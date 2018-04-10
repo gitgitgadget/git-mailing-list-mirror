@@ -2,101 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C32331F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 21:25:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB1281F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 21:26:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752371AbeDJVZk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 17:25:40 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:38244 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751959AbeDJVZj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 17:25:39 -0400
-Received: by mail-wm0-f68.google.com with SMTP id i3so93856wmf.3
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 14:25:39 -0700 (PDT)
+        id S1752100AbeDJV0b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 17:26:31 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:42373 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751611AbeDJV0a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 17:26:30 -0400
+Received: by mail-pf0-f174.google.com with SMTP id o16so9304365pfk.9
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 14:26:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Q3ktq1a/nLcuBuE+0ixg58MPSaik+leHzz96xLGUvl0=;
-        b=uSppxjxfxIxzU6YAOkDvWAX2u1rp7ens52odkzJ6Q4/FXKD+EgVrKoFnpehpDOsRpT
-         XfBHMvRLTAtNE2sF8uKJz6LIAVPIkb+zWp4SnFNpEcJhlPJvh6XkW6XsWkUmnwe3pLGR
-         QvpD4ivSwLKxStVo53XkHyoyfE5PaZzdtTcjPXSbyDQplttUzD1m8Im7BJTklg2nN+AJ
-         XWf0egDji47slT3tGqxAZTD3s6Lw20xa0I/ABORwYCruDF8enyGk76chnH4jYE6kXv+P
-         zBdwdF1o9SyV6/g+KHmUT64QyG2rEDAl2QQ3obf/n33eifHoU5I9Nyde19ObU5Jk+C/c
-         9/Ow==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/XZ0/wJfmJUwuKD8IX64j1MAcNVk39rBSylG4Dudj9w=;
+        b=sLrJGmfIsJY+GRrjw4KauYDwdY5nGmpU3Nfk5KUxlN2O0JEUub01Mj5xHP/mYP1DnS
+         T3zhBbAoeZ+8nuakrzchpI4kespHJ9Q1T+nx6Z4fcfQtJiqNG69UUUhoHjkMOZHnIthi
+         8dPPeKAb267MTYpqsTPBvQ718LJ74FkdxQe9j0apGF+dfTHymage5AXO1ariOpr1TCDo
+         zJbuG2M2m+JuT94Col0vberBWMQmsKze8YWG46dShDZ62jqH316IXviKD3rf1nAc+8/T
+         0265cR4tdLgw0P9Dp+M9OWIPBCnzeA4mJb9ek4aRVyTgM/5eiQCFM19XP8/IYRqXkD49
+         Sc7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Q3ktq1a/nLcuBuE+0ixg58MPSaik+leHzz96xLGUvl0=;
-        b=kUqRFrz0tqXl5n/H1Ilwno0OsDaR4taEvPg9janh+937bCpoY5+hsJ3LSHH1dvAnCO
-         8vhHL/yNBpFLd6nR2SuM8rxWacdD0/1lgovUAbptvY5y1flij40lGSIh1/zlrh892gU+
-         hgZegVbikAFkrFKs5k6hP3CJed2ew7gyxm8kyUBeblKp7CMD9/f58zW6EirusugKh5Gz
-         OjVpxdifyw2Wu6PD21OcXDlEj4tTazL4h7yBcDD8hHAEVDqvbj6OM5TIGw+DGjy6dCQC
-         d510v/zu6FvZAs2xcfjIbbPYICAXbbb23oDTzqCNOBiCNWG6CgQby8szcT7eOTP7mkQM
-         FuQg==
-X-Gm-Message-State: ALQs6tCydQP88UckcdMH8YF4cBq9iEJNAHEcVkvLKZep8x7Q6ElkDFvS
-        cd0q2md3gi45p+E16GpbMy0=
-X-Google-Smtp-Source: AIpwx4/mh509ENHXAVOq3QPBule/lVtHhs3oS74xnBW780co1hXgtkQBA37juK+pn/nidn2fz9X8VA==
-X-Received: by 10.28.116.26 with SMTP id p26mr762290wmc.102.1523395538234;
-        Tue, 10 Apr 2018 14:25:38 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id r11sm2690088wrl.42.2018.04.10.14.25.37
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=/XZ0/wJfmJUwuKD8IX64j1MAcNVk39rBSylG4Dudj9w=;
+        b=YqHed+PVbLgkDYzqCXae4R5/SHALVndKwMUt71UiyYEzl5yovFIv2+uOH772s66nsA
+         2KMEdnJnX2sYu9BpXoPrmdXUXg1SaHix0MbaucsMfwIJnZ54ifg9Dg3vYueyZluRYGCG
+         jWTdeFfwRcKMR3YfKKeXmz6dwdecusp8ii8PrFy06Q9g90zMNmB+DSJ1YuvKff+3tOgP
+         PhzBGNQWXoycIjTYU5pCb08buATipdnDnQzvomujUgNdUM4OK3e2spGApQQNUpzXOZDG
+         Evw8E9tJB1K+3gF3DOD3MaVERlA8u2ljwX2x02RdV3AxXuQVNqymQ4aGD954vc80LPJS
+         WoeA==
+X-Gm-Message-State: ALQs6tCHABSbhCbOed/166Vq/iVRVs+6uDxMi1VuLRee4QtKfOIb+k/j
+        /tuQ1c+vYhpyfyIB1Yjco53NLw==
+X-Google-Smtp-Source: AIpwx4832pYOIjpPeyaikzhfOYSxbPO0AxfEutuTnjni5mkJQ6OaDlfyPUqSn5u0zJVhlizoTBVorQ==
+X-Received: by 10.99.154.82 with SMTP id e18mr1413303pgo.365.1523395589933;
+        Tue, 10 Apr 2018 14:26:29 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id s17sm8153323pfk.105.2018.04.10.14.26.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 10 Apr 2018 14:25:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andreas Heiduk <asheiduk@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 6/6] doc: add note about shell quoting to revision.txt
-References: <20180410183224.10780-1-asheiduk@gmail.com>
-        <20180410183939.12146-1-asheiduk@gmail.com>
-Date:   Wed, 11 Apr 2018 06:25:37 +0900
-In-Reply-To: <20180410183939.12146-1-asheiduk@gmail.com> (Andreas Heiduk's
-        message of "Tue, 10 Apr 2018 20:39:39 +0200")
-Message-ID: <xmqqy3hu21pq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Tue, 10 Apr 2018 14:26:29 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, jrnieder@gmail.com,
+        l.s.r@web.de, pclouds@gmail.com, sandals@crustytoothpaste.net,
+        sbeller@google.com, sunshine@sunshineco.com
+Subject: [PATCH 0/6] Rename files to use dashes instead of underscores
+Date:   Tue, 10 Apr 2018 14:26:15 -0700
+Message-Id: <20180410212621.259409-1-sbeller@google.com>
+X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
+In-Reply-To: <xmqqbmer4vfh.fsf@gitster-ct.c.googlers.com>
+References: <xmqqbmer4vfh.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Heiduk <asheiduk@gmail.com> writes:
+This is the followup for 
+https://public-inbox.org/git/xmqqbmer4vfh.fsf@gitster-ct.c.googlers.com/
 
-> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
-> ---
->  Documentation/revisions.txt | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-> index dfcc49c72c..c1d3a40a90 100644
-> --- a/Documentation/revisions.txt
-> +++ b/Documentation/revisions.txt
-> @@ -7,6 +7,10 @@ syntax.  Here are various ways to spell object names.  The
->  ones listed near the end of this list name trees and
->  blobs contained in a commit.
->  
-> +NOTE: This document shows the "raw" syntax as seen by git. The shell
-> +and other UIs might require additional quoting to protect special
-> +characters and to avoid word splitting.
-> +
->  '<sha1>', e.g. 'dae86e1950b1277e545cee180551750029cfe735', 'dae86e'::
->    The full SHA-1 object name (40-byte hexadecimal string), or
->    a leading substring that is unique within the repository.
-> @@ -186,6 +190,8 @@ existing tag object.
->    is matched. ':/!-foo' performs a negative match, while ':/!!foo' matches a
->    literal '!' character, followed by 'foo'. Any other sequence beginning with
->    ':/!' is reserved for now.
-> +  Depending on the given text the shell's word splitting rules might
-> +  require additional quoting.
->  
->  '<rev>:<path>', e.g. 'HEAD:README', ':README', 'master:./README'::
->    A suffix ':' followed by a path names the blob or tree
+We have no files left with underscores in their names.
 
-I've seen this suggested before and thought it is a good idea.  GOod
-to see it is finally happening ;-)  Thanks.
+Thanks,
+Stefan
+
+Stefan Beller (6):
+  write_or_die.c: rename to use dashes in file name
+  unicode_width.h: rename to use dash in file name
+  exec_cmd: rename to use dash in file name
+  sha1_name.c: rename to use dash in file name
+  sha1_file.c: rename to use dash in file name
+  replace_object.c: rename to use dash in file name
+
+ Documentation/technical/api-object-access.txt |  2 +-
+ Makefile                                      | 14 +++++++-------
+ attr.c                                        |  2 +-
+ builtin/add.c                                 |  2 +-
+ builtin/am.c                                  |  2 +-
+ builtin/describe.c                            |  2 +-
+ builtin/difftool.c                            |  2 +-
+ builtin/hash-object.c                         |  2 +-
+ builtin/help.c                                |  2 +-
+ builtin/index-pack.c                          |  4 ++--
+ builtin/init-db.c                             |  2 +-
+ builtin/merge-tree.c                          |  2 +-
+ builtin/notes.c                               |  2 +-
+ builtin/pull.c                                |  2 +-
+ builtin/receive-pack.c                        |  2 +-
+ common-main.c                                 |  2 +-
+ config.c                                      |  2 +-
+ contrib/update-unicode/README                 |  6 +++---
+ contrib/update-unicode/update_unicode.sh      |  2 +-
+ exec_cmd.c => exec-cmd.c                      |  2 +-
+ exec_cmd.h => exec-cmd.h                      |  0
+ fetch-pack.c                                  |  2 +-
+ git.c                                         |  2 +-
+ help.c                                        |  2 +-
+ http-backend.c                                |  2 +-
+ http-fetch.c                                  |  2 +-
+ http-push.c                                   |  2 +-
+ imap-send.c                                   |  2 +-
+ list-objects-filter.c                         |  2 +-
+ object.h                                      |  2 +-
+ remote-curl.c                                 |  2 +-
+ remote-testsvn.c                              |  2 +-
+ replace_object.c => replace-object.c          |  0
+ run-command.c                                 |  2 +-
+ sequencer.c                                   |  2 +-
+ sha1_file.c => sha1-file.c                    |  0
+ sha1_name.c => sha1-name.c                    |  0
+ shell.c                                       |  2 +-
+ unicode_width.h => unicode-width.h            |  0
+ upload-pack.c                                 |  2 +-
+ utf8.c                                        |  2 +-
+ write_or_die.c => write-or-die.c              |  0
+ 42 files changed, 45 insertions(+), 45 deletions(-)
+ rename exec_cmd.c => exec-cmd.c (99%)
+ rename exec_cmd.h => exec-cmd.h (100%)
+ rename replace_object.c => replace-object.c (100%)
+ rename sha1_file.c => sha1-file.c (100%)
+ rename sha1_name.c => sha1-name.c (100%)
+ rename unicode_width.h => unicode-width.h (100%)
+ rename write_or_die.c => write-or-die.c (100%)
+
+-- 
+2.17.0.484.g0c8726318c-goog
+
