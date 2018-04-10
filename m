@@ -6,54 +6,54 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E16411F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 00:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E27AF1F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 00:18:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752232AbeDJASn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 20:18:43 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:46392 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752107AbeDJASh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 20:18:37 -0400
-Received: by mail-pf0-f195.google.com with SMTP id h69so6756330pfe.13
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 17:18:37 -0700 (PDT)
+        id S1752264AbeDJASx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 20:18:53 -0400
+Received: from mail-pl0-f47.google.com ([209.85.160.47]:40533 "EHLO
+        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752134AbeDJAS3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 20:18:29 -0400
+Received: by mail-pl0-f47.google.com with SMTP id x4-v6so6220976pln.7
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 17:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=EHUPBdGgXUXtkCSKdGgg8A2RMQjlMuGzzmNJfoIyrXA=;
-        b=uMixPXBnjhLV0SyPOCFdtHdq8z5vK2wDwyFVWF+x0anARAe9xadAqPAqKUDiWxP+Pt
-         UPiIFiquEV2TtPVRb1HoUIvOsvcjfGaR6SUv6y5M3qSf7CoPNftTGu6wwljeTwpzXeYl
-         0jItghqbQ9Pa9b/PO9lViAo9GXnvnA5HW5H26kvCqPS4dGXLsrPvury6qcnX95+IPsU2
-         SJsf8z+ASTUc3pF0S3LmtPf82hxgTgpQ1MV4qDjB36N63glncm+BWkexrGbN8z0yR7+F
-         9JkFhT+RoiUj5L7heVG5NTpw+XODWBw6Fohvgu/GNw/rEdkgJsRbjnxE/RavaWmcKm89
-         ukVA==
+        bh=g0a5KCUACoTr0j/A/hwplYr8IKqz+I/iY2ZRDaCpBpY=;
+        b=bcVr3mJ1kwRt9EtzsB6sKC87ym3XCNTP78hLhPIHIesH2O2M9rSRWNCdRW9rWSgUqp
+         pM1/LAYz7JFdUF+U7umT2Ukghzk2QdJydCQhBfw7gMYFn8mZbaH+8ZTlmpodSS9pUbyc
+         R46dEki3azxapZZ/AgymcTnxapnirx5wWdF1N/ueO7P8H6R+spuBpR9z0lQjGSW8EcIm
+         NWERj94Fpee0c4dfhdx4kn9zJ4E7MzZiTwsYM/8gZknhYkIL2+LYS3KGkz5+zbe0haMk
+         SXUGkwxWp5bt8s4/6rtjZ9BOBXmjyFP+LwaC3mDwel2iTz5op3hI7BI/DstYqiZSPC+Q
+         dJkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EHUPBdGgXUXtkCSKdGgg8A2RMQjlMuGzzmNJfoIyrXA=;
-        b=Q/zAOX+42t+5HYAEKB6m2hn9ZX7Zs+AWLfOECGs62uGBe61faOs1IYVbw3eLloyNJ2
-         AYl59TtQybQiyFAWxoBYd1/p//sHvY+7Di4E6PMwqSSmwpCx5vS6lDQE5ChyHzDtl6qS
-         knnpmYEPNMcy5njx6FibOvgQaFh6kpepm1Z3PXiuYmZJzSIwSCr0yvPMYFAXa294MGkN
-         6EWC3m0i8B0bE5hH/b3ZCf/j0BS026XCJNAA65VkhwM/Kvfxdwx5jPN3AvapCzIi7Ods
-         PvderJ2jTQzxkODNk7CGTf47C0uC1DwM/2EEBhgBeZ6CLtgtTGMv/saSJo6+8pkteQq3
-         PT0w==
-X-Gm-Message-State: ALQs6tCU+kPxmpt2k3vnn/hzgCRxCCTt+Bh6mg6XJo9yX/VYtWu/WGfC
-        GbJoBvaRh0jSavfVwHbN8FqFPrznuIM=
-X-Google-Smtp-Source: AIpwx49pQ2NAHVm2/pD097NQOt2IgTFabftasFY0u+px/TNeIQiWRJ6tuziLmyalsRk2mphgQBOb8A==
-X-Received: by 10.98.236.220 with SMTP id e89mr796091pfm.173.1523319516477;
-        Mon, 09 Apr 2018 17:18:36 -0700 (PDT)
+        bh=g0a5KCUACoTr0j/A/hwplYr8IKqz+I/iY2ZRDaCpBpY=;
+        b=oicVBMgfqf2jgmJBvv/XGBjJszOKa+YbB3W/zBHYoAnmaBeDWUlM1qt3v6KTnuhNen
+         CBSwlDzYjgxnG+cq/xVHR3ZE29CwJpDtH9yyhVsrssIHOFcbwY2nOLJ8rq5wAweshfBc
+         hukzRJyZfobFWgO6dsB8yRpoUNHH6LxlFpdrDKHt7BpfpKhrg0nZz1LpUtZLRBw90s3L
+         myRASD1T6iaoxfurHQ+UD0BPpmXpGolNDNc/UnqGECRI5poBw7EE/q99eIABVhkckXtK
+         Bwd1Db2Kt9p5H7t8sFGi58I0vJPusV3uliTo4KUHPATxp8kBM/cpNFMuhvC1qBeNFIqi
+         qk4w==
+X-Gm-Message-State: ALQs6tBbA7A8WHpU32qQ549QRwCu4nU7Cz3AY3H/EPDARJcaAPnKl8hF
+        LrNKZ/ePbLMqkIP+g5PhUrYz5xjc/N0=
+X-Google-Smtp-Source: AIpwx4/vQwEWvr2UiIfpG/v+2bMboMkNBOYfOrNnM/nX9cz5pBu7AGuwzlgRRtscGS4UOqYmTrXigQ==
+X-Received: by 2002:a17:902:b60f:: with SMTP id b15-v6mr5386498pls.12.1523319508194;
+        Mon, 09 Apr 2018 17:18:28 -0700 (PDT)
 Received: from localhost ([2601:602:9500:3a4f:1d66:22f3:ac1d:6007])
-        by smtp.gmail.com with ESMTPSA id t11sm1960413pgn.94.2018.04.09.17.18.35
+        by smtp.gmail.com with ESMTPSA id g26sm3345815pfk.173.2018.04.09.17.18.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Apr 2018 17:18:35 -0700 (PDT)
-Date:   Mon, 9 Apr 2018 17:18:34 -0700
+        Mon, 09 Apr 2018 17:18:27 -0700 (PDT)
+Date:   Mon, 9 Apr 2018 17:18:26 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     sunshine@sunshineco.com, gitster@pobox.com, peff@peff.net
-Subject: [PATCH v6 3/3] builtin/config: introduce `color` type specifier
-Message-ID: <20180410001834.GE67209@syl.local>
+Subject: [PATCH v6 1/3] builtin/config: introduce `--default`
+Message-ID: <20180410001826.GB67209@syl.local>
 References: <20180306021729.45813-1-me@ttaylorr.com>
  <cover.1523319159.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -66,149 +66,169 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As of this commit, the canonical way to retreive an ANSI-compatible
-color escape sequence from a configuration file is with the
-`--get-color` action.
+For some use cases, callers of the `git-config(1)` builtin would like to
+fallback to default values when the variable asked for does not exist.
+In addition, users would like to use existing type specifiers to ensure
+that values are parsed correctly when they do exist in the
+configuration.
 
-This is to allow Git to "fall back" on a default value for the color
-should the given section not exist in the specified configuration(s).
+For example, to fetch a value without a type specifier and fallback to
+`$fallback`, the following is required:
 
-With the addition of `--default`, this is no longer needed since:
+  $ git config core.foo || echo "$fallback"
 
-  $ git config --default red --type=color core.section
+This is fine for most values, but can be tricky for difficult-to-express
+`$fallback`'s, like ANSI color codes.
 
-will be have exactly as:
+This motivates `--get-color`, which is a one-off exception to the normal
+type specifier rules wherein a user specifies both the configuration
+variable and an optional fallback. Both are formatted according to their
+type specifier, which eases the burden on the user to ensure that values
+are correctly formatted.
 
-  $ git config --get-color core.section red
+This commit (and those following it in this series) aim to eventually
+replace `--get-color` with a consistent alternative. By introducing
+`--default`, we allow the `--get-color` action to be promoted to a
+`--type=color` type specifier, retaining the "fallback" behavior via the
+`--default` flag introduced in this commit.
 
-For consistency, let's introduce `--type=color` and encourage its use
-with `--default` together over `--get-color` alone.
+For example, we aim to replace:
+
+  $ git config --get-color variable [default] [...]
+
+with:
+
+  $ git config --default default --type=color variable [...]
+
+Values filled by `--default` behave exactly as if they were present in
+the affected configuration file; they will be parsed by type specifiers
+without the knowledge that they are not themselves present in the
+configuration.
+
+Specifically, this means that the following will work:
+
+  $ git config --int --default 1M does.not.exist
+  1048576
+
+In subsequent commits, we will offer `--type=color`, which (in
+conjunction with `--default`) will be sufficient to replace
+`--get-color`.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-config.txt |  6 ++++++
- builtin/config.c             | 22 ++++++++++++++++++++++
- t/t1300-repo-config.sh       | 30 ++++++++++++++++++++++++++++++
+ Documentation/git-config.txt |  4 ++++
+ builtin/config.c             | 18 ++++++++++++++++++
+ t/t1310-config-default.sh    | 36 ++++++++++++++++++++++++++++++++++++
  3 files changed, 58 insertions(+)
+ create mode 100755 t/t1310-config-default.sh
 
 diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index b644a44ae9..7c8365e377 100644
+index a1e3ffe750..b644a44ae9 100644
 --- a/Documentation/git-config.txt
 +++ b/Documentation/git-config.txt
-@@ -177,6 +177,10 @@ Valid `<type>`'s include:
-   ~/` from the command line to let your shell do the expansion.)
- - 'expiry-date': canonicalize by converting from a fixed or relative date-string
-   to a timestamp. This specifier has no effect when setting the value.
-+- 'color': When getting a value, canonicalize by converting to an ANSI color
-+  escape sequence. When setting a value, a sanity-check is performed to ensure
-+  that the given value is canonicalize-able as an ANSI color, but it is written
-+  as-is.
- +
+@@ -240,6 +240,10 @@ Valid `<type>`'s include:
+ 	using `--file`, `--global`, etc) and `on` when searching all
+ 	config files.
  
- --bool::
-@@ -228,6 +232,8 @@ Valid `<type>`'s include:
- 	output it as the ANSI color escape sequence to the standard
- 	output.  The optional `default` parameter is used instead, if
- 	there is no color configured for `name`.
-++
-+`--type=color [--default=<default>]` is preferred over `--get-color`.
- 
- -e::
- --edit::
++--default <value>::
++  When using `--get`, and the requested variable is not found, behave as if
++  <value> were the value assigned to the that variable.
++
+ CONFIGURATION
+ -------------
+ `pager.config` is only respected when listing configuration, i.e., when
 diff --git a/builtin/config.c b/builtin/config.c
-index 014e3a0d53..08016863ac 100644
+index 5c8952a17c..014e3a0d53 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -61,6 +61,7 @@ static int show_origin;
- #define TYPE_BOOL_OR_INT	3
- #define TYPE_PATH		4
- #define TYPE_EXPIRY_DATE	5
-+#define TYPE_COLOR		6
+@@ -26,6 +26,7 @@ static char term = '\n';
+ static int use_global_config, use_system_config, use_local_config;
+ static struct git_config_source given_config_source;
+ static int actions, type;
++static char *default_value;
+ static int end_null;
+ static int respect_includes_opt = -1;
+ static struct config_options config_options;
+@@ -121,6 +122,7 @@ static struct option builtin_config_options[] = {
+ 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
+ 	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include directives on lookup")),
+ 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
++	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use default value when missing entry")),
+ 	OPT_END(),
+ };
  
- static int option_parse_type(const struct option *opt, const char *arg,
- 			     int unset)
-@@ -82,6 +83,8 @@ static int option_parse_type(const struct option *opt, const char *arg,
- 		*type = TYPE_PATH;
- 	else if (!strcmp(arg, "expiry-date"))
- 		*type = TYPE_EXPIRY_DATE;
-+	else if (!strcmp(arg, "color"))
-+		*type = TYPE_COLOR;
- 	else
- 		die(_("unrecognized --type argument, %s"), arg);
+@@ -285,6 +287,16 @@ static int get_value(const char *key_, const char *regex_)
+ 	config_with_options(collect_config, &values,
+ 			    &given_config_source, &config_options);
  
-@@ -202,6 +205,11 @@ static int format_config(struct strbuf *buf, const char *key_, const char *value
- 			if (git_config_expiry_date(&t, key_, value_) < 0)
- 				return -1;
- 			strbuf_addf(buf, "%"PRItime, t);
-+		} else if (type == TYPE_COLOR) {
-+			char v[COLOR_MAXLEN];
-+			if (git_config_color(v, key_, value_) < 0)
-+				return -1;
-+			strbuf_addstr(buf, v);
- 		} else if (value_) {
- 			strbuf_addstr(buf, value_);
- 		} else {
-@@ -347,6 +355,20 @@ static char *normalize_value(const char *key, const char *value)
- 		else
- 			return xstrdup(v ? "true" : "false");
- 	}
-+	if (type == TYPE_COLOR) {
-+		char v[COLOR_MAXLEN];
-+		if (git_config_color(v, key, value))
-+			die("cannot parse color '%s'", value);
-+
-+		/*
-+		 * The contents of `v` now contain an ANSI escape
-+		 * sequence, not suitable for including within a
-+		 * configuration file. Treat the above as a
-+		 * "sanity-check", and return the given value, which we
-+		 * know is representable as valid color code.
-+		 */
-+		return xstrdup(value);
++	if (!values.nr && default_value) {
++		struct strbuf *item;
++		ALLOC_GROW(values.items, values.nr + 1, values.alloc);
++		item = &values.items[values.nr++];
++		strbuf_init(item, 0);
++		if (format_config(item, key_, default_value) < 0)
++			die(_("failed to format default config value: %s"),
++				default_value);
 +	}
++
+ 	ret = !values.nr;
  
- 	die("BUG: cannot normalize type %d", type);
- }
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index f5ae80e9ae..c494733061 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -931,6 +931,36 @@ test_expect_success 'get --expiry-date' '
- 	test_must_fail git config --expiry-date date.invalid1
- '
+ 	for (i = 0; i < values.nr; i++) {
+@@ -623,6 +635,12 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	}
  
-+test_expect_success 'get --type=color' '
-+	rm .git/config &&
-+	git config foo.color "red" &&
-+	git config --get --type=color foo.color >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	echo "<RED>" >expect &&
++	if (default_value && !(actions & ACTION_GET)) {
++		error("--default is only applicable to --get");
++		usage_with_options(builtin_config_usage,
++			builtin_config_options);
++	}
++
+ 	if (actions & PAGING_ACTIONS)
+ 		setup_auto_pager("config", 1);
+ 
+diff --git a/t/t1310-config-default.sh b/t/t1310-config-default.sh
+new file mode 100755
+index 0000000000..6049d91708
+--- /dev/null
++++ b/t/t1310-config-default.sh
+@@ -0,0 +1,36 @@
++#!/bin/sh
++
++test_description='Test git config in different settings (with --default)'
++
++. ./test-lib.sh
++
++test_expect_success 'uses --default when entry missing' '
++	echo quux >expect &&
++	git config -f config --default=quux core.foo >actual &&
 +	test_cmp expect actual
 +'
 +
-+cat >expect << EOF
-+[foo]
-+	color = red
-+EOF
-+
-+test_expect_success 'set --type=color' '
-+	rm .git/config &&
-+	git config --type=color foo.color "red" &&
-+	test_cmp expect .git/config
++test_expect_success 'does not use --default when entry present' '
++	echo bar >expect &&
++	git -c core.foo=bar config --default=baz core.foo >actual &&
++	test_cmp expect actual
 +'
 +
-+test_expect_success 'get --type=color barfs on non-color' '
-+	echo "[foo]bar=not-a-color" >.git/config &&
-+	test_must_fail git config --get --type=color foo.bar
++test_expect_success 'canonicalizes --default with appropriate type' '
++	echo true >expect &&
++	git config -f config --default=yes --bool core.foo >actual &&
++	test_cmp expect actual
 +'
 +
-+test_expect_success 'set --type=color barfs on non-color' '
-+	test_must_fail git config --type=color foo.color "not-a-color" 2>error &&
-+	test_i18ngrep "cannot parse color" error
++test_expect_success 'dies when --default cannot be parsed' '
++	test_must_fail git config -f config --type=expiry-date --default=x --get \
++		not.a.section 2>error &&
++	test_i18ngrep "failed to format default config value" error
 +'
 +
- cat > expect << EOF
- [quote]
- 	leading = " test"
++test_expect_success 'does not allow --default without --get' '
++	test_must_fail git config --default=quux --unset a.section >output 2>&1 &&
++	test_i18ngrep "\-\-default is only applicable to" output
++'
++
++test_done
 -- 
 2.17.0
+
