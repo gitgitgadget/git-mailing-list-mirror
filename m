@@ -7,210 +7,208 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2713D1F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 12:56:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C24F1F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 12:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752770AbeDJM4W (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 08:56:22 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:36450 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752587AbeDJM4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 08:56:21 -0400
-Received: by mail-pl0-f66.google.com with SMTP id 91-v6so7472348pld.3
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 05:56:21 -0700 (PDT)
+        id S1752829AbeDJM41 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 08:56:27 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:42040 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752587AbeDJM40 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 08:56:26 -0400
+Received: by mail-pl0-f67.google.com with SMTP id t20-v6so4615888ply.9
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 05:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=uUxts309jnu4mXzDwtAzOutpmWXk//ksLwRpq+tjug0=;
-        b=thtnyB3/9A/U3+R5jCyldGgy18KzLGEtAAUxK0aB/Yba0POHyzwX+Gdfzl8hDGiDHN
-         tXxRw2U74+Ajq2ZjWcMbFEepBc/kJyP4S0YHv8W8JPvXpR8lWeNIFtdPLaIztdEvibKN
-         gG70+tpoZzGfws44kwyRG4BaF2J/0EkFS3uD9I/hBLTc2OB2Eu9dCw0UzryTFyHyHcLE
-         g//GZfJ1GvRweLx1+PM4ETA35ht7NXxmMwq6jWYi7Fv1+mgPuDtkdn9s2Td9Z/eW9+ks
-         44hrb+NM1tUxVwFSyfk68uF/mLmh2POJpbWw+mOWrgx/l69Q36Ys23rlt+vDoLDIVtle
-         DOEw==
+        bh=lf33D1p2qDxnBdpTdpgiXKJH6lFmmiId8qWhEXh16BE=;
+        b=diLb42VK4c33Hf0Wp5PiVKtVxU4KGUD3pHJklT06Chpto43VH8a6bYkLtuVSGEf+2I
+         8bHYrKYCxUptYdFgrzi6ZUc3Tc6lHGKQo86uln06lKo6UUj7EsRSvZBlvXbLY4gMF/4i
+         jdb1vYBo1N2s1ppQODVv3TiEH7G2xcBkMQEum1esGh4nkrDh/gwZBfgkt6tWBieSR1f3
+         efBq7/01t4u6Wq4JL5zUyuUz1DPdSA7ob8FVxxBhbDGMqHkKxMDdLHq6smB7yCE6qfde
+         YLiCQaNZBqXIp95RY4HIn9BhYBNP86+HUQqK8XSzAv98SB/tK4q0NyhY3ZbruYP5ewqQ
+         Zcwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=uUxts309jnu4mXzDwtAzOutpmWXk//ksLwRpq+tjug0=;
-        b=N9aHq75R58wFSv/BzcedoVU9os7l12CdPwXR67OM2HfMrmhpxrwcYOobfdmrKzwW2S
-         JH0saULrKBUkpyIKhnYvCblT3m64Vlly5JLIKvrWAu8u/BXbkGh3KSoOiOvNf74pT/j4
-         4xp/1jeTSVjG3EyC0AfYjwT9sx+hk6phUhA9Rh6QNEu4f2iyBsxFoY57w1fNKgYu1vaW
-         mhQtqsN1p4LR1g2V0EtLAZlneCwX28NyaH658jsBP+kLwqjZJR/7cH9KhxTAqVPMTi39
-         6rTfiDiDX+LAWZGR033n9dVs1dsXiA5MyNbzZrcEddV2KyKirmAXgY4Ox38v1vXUT+Pk
-         GbsA==
-X-Gm-Message-State: ALQs6tD7wFTx3APFVYm7j1FDGXBSUp1fe7C/+n4Yc96VlmXTkL7IqDTs
-        efXA6VYDtcrydTLyDRHc+lNYa/h4DA8=
-X-Google-Smtp-Source: AIpwx48gb6QlVxPdLNpm7Srm2P1qCW6WPJt7kicPGn31kIFu3/wc7XOty9tC+0Weq6h+Qwcal6Cyiw==
-X-Received: by 2002:a17:902:6bc3:: with SMTP id m3-v6mr280118plt.363.1523364980313;
-        Tue, 10 Apr 2018 05:56:20 -0700 (PDT)
+        bh=lf33D1p2qDxnBdpTdpgiXKJH6lFmmiId8qWhEXh16BE=;
+        b=KNu0QP8+Q/LUxiQ1fHmrJ1tf0NVgt6IreJqhST6+u4FireoDzDFSlu/knlfPQutCAz
+         n/soj6pZmSRfbuGvwzTHRxnWQzfvqJDoCuSviYhB9fsRT2rhxSTyNbXqepX7E7uwG4OW
+         +8Qnrz093Tdn69GRASlb436VUkOgjEaiKR8yoLIYam+p17BFGg3Bret5ulxlB+H5OsKM
+         1rPl/detxiaRn7K7s0ak3fz8B7iRdh8CnW6ZgViLv/QcUEvq+Cw2GSI2aZwGEW1SEFIm
+         H3ofjQNqGNW+qYc+StdNxGm+SB84fzhZUHA1OVRu06Esjl5sMyY3IRIkA6nYPGolMh3S
+         r2EQ==
+X-Gm-Message-State: ALQs6tArEfEcvs0qLBXR23vpNfqGvs6pagraqqrjGzw3Fe4PFDGoChx6
+        Tp+tK1zxyZf7FkTRgQx2b2Z19GboGZA=
+X-Google-Smtp-Source: AIpwx49sEa8kRLC2r5FFzWUjslHyjM7dSmUmkhLf+AXJrrUOnhRDRZ5YNFrR7laN0K+8EGLeB1crJw==
+X-Received: by 2002:a17:902:a9c4:: with SMTP id b4-v6mr292067plr.333.1523364985820;
+        Tue, 10 Apr 2018 05:56:25 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id l10sm4421666pgp.35.2018.04.10.05.56.14
+        by smtp.gmail.com with ESMTPSA id l10sm4421666pgp.35.2018.04.10.05.56.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Apr 2018 05:56:18 -0700 (PDT)
+        Tue, 10 Apr 2018 05:56:25 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, ramsay@ramsayjones.plus.com, sbeller@google.com,
         szeder.dev@gmail.com, git@jeffhostetler.com, peff@peff.net,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v8 00/14] Serialized Git Commit Graph
-Date:   Tue, 10 Apr 2018 08:55:54 -0400
-Message-Id: <20180410125608.39443-1-dstolee@microsoft.com>
+Subject: [PATCH v8 01/14] csum-file: rename hashclose() to finalize_hashfile()
+Date:   Tue, 10 Apr 2018 08:55:55 -0400
+Message-Id: <20180410125608.39443-2-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.17.0
-In-Reply-To: <20180402203427.170177-1-dstolee@microsoft.com>
+In-Reply-To: <20180410125608.39443-1-dstolee@microsoft.com>
 References: <20180402203427.170177-1-dstolee@microsoft.com>
+ <20180410125608.39443-1-dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This version covers the review that I missed when rerolling v7. The
-file diff is below from previous version, and also PATCH 14/14 was
-reworded to use "--append" properly.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 41c4f76caf..37420ae0fd 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -31,7 +31,7 @@ static struct opts_commit_graph {
+The hashclose() method behaves very differently depending on the flags
+parameter. In particular, the file descriptor is not always closed.
 
- static int graph_read(int argc, const char **argv)
- {
--       struct commit_graph *graph = 0;
-+       struct commit_graph *graph = NULL;
-        char *graph_name;
+Perform a simple rename of "hashclose()" to "finalize_hashfile()" in
+preparation for functional changes.
 
-        static struct option builtin_commit_graph_read_options[] = {
-diff --git a/commit-graph.c b/commit-graph.c
-index 1fc63d541b..3ff8c84c0e 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -179,7 +179,7 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ builtin/index-pack.c   | 2 +-
+ builtin/pack-objects.c | 6 +++---
+ bulk-checkin.c         | 4 ++--
+ csum-file.c            | 2 +-
+ csum-file.h            | 4 ++--
+ fast-import.c          | 2 +-
+ pack-bitmap-write.c    | 2 +-
+ pack-write.c           | 4 ++--
+ 8 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index bda84a92ef..8bcf280e0b 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1270,7 +1270,7 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
+ 			    nr_objects - nr_objects_initial);
+ 		stop_progress_msg(&progress, msg.buf);
+ 		strbuf_release(&msg);
+-		hashclose(f, tail_hash, 0);
++		finalize_hashfile(f, tail_hash, 0);
+ 		hashcpy(read_hash, pack_hash);
+ 		fixup_pack_header_footer(output_fd, pack_hash,
+ 					 curr_pack, nr_objects,
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index e9d3cfb9e3..ab3e80ee49 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -837,11 +837,11 @@ static void write_pack_file(void)
+ 		 * If so, rewrite it like in fast-import
+ 		 */
+ 		if (pack_to_stdout) {
+-			hashclose(f, oid.hash, CSUM_CLOSE);
++			finalize_hashfile(f, oid.hash, CSUM_CLOSE);
+ 		} else if (nr_written == nr_remaining) {
+-			hashclose(f, oid.hash, CSUM_FSYNC);
++			finalize_hashfile(f, oid.hash, CSUM_FSYNC);
+ 		} else {
+-			int fd = hashclose(f, oid.hash, 0);
++			int fd = finalize_hashfile(f, oid.hash, 0);
+ 			fixup_pack_header_footer(fd, oid.hash, pack_tmp_name,
+ 						 nr_written, oid.hash, offset);
+ 			close(fd);
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 9d87eac07b..227cc9f3b1 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -35,9 +35,9 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
+ 		unlink(state->pack_tmp_name);
+ 		goto clear_exit;
+ 	} else if (state->nr_written == 1) {
+-		hashclose(state->f, oid.hash, CSUM_FSYNC);
++		finalize_hashfile(state->f, oid.hash, CSUM_FSYNC);
+ 	} else {
+-		int fd = hashclose(state->f, oid.hash, 0);
++		int fd = finalize_hashfile(state->f, oid.hash, 0);
+ 		fixup_pack_header_footer(fd, oid.hash, state->pack_tmp_name,
+ 					 state->nr_written, oid.hash,
+ 					 state->offset);
+diff --git a/csum-file.c b/csum-file.c
+index 5eda7fb6af..e6c95a6915 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -53,7 +53,7 @@ void hashflush(struct hashfile *f)
+ 	}
  }
-
- /* global storage */
--struct commit_graph *commit_graph = NULL;
-+static struct commit_graph *commit_graph = NULL;
-
- static void prepare_commit_graph_one(const char *obj_dir)
+ 
+-int hashclose(struct hashfile *f, unsigned char *result, unsigned int flags)
++int finalize_hashfile(struct hashfile *f, unsigned char *result, unsigned int flags)
  {
-
--- >8 -- 
-
-This patch contains a way to serialize the commit graph.
-
-The current implementation defines a new file format to store the graph
-structure (parent relationships) and basic commit metadata (commit date,
-root tree OID) in order to prevent parsing raw commits while performing
-basic graph walks. For example, we do not need to parse the full commit
-when performing these walks:
-
-* 'git log --topo-order -1000' walks all reachable commits to avoid
-  incorrect topological orders, but only needs the commit message for
-  the top 1000 commits.
-
-* 'git merge-base <A> <B>' may walk many commits to find the correct
-  boundary between the commits reachable from A and those reachable
-  from B. No commit messages are needed.
-
-* 'git branch -vv' checks ahead/behind status for all local branches
-  compared to their upstream remote branches. This is essentially as
-  hard as computing merge bases for each.
-
-The current patch speeds up these calculations by injecting a check in
-parse_commit_gently() to check if there is a graph file and using that
-to provide the required metadata to the struct commit.
-
-The file format has room to store generation numbers, which will be
-provided as a patch after this framework is merged. Generation numbers
-are referenced by the design document but not implemented in order to
-make the current patch focus on the graph construction process. Once
-that is stable, it will be easier to add generation numbers and make
-graph walks aware of generation numbers one-by-one.
-
-By loading commits from the graph instead of parsing commit buffers, we
-save a lot of time on long commit walks. Here are some performance
-results for a copy of the Linux repository where 'master' has 678,653
-reachable commits and is behind 'origin/master' by 59,929 commits.
-
-| Command                          | Before | After  | Rel % |
-|----------------------------------|--------|--------|-------|
-| log --oneline --topo-order -1000 |  8.31s |  0.94s | -88%  |
-| branch -vv                       |  1.02s |  0.14s | -86%  |
-| rev-list --all                   |  5.89s |  1.07s | -81%  |
-| rev-list --all --objects         | 66.15s | 58.45s | -11%  |
-
-To test this yourself, run the following on your repo:
-
-  git config core.commitGraph true
-  git show-ref -s | git commit-graph write --stdin-commits
-
-The second command writes a commit graph file containing every commit
-reachable from your refs. Now, all git commands that walk commits will
-check your graph first before consulting the ODB. You can run your own
-performance comparisons by toggling the 'core.commitGraph' setting.
-
-[1] https://github.com/derrickstolee/git/pull/2
-    A GitHub pull request containing the latest version of this patch.
-
-Derrick Stolee (14):
-  csum-file: rename hashclose() to finalize_hashfile()
-  csum-file: refactor finalize_hashfile() method
-  commit-graph: add format document
-  graph: add commit graph design document
-  commit-graph: create git-commit-graph builtin
-  commit-graph: implement write_commit_graph()
-  commit-graph: implement git-commit-graph write
-  commit-graph: implement git commit-graph read
-  commit-graph: add core.commitGraph setting
-  commit-graph: close under reachability
-  commit: integrate commit graph with commit parsing
-  commit-graph: read only from specific pack-indexes
-  commit-graph: build graph from starting commits
-  commit-graph: implement "--append" option
-
- .gitignore                                    |   1 +
- Documentation/config.txt                      |   4 +
- Documentation/git-commit-graph.txt            |  94 +++
- .../technical/commit-graph-format.txt         |  97 +++
- Documentation/technical/commit-graph.txt      | 163 ++++
- Makefile                                      |   2 +
- alloc.c                                       |   1 +
- builtin.h                                     |   1 +
- builtin/commit-graph.c                        | 171 ++++
- builtin/index-pack.c                          |   2 +-
- builtin/pack-objects.c                        |   6 +-
- bulk-checkin.c                                |   4 +-
- cache.h                                       |   1 +
- command-list.txt                              |   1 +
- commit-graph.c                                | 738 ++++++++++++++++++
- commit-graph.h                                |  46 ++
- commit.c                                      |   3 +
- commit.h                                      |   3 +
- config.c                                      |   5 +
- contrib/completion/git-completion.bash        |   2 +
- csum-file.c                                   |  10 +-
- csum-file.h                                   |   9 +-
- environment.c                                 |   1 +
- fast-import.c                                 |   2 +-
- git.c                                         |   1 +
- pack-bitmap-write.c                           |   2 +-
- pack-write.c                                  |   5 +-
- packfile.c                                    |   4 +-
- packfile.h                                    |   2 +
- t/t5318-commit-graph.sh                       | 224 ++++++
- 30 files changed, 1584 insertions(+), 21 deletions(-)
- create mode 100644 Documentation/git-commit-graph.txt
- create mode 100644 Documentation/technical/commit-graph-format.txt
- create mode 100644 Documentation/technical/commit-graph.txt
- create mode 100644 builtin/commit-graph.c
- create mode 100644 commit-graph.c
- create mode 100644 commit-graph.h
- create mode 100755 t/t5318-commit-graph.sh
-
-
-base-commit: 468165c1d8a442994a825f3684528361727cd8c0
+ 	int fd;
+ 
+diff --git a/csum-file.h b/csum-file.h
+index 992e5c0141..9ba87f0a6c 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -26,14 +26,14 @@ struct hashfile_checkpoint {
+ extern void hashfile_checkpoint(struct hashfile *, struct hashfile_checkpoint *);
+ extern int hashfile_truncate(struct hashfile *, struct hashfile_checkpoint *);
+ 
+-/* hashclose flags */
++/* finalize_hashfile flags */
+ #define CSUM_CLOSE	1
+ #define CSUM_FSYNC	2
+ 
+ extern struct hashfile *hashfd(int fd, const char *name);
+ extern struct hashfile *hashfd_check(const char *name);
+ extern struct hashfile *hashfd_throughput(int fd, const char *name, struct progress *tp);
+-extern int hashclose(struct hashfile *, unsigned char *, unsigned int);
++extern int finalize_hashfile(struct hashfile *, unsigned char *, unsigned int);
+ extern void hashwrite(struct hashfile *, const void *, unsigned int);
+ extern void hashflush(struct hashfile *f);
+ extern void crc32_begin(struct hashfile *);
+diff --git a/fast-import.c b/fast-import.c
+index b5db5d20b1..6d96f55d9d 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1016,7 +1016,7 @@ static void end_packfile(void)
+ 		struct tag *t;
+ 
+ 		close_pack_windows(pack_data);
+-		hashclose(pack_file, cur_pack_oid.hash, 0);
++		finalize_hashfile(pack_file, cur_pack_oid.hash, 0);
+ 		fixup_pack_header_footer(pack_data->pack_fd, pack_data->sha1,
+ 				    pack_data->pack_name, object_count,
+ 				    cur_pack_oid.hash, pack_size);
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index e01f992884..662b44f97d 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -535,7 +535,7 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 	if (options & BITMAP_OPT_HASH_CACHE)
+ 		write_hash_cache(f, index, index_nr);
+ 
+-	hashclose(f, NULL, CSUM_FSYNC);
++	finalize_hashfile(f, NULL, CSUM_FSYNC);
+ 
+ 	if (adjust_shared_perm(tmp_file.buf))
+ 		die_errno("unable to make temporary bitmap file readable");
+diff --git a/pack-write.c b/pack-write.c
+index d775c7406d..044f427392 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -170,8 +170,8 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
+ 	}
+ 
+ 	hashwrite(f, sha1, the_hash_algo->rawsz);
+-	hashclose(f, NULL, ((opts->flags & WRITE_IDX_VERIFY)
+-			    ? CSUM_CLOSE : CSUM_FSYNC));
++	finalize_hashfile(f, NULL, ((opts->flags & WRITE_IDX_VERIFY)
++				    ? CSUM_CLOSE : CSUM_FSYNC));
+ 	return index_name;
+ }
+ 
 -- 
 2.17.0
 
