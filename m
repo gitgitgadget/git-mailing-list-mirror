@@ -2,109 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7129A1F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 20:22:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 154071F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 20:28:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752926AbeDJUWG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 16:22:06 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:47560 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752467AbeDJUWF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 16:22:05 -0400
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id 5zmFfO2igsD7b5zmGfMIFs; Tue, 10 Apr 2018 21:22:04 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=ZHFrMlG2AK3TgxOoXY4A:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: What's cooking in git.git (Apr 2018, #01; Mon, 9)
-To:     Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com>
- <98394864-ece6-5112-0274-b2399087f207@gmail.com>
- <bba6e3ba-ab28-8cda-eab3-91ec3591bcb5@ramsayjones.plus.com>
- <xmqq4lkk58y0.fsf@gitster-ct.c.googlers.com>
- <b7644afa-3f5f-4caf-59dc-4ffc8ab0695a@gmail.com>
- <73f2f53d-b73a-bdbe-01a5-8ed1d4fe6b00@ramsayjones.plus.com>
- <f9f5ead8-52c8-0ac4-750c-6d4dc324164d@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <400756e6-b8df-168e-55b6-652e1f9298be@ramsayjones.plus.com>
-Date:   Tue, 10 Apr 2018 21:22:03 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1753173AbeDJU2X (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 16:28:23 -0400
+Received: from mout.kundenserver.de ([212.227.126.187]:33171 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752064AbeDJU2W (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 16:28:22 -0400
+Received: from furore ([82.194.150.97]) by mrelayeu.kundenserver.de (mreue006
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 0MQpjt-1etiJR2dG1-00U4jA; Tue, 10
+ Apr 2018 22:28:16 +0200
+Date:   Tue, 10 Apr 2018 22:28:14 +0200
+From:   Florian =?utf-8?Q?Gamb=C3=B6ck?= <mail@floga.de>
+To:     git@vger.kernel.org
+Cc:     Szeder =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH v2 0/1] completion: dynamic completion loading
+Message-ID: <20180410202758.5877-1-mail@floga.de>
+Mail-Followup-To: git@vger.kernel.org,
+        Szeder =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
 MIME-Version: 1.0
-In-Reply-To: <f9f5ead8-52c8-0ac4-750c-6d4dc324164d@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfNKyap+iwXt3XEYMeI/Ax/HjHeyNqRJ4HcOJpNUGWJd/Xx1pfnP7TlFqUSXT1qlVcEOUqN9lL5ctpJ5uuKa+XTpGbrjN3D7JiWBHqunTssbpcARRHVqB
- m1T9W7hE8GnrCT4bGi1GY8lmj/VSlcPqoZ5GLvGk2uQE05GEmiiFfurlAS9v9gE2HybyWUCkGKUXmQ==
+X-Mailer: git-send-email 2.16.1
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Provags-ID: V03:K1:W50McxIBeZVaYtEEYiiRmciSKazPX0R3E51OUJ8MFvMh0/FwYoO
+ o5iw0kBSiWTQqndtXp6ZTJJY+E2mKTNfQmJdYAxXMXqCWL0tqQbrXuK6OWuzsBhVOdSxJGR
+ WbBF9xagyq0E2O0Ae4SjX7hxJA/hZUVeevwGFPPx2aHMuFJTN1EMdJ3w4KVQudSTFxjcj3c
+ g6yOHX+IOnhuKY3VdEVCg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8U/MQpV951Y=:KUjQuXH9EXD4YeJUHXHCKm
+ Y8nNsySkj7wMGBZA4E15O1xsr93/y6yOsFg/xHgQCK3lNY33hUqS0VjZUuDXjT8M/IRXZBL0L
+ 3C3Uq/QootHNNOmQZXLXx+HgSPXcaqQicwFECIZ2tIhP17zwAomk+ATLZCz55Z/VOTyiOCBJx
+ TvZ1GRgRcwLxXLLx9bfLm6mAvtQKEq+Scu0fY1RMexKIat6/7azxB02bkRqowU1c09aMC8+8w
+ qq90rkz/2rR14Gx+vVYiNJbziKnjDABFa5Ht6Dl/fas73pIYKawooJDHxbu/2aGn37E3gAZ7p
+ zdh0+tZzT6qHWoW2TbOAjjiIkFc+ju5ds8XGWX88H4U68RGGhkxO++O7fUSZESW7lGPtVNmhA
+ gJI98bVUJZRrvaay5Df3cBuTMcld3W0H3QHXceJtXjy1u4taEwmIuMwR2H8/dKefGT61Kyi1z
+ w/M3VyHaGD7K180fwL8cOKuugMYfuuuy/ihDM9QevezJG4IsjViPgoRaBMcW2T2NRbA5/cn6R
+ 8M9XiMbKQFwN4eDP+/a2Lig90ndnJSzjUPiYoY+X1KS6JHvO+y0GgXM31yLsNA4u0WCBO7YRG
+ u+fo/4jEX8rt5W495ST4GacG6BbbOYdEozXIbtNuxTa+v9ojnEOUz4o+M03w6omH0KnbPFUnO
+ jSbtm2ojlQf+oNqx8n++OxTniuTGfHYBiFraWyo/rCB/QyzQ4mjlzNa3QU3zh+X+kwrZpKuXr
+ ASfONh+TTBibEqxG1OrN9LZyGvfAGGABAjYIPA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+In this small patch I want to introduce a way to dynamically load completion 
+scripts for external subcommands.
 
+A few years ago, you would put a completion script (which defines a Bash 
+function _git_foo for a custom git subcommand foo) into 
+/etc/bash_completion.d, or save it somewhere in your $HOME and source it 
+manually in your .bashrc.
 
-On 10/04/18 20:35, Derrick Stolee wrote:
-> On 4/10/2018 3:21 PM, Ramsay Jones wrote:
->>
->> On 10/04/18 13:57, Derrick Stolee wrote:
->>> On 4/9/2018 6:08 PM, Junio C Hamano wrote:
->>>> I guess we'd want a final cleaned-up round after all ;-)  Thanks.
->>> v8 sent [1]. Thanks.
->> I just tried to 'git am' this series and I could not get it
->> to apply cleanly to current 'master', 'next' or 'pu'. I fixed
->> up a few patches, but just got bored ... ;-)
->>
-> 
-> In my cover letter, I did mention that my patch started here (using 'format-patch --base'):
-> 
-> base-commit: 468165c1d8a442994a825f3684528361727cd8c0
-> 
-> 
-> This corresponds to v2.17.0.
+Starting with bash-completion v2.0 (or, to be absolutely exact, the preview 
+versions started at v1.90), completion scripts are not sourced at bash startup 
+anymore. Rather, when typing in a command and trigger completion by pressing 
+the TAB key, the new bash-completion's main script looks for a script with the 
+same name as the typed command in the completion directory, sources it, and 
+provides the completions defined in this script.
 
-Yep, I forgot to mention that I had already tried that too:
+However, that only works for top level commands. After a completion script has 
+been found, the logic is delegated to this script. This means, that the 
+completion of subcommands must be handled by the corresponding completion 
+script.
 
-$ git log --oneline -1
-468165c1d (HEAD -> master-graph, tag: v2.17.0, origin/maint, maint, build) Git 2.17
-$ git am patches/*
-Applying: csum-file: rename hashclose() to finalize_hashfile()
-Applying: csum-file: refactor finalize_hashfile() method
-Applying: commit-graph: add format document
-Applying: graph: add commit graph design document
-Applying: commit-graph: create git-commit-graph builtin
-Applying: commit-graph: create git-commit-graph builtin
-error: patch failed: .gitignore:34
-error: .gitignore: patch does not apply
-error: Documentation/git-commit-graph.txt: already exists in index
-error: patch failed: Makefile:952
-error: Makefile: patch does not apply
-error: patch failed: builtin.h:149
-error: builtin.h: patch does not apply
-error: builtin/commit-graph.c: already exists in index
-error: patch failed: command-list.txt:34
-error: command-list.txt: patch does not apply
-error: patch failed: contrib/completion/git-completion.bash:878
-error: contrib/completion/git-completion.bash: patch does not apply
-error: patch failed: git.c:388
-error: git.c: patch does not apply
-Patch failed at 0006 commit-graph: create git-commit-graph builtin
-Use 'git am --show-current-patch' to see the failed patch
-When you have resolved this problem, run "git am --continue".
-If you prefer to skip this patch, run "git am --skip" instead.
-To restore the original branch and stop patching, run "git am --abort".
-$ 
+As it is now, git is perfectly able to call custom completion functions, iff 
+they are already defined when calling the git completion. With my patch, git 
+uses an already defined loader function of bash-completion (or continues 
+silently if this function is not found), loads an external completion script, 
+and provides its completions.
 
-ATB,
-Ramsay Jones
+An example for an external completion script would be 
+/usr/share/bash-completion/completions/git-foo for a git subcommand foo.
 
+Changes since v1 (RFC):
+
+-   Re-arranged if-fi statement to increase readability (suggested by Junio C 
+    Hamano)
+
+-   Re-worded commit message to include the exakt version of bashcomp that 
+    introduced dynamic loading (suggested by Stefan Beller)
+
+Florian Gamböck (1):
+  completion: load completion file for external subcommand
+
+ contrib/completion/git-completion.bash | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+-- 
+2.16.1
 
