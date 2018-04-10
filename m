@@ -2,79 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E2291F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 21:46:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28CC41F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 21:54:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751892AbeDJVqP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 17:46:15 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:34474 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751876AbeDJVqO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 17:46:14 -0400
-Received: by mail-wm0-f49.google.com with SMTP id w2so23274549wmw.1
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 14:46:14 -0700 (PDT)
+        id S1752077AbeDJVyV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 17:54:21 -0400
+Received: from mail-yw0-f179.google.com ([209.85.161.179]:44015 "EHLO
+        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751799AbeDJVyU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 17:54:20 -0400
+Received: by mail-yw0-f179.google.com with SMTP id i187so4544308ywd.10
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 14:54:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=VwCBwKSS4ehptfwT28tH3BcMZ2qETfXdeBGRNtAxn+A=;
-        b=iv5xAZACI8stOp8gNANxuc3aEEubPzVU4BFeWUySs+JLxIg0GD0amB73SbncJBBZDf
-         TeiE9HNMbEZoGhZhlZQZyOIjzVExy4VomOL9uER9SwQSimnO3qpPbvvt+elWDtkDO8R+
-         ALZoJRpFk/e7jeZdSyk+c+LbO7Zn9S42DWS61dzlOi0ZgamwFm1Sev23hSnE92MVYyBX
-         IvR+yw3Z8ddhLS4g4YbSKykxmq7dXkXdsXrKbAN9MS1DrpFDWtOGKUx4/XNU9UhO+z29
-         fs6zlJE5YQLASUL8I6HfzwRQIqqyg7VhhH5YahLUBfTPiNJnlLy3LN4j/YheLCmGK7j7
-         lZhA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=vsRZ8hxIqAMILBFouRO7LUzp5qz1SElbGW12/+x2N7M=;
+        b=vFc46qMFcnzFCYs+aA1FkS5/n7arSXU/4sG/l6cK0x8xVm+U/ncglNOGtiK6x7/aYA
+         7IB78RbsbALu/1fOa8oSfEDkfeIcU60ROYX0RNVksZRpUgoluJNP/kD32Oxk9Qn99p0a
+         qH7DToeuaum6Pc55O3Kkb3qx3cWhrt1HA43Vcr24f03IZyaL9+1P63H4f8Dg4QGk8kDy
+         vZu2116cmZewmzcfzZEl+BYxzer/ZSGuVQSjotmMIIArervDSDZMnF0t3T/UDdzWNRQK
+         NWr/pMlLKWpzJ1Ah1WMBxAxzH/tKqlrASzPEjGj61iZar5i06ZXkqN9ecbpfPdRqah6i
+         lMyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=VwCBwKSS4ehptfwT28tH3BcMZ2qETfXdeBGRNtAxn+A=;
-        b=b+eBuUeflIjxxl7wOSmmRfxFgPf8dYKxyprmh0gdYDAhMM9vLjIrNOBIKF93ovKgsS
-         e5ETD3KADs8zgMMh97JWjbl6jpXVD+EaPrbVNkT+It5mW56JlqjsSBiv+V9/utCx9vqy
-         r3IjxYtqJZ2pUNxgvqBF7JQIlagOBsvhskLL2GBqAjQCZLc2n6NR+Pwf7/In0w3nreTN
-         SN9xXD2iWCcAfQKcbz/9JKbfMSkc7yu+O0A+okMV4wOF2MdeKAXdA+9/mJRRxHGKxKFk
-         7B48FSUJCLVLLmBzGGx5U3ZJ9hRi/IE+Jfvjfpnps27sur/JlryXSjhq62TBduXHhbgT
-         sl2A==
-X-Gm-Message-State: ALQs6tCGv9/Hy9poEZZjWPOhI3mdzLdDGpTRlWT4Vm23aNCOaouYeRoj
-        mEztNYWV68bQ7vVpdgV02go=
-X-Google-Smtp-Source: AIpwx4/fYCrO3RfFRrAyJvUa4lOkp3bXaD3gX8T24BDk6hGM2cYsJLDShvxduw91aQEPcxx9En3sCQ==
-X-Received: by 10.28.150.71 with SMTP id y68mr759589wmd.139.1523396773418;
-        Tue, 10 Apr 2018 14:46:13 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q127sm25543841wmd.3.2018.04.10.14.46.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 10 Apr 2018 14:46:12 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2018, #01; Mon, 9)
-References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com>
-        <98394864-ece6-5112-0274-b2399087f207@gmail.com>
-        <bba6e3ba-ab28-8cda-eab3-91ec3591bcb5@ramsayjones.plus.com>
-        <xmqq4lkk58y0.fsf@gitster-ct.c.googlers.com>
-        <b7644afa-3f5f-4caf-59dc-4ffc8ab0695a@gmail.com>
-Date:   Wed, 11 Apr 2018 06:46:12 +0900
-In-Reply-To: <b7644afa-3f5f-4caf-59dc-4ffc8ab0695a@gmail.com> (Derrick
-        Stolee's message of "Tue, 10 Apr 2018 08:57:54 -0400")
-Message-ID: <xmqqlgdu20rf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=vsRZ8hxIqAMILBFouRO7LUzp5qz1SElbGW12/+x2N7M=;
+        b=gox7aBpJcOFinCaQaQgk+WQsnmGpo0FwqjMf++CpfpcBWUbrV/lUHNy5TZm5z/jDif
+         6UGuuRe2V3qL4ABqivtN0m/GMi1hlGpJrXTWER+mGOhcGu6oI8HBCRmKFUQvp1N/kmHi
+         Ik7hNCnia7E/s5rLZahoNSiLueVH+RHLq1n0uuITTKFk5nWulUEgmazCWgPK5fRW7HYI
+         ma7G6ZByG++oWqEZ/E4kIyap2Ddk6iYlYJA5oqUlUi8Je9vY6DS5HYHBfbR22ByA9ttr
+         6SJBn7f8bjcM72/h/UayDfxOeIlF30uulrQHfOnhb/eejmazyb4bwpFAju0oBhY3tNub
+         pejw==
+X-Gm-Message-State: ALQs6tBmu3wK7QAVIU+Njvylx34mpuw6y4Wez8iE1rwyC/gWIVJgrcNB
+        Y7A7qcXIPy291ffPuTnVyssQm0rHRha96ghSAB22ig==
+X-Google-Smtp-Source: AIpwx48VCVuoMXMCzcxla3JzrgZMsaQKTp2iqxerTWs/WUs4xKqhQAbmYs6LysCC/gXCdaS2owpG9BOM3Urn023KI80=
+X-Received: by 10.129.232.5 with SMTP id a5mr1249950ywm.421.1523397259402;
+ Tue, 10 Apr 2018 14:54:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Tue, 10 Apr 2018 14:54:18
+ -0700 (PDT)
+In-Reply-To: <xmqqtvsi214p.fsf@gitster-ct.c.googlers.com>
+References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1804102301200.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <xmqqtvsi214p.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 10 Apr 2018 14:54:18 -0700
+Message-ID: <CAGZ79kb4ny9LNbbYe53WO9eqTAmjUSprUeX9-rhvAehVR_cPgg@mail.gmail.com>
+Subject: Re: git-gui branches, was Re: What's cooking in git.git (Apr 2018,
+ #01; Mon, 9)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
-
-> On 4/9/2018 6:08 PM, Junio C Hamano wrote:
->>
->> I guess we'd want a final cleaned-up round after all ;-)  Thanks.
+On Tue, Apr 10, 2018 at 2:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> v8 sent [1]. Thanks.
+>> On Mon, 9 Apr 2018, Junio C Hamano wrote:
+>>
+>>> * bb/git-gui-ssh-key-files (2018-03-02) 2 commits
 
-Thanks, will take a look and queue.
+This looks good to me.
+Please merge down.
+
+>>> * bp/git-gui-bind-kp-enter (2018-03-02) 2 commits
+
+I tested and reviewed this, and it also looks good to me.
+
+>>> * cb/git-gui-ttk-style (2018-03-05) 2 commits
+
+While this looks like it doesn't break anything, and it does what
+it intends to do, I am not sure if that is the best approach.
+I'll look into Tcl and experiment to have an opinion.
+
+>> What is your plan with those? I thought they were on track for v2.17.0,
+>> but now I see that they are not even in `next`...
+>
+> There is no plan. I was waiting for somebody to raise noises, get
+> irritated by lack of active subsystem maintainer(s), which would
+> eventually lead us to find a replacement for Pat.
+
+Ok, glad that Johannes made noise then.
+I am a heavy user of git-gui myself so I would feel sad if it wasn't
+properly maintained. (On the other hand it "just works" -- for me)
+I'd be ok to step up as a maintainer there in the long run if nobody
+else steps up.
+
+> I can play patch-monkey for git-gui part but I do not want to be the
+> one who judges if proposed changes to it are good ones.  Have they
+> been reviewed by git-gui competent people?
+
+For now please apply (or monkey-patch as you put it) the
+first and second.
+
+Thanks,
+Stefan
