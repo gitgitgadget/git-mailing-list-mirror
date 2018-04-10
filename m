@@ -2,108 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28CC41F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 21:54:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A23791F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 21:56:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752077AbeDJVyV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 17:54:21 -0400
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:44015 "EHLO
-        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751799AbeDJVyU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 17:54:20 -0400
-Received: by mail-yw0-f179.google.com with SMTP id i187so4544308ywd.10
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 14:54:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vsRZ8hxIqAMILBFouRO7LUzp5qz1SElbGW12/+x2N7M=;
-        b=vFc46qMFcnzFCYs+aA1FkS5/n7arSXU/4sG/l6cK0x8xVm+U/ncglNOGtiK6x7/aYA
-         7IB78RbsbALu/1fOa8oSfEDkfeIcU60ROYX0RNVksZRpUgoluJNP/kD32Oxk9Qn99p0a
-         qH7DToeuaum6Pc55O3Kkb3qx3cWhrt1HA43Vcr24f03IZyaL9+1P63H4f8Dg4QGk8kDy
-         vZu2116cmZewmzcfzZEl+BYxzer/ZSGuVQSjotmMIIArervDSDZMnF0t3T/UDdzWNRQK
-         NWr/pMlLKWpzJ1Ah1WMBxAxzH/tKqlrASzPEjGj61iZar5i06ZXkqN9ecbpfPdRqah6i
-         lMyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vsRZ8hxIqAMILBFouRO7LUzp5qz1SElbGW12/+x2N7M=;
-        b=gox7aBpJcOFinCaQaQgk+WQsnmGpo0FwqjMf++CpfpcBWUbrV/lUHNy5TZm5z/jDif
-         6UGuuRe2V3qL4ABqivtN0m/GMi1hlGpJrXTWER+mGOhcGu6oI8HBCRmKFUQvp1N/kmHi
-         Ik7hNCnia7E/s5rLZahoNSiLueVH+RHLq1n0uuITTKFk5nWulUEgmazCWgPK5fRW7HYI
-         ma7G6ZByG++oWqEZ/E4kIyap2Ddk6iYlYJA5oqUlUi8Je9vY6DS5HYHBfbR22ByA9ttr
-         6SJBn7f8bjcM72/h/UayDfxOeIlF30uulrQHfOnhb/eejmazyb4bwpFAju0oBhY3tNub
-         pejw==
-X-Gm-Message-State: ALQs6tBmu3wK7QAVIU+Njvylx34mpuw6y4Wez8iE1rwyC/gWIVJgrcNB
-        Y7A7qcXIPy291ffPuTnVyssQm0rHRha96ghSAB22ig==
-X-Google-Smtp-Source: AIpwx48VCVuoMXMCzcxla3JzrgZMsaQKTp2iqxerTWs/WUs4xKqhQAbmYs6LysCC/gXCdaS2owpG9BOM3Urn023KI80=
-X-Received: by 10.129.232.5 with SMTP id a5mr1249950ywm.421.1523397259402;
- Tue, 10 Apr 2018 14:54:19 -0700 (PDT)
+        id S1752081AbeDJV4h (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 17:56:37 -0400
+Received: from mout.gmx.net ([212.227.15.15]:32773 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751799AbeDJV4f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 17:56:35 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LjIel-1eTwbm28AJ-00dXpi; Tue, 10
+ Apr 2018 23:56:25 +0200
+Date:   Tue, 10 Apr 2018 23:56:08 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>
+Subject: Re: [PATCH v6 15/15] rebase -i --rebase-merges: add a section to
+ the man page
+In-Reply-To: <CAN0heSrSvKiRGxSS0jq9Hsxkc7NSuZkt+gLD7DhXRjkfNJd_hw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804102348190.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1519680483.git.johannes.schindelin@gmx.de> <cover.1523362469.git.johannes.schindelin@gmx.de> <a162afa761e3000eb60169fce7a50938888f80b4.1523362469.git.johannes.schindelin@gmx.de>
+ <CAN0heSrSvKiRGxSS0jq9Hsxkc7NSuZkt+gLD7DhXRjkfNJd_hw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Tue, 10 Apr 2018 14:54:18
- -0700 (PDT)
-In-Reply-To: <xmqqtvsi214p.fsf@gitster-ct.c.googlers.com>
-References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1804102301200.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <xmqqtvsi214p.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 10 Apr 2018 14:54:18 -0700
-Message-ID: <CAGZ79kb4ny9LNbbYe53WO9eqTAmjUSprUeX9-rhvAehVR_cPgg@mail.gmail.com>
-Subject: Re: git-gui branches, was Re: What's cooking in git.git (Apr 2018,
- #01; Mon, 9)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323329-445856790-1523397385=:56"
+X-Provags-ID: V03:K1:u/YWyLl9wXhinuevMxH0rVIeHPlzlFKYTRm6UFi8Vvshq/cb8FI
+ EGIdrr1b3zw+kvJgyEXslMWpF+LcUuW9oGCA6D395821OedbJT0klWlndu/wmQKK1oB0gHx
+ n+6PZ1YQv0kE8b0RhXOp5bzs7M5CRmDVR4dkY/eGzTXcgU7KWCUmyW2zF9YpMZWtvT+ETbb
+ ETkbJt+Yan99juA3qkXxQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3JZ/HIR1iVw=:zPwsVWUZce8qRAFxtgHxnq
+ WgZ1znUIQaJHXTdE+gdZZL1fzPCcgI8abhHRasGiiThG+dsu1NzStUlk6ZZmAq/mdzuay6zyK
+ 8/UgzcRgmgaaxCHAKX373CbY/3xiGTrOfeZhg3biiEqBkj/TQ/Y+mgU2ErB/IyPIqLeVNO5AJ
+ 9p5z9Az16mqrYlH/nGH/rQ9hC7yv5993SH0Ggrc6hJYmRdau5K2MqA9sGB28bwD3Mg271y0o8
+ i+VvRShotZVBXzd7IHQy1q85/uo8iIAxAgc6H5w5kE1qc3ZtKskiFpYsfIfHlC8xIiFu/89n0
+ ht1LVNFhmdz7FxbNnln0fVnNT+/nerHnugau5ynI4T9Al6qID5/G8FnXdTSgl3pbK/vT9qOYU
+ REevbTAruh+gJp4f0Xy2ZHCHzFrwtjTbvmnW1GISV5YNUW9GZcg8VL9equCgm2LzmQvjxJutv
+ WPpStAqUH1RmY1PIBxOF76DyIiHgRi5oz73WvG15NslIvpmC1AZd2k6MPxS/8x2i6cOSDBX/r
+ 6sJK7Hkm6p+nyTx+e9GYLC23puB3NGdcONJnyDmzftgN7adU7KshWjqolvzluLSZRUKN5TefJ
+ HYa9YFukjniD09a9TUGcNcuOF4a6WS8/EnVcjATRrqI9GaSlMQT+lArDAOGeOM839BeudZzaM
+ pJJ5uGNHORaK7JWWfBEIxnU0Q0LmdG3C97bvgOx1no4ot5NfiX4Ozm4VFQKMrNLFIUvfSlhQe
+ Aig9xqa8ONWdKLjQCx+KQuJsQ+z0fktTAXmDmkd1pRKmbjwPfD7jGBUHy7Bn3pK/2NkAbVS1R
+ fMTWlN7Og9HDOYCcbrVdixUQt6ysnUGKvAPcWhtrvLxluQ4FeE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 10, 2018 at 2:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> On Mon, 9 Apr 2018, Junio C Hamano wrote:
->>
->>> * bb/git-gui-ssh-key-files (2018-03-02) 2 commits
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This looks good to me.
-Please merge down.
+--8323329-445856790-1523397385=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
->>> * bp/git-gui-bind-kp-enter (2018-03-02) 2 commits
+Hi Martin,
 
-I tested and reviewed this, and it also looks good to me.
+On Tue, 10 Apr 2018, Martin =C3=85gren wrote:
 
->>> * cb/git-gui-ttk-style (2018-03-05) 2 commits
+> On 10 April 2018 at 14:30, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > The --rebase-merges mode is probably not half as intuitive to use as
+> > its inventor hopes, so let's document it some.
+>=20
+> I quite like this documentation. Well-structured and well-paced.
+> Already after the first reading, I believe I understand how to use this.
 
-While this looks like it doesn't break anything, and it does what
-it intends to do, I am not sure if that is the best approach.
-I'll look into Tcl and experiment to have an opinion.
+Thanks!
 
->> What is your plan with those? I thought they were on track for v2.17.0,
->> but now I see that they are not even in `next`...
->
-> There is no plan. I was waiting for somebody to raise noises, get
-> irritated by lack of active subsystem maintainer(s), which would
-> eventually lead us to find a replacement for Pat.
+> > +The `label` command puts a label to whatever will be the current
+> > +revision when that command is executed. Internally, these labels are
+> > +worktree-local refs that will be deleted when the rebase finishes or
+> > +when it is aborted. That way, rebase operations in multiple worktrees
+> > +linked to the same repository do not interfere with one another.
+>=20
+> In the above paragraph, you say "internally".
 
-Ok, glad that Johannes made noise then.
-I am a heavy user of git-gui myself so I would feel sad if it wasn't
-properly maintained. (On the other hand it "just works" -- for me)
-I'd be ok to step up as a maintainer there in the long run if nobody
-else steps up.
+I guess that I should reword this to say "These labels are created as
+worktree-local refs (`refs/rewritten/<label>`) that will be ..."
 
-> I can play patch-monkey for git-gui part but I do not want to be the
-> one who judges if proposed changes to it are good ones.  Have they
-> been reviewed by git-gui competent people?
+I'll do that, thanks for the sanity check!
 
-For now please apply (or monkey-patch as you put it) the
-first and second.
+> > +At this time, the `merge` command will *always* use the `recursive`
+> > +merge strategy, with no way to choose a different one. To work around
+> > +this, an `exec` command can be used to call `git merge` explicitly,
+> > +using the fact that the labels are worktree-local refs (the ref
+> > +`refs/rewritten/onto` would correspond to the label `onto`).
+>=20
+> This sort of encourages use of that "internal" detail, which made me a
+> little bit surprised at first. But if we can't come up with a reason why
+> we would want to change the "refs/rewritten/<label>"-concept later (I
+> can't) and if we think the gain this paragraph gives is significant (it
+> basically gives access to `git merge` in its entirety), then providing
+> this hint might be the correct thing to do.
 
-Thanks,
-Stefan
+You are right. I made it sound as if this was an implementation detail
+that you should not rely on, when I wanted to say that this is how it is
+implemented and you are free to use it in your scripts.
+
+> > +Note: the first command (`reset onto`) labels the revision onto which
+> > +the commits are rebased; The name `onto` is just a convention, as a no=
+d
+> > +to the `--onto` option.
+>=20
+> s/reset onto/label onto/
+
+D'oh!
+
+Thanks, fixed. Current state is in `sequencer-shears` in
+https://github.com/dscho/git (I will update the `recreate-merges` branch,
+which needs to keep its name so that my scripts will connect the mail
+threads for the patch submissions, once I called `git rebase -kir @{u}`).
+
+Ciao,
+Dscho
+--8323329-445856790-1523397385=:56--
