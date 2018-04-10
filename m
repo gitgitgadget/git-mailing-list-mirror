@@ -2,116 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 565CD1F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 14:48:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92AAA1F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 14:52:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753953AbeDJOsB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 10:48:01 -0400
-Received: from mail-oi0-f48.google.com ([209.85.218.48]:39689 "EHLO
-        mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753935AbeDJOsA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 10:48:00 -0400
-Received: by mail-oi0-f48.google.com with SMTP id q71-v6so11407044oic.6
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 07:48:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=hw23BibyCDd57zYc2L9/6N4qEwMvxf6y4eiMoohnqx0=;
-        b=Aa3ycnjRt20pTGIc7NrDjAbgILiVGN+G4uyuj7wxSI/qqe9YXnRk6DINa21L7vucW1
-         Dk33L1S9+Zk1AzG2KCBVHGneRVoG5USlx7JPxrhe14u0YOvGIxOZ5bSeeV9YH3PiJcJN
-         WRpM+ktj3DR0Ka1AFNl8mYdJpenneCL1kV92B3mHcZZClZtJxocu7qLwkJozyHireK7s
-         A4YhgCvje7KcXN+h+BcBWq6tOePe4isF6eUo3ltLn5KDvPZAuB62uqbF/7BrINRKB53E
-         0aiLFYnavU63pBaMRLMh3m98RTK+gL35MkIFaJnL23wwH0kUEeBQLI676gkPHanYcphv
-         hbTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=hw23BibyCDd57zYc2L9/6N4qEwMvxf6y4eiMoohnqx0=;
-        b=lsk9qGtA890qqdOKHu1ztqVf6j7/iTkG6zt+5IsQBw518X2HwHDJCTSLOtCZS+KezY
-         ZCuukCPB6kIvgRuK0Ha2x5nJGmAgebyHAobnclsYIlLRTKpf5eDfBHbgbXYPfZt7R9Pt
-         gqrgAFV3lqPijuJxXDZ0kmMVNoF4psJHfHZwldLJYfU7t0ncb8ox1vS7aYJFywN04FjG
-         1B0QGL3Z0j7Q6UL+HFNPM6+DUpymsn9rNOcyYOvTNcOe+ZEgKa9vHiwBkr0X89lLnKh3
-         Qs6C5QNqBh0W63wrgN6k3ucpskiDq/eQBj3kGpS/DmGQpex2EfnMZHixX5uLaVhpMxG0
-         gQXw==
-X-Gm-Message-State: ALQs6tC1ct0SxgoVQ9JbL3hGz/BYMrPAI63+LDLuq94UWioJG0KZfpHK
-        wGxnQFSmAq515qTRxjke2DkbjgwzXGPCtlQT8BIeWA+h
-X-Google-Smtp-Source: AIpwx48WfKB+R9/aIuk8h2y4Tw0UCQNLtHePqm+AjAhEllN+ClsSlvNT8XcFF9J9V952Z77Dpd8lpI5ldt7knGmwXMg=
-X-Received: by 2002:aca:801:: with SMTP id 1-v6mr510044oii.152.1523371679902;
- Tue, 10 Apr 2018 07:47:59 -0700 (PDT)
+        id S1753935AbeDJOwF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 10:52:05 -0400
+Received: from mail.javad.com ([54.86.164.124]:59097 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753628AbeDJOwE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 10:52:04 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 6717D3EC38;
+        Tue, 10 Apr 2018 14:52:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523371923;
+        bh=9j0hnIjSx2Nz3nZO6KXiNDJw9MxbX+EZz5Ol6ADOLtI=; l=853;
+        h=Received:From:To:Subject;
+        b=P55Q3dMGjk00saUt0rgGyOZ1mPSd6JkBhV7RBrftMlgEQvUprYULXV+WyYkBzJv5G
+         Sxdn3NdlPaEHQr1u3RjBocQ3gBHNr5KnRUUIJAoA0oejgxR+yivc5Mshfoit8dHH/5
+         yjt6+aIDxll2mrFpnA+uEQ6EZJQJ7dlDXQ7EqPik=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523371923;
+        bh=9j0hnIjSx2Nz3nZO6KXiNDJw9MxbX+EZz5Ol6ADOLtI=; l=853;
+        h=Received:From:To:Subject;
+        b=P55Q3dMGjk00saUt0rgGyOZ1mPSd6JkBhV7RBrftMlgEQvUprYULXV+WyYkBzJv5G
+         Sxdn3NdlPaEHQr1u3RjBocQ3gBHNr5KnRUUIJAoA0oejgxR+yivc5Mshfoit8dHH/5
+         yjt6+aIDxll2mrFpnA+uEQ6EZJQJ7dlDXQ7EqPik=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523371923;
+        bh=9j0hnIjSx2Nz3nZO6KXiNDJw9MxbX+EZz5Ol6ADOLtI=; l=853;
+        h=Received:From:To:Subject;
+        b=P55Q3dMGjk00saUt0rgGyOZ1mPSd6JkBhV7RBrftMlgEQvUprYULXV+WyYkBzJv5G
+         Sxdn3NdlPaEHQr1u3RjBocQ3gBHNr5KnRUUIJAoA0oejgxR+yivc5Mshfoit8dHH/5
+         yjt6+aIDxll2mrFpnA+uEQ6EZJQJ7dlDXQ7EqPik=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523371923;
+        bh=9j0hnIjSx2Nz3nZO6KXiNDJw9MxbX+EZz5Ol6ADOLtI=; l=853;
+        h=Received:From:To:Subject;
+        b=P55Q3dMGjk00saUt0rgGyOZ1mPSd6JkBhV7RBrftMlgEQvUprYULXV+WyYkBzJv5G
+         Sxdn3NdlPaEHQr1u3RjBocQ3gBHNr5KnRUUIJAoA0oejgxR+yivc5Mshfoit8dHH/5
+         yjt6+aIDxll2mrFpnA+uEQ6EZJQJ7dlDXQ7EqPik=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523371923;
+        bh=9j0hnIjSx2Nz3nZO6KXiNDJw9MxbX+EZz5Ol6ADOLtI=; l=853;
+        h=Received:From:To:Subject;
+        b=P55Q3dMGjk00saUt0rgGyOZ1mPSd6JkBhV7RBrftMlgEQvUprYULXV+WyYkBzJv5G
+         Sxdn3NdlPaEHQr1u3RjBocQ3gBHNr5KnRUUIJAoA0oejgxR+yivc5Mshfoit8dHH/5
+         yjt6+aIDxll2mrFpnA+uEQ6EZJQJ7dlDXQ7EqPik=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523371923;
+        bh=9j0hnIjSx2Nz3nZO6KXiNDJw9MxbX+EZz5Ol6ADOLtI=; l=853;
+        h=Received:From:To:Subject;
+        b=P55Q3dMGjk00saUt0rgGyOZ1mPSd6JkBhV7RBrftMlgEQvUprYULXV+WyYkBzJv5G
+         Sxdn3NdlPaEHQr1u3RjBocQ3gBHNr5KnRUUIJAoA0oejgxR+yivc5Mshfoit8dHH/5
+         yjt6+aIDxll2mrFpnA+uEQ6EZJQJ7dlDXQ7EqPik=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523371923;
+        bh=9j0hnIjSx2Nz3nZO6KXiNDJw9MxbX+EZz5Ol6ADOLtI=; l=853;
+        h=Received:From:To:Subject;
+        b=P55Q3dMGjk00saUt0rgGyOZ1mPSd6JkBhV7RBrftMlgEQvUprYULXV+WyYkBzJv5G
+         Sxdn3NdlPaEHQr1u3RjBocQ3gBHNr5KnRUUIJAoA0oejgxR+yivc5Mshfoit8dHH/5
+         yjt6+aIDxll2mrFpnA+uEQ6EZJQJ7dlDXQ7EqPik=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523371923;
+        bh=9j0hnIjSx2Nz3nZO6KXiNDJw9MxbX+EZz5Ol6ADOLtI=; l=853;
+        h=Received:From:To:Subject;
+        b=P55Q3dMGjk00saUt0rgGyOZ1mPSd6JkBhV7RBrftMlgEQvUprYULXV+WyYkBzJv5G
+         Sxdn3NdlPaEHQr1u3RjBocQ3gBHNr5KnRUUIJAoA0oejgxR+yivc5Mshfoit8dHH/5
+         yjt6+aIDxll2mrFpnA+uEQ6EZJQJ7dlDXQ7EqPik=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523371923;
+        bh=9j0hnIjSx2Nz3nZO6KXiNDJw9MxbX+EZz5Ol6ADOLtI=; l=853;
+        h=Received:From:To:Subject;
+        b=P55Q3dMGjk00saUt0rgGyOZ1mPSd6JkBhV7RBrftMlgEQvUprYULXV+WyYkBzJv5G
+         Sxdn3NdlPaEHQr1u3RjBocQ3gBHNr5KnRUUIJAoA0oejgxR+yivc5Mshfoit8dHH/5
+         yjt6+aIDxll2mrFpnA+uEQ6EZJQJ7dlDXQ7EqPik=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523371923;
+        bh=9j0hnIjSx2Nz3nZO6KXiNDJw9MxbX+EZz5Ol6ADOLtI=; l=853;
+        h=Received:From:To:Subject;
+        b=P55Q3dMGjk00saUt0rgGyOZ1mPSd6JkBhV7RBrftMlgEQvUprYULXV+WyYkBzJv5G
+         Sxdn3NdlPaEHQr1u3RjBocQ3gBHNr5KnRUUIJAoA0oejgxR+yivc5Mshfoit8dHH/5
+         yjt6+aIDxll2mrFpnA+uEQ6EZJQJ7dlDXQ7EqPik=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1f5ucr-0006zh-Od; Tue, 10 Apr 2018 17:52:01 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v6 00/15] rebase -i: offer to recreate commit topology
+References: <cover.1519680483.git.johannes.schindelin@gmx.de>
+        <cover.1523362469.git.johannes.schindelin@gmx.de>
+Date:   Tue, 10 Apr 2018 17:52:01 +0300
+In-Reply-To: <cover.1523362469.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Tue, 10 Apr 2018 14:29:23 +0200 (DST)")
+Message-ID: <87tvsj6rn2.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.56.25 with HTTP; Tue, 10 Apr 2018 07:47:39 -0700 (PDT)
-In-Reply-To: <xmqqlgdv2y66.fsf@gitster-ct.c.googlers.com>
-References: <20180409204129.43537-1-mastahyeti@gmail.com> <20180409204129.43537-7-mastahyeti@gmail.com>
- <xmqqlgdv2y66.fsf@gitster-ct.c.googlers.com>
-From:   Ben Toews <mastahyeti@gmail.com>
-Date:   Tue, 10 Apr 2018 08:47:39 -0600
-Message-ID: <CAE=pOyFj+WZBB6Zp35d=mYNsxcJK-LwOxseWXSmY_hs+Lwugpg@mail.gmail.com>
-Subject: Re: [PATCH 6/8] gpg-interface: find the last gpg signature line
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 10, 2018 at 3:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ben Toews <mastahyeti@gmail.com> writes:
->
->> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
->> index ee093b393d..e3f1e014aa 100755
->> --- a/t/t7004-tag.sh
->> +++ b/t/t7004-tag.sh
->> @@ -1059,6 +1059,17 @@ test_expect_success GPG \
->>       git tag -v blanknonlfile-signed-tag
->>  '
->>
->> +test_expect_success GPG 'signed tag with embedded PGP message' '
->> +     cat >msg <<-\EOF &&
->> +     -----BEGIN PGP MESSAGE-----
->> +
->> +     this is not a real PGP message
->> +     -----END PGP MESSAGE-----
->> +     EOF
->> +     git tag -s -F msg confusing-pgp-message &&
->> +     git tag -v confusing-pgp-message
->> +'
->> +
->>  # messages with commented lines for signed tags:
->>
->>  cat >sigcommentsfile <<EOF
->
-> Hmmmm, what vintage of our codebase is this patch based on?  Did I
-> miss a patch that removes these lines
->
->
->     printf '      ' >sigblanknonlfile
->     get_tag_header blanknonlfile-signed-tag $commit commit $time >expect
->     echo '-----BEGIN PGP SIGNATURE-----' >>expect
->     test_expect_success GPG \
->             'creating a signed tag with spaces and no newline should succeed' '
->             git tag -s -F sigblanknonlfile blanknonlfile-signed-tag &&
->             get_tag_msg blanknonlfile-signed-tag >actual &&
->             test_cmp expect actual &&
->             git tag -v signed-tag
->     '
->
-> which appear between the pre- and post- context of the lines you are
-> inserting?  They date back to 2007-2009.
->
+Hi Johannes,
 
-That test was fixed a week ago:
-https://github.com/git/git/commit/a99d903f21d102a5768f19157085a9733aeb68dd
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
+> Once upon a time, I dreamt of an interactive rebase that would not
+> flatten branch structure, but instead recreate the commit topology
+> faithfully.
 
+[...]
 
--- 
--Ben Toews
+> Think of --rebase-merges as "--preserve-merges done right".
+
+Both option names seem to miss the primary point of the mode of
+operation that you've formulated in the first sentence. I suggest to
+rather call the new option in accordance to your description, say,
+--no-flatten, --keep-topology, or --preserve-shape.
+
+Besides, this way the option name will only specify one thing: _what_ it
+is about, leaving out the _how_ part, that could vary and could then be
+specified as option value or as another companion option(s), that is
+usually considered to be an indication of a good design.
+
+-- Sergey
