@@ -2,124 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D765D1F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 00:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D3911F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 00:48:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751546AbeDJAU2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 20:20:28 -0400
-Received: from mail-pl0-f45.google.com ([209.85.160.45]:32990 "EHLO
-        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751367AbeDJAU1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 20:20:27 -0400
-Received: by mail-pl0-f45.google.com with SMTP id s10-v6so6228273plp.0
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 17:20:27 -0700 (PDT)
+        id S1751844AbeDJAsg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 20:48:36 -0400
+Received: from mail-ua0-f177.google.com ([209.85.217.177]:46237 "EHLO
+        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751552AbeDJAsf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 20:48:35 -0400
+Received: by mail-ua0-f177.google.com with SMTP id a17so6239451uaf.13
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 17:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=NN1VLWW0WXa09VLfqHAtGPWa0j/CnK+vSDORBCy4xM4=;
-        b=Tom+8By9wi9tdnDkdaXLp5vRYN799M0g7mUC1ZjNT6qWEQvamM4lC477Ka5ypCghFK
-         scmm2sgOR1HfILMPClXFP3+zd7+fT+XQZ+JHgB45a+6UtTmhi/X1RfeO0wYRkHDHgIh4
-         DkTleeUK4IVb8ktSwOBuG8jl/+PzcGn7XDAtggcTVQnK0FOOSxKnprPQ7hjUFWOySjBZ
-         pylzkm552S0jw/CYT92B8ZZ0AuxfLL7ZtJFf90RUvmewwpB3r5sKXg7fhiPOryar1wiO
-         sB3udNw2xgGE6a7rR6c7tQfgmrJqe9Tl8fxsJFvZ9Mv45SAx+JYABN15a94bcZGT9UQa
-         9UdA==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=fWCBn+kItrikxUbDE6PJhe+y2DpbgHsKX1IizLUlVBw=;
+        b=uPa742PhbUeWdtpcMDd1htXMXzc60evMj3Oj5wcCao19mvqTTojtTM9/tMwtwv+YNW
+         sV9GGLgGuva+8QGtGvWMmuLtJ7HW0sajBgXym+izGmcLNux9gyF9K2WXzGbGkDxfYei/
+         Q0hBaXz1RVdmLt2Cp7Dc8VS/udsPU8a690fxi5KyGMtHnvi9yq72TXfbPDQMJ6/I1Utb
+         TLldfMQ+ZJbG4bzLIFM5MM5a1mW5CBsS5d2D7o4RlVoWuaz3r4IjCuhW8Bq9lxnN0EMV
+         UPMCFXe98KyfD8G77He1A5jukwODnnz6OBlwwPSHBwn5y+ZhgIIgsvzm9b+Z94V8WUGx
+         LeeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NN1VLWW0WXa09VLfqHAtGPWa0j/CnK+vSDORBCy4xM4=;
-        b=t/nUyPj9bIvzDJC55IAuFCUqLOm81OLtaRmqtxmu0sx3CaMEbpyCEPFFxsRbe7E/uu
-         FeXopRqj5ZbovYowEO9bfW8M1GIVpa4meANepu5nUsYFvXbm1g6cExiiHnf4mxhJkMqm
-         NLcVdggqO8PgQAW9Y/x7+Z0cyJvugiPE8vfPw/6NysFMBIEw5uRfQQoAt1ajyYzcZQOX
-         RzFHzBmT8eUsjL5ocG7DfTVcVa1ImiwwrvfCC2NUOd74nWRvxoPzjKJ5X936xpue1JeB
-         kNRZ/B/+XmtGfFBcOKZIhKRV8NuYTE67C5zBLTTBCmj3yI9ooRwsXXwRzVnJ0ykL0ocT
-         VPLQ==
-X-Gm-Message-State: ALQs6tAEeCaw2OG6NjeuSpmTmfNRlLMhvN53pvPulGZiYfiiWiTfBmMx
-        SELuLyUWENFBXThB8CLRBU3DVIJUcRk=
-X-Google-Smtp-Source: AIpwx4+/fOCh7KlBvUDfTbtlLiPJIMwfpl8nHrph+LWnGBUPrpZ6Js98M+PDF3hOeouEh5ZcUbPnyg==
-X-Received: by 2002:a17:902:7702:: with SMTP id n2-v6mr10828743pll.216.1523319626656;
-        Mon, 09 Apr 2018 17:20:26 -0700 (PDT)
-Received: from localhost ([2601:602:9500:3a4f:1d66:22f3:ac1d:6007])
-        by smtp.gmail.com with ESMTPSA id r76sm2722248pfl.24.2018.04.09.17.20.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Apr 2018 17:20:25 -0700 (PDT)
-Date:   Mon, 9 Apr 2018 17:20:24 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        sunshine@sunshineco.com
-Subject: Re: [PATCH v4 1/3] builtin/config: introduce `--default`
-Message-ID: <20180410002024.GA48196@syl.local>
-References: <20180329011634.68582-1-me@ttaylorr.com>
- <cover.1522896713.git.me@ttaylorr.com>
- <20180405025912.GB49902@syl.local>
- <20180405222949.GC29117@sigill.intra.peff.net>
- <xmqq60518eyt.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=fWCBn+kItrikxUbDE6PJhe+y2DpbgHsKX1IizLUlVBw=;
+        b=t7I4cyxqeQVNIkbA1xhQLmhGwurzjWfgKQy8t7kjqJQgew8AjFcdQtmobdoD/aYT85
+         vdRvrxePDlaL7Qq9IJBl05P2XV9URrigTPl9Msm+U+bVGhKPDBThOzRM/vM73giMUFEx
+         WiOVq6PuFsc+uS/l6gISxLR3lSiPSm5dJZMCtiAd4F7VnavB5uWSLU6sbmWgy5bFoJUu
+         X42BlGb2frjI2RP0bVdGNuJUWmO+oDm5i1D7Hm1b4e7AQrTITB1VbopiS8PdJFWsnNBK
+         m292u3WtnyTaiy4MMsMZCKlKRVpGkltzazx+j+R1UbVCZezZfXa2hrHGvjjfRCdlE3Zd
+         EGYg==
+X-Gm-Message-State: AElRT7HbgizdoX1xBJSRPzZtf/HlKy7GZAkuxxLLFugyHmhUG/rq3Vg9
+        CUCfq99nmxMOMoIDOsZhRuueHv38/2HV9/bWpGq0NQ==
+X-Google-Smtp-Source: AIpwx49mG/Hu/UyAve8l3iwRckgsm/vBSk1QQabXPscWtUDzC/6pawykjLAJxCERsEQwRa1cCxqMq+YGd3G4UkyiuiU=
+X-Received: by 10.176.10.152 with SMTP id d24mr25267498uak.154.1523321314515;
+ Mon, 09 Apr 2018 17:48:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq60518eyt.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.3 (2018-01-21)
+Received: by 10.159.40.42 with HTTP; Mon, 9 Apr 2018 17:48:33 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1804092316280.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180405174935.598-1-newren@gmail.com> <20180409185136.4880-1-newren@gmail.com>
+ <nycvar.QRO.7.76.6.1804092316280.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 9 Apr 2018 17:48:33 -0700
+Message-ID: <CABPp-BF4x-ppjptq1TBj+VicvGeWGbfj4e3f5ne_13AEKmvSQQ@mail.gmail.com>
+Subject: Re: [PATCH v2] Make running git under other debugger-like programs easy
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 09, 2018 at 08:18:18AM +0900, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
->
-> > On Wed, Apr 04, 2018 at 07:59:12PM -0700, Taylor Blau wrote:
-> >
-> >> @@ -286,6 +288,16 @@ static int get_value(const char *key_, const char *regex_)
-> >>  	config_with_options(collect_config, &values,
-> >>  			    &given_config_source, &config_options);
-> >>
-> >> +	if (!values.nr && default_value) {
-> >> +		struct strbuf *item;
-> >> +		ALLOC_GROW(values.items, values.nr + 1, values.alloc);
-> >> +		item = &values.items[values.nr++];
-> >> +		strbuf_init(item, 0);
-> >> +		if (format_config(item, key_, default_value) < 0) {
-> >> +			exit(1);
-> >> +		}
-> >> +	}
-> > ...
-> >
-> > It's obvious in this toy example, but that config call may be buried
-> > deep in a script. It'd probably be nicer for that exit(1) to be
-> > something like:
-> >
-> >   die(_("failed to format default config value"));
->
-> Together with key_ and default_value, you mean?
->
-> >
-> >> +test_expect_success 'does not allow --default without --get' '
-> >> +	test_must_fail git config --default quux --unset a >output 2>&1 &&
-> >> +	test_i18ngrep "\-\-default is only applicable to" output
-> >> +'
-> >
-> > I think "a" here needs to be "a.section". I get:
-> >
-> >   error: key does not contain a section: a
->
-> "section.var"?  That aside, even with a properly formatted key, I
-> seem to get an empty output here, so this may need a bit more work.
+[Re-sending, making sure the annoying rich text mode isn't turned on
+in gmail...]
 
-This should be fixed in the latest re-roll, v6:
+Hi Dscho,
 
-	expecting success:
-					test_must_fail git config --default=quux --unset a.section >output 2>&1 &&
-					test_i18ngrep "\-\-default is only applicable to" output
+On Mon, Apr 9, 2018 at 2:19 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Elijah,
+>
+> On Mon, 9 Apr 2018, Elijah Newren wrote:
+>
+>>  debug () {
+>> -      GIT_TEST_GDB=1 "$@" <&6 >&5 2>&7
+>> +     case "$1" in
+>> +     -d)
+>> +             DBG_FLAGS="$2" &&
+>
+> Maybe we can find a way that does not require setting a variable other
+> than GIT_DEBUGGER? After all, DBG_FLAGS will be visible to the script
+> calling `debug`...
 
-	error: --default is only applicable to --get
-	ok 5 - does not allow --default without --get
+I guess we could instead do a
+   export GIT_DEBUGGER="$2"
+here.  Short of explicitly using 'export', I think we'd need another
+environment variable.
 
+I would have stuck with your original suggestion, except that by running:
+    GIT_DEBUGGER="$1" debug_aux "$@"
+GIT_DEBUGGER would be set within the debug_aux function and would NOT
+be set once bin-wrappers/git was called, making git not run under the
+debugger as desired.
+
+>> +*)
+>> +     GIT_DEBUGGER_ARGS="$GIT_DEBUGGER"
+>> +     unset GIT_DEBUGGER
+>> +     exec ${GIT_DEBUGGER_ARGS} "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+>
+> It may not be a big deal, bug GIT_DEBUGGER_ARGS (if it was exported e.g.
+> by the user calling the script) is now visible by the called process... (I
+> thought I had tried my best to avoid such a leaking variable in my
+> patch...)
+
+You had a separate, per-process variable:
+GIT_DEBUGGER_$$="$GIT_DEBUGGER"
+
+The problem with that line is that the $$ apparently makes bash treat
+it as a command to run rather than as a variable and a value with the
+desire to set one to the other.  Prepending the line with 'declare' or
+'local' or perhaps 'readonly' would fix that, but those aren't posix
+and my reading suggested that while some other shells did support some
+of those builtins, the support was somewhat spotty.  Since
+wrap-for-bin.sh runs under /bin/sh, not /bin/bash, I didn't have a way
+of making the per-process piece work and just fell back to a separate
+variable.  Maybe we want to change that script to /bin/bash?
+
+Do you see any alternatives I'm missing?
 
 Thanks,
-Taylor
+Elijah
