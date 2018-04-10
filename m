@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7D711F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 12:56:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 984E91F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 12:57:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752946AbeDJM4u (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 08:56:50 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34253 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752923AbeDJM4s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 08:56:48 -0400
-Received: by mail-pf0-f196.google.com with SMTP id q9so8242678pff.1
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 05:56:48 -0700 (PDT)
+        id S1753099AbeDJM5C (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 08:57:02 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:33700 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753074AbeDJM47 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 08:56:59 -0400
+Received: by mail-pl0-f67.google.com with SMTP id s10-v6so7464792plp.0
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 05:56:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=uCipDz0ghHI9TXnMc+0co2pX4TRVczIXPLAVQ1uR9n4=;
-        b=qpVLdLvXbqDNGF3FRdi7zOl1OTZuFI9vxcT2OSJnh6MbF4knkrHh32crHOcjmtyjgR
-         e+jSpxfb6KTg09nhIqUtaqul6YVR2mpdKKVkJhW1S+QgpiZ3wzNOK3qpkpi96iX14K2v
-         /t3nWmkx88P+k+DaX3bS5ZQkLD/OfBENQcl37ykgBwUMvgywmBw4nG450H+HeNmKQSsU
-         hpaTTWcs1s/AjxLdPlZmsBZSP/MmUUII7W1ewibr5Evy9hDBQrjpfOoK6SMMixaS6KTM
-         sR0XZ5hhmdkdogHyLs+pMx/o1fIKOY4JFPtBri7bRS4bweLsxpOVfkToa0byZVXPJoRO
-         QZQQ==
+        bh=mIuDN9JIvjV7dDQE/Iq0Pz0zzpOzXQJyrviEGmuqJqU=;
+        b=bn2S4NZhfFcSdO2cE2paq5o5R1UUT7KfcLG8e2MCX6TjVfUXOyAHJVe0kj/HJw8Xth
+         1AhGN+PC3w01edAjPa/j3Vc49PKvMolE/GLuZYW7oynOkuQ91dM7UFt/TuvTjZ7gfU4u
+         ioMPF9gTZgvXLrHkU/oP+k+ZDpPOKft6AYzG4z9hU9B91jWmivcnM/pg2zHYClufn1cA
+         Js/QofPpy2vHd7QJFvczVXjdxS4dbeBbLy+4htIVuwtalQrB2XaawuaD8dXPYW97HdYC
+         Wlk8fInFYmCH+aikv/Vfa4kPtCrt5i+7TuRc3BEmgrUWUu5/eDUynph0OYWFGx0f5IvS
+         pInw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=uCipDz0ghHI9TXnMc+0co2pX4TRVczIXPLAVQ1uR9n4=;
-        b=PFKVm9J/PYPMxrpPR4WMAoU6uEPZjesg0TFpUYuGBiP0LUsqGiPhSMvSVS1EKUfVvg
-         Ifzv1msL/AJj2mgcXI/VNN9EKyek5pZLQqCxQuVh4Zj3nEDFv/DoeK+i4XiuFAA47Yzz
-         WCeDfoqI9izz43t4RowTD4yA1MTDpqUHvll8PuN7SlaY5lT4jLM58lLFF3ltd8b+IkB2
-         gYXXhyCuJTjxM9HhJxJZcsfZau1q2OhYOFFlmi6ggYEUmL6D34RY4r4vMQy55dKV4E5M
-         hmX8ZFAqAYcpCsu1gOVnAHKkKl2w3A+FiBrAXSzwGzF0AmktJ7dpj4AmcJMW86O+9/iF
-         dDfg==
-X-Gm-Message-State: ALQs6tBOuvbVp/wXEtt54rFLnRfrnNw8yB99iB2O37dmLQkcxAnLxV1h
-        G1//dsLr0eNhnjsV1ZMRHIeoRzPSNBs=
-X-Google-Smtp-Source: AIpwx4/vsRhFsjWwBWFycTtS7qUWELjCFBLtRjYfpZ+5ouafvlQVoMSFWxf+itMaVa7o0qp9vzI93Q==
-X-Received: by 10.101.70.72 with SMTP id k8mr216693pgr.402.1523365007561;
-        Tue, 10 Apr 2018 05:56:47 -0700 (PDT)
+        bh=mIuDN9JIvjV7dDQE/Iq0Pz0zzpOzXQJyrviEGmuqJqU=;
+        b=ebSmhtpMm8w6kYnMxFkvOBeZEGHwRNb3Lo7EZL/Um8pOZcS9L7nnkar31sfXNB0GgZ
+         K5zqLemDxBrtIpM00qaNgifNoShrlymBN6hzQJyjL8ipzC1//47DjheOXrN6cvO0Syh1
+         xVW2yT0zfU7FAlkKUW3rGFaDv77pqRAGI/FhLPy0qwTJBDgFQc4H47JBciXOD1NF710h
+         ukSI8t5/T2MKXnnae83o+SnZqAi30ccxRbdccEtoQnghxVNEITrD/mGJV0dqTfgag4AZ
+         7tXtzfRgEq8mJ01uGh8Yn1TGcFe2QEGLzmZFNDTY/GoLuK26rMEty8UIlMfq1t/vghoM
+         YoDA==
+X-Gm-Message-State: ALQs6tC9sJfOldUL4W/zHgQSzgxK60DiMn5wAN8o32uX1ffEE57FGKnc
+        mE4ew7TaHa2tEI54bqB/iaJIJckb+TY=
+X-Google-Smtp-Source: AIpwx48b1Kes25CdYGtaNm03v/J5E4qm7tMpQ29e9lN3rjQHHOdN7Kz9Tn3eQMiZC9l8w+sL11xiqQ==
+X-Received: by 2002:a17:902:a9c4:: with SMTP id b4-v6mr293946plr.333.1523365018710;
+        Tue, 10 Apr 2018 05:56:58 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id l10sm4421666pgp.35.2018.04.10.05.56.42
+        by smtp.gmail.com with ESMTPSA id l10sm4421666pgp.35.2018.04.10.05.56.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Apr 2018 05:56:46 -0700 (PDT)
+        Tue, 10 Apr 2018 05:56:57 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, ramsay@ramsayjones.plus.com, sbeller@google.com,
         szeder.dev@gmail.com, git@jeffhostetler.com, peff@peff.net,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v8 05/14] commit-graph: create git-commit-graph builtin
-Date:   Tue, 10 Apr 2018 08:55:59 -0400
-Message-Id: <20180410125608.39443-6-dstolee@microsoft.com>
+Subject: [PATCH v8 07/14] commit-graph: implement git-commit-graph write
+Date:   Tue, 10 Apr 2018 08:56:01 -0400
+Message-Id: <20180410125608.39443-8-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.17.0
 In-Reply-To: <20180410125608.39443-1-dstolee@microsoft.com>
 References: <20180402203427.170177-1-dstolee@microsoft.com>
@@ -68,162 +68,260 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Teach git the 'commit-graph' builtin that will be used for writing and
-reading packed graph files. The current implementation is mostly
-empty, except for an '--object-dir' option.
+Teach git-commit-graph to write graph files. Create new test script to verify
+this command succeeds without failure.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- .gitignore                             |  1 +
- Documentation/git-commit-graph.txt     | 10 +++++++
- Makefile                               |  1 +
- builtin.h                              |  1 +
- builtin/commit-graph.c                 | 36 ++++++++++++++++++++++++++
- command-list.txt                       |  1 +
- contrib/completion/git-completion.bash |  2 ++
- git.c                                  |  1 +
- 8 files changed, 53 insertions(+)
- create mode 100644 Documentation/git-commit-graph.txt
- create mode 100644 builtin/commit-graph.c
+ Documentation/git-commit-graph.txt |  41 ++++++++++
+ builtin/commit-graph.c             |  33 ++++++++
+ t/t5318-commit-graph.sh            | 124 +++++++++++++++++++++++++++++
+ 3 files changed, 198 insertions(+)
+ create mode 100755 t/t5318-commit-graph.sh
 
-diff --git a/.gitignore b/.gitignore
-index 833ef3b0b7..e82f90184d 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -34,6 +34,7 @@
- /git-clone
- /git-column
- /git-commit
-+/git-commit-graph
- /git-commit-tree
- /git-config
- /git-count-objects
 diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-new file mode 100644
-index 0000000000..f3b34622a8
---- /dev/null
+index f3b34622a8..47996e8f89 100644
+--- a/Documentation/git-commit-graph.txt
 +++ b/Documentation/git-commit-graph.txt
-@@ -0,0 +1,10 @@
-+git-commit-graph(1)
-+===================
+@@ -5,6 +5,47 @@ NAME
+ ----
+ git-commit-graph - Write and verify Git commit graph files
+ 
 +
-+NAME
-+----
-+git-commit-graph - Write and verify Git commit graph files
++SYNOPSIS
++--------
++[verse]
++'git commit-graph write' <options> [--object-dir <dir>]
 +
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index a1d8775adb..a59b62bed1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -952,6 +952,7 @@ BUILTIN_OBJS += builtin/clone.o
- BUILTIN_OBJS += builtin/column.o
- BUILTIN_OBJS += builtin/commit-tree.o
- BUILTIN_OBJS += builtin/commit.o
-+BUILTIN_OBJS += builtin/commit-graph.o
- BUILTIN_OBJS += builtin/config.o
- BUILTIN_OBJS += builtin/count-objects.o
- BUILTIN_OBJS += builtin/credential.o
-diff --git a/builtin.h b/builtin.h
-index 42378f3aa4..079855b6d4 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -149,6 +149,7 @@ extern int cmd_clone(int argc, const char **argv, const char *prefix);
- extern int cmd_clean(int argc, const char **argv, const char *prefix);
- extern int cmd_column(int argc, const char **argv, const char *prefix);
- extern int cmd_commit(int argc, const char **argv, const char *prefix);
-+extern int cmd_commit_graph(int argc, const char **argv, const char *prefix);
- extern int cmd_commit_tree(int argc, const char **argv, const char *prefix);
- extern int cmd_config(int argc, const char **argv, const char *prefix);
- extern int cmd_count_objects(int argc, const char **argv, const char *prefix);
++
++DESCRIPTION
++-----------
++
++Manage the serialized commit graph file.
++
++
++OPTIONS
++-------
++--object-dir::
++	Use given directory for the location of packfiles and commit graph
++	file. This parameter exists to specify the location of an alternate
++	that only has the objects directory, not a full .git directory. The
++	commit graph file is expected to be at <dir>/info/commit-graph and
++	the packfiles are expected to be in <dir>/pack.
++
++
++COMMANDS
++--------
++'write'::
++
++Write a commit graph file based on the commits found in packfiles.
++Includes all commits from the existing commit graph file.
++
++
++EXAMPLES
++--------
++
++* Write a commit graph file for the packed commits in your local .git folder.
+++
++------------------------------------------------
++$ git commit-graph write
++------------------------------------------------
++
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-new file mode 100644
-index 0000000000..b466ecd781
---- /dev/null
+index b466ecd781..26b6360289 100644
+--- a/builtin/commit-graph.c
 +++ b/builtin/commit-graph.c
-@@ -0,0 +1,36 @@
-+#include "builtin.h"
-+#include "config.h"
-+#include "parse-options.h"
-+
-+static char const * const builtin_commit_graph_usage[] = {
-+	N_("git commit-graph [--object-dir <objdir>]"),
+@@ -1,9 +1,18 @@
+ #include "builtin.h"
+ #include "config.h"
++#include "dir.h"
++#include "lockfile.h"
+ #include "parse-options.h"
++#include "commit-graph.h"
+ 
+ static char const * const builtin_commit_graph_usage[] = {
+ 	N_("git commit-graph [--object-dir <objdir>]"),
++	N_("git commit-graph write [--object-dir <objdir>]"),
 +	NULL
 +};
 +
-+static struct opts_commit_graph {
-+	const char *obj_dir;
-+} opts;
-+
-+
-+int cmd_commit_graph(int argc, const char **argv, const char *prefix)
++static const char * const builtin_commit_graph_write_usage[] = {
++	N_("git commit-graph write [--object-dir <objdir>]"),
+ 	NULL
+ };
+ 
+@@ -11,6 +20,25 @@ static struct opts_commit_graph {
+ 	const char *obj_dir;
+ } opts;
+ 
++static int graph_write(int argc, const char **argv)
 +{
-+	static struct option builtin_commit_graph_options[] = {
++	static struct option builtin_commit_graph_write_options[] = {
 +		OPT_STRING(0, "object-dir", &opts.obj_dir,
 +			N_("dir"),
 +			N_("The object directory to store the graph")),
 +		OPT_END(),
 +	};
 +
-+	if (argc == 2 && !strcmp(argv[1], "-h"))
-+		usage_with_options(builtin_commit_graph_usage,
-+				   builtin_commit_graph_options);
++	argc = parse_options(argc, argv, NULL,
++			     builtin_commit_graph_write_options,
++			     builtin_commit_graph_write_usage, 0);
 +
-+	git_config(git_default_config, NULL);
-+	argc = parse_options(argc, argv, prefix,
-+			     builtin_commit_graph_options,
-+			     builtin_commit_graph_usage,
-+			     PARSE_OPT_STOP_AT_NON_OPTION);
++	if (!opts.obj_dir)
++		opts.obj_dir = get_object_directory();
 +
-+	usage_with_options(builtin_commit_graph_usage,
-+			   builtin_commit_graph_options);
++	write_commit_graph(opts.obj_dir);
++	return 0;
 +}
-diff --git a/command-list.txt b/command-list.txt
-index a1fad28fd8..835c5890be 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -34,6 +34,7 @@ git-clean                               mainporcelain
- git-clone                               mainporcelain           init
- git-column                              purehelpers
- git-commit                              mainporcelain           history
-+git-commit-graph                        plumbingmanipulators
- git-commit-tree                         plumbingmanipulators
- git-config                              ancillarymanipulators
- git-count-objects                       ancillaryinterrogators
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b09c8a2362..6726daaf69 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -878,6 +878,7 @@ __git_list_porcelain_commands ()
- 		check-ref-format) : plumbing;;
- 		checkout-index)   : plumbing;;
- 		column)           : internal helper;;
-+		commit-graph)     : plumbing;;
- 		commit-tree)      : plumbing;;
- 		count-objects)    : infrequent;;
- 		credential)       : credentials;;
-@@ -2350,6 +2351,7 @@ _git_config ()
- 		core.bigFileThreshold
- 		core.checkStat
- 		core.commentChar
-+		core.commitGraph
- 		core.compression
- 		core.createObject
- 		core.deltaBaseCacheLimit
-diff --git a/git.c b/git.c
-index ceaa58ef40..2808c51de9 100644
---- a/git.c
-+++ b/git.c
-@@ -388,6 +388,7 @@ static struct cmd_struct commands[] = {
- 	{ "clone", cmd_clone },
- 	{ "column", cmd_column, RUN_SETUP_GENTLY },
- 	{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
-+	{ "commit-graph", cmd_commit_graph, RUN_SETUP },
- 	{ "commit-tree", cmd_commit_tree, RUN_SETUP },
- 	{ "config", cmd_config, RUN_SETUP_GENTLY | DELAY_PAGER_CONFIG },
- 	{ "count-objects", cmd_count_objects, RUN_SETUP },
+ 
+ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
+ {
+@@ -31,6 +59,11 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
+ 			     builtin_commit_graph_usage,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
+ 
++	if (argc > 0) {
++		if (!strcmp(argv[0], "write"))
++			return graph_write(argc, argv);
++	}
++
+ 	usage_with_options(builtin_commit_graph_usage,
+ 			   builtin_commit_graph_options);
+ }
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+new file mode 100755
+index 0000000000..d7b635bd68
+--- /dev/null
++++ b/t/t5318-commit-graph.sh
+@@ -0,0 +1,124 @@
++#!/bin/sh
++
++test_description='commit graph'
++. ./test-lib.sh
++
++test_expect_success 'setup full repo' '
++	mkdir full &&
++	cd "$TRASH_DIRECTORY/full" &&
++	git init &&
++	objdir=".git/objects"
++'
++
++test_expect_success 'write graph with no packs' '
++	cd "$TRASH_DIRECTORY/full" &&
++	git commit-graph write --object-dir . &&
++	test_path_is_file info/commit-graph
++'
++
++test_expect_success 'create commits and repack' '
++	cd "$TRASH_DIRECTORY/full" &&
++	for i in $(test_seq 3)
++	do
++		test_commit $i &&
++		git branch commits/$i
++	done &&
++	git repack
++'
++
++test_expect_success 'write graph' '
++	cd "$TRASH_DIRECTORY/full" &&
++	graph1=$(git commit-graph write) &&
++	test_path_is_file $objdir/info/commit-graph
++'
++
++test_expect_success 'Add more commits' '
++	cd "$TRASH_DIRECTORY/full" &&
++	git reset --hard commits/1 &&
++	for i in $(test_seq 4 5)
++	do
++		test_commit $i &&
++		git branch commits/$i
++	done &&
++	git reset --hard commits/2 &&
++	for i in $(test_seq 6 7)
++	do
++		test_commit $i &&
++		git branch commits/$i
++	done &&
++	git reset --hard commits/2 &&
++	git merge commits/4 &&
++	git branch merge/1 &&
++	git reset --hard commits/4 &&
++	git merge commits/6 &&
++	git branch merge/2 &&
++	git reset --hard commits/3 &&
++	git merge commits/5 commits/7 &&
++	git branch merge/3 &&
++	git repack
++'
++
++# Current graph structure:
++#
++#   __M3___
++#  /   |   \
++# 3 M1 5 M2 7
++# |/  \|/  \|
++# 2    4    6
++# |___/____/
++# 1
++
++
++test_expect_success 'write graph with merges' '
++	cd "$TRASH_DIRECTORY/full" &&
++	git commit-graph write &&
++	test_path_is_file $objdir/info/commit-graph
++'
++
++test_expect_success 'Add one more commit' '
++	cd "$TRASH_DIRECTORY/full" &&
++	test_commit 8 &&
++	git branch commits/8 &&
++	ls $objdir/pack | grep idx >existing-idx &&
++	git repack &&
++	ls $objdir/pack| grep idx | grep -v --file=existing-idx >new-idx
++'
++
++# Current graph structure:
++#
++#      8
++#      |
++#   __M3___
++#  /   |   \
++# 3 M1 5 M2 7
++# |/  \|/  \|
++# 2    4    6
++# |___/____/
++# 1
++
++test_expect_success 'write graph with new commit' '
++	cd "$TRASH_DIRECTORY/full" &&
++	git commit-graph write &&
++	test_path_is_file $objdir/info/commit-graph
++'
++
++test_expect_success 'write graph with nothing new' '
++	cd "$TRASH_DIRECTORY/full" &&
++	git commit-graph write &&
++	test_path_is_file $objdir/info/commit-graph
++'
++
++test_expect_success 'setup bare repo' '
++	cd "$TRASH_DIRECTORY" &&
++	git clone --bare --no-local full bare &&
++	cd bare &&
++	baredir="./objects"
++'
++
++test_expect_success 'write graph in bare repo' '
++	cd "$TRASH_DIRECTORY/bare" &&
++	git commit-graph write &&
++	test_path_is_file $baredir/info/commit-graph
++'
++
++test_done
 -- 
 2.17.0
 
