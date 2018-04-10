@@ -7,28 +7,28 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7D941F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 21:04:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C34C1F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 21:04:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752255AbeDJVEd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 17:04:33 -0400
-Received: from mail-bn3nam01on0093.outbound.protection.outlook.com ([104.47.33.93]:37968
-        "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
+        id S1752262AbeDJVEj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 17:04:39 -0400
+Received: from mail-sn1nam01on0128.outbound.protection.outlook.com ([104.47.32.128]:58880
+        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752242AbeDJVEb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 17:04:31 -0400
+        id S1752214AbeDJVE2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 17:04:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=o2qbfvMf/5cWs2SXEyDdkQrymfF1QAK5WdsIUJgEFVk=;
- b=CIMO41GoGqASox19QeoIfIeTtVPonIxheryHHR/jidov+TgY7de42ULN37BLLoPDQIGC3TneCz5rnLF+nm0AIeyJTUPRtwsyOnktEHdriDl+TbfIKIEtubUqoh5LvnkYec0i5u5tMSHitEWe6Vd+cqETu04XfjPARcIa5KimdG8=
+ bh=usyvbP+UDwSv6ZV4tEsqqx/4kr9D3dHQ08UcUh2cAK8=;
+ b=kT5oE2BfBt4Zf36ZrvWB/1A7ZExWL5mhPfxH6DOrlK5UlVaEPebenVi7KF9F0CeF2pOoqBjqB/LfWIOvxBDVahHzgCSdZ1lbSPF95qqZHQPf8V6KirB064ddIzcXnxUGrB902IcyTIDoiqve0giq35TJwI3RNZ1i8CIbiur7BZY=
 Received: from DM5PR2101MB1016.namprd21.prod.outlook.com (52.132.133.38) by
  DM5PR2101MB0982.namprd21.prod.outlook.com (52.132.133.28) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.696.0; Tue, 10 Apr 2018 21:04:26 +0000
+ 15.20.696.0; Tue, 10 Apr 2018 21:04:25 +0000
 Received: from DM5PR2101MB1016.namprd21.prod.outlook.com
  ([fe80::5d76:2e71:c400:8b83]) by DM5PR2101MB1016.namprd21.prod.outlook.com
  ([fe80::5d76:2e71:c400:8b83%4]) with mapi id 15.20.0696.003; Tue, 10 Apr 2018
- 21:04:26 +0000
+ 21:04:25 +0000
 From:   Ben Peart <Ben.Peart@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "pclouds@gmail.com" <pclouds@gmail.com>,
@@ -39,13 +39,13 @@ CC:     "pclouds@gmail.com" <pclouds@gmail.com>,
         "avarab@gmail.com" <avarab@gmail.com>,
         "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
         Ben Peart <Ben.Peart@microsoft.com>
-Subject: [PATCH v1 2/2] fsmonitor: switch to use new fsexcludes logic and
- remove unused untracked cache based logic
-Thread-Topic: [PATCH v1 2/2] fsmonitor: switch to use new fsexcludes logic and
- remove unused untracked cache based logic
-Thread-Index: AQHT0Q+BEzimXgKTj0ijGV6Ae5b0Qg==
-Date:   Tue, 10 Apr 2018 21:04:25 +0000
-Message-ID: <20180410210408.13788-3-benpeart@microsoft.com>
+Subject: [PATCH v1 1/2] fsexcludes: add a programmatic way to exclude files
+ from git's working directory traversal logic
+Thread-Topic: [PATCH v1 1/2] fsexcludes: add a programmatic way to exclude
+ files from git's working directory traversal logic
+Thread-Index: AQHT0Q+AOcK1hnY73kaXsr8L3f9kKw==
+Date:   Tue, 10 Apr 2018 21:04:24 +0000
+Message-ID: <20180410210408.13788-2-benpeart@microsoft.com>
 References: <20180410210408.13788-1-benpeart@microsoft.com>
 In-Reply-To: <20180410210408.13788-1-benpeart@microsoft.com>
 Accept-Language: en-US
@@ -59,29 +59,29 @@ x-clientproxiedby: BN3PR03CA0082.namprd03.prod.outlook.com
  (2603:10b6:4:a8::38)
 x-ms-exchange-messagesentrepresentingtype: 1
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;DM5PR2101MB0982;7:s4yk4DsCssWrAw9oJkaBNvVrlMZDvhlXO+iIS5umOxPiGdW+GL/AeGlZOzCba8tjna25pwmyaiuDT1Oj5pXCVK+f0xb4W0CL1YZUQaJVd7nKxYUK//6FfR9IL3cfO45vYPzWSnhSB2X5o6IdVB1Hb4seHke7OaEI6mIzLeynJEgSIEe7Cpqe6hyqed6XUtOymiUk20p2QCPJbYot1KcKaOkwnaaqb1Q7j+jRleYWeF5qkuVbakAzamwQ/mE9U+C6;20:lK4uveKQgcvzHAZE1xlrIoZmWZ5+H73kDf5M8nr/1XMtfuZDB+BPHax3UGs8Qw9qJ0rV8EoPI7l9QnajbECcO1JmyHtfEL1hPwPaKRvG4l+3tR3D1z7zPowS8O9jr5pqM03yf5HniRlUQS0GVMXjdge2tKu3uxf5NoA48G2WwOQ=
+x-microsoft-exchange-diagnostics: 1;DM5PR2101MB0982;7:QIP2EqsTsjx2Dhs4qA9GdUdqUJnMnK1GiHVk9X4JsIQRLfYs91xMiwLYZnVUWpQlvoGLGOoMjIFoLdPa7QHqILlyFcAhWb57Eavfb+DfuwywUSviHowjRssNJVDSV7wkA5qxHVGKc3KyYPT+ntNW9GCIYCml1rj4+bfjULQiWV9sHp0Yi2fk5l7OdPDTQVa/VDNdu2dVXPr/jSM8HeNZ9wxOcSNJYvmDPdUDDHWkEypOkwRB676npK1pa0Q0tVpg;20:6FNxzYYwhS6GJFC9ZfoW1Ziv2QvPogadhu7lzhGHCqzzPKlMqStz+Izc5+Fa15zDurNwjwULJ10uwxWRdTVz7ZnT3R4tPFCwbJ9+405f/4YWpJNCh5HGDkWtfiG4O2BoJI+YBIsbq8X10YCagycmpvzdrgGmMD4b91gyfpbaRSs=
 x-ms-office365-filtering-ht: Tenant
 x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(3008032)(2017052603328)(7193020);SRVR:DM5PR2101MB0982;
 x-ms-traffictypediagnostic: DM5PR2101MB0982:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=Ben.Peart@microsoft.com; 
-x-microsoft-antispam-prvs: <DM5PR2101MB09829ADB002CE0100BD41BBBF4BE0@DM5PR2101MB0982.namprd21.prod.outlook.com>
+x-microsoft-antispam-prvs: <DM5PR2101MB098233BDBA8D9ACA5D45B559F4BE0@DM5PR2101MB0982.namprd21.prod.outlook.com>
 x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
 x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(5005006)(8121501046)(3002001)(10201501046)(3231221)(944501327)(52105095)(93006095)(93001095)(6055026)(61426038)(61427038)(6041310)(20161123558120)(20161123564045)(20161123562045)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011);SRVR:DM5PR2101MB0982;BCL:0;PCL:0;RULEID:;SRVR:DM5PR2101MB0982;
 x-forefront-prvs: 0638FD5066
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(366004)(39380400002)(346002)(376002)(39860400002)(189003)(199004)(81166006)(8936002)(105586002)(106356001)(59450400001)(81156014)(8676002)(1076002)(1730700003)(99286004)(3280700002)(76176011)(8656006)(52116002)(2906002)(50226002)(86612001)(2501003)(6916009)(5250100002)(6116002)(107886003)(3846002)(97736004)(54906003)(26005)(5660300001)(22452003)(316002)(39060400002)(4326008)(186003)(68736007)(66066001)(102836004)(6506007)(386003)(478600001)(11346002)(446003)(486006)(476003)(72206003)(25786009)(10290500003)(8666007)(3660700001)(6512007)(2351001)(6436002)(10090500001)(5640700003)(53936002)(2616005)(36756003)(575784001)(2900100001)(14454004)(305945005)(6486002)(7736002)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR2101MB0982;H:DM5PR2101MB1016.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(366004)(39380400002)(346002)(376002)(39860400002)(189003)(199004)(81166006)(8936002)(105586002)(106356001)(59450400001)(81156014)(8676002)(1076002)(1730700003)(99286004)(3280700002)(76176011)(8656006)(52116002)(2906002)(50226002)(86612001)(2501003)(6916009)(5250100002)(6116002)(107886003)(3846002)(97736004)(54906003)(26005)(5660300001)(22452003)(316002)(39060400002)(4326008)(186003)(68736007)(66066001)(102836004)(6506007)(386003)(478600001)(11346002)(446003)(486006)(476003)(72206003)(25786009)(10290500003)(8666007)(3660700001)(6512007)(2351001)(6436002)(10090500001)(5640700003)(53936002)(2616005)(36756003)(2900100001)(14454004)(305945005)(6486002)(7736002)(22906009)(43043002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR2101MB0982;H:DM5PR2101MB1016.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: yvm9CEZW2UmdxTJElpRIIxncW0yH6duXsqtRcWnnlwcuQkzReGjsFGbnS9Bs2tM7huNz3vKuthX7/9cwvYT7JR0yqVAjniQ4tT3Jr4ga7kaDMqOTZQ4DwqaPN6JHSrctqFQrXMon9r+gzodmddObIMBjkGWZRpbV6tcmNuv/0t81oX96j7Cx0UDd2gGTOd0h9QE7enY/8vJa1BQognu32ryCritSd/4jOXlffDoMqSEG68LkW0L2WLV8aBAZkoF19wjPngyHbwEAnGEJ0+9BADY+UW+fo3BbJoDkyci8b/9PC8pK8x1OVbwHZWlxryEe/GsdKSVKllAUFt9Jfq3z6r0mHny3iv64a7wkO1lMxkDcjvX+qYMyad/+PMgQVm2AaA7LIspM16KnQLbZ3VeLIDbkVk5E/8hLYHDzUrjGDl4=
+x-microsoft-antispam-message-info: 93UiHbCes/SgPIrxmkLWUrN0ve4EvD8bjtwfpVzFNd7Tepj4w5QnarAZgt4/7tsWuBr3HSRJ7f+HDs/j3PQEwGKZdrVsSr5apv4F8uqqyFCd+OjLixe1RAEcHWguosDiAaClJ4FRgqqgTRHdbDKep8FWaNk6trU90kNu+wEBBBZ0kr9K7ImPKq1YmroOOfkRDoCtx3jQXdCjbK2KTEHduP1OTT6msFW6eVP2n1oknwGrjSLfoFTMdGdRCnOgFsRjU34MNYQ7tsprfQvFAXHSik16R58oqKPdbaGFEPJG6pq5aIN0cmCGhC20dz8C8Plp6m+/uNpP+4EFznzI74p150z2zvvK29ZMLForiOpk1HzOztr/SItv6WNRR9LI9R9bU78zvEzHfz8OxAklMSf5Jo8tTQ/ZPUy1Zr42uxMHd8c=
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 24549f5a-4a01-4b99-9f61-08d59f26a3f5
+X-MS-Office365-Filtering-Correlation-Id: 5ed6a9a1-d1d3-454e-a23c-08d59f26a346
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 24549f5a-4a01-4b99-9f61-08d59f26a3f5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Apr 2018 21:04:25.5513
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5ed6a9a1-d1d3-454e-a23c-08d59f26a346
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Apr 2018 21:04:24.4355
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
@@ -91,265 +91,302 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update fsmonitor to utilize the new fsexcludes based logic for excluding pa=
-ths
-that do not need to be scaned for new or modified files.  Remove the old lo=
-gic
-in dir.c that utilized the untracked cache (if enabled) to accomplish the s=
-ame
-goal.
+The File System Excludes module is a new programmatic way to exclude files =
+and
+folders from git's traversal of the working directory.  fsexcludes_init() s=
+hould
+be called with a string buffer that contains a NUL separated list of path n=
+ames
+of the files and/or directories that should be included.  Any path not list=
+ed
+will be excluded. The paths should be relative to the root of the working
+directory and be separated by a single NUL.
+
+The excludes logic in dir.c has been updated to honor the results of
+fsexcludes_is_excluded_from().  If fsexcludes does not exclude the file, th=
+e
+normal excludes logic is also checked as it could further reduce the set of
+files that should be included.
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
 ---
- dir.c                       | 33 ++++++++++++++++++++++++---------
- dir.h                       |  2 --
- fsmonitor.c                 | 21 ++-------------------
- fsmonitor.h                 | 10 +++-------
- t/t7519-status-fsmonitor.sh | 14 +++-----------
- 5 files changed, 32 insertions(+), 48 deletions(-)
+ Makefile     |   1 +
+ fsexcludes.c | 210 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ fsexcludes.h |  27 +++++++
+ 3 files changed, 238 insertions(+)
+ create mode 100644 fsexcludes.c
+ create mode 100644 fsexcludes.h
 
-diff --git a/dir.c b/dir.c
-index 63a917be45..28c2c83f76 100644
---- a/dir.c
-+++ b/dir.c
-@@ -18,7 +18,7 @@
- #include "utf8.h"
- #include "varint.h"
- #include "ewah/ewok.h"
--#include "fsmonitor.h"
+diff --git a/Makefile b/Makefile
+index 96f6138f63..c102d2f75a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -819,6 +819,7 @@ LIB_OBJS +=3D exec_cmd.o
+ LIB_OBJS +=3D fetch-object.o
+ LIB_OBJS +=3D fetch-pack.o
+ LIB_OBJS +=3D fsck.o
++LIB_OBJS +=3D fsexcludes.o
+ LIB_OBJS +=3D fsmonitor.o
+ LIB_OBJS +=3D gettext.o
+ LIB_OBJS +=3D gpg-interface.o
+diff --git a/fsexcludes.c b/fsexcludes.c
+new file mode 100644
+index 0000000000..07bfe376a0
+--- /dev/null
++++ b/fsexcludes.c
+@@ -0,0 +1,210 @@
++#include "cache.h"
 +#include "fsexcludes.h"
-=20
- /*
-  * Tells read_directory_recursive how a file or directory should be treate=
-d.
-@@ -1102,6 +1102,12 @@ int is_excluded_from_list(const char *pathname,
- 			  struct exclude_list *el, struct index_state *istate)
- {
- 	struct exclude *exclude;
++#include "hashmap.h"
++#include "strbuf.h"
 +
-+	if (*dtype =3D=3D DT_UNKNOWN)
-+		*dtype =3D get_dtype(NULL, istate, pathname, pathlen);
-+	if (fsexcludes_is_excluded_from(istate, pathname, pathlen, *dtype) > 0)
-+		return 1;
++static int fsexcludes_initialized =3D 0;
++static struct strbuf fsexcludes_data =3D STRBUF_INIT;
++static struct hashmap fsexcludes_hashmap;
++static struct hashmap parent_directory_hashmap;
 +
- 	exclude =3D last_exclude_matching_from_list(pathname, pathlen, basename,
- 						  dtype, el, istate);
- 	if (exclude)
-@@ -1317,8 +1323,15 @@ struct exclude *last_exclude_matching(struct dir_str=
-uct *dir,
- int is_excluded(struct dir_struct *dir, struct index_state *istate,
- 		const char *pathname, int *dtype_p)
- {
--	struct exclude *exclude =3D
--		last_exclude_matching(dir, istate, pathname, dtype_p);
-+	struct exclude *exclude;
-+	int pathlen =3D strlen(pathname);
++struct fsexcludes {
++	struct hashmap_entry ent; /* must be the first member! */
++	const char *pattern;
++	int patternlen;
++};
 +
-+	if (*dtype_p =3D=3D DT_UNKNOWN)
-+		*dtype_p =3D get_dtype(NULL, istate, pathname, pathlen);
-+	if (fsexcludes_is_excluded_from(istate, pathname, pathlen, *dtype_p) > 0)
-+		return 1;
++static unsigned int(*fsexcludeshash)(const void *buf, size_t len);
++static int(*fsexcludescmp)(const char *a, const char *b, size_t len);
 +
-+	exclude =3D last_exclude_matching(dir, istate, pathname, dtype_p);
- 	if (exclude)
- 		return exclude->flags & EXC_FLAG_NEGATIVE ? 0 : 1;
- 	return 0;
-@@ -1671,6 +1684,9 @@ static enum path_treatment treat_one_path(struct dir_=
-struct *dir,
- 	if (dtype !=3D DT_DIR && has_path_in_index)
- 		return path_none;
-=20
-+	if (fsexcludes_is_excluded_from(istate, path->buf, path->len, dtype) > 0)
-+		return path_excluded;
++static int fsexcludes_hashmap_cmp(const void *unused_cmp_data,
++	const void *a, const void *b, const void *key)
++{
++	const struct fsexcludes *fse1 =3D a;
++	const struct fsexcludes *fse2 =3D b;
 +
- 	/*
- 	 * When we are looking at a directory P in the working tree,
- 	 * there are three cases:
-@@ -1810,12 +1826,9 @@ static int valid_cached_dir(struct dir_struct *dir,
- 	if (!untracked)
- 		return 0;
-=20
--	/*
--	 * With fsmonitor, we can trust the untracked cache's valid field.
--	 */
--	refresh_fsmonitor(istate);
--	if (!(dir->untracked->use_fsmonitor && untracked->valid)) {
--		if (lstat(path->len ? path->buf : ".", &st)) {
-+	if (!untracked->valid) {
-+		if (stat(path->len ? path->buf : ".", &st)) {
-+			invalidate_directory(dir->untracked, untracked);
- 			memset(&untracked->stat_data, 0, sizeof(untracked->stat_data));
- 			return 0;
- 		}
-@@ -2011,6 +2024,8 @@ static enum path_treatment read_directory_recursive(s=
-truct dir_struct *dir,
- 		/* add the path to the appropriate result list */
- 		switch (state) {
- 		case path_excluded:
-+			if (fsexcludes_is_excluded_from(istate, path.buf, path.len, DTYPE(cdir.=
-de)) > 0)
-+				break;
- 			if (dir->flags & DIR_SHOW_IGNORED)
- 				dir_add_name(dir, istate, path.buf, path.len);
- 			else if ((dir->flags & DIR_SHOW_IGNORED_TOO) ||
-diff --git a/dir.h b/dir.h
-index b0758b82a2..e67ccfbb29 100644
---- a/dir.h
-+++ b/dir.h
-@@ -139,8 +139,6 @@ struct untracked_cache {
- 	int gitignore_invalidated;
- 	int dir_invalidated;
- 	int dir_opened;
--	/* fsmonitor invalidation data */
--	unsigned int use_fsmonitor : 1;
- };
-=20
- struct dir_struct {
-diff --git a/fsmonitor.c b/fsmonitor.c
-index 6d7bcd5d0e..dd67eef851 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -2,6 +2,7 @@
- #include "config.h"
- #include "dir.h"
- #include "ewah/ewok.h"
-+#include "fsexcludes.h"
- #include "fsmonitor.h"
- #include "run-command.h"
- #include "strbuf.h"
-@@ -125,12 +126,7 @@ static void fsmonitor_refresh_callback(struct index_st=
-ate *istate, const char *n
- 		ce->ce_flags &=3D ~CE_FSMONITOR_VALID;
- 	}
-=20
--	/*
--	 * Mark the untracked cache dirty even if it wasn't found in the index
--	 * as it could be a new untracked file.
--	 */
- 	trace_printf_key(&trace_fsmonitor, "fsmonitor_refresh_callback '%s'", nam=
-e);
--	untracked_cache_invalidate_path(istate, name, 0);
- }
-=20
- void refresh_fsmonitor(struct index_state *istate)
-@@ -184,11 +180,8 @@ void refresh_fsmonitor(struct index_state *istate)
- 		/* Mark all entries invalid */
- 		for (i =3D 0; i < istate->cache_nr; i++)
- 			istate->cache[i]->ce_flags &=3D ~CE_FSMONITOR_VALID;
--
--		if (istate->untracked)
--			istate->untracked->use_fsmonitor =3D 0;
- 	}
--	strbuf_release(&query_result);
-+	fsexcludes_init(&query_result);
-=20
- 	/* Now that we've updated istate, save the last_update time */
- 	istate->fsmonitor_last_update =3D last_update;
-@@ -207,12 +200,6 @@ void add_fsmonitor(struct index_state *istate)
- 		for (i =3D 0; i < istate->cache_nr; i++)
- 			istate->cache[i]->ce_flags &=3D ~CE_FSMONITOR_VALID;
-=20
--		/* reset the untracked cache */
--		if (istate->untracked) {
--			add_untracked_cache(istate);
--			istate->untracked->use_fsmonitor =3D 1;
--		}
--
- 		/* Update the fsmonitor state */
- 		refresh_fsmonitor(istate);
- 	}
-@@ -241,10 +228,6 @@ void tweak_fsmonitor(struct index_state *istate)
-=20
- 			/* Mark all previously saved entries as dirty */
- 			ewah_each_bit(istate->fsmonitor_dirty, fsmonitor_ewah_callback, istate)=
-;
--
--			/* Now mark the untracked cache for fsmonitor usage */
--			if (istate->untracked)
--				istate->untracked->use_fsmonitor =3D 1;
- 		}
-=20
- 		ewah_free(istate->fsmonitor_dirty);
-diff --git a/fsmonitor.h b/fsmonitor.h
-index 65f3743636..f7adfc1f7c 100644
---- a/fsmonitor.h
-+++ b/fsmonitor.h
-@@ -35,8 +35,7 @@ extern void tweak_fsmonitor(struct index_state *istate);
-=20
- /*
-  * Run the configured fsmonitor integration script and clear the
-- * CE_FSMONITOR_VALID bit for any files returned as dirty.  Also invalidat=
-e
-- * any corresponding untracked cache directory structures. Optimized to on=
-ly
-+ * CE_FSMONITOR_VALID bit for any files returned as dirty. Optimized to on=
-ly
-  * run the first time it is called.
-  */
- extern void refresh_fsmonitor(struct index_state *istate);
-@@ -55,17 +54,14 @@ static inline void mark_fsmonitor_valid(struct cache_en=
-try *ce)
- }
-=20
- /*
-- * Clear the given cache entry's CE_FSMONITOR_VALID bit and invalidate
-- * any corresponding untracked cache directory structures. This should
-+ * Clear the given cache entry's CE_FSMONITOR_VALID bit. This should
-  * be called any time git creates or modifies a file that should
-- * trigger an lstat() or invalidate the untracked cache for the
-- * corresponding directory
-+ * trigger an lstat() for the corresponding directory
-  */
- static inline void mark_fsmonitor_invalid(struct index_state *istate, stru=
-ct cache_entry *ce)
- {
- 	if (core_fsmonitor) {
- 		ce->ce_flags &=3D ~CE_FSMONITOR_VALID;
--		untracked_cache_invalidate_path(istate, ce->name, 1);
- 		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_invalid '%s'", ce->na=
-me);
- 	}
- }
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index 756beb0d8e..d6a1da5a0a 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -225,8 +225,7 @@ test_expect_success '*only* files returned by the integ=
-ration script get flagged
- # Ensure commands that call refresh_index() to move the index back in time
- # properly invalidate the fsmonitor cache
- test_expect_success 'refresh_index() invalidates fsmonitor cache' '
--	write_script .git/hooks/fsmonitor-test<<-\EOF &&
--	EOF
-+	write_integration_script &&
- 	clean_repo &&
- 	dirty_repo &&
- 	git add . &&
-@@ -275,7 +274,7 @@ do
- 		'
-=20
- 		# Make sure it's actually skipping the check for modified and untracked
--		# (if enabled) files unless it is told about them.
-+		# files unless it is told about them.
- 		test_expect_success "status doesn't detect unreported modifications" '
- 			write_script .git/hooks/fsmonitor-test<<-\EOF &&
- 			:>marker
-@@ -288,14 +287,7 @@ do
- 			git status >actual &&
- 			test_path_is_file marker &&
- 			test_i18ngrep ! "Changes not staged for commit:" actual &&
--			if test $uc_val =3D true
--			then
--				test_i18ngrep ! "Untracked files:" actual
--			fi &&
--			if test $uc_val =3D false
--			then
--				test_i18ngrep "Untracked files:" actual
--			fi &&
-+			test_i18ngrep ! "Untracked files:" actual &&
- 			rm -f marker
- 		'
- 	done
++	return fsexcludescmp(fse1->pattern, fse2->pattern, fse1->patternlen);
++}
++
++static int check_fsexcludes_hashmap(struct hashmap *map, const char *patte=
+rn, int patternlen)
++{
++	struct strbuf sb =3D STRBUF_INIT;
++	struct fsexcludes fse;
++	char *slash;
++
++	/* Check straight mapping */
++	strbuf_reset(&sb);
++	strbuf_add(&sb, pattern, patternlen);
++	fse.pattern =3D sb.buf;
++	fse.patternlen =3D sb.len;
++	hashmap_entry_init(&fse, fsexcludeshash(fse.pattern, fse.patternlen));
++	if (hashmap_get(map, &fse, NULL)) {
++		strbuf_release(&sb);
++		return 0;
++	}
++
++	/*
++	 * Check to see if it matches a directory or any path
++	 * underneath it.  In other words, 'a/b/foo.txt' will match
++	 * '/', 'a/', and 'a/b/'.
++	 */
++	slash =3D strchr(sb.buf, '/');
++	while (slash) {
++		fse.pattern =3D sb.buf;
++		fse.patternlen =3D slash - sb.buf + 1;
++		hashmap_entry_init(&fse, fsexcludeshash(fse.pattern, fse.patternlen));
++		if (hashmap_get(map, &fse, NULL)) {
++			strbuf_release(&sb);
++			return 0;
++		}
++		slash =3D strchr(slash + 1, '/');
++	}
++
++	strbuf_release(&sb);
++	return 1;
++}
++
++static void fsexcludes_hashmap_add(struct hashmap *map, const char *patter=
+n, const int patternlen)
++{
++	struct fsexcludes *fse;
++
++	fse =3D xmalloc(sizeof(struct fsexcludes));
++	fse->pattern =3D pattern;
++	fse->patternlen =3D patternlen;
++	hashmap_entry_init(fse, fsexcludeshash(fse->pattern, fse->patternlen));
++	hashmap_add(map, fse);
++}
++
++static void initialize_fsexcludes_hashmap(struct hashmap *map, struct strb=
+uf *fsexcludes_data)
++{
++	char *buf, *entry;
++	size_t len;
++	int i;
++
++	/*
++	 * Build a hashmap of the fsexcludes data we can use to look
++	 * for cache entry matches quickly
++	 */
++	fsexcludeshash =3D ignore_case ? memihash : memhash;
++	fsexcludescmp =3D ignore_case ? strncasecmp : strncmp;
++	hashmap_init(map, fsexcludes_hashmap_cmp, NULL, 0);
++
++	entry =3D buf =3D fsexcludes_data->buf;
++	len =3D fsexcludes_data->len;
++	for (i =3D 0; i < len; i++) {
++		if (buf[i] =3D=3D '\0') {
++			fsexcludes_hashmap_add(map, entry, buf + i - entry);
++			entry =3D buf + i + 1;
++		}
++	}
++}
++
++static void parent_directory_hashmap_add(struct hashmap *map, const char *=
+pattern, const int patternlen)
++{
++	char *slash;
++	struct fsexcludes *fse;
++
++	/*
++	 * Add any directories leading up to the file as the excludes logic
++	 * needs to match directories leading up to the files as well. Detect
++	 * and prevent unnecessary duplicate entries which will be common.
++	 */
++	if (patternlen > 1) {
++		slash =3D strchr(pattern + 1, '/');
++		while (slash) {
++			fse =3D xmalloc(sizeof(struct fsexcludes));
++			fse->pattern =3D pattern;
++			fse->patternlen =3D slash - pattern + 1;
++			hashmap_entry_init(fse, fsexcludeshash(fse->pattern, fse->patternlen));
++			if (hashmap_get(map, fse, NULL))
++				free(fse);
++			else
++				hashmap_add(map, fse);
++			slash =3D strchr(slash + 1, '/');
++		}
++	}
++}
++
++static void initialize_parent_directory_hashmap(struct hashmap *map, struc=
+t strbuf *vfs_data)
++{
++	char *buf, *entry;
++	size_t len;
++	int i;
++
++	/*
++	 * Build a hashmap of the parent directories contained in the virtual
++	 * file system data we can use to look for matches quickly
++	 */
++	fsexcludeshash =3D ignore_case ? memihash : memhash;
++	fsexcludescmp =3D ignore_case ? strncasecmp : strncmp;
++	hashmap_init(map, fsexcludes_hashmap_cmp, NULL, 0);
++
++	entry =3D buf =3D vfs_data->buf;
++	len =3D vfs_data->len;
++	for (i =3D 0; i < len; i++) {
++		if (buf[i] =3D=3D '\0') {
++			parent_directory_hashmap_add(map, entry, buf + i - entry);
++			entry =3D buf + i + 1;
++		}
++	}
++}
++
++static int check_directory_hashmap(struct hashmap *map, const char *pathna=
+me, int pathlen)
++{
++	struct strbuf sb =3D STRBUF_INIT;
++	struct fsexcludes fse;
++
++	/* Check for directory */
++	strbuf_reset(&sb);
++	strbuf_add(&sb, pathname, pathlen);
++	strbuf_addch(&sb, '/');
++	fse.pattern =3D sb.buf;
++	fse.patternlen =3D sb.len;
++	hashmap_entry_init(&fse, fsexcludeshash(fse.pattern, fse.patternlen));
++	if (hashmap_get(map, &fse, NULL)) {
++		strbuf_release(&sb);
++		return 0;
++	}
++
++	strbuf_release(&sb);
++	return 1;
++}
++
++/*
++ * Return 1 for exclude, 0 for include and -1 for undecided.
++ */
++int fsexcludes_is_excluded_from(struct index_state *istate,
++	const char *pathname, int pathlen, int dtype)
++{
++	if (!fsexcludes_initialized)
++		return -1;
++
++	if (dtype =3D=3D DT_REG) {
++		/* lazily init the hashmap */
++		if (!fsexcludes_hashmap.cmpfn_data)
++			initialize_fsexcludes_hashmap(&fsexcludes_hashmap, &fsexcludes_data);
++
++		return check_fsexcludes_hashmap(&fsexcludes_hashmap, pathname, pathlen);
++	}
++
++	if (dtype =3D=3D DT_DIR || dtype =3D=3D DT_LNK) {
++		/* lazily init the hashmap */
++		if (!parent_directory_hashmap.cmpfn_data)
++			initialize_parent_directory_hashmap(&parent_directory_hashmap, &fsexclu=
+des_data);
++
++		return check_directory_hashmap(&parent_directory_hashmap, pathname, path=
+len);
++	}
++
++	return -1;
++}
++
++void fsexcludes_init(struct strbuf *sb) {
++	fsexcludes_initialized =3D 1;
++	fsexcludes_data =3D *sb;
++}
++
++void fsexcludes_free() {
++	strbuf_release(&fsexcludes_data);
++	hashmap_free(&fsexcludes_hashmap, 1);
++	hashmap_free(&parent_directory_hashmap, 1);
++}
+diff --git a/fsexcludes.h b/fsexcludes.h
+new file mode 100644
+index 0000000000..1c4101343c
+--- /dev/null
++++ b/fsexcludes.h
+@@ -0,0 +1,27 @@
++#ifndef FSEXCLUDES_H
++#define FSEXCLUDES_H
++
++/*
++ * The file system excludes functions provides a way to programatically li=
+mit
++ * where git will scan for untracked files.  This is used to speed up the
++ * scan by avoiding scanning parts of the work directory that do not have
++ * any new files.
++ *
++ */
++
++/*
++ * sb should contain a NUL separated list of path names of the files
++ * and/or directories that should be checked.  Any path not listed will
++ * be excluded from the scan.
++ */
++void fsexcludes_init(struct strbuf *sb);
++void fsexcludes_free();
++
++/*
++ * Return 1 for exclude, 0 for include and -1 for undecided.
++ */
++int fsexcludes_is_excluded_from(struct index_state *istate,
++	const char *pathname, int pathlen, int dtype_p);
++
++
++#endif
 --=20
 2.17.0.windows.1
 
