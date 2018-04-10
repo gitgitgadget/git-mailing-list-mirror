@@ -2,139 +2,215 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FE731F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 12:30:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2713D1F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 12:56:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753101AbeDJMaW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 08:30:22 -0400
-Received: from mout.gmx.net ([212.227.15.18]:36247 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752585AbeDJMaT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 08:30:19 -0400
-Received: from minint-aivcfq2.fareast.corp.microsoft.com ([37.201.195.115]) by
- mail.gmx.com (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MHoWj-1f2q8v10Cj-003fl2; Tue, 10 Apr 2018 14:30:12 +0200
-Date:   Tue, 10 Apr 2018 14:30:11 +0200 (DST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+        id S1752770AbeDJM4W (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 08:56:22 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:36450 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752587AbeDJM4V (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 08:56:21 -0400
+Received: by mail-pl0-f66.google.com with SMTP id 91-v6so7472348pld.3
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 05:56:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=uUxts309jnu4mXzDwtAzOutpmWXk//ksLwRpq+tjug0=;
+        b=thtnyB3/9A/U3+R5jCyldGgy18KzLGEtAAUxK0aB/Yba0POHyzwX+Gdfzl8hDGiDHN
+         tXxRw2U74+Ajq2ZjWcMbFEepBc/kJyP4S0YHv8W8JPvXpR8lWeNIFtdPLaIztdEvibKN
+         gG70+tpoZzGfws44kwyRG4BaF2J/0EkFS3uD9I/hBLTc2OB2Eu9dCw0UzryTFyHyHcLE
+         g//GZfJ1GvRweLx1+PM4ETA35ht7NXxmMwq6jWYi7Fv1+mgPuDtkdn9s2Td9Z/eW9+ks
+         44hrb+NM1tUxVwFSyfk68uF/mLmh2POJpbWw+mOWrgx/l69Q36Ys23rlt+vDoLDIVtle
+         DOEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=uUxts309jnu4mXzDwtAzOutpmWXk//ksLwRpq+tjug0=;
+        b=N9aHq75R58wFSv/BzcedoVU9os7l12CdPwXR67OM2HfMrmhpxrwcYOobfdmrKzwW2S
+         JH0saULrKBUkpyIKhnYvCblT3m64Vlly5JLIKvrWAu8u/BXbkGh3KSoOiOvNf74pT/j4
+         4xp/1jeTSVjG3EyC0AfYjwT9sx+hk6phUhA9Rh6QNEu4f2iyBsxFoY57w1fNKgYu1vaW
+         mhQtqsN1p4LR1g2V0EtLAZlneCwX28NyaH658jsBP+kLwqjZJR/7cH9KhxTAqVPMTi39
+         6rTfiDiDX+LAWZGR033n9dVs1dsXiA5MyNbzZrcEddV2KyKirmAXgY4Ox38v1vXUT+Pk
+         GbsA==
+X-Gm-Message-State: ALQs6tD7wFTx3APFVYm7j1FDGXBSUp1fe7C/+n4Yc96VlmXTkL7IqDTs
+        efXA6VYDtcrydTLyDRHc+lNYa/h4DA8=
+X-Google-Smtp-Source: AIpwx48gb6QlVxPdLNpm7Srm2P1qCW6WPJt7kicPGn31kIFu3/wc7XOty9tC+0Weq6h+Qwcal6Cyiw==
+X-Received: by 2002:a17:902:6bc3:: with SMTP id m3-v6mr280118plt.363.1523364980313;
+        Tue, 10 Apr 2018 05:56:20 -0700 (PDT)
+Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
+        by smtp.gmail.com with ESMTPSA id l10sm4421666pgp.35.2018.04.10.05.56.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Apr 2018 05:56:18 -0700 (PDT)
+From:   Derrick Stolee <stolee@gmail.com>
+X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v6 11/15] sequencer: handle post-rewrite for merge commands
-In-Reply-To: <cover.1523362469.git.johannes.schindelin@gmx.de>
-Message-ID: <3316ce1ee802d0bded8c47e3ad2abd00ea63956c.1523362469.git.johannes.schindelin@gmx.de>
-References: <cover.1519680483.git.johannes.schindelin@gmx.de> <cover.1523362469.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:NLmjMpyyyizeUG5+NUArDm6XvEYVZXCI+h2z9iww72iMKkX6oOa
- /TI0cAHHSUysF0ekTalTEEmqHQkT88dSNeyQPHXm9/R0C6i1tsq/Q6pxMqb+QUES07Qsmc4
- oHnFb0Hd2eNd7w+ZdQWLOmVGyQhC9Br8LmKhfUKXYcvpaLjJzG4sxCbjlqSo+bSeI0fX7Kj
- UE4T0a5wPpI06QgnQQsgg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rfj0bGzWFYA=:uM2C/QfFJCxOhG9fHiC7hV
- hYG7pNEWTOxmN5m2TTA4cabrLY+x6b+z6Jq9SgzHmbsmxm8XTf9q5+TFD7cuH+uwjRtI0roY3
- dK8HswZnFt3u5ufmX0ntk2EgpRTiq45W5jHHxNMvJcbR4WEb9vVzmHsXtGY3IXL8R3QlPCrWR
- SgIHht0TMxSRYTY4hfal6ODQxSyxxTdBHu2XzeH1jnYk9pgNvZJjpklwJU10jeFEByy1v4mPc
- Xk9OWHoFR8+wSGMdXun9uO2hNP+guZeYfYSDMkOdQAacl+7vDMY+PAHz+/Grj950HuTnQAEmz
- 0Snd1VCh0kYok7tXd/y8FGbhg89/Pmssfjo97vF0ReF8LblH5WpXjK6fz9W4zwm2R9Scn6stZ
- KC/V17c1BAplNoGKtjYZY4OTeUQKbzyA0pFKIcdQ1C9PZEkCirdRosY2zXhDEoWb8zsuluyhF
- 6BSeLwBUwIIHs8IpaTpCKJ6njjyLrJzMcm3jg+90WyYIOH4bot7bsUav3WEho5PYVUVhQP0ql
- j40Vc8HP5YhUZIGdiXn6fOE7a7016EAyrSjSwDkBKgy94VqucZf7tuW49w8EUDDVMqkUNBeiX
- oBkUrEv1lNy8uvj6Kxk79G8Z7NxZd/cih9xlBzyF9PGDvd3Z5jDI/lgfK90K34Ur/n33+7OEL
- qHt78vu2UN83QN6o027LqSFik3xIgtAXQ7Ud8J6PBMYKm8W3G2aaYoGagG7SKTOp/mdcjWGPN
- kcva1CIHu+BLyz40jZaXCP/szmjY+yHmpS/DB9E+vtENfLFQxor2w6rlByHzXZBPvkTc+Z9ON
- FE30+42Nc101xaL2rSDz9pI5ir32sIlmiN60g2DRNj3yQs8qqE=
+Cc:     gitster@pobox.com, ramsay@ramsayjones.plus.com, sbeller@google.com,
+        szeder.dev@gmail.com, git@jeffhostetler.com, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH v8 00/14] Serialized Git Commit Graph
+Date:   Tue, 10 Apr 2018 08:55:54 -0400
+Message-Id: <20180410125608.39443-1-dstolee@microsoft.com>
+X-Mailer: git-send-email 2.17.0
+In-Reply-To: <20180402203427.170177-1-dstolee@microsoft.com>
+References: <20180402203427.170177-1-dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the previous patches, we implemented the basic functionality of the
-`git rebase -i --rebase-merges` command, in particular the `merge`
-command to create merge commits in the sequencer.
+This version covers the review that I missed when rerolling v7. The
+file diff is below from previous version, and also PATCH 14/14 was
+reworded to use "--append" properly.
 
-The interactive rebase is a lot more these days, though, than a simple
-cherry-pick in a loop. For example, it calls the post-rewrite hook (if
-any) after rebasing with a mapping of the old->new commits.
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 41c4f76caf..37420ae0fd 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -31,7 +31,7 @@ static struct opts_commit_graph {
 
-This patch implements the post-rewrite handling for the `merge` command
-we just introduced. The other commands that were added recently (`label`
-and `reset`) do not create new commits, therefore post-rewrite hooks do
-not need to handle them.
+ static int graph_read(int argc, const char **argv)
+ {
+-       struct commit_graph *graph = 0;
++       struct commit_graph *graph = NULL;
+        char *graph_name;
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sequencer.c              |  7 +++++--
- t/t3430-rebase-merges.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 30 insertions(+), 2 deletions(-)
+        static struct option builtin_commit_graph_read_options[] = {
+diff --git a/commit-graph.c b/commit-graph.c
+index 1fc63d541b..3ff8c84c0e 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -179,7 +179,7 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+ }
 
-diff --git a/sequencer.c b/sequencer.c
-index 422c71db975..878ff449fe8 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3012,10 +3012,13 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 			res = do_label(item->arg, item->arg_len);
- 		else if (item->command == TODO_RESET)
- 			res = do_reset(item->arg, item->arg_len, opts);
--		else if (item->command == TODO_MERGE)
-+		else if (item->command == TODO_MERGE) {
- 			res = do_merge(item->commit, item->arg, item->arg_len,
- 				       item->flags, opts);
--		else if (!is_noop(item->command))
-+			if (item->commit)
-+				record_in_rewritten(&item->commit->object.oid,
-+						    peek_command(todo_list, 1));
-+		} else if (!is_noop(item->command))
- 			return error(_("unknown command %d"), item->command);
- 
- 		todo_list->current++;
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 95f99d965c1..392c1136973 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -157,4 +157,29 @@ test_expect_success 'refs/rewritten/* is worktree-local' '
- 	test_cmp_rev HEAD "$(cat wt/b)"
- '
- 
-+test_expect_success 'post-rewrite hook and fixups work for merges' '
-+	git checkout -b post-rewrite &&
-+	test_commit same1 &&
-+	git reset --hard HEAD^ &&
-+	test_commit same2 &&
-+	git merge -m "to fix up" same1 &&
-+	echo same old same old >same2.t &&
-+	test_tick &&
-+	git commit --fixup HEAD same2.t &&
-+	fixup="$(git rev-parse HEAD)" &&
-+
-+	mkdir -p .git/hooks &&
-+	test_when_finished "rm .git/hooks/post-rewrite" &&
-+	echo "cat >actual" | write_script .git/hooks/post-rewrite &&
-+
-+	test_tick &&
-+	git rebase -i --autosquash -r HEAD^^^ &&
-+	printf "%s %s\n%s %s\n%s %s\n%s %s\n" >expect $(git rev-parse \
-+		$fixup^^2 HEAD^2 \
-+		$fixup^^ HEAD^ \
-+		$fixup^ HEAD \
-+		$fixup HEAD) &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ /* global storage */
+-struct commit_graph *commit_graph = NULL;
++static struct commit_graph *commit_graph = NULL;
+
+ static void prepare_commit_graph_one(const char *obj_dir)
+ {
+
+-- >8 -- 
+
+This patch contains a way to serialize the commit graph.
+
+The current implementation defines a new file format to store the graph
+structure (parent relationships) and basic commit metadata (commit date,
+root tree OID) in order to prevent parsing raw commits while performing
+basic graph walks. For example, we do not need to parse the full commit
+when performing these walks:
+
+* 'git log --topo-order -1000' walks all reachable commits to avoid
+  incorrect topological orders, but only needs the commit message for
+  the top 1000 commits.
+
+* 'git merge-base <A> <B>' may walk many commits to find the correct
+  boundary between the commits reachable from A and those reachable
+  from B. No commit messages are needed.
+
+* 'git branch -vv' checks ahead/behind status for all local branches
+  compared to their upstream remote branches. This is essentially as
+  hard as computing merge bases for each.
+
+The current patch speeds up these calculations by injecting a check in
+parse_commit_gently() to check if there is a graph file and using that
+to provide the required metadata to the struct commit.
+
+The file format has room to store generation numbers, which will be
+provided as a patch after this framework is merged. Generation numbers
+are referenced by the design document but not implemented in order to
+make the current patch focus on the graph construction process. Once
+that is stable, it will be easier to add generation numbers and make
+graph walks aware of generation numbers one-by-one.
+
+By loading commits from the graph instead of parsing commit buffers, we
+save a lot of time on long commit walks. Here are some performance
+results for a copy of the Linux repository where 'master' has 678,653
+reachable commits and is behind 'origin/master' by 59,929 commits.
+
+| Command                          | Before | After  | Rel % |
+|----------------------------------|--------|--------|-------|
+| log --oneline --topo-order -1000 |  8.31s |  0.94s | -88%  |
+| branch -vv                       |  1.02s |  0.14s | -86%  |
+| rev-list --all                   |  5.89s |  1.07s | -81%  |
+| rev-list --all --objects         | 66.15s | 58.45s | -11%  |
+
+To test this yourself, run the following on your repo:
+
+  git config core.commitGraph true
+  git show-ref -s | git commit-graph write --stdin-commits
+
+The second command writes a commit graph file containing every commit
+reachable from your refs. Now, all git commands that walk commits will
+check your graph first before consulting the ODB. You can run your own
+performance comparisons by toggling the 'core.commitGraph' setting.
+
+[1] https://github.com/derrickstolee/git/pull/2
+    A GitHub pull request containing the latest version of this patch.
+
+Derrick Stolee (14):
+  csum-file: rename hashclose() to finalize_hashfile()
+  csum-file: refactor finalize_hashfile() method
+  commit-graph: add format document
+  graph: add commit graph design document
+  commit-graph: create git-commit-graph builtin
+  commit-graph: implement write_commit_graph()
+  commit-graph: implement git-commit-graph write
+  commit-graph: implement git commit-graph read
+  commit-graph: add core.commitGraph setting
+  commit-graph: close under reachability
+  commit: integrate commit graph with commit parsing
+  commit-graph: read only from specific pack-indexes
+  commit-graph: build graph from starting commits
+  commit-graph: implement "--append" option
+
+ .gitignore                                    |   1 +
+ Documentation/config.txt                      |   4 +
+ Documentation/git-commit-graph.txt            |  94 +++
+ .../technical/commit-graph-format.txt         |  97 +++
+ Documentation/technical/commit-graph.txt      | 163 ++++
+ Makefile                                      |   2 +
+ alloc.c                                       |   1 +
+ builtin.h                                     |   1 +
+ builtin/commit-graph.c                        | 171 ++++
+ builtin/index-pack.c                          |   2 +-
+ builtin/pack-objects.c                        |   6 +-
+ bulk-checkin.c                                |   4 +-
+ cache.h                                       |   1 +
+ command-list.txt                              |   1 +
+ commit-graph.c                                | 738 ++++++++++++++++++
+ commit-graph.h                                |  46 ++
+ commit.c                                      |   3 +
+ commit.h                                      |   3 +
+ config.c                                      |   5 +
+ contrib/completion/git-completion.bash        |   2 +
+ csum-file.c                                   |  10 +-
+ csum-file.h                                   |   9 +-
+ environment.c                                 |   1 +
+ fast-import.c                                 |   2 +-
+ git.c                                         |   1 +
+ pack-bitmap-write.c                           |   2 +-
+ pack-write.c                                  |   5 +-
+ packfile.c                                    |   4 +-
+ packfile.h                                    |   2 +
+ t/t5318-commit-graph.sh                       | 224 ++++++
+ 30 files changed, 1584 insertions(+), 21 deletions(-)
+ create mode 100644 Documentation/git-commit-graph.txt
+ create mode 100644 Documentation/technical/commit-graph-format.txt
+ create mode 100644 Documentation/technical/commit-graph.txt
+ create mode 100644 builtin/commit-graph.c
+ create mode 100644 commit-graph.c
+ create mode 100644 commit-graph.h
+ create mode 100755 t/t5318-commit-graph.sh
+
+
+base-commit: 468165c1d8a442994a825f3684528361727cd8c0
 -- 
-2.17.0.windows.1.4.g7e4058d72e3
-
+2.17.0
 
