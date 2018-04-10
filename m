@@ -7,124 +7,78 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B14F11F424
-	for <e@80x24.org>; Tue, 10 Apr 2018 08:26:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECFAB1F424
+	for <e@80x24.org>; Tue, 10 Apr 2018 08:41:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752121AbeDJI0l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 04:26:41 -0400
-Received: from mout.gmx.net ([212.227.17.21]:37009 "EHLO mout.gmx.net"
+        id S1752057AbeDJIlf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 04:41:35 -0400
+Received: from mout.gmx.net ([212.227.17.22]:58683 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751836AbeDJI0j (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 04:26:39 -0400
-Received: from MININT-AIVCFQ2.fareast.corp.microsoft.com ([37.201.195.115]) by
- mail.gmx.com (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MQNFY-1etcKv3gaa-00TpaA; Tue, 10 Apr 2018 10:26:38 +0200
-Date:   Tue, 10 Apr 2018 10:26:37 +0200 (DST)
+        id S1751886AbeDJIle (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 04:41:34 -0400
+Received: from minint-aivcfq2.fareast.corp.microsoft.com ([37.201.195.115]) by
+ mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0Mbx62-1enbli0wxK-00JNMd; Tue, 10 Apr 2018 10:41:32 +0200
+Date:   Tue, 10 Apr 2018 10:41:30 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Elijah Newren <newren@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2] Make running git under other debugger-like programs
- easy
-In-Reply-To: <CABPp-BF4x-ppjptq1TBj+VicvGeWGbfj4e3f5ne_13AEKmvSQQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804101023100.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180405174935.598-1-newren@gmail.com> <20180409185136.4880-1-newren@gmail.com> <nycvar.QRO.7.76.6.1804092316280.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CABPp-BF4x-ppjptq1TBj+VicvGeWGbfj4e3f5ne_13AEKmvSQQ@mail.gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     vaibhav kurhe <vaibhav.kurhe@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Want to start contributing to git through this task: "Use
+ dir-iterator to avoid explicit recursiv
+In-Reply-To: <CAPig+cRNbDBpDn_ku0cXJhzvnrSOkBTztp8tWomePxfXaviotw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804101040090.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CAHKv1qs-cnmcd2pR9iv=Xx1aKnb=SEsCQ7OAjy-4yHhCE_e_dw@mail.gmail.com> <CAPig+cRNbDBpDn_ku0cXJhzvnrSOkBTztp8tWomePxfXaviotw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+b02n66SkWRNsfzJwwcPBUrmv4B6nirsRsGx/fJNda/3e0DQ5d2
- 8NYv+D7V0GKv1nqL09Vfp1rFLfDqMMQUdNsBxajOykN3WVpESDwFG3Ca1UoHL9Tc4EU1MNZ
- iuRLBpHAYCDlkA6vxfufyqH5B0t9v9tT3L0OU1kfOLTYewTuy5kjBy2GWwWE9JVTXzGohcX
- hP0ls9bBDOlo1oViDnsEw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:anQ3D2xsRrA=:xxxyp8ZYQwvvtiUKl9ICMU
- iO+tybzKNu4XhNZhxSptZ0Rw6uH54X42bLF3LhNCJv0jqvIJThQzYcYjxjCoH1rRcKKPp+fEO
- MMCivvBt2HtTzZi1RTPCTwqnybxo4tsZfIvBYjuo9WUrmPOAIfbAUy8V4e5KVD+3lnd3bzykl
- d8fh6w3gXadERFhIlaYJ5LLfMqHmdqlgSI8y6rvqEQ7IvQw+Tvv+xboF0Sdz+maN2QjHVd27I
- EAegw9/dXpe6oXMkpe0Eoi5naAr7oqluqSNvYOHQFWdK6uBD/Xml61m7dII7GkUdbKXCmeg2v
- i5T3AeI/NegGbqESP/Q295qpwxxz05Sl0rXrOnREKkQp3hCL58uqai7EUsq/2Bo1iGwtQg+rO
- ajADq7qWGRtR/7cHe3t4Td7BylZdGr2WACmvnWBFZ6XYwNZxOjbcK2p37kTL7ilkI+v+ff4kZ
- juTKU8YAjzQgyHNRMicPVwq9eoMnVgnU8ehFPhV0EcA8ari12LHa+yOFMXPjJ6Hg0OI+6Lc3h
- yr/SvLt/f48kZc6QqgnfoaAVCAQHrwjKNJzaljbSdC+kFRwW57+RbNO/QBDbkGnp/lsiyUsXN
- pkFJf4/taG1taTj76uYxWELS+SwuznVjK+EFUSbsa6FEf5Giu7TnvwjtIENGPzpTQuO3GjSN/
- IpV7rh6M/Npcb7v+LRanTAH+7iA9GIJ8mAoxUgg1E6acZYqEMVZCWAutguNvwEqCREhxlSh9O
- Thc2iqeQMwt+fN5Qs0YlLpssXaPBV3Lj5+x69pPQDczsZMMSxJLK/OJ3r6oQKHoxomOPzWsFv
- PbjH+SJXO9Bbv6Mx93eF89wyJ/0cQqGLgL7pBaBwV8t4OKDhsw=
+X-Provags-ID: V03:K1:ND3bjfJ4x91JsQmGSrdhulbE8R2QYB7PMAeBPz6likCmcus13Bt
+ 7ivqDRB+cIhw9ZaXGLLL7dNbR164YBm+KKta+PIj4PrIr5q+xg0e1Ok4/pwrJGXIfZpVXTP
+ nYp1rm8XOYNU6LchqM9ZGrefwI/2Yv7IllPEv5faGnokcAhw3G0kvFrjWV131zBgyxQsnPA
+ E2AeB6NuxnoJdNdqc3W2w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:O5pQ+M1v1bg=:+KDE8yGS9sBOg5+mZ7yXhM
+ AnQChJ1mqxge58CrTpng/bI7b6kbfSntmPhO6IWBxCOvSlwkNJCedVhhoaMgekkLni/XdKlM/
+ C48UWMuV62uhvmz1Dis2wJ4ulW4eAo1KQKbf6nEUMQtKnwQCdIkbSYgBQJXlMedde+Ei1GIAJ
+ zDhUPjqmbJYHUGl2WyqRJctDKMRZzzCI/+gpGq+sLdCdpQezGZPoL6r8+FOhr3v9G7zX2eH2D
+ BXhmgdEDXIn2joXYRuUD2sLV0mB5mE8Rvt/jX95017HyrFrB9dm+8ouhW5I4QcDpo2Ri+4c4E
+ NWmWQGt+gz5qnhNyix5R/lpHBnwHlvLE9Bohub9C04xDDDvl2HMj0etianSsENZvWl53uUjH9
+ Rp1uhDSJ1hS8O4I1ppAdx9fYWweDIahxxcPFbnh0kJ5c/E8EUGgvVbsMwChwSlqMW2vXpEQnC
+ 7ag9ln/tRFoKXvXOPWW6EIDuQKiFi4LCSpWiO65komck9DnSgiizeaPeJAn+/D5/7LByXa3ef
+ hcfdAvWcHQzjYye4Miu1HAQsoPN40HMl9BtccjobAfp7iSJgARBMos95/GX5ZjrDlYW/uGR5a
+ 5yt+PQ6Nt9hdxQ4jI05SDAxK7qjwcoLaOSvjDaiINMSsc0fpwjKe4ZcdyiAV5UfjM0TKzttQO
+ y83YD5qI4+yQB5NgdOZRzP8Tz79W6oYH7PzqiA4um+hL1rlqWCHn8br0dxWZ+hMIsCObVqzFw
+ xmB6H2d0yCiqfXGjVh3m251iw+fXGqg/8t8NUnQu5fgBDUd4+HmMg9YKuL73jpEr0PirvplFh
+ 1RMXV8S1WSdS734gUS5HyohFNHePk5OPVlTWVDFnXSAFuBe6jE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi,
 
-On Mon, 9 Apr 2018, Elijah Newren wrote:
+On Mon, 9 Apr 2018, Eric Sunshine wrote:
 
-> On Mon, Apr 9, 2018 at 2:19 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Mon, 9 Apr 2018, Elijah Newren wrote:
-> >
-> >>  debug () {
-> >> -      GIT_TEST_GDB=1 "$@" <&6 >&5 2>&7
-> >> +     case "$1" in
-> >> +     -d)
-> >> +             DBG_FLAGS="$2" &&
-> >
-> > Maybe we can find a way that does not require setting a variable other
-> > than GIT_DEBUGGER? After all, DBG_FLAGS will be visible to the script
-> > calling `debug`...
+> On Mon, Apr 9, 2018 at 9:51 AM, vaibhav kurhe <vaibhav.kurhe@gmail.com> wrote:
+> > https://git.github.io/SoC-2018-Microprojects/.
+> > Out of the tasks listed down in above URL, I found this one interesting:-
+> > "Use dir-iterator to avoid explicit recursive directory traversal"
+> > I cloned the git repo and browsed through it. I found that in git
+> > clone (buildtin/clone.c), raw directory API readdir() is used
+> > recursively.
+> > So there is a place to change it to use the already available
+> > "dir_iterator" structure.
+> > I just want to know, if anybody is working on this task already.
+> > If not, then I can proceed to work.
 > 
-> I guess we could instead do a
->    export GIT_DEBUGGER="$2"
-> here.  Short of explicitly using 'export', I think we'd need another
-> environment variable.
+> There has been no recent discussion on the mailing list regarding
+> this, so it is unlikely that anyone else is working on it.
 
-I suppose so. The GIT_DEBUGGER variable has to be exported *anyway*,
-otherwise the bin-wrappers/* won't see it.
+Indeed.
 
-> I would have stuck with your original suggestion, except that by running:
->     GIT_DEBUGGER="$1" debug_aux "$@"
-> GIT_DEBUGGER would be set within the debug_aux function and would NOT
-> be set once bin-wrappers/git was called, making git not run under the
-> debugger as desired.
+Please feel free to reach out when you get stuck. If you want to show the
+code in progress, may I suggest to publish your topic branch to a public
+repository, such as on GitHub?
 
-Oh, so in debug_aux, you'd have to do some funny
-
-	GIT_DEBUGGER="$GIT_DEBUGGER" "$@"
-
-to export that variable to the process... Ugly.
-
-> >> +*)
-> >> +     GIT_DEBUGGER_ARGS="$GIT_DEBUGGER"
-> >> +     unset GIT_DEBUGGER
-> >> +     exec ${GIT_DEBUGGER_ARGS} "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-> >
-> > It may not be a big deal, bug GIT_DEBUGGER_ARGS (if it was exported e.g.
-> > by the user calling the script) is now visible by the called process... (I
-> > thought I had tried my best to avoid such a leaking variable in my
-> > patch...)
-> 
-> You had a separate, per-process variable:
-> GIT_DEBUGGER_$$="$GIT_DEBUGGER"
-
-Right. And I guess it does not work because the _$$ is not expanded, you'd
-have to eval it, and then you'd have to quote the right side
-appropriately, and it's all not worth it.
-
-> The problem with that line is that the $$ apparently makes bash treat
-> it as a command to run rather than as a variable and a value with the
-> desire to set one to the other.  Prepending the line with 'declare' or
-> 'local' or perhaps 'readonly' would fix that, but those aren't posix
-> and my reading suggested that while some other shells did support some
-> of those builtins, the support was somewhat spotty.  Since
-> wrap-for-bin.sh runs under /bin/sh, not /bin/bash, I didn't have a way
-> of making the per-process piece work and just fell back to a separate
-> variable.  Maybe we want to change that script to /bin/bash?
-> 
-> Do you see any alternatives I'm missing?
-
-No, not really.
-
-Well, let's stick with your patch (with s/DBG_FLAGS/GIT_DEBUGGER/).
-
-Thanks,
-Dscho
+Ciao,
+Johannes
