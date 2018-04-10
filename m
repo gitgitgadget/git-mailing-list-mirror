@@ -2,139 +2,224 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA6FC1F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 15:00:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FA991F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 15:06:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754146AbeDJPA3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 11:00:29 -0400
-Received: from mail-he1eur01on0082.outbound.protection.outlook.com ([104.47.0.82]:63020
-        "EHLO EUR01-HE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1754043AbeDJPA1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 11:00:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=macq.onmicrosoft.com;
- s=selector1-macq-eu;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=cckRh0WjX8b9ot6FJ9ZwU9fYMpHZoUT5SbRzI1GbGIY=;
- b=GhbSdo+e1jQLEr5uFB22ObYtSAR1zE8IqYE/cD0LPf91V59jK6BqxWYVkopkZzlMsj+hw0EmRlCH0TmBYyiCLlp/ntGwzYU/o4p2bQc2/XjTOvi+wZsjdpLTMz2u+WEYsWshtBAIoGM+9hIvDuE2VosvkNbfzlPu1L3RpXOWp5o=
-Authentication-Results: spf=none (sender IP is )
- smtp.mailfrom=Chris.Maes@macq.eu; 
-Received: from chmalap.suse (109.88.34.230) by
- VI1PR05MB1168.eurprd05.prod.outlook.com (2a01:111:e400:582f::25) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.653.12; Tue, 10
- Apr 2018 15:00:23 +0000
-To:     philipp@gortan.org
-Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
-        philipoakley@iee.org
-References: <74c84bda-4f3d-b2d3-91cf-e80e84fe46b1@gortan.org>
-Subject: Re: git-gui ignores core.hooksPath
-From:   Chris Maes <chris.maes@macq.eu>
-Message-ID: <3a3eb88e-0d7b-e689-c4e4-207569ebd667@macq.eu>
-Date:   Tue, 10 Apr 2018 17:00:20 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
+        id S1754205AbeDJPGB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 11:06:01 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:46364 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753118AbeDJPGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 11:06:00 -0400
+Received: by mail-qk0-f173.google.com with SMTP id p67so13697999qke.13
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 08:05:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dxoE+JD89fiJg8FMUrfsRiFMcsAv9QUBx5Hsy3YzUMI=;
+        b=BBs1WBHkxhff0EV9GfK4VblG1IYyIDg+T0R/4sFdiS/q2zuSnypSLEQZOpBNnsmxme
+         YzE8DrES99rQ8k11OAxWfAZ51BhmgL6YRRW0nneg/eLauKTeZdun8I93jExGxz26tv0A
+         BcQKVQbV8Gdi+MaioJezd6guh0GT0s/ueweKWgHoGgu5xEpIX4VLGFTuCKgXLnsi6sCi
+         b+R8r+dXvyC6w/C3hzntyhLNRrSrCnfTArE+F9c/CKT3sodIyBhqnr7r4HoLf7RjM78y
+         kHNimwsV8IrB7j2LHFZIPTag/qzk4OqqsrqI8SolxuDOAmPGL8CnY2NsKWfr8sOOU+SK
+         xRnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dxoE+JD89fiJg8FMUrfsRiFMcsAv9QUBx5Hsy3YzUMI=;
+        b=pKApNx2csPte1XAfXuwO3ucMlqewsmdJjxVBWIoUNSZOmVTLlVr8CMxjSq5uu/M2Vb
+         uCloIdY3JPVnx4R090Bn4DTHHTIkbLrnVDc72RpqA2+kGbQ5x4nI5FqPvrdrO0GUqb8k
+         YLAXPTJcOslRJAsg8FU3gH6uJnaU2x8fp8KRV0lO96wiRydm0sNXC+qvyOi4QBn9Sfh9
+         T1CpNjMgGcV6Z4PFXqA+Cpvbqqo7Hl4TNeUm0ONvH8WgiJY6bXFiCqcg/hd5HcsUdxbA
+         AnBst+DDHnY6T/oFPybR8+Z1Tz8EirQ/W4mfPiXdQUD6Of7souSu+v+M3Qp18vPmyTWJ
+         0sfQ==
+X-Gm-Message-State: ALQs6tA2LJn2AeMMBGp4ryJvScmRnM8vmm+oFp6sF/UZF4R3TJn56k3X
+        P1x5TgaG4Eg0u7T+WgK57+5QUcVoBm0=
+X-Google-Smtp-Source: AIpwx48NsTEucMwjSG8fIvdL0LN8IFtQ20lPDGQQ/dDWuxeTUNdOZC0U21cRspIYRBeLkzsd7DGFEw==
+X-Received: by 10.55.34.129 with SMTP id i123mr1109982qki.119.1523372757177;
+        Tue, 10 Apr 2018 08:05:57 -0700 (PDT)
+Received: from dnj-macbookpro.roam.corp.google.com.com ([100.67.16.96])
+        by smtp.gmail.com with ESMTPSA id c137sm2333526qkb.2.2018.04.10.08.05.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Apr 2018 08:05:54 -0700 (PDT)
+From:   Dan Jacques <dnj@google.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, avarab@gmail.com, Johannes.Schindelin@gmx.de,
+        Dan Jacques <dnj@google.com>
+Subject: [PATCH v8 0/5] RUNTIME_PREFIX relocatable Git
+Date:   Tue, 10 Apr 2018 11:05:41 -0400
+Message-Id: <20180410150546.38062-1-dnj@google.com>
+X-Mailer: git-send-email 2.15.0.chromium12
 MIME-Version: 1.0
-In-Reply-To: <74c84bda-4f3d-b2d3-91cf-e80e84fe46b1@gortan.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Originating-IP: [109.88.34.230]
-X-ClientProxiedBy: DB6PR0501CA0018.eurprd05.prod.outlook.com
- (2603:10a6:4:8f::28) To VI1PR05MB1168.eurprd05.prod.outlook.com
- (2a01:111:e400:582f::25)
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 47ede161-b146-46e7-d54c-08d59ef3c98d
-X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4604075)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:VI1PR05MB1168;
-X-Microsoft-Exchange-Diagnostics: 1;VI1PR05MB1168;3:uaDyBrIVbnzdx4MC2Ms7l6W4G/chN07pvwVO9L9H+IZleOvuePnCbXZZCQX1BuKIrXP/LXN99wKgzwylVhOmbW0gBDqxQ9f+sLMZId6YvX4xHyeNEH5rho/NgHRRcnCITTWIUCNYgiJVKQddq0Y1ZioCsZZW6yJCj1uZk+69FYwW7A36MNYdvRowQs3HJfGhulrA/OzfrHaT9NX+WEylR/QuFVSwQgbcpmOc5Qlk/k/pWhSoo57gHonJMmVNje/B;25:33v9V5E7UYtqWxcblrozjW5pOJxGzF8JTPMFuQ0WzWj8GAWUhZPELCL8aDFwBOQDh+WErlE3GfORB6XRKA5IdIedPFspfOaQ+cGoBVOvBzn7hPiYJ6RVQXn5BUTcQSresZ8K6uBy9nd0iwSiCO7BJorHrwie6dsJEBoRTbaRoTUf4u1znbZbT1P7c7wMboxXx0GOIWkff1K3vABO9PJqymiGDTBIeD3uAyB7js+Tft5B11Eyr0RvW/LXrTJExu3IrmWRlu/P1W7RZA93PnlU5064kzso4NKZin3w1h71ysAN38Yxl/XJqpmQoOki5F38nP/EZpVyjvjvb4Tn3uDpoA==;31:6LoN0dpjVfefRvf22uPl0ERExFpWd7y5yzsKQuPIWS0B8zwFBlqWGNVJxt1yK1FfXlBQhpgSM5Td7dsXT+ypRRjr6TFRtoXfUm4G9sii4BR90Y+y/P6tgWlEdZz9S+wFXcG2/rS6nDjBO6nlBen+9AS39IsnMRJ/HaUGVAblJ8RZET1+zsq1ofd/HWcfU2VUDEkd4u7Pm1hMe2W0VmVzLZX43b9bHu9HsndEHXmCEsk=
-X-MS-TrafficTypeDiagnostic: VI1PR05MB1168:
-X-Microsoft-Exchange-Diagnostics: 1;VI1PR05MB1168;20:2CrZJ0bdeuOz2sDK45ibT4GqZssTFUoDBPJagP8Qr9U0kBE2ImLVjpkylQd02Xt4auBB8SCRKwWbOFwAtuhGBVLfWI/VbwuSD0Yks8TeP2irkE12ab0Pc8Ua8PjMhm1TnmIovYejwe+pmTErAXyoma9S7k7bVQHfAt3te3TRDOgCnoTe1bJcun2pdYTJPz0SLQuREF12i5YV29GX6x/V6InDgpm2uwWLChhjIdKYu4pZDPfEDARHYLjMsnhpvTt2idiloQwKfjzeuVdDjmPrEylYhwaLOa9DpOKAcX3qeycwLBbQ3qpgwty/Xu5sUQjfP0QRMpvcugifO0mMmz/2rQ==;4:x1KDkycPViVnh2Po+rPWN1hwvGKi077PhFg/dA0Sj8XGqX8RKZ9L9C9YEf/268MUV5lpCJHBX6EAJ5TFivIl0hPxvq1wjm8RA1RNfCuOHSMvckjh0EOLkj/rczMCQyic9LZ5XMky5vDgby5u/w9FpcPlwWajacEVy/rO/tHlYlt/dcUrm9BTU1nh51H/fE7xVqWah3Ky4qxy0+FK6HPA3o66aVrMPod5TjJALUcqJNF5oNL33dYoyOeArxVlNLRbPu+RfhGz4ZcNPuvWn/V7n5DRXNFI9IUXf10nClc64XlIiJ+vNBG3SUJbznTpuk1u3M3dS7RHD0pKApftJw061YEeuiiZVjoTK0cSTGePo4o=
-X-Microsoft-Antispam-PRVS: <VI1PR05MB116871DA98967ACBB16204538DBE0@VI1PR05MB1168.eurprd05.prod.outlook.com>
-X-Exchange-Antispam-Report-Test: UriScan:(166708455590820)(15185016700835);
-X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(5005006)(8121501046)(93006095)(93001095)(3231221)(944501327)(52105095)(3002001)(10201501046)(6041310)(20161123560045)(20161123564045)(20161123558120)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011);SRVR:VI1PR05MB1168;BCL:0;PCL:0;RULEID:;SRVR:VI1PR05MB1168;
-X-Forefront-PRVS: 0638FD5066
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10009020)(366004)(39840400004)(39380400002)(346002)(376002)(396003)(189003)(199004)(16526019)(186003)(3846002)(15974865002)(86362001)(31696002)(21086003)(6116002)(69596002)(97736004)(64126003)(106356001)(31686004)(53936002)(6306002)(68736007)(6246003)(316002)(65806001)(50466002)(47776003)(58126008)(74482002)(6512007)(8666007)(65956001)(66066001)(39060400002)(105586002)(26005)(6486002)(36756003)(229853002)(52116002)(305945005)(446003)(2616005)(956004)(23676004)(76176011)(52146003)(7736002)(966005)(2486003)(478600001)(59450400001)(2361001)(386003)(11346002)(2351001)(476003)(6506007)(486006)(8936002)(72206003)(25786009)(8676002)(81156014)(67846002)(2906002)(2870700001)(6916009)(81166006)(65826007)(5660300001)(4326008)(18886075002);DIR:OUT;SFP:1101;SCL:1;SRVR:VI1PR05MB1168;H:chmalap.suse;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-Received-SPF: None (protection.outlook.com: macq.eu does not designate
- permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?utf-8?B?MTtWSTFQUjA1TUIxMTY4OzIzOitSNmhzalltS0EwRlVUb3diVWlvM0NlVEx5?=
- =?utf-8?B?Wi9hQUxMZEU0VjYrbXJ5VzZBd1hEVnBjS3hueWZnaE9FZXMxbUdoZktCeU9Y?=
- =?utf-8?B?S3NuN0IvRTZ2azMxdW8ra3BPNFRONG1pYnNJeWZsdlNRWGxZQy96dmVEZWhO?=
- =?utf-8?B?TEVQS3dQRlBjV3IxUmZuSTZrQ0NHZ2dpLzhIbW5HblZLeDNxRkl4R2RZbVdr?=
- =?utf-8?B?TDVCUWdYQ1NLeU42anN0V1NaOW5iZlNtZHQvY0FTQW0zeWxWOFdRY0QzVkVR?=
- =?utf-8?B?dGNtZ0NET0ZRMkU1d0sxWTAyb0VZRVYwOTgyWU1Id0dMdGxJN1ZKSTdhT3Fr?=
- =?utf-8?B?cjc1QVhZYmZtbDJOMHduNWFOWUM1VFVqY3ZNa3gyT0haWDMzZCs1NlVrUDFQ?=
- =?utf-8?B?aHNkc1NjWU1XSldVMDdMcHJNa1B5ajNXb09OSVNvNStVRG1SY1ZzMXAvZ1Nh?=
- =?utf-8?B?NXZ6aURkUCtua1RtS1hnRmZlTFZlWXpZWjl1UUpIdFBvcEJMczdmYnQySWFa?=
- =?utf-8?B?aWhDS09GZEtwZWxJeUs2cExFZWVRbWpZWUpkazRLdjZVQWZOQk95TVJRb1Bs?=
- =?utf-8?B?dHk3SEQvUmJkYWUxSGxVU1hyWVFjU01lZ3JnU3hERkJQbVpZRUszaWZzWklj?=
- =?utf-8?B?SzdTRDZUL0NjV2F1aS8ydG1Zd2FzTzU3NlNQRkhKdy9Xc1FwSUZLRFB5VStS?=
- =?utf-8?B?Y3lxbzA2ME5vUmdjWU82WEIxb1hZbkh6VjFGVlgyZFV2SHpKSnVwbmpUdHVq?=
- =?utf-8?B?ZWc3VHlWR0tNTS9ISEFQNElBSlZGQ014N2hMa05uNFk1M3dzbGJUQzI1NGJ4?=
- =?utf-8?B?NHRUOExTRDVtVHA3UzZuQTdvdEkyZlpEdWphV25WU1FBWlYwZGhzeWZMK3Va?=
- =?utf-8?B?MnRacldZeE5vT29UWmpRdXUrMG5Rd2hTUGpBcXlSVGROUmxTUHJNcitQNDdH?=
- =?utf-8?B?TDV6T3FUUmNnTEROSFRsZ085Z0ZQZk53eTF3V1RvTnRYNElzbkFDRVY5NlNy?=
- =?utf-8?B?OWdXTEtIQ2YwenNiWC9iRG5sZ2hXcUhvV3RkWGk1YVdEc05oVFlPbzYza2Zs?=
- =?utf-8?B?VmtCNk4zK2x5Y2wzaFZwM0pHeTB0SzlOU3lzMDJsM21CT1VrZDhleEVyWi93?=
- =?utf-8?B?VzhUNngwaUc4dWtQR3VZT2k3RGJyNTFRZWYyYi9hbWw0TU9WdWxnWStvSnZJ?=
- =?utf-8?B?UzhsdUk3amZ1cDAwVktqcFlRNzN1WHl3eWg0ZzlNZmZVQ0IyMlNGdTNQbXNk?=
- =?utf-8?B?ckZRUTF6Wnh4YlR5Rm9uZHpqclZuY3ZkREhMVkxkbndVbVJvVTlyako1MkRv?=
- =?utf-8?B?Q0N0UTJDQ2xoV0FtclNLZ1I2Rys5dlRjZVR0djJZdHBqcVNJQWJxUWYybkxK?=
- =?utf-8?B?UnoweTN4WGNLRUlIbm1hdmZuVjk3eVhWb3hKUEJvRnplZFBCc3RrMlhNTWJH?=
- =?utf-8?B?aFVTQVdBbkRuR2hqQk5xVkRzR3dTTDJtUkxGRHN4eW83QTVralUxUWs1MDJI?=
- =?utf-8?B?a1VaVFZvWmZzUCtSR21ISm1UYjF0bE1ydzl4Z2dBOEFPR3NJUENQVStrb1By?=
- =?utf-8?B?a2x3Rk1EQzg4YWFGOHR5VmxkNjFZTGF2K0JYV2tQdEZMUXQvdHNENDFadHI2?=
- =?utf-8?B?SzlqSTlSNm12N1hQd1hwRS8zOVhLZ0QxUW55cGh3ZUJLb0drZFU2U25jcGZO?=
- =?utf-8?B?N0Z2VmRmQVYzbVdQaGpxRnpOUFNMWDN6eDRLWEx5cXBvV29JaFNMaHRFRFJx?=
- =?utf-8?B?VE16UVRCeG9CRzVTMGMzMnFXN3p5WkdSUURUT1FLSFoybGpsTVJqenhZWk5P?=
- =?utf-8?B?bUJDTE94cHMrckhFYStoU0ZGTStFSTdoRnRtY2RhS0t3UzhLcjBWaDQ4OFZt?=
- =?utf-8?B?VkdIQ3lDSHB2NnFEb21KMmQrdXIyRjg5ZGNVSDNwbEhta2g1bGFDOWZobE93?=
- =?utf-8?B?TDNZQklaSXdwcG9MOUgvaU41a2lWdXA2NEk5ZklzRWZub25DWWt5NEdrSVdt?=
- =?utf-8?B?TkRBLzh5T3E3Rk5IenVPdzJaU2dpTVlWRHI1TENXeFNJUkxPYjJ3VnFwSE9K?=
- =?utf-8?B?RFhwY3JBa3ZkY1ZSWjhscDVMdWRhK1BFWjBoL2NzU1Qrcmc1cHUwemlTanRs?=
- =?utf-8?B?N3FxaDZKb20vdFJUV2JtRzNuVmE4UXM4WnRRUVRRMTdEWStTdUN3NElLemxy?=
- =?utf-8?B?bUFianJTbFhYazdpeEVjb29COFVPSkRUSlpYaFFKTjZtZXozYytxTEt5bVlk?=
- =?utf-8?Q?iwxC57ylE65f1f7vBh?=
-X-Microsoft-Antispam-Message-Info: 8CkyGdws5rhwN3PXK49Ht82yM3rDOxAyWMGs9iOiCEDTwOi8e12IOr3TawVt8KhCyGOSm3RZ8RCiUvlIa4wiPx2iycXqjNqkjnE8/x1orRXkuvL8cXK4YS3d/r1iefVEZYD1eCbngJ6wThvEMgqEI+a+lK4uHiwEOt8RKbvkSiSsun2s4DuFmfAX5PVHGh4v
-X-Microsoft-Exchange-Diagnostics: 1;VI1PR05MB1168;6:w+m5bX8E0glk/z23rzC182ZtOlzZNw6XrMNWWDUT1+CcmcZ7vq0sNEFt9Cwqk4SUGrn1c2dkzppi5zY1xv8T9mvl6WrGDWyZtv53bjpfE3H74dgIyElusPvkbkXorkSDsadSUmnHbmMfKzXgPdoCMh/Cojfco6KRtsh1pDhWkZks5jBtI8dikRQINL85E3cbfmDPic7CUn8BvQ02o4uZ6seeYn3BMslT3SvyzdsAdp4Ry6m1Ol8Thg7t7yfD2kSlEMdPlIMQFSgmGaGWLayyqQsB5ZNrxeMykIEqkAoNFhlYmtzysNtB7LEQBifdIdzafZSkm8PnbuQlmAA7XID2VmoagmWHYb9uyN1jix0FzW+FMa/wfgSZ+RcA18KD9H878xunW/0jAuhp7bwdiw7LS6PPDd7GvvcY9EDMjeBq+1vCVMbOdjKpauo648JRShtIbKLxPqehqtQQYuVWm3pOsg==;5:QqAvfL9RxFj50NPibXw5JeDiVP7FT2/QBBiVgX45gaGLVEJo0TsSCM1wt5/U9zuU7OB2wlrfCUtzoU0S1y0BPIpQHvrcG+Bb6trOypitxDbhQo75N06N1IBdG94rzzQp0onEvbcxlRHH0FUuHXabqTxMwHHXWXoJF3eCdeDRfQ4=;24:RjQdflFRO7w5h3Qm8oQBV/wbBEOSI1dRhriRa+/riLs11bafjIeKEW9SArhMy8s+y6fSoCLhYjG6sCC4YFvf4yZLf4ddYEBnlPLnh40pmHc=
-SpamDiagnosticOutput: 1:99
-SpamDiagnosticMetadata: NSPM
-X-Microsoft-Exchange-Diagnostics: 1;VI1PR05MB1168;7:odpzilczwwPzsuaa9SHPv3PB3ENFukD2mot65s8HiViMhlkJ8CUct0SME7v1Djwr5GoSAYfrNC8Lhqns599INcBxbmKIdmRT3jvaaOsctOZUaSs8U1VJBYmxy6w7alHWWXFO0OgBsZwjP0CCqL8nvQcsZ8ObYvPUSoXCiROzWrqJurdPlfr/dkcYiVmsOj+JhMIgLBHDKBGHDz/WqF8wFJiunErE/ukl8M0VwwUWr043///om+gLbfG3N6aG2Eo6
-X-OriginatorOrg: macq.eu
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Apr 2018 15:00:23.3394 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47ede161-b146-46e7-d54c-08d59ef3c98d
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 5541087b-384c-4066-992a-42aa5fe171eb
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR05MB1168
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+This is a minor update based on comments from the v6 series.
+I'm hoping this set is good to go!
 
-using git 2.16 the same problem is still present. I see that the pull 
-request https://github.com/patthoyts/git-gui/pull/12 (along with 15 
-other pull requests) are lying around since about one year without any 
-sign of life from patthoyts.
+This patch set expands support for the RUNTIME_PREFIX configuration flag,
+currently only used on Windows builds, to include Linux, Darwin, and
+FreeBSD. When Git is built with RUNTIME_PREFIX enabled, it resolves its
+ancillary paths relative to the runtime location of its executable
+rather than hard-coding them at compile-time, allowing a Git
+installation to be deployed to a path other than the one in which it
+was built/installed.
 
-Is there any hope from here that anyone will pick up this / these 
-changes? Will anyone else be assigned the main responsible for this 
-git-gui repository?
+Note that RUNTIME_PREFIX is not currently used outside of Windows.
+This patch set should not have an impact on default Git builds.
 
-Just hoping to revive the discussion here, since the 
-https://github.com/patthoyts/git-gui/ repository seems quite dead.
+Previous threads:
+v1: https://public-inbox.org/git/20171116170523.28696-1-dnj@google.com/
+v2: https://public-inbox.org/git/20171119173141.4896-1-dnj@google.com/
+v3: https://public-inbox.org/git/20171127164055.93283-1-dnj@google.com/
+v4: https://public-inbox.org/git/20171129223807.91343-1-dnj@google.com/
+v5: https://public-inbox.org/git/20180108030239.92036-1-dnj@google.com/
+v5: https://public-inbox.org/git/20180108030239.92036-1-dnj@google.com/
+v6: https://public-inbox.org/git/20180319025046.58052-1-dnj@google.com/
+v7: https://public-inbox.org/git/20180325205120.17730-1-dnj@google.com/
 
-sincerely,
+Changes in v8 from v7:
 
-Chris Maes.
+- Add Johannes's Windows patch series to the end (see v7 thread).
+- Fix more typos and formatting nits.
+- Rebased on top of "master".
+
+
+=== Testing ===
+
+The latest patch set is available for testing on my GitHub fork, including
+"travis.ci" testing. The "runtime-prefix" branch includes a "config.mak"
+commit that enables runtime prefix for the Travis build; the
+"runtime-prefix-no-config" omits this file, testing this patch without
+runtime prefix enabled:
+- https://github.com/danjacques/git/tree/runtime-prefix
+- https://github.com/danjacques/git/tree/runtime-prefix-no-config
+- https://travis-ci.org/danjacques/git/branches
+
+Built/tested locally using this "config.mak" w/ autoconf:
+
+=== Example config.mak ===
+
+## (BEGIN config.mak)
+
+RUNTIME_PREFIX = YesPlease
+RUNTIME_PREFIX_PERL = YesPlease
+gitexecdir = libexec/git-core
+template_dir = share/git-core/templates
+sysconfdir = etc
+
+## (END config.mak)
+
+=== Revision History ===
+
+Changes in v7 from v6:
+
+- Change Perl header based on avarab@'s suggestion.
+- Fix typos in commit messages and comments.
+
+Changes in v6 from v5:
+
+- Rebased on top of "master".
+- Updated commit messages.
+- Updated runtime prefix Perl header comment and code to clarify when and
+  why FindBin is used.
+- With Johannes' blessing on Git-for-Windows, folded "RUNTIME_PREFIX_PERL"
+  functionality into "RUNTIME_PREFIX".
+- Updated "run-command" test to accommodate RUNTIME_PREFIX trace messages.
+
+Changes in v5 from v4:
+
+- Rebase on top of "next", notably incorporating the
+  "ab/simplify-perl-makefile" branch.
+- Cleaner Makefile relative path enforcement.
+- Update Perl header template path now that the "perl/" directory has
+  fewer build-related files in it.
+- Update Perl runtime prefix header to use a general system path resolution
+  function.
+- Implemented the injection of the locale directory into Perl's
+  "Git/I18N.pm" module from the runtime prefix Perl script header.
+- Updated Perl's "Git/I18N.pm" module to accept injected locale directory.
+- Added more content to some comments.
+
+
+Changes in v4 from v3:
+
+- Incorporated some quoting and Makefile dependency fixes, courtesy of
+  <johannes.schindelin@gmx.de>.
+
+Changes in v3 from v2:
+
+- Broken into multiple patches now that Perl is isolated in its own
+  RUNTIME_PREFIX_PERL flag.
+- Working with avarab@, several changes to Perl script runtime prefix
+  support:
+  - Moved Perl header body content from Makefile into external template
+    file(s).
+  - Added generic "perllibdir" variable to override Perl installation
+    path.
+  - RUNTIME_PREFIX_PERL generated script header is more descriptive and
+    consistent with how the C version operates.
+  - Fixed Generated Perl header Makefile dependency, should rebuild
+    when dependent files and flags change.
+- Changed some of the new RUNTIME_PREFIX trace strings to use consistent
+  formatting and terminology.
+
+Changes in v2 from v1:
+
+- Added comments and formatting to improve readability of
+  platform-sepecific executable path resolution sleds in
+  `git_get_exec_path`.
+- Consolidated "cached_exec_path" and "argv_exec_path" globals
+  into "exec_path_value".
+- Use `strbuf_realpath` instead of `realpath` for procfs resolution.
+- Removed new environment variable exports. Git with RUNTIME_PREFIX no
+  longer exports or consumes any additional environment information.
+- Updated Perl script resolution strategy: rather than having Git export
+  the relative executable path to the Perl scripts, they now resolve
+  it independently when RUNTIME_PREFIX_PERL is enabled.
+- Updated resolution strategy for "gettext()": use system_path() instead
+  of special environment variable.
+- Added `sysctl` executable resolution support for BSDs that don't
+  mount "procfs" by default (most of them).
+
+Dan Jacques (3):
+  Makefile: generate Perl header from template file
+  Makefile: add Perl runtime prefix support
+  exec_cmd: RUNTIME_PREFIX on some POSIX systems
+
+Johannes Schindelin (2):
+  exec_cmd: provide a new-style RUNTIME_PREFIX helper for Windows
+  mingw/msvc: use the new-style RUNTIME_PREFIX helper
+
+ .gitignore                                       |   1 +
+ Makefile                                         | 128 +++++++++--
+ cache.h                                          |   1 +
+ common-main.c                                    |   4 +-
+ compat/mingw.c                                   |   5 +-
+ config.mak.uname                                 |   9 +
+ exec_cmd.c                                       | 258 ++++++++++++++++++++---
+ exec_cmd.h                                       |   4 +-
+ gettext.c                                        |   8 +-
+ git.c                                            |   2 +-
+ perl/Git/I18N.pm                                 |   2 +-
+ perl/header_templates/fixed_prefix.template.pl   |   1 +
+ perl/header_templates/runtime_prefix.template.pl |  42 ++++
+ t/t0061-run-command.sh                           |   2 +-
+ 14 files changed, 412 insertions(+), 55 deletions(-)
+ create mode 100644 perl/header_templates/fixed_prefix.template.pl
+ create mode 100644 perl/header_templates/runtime_prefix.template.pl
 
 -- 
-Macq nv
-Luchtschipstraat, 2 - 1140 Brussel - België
-T +32 (0) 2 610 15 57
-chris.maes@macq.eu - www.macq.eu
+2.15.0.chromium12
 
