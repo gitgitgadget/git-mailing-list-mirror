@@ -2,73 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C4981F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 05:20:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 203D81F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 06:16:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751987AbeDJFU5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 01:20:57 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:62350 "EHLO bsmtp3.bon.at"
+        id S1751884AbeDJGQC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 02:16:02 -0400
+Received: from mout.gmx.net ([212.227.15.19]:35867 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751595AbeDJFU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 01:20:56 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 40KwVt37HMz5tlS;
-        Tue, 10 Apr 2018 07:20:54 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 39CC7101;
-        Tue, 10 Apr 2018 07:20:53 +0200 (CEST)
+        id S1751771AbeDJGQB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 02:16:01 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHX0m-1f2UFP0KJY-003Mld; Tue, 10
+ Apr 2018 08:15:59 +0200
+Date:   Tue, 10 Apr 2018 08:15:59 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Stefan Beller <sbeller@google.com>
+cc:     Hari Lubovac <hlubovac@gmail.com>, git <git@vger.kernel.org>
 Subject: Re: Windows > git.exe > the result of "git branch" does not always
  highlight the current branch
-To:     Hari Lubovac <hlubovac@gmail.com>
-References: <CAFLu24=o0nQveRpMJV-6dhvft0H9PgdBahisBi4EEg=G0BwhpQ@mail.gmail.com>
-Cc:     git@vger.kernel.org
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <4de8574c-1b64-408c-ca7e-c6e3de2dfa4a@kdbg.org>
-Date:   Tue, 10 Apr 2018 07:20:52 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+In-Reply-To: <CAGZ79kZ6xWijnZZpcogVm_JCX3nGMzN8ebKyh1vYygNc_dqGFw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804100813590.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CAFLu24=o0nQveRpMJV-6dhvft0H9PgdBahisBi4EEg=G0BwhpQ@mail.gmail.com> <CAGZ79kZ6xWijnZZpcogVm_JCX3nGMzN8ebKyh1vYygNc_dqGFw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CAFLu24=o0nQveRpMJV-6dhvft0H9PgdBahisBi4EEg=G0BwhpQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:/ScHrlQL/tTJkcEFPDGNtScpY6XHDX/hWtHCw2dLAKVuMZoj30P
+ QeC1oSwgmqhijPfGlMREP35Oc6z/heQF6uv0fNbZ39JqP5Hzzfh5XQnQp/RQZJaoZj5wMNO
+ YRT1xi8UJG8WepSLR1KO7mZTY1bmXQcIIIwIYP8ApaJYmh5O1Ca1PoiBPtcv15EQUNetgCy
+ Xo2GayZhg0BgdTl1IsGbw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FVAw6BNvdXU=:D4o14P14KYNrEepc1STUY0
+ 7tFuJplCWLi+1DQpq2ukFrbZx6+zx9EikNQSxm7TMqh3av3Q40exROKOfEfIOOshURTo6LMJ9
+ p6Uej8bmcihX+rfhN+wmWOIsd8VGL45sVjtvK9uJ1sqzhlitrm5ZG9yYkQvZY9M2Yh7vaQGvF
+ e0lBe4eeWHD/IqflvbGHQRdOWIcz+WHHSis2oRd2VzfZZRKhRd1hjsr2s8p70b62F0TM7Lkq5
+ 7YapQs+nR8l6RyFHuvNzUgOXQ4NDDDOZSCpmondS02epQaHEQQuehaVuTtwEWxGMryG4lyzH+
+ XRNU0GAVYGABDN/NOFp+bO+erfGeYgFyVNBzKhDU2+3L0h+5d7eYajFh9oBUnsTg0iT/VlThD
+ st+0C50SWwd+Q9664OSvZJC99MD/K+kRvzEzmD4Be0oY1ZY6W7tKCz3PnhCuV4TvVQzih657y
+ UAZqZTkENT50tgOV9v1L44e9t0jbG+C0GtCBGeC2byNBqDrTSzYWgSvZt4HUiN4UE+8IMq4Qi
+ OMA5Susbw86mcqnUvGfAUlHhAZQF1/6cVz0H5nJR0ZxT6Kv8+kGOLCd1/ukRUkR2nv05eu07Q
+ re1qIHyait43KJPFR6abHVs4rYZ/37nJ1HJwHqpp5oVdFeINZ98Wet5OZWZRSUfR4PEtdCvHi
+ ijFXb/rOgeLD/rms8LzI4yPXtzZgf6zdubVehBo1omHd/qrE4da374hLhb6YbglQjR+MGtCLO
+ f7G1lwrbPb7ve2avGHvEMY1vXicWmdgJ1I+N9W0/FUD+onGcFqQ46rqt93NaGx3uAdEKRhxOs
+ +yn8XjZHdtMB99DNYRN3KdDIGGMuqGhyc/3GF5ct2VzHtgwQ/w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.04.2018 um 21:26 schrieb Hari Lubovac:
-> It appears to be just a reporting issue. Probably not a big deal, but
-> I thought I should report this, if it hasn't been noticed: when a
-> branch is switched to by being named with non-original
-> character-casing, then it's not clear which branch is current.
-> 
-> Example:
-> 
-> C:\repo>git branch
-> * bar
->    foo
-> 
-> C:\repo>git checkout Bar
-> Switched to branch 'Bar'
-> 
-> C:\repo>git branch
->    bar
->    foo
+Hi Stefan,
 
-The bug is not that the branch is not marked, but that you are permitted 
-to check out a branch that does not exist. This is a side-effect of the 
-fact that branch names are sometimes stored using file names, and, as we 
-know, file names are case-insensitive on Windows. I don't know of any 
-efforts to fix that (I assume that it is not just a simple fix). In the 
-meantime, I can only recommend: if it hurts, don't do it.
+On Mon, 9 Apr 2018, Stefan Beller wrote:
 
-If you call `git gc` before the checkout command, I would expect that 
-you would not be able to check out branch 'Bar', because branches are 
-represented unambiguously after 'gc' (not as file names).
+> AFAICT Git-for-Windows prefers to have a bug on github
+> https://github.com/git-for-windows/git/issues/new
 
--- Hannes
+I try to follow Postel's Law for contributions and bug reports. If there
+is enough detail in the bug report on this here mailing list, that's good
+enough for me.
+
+If details are missing, I frequently suggest to follow that link because
+some excellent contributors spent quality time on the issue reporting
+template, helping bug reporters to avoid incomplete reports.
+
+Thanks,
+Johannes
