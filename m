@@ -2,85 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B96F21F42D
-	for <e@80x24.org>; Tue, 10 Apr 2018 22:42:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA2241F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 22:47:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932807AbeDJWl6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 18:41:58 -0400
-Received: from mout.gmx.net ([212.227.15.19]:56513 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932131AbeDJWl5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 18:41:57 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lhwgc-1ekfYo3qzq-00n6HQ; Wed, 11
- Apr 2018 00:41:53 +0200
-Date:   Wed, 11 Apr 2018 00:41:37 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: git-gui branches, was Re: What's cooking in git.git (Apr 2018,
- #01; Mon, 9)
-In-Reply-To: <xmqqtvsi214p.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1804110040240.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1804102301200.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <xmqqtvsi214p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1755353AbeDJWrH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 18:47:07 -0400
+Received: from mail-yw0-f169.google.com ([209.85.161.169]:38119 "EHLO
+        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754472AbeDJWrF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 18:47:05 -0400
+Received: by mail-yw0-f169.google.com with SMTP id x20so4583073ywg.5
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 15:47:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=LeDth4Y4186Z9liRV3j+IwQ8TwtzUbAN1gn5uwj4hA0=;
+        b=BACqpNmrY+1OeN0OPbcIXtfpxfBlieDwBgNXL4zgCvr7N3UwUwTrRjHLhMkI5IsS6Q
+         /xdAplq+qZhUaf8pPNxKbNq1X52I4K9PB8HajT3HW1CeU0N/MLKCCAwqqkOlMw2skVm8
+         foTZEj3vcsKHkQ1/IxvzLLzLFGKLznbBaT1t8PYdbY/L0yqkJYfntYw5/nh4e1ZT5/Jj
+         SSYD54TVrWyoqt0gUL2MjRj5I+bI6oqDwsbJBHEI286iLxphwxjqyexZlCrCmAIW/Vyq
+         BzPSImNwmr101Zglc71aVr+afsz5RD2T6Drqq+Ue3FGE9iMElEWyYS5iEeBsbLWEEusV
+         +lUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=LeDth4Y4186Z9liRV3j+IwQ8TwtzUbAN1gn5uwj4hA0=;
+        b=PE9YaPVMDza8luzk+2ExOVz1JYPOVKj9IPpNySaiAYjqd0WbNNBnUHUiLMLJpTcsep
+         x1KdH/LRzMhO8nnRkJ7zgQNWgyTQwv9tPZBYEJRo1J5vI1hY1C7lQcuVY0KFZTMDGVOc
+         E6kj3hSNi+s3oXfe7sX5KJ2l52x7g/q/rV6yoT5cQJdaoDuduxvRHv+U29KVNKzIQ7LS
+         C3MxU9DpjfXGeA9bqp3e5LzvAuUAelZlW5JD5Jsne0W482HJsdo5QaQpumhHV86uacUC
+         5ld/S17glT7QxO5bhgOpLNpW+VZugz2YaudtYJsSbtYDbVhEhUWDwHwO7vlwukU3g/9W
+         N4DQ==
+X-Gm-Message-State: ALQs6tD7RL4gyKUHH4aT/HSCVpeHf1MDMVLBc/jMdin9A0oRZHQDgOu+
+        Gz12C73YoL3S0sCZSBuXWuN7Q627+16UWQIB9v66xw==
+X-Google-Smtp-Source: AIpwx4+rFeqolDdagaHGs0AiRY6Wc5iPODjw+P85in1K5IIlz9XuZvZ8IZdpUMDA6jB9IR5Xx1xu2H2BPdXsBNwToEo=
+X-Received: by 10.129.86.5 with SMTP id k5mr1254272ywb.345.1523400424122; Tue,
+ 10 Apr 2018 15:47:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:NbMKUiHEioRZoZ0lT3AvivXFfiuX3YRV7/BVk0W7VGDzJ7aIOk+
- rWE257QlhCSDvtvlV0nq4DxqQyad0uJAxICihlk59RX5EJYvy8nHo3JAz4/mrstG9FIuEX0
- jnmkWVcTka7dyLNp4JK6tVR3KI7jnAwGY5zNlK1QmdWLuuIqprP7EDsrUvVELPOcVEcRSx+
- KrzdInofXbl+oXpERfyZQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FsPct6NC1ZU=:58np8C58cKzWc8raok6vvf
- XpIbYWpbw4Ec7bMv/oTTOyCjMvJZXQtlYgi41aG9f2ilHxSp3G2PPfEB4z85ABlsn+0YTVD9D
- ADHtGQT/rYw1U+MUQGrO/N/HeAY/O40okVg39+EX0qHVY6vvgZOhOGOJTRy5Ee++So2bLPknq
- DiCtI1AF4GT+zNg+8UercPtwUBJXTKSJeJVuSAVim9RbfnAAAxrXUH1P3wVUdxIFQZLdxAcFg
- kWJQhqsBCSvanfh3OP000fMP6e5Ty5jF9NUd1u13Sw+F878WpzH8dxjTglWtVgQFSfY6iFQsM
- 0NGp8Vz9ubluHiEUtoYsk1zYFA9BbbYCE/NusQobQBVEeKEMBTeUOm8e+0DvUWx+/MtJEG5KN
- fqumj9fxSaPQAicyGQEKe6HTD97E+5jU4fiS0WrTCx3B3wKzh/YhoSrCDAdR6S88vjrqb5Ksw
- nxnvQwmjvwZckwRJHYDaD0l/hGHjoqOWMN3RbzcuKLcQ7/MLe1pNzG6XVj48Z5RAa+3M/c+DX
- o950xykWLf44D8mJXMJnfGIiaNydt6M/K+rcXnV8DGzylWP9KFujqUtsnTwLOnXtHEo+zLQ8a
- lP+CYso9l9ExKRMLMqRvT2ONyOQGaEzHD+u0brd2UBnmEzUmUzEXN1wN2OdgaEJ1xLst82xzz
- PghCoJ2B2UslLdgoB2521OzuuJNW0biPZrJaJi0u8i8OgbMftpuWIKnrGgh60pfjll/yGV63x
- Z6HGujWSkyrmBozUZScZ4L7ZhXuUIsalKcCt5eP3KyaJ1BhF4tk3dcSMVR9liFW+fMwRChwyY
- CMSxoEx9fO4CkBMtMfWUA2fEOCjmnqzDIJVcybZs0T3AAyrws4=
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Tue, 10 Apr 2018 15:47:03
+ -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1804110038230.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <xmqqbmer4vfh.fsf@gitster-ct.c.googlers.com> <20180410212621.259409-1-sbeller@google.com>
+ <nycvar.QRO.7.76.6.1804110038230.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 10 Apr 2018 15:47:03 -0700
+Message-ID: <CAGZ79kakGDwK_NgF0Y77mjj0mskgqed6ffu0UYdSnVquC-ef9w@mail.gmail.com>
+Subject: Re: [PATCH 0/6] Rename files to use dashes instead of underscores
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Duy Nguyen <pclouds@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Johannes,
 
-On Wed, 11 Apr 2018, Junio C Hamano wrote:
+On Tue, Apr 10, 2018 at 3:39 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Stefan,
+>
+> On Tue, 10 Apr 2018, Stefan Beller wrote:
+>
+>> This is the followup for
+>> https://public-inbox.org/git/xmqqbmer4vfh.fsf@gitster-ct.c.googlers.com/
+>>
+>> We have no files left with underscores in their names.
+>
+> Yaaay!
+>
+>> Stefan Beller (6):
+>>   write_or_die.c: rename to use dashes in file name
+>>   unicode_width.h: rename to use dash in file name
+>>   exec_cmd: rename to use dash in file name
+>>   sha1_name.c: rename to use dash in file name
+>>   sha1_file.c: rename to use dash in file name
+>>   replace_object.c: rename to use dash in file name
+>
+> These are all obviously correct (I did not apply the series and used `git
+> grep` to verify that nothing underscored is left there, but I trust you to
+> have done that already).
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Mon, 9 Apr 2018, Junio C Hamano wrote:
-> >
-> >> * bb/git-gui-ssh-key-files (2018-03-02) 2 commits
-> >> * bp/git-gui-bind-kp-enter (2018-03-02) 2 commits
-> >> * cb/git-gui-ttk-style (2018-03-05) 2 commits
-> >
-> > What is your plan with those? I thought they were on track for v2.17.0,
-> > but now I see that they are not even in `next`...
-> 
-> There is no plan. I was waiting for somebody to raise noises, get
-> irritated by lack of active subsystem maintainer(s), which would
-> eventually lead us to find a replacement for Pat.
-> 
-> I can play patch-monkey for git-gui part but I do not want to be the
-> one who judges if proposed changes to it are good ones.  Have they
-> been reviewed by git-gui competent people?
+Yes and I did not tell the full story.
 
-I would call myself "reasonably literate" in Tcl/Tk, not "git-gui
-competent", but for what it is worth: I remember having reviewed those
-patches and AFAIR they looked fine enough for inclusion. Certainly the
-ssk-key-files one.
+There is still 'check_bindir' as compile output, such that I ignored it.
 
-Ciao,
-Dscho
+And there was sha1dc_git.{h, c} which I also ignored as it is unclear
+to me how our relationship with the DC library is.
+I think that could also be converted as it seems to be a shallow wrapper
+around that lib.
