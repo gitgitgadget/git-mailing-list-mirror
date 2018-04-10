@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 638171F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 19:38:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A042E1F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 20:04:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752696AbeDJTiR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 15:38:17 -0400
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:36248 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752611AbeDJTiQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 15:38:16 -0400
-Received: by mail-wr0-f182.google.com with SMTP id y55so13938395wry.3
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 12:38:16 -0700 (PDT)
+        id S1752772AbeDJUEk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 16:04:40 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:52957 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751629AbeDJUEj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 16:04:39 -0400
+Received: by mail-wm0-f66.google.com with SMTP id g8so28497587wmd.2
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 13:04:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=pKinFWYwdVrUaNy70Rzw20VTKQxdvgLm9ZO2i5xZx1o=;
-        b=keYuquviLuA6Q9HRTgtRnnJdaq65+Z44U541ru/Q7JRJ/iV54ZLxh175ln21xPJkZi
-         KPgiBTzxEMi3oV1sqRZb1LndUrgLKAJdIixaS46caTd/rkQ5fVI3LofGd6r18KlonJVI
-         2f23EnnWEAp4EoGmSu2BBtGoSMrTIjio1gEGFYV3GDI/CBftmsaVXthz0n7dSo5+FF+h
-         ME2m6ajQu33lEVpGmLQiDhK5StIDycWAMxZ9Lowj1//31FaGgCjaykfHn3AOZUW3Z5AE
-         Ap4fRfaZdTaVtjvA8MihpSIJ8d0GKRQ4+51+XhvgfLCIOXLCUIVTiFdbx2z73SbwdhKY
-         ReFA==
+        bh=8sWZ3IPBqk/SOnmFt9raDdUsgVbMYwWiOqlSeMJk5yE=;
+        b=VKbdlVCet788cXMeiH1MCiC3Lmh+5SmBF/ik9J8+AtjnWNPcgTd+H0Pm4QrulOZSHu
+         Ljnjrh7t7BsP3Vi71W/NiYOQi5TFQMMfpFq1pzXmHBdGLZ6n5KIXLoU+9YJ1rdsnQ/Ji
+         YqGS6hIGf9GsDf1m+hcVvkUDV0idm1y7U16fUCsw4WeKogIqInYf7C9cX96EC2Kjyk/m
+         xsjyxl74qmka5d/XUdK32fCMR+RzePaWlwUMyC1tiZEgpnArMKAUkZ7WqICliJC8lef0
+         ESiVS5n2zp9OiX0YWl1CnFY+nQkb6HzMHA5u7pWrlzdOD0y4loyqMwNOIKUbI5jUYkw5
+         x2zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=pKinFWYwdVrUaNy70Rzw20VTKQxdvgLm9ZO2i5xZx1o=;
-        b=JH70fLK+ledXrYvjwcTVbEAP++Hb+ObxuO0bF8TH3IRTqxQbzeie1dB9K84+oCGurF
-         vXXBYPXWaEETzSQy4dRpGz3RfDCEhHnc3Tgo4pS7Jf59SJtn8oEZ1Z8aaG+ZSl07EaHU
-         KWcZ1OM2ksP5hRiAQIhTKa5nKK9vXJmhni8z/01RT5mFb8uUP5pqiSyyjGSeKE9CBy56
-         SFJTT4uwFsfVFWe8K0BeNBljBy10ibDdVqW5v8HAY9JdKcFt44xFTHL5g/q0EcBpL08d
-         sp4FwWcCNUEWO8airch5UGYf/BgSvfq9teOPJePlnUoa0PkSSNWggqrSt1pc0tRCNcls
-         Ec8w==
-X-Gm-Message-State: ALQs6tCNgSTXJMVZkcSP+kKXNqdt5hwZao9RTxXed3GBvnf4BF1TQVoL
-        +wZJG4I/CZqHTxdWipvTGLUvow==
-X-Google-Smtp-Source: AIpwx483MYO0r6KXPyc+jWh1delsMCyUkb/Knio2p7oq/Mujobi5z++8JEsNOSnfCBxP718HxHvJSA==
-X-Received: by 10.223.184.219 with SMTP id c27mr1408297wrg.30.1523389095025;
-        Tue, 10 Apr 2018 12:38:15 -0700 (PDT)
+        bh=8sWZ3IPBqk/SOnmFt9raDdUsgVbMYwWiOqlSeMJk5yE=;
+        b=T+TbsgqsyPsD0j5ujz88ytTcL/HYZ128TWk1mfyHOCa6WTrLYRWi5uby0MsXRC79Cr
+         YUevyinsx9Shq1V9v51EYktHS0LjXLHUOX0uuRe+m8PZyUQy+yt6l1/9BYUf3WENH+k6
+         a6OdFJD+j4mGczLlMioVbGVtiH4Tp6uz1+nLqVuLiJISDqBNTXoDaEe59flTIxJtSNcc
+         Hasit4rHJOZNNRlNloZRz0Bsz+GhdVmt4b4KNiAXMwebkba61a6OhxXD2XtjFNwVrCPw
+         D5fjS57xiPWJps+SSZSmhl2WpN2DJiGX3sK++jAKdu3ab7PbV2fzASLCMeqImhLBCH2p
+         R2OQ==
+X-Gm-Message-State: ALQs6tBTCpR33bm/klq09pJ1SFh+3A7d7U7YHz4AINf8OpXHEpGeyCwW
+        zftyQGoijmFE0GgCgsELCtIQcw==
+X-Google-Smtp-Source: AIpwx48pu9W2nKouOXE1daz6Swidrh6LTVvC/m1pA5x6NIjym9Nf/Tya3iNL6SZ8BfuNw1tsRXOSOA==
+X-Received: by 10.28.134.203 with SMTP id i194mr640043wmd.114.1523390677862;
+        Tue, 10 Apr 2018 13:04:37 -0700 (PDT)
 Received: from ?IPv6:2001:a62:81d:ab01:35db:2474:c452:ca1e? ([2001:a62:81d:ab01:35db:2474:c452:ca1e])
-        by smtp.googlemail.com with ESMTPSA id p4sm4608124wrf.27.2018.04.10.12.38.14
+        by smtp.googlemail.com with ESMTPSA id z11sm3536689wre.15.2018.04.10.13.04.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Apr 2018 12:38:14 -0700 (PDT)
-Subject: Re: [PATCH 4/6] doc: added '-d' and '-q' for 'git push'
+        Tue, 10 Apr 2018 13:04:37 -0700 (PDT)
+Subject: Re: [PATCH 1/6] doc: fix formatting inconsistency in githooks.txt
 To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 References: <20180410183224.10780-1-asheiduk@gmail.com>
- <20180410183224.10780-5-asheiduk@gmail.com>
- <CAN0heSrrPa5-ckjsonUh+3JpoAnaAT=efJT4Rp7uEn=UfWpC_g@mail.gmail.com>
+ <20180410183224.10780-2-asheiduk@gmail.com>
+ <CAN0heSquxLpMfrLQs2em1amLv77-Uywr+885Viuq4-7DiWYmAQ@mail.gmail.com>
 From:   Andreas Heiduk <asheiduk@gmail.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=asheiduk@gmail.com; prefer-encrypt=mutual; keydata=
@@ -97,12 +97,12 @@ Autocrypt: addr=asheiduk@gmail.com; prefer-encrypt=mutual; keydata=
  0h2On7SlyXSb9PgDfH1fuxPzMWmbvJ99KiYVaLoyp1ObW50Ie3pPysj+6QNN8JxXDQv3L5tw
  eDjOFE4iXiXYUQUeZWIVgLoEiveS8RP/RaBSNYXA9NXLtQ0iwNqgEjwia/PXUoIIdoIRRc3p
  khKIKhAKu5lezA==
-Message-ID: <85c6d713-7e36-6068-f6d3-9b9144a4958d@gmail.com>
-Date:   Tue, 10 Apr 2018 21:38:13 +0200
+Message-ID: <f45ef7cb-dc0c-8c63-1d2f-6ece0d0091cc@gmail.com>
+Date:   Tue, 10 Apr 2018 22:04:35 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSrrPa5-ckjsonUh+3JpoAnaAT=efJT4Rp7uEn=UfWpC_g@mail.gmail.com>
+In-Reply-To: <CAN0heSquxLpMfrLQs2em1amLv77-Uywr+885Viuq4-7DiWYmAQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: de-BE
 Content-Transfer-Encoding: 8bit
@@ -111,22 +111,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.04.2018 um 21:17 schrieb Martin Ågren:
+Am 10.04.2018 um 21:13 schrieb Martin Ågren:
 > On 10 April 2018 at 20:32, Andreas Heiduk <asheiduk@gmail.com> wrote:
->> Add the missing `-o` shortcut for `--push-option` to the synposis.
->> Add the missing `-d` shortcut for `--delete` in the main section.
+>> The section 'post-rewrite' in 'githooks.txt' renders only one command
+>> using backticks (`git commit`) but the other commands using single quotes
+>> ('git-rebase'). Align this formatting to use single quotes.
+>>
+>> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+>> ---
+>>  Documentation/githooks.txt | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+>> index f877f7b7cd..070e745b41 100644
+>> --- a/Documentation/githooks.txt
+>> +++ b/Documentation/githooks.txt
+>> @@ -417,8 +417,8 @@ to abort.
+>>  post-rewrite
+>>  ~~~~~~~~~~~~
+>>
+>> -This hook is invoked by commands that rewrite commits (`git commit
+>> ---amend`, 'git-rebase'; currently 'git-filter-branch' does 'not' call
+>> +This hook is invoked by commands that rewrite commits ('git commit
+>> +--amend', 'git-rebase'; currently 'git-filter-branch' does 'not' call
+>>  it!).  Its first argument denotes the command it was invoked by:
+>>  currently one of `amend` or `rebase`.  Further command-dependent
+>>  arguments may be passed in the future.
 > 
-> s/synposis/synopsis/
+> Hmm, I wonder if that is actually intentional. `git commit --amend`
+> could be run exactly like that and would do what this paragraph expects
+> of it. The 'git-rebase' is a Git subcommand name, i.e., not some
+> copy-paste command-line ready for use. If it were something like `git
+> rebase -i HEAD~5`, I would expect the backticks.
+
+That page mostly uses single quotes and no dash ('git send-email')for
+formatting. Reading 'CodingGuidelines' my understanding is, that git
+commands should be typeset with backticks, no dash (`git send-email`). 
+So 'git-rebase' (an similar) *should* be typeset as `git rebase`. But
+doing so consistently would be a full-diff for this manual page.
+
+Should I do this?
+
 > 
-> The subject of this patch says -q, which should be -o. The subject
-> could also be in imperative ("doc: add ...", or "doc: add missing ...").
-> The diff LGTM.
+> A second discrepancy is the dash in "git commit" vs "git-rebase" and
+> "git-ls-remote". That could perhaps be explained by the same reasoning.
 > 
 > Martin
 > 
 
-ACK & Thanks,
-
-Can I add "Reviewed-by: $YOU" to this one and 2/6?
-
-Andreas
