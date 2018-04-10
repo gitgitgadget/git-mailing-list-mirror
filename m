@@ -2,65 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12E211F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 23:31:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 173441F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 23:31:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754641AbeDJXbU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 19:31:20 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:39115 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754616AbeDJXbS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 19:31:18 -0400
-Received: by mail-wm0-f49.google.com with SMTP id b21so457808wme.4
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 16:31:18 -0700 (PDT)
+        id S1754581AbeDJXbh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 19:31:37 -0400
+Received: from mail-wr0-f175.google.com ([209.85.128.175]:42441 "EHLO
+        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754405AbeDJXbf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 19:31:35 -0400
+Received: by mail-wr0-f175.google.com with SMTP id s18so14360735wrg.9
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 16:31:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=iTwU39bqTf+D20NoxIr98nU+Ty6fspY3ORUx42TXQUE=;
-        b=qQteuACt0kFAQ1YuaVY5TGdmLdHMkZo3LT3VOKUkiyNSJs5czVSgsT9M8fRq02w2hg
-         Zot4OMTRP+v3nYHbcZtVZaD3I9ySkhuOJMBnZ6Cmhi/qIBU3umBdKSV3A2pZF1Gj9UZ3
-         hTRNRJ9qnUbAy9DK7EqQr9MkAaXJ5gMA5CwTlM5ciTGkSC5KhshdoHgWNv5S+9ROLL9/
-         3ft7zVpH0MO0AISBCC7mf2g5lMhTFb9JVYlVH/6abNETq/oe0QiZtcvsHK/VmKpqYpje
-         ZbJCLLABsNVmfJHlyowdvLXioZJcIvPPFg2GmE90A43BllA9o/H8d6RV1cmCqQZAxVNj
-         Cy4Q==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=R02sMQq1BXTw/xj/UEwZljOErEklAUqtRGJ033TPRJ0=;
+        b=gHv3UNS/li5oSMlsMsCSdp8aCg/82THcNPlMALu0qxOEarEVQbcMMvA5XoD8KZ1G0e
+         L2873j51vSfBudMQ3yvqR1dvHhjgLvhpJ4UoIanrCwh84exu8OTRI6LpsIVPx6eX07Ba
+         2TEVTdyn5v21D9RkqEo6iQgo0rDlMucn41jXQ43+NOHYiJrGm1oEFCTg3yt5NaTxPqa8
+         WEKTQNUSyAkK+P2aMzIJfAPd8bECLN1unGXeQxmIJH7zzE02w6aLza3BdlNJMBooLMCR
+         IQlnpt/sbJlFEbFYoj9ukxeoYgK2GBLsoypycvBlf9Bk4i0CTGFNWgkf6a6xziTNPtfR
+         tecQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=iTwU39bqTf+D20NoxIr98nU+Ty6fspY3ORUx42TXQUE=;
-        b=nsaEsu5wd3XJ9ElGnUbAcHyutjxlJ/QCM2RCufoUmdoMqpWUHa/NZluMySTmpBgqQC
-         50dPwUF2hY3rWb+mAGkSRrZ+ihHtPfehvltftxX+zFnU8OF/UYcjp4qD4o7uPqsqpH5s
-         fax30Rmyc9CVfRD7fvJrrMFRzSMPQ05eJpuNzp1amdU4/lWw3L6Rvs8lbnXBKA5xo5oE
-         YjiF+bd5adTqArtpWXd84Z8FUxQUcbcVgySn+UtZ0H/QMR7MIYa2F5tK3LJiLoprqBJw
-         il/zMzuIiJ5SlFzPN7S4RAwa0yF+ZHCh0jxB+IsOn0W7EZky03U9/TkTj2jiz7ZywZTA
-         8pKw==
-X-Gm-Message-State: ALQs6tD+3gpbrx6f/JDtfjk1x/aU9yv6IceXPtZZ4yxj91thFc2PtRBz
-        J7AOMGgznBJr3TJzgsT+sRZjaL5L
-X-Google-Smtp-Source: AIpwx4/cDgy2jgQzi3Uib8mnhWAncJZBtvMSj2PaBAZgbOOhHlU3gcBelcigpVzbYymDTUbfGB7mKw==
-X-Received: by 10.28.237.11 with SMTP id l11mr875444wmh.124.1523403077376;
-        Tue, 10 Apr 2018 16:31:17 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g38sm5832171wra.77.2018.04.10.16.31.14
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=R02sMQq1BXTw/xj/UEwZljOErEklAUqtRGJ033TPRJ0=;
+        b=WYYZqZBSUELo5lxgJiNHciXhsNsj+vhs8f2Es6gW+1yVhqPCipOMoLMCykfDU+9l96
+         U9W3ruI8V95yX42wHgxS0cvDXJmTQs0u9juhhkhs+zsoM24b3UC1Wrr0aRZuPZcOWUeN
+         Zeg9Yzm9w0OFDy0Dgab/5jC+CnV6zzGtU1zlfq09BJI7gIb/TkXw9EXSTRPrjIDAATC8
+         gmqLGv/Q7UvjTO1mWVUs93yAYIZUx0Z2dgX2UNj2RTLuv3B5LfhEzcOiXo/DGMavdgLn
+         IkswjUZdTRAFMelLYBUSIEemAv8X7l8W5+VE4lBZjXftpHxUx5WfhMOdfrWKi9nmD6tb
+         Dprg==
+X-Gm-Message-State: ALQs6tBdQlWnJ3xua9iEiI8z/KM2ya/k+hmzohPCQdXFYfNst3auj6ym
+        8/Lqa1zxc95/e0SQXNzs2N8=
+X-Google-Smtp-Source: AIpwx48SrGj+xidFNEavN8eOwhx58d4qM2jJeuMpYo8mvc/gJbBJBjHLnlOLUAxv6Xlr7iBanWguPg==
+X-Received: by 10.223.226.140 with SMTP id v12mr1537956wri.188.1523403094281;
+        Tue, 10 Apr 2018 16:31:34 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id e10sm6777083wri.23.2018.04.10.16.31.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 10 Apr 2018 16:31:15 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Marc Strapetz <marc.strapetz@syntevo.com>, git@vger.kernel.org
-Subject: Re: git remote rename problem with trailing \\ for remote.url config entries (on Windows)
-References: <da730b21-58ae-bfa8-705f-7669c0f56764@syntevo.com>
-        <xmqqo9y6dj1s.fsf@gitster.mtv.corp.google.com>
-        <nycvar.QRO.7.76.6.1804110020380.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Wed, 11 Apr 2018 08:31:14 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1804110020380.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Wed, 11 Apr 2018 00:35:08 +0200
-        (DST)")
-Message-ID: <xmqq8t9u1vwd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Tue, 10 Apr 2018 16:31:33 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Chris Maes <chris.maes@macq.eu>, philipp@gortan.org,
+        Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        philipoakley@iee.org, Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: git-gui ignores core.hooksPath
+References: <74c84bda-4f3d-b2d3-91cf-e80e84fe46b1@gortan.org> <3a3eb88e-0d7b-e689-c4e4-207569ebd667@macq.eu> <xmqqd0z61xsv.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqd0z61xsv.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 11 Apr 2018 01:31:32 +0200
+Message-ID: <87muyabpuz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -68,27 +68,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> A quick test with my `empty-config-section` patch series shows that it
-> addresses this issue. A quick bisec confirms that the patch with the
-> online "git_config_set: make use of the config parser's event stream" is
-> responsible for this fix.
+On Tue, Apr 10 2018, Junio C. Hamano wrote:
+
+> Chris Maes <chris.maes@macq.eu> writes:
 >
-> At first, I was puzzled by this, because I expected `git remote rename` to
-> be backed by the `git_config_copy_or_rename_section_in_file()` function
-> (which my patch series does not touch).
+>> Is there any hope from here that anyone will pick up this / these
+>> changes? Will anyone else be assigned the main responsible for this
+>> git-gui repository?
+>>
+>> Just hoping to revive the discussion here, since the
+>> https://github.com/patthoyts/git-gui/ repository seems quite dead.
+>
+> It indeed does.
+>
+> I've played a patch-monkey in the past for git-gui and have a few
+> topics queued still in my tree, but that serves merely as a bookmark
+> that is slightly better than a pointer to the mailing list archive.
+>
+> We need a volunteer to take over this part of the subsystem;
+> somebody who actually uses it, passionate about improving it, and
+> can speak tcl/tk somewhat fluently (I qualify none of these three
+> criteria myself).
+>
+> Any takers?
 
-I played around with this test data:
+Isn't everyone involved much better solved if we come up with some plan
+to split these off from git.git? I.e. I think if if git-gui, gitk and
+gitweb were proposed for inclusion in-tree today I don't think we'd
+bite, and instead point to things like [1] or [2].
 
-        [sec "tio"]
-                val = a\\
-                ue = b
+Of the three gitweb is a bit more glued to the rest of the codebase
+(test & custom test lib), but gitk and git-gui already have their own
+external projects.
 
-and saw "git config --rename-section sec.tio sec.tion" just work
-fine (without the event stream change).  Without the event stream
-change, "git config --unset sec.tio.ue" loses "sec.tio.val" but with
-it we see we only lose the last line, which is the correct thing to
-happen.
+It looks like if they started making tagged releases, along with some
+small Makefile changes like generating their manpages from ASCIIDOC,
+downstream packagers of git-gui and gitk could simply start pointing to
+those as the authoritative source instead of whatever gets shipped with
+git.
 
-Nice.
+1. https://git-scm.com/downloads/guis/
+2. https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools#Web_Interfaces
