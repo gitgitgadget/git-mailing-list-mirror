@@ -2,95 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 739771F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 22:06:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 239A91F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 22:09:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752084AbeDJWGr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 18:06:47 -0400
-Received: from mout.gmx.net ([212.227.15.15]:34669 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751624AbeDJWGq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 18:06:46 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MEnX8-1fHWvK0qMM-00FxGp; Wed, 11
- Apr 2018 00:06:40 +0200
-Date:   Wed, 11 Apr 2018 00:06:24 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Chris Maes <chris.maes@macq.eu>
-cc:     philipp@gortan.org, avarab@gmail.com, git@vger.kernel.org,
-        philipoakley@iee.org
-Subject: Re: git-gui ignores core.hooksPath
-In-Reply-To: <3a3eb88e-0d7b-e689-c4e4-207569ebd667@macq.eu>
-Message-ID: <nycvar.QRO.7.76.6.1804110001350.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <74c84bda-4f3d-b2d3-91cf-e80e84fe46b1@gortan.org> <3a3eb88e-0d7b-e689-c4e4-207569ebd667@macq.eu>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752033AbeDJWJd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 18:09:33 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:46433 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751770AbeDJWJc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 18:09:32 -0400
+Received: by mail-pf0-f179.google.com with SMTP id h69so9390843pfe.13
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 15:09:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ZvunY9kMZGGno54t6QfISQOmHQn18zaFieojGYuMm3M=;
+        b=Ukdkoyn51U15ec99jG71zhSHRKcYBZ3QL93Zm3nQhZKBScpzYy9MsYrJndW+XEOdEP
+         tTfmf/epG55nMJJVP6y0fK61+f55bKSre3Zv4OyPO61QuVZVY59YpZwqsrZV/LwoOcU9
+         CletEaCcCoU5Y3ZvgT50JMh/HT0+y2CsBOVGFUlvXSz25d73hI9FdThlo/NYLph8CrDu
+         PnMu05FoHQ9C9UkLAo8GcdcYF+QhkJ8DVhWaJl1FtrEDO88CFeqkiYMpINnAJdHeEjXL
+         7BmB2ZT9lNG9xuGgYbPzMTXolgfXWOA+nd4c78JXoidv5QgOTAoDyv7dREthNQxsUTW+
+         MJEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ZvunY9kMZGGno54t6QfISQOmHQn18zaFieojGYuMm3M=;
+        b=ZRe60Stng+8azVl0Y4nD+avjg0a1Ly9gO6d+jKjA6q9ODaJqQK3LLhXzrN6LOItTHe
+         /jDD9aR3bk5kIV+6GYqPo5jL9mDD09d03OP+J8LgdBEdlfk6Tg36Wiutfi0YZsdxRAzU
+         8tSvqOpfoy/0DWjbiS/bBUuiqk/7sh9mS7mliS6Ep5IYHZTXHk7PgkFg2oG1mRhLCRc9
+         dDAE9ANPAjV+3jz6UtMQ8xbPWBGr2aO7IyxTcgMXo2vvo5bf2ncO7X7FgBV04C0Xff+m
+         /uaV13VUSMW15fLZgNk3AVD72dB6SCNFVTDTmsKlH4cv+jtyQ75wHCPRDWcAjQdrAGhw
+         vg9A==
+X-Gm-Message-State: ALQs6tAFc1xEiWYliBrP8ZKm/dplURDsKJuNbjc7zPzJPRpMO2t+0xU3
+        uST5VhnltHqONtYgxacR53SYzGuAYrSn+anNmmw=
+X-Google-Smtp-Source: AIpwx4/DkRZM3Ezi4sAE1bg9dwLB8cxKeojomDmCO8lzxp9qNOI7yd0ikXaWnGfuZX199IQce4th/2sYVJEviboKwJI=
+X-Received: by 10.98.226.24 with SMTP id a24mr1749795pfi.223.1523398171942;
+ Tue, 10 Apr 2018 15:09:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:JmDt9D/Xo63i5uujHMkRsd6cFcdEKNJFnrbU/o0V1YfpbC3qKSJ
- gY5Gw/69EYiRJ2MmrjEjX91mTq5lQlXJJEUxmWqgck0Olz+9+zUPMMMxSeSZ0QvkOTfT0Hp
- mPhhW1+w+QDN8S6OvsQ1+B53rC0QWR4uSRHcOc7ez9CIsaDix1dh7BZ5ClHzslsCxh5UV9z
- daz4Heco1o4AMJNXb6Tfw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Pa8dPMbxkDw=:z2sOnUiPpmUE4fFDt7gHYw
- /eAXtPepVtJG8C+EQaJGCz/yNxsGRxoIMwGTQVA01ksPd/oTtnuXgYnQd1vp9HHOn3StyrN1v
- yECumu8jO/t5ydc1vEDKRqhMmQ06Xdza76YRyF5A0zVhZnaTO7HE6r8FXp9R4IKSXJ+cj0CXM
- 4tKd/60atWjIS4OPisLNTgwCLAwCmPjNqfctf5V5MAzS3Jbugg+j6A5msWn/cr4iUmuEgKE3o
- gZHQioOCafsvOKXYSZP5ghuZ10FsCwkC4xMyX1dLVxEYLW0N9H4nXngr1ZbN/kvVHqWjicULx
- J27I1cFcDi80EGvhIUJKsM5FIruMyDOFfcn7nltSz9NQQzTrff3d+Owdx2Kjw/ZtnHMl9f9wY
- aIvKzkPcQRE4+VFWgJJwAn/MUxKG3vQhGz6Jal3qtqDbChB7y/ZbXjlQH7gKg63HhoWBvvs0x
- R641UPdg3iTxAmUeb64ygVIVQOzgYQp7petM+eWA2wGUL/MVcwr3/rOhfZoHhg1QJkShvR4bb
- RqA4ymanf8Gj3nJCEJeBH0wwh4EEt9JPEA5fRTIkqDObUhqgRBB8Y6UiqFMQ90cK2Jkp/aRv2
- tE2Ah+uxv6L7PdTvOajyMi7HezkMGlMdRmXIVFzqF9XHMG44WhXM5IHbbNiIz7yx496FnSfSc
- siuxkrfPE+MIuqSq6QilsJdYUXs3e2HcbCfJ/iq4+U0/uv1EbyPZIoaDVNjy6gaa8mO7i1kV4
- 7Fwbyk0F7i/ioptVwjwtiPgJXfVWFQPqvVAV8XjtMZf1SFA0GAnf8oCLXgeNXpQLeCESNY9B6
- 2AtoYb/B6EGUuCB6hvz4AJoqedhEgEXG/Q4zR/P3RgNA1MBw3w=
+Received: by 10.100.178.66 with HTTP; Tue, 10 Apr 2018 15:09:31 -0700 (PDT)
+In-Reply-To: <20180410210408.13788-2-benpeart@microsoft.com>
+References: <20180410210408.13788-1-benpeart@microsoft.com> <20180410210408.13788-2-benpeart@microsoft.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 11 Apr 2018 00:09:31 +0200
+Message-ID: <CAN0heSpKzG93OcAAAoHQxURVGsHFWz6j494C+3bezHLTOovQHA@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] fsexcludes: add a programmatic way to exclude
+ files from git's working directory traversal logic
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "alexmv@dropbox.com" <alexmv@dropbox.com>,
+        "blees@dcon.de" <blees@dcon.de>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "bmwill@google.com" <bmwill@google.com>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Chris,
+On 10 April 2018 at 23:04, Ben Peart <Ben.Peart@microsoft.com> wrote:
+> The File System Excludes module is a new programmatic way to exclude files and
+> folders from git's traversal of the working directory.  fsexcludes_init() should
+> be called with a string buffer that contains a NUL separated list of path names
+> of the files and/or directories that should be included.  Any path not listed
+> will be excluded. The paths should be relative to the root of the working
+> directory and be separated by a single NUL.
+>
+> The excludes logic in dir.c has been updated to honor the results of
+> fsexcludes_is_excluded_from().  If fsexcludes does not exclude the file, the
+> normal excludes logic is also checked as it could further reduce the set of
+> files that should be included.
 
-On Tue, 10 Apr 2018, Chris Maes wrote:
+Here you mention a change in dir.c...
 
-> using git 2.16 the same problem is still present.
+>  Makefile     |   1 +
+>  fsexcludes.c | 210 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  fsexcludes.h |  27 +++++++
+>  3 files changed, 238 insertions(+)
 
-And probably 2.17, too.
+... but this patch does not seem to touch dir.c at all.
 
-> I see that the pull request https://github.com/patthoyts/git-gui/pull/12
-> (along with 15 other pull requests) are lying around since about one
-> year without any sign of life from patthoyts.
+> +static int check_fsexcludes_hashmap(struct hashmap *map, const char *pattern, int patternlen)
+> +{
+> +       struct strbuf sb = STRBUF_INIT;
+> +       struct fsexcludes fse;
+> +       char *slash;
+> +
+> +       /* Check straight mapping */
+> +       strbuf_reset(&sb);
 
-Yes, this is very sad. I hope he is alive and doing well.
+You could drop this strbuf_reset(). Or did you intend to use a static
+struct strbuf?
 
-As to Git GUI: if you know your way around Tcl/Tk reasonably well, how
-about stepping up and reviewing those PRs? Even if the PRs are not merged,
-a review would do those PRs pretty good and we could then take things from
-there.
+> +       /*
+> +        * Check to see if it matches a directory or any path
+> +        * underneath it.  In other words, 'a/b/foo.txt' will match
+> +        * '/', 'a/', and 'a/b/'.
+> +        */
+> +       slash = strchr(sb.buf, '/');
+> +       while (slash) {
+> +               fse.pattern = sb.buf;
+> +               fse.patternlen = slash - sb.buf + 1;
+> +               hashmap_entry_init(&fse, fsexcludeshash(fse.pattern, fse.patternlen));
+> +               if (hashmap_get(map, &fse, NULL)) {
+> +                       strbuf_release(&sb);
+> +                       return 0;
+> +               }
+> +               slash = strchr(slash + 1, '/');
+> +       }
 
-> Is there any hope from here that anyone will pick up this / these
-> changes?  Will anyone else be assigned the main responsible for this
-> git-gui repository?
+Maybe a for-loop would make this slightly more obvious:
 
-There is no "assigning" here, not really. What is missing is a volunteer
-who earned the trust of the Git developers. Reviewing those PRs would go a
-long way to earn that trust.
+for (slash = strchr(sb.buf, '/'); slash; slash = strchr(slash + 1, '/'))
 
-> Just hoping to revive the discussion here, since the
-> https://github.com/patthoyts/git-gui/ repository seems quite dead.
+On second thought, maybe not.
 
-Thank you for doing this.
+> +       entry = buf = fsexcludes_data->buf;
+> +       len = fsexcludes_data->len;
+> +       for (i = 0; i < len; i++) {
+> +               if (buf[i] == '\0') {
+> +                       fsexcludes_hashmap_add(map, entry, buf + i - entry);
+> +                       entry = buf + i + 1;
+> +               }
+> +       }
+> +}
 
-I also hope that somebody with reasonable understanding of Tcl/Tk and a
-vested interest in Git GUI takes up the responsibility of maintaining it.
-Judging by the rate the PRs trickled into
-https://github.com/patthoyts/git-gui, I think it would be a minor time
-commitment.
+Very minor: I would have found "buf - entry + i" clearer here and later,
+but I'm sure you'll find someone of the opposing opinion (e.g.,
+yourself). ;-)
 
-Ciao,
-Johannes
+> +static int check_directory_hashmap(struct hashmap *map, const char *pathname, int pathlen)
+> +{
+> +       struct strbuf sb = STRBUF_INIT;
+> +       struct fsexcludes fse;
+> +
+> +       /* Check for directory */
+> +       strbuf_reset(&sb);
+
+Same comment as above about this spurious reset.
+
+> +       if (hashmap_get(map, &fse, NULL)) {
+> +               strbuf_release(&sb);
+> +               return 0;
+> +       }
+> +
+> +       strbuf_release(&sb);
+> +       return 1;
+> +}
+> +
+> +/*
+> + * Return 1 for exclude, 0 for include and -1 for undecided.
+> + */
+> +int fsexcludes_is_excluded_from(struct index_state *istate,
+> +       const char *pathname, int pathlen, int dtype)
+> +{
+
+Will we at some point regret not being able to "return negative on
+error"? I guess that would be "-2" or "negative other than -1".
+
+> +void fsexcludes_init(struct strbuf *sb) {
+> +       fsexcludes_initialized = 1;
+> +       fsexcludes_data = *sb;
+> +}
+
+Grabbing the strbuf's members looks a bit odd. Is this
+performance-sensitive enough that you do not want to make a copy? If a
+caller releases its strbuf, which would normally be a good thing to do,
+we may be in big trouble later. (Not only may .buf be stale, .len may
+indicate we actually have something to read.)
+
+I can understand that you do not want to pass a pointer+len, and that it
+is not enough to pass sb.buf, since the string may contain nuls.
+
+Maybe detach the original strbuf? That way, if a caller releases its
+buffer, that is a no-op. A caller which goes on to use its buffer should
+fail quickly and obviously. Right now, an incorrect caller would
+probably fail more subtly and less reproducibly.
+
+In any case, maybe document this in the .h-file?
+
+Martin
