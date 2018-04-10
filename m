@@ -6,61 +6,58 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DDE41F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 21:05:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B7681F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 21:22:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752037AbeDJVE7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 17:04:59 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:55501 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751888AbeDJVE6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 17:04:58 -0400
-Received: by mail-wm0-f52.google.com with SMTP id b127so29011338wmf.5
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 14:04:58 -0700 (PDT)
+        id S1752163AbeDJVWd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 17:22:33 -0400
+Received: from mail-wr0-f178.google.com ([209.85.128.178]:41265 "EHLO
+        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751589AbeDJVWc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 17:22:32 -0400
+Received: by mail-wr0-f178.google.com with SMTP id s12so14160653wrc.8
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 14:22:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=G5dos+DM6Qv9i57NL1tQQ7WfI9psZmK5Xatjne84oqE=;
-        b=klEIzJfyUwN++D55X7b+fWkuAKtC14XHDF7a9Lcvb978cuj5cYJ1PicR3hLXnzgS/p
-         Rt2G9rmi3PrNUf4gQAsS5a2piaoReIiBnUjhbw6fZ3gFk3bnp2RY3j1oWxcfyiu6n/xn
-         15W9zUFRxx3hEjFrnD1Jd1Md42HRHQPIkzWTEBhZkBWIuwqAAaZGJcM6QKXW5TB+GWGx
-         S7fHrU9gJ/fVz3iJSrLRfoW+axFaH5nzXP0ZlSAVg2Z034tTfUtGGn80hO6smvvJjXiO
-         nILss/HAfJtW6F6kdabUFGUv4GX+kkqN/hffosfoZUf+bcAws/2ASm9gw76BUgk6XEzQ
-         dCUQ==
+        bh=kwi/3FdJj+enrhiYP0NasI7w4PHYGvB2NzNy1jUP6mU=;
+        b=t32EDZD2fXLmyD2lEuEGJuc/RRNzPIJfJzqRrJbxUNjEyduMPcbBbujcITOhkH589o
+         aNCx0FZLWxTHNuMxyWNmChOKKWGgLXXMvrDtS12PohxZ/uiSN791crvdSAC6MXsPOQVD
+         z6DMs5JQWL70iBPZ7gPsrTP4MInfzW6fyRLmILh2zKk6NjNW/mqIfR3TynlAA3zPN0O5
+         ptyzr7oOSymZ9ztCWtf+ZGoP2w7Jvaq7C8rG/AvSRSe2SiTvOQc7RFpajGsyNi+zuMAz
+         Wt4pmYowLJ9HTlxsHFFgMhv6q5nFdsGbh5c35JNar7ihelp1Y0EWk++oZ8rwBw8jrD/P
+         CyvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=G5dos+DM6Qv9i57NL1tQQ7WfI9psZmK5Xatjne84oqE=;
-        b=fti5R9eyqXjBZGg7YphG9E/QLkofLgAFdOmJsb9xnoWaMBK5FBAjbbBCMJHEyT/2PT
-         yaRzWL5GBtIJGULEOAmbPbsp10UBSNnrWnNrGu6wB8PIKBpvaa/aXXmIVcScUWC0lAoA
-         wKT6fTHk3xrzfq2KzsvN8AbEOouwHpERtrWD1CRcNg9HnRKNOkgX6NLpXaAfZs5wBOLN
-         TwB+N66Camegm2t9Hj57oYG0oOR+8CbzBsblAg+53ZrracW04J7+0QdBquxISqrD9w3U
-         jkneIEiwOChNYmXXmgFyzu1AGNIBQyPYmt/y/4oc/qX5Z8F6NTnVYNFOcrQA1IlOX8Ea
-         3lLw==
-X-Gm-Message-State: ALQs6tAXgObuFvcBFLc/0TxnMMtlix/yioD91GrVqoyXToMgls72uFI9
-        INFdP+C41DjWCv/ONTM+4yU=
-X-Google-Smtp-Source: AIpwx48IVtkFQG0UF4PUttvfQsVroI0MrxtlxcoonC9+okTbrwrGcICcwEF4R9EUPYQ70k5oN2fKVg==
-X-Received: by 10.28.172.135 with SMTP id v129mr633356wme.144.1523394296813;
-        Tue, 10 Apr 2018 14:04:56 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id q81sm3292482wmg.8.2018.04.10.14.04.55
+        bh=kwi/3FdJj+enrhiYP0NasI7w4PHYGvB2NzNy1jUP6mU=;
+        b=h9ehb7ovQYVqN5ZkbmrUVbRHHPfDO8tcuH4iPZnFgdO9INgWR61XTM79Zj8lT4MBOu
+         r9YmwIp22X2S9fxm61GuUI6gvyIG+eLBEuP8rWGAdRQdgV6u5pZIckyh5nfPcnUzAvNL
+         qV/RVXF0dBaP8sdw8HbMLzbCDbHCbfCwkWxv41X7S5F+BpIFCXKrxZBZxnIbuhrbfuC5
+         Mn7F+8TAqovhTyAYgLJUBVwBOglCcIxEUmokgmwgQ5utEDnkJrvwOasqH7gwkJRPzAgu
+         ZxIBGM5R73SE5IpWnUJGOsQauOmyao/CpHBvblgIfgv9UcoY3mQ3C1V+1i5uzeXiDUoF
+         E/Fg==
+X-Gm-Message-State: ALQs6tBC/gDiJDAmdLhCgmZHbb5fKeT5cTWIpw/EngeCFO6z0aZUmSv8
+        4yU0JTyUvtaU0SJ73yX9gAQ=
+X-Google-Smtp-Source: AIpwx481l6FnU3Qg9CZlQqfbgr9LEA7KsHIkDsQZdYT7ZV78CFs2NfNWslrahtykytFDuL9M4m6zuA==
+X-Received: by 10.223.171.213 with SMTP id s79mr1436073wrc.52.1523395350575;
+        Tue, 10 Apr 2018 14:22:30 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id k82sm1537964wmf.7.2018.04.10.14.22.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 10 Apr 2018 14:04:56 -0700 (PDT)
+        Tue, 10 Apr 2018 14:22:29 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Toews <mastahyeti@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 6/8] gpg-interface: find the last gpg signature line
-References: <20180409204129.43537-1-mastahyeti@gmail.com>
-        <20180409204129.43537-7-mastahyeti@gmail.com>
-        <xmqqlgdv2y66.fsf@gitster-ct.c.googlers.com>
-        <CAE=pOyFj+WZBB6Zp35d=mYNsxcJK-LwOxseWXSmY_hs+Lwugpg@mail.gmail.com>
-Date:   Wed, 11 Apr 2018 06:04:55 +0900
-In-Reply-To: <CAE=pOyFj+WZBB6Zp35d=mYNsxcJK-LwOxseWXSmY_hs+Lwugpg@mail.gmail.com>
-        (Ben Toews's message of "Tue, 10 Apr 2018 08:47:39 -0600")
-Message-ID: <xmqqbmeq3h8o.fsf@gitster-ct.c.googlers.com>
+To:     Andreas Heiduk <asheiduk@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/6] doc: align 'diff --no-index' in text with synopsis
+References: <20180410183224.10780-1-asheiduk@gmail.com>
+        <20180410183224.10780-3-asheiduk@gmail.com>
+Date:   Wed, 11 Apr 2018 06:22:29 +0900
+In-Reply-To: <20180410183224.10780-3-asheiduk@gmail.com> (Andreas Heiduk's
+        message of "Tue, 10 Apr 2018 20:32:20 +0200")
+Message-ID: <xmqq7epe3gfe.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,33 +66,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Toews <mastahyeti@gmail.com> writes:
+Andreas Heiduk <asheiduk@gmail.com> writes:
 
->> Hmmmm, what vintage of our codebase is this patch based on?  Did I
->> miss a patch that removes these lines
->>
->>
->>     printf '      ' >sigblanknonlfile
->>     get_tag_header blanknonlfile-signed-tag $commit commit $time >expect
->>     echo '-----BEGIN PGP SIGNATURE-----' >>expect
->>     test_expect_success GPG \
->>             'creating a signed tag with spaces and no newline should succeed' '
->>             git tag -s -F sigblanknonlfile blanknonlfile-signed-tag &&
->>             get_tag_msg blanknonlfile-signed-tag >actual &&
->>             test_cmp expect actual &&
->>             git tag -v signed-tag
->>     '
->>
->> which appear between the pre- and post- context of the lines you are
->> inserting?  They date back to 2007-2009.
->>
->
-> That test was fixed a week ago:
-> https://github.com/git/git/commit/a99d903f21d102a5768f19157085a9733aeb68dd
+>  
+> -'git diff' --no-index [--options] [--] [<path>...]::
+> +'git diff' [--options] [--no-index] [--] <path> <path>::
+>  
+>  	This form is to compare the given two paths on the
+>  	filesystem.  You can omit the `--no-index` option when
 
-Well, you cannot expect any reviewer to know about a change that has
-never been sent to the list and has never been part of even 'pu'
-branch, no matter how old such a private "fix" is.  
+It definitely is a good change to show two (and only two) <path> on
+the command line as non-optional arguments.
 
-What other unpublished things that are not even on 'pu' do these
-patches depend on?
+I however find the change to mark that -"-no-index" is optional is
+inviting more confusion in the form presented in this patch.  It is
+optional under specific conditions, and that is not conveyed with
+these two path arguments named very genericly (as opposed to making
+it clear that they are paths that are not managed by Git) on the
+example command line.
+
+I have a suspicion that it would be safer to have the description
+say under what condition "--no-index" becomes optional (which our
+text already does), without marking it as if it is always optional
+like this patch does (i.e. do not lose [] around it from this line).
+I dunno.
+
