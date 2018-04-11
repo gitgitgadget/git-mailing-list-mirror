@@ -2,88 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC2E91F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 01:16:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E9CD1F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 01:24:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752240AbeDKBQq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 21:16:46 -0400
-Received: from mail-bl2nam02on0046.outbound.protection.outlook.com ([104.47.38.46]:38223
-        "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751775AbeDKBQp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 21:16:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Seeq.onmicrosoft.com;
- s=selector1-seeq-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=iwJc5fSU1ZSpZ3qfdzSiwk8c4zleYjYhLqIqRDb/7DM=;
- b=p5CVK0/b/G2/wKT9NE1kdtqJir7SSjg0fkTY1RkAy9r3i0r8qTOD3WFx+d0UJ9Tn7H8f08lu9A+ncO0ztkMddxYX6cllF6YbnmVA5ezX4fS2rvvtouwl3Zu4eXavIf9BSc/oTRqdcJfwlnFFMrLSAdirSffonzCw5iXoSxR8BFo=
-Received: from SN6PR06MB3824.namprd06.prod.outlook.com (52.132.125.144) by
- SN6PR06MB4109.namprd06.prod.outlook.com (52.132.124.155) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.653.12; Wed, 11 Apr 2018 01:16:42 +0000
-Received: from SN6PR06MB3824.namprd06.prod.outlook.com
- ([fe80::3d14:fc74:d946:1a74]) by SN6PR06MB3824.namprd06.prod.outlook.com
- ([fe80::3d14:fc74:d946:1a74%13]) with mapi id 15.20.0653.014; Wed, 11 Apr
- 2018 01:16:42 +0000
-From:   John Sullivan <john.sullivan@seeq.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: git-lfs question
-Thread-Topic: git-lfs question
-Thread-Index: AdPRMkDGr74BKtdtRsiO+nGgxpeIPQAAGyQQ
-Date:   Wed, 11 Apr 2018 01:16:42 +0000
-Message-ID: <SN6PR06MB382452FA81CAD6654E40EEB58CBD0@SN6PR06MB3824.namprd06.prod.outlook.com>
-References: <SN6PR06MB3824DE625D893166EEE35D358CBD0@SN6PR06MB3824.namprd06.prod.outlook.com>
-In-Reply-To: <SN6PR06MB3824DE625D893166EEE35D358CBD0@SN6PR06MB3824.namprd06.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [73.40.112.164]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;SN6PR06MB4109;7:DJjW2A4+OPDWMZ37l4UTUlFfafsAGYoNT5k+VziejzfkB31p0cgjprIf+7coycLXRh+TJMgSbwinQCr7KhwfGWJxu7HYK4oPfSHcXCiswwkhRlLzpFOtrlcugjgiX+b58HOb+kFch2VMUCoAizBIcHr8rG/ndCz6171wQJ1Vkxw04y3g20l78az7fVtNnI8P7t5fYVZDdq6G8ZNndtDnb0riEc6+5o/A2b7TydwqWOzHM+yNWcw+9BjfHdANdsln
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(7021125)(5600026)(3008032)(4534165)(7022125)(4603075)(4627221)(201702281549075)(7048125)(7024125)(7027125)(7028125)(7023125)(2017052603328)(7153060)(7193020);SRVR:SN6PR06MB4109;
-x-ms-traffictypediagnostic: SN6PR06MB4109:
-x-microsoft-antispam-prvs: <SN6PR06MB410964F21067EA07389128B38CBD0@SN6PR06MB4109.namprd06.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(5005006)(8121501046)(3231221)(944501327)(52105095)(93006095)(93001095)(10201501046)(3002001)(6041310)(20161123564045)(20161123562045)(2016111802025)(20161123560045)(20161123558120)(6043046)(6072148)(201708071742011);SRVR:SN6PR06MB4109;BCL:0;PCL:0;RULEID:;SRVR:SN6PR06MB4109;
-x-forefront-prvs: 0639027A9E
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(376002)(396003)(39380400002)(346002)(39840400004)(366004)(199004)(189003)(3660700001)(97736004)(102836004)(316002)(106356001)(7696005)(86362001)(76176011)(6116002)(66066001)(68736007)(3846002)(105586002)(2900100001)(2906002)(6506007)(305945005)(99286004)(5250100002)(14454004)(3280700002)(74316002)(6916009)(5660300001)(2351001)(2940100002)(25786009)(53936002)(478600001)(9686003)(55016002)(6436002)(5640700003)(186003)(6346003)(11346002)(8936002)(8676002)(3480700004)(7736002)(2501003)(1730700003)(81156014)(486006)(476003)(81166006)(33656002)(26005)(446003);DIR:OUT;SFP:1101;SCL:1;SRVR:SN6PR06MB4109;H:SN6PR06MB3824.namprd06.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: seeq.com does not designate
- permitted sender hosts)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=john.sullivan@seeq.com; 
-x-microsoft-antispam-message-info: DDEozAavQHmhwjPdSxM83x1lKebf/11OkYvwBRwgg62AZKIdRku/h3xnCxKlFDZAysPtpJ5/gOITyXXOvzZnCps9neRTWo1HIyyWZdq1lzo60mo3E/lr2t4Q5eSX7RSUvEgOXFzLRUn0ouuvrLNnHB4XhmlmD0tOkPfpbBAgVO8wT+n/OrsA6BdcHsPRlZT+I6FWhnj+3SO3CcYbh2pujrm+YrxSKEe4Ci/IUb+yG6OCJhJr71/MKhl+TRfkfmvBU0EFMJQlgEFDw7+V8Fw/LMcZp7fICZkMjVm7DDLBNSv3KVinRb+GL/EAikWutO0d7/MJiz9WftZX/JMG91PscDIGaM6jiKKXJIQIokHaVhF5MVDJME9X68FwnTr3/8qqmS82L9KSxqILniPoeQsoHsGTgP/muKFrqJKfkEjsGvI=
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1752564AbeDKBYt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 21:24:49 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36051 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752016AbeDKBYs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 21:24:48 -0400
+Received: by mail-wm0-f67.google.com with SMTP id x82so760952wmg.1
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 18:24:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=tlH+6Zd5znTKs4thnuH3I9yJMqd+B7NeWgAA/+Drmck=;
+        b=J7cE4BCitjsdnoVHmRLu2Kkj5GLEJ6Os8kK0SxJuvd/40+1Luek1hZ3jKudqbxw2QA
+         enBGSxuKX1qa00FhgWCu/++S2nydIyD8lDU5ThHQ2+QzIqIBW+zthPsWzfZ9rFumpV42
+         QOD3d67LzvWAfvJj/U9m4KbwID02/nboIZpGBzUWlHs1INGpG6xgo0GGtcVyzSTGadGR
+         iQikyd/bsMKiOd3GbQpKlTz8mJrJxaMyC0tHwDdvLbUnqqmGsodtD/9Y6HXWjN7fDngR
+         Rn56Y/IHObrUvFPTcP4VJ2jvt2rlnLIQ5bpbnkpICnROKY+lqckfwCX+4k7wdRR2mOt0
+         eXxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=tlH+6Zd5znTKs4thnuH3I9yJMqd+B7NeWgAA/+Drmck=;
+        b=N7qxwz5s6ZTURyMzO7jdGm9cFQQohGJ2HysEGvNSv6CtOz1Oo1aURbqi4pojNzwlUX
+         kSfubzstos4AHqx5EjNWoZyspt8wkyxxxdQK+RnenVwSM+33lxeYUkUr8ZtMwkwa5CaH
+         y/Mg9rD+joGrfEou+LUI+bc8kP5hwY9cHtwhdV/+zSO3ixFYR55tnjeFkWu7lWLfCPXE
+         07kBlepDoXvyvldS/1WXcR9fFNK5tKojsTw1js0T4ziJTJtBACO1htLB3reESBKrOdpL
+         TcahFB8KyljJPXsKx1mx9cqnGRtv3d/Z3PBSnY6zBvv+s1fUyElHCrkQkNiDaMGL9+ho
+         OBWw==
+X-Gm-Message-State: ALQs6tCWHAXrYl1qA/IK4hmu9vyPNQH+l6BrXR9n3WbusSZyQ/iqxzw0
+        7voo1MYzL8O7kLvGU9LS1+rjwkTd
+X-Google-Smtp-Source: AIpwx4+2kXMHv78oQVsyj/05x6Aj8GpVX3+4a2Gg/f/Wgl0dlgxhn3+VhyVVpFST9YYb+OtWrIaNUw==
+X-Received: by 10.28.99.84 with SMTP id x81mr1148353wmb.8.1523409886700;
+        Tue, 10 Apr 2018 18:24:46 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id l73sm791890wma.10.2018.04.10.18.24.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 10 Apr 2018 18:24:45 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com, peff@peff.net
+Subject: Re: [PATCH v8 0/2] builtin/config.c: support `--type=<type>` as preferred alias for `--type`
+References: <20180328234719.595-1-me@ttaylorr.com>
+        <20180411010654.GA28561@syl.local>
+Date:   Wed, 11 Apr 2018 10:24:45 +0900
+In-Reply-To: <20180411010654.GA28561@syl.local> (Taylor Blau's message of
+        "Tue, 10 Apr 2018 18:06:54 -0700")
+Message-ID: <xmqqtvsizg9u.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 23bb36ba-cbe5-4078-bba4-08d59f49e29f
-X-OriginatorOrg: seeq.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 23bb36ba-cbe5-4078-bba4-08d59f49e29f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Apr 2018 01:16:42.5247
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 59c34274-1c79-484b-8ed6-71174050b6d6
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR06MB4109
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello - I've seen instructions that say after installing git to also instal=
-l git-lfs.
-But today when installing git I noticed that in the install options there w=
-as a default selected options stating "Git LFS (Large File Support)".
+Taylor Blau <me@ttaylorr.com> writes:
 
-Does this mean git is automatically adding git-LFS or just adding support f=
-or it and I'll still need to install git-lfs afterwards?
+> Attached is the eighth re-roll of my series to add `--type=<type>` as
+> the preferred alternative for `--<type>`.
+>
+> The main changes since v7 concern handling degenerate cases, such as:
+>
+>   * git config --type=int --type=bool
+>   * git config --type=int --int
+>
+> We have previously had discussion about whether we should (1) retain the
+> error in previous versions when confronted with multiple, conflicting
+> type specifiers, (2) ignore the error, in favor of making --<type> and
+> --type=<type> true synonyms, or (3) some combination of the two.
+>
+> I have thought some more about my argument that it would be favorable to
+> make "--type=int" and "--int" behave in the same way, and I am no
+> longer convinced that my argument makes sense. It's based on the premise
+> that "--type=<type>" must _necessarily_ allow multiple invocations, such
+> as '--type=int --type=bool', and therefore "--int --bool" should be
+> updated to behave the same way.
+>
+> We are not constrained to this behavior, so in v8, I have taught Git the
+> following:
+>
+>   1. Allow multiple non-conflicting types, such as '--int --int',
+>      '--type=int --int', and '--int --type=int'.
+>
+>   2. Disallow multiple conflicting types, such as '--int --bool',
+>      '--type=int --bool', and '--int --type=bool'.
+>
+>   3. Allow conflicting types following --no-type, such as '--int
+>      --no-type --bool', '--type=int --no-type --bool', and '--int
+>      --no-type --type=bool'. Note that this does _not_ introduce options
+>      such as '--no-int' and whatnot.
+>
+> This is accomplished by a new locally defined macro called
+> OPT_CALLBACK_VALUE, which allows us to reuse option_parse_type() to
+> handle --int as well, by sending it through as opt->defval.
+>
+> I think that the above is the best-of-all-worlds choice, but I am
+> curious to hear everyone else's thoughts. Thanks in advance for your
+> review.
 
-Thanks,
-John
+I too am curious.  Personally I do not think your "last one wins"
+was necessarily bad--in fact it internally was consistent--I just
+thought that the log message did not justify the choice well.  And I
+do not think the semantics defined by this one, "once you choose,
+stick to it, or explicitly clear the previous choice", is bad,
+either.
 
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 5c8952a17c..7184c09582 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -61,28 +61,53 @@ static int show_origin;
+>  #define TYPE_PATH		4
+>  #define TYPE_EXPIRY_DATE	5
+>
+> +#define OPT_CALLBACK_VALUE(s, l, h, f, i) \
+> +	{ OPTION_CALLBACK, (s), (l), NULL, NULL, (h), PARSE_OPT_NOARG | \
+> +	PARSE_OPT_NONEG, (f), (i) }
+> +
+> +static struct option builtin_config_options[];
+
+OK.  I am not sure if OPT_CALLBACK_VALUE() needs to take 'f', as you
+always pass the option_parse_type function to it.
+
+>  static int option_parse_type(const struct option *opt, const char *arg,
+>  			     int unset)
+>  {
+> -	int *type = opt->value;
+> -
+>  	if (unset) {
+> -		*type = 0;
+> +		type = 0;
+>  		return 0;
+>  	}
+>
+> -	if (!strcmp(arg, "bool"))
+> -		*type = TYPE_BOOL;
+> -	else if (!strcmp(arg, "int"))
+> -		*type = TYPE_INT;
+> -	else if (!strcmp(arg, "bool-or-int"))
+> -		*type = TYPE_BOOL_OR_INT;
+> -	else if (!strcmp(arg, "path"))
+> -		*type = TYPE_PATH;
+> -	else if (!strcmp(arg, "expiry-date"))
+> -		*type = TYPE_EXPIRY_DATE;
+> -	else
+> -		die(_("unrecognized --type argument, %s"), arg);
+> +	/*
+> +	 * To support '--<type>' style flags, begin with new_type equal to
+> +	 * opt->defval.
+> +	 */
+> +	int new_type = opt->defval;
+> +	if (!new_type) {
+> +		if (!strcmp(arg, "bool"))
+> +			new_type = TYPE_BOOL;
+> +		else if (!strcmp(arg, "int"))
+> +			new_type = TYPE_INT;
+> +		else if (!strcmp(arg, "bool-or-int"))
+> +			new_type = TYPE_BOOL_OR_INT;
+> +		else if (!strcmp(arg, "path"))
+> +			new_type = TYPE_PATH;
+> +		else if (!strcmp(arg, "expiry-date"))
+> +			new_type = TYPE_EXPIRY_DATE;
+> +		else
+> +			die(_("unrecognized --type argument, %s"), arg);
+> +	}
+> +
+> +	if (type != 0 && type != new_type) {
+> +		/*
+> +		 * Complain when there is a new type not equal to the old type.
+> +		 * This allows for combinations like '--int --type=int' and
+> +		 * '--type=int --type=int', but disallows ones like '--type=bool
+> +		 * --int' and '--type=bool
+> +		 * --type=int'.
+> +		 */
+> +		error("only one type at a time.");
+> +		usage_with_options(builtin_config_usage,
+> +			builtin_config_options);
+> +	}
+> +	type = new_type;
+
+Does this rely on a file-scope global variable (type)?
+
+>
+>  	return 0;
+>  }
