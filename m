@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 587401F424
-	for <e@80x24.org>; Wed, 11 Apr 2018 11:29:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EF751F424
+	for <e@80x24.org>; Wed, 11 Apr 2018 11:37:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751891AbeDKL3W (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 07:29:22 -0400
-Received: from mout.gmx.net ([212.227.17.20]:42609 "EHLO mout.gmx.net"
+        id S1752297AbeDKLhP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 07:37:15 -0400
+Received: from mout.gmx.net ([212.227.15.19]:46607 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751797AbeDKL3U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 07:29:20 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MgXCF-1es7T00hmB-00O21l; Wed, 11
- Apr 2018 13:29:09 +0200
-Date:   Wed, 11 Apr 2018 13:28:51 +0200 (DST)
+        id S1752016AbeDKLhO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 07:37:14 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmbZb-1eXA9q1Isl-00aDD3; Wed, 11
+ Apr 2018 13:37:05 +0200
+Date:   Wed, 11 Apr 2018 13:36:48 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     Sergey Organov <sorganov@gmail.com>
@@ -31,30 +31,31 @@ cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Igor Djordjevic <igor.d.djordjevic@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v6 00/15] rebase -i: offer to recreate commit topology
-In-Reply-To: <871sfm737e.fsf@javad.com>
-Message-ID: <nycvar.QRO.7.76.6.1804111324350.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1519680483.git.johannes.schindelin@gmx.de> <cover.1523362469.git.johannes.schindelin@gmx.de> <87tvsj6rn2.fsf@javad.com> <nycvar.QRO.7.76.6.1804110009080.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <871sfm737e.fsf@javad.com>
+Subject: Re: [PATCH v6 04/15] sequencer: introduce new commands to reset the
+ revision
+In-Reply-To: <878t9u5ksw.fsf@javad.com>
+Message-ID: <nycvar.QRO.7.76.6.1804111329270.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1519680483.git.johannes.schindelin@gmx.de> <cover.1523362469.git.johannes.schindelin@gmx.de> <fb797f32b7385317b9dc18524e3863ba627f6c98.1523362469.git.johannes.schindelin@gmx.de> <878t9u5ksw.fsf@javad.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:54xtyIUXn+G5t8+Ub5RjpGFFcs4sAS5wKdL1Gb2HgVUy6s8qYpb
- 6Y7qi2anJ1hr/OXopGhet4Hra7bxacI3HjFfkUD4uBsTusjmVoFi5fL5CxuqbUvdwvj5iQR
- iBGAOoqDYBjN3CtGKuZJKn2/yLzFxoHlEDSTbtk5lGnHErDBlFQd6+zfYvqmPJh/m8Jx/no
- y21APL0FI0G1rMX/9Z9Fg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vTa6y3PIVgk=:PsSCXvCU+WjgZY2Rpuj4tY
- +iGS1LTW/g90Hfoi1eDDX+/qB+pawKfNt5Z1HDo2wAkndoVmb+RZ+O8DhWrtxYgO3LBd2p5Dp
- KJuSKkAYkRqsuBv7J3jNmaVe5g2UptsQ0B/AMSJI9eMDZN08ktXJOlhG+5duwzFem7CcM3PiI
- iB2ei8l5eXiK/x1f/EMPUXZgrxmN1Nfn5MPLAmm9uAEaPavWAp2IFeIfC8CgkFTHVcHlKlMN9
- K05KJsLflTridiAm8AeUka4R7UBaJzX5AU7yN7cPMJprhMiHxz7nRjN/DIFMmvUEXM7cwkHIP
- /7I5fe2MSQ/r6EgBAepkVVBopeSTS2+isyzCSJcdvf/r67O8+XMFxhPxLBePNGcdmyZtjirDE
- 34qXluuZB4ukUXEFrx9lQ/eLVzXZes5iY3HFvZH/TNuakFwrcwfQh3kRfQ6xE+nv84rCw9evh
- wJMJIcPohj5SRI3N4xXODC/XYyxqfqDSyFLhUDbVsdpbByrJYw072znFg4cylezAgD4+16tx5
- gCcsj5nYda3Wg4AaxGz5bbD3xE8Yldji0/wZi//x7tPB3sX/gzZSVQbXiNtaQrpZrlepz/cYe
- HK0kkyJNf9n0FC1mp8x9O4K58SvEfHFivRf+6ZrBoQw/ekKbldYFdUGyObg7wXLrgWBBW26xu
- bKTuQaBRQBbFB2uhxjM99fm4CD6rmbnQgkmmNpbuMgArm885Ied+cl3UftNMjK1bV+e/+CzZQ
- 8y/hmIHs9G8m2VfUhT4f2+N+q3JrVrq1uu+d/OjTAMfNkOdSfUuTYZv1JCjARB2/MPY6ZMOa7
- RtjZiV7/+5icK0Z1Bd3iJl1KH7iAuHZo0K6fDinwXP8onY9X78=
+X-Provags-ID: V03:K1:fLV/Tep4zlF+URX18WqNIpGTXaiOpPP2FikHoYkKZ+OyZ/DQSUj
+ C66f3ACqan1O98tvwv/80DZXv05CxoUHekdVd36ZRwBxwiSmnfueXebdYu9YdrqZkAvYyMM
+ yxdJElKn72+QLP729Ki6/q8EsY4NQ7VCACAKWaMjmoSWBSVKYHY+ev56mMe+7/hemp6h++c
+ xTf4CgdmgxaR6PwYqOadQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:e6Lnpn0omEQ=:isjC4qclwrjg1kmrRFW/pG
+ c/86MKEAb4cbow4mjFsxjd24Ga/uPIeh3shQ2VVyfcqTXei++gI3RBWRwCHvJ3CjsY4MiwX6s
+ zCO/rKamyVo1gubGrhhgSR5jBLiqHQqYQ8dtq0KB1PRaThn63GOqB6dSaAN2ldUca3hP6frWa
+ zRwq1Gr7KaCzzYl3wQys/qiLPvMaHyc2qydQNFvSjQe2n52roFgOpMK5UI7QMG1q+3S0B6aEG
+ dgWpdJbb1rtUaOVYWjU9GlJisjx64olvEwxSDRzHXR0kXvfmVofeIJJXrHsTNVz7PymS0q3L1
+ 8+OVBzNkx6mtgF2tpc3CQOSTP7yI7G9C4FJ3KWbZbx7dll2he4Xh1lH2J7OpeBYX1gPUrKIQe
+ OTUOPig+2lbhbYArbKqS468eWuMh2Q6Ufflf9RRW9s4RORYzfiQx3QrJiP2PFlxeoQrg7vuI4
+ OOAfJrzOoHdbsI2+dglSblpRcIaYBdDJ90sxgGPoF6RJCgW1oDEK1CXHaHHZcysnMzAQ6Bcnk
+ TmPwAFxDutrD9JQTFKQTN9PGGnYwW2w4CrNf1HiF8Nq1ZlgDMxA9718Rg8r8XizIHYK1D2tW5
+ Z5bM4AJzOh4PndPYdbwu53DZacJeF1AB+3ZAi57fbB59uyZ7fKnPfvtadt7FCgw8G1WOamJoa
+ bwUC9kbNdAwl/0T4bBgTPEcajBVrE81pFPf2UIzoVk84OY8uqVYFnF5x+s1Yh3gxC+ywUQilC
+ NSCs3Ws9wfFh87HiNgzDymdVe5RAobMuRY47GRRTx2a4FIGA4nKQJFBuzMxJa7c5LPWIVJp2e
+ bMmYoioRgF8dEeJL/vEz6qFMWTu4M16MQUXJuLfA2R6F+gpPjk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,51 +65,39 @@ Hi Sergey,
 
 On Wed, 11 Apr 2018, Sergey Organov wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> > On Tue, 10 Apr 2018, Sergey Organov wrote:
-> >
-> >> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> >> 
-> >> > Once upon a time, I dreamt of an interactive rebase that would not
-> >> > flatten branch structure, but instead recreate the commit topology
-> >> > faithfully.
-> >> 
-> >> [...]
-> >> 
-> >> > Think of --rebase-merges as "--preserve-merges done right".
-> >> 
-> >> Both option names seem to miss the primary point of the mode of
-> >> operation that you've formulated in the first sentence. I suggest to
-> >> rather call the new option in accordance to your description, say,
-> >> --no-flatten, --keep-topology, or --preserve-shape.
-> >
-> > A very quick A/B test shows that neither --no-flatten nor --keep-topology
-> > and certainly not --preserve-shape conveys to Git users what those options
-> > are supposed to do.
+> [...]
 > 
-> In fact, my preference would be --[no-]flatten, exactly because the
-> default mode of rebase operation flattens the history, and thus what I'm
-> talking about is:
+> > We disallow '#' as label because that character will be used as
+> > separator in the upcoming `merge` command.
 > 
-> git rebase --no-flatten
+> Please consider to use # not only in `merge` and `reset`, but in the
+> rest of the commands as well, to unify this new syntax. I.e., right now
+> it seems to be:
+> 
+> pick  abcd A commit message
+> merge beaf # B commit message
+> 
+> I suggest to turn it to:
+> 
+> pick  abcd # A commit message
+> merge beaf # B commit message
 
-And this is the option out of the four that fared *worst* in the A/B
-testing. Not even experts in Git internals were able to figure out what
-the heck you are talking about.
+First of all, that alignment of pick's and merge's first arguments? That
+does not exist. If you want aligned arguments, you have to use the
+rebase.abbreviateCommands feature.
 
-Now, you can beat that dead horse until it is pulp. Your choice. I'd
-rather go on to more interesting things, because as far as I am concerned,
-the naming issue has been settled, with you being the only person in
-disfavor of --rebase-merges.
+Second: this change would break backwards-compatibility. For almost eleven
+years, we generated `pick abcdef0123 A commit message`. Even if there are
+no scripts that rely on this form, power users have gotten used to it, and
+I can tell you from experience how unsettling even minor visual changes
+are in everyday operations.
 
-What you *could* do is finally take your RFC to the test. Run it with the
-concrete example I showed you in
-https://public-inbox.org/git/nycvar.QRO.7.76.6.1803261405170.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz/
-
-It is high time that you demonstrated on this concrete case study how your
-proposed solution performs. And then tally that up with Phillip's
-strategy.
+In short: no, we cannot do that. Just like your proposal to conflate the
+`merge` and `pick` commands for some perception of consistency: The user
+experience is more important than individual persons' sense of elegance
+(that might not even be shared with the majority).
 
 Ciao,
 Johannes
