@@ -3,108 +3,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF00E1F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 18:30:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04FD91F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 18:38:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752804AbeDKSak (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 14:30:40 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54589 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751777AbeDKSak (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 14:30:40 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 91D35E2189;
-        Wed, 11 Apr 2018 14:30:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=CtX6fHtO1wgcgizGyd6AIMc+fS0=; b=r4ngwVR
-        NHf5DMJCI/6kDH3Y7yoWqtq9RW9hm7yYku8Tph2S2GHvqvqlBHw7JdTknToXJrti
-        x9IBqUEKUsX0ctSCzKqz3uyhigHnxj1cc4e3uzx5O0o7UDUTF5yq4fN8X9EJp1jB
-        K8e+7voyvDcjy7A3dFd2rExA4wCISw8YEPN0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=oQ2AWSf11DkUXes6yJMmBj7nmXxPaxq4R
-        4I0Q5BMZ9m6SZ79Eap9qC7rqViI1VDNyNWd5+Nj4Q8FWxpnczfRDOIB9J3vRG9Zp
-        6FDyFVcESbRXWmX5Tp1sPS4BOnDxhsjst40eHAr0DTNk4BdliqWMO6lmF3wAKsQD
-        SngKeryO90=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 88B8DE2188;
-        Wed, 11 Apr 2018 14:30:35 -0400 (EDT)
-Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DF9B2E2187;
-        Wed, 11 Apr 2018 14:30:34 -0400 (EDT)
-Date:   Wed, 11 Apr 2018 14:30:33 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Harald Nordgren <haraldnordgren@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v14 2/4] ref-filter: make ref_array_item allocation more
- consistent
-Message-ID: <20180411183033.GQ29680@zaya.teonanacatl.net>
-References: <20180402005248.52418-1-haraldnordgren@gmail.com>
- <20180409014226.2647-1-haraldnordgren@gmail.com>
- <20180409014226.2647-2-haraldnordgren@gmail.com>
- <CAHwyqnURebvfW4rGz9RAbe7B9p6ZDy0jUueDFrYE30dmjCtMVA@mail.gmail.com>
- <CAGZ79kYeM=CqKSWTL2tdDXWueMGoki4zAUmFy4wbhtagN7gEAA@mail.gmail.com>
+        id S1753664AbeDKSh5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 14:37:57 -0400
+Received: from mail-sn1nam01on0124.outbound.protection.outlook.com ([104.47.32.124]:63414
+        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752311AbeDKShz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 14:37:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=fG1Q2g36LkiejAu2PG29FHR09LYF/zAsZ5VtLHFY98E=;
+ b=ND8UcdmVvkcXUx9gunlf/o5hdKf+vuVhbqqsdbu6UdBZaojKdFUOQk0IHoa35RWJhsIAbKhNgED5zRty0kVu7qj/7VhDPgmq2f1jjftqv3gCK9Ok02xKz36XJcizH2UrRFhZSENbgZpb9VmHPQXrPMgeAYKqD+1Ci53Vt8nP9Dc=
+Received: from BL0PR2101MB1106.namprd21.prod.outlook.com (52.132.24.29) by
+ BL0PR2101MB0994.namprd21.prod.outlook.com (52.132.23.156) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.696.0; Wed, 11 Apr 2018 18:37:53 +0000
+Received: from BL0PR2101MB1106.namprd21.prod.outlook.com
+ ([fe80::1516:5e9f:5649:ef8b]) by BL0PR2101MB1106.namprd21.prod.outlook.com
+ ([fe80::1516:5e9f:5649:ef8b%4]) with mapi id 15.20.0696.006; Wed, 11 Apr 2018
+ 18:37:53 +0000
+From:   Jameson Miller <jamill@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "gitster@pobox.com" <gitster@pobox.com>,
+        "peff@peff.net" <peff@peff.net>,
+        "sunshine@sunshineco.com" <sunshine@sunshineco.com>,
+        "ramsay@ramsayjones.plus.com" <ramsay@ramsayjones.plus.com>,
+        Jameson Miller <jamill@microsoft.com>
+Subject: [PATCH v4 0/3] Extract memory pool logic into reusable component
+Thread-Topic: [PATCH v4 0/3] Extract memory pool logic into reusable component
+Thread-Index: AQHT0cQzXrV3RyDdXkKxrOL4vNcsMg==
+Date:   Wed, 11 Apr 2018 18:37:53 +0000
+Message-ID: <20180411183738.113809-1-jamill@microsoft.com>
+References: <20180321164152.204869-1-jamill@microsoft.com>
+In-Reply-To: <20180321164152.204869-1-jamill@microsoft.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2001:4898:8010:1:1060:bd2c:4297:50e]
+x-clientproxiedby: BL0PR02CA0037.namprd02.prod.outlook.com
+ (2603:10b6:207:3d::14) To BL0PR2101MB1106.namprd21.prod.outlook.com
+ (2603:10b6:207:37::29)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0994;7:Hqin4OeGVmk858YkTHLVVe5UGjeNXmVOXETgsqa1nNel6mWOHT3Ca8N4CWzGvWYLu9FW9sQEgvlx25WQcqDOCxzNQNyNfMsSkOr4t+5BHJtpX8eXA4Bevy1n8v40k/RQJW0+BV4KcQeGRYpLDRS7Ko0OgU6G5Qi+69qNwAYNKULqa54LgkEYiM522RGqXiZU8Un1DdJfTRQetdT8buohFe9T6KtLdcVzJ6OlhdI4gphPqL8VXNS/kTqIzA86Uoqn;20:id84Altf6PC855VHgLP9f4KYpM8s5A0Qigi9IHl+XQ2muAHZxyC+FT+ctiwUB+t5ZKrjS7wOiC6L3QxqEKHHWPlNN+0lz/tLsTlc5B+YBJA00usDQrKQv4V5VVmfkbW211W49pfJSHSARvIGq4rS/WYniLpd9HLr6/ihfkrTs00=
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(3008032)(2017052603328)(7193020);SRVR:BL0PR2101MB0994;
+x-ms-traffictypediagnostic: BL0PR2101MB0994:
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=jamill@microsoft.com; 
+x-microsoft-antispam-prvs: <BL0PR2101MB0994C1D63AC330B766163BD1CEBD0@BL0PR2101MB0994.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(8121501046)(5005006)(3002001)(10201501046)(3231221)(944501327)(52105095)(93006095)(93001095)(6055026)(61426038)(61427038)(6041310)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123558120)(20161123562045)(6072148)(201708071742011);SRVR:BL0PR2101MB0994;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0994;
+x-forefront-prvs: 0639027A9E
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(366004)(376002)(39860400002)(39380400002)(346002)(189003)(199004)(8656006)(52116002)(25786009)(54906003)(486006)(102836004)(22452003)(76176011)(68736007)(106356001)(446003)(59450400001)(305945005)(5640700003)(316002)(6506007)(46003)(6116002)(386003)(476003)(5250100002)(6436002)(186003)(86612001)(10090500001)(2501003)(6512007)(53936002)(99286004)(86362001)(7736002)(11346002)(2900100001)(105586002)(10290500003)(2616005)(478600001)(4326008)(2351001)(81156014)(8676002)(1730700003)(81166006)(97736004)(2906002)(36756003)(8936002)(5660300001)(6486002)(6916009)(1076002)(3280700002)(3660700001)(14454004)(107886003)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0994;H:BL0PR2101MB1106.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-microsoft-antispam-message-info: o8N8aAGrOH5OoK7ZGd42/nygHADavkvaHHq3BvNfwlHn2Z7aKgvc8PNxtQTy2s6ThIhbu4Qv8dIZ+8dHrGnmSZsk4xZxdIpprhXNnkHDoVAuHZ7KyAfZuVYgnGpIkkrmbFC8fPKP7iarE259VZidi5l2CdBxrfJ/BxeGLw7/hwxnWyecLhTeVE+0ETd4GNHUpKe/OhfzYC2Zjnvw7gLTTI+aZFR1hYw7M9sYMZ9+91mIW9AiI3zWpuPK3JevphYYlPNEAtdCTOEvEyGx1VbRXOlC/dvUcuWQseBmOGgj3se6DVOoCOADdNjlHpzAOS8Pki1OuTVmWwYtQXnWWr6uv3nEYA2AdfF4rf528vyAKRbV+5PhmnKU2qQXCq1P85uDbpJ/Fui4b+Cw7NZtl8Jie2H8wVy4ka2wvIWXRaCPsO0=
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYeM=CqKSWTL2tdDXWueMGoki4zAUmFy4wbhtagN7gEAA@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Pobox-Relay-ID: 6C99DFD2-3DB6-11E8-BC5C-44CE1968708C-09356542!pb-smtp1.pobox.com
+X-MS-Office365-Filtering-Correlation-Id: 7e01092d-74a8-47da-c4ab-08d59fdb55a7
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7e01092d-74a8-47da-c4ab-08d59fdb55a7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Apr 2018 18:37:53.1669
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0994
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Thank you everyone for taking the time review and provide feedback on
+this patch series.
 
-Stefan Beller wrote:
-> Please see the "What's cooking?" email on the mailing list that is
-> sent out periodically by Junio.
-> the last one is
-> https://public-inbox.org/git/xmqqd0z865pk.fsf@gitster-ct.c.googlers.com/
-> which says:
-> 
->> * jk/ref-array-push (2018-04-09) 3 commits
->> - ref-filter: factor ref_array pushing into its own function
->> - ref-filter: make ref_array_item allocation more consistent
->> - ref-filter: use "struct object_id" consistently
->> (this branch is used by hn/sort-ls-remote.)
->>
->> API clean-up aournd ref-filter code.
->>
->> Will merge to 'next'.
-> 
-> It will be merged to next and if no people speak up (due to bugs
-> observed or such)
-> then it will be merged to master eventually, later.
-> 
-> I am not able to find the documentation for the workflow right now,
-> though it is partially covered in Documentation/SubmittingPatches.
+Changes from v3:
 
-Perhaps Documentation/howto/maintain-git.txt is the
-documentation you're thinking of?
+  - Based patch off of new commit, to resolve merge conflict.
 
-https://kernel.org/pub/software/scm/git/docs/howto/maintain-git.html
+  - Updated log message in 2/3 based on feedback.
 
-There's also MaintNotes in the todo branch:
+  - Squashed patch from Ramsay Jones into 2/3 to fix warning from
+    sparse.
 
-https://raw.githubusercontent.com/git/git/todo/MaintNotes
+  - Updated variable names in 2/3 to reflect updated usage of
+    variable.
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Be who you are and say what you feel because those who mind don't
-matter and those who matter don't mind.
-    -- Dr Seuss, "Oh the Places You'll Go"
+Jameson Miller (3):
+  fast-import: rename mem_pool type to mp_block
+  fast-import: introduce mem_pool type
+  Move reusable parts of memory pool into its own file
+
+ Makefile      |  1 +
+ fast-import.c | 77 +++++++++++++------------------------------------------=
+----
+ mem-pool.c    | 55 ++++++++++++++++++++++++++++++++++++++++++
+ mem-pool.h    | 34 ++++++++++++++++++++++++++
+ 4 files changed, 106 insertions(+), 61 deletions(-)
+ create mode 100644 mem-pool.c
+ create mode 100644 mem-pool.h
+
+--=20
+2.14.3
 
