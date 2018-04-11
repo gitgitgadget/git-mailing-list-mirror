@@ -2,113 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 258791F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 20:39:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 183FF1F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 20:40:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755023AbeDKUjE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 16:39:04 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:36907 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753884AbeDKUjB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 16:39:01 -0400
-Received: by mail-pl0-f67.google.com with SMTP id v5-v6so2246791plo.4
-        for <git@vger.kernel.org>; Wed, 11 Apr 2018 13:39:01 -0700 (PDT)
+        id S1756164AbeDKUkA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 16:40:00 -0400
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:38789 "EHLO
+        mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756048AbeDKSsG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 14:48:06 -0400
+Received: by mail-lf0-f49.google.com with SMTP id u3-v6so4101835lff.5
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 11:48:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=LIc2lepr6NTKsIB3nZIRkR5+lwggNuvcKWPGsWyztow=;
-        b=oG+ji76KNl06URsRaN5soICuyiW2T6MJ7L99bdvowTM+knTjLQYDoLE2Sq3ooMxxke
-         7BOM+GyQgUgH2Zzib+p28G1T1i995hm2Ch6793SrAp1nlf+MV1aaFOQmccuuPe/tOSpy
-         K4+oHNGF51vLrnxMgx0Btv6+/XoSr5FZomU3kZx4i/NLzYKo1BZSZpt/YZjAIcttteiN
-         mjpM2m7y7tEswp/Esbw/P8l7VVXwrAXXsKnsJewSn2jLzCVxMHdWNUwPQ79NHMqLeKjF
-         6TR96l3GDiUL3OpSijExiq5D6XsBN6KTKBTkRNHHyUyO1JJAWTnJVcIy+psqxAogFU8m
-         q9tw==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=LyjTf7j69CCt/h5TL99infJ8YmjrmpNi8/kWMv6bmE8=;
+        b=Qei8lyM/jop+NMr/y4uMOSytpzGMTTLEwTTPMIUcW4eO8/+3lFCIbDwRxDP9mkpJrU
+         VJEOfHTIDFhgcn9443CO5zusKyw/hqHKChKx4bEyCZxIA5j08nGWdqCxELpebxEGqfQm
+         b6Aivf6CgJU7uHXyGdCoZRX4GEPZSxRoOGn+LF6H1hlls3hfvgNPtaG7ILignzrGC501
+         pFcFVnP78KNY1Qnpvo4Sd7gdZsywnP2C34KtoW5zUfr2pZUHy2WgOXu3zECLrQToYcor
+         U0aQ1dkmodUA6/plxVCZiceakHS3d1y7kAG+PotMzeDQ4Ht6md813ZOmwFY7x5a35jpN
+         s0Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=LIc2lepr6NTKsIB3nZIRkR5+lwggNuvcKWPGsWyztow=;
-        b=IX3whyq7CuW+smfFWJ8RXjBQGwQ37oUfRLuk9tyL8xD0w7T30kjtPX7aCiYCh/VVMO
-         L4d3od24MfQO93J1d07hD9XwCh4uKNVMIJoCYjNuANenW6Ad4p6LFMWnDOLRx4TVQvWk
-         +BqoSbMgkv8RlI+EqWWCFb7voGBkdR7xF3DQyPd+JKNAx2HTuY3BwmvBzJMvZtFPTgEk
-         ryfV1KiDvp4EcHd/YpBIYKBojXYK3saD2vJZcPyaPKtCbKfiTQL6LPyW69PUk90tFwjT
-         N9Fp31h3CQpb2EtWdwm3NcM7RZLjvMZhVTfsGBLO1M1ZOeJgJnO7jwmrIxG4BTmkAGyi
-         /HAg==
-X-Gm-Message-State: ALQs6tCmSUEHwXTZ7pemiZwF4TjaHRqwYzBgy42M6i8msfAMmMn6WlGw
-        ITsZJG2tIa+71OY1DlcfdTy8Sk4L
-X-Google-Smtp-Source: AIpwx4+4B2OeHl7uPTv/RKkuIqDF86b9HvRI6elS5HgrxaFe7XJspGMv7qpWNgAC7EUv+ssb7tacQw==
-X-Received: by 2002:a17:902:f24:: with SMTP id 33-v6mr6646218ply.242.1523479141017;
-        Wed, 11 Apr 2018 13:39:01 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id v144sm4779053pgb.11.2018.04.11.13.38.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Apr 2018 13:39:00 -0700 (PDT)
-Subject: Re: [PATCH resend] SubmittingPatches: mention the git contacts
- command
-To:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20180411202000.31086-1-t.gummerer@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4f19d1b0-72e1-4c9f-6027-16e0e6cfc24d@gmail.com>
-Date:   Wed, 11 Apr 2018 16:38:54 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=LyjTf7j69CCt/h5TL99infJ8YmjrmpNi8/kWMv6bmE8=;
+        b=HqOUGSkjQ3Nce2JyaXp5e3rnehBNrmo28sBu7z6J5Njp5GrPt5jSx7w2n8SUV3Kt76
+         wZzIyF7D3Nz9ThUQ3Hhfo6LpF/QAedW1gI+56MnXRc9Jdz0u2hCa7eRtjJCMCfcccAUk
+         8NivOs8q3q3MvBR9vdd+eFJoMls8tmjN27fwbomyHB8cyEfs3SOHFULPggoApwlXInn2
+         86jYF3X7cXfwSIWf87X8Jvrg93TIhvRSZedb1YG8zws6p+WZcnMbdCZAnacek3Fz3bx3
+         pq4aJhYc8xsk3JS05Jw+ftXistGppjUtWEBjvBrjzkwkFekq9VC3DkvQnF4nk+fHqoWj
+         QKbQ==
+X-Gm-Message-State: ALQs6tBtYlLtL/ex4UnFecpWR7JOQCWD/t2SROLXaCy5RODQylrYY13G
+        /ucFYUvw/qzlr7gasCaV1lAkRL/Z
+X-Google-Smtp-Source: AIpwx4/717caHRNyi2hhoiclUrzxi+t0y9UsaiXY2tyrQrcxWOGSDgzgPWD+jb2e1mELqqAX8bYgOg==
+X-Received: by 2002:a19:d202:: with SMTP id j2-v6mr3682946lfg.68.1523472484407;
+        Wed, 11 Apr 2018 11:48:04 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (abrk101.neoplus.adsl.tpnet.pl. [83.8.104.101])
+        by smtp.gmail.com with ESMTPSA id b67-v6sm364501lfh.26.2018.04.11.11.48.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 11 Apr 2018 11:48:03 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2018, #01; Mon, 9)
+References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 11 Apr 2018 20:47:59 +0200
+In-Reply-To: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 09 Apr 2018 19:21:11 +0900")
+Message-ID: <86d0z560m8.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-In-Reply-To: <20180411202000.31086-1-t.gummerer@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/11/2018 4:20 PM, Thomas Gummerer wrote:
-> Instead of just mentioning 'git blame' and 'git shortlog', which make it
-> quite hard for new contributors to pick out the appropriate list of
-> people to cc on their patch series, mention the 'git contacts' utility,
-> which makes it much easier to get a reasonable list of contacts for a
-> change.
->
-> This should help new contributors pick out a reasonable cc list by
-> simply using a single command.
->
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
->
-> I've originally sent this at <20180316213323.GC2224@hank>, during an
-> the rc period.  Eric had some comments, which I interpreted as being
-> okay with the change (hope I'm not mistaken there :)).  As I still
-> think this would be an improvement for new contributors, I'm resending
-> it here.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I didn't know about this tool, and it seems helpful. I plan to use it 
-now. Thanks!
 
->   Documentation/SubmittingPatches | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> * ab/nuke-emacs-contrib (2018-03-13) 1 commit
+>   (merged to 'next' on 2018-03-15 at 13eb4e2d8b)
+>  + git{,-blame}.el: remove old bitrotting Emacs code
 >
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index a1d0feca36..945f8edb46 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -260,8 +260,8 @@ that starts with `-----BEGIN PGP SIGNED MESSAGE-----`.  That is
->   not a text/plain, it's something else.
->   
->   Send your patch with "To:" set to the mailing list, with "cc:" listing
-> -people who are involved in the area you are touching (the output from
-> -`git blame $path` and `git shortlog --no-merges $path` would help to
-> +people who are involved in the area you are touching (the `git
-> +contacts` command in `contrib/contacts/` can help to
->   identify them), to solicit comments and reviews.
->   
->   :1: footnote:[The current maintainer: gitster@pobox.com]
+>  The scripts in contrib/emacs/ have outlived their usefulness and
+>  have been removed.
+>
+>  Will kick back to 'pu'.
+>
+>  There were some noises about better migration strategy that lets
+>  git.el to nudge users to magit or something when used.  Is it
+>  something we want to pursue further?
 
+Maybe simply delete all files, leaving only README pointing to Magit?
+
+Best,
+--
+Jakub Nar=C4=99bski
