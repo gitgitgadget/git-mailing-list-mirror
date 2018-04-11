@@ -6,62 +6,66 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C50E1F42D
-	for <e@80x24.org>; Wed, 11 Apr 2018 23:19:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E32F1F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 23:25:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751983AbeDKXTC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 19:19:02 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35268 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751942AbeDKXTB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 19:19:01 -0400
-Received: by mail-wm0-f66.google.com with SMTP id r82so6627895wme.0
-        for <git@vger.kernel.org>; Wed, 11 Apr 2018 16:19:00 -0700 (PDT)
+        id S1752178AbeDKXZk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 19:25:40 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:40776 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751942AbeDKXZj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 19:25:39 -0400
+Received: by mail-wm0-f42.google.com with SMTP id x4so6540685wmh.5
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 16:25:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=LfhFCOjzHJwwujB1SOr/6KvcJX80ROZMYS39VvUMPmc=;
-        b=VrIUsfxdP4ZCOEXaNbtpVj87F4WAlRoTQru/xtyetJRHqcKpi86YSGubH0pUCAO13u
-         oPZf4z54n64QgbLDYzsckEJ7WRevGJT8o5CwVVUP/RmoaB8xfNVTv62wb9fj99D4IyGk
-         qZYhj82pQEqF3+mQShOBEhonFxal3SBA6ewIgh+GA54W8l75pGzk2mN+ZnEG+fkhlE43
-         3IyHJ0rLHe+/m15K/YKJxDnN1O7f6yYq9iwPt5b3mSABl1lSbTh6Mom1l+69midR2J2E
-         K2FQXqvWk/DHE4AwpwbCqwEpt5MMUUM5/03iLseQv1En68fqMrELai0aR028hpzAp8rZ
-         4rkQ==
+        bh=RhKV1lRa0nPqA+OZJGFpSaLBgPvQPOVBM8ak2sL//JU=;
+        b=EADnp4QFfzh4Sc12ixa22W1OjeHS+TqhgfkOlrixXL8fZRwMbyxbgPknu3HKw5aRJ3
+         0VBODLQMwOtaqUzpOEfnT+DltJW3sbzmbLtLZKWtikvI6jUyaoanh+bUhowjdRoyICZa
+         P5lZvTDro//q1mvrn/+xGhEGvJb4ZZ2fg35hKugU0V0Qq6+8LCBbKFCkYNwJLp0PQ2Td
+         extMBP+espujX7+zpza7awZ6oVVwxjT22wEKHf6ATTOlW0TX3TsQlyLskqNGTC5rY6qC
+         te4UQpRbSJ3ZC8eQFbEAfEEh7DLC/R21BTqC3XkiKTjQ6vMLIDiMKCH57ficRBoYq1XT
+         RHbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=LfhFCOjzHJwwujB1SOr/6KvcJX80ROZMYS39VvUMPmc=;
-        b=KdErzF1vxsABf+Y47EoKJt8HoBjOX7I5L4UaE/+HsHBn5M8Qh4rnWQJnFn5EptS4CT
-         qkqRaOq+O0W5rErURCyXk/jEe74RZA/fwag3IPFzhGhWUZjqA46syjDXk66tm7rAm6M3
-         /pW1SRo4YRgWd8DL1GVrz0A5aF+k4JCtWNJPeEIe3krUxxN1zuWYS2TLmVKzK2piWABX
-         EhvVi2nzorI0eyXviha6CO4poGGe7PgxbmfL8eornOzMSBMyv+R16GFCLTRWvHCGoiS/
-         v+ybc4jCrRIr4rEM5sSuHds96+HILXQb/3WmQQNYi9jhyaunCdwPgvdOZi+7vt+WI4Zm
-         PFzA==
-X-Gm-Message-State: ALQs6tBKD0szW2PFKULa0H1XQc8T00huLYfLaicQoVriNOlRniFFSHPJ
-        3rUBjCik4g+lEUH5suquFB8=
-X-Google-Smtp-Source: AIpwx48GOBoUTIp1h+qNUds/xvGGkafIQP/F+KB4/sV3XFvP3NkoRU79rXjgg9ZzPA9mojTljtbCig==
-X-Received: by 10.28.135.195 with SMTP id j186mr4061074wmd.143.1523488739673;
-        Wed, 11 Apr 2018 16:18:59 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h197sm3193357wmd.3.2018.04.11.16.18.58
+        bh=RhKV1lRa0nPqA+OZJGFpSaLBgPvQPOVBM8ak2sL//JU=;
+        b=uEvL7eM/JAXh16I1dcvJeFF2bA0V6x9XGD4gzRmKfStuUw8PakVJOrGPEx4RlfhpkJ
+         wqZCMwZWsd8booHCPzm69HgqtcwvBfVwZ7BbCQIHZjzqEqnk6WsFc0jkckP2OxEbZwJg
+         PuuCPuhCW3avS4g62HMJIhbAkhJdq5ocqM9NexHaGjUi9ZzvwesOUsS9QyO+CyqXiifq
+         a2S1ubhCPbSRGxbMguQ95Yr3DAKDXpMYXpfpTusBMU6QU1SjbKTfojw1c8oy60chIk9e
+         j+hV0TLdAP1YVuk6hBR9GResJt/jSGZIsCKhWoWOkMSQP8UJyiGkeT0qK+mKKav5qMuz
+         J2VA==
+X-Gm-Message-State: ALQs6tA5YY0GqNyvrNvMdQHxt9u6tOr59h49reCasGeEbUEocP0vddJN
+        9Ax1u4pvjb8elKtU7JEr+Yo=
+X-Google-Smtp-Source: AIpwx49jcTTrZbAlO5hphHNofhSXh+r5KxCe0cqR9gRDAimRcAApxixPLogPCX1ewWB1ZJreAPhH4w==
+X-Received: by 10.28.116.20 with SMTP id p20mr4009319wmc.24.1523489137918;
+        Wed, 11 Apr 2018 16:25:37 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id e10sm4382811wri.23.2018.04.11.16.25.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Apr 2018 16:18:58 -0700 (PDT)
+        Wed, 11 Apr 2018 16:25:37 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Andreas Heiduk <asheiduk@gmail.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] git-svn: allow empty email-address using authors-prog and authors-file
-References: <20180320220743.GA17234@whir>
-        <20180324102046.8840-1-asheiduk@gmail.com>
-        <20180405075113.3y6a5nadijswt7pm@untitled>
-        <e2234113-52cf-1443-5abb-70a595037f30@gmail.com>
-        <20180405194421.GA25243@80x24.org>
-Date:   Thu, 12 Apr 2018 08:18:58 +0900
-In-Reply-To: <20180405194421.GA25243@80x24.org> (Eric Wong's message of "Thu,
-        5 Apr 2018 19:44:21 +0000")
-Message-ID: <xmqqa7u949i5.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Harald Nordgren <haraldnordgren@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v14 2/4] ref-filter: make ref_array_item allocation more consistent
+References: <20180402005248.52418-1-haraldnordgren@gmail.com>
+        <20180409014226.2647-1-haraldnordgren@gmail.com>
+        <20180409014226.2647-2-haraldnordgren@gmail.com>
+        <CAHwyqnURebvfW4rGz9RAbe7B9p6ZDy0jUueDFrYE30dmjCtMVA@mail.gmail.com>
+        <CAGZ79kYeM=CqKSWTL2tdDXWueMGoki4zAUmFy4wbhtagN7gEAA@mail.gmail.com>
+        <CAPig+cQzWAbEVBJ8O0yKYHQ02EaGTx9CeUyF67xozeT2-FL0EA@mail.gmail.com>
+Date:   Thu, 12 Apr 2018 08:25:36 +0900
+In-Reply-To: <CAPig+cQzWAbEVBJ8O0yKYHQ02EaGTx9CeUyF67xozeT2-FL0EA@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 11 Apr 2018 14:56:21 -0400")
+Message-ID: <xmqq37014973.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,31 +74,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Andreas Heiduk <asheiduk@gmail.com> wrote:
->> Am 05.04.2018 um 09:51 schrieb Eric Wong:
->> > Can you confirm it's OK for you?  Thanks.
->> 
->> Looks good, works for me.
->> 
->> Do you squash this patch with with my commit or do you need a reroll?
+> On Wed, Apr 11, 2018 at 2:07 PM, Stefan Beller <sbeller@google.com> wrote:
+>> On Wed, Apr 11, 2018 at 10:57 AM, Harald Nordgren
+>> <haraldnordgren@gmail.com> wrote:
+>>> There have been no new comments for the last few days. I know Jeff
+>>> King will be away for the next two weeks, but should we still move
+>>> forward with this? The initial reactions to the idea seemed positive.
+>> ...
+>> It will be merged to next and if no people speak up (due to bugs
+>> observed or such)
 >
-> Nope, no need to reroll.  Pushed to my repo for Junio.  Thanks all.
+> I would guess, however, that Harald is wondering more specifically
+> about the "--sort" patch he added atop Peff's patches. Disposition for
+> _that_ patch is not specified in the latest "What's cooking":
 >
-> The following changes since commit 468165c1d8a442994a825f3684528361727cd8c0:
+>     * hn/sort-ls-remote (2018-04-09) 1 commit
+>      - ls-remote: create '--sort' option
+>      (this branch uses jk/ref-array-push.)
 >
->   Git 2.17 (2018-04-02 10:13:35 -0700)
->
-> are available in the Git repository at:
->
->   git://bogomips.org/git-svn.git svn/authors-prog-2
->
-> for you to fetch changes up to cb427e9eb0243fe7a1a22ea3bd0a46b7410c0bf3:
->
->   git-svn: allow empty email-address using authors-prog and authors-file (2018-04-05 19:22:06 +0000)
+>      "git ls-remote" learned an option to allow sorting its output based
+>      on the refnames being shown.
 
-Sorry; this message fell under my radar and I had to privately get
-reminded of it.  Pulled.
+Thanks all for summarizing.
 
-Thanks, both.
+I think the preliminary clean-up patches by Peff are all
+independently good and can be advanced, even without him being
+around.  I haven't formed a firm opinion on the doneness of the
+latest round of the "--sort" thing.  I usually do not explicitly
+write "I haven't formed an opinion" in "What's cooking" report,
+so please read the lack of "disposition" as such.
