@@ -2,93 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 599D81F424
-	for <e@80x24.org>; Wed, 11 Apr 2018 06:51:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 825171F424
+	for <e@80x24.org>; Wed, 11 Apr 2018 06:59:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752499AbeDKGv3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 02:51:29 -0400
-Received: from mx.mylinuxtime.de ([148.251.109.235]:47074 "EHLO
-        mx.mylinuxtime.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751858AbeDKGv2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 02:51:28 -0400
-Received: from leda.eworm.de (unknown [10.10.4.2])
-        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx.mylinuxtime.de (Postfix) with ESMTPSA id 3D9C8265EB;
-        Wed, 11 Apr 2018 08:51:27 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.mylinuxtime.de 3D9C8265EB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
-        t=1523429487; bh=nTIMJ8BYUAvVDniXw083YqoQ+K2VOhiFgrry1FTPGoI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=kjUEpYUFuMXEgOsC9oWIo7A7Pqq7CAP2If1yVjQoVU3Cm+B4aMX1hUHyCu+Hi66X2
-         vLE/Fiwnk6Ie3aVzxi6mxUxNsa6iGpq4EVmjintv26XHrpVZPQIbnJZiUv9BYAIPOc
-         ypoe9OuXSnI8mW+ScLCCA5xwcWCdD7OpIxSkCuXM=
-Received: by leda.eworm.de (Postfix, from userid 1000)
-        id D83E9102940; Wed, 11 Apr 2018 08:51:21 +0200 (CEST)
-From:   Christian Hesse <mail@eworm.de>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Dan Jacques <dnj@chromium.org>,
-        Christian Hesse <mail@eworm.de>
-Subject: [PATCH v3 1/1] perl: fix installing modules from contrib
-Date:   Wed, 11 Apr 2018 08:51:20 +0200
-Message-Id: <20180411065120.9432-1-mail@eworm.de>
-X-Mailer: git-send-email 2.17.0
-In-Reply-To: <xmqqpo3620tz.fsf@gitster-ct.c.googlers.com>
-References: <xmqqpo3620tz.fsf@gitster-ct.c.googlers.com>
+        id S1752836AbeDKG7D (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 02:59:03 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:38524 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752445AbeDKG7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 02:59:02 -0400
+Received: by mail-wm0-f44.google.com with SMTP id i3so1703952wmf.3
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 23:59:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=gIV5NXxawcD72RymOZ4B16ohoLQXUwO4Z0XLiVgIzus=;
+        b=dRJ4kJQDZw9b35oSwj0ZnDxk93aaE9HHQuIOtKI1JcLqFXUxDoKAqYWnexh1U7CE+v
+         1cWcrdNrKta/q87NxH/99mQNVAC0Im7dx12r4CMctKVSIc/p0cKzxw/8ixJs/fbcEqMF
+         uo/L2o9HtEGm88/B45dE6Zm8RENWI7hCiD6z3+/qY5zbCNuBbneKUVUVAoDDWT0IAaHY
+         OvynG1FV2gM9ix8OWvt99i25HlfzFjNCN3csqITqFfaaflc/reedCZ2dYhP3Mp8gBrsn
+         JjeaYzdHG+XvDCBJovyqlAozWixPTk49S8l1ZLMzr6welcoEZNnWFBB1TDquUu8iVriP
+         GzcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=gIV5NXxawcD72RymOZ4B16ohoLQXUwO4Z0XLiVgIzus=;
+        b=DWGzUbgxmkfLRgxaMyQfkR8XOEr6mQ8/1o1K+5m6uUxX8Ri/5BY91M/t9PvNaGWXW7
+         PjmikHnhuZHklAfBL/3sO+Z7/ynFHypKUCLgKiITkQRE1/GDq85NxPyAPrJhEWFN8cpK
+         Kg5H02i0t37jDylsbVc62LOaaC/jl3xWUs1X+ejkScSKibCFtt6Vdj+qgL2bGnIBth+A
+         e3TQuQ6CX/WhByyR0OH4kFW4xM1I3jLTa8IQFL2rSDNNEwyP3wTWsvi4u+WZ1Pfbzb0u
+         dkroO5OUQxL8DgdxflX1XP9egK5mafmLfQLsAMxwUYN4ICDMNOkl1RSojL9zBRjVoDAO
+         HZVg==
+X-Gm-Message-State: ALQs6tCSAi6Xynm2zaHPYaZJzkoa3Jbv7LHBlEz30U3UbKp8OwIxOcKc
+        BZWAgJ6a5wn61Gb0p36SnT8H8tmr
+X-Google-Smtp-Source: AIpwx48bznGik96e7LQSgsttkrEPct4wBRh79SkbfHrhS6mjZj0Du9cHW5a1cTENYm7IYKDuUOj/Ew==
+X-Received: by 10.28.191.20 with SMTP id p20mr1549196wmf.100.1523429940521;
+        Tue, 10 Apr 2018 23:59:00 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id p5sm1160044wmf.37.2018.04.10.23.58.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 10 Apr 2018 23:58:59 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "pclouds\@gmail.com" <pclouds@gmail.com>,
+        "alexmv\@dropbox.com" <alexmv@dropbox.com>,
+        "blees\@dcon.de" <blees@dcon.de>,
+        "bmwill\@google.com" <bmwill@google.com>,
+        "avarab\@gmail.com" <avarab@gmail.com>,
+        "johannes.schindelin\@gmx.de" <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v1 1/2] fsexcludes: add a programmatic way to exclude files from git's working directory traversal logic
+References: <20180410210408.13788-1-benpeart@microsoft.com>
+        <20180410210408.13788-2-benpeart@microsoft.com>
+Date:   Wed, 11 Apr 2018 15:58:59 +0900
+In-Reply-To: <20180410210408.13788-2-benpeart@microsoft.com> (Ben Peart's
+        message of "Tue, 10 Apr 2018 21:04:24 +0000")
+Message-ID: <xmqqr2nm44b0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 20d2a30f (Makefile: replace perl/Makefile.PL with simple make rules)
-removed a target that allowed Makefiles from contrib/ to get the correct
-install path. This introduces a new target for main Makefile and fixes
-installation for Mediawiki module.
+Ben Peart <Ben.Peart@microsoft.com> writes:
 
-v2: Pass prefix as that can have influence as well, add single quotes
-    for _SQ variant.
-v3: Rename target, add to .PHONY.
+> +void fsexcludes_free() {
 
-Signed-off-by: Christian Hesse <mail@eworm.de>
----
- Makefile                   | 3 +++
- contrib/mw-to-git/Makefile | 5 +++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+Write this line like so:
 
-diff --git a/Makefile b/Makefile
-index f18168725..5a06eddf2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2014,6 +2014,9 @@ GIT-PERL-DEFINES: FORCE
- 		echo "$$FLAGS" >$@; \
- 	    fi
- 
-+.PHONY: say-perllibdir
-+say-perllibdir:
-+	@echo '$(perllibdir_SQ)'
- 
- .PHONY: gitweb
- gitweb:
-diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
-index a4b6f7a2c..e301a5b4e 100644
---- a/contrib/mw-to-git/Makefile
-+++ b/contrib/mw-to-git/Makefile
-@@ -21,8 +21,9 @@ HERE=contrib/mw-to-git/
- INSTALL = install
- 
- SCRIPT_PERL_FULL=$(patsubst %,$(HERE)/%,$(SCRIPT_PERL))
--INSTLIBDIR=$(shell $(MAKE) -C $(GIT_ROOT_DIR)/perl \
--                -s --no-print-directory instlibdir)
-+INSTLIBDIR=$(shell $(MAKE) -C $(GIT_ROOT_DIR)/ \
-+                -s --no-print-directory prefix=$(prefix) \
-+                perllibdir=$(perllibdir) say-perllibdir)
- DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
- INSTLIBDIR_SQ = $(subst ','\'',$(INSTLIBDIR))
- 
+        void fsexcludes_free(void)
+        {
+
+> +void fsexcludes_free();
+
+void fsexcludes_free(void);
