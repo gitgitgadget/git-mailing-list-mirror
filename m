@@ -2,230 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CAFA1F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 13:13:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BE7E1F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 13:24:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753176AbeDKNNW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 09:13:22 -0400
-Received: from mail.javad.com ([54.86.164.124]:44640 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752906AbeDKNNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 09:13:21 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 8E1673EC38;
-        Wed, 11 Apr 2018 13:13:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523452399;
-        bh=CqhFZEf9ClO5sxSsmnQPg/dc7XZc46WdDYqVTg2WAj8=; l=3482;
-        h=Received:From:To:Subject;
-        b=PUBEmLjjZj7fggP3/Kys/GRoB52KWuh34MV4UXQPI4En0v79Zf0IX/w1ao6OuUbNe
-         j0Xv/qTO/ANXPftUQ7JwHkNMDKKp/08ChPzLIczbOIP6rL7crFUSOBTvLIEjZhqZ3j
-         GzdMGYloUKIxoBkZaqQAAOWVCpcq32vXn24O8eC8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523452399;
-        bh=CqhFZEf9ClO5sxSsmnQPg/dc7XZc46WdDYqVTg2WAj8=; l=3482;
-        h=Received:From:To:Subject;
-        b=PUBEmLjjZj7fggP3/Kys/GRoB52KWuh34MV4UXQPI4En0v79Zf0IX/w1ao6OuUbNe
-         j0Xv/qTO/ANXPftUQ7JwHkNMDKKp/08ChPzLIczbOIP6rL7crFUSOBTvLIEjZhqZ3j
-         GzdMGYloUKIxoBkZaqQAAOWVCpcq32vXn24O8eC8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523452399;
-        bh=CqhFZEf9ClO5sxSsmnQPg/dc7XZc46WdDYqVTg2WAj8=; l=3482;
-        h=Received:From:To:Subject;
-        b=PUBEmLjjZj7fggP3/Kys/GRoB52KWuh34MV4UXQPI4En0v79Zf0IX/w1ao6OuUbNe
-         j0Xv/qTO/ANXPftUQ7JwHkNMDKKp/08ChPzLIczbOIP6rL7crFUSOBTvLIEjZhqZ3j
-         GzdMGYloUKIxoBkZaqQAAOWVCpcq32vXn24O8eC8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523452399;
-        bh=CqhFZEf9ClO5sxSsmnQPg/dc7XZc46WdDYqVTg2WAj8=; l=3482;
-        h=Received:From:To:Subject;
-        b=PUBEmLjjZj7fggP3/Kys/GRoB52KWuh34MV4UXQPI4En0v79Zf0IX/w1ao6OuUbNe
-         j0Xv/qTO/ANXPftUQ7JwHkNMDKKp/08ChPzLIczbOIP6rL7crFUSOBTvLIEjZhqZ3j
-         GzdMGYloUKIxoBkZaqQAAOWVCpcq32vXn24O8eC8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523452399;
-        bh=CqhFZEf9ClO5sxSsmnQPg/dc7XZc46WdDYqVTg2WAj8=; l=3482;
-        h=Received:From:To:Subject;
-        b=PUBEmLjjZj7fggP3/Kys/GRoB52KWuh34MV4UXQPI4En0v79Zf0IX/w1ao6OuUbNe
-         j0Xv/qTO/ANXPftUQ7JwHkNMDKKp/08ChPzLIczbOIP6rL7crFUSOBTvLIEjZhqZ3j
-         GzdMGYloUKIxoBkZaqQAAOWVCpcq32vXn24O8eC8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523452399;
-        bh=CqhFZEf9ClO5sxSsmnQPg/dc7XZc46WdDYqVTg2WAj8=; l=3482;
-        h=Received:From:To:Subject;
-        b=PUBEmLjjZj7fggP3/Kys/GRoB52KWuh34MV4UXQPI4En0v79Zf0IX/w1ao6OuUbNe
-         j0Xv/qTO/ANXPftUQ7JwHkNMDKKp/08ChPzLIczbOIP6rL7crFUSOBTvLIEjZhqZ3j
-         GzdMGYloUKIxoBkZaqQAAOWVCpcq32vXn24O8eC8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523452399;
-        bh=CqhFZEf9ClO5sxSsmnQPg/dc7XZc46WdDYqVTg2WAj8=; l=3482;
-        h=Received:From:To:Subject;
-        b=PUBEmLjjZj7fggP3/Kys/GRoB52KWuh34MV4UXQPI4En0v79Zf0IX/w1ao6OuUbNe
-         j0Xv/qTO/ANXPftUQ7JwHkNMDKKp/08ChPzLIczbOIP6rL7crFUSOBTvLIEjZhqZ3j
-         GzdMGYloUKIxoBkZaqQAAOWVCpcq32vXn24O8eC8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523452399;
-        bh=CqhFZEf9ClO5sxSsmnQPg/dc7XZc46WdDYqVTg2WAj8=; l=3482;
-        h=Received:From:To:Subject;
-        b=PUBEmLjjZj7fggP3/Kys/GRoB52KWuh34MV4UXQPI4En0v79Zf0IX/w1ao6OuUbNe
-         j0Xv/qTO/ANXPftUQ7JwHkNMDKKp/08ChPzLIczbOIP6rL7crFUSOBTvLIEjZhqZ3j
-         GzdMGYloUKIxoBkZaqQAAOWVCpcq32vXn24O8eC8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523452399;
-        bh=CqhFZEf9ClO5sxSsmnQPg/dc7XZc46WdDYqVTg2WAj8=; l=3482;
-        h=Received:From:To:Subject;
-        b=PUBEmLjjZj7fggP3/Kys/GRoB52KWuh34MV4UXQPI4En0v79Zf0IX/w1ao6OuUbNe
-         j0Xv/qTO/ANXPftUQ7JwHkNMDKKp/08ChPzLIczbOIP6rL7crFUSOBTvLIEjZhqZ3j
-         GzdMGYloUKIxoBkZaqQAAOWVCpcq32vXn24O8eC8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523452399;
-        bh=CqhFZEf9ClO5sxSsmnQPg/dc7XZc46WdDYqVTg2WAj8=; l=3482;
-        h=Received:From:To:Subject;
-        b=PUBEmLjjZj7fggP3/Kys/GRoB52KWuh34MV4UXQPI4En0v79Zf0IX/w1ao6OuUbNe
-         j0Xv/qTO/ANXPftUQ7JwHkNMDKKp/08ChPzLIczbOIP6rL7crFUSOBTvLIEjZhqZ3j
-         GzdMGYloUKIxoBkZaqQAAOWVCpcq32vXn24O8eC8=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1f6FYr-0008RZ-Bu; Wed, 11 Apr 2018 16:13:17 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v6 00/15] rebase -i: offer to recreate commit topology
-References: <cover.1519680483.git.johannes.schindelin@gmx.de>
-        <cover.1523362469.git.johannes.schindelin@gmx.de>
-        <87tvsj6rn2.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1804110009080.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <871sfm737e.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1804111324350.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Wed, 11 Apr 2018 16:13:17 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1804111324350.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Wed, 11 Apr 2018 13:28:51 +0200
-        (DST)")
-Message-ID: <87h8oh51jm.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1753567AbeDKNYN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 09:24:13 -0400
+Received: from mail-pl0-f41.google.com ([209.85.160.41]:34044 "EHLO
+        mail-pl0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753302AbeDKNYK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 09:24:10 -0400
+Received: by mail-pl0-f41.google.com with SMTP id y12-v6so1407189plt.1
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 06:24:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=/8olNCouLox3ABJNJ0pezJOJwjncjFHWMSwY4GiGKcg=;
+        b=D2i2OynHY/4H5Jiz5lgJGp4Bk/wLmmynfVyOER2tfKU4DwFZWkarPlJ6SkZdf4p6vT
+         BBuC/PievLQCcy+/etSlqoKckv+TF78qdYxFeiSBdpiQjXM1TIrq9wG/m5sXUakT2oJG
+         Hjggw2c80xt+bIq1C9KqEGu3tY91GulwHDFW4GiVUf9Jt44zBSOfGSci3tIbXrgRqMaD
+         QELfCqUDi1ft9MTdC75nve7r9djLCLkq42L4Gk5TCJio1JgBHbxnJjNjlKGE56i1nuvo
+         XoC2zxUxxWUe7S+8pdAqi5ZsWecwshsHDi/hgzq0p5y0tlODbiRqeJv+znEmnwh0UTTc
+         FfJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=/8olNCouLox3ABJNJ0pezJOJwjncjFHWMSwY4GiGKcg=;
+        b=ZXP+adClb9ECqhPMRs+PieahOC6yRatWdXWfZcG30q7VtfN/XJhAtIV/kFciv15PTd
+         hESdOu9cCeORzYKyggOCZMOcC7y3yuY9lHsQRnlCX9hwwfAZ86bTo5JGUFndf+zBVaoO
+         MrJl0O1tMKExf9Tui7qBU5PaC3Cjj9P6neToWZZzNcNojHVEPYGojoj7JCyzt/pSocA2
+         Ti45r/SIB6peOzu/euTBWzsd/x+7MmnjXjS7PpqFL+o8dJ9b2M/lp6Ieg2RoOA2e7EPW
+         yVEfUuwq8414VtR9lpg4zNC8Okm7dcVgqiwmhjG897re6w0lTPbkpq4MMbT8cpIxLjGL
+         nU4A==
+X-Gm-Message-State: ALQs6tCEnE8CKGv3iZ7BJGKxGogqJUHhXCgSHiVOK7aLpqQ7Vq0uG50+
+        PrL6+e+EgKi0dyohhD+21PQ=
+X-Google-Smtp-Source: AIpwx48wBeAybTQ585nxwdTIvJbnvTFvuV64I7e7WRuoyqgb1ASbPbYKmYp5ZEHqEt5sBi+2KOAZOA==
+X-Received: by 2002:a17:902:6b86:: with SMTP id p6-v6mr5001873plk.32.1523453049292;
+        Wed, 11 Apr 2018 06:24:09 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id d199sm3224516pfd.95.2018.04.11.06.24.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 11 Apr 2018 06:24:08 -0700 (PDT)
+Subject: Re: [PATCH v2 06/10] commit.c: use generation to halt paint walk
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        "sbeller@google.com" <sbeller@google.com>,
+        "larsxschneider@gmail.com" <larsxschneider@gmail.com>,
+        "bmwill@google.com" <bmwill@google.com>
+References: <20180403165143.80661-1-dstolee@microsoft.com>
+ <20180409164131.37312-1-dstolee@microsoft.com>
+ <20180409164131.37312-7-dstolee@microsoft.com>
+ <xmqq604yzbqe.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <cc58d8c1-f8de-4841-934f-56e4ad7729aa@gmail.com>
+Date:   Wed, 11 Apr 2018 09:24:01 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqq604yzbqe.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi Sergey,
+On 4/10/2018 11:02 PM, Junio C Hamano wrote:
+> Derrick Stolee <dstolee@microsoft.com> writes:
 >
-> On Wed, 11 Apr 2018, Sergey Organov wrote:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>
->> > On Tue, 10 Apr 2018, Sergey Organov wrote:
->> >
->> >> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->> >>
->> >> > Once upon a time, I dreamt of an interactive rebase that would not
->> >> > flatten branch structure, but instead recreate the commit topology
->> >> > faithfully.
->> >>
->> >> [...]
->> >>
->> >> > Think of --rebase-merges as "--preserve-merges done right".
->> >>
->> >> Both option names seem to miss the primary point of the mode of
->> >> operation that you've formulated in the first sentence. I suggest to
->> >> rather call the new option in accordance to your description, say,
->> >> --no-flatten, --keep-topology, or --preserve-shape.
->> >
->> > A very quick A/B test shows that neither --no-flatten nor --keep-topology
->> > and certainly not --preserve-shape conveys to Git users what those options
->> > are supposed to do.
->>
->> In fact, my preference would be --[no-]flatten, exactly because the
->> default mode of rebase operation flattens the history, and thus what I'm
->> talking about is:
->>
->> git rebase --no-flatten
->
-> And this is the option out of the four that fared *worst* in the A/B
-> testing. Not even experts in Git internals were able to figure out what
-> the heck you are talking about.
+>> @@ -800,17 +810,26 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
+>>   		return result;
+>>   	}
+>>   	prio_queue_put(&queue, one);
+>> +	if (one->generation < min_nonstale_gen)
+>> +		min_nonstale_gen = one->generation;
+>>   
+>>   	for (i = 0; i < n; i++) {
+>>   		twos[i]->object.flags |= PARENT2;
+>>   		prio_queue_put(&queue, twos[i]);
+>> +		if (twos[i]->generation < min_nonstale_gen)
+>> +			min_nonstale_gen = twos[i]->generation;
+>>   	}
+>>   
+>> -	while (queue_has_nonstale(&queue)) {
+>> +	while (queue_has_nonstale(&queue, min_nonstale_gen)) {
+>>   		struct commit *commit = prio_queue_get(&queue);
+>>   		struct commit_list *parents;
+>>   		int flags;
+>>   
+>> +		if (commit->generation > last_gen)
+>> +			BUG("bad generation skip");
+>> +
+>> +		last_gen = commit->generation;
+>> +
+>>   		flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
+>>   		if (flags == (PARENT1 | PARENT2)) {
+>>   			if (!(commit->object.flags & RESULT)) {
+>> @@ -830,6 +849,10 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
+>>   				return NULL;
+>>   			p->object.flags |= flags;
+> Hmph.  Can a commit that used to be not stale (and contributed to
+> the current value of min_nonstale_gen) become stale here by getting
+> visited twice, invalidating the value in min_nonstale_gen?
 
-It was you who introduced the "flatten" term, not me. I took it from
-your descriptions.
+min_nonstale_gen can be "wrong" in the way you say, but fits the 
+definition from the commit message:
 
-So they are able to make sense of your own:
+"To properly take advantage of this condition, track the minimum 
+generation number of a commit that **enters the queue** with nonstale 
+status." (Emphasis added)
 
->>> Once upon a time, I dreamt of an interactive rebase that would not
->>> flatten branch structure, but instead recreate the commit topology
->>> faithfully.
+You make an excellent point about how this can be problematic. I was 
+confused by the lack of clear performance benefits here, but I think 
+that whatever benefits making queue_has_nonstale() be O(1) were removed 
+by walking more commits than necessary.
 
-Yet they can't get:
+Consider the following commit graph, where M is a parent of both A and 
+B, S is a parent of M and B, and there is a large set of commits 
+reachable from M with generation number larger than gen(S).
 
---no-flatten::
-	Instead of flattening branch structure, recreate the commit
-	topology faithfully
+A    B
+| __/|
+|/   |
+M    |
+|\   |
+. |  |
+. |  |
+. |_/
+|/
+S
 
-Are you kidding?
+Between A and B, the true merge base is M. Anything reachable from M is 
+marked as stale. When S is added to the queue, it is only reachable from 
+B, so it is non-stale. However, it is marked stale after M is walked. 
+The old code would detect this as a termination condition, but the new 
+code would not.
 
-Well, suppose for a moment that nobody could even guess what "flatten"
-means indeed. Then are you willing to remove the "flatten" from both the
-description of our patch series and from the proposed patch to the Git
-manual:
+I think this data shape is actually common (not exactly, as it may be 
+that some ancestor of M provides a second path to S) especially in the 
+world of pull requests and users merging master into their topic branches.
 
--r::
---rebase-merges[=(rebase-cousins|no-rebase-cousins)]::
-	Rebase merge commits instead of _flattening_ the history by replaying
-	merges.
+I'll remove this commit in the next version, but use the new prototype 
+for queue_has_nonstale() in "commit: add short-circuit to 
+paint_down_to_common()" using the given 'min_generation' instead of 
+'min_nonstale_gen'.
 
-???
-
->
-> Now, you can beat that dead horse until it is pulp. Your choice. I'd
-> rather go on to more interesting things, because as far as I am concerned,
-> the naming issue has been settled, with you being the only person in
-> disfavor of --rebase-merges.
-
-It was rather --recreate-merges just a few weeks ago, and I've seen
-nobody actually commented either in favor or against the
---rebase-merges.
-
-git rebase --rebase-merges
-
-_is_ plain simple ugly.
-
->
-> What you *could* do is finally take your RFC to the test. Run it with the
-> concrete example I showed you in
-> https://public-inbox.org/git/nycvar.QRO.7.76.6.1803261405170.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz/
->
-> It is high time that you demonstrated on this concrete case study how your
-> proposed solution performs. And then tally that up with Phillip's
-> strategy.
-
-What you could do is to stop shifting the subject of discussion.
-
-The RFC v2 and Phillip's strategy are essentially the same, as has been
-already shown multiple times, both theoretically and by testing. Ask
-Bugga for details.
-
-One way or another, this doesn't make
-
-git rebase --rebase-merges
-
-even a bit less ugly.
-
--- Sergey
+Thanks,
+-Stolee
