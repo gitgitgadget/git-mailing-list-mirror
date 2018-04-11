@@ -2,102 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EF751F424
-	for <e@80x24.org>; Wed, 11 Apr 2018 11:37:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6998E1F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 12:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752297AbeDKLhP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 07:37:15 -0400
-Received: from mout.gmx.net ([212.227.15.19]:46607 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752016AbeDKLhO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 07:37:14 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmbZb-1eXA9q1Isl-00aDD3; Wed, 11
- Apr 2018 13:37:05 +0200
-Date:   Wed, 11 Apr 2018 13:36:48 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Sergey Organov <sorganov@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v6 04/15] sequencer: introduce new commands to reset the
- revision
-In-Reply-To: <878t9u5ksw.fsf@javad.com>
-Message-ID: <nycvar.QRO.7.76.6.1804111329270.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1519680483.git.johannes.schindelin@gmx.de> <cover.1523362469.git.johannes.schindelin@gmx.de> <fb797f32b7385317b9dc18524e3863ba627f6c98.1523362469.git.johannes.schindelin@gmx.de> <878t9u5ksw.fsf@javad.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753206AbeDKMtz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 08:49:55 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:33049 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753095AbeDKMtx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 08:49:53 -0400
+Received: by mail-pl0-f66.google.com with SMTP id w12-v6so416172plp.0
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 05:49:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=/TiG0nSO7woABpf5FZxZwkQ8prwZIp1HZAr1YiXMxes=;
+        b=Ew2yuorLGb0SUKHXuUM1l3ltsxRR1v/acs3HcN8r7LPASiXKE+91J3r/Rfwm4LshpP
+         eQNmMBAkQS1QGfWvHpWTDRXkzvd3S7Tn50gc4gLqmJeAOH2p4/Cfrdth+tADDHnWNS8E
+         YLlp36NPjep9bfjCKxUWs+AHAXWQ5FtUY1t4afFcYXtyFDXuTxOuelcg4mRnPEAkWGfU
+         h8/5LdyjPhIqhH9dqqC/o7QWs+FXHzW5d7Vo6ha954Vc/6aIc83RSSVcHXnhlVowh+a5
+         tyxQb3l61TJhgk6P5kxJ0pgfcUFXHIGUVKqSlH+gldchbzwYi4+HqL27XUiEqYzgeELG
+         bP+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=/TiG0nSO7woABpf5FZxZwkQ8prwZIp1HZAr1YiXMxes=;
+        b=lJdlerqrDqeTGshbiZIX5Xey0PJLOjfuXIpPiXLpSqruHj6eJ/AgU8Pu+uGYNZ+JE9
+         oavG1x6CJnDPIv1UwqYEwgt7UkM2yWGm8QeaCUYK9g7RCFsweaK0JcgG15nPcr89xqiZ
+         bkldPlBBEtovZMxBG1NlxrSTUeQM7lRQOi7jbkSjCiq/jA/7iAINxQM2oX2J5Y2S4bah
+         ne7AgwaXPQEis6O5Zp3jZB32AZRGJfCwjcSDSv029HmmlCYawl7ReRdJHosP+UcnqNwU
+         L7VLhkgGY32ChxNt0BlDv6Oa79FNptGa7h3coX3uFk69d3CYUoqFvs3C4CGn46HOn3KN
+         1TIg==
+X-Gm-Message-State: ALQs6tAhT7648n1pmbNDB/MXZCVCGdxEo0y10pAV6SH4KgEuQ1rB68gM
+        K6uGM5Y1oPzl3Tvay37b+ow=
+X-Google-Smtp-Source: AIpwx4+FmGLD90l31MEHaVrlEh8ijHV99HppnrUAklmjWPgdbV5aIEeA1HBjXMtyQd/mVlGbeS4ggg==
+X-Received: by 2002:a17:902:2006:: with SMTP id n6-v6mr5003802pla.150.1523450992714;
+        Wed, 11 Apr 2018 05:49:52 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id b65sm4612408pfl.145.2018.04.11.05.49.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 11 Apr 2018 05:49:51 -0700 (PDT)
+Subject: Re: [PATCH v2 02/10] merge: check config before loading commits
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        "sbeller@google.com" <sbeller@google.com>,
+        "larsxschneider@gmail.com" <larsxschneider@gmail.com>,
+        "bmwill@google.com" <bmwill@google.com>
+References: <20180403165143.80661-1-dstolee@microsoft.com>
+ <20180409164131.37312-1-dstolee@microsoft.com>
+ <20180409164131.37312-3-dstolee@microsoft.com>
+ <xmqqo9iqze1g.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <197f4c77-ab2a-cf5b-463f-471bd5f8966f@gmail.com>
+Date:   Wed, 11 Apr 2018 08:49:44 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:fLV/Tep4zlF+URX18WqNIpGTXaiOpPP2FikHoYkKZ+OyZ/DQSUj
- C66f3ACqan1O98tvwv/80DZXv05CxoUHekdVd36ZRwBxwiSmnfueXebdYu9YdrqZkAvYyMM
- yxdJElKn72+QLP729Ki6/q8EsY4NQ7VCACAKWaMjmoSWBSVKYHY+ev56mMe+7/hemp6h++c
- xTf4CgdmgxaR6PwYqOadQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:e6Lnpn0omEQ=:isjC4qclwrjg1kmrRFW/pG
- c/86MKEAb4cbow4mjFsxjd24Ga/uPIeh3shQ2VVyfcqTXei++gI3RBWRwCHvJ3CjsY4MiwX6s
- zCO/rKamyVo1gubGrhhgSR5jBLiqHQqYQ8dtq0KB1PRaThn63GOqB6dSaAN2ldUca3hP6frWa
- zRwq1Gr7KaCzzYl3wQys/qiLPvMaHyc2qydQNFvSjQe2n52roFgOpMK5UI7QMG1q+3S0B6aEG
- dgWpdJbb1rtUaOVYWjU9GlJisjx64olvEwxSDRzHXR0kXvfmVofeIJJXrHsTNVz7PymS0q3L1
- 8+OVBzNkx6mtgF2tpc3CQOSTP7yI7G9C4FJ3KWbZbx7dll2he4Xh1lH2J7OpeBYX1gPUrKIQe
- OTUOPig+2lbhbYArbKqS468eWuMh2Q6Ufflf9RRW9s4RORYzfiQx3QrJiP2PFlxeoQrg7vuI4
- OOAfJrzOoHdbsI2+dglSblpRcIaYBdDJ90sxgGPoF6RJCgW1oDEK1CXHaHHZcysnMzAQ6Bcnk
- TmPwAFxDutrD9JQTFKQTN9PGGnYwW2w4CrNf1HiF8Nq1ZlgDMxA9718Rg8r8XizIHYK1D2tW5
- Z5bM4AJzOh4PndPYdbwu53DZacJeF1AB+3ZAi57fbB59uyZ7fKnPfvtadt7FCgw8G1WOamJoa
- bwUC9kbNdAwl/0T4bBgTPEcajBVrE81pFPf2UIzoVk84OY8uqVYFnF5x+s1Yh3gxC+ywUQilC
- NSCs3Ws9wfFh87HiNgzDymdVe5RAobMuRY47GRRTx2a4FIGA4nKQJFBuzMxJa7c5LPWIVJp2e
- bMmYoioRgF8dEeJL/vEz6qFMWTu4M16MQUXJuLfA2R6F+gpPjk=
+In-Reply-To: <xmqqo9iqze1g.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sergey,
+On 4/10/2018 10:12 PM, Junio C Hamano wrote:
+> Derrick Stolee <dstolee@microsoft.com> writes:
+>
+>> diff --git a/builtin/merge.c b/builtin/merge.c
+>> index ee050a47f3..20897f8223 100644
+>> --- a/builtin/merge.c
+>> +++ b/builtin/merge.c
+>> @@ -1183,13 +1183,14 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>>   	branch = branch_to_free = resolve_refdup("HEAD", 0, &head_oid, NULL);
+>>   	if (branch)
+>>   		skip_prefix(branch, "refs/heads/", &branch);
+>> +	init_diff_ui_defaults();
+>> +	git_config(git_merge_config, NULL);
+>> +
+>>   	if (!branch || is_null_oid(&head_oid))
+>>   		head_commit = NULL;
+>>   	else
+>>   		head_commit = lookup_commit_or_die(&head_oid, "HEAD");
+>>   
+>> -	init_diff_ui_defaults();
+>> -	git_config(git_merge_config, NULL);
+> Wow, that's tricky.  git_merge_config() wants to know which "branch"
+> we are on, and this place is as early as we can move the call to
+> without breaking things.  Is this to allow parse_object() called
+> in lookup_commit_reference_gently() to know if we can rely on the
+> data cached in the commit-graph data?
 
-On Wed, 11 Apr 2018, Sergey Organov wrote:
+When I saw the bug on my machine, I tracked the issue down to a call to 
+parse_commit_in_graph() that skipped the graph check since 
+core_commit_graph was not set. The call stack from this call is as follows:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> [...]
-> 
-> > We disallow '#' as label because that character will be used as
-> > separator in the upcoming `merge` command.
-> 
-> Please consider to use # not only in `merge` and `reset`, but in the
-> rest of the commands as well, to unify this new syntax. I.e., right now
-> it seems to be:
-> 
-> pick  abcd A commit message
-> merge beaf # B commit message
-> 
-> I suggest to turn it to:
-> 
-> pick  abcd # A commit message
-> merge beaf # B commit message
+* lookup_commit_or_die()
+* lookup_commit_reference()
+* lookup_commit_reference_gently()
+* parse_object()
+* parse_object_buffer()
+* parse_commit_in_graph() [as introduced in PATCH 01/10]
 
-First of all, that alignment of pick's and merge's first arguments? That
-does not exist. If you want aligned arguments, you have to use the
-rebase.abbreviateCommands feature.
+>
+>> Move the config load to be between the initialization of 'branch'
+>> and the commit lookup. Also add a test to t5318-commit-graph.sh
+>> that exercises this code path to prevent a regression.
+> It is not clear to me how a successful merge of commits/8
+> demonstrates that reading the config earlier than before is
+> regression free.
 
-Second: this change would break backwards-compatibility. For almost eleven
-years, we generated `pick abcdef0123 A commit message`. Even if there are
-no scripts that rely on this form, power users have gotten used to it, and
-I can tell you from experience how unsettling even minor visual changes
-are in everyday operations.
+I didn't want to introduce commits in an order that led to a commit 
+failing tests, but if you drop the change to builtin/merge.c from this 
+series, the tip commit will fail this test with "BUG: bad generation skip".
 
-In short: no, we cannot do that. Just like your proposal to conflate the
-`merge` and `pick` commands for some perception of consistency: The user
-experience is more important than individual persons' sense of elegance
-(that might not even be shared with the majority).
+The reason for this failure is that commits/5 is loaded from HEAD from 
+the object database, so its generation is marked as 
+GENERATION_NUMBER_INFINITY, and the commit is marked as parsed. Later, 
+the commit at merges/3 is loaded from the graph with generation 4. This 
+triggers the BUG statement in paint_down_to_common(). That is why it is 
+important to check a fast-forward merge.
 
-Ciao,
-Johannes
+In the 'graph_git_behavior' steps of t5318-commit-graph.sh, we were 
+already testing 'git merge-base' to check the commit walk logic.
+
+Thanks,
+-Stolee
