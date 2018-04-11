@@ -6,66 +6,67 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E32F1F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 23:25:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24CEC1F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 23:28:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752178AbeDKXZk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 19:25:40 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:40776 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751942AbeDKXZj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 19:25:39 -0400
-Received: by mail-wm0-f42.google.com with SMTP id x4so6540685wmh.5
-        for <git@vger.kernel.org>; Wed, 11 Apr 2018 16:25:38 -0700 (PDT)
+        id S1751886AbeDKX25 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 19:28:57 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:37238 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751553AbeDKX24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 19:28:56 -0400
+Received: by mail-wr0-f174.google.com with SMTP id l49so3324170wrl.4
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 16:28:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=RhKV1lRa0nPqA+OZJGFpSaLBgPvQPOVBM8ak2sL//JU=;
-        b=EADnp4QFfzh4Sc12ixa22W1OjeHS+TqhgfkOlrixXL8fZRwMbyxbgPknu3HKw5aRJ3
-         0VBODLQMwOtaqUzpOEfnT+DltJW3sbzmbLtLZKWtikvI6jUyaoanh+bUhowjdRoyICZa
-         P5lZvTDro//q1mvrn/+xGhEGvJb4ZZ2fg35hKugU0V0Qq6+8LCBbKFCkYNwJLp0PQ2Td
-         extMBP+espujX7+zpza7awZ6oVVwxjT22wEKHf6ATTOlW0TX3TsQlyLskqNGTC5rY6qC
-         te4UQpRbSJ3ZC8eQFbEAfEEh7DLC/R21BTqC3XkiKTjQ6vMLIDiMKCH57ficRBoYq1XT
-         RHbg==
+        bh=sz9ijSERpE12hz4vMV0x8sVNs6eUetQk+6oYBZcUtF4=;
+        b=MsB4cHqfgmEJKHd74JWE316i3EiO1xgL0j9hs1fimui3Rmhg0GimLA5dAh/1womwdy
+         2LAdNbc2CgOlG7kfAI9OjNd1YAXGt7jbvcHSEZwdZEnvY8f46JeG0/oktCawZAszz5pW
+         rudXkHXtqB5OLNUqk3E9l7Ex44TDvahl2U0OAdcJExWh9ZiqwPPQ83LEdtsXMhIj7EXO
+         HYB0/w4t5GhAxfFjA4+z2ok9/7RLia12OzRzQj0PFXmZvd2QGjhtS6AIMl183vet6NSu
+         sJ9wj54l4D5/q9I00OK8uXgK2uZVBGK+m6SNi8782KvLyThXsh/GOlaGvonWYeCcNIDy
+         ebvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=RhKV1lRa0nPqA+OZJGFpSaLBgPvQPOVBM8ak2sL//JU=;
-        b=uEvL7eM/JAXh16I1dcvJeFF2bA0V6x9XGD4gzRmKfStuUw8PakVJOrGPEx4RlfhpkJ
-         wqZCMwZWsd8booHCPzm69HgqtcwvBfVwZ7BbCQIHZjzqEqnk6WsFc0jkckP2OxEbZwJg
-         PuuCPuhCW3avS4g62HMJIhbAkhJdq5ocqM9NexHaGjUi9ZzvwesOUsS9QyO+CyqXiifq
-         a2S1ubhCPbSRGxbMguQ95Yr3DAKDXpMYXpfpTusBMU6QU1SjbKTfojw1c8oy60chIk9e
-         j+hV0TLdAP1YVuk6hBR9GResJt/jSGZIsCKhWoWOkMSQP8UJyiGkeT0qK+mKKav5qMuz
-         J2VA==
-X-Gm-Message-State: ALQs6tA5YY0GqNyvrNvMdQHxt9u6tOr59h49reCasGeEbUEocP0vddJN
-        9Ax1u4pvjb8elKtU7JEr+Yo=
-X-Google-Smtp-Source: AIpwx49jcTTrZbAlO5hphHNofhSXh+r5KxCe0cqR9gRDAimRcAApxixPLogPCX1ewWB1ZJreAPhH4w==
-X-Received: by 10.28.116.20 with SMTP id p20mr4009319wmc.24.1523489137918;
-        Wed, 11 Apr 2018 16:25:37 -0700 (PDT)
+        bh=sz9ijSERpE12hz4vMV0x8sVNs6eUetQk+6oYBZcUtF4=;
+        b=DvfCvu/Ve894dD6HDCTnr6EfntBvBCNsbeLYtBjcrMWqo1Auv5J2HfWpUBlhhS7rQp
+         c21Ux8djVpFyOTPtgbjCyQgiWUFj2pDVY60sFkv5P4n7OmCqMjvqv6bt0O0dXsWY4lkm
+         TAtZDiQgpL84VJIuVopR60DctReTp4Ec+x/sY/2qTWYW35p2y28/vMZ1ZO+hxPKZXt/F
+         J6KSLqQ6D9Ue/PL5Dp+xrmKANkdv1kvnY/nYpK+nncYhWr+S0XZl2sxQC6dZgTLJ9p3B
+         RGaoq2anVaxslkLN/h75WJPXmo76FSi+Tg2/3VW0gEgd7Nfk1qb7i1EpRCF41ZzBDg25
+         AhDg==
+X-Gm-Message-State: ALQs6tCi1hIj22tEGziNpGB8hau4an15L2MkQuDuRIDlLynu1K7n5lzZ
+        ge/IcjHvsZIqbvG7bpPWf78=
+X-Google-Smtp-Source: AIpwx4/jCRheVoipHK9XMR9byeuhIHM4NiGiHTHiQYHUWemHjTXMjP2mui6Q5+M35ZNdC9TSkI40OA==
+X-Received: by 10.223.169.232 with SMTP id b95mr4858821wrd.96.1523489335107;
+        Wed, 11 Apr 2018 16:28:55 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e10sm4382811wri.23.2018.04.11.16.25.37
+        by smtp.gmail.com with ESMTPSA id t76sm3850471wme.17.2018.04.11.16.28.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Apr 2018 16:25:37 -0700 (PDT)
+        Wed, 11 Apr 2018 16:28:54 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Harald Nordgren <haraldnordgren@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v14 2/4] ref-filter: make ref_array_item allocation more consistent
-References: <20180402005248.52418-1-haraldnordgren@gmail.com>
-        <20180409014226.2647-1-haraldnordgren@gmail.com>
-        <20180409014226.2647-2-haraldnordgren@gmail.com>
-        <CAHwyqnURebvfW4rGz9RAbe7B9p6ZDy0jUueDFrYE30dmjCtMVA@mail.gmail.com>
-        <CAGZ79kYeM=CqKSWTL2tdDXWueMGoki4zAUmFy4wbhtagN7gEAA@mail.gmail.com>
-        <CAPig+cQzWAbEVBJ8O0yKYHQ02EaGTx9CeUyF67xozeT2-FL0EA@mail.gmail.com>
-Date:   Thu, 12 Apr 2018 08:25:36 +0900
-In-Reply-To: <CAPig+cQzWAbEVBJ8O0yKYHQ02EaGTx9CeUyF67xozeT2-FL0EA@mail.gmail.com>
-        (Eric Sunshine's message of "Wed, 11 Apr 2018 14:56:21 -0400")
-Message-ID: <xmqq37014973.fsf@gitster-ct.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "peff\@peff.net" <peff@peff.net>,
+        "avarab\@gmail.com" <avarab@gmail.com>,
+        "sbeller\@google.com" <sbeller@google.com>,
+        "larsxschneider\@gmail.com" <larsxschneider@gmail.com>,
+        "bmwill\@google.com" <bmwill@google.com>
+Subject: Re: [PATCH v2 03/10] commit: add generation number to struct commmit
+References: <20180403165143.80661-1-dstolee@microsoft.com>
+        <20180409164131.37312-1-dstolee@microsoft.com>
+        <20180409164131.37312-4-dstolee@microsoft.com>
+        <xmqqefjmzd67.fsf@gitster-ct.c.googlers.com>
+        <01c8d95b-e444-4b69-f083-9832023978a0@gmail.com>
+Date:   Thu, 12 Apr 2018 08:28:53 +0900
+In-Reply-To: <01c8d95b-e444-4b69-f083-9832023978a0@gmail.com> (Derrick
+        Stolee's message of "Wed, 11 Apr 2018 08:57:05 -0400")
+Message-ID: <xmqqy3ht2uh6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,34 +75,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> On Wed, Apr 11, 2018 at 2:07 PM, Stefan Beller <sbeller@google.com> wrote:
->> On Wed, Apr 11, 2018 at 10:57 AM, Harald Nordgren
->> <haraldnordgren@gmail.com> wrote:
->>> There have been no new comments for the last few days. I know Jeff
->>> King will be away for the next two weeks, but should we still move
->>> forward with this? The initial reactions to the idea seemed positive.
->> ...
->> It will be merged to next and if no people speak up (due to bugs
->> observed or such)
+> How about we do a slightly different
+> arrangement for these overflow commits?
 >
-> I would guess, however, that Harald is wondering more specifically
-> about the "--sort" patch he added atop Peff's patches. Disposition for
-> _that_ patch is not specified in the latest "What's cooking":
->
->     * hn/sort-ls-remote (2018-04-09) 1 commit
->      - ls-remote: create '--sort' option
->      (this branch uses jk/ref-array-push.)
->
->      "git ls-remote" learned an option to allow sorting its output based
->      on the refnames being shown.
+> Instead of storing the commits in the commit-graph file as "0" (which
+> currently means "written by a version of git that did not compute
+> generation numbers") we could let GENERATION_NUMBER_MAX be the maximum
+> generation of a commit in the commit-graph, and if a commit would have
+> larger generation, we collapse it down to that value.
 
-Thanks all for summarizing.
-
-I think the preliminary clean-up patches by Peff are all
-independently good and can be advanced, even without him being
-around.  I haven't formed a firm opinion on the doneness of the
-latest round of the "--sort" thing.  I usually do not explicitly
-write "I haven't formed an opinion" in "What's cooking" report,
-so please read the lack of "disposition" as such.
+Sure.  Any value we can tell that it is special is fine.  Thanks.
