@@ -6,48 +6,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A66111F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 02:51:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC2161F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 03:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752258AbeDKCv2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 22:51:28 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35061 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752128AbeDKCv1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 22:51:27 -0400
-Received: by mail-wm0-f68.google.com with SMTP id r82so986080wme.0
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 19:51:27 -0700 (PDT)
+        id S1752407AbeDKDCw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 23:02:52 -0400
+Received: from mail-wr0-f169.google.com ([209.85.128.169]:42978 "EHLO
+        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752128AbeDKDCv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 23:02:51 -0400
+Received: by mail-wr0-f169.google.com with SMTP id s18so250060wrg.9
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 20:02:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=e4W2882aIP9sj7iVsO6NgejugG+mixRHDmvJp4isqJY=;
-        b=X8rEaaIyF+XAbYxovBwHl2Gx11Ytgb/f11Vgd6tzTIQ6MdG9Zw9ejNd5PPG1hmdKqc
-         QhcVHFWrVv6uI7hVdEZi/gpxHZRk4d0XWo+IbXmxfsaY5gowRvST46tueIA2BxMM0/Or
-         S/z311FDXlPQlvkvzJzYT33cNfXtWHUGtPb0DjdCQzQHlzaNYVn0Jr53OnzOMo7k3/rh
-         imqkhOD/EjbLQ2+dGQX5R5YgWElnRcUk6O/4PBeDQ0ulbfmHGTgexe0yAY8/PJ1FEqV9
-         Vb6cegTGDMKs8vQvuYQSuZvBAJ7kYTjmMZKoq7Q+k17hepHnMd9jOclr8aNjXJHN3h7q
-         Nmrg==
+        bh=Sxb1cmOpxz9iwKrleuWi1kQIAy+1PyGso2ybAJqYNWc=;
+        b=WIcK5eT+ogQ5NcGEccHRrr8AY6npfVC969PtmE3X+QNoq+fMe7HiyRQHuyIo1qOCUr
+         z7tdrpQjPUWbJkabrx20vCcIH8JVD1yVLWSSjS2ni+T8jc/XESMHs3hKhiS18pRs8jwc
+         Ogfd9d7mBDaTMqKZg2J+z4tY3WxwfuSm9izyGzxA/qtRfe9MwAAuYFQPo/0MgP0S/2Ca
+         OJttcp8AfqRpsagZP6wj8YNy7dK9JKwzjishfALWxOwZNValOhuMJyF1E5S453M0GtIq
+         U/88jzVSoYcr6vhdMQZJUfuuiQInvqUfDQMRabfxtdEq9T+gtkppD4MN7TXQZqUqkigi
+         2wkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=e4W2882aIP9sj7iVsO6NgejugG+mixRHDmvJp4isqJY=;
-        b=D08pKYu/ULMioQkDhZ4B9U6UsTaer0TY8F2Ld/EkyXXL5bd4oO/86XlAZF3SHrt+ez
-         8eO1pzXE7aYSgsqprXt9NQBFu4373PYd3dnktsi6FWqfk+qkJ+XMQDcVS8O86X00erMe
-         wDIioDix7caU7u14doxxvQunltNTCuJtv0TrC8gtNzbnzomC6D49lwrf8lbqHtPcMZcY
-         IyNsMUpotcHQW2QsD/cFHRH1VOXOmN5O3UTiUnKAhdSToFA9PstjhynGQnP6SPvo/fU1
-         7doLmw+IuwbaVpu7hMZUPiHK0+KFi4vG0yNbJP0iph0bfJmqtGKXKqee7FrptmD7XkEN
-         BY+g==
-X-Gm-Message-State: ALQs6tAeTyn0xcBn+jb6yDHlMxKhWeD0j459HFmJ57oTyJYCb2BCR2cX
-        QDsyMSahBqmCLmZ2KGS5gS4=
-X-Google-Smtp-Source: AIpwx48hkv5W/de10vGKMkXt1cXllBrWAt/9w+knxw7jo3P6O7FZbce+ZZzaVPJlo/gGf6hP1K2aHg==
-X-Received: by 10.28.109.88 with SMTP id i85mr1102464wmc.150.1523415086005;
-        Tue, 10 Apr 2018 19:51:26 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f54sm63351wra.80.2018.04.10.19.51.25
+        bh=Sxb1cmOpxz9iwKrleuWi1kQIAy+1PyGso2ybAJqYNWc=;
+        b=LlQVNlIg0hV3JwYRu7oRxpHU4VEvalN+lfGxqvzvVz4oDUlx2lpnKV2346PpIaCAV7
+         b92OHHGl/FMntfysU/p6FtGEukZivuV4JiRXwB6x0F7utPhM9ygExeRIxwjaCgM3fbEg
+         kguh5wwjtyVXVgLKZfRjaRWkUJE+/xc1yAh7ahXyeYT95EOiIjy22KQq2e636p8lbcn7
+         SyoI+JSf2Mj0cC4vqp7gst9P9S/ipP9imFP1hF+dMcbYzI4NtkfMvA4l9lrmcv6jC7e8
+         aebikY0hYyW8UsCUzSBDNZGiJm5UcKyToOF4ZFUNWn1LyEPWI+dpIdn00QrdriE/jcqq
+         FJRQ==
+X-Gm-Message-State: ALQs6tDiF77LUOiLvVMaVRQYWi2gxHIHCgRRv6+EbkZ5jbPcybD+AupS
+        Cni1gUB05K6O47EivWgN930=
+X-Google-Smtp-Source: AIpwx4/KHEybic238wDlXEZdJjQ+rARRMUyy09HWgiDhK/0bRftJHQGWqqO6S2tXUGDm4itH7b2JNA==
+X-Received: by 10.223.168.4 with SMTP id l4mr1835097wrc.170.1523415770251;
+        Tue, 10 Apr 2018 20:02:50 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id e13sm330839wrg.79.2018.04.10.20.02.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 10 Apr 2018 19:51:25 -0700 (PDT)
+        Tue, 10 Apr 2018 20:02:49 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Derrick Stolee <dstolee@microsoft.com>
 Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
@@ -56,14 +56,14 @@ Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
         "sbeller\@google.com" <sbeller@google.com>,
         "larsxschneider\@gmail.com" <larsxschneider@gmail.com>,
         "bmwill\@google.com" <bmwill@google.com>
-Subject: Re: [PATCH v2 04/10] commit-graph: compute generation numbers
+Subject: Re: [PATCH v2 06/10] commit.c: use generation to halt paint walk
 References: <20180403165143.80661-1-dstolee@microsoft.com>
         <20180409164131.37312-1-dstolee@microsoft.com>
-        <20180409164131.37312-5-dstolee@microsoft.com>
-Date:   Wed, 11 Apr 2018 11:51:25 +0900
-In-Reply-To: <20180409164131.37312-5-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Mon, 9 Apr 2018 16:42:01 +0000")
-Message-ID: <xmqqa7uazc9e.fsf@gitster-ct.c.googlers.com>
+        <20180409164131.37312-7-dstolee@microsoft.com>
+Date:   Wed, 11 Apr 2018 12:02:49 +0900
+In-Reply-To: <20180409164131.37312-7-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Mon, 9 Apr 2018 16:42:05 +0000")
+Message-ID: <xmqq604yzbqe.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,50 +74,46 @@ X-Mailing-List: git@vger.kernel.org
 
 Derrick Stolee <dstolee@microsoft.com> writes:
 
-> +		if ((*list)->generation != GENERATION_NUMBER_INFINITY) {
-> +			if ((*list)->generation > GENERATION_NUMBER_MAX)
-> +				die("generation number %u is too large to store in commit-graph",
-> +				    (*list)->generation);
-> +			packedDate[0] |= htonl((*list)->generation << 2);
-> +		}
-
-
-How serious do we want this feature to be?  On one extreme, we could
-be irresponsible and say it will be a problem for our descendants in
-the future if their repositories have more than billion pearls on a
-single strand, and the above certainly is a reasonable way to punt.
-Those who actually encounter the problem will notice by Git dying
-somewhere rather deep in the callchain.
-
-Or we could say Git actually does support a history that is
-arbitrarily long, even though such a deep portion of history will
-not benefit from having generation numbers in commit-graph.
-
-I've been assuming that our stance is the latter and that is why I
-made noises about overflowing 30-bit generation field in my review
-of the previous step.
-
-In case we want to do the "we know this is very large, but we do not
-know the exact value", we may actually want a mode where we can
-pretend that GENERATION_NUMBER_MAX is set to quite low (say 256) and
-make sure that the code to handle overflow behaves sensibly.
-
-> +	for (i = 0; i < nr_commits; i++) {
-> +		if (commits[i]->generation != GENERATION_NUMBER_INFINITY &&
-> +		    commits[i]->generation != GENERATION_NUMBER_ZERO)
-> +			continue;
+> @@ -800,17 +810,26 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
+>  		return result;
+>  	}
+>  	prio_queue_put(&queue, one);
+> +	if (one->generation < min_nonstale_gen)
+> +		min_nonstale_gen = one->generation;
+>  
+>  	for (i = 0; i < n; i++) {
+>  		twos[i]->object.flags |= PARENT2;
+>  		prio_queue_put(&queue, twos[i]);
+> +		if (twos[i]->generation < min_nonstale_gen)
+> +			min_nonstale_gen = twos[i]->generation;
+>  	}
+>  
+> -	while (queue_has_nonstale(&queue)) {
+> +	while (queue_has_nonstale(&queue, min_nonstale_gen)) {
+>  		struct commit *commit = prio_queue_get(&queue);
+>  		struct commit_list *parents;
+>  		int flags;
+>  
+> +		if (commit->generation > last_gen)
+> +			BUG("bad generation skip");
 > +
-> +		commit_list_insert(commits[i], &list);
-> +		while (list) {
-> +...
-> +		}
-> +	}
+> +		last_gen = commit->generation;
+> +
+>  		flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
+>  		if (flags == (PARENT1 | PARENT2)) {
+>  			if (!(commit->object.flags & RESULT)) {
+> @@ -830,6 +849,10 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
+>  				return NULL;
+>  			p->object.flags |= flags;
 
-So we go over the list of commits just _once_ and make sure each of
-them gets the generation assigned correctly by (conceptually
-recursively but iteratively in implementation by using a commit
-list) making sure that all its parents have generation assigned and
-compute the generation for the commit, before moving to the next
-one.  Which sounds correct.
+Hmph.  Can a commit that used to be not stale (and contributed to
+the current value of min_nonstale_gen) become stale here by getting
+visited twice, invalidating the value in min_nonstale_gen?
 
-
+>  			prio_queue_put(&queue, p);
+> +
+> +			if (!(flags & STALE) &&
+> +			    p->generation < min_nonstale_gen)
+> +				min_nonstale_gen = p->generation;
+>  		}
+>  	}
