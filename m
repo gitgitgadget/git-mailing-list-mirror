@@ -7,144 +7,96 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD6DE1F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 20:09:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B6B71F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 20:20:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932909AbeDKUJy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 16:09:54 -0400
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:43976 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932268AbeDKUJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 16:09:50 -0400
-Received: by mail-wr0-f180.google.com with SMTP id y7so2927568wrh.10
-        for <git@vger.kernel.org>; Wed, 11 Apr 2018 13:09:49 -0700 (PDT)
+        id S933402AbeDKUT7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 16:19:59 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:37038 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933282AbeDKUT6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 16:19:58 -0400
+Received: by mail-wm0-f68.google.com with SMTP id l16so2192267wmh.2
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 13:19:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DtJhSQjEd62J9P0g8YIMUr5F+v+NDY2C050Pj/uCEYU=;
-        b=Obqk0FT+AQNwHUIB470C/jASCZLysczb8yCyBhnJi+hq/RFkwqugw6/uQZmLx+/HNZ
-         fR34g0cmR0JbS48D0J/VFDF9Fnh1TGJ/3xKE+OQ+m/IafcdTPPudJ5uLQi2WJg+sp7Cj
-         S4fMOtWZ2lNhKMJzdZxF7LZupEMoK5DEbT4CxM0iDd6YjwBQuW0WMJ1p74MAddX2Rpwo
-         8EJeiVfMqzhVAbPmti21n3jMxUEio+lU9J2dsQYW1D6xDW2vISQHmb4tUQ177KAuvM7u
-         QqMkFwtbkeWKQtv2M8ZceE3wCpoesY6YiQt4SCeshv5yLuwS4DF3zyb/q+W8K1dGgrLh
-         NTHw==
+        h=from:to:cc:subject:date:message-id;
+        bh=UpeWPx9pHrdsPWGzfAWGAV1nAqPoURe9cOBiqOSkp+Y=;
+        b=Qp5iRTsqZJ9u+Fl9yGcP6z5o0bCwxD90NGIESzsomzUKfjLZ9uBg/2Bqn06lIsIy/V
+         2kMmItqIpOodx8CVHg9fs6hei9UQrsFbd8ja4cKdjpIPvFZN/6EH+v+zEBW4UcRvJHM6
+         bd9D/4bCJZVqhtECLa50nNJVN4z8rYCA0USlJXwir0aNI+gdk96s64sqmgN7cHv6jHL3
+         CXxgYDuIHYKmsdfpv1hH4hNqiSBps7562TM58womXzqHyRQSPML8uDKYOP7tU4V4kMpp
+         CQ9OjgQhgpmDZ/dblFmipUdml6/vS6yzxxZ6wVjlgXB077bG1SzbxyfgO2Xrm6BhHpgM
+         Zl0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DtJhSQjEd62J9P0g8YIMUr5F+v+NDY2C050Pj/uCEYU=;
-        b=stFl8VJOGHHP6VFuP5wrS8LQfJBN+yE/mIhDRTBdHZBZQb17k3Hhn72oFASe9jmZBv
-         Cz17t0jg7uKdyLlbeS7eyGU8dMR9gIknfXpp8gK6ptZRv/CjeAct7s3JKZDXJdNWLXcu
-         xyzWt26761T2AlvLS1h/Whnzlv0vYB8c+nH14PyE5OCs559jS8/51EcupxycIUp4GGMa
-         NrL4pA8mzWmaX0FEcLFz8dpYQliI4z1Dy4nnX/+BtsDds90/LzQzPBtpZJ8uyoqAdMkS
-         XKJQ+LtDISxjaxTDQmZGCLR7thGg9Oskmidk5DHlShlNaKowhfTx7JBEZOVdqDqdMSBs
-         iTXA==
-X-Gm-Message-State: ALQs6tDO6ASJXVStQip8vlGJngJreOQ/dxdaMbNLxAtahlf+PKs+YuLj
-        0rEW6R1cX0PHHQoZ0zoOcRQ=
-X-Google-Smtp-Source: AIpwx4/gj+cdMVnRvwxStOGCeKrTQSe+J0FdO9AHocOAiM9UJ8qPgk+y83ElKePr4uWtFS1u/oS74g==
-X-Received: by 10.223.160.195 with SMTP id n3mr4632553wrn.92.1523477389138;
-        Wed, 11 Apr 2018 13:09:49 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=UpeWPx9pHrdsPWGzfAWGAV1nAqPoURe9cOBiqOSkp+Y=;
+        b=NNRPRCBmBqz1/wbHGY5lUvD3WgTwj0mDcpWtOoGKfOp3sqE+S/xSOuEKHa+YXwuEIs
+         +DA2qDZvmcmx+Oshjr+iW9gb5H6/1+MFE3z2jDleoL2wC7Hsl1bAaGzMknEM56tTrm+g
+         qZzDnlDQrVVGmkKUyyPCXcy3birD2thEIaD4RIE5pHNoETMQwcTQln1b0gXMTk9+1n0+
+         qPBfSMynG/UW2+YGQ48P59fOmDnx5XsUfcc8fkXHOsKO6WmkOknN5AqULROthwhK4yz7
+         M460Y4A4vQuyTO6UuuREIWk2BipwKPkOflgCrxDwEuFvk/q0NCzI3XOFX3qNfY/pGOUJ
+         Coaw==
+X-Gm-Message-State: ALQs6tCBMe6myvozM7gjpPouLO3Hg9qYSFykEWrdBK52lJaTjNYQ57J4
+        mBUy7zh56A+VOSBvXViIJ+w6cbwl
+X-Google-Smtp-Source: AIpwx4/aV+WD0Fn4Gn+8Hx2TZh/0ySmQWEblPkM1Yhz0YcPbQFxfiC9r6jJSRtrM1nITbebvMGL0gg==
+X-Received: by 10.28.18.206 with SMTP id 197mr3352922wms.22.1523477996539;
+        Wed, 11 Apr 2018 13:19:56 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id h197sm2838414wmd.3.2018.04.11.13.09.47
+        by smtp.gmail.com with ESMTPSA id r28sm2156946wra.78.2018.04.11.13.19.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Apr 2018 13:09:48 -0700 (PDT)
-Date:   Wed, 11 Apr 2018 21:09:55 +0100
+        Wed, 11 Apr 2018 13:19:55 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 0/6] worktree: teach "add" to check out existing
- branches
-Message-ID: <20180411200955.GO2629@hank>
-References: <20180325134947.25828-1-t.gummerer@gmail.com>
- <20180331151804.30380-1-t.gummerer@gmail.com>
- <CAPig+cQ8VzDycUMo-QOexNDBgQGEGj2BPmPa-Y0vhGCt_brbhg@mail.gmail.com>
- <20180409193007.GL2629@hank>
- <CAPig+cRXsir3siZ5eArk6k1mF9kaDfFe1mL+T9faR6dxSUez7w@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPig+cRXsir3siZ5eArk6k1mF9kaDfFe1mL+T9faR6dxSUez7w@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH resend] SubmittingPatches: mention the git contacts command
+Date:   Wed, 11 Apr 2018 21:20:00 +0100
+Message-Id: <20180411202000.31086-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.17.0.484.g0c8726318
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/09, Eric Sunshine wrote:
-> On Mon, Apr 9, 2018 at 3:30 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > On 04/08, Eric Sunshine wrote:
-> >> As with Junio, I'm fine with this hidden option (for now), however, I
-> >> think you can take this a step further. Rather than having a (hidden)
-> >> git-reset option which suppresses "HEAD is now at...", instead have a
-> >> (hidden) option which augments the message. For example,
-> >> --new-head-desc="New worktree" would make it output "New worktree HEAD
-> >> is now at...". Changes to builtin/reset.c to support this would hardly
-> >> be larger than the changes you already made.
-> >
-> > Something else I just noticed that may make this a worse solution is
-> > that this breaks the sentence in two pieces for translators.  I guess
-> > we could somehow get the "New worktree" part of the option translated,
-> > but that still means that if some language would require to move parts
-> > of the sentence around that would be less than ideal for translation.
-> 
-> Good point.
-> 
-> One solution would be to have the new hidden option replace the string
-> entirely: --new-head-msg="New worktree HEAD is now at %s", which would
-> allow translators to deal with the entire sentence. Even clearer would
-> be to drop "now", as in "New worktree HEAD is at %s". (Default in
-> reset.c would still be "HEAD is now at %s", of course.)
-> 
-> Another solution would be not to augment the "HEAD is now at..."
-> message at all. I realize that that augmentation was one of the
-> original motivations for this patch series, but with the upcoming
-> restoration of the "Preparing worktree" message:
+Instead of just mentioning 'git blame' and 'git shortlog', which make it
+quite hard for new contributors to pick out the appropriate list of
+people to cc on their patch series, mention the 'git contacts' utility,
+which makes it much easier to get a reasonable list of contacts for a
+change.
 
-My original motivation of the series was to just make the new dwim
-work :)  Because that's adding some magic, the secondary motivation
-became improving the UI, to help users see which dwim was used.  I
-felt like this was going to be one of those improvements, especially
-after we get rid of the "Preparing ..." line.
+This should help new contributors pick out a reasonable cc list by
+simply using a single command.
 
-I do however like your suggestion of the "Preparing worktree (_branch
-disposition_)", as that doesn't add more lines to the output, while
-still giving a good indication of what exactly is happening.  At that
-point just showing "HEAD is now at ..." is fine by me, and doesn't
-require adding the hidden flag to 'git reset'.  So I'm happy just
-dropping the change in the message here, which will simplify things.
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
 
-Thanks for the suggestion!
+I've originally sent this at <20180316213323.GC2224@hank>, during an
+the rc period.  Eric had some comments, which I interpreted as being
+okay with the change (hope I'm not mistaken there :)).  As I still
+think this would be an improvement for new contributors, I'm resending
+it here.
 
->     Preparing worktree (_branch disposition_)
->     HEAD is now at ...
-> 
-> it seems clear enough (at least to me) from the context introduced by
-> the "Preparing..." message that "HEAD is now at..." refers to HEAD in
-> the worktree. (But that's just my opinion.)
-> 
-> > Would factoring out what we have in 'print_new_head_line()' into some
-> > common code, maybe in 'pretty.c', and still doing the printing from
-> > here be a reasonable tradeoff?
-> 
-> Isn't that getting uglier again? Not only would you have to publish
-> that function, but you'd still need the hidden git-reset
-> --show-new-head-line option.
-> 
-> Also, you'd end up calling that function from within low-level worker
-> worktree.c:add_worktree(), thus making it take on UI duties, which
-> would be nice to avoid if possible. (Unfortunately, the alternate idea
-> of having worktree.c:add() handle this UI task doesn't quite work
-> since add_worktree() doesn't return sufficient information for add()
-> to know whether or not it should print "HEAD is now at..."; however,
-> add_worktree() could be augmented to return more information.)
-> 
-> So, I don't presently have a good answer. I'm partial to the idea of
-> not augmenting "HEAD is now at...", partly because context makes it
-> relatively clear that it applies to the new worktree and partly
-> because it's simpler (less implementation work for you) to leave it as
-> is. If that choice isn't desirable, then next best would be for
-> --new-head-msg= to replace the entire "HEAD is now at..." string
-> rather than augmenting it.
+ Documentation/SubmittingPatches | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index a1d0feca36..945f8edb46 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -260,8 +260,8 @@ that starts with `-----BEGIN PGP SIGNED MESSAGE-----`.  That is
+ not a text/plain, it's something else.
+ 
+ Send your patch with "To:" set to the mailing list, with "cc:" listing
+-people who are involved in the area you are touching (the output from
+-`git blame $path` and `git shortlog --no-merges $path` would help to
++people who are involved in the area you are touching (the `git
++contacts` command in `contrib/contacts/` can help to
+ identify them), to solicit comments and reviews.
+ 
+ :1: footnote:[The current maintainer: gitster@pobox.com]
+-- 
+2.16.2.804.g6dcf76e11
+
