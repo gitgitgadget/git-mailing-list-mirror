@@ -2,85 +2,221 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF14C1F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 15:51:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB76F1F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 16:08:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753788AbeDKPvv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 11:51:51 -0400
-Received: from mail-vk0-f45.google.com ([209.85.213.45]:33043 "EHLO
-        mail-vk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751491AbeDKPvu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 11:51:50 -0400
-Received: by mail-vk0-f45.google.com with SMTP id d201so1380992vke.0
-        for <git@vger.kernel.org>; Wed, 11 Apr 2018 08:51:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=p41/2Kg/LtDNJaMijj+tZqQYUkMN8VSFsSuaahQgGw8=;
-        b=P487/4ubaTsMWWgSq7dIxYKoqSSLfm5GVQUHGc6gBurgazqW9zzzO0eWwC3aaqMEmK
-         ZO+jHR2gPfxurhY31g6qqJau+qi/1+jLAy4M71YfoECLNLC9Ji4XwFAynsM51TsGzwjV
-         k+Ww0sRadFVp5aYnHInBPw840RWltbLsDMxuMfO40t5EnCQ/QKw8DWxGQ8tPzuWvTMYs
-         XUapy9uaFyPXuAeOJGVVUCBtXm0bNfzRiuvtamvOVEd02Z6fjpTY3GcdqAvj5UQT8MqG
-         R9aM8/3DJau003t/8LtO2gifQzBkLjwotZpdW1iYQZMip8+glL5qt+oKaxpWpArnecDr
-         k7rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=p41/2Kg/LtDNJaMijj+tZqQYUkMN8VSFsSuaahQgGw8=;
-        b=H/hS1mi7JySe12WQgbDJyy3mN6sFgB6WQGk954QURiehC4RJhf2I2OOPWXuuh9xFwa
-         rNqnuYzWrrWl70656P48rBucypv+e6vsXHJ/jnq3uou//6Mt5uhRJTfLWI70TuzSFN1c
-         DRYJzglSu2UXSCsg1V8MHZxb7CmIRdfIa0YXzu7/Qmgn01yfXOLvFUz0+P1gSLmDpRwC
-         3EvNbidh/AFX+nvJ5zKW1u3J/Lfkva2y4FHOVR1AEukA6d7SD77Lv7u4SN3wsmljU8At
-         kRo1S5yLhtPzzQD1cT6WweeHm4MD5AQgKdCSVMpTq3hjIqpSyGRDOxl/kaGptT2OE32R
-         NioA==
-X-Gm-Message-State: ALQs6tD1kiPWr9wCXEAH3vVzpwk+OQaYU1IbaYXa0lIrOIUbmjYlRc/N
-        rEiWFzWFhWDpg1+Uysc5Mgcw6Npzw9JiYUd+v64=
-X-Google-Smtp-Source: AIpwx4+/kadSarmtXWf42RzJQZsBlKD777nsHz/kTsvlc6uEZtHvPkTV00d+h62qwbl3mLsqHiaqJmrk/ajWYeJUhzc=
-X-Received: by 10.31.115.140 with SMTP id o134mr3775263vkc.106.1523461909996;
- Wed, 11 Apr 2018 08:51:49 -0700 (PDT)
+        id S1753055AbeDKQH7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 12:07:59 -0400
+Received: from mail.javad.com ([54.86.164.124]:48738 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752804AbeDKQH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 12:07:58 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 8F13C3EB38;
+        Wed, 11 Apr 2018 16:07:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523462877;
+        bh=MGS0pqklhUCK7DRh3GoW26ivDZ2rS56KbMR6KaYogHE=; l=3330;
+        h=Received:From:To:Subject;
+        b=fzCUZaCecvlInBWbM2nCdMS5/l8HadejVzBIoc1NXgkvj97R0QuO7KDdg6foIJ3P0
+         tbndU5kcO0BaixWT2dPvqMhxjxgeSFyQ13PIXvYPEBonJxoOwcJZmQPN293iq85UaA
+         GQNfdkCe6ELw2R9s7YVGjeuXuVXdfoB2e8u0qSZs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523462877;
+        bh=MGS0pqklhUCK7DRh3GoW26ivDZ2rS56KbMR6KaYogHE=; l=3330;
+        h=Received:From:To:Subject;
+        b=fzCUZaCecvlInBWbM2nCdMS5/l8HadejVzBIoc1NXgkvj97R0QuO7KDdg6foIJ3P0
+         tbndU5kcO0BaixWT2dPvqMhxjxgeSFyQ13PIXvYPEBonJxoOwcJZmQPN293iq85UaA
+         GQNfdkCe6ELw2R9s7YVGjeuXuVXdfoB2e8u0qSZs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523462877;
+        bh=MGS0pqklhUCK7DRh3GoW26ivDZ2rS56KbMR6KaYogHE=; l=3330;
+        h=Received:From:To:Subject;
+        b=fzCUZaCecvlInBWbM2nCdMS5/l8HadejVzBIoc1NXgkvj97R0QuO7KDdg6foIJ3P0
+         tbndU5kcO0BaixWT2dPvqMhxjxgeSFyQ13PIXvYPEBonJxoOwcJZmQPN293iq85UaA
+         GQNfdkCe6ELw2R9s7YVGjeuXuVXdfoB2e8u0qSZs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523462877;
+        bh=MGS0pqklhUCK7DRh3GoW26ivDZ2rS56KbMR6KaYogHE=; l=3330;
+        h=Received:From:To:Subject;
+        b=fzCUZaCecvlInBWbM2nCdMS5/l8HadejVzBIoc1NXgkvj97R0QuO7KDdg6foIJ3P0
+         tbndU5kcO0BaixWT2dPvqMhxjxgeSFyQ13PIXvYPEBonJxoOwcJZmQPN293iq85UaA
+         GQNfdkCe6ELw2R9s7YVGjeuXuVXdfoB2e8u0qSZs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523462877;
+        bh=MGS0pqklhUCK7DRh3GoW26ivDZ2rS56KbMR6KaYogHE=; l=3330;
+        h=Received:From:To:Subject;
+        b=fzCUZaCecvlInBWbM2nCdMS5/l8HadejVzBIoc1NXgkvj97R0QuO7KDdg6foIJ3P0
+         tbndU5kcO0BaixWT2dPvqMhxjxgeSFyQ13PIXvYPEBonJxoOwcJZmQPN293iq85UaA
+         GQNfdkCe6ELw2R9s7YVGjeuXuVXdfoB2e8u0qSZs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523462877;
+        bh=MGS0pqklhUCK7DRh3GoW26ivDZ2rS56KbMR6KaYogHE=; l=3330;
+        h=Received:From:To:Subject;
+        b=fzCUZaCecvlInBWbM2nCdMS5/l8HadejVzBIoc1NXgkvj97R0QuO7KDdg6foIJ3P0
+         tbndU5kcO0BaixWT2dPvqMhxjxgeSFyQ13PIXvYPEBonJxoOwcJZmQPN293iq85UaA
+         GQNfdkCe6ELw2R9s7YVGjeuXuVXdfoB2e8u0qSZs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523462877;
+        bh=MGS0pqklhUCK7DRh3GoW26ivDZ2rS56KbMR6KaYogHE=; l=3330;
+        h=Received:From:To:Subject;
+        b=fzCUZaCecvlInBWbM2nCdMS5/l8HadejVzBIoc1NXgkvj97R0QuO7KDdg6foIJ3P0
+         tbndU5kcO0BaixWT2dPvqMhxjxgeSFyQ13PIXvYPEBonJxoOwcJZmQPN293iq85UaA
+         GQNfdkCe6ELw2R9s7YVGjeuXuVXdfoB2e8u0qSZs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523462877;
+        bh=MGS0pqklhUCK7DRh3GoW26ivDZ2rS56KbMR6KaYogHE=; l=3330;
+        h=Received:From:To:Subject;
+        b=fzCUZaCecvlInBWbM2nCdMS5/l8HadejVzBIoc1NXgkvj97R0QuO7KDdg6foIJ3P0
+         tbndU5kcO0BaixWT2dPvqMhxjxgeSFyQ13PIXvYPEBonJxoOwcJZmQPN293iq85UaA
+         GQNfdkCe6ELw2R9s7YVGjeuXuVXdfoB2e8u0qSZs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523462877;
+        bh=MGS0pqklhUCK7DRh3GoW26ivDZ2rS56KbMR6KaYogHE=; l=3330;
+        h=Received:From:To:Subject;
+        b=fzCUZaCecvlInBWbM2nCdMS5/l8HadejVzBIoc1NXgkvj97R0QuO7KDdg6foIJ3P0
+         tbndU5kcO0BaixWT2dPvqMhxjxgeSFyQ13PIXvYPEBonJxoOwcJZmQPN293iq85UaA
+         GQNfdkCe6ELw2R9s7YVGjeuXuVXdfoB2e8u0qSZs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523462877;
+        bh=MGS0pqklhUCK7DRh3GoW26ivDZ2rS56KbMR6KaYogHE=; l=3330;
+        h=Received:From:To:Subject;
+        b=fzCUZaCecvlInBWbM2nCdMS5/l8HadejVzBIoc1NXgkvj97R0QuO7KDdg6foIJ3P0
+         tbndU5kcO0BaixWT2dPvqMhxjxgeSFyQ13PIXvYPEBonJxoOwcJZmQPN293iq85UaA
+         GQNfdkCe6ELw2R9s7YVGjeuXuVXdfoB2e8u0qSZs=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1f6IHr-0000Is-VJ; Wed, 11 Apr 2018 19:07:55 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v6 04/15] sequencer: introduce new commands to reset the revision
+References: <cover.1519680483.git.johannes.schindelin@gmx.de>
+        <cover.1523362469.git.johannes.schindelin@gmx.de>
+        <fb797f32b7385317b9dc18524e3863ba627f6c98.1523362469.git.johannes.schindelin@gmx.de>
+        <878t9u5ksw.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1804111329270.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Wed, 11 Apr 2018 19:07:55 +0300
+In-Reply-To: <nycvar.QRO.7.76.6.1804111329270.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Wed, 11 Apr 2018 13:36:48 +0200
+        (DST)")
+Message-ID: <87zi293ew4.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.159.40.42 with HTTP; Wed, 11 Apr 2018 08:51:48 -0700 (PDT)
-In-Reply-To: <xmqqmuya43cs.fsf@gitster-ct.c.googlers.com>
-References: <xmqqmuya43cs.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 11 Apr 2018 08:51:48 -0700
-Message-ID: <CABPp-BHL4P0RxQ6OAuDSev9BXVM0uKTYD3M4JGTQvSwcBv4K0Q@mail.gmail.com>
-Subject: Re: [Git] recursive merge on 'master' severely broken?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 11, 2018 at 12:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> It appears that a topic recently graduated to 'master' introduces a
-> severe regression to "git merge" when it merges a side branch that
-> renames paths while the trunk has further updates.
->
-> The symptom can easily be seen by trying to recreate the merge I
-> made at the tip of 'pu' 29dea678 ("Merge branch
-> 'sb/filenames-with-dashes' into pu", 2018-04-11) that I'll be.
-> pushing out shortly.  The side branch renames a file exec_cmd.h to
-> exec-cmd.h (an underscore changed to a dash) without changing any
-> contents, while the branch being merged to has made some changes to
-> the contents while keeping the original pathname.
->
-> A clean automerged result should leave the identical contents from
-> HEAD:exec_cmd.h in :exec-cmd.h in the index, which is what happens
-> when using Git v2.17.0 proper, but with today's master', there are
-> content changes that cannot be explained--the merge is simply broken
-> and worse yet, the command pretends that everything went well and
-> merged cleanly in that path.  Overly clever tool that behaves in a
-> buggy and unexplainable way is bad enough, doing so silently is
-> unexcusable.
+Hi Johannes,
 
-I agree, that is _really_ bad.  My sincerest apologies.  I'll dig into it.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> Hi Sergey,
+>
+> On Wed, 11 Apr 2018, Sergey Organov wrote:
+>
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>> 
+>> [...]
+>> 
+>> > We disallow '#' as label because that character will be used as
+>> > separator in the upcoming `merge` command.
+>> 
+>> Please consider to use # not only in `merge` and `reset`, but in the
+>> rest of the commands as well, to unify this new syntax. I.e., right now
+>> it seems to be:
+>> 
+>> pick  abcd A commit message
+>> merge beaf # B commit message
+>> 
+>> I suggest to turn it to:
+>> 
+>> pick  abcd # A commit message
+>> merge beaf # B commit message
+>
+> First of all, that alignment of pick's and merge's first arguments?
+
+As if it has anything to do with the topic of the issue!
+
+Just a nice look. Let it be:
+
+pick abcd # A commit message
+merge beaf # B commit message
+
+if it's that essential indeed.
+
+> That does not exist. If you want aligned arguments, you have to use the
+> rebase.abbreviateCommands feature.
+
+It's changing the subject.
+
+> Second: this change would break backwards-compatibility. For almost eleven
+> years, we generated `pick abcdef0123 A commit message`.
+
+I thought we already agreed that you have no backward compatibility
+issues with this new feature, as it's a new feature, complete re-design,
+as you put it yourself:
+
+"This design flaw cannot be fixed. Not without a complete re-design, at
+least. This patch series offers such a re-design."
+
+At least could you please answer plain yes/no to this simple question: is
+this feature a complete re-design or not? yes/no, please!
+
+> Even if there are no scripts that rely on this form, power users have
+> gotten used to it, and I can tell you from experience how unsettling
+> even minor visual changes are in everyday operations.
+> In short: no, we cannot do that.
+
+You can do that, provided it's complete re-design indeed. You don't wish
+to, but you can. Nothing will break and things will be at least a little
+bit cleaner.
+
+Each directive having its own dedicated syntax... gosh! No luck getting
+syntax description, I'm afraid.
+
+> Just like your proposal to conflate the `merge` and `pick` commands
+
+There was never such proposal. The proposal was not to introduce new
+`merge` command when there is already `pick` that could simply be
+extended to pick any commit, whatever number of parents it happens to
+have.
+
+But provided you decline to even put a # before the commit message...
+that proposal is simply a pie in the sky.
+
+> for some perception of consistency: The user experience is more
+> important than individual persons' sense of elegance (that might not
+> even be shared with the majority).
+
+It's about consistency indeed. Consistent handling of commits is
+essential. Consistency is one of the things that bring positive user
+experience. You disagree?
+
+Besides, it was bad user experience that forced you to re-design, isn't
+it? I'm afraid you miss good opportunity to fix some of your former
+mistakes and you make some new. As the discussion goes, it seems you'd
+never admit it, the design is set in stone, and my attempts are in fact
+pointless.
+
+Overall, I hereby withdraw all my pending suggestions to improve this
+patch series.
+
+-- Sergey
