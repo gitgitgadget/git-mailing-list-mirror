@@ -2,104 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2155B1F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 03:49:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F7451F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 04:28:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751963AbeDKDtq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 23:49:46 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:39479 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751845AbeDKDtp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 23:49:45 -0400
-Received: by mail-pg0-f45.google.com with SMTP id b9so165216pgf.6
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 20:49:44 -0700 (PDT)
+        id S1751617AbeDKE2i (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 00:28:38 -0400
+Received: from mail-ot0-f181.google.com ([74.125.82.181]:34237 "EHLO
+        mail-ot0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751553AbeDKE2f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 00:28:35 -0400
+Received: by mail-ot0-f181.google.com with SMTP id m7-v6so571387otd.1
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 21:28:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9vPoHJ4oblld9kfRlPNT7kZQhb9na+spCmNQo2YbAR4=;
-        b=Y+taXiI0yp+bla4is0BGCniX3hBwviUnYz1+tgMrx0IcJMKlZBlMcPENu1QlkB3s7l
-         tKCQCR1kDIyp63ROY80iY3+U5y33l4oSdFsavr6rj0UCD8r9xyqHpoLkD8c1ZUHAQwbw
-         M52fzYz79rji/74WOONYrVU0tVqQQRB+X052dP2nmG+qzvG6JNchozWmbB+W41hFEMQo
-         ZcijhGRrKk0AeU62pp2C6cUW3BATPR5M6kSFUQS6oZOz+RnMgAGLfkIl9gtQU8umJoRf
-         nFNq2VJK/MAXTm7HQaCbQH5/Bnhqk3wBJboDNnPpSm+xBAceGC4HYNBhow3ru4PTFunr
-         TsYg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=IR1cLg4r+IzzsJLkAt9IJ4ISeFpMDEvPjlKAAHFh4i4=;
+        b=cEUxk/b68TN376Ztha/BCgr8PCTeKRg32Wn7KU+eNXo5XALVExv0BPXjdhaI9PVb/D
+         t/0ud1diXasZfFWoBwWACxmYKHLBe++GA/IqKXx6eaDgFtCQkvlxg1nog3wHXes5dulF
+         VbeBOsFpLCe+H3qYKZiQB9c9oNi7W6qi0s74e1SAHtHbLsTAPYtw+lbSHjUR5Ypqd6ew
+         UpZ4tFY9ifq0knYtyfWzse1TShAV7lNdikBlaLgFI3sX6qXIvb1wFSMCnZNrMNos+tZR
+         CcQLLZNcoyMw2YpIffDgVg9NrjxjtPD2Ya9j/zXNy0MCOg8XBLebVoHB2CEB+oix0aVL
+         q5bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9vPoHJ4oblld9kfRlPNT7kZQhb9na+spCmNQo2YbAR4=;
-        b=ESXYlMwPFgp1Oj3cvFaJymXTk8xAoe6cYm5yn3R8YAy847QYhVVJzQdZpNY5EeYG2c
-         ToISBKdhuBiSvtH1t+CnNu3BvnjnP4GEg9M6XTcz084zBRwLrs52OMcowhk8Kd+PZrmM
-         czKki92XE7VLizIi/hPUiOnDzYTdD7DOut/nlsKqWnVdtzHbL1z0EapKwvpb/2QvMmRn
-         W7VKnSt09BljTYaXmulU3rljSGAWJEVnTXMD8TPxJSUCDUYAkHcir7g8L5T3WCLPWnLd
-         n/lJenK84rAWzRX5tvtiRs/maXpktOidoOapFJ9VAMufC+fTUpebV4gP97VuaZDnpTyx
-         6/tQ==
-X-Gm-Message-State: ALQs6tBYEBFUIXZSM3D5EGPTCPdzdG8We0Vs567fhIR8T+nATawG4w9f
-        sgmJtGYefCd4g82CFr+Eq8srHHv9MTI0xg==
-X-Google-Smtp-Source: AIpwx48L10zQCEu3dZSLdoLArXIyYtGdONOprOl/4bZZXfCyqIO4+of927oQoJBpn1E3Ren4pmTLEg==
-X-Received: by 10.98.242.80 with SMTP id y16mr2580112pfl.200.1523418584175;
-        Tue, 10 Apr 2018 20:49:44 -0700 (PDT)
-Received: from localhost ([2601:602:9500:3a4f:1d0e:5efd:b490:f1b1])
-        by smtp.gmail.com with ESMTPSA id p6sm360089pfk.104.2018.04.10.20.49.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Apr 2018 20:49:42 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Tue, 10 Apr 2018 20:49:41 -0700
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        sunshine@sunshineco.com, peff@peff.net
-Subject: Re: [PATCH v8 0/2] builtin/config.c: support `--type=<type>` as
- preferred alias for `--type`
-Message-ID: <20180411034941.GA63158@syl.local>
-References: <20180328234719.595-1-me@ttaylorr.com>
- <20180411010654.GA28561@syl.local>
- <xmqqtvsizg9u.fsf@gitster-ct.c.googlers.com>
- <20180411013309.GA36066@syl.local>
- <xmqq1sfmzbbg.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=IR1cLg4r+IzzsJLkAt9IJ4ISeFpMDEvPjlKAAHFh4i4=;
+        b=Y59sr2x7NJ6QpfmSLUK1ro7rfSwTfvesUnjIiRqOrUNJYiNhLn4oiy8RMJ51xFxPSr
+         NlQbNEvTM7uFlWUREQhU9pkksZ/372lM3eGgeMF0V9FM2Eum1Ap6Nz8Zed0Fit6drjeC
+         WrkRFmxNO1LFCV/opKYhS7x5SpgR/hIcMtOeLYdDXIPhmDoZhpZvkAekDBnjPCu5/3S8
+         8RjDlqxnE/eOPqehWWjiIckkPlGQxI2PRoOe145e7jjBWwQu+fcPWSKifpzC0fXRztkv
+         1NPmmqlxbRUJ3jFtQXmiBQRdfdH+FtX/UqPjPj2WTqm8qmPyWlf3qs93euwl4BWTlJ/y
+         bMXw==
+X-Gm-Message-State: ALQs6tB/3Y8Io+VJuD+8+IvGWhXbLPXp3Iwo0BvrDSG2U+BOlCF0VUvS
+        jIZ590Zi4NMYDrK0yxexIM0Tv0/l69WOGMzAmYFCfQ==
+X-Google-Smtp-Source: AIpwx4+XdEMiS4xLv/HMLp89nsbthEuG1R892RvfI7txLt4YFFx7bCQM+Mg/sgfAedqitPlk1ctPVS8gTcazaYpCqt4=
+X-Received: by 2002:a9d:21e5:: with SMTP id s92-v6mr2218715otb.165.1523420914733;
+ Tue, 10 Apr 2018 21:28:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq1sfmzbbg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.3 (2018-01-21)
+Received: by 10.201.102.138 with HTTP; Tue, 10 Apr 2018 21:28:34 -0700 (PDT)
+In-Reply-To: <CAPig+cRjYju4zEgiY_TuOOk0e7A8zNz+hu+40vQUEGDX6FGDxw@mail.gmail.com>
+References: <CA+FnnTxbg97A4P3AP7n5RT8+=W8PY0yx3644Ay2Zi9xgKD2aoA@mail.gmail.com>
+ <CAPig+cR19LS2vfjBQ71c3j2g61vSHnYRj1iSX1-V_E3Fj=kwOA@mail.gmail.com>
+ <CA+FnnTzfJMBuSMAD7PgUurRu8jOpirEgM6=+=i91zdGLWmfUpg@mail.gmail.com>
+ <CAPig+cQOzKbM0R6vKTg_BU6meEbAAJWL1T0jZkaCOF0uJ=_Lmw@mail.gmail.com>
+ <CA+FnnTzqaPrLgYv-8X9BDW0DR7331morN33B81w8T3vzOwn+Pw@mail.gmail.com>
+ <CA+FnnTz-qdVK5482GJo06QrvMktGYhJAJ6g-Naq0BgT-uoRvEA@mail.gmail.com>
+ <CAPig+cS+gf5gGM3fmnxk-6k7ezbtS=KQFqkkxVtcytHfcQApEQ@mail.gmail.com>
+ <CA+FnnTwvnA90nDARKW9r7p5iraoOGTvfDJ26n6Udc68bDSUASw@mail.gmail.com> <CAPig+cRjYju4zEgiY_TuOOk0e7A8zNz+hu+40vQUEGDX6FGDxw@mail.gmail.com>
+From:   Igor Korot <ikorot01@gmail.com>
+Date:   Wed, 11 Apr 2018 00:28:34 -0400
+Message-ID: <CA+FnnTzFomd91d1F6O-a28hXQ6PxOiBd44da4nSVW0MuDKgkmw@mail.gmail.com>
+Subject: Re: Is support for 10.8 dropped?
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 11, 2018 at 12:11:47PM +0900, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Hi, Eric,
+
+Sorry for the long delay.
+
+On Sun, Apr 8, 2018 at 7:59 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sun, Apr 8, 2018 at 7:55 PM, Igor Korot <ikorot01@gmail.com> wrote:
+>> On Sun, Apr 8, 2018, 6:23 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> And, as noted earlier, before running "make", you may need to create
+>>> config.mak to override some settings documented at the top of Makefile
+>>> (in particular, you may want to set NO_GETTEXT if you don't want to
+>>> install gettext and don't think you'll need it). As prerequisite,
+>>> you'll probably need to install OpenSSL.
+>>
+>> Is there a way to check for OpenSSL presence?
 >
-> >> > +#define OPT_CALLBACK_VALUE(s, l, h, f, i) \
-> >> > +	{ OPTION_CALLBACK, (s), (l), NULL, NULL, (h), PARSE_OPT_NOARG | \
-> >> > +	PARSE_OPT_NONEG, (f), (i) }
-> >> > +
-> >> > +static struct option builtin_config_options[];
-> >>
-> >> OK.  I am not sure if OPT_CALLBACK_VALUE() needs to take 'f', as you
-> >> always pass the option_parse_type function to it.
-> >
-> > That's fair. I left this in as an indication that something like this
-> > _might_ want to make its way into parse-options.h as a general-purpose
-> > utility, but was not yet ready to do so. Thus, I defined it inside
-> > builtin/config.c.
+> Not sure what you're asking. Are you asking how to determine if you
+> already have OpenSSL built on your machine?
+
+Yes, that's what I was asking...
+
 >
-> I understood the reasoning, but as your current verdict is that this
-> is not yet ready for parse-options.[ch], I think it is probably
-> preferrable to reduce repeated passing of the same function to the
-> macro, at least while it is in this builgin/config.c file.
+> Note that you might be able to get by without installing OpenSSL since
+> Git will try to use Apple's "Common Crypto" instead, so you could
+> define NO_OPENSSL in config.mak and see if the project builds.
 
-Ah, that seems fair to me. I have removed the duplicate 'f' parameter
-and all of the option_parse_type()'s in builtin/config.c within my local
-copy, and will happily include these changes in the subsequent re-roll.
+This is what I got trying to do just "make":
 
-I'll wait for more feedback before sending this, however.
+MyMac:git-2.17.0 igorkorot$ make
+    * new build flags
+    CC credential-store.o
+In file included from credential-store.c:1:
+In file included from ./cache.h:9:
+./gettext.h:17:11: fatal error: 'libintl.h' file not found
+#       include <libintl.h>
+                ^
+1 error generated.
+make: *** [credential-store.o] Error 1
 
+And I am also confused. Which file am I suppose to modify here?
 
-Thanks,
-Taylor
+MyMac:git-2.17.0 igorkorot$ ls -la conf*
+-rwxr-xr-x@ 1 igorkorot  staff  74461 Apr  2 10:13 config.c
+-rwxr-xr-x@ 1 igorkorot  staff   9888 Apr  2 10:13 config.h
+-rwxr-xr-x@ 1 igorkorot  staff    540 Apr  2 10:13 config.mak.in
+-rwxr-xr-x@ 1 igorkorot  staff  16940 Apr  2 10:13 config.mak.uname
+-rwxr-xr-x@ 1 igorkorot  staff  37509 Apr  2 10:13 configure.ac
+-rw-r--r--  1 igorkorot  staff  37500 Apr  8 18:52 configure.ac+
+
+Thank you.
