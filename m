@@ -6,84 +6,81 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAA081F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 19:10:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D39231F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 19:26:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756917AbeDKTKl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 15:10:41 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:41785 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756889AbeDKTKS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 15:10:18 -0400
-Received: by mail-qk0-f175.google.com with SMTP id s78so3087433qkl.8
-        for <git@vger.kernel.org>; Wed, 11 Apr 2018 12:10:18 -0700 (PDT)
+        id S1753696AbeDKT0K (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 15:26:10 -0400
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:46180 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752410AbeDKT0I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 15:26:08 -0400
+Received: by mail-qt0-f170.google.com with SMTP id h4so3266987qtn.13
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 12:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=EPR9FSHeYFyrCUvzKyvzm1vfsXMziFGKiM8wt8yOt9I=;
-        b=ucD+7Ge9Kf8Cx3kufLgFTnOUm1ph5n6mv5NvGtp2gWOjJ2mMtMM+DI04x2ghjazwjl
-         y7QSAy0wOCjN/eyRoCmGknqGNCIUHTJkrHfrq5sVGjqxNbTcncCT8ycViAQ8KktDJV+x
-         T0IkewWEq21DU2NXqCnziB/8D8gtGbCTyJ393x/oyGXKV/RUc0vOj2RqZpp4pfZG44AR
-         usFkxaI8JurPJ/ljLa71Yy2IWO7tbyEIOuSelZm8HLGi/gmdq4UKtw3Yp9uJ3kVoDTke
-         szIRt50BNVl/t3VVKfb7iui/N2+BZCP/XWoj9RkYezfeDb9q0ZB4lH5XKS6bEh9QugsY
-         O5VA==
+        bh=xPIiCPUnT0WP0ggCKiBkvy58Mv6ymFVMh5UORwR1iig=;
+        b=Cr+BOAhDRmqypqQFvT/2GHJdyaVzy2kv21UxmwkS4Zgiataw7bf4RSN2+Q62Sgvknd
+         gcT4+Soqc+JSryOYF/u10YFERseAYBroNjiKu2wdemX2XIJRnviObUXB6GBcCmYT6jEW
+         jA1kkTa0QTEYK2e0HhBGEDQZLDfZLOLdMtfZR55IGFo6Iyb0P/RfYbr0Jrt1N8wudyBB
+         Kb02C/z5Pwzg+eiR7urvygRnDMmwwiVn+Jn7ry0kjgCKY8CdnyKVMxDzMNoscaMDuIuG
+         xufTd1CFJ54hMy4U+n6GoD07Xysx1mJ2pjW7cq/bo5rlMqwaTDR38GXVMJLHumad0JLh
+         sSCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=EPR9FSHeYFyrCUvzKyvzm1vfsXMziFGKiM8wt8yOt9I=;
-        b=kgjbpI7+dH18pPknydLzc/7tf+iyTP4I5/RJpoEXIAVrylx0SJb0a895MsoXorZjsO
-         S2uCXemd+gyiGacNciYSud6rqKdqNz3TwF81dPHM7Sw4dB2zujhmUXpuUXHJsfPDhn8m
-         6TtCQ/FvuNpjj+powLzb1TnASsV3a8IVv9xwFqIpcLjlH8kHYG+DFfxr/nuCAM3Ny/gb
-         9RJR/u22Uu+Kf3vIzbaANgi2uy+xLiuKxWFpczU48ZHhPiD5Iw7c8Egtz9pV8ycJqKkD
-         Hk/SLqkSsRdxNZ4kst+NtT7BYKBY7+Sypx6JZteYbPFWzLTEFlXFAIQ24TCpy+QlmDc9
-         EPpg==
-X-Gm-Message-State: ALQs6tCzSsW/X3iNdgvaeYMNGNEkVQ6z551Z4KlIAJojai15r1LN6e2U
-        WKlIin7WR1o7ROiso2Ce8EeC7Q0wCFf71bQ2fn0=
-X-Google-Smtp-Source: AIpwx4/RBw4RUdip+gCaKD9QMU/bAVJLLw8p++V/QAvkL17E7DBYpcvLenQNFgmV9nkWRGqaCMcNo5VepiLnK2MJh8A=
-X-Received: by 10.55.3.140 with SMTP id 134mr8714653qkd.26.1523473818018; Wed,
- 11 Apr 2018 12:10:18 -0700 (PDT)
+        bh=xPIiCPUnT0WP0ggCKiBkvy58Mv6ymFVMh5UORwR1iig=;
+        b=V+kDDMNuU6ISCT3iwdQOdOA7FC1z4VsI/pk0tvx4PxlyMg5/ZlNsQe6spZoqpEwvnc
+         n3VPR7ILqmZTrYvdFNeQ6iNmcdZW1Ctxc0JaeqEvs0jLuP6w6WrO/VVt6OuZ5fIR6yFD
+         hssN7LCrzxf21hj7rajGuEZmrBMWKyPSczgujc4/6fEyMlUrG84elU6xByr2QuA6vKaL
+         x/TwDAovOFuyjuN8MFIrqFf2rYkqdxRGKQaAPbZQfUR93TH+RCcnC4ffxY0mnGEAm7Uy
+         WVdQtZIgXqTv4w1baH/sf1SwOJ4x9l8JQfMdateSfg2HAqNzO7YGGtFnv82hC91y3pdG
+         JPMQ==
+X-Gm-Message-State: ALQs6tDERLAe0/dgn0dHVps3kwlU9R6x2Bh22eRYOYQPXXNNDjsd4YGA
+        rAY8I4nGgSauXBLkIV1BedwoQcIJNNbtJc6fOeo=
+X-Google-Smtp-Source: AIpwx49R0Ka/7qP+S252AvpKH5y6RjFWftqYrLXplwfzPkXKZTGsu339vsgCdxv8yh+ctJh9OsOdOeMQhPpx3mZ9K50=
+X-Received: by 10.200.42.37 with SMTP id k34mr9552099qtk.101.1523474767454;
+ Wed, 11 Apr 2018 12:26:07 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Wed, 11 Apr 2018 12:10:17 -0700 (PDT)
-In-Reply-To: <26c21a44-92b3-80f4-5211-034c64f7568c@talktalk.net>
-References: <cover.1519680483.git.johannes.schindelin@gmx.de>
- <cover.1523362469.git.johannes.schindelin@gmx.de> <a162afa761e3000eb60169fce7a50938888f80b4.1523362469.git.johannes.schindelin@gmx.de>
- <26c21a44-92b3-80f4-5211-034c64f7568c@talktalk.net>
+Received: by 10.12.174.202 with HTTP; Wed, 11 Apr 2018 12:26:07 -0700 (PDT)
+In-Reply-To: <9ba7d27f-ce65-7f2c-601a-1bea3274104e@gmail.com>
+References: <20180403165143.80661-1-dstolee@microsoft.com> <20180409164131.37312-1-dstolee@microsoft.com>
+ <20180409164131.37312-5-dstolee@microsoft.com> <xmqqa7uazc9e.fsf@gitster-ct.c.googlers.com>
+ <9ba7d27f-ce65-7f2c-601a-1bea3274104e@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 11 Apr 2018 15:10:17 -0400
-X-Google-Sender-Auth: s4onvecF298KyfJsJluEXYHpwlo
-Message-ID: <CAPig+cRfQgz2tCab2d9g-XznHORW0FJvDKS4fe85JkLPxm2HMQ@mail.gmail.com>
-Subject: Re: [PATCH v6 15/15] rebase -i --rebase-merges: add a section to the
- man page
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>
+Date:   Wed, 11 Apr 2018 15:26:07 -0400
+X-Google-Sender-Auth: ity74voob0AVhIq1dCAWRpTTe84
+Message-ID: <CAPig+cRHV0+iWS_+QdbJyuWpoXxknVbwngOS-BV4XFcyGRWGaw@mail.gmail.com>
+Subject: Re: [PATCH v2 04/10] commit-graph: compute generation numbers
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        "sbeller@google.com" <sbeller@google.com>,
+        "larsxschneider@gmail.com" <larsxschneider@gmail.com>,
+        "bmwill@google.com" <bmwill@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 11, 2018 at 11:35 AM, Phillip Wood
-<phillip.wood@talktalk.net> wrote:
-> On 10/04/18 13:30, Johannes Schindelin wrote:
->> +The `reset` command is essentially a `git reset --hard` to the specified
->> +revision (typically a previously-labeled one).
+On Wed, Apr 11, 2018 at 9:02 AM, Derrick Stolee <stolee@gmail.com> wrote:
+> On 4/10/2018 10:51 PM, Junio C Hamano wrote:
+>> In case we want to do the "we know this is very large, but we do not
+>> know the exact value", we may actually want a mode where we can
+>> pretend that GENERATION_NUMBER_MAX is set to quite low (say 256) and
+>> make sure that the code to handle overflow behaves sensibly.
 >
-> s/labeled/labelled/
+> I agree. I wonder how we can effectively expose this value into a test. It's
+> probably not sufficient to manually test using compiler flags ("-D
+> GENERATION_NUMBER_MAX=8").
 
-American vs. British English spelling.
-
-CodingGuidelines and SubmittingPatches talk about this. Junio
-summarizes the issue well in [1]. The TL;DR is to lean toward the
-American English spelling.
-
-[1]: https://public-inbox.org/git/xmqq4m9gpebm.fsf@gitster.mtv.corp.google.com/
+A few similar cases of tests needing to tweak some behavior do so by
+environment variable. See, for instance, GIT_GETTEXT_POISON and
+GIT_FSMONITOR_TEST.
