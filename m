@@ -2,149 +2,227 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B22E1F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 19:32:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E8261F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 19:56:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757023AbeDKTcl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 15:32:41 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:37830 "EHLO
-        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755371AbeDKTcj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 15:32:39 -0400
-Received: by mail-lf0-f51.google.com with SMTP id m200-v6so4272030lfm.4
-        for <git@vger.kernel.org>; Wed, 11 Apr 2018 12:32:38 -0700 (PDT)
+        id S1756063AbeDKT4j (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 15:56:39 -0400
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:33656 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754367AbeDKT4i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 15:56:38 -0400
+Received: by mail-qt0-f176.google.com with SMTP id p9so1072352qtn.0
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 12:56:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=tB47CsW0/Dzw5nnxYWJIP935gtweM4XbGrfq6/qyyKI=;
-        b=T6fj0MqBoDVGFnfjW3aRElJt8i2s7mv1F4E0lfnshYhU8VY8gb4OFG5n9rFP5/ctPG
-         Bdt1yu9kbIXra2AA8YQFsVScFtmjcBkrWSR65iJg8sBeoVFwO28eZ2Rv5xOFNN5HWumc
-         2qPq5UmswBkiWCnlNHGUvun7KX/B2rKonGei5LmhhSjMOoU7BOuN1h3XlmaGOfZ/dPjn
-         O2m6qVst+Y/UoMWqLMdX+vN4aylK177mguUrPR0jg8Ux4jvcWNl1tMyesYNvAqVlMrjO
-         OAN459U7fCnuuHk8xtpIAUYHn/rj23catl7WldTLF44+KSbdJWMxOiHMewQn7WbU6xxY
-         K8JQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nhPgQLRftbTzzzDh8YMH7a6nJSDoa06oewAB/WBouJM=;
+        b=ZO6RGFJvAqLvkNjtcBppwmdUGR77n/TwGfC4r33ofWusWAWbn4E36ovt9/wsFJ10y6
+         FPiJuiLZBPLtABfWW41pahk/q3Rc5e/N8Zp8Gbmz8OfP4pLrDiPG+kigQib4vp1QgR7t
+         tSmwlNFj57f0q8lZJZgmL0G5qsg0ZqJCjd3LhBDRevaP410l9ZGcFhZAypblfJTZjZ9d
+         boFYBDLpboYxc2A1oB1+L7KS9fU2M0oJDvBdCJAxRjBLmcxRmZtoX3MORPp8sFIJS4DF
+         X1a5SiBB1HbCIZJtaofUSYcfafjDK+quK+vmMGr0LckXZNOg+K9Dp8Zk39lZr8jf0BmT
+         xF4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=tB47CsW0/Dzw5nnxYWJIP935gtweM4XbGrfq6/qyyKI=;
-        b=tbRIxL++YVeJO26T1FwHxx3nIlgvsgzxghadjtIrOqnGPRxaidW7w3HggI+0cje8ap
-         58A5E0oggyZhJm7ik7BDfmCn3ZPNhM3Eob8z0iZdY2B/guzbSaGGdURqZmgVYq1evETZ
-         Q4ZHGz3l13hpzFyr/FVpOMDkW6QbCMVEYpRomskqPF/KlvpFSM2PLAcKECjhIFwb8SkF
-         dyfeKcidqXNWe4Wa+V8RQg6VNjj+65iT8ntpzitGIKeLvLJy7ThnV3JaiYfs2VWTsQR5
-         R0lqGy3tf2VaZn4401OnQRcJriZsl7S5Tpqr+Tr7eL85aEDY/G8zmbWrGzR2M66Nzp7l
-         imsg==
-X-Gm-Message-State: ALQs6tCvLx0LTQ+g5tvt3Yq0yu5XICdG4Il/SfTbipkFDH1P5PBbOA50
-        sq5vpDCoSOv7nqxlZo0UmTE=
-X-Google-Smtp-Source: AIpwx49rxxYeLis3dGT5DqmKQfmYIRAtSqs4J/S4PbuKUXgKb32thiKGDKCOo8ulWoHaWcPCOmjjCA==
-X-Received: by 10.46.21.86 with SMTP id 22mr3965709ljv.111.1523475157678;
-        Wed, 11 Apr 2018 12:32:37 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (abrk101.neoplus.adsl.tpnet.pl. [83.8.104.101])
-        by smtp.gmail.com with ESMTPSA id d4-v6sm378437lfg.65.2018.04.11.12.32.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Apr 2018 12:32:36 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/6] Compute and consume generation numbers
-References: <20180403165143.80661-1-dstolee@microsoft.com>
-        <867epjez1n.fsf@gmail.com>
-        <07abd2ce-e042-fe3c-b2db-3d2f2aa44de8@gmail.com>
-Date:   Wed, 11 Apr 2018 21:32:32 +0200
-In-Reply-To: <07abd2ce-e042-fe3c-b2db-3d2f2aa44de8@gmail.com> (Derrick
-        Stolee's message of "Sat, 7 Apr 2018 21:06:24 -0400")
-Message-ID: <868t9t5yjz.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nhPgQLRftbTzzzDh8YMH7a6nJSDoa06oewAB/WBouJM=;
+        b=Efr3IzI39ALrbHLNgtoV11tmPyIkNdDw+71yOwUOU6CLDuLqxnrkcaK9rRaJOh7Mgu
+         U8g/rlCKNeqwludSAAk7WNo5EjBNU3xOBUIhbKLjKs+ySyfr+lewp857A0nDJr04gEk6
+         ShZ3PzvuODXPC/s53pTizIG8+Ysh6qafOCO16bsQ66qPBGhl316LQ9yLv6k7Y3CpsATY
+         UvA6v9Ofedr+2sSFY+unaeHdTzLk5K44ywwA4igS1RETmYUBZICyJUu2q1Bas7muNgZH
+         Sf5TMuvuvjgoEKO1jKAfzfcVKKEXATOPpX+yK+LcckXVx6G+35+iixe04mH6V7D/5kXx
+         dGsw==
+X-Gm-Message-State: ALQs6tC61OSHRcIqbuxspbtcNzBlHxb1RNUmAmtxZNvOFTg2zmmvs6tG
+        /upTjJD8OzjN0SY3DkcP9lM=
+X-Google-Smtp-Source: AIpwx4/6LmP3+D4R9NKmHEvwZIQTUxW0TIs+fWiguafnZnfWyMj/Nf+7v/DipcrcEcjOBJA5SYYXqg==
+X-Received: by 10.237.39.67 with SMTP id n61mr9242503qtd.36.1523476597246;
+        Wed, 11 Apr 2018 12:56:37 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id b125sm1357528qkd.62.2018.04.11.12.56.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 11 Apr 2018 12:56:36 -0700 (PDT)
+Subject: Re: [PATCH v1 1/2] fsexcludes: add a programmatic way to exclude
+ files from git's working directory traversal logic
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "alexmv@dropbox.com" <alexmv@dropbox.com>,
+        "blees@dcon.de" <blees@dcon.de>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "bmwill@google.com" <bmwill@google.com>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>
+References: <20180410210408.13788-1-benpeart@microsoft.com>
+ <20180410210408.13788-2-benpeart@microsoft.com>
+ <CAN0heSpKzG93OcAAAoHQxURVGsHFWz6j494C+3bezHLTOovQHA@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <082cda6c-eb9f-c853-c09b-e0d3bc04cb9c@gmail.com>
+Date:   Wed, 11 Apr 2018 15:56:35 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAN0heSpKzG93OcAAAoHQxURVGsHFWz6j494C+3bezHLTOovQHA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
 
-> On 4/7/2018 12:55 PM, Jakub Narebski wrote:
->> Currently I am at the stage of reproducing results in FELINE paper:
->> "Reachability Queries in Very Large Graphs: A Fast Refined Online Search
->> Approach" by Ren=C3=AA R. Veloso, Lo=C3=AFc Cerf, Wagner Meira Jr and Mo=
-hammed
->> J. Zaki (2014).  This paper is available in the PDF form at
->> https://openproceedings.org/EDBT/2014/paper_166.pdf
+
+On 4/10/2018 6:09 PM, Martin Ågren wrote:
+> On 10 April 2018 at 23:04, Ben Peart <Ben.Peart@microsoft.com> wrote:
+>> The File System Excludes module is a new programmatic way to exclude files and
+>> folders from git's traversal of the working directory.  fsexcludes_init() should
+>> be called with a string buffer that contains a NUL separated list of path names
+>> of the files and/or directories that should be included.  Any path not listed
+>> will be excluded. The paths should be relative to the root of the working
+>> directory and be separated by a single NUL.
 >>
->> The Jupyter Notebook (which runs on Google cloud, but can be also run
->> locally) uses Python kernel, NetworkX librabry for graph manipulation,
->> and matplotlib (via NetworkX) for display.
->>
->> Available at:
->> https://colab.research.google.com/drive/1V-U7_slu5Z3s5iEEMFKhLXtaxSu5xyzg
->> https://drive.google.com/file/d/1V-U7_slu5Z3s5iEEMFKhLXtaxSu5xyzg/view?u=
-sp=3Dsharing
->>
->> I hope that could be of help, or at least interesting
->
-> Let me know when you can give numbers (either raw performance or # of
-> commits walked) for real-world Git commit graphs. The Linux repo is a
-> good example to use for benchmarking, but I also use the Kotlin repo
-> sometimes as it has over a million objects and over 250K commits.
+>> The excludes logic in dir.c has been updated to honor the results of
+>> fsexcludes_is_excluded_from().  If fsexcludes does not exclude the file, the
+>> normal excludes logic is also checked as it could further reduce the set of
+>> files that should be included.
+> 
+> Here you mention a change in dir.c...
+> 
+>>   Makefile     |   1 +
+>>   fsexcludes.c | 210 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>>   fsexcludes.h |  27 +++++++
+>>   3 files changed, 238 insertions(+)
+> 
+> ... but this patch does not seem to touch dir.c at all.
+> 
 
-As I am curently converting git repository into commit graph, number of
-objects doesn't matter.
+Oops! Fixed in V2.
 
-Though Kotlin is nicely in largish size set, not as large as Linux
-kernel which has 750K commits, but mich larger than git.git with 65K
-commits.
+>> +static int check_fsexcludes_hashmap(struct hashmap *map, const char *pattern, int patternlen)
+>> +{
+>> +       struct strbuf sb = STRBUF_INIT;
+>> +       struct fsexcludes fse;
+>> +       char *slash;
+>> +
+>> +       /* Check straight mapping */
+>> +       strbuf_reset(&sb);
+> 
+> You could drop this strbuf_reset(). Or did you intend to use a static
+> struct strbuf?
+> 
 
-> Of course, the only important statistic at the end of the day is the
-> end-to-end time of a 'git ...' command. Your investigations should
-> inform whether it is worth prototyping the feature in the git
-> codebase.
+Good point, fixed in V2.
 
-What would you suggest as a good test that could imply performance?  The
-Google Colab notebook linked to above includes a function to count
-number of commits (nodes / vertices in the commit graph) walked,
-currently in the worst case scenario.
+>> +       /*
+>> +        * Check to see if it matches a directory or any path
+>> +        * underneath it.  In other words, 'a/b/foo.txt' will match
+>> +        * '/', 'a/', and 'a/b/'.
+>> +        */
+>> +       slash = strchr(sb.buf, '/');
+>> +       while (slash) {
+>> +               fse.pattern = sb.buf;
+>> +               fse.patternlen = slash - sb.buf + 1;
+>> +               hashmap_entry_init(&fse, fsexcludeshash(fse.pattern, fse.patternlen));
+>> +               if (hashmap_get(map, &fse, NULL)) {
+>> +                       strbuf_release(&sb);
+>> +                       return 0;
+>> +               }
+>> +               slash = strchr(slash + 1, '/');
+>> +       }
+> 
+> Maybe a for-loop would make this slightly more obvious:
+> 
+> for (slash = strchr(sb.buf, '/'); slash; slash = strchr(slash + 1, '/'))
+> 
+> On second thought, maybe not.
+> 
+>> +       entry = buf = fsexcludes_data->buf;
+>> +       len = fsexcludes_data->len;
+>> +       for (i = 0; i < len; i++) {
+>> +               if (buf[i] == '\0') {
+>> +                       fsexcludes_hashmap_add(map, entry, buf + i - entry);
+>> +                       entry = buf + i + 1;
+>> +               }
+>> +       }
+>> +}
+> 
+> Very minor: I would have found "buf - entry + i" clearer here and later,
+> but I'm sure you'll find someone of the opposing opinion (e.g.,
+> yourself). ;-)
+> 
+>> +static int check_directory_hashmap(struct hashmap *map, const char *pathname, int pathlen)
+>> +{
+>> +       struct strbuf sb = STRBUF_INIT;
+>> +       struct fsexcludes fse;
+>> +
+>> +       /* Check for directory */
+>> +       strbuf_reset(&sb);
+> 
+> Same comment as above about this spurious reset.
 
+Good point, fixed in V2.
 
-I have tried finding number of false positives for level (generation
-number) filter and for FELINE index, and number of false negatives for
-min-post intervals in the spanning tree (for DFS tree) for 10000
-randomly selected pairs of commits... but I don't think this is a good
-benchmark.
+> 
+>> +       if (hashmap_get(map, &fse, NULL)) {
+>> +               strbuf_release(&sb);
+>> +               return 0;
+>> +       }
+>> +
+>> +       strbuf_release(&sb);
+>> +       return 1;
+>> +}
+>> +
+>> +/*
+>> + * Return 1 for exclude, 0 for include and -1 for undecided.
+>> + */
+>> +int fsexcludes_is_excluded_from(struct index_state *istate,
+>> +       const char *pathname, int pathlen, int dtype)
+>> +{
+> 
+> Will we at some point regret not being able to "return negative on
+> error"? I guess that would be "-2" or "negative other than -1".
+> 
 
-I Linux kernel sources (https://git.kernel.org/pub/scm/linux/kernel/git/tor=
-valds/linux.git)
-that has 750832 nodes and 811733 edges, and 563747941392 possible
-directed pairs, we have for 10000 randomly selected pairs of commits:
+This function is modeled after the other is_excluded_from* functions in 
+dir.c so that the return value can be handled the same way.  I don't 
+anticipate any need for change but you're right, we could return some 
+other "negative other than -1" if it was ever needed.
 
-  level-filter has    91 =3D  0.91% [all] false positives
-  FELINE index has    78 =3D  0.78% [all] false positives
-  FELINE index has 1.16667 less false positives than level filter
+>> +void fsexcludes_init(struct strbuf *sb) {
+>> +       fsexcludes_initialized = 1;
+>> +       fsexcludes_data = *sb;
+>> +}
+> 
+> Grabbing the strbuf's members looks a bit odd. Is this
+> performance-sensitive enough that you do not want to make a copy? If a
+> caller releases its strbuf, which would normally be a good thing to do,
+> we may be in big trouble later. (Not only may .buf be stale, .len may
+> indicate we actually have something to read.)
+> 
+> I can understand that you do not want to pass a pointer+len, and that it
+> is not enough to pass sb.buf, since the string may contain nuls.
+> 
+> Maybe detach the original strbuf? That way, if a caller releases its
+> buffer, that is a no-op. A caller which goes on to use its buffer should
+> fail quickly and obviously. Right now, an incorrect caller would
+> probably fail more subtly and less reproducibly.
+> 
+> In any case, maybe document this in the .h-file?
 
-  min-post spanning-tree intervals has  3641 =3D 36.41% [all] false
-  negatives
+Great suggestion!  I was looking for a better way to ensure the buffer 
+ownership transfer was robust.  I'll do both strbuf_detach() and update 
+the header file.  Thank you.
 
-For git.git repository (https://github.com/git/git.git) that has 52950
-nodes and 65887 edges the numbers are slighly more in FELINE index
-favor (also out of 10000 random pairs):
-
-  level-filter has   504 =3D  9.11% false positives
-  FELINE index has   125 =3D  2.26% false positives
-  FELINE index has 4.032 less false positives than level filter
-
-This is for FELINE which does not use level / generatio-numbers filter.
-
-Regards,
---
-Jakub Nar=C4=99bski
+> 
+> Martin
+> 
