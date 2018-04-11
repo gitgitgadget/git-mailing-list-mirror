@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9B201F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 12:57:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 620B21F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 13:02:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753112AbeDKM5R (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 08:57:17 -0400
-Received: from mail-pl0-f45.google.com ([209.85.160.45]:35176 "EHLO
-        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753107AbeDKM5O (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 08:57:14 -0400
-Received: by mail-pl0-f45.google.com with SMTP id 61-v6so1344778plb.2
-        for <git@vger.kernel.org>; Wed, 11 Apr 2018 05:57:14 -0700 (PDT)
+        id S1753289AbeDKNCT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 09:02:19 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:46325 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753035AbeDKNCS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 09:02:18 -0400
+Received: by mail-pg0-f51.google.com with SMTP id t12so738868pgp.13
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 06:02:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=AcITTWgk1lFXD8LjlX/5FX+tFZ9o+Lkj4j9lsY9JEA0=;
-        b=vKzGfCdriAEdmeyXLv8UyStF/bQmwNhxzaVZhIL5yHhIVAV57rPqWbqF/hVE78nJgW
-         UUpL3k9IRaTdntJAr7o+eCkcAzHJOGcDsv6nVgt+eSLYwDS3b3xkn2IWuYMzZQycWpWP
-         Xm45ZE4TjZksgWH+c3HsOGuZAPOAlKHWkEb5H50cNjk5hRiTiy+mdD3jZcvPmnUHhyHQ
-         FLJrnnIzuhiZbN7JXe8sOtSdvEX4NnyamZnzg155KIyTedVw4WPTTNF76BdQmGwnGMBf
-         /vJAgXlz+pcDf+uXGvg0gNfxQKplQ5hEdIqT2lVMUJdhk2mEhxhMBRNhhjD2ChDwnWMA
-         86XA==
+        bh=X1Tr9vXnZ4JHC+tJq3XS/U8BpPcYViIQzGWJBdRwf4c=;
+        b=FPJUpiL19YZPI8Zo8bOeyfBwTkZ6U1SvkJH52j5uerpSi0PYrvGhFgzy63902QHaZT
+         +SXjdT6KZl52nkfvydJM33g0kX6GZyoQIGTMad6CruukSZan2aPsAA+/vOUrpm6F1aNp
+         CrSFVcA7cWi60C11VsygygAassy9rfZ617j3QLvs0wPmcx75MKqzBI4U3PFDoQ4prOoA
+         omchOCwKAU7Yg7Dp0qeaRMU3R2W009cdo09o10oYQyUamizypxIanJdmYX8+W60bOqmf
+         awHA9v7Y15/llyNqfl5PJ367ydC66zr2cBTZztkuEVciCLeKEGmTo73v6TJh+YIBsDS3
+         7dNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=AcITTWgk1lFXD8LjlX/5FX+tFZ9o+Lkj4j9lsY9JEA0=;
-        b=TURo4I0K/0CUd4B2tsZXh32/E0W9s1Lx2q6rDLtQ3BLJXC12sR36odr5ECm4NBPlKQ
-         /RHh3VSmHty6mxXyMKugZ8eE8btLbpGR6GBygoy4HFFx5SqC0IffzPRmQvxE56bQb1Cq
-         DNlqmGa1x46uqacK/+lT3ZMc1DIUCWQ6bUwZ77frvVE0Q4r9Qr03HtCVbYuCKAb/98V1
-         iuIf4LSl14Zth6I6tuynP0iB0A1Nz5SDDCKebiItd4Uf7AneRfyudKQrFa5BhOujDjne
-         /KTM0LYMkcODgG0Mq7XGPkYXPxpCLknWIHRTMc+npfnyYIVtBvYwgjVz0oZCTNi4V3c7
-         zmxA==
-X-Gm-Message-State: ALQs6tCoYlbCIvfVvc9Kys2QBDqx5UzWybetZMEoNPmt0etya5Zta2tP
-        ozeifdjze4p75BtGmTwn0h4=
-X-Google-Smtp-Source: AIpwx48mYkjBu5Biw+4Wely5I77bHzDSuNPLBwk/vFHs+dAA03wO+cCC9WbybQ98KYB7K5cqBB+nqw==
-X-Received: by 2002:a17:902:900a:: with SMTP id a10-v6mr5124085plp.142.1523451434155;
-        Wed, 11 Apr 2018 05:57:14 -0700 (PDT)
+        bh=X1Tr9vXnZ4JHC+tJq3XS/U8BpPcYViIQzGWJBdRwf4c=;
+        b=TmCmctUYw/Ilg77C8JrS774z5LXUx+lN09qiWqJ9JN4+K/E+orfUfk6TOnl8USKTAa
+         0Oxcr79Bs5Z5/pEnelZafg5KmLSYLL1SJt0y+SRdEWz7HzecdRlcL1nH8SFnFPR7AkSD
+         GQBN0sBvdwjfu2ww51h/QOOZyWhzlcPr+qC/uGpRBzfjIGoXuC0szKoKqE/63UVw2K1c
+         Fhl3z3orbntLSYuggVzpwwacmFNpOCWGN52uicQg6svlk/a/w8I+pDJ93cE6qI/SpWyV
+         s+Ke047jb4VVbpCsxbim/NkKMQywVMU/tenWT0gShmryltYzIILNPF0F0vVH6GsQUKBz
+         X2IQ==
+X-Gm-Message-State: ALQs6tBzSBeU1fFbeEvJ6Kl+jWexqaTgE/ZS2bNYyyjzZ0ZEn843HuOR
+        QxhjFmj8PCTb1TeM+BIGEnQ=
+X-Google-Smtp-Source: AIpwx48aiqoJBZqUqUDxjc3/RiFz55IkU9cuK61y1T+UDkC0J4FHE7qPNyTHPLPkTyCGQvdqQY0Uow==
+X-Received: by 10.99.136.194 with SMTP id l185mr3452231pgd.419.1523451737293;
+        Wed, 11 Apr 2018 06:02:17 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id z8sm3148460pgc.90.2018.04.11.05.57.09
+        by smtp.gmail.com with ESMTPSA id b73sm2914007pga.62.2018.04.11.06.02.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Apr 2018 05:57:13 -0700 (PDT)
-Subject: Re: [PATCH v2 03/10] commit: add generation number to struct commmit
+        Wed, 11 Apr 2018 06:02:16 -0700 (PDT)
+Subject: Re: [PATCH v2 04/10] commit-graph: compute generation numbers
 To:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <dstolee@microsoft.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
@@ -61,122 +61,80 @@ Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         "bmwill@google.com" <bmwill@google.com>
 References: <20180403165143.80661-1-dstolee@microsoft.com>
  <20180409164131.37312-1-dstolee@microsoft.com>
- <20180409164131.37312-4-dstolee@microsoft.com>
- <xmqqefjmzd67.fsf@gitster-ct.c.googlers.com>
+ <20180409164131.37312-5-dstolee@microsoft.com>
+ <xmqqa7uazc9e.fsf@gitster-ct.c.googlers.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <01c8d95b-e444-4b69-f083-9832023978a0@gmail.com>
-Date:   Wed, 11 Apr 2018 08:57:05 -0400
+Message-ID: <9ba7d27f-ce65-7f2c-601a-1bea3274104e@gmail.com>
+Date:   Wed, 11 Apr 2018 09:02:09 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqefjmzd67.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqa7uazc9e.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/10/2018 10:31 PM, Junio C Hamano wrote:
+On 4/10/2018 10:51 PM, Junio C Hamano wrote:
 > Derrick Stolee <dstolee@microsoft.com> writes:
 >
->> The generation number of a commit is defined recursively as follows:
->>
->> * If a commit A has no parents, then the generation number of A is one.
->> * If a commit A has parents, then the generation number of A is one
->>    more than the maximum generation number among the parents of A.
->>
->> Add a uint32_t generation field to struct commit so we can pass this
->> information to revision walks. We use two special values to signal
->> the generation number is invalid:
->>
->> GENERATION_NUMBER_ININITY 0xFFFFFFFF
->> GENERATION_NUMBER_ZERO 0
->>
->> The first (_INFINITY) means the generation number has not been loaded or
->> computed. The second (_ZERO) means the generation number was loaded
->> from a commit graph file that was stored before generation numbers
->> were computed.
-> Should it also be possible for a caller to tell if a given commit
-> has too deep a history, i.e. we do not know its generation number
-> exactly, but we know it is larger than 1<<30?
+>> +		if ((*list)->generation != GENERATION_NUMBER_INFINITY) {
+>> +			if ((*list)->generation > GENERATION_NUMBER_MAX)
+>> +				die("generation number %u is too large to store in commit-graph",
+>> +				    (*list)->generation);
+>> +			packedDate[0] |= htonl((*list)->generation << 2);
+>> +		}
 >
-> It seems that we only have a 30-bit field in the file, so wouldn't
-> we need a special value defined in (e.g. "0") so that we can tell
-> that the commit has such a large generation number?  E.g.
+> How serious do we want this feature to be?  On one extreme, we could
+> be irresponsible and say it will be a problem for our descendants in
+> the future if their repositories have more than billion pearls on a
+> single strand, and the above certainly is a reasonable way to punt.
+> Those who actually encounter the problem will notice by Git dying
+> somewhere rather deep in the callchain.
 >
->> +	item->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
-> 	if (!item->generation)
-> 		item->generation = GENERATION_NUMBER_OVERFLOW;
+> Or we could say Git actually does support a history that is
+> arbitrarily long, even though such a deep portion of history will
+> not benefit from having generation numbers in commit-graph.
 >
-> when we read it from the file?
+> I've been assuming that our stance is the latter and that is why I
+> made noises about overflowing 30-bit generation field in my review
+> of the previous step.
 >
-> We obviously need to do something similar when assigning a
-> generation number to a child commit, perhaps like
->
-> 	#define GENERATION_NUMBER_OVERFLOW (GENERATION_NUMBER_MAX + 1)
->
-> 	commit->generation = 1; /* assume no parent */
-> 	for (p = commit->parents; p; p++) {
-> 		uint32_t gen = p->item->generation + 1;
->
-> 		if (gen >= GENERATION_NUMBER_OVERFLOW) {
-> 			commit->generation = GENERATION_NUMBER_OVERFLOW;
-> 			break;
-> 		} else if (commit->generation < gen)
-> 			commit->generation = gen;
-> 	}
->          
-> or something?  And then on the writing side you'd encode too large a
-> generation as '0'.
+> In case we want to do the "we know this is very large, but we do not
+> know the exact value", we may actually want a mode where we can
+> pretend that GENERATION_NUMBER_MAX is set to quite low (say 256) and
+> make sure that the code to handle overflow behaves sensibly.
 
-You raise a very good point. How about we do a slightly different 
-arrangement for these overflow commits?
+I agree. I wonder how we can effectively expose this value into a test. 
+It's probably not sufficient to manually test using compiler flags ("-D 
+GENERATION_NUMBER_MAX=8").
 
-Instead of storing the commits in the commit-graph file as "0" (which 
-currently means "written by a version of git that did not compute 
-generation numbers") we could let GENERATION_NUMBER_MAX be the maximum 
-generation of a commit in the commit-graph, and if a commit would have 
-larger generation, we collapse it down to that value.
+>
+>> +	for (i = 0; i < nr_commits; i++) {
+>> +		if (commits[i]->generation != GENERATION_NUMBER_INFINITY &&
+>> +		    commits[i]->generation != GENERATION_NUMBER_ZERO)
+>> +			continue;
+>> +
+>> +		commit_list_insert(commits[i], &list);
+>> +		while (list) {
+>> +...
+>> +		}
+>> +	}
+> So we go over the list of commits just _once_ and make sure each of
+> them gets the generation assigned correctly by (conceptually
+> recursively but iteratively in implementation by using a commit
+> list) making sure that all its parents have generation assigned and
+> compute the generation for the commit, before moving to the next
+> one.  Which sounds correct.
 
-It slightly complicates the diagram I made in 
-Documentation/technical/commit-graph.txt, but it was already a bit of a 
-simplification. Here is an updated diagram, but likely we will want to 
-limit discussion of the special-case GENERATION_NUMBER_MAX to the prose, 
-since it is not a practical situation at the moment.
-
-     +-----------------------------------------+
-     | GENERATION_NUMBER_INFINITY = 0xFFFFFFFF |
-     +-----------------------------------------+
-       |    |            |      ^
-       |    |            |      |
-       |    |            +------+
-       |    |         [gen(A) = gen(B)]
-       |    V
-       |  +------------------------------------+
-       |  | GENERATION_NUMBER_MAX = 0x3FFFFFFF |
-       |  +------------------------------------+
-       |    |            |      ^
-       |    |            |      |
-       |    |            +------+
-       |    |         [gen(A) = gen(B)]
-       V    V
-     +-------------------------------------+
-     | 0 < commit->generation < 0x3FFFFFFF |
-     +-------------------------------------+
-         |            |      ^
-         |            |      |
-         |            +------+
-         |        [gen(A) > gen(B)]
-         V
-     +-------------------------------------+
-     | GENERATION_NUMBER_ZERO = 0          |
-     +-------------------------------------+
-              |      ^
-              |      |
-              +------+
-              [gen(A) = gen(B)]
+Yes, we compute the generation number of a commit exactly once. We use 
+the list as a stack so we do not have recursion limits during our 
+depth-first search (DFS). We rely on the object cache to ensure we store 
+the computed generation numbers, and computed generation numbers provide 
+termination conditions to the DFS.
 
 Thanks,
 -Stolee
