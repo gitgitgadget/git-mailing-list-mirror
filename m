@@ -2,104 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39A211F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 23:13:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C50E1F42D
+	for <e@80x24.org>; Wed, 11 Apr 2018 23:19:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752286AbeDKXNO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 19:13:14 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53064 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751797AbeDKXNN (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 11 Apr 2018 19:13:13 -0400
-Received: from genre.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2CFEB6042D;
-        Wed, 11 Apr 2018 23:13:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1523488390;
-        bh=HUSetkRD2CrVE+hGJSy+eNdm3pRFGoiUgQLYWyR4orQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=s1OJbSTSdr/qaK3rGngoAjgPMq+wyHsd81uUSenTzU5XJmCuFk0DhMcsnPy6ECXYy
-         kPKYJrvI7HieSysK8wu41I0RbHNnnKhMB2aalTdV7RKKiMopdcd/fs4Y2N1+v90bUK
-         pBMOftbrzfhAls1qq2JwKrexGyqSrGmTvdAbhwTc/39WilcL3rfOgZC7lmLuWV+f1G
-         IhcW0OMtv6tB5ghMinjeXYUa/b/sP5ar2TevPxPHdoKOTT5xi7yxMSQbOUzY5nmGpf
-         jPzERFZ+GN2V2Vh8koO56DRCW9thqkkKs0ni8HnbHtwJ24Zzg8KZ+VSvHEJ1pzE309
-         3YWM24a/u7i3q04BFA1AONYEKXRl/g9mZL7A2rTjfn3H6WrIws3jCbI6f83Uqh0v+B
-         pRZDEpxOQRCaTH1JJJH79iFNfxysMmA3qgyMpcI4z91FoV+xUSW7BaxFeoIcSLUABR
-         Lru2pwh3ORpwN7Ng+K715Krd89ouUpIKnxES9XIXRB3yctfVSSU
-Date:   Wed, 11 Apr 2018 23:13:03 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, jonathantanmy@google.com,
-        jrnieder@gmail.com, l.s.r@web.de, pclouds@gmail.com,
-        sunshine@sunshineco.com
-Subject: Re: [PATCH 0/6] Rename files to use dashes instead of underscores
-Message-ID: <20180411231303.GC233862@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>, gitster@pobox.com,
-        git@vger.kernel.org, jonathantanmy@google.com, jrnieder@gmail.com,
-        l.s.r@web.de, pclouds@gmail.com, sunshine@sunshineco.com
-References: <xmqqbmer4vfh.fsf@gitster-ct.c.googlers.com>
- <20180410212621.259409-1-sbeller@google.com>
+        id S1751983AbeDKXTC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 19:19:02 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35268 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751942AbeDKXTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 19:19:01 -0400
+Received: by mail-wm0-f66.google.com with SMTP id r82so6627895wme.0
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 16:19:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=LfhFCOjzHJwwujB1SOr/6KvcJX80ROZMYS39VvUMPmc=;
+        b=VrIUsfxdP4ZCOEXaNbtpVj87F4WAlRoTQru/xtyetJRHqcKpi86YSGubH0pUCAO13u
+         oPZf4z54n64QgbLDYzsckEJ7WRevGJT8o5CwVVUP/RmoaB8xfNVTv62wb9fj99D4IyGk
+         qZYhj82pQEqF3+mQShOBEhonFxal3SBA6ewIgh+GA54W8l75pGzk2mN+ZnEG+fkhlE43
+         3IyHJ0rLHe+/m15K/YKJxDnN1O7f6yYq9iwPt5b3mSABl1lSbTh6Mom1l+69midR2J2E
+         K2FQXqvWk/DHE4AwpwbCqwEpt5MMUUM5/03iLseQv1En68fqMrELai0aR028hpzAp8rZ
+         4rkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=LfhFCOjzHJwwujB1SOr/6KvcJX80ROZMYS39VvUMPmc=;
+        b=KdErzF1vxsABf+Y47EoKJt8HoBjOX7I5L4UaE/+HsHBn5M8Qh4rnWQJnFn5EptS4CT
+         qkqRaOq+O0W5rErURCyXk/jEe74RZA/fwag3IPFzhGhWUZjqA46syjDXk66tm7rAm6M3
+         /pW1SRo4YRgWd8DL1GVrz0A5aF+k4JCtWNJPeEIe3krUxxN1zuWYS2TLmVKzK2piWABX
+         EhvVi2nzorI0eyXviha6CO4poGGe7PgxbmfL8eornOzMSBMyv+R16GFCLTRWvHCGoiS/
+         v+ybc4jCrRIr4rEM5sSuHds96+HILXQb/3WmQQNYi9jhyaunCdwPgvdOZi+7vt+WI4Zm
+         PFzA==
+X-Gm-Message-State: ALQs6tBKD0szW2PFKULa0H1XQc8T00huLYfLaicQoVriNOlRniFFSHPJ
+        3rUBjCik4g+lEUH5suquFB8=
+X-Google-Smtp-Source: AIpwx48GOBoUTIp1h+qNUds/xvGGkafIQP/F+KB4/sV3XFvP3NkoRU79rXjgg9ZzPA9mojTljtbCig==
+X-Received: by 10.28.135.195 with SMTP id j186mr4061074wmd.143.1523488739673;
+        Wed, 11 Apr 2018 16:18:59 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id h197sm3193357wmd.3.2018.04.11.16.18.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 11 Apr 2018 16:18:58 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Andreas Heiduk <asheiduk@gmail.com>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3] git-svn: allow empty email-address using authors-prog and authors-file
+References: <20180320220743.GA17234@whir>
+        <20180324102046.8840-1-asheiduk@gmail.com>
+        <20180405075113.3y6a5nadijswt7pm@untitled>
+        <e2234113-52cf-1443-5abb-70a595037f30@gmail.com>
+        <20180405194421.GA25243@80x24.org>
+Date:   Thu, 12 Apr 2018 08:18:58 +0900
+In-Reply-To: <20180405194421.GA25243@80x24.org> (Eric Wong's message of "Thu,
+        5 Apr 2018 19:44:21 +0000")
+Message-ID: <xmqqa7u949i5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nmemrqcdn5VTmUEE"
-Content-Disposition: inline
-In-Reply-To: <20180410212621.259409-1-sbeller@google.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.16.0-rc6-amd64)
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Eric Wong <e@80x24.org> writes:
 
---nmemrqcdn5VTmUEE
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Andreas Heiduk <asheiduk@gmail.com> wrote:
+>> Am 05.04.2018 um 09:51 schrieb Eric Wong:
+>> > Can you confirm it's OK for you?  Thanks.
+>> 
+>> Looks good, works for me.
+>> 
+>> Do you squash this patch with with my commit or do you need a reroll?
+>
+> Nope, no need to reroll.  Pushed to my repo for Junio.  Thanks all.
+>
+> The following changes since commit 468165c1d8a442994a825f3684528361727cd8c0:
+>
+>   Git 2.17 (2018-04-02 10:13:35 -0700)
+>
+> are available in the Git repository at:
+>
+>   git://bogomips.org/git-svn.git svn/authors-prog-2
+>
+> for you to fetch changes up to cb427e9eb0243fe7a1a22ea3bd0a46b7410c0bf3:
+>
+>   git-svn: allow empty email-address using authors-prog and authors-file (2018-04-05 19:22:06 +0000)
 
-On Tue, Apr 10, 2018 at 02:26:15PM -0700, Stefan Beller wrote:
-> This is the followup for=20
-> https://public-inbox.org/git/xmqqbmer4vfh.fsf@gitster-ct.c.googlers.com/
->=20
-> We have no files left with underscores in their names.
+Sorry; this message fell under my radar and I had to privately get
+reminded of it.  Pulled.
 
-This series looked good to me.  It's a nice change.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---nmemrqcdn5VTmUEE
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrOln8ACgkQv1NdgR9S
-9ouNkg/+OFbQi4Vi1rBv30x6qiMiKP5eh9k2fWQWyoJ0ud9E3HFuayCfIQpaLcnq
-OoKltD/cStw6xMfJH2RJ1kgvaHiOgqXJkVdDMqv7o0ZHYOPKtzAzBgKpzwRtE5EJ
-BbtQTk3wmu6n8YWJ+UJkmHCqPFB2xrJBgMEa31JrqtkyM+b3xMvEURHJw3PfiRgQ
-C7WV1ut3EE7lkbKSe7wm7JMmgC/t3u8in6u2343Eu5Ev1mCCtG9NJVlIKp3+xEaX
-vzbNVW5BYsEbplgADenSbGYt/U3MS5rJrKUBCS4YAVZ4IdhbKvew7WGzfzSO2Rbn
-HLY3eUCFkrytNyZm4StmzqG4YRA5JrKOy8nOBwJf+c1mT9nf8BLgWDZWov+DAiF7
-U/cpKCVYfPaCAkZHvF84yCnyMB9gpj6sAlagF+hbNVJomisfrLkq5toS90rZRNtF
-gkwDqsuq6tmWogLlsbBG+37bTmAL3QNbn7rNVqHmy6/SjVgpVHrKuCGGa+1YjzGS
-XxC9VR3jxBaQsavo9ynzUlJv6jvFBSx28bys1FDYM50rPRo1/pWqIVI2k/nJQw4b
-iuhu02pHvOKd0CyrlAXnfG+Ue3p78eecyZGnmk2xxViTnmhuMwyd1x776hjXCDde
-j2ZwnNCMHREElwPuhEUirSkSTu7/8OMRjlbqpV6qbg+WFLVEl2Q=
-=OGxs
------END PGP SIGNATURE-----
-
---nmemrqcdn5VTmUEE--
+Thanks, both.
