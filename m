@@ -2,80 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D013A1F424
-	for <e@80x24.org>; Wed, 11 Apr 2018 10:13:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 587401F424
+	for <e@80x24.org>; Wed, 11 Apr 2018 11:29:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752809AbeDKKN2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 06:13:28 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:41474 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752361AbeDKKN0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 06:13:26 -0400
-Received: from [192.168.2.240] ([92.22.12.182])
-        by smtp.talktalk.net with SMTP
-        id 6Cklfyfx7lWlT6CklfJe5y; Wed, 11 Apr 2018 11:13:24 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1523441604;
-        bh=hjbage5E4252PxOe2wq/XP732+fH5GxARPCRzGVClJA=;
-        h=Reply-To:Subject:To:References:From:Date:In-Reply-To;
-        b=Fk7FMt/z/eSSkGykSRyv5vqpAq/YfQLjgjb9dlQuXfn/lz/OpQOznf+VZIiJ8nDtF
-         CTQ0kBcvNTRjwwKesWPSMjmVWsx11TlGG11QI9wh81EtH0uuQcW2TIbA4cR0XRnrJ2
-         8DCg3OCnO6Q5GSpR0eSrdWCpU06xP4qV+S4Q/JF0=
-X-Originating-IP: [92.22.12.182]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=N4gH6V1B c=1 sm=1 tr=0 a=6E9tJQHDO+z314HI75mSew==:117
- a=6E9tJQHDO+z314HI75mSew==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=W9fWLeL9r2sVS2eDZdUA:9 a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Apr 2018, #01; Mon, 9)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <9895c7b7-eac4-28c1-90c6-443acd1131b7@talktalk.net>
-Date:   Wed, 11 Apr 2018 11:13:23 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1751891AbeDKL3W (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 07:29:22 -0400
+Received: from mout.gmx.net ([212.227.17.20]:42609 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751797AbeDKL3U (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 07:29:20 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MgXCF-1es7T00hmB-00O21l; Wed, 11
+ Apr 2018 13:29:09 +0200
+Date:   Wed, 11 Apr 2018 13:28:51 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Sergey Organov <sorganov@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v6 00/15] rebase -i: offer to recreate commit topology
+In-Reply-To: <871sfm737e.fsf@javad.com>
+Message-ID: <nycvar.QRO.7.76.6.1804111324350.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1519680483.git.johannes.schindelin@gmx.de> <cover.1523362469.git.johannes.schindelin@gmx.de> <87tvsj6rn2.fsf@javad.com> <nycvar.QRO.7.76.6.1804110009080.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <871sfm737e.fsf@javad.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfDVwGclQ47jp8QHkA8yUbVVpaRE2VKhrrngoKyWlWI+v8DriYw4Yb3OnYYqAwAOSInsBtkAhADJCPmv3EQRfyGFMKL4pv+hUBNJPeihf6b6hW/eiXItr
- +AB7IIAqPzHO4KhXFbkqg4RrfLimhgjlvYqoMc086Fcpb2fRJqkRzBQKf86TGm5A4zAgwkl+fs2sKqGghGUw0X9Bw5RUNsevG48=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:54xtyIUXn+G5t8+Ub5RjpGFFcs4sAS5wKdL1Gb2HgVUy6s8qYpb
+ 6Y7qi2anJ1hr/OXopGhet4Hra7bxacI3HjFfkUD4uBsTusjmVoFi5fL5CxuqbUvdwvj5iQR
+ iBGAOoqDYBjN3CtGKuZJKn2/yLzFxoHlEDSTbtk5lGnHErDBlFQd6+zfYvqmPJh/m8Jx/no
+ y21APL0FI0G1rMX/9Z9Fg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vTa6y3PIVgk=:PsSCXvCU+WjgZY2Rpuj4tY
+ +iGS1LTW/g90Hfoi1eDDX+/qB+pawKfNt5Z1HDo2wAkndoVmb+RZ+O8DhWrtxYgO3LBd2p5Dp
+ KJuSKkAYkRqsuBv7J3jNmaVe5g2UptsQ0B/AMSJI9eMDZN08ktXJOlhG+5duwzFem7CcM3PiI
+ iB2ei8l5eXiK/x1f/EMPUXZgrxmN1Nfn5MPLAmm9uAEaPavWAp2IFeIfC8CgkFTHVcHlKlMN9
+ K05KJsLflTridiAm8AeUka4R7UBaJzX5AU7yN7cPMJprhMiHxz7nRjN/DIFMmvUEXM7cwkHIP
+ /7I5fe2MSQ/r6EgBAepkVVBopeSTS2+isyzCSJcdvf/r67O8+XMFxhPxLBePNGcdmyZtjirDE
+ 34qXluuZB4ukUXEFrx9lQ/eLVzXZes5iY3HFvZH/TNuakFwrcwfQh3kRfQ6xE+nv84rCw9evh
+ wJMJIcPohj5SRI3N4xXODC/XYyxqfqDSyFLhUDbVsdpbByrJYw072znFg4cylezAgD4+16tx5
+ gCcsj5nYda3Wg4AaxGz5bbD3xE8Yldji0/wZi//x7tPB3sX/gzZSVQbXiNtaQrpZrlepz/cYe
+ HK0kkyJNf9n0FC1mp8x9O4K58SvEfHFivRf+6ZrBoQw/ekKbldYFdUGyObg7wXLrgWBBW26xu
+ bKTuQaBRQBbFB2uhxjM99fm4CD6rmbnQgkmmNpbuMgArm885Ied+cl3UftNMjK1bV+e/+CzZQ
+ 8y/hmIHs9G8m2VfUhT4f2+N+q3JrVrq1uu+d/OjTAMfNkOdSfUuTYZv1JCjARB2/MPY6ZMOa7
+ RtjZiV7/+5icK0Z1Bd3iJl1KH7iAuHZo0K6fDinwXP8onY9X78=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/04/18 11:21, Junio C Hamano wrote:
-> * pw/add-p-select (2018-03-16) 3 commits
->    (merged to 'next' on 2018-03-30 at eae69f5ded)
->   + add -p: optimize line selection for short hunks
->   + add -p: allow line selection to be inverted
->   + add -p: select individual hunk lines
+Hi Sergey,
+
+On Wed, 11 Apr 2018, Sergey Organov wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
->   "git add -p" interactive interface learned to let users choose
->   individual added/removed lines to be used in the operation, instead
->   of accepting or rejecting a whole hunk.
+> > On Tue, 10 Apr 2018, Sergey Organov wrote:
+> >
+> >> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >> 
+> >> > Once upon a time, I dreamt of an interactive rebase that would not
+> >> > flatten branch structure, but instead recreate the commit topology
+> >> > faithfully.
+> >> 
+> >> [...]
+> >> 
+> >> > Think of --rebase-merges as "--preserve-merges done right".
+> >> 
+> >> Both option names seem to miss the primary point of the mode of
+> >> operation that you've formulated in the first sentence. I suggest to
+> >> rather call the new option in accordance to your description, say,
+> >> --no-flatten, --keep-topology, or --preserve-shape.
+> >
+> > A very quick A/B test shows that neither --no-flatten nor --keep-topology
+> > and certainly not --preserve-shape conveys to Git users what those options
+> > are supposed to do.
 > 
->   Will kick back to 'pu'.
+> In fact, my preference would be --[no-]flatten, exactly because the
+> default mode of rebase operation flattens the history, and thus what I'm
+> talking about is:
 > 
->   There was a brief discussion about this topic not doing as good a
->   job as it is advertised as---has it been resolved, or do we want to
->   run with what we have for now?
->   cf. <878ta8vyqe.fsf@evledraar.gmail.com>
+> git rebase --no-flatten
 
-I've been working on a re-roll that has handles modified lines better. 
-I'm not sure what to do about the cases where it cannot pair up the 
-insertions and deletions automatically - I think I'll clean up what I've 
-got, post it and see where the discussion goes from there.
+And this is the option out of the four that fared *worst* in the A/B
+testing. Not even experts in Git internals were able to figure out what
+the heck you are talking about.
 
-Thanks
+Now, you can beat that dead horse until it is pulp. Your choice. I'd
+rather go on to more interesting things, because as far as I am concerned,
+the naming issue has been settled, with you being the only person in
+disfavor of --rebase-merges.
 
-Phillip
+What you *could* do is finally take your RFC to the test. Run it with the
+concrete example I showed you in
+https://public-inbox.org/git/nycvar.QRO.7.76.6.1803261405170.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz/
 
+It is high time that you demonstrated on this concrete case study how your
+proposed solution performs. And then tally that up with Phillip's
+strategy.
+
+Ciao,
+Johannes
