@@ -2,204 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C5AA1F404
-	for <e@80x24.org>; Wed, 11 Apr 2018 20:01:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F22E51F404
+	for <e@80x24.org>; Wed, 11 Apr 2018 20:01:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756336AbeDKUBa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 16:01:30 -0400
-Received: from mail-sn1nam02on0137.outbound.protection.outlook.com ([104.47.36.137]:55490
-        "EHLO NAM02-SN1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1755722AbeDKUB1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 16:01:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=j51eHsfJm4GzQp0ExF8BgElq/5bK60KKmGWOzvcQB+E=;
- b=ayCtPqp77WORRMUvkVM4HKmsgkULHAWRXYn/VoqZBoete44spXzSIX3sEKA1tnF8ACEIIiiQ+lEhfc/SzVuS82xyoWAcRjXlaWAgo4iaKX/SZunBvxbFKX3S1AbKRkyesaLlotrQRyO/aHYlKjJbC8kHrDmqx9Idg1qP0qBywjM=
-Received: from DM5PR2101MB1016.namprd21.prod.outlook.com (52.132.133.38) by
- DM5PR2101MB0984.namprd21.prod.outlook.com (52.132.133.30) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.696.0; Wed, 11 Apr 2018 20:01:24 +0000
-Received: from DM5PR2101MB1016.namprd21.prod.outlook.com
- ([fe80::5d76:2e71:c400:8b83]) by DM5PR2101MB1016.namprd21.prod.outlook.com
- ([fe80::5d76:2e71:c400:8b83%4]) with mapi id 15.20.0696.006; Wed, 11 Apr 2018
- 20:01:24 +0000
-From:   Ben Peart <Ben.Peart@microsoft.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "pclouds@gmail.com" <pclouds@gmail.com>,
-        "alexmv@dropbox.com" <alexmv@dropbox.com>,
-        "blees@dcon.de" <blees@dcon.de>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "bmwill@google.com" <bmwill@google.com>,
-        "avarab@gmail.com" <avarab@gmail.com>,
-        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
-        "martin.agren@gmail.com" <martin.agren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: [PATCH v2 0/2] fsexcludes: Add programmatic way to exclude files
-Thread-Topic: [PATCH v2 0/2] fsexcludes: Add programmatic way to exclude files
-Thread-Index: AQHT0c/eLgp+QA5U+k2MFqK1wozJ4w==
-Date:   Wed, 11 Apr 2018 20:01:24 +0000
-Message-ID: <20180411200007.8612-1-benpeart@microsoft.com>
-References: <20180410210408.13788-1-benpeart@microsoft.com>
-In-Reply-To: <20180410210408.13788-1-benpeart@microsoft.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [70.33.148.227]
-x-mailer: git-send-email 2.17.0.windows.1
-x-clientproxiedby: BN3PR03CA0062.namprd03.prod.outlook.com
- (2a01:111:e400:7a4d::22) To DM5PR2101MB1016.namprd21.prod.outlook.com
- (2603:10b6:4:a8::38)
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;DM5PR2101MB0984;7:LbqNEVQBWAlzQecZ5VYSX3ylE7+mxiK/KnnmQsrZAfMMsfeeTQvgsfviaH4ImJHrBWMzM/P4N5gLCSatwQ5oDKrwQOxkRpgta62u8EG4ez7GaqijexIUEaYgOUxjVN2JijO2KDXJgA3aEClW2KZcbiZcNyJ3BvlIO5mWU13thiHq/e5MR69kvOOVMje/W/wzEcS2GKUudZx183BGQMXUkjEJD5RU5Ve2IjMnNAdxbLzwhksehyBc9LEGeW0UjqmE;20:B78YQlW5RK6trvqzmpJdwVnmvl5+ar6eC87iVA+35sbQJuoWNUy+mFZFFtk9IZKVd1aENvLVUR1Or9BcV8ywReGrL381d1PQm4y1Rq4xIX2hqLNe59lNq2PA9+OeL4hn2H3nA+9eatNITY3W2+wJuFd60DVzcdYqlCIiHNioZ8s=
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(3008032)(48565401081)(2017052603328)(7193020);SRVR:DM5PR2101MB0984;
-x-ms-traffictypediagnostic: DM5PR2101MB0984:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Ben.Peart@microsoft.com; 
-x-microsoft-antispam-prvs: <DM5PR2101MB0984FEE109BDCA3F251F0D97F4BD0@DM5PR2101MB0984.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(60795455431006)(166708455590820)(15185016700835);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(8121501046)(5005006)(3002001)(3231221)(944501337)(52105095)(93006095)(93001095)(10201501046)(6055026)(61426038)(61427038)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123564045)(20161123562045)(20161123558120)(6072148)(201708071742011);SRVR:DM5PR2101MB0984;BCL:0;PCL:0;RULEID:;SRVR:DM5PR2101MB0984;
-x-forefront-prvs: 0639027A9E
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(39380400002)(39860400002)(346002)(366004)(376002)(199004)(189003)(2501003)(6916009)(5250100002)(8666007)(105586002)(5640700003)(2900100001)(25786009)(39060400002)(1076002)(6116002)(3846002)(36756003)(6486002)(6436002)(4326008)(97736004)(7736002)(305945005)(5660300001)(10090500001)(2351001)(81166006)(81156014)(8676002)(8936002)(50226002)(106356001)(66066001)(478600001)(59450400001)(72206003)(52116002)(76176011)(10290500003)(575784001)(3280700002)(107886003)(1730700003)(186003)(3660700001)(386003)(53936002)(14454004)(54906003)(2906002)(99286004)(26005)(6506007)(8656006)(102836004)(966005)(2616005)(476003)(486006)(446003)(11346002)(86612001)(68736007)(22452003)(316002)(6512007)(6306002)(22906009)(43043002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR2101MB0984;H:DM5PR2101MB1016.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: Uiy0Bj37o7SqQjPVkmbCv1GrAwUja/Sf+k0xggIJilni4CDeCC2S+ehau6F4Kni5y4jCCRmuGwA2w4OTpoIjO9TUWAqYPyCDeeKGhNBdDm6CPzVll1BdhQL45eOWKRiPzozo6sDlWKnx4O58O7FE1bNYzYjnGhcB6YKdqGvAGj6DQSVf7/Q22p+McolXrls9bFq3+6A/AKJX7mqm7IHwxA3ZpK0JOxgNg2X+wWaVz4zw2TIDyRH2p1ofT14r9dIlafUqc/uKuvVdOZJ4qI9HUqMoSdaCBdUBn5xdFeKzVI8YggAAvtrxzb1iC+/Yv/Xna8tWm/+BK7CVdtWhIG7oO4EiFjcSpnJCHwuJqsu9VOcXY/lj+zZWYa9Eiwxwj4qEirKZPJ0AnZepNVD70yrN2NvbjDfTbHRviKBWyXPS3yg=
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S1756538AbeDKUBT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 16:01:19 -0400
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:42416 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933873AbeDKS4W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 14:56:22 -0400
+Received: by mail-qt0-f176.google.com with SMTP id j3so3149159qtn.9
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 11:56:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=kicJFQk1mJrD2u6rKGkyj3hYeaDbIVnA6iT57OXmeYc=;
+        b=DXfI27qYhqoCSrZ8tZq6UqrbGRVAjSkZjnV0PHo5hJH2IJ5o6AUVXPW85FB71Wjf/f
+         Lz1+cxN0SE3V4PM2eVz+zEq+8aXfbmP3tSSyXPzNoW/kTaQDVfkP80s4FudG9wZlWVRA
+         gHjE7obUpTTkBgZWIdXitKI65M3qAGq2zLwisB7oebMZ5+bRZeYqfV7ibC96YQTAwcuc
+         6W+QtuyNOmE5KOWPEJF2vzbbj/h+eCM5yyiO0peL4Xzxdqq0w2fA3ONWIrV45V0rv0Nq
+         4VuIfZkJFJI+nrfpc1IRXLT0YHURWY7jy1J9Dw6v9awz5eVxNJ8Nd5tN8BUEg5ILBPAC
+         UxIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=kicJFQk1mJrD2u6rKGkyj3hYeaDbIVnA6iT57OXmeYc=;
+        b=qFxEjxJ0TH8ah+lUPJkPAMLfyTFivV6VrHip85+wuX6YGp4ghoAhE/cQQL6uZGwsXs
+         974MgG9xMgXVqL37Uieeovt6RqOdHnYD2JXVLJNsJ++VAAMvAipJojE/uJ45nWeHXzYu
+         88yxXTA2tMe4LM2eSgGjQQhRFHqIeGbcGIJfuGg58a+VCwKEQHU6HH0WyD48Tk3Z5XnS
+         KTJvU84VXX+RR7VzTFAFzXOuYPATOOgU6kR4yNWzZdM4vvcssJWPdM+Hgdu65slsq9oM
+         umnWvZjplmfQAoXeNzmskPC8Ca56HkptcEjuZ+WAppmmjtrA1akN9AfSiiZJI6puYbhp
+         7DkQ==
+X-Gm-Message-State: ALQs6tDj1U/AVKig1GNZQWGCDy+/Hx2Mxr1sZhDjrU3FaMXeQXUWlFXG
+        amwfX9xWzG0RKYhN6nby7ZekQQM/yL7vuyqFwmSRTA==
+X-Google-Smtp-Source: AIpwx4+mI00MdZvu6J02Xy0+9x1DGte0b1YIZshZQdphT4EqBu2ALpkSmhKKb9MdhpX+BQrwhRI6FGq+9XpQI1nkB4A=
+X-Received: by 10.237.33.231 with SMTP id m36mr2898221qtc.154.1523472981973;
+ Wed, 11 Apr 2018 11:56:21 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: ea05e111-a7cd-4fab-8911-08d59fe70085
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ea05e111-a7cd-4fab-8911-08d59fe70085
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Apr 2018 20:01:24.7233
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR2101MB0984
+Received: by 10.12.174.202 with HTTP; Wed, 11 Apr 2018 11:56:21 -0700 (PDT)
+In-Reply-To: <CAGZ79kYeM=CqKSWTL2tdDXWueMGoki4zAUmFy4wbhtagN7gEAA@mail.gmail.com>
+References: <20180402005248.52418-1-haraldnordgren@gmail.com>
+ <20180409014226.2647-1-haraldnordgren@gmail.com> <20180409014226.2647-2-haraldnordgren@gmail.com>
+ <CAHwyqnURebvfW4rGz9RAbe7B9p6ZDy0jUueDFrYE30dmjCtMVA@mail.gmail.com> <CAGZ79kYeM=CqKSWTL2tdDXWueMGoki4zAUmFy4wbhtagN7gEAA@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 11 Apr 2018 14:56:21 -0400
+X-Google-Sender-Auth: FF17pDd7OXdq6K3AFrSy2BoRCjw
+Message-ID: <CAPig+cQzWAbEVBJ8O0yKYHQ02EaGTx9CeUyF67xozeT2-FL0EA@mail.gmail.com>
+Subject: Re: [PATCH v14 2/4] ref-filter: make ref_array_item allocation more consistent
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Harald Nordgren <haraldnordgren@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Updated to incorporate feedback from V1.
+On Wed, Apr 11, 2018 at 2:07 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Wed, Apr 11, 2018 at 10:57 AM, Harald Nordgren
+> <haraldnordgren@gmail.com> wrote:
+>> There have been no new comments for the last few days. I know Jeff
+>> King will be away for the next two weeks, but should we still move
+>> forward with this? The initial reactions to the idea seemed positive.
+>
+> Please see the "What's cooking?" email on the mailing list that is
+> sent out periodically by Junio.
+>
+>> * jk/ref-array-push (2018-04-09) 3 commits
+>> - ref-filter: factor ref_array pushing into its own function
+>> - ref-filter: make ref_array_item allocation more consistent
+>> - ref-filter: use "struct object_id" consistently
+>> (this branch is used by hn/sort-ls-remote.)
+>>
+>> API clean-up aournd ref-filter code.
+>>
+>> Will merge to 'next'.
+>
+> It will be merged to next and if no people speak up (due to bugs
+> observed or such)
 
-I'd really like a close review of the changes in dir.c where I added the ca=
-lls
-to fsexcludes_is_excluded_from().  While they work and pass all the git tes=
-ts
-as well as our internal functional tests, I'd like to be sure I haven't mis=
-sed
-anything.
+I would guess, however, that Harald is wondering more specifically
+about the "--sort" patch he added atop Peff's patches. Disposition for
+_that_ patch is not specified in the latest "What's cooking":
 
-Base Ref: master
-Web-Diff: https://github.com/benpeart/git/commit/08442c209d
-Checkout: git fetch https://github.com/benpeart/git fsexcludes-v2 && git ch=
-eckout 08442c209d
+    * hn/sort-ls-remote (2018-04-09) 1 commit
+     - ls-remote: create '--sort' option
+     (this branch uses jk/ref-array-push.)
 
-
-### Interdiff (v1..v2):
-
-diff --git a/fsexcludes.c b/fsexcludes.c
-index 07bfe376a0..0ef57f107b 100644
---- a/fsexcludes.c
-+++ b/fsexcludes.c
-@@ -33,7 +33,6 @@ static int check_fsexcludes_hashmap(struct hashmap *map, =
-const char *pattern, in
- 	char *slash;
-=20
- 	/* Check straight mapping */
--	strbuf_reset(&sb);
- 	strbuf_add(&sb, pattern, patternlen);
- 	fse.pattern =3D sb.buf;
- 	fse.patternlen =3D sb.len;
-@@ -155,7 +154,6 @@ static int check_directory_hashmap(struct hashmap *map,=
- const char *pathname, in
- 	struct fsexcludes fse;
-=20
- 	/* Check for directory */
--	strbuf_reset(&sb);
- 	strbuf_add(&sb, pathname, pathlen);
- 	strbuf_addch(&sb, '/');
- 	fse.pattern =3D sb.buf;
-@@ -198,13 +196,16 @@ int fsexcludes_is_excluded_from(struct index_state *i=
-state,
- 	return -1;
- }
-=20
--void fsexcludes_init(struct strbuf *sb) {
-+void fsexcludes_init(struct strbuf *sb)
-+{
- 	fsexcludes_initialized =3D 1;
- 	fsexcludes_data =3D *sb;
-+	strbuf_detach(sb, NULL);
- }
-=20
--void fsexcludes_free() {
-+void fsexcludes_free(void) {
- 	strbuf_release(&fsexcludes_data);
- 	hashmap_free(&fsexcludes_hashmap, 1);
- 	hashmap_free(&parent_directory_hashmap, 1);
-+	fsexcludes_initialized =3D 0;
- }
-diff --git a/fsexcludes.h b/fsexcludes.h
-index 1c4101343c..10246daa02 100644
---- a/fsexcludes.h
-+++ b/fsexcludes.h
-@@ -6,16 +6,18 @@
-  * where git will scan for untracked files.  This is used to speed up the
-  * scan by avoiding scanning parts of the work directory that do not have
-  * any new files.
-- *
-  */
-=20
- /*
-  * sb should contain a NUL separated list of path names of the files
-  * and/or directories that should be checked.  Any path not listed will
-  * be excluded from the scan.
-+ *
-+ * NOTE: fsexcludes_init() will take ownership of the storage passed in
-+ * sb and will reset sb to `STRBUF_INIT`
-  */
- void fsexcludes_init(struct strbuf *sb);
--void fsexcludes_free();
-+void fsexcludes_free(void);
-=20
- /*
-  * Return 1 for exclude, 0 for include and -1 for undecided.
-
-
-### Patches
-
-Ben Peart (2):
-  fsexcludes: add a programmatic way to exclude files from git's working
-    directory traversal logic
-  fsmonitor: switch to use new fsexcludes logic and remove unused
-    untracked cache based logic
-
- Makefile                    |   1 +
- dir.c                       |  33 ++++--
- dir.h                       |   2 -
- fsexcludes.c                | 211 ++++++++++++++++++++++++++++++++++++
- fsexcludes.h                |  29 +++++
- fsmonitor.c                 |  21 +---
- fsmonitor.h                 |  10 +-
- t/t7519-status-fsmonitor.sh |  14 +--
- 8 files changed, 273 insertions(+), 48 deletions(-)
- create mode 100644 fsexcludes.c
- create mode 100644 fsexcludes.h
-
-
-base-commit: 0b0cc9f86731f894cff8dd25299a9b38c254569e
---=20
-2.17.0.windows.1
-
-
+     "git ls-remote" learned an option to allow sorting its output based
+     on the refnames being shown.
