@@ -2,87 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A2D21F424
-	for <e@80x24.org>; Thu, 12 Apr 2018 08:58:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 554181F424
+	for <e@80x24.org>; Thu, 12 Apr 2018 09:00:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752701AbeDLI6Y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Apr 2018 04:58:24 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:52888 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750780AbeDLI6W (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Apr 2018 04:58:22 -0400
-Received: by mail-it0-f66.google.com with SMTP id f6-v6so6371326ita.2
-        for <git@vger.kernel.org>; Thu, 12 Apr 2018 01:58:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Pm68hKBEU78f45iLXPJakhuh+zj5t4cHbTGxfPe6Wn0=;
-        b=BPiN7QXn5LCMU790h2l+G78Uffm1b9+s13wftEpW7iYzhtSYJoXus3Cx/p4QREFIoI
-         nciy9Fn8GymEmjS4crylCz9hYAtXqFxvnj/NyA0TK95jsr2do4ximpMLh0arBLHq/X+G
-         HhoJY3RbSF2Ua7WBnV+mGNCPYGcZlGuIkJiye+9BhIlyMJo4gjkGxp3i1SBNwfCTe+51
-         bWpydl0JNIPe7/QuU1a81zrfmZYBgXMPbuw5UDRNawhpfqVkCAqw05oxLO7CFAK1pWb4
-         mu8/S/sqQjwiH095oJp2Lypgw6yRRU8Lz6blo1NNsgQ+ysCq75CSHUC+i1esGqyPNmNE
-         vghQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Pm68hKBEU78f45iLXPJakhuh+zj5t4cHbTGxfPe6Wn0=;
-        b=MSp3QcSnXdFMYqoqFkY1gnhGoDflOqkMJS5dNv8BdI1B6euqO5QZjq0pn6cjNrn+3+
-         7fuSWJM5nGv5oywKdodhX6+LmL+DvroDSxw0Bv2TZHzJ5Kijc6+dCVVhTkDL6MDb/25O
-         x6bHJOMzau8ad+DryVhXo81BblXCacjdLfG2GYvh7WN+WZR9k+vFiYK/Q0z0c++UFeCx
-         sB4ibZcJZG4e7lx8uIJqF+5cAZbCXy3kpxlxA0fj3NLakA2XCztsLWdXn1PLoNVtc8z3
-         JjuqgKEY+O0TOBr+Q2eGuaQthOn8PPFArQsHrCVyh+3UKIVvmCETxZQhqJfKzKoNkabS
-         BgJw==
-X-Gm-Message-State: ALQs6tAmBYBR1ORgfe7L5pwlqsLIVFjJo4khWbO8QmsIPkutNtBLOs+t
-        k2OgNhsCCfYDGovOO/Qq+AodxilTLNU1ddzpr+g=
-X-Google-Smtp-Source: AIpwx49Q51OjSCH0V3geye0utNEaiP3kF3O07dx91NxdcBGnWPBV08yS7UFfxygpF22pTMpcNUX0suqneBf1Vkh+fpg=
-X-Received: by 2002:a24:6747:: with SMTP id u68-v6mr6980itc.21.1523523501996;
- Thu, 12 Apr 2018 01:58:21 -0700 (PDT)
+        id S1752317AbeDLJA4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Apr 2018 05:00:56 -0400
+Received: from mout.gmx.net ([212.227.17.22]:47447 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751611AbeDLJAz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Apr 2018 05:00:55 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCfcc-1fElYZ2sYU-009P0f; Thu, 12
+ Apr 2018 11:00:41 +0200
+Date:   Thu, 12 Apr 2018 11:00:23 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>
+Subject: Re: [PATCH v6 15/15] rebase -i --rebase-merges: add a section to
+ the man page
+In-Reply-To: <CAPig+cRfQgz2tCab2d9g-XznHORW0FJvDKS4fe85JkLPxm2HMQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804121059110.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1519680483.git.johannes.schindelin@gmx.de> <cover.1523362469.git.johannes.schindelin@gmx.de> <a162afa761e3000eb60169fce7a50938888f80b4.1523362469.git.johannes.schindelin@gmx.de> <26c21a44-92b3-80f4-5211-034c64f7568c@talktalk.net>
+ <CAPig+cRfQgz2tCab2d9g-XznHORW0FJvDKS4fe85JkLPxm2HMQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.79.34.9 with HTTP; Thu, 12 Apr 2018 01:58:21 -0700 (PDT)
-In-Reply-To: <CAHwyqnVg83xSQHRnDVz+aMxPPMj-3bWF4P8YUxEjurxnpDhFEQ@mail.gmail.com>
-References: <20180411225534.48658-1-haraldnordgren@gmail.com>
- <CAGZ79kbt=J5SHsHJTfOZYhgSdn9_gOjVBC3qp_oL0sC-b3ZRmw@mail.gmail.com> <CAHwyqnVg83xSQHRnDVz+aMxPPMj-3bWF4P8YUxEjurxnpDhFEQ@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 12 Apr 2018 10:58:21 +0200
-Message-ID: <CAP8UFD3j-MGY7jHQK52zVLYMB=1vhCSFKxrvQ1JsRW-Rmnn8Qg@mail.gmail.com>
-Subject: Re: [PATCH] Create '--merges-only' option for 'git bisect'
-To:     Harald Nordgren <haraldnordgren@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Tiago Botelho <tiago@gitlab.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:lZb0ZAUySOKeKgODjtYQ/JLfXj3WmVsKJAUjrIgbjBL4M0Dhude
+ vUwoD6h3p+iZnqFuRbTAiqdM8ot1a9MPq5zqOuWng+mbPfjLQ1TmUXKG/rwnjkfWcHVz39p
+ pfgHUyP0pfqFp9LZui6pzeRqX14fVpU1/o8sPTIfcR23DeGFzhV895Cf8yKcyTJvofrT+af
+ RKJTsh46LvhY01WOdKCLw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PRpevzKSNRk=:eWvs+em82voNyT5BGmBiqS
+ LtTBQgxrqQ6HrWICUTL4x9nuNhHxw34b1QZh0Q7G+xbKB5ypC2mCNqy16Mh1duOycoQmKy3hi
+ H4grTuCS48ICVjitJwV7ROxGdR9qN9X1AxWPtOu08at39/cpViluuSI5KALq0rDWeLAh1M6aD
+ 2rO1ZAUpqo1Z3krUyiJ5u7bRr691o+mTKAB2lVFoPl+SUMNuiS1SFLxRHTYKEXSEU2eLUkX8N
+ JgtOQZ7z/mwZQ8zdYhSIS8E42dXQZ1zXey2fKSP82d5DvIH8PB/XGRy/uwne4xIUBkY7rXa6u
+ FpclQfL/1xrF6Ujfszdx1TLWTwIC3UNJ4dOqbbUW+B7GvW8BD/HYKNKUEmrWqSB1rkMxI6xOy
+ 3r1l5WOKpdJspHOZmiIuElVmh3LM7On8nROeiifRMY0iuGnd2rii4dPwwCJyV0jjeuf9NbPMA
+ xFT5mr8EG/xx64sEswFE6b8dYtTUdmIETpEQQHyY9zFpCOBieq4+wXv8TdJVLwVhjXDZTPiFd
+ aylVU053AiNAuh2pMs6w3/cxqtXIgG2zY6x8EdtzLZNvbaYuRfDKulCZPC4YA/xxKH/GTX2Fe
+ m1K0n15izPDpL+IhcNvCF4XOHFwdPHmSxWoqmWhwisd5YnS765TNqJD4ePzpMyYEqZGq0EUQp
+ eT8BzSwQ11akBigZ8QOW7rfSczkmAGcbSe44FmBXbdfPvJFo3ygU30A79v/8yjFzfr7bspP1R
+ 64oqvmKd2SXPJ0Wb4blhcsO6GHLchQQGXTctLoQI6rnEZ5/PX3/Mm9wofW4GH7YCwOzfaiiy1
+ XWZg48Nqn5x7SHcaCP0taXA8TN4eJyGDqV0rlDKVi63bmdSxkg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 12, 2018 at 9:49 AM, Harald Nordgren
-<haraldnordgren@gmail.com> wrote:
-> I think it looks similar. But if I'm reading that thread correctly
-> then there was never a patch created, right?
+Hi Eric & Phillip,
 
-(It is customary on this mailing list to reply after the sentences we
-reply to. We don't "top post".)
+On Wed, 11 Apr 2018, Eric Sunshine wrote:
 
-On the GSoC idea pages (like https://git.github.io/SoC-2018-Ideas/) we
-have been suggesting "Implement git bisect --first-parent" and there
-are the following related links:
+> On Wed, Apr 11, 2018 at 11:35 AM, Phillip Wood
+> <phillip.wood@talktalk.net> wrote:
+> > On 10/04/18 13:30, Johannes Schindelin wrote:
+> >> +The `reset` command is essentially a `git reset --hard` to the specified
+> >> +revision (typically a previously-labeled one).
+> >
+> > s/labeled/labelled/
+> 
+> American vs. British English spelling.
+> 
+> CodingGuidelines and SubmittingPatches talk about this. Junio
+> summarizes the issue well in [1]. The TL;DR is to lean toward the
+> American English spelling.
+> 
+> [1]: https://public-inbox.org/git/xmqq4m9gpebm.fsf@gitster.mtv.corp.google.com/
 
-https://public-inbox.org/git/20150304053333.GA9584@peff.net/
-https://public-inbox.org/git/4D3CDDF9.6080405@intel.com/
+Thanks, I meant to look that up because I was not sure, and now I do not
+have to ;-)
 
-Tiago in Cc also tried at a recent London hackathon to implement it
-and came up with the following:
+No worries, Phillip, I will keep spelling your name with two `l`s. :0)
 
-https://github.com/tiagonbotelho/git/pull/1/files
-
-I tried to help him by reworking his commit in the following branch:
-
-https://github.com/chriscool/git/commits/myfirstparent
+Ciao,
+Dscho
