@@ -2,68 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 429BC1F404
-	for <e@80x24.org>; Thu, 12 Apr 2018 21:23:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3A521F404
+	for <e@80x24.org>; Thu, 12 Apr 2018 21:24:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752354AbeDLVW6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Apr 2018 17:22:58 -0400
-Received: from mail-out01.uio.no ([129.240.10.50]:53105 "EHLO
-        mail-out01.uio.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751624AbeDLVW5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Apr 2018 17:22:57 -0400
-Received: from mail-mx04.uio.no ([129.240.10.25])
-        by mail-out01.uio.no with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.90_1)
-        (envelope-from <h.b.furuseth@usit.uio.no>)
-        id 1f6jgG-0000Rf-GQ; Thu, 12 Apr 2018 23:22:56 +0200
-Received: from bombur.uio.no ([129.240.203.105])
-        by mail-mx04.uio.no with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        user hbf (Exim 4.90_1)
-        (envelope-from <h.b.furuseth@usit.uio.no>)
-        id 1f6jgG-0005Dg-05; Thu, 12 Apr 2018 23:22:56 +0200
-Subject: Re: File versioning based on shallow Git repositories?
-To:     Rafael Ascensao <rafa.almas@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <hbf.20180412fvfi@bombur.uio.no>
- <87d0z4b6ti.fsf@evledraar.gmail.com>
- <4af21bcd-7a68-50df-4cce-0b050ccaeb90@usit.uio.no>
- <87k1tcf905.fsf@evledraar.gmail.com>
- <CACUQV592km3SaHiY9uZon4E3jhakmYmzwcejmsnExzaybNm3xw@mail.gmail.com>
-From:   Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Message-ID: <2e700b4e-d52c-afc5-dacd-51405fb51c21@usit.uio.no>
-Date:   Thu, 12 Apr 2018 23:22:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
-MIME-Version: 1.0
-In-Reply-To: <CACUQV592km3SaHiY9uZon4E3jhakmYmzwcejmsnExzaybNm3xw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-MW
-Content-Transfer-Encoding: 8bit
-X-UiO-SPF-Received: Received-SPF: neutral (mail-mx04.uio.no: 129.240.203.105 is neither permitted nor denied by domain of usit.uio.no) client-ip=129.240.203.105; envelope-from=h.b.furuseth@usit.uio.no; helo=bombur.uio.no;
-X-UiO-Spam-info: not spam, SpamAssassin (score=-4.7, required=5.0, autolearn=disabled, AWL=0.289,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: F7B7D34D8D1B2ABBC9D79C7E1565352CBF7A16F3
-X-UiOonly: E1185BC6F4AE6CC6DE13B0489F6265DE6D7B2F7F
+        id S1753179AbeDLVYq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Apr 2018 17:24:46 -0400
+Received: from sif.is.scarlet.be ([193.74.71.28]:24107 "EHLO sif.is.scarlet.be"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752270AbeDLVYq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Apr 2018 17:24:46 -0400
+X-Greylist: delayed 961 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Apr 2018 17:24:45 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scarlet.be;
+        s=scarlet; t=1523567307;
+        bh=t/k/chKXKmQQUMAUZ4r5+4GHkXm4BKDaG+CyZiwS7MM=;
+        h=From:To:Cc:Subject:Date:Message-Id;
+        b=rwQ6Y9miZ6TF5V4gK0a4UEXo7bwwDFAgirybu8yOO0igtiw+zHY1ZF3WjwyS1mhrI
+         0KKV9XV00GZ8INaBorwxlczE7VJPPxZG3EVDx/LUy6UF2ZIp0TA3uqEGbUVV2Eo5ti
+         /FRKmQWzlV3XbSj6urnfU9DrPG1EtweVmW5v+vDk=
+Received: from localhost.localdomain (ip-83-134-143-61.dsl.scarlet.be [83.134.143.61])
+        by sif.is.scarlet.be (8.14.9/8.14.9) with ESMTP id w3CL8Qbd002436
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Thu, 12 Apr 2018 23:08:27 +0200
+X-Scarlet: d=1523567307 c=83.134.143.61
+From:   Kim Gybels <kgybels@infogroep.be>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Kim Gybels <kgybels@infogroep.be>
+Subject: [PATCH 0/2] Fix early EOF with GfW daemon
+Date:   Thu, 12 Apr 2018 23:07:55 +0200
+Message-Id: <20180412210757.7792-1-kgybels@infogroep.be>
+X-Mailer: git-send-email 2.17.0.windows.1
+X-DCC-scarlet.be-Metrics: sif 20001; Body=5 Fuz1=5 Fuz2=6
+X-Virus-Scanned: clamav-milter 0.98.1-exp at sif
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12. april 2018 23:07, Rafael Ascensao wrote:
-> Would initiating a repo with a empty root commit, tag it with 'base' then
-> use $ git rebase --onto base master@{30 days ago} master;
-> be viable?
+It has been reported [1] that cloning from a Git-for-Windows daemon would
+sometimes fail with an early EOF error:
 
-No... my question was confused from the beginning.  With such large files
-I _shouldn't_ have history (or grafts), otherwise Git spends a lot of CPU
-time creating diffs when I look at a commit, or worse, when I try git log.
-Which I discovered quickly when trying real data instead of test-data:-)
+  $ git clone git://server/test
+  Cloning into 'test'...
+  remote: Counting objects: 36, done.
+  remote: Compressing objects: 100% (24/24), done.
+  fatal: read error: Invalid argument
+  fatal: early EOF
+  fatal: index-pack failed
 
-Ævar's suggestion was exactly right in that respect.  Thanks again!
+These patches solve the issue by only changing git-daemon, its child processes
+can remain unaware that stdin/stdout are actually network connections.
+
+[1] https://github.com/git-for-windows/git/issues/304
+
+Kim Gybels (2):
+  daemon: use timeout for uninterruptible poll
+  daemon: graceful shutdown of client connection
+
+ daemon.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
 -- 
-Hallvard
+2.17.0.windows.1
+
