@@ -2,91 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 554181F424
-	for <e@80x24.org>; Thu, 12 Apr 2018 09:00:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 781A71F424
+	for <e@80x24.org>; Thu, 12 Apr 2018 09:12:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752317AbeDLJA4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Apr 2018 05:00:56 -0400
-Received: from mout.gmx.net ([212.227.17.22]:47447 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751611AbeDLJAz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Apr 2018 05:00:55 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCfcc-1fElYZ2sYU-009P0f; Thu, 12
- Apr 2018 11:00:41 +0200
-Date:   Thu, 12 Apr 2018 11:00:23 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>
-Subject: Re: [PATCH v6 15/15] rebase -i --rebase-merges: add a section to
- the man page
-In-Reply-To: <CAPig+cRfQgz2tCab2d9g-XznHORW0FJvDKS4fe85JkLPxm2HMQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804121059110.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1519680483.git.johannes.schindelin@gmx.de> <cover.1523362469.git.johannes.schindelin@gmx.de> <a162afa761e3000eb60169fce7a50938888f80b4.1523362469.git.johannes.schindelin@gmx.de> <26c21a44-92b3-80f4-5211-034c64f7568c@talktalk.net>
- <CAPig+cRfQgz2tCab2d9g-XznHORW0FJvDKS4fe85JkLPxm2HMQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752806AbeDLJMm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Apr 2018 05:12:42 -0400
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:40895 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751611AbeDLJMl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Apr 2018 05:12:41 -0400
+Received: by mail-wr0-f171.google.com with SMTP id v60so448424wrc.7
+        for <git@vger.kernel.org>; Thu, 12 Apr 2018 02:12:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=OzO8IfqpULLNvgSdgduGXecm0rqA3U6Y64m4g+qKIxI=;
+        b=n4J2te6j+JC7LhQjbYeJ03pHHgkwnOwAshQwNPATEbYGPa+/+EhWfoCUbGyeKO08ku
+         uttDFG18fx3QU0Klsc+4C0YqgFIDRgXcsySURAWgLtNhYsdZgHK8+D4XXxXBSx+vQvoR
+         cQ4/NIGQK8NNdlXYGPd/0L7DqXCIISS9Y0mRKg72ZP5s6jYhveHhN5V3TMy+nGCrE7JB
+         tEOtGktfrhm+i3hObRCPIpvY0TcCCYWjgJ+q6MTXidgkgUWA+GV+FrOn0XA6yBOLtWNA
+         Q22qUfLaTd4V0oENIUtK4FVx76NdRApTDmWPXaCtoSoybTwZmoRYXVAsRLeBBdJNRBEL
+         IejQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=OzO8IfqpULLNvgSdgduGXecm0rqA3U6Y64m4g+qKIxI=;
+        b=fiPCvxYy5CkUqYCaJOXSHlpcxi2OgDmbzxrvDgAvsFT9nBp0W3fobSCHbFF4bUzKrd
+         1O5S943YpQcMUmafCrtcJK+SnQQtS94whEDn4vuSFSgSS3pQ4QS/WxO1ZLaf4eNYiK5u
+         WMSpdFy1s3rqRFX6AGcFl18TZOzQBTGB96NRGYdlc3W4KJfs7ALB5MQrEYGu0hPnSvCb
+         01n4FkWfjRxoFFcofc50QwwnSn4ijMjIL2JhAx96ASUwY0Zfbh/htVhr9Qz1lSnm68Q6
+         7xdbmfMqgY/yIc0sPGxJerQymhPRy0zy0R02dX+vsOJd9LmlWKcxyiiWkxX82WU1CkFU
+         vZwQ==
+X-Gm-Message-State: ALQs6tAMLG0UG8XcKPMyY1y+YXtbEZzN/JlgMMHMgDVYSVgEq+0X3vFB
+        jXn/t0s5GwAf1xb4RI21fBY=
+X-Google-Smtp-Source: AIpwx4+h9x3ZLvlhOYIBjUyFmsSBddSCE0WOxb1wut1qmQD7IXh1g4spQ+YuMwW13rzunGe07mrlGg==
+X-Received: by 10.223.195.9 with SMTP id n9mr112814wrf.252.1523524359614;
+        Thu, 12 Apr 2018 02:12:39 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a13sm4071132wrc.19.2018.04.12.02.12.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 12 Apr 2018 02:12:38 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "peff\@peff.net" <peff@peff.net>,
+        "avarab\@gmail.com" <avarab@gmail.com>,
+        "sbeller\@google.com" <sbeller@google.com>,
+        "larsxschneider\@gmail.com" <larsxschneider@gmail.com>,
+        "bmwill\@google.com" <bmwill@google.com>
+Subject: Re: [PATCH v2 07/10] commit-graph.txt: update future work
+References: <20180403165143.80661-1-dstolee@microsoft.com>
+        <20180409164131.37312-1-dstolee@microsoft.com>
+        <20180409164131.37312-8-dstolee@microsoft.com>
+Date:   Thu, 12 Apr 2018 18:12:38 +0900
+In-Reply-To: <20180409164131.37312-8-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Mon, 9 Apr 2018 16:42:07 +0000")
+Message-ID: <xmqqfu403i0p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:lZb0ZAUySOKeKgODjtYQ/JLfXj3WmVsKJAUjrIgbjBL4M0Dhude
- vUwoD6h3p+iZnqFuRbTAiqdM8ot1a9MPq5zqOuWng+mbPfjLQ1TmUXKG/rwnjkfWcHVz39p
- pfgHUyP0pfqFp9LZui6pzeRqX14fVpU1/o8sPTIfcR23DeGFzhV895Cf8yKcyTJvofrT+af
- RKJTsh46LvhY01WOdKCLw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PRpevzKSNRk=:eWvs+em82voNyT5BGmBiqS
- LtTBQgxrqQ6HrWICUTL4x9nuNhHxw34b1QZh0Q7G+xbKB5ypC2mCNqy16Mh1duOycoQmKy3hi
- H4grTuCS48ICVjitJwV7ROxGdR9qN9X1AxWPtOu08at39/cpViluuSI5KALq0rDWeLAh1M6aD
- 2rO1ZAUpqo1Z3krUyiJ5u7bRr691o+mTKAB2lVFoPl+SUMNuiS1SFLxRHTYKEXSEU2eLUkX8N
- JgtOQZ7z/mwZQ8zdYhSIS8E42dXQZ1zXey2fKSP82d5DvIH8PB/XGRy/uwne4xIUBkY7rXa6u
- FpclQfL/1xrF6Ujfszdx1TLWTwIC3UNJ4dOqbbUW+B7GvW8BD/HYKNKUEmrWqSB1rkMxI6xOy
- 3r1l5WOKpdJspHOZmiIuElVmh3LM7On8nROeiifRMY0iuGnd2rii4dPwwCJyV0jjeuf9NbPMA
- xFT5mr8EG/xx64sEswFE6b8dYtTUdmIETpEQQHyY9zFpCOBieq4+wXv8TdJVLwVhjXDZTPiFd
- aylVU053AiNAuh2pMs6w3/cxqtXIgG2zY6x8EdtzLZNvbaYuRfDKulCZPC4YA/xxKH/GTX2Fe
- m1K0n15izPDpL+IhcNvCF4XOHFwdPHmSxWoqmWhwisd5YnS765TNqJD4ePzpMyYEqZGq0EUQp
- eT8BzSwQ11akBigZ8QOW7rfSczkmAGcbSe44FmBXbdfPvJFo3ygU30A79v/8yjFzfr7bspP1R
- 64oqvmKd2SXPJ0Wb4blhcsO6GHLchQQGXTctLoQI6rnEZ5/PX3/Mm9wofW4GH7YCwOzfaiiy1
- XWZg48Nqn5x7SHcaCP0taXA8TN4eJyGDqV0rlDKVi63bmdSxkg=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric & Phillip,
+Derrick Stolee <dstolee@microsoft.com> writes:
 
-On Wed, 11 Apr 2018, Eric Sunshine wrote:
+> +Here is a diagram to visualize the shape of the full commit graph, and
+> +how different generation numbers relate:
+> +
+> +    +-----------------------------------------+
+> +    | GENERATION_NUMBER_INFINITY = 0xFFFFFFFF |
+> +    +-----------------------------------------+
+> +	    |            |      ^
+> +	    |            |      |
+> +	    |            +------+
+> +	    |         [gen(A) = gen(B)]
+> +	    V
+> +    +-------------------------------------+
+> +    | 0 < commit->generation < 0x40000000 |
+> +    +-------------------------------------+
+> +	    |            |      ^
+> +	    |            |      |
+> +	    |            +------+
+> +	    |        [gen(A) > gen(B)]
+> +	    V
+> +    +-------------------------------------+
+> +    | GENERATION_NUMBER_ZERO = 0          |
+> +    +-------------------------------------+
+> +			 |      ^
+> +			 |      |
+> +			 +------+
+> +		     [gen(A) = gen(B)]
 
-> On Wed, Apr 11, 2018 at 11:35 AM, Phillip Wood
-> <phillip.wood@talktalk.net> wrote:
-> > On 10/04/18 13:30, Johannes Schindelin wrote:
-> >> +The `reset` command is essentially a `git reset --hard` to the specified
-> >> +revision (typically a previously-labeled one).
-> >
-> > s/labeled/labelled/
-> 
-> American vs. British English spelling.
-> 
-> CodingGuidelines and SubmittingPatches talk about this. Junio
-> summarizes the issue well in [1]. The TL;DR is to lean toward the
-> American English spelling.
-> 
-> [1]: https://public-inbox.org/git/xmqq4m9gpebm.fsf@gitster.mtv.corp.google.com/
+It may be just me but all I can read out of the above is that
+commit->generation may store 0xFFFFFFFF, a value between 0 and
+0x40000000, or 0.  I cannot quite tell what the notation [gen(A)
+<cmp> gen(B)] is trying to say.  I am guessing "Two generation
+numbers within the 'valid' range can be compared" is what the second
+one is trying to say, but it is much less interesting to know that
+two infinities compare equal than how generation numbers from
+different classes compare, which cannot be depicted in the above
+notation, I am afraid.  For example, don't we want to say that a
+commit with INF can never be reached by a commit with a valid
+generation number, or something like that?
 
-Thanks, I meant to look that up because I was not sure, and now I do not
-have to ;-)
+>  Design Details
+>  --------------
+>  
+> @@ -98,17 +141,12 @@ Future Work
+>  - The 'commit-graph' subcommand does not have a "verify" mode that is
+>    necessary for integration with fsck.
+>  
+> -- The file format includes room for precomputed generation numbers. These
+> -  are not currently computed, so all generation numbers will be marked as
+> -  0 (or "uncomputed"). A later patch will include this calculation.
+> -
+>  - After computing and storing generation numbers, we must make graph
+>    walks aware of generation numbers to gain the performance benefits they
+>    enable. This will mostly be accomplished by swapping a commit-date-ordered
+>    priority queue with one ordered by generation number. The following
+> -  operations are important candidates:
+> +  operation is an important candidate:
 
-No worries, Phillip, I will keep spelling your name with two `l`s. :0)
-
-Ciao,
-Dscho
+Good.
