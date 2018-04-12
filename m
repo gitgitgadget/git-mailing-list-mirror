@@ -2,154 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A9C81F424
-	for <e@80x24.org>; Thu, 12 Apr 2018 08:34:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A2D21F424
+	for <e@80x24.org>; Thu, 12 Apr 2018 08:58:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752656AbeDLIeX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Apr 2018 04:34:23 -0400
-Received: from mail.javad.com ([54.86.164.124]:52204 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752389AbeDLIeW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Apr 2018 04:34:22 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 4FAF23FEBC;
-        Thu, 12 Apr 2018 08:34:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523522061;
-        bh=Am9H7KKzOh5+3yIr2u0WESdrlZhpddYLw3qmo0WkdHA=; l=800;
-        h=Received:From:To:Subject;
-        b=UmtY8CAFgawk9c87BdW9vYlRx0VvNfl+DNsa8wCq7v6UUFLLP1Mm5/UI6JkROi+/a
-         AO6AFzmC7y+9Jczuan/a51T4Wt/HbJTRjq7oJ90hwJzt8PQm6i5glSb7dgI1ZR/4eQ
-         M11hmyQu3223jkpgKnADGvR+JrtuPVbfBvwVgvy8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523522061;
-        bh=Am9H7KKzOh5+3yIr2u0WESdrlZhpddYLw3qmo0WkdHA=; l=800;
-        h=Received:From:To:Subject;
-        b=UmtY8CAFgawk9c87BdW9vYlRx0VvNfl+DNsa8wCq7v6UUFLLP1Mm5/UI6JkROi+/a
-         AO6AFzmC7y+9Jczuan/a51T4Wt/HbJTRjq7oJ90hwJzt8PQm6i5glSb7dgI1ZR/4eQ
-         M11hmyQu3223jkpgKnADGvR+JrtuPVbfBvwVgvy8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523522061;
-        bh=Am9H7KKzOh5+3yIr2u0WESdrlZhpddYLw3qmo0WkdHA=; l=800;
-        h=Received:From:To:Subject;
-        b=UmtY8CAFgawk9c87BdW9vYlRx0VvNfl+DNsa8wCq7v6UUFLLP1Mm5/UI6JkROi+/a
-         AO6AFzmC7y+9Jczuan/a51T4Wt/HbJTRjq7oJ90hwJzt8PQm6i5glSb7dgI1ZR/4eQ
-         M11hmyQu3223jkpgKnADGvR+JrtuPVbfBvwVgvy8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523522061;
-        bh=Am9H7KKzOh5+3yIr2u0WESdrlZhpddYLw3qmo0WkdHA=; l=800;
-        h=Received:From:To:Subject;
-        b=UmtY8CAFgawk9c87BdW9vYlRx0VvNfl+DNsa8wCq7v6UUFLLP1Mm5/UI6JkROi+/a
-         AO6AFzmC7y+9Jczuan/a51T4Wt/HbJTRjq7oJ90hwJzt8PQm6i5glSb7dgI1ZR/4eQ
-         M11hmyQu3223jkpgKnADGvR+JrtuPVbfBvwVgvy8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523522061;
-        bh=Am9H7KKzOh5+3yIr2u0WESdrlZhpddYLw3qmo0WkdHA=; l=800;
-        h=Received:From:To:Subject;
-        b=UmtY8CAFgawk9c87BdW9vYlRx0VvNfl+DNsa8wCq7v6UUFLLP1Mm5/UI6JkROi+/a
-         AO6AFzmC7y+9Jczuan/a51T4Wt/HbJTRjq7oJ90hwJzt8PQm6i5glSb7dgI1ZR/4eQ
-         M11hmyQu3223jkpgKnADGvR+JrtuPVbfBvwVgvy8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523522061;
-        bh=Am9H7KKzOh5+3yIr2u0WESdrlZhpddYLw3qmo0WkdHA=; l=800;
-        h=Received:From:To:Subject;
-        b=UmtY8CAFgawk9c87BdW9vYlRx0VvNfl+DNsa8wCq7v6UUFLLP1Mm5/UI6JkROi+/a
-         AO6AFzmC7y+9Jczuan/a51T4Wt/HbJTRjq7oJ90hwJzt8PQm6i5glSb7dgI1ZR/4eQ
-         M11hmyQu3223jkpgKnADGvR+JrtuPVbfBvwVgvy8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523522061;
-        bh=Am9H7KKzOh5+3yIr2u0WESdrlZhpddYLw3qmo0WkdHA=; l=800;
-        h=Received:From:To:Subject;
-        b=UmtY8CAFgawk9c87BdW9vYlRx0VvNfl+DNsa8wCq7v6UUFLLP1Mm5/UI6JkROi+/a
-         AO6AFzmC7y+9Jczuan/a51T4Wt/HbJTRjq7oJ90hwJzt8PQm6i5glSb7dgI1ZR/4eQ
-         M11hmyQu3223jkpgKnADGvR+JrtuPVbfBvwVgvy8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523522061;
-        bh=Am9H7KKzOh5+3yIr2u0WESdrlZhpddYLw3qmo0WkdHA=; l=800;
-        h=Received:From:To:Subject;
-        b=UmtY8CAFgawk9c87BdW9vYlRx0VvNfl+DNsa8wCq7v6UUFLLP1Mm5/UI6JkROi+/a
-         AO6AFzmC7y+9Jczuan/a51T4Wt/HbJTRjq7oJ90hwJzt8PQm6i5glSb7dgI1ZR/4eQ
-         M11hmyQu3223jkpgKnADGvR+JrtuPVbfBvwVgvy8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523522061;
-        bh=Am9H7KKzOh5+3yIr2u0WESdrlZhpddYLw3qmo0WkdHA=; l=800;
-        h=Received:From:To:Subject;
-        b=UmtY8CAFgawk9c87BdW9vYlRx0VvNfl+DNsa8wCq7v6UUFLLP1Mm5/UI6JkROi+/a
-         AO6AFzmC7y+9Jczuan/a51T4Wt/HbJTRjq7oJ90hwJzt8PQm6i5glSb7dgI1ZR/4eQ
-         M11hmyQu3223jkpgKnADGvR+JrtuPVbfBvwVgvy8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523522061;
-        bh=Am9H7KKzOh5+3yIr2u0WESdrlZhpddYLw3qmo0WkdHA=; l=800;
-        h=Received:From:To:Subject;
-        b=UmtY8CAFgawk9c87BdW9vYlRx0VvNfl+DNsa8wCq7v6UUFLLP1Mm5/UI6JkROi+/a
-         AO6AFzmC7y+9Jczuan/a51T4Wt/HbJTRjq7oJ90hwJzt8PQm6i5glSb7dgI1ZR/4eQ
-         M11hmyQu3223jkpgKnADGvR+JrtuPVbfBvwVgvy8=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1f6XgQ-0001O1-V4; Thu, 12 Apr 2018 11:34:19 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v6 00/15] rebase -i: offer to recreate commit topology
-References: <cover.1519680483.git.johannes.schindelin@gmx.de>
-        <cover.1523362469.git.johannes.schindelin@gmx.de>
-        <87tvsj6rn2.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1804110009080.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <871sfm737e.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1804111324350.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87h8oh51jm.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1804112233470.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Thu, 12 Apr 2018 11:34:18 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1804112233470.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Wed, 11 Apr 2018 22:40:51 +0200
-        (DST)")
-Message-ID: <87in8w2585.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1752701AbeDLI6Y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Apr 2018 04:58:24 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:52888 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750780AbeDLI6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Apr 2018 04:58:22 -0400
+Received: by mail-it0-f66.google.com with SMTP id f6-v6so6371326ita.2
+        for <git@vger.kernel.org>; Thu, 12 Apr 2018 01:58:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Pm68hKBEU78f45iLXPJakhuh+zj5t4cHbTGxfPe6Wn0=;
+        b=BPiN7QXn5LCMU790h2l+G78Uffm1b9+s13wftEpW7iYzhtSYJoXus3Cx/p4QREFIoI
+         nciy9Fn8GymEmjS4crylCz9hYAtXqFxvnj/NyA0TK95jsr2do4ximpMLh0arBLHq/X+G
+         HhoJY3RbSF2Ua7WBnV+mGNCPYGcZlGuIkJiye+9BhIlyMJo4gjkGxp3i1SBNwfCTe+51
+         bWpydl0JNIPe7/QuU1a81zrfmZYBgXMPbuw5UDRNawhpfqVkCAqw05oxLO7CFAK1pWb4
+         mu8/S/sqQjwiH095oJp2Lypgw6yRRU8Lz6blo1NNsgQ+ysCq75CSHUC+i1esGqyPNmNE
+         vghQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Pm68hKBEU78f45iLXPJakhuh+zj5t4cHbTGxfPe6Wn0=;
+        b=MSp3QcSnXdFMYqoqFkY1gnhGoDflOqkMJS5dNv8BdI1B6euqO5QZjq0pn6cjNrn+3+
+         7fuSWJM5nGv5oywKdodhX6+LmL+DvroDSxw0Bv2TZHzJ5Kijc6+dCVVhTkDL6MDb/25O
+         x6bHJOMzau8ad+DryVhXo81BblXCacjdLfG2GYvh7WN+WZR9k+vFiYK/Q0z0c++UFeCx
+         sB4ibZcJZG4e7lx8uIJqF+5cAZbCXy3kpxlxA0fj3NLakA2XCztsLWdXn1PLoNVtc8z3
+         JjuqgKEY+O0TOBr+Q2eGuaQthOn8PPFArQsHrCVyh+3UKIVvmCETxZQhqJfKzKoNkabS
+         BgJw==
+X-Gm-Message-State: ALQs6tAmBYBR1ORgfe7L5pwlqsLIVFjJo4khWbO8QmsIPkutNtBLOs+t
+        k2OgNhsCCfYDGovOO/Qq+AodxilTLNU1ddzpr+g=
+X-Google-Smtp-Source: AIpwx49Q51OjSCH0V3geye0utNEaiP3kF3O07dx91NxdcBGnWPBV08yS7UFfxygpF22pTMpcNUX0suqneBf1Vkh+fpg=
+X-Received: by 2002:a24:6747:: with SMTP id u68-v6mr6980itc.21.1523523501996;
+ Thu, 12 Apr 2018 01:58:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.34.9 with HTTP; Thu, 12 Apr 2018 01:58:21 -0700 (PDT)
+In-Reply-To: <CAHwyqnVg83xSQHRnDVz+aMxPPMj-3bWF4P8YUxEjurxnpDhFEQ@mail.gmail.com>
+References: <20180411225534.48658-1-haraldnordgren@gmail.com>
+ <CAGZ79kbt=J5SHsHJTfOZYhgSdn9_gOjVBC3qp_oL0sC-b3ZRmw@mail.gmail.com> <CAHwyqnVg83xSQHRnDVz+aMxPPMj-3bWF4P8YUxEjurxnpDhFEQ@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 12 Apr 2018 10:58:21 +0200
+Message-ID: <CAP8UFD3j-MGY7jHQK52zVLYMB=1vhCSFKxrvQ1JsRW-Rmnn8Qg@mail.gmail.com>
+Subject: Re: [PATCH] Create '--merges-only' option for 'git bisect'
+To:     Harald Nordgren <haraldnordgren@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Tiago Botelho <tiago@gitlab.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On Thu, Apr 12, 2018 at 9:49 AM, Harald Nordgren
+<haraldnordgren@gmail.com> wrote:
+> I think it looks similar. But if I'm reading that thread correctly
+> then there was never a patch created, right?
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> Hi Sergey,
->
-> On Wed, 11 Apr 2018, Sergey Organov wrote:
->
->> The RFC v2 and Phillip's strategy are essentially the same, as has been
->> already shown multiple times, both theoretically and by testing.
->
-> No, they are not.
+(It is customary on this mailing list to reply after the sentences we
+reply to. We don't "top post".)
 
-It's off-topic here. If you _really_ want to discuss it further, you are
-still welcome to come back to where you ran away from and continue:
+On the GSoC idea pages (like https://git.github.io/SoC-2018-Ideas/) we
+have been suggesting "Implement git bisect --first-parent" and there
+are the following related links:
 
-https://public-inbox.org/git/87po3oddl1.fsf@javad.com/
+https://public-inbox.org/git/20150304053333.GA9584@peff.net/
+https://public-inbox.org/git/4D3CDDF9.6080405@intel.com/
 
-Abrupt change of the topic of discussion indicates your intention to
-take attention off the apparent ugliness of 
+Tiago in Cc also tried at a recent London hackathon to implement it
+and came up with the following:
 
-git rebase --rebase-merges
+https://github.com/tiagonbotelho/git/pull/1/files
 
-I also get it as an indication that there are no more arguments in favor
-of --rebase-merges on your side, at least for now.
+I tried to help him by reworking his commit in the following branch:
 
--- Sergey
+https://github.com/chriscool/git/commits/myfirstparent
