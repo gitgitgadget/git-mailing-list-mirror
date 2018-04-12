@@ -2,127 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D75F1F404
-	for <e@80x24.org>; Thu, 12 Apr 2018 02:19:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32A231F404
+	for <e@80x24.org>; Thu, 12 Apr 2018 05:42:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751972AbeDLCT0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 22:19:26 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:52240 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751858AbeDLCTZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 22:19:25 -0400
-Received: by mail-wm0-f51.google.com with SMTP id g8so8065294wmd.2
-        for <git@vger.kernel.org>; Wed, 11 Apr 2018 19:19:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=N1a4kG4bJOGRWSEZxfJdASHWhORSjo2Plg96O7yCUMg=;
-        b=bCMtqMpMaVoepTOf2+g9QxMrQ3mdRKgBEgn3VuFwOfVQiIg9FFN0L7A9vKvaChoRs2
-         f4dZ6VCDnSFeHlTvVmoc4ogJ6vUiG8foLu0Bxwn5QYUyX5BWpp5nCnNz0693RvA7OFak
-         bapCzdp+cDFaqHn6pQQ+/N0764YdNJzEKLBnPXLNaxwBGhckPrzLqZmXVddYlWIUhc8I
-         WdXIDTFr+Tf8PDWEwTBPipVZl/3tK9BM0x2zdO5EyEAewgGKm4vwjyizLYx7SbyZkFaK
-         NA6QxMS/9CaBe8ncmRXEAQWLn2fU02CsSuf4B1oJ4W2MFy+cZHhYVh/jLN+3S/0/2wwG
-         Ro+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=N1a4kG4bJOGRWSEZxfJdASHWhORSjo2Plg96O7yCUMg=;
-        b=tsnQi3ROYwDp/SVagq+AOxixgY7NsWB/PqE3rbrpQnVMvGQmxdLysmPvrGhchpFHgy
-         CE01PlMlDRncUW5E3terdDmBj+ApTE/3R9TsdeiKDUO/9ORjxBypuiQ/FgU+m9RkJ4Go
-         zDwlm+H7hZ1zVb+WUdWkD3Gogu/6hDG4NN1IXan8kZ/IHj+aefSSoMQ4GBVU3TlhdKTo
-         ik6b5BysX7En9+rNrN80BCHYEQp1biisXwiKuCUoC0T40P9h9qq1gjpFB7RhC1nVlcqR
-         rCwUL6Gf9SUw5LPNvg3U+2s1ZyYVGr+LBX6mrmfWB/1e8K2QOOKqcXHiQ3qnl98jgH4r
-         KiUg==
-X-Gm-Message-State: ALQs6tDS/CggTgqDFydJN2Ypa70b/ZeKhPnK9dLsLfzPgFHs4iQSTVJX
-        VxbwNKN3Zh12w4V9NoNlQ9aZkU5T
-X-Google-Smtp-Source: AIpwx4/MaKvn73ehZKwi9EdzNcK27g9e5/shfS9xibT/zIBxFcn2c7M2wbhg5Lh0C9FY8atNKF/TiQ==
-X-Received: by 10.28.139.18 with SMTP id n18mr3875217wmd.26.1523499563708;
-        Wed, 11 Apr 2018 19:19:23 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q7sm2249475wrf.92.2018.04.11.19.19.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Apr 2018 19:19:21 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>,
-        Dorab Patel <dorabpatel@gmail.com>,
+        id S1751899AbeDLFmc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Apr 2018 01:42:32 -0400
+Received: from mail.javad.com ([54.86.164.124]:43490 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751771AbeDLFma (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Apr 2018 01:42:30 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 5BC3E3FEBC;
+        Thu, 12 Apr 2018 05:42:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523511749;
+        bh=rqr6oburn1emXxAVsqDxg1fdjXqzbQRibDhUzW/NBmE=; l=2959;
+        h=Received:From:To:Subject;
+        b=JvXsDvSBr3oCDnQtEW510RlqFdQLChQCm1kYmlC514hm5Jn4JSj7fkQSHUdOSyDqg
+         pjo6z0rUl50MUyxOeFyT7plVOrHgGB5/wWlfVMLn1X3g585FgQzrXEbHAsgXOz2ngw
+         hBX4Q8OPw9wAihB64ZSZ48XVnf4XEexIIl21aLhw=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523511749;
+        bh=rqr6oburn1emXxAVsqDxg1fdjXqzbQRibDhUzW/NBmE=; l=2959;
+        h=Received:From:To:Subject;
+        b=JvXsDvSBr3oCDnQtEW510RlqFdQLChQCm1kYmlC514hm5Jn4JSj7fkQSHUdOSyDqg
+         pjo6z0rUl50MUyxOeFyT7plVOrHgGB5/wWlfVMLn1X3g585FgQzrXEbHAsgXOz2ngw
+         hBX4Q8OPw9wAihB64ZSZ48XVnf4XEexIIl21aLhw=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523511749;
+        bh=rqr6oburn1emXxAVsqDxg1fdjXqzbQRibDhUzW/NBmE=; l=2959;
+        h=Received:From:To:Subject;
+        b=JvXsDvSBr3oCDnQtEW510RlqFdQLChQCm1kYmlC514hm5Jn4JSj7fkQSHUdOSyDqg
+         pjo6z0rUl50MUyxOeFyT7plVOrHgGB5/wWlfVMLn1X3g585FgQzrXEbHAsgXOz2ngw
+         hBX4Q8OPw9wAihB64ZSZ48XVnf4XEexIIl21aLhw=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523511749;
+        bh=rqr6oburn1emXxAVsqDxg1fdjXqzbQRibDhUzW/NBmE=; l=2959;
+        h=Received:From:To:Subject;
+        b=JvXsDvSBr3oCDnQtEW510RlqFdQLChQCm1kYmlC514hm5Jn4JSj7fkQSHUdOSyDqg
+         pjo6z0rUl50MUyxOeFyT7plVOrHgGB5/wWlfVMLn1X3g585FgQzrXEbHAsgXOz2ngw
+         hBX4Q8OPw9wAihB64ZSZ48XVnf4XEexIIl21aLhw=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523511749;
+        bh=rqr6oburn1emXxAVsqDxg1fdjXqzbQRibDhUzW/NBmE=; l=2959;
+        h=Received:From:To:Subject;
+        b=JvXsDvSBr3oCDnQtEW510RlqFdQLChQCm1kYmlC514hm5Jn4JSj7fkQSHUdOSyDqg
+         pjo6z0rUl50MUyxOeFyT7plVOrHgGB5/wWlfVMLn1X3g585FgQzrXEbHAsgXOz2ngw
+         hBX4Q8OPw9wAihB64ZSZ48XVnf4XEexIIl21aLhw=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523511749;
+        bh=rqr6oburn1emXxAVsqDxg1fdjXqzbQRibDhUzW/NBmE=; l=2959;
+        h=Received:From:To:Subject;
+        b=JvXsDvSBr3oCDnQtEW510RlqFdQLChQCm1kYmlC514hm5Jn4JSj7fkQSHUdOSyDqg
+         pjo6z0rUl50MUyxOeFyT7plVOrHgGB5/wWlfVMLn1X3g585FgQzrXEbHAsgXOz2ngw
+         hBX4Q8OPw9wAihB64ZSZ48XVnf4XEexIIl21aLhw=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523511749;
+        bh=rqr6oburn1emXxAVsqDxg1fdjXqzbQRibDhUzW/NBmE=; l=2959;
+        h=Received:From:To:Subject;
+        b=JvXsDvSBr3oCDnQtEW510RlqFdQLChQCm1kYmlC514hm5Jn4JSj7fkQSHUdOSyDqg
+         pjo6z0rUl50MUyxOeFyT7plVOrHgGB5/wWlfVMLn1X3g585FgQzrXEbHAsgXOz2ngw
+         hBX4Q8OPw9wAihB64ZSZ48XVnf4XEexIIl21aLhw=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523511749;
+        bh=rqr6oburn1emXxAVsqDxg1fdjXqzbQRibDhUzW/NBmE=; l=2959;
+        h=Received:From:To:Subject;
+        b=JvXsDvSBr3oCDnQtEW510RlqFdQLChQCm1kYmlC514hm5Jn4JSj7fkQSHUdOSyDqg
+         pjo6z0rUl50MUyxOeFyT7plVOrHgGB5/wWlfVMLn1X3g585FgQzrXEbHAsgXOz2ngw
+         hBX4Q8OPw9wAihB64ZSZ48XVnf4XEexIIl21aLhw=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523511749;
+        bh=rqr6oburn1emXxAVsqDxg1fdjXqzbQRibDhUzW/NBmE=; l=2959;
+        h=Received:From:To:Subject;
+        b=JvXsDvSBr3oCDnQtEW510RlqFdQLChQCm1kYmlC514hm5Jn4JSj7fkQSHUdOSyDqg
+         pjo6z0rUl50MUyxOeFyT7plVOrHgGB5/wWlfVMLn1X3g585FgQzrXEbHAsgXOz2ngw
+         hBX4Q8OPw9wAihB64ZSZ48XVnf4XEexIIl21aLhw=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1523511749;
+        bh=rqr6oburn1emXxAVsqDxg1fdjXqzbQRibDhUzW/NBmE=; l=2959;
+        h=Received:From:To:Subject;
+        b=JvXsDvSBr3oCDnQtEW510RlqFdQLChQCm1kYmlC514hm5Jn4JSj7fkQSHUdOSyDqg
+         pjo6z0rUl50MUyxOeFyT7plVOrHgGB5/wWlfVMLn1X3g585FgQzrXEbHAsgXOz2ngw
+         hBX4Q8OPw9wAihB64ZSZ48XVnf4XEexIIl21aLhw=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1f6V07-0001AC-CA; Thu, 12 Apr 2018 08:42:27 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
-        Kyle Meyer <kyle@kyleam.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Ami Fischman <fischman@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v4] git{,-blame}.el: remove old bitrotting Emacs code
-References: <20180327165751.GA4343@aiede.svl.corp.google.com>
-        <20180411204206.28498-1-avarab@gmail.com>
-Date:   Thu, 12 Apr 2018 11:19:21 +0900
-In-Reply-To: <20180411204206.28498-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 11 Apr 2018 20:42:05 +0000")
-Message-ID: <xmqqk1td2ml2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v6 00/15] rebase -i: offer to recreate commit topology
+References: <cover.1519680483.git.johannes.schindelin@gmx.de>
+        <cover.1523362469.git.johannes.schindelin@gmx.de>
+        <87tvsj6rn2.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1804110009080.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <871sfm737e.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1804111324350.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <87h8oh51jm.fsf@javad.com>
+        <CA+P7+xq8KJKJ0d1unW3btUhKVjOZM3EdTSKdDs96pn5J3WwSKA@mail.gmail.com>
+Date:   Thu, 12 Apr 2018 08:42:27 +0300
+In-Reply-To: <CA+P7+xq8KJKJ0d1unW3btUhKVjOZM3EdTSKdDs96pn5J3WwSKA@mail.gmail.com>
+        (Jacob Keller's message of "Wed, 11 Apr 2018 16:52:33 -0700")
+Message-ID: <87sh810ym4.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Hi Jacob,
 
-> However, since downstream packagers such as Debian are packaging this
-> as git-el it's less disruptive to still carry these files as Elisp
-> code that'll error out with a message suggesting alternatives, rather
-> than drop the files entirely[2].
+Jacob Keller <jacob.keller@gmail.com> writes:
+> On Wed, Apr 11, 2018 at 6:13 AM, Sergey Organov <sorganov@gmail.com> wrote:
+>> It was rather --recreate-merges just a few weeks ago, and I've seen
+>> nobody actually commented either in favor or against the
+>> --rebase-merges.
+>>
+>> git rebase --rebase-merges
+>>
 >
-> Then rather than receive a cryptic load error when they upgrade
-> existing users will get an error directing them to the README file, or
-> to just stop requiring these modes. I think it makes sense to link to
-> GitHub's hosting of contrib/emacs/README (which'll be updated by the
-> time users see this) so they don't have to hunt down the packaged
-> README on their local system.
-> ...
->
->  contrib/emacs/.gitignore   |    1 -
->  contrib/emacs/Makefile     |   21 -
->  contrib/emacs/README       |   32 +-
->  contrib/emacs/git-blame.el |  489 +----------
->  contrib/emacs/git.el       | 1710 +-----------------------------------
->  5 files changed, 25 insertions(+), 2228 deletions(-)
->  delete mode 100644 contrib/emacs/.gitignore
->  delete mode 100644 contrib/emacs/Makefile
+> I'm going to jump in here and say that *I* prefer --rebase-merges, as
+> it clearly mentions merge commits (which is the thing that changes).
 
-I know I am to blame for prodding you to reopen this topic, but I am
-wondering if removal of Makefile is sensible.  Is the assumption
-that the distro packagers won't be using this Makefile at all and
-have their own (e.g. debian/rules for Debian) build procedure, hence
-*.el files are all they need to have?
+OK, thanks, it's fair and the first argument in favor of --rebase-merges
+I see.
 
-The reason why I am wondering is because I do not know what distro
-folks would do when they find that their build procedure does not
-work---I suspect the would punt, and end users of the distro would
-find that git-el package is no longer with them.  These end users
-are whom this discussion is trying to help, but then to these
-packagers, the reason why their build procedure no longer works does
-not really matter, whether git.el is not shipped, or Makefile that
-their debian/rules-equivalent depends on is not there, for them to
-decide dropping the git-el package.
+I don't get why this detail matters so much it should be reflected in
+the option name, and if it is what matters most, why the patch series
+are not headed:
 
-On the other hand, the 6-lines of e-lisp you wrote for git.el
-replacement is something the packagers could have written for their
-users, so (1) if we really want to go extra mile without trusting
-that distro packagers are less competent than us in helping their
-users, we'd be better off to leave Makefile in, or (2) if we trust
-packagers and leave possible end-user confusion as their problem
-(not ours), then we can just remove as your previous round did.
+<twisted quote>
+rebase -i: offer to rebase merge commits.
 
-And from that point of view, I find this round slightly odd.
+Once upon a time, I dreamt of an interactive rebase that would not
+drop merge commits, but instead rebase them.
+</twisted quote>
 
+> I hadn't mentioned this before, because it was a suggestion that
+> someone else made and it seemed that Johannes liked it, so I didn't
+> think further discussion was worthwhile.
+
+So you guys seem to be winning 2:1, or even 3:1, counting the guy who
+made the suggestion. Except it was Buga's suggestion [1], and I believe
+I was able to convince him that something like --no-flatten would be
+better [2]:
+
+<quote>
+> I hope he'd be pleased to be able to say --no-flatten=remerge and get
+> back his current mode of operation, that he obviously has a good use
+> for.
+
+Makes sense, I like it, thanks for elaborating. [ Especially that you 
+used "(no) flatten" phrasing, where original `--preserve-merges` 
+documentation says it`s used "not to flatten the history", nice touch
+;) ]
+</quote>
+
+So I assume it's 2:2 by now, with the author of original suggestion on
+my side.
+
+I still find
+
+git rebase --rebase-merges
+
+both being ugly and missing the point.
+
+When I look at it with a fresh eye, the questions that immediately rise
+are: "What the hell else could 'git _rebase_' do with (merge) commits
+but _rebase_ them? Why do I even need to specify this option? Should I
+also specify --rebase-non-merges to rebase the rest of commits?"
+
+Well, if it was called something like --[no-]keep-merges, it'd make more
+sense as it'd be obvious that alternative is to drop merges (notice how
+the old --preserve-merges does match this criteria). However, it'd still
+miss to reflect the generic intent of the patch series, -- to preserve
+history shape as much as possible, -- now citing author's head message
+non-twisted: 
+
+<quote>
+rebase -i: offer to recreate commit topology
+
+Once upon a time, I dreamt of an interactive rebase that would not
+flatten branch structure, but instead recreate the commit topology
+faithfully.
+</quote>
+
+-- Sergey
+
+[1] https://public-inbox.org/git/bc9f82fb-fd18-ee45-36a4-921a1381b32e@gmail.com/
+[2] https://public-inbox.org/git/a3d40dca-f508-5853-89bc-1f9ab393416b@gmail.com/
