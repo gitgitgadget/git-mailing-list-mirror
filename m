@@ -2,123 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CADF81F424
-	for <e@80x24.org>; Thu, 12 Apr 2018 09:23:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85AA81F42D
+	for <e@80x24.org>; Thu, 12 Apr 2018 09:27:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752492AbeDLJXG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Apr 2018 05:23:06 -0400
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:39282 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751611AbeDLJXF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Apr 2018 05:23:05 -0400
-Received: by mail-wr0-f182.google.com with SMTP id c24so4385195wrc.6
-        for <git@vger.kernel.org>; Thu, 12 Apr 2018 02:23:05 -0700 (PDT)
+        id S1751959AbeDLJ1g (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Apr 2018 05:27:36 -0400
+Received: from mail-ot0-f195.google.com ([74.125.82.195]:33432 "EHLO
+        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751856AbeDLJ1f (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Apr 2018 05:27:35 -0400
+Received: by mail-ot0-f195.google.com with SMTP id 23-v6so5239524otj.0
+        for <git@vger.kernel.org>; Thu, 12 Apr 2018 02:27:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=3ov2/CUuSgbGqK7N3pb1XWBnEVq/dj9UB21b9guTFX8=;
-        b=DCsM3vNh+P1kGd+w60lWF1HWs90QDsvWCUhQVVAfGPu8g1gGCaT6iLfQt0WXsjf0az
-         hWsWc/9E0us20kGCNjW4X/J45dpZeZ85kb8vLgQnlsh5isj1cQN3TIrdEUfsoKNoailQ
-         Um1qpCARyeJ4CdVjgoB2N2ShDTXZgqgtjSzxIh02JHAfLVgCfPsdziiKNfGsdmEHqkV7
-         x77ygmVXsY8N8Tb9Fi1a2ZbW6bU9NN+5cWEC3Eo5267MHibWIynaU2Tfijq1U1wdGow6
-         FI6mADHE1U8F0E8hZNRu0WfNErUCfOlAIDwNvmKpoIy+fn2z3lvjqm6Du86Jt6ZGJ0i3
-         VckA==
+        d=gitlab.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=qVDBJm3eBxy7uxj7ZXPDJxR3UvYQ21jAh4sODpYXqLo=;
+        b=flaynQMtW7Q3Yx3bCV+yu6g8q8ZFRb1Ko+DlcV4V0V2lQCDaYdbu057ljpLgEQMUeO
+         OiwZsgPKX3i1rnnDchtRBVMi/G0/rvuinpzOXOCgI/4Aw4hEhGAF91S7IkLvqaWmV6ax
+         bwsgIfTvaj9w9ABN79JScgZcN2dy+3C4xa618=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=3ov2/CUuSgbGqK7N3pb1XWBnEVq/dj9UB21b9guTFX8=;
-        b=LsAmlLXGhHrKejGVEBawmAhCPQxPQRts7wwhYLl52CPIdr9GNvDmqRlz2wpcfXhoui
-         Y5Ee3NQtsmhNxJ2muHRTlWTneOSjaAM0pfZnhcd95J+sII3fp9Um6yTY9aqz0u3ZPt66
-         KPM24cFNbPm5vaxQ9Iptzz8RQntWlP8p0wRAHYiYdFNhMJEInj8zgI5iLwymV0ZImkzB
-         aaHq3QmREXhp9KQahHpzlZSYfpW0DhvQZjDa2OpqxoLR6OmYQYnFb/+cJd3I7V/NPuWf
-         2VpriCjy0Qsat3RS9TW1jNMY3mE+QGR5tzhJuSNVfs1cMjQoMEAQrlf/ZfXD6a98muVi
-         kTCw==
-X-Gm-Message-State: ALQs6tB2VDgrbLvrjCX4QhPElDKQabmNQCtR1neLPAaAFCo8ejuqqrwJ
-        T7M1u2hzqjVPa+ajo3rDx6Q=
-X-Google-Smtp-Source: AIpwx4/t3fb2vIn467JxrgyR8faDVcUlTYhG3uKBCgKPcGAY9AyH+9kXToaa3BXH0ze0OSTuU4cc+Q==
-X-Received: by 10.223.173.35 with SMTP id p32mr155164wrc.80.1523524984262;
-        Thu, 12 Apr 2018 02:23:04 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v13sm561240wrf.90.2018.04.12.02.23.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 12 Apr 2018 02:23:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>,
-        Dorab Patel <dorabpatel@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
-        Kyle Meyer <kyle@kyleam.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Ami Fischman <fischman@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH v4] git{,-blame}.el: remove old bitrotting Emacs code
-References: <20180327165751.GA4343@aiede.svl.corp.google.com>
-        <20180411204206.28498-1-avarab@gmail.com>
-        <xmqqk1td2ml2.fsf@gitster-ct.c.googlers.com>
-        <87fu40c3xe.fsf@evledraar.gmail.com>
-Date:   Thu, 12 Apr 2018 18:23:02 +0900
-In-Reply-To: <87fu40c3xe.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 12 Apr 2018 08:52:13 +0200")
-Message-ID: <xmqqa7u83hjd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=qVDBJm3eBxy7uxj7ZXPDJxR3UvYQ21jAh4sODpYXqLo=;
+        b=tpTbT3uw5KZBRUr7Ecuo5GZB3KlDPtI44DFdb90PcLb5OEw14DYr8dCEA2C9aJ2ZK4
+         2uabfu+A4aVSTIE+AE/07S80GuyDC5aEtFSekVjI93/GdCnC8pMEYVwlq7RlRc8OkuIf
+         +CBPjYcL+zmMFi8w24SkamUuqybjxDrOYfxnPpCBwKtgmcEKAz8S6pLUkUL/wsKdsTAv
+         0tsH12uz+KR3TNPTYeFxJDjsLjI/sAc9K+UE2YceoFpsaKuz0EcymnAKv8o79WqdscnS
+         CC3jzFYRGBL2nk1cFGsTsuisEQ6VuC/KTf6phTtZdYEw2zfWWevp6i5dnaIyeG6qDbgO
+         0s8w==
+X-Gm-Message-State: ALQs6tDU27jHl/BV4QGO0qqdfQc/oz7mTcTDXifRX0X19o9gGK14ze9o
+        QZ0LxxPAUsvt5BvXf56PciSuvw8rsGXZedMdw1K6qA==
+X-Google-Smtp-Source: AIpwx4/MaHperykWRtQw4v7+yNoOFk66L2RHb7BqYz54I1vd9BWDifeMnLQR/aMSTHL+wuLScuLu9Hx8kyQsZlfA6hg=
+X-Received: by 2002:a9d:16ce:: with SMTP id s14-v6mr99934ots.356.1523525255066;
+ Thu, 12 Apr 2018 02:27:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.200.2 with HTTP; Thu, 12 Apr 2018 02:27:34 -0700 (PDT)
+In-Reply-To: <CAP8UFD3j-MGY7jHQK52zVLYMB=1vhCSFKxrvQ1JsRW-Rmnn8Qg@mail.gmail.com>
+References: <20180411225534.48658-1-haraldnordgren@gmail.com>
+ <CAGZ79kbt=J5SHsHJTfOZYhgSdn9_gOjVBC3qp_oL0sC-b3ZRmw@mail.gmail.com>
+ <CAHwyqnVg83xSQHRnDVz+aMxPPMj-3bWF4P8YUxEjurxnpDhFEQ@mail.gmail.com> <CAP8UFD3j-MGY7jHQK52zVLYMB=1vhCSFKxrvQ1JsRW-Rmnn8Qg@mail.gmail.com>
+From:   Tiago Botelho <tiago@gitlab.com>
+Date:   Thu, 12 Apr 2018 10:27:34 +0100
+Message-ID: <CAF2Guqum5dak4us_HJtiW_gL0xgsihgUpidFEJzBgw-tEMunkQ@mail.gmail.com>
+Subject: Re: [PATCH] Create '--merges-only' option for 'git bisect'
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Harald Nordgren <haraldnordgren@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-
->> On the other hand, the 6-lines of e-lisp you wrote for git.el
->> replacement is something the packagers could have written for their
->> users, so (1) if we really want to go extra mile without trusting
->> that distro packagers are less competent than us in helping their
->> users, we'd be better off to leave Makefile in, or (2) if we trust
->> packagers and leave possible end-user confusion as their problem
->> (not ours), then we can just remove as your previous round did.
->>
->> And from that point of view, I find this round slightly odd.
+On Thu, Apr 12, 2018 at 9:58 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Thu, Apr 12, 2018 at 9:49 AM, Harald Nordgren
+> <haraldnordgren@gmail.com> wrote:
+>> I think it looks similar. But if I'm reading that thread correctly
+>> then there was never a patch created, right?
 >
-> I think the way it is makes sense. In Debian debian/git-el.install just
-> does:
-> ...
-> RedHat does use contrib/emacs/Makefile:
-> ...
-> But they can either just do their own byte compilation as they surely do
-> for other elisp packages,...
+> (It is customary on this mailing list to reply after the sentences we
+> reply to. We don't "top post".)
+>
+> On the GSoC idea pages (like https://git.github.io/SoC-2018-Ideas/) we
+> have been suggesting "Implement git bisect --first-parent" and there
+> are the following related links:
+>
+> https://public-inbox.org/git/20150304053333.GA9584@peff.net/
+> https://public-inbox.org/git/4D3CDDF9.6080405@intel.com/
+>
+> Tiago in Cc also tried at a recent London hackathon to implement it
+> and came up with the following:
+>
+> https://github.com/tiagonbotelho/git/pull/1/files
+>
+> I tried to help him by reworking his commit in the following branch:
+>
+> https://github.com/chriscool/git/commits/myfirstparent
 
-In short, Debian happens to be OK, but RedHat folks need to do work
-and cannot use what we ship out of the box, *IF* they care about end
-user experience.
+Thank you for the cc Christian, I=E2=80=99ve been quite busy and was not ab=
+le
+to work on the PR for quite some time.
 
-That was exactly why I felt it was "odd" (iow, "uneven").  We bother
-to give a stub git.el; we do not bother to make sure it would keep
-being installed if the packagers do not bother to update their
-procedure.
+I intended to pick it back up again next week. If it is ok with Harald
+I would love to finish the PR that I started,
+since it is quite close to being finished (I think it was just specs
+missing if I am not mistaken).
 
-If we do not change anything other than making *.el into stubs, then
-it is a lot more likely that end user experience on *any* distro
-that have been shipping contrib/emacs/ stuff will by default
-(i.e. if the packagers do not do anything to adjust) be what we
-design here---upon loading they'd see (error) triggering that nudge
-them towards modern and maintained alternatives.  If we do more than
-that, e.g. remove Makefile, then some distros need to adjust, or
-their build would be broken.
+Kind regards,
 
-I suspect that the set of people Cc'ed on the thread are a lot more
-familiar than I am with how distro packagers prefer us to deliber,
-so I'll stop speculating at this point.
-
-Thanks.
+Tiago Botelho
