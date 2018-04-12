@@ -2,164 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86E9A1F42D
-	for <e@80x24.org>; Thu, 12 Apr 2018 00:22:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DBF51F404
+	for <e@80x24.org>; Thu, 12 Apr 2018 01:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752692AbeDLAWE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Apr 2018 20:22:04 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:43371 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752622AbeDLAVj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Apr 2018 20:21:39 -0400
-Received: by mail-pl0-f67.google.com with SMTP id a39-v6so2599382pla.10
-        for <git@vger.kernel.org>; Wed, 11 Apr 2018 17:21:39 -0700 (PDT)
+        id S1752212AbeDLBho (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Apr 2018 21:37:44 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:50734 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751553AbeDLBhn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Apr 2018 21:37:43 -0400
+Received: by mail-wm0-f66.google.com with SMTP id t67so8014703wmt.0
+        for <git@vger.kernel.org>; Wed, 11 Apr 2018 18:37:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ygDIhx/jc6TeABGPnbccuN0d1C3BPsRInrjjaXK4a1Y=;
-        b=glpY5c6INqDWrYwXwByaJ4ywJKd2VuSMtp42HD6R4XFIBGfT8LtT8XJYOWIaFHL8/4
-         kHqD/VyNJZKy5GF128W44FOtTBOXVzGQ4YL/FRFA/icN3EPNHUx4wzx0wmhovxzIdr4i
-         Wiwbr5OeNcLZUnyKvbcMnm7dZKgoznVJJcOACObPfVWm2iv9NUWT7qTBkf9TazBuL4yO
-         P9EGPRWMy2GHCMjBuv9OpQVg3eIt6XszbHs3ptD054DekvMW8N/ZnbR1/DUE3N2Wmpvh
-         iyaCnaIamNjFuTiCbO2/ZPs86bzfdzRviMV9qGnQ4fq3NirobTSHi83KgEUOemi8br3i
-         mMUg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ZvcLA6kacsyZ1vQY/ztNLX51os3F+FgSnlDEXVERk2o=;
+        b=BiTyp+frOca6w/s+hmotBN17hJR15hGc9YaQulESev55oyO2LtixJmNoRkkQgFQjlQ
+         fBi2lgPziW7+v7Dg7zPewDlP8xzmj21peMrpIqDp3UOYODBZVW7Gv9kzGC5Sru7sPExw
+         9jxCy7fuilmL9WJoh5z64Z6ayspjd13p47xSHi7yjAIf7uJsiA66CaQXoa8aJ5emJOBK
+         /NM1EvD+t7wenri5DOPRXsf+56JHSpT9N23UU6ZUUIVksZqdxl7Gxx7/mwd2wHT4H7yw
+         n1xurADsjol7LrJ08qdQmS9ulFPDO4IIzaAMzQPfSMJsihrVessSPRzFpMUeEp91q6Za
+         Cb7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ygDIhx/jc6TeABGPnbccuN0d1C3BPsRInrjjaXK4a1Y=;
-        b=cwxvAUJf0M5urpVnos3hUsct5QqfignifXEVHvsRCxMKOINvC6AWug/LKBEfdvfBRF
-         qgUBYwRX4NyS2DqXkuzBqw3sHHuswIBiygMd3U4dKScoiIwrH8aVdcIvwEHEG+c7/cU/
-         v0YZ7MT9NE5n3seYk+HCDdrk87pggv0gyIF4UuBLIp+pfm/pPHZQjt0LXyP8FiVwLgxV
-         o2pdnG0KEZmU80Ov2JNfAH6hVSHRNjWulBzwqGrjmKT0AVdlyhiaHWVM8cUPntTjSbbk
-         CHaSVXL3gojfu9YbexYtVvwjkprox0wOhgrdTUNGLojreJ7yMP8kclLcqLNOYk3z7NZe
-         0W7w==
-X-Gm-Message-State: ALQs6tAOSZpUqkfbGOu8+M1ufZrqCusp7IIezPRlO0QSLIb4+Ua/SAcs
-        3j4bDyPEj6hIf0EflEUClRzl7Q==
-X-Google-Smtp-Source: AIpwx4/gJRJYmMcokTMmvW6xfD4HhC1BCWTvQNp3vtFxrl7nVwGGCxe9vWoDLoJVYk6+O4cwOXjC4w==
-X-Received: by 2002:a17:902:9:: with SMTP id 9-v6mr7565173pla.42.1523492498750;
-        Wed, 11 Apr 2018 17:21:38 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id m185sm5027577pfc.88.2018.04.11.17.21.37
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ZvcLA6kacsyZ1vQY/ztNLX51os3F+FgSnlDEXVERk2o=;
+        b=tkRNNtEBwMKpwTlpkNhtiiIT3GWbKvPF+BCDmXL1qnqd+ttwgfzahEQcG842u4M2/e
+         88JQjL0fpwVF+Tl2TCaND6gfVOkT77o7P6L+cHMCxemAcQosCYNZBMBdmT4AlgIXyIKo
+         Go7sBQUnsosFT/9TOo6KL/5acUha3fNQiZ4reLjCWrsz1eUUgfPpUWigQ6cjri6EqtVd
+         In6oUNUo8eoUwMhjJbBuRgqDbZVALNa9vuPltM3v+M0zVIvFdZFAldbDP0vF7Ejys4up
+         6JmYunQdpye0KpekpB3G9NDU8+dCAuUEu0bSnpCLgTLE0HU7j0+ZUdaxdaXeMajY6Xyd
+         bFfA==
+X-Gm-Message-State: ALQs6tBy4k7Irr6OAqgZb/aDTiyNpS5ERimWfEE97npgeP8SySpWcB7i
+        5lbs7RRV4rsygIxUMoO4jjjU5V5v
+X-Google-Smtp-Source: AIpwx49+xuhcyBoTlN+tiTqnMnVoXoETD1Ffb9k0ByO46JW2TqlYJw7UhUhoGjcapksYq6eg9vYJLw==
+X-Received: by 10.28.197.205 with SMTP id v196mr4272677wmf.39.1523497061911;
+        Wed, 11 Apr 2018 18:37:41 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id l73sm5801444wma.10.2018.04.11.18.37.39
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Apr 2018 17:21:38 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, l.s.r@web.de,
-        pclouds@gmail.com, sandals@crustytoothpaste.net,
-        sunshine@sunshineco.com, Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 10/15] replace-object: add repository argument to lookup_replace_object
-Date:   Wed, 11 Apr 2018 17:21:13 -0700
-Message-Id: <20180412002118.102976-11-sbeller@google.com>
-X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
-In-Reply-To: <20180412002118.102976-1-sbeller@google.com>
-References: <20180409224533.17764-1-sbeller@google.com>
- <20180412002118.102976-1-sbeller@google.com>
+        Wed, 11 Apr 2018 18:37:39 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [Git] recursive merge on 'master' severely broken?
+References: <xmqqmuya43cs.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BHL4P0RxQ6OAuDSev9BXVM0uKTYD3M4JGTQvSwcBv4K0Q@mail.gmail.com>
+Date:   Thu, 12 Apr 2018 10:37:39 +0900
+In-Reply-To: <CABPp-BHL4P0RxQ6OAuDSev9BXVM0uKTYD3M4JGTQvSwcBv4K0Q@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 11 Apr 2018 08:51:48 -0700")
+Message-ID: <xmqqo9ip2oik.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow callers of lookup_replace_object
-to be more specific about which repository to handle. This is a small
-mechanical change; it doesn't change the implementation to handle
-repositories other than the_repository yet.
+Elijah Newren <newren@gmail.com> writes:
 
-As with the previous commits, use a macro to catch callers passing a
-repository other than the_repository at compile time.
+> On Wed, Apr 11, 2018 at 12:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> It appears that a topic recently graduated to 'master' introduces a
+>> severe regression to "git merge" when it merges a side branch that
+>> renames paths while the trunk has further updates.
+>>
+>> The symptom can easily be seen by trying to recreate the merge I
+>> made at the tip of 'pu' 29dea678 ("Merge branch
+>> 'sb/filenames-with-dashes' into pu", 2018-04-11) that I'll be.
+>> pushing out shortly.  The side branch renames a file exec_cmd.h to
+>> exec-cmd.h (an underscore changed to a dash) without changing any
+>> contents, while the branch being merged to has made some changes to
+>> the contents while keeping the original pathname.
+> ...
+> I agree, that is _really_ bad.  My sincerest apologies.  I'll dig into it.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/mktag.c  | 2 +-
- object.c         | 2 +-
- replace-object.h | 3 ++-
- sha1_file.c      | 6 +++---
- streaming.c      | 2 +-
- 5 files changed, 8 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index e3d20a7722..82a6e86077 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -25,7 +25,7 @@ static int verify_object(const struct object_id *oid, const char *expected_type)
- 	enum object_type type;
- 	unsigned long size;
- 	void *buffer = read_object_file(oid, &type, &size);
--	const struct object_id *repl = lookup_replace_object(oid);
-+	const struct object_id *repl = lookup_replace_object(the_repository, oid);
- 
- 	if (buffer) {
- 		if (type == type_from_string(expected_type))
-diff --git a/object.c b/object.c
-index 998ec2a25f..66cffaf6e5 100644
---- a/object.c
-+++ b/object.c
-@@ -247,7 +247,7 @@ struct object *parse_object(const struct object_id *oid)
- 	unsigned long size;
- 	enum object_type type;
- 	int eaten;
--	const struct object_id *repl = lookup_replace_object(oid);
-+	const struct object_id *repl = lookup_replace_object(the_repository, oid);
- 	void *buffer;
- 	struct object *obj;
- 
-diff --git a/replace-object.h b/replace-object.h
-index ddeb0470bd..dff57bfa1e 100644
---- a/replace-object.h
-+++ b/replace-object.h
-@@ -23,7 +23,8 @@ extern const struct object_id *do_lookup_replace_object_the_repository(const str
-  * either sha1 or a pointer to a permanently-allocated value.  When
-  * object replacement is suppressed, always return sha1.
-  */
--static inline const struct object_id *lookup_replace_object(const struct object_id *oid)
-+#define lookup_replace_object(r, s) lookup_replace_object_##r(s)
-+static inline const struct object_id *lookup_replace_object_the_repository(const struct object_id *oid)
- {
- 	if (!check_replace_refs ||
- 	    (the_repository->objects->replace_map &&
-diff --git a/sha1_file.c b/sha1_file.c
-index c38e41e49e..028a4357c5 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1240,7 +1240,7 @@ int oid_object_info_extended(const struct object_id *oid, struct object_info *oi
- 	int already_retried = 0;
- 
- 	if (flags & OBJECT_INFO_LOOKUP_REPLACE)
--		real = lookup_replace_object(oid);
-+		real = lookup_replace_object(the_repository, oid);
- 
- 	if (is_null_oid(real))
- 		return -1;
-@@ -1379,8 +1379,8 @@ void *read_object_file_extended(const struct object_id *oid,
- 	const struct packed_git *p;
- 	const char *path;
- 	struct stat st;
--	const struct object_id *repl = lookup_replace ? lookup_replace_object(oid)
--						      : oid;
-+	const struct object_id *repl = lookup_replace ?
-+		lookup_replace_object(the_repository, oid) : oid;
- 
- 	errno = 0;
- 	data = read_object(repl->hash, type, size);
-diff --git a/streaming.c b/streaming.c
-index a6e1162946..cce7b17ea7 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -140,7 +140,7 @@ struct git_istream *open_istream(const struct object_id *oid,
- {
- 	struct git_istream *st;
- 	struct object_info oi = OBJECT_INFO_INIT;
--	const struct object_id *real = lookup_replace_object(oid);
-+	const struct object_id *real = lookup_replace_object(the_repository, oid);
- 	enum input_source src = istream_source(real, type, &oi);
- 
- 	if (src < 0)
--- 
-2.17.0.484.g0c8726318c-goog
+Thanks.  It is not unusual for a moderately large set of changes to
+have glitches that need time to be discovered.  I was hoping that
+placing it in 'next' and keeping it there for several weeks would
+have been sufficient for people who do use stuff from there in real
+life but apparently that wasn't the case.
 
