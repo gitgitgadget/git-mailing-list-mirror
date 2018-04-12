@@ -2,224 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,URI_HEX
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 561721F404
-	for <e@80x24.org>; Thu, 12 Apr 2018 22:57:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B94D81F404
+	for <e@80x24.org>; Thu, 12 Apr 2018 22:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753042AbeDLW5I (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Apr 2018 18:57:08 -0400
-Received: from ao2.it ([92.243.12.208]:51115 "EHLO ao2.it"
+        id S1753131AbeDLW5M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Apr 2018 18:57:12 -0400
+Received: from ao2.it ([92.243.12.208]:51117 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752379AbeDLW5I (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Apr 2018 18:57:08 -0400
-X-Greylist: delayed 2154 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Apr 2018 18:57:07 EDT
+        id S1753064AbeDLW5J (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Apr 2018 18:57:09 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1f6kZd-0008Uw-CT; Fri, 13 Apr 2018 00:20:09 +0200
+        id 1f6kZd-0008Ut-15; Fri, 13 Apr 2018 00:20:09 +0200
 Received: from ao2 by jcn with local (Exim 4.90_1)
         (envelope-from <ao2@ao2.it>)
-        id 1f6kad-0001VE-9v; Fri, 13 Apr 2018 00:21:11 +0200
+        id 1f6kac-0001V8-Pv; Fri, 13 Apr 2018 00:21:10 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     git@vger.kernel.org
 Cc:     Richard Hartmann <richih.mailinglist@gmail.com>,
         Antonio Ospite <ao2@ao2.it>
-Subject: [RFC 03/10] submodule: use the 'submodules_file' variable in output messages
-Date:   Fri, 13 Apr 2018 00:20:40 +0200
-Message-Id: <20180412222047.5716-4-ao2@ao2.it>
+Subject: [RFC 00/10] Make .the gitmodules file path configurable
+Date:   Fri, 13 Apr 2018 00:20:37 +0200
+Message-Id: <20180412222047.5716-1-ao2@ao2.it>
 X-Mailer: git-send-email 2.17.0
-In-Reply-To: <20180412222047.5716-1-ao2@ao2.it>
-References: <20180412222047.5716-1-ao2@ao2.it>
 X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The gitmodules file path can be customized by setting the
-'core.submodulesFile' config option.
+Hi,
 
-Use the 'submodules_file' variable instead of the hardcoded
-'.gitmodules' in output messages, to reflect the actual path of the
-gitmodules file.
+vcsh[1] uses bare git repositories and detached work-trees to manage
+*distinct* sets of configuration files directly into $HOME.
 
-NOTE: the default git configuration has to be initialized in
-'builtin/submodule--helper.c' to make the actual value of
-'submodules_file', overridden by 'core.submodulesFile', available to the
-helper command.
+In general, submodules have worked perfectly fine with detached
+work-trees for some time[2,3,4].
 
-Signed-off-by: Antonio Ospite <ao2@ao2.it>
----
- builtin/mv.c                |  3 ++-
- builtin/rm.c                |  3 ++-
- builtin/submodule--helper.c | 18 ++++++++++--------
- submodule-config.c          |  4 ++--
- submodule.c                 | 14 +++++++-------
- 5 files changed, 23 insertions(+), 19 deletions(-)
+However when multiple repositories take turns using the same directory
+as their work-tree, and more than one of them want to use submodules,
+there could still be conflicts about the '.gitmodules' file because git
+hardcodes this path.
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 6d141f7a5..ec8f139c4 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -82,7 +82,8 @@ static void prepare_move_submodule(const char *src, int first,
- 	if (!S_ISGITLINK(active_cache[first]->ce_mode))
- 		die(_("Directory %s is in index and no submodule?"), src);
- 	if (!is_staging_gitmodules_ok(&the_index))
--		die(_("Please stage your changes to .gitmodules or stash them to proceed"));
-+		die(_("Please stage your changes to %s or stash them to proceed"),
-+		    submodules_file);
- 	strbuf_addf(&submodule_dotgit, "%s/.git", src);
- 	*submodule_gitfile = read_gitfile(submodule_dotgit.buf);
- 	if (*submodule_gitfile)
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 5b6fc7ee8..6fd015d86 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -286,7 +286,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 		list.entry[list.nr].is_submodule = S_ISGITLINK(ce->ce_mode);
- 		if (list.entry[list.nr++].is_submodule &&
- 		    !is_staging_gitmodules_ok(&the_index))
--			die (_("Please stage your changes to .gitmodules or stash them to proceed"));
-+			die (_("Please stage your changes to %s or stash them to proceed"),
-+			     submodules_file);
- 	}
- 
- 	if (pathspec.nr) {
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index a404df3ea..72b95d27b 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -458,8 +458,8 @@ static void init_submodule(const char *path, const char *prefix,
- 	sub = submodule_from_path(&null_oid, path);
- 
- 	if (!sub)
--		die(_("No url found for submodule path '%s' in .gitmodules"),
--			displaypath);
-+		die(_("No url found for submodule path '%s' in %s"),
-+			displaypath, submodules_file);
- 
- 	/*
- 	 * NEEDSWORK: In a multi-working-tree world, this needs to be
-@@ -481,8 +481,8 @@ static void init_submodule(const char *path, const char *prefix,
- 	strbuf_addf(&sb, "submodule.%s.url", sub->name);
- 	if (git_config_get_string(sb.buf, &url)) {
- 		if (!sub->url)
--			die(_("No url found for submodule path '%s' in .gitmodules"),
--				displaypath);
-+			die(_("No url found for submodule path '%s' in %s"),
-+				displaypath, submodules_file);
- 
- 		url = xstrdup(sub->url);
- 
-@@ -623,8 +623,8 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
- 	int diff_files_result;
- 
- 	if (!submodule_from_path(&null_oid, path))
--		die(_("no submodule mapping found in .gitmodules for path '%s'"),
--		      path);
-+		die(_("no submodule mapping found in %s for path '%s'"),
-+		      submodules_file, path);
- 
- 	displaypath = get_submodule_displaypath(path, prefix);
- 
-@@ -749,8 +749,8 @@ static int module_name(int argc, const char **argv, const char *prefix)
- 	sub = submodule_from_path(&null_oid, argv[1]);
- 
- 	if (!sub)
--		die(_("no submodule mapping found in .gitmodules for path '%s'"),
--		    argv[1]);
-+		die(_("no submodule mapping found in %s for path '%s'"),
-+		    submodules_file, argv[1]);
- 
- 	printf("%s\n", sub->name);
- 
-@@ -1855,6 +1855,8 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
- 	if (argc < 2 || !strcmp(argv[1], "-h"))
- 		usage("git submodule--helper <command>");
- 
-+	git_config(git_default_config, NULL);
-+
- 	for (i = 0; i < ARRAY_SIZE(commands); i++) {
- 		if (!strcmp(argv[1], commands[i].cmd)) {
- 			if (get_super_prefix() &&
-diff --git a/submodule-config.c b/submodule-config.c
-index 8a3396ade..620d522ee 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -347,9 +347,9 @@ static void warn_multiple_config(const unsigned char *treeish_name,
- 	const char *commit_string = "WORKTREE";
- 	if (treeish_name)
- 		commit_string = sha1_to_hex(treeish_name);
--	warning("%s:.gitmodules, multiple configurations found for "
-+	warning("%s:%s, multiple configurations found for "
- 			"'submodule.%s.%s'. Skipping second one!",
--			commit_string, name, option);
-+			commit_string, submodules_file, name, option);
- }
- 
- struct parse_config_parameter {
-diff --git a/submodule.c b/submodule.c
-index 2afbdb644..97213b549 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -94,11 +94,11 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
- 		return -1;
- 
- 	if (is_gitmodules_unmerged(&the_index))
--		die(_("Cannot change unmerged .gitmodules, resolve merge conflicts first"));
-+		die(_("Cannot change unmerged %s, resolve merge conflicts first"), submodules_file);
- 
- 	submodule = submodule_from_path(&null_oid, oldpath);
- 	if (!submodule || !submodule->name) {
--		warning(_("Could not find section in .gitmodules where path=%s"), oldpath);
-+		warning(_("Could not find section in %s where path=%s"), submodules_file, oldpath);
- 		return -1;
- 	}
- 	strbuf_addstr(&entry, "submodule.");
-@@ -106,7 +106,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
- 	strbuf_addstr(&entry, ".path");
- 	if (git_config_set_in_file_gently(submodules_file, entry.buf, newpath) < 0) {
- 		/* Maybe the user already did that, don't error out here */
--		warning(_("Could not update .gitmodules entry %s"), entry.buf);
-+		warning(_("Could not update %s entry %s"), submodules_file, entry.buf);
- 		strbuf_release(&entry);
- 		return -1;
- 	}
-@@ -128,18 +128,18 @@ int remove_path_from_gitmodules(const char *path)
- 		return -1;
- 
- 	if (is_gitmodules_unmerged(&the_index))
--		die(_("Cannot change unmerged .gitmodules, resolve merge conflicts first"));
-+		die(_("Cannot change unmerged %s, resolve merge conflicts first"), submodules_file);
- 
- 	submodule = submodule_from_path(&null_oid, path);
- 	if (!submodule || !submodule->name) {
--		warning(_("Could not find section in .gitmodules where path=%s"), path);
-+		warning(_("Could not find section in %s where path=%s"), submodules_file, path);
- 		return -1;
- 	}
- 	strbuf_addstr(&sect, "submodule.");
- 	strbuf_addstr(&sect, submodule->name);
- 	if (git_config_rename_section_in_file(submodules_file, sect.buf, NULL) < 0) {
- 		/* Maybe the user already did that, don't error out here */
--		warning(_("Could not remove .gitmodules entry for %s"), path);
-+		warning(_("Could not remove %s entry for %s"), submodules_file, path);
- 		strbuf_release(&sect);
- 		return -1;
- 	}
-@@ -150,7 +150,7 @@ int remove_path_from_gitmodules(const char *path)
- void stage_updated_gitmodules(struct index_state *istate)
- {
- 	if (add_file_to_index(istate, submodules_file, 0))
--		die(_("staging updated .gitmodules failed"));
-+		die(_("staging updated %s failed"), submodules_file);
- }
- 
- static int add_submodule_odb(const char *path)
+For comparison, in case of '.gitignore' a similar conflict might arise,
+but git has alternative ways to specify exclude files, so vcsh solves
+this by setting core.excludesFile for each repository and track ignored
+files somewhere else (in ~/.gitignore.d/$VCSH_REPO_NAME).
+
+This is currently not possible with submodules configuration.
+
+So this series proposes a mechanism to set an alternative path for the
+submodules configuration file (from now on "gitmodules file").
+
+Patches are based on fe0a9eaf31dd0c349ae4308498c33a5c3794b293.
+
+In commit 4c0eeafe4755 (cache.h: add GITMODULES_FILE macro)[5] the
+gitmodules file path definition was centralized, AFAIU this was done
+mainly to prevent typos, as checking a symbolic constant is something
+the compiler will do for us.
+
+Expanding on that change the first patch in the series makes the path
+customizable exposing a 'core.submodulesFile' configuration setting.
+
+The new configuration setting can be used to set an *alternative*
+location for the gitmodules file; IMHO there is no need to provide
+*additional* locations like in the case of exclude files.
+
+For instance vcsh could set the location to
+'~/.gitmodules.d/$VCSH_REPO_NAME' to avoid conflicts.
+
+Since the gitmodules file is meant to be checked in into the repository,
+the overridden file path should be relative to the work-tree; is there
+a way to enforce this constraint at run time (i.e. validate the config
+value), or is it enough to have it documented?
+
+The last patch adds a hacky 'test-custom-gitmodules-file.sh' script
+which patches the test suite to fix all the hardcoded occurrences of
+'.gitmodules' and runs it twice: once with the default value and once
+with a custom path, passed via an environmental variable.
+
+I guess in the final version just testing for a custom path (e.g.
+'.gitmodules_custom') could be enough, as the default value can be seen
+as a particular case.
+
+The last thing I noticed is that git does not create config files
+automatically if they are under a subdirectory which does not exist
+already; for instance the following command would fail:
+
+  git config -f newsubdir/test-config user.name Antonio
+
+This means that if the user wanted to use something like:
+
+  git -c core.submodulesFile=.gitmodules.d/repo_submodules ...
+
+the subdirectory would have to be created beforehand. This is not a big
+deal of course, but I was wondering if this is mentioned anywhere.
+Fixing the current behavior to create the leading directories does not
+seem hard, but I am not sure it is worth it.
+
+Thanks,
+   Antonio
+
+[1] https://github.com/RichiH/vcsh
+[2] http://git.661346.n2.nabble.com/git-submodule-vs-GIT-WORK-TREE-td7562165.html
+[3] http://git.661346.n2.nabble.com/PATCH-Solve-git-submodule-issues-with-detached-work-trees-td7563377.html
+[4] https://github.com/git/git/commit/be8779f7ac9a3be9aa783df008d59082f4054f67
+[5] https://github.com/git/git/commit/4c0eeafe4755345b0f4636bf09904cf689703e11
+
+Antonio Ospite (10):
+  submodule: add 'core.submodulesFile' to override the '.gitmodules'
+    path
+  submodule: fix getting custom gitmodule file in fetch command
+  submodule: use the 'submodules_file' variable in output messages
+  submodule: document 'core.submodulesFile' and fix references to
+    '.gitmodules'
+  submodule: adjust references to '.gitmodules' in comments
+  completion: add 'core.submodulesfile' to the git-completion.bash file
+  XXX: wrap-for-bin.sh: set 'core.submodulesFile' for each git
+    invocation
+  XXX: submodule: fix t1300-repo-config.sh to take into account the new
+    config
+  XXX: submodule: pass custom gitmodules file to 'test-tool
+    submodule-config'
+  XXX: add a hacky script to test the changes with a patched test suite
+
+ Documentation/config.txt                      | 18 +++--
+ Documentation/git-add.txt                     |  4 +-
+ Documentation/git-submodule.txt               | 45 +++++------
+ Documentation/gitmodules.txt                  | 15 ++--
+ Documentation/gitsubmodules.txt               | 18 ++---
+ .../technical/api-submodule-config.txt        |  6 +-
+ Makefile                                      |  3 +-
+ builtin/fetch.c                               |  2 +-
+ builtin/mv.c                                  |  3 +-
+ builtin/rm.c                                  |  3 +-
+ builtin/submodule--helper.c                   | 20 ++---
+ cache.h                                       |  1 +
+ config.c                                      | 13 ++--
+ config.h                                      |  7 +-
+ contrib/completion/git-completion.bash        |  1 +
+ contrib/subtree/git-subtree.txt               |  2 +-
+ environment.c                                 |  1 +
+ git-submodule.sh                              | 24 +++---
+ repository.h                                  |  2 +-
+ submodule-config.c                            | 16 ++--
+ submodule-config.h                            |  2 +-
+ submodule.c                                   | 54 ++++++-------
+ t/helper/test-submodule-config.c              |  7 ++
+ t/t0001-init.sh                               |  1 +
+ t/t1300-repo-config.sh                        | 26 ++++++-
+ test-custom-gitmodules-file.sh                | 75 +++++++++++++++++++
+ unpack-trees.c                                |  2 +-
+ wrap-for-bin.sh                               |  2 +
+ 28 files changed, 250 insertions(+), 123 deletions(-)
+ create mode 100755 test-custom-gitmodules-file.sh
+ mode change 100644 => 100755 wrap-for-bin.sh
+
 -- 
-2.17.0
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
 
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
