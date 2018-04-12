@@ -2,79 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D28A51F424
-	for <e@80x24.org>; Thu, 12 Apr 2018 11:36:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 538A41F424
+	for <e@80x24.org>; Thu, 12 Apr 2018 11:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752125AbeDLLgC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Apr 2018 07:36:02 -0400
-Received: from mout.gmx.net ([212.227.17.20]:36929 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751747AbeDLLgB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Apr 2018 07:36:01 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZ7bs-1elcos3u28-00KzuR; Thu, 12
- Apr 2018 13:35:59 +0200
-Date:   Thu, 12 Apr 2018 13:35:43 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+        id S1752334AbeDLLng (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Apr 2018 07:43:36 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:45848 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752234AbeDLLnf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Apr 2018 07:43:35 -0400
+Received: by mail-io0-f196.google.com with SMTP id 141so5915258iou.12
+        for <git@vger.kernel.org>; Thu, 12 Apr 2018 04:43:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=TzWZ07aKxAg7Gtq5CS9TMze/YAeyimrHlLNHn/KmYH4=;
+        b=CQ2aW2sRUPv9qU9R90d8WMpwkH+Hg/VSrrKtcNW2LztjG2hlpWw627wEmR3HpovJXN
+         OadamnpjvP5cJZH9MDdYNl5St8HvfcYZjxmCLcWEoXyhILq8E9bbeUVzqROjEzOmi81g
+         SqwDP3DNEKfkcr/PBDwaA+m0m7hnbzAiNp/PhXzPHhvQOYGZw6S06ZXSmBA2YXbNQazo
+         pbPXmZo9ybzybs+MvMlA6stdjXOyd6kfDgpou4zKq/afqenpmkaH4JyFKNgRD4zBXTlg
+         ZSqtkVn8BAp2cwjMyyHNJN5fLsFswi4PTTJz7N+z8QIw6PFsTUD35p5UZ0g8MxgmDch4
+         jfAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=TzWZ07aKxAg7Gtq5CS9TMze/YAeyimrHlLNHn/KmYH4=;
+        b=RJ2h/4PbSLE90l9LJOrEQUpJ0cCS49m+c1zN0EGvSavMJf+H0RPFSOh3gkLMeRby6i
+         AVwwsb5xC26AXBrysQUZCkvs7Qjsz9K57mqSCykWsXLZoAfIGgeYvXfPd3b9pPPbajI3
+         iUONIxq17As1owL0VbNmDfKu0PVU8Lr77IGhLxOR4AOXhEx+743r7vKtzBzvbTONhFPX
+         QdSTSlBNf6fKkb4A2Li/pB+dPwOzUn2+w7tVhU5AWC+gj7vn0wKTnJK49kkGdw+2mDzl
+         Fy7YAO8kxj6H+uzg/MlKi72zlpyMb8KA9F8CXZ43WUTHgy2Sgu9B2FsjkUn77CDxlug8
+         VeoQ==
+X-Gm-Message-State: ALQs6tCkh/uw3KHfYqLk6IfCsqfSt0OGkAlzTxdTmTblafFS7juEHUVN
+        hhFBI33WzlphnTe8Ec3I/Pg=
+X-Google-Smtp-Source: AIpwx4+ZrZsn4oYNy1S5ejfK0FuB8UI8GB7G5TemA5x67xrHheEH0SGWagdx54LbgdMvDr6uspTYeg==
+X-Received: by 10.107.155.208 with SMTP id d199mr8447973ioe.5.1523533414675;
+        Thu, 12 Apr 2018 04:43:34 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id w134-v6sm1809283ita.12.2018.04.12.04.43.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Apr 2018 04:43:34 -0700 (PDT)
+Subject: Re: [PATCHv3 00/15] replace_object.c: rename to use dash in file name
 To:     Stefan Beller <sbeller@google.com>
-cc:     Harald Nordgren <haraldnordgren@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH] Create '--merges-only' option for 'git bisect'
-In-Reply-To: <CAGZ79kbt=J5SHsHJTfOZYhgSdn9_gOjVBC3qp_oL0sC-b3ZRmw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804121333340.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180411225534.48658-1-haraldnordgren@gmail.com> <CAGZ79kbt=J5SHsHJTfOZYhgSdn9_gOjVBC3qp_oL0sC-b3ZRmw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, l.s.r@web.de,
+        pclouds@gmail.com, sandals@crustytoothpaste.net,
+        sunshine@sunshineco.com
+References: <20180409224533.17764-1-sbeller@google.com>
+ <20180412002118.102976-1-sbeller@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <9ddfee7e-025a-79c9-8d6b-700c65a14067@gmail.com>
+Date:   Thu, 12 Apr 2018 07:43:26 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Ltljtfb31mNFY4xgpv321kOQZwE7ZvddSNa6F56bVIeCh9hMJwf
- 2L48/3kxvtmKXQdRqDNw5PnJaPP9L6//LzsjeKsAgWzOszAbJiPzDLRM1Uf6QDnRaRk3QAn
- woNp7HOGKOhLS6WT6gt/Ha5Y7ATNiViRvU9c0J74XfUbBlYF/1/1hshiAADWKY/VIm5U/0t
- SdLwY195Cuh3VeOAh3XSQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EEVzGLdtTPo=:VdzhZgKeU9Cf+CAOdkFu6h
- VFxvsmmpJJklrbvQzn/z5K75HxVMDE89+hH4TzW/sjJ23iAJigGtf8xnUOBNGXJg2g7josqUr
- xBVKnaSFRYgVWkD3cS1UWINPO9xrJdRjcsKeGfst0tudpvDb4+KAcdf0HnQH726K9TRFNoDyW
- r5hHRN4BJ+MRjUV7Gs8IczpHcgEyaWDkx5VseEyOKoD0SCgJ9POPvPvaWzEA1cxuC1aWsndmC
- IgAig7QLTYRmCFY1DifhpOWksBU8E7E/wClFRegq9ftFTJzUAI4tr6gYCD2jtBPVPNuyZjwDO
- GyrBxiKmzKLkYsdgEg28dRa1pr2ZG0b5fBnzhr9CnmB4SuFu7mQZqXw/X7wo5Wl0GL172QJbk
- J9qL/EG+7uy3lzeXfjXzJgyNYqSTte4mnKIedazXaiMAqAFMa+avct3WfNu9sf3XTuR6r4/8x
- BAd57xm0CnOIV2fG8H4KL/nZNHPWe0dt39OgPNOZ4UxSNl9a153i+k5F3qcGV2k9IyVEtJWob
- F1EnmOBs2qoSWmMSHk9yBoTeuOjTBvLlaFRHNZe/NcwiYbGNkVF1Y1OkG12yfb6oed0TX8dIN
- iOPiEqony9UUj/VuEhGBuhaypPY65wVeq4nzFhvu4xq7LOAEdv9gfud81mPWnTwQSIzw1hqJp
- EqBf5akQP8dF78U9rJ2WmTC61/FxNxbGyaTR6erTEOYJX2OG03Ci3yjlTO6NXs46u2JVmbRy8
- mcbo4Q8W/XtlaeVO6MUS2NthJ6g/I9dr0xcyEpDC7QY8piioyUF2q4+Fe3Cgsa4C6hIraL7vE
- eTYN+z2eKIhgGYJTlFCcya1W8PNBe4Vc6Al3ZiPqaRyvG0TU3s=
+In-Reply-To: <20180412002118.102976-1-sbeller@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
-
-On Wed, 11 Apr 2018, Stefan Beller wrote:
-
-> On Wed, Apr 11, 2018 at 3:55 PM, Harald Nordgren
-> <haraldnordgren@gmail.com> wrote:
-> > When ran with '--merges-only', git bisect will only look at merge commits -- commits with 2 or more parents or the initial commit.
-> 
-> There has been quite some talk on the mailing list, e.g.
-> https://public-inbox.org/git/20160427204551.GB4613@virgo.localdomain/
-> which suggests a --first-parent mode instead.
-
-I like that mode, but I would love to have *both*. And from what I see, it
-should be relatively easy to add the --first-parent mode on top of
-Harald's patches.
-
-> For certain histories these are the same, but merges-only is more
-> restrictive for back-and-forth-cross merges.
-
-You mean merges-only tests *more* in back-and-forth-cross-merges
-scenarios?
-
-Ciao,
-Dscho
+On 4/11/2018 8:21 PM, Stefan Beller wrote:
+> v3:
+> * interdiff below,
+>    the only changes are renaming the variable
+>    -       struct ref_store *main_ref_store;
+>    +       struct ref_store *refs;
+>    in struct repository.
+>    as well as dropping the file rename patch.
+> * improved commit messages from discussion on the single patches.
+Looks good to me. Thanks!
+-Stolee
