@@ -6,110 +6,220 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B6D91F404
-	for <e@80x24.org>; Thu, 12 Apr 2018 22:20:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 561721F404
+	for <e@80x24.org>; Thu, 12 Apr 2018 22:57:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753254AbeDLWUF convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 12 Apr 2018 18:20:05 -0400
-Received: from mail.1eanda.com ([50.241.99.154]:34313 "EHLO mail.1eanda.com"
+        id S1753042AbeDLW5I (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Apr 2018 18:57:08 -0400
+Received: from ao2.it ([92.243.12.208]:51115 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753176AbeDLWUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Apr 2018 18:20:05 -0400
-X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Apr 2018 18:20:04 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mail.1eanda.com (Postfix) with ESMTP id EBE4F40242;
-        Thu, 12 Apr 2018 18:12:44 -0400 (EDT)
-X-Virus-Scanned: Debian amavisd-new at mail.1eanda.com
-Received: from mail.1eanda.com ([127.0.0.1])
-        by localhost (mail.1eanda.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id HtxFbcGvJ_sY; Thu, 12 Apr 2018 18:12:20 -0400 (EDT)
-Received: from [10.134.3.27] (50-241-99-157-static.hfc.comcastbusiness.net [50.241.99.157])
-        (Authenticated sender: matt@1eanda.com)
-        by mail.1eanda.com (Postfix) with ESMTPSA id E5C9340213;
-        Thu, 12 Apr 2018 18:12:13 -0400 (EDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: Re: [PATCH] specify encoding for sed command
-From:   Matthew Coleman <matt@1eanda.com>
-In-Reply-To: <3FE7BFB6-769A-4F11-9C3B-86D681B3502F@gmail.com>
-Date:   Thu, 12 Apr 2018 18:12:12 -0400
-Cc:     Stephon Harris <theonestep4@gmail.com>, git@vger.kernel.org,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-X-Mao-Original-Outgoing-Id: 545263931.866219-29e9a419bad00c5236d6b684ee39d57b
-Content-Transfer-Encoding: 8BIT
-Message-Id: <CBA1FB4A-C586-48E0-A64E-371CCD2F6AC4@1eanda.com>
-References: <0102016293c8dca7-6626fcde-548d-476e-b61f-c83ecdeedfe1-000000@eu-west-1.amazonses.com>
- <87605616vr.fsf@evledraar.gmail.com>
- <DB5A1CE2-7844-4CB6-A03E-6AAC4EC13D66@gmail.com>
- <3FE7BFB6-769A-4F11-9C3B-86D681B3502F@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-Mailer: Apple Mail (2.3273)
+        id S1752379AbeDLW5I (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Apr 2018 18:57:08 -0400
+X-Greylist: delayed 2154 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Apr 2018 18:57:07 EDT
+Received: from localhost ([::1] helo=jcn)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1f6kZd-0008Uw-CT; Fri, 13 Apr 2018 00:20:09 +0200
+Received: from ao2 by jcn with local (Exim 4.90_1)
+        (envelope-from <ao2@ao2.it>)
+        id 1f6kad-0001VE-9v; Fri, 13 Apr 2018 00:21:11 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     git@vger.kernel.org
+Cc:     Richard Hartmann <richih.mailinglist@gmail.com>,
+        Antonio Ospite <ao2@ao2.it>
+Subject: [RFC 03/10] submodule: use the 'submodules_file' variable in output messages
+Date:   Fri, 13 Apr 2018 00:20:40 +0200
+Message-Id: <20180412222047.5716-4-ao2@ao2.it>
+X-Mailer: git-send-email 2.17.0
+In-Reply-To: <20180412222047.5716-1-ao2@ao2.it>
+References: <20180412222047.5716-1-ao2@ao2.it>
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I did a little more digging into this issue today.
+The gitmodules file path can be customized by setting the
+'core.submodulesFile' config option.
 
-> On Apr 11, 2018, at 4:42 PM, Matt Coleman <cat.moleman@gmail.com> wrote:
-> 
-> I found another (possibly better) way to fix this:
-> 
->> On Apr 10, 2018, at 3:18 AM, Matt Coleman <cat.moleman@gmail.com> wrote:
->> 
->>> 1) What platform OS / version / sed version is this on?
->> I'm experiencing this on macOS Sierra (10.12.6). The issue occurs with the OS's native sed, which is FreeBSD sed so the version number is kind of ambiguous.
->> 
->> The error goes away if I set LANG=C or LC_ALL=C or change it to use GNU sed (installed via homebrew as gsed).
-> 
-> If I change it to use awk instead of sed, it works with mawk, gawk, and macOS awk:
-> unset $(set | awk -F '=' '/^__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*=/ {print $1}') 2>/dev/null
-> 
-> I compared sed vs. awk on Linux and Mac and they all take about the same amount of time to run (within 0.002ms).
+Use the 'submodules_file' variable instead of the hardcoded
+'.gitmodules' in output messages, to reflect the actual path of the
+gitmodules file.
 
-The issue isn't actually caused by `sed`: it's caused by the way that the `set` builtin outputs characters in the Unicode Private Use Area (PUA) in the build of Bash 3.2.57 that macOS Sierra ships with.
+NOTE: the default git configuration has to be initialized in
+'builtin/submodule--helper.c' to make the actual value of
+'submodules_file', overridden by 'core.submodulesFile', available to the
+helper command.
 
-Powerline uses several PUA code points to make some of its pretty text UI elements:
+Signed-off-by: Antonio Ospite <ao2@ao2.it>
+---
+ builtin/mv.c                |  3 ++-
+ builtin/rm.c                |  3 ++-
+ builtin/submodule--helper.c | 18 ++++++++++--------
+ submodule-config.c          |  4 ++--
+ submodule.c                 | 14 +++++++-------
+ 5 files changed, 23 insertions(+), 19 deletions(-)
 
-Code point (hex value): description
-U+E0A0 (0xEE82A0): Version control branch
-U+E0A1 (0xEE82A1): LN (line) symbol
-U+E0A2 (0xEE82A2): Closed padlock
-U+E0B0 (0xEE82B0): Rightwards black arrowhead
-U+E0B1 (0xEE82B1): Rightwards arrowhead
-U+E0B2 (0xEE82B2): Leftwards black arrowhead
-U+E0B3 (0xEE82B3): Leftwards arrowhead
+diff --git a/builtin/mv.c b/builtin/mv.c
+index 6d141f7a5..ec8f139c4 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -82,7 +82,8 @@ static void prepare_move_submodule(const char *src, int first,
+ 	if (!S_ISGITLINK(active_cache[first]->ce_mode))
+ 		die(_("Directory %s is in index and no submodule?"), src);
+ 	if (!is_staging_gitmodules_ok(&the_index))
+-		die(_("Please stage your changes to .gitmodules or stash them to proceed"));
++		die(_("Please stage your changes to %s or stash them to proceed"),
++		    submodules_file);
+ 	strbuf_addf(&submodule_dotgit, "%s/.git", src);
+ 	*submodule_gitfile = read_gitfile(submodule_dotgit.buf);
+ 	if (*submodule_gitfile)
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 5b6fc7ee8..6fd015d86 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -286,7 +286,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 		list.entry[list.nr].is_submodule = S_ISGITLINK(ce->ce_mode);
+ 		if (list.entry[list.nr++].is_submodule &&
+ 		    !is_staging_gitmodules_ok(&the_index))
+-			die (_("Please stage your changes to .gitmodules or stash them to proceed"));
++			die (_("Please stage your changes to %s or stash them to proceed"),
++			     submodules_file);
+ 	}
+ 
+ 	if (pathspec.nr) {
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index a404df3ea..72b95d27b 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -458,8 +458,8 @@ static void init_submodule(const char *path, const char *prefix,
+ 	sub = submodule_from_path(&null_oid, path);
+ 
+ 	if (!sub)
+-		die(_("No url found for submodule path '%s' in .gitmodules"),
+-			displaypath);
++		die(_("No url found for submodule path '%s' in %s"),
++			displaypath, submodules_file);
+ 
+ 	/*
+ 	 * NEEDSWORK: In a multi-working-tree world, this needs to be
+@@ -481,8 +481,8 @@ static void init_submodule(const char *path, const char *prefix,
+ 	strbuf_addf(&sb, "submodule.%s.url", sub->name);
+ 	if (git_config_get_string(sb.buf, &url)) {
+ 		if (!sub->url)
+-			die(_("No url found for submodule path '%s' in .gitmodules"),
+-				displaypath);
++			die(_("No url found for submodule path '%s' in %s"),
++				displaypath, submodules_file);
+ 
+ 		url = xstrdup(sub->url);
+ 
+@@ -623,8 +623,8 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ 	int diff_files_result;
+ 
+ 	if (!submodule_from_path(&null_oid, path))
+-		die(_("no submodule mapping found in .gitmodules for path '%s'"),
+-		      path);
++		die(_("no submodule mapping found in %s for path '%s'"),
++		      submodules_file, path);
+ 
+ 	displaypath = get_submodule_displaypath(path, prefix);
+ 
+@@ -749,8 +749,8 @@ static int module_name(int argc, const char **argv, const char *prefix)
+ 	sub = submodule_from_path(&null_oid, argv[1]);
+ 
+ 	if (!sub)
+-		die(_("no submodule mapping found in .gitmodules for path '%s'"),
+-		    argv[1]);
++		die(_("no submodule mapping found in %s for path '%s'"),
++		    submodules_file, argv[1]);
+ 
+ 	printf("%s\n", sub->name);
+ 
+@@ -1855,6 +1855,8 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+ 	if (argc < 2 || !strcmp(argv[1], "-h"))
+ 		usage("git submodule--helper <command>");
+ 
++	git_config(git_default_config, NULL);
++
+ 	for (i = 0; i < ARRAY_SIZE(commands); i++) {
+ 		if (!strcmp(argv[1], commands[i].cmd)) {
+ 			if (get_super_prefix() &&
+diff --git a/submodule-config.c b/submodule-config.c
+index 8a3396ade..620d522ee 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -347,9 +347,9 @@ static void warn_multiple_config(const unsigned char *treeish_name,
+ 	const char *commit_string = "WORKTREE";
+ 	if (treeish_name)
+ 		commit_string = sha1_to_hex(treeish_name);
+-	warning("%s:.gitmodules, multiple configurations found for "
++	warning("%s:%s, multiple configurations found for "
+ 			"'submodule.%s.%s'. Skipping second one!",
+-			commit_string, name, option);
++			commit_string, submodules_file, name, option);
+ }
+ 
+ struct parse_config_parameter {
+diff --git a/submodule.c b/submodule.c
+index 2afbdb644..97213b549 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -94,11 +94,11 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
+ 		return -1;
+ 
+ 	if (is_gitmodules_unmerged(&the_index))
+-		die(_("Cannot change unmerged .gitmodules, resolve merge conflicts first"));
++		die(_("Cannot change unmerged %s, resolve merge conflicts first"), submodules_file);
+ 
+ 	submodule = submodule_from_path(&null_oid, oldpath);
+ 	if (!submodule || !submodule->name) {
+-		warning(_("Could not find section in .gitmodules where path=%s"), oldpath);
++		warning(_("Could not find section in %s where path=%s"), submodules_file, oldpath);
+ 		return -1;
+ 	}
+ 	strbuf_addstr(&entry, "submodule.");
+@@ -106,7 +106,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
+ 	strbuf_addstr(&entry, ".path");
+ 	if (git_config_set_in_file_gently(submodules_file, entry.buf, newpath) < 0) {
+ 		/* Maybe the user already did that, don't error out here */
+-		warning(_("Could not update .gitmodules entry %s"), entry.buf);
++		warning(_("Could not update %s entry %s"), submodules_file, entry.buf);
+ 		strbuf_release(&entry);
+ 		return -1;
+ 	}
+@@ -128,18 +128,18 @@ int remove_path_from_gitmodules(const char *path)
+ 		return -1;
+ 
+ 	if (is_gitmodules_unmerged(&the_index))
+-		die(_("Cannot change unmerged .gitmodules, resolve merge conflicts first"));
++		die(_("Cannot change unmerged %s, resolve merge conflicts first"), submodules_file);
+ 
+ 	submodule = submodule_from_path(&null_oid, path);
+ 	if (!submodule || !submodule->name) {
+-		warning(_("Could not find section in .gitmodules where path=%s"), path);
++		warning(_("Could not find section in %s where path=%s"), submodules_file, path);
+ 		return -1;
+ 	}
+ 	strbuf_addstr(&sect, "submodule.");
+ 	strbuf_addstr(&sect, submodule->name);
+ 	if (git_config_rename_section_in_file(submodules_file, sect.buf, NULL) < 0) {
+ 		/* Maybe the user already did that, don't error out here */
+-		warning(_("Could not remove .gitmodules entry for %s"), path);
++		warning(_("Could not remove %s entry for %s"), submodules_file, path);
+ 		strbuf_release(&sect);
+ 		return -1;
+ 	}
+@@ -150,7 +150,7 @@ int remove_path_from_gitmodules(const char *path)
+ void stage_updated_gitmodules(struct index_state *istate)
+ {
+ 	if (add_file_to_index(istate, submodules_file, 0))
+-		die(_("staging updated .gitmodules failed"));
++		die(_("staging updated %s failed"), submodules_file);
+ }
+ 
+ static int add_submodule_odb(const char *path)
+-- 
+2.17.0
 
-macOS Bash 3.2.57's `set` builtin has garbled output where Powerline's special symbols should be in the PS1 variable, but Bash 4.4.19 (installed on macOS via homebrew) and Bash 4.3.38 (Ubuntu 16.04) both display it correctly in the output of `set`. `echo $PS1` does display the symbols correctly on these versions of Bash.
-
-So...
-
-> 3) There's other invocations of "sed" in the file, aren't those affected as well?
-The short answer: no. Slightly longer: not by the same thing that's affecting the line in the patch, at least.
-
-Long: As described above, the problem isn't actually `sed`: it's the `set` builtin in macOS's build of Bash. The other invocations of `sed` should be safe, because `sed` properly handles the PUA code points on its own:
-
-$ echo $'\xee\x82\xb0' | sed 's/./@/'
-@
-
-The way that `set` is displaying the PS1 variable seems to be sending them to `sed` individually or somehow split up:
-
-$ for character in $'\xee' $'\x82' $'\xb0' $'\xee\x82' $'\x82\xb0'; do echo $character | sed 's/./@/'; done
-sed: RE error: illegal byte sequence
-sed: RE error: illegal byte sequence
-sed: RE error: illegal byte sequence
-sed: RE error: illegal byte sequence
-sed: RE error: illegal byte sequence
-
-Interestingly, Bash 3.2.25's `set` builtin on CentOS 5 correctly displays the octal values for the symbols (prompt edited to keep this email ASCII):
-
-$ PS1=$'\xee\x82\xb0 '
->  set | grep PS1
-PS1=$'\356\202\260 '
-
-I haven't started digging through Bash's codebase, but it could either be a bug that was introduced between 3.2.25 and 3.2.57 or Apple used some silly flags when compiling Bash. Ideally, this should be fixed in Bash, but since Apple's using such an old version of Bash for license reasons, I think it's unlikely that they'll fix the issue.
-
-I think the best way to move forward with this is a new patch that uses `awk` instead of `sed`: I tested several `awk` variants and the command was portable without requiring any changes to LANG or LC_ALL.
-
-Does that sound like a good plan?
