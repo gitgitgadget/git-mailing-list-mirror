@@ -2,115 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AB4C1F42D
-	for <e@80x24.org>; Thu, 12 Apr 2018 18:47:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27D501F404
+	for <e@80x24.org>; Thu, 12 Apr 2018 19:36:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753021AbeDLSr0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Apr 2018 14:47:26 -0400
-Received: from mail-wr0-f175.google.com ([209.85.128.175]:41243 "EHLO
-        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752961AbeDLSrZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Apr 2018 14:47:25 -0400
-Received: by mail-wr0-f175.google.com with SMTP id s12so6052844wrc.8
-        for <git@vger.kernel.org>; Thu, 12 Apr 2018 11:47:24 -0700 (PDT)
+        id S1753058AbeDLTgQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Apr 2018 15:36:16 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:33610 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752948AbeDLTgP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Apr 2018 15:36:15 -0400
+Received: by mail-pl0-f67.google.com with SMTP id w12-v6so3662623plp.0
+        for <git@vger.kernel.org>; Thu, 12 Apr 2018 12:36:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:cc:subject:references:afrom:user-agent:in-reply-to:from:date
-         :message-id:mime-version;
-        bh=mGvDLYBtUZFUIkiRQGm2x2nxACdNdGxHdTYhZpDnsK8=;
-        b=f6N7gcMCif6MRBjfpIcG2WGnibKl0qZk2p264HKlIcLfZL+hnHjLj9bcKafPYwuIeL
-         c2ESLfxzAFotmLlHlKmM19ysUGuoUwmSKagW0+YMzGUzW7gBSrIK8ZVuaZouA06LQwBW
-         WjJkrGocOLHZFMMVx8d5GMqocfEmQmaCEf9MUUUkzLeonjPkmGe/5dhacw7z5Kys817W
-         zrU2n6VOlB3K+Md2tCERnZbiwu6GX1IasYRpROeWFn2Kp+DAiNFZH7RpeIZ5pnLQVfpI
-         n/4WRAp57DrI5/e2l+iH82yqT+WKUHqHsF17I7skk9hT/GiFj+1TXVO203Axqdh1Vk6I
-         o9Zg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=zZZoKtKzlNk9SZ3T0J5MPMe718gxaKMoqeJTUKMT2IA=;
+        b=EK8oMxbJW5fjJHFFr+q12z72zemSPkT9zmin2gg9cNq/6T0FcwVnW6IitO5bscgmfa
+         AYx3vbhva/6L+2qQVS0MsvK9l3BVWuvnoAl613zn0p5GPMa9RjZjtJTpg1a53cEVYpF4
+         z2SUgT5ujXgkW4zvw7fPXm4TJyB/u06hqLttElF8JkzOG+uQxED5aVO25OH4vDhY0Y4Z
+         UBWIEFb6uWGM+ny0/a9KeDgc2805iO0CvyxJWdG2RMfvxNxmnDk8yBtnfpPHO/wAaqbU
+         llcJUjm+d+dRILNOmmiWMsgqbae94pbWAhx5O5T7C6WkksUt/O20DDlYDp3K8/kw5R2K
+         Sl+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:subject:references:afrom:user-agent
-         :in-reply-to:from:date:message-id:mime-version;
-        bh=mGvDLYBtUZFUIkiRQGm2x2nxACdNdGxHdTYhZpDnsK8=;
-        b=UN9+OsTpjhMS5qXrb7GXfl+WotfFoDvIuTNZ4lc/g587YHg85OgPr489loCmZ6reSN
-         wdG7cMS4xxbD/5d/2K/ZNPmBLy2bGtaKaLtNKzWjcvSPyGQlmrv3AXB68ndRjYMilivH
-         lmtJ/fEdoTpbKvzB56jRPKjKQ/7susEJCacfRAaguXkqOtLg6pVX7SuHSm2seghOyCEZ
-         +UZ4WQb6Ma0GP/XGEn0jplOgBgg7xFz6tQz3PExciqRReAGb04PInfvCRlcsgywS1bDi
-         M8HxO01Dv/YTyQ1w29z07L0uJ/BYOCsjczaRW7UyjSNPNOARF/KooLU2nBkGG4elCvPk
-         CbDA==
-X-Gm-Message-State: ALQs6tCls0eqOjAl19m1mvz5T0f/NfkWnVoVutBZ7SCgcDcHUrtbBF6N
-        vWquljV6TAPriVfkrjiGrt90kUxN
-X-Google-Smtp-Source: AIpwx4/iU7bCVAaT1ZRs0A/ZcZvcFRkpM2EtjmqTEnvl9z/t9Rs5Lq7YXnvTZjHFUl6GLAFOB682gQ==
-X-Received: by 10.223.144.110 with SMTP id h101mr1611507wrh.167.1523558844215;
-        Thu, 12 Apr 2018 11:47:24 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id c130sm49421wmh.33.2018.04.12.11.47.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 12 Apr 2018 11:47:22 -0700 (PDT)
-To:     Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Cc:     git@vger.kernel.org
-Subject: Re: File versioning based on shallow Git repositories?
-References: <hbf.20180412fvfi@bombur.uio.no>
-aFrom:  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <hbf.20180412fvfi@bombur.uio.no>
-From:   avarab@gmail.com (=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason)
-Date:   Thu, 12 Apr 2018 20:47:21 +0200
-Message-ID: <87d0z4b6ti.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=zZZoKtKzlNk9SZ3T0J5MPMe718gxaKMoqeJTUKMT2IA=;
+        b=GSTSOOu57XGbcTHG7NoTQby2UDAszQRHV7KSdzwlP0T59YqEZIHyVXt/uwBdPUP2lt
+         p8H7MOy4sU/2c68h2YBSB5Dj4W9D0a/4e4qr8FPxsjMdN5smQQjupFP7l2GiT+YGJhWv
+         p55Xldoq3qcI77ucOHsNKlDLqpwUFoKOFTFnbUlmjz3Y/dwV5gUHw4yr6hu5miehNvjz
+         VLLd2Vj1ZlFSaTX3CXdX2fhCyZtDlL++RaXEvg53tCAMlEQ9XRb2QZfvHI2y+B91lci7
+         qepwFsxAr8gpy6gJLAdu37L+gCMzHAvSMOtME/EY1+2zdPc4HaTbRFHyYTHCbh/pfoXl
+         Hl7Q==
+X-Gm-Message-State: ALQs6tBetuq0fQjpaMSs0OVSvo/ihp8SljJG1Itc4uyUzpWDzqKaBQRn
+        TYWERrA/ZiES4T/XPW2HNx8m86pvkA/e3o1remg=
+X-Google-Smtp-Source: AIpwx49iyiBVI3sWNBPPn51p4LoCoaiaU4ITMWauoDxt9GsZzZYzRCaBmSemD3be28xJaTKxWGnOIX1S5+nUEsNzEnE=
+X-Received: by 2002:a17:902:6184:: with SMTP id u4-v6mr2411800plj.390.1523561775092;
+ Thu, 12 Apr 2018 12:36:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.178.66 with HTTP; Thu, 12 Apr 2018 12:36:14 -0700 (PDT)
+In-Reply-To: <20180411210857.22598-2-asheiduk@gmail.com>
+References: <b227d2b3-dfe8-09cf-2705-da70bfebd268@gmail.com>
+ <20180411210857.22598-1-asheiduk@gmail.com> <20180411210857.22598-2-asheiduk@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 12 Apr 2018 21:36:14 +0200
+Message-ID: <CAN0heSpD+TurNsP9Xtwh2OwQaenSCJ2GdpDbZWoifPDBC+tZHg@mail.gmail.com>
+Subject: Re: fixup! [PATCH 1/6] doc: fix formatting inconsistency in githooks.txt
+To:     Andreas Heiduk <asheiduk@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 11 April 2018 at 23:08, Andreas Heiduk <asheiduk@gmail.com> wrote:
+> - reflow some paragraphs
+> ---
+>  Documentation/githooks.txt | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 
-On Thu, Apr 12 2018, Hallvard Breien Furuseth wrote:
+I have reviewed the resulting githooks.txt. See the diff below for two
+more instances that I found. For the second hunk, I have difficulties
+parsing that paragraph, but I still claim those should be backticks and
+*git* read-tree...
 
-> Can I use a shallow Git repo for file versioning, and regularly purge
-> history older than e.g. 2 weeks?  Purged data MUST NOT be recoverable.
->
-> Or is there a backup tool based on shallow Git cloning which does this?
-> Push/pull to another shallow repo would be nice but is not required.
-> The files are text files up to 1/4 Gb, usually with few changes.
->
->
-> If using Git - I see "git fetch --depth" can shorten history now.
-> How do I do that without 'fetch', in the origin repo?
-> Also Documentation/technical/shallow.txt describes some caveats, I'm
-> not sure how relevant they are.
->
-> To purge old data -
->   git config core.logallrefupdates false
->   git gc --prune=now --aggressive
-> Anything else?
->
-> I'm guessing that without --aggressive, some expired info might be
-> deduced from studying the packing of the remaining objects.  Don't
-> know if we'll be required to be that paranoid.
+Martin
 
-The shallow feature is not for this use-case, but there's a much easier
-solution that I've used for exactly this use-case, e.g. taking backups
-of SQL dumps that delta-compress well, and then throwing out old
-backups.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index ab5ce80e13..e3c283a174 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -80,7 +80,7 @@ This hook is invoked by linkgit:git-am[1].  It takes
+no parameter,
+ and is invoked after the patch is applied and a commit is made.
 
-You:
+ This hook is meant primarily for notification, and cannot affect
+-the outcome of 'git am'.
++the outcome of `git am`.
 
-1. Create a backup.git repo
-2. Each time you make a backup, checkout a new orphan branch, see "git
-   checkout --orphan"
-3. You copy the files over, commit them, "git log" at this point shows
-   one commit no matter if you've done this before.
-4. You create a tag for this backup, e.g. one named after the current
-   time, delete the branch.
-5. You then have a retention period for the tags, e.g. only keep the
-   last 30 tags if you do daily backups for 30 days of backups.
+ pre-commit
+ ~~~~~~~~~~
+@@ -400,8 +400,8 @@ when the tip of the current branch is updated to
+the new commit, and
+ exit with a zero status.
 
-Then as soon as you delete the tags the old commit will be unreferenced,
-and you can make git-gc delete the data.
-
-You'll still be able to `git diff` between tags, even though they have
-unrelated histories, and the files will still delta-compress.
+ For example, the hook can simply run `git read-tree -u -m HEAD "$1"`
+-in order to emulate 'git fetch' that is run in the reverse direction
+-with `git push`, as the two-tree form of `read-tree -u -m` is
++in order to emulate `git fetch` that is run in the reverse direction
++with `git push`, as the two-tree form of `git read-tree -u -m` is
+ essentially the same as `git checkout` that switches branches while
+ keeping the local changes in the working tree that do not interfere
+ with the difference between the branches.
