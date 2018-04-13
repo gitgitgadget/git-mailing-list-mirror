@@ -2,96 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FACE1F404
-	for <e@80x24.org>; Fri, 13 Apr 2018 13:04:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F0A71F404
+	for <e@80x24.org>; Fri, 13 Apr 2018 15:19:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753931AbeDMNEt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 09:04:49 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60331 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751847AbeDMNEs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 09:04:48 -0400
-Received: from [192.168.0.129] ([37.201.203.18]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MeMOx-1epBAb2dzD-00QB5h; Fri, 13
- Apr 2018 15:04:26 +0200
-Date:   Fri, 13 Apr 2018 15:03:21 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Kim Gybels <kgybels@infogroep.be>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] daemon: graceful shutdown of client connection
-In-Reply-To: <20180412210757.7792-3-kgybels@infogroep.be>
-Message-ID: <nycvar.QRO.7.76.6.1804131440100.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180412210757.7792-1-kgybels@infogroep.be> <20180412210757.7792-3-kgybels@infogroep.be>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1750837AbeDMPTD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 11:19:03 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:44470 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750761AbeDMPTC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 11:19:02 -0400
+Received: by mail-wr0-f193.google.com with SMTP id u46so9064207wrc.11
+        for <git@vger.kernel.org>; Fri, 13 Apr 2018 08:19:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=to:from:subject:openpgp:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=bxEfPQxMS/8kBGhyHV91OlldI5bn6dGsD3e28JEK37Q=;
+        b=mnaKwUTjEDLuI9SSr4SuTN71nt5ptS5HIMfcKzBaVW5BT6D4qbAxyzmYCkQeFKLvoX
+         CAnqAC1mUgYeWhTjG/K1sHJCk4MwXVtxtYPGKv853p1mxDjmhH+rzmDFa38tCJAYlJ4F
+         3ypsF8BF8EedXG0mTph/q9Vqy9SoPK1vlx8rd7+CxJrdYWuAmQqBGur8Ed3YVHMXRPn6
+         p/ME4TSWAqnbyXTzst2vFWDpal8klY0jXWWHkI6nBntC6pY8mfJq11FbaHPztdPTuqnZ
+         mORtC/buTV0y0mIOPYK0IJEL5HmrNnj+owFTE3B0dXhs/xNY0api4ywNgn6jm/zASU7c
+         wZPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:openpgp:message-id:date
+         :user-agent:mime-version:content-language:content-transfer-encoding;
+        bh=bxEfPQxMS/8kBGhyHV91OlldI5bn6dGsD3e28JEK37Q=;
+        b=rcPxvSboAtT1hpp1d5q49+9T9EDFiqxE1hhJ9UH0+/RH/rheYEKnsdv6IxSQvqlnSG
+         mjbf1d8QXaElcNYnhJfrNfH3d08QZiwQXlZQkPX5wwqw0ECkpsDoqiMXQkJcZwpCpj8z
+         PiRmhjo7wdxMjRcW+s7WTToJbm/lQKpL9UbRp6fbxRrzj156bbZGNej9WvTxWeqDvYxJ
+         8USU3k7yGJiOCuJ6gviwIvVTPt78K9JakG/aBxyFw5XlsZJ70YfFyMuoJlH8/yEOhV/N
+         auRhzk6ejOxCJOHgDHFFBlGBsi+EPBjWRUZECA9kJaqfrA14wqABmZbqIFOwHMeX/Rpi
+         2w+A==
+X-Gm-Message-State: ALQs6tBy6Tc5jCOYNWU12P581gdA5tV9dEnc/8AA0PLUfimjl6h9Bqw9
+        5tFW1MUzE3HyISK89uK2/o98BQ==
+X-Google-Smtp-Source: AIpwx4/XS1rAGlSI5yhpoPfRKLldIA7HKV780BPRQf2owuHFvncfwhbT20tffqGDuX9rkOcAHZOSOw==
+X-Received: by 10.28.22.143 with SMTP id 137mr4200670wmw.58.1523632741386;
+        Fri, 13 Apr 2018 08:19:01 -0700 (PDT)
+Received: from [10.0.0.56] (188-22-108-12.adsl.highway.telekom.at. [188.22.108.12])
+        by smtp.gmail.com with ESMTPSA id g185sm1939497wmf.40.2018.04.13.08.19.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 13 Apr 2018 08:19:00 -0700 (PDT)
+To:     git@vger.kernel.org, Justin Cappos <jcappos@nyu.edu>,
+        Santiago Torres <santiago@nyu.edu>,
+        Wendy Dembowski <wmd@google.com>
+From:   Lukas Puehringer <lukas.puehringer@nyu.edu>
+Subject: legal consent to use logo in talk
+Openpgp: preference=signencrypt
+Message-ID: <36da21c9-8d13-95a7-94dd-3238166aa040@nyu.edu>
+Date:   Fri, 13 Apr 2018 17:18:59 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:52.0)
+ Gecko/20100101 Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:iYhKw4z3A+3ZbwBTK369anutC0P0vPK6B4FLCwzknYeaqkN2NJR
- yUfVWn1ZzFkkFrGomFjauRjh2FW3X3Bb3aFFxSnC3k2jNyPPDZoTZaPatv/wiN0jDwOWth7
- CqbNIWntK+B26RyHYrdoCI+wyqhuHnednX0SURHvVkD+g2R/GaZMfYOHWY8D+c5ky8KSaLd
- aVlbDeaZzBYMHi7STM2fg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0eq4bwmtzXk=:PBuWEQ7upYcCbi9PRwfDJc
- 38ffejljt2p+ondSdEdDvzln0H2aNnghph0S4QZZYR9nUz+jezVgkJR7iaul5qOlpJOk7kM8y
- bjvn/3udqty7oLota4HUssbFAO979wfXDpV/he9FgbuOfjE0HaHbBSX4WcIOQhmsasypi9ulL
- +lgOgd8fKv5vsxLINGiQ8SCxVsx0/a/sV/+3CLjEaCO8g75ppKN5rAUkoLizcuQWE6Ik/Vqpv
- inrilhxtDYoC0rgfEZUCPKSvvSylURW0jWw/8cSjnNPEacnGkZvFwq/lX0UwFK77mEHvpP+69
- wukAGH7LpvLxWX/BsjMcY2MewZkWnt3FGsuZYdILiAIs5R3WjDKoIhZ3MdpdjzDRABOVJHO4+
- 35VU1f6gFpN3Dpt5TvEcCqVXkXwMyuB2aSRqWX6z/9zgS1kRHROZDKVkbBXlTaCndVb9Wp20m
- DpC1Zeb67n5al31wq6t1SW0j18qtrKtPa1Bibo2kH/qHXgLUEto6RI76/NwFPXVTMgCtV5mgT
- qOzolTLOGQArZEf44VXQPqcql5LD52N/4rKk3t3AuyViVk1a6jE+aJfJRLGiK52UcBkHUmSWl
- 1ypTCtoSeanjBQA0o+aVoPx+f8bAYTvqew7mFfNAy7LiwIGOlxOMipxIHWxDwMEkZifyD6waS
- g9be1GujgYLiIpfgBdapmCjte2+5bZqw8NTea7mXWqD1R65n051Agg3bRTnxEBt+by+U73pyP
- vRiR9K+5Dbt1bxTr7KCA78UOBmnWl/0VpVigmlnG6THiFckR/ASD1JKE6JzN9oPLw0aONPw3J
- 8oo0iKVcgVvT3KHFs9Zha7W5PguCL3HkibR44FwYW8yFgDSB1M=
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Kim,
+Dear git community,
 
-On Thu, 12 Apr 2018, Kim Gybels wrote:
+I'd like to use the git logo in the slides for a talk about software
+supply chain security at KubeCon + CloudNativeCon 2018 [1].
 
-> On Windows, a connection is shutdown when the last open handle to it is
-> closed. When that last open handle is stdout of our child process, an
-> abortive shutdown is triggered when said process exits. Ensure a
-> graceful shutdown of the client connection by keeping an open handle
-> until we detect our child process has finished. This allows all the data
-> to be sent to the client, instead of being discarded.
+The talk will present in-toto [2], a framework to secure the software
+supply chain, developed at New York University, and Grafeas [3], an open
+artifact metadata API to audit and govern software supply chains,
+developed at Google.
 
-Nice explanation!
+The logo will serve to demonstrate an exemplary software supply chain.
 
-> @@ -928,13 +931,13 @@ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
->  	}
->  
->  	cld.argv = cld_argv.argv;
-> -	cld.in = incoming;
-> +	cld.in = dup(incoming);
+The legal department of my co-lecturer, mandates to acquire legal
+consent when using logos, which I hereby request.
 
-At first I was worried that somebody might want to remove this in the
-future, but then I saw this line (which also calls dup()):
+Please let me know if you need any additional information, or if you
+would like me to share the slide deck.
 
->  	cld.out = dup(incoming);
->  
->  	if (start_command(&cld))
->  		logerror("unable to fork");
->  	else
-> -		add_child(&cld, addr, addrlen);
-> +		add_child(&cld, addr, addrlen, incoming);
->  }
->  
->  static void child_handler(int signo)
+Thanks,
+Lukas Puehringer
 
-Nice work!
 
-I wonder whether you found a reliable way to trigger this? It would be
-nice to have a regression test for this.
-
-Ciao,
-Dscho
+[1] https://kccnceu18.sched.com/event/d5ccae5373cef50d11d502901b1b7eb9
+[2] https://in-toto.io/
+[3] https://grafeas.io/
+-- 
+lukas.puehringer@nyu.edu
+PGP fingerprint: 8BA6 9B87 D43B E294 F23E  8120 89A2 AD3C 07D9 62E8
