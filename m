@@ -7,159 +7,75 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A65A1F42D
-	for <e@80x24.org>; Fri, 13 Apr 2018 11:12:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27C811F424
+	for <e@80x24.org>; Fri, 13 Apr 2018 11:12:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754204AbeDMLL6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 07:11:58 -0400
-Received: from mout.gmx.net ([212.227.15.15]:59855 "EHLO mout.gmx.net"
+        id S1754289AbeDMLMy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 07:12:54 -0400
+Received: from mout.gmx.net ([212.227.17.21]:53229 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753981AbeDMLL4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 07:11:56 -0400
-Received: from [192.168.0.129] ([37.201.203.18]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mg3Vt-1emNSU10cf-00NPUJ; Fri, 13
- Apr 2018 13:11:51 +0200
-Date:   Fri, 13 Apr 2018 13:11:37 +0200 (DST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1754273AbeDMLMw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 07:12:52 -0400
+Received: from [192.168.0.129] ([37.201.203.18]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LrqNe-1eSmH00bUM-013aBa; Fri, 13
+ Apr 2018 13:12:48 +0200
+Date:   Fri, 13 Apr 2018 13:12:34 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] Deprecate support for .git/info/grafts
-Message-ID: <0f0942043678fe76f8d654306482ee26fac643f0.1523617836.git.johannes.schindelin@gmx.de>
+To:     Jakub Narebski <jnareb@gmail.com>
+cc:     Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org
+Subject: Re: File versioning based on shallow Git repositories?
+In-Reply-To: <86efjjmqsi.fsf@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804131157360.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <hbf.20180412fvfi@bombur.uio.no>        <87d0z4b6ti.fsf@evledraar.gmail.com>        <4af21bcd-7a68-50df-4cce-0b050ccaeb90@usit.uio.no> <86efjjmqsi.fsf@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:5AeqMqFjk5T1iaS+ejFFgn8C2sT5pGgFW+ue+apSd74b+cMN3R9
- QNGChedQhYR7WSChN85pQDaUGcT9mnDpfW33x2la3hUWENngkPp4+Cu8V7wdXet8QGlmZpF
- 8i5S0hrtA8gdSpe20YZRCJ/uqrgUprJaqIs829gzLagRqfBJlsmQPRS2VMEbuzND8VEL1VO
- rUj4/HJEvbwMvvc8k5PDQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qfoP5UWrX/M=:qQfX6T63CXEbrlhNn/OkFA
- 0zHGJdsLtJWQoF2wb+xxziVOYAMRW+Xan9AgnE4b/vXx1otUCnpT16tk4lnc2/Yn606OJRqrZ
- Re5fOyJr3UZoNvbt7ltyxn8ODij4/4ONu6RrDWR08MuVwAfRhoUZCn6uHMLjVPk6fg7weH/+I
- Oc7BAPtdJHDG2zldbQRSQQ3i/iVwppLfGrKNh+QICmpfyMC2o8fHSwFIO1KITbgGSDfX/zGIj
- bkHfxflnx0zhfHciqHohtcfRug0rMAwLPhxkVLatezF9nNvMTe2ebap0Oa3oy3H3upQ6SXhoG
- Iam5vgMCfNFDC4WKcDCNknhpy+LnqAizJKm76z6q4gdTkyr5Y3/yAZDFqwNRDi++BiL64e7XP
- lZSHn95u+xk7RVpYCNuWpNtjww7hEkzOE+L905uAPxXcKvqCA+N+EFrHUnq3l0K9VSm/7hJ8X
- J3ohyVCnXBPfHA/EYW1RJMxup7mUMEPaMxfv76BMsENF1L7q9apDNZHwUL6LnhjGBO7jXdhwY
- NkQPLiHqKEeqeJIRD844sxCpE1vTMMYyt3lqsBpjcNsYrF2KtoMmgTqgrNVobNTmsEMsklJ9P
- Qc3sJc+MrcafkYZpLyDmIYtbXoJdSc6tXqBSDstQHOBj/2AgaJGJ0kJQaHOgF78oEwSbrLCYh
- 4QVUZv7OEPaO4fY9uoSFqzFYFNOdMfiaW/J0mIcaGR1lX+xxff9JGFeZl+l2fAHt1We/lE+Wi
- SaN67NqqSholqMTLonj9uNCoirB5GbHMiOLEyPZ+1HARzyK9oyr8lKBdOmYnboJ3BcjDje3IP
- 5wzI8Q7uhkLLjN4K4gFgs7KvVM5IHfIQOXEFYvKCsVNQilDM0A=
+X-Provags-ID: V03:K1:dfWJ43yWwpflWrRGOi5HFjOpGN0zqQuIKsssbzTGP+Eeir7DetY
+ o8mLX4UhUUsDj80izg3Xn+XsIRB1mX/gJA6F9mICRZgS0Vp9GSsDz4+P1NNOuA0VhcMGumi
+ y/1344bO5gQopOr0iwg0g1N5KyZlSh/npwKHZEAx1cpS+Gp15SmSW1mwLnHopyTV0VJMm9G
+ kfVUFMsFJlVqwiXvHNBxg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HtOMSm6ohx0=:kA+C6s8BtUShkUakb1vmdN
+ noBbfzXw2TurXCSw1IsXURDRaYWZRd9exQ9tzryOf+jRAV0cC/9qv1GMstFYg5jz58klTfqxs
+ 0dKLgoz2N2HjpVevuPG85fA3o7s7e+N4tDQTRwPRrYLHVXOlxMz0SafwFaNMzn3MSwRaxO0Fw
+ DqIUXaW+xUrgQlxdp7ZTpzSOaeSrviTQjRLcAbt9F9Sn2S7NpxdvgPlPgStMdHnHJ+vKv+nmU
+ XzIV9fd7KzmaI+waT/jmLMeanXHwBxuBHxXyT32hHV5d1djHkNmKdGHbMcqRy+mlZqhjJI2A6
+ MRTpuqHMiQ8Arrs1PC8GPSfxh0yJ0pgS6QpExIda6So6RRTiqaadOS/6cT9QvPcAbTfnnGuVQ
+ nvYgMF0w7U3LV1eyuMGKbfYcSME7NgDwUPmEyCWBXD951QOziEEdb+2YVVzZy5/gxBLJprXqi
+ T5yobkg2tdNuOq+6Wo643TwSv45+N3mK8kMvPS2ma6qKTIg+p+WZR1bJbVRTofqUt8nni20m4
+ uM97pFKiTieWzixbspdCTXB9dKHp17ihPfG4gTIP5Q6sx0BsoZJd5GmNthEUO9MHCoNysYaLk
+ +/AAfRi442DVKP0AMG2FUN/8smplfOC6ywAVFAhlnSPcrXRa55tU/J9TXLaNYuY69wnDwREc2
+ cUq32lL2Lirv/veYFBlTJaSGz8USuUxAKl3ZOtRo1ZSr8bwnGcusDmRHePihGO32CU1tbmZzK
+ YB5tkYIvjTYI39LvjMmcgX2tPIB5dzHxahFbGDzNcfsxALM7X6TkDW/FXxpAgbm3vTXpwJQ8A
+ QdZtK1txQHIMjGAaK0fNdftV9eph+kpYmYr43TuY7ngOOxdTOQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The grafts feature was a convenient way to "stich together" ancient
-history to the fresh start of linux.git.
+Hi Kuba,
 
-Its implementation is, however, not up to Git's standards, as there are
-too many ways where it can lead to surprising and unwelcome behavior.
+On Fri, 13 Apr 2018, Jakub Narebski wrote:
 
-For example, when pushing from a repository with active grafts, it is
-possible to miss commits that have been "grafted out", resulting in a
-broken state on the other side.
+> Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no> writes:
+> 
+> > Also maybe it'll be worthwhile to generate .git/info/grafts in a local
+> > clone of the repo to get back easily visible history.  No grafts in
+> > the original repo, grafts mess things up.
+> 
+> Just a reminder: modern Git has "git replace", a modern and safe
+> alternative to the grafts file.
 
-Also, the grafts feature is limited to "rewriting" commits' list of
-parents, it cannot replace anything else.
+Right!
 
-The much younger feature implemented as `git replace` set out to remedy
-those limitations and dangerous bugs.
+Maybe it is time to start deprecating grafts? They *do* cause problems,
+such as weird "missing objects" problems when trying to fetch into, or
+push from, a repository with grafts. These problems are not shared by the
+`git replace` method.
 
-Seeing as `git replace` is pretty mature by now, it is time to deprecate
-support for the graft file, and to retire it eventually.
+I just sent out a patch to add a deprecation warning.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- advice.c                  | 2 ++
- advice.h                  | 1 +
- commit.c                  | 9 +++++++++
- t/t6001-rev-list-graft.sh | 9 +++++++++
- 4 files changed, 21 insertions(+)
-
-diff --git a/advice.c b/advice.c
-index 406efc183ba..4411704fd45 100644
---- a/advice.c
-+++ b/advice.c
-@@ -19,6 +19,7 @@ int advice_rm_hints = 1;
- int advice_add_embedded_repo = 1;
- int advice_ignored_hook = 1;
- int advice_waiting_for_editor = 1;
-+int advice_graft_file_deprecated = 1;
- 
- static struct {
- 	const char *name;
-@@ -42,6 +43,7 @@ static struct {
- 	{ "addembeddedrepo", &advice_add_embedded_repo },
- 	{ "ignoredhook", &advice_ignored_hook },
- 	{ "waitingforeditor", &advice_waiting_for_editor },
-+	{ "graftfiledeprecated", &advice_graft_file_deprecated },
- 
- 	/* make this an alias for backward compatibility */
- 	{ "pushnonfastforward", &advice_push_update_rejected }
-diff --git a/advice.h b/advice.h
-index 70568fa7922..9f5064e82a8 100644
---- a/advice.h
-+++ b/advice.h
-@@ -21,6 +21,7 @@ extern int advice_rm_hints;
- extern int advice_add_embedded_repo;
- extern int advice_ignored_hook;
- extern int advice_waiting_for_editor;
-+extern int advice_graft_file_deprecated;
- 
- int git_default_advice_config(const char *var, const char *value);
- __attribute__((format (printf, 1, 2)))
-diff --git a/commit.c b/commit.c
-index ca474a7c112..a96b0a27154 100644
---- a/commit.c
-+++ b/commit.c
-@@ -12,6 +12,7 @@
- #include "prio-queue.h"
- #include "sha1-lookup.h"
- #include "wt-status.h"
-+#include "advice.h"
- 
- static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
- 
-@@ -176,6 +177,14 @@ static int read_graft_file(const char *graft_file)
- 	struct strbuf buf = STRBUF_INIT;
- 	if (!fp)
- 		return -1;
-+	if (advice_graft_file_deprecated)
-+		advise(_("Support for <GIT_DIR>/info/grafts is deprecated\n"
-+			 "and will be removed in a future Git version.\n"
-+			 "\n"
-+			 "Please use \"git replace --graft [...]\" instead.\n"
-+			 "\n"
-+			 "Turn this message off by running\n"
-+			 "\"git config advice.graftFileDeprecated false\""));
- 	while (!strbuf_getwholeline(&buf, fp, '\n')) {
- 		/* The format is just "Commit Parent1 Parent2 ...\n" */
- 		struct commit_graft *graft = read_graft_line(&buf);
-diff --git a/t/t6001-rev-list-graft.sh b/t/t6001-rev-list-graft.sh
-index 05ddc69cf2a..7504ba47511 100755
---- a/t/t6001-rev-list-graft.sh
-+++ b/t/t6001-rev-list-graft.sh
-@@ -110,4 +110,13 @@ do
- 	"
- 
- done
-+
-+test_expect_success 'show advice that grafts are deprecated' '
-+	git show HEAD 2>err &&
-+	test_i18ngrep "git replace" err &&
-+	test_config advice.graftFileDeprecated false &&
-+	git show HEAD 2>err &&
-+	test_i18ngrep ! "git replace" err
-+'
-+
- test_done
-
-base-commit: fe0a9eaf31dd0c349ae4308498c33a5c3794b293
--- 
-2.17.0.windows.1.4.g7e4058d72e3
-
-Published-As: https://github.com/dscho/git/releases/tag/deprecate-grafts-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git deprecate-grafts-v1
+Ciao,
+Dscho
