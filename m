@@ -2,126 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 798FF1F404
-	for <e@80x24.org>; Fri, 13 Apr 2018 20:04:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 880E41F404
+	for <e@80x24.org>; Fri, 13 Apr 2018 20:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750864AbeDMUEE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 16:04:04 -0400
-Received: from mail-ua0-f177.google.com ([209.85.217.177]:43174 "EHLO
-        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750761AbeDMUEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 16:04:04 -0400
-Received: by mail-ua0-f177.google.com with SMTP id u4so6525114uaf.10
-        for <git@vger.kernel.org>; Fri, 13 Apr 2018 13:04:03 -0700 (PDT)
+        id S1751002AbeDMUFV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 16:05:21 -0400
+Received: from mail-yb0-f179.google.com ([209.85.213.179]:40360 "EHLO
+        mail-yb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750980AbeDMUFU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 16:05:20 -0400
+Received: by mail-yb0-f179.google.com with SMTP id c10-v6so4881709ybn.7
+        for <git@vger.kernel.org>; Fri, 13 Apr 2018 13:05:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=v6qUXq9imfLL/VIx8xowLBRjGpQXfzXeh85Wxg4m+sk=;
-        b=DEuUOqyeBy3SZFgUBj6fvJ1zSzjqkb5Levq4DFWRQvQ0mkFVfpnTYoN7AuBVi9PAaa
-         e0Kk8BLLkSnev1xxAOFOZ8qs/9o7xuqQzR2hjAnuOiZFyGQa2t/E+eViAueaecD8uAjT
-         3XxYjcr+6X/8JLD3UadV9eYTYXYmLT61ZTkoeghnhHmlhL4sAEd0f/5J+fLvmls7ib/U
-         RzhiklAyZtLZGss/T7I0NsRfN+4Z7nVLQQhg+bYdI3P8y9MW22+qTA8io2Ya9dSlZrOP
-         XUUnZ/aQ4f7vySX5/EBB+qtdwmEZmgNu668Xj3nvqrB9Nk5eulBfJMeWpH4ryiL48Ouo
-         RIiA==
+        bh=pj2ynXcflfuvmmzIjFKprQcAD76daL2+rjM7y8H0qns=;
+        b=q/eayM6ayqV22s8BntWrGOnuB6PfN7zbYe26r7staoaX2k3p8nQ3MT7e8v/Ii1SZ5q
+         m2QLAEXa72Xmwnz+tBu00CY70BbLmSz4PQvqPPeoDL8R74H3wM2CsCt2TAsTR2C1X5jI
+         dr4poITOOAb+IXqq9VHWJmWjRyJXq83OQG3XlmRRf9FvPLCAh3Go0I/AMignWneUs0O2
+         iIBWQztGo2+V5EmlqXOqjr/wy5DJvLWKhuZHkc9Mr3KNQk1/4K9d6yBC4l00QcM54/G1
+         j9yj+950FKCgcqSVkqBwZp1om3qs0zeV9HPYFab6B+cP6vO/tjuDkwN/LXbPKOBVClVC
+         UHFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=v6qUXq9imfLL/VIx8xowLBRjGpQXfzXeh85Wxg4m+sk=;
-        b=ROPvSVUb4UiqqcVGT66A01GOvqGMDz/1AwDJhnuVMc1uxcwcH8Sq2eqZeMBH/zF7uC
-         YIwLRsL1mYL26lMDo5pKPB8GgDnuxG1r7IPMr6hxtEOX5b7lgclNxTJLMQrCL7fGgtDQ
-         5+cfgk/WuJPeKHqPdx3I+c7qX4F945m58fbrnTWq6Ku9Fn6Rx2dlUhgCoOWoFIi/PLm1
-         8Aa0xrBOBknirvtTV8qMwgmlisrN/ZJnBepta5v1Wt6pBtXo4L/tZw2gM2YVngakYsrf
-         oBLs+Vy/C4ek9pLytgeEB9EN+Egjz5t3VTVKBx80sDB8r0NYA4ASsLtavm3HvJE2TGFB
-         D94g==
-X-Gm-Message-State: ALQs6tBNvCloR0NJFh+FkudYx50Ved/M/TohV99Wg2KM5GaY+I2w6Ghk
-        HVXBS1R5NJZwDNRZUUtrJcN2rLGWCYRITaYluNM=
-X-Google-Smtp-Source: AIpwx49JLfUEWj4ZRSRdaPYwrjx+7qPRyyYpa0AlHcawynNf0vEmsuHGJk4Y8o2PHpGP9EyFa3STN0GphHTNTfkenoQ=
-X-Received: by 10.176.90.38 with SMTP id l35mr5063299uad.79.1523649842859;
- Fri, 13 Apr 2018 13:04:02 -0700 (PDT)
+        bh=pj2ynXcflfuvmmzIjFKprQcAD76daL2+rjM7y8H0qns=;
+        b=X5z3dtL0GXwGxDGszH2kUWDBDhY3YhsO5m+HHquybBdchNyZcG6uZYMfZjJBR9fwU/
+         uIUF3L5u59NfcMPw5oQEWbGOjTyioxi+9WVzwzCcodbTuTg0Ko9Q1dHKxFq5hgEvf/kW
+         wHX4m4DS+wF91QRBGamuaEEKV4ynZF2HghQnPo9wH/BklW8/q713AvlneaekwMKpXSJq
+         lsD43MwJoN5ePaLsVf7FCzgTBdNlCeEODVbgO7Vi2OuiO5d2mVkwbPebGalmUhYZHSoB
+         Q0IQMe7RhNCu4WnvNjtXEicix3weBBuY8SZZxhUm2UFpcAQJjDcWEVjeDlolB2V82BVW
+         sOaQ==
+X-Gm-Message-State: ALQs6tD/YXe1meO2ykjfxT1EQaw/R2I5z9yOG4JysDu9+VFeQ8Le7Fp8
+        NCaWkGERuy7/cJYMeFDIYWOzlbb0GAFlrXm8KpprxQ==
+X-Google-Smtp-Source: AIpwx486ST/28JXDp9rk5959frhSITdKqQ+sNMQoIi+ZM0XGULZmCqmLNkahNxnHWovrCGCPt0mChwlXgkja579SoA8=
+X-Received: by 2002:a25:8e09:: with SMTP id p9-v6mr6026337ybl.352.1523649918914;
+ Fri, 13 Apr 2018 13:05:18 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.159.40.42 with HTTP; Fri, 13 Apr 2018 13:04:01 -0700 (PDT)
-In-Reply-To: <CA+55aFwi9pTAJT_qtv=vHLgu=B1fdXBoD96i8Y5xnbS=zrfSzg@mail.gmail.com>
-References: <CA+55aFzLZ3UkG5svqZwSnhNk75=fXJRkvU1m_RHBG54NOoaZPA@mail.gmail.com>
- <xmqq604w2j4u.fsf@gitster-ct.c.googlers.com> <xmqqtvsg10bu.fsf@gitster-ct.c.googlers.com>
- <CA+55aFxA9YVLoh_23V8Hi+X7ODEmqg-dhdAYZz1jbq5JhXqBFw@mail.gmail.com>
- <CA+55aFwM2CaafNGq8_=GkYAw9inpm-4xcyHUmKprLv4Gb3-aVg@mail.gmail.com>
- <CA+55aFw5mpEcEpPTOWych-kjNLc8pEn8FdjJHe2u7HUBBLy-Fw@mail.gmail.com>
- <CA+55aFwwVZDetd-SobOzzLQW4_GEwm3krxEGR+cpqzkzK-yiwQ@mail.gmail.com>
- <CABPp-BHQsOSCJiPU9Ku5b67QTkAjnEBrhx04mTXf2QdPBriHmw@mail.gmail.com> <CA+55aFwi9pTAJT_qtv=vHLgu=B1fdXBoD96i8Y5xnbS=zrfSzg@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 13 Apr 2018 13:04:01 -0700
-Message-ID: <CABPp-BFZZJ=rgOYqgsxD1A-Q5AU91e-HQ6WbAsGSqNppADXySQ@mail.gmail.com>
-Subject: Re: Optimizing writes to unchanged files during merges?
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Fri, 13 Apr 2018 13:05:18
+ -0700 (PDT)
+In-Reply-To: <20180413080733.6380-1-ao2@ao2.it>
+References: <20180412222047.5716-1-ao2@ao2.it> <20180413080733.6380-1-ao2@ao2.it>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 13 Apr 2018 13:05:18 -0700
+Message-ID: <CAGZ79kagFY_AnLJ0Zjcu++e567JHYeHaW-0k8=4Q4rsyqtnU9w@mail.gmail.com>
+Subject: Re: [RFC 07/10] FIXME: wrap-for-bin.sh: set 'core.submodulesFile' for
+ each git invocation
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     git <git@vger.kernel.org>,
+        Richard Hartmann <richih.mailinglist@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 13, 2018 at 10:14 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> On Fri, Apr 13, 2018 at 12:02 AM, Elijah Newren <newren@gmail.com> wrote:
+Hi Antonio,
 
->> However, it turns out we have this awesome function called
->> "was_tracked(const char *path)" that was intended for answering this
->> exact question.  So, assuming was_tracked() isn't buggy, the correct
->> patch for this problem would look like:
+On Fri, Apr 13, 2018 at 1:07 AM, Antonio Ospite <ao2@ao2.it> wrote:
+> This is to test custom gitmodules file paths. The default path can be
+> overridden using the 'GIT_MODULES_FILE' environmental variable.
 >
-> Apparently that causes problems, for some odd reason.
+> Maybe In the final patch the option should be set only when running
+> tests and not unconditionally in the wrapper script, but as a proof of
+> concept the wrapper script was a convenient location.
 >
-> I like the notion of checking the index, but it's not clear that the
-> index is reliable in the presence of renames either.
-
-Yes, precisely.  Checking the *current* index is not reliable in the
-presence of renames.
-
-Trying to use the current index as a proxy for what was in the index
-before the merge started is a problem.  But we had a copy of the index
-before the merge started; we just discarded it at the end of
-unpack_trees().  We could keep it around instead.  That would also
-have the benefits of making the was_dirty() checks more accurate too,
-as using the mtime's in the current index as a proxy for what was in
-the original index has the potential for the same kinds of problems.
-
->>   A big series
->> including that patch was merged to master two days ago, but
->> unfortunately that exact patch was the one that caused some
->> impressively awful fireworks[1].
+> Also, in the final patch a fixed custom file path could be used instead
+> of the environmental variable: to exercise the code it should be enough
+> to have a value different from the default one.
 >
-> Yeah, so this code is fragile.
+> The change to 't0001-init.sh' is needed to make the test pass, since now
+> a config is set on the command line.
+
+Missing sign off.
+
+So you'd think we'd have to rerun the test suite with GIT_MODULES_FILE set?
+That makes for an expensive test. Can we have just a few tests for a few
+commands to see that the basics are working correctly?
+
+
+> ---
+>  Makefile        | 3 ++-
+>  t/t0001-init.sh | 1 +
+>  wrap-for-bin.sh | 2 ++
+>  3 files changed, 5 insertions(+), 1 deletion(-)
+>  mode change 100644 => 100755 wrap-for-bin.sh
 >
-> How about we take a completely different approach? Instead of relying
-> on fragile (but clever) tests, why not rely on stupid brute force?
+> diff --git a/Makefile b/Makefile
+> index f18168725..38ee1f6a2 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2480,7 +2480,8 @@ bin-wrappers/%: wrap-for-bin.sh
+>         @mkdir -p bin-wrappers
+>         $(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+>              -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
+> -            -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))|' < $< > $@ && \
+> +            -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))|' \
+> +            -e 's|git\"|git\" $$GIT_OPTIONS|' < $< > $@ && \
+>         chmod +x $@
 >
-> Yeah, yeah, it's bad to be stupid, but sometimes simple and stupid
-> really does work.
+>  # GNU make supports exporting all variables by "export" without parameters.
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index c413bff9c..6fa3fd24e 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -93,6 +93,7 @@ test_expect_success 'No extra GIT_* on alias scripts' '
+>                 sed -n \
+>                         -e "/^GIT_PREFIX=/d" \
+>                         -e "/^GIT_TEXTDOMAINDIR=/d" \
+> +                       -e "/^GIT_CONFIG_PARAMETERS=/d" \
+>                         -e "/^GIT_/s/=.*//p" |
+>                 sort
+>         EOF
+> diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
+> old mode 100644
+> new mode 100755
+> index 584240881..02bf41cbd
+> --- a/wrap-for-bin.sh
+> +++ b/wrap-for-bin.sh
+> @@ -20,6 +20,8 @@ PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
 >
-<snip>
-> Comments? Because considering the problems this code has had, maybe
-> "stupid" really is the right approach...
-
-It's certainly tempting as an interim solution.  I have an alternative
-interim solution that I think explains well why the code here had been
-fragile, and how to just implement what we want to know rather than
-making approximations to it, which I just posted at [2].  But I can
-see the draw of just gutting the code and replacing with simple brute
-force.  Long term, I think the correct solution is still Junio's
-suggested rewrite[1].  My alternative is slightly closer to that
-end-state, so I favor it over simple brute-force, but if others have
-strong preferences here, I can be happy with either.
-
-
-Elijah
-
-[1] https://public-inbox.org/git/xmqqd147kpdm.fsf@gitster.mtv.corp.google.com/
-[2] https://public-inbox.org/git/20180413195607.18091-1-newren@gmail.com/
+>  export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
+>
+> +GIT_OPTIONS="-c core.submodulesfile=${GITMODULES_FILE:-.gitmodules}"
+> +
+>  if test -n "$GIT_TEST_GDB"
+>  then
+>         unset GIT_TEST_GDB
+> --
+> 2.17.0
+>
