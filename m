@@ -7,103 +7,79 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 880B01F404
-	for <e@80x24.org>; Fri, 13 Apr 2018 17:28:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D2AF1F404
+	for <e@80x24.org>; Fri, 13 Apr 2018 17:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751756AbeDMR2Q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 13:28:16 -0400
-Received: from mail-yw0-f177.google.com ([209.85.161.177]:42274 "EHLO
-        mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751630AbeDMR2P (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 13:28:15 -0400
-Received: by mail-yw0-f177.google.com with SMTP id z82so4473847ywd.9
-        for <git@vger.kernel.org>; Fri, 13 Apr 2018 10:28:14 -0700 (PDT)
+        id S1750832AbeDMRjG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 13:39:06 -0400
+Received: from mail-yb0-f169.google.com ([209.85.213.169]:40887 "EHLO
+        mail-yb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750761AbeDMRjF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 13:39:05 -0400
+Received: by mail-yb0-f169.google.com with SMTP id c10-v6so4720244ybn.7
+        for <git@vger.kernel.org>; Fri, 13 Apr 2018 10:39:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=+5DGLuex3KqwC4r2ii629Non6gVnZLGedklvytBEJCk=;
-        b=kIpqJKwXllBkmCTPB5iAnT3N2yr3ZZqP54HFDU9atFUmnDH/+Qnh/XIo0uKSVX8eHU
-         PRswiIfNEFdVD5DTuqVIJV/MRe8bz7xpMguuySLDjoFto6DpUds6EE14UpVOMUiHAFvV
-         iWxzkRbXTlROtbO97p89JkTp6AOtJZ+1UjuFTy3iEiCVF4kuHKFxIJB7uozUjsj0+1Fh
-         NBMDnb5Zjor4VmImu4qjOLornUqFU3mp2NOG19wbvC4ugLQWsGML3Vo611rjyLG81xDq
-         55TvxBHeTjV+i8rGXFR66kfCBLmafHKgVD0BrUtWp6kSyGTaegagnaYBcxtYb/jZ3Duy
-         HC/A==
+        bh=ctPbJ83LQ5yldd2VdmUf8OmpX+xdyRNk1pPM9xldKlA=;
+        b=pKbqnxf9HqG0sWytbwMjXKmFO4s5fIt1n5XgK67Zs/bsSNLNNtP6weap7rVshvsVt6
+         5p6bzzvC5G8NDH1pxJLwLFP2LvTH4bPz1yd9BFIye7JoJNew+VGqutsQl3grHNECOO6H
+         Qlmt9M9W7NdI7ZBhuftBSI/TC9tF8NYBST2CqqxWhR7QShSx4sTeXtGyth9acALs8naa
+         QcYxoY8M13XJPNK1dth/vrwkB3UA2c+pwWTbaB5d+GfpQ3OnQrIU1Dww6I9mvj+MT5ia
+         noHB9+iC5RDfTe5KoPbybw4KT6uoRNmTkNwy3fcqUPMwGielZmTkEwqTxpJzOejfjI3J
+         5krA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=+5DGLuex3KqwC4r2ii629Non6gVnZLGedklvytBEJCk=;
-        b=TMHYcKohTcTh2D7WLuUpQuROH5WDNEUrftp5yE9N1u9EwiDg/A61D6KLdo9yEgbYNJ
-         11pu5jJs9sCIGnDtCzWr9TiIiKwxRi8oaFRtY3r/KtdJ/mLbT/q1vpVdaZ0HvfByWGJQ
-         evqKP9dLSuqgsv8o7NkyqaS71FsChuT6CO/6ukv1eeN6WviCvwEl2qlo3WOcF6pRor0D
-         lvoNAG/lSPXYT7zMFzTthl+0j0f+mlQPmksf7fWTiNkCUWk75Nh8Z+PXhpZJiY01Ott1
-         oBlf47F+wneUidLbNDWAwtYHXLQhJpp7ix9kHytlC5kJYtf/muccxNSbPBe6NUJZ/tRt
-         KAlg==
-X-Gm-Message-State: ALQs6tAI5f3SDl2ag5uCqirVs9Oycw5ujvDEfQcFSR/escwSBrcRHrV2
-        ilB16aYsZcvTEOKyWaz163JdmPKq6Pvac88ex8M92g==
-X-Google-Smtp-Source: AIpwx49PtCWf8/ptA8e7Tnw07W7PG68x6jJD9SHvNUunR+tFRNaQdBI+Y7hdLt3e4BGWyNgSfdqkTVtvveqQMZtY+zY=
-X-Received: by 10.129.136.7 with SMTP id y7mr5267653ywf.238.1523640494121;
- Fri, 13 Apr 2018 10:28:14 -0700 (PDT)
+        bh=ctPbJ83LQ5yldd2VdmUf8OmpX+xdyRNk1pPM9xldKlA=;
+        b=MeaJeveSRuBvqI53MZAA07lCB2xXl7SK9vzTQElvIisEVDkB5W54Un64XW9BwuO+d8
+         vSWVlkwYDHDDFRu+8YHmplUFJAtWoGSaGqFQI1vjFlPdu0IS0hbLQmBO/Kuzhjf5w+5+
+         vpGOxLxxW1Sdfs9vk+b2g/sfbbGmUDCBg5+MjhxKULJ8jnE/3CWsw28mskEQeumuANm4
+         lady40/r8+vz/SSiyQWiQeHutWAmmgqn5uK3xFxJb6BEmG7k8Yki3Jbd/L6dxgedaIO3
+         q349b4HuoiKnSgdUwz5lLaN9RDM/IYJVilDVX9bHfA31R6yEiIuvnk4Pbqheugm+pxv1
+         HzYA==
+X-Gm-Message-State: ALQs6tBo8n2rfxohFOUweFtV/I+4OsLwWVrDjzl1GvE/xzNfExU5e+/u
+        g+wYZ0WLWHHhTElyj3wP7NYsk+JlCTZ2An9Vuw/1xcltNW0=
+X-Google-Smtp-Source: AIpwx48AQc56rMAODoE1JVYhL2CYT9KZ0bnPwMzI2QQ+IS1UXK4rpAY2hOyYL4IR3GHAKDl7k4y9n6SnMBoSbiuFOFA=
+X-Received: by 2002:a25:2782:: with SMTP id n124-v6mr5785018ybn.307.1523641144239;
+ Fri, 13 Apr 2018 10:39:04 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Fri, 13 Apr 2018 10:28:13
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Fri, 13 Apr 2018 10:39:03
  -0700 (PDT)
-In-Reply-To: <20180413094314.GA2404@bod>
-References: <20180409090047.lfru2ul5fbnggfg7@bod> <87in90zq2a.fsf@evledraar.gmail.com>
- <20180413094314.GA2404@bod>
+In-Reply-To: <CA+55aFwi9pTAJT_qtv=vHLgu=B1fdXBoD96i8Y5xnbS=zrfSzg@mail.gmail.com>
+References: <CA+55aFzLZ3UkG5svqZwSnhNk75=fXJRkvU1m_RHBG54NOoaZPA@mail.gmail.com>
+ <xmqq604w2j4u.fsf@gitster-ct.c.googlers.com> <xmqqtvsg10bu.fsf@gitster-ct.c.googlers.com>
+ <CA+55aFxA9YVLoh_23V8Hi+X7ODEmqg-dhdAYZz1jbq5JhXqBFw@mail.gmail.com>
+ <CA+55aFwM2CaafNGq8_=GkYAw9inpm-4xcyHUmKprLv4Gb3-aVg@mail.gmail.com>
+ <CA+55aFw5mpEcEpPTOWych-kjNLc8pEn8FdjJHe2u7HUBBLy-Fw@mail.gmail.com>
+ <CA+55aFwwVZDetd-SobOzzLQW4_GEwm3krxEGR+cpqzkzK-yiwQ@mail.gmail.com>
+ <CABPp-BHQsOSCJiPU9Ku5b67QTkAjnEBrhx04mTXf2QdPBriHmw@mail.gmail.com> <CA+55aFwi9pTAJT_qtv=vHLgu=B1fdXBoD96i8Y5xnbS=zrfSzg@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 13 Apr 2018 10:28:13 -0700
-Message-ID: <CAGZ79kZDUnxkKfqRnZiLhweJ4HNO5sSGUfxkEvJPGagV4wmtkg@mail.gmail.com>
-Subject: Re: [RFC PATCH] Add "git show --follow-symlinks HEAD:symlink"
-To:     Michael Vogt <mvo@ubuntu.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>
+Date:   Fri, 13 Apr 2018 10:39:03 -0700
+Message-ID: <CAGZ79kbs0heVvqMf2cjBtxtYs48CFFaM+9+YzB6gUwzWScvr=A@mail.gmail.com>
+Subject: Re: Optimizing writes to unchanged files during merges?
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Michael,
+Hi Linus,
 
-thanks for the patch,
+On Fri, Apr 13, 2018 at 10:14 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+> Comments? Because considering the problems this code has had, maybe
+> "stupid" really is the right approach...
 
-> Thanks for the intial reivew. I updated the patch with a test and
-> documentation for the new option. Happy to merge the test into one of
-> the existing test files, I read t/README and greping around I did not
-> find a place that looked like a good fit.
+Would s/read/xread/ make sense in working_tree_matches ?
+If read returns unexpectedly due to EINTR or EAGAIN,
+this is no correctness issue, but you'd have to recompile the kernel.
 
-I think keeping tests as separate as possible is a good idea.
-Looking at the patch https://public-inbox.org/git/20180413094314.GA2404@bod/
-
-The patch seems reasonable, apart from minor nits:
-In the test we'd prefer no whitespace on the right side of the redirection,
-i.e. echo content >foo
-
-Instead of evaluating git commands in shell and assigning it to a variable,
-we'd prefer to dump it to files:
-
-  git show HEAD:symlink >actual &&
-  echo foo >expect &&
-  test_cmp expect actual
-
-(instead of content=$(git show HEAD:foo) && test $content == ...)
-
-The reason for this is that the &&-chain will inspect the return code
-of the git command.
-
-There is a typo &e&.
-
-Can we reword the documentation, such that we do not have
-an occurrence of "extended SHA-1" ?
-(By now the Git community came up with a plan to migrate
-away from SHA-1, hence we'd not want to introduce more
-dependencies even in the form of documentation for that)
-
-Maybe
-
-Follow symlinks inside the repository when requesting
-objects in extended revision syntax of the form tree-ish:path-in-tree.
-
-Thanks,
 Stefan
