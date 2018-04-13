@@ -2,260 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CA5C1F404
-	for <e@80x24.org>; Fri, 13 Apr 2018 17:48:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 127E31F404
+	for <e@80x24.org>; Fri, 13 Apr 2018 17:53:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750851AbeDMRsX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 13:48:23 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:48413 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750783AbeDMRsX (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 13 Apr 2018 13:48:23 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id C79B621343;
-        Fri, 13 Apr 2018 13:48:21 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Fri, 13 Apr 2018 13:48:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm2; bh=FePoq88IKUWWmNFi0ERH2fGwSblwf
-        JyNA/Nq21q3nnc=; b=G0wKj3uk5Pzmsqqe8ODDcmYGBz0/W8Bm3F4oySq4U8AIe
-        v3/dh947eYboeoE4wqGTPH5GsE166ypiuYTwYDxxp/mG6Iujt6Rxbu/pnYoFhIDS
-        w5yfy0/LHSY43o1s5MU62jyb7h8JlVq5AHLKVIjehSBYBOB4v2Xmxw6j0RkbugW+
-        NyoTL5PxeZw92JL0hXXcoQUIyLG2AFxd62wYGmO7Vqer3rWL0tymxeCKbUQvDxG2
-        WGlUqJmuOH+mQ1eCtndCg7R52dzqfeF2LIQ6aNrit74gxjRbdkQ4Op1E+I1+0OL/
-        mQq6lpzEjkziBRG5q0trALjyAnPRstYkjZRk45eNA==
-X-ME-Sender: <xms:Ze3QWuY9XQr3YrdGvKaDjwMLNsZs69XowaEZGdLQdTrz8FktpjAu_w>
-Received: from bod.fritz.box (p54826bc2.dip0.t-ipconnect.de [84.130.107.194])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 360011025E;
-        Fri, 13 Apr 2018 13:48:21 -0400 (EDT)
-Received: by bod.fritz.box (Postfix, from userid 1000)
-        id 8DE7B7C020F; Fri, 13 Apr 2018 19:48:19 +0200 (CEST)
-Date:   Fri, 13 Apr 2018 19:48:19 +0200
-From:   Michael Vogt <mvo@ubuntu.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com
-Subject: Re: [RFC PATCH] Add "git show --follow-symlinks HEAD:symlink"
-Message-ID: <20180413174819.GA19030@bod>
-References: <20180409090047.lfru2ul5fbnggfg7@bod>
- <87in90zq2a.fsf@evledraar.gmail.com>
- <20180413094314.GA2404@bod>
- <CAGZ79kZDUnxkKfqRnZiLhweJ4HNO5sSGUfxkEvJPGagV4wmtkg@mail.gmail.com>
+        id S1750824AbeDMRxa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 13:53:30 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:39405 "EHLO
+        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750761AbeDMRx3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 13:53:29 -0400
+Received: by mail-io0-f170.google.com with SMTP id v13so11158643iob.6
+        for <git@vger.kernel.org>; Fri, 13 Apr 2018 10:53:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=bTgQMKg27bK0hSs/8klbFuLAq1q7DMTBfquPUPFo/HU=;
+        b=aIlOgSYILSRcILrcli1P2QDeOP0vKNI9I80qfb7Pang1aKw8qaHbon4DewBS6f8OqE
+         yJd6omYmRvPsmCGE0PF3SNQkYT12zdW5I6VjSF/KfcBW5XnVUtg0A0LE6dZRSKa9tMtq
+         RhHs4v71L+vnzoTRN+76pVDVUHaDhJ9wdyqkAv6sUkgurDNWJsNDE4eWZBMfUyi9geJi
+         O/89p5sy20T+3ymBSs3vv2NRW9Hf5aircoZ5Coz7/lUcidnsOJRziuQjZeemGGTsNCqW
+         iW34c4m+TyROYxN+2NMk1G59w2yUtAsEs0+WyZyA9W/gbZLk4w50oKaY25BCurxH7JLt
+         nAxA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=bTgQMKg27bK0hSs/8klbFuLAq1q7DMTBfquPUPFo/HU=;
+        b=D42ur3FVJxtZLtZ8KxKoolJMxBxGVu052aO2r6AU/z8Dk2Q8EpUx/9KZrfdXIcqNZj
+         2wMuYZv1hB7hFUg4uMAkYiO2pJhA9uPWEdqjAtSq0OaVETxI9zaGNT9Dk/WjRlMv8uCB
+         VZHaF2f8VZJs+c7F0+NztFXOk0FwjvHcyUWsk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=bTgQMKg27bK0hSs/8klbFuLAq1q7DMTBfquPUPFo/HU=;
+        b=egQB1z3KS7uplvYVXyUxAq6ezMqJgA7SXLH2VPgMApax+D1FWkinQAZ3iYYh+uNDSK
+         mj3xqk2yZ95YS7iaDlSBhwU36FrymrOA5hj8RHUmMUiOA7k9xtNGv6ViHtN1BOf88n7d
+         FE5Pgv/cOp/LnB12QrSm8eJsj0WFURbKmcSQaGhKqPuFEoEtP8Qk0ar6Hf2NfRvXHhJo
+         tx7ZzRPe+vyq0NnTNqpcyRxFN7QLa64YB783u/YpMq9iMP5s2IC0pwOxFQlquhsaFPQ8
+         EuD/ywRIFNwFIl1T8/wfBHFiEhLkbqiMqdP1BkyaKXKPejixdY4pNo9XfbuKYxkhPmTg
+         NCyA==
+X-Gm-Message-State: ALQs6tCi6wjGQwTl1YIQdA5wB5/pt6W0TaVYAD5g7S89WLdM/h8QwFt0
+        lfAypKblBewhH2u/57w/vGtJVi0FjTJVJ+lVK9M=
+X-Google-Smtp-Source: AIpwx4+z7iA7Khl10rIzV4bL1kpt8e0T8X6AIX+H0nR158P45oe+3irlPNN2uq0wf+JUzM61dpnzYLUhK33hIzVLY4k=
+X-Received: by 10.107.138.38 with SMTP id m38mr4352374iod.259.1523642009027;
+ Fri, 13 Apr 2018 10:53:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="fUYQa+Pmc3FrFX/N"
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZDUnxkKfqRnZiLhweJ4HNO5sSGUfxkEvJPGagV4wmtkg@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Received: by 10.107.95.15 with HTTP; Fri, 13 Apr 2018 10:53:28 -0700 (PDT)
+In-Reply-To: <CAGZ79kbs0heVvqMf2cjBtxtYs48CFFaM+9+YzB6gUwzWScvr=A@mail.gmail.com>
+References: <CA+55aFzLZ3UkG5svqZwSnhNk75=fXJRkvU1m_RHBG54NOoaZPA@mail.gmail.com>
+ <xmqq604w2j4u.fsf@gitster-ct.c.googlers.com> <xmqqtvsg10bu.fsf@gitster-ct.c.googlers.com>
+ <CA+55aFxA9YVLoh_23V8Hi+X7ODEmqg-dhdAYZz1jbq5JhXqBFw@mail.gmail.com>
+ <CA+55aFwM2CaafNGq8_=GkYAw9inpm-4xcyHUmKprLv4Gb3-aVg@mail.gmail.com>
+ <CA+55aFw5mpEcEpPTOWych-kjNLc8pEn8FdjJHe2u7HUBBLy-Fw@mail.gmail.com>
+ <CA+55aFwwVZDetd-SobOzzLQW4_GEwm3krxEGR+cpqzkzK-yiwQ@mail.gmail.com>
+ <CABPp-BHQsOSCJiPU9Ku5b67QTkAjnEBrhx04mTXf2QdPBriHmw@mail.gmail.com>
+ <CA+55aFwi9pTAJT_qtv=vHLgu=B1fdXBoD96i8Y5xnbS=zrfSzg@mail.gmail.com> <CAGZ79kbs0heVvqMf2cjBtxtYs48CFFaM+9+YzB6gUwzWScvr=A@mail.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Fri, 13 Apr 2018 10:53:28 -0700
+X-Google-Sender-Auth: GCK7FhMsvgl2aVh97isaTTyvbQA
+Message-ID: <CA+55aFw6okG9=ghsqZwqmet-PMym7WqY9qJr5FfM+yhJv97PAw@mail.gmail.com>
+Subject: Re: Optimizing writes to unchanged files during merges?
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Apr 13, 2018 at 10:39 AM, Stefan Beller <sbeller@google.com> wrote:
+>
+> Would s/read/xread/ make sense in working_tree_matches ?
 
---fUYQa+Pmc3FrFX/N
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Makes sense, yes.
 
-On Fri, Apr 13, 2018 at 10:28:13AM -0700, Stefan Beller wrote:
-> Hi Michael,
-Hi Stefan,
+That patch was really more of a RFD than anything that should be applied.
 
-> thanks for the patch,
-Thanks for the review.
+I would like to see the "might be same" flag pushed down so that we
+don't do this comparison when it makes no sense, even if the stat info
+makes that less of an issue than it might otherwise be,
 
-[..]
-> The patch seems reasonable, apart from minor nits:
-> In the test we'd prefer no whitespace on the right side of the redirection,
-> i.e. echo content >foo
+And maybe that whole function should be taught to do the "verify CE
+against file", and do the proper full cache state check (ie time etc)
+instead of doing the read.
 
-Sure, updated.
+So maybe the best option is a combination of the two patches: my
+"verify the working tree state" _together_ with the was_tracked()
+logic that looks up a cache entry.
 
-> Instead of evaluating git commands in shell and assigning it to a variable,
-> we'd prefer to dump it to files:
-[..]
+Again, the problem with "look up the index state" is about files
+possibly being renamed as part of the merge, but if we then check the
+index state against the actual contents of the working directory, that
+isn't an issue.
 
-Makes sense, updated.
-
-> There is a typo &e&.
-
-Ups, sorry! Fixed.
-
-> Can we reword the documentation, such that we do not have
-> an occurrence of "extended SHA-1" ?
-[..]
-> Maybe
-> 
-> Follow symlinks inside the repository when requesting
-> objects in extended revision syntax of the form tree-ish:path-in-tree.
-
-This looks very reasonable, I updated the documentation accordingly.
-
-The update patch is attached as an inline attachement.
-
-Cheers,
- Michael
-
---fUYQa+Pmc3FrFX/N
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: inline; filename="0001-support-git-show-follow-symlinks-HEAD-symlink.patch"
-
-From dab10f5e5aea8a31cbee0ab1d5a78204c8c9832a Mon Sep 17 00:00:00 2001
-From: Michael Vogt <mvo@ubuntu.com>
-Date: Mon, 9 Apr 2018 10:38:13 +0200
-Subject: [PATCH] support: git show --follow-symlinks HEAD:symlink
-
-Add support for the `--follow-symlinks` options to git-show. This
-allows to write:
-
-    git show --follow-symlink HEAD:path-a-symlink
-
-to get the content of the symlinked file.
-
-Signed-off-by: Michael Vogt <mvo@ubuntu.com>
----
- Documentation/git-show.txt |  6 +++++
- builtin/log.c              |  7 ++++--
- revision.c                 |  2 ++
- revision.h                 |  1 +
- t/t1800-git-show.sh        | 46 ++++++++++++++++++++++++++++++++++++++
- 5 files changed, 60 insertions(+), 2 deletions(-)
- create mode 100755 t/t1800-git-show.sh
-
-diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-index e73ef5401..d9f7fd90c 100644
---- a/Documentation/git-show.txt
-+++ b/Documentation/git-show.txt
-@@ -39,6 +39,12 @@ OPTIONS
- 	For a more complete list of ways to spell object names, see
- 	"SPECIFYING REVISIONS" section in linkgit:gitrevisions[7].
- 
-+--follow-symlinks::
-+	Follow symlinks inside the repository when requesting objects
-+	in extended revision syntax of the form tree-ish:path-in-tree.
-+	Instead of output about the link itself, provide output about
-+	the linked-to object.
-+
- include::pretty-options.txt[]
- 
- 
-diff --git a/builtin/log.c b/builtin/log.c
-index 94ee177d5..e92af4fc7 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -142,7 +142,7 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 			 struct rev_info *rev, struct setup_revision_opt *opt)
- {
- 	struct userformat_want w;
--	int quiet = 0, source = 0, mailmap = 0;
-+	int quiet = 0, source = 0, mailmap = 0, follow_symlinks = 0;
- 	static struct line_opt_callback_data line_cb = {NULL, NULL, STRING_LIST_INIT_DUP};
- 	static struct string_list decorate_refs_exclude = STRING_LIST_INIT_NODUP;
- 	static struct string_list decorate_refs_include = STRING_LIST_INIT_NODUP;
-@@ -162,6 +162,8 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 		OPT_CALLBACK('L', NULL, &line_cb, "n,m:file",
- 			     N_("Process line range n,m in file, counting from 1"),
- 			     log_line_range_callback),
-+		OPT_BOOL(0, "follow-symlinks", &follow_symlinks,
-+			 N_("follow in-tree symlinks (used when showing file content)")),
- 		OPT_END()
- 	};
- 
-@@ -173,9 +175,10 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 			     builtin_log_options, builtin_log_usage,
- 			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN |
- 			     PARSE_OPT_KEEP_DASHDASH);
--
- 	if (quiet)
- 		rev->diffopt.output_format |= DIFF_FORMAT_NO_OUTPUT;
-+	if (follow_symlinks)
-+		rev->follow_symlinks = 1;
- 	argc = setup_revisions(argc, argv, rev, opt);
- 
- 	/* Any arguments at this point are not recognized */
-diff --git a/revision.c b/revision.c
-index b42c836d7..4ab22313f 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1678,6 +1678,8 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
- 
- 	if (revarg_opt & REVARG_COMMITTISH)
- 		get_sha1_flags |= GET_OID_COMMITTISH;
-+	if (revs && revs->follow_symlinks)
-+		get_sha1_flags |= GET_OID_FOLLOW_SYMLINKS;
- 
- 	if (get_oid_with_context(arg, get_sha1_flags, &oid, &oc))
- 		return revs->ignore_missing ? 0 : -1;
-diff --git a/revision.h b/revision.h
-index b8c47b98e..060f1038a 100644
---- a/revision.h
-+++ b/revision.h
-@@ -122,6 +122,7 @@ struct rev_info {
- 			first_parent_only:1,
- 			line_level_traverse:1,
- 			tree_blobs_in_commit_order:1,
-+			follow_symlinks:1,
- 
- 			/* for internal use only */
- 			exclude_promisor_objects:1;
-diff --git a/t/t1800-git-show.sh b/t/t1800-git-show.sh
-new file mode 100755
-index 000000000..85541b4db
---- /dev/null
-+++ b/t/t1800-git-show.sh
-@@ -0,0 +1,46 @@
-+#!/bin/sh
-+
-+test_description='Test git show works'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'verify git show HEAD:foo works' '
-+    printf "foo content\n" >foo &&
-+    git add foo &&
-+    git commit -m "added foo" &&
-+    git show HEAD:foo >actual &&
-+    printf "foo content\n" >expected &&
-+    test_cmp expected actual
-+'
-+
-+test_expect_success 'verify git show HEAD:symlink shows symlink points to foo' '
-+    printf "foo content\n" >foo &&
-+    ln -s foo symlink &&
-+    git add foo symlink &&
-+    git commit -m "added foo and a symlink to foo" &&
-+    git show HEAD:foo >actual &&
-+    printf "foo content\n" >expected &&
-+    test_cmp expected actual &&
-+    git show HEAD:symlink >actual &&
-+    printf "foo" >expected &&
-+    test_cmp expected actual
-+'
-+
-+test_expect_success 'verify git show --follow-symlinks HEAD:symlink shows foo' '
-+    git show --follow-symlinks HEAD:symlink >actual &&
-+    printf "foo content\n" >expected &&
-+    test_cmp expected actual
-+'
-+
-+test_expect_success 'verify git show --follow-symlinks HEAD:symlink works with subdirs' '
-+    mkdir dir &&
-+    ln -s dir symlink-to-dir &&
-+    printf "bar content\n" >dir/bar &&
-+    git add dir symlink-to-dir &&
-+    git commit -m "add dir and symlink-to-dir" &&
-+    git show --follow-symlinks HEAD:symlink-to-dir/bar >actual &&
-+    printf "bar content\n" >expected &&
-+    test_cmp expected actual
-+'
-+
-+test_done
--- 
-2.17.0
-
-
---fUYQa+Pmc3FrFX/N--
+              Linus
