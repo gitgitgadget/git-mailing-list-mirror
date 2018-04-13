@@ -2,99 +2,214 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84AF11F424
-	for <e@80x24.org>; Fri, 13 Apr 2018 11:53:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED90F1F404
+	for <e@80x24.org>; Fri, 13 Apr 2018 12:09:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754048AbeDMLxa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 07:53:30 -0400
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:33214 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753831AbeDMLx3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 07:53:29 -0400
-Received: by mail-qt0-f175.google.com with SMTP id p9so5372391qtn.0
-        for <git@vger.kernel.org>; Fri, 13 Apr 2018 04:53:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=dEkO+HuXTCrr6oelo8OhUuprkGbMb32Zu5jMPW+0DUg=;
-        b=MWfUa+MvLTqpOeGu78L2g5mjmKsoicVFWyBmzXWpW6SSXRjVLsRmqOCw8pFipnPvL2
-         uC2W3dtoqhtboGhELS4EPQC/DFeX9ChdpNRDVUU8DSl/gU4yKJ5ot35TQlwJY5GM7e+R
-         v/3l5/YFXNBFLnqeQoVe7ntBLJnOaXF/vT5tOjWwVBR033LePKzYFKOPMNIWrrOrH7Xd
-         GBGEN6Ygsgqs7/jGCDeK7yE7yyqa4r47yHDpNnqLXzaY6xpjNVVP4rjM6s6x72ZHScHs
-         M4EuFkVdAnrfoN5PSRVPRp8SeGdsjN6H3+Yyc4tznllMSU9sizhRgDAB2EYQiEXOPQjf
-         LrWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=dEkO+HuXTCrr6oelo8OhUuprkGbMb32Zu5jMPW+0DUg=;
-        b=Kj4LAQNWEpKcD8I97GVnqugaEgNYMqfUx7TpWOOkPBVIWb7Pe58cPjtQlBjZ5y5uOu
-         i9p8ERPjCIEo2MSiOBVyuUZ+Ud48Zuw3Hk/PjEDb+2lNp4PpFi2n4mDJpfq/WK2lAXxx
-         yx3h4uYbEW5iKNXj0yFp+eE1DqEIbZk4FFD8LadvKiNQMVOcDNmWVsagfnfV93/AaIR0
-         iN/K8ERAxq81O1N39Fd9hT/msIH9LTSlUov/j1mSEZLYHZFZZkAmPLCDOqAkOTKXvXJr
-         53ft6Ijv7iOWNXT2vfocqeACahdJVEdXCZTfbHkX4BhFTWLkX+G8123sQSpXdMbrO/F8
-         BdMg==
-X-Gm-Message-State: ALQs6tAeuI1NH4ch8W9DbU5CmHBXsst70lwts8p7NCkixqFtws/X35xj
-        gzN2O9d06MnXbnoGna60scI=
-X-Google-Smtp-Source: AIpwx4+Rad2f/qDhsrCMJ5524APq+hFGQ+WIltGIA56TwIF3Iwpl/Alddcr0sceY/fiB0PYT0f/0MA==
-X-Received: by 10.200.54.243 with SMTP id b48mr1449337qtc.334.1523620408320;
-        Fri, 13 Apr 2018 04:53:28 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id z19sm4561018qka.39.2018.04.13.04.53.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Apr 2018 04:53:27 -0700 (PDT)
-Subject: Re: [PATCH v2 1/2] fsexcludes: add a programmatic way to exclude
- files from git's working directory traversal logic
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "alexmv@dropbox.com" <alexmv@dropbox.com>,
-        "blees@dcon.de" <blees@dcon.de>,
-        "bmwill@google.com" <bmwill@google.com>,
-        "avarab@gmail.com" <avarab@gmail.com>,
-        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
-        "martin.agren@gmail.com" <martin.agren@gmail.com>
-References: <20180410210408.13788-1-benpeart@microsoft.com>
- <20180411200007.8612-1-benpeart@microsoft.com>
- <20180411200007.8612-2-benpeart@microsoft.com>
- <xmqqsh812td0.fsf@gitster-ct.c.googlers.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <0dc3c045-8851-cbed-6756-8dfda5e25868@gmail.com>
-Date:   Fri, 13 Apr 2018 07:53:24 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1754246AbeDMMJe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 08:09:34 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50209 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754086AbeDMMJd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 08:09:33 -0400
+Received: from [192.168.0.129] ([37.201.203.18]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lj1jy-1ebSij2QLW-00dJM3; Fri, 13
+ Apr 2018 14:09:23 +0200
+Date:   Fri, 13 Apr 2018 14:08:26 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Jacob Keller <jacob.keller@gmail.com>
+cc:     Sergey Organov <sorganov@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v6 00/15] rebase -i: offer to recreate commit topology
+In-Reply-To: <CA+P7+xrGMtbtquHohnWbfq1Fy6Smj=LAXnqM=_wXOLvHMU+F2A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804131243010.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1519680483.git.johannes.schindelin@gmx.de> <cover.1523362469.git.johannes.schindelin@gmx.de> <87tvsj6rn2.fsf@javad.com> <nycvar.QRO.7.76.6.1804110009080.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <871sfm737e.fsf@javad.com>
+ <nycvar.QRO.7.76.6.1804111324350.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <87h8oh51jm.fsf@javad.com> <CA+P7+xq8KJKJ0d1unW3btUhKVjOZM3EdTSKdDs96pn5J3WwSKA@mail.gmail.com> <87sh810ym4.fsf@javad.com> <CA+P7+xq8LOUZxVd832cOQFi4V=2YvydxtT6_y4NLKvFkki4QdA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1804130002090.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xrGMtbtquHohnWbfq1Fy6Smj=LAXnqM=_wXOLvHMU+F2A@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqsh812td0.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:wIyJxR32Nx6Fhapqbz937O0LF5KSUchq+Lno94RFhpDtZPcy+bb
+ 8w2OtzpoVT2f6vFaZHOdfjEQrrdmkVdSfPtsa+OyUsy/kX1v5OxuWdtwNBaLnzrci6qfgTh
+ rLWMVSd6WJiB3WOLcOX+vbHS3ZsNOg/NrA/fPv8Oos5YCnKFi0RpYt2pLEdeky6AeqXmBCT
+ 1PzFwKD/HK3b37ni0IZgQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:y75LnkxOUpc=:SS40rV6ZfuhH1yNwki8FcH
+ 7bA2TMH8kuHGA58BUvlfSG9DkPDUtYYu3IFp3fQqm6DclLzI7M3kKyeKL3zODVunALxV+tlsz
+ ceAFnMx7DTQb6mksDQZMMOCu1jtbja1wULHyc/LPa7o818RdXjBpZ+S8vzw8+x67cMyjUiV95
+ n3W1pp5AP4nIMGk+JvGOCHfWQfy45pdvgRCv7pi1srstR+4UMywjXMTtaD8VO7q1HQc32oMYo
+ yhf+C4HElCA3v1sIQSF8X68Xtvw/LMopQUTsIuSsVoUKY7CgKnQvWfjzBWfGsB19aKro4fdQJ
+ ljEhrWk2/OdMY4XYGKi2j46VuiqIUf8PL75zc/b9cyzkl0TUPShIMIrymyEkanXdtDeDQG9ph
+ qDEZyDuPXf2Cy8XQR2Z+S9G6w2/pwWlq17U2pYn5ICDt8HSMkcl6fWjEXBtLwPxkHMPZcBVTO
+ 4wuOxgMYFho3mf+UYGL/gPNzR5kbP5bEnDGT7+x2X2D1qfX2M3IDyiYMPaoCF84MSJoUFu9A1
+ LhCNHepEVkpMZHrShsmPEyps0viWMrJyXFp28sUr7cUbJyyCGP3E4V0OigTgsajLZLyhpDFOg
+ 6ht6bsgTgKL6i5n6kNHLHTLjgsrI8Eu9sB+GikyVDlR6JKFGXicmvxRZhVFIDNG9G9k0mbB0x
+ DZ52yYxpx69dW/Q0Oj5gnhF0jPvM33KGmJHSlK2cofMzQa30eNxv7r2qk7PaozZT5+qPeeac9
+ Axl1y2tvNkvx9UlxaZfLnUrVH0zDC1qKiL4A4uwOTarDBG0zp7PmpkW27HeEQDUme/WguYmHQ
+ AnpIHxMC5721L1r81Dqypz7M4FB6NrNPRrM1VxuU8DMSyx51NU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Jake,
 
+On Thu, 12 Apr 2018, Jacob Keller wrote:
 
-On 4/11/2018 7:52 PM, Junio C Hamano wrote:
->> @@ -2011,6 +2028,8 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
->>   		/* add the path to the appropriate result list */
->>   		switch (state) {
->>   		case path_excluded:
->> +			if (fsexcludes_is_excluded_from(istate, path.buf, path.len, DTYPE(cdir.de)) > 0)
->> +				break;
+> On Thu, Apr 12, 2018 at 3:02 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 > 
-> Then the use of DTYPE() looks a bit odd here.  On
-> NO_D_TYPE_IN_DIRENT platforms, we would get DT_UNKNOWN out of it and
-> then end up passing DT_UNKNOWN to the function.
+> > [... talking about nested merge conflicts ...]
+> >
+> > The only way out I can see is to implement some sort of "W merge" or
+> > "chandelier merge" that can perform an N-way merge between one revision
+> > and N-1 other revisions (each of the N-1 bringing its own merge base). I
+> > call them "W" or "chandelier" because such a merge can be visualized by
+> > the original merge commit being the center of a chandelier, and each arm
+> > representing one of the N-1 merge heads with their own merge bases.
+> >
 > 
+> I think this approach sounds reasonable.
 
-Good catch.  I was trying to optimize this path and didn't realize the 
-platform implications of using DTYPE().  I'll update it to match the others.
+... and it would incidentally also offer a saner way to do octopus merges
+(so far, an octopus merge that causes merge conflicts causes... huge
+pains, as it usually stops in the middle of everything, without a UI to
+help with concluding the merge).
+
+> > Similar to the 3-way merge we have implemented in xdiff/xmerge.c, this
+> > "chandelier merge" would then generate the two diffs between merge base
+> > and both merge heads, except not only one time, but N-1 times. It would
+> > then iterate through all hunks ordered by file name and line range. Any
+> > hunk without conflicting changes would be applied as-is, and the remaining
+> > ones be turned into conflicts (handling those chandelier arms first where
+> > both diffs' hunks look identical).
+> >
+> > Have I missed any simpler alternative?
+> 
+> I *think* this would work well if I understand it, but it's difficult
+> to process without examples.
+
+Well, I am fairly certain about the implementation details (it's been a
+while since I contributed xdiff/xmerge.c, and if you ever want to hear the
+horrible story how I wrote the initial version in a stopped train in the
+middle of the night, just buy me a beer or three, my memory is fresh on
+the "simultaneous walking" of the diff hunks).
+
+So it goes somewhat like this. You have two diffs, and for the matter of
+the discussion, let's just look at the hunk headers (with 0 context lines,
+i.e. -U0):
+
+diff base..HEAD
+@@ -10,1 +10,2 @@
+@@ -40,2 +41,0 @@
+
+diff base..branch
+@@ -8,4 +8,3 @@
+
+So on one side of the merge, we changed line 10 (e.g. wrapping a long
+line), and we removed lines 40 and 41.
+
+In the branch we want to merge, lines 8--11 were edited (removing one
+line).
+
+The 3-way merge as implemented in xdiff/xmerge.c handles only one file,
+and first uses the diff machinery to figure out the hunk headers of both
+diffs, then iterates through both diffs. This is the `while (xscr1 &&
+xscr2)` loop in `xdl_do_merge()`, and the "scr" stands for "script" as in
+"edit script". In other words, `xscr1` refers to the current hunk in the
+first diff, and `xscr2` to the one in the second diff.
+
+Inside the loop, we look whether they overlap. If not, the one with the
+smaller line numbers is "applied" and we iterate to the next hunk after
+that.
+
+If the hunks overlap, we have a look at the respective post images to see
+whether both sides of the merge modified that part identically; if they
+don't, we create a conflict (and later, we will try to reduce the conflict
+by trimming identially-changed lines at both ends of the line range).
+
+Lather, rinse & repeat.
+
+Now, what I have in mind is that we will have not only two diffs' hunks to
+look through, but (N-1)*2 (note that if N == 2, it is the exact same thing
+as before).
+
+Again, at each iteration, we look for the next hunk among all available
+ones, then determine whether it overlaps with any other hunk. If it does
+not, we apply it. If it does, we first look whether all overlapping hunks
+agree on the post image and if they do: apply the change, otherwise create
+a conflict.
+
+How to present such conflicts to the user, though?
+
+The worst case, I think, would be N diverging changes with N-1 agreeing on
+a large part of the post image and the remaining post image being
+completely different. Imagine, for example, that the original merge
+contains a long function hi() that was renamed to greeting() in HEAD, but
+replaced by a completely different implementation in the rebased
+branch-to-merge. In such a case, this nested conflict would be most
+intuitive, methinks:
+
+	<<< intermediate merge
+	<<<< HEAD
+	greeting()
+	====
+	hi()
+	>>>> original merge
+	... /* original function body */
+	===
+	hi()
+	... /* complete rewrite */
+	>>> branch
+
+But now that I look at it, it is still hard to parse. *Is* there any good
+way to present this conflict?
+
+And then there is the problem that our index really is only prepared for
+*three* stages, but we would need N*2-1.
+
+So maybe I am overthinking this and we should stick with the
+implementation I have right now (try to merge HEAD and the original merge
+first, then merge the rebased 2nd parent if there are no conflicts,
+otherwise try the other way round), and simply come up with a *very good*
+message to the unfortunate user who encounters this situation?
+
+I am thinking about something along these lines:
+
+	There were conflicts merging the original merge
+		deadbee (Merge 'side-branch')
+	with its rebased first parent
+		b1ab1ab (Rename 'core()' to 'hi()')
+	and its rebased second parent
+		ceeceec (Call core() in the event loop)
+
+	The intermediate merge(s) are available as
+		abcdef6 (intermediate merge)
+
+Maybe that is good enough? Then the user could always try to glean which
+amendments in the original merge (if any) were responsible for the
+conflicts, and maybe even try to recreate the merge and then apply the
+amendments manually... or something else...
+
+I could even imagine that we could come up with more clever fall-back
+strategies, such as recreating the original merge with a regular
+merge_trees() to see whether it resulted in the same tree, i.e. find out
+whether there *were* amendments, and in that case simply recreate a new
+merge from scratch.
+
+At some point, though, I should stop spending so much time on something
+that may not even happen all that much in practice, I guess... ;-)
+
+Ciao,
+Dscho
