@@ -2,293 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F3AE1F42D
-	for <e@80x24.org>; Fri, 13 Apr 2018 17:57:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 757731F404
+	for <e@80x24.org>; Fri, 13 Apr 2018 18:22:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750955AbeDMR5J (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 13:57:09 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:7660 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750824AbeDMR5I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 13:57:08 -0400
-Received: from [192.168.2.201] ([92.28.131.105])
-        by smtp.talktalk.net with SMTP
-        id 72wZfiFM8C0Wb72waf7qUD; Fri, 13 Apr 2018 18:57:06 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1523642226;
-        bh=aBSjYr8UINmtg6vAvHFw3gp5n+zGz0DSiJce0IucKAs=;
-        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=HJKS+LGq4GJNud7M/egbS8ZpXNgrAxEt8miQqi7y62UOJRTuRvjYeFE9N1TxhODqe
-         NgR1OV7h8aiyyMI24jzyiLTHL4f8tr1aKm9JQGkWatmX/hUl6duR0fpqAc0iCd5bVt
-         39mGpv0VDvpxH2c1vbjr7R8ZI5ek0jSEYIQuNLXU=
-X-Originating-IP: [92.28.131.105]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Q+T8Hb+a c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
- a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
- a=XGhs91ss3p6XzigbGvYA:9 a=B4v6LIeArFRCb6rf:21 a=tGUqaxwm-2-ohuB0:21
- a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 05/15] sequencer: introduce the `merge` command
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>
-References: <cover.1519680483.git.johannes.schindelin@gmx.de>
- <cover.1523362469.git.johannes.schindelin@gmx.de>
- <8a5ae61f603df8d8cb19268e1b8470f0a4993445.1523362469.git.johannes.schindelin@gmx.de>
- <55216d0b-cb37-6514-7f80-91f4617c105d@talktalk.net>
-Message-ID: <85232331-97a0-7989-e095-854ed962c7a0@talktalk.net>
-Date:   Fri, 13 Apr 2018 18:57:03 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1751032AbeDMSW0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 14:22:26 -0400
+Received: from mail-yb0-f177.google.com ([209.85.213.177]:39697 "EHLO
+        mail-yb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750928AbeDMSWZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 14:22:25 -0400
+Received: by mail-yb0-f177.google.com with SMTP id g197-v6so4758627ybf.6
+        for <git@vger.kernel.org>; Fri, 13 Apr 2018 11:22:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=q2H4Mtte1TZCVnwP9ekfo2yAhg2NbwvFL39h03Zuy4s=;
+        b=H+ZHZfiJfA5BnrBWWyZJWmqD4FABy5O1CZQKUODWLDyXSh+bTESL0HGQxudf3gZe4d
+         0FYOVf3bg6RAnv2szez1oCTdrN9WKTioxcbX3PHpunXDfexnnS78jG01IyOSr4TzeCzz
+         ObmZSzNC7MO9noi4bXGvSpK4amUUyNc1uD0UeiezA2IDuhRF4RJ4Kq+TTokh/+QFWk1a
+         YMRlbyzMi+4tQ5gSWr46cMOw6b/xYz4i+ZZvwbOCINREMq3P0vYp70l+RIm9EO3BM4Yz
+         yvS0xNjro1t8KslyoyffyufqKBvVfoVKIuDHbF8/2yBxAgoR91yBoNDvlr9jDlJC8kUC
+         sc1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=q2H4Mtte1TZCVnwP9ekfo2yAhg2NbwvFL39h03Zuy4s=;
+        b=rVeWsCYkXYxxBairk8QpCnQOXwaExPC0zwonuDtEPH9y6UKdElmQmBlWdfS9ufR2L4
+         jbOtEcCmDNntWBJBqxazEk7reyTb/R5w16QiEXLS1WznFmOYTadGYWEhh53HmlD0CiM+
+         Xd829kon0KVMoc2EKKQUWEEm7KpHMzlVED8ea3mhgoGFWwAOJ+QVGGJWq+TUtz43NKeV
+         pAzxHbJJdtEk0oHuTNGE/gz4kM7rpAnVnqUreBSwLFo1az5ixrVXnMwTfu2+kiUneGdJ
+         1Ex2hwi3CSguLpVbgQBtjar+tVYffk+ky819Tkl038/PtfeAXVEy6WOrM9gBP7t/8p8o
+         iP1Q==
+X-Gm-Message-State: ALQs6tDRiX1mNtApYKR2ALnIRdJfQTKk6eR6vBS5++HcDx5YH/kXdVGC
+        5PKwaafuE8l4N4zbpdje9BIg7ZzKDO6TP3H8e//USw==
+X-Google-Smtp-Source: AIpwx48iBCTklQbxvlhuycnEhvXPPDFjWO+5tZ/m6icrLwIZqBKpmuMFstaxgjwLw9foxGbPe1WTPVlNz3ApUBOJHa8=
+X-Received: by 2002:a25:2704:: with SMTP id n4-v6mr5654698ybn.167.1523643744006;
+ Fri, 13 Apr 2018 11:22:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <55216d0b-cb37-6514-7f80-91f4617c105d@talktalk.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfLc4AyebkRB1VyzisLwtfOoiQ6gVUxOsLLk66V89Ajl1cnCGtWfLg1BB1S8Wd5/j5jj5I1jBARumIqYeRZYeiJY7WxrZOORSBz0m6vSHOG6UK1E358h8
- 5Lhp77x43BfGkfM90Jb7flTfhXfc0ipVWdCT/lS4bbojebnxdDFkQQdcAU2Pu8oMYHj0ehoxUGrmeYUjLfTgPgtj+zJd3Wa6lq54lInFTjRG0Ee1QBaGKyKw
- hkIBXznO9GZy/tRYp97F5+a/dt/sgk9qsnXy0lYaryOrJJxQ9s9JEsixrmNZqwcrMtL0qmQW7mtyMKnu8SiMjpUT3uGE5o1iff89Ynb/32z32blqh/3ebrEX
- xPcO28t0eaWmcWf8pxNiJ9FC3gtfxWob+K3Yx2S5TfQpGaFeZmhRv5lNknbOr5rzFPSjOmaZmKrrZSQvXZRaicfhsqAkpE6Aguq2BKGvgQMaA4m70IHJL97v
- 6zgF0aPOWX9tXruPUxL9BhNnrBaLuaxVXTPX6w==
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Fri, 13 Apr 2018 11:22:23
+ -0700 (PDT)
+In-Reply-To: <0f0942043678fe76f8d654306482ee26fac643f0.1523617836.git.johannes.schindelin@gmx.de>
+References: <0f0942043678fe76f8d654306482ee26fac643f0.1523617836.git.johannes.schindelin@gmx.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 13 Apr 2018 11:22:23 -0700
+Message-ID: <CAGZ79kbEec_U5wL_aOS5O_3+ZOshGwARALpjz801h-fRx-zotA@mail.gmail.com>
+Subject: Re: [PATCH] Deprecate support for .git/info/grafts
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/04/18 11:12, Phillip Wood wrote:
-> On 10/04/18 13:29, Johannes Schindelin wrote:
->> +static int do_merge(struct commit *commit, const char *arg, int arg_len,
->> +		    int flags, struct replay_opts *opts)
->> +{
->> +	int run_commit_flags = (flags & TODO_EDIT_MERGE_MSG) ?
->> +		EDIT_MSG | VERIFY_MSG : 0;
->> +	struct strbuf ref_name = STRBUF_INIT;
->> +	struct commit *head_commit, *merge_commit, *i;
->> +	struct commit_list *bases, *j, *reversed = NULL;
->> +	struct merge_options o;
->> +	int merge_arg_len, oneline_offset, ret;
->> +	static struct lock_file lock;
->> +	const char *p;
->> +
->> +	oneline_offset = arg_len;
->> +	merge_arg_len = strcspn(arg, " \t\n");
->> +	p = arg + merge_arg_len;
->> +	p += strspn(p, " \t\n");
->> +	if (*p == '#' && (!p[1] || isspace(p[1]))) {
->> +		p += 1 + strspn(p + 1, " \t\n");
->> +		oneline_offset = p - arg;
->> +	} else if (p - arg < arg_len)
->> +		BUG("octopus merges are not supported yet: '%s'", p);
->> +
->> +	strbuf_addf(&ref_name, "refs/rewritten/%.*s", merge_arg_len, arg);
->> +	merge_commit = lookup_commit_reference_by_name(ref_name.buf);
->> +	if (!merge_commit) {
->> +		/* fall back to non-rewritten ref or commit */
->> +		strbuf_splice(&ref_name, 0, strlen("refs/rewritten/"), "", 0);
->> +		merge_commit = lookup_commit_reference_by_name(ref_name.buf);
->> +	}
->> +	if (!merge_commit) {
->> +		error(_("could not resolve '%s'"), ref_name.buf);
->> +		strbuf_release(&ref_name);
->> +		return -1;
->> +	}
->> +
->> +	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
->> +		return -1;
->> +
->> +	head_commit = lookup_commit_reference_by_name("HEAD");
->> +	if (!head_commit) {
->> +		rollback_lock_file(&lock);
->> +		return error(_("cannot merge without a current revision"));
->> +	}
->> +
->> +	if (commit) {
->> +		const char *message = get_commit_buffer(commit, NULL);
->> +		const char *body;
->> +		int len;
->> +
->> +		if (!message) {
->> +			rollback_lock_file(&lock);
->> +			return error(_("could not get commit message of '%s'"),
->> +				     oid_to_hex(&commit->object.oid));
->> +		}
->> +		write_author_script(message);
->> +		find_commit_subject(message, &body);
->> +		len = strlen(body);
->> +		if (write_message(body, len, git_path_merge_msg(), 0) < 0) {
->> +			error_errno(_("could not write '%s'"),
->> +				    git_path_merge_msg());
->> +			unuse_commit_buffer(commit, message);
->> +			rollback_lock_file(&lock);
->> +			return -1;
->> +		}
->> +		unuse_commit_buffer(commit, message);
->> +	} else {
->> +		struct strbuf buf = STRBUF_INIT;
->> +		int len;
->> +
->> +		strbuf_addf(&buf, "author %s", git_author_info(0));
->> +		write_author_script(buf.buf);
->> +		strbuf_reset(&buf);
->> +
->> +		if (oneline_offset < arg_len) {
->> +			p = arg + oneline_offset;
->> +			len = arg_len - oneline_offset;
->> +		} else {
->> +			strbuf_addf(&buf, "Merge branch '%.*s'",
->> +				    merge_arg_len, arg);
->> +			p = buf.buf;
->> +			len = buf.len;
->> +		}
->> +
->> +		if (write_message(p, len, git_path_merge_msg(), 0) < 0) {
->> +			error_errno(_("could not write '%s'"),
->> +				    git_path_merge_msg());
->> +			strbuf_release(&buf);
->> +			rollback_lock_file(&lock);
->> +			return -1;
->> +		}
->> +		strbuf_release(&buf);
->> +	}
->> +
->> +	write_message(oid_to_hex(&merge_commit->object.oid), GIT_SHA1_HEXSZ,
->> +		      git_path_merge_head(), 0);
->> +	write_message("no-ff", 5, git_path_merge_mode(), 0);
->> +
->> +	bases = get_merge_bases(head_commit, merge_commit);
->> +	for (j = bases; j; j = j->next)
->> +		commit_list_insert(j->item, &reversed);
->> +	free_commit_list(bases);
->> +
->> +	read_cache();
->> +	init_merge_options(&o);
->> +	o.branch1 = "HEAD";
->> +	o.branch2 = ref_name.buf;
->> +	o.buffer_output = 2;
->> +
->> +	ret = merge_recursive(&o, head_commit, merge_commit, reversed, &i);
->> +	if (!ret)
->> +		rerere(opts->allow_rerere_auto);
->> +	if (ret <= 0)
->> +		fputs(o.obuf.buf, stdout);
->> +	strbuf_release(&o.obuf);
->> +	if (ret < 0) {
->> +		strbuf_release(&ref_name);
->> +		rollback_lock_file(&lock);
->> +		return error(_("conflicts while merging '%.*s'"),
->> +			     merge_arg_len, arg);
->> +	}
-> 
-> If there are conflicts then ret == 0 rather than -1
-> 
->> +
->> +	if (active_cache_changed &&
->> +	    write_locked_index(&the_index, &lock, COMMIT_LOCK)) {
->> +		strbuf_release(&ref_name);
->> +		return error(_("merge: Unable to write new index file"));
->> +	}
->> +	rollback_lock_file(&lock);
->> +
->> +	ret = run_git_commit(git_path_merge_msg(), opts, run_commit_flags);
-> 
-> If there were conflicts this will try and run git commit with unmerged
-> cache entries
-> 
->> +	strbuf_release(&ref_name);
->> +
->> +	return ret;
->> +}
->> +
-> 
-> If the merge fails with an error rather than conflicts then I think it
-> should be rescheduled as we do for picks that fail with an error. The
-> patch below does that and also adjusts the logic following the merge so
-> that it does not call 'git commit' when there are conflicts. I think we
-> may want to say something about fixing the conflicts and running
-> 'git rebase --continue' as we do for conflicts when picking.
-> 
-> Best Wishes
-> 
-> Phillip
-> 
-> --->8---
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Subject: [PATCH] fixup! sequencer: introduce the `merge` command
-> 
-> 
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Hi Johannes,
+
+On Fri, Apr 13, 2018 at 4:11 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> The grafts feature was a convenient way to "stich together" ancient
+> history to the fresh start of linux.git.
+
+Did you mean: stitch?
+
+> Its implementation is, however, not up to Git's standards, as there are
+> too many ways where it can lead to surprising and unwelcome behavior.
+>
+> For example, when pushing from a repository with active grafts, it is
+> possible to miss commits that have been "grafted out", resulting in a
+> broken state on the other side.
+>
+> Also, the grafts feature is limited to "rewriting" commits' list of
+> parents, it cannot replace anything else.
+>
+> The much younger feature implemented as `git replace` set out to remedy
+> those limitations and dangerous bugs.
+>
+> Seeing as `git replace` is pretty mature by now, it is time to deprecate
+> support for the graft file, and to retire it eventually.
+
+It seems that the maturity needed for this commit was reached in
+4228e8bc98 (replace: add --graft option, 2014-07-19)
+
+Reviewed-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  sequencer.c | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index e1b9be7327..511b7fddca 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2807,27 +2807,26 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
->  	o.buffer_output = 2;
->  
->  	ret = merge_recursive(&o, head_commit, merge_commit, reversed, &i);
-> -	if (!ret)
-> -		rerere(opts->allow_rerere_auto);
-> +	strbuf_release(&ref_name);
->  	if (ret <= 0)
->  		fputs(o.obuf.buf, stdout);
->  	strbuf_release(&o.obuf);
->  	if (ret < 0) {
-> -		strbuf_release(&ref_name);
->  		rollback_lock_file(&lock);
-> -		return error(_("conflicts while merging '%.*s'"),
-> -			     merge_arg_len, arg);
-> +		return ret;
->  	}
->  
->  	if (active_cache_changed &&
-> -	    write_locked_index(&the_index, &lock, COMMIT_LOCK)) {
-> -		strbuf_release(&ref_name);
-> +	    write_locked_index(&the_index, &lock, COMMIT_LOCK))
->  		return error(_("merge: Unable to write new index file"));
-> -	}
->  	rollback_lock_file(&lock);
-> +	if (!ret) {
-> +		rerere(opts->allow_rerere_auto);
-> +		error(_("conflicts while merging '%.*s'"), merge_arg_len, arg);
-> +		return 1;
-> +	}
->  
->  	ret = run_git_commit(git_path_merge_msg(), opts, run_commit_flags);
-> -	strbuf_release(&ref_name);
->  
->  	return ret;
->  }
-> @@ -3030,7 +3029,8 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
->  			return error(_("unknown command %d"), item->command);
->  
->  		if (res < 0 && (item->command == TODO_LABEL ||
-> -				item->command == TODO_RESET)) {
-> +				item->command == TODO_RESET ||
-> +				item->command == TODO_MERGE)) {
 
-Unfortunately it's not as simple as that - we only want to reschedule if
-merge_recursive() fails, not if run_git_commit() does.
+>                 return -1;
+> +       if (advice_graft_file_deprecated)
+> +               advise(_("Support for <GIT_DIR>/info/grafts is deprecated\n"
+> +                        "and will be removed in a future Git version.\n"
+> +                        "\n"
+> +                        "Please use \"git replace --graft [...]\" instead.\n"
+> +                        "\n"
+> +                        "Turn this message off by running\n"
+> +                        "\"git config advice.graftFileDeprecated false\""));
 
+So the user would have to run:
 
->  			/* Reschedule */
->  			todo_list->current--;
->  			save_todo(todo_list, opts);
-> 
+  for line in <GIT_DIR>/info/grafts:
+      git replace --graft $line
+      # The order in the grafts file is the same as the arguments,
+      # but we'd have to pass each as its own argument
+  rm <GIT_DIR>/info/grafts
 
+I wonder if we want to offer a migration tool or just leave it
+at this hint.
+
+Thanks,
+Stefan
