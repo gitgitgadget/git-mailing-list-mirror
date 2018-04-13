@@ -2,246 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED6721F424
-	for <e@80x24.org>; Fri, 13 Apr 2018 09:43:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D33521F424
+	for <e@80x24.org>; Fri, 13 Apr 2018 09:53:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754051AbeDMJnT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 05:43:19 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:33027 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753763AbeDMJnR (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 13 Apr 2018 05:43:17 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id DF5C120BC2;
-        Fri, 13 Apr 2018 05:43:16 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 13 Apr 2018 05:43:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=/+yoBI
-        daAbUmRNx8TDs5xNlzh06bjiaaE9wD/ruEND8=; b=VVkQIszs8NyegJp+86PVtl
-        FAWdp82Ha5J8nhcwFRYBfqQUD/6GN6CmSeXr1uGxe1NTt73LCKwf9lVBoBJiigZY
-        1sUk2zDn3Z6mVFoa/rGRoeJKMxmLiW7XpyHSo3/pKnf5hYtZ4vdPxux+QWHA6IPL
-        MOFASUEvnSBYU8DRtajFVPwVgd77CH/atFAl5CMciynTsmPE2woyBHllTkDr1Ek9
-        qCXXfpAJNlZPEOtst+mx5PsHsZidFLx6hBKRKxnEej6AW5rLS+jlFPIiPhsJG8qZ
-        L4uZAoRiX316egQub+/KoAjqFPHpyfwIWIO8zMHBzjytc34AyDdSd2JUYDZ2LV6A
-        ==
-X-ME-Sender: <xms:tHvQWutO6AElAgeyWrxd-jmeg-0wZcidUpvVdwqbV9IRP4wuiHbfFQ>
-Received: from bod.fritz.box (p54826bc2.dip0.t-ipconnect.de [84.130.107.194])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 4AE23E442C;
-        Fri, 13 Apr 2018 05:43:16 -0400 (EDT)
-Received: by bod.fritz.box (Postfix, from userid 1000)
-        id 6CD967C0179; Fri, 13 Apr 2018 11:43:14 +0200 (CEST)
-Date:   Fri, 13 Apr 2018 11:43:14 +0200
-From:   Michael Vogt <mvo@ubuntu.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] Add "git show --follow-symlinks HEAD:symlink"
-Message-ID: <20180413094314.GA2404@bod>
-References: <20180409090047.lfru2ul5fbnggfg7@bod>
- <87in90zq2a.fsf@evledraar.gmail.com>
+        id S1753910AbeDMJx2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 05:53:28 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:47015 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752223AbeDMJx1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 05:53:27 -0400
+Received: by mail-wr0-f196.google.com with SMTP id d1so7690712wrj.13
+        for <git@vger.kernel.org>; Fri, 13 Apr 2018 02:53:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=k3FMrVhdhRkgtZlWLD3mj+WMKwSQ+I1EWy7WtqD8eIQ=;
+        b=WIU43fDyO5yQ5EwgWbGNGx7NEr0IM2Dnsg0i/LDrtbK/DGGO+pM3h5Vg9Z//bipqG0
+         NJtE+t/cBHV0F348VA3uHOlteM9MdD88jIFDJPwYl8Bn/AlZxZFs5tZe/58Var9ndFuo
+         AVCC2Rl61U5ax+pqXs9gr1SrgRnJTedidSliwD2qsrULOGJi/NwCHb2WiD4+yvbsdv3B
+         eJdG19slsj2YXOA3GeRZ96o+pY/b0ve+3t9nyCKr7+eBBvW6MlFl7UIUfzhulk2z6Gkw
+         f2Z1vv1/iZCMCz+PZN5BP9zUnsn6zsIOG5n68OIbLOZfla3xBTFsmCm/LqNEdDCr97k6
+         p5hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=k3FMrVhdhRkgtZlWLD3mj+WMKwSQ+I1EWy7WtqD8eIQ=;
+        b=bok53TLp51RBnCkMNG/kQAKpRXRwug4Oui+NOxfrlPf+c/mAn/LFLIWM/OMLjQEE97
+         uor0SzaDFX8oY5UmXJsX7hAR1csAp0+KrBxU6NKWtcOHiUAJKCAqzMOcd/bu7kqjIr8c
+         U3r+dTchdDKVUceQXAe1O/CPSmju2UdH0Kdwns+vH1Vm0QdaCe6AYyKdHExNOGzESGxD
+         MrjLKKgR/LdnWMiWXsif7lbm3daxcgklbdYpbijXY3O6u4pnVCwbTvyHLFQOUnSSWkaE
+         YXcyC1Z6MkSNA3ZG2JJDgHSokf7d1jgvH8g2/YRhQPCSlbf91r6BrNdJj2TsHum7DIt4
+         6+6g==
+X-Gm-Message-State: ALQs6tDXMUFKUaGP4jFX/SYAMMB1s59WeitwhaLCxECvdrHR5l3yyzdq
+        9lM5COdZ3fdYDripm6u7CAA=
+X-Google-Smtp-Source: AIpwx4+3oS5cn+DwSpg2HgRp7S7zbn5rbBMOrxVCTmSGUzg5Za0JYtqDlMj2/Fb7dTYWdXh1GyQdFQ==
+X-Received: by 10.223.198.71 with SMTP id u7mr3389431wrg.270.1523613206100;
+        Fri, 13 Apr 2018 02:53:26 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (abrf152.neoplus.adsl.tpnet.pl. [83.8.99.152])
+        by smtp.gmail.com with ESMTPSA id c130sm1452692wmh.33.2018.04.13.02.53.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 13 Apr 2018 02:53:24 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v2 07/10] commit-graph.txt: update future work
+References: <20180403165143.80661-1-dstolee@microsoft.com>
+        <20180409164131.37312-1-dstolee@microsoft.com>
+        <20180409164131.37312-8-dstolee@microsoft.com>
+        <xmqqfu403i0p.fsf@gitster-ct.c.googlers.com>
+        <f557058d-7836-4b66-8fda-7fdfc7484219@gmail.com>
+Date:   Fri, 13 Apr 2018 11:53:21 +0200
+In-Reply-To: <f557058d-7836-4b66-8fda-7fdfc7484219@gmail.com> (Derrick
+        Stolee's message of "Thu, 12 Apr 2018 07:35:36 -0400")
+Message-ID: <86a7u7mnzi.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="cNdxnHkX5QqsyA0e"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87in90zq2a.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Derrick Stolee <stolee@gmail.com> writes:
 
---cNdxnHkX5QqsyA0e
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+> On 4/12/2018 5:12 AM, Junio C Hamano wrote:
+>> Derrick Stolee <dstolee@microsoft.com> writes:
+>>
+>>> +Here is a diagram to visualize the shape of the full commit graph, and
+>>> +how different generation numbers relate:
+>>> +
+>>> +    +-----------------------------------------+
+>>> +    | GENERATION_NUMBER_INFINITY =3D 0xFFFFFFFF |
+>>> +    +-----------------------------------------+
+>>> +	    |            |      ^
+>>> +	    |            |      |
+>>> +	    |            +------+
+>>> +	    |         [gen(A) =3D gen(B)]
+>>> +	    V
+>>> +    +-------------------------------------+
+>>> +    | 0 < commit->generation < 0x40000000 |
+>>> +    +-------------------------------------+
+>>> +	    |            |      ^
+>>> +	    |            |      |
+>>> +	    |            +------+
+>>> +	    |        [gen(A) > gen(B)]
+>>> +	    V
+>>> +    +-------------------------------------+
+>>> +    | GENERATION_NUMBER_ZERO =3D 0          |
+>>> +    +-------------------------------------+
+>>> +			 |      ^
+>>> +			 |      |
+>>> +			 +------+
+>>> +		     [gen(A) =3D gen(B)]
+>>
+>> It may be just me but all I can read out of the above is that
 
-Hi Ævar,
+It's not just you.
 
-thanks for your quick reply!
+>> commit->generation may store 0xFFFFFFFF, a value between 0 and
+>> 0x40000000, or 0.  I cannot quite tell what the notation [gen(A)
+>> <cmp> gen(B)] is trying to say.  I am guessing "Two generation
+>> numbers within the 'valid' range can be compared" is what the second
+>> one is trying to say, but it is much less interesting to know that
+>> two infinities compare equal than how generation numbers from
+>> different classes compare, which cannot be depicted in the above
+>> notation, I am afraid.  For example, don't we want to say that a
+>> commit with INF can never be reached by a commit with a valid
+>> generation number, or something like that?
+>
+> My intention with the arrows was to demonstrate where parent
+> relationships can go, and the generation-number relation between a
+> commit A with parent B. Clearly, this diagram is less than helpful.
 
-On Mon, Apr 09, 2018 at 11:28:45AM +0200, Ævar Arnfjörð Bjarmason wrote:
-> On Mon, Apr 09 2018, Michael Vogt wrote:
-[..]
-> > Subject: [PATCH] support: git show --follow-symlinks HEAD:symlink
-> >
-> > Add support for the `--follow-symlinks` options to git-show. This
-> > allows to write:
-> >
-> >     git show --follow-symlink HEAD:path-a-symlink
-> 
-> The patch looks reasonable, but please submit it as described in
-> Documentation/SubmittingPatches, i.e. inline instead of as an
-> attachment, and with a signed-off-by line etc. We'd also need some tests
-> for this.
+Perhaps the following table would make the information clearer (perhaps
+in addition to the above graph, but without "gen(A) {cmp} gen(B)"
+arrows).
 
-Thanks for the intial reivew. I updated the patch with a test and
-documentation for the new option. Happy to merge the test into one of
-the existing test files, I read t/README and greping around I did not
-find a place that looked like a good fit. 
+I assume that it is possible to have both GENERATION_NUMBER_ZERO and non
+zero generation numbers in one repo, perhaps via alternates.  I also
+assume that A !=3D B, and that generation numbers (both set, and 0s) are
+transitivelu closed under reachability.
 
-I added the updated patch as an mutt inline attachment now.
+gen(A) \   commit B ->   |                     gen(B)
+        \-----\          |
+commit A       \         | 0xFFFFFFFF | larger   | smaller | 0x00000000
+----------------\--------+------------+----------+---------+------------
+0xFFFFFFFF               | =3D            >          >         >
+0 < larger  < 0x40000000 | < N          =3D n        >         >
+0 < smaller < 0x40000000 | < N          < N        =3D n       >
+0x00000000               | < N          < N        < N       =3D
 
-Cheers,
- Michael
+The "<", "=3D", ">" denotes result of comparison between gen(A) and gen(B).
 
---cNdxnHkX5QqsyA0e
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: inline; filename="0001-support-git-show-follow-symlinks-HEAD-symlink.patch"
+Generation numbers create a negative-cut filter: "N" and "n" denote
+situation where we know from gen(A) and gen(B) that B is not reachable
+from A.
 
-From 5a9faa9eff00f316fc654c8e3bc85c3ba56ea659 Mon Sep 17 00:00:00 2001
-From: Michael Vogt <mvo@ubuntu.com>
-Date: Mon, 9 Apr 2018 10:38:13 +0200
-Subject: [PATCH] support: git show --follow-symlinks HEAD:symlink
-
-Add support for the `--follow-symlinks` options to git-show. This
-allows to write:
-
-    git show --follow-symlink HEAD:path-a-symlink
-
-to get the content of the symlinked file.
-
-Signed-off-by: Michael Vogt <mvo@ubuntu.com>
----
- Documentation/git-show.txt |  6 ++++++
- builtin/log.c              |  7 +++++--
- revision.c                 |  2 ++
- revision.h                 |  1 +
- t/t1800-git-show.sh        | 41 ++++++++++++++++++++++++++++++++++++++
- 5 files changed, 55 insertions(+), 2 deletions(-)
- create mode 100755 t/t1800-git-show.sh
-
-diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-index e73ef5401..fa751c35d 100644
---- a/Documentation/git-show.txt
-+++ b/Documentation/git-show.txt
-@@ -39,6 +39,12 @@ OPTIONS
- 	For a more complete list of ways to spell object names, see
- 	"SPECIFYING REVISIONS" section in linkgit:gitrevisions[7].
- 
-+--follow-symlinks::
-+	Follow symlinks inside the repository when requesting objects
-+	with extended SHA-1 expressions of the form tree-ish:path-in-tree.
-+	Instead of output about the link itself, provide output about
-+	the linked-to object.
-+
- include::pretty-options.txt[]
- 
- 
-diff --git a/builtin/log.c b/builtin/log.c
-index 94ee177d5..e92af4fc7 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -142,7 +142,7 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 			 struct rev_info *rev, struct setup_revision_opt *opt)
- {
- 	struct userformat_want w;
--	int quiet = 0, source = 0, mailmap = 0;
-+	int quiet = 0, source = 0, mailmap = 0, follow_symlinks = 0;
- 	static struct line_opt_callback_data line_cb = {NULL, NULL, STRING_LIST_INIT_DUP};
- 	static struct string_list decorate_refs_exclude = STRING_LIST_INIT_NODUP;
- 	static struct string_list decorate_refs_include = STRING_LIST_INIT_NODUP;
-@@ -162,6 +162,8 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 		OPT_CALLBACK('L', NULL, &line_cb, "n,m:file",
- 			     N_("Process line range n,m in file, counting from 1"),
- 			     log_line_range_callback),
-+		OPT_BOOL(0, "follow-symlinks", &follow_symlinks,
-+			 N_("follow in-tree symlinks (used when showing file content)")),
- 		OPT_END()
- 	};
- 
-@@ -173,9 +175,10 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 			     builtin_log_options, builtin_log_usage,
- 			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN |
- 			     PARSE_OPT_KEEP_DASHDASH);
--
- 	if (quiet)
- 		rev->diffopt.output_format |= DIFF_FORMAT_NO_OUTPUT;
-+	if (follow_symlinks)
-+		rev->follow_symlinks = 1;
- 	argc = setup_revisions(argc, argv, rev, opt);
- 
- 	/* Any arguments at this point are not recognized */
-diff --git a/revision.c b/revision.c
-index b42c836d7..4ab22313f 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1678,6 +1678,8 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
- 
- 	if (revarg_opt & REVARG_COMMITTISH)
- 		get_sha1_flags |= GET_OID_COMMITTISH;
-+	if (revs && revs->follow_symlinks)
-+		get_sha1_flags |= GET_OID_FOLLOW_SYMLINKS;
- 
- 	if (get_oid_with_context(arg, get_sha1_flags, &oid, &oc))
- 		return revs->ignore_missing ? 0 : -1;
-diff --git a/revision.h b/revision.h
-index b8c47b98e..060f1038a 100644
---- a/revision.h
-+++ b/revision.h
-@@ -122,6 +122,7 @@ struct rev_info {
- 			first_parent_only:1,
- 			line_level_traverse:1,
- 			tree_blobs_in_commit_order:1,
-+			follow_symlinks:1,
- 
- 			/* for internal use only */
- 			exclude_promisor_objects:1;
-diff --git a/t/t1800-git-show.sh b/t/t1800-git-show.sh
-new file mode 100755
-index 000000000..86fe8ee02
---- /dev/null
-+++ b/t/t1800-git-show.sh
-@@ -0,0 +1,41 @@
-+#!/bin/sh
-+
-+test_description='Test git show works'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'verify git show HEAD:foo works' '
-+    echo "foo content" > foo &&
-+    git add foo &&
-+    git commit -m "added foo" &&
-+    content=$(git show HEAD:foo) &&
-+    test "$content" = "foo content"
-+'
-+
-+test_expect_success 'verify git show HEAD:symlink shows symlink points to foo' '
-+    echo "foo content" > foo &&
-+    ln -s foo symlink &&
-+    git add foo symlink &&
-+    git commit -m "added foo and a symlink to foo" &&
-+    content=$(git show HEAD:foo) &&
-+    test "$content" = "foo content" &&
-+    symlink=$(git show HEAD:symlink) &e& 
-+    test "$symlink" = "foo"
-+'
-+
-+test_expect_success 'verify git show --follow-symlinks HEAD:symlink shows foo' '
-+    content=$(git show --follow-symlinks HEAD:symlink) &&
-+    test "$content" = "foo content"
-+'
-+
-+test_expect_success 'verify git show --follow-symlinks HEAD:symlink works with subdirs' '
-+    mkdir dir &&
-+    ln -s dir symlink-to-dir &&
-+    echo "bar content" > dir/bar &&
-+    git add dir symlink-to-dir &&
-+    git commit -m "add dir and symlink-to-dir" &&
-+    content=$(git show --follow-symlinks HEAD:symlink-to-dir/bar) &&
-+    test "$content" = "bar content"
-+'
-+
-+test_done
--- 
-2.17.0
+As can be seen if we use gen(A) < gen(B) as cutoff, we don't need to
+treat "infinity" and "zero" in a special way.
 
 
---cNdxnHkX5QqsyA0e--
+Best,
+--=20
+Jakub Nar=C4=99bski
