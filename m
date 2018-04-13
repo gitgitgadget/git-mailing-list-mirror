@@ -2,127 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EEEC1F424
-	for <e@80x24.org>; Fri, 13 Apr 2018 10:30:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A65A1F42D
+	for <e@80x24.org>; Fri, 13 Apr 2018 11:12:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754269AbeDMKaW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 06:30:22 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:39707 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754265AbeDMKaT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 06:30:19 -0400
-Received: by mail-wm0-f41.google.com with SMTP id b21so3307930wme.4
-        for <git@vger.kernel.org>; Fri, 13 Apr 2018 03:30:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=XUc4z6Ox2/CW36gzUCtH1XNT4YGy3cmw3cWZ5LAbt14=;
-        b=Uj34uxlcYfKDw5I9PxDHvD9oibq8IVm0+8yRbd5WWhLCh+jwryZHz7KRbldEZxRxFu
-         NftUF0uQIz/xDSR8xa1chNsh48pIk6WM3NbeKfIi7osewmO9OlJZY6md6JROxEXK36bl
-         wa71ej3rDLkDyrSZBsSy7PnwEyilSswYELOunEZvZ1ELV5upHjH/IEaQxf62VzIeI/YX
-         4NjZXlc+EcJkaw+/Gaf5xw0hIO2L4auE0QdszftSwQmfA0uq5kBtlPzj068tcHYdm2FC
-         0DJ5bvSdksEnOQ5SK6x4sJGuSVwty66IQlF2RlbJ9sR7UVLOJyz6SV2me4XBD7GGO7fs
-         Oi3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=XUc4z6Ox2/CW36gzUCtH1XNT4YGy3cmw3cWZ5LAbt14=;
-        b=gSsdCUr5WTEPlPzD58y8xfTwIV7aiXZ+u9LNOfGVbBthE8CWb0lKS1eB4R+Y6oEmg0
-         ayhICGq9T6lfpGO/PB3AOrI6juYLNyCr9c2PuaK4hXr/TlnNkl6p992zxlyrkEVdKbm2
-         ZRt/2hIb2AuNLOwM4rbOrtgNEBaMBs2jb95otpaYrQoFq0/a5cnC4uPl2lWk8VXZ8HEa
-         3HuwORpi4kLtjzco+msCFrCZzxL3jubWhKjhI4DxMfBwP4bj+2zOCxsvnzYHSRAV0v1+
-         8ckuE1j8Qm9extvE+PqUywfPV19qk8Bk34bAio1vd/wI6jbeFKAOevt1tBhsKKwYNtYM
-         /43A==
-X-Gm-Message-State: ALQs6tB4NX5zQqN0Msyf79r87Tu6qhXJoeNKygK4s/tDgywzaPSrAlLJ
-        jl8Y08zM/5BLk7lBbv9zYKF/pg==
-X-Google-Smtp-Source: AIpwx4/0CJPYKvg9SiVlvMuW0gv1Jx9Wsd3rCKYLOw+wPQmt0zqpYHCQggZ/wkX14hl4flH+k0tkng==
-X-Received: by 10.28.45.9 with SMTP id t9mr3050425wmt.161.1523615418393;
-        Fri, 13 Apr 2018 03:30:18 -0700 (PDT)
-Received: from localhost.localdomain (x4db27fa3.dyn.telefonica.de. [77.178.127.163])
-        by smtp.gmail.com with ESMTPSA id j21sm7325551wrb.49.2018.04.13.03.30.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 13 Apr 2018 03:30:17 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matthew Coleman <matt@1eanda.com>,
-        Stephon Harris <theonestep4@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] completion: reduce overhead of clearing cached --options
-Date:   Fri, 13 Apr 2018 12:30:05 +0200
-Message-Id: <20180413103005.671-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.17.0.366.gbe216a3084
-In-Reply-To: <ACE8F169-7700-4D60-85CB-786C6BEBF0B7@1eanda.com>
-References: <ACE8F169-7700-4D60-85CB-786C6BEBF0B7@1eanda.com>
+        id S1754204AbeDMLL6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 07:11:58 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59855 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753981AbeDMLL4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 07:11:56 -0400
+Received: from [192.168.0.129] ([37.201.203.18]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mg3Vt-1emNSU10cf-00NPUJ; Fri, 13
+ Apr 2018 13:11:51 +0200
+Date:   Fri, 13 Apr 2018 13:11:37 +0200 (DST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] Deprecate support for .git/info/grafts
+Message-ID: <0f0942043678fe76f8d654306482ee26fac643f0.1523617836.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:5AeqMqFjk5T1iaS+ejFFgn8C2sT5pGgFW+ue+apSd74b+cMN3R9
+ QNGChedQhYR7WSChN85pQDaUGcT9mnDpfW33x2la3hUWENngkPp4+Cu8V7wdXet8QGlmZpF
+ 8i5S0hrtA8gdSpe20YZRCJ/uqrgUprJaqIs829gzLagRqfBJlsmQPRS2VMEbuzND8VEL1VO
+ rUj4/HJEvbwMvvc8k5PDQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qfoP5UWrX/M=:qQfX6T63CXEbrlhNn/OkFA
+ 0zHGJdsLtJWQoF2wb+xxziVOYAMRW+Xan9AgnE4b/vXx1otUCnpT16tk4lnc2/Yn606OJRqrZ
+ Re5fOyJr3UZoNvbt7ltyxn8ODij4/4ONu6RrDWR08MuVwAfRhoUZCn6uHMLjVPk6fg7weH/+I
+ Oc7BAPtdJHDG2zldbQRSQQ3i/iVwppLfGrKNh+QICmpfyMC2o8fHSwFIO1KITbgGSDfX/zGIj
+ bkHfxflnx0zhfHciqHohtcfRug0rMAwLPhxkVLatezF9nNvMTe2ebap0Oa3oy3H3upQ6SXhoG
+ Iam5vgMCfNFDC4WKcDCNknhpy+LnqAizJKm76z6q4gdTkyr5Y3/yAZDFqwNRDi++BiL64e7XP
+ lZSHn95u+xk7RVpYCNuWpNtjww7hEkzOE+L905uAPxXcKvqCA+N+EFrHUnq3l0K9VSm/7hJ8X
+ J3ohyVCnXBPfHA/EYW1RJMxup7mUMEPaMxfv76BMsENF1L7q9apDNZHwUL6LnhjGBO7jXdhwY
+ NkQPLiHqKEeqeJIRD844sxCpE1vTMMYyt3lqsBpjcNsYrF2KtoMmgTqgrNVobNTmsEMsklJ9P
+ Qc3sJc+MrcafkYZpLyDmIYtbXoJdSc6tXqBSDstQHOBj/2AgaJGJ0kJQaHOgF78oEwSbrLCYh
+ 4QVUZv7OEPaO4fY9uoSFqzFYFNOdMfiaW/J0mIcaGR1lX+xxff9JGFeZl+l2fAHt1We/lE+Wi
+ SaN67NqqSholqMTLonj9uNCoirB5GbHMiOLEyPZ+1HARzyK9oyr8lKBdOmYnboJ3BcjDje3IP
+ 5wzI8Q7uhkLLjN4K4gFgs7KvVM5IHfIQOXEFYvKCsVNQilDM0A=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To get the names of all '$__git_builtin_*' variables caching --options
-of builtin commands in order to unset them, 8b0eaa41f2 (completion:
-clear cached --options when sourcing the completion script,
-2018-03-22) runs a 'set |sed s///' pipeline.  This works both in Bash
-and in ZSH, but has a higher than necessasry overhead with the extra
-processes.
+The grafts feature was a convenient way to "stich together" ancient
+history to the fresh start of linux.git.
 
-In Bash we can do better: run the 'compgen -v __gitcomp_builtin_'
-builtin command, which lists the same variables, but without a
-pipeline and 'sed' it can do so with lower overhead.
+Its implementation is, however, not up to Git's standards, as there are
+too many ways where it can lead to surprising and unwelcome behavior.
 
-This change also happens to work around an issue reported by users of
-the Powerline shell prompt on macOS, which was triggered by the same
-commit 8b0eaa41f2 as well.  Powerline uses several Unicode Private Use
-Area code points to represent some of its pretty text UI elements
-(arrows and what not), and these are stored in the $PS1 variable.
-Apparently the 'set' builtin command of the default Bash version shipped
-in macOS (3.2.57) has issues with these code points, and produces
-garbled output where Powerline's special symbols should be in the $PS1
-variable.  This, in turn, triggers the following error message in the
-downstream 'sed' process:
+For example, when pushing from a repository with active grafts, it is
+possible to miss commits that have been "grafted out", resulting in a
+broken state on the other side.
 
-  sed: RE error: illegal byte sequence
+Also, the grafts feature is limited to "rewriting" commits' list of
+parents, it cannot replace anything else.
 
-Other Bash versions, notably 4.4.19 on macOS (via homebrew) and 3.2.25
-on CentOS don't seem to be affected.
+The much younger feature implemented as `git replace` set out to remedy
+those limitations and dangerous bugs.
 
-With this patch neither the 'set' builtin is invoked to print garbage,
-nor 'sed' to choke on it.
+Seeing as `git replace` is pretty mature by now, it is time to deprecate
+support for the graft file, and to retire it eventually.
 
-Issue-on-macOS-reported-by: Stephon Harris <theonestep4@gmail.com>
-Issue-on-macOS-explained-by: Matthew Coleman <matt@1eanda.com>
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/completion/git-completion.bash | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ advice.c                  | 2 ++
+ advice.h                  | 1 +
+ commit.c                  | 9 +++++++++
+ t/t6001-rev-list-graft.sh | 9 +++++++++
+ 4 files changed, 21 insertions(+)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b09c8a2362..4ef59a51be 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -282,7 +282,11 @@ __gitcomp ()
+diff --git a/advice.c b/advice.c
+index 406efc183ba..4411704fd45 100644
+--- a/advice.c
++++ b/advice.c
+@@ -19,6 +19,7 @@ int advice_rm_hints = 1;
+ int advice_add_embedded_repo = 1;
+ int advice_ignored_hook = 1;
+ int advice_waiting_for_editor = 1;
++int advice_graft_file_deprecated = 1;
  
- # Clear the variables caching builtins' options when (re-)sourcing
- # the completion script.
--unset $(set |sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p') 2>/dev/null
-+if [[ -n ${ZSH_VERSION-} ]]; then
-+	unset $(set |sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p') 2>/dev/null
-+else
-+	unset $(compgen -v __gitcomp_builtin_)
-+fi
+ static struct {
+ 	const char *name;
+@@ -42,6 +43,7 @@ static struct {
+ 	{ "addembeddedrepo", &advice_add_embedded_repo },
+ 	{ "ignoredhook", &advice_ignored_hook },
+ 	{ "waitingforeditor", &advice_waiting_for_editor },
++	{ "graftfiledeprecated", &advice_graft_file_deprecated },
  
- # This function is equivalent to
- #
+ 	/* make this an alias for backward compatibility */
+ 	{ "pushnonfastforward", &advice_push_update_rejected }
+diff --git a/advice.h b/advice.h
+index 70568fa7922..9f5064e82a8 100644
+--- a/advice.h
++++ b/advice.h
+@@ -21,6 +21,7 @@ extern int advice_rm_hints;
+ extern int advice_add_embedded_repo;
+ extern int advice_ignored_hook;
+ extern int advice_waiting_for_editor;
++extern int advice_graft_file_deprecated;
+ 
+ int git_default_advice_config(const char *var, const char *value);
+ __attribute__((format (printf, 1, 2)))
+diff --git a/commit.c b/commit.c
+index ca474a7c112..a96b0a27154 100644
+--- a/commit.c
++++ b/commit.c
+@@ -12,6 +12,7 @@
+ #include "prio-queue.h"
+ #include "sha1-lookup.h"
+ #include "wt-status.h"
++#include "advice.h"
+ 
+ static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
+ 
+@@ -176,6 +177,14 @@ static int read_graft_file(const char *graft_file)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	if (!fp)
+ 		return -1;
++	if (advice_graft_file_deprecated)
++		advise(_("Support for <GIT_DIR>/info/grafts is deprecated\n"
++			 "and will be removed in a future Git version.\n"
++			 "\n"
++			 "Please use \"git replace --graft [...]\" instead.\n"
++			 "\n"
++			 "Turn this message off by running\n"
++			 "\"git config advice.graftFileDeprecated false\""));
+ 	while (!strbuf_getwholeline(&buf, fp, '\n')) {
+ 		/* The format is just "Commit Parent1 Parent2 ...\n" */
+ 		struct commit_graft *graft = read_graft_line(&buf);
+diff --git a/t/t6001-rev-list-graft.sh b/t/t6001-rev-list-graft.sh
+index 05ddc69cf2a..7504ba47511 100755
+--- a/t/t6001-rev-list-graft.sh
++++ b/t/t6001-rev-list-graft.sh
+@@ -110,4 +110,13 @@ do
+ 	"
+ 
+ done
++
++test_expect_success 'show advice that grafts are deprecated' '
++	git show HEAD 2>err &&
++	test_i18ngrep "git replace" err &&
++	test_config advice.graftFileDeprecated false &&
++	git show HEAD 2>err &&
++	test_i18ngrep ! "git replace" err
++'
++
+ test_done
+
+base-commit: fe0a9eaf31dd0c349ae4308498c33a5c3794b293
 -- 
-2.17.0.366.gbe216a3084
+2.17.0.windows.1.4.g7e4058d72e3
 
+Published-As: https://github.com/dscho/git/releases/tag/deprecate-grafts-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git deprecate-grafts-v1
