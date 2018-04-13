@@ -2,189 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0D6C1F404
-	for <e@80x24.org>; Fri, 13 Apr 2018 17:14:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 880B01F404
+	for <e@80x24.org>; Fri, 13 Apr 2018 17:28:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751100AbeDMROa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 13:14:30 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:44913 "EHLO
-        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750940AbeDMRO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 13:14:29 -0400
-Received: by mail-io0-f177.google.com with SMTP id d7so11016931ioc.11
-        for <git@vger.kernel.org>; Fri, 13 Apr 2018 10:14:29 -0700 (PDT)
+        id S1751756AbeDMR2Q (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 13:28:16 -0400
+Received: from mail-yw0-f177.google.com ([209.85.161.177]:42274 "EHLO
+        mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751630AbeDMR2P (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 13:28:15 -0400
+Received: by mail-yw0-f177.google.com with SMTP id z82so4473847ywd.9
+        for <git@vger.kernel.org>; Fri, 13 Apr 2018 10:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=FLIQAhWaKW9EMW5WFbJF24mpc7w+AT2Fvv/X7P0tyCc=;
-        b=BnMko167LYihyGR1AAtmjQVnf+rlMFnJ1LnGEfTpvw0TyPxdpTxrW9rb9nq1LvQFbx
-         ESnnIZUdsGD9DQlRdEqPl5Nq5Gp3Bx610GF68uRPuVJ08quygsxda6O97j0YT8fZ66H8
-         1v0lTyYXcsBE2Dg9tW7RFRKTJlZlOaMSTQBl+MCRvqHm2ROziubDV69gZOCs4HlnmpkF
-         UggwcbFOtCb9aW42NMaRVMRvGHQcqPSrqo6IX43O+qkZ0FUpD/sMZaH6c2aqyxlh5TRJ
-         cBVudBIx7P2SxhqWzgtXWFTuXEWDykdhfl+vcDd88cpkiQD6Av9NStJHSKrA7lliPKYx
-         KyCA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=FLIQAhWaKW9EMW5WFbJF24mpc7w+AT2Fvv/X7P0tyCc=;
-        b=JN9r7V1e1ovPGprmxOI6LAUihpUQyyjNtw9I+YEJcsCons3fadWN9QPxusemUQ7Y2L
-         hzacWtQn8Tg7RLHK+bJfIVO9fhkyGT31OR3NtWOaJomHH6FPYNFG9LcW58M/JqE5VHnL
-         N8XOm0O5jQ2wMhra9zALYjXjQm9EQi4CRPyOI=
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+5DGLuex3KqwC4r2ii629Non6gVnZLGedklvytBEJCk=;
+        b=kIpqJKwXllBkmCTPB5iAnT3N2yr3ZZqP54HFDU9atFUmnDH/+Qnh/XIo0uKSVX8eHU
+         PRswiIfNEFdVD5DTuqVIJV/MRe8bz7xpMguuySLDjoFto6DpUds6EE14UpVOMUiHAFvV
+         iWxzkRbXTlROtbO97p89JkTp6AOtJZ+1UjuFTy3iEiCVF4kuHKFxIJB7uozUjsj0+1Fh
+         NBMDnb5Zjor4VmImu4qjOLornUqFU3mp2NOG19wbvC4ugLQWsGML3Vo611rjyLG81xDq
+         55TvxBHeTjV+i8rGXFR66kfCBLmafHKgVD0BrUtWp6kSyGTaegagnaYBcxtYb/jZ3Duy
+         HC/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=FLIQAhWaKW9EMW5WFbJF24mpc7w+AT2Fvv/X7P0tyCc=;
-        b=PvE2dPPdQ46XZBW446XLnoUXdl/phIhnJRhpZLnln/3pw/Xr2llO7jO0pjEew9gFl4
-         G7njcZ/MKmn2jfjGrxc0fjqCXtBMkp24P0DLYVYLSrEcL2K5zlbq9HwXsmiuzotl6/OK
-         Y6nRLVrRiqSqQM2U+ayfbrFwv+TEMS0xlNfkwmZRde92GeyOCOizh1kPdHmwnzhs4zWt
-         M7pLIeKorjaZXlb/aATa1MWHjRK6JGMVzPSAx9inxOkcEMsPXIzaAuZJJ+hn/8IoPeWn
-         I/2Jy11FqvFBU50PMu03Ghi5jo4dX1qjGOCNsKkKbPoE5k7X+Gi1Zb+oji+5bzU20e+J
-         eazg==
-X-Gm-Message-State: ALQs6tB/umgLX87WoTZaTUHsEcst7gEfm2+cq+hWihIGv5M2HOp4gxlZ
-        5tWYRNkAaP91lpwW/6fw6NUdQnSi3XbQ7Acqz3x+8A==
-X-Google-Smtp-Source: AIpwx4+OG1dDkkq8elgpQxZ4bMQTMo3tRK9J9SunUhvo5JYMzriQgvYl+igItMbz7YwcVweRGdYA6C+VmZPQxTCYEt4=
-X-Received: by 10.107.175.219 with SMTP id p88mr13928523ioo.257.1523639668625;
- Fri, 13 Apr 2018 10:14:28 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+5DGLuex3KqwC4r2ii629Non6gVnZLGedklvytBEJCk=;
+        b=TMHYcKohTcTh2D7WLuUpQuROH5WDNEUrftp5yE9N1u9EwiDg/A61D6KLdo9yEgbYNJ
+         11pu5jJs9sCIGnDtCzWr9TiIiKwxRi8oaFRtY3r/KtdJ/mLbT/q1vpVdaZ0HvfByWGJQ
+         evqKP9dLSuqgsv8o7NkyqaS71FsChuT6CO/6ukv1eeN6WviCvwEl2qlo3WOcF6pRor0D
+         lvoNAG/lSPXYT7zMFzTthl+0j0f+mlQPmksf7fWTiNkCUWk75Nh8Z+PXhpZJiY01Ott1
+         oBlf47F+wneUidLbNDWAwtYHXLQhJpp7ix9kHytlC5kJYtf/muccxNSbPBe6NUJZ/tRt
+         KAlg==
+X-Gm-Message-State: ALQs6tAI5f3SDl2ag5uCqirVs9Oycw5ujvDEfQcFSR/escwSBrcRHrV2
+        ilB16aYsZcvTEOKyWaz163JdmPKq6Pvac88ex8M92g==
+X-Google-Smtp-Source: AIpwx49PtCWf8/ptA8e7Tnw07W7PG68x6jJD9SHvNUunR+tFRNaQdBI+Y7hdLt3e4BGWyNgSfdqkTVtvveqQMZtY+zY=
+X-Received: by 10.129.136.7 with SMTP id y7mr5267653ywf.238.1523640494121;
+ Fri, 13 Apr 2018 10:28:14 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.95.15 with HTTP; Fri, 13 Apr 2018 10:14:26 -0700 (PDT)
-In-Reply-To: <CABPp-BHQsOSCJiPU9Ku5b67QTkAjnEBrhx04mTXf2QdPBriHmw@mail.gmail.com>
-References: <CA+55aFzLZ3UkG5svqZwSnhNk75=fXJRkvU1m_RHBG54NOoaZPA@mail.gmail.com>
- <xmqq604w2j4u.fsf@gitster-ct.c.googlers.com> <xmqqtvsg10bu.fsf@gitster-ct.c.googlers.com>
- <CA+55aFxA9YVLoh_23V8Hi+X7ODEmqg-dhdAYZz1jbq5JhXqBFw@mail.gmail.com>
- <CA+55aFwM2CaafNGq8_=GkYAw9inpm-4xcyHUmKprLv4Gb3-aVg@mail.gmail.com>
- <CA+55aFw5mpEcEpPTOWych-kjNLc8pEn8FdjJHe2u7HUBBLy-Fw@mail.gmail.com>
- <CA+55aFwwVZDetd-SobOzzLQW4_GEwm3krxEGR+cpqzkzK-yiwQ@mail.gmail.com> <CABPp-BHQsOSCJiPU9Ku5b67QTkAjnEBrhx04mTXf2QdPBriHmw@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Fri, 13 Apr 2018 10:14:26 -0700
-X-Google-Sender-Auth: 3sGMfZ8zFADYooI1eSAo9tFJDEg
-Message-ID: <CA+55aFwi9pTAJT_qtv=vHLgu=B1fdXBoD96i8Y5xnbS=zrfSzg@mail.gmail.com>
-Subject: Re: Optimizing writes to unchanged files during merges?
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="001a114461a83717600569be01c4"
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Fri, 13 Apr 2018 10:28:13
+ -0700 (PDT)
+In-Reply-To: <20180413094314.GA2404@bod>
+References: <20180409090047.lfru2ul5fbnggfg7@bod> <87in90zq2a.fsf@evledraar.gmail.com>
+ <20180413094314.GA2404@bod>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 13 Apr 2018 10:28:13 -0700
+Message-ID: <CAGZ79kZDUnxkKfqRnZiLhweJ4HNO5sSGUfxkEvJPGagV4wmtkg@mail.gmail.com>
+Subject: Re: [RFC PATCH] Add "git show --follow-symlinks HEAD:symlink"
+To:     Michael Vogt <mvo@ubuntu.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a114461a83717600569be01c4
-Content-Type: text/plain; charset="UTF-8"
+Hi Michael,
 
-On Fri, Apr 13, 2018 at 12:02 AM, Elijah Newren <newren@gmail.com> wrote:
->
-> I hope you don't mind me barging into your conversation
+thanks for the patch,
 
-I was getting tired of my own rambling anyway..
+> Thanks for the intial reivew. I updated the patch with a test and
+> documentation for the new option. Happy to merge the test into one of
+> the existing test files, I read t/README and greping around I did not
+> find a place that looked like a good fit.
 
-> However, it turns out we have this awesome function called
-> "was_tracked(const char *path)" that was intended for answering this
-> exact question.  So, assuming was_tracked() isn't buggy, the correct
-> patch for this problem would look like:
+I think keeping tests as separate as possible is a good idea.
+Looking at the patch https://public-inbox.org/git/20180413094314.GA2404@bod/
 
-Apparently that causes problems, for some odd reason.
+The patch seems reasonable, apart from minor nits:
+In the test we'd prefer no whitespace on the right side of the redirection,
+i.e. echo content >foo
 
-I like the notion of checking the index, but it's not clear that the
-index is reliable in the presence of renames either.
+Instead of evaluating git commands in shell and assigning it to a variable,
+we'd prefer to dump it to files:
 
->   A big series
-> including that patch was merged to master two days ago, but
-> unfortunately that exact patch was the one that caused some
-> impressively awful fireworks[1].
+  git show HEAD:symlink >actual &&
+  echo foo >expect &&
+  test_cmp expect actual
 
-Yeah, so this code is fragile.
+(instead of content=$(git show HEAD:foo) && test $content == ...)
 
-How about we take a completely different approach? Instead of relying
-on fragile (but clever) tests, why not rely on stupid brute force?
+The reason for this is that the &&-chain will inspect the return code
+of the git command.
 
-Yeah, yeah, it's bad to be stupid, but sometimes simple and stupid
-really does work.
+There is a typo &e&.
 
-See the attached patch. It gets rid of all the subtle "has this been
-renamed" tests entirely, and just _always_ does that final
-update_file().
+Can we reword the documentation, such that we do not have
+an occurrence of "extended SHA-1" ?
+(By now the Git community came up with a plan to migrate
+away from SHA-1, hence we'd not want to introduce more
+dependencies even in the form of documentation for that)
 
-But instead, it makes update_file() a bit smarter, and says "before we
-write this file out, let's see if it's already there and already has
-the expected contents"?
+Maybe
 
-Now, it really shouldn't be _quite_ as stupid as that: we should
-probably set a flag in the "hey, the oid matches, maybe it's worth
-checking", so that it doesn't do the check in the cases where we know
-the merge has done things.
+Follow symlinks inside the repository when requesting
+objects in extended revision syntax of the form tree-ish:path-in-tree.
 
-But it's actually *fairly* low cost, because before it reads the file
-it at least checks that file length matches the expected length (and
-that the user permission bits match the expected mode).
-
-So if the file doesn't match, most of the time the real cost will just
-be an extra 'open/fstat/close()' sequence. That's pretty cheap.
-
-So even the completely stupid approach is probably not too bad, and it
-could be made smarter.
-
-NOTE! I have *NOT* tested this on anything interesting. I tested the
-patch on my stupid test-case, but that'[s it. I didn't even bother
-re-doing the kernel merge that started this.
-
-Comments? Because considering the problems this code has had, maybe
-"stupid" really is the right approach...
-
-[ Ok, I lied. I just tested this on the kernel merge. It worked fine,
-and avoided modifying <linux/mm.h> ]
-
-                     Linus
-
---001a114461a83717600569be01c4
-Content-Type: text/x-patch; charset="US-ASCII"; name="patch.diff"
-Content-Disposition: attachment; filename="patch.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_jfy7mpd30
-
-IG1lcmdlLXJlY3Vyc2l2ZS5jIHwgNDIgKysrKysrKysrKysrKysrKysrKysrKysrKysrKystLS0t
-LS0tLS0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgMjkgaW5zZXJ0aW9ucygrKSwgMTMgZGVsZXRpb25z
-KC0pCgpkaWZmIC0tZ2l0IGEvbWVyZ2UtcmVjdXJzaXZlLmMgYi9tZXJnZS1yZWN1cnNpdmUuYwpp
-bmRleCAwYzBkNDg2MjQuLmVkMjIwMDA2NSAxMDA2NDQKLS0tIGEvbWVyZ2UtcmVjdXJzaXZlLmMK
-KysrIGIvbWVyZ2UtcmVjdXJzaXZlLmMKQEAgLTgxNSw2ICs4MTUsMzIgQEAgc3RhdGljIGludCBt
-YWtlX3Jvb21fZm9yX3BhdGgoc3RydWN0IG1lcmdlX29wdGlvbnMgKm8sIGNvbnN0IGNoYXIgKnBh
-dGgpCiAJcmV0dXJuIGVycihvLCBtc2csIHBhdGgsIF8oIjogcGVyaGFwcyBhIEQvRiBjb25mbGlj
-dD8iKSk7CiB9CiAKK3N0YXRpYyBpbnQgd29ya2luZ190cmVlX21hdGNoZXMoY29uc3QgY2hhciAq
-cGF0aCwgY29uc3QgY2hhciAqYnVmLCB1bnNpZ25lZCBsb25nIHNpemUsIHVuc2lnbmVkIG1vZGUp
-Cit7CisJaW50IGZkLCBtYXRjaGVzOworCXN0cnVjdCBzdGF0IHN0OworCisJZmQgPSBvcGVuKHBh
-dGgsIE9fUkRPTkxZKTsKKwlpZiAoZmQgPCAwKQorCQlyZXR1cm4gMDsKKwltYXRjaGVzID0gMDsK
-KwlpZiAoIWZzdGF0KGZkLCAmc3QpICYmIHN0LnN0X3NpemUgPT0gc2l6ZSAmJiBTX0lTUkVHKHN0
-LnN0X21vZGUpICYmICEoMDcwMCAmIChzdC5zdF9tb2RlIF4gbW9kZSkpKSB7CisJCWNoYXIgdG1w
-YnVmWzEwMjRdOworCQl3aGlsZSAoc2l6ZSkgeworCQkJaW50IG4gPSByZWFkKGZkLCB0bXBidWYs
-IHNpemVvZih0bXBidWYpKTsKKwkJCWlmIChuIDw9IDAgfHwgbiA+IHNpemUpCisJCQkJYnJlYWs7
-CisJCQlpZiAobWVtY21wKHRtcGJ1ZiwgYnVmLCBuKSkKKwkJCQlicmVhazsKKwkJCWJ1ZiArPSBu
-OworCQkJc2l6ZSAtPSBuOworCQl9CisJCW1hdGNoZXMgPSAhc2l6ZTsKKwl9CisJY2xvc2UoZmQp
-OworCXJldHVybiBtYXRjaGVzOworfQorCiBzdGF0aWMgaW50IHVwZGF0ZV9maWxlX2ZsYWdzKHN0
-cnVjdCBtZXJnZV9vcHRpb25zICpvLAogCQkJICAgICBjb25zdCBzdHJ1Y3Qgb2JqZWN0X2lkICpv
-aWQsCiAJCQkgICAgIHVuc2lnbmVkIG1vZGUsCkBAIC04NTYsNiArODgyLDggQEAgc3RhdGljIGlu
-dCB1cGRhdGVfZmlsZV9mbGFncyhzdHJ1Y3QgbWVyZ2Vfb3B0aW9ucyAqbywKIAkJCQlzaXplID0g
-c3RyYnVmLmxlbjsKIAkJCQlidWYgPSBzdHJidWZfZGV0YWNoKCZzdHJidWYsIE5VTEwpOwogCQkJ
-fQorCQkJaWYgKHdvcmtpbmdfdHJlZV9tYXRjaGVzKHBhdGgsIGJ1Ziwgc2l6ZSwgbW9kZSkpCisJ
-CQkJZ290byBmcmVlX2J1ZjsKIAkJfQogCiAJCWlmIChtYWtlX3Jvb21fZm9yX3BhdGgobywgcGF0
-aCkgPCAwKSB7CkBAIC0xNzgyLDIwICsxODEwLDggQEAgc3RhdGljIGludCBtZXJnZV9jb250ZW50
-KHN0cnVjdCBtZXJnZV9vcHRpb25zICpvLAogCiAJaWYgKG1maS5jbGVhbiAmJiAhZGZfY29uZmxp
-Y3RfcmVtYWlucyAmJgogCSAgICBvaWRfZXEoJm1maS5vaWQsIGFfb2lkKSAmJiBtZmkubW9kZSA9
-PSBhX21vZGUpIHsKLQkJaW50IHBhdGhfcmVuYW1lZF9vdXRzaWRlX0hFQUQ7CiAJCW91dHB1dChv
-LCAzLCBfKCJTa2lwcGVkICVzIChtZXJnZWQgc2FtZSBhcyBleGlzdGluZykiKSwgcGF0aCk7Ci0J
-CS8qCi0JCSAqIFRoZSBjb250ZW50IG1lcmdlIHJlc3VsdGVkIGluIHRoZSBzYW1lIGZpbGUgY29u
-dGVudHMgd2UKLQkJICogYWxyZWFkeSBoYWQuICBXZSBjYW4gcmV0dXJuIGVhcmx5IGlmIHRob3Nl
-IGZpbGUgY29udGVudHMKLQkJICogYXJlIHJlY29yZGVkIGF0IHRoZSBjb3JyZWN0IHBhdGggKHdo
-aWNoIG1heSBub3QgYmUgdHJ1ZQotCQkgKiBpZiB0aGUgbWVyZ2UgaW52b2x2ZXMgYSByZW5hbWUp
-LgotCQkgKi8KLQkJcGF0aF9yZW5hbWVkX291dHNpZGVfSEVBRCA9ICFwYXRoMiB8fCAhc3RyY21w
-KHBhdGgsIHBhdGgyKTsKLQkJaWYgKCFwYXRoX3JlbmFtZWRfb3V0c2lkZV9IRUFEKSB7Ci0JCQlh
-ZGRfY2FjaGVpbmZvKG8sIG1maS5tb2RlLCAmbWZpLm9pZCwgcGF0aCwKLQkJCQkgICAgICAwLCAo
-IW8tPmNhbGxfZGVwdGgpLCAwKTsKLQkJCXJldHVybiBtZmkuY2xlYW47Ci0JCX0KKwkJLyogV2Ug
-Y291bGQgc2V0IGEgZmxhZyBoZXJlIGFuZCBwYXNzIGl0IHRvICJ1cGRhdGVfZmlsZSgpIiAqLwog
-CX0gZWxzZQogCQlvdXRwdXQobywgMiwgXygiQXV0by1tZXJnaW5nICVzIiksIHBhdGgpOwogCg==
---001a114461a83717600569be01c4--
+Thanks,
+Stefan
