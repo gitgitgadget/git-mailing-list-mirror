@@ -2,80 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27C811F424
-	for <e@80x24.org>; Fri, 13 Apr 2018 11:12:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84AF11F424
+	for <e@80x24.org>; Fri, 13 Apr 2018 11:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754289AbeDMLMy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 07:12:54 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53229 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754273AbeDMLMw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 07:12:52 -0400
-Received: from [192.168.0.129] ([37.201.203.18]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LrqNe-1eSmH00bUM-013aBa; Fri, 13
- Apr 2018 13:12:48 +0200
-Date:   Fri, 13 Apr 2018 13:12:34 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Jakub Narebski <jnareb@gmail.com>
-cc:     Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org
-Subject: Re: File versioning based on shallow Git repositories?
-In-Reply-To: <86efjjmqsi.fsf@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804131157360.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <hbf.20180412fvfi@bombur.uio.no>        <87d0z4b6ti.fsf@evledraar.gmail.com>        <4af21bcd-7a68-50df-4cce-0b050ccaeb90@usit.uio.no> <86efjjmqsi.fsf@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754048AbeDMLxa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 07:53:30 -0400
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:33214 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753831AbeDMLx3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 07:53:29 -0400
+Received: by mail-qt0-f175.google.com with SMTP id p9so5372391qtn.0
+        for <git@vger.kernel.org>; Fri, 13 Apr 2018 04:53:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dEkO+HuXTCrr6oelo8OhUuprkGbMb32Zu5jMPW+0DUg=;
+        b=MWfUa+MvLTqpOeGu78L2g5mjmKsoicVFWyBmzXWpW6SSXRjVLsRmqOCw8pFipnPvL2
+         uC2W3dtoqhtboGhELS4EPQC/DFeX9ChdpNRDVUU8DSl/gU4yKJ5ot35TQlwJY5GM7e+R
+         v/3l5/YFXNBFLnqeQoVe7ntBLJnOaXF/vT5tOjWwVBR033LePKzYFKOPMNIWrrOrH7Xd
+         GBGEN6Ygsgqs7/jGCDeK7yE7yyqa4r47yHDpNnqLXzaY6xpjNVVP4rjM6s6x72ZHScHs
+         M4EuFkVdAnrfoN5PSRVPRp8SeGdsjN6H3+Yyc4tznllMSU9sizhRgDAB2EYQiEXOPQjf
+         LrWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=dEkO+HuXTCrr6oelo8OhUuprkGbMb32Zu5jMPW+0DUg=;
+        b=Kj4LAQNWEpKcD8I97GVnqugaEgNYMqfUx7TpWOOkPBVIWb7Pe58cPjtQlBjZ5y5uOu
+         i9p8ERPjCIEo2MSiOBVyuUZ+Ud48Zuw3Hk/PjEDb+2lNp4PpFi2n4mDJpfq/WK2lAXxx
+         yx3h4uYbEW5iKNXj0yFp+eE1DqEIbZk4FFD8LadvKiNQMVOcDNmWVsagfnfV93/AaIR0
+         iN/K8ERAxq81O1N39Fd9hT/msIH9LTSlUov/j1mSEZLYHZFZZkAmPLCDOqAkOTKXvXJr
+         53ft6Ijv7iOWNXT2vfocqeACahdJVEdXCZTfbHkX4BhFTWLkX+G8123sQSpXdMbrO/F8
+         BdMg==
+X-Gm-Message-State: ALQs6tAeuI1NH4ch8W9DbU5CmHBXsst70lwts8p7NCkixqFtws/X35xj
+        gzN2O9d06MnXbnoGna60scI=
+X-Google-Smtp-Source: AIpwx4+Rad2f/qDhsrCMJ5524APq+hFGQ+WIltGIA56TwIF3Iwpl/Alddcr0sceY/fiB0PYT0f/0MA==
+X-Received: by 10.200.54.243 with SMTP id b48mr1449337qtc.334.1523620408320;
+        Fri, 13 Apr 2018 04:53:28 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id z19sm4561018qka.39.2018.04.13.04.53.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 13 Apr 2018 04:53:27 -0700 (PDT)
+Subject: Re: [PATCH v2 1/2] fsexcludes: add a programmatic way to exclude
+ files from git's working directory traversal logic
+To:     Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "alexmv@dropbox.com" <alexmv@dropbox.com>,
+        "blees@dcon.de" <blees@dcon.de>,
+        "bmwill@google.com" <bmwill@google.com>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
+        "martin.agren@gmail.com" <martin.agren@gmail.com>
+References: <20180410210408.13788-1-benpeart@microsoft.com>
+ <20180411200007.8612-1-benpeart@microsoft.com>
+ <20180411200007.8612-2-benpeart@microsoft.com>
+ <xmqqsh812td0.fsf@gitster-ct.c.googlers.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <0dc3c045-8851-cbed-6756-8dfda5e25868@gmail.com>
+Date:   Fri, 13 Apr 2018 07:53:24 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dfWJ43yWwpflWrRGOi5HFjOpGN0zqQuIKsssbzTGP+Eeir7DetY
- o8mLX4UhUUsDj80izg3Xn+XsIRB1mX/gJA6F9mICRZgS0Vp9GSsDz4+P1NNOuA0VhcMGumi
- y/1344bO5gQopOr0iwg0g1N5KyZlSh/npwKHZEAx1cpS+Gp15SmSW1mwLnHopyTV0VJMm9G
- kfVUFMsFJlVqwiXvHNBxg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HtOMSm6ohx0=:kA+C6s8BtUShkUakb1vmdN
- noBbfzXw2TurXCSw1IsXURDRaYWZRd9exQ9tzryOf+jRAV0cC/9qv1GMstFYg5jz58klTfqxs
- 0dKLgoz2N2HjpVevuPG85fA3o7s7e+N4tDQTRwPRrYLHVXOlxMz0SafwFaNMzn3MSwRaxO0Fw
- DqIUXaW+xUrgQlxdp7ZTpzSOaeSrviTQjRLcAbt9F9Sn2S7NpxdvgPlPgStMdHnHJ+vKv+nmU
- XzIV9fd7KzmaI+waT/jmLMeanXHwBxuBHxXyT32hHV5d1djHkNmKdGHbMcqRy+mlZqhjJI2A6
- MRTpuqHMiQ8Arrs1PC8GPSfxh0yJ0pgS6QpExIda6So6RRTiqaadOS/6cT9QvPcAbTfnnGuVQ
- nvYgMF0w7U3LV1eyuMGKbfYcSME7NgDwUPmEyCWBXD951QOziEEdb+2YVVzZy5/gxBLJprXqi
- T5yobkg2tdNuOq+6Wo643TwSv45+N3mK8kMvPS2ma6qKTIg+p+WZR1bJbVRTofqUt8nni20m4
- uM97pFKiTieWzixbspdCTXB9dKHp17ihPfG4gTIP5Q6sx0BsoZJd5GmNthEUO9MHCoNysYaLk
- +/AAfRi442DVKP0AMG2FUN/8smplfOC6ywAVFAhlnSPcrXRa55tU/J9TXLaNYuY69wnDwREc2
- cUq32lL2Lirv/veYFBlTJaSGz8USuUxAKl3ZOtRo1ZSr8bwnGcusDmRHePihGO32CU1tbmZzK
- YB5tkYIvjTYI39LvjMmcgX2tPIB5dzHxahFbGDzNcfsxALM7X6TkDW/FXxpAgbm3vTXpwJQ8A
- QdZtK1txQHIMjGAaK0fNdftV9eph+kpYmYr43TuY7ngOOxdTOQ=
+In-Reply-To: <xmqqsh812td0.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Kuba,
 
-On Fri, 13 Apr 2018, Jakub Narebski wrote:
 
-> Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no> writes:
+On 4/11/2018 7:52 PM, Junio C Hamano wrote:
+>> @@ -2011,6 +2028,8 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+>>   		/* add the path to the appropriate result list */
+>>   		switch (state) {
+>>   		case path_excluded:
+>> +			if (fsexcludes_is_excluded_from(istate, path.buf, path.len, DTYPE(cdir.de)) > 0)
+>> +				break;
 > 
-> > Also maybe it'll be worthwhile to generate .git/info/grafts in a local
-> > clone of the repo to get back easily visible history.  No grafts in
-> > the original repo, grafts mess things up.
+> Then the use of DTYPE() looks a bit odd here.  On
+> NO_D_TYPE_IN_DIRENT platforms, we would get DT_UNKNOWN out of it and
+> then end up passing DT_UNKNOWN to the function.
 > 
-> Just a reminder: modern Git has "git replace", a modern and safe
-> alternative to the grafts file.
 
-Right!
-
-Maybe it is time to start deprecating grafts? They *do* cause problems,
-such as weird "missing objects" problems when trying to fetch into, or
-push from, a repository with grafts. These problems are not shared by the
-`git replace` method.
-
-I just sent out a patch to add a deprecation warning.
-
-Ciao,
-Dscho
+Good catch.  I was trying to optimize this path and didn't realize the 
+platform implications of using DTYPE().  I'll update it to match the others.
