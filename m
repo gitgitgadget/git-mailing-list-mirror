@@ -7,34 +7,33 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1164C1F424
-	for <e@80x24.org>; Fri, 13 Apr 2018 10:03:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D05841F424
+	for <e@80x24.org>; Fri, 13 Apr 2018 10:12:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753784AbeDMKDm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 06:03:42 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:36956 "EHLO
+        id S1754144AbeDMKMd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 06:12:33 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:30207 "EHLO
         smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753238AbeDMKDl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 06:03:41 -0400
+        with ESMTP id S1753931AbeDMKMc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 06:12:32 -0400
 Received: from [192.168.2.201] ([92.28.131.105])
         by smtp.talktalk.net with SMTP
-        id 6vYPfXnCdLjjA6vYPfUH4i; Fri, 13 Apr 2018 11:03:39 +0100
+        id 6vgzfXo4HLjjA6vgzfUHQL; Fri, 13 Apr 2018 11:12:30 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1523613819;
-        bh=Z1H6743YFTOBvbQajDq6mQnhjRfkUHX56t/x4ILf5e8=;
+        s=cmr1711; t=1523614350;
+        bh=+EP7sUXedEYN969NLnWDCXSmPgsHU2PJXrLi+6pxHN8=;
         h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=a4jQkNoPiFy9OKgK8IJPzO1C123sh9ppdyo5dwmi+CTqkSC3vMSGXLPMWkkveAgI7
-         xDeYWCu1lcmgtSNIWNBqyNwEE2IpdQSWXxsuRmUcOWCP0xMdM0IE00k3aY0BGNyBCQ
-         i4yieubwaqc37cQEcBxK/kLhTPwu7evHnyOtIOBk=
+        b=MGvYFOolKzqjqWw2ZeuuJMuCxLyuvurw7RDziQUpCG8VwKhJeL463wZFUvhLaifEB
+         8ftqJWvPX5+O0vdjo+44RLizoG1Jm0lMcYrT2ygqVg2wWupECDl4dQ8TwGnFY+OS8G
+         palYLdiPvovsC39omFXoHcG1Uy/27cgkAEhsdHeo=
 X-Originating-IP: [92.28.131.105]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=LZYSFAXi c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
  a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
- a=c6JxbGO7SjSxshBe0QUA:9 a=_Bwb3uRwRrITFT10:21 a=JV6XiMRsvAl1fF1m:21
+ a=Ud08yLbfuBoa9Tj0uh8A:9 a=zgM-xqpDGvIzRWl-:21 a=M6jvSlbJ8TtQPSvx:21
  a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 04/15] sequencer: introduce new commands to reset the
- revision
+Subject: Re: [PATCH v6 05/15] sequencer: introduce the `merge` command
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -48,99 +47,241 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Sergey Organov <sorganov@gmail.com>
 References: <cover.1519680483.git.johannes.schindelin@gmx.de>
  <cover.1523362469.git.johannes.schindelin@gmx.de>
- <fb797f32b7385317b9dc18524e3863ba627f6c98.1523362469.git.johannes.schindelin@gmx.de>
+ <8a5ae61f603df8d8cb19268e1b8470f0a4993445.1523362469.git.johannes.schindelin@gmx.de>
 From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <2bec489c-521e-0277-3a15-00b39126e652@talktalk.net>
-Date:   Fri, 13 Apr 2018 11:03:37 +0100
+Message-ID: <55216d0b-cb37-6514-7f80-91f4617c105d@talktalk.net>
+Date:   Fri, 13 Apr 2018 11:12:29 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <fb797f32b7385317b9dc18524e3863ba627f6c98.1523362469.git.johannes.schindelin@gmx.de>
+In-Reply-To: <8a5ae61f603df8d8cb19268e1b8470f0a4993445.1523362469.git.johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfMdFWgjmcym7bzXqaCS4CXQFjf8iDmfoiZ6ABIXUhJ/jPAjwAbLA10bQlxACl04ZEnq3p7L5qOa1cp9pg9ZpsbSzFnZFEQZ85J2GFAj/JAwR88FNzWcJ
- PCjgAUhg3cPQC28MB6x57hlbmk55AeSXYReURD6cq08TCQA3GlNlsggtbrjWOD8dczLTgsfrz4X/8Z6JaBIRj0kVnKTPZMlN68UIO+agAtsvj3mP6N0vCCOu
- oKb1bRMqvWAV81iNr9lclQLy8UvVnXE6X04/XBYrHf8lgjZrV/cn3OGy2tLURvVFPdlVuH2+yFdkG6J4PUrHrhoiRyUyVaL6fATdr4cobqBHuUNPzI99dZAM
- jlA8wi3G4IoegvfA+kx/zrFHd8hG89cHILlVoSH9Ty7aH3k1ck2r7TF6OzvRBNMkY3qjh+pPRV4GCKnsmv6wc1Gi5KvyCsszkNIMC56fthVh5hZIM8oizsj5
- 3MHJW+4KYaSHR26m635pvUcdXkpwNjz8k6gmMg==
+X-CMAE-Envelope: MS4wfPXpldxxZHvWFUMqd4CnYNTVPi7KQ6+Hz5zgIF4n9B0Pj9qJGEFYOio3vL0TZtEOixa4zWszKrUBrKCIW3ZPWkg90fDKTlS+YcwaoJGMbeiuQ6QYMQ0V
+ Kia7z33QqtSJA32ZV0DyAFpKkHZdg9BG5iFcLqNtRbdvGeNcME1k1l7G2dbYcyPTzsYwx5jLOHKSNKsFFEL8RgsLkZzzx651puvbeLu0TMxYqnYWMpJgcKNV
+ B8WbyFYrFyZwFX28nfkBp8r00VGjBxavT+vw1ANm3oGsox/XDm2p1d1ect0F4MXFgqJ1upsp0HO/Cvt5VNBeniTvrLPJkEhA3Kt0CqvkNDCx8woe7XOHtq0Y
+ RLnq1CoGt8+5NGhtzOnVofcM5ljvfnjCECfMn/FZL0qfMBmkUiFvcT+4pHOcKLkKJsUQDXsMGxIpngaz0f+4hOrR11igEo0CCzsY7dkbG+W1B5Njhs+ETq2n
+ ksx1I+sXMJFnMmO3IHbGXAD5NIw94UE1aNXS/g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 10/04/18 13:29, Johannes Schindelin wrote:
-> In the upcoming commits, we will teach the sequencer to rebase merges.
-> This will be done in a very different way from the unfortunate design of
-> `git rebase --preserve-merges` (which does not allow for reordering
-> commits, or changing the branch topology).
-> 
-> The main idea is to introduce new todo list commands, to support
-> labeling the current revision with a given name, resetting the current
-> revision to a previous state, and  merging labeled revisions.
-> 
-> This idea was developed in Git for Windows' Git garden shears (that are
-> used to maintain Git for Windows' "thicket of branches" on top of
-> upstream Git), and this patch is part of the effort to make it available
-> to a wider audience, as well as to make the entire process more robust
-> (by implementing it in a safe and portable language rather than a Unix
-> shell script).
-> 
-> This commit implements the commands to label, and to reset to, given
-> revisions. The syntax is:
-> 
-> 	label <name>
-> 	reset <name>
-> 
-> Internally, the `label <name>` command creates the ref
-> `refs/rewritten/<name>`. This makes it possible to work with the labeled
-> revisions interactively, or in a scripted fashion (e.g. via the todo
-> list command `exec`).
-> 
-> These temporary refs are removed upon sequencer_remove_state(), so that
-> even a `git rebase --abort` cleans them up.
-> 
-> We disallow '#' as label because that character will be used as separator
-> in the upcoming `merge` command.
-> 
-> Later in this patch series, we will mark the `refs/rewritten/` refs as
-> worktree-local, to allow for interactive rebases to be run in parallel in
-> worktrees linked to the same repository.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> +static int do_merge(struct commit *commit, const char *arg, int arg_len,
+> +		    int flags, struct replay_opts *opts)
+> +{
+> +	int run_commit_flags = (flags & TODO_EDIT_MERGE_MSG) ?
+> +		EDIT_MSG | VERIFY_MSG : 0;
+> +	struct strbuf ref_name = STRBUF_INIT;
+> +	struct commit *head_commit, *merge_commit, *i;
+> +	struct commit_list *bases, *j, *reversed = NULL;
+> +	struct merge_options o;
+> +	int merge_arg_len, oneline_offset, ret;
+> +	static struct lock_file lock;
+> +	const char *p;
+> +
+> +	oneline_offset = arg_len;
+> +	merge_arg_len = strcspn(arg, " \t\n");
+> +	p = arg + merge_arg_len;
+> +	p += strspn(p, " \t\n");
+> +	if (*p == '#' && (!p[1] || isspace(p[1]))) {
+> +		p += 1 + strspn(p + 1, " \t\n");
+> +		oneline_offset = p - arg;
+> +	} else if (p - arg < arg_len)
+> +		BUG("octopus merges are not supported yet: '%s'", p);
+> +
+> +	strbuf_addf(&ref_name, "refs/rewritten/%.*s", merge_arg_len, arg);
+> +	merge_commit = lookup_commit_reference_by_name(ref_name.buf);
+> +	if (!merge_commit) {
+> +		/* fall back to non-rewritten ref or commit */
+> +		strbuf_splice(&ref_name, 0, strlen("refs/rewritten/"), "", 0);
+> +		merge_commit = lookup_commit_reference_by_name(ref_name.buf);
+> +	}
+> +	if (!merge_commit) {
+> +		error(_("could not resolve '%s'"), ref_name.buf);
+> +		strbuf_release(&ref_name);
+> +		return -1;
+> +	}
+> +
+> +	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
+> +		return -1;
+> +
+> +	head_commit = lookup_commit_reference_by_name("HEAD");
+> +	if (!head_commit) {
+> +		rollback_lock_file(&lock);
+> +		return error(_("cannot merge without a current revision"));
+> +	}
+> +
+> +	if (commit) {
+> +		const char *message = get_commit_buffer(commit, NULL);
+> +		const char *body;
+> +		int len;
+> +
+> +		if (!message) {
+> +			rollback_lock_file(&lock);
+> +			return error(_("could not get commit message of '%s'"),
+> +				     oid_to_hex(&commit->object.oid));
+> +		}
+> +		write_author_script(message);
+> +		find_commit_subject(message, &body);
+> +		len = strlen(body);
+> +		if (write_message(body, len, git_path_merge_msg(), 0) < 0) {
+> +			error_errno(_("could not write '%s'"),
+> +				    git_path_merge_msg());
+> +			unuse_commit_buffer(commit, message);
+> +			rollback_lock_file(&lock);
+> +			return -1;
+> +		}
+> +		unuse_commit_buffer(commit, message);
+> +	} else {
+> +		struct strbuf buf = STRBUF_INIT;
+> +		int len;
+> +
+> +		strbuf_addf(&buf, "author %s", git_author_info(0));
+> +		write_author_script(buf.buf);
+> +		strbuf_reset(&buf);
+> +
+> +		if (oneline_offset < arg_len) {
+> +			p = arg + oneline_offset;
+> +			len = arg_len - oneline_offset;
+> +		} else {
+> +			strbuf_addf(&buf, "Merge branch '%.*s'",
+> +				    merge_arg_len, arg);
+> +			p = buf.buf;
+> +			len = buf.len;
+> +		}
+> +
+> +		if (write_message(p, len, git_path_merge_msg(), 0) < 0) {
+> +			error_errno(_("could not write '%s'"),
+> +				    git_path_merge_msg());
+> +			strbuf_release(&buf);
+> +			rollback_lock_file(&lock);
+> +			return -1;
+> +		}
+> +		strbuf_release(&buf);
+> +	}
+> +
+> +	write_message(oid_to_hex(&merge_commit->object.oid), GIT_SHA1_HEXSZ,
+> +		      git_path_merge_head(), 0);
+> +	write_message("no-ff", 5, git_path_merge_mode(), 0);
+> +
+> +	bases = get_merge_bases(head_commit, merge_commit);
+> +	for (j = bases; j; j = j->next)
+> +		commit_list_insert(j->item, &reversed);
+> +	free_commit_list(bases);
+> +
+> +	read_cache();
+> +	init_merge_options(&o);
+> +	o.branch1 = "HEAD";
+> +	o.branch2 = ref_name.buf;
+> +	o.buffer_output = 2;
+> +
+> +	ret = merge_recursive(&o, head_commit, merge_commit, reversed, &i);
+> +	if (!ret)
+> +		rerere(opts->allow_rerere_auto);
+> +	if (ret <= 0)
+> +		fputs(o.obuf.buf, stdout);
+> +	strbuf_release(&o.obuf);
+> +	if (ret < 0) {
+> +		strbuf_release(&ref_name);
+> +		rollback_lock_file(&lock);
+> +		return error(_("conflicts while merging '%.*s'"),
+> +			     merge_arg_len, arg);
+> +	}
 
-If a label or reset command fails it is likely to be due to a
-typo. Rescheduling the command would make it easier for the user to fix
-the problem as they can just run 'git rebase --edit-todo'. It also
-ensures that the problem has actually been fixed when the rebase
-continues. I think you could do it like this
+If there are conflicts then ret == 0 rather than -1
+
+> +
+> +	if (active_cache_changed &&
+> +	    write_locked_index(&the_index, &lock, COMMIT_LOCK)) {
+> +		strbuf_release(&ref_name);
+> +		return error(_("merge: Unable to write new index file"));
+> +	}
+> +	rollback_lock_file(&lock);
+> +
+> +	ret = run_git_commit(git_path_merge_msg(), opts, run_commit_flags);
+
+If there were conflicts this will try and run git commit with unmerged
+cache entries
+
+> +	strbuf_release(&ref_name);
+> +
+> +	return ret;
+> +}
+> +
+
+If the merge fails with an error rather than conflicts then I think it
+should be rescheduled as we do for picks that fail with an error. The
+patch below does that and also adjusts the logic following the merge so
+that it does not call 'git commit' when there are conflicts. I think we
+may want to say something about fixing the conflicts and running
+'git rebase --continue' as we do for conflicts when picking.
+
+Best Wishes
+
+Phillip
 
 --->8---
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH] fixup! sequencer: introduce new commands to reset the revision
+Subject: [PATCH] fixup! sequencer: introduce the `merge` command
+
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- sequencer.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sequencer.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 809df1ce48..e1b9be7327 100644
+index e1b9be7327..511b7fddca 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -3029,6 +3029,13 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 		} else if (!is_noop(item->command))
+@@ -2807,27 +2807,26 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
+ 	o.buffer_output = 2;
+ 
+ 	ret = merge_recursive(&o, head_commit, merge_commit, reversed, &i);
+-	if (!ret)
+-		rerere(opts->allow_rerere_auto);
++	strbuf_release(&ref_name);
+ 	if (ret <= 0)
+ 		fputs(o.obuf.buf, stdout);
+ 	strbuf_release(&o.obuf);
+ 	if (ret < 0) {
+-		strbuf_release(&ref_name);
+ 		rollback_lock_file(&lock);
+-		return error(_("conflicts while merging '%.*s'"),
+-			     merge_arg_len, arg);
++		return ret;
+ 	}
+ 
+ 	if (active_cache_changed &&
+-	    write_locked_index(&the_index, &lock, COMMIT_LOCK)) {
+-		strbuf_release(&ref_name);
++	    write_locked_index(&the_index, &lock, COMMIT_LOCK))
+ 		return error(_("merge: Unable to write new index file"));
+-	}
+ 	rollback_lock_file(&lock);
++	if (!ret) {
++		rerere(opts->allow_rerere_auto);
++		error(_("conflicts while merging '%.*s'"), merge_arg_len, arg);
++		return 1;
++	}
+ 
+ 	ret = run_git_commit(git_path_merge_msg(), opts, run_commit_flags);
+-	strbuf_release(&ref_name);
+ 
+ 	return ret;
+ }
+@@ -3030,7 +3029,8 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
  			return error(_("unknown command %d"), item->command);
  
-+		if (res < 0 && (item->command == TODO_LABEL ||
-+				item->command == TODO_RESET)) {
-+			/* Reschedule */
-+			todo_list->current--;
-+			save_todo(todo_list, opts);
-+			return res;
-+		}
- 		todo_list->current++;
- 		if (res)
- 			return res;
+ 		if (res < 0 && (item->command == TODO_LABEL ||
+-				item->command == TODO_RESET)) {
++				item->command == TODO_RESET ||
++				item->command == TODO_MERGE)) {
+ 			/* Reschedule */
+ 			todo_list->current--;
+ 			save_todo(todo_list, opts);
 -- 
 2.17.0
