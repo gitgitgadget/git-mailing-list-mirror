@@ -2,160 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D33521F424
-	for <e@80x24.org>; Fri, 13 Apr 2018 09:53:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1164C1F424
+	for <e@80x24.org>; Fri, 13 Apr 2018 10:03:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753910AbeDMJx2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 05:53:28 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:47015 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752223AbeDMJx1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 05:53:27 -0400
-Received: by mail-wr0-f196.google.com with SMTP id d1so7690712wrj.13
-        for <git@vger.kernel.org>; Fri, 13 Apr 2018 02:53:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=k3FMrVhdhRkgtZlWLD3mj+WMKwSQ+I1EWy7WtqD8eIQ=;
-        b=WIU43fDyO5yQ5EwgWbGNGx7NEr0IM2Dnsg0i/LDrtbK/DGGO+pM3h5Vg9Z//bipqG0
-         NJtE+t/cBHV0F348VA3uHOlteM9MdD88jIFDJPwYl8Bn/AlZxZFs5tZe/58Var9ndFuo
-         AVCC2Rl61U5ax+pqXs9gr1SrgRnJTedidSliwD2qsrULOGJi/NwCHb2WiD4+yvbsdv3B
-         eJdG19slsj2YXOA3GeRZ96o+pY/b0ve+3t9nyCKr7+eBBvW6MlFl7UIUfzhulk2z6Gkw
-         f2Z1vv1/iZCMCz+PZN5BP9zUnsn6zsIOG5n68OIbLOZfla3xBTFsmCm/LqNEdDCr97k6
-         p5hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=k3FMrVhdhRkgtZlWLD3mj+WMKwSQ+I1EWy7WtqD8eIQ=;
-        b=bok53TLp51RBnCkMNG/kQAKpRXRwug4Oui+NOxfrlPf+c/mAn/LFLIWM/OMLjQEE97
-         uor0SzaDFX8oY5UmXJsX7hAR1csAp0+KrBxU6NKWtcOHiUAJKCAqzMOcd/bu7kqjIr8c
-         U3r+dTchdDKVUceQXAe1O/CPSmju2UdH0Kdwns+vH1Vm0QdaCe6AYyKdHExNOGzESGxD
-         MrjLKKgR/LdnWMiWXsif7lbm3daxcgklbdYpbijXY3O6u4pnVCwbTvyHLFQOUnSSWkaE
-         YXcyC1Z6MkSNA3ZG2JJDgHSokf7d1jgvH8g2/YRhQPCSlbf91r6BrNdJj2TsHum7DIt4
-         6+6g==
-X-Gm-Message-State: ALQs6tDXMUFKUaGP4jFX/SYAMMB1s59WeitwhaLCxECvdrHR5l3yyzdq
-        9lM5COdZ3fdYDripm6u7CAA=
-X-Google-Smtp-Source: AIpwx4+3oS5cn+DwSpg2HgRp7S7zbn5rbBMOrxVCTmSGUzg5Za0JYtqDlMj2/Fb7dTYWdXh1GyQdFQ==
-X-Received: by 10.223.198.71 with SMTP id u7mr3389431wrg.270.1523613206100;
-        Fri, 13 Apr 2018 02:53:26 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (abrf152.neoplus.adsl.tpnet.pl. [83.8.99.152])
-        by smtp.gmail.com with ESMTPSA id c130sm1452692wmh.33.2018.04.13.02.53.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 13 Apr 2018 02:53:24 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
+        id S1753784AbeDMKDm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Apr 2018 06:03:42 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:36956 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753238AbeDMKDl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Apr 2018 06:03:41 -0400
+Received: from [192.168.2.201] ([92.28.131.105])
+        by smtp.talktalk.net with SMTP
+        id 6vYPfXnCdLjjA6vYPfUH4i; Fri, 13 Apr 2018 11:03:39 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1523613819;
+        bh=Z1H6743YFTOBvbQajDq6mQnhjRfkUHX56t/x4ILf5e8=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=a4jQkNoPiFy9OKgK8IJPzO1C123sh9ppdyo5dwmi+CTqkSC3vMSGXLPMWkkveAgI7
+         xDeYWCu1lcmgtSNIWNBqyNwEE2IpdQSWXxsuRmUcOWCP0xMdM0IE00k3aY0BGNyBCQ
+         i4yieubwaqc37cQEcBxK/kLhTPwu7evHnyOtIOBk=
+X-Originating-IP: [92.28.131.105]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=LZYSFAXi c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
+ a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
+ a=c6JxbGO7SjSxshBe0QUA:9 a=_Bwb3uRwRrITFT10:21 a=JV6XiMRsvAl1fF1m:21
+ a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v6 04/15] sequencer: introduce new commands to reset the
+ revision
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH v2 07/10] commit-graph.txt: update future work
-References: <20180403165143.80661-1-dstolee@microsoft.com>
-        <20180409164131.37312-1-dstolee@microsoft.com>
-        <20180409164131.37312-8-dstolee@microsoft.com>
-        <xmqqfu403i0p.fsf@gitster-ct.c.googlers.com>
-        <f557058d-7836-4b66-8fda-7fdfc7484219@gmail.com>
-Date:   Fri, 13 Apr 2018 11:53:21 +0200
-In-Reply-To: <f557058d-7836-4b66-8fda-7fdfc7484219@gmail.com> (Derrick
-        Stolee's message of "Thu, 12 Apr 2018 07:35:36 -0400")
-Message-ID: <86a7u7mnzi.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>
+References: <cover.1519680483.git.johannes.schindelin@gmx.de>
+ <cover.1523362469.git.johannes.schindelin@gmx.de>
+ <fb797f32b7385317b9dc18524e3863ba627f6c98.1523362469.git.johannes.schindelin@gmx.de>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <2bec489c-521e-0277-3a15-00b39126e652@talktalk.net>
+Date:   Fri, 13 Apr 2018 11:03:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
+In-Reply-To: <fb797f32b7385317b9dc18524e3863ba627f6c98.1523362469.git.johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfMdFWgjmcym7bzXqaCS4CXQFjf8iDmfoiZ6ABIXUhJ/jPAjwAbLA10bQlxACl04ZEnq3p7L5qOa1cp9pg9ZpsbSzFnZFEQZ85J2GFAj/JAwR88FNzWcJ
+ PCjgAUhg3cPQC28MB6x57hlbmk55AeSXYReURD6cq08TCQA3GlNlsggtbrjWOD8dczLTgsfrz4X/8Z6JaBIRj0kVnKTPZMlN68UIO+agAtsvj3mP6N0vCCOu
+ oKb1bRMqvWAV81iNr9lclQLy8UvVnXE6X04/XBYrHf8lgjZrV/cn3OGy2tLURvVFPdlVuH2+yFdkG6J4PUrHrhoiRyUyVaL6fATdr4cobqBHuUNPzI99dZAM
+ jlA8wi3G4IoegvfA+kx/zrFHd8hG89cHILlVoSH9Ty7aH3k1ck2r7TF6OzvRBNMkY3qjh+pPRV4GCKnsmv6wc1Gi5KvyCsszkNIMC56fthVh5hZIM8oizsj5
+ 3MHJW+4KYaSHR26m635pvUcdXkpwNjz8k6gmMg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On 10/04/18 13:29, Johannes Schindelin wrote:
+> In the upcoming commits, we will teach the sequencer to rebase merges.
+> This will be done in a very different way from the unfortunate design of
+> `git rebase --preserve-merges` (which does not allow for reordering
+> commits, or changing the branch topology).
+> 
+> The main idea is to introduce new todo list commands, to support
+> labeling the current revision with a given name, resetting the current
+> revision to a previous state, and  merging labeled revisions.
+> 
+> This idea was developed in Git for Windows' Git garden shears (that are
+> used to maintain Git for Windows' "thicket of branches" on top of
+> upstream Git), and this patch is part of the effort to make it available
+> to a wider audience, as well as to make the entire process more robust
+> (by implementing it in a safe and portable language rather than a Unix
+> shell script).
+> 
+> This commit implements the commands to label, and to reset to, given
+> revisions. The syntax is:
+> 
+> 	label <name>
+> 	reset <name>
+> 
+> Internally, the `label <name>` command creates the ref
+> `refs/rewritten/<name>`. This makes it possible to work with the labeled
+> revisions interactively, or in a scripted fashion (e.g. via the todo
+> list command `exec`).
+> 
+> These temporary refs are removed upon sequencer_remove_state(), so that
+> even a `git rebase --abort` cleans them up.
+> 
+> We disallow '#' as label because that character will be used as separator
+> in the upcoming `merge` command.
+> 
+> Later in this patch series, we will mark the `refs/rewritten/` refs as
+> worktree-local, to allow for interactive rebases to be run in parallel in
+> worktrees linked to the same repository.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> On 4/12/2018 5:12 AM, Junio C Hamano wrote:
->> Derrick Stolee <dstolee@microsoft.com> writes:
->>
->>> +Here is a diagram to visualize the shape of the full commit graph, and
->>> +how different generation numbers relate:
->>> +
->>> +    +-----------------------------------------+
->>> +    | GENERATION_NUMBER_INFINITY =3D 0xFFFFFFFF |
->>> +    +-----------------------------------------+
->>> +	    |            |      ^
->>> +	    |            |      |
->>> +	    |            +------+
->>> +	    |         [gen(A) =3D gen(B)]
->>> +	    V
->>> +    +-------------------------------------+
->>> +    | 0 < commit->generation < 0x40000000 |
->>> +    +-------------------------------------+
->>> +	    |            |      ^
->>> +	    |            |      |
->>> +	    |            +------+
->>> +	    |        [gen(A) > gen(B)]
->>> +	    V
->>> +    +-------------------------------------+
->>> +    | GENERATION_NUMBER_ZERO =3D 0          |
->>> +    +-------------------------------------+
->>> +			 |      ^
->>> +			 |      |
->>> +			 +------+
->>> +		     [gen(A) =3D gen(B)]
->>
->> It may be just me but all I can read out of the above is that
+If a label or reset command fails it is likely to be due to a
+typo. Rescheduling the command would make it easier for the user to fix
+the problem as they can just run 'git rebase --edit-todo'. It also
+ensures that the problem has actually been fixed when the rebase
+continues. I think you could do it like this
 
-It's not just you.
+--->8---
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH] fixup! sequencer: introduce new commands to reset the revision
 
->> commit->generation may store 0xFFFFFFFF, a value between 0 and
->> 0x40000000, or 0.  I cannot quite tell what the notation [gen(A)
->> <cmp> gen(B)] is trying to say.  I am guessing "Two generation
->> numbers within the 'valid' range can be compared" is what the second
->> one is trying to say, but it is much less interesting to know that
->> two infinities compare equal than how generation numbers from
->> different classes compare, which cannot be depicted in the above
->> notation, I am afraid.  For example, don't we want to say that a
->> commit with INF can never be reached by a commit with a valid
->> generation number, or something like that?
->
-> My intention with the arrows was to demonstrate where parent
-> relationships can go, and the generation-number relation between a
-> commit A with parent B. Clearly, this diagram is less than helpful.
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ sequencer.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Perhaps the following table would make the information clearer (perhaps
-in addition to the above graph, but without "gen(A) {cmp} gen(B)"
-arrows).
-
-I assume that it is possible to have both GENERATION_NUMBER_ZERO and non
-zero generation numbers in one repo, perhaps via alternates.  I also
-assume that A !=3D B, and that generation numbers (both set, and 0s) are
-transitivelu closed under reachability.
-
-gen(A) \   commit B ->   |                     gen(B)
-        \-----\          |
-commit A       \         | 0xFFFFFFFF | larger   | smaller | 0x00000000
-----------------\--------+------------+----------+---------+------------
-0xFFFFFFFF               | =3D            >          >         >
-0 < larger  < 0x40000000 | < N          =3D n        >         >
-0 < smaller < 0x40000000 | < N          < N        =3D n       >
-0x00000000               | < N          < N        < N       =3D
-
-The "<", "=3D", ">" denotes result of comparison between gen(A) and gen(B).
-
-Generation numbers create a negative-cut filter: "N" and "n" denote
-situation where we know from gen(A) and gen(B) that B is not reachable
-from A.
-
-As can be seen if we use gen(A) < gen(B) as cutoff, we don't need to
-treat "infinity" and "zero" in a special way.
-
-
-Best,
---=20
-Jakub Nar=C4=99bski
+diff --git a/sequencer.c b/sequencer.c
+index 809df1ce48..e1b9be7327 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3029,6 +3029,13 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 		} else if (!is_noop(item->command))
+ 			return error(_("unknown command %d"), item->command);
+ 
++		if (res < 0 && (item->command == TODO_LABEL ||
++				item->command == TODO_RESET)) {
++			/* Reschedule */
++			todo_list->current--;
++			save_todo(todo_list, opts);
++			return res;
++		}
+ 		todo_list->current++;
+ 		if (res)
+ 			return res;
+-- 
+2.17.0
