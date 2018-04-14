@@ -2,112 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB8E81F404
-	for <e@80x24.org>; Sat, 14 Apr 2018 16:00:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEAF81F404
+	for <e@80x24.org>; Sat, 14 Apr 2018 16:39:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751141AbeDNQAC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Apr 2018 12:00:02 -0400
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:39880 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750996AbeDNQAB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Apr 2018 12:00:01 -0400
-Received: by mail-ot0-f196.google.com with SMTP id a14-v6so13035810otf.6
-        for <git@vger.kernel.org>; Sat, 14 Apr 2018 09:00:01 -0700 (PDT)
+        id S1751173AbeDNQjK (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Apr 2018 12:39:10 -0400
+Received: from mail-lf0-f46.google.com ([209.85.215.46]:42335 "EHLO
+        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751121AbeDNQjK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Apr 2018 12:39:10 -0400
+Received: by mail-lf0-f46.google.com with SMTP id q9-v6so16512879lfk.9
+        for <git@vger.kernel.org>; Sat, 14 Apr 2018 09:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=j4ORgzimtao+706TTd/4P+f6OXtQWtbCyl2jlIb9OkE=;
-        b=HQ1t5FJxLYgnJaTRYYMKHH393KAxVAL99DuFVhf2BXFUHA02f+RrkRDWjasP3uXDrP
-         2G85yObEF4aIh7NXVBFqyDzUL58oUYIv6KyXcH2npVXDMgqeUWKcTnnQueqUVjt8q5fz
-         SV7i2VnW/r8eViVxg3lbZ+mD9DWWfcZ6s2KxBzuUb24W0SD4qzJyea9wQbTxJu5b3ZaQ
-         m6nCbfiA18yyzoR00r8lqyNouG3ec9wZ5Knu1d5zMJLAXNYFcRpQlj9l+j0HXPwVC91a
-         eyhHvhuD0bhQ4artxBfQdhsLZpLWSo69EkzN/Fd5BfMMIWxP5Jw9T3LEAjLsU6gTpVc1
-         O1xA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=EPlqBUKNPN3U4nGphPTI7NP0L0h5sr8yZwz0ovyFmOI=;
+        b=lF+gRV4pl70EAWz4IA9d7RdLBOy4KWFeh48SVvNX0jcYVFfWKK67KyJBKeG2dtCepv
+         fiuoW6x3US9FOWPx9NWdmDgsqobZ58NxE7iEcnm+cx+KrwNrNrEvKGlVpDeypMjyo0wh
+         FMqsshl4IPe3B+nWSAfeTQikmyewFS7mACStsv11tFwzM2cxxF8EMVs5AYLhKq2gmvPn
+         KL/FHjuw+0YGLGWWGVBuq86Wf+bbjETRv2YodMXWDtOguJs+6+0/wgBl2eOm1I2nhk52
+         NBvcMRMV+eELkh7V5cwnC0etaRVetzNcraE9oG5RhG/dxF15nkVPUcUOHGi+GDfLfFZP
+         kJHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=j4ORgzimtao+706TTd/4P+f6OXtQWtbCyl2jlIb9OkE=;
-        b=XBn4sjKM7sLDmUNKwHdEJDmCN3BWtY/Kcz9ylUm+mqMwGTgXj6Mb/yqcakV6F9mE12
-         Fzu8VBsYAfmCcnel2dvFRHpbWYOrFbEDAr11TezPZ3zNYKu7/8Ug0OqxEndL/TlTVodw
-         MjqbJpYnki1FR/sC4v+nqnhfg3mXxKf3Caz9ZzL86bZocvJsIDhSVzeaTZutML2BBe8Q
-         6p85edli20L4iuwusTGuiZdWWhaLn2cATheZCYHH7/P6yNK/cUYZxgzH/2hIM6cxD5uX
-         oiJfWQDCERuABbi/28C0GfPAY0DtSG3+oTt/Ovx1DQB/d0VBxRvS6ihwlgWBQjTNBE9Y
-         skeA==
-X-Gm-Message-State: ALQs6tAaJF9zFTepLwfTf4PBBsLjSh0GWEnVgR+sbKOZZIyVmIZSyfb6
-        QpPRxGO8rurc2B7BD6VqlMTkoLCuxgc/S/05sVo=
-X-Google-Smtp-Source: AIpwx48DuZ1ANzAeU5yMtOl/m9rubCg9rtYI4zZORilcYoAFT7qMbQPAox/YZ/X8RkoNrOozvS/aWXHtXVotsVj6t28=
-X-Received: by 2002:a9d:24c7:: with SMTP id z65-v6mr6731209ota.152.1523721601033;
- Sat, 14 Apr 2018 09:00:01 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=EPlqBUKNPN3U4nGphPTI7NP0L0h5sr8yZwz0ovyFmOI=;
+        b=ihq4ZE4gsV2/f6DFughkEUcwiZgWkhBCVl+MmPHtkuncI6QwrVS3lFM8HUsy0U8d7h
+         v+id6ODSJOnn71zktXwi1TH3QKNt8qQYNjeyMc3xGe0lB/u5XCrokUns40nM88P3tTrO
+         qFInxl4wZWjarNUatZFVbRae9Tw9saeeLZIs2VhltA3JNREZh1Wx+42LVAUSWIxsens8
+         5vfBvgSWRtEfkv1/79FOBOqsvWEGu2cLmO558X8vHAG41qX5ycqTM38b6joLkLLCOKDS
+         TPSgQZvH/8Hn89CVCxa/JMILkWG+ney/J5u/2O3/cMi5EuqrjZcuh4TgMNxU4VLs151v
+         CDTA==
+X-Gm-Message-State: ALQs6tC1Qk9KJ5OFRMGL9bz/JIoH0GskN99LoFw20ISzLkd2MSz5yVIW
+        8FTv6m5U7fJzji82UarkwAlwZBp8DdPIiscO0CWPGw==
+X-Google-Smtp-Source: AIpwx48oX2atATAZN6ba8r+z2xSgFqnhkigIJGAYozXaCtzE291I4/lGneZX47zf6yeS0EijDMWxlKUUQVmaE1FhqeM=
+X-Received: by 10.46.152.143 with SMTP id b15mr6048125ljj.65.1523723948414;
+ Sat, 14 Apr 2018 09:39:08 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.198.152 with HTTP; Sat, 14 Apr 2018 08:59:30 -0700 (PDT)
-In-Reply-To: <20180410210408.13788-1-benpeart@microsoft.com>
-References: <20180410210408.13788-1-benpeart@microsoft.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 14 Apr 2018 17:59:30 +0200
-Message-ID: <CACsJy8B+fTfUiGA-cFE5QEipa_4pSfC4_GhUSJvCKL82G21xWw@mail.gmail.com>
-Subject: Re: [PATCH v1 0/2] fsexcludes: Add programmatic way to exclude files
-To:     Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "alexmv@dropbox.com" <alexmv@dropbox.com>,
-        "blees@dcon.de" <blees@dcon.de>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "bmwill@google.com" <bmwill@google.com>,
-        "avarab@gmail.com" <avarab@gmail.com>,
-        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.46.65.201 with HTTP; Sat, 14 Apr 2018 09:39:07 -0700 (PDT)
+In-Reply-To: <3152c739-5c80-99b3-ac16-31fe348b7657@kdbg.org>
+References: <CAHd499C39sBTJy_AoCJxE2ZS4ECJju2jroY6_0E1MssCBtmC=A@mail.gmail.com>
+ <3152c739-5c80-99b3-ac16-31fe348b7657@kdbg.org>
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Sat, 14 Apr 2018 11:39:07 -0500
+X-Google-Sender-Auth: stzz1fx94OTAOp6D0mmSVlGStPI
+Message-ID: <CAHd499ApQV-juNU4tZ7XgDx3y4hi8u2-dwwa=eytFxrwVaHRmA@mail.gmail.com>
+Subject: Re: Need help debugging issue in git
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 10, 2018 at 11:04 PM, Ben Peart <Ben.Peart@microsoft.com> wrote=
-:
-> In git repos with large working directories an external file system monit=
-or
-> (like fsmonitor or gvfs) can track what files in the working directory ha=
-ve been
-> modified.  This information can be used to speed up git operations that s=
-cale
-> based on the size of the working directory so that they become O(# of mod=
-ified
-> files) vs O(# of files in the working directory).
+On Mon, Apr 2, 2018 at 1:53 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 02.04.2018 um 02:36 schrieb Robert Dailey:
+>>
+>> I'm struggling with a bug that I found introduced in git v2.13.2. The
+>> bug was not reproducible in v2.13.1. The issue is that using arguments
+>> like "@{-1}" to aliases causes those curly braces to be removed, so
+>> once the command is executed after alias processing the argument looks
+>> like "@-1". This breaks any aliases you have that wrap `git log` and
+>> such. I originally opened the bug on the Git for Windows project
+>> (since I use Git mostly on Windows):
+>>
+>> https://github.com/git-for-windows/git/issues/1220
 >
-> The fsmonitor patch series added logic to limit what files git had to sta=
-t() to
-> the set of modified files provided by the fsmonitor hook proc.  It also u=
-sed the
-> untracked cache (if enabled) to limit the files/folders git had to scan l=
-ooking
-> for new/untracked files.  GVFS is another external file system model that=
- also
-> speeds up git working directory based operations that has been using a di=
-fferent
-> mechanism (programmatically generating an excludes file) to enable git to=
- be
-> O(# of modified files).
+> ...
+>>
+>> Here is the alias being used for a test:
+>>
+>> [alias]
+>>      lgtest = !git log --oneline \"$@\"
+>>
+>> And here is the command I invoke for the test:
+>>
+>> $ git lgtest @{-1}
+>>
+>> I should get logs for the previously-checked-out branch.
+>>
+>> When `prepare_shell_cmd()` is called in run-command.c, it gets expanded
+>> like so:
+>>
+>> + [0] "sh" const char *
+>> + [1] "-c" const char *
+>> + [2] "git log --oneline \"$@\" \"$@\"" const char *
+>> + [3] "git log --oneline \"$@\"" const char *
+>> + [4] "@{-1}" const char *
+>>
+>> With my modifications (again, patch inline below) I get this:
+>>
+>> + [0] "sh" const char *
+>> + [1] "-c" const char *
+>> + [2] "git log --oneline \"$@\"" const char *
+>> + [3] "@{-1}" const char *
+>>
+>> The second version looks much better.
 >
-> This patch series will introduce a new way to limit git=EF=BF=BDs travers=
-al of the
-> working directory that does not require the untracked cache (fsmonitor) o=
-r using
-> the excludes feature (GVFS).  It does this by enhancing the existing excl=
-udes
-> logic in dir.c to support a new =EF=BF=BDFile System Excludes=EF=BF=BD or=
- fsexcludes API that is
-> better tuned to these programmatic applications.
+>
+> But this is wrong. Try this on the command line:
+>
+>   sh -c 'echo "$@"' a b c
+>
+> Notice how this prints only 'b c', not 'a b c'. The reason is that the
+> argument 'a' is treated like a "script" name, i.e. what you get for "$0",
+> and 'b' and 'c' as the actual arguments to the "script".
+>
+> That is, you must fill in some dummy "script" name at slot [3], and
+> run_command chooses to put the alias text there.
+>
+>> I think the constant nesting of
+>> commands inside each other that the first version does is somehow
+>> causing curly braces to be removed. I don't understand enough about
+>> shell processing to know why it would do this.
+>
+>
+> Some shells expand the curly braces. They must get lost somewhere by one of
+> the two shell invocations that happen on the way.
+>
+> BTW, you don't happen to have a file named '@-1' in your directory, most
+> likely by accident?
 
-I have not had a chance to really look at the patches yet but I think
-these three paragraphs should somehow be included in the commit
-description of 1/2 (or spread out between 1/2 and 2/2). 1/2
-description for example briefly talks about how to use the new thing,
-but not really tell what it's for, why you need to add it.
---=20
-Duy
+Thanks for your help. I checked for @-1 but I do not have a file with
+that name (good catch though). I contacted the MinGW mailing list and
+they seem to indicate that {-1} is a valid brace expansion. I was able
+to verify the git.exe code itself is not causing this problem. It
+seems to be GNU bash doing it. But oddly enough, the Ubuntu version of
+Bash for example does not process {-1} as a brace expansion. It seems
+weird to me that Git uses a syntax for a portion of its revision
+specification that could be ambiguously treated as syntax processed by
+Bash. In other words, I feel like this would have been designed into
+Git years ago, so I'm not sure why this is a problem now all of a
+sudden.
+
+Their suggested solution was to start quoting items in the list or
+escaping the braces, but that will make git revisions less intuitive
+to use and make commands more tedious to type. I am still discussing
+things over there but for the purposes of the Git mailing list, I
+think it's clear at this point this is not an issue with Git itself.
+Having said that, thanks again for the help!!
