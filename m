@@ -2,151 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEAF81F404
-	for <e@80x24.org>; Sat, 14 Apr 2018 16:39:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8B351F404
+	for <e@80x24.org>; Sat, 14 Apr 2018 16:53:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751173AbeDNQjK (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Apr 2018 12:39:10 -0400
-Received: from mail-lf0-f46.google.com ([209.85.215.46]:42335 "EHLO
-        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751121AbeDNQjK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Apr 2018 12:39:10 -0400
-Received: by mail-lf0-f46.google.com with SMTP id q9-v6so16512879lfk.9
-        for <git@vger.kernel.org>; Sat, 14 Apr 2018 09:39:09 -0700 (PDT)
+        id S1751162AbeDNQxE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Apr 2018 12:53:04 -0400
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:33564 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751121AbeDNQxD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Apr 2018 12:53:03 -0400
+Received: by mail-wr0-f180.google.com with SMTP id z73so15335158wrb.0
+        for <git@vger.kernel.org>; Sat, 14 Apr 2018 09:53:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=EPlqBUKNPN3U4nGphPTI7NP0L0h5sr8yZwz0ovyFmOI=;
-        b=lF+gRV4pl70EAWz4IA9d7RdLBOy4KWFeh48SVvNX0jcYVFfWKK67KyJBKeG2dtCepv
-         fiuoW6x3US9FOWPx9NWdmDgsqobZ58NxE7iEcnm+cx+KrwNrNrEvKGlVpDeypMjyo0wh
-         FMqsshl4IPe3B+nWSAfeTQikmyewFS7mACStsv11tFwzM2cxxF8EMVs5AYLhKq2gmvPn
-         KL/FHjuw+0YGLGWWGVBuq86Wf+bbjETRv2YodMXWDtOguJs+6+0/wgBl2eOm1I2nhk52
-         NBvcMRMV+eELkh7V5cwnC0etaRVetzNcraE9oG5RhG/dxF15nkVPUcUOHGi+GDfLfFZP
-         kJHw==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=aaRyJfDMsyLw1YFcpcEA4tDPxXNaFYCQWdzAXipu2HU=;
+        b=FSon54O8tge6DupvmzhPL6mKH4iiVjPKCJFHHqyzpC0yD8JIO9K51lPTo0YMJd34PG
+         K7Q5u/g8YOiAft8BKkl1dwh5HXTza7k2Cy7gsvwLaTCfE23tfaaEdXPDk8NX2cw+9o9f
+         xpwKVxIZvwxzvENSA2MZpfFnQLZ9XCEzD4KdhG2v6QjtV6V8CK+IsZeXJagu2ytJiieR
+         YK/ry9l2x+wvPlwuWdeh1vZ4DezVRjmbm0KCbJgBoL6U3h62UKcex4IG3cd8mg5M5u6V
+         fKoQ6uEIixVS5PMyfWI36HdTkhlDBN+WJEhXitPvGdWT+J7Ckr9EqWCXJTScTOOyBOzO
+         7fOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=EPlqBUKNPN3U4nGphPTI7NP0L0h5sr8yZwz0ovyFmOI=;
-        b=ihq4ZE4gsV2/f6DFughkEUcwiZgWkhBCVl+MmPHtkuncI6QwrVS3lFM8HUsy0U8d7h
-         v+id6ODSJOnn71zktXwi1TH3QKNt8qQYNjeyMc3xGe0lB/u5XCrokUns40nM88P3tTrO
-         qFInxl4wZWjarNUatZFVbRae9Tw9saeeLZIs2VhltA3JNREZh1Wx+42LVAUSWIxsens8
-         5vfBvgSWRtEfkv1/79FOBOqsvWEGu2cLmO558X8vHAG41qX5ycqTM38b6joLkLLCOKDS
-         TPSgQZvH/8Hn89CVCxa/JMILkWG+ney/J5u/2O3/cMi5EuqrjZcuh4TgMNxU4VLs151v
-         CDTA==
-X-Gm-Message-State: ALQs6tC1Qk9KJ5OFRMGL9bz/JIoH0GskN99LoFw20ISzLkd2MSz5yVIW
-        8FTv6m5U7fJzji82UarkwAlwZBp8DdPIiscO0CWPGw==
-X-Google-Smtp-Source: AIpwx48oX2atATAZN6ba8r+z2xSgFqnhkigIJGAYozXaCtzE291I4/lGneZX47zf6yeS0EijDMWxlKUUQVmaE1FhqeM=
-X-Received: by 10.46.152.143 with SMTP id b15mr6048125ljj.65.1523723948414;
- Sat, 14 Apr 2018 09:39:08 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=aaRyJfDMsyLw1YFcpcEA4tDPxXNaFYCQWdzAXipu2HU=;
+        b=cY9L5VD+Zk6tucTxrNpRRl56WQsHzwUg92SfMZJEXal+DC9/ksKPZOCJWmNB/Yas+e
+         czSFLkrKLnhdJfL/1D1v4wi2yLwYnWATWZ3nzxan3t1GT5qZpu7nkpFYq9kHg4xUB5Wa
+         cj248adA63TVssdO+9yL+e/44bth0B1R5jW8vLGxyUdvQGZtJFj/dWdbCLBRJuqvywzY
+         inSPy8AIVUBKqGfpJ93J+akzgSq35/1E66uH4LZ9n4wgHiaimnwzha40DbhWynuxEDP4
+         J34k873MW7YqU/+0dej/zBE1WDTWipSiVz6Y1PGlHVZ4L0pNSDe6CqXEOYSAh7bNGCU8
+         gkUg==
+X-Gm-Message-State: ALQs6tAh0TgsesN/anZPHWQSSfD8Kv90pSbUeDopFleZM1LiYoxQO4vc
+        A8yC4GeTb77pqeU8hdHOmyE=
+X-Google-Smtp-Source: AIpwx48O7DlWKGGUk8uLDGzYnQvp3KNcMRECsHqXDpGGi6XIsmifMWTb/ao39rQ1KrxYNm6+goUUZA==
+X-Received: by 10.223.225.198 with SMTP id l6mr6561471wri.111.1523724781896;
+        Sat, 14 Apr 2018 09:53:01 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egm16.neoplus.adsl.tpnet.pl. [83.21.76.16])
+        by smtp.gmail.com with ESMTPSA id u196sm3688948wmf.30.2018.04.14.09.52.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 14 Apr 2018 09:53:00 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/6] Compute and consume generation numbers
+References: <20180403165143.80661-1-dstolee@microsoft.com>
+        <867epjez1n.fsf@gmail.com>
+        <07abd2ce-e042-fe3c-b2db-3d2f2aa44de8@gmail.com>
+        <868t9t5yjz.fsf@gmail.com>
+        <45320265-9fec-cee1-e82c-3ff719bb0435@gmail.com>
+Date:   Sat, 14 Apr 2018 18:52:56 +0200
+In-Reply-To: <45320265-9fec-cee1-e82c-3ff719bb0435@gmail.com> (Derrick
+        Stolee's message of "Wed, 11 Apr 2018 15:58:27 -0400")
+Message-ID: <86lgdplogn.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.46.65.201 with HTTP; Sat, 14 Apr 2018 09:39:07 -0700 (PDT)
-In-Reply-To: <3152c739-5c80-99b3-ac16-31fe348b7657@kdbg.org>
-References: <CAHd499C39sBTJy_AoCJxE2ZS4ECJju2jroY6_0E1MssCBtmC=A@mail.gmail.com>
- <3152c739-5c80-99b3-ac16-31fe348b7657@kdbg.org>
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Sat, 14 Apr 2018 11:39:07 -0500
-X-Google-Sender-Auth: stzz1fx94OTAOp6D0mmSVlGStPI
-Message-ID: <CAHd499ApQV-juNU4tZ7XgDx3y4hi8u2-dwwa=eytFxrwVaHRmA@mail.gmail.com>
-Subject: Re: Need help debugging issue in git
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 2, 2018 at 1:53 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 02.04.2018 um 02:36 schrieb Robert Dailey:
->>
->> I'm struggling with a bug that I found introduced in git v2.13.2. The
->> bug was not reproducible in v2.13.1. The issue is that using arguments
->> like "@{-1}" to aliases causes those curly braces to be removed, so
->> once the command is executed after alias processing the argument looks
->> like "@-1". This breaks any aliases you have that wrap `git log` and
->> such. I originally opened the bug on the Git for Windows project
->> (since I use Git mostly on Windows):
->>
->> https://github.com/git-for-windows/git/issues/1220
->
-> ...
->>
->> Here is the alias being used for a test:
->>
->> [alias]
->>      lgtest = !git log --oneline \"$@\"
->>
->> And here is the command I invoke for the test:
->>
->> $ git lgtest @{-1}
->>
->> I should get logs for the previously-checked-out branch.
->>
->> When `prepare_shell_cmd()` is called in run-command.c, it gets expanded
->> like so:
->>
->> + [0] "sh" const char *
->> + [1] "-c" const char *
->> + [2] "git log --oneline \"$@\" \"$@\"" const char *
->> + [3] "git log --oneline \"$@\"" const char *
->> + [4] "@{-1}" const char *
->>
->> With my modifications (again, patch inline below) I get this:
->>
->> + [0] "sh" const char *
->> + [1] "-c" const char *
->> + [2] "git log --oneline \"$@\"" const char *
->> + [3] "@{-1}" const char *
->>
->> The second version looks much better.
->
->
-> But this is wrong. Try this on the command line:
->
->   sh -c 'echo "$@"' a b c
->
-> Notice how this prints only 'b c', not 'a b c'. The reason is that the
-> argument 'a' is treated like a "script" name, i.e. what you get for "$0",
-> and 'b' and 'c' as the actual arguments to the "script".
->
-> That is, you must fill in some dummy "script" name at slot [3], and
-> run_command chooses to put the alias text there.
->
->> I think the constant nesting of
->> commands inside each other that the first version does is somehow
->> causing curly braces to be removed. I don't understand enough about
->> shell processing to know why it would do this.
->
->
-> Some shells expand the curly braces. They must get lost somewhere by one of
-> the two shell invocations that happen on the way.
->
-> BTW, you don't happen to have a file named '@-1' in your directory, most
-> likely by accident?
+Derrick Stolee <stolee@gmail.com> writes:
+> On 4/11/2018 3:32 PM, Jakub Narebski wrote:
 
-Thanks for your help. I checked for @-1 but I do not have a file with
-that name (good catch though). I contacted the MinGW mailing list and
-they seem to indicate that {-1} is a valid brace expansion. I was able
-to verify the git.exe code itself is not causing this problem. It
-seems to be GNU bash doing it. But oddly enough, the Ubuntu version of
-Bash for example does not process {-1} as a brace expansion. It seems
-weird to me that Git uses a syntax for a portion of its revision
-specification that could be ambiguously treated as syntax processed by
-Bash. In other words, I feel like this would have been designed into
-Git years ago, so I'm not sure why this is a problem now all of a
-sudden.
+>> What would you suggest as a good test that could imply performance? The
+>> Google Colab notebook linked to above includes a function to count
+>> number of commits (nodes / vertices in the commit graph) walked,
+>> currently in the worst case scenario.
+>
+> The two main questions to consider are:
+>
+> 1. Can X reach Y?
 
-Their suggested solution was to start quoting items in the list or
-escaping the braces, but that will make git revisions less intuitive
-to use and make commands more tedious to type. I am still discussing
-things over there but for the purposes of the Git mailing list, I
-think it's clear at this point this is not an issue with Git itself.
-Having said that, thanks again for the help!!
+That is easy to do.  The function generic_is_reachable() does
+that... though using direct translation of the pseudocode for
+"Algorithm 3: Reachable" from FELINE paper, which is recursive and
+doesn't check if vertex was already visited was not good idea for large
+graphs such as Linux kernel commit graph, oops.  That is why
+generic_is_reachable_large() was created.
+
+> 2. What is the set of merge-bases between X and Y?
+
+I don't have an algorithm for that in the Google Colaboratory notebook.
+Though I see that there exist algorithms for calculating lowest common
+ancestors in DAGs...
+
+I'll have to take a look how Git does that.
+
+>
+> And the thing to measure is a commit count. If possible, it would be
+> good to count commits walked (commits whose parent list is enumerated)
+> and commits inspected (commits that were listed as a parent of some
+> walked commit). Walked commits require a commit parse -- albeit from
+> the commit-graph instead of the ODB now -- while inspected commits
+> only check the in-memory cache.
+
+I don't quite see the distinction.  Whether we access generation number
+of a commit (information about level of vertex in graph), or a parent
+list (vertex successors / neighbours), it both needs accessing
+commit-graph; well, accessing parents may be more costly for octopus
+merges (due to having to go through EDGE chunk).
+
+I can easily return the set of visited commits (vertices), or just size
+of said set.
+
+>
+> For git.git and Linux, I like to use the release tags as tests. They
+> provide a realistic view of the linear history, and maintenance
+> releases have their own history from the major releases.
+
+Hmmm... testing for v4.9-rc5..v4.9 in Linux kernel commit graphs, the
+FELINE index does not bring any improvements over using just level
+(generation number) filter.  But that may be caused by narrowing od
+commit DAG around releases.
+
+I try do do the same between commits in wide part, with many commits
+with the same level (same generation number) both for source and for
+target commit.  Though this may be unfair to level filter, though...
+
+
+Note however that FELINE index is not unabiguous, like generation
+numbers are (modulo decision whether to start at 0 or at 1); it depends
+on the topological ordering chosen for the X elements.
+
+>> I have tried finding number of false positives for level (generation
+>> number) filter and for FELINE index, and number of false negatives for
+>> min-post intervals in the spanning tree (for DFS tree) for 10000
+>> randomly selected pairs of commits... but I don't think this is a good
+>> benchmark.
+>
+> What is a false-positive? A case where gen(X) < gen(Y) but Y cannot
+> reach X?
+
+Yes.  (And equivalent for FELINE index, which is a pair of integers).
+
+> I do not think that is a great benchmark, but I guess it is
+> something to measure.
+
+I have simply used it to have something to compare.
+
+>> I Linux kernel sources (https://git.kernel.org/pub/scm/linux/kernel/git/=
+torvalds/linux.git)
+>> that has 750832 nodes and 811733 edges, and 563747941392 possible
+>> directed pairs, we have for 10000 randomly selected pairs of commits:
+>>
+>>    level-filter has    91 =3D  0.91% [all] false positives
+>>    FELINE index has    78 =3D  0.78% [all] false positives
+>>    FELINE index has 1.16667 less false positives than level filter
+>>
+>>    min-post spanning-tree intervals has  3641 =3D 36.41% [all] false
+>>    negatives
+>
+> Perhaps something you can do instead of sampling from N^2 commits in
+> total is to select a pair of generations (say, G =3D 20000, G' =3D 20100)
+> or regions of generations ( 20000 <=3D G <=3D 20050, 20100 <=3D G' <=3D 2=
+0150)
+> and see how many false positives you see by testing all pairs (one
+> from each level). The delta between the generations may need to be
+> smaller to actually have a large proportion of unreachable pairs. Try
+> different levels, since major version releases tend to "pinch" the
+> commit graph to a common history.
+
+That's a good idea.
+
+>> For git.git repository (https://github.com/git/git.git) that has 52950
+>> nodes and 65887 edges the numbers are slighly more in FELINE index
+>> favor (also out of 10000 random pairs):
+>>
+>>    level-filter has   504 =3D  9.11% false positives
+>>    FELINE index has   125 =3D  2.26% false positives
+>>    FELINE index has 4.032 less false positives than level filter
+>>
+>> This is for FELINE which does not use level / generatio-numbers filter.
+
+Best,
+--=20
+Jakub Nar=C4=99bski
