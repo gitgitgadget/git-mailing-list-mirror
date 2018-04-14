@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41BC41F404
-	for <e@80x24.org>; Sat, 14 Apr 2018 15:35:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36AAB1F404
+	for <e@80x24.org>; Sat, 14 Apr 2018 15:36:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751732AbeDNPfm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Apr 2018 11:35:42 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:42412 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751375AbeDNPfi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Apr 2018 11:35:38 -0400
-Received: by mail-lf0-f67.google.com with SMTP id q9-v6so16389879lfk.9
-        for <git@vger.kernel.org>; Sat, 14 Apr 2018 08:35:38 -0700 (PDT)
+        id S1751684AbeDNPgC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Apr 2018 11:36:02 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:43524 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751617AbeDNPfk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Apr 2018 11:35:40 -0400
+Received: by mail-lf0-f66.google.com with SMTP id v207-v6so16386786lfa.10
+        for <git@vger.kernel.org>; Sat, 14 Apr 2018 08:35:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Bz6WY+vcrnD2NAFMjT7c9tnLCI+q1+S2GO1J6v3UQxY=;
-        b=ecVbPgZmhT2/bruJJwkF6hEB9B1Z4tvTTz7039dlTH7MW1XoAk5dPfemQ0Uizx7c+P
-         8Ub01LHuhQc749vA3Jwv0z73A/01Rf1z5F39INCIl8tay0J3mdHXzp3KmGFLDi0ZDUdi
-         YfTD202dYcK/Z70NA4O+ps7VAJXTvLl0EHcrHe7LPemia/a8ZUxkDdOHG+XDpr8WK1V/
-         9sv/7t+aFjI7VCIH8o+Hws04tnpGQ9kuqGNmpQvDhf2zQQpzJ7HHVEEzg5WIw80nAy+0
-         q/pAHIXdQjs/kIHSKHGbfe8+rIiZc73Ml2lc52mNnYi1ecoa3PSRr66bxfOmTP4QK05v
-         4Adg==
+        bh=p8AMJ+fH/zW8/4NXH7o5Wv9ZpBBhPvylVUR69xS6IU4=;
+        b=NiiXsISEYOXBoIU/Uw9kHrOk4w78WVMcJkZhHZOqrM5jklQDTEnHgIveo014wy9CTg
+         4CwVyzhUoU7GEhMn1Gat0Gb+leZxBTPHg2WE/MDunIXDOJngE1Ha+RG/ZcPfW+GBySsL
+         MUsieRfjwL4C0yydloQNHapNj6Z3wW+vPI5e5fec3MtzcEKDR/MW6KtDi+X7ivrCqG7g
+         HzlGRGZBwc+IWC5KU/dyN/8DeqGI422TlZw39cCOet8XPxKjP9Wk90BZ8Tn2+BtmAp1C
+         MGOtCAdX0GmOuIaasrFvwkLiED74UlBpk/qI6P6GS7b6QlucFodYLw6YtUmNPxr0g42W
+         3yPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Bz6WY+vcrnD2NAFMjT7c9tnLCI+q1+S2GO1J6v3UQxY=;
-        b=Sk+V/O+xWn/yL+geRPWtLoRTSJyvjqLFShx8iCJj8pTRWySVobibedSm4qpgLwU6T6
-         m5FvrZkO8uvc5G7u585itb20JBgfiy95sglhDHMBxkD7+1kYlwKvCUqXlxobKWfkPqNo
-         hXNK6w/7nkbFvw6YfXWVrNfG5vWaSxTIFsvqEDUMNh/FaZams4CJQaLA+eZEDJ3c62OM
-         zP6KZmn4Pp3h2+s+6gAveFpCCW/jwijvO+eZHhxnfBYVvrsBUIsyouxPMEE+yQa9rHIc
-         4/J+tlhHPIwCffUTK8P6aFizvZL87N1HtcLH6zEhK3+hq7eP4fUH33r+UgBdUpDw7jrS
-         WyFQ==
-X-Gm-Message-State: ALQs6tDYMQ+ihyn+Ab7YZgDcBDjqlFysWtuWVfulRQynutcOeJs6xv1X
-        chKxT+u/bT1oOcS7Dx1HrRw0lQ==
-X-Google-Smtp-Source: AIpwx4+Om3ToTwbDWHDcCEAtcHaTYdF4W8hsTT9yx9xtM5XZ5O5HEl+tGsnk5zZycqepLgZkAJApiA==
-X-Received: by 10.46.58.26 with SMTP id h26mr1581894lja.108.1523720137104;
-        Sat, 14 Apr 2018 08:35:37 -0700 (PDT)
+        bh=p8AMJ+fH/zW8/4NXH7o5Wv9ZpBBhPvylVUR69xS6IU4=;
+        b=AYRBfJ44H41BulFCVhEUmXTgQP1socrTd6ZoYtXSWh/AQiCdnz8qzwWFmXqX2ilbVg
+         PpcgdoPaDD1wtWVmFvY7Texf0TtFTnYjQ3D1wkX9NwcQ9l49F8kjWKN6j0GwaJO2Si74
+         yqa+A9J/6sdDevtjtuBtnc/c2EprMb0Ol2Bn1Y2MpiHES/fQN6hdOEMbPGsUv8GD/ceP
+         4c5sIo8T8lGgB2Pnz1ZuM+VnCbvAjssreLrGuyfJBgjUQpTZgqlC522OVVPfhTii3VuW
+         UT6a2ZaTUV0hwOZ/zZt+fSeD4jESOQPxVtdOvGTBDfeU5FmhSCdXIUphb/FKQc4kGcue
+         DINw==
+X-Gm-Message-State: ALQs6tASiv22X8WyMijFWAV3i4C6gAHX6/iqQyW0nKzvDJycUSaemaEB
+        MnGhOZHG2xOe9nyOzYyKf/DMgQ==
+X-Google-Smtp-Source: AIpwx4/b1ZtxgRLn6FhtvHUj11JNjM3Pvx9iE5QHBsnHMSF6bx8hkbdyZtZlMj0VDynMlP/BuOcMyA==
+X-Received: by 10.46.54.20 with SMTP id d20mr3341810lja.114.1523720138334;
+        Sat, 14 Apr 2018 08:35:38 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id t8-v6sm1844074lfk.9.2018.04.14.08.35.35
+        by smtp.gmail.com with ESMTPSA id t8-v6sm1844074lfk.9.2018.04.14.08.35.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 14 Apr 2018 08:35:36 -0700 (PDT)
+        Sat, 14 Apr 2018 08:35:37 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 10/15] pack-objects: don't check size when the object is bad
-Date:   Sat, 14 Apr 2018 17:35:08 +0200
-Message-Id: <20180414153513.9902-11-pclouds@gmail.com>
+Subject: [PATCH 11/15] pack-objects: clarify the use of object_entry::size
+Date:   Sat, 14 Apr 2018 17:35:09 +0200
+Message-Id: <20180414153513.9902-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.367.g5dd2e386c3
 In-Reply-To: <20180414153513.9902-1-pclouds@gmail.com>
 References: <20180414153513.9902-1-pclouds@gmail.com>
@@ -70,43 +70,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-sha1_object_info() in check_objects() may fail to locate an object in
-the pack and return type OBJ_BAD. In that case, it will likely leave
-the "size" field untouched. We delay error handling until later in
-prepare_pack() though. Until then, do not touch "size" field.
+While this field most of the time contains the canonical object size,
+there is one case it does not: when we have found that the base object
+of the delta in question is also to be packed, we will very happily
+reuse the delta by copying it over instead of regenerating the new
+delta.
 
-This field should contain the default value zero, but we can't say
-sha1_object_info() cannot damage it. This becomes more important later
-when the object size may have to be retrieved back from the
-(non-existing) pack.
+"size" in this case will record the delta size, not canonical object
+size. Later on in write_reuse_object(), we reconstruct the delta
+header and "size" is used for this purpose. When this happens, the
+"type" field contains a delta type instead of a canonical type.
+Highlight this in the code since it could be tricky to see.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/pack-objects.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/pack-objects.c | 11 ++++++++---
+ pack-objects.h         |  4 +++-
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 211bb1ad0e..e75693176e 100644
+index e75693176e..779f14a45e 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -1742,7 +1742,7 @@ static void get_object_details(void)
- 	for (i = 0; i < to_pack.nr_objects; i++) {
- 		struct object_entry *entry = sorted_by_offset[i];
- 		check_object(entry);
--		if (big_file_threshold < entry->size)
-+		if (entry->type_valid && big_file_threshold < entry->size)
- 			entry->no_try_delta = 1;
- 	}
+@@ -1418,6 +1418,7 @@ static void check_object(struct object_entry *entry)
+ 		off_t ofs;
+ 		unsigned char *buf, c;
+ 		enum object_type type;
++		unsigned long in_pack_size;
  
-@@ -2453,7 +2453,7 @@ static void prepare_pack(int window, int depth)
+ 		buf = use_pack(p, &w_curs, entry->in_pack_offset, &avail);
+ 
+@@ -1427,7 +1428,7 @@ static void check_object(struct object_entry *entry)
+ 		 */
+ 		used = unpack_object_header_buffer(buf, avail,
+ 						   &type,
+-						   &entry->size);
++						   &in_pack_size);
+ 		if (used == 0)
+ 			goto give_up;
+ 
+@@ -1444,6 +1445,7 @@ static void check_object(struct object_entry *entry)
+ 		default:
+ 			/* Not a delta hence we've already got all we need. */
+ 			oe_set_type(entry, entry->in_pack_type);
++			entry->size = in_pack_size;
+ 			entry->in_pack_header_size = used;
+ 			if (oe_type(entry) < OBJ_COMMIT || oe_type(entry) > OBJ_BLOB)
+ 				goto give_up;
+@@ -1500,6 +1502,7 @@ static void check_object(struct object_entry *entry)
+ 			 * circular deltas.
  			 */
- 			continue;
+ 			oe_set_type(entry, entry->in_pack_type);
++			entry->size = in_pack_size; /* delta size */
+ 			SET_DELTA(entry, base_entry);
+ 			entry->delta_size = entry->size;
+ 			entry->delta_sibling_idx = base_entry->delta_child_idx;
+@@ -1509,13 +1512,15 @@ static void check_object(struct object_entry *entry)
+ 		}
  
--		if (entry->size < 50)
-+		if (!entry->type_valid || entry->size < 50)
- 			continue;
- 
- 		if (entry->no_try_delta)
+ 		if (oe_type(entry)) {
++			off_t delta_pos;
++
+ 			/*
+ 			 * This must be a delta and we already know what the
+ 			 * final object type is.  Let's extract the actual
+ 			 * object size from the delta header.
+ 			 */
+-			entry->size = get_size_from_delta(p, &w_curs,
+-					entry->in_pack_offset + entry->in_pack_header_size);
++			delta_pos = entry->in_pack_offset + entry->in_pack_header_size;
++			entry->size = get_size_from_delta(p, &w_curs, delta_pos);
+ 			if (entry->size == 0)
+ 				goto give_up;
+ 			unuse_pack(&w_curs);
+diff --git a/pack-objects.h b/pack-objects.h
+index 9d0391c173..e4ea6a350c 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -32,7 +32,9 @@ enum dfs_state {
+  *
+  * "size" is the uncompressed object size. Compressed size of the raw
+  * data for an object in a pack is not stored anywhere but is computed
+- * and made available when reverse .idx is made.
++ * and made available when reverse .idx is made. Note that when a
++ * delta is reused, "size" is the uncompressed _delta_ size, not the
++ * canonical one after the delta has been applied.
+  *
+  * "hash" contains a path name hash which is used for sorting the
+  * delta list and also during delta searching. Once prepare_pack()
 -- 
 2.17.0.367.g5dd2e386c3
 
