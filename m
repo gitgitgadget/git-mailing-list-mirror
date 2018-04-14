@@ -2,95 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC7BD1F424
-	for <e@80x24.org>; Sat, 14 Apr 2018 11:24:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BC871F404
+	for <e@80x24.org>; Sat, 14 Apr 2018 12:30:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751154AbeDNLYj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Apr 2018 07:24:39 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:45726 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751144AbeDNLYi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Apr 2018 07:24:38 -0400
-X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Apr 2018 07:24:37 EDT
-Received: from barra ([92.28.131.105])
-        by smtp.talktalk.net with SMTP
-        id 7JASfnpSQ4Zqz7JASfhwAG; Sat, 14 Apr 2018 12:16:29 +0100
-X-Originating-IP: [92.28.131.105]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=E/fjW5Vl c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
- a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=Kd1tUaAdevIA:10
- a=sZ37js8MScgkEhjnxmUA:9 a=QEXdDO2ut3YA:10
-To:     Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Date:   Sat, 14 Apr 2018 12:15:39 +0100
-Subject: Re: Bug: rebase -i creates committer time inversions on 'reword'
-Envelope-To: git@vger.kernel.org,johannes.schindelin@gmx.de,j6t@kdbg.org
-References: <5f5d5b88-b3ac-ed4f-ee24-6ce2cba2bd55@kdbg.org>
-CC:     Git Mailing List <git@vger.kernel.org>
-Message-ID: <f56b84fa-9286-3a7b-fc5b-2307c9ff5b5e@philandanna.no-ip.org>
-From:   "Phillip Wood" <phil@philandanna.no-ip.org>
-Received: from [192.168.2.201] (lindisfarne.local [192.168.2.201])
-        by barra; Sat, 14 Apr 2018 12:15:39 +0100
-Reply-To: phillip.wood@dunelm.org.uk
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1750936AbeDNMat (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Apr 2018 08:30:49 -0400
+Received: from mout.gmx.net ([212.227.15.15]:36987 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750883AbeDNMas (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Apr 2018 08:30:48 -0400
+Received: from [192.168.0.129] ([37.201.203.18]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MUZKF-1eyhal0I4Z-00RIRx; Sat, 14
+ Apr 2018 14:30:40 +0200
+Date:   Sat, 14 Apr 2018 14:30:38 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Guillaume Maudoux <layus.on@gmail.com>
+cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH] tests: fix PATH for GIT_TEST_INSTALLED tests
+In-Reply-To: <20180414003338.27091-1-layus.on@gail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804141423530.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180414003338.27091-1-layus.on@gail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOzFwQfErhViPyna45KDhUmctwn/mVde2nNMqX0I5ooAccIQP9OaU168uKhjpLybOO8Mzu619ZAI7LErRpsPPdpC7EefiAQs4ZY9hcEFD1Wb93kJ5OjH
- SjsPssk8ElNKlqsHsH1R6pA0p+8d987IhUy3QucMl0kVWhLep5uFqgJi
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:G6bFvv0t5J+85006DXO8fYqa6+awK0veXKk7dPD1bAYgzGqid4p
+ a//MTJGJWJSzF9jfPmFPvb81Cl0Nas4at9zfCmQpPPdiCXzEDS2ta3KYBOwYe4z/wXqHdNy
+ XHmkqX8W75fTi6voxNAVLgnrir9BNSdr+aBtxANe4I6++lQ0CVC/maMlBmIZT2IfMcRVy2T
+ MbVBGRYDSxORzYbe7WusQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XQXC26Uux5E=:9iprHJfmp1IVK+/cdtsfal
+ XQYk198YLbcuDbIEoNLpxvQaA5yBIIpqvJff+gT9Pi1pIci1OxgADlRekNmfDrVoFuT8NGjmG
+ Splxa72HtGaPtYrNAwW8oGgr8mxUKf/sN5xNwNlco+yZ8tz4oGzg0PA7nulxnYHIua/dwaTwT
+ tjNZ5LrDYyMyBdvHJoMvXo+VG7f1mAPle6LCTSVv0YPHuIIOCXA/Pb1hPNKGgn2k3pYLCkbfJ
+ c4l5sh70LhhZVRwKHv+fniEcjJYLnkdmTcUYG2qxob9/BevAVi6Ze2arh2HjbaWfo3yo5FmlK
+ 3Oehy86U1gOV8EduEXu+0pO9cxBLE68V2/XNl4rzJ5kxfMJmDr5z0Ycw7w8YEZhh5voCseMoq
+ eZ32RS7WmG7D4XDySpIY9Mk9y6zpnttZGdvF6YnxhK4dWbvA4DP8lC6yJDDB6/kLs+aub0Q0u
+ M1WM9JzBTjqjg2CmdhnpLNNLmyUudCrjI/dSGez+kW7Qblx+pflPgBJgo/37ZgtvK1ovrLbAb
+ KD1SqD4rQK62PHZOf0HZO6KIFa+lGtUKRnJNdkicNfweqHmaByAKwLGpspgCc6XFLe3p17QDN
+ fn8Ea15sAglagIDtAc1X28+p29uU9fRAkcF0Z7T1gyvCqxUuaErByFJFcLG2Wz1IerCfQKgvz
+ zGpvwJZozXuBF7ecVI1LSka68eglUrN+6IAmEPzpVkKJl6hCNSDp/NdoiEydTtT0F8Sy9JcVH
+ FDi2E0J/eHgKP1kADsxDwwu5uNS1gi7mzbbsMCNuNpUU7HOzAKUWEixh6KGMKzDluotqywnh1
+ aD5wefj7YLzuJuAHBWDEW2vHO3EpzaXMEzvN8z1kCSrHqBSXKY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Guillaume,
 
-On 13/04/18 17:52, Johannes Sixt wrote:
+On Sat, 14 Apr 2018, Guillaume Maudoux wrote:
+
+> From: Guillaume Maudoux <layus.on@gmail.com>
 > 
-> I just noticed that all commits in a 70-commit branch have the same
-> committer timestamp. This is very unusual on Windows, where rebase -i of
-> such a long branch takes more than one second (but not more than 3 or
-> so thanks to the builtin nature of the command!).
+> When running tests on an existing git installation with
+> GIT_TEST_INSTALLED (as described in t/README), the test helpers are
+> missing in the PATH.
 > 
-> And, in fact, if you mark some commits with 'reword' to delay the quick
-> processing of the patches, then the reworded commits have later time
-> stamps, but subsequent not reworded commits receive the earlier time
-> stamp. This is clearly not intended.
-
-Oh dear, I think this is probably due to my series making rebase commit
-in-process when the commit message isn't being edited. I didn't realize
-that git cached the commit date rather than using the current time when
-calling commit_tree_extended(). I'll take a look at it next week. I
-think 'git am' probably gives all patches the same commit time as well
-if the commit date is cached though it wont suffer from the time-travel
-problem.
-
-Best Wishes
-
-Phillip
-
-> Perhaps something like this below is needed.
+> This fixes the test suite in a way that allows all the tests to pass.
 > 
-> diff --git a/ident.c b/ident.c
-> index 327abe557f..2c6bff7b9d 100644
-> --- a/ident.c
-> +++ b/ident.c
-> @@ -178,8 +178,8 @@ const char *ident_default_email(void)
->  
->  static const char *ident_default_date(void)
->  {
-> -	if (!git_default_date.len)
-> -		datestamp(&git_default_date);
-> +	strbuf_reset(&git_default_date);
-> +	datestamp(&git_default_date);
->  	return git_default_date.buf;
->  }
->  
+> Signed-off-by: Guillaume Maudoux <layus.on@gmail.com>
+> ---
 > 
+> This is more a bug report than a real patch. The issue is described
+> above and this patch does solve it. I however think that someone with
+> more knowledge should refactor all that chunck of code that was last
+> changed in 2010.
+> 
+> In particular, it seems that the GIT_TEST_INSTALLED path does not use
+> bin-wrappers at all. This may imply that --with-dashes also breaks
+> tests.
+> 
+>  t/test-lib.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git t/test-lib.sh t/test-lib.sh
+> index 7740d511d..0d51261f7 100644
+> --- t/test-lib.sh
+> +++ t/test-lib.sh
+> @@ -923,7 +923,7 @@ elif test -n "$GIT_TEST_INSTALLED"
+>  then
+>  	GIT_EXEC_PATH=$($GIT_TEST_INSTALLED/git --exec-path)  ||
+>  	error "Cannot run git from $GIT_TEST_INSTALLED."
+> -	PATH=$GIT_TEST_INSTALLED:$GIT_BUILD_DIR:$PATH
+> +	PATH=$GIT_TEST_INSTALLED:$GIT_BUILD_DIR/t/helper:$GIT_BUILD_DIR:$PATH
+>  	GIT_EXEC_PATH=${GIT_TEST_EXEC_PATH:-$GIT_EXEC_PATH}
+>  else # normal case, use ../bin-wrappers only unless $with_dashes:
+>  	git_bin_dir="$GIT_BUILD_DIR/bin-wrappers"
 
+This is essentially identical to what we have in
+
+http://github.com/git-for-windows/git/commit/e408b7517d
+
+So: ACK.
+
+You might also want to go a bit further and let the test suite run with
+GIT_TEST_INSTALLED when Git has not actually be built, but only the test
+helpers. I started something along those lines here:
+
+http://github.com/git-for-windows/git/commit/a80f047abc5
+
+I always meant to come back to polish those patches and submit them to the
+Git mailing list, so: thank you for getting the ball rolling.
+
+FWIW my use case is that I want to test a "MinGit" package, i.e. a subset
+of Git for Windows intended to cater to third-party applications requiring
+Git functionality (but not requiring any interactive parts of it).
+
+What is your use case?
+
+Ciao,
+Johannes
