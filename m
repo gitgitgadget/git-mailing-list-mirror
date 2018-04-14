@@ -2,76 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AC5C1F404
-	for <e@80x24.org>; Sat, 14 Apr 2018 15:44:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB8E81F404
+	for <e@80x24.org>; Sat, 14 Apr 2018 16:00:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751120AbeDNPoo (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Apr 2018 11:44:44 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:42429 "EHLO
-        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751137AbeDNPoo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Apr 2018 11:44:44 -0400
-Received: by mail-oi0-f67.google.com with SMTP id 26-v6so1362617ois.9
-        for <git@vger.kernel.org>; Sat, 14 Apr 2018 08:44:43 -0700 (PDT)
+        id S1751141AbeDNQAC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Apr 2018 12:00:02 -0400
+Received: from mail-ot0-f196.google.com ([74.125.82.196]:39880 "EHLO
+        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750996AbeDNQAB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Apr 2018 12:00:01 -0400
+Received: by mail-ot0-f196.google.com with SMTP id a14-v6so13035810otf.6
+        for <git@vger.kernel.org>; Sat, 14 Apr 2018 09:00:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8dN7bg5uk4Evjffi0ao/kNf/hv6Qb9rsMM68bLAfEck=;
-        b=e4dK96htltODrz7Rhgxt9wX1GGtGO20F8YxkZx8m9ukzvD88TMSkXNex4WktDhYinj
-         qMwKuNPRmObdVIO9yYHk7IjbsLxYU7iCuVAvd6c4bF+aRof3sr5d5YCoEqDYZpg/9p65
-         NbeZlUMOAxV1MhcXz0H6SUduWbiDOtwUXRsP+8go84nU8WqqKiBYIWTcK6NaAfwbtDUs
-         l+TOfM420gnzhmG9MY8mrx9pKsfjtffKZ5hs6UF1q75CDc/WTL2vzy9GZ62JDBbUMSbz
-         JKUVrM6jLLUbifwKcGtE99uV9l7+31kClgO7dRBoDAWPXy1iUMM4NuDiWuBvuXboWLAI
-         BQmg==
+         :cc:content-transfer-encoding;
+        bh=j4ORgzimtao+706TTd/4P+f6OXtQWtbCyl2jlIb9OkE=;
+        b=HQ1t5FJxLYgnJaTRYYMKHH393KAxVAL99DuFVhf2BXFUHA02f+RrkRDWjasP3uXDrP
+         2G85yObEF4aIh7NXVBFqyDzUL58oUYIv6KyXcH2npVXDMgqeUWKcTnnQueqUVjt8q5fz
+         SV7i2VnW/r8eViVxg3lbZ+mD9DWWfcZ6s2KxBzuUb24W0SD4qzJyea9wQbTxJu5b3ZaQ
+         m6nCbfiA18yyzoR00r8lqyNouG3ec9wZ5Knu1d5zMJLAXNYFcRpQlj9l+j0HXPwVC91a
+         eyhHvhuD0bhQ4artxBfQdhsLZpLWSo69EkzN/Fd5BfMMIWxP5Jw9T3LEAjLsU6gTpVc1
+         O1xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8dN7bg5uk4Evjffi0ao/kNf/hv6Qb9rsMM68bLAfEck=;
-        b=e0Xk2k7ja1PB/iYC0dMnKg23c5Qy/6nxYqr8U+DfNXCTjVYGtuMz4ky20zieUpIvJp
-         wk5nNutGumdgu+M4tihNu0gr8cgHyho9thjlIJos3g4SCYEGbJcy6ZXurV/nHd+JiHzG
-         6RIxaJ7G9kklUa6ZZqdpL9DsPu5q/6P+TtP0lWCkhV3u7buT7q3RwXuWKBmXl+dCHoZv
-         C1K2raJFXaEM4eXpum7Oca1zExY8+qMOQFwh+u3TQLpPFGXcJSZ7J6J1J+sZGqNP0Zne
-         T/TB9n+HWRp4JSoYBjoMsclx2iGEEaas99xLu+aciKkatQa4Gp16Jfybhcm6+Wq51bpJ
-         90RQ==
-X-Gm-Message-State: ALQs6tBseWcNRzBg0WXSkpUvGF2XEPX/wYXIc6eL96oqQD6nPqNPo43K
-        DGZCq+OCURAjGwaWIhWiI1lrowekFzdXtcxOH0A=
-X-Google-Smtp-Source: AIpwx4/HFkb8X96mqGR5xrrR5nUltNG26RooOd1wOeDGqkEZxuwJNsOSa3mE8avw5E5zMWrBIypE4bS3LSs/XyC8W68=
-X-Received: by 2002:aca:f141:: with SMTP id p62-v6mr11469595oih.56.1523720683440;
- Sat, 14 Apr 2018 08:44:43 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=j4ORgzimtao+706TTd/4P+f6OXtQWtbCyl2jlIb9OkE=;
+        b=XBn4sjKM7sLDmUNKwHdEJDmCN3BWtY/Kcz9ylUm+mqMwGTgXj6Mb/yqcakV6F9mE12
+         Fzu8VBsYAfmCcnel2dvFRHpbWYOrFbEDAr11TezPZ3zNYKu7/8Ug0OqxEndL/TlTVodw
+         MjqbJpYnki1FR/sC4v+nqnhfg3mXxKf3Caz9ZzL86bZocvJsIDhSVzeaTZutML2BBe8Q
+         6p85edli20L4iuwusTGuiZdWWhaLn2cATheZCYHH7/P6yNK/cUYZxgzH/2hIM6cxD5uX
+         oiJfWQDCERuABbi/28C0GfPAY0DtSG3+oTt/Ovx1DQB/d0VBxRvS6ihwlgWBQjTNBE9Y
+         skeA==
+X-Gm-Message-State: ALQs6tAaJF9zFTepLwfTf4PBBsLjSh0GWEnVgR+sbKOZZIyVmIZSyfb6
+        QpPRxGO8rurc2B7BD6VqlMTkoLCuxgc/S/05sVo=
+X-Google-Smtp-Source: AIpwx48DuZ1ANzAeU5yMtOl/m9rubCg9rtYI4zZORilcYoAFT7qMbQPAox/YZ/X8RkoNrOozvS/aWXHtXVotsVj6t28=
+X-Received: by 2002:a9d:24c7:: with SMTP id z65-v6mr6731209ota.152.1523721601033;
+ Sat, 14 Apr 2018 09:00:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.198.152 with HTTP; Sat, 14 Apr 2018 08:44:13 -0700 (PDT)
-In-Reply-To: <FBB059C530054EEAB2E989D86CBE3BD5@PhilipOakley>
-References: <20180326165520.802-1-pclouds@gmail.com> <CAPig+cTW7KRzXXY7vP-GZ23effYd5jLhiL15KqdRam4rNELCWw@mail.gmail.com>
- <FBB059C530054EEAB2E989D86CBE3BD5@PhilipOakley>
+Received: by 10.74.198.152 with HTTP; Sat, 14 Apr 2018 08:59:30 -0700 (PDT)
+In-Reply-To: <20180410210408.13788-1-benpeart@microsoft.com>
+References: <20180410210408.13788-1-benpeart@microsoft.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 14 Apr 2018 17:44:13 +0200
-Message-ID: <CACsJy8BqoW_YWBiMoOks+WM5XY7Mmadkd0LUBoUWLDXehx1GZQ@mail.gmail.com>
-Subject: Re: [PATCH/RFC 0/5] Keep all info in command-list.txt in git binary
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Sat, 14 Apr 2018 17:59:30 +0200
+Message-ID: <CACsJy8B+fTfUiGA-cFE5QEipa_4pSfC4_GhUSJvCKL82G21xWw@mail.gmail.com>
+Subject: Re: [PATCH v1 0/2] fsexcludes: Add programmatic way to exclude files
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "alexmv@dropbox.com" <alexmv@dropbox.com>,
+        "blees@dcon.de" <blees@dcon.de>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "bmwill@google.com" <bmwill@google.com>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 12, 2018 at 12:06 AM, Philip Oakley <philipoakley@iee.org> wrote:
-> I'm only just catching up, but does/can this series also capture the
-> non-command guides that are available in git so that the 'git help -g' can
-> begin to list them all?
+On Tue, Apr 10, 2018 at 11:04 PM, Ben Peart <Ben.Peart@microsoft.com> wrote=
+:
+> In git repos with large working directories an external file system monit=
+or
+> (like fsmonitor or gvfs) can track what files in the working directory ha=
+ve been
+> modified.  This information can be used to speed up git operations that s=
+cale
+> based on the size of the working directory so that they become O(# of mod=
+ified
+> files) vs O(# of files in the working directory).
+>
+> The fsmonitor patch series added logic to limit what files git had to sta=
+t() to
+> the set of modified files provided by the fsmonitor hook proc.  It also u=
+sed the
+> untracked cache (if enabled) to limit the files/folders git had to scan l=
+ooking
+> for new/untracked files.  GVFS is another external file system model that=
+ also
+> speeds up git working directory based operations that has been using a di=
+fferent
+> mechanism (programmatically generating an excludes file) to enable git to=
+ be
+> O(# of modified files).
+>
+> This patch series will introduce a new way to limit git=EF=BF=BDs travers=
+al of the
+> working directory that does not require the untracked cache (fsmonitor) o=
+r using
+> the excludes feature (GVFS).  It does this by enhancing the existing excl=
+udes
+> logic in dir.c to support a new =EF=BF=BDFile System Excludes=EF=BF=BD or=
+ fsexcludes API that is
+> better tuned to these programmatic applications.
 
-It currently does not. But I don't see why it should not. This should
-allow git.txt to list all the guides too, for people who skip "git
-help" and go hard core mode with "man git". Thanks for bringing this
-up.
--- 
+I have not had a chance to really look at the patches yet but I think
+these three paragraphs should somehow be included in the commit
+description of 1/2 (or spread out between 1/2 and 2/2). 1/2
+description for example briefly talks about how to use the new thing,
+but not really tell what it's for, why you need to add it.
+--=20
 Duy
