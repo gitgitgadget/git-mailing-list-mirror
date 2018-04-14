@@ -2,89 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.0 required=3.0 tests=BAYES_50,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SBL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EB661F404
-	for <e@80x24.org>; Sat, 14 Apr 2018 22:39:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 905941F404
+	for <e@80x24.org>; Sun, 15 Apr 2018 02:40:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752078AbeDNWjD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Apr 2018 18:39:03 -0400
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:39791 "EHLO
-        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752002AbeDNWjC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Apr 2018 18:39:02 -0400
-Received: by mail-vk0-f47.google.com with SMTP id n124so7406265vkd.6
-        for <git@vger.kernel.org>; Sat, 14 Apr 2018 15:39:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=ETwjvFA3MrJ3WEc3e9N0q0s4jPvd5fSxAe19rCWUspY=;
-        b=TLw26i/0k3Gcq+ltJWAvurhCiMu0murTKjsZc9KFTagFX8/DDJi85gH/c8nhy0zne8
-         LHV9b6/hL+wTEM9Z0hZTqzrQq+UyCgYVcOJM647iAmSJEws1AlCh8Y7213pVnIZxreOy
-         bPZifAKj/Fs7yIakNqk4PS2RC/JxvOatGK70h/Cj3nqpv5ReE3PPTwI45drvP0NSBCmQ
-         mJcv1ZgKnUCDIGxIAZrZXn1KGpFSUPXTCea+TDCmpDwaFVNI/eBgcwUEM6Gj0WvMXUSz
-         K+pltxdtZ8+wjpMKLy7B0ueCh1fiWahLiae/kvF6fVkFRr4SAZIzRKvHPD45bzAAki8C
-         hyUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=ETwjvFA3MrJ3WEc3e9N0q0s4jPvd5fSxAe19rCWUspY=;
-        b=so28FYRU2zor1ihs+naSYyv7cwhdhHO2Iion4JViaxL8g7m7pBRL2LZ6uQxzLpdVd3
-         17wbsDe44SnyZlRo5gOj+tOvKPi9xfLqlX4HRi/3w/hBaKrQq0iHyT1GW55LXRuDo4UY
-         uaWviDcDfDrw48NMi2mhIgAujbX2AVlVNBqtV1p3w+1/A1CVvEM/ZrjlwO9CGiaGfazu
-         H0QHBG2UB65BKuw96T2Uks+0Eo1dlvAFfbAAr7bKninvjNGtNIKeEU77nVNffNL3CroZ
-         vxLW69FFYG+CGuqYZKMG5EbViaxqHGknkiOT+w4XFBPFpUMXGIjF8bI78sPt8B60y6VH
-         oieQ==
-X-Gm-Message-State: ALQs6tBtnqlQVEOD/7mF/up4Ze19zN7k+r09NiAbr89rbitu7Ya0IRdL
-        ucwtvTBUmNg/80tVR7DusVfE2bmj4snVxkRqPDU=
-X-Google-Smtp-Source: AIpwx488J9B3fa6qWcDC0WXeO4fOGvIzyX6RZFuc5co/ZY2/reIwv7izx663VsN8iHEIcXXuAMyLWJC96ZbLbQgmMQ4=
-X-Received: by 10.31.178.200 with SMTP id b191mr7398254vkf.145.1523745541757;
- Sat, 14 Apr 2018 15:39:01 -0700 (PDT)
+        id S1752157AbeDOCgP convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 14 Apr 2018 22:36:15 -0400
+Received: from mail.fcgo.gov.np ([202.70.88.133]:39635 "EHLO mail.fcgo.gov.np"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752112AbeDOCgO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Apr 2018 22:36:14 -0400
+X-Greylist: delayed 6714 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Apr 2018 22:36:14 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by mail.fcgo.gov.np (Postfix) with ESMTP id D4E3911032F
+        for <git@vger.kernel.org>; Sun, 15 Apr 2018 06:07:26 +0545 (NPT)
+Received: from mail.fcgo.gov.np ([127.0.0.1])
+        by localhost (mail.fcgo.gov.np [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id NFg5cjjl3Jga for <git@vger.kernel.org>;
+        Sun, 15 Apr 2018 06:07:25 +0545 (NPT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.fcgo.gov.np (Postfix) with ESMTP id E2C0C110BEB
+        for <git@vger.kernel.org>; Sat, 14 Apr 2018 23:29:57 +0545 (NPT)
+X-Virus-Scanned: amavisd-new at fcgo.gov.np
+Received: from mail.fcgo.gov.np ([127.0.0.1])
+        by localhost (mail.fcgo.gov.np [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id Lygt3YLTjgrv for <git@vger.kernel.org>;
+        Sat, 14 Apr 2018 23:29:57 +0545 (NPT)
+Received: from [192.168.10.100] (unknown [154.66.24.219])
+        by mail.fcgo.gov.np (Postfix) with ESMTPSA id BA74810D009
+        for <git@vger.kernel.org>; Sat, 14 Apr 2018 22:39:24 +0545 (NPT)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Received: by 10.31.114.143 with HTTP; Sat, 14 Apr 2018 15:38:41 -0700 (PDT)
-In-Reply-To: <878t9pfu4f.fsf@evledraar.gmail.com>
-References: <20180414152642.4666-1-pclouds@gmail.com> <878t9pfu4f.fsf@evledraar.gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-Date:   Sun, 15 Apr 2018 07:38:41 +0900
-X-Google-Sender-Auth: 7y4QpqhXUeQGKjw4pRUDNZ9Agqg
-Message-ID: <CAPc5daXHJCbuxv2NE1KUt3pYtP1p1RQhOT5ceb0++spEJZ5dTQ@mail.gmail.com>
-Subject: Re: [PATCH 0/7] nd/repack-keep-pack update
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Request for Quotation
+To:     git@vger.kernel.org
+From:   Mohammed <mahottari.dtco@fcgo.gov.np>
+Date:   Sat, 14 Apr 2018 17:54:06 +0100
+Reply-To: tr.export.import@outlook.com
+Message-Id: <20180414165424.BA74810D009@mail.fcgo.gov.np>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 15, 2018 at 4:47 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> The only (trivial) issue I found in the patches themselves was that
-> between 4/5 and 5/7 you're adding an empty line to config.txt in 4/7
-> just to erase it in 5/7, better not to add it to begin with, but
-> hopefully Junio can fix that up (if he cares).
-
-I do care but I'd wish I do not have to waste time and concentration to spe=
-nd
-on doing so, even though I would be fully capable of skipping this round an=
-d
-remembering to queue a rerolled one.
-
-I've seen mentions like the above one a few times on the list recently, so =
-let
-me make it clear. Some things are easier to tweak locally than others, and
-I'd rather not to waste my time on cleaning other people's mess. A simple
-typofix that does not cascade through to later steps in a series is one thi=
-ng.
-A tweak that changes number of lines in a hunk that forces a later step to
-compensate is more involved.
-
-Don't expect your traffic cop to wash your care while you're stopping at a
-red signal.
+Hello,
+ 
+Good day,
+ 
+I am  Mohammed, Our company is interested in your product.
+We have gone through your product site online and wish to make order of your
+product.
+Please do send us details of your products and company to our {email} Also
+provide with the recent price
+ 
+We await your response with quotation and specification.
+[1] Payment terms
+[2] And your products Warranty
+(3] Minimum Order Quantity
+ 
+ 
+Mohammed /Purchasing Manager
+Telephone: +966 3 867 1902
+Fax: +966 3 867 3435
+tr.export.import@outlook.com
+ 
+PAN TRADING  EQUIPMENT'S WORLDWIDE
+ 
+Address: Dallah street, Al Rehab
+Saudi Arabia
