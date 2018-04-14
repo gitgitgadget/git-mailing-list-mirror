@@ -2,87 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D1D41F42D
-	for <e@80x24.org>; Sat, 14 Apr 2018 00:52:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC7BD1F424
+	for <e@80x24.org>; Sat, 14 Apr 2018 11:24:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751116AbeDNAwK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Apr 2018 20:52:10 -0400
-Received: from mout.gmx.net ([212.227.15.15]:56409 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751013AbeDNAwJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Apr 2018 20:52:09 -0400
-Received: from [192.168.0.129] ([37.201.203.18]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ld0jY-1egvL53rKC-00iG3l; Sat, 14
- Apr 2018 02:52:00 +0200
-Date:   Sat, 14 Apr 2018 02:51:58 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>
-Subject: Re: [PATCH v6 05/15] sequencer: introduce the `merge` command
-In-Reply-To: <85232331-97a0-7989-e095-854ed962c7a0@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1804140248110.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1519680483.git.johannes.schindelin@gmx.de> <cover.1523362469.git.johannes.schindelin@gmx.de> <8a5ae61f603df8d8cb19268e1b8470f0a4993445.1523362469.git.johannes.schindelin@gmx.de> <55216d0b-cb37-6514-7f80-91f4617c105d@talktalk.net>
- <85232331-97a0-7989-e095-854ed962c7a0@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751154AbeDNLYj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Apr 2018 07:24:39 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:45726 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751144AbeDNLYi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Apr 2018 07:24:38 -0400
+X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Apr 2018 07:24:37 EDT
+Received: from barra ([92.28.131.105])
+        by smtp.talktalk.net with SMTP
+        id 7JASfnpSQ4Zqz7JASfhwAG; Sat, 14 Apr 2018 12:16:29 +0100
+X-Originating-IP: [92.28.131.105]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=E/fjW5Vl c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
+ a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=Kd1tUaAdevIA:10
+ a=sZ37js8MScgkEhjnxmUA:9 a=QEXdDO2ut3YA:10
+To:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Sat, 14 Apr 2018 12:15:39 +0100
+Subject: Re: Bug: rebase -i creates committer time inversions on 'reword'
+Envelope-To: git@vger.kernel.org,johannes.schindelin@gmx.de,j6t@kdbg.org
+References: <5f5d5b88-b3ac-ed4f-ee24-6ce2cba2bd55@kdbg.org>
+CC:     Git Mailing List <git@vger.kernel.org>
+Message-ID: <f56b84fa-9286-3a7b-fc5b-2307c9ff5b5e@philandanna.no-ip.org>
+From:   "Phillip Wood" <phil@philandanna.no-ip.org>
+Received: from [192.168.2.201] (lindisfarne.local [192.168.2.201])
+        by barra; Sat, 14 Apr 2018 12:15:39 +0100
+Reply-To: phillip.wood@dunelm.org.uk
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:fA0xOLs/AyQ8WZnUEqYkV98fgvaph1ZOM2e3JuIxI1FNs2EY+zS
- c7htjGM5L7HY0boeM6e2vJdjQDnc951OE/Bf8iQZYOguHjfPdzK/IZS1c8kdEG6tKfJPXH7
- OwIobYh0zkcBd22rCSJfJlO4k5dRxYbtmelW/FQkKP159tq2EfeE8zCkPbp7x1Udkn8Ex1k
- m4GW564pARl4yn6akJ0MQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BCpLShPI2dg=:e+JHbQEoYtktjNJ6YBguYU
- 0ugGh+IXyYBGDQ9dl22lgRTik32sXBCSPmIYRMTOkGLNx0VsR3PVgLnKucpWEMn4u8EY3PLuG
- pSvywfbFj47ylrM7CHLPoFYayN4xGTvVXVqQV9BKSQSIuAm2kSmjM0dCvoHfX+k+Y2BrZ7136
- LiDgLsmZCjAbE9ZPZBaMVf8qFUbPm3EQsCAkM9JZIjsJO8nnqmLzHnRNhJhxTXn2lsp8dJaww
- W+42X2PLqBHmJYP2wlfbqJ+dlpwTKBLBpIBIrmgeNAC2Mm3VEcyJtouzTeIwLS8jTYm1Dvdof
- JZ/ItKh2s6T2YB0us8sM3wKtm+u8Z6KtljP3CaWWIUHQouikdvyudaixgsklBrlpTUVhxR2mI
- esNZe3W+Gj9cSLf2B+vSXhFPDhXsYP36rvAvUMg++7fRFYehUZfe+HL2lboAO1YLxJpADrKBE
- Rn0y5HoejxLCNUWeBtFswd1fJ5+w48rrBua/aatA48IA5L7BGy04aMRVMvatbbjpvspIJxpru
- Wy8fZKCn8OjbRN26YAbaJNqaX3fhDFG1AoWSMbb1wB7rw1g2PAA0To3tIPUwAE5S2oizNRS8z
- 9vVojhc8V/2a6swNexs+joK9lvbvn8ycvC6jGsTbzO8R03P/wuKGB/pxJvxUi5MqFGmRoZ25L
- sN13zoRESsz7erbfcS8QGSOF0b9r9cuAZ4mAEIxT6WO71kffTcaOpVChtj2sWq0NzPdna36mU
- wPE8jWL8/sJfsSrCrUauupYd+dLa5V02Hop7aWYtMlRuc+6DEKSJJn/o8WMoqswG6uxEGfdAA
- YW3BgqgRrLZsj8IOvWFBqLSE0w3AsLAkIVGHl4K84ykUAC/f6o=
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOzFwQfErhViPyna45KDhUmctwn/mVde2nNMqX0I5ooAccIQP9OaU168uKhjpLybOO8Mzu619ZAI7LErRpsPPdpC7EefiAQs4ZY9hcEFD1Wb93kJ5OjH
+ SjsPssk8ElNKlqsHsH1R6pA0p+8d987IhUy3QucMl0kVWhLep5uFqgJi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
 
-On Fri, 13 Apr 2018, Phillip Wood wrote:
-
-> On 13/04/18 11:12, Phillip Wood wrote:
-> > @@ -3030,7 +3029,8 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
-> >  			return error(_("unknown command %d"), item->command);
-> >  
-> >  		if (res < 0 && (item->command == TODO_LABEL ||
-> > -				item->command == TODO_RESET)) {
-> > +				item->command == TODO_RESET ||
-> > +				item->command == TODO_MERGE)) {
+On 13/04/18 17:52, Johannes Sixt wrote:
 > 
-> Unfortunately it's not as simple as that - we only want to reschedule if
-> merge_recursive() fails, not if run_git_commit() does.
+> I just noticed that all commits in a 70-commit branch have the same
+> committer timestamp. This is very unusual on Windows, where rebase -i of
+> such a long branch takes more than one second (but not more than 3 or
+> so thanks to the builtin nature of the command!).
+> 
+> And, in fact, if you mark some commits with 'reword' to delay the quick
+> processing of the patches, then the reworded commits have later time
+> stamps, but subsequent not reworded commits receive the earlier time
+> stamp. This is clearly not intended.
 
-Correct. How about introducing a flag `reschedule` that is passed to
-do_label(), do_reset() and do_merge()?
+Oh dear, I think this is probably due to my series making rebase commit
+in-process when the commit message isn't being edited. I didn't realize
+that git cached the commit date rather than using the current time when
+calling commit_tree_extended(). I'll take a look at it next week. I
+think 'git am' probably gives all patches the same commit time as well
+if the commit date is cached though it wont suffer from the time-travel
+problem.
 
-Seeing as do_reset() and do_merge() already have a replay_opts parameter,
-we could add a field `needs_rescheduling` and pass the replay_opts also to
-do_label().
+Best Wishes
 
-Ciao,
-Dscho
+Phillip
+
+> Perhaps something like this below is needed.
+> 
+> diff --git a/ident.c b/ident.c
+> index 327abe557f..2c6bff7b9d 100644
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -178,8 +178,8 @@ const char *ident_default_email(void)
+>  
+>  static const char *ident_default_date(void)
+>  {
+> -	if (!git_default_date.len)
+> -		datestamp(&git_default_date);
+> +	strbuf_reset(&git_default_date);
+> +	datestamp(&git_default_date);
+>  	return git_default_date.buf;
+>  }
+>  
+> 
+
