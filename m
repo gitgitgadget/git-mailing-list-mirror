@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2BCF1F404
-	for <e@80x24.org>; Sat, 14 Apr 2018 15:35:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA56D1F404
+	for <e@80x24.org>; Sat, 14 Apr 2018 15:35:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751144AbeDNPfa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Apr 2018 11:35:30 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:37173 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751111AbeDNPf3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Apr 2018 11:35:29 -0400
-Received: by mail-lf0-f67.google.com with SMTP id m200-v6so16389245lfm.4
-        for <git@vger.kernel.org>; Sat, 14 Apr 2018 08:35:28 -0700 (PDT)
+        id S1751347AbeDNPfb (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Apr 2018 11:35:31 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:32957 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750993AbeDNPf2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Apr 2018 11:35:28 -0400
+Received: by mail-lf0-f66.google.com with SMTP id m14-v6so4396404lfc.0
+        for <git@vger.kernel.org>; Sat, 14 Apr 2018 08:35:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QGcun7TFC7Nlb4MjZfN59NnCLgnd0QYhtI0Tk0YvSh0=;
-        b=goNiIVAfXbIOyFm9BiFVi5MrKxGhb1CQPiF2n3zPLk3TQKSIeVe56dmYP2Xga9NZC8
-         yWtea+WYWNLj0gTKq3TZ/U3cAKsYlwNV3BqGJjw4xO7ggAgG/34r+KfdvZMIAgZ03jwN
-         HGUmkwPLN2oZoeJ8uPXZKwuHKUr6lqT9fIUxGgCTz6fnCPnK+L6vSMIXs71iBBQmjI4b
-         nTS5a/rJFuADI8696NJIL9dxIz4jG/g4z+d41RIWpb8weH8LW++btBNvqAhvrcvdkqC2
-         zC9dy8o9k0xoLM4TgzJkglCtQ7qLd68Gp8tjFYF8KUTT+K1qV8jZjA3I6z01jDQ3LF18
-         Fa5w==
+        bh=Z4gkKhA065O8uxYiVOZZE38juna439sSyzVHonaVlbE=;
+        b=lHOfKSe8e56SXbrIkX2JVcLrHilJBYYkv4oSE2gPneIP7wns6Y8dDIO8zaA+Mi64q5
+         T12Nv5CvhXMy3gC5NVVmzxzpbyrmCUytcjLPif4D+5Fw44u6lMfzi/DB+IxwgMhDD8Ws
+         9joi3RtsesDfUPG/7+cbLavAOK6iBOinC0f9zfLLHn1lQQQ1zQUICvr16OSSJGaVRd1T
+         qF279OVfxTBDBHPXVjLs1UQUrinQaFG+bCdbacC6aJ6GD+FqDCSp7wMbm5RUxxwD8l5A
+         BMQ2MndRNIdhAi24C6AoBif9wpY89nvCfS0Kwz5ncpq8J+mJxjdOByp+8jtLrU9xRDbL
+         R6Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QGcun7TFC7Nlb4MjZfN59NnCLgnd0QYhtI0Tk0YvSh0=;
-        b=hrdW07HNSbbOPJkDK94TPBmHvKs04+SmyiljnxpZKCXtGz8F+U0hnrajlfBNFVcD8w
-         iu5TKEDEJvip6Si3e2YBZysnAunmZi7jYe5ZiC2UU+BVkaw6YPFMkmZVYHjhVeVDMu4n
-         D1+dS8Z15XPRWi0EL9spj55ih8nAqkxJouvhwIa8oQzK2W2AcRNF5UpNjXyF8lgqC5iU
-         qir5glvCyLMfECCXDI+bhtRsEeUjwyo2qIvmSnoMyzYSlc5/wldBJDOtJ8g+9Yb9Gx6J
-         xQ7M1pvYFnuqMnEONEhi24WfBWSObsujpBOKkqeFBm7cSSkd8NYJs38+VVEmEbdfSD0c
-         1n2w==
-X-Gm-Message-State: ALQs6tDovrUu9Lh5zISYD47sb5dFX/xC3EQNmgyyCwzqc/lazfLMak18
-        IFOwGD2YmWIdfTBSIXAMR/Pf8Q==
-X-Google-Smtp-Source: AIpwx4/WrcKaFVhjSyK8Q3JmhgDK2NWqj8IbwMGauPqb5+wCSm9VjhsRNRPNH94dQZY+WBMFYDP/6Q==
-X-Received: by 2002:a19:2181:: with SMTP id h123-v6mr2375856lfh.81.1523720127419;
-        Sat, 14 Apr 2018 08:35:27 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id t8-v6sm1844074lfk.9.2018.04.14.08.35.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=Z4gkKhA065O8uxYiVOZZE38juna439sSyzVHonaVlbE=;
+        b=d73gBKDejlvFo3d4sthc5g+2v4R3+Z4AM30XvYNciTG8Q7c4u+vB8jsjNN3GtSvrIt
+         wCGibg+aLaEJp7xmluUrHIgCTc+1YcrS1k3jrtgOB2l4QPfTepfMAjJNPFxaf5gD/ddz
+         zox6zhd+rPFbu5YLsKsZoYEIVP7K27ubNBsOzdvfdO9CcMNxTUnjQOFMe33v74XJNXlo
+         0TgarsSzJgWY7AOAhYutqpwnb+1uyDFeR9xiRilSsdpmUZ6svZ4qTENLKDZgU3J8DuQI
+         fxdK/EmqhrSYwDQ0aNUqioR4IimdLifRBWmcNlQlsTMBoTqG91QoM3vzvSvwNVezueQx
+         scgA==
+X-Gm-Message-State: ALQs6tBKs2D5JfmEBX+X2i+JS6UWebf80gcdro+dwdkYj5Vq3wTakxDa
+        rKKHrfvMZCLRwwVBEMAiEWPceg==
+X-Google-Smtp-Source: AIpwx49Dye+p63AIF3yPicrLlbbKr20GKolqZPEBrLPSD/oPKMhPyc0UU0zfJPpiIUwmnQb3mfT+yw==
+X-Received: by 2002:a19:e501:: with SMTP id c1-v6mr11196869lfh.65.1523720126331;
         Sat, 14 Apr 2018 08:35:26 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id t8-v6sm1844074lfk.9.2018.04.14.08.35.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 14 Apr 2018 08:35:25 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 02/15] pack-objects: a bit of document about struct object_entry
-Date:   Sat, 14 Apr 2018 17:35:00 +0200
-Message-Id: <20180414153513.9902-3-pclouds@gmail.com>
+Subject: [PATCH 01/15] read-cache.c: make $GIT_TEST_SPLIT_INDEX boolean
+Date:   Sat, 14 Apr 2018 17:34:59 +0200
+Message-Id: <20180414153513.9902-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.367.g5dd2e386c3
 In-Reply-To: <20180414153513.9902-1-pclouds@gmail.com>
 References: <20180414153513.9902-1-pclouds@gmail.com>
@@ -70,71 +70,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The role of this comment block becomes more important after we shuffle
-fields around to shrink this struct. It will be much harder to see what
-field is related to what.
+While at there, document about this special mode when running the test
+suite.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- pack-objects.h | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ ci/run-build-and-tests.sh |  2 +-
+ read-cache.c              |  4 ++--
+ t/README                  | 11 +++++++++++
+ 3 files changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/pack-objects.h b/pack-objects.h
-index 03f1191659..c0a1f61aac 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -1,6 +1,51 @@
- #ifndef PACK_OBJECTS_H
- #define PACK_OBJECTS_H
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 3735ce413f..8190a753de 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -11,7 +11,7 @@ make --jobs=2
+ make --quiet test
+ if test "$jobname" = "linux-gcc"
+ then
+-	GIT_TEST_SPLIT_INDEX=YesPlease make --quiet test
++	GIT_TEST_SPLIT_INDEX=yes make --quiet test
+ fi
  
-+/*
-+ * basic object info
-+ * -----------------
-+ * idx.oid is filled up before delta searching starts. idx.crc32 is
-+ * only valid after the object is written out and will be used for
-+ * generating the index. idx.offset will be both gradually set and
-+ * used in writing phase (base objects get offset first, then deltas
-+ * refer to them)
-+ *
-+ * "size" is the uncompressed object size. Compressed size of the raw
-+ * data for an object in a pack is not stored anywhere but is computed
-+ * and made available when reverse .idx is made.
-+ *
-+ * "hash" contains a path name hash which is used for sorting the
-+ * delta list and also during delta searching. Once prepare_pack()
-+ * returns it's no longer needed.
-+ *
-+ * source pack info
-+ * ----------------
-+ * The (in_pack, in_pack_offset) tuple contains the location of the
-+ * object in the source pack. in_pack_header_size allows quickly
-+ * skipping the header and going straight to the zlib stream.
-+ *
-+ * "type" and "in_pack_type" both describe object type. in_pack_type
-+ * may contain a delta type, while type is always the canonical type.
-+ *
-+ * deltas
-+ * ------
-+ * Delta links (delta, delta_child and delta_sibling) are created to
-+ * reflect that delta graph from the source pack then updated or added
-+ * during delta searching phase when we find better deltas.
-+ *
-+ * delta_child and delta_sibling are last needed in
-+ * compute_write_order(). "delta" and "delta_size" must remain valid
-+ * at object writing phase in case the delta is not cached.
-+ *
-+ * If a delta is cached in memory and is compressed, delta_data points
-+ * to the data and z_delta_size contains the compressed size. If it's
-+ * uncompressed [1], z_delta_size must be zero. delta_size is always
-+ * the uncompressed size and must be valid even if the delta is not
-+ * cached.
-+ *
-+ * [1] during try_delta phase we don't bother with compressing because
-+ * the delta could be quickly replaced with a better one.
-+ */
- struct object_entry {
- 	struct pack_idx_entry idx;
- 	unsigned long size;	/* uncompressed size */
+ check_unignored_build_artifacts
+diff --git a/read-cache.c b/read-cache.c
+index 10f1c6bb8a..fa3df2e72e 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2268,7 +2268,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 
+ 	if (!istate->version) {
+ 		istate->version = get_index_format_default();
+-		if (getenv("GIT_TEST_SPLIT_INDEX"))
++		if (git_env_bool("GIT_TEST_SPLIT_INDEX", 0))
+ 			init_split_index(istate);
+ 	}
+ 
+@@ -2559,7 +2559,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 		goto out;
+ 	}
+ 
+-	if (getenv("GIT_TEST_SPLIT_INDEX")) {
++	if (git_env_bool("GIT_TEST_SPLIT_INDEX", 0)) {
+ 		int v = si->base_sha1[0];
+ 		if ((v & 15) < 6)
+ 			istate->cache_changed |= SPLIT_INDEX_ORDERED;
+diff --git a/t/README b/t/README
+index 24ddebfabf..d5e0a3c786 100644
+--- a/t/README
++++ b/t/README
+@@ -293,6 +293,17 @@ and know what setup is needed for it.  Or when you want to run
+ everything up to a certain test.
+ 
+ 
++Running tests with special setups
++---------------------------------
++
++The whole test suite could be run to test some special features
++that cannot be easily covered by a few specific test cases. These
++could be enabled by running the test suite with correct GIT_TEST_
++environment set.
++
++GIT_TEST_SPLIT_INDEX=<boolean> forces split-index mode on the whole
++test suite. Accept any boolean values that are accepted by git-config.
++
+ Naming Tests
+ ------------
+ 
 -- 
 2.17.0.367.g5dd2e386c3
 
