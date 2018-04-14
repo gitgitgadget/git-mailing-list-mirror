@@ -7,48 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D57E1F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id A28121F404
 	for <e@80x24.org>; Sat, 14 Apr 2018 19:20:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751192AbeDNTUA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Apr 2018 15:20:00 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:34533 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751162AbeDNTT7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Apr 2018 15:19:59 -0400
-Received: by mail-wr0-f193.google.com with SMTP id d19so15849208wre.1
-        for <git@vger.kernel.org>; Sat, 14 Apr 2018 12:19:58 -0700 (PDT)
+        id S1751347AbeDNTUG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Apr 2018 15:20:06 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:35788 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751202AbeDNTUG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Apr 2018 15:20:06 -0400
+Received: by mail-wr0-f196.google.com with SMTP id o3so15850302wri.2
+        for <git@vger.kernel.org>; Sat, 14 Apr 2018 12:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=J4oq5l/zj8x67KFSbm/fr61cM5zS29VeTquuj3DiKLU=;
-        b=ANX3RkNPA55JhXOqR+JH1TCMPYSBOvh6541sYpAw+PdsSEYhFc+295s3amrXCAKeSD
-         O+fzgs+04yHnShotnZicKbP8BXOEY1qcGZFJG98IVxm+Jhiu6bxAyT81i0NkItxcjphM
-         hqHYzGfxUUy5ReUHo6XJlw5yYZzVfqWIIDHeJ71LRwnkOFCWNFijcSuO3eCeciQFTyAY
-         C0wryZNbZBc2q1zzPQQZMxDZp+XRhwXmhqUIjMuBPyyQaey5x55uh2lPfIQkgd0CENxT
-         9GyeUPOynEr8pxsxKswEIDsUSyfPAZ2b3fhZOvhMbgISTv8vJYHX7wZt11XXzQWsbIOn
-         qySw==
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=76XvvYh9v/pa9caESykgIyqPlzx1OR0OCveIY3e8YQc=;
+        b=ElVn2p5Ls2KN/gdh8LLm2tOegYKD7z+s8Y5mS5rKSwwppjLEHs9da1k4EVpChBHKd1
+         ydRWZukaw2YugJR1O/otiWR/gsU6PhviH+kcxfkmfyEHN+u6u2pXYmoDA6cFVnAziXpE
+         QxNdKKLzam9yQpFlPYWUeCeTe2H2ptw4YldYwT9/D/cmJerAbN4mmCv+0GVWZURJksEV
+         cKlbtpmsykexl8t+ZbMkA731TtbgbQNF9u9knKpCoQ34DoYnmVitXZ0x5QzWl53wmR42
+         4MEUawgrtzAzDM2IfmzufcUyiaonjLSIy+XKEVBJWJa8w8FTBX6AHTD1LfRwq2sO1UBf
+         YqaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=J4oq5l/zj8x67KFSbm/fr61cM5zS29VeTquuj3DiKLU=;
-        b=HE2X8ScJPC97YeaEpK5Xlz8EhWYe3uaKU7KZS+4urlQhGRuowPpLXsGs10ca38ZfaW
-         qUSNIhqb1anoTVhGgAKoynIFuF+A3aHzkNvM3LRXiJ3Kd7N8rqD9J6gPsAP8IX2lOn7U
-         SaOQIUiOkyrvV5fOvpfEkTdliVUaSK5NRt8czDaROlIVwb9TdKrgZnaGm7oZ2YRmJU9C
-         YZLng1yrbQJqEgjlOwdAm5Qn4RX4YCxGxFu6dWujQxrxYqP2o5eY3nIjid/PmhVjt7Ja
-         y/x1ElWpfXYhhl64DDlv/yRbuOFu3BVGjqWteLgp1bIFZ9FT4dsubozQJdRloJ3K1CKC
-         7m0g==
-X-Gm-Message-State: ALQs6tAX5/3rxqJG0K0qUEXWFmZdQoh/TgHsMzkKbaMeZayUNknj7daZ
-        8xiePvBuK3JH+sRmak7O/A4A6eGn
-X-Google-Smtp-Source: AIpwx49q0HWrVdPwTr4iq5904yyaS4nFmos8CSIr4+iDKgUE0ES1t5B/vP1GBvLRK7c5sUakQTZeyQ==
-X-Received: by 10.28.118.3 with SMTP id r3mr6821202wmc.90.1523733597631;
-        Sat, 14 Apr 2018 12:19:57 -0700 (PDT)
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=76XvvYh9v/pa9caESykgIyqPlzx1OR0OCveIY3e8YQc=;
+        b=QGUuabxFahdZX3tmH7cFjTaZyg3kT16lR/B0DR6kAT29wbuXuIMvXBYzZG7sYUwCUI
+         h6sXSiTqIJISLHBz2z0ChLJulWx2rPMBDMR7l1yRxhn9/4tR1W1bo8ibD8ULHNEoJ5LL
+         inWrLcNMpv87It1FLqnRN6xdhJ0ZpAftHnDOVGzbBbEMvqzRQdfvsGJUdFwCMB3yu2Db
+         v7FXV/RjldfVr2zYJ9FWkLzOwMk6S655oe98L0Wzst1qo5SPY5i6LDMfCqbW7BSdsmr1
+         x6Bef66FlS3U55Vfpk0M+VoUB8hW3qA8sUdSy29+AiqfADbOGzM1im//NIHw4dOKp6zV
+         Q5dg==
+X-Gm-Message-State: ALQs6tB5n5K+YEHc1m8ZnMhSPlcxV0yKDrQQNVVGN+k4ywfzGGCMmINz
+        qflKHKrhJLul4Iv3C5zTxWmYaY4k
+X-Google-Smtp-Source: AIpwx4+qRe4RfaTkJdCdHEDlUh7FDp1RciAZ6fjH6uhphHU0PrehxcRJDUU4/iJAIQd/41kmJq0H4Q==
+X-Received: by 10.28.216.148 with SMTP id p142mr6917386wmg.72.1523733604309;
+        Sat, 14 Apr 2018 12:20:04 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 31sm8610644wrm.68.2018.04.14.12.19.56
+        by smtp.gmail.com with ESMTPSA id 31sm8610644wrm.68.2018.04.14.12.20.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 14 Apr 2018 12:19:56 -0700 (PDT)
+        Sat, 14 Apr 2018 12:20:03 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,13 +58,13 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, larsxschneider@gmail.com,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 0/4] Make DEVELOPER more more flexible with DEVOPTS
-Date:   Sat, 14 Apr 2018 19:19:42 +0000
-Message-Id: <20180414191946.30674-1-avarab@gmail.com>
+        <pclouds@gmail.com>
+Subject: [PATCH v4 1/4] connect.c: mark die_initial_contact() NORETURN
+Date:   Sat, 14 Apr 2018 19:19:43 +0000
+Message-Id: <20180414191946.30674-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
+In-Reply-To: <20180414191946.30674-1-avarab@gmail.com>
+References: <20180414191946.30674-1-avarab@gmail.com>
 In-Reply-To: <20180329150322.10722-1-pclouds@gmail.com>
 References: <20180329150322.10722-1-pclouds@gmail.com>
 MIME-Version: 1.0
@@ -74,46 +75,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a v4 and replacement of gitster/nd/warn-more-for-devs. I'm
-sending this with Duy's blessing.
+From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
-The first two patches are the same, except for one trivial
-s/faimily/family/ typo fix.
+There is a series running in parallel with this one that adds code
+like this
 
-The third patch in gitster/nd/warn-more-for-devs ("Makefile: add
-EAGER_DEVELOPER mode") is gone, instead there's now a DEVOPTS
-option. The 3/4 and 4/4 add a way to turn off -Werror & the -Wextra
-suppression, respectively.
+    switch (...) {
+    case ...:
+        die_initial_contact();
+    case ...:
 
-Duy was right in [1] that this is a much better and extensible way of
-doing this than my "Makefile: untangle DEVELOPER and -Werror" patch.
+There is nothing wrong with this. There is no actual falling
+through. But since gcc is not that smart and gcc 7.x introduces
+-Wimplicit-fallthrough, it raises a false alarm in this case.
 
-Most of 3/4 & 4/4 are just tweaked from git@github.com:pclouds/git.git
-pclouds/more-warnings and combined with my previous 4/3 patch[2].
+This class of warnings may be useful elsewhere, so instead of
+suppressing the whole class, let's try to fix just this code. gcc is
+smart enough to realize that no execution can continue after a
+NORETURN function call and no longer raises the warning.
 
-I changed the "no-suppression" name in Duy's WIP patch to "extra-all",
-and "gentle" to "no-error". I think those are cleare,r and leave
-things more open to future expansion, e.g. if we'd like pedantic-all.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ connect.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-1. https://public-inbox.org/git/CACsJy8CyB0igY365NMkswSgAi9_rf+XBOMQyJ7XW6iQxQiCEyQ@mail.gmail.com/
-2. https://public-inbox.org/git/20180331164009.2264-1-avarab@gmail.com/
-
-Nguyễn Thái Ngọc Duy (2):
-  connect.c: mark die_initial_contact() NORETURN
-  Makefile: detect compiler and enable more warnings in DEVELOPER=1
-
-Ævar Arnfjörð Bjarmason (2):
-  Makefile: add a DEVOPTS to suppress -Werror under DEVELOPER
-  Makefile: add a DEVOPTS to get all of -Wextra
-
- Makefile        | 31 +++++++++++++++++++----------
- config.mak.dev  | 42 +++++++++++++++++++++++++++++++++++++++
- connect.c       |  2 +-
- detect-compiler | 53 +++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 117 insertions(+), 11 deletions(-)
- create mode 100644 config.mak.dev
- create mode 100755 detect-compiler
-
+diff --git a/connect.c b/connect.c
+index c3a014c5ba..49eca46462 100644
+--- a/connect.c
++++ b/connect.c
+@@ -46,7 +46,7 @@ int check_ref_type(const struct ref *ref, int flags)
+ 	return check_ref(ref->name, flags);
+ }
+ 
+-static void die_initial_contact(int unexpected)
++static NORETURN void die_initial_contact(int unexpected)
+ {
+ 	if (unexpected)
+ 		die(_("The remote end hung up upon initial contact"));
 -- 
 2.17.0.290.gded63e768a
 
