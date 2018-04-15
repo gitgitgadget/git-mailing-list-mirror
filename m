@@ -7,27 +7,27 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55B941F404
-	for <e@80x24.org>; Sun, 15 Apr 2018 18:17:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24A431F404
+	for <e@80x24.org>; Sun, 15 Apr 2018 18:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752940AbeDOSRC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Apr 2018 14:17:02 -0400
-Received: from mail-sn1nam01on0138.outbound.protection.outlook.com ([104.47.32.138]:60384
+        id S1752960AbeDOSRH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Apr 2018 14:17:07 -0400
+Received: from mail-sn1nam01on0115.outbound.protection.outlook.com ([104.47.32.115]:43680
         "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752926AbeDOSQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Apr 2018 14:16:57 -0400
+        id S1752938AbeDOSRD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Apr 2018 14:17:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=autodesk.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=AlALoG45APCDaGcotr3UmgVuCJ9c8dssCf7fXlbLhJg=;
- b=Oh/1U7J604a2AYZUlrtjgKPvGW3OW+nxFQDwOrFz16QR27daRCgMrSZJfyMha4BvQn1u54LQaezLuTE6d0yra6sBLDpriyQYauZWnKDm0GS5KT3VpBPjdNy9BEWQ2OYbnTgsGPnZv8rTO+HRJ9fL16qt7As9aW7OGOAyb413eNM=
+ bh=hv3cycPoMH7MIZFZsYSMYx/Iv72FXLaRf2fNUXUxqds=;
+ b=Hz5ZxjD0QP/Txiw1wP/de9YKOEqHS9bNVeIkqWeS81cM6iFoZMrDqelTdGqA8XF/8FfWRotV8bmkbgd51bWRVyZ323eK1C361oG3SlpguSDqZ0hvcuftTQOjaHMFKrpfQrU88taNQNjNdkek0ijxzG+bxwNskgrQweK2d7h9rDc=
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=lars.schneider@autodesk.com; 
 Received: from remj8gtty1.ads.autodesk.com (132.188.32.100) by
  MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM (2603:10b6:320:1c::21) with Microsoft
  SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.675.14; Sun, 15
- Apr 2018 18:16:52 +0000
+ Apr 2018 18:16:58 +0000
 From:   lars.schneider@autodesk.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, tboegi@web.de, j6t@kdbg.org,
@@ -35,9 +35,9 @@ Cc:     gitster@pobox.com, tboegi@web.de, j6t@kdbg.org,
         ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
         pclouds@gmail.com, avarab@gmail.com,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v13 06/10] utf8: add function to detect a missing UTF-16/32 BOM
-Date:   Sun, 15 Apr 2018 20:16:06 +0200
-Message-Id: <20180415181610.1612-7-lars.schneider@autodesk.com>
+Subject: [PATCH v13 08/10] convert: check for detectable errors in UTF encodings
+Date:   Sun, 15 Apr 2018 20:16:08 +0200
+Message-Id: <20180415181610.1612-9-lars.schneider@autodesk.com>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <20180415181610.1612-1-lars.schneider@autodesk.com>
 References: <20180415181610.1612-1-lars.schneider@autodesk.com>
@@ -50,50 +50,49 @@ X-ClientProxiedBy: AM6P193CA0010.EURP193.PROD.OUTLOOK.COM
 X-MS-PublicTrafficType: Email
 X-MS-Office365-Filtering-HT: Tenant
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:MWHP136MB0014;
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;3:8qiH9GoBwHcUwWN6XFLve2rZLemU/IB9a8R94xL4v8vk1BZFuCp7/Bp+ztJc6KgN5WIAf2pPZHyYgQlETEbj/pr7DmhSzn040nRn1lWtpBoH29DK/11+QJVRRwXiIMHeIpBRArIC0BO+fWOP2krvk5nCjPxNx5cB10xQ8BhKrFC7cr801ShZ4Y2zJHCGFCh1DoB31yd2oGFAYs502WT5ktrVXOUa3bUO1tAhwdAnd8CKLHrQAc+xIj9fEmfhjE2Z;25:T/C40cTmNdh4O7HyemMM7MSLuRKYqTGJyop7I+OhXDjIxrs39m6pYffXod57pUkVjz78HeH2dcIv2IiDWP48Qi/kBbNhIVEHBtLhwX14yg3KNMvfp//TDvDLNgGkIbev8JXmL1/xI67K2l6+Y3PNXe/9aS3iTzEA7pEzvqNUhqVp6fz/8IK1L/K+mvvb7TJep50q8/3PfVobjd3kuy3ZafMAU09Gq71+/Qv3zk6sBpTPfFLQrly5OD1oE00Jd41E/EY0xj37Ok+4z4O+l0m1R0RW92td8avqzUsDroOx2RIiV/jqsuFsn/VpdgCVSK+3n2O1pIxQ0Co0U2uEBn3t4g==;31:58wUX2XPmTG717jVdiUDfz4MqReX6etRi8Q7GQGZK9JAptR1wskDqZhvoifQg1B71AwdcC9cWHkEUdUBdKWueu+dDCp/HNh/86Mqglezb1whwaxAJn26snO5hEYNa3Ib1ZsfXY1ESfMV7BKW/KkxZmAF6QKcASMh6P6jbp+3O3rPRRe9ujBqMLgyb0i0JtnSpojKwp/aAgHcjqbIKykKhccDozZr3BLwFs1GNVyhQIM=
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;3:SpZYMzcqgjtmrQxcyg9kwp1ux5oMGuMcT4ZP1LI3xpJvjhfITgbGz7n7YBri5u3Xz/ECCd7e6CCmqJ1cUxQJfmBIJ3VG+cpMtq5NhZmhYsUwAwM7SJzFRGK5maQAU5UgNp0fqVmXJCHgu/lv+J4j1kkq7hYSiJ6L6KWVGty2b1B8VzzvjAUZCeldIn95Hp3PbTTrv86+jne3b2yee9C9CkiZsmtid5ICl86iYtPfQDOwa4eOE1vK8q6PO+te89Ac;25:i/diLTZYAUkv1WNNJHukZ28w6f0182XH3lT7fRJ4RmPb1RLVI4sS2cd6nuyupQVQhVXaNO62kmsZdiYZOnAJjAIh9Ixycp/q04k1i0/7KdCX1z+UMT+jSbGoEIjDSs235ekxIssWaSIsGlKadB1gKSkudo1TBv1tMTf5srHdxxRlzQUolGYqfcKBrF+9Cg46Q/0qX+9Gl4Nz8zhiMbeBuHrKDHFiDNB3RD3ArnwfRD+DrChPuW3Fzg1LlTLJa8qVhhJVB3MHbaTIz38DJaYOHcx9Gsf+ZGCQ63n3yzvaymCzuEuWjP8ATJ3Vzu15YOE1aBosxtY/WFTtUlyX90jtEg==;31:I2s1KvQi3x8mNJTbl9BM2VYVSi5YUGH3lavdJtW/4TrMQ7tQzlA0v5em/NKbBNyaAhEKmdONInKjruZi/Vwgf1uk6EgRsS8d4SkowL9rWvceGFNnqAOYiZlwlrae0TqkRn5j731rZPLHtOlvD7RlqU76eP7X7ACuo694iFrsrQf8flEaz5Ewql6zEh6j5IuBzPJqazzqG1rmpWCaMdZ15RyFjtHArDdMSIM/aKI3qxQ=
 X-MS-TrafficTypeDiagnostic: MWHP136MB0014:
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;20:9h38RxhM7xkOUYB5h3gcVbavp4cMXbEnQqwNp0sYM2zlnxjpAwHK2176+B48rlMQ71M7W4WmOGPPrpuExnpxVxl5LFY2GLAZtNl+1q4o0rYc9BaU0BAo40emqWFw+ibCpqopf/+FK6011ykCPnW5w2YTfiKO2jz4PhQgYRoAvzKGs+wDTRYuql7w46mC/1GoUTiQ8lIzASpAZIY5Ic9uYwxJE5/H+2NQ+Pcpb5RTg/5qEeyJ0Tnk+gf/GxnbnWEVFihXOGnoDuoU9XgywzAHwnH7yLt3c1xqgOze7g60cdahnubiTmAe6OmEoKk9BpoYsyT6hqfHHpII0e9yFFQINAcQu2icxAXqBv68H7kvGitoK3m5pb7poSuQx/r92+xXWgbzXvD9JN+rVNBTCIsblKmt74LBEvGdEOCIOoOofEnJXal4h7K7czX49w8TKQQ9TwsRrVPV94znrl+GTayjSQ1o/aYVPk22ktpUvKru6Nr/rGqjWLu5gBNr8wKVRr9EG8pX47CFYHjFp9zOmdN6yuPXlya7dXMp/7kpcSGzFxEVhN3e22FrK+yuG63Wn3grr/qBy+EO9fFZ3y0o7LYu7H7tp7URlCJcUCL5Q8lSZb4=;4:qoiVHCNJHExH5lG21LqvPJCNiVDEhiRB0C0FmhRnTs20FXl9CQTqix3yWSaTZA6D40LYiZEDYO0xxLwuLl4i65t3w/ovXOpmw5PjjiVxrSJ0595RDvUL5WDrIE3W8XDZruRqmqmnrs6pnsGcx7iqaB/Q1tDBVPbLK8RJwD+wgwRVEHj5819Zl22XiuzVFMUIwe4+Ime0zc3cgK2SygwFBORRO4xBAse86Cp7+Jr/3QltapWzuVEDNEODIirM0IL4sCSVWJ/fq9ZI7xCE+vC1u2A/aZAaE6dwUWNJoznl1YSJVvpTWPxSrjhgmwlLXXuK
-X-Microsoft-Antispam-PRVS: <MWHP136MB0014A38DCF87BFBF6157633CE8B10@MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM>
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;20:T0Hnp/TRzKyR23bMxHnYAbgHl9wNfjou8lBbY5QYWn1VtQu02eKimd+3Udy/bdd49y0Pz090C/LblZ7+58pqN82EAcLZG6lTQ+7GWFkbIm/1pkm/0xYe7frZBGZ4JmcgV1VGNZy/pSAIxURlBeK0nlXFZ2zU5ipi+dRWY0TFdYccl/BgoLiq8xYyUGlkWZx+IwhUeDQF51G8NfMlLUrq2p61jwyqiapwEsVgE3APTj/yWhSNNnRxtKsUF15c+DO5jNBzEm7MhdPlY/+Dp47GcNaxZqvkV41IK0Vk2dEZjfgFqBOnU3tSzzRkmzjjzFtYvSKz9USXb8qtHRtlTE/rOzXMFELhcCeMW8wXo5TUiUCnPbL+Bv4TfOSunmOsnkXGtAVzgzun2JlTdd133tpMz2MoWYUuoU7lYFTwDrt58wz8h2nS47PShP7F4gJ1krYDo02h/KtEgfNDDs5Nb4BNmBbL2/ZTBWRSSd8nQnVYh8aY0bh3WfI8URgA1GqHTQ3ATcqnyah4/0AhIdl4pbopuN8b2OnMbDzCNEG/BGhOHof9x/hMmuYPXyk/1GszsvP7t5FUKRcXVlyHwEsaAP/UMgMCv5zBvqHr6umAtyr5UsY=;4:7COGhcBEqCGyQbtGfFxLr4NoDycyGNo5v5b3WpSEA9VPgSbhFWbXNZLA1N67u7M6pLHyX+aM/fLUM/vGwmUNK1dQPGhoqyPBTBDgIDC9Zpmz0ZYVe41I0XhwIo5Saq0UoxWBCo/Og1u0dSSms57PGewQ3d7IB11CvP/S7JsClo+Gfiwgmg8dHJ7VbdMa9Pq++CeRgCvvvRZ7OCCMBn28tDcqt0EZgNnomptgsXMCtGuSHSwi9p8SVqbPYCw+KgJpaPd6LMskGmRB+dUJAi/Lg2h3XxwbncECFpDyNp5LD83MxIJHQUnJUWjl5zOi3Mcy
+X-Microsoft-Antispam-PRVS: <MWHP136MB00146C65E2BF4624F4DBCB02E8B10@MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM>
 X-Exchange-Antispam-Report-Test: UriScan:(85827821059158);
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(3002001)(10201501046)(3231232)(944501327)(52105095)(93006095)(93001095)(6055026)(6041310)(20161123558120)(20161123562045)(20161123560045)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011);SRVR:MWHP136MB0014;BCL:0;PCL:0;RULEID:;SRVR:MWHP136MB0014;
 X-Forefront-PRVS: 0643BDA83C
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(366004)(346002)(39860400002)(396003)(39380400002)(189003)(199004)(53936002)(86362001)(8656006)(7416002)(966005)(9686003)(6306002)(106356001)(76176011)(478600001)(52116002)(7696005)(51416003)(386003)(6116002)(97736004)(446003)(476003)(1076002)(4326008)(50466002)(26005)(68736007)(16526019)(186003)(85782001)(486006)(3846002)(36756003)(48376002)(2616005)(956004)(11346002)(105586002)(2351001)(50226002)(8676002)(7736002)(305945005)(39060400002)(8936002)(66066001)(2361001)(81166006)(53376002)(81156014)(5660300001)(25786009)(6916009)(316002)(6666003)(47776003)(16586007)(2906002)(8666007)(6486002)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHP136MB0014;H:remj8gtty1.ads.autodesk.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(366004)(346002)(39860400002)(396003)(39380400002)(189003)(199004)(53936002)(86362001)(8656006)(7416002)(9686003)(106356001)(76176011)(478600001)(52116002)(7696005)(51416003)(386003)(6116002)(97736004)(446003)(476003)(1076002)(4326008)(50466002)(26005)(68736007)(16526019)(186003)(85782001)(59450400001)(486006)(3846002)(36756003)(48376002)(2616005)(956004)(11346002)(105586002)(2351001)(50226002)(8676002)(7736002)(305945005)(39060400002)(8936002)(66066001)(2361001)(81166006)(81156014)(5660300001)(25786009)(6916009)(316002)(6666003)(47776003)(16586007)(2906002)(8666007)(6486002)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHP136MB0014;H:remj8gtty1.ads.autodesk.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 Received-SPF: None (protection.outlook.com: autodesk.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0014;23:ijcGwlnyV4y9u1s4a0ggU9Rc/QfgzgJJDFS4xQPMI?=
- =?us-ascii?Q?JH1QXJ62rBWZKeXlRZJmen0EBS2ix8Fec06XdvbohjyncIuZIWm6qoIoOVMw?=
- =?us-ascii?Q?x8p+OILz9pB86H7x9145ClyTW+XXbor9QE2TGOYfiJE/3JD/dIYkDChnQT7Q?=
- =?us-ascii?Q?GfE0w9KRg1QbLxlgyQLWRzs2cspiDQphC1dHNda0NKqVGY591e2Dm2iRG0gE?=
- =?us-ascii?Q?k9uCtt07k+NitW/tZjCVClhGm0HTuTB6nKWbZ0BHnUIsSeaXEs0tUT0i9q0k?=
- =?us-ascii?Q?2YPLi/WSJ+qcjHtaVKOBxpDGdiyE2D7PxQvm0qIDvKaykXK4Bq605N2ML4uu?=
- =?us-ascii?Q?uSGLv+ymx+nN5nb0h+euPo5WQ9ubLuicRiSbuvQGghLB7+fRZzB5hAn7jlJV?=
- =?us-ascii?Q?No446kALq5eZ/W3Yr6/opwLWUy/IVBKU7dkz/SdJ9BvWdjssydi7ilK2hT9M?=
- =?us-ascii?Q?4/GvyvcVDGMVnYLMDK62HwbL3/JaiYx0Hz7/ml/JMVIe7+WV+dykJyVmPt4D?=
- =?us-ascii?Q?+iIjwkoKLqKdxWQj/IG7X7hESkULeZCeMo/RIq1yXizGwav5ovTyajnDMnWl?=
- =?us-ascii?Q?1xzCWOuuFAem0oxPWxRgL+6D4N9yWpLzYKbEsg6iHxeoAA4wM2nh6v/q33jl?=
- =?us-ascii?Q?kmQU5N+CM5CXK7f4+i8dvsN9ZIHczeSdzkIbA33BGqB6GtdqDG/iBoojwAqp?=
- =?us-ascii?Q?bIV5Us4Os+otj67CY3l4frbdFkHYSxShtHZjVUzg6drTg2OU2TrLS3S5+Yc8?=
- =?us-ascii?Q?EIkTo9MY0yuzicwzKuD5PMK3RXFl3eL+QHadPvyDEdLK3XUV7aRAZCJaC0T2?=
- =?us-ascii?Q?KsVzDIsWhmf02Sa9uZJPhyxdUawz0R9yBg7PxG8UuyLlLmJ6mNLY57+Vr85n?=
- =?us-ascii?Q?RPdbX1qy/e02lcE4Rd8XU+mws35Ne74VKJMUL9emhPgDew4XUTXK9XZJLiAN?=
- =?us-ascii?Q?EjGP2L4d7D6o0hGRnd3ePal23a8EjB+P+2BRTGhzlLGRQmYb9clz3KGBXzY3?=
- =?us-ascii?Q?vRMML9kvef8huzYn6rilr/WI6p6fHkMuWZaoVzr2m0yfd83hF3IDxsGQXgRK?=
- =?us-ascii?Q?vw2glvKqppTpSFMC7oP3BTz1dZ8yoxiBtFzvJdryfXjqYmWWgqkFYrp5DrAH?=
- =?us-ascii?Q?ISJKyPFfcOOFdYbuh4x7dL+URwGlT2q7C0CL8LtjYCCoCVb9WapTqBROgxTj?=
- =?us-ascii?Q?KNjvwsVhz78g6ss9wf+ymfE8VRtTLFiMZfGku5Fj/IKJe2l04vi5HhS1Qmqx?=
- =?us-ascii?Q?Ooyadde2Va17rFxInqhKoC/BnwWQQASSHjhgoLQhwjiU/Suvvxca2piY8LGa?=
- =?us-ascii?Q?F1PP6nrHUxJnTr9fEJ/PSQWalEkvHAvOgovJYNw+lBGJmJm2Eh7NMKWNpbFy?=
- =?us-ascii?Q?i6TvoX9UizWZuCIIudkai5siElWFL3BOqLjbdGFXNUvxudhG1YHjedNXg79M?=
- =?us-ascii?Q?pnxc3Z/dw=3D=3D?=
-X-Microsoft-Antispam-Message-Info: bzboGRMQKp4gP56w13pMEuwxXJUKJLLDpQUZN2bvOhxNGf/2WmF4yfJegab5NI84VAYHWj52jzA6zrzNS4z/WiihOXAwo21ngSKQWdMbjcw1rMbLdLjj2GfVcLxN83iF3GY/vDGqrtpdoTfHuGwaogpHVKFTgb2nPi4LgP1RjxfMf0wUEhibwoNyQA0snkfN
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;6:tAVkz0YyGsga+TmlNVdSDzPhSwfz1c80/1WU7CstlBON5Rp7dLtFXPBof6WO58h3a9SJoz8Xk4iYYpw90vo4Xy53NjbmaszuxkSvFnLSa7PnGbzuJ37+q3T2Tj0hEUO2G0dvlx3lCRPo/nrdHi1Ekidq53gj0/IZdOF/AuxKXbgqGMKTrhexOqxw4LqcBA6j2pIEyWO70Xx+/SivoEaRjl6MdwFhKiDQ/++5pY2MhRUS835RWOnkdOW2ReLtZzrNZtdvp9RXeuCYFH4U5nwIUuOil5yvCXVOtFsyntx1KjTTUfiuQR5r6eacaDZauHCUh3mHGVcUrIDNfHP+ivnQYn4PUvUeXp/9wcou5XwqxWtN90yrM4A+CXiwaCvbMTbQekBZ0TofZ+MMMQksmpLL+ZE22JChAlT3jhsNFEAUyVzhjayiuC0xClsokehqcoJO063APF2a87r7t5kEt5vCLQ==;5:JnzYWtgNC+14TjCiDfApqLbEwNp4oLykEPnbdipJfRyuRd8Du/QV/2frL7l6a3Ar7b1Am2wdbrtZAYEbjl9KvqtF9XZ9nWEWsDdYBdsfHzTPVzv2raJlbXNq4GQ6A4Smgc6wDGVmbcDlF3reGcfUsQKL3ngZgY8GV/dX2eieoKk=;24:rpzVGfP+Miv4x/C/Qgrf57XSiWB8WxCO2lpDrWBsLy6koWVbLF33knvmDl+1Yt3aNaCSd6V7j/5pNylsRcSPAuspUb/Do/1znHsU3dlfxPY=
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0014;23:+vX4tBSpxLbqQuBcOA1xtwFkm7MPvjob95DvJ4v3h?=
+ =?us-ascii?Q?SqUe3F/oNvoTCENiGSslpjpy1yKpJBswJyiwrW6HPby78gtGpp9NGffMteq2?=
+ =?us-ascii?Q?8S6uC4eOP0yQ3fGch3iuRl8UjrHYCjjJg/ro3P7VS+RaF+/dOVPpPIQJmi14?=
+ =?us-ascii?Q?zRLyZw+Q41mXaSWDEWF/zs2KvUQUqtyPD3LeR8b5o7j3q/GKJ5bBGY6acKP7?=
+ =?us-ascii?Q?Cv8TnglXY63A5iFZsQYgRS6FdJTEi/Yj89BHW2A+Tdf4gOn+76hVuMCTyWSD?=
+ =?us-ascii?Q?1AVwKZ/+XGSFziXZIc1OroCYw02qH6n1ScVOPQzLW0eVlXKL1UjPBSc6KNHQ?=
+ =?us-ascii?Q?okVIqIoCGgMUsVSUCAdyIpKKtMc8RtGVZW179YXjTDspJUZPkY/J/THRFLPe?=
+ =?us-ascii?Q?phvrWbOGb2j2c6pPqkA0ZmkSJvpTJPv6KdHPqfHf/V4g6+G1x69Y82yOy7rk?=
+ =?us-ascii?Q?N/1cGJe7+cCpEGCkRLLxQmicxxois8vX5WjUuuFvnl7Y+qCguOvWA45eylu4?=
+ =?us-ascii?Q?BYVcBMs/zxwt77L6tedK5FL//eNOs8+80texs8/j7B+o6WwyC7wYZegrMypy?=
+ =?us-ascii?Q?Lkp0YrC3t6tmC5eWMeLHC7wJWPP3uAp8k6fMmPih1zQJAq4j9Ev9QtB+BaxU?=
+ =?us-ascii?Q?hJWdqEpF8ufBX3UGC2H1wku6daAxVMkYZ1Wn5usc/Z05SOefYi0Wis69pneh?=
+ =?us-ascii?Q?DDhZjxJwqvEIYyZ4wsl/pRRE1q+kj/18WbzeMVu0YA3yMZsZoo0H5ggRQmNl?=
+ =?us-ascii?Q?2uK2fBSZddMKMGg09junC9Mjs3/k6rRFpXgyKDOQe2297cbYnbdNzIk2RXw3?=
+ =?us-ascii?Q?SJrueIyLLfyfOCwMywf/plEEYlGsO5FJEIvUJQkbNpPfwooTeg50gDdVUvy/?=
+ =?us-ascii?Q?jG6en1rAp38yB1ImNc0ygcbS6wG+JrDOmFlvKn8cOcOLSkpjUD+1JvYOG/x1?=
+ =?us-ascii?Q?OGXnaAxibaTyObdOAQV4Lnz0t199wtfcYlhPwU0zzpxPgOvZq3Exp8S72lrI?=
+ =?us-ascii?Q?UDoWMUDe1DOgfrTykOr2pHUrJvFxIlz5Rc7/HMYlKqAUrr6ShFxJ7HydythY?=
+ =?us-ascii?Q?0ISAn+LSTi0IkJjRG7qiv7zTcoC2RmOncayG4f2g2e4vIxnIQ7DdNVzmjIpI?=
+ =?us-ascii?Q?983ZnF1tlijRDTA0oqNo4U0IWIj2BOsMsmP5jIBwQLO0sc4qmC/jYUTjU5vr?=
+ =?us-ascii?Q?kINAdP+jKkAeRYv9IJuHqJnVuOWeitQqf+Kl60zNUeFKoWmetFAZY8Ba6SjJ?=
+ =?us-ascii?Q?eE7J+bjcCvoEfYyjDSZUfFrOyUMMYf0eThQGeK9F55DeYzUmvJkHiA3xcgs4?=
+ =?us-ascii?Q?3QlgorvyMFDZpA8tdU2FsxqabMLVmEWXDwVmBFY2cBE/6RNIV69z4Hd1QsUU?=
+ =?us-ascii?Q?0+F3VOvgmLSPmRI3UEGAZsQlU0=3D?=
+X-Microsoft-Antispam-Message-Info: dbyl1a7uZncQlVgMK2AaqN6esA3QrZjCgSNWs1+O7uZymCPjZT7n88+MP/4sVQWupT4a6EbjJotZtr3b8bP8Q5Wgjy8cEWcs+zM5HNXN+4v8utV6EGZZzSrojQaXPtzmI1s+kHTJXUj6t/x+F3Z0r7Hdtf/0X83ijddfjX0+dHoKwYvtiKe/FdNUIZfarMTJ
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;6:tRtaH2QDPKFn+aVHUhN8s/w3roYnRiaJQpsiy0sBsiu9oaq+5iJy2uKQq2ZFE4Lauu0SpHOTgwy+D4thLUBwBn0rHat1Hvsyv+4gPM/kWtqjhqKNMGEgYIj38c1lU0oJgxB/WNzh1ecdD3rQq8rKGYIzG/ltJ2I7PzoMP7ZS+u1s7zE7uSHnkxQfolSmb8abFp9CZHogOqVwfDJhXJBVf6w8MkEV9RqVKWf3Qff3o6Z2ZDrvzobLcVG3UdHHG4vkiFz/PP1SKwW2bHsfNihlOmfsS7VCcZIActv5S24zag5iNTVNcOzyG88W4aG/5xKse7hJP90wqNrMKIGLnRKJYYuNzzTezQ9MAX0+U6slJqlj/Ro9WbRNIDdnl5X4y/cT/zpMcbULpVWyiQ3cO3V/Xd/i2898T0MP6ePLjcYAYPsrZrJRRG0WCAL7PETQ8v7Zz3OpgQaN8oQ8c1waUNdtdg==;5:VvGHFHXQGNxDJo69QPNxWL07FPgQcF3z5he04bVC2XwVkhKLrSJhOWAHcpINUwM+8iFVuo8YM2V4YqfUvxWfgCgT+GG197j9SGPLJlHF/QTUFCLCkaCLgnkTwKH25UWCKRxylosSjlCnHph0EC81F2VtTJAJKJWuYoMhOIWG3Xg=;24:Ra6RQZW+81tUymYjHBCGXih7o/pUvgSJ/cMoZUj8BvQjdx4t5W6Ivz5LNYiJXbQxSj+kf2X18EA6OaG3pHZ1KexHZ18gebd1jLn4nmYMFxM=
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;7:x+6UqDWYEhFQ/tK6cWyQK7XHhkW8g/Si6yVn7jtUdjKl5WXyUdLG5CdOY0mZPLq3WRiZQkwG4DhkdoM4T/Qt8w/ax7FagyI1E0jJIkXjk3S88WzhwBrLzVwZbHksED5hthgz+wOb9shFMk0K3ejDcUmy2/x87JNCJuiCTFJ9/3UKBvWDKwPKPZTfo0M52JxIjXB02lch+5qMH2WUR3LKz+g9mSdukRcZNsBKiPoVhLN7RyqoT9U4yMUOYVkUpEVw
-X-MS-Office365-Filtering-Correlation-Id: e4a4a2e3-663b-4d87-cd5c-08d5a2fd118d
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;7:hf7/vkIT3sRFrtogjdd0FLlnOCjojcv9hjVRHaE5XB9x4F5QpVpo5kYDx1ND9wmisrzS+ACWWE8/A0/VD+H2uGPyoeb0OdFcVqSpaeyqWh8E5fyXDNvvUkVV+2cAsBvRuG0BSTPmXMiaTKS8ScBFC24+IiJDSj5nmBZCsiEo4gmSLx2HlyFkxcqcPcEHw/ElmupIZuAF7LmbfVHb9KP/dMcPDpO+cwxVYsRIxlyzGI+P5Q2kdm8avk/DA2dJgRp3
+X-MS-Office365-Filtering-Correlation-Id: e802d483-4443-4602-e398-08d5a2fd1587
 X-OriginatorOrg: autodesk.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2018 18:16:52.1004 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e4a4a2e3-663b-4d87-cd5c-08d5a2fd118d
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2018 18:16:58.7413 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e802d483-4443-4602-e398-08d5a2fd1587
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 67bff79e-7f91-4433-a8e5-c9252d2ddc1d
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHP136MB0014
@@ -104,82 +103,172 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-If the endianness is not defined in the encoding name, then let's
-be strict and require a BOM to avoid any encoding confusion. The
-is_missing_required_utf_bom() function returns true if a required BOM
-is missing.
-
-The Unicode standard instructs to assume big-endian if there in no BOM
-for UTF-16/32 [1][2]. However, the W3C/WHATWG encoding standard used
-in HTML5 recommends to assume little-endian to "deal with deployed
-content" [3]. Strictly requiring a BOM seems to be the safest option
-for content in Git.
-
-This function is used in a subsequent commit.
-
-[1] http://unicode.org/faq/utf_bom.html#gen6
-[2] http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf
-     Section 3.10, D98, page 132
-[3] https://encoding.spec.whatwg.org/#utf-16le
+Check that new content is valid with respect to the user defined
+'working-tree-encoding' attribute.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- utf8.c | 13 +++++++++++++
- utf8.h | 19 +++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ convert.c                        | 61 +++++++++++++++++++++++++++++++++++++++
+ t/t0028-working-tree-encoding.sh | 62 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 123 insertions(+)
 
-diff --git a/utf8.c b/utf8.c
-index 83af3a9f6b..25d366d6b3 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -586,6 +586,19 @@ int has_prohibited_utf_bom(const char *enc, const char *data, size_t len)
- 	);
+diff --git a/convert.c b/convert.c
+index 21d5cb60da..0e7930c154 100644
+--- a/convert.c
++++ b/convert.c
+@@ -266,6 +266,64 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
+ 
  }
  
-+int is_missing_required_utf_bom(const char *enc, const char *data, size_t len)
++static int validate_encoding(const char *path, const char *enc,
++		      const char *data, size_t len, int die_on_error)
 +{
-+	return (
-+	   (same_utf_encoding(enc, "UTF-16")) &&
-+	   !(has_bom_prefix(data, len, utf16_be_bom, sizeof(utf16_be_bom)) ||
-+	     has_bom_prefix(data, len, utf16_le_bom, sizeof(utf16_le_bom)))
-+	) || (
-+	   (same_utf_encoding(enc, "UTF-32")) &&
-+	   !(has_bom_prefix(data, len, utf32_be_bom, sizeof(utf32_be_bom)) ||
-+	     has_bom_prefix(data, len, utf32_le_bom, sizeof(utf32_le_bom)))
-+	);
++	/* We only check for UTF here as UTF?? can be an alias for UTF-?? */
++	if (istarts_with(enc, "UTF")) {
++		/*
++		 * Check for detectable errors in UTF encodings
++		 */
++		if (has_prohibited_utf_bom(enc, data, len)) {
++			const char *error_msg = _(
++				"BOM is prohibited in '%s' if encoded as %s");
++			/*
++			 * This advice is shown for UTF-??BE and UTF-??LE encodings.
++			 * We cut off the last two characters of the encoding name
++			 * to generate the encoding name suitable for BOMs.
++			 */
++			const char *advise_msg = _(
++				"The file '%s' contains a byte order "
++				"mark (BOM). Please use UTF-%s as "
++				"working-tree-encoding.");
++			const char *stripped = NULL;
++			char *upper = xstrdup_toupper(enc);
++			upper[strlen(upper)-2] = '\0';
++			if (!skip_prefix(upper, "UTF-", &stripped))
++				skip_prefix(stripped, "UTF", &stripped);
++			advise(advise_msg, path, stripped);
++			free(upper);
++			if (die_on_error)
++				die(error_msg, path, enc);
++			else {
++				return error(error_msg, path, enc);
++			}
++
++		} else if (is_missing_required_utf_bom(enc, data, len)) {
++			const char *error_msg = _(
++				"BOM is required in '%s' if encoded as %s");
++			const char *advise_msg = _(
++				"The file '%s' is missing a byte order "
++				"mark (BOM). Please use UTF-%sBE or UTF-%sLE "
++				"(depending on the byte order) as "
++				"working-tree-encoding.");
++			const char *stripped = NULL;
++			char *upper = xstrdup_toupper(enc);
++			if (!skip_prefix(upper, "UTF-", &stripped))
++				skip_prefix(stripped, "UTF", &stripped);
++			advise(advise_msg, path, stripped, stripped);
++			free(upper);
++			if (die_on_error)
++				die(error_msg, path, enc);
++			else {
++				return error(error_msg, path, enc);
++			}
++		}
++
++	}
++	return 0;
 +}
 +
- /*
-  * Returns first character length in bytes for multi-byte `text` according to
-  * `encoding`.
-diff --git a/utf8.h b/utf8.h
-index 0db1db4519..cce654a64a 100644
---- a/utf8.h
-+++ b/utf8.h
-@@ -79,4 +79,23 @@ void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int wid
-  */
- int has_prohibited_utf_bom(const char *enc, const char *data, size_t len);
+ static const char *default_encoding = "UTF-8";
  
-+/*
-+ * If the endianness is not defined in the encoding name, then we
-+ * require a BOM. The function returns true if a required BOM is missing.
-+ *
-+ * The Unicode standard instructs to assume big-endian if there in no
-+ * BOM for UTF-16/32 [1][2]. However, the W3C/WHATWG encoding standard
-+ * used in HTML5 recommends to assume little-endian to "deal with
-+ * deployed content" [3].
-+ *
-+ * Therefore, strictly requiring a BOM seems to be the safest option for
-+ * content in Git.
-+ *
-+ * [1] http://unicode.org/faq/utf_bom.html#gen6
-+ * [2] http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf
-+ *     Section 3.10, D98, page 132
-+ * [3] https://encoding.spec.whatwg.org/#utf-16le
-+ */
-+int is_missing_required_utf_bom(const char *enc, const char *data, size_t len);
+ static int encode_to_git(const char *path, const char *src, size_t src_len,
+@@ -291,6 +349,9 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
+ 	if (!buf && !src)
+ 		return 1;
+ 
++	if (validate_encoding(path, enc, src, src_len, die_on_error))
++		return 0;
 +
- #endif
+ 	dst = reencode_string_len(src, src_len, default_encoding, enc,
+ 				  &dst_len);
+ 	if (!dst) {
+diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
+index 8e574ccdd8..a318d03232 100755
+--- a/t/t0028-working-tree-encoding.sh
++++ b/t/t0028-working-tree-encoding.sh
+@@ -62,6 +62,52 @@ test_expect_success 'check $GIT_DIR/info/attributes support' '
+ 
+ for i in 16 32
+ do
++	test_expect_success "check prohibited UTF-${i} BOM" '
++		test_when_finished "git reset --hard HEAD" &&
++
++		echo "*.utf${i}be text working-tree-encoding=utf-${i}be" >>.gitattributes &&
++		echo "*.utf${i}le text working-tree-encoding=utf-${i}LE" >>.gitattributes &&
++
++		# Here we add a UTF-16 (resp. UTF-32) files with BOM (big/little-endian)
++		# but we tell Git to treat it as UTF-16BE/UTF-16LE (resp. UTF-32).
++		# In these cases the BOM is prohibited.
++		cp bebom.utf${i}be.raw bebom.utf${i}be &&
++		test_must_fail git add bebom.utf${i}be 2>err.out &&
++		test_i18ngrep "fatal: BOM is prohibited .* utf-${i}be" err.out &&
++		test_i18ngrep "use UTF-${i} as working-tree-encoding" err.out &&
++
++		cp lebom.utf${i}le.raw lebom.utf${i}be &&
++		test_must_fail git add lebom.utf${i}be 2>err.out &&
++		test_i18ngrep "fatal: BOM is prohibited .* utf-${i}be" err.out &&
++		test_i18ngrep "use UTF-${i} as working-tree-encoding" err.out &&
++
++		cp bebom.utf${i}be.raw bebom.utf${i}le &&
++		test_must_fail git add bebom.utf${i}le 2>err.out &&
++		test_i18ngrep "fatal: BOM is prohibited .* utf-${i}LE" err.out &&
++		test_i18ngrep "use UTF-${i} as working-tree-encoding" err.out &&
++
++		cp lebom.utf${i}le.raw lebom.utf${i}le &&
++		test_must_fail git add lebom.utf${i}le 2>err.out &&
++		test_i18ngrep "fatal: BOM is prohibited .* utf-${i}LE" err.out &&
++		test_i18ngrep "use UTF-${i} as working-tree-encoding" err.out
++	'
++
++	test_expect_success "check required UTF-${i} BOM" '
++		test_when_finished "git reset --hard HEAD" &&
++
++		echo "*.utf${i} text working-tree-encoding=utf-${i}" >>.gitattributes &&
++
++		cp nobom.utf${i}be.raw nobom.utf${i} &&
++		test_must_fail git add nobom.utf${i} 2>err.out &&
++		test_i18ngrep "fatal: BOM is required .* utf-${i}" err.out &&
++		test_i18ngrep "use UTF-${i}BE or UTF-${i}LE" err.out &&
++
++		cp nobom.utf${i}le.raw nobom.utf${i} &&
++		test_must_fail git add nobom.utf${i} 2>err.out &&
++		test_i18ngrep "fatal: BOM is required .* utf-${i}" err.out &&
++		test_i18ngrep "use UTF-${i}BE or UTF-${i}LE" err.out
++	'
++
+ 	test_expect_success "eol conversion for UTF-${i} encoded files on checkout" '
+ 		test_when_finished "rm -f crlf.utf${i}.raw lf.utf${i}.raw" &&
+ 		test_when_finished "git reset --hard HEAD^" &&
+@@ -139,4 +185,20 @@ test_expect_success 'error if encoding round trip is not the same during refresh
+ 	test_i18ngrep "error: .* overwritten by checkout:" err.out
+ '
+ 
++test_expect_success 'error if encoding garbage is already in Git' '
++	BEFORE_STATE=$(git rev-parse HEAD) &&
++	test_when_finished "git reset --hard $BEFORE_STATE" &&
++
++	# Skip the UTF-16 filter for the added file
++	# This simulates a Git version that has no checkoutEncoding support
++	cp nobom.utf16be.raw nonsense.utf16 &&
++	TEST_HASH=$(git hash-object --no-filters -w nonsense.utf16) &&
++	git update-index --add --cacheinfo 100644 $TEST_HASH nonsense.utf16 &&
++	COMMIT=$(git commit-tree -p $(git rev-parse HEAD) -m "plain commit" $(git write-tree)) &&
++	git update-ref refs/heads/master $COMMIT &&
++
++	git diff 2>err.out &&
++	test_i18ngrep "error: BOM is required" err.out
++'
++
+ test_done
 -- 
 2.16.2
 
