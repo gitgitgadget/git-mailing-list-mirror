@@ -2,133 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E95FE1F404
-	for <e@80x24.org>; Sun, 15 Apr 2018 21:54:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F07301F404
+	for <e@80x24.org>; Sun, 15 Apr 2018 22:11:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751983AbeDOVyM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Apr 2018 17:54:12 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:46425 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750960AbeDOVyL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Apr 2018 17:54:11 -0400
-Received: by mail-wr0-f195.google.com with SMTP id d1so20794399wrj.13
-        for <git@vger.kernel.org>; Sun, 15 Apr 2018 14:54:10 -0700 (PDT)
+        id S1752636AbeDOWLs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Apr 2018 18:11:48 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:53446 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752609AbeDOWLr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Apr 2018 18:11:47 -0400
+Received: by mail-it0-f46.google.com with SMTP id m134-v6so9156946itb.3
+        for <git@vger.kernel.org>; Sun, 15 Apr 2018 15:11:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Xt6dvUXs9kza5vcCAhyp+Q8bPbTiMqz5731MXMqp974=;
-        b=RlI7fnCpWLWJ1/8QIx2IfpjL8rH8Vau6nPPj0k/Ig06pW+ph4wqVBfbvT7loG+JYJC
-         DuAAVxvhNbIKtdHgXDzMDe5UBxq8RW95ooI7uL9hX2bhdo4ZbKifl+TDnkzi7cFBgfpe
-         S4fsg+wM2G74Cg7fHLjIL6qpnDOTk3qP41R/D1cxQSLevPJMVN9Gdc191wNaA+lEzTmL
-         hXC17BUObQsqNh9qPA4JCK5E9eos1cWbCe5xEMpmms8ocRbMq7Za9ZvIu2EjYZbfH6Xd
-         qhdy5MkcrEAYiMuLzWOoJqF8Nfye0ttZDoBhSLdEun+1SJuiJie6yAwhkKgpIoebP5Eg
-         aHFQ==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=fCztKrDkL8N+Rfhh5KqyZWE7/vI3y8P+yiTSVm65QhI=;
+        b=BnILgl2zn9OUdjSyHsBL9MS9M3T9nxo4sh15IfrwrSpeQGoqcSoslCfqPxsS7W4f48
+         taHM06gx8iO316cXnRsqn4AzT3uTiGxFWwHymcoBv3g0zfgvzNhDJhI+GsVvgiDvz/KZ
+         /ZBdTIvrJ7XiKubKY8iY0ANIWAAvwabxb73vW6sEujfr8NJ41W9T9YFuqXROwFGey6eL
+         sLHAX5L4oUSKLXcH4ujvrF1bqCrifrNez/TwM6tmMDOMRaSKLoR6h5Yc+kj8OvXp/Qz6
+         UHrgVMzwYYfK5HimkTSpa1tBMO3aCtBLA+/BECMQTjndmLfgVGB5V0u+k0/+FFwQ4CFw
+         WelA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Xt6dvUXs9kza5vcCAhyp+Q8bPbTiMqz5731MXMqp974=;
-        b=DI6q6TPuWQoUBiVnWOGwNDzzum6cz3Go42e1nb8moKnM1SP/W2yZTaSSlzW+dEX4Tw
-         tQ6jXqCeak2BXnMahQ9aU+319WK6GaGg6QLwmmAExnVTCd8UKTHzzOSphlAG4Y32mDaf
-         GzCJGA0j4E04T99sSfRcsb4mKg4ARjPPMRBwn2BJ+skxd7OfUM9odgMIeNQScNNAy8DZ
-         JVL38uyYkzCy7/kvXqk82LPlpUASz8QfIpTMi6dJtOMlkLTxUQTapBPrwi8gl4EiGJET
-         KK7HSbWTtoF5wxcTDKCkM/0lHQvyOIc9Bgse2Eau48di5crBS2EzOWr1QUGn0bWLnSf6
-         vI5w==
-X-Gm-Message-State: ALQs6tCYsNyAaoopgYmccw4X6cLBZ6LA8rTKnr9pbeZpSxhg8kfMB3O+
-        8s2R1o3bAM5PrnndBwg4VLs=
-X-Google-Smtp-Source: AIpwx4/73eTyYYJ52PwvbOmi4ZKlVp1Ty9+T+bQFHSFLE6STngONlgVChMQbHL8us9dtx2v6dElcVg==
-X-Received: by 10.223.187.212 with SMTP id z20mr1535796wrg.51.1523829249834;
-        Sun, 15 Apr 2018 14:54:09 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b97sm9077216wrd.64.2018.04.15.14.54.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 15 Apr 2018 14:54:09 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kim Gybels <kgybels@infogroep.be>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] daemon: use timeout for uninterruptible poll
-References: <20180412210757.7792-1-kgybels@infogroep.be>
-        <20180412210757.7792-2-kgybels@infogroep.be>
-Date:   Mon, 16 Apr 2018 06:54:08 +0900
-In-Reply-To: <20180412210757.7792-2-kgybels@infogroep.be> (Kim Gybels's
-        message of "Thu, 12 Apr 2018 23:07:56 +0200")
-Message-ID: <xmqq36zw16gv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=fCztKrDkL8N+Rfhh5KqyZWE7/vI3y8P+yiTSVm65QhI=;
+        b=blKUCN9YpD7Lrc9FspqdMfuZ8fVheKQpwlyg5JhL38h7usFBk+p6VWOq6pGD8z6f6+
+         YJ/rPtF2C4TJWYNC/0Mz2J2TSxdUQ6dfDSXy6r9jB4l8nuPCLhDFT4edpz5zK3V8Mkrc
+         lSh1cVM/hRvF/xr5sKi/dRi1EtdHO3n7qQ2G9ShJeizK/fKFjWJ6SfChBHFdq19ImzWa
+         zOUN3Ik57xhTKCohfgfNlKT3svrDUg7w+pAAQRQW4zc304Dpdr6anruChsPFJIDmW8A0
+         6XgyGUOmS2tQuYmZTHOV3u0u+F1O3m0Sv5DQjmBpIWjbjOkIAX1/MfN9LTYRnK5n04M5
+         Meqw==
+X-Gm-Message-State: ALQs6tBs7qONG6A2J3gjTaMM7oC4OwyvCkG7eS9l166Po6rZwjAFSpJy
+        42RHYUnSC5L9hCgie+ODErqm0HQ606evWYs85Ig8anee
+X-Google-Smtp-Source: AIpwx4+jsAK5alaLPbU2JhhYU/XMG5QXkJdppopWPI8pIPWc1jkflQRK2uTceFfrBogzdL0MkxevlLHNbwM5DdaiCbM=
+X-Received: by 2002:a24:6747:: with SMTP id u68-v6mr12598034itc.21.1523830306692;
+ Sun, 15 Apr 2018 15:11:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.34.219 with HTTP; Sun, 15 Apr 2018 15:11:46 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 16 Apr 2018 00:11:46 +0200
+Message-ID: <CAP8UFD0DagacfeismKoVgo=O1guRUV=u1=EbbwRyrY3g1MeQ8Q@mail.gmail.com>
+Subject: Draft of Git Rev News edition 38
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kim Gybels <kgybels@infogroep.be> writes:
+Hi,
 
-> The poll provided in compat/poll.c is not interrupted by receiving
-> SIGCHLD. Use a timeout for cleaning up dead children in a timely manner.
+A draft of a new Git Rev News edition is available here:
 
-I think you identified the problem and diagnosed it correctly, but I
-find that the change proposed here introduces a severe layering
-violation.  The code is still calling what is called poll(), which
-should not have such a broken semantics.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-38.md
 
-The ideal solution would be to fix the emulation so that it also
-properly works for reaping a dead child process, but if that is not
-possible, another solution that does not break the API layering
-would probably be to introduce our own version of something similar
-to poll() that helps various platforms that cannot implement the
-real poll() faithfully for whatever reason.  Such an xpoll() API
-function we introduce (and implement in compat/poll.c) may take, in
-addition to the usual parameters to reall poll(), the value of
-live_children we have at this call site.  With that
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
- - On platforms whose poll() does work correctly for culling dead
-   children will just ignore the live_children paramater in its
-   implementation of xpoll()
+  https://github.com/git/git.github.io/issues/285
 
- - On other platforms, it will shorten the timeout depending on the
-   need to cull dead children, just like your patch did.
+You can also reply to this email.
 
-Thanks.
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
 
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
 
->
-> Signed-off-by: Kim Gybels <kgybels@infogroep.be>
-> ---
->  daemon.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/daemon.c b/daemon.c
-> index fe833ea7de..6dc95c1b2f 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -1147,6 +1147,7 @@ static int service_loop(struct socketlist *socklist)
->  {
->  	struct pollfd *pfd;
->  	int i;
-> +	int poll_timeout = -1;
->  
->  	pfd = xcalloc(socklist->nr, sizeof(struct pollfd));
->  
-> @@ -1161,8 +1162,13 @@ static int service_loop(struct socketlist *socklist)
->  		int i;
->  
->  		check_dead_children();
-> -
-> -		if (poll(pfd, socklist->nr, -1) < 0) {
-> +#ifdef NO_POLL
-> +		poll_timeout = live_children ? 100 : -1;
-> +#endif
-> +		int ret = poll(pfd, socklist->nr, poll_timeout);
-> +		if  (ret == 0) {
-> +			continue;
-> +		} else if (ret < 0) {
->  			if (errno != EINTR) {
->  				logerror("Poll failed, resuming: %s",
->  				      strerror(errno));
+Jakub, Markus, Gabriel and me plan to publish this edition on
+Wednesday April 18th.
+
+Thanks,
+Christian.
