@@ -2,75 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.0 required=3.0 tests=BAYES_50,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SBL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 905941F404
-	for <e@80x24.org>; Sun, 15 Apr 2018 02:40:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3706F1F404
+	for <e@80x24.org>; Sun, 15 Apr 2018 02:45:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752157AbeDOCgP convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 14 Apr 2018 22:36:15 -0400
-Received: from mail.fcgo.gov.np ([202.70.88.133]:39635 "EHLO mail.fcgo.gov.np"
+        id S1752304AbeDOCpN (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Apr 2018 22:45:13 -0400
+Received: from smtpbgsg2.qq.com ([54.254.200.128]:58179 "EHLO smtpbgsg2.qq.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752112AbeDOCgO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Apr 2018 22:36:14 -0400
-X-Greylist: delayed 6714 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Apr 2018 22:36:14 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mail.fcgo.gov.np (Postfix) with ESMTP id D4E3911032F
-        for <git@vger.kernel.org>; Sun, 15 Apr 2018 06:07:26 +0545 (NPT)
-Received: from mail.fcgo.gov.np ([127.0.0.1])
-        by localhost (mail.fcgo.gov.np [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id NFg5cjjl3Jga for <git@vger.kernel.org>;
-        Sun, 15 Apr 2018 06:07:25 +0545 (NPT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.fcgo.gov.np (Postfix) with ESMTP id E2C0C110BEB
-        for <git@vger.kernel.org>; Sat, 14 Apr 2018 23:29:57 +0545 (NPT)
-X-Virus-Scanned: amavisd-new at fcgo.gov.np
-Received: from mail.fcgo.gov.np ([127.0.0.1])
-        by localhost (mail.fcgo.gov.np [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id Lygt3YLTjgrv for <git@vger.kernel.org>;
-        Sat, 14 Apr 2018 23:29:57 +0545 (NPT)
-Received: from [192.168.10.100] (unknown [154.66.24.219])
-        by mail.fcgo.gov.np (Postfix) with ESMTPSA id BA74810D009
-        for <git@vger.kernel.org>; Sat, 14 Apr 2018 22:39:24 +0545 (NPT)
-Content-Type: text/plain; charset="iso-8859-1"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: Request for Quotation
+        id S1752122AbeDOCpM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Apr 2018 22:45:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1523760308;
+        bh=nhN6HCS6zjlaJRs4tI5pESFVz+NOoZZbPd+9/AGFNk4=;
+        h=From:To:Cc:Subject:Date:Message-Id;
+        b=Wi50qv5GfPnB5bxh2UJ0A3O2+ljUsr47D9bYXJtnG3WOGv7CHRHgdHZB1MjbO/dly
+         zHvl1cYKDPlbKlAwfPwujJDpcHzvQ8LEbHEFrx+cYtW++hFJYgAGmwz6petXX4THw4
+         Tch8NisrUwio/bokFJl+eUS6Zf2YOk0YFP7R+vvU=
+X-QQ-mid: esmtp23t1523760307t84n6foer
+Received: from localhost.localdomain (unknown [218.82.51.190])
+        by esmtp4.qq.com (ESMTP) with 
+        id ; Sun, 15 Apr 2018 10:45:06 +0800 (CST)
+X-QQ-SSF: B1000000000000F0F4100000000000Y
+X-QQ-FEAT: nSUdqPGu3tshzs/xR53+gp2kmRNU+Out3pNz3nQM1WZ5f0iDV02OPndJ4sim6
+        /OP2MZuvGaJtusfnk8mFJqaXZaRtSi2iDZH1Bf7rCssWsdspyGQsjFxpu6pA16n18LitU/f
+        ZjnOI+dUGxrEYHGgw4QnAeBifUY8hcrXOfmEoQtx8HSIR0ke27uk/Uz/3wRQL6Ja5QwYhgg
+        HZDR7kqbFzsKK5o9UrWnpLxMczCNFRwigHYSkSu5g2XTy6SI4iJI1zA2PdBBJDhNgvYnBlx
+        z7YA==
+X-QQ-GoodBg: 0
+From:   qingyunha@foxmail.com
 To:     git@vger.kernel.org
-From:   Mohammed <mahottari.dtco@fcgo.gov.np>
-Date:   Sat, 14 Apr 2018 17:54:06 +0100
-Reply-To: tr.export.import@outlook.com
-Message-Id: <20180414165424.BA74810D009@mail.fcgo.gov.np>
+Cc:     Tao Qingyun <845767657@qq.com>
+Subject: [PATCH] t1510-repo-setup.sh: rm useless mkdir
+Date:   Sun, 15 Apr 2018 10:45:04 +0800
+Message-Id: <20180415024504.2397-1-qingyunha@foxmail.com>
+X-Mailer: git-send-email 2.16.2
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtp:foxmail.com:bgforeign:bgforeign3
+X-QQ-Bgrelay: 1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+From: Tao Qingyun <845767657@qq.com>
+
+Signed-off-by: Tao Qingyun <845767657@qq.com>
+---
+ t/t1510-repo-setup.sh | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
+index e6854b828..972bd9c78 100755
+--- a/t/t1510-repo-setup.sh
++++ b/t/t1510-repo-setup.sh
+@@ -238,7 +238,6 @@ test_expect_success '#0: nonbare repo, no explicit configuration' '
+ '
  
-Good day,
- 
-I am  Mohammed, Our company is interested in your product.
-We have gone through your product site online and wish to make order of your
-product.
-Please do send us details of your products and company to our {email} Also
-provide with the recent price
- 
-We await your response with quotation and specification.
-[1] Payment terms
-[2] And your products Warranty
-(3] Minimum Order Quantity
- 
- 
-Mohammed /Purchasing Manager
-Telephone: +966 3 867 1902
-Fax: +966 3 867 3435
-tr.export.import@outlook.com
- 
-PAN TRADING  EQUIPMENT'S WORLDWIDE
- 
-Address: Dallah street, Al Rehab
-Saudi Arabia
+ test_expect_success '#1: GIT_WORK_TREE without explicit GIT_DIR is accepted' '
+-	mkdir -p wt &&
+ 	try_repo 1 "$here" unset unset "" unset \
+ 		"$here/1/.git" "$here" "$here" 1/ \
+ 		"$here/1/.git" "$here" "$here" 1/sub/ 2>message &&
+-- 
+2.16.2
+
+
+
