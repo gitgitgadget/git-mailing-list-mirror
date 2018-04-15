@@ -2,64 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F6641F404
-	for <e@80x24.org>; Sun, 15 Apr 2018 19:04:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E8EB1F404
+	for <e@80x24.org>; Sun, 15 Apr 2018 20:29:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752604AbeDOTEl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Apr 2018 15:04:41 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:37573 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752470AbeDOTEk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Apr 2018 15:04:40 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 40PLY21nqdz1rFcN
-        for <git@vger.kernel.org>; Sun, 15 Apr 2018 21:04:38 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 40PLY21h70z1qqkc
-        for <git@vger.kernel.org>; Sun, 15 Apr 2018 21:04:38 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id a31nfWOfrGVh for <git@vger.kernel.org>;
-        Sun, 15 Apr 2018 21:04:37 +0200 (CEST)
-X-Auth-Info: iQpjXMq62FHmxj3EkwMjyDAHJHvckqfZOlTzSr1q8GZvuKsWvxWZMHIAiUlIDySI
-Received: from localhost (ppp-188-174-156-232.dynamic.mnet-online.de [188.174.156.232])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA
-        for <git@vger.kernel.org>; Sun, 15 Apr 2018 21:04:37 +0200 (CEST)
-Received: by localhost (Postfix, from userid 1000)
-        id 4CBCD2C3D5A; Sun, 15 Apr 2018 21:04:36 +0200 (CEST)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     git@vger.kernel.org
-Subject: .gitattributes lookup doesn't respect GIT_WORK_TREE
-X-Yow:  MMM-MM!!  So THIS is BIO-NEBULATION!
-Date:   Sun, 15 Apr 2018 21:04:36 +0200
-Message-ID: <877ep8p9yz.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1752863AbeDOUV0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Apr 2018 16:21:26 -0400
+Received: from mxin.vub.ac.be ([134.184.129.114]:10160 "EHLO mxin.vub.ac.be"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752849AbeDOUVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Apr 2018 16:21:25 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2GaAwDzs9Na/wsxuIZchBc9eiiMR44nF?=
+ =?us-ascii?q?HuQR4IhgUA7CyUGgQKDVgKCTzQYAQIBAQEBAQECAgJoHAyCZARLLC4BAQEBAQE?=
+ =?us-ascii?q?BAQEBAQEBAQEBGgINIjwBBTo/EAsYCSUPBSghhSAPpnOIO4IviVo/hBqDEQICg?=
+ =?us-ascii?q?UiDRoIkAocnhXuKQgiFWYhXgT47hUoxhGKBFIFmhjKDfAGCdoElHDmBUk0gGIJ?=
+ =?us-ascii?q?+CQqFaYZRhAM9MI5iAQE?=
+X-IPAS-Result: =?us-ascii?q?A2GaAwDzs9Na/wsxuIZchBc9eiiMR44nFHuQR4IhgUA7CyU?=
+ =?us-ascii?q?GgQKDVgKCTzQYAQIBAQEBAQECAgJoHAyCZARLLC4BAQEBAQEBAQEBAQEBAQEBG?=
+ =?us-ascii?q?gINIjwBBTo/EAsYCSUPBSghhSAPpnOIO4IviVo/hBqDEQICgUiDRoIkAocnhXu?=
+ =?us-ascii?q?KQgiFWYhXgT47hUoxhGKBFIFmhjKDfAGCdoElHDmBUk0gGIJ+CQqFaYZRhAM9M?=
+ =?us-ascii?q?I5iAQE?=
+Received: from igwe11.vub.ac.be (HELO igwe.rave.org) ([134.184.49.11])
+  by smtp.vub.ac.be with ESMTP/TLS/AES128-GCM-SHA256; 15 Apr 2018 22:21:22 +0200
+Received: from kgybels by igwe.rave.org with local (Exim 4.84_2)
+        (envelope-from <kgybels@infogroep.be>)
+        id 1f7o9K-0001Th-BT; Sun, 15 Apr 2018 22:21:22 +0200
+Date:   Sun, 15 Apr 2018 22:21:22 +0200
+From:   Kim Gybels <kgybels@infogroep.be>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Oleg Gubanov <oleg.gubanov@gmail.com>
+Subject: Re: [PATCH 2/2] daemon: graceful shutdown of client connection
+Message-ID: <20180415202122.GA4657@infogroep.be>
+References: <20180412210757.7792-1-kgybels@infogroep.be>
+ <20180412210757.7792-3-kgybels@infogroep.be>
+ <nycvar.QRO.7.76.6.1804131440100.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1804131440100.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The functions in attr.c do not look at $GIT_WORK_TREE when trying to
-find the .gitattributes file.  Thus if you are not inside the work tree,
-but have GIT_WORK_TREE set attribute lookup will be wrong.
+On (13/04/18 15:03), Johannes Schindelin wrote:
+> I wonder whether you found a reliable way to trigger this? It would be
+> nice to have a regression test for this.
 
-Password Store <http://www.passwordstore.org/> is using this feature
-when the password store is a git repository.  It sets up a diff
-attribute that decrypts the contents, but that works only if the command
-is issued while inside the repository.
+On my system, it reproduced reliably using Oleg's example [1], below is my bash
+version of it.
 
-Andreas.
+Script to generate repository with some history:
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+  $ cat example.sh
+  #!/bin/bash
+  
+  git init example
+  cd example
+  
+  git --help > foo.txt
+  
+  for i in $(seq 1 12); do
+      cat foo.txt foo.txt > bar.txt
+      mv bar.txt foo.txt
+      git add foo.txt
+      git commit -m v$i
+  done
+  
+  $ ./example.sh
+  Initialized empty Git repository in C:/git/bug/example/.git/
+  [master (root-commit) 2e44b4a] v1
+   1 file changed, 84 insertions(+)
+   create mode 100644 foo.txt
+  [master 9791332] v2
+   1 file changed, 84 insertions(+)
+  [master 524e672] v3
+   1 file changed, 168 insertions(+)
+  [master afec6ef] v4
+   1 file changed, 336 insertions(+)
+  [master 1bcd9cc] v5
+   1 file changed, 672 insertions(+)
+  [master 2f38a8e] v6
+   1 file changed, 1344 insertions(+)
+  [master 33382fe] v7
+   1 file changed, 2688 insertions(+)
+  [master 6c2cbd6] v8
+   1 file changed, 5376 insertions(+)
+  [master 8d0770f] v9
+   1 file changed, 10752 insertions(+)
+  [master 517d650] v10
+   1 file changed, 21504 insertions(+)
+  [master 9e12406] v11
+   1 file changed, 43008 insertions(+)
+  [master 4c4f600] v12
+   1 file changed, 86016 insertions(+)
+
+Server side:
+
+  $ git daemon --verbose --reuseaddr --base-path=$(pwd) --export-all
+  [4760] Ready to rumble
+  [696] Connection from 127.0.0.1:2054
+  [696] unable to set SO_KEEPALIVE on socket: No such file or directory
+  [696] Extended attribute "host": 127.0.0.1
+  [696] Request upload-pack for '/example'
+
+Client side:
+
+  $ git clone git://127.0.0.1/example
+  Cloning into 'example'...
+  remote: Counting objects: 36, done.
+  remote: Compressing objects: 100% (24/24), done.
+  fatal: read error: Invalid argument
+  fatal: early EOF
+  fatal: index-pack failed
+
+System information:
+
+  $ git --version --build-options
+  git version 2.17.0.windows.1
+  cpu: x86_64
+  built from commit: e7621d891d081acff6acd1f0ba6ae0adce06dd09
+  sizeof-long: 4
+  
+  $ cmd.exe /c ver
+  
+  Microsoft Windows [Version 10.0.16299.371]
+
+Best regards,
+Kim
+
+[1] https://github.com/git-for-windows/git/issues/304#issuecomment-274266897
