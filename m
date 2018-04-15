@@ -7,27 +7,27 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC46E1F404
-	for <e@80x24.org>; Sun, 15 Apr 2018 18:17:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7E231F404
+	for <e@80x24.org>; Sun, 15 Apr 2018 18:17:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752961AbeDOSRI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Apr 2018 14:17:08 -0400
-Received: from mail-sn1nam01on0137.outbound.protection.outlook.com ([104.47.32.137]:55872
+        id S1752982AbeDOSRN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Apr 2018 14:17:13 -0400
+Received: from mail-sn1nam01on0137.outbound.protection.outlook.com ([104.47.32.137]:22656
         "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752777AbeDOSRA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Apr 2018 14:17:00 -0400
+        id S1752947AbeDOSRG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Apr 2018 14:17:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=autodesk.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=L1n1fzLsV7HCW34E9RM1gAyzw8cP9E6eyBvLGKvyCEA=;
- b=nxvG5ls3r08sTUagDkrvtwPkmqOlK9kU5hLcJWUHfdRZIL2Wa/gCr21swUkoRwDshzsUCCnC4qjsbNX5240uCdNNMD2cXWVikRa921/YVqItFuerbNzwmDJD2Ei+9FwAPdn2PE6Hl/SlLUZQL2kC7ALlI1VJ4xmzapEdqdS04XU=
+ bh=yaUADw0XnPfew4rIa5KMoXwzc/QDX2kr0/riuU/vYR8=;
+ b=j62MG2erNADA6nYZr1IthCz8oyQbRtql3HtaQEkQtmbCnSYzHgYFpzP7iYSw2aMEC7fojJSWTjyGr/1yuj/BYs5Z8WRu4n7Y43Yyf7hk9ort50nzKcztUwa5ebW8QuYlkmYt4yI46WURt9suPmE1ranE88/o8X5jqCzbC2VWvsU=
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=lars.schneider@autodesk.com; 
 Received: from remj8gtty1.ads.autodesk.com (132.188.32.100) by
  MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM (2603:10b6:320:1c::21) with Microsoft
  SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.675.14; Sun, 15
- Apr 2018 18:16:55 +0000
+ Apr 2018 18:17:02 +0000
 From:   lars.schneider@autodesk.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, tboegi@web.de, j6t@kdbg.org,
@@ -35,9 +35,9 @@ Cc:     gitster@pobox.com, tboegi@web.de, j6t@kdbg.org,
         ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
         pclouds@gmail.com, avarab@gmail.com,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v13 07/10] convert: add 'working-tree-encoding' attribute
-Date:   Sun, 15 Apr 2018 20:16:07 +0200
-Message-Id: <20180415181610.1612-8-lars.schneider@autodesk.com>
+Subject: [PATCH v13 09/10] convert: add tracing for 'working-tree-encoding' attribute
+Date:   Sun, 15 Apr 2018 20:16:09 +0200
+Message-Id: <20180415181610.1612-10-lars.schneider@autodesk.com>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <20180415181610.1612-1-lars.schneider@autodesk.com>
 References: <20180415181610.1612-1-lars.schneider@autodesk.com>
@@ -50,50 +50,49 @@ X-ClientProxiedBy: AM6P193CA0010.EURP193.PROD.OUTLOOK.COM
 X-MS-PublicTrafficType: Email
 X-MS-Office365-Filtering-HT: Tenant
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:MWHP136MB0014;
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;3:WToGtLC4K3wRBQ8jHLJIUci5Z5ssKMh+JbXkyEKfGyWkgTS4euszNLl7j7EqL9W2MMAF/CSCATHOlBJyOuD/rg02Lsn2zjJs24rh2jEqUwQZCPVFL2MTElalRpRFRe/F15bqDAitwh2YqROyZH4RacfyqP7dqn/N3Fh35Zjjhlu3gm0TdaaUpzgbmS3YomwYBV4sOWsJb2hRR5L3hGJX3Lvnf4PoFZvXehAZeIZO93InykUwhP8ULH9c6JhZ8p4k;25:KEZIDXn2JtfY+l6YSbMhanuGt8jx4IsiC3qxYCwSBYdUyqaWEMGuJOwvCnkn/rdopenhnscPZjvkRApys/MUwQplms5rmgZzNMsT9ql8gUbGNfPn8/tHWXxyPwRvPiJyqx59ik3SLgsT24wSJ8dhmAH2Vjo7LBmWsnPgrZB3Vm7SYn+PLQa+scMVgAds75jcVr7HOmxy17j6M0iwirxMiCCJj+DqPeSgdJQAN+P0SbIWbUG2SxFN5Kk8RX7ZoPifoMZ4oRPcXkHtd2/XcAlZzpmolFUzfaRXWFftPqP3wEYg/UIqQcczxluI1/ClHPulEDKH9mxRDKaBedcR2/RHcA==;31:+4B04IJNL2YcHdg7FuU1noi7RTcmPQM/sbJPFx+JDdU6yEO5Bp+6auouN51OsKrAfSEfRvW/c9FWP9pgqlP0t79Yq6bCsUPk6xS1t10UQQtG8KGmn0M7aovVw+lyrbrKHDh0GnT4EmE/O6+i42KD3nEm47FK0dNYwamZnNKNZyMipQcB5gdeYHkrCsmAAgj3qrWitAYsx5epupzb3OV+qHmi3g15kkPGYrO91ofuGEY=
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;3:w/MpFecFEWmUcVONyao482iRahNoKWj717NRBjEKlEqErw/Ov0HY4Up5efNrwqhI62fwF5dA/lKqzw9jN0GUQTvvsVs7wTZ77FzK0ry3iNIml1CNoeA6Ngm49ykiMsYEvVilRX1kl+Wm5C1TgIlPjFyMIldsnla1necrHkYJh1kUsWYcGMOETy/khVP9/AIZ0NkXQUouc3hKKEs13fc+E//0NSzmnbTGpolJdh2n+8/GRBLDvhjLYUtbdIpTscy/;25:9sDvi3mztL0o3gL4yISizZt2rDLJDP9ZYaNlnFiP+nMZzC+a8n0s0MMV5v3xdADGAAhAMz5leNN6uMESuPjSm9fWk6HgzfDziHxM8Uo+pTcfhX0SCmynvMG+hQmNwBixLhdFQGUut1AaMNaO5ngIRdWMii6lRrOgNoPqDSpyOJsjRU9eTePbNlu6dKxdmjrootumH1closOaxiuSMC+0v9SiQoih7iBEOavobUuktiAmElJaWLY0GVD7gjxJnbCSLCYFPw/zN8NkLMrkXYYQ5laWCPI75A/71EKw/YuUoAyX35HzXIl3fyWkjnPXSb+Cs7sk77cMDZ3oBeEqp6RCnQ==;31:g3gR4oQ+oGU4hkwDgseWQ1YUuu4/d71XDaRG2edOpGhjnYN+jUNoLOE/zYnO1tt9Eo8w8zZgsLhwYme8lGrIwGE2KFIvbum/0Rk/jm9jA/MsMUkHJIKW+6i69zfTbS7ZRqYq79we3hJ9SCq1XygU/RAGJqH+Tg762/UzkiT0aWkTYXbAC3JtXYgmGBfWIcBECVHHI4JyCcP/dTUWWBfWykP3/mxBttycc+L/E4lDSyw=
 X-MS-TrafficTypeDiagnostic: MWHP136MB0014:
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;20:9h5c0TfN80Rq6gVbB+3qn1g5drJJKR5XqeBqsL8q40L04h1HA+K0GV8LF8tiDoQYt9n4vRt/UUM70IFIi+70mJmq+jS596STW+CneliY08Fe5td9UYNIaU5IF66TEJMQy+mRVz465nBeJVGhRWophYAAoWNDdSGpqVpVYSKqGshnTT3mir1fkhP48OcpE3vvLJKmnKIXk6xV7qNM4pIcvi+MD303XVzyHQsHfTmGJw1n5et4YPcwnC6lQJHxBOPHnozWTAL0Ay5qm01BroLIrpUXLtxve8Ul/buTdOTO9AwgjNs2CDvPOg4cF3XB8r/HCIgjsnpANXo2XtsGyrYdyzqP41u04eBu2e5XWy+f8ew02FuB1KBsvyNQ9iigGMH8/Xf9eaJs+6w2510D3gaznYB8cKSZ9tSsc7jFBkDMOaRNeBGaxzjIm2ndPSqjXVOIgix/dW5ygONtkwHqmL02G0D6oVtSy7iDwan9FJGKwH7G1os/zQm4WiO8p0WbcGrwHl81lgE+dLkZ4EqIfdiERl2UT8spc7R8lJIj04l6Nm62pWYXP0oxt9b+Z6j65e/LX+cHchWMBLV5Z6IzivYfs32JpSWZD+R0YAFYi3d93O4=;4:Q98HT8toSW0w9502/hiWlw4DinvpvB5nLmzSJbhfykQyAGMjwVQXE7Awkg76Cw4cJ1sqT0ivY5vULv4wQeJJEw5D3t6UgS5fws8hp+XWp1KYYe4umOSXUx2Vu+ac79y9cbT5Uj7UtT4ranP9RVbU8/Cwhs3T4scD13LyNs46vGthGsEQwfpjah1dz6FrRfOW8B92UctBf1Xca58RL4AOX4Qin/D5nVy1uAUluJO9M1hSz2xlZUFQJ2cEJfu3SdE2F8bAIAIelY+yMU0deS1GmG/hnMj7Ww9ixFZktEnM00wE8jB76SH5qZdphJDuyrdM
-X-Microsoft-Antispam-PRVS: <MWHP136MB0014140DAC81CA7F6984321BE8B10@MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM>
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;20:Lm768rXkvBooiIZLM9DDkg/uPiv1dMg+q2GB5y8fKiBKlWvBMQNEeHW9xoZl0C8WJBFpWkeUqMuHcxLmAzeTo/HzgvuDrk3UJGJXw4tqH1jAKVn2GvzeICniNI+OrZoseWD/VGage1B+O0yTvUyQkANtTnAoKooyLUIMpmuRZCaJDAKvNrvCbAG7KMzH/rdTXZr4/AKj/9nTz+5wMkLiS2YtrgWehfKcm3WfLBnoVwEvU8EWH8eOYnKaFT7OxW/5LvqcUAJVBnCBljgvMCe24S8DVIuU7QALIzybx8pLdBmzXYwBV1+MktR4OgngGfi4sdLXEsc4D3/zKnG3zvr4NwIvrUKnBx0qXh0MWVivyjeo3eTXjWYZgU9oJ1FHP9MyjYcnXD2ObmUrBC1JZB3YwwDOCkK2hdlwWS0grLei/hMSRtc4qJwTTqtbvXmgmxZm3NDz9HO0ayFv9/i70cx1uiJtStr4YH9nwNZ4riX02Xq7TDhrLY3ylUyS7y7a7sVQE0jyVg6wUBdJEV0R79PkNeFFDoVHwGvhmmOQHEqziKyDL+cB2wEqD4VJm6oUn9NkpNjMxYzDf+D9SazjGB5yI0gpO9s0qo0ieq3LO2xohME=;4:jQtaCVi32j0TJhjcvvEy0b1jgt4iCI4nwxtVZt06a+4PosvTLzNvUSxH4WX5ghw5MNNzyLICbJkic8udTsN15tQXVZD5HxbrZyGZ3tj7pSEHax7d7vyC6OIfXe/edgSlNdA+GM1LeXXN67NjCCsX9TikZlz+SnH9CfYSTCpbK3CoNPryX2i+ovaVIUty5Bkl2yvBVKRVzjPAU8I/FPYAwc8UwvMmiyDZzdx701sm5pGKn1ghsCN/aoPPUrYiuaV0VREwCvQVXmSI8ninJgcuM6KgrVf5++aR3ecO+Kvlr0ZDZs6Ua2ILwEJdzrno64MH
+X-Microsoft-Antispam-PRVS: <MWHP136MB0014E616F48DCC75AFE689DBE8B10@MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM>
 X-Exchange-Antispam-Report-Test: UriScan:(85827821059158);
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(3002001)(10201501046)(3231232)(944501327)(52105095)(93006095)(93001095)(6055026)(6041310)(20161123558120)(20161123562045)(20161123560045)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011);SRVR:MWHP136MB0014;BCL:0;PCL:0;RULEID:;SRVR:MWHP136MB0014;
 X-Forefront-PRVS: 0643BDA83C
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(366004)(346002)(39860400002)(396003)(39380400002)(189003)(199004)(53936002)(86362001)(8656006)(7416002)(45080400002)(9686003)(106356001)(76176011)(478600001)(52116002)(7696005)(51416003)(386003)(6116002)(97736004)(446003)(476003)(1076002)(4326008)(5890100001)(50466002)(26005)(575784001)(68736007)(16526019)(186003)(85782001)(59450400001)(486006)(3846002)(36756003)(48376002)(2616005)(956004)(11346002)(105586002)(2351001)(50226002)(8676002)(7736002)(305945005)(39060400002)(8936002)(66066001)(2361001)(81166006)(81156014)(5660300001)(25786009)(6916009)(316002)(6666003)(47776003)(16586007)(2906002)(8666007)(6486002)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHP136MB0014;H:remj8gtty1.ads.autodesk.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(366004)(346002)(39860400002)(396003)(39380400002)(189003)(199004)(53936002)(86362001)(8656006)(7416002)(9686003)(106356001)(76176011)(478600001)(52116002)(7696005)(51416003)(386003)(6116002)(97736004)(446003)(476003)(1076002)(4326008)(5890100001)(50466002)(26005)(68736007)(16526019)(186003)(85782001)(59450400001)(486006)(3846002)(36756003)(48376002)(2616005)(956004)(11346002)(105586002)(2351001)(50226002)(8676002)(7736002)(305945005)(39060400002)(8936002)(66066001)(2361001)(81166006)(81156014)(5660300001)(25786009)(6916009)(316002)(47776003)(16586007)(2906002)(8666007)(6486002)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHP136MB0014;H:remj8gtty1.ads.autodesk.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 Received-SPF: None (protection.outlook.com: autodesk.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0014;23:z2YkzrP0D9cfuHKbAWTmBjxDy+uNmNvJDovwK71kY?=
- =?us-ascii?Q?u9gAxyECx1BSj2Rt4bmLNCxxK46Q5TRc33OVbzS7ZtSQLXqEaD17T3N2llLi?=
- =?us-ascii?Q?JUXVhmcssh3CLv8l9AjSgffHOsLADsS7H4xcEtLDs6Pzv/p5vgBQwdX6ZlbV?=
- =?us-ascii?Q?78b/lx245ZXE8SClsE3lqvwmW98OMrROfCwHoE1bH2Em6ulP34yboyIdHymr?=
- =?us-ascii?Q?QMfmQ2U4wJ8NbUAxgHFxxc9MTsflmh5aHMWj9bEWLgKp9q9nV8rLg4QOx0E1?=
- =?us-ascii?Q?fHocdy0z6zUluXT0YDG/qimjoTE8QJFvNWZHslQskJN+3bge2AUnEfvzvOyf?=
- =?us-ascii?Q?GacMyfKAB71pWhcxROkOdOEZsURyF1Y+O++3+BV+LBX754kga+oW4wH05AiV?=
- =?us-ascii?Q?4UgYop284maGZn28EVFIAOUAaqZC5TKJLWiaROZiHG9nwzGB83fTfE5coYXj?=
- =?us-ascii?Q?Q2/9NQLV04PIBHN+NAf4+URFD6TQxIuy+dcbZvCKbWfnWZRYSiIVSL7Hbco8?=
- =?us-ascii?Q?778r+dKuNLoYZ4hW8xXyvvecwOCtiv3h4YEIAQHpPAfGUmWtfMaLylg1ir8k?=
- =?us-ascii?Q?GpRq6biWcu7+FxC8b12mbLfOUXEmapElw/916B/KZ67cnUKkRQUkXVPos7JF?=
- =?us-ascii?Q?xDOv9xELhc72GTdoAboq0Fbjv52yQPLVVvwxT2D4PGgCjlr8Cl0Tviu77NFg?=
- =?us-ascii?Q?wrOpURX7ELgYElVDF4tUtDM2ELDEsqvcJy6LTM5Kkl8SQV2OcvdPxl9tmVx6?=
- =?us-ascii?Q?0v1FbiJBn4zC3fT3mlPyd01OjpJqnb6oSclcLdIkMphafm8juWgdul4ss+rf?=
- =?us-ascii?Q?ylEp5Rt5r5ge8/XwSkVMGVIutkB75A2LpJKPmz7Lda8oF7VeX8rdzam1O9Di?=
- =?us-ascii?Q?vA9GdJY68XIn79nkCOZynksu2o+Ui/3DOwXMHSAYqsArrTlRiZKtO+YNykTG?=
- =?us-ascii?Q?/Clwir8Q+oGzu2fDLdLD0WVKHSPhAZYBRFd18wJbepntZyC2C223r8tSkssD?=
- =?us-ascii?Q?wguRBkyDjiak0nF04coThqdXrxHCsSWK0vXpOqF40OGScARH/4VbbuWJa1gl?=
- =?us-ascii?Q?wqzeWbUBWVQzNq9YYg6ZwR+Ff6rIOGvNfAvHUKSKT+B4UsrAvMlECOiMm8Xy?=
- =?us-ascii?Q?hmRiZOr8sgIjdNrWy7o90l0qo+NGavH8m17AACs6bMj34E2toXgpPlEolIIE?=
- =?us-ascii?Q?/xRBXcf5KnUzeztbz0iX3lQPCv8svKlS0nkJ7l+U4L9+lI4V+P05BEkMU02L?=
- =?us-ascii?Q?EIz6hKG1Zjyy590iNrFK45GQxLdwwFJ5Itz+fowQGNw8lzIsaHuvfwD+ahWK?=
- =?us-ascii?Q?uktYM9r9rNod2EztAcRBL6USHoN5HoccM0pQpbtSYSVF1+2Oswo0gR6ZU0Qu?=
- =?us-ascii?Q?UjKsTN5qeBQUPc3LTGfopJrOuXAfXaooWRS4lI7XM0/cq0fAlM7W3zm7xAAo?=
- =?us-ascii?Q?7q4ojiGEUD8nEhzF0krU5odu/Cy6GtmaG9RkWXio3uf+I+VWupW?=
-X-Microsoft-Antispam-Message-Info: rAr6eXpGuknO6I8FHLOuymNXhv8pBRMQFyjp9fgiYZk6ZbDqbnUA2W1iI88bfroSP+/i2vRnUaASbs0hLL0r0iVkz4DQicfw7T2msbqanp9aXcW7VRTd89ZcJ4kKctEAwXBMdymns5tryOundCsV/E02pmBm3qfBks07c/IWkqfMlMZTUuU3BiXs1QgDE8tj
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;6:cTnZv7vFY6SvGr2PO9yt7o+qQ5zICBqcgJhaDZj9OBrXOG+AcqoEdmIGNO0R3qhRTSnYtpTpXmFM4RBbIe7gXHwVveAdopsMRFpLGWdBRCCWxm4Ko3J6SAeOl0FJetTMaAnWF7hRCSadenZJo7t++iyqn55zNKBVN36Kpx+VjWO3d4FlSkXKMOhMCip3COXI6INIXEbL970DYvsqIc4QZGS8EfoUxFML8MI3IccWzABFvUX95oULD9dZTq+aDQO4adTROmTQs7ugxLh2k6n8mSuQkqknAPrWxaR2RXOs7rvuT3VWmQn5DvfZspoz7+zOyYrox0bJI7573TiWwiroECUWU72gAGiVKr7ouPye/6Zs1wHlJLjtc0+IyR7QU9X/uGKBMvktLuig3DuaXUDn4uM2K5m1T+yAP5JYnS5rKqEJBqkC2sOn/7vAlTjFwNX35Ri862IGZ7/7lo6gyjGmnA==;5:hjUxbW8D4TsAVNNUotLTTcKN4SxoznJb5lKkgktcTun6+JfcPZzXWIPOaBqlOlhtuPmF+XC1sqxtdxJZstLgKPSRvsbeJE1j2JdgHKea8sg2x5oOsZjnWocvOsN523FF9gPbRPTnAPbCtQYFx5pwviPfPUiOb2gj47FjujkaNkE=;24:aueglqCDdsQ9roInhZwtJEqoPS6LgvcA+LNRwCZyIrGQ06UdO5j8vArPivFJnFAXX9gZQ+wGmE8AaaKM9Y9ec/fNNKtMS6OwdRDu7Ke5QP4=
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0014;23:upItzj0ocQar/rLh4GXQlh8jL0UljMiYAprP4Gv6C?=
+ =?us-ascii?Q?Slie6HDKoXw8qCAQv3g0q+03yKJJfXz1biwCvvRCNNjSC/VJxz+JjuJ4N+9g?=
+ =?us-ascii?Q?qfetqvVcNfxE213SHXdAWbdystovAs6wbGOE7GkrHZQVZb4T9YnpkMR3EzNM?=
+ =?us-ascii?Q?Mfl1vVmH05omOCV0piZuL5rHo2OVGrLhx+IMPggMS/T+POfKNpw5sp4o0B2w?=
+ =?us-ascii?Q?ZzNVGJh/yXXtOL+youhsY8W0Uidqk6AGNq2XnWVdtx/m3i0l/93KGxVmEjIS?=
+ =?us-ascii?Q?oBoD55yj/jxBiHiBYSV7GZwGEEKkQHLsmiH7T67ZLyD514eqEgSQYMno4c7Q?=
+ =?us-ascii?Q?IRFUFPw5WrlTfILa6pG9pYKrfhC79W2A2g2+BtSyvfNCx2y3PJTbQJ3491CP?=
+ =?us-ascii?Q?zhd8rKRvqKZ++xr0Ea9PM2rNuLKuVQclSBD7y/wna9DP8NbrzwR52tjHIsL8?=
+ =?us-ascii?Q?0FDBIc4AFYKyfeGfyecdMOZ8LiS+EL/oWzN1AAjj7NXTGL9430TGVyslx9qw?=
+ =?us-ascii?Q?b9ik/LFfa03UQk2GI5r9nN9Bd6hHIyoDb+ti6sQPj4HNYXJABxfmGoC/7Y3E?=
+ =?us-ascii?Q?4jgpQk5HUbIy42zdK+jFmJnjCKQURx1RFADTkZL3LrwJO1zNSXxRdYvUrPKA?=
+ =?us-ascii?Q?kAgoiBL+6AvR60LbRAA8+azxZHO1YwcOCvP7jOPJ8HAoOtkV/V1638e7d6Lg?=
+ =?us-ascii?Q?oFEvv1fckxGiBEfVDs75He+Pb7TM/KFgHgELsxYVX8P7bldCmwiscmaO/ZtP?=
+ =?us-ascii?Q?In8A0Wel+W7sCu4kZC/QsXgh9X7lHK1PS4p/N7Wx78vPiHEK0bCLwm4pmPnM?=
+ =?us-ascii?Q?LARyyFkYQyznTv/a5sji+7+sImFu1hjtUnQKB01LNyPx9SPF63SySglSHLVP?=
+ =?us-ascii?Q?6GMlS5UAB7axqfGDPf0NCJfSiRNblx0Ny7aU2k3t4jEGV2TdVutwNu03n6Ox?=
+ =?us-ascii?Q?BypI6BAelAgUJISOB9e/R24QLC0YOTEwXCddXmAauvJCwShVgoUzBl/qwSCv?=
+ =?us-ascii?Q?kp8ljdngYhVUddlla8qX8oNOrc38zbgjxlPcBGBnGo4wOPeaeq9x+BEqScdW?=
+ =?us-ascii?Q?oQewzAyJ2MOpaog5Vt19HlSBc8CnkGWHDf9qrYof2AIfZ3txdANzNoAfLuj5?=
+ =?us-ascii?Q?4oOrJ5q71R5axImfyTrsM1XRq+9Pg65wWj6Th+x/GVG1uRFq3nvFmLoBKkeG?=
+ =?us-ascii?Q?s8qw6OgfoG1trFfZDpkCCFY1T8uKaTGdll5TZ/RXOFWBnQVDInYQtAsmffK4?=
+ =?us-ascii?Q?FrUSTMM+xY+dL1f3tbsBc/PFGTLVDu1f9O6tXFaprrnYsLsRCmc5lxhcW0f4?=
+ =?us-ascii?Q?Eia/PbA0XQ4zLfy+vEvsU/tteuVb3jzzDSL8S5lR95UKIaZTYQ5gY6uggQI2?=
+ =?us-ascii?Q?U8vjbJWC0z6jr6sg1nOavEWRAZLfI8r8y1Bl9XR9malbE1J?=
+X-Microsoft-Antispam-Message-Info: 2JcJyb82sDS9sD2F8tnVB3J8tqiniIvX22vv3DEQS34W3pwVf7b2x5Q8ytKMTYe+TWa7jME7FThqZHbVJfYPbprYtWrNFMcHR/+0kWrKbSguKES0TaCJ/eiJW1k4EEDN4HxAG4NzkBaUHSgv5Ob2tPwt+8sRz49hmR8RM5iko6brAvw+A44UPeFGrkBQJ6Np
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;6:GWfk1i8DryqdJY3skPYvbDlgw0j5TeQABtjHVWv8rMGJsc0JLXVY9QkjHg2YoqXjBhRAEnupv1t7JBBi+Wb6UcnJmXs/9RK/xwj50ASfQHC7X6miEd9F96K+NNIaLu1n2zlbRKS7V0B5ZjA8K5x1vtHnrEmVoBLL28WvdLGCdwhBZVfRNrioSO8xL4TDS5aMaMhUPG+k/DeqtRXPy5XAIV9rtnwyPVqJ4ZZJzf8q7pEbiZv+oBtyoXi1iMsAijnrN6YhK+cjpvKvJcqU28YlB5l4Rvr9etQeKy7fNXORTbGsjVqVR/h+GWTFr01U5MWnKWAVoWqa4Vc77rYBTrF3bj8znXSGWqo4BMelvsEUxKgCEnNsyCQMi6+qNVZ7TWy+LEgymOB5s8c0OdRYjumy2w/2YuwHh6fLCeLC3JwwZsvk8mIUMebTqJ0tkD43/UFIesQ38u1RinM09NTc2DLgpg==;5:pZHDVmEY65+d9yTVeXK6eL+KAZyLWPVKTen7R+8U2tNWx1bzaHj8HfnSKLtbMvYLzIOy6eJCeUf2L9sZzcm7JJvOxLiRvPxZLn7e6DQ5qgvJayN4dh7luPgcggK9JtyG8t+FDJXEVgrAEaWhbgpBbzQEw8vQeSFtWasPvhWfCN4=;24:GO205/e6ydfSWdTyULxTzJJvO70yI9NqYPZkdal3Ccy5jKsF8o0ZuD5XHwuP0N1s1q3jvo4Ax+pnqZp0c0OJVCcTHXttYNpJRIjbcHlW8kw=
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;7:j+2NzMFlT69SZfPmWl00o5K18ne/steUc7+xyK6RcVHYwKFc2IT+M/UgVsMTezRJke3cqfw8nUAI5VTU32F1OynqByJz6+NDrDQ0puq2q8mzMfR79EutlFIlNuHugOYqkyn+YesW9f4voXR4/u19tApXUJwuukZ68o7nkG+5IpoK/MQ38B61oi+vNsmJqadkTarJJE5ks7bcUEz+Zb7Dg4XtNNs5w5RVphLj7tZdQQbbZJB9vJve9/kcILHVQyBY
-X-MS-Office365-Filtering-Correlation-Id: 74b9b948-1135-4eab-9331-08d5a2fd1395
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;7:eCDhAcgtjAb4j8mTWI1BCBjYYVb7yk57/X+Y88xpC4vvYIyr2Uz5vYh+HQLYnv2vXCfxvgN3Kf56cljCBBmCDsOlZwSvXx3NzMcui3thRS1GZ/qBsd52wlJ/qD6PEVdmO9URKIbO5oU1yomebFu3b4SWkN+9j2mRVg6I5PxbsR9+fZTvVw/o2cJJHOVum39gBT6xK9/9I7aFUArwhETyCYjayUQTPz2dsn0dKGTTc5O4E9MCRPLxYrjH+8wVwFrs
+X-MS-Office365-Filtering-Correlation-Id: 15263e41-20f4-46cd-8261-08d5a2fd1788
 X-OriginatorOrg: autodesk.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2018 18:16:55.3662 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 74b9b948-1135-4eab-9331-08d5a2fd1395
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2018 18:17:02.1321 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 15263e41-20f4-46cd-8261-08d5a2fd1788
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 67bff79e-7f91-4433-a8e5-c9252d2ddc1d
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHP136MB0014
@@ -104,478 +103,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Git recognizes files encoded with ASCII or one of its supersets (e.g.
-UTF-8 or ISO-8859-1) as text files. All other encodings are usually
-interpreted as binary and consequently built-in Git text processing
-tools (e.g. 'git diff') as well as most Git web front ends do not
-visualize the content.
-
-Add an attribute to tell Git what encoding the user has defined for a
-given file. If the content is added to the index, then Git reencodes
-the content to a canonical UTF-8 representation. On checkout Git will
-reverse this operation.
+Add the GIT_TRACE_WORKING_TREE_ENCODING environment variable to enable
+tracing for content that is reencoded with the 'working-tree-encoding'
+attribute. This is useful to debug encoding issues.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- Documentation/gitattributes.txt  |  80 ++++++++++++++++++++++
- convert.c                        | 113 ++++++++++++++++++++++++++++++-
- convert.h                        |   1 +
- sha1_file.c                      |   2 +-
- t/t0028-working-tree-encoding.sh | 142 +++++++++++++++++++++++++++++++++++++++
- 5 files changed, 336 insertions(+), 2 deletions(-)
- create mode 100755 t/t0028-working-tree-encoding.sh
+ convert.c                        | 25 +++++++++++++++++++++++++
+ t/t0028-working-tree-encoding.sh |  2 ++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 30687de81a..31a4f92840 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -272,6 +272,86 @@ few exceptions.  Even though...
-   catch potential problems early, safety triggers.
- 
- 
-+`working-tree-encoding`
-+^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Git recognizes files encoded in ASCII or one of its supersets (e.g.
-+UTF-8, ISO-8859-1, ...) as text files. Files encoded in certain other
-+encodings (e.g. UTF-16) are interpreted as binary and consequently
-+built-in Git text processing tools (e.g. 'git diff') as well as most Git
-+web front ends do not visualize the contents of these files by default.
-+
-+In these cases you can tell Git the encoding of a file in the working
-+directory with the `working-tree-encoding` attribute. If a file with this
-+attribute is added to Git, then Git reencodes the content from the
-+specified encoding to UTF-8. Finally, Git stores the UTF-8 encoded
-+content in its internal data structure (called "the index"). On checkout
-+the content is reencoded back to the specified encoding.
-+
-+Please note that using the `working-tree-encoding` attribute may have a
-+number of pitfalls:
-+
-+- Alternative Git implementations (e.g. JGit or libgit2) and older Git
-+  versions (as of March 2018) do not support the `working-tree-encoding`
-+  attribute. If you decide to use the `working-tree-encoding` attribute
-+  in your repository, then it is strongly recommended to ensure that all
-+  clients working with the repository support it.
-+
-+  For example, Microsoft Visual Studio resources files (`*.rc`) or
-+  PowerShell script files (`*.ps1`) are sometimes encoded in UTF-16.
-+  If you declare `*.ps1` as files as UTF-16 and you add `foo.ps1` with
-+  a `working-tree-encoding` enabled Git client, then `foo.ps1` will be
-+  stored as UTF-8 internally. A client without `working-tree-encoding`
-+  support will checkout `foo.ps1` as UTF-8 encoded file. This will
-+  typically cause trouble for the users of this file.
-+
-+  If a Git client, that does not support the `working-tree-encoding`
-+  attribute, adds a new file `bar.ps1`, then `bar.ps1` will be
-+  stored "as-is" internally (in this example probably as UTF-16).
-+  A client with `working-tree-encoding` support will interpret the
-+  internal contents as UTF-8 and try to convert it to UTF-16 on checkout.
-+  That operation will fail and cause an error.
-+
-+- Reencoding content requires resources that might slow down certain
-+  Git operations (e.g 'git checkout' or 'git add').
-+
-+Use the `working-tree-encoding` attribute only if you cannot store a file
-+in UTF-8 encoding and if you want Git to be able to process the content
-+as text.
-+
-+As an example, use the following attributes if your '*.ps1' files are
-+UTF-16 encoded with byte order mark (BOM) and you want Git to perform
-+automatic line ending conversion based on your platform.
-+
-+------------------------
-+*.ps1		text working-tree-encoding=UTF-16
-+------------------------
-+
-+Use the following attributes if your '*.ps1' files are UTF-16 little
-+endian encoded without BOM and you want Git to use Windows line endings
-+in the working directory. Please note, it is highly recommended to
-+explicitly define the line endings with `eol` if the `working-tree-encoding`
-+attribute is used to avoid ambiguity.
-+
-+------------------------
-+*.ps1		text working-tree-encoding=UTF-16LE eol=CRLF
-+------------------------
-+
-+You can get a list of all available encodings on your platform with the
-+following command:
-+
-+------------------------
-+iconv --list
-+------------------------
-+
-+If you do not know the encoding of a file, then you can use the `file`
-+command to guess the encoding:
-+
-+------------------------
-+file foo.ps1
-+------------------------
-+
-+
- `ident`
- ^^^^^^^
- 
 diff --git a/convert.c b/convert.c
-index b976eb968c..21d5cb60da 100644
+index 0e7930c154..bc35c33249 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -7,6 +7,7 @@
- #include "sigchain.h"
- #include "pkt-line.h"
- #include "sub-process.h"
-+#include "utf8.h"
- 
- /*
-  * convert.c - convert a file when checking it out and checking it in.
-@@ -265,6 +266,78 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
- 
+@@ -324,6 +324,29 @@ static int validate_encoding(const char *path, const char *enc,
+ 	return 0;
  }
  
-+static const char *default_encoding = "UTF-8";
-+
-+static int encode_to_git(const char *path, const char *src, size_t src_len,
-+			 struct strbuf *buf, const char *enc, int conv_flags)
++static void trace_encoding(const char *context, const char *path,
++			   const char *encoding, const char *buf, size_t len)
 +{
-+	char *dst;
-+	int dst_len;
-+	int die_on_error = conv_flags & CONV_WRITE_OBJECT;
++	static struct trace_key coe = TRACE_KEY_INIT(WORKING_TREE_ENCODING);
++	struct strbuf trace = STRBUF_INIT;
++	int i;
 +
-+	/*
-+	 * No encoding is specified or there is nothing to encode.
-+	 * Tell the caller that the content was not modified.
-+	 */
-+	if (!enc || (src && !src_len))
-+		return 0;
-+
-+	/*
-+	 * Looks like we got called from "would_convert_to_git()".
-+	 * This means Git wants to know if it would encode (= modify!)
-+	 * the content. Let's answer with "yes", since an encoding was
-+	 * specified.
-+	 */
-+	if (!buf && !src)
-+		return 1;
-+
-+	dst = reencode_string_len(src, src_len, default_encoding, enc,
-+				  &dst_len);
-+	if (!dst) {
-+		/*
-+		 * We could add the blob "as-is" to Git. However, on checkout
-+		 * we would try to reencode to the original encoding. This
-+		 * would fail and we would leave the user with a messed-up
-+		 * working tree. Let's try to avoid this by screaming loud.
-+		 */
-+		const char* msg = _("failed to encode '%s' from %s to %s");
-+		if (die_on_error)
-+			die(msg, path, enc, default_encoding);
-+		else {
-+			error(msg, path, enc, default_encoding);
-+			return 0;
-+		}
++	strbuf_addf(&trace, "%s (%s, considered %s):\n", context, path, encoding);
++	for (i = 0; i < len && buf; ++i) {
++		strbuf_addf(
++			&trace,"| \e[2m%2i:\e[0m %2x \e[2m%c\e[0m%c",
++			i,
++			(unsigned char) buf[i],
++			(buf[i] > 32 && buf[i] < 127 ? buf[i] : ' '),
++			((i+1) % 8 && (i+1) < len ? ' ' : '\n')
++		);
 +	}
++	strbuf_addchars(&trace, '\n', 1);
 +
-+	strbuf_attach(buf, dst, dst_len, dst_len + 1);
-+	return 1;
++	trace_strbuf(&coe, &trace);
++	strbuf_release(&trace);
 +}
 +
-+static int encode_to_worktree(const char *path, const char *src, size_t src_len,
-+			      struct strbuf *buf, const char *enc)
-+{
-+	char *dst;
-+	int dst_len;
-+
-+	/*
-+	 * No encoding is specified or there is nothing to encode.
-+	 * Tell the caller that the content was not modified.
-+	 */
-+	if (!enc || (src && !src_len))
-+		return 0;
-+
-+	dst = reencode_string_len(src, src_len, enc, default_encoding,
-+				  &dst_len);
-+	if (!dst) {
-+		error("failed to encode '%s' from %s to %s",
-+			path, default_encoding, enc);
-+		return 0;
-+	}
-+
-+	strbuf_attach(buf, dst, dst_len, dst_len + 1);
-+	return 1;
-+}
-+
- static int crlf_to_git(const struct index_state *istate,
- 		       const char *path, const char *src, size_t len,
- 		       struct strbuf *buf,
-@@ -978,6 +1051,24 @@ static int ident_to_worktree(const char *path, const char *src, size_t len,
- 	return 1;
- }
+ static const char *default_encoding = "UTF-8";
  
-+static const char *git_path_check_encoding(struct attr_check_item *check)
-+{
-+	const char *value = check->value;
-+
-+	if (ATTR_UNSET(value) || !strlen(value))
-+		return NULL;
-+
-+	if (ATTR_TRUE(value) || ATTR_FALSE(value)) {
-+		die(_("true/false are no valid working-tree-encodings"));
-+	}
-+
-+	/* Don't encode to the default encoding */
-+	if (same_encoding(value, default_encoding))
-+		return NULL;
-+
-+	return value;
-+}
-+
- static enum crlf_action git_path_check_crlf(struct attr_check_item *check)
- {
- 	const char *value = check->value;
-@@ -1033,6 +1124,7 @@ struct conv_attrs {
- 	enum crlf_action attr_action; /* What attr says */
- 	enum crlf_action crlf_action; /* When no attr is set, use core.autocrlf */
- 	int ident;
-+	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
- };
- 
- static void convert_attrs(struct conv_attrs *ca, const char *path)
-@@ -1041,7 +1133,8 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
- 
- 	if (!check) {
- 		check = attr_check_initl("crlf", "ident", "filter",
--					 "eol", "text", NULL);
-+					 "eol", "text", "working-tree-encoding",
-+					 NULL);
- 		user_convert_tail = &user_convert;
- 		git_config(read_convert_config, NULL);
- 	}
-@@ -1064,6 +1157,7 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
- 			else if (eol_attr == EOL_CRLF)
- 				ca->crlf_action = CRLF_TEXT_CRLF;
- 		}
-+		ca->working_tree_encoding = git_path_check_encoding(ccheck + 5);
- 	} else {
- 		ca->drv = NULL;
- 		ca->crlf_action = CRLF_UNDEFINED;
-@@ -1144,6 +1238,13 @@ int convert_to_git(const struct index_state *istate,
- 		src = dst->buf;
- 		len = dst->len;
- 	}
-+
-+	ret |= encode_to_git(path, src, len, dst, ca.working_tree_encoding, conv_flags);
-+	if (ret && dst) {
-+		src = dst->buf;
-+		len = dst->len;
-+	}
-+
- 	if (!(conv_flags & CONV_EOL_KEEP_CRLF)) {
- 		ret |= crlf_to_git(istate, path, src, len, dst, ca.crlf_action, conv_flags);
- 		if (ret && dst) {
-@@ -1167,6 +1268,7 @@ void convert_to_git_filter_fd(const struct index_state *istate,
- 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN, NULL))
- 		die("%s: clean filter '%s' failed", path, ca.drv->name);
- 
-+	encode_to_git(path, dst->buf, dst->len, dst, ca.working_tree_encoding, conv_flags);
- 	crlf_to_git(istate, path, dst->buf, dst->len, dst, ca.crlf_action, conv_flags);
- 	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
- }
-@@ -1198,6 +1300,12 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
- 		}
- 	}
- 
-+	ret |= encode_to_worktree(path, src, len, dst, ca.working_tree_encoding);
-+	if (ret) {
-+		src = dst->buf;
-+		len = dst->len;
-+	}
-+
- 	ret_filter = apply_filter(
- 		path, src, len, -1, dst, ca.drv, CAP_SMUDGE, dco);
- 	if (!ret_filter && ca.drv && ca.drv->required)
-@@ -1664,6 +1772,9 @@ struct stream_filter *get_stream_filter(const char *path, const unsigned char *s
- 	if (ca.drv && (ca.drv->process || ca.drv->smudge || ca.drv->clean))
- 		return NULL;
- 
-+	if (ca.working_tree_encoding)
-+		return NULL;
-+
- 	if (ca.crlf_action == CRLF_AUTO || ca.crlf_action == CRLF_AUTO_CRLF)
- 		return NULL;
- 
-diff --git a/convert.h b/convert.h
-index 65ab3e5167..1d9539ed0b 100644
---- a/convert.h
-+++ b/convert.h
-@@ -12,6 +12,7 @@ struct index_state;
- #define CONV_EOL_RNDTRP_WARN  (1<<1) /* Warn if CRLF to LF to CRLF is different */
- #define CONV_EOL_RENORMALIZE  (1<<2) /* Convert CRLF to LF */
- #define CONV_EOL_KEEP_CRLF    (1<<3) /* Keep CRLF line endings as is */
-+#define CONV_WRITE_OBJECT     (1<<4) /* Content is written to the index */
- 
- extern int global_conv_flags_eol;
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index 6bc7c6ada9..e2f319d677 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -138,7 +138,7 @@ static int get_conv_flags(unsigned flags)
- 	if (flags & HASH_RENORMALIZE)
- 		return CONV_EOL_RENORMALIZE;
- 	else if (flags & HASH_WRITE_OBJECT)
--	  return global_conv_flags_eol;
-+		return global_conv_flags_eol | CONV_WRITE_OBJECT;
- 	else
+ static int encode_to_git(const char *path, const char *src, size_t src_len,
+@@ -352,6 +375,7 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
+ 	if (validate_encoding(path, enc, src, src_len, die_on_error))
  		return 0;
- }
+ 
++	trace_encoding("source", path, enc, src, src_len);
+ 	dst = reencode_string_len(src, src_len, default_encoding, enc,
+ 				  &dst_len);
+ 	if (!dst) {
+@@ -369,6 +393,7 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
+ 			return 0;
+ 		}
+ 	}
++	trace_encoding("destination", path, default_encoding, dst, dst_len);
+ 
+ 	strbuf_attach(buf, dst, dst_len, dst_len + 1);
+ 	return 1;
 diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
-new file mode 100755
-index 0000000000..8e574ccdd8
---- /dev/null
+index a318d03232..026544ce09 100755
+--- a/t/t0028-working-tree-encoding.sh
 +++ b/t/t0028-working-tree-encoding.sh
-@@ -0,0 +1,142 @@
-+#!/bin/sh
+@@ -4,6 +4,8 @@ test_description='working-tree-encoding conversion via gitattributes'
+ 
+ . ./test-lib.sh
+ 
++GIT_TRACE_WORKING_TREE_ENCODING=1 && export GIT_TRACE_WORKING_TREE_ENCODING
 +
-+test_description='working-tree-encoding conversion via gitattributes'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup test files' '
-+	git config core.eol lf &&
-+
-+	text="hallo there!\ncan you read me?" &&
-+	echo "*.utf16 text working-tree-encoding=utf-16" >.gitattributes &&
-+	printf "$text" >test.utf8.raw &&
-+	printf "$text" | iconv -f UTF-8 -t UTF-16 >test.utf16.raw &&
-+	printf "$text" | iconv -f UTF-8 -t UTF-32 >test.utf32.raw &&
-+
-+	# Line ending tests
-+	printf "one\ntwo\nthree\n" >lf.utf8.raw &&
-+	printf "one\r\ntwo\r\nthree\r\n" >crlf.utf8.raw &&
-+
-+	# BOM tests
-+	printf "\0a\0b\0c"                         >nobom.utf16be.raw &&
-+	printf "a\0b\0c\0"                         >nobom.utf16le.raw &&
-+	printf "\376\777\0a\0b\0c"                 >bebom.utf16be.raw &&
-+	printf "\777\376a\0b\0c\0"                 >lebom.utf16le.raw &&
-+	printf "\0\0\0a\0\0\0b\0\0\0c"             >nobom.utf32be.raw &&
-+	printf "a\0\0\0b\0\0\0c\0\0\0"             >nobom.utf32le.raw &&
-+	printf "\0\0\376\777\0\0\0a\0\0\0b\0\0\0c" >bebom.utf32be.raw &&
-+	printf "\777\376\0\0a\0\0\0b\0\0\0c\0\0\0" >lebom.utf32le.raw &&
-+
-+	# Add only UTF-16 file, we will add the UTF-32 file later
-+	cp test.utf16.raw test.utf16 &&
-+	cp test.utf32.raw test.utf32 &&
-+	git add .gitattributes test.utf16 &&
-+	git commit -m initial
-+'
-+
-+test_expect_success 'ensure UTF-8 is stored in Git' '
-+	test_when_finished "rm -f test.utf16.git" &&
-+
-+	git cat-file -p :test.utf16 >test.utf16.git &&
-+	test_cmp_bin test.utf8.raw test.utf16.git
-+'
-+
-+test_expect_success 're-encode to UTF-16 on checkout' '
-+	test_when_finished "rm -f test.utf16.raw" &&
-+
-+	rm test.utf16 &&
-+	git checkout test.utf16 &&
-+	test_cmp_bin test.utf16.raw test.utf16
-+'
-+
-+test_expect_success 'check $GIT_DIR/info/attributes support' '
-+	test_when_finished "rm -f test.utf32.git" &&
-+	test_when_finished "git reset --hard HEAD" &&
-+
-+	echo "*.utf32 text working-tree-encoding=utf-32" >.git/info/attributes &&
-+	git add test.utf32 &&
-+
-+	git cat-file -p :test.utf32 >test.utf32.git &&
-+	test_cmp_bin test.utf8.raw test.utf32.git
-+'
-+
-+for i in 16 32
-+do
-+	test_expect_success "eol conversion for UTF-${i} encoded files on checkout" '
-+		test_when_finished "rm -f crlf.utf${i}.raw lf.utf${i}.raw" &&
-+		test_when_finished "git reset --hard HEAD^" &&
-+
-+		cat lf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >lf.utf${i}.raw &&
-+		cat crlf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >crlf.utf${i}.raw &&
-+		cp crlf.utf${i}.raw eol.utf${i} &&
-+
-+		cat >expectIndexLF <<-EOF &&
-+			i/lf    w/-text attr/text             	eol.utf${i}
-+		EOF
-+
-+		git add eol.utf${i} &&
-+		git commit -m eol &&
-+
-+		# UTF-${i} with CRLF (Windows line endings)
-+		rm eol.utf${i} &&
-+		git -c core.eol=crlf checkout eol.utf${i} &&
-+		test_cmp_bin crlf.utf${i}.raw eol.utf${i} &&
-+
-+		# Although the file has CRLF in the working tree,
-+		# ensure LF in the index
-+		git ls-files --eol eol.utf${i} >actual &&
-+		test_cmp expectIndexLF actual &&
-+
-+		# UTF-${i} with LF (Unix line endings)
-+		rm eol.utf${i} &&
-+		git -c core.eol=lf checkout eol.utf${i} &&
-+		test_cmp_bin lf.utf${i}.raw eol.utf${i} &&
-+
-+		# The file LF in the working tree, ensure LF in the index
-+		git ls-files --eol eol.utf${i} >actual &&
-+		test_cmp expectIndexLF actual
-+	'
-+done
-+
-+test_expect_success 'check unsupported encodings' '
-+	test_when_finished "git reset --hard HEAD" &&
-+
-+	echo "*.set text working-tree-encoding" >.gitattributes &&
-+	printf "set" >t.set &&
-+	test_must_fail git add t.set 2>err.out &&
-+	test_i18ngrep "true/false are no valid working-tree-encodings" err.out &&
-+
-+	echo "*.unset text -working-tree-encoding" >.gitattributes &&
-+	printf "unset" >t.unset &&
-+	git add t.unset &&
-+
-+	echo "*.empty text working-tree-encoding=" >.gitattributes &&
-+	printf "empty" >t.empty &&
-+	git add t.empty &&
-+
-+	echo "*.garbage text working-tree-encoding=garbage" >.gitattributes &&
-+	printf "garbage" >t.garbage &&
-+	test_must_fail git add t.garbage 2>err.out &&
-+	test_i18ngrep "failed to encode" err.out
-+'
-+
-+test_expect_success 'error if encoding round trip is not the same during refresh' '
-+	BEFORE_STATE=$(git rev-parse HEAD) &&
-+	test_when_finished "git reset --hard $BEFORE_STATE" &&
-+
-+	# Add and commit a UTF-16 file but skip the "working-tree-encoding"
-+	# filter. Consequently, the in-repo representation is UTF-16 and not
-+	# UTF-8. This simulates a Git version that has no working tree encoding
-+	# support.
-+	echo "*.utf16le text working-tree-encoding=utf-16le" >.gitattributes &&
-+	echo "hallo" >nonsense.utf16le &&
-+	TEST_HASH=$(git hash-object --no-filters -w nonsense.utf16le) &&
-+	git update-index --add --cacheinfo 100644 $TEST_HASH nonsense.utf16le &&
-+	COMMIT=$(git commit-tree -p $(git rev-parse HEAD) -m "plain commit" $(git write-tree)) &&
-+	git update-ref refs/heads/master $COMMIT &&
-+
-+	test_must_fail git checkout HEAD^ 2>err.out &&
-+	test_i18ngrep "error: .* overwritten by checkout:" err.out
-+'
-+
-+test_done
+ test_expect_success 'setup test files' '
+ 	git config core.eol lf &&
+ 
 -- 
 2.16.2
 
