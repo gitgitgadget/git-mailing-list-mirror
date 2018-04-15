@@ -6,58 +6,60 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DFBF1F404
-	for <e@80x24.org>; Sun, 15 Apr 2018 21:37:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E95FE1F404
+	for <e@80x24.org>; Sun, 15 Apr 2018 21:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752900AbeDOVfl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Apr 2018 17:35:41 -0400
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:46064 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752708AbeDOVfk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Apr 2018 17:35:40 -0400
-Received: by mail-wr0-f177.google.com with SMTP id u11so20750077wri.12
-        for <git@vger.kernel.org>; Sun, 15 Apr 2018 14:35:39 -0700 (PDT)
+        id S1751983AbeDOVyM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Apr 2018 17:54:12 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:46425 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750960AbeDOVyL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Apr 2018 17:54:11 -0400
+Received: by mail-wr0-f195.google.com with SMTP id d1so20794399wrj.13
+        for <git@vger.kernel.org>; Sun, 15 Apr 2018 14:54:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=2xuxrauX0Dv4GTEUi7YesVCvtoH8P0jxXJNQguFYl0Y=;
-        b=VSL38WVM/zKrVgz3ctEnpEEHlWsTohyFNF+G9bQZX2osHxt0TPPrCXe40g3yhRvuip
-         hyjC6WlGbMvqH261dZFHCLzqvNLMDTKfioN0KuMeW5NjGa/3JV0Tusy8EaDi+DatTv77
-         54n/2j/1AM8DAr7NlgiGbst9veS1iGi2IA6j3KSW0D03mRXOpweTXL7oXFPttDJAkLi2
-         t+poHlU94YosLgH+aUBZpx+/t1pYXs7n/RByvXvSfKDI1JvFA87vx2ttH9c7gcFEcvV1
-         lI6VKpumU7Q1NsZPGEobwIao8aCXxJOpP6dVEOrVHeJAY+pR2R2T/06ItR2FkgYnGBsw
-         caTg==
+        bh=Xt6dvUXs9kza5vcCAhyp+Q8bPbTiMqz5731MXMqp974=;
+        b=RlI7fnCpWLWJ1/8QIx2IfpjL8rH8Vau6nPPj0k/Ig06pW+ph4wqVBfbvT7loG+JYJC
+         DuAAVxvhNbIKtdHgXDzMDe5UBxq8RW95ooI7uL9hX2bhdo4ZbKifl+TDnkzi7cFBgfpe
+         S4fsg+wM2G74Cg7fHLjIL6qpnDOTk3qP41R/D1cxQSLevPJMVN9Gdc191wNaA+lEzTmL
+         hXC17BUObQsqNh9qPA4JCK5E9eos1cWbCe5xEMpmms8ocRbMq7Za9ZvIu2EjYZbfH6Xd
+         qhdy5MkcrEAYiMuLzWOoJqF8Nfye0ttZDoBhSLdEun+1SJuiJie6yAwhkKgpIoebP5Eg
+         aHFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=2xuxrauX0Dv4GTEUi7YesVCvtoH8P0jxXJNQguFYl0Y=;
-        b=BX8jGde/SRjOQ1jUmZyD+1T1mSsLAl3bUIytvSH1kItJ5s4U4ds2drGZkKHbgg7bcD
-         zxfP8hWtWyPB8efYl/SNH1l7XdMBc698QzU5w30e/WPXDER3l9pUfdfPTc4cWtwO5pZz
-         5zX9QthSkWbWR7sF2XJEpZN8twGgpzLGKdPQ2vtrPVtHTGLOvVq/UP1NFIzIcjYjq2Me
-         ghsX/g872OPLjXobMWBqOxIBUP67hLL1hmNnP6x9SHO/2rog3PZqBAItYV79RijIqTIS
-         hxAtNls+00PzchiRJL0AOLCVMnPZbkzu0p48NpB5iAEdTIdyDulQSJ2r4hKE+Zv/aYcg
-         1LaQ==
-X-Gm-Message-State: ALQs6tD7s4tjtoYiChUQB1qIeNLAy2xA22I9tvC6TAAv2kQc75IdocrI
-        xGQ1/bzKXeRBrDXy9fkVOZ8=
-X-Google-Smtp-Source: AIpwx4+Dvv5OXoaVWs2djmzgnnihInJb3EQjFwFZP0BMaNJzpM8Ro43GibfHTkBQmjHVnR1kJ0CFlQ==
-X-Received: by 10.28.11.14 with SMTP id 14mr8697314wml.34.1523828138673;
-        Sun, 15 Apr 2018 14:35:38 -0700 (PDT)
+        bh=Xt6dvUXs9kza5vcCAhyp+Q8bPbTiMqz5731MXMqp974=;
+        b=DI6q6TPuWQoUBiVnWOGwNDzzum6cz3Go42e1nb8moKnM1SP/W2yZTaSSlzW+dEX4Tw
+         tQ6jXqCeak2BXnMahQ9aU+319WK6GaGg6QLwmmAExnVTCd8UKTHzzOSphlAG4Y32mDaf
+         GzCJGA0j4E04T99sSfRcsb4mKg4ARjPPMRBwn2BJ+skxd7OfUM9odgMIeNQScNNAy8DZ
+         JVL38uyYkzCy7/kvXqk82LPlpUASz8QfIpTMi6dJtOMlkLTxUQTapBPrwi8gl4EiGJET
+         KK7HSbWTtoF5wxcTDKCkM/0lHQvyOIc9Bgse2Eau48di5crBS2EzOWr1QUGn0bWLnSf6
+         vI5w==
+X-Gm-Message-State: ALQs6tCYsNyAaoopgYmccw4X6cLBZ6LA8rTKnr9pbeZpSxhg8kfMB3O+
+        8s2R1o3bAM5PrnndBwg4VLs=
+X-Google-Smtp-Source: AIpwx4/73eTyYYJ52PwvbOmi4ZKlVp1Ty9+T+bQFHSFLE6STngONlgVChMQbHL8us9dtx2v6dElcVg==
+X-Received: by 10.223.187.212 with SMTP id z20mr1535796wrg.51.1523829249834;
+        Sun, 15 Apr 2018 14:54:09 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v35sm3962814wrc.18.2018.04.15.14.35.37
+        by smtp.gmail.com with ESMTPSA id b97sm9077216wrd.64.2018.04.15.14.54.08
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 15 Apr 2018 14:35:38 -0700 (PDT)
+        Sun, 15 Apr 2018 14:54:09 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Bug: rebase -i creates committer time inversions on 'reword'
-References: <5f5d5b88-b3ac-ed4f-ee24-6ce2cba2bd55@kdbg.org>
-Date:   Mon, 16 Apr 2018 06:35:37 +0900
-In-Reply-To: <5f5d5b88-b3ac-ed4f-ee24-6ce2cba2bd55@kdbg.org> (Johannes Sixt's
-        message of "Fri, 13 Apr 2018 18:52:28 +0200")
-Message-ID: <xmqq7ep817bq.fsf@gitster-ct.c.googlers.com>
+To:     Kim Gybels <kgybels@infogroep.be>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] daemon: use timeout for uninterruptible poll
+References: <20180412210757.7792-1-kgybels@infogroep.be>
+        <20180412210757.7792-2-kgybels@infogroep.be>
+Date:   Mon, 16 Apr 2018 06:54:08 +0900
+In-Reply-To: <20180412210757.7792-2-kgybels@infogroep.be> (Kim Gybels's
+        message of "Thu, 12 Apr 2018 23:07:56 +0200")
+Message-ID: <xmqq36zw16gv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,61 +68,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Kim Gybels <kgybels@infogroep.be> writes:
 
-> I just noticed that all commits in a 70-commit branch have the same
-> committer timestamp. This is very unusual on Windows, where rebase -i of
-> such a long branch takes more than one second (but not more than 3 or
-> so thanks to the builtin nature of the command!).
->
-> And, in fact, if you mark some commits with 'reword' to delay the quick
-> processing of the patches, then the reworded commits have later time
-> stamps, but subsequent not reworded commits receive the earlier time
-> stamp. This is clearly not intended.
+> The poll provided in compat/poll.c is not interrupted by receiving
+> SIGCHLD. Use a timeout for cleaning up dead children in a timely manner.
 
-Hmm, I may be missing something without enough caffeine but I am
-puzzled how that would be possible.  With a "few picks, an edit, and
-a yet more picks" sequence, the first picks may share the same
-timestamp due to the git_default_date caching (which I think is a
-deliberate design choice we made), an edit that stops will let the
-concluding "commit" (either by the end user or invoked internally
-via "rebase --continue"), but because that process restarts afresh,
-the commits made by "yet more picks" cannot share the timestamp that
-was cached for the earliest ones from the same series, no?
+I think you identified the problem and diagnosed it correctly, but I
+find that the change proposed here introduces a severe layering
+violation.  The code is still calling what is called poll(), which
+should not have such a broken semantics.
 
-Ah, do you mean we have an internal sequence like this, when "rebase
---continue" wants to conclude an edit/reword?
+The ideal solution would be to fix the emulation so that it also
+properly works for reaping a dead child process, but if that is not
+possible, another solution that does not break the API layering
+would probably be to introduce our own version of something similar
+to poll() that helps various platforms that cannot implement the
+real poll() faithfully for whatever reason.  Such an xpoll() API
+function we introduce (and implement in compat/poll.c) may take, in
+addition to the usual parameters to reall poll(), the value of
+live_children we have at this call site.  With that
 
- - we figure out the committer ident, which grabs a timestamp and
-   cache it;
+ - On platforms whose poll() does work correctly for culling dead
+   children will just ignore the live_children paramater in its
+   implementation of xpoll()
 
- - we spawn "commit" to conclude the stopped step, letting it record
-   its beginning time (which is a bit older than the above) or its
-   ending time (which is much older due to human typing speed);
+ - On other platforms, it will shorten the timeout depending on the
+   need to cull dead children, just like your patch did.
 
- - subsequent "picks" are made in the same process, and share the
-   timestamp we grabbed in the first step, which is older than the
-   second one.
+Thanks.
 
-I guess we'd want a mechanism to tell ident.c layer "discard the
-cached one, as we are no longer in the same automated sequence", and
-use that whenever we spawn an editor (or otherwise go interactive).
 
 >
-> Perhaps something like this below is needed.
+> Signed-off-by: Kim Gybels <kgybels@infogroep.be>
+> ---
+>  daemon.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 >
-> diff --git a/ident.c b/ident.c
-> index 327abe557f..2c6bff7b9d 100644
-> --- a/ident.c
-> +++ b/ident.c
-> @@ -178,8 +178,8 @@ const char *ident_default_email(void)
->  
->  static const char *ident_default_date(void)
+> diff --git a/daemon.c b/daemon.c
+> index fe833ea7de..6dc95c1b2f 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -1147,6 +1147,7 @@ static int service_loop(struct socketlist *socklist)
 >  {
-> -	if (!git_default_date.len)
-> -		datestamp(&git_default_date);
-> +	strbuf_reset(&git_default_date);
-> +	datestamp(&git_default_date);
->  	return git_default_date.buf;
->  }
+>  	struct pollfd *pfd;
+>  	int i;
+> +	int poll_timeout = -1;
 >  
+>  	pfd = xcalloc(socklist->nr, sizeof(struct pollfd));
+>  
+> @@ -1161,8 +1162,13 @@ static int service_loop(struct socketlist *socklist)
+>  		int i;
+>  
+>  		check_dead_children();
+> -
+> -		if (poll(pfd, socklist->nr, -1) < 0) {
+> +#ifdef NO_POLL
+> +		poll_timeout = live_children ? 100 : -1;
+> +#endif
+> +		int ret = poll(pfd, socklist->nr, poll_timeout);
+> +		if  (ret == 0) {
+> +			continue;
+> +		} else if (ret < 0) {
+>  			if (errno != EINTR) {
+>  				logerror("Poll failed, resuming: %s",
+>  				      strerror(errno));
