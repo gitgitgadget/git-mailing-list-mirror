@@ -2,67 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6AF31F424
-	for <e@80x24.org>; Sun, 15 Apr 2018 11:21:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0E061F404
+	for <e@80x24.org>; Sun, 15 Apr 2018 12:21:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751270AbeDOLVg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Apr 2018 07:21:36 -0400
-Received: from mail2.luminati.io ([54.243.100.238]:36975 "EHLO
-        mail2.luminati.io" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751145AbeDOLVg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Apr 2018 07:21:36 -0400
-X-Greylist: delayed 451 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Apr 2018 07:21:36 EDT
-Received: (Haraka outbound); Sun, 15 Apr 2018 11:14:30 +0000
-Authentication-Results: mail2.luminati.io; auth=pass (cram-md5)
-Received: from [10.71.1.143] (wall-ext.hola.org [212.235.66.73])
-        by mail2.luminati.io (Haraka/2.8.18) with ESMTPSA id F9616E7A-8802-4B68-96EA-F3AA1F1F998B.1
-        envelope-from <michals@luminati.io> (authenticated bits=0)
-        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 verify=FAIL);
-        Sun, 15 Apr 2018 11:14:30 +0000
-To:     git@vger.kernel.org
-From:   Michal Sapozhnikov <michals@luminati.io>
-Subject: Generate more revenue from Git
-Message-ID: <c3a424c5-bc14-00e1-af7f-a74200951edf@luminati.io>
-Date:   Sun, 15 Apr 2018 14:14:03 +0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1752264AbeDOMV0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Apr 2018 08:21:26 -0400
+Received: from a27-142.smtp-out.us-west-2.amazonses.com ([54.240.27.142]:46078
+        "EHLO a27-142.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751190AbeDOMVZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 15 Apr 2018 08:21:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=7v7vs6w47njt4pimodk5mmttbegzsi6n; d=amazonses.com; t=1523794884;
+        h=Content-Type:From:To:Subject:Message-ID:Date:Content-Transfer-Encoding:MIME-Version:Feedback-ID;
+        bh=Q8pxFLMt/qZfjZJS9Wfp1L7mgH9KsxZEUYgHTBigG4M=;
+        b=XumISRgVnjGa+E0ayF3LL67rtTAGGUM6Wpiz1EGJ7tsthdX1oh6gOWQ1vJ9xRQHG
+        16HxUcbOEStyC3LHRVhowCboRI+FZHY6lonDzpauaIbFBgh09Ecblo1XRxk0iMUKd7X
+        dycMTqCowm7OVhCfAIpytIDWFEpnxGI9y4iPqIgg=
+Content-Type: text/plain
+From:   mqudsi@neosmart.net
+To:     git@vger.kernel.org, mqudsi@neosmart.net
+Subject: Regression in patch add?
+Message-ID: <01010162c940b8bb-d8139971-3ee2-4cd6-bb19-35126d46753b-000000@us-west-2.amazonses.com>
+Date:   Sun, 15 Apr 2018 12:21:24 +0000
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Feedback-ID: generatemorerevenuefromgit:michals:smtp:luminati
-DKIM-Signature: v=1;a=rsa-sha256;bh=tQ7Gw4+xSpkfJycxbfMqt6pDW954XWJMcQceaRNFYmY=;c=relaxed/simple;d=luminati.io;h=from;s=dkim;b=iK1btycKxcr6IIdEHY/TCvxD44ToMsq1xzK5Vy25becTwOWp7skMTMMXnqZP3DKBnuQCpyfdPYCzxscuFmqJhItxyXUiSinY23mY9fD1N3cqK9iM96GInFBN3IXjROyGhTQhdVeuX6QLDDziynYYPUnkkRnGNE+iZPp8xMIEUv0=
+X-SES-Outgoing: 2018.04.15-54.240.27.142
+Feedback-ID: 1.us-west-2.PCEy91/Vd+GU67P48MglE9FKtQG6qQD9MhgwC/YKQRM=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hello all,
 
-​​My name is Michal and I lead the SDK partnerships at Luminati.​ I assume your
-software earns money by charging users for a premium subscription or by showing
-ads - both models do not pay out much and harm the user experience.
+I'm currently running the latest version of git built from `master`, and
+I'm running into what appears to be a regression in the behavior of the
+piecewise `git add -p` when applying a manually edited chunk.
 
-We now offer you a third option.
+I first run `git add -p`, then manually edit a chunk (after hitting `s`
+once, if it matters). The chunk originally contains the following:
 
-Luminati’s monetization SDK for Windows desktop provides your users the option
-to use the software for free, and in exchange we pay you $3,000 USD per month,
-for every 100K daily active users.
-Luminati is the largest proxy network, having millions of IPs based on other
-developers who embedded our SDK. More information is available on
-http://luminati.io/sdk_win.
+```diff
+# Manual hunk edit mode -- see bottom for a quick guide
+@@ -20,7 +20,7 @@
+ 	"call dein#add('Shougo/dein.vim', {'rev': 'master'})
 
-I’d like to schedule a 15 minute call to let you know how we can start. Are you
-available tomorrow at 12:30pm your local time?
+ 	" Add or remove your plugins here:
+-	" call dein#add('flazz/vim-colorschemes')
+-	call dein#add('Haron-Prime/evening_vim')
++	call dein#add('flazz/vim-colorschemes')
++	call dein#add('danilo-augusto/vim-afterglow')
 
-Best Regards,
-Michal
--- 
-Michal Sapozhnikov | Business Manager, Luminati SDK | +972-50-2826778 | Skype:
-live:michals_43
-http://luminati.io/sdk_win
+ 	"core plugins that change the behavior of vim and how we use it globally
+```
+
+Under git 2.7.4, I can edit it to the following, which is accepted
+without a problem:
+
+```diff
+# Manual hunk edit mode -- see bottom for a quick guide
+@@ -20,7 +20,7 @@
+	"call dein#add('Shougo/dein.vim', {'rev': 'master'})
+
+	" Add or remove your plugins here:
+-	" call dein#add('flazz/vim-colorschemes')
+-	call dein#add('Haron-Prime/evening_vim')
++	call dein#add('flazz/vim-colorschemes')
++	call dein#add('Haron-Prime/evening_vim')
+
+	"core plugins that change the behavior of vim and how we use it globally
+```
+
+All I did here was remove one `+` line and manually add another (which
+is a variant of the second `-` line).
+
+Under git 2.17.0.252.gfe0a9ea, the same piece is opened in $VISUAL for
+editing (and if left unmodified applies OK), but when modified in the
+to the same exact value, after exiting the editor I receive the
+following error from git:
+
+    error: patch fragment without header at line 15: @@ -25,7 +25,8 @@
+
+I'm not sure what to make of this.
+
+Thank you,
+
+Mahmoud Al-Qudsi
+NeoSmart Technologies
+
+
