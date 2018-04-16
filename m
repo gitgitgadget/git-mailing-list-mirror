@@ -6,108 +6,121 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A29A01F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 02:09:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3BEF1F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 02:30:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752648AbeDPCJu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Apr 2018 22:09:50 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:47056 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752212AbeDPCJt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Apr 2018 22:09:49 -0400
-Received: by mail-wr0-f196.google.com with SMTP id d1so21551418wrj.13
-        for <git@vger.kernel.org>; Sun, 15 Apr 2018 19:09:49 -0700 (PDT)
+        id S1752690AbeDPCaF (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Apr 2018 22:30:05 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:34943 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752630AbeDPCaE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Apr 2018 22:30:04 -0400
+Received: by mail-wr0-f193.google.com with SMTP id w3so4986387wrg.2
+        for <git@vger.kernel.org>; Sun, 15 Apr 2018 19:30:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WHSzMqf7suLFF5JXSKv3jl0cYLt7tSlSXAMjeJsWhPM=;
-        b=T+aGaaG9EWv62F4hFmbhBgcramedUzTbCwu51xIS3zjuhSoCF0x2KBU4lYfURQyQVs
-         x7tRPS/0SBpeJdqNn4KNtNTgmd/vWOhFQpVUmI6zT8AH6XsoX1VQJF9VZtdAmZnnf+4g
-         QLda9R2VXLaLdIFM7H2nr7BrbGCTfnyEZu/OGUoRHOFJASFpxSzo9MUutyixdQwApsjW
-         NwhfVBfHGDac/eXdtCq9MxAJ1CHjUMVpePFiU0KTCY0Be9Bb32G7ILs2TzxWE+YDRzMb
-         /8J/HnHi4XLsilJXGBpazVafArAPcUMJ//QCm65ykRowT0dLq9iMujL768CSTf8K2ctn
-         yFgA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=hMChZEmZFPjarlSbkOl/LQTLNcbTQS2f7ptW38EY7mo=;
+        b=i5synEvJF7uLJ2UoA7VzhIkpZnNeOCHCg3Xtun4on/d9WILTn96uImdvJdTXOyRDC3
+         14y85rlvZJQVh4C1Ue0ZnaeUkMMFCUiHN5H43ejZEasROOerBcjz+F5LbzPopQzuMmzR
+         XlgYw1EqROI+Sm5IaA4wpK2N/1KQZKYyW9+NrdDXGefvOLltV6oxr/kZwqw8whm9I1nq
+         UwgthAfv5sTxw42zZhE8UYI3+ZqI2HzJCDPa0IUgIeaIDDlJGTnGVs+D3KIkx/zi99vu
+         kFOURCeefI+pvB6YUs6dWqAwlMSA0jJbEP3tpqb25EL4WflndxZQsGIqFRXLNogGVF8s
+         i5Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=WHSzMqf7suLFF5JXSKv3jl0cYLt7tSlSXAMjeJsWhPM=;
-        b=uRU0WUYQosjEt677+5Lab+ASYJVyRlulfR+U0XTYj5XALsioefCPYb5EhQ6LUXCO9d
-         Und0I9/EL4E8P2Yt2Cn2NFh5INKPRa0rpd7bSGtU8rncsIwl4qZ19c2TgWe6GTq27rcC
-         bTL4KZGZsNlR7EQ6YokU99I8lmNcv3lSzOMfFrVH/SSXbXm5RT8hLtRhp6RN9NaRqSNS
-         i4bTHz23RmRqyBXSyCJSbgIIrXTalmUZGuWjlWYqayo9RBR1nwiulAmi3vDDVIzd7LzG
-         iFl9CeVtntu1MzUfiMfsu5cARwg1UZbHIWcDVCLGyRGmkBbGLsioZCtGMALeBo4jy+7+
-         mqyw==
-X-Gm-Message-State: ALQs6tAnB3A2aYWXPrh9d+3ag1zJ5vZLVS3jaDnqb1kMC3snaZaDmr08
-        +xem4qJW7bmq4Iz8s4YbJ5o=
-X-Google-Smtp-Source: AIpwx4/BrRrDIAFce6Hi1pwYezbnQU6EjQ79iQ5bkmkFxHsrjSpJzXdj9vjzuxi9Hw77Fgb43tv+jg==
-X-Received: by 10.223.225.71 with SMTP id f7mr8362685wri.172.1523844588285;
-        Sun, 15 Apr 2018 19:09:48 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=hMChZEmZFPjarlSbkOl/LQTLNcbTQS2f7ptW38EY7mo=;
+        b=WIqZHb3FDbkAXVWM/+G6CWLtOnciBJJ2XZkpGTBIg7+dnUgfN8DlafYdnB2tctqLsP
+         p8M4iXxUZE5nPXLtnFaJpRUIa3XhZQcANK3obWBkJsv+Y+4mXJxaN9alpnF8SpoBrbrS
+         gbhVldXz4jNexK7vlWqUxQCk0C6myWNW90SZ2HpcEjVgIg40q51AP1JqpLdyRsh9DsPp
+         mvcvAhdf502u4eVsWmNeejdt3Z8f1cV8JvVWiTJ2Be9VrZRo/QRGqNw2lobEBobwvYAS
+         y1THLk2XfOrnGxPpXwzOgs76FZArgS+uU8itPxTTI+C+7SblXX0x1kEcN6pOu+FwrKPB
+         Sckw==
+X-Gm-Message-State: ALQs6tB0KNc8H2u8eNT8kst47+XIHNIASmhDkl7cyTsQ01kHzD3mga6s
+        odtmoJM6X/rkkfXEDajN9Ws=
+X-Google-Smtp-Source: AIpwx49ZS9dFTAhQkEoYnUndZo6adFsBprqeV2sLwcw/blb7lgLMShxLsY8+JhqJAmA2kVLfnNG7Kg==
+X-Received: by 10.28.53.194 with SMTP id c185mr9538398wma.27.1523845803237;
+        Sun, 15 Apr 2018 19:30:03 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b97sm10140979wrd.64.2018.04.15.19.09.47
+        by smtp.gmail.com with ESMTPSA id n20sm6138972wmc.24.2018.04.15.19.30.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 15 Apr 2018 19:09:47 -0700 (PDT)
+        Sun, 15 Apr 2018 19:30:01 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v7 2/4] worktree: improve message when creating a new worktree
-References: <20180331151804.30380-1-t.gummerer@gmail.com>
-        <20180415202917.4360-1-t.gummerer@gmail.com>
-        <20180415202917.4360-3-t.gummerer@gmail.com>
-Date:   Mon, 16 Apr 2018 11:09:46 +0900
-In-Reply-To: <20180415202917.4360-3-t.gummerer@gmail.com> (Thomas Gummerer's
-        message of "Sun, 15 Apr 2018 21:29:15 +0100")
-Message-ID: <xmqq604rzytx.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, szeder.dev@gmail.com,
+        Eric Sunshine <sunshine@sunshineco.com>, philipoakley@iee.org
+Subject: Re: [PATCH v2 2/6] git.c: implement --list-cmds=all and use it in git-completion.bash
+References: <20180326165520.802-1-pclouds@gmail.com>
+        <20180415164238.9107-1-pclouds@gmail.com>
+        <20180415164238.9107-3-pclouds@gmail.com>
+Date:   Mon, 16 Apr 2018 11:30:00 +0900
+In-Reply-To: <20180415164238.9107-3-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Sun, 15 Apr 2018 18:42:34 +0200")
+Message-ID: <xmqqy3hnyjbr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> Currently 'git worktree add' produces output like the following:
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash |  2 +-
+>  git.c                                  |  2 ++
+>  help.c                                 | 18 ++++++++++++++++++
+>  help.h                                 |  1 +
+>  4 files changed, 22 insertions(+), 1 deletion(-)
 >
->     Preparing ../foo (identifier foo)
->     HEAD is now at 26da330922 <title>
->
-> The '../foo' is the path where the worktree is created, which the user
-> has just given on the command line.  The identifier is an internal
-> implementation detail, which is not particularly relevant for the user
-> and indeed isn't mentioned explicitly anywhere in the man page.
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 3556838759..a5f13ade20 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -839,7 +839,7 @@ __git_commands () {
+>  	then
+>  		printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
+>  	else
+> -		git help -a|egrep '^  [a-zA-Z0-9]'
+> +		git --list-cmds=all
+>  	fi
+>  }
 
-OK.  Maybe there once was a place or two that took the identifier as
-an input to name a specific worktree to work on (perhaps "prune"?),
-but if we no longer do that (which makes sense, as we should be able
-to uniquely identify a worktree by the path to it), then it makes
-perfect sense to prevent it from appearing in the UI.
+To those of us who install a copy of git-completion.bash somewhere
+in $HOME and forget about it, while installing different versions of
+Git all the time for testing, may see breakage caused by an invalid
+combination of having new completion script with Git that does not
+know about --list=cmds=<all> option.  I do not think it matters too
+much, though ;-)
 
-> Instead of this message, print a message that gives the user a bit more
-> detail of what exactly 'git worktree' is doing.  There are various dwim
-> modes which are perform some magic under the hood, which should be
+> +void list_all_cmds(void)
+> +{
+> +	struct cmdnames main_cmds, other_cmds;
+> +	int i;
+> +
+> +	memset(&main_cmds, 0, sizeof(main_cmds));
+> +	memset(&other_cmds, 0, sizeof(other_cmds));
+> +	load_command_list("git-", &main_cmds, &other_cmds);
+> +
+> +	for (i = 0; i < main_cmds.cnt; i++)
+> +		puts(main_cmds.names[i]->name);
+> +	for (i = 0; i < other_cmds.cnt; i++)
+> +		puts(other_cmds.names[i]->name);
+> +
+> +	clean_cmdnames(&main_cmds);
+> +	clean_cmdnames(&other_cmds);
+> +}
+> +
 
-s/are perform/perform/, I think (no need to reroll, only to fix this).
+OK.
 
-> Additionally currently the "Preparing ..." line is printed to stderr,
-> while the "HEAD is now at ..." line is printed to stdout by 'git reset
-> --hard', which is used internally by 'git worktree add'.  Fix this
-> inconsistency by printing the "Preparing ..." message to stdout as
-> well.  As "Preparing ..." is not an error, stdout also seems like the
-> more appropriate output stream.
-
-I think it is a bug for reset to give this kind of informational
-message to the standard output stream.  A rule of thumb I use is "is
-this something that a user who wants quiet operation would wish to
-squelch with --quiet option?" and if the answer is yes, it should go
-to the standard error output, so info and progress should go to the
-standard output in general.
-
-But I am OK to unify to the standard output with this patch.  We may
-want to come back and correct _both_ this new message and what reset
-says, but that is outside the scope of this topic.
-
-Thanks.
+By reusing load_command_list(), the duplicate-removal logic at its
+end that is used for "help -a" kicks in; the above looks good.
