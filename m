@@ -2,207 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5A901F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 15:19:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A39B1F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 15:38:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751164AbeDPPTt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 11:19:49 -0400
-Received: from mail.javad.com ([54.86.164.124]:40226 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751110AbeDPPTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 11:19:47 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id A62F53FEB6;
-        Mon, 16 Apr 2018 15:19:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523891986;
-        bh=E0Bz1MyQgnFLBeWrMuHD4d8tnXxPevsJQcmTPitrG14=; l=1425;
-        h=Received:From:To:Subject;
-        b=WStaJHdCWKjb7jHTKPR1GovdAXHrOTjaLG07i5H6SAXIEAL3jjj8FsXmDDVB1LMtd
-         80PzMU6OyASFgN+k7nBJ53BF3dejUYJulZdOn+0F3YvPqRGgPkJTVWRHAhgPaK2mRO
-         +KsQfuGSYUgY5YTQhCjys87IY2hg1sI5RGRQVMYs=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1f85ux-0000iA-2y; Mon, 16 Apr 2018 18:19:43 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: Draft of Git Rev News edition 38
-References: <CAP8UFD0DagacfeismKoVgo=O1guRUV=u1=EbbwRyrY3g1MeQ8Q@mail.gmail.com>
-        <CAP8UFD1vFM8k-1Po=2QXZdBOuCca1Dg_FGaPnSi85hKp1je54w@mail.gmail.com>
-        <87in8rz65t.fsf@javad.com>
-        <CAP8UFD3JwHfyr=bByvjDrxboFL+yHVdZnbkXztsUuOU0aRD-9w@mail.gmail.com>
-        <87sh7v6vn4.fsf@javad.com>
-        <72f42205-c9c6-03aa-e8df-12e7062e8e62@gmail.com>
-Date:   Mon, 16 Apr 2018 18:19:43 +0300
-In-Reply-To: <72f42205-c9c6-03aa-e8df-12e7062e8e62@gmail.com> (Kaartic
-        Sivaraam's message of "Mon, 16 Apr 2018 20:37:16 +0530")
-Message-ID: <87efjf6uwg.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1750989AbeDPPib (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 11:38:31 -0400
+Received: from mail-ot0-f179.google.com ([74.125.82.179]:39746 "EHLO
+        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750732AbeDPPia (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 11:38:30 -0400
+Received: by mail-ot0-f179.google.com with SMTP id a14-v6so17870407otf.6
+        for <git@vger.kernel.org>; Mon, 16 Apr 2018 08:38:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=o6t9/JuzTZ36wffq35+FMrirKZyu0z+3cu3qVN5ZqIw=;
+        b=quQl8PLjgumwjKpwgJXZKxHqOBWplW6IbRK7dI8/wbCCAUylAsNRHmMFXQQ5icmdjr
+         SWnzqIstMxZq3BNpoYjiy/PXp716zWjpDb4Y3T9/2JKx6hZ/ujU4DWvvc/7qKRxqRn0p
+         lgBjctiFDJTY7sLTi4gCoE/e0b64Z+cBYmyiZvZuNYhgMBzatMHBKmlqbHv7WadWG8ge
+         e83rDh2zcm+RLTkoJMgsAl/SV+CeHYI8Efu8uFiYj8mkAVLmbbS2myWDppldIym/RWKp
+         sLisgnVLvb5aOJze7iJlu8KKC9rtucUe45QDvcN2jh4qIPZ4OsgABnUUjhlHRKWIlfWy
+         DY7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=o6t9/JuzTZ36wffq35+FMrirKZyu0z+3cu3qVN5ZqIw=;
+        b=G7OwnUNPcQzBDzB+BlbujwIvI7AHLDTx7sj3RDGvvUBGJAF5+jeLk6T8mu79K4B4Xv
+         r418cVG0U937VlES+rxkVEHyFEgu+PJHt3kFC3Yvi7ZzKj96Lb/bmy/iU/JcDT+wNmUy
+         rXx+LEpeMdegzldvigCB6mGG7W/kDa+Zw7aP0gW9i0yxwdlUYMqERl62suE+Uj2dMeVg
+         wR44+L5BxnLkh4npjnpLkdWorM+bo0QpM95Pu3Yv0MDdOfb7zYBtzB9y9nAUl2ZXNsKI
+         cK4EPcOSEEH6x0E0HsJJ/Zj99CjwEm4IIGs6MHr4/666w2kAHltHgihX/Ksw/1PFbq8R
+         Ixew==
+X-Gm-Message-State: ALQs6tByjoMqmkUQd2h/+eG35fZlWlW3+hCbK4wRW3an/8mKnAWGLKVv
+        nVXjNmwpKaY5LKA/nGSPVqLJh+OjqJpuLhcUcA4=
+X-Google-Smtp-Source: AIpwx4/kmAPEQ1b9jllHK2wI+oeROfJQjJ/sP+WKoJptlcyyyTEERXa3exoqhwuaB0fvyayIY7Csmjc/tQOa8Rb3TmQ=
+X-Received: by 2002:a9d:24c7:: with SMTP id z65-v6mr11375483ota.152.1523893110289;
+ Mon, 16 Apr 2018 08:38:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.74.198.152 with HTTP; Mon, 16 Apr 2018 08:37:59 -0700 (PDT)
+In-Reply-To: <8736zwozze.fsf@linux-m68k.org>
+References: <877ep8p9yz.fsf@linux-m68k.org> <xmqqin8s18pg.fsf@gitster-ct.c.googlers.com>
+ <8736zwozze.fsf@linux-m68k.org>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 16 Apr 2018 17:37:59 +0200
+Message-ID: <CACsJy8DofC0Q9HPE69d=Cd930yG04wTiJdx2j5J8qgSEstr-Pg@mail.gmail.com>
+Subject: Re: .gitattributes lookup doesn't respect GIT_WORK_TREE
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+On Mon, Apr 16, 2018 at 12:40 AM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+> On Apr 16 2018, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> I may be mistaken (I do not have the code in front of me right now)
+>> but IIRC after the setup.c code runs (which happens quite early in
+>> the sequence that starts from git.c::cmd_main()), the Git process
+>> moves to the top level of the working tree,
+>
+> git log/show don't appear to do that.
 
-> Hi,
->
-> On Monday 16 April 2018 08:33 PM, Sergey Organov wrote:
->> Christian Couder <christian.couder@gmail.com> writes:
->>> Here "the above article" means the Jake's "branch -l: print useful
->>> info whilst rebasing a non-local branch" article above the current
->>> article.
->
-> Just a little correction. I suppose Chris actually meant the "rebase -i:
-> offer to recreate merge commits" article written by Jake and not the
-> "branch -l: print useful info whilst rebasing a non-local branch" article.
->
-> That said, I read the draft and found it good except for two minor issues,
->
-> 1. I see the following sentence in the "Rebasing merges: a jorney to the
-> ultimate solution (Road Clear) (written by Jacob Keller)" article
->
-> 	"A few examples were tried, but it was proven that the original
-> 	concept did not work, as dropped commits could end up being
-> 	replaid into the merge commits, turning them into "evil"
-> 	merges."
->
-> I'm not sure if 'replaid' is proper English assuming the past tense of
-> replay was intended there (which I think is 'replayed').
-
-It could have meant, say, "reapplied", -- we need to ask the author.
-
-While we are at it, please also consider to replace "original concept"
-by "original algorithm", as it didn't work due to a mistake in the
-algorithm as opposed to failure of the concept itself.
-
--- Sergey
+Yeah we lazily set up worktree in some cases. Elsewhere in the
+chdir-notify thread, I suggested that we set up worktree
+unconditionally (but do not die setup fails; only die when a command
+specifically requests for worktree). That work would help make this
+work in most cases. But it's not materialized yet.
+-- 
+Duy
