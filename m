@@ -2,71 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF89F1F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 16:15:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEF4A1F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 16:18:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753488AbeDPQPF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 12:15:05 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:44700 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752777AbeDPQPC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 12:15:02 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 40Ptkr2Cblz1rMSd;
-        Mon, 16 Apr 2018 18:14:59 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 40Ptkq6b2gz1qqkx;
-        Mon, 16 Apr 2018 18:14:59 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id pLPK691wGgbB; Mon, 16 Apr 2018 18:14:59 +0200 (CEST)
-X-Auth-Info: oBJjFJ49kmRL9e0fO2sFYIiWfRRoO27CR9cSNKdkOAT3NZZlLQSf3OujvjUEoWJW
-Received: from localhost (ppp-188-174-148-193.dynamic.mnet-online.de [188.174.148.193])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Mon, 16 Apr 2018 18:14:59 +0200 (CEST)
-Received: by localhost (Postfix, from userid 1000)
-        id 397412C069F; Mon, 16 Apr 2018 18:14:58 +0200 (CEST)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: man page for "git remote set-url" seems confusing/contradictory
-References: <alpine.LFD.2.21.1804160538100.3564@localhost.localdomain>
-X-Yow:  RELATIVES!!
-Date:   Mon, 16 Apr 2018 18:14:58 +0200
-In-Reply-To: <alpine.LFD.2.21.1804160538100.3564@localhost.localdomain>
-        (Robert P. J. Day's message of "Mon, 16 Apr 2018 05:43:59 -0700
-        (PDT)")
-Message-ID: <87y3hn5drx.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1751840AbeDPQSo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 12:18:44 -0400
+Received: from ao2.it ([92.243.12.208]:40135 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750989AbeDPQSo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 12:18:44 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1f86ov-0003lI-L3; Mon, 16 Apr 2018 18:17:33 +0200
+Date:   Mon, 16 Apr 2018 18:18:41 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>,
+        Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Re: [RFC 02/10] submodule: fix getting custom gitmodule file in
+ fetch command
+Message-Id: <20180416181841.b486524b8b9b0e68e3a31bfa@ao2.it>
+In-Reply-To: <CAGZ79kbnc17PZ9_=8QLkZgUZ0DHJKfWnxrekmgkLGFBU_0ieug@mail.gmail.com>
+References: <20180412222047.5716-1-ao2@ao2.it>
+        <20180412222047.5716-3-ao2@ao2.it>
+        <CAGZ79kbnc17PZ9_=8QLkZgUZ0DHJKfWnxrekmgkLGFBU_0ieug@mail.gmail.com>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Apr 16 2018, "Robert P. J. Day" <rpjday@crashcourse.ca> wrote:
+On Thu, 12 Apr 2018 16:55:15 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-> i don't understand how you can clearly set the fetch and push URLs of
-> a remote independently, while the man page nonetheless insists that
-> "even though they can be set differently, must still refer to the same
-> place". how can they be set differently yet still must refer to the
-> same place?
+> Hi Antonio,
+> 
+> the subject line could also be
+>   fetch: fix custom submodule location
+> as I was not expecting this patch from the subject line.
+>
 
-They could be using different transport methods.  For example, for
-fetching the unauthenticated git: method could be used, but for pushing
-an authenticated method like ssh: is usually needed.
+OK.
 
-Andreas.
+> On Thu, Apr 12, 2018 at 3:20 PM, Antonio Ospite <ao2@ao2.it> wrote:
+> > Import the default git configuration before accessing the gitmodules
+> > file.
+> >
+> > This is important when a value different from the default one is set via
+> > the 'core.submodulesfile' config.
+> >
+> > Signed-off-by: Antonio Ospite <ao2@ao2.it>
+> > ---
+> >  builtin/fetch.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/builtin/fetch.c b/builtin/fetch.c
+> > index dcdfc66f0..d56636f74 100644
+> > --- a/builtin/fetch.c
+> > +++ b/builtin/fetch.c
+> > @@ -1428,8 +1428,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+> >         for (i = 1; i < argc; i++)
+> >                 strbuf_addf(&default_rla, " %s", argv[i]);
+> >
+> > -       config_from_gitmodules(gitmodules_fetch_config, NULL);
+> >         git_config(git_fetch_config, NULL);
+> > +       config_from_gitmodules(gitmodules_fetch_config, NULL);
+> 
+> Wouldn't this break the overwriting behavior?
+> e.g. you configure a submodule URL in .gitmodules and then override it
+> in .git/config,
+> then we'd currently first load config from the modules file and then override it
+> in git_config(git_fetch_config,..), whereas swapping them might have
+> unintended consequences? Do the tests pass with this patch?
+
+The patch changes the current behavior indeed, but it does not break
+any of the existing tests.
+
+Anyway, to be on the safe side, I could load only the
+core.submodulesFile option from the global configuration, maybe even in
+config_from_gitmodules() itself, before accessing the gitmodules file,
+but I still don't know how to do that.
+
+Is there an API to just load one config setting?
+
+Ciao,
+   Antonio
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
+
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
