@@ -2,88 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF3DC1F424
-	for <e@80x24.org>; Mon, 16 Apr 2018 08:55:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF8ED1F424
+	for <e@80x24.org>; Mon, 16 Apr 2018 09:39:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754352AbeDPIzP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 04:55:15 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:50712 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754157AbeDPIzO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 04:55:14 -0400
-Received: by mail-it0-f44.google.com with SMTP id r19-v6so10447628itc.0
-        for <git@vger.kernel.org>; Mon, 16 Apr 2018 01:55:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RrLAffuaogQwivXkyVAobIcY7xRD0CdolPvmYjAwsno=;
-        b=iJZEqeEkvtcoziUBpU3wxXIcW8GK4esFg57JJnSpcx/P3TqXj52S0qlAGETKY+SqUp
-         4r51eJ93riGf/6Gs2FhUp7IDHhkVAqcgA5YA/rKVvEFxQ0U9HMrobnG0d1O6ijnLdCgT
-         GmWTbSBD9RLzxTdoah0M7WfKT+vVyn/vB0ZB9reMJ0gsPW8dJCICSm8ca5aVgyQ9BbSk
-         iffjUFoVCBPX4EU/SfbJrTbkWkNNPqaG/Krzfwtu7+FXd76os+uq5gZ+Va9eWVGrIoqD
-         HfR2OQtXPWUFk2LyOYJcjo1N5SySqw13s0zc2b9KnC8mMZE+pj7Kke83KDS2bLOtlv5M
-         u55Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RrLAffuaogQwivXkyVAobIcY7xRD0CdolPvmYjAwsno=;
-        b=U3Dy/mP/996ICHu9Ts6Tm58FJpl2ZLXo5fBIubEDEpkaJOnx5CFiIUsUp+HjMCxrR4
-         E8XSdaEL096Tla6rgz3vjtaMR0sRZrL6nIiuRNEXJflIDS4OUB21QYW0Wk5vnA67DyeE
-         fU7EOUckom162wWJ4RC51KkhOJEdg2i8aBSrShd5PnvwY6DJ/dwZDLaYvXxJdcALDJLZ
-         C53WFLoyxCMGsCnzxnapnP/sWPslIwGvrECFsY/0tL1mPq6dUw6pC3WxCYd5wgV1W+B3
-         kbjiwqkQb466Sw67fj891ke85xKsu6iIlU7xLTB7ZHmxelW0yurbFx7S/bglpW/dTgCY
-         kV4A==
-X-Gm-Message-State: ALQs6tAgjL7psMvsePMSCyAn8uMeKcTBQ+gIzE12LBOWNpiBaTkVyxrn
-        US3zS9kZy1/TW2tiaPCpv5Bu9H76eR/bInYyDrU4OQ==
-X-Google-Smtp-Source: AIpwx4/K34tOTQMZPW0zZVs+nkcxHShreKUb234YGI/cDKwWUqaHNGmHFaUaNFhH16V1+7lrciLqpiKX5Au4xBkqvWI=
-X-Received: by 2002:a24:fa89:: with SMTP id v131-v6mr14052935ith.40.1523868913600;
- Mon, 16 Apr 2018 01:55:13 -0700 (PDT)
+        id S1754142AbeDPJjS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 05:39:18 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:58483 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753922AbeDPJjR (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 16 Apr 2018 05:39:17 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id 1488E20B5F;
+        Mon, 16 Apr 2018 05:39:17 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Mon, 16 Apr 2018 05:39:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=S7t5Nu
+        wV3D1qYOVyaVjHL9/W8+X318YEq/oiXw+I1Po=; b=bIuAZ7XZoMib1ZP1AuNqGV
+        Jok5r77RTLONNRemzNpzlVS4RjLlpYvHPwPyW+/M1+uD9Cg9VpLEpRVIC3MAA81/
+        o10UyI8yrmsvhJly4WTy3/AzUCHAut919L71qhjeevGT3ifZh/esye/q/yuueHez
+        W4qNR9p/1Cu/X8WZZq/fi5kU50Yvmb2d/DZ3EqkmUE82c+Dhl8ox5lenn+K1BpAw
+        m8pwL23tvjrnjFBBULOEdIZ/ioyn7AcIgMfve67l9NfgpTXpEtewKt/YHguXvyOe
+        QQBs6IHgplfL3pUkeECKLyXnY3eZfG3GzLT+kBH3X+p14BdRm/QIaGODQe5RyyLA
+        ==
+X-ME-Sender: <xms:RG_UWhvWqTVOSvRbGH0HrHqEkuqAIv1hBz7hxlwLEGEz469Sn9Bvdw>
+Received: from bod.fritz.box (p5482623f.dip0.t-ipconnect.de [84.130.98.63])
+        by mail.messagingengine.com (Postfix) with ESMTPA id A3F75E4925;
+        Mon, 16 Apr 2018 05:39:16 -0400 (EDT)
+Received: by bod.fritz.box (Postfix, from userid 1000)
+        id 6085E7C05C7; Mon, 16 Apr 2018 11:39:15 +0200 (CEST)
+From:   Michael Vogt <mvo@ubuntu.com>
+To:     git@vger.kernel.org, sbeller@google.com, avarab@gmail.com
+Subject: [PATCH v2] show: add --follow-symlinks option for <rev>:<path>
+Date:   Mon, 16 Apr 2018 11:36:24 +0200
+Message-Id: <20180416093625.15752-1-mvo@ubuntu.com>
+X-Mailer: git-send-email 2.17.0
+In-Reply-To: <87fu3yg6od.fsf@evledraar.gmail.com>
+References: <87fu3yg6od.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.79.34.219 with HTTP; Mon, 16 Apr 2018 01:55:12 -0700 (PDT)
-In-Reply-To: <CAP8UFD0DagacfeismKoVgo=O1guRUV=u1=EbbwRyrY3g1MeQ8Q@mail.gmail.com>
-References: <CAP8UFD0DagacfeismKoVgo=O1guRUV=u1=EbbwRyrY3g1MeQ8Q@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 16 Apr 2018 10:55:12 +0200
-Message-ID: <CAP8UFD1vFM8k-1Po=2QXZdBOuCca1Dg_FGaPnSi85hKp1je54w@mail.gmail.com>
-Subject: Re: Draft of Git Rev News edition 38
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 16, 2018 at 12:11 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> A draft of a new Git Rev News edition is available here:
->
->   https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-38.md
+Updated version of the `git show --follow-symlink` patch. This version
+includes the feedback from Ævar Arnfjörð Bjarmason and Stefan Beller:
 
-The draft has just been updated with 2 articles contributed by Jake
-about rebasing merges, so I am cc'ing more people involved in those
-discussions.
+- commit message updated
+- test fixes merged from Ævar (thanks!)
+- Documentation/git-show.txt clarified
 
-Thanks Jake!
+It does not include a test for --follow-symlinks in the dirlink case
+when a file is behind a dirlink symlink. This this currently fails with
+a non-descriptive error message. I hope to find time to improve this
+error message at some point and then a test for this will be added.
+
+It also does not include a test for a repo with symlinks when running
+on a system without SYMLINKS. I don't have access to such a system,
+sorry.
+
+
+
