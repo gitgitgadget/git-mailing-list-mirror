@@ -2,163 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 280FD1F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 19:58:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FA541F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 20:00:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753639AbeDPT6Z convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 16 Apr 2018 15:58:25 -0400
-Received: from prvmx04.microfocus.com ([130.57.1.219]:16791 "EHLO
-        prvmx04.microfocus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753633AbeDPT6Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 15:58:24 -0400
-Received: from prvxcaht04.microfocus.com (Not Verified[137.65.248.138]) by prvmx04.microfocus.com with Trustwave SEG (v7,5,8,10121) (using TLS: TLSv1.2, AES256-SHA256)
-        id <B5ad5005f0000>; Mon, 16 Apr 2018 13:58:23 -0600
-Received: from PRVXMB04.microfocus.com ([137.65.249.213]) by
- prvxcaht04.microfocus.com ([137.65.248.138]) with mapi id 14.03.0339.000;
- Mon, 16 Apr 2018 13:58:23 -0600
-From:   Isaac Chou <Isaac.Chou@microfocus.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Git fast-export with import marks file omits merge commits
-Thread-Topic: Git fast-export with import marks file omits merge commits
-Thread-Index: AdPVtTHRi0DsZmJvQeyoGe8DOEQKbQAB88Aw
-Date:   Mon, 16 Apr 2018 19:58:22 +0000
-Message-ID: <1D42A4F860DBEF4C91D0E09C5CDE20097EC178E8@prvxmb04.microfocus.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.70.12.51]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1753459AbeDPUAj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 16:00:39 -0400
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:39373 "EHLO
+        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753409AbeDPUAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 16:00:38 -0400
+Received: by mail-lf0-f50.google.com with SMTP id p142-v6so23923725lfd.6
+        for <git@vger.kernel.org>; Mon, 16 Apr 2018 13:00:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Kk3nooVZniZVVEPMuQwNQ9CfVsj0hrrbAAttt5CbhFk=;
+        b=uESznVO8BKb2kEEyMQuRN3ioi2ke5WJuK8y2zMsFcfpynPMVb8VMJ5h1YFttpvFLEv
+         ox/bgwk/9TtzbRY95QRXbw0s5OCB9lvnQsDnWLfMFA9S3vPi98Oy9s5jgVa6sbCBc8T9
+         SkAEO3qpDwR+kr5rNVPcC0Xqnw9uyJLWQRpa1ArRw5KEkrwHSRsp10NUDWtxjdk2JbKQ
+         1n4c1PO2+FJdjRTQ7/d9xVw6Riq1OKpiZPMH0L7bxy669FKJe/Ir2bCiuNNdnE+ZUBFd
+         DMNrK2ZP9w6FODf2kpb7OT4Xx4cUPtcc/6/elAbj0pp7q1/D9iuQB4hDXv1et33LS0MD
+         uMhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Kk3nooVZniZVVEPMuQwNQ9CfVsj0hrrbAAttt5CbhFk=;
+        b=G7Bs5F//swRaOKNJp6GQdaaFOweOF/9FSQJDz8vHJr1BGLVOah+IpHgOMIro6szoQf
+         FdtbQ31/NEEiwfi62xr6dRElgciDyjxc61UF2Rv+BsAs62eQBGRSPgWdqWlNCRiKRTpe
+         pF4y9qG9UrKwUN/TtBYZDVU6gXmQDLg+8+VXrPPK+B1YKDaUHK0ocj1loQmSN6U0H8pJ
+         +yPZj9RWrOiS4zAym1RwKmARHGRz8ZzUrPspHgn7/fS5J912H0xu1lWw+paZwU5IhMB0
+         Nd/4oKpgYpORv5SJ5Q0oHXHYveMB7n6Vnvl1A3TjwiMMPkHFUnlNZ6dOaZt6F/CcQV4f
+         /DCQ==
+X-Gm-Message-State: ALQs6tAJAQ3Bm7uQc2p1+uCtO3bnWPNNzriSyj3/Uzd76yjVJU/ySJsK
+        wOGPZ+5fMBiAyFX+1q+FV8Q4DB2hUeG/SjcJnBbEfQ==
+X-Google-Smtp-Source: AIpwx48xlMJLQxHaDIb52zHKxMvWmubDNs2Nzp+5XqPlk3JqaqIekWnMqsGGQrxarhGnPBy4HHzaSl7JQWDMffdYugg=
+X-Received: by 10.46.145.4 with SMTP id m4mr9940669ljg.73.1523908836905; Mon,
+ 16 Apr 2018 13:00:36 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.46.64.203 with HTTP; Mon, 16 Apr 2018 13:00:36 -0700 (PDT)
+From:   Alexander Mills <alexander.d.mills@gmail.com>
+Date:   Mon, 16 Apr 2018 13:00:36 -0700
+Message-ID: <CA+KyZp6K2rYwpcyRvuAYHxMg_pfxCMyaHRBu9LPawMqArJOqMw@mail.gmail.com>
+Subject: shortstat / stat / numstat for git log
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+@git
 
-I came across a change of behavior with Git version 2.15 and later where the fast-export command would omit the merge commits.  The same use case works correctly with Git version 2.14 and older.  Here is the detail of the use case:
+I have this question:
 
-0> git --version
-git version 2.16.2.windows.1
+https://stackoverflow.com/questions/49863038/get-numstat-or-stat-for-pretty-format
 
-1> git init
-Initialized empty Git repository in c:/./.git/
+I am looking to generage JSON with the pretty format, but apparent
 
-2> echo 1111 >> file.txt
+* stat
+* shortstat
+* numstat
 
-3> git add file.txt
+etc
 
-4> git commit -m "first commit"
-[master (root-commit) 711d4d5] first commit
-1 file changed, 1 insertion(+)
-create mode 100644 file.txt
+cannot be interpolated.
 
-5> git checkout -b test
-Switched to a new branch 'test'
+can this be updated / improved?
 
-6> echo 2222 >> file.txt
+-alex
 
-7> git add file.txt
 
-8> git commit -m "commit on test branch"
-[test 76d231c] commit on test branch
-1 file changed, 1 insertion(+)
+-- 
+Alexander D. Mills
+! New cell phone number: (415)766-8243
+alexander.d.mills@gmail.com
 
-9> git checkout master
-Switched to branch 'master'
-
-10> echo 3333 >> file.txt
-
-11> git add file.txt
-
-12> git commit -m "commit on master branch"
-[master 61c55fd] commit on master branch
-1 file changed, 1 insertion(+)
-
-13> git merge test
-Auto-merging file.txt
-CONFLICT (content): Merge conflict in file.txt
-Automatic merge failed; fix conflicts and then commit the result.
-
-14> notepad file.txt
-
-15> git add file.txt
-
-16> git commit -m "merged with test branch"
-[master 1442e0e] merged with test branch
-
-17> git log
-commit 1442e0ee728c831e74550329e39d27d4188b4422 (HEAD -> master)
-Merge: 61c55fd 76d231c
-Author: isaac <...>
-Date:   Mon Apr 16 15:08:39 2018 -0400
-
-    merged with test branch
-
-commit 61c55fdb883fc403e63c91b49bc11bdade62b3e8
-Author: isaac <...>
-Date:   Mon Apr 16 15:07:41 2018 -0400
-
-    commit on master branch
-
-commit 76d231cdb12eb84f45abdebede06a56f912613d3 (test)
-Author: isaac <...>
-Date:   Mon Apr 16 15:07:07 2018 -0400
-
-    commit on test branch
-
-commit 711d4d5781df41924421f8629af040e7c91a8d2e
-Author: isaac <...>
-Date:   Mon Apr 16 15:06:07 2018 -0400
-
-    first commit
-
-18> echo :1 711d4d5781df41924421f8629af040e7c91a8d2e > git-marks
-
-19> cat git-marks
-:1 711d4d5781df41924421f8629af040e7c91a8d2e
-
-20> git fast-export --use-done-feature --import-marks=git-marks refs/heads/master --
-feature done
-blob
-mark :2
-data 12
-1111
-2222
-
-commit refs/heads/master
-mark :3
-author isaac <...> 1523905627 -0400
-committer isaac <...> 1523905627 -0400
-data 22
-commit on test branch
-from :1
-M 100644 :2 file.txt
-
-blob
-mark :4
-data 12
-1111
-3333
-
-commit refs/heads/master
-mark :5
-author isaac <...> 1523905661 -0400
-committer isaac <...> 1523905661 -0400
-data 24
-commit on master branch
-from :1
-M 100644 :4 file.txt
-
-done
-
-Thanks,
-
-Isaac
-
+www.linkedin.com/pub/alexander-mills/b/7a5/418/
