@@ -2,104 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C3AB1F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 13:30:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B36541F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 14:03:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754942AbeDPNaC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 09:30:02 -0400
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:37724 "EHLO
-        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752824AbeDPNaB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 09:30:01 -0400
-Received: by mail-lf0-f42.google.com with SMTP id b23-v6so3139654lfg.4
-        for <git@vger.kernel.org>; Mon, 16 Apr 2018 06:30:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=AUqjg2uuoG95IAwM1Xk5b8aycmjiU0JFw3r/jfAc//k=;
-        b=pAVEdd0MyABQdLn423ooY0QyaBvCM/I6fKdcNzY7yHz3d0IgLL8eO65uZGxSvyGvsF
-         PZ6qaKViKapZrnEACXO19VW3lhFbxQIrPpjaMiFB+LOBiS4nM9sBYRBZdahtiAFsmypa
-         dTuPgt+ojm0PdDTdMvEkVZzHwqYhTw3XsfprsYyvtj8riXQLIu1gv1lF9ZedFlhBYEs8
-         P/Oar0KtWqejPqMTiQ1/+8zveYegl0fF+zpRDulRME/f6Zfjc21QmXHVxHJrSgfoHdfu
-         ipSZ/xXo1NTa4mDEmGofyuX/9fAq/H4aXkWwjnKTW1hmlPN/xtRiAYITdbzt57synj8/
-         FFzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=AUqjg2uuoG95IAwM1Xk5b8aycmjiU0JFw3r/jfAc//k=;
-        b=Twr4+MlGxHJBUXQ56yram6W67OJcqLZlE9GDDj1c90+VQBT3srVBj5ecdVXa4qPRTk
-         m8I2a0Kd+AGp/8Ss2dh5Crkn9/KzpSnLrFCp8vNnGiBxaK9LDQzB8HoKKVPTbckoGEFj
-         p0ZrPRm2Jqum/mY2dnX1InsmmwnKroxiS08T+acWbcZmubFLbDpNr0Ghgz4tpMqAGlCq
-         ETzfkIc8q+BBYpAeKyFfiIa6zGGRou0yHyF1p3TdI3bFHmiHG9B/eaNEVz4H25+5nuDh
-         yC+Ji0H/vNJzKbvsJxumq1qvcWIwvqidHlc7hxnabu0SxQY9LDANU0EDQOt95afVmmr4
-         IO5A==
-X-Gm-Message-State: ALQs6tBA4OlBDhHwTgdybZDR85IKlkBtnRNfO1C+x0x/D1mNdZ+/e6u8
-        +Ta5Yj4QA4zhLSO3It6fcbCTUGusyNFFA5irAxyL3A==
-X-Google-Smtp-Source: AIpwx4/taRN5of9POw5p7TqTxW2C7eoq4i8c9EeDaOL3qgCC9tGLaN8d4PUun6xa5fCsYWfk6wHckUiLxuHjiKeZB9k=
-X-Received: by 2002:a19:1895:: with SMTP id 21-v6mr8928855lfy.39.1523885399654;
- Mon, 16 Apr 2018 06:29:59 -0700 (PDT)
+        id S1755168AbeDPODs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 10:03:48 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:48870 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750973AbeDPODr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 10:03:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=vBfCvHcDJhR7H4iFy5RTdB+eo7I5AQpIaP4zKg9XWtg=; b=OebPm99GOs/qTzqixlRz6wiutP
+        Y46aWOMQpp2f0qe5JF9bGeB3cU3akj7ZmVEdVe8skyFMww6bVbRmacU27G+f177az/ShNPOAT0C7t
+        Nt7XQvRseWg1udh0dsoctjQvFxolFi2BlPRWQ5hxWco3byOET92Z/ldLzf08H7I++w64b1h1WTX0E
+        1MOD90ZhgV/sjVv62Frn+rWmz/6q1/3J22lcIQqUtRVkY2DQ2HgLdLed3ANpG0Q5TNK8+MN8jQfiG
+        oAzft5FCJwp6/EZMUaa0952+duaX3QYmSXOdywMRWE12bXyO5nsWlP+JZV/v0fW8KRm2aEV4hkUF2
+        Si4Lq4mg==;
+Received: from [209.37.255.2] (port=52430 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89_1)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1f84jK-0003C1-87
+        for git@vger.kernel.org; Mon, 16 Apr 2018 10:03:46 -0400
+Date:   Mon, 16 Apr 2018 07:03:36 -0700 (PDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: "proper" way to deactivate push for a remote?
+Message-ID: <alpine.LFD.2.21.1804160659300.6118@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Received: by 2002:a19:4a4c:0:0:0:0:0 with HTTP; Mon, 16 Apr 2018 06:29:19
- -0700 (PDT)
-In-Reply-To: <CAM0VKjm=jyetT9ucNbOYxQ19BGYr8nWzAi+WUnsHPuRTrSG9SA@mail.gmail.com>
-References: <ACE8F169-7700-4D60-85CB-786C6BEBF0B7@1eanda.com>
- <20180413103005.671-1-szeder.dev@gmail.com> <86604un5mz.fsf@gmail.com>
- <CAM0VKjkKE695mMPgmfgzWJPaJThdLDSESV9KmupQX_bm-6MW-w@mail.gmail.com>
- <xmqq7ep7ybw2.fsf@gitster-ct.c.googlers.com> <CAM0VKjm=jyetT9ucNbOYxQ19BGYr8nWzAi+WUnsHPuRTrSG9SA@mail.gmail.com>
-From:   =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Date:   Mon, 16 Apr 2018 15:29:19 +0200
-Message-ID: <CANQwDwf8sBFuKBXG6Yt5CH9+E2doqB6rB-_oQ4U7vjTOYBfu_g@mail.gmail.com>
-Subject: Re: [PATCH] completion: reduce overhead of clearing cached --options
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Matthew Coleman <matt@1eanda.com>,
-        Stephon Harris <theonestep4@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16 April 2018 at 15:15, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote:
-> On Mon, Apr 16, 2018 at 7:10 AM, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> > SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
-> >> On Fri, Apr 13, 2018 at 11:44 PM, Jakub Narebski <jnareb@gmail.com> wr=
-ote:
-> >>> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
-> >>>>
-> >>>> In Bash we can do better: run the 'compgen -v __gitcomp_builtin_'
-> >>>> builtin command, which lists the same variables, but without a
-> >>>> pipeline and 'sed' it can do so with lower overhead.
-> >>>
-> >>> What about ZSH?
-> >>
-> >> Nothing, ZSH is unaffected by this patch.
-> >
-> > OK, do we want to follow it up with [PATCH 2/1] to add the LC_ALL=3DC
-> > thing to the ZSH side to help that "sed", then?
->
-> No.  'sed' would only need need help when its input comes from a buggy
-> 'set' builtin of a particular version of Bash from a particular vendor.
->
-> As far as I can test this in Travis CI's OSX builds, ZSH doesn't seem to
-> be affected, neither the version Apple ships by default nor the version
-> installed via homebrew.
 
-That's nice - this means that the patch fixes all of the issue.
-The above information should be, in my opinion, included
-in the commit message, though.
+ another feature i've seen for the very first time ... working with
+kubernetes so i checked it out of github, and part of the instructions
+for that is to make sure you don't accidentally try to push back to
+the github remote, so the directions suggest:
 
-Best,
---=20
-Jakub Nar=C4=99bski
+$ git remote add upstream https://github.com/kubernetes/kubernetes.git
+$ git remote set-url --push upstream no_push
+
+  fair enough, i just assumed the word "no_push" was some magical
+keyword in that context, but as i read it, all you need to do is put
+*some* invalid URL value there, is that correct?
+
+  and is that the accepted way to do that? what about just deleting
+that line from .git/config? is that valid, or is there a different
+recommendation for doing that? thanks.
+
+rday
