@@ -2,116 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C6711F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 02:03:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A29A01F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 02:09:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752652AbeDPCD0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Apr 2018 22:03:26 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:41946 "EHLO
-        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752552AbeDPCDZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Apr 2018 22:03:25 -0400
-Received: by mail-io0-f182.google.com with SMTP id r69so9966657iod.8
-        for <git@vger.kernel.org>; Sun, 15 Apr 2018 19:03:25 -0700 (PDT)
+        id S1752648AbeDPCJu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Apr 2018 22:09:50 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:47056 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752212AbeDPCJt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Apr 2018 22:09:49 -0400
+Received: by mail-wr0-f196.google.com with SMTP id d1so21551418wrj.13
+        for <git@vger.kernel.org>; Sun, 15 Apr 2018 19:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=PaKsyJ/AQ+Jqvuy8AGZosReCo0zG1i5YFFwQWj4OgP8=;
-        b=RGv07tqiDNzZv6YIEfGBUX4xmMvcGViZKgtTaxAQ8kJNPm5mq1CyzWdc4blUH8CH8p
-         CmjN+J+ppVUxi5nPhUdfVd9z5BpMX/+3N4y9tmWTcMsehL/wkPkGcUcrVEf9/3LolOAn
-         R5M4OaMiEVC3bJnU9y6xVN5GovP+8payCrlrNUfb2DGhJXS6sF+uo1aY6MINxJY/Hwvr
-         Zy4dxtNlkozK6r8ehLnYIbHIa9aUY/R4IBQW0jLQrhjEmoSkSjopAU7Xj8kVpcnaHceM
-         RA1kTJg54qXkAeN24g5Yh4oEtRKBpi0sVABvS0UWybkcCbMKVLs2JQpcY/8OlXN7rKnm
-         k6IQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=PaKsyJ/AQ+Jqvuy8AGZosReCo0zG1i5YFFwQWj4OgP8=;
-        b=T1qS+WzBBL6qqNQtCXS6jzSsUnru1Pso5TLiHDhHAcLMfCtsMZX8EFHUVeY4DeMbMi
-         GGIqFfi0G4/aKyXFPLKaDZCgtXFga9R4EydkOE3E5vswmTbh+psuUzeOMmyeTuEaaLKc
-         FhWUWSRkLhPidOGSlFT0cD3WOyvJ6oEH7TEyE=
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=WHSzMqf7suLFF5JXSKv3jl0cYLt7tSlSXAMjeJsWhPM=;
+        b=T+aGaaG9EWv62F4hFmbhBgcramedUzTbCwu51xIS3zjuhSoCF0x2KBU4lYfURQyQVs
+         x7tRPS/0SBpeJdqNn4KNtNTgmd/vWOhFQpVUmI6zT8AH6XsoX1VQJF9VZtdAmZnnf+4g
+         QLda9R2VXLaLdIFM7H2nr7BrbGCTfnyEZu/OGUoRHOFJASFpxSzo9MUutyixdQwApsjW
+         NwhfVBfHGDac/eXdtCq9MxAJ1CHjUMVpePFiU0KTCY0Be9Bb32G7ILs2TzxWE+YDRzMb
+         /8J/HnHi4XLsilJXGBpazVafArAPcUMJ//QCm65ykRowT0dLq9iMujL768CSTf8K2ctn
+         yFgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=PaKsyJ/AQ+Jqvuy8AGZosReCo0zG1i5YFFwQWj4OgP8=;
-        b=SKbUGZpdXSsdNKVq30No5fZstO1HXv5BTrs0yPoRIsz+0l5UHxHp1bT7M5zVexMy3t
-         fGp5fzIMPGuILAek9uzWtP3mYB/PLpk3S9hHdip9LlQv0DQzIIQEXxZ9nQ2OyyRsM5/5
-         h3KnlNIAp5EAaFPdXD6MXOT2SFy9W5dYz/aFBqkNBMcyPCLIwWCc8H94JnA2d9uL3N3C
-         PIZakeVyj+IqGqtwqBLQGNKUdnF9CRewhe8v2KPdViA5PIJPPLZvTgplGM1eecp69Z5h
-         x3zeFq13qK4Nxm+Eo7OScvqSODKQ1TEcNPjlwJ0wNc5wbaBiQdZdxmpkdMI9j7wLGugt
-         rxxQ==
-X-Gm-Message-State: ALQs6tBucAYSB087XF4mIazMp7T1PK6s4Nbik4FIvVdw5zyBQn6ufq2I
-        HFIxwk6z9HJBJN59og4qSt82QL5sJ4KG6N58D6M=
-X-Google-Smtp-Source: AIpwx4+HBS6m/55fcn9Eow4DZaONQJUHsFB8vWJYucb+fjaVEHxpAZtNhewoU0WxdGrYgQxBfjcdgJDPLZh7g2TyZCc=
-X-Received: by 10.107.47.215 with SMTP id v84mr7050894iov.48.1523844205041;
- Sun, 15 Apr 2018 19:03:25 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=WHSzMqf7suLFF5JXSKv3jl0cYLt7tSlSXAMjeJsWhPM=;
+        b=uRU0WUYQosjEt677+5Lab+ASYJVyRlulfR+U0XTYj5XALsioefCPYb5EhQ6LUXCO9d
+         Und0I9/EL4E8P2Yt2Cn2NFh5INKPRa0rpd7bSGtU8rncsIwl4qZ19c2TgWe6GTq27rcC
+         bTL4KZGZsNlR7EQ6YokU99I8lmNcv3lSzOMfFrVH/SSXbXm5RT8hLtRhp6RN9NaRqSNS
+         i4bTHz23RmRqyBXSyCJSbgIIrXTalmUZGuWjlWYqayo9RBR1nwiulAmi3vDDVIzd7LzG
+         iFl9CeVtntu1MzUfiMfsu5cARwg1UZbHIWcDVCLGyRGmkBbGLsioZCtGMALeBo4jy+7+
+         mqyw==
+X-Gm-Message-State: ALQs6tAnB3A2aYWXPrh9d+3ag1zJ5vZLVS3jaDnqb1kMC3snaZaDmr08
+        +xem4qJW7bmq4Iz8s4YbJ5o=
+X-Google-Smtp-Source: AIpwx4/BrRrDIAFce6Hi1pwYezbnQU6EjQ79iQ5bkmkFxHsrjSpJzXdj9vjzuxi9Hw77Fgb43tv+jg==
+X-Received: by 10.223.225.71 with SMTP id f7mr8362685wri.172.1523844588285;
+        Sun, 15 Apr 2018 19:09:48 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b97sm10140979wrd.64.2018.04.15.19.09.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 15 Apr 2018 19:09:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v7 2/4] worktree: improve message when creating a new worktree
+References: <20180331151804.30380-1-t.gummerer@gmail.com>
+        <20180415202917.4360-1-t.gummerer@gmail.com>
+        <20180415202917.4360-3-t.gummerer@gmail.com>
+Date:   Mon, 16 Apr 2018 11:09:46 +0900
+In-Reply-To: <20180415202917.4360-3-t.gummerer@gmail.com> (Thomas Gummerer's
+        message of "Sun, 15 Apr 2018 21:29:15 +0100")
+Message-ID: <xmqq604rzytx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.95.15 with HTTP; Sun, 15 Apr 2018 19:03:24 -0700 (PDT)
-In-Reply-To: <xmqqbmekylgc.fsf@gitster-ct.c.googlers.com>
-References: <CA+55aFzLZ3UkG5svqZwSnhNk75=fXJRkvU1m_RHBG54NOoaZPA@mail.gmail.com>
- <xmqq604w2j4u.fsf@gitster-ct.c.googlers.com> <xmqqtvsg10bu.fsf@gitster-ct.c.googlers.com>
- <CA+55aFxA9YVLoh_23V8Hi+X7ODEmqg-dhdAYZz1jbq5JhXqBFw@mail.gmail.com>
- <CA+55aFwM2CaafNGq8_=GkYAw9inpm-4xcyHUmKprLv4Gb3-aVg@mail.gmail.com>
- <CA+55aFw5mpEcEpPTOWych-kjNLc8pEn8FdjJHe2u7HUBBLy-Fw@mail.gmail.com>
- <CA+55aFwwVZDetd-SobOzzLQW4_GEwm3krxEGR+cpqzkzK-yiwQ@mail.gmail.com>
- <CABPp-BHQsOSCJiPU9Ku5b67QTkAjnEBrhx04mTXf2QdPBriHmw@mail.gmail.com>
- <CA+55aFwi9pTAJT_qtv=vHLgu=B1fdXBoD96i8Y5xnbS=zrfSzg@mail.gmail.com> <xmqqbmekylgc.fsf@gitster-ct.c.googlers.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Sun, 15 Apr 2018 19:03:24 -0700
-X-Google-Sender-Auth: 16UuelDsp6HJvEkOTwILDObnLus
-Message-ID: <CA+55aFxP8j7YbYaRXt-8Y0n8cHafB=FPKMy8gKFYH5QsKX4S=Q@mail.gmail.com>
-Subject: Re: Optimizing writes to unchanged files during merges?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 15, 2018 at 6:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
+
+> Currently 'git worktree add' produces output like the following:
 >
-> I think Elijah's corrected was_tracked() also does not care "has
-> this been renamed".
+>     Preparing ../foo (identifier foo)
+>     HEAD is now at 26da330922 <title>
+>
+> The '../foo' is the path where the worktree is created, which the user
+> has just given on the command line.  The identifier is an internal
+> implementation detail, which is not particularly relevant for the user
+> and indeed isn't mentioned explicitly anywhere in the man page.
 
-I'm perfectly happy with the slightly smarter patches. My patch was
-really just an RFC and because I had tried it out.
+OK.  Maybe there once was a place or two that took the identifier as
+an input to name a specific worktree to work on (perhaps "prune"?),
+but if we no longer do that (which makes sense, as we should be able
+to uniquely identify a worktree by the path to it), then it makes
+perfect sense to prevent it from appearing in the UI.
 
-> One thing that makes me curious is what happens (and what we want to
-> happen) when such a "we already have the changes the side branch
-> tries to bring in" path has local (i.e. not yet in the index)
-> changes.  For a dirty file that trivially merges (e.g. a path we
-> modified since our histories forked, while the other side didn't do
-> anything, has local changes in the working tree), we try hard to
-> make the merge succeed while keeping the local changes, and we
-> should be able to do the same in this case, too.
+> Instead of this message, print a message that gives the user a bit more
+> detail of what exactly 'git worktree' is doing.  There are various dwim
+> modes which are perform some magic under the hood, which should be
 
-I think it might be nice, but probably not really worth it.
+s/are perform/perform/, I think (no need to reroll, only to fix this).
 
-I find the "you can merge even if some files are dirty" to be really
-convenient, because I often keep stupid test patches in my tree that I
-may not even intend to commit, and I then use the same tree for
-merging.
+> Additionally currently the "Preparing ..." line is printed to stderr,
+> while the "HEAD is now at ..." line is printed to stdout by 'git reset
+> --hard', which is used internally by 'git worktree add'.  Fix this
+> inconsistency by printing the "Preparing ..." message to stdout as
+> well.  As "Preparing ..." is not an error, stdout also seems like the
+> more appropriate output stream.
 
-For example, I sometimes end up editing the Makefile for the release
-version early, but I won't *commit* that until I actually cut the
-release. But if I pull some branch that has also changed the Makefile,
-it's not worth any complexity to try to be nice about the dirty state.
+I think it is a bug for reset to give this kind of informational
+message to the standard output stream.  A rule of thumb I use is "is
+this something that a user who wants quiet operation would wish to
+squelch with --quiet option?" and if the answer is yes, it should go
+to the standard error output, so info and progress should go to the
+standard output in general.
 
-If it's a file that actually *has* been changed in the branch I'm
-merging, and I'm more than happy to just stage the patch (or throw it
-away - I think it's about 50:50 for me).
+But I am OK to unify to the standard output with this patch.  We may
+want to come back and correct _both_ this new message and what reset
+says, but that is outside the scope of this topic.
 
-So I don't think it's a big deal, and I'd rather have the merge fail
-very early with "that file has seen changes in the branch you are
-merging" than add any real complexity to the merge logic.
-
-                Linus
+Thanks.
