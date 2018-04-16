@@ -7,116 +7,136 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F25551F424
-	for <e@80x24.org>; Mon, 16 Apr 2018 09:48:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 977AE1F424
+	for <e@80x24.org>; Mon, 16 Apr 2018 10:00:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754177AbeDPJsX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 05:48:23 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:32991 "EHLO
+        id S1753755AbeDPKA4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 06:00:56 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:43670 "EHLO
         smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753073AbeDPJsU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 05:48:20 -0400
+        with ESMTP id S1752883AbeDPKAz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 06:00:55 -0400
 Received: from [192.168.2.201] ([92.28.131.105])
         by smtp.talktalk.net with SMTP
-        id 80kDfMgntHCow80kDf8Dt4; Mon, 16 Apr 2018 10:48:18 +0100
+        id 80wPfMi4XHCow80wPf8EKd; Mon, 16 Apr 2018 11:00:54 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1523872098;
-        bh=9D+FLxVItxmzodjUKFCIQFUZhZluxd6h2uCQWBG1uQs=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=da3/8NSxPXl8GCebezz046hnBqKbauvxYtGhw89aEWrMhWOY90y65ah6VLyjFVP4k
-         FzHzKAMtGTkMYKm6m84Nl18odqQjngKNZu8WNeZJ9Bc9Y2wZvF08JsEBv/DIap+KxT
-         y/kbHmCXj3Wap2Zcb+Fdf97mdUxw3i3+1jeJh+kk=
+        s=cmr1711; t=1523872854;
+        bh=gK1aB2DXf8gIJKhf6CS4y7JmV6xL+gU1HIVaP8WDgrI=;
+        h=Reply-To:Subject:To:References:Cc:From:Date:In-Reply-To;
+        b=HdRmJdzcnbR9Y7hmRIt1JxuZ8cbwk8VpEk+PEFkZ8Ur64JXAjjUVAnv8VSo5a+1S3
+         8HtNdm8M8Cu504wRVISOJ6oWpVqsDdJpibXS2B7zFqtwZ8OyF9MmKX6ZkpP5c3bY9N
+         Yc1wEEwuIHMaEHea4zMInUqj9uxFO1IGAReK1a6I=
 X-Originating-IP: [92.28.131.105]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=SfXZiMZu c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
- a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=jN-XDxcjDrzCXfyQG4IA:9
+ a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=SQ0badRnRpLHX10H574A:9
  a=QEXdDO2ut3YA:10
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Bug: rebase -i creates committer time inversions on 'reword'
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-References: <5f5d5b88-b3ac-ed4f-ee24-6ce2cba2bd55@kdbg.org>
- <f56b84fa-9286-3a7b-fc5b-2307c9ff5b5e@philandanna.no-ip.org>
- <nycvar.QRO.7.76.6.1804141444060.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Subject: Re: Regression in patch add?
+To:     mqudsi <mqudsi@neosmart.net>, git@vger.kernel.org
+References: <01010162c940b8bb-d8139971-3ee2-4cd6-bb19-35126d46753b-000000@us-west-2.amazonses.com>
+Cc:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
 From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <ba17074b-865e-32ba-908d-0d94bedc50ad@talktalk.net>
-Date:   Mon, 16 Apr 2018 10:48:17 +0100
+Message-ID: <20828345-bd21-3c45-a899-e6a97910d663@talktalk.net>
+Date:   Mon, 16 Apr 2018 11:00:53 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1804141444060.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+In-Reply-To: <01010162c940b8bb-d8139971-3ee2-4cd6-bb19-35126d46753b-000000@us-west-2.amazonses.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfFSULuO07+6j4x/k1t49DKU8bMnApWjHNxeFQYV2eut1h9dlqQnV50T3yC9oarLzG3xm7B4l06QH6aM7wNoaZz3SIYZBBIwkGB8jRJsYfUFrKQr3fpiH
- OxOHtP8CGeWzDX+LAv8D957Smer+lKp1/FHIDy73ezgqUwfp4QuwV6Ecb4C78oZq0gTzpZhhZoNrTSrnpHwiFefGI1PdCQhcIETrbwYLcXwmPHZM+b2iJsYp
- jDk9GkdbpaXJtr5/HCMajmX2a+t/qC9Ojvwlt5UrB4yg8tpFEs9i/eok4rG/s4Xw
+X-CMAE-Envelope: MS4wfA7GMm0QqR3Pw5egpj1vpWrf0Z4ewn0iBP+v2YLCFc4htC1RbWSU9BTz18pbQ3o0n8TBZVG+RRthGw2i1p6yqtquPtzkWWbVwZvLpXie6tHKl4Tp/AMb
+ MVWAt5i0eHapdmcXrd0CNiK402obFeCicnnqd1zqjuwWu3I9QKs9CntkYvaxteFui2hu5v9ePlZ3hnWsOvYCnVWedW2vu8nj5oskroOhii6Zhig8qSL34pnu
+ NJPMhizqzcD2GIBR7DIaHA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14/04/18 14:11, Johannes Schindelin wrote:
-> Hi,
+On 15/04/18 13:21, mqudsi wrote:
 > 
-> On Sat, 14 Apr 2018, Phillip Wood wrote:
+> Hello all,
 > 
->> On 13/04/18 17:52, Johannes Sixt wrote:
->>>
->>> I just noticed that all commits in a 70-commit branch have the same
->>> committer timestamp. This is very unusual on Windows, where rebase -i of
->>> such a long branch takes more than one second (but not more than 3 or
->>> so thanks to the builtin nature of the command!).
->>>
->>> And, in fact, if you mark some commits with 'reword' to delay the quick
->>> processing of the patches, then the reworded commits have later time
->>> stamps, but subsequent not reworded commits receive the earlier time
->>> stamp. This is clearly not intended.
->>
->> Oh dear, I think this is probably due to my series making rebase commit
->> in-process when the commit message isn't being edited. I didn't realize
->> that git cached the commit date rather than using the current time when
->> calling commit_tree_extended(). I'll take a look at it next week.
+> I'm currently running the latest version of git built from `master`, and
+> I'm running into what appears to be a regression in the behavior of the
+> piecewise `git add -p` when applying a manually edited chunk.
 > 
-> Thanks.
-> 
-> However, a quick lock at `git log @{u}.. --format=%ct` in my
-> `sequencer-shears` branch thicket (which I rebase frequently on top of
-> upstream's `master` using the last known-good `rebase-merges` sub-branch)
-> shows that the commits have different-enough commit timestamps. (It is
-> satisfying to see that multiple commits were made during the same second,
-> of course.)
-> 
-> So while I cannot find anything in the code that disagrees with Hannes'
-> assessment, it looks on the surface as if I did not encounter the bug
-> here.
-> 
-> Curious.
+> I first run `git add -p`, then manually edit a chunk (after hitting `s`
+> once, if it matters).
 
-That's strange (I'd have expected the picks after recreated merges to
-have the earlier timestamps than the merge), if I do 'git rebase -i
---force-rebase --exec="sleep 2" @~5' then all the new commits have the
-same timestamp.
+Thanks for mentioning that, it can matter as the code that stitches
+split hunks back together can't cope with edited hunks properly (though
+the code that checks the hunk immediately after it's been edited doesn't
+bother to try and stitch things back together).
 
-> FWIW I agree with Hannes' patch.
+> The chunk originally contains the following:
 > 
->> I think 'git am' probably gives all patches the same commit time as well
->> if the commit date is cached though it wont suffer from the time-travel
->> problem.
+> ```diff
+> # Manual hunk edit mode -- see bottom for a quick guide
+> @@ -20,7 +20,7 @@
+>  	"call dein#add('Shougo/dein.vim', {'rev': 'master'})
 > 
-> I thought that `git am` was the subject of such a complaint recently, but
-> I thought that had been resolved? Apparently I misremember...
+>  	" Add or remove your plugins here:
+> -	" call dein#add('flazz/vim-colorschemes')
+> -	call dein#add('Haron-Prime/evening_vim')
+> +	call dein#add('flazz/vim-colorschemes')
+> +	call dein#add('danilo-augusto/vim-afterglow')
+> 
+>  	"core plugins that change the behavior of vim and how we use it globally
+> ```
+> 
+> Under git 2.7.4, I can edit it to the following, which is accepted
+> without a problem:
+> 
+> ```diff
+> # Manual hunk edit mode -- see bottom for a quick guide
+> @@ -20,7 +20,7 @@
+> 	"call dein#add('Shougo/dein.vim', {'rev': 'master'})
+> 
+> 	" Add or remove your plugins here:
+> -	" call dein#add('flazz/vim-colorschemes')
+> -	call dein#add('Haron-Prime/evening_vim')
+> +	call dein#add('flazz/vim-colorschemes')
+> +	call dein#add('Haron-Prime/evening_vim')
+> 
+> 	"core plugins that change the behavior of vim and how we use it globally
+> ```
+> 
+> All I did here was remove one `+` line and manually add another (which
+> is a variant of the second `-` line).
+> 
+> Under git 2.17.0.252.gfe0a9ea, the same piece is opened in $VISUAL for
+> editing (and if left unmodified applies OK), but when modified in the
+> to the same exact value, after exiting the editor I receive the
+> following error from git:
+> 
+>     error: patch fragment without header at line 15: @@ -25,7 +25,8 @@
 
-I had a quick look and couldn't see anything about that, it looks to me
-like it just calls commit_tree() and only does anything to change the
-default commit date if '--committer-date-is-author-date' was given.
+I'm not quite sure what that error message is telling us, I need to
+spend some time understanding the code in apply.c that creates this
+error message.
 
-Best Wishes
+I assume that the header is coming from the next hunk which was created
+when you split the original hunk. If you could post the original hunk
+before it was split and the hunk starting at line 25 after it was split
+that might help.
+
+As Martin said if you could share the files or come up with a
+reproducible example that would really help in figuring out what is
+going wrong.
+
+Thanks for reporting this
 
 Phillip
-> Ciao,
-> Dscho
+
+
+> I'm not sure what to make of this.
+> 
+> Thank you,
+> 
+> Mahmoud Al-Qudsi
+> NeoSmart Technologies
+> 
 > 
 
