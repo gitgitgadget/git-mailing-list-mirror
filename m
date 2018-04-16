@@ -2,99 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 969151F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 22:17:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66B931F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 22:26:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752557AbeDPWRB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 18:17:01 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:32998 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751161AbeDPWQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 18:16:58 -0400
-Received: by mail-yw0-f193.google.com with SMTP id q12so7200127ywj.0
-        for <git@vger.kernel.org>; Mon, 16 Apr 2018 15:16:58 -0700 (PDT)
+        id S1753251AbeDPW0Z (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 18:26:25 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:44763 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753238AbeDPW0X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 18:26:23 -0400
+Received: by mail-io0-f196.google.com with SMTP id g9so1276142iob.11
+        for <git@vger.kernel.org>; Mon, 16 Apr 2018 15:26:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=LaI6kPJZTlZp4rR0VTKK+fjvDfokJszRSlHYixhHFBc=;
-        b=m4J1WGbVdYrDwhbsaWGnY2XMcp8wMNbFP111z/3ip2Ek565FElnHNDn6Zr3UamqFjq
-         ABeuplyCCfz4YnPhi5+gA8E18lZ1covbwtDB70+xxjnkx0zMx6sKCBiwleQ3nkSrLmX8
-         9A4QY8JJbr/Ot1MI2wY0chyq8huZ2hLoVhu/xlRSoZXzjckRYqoJuuWFcqT6XZXD4V4I
-         +C3KyBuXpEDZm7e3AsE1+v0lrPliuLQRPMlBStjR+XeoQy+VcZnEI8MoafU5zDsY/lYb
-         ta4TCH3zkol1iiDg2I2vvc1C9xAqzsQM8euQYV8r2E9YxYxfdOJANcQbTpMCiyaR9y9e
-         PGdg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=wGk2Al6uwe8n7aLSXdmz5AwEv2dlpLrWtIswP32R8SY=;
+        b=FDIBpT72TwE+Af3R+TtR4Nr86MdKR9xMf8/8K+G6DqDJ4qR519lo5/zFyKw9t6UxBl
+         29s+jETKPw/mOX7Dkdftr2Xwqlx2cETXwcH0vRPTyP8KbBttmU+Kij83UvnpGP4Tufyd
+         Bs8+LgBwOxSDUX0o1e7IfFgfVBlq8n2g1s09LYrao9wE2+Ry0qtG8oKDJdvdx2RNjr9f
+         jnTXiYBEcRk8C1hOoeXbOSl3QvAVCVZGY92E0Ka0RmnSIaXqzqXkrXs822UbF8BNZx9o
+         SACZdIYjVK0glDaFl+EW50BM/jKg/ln86KTeyT2WQQDA4ZImHmH84ReszYjvQnmH/Sri
+         avPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=LaI6kPJZTlZp4rR0VTKK+fjvDfokJszRSlHYixhHFBc=;
-        b=P0Tu96ID8DMVJnyUT9qlJths8XrNuSVK7j0zc1ceGeHLguvN9H7wtAvzYO3YT5W0+n
-         A+BHynYCTeAvujeHll3x9TUQNPJr7k5rVSfMwyVCqsOO+WZvqxiqokhn0jQLMQkUU7/m
-         SV2QadlJVhBg0XbbpdHO4/bJqyMFN7gf/F6EVmnumz19ggN9l4xUtp6S2kCDh4jGf4cz
-         Hu7iflEmUj7FCpMWgdiHfvINMsVPekLNrBe503QNRfoW5VeWg9qSLdLiGOBsAklDczK+
-         uPd/y4s4623ubIuC+lIRjIdP1y5rnZZWHNLJsxxDkBWYd0gu0lcfBaFeroMEF+fYU5pY
-         tsKA==
-X-Gm-Message-State: ALQs6tCM0ljjMOXxnZxPhhJG29EaCDFiddmYlItwwRBfbu70wQadGR9n
-        zKdkM/J+vhTGNOuBo3MgL70Ir9mlocU=
-X-Google-Smtp-Source: AIpwx4+y1nx9GzKBt+2jtg5juyAStzuHW8Z9IydqtuR5mMdLZ/ukhOjlH1Aud1KC4qyVhYajW+o21A==
-X-Received: by 10.129.72.65 with SMTP id v62mr9139817ywa.375.1523917017579;
-        Mon, 16 Apr 2018 15:16:57 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id x5sm2541885ywf.107.2018.04.16.15.16.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 16 Apr 2018 15:16:57 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     pclouds@gmail.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] worktree: accept -f as short for --force for removal
-Date:   Mon, 16 Apr 2018 15:16:54 -0700
-Message-Id: <20180416221654.49454-1-sbeller@google.com>
-X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=wGk2Al6uwe8n7aLSXdmz5AwEv2dlpLrWtIswP32R8SY=;
+        b=rmyO4JraXfwMmwHbwmRwhpE3Awy2YCnOT11YDKfW35RireQunCDI9QLmr8KgjEZtiv
+         ca1uAB+qbHv5meTariSB02oZ9JxC84+mqUp+dgEMGqUo83c5FGI5rc5BPf9y/C0A9gc8
+         vgoinWn2toej7VeljsD2whqcuw/L/XKwCEDdyagGcqSqSh0WeQV0hp+240bp7WaU6kl7
+         e9oihWcfr0opc8yGxo1E5hasZtWN8zWaa91pupqO5963DVT9rkMvQynYBgoNvXo8s8AR
+         d4jc9PwdBBbO4RM1oFz3mj2gOnRu9RV+HDpMi5kP64JJ40skPGgC1bpUxtfghp39ubhd
+         60NQ==
+X-Gm-Message-State: ALQs6tD/vsLOg1enDFbtyLXAzsuUpQx+eMKqWyGfGOGdLEpHyZUL9YXH
+        JoaOIv350SP/EC+gT1gjFtQtZ0NqVUDiGDppIYs=
+X-Google-Smtp-Source: AIpwx4/k80+BnxNcICYEAcqMHASKefpsQhWBtrpsbxzCb6bQfJL074wE8QocvSn48RVReYCmAZm75BNsXqN0gJ9QmBY=
+X-Received: by 10.107.144.11 with SMTP id s11mr2776325iod.223.1523917582410;
+ Mon, 16 Apr 2018 15:26:22 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.79.34.219 with HTTP; Mon, 16 Apr 2018 15:26:21 -0700 (PDT)
+In-Reply-To: <72f42205-c9c6-03aa-e8df-12e7062e8e62@gmail.com>
+References: <CAP8UFD0DagacfeismKoVgo=O1guRUV=u1=EbbwRyrY3g1MeQ8Q@mail.gmail.com>
+ <CAP8UFD1vFM8k-1Po=2QXZdBOuCca1Dg_FGaPnSi85hKp1je54w@mail.gmail.com>
+ <87in8rz65t.fsf@javad.com> <CAP8UFD3JwHfyr=bByvjDrxboFL+yHVdZnbkXztsUuOU0aRD-9w@mail.gmail.com>
+ <87sh7v6vn4.fsf@javad.com> <72f42205-c9c6-03aa-e8df-12e7062e8e62@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 17 Apr 2018 00:26:21 +0200
+Message-ID: <CAP8UFD34Y0KRY7vqXU_jWGUc3tdDHB1h67ARZxi_vk1EyUV+zQ@mail.gmail.com>
+Subject: Re: Draft of Git Rev News edition 38
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Sergey Organov <sorganov@gmail.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The force flag is very common in many commands and is commonly
-abbreviated with '-f', so add that to worktree removal, too
+Hi,
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+On Mon, Apr 16, 2018 at 5:07 PM, Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+>
+> That said, I read the draft and found it good except for two minor issues=
+,
 
-As a side note:
+Thanks for your comments!
 
- $ git worktree add ../test HEAD^
- $ cd ../test
- $ make
- $ git worktree remove test
- fatal: working trees containing submodules cannot be moved or removed
- 
- (This is on git.git, which does have submodules, but they should not 
- be relevant here? Instead we rather want to point out files left over.
- Not sure. I also plan on having worktrees and submodules to work well
- together eventually)
+> 1. I see the following sentence in the "Rebasing merges: a jorney to the
+> ultimate solution (Road Clear) (written by Jacob Keller)" article
+>
+>         "A few examples were tried, but it was proven that the original
+>         concept did not work, as dropped commits could end up being
+>         replaid into the merge commits, turning them into "evil"
+>         merges."
+>
+> I'm not sure if 'replaid' is proper English assuming the past tense of
+> replay was intended there (which I think is 'replayed').
 
+I agree and changed it to "replayed".
 
- builtin/worktree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> 2. I see a minor Markdown syntax issue in the "branch -l: print useful
+> info whilst rebasing a non-local branch" article.
+>
+>         ... reworked his original patch to improve `git branch
+>         --list=CC=80
+>
+> Specifically, in the '--list=CC=80' part. I guess it should be "--list`".
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 40a438ed6c..d734874d58 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -783,7 +783,7 @@ static int remove_worktree(int ac, const char **av, const char *prefix)
- {
- 	int force = 0;
- 	struct option options[] = {
--		OPT_BOOL(0, "force", &force,
-+		OPT_BOOL('f', "force", &force,
- 			 N_("force removing even if the worktree is dirty")),
- 		OPT_END()
- 	};
--- 
-2.17.0.484.g0c8726318c-goog
+Yeah, it's fixed too.
 
+Thanks,
+Christian.
