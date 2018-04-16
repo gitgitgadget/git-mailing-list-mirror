@@ -2,96 +2,216 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 997171F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 23:13:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F3BC1F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 23:36:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753117AbeDPXNj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 19:13:39 -0400
-Received: from mail-wr0-f174.google.com ([209.85.128.174]:35456 "EHLO
-        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753015AbeDPXNh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 19:13:37 -0400
-Received: by mail-wr0-f174.google.com with SMTP id w3so13772601wrg.2
-        for <git@vger.kernel.org>; Mon, 16 Apr 2018 16:13:37 -0700 (PDT)
+        id S1751150AbeDPXgV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 19:36:21 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:45658 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750979AbeDPXgU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 19:36:20 -0400
+Received: by mail-io0-f171.google.com with SMTP id a7so4282546ioc.12
+        for <git@vger.kernel.org>; Mon, 16 Apr 2018 16:36:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=J+Y0Cgj+UkBH3VAH5i7VOllbDIk3yXfnpf921b+29eo=;
-        b=Yys+nCNh0uZFpw5T4QDr/oeQf/EKiqh9pe9GlDaTJa9ByXXVGjNUMPwJ37pNx15reS
-         6936woIMaI6leci8Ee51pQty4tYV9Sg35Pane7lCPuDFhyjaCE6JygO1Kj35QB2V4Imo
-         49fhgVQ43qWVzD/M43/1HTBG4tZg+OgnmQzsLMGMrHp/28gbVkOzA3gxmllXD560i/ZU
-         RP+/emVYEUz3pGX9y1plPsbRsWoNdC7mpTBMGKaXncxIpNIP6ISz81naKfHhmv0/OEO6
-         kl95tOzkMgzyuPYxYr1REVoty5vj1tUxLghOhwMvK+VvwkitxZyD4rlfi2TdhtNrDpKt
-         SApw==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=bPdJFqubyhzR04t3h+qKaw6pHlY9JdZBQpDZA/h7uMo=;
+        b=oA8I4dzLYImGiRpXP+mDz+avrl0zq8CpBMy0jfEMpsWdIVOdAvSwe7PSacmstkUfb3
+         r/d5hIuwZC31psZ+qsEOdMVAs5OBHkLe1xizHWakwd4pYEQVKN4JVOz3RT5wCwHiFRTr
+         zvuhZRvBGTzYGT4N2T7J0tJBNTwfoxuQSJqB1+UusGgQ30LUmOotl7rgqIn+ApnNGVod
+         P8DxEcUTyRohZvOPa8MqsMZDf0gSkV9mYwxowxwYQXv1WeFNHFZSXugujTRTst1pnXe/
+         smfjFrd/Ol6rX6OpKmKLcBFJuf4bi/FJr9P6w4fpBxzhkPiMjmJylyj0O1YU7og1OvXc
+         DZSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=J+Y0Cgj+UkBH3VAH5i7VOllbDIk3yXfnpf921b+29eo=;
-        b=kAmpoyYgx9FfYtBgixK5o0mcB3hSl5/0UCUXD0yIIFGmzhaHAuOolUhuXVTQ+16cyJ
-         852otx8XomFfYEHsrCXRd2pt/WzMzjoA4liEXb4maP81WHoRy1fWrWke3DhfbHxKt036
-         mLT6GOOI0FQvjPWBlVNP77EOhDkFBpf5+aNeYcxT9nc2DWIh3etclISQe/hFAjt/btf3
-         mh6f4ICNC3EPjXRLLwGWHE5+jnxWVi7Ehu9iEKl+31laetrt4dNJBv+Vjbnl4SNAsA7X
-         xgBZQGg2n5h1YroEJk4Xt8WSihWFrzK8PNk5r8XQyKKFFnxDvJsNWK/CS+gGPQsy1ZyX
-         LdNw==
-X-Gm-Message-State: ALQs6tBYcr3F+6jHIn35d0d7AyRen74BhgTmGI70rFUaaoVciCLUggdI
-        //ERUS+qfk0hXJDVMjzPZozc0CXk
-X-Google-Smtp-Source: AIpwx48wHP0XWyEjIDE7ibrp+MGN34fXlx5O0WIkO4YZNNlBfivD4CPCjfSWRagMJ4RoYGDSKtsMSA==
-X-Received: by 10.223.200.145 with SMTP id k17mr12217839wrh.6.1523920416381;
-        Mon, 16 Apr 2018 16:13:36 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q127sm19144796wmd.3.2018.04.16.16.13.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 16 Apr 2018 16:13:35 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: man page for "git remote set-url" seems confusing/contradictory
-References: <alpine.LFD.2.21.1804160538100.3564@localhost.localdomain>
-        <87y3hn5drx.fsf@linux-m68k.org>
-        <alpine.LFD.2.21.1804160918120.6924@localhost.localdomain>
-        <CA+P7+xrDsPXA6Bq77gYwWtc16Dz4drg+CHA80=vBNB9-NhxHVg@mail.gmail.com>
-Date:   Tue, 17 Apr 2018 08:13:35 +0900
-In-Reply-To: <CA+P7+xrDsPXA6Bq77gYwWtc16Dz4drg+CHA80=vBNB9-NhxHVg@mail.gmail.com>
-        (Jacob Keller's message of "Mon, 16 Apr 2018 11:20:03 -0700")
-Message-ID: <xmqqefjewxr4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=bPdJFqubyhzR04t3h+qKaw6pHlY9JdZBQpDZA/h7uMo=;
+        b=QcHNonQoq8O/6BAxGZhl0h6e4NwuDDkuqWVlZLgQ9XsaQm/lsRhvhkuWOYFYV2RbO2
+         aXgYyxNrlFtK1QQcNN/ZHvntn8nhKpFPmtsHzNaVSzTV5E76j4R9nK+j1r1hZbsdTHVZ
+         i4AqVeK3/kXX4n3zlzjTjvxjmFBJVskav3t2lDyBfQFN4aaRF5Tgvo/mUkoY/Xn8Vm+d
+         BiNDCDRuDCEwoZsDAReEObpAJHiAruSQpXVYv5QWBBmZky4/nDk6I5bZFGESgjnph6Dd
+         Tkw3qfrqD4q1KNjPM7DzpfOeXnugTpd15ETYV+T3xzVlnkYOECykqqy19vcFGl3QpWyu
+         ILtw==
+X-Gm-Message-State: ALQs6tCDim+9a/qAgGeWSy3O+nU61u3XPva7euwZKAtaXF3qFFUCOGMJ
+        SeyvMB8JPWCpZ3XAKQV8N9QIsYd/Qwh0VYYc9IWa6w==
+X-Google-Smtp-Source: AIpwx4+4kcknCWqAVZByGUcWd5CV48iMpDVv9tMOZObj9nRKSS716xsidQA28H4N/81lupBlyb4RE6xIS4IrldgoKzs=
+X-Received: by 10.107.133.68 with SMTP id h65mr14092341iod.271.1523921779901;
+ Mon, 16 Apr 2018 16:36:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.2.167.138 with HTTP; Mon, 16 Apr 2018 16:35:39 -0700 (PDT)
+From:   Thandesha VK <thanvk@gmail.com>
+Date:   Mon, 16 Apr 2018 16:35:39 -0700
+Message-ID: <CAJJpmi-pLb4Qcka5aLKXA8B1VOZFFF+OAQ0fgUq9YviobRpYGg@mail.gmail.com>
+Subject: [BUG] git p4 clone fails when p4 sizes does not return 'fileSize' key
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+git p4 clone fails when p4 sizes does not return 'fileSize' key. There
+are few cases when p4 sizes returens 0 size and with marshaled output,
+it doesn=E2=80=99t return the fileSize attribute.
 
-> Things won't work so well if you set the push url and fetch url to
-> different repositories. Git assumes that refs updated by "push" will
-> also be reflected via "fetch".
->
-> I don't know offhand what will break, but likely something will. For
-> one, when you fetch again it will rewind your remotes after the push.
+Here is the demonstration and potential fix
 
-Exactly.  I still haven't fully embraced it myself, but for a long
-time, "git push" pretends as if it fetched from that remote and
-updates the corresponding remote tracking branches (if you have
-any), so you'll be inviting inconsistent behaviour if you set your
-fetch and push URLs pointing at two logically separate places.
 
-This is a tangent, but there probably should be a boolean that
-disables this feature in "git push" per destination repository,
-i.e. "when pushing into this repository, pretend that we immediately
-fetched from the refs we just pushed to and update the remote
-tracking branches we have for them: yes/no".  It is not entirely
-implausible to envision an overly smart remote repository that turns
-a non-fast-forward push into an automatic rebase when it is safe to
-do so, instead of failing such a push, and you'd disable the "assume
-what we pushed would appear there" when talking to such a remote.
 
+$ cd /tmp/git/
+
+
+
+$ git remote -v
+
+origin  https://github.com/git/git.git (fetch)
+
+origin  https://github.com/git/git.git (push)
+
+
+
+$ git branch  -v
+
+* master fe0a9eaf3 Merge branch 'svn/authors-prog-2' of
+git://bogomips.org/git-svn
+
+
+
+Problem:
+
+
+
+$ /tmp/git/git-p4.py clone //depot/<path>/@all   . =E2=80=93verbose
+
+.
+
+.
+
+.
+
+Traceback (most recent call last):
+
+  File "/tmp/git/git-p4.py", line 3840, in <module>
+
+    main()
+
+  File "/tmp/git/git-p4.py", line 3834, in main
+
+    if not cmd.run(args):
+
+  File "/tmp/git/git-p4.py", line 3706, in run
+
+    if not P4Sync.run(self, depotPaths):
+
+  File "/tmp/git/git-p4.py", line 3568, in run
+
+    self.importChanges(changes)
+
+  File "/tmp/git/git-p4.py", line 3240, in importChanges
+
+    self.initialParent)
+
+  File "/tmp/git/git-p4.py", line 2858, in commit
+
+    self.streamP4Files(files)
+
+  File "/tmp/git/git-p4.py", line 2750, in streamP4Files
+
+    cb=3DstreamP4FilesCbSelf)
+
+  File "/tmp/git/git-p4.py", line 552, in p4CmdList
+
+    cb(entry)
+
+  File "/tmp/git/git-p4.py", line 2744, in streamP4FilesCbSelf
+
+    self.streamP4FilesCb(entry)
+
+  File "/tmp/git/git-p4.py", line 2692, in streamP4FilesCb
+
+    self.streamOneP4File(self.stream_file, self.stream_contents)
+
+  File "/tmp/git/git-p4.py", line 2569, in streamOneP4File
+
+    size =3D int(self.stream_file['fileSize'])
+
+KeyError: 'fileSize'
+
+
+
+Signature of the sizes output resulting in this problem:
+
+$ p4 -p <port>  sizes //foo.c
+
+//foo.c#5 <n/a> bytes
+
+
+
+$ p4 -p <port>  -G sizes //foo.c
+
+{scodesstats    depotFiles4//fooc.c50
+
+
+
+Signature for a file without problem:
+
+
+
+$ p4 -p <port>  sizes //bar.c
+
+//bar.c#5 1105 bytes
+
+
+
+$ p4 -p <port> -G  sizes //bar.c
+
+{scodesstats    depotFiles;//bar.csrevs5fileSizes11050
+
+
+
+Patch:
+
+$ git diff
+
+diff --git a/git-p4.py b/git-p4.py
+
+index 7bb9cadc6..f908e805e 100755
+
+--- a/git-p4.py
+
++++ b/git-p4.py
+
+@@ -2565,7 +2565,7 @@ class P4Sync(Command, P4UserMap):
+
+     def streamOneP4File(self, file, contents):
+
+         relPath =3D self.stripRepoPath(file['depotFile'], self.branchPrefi=
+xes)
+
+         relPath =3D self.encodeWithUTF8(relPath)
+
+-        if verbose:
+
++        if verbose and 'fileSize' in self.stream_file:
+
+             size =3D int(self.stream_file['fileSize'])
+
+             sys.stdout.write('\r%s --> %s (%i MB)\n' %
+(file['depotFile'], relPath, size/1024/1024))
+
+             sys.stdout.flush()
+
+
+
+Thanks & Regards
+
+Thandesha
