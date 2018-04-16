@@ -2,169 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96B1B1F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 15:52:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B3FA1F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 16:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751172AbeDPPwy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 11:52:54 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:34515 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751164AbeDPPwx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 11:52:53 -0400
-Received: by mail-wr0-f173.google.com with SMTP id d19so27455670wre.1
-        for <git@vger.kernel.org>; Mon, 16 Apr 2018 08:52:53 -0700 (PDT)
+        id S1752067AbeDPQHM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 12:07:12 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:39329 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751002AbeDPQHL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 12:07:11 -0400
+Received: by mail-pl0-f65.google.com with SMTP id e7-v6so10292514plt.6
+        for <git@vger.kernel.org>; Mon, 16 Apr 2018 09:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DNYZ+LjS6Db/L1z6o2a5809c1tGMHW5GEXlz/RMqUA4=;
-        b=Vqk56daqo27zWEU7kRvBnRCpMGNJ7AE4hTOTQ18m6k+K0jp1qwmBTPBQd3R5mthgcL
-         tmmgu9lKD+IK+tXqd+hoYdqgCv7s75CWkuIgsFRuyb8YZHCkT5WZ3Wx96l/hYSeaxGOO
-         SRgSU+3USK9KX2rlTyYBPgIIwJ2ZPWbhHP1LQNeWvnhO4way3vjnzOJKQSpvC5JmWMHU
-         ITO4QLlRfT/XXDiGnkv0ImiXF71iy0gAgJuYg6rlmtqJTxBNLdPxfcjsSUBdmAzdjgAS
-         n/TBcSW5ZF8vbggmHPJRn/2NmmeT8log0ZXy51gvgXL5hYz5DAfQC24qjkeptA4MGfPy
-         COuw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=ZlrolOG/jLcRMvDOsEHf2lnZ+EKsTW1URjXq9C1aMOU=;
+        b=Ai80LUryI3N3+7FhiB+aZvx0c+mg2LH1bZpwl3DEw/h8dC2dvIJZNcAVyIB8CE0y70
+         4B59GkXJQSLQrgjVVceJE2WlH1HYJO6cZNOMtMFEUMq8CgZYAG7FCfOoAtEEAJ+4d21V
+         39BY/AVVU6bo6GWh9Eil8akOQUFK0++YMVJu7mP7J2d0HiFGIfRFanQTed6Ccs1E316v
+         iX0h3uvP5nk/yJzirhJrBOVSNvB+47HTsITNIeCwIL7Hscdrj3ETIzNG8wlVCYAOZnaP
+         jxNen64W6DGmEIYaerK3sNBa66l52FXfRhKDQ0kzRtGTxaoO6zVi58Rfo/qWHo5kG8m/
+         /q0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DNYZ+LjS6Db/L1z6o2a5809c1tGMHW5GEXlz/RMqUA4=;
-        b=A2wnDuCdqfR4q91dbcE0tSY0ZQJDWzo4sNnI4VtwCXGHqYG1BPYjicRhxcDfQHthLZ
-         n0LBFnhZp6SKCbyb02u1LJbPIaSFDyM4aWr8nkZlP3xsnfoveRY8HFbgb9vURN6wFzm6
-         vcYu5zCgDrMG+MJaVEXg0QUki+iUWhjTCa7gmM16OAeOi7DVzyMMC99DdqW5MiJqWIiN
-         YMeO+gMPvcpjTSovmvR9BkijEzBZdwH5l+VLO6fWc5chsBYx4/ZIxCxV19ZHX6hybUDz
-         4i3aAGSQbBxYEo97dZlak+XmAy0z+SiUYLE4YhYpa1u7pHWUWKY4Akn/v1oIB8buirTx
-         LsMQ==
-X-Gm-Message-State: ALQs6tBmG5F9HKDsG9cLVXKuK0issz/jv9u4VkwmzpYN0BpEwC4f+Y3z
-        AaZ1lteW2fieew3LfRSNQ9rMphOI6yxWFN9loqc=
-X-Google-Smtp-Source: AIpwx494t/hypTvMjuQTvZOc4hMBdGdPhtUIypJKAieMySryGBlbHfhitdq0GYlPKC14NA+XYE2twOCOLkQxM9IGVpw=
-X-Received: by 10.80.171.72 with SMTP id t8mr1711428edc.133.1523893972235;
- Mon, 16 Apr 2018 08:52:52 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.80.180.180 with HTTP; Mon, 16 Apr 2018 08:52:31 -0700 (PDT)
-In-Reply-To: <87in8rz65t.fsf@javad.com>
-References: <CAP8UFD0DagacfeismKoVgo=O1guRUV=u1=EbbwRyrY3g1MeQ8Q@mail.gmail.com>
- <CAP8UFD1vFM8k-1Po=2QXZdBOuCca1Dg_FGaPnSi85hKp1je54w@mail.gmail.com> <87in8rz65t.fsf@javad.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 16 Apr 2018 08:52:31 -0700
-Message-ID: <CA+P7+xqLeO_OSURv+Zhw_2=DP6Gx3+C=rdA3MkCYzLxtVO4WMQ@mail.gmail.com>
-Subject: Re: Draft of Git Rev News edition 38
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=ZlrolOG/jLcRMvDOsEHf2lnZ+EKsTW1URjXq9C1aMOU=;
+        b=cFFrASFGYWqDT4mQM+vDcRLrcFDx21b2NrjnsZ28WSN2X4/0dDKXcz1MAEJzAdkaXt
+         1oWVeE1cZiwxZPnt/PQjQOIcF8N+ut3yjSkh4xYv1OuY0vL1vGpAQFbGMDYzfR6rvzk+
+         f6b/hq5ConaPGjzAJ9K0wncTi964ddcX7uZNkAfwcHTE6KxjmcFP8jmcU2rq8U9YIGVT
+         gmFIM6R6iQgtdOaNUzTqD/OMcjbfY7B7dtm4JW0/GmNlI4exblplA5dk9f+mtyemnkb8
+         oGzje+u/g9YC698XtEZwFM55+NHFzRO/9aUOR8R5gkrqrXnWSqJuI46TOOWhpFvZLmdM
+         X0xQ==
+X-Gm-Message-State: ALQs6tAU8h6EyEHxVm59WP5pGUCcOfu7J/h4UKPzmdQI7FDwkE2GXqda
+        jfjrD3kuEJ3KkVzkRY/myHczKAjh
+X-Google-Smtp-Source: AIpwx49c1p9RB55K6FE7k1Iz8hYVGm2uOXXOjduP0aA61VQfW47OJKAjZtgvrYg07rFmauj9iPSpOQ==
+X-Received: by 2002:a17:902:b105:: with SMTP id q5-v6mr16226713plr.173.1523894830838;
+        Mon, 16 Apr 2018 09:07:10 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id q17sm22000841pgt.70.2018.04.16.09.07.05
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 16 Apr 2018 09:07:09 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: Optimizing writes to unchanged files during merges?
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CA+55aFxP8j7YbYaRXt-8Y0n8cHafB=FPKMy8gKFYH5QsKX4S=Q@mail.gmail.com>
+Date:   Mon, 16 Apr 2018 18:07:00 +0200
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, mgorny@gentoo.org,
+        rtc@helen.PLASMA.Xg8.DE, winserver.support@winserver.com,
+        tytso@mit.edu
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F1738316-71EF-4053-82E5-F009F491CCE8@gmail.com>
+References: <CA+55aFzLZ3UkG5svqZwSnhNk75=fXJRkvU1m_RHBG54NOoaZPA@mail.gmail.com> <xmqq604w2j4u.fsf@gitster-ct.c.googlers.com> <xmqqtvsg10bu.fsf@gitster-ct.c.googlers.com> <CA+55aFxA9YVLoh_23V8Hi+X7ODEmqg-dhdAYZz1jbq5JhXqBFw@mail.gmail.com> <CA+55aFwM2CaafNGq8_=GkYAw9inpm-4xcyHUmKprLv4Gb3-aVg@mail.gmail.com> <CA+55aFw5mpEcEpPTOWych-kjNLc8pEn8FdjJHe2u7HUBBLy-Fw@mail.gmail.com> <CA+55aFwwVZDetd-SobOzzLQW4_GEwm3krxEGR+cpqzkzK-yiwQ@mail.gmail.com> <CABPp-BHQsOSCJiPU9Ku5b67QTkAjnEBrhx04mTXf2QdPBriHmw@mail.gmail.com> <CA+55aFwi9pTAJT_qtv=vHLgu=B1fdXBoD96i8Y5xnbS=zrfSzg@mail.gmail.com> <xmqqbmekylgc.fsf@gitster-ct.c.googlers.com> <CA+55aFxP8j7YbYaRXt-8Y0n8cHafB=FPKMy8gKFYH5QsKX4S=Q@mail.gmail.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 16, 2018 at 5:29 AM, Sergey Organov <sorganov@gmail.com> wrote:
-> Hi Christian,
->
-> Christian Couder <christian.couder@gmail.com> writes:
->> On Mon, Apr 16, 2018 at 12:11 AM, Christian Couder
->> <christian.couder@gmail.com> wrote:
->>>
->>> A draft of a new Git Rev News edition is available here:
->>>
->>>   https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-38.md
->>
->> The draft has just been updated with 2 articles contributed by Jake
->> about rebasing merges, so I am cc'ing more people involved in those
->> discussions.
->
-> I find this section of the draft pretty close to my own vision of what
-> and how has been discussed, except for a few issues.
->
-> [all quotations below are taken from the draft]
->
->> Some discussion about --preserve-merges and compatibility with scripts
->> (i.e. should we change or fix it? or should we deprecate it?)
->> followed.
->>
->>    Rebasing merges: a jorney to the ultimate solution (Road Clear)
->>    (written by Jacob Keller)
->
-> What article by Jacob is actually meant here I have no idea, please
-> check, as this one, and the RFC this refers to, was written by me, not
-> by Jacob, and it is the outline of potential method of actually rebasing
-> merges that is discussed in the next paragraph, so it likely belongs
-> right after the next paragraph:
 
-I believe he meant that the summary on git rev news was written by me,
-that's all :)
+> On 16 Apr 2018, at 04:03, Linus Torvalds =
+<torvalds@linux-foundation.org> wrote:
+>=20
+> On Sun, Apr 15, 2018 at 6:44 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>=20
+>> I think Elijah's corrected was_tracked() also does not care "has
+>> this been renamed".
+>=20
+> I'm perfectly happy with the slightly smarter patches. My patch was
+> really just an RFC and because I had tried it out.
+>=20
+>> One thing that makes me curious is what happens (and what we want to
+>> happen) when such a "we already have the changes the side branch
+>> tries to bring in" path has local (i.e. not yet in the index)
+>> changes.  For a dirty file that trivially merges (e.g. a path we
+>> modified since our histories forked, while the other side didn't do
+>> anything, has local changes in the working tree), we try hard to
+>> make the merge succeed while keeping the local changes, and we
+>> should be able to do the same in this case, too.
+>=20
+> I think it might be nice, but probably not really worth it.
+>=20
+> I find the "you can merge even if some files are dirty" to be really
+> convenient, because I often keep stupid test patches in my tree that I
+> may not even intend to commit, and I then use the same tree for
+> merging.
+>=20
+> For example, I sometimes end up editing the Makefile for the release
+> version early, but I won't *commit* that until I actually cut the
+> release. But if I pull some branch that has also changed the Makefile,
+> it's not worth any complexity to try to be nice about the dirty state.
+>=20
+> If it's a file that actually *has* been changed in the branch I'm
+> merging, and I'm more than happy to just stage the patch (or throw it
+> away - I think it's about 50:50 for me).
+>=20
+> So I don't think it's a big deal, and I'd rather have the merge fail
+> very early with "that file has seen changes in the branch you are
+> merging" than add any real complexity to the merge logic.
 
->
->> After the discussions in the above article Sergey posted an outline of a
->> potential method for actually rebasing a merge (as opposed to recreating
->> it from scratch) which used a process of git cherry-pick -mN of the
->> merge onto each topic branch being merged, and then merging the result.
->
-> The reference to:
->
->     Rebasing merges: a jorney to the ultimate solution (Road Clear)
->     (written by Sergey Organov)
->
-> belongs here, if at all.
->
-> In addition, I'd like to see a minor edition to the following:
->
->> Sergey replied that he thinks the solution produces the same result as
->> his updated strategy.
->
-> This has been said in the context that assumed lack of conflicts during
-> application of both strategies. Something like this, maybe:
->
-> "Sergey replied that he thinks the solution produces the same result as
-> his updated strategy, at least when none of the strategies produce any
-> conflicts."
->
-> Next, this is very close, but not exactly right:
->
->> Further suggestions to the strategy were proposed and tested, ultimately
->> resulting in Sergey proposing the addition of using the original merge
->> commit as a merge base during the final step.
->
-> This was not an addition, this was a fix of particular mistake in the
-> original RFC that has been revealed during testing. I didn't get it
-> right at first that it's original merge commit that must be used as
-> merge base, so my original proposal ended up implicitly using wrong
-> merge base, that is the one computed by "git merge-base U1' U2'".
->
-> Something along these lines may fit better:
->
-> "Further suggestions to the strategy were proposed and tested,
-> ultimately resulting in Sergey proposing the fix to his method,
-> specifically using the original merge commit as a merge base during the
-> final step."
->
-> I'd also like a reference to the final fixed [RFC v2] be added right
-> here. The reference is:
->
-> https://public-inbox.org/git/87r2oxe3o1.fsf@javad.com/
->
-> Thanks a lot!
->
-> -- Sergey
+I am happy to see this discussion and the patches, because long rebuilds=20=
 
-Yep that all sounds right to me also.
+are a constant annoyance for us. We might have been bitten by the exact=20=
+
+case discussed here, but more often, we have a slightly different=20
+situation:
+
+An engineer works on a task branch and runs incremental builds =E2=80=94 =
+all=20
+is good. The engineer switches to another branch to review another=20
+engineer's work. This other branch changes a low-level header file,=20
+but no rebuild is triggered. The engineer switches back to the previous=20=
+
+task branch. At this point, the incremental build will rebuild=20
+everything, as the compiler thinks that the low-level header file has
+been changed (because the mtime is different).
+
+Of course, this problem can be solved with a separate worktree. However,=20=
+
+our engineers forget about that sometimes, and then, they are annoyed by=20=
+
+a 4h rebuild.
+
+Is this situation a problem for others too?
+If yes, what do you think about the following approach:
+
+What if Git kept a LRU list that contains file path, content hash, and=20=
+
+mtime of any file that is removed or modified during a checkout. If a=20
+file is checked out later with the exact same path and content hash,=20
+then Git could set the mtime to the previous value. This way the=20
+compiler would not think that the content has been changed since the=20
+last rebuild.
+
+I think that would fix the problem that our engineers run into and also=20=
+
+the problem that Linus experienced during the merge, wouldn't it?
 
 Thanks,
-Jake
+Lars=
