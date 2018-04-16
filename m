@@ -2,93 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1C901F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 17:04:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FA251F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 17:43:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752774AbeDPREj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 13:04:39 -0400
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:42058 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751060AbeDPREi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 13:04:38 -0400
-Received: by mail-wr0-f182.google.com with SMTP id s18so28033033wrg.9
-        for <git@vger.kernel.org>; Mon, 16 Apr 2018 10:04:37 -0700 (PDT)
+        id S1753187AbeDPRn4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 13:43:56 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:46470 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753056AbeDPRnz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 13:43:55 -0400
+Received: by mail-wr0-f193.google.com with SMTP id d1so28355856wrj.13
+        for <git@vger.kernel.org>; Mon, 16 Apr 2018 10:43:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=MtptCPcAptuZ2qV83VCJfbsPKLXpD11mGEENPB3xnoA=;
-        b=RabanHSZ5pVcV9U0ghMJ2tavBpm7+9cLE/gPoqG7Dw3W9qCwH/xit2Tk4iIwA7grGl
-         wroDRaAOROop0jn063CS6C1RnJhrVqBKw0ECKABw48mBg2nUyQEvZNxvABJMNeKDT8g2
-         nZHIB3F/RPNqkORnsPPb+cR+4L3IQwgVxprUO5G6NBbVbpjvJFEt73OKQG4aX/Rq1EK1
-         zwGfsQxBvHOyp4Shq9eAnSoVjNomjgDNTtWNzSEwg7m6zsxnGsO2zGdrDJLffX+vjtwr
-         s5x+pQxDr9J95QFG5Q/UQQdTURj6PsB0Nxe1WBKDqkLM6ZluE9yKQ09/Ppi85oa2P0Oh
-         BDOw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=lucjlbS+kyLM9BL147Oa8UCF6iEEeubFPSKywnC4Y4o=;
+        b=U+TKxm5obR5+yeigDxSiSWtqeoVYM5oMs94vO2Al+3Macw1S14NUzevD0fK/Sa+yJf
+         eKEH15joj7ZM+weSTGLklYolPRWT8Mb3KpEE9M46Mzj18asoIlEW47Sbqsu1aYWGpO2Q
+         OBnf69Sf4TmS/6IiiAjnf+AtK+BzyvEdu14tP5s7J1MgpelmdLN6ye3xeZiDd0L+ttI7
+         mSRgU5k6feACmq9dEWTF/YMxdyWubCPXb1tohynnFdvk7TgfXi0Ae/C5f7NZWuHP3YyQ
+         oWaO7ginOAOxUo7meuK9XxlpYOF+kyVJp9GKyZJsUXn24JKOsgk/DkT3q+nCTFmK2PBI
+         wOOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=MtptCPcAptuZ2qV83VCJfbsPKLXpD11mGEENPB3xnoA=;
-        b=ZPoC8rpQzVTAfdZXLCgeEQFNYpaKSNlEJJ5+s2nReJVcQooYDrxhdfWaHx5ogklDk7
-         klZy9wuh8SYYQqnjkNA5NASZmUkqHF9uG1DftqUd+srYjmOQIDGLFQLX0/OURuWXPC1K
-         iJKrzIIDkoky+zidoCQdcNysBVImHk/WrgIyTYFiUNvJpmNRyfHPs4v2EtuJZCpXkIO/
-         b1FIVNrvm0yX1TIKcPY33IQevybA8h7cOQBZ5AEa+gPsI5uPePlUR8ZDXoona/11ATaL
-         pWZLAcJhS4TiMtETs2OwBYsgUeazlAUxOLSe9UvcgbQyarpXUXc9cNmm/FccwbyincmF
-         cp8A==
-X-Gm-Message-State: ALQs6tDX88cvcaCNGN/0xtGr6OxsWVi7/5NFVaZ99DHAswM4uhthpSP2
-        dUCeTm+6yCiM9GJIzNUezFw=
-X-Google-Smtp-Source: AIpwx49ITsIOIXgzs162GZpRu341b2XWxscrPqRWsGuNhnHz2KlBIl0YUoYCWUysdQ39Po935P4SLA==
-X-Received: by 10.80.185.65 with SMTP id m59mr16589616ede.276.1523898277271;
-        Mon, 16 Apr 2018 10:04:37 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id i15sm7527070edb.56.2018.04.16.10.04.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 16 Apr 2018 10:04:36 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=lucjlbS+kyLM9BL147Oa8UCF6iEEeubFPSKywnC4Y4o=;
+        b=ae46cAkbVNFlMft1NrbALN7H7AfFtT3eyeXyGTB6p7LVvIxnjZap9EYNWZz9FYyiOn
+         RetSCOm5GgBnSUJNwO18ul7yyPirST5kDT/FsMGvLK6szOty/zIZoh/RE3KU7nHA/Tpb
+         64MC9/9uVZo97bOl1bY+28cli6TGhnYaNERpCIz9FBD/b+Vl6IvzSGEDkQz3lBJrlmaT
+         pTOiVO7SNvcxQGQAqgHLQXjyZrJOV8qHy2UrAjYWZ6SclBGykezKFzMHMA9iBQlK1PJk
+         clnz14Q53G9623+A4gddYoF6Zw1eHTNiVxDcZaFT4TSeNy9NxJ5F9zVBo586uSYqPhYN
+         c3/w==
+X-Gm-Message-State: ALQs6tDRUYd5zmjN+wkuYdLw3OALx69llYv9e5Q3I1tULWnXN25sx4Ae
+        4decKuXRdTdkCpvOYXERc37BrlSuxqWOvBOVszQ=
+X-Google-Smtp-Source: AIpwx4+2E80M5Rpxgts7u7g/kIBP8r0ELc+mb7uxVOmoyXpijmDzOW3L/BumhqbNDYzgRDYc5vqqDO0oN3IJEK1hu/g=
+X-Received: by 10.80.192.145 with SMTP id k17mr17736206edf.303.1523900633626;
+ Mon, 16 Apr 2018 10:43:53 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.80.180.180 with HTTP; Mon, 16 Apr 2018 10:43:33 -0700 (PDT)
+In-Reply-To: <F1738316-71EF-4053-82E5-F009F491CCE8@gmail.com>
+References: <CA+55aFzLZ3UkG5svqZwSnhNk75=fXJRkvU1m_RHBG54NOoaZPA@mail.gmail.com>
+ <xmqq604w2j4u.fsf@gitster-ct.c.googlers.com> <xmqqtvsg10bu.fsf@gitster-ct.c.googlers.com>
+ <CA+55aFxA9YVLoh_23V8Hi+X7ODEmqg-dhdAYZz1jbq5JhXqBFw@mail.gmail.com>
+ <CA+55aFwM2CaafNGq8_=GkYAw9inpm-4xcyHUmKprLv4Gb3-aVg@mail.gmail.com>
+ <CA+55aFw5mpEcEpPTOWych-kjNLc8pEn8FdjJHe2u7HUBBLy-Fw@mail.gmail.com>
+ <CA+55aFwwVZDetd-SobOzzLQW4_GEwm3krxEGR+cpqzkzK-yiwQ@mail.gmail.com>
+ <CABPp-BHQsOSCJiPU9Ku5b67QTkAjnEBrhx04mTXf2QdPBriHmw@mail.gmail.com>
+ <CA+55aFwi9pTAJT_qtv=vHLgu=B1fdXBoD96i8Y5xnbS=zrfSzg@mail.gmail.com>
+ <xmqqbmekylgc.fsf@gitster-ct.c.googlers.com> <CA+55aFxP8j7YbYaRXt-8Y0n8cHafB=FPKMy8gKFYH5QsKX4S=Q@mail.gmail.com>
+ <F1738316-71EF-4053-82E5-F009F491CCE8@gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 16 Apr 2018 10:43:33 -0700
+Message-ID: <CA+P7+xrmAHjaF=wze1iu0=cZBY3WcHXqpuDep3Nrev+zmt_Gog@mail.gmail.com>
+Subject: Re: Optimizing writes to unchanged files during merges?
 To:     Lars Schneider <larsxschneider@gmail.com>
 Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
         Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         Git Mailing List <git@vger.kernel.org>, mgorny@gentoo.org,
-        rtc@helen.PLASMA.Xg8.DE, winserver.support@winserver.com,
-        tytso@mit.edu
-Subject: Re: Optimizing writes to unchanged files during merges?
-References: <CA+55aFzLZ3UkG5svqZwSnhNk75=fXJRkvU1m_RHBG54NOoaZPA@mail.gmail.com>
-        <xmqq604w2j4u.fsf@gitster-ct.c.googlers.com>
-        <xmqqtvsg10bu.fsf@gitster-ct.c.googlers.com>
-        <CA+55aFxA9YVLoh_23V8Hi+X7ODEmqg-dhdAYZz1jbq5JhXqBFw@mail.gmail.com>
-        <CA+55aFwM2CaafNGq8_=GkYAw9inpm-4xcyHUmKprLv4Gb3-aVg@mail.gmail.com>
-        <CA+55aFw5mpEcEpPTOWych-kjNLc8pEn8FdjJHe2u7HUBBLy-Fw@mail.gmail.com>
-        <CA+55aFwwVZDetd-SobOzzLQW4_GEwm3krxEGR+cpqzkzK-yiwQ@mail.gmail.com>
-        <CABPp-BHQsOSCJiPU9Ku5b67QTkAjnEBrhx04mTXf2QdPBriHmw@mail.gmail.com>
-        <CA+55aFwi9pTAJT_qtv=vHLgu=B1fdXBoD96i8Y5xnbS=zrfSzg@mail.gmail.com>
-        <xmqqbmekylgc.fsf@gitster-ct.c.googlers.com>
-        <CA+55aFxP8j7YbYaRXt-8Y0n8cHafB=FPKMy8gKFYH5QsKX4S=Q@mail.gmail.com>
-        <F1738316-71EF-4053-82E5-F009F491CCE8@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <F1738316-71EF-4053-82E5-F009F491CCE8@gmail.com>
-Date:   Mon, 16 Apr 2018 19:04:35 +0200
-Message-ID: <8736zvf5gc.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        Peter Backes <rtc@helen.plasma.xg8.de>,
+        winserver.support@winserver.com, "Theodore Ts'o" <tytso@mit.edu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Apr 16 2018, Lars Schneider wrote:
-
->> On 16 Apr 2018, at 04:03, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+On Mon, Apr 16, 2018 at 9:07 AM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+>
+>> On 16 Apr 2018, at 04:03, Linus Torvalds <torvalds@linux-foundation.org>=
+ wrote:
 >>
->> On Sun, Apr 15, 2018 at 6:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> On Sun, Apr 15, 2018 at 6:44 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
 >>>
 >>> I think Elijah's corrected was_tracked() also does not care "has
 >>> this been renamed".
@@ -130,7 +125,8 @@ On Mon, Apr 16 2018, Lars Schneider wrote:
 > case discussed here, but more often, we have a slightly different
 > situation:
 >
-> An engineer works on a task branch and runs incremental builds — all
+> An engineer works on a task branch and runs incremental builds =E2=80=94 =
+all
 > is good. The engineer switches to another branch to review another
 > engineer's work. This other branch changes a low-level header file,
 > but no rebuild is triggered. The engineer switches back to the previous
@@ -151,23 +147,21 @@ On Mon, Apr 16 2018, Lars Schneider wrote:
 > then Git could set the mtime to the previous value. This way the
 > compiler would not think that the content has been changed since the
 > last rebuild.
+
+That would only work until they actuall *did* a build on the second
+branch, and upon changing back, how would this detect that it needs to
+update mtime again? I don't think this solution really works.
+Ultimately, the problem is that the build tool relies on the mtime to
+determine what to rebuild. I think this would cause worse problems
+because we *wouldn't* rebuild in the case. How is git supposed to know
+that we rebuilt when switching branches or not?
+
+Thanks,
+Jake
+
 >
 > I think that would fix the problem that our engineers run into and also
 > the problem that Linus experienced during the merge, wouldn't it?
-
-Could what you're describing be prototyped as a post-checkout hook that
-looks at the reflog? It sounds to me like it could, but perhaps I've
-missed some subtlety.
-
-Not re-writing out a file that hasn't changed is one thing, but I think
-for more complex behaviors (such as the "I want everything to have the
-same mtime" mentioned in another thread on-list), and this, it makes
-sense to provide some hook mechanism than have git itself do all the
-work.
-
-I also don't see how what you're describing could be generalized, or
-even be made to work reliably in the case you're describing. If the
-engineer runs "make" on this branch he's testing out that might produce
-an object file that'll get used as-is once he switches back, since
-you've set the mtime in the past for that file because you re-checked it
-out.
+>
+> Thanks,
+> Lars
