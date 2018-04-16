@@ -2,160 +2,212 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C0B21F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 21:21:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A05D41F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 21:22:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751980AbeDPVVL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 17:21:11 -0400
-Received: from mail-ua0-f177.google.com ([209.85.217.177]:46622 "EHLO
-        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751199AbeDPVVK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 17:21:10 -0400
-Received: by mail-ua0-f177.google.com with SMTP id a17so11083894uaf.13
-        for <git@vger.kernel.org>; Mon, 16 Apr 2018 14:21:09 -0700 (PDT)
+        id S1751876AbeDPVWj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 17:22:39 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:36232 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751002AbeDPVWh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 17:22:37 -0400
+Received: by mail-yw0-f180.google.com with SMTP id c9so4365395ywb.3
+        for <git@vger.kernel.org>; Mon, 16 Apr 2018 14:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=e1PLSy5xhEup54VbKLmnkmxZhlPvb4+tr0zOOErUncM=;
-        b=oJCoi5lDGs4tQCdgaIPvHG9/dnQByJ8jtiCY1Za3lZqp2jZa2x9XOJtIGCdpy6ER2y
-         L5Qc/TfS2Cj8F7cbrJ85swUNTWWsLo3zxYAhES/qA8WwmpXG1mRlNblAHKtlEEIBm1so
-         I6tOzSb+seOFlBpDgX5J6V/Y7FHz/+9XSNFUJg68lWh+btIIa2aIiXJVwbkUJ+VRACIl
-         fPGyKhacTQpvUIfGAC1KeIq4Gb66RSLZeHc9ZH3a4EANi2QpC+l3CkxXOXd2TO2bzEX1
-         7u+/gyw46bev4XOuuB2bXsugqgoK9Y4QHw5oIig3nMQVx7RdY9zs0SRaI7Wmk2MEjdfV
-         Kclg==
+        bh=lHQ0PnH4Icvh5ahjOQnruKm+Kfn09ZGPeycuqGPktPk=;
+        b=JNDHk8GxG+kPRKDrZVykYYEPIRBYvBD7JaPdOIpq8VNm/pKSvThxpkllprMzOOmtPs
+         8v/TWTLBNn1OJYJNC6nOyzgoInxq9fU/rb1wDt7+nBLu/WkFFbp1wgM6cSUndjdSxRXQ
+         9lHuV3aWuEhaEElBWOLxtcXlcBWN80Vnx5QByZGRR3mgLRVpaOqQhOBeoOdV/lyTBh0G
+         Seo+E49/sJ2KrdHTQA5tA6auL0c7tDjB9KZHDQHJadc95IV2GtXllrGHVP4iHklWGe5r
+         hJTmXKRY/0ByHuK8Yinz1xelEYIOBDfdwykoL36Pm8ZUxHa/pCR+T6zDoe8VCMMHFtQI
+         forQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=e1PLSy5xhEup54VbKLmnkmxZhlPvb4+tr0zOOErUncM=;
-        b=ESDC6CHMPYS1sRqEmbWL+rCdJas0O3060WIkyX1vz7X0raKDVCFXGFcAKCXHix4ude
-         i5NxknPlKyQXx1Qe2i6hS+WiN+EDF/HT5jBVXWa8WawEw2xFZNsRZQDFte1//OxJzXMG
-         kayW8twLsvp69ZQOt2yl99y7ClJ/K6XRKXfb1D/d+f3GZ1+NxKOAZT7wsjmTUNV8lC2k
-         Yo1U8xZPFY8foGijeZczvr4Kct3FwobuY5Go1CeOiI4rcrLSIWRi/mHMPA0ye4jRZDAS
-         K4j5lfGhTc5VLNeMVpg0RP79f+CzEq0SpVXsQtfGbic5cjIncQAcdKqukbbTe1grPHPn
-         uxdQ==
-X-Gm-Message-State: ALQs6tCjJrVQBfwjlng+oQL2778UC23Ft6M7LrJa9koGCQCpf8D6MuWO
-        Kef3njcrfAUtn2ujcppGXvzJ2MUDgfnd6JDtIUY=
-X-Google-Smtp-Source: AIpwx4/IaAEtj8FnbgO1nKMfQc00z0aamiROXvSVmT34pMsXDUDP7m4sVgwE2F13pyczgXXp45gdvtIJ3rYJszMOxog=
-X-Received: by 10.176.30.132 with SMTP id o4mr6035238uak.154.1523913668865;
- Mon, 16 Apr 2018 14:21:08 -0700 (PDT)
+        bh=lHQ0PnH4Icvh5ahjOQnruKm+Kfn09ZGPeycuqGPktPk=;
+        b=oEeSjUT+xoFAz3fAXp+8N4hhPsnTLbvZFQGKkDmORKwYBQxvpBw8NlanHCNoWDCT1q
+         zIAbv3zvzei68xx7GPYCTRIs4ebGhHwlGHOn0lAS2+iU8Cb2N80r4xReFHh441YgDqLg
+         4fcXwbEKdbl2ny4LL8Fh+RUH13MjlEvta7h3z4vGIRjV9jrZKeEJ+yoLX1tv9WyCvP63
+         Eo4oXX6bHXrS7ekoDdR9jF6bArGS1jQW7+eTRsUPb9RyNl+tv2ObtrwIsTgvfolET4MT
+         cVD2eJ0zszxgj3GPLZy0Z+31EBhQ6VJ7qmv5TOw96XW1GJQIOdvaZPYJKiehuc5zI8rF
+         VWwg==
+X-Gm-Message-State: ALQs6tDyhvg2fg4nKDa6o44Rb06+45rNELDFZMEqJJSKDaXPlB21eg6s
+        xJ4Ly2FyzHnOmAL8Ih3LXjSYP6oEl12aprOpp9KpkQ==
+X-Google-Smtp-Source: AIpwx4+I02apYKZlaLmZAl0kKcWIbrkp16YD0EJllplN1v7omHzxRQnCJ+jJBBwCJEpy52Z6SvnRZmGiYqqae7UeuFU=
+X-Received: by 10.129.232.5 with SMTP id a5mr12282374ywm.421.1523913756048;
+ Mon, 16 Apr 2018 14:22:36 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.159.40.42 with HTTP; Mon, 16 Apr 2018 14:21:08 -0700 (PDT)
-In-Reply-To: <xmqqo9ikyojz.fsf@gitster-ct.c.googlers.com>
-References: <xmqqmuya43cs.fsf@gitster-ct.c.googlers.com> <20180413195607.18091-1-newren@gmail.com>
- <20180413195607.18091-4-newren@gmail.com> <xmqqo9ikyojz.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 16 Apr 2018 14:21:08 -0700
-Message-ID: <CABPp-BFPTJsTUVoPxxN=2u5jEqn1ngdDvMNhp+VLZKTgZaUkvw@mail.gmail.com>
-Subject: Re: [PATCH v9 29.75/30] merge-recursive: Fix was_tracked() to quit
- lying with some renamed paths
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Stefan Beller <sbeller@google.com>
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Mon, 16 Apr 2018 14:22:35
+ -0700 (PDT)
+In-Reply-To: <20180416183742.032530a4d44faccd44189ea6@ao2.it>
+References: <20180412222047.5716-1-ao2@ao2.it> <20180412222047.5716-2-ao2@ao2.it>
+ <CAGZ79kZV+MLaVp4AM77bJkT=MeBvDSHTxZCni8dkqq4VLWZ0AA@mail.gmail.com> <20180416183742.032530a4d44faccd44189ea6@ao2.it>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 16 Apr 2018 14:22:35 -0700
+Message-ID: <CAGZ79kajTdkPKpcjH3NXBE75qWnNCCq_OefAjQsw17hK_VEyCw@mail.gmail.com>
+Subject: Re: [RFC 01/10] submodule: add 'core.submodulesFile' to override the
+ '.gitmodules' path
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     git <git@vger.kernel.org>,
+        Richard Hartmann <richih.mailinglist@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 15, 2018 at 5:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Elijah Newren <newren@gmail.com> writes:
+On Mon, Apr 16, 2018 at 9:37 AM, Antonio Ospite <ao2@ao2.it> wrote:
+> On Thu, 12 Apr 2018 16:50:03 -0700
+> Stefan Beller <sbeller@google.com> wrote:
 >
->> @@ -362,13 +363,17 @@ static int git_merge_trees(struct merge_options *o,
->>       init_tree_desc_from_tree(t+2, merge);
+>> Hi Antonio,
 >>
->>       rc = unpack_trees(3, t, &o->unpack_opts);
->> +     cache_tree_free(&active_cache_tree);
->> +
->> +     o->orig_index = the_index;
->> +     the_index = tmp_index;
->> +
->>       /*
->> -      * unpack_trees NULLifies src_index, but it's used in verify_uptodate,
->> -      * so set to the new index which will usually have modification
->> -      * timestamp info copied over.
->> +      * src_index is used in verify_uptodate, but was NULLified in
->> +      * unpack_trees, so we need to set it back to the original index.
->>        */
+>> On Thu, Apr 12, 2018 at 3:20 PM, Antonio Ospite <ao2@ao2.it> wrote:
+>> > When multiple repositories with detached work-trees take turns using the
+>> > same directory as their work-tree, and more than one of them want to use
+>> > submodules, there will be conflicts about the '.gitmodules' file.
+>>
+>> unlike other files which would not conflict?
+>> There might be file names such as LICENSE, Readme.md etc,
+>> which are common enough that they would produce conflicts as well?
+>> I find this argument on its own rather weak. ("Just delete everything in
+>> the working dir before using it with another repository"). I might be
+>> missing a crucial bit here?
+>>
 >
-> Was NULLified?  I thought that the point of src/dst distinction
-> Linus introduced long time ago at 34110cd4 ("Make 'unpack_trees()'
-> have a separate source and destination index", 2008-03-06) was that
-> we can then keep the source side of the traversal unmodified.
-
-That comment is messed up; maybe I edited and re-edited the comment
-multiple times and then didn't notice the big problems when
-re-reading?
-
-Anyway, I should move the comment a few lines up, and make the code
-instead read:
-
-    /*
-     * Update the_index to match the new results, AFTER saving a copy
-     * in o->orig_index.  Update src_index to point to the saved copy.
-     * (verify_uptodate() checks src_index, and the original index is
-     * the one that had the necessary modification timestamps.)
-     */
-    o->orig_index = the_index;
-    the_index = tmp_index;
-    o->unpack_opts.src_index = &o->orig_index;
-
->>  static int would_lose_untracked(const char *path)
->>  {
->> -     return !was_tracked(path) && file_exists(path);
->> +     /*
->> +      * This may look like it can be simplified to:
->> +      *   return !was_tracked(o, path) && file_exists(path)
->> +      * but it can't.  This function needs to know whether path was
->> +      * in the working tree due to EITHER having been tracked in the
->> +      * index before the merge OR having been put into the working copy
->> +      * and index by unpack_trees().  Due to that either-or requirement,
->> +      * we check the current index instead of the original one.
->> +      */
+> All the vcsh repositories _share_ the same work-tree; they may control
+> it taking turns but, in general, all files are meant to be checked out
+> at all times as the basic use case is: *distinct* sets of config files.
 >
-> If this path was created by merge-recursive, not by unpack_trees(),
-> what does this function want to say?  Say, we are looking at path P,
-> the other branch we are merging moved some other path Q to P (while
-> our side modified contents at path Q).  Then path P we are looking
-> at has contents of Q at the merge base at stage #1, the contents of
-> Q from our HEAD at stage #2 and the contents of P from the other
-> branch at stage #3.  The code below says "path P is OK, we won't
-> lose it" in such a case, but it is unclear if the above comment
-> wants to also cover that case.
+> Maybe saying that the repositories "take turns" is confusing.
+> It's an unnecessary information, so I will omit that part form the
+> commit message.
 
-Oh, boy, here be dragons...
+So they all have the same workdir, do they track the same set of files
+or do they track a disjoint set of files, and ignoring the other repositories
+files via the ignore mechanism?
 
-The comment as-is actually does cover your example case with Q and P:
-unpack_trees(), which is unaware of renames, will see that P only
-exists on one side of history and thus load it into the index at stage
-0 rather than stage 3.
+This sounds like an interesting setup. I never though of that as something
+useful (in either configuration).
 
-But your general comment about whether something else in
-merge-recursive could create a path in the current index after
-unpack_trees() is interesting...it touches on a pitfall that has bit
-me multiple times.  There is a required ordering in merge-recursive.c
-that for any given path, the working directory must be updated before
-the index is -- otherwise, would_lose_untracked() will return faulty
-information.  update_file_flags() has this ordering builtin,
-update_stages() has a big obnoxious comment at the beginning about how
-it should not be called until after update_file() is,
-apply_directory_rename_modifications() has a big comment about this
-~80% of the way through the function (look for
-"would_lose_untracked"), and conflict_rename_rename_2to1() has a big
-obnoxious comment near the end painstakingly pointing out that some
-code that feels like it would make more sense being combined with a
-previous function cannot be due to the
-update-working-directory-before-index requirement.
+> After your question I've done some research and I've seen other vcsh
+> users managing conflicting LICENSE and README files using git
+> sparse-checkouts, to have these files in the single repositories but
+> not checked out in the shared work-tree:
+> https://github.com/RichiH/vcsh/issues/120#issuecomment-42639619
+> https://github.com/jwhitley/vcsh-root/commit/30b0d495c2cbe47ae9617ace9c2c14720d961d78
+>
+> However I guess that my point here is that the gitmodules file is
+> something that influences git behavior so it should not be on the user's
+> shoulder to manage conflicts for it, and most importantly it needs to
+> be checked out for git to access it, doesn't it?
 
-I should probably add to this comment something about this annoying
-(and error-prone) ordering restriction, since this function is the
-source of those particular pains.  Your suggested ideal-world rewrite
-(run unpack_trees() with unpack_opts.index_only=1, do merge in memory,
-then update working tree), would make this whole problem go away.
+Good point! I wonder if the cleaner solution would be to just
+tell git to use HEAD:.gitmodules and not check out the file?
+then you would not need to come up with a namespace for names
+of the .gitmodules files and scatter them into the worktree as well?
+
+
+>> > -               value=$(git config -f .gitmodules submodule."$name"."$option")
+>> > +               gitmodules_file=$(git config core.submodulesfile)
+>> > +               : ${gitmodules_file:=.gitmodules}
+>> > +               value=$(git config -f "$gitmodules_file" submodule."$name"."$option")
+>>
+>> I wonder if it would be cheaper to write a special config lookup now, e.g.
+>> in builtin/submodule--helper.c we could have a "config-from-gitmodules"
+>> subcommand that is looking up the modules file and then running the config
+>> on that file.
+>>
+>
+> Can you give an example from the user point of view of such a
+> "config-from-gitmodules" command?
+>
+
+    git submodule config <name> <option>
+
+as an 'alias' for
+
+               gitmodules_file=$(git config core.submodulesfile)
+               : ${gitmodules_file:=.gitmodules}
+               value=$(git config -f "$gitmodules_file"
+submodule."$name"."$option")
+
+The helper would figure out which config file to load form
+(.gitmodules in tree, HEAD:.gitmodules, your new proposed gitmodules file,
+.git/config... or the special ref) and then return the <option> for <name>
+
+So maybe:
+
+    $ git clone https://gerrit.googlesource.com/gerrit && cd gerrit
+    # ^ My goto-repo with submodules
+
+    $ git submodule config "plugins/hooks" URL
+    ../plugins/hooks
+
+
+
+> I might look into it, but that can also be a followup change.
+
+
+>> > diff --git a/submodule.c b/submodule.c
+>> > index 9a50168b2..2afbdb644 100644
+>> > --- a/submodule.c
+>> > +++ b/submodule.c
+>> > @@ -36,13 +36,13 @@ static struct oid_array ref_tips_after_fetch;
+>> >   */
+>> >  int is_gitmodules_unmerged(const struct index_state *istate)
+>> >  {
+>> > -       int pos = index_name_pos(istate, GITMODULES_FILE, strlen(GITMODULES_FILE));
+>> > +       int pos = index_name_pos(istate, submodules_file, strlen(submodules_file));
+>>
+>> Ah, regarding the coverletter: This clearly assumes the modules
+>> file is in the tree. So at least here we would make an exception
+>> for files outside the tree to either not check for un-merged-ness or
+>> disallow that case entirely.
+>>
+>
+> Sorry I am not sure I follow what you are saying here, keep in mind
+> that I am new to git internals.
+>
+> Do you mean that, even if we ensure (in
+> config.c::git_default_core_config) that only paths relative to
+> the work-tree are allowed, we still have to check here that the
+> constraint is respected? And is so, why?
+
+index_name_pos looks up a position of a file in the index,
+which would fail for any file not in the index.
+
+So if we give a path outside the tree, the lookup would fail
+and we'd treat it as no .gitmodules file would be found,
+which implies is_gitmodules_unmerged = false.
+
+That sounds about right, but I think we could make the
+distinction clearer, i.e. out-of-tree .gitmodule files *cannot*
+be "unmerged" as that requires them to be part of a git
+repository with a merge in progress.
+
+>> There are quite a few functions in submodule.c which access the new global. :/
+>> So moving them to the_repository should be fine, but eventually (not
+>> in this series)
+>> all these functions would would want to take a repository argument as well
+>> such that they work on more than the_repository.
+>>
+>
+> I will surely get rid of the global variable, but about changing the
+> functions signatures I don't feel like promising anything just yet.
+
+Yes, I would just use the_repository->... for now and as said by
+"(not in this series)" we can do that later. It was more of a reminder
+to myself, sorry for the confusion.
+
+Thanks,
+Stefan
