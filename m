@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E81461F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 22:42:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 252FE1F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 22:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753060AbeDPWmx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 18:42:53 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:37955 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753050AbeDPWmt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 18:42:49 -0400
-Received: by mail-wr0-f195.google.com with SMTP id h3so17632618wrh.5
-        for <git@vger.kernel.org>; Mon, 16 Apr 2018 15:42:48 -0700 (PDT)
+        id S1753057AbeDPWmw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 18:42:52 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:38423 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751882AbeDPWmu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 18:42:50 -0400
+Received: by mail-wr0-f174.google.com with SMTP id h3so17632678wrh.5
+        for <git@vger.kernel.org>; Mon, 16 Apr 2018 15:42:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rMr2FAce+eSdFuNJf2c72GaC0y/sInc0+S0CstjxB3M=;
-        b=tneOmhE+pVdjj8rUgA4p4G0fvxQMAwBWL6tSBIqCIe4MeuxhgjAITXvxnrB7u5wrCI
-         sfQZsROFgwojGA7N2ZB5Um1pyhWhlcRYiGpY0720dTBuFYlmOaz9aRXaDLiPspORpBEL
-         AFseq+RA4SP8KZKiYRuypwUHhu0DCpPhph+eB8iZbeI5DUT2Pj82VrbzkC5ZAs0vPYgE
-         EbUMWzCJ9XfIrLCj3z2/11iXN9a4uJWZKZxV0USh2vdvkp/Y/zRmF9l+o+cei+0Ugmyc
-         vBVpuOmP5y3RyZa7GTuv2BcAwr7+VyV7thkfoOkvQvTQbKlygf53Y7pzHE3hhhhQ4nzr
-         DqyA==
+        bh=7KTlaNYfQgL6p32zv2r1ghYLROYp/nert2vphoAL11A=;
+        b=Dq/mLOasjpwfKlZYHfrDvGvO+6sx5QMitz7/T3CGO29+5+SUNSA+kpc8/K8Rdr4ta5
+         DIpvgEYiJY+siax3mEMy41u8i78qMLQSsY6azsrPfkn/TqX0jCgFhVmEAPmwrt6vy+qg
+         Uztf2TarM2jRkpZVpEyL0hMGm5xczQY5Wft40mTfqQWvOwX+q9G8phwMcpl/nD0Xx+P3
+         n7VPOKOkHPdqQYquVznvvh7GesibJtGGiW9l3sarMnFDlqooRLRcU7/Pyb2Bunf1MhKu
+         LZdJp2uB+wD6OLwhY7z3IqjAVKKE4yy/WF3oEGxZRS/JqlLhv4MrDwM5gTQXm4y9c9BV
+         EtAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rMr2FAce+eSdFuNJf2c72GaC0y/sInc0+S0CstjxB3M=;
-        b=qY451TmheggoRBwgKQPn+UddLjnadkPPJehwMFhLRjh/TX8/wIufCbDTcRgKdEJZ9W
-         VGJMi2HmqJwDxhbg/qRoAq1fxZtqsVwP8Txn7S4CrEE/gQZeG86jA8CHj6Ov8z+B+F24
-         x/ZBq/U6qHoLTJoOWfHwZ10c/DbKcYByWkbS7nL363NJVjLSBHh+TcCN51I8DjKE4t4M
-         2PYO9bkL9X5xYIca1Lv8EWu58SrWdnM+adIb5bfx5Ws5afGtbvgM8R77PL6FaAouAstH
-         YbRb7kK2cjRgMZhI3V5wRXr89tvazMzOoL2b7H9AwSG7GU2nRcMtYfzU6znl92TCin7c
-         uFhw==
-X-Gm-Message-State: ALQs6tDgKWgRYgzvPSTTQqWmjofByi+8kXtWSL4rjL15JuvkgVX711uF
-        9Lr9DUWTK4ubXdX4kRLHVwiPZA==
-X-Google-Smtp-Source: AIpwx4/ATBfSnqatzoKVXdA5wmCLNqk2tejBtFfEU9ld1ksRr/qTzCfjuyYllhSs+0sFuDh/Sis6nw==
-X-Received: by 10.223.157.65 with SMTP id o1mr11541531wre.14.1523918567764;
-        Mon, 16 Apr 2018 15:42:47 -0700 (PDT)
+        bh=7KTlaNYfQgL6p32zv2r1ghYLROYp/nert2vphoAL11A=;
+        b=BYPIGPHoeB7xntJOyHN3Q5Xz3mSmy7S0ifMYJJtiVgU8vESI/TBBNa5aQxhK29wXQz
+         B9iuLhjX033fsyuEN6SAu1867VnrDPs1U/ooW69uZl8NsGr3wb9rMIXxKVzAGu3yxfvS
+         m3JT0w9xhVJ3G6+nsYXjIl0vX/J3SQY3vyTGHm7IulsselnIn6NmTlcPgi9tAOIKhqFX
+         u4OsTUrnshoZDm7EEC1u6CQQTUyj2n+BiyPATp3MqEhB3IYjfTukyuwpIjUrxaz9JKFf
+         OtBLprdA7Q33+wHhuhs7DgSQBC69L+QeqGh3OTQUJiFwBFVwSc06Pctmw0ZU0XrimsQv
+         jY9g==
+X-Gm-Message-State: ALQs6tCDirZIRFLsj+0sANO1mWbr6FZ6O7DoY6hRsnsjRTI4GU7HPUFP
+        ycjWtaWRMbhqGXRH3Qai+6y+Vw==
+X-Google-Smtp-Source: AIpwx49TsCSVYuT4Io5FJbXKL4Oea8O31+0x3MwINqDWDj181bI7zldYi7KA2k3OEWEHT5ZRiMhWgg==
+X-Received: by 10.223.195.132 with SMTP id p4mr11584909wrf.279.1523918568883;
+        Mon, 16 Apr 2018 15:42:48 -0700 (PDT)
 Received: from localhost.localdomain (x590d89db.dyn.telefonica.de. [89.13.137.219])
-        by smtp.gmail.com with ESMTPSA id e10sm23413937wri.23.2018.04.16.15.42.46
+        by smtp.gmail.com with ESMTPSA id e10sm23413937wri.23.2018.04.16.15.42.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 16 Apr 2018 15:42:47 -0700 (PDT)
+        Mon, 16 Apr 2018 15:42:48 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -56,12 +56,13 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Manlio Perillo <manlio.perillo@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 10/11] completion: improve handling quoted paths in 'git ls-files's output
-Date:   Tue, 17 Apr 2018 00:42:35 +0200
-Message-Id: <20180416224236.17078-1-szeder.dev@gmail.com>
+Subject: [PATCH 11/11] completion: fill COMPREPLY directly when completing paths
+Date:   Tue, 17 Apr 2018 00:42:36 +0200
+Message-Id: <20180416224236.17078-2-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.17.0.366.gbe216a3084
-In-Reply-To: <20180416224113.16993-1-szeder.dev@gmail.com>
+In-Reply-To: <20180416224236.17078-1-szeder.dev@gmail.com>
 References: <20180416224113.16993-1-szeder.dev@gmail.com>
+ <20180416224236.17078-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,191 +71,203 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If any pathname contains backslash, double quote, tab, newline, or any
-control characters, 'git ls-files' and 'git diff-index' will enclose
-that pathname in double quotes and escape those special characters
-using C-style one-character escape sequences or \nnn octal values.
-This prevents those files from being listed during git-aware path
-completion, because due to the quoting they will never match the
-current word to be completed.
+During git-aware path completion, when a lot of path components have
+to be listed, a significant amount of time is spent in
+__gitcomp_file(), or more accurately in the shell loop of
+__gitcompappend(), iterating over all the path components filtering
+path components matching the current word to be completed, adding
+prefix path components, and placing the resulting matching paths into
+the COMPREPLY array.
 
-Extend __git_index_files()'s 'awk' script to remove all that quoting
-and escaping from unique path components, so even paths containing
-(almost all) such special characters can be completed.
+Now, a previous patch in this series made 'git ls-files' and 'git
+diff-index' list only paths matching the current word to be completed,
+so an additional filtering in __gitcomp_file() is not necessary
+anymore.  Adding the prefix path components could be done much more
+efficiently in __git_index_files()'s 'awk' script while stripping
+trailing path components and removing duplicates and quoting.  And
+then the resulting paths won't require any more filtering or
+processing before being handed over to Bash, so we could fill the
+COMPREPLY array directly.
 
-Paths containing newline characters are still an issue, though.  We
-use newlines as separator character when filling the COMPREPLY array,
-so a path with one or more newline will end up split to two or more
-elements in COMPREPLY, basically breaking completion.  There is
-nothing we can do about it without a significant performance hit, so
-let's just ignore such paths for now.  As far as paths with newlines
-are concerned, this isn't any different from the previous behavior,
-because those paths were always omitted, though in the past they were
-omitted because due to the quoting they didn't match the current word
-to be completed.  Anyway, Bash's own filename completion (Meta-/) can
-complete even those paths, if need be.
+Unfortunately, we can't simply use the __gitcomp_direct() helper
+function to do that, because __gitcomp_file() does one additional
+thing: it tells Bash that we are doing filename completion, so the
+shell will kindly do four important things for us:
 
-Note:
+  1. Append a trailing space to all filenames.
+  2. Append a trailing '/' to all directory names.
+  3. Escape any meta, globbing, separator, etc. characters.
+  4. List only the current path component when listing possible
+     completions (i.e. 'dir/subdir/f<TAB>' will list 'file1', 'file2',
+     etc. instead of the whole 'dir/subdir/file1',
+     'dir/subdir/file2').
 
-  - We don't dequote path components right away as they are coming in,
-    because then we would have to dequote each directory name
-    repeatedly, as many times as it appears in the input, i.e. as many
-    times as the number of listed paths it contains.  Instead, we
-    dequote them at the end, as we print unique path components.
+While we could let __git_index_files()'s 'awk' script take care of the
+first two points, the third one gets tricky, and we absolutely need
+the shell's support for the fourth.
 
-  - Even when a directory name itself does not contain any special
-    characters, it will still be quoted if any of its trailing path
-    components do.  If a directory contains paths both with and
-    without special characters, then the name of that directory will
-    appear both quoted and unquoted in the output of 'git ls-files'
-    and 'git diff-index'.  Consequently, we will add such a directory
-    name to the deduplicating associative array twice: once quoted and
-    once unquoted.
+Add the helper function __gitcomp_file_direct(), which, just like
+__gitcomp_direct(), fills the COMPREPLY array with prefiltered and
+preprocessed paths without any additional processing, without a shell
+loop, with just one single compound assignment, and, similar to
+__gitcomp_file(), tells Bash and ZSH that we are doing filename
+completion.  Extend __git_index_files()'s 'awk' script a bit to
+prepend any prefix path components to all listed paths.  Finally,
+modify __git_complete_index_file() to feed __git_index_files()'s
+output to ___gitcomp_file_direct() instead of __gitcomp_file().
 
-    This means that we have to be careful after dequoting a directory
-    name, and only print it if we haven't seen the same directory name
-    unquoted.
+After this patch there is no shell loop left in the path completion
+code path.
 
-  - It would be wonderful if we could just pass '-z' to those git
-    commands to output \0-separated unquoted paths, and use \0 as
-    record separator in the 'awk' script processing their output...
-    this patch would be so much simpler, almost trivial even.
-    Unfortunately, however, POSIX and most 'awk' implementations don't
-    support \0 as record separator (GNU awk does support it).
+This speeds up path completion when there are a lot of paths matching
+the current word to be completed.  In a pathological repository with
+100k files in a single directory, listing all those files:
 
-  - This patch makes the earlier change to list paths with
-    'core.quotePath=false' basically redundant, because this could
-    decode any \nnn-escaped non-ASCII character just fine, as well.
-    However, I suspect that 'git ls-files' can deal with those
-    non-ASCII characters faster than this updated 'awk' script; just
-    in case someone is burdened with tons of pathnames containing
-    non-ASCII characters.
+  Before this patch, best of five, using GNU awk on Linux:
+
+    $ time cur=dir/ __git_complete_index_file
+
+    real    0m0.983s
+    user    0m1.004s
+    sys     0m0.033s
+
+  After:
+
+    real    0m0.313s
+    user    0m0.341s
+    sys     0m0.029s
+
+  Difference: -68.2%
+  Speedup:      3.1x
+
+  To see the benefits of the whole patch series, the same command with
+  v2.17.0:
+
+    real    0m2.736s
+    user    0m2.472s
+    sys     0m0.610s
+
+  Difference: -88.6%
+  Speedup:      8.7x
+
+Note that this patch changes the output of the __git_index_files()
+helper function by unconditionally prepending the prefix path
+components to every listed path.  This would break users' completion
+scriptlets that directly run:
+
+  __gitcomp_file "$(__git_index_files ...)" "$pfx" "$cur_"
+
+because that would add the prefix path components once more.
+However, __git_index_files() is kind of a "helper function of a helper
+function", and users' completion scriptlets should have been using
+__git_complete_index_file() for git-aware path completion in the first
+place, so this is likely doesn't worth worrying about.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- contrib/completion/git-completion.bash | 66 +++++++++++++++++++++++++-
- t/t9902-completion.sh                  | 17 ++++++-
- 2 files changed, 79 insertions(+), 4 deletions(-)
+ contrib/completion/git-completion.bash | 34 +++++++++++++++++++++++---
+ contrib/completion/git-completion.zsh  |  9 +++++++
+ 2 files changed, 39 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 70bc75dfc7..e97d57024b 100644
+index e97d57024b..360ee9ca51 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -459,8 +459,70 @@ __git_index_files ()
+@@ -404,6 +404,23 @@ __gitcomp_nl ()
+ 	__gitcomp_nl_append "$@"
+ }
+ 
++# Fills the COMPREPLY array with prefiltered paths without any additional
++# processing.
++# Callers must take care of providing only paths that match the current path
++# to be completed and adding any prefix path components, if necessary.
++# 1: List of newline-separated matching paths, complete with all prefix
++#    path componens.
++__gitcomp_file_direct ()
++{
++	local IFS=$'\n'
++
++	COMPREPLY=($1)
++
++	# use a hack to enable file mode in bash < 4
++	compopt -o filenames +o nospace 2>/dev/null ||
++	compgen -f /non-existing-dir/ > /dev/null
++}
++
+ # Generates completion reply with compgen from newline-separated possible
+ # completion filenames.
+ # It accepts 1 to 3 arguments:
+@@ -455,14 +472,14 @@ __git_index_files ()
+ 	local root="$2" match="$3"
+ 
+ 	__git_ls_files_helper "$root" "$1" "$match" |
+-	awk -F / '{
++	awk -F / -v pfx="${2//\\/\\\\}" '{
  		paths[$1] = 1
  	}
  	END {
--		for (p in paths)
--			print p
-+		for (p in paths) {
-+			if (substr(p, 1, 1) != "\"") {
-+				# No special characters, easy!
-+				print p
-+				continue
-+			}
-+
-+			# The path is quoted.
-+			p = dequote(p)
-+			if (p == "")
-+				continue
-+
-+			# Even when a directory name itself does not contain
-+			# any special characters, it will still be quoted if
-+			# any of its (stripped) trailing path components do.
-+			# Because of this we may have seen the same direcory
-+			# both quoted and unquoted.
-+			if (p in paths)
-+				# We have seen the same directory unquoted,
-+				# skip it.
-+				continue
-+			else
-+				print p
-+		}
-+	}
-+	function dequote(p,    bs_idx, out, esc, esc_idx, dec) {
-+		# Skip opening double quote.
-+		p = substr(p, 2)
-+
-+		# Interpret backslash escape sequences.
-+		while ((bs_idx = index(p, "\\")) != 0) {
-+			out = out substr(p, 1, bs_idx - 1)
-+			esc = substr(p, bs_idx + 1, 1)
-+			p = substr(p, bs_idx + 2)
-+
-+			if ((esc_idx = index("abtvfr\"\\", esc)) != 0) {
-+				# C-style one-character escape sequence.
-+				out = out substr("\a\b\t\v\f\r\"\\",
-+						 esc_idx, 1)
-+			} else if (esc == "n") {
-+				# Uh-oh, a newline character.
-+				# We cant reliably put a pathname
-+				# containing a newline into COMPREPLY,
-+				# and the newline would create a mess.
-+				# Skip this path.
-+				return ""
-+			} else {
-+				# Must be a \nnn octal value, then.
-+				dec = esc             * 64 + \
-+				      substr(p, 1, 1) * 8  + \
-+				      substr(p, 2, 1)
-+				out = out sprintf("%c", dec)
-+				p = substr(p, 3)
-+			}
-+		}
-+		# Drop closing double quote, if there is one.
-+		# (There isnt any if this is a directory, as it was
-+		# already stripped with the trailing path components.)
-+		if (substr(p, length(p), 1) == "\"")
-+			out = out substr(p, 1, length(p) - 1)
-+		else
-+			out = out p
-+
-+		return out
- 	}'
+ 		for (p in paths) {
+ 			if (substr(p, 1, 1) != "\"") {
+ 				# No special characters, easy!
+-				print p
++				print pfx p
+ 				continue
+ 			}
+ 
+@@ -481,7 +498,7 @@ __git_index_files ()
+ 				# skip it.
+ 				continue
+ 			else
+-				print p
++				print pfx p
+ 		}
+ 	}
+ 	function dequote(p,    bs_idx, out, esc, esc_idx, dec) {
+@@ -545,7 +562,7 @@ __git_complete_index_file ()
+ 		cur_="$dequoted_word"
+ 	esac
+ 
+-	__gitcomp_file "$(__git_index_files "$1" "$pfx" "$cur_")" "$pfx" "$cur_"
++	__gitcomp_file_direct "$(__git_index_files "$1" "$pfx" "$cur_")"
  }
  
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index a747998d6c..b9879576ab 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1527,7 +1527,7 @@ else
- 	say "Your filesystem does not allow \\ and \" in filenames."
- 	rm -rf 'New\Dir'
- fi
--test_expect_failure FUNNYNAMES_BS_DQ \
-+test_expect_success FUNNYNAMES_BS_DQ \
-     'complete files - C-style escapes in ls-files output' '
- 	test_when_finished "rm -r \"New\\\\Dir\"" &&
+ # Lists branches from the local repository.
+@@ -3311,6 +3328,15 @@ if [[ -n ${ZSH_VERSION-} ]]; then
+ 		compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
+ 	}
  
-@@ -1548,7 +1548,7 @@ else
- 	say 'Your filesystem does not allow special separator characters (FS, GS, RS, US) in filenames.'
- 	rm -rf $'New\034Special\035Dir'
- fi
--test_expect_failure FUNNYNAMES_SEPARATORS \
-+test_expect_success FUNNYNAMES_SEPARATORS \
-     'complete files - \nnn-escaped control characters in ls-files output' '
- 	test_when_finished "rm -r '$'New\034Special\035Dir''" &&
- 
-@@ -1562,6 +1562,19 @@ test_expect_failure FUNNYNAMES_SEPARATORS \
- 			"'$'New\034Special\035Dir/New\036Special\037File''"
- '
- 
-+test_expect_success FUNNYNAMES_BS_DQ \
-+    'complete files - removing repeated quoted path components' '
-+	test_when_finished rm -rf NewDir &&
-+	mkdir NewDir &&    # A dirname which in itself would not be quoted ...
-+	>NewDir/0-file &&
-+	>NewDir/1\"file && # ... but here the file makes the dirname quoted ...
-+	>NewDir/2-file &&
-+	>NewDir/3\"file && # ... and here, too.
++	__gitcomp_file_direct ()
++	{
++		emulate -L zsh
 +
-+	# Still, we should only list it once.
-+	test_completion "git test-path-comp New" "NewDir"
-+'
++		local IFS=$'\n'
++		compset -P '*[=:]'
++		compadd -Q -f -- ${=1} && _ret=0
++	}
 +
+ 	__gitcomp_file ()
+ 	{
+ 		emulate -L zsh
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index c3521fbfc4..53cb0f934f 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -93,6 +93,15 @@ __gitcomp_nl_append ()
+ 	compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
+ }
  
- test_expect_success "completion uses <cmd> completion for alias: !sh -c 'git <cmd> ...'" '
- 	test_config alias.co "!sh -c '"'"'git checkout ...'"'"'" &&
++__gitcomp_file_direct ()
++{
++	emulate -L zsh
++
++	local IFS=$'\n'
++	compset -P '*[=:]'
++	compadd -Q -f -- ${=1} && _ret=0
++}
++
+ __gitcomp_file ()
+ {
+ 	emulate -L zsh
 -- 
 2.17.0.366.gbe216a3084
 
