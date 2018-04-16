@@ -2,83 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C6211F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 05:43:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFBA01F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 05:56:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752850AbeDPFnU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 01:43:20 -0400
-Received: from mail.javad.com ([54.86.164.124]:55016 "EHLO mail.javad.com"
+        id S1752850AbeDPF44 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 01:56:56 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:29299 "EHLO bsmtp3.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751927AbeDPFnT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 01:43:19 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 6A5D73E8B8;
-        Mon, 16 Apr 2018 05:43:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523857398;
-        bh=G1jpkqwvXuJzqKYTb9oyirYMRTLaubyyl4oHyppAEz8=; l=1167;
-        h=Received:From:To:Subject;
-        b=JiEiiUrN1n2Y/bn8nNwnnVvbZeLeobbqpRpVDWYdcOgOjWMWRrsctE7x8P4VVzX67
-         8WvPGM2X5l79kZhuWuNUSg8ZpGoY2ZgXA8UVV71c/jXH1m2HavbElQaSNUQ+sS0UUM
-         Gaq6MsftR4qnZtkyBC/M7KJOJtTldFnYlg1Da4MA=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1523857398;
-        bh=G1jpkqwvXuJzqKYTb9oyirYMRTLaubyyl4oHyppAEz8=; l=1167;
-        h=Received:From:To:Subject;
-        b=JiEiiUrN1n2Y/bn8nNwnnVvbZeLeobbqpRpVDWYdcOgOjWMWRrsctE7x8P4VVzX67
-         8WvPGM2X5l79kZhuWuNUSg8ZpGoY2ZgXA8UVV71c/jXH1m2HavbElQaSNUQ+sS0UUM
-         Gaq6MsftR4qnZtkyBC/M7KJOJtTldFnYlg1Da4MA=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1f7wv6-0006Iu-Ex; Mon, 16 Apr 2018 08:43:16 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH] glossary: substitute "ancestor" for "direct ancestor" in 'push' description.
-Date:   Mon, 16 Apr 2018 08:43:16 +0300
-Message-ID: <87muy31zbf.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1751205AbeDPF44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 01:56:56 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 40Pd1f0VrYz5tlH;
+        Mon, 16 Apr 2018 07:56:53 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 772CD10B;
+        Mon, 16 Apr 2018 07:56:53 +0200 (CEST)
+Subject: Re: Bug: rebase -i creates committer time inversions on 'reword'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+References: <5f5d5b88-b3ac-ed4f-ee24-6ce2cba2bd55@kdbg.org>
+ <xmqq7ep817bq.fsf@gitster-ct.c.googlers.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <06c5bd54-f1b0-7fe5-6aa8-870e0ae4487d@kdbg.org>
+Date:   Mon, 16 Apr 2018 07:56:52 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqq7ep817bq.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 15.04.2018 um 23:35 schrieb Junio C Hamano:
+> Ah, do you mean we have an internal sequence like this, when "rebase
+> --continue" wants to conclude an edit/reword?
 
-Even though "direct ancestor" is not defined in the glossary, the
-common meaning of the term is simply "parent", parents being the only
-direct ancestors, and the rest of ancestors being indirect ancestors.
+Yes, it's only 'reword' that is affected, because then subsequent picks 
+are processed by the original process.
 
-As "parent" is obviously wrong in this place in the description, we
-should simply say "ancestor", as everywhere else.
+>   - we figure out the committer ident, which grabs a timestamp and
+>     cache it;
+> 
+>   - we spawn "commit" to conclude the stopped step, letting it record
+>     its beginning time (which is a bit older than the above) or its
+>     ending time (which is much older due to human typing speed);
 
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
----
- Documentation/glossary-content.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Younger in both cases, of course. According to my tests, we seem to pick 
+the beginning time, because the first 'reword'ed commit typically has 
+the same timestamp as the preceding picks. Later 'reword'ed commits have 
+noticably younger timestamps.
 
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index 6b8888d..6c2d23d 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -463,7 +463,7 @@ exclude;;
- [[def_push]]push::
- 	Pushing a <<def_branch,branch>> means to get the branch's
- 	<<def_head_ref,head ref>> from a remote <<def_repository,repository>>,
--	find out if it is a direct ancestor to the branch's local
-+	find out if it is an ancestor to the branch's local
- 	head ref, and in that case, putting all
- 	objects, which are <<def_reachable,reachable>> from the local
- 	head ref, and which are missing from the remote
--- 
-2.10.0.1.g57b01a3
+>   - subsequent "picks" are made in the same process, and share the
+>     timestamp we grabbed in the first step, which is older than the
+>     second one.
+> 
+> I guess we'd want a mechanism to tell ident.c layer "discard the
+> cached one, as we are no longer in the same automated sequence", and
+> use that whenever we spawn an editor (or otherwise go interactive).
 
+Frankly, I think that this caching is overengineered (or prematurly 
+optimized). If the design requires that different callers of datestamp() 
+must see the same time, then the design is broken. In a fixed design, 
+there would be a single call of datestamp() in advance, and then the 
+timestamp, which then obviously is a very important piece of data, would 
+be passed along as required.
+
+-- Hannes
