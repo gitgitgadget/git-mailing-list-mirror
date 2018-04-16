@@ -2,97 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E120A1F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 20:35:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E24281F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 20:46:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751164AbeDPUfg convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 16 Apr 2018 16:35:36 -0400
-Received: from mail.1eanda.com ([50.241.99.154]:50001 "EHLO mail.1eanda.com"
+        id S1751211AbeDPUqs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 16:46:48 -0400
+Received: from ao2.it ([92.243.12.208]:40386 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750979AbeDPUff (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 16:35:35 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mail.1eanda.com (Postfix) with ESMTP id 8BECA40242;
-        Mon, 16 Apr 2018 16:35:34 -0400 (EDT)
-X-Virus-Scanned: Debian amavisd-new at mail.1eanda.com
-Received: from mail.1eanda.com ([127.0.0.1])
-        by localhost (mail.1eanda.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id Mk56H7Ht5tnn; Mon, 16 Apr 2018 16:35:33 -0400 (EDT)
-Received: from [10.134.3.27] (50-241-99-157-static.hfc.comcastbusiness.net [50.241.99.157])
-        (Authenticated sender: matt@1eanda.com)
-        by mail.1eanda.com (Postfix) with ESMTPSA id CAA0D40213;
-        Mon, 16 Apr 2018 16:35:32 -0400 (EDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: Re: [PATCH] completion: reduce overhead of clearing cached --options
-From:   Matthew Coleman <matt@1eanda.com>
-In-Reply-To: <CA+P7+xqVdhJ3PrGjQWcofHJV3E1UYWVHEXVt5yaV3Ycv1YvkTg@mail.gmail.com>
-Date:   Mon, 16 Apr 2018 16:35:31 -0400
-Cc:     Jakub Narebski <jnareb@gmail.com>,
-        =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stephon Harris <theonestep4@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-X-Mao-Original-Outgoing-Id: 545603731.093854-abaac147a2f82fcfaa47e45af3c46863
-Content-Transfer-Encoding: 8BIT
-Message-Id: <6A862FDA-1EBA-47BB-8C99-AB09DA91955D@1eanda.com>
-References: <ACE8F169-7700-4D60-85CB-786C6BEBF0B7@1eanda.com>
- <20180413103005.671-1-szeder.dev@gmail.com> <86604un5mz.fsf@gmail.com>
- <CAM0VKjkKE695mMPgmfgzWJPaJThdLDSESV9KmupQX_bm-6MW-w@mail.gmail.com>
- <86sh7xlxyp.fsf@gmail.com>
- <CA+P7+xqVdhJ3PrGjQWcofHJV3E1UYWVHEXVt5yaV3Ycv1YvkTg@mail.gmail.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-X-Mailer: Apple Mail (2.3273)
+        id S1750989AbeDPUqs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 16:46:48 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1f8B0L-0006qI-LE; Mon, 16 Apr 2018 22:45:37 +0200
+Date:   Mon, 16 Apr 2018 22:46:45 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>,
+        Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Re: [RFC 02/10] submodule: fix getting custom gitmodule file in
+ fetch command
+Message-Id: <20180416224645.f5d2f49702ad647cabd8c98d@ao2.it>
+In-Reply-To: <CAGZ79kZMXjEAHewkwBR4R91c46+jEL5s9rX2D+2gXo2X6dcozA@mail.gmail.com>
+References: <20180412222047.5716-1-ao2@ao2.it>
+        <20180412222047.5716-3-ao2@ao2.it>
+        <CAGZ79kbnc17PZ9_=8QLkZgUZ0DHJKfWnxrekmgkLGFBU_0ieug@mail.gmail.com>
+        <20180416181841.b486524b8b9b0e68e3a31bfa@ao2.it>
+        <CAGZ79kZMXjEAHewkwBR4R91c46+jEL5s9rX2D+2gXo2X6dcozA@mail.gmail.com>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Disclaimer: I'm not a zsh user, so please correct anything I might have gotten wrong.
+On Mon, 16 Apr 2018 12:23:59 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-I created a .zshrc with the following contents:
-autoload -Uz compinit
-compinit
-source /usr/local/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh
-
-zsh doesn't have broken Unicode output in its `set` builtin, so it was not affected by the original issue. Applying the patch does not cause any change in behavior.
-
-Since the commit only changes a file with "bash" in its name, but the conditional references zsh variables, I think it's worth mentioning something about it in the commit message.
-
-I think the bash side of things is all set for this commit, but can a similar improvement be made (using a builtin instead of parsing set|sed) for zsh? Again, I'm not a zsh user, so some input from someone who's written zsh completion rules would be very helpful. Can any of the builtins mentioned in this zsh documentation be used instead of set|sed?
-http://zsh.sourceforge.net/Doc/Release/Zsh-Modules.html#The-zsh_002fcomputil-Module
-
-> On Apr 16, 2018, at 2:23 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Mon, Apr 16, 2018 at 9:18 AM, Antonio Ospite <ao2@ao2.it> wrote:
 > 
-> On Sat, Apr 14, 2018 at 6:27 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->> SZEDER Gábor <szeder.dev@gmail.com> writes:
->>> On Fri, Apr 13, 2018 at 11:44 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->>>> SZEDER Gábor <szeder.dev@gmail.com> writes:
->>>>> 
->>>>> In Bash we can do better: run the 'compgen -v __gitcomp_builtin_'
->>>>> builtin command, which lists the same variables, but without a
->>>>> pipeline and 'sed' it can do so with lower overhead.
->>>> 
->>>> What about ZSH?
->>> 
->>> Nothing, ZSH is unaffected by this patch.
->> 
->> All right, so for ZSH we would need LC_ALL=C trick, or come with some
->> equivalent of 'compgen -v __gitcomp_builtin_' for this shell.
->> 
->> Good patch, though it does not solve whole of the problem.
->> 
->> Best,
->> --
->> Jakub Narębski
+> >
+> > Is there an API to just load one config setting?
 > 
-> Is ZSH actually affected by the broken set behavior, though?
+> Do you mean to
 > 
-> Thanks,
-> Jake
+>   git -c key=value foo-command --options ...
 
+I meant, instead of:
+
+  git_config(git_fetch_config, NULL);
+
+which updates a series of config settings, something which loads
+_in_the_code_ just the one value for 'core.submodulesFile' previously
+set either via "git -c" or "git config".
+
+It turns out what I was looking for is git_config_get_string_const().
+
+The new patch will be simply this:
+
+diff --git a/config.c b/config.c
+index 6ffb1d501..1ef9801d3 100644
+--- a/config.c
++++ b/config.c
+@@ -2087,6 +2087,7 @@ int git_config_get_pathname(const char *key, const char **dest)
+  */
+ void config_from_gitmodules(config_fn_t fn, void *data)
+ {
++       git_config_get_string_const("core.submodulesFile", &submodules_file);
+        if (the_repository->worktree) {
+                char *file = repo_worktree_path(the_repository, submodules_file);
+                git_config_from_file(fn, file, data);
+
+
+Which covers my use case without changing the fetch behavior for previous
+users, as "core.submodulesFile" is a new option.
+
+Thanks,
+   Antonio
+
+-- 
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
+
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
