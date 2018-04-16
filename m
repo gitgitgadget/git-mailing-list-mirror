@@ -2,71 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DB341F404
-	for <e@80x24.org>; Sun, 15 Apr 2018 22:48:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F325F1F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 00:37:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751931AbeDOWsY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Apr 2018 18:48:24 -0400
-Received: from mail-wr0-f181.google.com ([209.85.128.181]:36816 "EHLO
-        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751489AbeDOWsX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Apr 2018 18:48:23 -0400
-Received: by mail-wr0-f181.google.com with SMTP id q13so17538835wre.3
-        for <git@vger.kernel.org>; Sun, 15 Apr 2018 15:48:22 -0700 (PDT)
+        id S1752604AbeDPAhJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Apr 2018 20:37:09 -0400
+Received: from mail-wr0-f172.google.com ([209.85.128.172]:34746 "EHLO
+        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751919AbeDPAhI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Apr 2018 20:37:08 -0400
+Received: by mail-wr0-f172.google.com with SMTP id d19so21284542wre.1
+        for <git@vger.kernel.org>; Sun, 15 Apr 2018 17:37:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=zywzVOdWkE/B0RjLTXpYgXBztDlmuj04kvz7dEO98rg=;
-        b=SU5sGnh2Em/lGWlUngkbhSHys7zOJE7JNr+IPQdK2m5eQhdB2z1OlTs6WHyK9+dbHC
-         KTAjTiXhKMcs8jEWknF+QonXx9jW7rdV8OLyHk/gzqN/UxcSVNjdK9aN6FyY7hv7/BLn
-         ZaQAbqTXc6tCeajOzhxSjIyTvagWQFl6IIxGQiGW52aHap6QMFrvW3XjM4ZWBvD3e2v7
-         EafWN3WAPwZDkB3/z604ObdBBQAS4InMRTKWaufFa1vJ02Y5V9Q2JcoEONC1tWAHnhp2
-         xr00pvDmOmOaU2u5/tztrvFBQUpxr8fytItO7CpQlb9WpZDDMhX0l46sxQczq3QiIRa8
-         mUfg==
+        bh=+EHyx7ETuRQO09/cgRyk0L0nAhppsFNDH2ecvbOC5s4=;
+        b=bhS4uMXTsATABJRs/4REMZd3/ChfSHCLa+bMDuOHvID6qLDs2cC29id4BI1RTIiYsN
+         Ye/vAGev1Dlv8+v6wG4FKBViLLpSaYA6Zc8D4Wx+tB60EcrA72nYgarNOdrj8YNU0PWP
+         6FotQFW7rtIbNC6ryE3nF1yAzCmQdKNm2Pr/x/lByeQhFeWQc/LFypgFj3xcGUKyB0cw
+         vAimyJaxYu86Bmiql1vLYamxpSNLG5ffokH8eytwe2h2LqSQFGJLJ55vJNHhbHdd4L0P
+         k9SfUuvodX7XCAh/ILPQ1GXayoizf7pdeFn/mUukn8Mw0x/651Riyg5uijXmF/DxV0IH
+         avfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=zywzVOdWkE/B0RjLTXpYgXBztDlmuj04kvz7dEO98rg=;
-        b=T34dDV2XQfDXDBGy8bVv/5Sm2s1t9ZtBqau+y4Bdr5xLthCbFbB+ExN7bcFm5gcyqQ
-         xEvrYq55WvLXk2BTSnXlC/STv9PpTuvOynfu5Cz2s1C5dE9rLYB8aCGOfB9X+4xxb5iQ
-         6+OQ4ZTcbxvZDJIjC/WKjC/AAFmZybKiFsHyxR1b8RMBTXaZI44Dgk42CzdBZutdkh++
-         LC1Oity6SicZIM0S7zJpfBDTBZvdPS8GSrUEGqVDIO/KfrEwButxkL1MK4mBh53jWMe7
-         FgQXEnKJg0mIaHoUDVnAtgBwjAdwxylgvkNZWNHyR9QUegivs8WokysxBT5PSXaMGBiU
-         ekmA==
-X-Gm-Message-State: ALQs6tAbCQq1hkJnalh2YixLHFHh2s5zWPFaEW+2uTGQEXHuuNFBMnBz
-        caPBepGEfYntxIvWu+TmlmM=
-X-Google-Smtp-Source: AIpwx4/S4eG6O/WNEMpm2uFW+pOxqdKVqdMPwN+w9vmeZ2HW3iK3IYD7o2IqfRUQFbNpMYcEdWENrQ==
-X-Received: by 10.223.145.162 with SMTP id 31mr8155317wri.124.1523832501544;
-        Sun, 15 Apr 2018 15:48:21 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egm16.neoplus.adsl.tpnet.pl. [83.21.76.16])
-        by smtp.gmail.com with ESMTPSA id d18sm8219570wre.5.2018.04.15.15.48.19
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=+EHyx7ETuRQO09/cgRyk0L0nAhppsFNDH2ecvbOC5s4=;
+        b=Scx6DmYL+KVdblqcVD9N1UpbveoMhiPvgcn4P5+8vlD0lnLAyx1mOyY7/sv34THbjP
+         lrVtxfIuyHQ7aQPIXOIhpcmy5j9MBZHhLwfn9JwTQzuf1C7pKyesD1Ks7SRnPoN20V61
+         f8r3BsGmgdJviyMbaIWjRFKp3VzznaCAtsd8ge4chhwkhVuEWuu4Y7YTiTFNdHracMeI
+         UOzB/EF7cS9IzLanv6lui95WoQ9/EGCkXIfntFIgMTOL0dskKRJq5Zzqx+rXecNa0gsa
+         8va3ziDTJG2zuV8JJ6g9awR00pwzJxHMf/331DUUK/iEOa74zthWUR/ETw4m3RQc7MAi
+         Kgug==
+X-Gm-Message-State: ALQs6tA3jLb3npK+EGaEJTVU/hA2ikpZiL1YBlknL1klrVfWRmpTgW4w
+        9OL9M/iOrJnZXiO2Gjxr4nA=
+X-Google-Smtp-Source: AIpwx48q4PrAKHd1RPK3iOMWXCo6YvDMSwNeTKSNx/hhvGXIBcnR91OdyaQf7UbLHM9/9P+7AKtM/w==
+X-Received: by 10.223.163.135 with SMTP id l7mr1641719wrb.133.1523839027192;
+        Sun, 15 Apr 2018 17:37:07 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q81sm8774717wmg.8.2018.04.15.17.37.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 15 Apr 2018 15:48:20 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v8 04/14] graph: add commit graph design document
-References: <20180402203427.170177-1-dstolee@microsoft.com>
-        <20180410125608.39443-1-dstolee@microsoft.com>
-        <20180410125608.39443-5-dstolee@microsoft.com>
-Date:   Mon, 16 Apr 2018 00:48:15 +0200
-In-Reply-To: <20180410125608.39443-5-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Tue, 10 Apr 2018 08:55:58 -0400")
-Message-ID: <86vacsjdcg.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        Sun, 15 Apr 2018 17:37:05 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, torvalds@linux-foundation.org,
+        sbeller@google.com
+Subject: Re: [PATCH v9 29.75/30] merge-recursive: Fix was_tracked() to quit lying with some renamed paths
+References: <xmqqmuya43cs.fsf@gitster-ct.c.googlers.com>
+        <20180413195607.18091-1-newren@gmail.com>
+        <20180413195607.18091-4-newren@gmail.com>
+Date:   Mon, 16 Apr 2018 09:37:04 +0900
+In-Reply-To: <20180413195607.18091-4-newren@gmail.com> (Elijah Newren's
+        message of "Fri, 13 Apr 2018 12:56:06 -0700")
+Message-ID: <xmqqo9ikyojz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -74,133 +68,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> +Future Work
-> +-----------
+> @@ -362,13 +363,17 @@ static int git_merge_trees(struct merge_options *o,
+>  	init_tree_desc_from_tree(t+2, merge);
+>  
+>  	rc = unpack_trees(3, t, &o->unpack_opts);
+> +	cache_tree_free(&active_cache_tree);
 > +
-> +- The commit graph feature currently does not honor commit grafts. This can
-> +  be remedied by duplicating or refactoring the current graft logic.
-
-The problem in my opinion lies in different direction, namely that
-commit grafts can change, changing the view of the history.  If we want
-commit-graph file to follow user-visible view of the history of the
-project, it needs to respect current version of commit grafts - but what
-if commit grafts changed since commit-graph file was generated?
-
-Actually, there are currently three ways to affect the view of the
-history:
-
-a. legacy commit grafts mechanism; it was first, but it is not safe,
-   cannot be transferred on fetch / push, and is now deprecated.
-
-b. shallow clones, which are kind of specialized and limited grafts;
-   they used to limit available functionality, but restrictions are
-   being lifted (or perhaps even got lifted)
-
-c. git-replace mechanism, where we can create an "overlay" of any
-   object, and is intended to be among others replacement for commit
-   grafts; safe, transferable, can be turned off with "git
-   --no-replace-objects <command>"
-
-All those can change; some more likely than others.  The problem is if
-they change between writing commit-graph file (respecting old view of
-the history) and reading it (where we expect to see the new view).
-
-a. grafts file can change: lines can be added, removed or changed
-
-b. shallow clones can be deepened or shortened, or even make
-   not shallow
-
-c. new replacements can be added, old removed, and existing edited
-
-
-There are, as far as I can see, two ways of handling the issue of Git
-features that can change the view of the project's history, namely:
-
- * Disable commit-graph reading when any of this features are used, and
-   always write full graph info.
-
-   This may not matter much for shallow clones, where commit count
-   should be small anyway, but when using git-replace to stitch together
-   current repository with historical one, commit-graph would be
-   certainly useful.  Also, git-replace does not need to change history.
-
-   On the other hand I think it is the easier solution.
-
-Or
-
- * Detect somehow that the view of the history changed, and invalidate
-   commit-graph (perhaps even automatically regenerate it).
-
-   For shallow clone changes I think one can still use the old
-   commit-graph file to generate the new one.  For other cases, the
-   metadata is simple to modify, but indices such as generation number
-   would need to be at least partially calculated anew.
-
-Happily, you don't need to do this now.  It can be done in later series;
-on the other hand this would be required before the switch can be turned
-from "default off" to "default on" for commit-graph feature (configured
-with core.commitGraph).
-
-So please keep up the good work with sending nicely digestible patch
-series.
-
+> +	o->orig_index = the_index;
+> +	the_index = tmp_index;
 > +
-> +- The 'commit-graph' subcommand does not have a "verify" mode that is
-> +  necessary for integration with fsck.
+>  	/*
+> -	 * unpack_trees NULLifies src_index, but it's used in verify_uptodate,
+> -	 * so set to the new index which will usually have modification
+> -	 * timestamp info copied over.
+> +	 * src_index is used in verify_uptodate, but was NULLified in
+> +	 * unpack_trees, so we need to set it back to the original index.
+>  	 */
 
-The "read" mode has beginnings of "verify", or at least "fsck", isn't
-it?
+Was NULLified?  I thought that the point of src/dst distinction
+Linus introduced long time ago at 34110cd4 ("Make 'unpack_trees()'
+have a separate source and destination index", 2008-03-06) was that
+we can then keep the source side of the traversal unmodified.
 
-[...]
-> +- The current design uses the 'commit-graph' subcommand to generate the graph.
-> +  When this feature stabilizes enough to recommend to most users, we should
-> +  add automatic graph writes to common operations that create many commits.
-> +  For example, one could compute a graph on 'clone', 'fetch', or 'repack'
-> +  commands.
+> -	o->unpack_opts.src_index = &the_index;
+> -	cache_tree_free(&active_cache_tree);
+> +	o->unpack_opts.src_index = &o->orig_index;
 
-Automatic is good ("git gc --auto").
+> -static int was_tracked(const char *path)
+> +/*
+> + * Returns whether path was tracked in the index before the merge started
+> + */
+> +static int was_tracked(struct merge_options *o, const char *path)
+>  {
+> -	int pos = cache_name_pos(path, strlen(path));
+> +	int pos = index_name_pos(&o->orig_index, path, strlen(path));
+>  
+>  	if (0 <= pos)
+> -		/* we have been tracking this path */
+> +		/* we were tracking this path before the merge */
+>  		return 1;
+>  
+> -	/*
+> -	 * Look for an unmerged entry for the path,
+> -	 * specifically stage #2, which would indicate
+> -	 * that "our" side before the merge started
+> -	 * had the path tracked (and resulted in a conflict).
+> -	 */
+> -	for (pos = -1 - pos;
+> -	     pos < active_nr && !strcmp(path, active_cache[pos]->name);
+> -	     pos++)
+> -		if (ce_stage(active_cache[pos]) == 2)
+> -			return 1;
+>  	return 0;
+>  }
 
-But that needs handling of view chaning features such as commit grafts,
-isn't it?
+I do agree with the simplicity of the new code that directly asks
+exactly what we want to ask.  However, there is one thing that is
+puzzling below...
 
+>  static int would_lose_untracked(const char *path)
+>  {
+> -	return !was_tracked(path) && file_exists(path);
+> +	/*
+> +	 * This may look like it can be simplified to:
+> +	 *   return !was_tracked(o, path) && file_exists(path)
+> +	 * but it can't.  This function needs to know whether path was
+> +	 * in the working tree due to EITHER having been tracked in the
+> +	 * index before the merge OR having been put into the working copy
+> +	 * and index by unpack_trees().  Due to that either-or requirement,
+> +	 * we check the current index instead of the original one.
+> +	 */
+
+If this path was created by merge-recursive, not by unpack_trees(),
+what does this function want to say?  Say, we are looking at path P,
+the other branch we are merging moved some other path Q to P (while
+our side modified contents at path Q).  Then path P we are looking
+at has contents of Q at the merge base at stage #1, the contents of
+Q from our HEAD at stage #2 and the contents of P from the other
+branch at stage #3.  The code below says "path P is OK, we won't
+lose it" in such a case, but it is unclear if the above comment
+wants to also cover that case.
+
+> +	int pos = cache_name_pos(path, strlen(path));
 > +
-> +- A server could provide a commit graph file as part of the network protocol
-> +  to avoid extra calculations by clients. This feature is only of benefit if
-> +  the user is willing to trust the file, because verifying the file is correct
-> +  is as hard as computing it from scratch.
-
-Should server send different commit-graph file / info depending on
-whether client fetches from refs/replaces/* nameespace?
-
-> +
-> +Related Links
-> +-------------
-
-Thank you for providing them (together with summary).
-
-> +[0] https://bugs.chromium.org/p/git/issues/detail?id=8
-> +    Chromium work item for: Serialized Commit Graph
-> +
-> +[1] https://public-inbox.org/git/20110713070517.GC18566@sigill.intra.peff.net/
-> +    An abandoned patch that introduced generation numbers.
-> +
-> +[2] https://public-inbox.org/git/20170908033403.q7e6dj7benasrjes@sigill.intra.peff.net/
-> +    Discussion about generation numbers on commits and how they interact
-> +    with fsck.
-> +
-> +[3] https://public-inbox.org/git/20170908034739.4op3w4f2ma5s65ku@sigill.intra.peff.net/
-> +    More discussion about generation numbers and not storing them inside
-> +    commit objects. A valuable quote:
-> +
-> +    "I think we should be moving more in the direction of keeping
-> +     repo-local caches for optimizations. Reachability bitmaps have been
-> +     a big performance win. I think we should be doing the same with our
-> +     properties of commits. Not just generation numbers, but making it
-> +     cheap to access the graph structure without zlib-inflating whole
-> +     commit objects (i.e., packv4 or something like the "metapacks" I
-> +     proposed a few years ago)."
-> +
-> +[4] https://public-inbox.org/git/20180108154822.54829-1-git@jeffhostetler.com/T/#u
-> +    A patch to remove the ahead-behind calculation from 'status'.
+> +	if (pos < 0)
+> +		pos = -1 - pos;
+> +	while (pos < active_nr &&
+> +	       !strcmp(path, active_cache[pos]->name)) {
+> +		/*
+> +		 * If stage #0, it is definitely tracked.
+> +		 * If it has stage #2 then it was tracked
+> +		 * before this merge started.  All other
+> +		 * cases the path was not tracked.
+> +		 */
+> +		switch (ce_stage(active_cache[pos])) {
+> +		case 0:
+> +		case 2:
+> +			return 0;
+> +		}
+> +		pos++;
+> +	}
+> +	return file_exists(path);
+>  }
+>  
+>  static int was_dirty(struct merge_options *o, const char *path)
