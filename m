@@ -7,93 +7,92 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC4AE1F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 18:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EA1F1F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 18:23:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752978AbeDPSU1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 14:20:27 -0400
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:41821 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752417AbeDPSU0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 14:20:26 -0400
-Received: by mail-wr0-f178.google.com with SMTP id v24so11568874wra.8
-        for <git@vger.kernel.org>; Mon, 16 Apr 2018 11:20:26 -0700 (PDT)
+        id S1752955AbeDPSXo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 14:23:44 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:45870 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752308AbeDPSXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 14:23:43 -0400
+Received: by mail-wr0-f195.google.com with SMTP id u11so28637845wri.12
+        for <git@vger.kernel.org>; Mon, 16 Apr 2018 11:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=4pxTXb5S02zZ84aOkCx2HXCQpK9xQycn69ntnrOl4Tc=;
-        b=BvFwjNw5+T8NZe42kWpFk9RQvjIl/yk6Uh0nMf1ev5hD014b8OiLgwXeLb8QwR/b0I
-         KCWagnrkrSIyRQjMZlLplaeSeueE3YaSc8Ml9z/6mSePMFeWGVKjMqHhvdfeyUPlZJFG
-         j9zN7rTo0pgq2jpUc3RlIr9+/8c0AW57+YzB98fY4uT3moHWFE6UiYZw2lQBja4Wa8U3
-         E4TvJMmtfA3v4o3vsicvPt4iyEGQmnpoVUcSDotwBP+8B3UgH553Oxmu8DOTWAxxDn/c
-         qKX7qs+Mqs01RDYA1iy7726uCCKdLdBI+AwGvbjl4itcNSjKncuNCYKH6k1hyBf6WxnC
-         Sjhw==
+         :cc:content-transfer-encoding;
+        bh=N8etomfOXg5OfQMEIzR8KUQneK2Octsu/NNfkLfdp6I=;
+        b=NvWkQVmsOUoOr+bSJbrmVLgenLgLYK+H80pqLrEPZitNgpcvvXpbJUg2QqNgoWgD51
+         nbse0utzrVdIWcuscvqZM8RvJrMD2PIo0/OYoAzMBtfT0mTFiB4AFy0rVJXlwasfQqQY
+         XhhH7UUrU6lXHbdGsL4H3F4bu3vF72LJV6G62xW0WnfjQsEnnzUPQRoyyCSX1Gx5LmLB
+         jA6vhNGDR6DC8C1qVynovfeHfEh7MjJnqddBT+McZ+6jAI8vSHAoUsr3+AL6jcfsMi6P
+         eNqOXsaoryLTp8do4VNpb77WLpYRMnwaHJqb8CGSwn/svOoxweMDsYr7ihc66+HNxtoX
+         n47Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=4pxTXb5S02zZ84aOkCx2HXCQpK9xQycn69ntnrOl4Tc=;
-        b=Mm0vv//OvJ6BLgHqPstjr7R8k8z/j/J10lXHiaFqR0lK9YYyZjLF9GNhh2wpFV5n8o
-         7dOO966ZMBhTBOGJHJaBO5Fu8yzLw7rjNox0DazZzhBF8zKpgEqncp8W/mb2t+VV5Y4u
-         dj6+qWg04SRrRkeNhFQ4syOlMDB0wVkslnGEdcoBw48pXaXp9h2GNmBy++P9BlgeGBwV
-         42rc0goqWcEmK7RbTGCoX78Rd/QAecOBriHQfDLrXREw96zUr3/4u/Nt1Ngx9+RDWhF3
-         53VVWYSM3PwhD+JlKxoWzgeqslEou78OWHbZ1/7KB5RuyjKuvPPnAa5od4hVpuEw9vJ5
-         0Fbw==
-X-Gm-Message-State: ALQs6tDhVnf8IsD/NcfcILxHwjSr8tpQj3OgJL4t8cDGoJ0d7bIOZgLf
-        TDUDC0Xyf27akc5h6cZ675fLKM+y5eVCOyNmkc8jL9ya
-X-Google-Smtp-Source: AIpwx4+qUH0YFzH+t4AfZg99KrhQBAV72ptQS2eP2Q6SrQ6/QZsFEN9EHxEn2gppamxYC47+xd+NEfIW+SbWpq0VqbI=
-X-Received: by 10.80.175.2 with SMTP id g2mr33805697edd.84.1523902824099; Mon,
- 16 Apr 2018 11:20:24 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=N8etomfOXg5OfQMEIzR8KUQneK2Octsu/NNfkLfdp6I=;
+        b=O2aAkRQDYO1WZu7j809itgWAvJAetKyZx3JnfAqyjKvg+X6MuSQ3UjQ1gbHYo2I6JB
+         ObHfM+c7/MB/ghtFbUgSpER4145SEHjz6ukTreufAiI1r+eyJz3WuoikLqiXxPGaS9B6
+         pZLa2KrMFB5GX65Y9nA0r2Ev6OslGmf4Rxmb2bcNq2cHwTgW6RtKqlDMStD1oYrXR2Ak
+         jmnJ01VSJ0Qhkzt9kpWYPKZCzN68JF1Ro46yl77JEeJBW7B62d9/4CHMwF7pRKeZpgan
+         C7zwsmhiuWoZt1smNovUjZTih7B/wXYhnVv+4b3VBoobuMjhiquChNoQj/fEiLIdLgoA
+         QErA==
+X-Gm-Message-State: ALQs6tDj6cQTyR9g2VyWw12xv4RXJxpvQqTk/TmFAdnlGGysNBnHds+A
+        rkVCewr7QUfqw15e3NriIyZ6oIwr1s6R0wQHMC8I0Sr+
+X-Google-Smtp-Source: AIpwx4++EgBbYf8huHZ5tN1+6og0cm2gS3g5Ps0it+gPT6wz+AHTbxHaw2D4j0o5VeBxOnt/ZhmjwZk7uCToICOIARg=
+X-Received: by 10.80.192.145 with SMTP id k17mr17893290edf.303.1523903022522;
+ Mon, 16 Apr 2018 11:23:42 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.80.180.180 with HTTP; Mon, 16 Apr 2018 11:20:03 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.21.1804160918120.6924@localhost.localdomain>
-References: <alpine.LFD.2.21.1804160538100.3564@localhost.localdomain>
- <87y3hn5drx.fsf@linux-m68k.org> <alpine.LFD.2.21.1804160918120.6924@localhost.localdomain>
+Received: by 10.80.180.180 with HTTP; Mon, 16 Apr 2018 11:23:21 -0700 (PDT)
+In-Reply-To: <86sh7xlxyp.fsf@gmail.com>
+References: <ACE8F169-7700-4D60-85CB-786C6BEBF0B7@1eanda.com>
+ <20180413103005.671-1-szeder.dev@gmail.com> <86604un5mz.fsf@gmail.com>
+ <CAM0VKjkKE695mMPgmfgzWJPaJThdLDSESV9KmupQX_bm-6MW-w@mail.gmail.com> <86sh7xlxyp.fsf@gmail.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 16 Apr 2018 11:20:03 -0700
-Message-ID: <CA+P7+xrDsPXA6Bq77gYwWtc16Dz4drg+CHA80=vBNB9-NhxHVg@mail.gmail.com>
-Subject: Re: man page for "git remote set-url" seems confusing/contradictory
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Andreas Schwab <schwab@linux-m68k.org>,
-        Git Mailing list <git@vger.kernel.org>
+Date:   Mon, 16 Apr 2018 11:23:21 -0700
+Message-ID: <CA+P7+xqVdhJ3PrGjQWcofHJV3E1UYWVHEXVt5yaV3Ycv1YvkTg@mail.gmail.com>
+Subject: Re: [PATCH] completion: reduce overhead of clearing cached --options
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matthew Coleman <matt@1eanda.com>,
+        Stephon Harris <theonestep4@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 16, 2018 at 9:19 AM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
-> On Mon, 16 Apr 2018, Andreas Schwab wrote:
->
->> On Apr 16 2018, "Robert P. J. Day" <rpjday@crashcourse.ca> wrote:
+On Sat, Apr 14, 2018 at 6:27 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>> On Fri, Apr 13, 2018 at 11:44 PM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+>>> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>>>>
+>>>> In Bash we can do better: run the 'compgen -v __gitcomp_builtin_'
+>>>> builtin command, which lists the same variables, but without a
+>>>> pipeline and 'sed' it can do so with lower overhead.
+>>>
+>>> What about ZSH?
 >>
->> > i don't understand how you can clearly set the fetch and push URLs
->> > of a remote independently, while the man page nonetheless insists
->> > that "even though they can be set differently, must still refer to
->> > the same place". how can they be set differently yet still must
->> > refer to the same place?
->>
->> They could be using different transport methods.  For example, for
->> fetching the unauthenticated git: method could be used, but for
->> pushing an authenticated method like ssh: is usually needed.
+>> Nothing, ZSH is unaffected by this patch.
 >
->   ok, point taken, but does that mean the two must actually refer to
-> the same "place"? it seems that i'm perfectly free to use this command
-> to set the push and fetch URLs to totally different locations.
+> All right, so for ZSH we would need LC_ALL=3DC trick, or come with some
+> equivalent of 'compgen -v __gitcomp_builtin_' for this shell.
 >
-> rday
+> Good patch, though it does not solve whole of the problem.
+>
+> Best,
+> --
+> Jakub Nar=C4=99bski
 
-Things won't work so well if you set the push url and fetch url to
-different repositories. Git assumes that refs updated by "push" will
-also be reflected via "fetch".
-
-I don't know offhand what will break, but likely something will. For
-one, when you fetch again it will rewind your remotes after the push.
-
-The URLs could be different for lots of reasons, but they need to
-ultimately link to the same remote repository. As Andreas said, the
-most likely reason is differing transport protocols.
+Is ZSH actually affected by the broken set behavior, though?
 
 Thanks,
 Jake
