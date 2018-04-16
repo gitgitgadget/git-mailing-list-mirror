@@ -2,103 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C8081F404
-	for <e@80x24.org>; Mon, 16 Apr 2018 15:43:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65FA91F404
+	for <e@80x24.org>; Mon, 16 Apr 2018 15:44:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751150AbeDPPn4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 11:43:56 -0400
-Received: from mail-ot0-f180.google.com ([74.125.82.180]:35328 "EHLO
-        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750732AbeDPPnz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 11:43:55 -0400
-Received: by mail-ot0-f180.google.com with SMTP id f47-v6so17893398oth.2
-        for <git@vger.kernel.org>; Mon, 16 Apr 2018 08:43:55 -0700 (PDT)
+        id S1752201AbeDPPon (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 11:44:43 -0400
+Received: from mail-oi0-f51.google.com ([209.85.218.51]:38378 "EHLO
+        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750799AbeDPPom (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 11:44:42 -0400
+Received: by mail-oi0-f51.google.com with SMTP id y20-v6so3484143oix.5
+        for <git@vger.kernel.org>; Mon, 16 Apr 2018 08:44:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3aITjx/stIh8O39wUTeuXlSHBTVOf0UHbH7d383DxVE=;
-        b=mKgvbnwzqw7lpNqQR4WGQWr/AchiW8rw4ZMtUKthEh+iUvVOCAl240xwnX7o40SbQc
-         KQJkzkAR2jLcnDF8Zt4mFdD8G1ve3DQcXCUPF6qsnIjZBtQb8VO1SJyPiXPpgvWkPx9p
-         4AQgWE4LUNV0RMEaOcJGWbkODdRici5FRXEX7YSSJSncd05gV4z7jKuadY732OQ61UG9
-         685z8KjdmgH8gMtegR0DJn6U9JMFvMCr6fC584/sMbBNz1nq5Nf/aVYEjkbgHGP2xRs1
-         nQmp77dxNDpniafRnMlj79BSWlDGqiL+brfgQ0KxflPcSgTKjFCgjySLJwhWbuyFsWyq
-         /skw==
+        d=utexas-edu.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=iDWKzMLi3uyDngL67hNPG1waJ6R3aRZF9wwZeVwzmuQ=;
+        b=OjEIhz3FyLUZMpUdnVXWM/WtjL+9tD2hwG0JBkHnM01phjSmWdWdpqgAgi8vWLqU0N
+         GJTG58tMwbiEsszvjmAjhTJytWkBdaBshQBaGr85pveT0Yv3O2NDLyxIT4m4CWzJlZz/
+         LvvSLC94+3WWwbxoXxU/luSTGYMANl9ILyzjf+XIecggV5tIX1tjFJPXKPwYx2rmMb5j
+         EqwDFINZSwpXtXa+/47PTioyhKaSkA3tYBawtaAGymGOVTDbSibrYXRSGGHE0daA67Tn
+         F6SyGRLE2ENwWAGRHKEFIRYm5QxFQVvm8SvqplvWvw8+1v2Md1KQS1pwLu4AfcdJOZKb
+         /cgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3aITjx/stIh8O39wUTeuXlSHBTVOf0UHbH7d383DxVE=;
-        b=tS6uHMfmj97x3bigjmWNGl/5wrRvT0KviYTjv4C43dy2xLyFWwldvHlvOuO3eNiQip
-         Z4dOobtWljwmLuQxPP4zWW9pSclggmtKOtjIHFHqSOeOlajd6tHZ3SfIZlSIrhd0mPpm
-         K5Ffor7gqZ8BRJ+mpb2XtOmDETytdoO6OBFvQJjb9ZEqlucpauZE5UFE7QCyj/piWxoJ
-         J/zwinriBSQF1oNpkbaMd+Ce0IUH1SgtMjC9nLrkoBLMGjdwqLmlT4ldvSDXRfHCgeNN
-         1gqNl9yoam2D5guHfdV/FR4xrCaQFD3OWwFmWm7hkueCQ4jnDNxqTJNHWXNY1BPISHY5
-         knvQ==
-X-Gm-Message-State: ALQs6tDdVWmHu4uehgEnXEFfcf8/pyQ/zcio55sWad78oAHAZiKtca2c
-        Mu9DLalOxgjYujC8qTw6j/EzCKTV6L1ZAUDG4qI=
-X-Google-Smtp-Source: AIpwx49fGah2f0vsyrswT81M5Afea9Yj7+ceODSM3DB3toWwtUeI3VLjQTwTemTHhfv/xlL+zCUv7xySHBOUk3p38aQ=
-X-Received: by 2002:a9d:16f3:: with SMTP id s48-v6mr11310156ots.304.1523893434722;
- Mon, 16 Apr 2018 08:43:54 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=iDWKzMLi3uyDngL67hNPG1waJ6R3aRZF9wwZeVwzmuQ=;
+        b=txQM9vZOcYzHi91NrEO5RyxbPCL0h/TTcix7jXGa49+/34+eiERg4I8vElr59rY8h3
+         vom2WuqCNFvrkEQior7SzkK+EuvBxwe0dOEIYQbzcK/tzipUXHx9/ZqPmt1ZsQiYmXVP
+         UIIJzAIBWxPFCQMirDgJeivyexFkvMNKNUpBktIqlBTj5rnezQvMF/RSiE8Fk7XelYTi
+         3iiN7l3+0hd5kEEX9q6+K0LJGQ7N/ijrbWyQSUuBLF4hCGLfTqVPbYuozna81vwdP0F8
+         2+g5kLh9zmWEHoJnIeFyFfI0zUviyZnINPMCNhKrjgxiuo3D3ph/CNNxgwCu+2hrb9rw
+         A5nQ==
+X-Gm-Message-State: ALQs6tAkJ3CkWNo1eIePx2PF99OHjkMNteU2oyKDW801v/u6S08pSPLj
+        9cvBh5FYtWsOcbVwPgNmVMpzMJAitnK5PE0/NmSMLw==
+X-Google-Smtp-Source: AIpwx48fen5/FmbDVcLX9npkfnYIVeykawcnxFfP0lorn4bc4AY41nfKliYq15LsLFDHUVi22nNwHZls/O7t7qaBc6g=
+X-Received: by 2002:aca:2c81:: with SMTP id s123-v6mr5275618ois.27.1523893481619;
+ Mon, 16 Apr 2018 08:44:41 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.198.152 with HTTP; Mon, 16 Apr 2018 08:43:24 -0700 (PDT)
-In-Reply-To: <xmqq36zvy8a5.fsf@gitster-ct.c.googlers.com>
-References: <20180326165520.802-1-pclouds@gmail.com> <20180415164238.9107-1-pclouds@gmail.com>
- <20180415164238.9107-4-pclouds@gmail.com> <xmqq36zvy8a5.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 16 Apr 2018 17:43:24 +0200
-Message-ID: <CACsJy8DHRjtWOC+Mt=gW95-UuyswHmGMM=eM0rFguQXeAsoZyA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/6] generate-cmdlist.sh: keep all information in common-cmds.h
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Philip Oakley <philipoakley@iee.org>
+Received: by 10.201.9.209 with HTTP; Mon, 16 Apr 2018 08:44:41 -0700 (PDT)
+From:   Marko Vasic <vasic@utexas.edu>
+Date:   Mon, 16 Apr 2018 10:44:41 -0500
+Message-ID: <CALH-0NbMxkQewnrr6S_xtyVH0BrC2J6gpB5r-hx8=PpekP1VKw@mail.gmail.com>
+Subject: Git Bash Completion Not Working In Emacs
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 16, 2018 at 8:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->
->> @@ -23,28 +36,44 @@ sed -n '
->>       ' "$1"
->>  printf '};\n\n'
->>
->> +echo "#define GROUP_NONE 0xff /* no common group */"
->
-> Some later code forgets about this value, and causes "git<ENTER>" to
-> segfault at the end of this entire series.
->
-> Namely, here:
->
->> -     for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
->> +     for (i =3D 0; i < nr; i++) {
->>               if (common_cmds[i].group !=3D current_grp) {
->>                       printf("\n%s\n", _(common_cmd_groups[common_cmds[i=
-].group]));
->>                       current_grp =3D common_cmds[i].group;
->
-> where common_cmd_groups[] gets overrun.
+Hello,
 
-Argh!! I thought I tested everything. Sorry for the sloppy quality.
+Git bash completion script works perfectly under the terminal,
+however, it does not work in Emacs (neither shell nor gui mode). Did
+anyone encounter this issues and how can it be solved?
 
->
-> Here is a squash I'll queue on top to keep the tip of 'pu' at least
-> buildable.
+System I use:
+OS: Ubuntu 17.10
+Emacs: 25.2.2
 
-Thanks. It's actually interesting that we have main porcelain commands
-that belong to no group. I'll try to classify them so that they show
-up as well.
-
-
---=20
-Duy
+Thanks,
+Marko
