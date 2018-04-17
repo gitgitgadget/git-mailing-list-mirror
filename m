@@ -2,115 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82AF41F404
-	for <e@80x24.org>; Tue, 17 Apr 2018 17:27:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4E281F404
+	for <e@80x24.org>; Tue, 17 Apr 2018 17:33:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752546AbeDQR1T (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Apr 2018 13:27:19 -0400
-Received: from mail-pl0-f46.google.com ([209.85.160.46]:38857 "EHLO
-        mail-pl0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751193AbeDQR1S (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Apr 2018 13:27:18 -0400
-Received: by mail-pl0-f46.google.com with SMTP id c7-v6so12369662plr.5
-        for <git@vger.kernel.org>; Tue, 17 Apr 2018 10:27:18 -0700 (PDT)
+        id S1752387AbeDQRdc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Apr 2018 13:33:32 -0400
+Received: from mail-bl2nam02on0106.outbound.protection.outlook.com ([104.47.38.106]:62156
+        "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752192AbeDQRdb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Apr 2018 13:33:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=X8YIHq/SsSnDUibmxNMd3UEG+8x0vx5AudhCCLBIc3o=;
-        b=Yah9OnwXFCfWFhqSUhJQSqn/9L+aZMh04ChlPqzYW7OocjUvnlVW4owEEVaqPTYPz3
-         okiyv0qbmepFBvlOO5kMKhFtZeXsowWmw0tUXF84IfNWlO9rxdVq4fbYTbndWOS1jXmj
-         fdyXjJrb0z2i2NZuCM9H8LQLNELqW1c2WOQA6JB3YMhYpaNBj+RDjOZPEqb9L3KTj/yl
-         heGT04qE49uCEX70GnJ6b9ZSRD0/msTdfwvz71J6nhh5z2pUtVSSehEOUpHubnDclSlx
-         WxXPJkgRx5R/sFR9HPgL2RnK7ta1z6Eb2Y4lJDTfnhIkGunVS2Y8dwOLzCHUQWOgVcMq
-         M37A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=X8YIHq/SsSnDUibmxNMd3UEG+8x0vx5AudhCCLBIc3o=;
-        b=NX7z+VSSonw3xTUI5IVeuVIkjnK4X8qkafmR9auUYki7Hkj4cpBMkhQDEOfS1nxb82
-         wkurzZ+sLstXfmhKGmB0X9JogsGS680qKPeKoKbDReCHc7OUYexn1Gk6bq6Am0Gju9TL
-         3hzjvTbiL33EOj64orfll8ke+mlsDIn2X3mIfkr6ycs+UztRiPoeLBOV79j+6t7brC2Z
-         daMfY/39Pbdq8nyuUQ93eCPNIH0ouKoWWKQCzZ6yGcQpkJ5JhvmCcwcVLMxz8lW2hgD7
-         j9d8WcMpKmJ3K6X5EkfQacFFIaedYpCwGtHZKBkrGQIr9DQD8esXTZxUYA9Ly6v/uOqJ
-         cfiw==
-X-Gm-Message-State: ALQs6tCR8xA+m0Nld33kG9pxKBd6bHdnMObdP07/yTq/O11fSJKAXeKv
-        Ciq5w3Qb2YwYh/P95LC5uqQmmhVG
-X-Google-Smtp-Source: AIpwx4/VondpbVEEb/Kz7ioLO9uMTwpsbnjwyDFRNknw138qKUBooiZ5wN3DTfJ73IEdCzCXs/X2Eg==
-X-Received: by 2002:a17:902:680e:: with SMTP id h14-v6mr2697561plk.90.1523986037912;
-        Tue, 17 Apr 2018 10:27:17 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id a6sm25563998pfi.12.2018.04.17.10.27.12
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 17 Apr 2018 10:27:17 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: Optimizing writes to unchanged files during merges?
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CA+P7+xoVcPV_mFS3WpUvCUR7N4SzJ5WBZqpGT3VVWdkPjh6Qww@mail.gmail.com>
-Date:   Tue, 17 Apr 2018 19:27:08 +0200
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, mgorny@gentoo.org,
-        Peter Backes <rtc@helen.plasma.xg8.de>,
-        winserver.support@winserver.com, Theodore Ts'o <tytso@mit.edu>
+ d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=iPCCAjotOQWOV6DLbSYFDeRBA/eVgJG6wlJn1s7cJbQ=;
+ b=p0kMjnVhrY3dbbThpHR2YHwcC165MRIFe8VPuc1XehhhO6V8PKp3ivU9EUs0clb0n1T9d4Nxai2sdvD9ZEob6tX7XtNZD3IZveZCH26f7u2cC5J0tEDz5VDzY3G1cEtxsXQUGhD8U/NRApSGdiRvd4ZszXeZ6H4PFEveECQV0Q4=
+Received: from BYAPR08MB3845.namprd08.prod.outlook.com (52.135.193.27) by
+ BYAPR08MB4117.namprd08.prod.outlook.com (52.135.196.17) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.675.14; Tue, 17 Apr 2018 17:33:27 +0000
+Received: from BYAPR08MB3845.namprd08.prod.outlook.com
+ ([fe80::496c:14e1:20ef:ca62]) by BYAPR08MB3845.namprd08.prod.outlook.com
+ ([fe80::496c:14e1:20ef:ca62%13]) with mapi id 15.20.0675.015; Tue, 17 Apr
+ 2018 17:33:27 +0000
+From:   "Mazo, Andrey" <amazo@checkvideo.com>
+To:     Thandesha VK <thanvk@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "luke@diamand.org" <luke@diamand.org>,
+        "gvanburgh@bloomberg.net" <gvanburgh@bloomberg.net>,
+        "larsxschneider@gmail.com" <larsxschneider@gmail.com>,
+        "miguel.torroja@gmail.com" <miguel.torroja@gmail.com>
+Subject: Re: [BUG] git p4 clone fails when p4 sizes does not return 'fileSize'
+ key
+Thread-Topic: [BUG] git p4 clone fails when p4 sizes does not return
+ 'fileSize' key
+Thread-Index: AQHT1du7X51QcloYSUG+Lp9Mls7MJ6QFJMMAgAAQcACAAAD9Bg==
+Date:   Tue, 17 Apr 2018 17:33:26 +0000
+Message-ID: <BYAPR08MB384591845049E50D98A42303DAB70@BYAPR08MB3845.namprd08.prod.outlook.com>
+References: <CAJJpmi-pLb4Qcka5aLKXA8B1VOZFFF+OAQ0fgUq9YviobRpYGg@mail.gmail.com>
+ <cover.1523981210.git.amazo@checkvideo.com>,<CAJJpmi9OQicqEonVwWMo+yimU5MBdJ9gwzbtY1GXSMB+E69AGA@mail.gmail.com>
+In-Reply-To: <CAJJpmi9OQicqEonVwWMo+yimU5MBdJ9gwzbtY1GXSMB+E69AGA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=amazo@checkvideo.com; 
+x-originating-ip: [70.163.25.109]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;BYAPR08MB4117;7:z/bGMEAFAiqGPRvdX5geKLg91aq4esjnqelEh4+6Eg8azeu7SYjo5A0wqrbTRfLUkGm5z/+rTSPf7zBmVsH1fM4Chg8HDoiptuAgFe3f598vLJlbkC0jkcJtNoSkW6quKY7YNN93FHngMaT5yehPptt9ox0rTN35Yi8WD3NzQdYNnnjGFFKwvvTq5MeXxq/NxE0OeiblrlY13SjUBbwhVEcPcYwNto8rLxuXnsZ5DCgoRyTIhq+LU3EmHeYjuO67
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:BYAPR08MB4117;
+x-ms-traffictypediagnostic: BYAPR08MB4117:
+x-microsoft-antispam-prvs: <BYAPR08MB411798A03488A9E180ABD517DAB70@BYAPR08MB4117.namprd08.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(85827821059158);
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(8121501046)(5005006)(3231232)(944501359)(52105095)(3002001)(10201501046)(93006095)(93001095)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123564045)(20161123562045)(20161123558120)(6072148)(201708071742011);SRVR:BYAPR08MB4117;BCL:0;PCL:0;RULEID:;SRVR:BYAPR08MB4117;
+x-forefront-prvs: 0645BEB7AA
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39380400002)(39860400002)(346002)(376002)(366004)(396003)(199004)(189003)(4326008)(6246003)(8676002)(55016002)(66066001)(2900100001)(53936002)(9686003)(6436002)(54906003)(3660700001)(74316002)(486006)(81156014)(81166006)(305945005)(3846002)(6116002)(14454004)(3280700002)(106356001)(39060400002)(478600001)(68736007)(8936002)(25786009)(316002)(11346002)(6916009)(229853002)(99286004)(97736004)(7696005)(102836004)(476003)(105586002)(33656002)(76176011)(6506007)(26005)(53546011)(7736002)(2906002)(86362001)(186003)(446003)(5250100002)(1411001)(5660300001);DIR:OUT;SFP:1102;SCL:1;SRVR:BYAPR08MB4117;H:BYAPR08MB3845.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: checkvideo.com does not designate
+ permitted sender hosts)
+x-microsoft-antispam-message-info: Dh/wPkiaVEKr5pcUzaNdAraX+vECrHgyy5Bc4lEC0f2OzKixNaj0Ph9+Agy0PeFFQFqbddfGr8lLkXdF1UDyXV20Woo9V7S0YZ2Xbn3zwfQhnlYnMhkWT5IO3F059YviesMuQqggJR+RTzBNsc5Yvepg2qiXQUu2uM82PqgrzBtBLK8IYES1Bv9RahgbZUPq
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <C42212C2-6777-41B8-A571-1457ACD405A3@gmail.com>
-References: <CA+55aFzLZ3UkG5svqZwSnhNk75=fXJRkvU1m_RHBG54NOoaZPA@mail.gmail.com> <xmqq604w2j4u.fsf@gitster-ct.c.googlers.com> <xmqqtvsg10bu.fsf@gitster-ct.c.googlers.com> <CA+55aFxA9YVLoh_23V8Hi+X7ODEmqg-dhdAYZz1jbq5JhXqBFw@mail.gmail.com> <CA+55aFwM2CaafNGq8_=GkYAw9inpm-4xcyHUmKprLv4Gb3-aVg@mail.gmail.com> <CA+55aFw5mpEcEpPTOWych-kjNLc8pEn8FdjJHe2u7HUBBLy-Fw@mail.gmail.com> <CA+55aFwwVZDetd-SobOzzLQW4_GEwm3krxEGR+cpqzkzK-yiwQ@mail.gmail.com> <CABPp-BHQsOSCJiPU9Ku5b67QTkAjnEBrhx04mTXf2QdPBriHmw@mail.gmail.com> <CA+55aFwi9pTAJT_qtv=vHLgu=B1fdXBoD96i8Y5xnbS=zrfSzg@mail.gmail.com> <xmqqbmekylgc.fsf@gitster-ct.c.googlers.com> <CA+55aFxP8j7YbYaRXt-8Y0n8cHafB=FPKMy8gKFYH5QsKX4S=Q@mail.gmail.com> <F1738316-71EF-4053-82E5-F009F491CCE8@gmail.com> <CA+P7+xrmAHjaF=wze1iu0=cZBY3WcHXqpuDep3Nrev+zmt_Gog@mail.gmail.com> <CA+P7+xoVcPV_mFS3WpUvCUR7N4SzJ5WBZqpGT3VVWdkPjh6Qww@mail.gmail.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+MIME-Version: 1.0
+X-MS-Office365-Filtering-Correlation-Id: 2d56c451-2ff7-45ef-87f6-08d5a4895409
+X-OriginatorOrg: checkvideo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2d56c451-2ff7-45ef-87f6-08d5a4895409
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2018 17:33:26.9085
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR08MB4117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Sure, I totally agree.
+Sorry, I just wasn't clear enough in my previous email.
+I meant that your patch suppresses "%s --> %s (%i MB)" line in case "fileSi=
+ze" is not available,
+while my patch suppresses just "(%i MB)" portion if the "fileSize" is not k=
+nown.
+In other words,
+ * if "fileSize" is known:
+ ** both yours and mine patches don't change existing behavior;
+ * if "fileSize" is not known:
+ ** your patch makes streamOneP4File() not print anything;
+ ** my patch makes streamOneP4File() print "%s --> %s".
 
-> On 16 Apr 2018, at 19:45, Jacob Keller <jacob.keller@gmail.com> wrote:
+Hope, I'm clearer this time.
+    =20
+Thank you,
+Andrey
+
+From: Thandesha VK <thanvk@gmail.com>
+> *I* think keeping the filesize info is better with --verbose option as
+> that gives some clue about the file we are working on. What do you
+> think?
+> Script has similar checks of key existence at other places where it is
+> looking for fileSize.
 >=20
-> On Mon, Apr 16, 2018 at 10:43 AM, Jacob Keller =
-<jacob.keller@gmail.com> wrote:
->> On Mon, Apr 16, 2018 at 9:07 AM, Lars Schneider
->> <larsxschneider@gmail.com> wrote:
->>> What if Git kept a LRU list that contains file path, content hash, =
-and
->>> mtime of any file that is removed or modified during a checkout. If =
-a
->>> file is checked out later with the exact same path and content hash,
->>> then Git could set the mtime to the previous value. This way the
->>> compiler would not think that the content has been changed since the
->>> last rebuild.
->>=20
->> That would only work until they actuall *did* a build on the second
->> branch, and upon changing back, how would this detect that it needs =
-to
->> update mtime again? I don't think this solution really works.
->> Ultimately, the problem is that the build tool relies on the mtime to
->> determine what to rebuild. I think this would cause worse problems
->> because we *wouldn't* rebuild in the case. How is git supposed to =
-know
->> that we rebuilt when switching branches or not?
->>=20
->> Thanks,
->> Jake
+> On Tue, Apr 17, 2018 at 9:22 AM, Andrey Mazo <amazo@checkvideo.com> wrote=
+:
+>> Huh, I actually have a slightly different fix for the same issue.
+>> It doesn't suppress the corresponding verbose output completely, but jus=
+t removes the size information from it.
+>>
+>> Also, I'd mention that the workaround is trivial -- simply omit the "--v=
+erbose" option.
+>>
+>> Andrey Mazo (1):
+>>=A0=A0 git-p4: fix `sync --verbose` traceback due to 'fileSize'
+>>
+>>=A0 git-p4.py | 8 ++++++--
+>>=A0 1 file changed, 6 insertions(+), 2 deletions(-)
+>>
+>>
+>> base-commit: 468165c1d8a442994a825f3684528361727cd8c0
+>> --
+>> 2.16.1
+>>
 >=20
-> I think a better solution for your problem would be to extend the
-> build system you're using to avoid rebuilding when the contents
-> haven't changed since last build (possibly by using hashes?). At the
-> very least, I would not want this to be default, as it could possibly
-> result in *no* build when there should be one, which is far more
-> confusing to debug.
-
-I am 100% with you that this is a build system issue. But changing
-the build system for many teams in a large organization is really
-hard. That's why I wondered if Git could help with a shortcut.
-Looks like there is no shortcut (see my other reply in this thread).
-
-Thanks
-Lars=
+> --=20
+> Thanks & Regards
+> Thandesha VK | Cellphone +1 (703) 459-5386=
