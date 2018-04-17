@@ -2,67 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFD1A1F404
-	for <e@80x24.org>; Tue, 17 Apr 2018 14:04:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86F521F404
+	for <e@80x24.org>; Tue, 17 Apr 2018 15:34:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752777AbeDQOEz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Apr 2018 10:04:55 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:42910 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751230AbeDQOEw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Apr 2018 10:04:52 -0400
-Received: by mail-qt0-f178.google.com with SMTP id j3so19005398qtn.9
-        for <git@vger.kernel.org>; Tue, 17 Apr 2018 07:04:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=269yzsA4gekdsbUjZ7CwLxeUs1CIIN9/zK37WlWFh2U=;
-        b=QXbJPL5a/oQ95iULi9CuhntYtaI0RPRjHH8UKSN1iDNm3HfeMhzvjdm6HnTWUoWNQd
-         QW+8ml2b/kFGFMtvd7bZdA8G2HQFzDrNT8ZZp3B7ZUpgKTQstNQm/PnoBttbLvusqLIe
-         lcxiss1mQzAxGwziz9x3E5bqvIapFWob5WeDYpRyWE8huAKbsQ7f0LUqvy+7IfWKmQ2P
-         1mqtivpvMHhBij1KQLbYLMNeIbeDVoXzT2R5QnAASLBJlnHLZhRw4G7DHwA3Oo/xOsrK
-         VDsJc9657IhUSqEdZQVodzgzbt2FL4hShdGKJjrmuEM4ptRD6A45p85+pkivQ2kKr+YP
-         aj7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=269yzsA4gekdsbUjZ7CwLxeUs1CIIN9/zK37WlWFh2U=;
-        b=Z9xv8R6vQuQ2NHHe89vHOoRerJbCjgptPNqrD4VtbqbCbpVefZpA+ofhLmnurv1mtU
-         nBG19TUXLMMwa//LeaRI+XVltIlTbbBIJ8dO+Ti2UiEzWuqSn0C+zusNfcRnbxvygmVi
-         5DsRr/D7fZSjvuFw/nmbxTkC3CXGEED3VtqanoLnL2l+/Nx5WN/PnUm7cwtlJORHodVE
-         6qRSnypSMsvWe4WMhgXA+kvZKNROPV4d7y+9dHX5q1R9K8KnibRcOajB+EPaIb160QZv
-         jAmAE2B5BOHKxNj8TzBDaCIX/fQme9CEBSEIELI1PyBGhiM1Us8Ysqkk3Klq3qgj7hw7
-         vbKQ==
-X-Gm-Message-State: ALQs6tD/xcfM+KqPatDW92VazEXQtvZGwBAjhaUJ0Ix957ls3JUlCqcr
-        AJmCMoyDRlcOcvnCKLEO61iOn8OEbOL+bg29d2IJzw==
-X-Google-Smtp-Source: AIpwx4+Yq1wz6ZWptIKtQZHL/E//wJuxwU+G73A+eDAL0EDsqn/0u4Jk+8uZtD7UcCKDHTazlVtRx9G43SWzQ3YtaQg=
-X-Received: by 10.200.42.37 with SMTP id k34mr2653790qtk.101.1523973891798;
- Tue, 17 Apr 2018 07:04:51 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Tue, 17 Apr 2018 07:04:51 -0700 (PDT)
-In-Reply-To: <xmqqzi22tlfx.fsf@gitster-ct.c.googlers.com>
-References: <xmqqzi22tlfx.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 17 Apr 2018 10:04:51 -0400
-X-Google-Sender-Auth: gOwAvSKnzf_sLelLLqcVU-ly_yU
-Message-ID: <CAPig+cT2gRK0Giq1UBqSKv82JKqSg-c0-LjhXzGXa9fODW-i7w@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2018, #02; Tue, 17)
+        id S1753236AbeDQPek (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Apr 2018 11:34:40 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:33840 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752747AbeDQPej (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Apr 2018 11:34:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=C7h3BY2HBlRZgHDeLPOUWUly4ZGMvMbPwSPlnCsGYRI=; b=0Cfl5i2Jg8AJlznZoHUy0OGAh
+        5gPLyiDS/pcRO956aTpTAbWq3oP28luZ33RCEssZHSBG+HxjmEr+37YovuJ2n3cuTCSHD/VPxzjoj
+        3CVd67QcxyeTM/MHH/gtPMxFO963hzf7qKkkTpunH4N9xAkfRgR7MUH9kFdRdEk3c+nHQhE9/BRKq
+        MC2PHW0/mSVK4bYrGU02EMATsOqUCz7ma7FwGcm0NWKu0w2IEOa8IOEFnrTr4Iz/1K2EvjU0eMhGT
+        AYi0ZLNoH6FhsISXEBpWnnGh6rJ6VhS8g2kwwbmWd26STtM2YNFc/68Tds2IRzwPpTqNI0c7EbQAD
+        dZlvfZmFQ==;
+Received: from [128.107.241.175] (port=40384 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89_1)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1f8Sck-0002wA-J1; Tue, 17 Apr 2018 11:34:37 -0400
+Date:   Tue, 17 Apr 2018 08:34:20 -0700 (PDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: man page for "git remote set-url" seems
+ confusing/contradictory
+In-Reply-To: <xmqqefjewxr4.fsf@gitster-ct.c.googlers.com>
+Message-ID: <alpine.LFD.2.21.1804170831190.6019@localhost.localdomain>
+References: <alpine.LFD.2.21.1804160538100.3564@localhost.localdomain> <87y3hn5drx.fsf@linux-m68k.org> <alpine.LFD.2.21.1804160918120.6924@localhost.localdomain> <CA+P7+xrDsPXA6Bq77gYwWtc16Dz4drg+CHA80=vBNB9-NhxHVg@mail.gmail.com>
+ <xmqqefjewxr4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 17, 2018 at 2:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> * so/grossary-ancestor (2018-04-17) 1 commit
->  - glossary: substitute "ancestor" for "direct ancestor" in 'push' description.
+On Tue, 17 Apr 2018, Junio C Hamano wrote:
 
-s/grossary/glossary/
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+> > Things won't work so well if you set the push url and fetch url to
+> > different repositories. Git assumes that refs updated by "push"
+> > will also be reflected via "fetch".
+> >
+> > I don't know offhand what will break, but likely something will.
+> > For one, when you fetch again it will rewind your remotes after
+> > the push.
+>
+> Exactly.  I still haven't fully embraced it myself, but for a long
+> time, "git push" pretends as if it fetched from that remote and
+> updates the corresponding remote tracking branches (if you have
+> any), so you'll be inviting inconsistent behaviour if you set your
+> fetch and push URLs pointing at two logically separate places.
+
+  ... snip ...
+
+  oh, i totally buy all that now, i'm just suggesting that the man
+page might be tweaked to make that more obvious. in "man git-remote",
+under "set-url", remember that it reads:
+
+"Note that the push URL and the fetch URL, even though they can be set
+differently, must still refer to the same place."
+
+  i think it would be useful to be more specific about what "can be
+set differently" means, since a lot of readers might not immediately
+appreciate that it means just, say, the transport protocols. it never
+hurts to add that little bit of detail.
+
+rday
+
+
