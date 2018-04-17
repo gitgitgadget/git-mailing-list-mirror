@@ -3,105 +3,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB6911F404
-	for <e@80x24.org>; Tue, 17 Apr 2018 18:08:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFDB51F404
+	for <e@80x24.org>; Tue, 17 Apr 2018 18:10:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752273AbeDQSIn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Apr 2018 14:08:43 -0400
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:35686 "EHLO
-        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752096AbeDQSIm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Apr 2018 14:08:42 -0400
-Received: by mail-oi0-f51.google.com with SMTP id c15-v6so1282007oic.2
-        for <git@vger.kernel.org>; Tue, 17 Apr 2018 11:08:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PTO0xZgK5nJ1LbsKGfcKijZG3BpSmWas09Z+D+FfZyc=;
-        b=kWaoFA7Ih1PWU0H7d/nLmMxVu8hN4VsWWAId/3eXhJo8D66uFp5lmr8dMzoXfzUDyU
-         r4m0nADhmxkdrJYBMaH/e0rKzDbXVkN9WY+geSR2dVTdyjBg+X1y6ZHeIOfX9X1gXmnR
-         i/pVPkxXLP9aTzxbv0ZKBgF4XmaioaBwsu9wXdPKG+JLavh1DjrRTJ9x9XzfWBrUtHKw
-         mEezW8V44QftMgVqUTV1VCeZOGXGS8ya1kkU8UBAhZi/HbUW9YnsW6V9K+pVG8jwQx19
-         KskwCjhanHH4kKDkYvpw7dRCvlK2MVnpQDBAMf0NWT+u0XXNKeul3qte4uh4UUG31dUB
-         pPig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PTO0xZgK5nJ1LbsKGfcKijZG3BpSmWas09Z+D+FfZyc=;
-        b=fZFzyUmDzqpDGMb6H4xZzDrHbXTDDITYiqgicDvf+pkvkT3sh04Ikz7DreVudpDyB9
-         iDrnkIVQTrfExshYNBa2JTeL4yR5YalkwmiKP4pe+5UvtNlZg55QbakEtYMhPKGzcG7I
-         faRi4wmjvcuABcVFO1KpA30fZG+3JjxnXTH28km/WolJBA86zAOgSkxWTaSwjWhzImvP
-         4ZfUyekrwTtCIa3rbFbrXN7gdhmX129UqoL6r/FndA9IY1L1uuTnxBfWbkLipPsEvFls
-         K8Y4DNfxIX7zhxI7i8JQaPp2VGi/TiAbkZPUZTWfBdaj8+Dyo6hgkq4Msn4R/YD4IAJn
-         3H2A==
-X-Gm-Message-State: ALQs6tBF63IJMqeK+ImgJL6Z6g08LUue0ZEux/bpbfmqbvU4Vqx0/aVo
-        qqoDeJvUDUVIF3p3B2SDrPew0fmDKUflZ13VvAA=
-X-Google-Smtp-Source: AIpwx48TlwIkJH4edWQNs01STM1m3QNxQeh2g2KI/oOhlD0lfWS529Jwb1yplZMyLx5JyT2juliTBAKSsReM7AR1hds=
-X-Received: by 2002:aca:ce42:: with SMTP id e63-v6mr1810530oig.34.1523988521321;
- Tue, 17 Apr 2018 11:08:41 -0700 (PDT)
+        id S1752766AbeDQSKm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Apr 2018 14:10:42 -0400
+Received: from mail-by2nam01on0097.outbound.protection.outlook.com ([104.47.34.97]:5120
+        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752719AbeDQSKk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Apr 2018 14:10:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=AI3qSFaGwDtTcHS3Y9cdIgcfvzs404cOzzSRdVZiOks=;
+ b=UhZb1o07O+sToWPdi6YQDGJRB2i501r4WYxMvp8knrF+GEvgUefgrF3rJDUGWzW6m21T+KoiZmyof8KZab+GaqF+UFSDt07bjar7nep8ujm9djLdguIa2bob+FZDWIYU1FRYgJUMSVnNc0XZiVRmdEOJOamf0hgzM3Q1sMxHcXA=
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
+ BL0PR2101MB1027.namprd21.prod.outlook.com (52.132.20.161) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.715.4; Tue, 17 Apr 2018 18:10:38 +0000
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::c8cd:6461:8337:8ad1]) by BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::c8cd:6461:8337:8ad1%2]) with mapi id 15.20.0715.004; Tue, 17 Apr 2018
+ 18:10:38 +0000
+From:   Derrick Stolee <dstolee@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "peff@peff.net" <peff@peff.net>,
+        "sbeller@google.com" <sbeller@google.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [RFC PATCH 01/12] fixup! commit-graph: always load commit-graph
+ information
+Thread-Topic: [RFC PATCH 01/12] fixup! commit-graph: always load commit-graph
+ information
+Thread-Index: AQHT1ndj7m9uk0x5MkKlFLLRZM186A==
+Date:   Tue, 17 Apr 2018 18:10:38 +0000
+Message-ID: <20180417181028.198397-2-dstolee@microsoft.com>
+References: <20180417181028.198397-1-dstolee@microsoft.com>
+In-Reply-To: <20180417181028.198397-1-dstolee@microsoft.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: BL0PR0102CA0015.prod.exchangelabs.com
+ (2603:10b6:207:18::28) To BL0PR2101MB1011.namprd21.prod.outlook.com
+ (2603:10b6:207:37::10)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1027;7:zJMxtqEc4lVqU5IQK5BKc0+Et6ZKw+4rckJCi6vobAbDyHVHVtgfGPKqATPk9QG0P91cRbwNE28pxiwDSV6z+KVjzIA8iv6ZQ9dcgGag5iy8nNdWiw6R7EeF18XXkWUu02a5DG+nocO1rWlnhOwMaqgpopDIxR5a7NDoVU3JKAX7darReNfBB9NKnohrgQm8esTy64OM3NvjNdEIfKy+nAXuefCiEmTXcJWD3UlwrQfAYuwHrQys4Wbq9huRrE5V;20:ipjrgqNsWKuMIHCYYob5IAUwOYv1jn9CL032e74/wcVwxi2UoJ1W3D2emp70bgSof33l2ru0nL9prCOO0aljvv7VIfxud+0k3Mn8Aq9QI12MIIMF1MchsUlbFMJ9pY6/58+2PvAos2xD4xMTff9hGPzUpA/G2r4F5GYWCUck3Rs=
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB1027;
+x-ms-traffictypediagnostic: BL0PR2101MB1027:
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=dstolee@microsoft.com; 
+x-microsoft-antispam-prvs: <BL0PR2101MB102720403D9C339A02F2BD6EA1B70@BL0PR2101MB1027.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(8121501046)(5005006)(3002001)(3231232)(944501359)(52105095)(10201501046)(93006095)(93001095)(6055026)(61426038)(61427038)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123558120)(20161123564045)(20161123562045)(6072148)(201708071742011);SRVR:BL0PR2101MB1027;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1027;
+x-forefront-prvs: 0645BEB7AA
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39380400002)(376002)(346002)(39860400002)(396003)(366004)(189003)(199004)(6512007)(5660300001)(186003)(107886003)(6916009)(2900100001)(478600001)(10290500003)(105586002)(106356001)(2906002)(86612001)(86362001)(99286004)(53936002)(25786009)(22452003)(575784001)(54906003)(316002)(5250100002)(6486002)(6506007)(97736004)(4326008)(8936002)(14454004)(102836004)(3660700001)(6436002)(36756003)(5640700003)(3280700002)(305945005)(10090500001)(81156014)(59450400001)(68736007)(446003)(76176011)(2501003)(52116002)(2351001)(11346002)(8676002)(476003)(1076002)(386003)(81166006)(2616005)(7736002)(486006)(46003)(6116002)(1730700003)(22906009)(217873001);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1027;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-microsoft-antispam-message-info: M0tEDwYMB6emGrBsLllJN/l15TPWsDLaD4R2npr1SJOr34+lzvUIqNTmZsfHytoPc751ur0V3dOyta9cuk/7SVfj5jdnJ7p/m7ssJpXF8dJUj5QUfiLFyoT0o6r35RuApjYIrRm0bBnmXuf4K4M+1DECVlet5QLrV2ESjzU20lRyOwxRcLPkUHyU4c5BpULT
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Received: by 10.74.117.17 with HTTP; Tue, 17 Apr 2018 11:08:20 -0700 (PDT)
-In-Reply-To: <xmqq604qwqbj.fsf@gitster-ct.c.googlers.com>
-References: <20180409204129.43537-1-mastahyeti@gmail.com> <20180409204129.43537-9-mastahyeti@gmail.com>
- <CAPig+cT3AobThgZ15iquyRQG0Qes1ZzQxycXcgHYuwQCuDEDBQ@mail.gmail.com>
- <20180414195954.GB14631@genre.crustytoothpaste.net> <xmqqbmejyc4j.fsf@gitster-ct.c.googlers.com>
- <20180417001212.GC14631@genre.crustytoothpaste.net> <xmqq604qwqbj.fsf@gitster-ct.c.googlers.com>
-From:   Ben Toews <mastahyeti@gmail.com>
-Date:   Tue, 17 Apr 2018 12:08:20 -0600
-Message-ID: <CAE=pOyE5oqtPZLQ7d9EHU3uPC2eG+2_6APFirRvHqywE=4dGpg@mail.gmail.com>
-Subject: Re: [PATCH 8/8] gpg-interface: handle alternative signature types
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Office365-Filtering-Correlation-Id: 54da8f62-1579-4274-13a7-08d5a48e85da
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 54da8f62-1579-4274-13a7-08d5a48e85da
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2018 18:10:38.4778
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1027
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 16, 2018 at 7:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
->> If we just want to add gpgsm support, that's fine, but we should be
->> transparent about that fact and try to avoid making an interface which
->> is at once too generic and not generic enough.
+---
+ commit-graph.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This patch is definitely designed around PGP and CMS, but the config
-options were intended to leave room for supporting other tools in the
-future. I think allowing a PEM type to be specified makes a lot of
-sense for PGP and CMS, but in the future, we can add a
-`signingtool.<name>.regex` option. Similarly, the GnuPG specific
-command line options and output parsing can be moved into a helper in
-the future.
+diff --git a/commit-graph.c b/commit-graph.c
+index 21e853c21a..3f0c142603 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -304,7 +304,7 @@ static int find_commit_in_graph(struct commit *item, st=
+ruct commit_graph *g, uin
+ 		*pos =3D item->graph_pos;
+ 		return 1;
+ 	} else {
+-		return bsearch_graph(commit_graph, &(item->object.oid), pos);
++		return bsearch_graph(g, &(item->object.oid), pos);
+ 	}
+ }
+=20
+--=20
+2.17.0.39.g685157f7fb
 
-My motivation with this series is not just to "add gpgsm support"
-though. I've been working on some other CMS tooling that will be open
-source eventually. My goal was to distribute this tool with a wrapper
-that emulates the GnuPG interface.
-
-To me, this series feels like a good stepping stone towards more
-generalized support for other tooling.
-
-> One thing that makes me somewhat worried is that "add gpgsm support"
-> may mean "don't encourage people to use the same PGP like everybody
-> else does" and instead promote fragmenting the world.
-
-There are a lot of projects for which PGP doesn't make sense. For
-example, many large organizations and government entities don't
-operate based on a web of trust, but have established PKI based on
-centralized trust. For organizations like this, adopting commit/tag
-signing with CMS would be far easier than adopting PGP signing.
-
-There's a chance that 10 different software projects will end up using
-10 different signing tools, but I don't see that as a problem if those
-tools are well suited to the projects. Developers are already
-responsible for learning how to work with the software projects they
-contribute to.
