@@ -2,294 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 932D31F404
-	for <e@80x24.org>; Tue, 17 Apr 2018 23:12:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D4641F404
+	for <e@80x24.org>; Tue, 17 Apr 2018 23:25:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752747AbeDQXMC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Apr 2018 19:12:02 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:38652 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751164AbeDQXMB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Apr 2018 19:12:01 -0400
-Received: by mail-qk0-f175.google.com with SMTP id b39so16698823qkb.5
-        for <git@vger.kernel.org>; Tue, 17 Apr 2018 16:12:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=4PRazPlJ5V8Dpfxkvy6SDepTetkQK2FWiMb9CvD69hQ=;
-        b=kfJP3ttSjmXJpVKE67qdX1iDo4y+Htm3WUTl78nKUY8aF26WwGegrabGVD+623hsdD
-         wIcV3NGBwmSjukt/CCdwJ2pp42pqOJ3XSCVfbVSCUcgy46tkD3ztyvtiasPghxjObMC2
-         BX+b9RvvVsOBEoHj8NW8+hlRQs2obUts9CmpUhSJqi37RAGUQ1ynnEYjwDPRSgVn/134
-         8WXkDrfiGazDZJ7Sy5zDb7lkO/7FpYljSimcMvSu0ABvlK7e8U6bU2P3c78Li0UnoZ6B
-         K9AUy+fwAWQNKE8/xxJeThdFgK830NZ3AGhHpTI+pdylK343jVmX7RbVmQWDPOR2eotR
-         rL9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=4PRazPlJ5V8Dpfxkvy6SDepTetkQK2FWiMb9CvD69hQ=;
-        b=STv8PzqQDcs9M4c2jiRNgrOrUai9IDzOvvLR+kCdHOazxYG47GY5clefiev8BBKoZx
-         ooYzsEJOClsOdE5nT5+8B1Sz0SG3OOLlrQFtJzQTqyBSZ4nJ6RKs7f+rfIuPy+MVsS7C
-         eL0LVa+J7zCEmi9xh1VZllqBZNNAzTI+7OF0dYvg5TGS9yYVCWkm8IR8oKx3d7YBffz6
-         bHFecj3mbU7Cjsy50XKtmqQO8ngKPhEJsfU3BMfhu91Ld8sFG84DkjzkjeJ/Rh8WF4h2
-         KxGgzA9YvnmprBWKhoHik/H24gtdlGKeFIGCxeilQt8ABFEzBD9UOOGc+Kmq47fNUjUO
-         1rYA==
-X-Gm-Message-State: ALQs6tBjBMEbAK/rMnt9HV6dUf1cue4ZVUQJ3UhXX0fFbHdHjj375GKR
-        ZHuZS2SpZdItYArAgbQv4DA=
-X-Google-Smtp-Source: AIpwx4+D8Q2HJPAe2N2RL2yT/eLBBEqcdRb7vhxBreSFwOqBJf8IaRjSh4XS5FtyOORaRSkB9cZGyQ==
-X-Received: by 10.55.123.3 with SMTP id w3mr3968535qkc.220.1524006720289;
-        Tue, 17 Apr 2018 16:12:00 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id v25sm11750298qkl.59.2018.04.17.16.11.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Apr 2018 16:11:59 -0700 (PDT)
-Subject: Re: [PATCH v1 2/5] Add an API creating / discarding cache_entry
- structs
-To:     Jameson Miller <jamill@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Cc:     "gitster@pobox.com" <gitster@pobox.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "jonathantanmy@google.com" <jonathantanmy@google.com>
-References: <20180417163400.3875-1-jamill@microsoft.com>
- <20180417163400.3875-4-jamill@microsoft.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <921a8d5c-b118-c5b1-35dd-459130faeed9@gmail.com>
-Date:   Tue, 17 Apr 2018 19:11:59 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1752757AbeDQXZV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Apr 2018 19:25:21 -0400
+Received: from titan.plasma.xg8.de ([85.10.203.189]:39510 "EHLO
+        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751857AbeDQXZU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Apr 2018 19:25:20 -0400
+Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w3HNPH0x020907
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 18 Apr 2018 01:25:17 +0200
+Received: (from uucp@localhost)
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w3HNPHSb020906;
+        Wed, 18 Apr 2018 01:25:17 +0200
+Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w3HNP5Hv004997;
+        Wed, 18 Apr 2018 01:25:05 +0200
+Received: (from rtc@localhost)
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w3HNP4kw004995;
+        Wed, 18 Apr 2018 01:25:04 +0200
+Date:   Wed, 18 Apr 2018 01:25:04 +0200
+From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: GDPR compliance best practices?
+Message-ID: <20180417232504.GA4626@helen.PLASMA.Xg8.DE>
+References: <20180417191549.GA1199@helen.PLASMA.Xg8.DE>
+ <87y3hlecod.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20180417163400.3875-4-jamill@microsoft.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87y3hlecod.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 4/17/2018 12:34 PM, Jameson Miller wrote:
-> Add an API around managing the lifetime of cache_entry structs. Abstracting
-> memory management details behind an API will allow for alternative memory
-> management strategies without affecting all the call sites.  This commit does
-> not change how memory is allocated / freed. A later commit in this series will
-> allocate cache entries from memory pools as appropriate.
+On Tue, Apr 17, 2018 at 11:38:26PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> I've been loosely following a similar discussion around blockchains and
+> my understanding of the situation is that for a project such as say
+> Linux the GDPR gives you this potential out for that[1]:
 > 
-> Motivation:
-> It has been observed that the time spent loading an index with a large
-> number of entries is partly dominated by malloc() calls. This
-> change is in preparation for using memory pools to reduce the number
-> of malloc() calls made when loading an index.
+>     "the personal data are no longer necessary in relation to the
+>     purposes for which they were collected or otherwise processed"
 > 
-> This API makes a distinction between cache entries that are intended for use
-> with a particular to an index and cache entries that are not. 
+> I.e. you understand that when you submit a patch to linux.git how it's
+> going to get used, and that it's in a storage system that isn't going to
+> be pruned just because you ask for it.
+> [...]
+> You can make a compelling case that for say submitting your data to the
+> Bitcoin blockhcain the above quote from article 17 overrides it
 
-The wording here is awkward.  Did you mean "intended for use with a 
-particular index?"
+Well, you're quoting from lit. a but there's also lit. b to f! It says 
+"one of the following grounds applies", not "all of ...".
 
-This enables us
-> to use the knowledge about how a cache entry will be used to make informed
-> decisions about how to handle the corresponding memory.
-> ---
->   apply.c                |  26 ++++++------
->   blame.c                |   5 +--
->   builtin/checkout.c     |   8 ++--
->   builtin/difftool.c     |   8 ++--
->   builtin/reset.c        |   6 +--
->   builtin/update-index.c |  26 ++++++------
->   cache.h                |  29 +++++++++++++-
->   merge-recursive.c      |   2 +-
->   read-cache.c           | 105 +++++++++++++++++++++++++++++++++++--------------
->   resolve-undo.c         |   6 ++-
->   split-index.c          |   8 ++--
->   tree.c                 |   4 +-
->   unpack-trees.c         |  27 ++++++++-----
->   13 files changed, 166 insertions(+), 94 deletions(-)
-> 
-> diff --git a/apply.c b/apply.c
-> index 7e5792c996..47903f427b 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -4090,12 +4090,12 @@ static int build_fake_ancestor(struct apply_state *state, struct patch *list)
->   			return error(_("sha1 information is lacking or useless "
->   				       "(%s)."), name);
->   
-> -		ce = make_cache_entry(patch->old_mode, oid.hash, name, 0, 0);
-> +		ce = make_index_cache_entry(&result, patch->old_mode, oid.hash, name, 0, 0);
->   		if (!ce)
-> -			return error(_("make_cache_entry failed for path '%s'"),
-> +			return error(_("make_index_cache_entry failed for path '%s'"),
->   				     name);
->   		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD)) {
-> -			free(ce);
-> +			index_cache_entry_discard(ce);
+> This is very different from you say joining a company, committing to its
+> internal git repo, and your name being there in perpetuity, or choosing
+> to submit a patch to linux.git or git.git.
+>
+> I'd think that would be handled the same way as a structural engineering
+> firm being able to record in perpetuity who it was that drew up the
+> design for some bridge.
 
-I personally prefer name symmetry.  To me, make_index_cache_entry() 
-should be paired with discard_index_cache_entry().
+Internal repo is entirely unproblematic, since you don't need consent 
+for doing that. It is covered by Art. 6 (1) lit. f.
 
-The rest of this patch looks like a fairly mechanical refactoring with 
-the biggest exception being the difference between the the 
-*_index_cache_entry() APIs and the *_transient_cache_entry() APIs.
+The problem is public repos. Publishing employee information is 
+generally considered not to be covered by Art. 6 (1) lit. f. After all, 
+you can easily publish the software but not the repo.
 
-There are quite a few changes but I didn't see any instances that were 
-missed or any errors.  I see that later patches will put verification 
-code in place to detect if any were done incorrectly and to prevent 
-regressions moving forward.
+> I don't think it's plausible that the GDPR,
+> which is probably mainly going to be about consumer protection, is going
+> to concern itself with that in practice.
 
-Overall, it looks correct and reasonable.
+Oh, no, GDPR is about privacy in general. It's not only about consumer 
+protection. It applies in the same way to employees in relation to 
+their employer and to citizens in relation to the authorities, and to 
+open source contributors in relation to the projects, or to any other 
+data processing outside family and friends (Art. 2 (2) lit. c).
 
-<snip>
+I am inclined to assume that Art. 6 (1) lit. b might be the solution, 
+since the licenses typically demand a history of changes to be 
+distributed with the program (for example, GPLv3 section 5 a). After 
+all, the author generally wants to be given credit for his changes and 
+it can be assumed that this one of the conditions for licensing the 
+work in the first place.
 
->   
-> -struct cache_entry *make_cache_entry(unsigned int mode,
-> -		const unsigned char *sha1, const char *path, int stage,
-> -		unsigned int refresh_options)
-> +struct cache_entry *make_empty_index_cache_entry(struct index_state *istate, size_t len)
-> +{
-> +	return xcalloc(1, cache_entry_size(len));
-> +}
-> +
-> +struct cache_entry *make_empty_transient_cache_entry(size_t len)
-> +{
-> +	return xcalloc(1, cache_entry_size(len));
-> +}
-> +
-> +struct cache_entry *make_index_cache_entry(struct index_state *istate, unsigned int mode,
-> +			    const unsigned char *sha1, const char *path,
-> +			    int stage, unsigned int refresh_options)
->   {
-> -	int size, len;
->   	struct cache_entry *ce, *ret;
-> +	int len;
->   
->   	if (!verify_path(path)) {
->   		error("Invalid path '%s'", path);
-> @@ -758,8 +767,7 @@ struct cache_entry *make_cache_entry(unsigned int mode,
->   	}
->   
->   	len = strlen(path);
-> -	size = cache_entry_size(len);
-> -	ce = xcalloc(1, size);
-> +	ce = make_empty_index_cache_entry(istate, len);
->   
->   	hashcpy(ce->oid.hash, sha1);
->   	memcpy(ce->name, path, len);
-> @@ -769,10 +777,34 @@ struct cache_entry *make_cache_entry(unsigned int mode,
->   
->   	ret = refresh_cache_entry(&the_index, ce, refresh_options);
->   	if (ret != ce)
-> -		free(ce);
-> +		index_cache_entry_discard(ce);
-> +
->   	return ret;
->   }
->   
-> +struct cache_entry *make_transient_cache_entry(unsigned int mode, const unsigned char *sha1,
-> +			   const char *path, int stage)
-> +{
-> +	struct cache_entry *ce;
-> +	int len;
-> +
-> +	if (!verify_path(path)) {
-> +		error("Invalid path '%s'", path);
-> +		return NULL;
-> +	}
-> +
-> +	len = strlen(path);
-> +	ce = make_empty_transient_cache_entry(len);
-> +
-> +	hashcpy(ce->oid.hash, sha1);
-> +	memcpy(ce->name, path, len);
-> +	ce->ce_flags = create_ce_flags(stage);
-> +	ce->ce_namelen = len;
-> +	ce->ce_mode = create_ce_mode(mode);
-> +
+On the other hand, of course, the author could waive the condition at 
+any time, which means Art. 6 (1) lit. b wouldn't apply anymore and 
+you'd have the same issue as with consent-based processing of the 
+information (lit. a).
 
-Nit, feel free to ignore. There isn't a lot of initialization here but I 
-wonder if it makes sense to have an internal helper function to ensure 
-these stay the same.
+Best wishes
+Peter
 
-> +	return ce;
-> +}
-> +
->   /*
->    * Chmod an index entry with either +x or -x.
->    *
-> @@ -1243,7 +1275,7 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
->   {
->   	struct stat st;
->   	struct cache_entry *updated;
-> -	int changed, size;
-> +	int changed;
->   	int refresh = options & CE_MATCH_REFRESH;
->   	int ignore_valid = options & CE_MATCH_IGNORE_VALID;
->   	int ignore_skip_worktree = options & CE_MATCH_IGNORE_SKIP_WORKTREE;
-> @@ -1323,8 +1355,7 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
->   		return NULL;
->   	}
->   
-> -	size = ce_size(ce);
-> -	updated = xmalloc(size);
-> +	updated = make_empty_index_cache_entry(istate, ce_namelen(ce));
->   	copy_cache_entry(updated, ce);
->   	memcpy(updated->name, ce->name, ce->ce_namelen + 1);
->   	fill_stat_cache_info(updated, &st);
-> @@ -1610,12 +1641,13 @@ int read_index(struct index_state *istate)
->   	return read_index_from(istate, get_index_file(), get_git_dir());
->   }
->   
-> -static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *ondisk,
-> +static struct cache_entry *cache_entry_from_ondisk(struct index_state *istate,
-> +						   struct ondisk_cache_entry *ondisk,
->   						   unsigned int flags,
->   						   const char *name,
->   						   size_t len)
->   {
-> -	struct cache_entry *ce = xmalloc(cache_entry_size(len));
-> +	struct cache_entry *ce = make_empty_index_cache_entry(istate, len);
->   
->   	ce->ce_stat_data.sd_ctime.sec = get_be32(&ondisk->ctime.sec);
->   	ce->ce_stat_data.sd_mtime.sec = get_be32(&ondisk->mtime.sec);
-> @@ -1657,7 +1689,8 @@ static unsigned long expand_name_field(struct strbuf *name, const char *cp_)
->   	return (const char *)ep + 1 - cp_;
->   }
->   
-> -static struct cache_entry *create_from_disk(struct ondisk_cache_entry *ondisk,
-> +static struct cache_entry *create_from_disk(struct index_state *istate,
-> +					    struct ondisk_cache_entry *ondisk,
->   					    unsigned long *ent_size,
->   					    struct strbuf *previous_name)
 
-Nit. Just wondering why you pulled refresh_cache_entry() out into an 
-earlier/separate commit but then did create_from_disk() as part of the 
-large refactoring focused on adding the create/discard APIs?
-
-<snip>
-
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index e73745051e..232cdecc72 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -192,10 +192,10 @@ static int do_add_entry(struct unpack_trees_options *o, struct cache_entry *ce,
->   			       ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
->   }
->   
-> -static struct cache_entry *dup_entry(const struct cache_entry *ce)
-> +static struct cache_entry *dup_entry(const struct cache_entry *ce, struct index_state *istate)
-
-Ditto with the dup_entry() and create_ce_entry() functions refactoring.
-
-> -static struct cache_entry *create_ce_entry(const struct traverse_info *info, const struct name_entry *n, int stage)
-> +static struct cache_entry *create_ce_entry(const struct traverse_info *info,
-> +	const struct name_entry *n,
-> +	int stage,
-> +	struct index_state *istate,
-> +	int is_transient)
+-- 
+Peter Backes, rtc@helen.PLASMA.Xg8.DE
