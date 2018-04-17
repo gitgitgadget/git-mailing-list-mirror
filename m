@@ -2,146 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F9701F404
-	for <e@80x24.org>; Tue, 17 Apr 2018 18:02:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C1FA1F404
+	for <e@80x24.org>; Tue, 17 Apr 2018 18:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751270AbeDQSCF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Apr 2018 14:02:05 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:33279 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751204AbeDQSCE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Apr 2018 14:02:04 -0400
-Received: by mail-io0-f176.google.com with SMTP id s14so6693446ioc.0
-        for <git@vger.kernel.org>; Tue, 17 Apr 2018 11:02:04 -0700 (PDT)
+        id S1752651AbeDQSGC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Apr 2018 14:06:02 -0400
+Received: from mail-yw0-f178.google.com ([209.85.161.178]:36450 "EHLO
+        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751836AbeDQSGB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Apr 2018 14:06:01 -0400
+Received: by mail-yw0-f178.google.com with SMTP id c9so5597457ywb.3
+        for <git@vger.kernel.org>; Tue, 17 Apr 2018 11:06:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=bdJtjD6u1h96xFJ1JpGv/+vwEkfX1G37NIJBy0jbod4=;
-        b=AXVMkMfVQn30oRcDzQZI8CM0sms5DKR8XvgV9XRBS1iNDA3hcUQZA+7PShMce/b2ND
-         wTriMh+qck+Mm/5aBtdo13j92LZRU4/oiwQ3NGtwYMH3S/f+VemngRBeuldRFRNhxyvl
-         fsWuk+dtvg4S7WvywJ9VWjNvzBxB62/IK59XRbnrLI8vb5ok49AncQhLzbpzn5hjAVTT
-         lkhboGgPDvdAhfsy4/xJ/nS59QJNwmd6lyG9hD6CpRP/v+jKJqMYbfbfxutTlu9T7x8i
-         q0wQCvSK9Gh7xCjH9GxLVQi/lw+ZqYQtOzIZsSoK3m09i0Z/d05mMYy59/vvkuhKkTnx
-         oYUw==
+        bh=m/xcmfb/DcdqmQz8aHn9v9n0IPaOd6Vqrcd/+/3vWsc=;
+        b=CmcTxaRK6RBDz9h0jkzjZwC2gKMrWC7BcfktwvrTm8j0ESlNs6bMvo8JsmsdoHRwEY
+         zYxzX3m8CRPnQdcIma92QYsRkUNgXJJEO2KTp+9q6rWnSQQ0HbXJz4Nrab/U1YGKae1I
+         jvp3gfJ9XbLkCwijTv5eIozxhcus3ybzoruAEgZosI/aekQhS9YVlv+Yo8A68eANOZ9K
+         Gmwq54x2Th+DQrMJQxOU4Oxcib7maw/tn9ttIYUT7JGGIdk9jUS/timwbEwg4yV/j1GA
+         A2rambrx/8JW6P5wDi4YFI9hh9Rt3pGNMV8X/2vAM8mIfyNJ3OwuPcwDAUpgWeshEPMZ
+         k8Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=bdJtjD6u1h96xFJ1JpGv/+vwEkfX1G37NIJBy0jbod4=;
-        b=WuMmfmsIbVl7hyFHhHXeqhRN5kx/+VN/lQQpirRmf9mUPTcOJQS3BgHgdwYfPg4qDl
-         DsKHcegO0KYLaOmTeYwV3299sJYdRM+FEYrfYz0AljVDU7PKxHXYIF2gZg+KYBYoDSM5
-         QjkVGfBAO5JNXFbLbUexrfTiE9f/R8FEALeHMYHf2CE5XtCK/CFMWaFEYi4DKkd47zDY
-         djIDOZw4q5w0WxHl+xfLkd6jWtDpDjA8FgYerfkE02dFzVSx84Z+9lt5CgI80gOLdujc
-         QLMrRw/ml9J81lnS6S1dpnL0TSqW28t1hoWoJM/EoWAziWIgvViNxztdN1mGb0+GrZa2
-         AsuA==
-X-Gm-Message-State: ALQs6tDJAeMTY2P0F0XxCh9QafrB0cCqpXGtYXbqiGhL+SzlISjxMU5/
-        f92rEG9ymWp25FqUc9gganZssItmzNU9iHu00NA=
-X-Google-Smtp-Source: AIpwx4+TBrH2aTR/LALzRINHcFCxJ64Ay2iiTVhY26Jx66xUHodGiflRrUGuV++mEaIqhvCTdM8sWUpR4Rm4CAhj0SE=
-X-Received: by 10.107.151.146 with SMTP id z140mr3014376iod.237.1523988124250;
- Tue, 17 Apr 2018 11:02:04 -0700 (PDT)
+        bh=m/xcmfb/DcdqmQz8aHn9v9n0IPaOd6Vqrcd/+/3vWsc=;
+        b=eMKR8dF0d6+YrVETuQVBu56Y5AQNrn8ZFAz3k26tDxMp1vWTFoNZo3dihVx7tYPguN
+         cqiqIxhvvzsA5uf4Lb3hPJ/9HPm6uWlicoWQZYjrbPJ0aDsgRzlmzA2t85k4BLg34TyY
+         fHS48DIPGb+csydTqqsCI/OzNgOglbJreMXBXeTcnrZ/zpqLiuliuYcCe2Om8RGjG5k2
+         L75qsLtOVYyAf6aZeQX19/a+GPf1EjvuHa8fUwuQ6E0pAbDA8JxLZK2XLMXDGb8sZsog
+         YP35pDO0semQswElissIVgN8gXayiDwE964BnONO1pcF/cJMxjQB5kwjbAosEBi0cuk6
+         QUYQ==
+X-Gm-Message-State: ALQs6tBFoWzRV7Gh9VbZr0oaKEWNADymweZa9QgUqZr+EZ+OW3aUkzI+
+        qKnyhq3d277mFNA48J2TNMf5EdEQBUxKG6qb+nkX0eOdp9Q=
+X-Google-Smtp-Source: AIpwx48YV4l2t9lMjBRmBuNQ1c1gW89+nP+yVFxn9OsO9bBFT/YrEd1EMPgxHS690QqvT2RMME1d/DLI/AsHTF/DnvU=
+X-Received: by 10.129.86.5 with SMTP id k5mr2144515ywb.345.1523988360138; Tue,
+ 17 Apr 2018 11:06:00 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a02:a78a:0:0:0:0:0 with HTTP; Tue, 17 Apr 2018 11:01:23
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Tue, 17 Apr 2018 11:05:59
  -0700 (PDT)
-In-Reply-To: <BYAPR08MB384591845049E50D98A42303DAB70@BYAPR08MB3845.namprd08.prod.outlook.com>
-References: <CAJJpmi-pLb4Qcka5aLKXA8B1VOZFFF+OAQ0fgUq9YviobRpYGg@mail.gmail.com>
- <cover.1523981210.git.amazo@checkvideo.com> <CAJJpmi9OQicqEonVwWMo+yimU5MBdJ9gwzbtY1GXSMB+E69AGA@mail.gmail.com>
- <BYAPR08MB384591845049E50D98A42303DAB70@BYAPR08MB3845.namprd08.prod.outlook.com>
-From:   Thandesha VK <thanvk@gmail.com>
-Date:   Tue, 17 Apr 2018 11:01:23 -0700
-Message-ID: <CAJJpmi_Qk-Q3ndiOFiYy5fGsKsJ0mF=nKbSDkdY-NE0DRkZTEg@mail.gmail.com>
-Subject: Re: [BUG] git p4 clone fails when p4 sizes does not return 'fileSize' key
-To:     "Mazo, Andrey" <amazo@checkvideo.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "luke@diamand.org" <luke@diamand.org>,
-        "gvanburgh@bloomberg.net" <gvanburgh@bloomberg.net>,
-        "larsxschneider@gmail.com" <larsxschneider@gmail.com>,
-        "miguel.torroja@gmail.com" <miguel.torroja@gmail.com>
+In-Reply-To: <xmqqzi22tlfx.fsf@gitster-ct.c.googlers.com>
+References: <xmqqzi22tlfx.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 17 Apr 2018 11:05:59 -0700
+Message-ID: <CAGZ79kb=A6BsdrtH=2F0634+r5ejG9Ce9U0mry65jkNnscu1nA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2018, #02; Tue, 17)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sounds good. How about an enhanced version of fix from both of us.
-This will let us know that something is not right with the file but
-will not bark
+Hi Junio,
 
-$ git diff
-diff --git a/git-p4.py b/git-p4.py
-index 7bb9cadc6..df901976f 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2566,7 +2566,12 @@ class P4Sync(Command, P4UserMap):
-         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
-         relPath = self.encodeWithUTF8(relPath)
-         if verbose:
--            size = int(self.stream_file['fileSize'])
-+            if 'fileSize' not in self.stream_file:
-+               print "WARN: File size from perforce unknown. Please
-verify by p4 sizes %s" %(file['depotFile'])
-+               size = "-1"
-+            else:
-+               size = self.stream_file['fileSize']
-+            size = int(size)
-             sys.stdout.write('\r%s --> %s (%i MB)\n' %
-(file['depotFile'], relPath, size/1024/1024))
-             sys.stdout.flush()
+> --------------------------------------------------
+> [New Topics]
 
-
-On Tue, Apr 17, 2018 at 10:33 AM, Mazo, Andrey <amazo@checkvideo.com> wrote:
-> Sure, I totally agree.
-> Sorry, I just wasn't clear enough in my previous email.
-> I meant that your patch suppresses "%s --> %s (%i MB)" line in case "fileSize" is not available,
-> while my patch suppresses just "(%i MB)" portion if the "fileSize" is not known.
-> In other words,
->  * if "fileSize" is known:
->  ** both yours and mine patches don't change existing behavior;
->  * if "fileSize" is not known:
->  ** your patch makes streamOneP4File() not print anything;
->  ** my patch makes streamOneP4File() print "%s --> %s".
+> * sb/object-store-replace (2018-04-12) 15 commits
+...
+>  The effort to pass the repository in-core structure throughout the
+>  API continues.  This round deals with the code that implements the
+>  refs/replace/ mechanism.
 >
-> Hope, I'm clearer this time.
+>  What's the doneness of this thing?  I didn't recall seeing any
+>  response, especially ones that demonstrated the reviewer carefully
+>  read and thought about the issues surrounding the code.  Not that I
+>  spotted any problems in these patches myself, though.
+
+Stolee and Brandon provided a "quick LGTM" type of review
+https://public-inbox.org/git/20180409232536.GB102627@google.com/
+https://public-inbox.org/git/9ddfee7e-025a-79c9-8d6b-700c65a14067@gmail.com/
+
+I do not recall an in depth review, though Rene had some design guidance
+in form of a patch, which is also the first commit of the series
+https://public-inbox.org/git/38962a15-1081-bbdb-b4c4-6b46222b5f64@web.de/
+
+My plan was to build the next series on top this week while waiting for
+further review, though I wonder how much review will happen this week.
+(Brandon, Jonathan Tan and Jonathan Nieder are all OOO,
+Peff is on vacation, too)
+
+I do not recall any discussion worthy design discussions left over, so
+I'd lean on "cook in next for a while".
+
 >
-> Thank you,
-> Andrey
+> --------------------------------------------------
+> [Cooking]
 >
-> From: Thandesha VK <thanvk@gmail.com>
->> *I* think keeping the filesize info is better with --verbose option as
->> that gives some clue about the file we are working on. What do you
->> think?
->> Script has similar checks of key existence at other places where it is
->> looking for fileSize.
->>
->> On Tue, Apr 17, 2018 at 9:22 AM, Andrey Mazo <amazo@checkvideo.com> wrote:
->>> Huh, I actually have a slightly different fix for the same issue.
->>> It doesn't suppress the corresponding verbose output completely, but just removes the size information from it.
->>>
->>> Also, I'd mention that the workaround is trivial -- simply omit the "--verbose" option.
->>>
->>> Andrey Mazo (1):
->>>   git-p4: fix `sync --verbose` traceback due to 'fileSize'
->>>
->>>  git-p4.py | 8 ++++++--
->>>  1 file changed, 6 insertions(+), 2 deletions(-)
->>>
->>>
->>> base-commit: 468165c1d8a442994a825f3684528361727cd8c0
->>> --
->>> 2.16.1
->>>
->>
->> --
->> Thanks & Regards
->> Thandesha VK | Cellphone +1 (703) 459-5386
+> * sb/blame-color (2018-04-17) 2 commits
+>  - builtin/blame: highlight recently changed lines
+>  - builtin/blame: dim uninteresting metadata lines
+>
+>  "git blame" learns to unhighlight uninteresting metadata from the
+>  originating commit on lines that are the same as the previous one,
+>  and also paint lines in different colors depending on the age of
+>  the commit.
+>
+>  The code to handle interaction between the config and command line
+>  option smelled fishy.  Reviews and discussions are welcomed (not
+>  just to this topic but others too ;-).
+
+I'll look at the replies in thread there.
 
 
+> * sb/submodule-move-nested (2018-03-29) 6 commits
+>  - submodule: fixup nested submodules after moving the submodule
+>  - submodule-config: remove submodule_from_cache
+>  - submodule-config: add repository argument to submodule_from_{name, path}
+>  - submodule-config: allow submodule_free to handle arbitrary repositories
+>  - grep: remove "repo" arg from non-supporting funcs
+>  - submodule.h: drop declaration of connect_work_tree_and_git_dir
+>
+>  Moving a submodule that itself has submodule in it with "git mv"
+>  forgot to make necessary adjustment to the nested sub-submodules;
+>  now the codepath learned to recurse into the submodules.
+>
+>  What's the doneness of this thing?
 
--- 
-Thanks & Regards
-Thandesha VK | Cellphone +1 (703) 459-5386
+I considered this done a long time ago,
+
+    "All 6 patches look good to me, thanks.
+     Reviewed-by: Jonathan Tan <jonathantanmy@google.com>"
+
+https://public-inbox.org/git/20180328161727.af10f596dffc8e01205c41dd@google.com/
+
+
+Thanks,
+Stefan
