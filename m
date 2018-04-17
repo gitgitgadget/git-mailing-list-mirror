@@ -2,139 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C1FA1F404
-	for <e@80x24.org>; Tue, 17 Apr 2018 18:06:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB6911F404
+	for <e@80x24.org>; Tue, 17 Apr 2018 18:08:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752651AbeDQSGC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Apr 2018 14:06:02 -0400
-Received: from mail-yw0-f178.google.com ([209.85.161.178]:36450 "EHLO
-        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751836AbeDQSGB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Apr 2018 14:06:01 -0400
-Received: by mail-yw0-f178.google.com with SMTP id c9so5597457ywb.3
-        for <git@vger.kernel.org>; Tue, 17 Apr 2018 11:06:01 -0700 (PDT)
+        id S1752273AbeDQSIn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Apr 2018 14:08:43 -0400
+Received: from mail-oi0-f51.google.com ([209.85.218.51]:35686 "EHLO
+        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752096AbeDQSIm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Apr 2018 14:08:42 -0400
+Received: by mail-oi0-f51.google.com with SMTP id c15-v6so1282007oic.2
+        for <git@vger.kernel.org>; Tue, 17 Apr 2018 11:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=m/xcmfb/DcdqmQz8aHn9v9n0IPaOd6Vqrcd/+/3vWsc=;
-        b=CmcTxaRK6RBDz9h0jkzjZwC2gKMrWC7BcfktwvrTm8j0ESlNs6bMvo8JsmsdoHRwEY
-         zYxzX3m8CRPnQdcIma92QYsRkUNgXJJEO2KTp+9q6rWnSQQ0HbXJz4Nrab/U1YGKae1I
-         jvp3gfJ9XbLkCwijTv5eIozxhcus3ybzoruAEgZosI/aekQhS9YVlv+Yo8A68eANOZ9K
-         Gmwq54x2Th+DQrMJQxOU4Oxcib7maw/tn9ttIYUT7JGGIdk9jUS/timwbEwg4yV/j1GA
-         A2rambrx/8JW6P5wDi4YFI9hh9Rt3pGNMV8X/2vAM8mIfyNJ3OwuPcwDAUpgWeshEPMZ
-         k8Cg==
+        bh=PTO0xZgK5nJ1LbsKGfcKijZG3BpSmWas09Z+D+FfZyc=;
+        b=kWaoFA7Ih1PWU0H7d/nLmMxVu8hN4VsWWAId/3eXhJo8D66uFp5lmr8dMzoXfzUDyU
+         r4m0nADhmxkdrJYBMaH/e0rKzDbXVkN9WY+geSR2dVTdyjBg+X1y6ZHeIOfX9X1gXmnR
+         i/pVPkxXLP9aTzxbv0ZKBgF4XmaioaBwsu9wXdPKG+JLavh1DjrRTJ9x9XzfWBrUtHKw
+         mEezW8V44QftMgVqUTV1VCeZOGXGS8ya1kkU8UBAhZi/HbUW9YnsW6V9K+pVG8jwQx19
+         KskwCjhanHH4kKDkYvpw7dRCvlK2MVnpQDBAMf0NWT+u0XXNKeul3qte4uh4UUG31dUB
+         pPig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=m/xcmfb/DcdqmQz8aHn9v9n0IPaOd6Vqrcd/+/3vWsc=;
-        b=eMKR8dF0d6+YrVETuQVBu56Y5AQNrn8ZFAz3k26tDxMp1vWTFoNZo3dihVx7tYPguN
-         cqiqIxhvvzsA5uf4Lb3hPJ/9HPm6uWlicoWQZYjrbPJ0aDsgRzlmzA2t85k4BLg34TyY
-         fHS48DIPGb+csydTqqsCI/OzNgOglbJreMXBXeTcnrZ/zpqLiuliuYcCe2Om8RGjG5k2
-         L75qsLtOVYyAf6aZeQX19/a+GPf1EjvuHa8fUwuQ6E0pAbDA8JxLZK2XLMXDGb8sZsog
-         YP35pDO0semQswElissIVgN8gXayiDwE964BnONO1pcF/cJMxjQB5kwjbAosEBi0cuk6
-         QUYQ==
-X-Gm-Message-State: ALQs6tBFoWzRV7Gh9VbZr0oaKEWNADymweZa9QgUqZr+EZ+OW3aUkzI+
-        qKnyhq3d277mFNA48J2TNMf5EdEQBUxKG6qb+nkX0eOdp9Q=
-X-Google-Smtp-Source: AIpwx48YV4l2t9lMjBRmBuNQ1c1gW89+nP+yVFxn9OsO9bBFT/YrEd1EMPgxHS690QqvT2RMME1d/DLI/AsHTF/DnvU=
-X-Received: by 10.129.86.5 with SMTP id k5mr2144515ywb.345.1523988360138; Tue,
- 17 Apr 2018 11:06:00 -0700 (PDT)
+        bh=PTO0xZgK5nJ1LbsKGfcKijZG3BpSmWas09Z+D+FfZyc=;
+        b=fZFzyUmDzqpDGMb6H4xZzDrHbXTDDITYiqgicDvf+pkvkT3sh04Ikz7DreVudpDyB9
+         iDrnkIVQTrfExshYNBa2JTeL4yR5YalkwmiKP4pe+5UvtNlZg55QbakEtYMhPKGzcG7I
+         faRi4wmjvcuABcVFO1KpA30fZG+3JjxnXTH28km/WolJBA86zAOgSkxWTaSwjWhzImvP
+         4ZfUyekrwTtCIa3rbFbrXN7gdhmX129UqoL6r/FndA9IY1L1uuTnxBfWbkLipPsEvFls
+         K8Y4DNfxIX7zhxI7i8JQaPp2VGi/TiAbkZPUZTWfBdaj8+Dyo6hgkq4Msn4R/YD4IAJn
+         3H2A==
+X-Gm-Message-State: ALQs6tBF63IJMqeK+ImgJL6Z6g08LUue0ZEux/bpbfmqbvU4Vqx0/aVo
+        qqoDeJvUDUVIF3p3B2SDrPew0fmDKUflZ13VvAA=
+X-Google-Smtp-Source: AIpwx48TlwIkJH4edWQNs01STM1m3QNxQeh2g2KI/oOhlD0lfWS529Jwb1yplZMyLx5JyT2juliTBAKSsReM7AR1hds=
+X-Received: by 2002:aca:ce42:: with SMTP id e63-v6mr1810530oig.34.1523988521321;
+ Tue, 17 Apr 2018 11:08:41 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Tue, 17 Apr 2018 11:05:59
- -0700 (PDT)
-In-Reply-To: <xmqqzi22tlfx.fsf@gitster-ct.c.googlers.com>
-References: <xmqqzi22tlfx.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 17 Apr 2018 11:05:59 -0700
-Message-ID: <CAGZ79kb=A6BsdrtH=2F0634+r5ejG9Ce9U0mry65jkNnscu1nA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2018, #02; Tue, 17)
+Received: by 10.74.117.17 with HTTP; Tue, 17 Apr 2018 11:08:20 -0700 (PDT)
+In-Reply-To: <xmqq604qwqbj.fsf@gitster-ct.c.googlers.com>
+References: <20180409204129.43537-1-mastahyeti@gmail.com> <20180409204129.43537-9-mastahyeti@gmail.com>
+ <CAPig+cT3AobThgZ15iquyRQG0Qes1ZzQxycXcgHYuwQCuDEDBQ@mail.gmail.com>
+ <20180414195954.GB14631@genre.crustytoothpaste.net> <xmqqbmejyc4j.fsf@gitster-ct.c.googlers.com>
+ <20180417001212.GC14631@genre.crustytoothpaste.net> <xmqq604qwqbj.fsf@gitster-ct.c.googlers.com>
+From:   Ben Toews <mastahyeti@gmail.com>
+Date:   Tue, 17 Apr 2018 12:08:20 -0600
+Message-ID: <CAE=pOyE5oqtPZLQ7d9EHU3uPC2eG+2_6APFirRvHqywE=4dGpg@mail.gmail.com>
+Subject: Re: [PATCH 8/8] gpg-interface: handle alternative signature types
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-> --------------------------------------------------
-> [New Topics]
-
-> * sb/object-store-replace (2018-04-12) 15 commits
-...
->  The effort to pass the repository in-core structure throughout the
->  API continues.  This round deals with the code that implements the
->  refs/replace/ mechanism.
+On Mon, Apr 16, 2018 at 7:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 >
->  What's the doneness of this thing?  I didn't recall seeing any
->  response, especially ones that demonstrated the reviewer carefully
->  read and thought about the issues surrounding the code.  Not that I
->  spotted any problems in these patches myself, though.
+>> If we just want to add gpgsm support, that's fine, but we should be
+>> transparent about that fact and try to avoid making an interface which
+>> is at once too generic and not generic enough.
 
-Stolee and Brandon provided a "quick LGTM" type of review
-https://public-inbox.org/git/20180409232536.GB102627@google.com/
-https://public-inbox.org/git/9ddfee7e-025a-79c9-8d6b-700c65a14067@gmail.com/
+This patch is definitely designed around PGP and CMS, but the config
+options were intended to leave room for supporting other tools in the
+future. I think allowing a PEM type to be specified makes a lot of
+sense for PGP and CMS, but in the future, we can add a
+`signingtool.<name>.regex` option. Similarly, the GnuPG specific
+command line options and output parsing can be moved into a helper in
+the future.
 
-I do not recall an in depth review, though Rene had some design guidance
-in form of a patch, which is also the first commit of the series
-https://public-inbox.org/git/38962a15-1081-bbdb-b4c4-6b46222b5f64@web.de/
+My motivation with this series is not just to "add gpgsm support"
+though. I've been working on some other CMS tooling that will be open
+source eventually. My goal was to distribute this tool with a wrapper
+that emulates the GnuPG interface.
 
-My plan was to build the next series on top this week while waiting for
-further review, though I wonder how much review will happen this week.
-(Brandon, Jonathan Tan and Jonathan Nieder are all OOO,
-Peff is on vacation, too)
+To me, this series feels like a good stepping stone towards more
+generalized support for other tooling.
 
-I do not recall any discussion worthy design discussions left over, so
-I'd lean on "cook in next for a while".
+> One thing that makes me somewhat worried is that "add gpgsm support"
+> may mean "don't encourage people to use the same PGP like everybody
+> else does" and instead promote fragmenting the world.
 
->
-> --------------------------------------------------
-> [Cooking]
->
-> * sb/blame-color (2018-04-17) 2 commits
->  - builtin/blame: highlight recently changed lines
->  - builtin/blame: dim uninteresting metadata lines
->
->  "git blame" learns to unhighlight uninteresting metadata from the
->  originating commit on lines that are the same as the previous one,
->  and also paint lines in different colors depending on the age of
->  the commit.
->
->  The code to handle interaction between the config and command line
->  option smelled fishy.  Reviews and discussions are welcomed (not
->  just to this topic but others too ;-).
+There are a lot of projects for which PGP doesn't make sense. For
+example, many large organizations and government entities don't
+operate based on a web of trust, but have established PKI based on
+centralized trust. For organizations like this, adopting commit/tag
+signing with CMS would be far easier than adopting PGP signing.
 
-I'll look at the replies in thread there.
-
-
-> * sb/submodule-move-nested (2018-03-29) 6 commits
->  - submodule: fixup nested submodules after moving the submodule
->  - submodule-config: remove submodule_from_cache
->  - submodule-config: add repository argument to submodule_from_{name, path}
->  - submodule-config: allow submodule_free to handle arbitrary repositories
->  - grep: remove "repo" arg from non-supporting funcs
->  - submodule.h: drop declaration of connect_work_tree_and_git_dir
->
->  Moving a submodule that itself has submodule in it with "git mv"
->  forgot to make necessary adjustment to the nested sub-submodules;
->  now the codepath learned to recurse into the submodules.
->
->  What's the doneness of this thing?
-
-I considered this done a long time ago,
-
-    "All 6 patches look good to me, thanks.
-     Reviewed-by: Jonathan Tan <jonathantanmy@google.com>"
-
-https://public-inbox.org/git/20180328161727.af10f596dffc8e01205c41dd@google.com/
-
-
-Thanks,
-Stefan
+There's a chance that 10 different software projects will end up using
+10 different signing tools, but I don't see that as a problem if those
+tools are well suited to the projects. Developers are already
+responsible for learning how to work with the software projects they
+contribute to.
