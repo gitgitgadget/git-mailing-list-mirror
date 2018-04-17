@@ -4,31 +4,31 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 690F71F404
-	for <e@80x24.org>; Tue, 17 Apr 2018 16:34:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE6EC1F404
+	for <e@80x24.org>; Tue, 17 Apr 2018 16:34:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755150AbeDQQen (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Apr 2018 12:34:43 -0400
-Received: from mail-by2nam03on0115.outbound.protection.outlook.com ([104.47.42.115]:49280
-        "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
+        id S1754092AbeDQQet (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Apr 2018 12:34:49 -0400
+Received: from mail-bn3nam01on0110.outbound.protection.outlook.com ([104.47.33.110]:2128
+        "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1755110AbeDQQel (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Apr 2018 12:34:41 -0400
+        id S1754127AbeDQQen (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Apr 2018 12:34:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=vLCgHCtCkFveGWDSOlJwKvJSYTn2XZTnR/eeN6JZfWs=;
- b=IwK16/qxqApg9v72MPZKHh6DUyP6TdEyS5ZB9B6W6ZaV+CKGr4R+WCtB6D/M+EcqimtpccraVZ7Z89ZGP8aNVLW8ssnzPsl/8zSbkB/GVskXN4Ux+ap14JBEgrqxJTy4N3FMt4/gkEv4jSf6kzO/S0c9TwxplXtvcfT1zFxE2Zw=
+ bh=P78WF6l3CwMNGT77hr6BOPJ+Q7R97c1UHIFeZaxAfSo=;
+ b=Q3cmCHlV5lAJA4EEJMYoCJGb7iKd+Z5tyjBep5QgDBBmQECuvjgXxCWlMPaO1sx46hBqeqt+RgVldn+n7IbSIKakDNlacBOAes6lKF3VbG3yrymplUmpRtE0ZSJVBV9CEXuTqczcD8OfPd0NKYeJrAhnebI4TQ343AMPO8pQtJk=
 Received: from BL0PR2101MB1106.namprd21.prod.outlook.com (52.132.24.29) by
- BL0PR2101MB1122.namprd21.prod.outlook.com (52.132.20.150) with Microsoft SMTP
+ BL0PR2101MB1089.namprd21.prod.outlook.com (52.132.24.23) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.715.4; Tue, 17 Apr 2018 16:34:39 +0000
+ 15.20.715.4; Tue, 17 Apr 2018 16:34:40 +0000
 Received: from BL0PR2101MB1106.namprd21.prod.outlook.com
  ([fe80::1516:5e9f:5649:ef8b]) by BL0PR2101MB1106.namprd21.prod.outlook.com
  ([fe80::1516:5e9f:5649:ef8b%4]) with mapi id 15.20.0715.004; Tue, 17 Apr 2018
- 16:34:39 +0000
+ 16:34:40 +0000
 From:   Jameson Miller <jamill@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "gitster@pobox.com" <gitster@pobox.com>,
@@ -37,9 +37,11 @@ CC:     "gitster@pobox.com" <gitster@pobox.com>,
         Jameson Miller <jamill@microsoft.com>
 Subject: [PATCH v1 0/5] Allocate cache entries from memory pool
 Thread-Topic: [PATCH v1 0/5] Allocate cache entries from memory pool
-Thread-Index: AQHT1mn66C+jyweZV0SsXfcexF58UA==
+Thread-Index: AQHT1mn66C+jyweZV0SsXfcexF58UKQFJu2A
 Date:   Tue, 17 Apr 2018 16:34:39 +0000
-Message-ID: <20180417163400.3875-1-jamill@microsoft.com>
+Message-ID: <20180417163400.3875-2-jamill@microsoft.com>
+References: <20180417163400.3875-1-jamill@microsoft.com>
+In-Reply-To: <20180417163400.3875-1-jamill@microsoft.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -50,33 +52,33 @@ x-clientproxiedby: BL0PR02CA0060.namprd02.prod.outlook.com
  (2603:10b6:207:37::29)
 x-ms-exchange-messagesentrepresentingtype: 1
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1122;7:tCeqCVzdr0nmKF69LgugCxkc97vVP0qdHKtqL9N87v2+2LV0eCL9bX0u80dT2rCsYrZX2P7qc9hAIQjvWV6RvsnqVN8I88QJPCZV2TO2YmV9kweyxbiDymVLYdBLrb2IAik0mHrL6SzR39TP6Hd7HPPvmLDc0YN7nT3BOZcmBIw7BFTmW2+3b07CMnleUTsZmvIM/Zck8Tg/XCoD6YllDJqw5kMNgiLzz/blnuWe7EM5xZm+n0+byhlek0isZTNb;20:Spd/9JVae3h77JTMT1uwt6pHsauPLjcOkwiN+VyuIq3PAS5stWHrhDLmsCylmyU45ksCiGYq+1DTP4re8E7jx9eM4G/DteZZkbHOZRfDpZT+fJq19UJXJ12coT7Egs09O3IFOGGuNnGBqgb8OMSMNER4KZVgti75cFm60D01Rd0=
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1089;7:stN6SliJAKqp5FOdoFd8WBSpjSX6fEYEGJ71UcahAjEep2M5THxLZJMYoMnFSWVEWWl0XcgDzull+rdJcsVdANAJCnJ1fBzc+NY+e1+qhO6MdxVz/NWBRiKFtpIDRLB5PCp11HLkAzvpMh0uTZTmxIT9wAjXTnTOPbc0zEddLRmAy7sAj4GOHD25LPMvThw2WiNe9xaHXo0Btp13qNZk3ZiqL1MruB7rWysd8plv3yRzNvw/DQ+LgHvaZzZMvsZh;20:X8gySSmZurDDo1hjyMwrS/Tbp1rNTcMw2CZsPZSUJYFGxBEWTKzczfqqvbzzQKiBLShIaxro3VDlPS4ciNwrOOfZNsqEPN8X7JXPC1LswRoQpI2w48CinjupatEaAawODgtn7iz5RlPqKR2XBgl81xxyp6txpnPJB+4WAPZbAYM=
 x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(2017052603328)(7193020);SRVR:BL0PR2101MB1122;
-x-ms-traffictypediagnostic: BL0PR2101MB1122:
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(2017052603328)(7193020);SRVR:BL0PR2101MB1089;
+x-ms-traffictypediagnostic: BL0PR2101MB1089:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=jamill@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB112277F5A908B0B67F6AF8A8CEB70@BL0PR2101MB1122.namprd21.prod.outlook.com>
+x-microsoft-antispam-prvs: <BL0PR2101MB10895A36F72BE8937A96BEB6CEB70@BL0PR2101MB1089.namprd21.prod.outlook.com>
 x-exchange-antispam-report-test: UriScan:(28532068793085);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(5005006)(8121501046)(3231232)(944501359)(52105095)(3002001)(93006095)(93001095)(10201501046)(6055026)(61426038)(61427038)(6041310)(20161123558120)(20161123560045)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(6072148)(201708071742011);SRVR:BL0PR2101MB1122;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1122;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3002001)(10201501046)(3231232)(944501359)(52105095)(6055026)(61426038)(61427038)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(20161123560045)(20161123564045)(20161123558120)(6072148)(201708071742011);SRVR:BL0PR2101MB1089;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1089;
 x-forefront-prvs: 0645BEB7AA
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(346002)(366004)(396003)(39380400002)(376002)(377424004)(199004)(189003)(97736004)(81166006)(46003)(4326008)(68736007)(2351001)(14454004)(2501003)(1730700003)(5250100002)(2900100001)(86612001)(8936002)(966005)(6916009)(305945005)(8676002)(5660300001)(2616005)(4001150100001)(476003)(1076002)(81156014)(7736002)(386003)(6506007)(107886003)(10290500003)(39060400002)(8656006)(6306002)(2906002)(6512007)(52116002)(3660700001)(54906003)(53936002)(3280700002)(6116002)(22452003)(59450400001)(105586002)(10090500001)(316002)(478600001)(86362001)(6436002)(25786009)(486006)(6486002)(186003)(106356001)(36756003)(102836004)(5640700003)(99286004)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1122;H:BL0PR2101MB1106.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(39380400002)(39860400002)(366004)(346002)(376002)(377424004)(199004)(189003)(7736002)(6116002)(5640700003)(2351001)(6306002)(14454004)(4001150100001)(6512007)(97736004)(8656006)(6486002)(53936002)(2906002)(4326008)(36756003)(5660300001)(106356001)(39060400002)(6436002)(107886003)(6916009)(305945005)(1076002)(3280700002)(99286004)(22452003)(478600001)(59450400001)(316002)(476003)(446003)(2616005)(486006)(54906003)(6506007)(5250100002)(11346002)(386003)(10290500003)(2900100001)(3660700001)(81166006)(81156014)(1730700003)(86362001)(966005)(8676002)(8936002)(10090500001)(186003)(68736007)(25786009)(46003)(86612001)(52116002)(76176011)(102836004)(105586002)(2501003)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1089;H:BL0PR2101MB1106.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: S7WqCRRaC/IOSHn1AtWCKsvlnSj2NqA7RYfo8nYGj2xVEAqKkS3s+eRbV+w08fg4uAeCF+XX796gII7or5RkSRCd1mzkNFH0/e8ANDn0CcOTAyeem8AcnJXIMEa+VTgz6QyzlFNv66E9MX8GoDAmnGq3UR94TOFfiadb9JIohCumh++bmLrokfcrbq8xRkaw
+x-microsoft-antispam-message-info: WIlPkGRYByAfezq/t6iu8CK8QXcBvmiE4lH+df6bYMqpeOwOjUKT8rFTdiLYFQnHJ8JI5ROW93p9b1sSnsi+3or55+6mUG/ZBVra7PryOm+FNCwo12etllKtiqz5rXVwuiJcI3EqsZ5xIMpNRjIFnls6DjYkUGlM365KHalzm6gOZfGm+llTQahylDTuRxPv
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: ff1aeb3d-abea-4cf8-9c3d-08d5a4811cce
+X-MS-Office365-Filtering-Correlation-Id: 8d94c9b5-ed92-4cfb-b368-08d5a4811d5b
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff1aeb3d-abea-4cf8-9c3d-08d5a4811cce
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2018 16:34:39.0446
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8d94c9b5-ed92-4cfb-b368-08d5a4811d5b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2018 16:34:39.8372
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1122
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1089
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -151,14 +153,15 @@ ion
 
 
 100K is not a large enough sample size to show the perf impact of this
-change, but we can see a perf improvement with 1M and 2M entries. For
-completeness, here is the p0002-read-cache tests for git.git and
+change, but we can see a perf improvement with 1M and 2M entries.
+
+For completeness, here is the p0002-read-cache tests for git.git and
 linux.git:
 
 git.git:
 
-Test                                          baseline          block_alloc=
-ation
+Test                                          baseline [4]     block_alloca=
+tion
  --------------------------------------------------------------------------=
 -------------------
 0002.1: read_cache/discard_cache 1000 times   0.30(0.26+0.03)   0.17(0.13+0=
@@ -204,6 +207,7 @@ Test                                       baseline          tcmalloc      =
 ----------------------------------------
 0002.1: read_cache/discard_cache 1 times   0.45(0.26+0.19)   0.46(0.25+0.21=
 ) +2.2%     0.57(0.36+0.21) +26.7%
+
 
 
 [1] https://public-inbox.org/git/20180321164152.204869-1-jamill@microsoft.c=
