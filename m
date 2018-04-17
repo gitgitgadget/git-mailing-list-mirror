@@ -2,109 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D4641F404
-	for <e@80x24.org>; Tue, 17 Apr 2018 23:25:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33DDC1F404
+	for <e@80x24.org>; Tue, 17 Apr 2018 23:32:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752757AbeDQXZV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Apr 2018 19:25:21 -0400
-Received: from titan.plasma.xg8.de ([85.10.203.189]:39510 "EHLO
-        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751857AbeDQXZU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Apr 2018 19:25:20 -0400
-Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
-        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w3HNPH0x020907
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 18 Apr 2018 01:25:17 +0200
-Received: (from uucp@localhost)
-        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w3HNPHSb020906;
-        Wed, 18 Apr 2018 01:25:17 +0200
-Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
-        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w3HNP5Hv004997;
-        Wed, 18 Apr 2018 01:25:05 +0200
-Received: (from rtc@localhost)
-        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w3HNP4kw004995;
-        Wed, 18 Apr 2018 01:25:04 +0200
-Date:   Wed, 18 Apr 2018 01:25:04 +0200
-From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: GDPR compliance best practices?
-Message-ID: <20180417232504.GA4626@helen.PLASMA.Xg8.DE>
-References: <20180417191549.GA1199@helen.PLASMA.Xg8.DE>
- <87y3hlecod.fsf@evledraar.gmail.com>
+        id S1751878AbeDQXcp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Apr 2018 19:32:45 -0400
+Received: from mail-ua0-f181.google.com ([209.85.217.181]:45280 "EHLO
+        mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751164AbeDQXco (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Apr 2018 19:32:44 -0400
+Received: by mail-ua0-f181.google.com with SMTP id j18so13767949uae.12
+        for <git@vger.kernel.org>; Tue, 17 Apr 2018 16:32:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=MWGgvziz8MyNM8Cvka99H/Tcx04x84zJ4/rE4ZgaxjE=;
+        b=dMHZ82mhdb31nfu1D/O6W1In76UoCdafKJBM/EpIUIipOJcc7WNDsXRZAvrlLZ1SzT
+         Bg4k4Wn0soBt6hBNlaWmb4CKnPGCguNgyeivlZvCZIgRMIctMFYfoqSMweWdPvF6xqxv
+         bkhIVnm85bFrsQei2m+NshCNA5iv22aGKyIax1lyIscrg/OPI3ect5VASocdOS39qvFZ
+         +d6DsTkdx2ZIV7Bn+468u91Ps5e6pdNVbumZX8DF7Bh88bzDoOesMLHF3HTuMj8O8J5F
+         Ao5yfbP4tZG0EAB9NM1yieL7Xwc0RD3ThfofXP/K3zYj/nkRF4MQSq1M42KaHJqNMoxG
+         KsJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MWGgvziz8MyNM8Cvka99H/Tcx04x84zJ4/rE4ZgaxjE=;
+        b=bQf8yfQkqiw7O5mpaYgs8efYljxUY6U7cfOo6x1AfKbvWFAnBDEB/tQPROH56+iiMR
+         cSaJfdIx4oXW+NIW+5xU7pQ6cDwMGvGtiR0Y1fzjM+8S4VeZJTQrZVlc1wywvA+v/12K
+         2RtrBeemCrOg0wWHPjQA4LD9r0romrhDdsYsLNkOCkqw4J6WaQ8kY3H1pcJtFWRVAJQm
+         6qKXAjt1FURXF7im/fOZ9kT3GbpXxLSAsYzCyfdlJDkmOYrSd+3xRtP+mMiwRPYcpOg4
+         4Su7LsYVXcr4qHXmiDajkQi2NbFl1dUvEblQIBUXVPQpgj59tZ4bnIXUxcCh6f5wIl61
+         0xzA==
+X-Gm-Message-State: ALQs6tBAr7VhY9YpuTuNPFFVablgmOvdUUEbrPsoWNE2DbJB1NUXnb2u
+        8lbL3U2NQlPfCRs0nWGuuY1ospzZpRdcBKc1vwY=
+X-Google-Smtp-Source: AIpwx4+BNztKHQaiQKfZsZ4Gih1J1rstdK9HHiFBLz0sv+TWRJ2PuMZv7CKR6MMYwLJaeci5XSfiSs+Sv2pBZ229xMM=
+X-Received: by 10.176.80.182 with SMTP id c51mr27307uaa.149.1524007964068;
+ Tue, 17 Apr 2018 16:32:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y3hlecod.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.159.34.195 with HTTP; Tue, 17 Apr 2018 16:32:43 -0700 (PDT)
+In-Reply-To: <xmqq7ep6v6ft.fsf@gitster-ct.c.googlers.com>
+References: <20180318012618.32691-1-szeder.dev@gmail.com> <20180416224113.16993-1-szeder.dev@gmail.com>
+ <20180416224113.16993-2-szeder.dev@gmail.com> <xmqq7ep6v6ft.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Wed, 18 Apr 2018 01:32:43 +0200
+Message-ID: <CAM0VKjk=JtdoduywJ4t5OPhLGgt90yxJA_Zif6R803XHA=Sfbg@mail.gmail.com>
+Subject: Re: [PATCH 01/11] t9902-completion: add tests demonstrating issues
+ with quoted pathnames
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Clemens Buchacher <drizzd@gmx.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Manlio Perillo <manlio.perillo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 17, 2018 at 11:38:26PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> I've been loosely following a similar discussion around blockchains and
-> my understanding of the situation is that for a project such as say
-> Linux the GDPR gives you this potential out for that[1]:
-> 
->     "the personal data are no longer necessary in relation to the
->     purposes for which they were collected or otherwise processed"
-> 
-> I.e. you understand that when you submit a patch to linux.git how it's
-> going to get used, and that it's in a storage system that isn't going to
-> be pruned just because you ask for it.
-> [...]
-> You can make a compelling case that for say submitting your data to the
-> Bitcoin blockhcain the above quote from article 17 overrides it
-
-Well, you're quoting from lit. a but there's also lit. b to f! It says 
-"one of the following grounds applies", not "all of ...".
-
-> This is very different from you say joining a company, committing to its
-> internal git repo, and your name being there in perpetuity, or choosing
-> to submit a patch to linux.git or git.git.
+On Tue, Apr 17, 2018 at 5:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 >
-> I'd think that would be handled the same way as a structural engineering
-> firm being able to record in perpetuity who it was that drew up the
-> design for some bridge.
+>>     Do any more new tests need FUNNYNAMES* prereq?
+>
+> Hmph, all of these look like they involve some funnynames ;-)
 
-Internal repo is entirely unproblematic, since you don't need consent 
-for doing that. It is covered by Art. 6 (1) lit. f.
+Well, I can' create a directory with a '|' in its name on FAT32 (on
+Linux), so this needs FUNNYNAMES prereq, too.
 
-The problem is public repos. Publishing employee information is 
-generally considered not to be covered by Art. 6 (1) lit. f. After all, 
-you can easily publish the software but not the repo.
+>> +test_expect_failure 'complete files - escaped characters on cmdline' '
+>> +     test_when_finished "rm -rf \"New|Dir\"" &&
+>> +     mkdir "New|Dir" &&
+>> +     >"New|Dir/New&File.c" &&
+>> +
+>> +     test_completion "git test-path-comp N" \
+>> +                     "New|Dir" &&    # Bash will turn this into "New\|D=
+ir/"
+>> +     test_completion "git test-path-comp New\\|D" \
+>> +                     "New|Dir" &&
+>> +     test_completion "git test-path-comp New\\|Dir/N" \
+>> +                     "New|Dir/New&File.c" && # Bash will turn this into
+>> +                                             # "New\|Dir/New\&File.c "
+>> +     test_completion "git test-path-comp New\\|Dir/New\\&F" \
+>> +                     "New|Dir/New&File.c"
+>> +'
+>> +
+>> +test_expect_failure 'complete files - quoted characters on cmdline' '
+>> +     test_when_finished "rm -r \"New(Dir\"" &&
+>
+> This does not use -rf unlike the previous one?
 
-> I don't think it's plausible that the GDPR,
-> which is probably mainly going to be about consumer protection, is going
-> to concern itself with that in practice.
+Noted.
 
-Oh, no, GDPR is about privacy in general. It's not only about consumer 
-protection. It applies in the same way to employees in relation to 
-their employer and to citizens in relation to the authorities, and to 
-open source contributors in relation to the projects, or to any other 
-data processing outside family and friends (Art. 2 (2) lit. c).
+The lack of '-f' is leftover from early versions of these tests, when I
+had a hard time getting the quoting-escaping right.  Without the '-f'
+'rm' errored out when I messed up, and the error message helpfully
+contained the path it wasn't able to delete.
 
-I am inclined to assume that Art. 6 (1) lit. b might be the solution, 
-since the licenses typically demand a history of changes to be 
-distributed with the program (for example, GPLv3 section 5 a). After 
-all, the author generally wants to be given credit for his changes and 
-it can be assumed that this one of the conditions for licensing the 
-work in the first place.
+>> +     mkdir "New(Dir" &&
+>> +     >"New(Dir/New)File.c" &&
+>> +
+>> +     test_completion "git test-path-comp \"New(D" "New(Dir" &&
+>> +     test_completion "git test-path-comp \"New(Dir/New)F" \
+>> +                     "New(Dir/New)File.c"
+>> +'
+>
+> OK.
+>
+>> +test_expect_failure 'complete files - UTF-8 in ls-files output' '
+>> +     test_when_finished "rm -r =C3=A1rv=C3=ADzt=C5=B1r=C5=91" &&
+>> +     mkdir =C3=A1rv=C3=ADzt=C5=B1r=C5=91 &&
+>> +     >"=C3=A1rv=C3=ADzt=C5=B1r=C5=91/=D0=A1=D0=B0=D0=B9=D0=BD =D1=8F=D0=
+=B2=D0=B0=D0=B0=D1=80=D0=B0=D0=B9" &&
+>> +
+>> +     test_completion "git test-path-comp =C3=A1" "=C3=A1rv=C3=ADzt=C5=
+=B1r=C5=91" &&
+>> +     test_completion "git test-path-comp =C3=A1rv=C3=ADzt=C5=B1r=C5=91/=
+=D0=A1" \
+>> +                     "=C3=A1rv=C3=ADzt=C5=B1r=C5=91/=D0=A1=D0=B0=D0=B9=
+=D0=BD =D1=8F=D0=B2=D0=B0=D0=B0=D1=80=D0=B0=D0=B9"
+>> +'
+>> +
+>> +if test_have_prereq !MINGW &&
+>> +   mkdir 'New\Dir' 2>/dev/null &&
+>> +   touch 'New\Dir/New"File.c' 2>/dev/null
+>> +then
+>> +     test_set_prereq FUNNYNAMES_BS_DQ
+>> +else
+>> +     say "Your filesystem does not allow \\ and \" in filenames."
+>> +     rm -rf 'New\Dir'
+>> +fi
+>> +test_expect_failure FUNNYNAMES_BS_DQ \
+>> +    'complete files - C-style escapes in ls-files output' '
+>> +     test_when_finished "rm -r \"New\\\\Dir\"" &&
+>> +
+>> +     test_completion "git test-path-comp N" "New\\Dir" &&
+>> +     test_completion "git test-path-comp New\\\\D" "New\\Dir" &&
+>> +     test_completion "git test-path-comp New\\\\Dir/N" \
+>> +                     "New\\Dir/New\"File.c" &&
+>> +     test_completion "git test-path-comp New\\\\Dir/New\\\"F" \
+>> +                     "New\\Dir/New\"File.c"
+>> +'
+>> +
+>> +if test_have_prereq !MINGW &&
+>> +   mkdir $'New\034Special\035Dir' 2>/dev/null &&
+>> +   touch $'New\034Special\035Dir/New\036Special\037File' 2>/dev/null
+>
+> The $'...' quote is bash-ism, but this is about testing bash
+> completion, so as long as we make sure non-bash shells won't touch
+> this part of the test, it is OK.
+>
+> Do we want to test a more common case of a filename that is two
+> words with SP in between, i.e.
+>
+>         $ >'hello world' && git add hel<TAB>
+>
+> or is it known to work just fine without quoting/escaping (because
+> the funny we care about is output from ls-files and SP is not special
+> in its one-item-at-a-time-on-a-line output) and not worth checking?
 
-On the other hand, of course, the author could waive the condition at 
-any time, which means Art. 6 (1) lit. b wouldn't apply anymore and 
-you'd have the same issue as with consent-based processing of the 
-information (lit. a).
+This particular case already works, even without this patch series.
 
-Best wishes
-Peter
-
-
--- 
-Peter Backes, rtc@helen.PLASMA.Xg8.DE
+The problems start when you want to complete the filename after a space,
+e.g. 'hello\ w<TAB', as discussed in detail in patch 5.  Actually, this
+was the first thing I tried to write a test for, but it didn't work out:
+inside the 'test_completion' helper function the space acts as
+separator, and the completion script then sees 'hello\' and 'w' as two
+separate words.
