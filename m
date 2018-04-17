@@ -7,109 +7,94 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D619E1F404
-	for <e@80x24.org>; Tue, 17 Apr 2018 00:58:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C1DF1F404
+	for <e@80x24.org>; Tue, 17 Apr 2018 01:01:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751187AbeDQA6i (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Apr 2018 20:58:38 -0400
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:40244 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751164AbeDQA6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Apr 2018 20:58:37 -0400
-Received: by mail-wr0-f172.google.com with SMTP id v60so26879887wrc.7
-        for <git@vger.kernel.org>; Mon, 16 Apr 2018 17:58:36 -0700 (PDT)
+        id S1751183AbeDQBB4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Apr 2018 21:01:56 -0400
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:33249 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751060AbeDQBBz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Apr 2018 21:01:55 -0400
+Received: by mail-wr0-f176.google.com with SMTP id z73so30781567wrb.0
+        for <git@vger.kernel.org>; Mon, 16 Apr 2018 18:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=OpTVqKDa7uoa8txqAYtnIhmvNzJKTB0oAohHQu+gWys=;
-        b=Kep2GmVSSuAXI0RCDEXuR1uoLK7/xmtKD8A7RRSzLI2tsxrOfoeASADutxpF0xsiUZ
-         saYismm58qlj446Z+o5un6DBR3oETUTz9riCmquCKpTLv0FXdj0P0bYE17hvW7wJf5FY
-         fQGgU9X57OpArLLeVpC8ILtF0frmKu9djSY72efDEOrJQGd3B6RVw2UhfXhxc/iUxowT
-         99CHI91DgsaFkvREfvZ1Ez/2LreFfP9D6Avv+KP7GDumEmbEZpYbsRbz7QHhcAGFQ7D5
-         3NNzPSNl4RKEznOfnqGv15eBDrcgNDbcKs8CNCWtdM32G55IL4jltq5C49ZLsi3VgIyh
-         LKCw==
+        bh=JtOK9WzYUR2IFE/Jnfu2RTmdjICDEHmW/3r3DecSHwg=;
+        b=UDGrtC2qFakEgssI352Jcfqpyr5i23jw7SGXv6QIrd4dBmLwfbpRH12edANjzGEUyO
+         80bV6YKxLWbmUOJfIW6h+laHqHNz71AOySJebeX63gy4U8fKeNy8Zn5AiAvswT/PLUER
+         Fj4Yo6I5ckx9IV7lCikN4ZSvFKs//gPq5m3IVMueRAFxyikbf+tLUzcvPAu9OZEy7jwG
+         FYA2eXjRAnHSo6ognwOOErrUd2kio3c185D9TZ2hUoroslgye4/ILZwYMudOTK3g/0H3
+         pml+leT+Z4z8LosOG4dFZ/PZSlzsvLFWHh1MDDpJr0eL6/7ZRDioRw7NyeuzaZSpJnor
+         kZTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=OpTVqKDa7uoa8txqAYtnIhmvNzJKTB0oAohHQu+gWys=;
-        b=FHHs9HD3kBanOt0QhenXyE/YULsURE2s6ex2m+ZxcM2KgHyGhvaJjPjXDPBreZS6e+
-         RHTq6o/6a4BsobLb5KN2OTYKjj9Do0pjQSsF8Jk71Ia1+SOGVcFy4TJHKll2XtmJ3pgx
-         tjwf+hu81JV/tI5vftqMRrZBKZTh1b3o1MYJJi81RtNHEwzbI1fCR0oRCffH+R8EDZbZ
-         U1O0aDq0NXp6pM6JDza7CyZ8OrS0/85bBQFpwFus/4Tmu1KbrOUfRr0dNGSBg9vbeB5L
-         i/9CCRDm9zdkcbPA52m/Da5dU3hd37TojOKaqthfMAlyG/Ug2ZOTcweM9o0BSyHazdDk
-         xuuQ==
-X-Gm-Message-State: ALQs6tCNR9xzfOW6mStPr73NtbcQQmd23OWiKVxYjNVtZGXZDI+hykh7
-        GUomnlZxDBEwgTTr/50hIwdUcyWx7fhyXC2Y1zo=
-X-Google-Smtp-Source: AIpwx49c4RNDOhaFxwu1wue7iXhd39904z3vJqV9PGtD/XklO8LdSnk8gsqoROzCw0oL4GLl0a2JgOjOghGCXeEZ4K4=
-X-Received: by 10.80.172.196 with SMTP id x62mr517514edc.265.1523926715854;
- Mon, 16 Apr 2018 17:58:35 -0700 (PDT)
+        bh=JtOK9WzYUR2IFE/Jnfu2RTmdjICDEHmW/3r3DecSHwg=;
+        b=EZcm42l4H7C6cASB+2eXYvWMH8RzsGporHCOGk14wRkt+hMxSMrY3uqyMooN8MsU47
+         X9Axpi5xjkKutPipAZLXo0/dht4/fXNuFxRtWBvpD5Up3sWFsxVaSknM4G7nB7wrS6Rs
+         SFH1/kjKA7J/ftb6bEWcI78qYTnjCayi3A9T97eznXXtyrzp3Eyml9a6f8rPQjyCycRn
+         0Z84XQvgUlwNctnWsllqodZFJwwG9fPuTPQwBZL8nO/WixnH1IuxzYTGOX2AeEA+F3IP
+         5TIWiOVCjzMRqhcmtAUJgOp5cclXPH5bmXXNtYmSHSxDC6AoJF4P/hcUfs6+W9pCRjX6
+         sOXw==
+X-Gm-Message-State: ALQs6tBqNA6noMZAqhIUXQLpQH7eDaaKVQMW8o1ezWTwVjDrgoVtxMV3
+        O50wf+R6NYzZEbuft5Ma91fUn81c1gjrqQ7GcaixGQ0h
+X-Google-Smtp-Source: AIpwx4/WDKZwNp3PuXfhaxmQM9+nFjDDh9WdgwJ8w2QIvnv5HEKnYEJESXwWMXCFFlmUq/pmnkOctsVZEd53G80LJFE=
+X-Received: by 10.80.192.145 with SMTP id k17mr534376edf.303.1523926914150;
+ Mon, 16 Apr 2018 18:01:54 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.80.180.180 with HTTP; Mon, 16 Apr 2018 17:58:15 -0700 (PDT)
-In-Reply-To: <CAP8UFD3ei7NEfiqBbWe_PKdrcW93t2pA=u-ub29X+jGOi9-Jwg@mail.gmail.com>
-References: <CAP8UFD0DagacfeismKoVgo=O1guRUV=u1=EbbwRyrY3g1MeQ8Q@mail.gmail.com>
- <CAP8UFD1vFM8k-1Po=2QXZdBOuCca1Dg_FGaPnSi85hKp1je54w@mail.gmail.com>
- <87in8rz65t.fsf@javad.com> <CAP8UFD3JwHfyr=bByvjDrxboFL+yHVdZnbkXztsUuOU0aRD-9w@mail.gmail.com>
- <87sh7v6vn4.fsf@javad.com> <72f42205-c9c6-03aa-e8df-12e7062e8e62@gmail.com>
- <87efjf6uwg.fsf@javad.com> <CAP8UFD3ei7NEfiqBbWe_PKdrcW93t2pA=u-ub29X+jGOi9-Jwg@mail.gmail.com>
+Received: by 10.80.180.180 with HTTP; Mon, 16 Apr 2018 18:01:33 -0700 (PDT)
+In-Reply-To: <xmqqefjewxr4.fsf@gitster-ct.c.googlers.com>
+References: <alpine.LFD.2.21.1804160538100.3564@localhost.localdomain>
+ <87y3hn5drx.fsf@linux-m68k.org> <alpine.LFD.2.21.1804160918120.6924@localhost.localdomain>
+ <CA+P7+xrDsPXA6Bq77gYwWtc16Dz4drg+CHA80=vBNB9-NhxHVg@mail.gmail.com> <xmqqefjewxr4.fsf@gitster-ct.c.googlers.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 16 Apr 2018 17:58:15 -0700
-Message-ID: <CA+P7+xq1M25NFEBzXtWEe=mD2trY+7vip_MCHegrr=qtgTBLyQ@mail.gmail.com>
-Subject: Re: Draft of Git Rev News edition 38
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Sergey Organov <sorganov@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Date:   Mon, 16 Apr 2018 18:01:33 -0700
+Message-ID: <CA+P7+xrY83CM6WYoxio2nPGzeg1YNGbptM52Opu2UBgdk9Y-4A@mail.gmail.com>
+Subject: Re: man page for "git remote set-url" seems confusing/contradictory
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        Git Mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 16, 2018 at 3:30 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Mon, Apr 16, 2018 at 5:19 PM, Sergey Organov <sorganov@gmail.com> wrote:
->> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+On Mon, Apr 16, 2018 at 4:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+>> Things won't work so well if you set the push url and fetch url to
+>> different repositories. Git assumes that refs updated by "push" will
+>> also be reflected via "fetch".
 >>
->>> 1. I see the following sentence in the "Rebasing merges: a jorney to the
->>> ultimate solution (Road Clear) (written by Jacob Keller)" article
->>>
->>>       "A few examples were tried, but it was proven that the original
->>>       concept did not work, as dropped commits could end up being
->>>       replaid into the merge commits, turning them into "evil"
->>>       merges."
->>>
->>> I'm not sure if 'replaid' is proper English assuming the past tense of
->>> replay was intended there (which I think is 'replayed').
->>
->> It could have meant, say, "reapplied", -- we need to ask the author.
+>> I don't know offhand what will break, but likely something will. For
+>> one, when you fetch again it will rewind your remotes after the push.
 >
-> Yeah it could but I would say that it is not very likely compared to
-> "replayed", so I changed it to "replayed". And yeah I can change it to
-> something else if Jake (who is Cc'ed) prefers.
+> Exactly.  I still haven't fully embraced it myself, but for a long
+> time, "git push" pretends as if it fetched from that remote and
+> updates the corresponding remote tracking branches (if you have
+> any), so you'll be inviting inconsistent behaviour if you set your
+> fetch and push URLs pointing at two logically separate places.
 >
->> While we are at it, please also consider to replace "original concept"
->> by "original algorithm", as it didn't work due to a mistake in the
->> algorithm as opposed to failure of the concept itself.
+> This is a tangent, but there probably should be a boolean that
+> disables this feature in "git push" per destination repository,
+> i.e. "when pushing into this repository, pretend that we immediately
+> fetched from the refs we just pushed to and update the remote
+> tracking branches we have for them: yes/no".  It is not entirely
+> implausible to envision an overly smart remote repository that turns
+> a non-fast-forward push into an automatic rebase when it is safe to
+> do so, instead of failing such a push, and you'd disable the "assume
+> what we pushed would appear there" when talking to such a remote.
 >
-> Ok, it's now "original algorithm".
->
-> Thanks,
-> Christian.
 
-Replayed is accurate.
+Not to mention something like gerrit which uses magical references
+"refs/publish/branchname" which don't actually get generated on the
+server.
 
 Thanks,
 Jake
