@@ -2,157 +2,233 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DB3B1F404
-	for <e@80x24.org>; Tue, 17 Apr 2018 18:11:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B57521F404
+	for <e@80x24.org>; Tue, 17 Apr 2018 18:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752841AbeDQSLI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Apr 2018 14:11:08 -0400
-Received: from mail-cys01nam02on0106.outbound.protection.outlook.com ([104.47.37.106]:60462
-        "EHLO NAM02-CY1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752770AbeDQSKn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Apr 2018 14:10:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=CMwCCfa6evqewIc6lc16WMjGNUpTfLK7zjCp7ZVeVRo=;
- b=HYjYj5gs1zDWCZdmmAvyxajjJAUxFEXj+y7D7du6jt5+mfUSsMaxqhfOAOLGGWh9S3myLwo/81LpYT40yX9u1OLMI5Fy/lbs5ENk2+/ionocROAaGSOKdl5LWMYkogG4Wdkg5yUQ3UYKLM5UA5pxKSwTR7Xxa+ZHBVpUqz3rmZ4=
-Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
- BL0PR2101MB0994.namprd21.prod.outlook.com (52.132.23.156) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.715.4; Tue, 17 Apr 2018 18:10:41 +0000
-Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
- ([fe80::c8cd:6461:8337:8ad1]) by BL0PR2101MB1011.namprd21.prod.outlook.com
- ([fe80::c8cd:6461:8337:8ad1%2]) with mapi id 15.20.0715.004; Tue, 17 Apr 2018
- 18:10:41 +0000
-From:   Derrick Stolee <dstolee@microsoft.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "peff@peff.net" <peff@peff.net>,
-        "sbeller@google.com" <sbeller@google.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: [RFC PATCH 05/12] commit-graph: check fanout and lookup table
-Thread-Topic: [RFC PATCH 05/12] commit-graph: check fanout and lookup table
-Thread-Index: AQHT1ndldu6wEJy/T0epRsNWNa6Zog==
-Date:   Tue, 17 Apr 2018 18:10:41 +0000
-Message-ID: <20180417181028.198397-6-dstolee@microsoft.com>
-References: <20180417181028.198397-1-dstolee@microsoft.com>
-In-Reply-To: <20180417181028.198397-1-dstolee@microsoft.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: BL0PR0102CA0015.prod.exchangelabs.com
- (2603:10b6:207:18::28) To BL0PR2101MB1011.namprd21.prod.outlook.com
- (2603:10b6:207:37::10)
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0994;7:pdasGQVkgz6yRSN8sNK7bxyI6JY9bXomEyCctpGXxnxPHv3nAjpkLImobANUuGRZ6bY8CHx7FwMmhjZ1hKPn97sCvjHsuxWZDW8zTIyHfcgwdEy4a1OwgX0T3738PJyRQAMNX2UnVo1tNJqUB2Yd3Iqq9XtMYCAOOTpnadBkwhSUB4lftHbxJ5VsL4gzoN/jGS86Xs6WfmidmEOVc0URfPB7sbfhAjtSuVWIi5JAxemf65bwSqmdwv+9OE3sFhBF;20:BlhDzI1XQPicMecPpm2Quhy9Rcr7+DWbXjCwN9Qw3VppGhzlc6Xqv6o8uDnBv0qQ5JzjKkNePGx56uuJfsXU3n4xvP+vBnK2D59+eX9p2wzOvY8fwA7HABmj+4b6MTy8VdUE/2UObKrdvTH3WqYGVF8JPejR0sT17F02ad1vP2M=
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(2017052603328)(7193020);SRVR:BL0PR2101MB0994;
-x-ms-traffictypediagnostic: BL0PR2101MB0994:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB0994B6F229F45A71B63E482BA1B70@BL0PR2101MB0994.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(8121501046)(5005006)(3231232)(944501359)(52105095)(3002001)(93006095)(93001095)(10201501046)(6055026)(61426038)(61427038)(6041310)(20161123560045)(20161123562045)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(6072148)(201708071742011);SRVR:BL0PR2101MB0994;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0994;
-x-forefront-prvs: 0645BEB7AA
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(366004)(346002)(39380400002)(376002)(396003)(199004)(189003)(59450400001)(6506007)(386003)(102836004)(486006)(52116002)(316002)(106356001)(76176011)(54906003)(68736007)(7736002)(22452003)(2616005)(53936002)(46003)(99286004)(11346002)(476003)(305945005)(2501003)(186003)(86612001)(575784001)(5250100002)(86362001)(6436002)(446003)(6116002)(6512007)(10090500001)(5640700003)(10290500003)(14454004)(25786009)(2351001)(4326008)(97736004)(2906002)(107886003)(5660300001)(478600001)(1076002)(2900100001)(8676002)(36756003)(8936002)(6916009)(81166006)(1730700003)(81156014)(105586002)(3280700002)(3660700001)(6486002)(22906009)(217873001);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0994;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: RxutZqCmNL8L6nToQqeoRc1N/iwCEpptLGftfaHUnUxe1Fne2usZSKT6BmxOkJMNp9k7xpDeRtEDlvzn72+3YORf6E38Xzlvbt8ChprlRC7Sr4BN4fOxAgvYkFrm1A9g8DZLdWuPphiMHb0PF2YD1MvKoXA3GYgzCRSGZ+Eu2sGn0wimi5FLFOC4gUU5bMKm
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S1752780AbeDQSNU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Apr 2018 14:13:20 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:36689 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751232AbeDQSNS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Apr 2018 14:13:18 -0400
+Received: by mail-lf0-f65.google.com with SMTP id d20-v6so28724495lfe.3
+        for <git@vger.kernel.org>; Tue, 17 Apr 2018 11:13:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Vp/pHZEfiyZVV8eUs+HhGYyF7Ietw50v2a0Lk5o8x5Y=;
+        b=EBAzB9N0U2/jGBrxuC81Z5z6VujyyEST+C3nNUwyG7QT1PZ2B0+70Pfa9d7Y0LE6a6
+         ysmMIPkI+JCStHfW2EY+bUNioAdsBPCKOUxvD4BfwWJmBGxyHOP9GA8ofwL951M9h+W4
+         u1GYiJjvA2SuO/V/IS63FUqfY+AakO/zoSj8YWuAX1/CH/M0R9t4LaRyPlOYPR9nbNgJ
+         EQeQ5VQ118Ny/ZRlUczIUA45bPGW3lQLTjbh8Jcy98PLsszWnhC9cFs6+3GqKb490MaV
+         O8xm2AgsSe+Kcvui+gsIAZoZbKUoxcWzP3dOh74Pe7yX26wPIKdYQ/1/rEs6wz/qsgOg
+         3lFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Vp/pHZEfiyZVV8eUs+HhGYyF7Ietw50v2a0Lk5o8x5Y=;
+        b=nNBZkvsB9tJWEOhqwZlWU+7BE1HjgT9UO8pM+zvkVaCu/nJ2FobL51yRwfFfIeXayR
+         X7EMo4ENK/P/stgioop9G6eNbiBnFMY0a9sCCGZDNJpq7tLj5eHrwd6eg+ZsEcK5I/w4
+         6JVPylMCzO/nb+AuIULLpt+MKhb333dvswqtwg9+0kMk3TZStCCN6+YiyHCPagMl+i74
+         UxP3bGF6tZ/0QL8K+LLx3mUUnmpgI87oFi1yQO6ehPWWXNdM7orKD8y4Owj3ACRrQ6YM
+         hXo6Qkz+VbK9NSb38s1Kg8B911/drlCSmmvZ8UrBcH7b321vlTBVGfIO8CDqO4KHIjfM
+         7HJA==
+X-Gm-Message-State: ALQs6tA27ufjopXEHLNXB1l90kyo6h9hWxRLgyXIJMeIpTevJPZ8NizP
+        AefMUKlhI7uUftNpQdpZsOdZTA==
+X-Google-Smtp-Source: AIpwx49QxwvxxBTiShZBLlMTlpF+SqSHa0MYLIbvWZAgFTWkLZLwIVo7c7BupQTkEul4P55uM662Ig==
+X-Received: by 10.46.84.66 with SMTP id y2mr2073990ljd.11.1523988796268;
+        Tue, 17 Apr 2018 11:13:16 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id i62-v6sm3497964lfa.45.2018.04.17.11.13.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 17 Apr 2018 11:13:15 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH/RFC] completion: complete all possible -no-<options>
+Date:   Tue, 17 Apr 2018 20:13:00 +0200
+Message-Id: <20180417181300.23683-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.367.g5dd2e386c3
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 0cef8a28-0df5-4365-7f71-08d5a48e878c
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0cef8a28-0df5-4365-7f71-08d5a48e878c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2018 18:10:41.3459
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0994
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While running 'git commit-graph check', verify that the object IDs
-are listed in lexicographic order and that the fanout table correctly
-navigates into that list of object IDs.
+This is not a complete topic but I'd like to present the problem and
+my approach to see if it's a good way to go.
 
-In anticipation of checking the commits in the commit-graph file
-against the object database, parse the commits from that file in
-advance. We perform this parse now to ensure the object cache contains
-only commits from this commit-graph file.
+We have started recently to rely on parse-options to help complete
+options. One of the leftover items is allowing completing --no- form.
+This patch enables that (some options should not have --no- form, but
+that's easy not included here).
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+The problem with completing --no- form is that the number of
+completable options now usually doubles, taking precious screen space
+and also making it hard to find the option you want.
+
+So the other half of this patch, the part in git-completion.bash, is
+to uncomplete --no- options. When you do "git checkout --<tab>",
+instead of displaying all --no- options, this patch simply displays
+one item: the --no- prefix. If you do "git checkout --no-<tab>" then
+all negative options are displayed. This helps reduce completable
+options quite efficiently.
+
+Of course life is not that simple, we do have --no- options by default
+sometimes (taking priority over the positive form), e.g. "git clone
+--no-checkout". Collapsing all --no-options into --no- would be a
+regression.
+
+To avoid it, the order of options --git-completion-helper returns does
+matter. The first 4 negative options are not collapsed. Only options
+after the 4th are. Extra --no- options are always printed at the end,
+after all the --no- defined in struct option, this kinda works. Not
+pretty but works.
+
+After all this "git checkout --<tab>" now looks like this
+
+    > ~/w/git $ git co --
+    --conflict=                   --orphan=
+    --detach                      --ours 
+    --ignore-other-worktrees      --patch 
+    --ignore-skip-worktree-bits   --progress 
+    --merge                       --quiet 
+    --no-                         --recurse-submodules 
+    --no-detach                   --theirs 
+    --no-quiet                    --track 
+    --no-track                    
+
+and all the no options
+
+    > ~/w/git $ git co --no-
+    --no-conflict                    --no-patch 
+    --no-detach                      --no-progress 
+    --no-ignore-other-worktrees      --no-quiet 
+    --no-ignore-skip-worktree-bits   --no-recurse-submodules 
+    --no-merge                       --no-track 
+    --no-orphan                      
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- commit-graph.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ contrib/completion/git-completion.bash | 25 +++++++++++++++-
+ parse-options.c                        | 40 +++++++++++++++++++++++---
+ 2 files changed, 60 insertions(+), 5 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 6d0d303a7a..6e3c08cd5c 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -835,6 +835,9 @@ static int check_commit_graph_error;
-=20
- int check_commit_graph(struct commit_graph *g)
- {
-+	uint32_t i, cur_fanout_pos =3D 0;
-+	struct object_id prev_oid, cur_oid;
-+
- 	if (!g) {
- 		graph_report(_("no commit-graph file loaded"));
- 		return 1;
-@@ -859,5 +862,36 @@ int check_commit_graph(struct commit_graph *g)
- 	if (g->hash_len !=3D GRAPH_OID_LEN)
- 		graph_report(_("commit-graph has incorrect hash length: %d"), g->hash_le=
-n);
-=20
-+	for (i =3D 0; i < g->num_commits; i++) {
-+		struct commit *graph_commit;
-+
-+		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
-+
-+		if (i > 0 && oidcmp(&prev_oid, &cur_oid) >=3D 0)
-+			graph_report(_("commit-graph has incorrect oid order: %s then %s"),
-+
-+		oid_to_hex(&prev_oid),
-+		oid_to_hex(&cur_oid));
-+		oidcpy(&prev_oid, &cur_oid);
-+
-+		while (cur_oid.hash[0] > cur_fanout_pos) {
-+			uint32_t fanout_value =3D get_be32(g->chunk_oid_fanout + cur_fanout_pos=
-);
-+			if (i !=3D fanout_value)
-+				graph_report(_("commit-graph has incorrect fanout value: fanout[%d] =
-=3D %u !=3D %u"),
-+					     cur_fanout_pos, fanout_value, i);
-+
-+			cur_fanout_pos++;
-+		}
-+
-+		graph_commit =3D lookup_commit(&cur_oid);
-+
-+		if (!parse_commit_in_graph_one(g, graph_commit))
-+			graph_report(_("failed to parse %s from commit-graph"), oid_to_hex(&cur=
-_oid));
-+
-+		if (graph_commit->graph_pos !=3D i)
-+			graph_report(_("graph_pos for commit %s is %u !=3D %u"), oid_to_hex(&cu=
-r_oid),
-+				     graph_commit->graph_pos, i);
-+	}
-+
- 	return check_commit_graph_error;
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index a757073945..85b9f24465 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -266,7 +266,7 @@ __gitcomp ()
+ 	case "$cur_" in
+ 	--*=)
+ 		;;
+-	*)
++	--no-*)
+ 		local c i=0 IFS=$' \t\n'
+ 		for c in $1; do
+ 			c="$c${4-}"
+@@ -279,6 +279,29 @@ __gitcomp ()
+ 			fi
+ 		done
+ 		;;
++	*)
++		local c i=0 IFS=$' \t\n' n=0
++		for c in $1; do
++			c="$c${4-}"
++			if [[ $c == "$cur_"* ]]; then
++				case $c in
++				--*=*|*.) ;;
++				--no-*)
++					n=$(($n+1))
++					if [ "$n" -eq 4 ]; then
++						c="--no-${4-} "
++					elif [ "$n" -gt 4 ]; then
++						continue
++					else
++						c="$c "
++					fi
++					;;
++				*) c="$c " ;;
++				esac
++				COMPREPLY[i++]="${2-}$c"
++			fi
++		done
++		;;
+ 	esac
  }
---=20
-2.17.0.39.g685157f7fb
+ 
+diff --git a/parse-options.c b/parse-options.c
+index 0f7059a8ab..f6cd7ca8d2 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -427,13 +427,11 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
+ 	parse_options_check(options);
+ }
+ 
+-/*
+- * TODO: we are not completing the --no-XXX form yet because there are
+- * many options that do not suppress it properly.
+- */
+ static int show_gitcomp(struct parse_opt_ctx_t *ctx,
+ 			const struct option *opts)
+ {
++	const struct option *original_opts = opts;
++
+ 	for (; opts->type != OPTION_END; opts++) {
+ 		const char *suffix = "";
+ 
+@@ -465,6 +463,40 @@ static int show_gitcomp(struct parse_opt_ctx_t *ctx,
+ 			suffix = "=";
+ 		printf(" --%s%s", opts->long_name, suffix);
+ 	}
++	for (opts = original_opts; opts->type != OPTION_END; opts++) {
++		int has_unset_form = 0;
++
++		if (!opts->long_name)
++			continue;
++		if (opts->flags & (PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE))
++			continue;
++		if (opts->flags & PARSE_OPT_NONEG)
++			continue;
++
++		switch (opts->type) {
++		case OPTION_STRING:
++		case OPTION_FILENAME:
++		case OPTION_INTEGER:
++		case OPTION_MAGNITUDE:
++		case OPTION_CALLBACK:
++		case OPTION_BIT:
++		case OPTION_NEGBIT:
++		case OPTION_COUNTUP:
++		case OPTION_SET_INT:
++			has_unset_form = 1;
++			break;
++		default:
++			break;
++		}
++		if (has_unset_form) {
++			const char *name;
++
++			if (skip_prefix(opts->long_name, "no-", &name))
++				printf(" --%s", name);
++			else
++				printf(" --no-%s", opts->long_name);
++		}
++	}
+ 	fputc('\n', stdout);
+ 	exit(0);
+ }
+-- 
+2.17.0.367.g5dd2e386c3
 
