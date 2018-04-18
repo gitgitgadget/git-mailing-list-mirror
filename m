@@ -2,127 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 860481F404
-	for <e@80x24.org>; Wed, 18 Apr 2018 21:16:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E37771F404
+	for <e@80x24.org>; Wed, 18 Apr 2018 21:21:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752166AbeDRVQs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 17:16:48 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53509 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751256AbeDRVQr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 17:16:47 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0PdN-1eIs7E0ZY5-00uci3; Wed, 18
- Apr 2018 23:16:21 +0200
-Date:   Wed, 18 Apr 2018 23:16:03 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Kim Gybels <kgybels@infogroep.be>
-cc:     "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] daemon: use timeout for uninterruptible poll
-In-Reply-To: <20180415170859.GA30197@infogroep.be>
-Message-ID: <nycvar.QRO.7.76.6.1804182307450.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180412210757.7792-1-kgybels@infogroep.be> <20180412210757.7792-2-kgybels@infogroep.be> <nycvar.QRO.7.76.6.1804131433250.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <20180415170859.GA30197@infogroep.be>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752586AbeDRVVq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 17:21:46 -0400
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:35525 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751407AbeDRVVp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 17:21:45 -0400
+Received: by mail-wr0-f173.google.com with SMTP id w3-v6so8508715wrg.2
+        for <git@vger.kernel.org>; Wed, 18 Apr 2018 14:21:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=lFRitmBk63UC481oB7e2xxGCzWLhDNJCcA0CiLePhFY=;
+        b=PXeo8rxGwmXbmojT/dsMqNUgfOB6YDu8Y3BcqzR/BoMaFLbESaUiGH7U5B72WdAiAA
+         JShtyM5emIATbt8ohjMpbhS9mG/Uolt9Xr+5WGyEg1pUenrUJ49qoGZ9/BTiVNyvh7pr
+         YAxBfO7uFNZirrvs5KOoICj98/zn8HmOYxMjyBMLaWROzxTb03z6QvPnbChJGgN2h+DF
+         TywZzzQpmIWorbi2uiI7BBdLcB75ruoKxBygRY78U8w8mJX/emQD4udA26tvjqI8mwbE
+         qT3T3EjHf8u+7yGLmjhQKByZoPir/4ZdGSn72MHzc5ilQY+Fqj3Kr5UieHYpAIohAOHy
+         tdVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=lFRitmBk63UC481oB7e2xxGCzWLhDNJCcA0CiLePhFY=;
+        b=Fm1xZR8osqLSLc0wB9TPgR6+M+dl3AlOQCIPQUktNNbT/Ne8bvKaEHEldtwamqhcYf
+         JQ/fjcbnOW9ZNMlixOGGCbDs2KZGDFufjh9AIpcIhPnJxKNQA2u7f3TJ28YM+lygBn2U
+         rawgQBu+dNlXT3j+gUtatdcXj2lCZipwaigWMtxlbm8D27xyY0X/uWvpzxNbqALUBl3G
+         SK56sUmHDf1HQp1wNmIVV40oNtv6sc2NCnbEeNN66YsDbelX6LvaAGUVRs6v6eFAbiuz
+         vpkPSqWl86som2YyXvBqALxcovx2GJoqAiR71Hlnr8K/QHXtwe/mKCHZtqinj6E+enEI
+         0Iug==
+X-Gm-Message-State: ALQs6tDkBzeyYNa0SQfCe8kTYvinwRCI3dhGgbnBJZfCny+kFV80FSZX
+        ff1bkAkxyzcfJPyTUGUEpPU=
+X-Google-Smtp-Source: AIpwx48gH2aDKbjxxfeeoAKUd7s+oImICPC0G0tAUvSJ/IHq1JHVQtRSqKdQOWSMSeePn038hwL+Lg==
+X-Received: by 10.28.236.76 with SMTP id k73mr2616677wmh.122.1524086504401;
+        Wed, 18 Apr 2018 14:21:44 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n20sm2042774wmc.24.2018.04.18.14.21.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 18 Apr 2018 14:21:43 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Matthew Wilcox <willy@infradead.org>, git@vger.kernel.org,
+        Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Minchan Kim <minchan@kernel.org>
+Subject: Re: [PATCH] git-send-email: Cc more people
+References: <20180418140503.GD27475@bombadil.infradead.org>
+        <87tvs8e174.fsf@evledraar.gmail.com>
+Date:   Thu, 19 Apr 2018 06:21:42 +0900
+In-Reply-To: <87tvs8e174.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 18 Apr 2018 21:58:39 +0200")
+Message-ID: <xmqqr2ncgqhl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:2d7bCReXi27ZiudEd5QtQqnC3xkI9iqtATmlijGq+bePClKSqID
- Jj4WUS6et/nTCOJMbIczSW/MxAOUCNL8fTgVb37KnGWdH3P5hyf7cYgLV/ol4T5lcr61ss8
- FoH0hJMdSybBCaiVLWpkh0Esi6jxHyUL2diF1oCM/BSZjVVKAm9rAh7fxOeHqqK1g0vBIZy
- lvynllG5ww9C1IuvsBfeQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:X2WahGKOXs0=:hldVsIGMo0tnLEUoau4+jY
- sU4rnOBEZdjK/HWbKBEXXpcOrtMC79+6Ajsl7st2ZGW39EQR4LQc+it7shK2zyScK94SJvZ1l
- 2Qoc9CjeiyR3ZklIDt8/wV+/TEFYsI/X2i1u7oK0gr+JOmOZCLwPuFH/oh4NqjBYbFu9I5jpl
- J6u/0miIqrtPqtW7C3BeY89iCoOx2HiCxXOuLgDtHRcGS7IPrDnKI0bH/E8ciOtDfsifF+SbS
- I3eZPEHiQ5PbZmGKIvBKhTS13NrUkSq5DLow65tNfI4rsReTwRdlak+3lMfTV967Woo7+jL1U
- rZx7OD2VoJgOdPdlAzvxzvais6O98u5rnWNvs/d83xIg+vvNqKnplmDBNZTn1CtyAVkBZ2Yrj
- pN+Yyg8DgX9XaXVWjywDpcVhD316b5nyYt6VYwllya51nq0pBxqD7Wu3WUBrQeqZqKkgJ6i1E
- rOpOqjv9s+xvKNzQPdgCwxlj1swa39XQQiTxqEJvtfcNN1Mnle1qx22mKHaLLbp7Kh0XvZiZb
- 5ATSPJqWywtAUs0yBbTLvxcY9P9J0iqYiMHfQ1sZpRS6LLk+aA/FrHkIEL9IAHw3Et7AyDEda
- wD7AJHs8OwlGc7Z2xFgLt5Xc9wPEzS02w7lI77aZMAJlQwjdZg9jjBlcpjdtvSpIiU5pYYolS
- R/X0RNW/cQTo4AYUAMi072R1vT1Fr5j0qwx2+iHkpMpWj+Ya6GRHHEYTusVJjGdgLTEx5AlGW
- djIzumtY8/SYMzGorWMGQB1RP4EWleCKrremfMrBNejvBTQ6/+b+9LhTvNquQm9Qhebvw6bIP
- lVOdfu59n6H0eWJRo0TVousL9JgHiQtMlm5S+Dj36IfGy3W4v0=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Kim,
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-On Sun, 15 Apr 2018, Kim Gybels wrote:
+> But IMO this patch is really lacking a few things before being ready:
+>
+> 1. You have no tests for this. See t/t9001-send-email.sh for examples,
+> ...
+> 2. Just a few lines down from your quoted hunk we have this:
+> ... code about $supress_cc{<token>} ...
+>    Your change should at least describe why those aren't being updated,
+>    but probably we should add some other command-line option for
+>    ignoring these wildcards, e.g. --[no-]wildcard-by-cc=reviewed
+>    --[no-]wildcard-by-cc=seen etc, and we can make --[no-]signed-off-by
+>    a historical alias for --[no-]wildcard-by-cc=signed-off.
+> 3. Ditto all the documentation in "man git-send-email" about
+> ...
 
-> On (13/04/18 14:36), Johannes Schindelin wrote:
-> > > The poll provided in compat/poll.c is not interrupted by receiving
-> > > SIGCHLD. Use a timeout for cleaning up dead children in a timely
-> > > manner.
-> > 
-> > Maybe say "When using this poll emulation, use a timeout ..."?
-> 
-> I will rewrite the commit message when I reroll the patch. Calling the
-> poll "uninterruptible" might be wrong as well, although the poll
-> doesn't return with EINTR when a child process terminates, it might
-> still be interruptible in other ways. On a related note, the handler
-> for SIGCHLD is simply not called in Git-for-Windows' daemon.
+Thanks, I agree that 2. (the lack of suppression) is a showstopper.
+I'd further say that these new CC-sources should be disabled by
+default and made opt-in to avoid surprising existing users.
 
-Right. There is no signal infrastructure on Windows that is an exact
-equivalent of what Junio desires.
+One thing we also need to be very careful about is that some of the
+fields may not even have an e-mail address.  We can expect that
+S-o-b and Cc would be of form "human readable name <email@addre.ss>"
+by their nature, but it is perfectly fine to write only human
+readable name without address on random lines like "suggeted-by" and
+"helped-by".  There needs a way for the end-user to avoid using data
+found on such lines as if they are valid e-mail addresses.
 
-> > > @@ -1161,8 +1162,13 @@ static int service_loop(struct socketlist *socklist)
-> > >  		int i;
-> > >  
-> > >  		check_dead_children();
-> > > -
-> > > -		if (poll(pfd, socklist->nr, -1) < 0) {
-> > > +#ifdef NO_POLL
-> > > +		poll_timeout = live_children ? 100 : -1;
-> > > +#endif
-> > > +		int ret = poll(pfd, socklist->nr, poll_timeout);
-> > > +		if  (ret == 0) {
-> > > +			continue;
-> > > +		} else if (ret < 0) {
-> > 
-> > I would find it a bit easier on the eyes if this did not use curlies, and
-> > dropped the unnecessary `else` (`continue` will take care of that):
-> > 
-> > 		if (!ret)
-> > 			continue;
-> > 		if (ret < 0)
-> > 			[...]
-> 
-> Funny, that's how I would normally write it, if I wasn't so focused on
-> trying to follow the coding quidelines. While I'm at it, I will also
-> fix that sneaky double space after the if.
 
-:-)
-
-> Is it ok to add the timeout for all platforms using the poll
-> emulation, since I only tested for Windows?
-
-From my reading of the patch, it changes only one thing, and only in the
-case that the developer asked to build with NO_POLL (which means that the
-platform does not have a native poll()): instead of waiting indefinitely,
-the poll() call is interrupted in regular intervals to give
-reap_dead_children() a chance to clean up.
-
-And that's all it does.
-
-So it is a simply heartbeat for platforms that require it, and that
-heartbeat would not even hurt any platform that would *not* require it.
-
-In short: from my point of view, it is fine to add the timeout for all
-NO_POLL platforms, even if it was only tested on Windows.
-
-Of course, we *do* know that there is one other user of NO_POLL: the
-NonStop platform.
-
-Randall, would you mind testing these two patches on NonStop?
-
-Thanks,
-Johannes
