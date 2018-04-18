@@ -2,195 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 139901F404
-	for <e@80x24.org>; Wed, 18 Apr 2018 19:47:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F30E1F404
+	for <e@80x24.org>; Wed, 18 Apr 2018 19:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752159AbeDRTry (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 15:47:54 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:43535 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750824AbeDRTrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 15:47:53 -0400
-Received: by mail-wr0-f194.google.com with SMTP id u4-v6so7882511wrg.10
-        for <git@vger.kernel.org>; Wed, 18 Apr 2018 12:47:52 -0700 (PDT)
+        id S1752170AbeDRTvk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 15:51:40 -0400
+Received: from mail-ua0-f175.google.com ([209.85.217.175]:37142 "EHLO
+        mail-ua0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751407AbeDRTvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 15:51:39 -0400
+Received: by mail-ua0-f175.google.com with SMTP id d3so1938316uae.4
+        for <git@vger.kernel.org>; Wed, 18 Apr 2018 12:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=CRuWkY5VTFJf16GcbUO6XTjseMVnrHTKaASmhWyHupY=;
-        b=nLS9BWltpu2QPmsNhau5XnwX2IPhYeh4nQJuO1/hb1nox7R8SzbfZdc9d+ZAey23gU
-         WJuYi9Bqo2IsvFRSjP2LS/oKi1Kdhy48rNOvSSYUkjug5U7z3KeHwIlf/fMdPS0urBy2
-         YOiEZMMgVb7npwogR6p+D18Ah5WteB7tP2MDBnmimPphYOgz6MpTP2USXNUoRL50fSkG
-         gk5B5ydRFcO6+L1y4bPjwj2S9hFKsOmuVdmm3TP/XdndkGOf0PikR3CmCc+yfjDumL12
-         TCnXOHUm5QpB7VxItPqRvFU6lZWkWhGoKLY6MeswfOUtWbFym5LPLbjVuhmRZcKBHyfD
-         bzlA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=S9Sl2D2Ja+AKSc4/egOqLsPRj2IGHeJAx/BU17c0pAE=;
+        b=H1cCNtWsySDHI/Y9Fg8JywV+s2MXf7TgJQ8ZXXQrXMIrwbgqettG8aivjrpRjAcWnD
+         Bm8E3NWGg1ye1dX61i5Ahc9jMB2yU8JX6OJrxAKMaZLlfSaTk57/brqCHPWoCwobZk5Z
+         cHJsdm8nzej8TGQD26VGVQKPGELIT+Y38ssFvN8B2gpjq8R5VytS1xsLimQXo5rYnffH
+         VBDryTPpjXZTFgxIY2QvwA9yIY3Tn+BwG5kbedjFa6TxIcC7vRipZM9zR81OStYChj0w
+         T625OGGR5R5MxjYKkqDZ8O9egY9EQUyrY8mGzfc8nPvquKuBPAOr+nA31Kiv0M9VMZJJ
+         L74Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=CRuWkY5VTFJf16GcbUO6XTjseMVnrHTKaASmhWyHupY=;
-        b=RsMf42AoHgJnopjGIqouBhQv6qtdQScB9jEODBXlOXDTfdOGu134pDmrEBX3JUxrfT
-         U6GCNeDtTJbCSrQ6htfFOwGSNt12KALl/sx2JCXGSg//LPL0UCFZNmtA29DVfC6LbNSa
-         YCRvcy0yHsRzyASIMtgRPo82I+I3eGO8WDStMEzQ1QyrTF8OOf8I7/PLDY+xXC+WtLo2
-         /CPJI9l6KBz0hnpC+GOx4O3Yz+UPVvewF3Ki82jiq42FQZpIz5u7NF3v+diG7bThPn/2
-         O2K+K2pG01UZjI06ZZqkQMn5IHz7Rn4s+1Wlzkzdm9w6F8o0zeEbce9IWqcYRo5+pNu6
-         Rj2A==
-X-Gm-Message-State: ALQs6tD7C0GCuwGpgY4kH3rR5Efsc0H977t6o4slx5xvqITJlwMJUwus
-        0dCCIGSvJ/N57ZSA1rRtXfU=
-X-Google-Smtp-Source: AIpwx4/A4CjhddJ3x6YXGo9yz+YvQ9esNtkshzc0xs7NnCkUYdNbmtag6kjlC/5kjbFwx+xaAsc4wQ==
-X-Received: by 2002:adf:9a54:: with SMTP id z78-v6mr2520758wrb.235.1524080871795;
-        Wed, 18 Apr 2018 12:47:51 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egc153.neoplus.adsl.tpnet.pl. [83.21.66.153])
-        by smtp.gmail.com with ESMTPSA id 55-v6sm3331208wrw.52.2018.04.18.12.47.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Apr 2018 12:47:50 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, "peff\@peff.net" <peff@peff.net>,
-        "stolee\@gmail.com" <stolee@gmail.com>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "sbeller\@google.com" <sbeller@google.com>,
-        "larsxschneider\@gmail.com" <larsxschneider@gmail.com>,
-        "bmwill\@google.com" <bmwill@google.com>,
-        "gitster\@pobox.com" <gitster@pobox.com>,
-        "sunshine\@sunshineco.com" <sunshine@sunshineco.com>,
-        "jonathantanmy\@google.com" <jonathantanmy@google.com>
-Subject: Re: [PATCH v3 4/9] commit-graph.txt: update design document
-References: <20180409164131.37312-1-dstolee@microsoft.com>
-        <20180417170001.138464-1-dstolee@microsoft.com>
-        <20180417170001.138464-5-dstolee@microsoft.com>
-Date:   Wed, 18 Apr 2018 21:47:48 +0200
-In-Reply-To: <20180417170001.138464-5-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Tue, 17 Apr 2018 17:00:24 +0000")
-Message-ID: <86y3hkguu3.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=S9Sl2D2Ja+AKSc4/egOqLsPRj2IGHeJAx/BU17c0pAE=;
+        b=TBbledg5OE+rrpOYbNgx+xEufLFLNFHMHrcczyTvnQxmesYGNTdwAZrQqBCLlpaybF
+         IdZN0LOGMh/MQIuWP8cwNu0gZ9z/1K6XaPgRqU2iTa0Fa9Fs8527wV8aP5nCeWdYsv2w
+         Ro79MGdQGcZqH5Jlud4MvVeQMZfgQ2lkZmHOlIMb/bJsamveIahiPCXnSvW+Yh9MOqZE
+         I0UIB+an2LxX783qa27vo8qqH0idpWwQDazhPglxAAMckE/shrT8YKk3RO10+gfgpaoF
+         dZtWy/j3v0TTYww/D7VhiJ1tmPBo+oI2lmRG6y2gCnsAQS26emOJfiDiT7Pzmtjnz6uV
+         3mrg==
+X-Gm-Message-State: ALQs6tDeKdXQleQMtpln+e+na9rCWIp7KaNzI9seiK5SZJ7qWcxB1Lir
+        rtW0uInaqdtb7BIUSZhTFIdZ8RWq2Fn9cUokclj6jg==
+X-Google-Smtp-Source: AIpwx48q8oPOb36lgJXdRTh7kh0tJXTEfSFCdtoD2aoFfTSaY4ZGL35tJhDRoDL+K7j8yMNQeNfr1ecbFyPfAVNKha8=
+X-Received: by 10.176.72.201 with SMTP id y9mr2696965uac.48.1524081098581;
+ Wed, 18 Apr 2018 12:51:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.159.34.195 with HTTP; Wed, 18 Apr 2018 12:51:32 -0700 (PDT)
+In-Reply-To: <20180410202758.5877-2-mail@floga.de>
+References: <20180410202758.5877-1-mail@floga.de> <20180410202758.5877-2-mail@floga.de>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Wed, 18 Apr 2018 21:51:32 +0200
+Message-ID: <CAM0VKj=pDVxfJtUZx7c6uCmPxwQFPBOQYdd7NH=YnVG86iK0Pw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] completion: load completion file for external subcommand
+To:     Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?Q?Szeder_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
-
-> We now calculate generation numbers in the commit-graph file and use
-> them in paint_down_to_common().
-
-All right.
-
+On Tue, Apr 10, 2018 at 10:28 PM, Florian Gamb=C3=B6ck <mail@floga.de> wrot=
+e:
+> Adding external subcommands to Git is as easy as to put an executable
+> file git-foo into PATH. Packaging such subcommands for a Linux
+> distribution can be achieved by unpacking the executable into /usr/bin
+> of the user's system. Adding system-wide completion scripts for new
+> subcommands, however, can be a bit tricky.
 >
-> Expand the section on generation numbers to discuss how the three
-> special generation numbers GENERATION_NUMBER_INFINITY, _ZERO, and
-> _MAX interact with other generation numbers.
+> Since bash-completion started to use dynamical loading of completion
+> scripts since v1.90 (preview of v2.0),
 
-Very good.
+I believe the main bash-completion repository can be found at:
 
+  https://github.com/scop/bash-completion.git
+
+This repository still contains the branch 'dynamic-loading'; for the
+record it points to 3b029892f6f9db3b7210a7f66d636be3e5ec5fa2.
+
+Two commits on that branch are worth mentioning:
+
+  20c05b43 (Load completions in separate files dynamically, get rid of
+            have()., 2011-10-12)
+  5baebf81 (Add _xfunc for loading and calling functions on demand,
+            use it in apt-get, cvsps, rsync, and sshfs., 2011-10-13)
+
+> it is no longer sufficient to
+> drop a completion script of a subcommand into the standard completions
+> path, /usr/share/bash-completion/completions, since this script will not
+> be loaded if called as a git subcommand.
 >
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> For example, look at https://bugs.gentoo.org/544722. To give a short
+> summary: The popular git-flow subcommand provides a completion script,
+> which gets installed as /usr/share/bash-completion/completions/git-flow.
+>
+> If you now type into a Bash shell:
+>
+>     git flow <TAB>
+>
+> You will not get any completions, because bash-completion only loads
+> completions for git and git has no idea that git-flow is defined in
+> another file. You have to load this script manually or trigger the
+> dynamic loader with:
+>
+>     git-flow <TAB> # Please notice the dash instead of whitespace
+>
+> This will not complete anything either, because it only defines a Bash
+> function, without generating completions. But now the correct completion
+> script has been loaded and the first command can use the completions.
+>
+> So, the goal is now to teach the git completion script to consider the
+> possibility of external completion scripts for subcommands, but of
+> course without breaking current workflows.
+>
+> I think the easiest method is to use a function that is defined by
+> bash-completion v2.0+, namely __load_completion.
+
+This is wrong, __load_completion() was introduced in cad3abfc
+(__load_completion: New function, use in _completion_loader and
+_xfunc, 2015-07-15), and the first release tag containg it is '2.2'
+from 2016-03-03.
+
+The release tags '1.90' and '2.0' are from 2011-11-03 and 2012-06-17,
+respectively.  This leaves a couple of years long hole where
+completions were already loaded dynamically but there was no
+__load_completion() function.
+
+Would it be possible to use _xfunc() instead to plug that hole?  It
+seems the be tricky, because that function not only sources but also
+_calls_ the completion function.
+
+> It will take care of
+> loading the correct script if present. Afterwards, the git completion
+> script behaves as usual.
+>
+> This way we can leverage bash-completion's dynamic loading for git
+> subcommands and make it easier for developers to distribute custom
+> completion scripts.
+>
+> Signed-off-by: Florian Gamb=C3=B6ck <mail@floga.de>
 > ---
->  Documentation/technical/commit-graph.txt | 30 +++++++++++++++++++-----
->  1 file changed, 24 insertions(+), 6 deletions(-)
+>  contrib/completion/git-completion.bash | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 >
-> diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
-> index 0550c6d0dc..d9f2713efa 100644
-> --- a/Documentation/technical/commit-graph.txt
-> +++ b/Documentation/technical/commit-graph.txt
-> @@ -77,6 +77,29 @@ in the commit graph. We can treat these commits as having "infinite"
->  generation number and walk until reaching commits with known generation
->  number.
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
+git-completion.bash
+> index b09c8a236..09a820990 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -3096,12 +3096,22 @@ __git_main ()
+>         fi
 >
-> +We use the macro GENERATION_NUMBER_INFINITY = 0xFFFFFFFF to mark commits not
-> +in the commit-graph file. If a commit-graph file was written by a version
-> +of Git that did not compute generation numbers, then those commits will
-> +have generation number represented by the macro GENERATION_NUMBER_ZERO = 0.
-
-I have to wonder if there would be any relesed Git that do not compute
-generation numbers...
-
-On the other hand in case the user-visible view of the project history
-changes, be it because shallow clone is shortened or deepened, or grafts
-file is edited, or a commit object is replaced with another with
-different parents - we can still use "commit-graph" data, just pretend
-that generation numbers (which are invalid in altered history) are all
-zero.  (I'll write about this idea in comments to later series.)
-
-On the other hand with GENERATION_NUMBER_ZERO these series of patches
-are self-contained and bisectable.
-
-> +
-> +Since the commit-graph file is closed under reachability, we can guarantee
-> +the following weaker condition on all commits:
-
-I have had to look up the contents of the whole file, but it turns out
-that it is all right: "weaker condition" refers to earlier "N <= M".
-
-Minor sidenote: if one would be extremly pedantic, one could say that
-previous condition is incorrect, because it doesn't state explicitely
-that commit A != commit B. ;-)
-
-> +
-> +    If A and B are commits with generation numbers N amd M, respectively,
-> +    and N < M, then A cannot reach B.
-> +
-> +Note how the strict inequality differs from the inequality when we have
-> +fully-computed generation numbers. Using strict inequality may result in
-> +walking a few extra commits, but the simplicity in dealing with commits
-> +with generation number *_INFINITY or *_ZERO is valuable.
-> +
-> +We use the macro GENERATION_NUMBER_MAX = 0x3FFFFFFF to for commits whose
-> +generation numbers are computed to be at least this value. We limit at
-> +this value since it is the largest value that can be stored in the
-> +commit-graph file using the 30 bits available to generation numbers. This
-> +presents another case where a commit can have generation number equal to
-> +that of a parent.
-
-I wonder if something like the table I have proposed in v2 version of
-this patch [1] would make it easier or harder to understand.
-
-[1]: https://public-inbox.org/git/86a7u7mnzi.fsf@gmail.com/
-
-Something like the following:
-
-             |                      gen(B)
-             |
-gen(A)       | _INFINITY | _MAX     | larger   | smaller  | _ZERO
--------------+-----------+----------+----------+----------+--------
-_INFINITY    | =         | >        | >        | >        | >
-_MAX         | < N       | =        | >        | >        | >
-larger       | < N       | < N      | = n      | >        | >
-smaller      | < N       | < N      | < N      | = n      | >
-_ZERO        | < N       | < N      | < N      | < N      | =
-
-Here "n" and "N" denotes stronger condition, and "N" denotes weaker
-condition.  We have _INFINITY > _MAX > larger > smaller > _ZERO.
-
-> +
->  Design Details
->  --------------
+>         local completion_func=3D"_git_${command//-/_}"
+> +       if ! declare -f $completion_func >/dev/null 2>/dev/null &&
+> +               declare -f __load_completion >/dev/null 2>/dev/null
+> +       then
+> +               __load_completion "git-$command"
+> +       fi
+>         declare -f $completion_func >/dev/null 2>/dev/null && $completion=
+_func && return
 >
-> @@ -98,17 +121,12 @@ Future Work
->  - The 'commit-graph' subcommand does not have a "verify" mode that is
->    necessary for integration with fsck.
+>         local expansion=3D$(__git_aliased_command "$command")
+>         if [ -n "$expansion" ]; then
+>                 words[1]=3D$expansion
+>                 completion_func=3D"_git_${expansion//-/_}"
+> +               if ! declare -f $completion_func >/dev/null 2>/dev/null &=
+&
+> +                       declare -f __load_completion >/dev/null 2>/dev/nu=
+ll
+> +               then
+> +                       __load_completion "git-$expansion"
+> +               fi
+>                 declare -f $completion_func >/dev/null 2>/dev/null && $co=
+mpletion_func
+>         fi
+>  }
+> --
+> 2.16.1
 >
-> -- The file format includes room for precomputed generation numbers. These
-> -  are not currently computed, so all generation numbers will be marked as
-> -  0 (or "uncomputed"). A later patch will include this calculation.
-> -
->  - After computing and storing generation numbers, we must make graph
->    walks aware of generation numbers to gain the performance benefits they
->    enable. This will mostly be accomplished by swapping a commit-date-ordered
->    priority queue with one ordered by generation number. The following
-> -  operations are important candidates:
-> +  operation is an important candidate:
->
-> -    - paint_down_to_common()
->      - 'log --topo-order'
->
->  - Currently, parse_commit_gently() requires filling in the root tree
-
-Looks good.
