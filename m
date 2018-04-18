@@ -7,94 +7,105 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F1B81F404
-	for <e@80x24.org>; Wed, 18 Apr 2018 18:00:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 973971F404
+	for <e@80x24.org>; Wed, 18 Apr 2018 18:04:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752762AbeDRSAc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 14:00:32 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:16078 "EHLO
+        id S1752166AbeDRSEF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 14:04:05 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:30037 "EHLO
         smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752530AbeDRSA3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 14:00:29 -0400
+        with ESMTP id S1752159AbeDRSEE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 14:04:04 -0400
 Received: from [192.168.2.201] ([92.28.131.105])
         by smtp.talktalk.net with SMTP
-        id 8rNZfhssYLjjA8rNafWYlN; Wed, 18 Apr 2018 19:00:27 +0100
+        id 8rR3fhtLDLjjA8rR3fWYsj; Wed, 18 Apr 2018 19:04:03 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1524074427;
-        bh=gpVb9KdUpxBkXp8pGbKXzJchmVceiUIQEKcYuQ7fcUg=;
+        s=cmr1711; t=1524074643;
+        bh=SiJppld6vUuSGTmTGByS0IuxZdHX6yzG1ZISgU+NLgI=;
         h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=hlXAFGptoH67siw0w3gYYwuXG+zCF+Hp/IrimkBZtKOI1S5BSVZgLkgLNozuIEnqp
-         Cmk3qawhY7ofAETiDGsuuGYi0be8LFzalBKvbcbmjqqyxGI1sPVndSOM0qULdv3+lu
-         R32OGfyVEdk/upH2V3LymqG5iw0Y18KtN2gV7RRk=
+        b=cdu4yCRt37MYmj9Hfl4AmpeDUqjWREI/ZqLpnxUOXhpY66fd3BHJN2/lqexav/2bs
+         OYgx+H8zqFDuGXaks1zUaXzBelYyGUmI5oAYygec8a9/UO00/oiad0F3TBdvD6tUcR
+         wgrq2z+9bpBVozdBSX/Wg3r4y9rdnZ0jorrP1T9s=
 X-Originating-IP: [92.28.131.105]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=LZYSFAXi c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
- a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=cIBk9nwiCTQbJB3qrrYA:9 a=QEXdDO2ut3YA:10
+ a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=dJwqgKVgLEQAiJrPjcgA:9
+ a=QEXdDO2ut3YA:10
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 04/15] sequencer: introduce new commands to reset the
- revision
-To:     Philip Oakley <philipoakley@iee.org>, phillip.wood@dunelm.org.uk,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+Subject: Re: [PATCH v6 05/15] sequencer: introduce the `merge` command
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Igor Djordjevic <igor.d.djordjevic@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Sergey Organov <sorganov@gmail.com>
 References: <cover.1519680483.git.johannes.schindelin@gmx.de>
  <cover.1523362469.git.johannes.schindelin@gmx.de>
- <fb797f32b7385317b9dc18524e3863ba627f6c98.1523362469.git.johannes.schindelin@gmx.de>
- <2bec489c-521e-0277-3a15-00b39126e652@talktalk.net>
- <BA40DE939AF14BC18B496FDA27281CA2@PhilipOakley>
+ <8a5ae61f603df8d8cb19268e1b8470f0a4993445.1523362469.git.johannes.schindelin@gmx.de>
+ <55216d0b-cb37-6514-7f80-91f4617c105d@talktalk.net>
+ <85232331-97a0-7989-e095-854ed962c7a0@talktalk.net>
+ <nycvar.QRO.7.76.6.1804140248110.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <b4ea06e6-462e-061e-2d66-0b2c7ee346ef@talktalk.net>
-Date:   Wed, 18 Apr 2018 19:00:25 +0100
+Message-ID: <66b0b2e6-11b6-20f9-da6b-211c9c4dc758@talktalk.net>
+Date:   Wed, 18 Apr 2018 19:04:01 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <BA40DE939AF14BC18B496FDA27281CA2@PhilipOakley>
+In-Reply-To: <nycvar.QRO.7.76.6.1804140248110.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfNtkcAnTI/unvPDJVt7PujN65EIfU22sNzNeJxp33KSlA6FnDfMbBEHYb9sfNDUxf+80UMpIHeRjQ1BhLVLGBBQKY2Rw72aig3T2e7YDa4FxrEsooQAZ
- QPZyPPYdnfR2xoIBbhzidNf9XyMcz2cYOLb1RJOVqlszmVFKnCH6m1PvCc7/0eZvpgYlhE/iGD8RLUh3PjotgfdX+HTOaogABMpwJJcp7rkcsScjis0eSxyb
- 6mIR9Rj7n9RNrWTuy4oQ1midQusMMntMPZaI8wiuojx0/X1qVhG/ANQBlb3rX04kPr33EoFMxoeHGwGm0hcwc82Eyo12+GbS8Nr6hbDrmPWfOjD+/sF+J1PQ
- 5E0w9bU2h1CsJL/zgr+cFp6nvOmzzUZ0VmmVylI7FRyN0T6ov35as7u35O7+sL5BI3ECKEEQs679EwK1lmGvN0kObmuaec8wtI6X9eKEBiS32pGupeWU6VOi
- RkeDkaEyyOr9dsfZ/SD5rEYgk2hgvifH39FStQ==
+X-CMAE-Envelope: MS4wfOg4bmK4vRrQ1dRv10Ag2+7QIWvcPDMp4M56IjYXOrCoVE/nlVnFBuKCo/bZg+fkZoTDe/gp9F/Uw1q9ZdP6RJmV11BY33iCsbuhDoaUZs3L/PhkXaai
+ jRSWtAYVPlTr+Z00S3YlpOQtxOqJ9eWA6G2M4K2pwSHBRNSGRqxXYq2dcfOct2X5anGei0YvEmwCBnN9yFtiLkAg+Hh+lrUi7y+xcs3fHXOdm6XkTEq3TgIO
+ 85pv3l6zW8cM5Le9UgnVybOPPJ6gfm9QA1geSdB50ZN0egVpfl53vMtIDmEJCyp4bPncESjjGOvBt+QtggGfzjWFI624WVcAoHpp9M2YCS20cFIF325+/wiN
+ IIbo3IV5Cy1QgevIq0kYpcSoHA5L9B1VdE8Q0CjikjLVnFDp1Y5nNNZcFaxla9I0o/pIha9UJv/XVYxj7Gfj5mHT9JwhnYDrYhzNJcVUqyoFRRkbyeVq330g
+ Bt5lM/uP6EgZHRrRRRVce9XkZHhxcWgIVW624g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15/04/18 18:17, Philip Oakley wrote:
-> From: "Phillip Wood" <phillip.wood@talktalk.net>
-> : Friday, April 13, 2018 11:03 AM
->> If a label or reset command fails it is likely to be due to a
->> typo. Rescheduling the command would make it easier for the user to fix
->> the problem as they can just run 'git rebase --edit-todo'. 
+On 14/04/18 01:51, Johannes Schindelin wrote:
+> Hi Phillip,
 > 
-> Is this worth noting in the command documentation? "If the label or
-> reset command fails then fix
-> the problem by runnning 'git rebase --edit-todo'." ?
+> On Fri, 13 Apr 2018, Phillip Wood wrote:
 > 
-> Just a thought.
-
-Yes that's a good idea, thanks
-
->> It also
->> ensures that the problem has actually been fixed when the rebase
->> continues. I think you could do it like this
+>> On 13/04/18 11:12, Phillip Wood wrote:
+>>> @@ -3030,7 +3029,8 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+>>>  			return error(_("unknown command %d"), item->command);
+>>>  
+>>>  		if (res < 0 && (item->command == TODO_LABEL ||
+>>> -				item->command == TODO_RESET)) {
+>>> +				item->command == TODO_RESET ||
+>>> +				item->command == TODO_MERGE)) {
 >>
-> <snip>
-> -- 
-> Philip
-> (also @dunelm, 73-79..)
-That's a bit before me (94-00) were you there when they were building
-the hill colleges and some of the science site?
+>> Unfortunately it's not as simple as that - we only want to reschedule if
+>> merge_recursive() fails, not if run_git_commit() does.
+> 
+> Correct. How about introducing a flag `reschedule` that is passed to
+> do_label(), do_reset() and do_merge()?
+
+That would work (I was thinking about using return codes but having a
+parameter is a better idea). Do you want me to re-roll the fixups or are
+you happy to make the changes in your next version?
+
+> 
+> Seeing as do_reset() and do_merge() already have a replay_opts parameter,
+> we could add a field `needs_rescheduling` and pass the replay_opts also to
+> do_label().
+
+I'm slightly wary of putting state in an options structure but maybe it
+doesn't matter.
 
 Best Wishes
 
 Phillip
+
+> Ciao,
+> Dscho
+> 
+
