@@ -2,145 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F08381F404
-	for <e@80x24.org>; Wed, 18 Apr 2018 20:56:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62F231F404
+	for <e@80x24.org>; Wed, 18 Apr 2018 20:56:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752245AbeDRU4j (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 16:56:39 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60701 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751256AbeDRU4i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 16:56:38 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C3A35EBB0D;
-        Wed, 18 Apr 2018 16:56:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=x1UTes04jAGhfAChIY1WBF+Iu5k=; b=NPdavJu
-        YiKil/g6JyVw83cZdZ8PaWPTljHOMaDPXo+TCM/4MS7GvYMBkTPx6HzS6ttVBS/u
-        oLHgFxJKseKcH/byWlPfh7klbq2ech2Ha09YTCuVqY/csO4ABTWXnNfFCEcx99X1
-        gXdw4zDkdup/Lhpsnoo/D/hmDAlzaMh7y2k8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=vV+UDYc6wSIofGy8RZRb91VInMuWvDzT6
-        GDp8pCfLCQsEMKx/iEIeZTIBx8FUyCbgCQSQr8otS3MnHmw165ZT2h/lavslCMCw
-        v6TemdzVRCGOdd6fpVokK7a4uiJOgDPh/UhboVnUP9+Za6JV9OAaR+p2saOLb7nn
-        76cYpmREoI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BA823EBB0C;
-        Wed, 18 Apr 2018 16:56:37 -0400 (EDT)
-Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 401BEEBB0B;
-        Wed, 18 Apr 2018 16:56:37 -0400 (EDT)
-Date:   Wed, 18 Apr 2018 16:56:35 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: man page for "git remote set-url" seems confusing/contradictory
-Message-ID: <20180418205635.GU29831@zaya.teonanacatl.net>
-References: <alpine.LFD.2.21.1804160538100.3564@localhost.localdomain>
- <87y3hn5drx.fsf@linux-m68k.org>
- <alpine.LFD.2.21.1804160918120.6924@localhost.localdomain>
- <CA+P7+xrDsPXA6Bq77gYwWtc16Dz4drg+CHA80=vBNB9-NhxHVg@mail.gmail.com>
- <xmqqefjewxr4.fsf@gitster-ct.c.googlers.com>
- <alpine.LFD.2.21.1804170831190.6019@localhost.localdomain>
- <CA+P7+xrebnWe_6P0uGu2yEmXZ0+qjpykjrv39Nhd2hUPzO_96g@mail.gmail.com>
- <xmqqd0yxl6n9.fsf@gitster-ct.c.googlers.com>
+        id S1752291AbeDRU44 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 16:56:56 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:42866 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752261AbeDRU4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 16:56:55 -0400
+Received: by mail-wr0-f193.google.com with SMTP id s18-v6so8345691wrg.9
+        for <git@vger.kernel.org>; Wed, 18 Apr 2018 13:56:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=sozuVYjPb5rT4aq17BYeo6hm8bECUV9708RRktQtXBI=;
+        b=ESuTZwGVybjtax/7ne+bO61IjDqCdXwts8w6oazP8sq4BNtuvTfESpuXSsHSq3tfbR
+         i9S8zlr6iLL6LQdabFQm8CzrfME33wPPPPcfn3ifOCANWVzrS/i+I/bfxTe9a8FrGMKn
+         SVaJ7ReT73N/jNFS3NWGvI6p2tq+pKSbKkXDWpv+CP/L+vccGnO3Sp5RzcSzATtXXy0O
+         BevKRkiSVwTbLSxKWIj0gf3lAa2BdyqGRtt6Yt3nvO4G/s7YpKAtirFugnWB0Y9DyPOb
+         BGQ94qtHRKCVhB4NqC/pH57R/BuhOXRnmt/8Zibk9YlqhEhddsrxBe57o/g8wXD2dyDd
+         6Akg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=sozuVYjPb5rT4aq17BYeo6hm8bECUV9708RRktQtXBI=;
+        b=Zao4Q4M+nwt+5waHjmPw0YIcuUZ7FDluBVz7CaQ8iqd29nwG49AQtmcJJMAgFpuSbd
+         6AvOxm56PtTbojuR+OYkSqorsLO1J6FRzYE08mDooWtxGoqI80OPJwnnyUjQIDKkDyGd
+         5fBt1oMxh/xUdtkkt9BjcBc+YwyOUlkJXHnhB+n62uS0xqsS4Zuq3W+aEmpCrBaDi2XQ
+         WIeVQYpFpRSVpC7D2Z5xA/8zAiS8ABewYkY/uLWDEAlodIXULVNZweT5D6Nyqkizmwm0
+         Qy84O//GTyOkgz+QzqjB72LwqFsDFqewYYR7p7b8qju6TMbNTks6nwI1al+oVac1Donu
+         hyvw==
+X-Gm-Message-State: ALQs6tDCZBDwJ8Jg7uIbfF4zzehOB2iw6GT6xtnkTJLjUvH9XpRU2cis
+        mVdYF1DmlOnwilmyRvU5Yek=
+X-Google-Smtp-Source: AIpwx4+DgT98e6vdw/2dZ1A7T2L2LlrpSEPkyhvtgYCPKRZ6Fp2KKyUeto0uqeyUAAF+G9Ci8TRlsg==
+X-Received: by 10.28.108.20 with SMTP id h20mr537864wmc.5.1524085013940;
+        Wed, 18 Apr 2018 13:56:53 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n79sm3468570wmi.20.2018.04.18.13.56.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 18 Apr 2018 13:56:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Apr 2018, #02; Tue, 17)
+References: <xmqqzi22tlfx.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kb=A6BsdrtH=2F0634+r5ejG9Ce9U0mry65jkNnscu1nA@mail.gmail.com>
+        <xmqqpo2xjpf6.fsf@gitster-ct.c.googlers.com>
+        <287d6c83-2c7e-3138-def4-fee5d9cb9e48@gmail.com>
+Date:   Thu, 19 Apr 2018 05:56:52 +0900
+In-Reply-To: <287d6c83-2c7e-3138-def4-fee5d9cb9e48@gmail.com> (Derrick
+        Stolee's message of "Wed, 18 Apr 2018 08:50:10 -0400")
+Message-ID: <xmqqd0ywi67f.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqd0yxl6n9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Pobox-Relay-ID: FC3C8A7E-434A-11E8-A7E6-44CE1968708C-09356542!pb-smtp1.pobox.com
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
-> 
->> Maybe something like:
->>
->> "Note that the push URL and the fetch URL, even though they can be set
->> differently, are expected to refer to the same repository. For
->> example, the fetch URL might use an unauthenticated transport, while
->> the push URL generally requires authentication" Then follow this bit
->> with the mention of multiple remotes.
->>
->> (I think "repository" conveys the meaning better than "place".
->> Technically, the URLs can be completely different as long as they end
->> up contacting the same real server repository.)
-> 
-> Sounds sensible.  Let's see if there is any further input and then
-> somebody pleaes wrap this up in a final patch ;-)
+Derrick Stolee <stolee@gmail.com> writes:
 
-A pointer to the "GIT URLS" section in git-fetch(1) might
-also be useful?  That section is provided via urls.txt and
-urls-remotes.txt and is included the git-clone, git-fetch,
-git-pull, and git-push man pages.
+> I'm sorry that my second message was terse. My response to v1 [1] was
+>
+>> I looked through these patches and only found one set of whitespace
+>> > 
+> errors. Compiles and tests fine on my machine. > > Reviewed-by:
+> Derrick Stolee <dstolee@microsoft.com> So, I pulled the code, went
+> through it patch-by-patch, and saw that the transformations were made
+> using the established pattern. The second review was to chime in that
+> my v1 comments had been addressed. Thanks, -Stolee
+> [1]
+> https://public-inbox.org/git/6c319100-df47-3b8d-8661-24e4643ada09@gmail.com/
 
-We could also include urls-remotes.txt in git-remote, though
-that seems like a lot of text to add to yet another man
-page.  Maybe a giturls.txt could be created and referenced
-(as a further enhancement if someone is inclined).
-
-Tangentially (and I don't know if it's worth fixing), while
-poking around the documentation which includes urls.txt I
-noticed that git-clone.txt refers readers to the "URLS
-section below" when the name of the section is "GIT URLS".
-
-I doubt any readers would be confused, but it would be
-consistent with the other files which include urls.txt to
-use "GIT URLS" as the referenced section name.
-
--- >& --
-Subject: [PATCH] doc/clone: update caption for GIT URLS cross-reference
-
-The description of the <repository> argument directs readers to "See the
-URLS section below".  When generating HTML this becomes a link to the
-"GIT URLS" section.  When reading the man page in a terminal, the
-caption is slightly misleading.  Use "GIT URLS" as the caption to avoid
-an confusion.
-
-The man page produced by asciidoc doesn't include hyperlinks.  The
-description of the <repository> argument simply
-
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
- Documentation/git-clone.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 42ca7b5095..b844b9957c 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -260,7 +260,7 @@ or `--mirror` is given)
- 
- <repository>::
- 	The (possibly remote) repository to clone from.  See the
--	<<URLS,URLS>> section below for more information on specifying
-+	<<URLS,GIT URLS>> section below for more information on specifying
- 	repositories.
- 
- <directory>::
--- 
-2.17.0
-
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The ultimate result of shielding men from the effects of folly is to
-fill the world with fools.
-    -- Herbert Spencer
-
+Thanks.
