@@ -2,221 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ADC91F404
-	for <e@80x24.org>; Wed, 18 Apr 2018 23:19:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A025C1F404
+	for <e@80x24.org>; Wed, 18 Apr 2018 23:22:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753213AbeDRXTW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 19:19:22 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:45865 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753197AbeDRXTV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 19:19:21 -0400
-Received: by mail-wr0-f195.google.com with SMTP id u11-v6so9021987wri.12
-        for <git@vger.kernel.org>; Wed, 18 Apr 2018 16:19:20 -0700 (PDT)
+        id S1753171AbeDRXWR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 19:22:17 -0400
+Received: from mail-yb0-f182.google.com ([209.85.213.182]:45522 "EHLO
+        mail-yb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753145AbeDRXWQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 19:22:16 -0400
+Received: by mail-yb0-f182.google.com with SMTP id r13-v6so97111ybm.12
+        for <git@vger.kernel.org>; Wed, 18 Apr 2018 16:22:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=YTDc9cUOII/B1PFrhrfoaNRT1webURcMWhXTf0yNCMM=;
-        b=eGjDH3KfGEyBmdXo/pBPwL/N2NhwtUSZETGc2cCiFyREgeY9Jk85eihqZJujREPoHi
-         W6ItfL5ZZsxGUeOAfDwX/7v4+nE01DeCfcR8rUxa5ZqaaBRuACSSmOmBtJDBjyWi4r8N
-         5yGMnQN65SlRt79O9JtXyjSIZIIJmYukf76i9Aqf2QcfJ9PV21vRV16iHMcodXYzzMYb
-         JB35ODR6iRG4KvDelaSflW/LTt0lMFFWs7hWowJ5gCEdmq76VQ20A2YWQjn1NABAHRZK
-         JzLfx8KuJYue+kuFp/Pylnnah2jT2oYmThk1cDjjKrT1d+OBv0IHIr0IAc5CFrpTDCsW
-         KLlQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=wHMFLZVM9pHRE1/lC41tqglAdBcGQuebtDXPJc6Xavw=;
+        b=fCy/wvCGgZOBEVnYGP0w7zOirZqTJR+zn6fUwfIqA0SUNCyA+LsFAYoe11X7xVok3c
+         OLDa5y3ff96aVLpQGjuhnHjQLEjbDGHLUvTCsTiJdMfiQ4hc1Qx84s1SEFJj2Wsrv4b4
+         pVuALkPX4RN7k6Fq/zRYzSEQ3RflJd2BKfOw2xqoqB9/fTkBRTl4JP+VgRqATlLK2NDK
+         aNKNwuJlTdRWqJM2wGRMoCUMVau9H7cAlfc0JFvkp/FIfX9Tghn1veD10IzZSNi/98WR
+         4j8w8l/EKH2jbY4f6LGdXHw5c0R4oibBLfk3cMHhziyVKz5f5XyQjsfPvQstCx6YSOp9
+         swMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=YTDc9cUOII/B1PFrhrfoaNRT1webURcMWhXTf0yNCMM=;
-        b=VhZCjfwMMb0zM0j9JL9BrLb/e3zhzscPFqWKjYyGtTLwfD7p68bslCGkeJbuCqJ6Ew
-         ovBbHuToJzLee7Z0Wo5QSMPbHIZbNHIJrKRtSaiJ8aDnx6VkyZW+cOxOi8DOC1Irz7A9
-         CjGlobVELXQluTMjidZ3LBLwkfQFILNZL9F/osAJHhmM3E4FP/sDQurEdz+yh9ZxDX8D
-         SyUMtVM/PtMExjEbxAPb8wU7IBHAKTrsWEPj9DKQCPosqI4ntxr0RmGde5QP6Cj/Zt6p
-         w/zUYDs00wlAtffyr8OLLgLMS9pNHMOZilS9F+f65Gqu50q5vgdlS/Gk8qUDeFLqN88O
-         3C4A==
-X-Gm-Message-State: ALQs6tA4ag6m0OGnXn/MtotA1JcWsicEKClrSu1b1wPvYifE5UOl0e+n
-        hqSVGrUDWCW6AGYeZ4kijtg=
-X-Google-Smtp-Source: AIpwx4+f3Q49cwVZOiZK2k9Doat0h2no1FETZ5n08zK8y5qewGG/7u6yXqEWJu28lzE3hcwUOlS6ZA==
-X-Received: by 10.28.16.85 with SMTP id 82mr2797886wmq.4.1524093559835;
-        Wed, 18 Apr 2018 16:19:19 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egc153.neoplus.adsl.tpnet.pl. [83.21.66.153])
-        by smtp.gmail.com with ESMTPSA id p10-v6sm1647615wre.77.2018.04.18.16.19.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Apr 2018 16:19:18 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "peff\@peff.net" <peff@peff.net>,
-        "stolee\@gmail.com" <stolee@gmail.com>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "sbeller\@google.com" <sbeller@google.com>,
-        "larsxschneider\@gmail.com" <larsxschneider@gmail.com>,
-        "bmwill\@google.com" <bmwill@google.com>,
-        "gitster\@pobox.com" <gitster@pobox.com>,
-        "sunshine\@sunshineco.com" <sunshine@sunshineco.com>,
-        "jonathantanmy\@google.com" <jonathantanmy@google.com>
-Subject: Re: [PATCH v3 7/9] commit: add short-circuit to paint_down_to_common()
-References: <20180409164131.37312-1-dstolee@microsoft.com>
-        <20180417170001.138464-1-dstolee@microsoft.com>
-        <20180417170001.138464-8-dstolee@microsoft.com>
-Date:   Thu, 19 Apr 2018 01:19:17 +0200
-In-Reply-To: <20180417170001.138464-8-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Tue, 17 Apr 2018 17:00:32 +0000")
-Message-ID: <86bmeggl1m.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=wHMFLZVM9pHRE1/lC41tqglAdBcGQuebtDXPJc6Xavw=;
+        b=e4T2kpYuMOTo1etxXTeaxI1dYYGyxesNh+s5XGMLD/LWogr/zAhFVvk2eJPcYTHTRT
+         knWuZUlCcPTRaFL2Ke7i6Of6/FqVXu8qzSUi67+vB/iOue9QGZZ7P/Xx4Q++GMqnJr8k
+         ebwWS0KJBZkKLq6stZpOcziTLbuTIq3cZrDaftAvg1DAqh+F1eCMo7KOWVFQGCDTDiaX
+         17RLluNoKxwmN/VOFyAmLVO60zTFPLbWfIVVLA8V0XxuflpLv68zNBClG5Qcw6YgypAP
+         K/BOmHibKIyDdePaP7ufnQBFbER3S2sH+V5q3pUUAaKxOrTG7BgIjrQA19NAzzsukuuv
+         ea5g==
+X-Gm-Message-State: ALQs6tBv9Ki3ZS46klGjft/9EfE/iUy7Mvj91AEL4jn+LVGMEplwLVUe
+        JxzH3fdIgVXq1z93CmqbD25oZLqHn16j5ENVQxTuiA==
+X-Google-Smtp-Source: AB8JxZpDEJQc8MAnyB6v5uR9iSX5EJRgb16QffBld/JgBoO8dQgjcKNy7cA0VkIu7YrlpfSnirxP3UHvMxV+p4XzgfA=
+X-Received: by 2002:a25:500e:: with SMTP id e14-v6mr2675897ybb.334.1524093735801;
+ Wed, 18 Apr 2018 16:22:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Wed, 18 Apr 2018 16:22:15
+ -0700 (PDT)
+In-Reply-To: <87sh7sdtc1.fsf@evledraar.gmail.com>
+References: <87sh7sdtc1.fsf@evledraar.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 18 Apr 2018 16:22:15 -0700
+Message-ID: <CAGZ79kak57D2_9bx5KwefFEZ0=Dk2bbZ=n8YFnByChK=6Hj2HQ@mail.gmail.com>
+Subject: Re: [RFC WIP PATCH] merge: implement -s theirs -X N
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <junio@pobox.com>,
+        demerphq <demerphq@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+On Wed, Apr 18, 2018 at 3:48 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> We have a -s ours, but not a -s theirs. This is a WIP patch to implement
+> that. It works, but I haven't dealt with this part of the internal API
+> before, comments most welcome.
 
-> When running 'git branch --contains', the in_merge_bases_many()
-> method calls paint_down_to_common() to discover if a specific
-> commit is reachable from a set of branches. Commits with lower
-> generation number are not needed to correctly answer the
-> containment query of in_merge_bases_many().
-
-Right. This description is not entirely clear to me, but I don't have a
-better proposal. Good enough, I guess.
-
->
-> Add a new parameter, min_generation, to paint_down_to_common() that
-> prevents walking commits with generation number strictly less than
-> min_generation. If 0 is given, then there is no functional change.
-
-Is it new parameter really needed, i.e. do you really need to change the
-signature of this function?  See below for details.
-
->
-> For in_merge_bases_many(), we can pass commit->generation as the
-> cutoff,...
-
-This is the only callsite that uses min_generation with non-zero value,
-and it uses commit->generation to fill it... while commit itself is one
-of exiting parameters.
-
-> [...], and this saves time during 'git branch --contains' queries
-> that would otherwise walk "around" the commit we are inspecting.
-
-If I understand the code properly, what happens is that we can now
-short-circuit if all commits that are left are lower than the target
-commit.
-
-This is because max-order priority queue is used: if the commit with
-maximum generation number is below generation number of target commit,
-then target commit is not reachable from any commit in the priority
-queue (all of which has generation number less or equal than the commit
-at head of queue, i.e. all are same level or deeper); compare what I
-have written in [1]
-
-[1]: https://public-inbox.org/git/866052dkju.fsf@gmail.com/
-
-Do I have that right?  If so, it looks all right to me.
-
->
-> For a copy of the Linux repository, where HEAD is checked out at
-> v4.13~100, we get the following performance improvement for
-> 'git branch --contains' over the previous commit:
->
-> Before: 0.21s
-> After:  0.13s
-> Rel %: -38%
-
-Nice.
-
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  commit.c | 18 ++++++++++++++----
->  1 file changed, 14 insertions(+), 4 deletions(-)
->
-> diff --git a/commit.c b/commit.c
-> index bceb79c419..a70f120878 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -805,11 +805,14 @@ static int queue_has_nonstale(struct prio_queue *queue)
->  }
->  
->  /* all input commits in one and twos[] must have been parsed! */
-> -static struct commit_list *paint_down_to_common(struct commit *one, int n, struct commit **twos)
-> +static struct commit_list *paint_down_to_common(struct commit *one, int n,
-> +						struct commit **twos,
-> +						int min_generation)
->  {
->  	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
->  	struct commit_list *result = NULL;
->  	int i;
-> +	uint32_t last_gen = GENERATION_NUMBER_INFINITY;
-
-Do we really need to change the signature of paint_down_to_common(), or
-would it be enough to create a local variable min_generation set
-initially to one->generation.
-
- +      uint32_t min_generation = one->generation;
- +	uint32_t last_gen = GENERATION_NUMBER_INFINITY;
-
->  
->  	one->object.flags |= PARENT1;
->  	if (!n) {
-> @@ -828,6 +831,13 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
->  		struct commit_list *parents;
->  		int flags;
->  
-> +		if (commit->generation > last_gen)
-> +			BUG("bad generation skip");
-> +		last_gen = commit->generation;
-> +
-> +		if (commit->generation < min_generation)
-> +			break;
-> +
-
-I think, after looking at the whole post-image code, that it is all
-right.
-
->  		flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
->  		if (flags == (PARENT1 | PARENT2)) {
->  			if (!(commit->object.flags & RESULT)) {
-> @@ -876,7 +886,7 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
->  			return NULL;
->  	}
->  
-> -	list = paint_down_to_common(one, n, twos);
-> +	list = paint_down_to_common(one, n, twos, 0);
->  
->  	while (list) {
->  		struct commit *commit = pop_commit(&list);
-> @@ -943,7 +953,7 @@ static int remove_redundant(struct commit **array, int cnt)
->  			filled_index[filled] = j;
->  			work[filled++] = array[j];
->  		}
-> -		common = paint_down_to_common(array[i], filled, work);
-> +		common = paint_down_to_common(array[i], filled, work, 0);
->  		if (array[i]->object.flags & PARENT2)
->  			redundant[i] = 1;
->  		for (j = 0; j < filled; j++)
-> @@ -1067,7 +1077,7 @@ int in_merge_bases_many(struct commit *commit, int nr_reference, struct commit *
->  	if (commit->generation > min_generation)
->  		return 0;
->  
-> -	bases = paint_down_to_common(commit, nr_reference, reference);
-> +	bases = paint_down_to_common(commit, nr_reference, reference, commit->generation);
-
-Is it the only case where we would call paint_down_to_common() with
-non-zero last parameter?  Would we always use commit->generation where
-commit is the first parameter of paint_down_to_common()?
-
-If both are true and will remain true, then in my humble opinion it is
-not necessary to change the signature of this function.
-
->  	if (commit->object.flags & PARENT2)
->  		ret = 1;
->  	clear_commit_marks(commit, all_flags);
+I hope reference pointers are welcome, too.
+https://public-inbox.org/git/xmqqzi9iazrp.fsf@gitster.mtv.corp.google.com/
