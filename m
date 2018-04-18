@@ -2,183 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F30E1F404
-	for <e@80x24.org>; Wed, 18 Apr 2018 19:51:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC58B1F404
+	for <e@80x24.org>; Wed, 18 Apr 2018 19:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752170AbeDRTvk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 15:51:40 -0400
-Received: from mail-ua0-f175.google.com ([209.85.217.175]:37142 "EHLO
-        mail-ua0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751407AbeDRTvj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 15:51:39 -0400
-Received: by mail-ua0-f175.google.com with SMTP id d3so1938316uae.4
-        for <git@vger.kernel.org>; Wed, 18 Apr 2018 12:51:39 -0700 (PDT)
+        id S1752732AbeDRT6n (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 15:58:43 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:45192 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752241AbeDRT6m (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 15:58:42 -0400
+Received: by mail-wr0-f194.google.com with SMTP id u11-v6so7955445wri.12
+        for <git@vger.kernel.org>; Wed, 18 Apr 2018 12:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=S9Sl2D2Ja+AKSc4/egOqLsPRj2IGHeJAx/BU17c0pAE=;
-        b=H1cCNtWsySDHI/Y9Fg8JywV+s2MXf7TgJQ8ZXXQrXMIrwbgqettG8aivjrpRjAcWnD
-         Bm8E3NWGg1ye1dX61i5Ahc9jMB2yU8JX6OJrxAKMaZLlfSaTk57/brqCHPWoCwobZk5Z
-         cHJsdm8nzej8TGQD26VGVQKPGELIT+Y38ssFvN8B2gpjq8R5VytS1xsLimQXo5rYnffH
-         VBDryTPpjXZTFgxIY2QvwA9yIY3Tn+BwG5kbedjFa6TxIcC7vRipZM9zR81OStYChj0w
-         T625OGGR5R5MxjYKkqDZ8O9egY9EQUyrY8mGzfc8nPvquKuBPAOr+nA31Kiv0M9VMZJJ
-         L74Q==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=wVMhXIswpo6B1X7RX0szJ2OuJsNRDW5f7gzx2wy5isk=;
+        b=O1rLkePRXe6lAW/e11Pn8nrS8XahZnGvnRxlAWafEFBmQYCm2Uj2uXflE4pkbldUh2
+         mIhctaijRBz9EfdTRgNZ5xQ/NbzCxTlXVaRL1O1ZsIN3p+720+qa8fUIcrd1tTX9egxL
+         PHQeGJvQj37cwy+gfYNmSWQnBl8gN3jr9Wqh7kNbC7OIznsnQq+iJEcba+a6QdiNquDf
+         qGI4Qx+54KyrpiXkBg77kA7lJRRZCU19xkRNW467W+0O0gOZ799/BAGm/IGlheYqJYKd
+         VedZoolBx0zyQ/TEA5fsNFw6gNazUlACMMA8HMG9FZDrUE7YvnXmjeuTRfycE17UgDT7
+         vA+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=S9Sl2D2Ja+AKSc4/egOqLsPRj2IGHeJAx/BU17c0pAE=;
-        b=TBbledg5OE+rrpOYbNgx+xEufLFLNFHMHrcczyTvnQxmesYGNTdwAZrQqBCLlpaybF
-         IdZN0LOGMh/MQIuWP8cwNu0gZ9z/1K6XaPgRqU2iTa0Fa9Fs8527wV8aP5nCeWdYsv2w
-         Ro79MGdQGcZqH5Jlud4MvVeQMZfgQ2lkZmHOlIMb/bJsamveIahiPCXnSvW+Yh9MOqZE
-         I0UIB+an2LxX783qa27vo8qqH0idpWwQDazhPglxAAMckE/shrT8YKk3RO10+gfgpaoF
-         dZtWy/j3v0TTYww/D7VhiJ1tmPBo+oI2lmRG6y2gCnsAQS26emOJfiDiT7Pzmtjnz6uV
-         3mrg==
-X-Gm-Message-State: ALQs6tDeKdXQleQMtpln+e+na9rCWIp7KaNzI9seiK5SZJ7qWcxB1Lir
-        rtW0uInaqdtb7BIUSZhTFIdZ8RWq2Fn9cUokclj6jg==
-X-Google-Smtp-Source: AIpwx48q8oPOb36lgJXdRTh7kh0tJXTEfSFCdtoD2aoFfTSaY4ZGL35tJhDRoDL+K7j8yMNQeNfr1ecbFyPfAVNKha8=
-X-Received: by 10.176.72.201 with SMTP id y9mr2696965uac.48.1524081098581;
- Wed, 18 Apr 2018 12:51:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=wVMhXIswpo6B1X7RX0szJ2OuJsNRDW5f7gzx2wy5isk=;
+        b=MMabrplnXTCdkpf4LQ+n/nCuALdHTJkne7KQw3osfY+v/TZrLs3UdbAC2cKpBGtzGP
+         +H9tiTfbFYP3wNr6ecyQlU8UPPlOLnCa3/36CIoQDUZ2bVBxb09+Jd7GnE8C4NQCgAFD
+         LuVV57KFEjQSzBU5H4aOMa+Bvsacin22xTZCc3+9qUY9k8OZUAa5BuvswwaBVOnJQCKG
+         b+LTyEz9ihRSy89eim58+w4bnpzaOvZS2cHPQszBqtBR/ufwxOa1dH0oLWaQHY4kef7W
+         bIxXSO2EjW7v/Z9lZG7skOB6U+P0OcNFoNTkoMxSA6s3LFSK5lY+mH/pXu6ShN3MIhlf
+         o1mA==
+X-Gm-Message-State: ALQs6tDrN46bTdw+bnY8ooOmc5XZU76EfXT9GQXiYmPqc8XhVMjxcgP0
+        QacxcfZQ2xP03pfGdofo+y8=
+X-Google-Smtp-Source: AIpwx4+YI0SSJfK3wHa8lryx6Vh3kwUsRTG2eTnHIWKU3Swh0y6AkEaPuAS+Zs9ajpHChDCh2+pOvw==
+X-Received: by 2002:adf:9a27:: with SMTP id z36-v6mr2519021wrb.47.1524081521153;
+        Wed, 18 Apr 2018 12:58:41 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id o20-v6sm2355493wro.7.2018.04.18.12.58.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 18 Apr 2018 12:58:40 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Matthew Wilcox <willy@infradead.org>
+Cc:     git@vger.kernel.org,
+        Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Minchan Kim <minchan@kernel.org>
+Subject: Re: [PATCH] git-send-email: Cc more people
+References: <20180418140503.GD27475@bombadil.infradead.org>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180418140503.GD27475@bombadil.infradead.org>
+Date:   Wed, 18 Apr 2018 21:58:39 +0200
+Message-ID: <87tvs8e174.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.159.34.195 with HTTP; Wed, 18 Apr 2018 12:51:32 -0700 (PDT)
-In-Reply-To: <20180410202758.5877-2-mail@floga.de>
-References: <20180410202758.5877-1-mail@floga.de> <20180410202758.5877-2-mail@floga.de>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Wed, 18 Apr 2018 21:51:32 +0200
-Message-ID: <CAM0VKj=pDVxfJtUZx7c6uCmPxwQFPBOQYdd7NH=YnVG86iK0Pw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] completion: load completion file for external subcommand
-To:     Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?Q?Szeder_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 10, 2018 at 10:28 PM, Florian Gamb=C3=B6ck <mail@floga.de> wrot=
-e:
-> Adding external subcommands to Git is as easy as to put an executable
-> file git-foo into PATH. Packaging such subcommands for a Linux
-> distribution can be achieved by unpacking the executable into /usr/bin
-> of the user's system. Adding system-wide completion scripts for new
-> subcommands, however, can be a bit tricky.
->
-> Since bash-completion started to use dynamical loading of completion
-> scripts since v1.90 (preview of v2.0),
 
-I believe the main bash-completion repository can be found at:
+On Wed, Apr 18 2018, Matthew Wilcox wrote:
 
-  https://github.com/scop/bash-completion.git
+> From: Matthew Wilcox <mawilcox@microsoft.com>
+>
+> Several of my colleagues (and myself) have expressed surprise and
+> annoyance that git-send-email doesn't automatically pick up people who
+> are listed in patches as Reported-by: or Reviewed-by: or ... many other
+> tags that would seem (to us) to indicate that person might be interested.
+> This patch to git-send-email tries to pick up all Foo-by: tags.
+>
+> Signed-off-by: Matthew Wilcox <mawilcox@microsoft.com>
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 2fa7818ca..926815329 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1665,7 +1665,7 @@ foreach my $t (@files) {
+>  	# Now parse the message body
+>  	while(<$fh>) {
+>  		$message .=  $_;
+> -		if (/^(Signed-off-by|Cc): (.*)/i) {
+> +		if (/^([A-Z-a-z]*-by|Cc): (.*)/i) {
+>  			chomp;
+>  			my ($what, $c) = ($1, $2);
+>  			# strip garbage for the address we'll use:
 
-This repository still contains the branch 'dynamic-loading'; for the
-record it points to 3b029892f6f9db3b7210a7f66d636be3e5ec5fa2.
+I like this direction, I've actually been meaning to take this further
+and try to parse out SHA1s in the commit message, look those up, and add
+their authors to CC one of these days.
 
-Two commits on that branch are worth mentioning:
+But IMO this patch is really lacking a few things before being ready:
 
-  20c05b43 (Load completions in separate files dynamically, get rid of
-            have()., 2011-10-12)
-  5baebf81 (Add _xfunc for loading and calling functions on demand,
-            use it in apt-get, cvsps, rsync, and sshfs., 2011-10-13)
+1. You have no tests for this. See t/t9001-send-email.sh for examples,
+   i.e. stuff like
 
-> it is no longer sufficient to
-> drop a completion script of a subcommand into the standard completions
-> path, /usr/share/bash-completion/completions, since this script will not
-> be loaded if called as a git subcommand.
->
-> For example, look at https://bugs.gentoo.org/544722. To give a short
-> summary: The popular git-flow subcommand provides a completion script,
-> which gets installed as /usr/share/bash-completion/completions/git-flow.
->
-> If you now type into a Bash shell:
->
->     git flow <TAB>
->
-> You will not get any completions, because bash-completion only loads
-> completions for git and git has no idea that git-flow is defined in
-> another file. You have to load this script manually or trigger the
-> dynamic loader with:
->
->     git-flow <TAB> # Please notice the dash instead of whitespace
->
-> This will not complete anything either, because it only defines a Bash
-> function, without generating completions. But now the correct completion
-> script has been loaded and the first command can use the completions.
->
-> So, the goal is now to teach the git completion script to consider the
-> possibility of external completion scripts for subcommands, but of
-> course without breaking current workflows.
->
-> I think the easiest method is to use a function that is defined by
-> bash-completion v2.0+, namely __load_completion.
+       (body) Adding cc: C O Mitter <committer@example.com> from line
+       'Signed-off-by: C O Mitter <committer@example.com>'
 
-This is wrong, __load_completion() was introduced in cad3abfc
-(__load_completion: New function, use in _completion_loader and
-_xfunc, 2015-07-15), and the first release tag containg it is '2.2'
-from 2016-03-03.
+   Should have corresponding tests for "Reviewed-by" "Seen-by"
+   etc. These are easy to add, just edit the raw messages and test that
+   for the output about adding CCs.
 
-The release tags '1.90' and '2.0' are from 2011-11-03 and 2012-06-17,
-respectively.  This leaves a couple of years long hole where
-completions were already loaded dynamically but there was no
-__load_completion() function.
+2. Just a few lines down from your quoted hunk we have this:
 
-Would it be possible to use _xfunc() instead to plug that hole?  It
-seems the be tricky, because that function not only sources but also
-_calls_ the completion function.
+	# strip garbage for the address we'll use:
+	$c = strip_garbage_one_address($c);
+	# sanitize a bit more to decide whether to suppress the address:
+	my $sc = sanitize_address($c);
+	if ($sc eq $sender) {
+		next if ($suppress_cc{'self'});
+	} else {
+		next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
+		next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
+	}
+	push @cc, $c;
+	printf(__("(body) Adding cc: %s from line '%s'\n"),
+		$c, $_) unless $quiet;
 
-> It will take care of
-> loading the correct script if present. Afterwards, the git completion
-> script behaves as usual.
->
-> This way we can leverage bash-completion's dynamic loading for git
-> subcommands and make it easier for developers to distribute custom
-> completion scripts.
->
-> Signed-off-by: Florian Gamb=C3=B6ck <mail@floga.de>
-> ---
->  contrib/completion/git-completion.bash | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index b09c8a236..09a820990 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -3096,12 +3096,22 @@ __git_main ()
->         fi
->
->         local completion_func=3D"_git_${command//-/_}"
-> +       if ! declare -f $completion_func >/dev/null 2>/dev/null &&
-> +               declare -f __load_completion >/dev/null 2>/dev/null
-> +       then
-> +               __load_completion "git-$command"
-> +       fi
->         declare -f $completion_func >/dev/null 2>/dev/null && $completion=
-_func && return
->
->         local expansion=3D$(__git_aliased_command "$command")
->         if [ -n "$expansion" ]; then
->                 words[1]=3D$expansion
->                 completion_func=3D"_git_${expansion//-/_}"
-> +               if ! declare -f $completion_func >/dev/null 2>/dev/null &=
-&
-> +                       declare -f __load_completion >/dev/null 2>/dev/nu=
-ll
-> +               then
-> +                       __load_completion "git-$expansion"
-> +               fi
->                 declare -f $completion_func >/dev/null 2>/dev/null && $co=
-mpletion_func
->         fi
->  }
-> --
-> 2.16.1
->
+   So before we just supported Signed-off-by as a special case, but now
+   your patch adds WHAT-EVER-by without updating the the corresponding
+   --[no-]signed-off-by-cc command-line options.
+
+   Your change should at least describe why those aren't being updated,
+   but probably we should add some other command-line option for
+   ignoring these wildcards, e.g. --[no-]wildcard-by-cc=reviewed
+   --[no-]wildcard-by-cc=seen etc, and we can make --[no-]signed-off-by
+   a historical alias for --[no-]wildcard-by-cc=signed-off.
+
+3. Ditto all the documentation in "man git-send-email" about
+   "signed-off-by", "sob" etc, and the "signedoffbycc" variable
+   documented both there and in "man git-config".
+
+Style comment: First time I've seen someone write a charclass as
+[A-Z-a-z] and mean it, usually it's usually it's [A-Za-z-] to clarify
+that the "-" isn't a range. Makes sense (to me) to have ranges first &
+stray chars last.
