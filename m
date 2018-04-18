@@ -2,110 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 973971F404
-	for <e@80x24.org>; Wed, 18 Apr 2018 18:04:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C9AE1F404
+	for <e@80x24.org>; Wed, 18 Apr 2018 18:15:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752166AbeDRSEF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 14:04:05 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:30037 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752159AbeDRSEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 14:04:04 -0400
-Received: from [192.168.2.201] ([92.28.131.105])
-        by smtp.talktalk.net with SMTP
-        id 8rR3fhtLDLjjA8rR3fWYsj; Wed, 18 Apr 2018 19:04:03 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1524074643;
-        bh=SiJppld6vUuSGTmTGByS0IuxZdHX6yzG1ZISgU+NLgI=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=cdu4yCRt37MYmj9Hfl4AmpeDUqjWREI/ZqLpnxUOXhpY66fd3BHJN2/lqexav/2bs
-         OYgx+H8zqFDuGXaks1zUaXzBelYyGUmI5oAYygec8a9/UO00/oiad0F3TBdvD6tUcR
-         wgrq2z+9bpBVozdBSX/Wg3r4y9rdnZ0jorrP1T9s=
-X-Originating-IP: [92.28.131.105]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=LZYSFAXi c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
- a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=dJwqgKVgLEQAiJrPjcgA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 05/15] sequencer: introduce the `merge` command
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>
-References: <cover.1519680483.git.johannes.schindelin@gmx.de>
- <cover.1523362469.git.johannes.schindelin@gmx.de>
- <8a5ae61f603df8d8cb19268e1b8470f0a4993445.1523362469.git.johannes.schindelin@gmx.de>
- <55216d0b-cb37-6514-7f80-91f4617c105d@talktalk.net>
- <85232331-97a0-7989-e095-854ed962c7a0@talktalk.net>
- <nycvar.QRO.7.76.6.1804140248110.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <66b0b2e6-11b6-20f9-da6b-211c9c4dc758@talktalk.net>
-Date:   Wed, 18 Apr 2018 19:04:01 +0100
+        id S1751830AbeDRSPJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 14:15:09 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:54912 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751299AbeDRSPI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 14:15:08 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 40R9JT5DWFz5tlM;
+        Wed, 18 Apr 2018 20:15:05 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 7EAE710B;
+        Wed, 18 Apr 2018 20:15:04 +0200 (CEST)
+Subject: Re: [RFC PATCH] ident: don't cache default date
+To:     phillip.wood@dunelm.org.uk
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <5f5d5b88-b3ac-ed4f-ee24-6ce2cba2bd55@kdbg.org>
+ <20180418102236.7183-1-phillip.wood@talktalk.net>
+ <87vacoeovh.fsf@evledraar.gmail.com>
+ <85ecb584-77a7-f818-14c9-1019873d87f9@talktalk.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <d4aee85d-956f-ac93-b909-6dfeb5ea8fd7@kdbg.org>
+Date:   Wed, 18 Apr 2018 20:15:04 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1804140248110.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+In-Reply-To: <85ecb584-77a7-f818-14c9-1019873d87f9@talktalk.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOg4bmK4vRrQ1dRv10Ag2+7QIWvcPDMp4M56IjYXOrCoVE/nlVnFBuKCo/bZg+fkZoTDe/gp9F/Uw1q9ZdP6RJmV11BY33iCsbuhDoaUZs3L/PhkXaai
- jRSWtAYVPlTr+Z00S3YlpOQtxOqJ9eWA6G2M4K2pwSHBRNSGRqxXYq2dcfOct2X5anGei0YvEmwCBnN9yFtiLkAg+Hh+lrUi7y+xcs3fHXOdm6XkTEq3TgIO
- 85pv3l6zW8cM5Le9UgnVybOPPJ6gfm9QA1geSdB50ZN0egVpfl53vMtIDmEJCyp4bPncESjjGOvBt+QtggGfzjWFI624WVcAoHpp9M2YCS20cFIF325+/wiN
- IIbo3IV5Cy1QgevIq0kYpcSoHA5L9B1VdE8Q0CjikjLVnFDp1Y5nNNZcFaxla9I0o/pIha9UJv/XVYxj7Gfj5mHT9JwhnYDrYhzNJcVUqyoFRRkbyeVq330g
- Bt5lM/uP6EgZHRrRRRVce9XkZHhxcWgIVW624g==
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14/04/18 01:51, Johannes Schindelin wrote:
-> Hi Phillip,
-> 
-> On Fri, 13 Apr 2018, Phillip Wood wrote:
-> 
->> On 13/04/18 11:12, Phillip Wood wrote:
->>> @@ -3030,7 +3029,8 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
->>>  			return error(_("unknown command %d"), item->command);
->>>  
->>>  		if (res < 0 && (item->command == TODO_LABEL ||
->>> -				item->command == TODO_RESET)) {
->>> +				item->command == TODO_RESET ||
->>> +				item->command == TODO_MERGE)) {
->>
->> Unfortunately it's not as simple as that - we only want to reschedule if
->> merge_recursive() fails, not if run_git_commit() does.
-> 
-> Correct. How about introducing a flag `reschedule` that is passed to
-> do_label(), do_reset() and do_merge()?
+Am 18.04.2018 um 19:47 schrieb Phillip Wood:
+> On 18/04/18 12:27, Ævar Arnfjörð Bjarmason wrote:
+>> On Wed, Apr 18 2018, Phillip Wood wrote:
+>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>> as it is created by running an separate instance of 'git commit'.  If
+>>> the reworded commit is follow by further picks, those later commits
+>>> will have an earlier committer date than the reworded one. This is
+>>> caused by git caching the default date used when GIT_COMMITTER_DATE is
+>>> not set. Fix this by not caching the date.
+>>>
+>>> Users expect commits to have the same author and committer dates when
+>>> the don't explicitly set them. As the date is now updated each time
+>>> git_author_info() or git_committer_info() is run it is possible to end
+>>> up with different author and committer dates. Fix this for
+>>> 'commit-tree', 'notes' and 'merge' by using a single date in
+>>> commit_tree_extended() and passing it explicitly to the new functions
+>>> git_author_info_with_date() and git_committer_info_with_date() when
+>>> neither the author date nor the committer date are explicitly
+>>> set. 'commit' always passes the author date to commit_tree_extended()
+>>> and relied on the date caching to have the same committer and author
+>>> dates when neither was specified. Fix this by setting
+>>> GIT_COMMITTER_DATE to be the same as the author date passed to
+>>> commit_tree_extended().
+>>>
+>>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>> Reported-by: Johannes Sixt <j6t@kdbg.org>
+>>> ---
+>>>
+>>> I'm slightly nervous that setting GIT_COMMITTER_DATE in
+>>> builtin/commit.c will break someone's hook script. Maybe it would be
+>>> better to add a committer parameter to commit_tree() and
+>>> commit_tree_extended().
 
-That would work (I was thinking about using return codes but having a
-parameter is a better idea). Do you want me to re-roll the fixups or are
-you happy to make the changes in your next version?
+While I like the basic theme of your patch, I think we should fix this
+case in a much simpler way, namely, use the infrastructure that was
+introduced for git-am.
 
-> 
-> Seeing as do_reset() and do_merge() already have a replay_opts parameter,
-> we could add a field `needs_rescheduling` and pass the replay_opts also to
-> do_label().
+I've shamelessly lifted the commit message from your patch.
 
-I'm slightly wary of putting state in an options structure but maybe it
-doesn't matter.
+---- 8< ----
+Subject: [PATCH] sequencer: reset the committer date before commits
 
-Best Wishes
+Now that the sequencer commits without forking when the commit message
+isn't edited all the commits that are picked have the same committer
+date. If a commit is reworded it's committer date will be a later time
+as it is created by running an separate instance of 'git commit'.  If
+the reworded commit is follow by further picks, those later commits
+will have an earlier committer date than the reworded one. This is
+caused by git caching the default date used when GIT_COMMITTER_DATE is
+not set. Reset the cached date before a commit is generated
+in-process.
 
-Phillip
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ sequencer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> Ciao,
-> Dscho
-> 
-
+diff --git a/sequencer.c b/sequencer.c
+index f9d1001dee..f0bac903a0 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1148,6 +1148,8 @@ static int try_to_commit(struct strbuf *msg, const char *author,
+ 		goto out;
+ 	}
+ 
++	reset_ident_date();
++
+ 	if (commit_tree_extended(msg->buf, msg->len, &tree, parents,
+ 				 oid, author, opts->gpg_sign, extra)) {
+ 		res = error(_("failed to write commit object"));
+-- 
+2.17.0.69.g0c1d01d9b6
