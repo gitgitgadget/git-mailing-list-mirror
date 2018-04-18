@@ -2,195 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F12B81F404
-	for <e@80x24.org>; Wed, 18 Apr 2018 21:05:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86CC21F404
+	for <e@80x24.org>; Wed, 18 Apr 2018 21:08:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751972AbeDRVFs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 17:05:48 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:37235 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751299AbeDRVFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 17:05:47 -0400
-Received: by mail-lf0-f67.google.com with SMTP id b23-v6so4666137lfg.4
-        for <git@vger.kernel.org>; Wed, 18 Apr 2018 14:05:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=prXnUVopNHli1Irn5JwB7gWxKXKsAYLVMmm3vFsL3M0=;
-        b=aVo263TcCTCa4WoiYH/yBG8CWlHzVXbDpoRk7XP3ucNszqNWdk4vDOQCOUj2aHUgO6
-         tvz8hPNpEccUJW07yRt4y47G9cuFVphwxSH5R8nzxxkJwGquc/eVX9fjSKE8b4XvMk4e
-         jh8Z0dGmdfh7b59MyqDKbvqAA8ANTfSQXGd/E7vzUnMJjdlHMjMOxZFhrk+Rfr2sdZun
-         r3Y3gWR2z3XhHp8JuNFO7iWo4utVyiPb9H6prjH6x54zTwmk6vLzgrNEavia0A4czHJF
-         f08PH01x0p2KDlLSfUjNEVbkgCRHomzoXF3GPu9J8T//jq5FXzvpSLqbUMT9CvPGinP6
-         jORA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=prXnUVopNHli1Irn5JwB7gWxKXKsAYLVMmm3vFsL3M0=;
-        b=uVbfG0FR1/Jvnkq4qj85hgfnFFNN0criKgnnW/6uQdtMls2+++klz+cm19C4lq1Ixv
-         qjUOUtpN8qI+I+2KXrd+vu3X8YzGVAgxvWUZQdsEGzLuCZmV88GFiS5M5iea601BPuRj
-         2IEKby7cXi10VDleuc7TiRSZT2w6K5orRiugBdp4Tfn4j+k+NEPswZVxzuftYAlDz9KH
-         Hay3MwLSQRR3EhPFYI1yWQwcX4He6aJTVTOn+nvrm7xIdKB9XIcqRmmbboFwhPnelE95
-         TB4s8JVvzUt/SQgsg31v9o3cqZAWKW+NEcLQz31JVFd8GyUwvK4ZLT0VbHC8wt9JcRFO
-         0/DQ==
-X-Gm-Message-State: ALQs6tCa1+2Rkfcd8pfDehw+RrxoXq+oGTIWhB769A9TaBw881I8HTix
-        VVqSubr5VMhSqw1jf0kgrPhmxjh8
-X-Google-Smtp-Source: AIpwx4/6MM1G47DuvnvV1p+a6/SXXWspCjvX+xHKRzfSK5spEodO9tMGb0uMpY2k2dnjNBKn5Tkk/Q==
-X-Received: by 2002:a19:dd83:: with SMTP id w3-v6mr2561260lfi.82.1524085545334;
-        Wed, 18 Apr 2018 14:05:45 -0700 (PDT)
-Received: from localhost.localdomain (c-83f6d854.017-110-73746f16.cust.bredbandsbolaget.se. [84.216.246.131])
-        by smtp.gmail.com with ESMTPSA id d4-v6sm433477lfg.65.2018.04.18.14.05.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Apr 2018 14:05:44 -0700 (PDT)
-From:   Harald Nordgren <haraldnordgren@gmail.com>
-To:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, tiago@gitlab.com,
-        christian.couder@gmail.com, sbeller@google.com
-Cc:     Harald Nordgren <haraldnordgren@gmail.com>
-Subject: [PATCH v4] bisect: create 'bisect_flags' parameter in find_bisection()
-Date:   Wed, 18 Apr 2018 23:05:35 +0200
-Message-Id: <20180418210535.1862-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.14.3 (Apple Git-98)
-In-Reply-To: <20180415085841.1269-1-haraldnordgren@gmail.com>
-References: <20180415085841.1269-1-haraldnordgren@gmail.com>
+        id S1752632AbeDRVIB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 17:08:01 -0400
+Received: from mout.gmx.net ([212.227.15.15]:54889 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752241AbeDRVH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 17:07:58 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MfW5D-1eoLAy3JsJ-00P3ne; Wed, 18
+ Apr 2018 23:07:35 +0200
+Date:   Wed, 18 Apr 2018 23:07:18 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Kim Gybels <kgybels@infogroep.be>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] daemon: use timeout for uninterruptible poll
+In-Reply-To: <xmqq36zw16gv.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1804182251070.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180412210757.7792-1-kgybels@infogroep.be> <20180412210757.7792-2-kgybels@infogroep.be> <xmqq36zw16gv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:L+eDum6xJZg0MWFAsTZWPGpzAP+TZGqUhgw43+jMiuTqw6aAZLi
+ 96Lb1HU7xxEqd7lghOurWLej1dodtKRhFKDUW+cMxpOTjZGYM5ge2XGcOBxt89AONpz1+HD
+ 6Fg9twTxc2LHzXo6FZvwOsjGDGi32H70muDRL1SEX6pqugOPWsNjcw2KHeRHYd7qsIJgYnU
+ G8mN09SkP57mEG2YD46Ag==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:O6wELi5Uoxk=:1MOdkI9a+x98wP1HVz3zMb
+ tfp+fVvFd3Rwzn/mUeOvXqecXmfTPKCE1X0kfB9DZBOhrfFQ0N1C0qKWKWeBk3YjfKJ2slrpY
+ tv7Vi+o/bKmpYXITSW6x+FAwcWSgBGN2dM/45imga6uDZNPXWUgxU5gw4+7RbBLtSCKSRdJIG
+ mLBDGNjMISws22e2IBmwiILZnAd2Y66S3MfvnRsEg8EjzyXujxNyM+qnTh2dWpFc8hoD6AEFK
+ p6/5320dqNr65ZhmmirAalZ5x2L8v1UQvdxN4I3f1TCaMHENJ87HSeJXovn1wNPARYxN15OLB
+ pzrfDiXaaRQN3eTW4DoYclIQBNFahj9hJYE8/vj0YpDPQ7VGHlMpIeQU7STxMXSQ4LfPcxWw5
+ euOduKTsrLuGIq5bIu9YWz5Aag1qfLgxYTLzYKCsKSZgUy6aOfT+lW4erG4o74CQnwdYXQQ7H
+ pZdiuz108xfr9kIyNxvRVrnQLf56dR5L+7DX0Dhi574xbavWigbUFq+nhsT6DnmUHsw/gQIez
+ kIhYCpG/CMMJBQ7+y9Im8Gq2D/+sWGAXGfMPKNgk4gjL1d6z1XeJiEiJwdlCFIuM1LlXLSOKL
+ MyUtAJtjKK30+B9uMEaMM+/yDk7qaza3VoFbRe2wNkzvp1UJO3GXdd6q+K2fyNu4zh7fM7zTA
+ 4EfoeG4JML7TJKTQ4//yiBEgwBfa2wQtVTlwDoHeYuuJ0LvuwXnpHhyBfGGuZfAQ37VUmdKnU
+ EUjtvHsmqA+qf6BxgQ5wEw04gWXtOADOZkkSaT2cVSELqIgF3IXf2zbynVPJR0biq4GMw0Je/
+ k6392e6DEltEhYr4kAXZBSFxThSE6hw6UvCM94RtElzE52QcVY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make it possible to implement bisecting only on first parents or on
-merge commits by passing flags to find_bisection(), instead of just
-a 'find_all' boolean.
+Hi Junio,
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
+On Mon, 16 Apr 2018, Junio C Hamano wrote:
 
-Notes:
-    Use unsigned type and cache flag value
+> Kim Gybels <kgybels@infogroep.be> writes:
+> 
+> > The poll provided in compat/poll.c is not interrupted by receiving
+> > SIGCHLD. Use a timeout for cleaning up dead children in a timely manner.
+> 
+> I think you identified the problem and diagnosed it correctly, but I
+> find that the change proposed here introduces a severe layering
+> violation.  The code is still calling what is called poll(), which
+> should not have such a broken semantics.
 
- bisect.c           | 15 ++++++++++-----
- bisect.h           |  6 ++++--
- builtin/rev-list.c |  6 +++---
- 3 files changed, 17 insertions(+), 10 deletions(-)
+While I have sympathy for your desire to apply pure POSIX functionality,
+the reality is that we do not have this luxury. Not if we want to support
+Git on the still most prevalent development platform: Windows. On Windows,
+you simply do not have that poll() that you are looking for.
 
-diff --git a/bisect.c b/bisect.c
-index a579b50884..4eafc8262b 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -254,9 +254,10 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
-  */
- static struct commit_list *do_find_bisection(struct commit_list *list,
- 					     int nr, int *weights,
--					     int find_all)
-+					     unsigned bisect_flags)
- {
- 	int n, counted;
-+	unsigned find_all = bisect_flags & BISECT_FIND_ALL;
- 	struct commit_list *p;
- 
- 	counted = 0;
-@@ -365,7 +366,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- }
- 
- void find_bisection(struct commit_list **commit_list, int *reaches,
--		    int *all, int find_all)
-+		    int *all, unsigned bisect_flags)
- {
- 	int nr, on_list;
- 	struct commit_list *list, *p, *best, *next, *last;
-@@ -400,9 +401,9 @@ void find_bisection(struct commit_list **commit_list, int *reaches,
- 	weights = xcalloc(on_list, sizeof(*weights));
- 
- 	/* Do the real work of finding bisection commit. */
--	best = do_find_bisection(list, nr, weights, find_all);
-+	best = do_find_bisection(list, nr, weights, bisect_flags);
- 	if (best) {
--		if (!find_all) {
-+		if (!(bisect_flags & BISECT_FIND_ALL)) {
- 			list->item = best->item;
- 			free_commit_list(list->next);
- 			best = list;
-@@ -943,6 +944,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 	struct rev_info revs;
- 	struct commit_list *tried;
- 	int reaches = 0, all = 0, nr, steps;
-+	unsigned bisect_flags = 0;
- 	struct object_id *bisect_rev;
- 	char *steps_msg;
- 
-@@ -957,7 +959,10 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 
- 	bisect_common(&revs);
- 
--	find_bisection(&revs.commits, &reaches, &all, !!skipped_revs.nr);
-+	if (skipped_revs.nr)
-+		bisect_flags |= BISECT_FIND_ALL;
-+
-+	find_bisection(&revs.commits, &reaches, &all, bisect_flags);
- 	revs.commits = managed_skipped(revs.commits, &tried);
- 
- 	if (!revs.commits) {
-diff --git a/bisect.h b/bisect.h
-index a5d9248a47..1d40a33ad2 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -1,15 +1,17 @@
- #ifndef BISECT_H
- #define BISECT_H
- 
-+#define BISECT_FIND_ALL		(1u<<0)
-+
- /*
-  * Find bisection. If something is found, `reaches` will be the number of
-  * commits that the best commit reaches. `all` will be the count of
-  * non-SAMETREE commits. If nothing is found, `list` will be NULL.
-  * Otherwise, it will be either all non-SAMETREE commits or the single
-- * best commit, as chosen by `find_all`.
-+ * best commit, as chosen by flag `BISECT_FIND_ALL`.
-  */
- extern void find_bisection(struct commit_list **list, int *reaches, int *all,
--			   int find_all);
-+			   unsigned bisect_flags);
- 
- extern struct commit_list *filter_skipped(struct commit_list *list,
- 					  struct commit_list **tried,
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index fadd3ec14c..8752f5bbed 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -360,8 +360,8 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	int i;
- 	int bisect_list = 0;
- 	int bisect_show_vars = 0;
--	int bisect_find_all = 0;
- 	int use_bitmap_index = 0;
-+	unsigned bisect_flags = 0;
- 	const char *show_progress = NULL;
- 
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
-@@ -426,7 +426,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 		}
- 		if (!strcmp(arg, "--bisect-all")) {
- 			bisect_list = 1;
--			bisect_find_all = 1;
-+			bisect_flags |= BISECT_FIND_ALL;
- 			info.flags |= BISECT_SHOW_ALL;
- 			revs.show_decorations = 1;
- 			continue;
-@@ -538,7 +538,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	if (bisect_list) {
- 		int reaches, all;
- 
--		find_bisection(&revs.commits, &reaches, &all, bisect_find_all);
-+		find_bisection(&revs.commits, &reaches, &all, bisect_flags);
- 
- 		if (bisect_show_vars)
- 			return show_bisect_vars(&info, reaches, all);
--- 
-2.14.3 (Apple Git-98)
+In particular, there is no signal handling of the type you seem to want to
+require.
 
+As to the layering violation you mention, first a HN quote, just to loosen
+the mood, and to at least partially ease the blow delivered by your mail:
+
+	There is no such thing as a layering violation. You should be
+	immediately suspicious of anyone who claims that there are such
+	things.
+
+;-)
+
+Seriously again. If you care to have a look at the patch, you will see
+that the loop (which will now benefit from Kim's timeout on platforms
+without POSIX signal handling) *already* contains that call to
+reap_dead_children().
+
+In other words, you scolded Kim for something that this patch did not
+introduce, but which was already there.
+
+Unless I am misunderstanding violently what you say, that is, in which
+case I would like to ask for a clarification why this patch (which does
+not change a thing unless NO_POLL is defined!) must be rejected, and while
+at it, I would like to ask you how introducing a layer of indirection with
+a full new function that is at least moderately misleading (as it would be
+named xpoll() despite your desire that it should do things that poll()
+does *not* do) would be preferable to this here patch that changes but a
+few lines to introduce a regular heartbeat check for platforms that
+require it?
+
+Thank you,
+Dscho
