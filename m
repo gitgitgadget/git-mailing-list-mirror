@@ -2,272 +2,218 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 131051F404
-	for <e@80x24.org>; Wed, 18 Apr 2018 05:23:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 854481F424
+	for <e@80x24.org>; Wed, 18 Apr 2018 06:38:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753351AbeDRFXZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 01:23:25 -0400
-Received: from mail.javad.com ([54.86.164.124]:54149 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753141AbeDRFXY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 01:23:24 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id BFA3C3FF48;
-        Wed, 18 Apr 2018 05:23:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1524029003;
-        bh=h8Z4fMVBoU2CXdoIvkrCUMwosuIeMqFvxWsBTUYzUxc=; l=5977;
-        h=Received:From:To:Subject;
-        b=VId5VIEBZjnzIPEJazxJma/6xz91FTm/3RUFjBC19OpoZw2K6ndz9lAJY2ceAl3YB
-         vkiGLRO4AgfiYAWOiNVxblfJmTKU08phAog7HuYO77oVOzUQvrGEbHk05HaZv9SB0j
-         lovSUqaV4pfzQGSh93BHq2fcbqIVIKcJFpO7978c=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1524029003;
-        bh=h8Z4fMVBoU2CXdoIvkrCUMwosuIeMqFvxWsBTUYzUxc=; l=5977;
-        h=Received:From:To:Subject;
-        b=VId5VIEBZjnzIPEJazxJma/6xz91FTm/3RUFjBC19OpoZw2K6ndz9lAJY2ceAl3YB
-         vkiGLRO4AgfiYAWOiNVxblfJmTKU08phAog7HuYO77oVOzUQvrGEbHk05HaZv9SB0j
-         lovSUqaV4pfzQGSh93BHq2fcbqIVIKcJFpO7978c=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1524029003;
-        bh=h8Z4fMVBoU2CXdoIvkrCUMwosuIeMqFvxWsBTUYzUxc=; l=5977;
-        h=Received:From:To:Subject;
-        b=VId5VIEBZjnzIPEJazxJma/6xz91FTm/3RUFjBC19OpoZw2K6ndz9lAJY2ceAl3YB
-         vkiGLRO4AgfiYAWOiNVxblfJmTKU08phAog7HuYO77oVOzUQvrGEbHk05HaZv9SB0j
-         lovSUqaV4pfzQGSh93BHq2fcbqIVIKcJFpO7978c=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1524029003;
-        bh=h8Z4fMVBoU2CXdoIvkrCUMwosuIeMqFvxWsBTUYzUxc=; l=5977;
-        h=Received:From:To:Subject;
-        b=VId5VIEBZjnzIPEJazxJma/6xz91FTm/3RUFjBC19OpoZw2K6ndz9lAJY2ceAl3YB
-         vkiGLRO4AgfiYAWOiNVxblfJmTKU08phAog7HuYO77oVOzUQvrGEbHk05HaZv9SB0j
-         lovSUqaV4pfzQGSh93BHq2fcbqIVIKcJFpO7978c=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1524029003;
-        bh=h8Z4fMVBoU2CXdoIvkrCUMwosuIeMqFvxWsBTUYzUxc=; l=5977;
-        h=Received:From:To:Subject;
-        b=VId5VIEBZjnzIPEJazxJma/6xz91FTm/3RUFjBC19OpoZw2K6ndz9lAJY2ceAl3YB
-         vkiGLRO4AgfiYAWOiNVxblfJmTKU08phAog7HuYO77oVOzUQvrGEbHk05HaZv9SB0j
-         lovSUqaV4pfzQGSh93BHq2fcbqIVIKcJFpO7978c=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1524029003;
-        bh=h8Z4fMVBoU2CXdoIvkrCUMwosuIeMqFvxWsBTUYzUxc=; l=5977;
-        h=Received:From:To:Subject;
-        b=VId5VIEBZjnzIPEJazxJma/6xz91FTm/3RUFjBC19OpoZw2K6ndz9lAJY2ceAl3YB
-         vkiGLRO4AgfiYAWOiNVxblfJmTKU08phAog7HuYO77oVOzUQvrGEbHk05HaZv9SB0j
-         lovSUqaV4pfzQGSh93BHq2fcbqIVIKcJFpO7978c=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1524029003;
-        bh=h8Z4fMVBoU2CXdoIvkrCUMwosuIeMqFvxWsBTUYzUxc=; l=5977;
-        h=Received:From:To:Subject;
-        b=VId5VIEBZjnzIPEJazxJma/6xz91FTm/3RUFjBC19OpoZw2K6ndz9lAJY2ceAl3YB
-         vkiGLRO4AgfiYAWOiNVxblfJmTKU08phAog7HuYO77oVOzUQvrGEbHk05HaZv9SB0j
-         lovSUqaV4pfzQGSh93BHq2fcbqIVIKcJFpO7978c=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1524029003;
-        bh=h8Z4fMVBoU2CXdoIvkrCUMwosuIeMqFvxWsBTUYzUxc=; l=5977;
-        h=Received:From:To:Subject;
-        b=VId5VIEBZjnzIPEJazxJma/6xz91FTm/3RUFjBC19OpoZw2K6ndz9lAJY2ceAl3YB
-         vkiGLRO4AgfiYAWOiNVxblfJmTKU08phAog7HuYO77oVOzUQvrGEbHk05HaZv9SB0j
-         lovSUqaV4pfzQGSh93BHq2fcbqIVIKcJFpO7978c=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1524029003;
-        bh=h8Z4fMVBoU2CXdoIvkrCUMwosuIeMqFvxWsBTUYzUxc=; l=5977;
-        h=Received:From:To:Subject;
-        b=VId5VIEBZjnzIPEJazxJma/6xz91FTm/3RUFjBC19OpoZw2K6ndz9lAJY2ceAl3YB
-         vkiGLRO4AgfiYAWOiNVxblfJmTKU08phAog7HuYO77oVOzUQvrGEbHk05HaZv9SB0j
-         lovSUqaV4pfzQGSh93BHq2fcbqIVIKcJFpO7978c=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1524029003;
-        bh=h8Z4fMVBoU2CXdoIvkrCUMwosuIeMqFvxWsBTUYzUxc=; l=5977;
-        h=Received:From:To:Subject;
-        b=VId5VIEBZjnzIPEJazxJma/6xz91FTm/3RUFjBC19OpoZw2K6ndz9lAJY2ceAl3YB
-         vkiGLRO4AgfiYAWOiNVxblfJmTKU08phAog7HuYO77oVOzUQvrGEbHk05HaZv9SB0j
-         lovSUqaV4pfzQGSh93BHq2fcbqIVIKcJFpO7978c=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1f8fYu-0002tt-2C; Wed, 18 Apr 2018 08:23:20 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v6 00/15] rebase -i: offer to recreate commit topology
-References: <cover.1519680483.git.johannes.schindelin@gmx.de>
-        <cover.1523362469.git.johannes.schindelin@gmx.de>
-        <87tvsj6rn2.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1804110009080.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <871sfm737e.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1804111324350.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87h8oh51jm.fsf@javad.com>
-        <CA+P7+xq8KJKJ0d1unW3btUhKVjOZM3EdTSKdDs96pn5J3WwSKA@mail.gmail.com>
-        <87sh810ym4.fsf@javad.com>
-        <CA+P7+xq8LOUZxVd832cOQFi4V=2YvydxtT6_y4NLKvFkki4QdA@mail.gmail.com>
-Date:   Wed, 18 Apr 2018 08:23:20 +0300
-Message-ID: <87a7u12ilz.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1751806AbeDRGiK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 02:38:10 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:60621 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751305AbeDRGiJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 02:38:09 -0400
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id 8gjFftyoF4Zqz8gjGfjZLL; Wed, 18 Apr 2018 07:38:07 +0100
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=E/fjW5Vl c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=xtxXYLxNAAAA:8
+ a=pGLkceISAAAA:8 a=4RBUngkUAAAA:8 a=_i6_jppn-kJt3n5xa0wA:9 a=wPNLvfGTeEIA:10
+ a=xts0dhWdiJbonKbuqhAr:22 a=_sbA2Q-Kp09kWB8D3iXc:22
+Message-ID: <07E7F55C217E47F9A321BC23CF769019@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Duy Nguyen" <pclouds@gmail.com>
+Cc:     "Eric Sunshine" <sunshine@sunshineco.com>,
+        "Git List" <git@vger.kernel.org>,
+        =?iso-8859-1?Q?SZEDER_G=E1bor?= <szeder.dev@gmail.com>
+References: <20180326165520.802-1-pclouds@gmail.com> <CAPig+cTW7KRzXXY7vP-GZ23effYd5jLhiL15KqdRam4rNELCWw@mail.gmail.com> <FBB059C530054EEAB2E989D86CBE3BD5@PhilipOakley> <CACsJy8BqoW_YWBiMoOks+WM5XY7Mmadkd0LUBoUWLDXehx1GZQ@mail.gmail.com> <A9B6B3A17C4844C69F8865C01BCFC51A@PhilipOakley> <CACsJy8BTX=6FsH7-Dc86ExQRfBSNVn9yxD5JrNZyLT9VDQOPEg@mail.gmail.com> <20180417164831.GA18563@duynguyen.home> <8F15D4F40F164250987F5DD3896AD825@PhilipOakley>
+Subject: Re: [PATCH/RFC 0/5] Keep all info in command-list.txt in git binary
+Date:   Wed, 18 Apr 2018 07:38:05 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 180417-4, 17/04/2018), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfCyMcdK8qBasH7fJaz37hl+60VcKbmOxxoEc8y7tcWDhhURhUNPvx+Y3noTINfaEoTo0hPl0rI4uC1FYfvg/lDx0jywEJ0elqTjJeE64StINIkEuJSm0
+ YdZwqMlhpyK6JVtDo+nz4OIUiKGYu5Mpodv+VPi+uw8QVsPKpIa+F8I815aS+P+vg2FFDVEZV/Gq4dJNig+4jIGm7gp76Bu9td67gk7woS6oh0WMynenpZS2
+ 1Hv5Zxeyohzc+VoQE/cDq4eR68FfAXQiNLCQTEJOKu8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jacob,
-
-Jacob Keller <jacob.keller@gmail.com> writes:
-
-> On Wed, Apr 11, 2018 at 10:42 PM, Sergey Organov <sorganov@gmail.com> wrote:
->> Hi Jacob,
->>
->> Jacob Keller <jacob.keller@gmail.com> writes:
->>> On Wed, Apr 11, 2018 at 6:13 AM, Sergey Organov <sorganov@gmail.com> wrote:
->>>> It was rather --recreate-merges just a few weeks ago, and I've seen
->>>> nobody actually commented either in favor or against the
->>>> --rebase-merges.
->>>>
->>>> git rebase --rebase-merges
->>>>
+From: "Philip Oakley" <philipoakley@iee.org> : Tuesday, April 17, 2018 11:47
+PM
+> From: "Duy Nguyen" <pclouds@gmail.com> : Tuesday, April 17, 2018 5:48 PM
+>> On Tue, Apr 17, 2018 at 06:24:41PM +0200, Duy Nguyen wrote:
+>>> On Sun, Apr 15, 2018 at 11:21 PM, Philip Oakley <philipoakley@iee.org>
+>>> wrote:
+>>> > From: "Duy Nguyen" <pclouds@gmail.com> : Saturday, April 14, 2018 4:44
+>>> > PM
+>>> >
+>>> >> On Thu, Apr 12, 2018 at 12:06 AM, Philip Oakley
+>>> >> <philipoakley@iee.org>
+>>> >> wrote:
+>>> >>>
+>>> >>> I'm only just catching up, but does/can this series also capture the
+>>> >>> non-command guides that are available in git so that the 'git
+>>> >>> help -g'
+>>> >>> can
+>>> >>> begin to list them all?
+>>> >>
+>>> >>
+>>> >> It currently does not. But I don't see why it should not. This should
+>>> >> allow git.txt to list all the guides too, for people who skip "git
+>>> >> help" and go hard core mode with "man git". Thanks for bringing this
+>>> >> up.
+>>> >> --
+>>> >> Duy
+>>> >>
+>>> > Is that something I should add to my todo to add a 'guide' category
+>>> > etc.?
 >>>
->>> I'm going to jump in here and say that *I* prefer --rebase-merges, as
->>> it clearly mentions merge commits (which is the thing that changes).
+>>> I added it too [1]. Not sure if you want anything more on top though.
+>
+> What I've seen is looking good - I've not had as much time as I'd like..
+>
+> I'm not sure of the status of the git/generate-cmdlist.sh though. Should
+> that also be updated, or did I miss that?
+> --
+> Philip
+
+I may be miss-remembering the order that the `git help` determines the list
+of commands and guides. There was at least one place where the list of
+commands was generated programatically that I may be confused with (I've not
+had time to delve into the code :-(
+--
+
+
+>
 >>
->> OK, thanks, it's fair and the first argument in favor of --rebase-merges
->> I see.
+>> The "anything more" that at least I had in mind was something like
+>> this. Though I'm not sure if it's a good thing to replace a hand
+>> crafted section with an automatedly generated one. This patch on top
+>> combines the "SEE ALSO" and "FURTHER DOCUMENT" into one with most of
+>> documents/guides are extracted from command-list.txt
+>>
+>> -- 8< --
+>> diff --git a/Documentation/Makefile b/Documentation/Makefile
+>> index 6232143cb9..3e0ecd2e11 100644
+>> --- a/Documentation/Makefile
+>> +++ b/Documentation/Makefile
+>> @@ -292,6 +292,7 @@ doc.dep : $(docdep_prereqs) $(wildcard *.txt)
+>> build-docdep.perl
+>>
+>> cmds_txt = cmds-ancillaryinterrogators.txt \
+>>  cmds-ancillarymanipulators.txt \
+>> + cmds-guide.txt \
+>>  cmds-mainporcelain.txt \
+>>  cmds-plumbinginterrogators.txt \
+>>  cmds-plumbingmanipulators.txt \
+>> diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
+>> index 5aa73cfe45..e158bd9b96 100755
+>> --- a/Documentation/cmd-list.perl
+>> +++ b/Documentation/cmd-list.perl
+>> @@ -54,6 +54,7 @@ for (sort <>) {
+>>
+>> for my $cat (qw(ancillaryinterrogators
+>>  ancillarymanipulators
+>> + guide
+>>  mainporcelain
+>>  plumbinginterrogators
+>>  plumbingmanipulators
+>> diff --git a/Documentation/git.txt b/Documentation/git.txt
+>> index 4767860e72..d60d2ae0c7 100644
+>> --- a/Documentation/git.txt
+>> +++ b/Documentation/git.txt
+>> @@ -808,29 +808,6 @@ The index is also capable of storing multiple
+>> entries (called "stages")
+>> for a given pathname.  These stages are used to hold the various
+>> unmerged version of a file when a merge is in progress.
+>>
+>> -FURTHER DOCUMENTATION
+>> ----------------------
+>> -
+>> -See the references in the "description" section to get started
+>> -using Git.  The following is probably more detail than necessary
+>> -for a first-time user.
+>> -
+>> -The link:user-manual.html#git-concepts[Git concepts chapter of the
+>> -user-manual] and linkgit:gitcore-tutorial[7] both provide
+>> -introductions to the underlying Git architecture.
+>> -
+>> -See linkgit:gitworkflows[7] for an overview of recommended workflows.
+>> -
+>> -See also the link:howto-index.html[howto] documents for some useful
+>> -examples.
+>> -
+>> -The internals are documented in the
+>> -link:technical/api-index.html[Git API documentation].
+>> -
+>> -Users migrating from CVS may also want to
+>> -read linkgit:gitcvs-migration[7].
+>> -
+>> -
+>> Authors
+>> -------
+>> Git was started by Linus Torvalds, and is currently maintained by Junio
+>> @@ -854,11 +831,16 @@ the Git Security mailing list
+>> <git-security@googlegroups.com>.
+>>
+>> SEE ALSO
+>> --------
+>> -linkgit:gittutorial[7], linkgit:gittutorial-2[7],
+>> -linkgit:giteveryday[7], linkgit:gitcvs-migration[7],
+>> -linkgit:gitglossary[7], linkgit:gitcore-tutorial[7],
+>> -linkgit:gitcli[7], link:user-manual.html[The Git User's Manual],
+>> -linkgit:gitworkflows[7]
+>> +
+>> +See the references in the "description" section to get started
+>> +using Git.  The following is probably more detail than necessary
+>> +for a first-time user.
+>> +
+>> +include::cmds-guide.txt[]
+>> +
+>> +See also the link:howto-index.html[howto] documents for some useful
+>> +examples. The internals are documented in the
+>> +link:technical/api-index.html[Git API documentation].
+>>
+>> GIT
+>> ---
+>> diff --git a/command-list.txt b/command-list.txt
+>> index 1835f1a928..f26b8acd52 100644
+>> --- a/command-list.txt
+>> +++ b/command-list.txt
+>> @@ -150,10 +150,14 @@ git-whatchanged ancillaryinterrogators
+>> git-worktree                            mainporcelain
+>> git-write-tree                          plumbingmanipulators
+>> gitattributes                           guide
+>> +gitcvs-migration                        guide
+>> +gitcli                                  guide
+>> +gitcore-tutorial                        guide
+>> giteveryday                             guide
+>> gitglossary                             guide
+>> gitignore                               guide
+>> gitmodules                              guide
+>> gitrevisions                            guide
+>> gittutorial                             guide
+>> +gittutorial-2                           guide
+>> gitworkflows                            guide
+>> -- 8< --
 >>
 >
-> I'd be ok with "--keep-merges" also. I don't like the idea of
-> "flatten" as it, to me, means that anyone who wants to understand the
-> option without prior knowledge must immediately read the man page or
-> they will be confused. Something like "--rebase-merges" at least my
-> coworkers got it instantly. The same could be said for "--keep-merges"
-> too, but so far no one I asked said the immediately understood
-> "--no-flatten".
+>
 
-If they got --rebase-merges instantly, they should already have known
-what "rebase" and "merge" mean. If so, they are likely Git users that
-are already familiar with "git rebase" and thus at least heard about a
-buddy called --preserve-merges. If it's the case indeed, the outcome
-you've got was rather predictable, me thinks.
-
-Now, what are the consequences?
-
-When pleasing maximum number of users of --preserve-merges (and probably
---recreate-merges) is number one target of design, while the rest of
-issues are secondary, being in favor of --rebase-merges, --keep-merges,
-or --<whatever>-merges is only natural indeed.
-
-However, I don't believe meeting user expectations should be the number
-one criteria of a good design. Sound technical design should come first,
-and meeting user expectations, provided they don't contradict the
-design, only second. That's how Git was born, that's how it should
-continue to evolve. Going in reverse direction, from user expectations
-to design, will give us Bzr, not Git.
-
-In discussing of these patch series though I rather see care for user
-expectations or preferences being used as an excuse for questionable
-design all the time. That's what actually bothers me much more than
-choosing particular names for particular options.
-
-Narrowing back to the topic, don't you see, honestly, that there is
-something wrong with:
-
-git rebase --rebase-merges
-
-that is supposedly easy to understand even without referring to the
-manual, yet when you do happen to refer to the manual, you suddenly
-realize it's not that easy to understand:
-
---rebase-merges[=(rebase-cousins|no-rebase-cousins)]
-	Rebase merge commits instead of flattening the history by replaying
-	merges. Merge conflict resolutions or manual amendments to merge
-	commits are not rebased automatically, but have to be applied
-	manually.
-
-???
-
-Please read the description. Actually read as if you never knew what's
-all this about.
-
-Why does it use "flattening the history" that is supposedly hard to
-understand to explain "--rebase-merges" that is supposedly easy to
-understand? How comes? And if it's actually a good explanation, why
-didn't author just call the option --no-flatten-history, to match its
-description?
-
-Next, what is "replaying merges", exactly? That's explaining one term
-with another that has not being explained and sounds being even more
-vague.
-
-Further, "Merge conflict resolutions or manual amendments to merge
-commits are not rebased automatically, but have to be applied manually."
-is mutually exclusive with "Rebase merge commits", making all this even
-more messy. A merge commit is just content with multiple parents, and
-`git rebase`, by definition, reapplies the changes the content
-introduces. Any "amendments" or "resolutions" that could have been
-happening (or not) when that commit was being created are entirely
-irrelevant.
-
-Further yet it goes with:
-
-"By default, or when `no-rebase-cousins` was specified, commits which do
-not have `<upstream>` as direct ancestor will keep their original branch
-point."
-
-Really? What does it actually mean? What is "commit branch point",
-exactly? What "direct ancestor" means in this context, exactly? Provided
-even when I do know what the option actually does, the description looks
-wrong, how it could explain anything?
-
-Having all this right here in the patch series, you guys try to convince
-me that it should not be fixed? That it meets user expectations? You
-know what? I, as a user, have somewhat higher expectations.
-
-Below is my final attempt at actually defining a sane alternative. If
-you still find this approach inferior, please feel free to ignore it. I
-added "history" at the end of original --no-flatten, as a courtesy to
-user expectations, as you seem to prefer more verbose names:
-
-----------
-
---flatten-history
-	Flatten rebased history by reapplying non-merge commits only.
-        This is the default.
-
---no-flatten-history[=<options>]
-	Do not flatten rebased history. When this option is specified,
-	the original shape of the history being rebased will be
-	preserved. <options> is comma-separated list of supported
-	options.
-
-The following options are supported:
-
-'merge-heads' - perform a merge of rebased merge heads instead of
-rebasing original merge commits. Only commit messages will be taken from
-original merge commits in this mode.
-
-'rebase-cousins' - commits which do not have <upstream> as
-direct ancestor will not keep their original branch point.
-
-------------
-
-In fact I think that 'rebase-cousins' should be removed as making no
-sense, but I've borrowed it from the original anyway, to show how the
-concept of this option itself works to support multiple additional
-options.
-
--- Sergey
