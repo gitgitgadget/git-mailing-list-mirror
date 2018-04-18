@@ -2,121 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16B081F404
-	for <e@80x24.org>; Wed, 18 Apr 2018 21:44:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D564D1F404
+	for <e@80x24.org>; Wed, 18 Apr 2018 21:49:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752699AbeDRVon (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 17:44:43 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:38735 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752255AbeDRVon (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 17:44:43 -0400
-Received: by mail-wr0-f196.google.com with SMTP id h3-v6so8628072wrh.5
-        for <git@vger.kernel.org>; Wed, 18 Apr 2018 14:44:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=LhJGWYuXSrSemphepLZKW406Xg+q77NIsbIeKhOQxfk=;
-        b=p2QE3qS9FvusFDOWWtxkEk4LncEJsE4JC0B2VTXtkA5R+JlYFKvk0NSIOpb6+Puv+5
-         lLorIxD54cFiPzwSRFK1nG9Rb1VKb9flfL6XEppgJtg5VOcri/ltL03lcxduAmBKn38D
-         wX1CZmFL/4oxd8FZQFERrOv6sCOqxKutEJwzeujEmv57uRsRV5LfKSyXeEwO/7uwiTK8
-         ePEQ+AAmkfL+ztvk7uM2iF5Q+SCrKc+Z0kGxXvJpRR49iWTZkddxanj6R8kPTCqPyEPF
-         Mc9e3hzmP4wNeAG3cAcnioV0fvjDBAGcqZ6VI27CjxkqIWlZmAj3zmOfNa4dEUhnBRMN
-         3SxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=LhJGWYuXSrSemphepLZKW406Xg+q77NIsbIeKhOQxfk=;
-        b=W5lWvUjwOMCOGip4abb3uiMMWOTU/q7AEjCQxxoUWtTTlouekkAXsZTTdWavwv1saf
-         07OOPMoXqMVXPCpE0m3wCGTsuiQEHjgX8lxlBa/fa232Gd2xNtZ34Z4p9m2q3EAYvI2t
-         OVzMHwfoj56QmCtqrNQdeyYuBySqsIBnV/oOThMz7F1sxZJXW2IZtn+5e8l9ZgrV+n39
-         jRjZh3T/0UY9E2n6ld9uN2PPqBzyZBV58Ol+vu6mQayWFOSavJMKS3H7hEm6Zb9cb9Zh
-         Lr+dloVdOQdGZ2ijJq6/dxWT1a+uUB96UhNJsGmcjmZ3mx1YPUviAN4SMdnEBVpilrCk
-         +ULQ==
-X-Gm-Message-State: ALQs6tBEE4LzCj7Yj+v6Ur6dqvL/Wa0XOYcEbHq4mEz9iK0b8IPrmqpi
-        AOPnFdwFbSaMyfNvttpd8EXJjRzg
-X-Google-Smtp-Source: AIpwx48zPdK3oVXS9XICSyK4ucXtgrYlY7ujZkxzlN20F/rnJWGvrEJUipysqBiL2/Yxr2hmO/YRww==
-X-Received: by 10.28.173.4 with SMTP id w4mr2947194wme.54.1524087881733;
-        Wed, 18 Apr 2018 14:44:41 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id n73-v6sm3039409wrb.18.2018.04.18.14.44.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Apr 2018 14:44:40 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Hesse <mail@eworm.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>, Dan Jacques <dnj@chromium.org>
-Subject: Re: [PATCH v3 1/1] perl: fix installing modules from contrib
-References: <xmqqpo3620tz.fsf@gitster-ct.c.googlers.com>
-        <20180411065120.9432-1-mail@eworm.de>
-Date:   Thu, 19 Apr 2018 06:44:40 +0900
-In-Reply-To: <20180411065120.9432-1-mail@eworm.de> (Christian Hesse's message
-        of "Wed, 11 Apr 2018 08:51:20 +0200")
-Message-ID: <xmqq36zsgpfb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752245AbeDRVtR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 17:49:17 -0400
+Received: from mout.gmx.net ([212.227.17.22]:37139 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750981AbeDRVtQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 17:49:16 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Le69A-1ef1Bp2bwi-00pwBM; Wed, 18
+ Apr 2018 23:48:53 +0200
+Date:   Wed, 18 Apr 2018 23:48:22 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Kim Gybels <kgybels@infogroep.be>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Oleg Gubanov <oleg.gubanov@gmail.com>
+Subject: Re: [PATCH 2/2] daemon: graceful shutdown of client connection
+In-Reply-To: <20180415202122.GA4657@infogroep.be>
+Message-ID: <nycvar.QRO.7.76.6.1804182316420.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180412210757.7792-1-kgybels@infogroep.be> <20180412210757.7792-3-kgybels@infogroep.be> <nycvar.QRO.7.76.6.1804131440100.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <20180415202122.GA4657@infogroep.be>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:0YmH18hOnoZKJrXzXDNv2liomL3yVR+mzxrx5J+xYqkXoHhZkjN
+ hXT1RsBbQC4ji0A7IYYtKIu5eo50SqthDJvMWl0ge6vHSkT+Kms2B6NTRlH/TkNNwMuZI8C
+ nfxJstQmv1GyBHZ15i5ZJThWJzm3G70ALx28vRcDlC7oIEtvc0D61PTfiwA2dm1ByU1F5I5
+ M+RG3mcyaVKsStBFFtJyA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IFAf3U54Dj8=:oBE+npA03fm4ITjF0NV0sP
+ /ZGIVHxmtMk0eg3jWijpdI6U3yH5Vd0i8yqXgMEgcqy+b5BTUEY9caZr5eNsPRrlMMQjq28ou
+ iUNsUzb1laH74yiFZAxAf5beHT8t16BzLCxZR3JWUsxp0tdsYqETSOnyGhBNQuBr8t2DbCZpH
+ h5wzYyz8qGIJvXnoS2lUrrFu2TMwtaHEwNAqkrrRXFXInFgALS1tlCGH2hdZPgAuKZmlm3kl8
+ ejAPDAQYemGsaAPWsDyznEnK5BxXy5AMCAYQZ9kK0nhlhQOpCLM3CifL+g9Jr13N3n09DyckC
+ 5Efrlnte0KIj4KnlHsjzXZmlEmut2iwOOCPn+S92dDYSeBD3UqqCad41sy0pw1iB0SoVAfhlA
+ UsRY9yXtlWKQPtRrg6cmpozPxrqbKuyZMX52hVU4GvJSWu9784AWoEc0KQeYOg+d4FYyuWc0N
+ ljgtW13NKEa5EZDNfQEZwCMziTshmpABgoId/63u1O7dSok1+U1yfTyr1w3BJhI5RR/cdTc+1
+ vqEK0dfr12v+FZbZtlnyGP79opOtjBn3szoL63UungxMPxN/c8639WtyQh3dhPVXX+zA7ZP2H
+ XZXsKb+YBmp9Go01H2WbrBfW+h/ppQRIkSe5a25v9uZKD/1gGLbhVy6b2XyDYwlN3usbaRYnm
+ yahsgta7ByAXWQGBFlfyPQ+vfSdSWjH8rXD7HRqtL8or8iO/LnEVDdOPb29CM5Nt/pzauCP6A
+ vgqv5I1pSwb7DsTaWGXLV/PNdrWBrb0t8GxAN5qs270zT8zkMKAPk0gbuQgFnOBuGRZbgVzPq
+ x9TtNQ4KakFH6hv47o7kpsykWzBu7FcmPGhdalW2Uutv44O648=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Hesse <mail@eworm.de> writes:
+Hi Kim,
 
-> Commit 20d2a30f (Makefile: replace perl/Makefile.PL with simple make rules)
-> removed a target that allowed Makefiles from contrib/ to get the correct
-> install path. This introduces a new target for main Makefile and fixes
-> installation for Mediawiki module.
->
-> v2: Pass prefix as that can have influence as well, add single quotes
->     for _SQ variant.
-> v3: Rename target, add to .PHONY.
->
-> Signed-off-by: Christian Hesse <mail@eworm.de>
-> ---
+On Sun, 15 Apr 2018, Kim Gybels wrote:
 
-Thanks for rerolling.  I should have made it a bit more clear that
-the say-* thing was merely a personal preference "I would be writing
-it that way if I were doing it", not a "You should write it this way
-when working on this project".  I think .PHONY is still a good idea
-to have, even for only its documentation value (it is unlikely that
-anybody would create a file "perllibdir").
+> On (13/04/18 15:03), Johannes Schindelin wrote:
+> > I wonder whether you found a reliable way to trigger this? It would be
+> > nice to have a regression test for this.
+> 
+> On my system, it reproduced reliably using Oleg's example [1], below is
+> my bash version of it.
 
-Let me queue this on top of the v2 queued in 'next' as an
-incremental update.
+Okay.
 
-Thanks.
+> Script to generate repository with some history:
+> 
+>   $ cat example.sh
+>   #!/bin/bash
+>   
+>   git init example
+>   cd example
+>   
+>   git --help > foo.txt
+>   
+>   for i in $(seq 1 12); do
+>       cat foo.txt foo.txt > bar.txt
+>       mv bar.txt foo.txt
+>       git add foo.txt
+>       git commit -m v$i
+>   done
 
--- >8 --
-From: Christian Hesse <mail@eworm.de>
-SUbject: Makefile: mark perllibdir as a .PHONY target
+Okay, so this sets up a minimal repository with a moderate size, inflating
+foo.txt from the initial Git help text by factor 2**12 = 4096. The help
+text is around 2kB, so we end up with an ~8MB large file in the end that
+grew exponentially.
 
-This target should be marked as .PHONY, just like other targets that
-exist only for their side effects that do not create filesystem
-entities with the same name.
+>   $ ./example.sh
+>   Initialized empty Git repository in C:/git/bug/example/.git/
+>   [master (root-commit) 2e44b4a] v1
+>    1 file changed, 84 insertions(+)
+>    create mode 100644 foo.txt
+>   [master 9791332] v2
+>    1 file changed, 84 insertions(+)
+>   [master 524e672] v3
+>    1 file changed, 168 insertions(+)
+>   [master afec6ef] v4
+>    1 file changed, 336 insertions(+)
+>   [master 1bcd9cc] v5
+>    1 file changed, 672 insertions(+)
+>   [master 2f38a8e] v6
+>    1 file changed, 1344 insertions(+)
+>   [master 33382fe] v7
+>    1 file changed, 2688 insertions(+)
+>   [master 6c2cbd6] v8
+>    1 file changed, 5376 insertions(+)
+>   [master 8d0770f] v9
+>    1 file changed, 10752 insertions(+)
+>   [master 517d650] v10
+>    1 file changed, 21504 insertions(+)
+>   [master 9e12406] v11
+>    1 file changed, 43008 insertions(+)
+>   [master 4c4f600] v12
+>    1 file changed, 86016 insertions(+)
+> 
+> Server side:
+> 
+>   $ git daemon --verbose --reuseaddr --base-path=$(pwd) --export-all
+>   [4760] Ready to rumble
+>   [696] Connection from 127.0.0.1:2054
+>   [696] unable to set SO_KEEPALIVE on socket: No such file or directory
+>   [696] Extended attribute "host": 127.0.0.1
+>   [696] Request upload-pack for '/example'
 
-Signed-off-by: Christian Hesse <mail@eworm.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile | 1 +
- 1 file changed, 1 insertion(+)
+I guess apart from the generated repo size (which would make this an
+expensive test in and of itself), the fact that we have to run the daemon
+(and that lib-git-daemon.sh requires the PIPE prerequisite which we
+disabled on Windows) makes it hard to turn this into a regular regression
+test in t/.
 
-diff --git a/Makefile b/Makefile
-index 75b9ad3b48..b284eb20aa 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1973,6 +1973,7 @@ GIT-PERL-DEFINES: FORCE
- 		echo "$$FLAGS" >$@; \
- 	    fi
+Although we *could* of course introduce a test that does not use
+lib-git-daemon.sh and is hidden behind the EXPENSIVE prerequisite or some
+such.
+
+BTW I just tested this, and it indeed fixes the problem, so I am eager to
+ship it to the Git for Windows users. Let's see whether we can convince
+Junio that your quite small and easy-to-review patches are not too much of
+a maintenance burden, and the fact that they fix a long-standing bug
+should help.
+
+BTW I had to apply this to build with DEVELOPER=1:
+
+diff --git a/daemon.c b/daemon.c
+index 97fadd62d10..1cc901e9739 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -1162,13 +1162,13 @@ static int service_loop(struct socketlist
+*socklist)
+ 	signal(SIGCHLD, child_handler);
  
-+.PHONY: perllibdir
- perllibdir:
- 	@echo '$(perllibdir_SQ)'
+ 	for (;;) {
+-		int i;
++		int i, ret;
  
+ 		check_dead_children();
+ #ifdef NO_POLL
+ 		poll_timeout = live_children ? 100 : -1;
+ #endif
+-		int ret = poll(pfd, socklist->nr, poll_timeout);
++		ret = poll(pfd, socklist->nr, poll_timeout);
+ 		if  (ret == 0) {
+ 			continue;
+ 		} else if (ret < 0) {
+
+Would you mind squashing that in?
+
+Thanks,
+Dscho
