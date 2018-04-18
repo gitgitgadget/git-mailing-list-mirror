@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F99E1F404
-	for <e@80x24.org>; Wed, 18 Apr 2018 22:37:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 106801F404
+	for <e@80x24.org>; Wed, 18 Apr 2018 22:37:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752809AbeDRWhB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 18:37:01 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:53998 "EHLO
+        id S1752914AbeDRWhH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 18:37:07 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:54152 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750981AbeDRWg7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 18:36:59 -0400
+        with ESMTP id S1752846AbeDRWhD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 18:37:03 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 4EF7960A4E; Wed, 18 Apr 2018 22:36:59 +0000 (UTC)
+        id 0A9DA60863; Wed, 18 Apr 2018 22:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1524091019;
-        bh=pSoq7d6vVnolYktUuflDtL3HRDAx3NHq+QAVR6OP2/I=;
+        s=default; t=1524091023;
+        bh=lC7ZMrRswvWLzRVOjYZpQnJAy57pnKkloKgkWWoqePE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:
          References:From;
-        b=nX3vCwNbvvFifAWaa9l6tfFjJLC3AXhml9zUztl8+8Af9sY4mf+4gA/qCoaYcp9ed
-         eB5Qj32RK+QNSuB8qpo71jbvmnQLUbwG7h0MkHRy/wwQLZqr1GW9eQJnX1oS/0kX0C
-         yu4Iev+Ov5cLS2YKwZ+ukzOSg8zyGtzPdHDXhc6g=
+        b=PbQPQlhF71VamitIhWrURxu4a2uwsyxfTJEgoEWz1E1mjzkoKNXfnpPcL7hfZufFC
+         9wYujb7gVpDzfqKxXNI31LXY9HpboG0qpyBvLaQTqg9PHiOU1WRARmeK/6xGFzXIHw
+         CsfngwhcpHCLOYP0Sh+yOUrtp3gMLA0XTh2ZMgMg=
 Received: from localhost.localdomain (unknown [188.27.164.250])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: eddy.petrisor@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CCEEA60500;
-        Wed, 18 Apr 2018 22:36:57 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 59C0560F6D;
+        Wed, 18 Apr 2018 22:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1524091019;
-        bh=pSoq7d6vVnolYktUuflDtL3HRDAx3NHq+QAVR6OP2/I=;
+        s=default; t=1524091022;
+        bh=lC7ZMrRswvWLzRVOjYZpQnJAy57pnKkloKgkWWoqePE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:
          References:From;
-        b=nX3vCwNbvvFifAWaa9l6tfFjJLC3AXhml9zUztl8+8Af9sY4mf+4gA/qCoaYcp9ed
-         eB5Qj32RK+QNSuB8qpo71jbvmnQLUbwG7h0MkHRy/wwQLZqr1GW9eQJnX1oS/0kX0C
-         yu4Iev+Ov5cLS2YKwZ+ukzOSg8zyGtzPdHDXhc6g=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CCEEA60500
+        b=dCpkcWdGQjwjINEwKkyrnro8k8qogowYCc5yYhEUDF80fvs5OnudFLuU87VyEBhnq
+         u3PTUNSS13MqQ7vBvgsi+KMnztbqMXQ8hM3BQhTNAJE3MdgS7gqFQSD6joFyh+24Eg
+         PSrSfywFzOAjWv0/k0t52SJbkzWnVG1c0ptomLKQ=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 59C0560F6D
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=eddy.petrisor@codeaurora.org
 From:   =?UTF-8?q?Eddy=20Petri=C8=99or?= <eddy.petrisor@codeaurora.org>
 To:     sbeller@google.com, jrnieder@gmail.com
 Cc:     =?UTF-8?q?Eddy=20Petri=C8=99or?= <eddy.petrisor@gmail.com>,
         git@vger.kernel.org
-Subject: [RFC PATCH v4 7/9] fixup:t7406:supr5 commit is done before submodules chaining
-Date:   Thu, 19 Apr 2018 01:35:50 +0300
-Message-Id: <20180418223552.18345-7-eddy.petrisor@codeaurora.org>
+Subject: [RFC PATCH v4 9/9] fixup:t7406:change branches in submodules after the link is done
+Date:   Thu, 19 Apr 2018 01:35:52 +0300
+Message-Id: <20180418223552.18345-9-eddy.petrisor@codeaurora.org>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <20180418223552.18345-1-eddy.petrisor@codeaurora.org>
 References: <20180418223552.18345-1-eddy.petrisor@codeaurora.org>
@@ -67,22 +67,40 @@ From: Eddy Petrișor <eddy.petrisor@gmail.com>
 
 Signed-off-by: Eddy Petrișor <eddy.petrisor@gmail.com>
 ---
- t/t7406-submodule-update.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t7406-submodule-update.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 32995e272..18328be73 100755
+index f44872143..68c25ce0f 100755
 --- a/t/t7406-submodule-update.sh
 +++ b/t/t7406-submodule-update.sh
-@@ -279,7 +279,7 @@ test_expect_success 'submodule update --remote --recursive --init should fetch m
- 	git rev-parse --verify HEAD >../expectl1 &&
- 	git checkout master &&
- 	cd ../super5 &&
--	test_commit super5_with_2_chained_modules_on_default_branch &&
-+	test_commit super5_commit_before_2_chained_modules_on_default_branch &&
- 	git submodule add ../submodl1b1 submodl1b1 &&
- 	git config -f .gitmodules submodule."submodl1b1".branch b1 &&
+@@ -267,17 +267,16 @@ test_expect_success 'submodule update --remote --recursive --init should fetch m
+ 	git checkout -b b2 &&
+ 	test_commit "l2_on_b2" &&
+ 	git rev-parse --verify HEAD >../expectl2 &&
+-	git checkout master &&
+ 	cd ../submodl1b1 &&
+ 	git checkout -b b1 &&
+ 	test_commit "l1_on_b1" &&
+ 	git submodule add ../submodl2b2 submodl2b2 &&
+ 	git config -f .gitmodules submodule."submodl2b2".branch b2 &&
  	git add .gitmodules &&
++	git -C ../submodl2b2 checkout master &&
+ 	test_tick &&
+ 	git commit -m "add l2 (on b2) in l1 (on b1)" &&
+ 	git rev-parse --verify HEAD >../expectl1 &&
+-	git checkout master &&
+ 	cd ../super5 &&
+ 	test_commit super5_commit_before_2_chained_modules_on_default_branch &&
+ 	git submodule add ../submodl1b1 submodl1b1 &&
+@@ -285,6 +284,7 @@ test_expect_success 'submodule update --remote --recursive --init should fetch m
+ 	git add .gitmodules &&
+ 	test_tick &&
+ 	git commit -m "add l1 module with branch b1 in super5" &&
++	git -C ../submodl1b1 checkout master &&
+ 	git submodule init submodl1b1 &&
+ 	cd .. &&
+ 	git clone super5 super_w &&
 -- 
 2.16.2
 
