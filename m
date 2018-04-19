@@ -7,101 +7,104 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF7C91F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 23:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF68B1F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 23:25:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753745AbeDSXZR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 19:25:17 -0400
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:41182 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753601AbeDSXZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 19:25:17 -0400
-Received: by mail-wr0-f178.google.com with SMTP id v24-v6so18190214wra.8
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 16:25:16 -0700 (PDT)
+        id S1753817AbeDSXZT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 19:25:19 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:44469 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753601AbeDSXZS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 19:25:18 -0400
+Received: by mail-wr0-f194.google.com with SMTP id o15-v6so18199362wro.11
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 16:25:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yTDzQ2nHBD4SBC/UFwaN8CSErXRadX/4gy9BWp0D78g=;
-        b=LAeCRtyZNBRlGs13z9PvKg2FTRQOlureYpidK+0wkwegASgF4QHldSRT1Pz2x6FTr1
-         IECAvy3i2mRCSypFpGfigKa1aJmJQl/DgjAQP8Ila5NkLsQ0yhcplsDrUpQv+FszfNj1
-         aJ4Bh4YQrKWAJJLPu20SpdWOZrAnpTHU7KbbxQ2zOOC0rlvCv9FgV7u31KYmvALSpgr7
-         2G4d28oRg+2rMHqmCiuAJuWa933mrU9X2jaJ3a5cWklpWPUBCzyPL46sXhA8eV7EZGHD
-         RpD1r/AWTGqQt5cXKcP3GTbU49I++MGORmvux8W9j80stXHpJMoGogzKyCyPDVhvjTqJ
-         5CvA==
+        bh=fM7ZHK9BK2DMUGHDBr9il2kPEAOJSY4lHm3irk3jO1s=;
+        b=lUaj3ryGa/yl+QQwmyiYUytwoou2e5sWsl6olf+3KcGivLvLCEn7k3wwjXT2rptgLe
+         7rDrgPW3cFDOuqcGIjtgIve2ix5oLlLzuANxxHBFy0Ed4VAXrD2FYRtf6vujiOJon/H/
+         BoM6CTjvHQtezEcyTwQIoWwiI6Vt1DRFT1Ty+bUXQwpvpaPYCUp98YQjzSTPhRGl925w
+         wf/+wYImAw5whaPMo3vK6cYdIM8HUozky+nfP3dLeM1rLwY7UMv7sj4gFl7DfAj8aqKy
+         A2CeDEzZoEaEF8K+WefzP4cHO2pGUJ2JYw606pjr0UQNp3mV+Jxq3pXRyITfAtdzdeUK
+         Qfrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=yTDzQ2nHBD4SBC/UFwaN8CSErXRadX/4gy9BWp0D78g=;
-        b=GQVG0OkfZv6Tq2N5NxlQFPxfezXo/FPT4H5IhlI7RdzXxbRGbokSxRcWCe1gMnup1O
-         ijZsCrAGO6xflhARdSwUs6WUBaZ9pH2adri5qMK3ARhIKvQOkqFGSw7lQpWdInsimWxW
-         15zkJWBVWr+P5t0TIYlkQx5KWh+DDXIw5cY1AEqwDG9H8LZ2BuN6bP7vPD7ahBNM9uwz
-         AB90O3qNqC2NnaON3BDc/sWeRAJj/IV/zPUqgcSiFgJMmn83/WSyvn4JfwGh/LW0O2lK
-         WA0qN2VC8z7LV5mJhKtc8yKyDVyiQXUyl/Kkhx+6pM9CndlOpXcb/C5rvn17Q7M0TCIz
-         qLMw==
-X-Gm-Message-State: ALQs6tAqlWX/Mlg8cnSE+JDpgK25jZZTgC2Pjw5U7KYlQW6cPVbGmqmH
-        ZZoEj/To3BJjvHObJYPZsKg1GvNk
-X-Google-Smtp-Source: AIpwx4+HubtsHHBHHFIiTAdQe/s+YF+eoxNDrV9J3EzbmXHNGxQidoYDZHeSHJGvp4ugitw3eSWfYA==
-X-Received: by 10.28.21.84 with SMTP id 81mr395181wmv.36.1524180315602;
-        Thu, 19 Apr 2018 16:25:15 -0700 (PDT)
+        bh=fM7ZHK9BK2DMUGHDBr9il2kPEAOJSY4lHm3irk3jO1s=;
+        b=JGjc6TAVbMVTJwvwwzRB878S514vBrZnTDr5xCYnHB/2oHRBvJ5xD64eh47wDgGDRi
+         3ZqG40G1gR1DzOnfJV1qBKoPxsfAu8nHKx0cs4QJzaBLqmpkuGd5Hc+WaNA0hlTDUNzO
+         4tF3aXG0G6ZHtbo6EBgZLuC73Z0JRq05rpsV7otk1MRwE1nEI8HC2JhoKPBF4W9ZnwIY
+         xC2U8sn106RnvvPylnu7nb5dR8Tby5MMznuHUXSnW6ij2BzkiO6zxa0+2JVsIFNKUy94
+         3Eqm3w6KsZmddfPQNtra5sAhaNTq/2E71NnyesrG3txG6jkw76Qv3SxbqhT8dhjYwZnO
+         wsYg==
+X-Gm-Message-State: ALQs6tAOTNPETVCPNJ7BmHcJ8f/tYu3pa9vBxfN9TkvbC+RiPhtMvaO2
+        AKJOFyBhYkp9FdrUt9BwUDGM2H1c
+X-Google-Smtp-Source: AIpwx48JyFATzzYMmCXF+uD09bTkC7kw8GbyUItE4EnnLbv231N46WDHt88qR2ToSFRDZdDgOFsMIA==
+X-Received: by 2002:adf:c358:: with SMTP id e24-v6mr6320839wrg.86.1524180317283;
+        Thu, 19 Apr 2018 16:25:17 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id v134sm304282wmv.32.2018.04.19.16.25.13
+        by smtp.gmail.com with ESMTPSA id 55-v6sm8442064wrw.52.2018.04.19.16.25.16
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Apr 2018 16:25:14 -0700 (PDT)
+        Thu, 19 Apr 2018 16:25:16 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 0/2] completion: improvements for git stash
-Date:   Fri, 20 Apr 2018 00:25:12 +0100
-Message-Id: <20180419232514.16572-1-t.gummerer@gmail.com>
+Subject: [PATCH v2 1/2] completion: stop showing 'save' for stash by default
+Date:   Fri, 20 Apr 2018 00:25:13 +0100
+Message-Id: <20180419232514.16572-2-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.17.0.252.gfe0a9eaf31
-In-Reply-To: <20180417212945.24002-1-t.gummerer@gmail.com>
+In-Reply-To: <20180419232514.16572-1-t.gummerer@gmail.com>
 References: <20180417212945.24002-1-t.gummerer@gmail.com>
+ <20180419232514.16572-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previous round was at <20180417212945.24002-1-t.gummerer@gmail.com>.
+The 'save' subcommand in git stash has been deprecated in
+fd2ebf14db ("stash: mark "git stash save" deprecated in the man page",
+2017-10-22).
 
-Thanks Junio for your input on the previous round.
+Stop showing it when the users enters 'git stash <tab>' or 'git stash
+s<tab>'.  Keep showing it however when the user enters 'git stash sa<tab>'
+or any more characters of the 'save' subcommand.  This is designed to
+not encourage users to use 'git stash save', but still leaving the
+completion option once it's clear that's what the user means.
 
-This round drops what was 1/3 in the previous round.  We keep
-completing the options for 'git stash save', so calling the variable
-'save_opts' and defining what would be 'push_opts' as 'save_opts' +
-'--message' makes sense.
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ contrib/completion/git-completion.bash | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-2/3 (now 1/2) was mostly rewritten.  We now no longer suggest 'save'
-in 'git stash <tab>', complete 'git stash s<tab>' will complete to
-'git stash show', but 'git stash sa<tab>' (or longer) will keep
-completing to 'git stash save', as the user most likely already knows
-about 'git stash save', and wanted to type that.  We also keep
-completing the options for 'git stash save' on 'git stash save
---<tab>'.
-
-3/3 (now 2/2) stays the same as in the previous round.
-
-I didn't find a good way to implement "reluctant completion" (I'm also
-by no means an expert in bash completion, so there may well be a way I
-couldn't find by googl'ing around), so I left that out of this
-series.
-
-I don't think it's strictly necessary for the deprecation either, as
-we can just print a warning message when the user actually uses 'git
-stash save' at some point, which would make a message printed when
-using the completion redundant anyway.  I feel like that warning
-message is not something we're quite ready for yet and I'd rather wait
-a few more releases before doing that though.
-
-Thomas Gummerer (2):
-  completion: stop showing 'save' for stash by default
-  completion: make stash -p and alias for stash push -p
-
- contrib/completion/git-completion.bash | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index a757073945..9a95b3b7b1 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2774,13 +2774,18 @@ _git_show_branch ()
+ _git_stash ()
+ {
+ 	local save_opts='--all --keep-index --no-keep-index --quiet --patch --include-untracked'
+-	local subcommands='push save list show apply clear drop pop create branch'
+-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
++	local subcommands='push list show apply clear drop pop create branch'
++	local subcommand="$(__git_find_on_cmdline "$subcommands save")"
+ 	if [ -z "$subcommand" ]; then
+ 		case "$cur" in
+ 		--*)
+ 			__gitcomp "$save_opts"
+ 			;;
++		sa*)
++			if [ -z "$(__git_find_on_cmdline "$save_opts")" ]; then
++				__gitcomp "save"
++			fi
++			;;
+ 		*)
+ 			if [ -z "$(__git_find_on_cmdline "$save_opts")" ]; then
+ 				__gitcomp "$subcommands"
 -- 
 2.17.0.252.gfe0a9eaf31
 
