@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2FC11F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 18:35:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDC441F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 18:42:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752984AbeDSSfW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 14:35:22 -0400
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:43153 "EHLO
-        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751092AbeDSSfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 14:35:21 -0400
-Received: by mail-vk0-f66.google.com with SMTP id v134so3771398vkd.10
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 11:35:21 -0700 (PDT)
+        id S1753057AbeDSSmA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 14:42:00 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:46181 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752908AbeDSSl7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 14:41:59 -0400
+Received: by mail-yw0-f193.google.com with SMTP id i17-v6so1979148ywg.13
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 11:41:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=IoKB98Nt6SbzhfXznBGvDDdWFdtdkmzxX1fKBQqH/7Q=;
-        b=E2+McFL+oDLKT29MeJwCqjSCFywQVLQojUC6tfNQUjjlLpa8Tkd7yDExNot36g+85D
-         qSAFShKFLI7mYx89hF4ic9n2IMwXW/9pk/t5Hj6dS7vOL/UcGceAGHflQWUQ6LtZsn7h
-         6Uob+uwob7w5MlK6MKvsVJRmE48xUZjEu04lXObkCUoDZoC7oHJ8lJLPH0GNJgxdy6Og
-         +2pPoBStzyUh7KjSOEV0KgX6J5cgTPoWkf8d5cFWg2AIzrSySw7tjuQmEif8Gtgd6cIV
-         pd6glADJZ8J/l+GffTGP6MF46TfoY195fVyoLdF3LWOzTObYL/NRNwClz6Ld9uCwn8s5
-         m6cQ==
+        bh=8creohGcEb5yNowhnLsFVG4s3vMatIPpVUfoh5oersc=;
+        b=Xq+uZmkw1wZO33tKlu/9BO9NS67PLN25rVBGs0voOIbYl3v8eGq/+zSW5l9SRPuLh2
+         w5Mk88O0GpaamWp3Xw2t5BKQnTCBMLxZ1RKDJuKl0F3IyZ/xuv2jSzNa9XHZ5+P21dGC
+         pTnEr26nTz9iTipEG4OlT6OrIjR8khxXQlBrJPHXzcdviiFQWxTnfeV0+3X/gwrtEQ+m
+         YFQADnecTgJHwf4uGo7GOLRjYbNvd8hi+NJM4ufsRju9aBdPMeM/TGpZ1g4OjE81s0ye
+         K+uYilmq1YrRGAVfk/HJDud+jqAckFjM81/s7aAzBt95fsm+Q3o/8fnXv7+2Bs8cJorL
+         fVJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=IoKB98Nt6SbzhfXznBGvDDdWFdtdkmzxX1fKBQqH/7Q=;
-        b=EhYZZY7G3SsXAZXz4nysxzxL+NrUw/4t8gtmil56oydGVxqfK73uf9RnFwWRswI3Le
-         TW1QG8iZHK6NSKhFmaOKnzyNmEKPfhTETqeK/X8UIVszLNdNOLb5981jZczk00wL2zA1
-         vc+dzNRMaxYd1TjNdeeC6DCCaNa9N7stDXtd1NVSckeshQLuVtzL12n5ohfpBdIi9ZLV
-         wZXRegDz6s6TNGBfgHaQHbGMKK3uRYFLMOjhyPK7/1pXRsdYUclsDzXw4EdrQ+XEe9g1
-         lDQVxBQJ+LC6T+r97C8oDs/c76O+z5H/aTYzhlFqEIKhUyzDzxofrnzGs+XfCIbWVS9o
-         VH8g==
-X-Gm-Message-State: ALQs6tAL/86b/O2Ahwj8HgcUM9ir9uDyaC/frp3p5CEj2o6Acr1+nppS
-        /f83naOiLnz8jaa8lGBKXul0cukfjmFymG1f0Cweqg==
-X-Google-Smtp-Source: AIpwx4/OThRbFhOa57uGoEMSrsHBZ+a7/CoU/ulWVusmfU2o7pDKCy3U4Ie+ggk2HT61jdzvVWFKxdNv9DpklZrAanM=
-X-Received: by 10.31.55.10 with SMTP id e10mr5135366vka.106.1524162920255;
- Thu, 19 Apr 2018 11:35:20 -0700 (PDT)
+        bh=8creohGcEb5yNowhnLsFVG4s3vMatIPpVUfoh5oersc=;
+        b=SIAz89On97HjFTdmzL6sO/6Mq4m6VuwDCW5ViwhbyXEILOVlsE76Y0bU9yh7quX78K
+         OJov3tlo20nzNkQSIQwSQvyknFCRq5rsRD8qY2qMXnJmODDF6GY3M1VW48MsRipYG5L3
+         VPlM3YmL+6aP5HKI+aClTqzRpznqXJEmlwKs/2MtzlYED9FcXDvzTKvC8EmBgg278UVj
+         719nja7vIJ+Eofk0uOPCZfMFeU+v1TBx6DxQsetotYR/gLVrKtQigIStSMK3U311akZj
+         qFg45VxOwRbjtZeDzLKhLq9cvha/4dtaafTNaUmjp71Fm3hkaMHNoBc7EOxele0QypYy
+         CLLA==
+X-Gm-Message-State: ALQs6tBItOEC6cmxXJAclqW3sO7/Emh42kayDTBRcnxG34khpQlzXkDy
+        Q3R9oVeUvIZJWFgaKbLefphoAXQcGYYNS69oMKRdARYm3Kc=
+X-Google-Smtp-Source: AIpwx49QIv65YEJqwr7pbAamNKcE9dD1qFRzRdANYKK/5RTtZblEk8WDkEB/x3GYtpKUR6z+d++55ZgIpoPN83dXR7o=
+X-Received: by 2002:a81:8801:: with SMTP id y1-v6mr4233856ywf.238.1524163319002;
+ Thu, 19 Apr 2018 11:41:59 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Thu, 19 Apr 2018 11:35:19 -0700 (PDT)
-In-Reply-To: <20180419175823.7946-1-newren@gmail.com>
-References: <20180419175823.7946-1-newren@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 19 Apr 2018 11:35:19 -0700
-Message-ID: <CABPp-BEhfMPNEtAvdc3MsX5mWsq=YT_=rVeOzCfidJde7Mhh-Q@mail.gmail.com>
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Thu, 19 Apr 2018 11:41:58
+ -0700 (PDT)
+In-Reply-To: <CABPp-BEhfMPNEtAvdc3MsX5mWsq=YT_=rVeOzCfidJde7Mhh-Q@mail.gmail.com>
+References: <20180419175823.7946-1-newren@gmail.com> <CABPp-BEhfMPNEtAvdc3MsX5mWsq=YT_=rVeOzCfidJde7Mhh-Q@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 19 Apr 2018 11:41:58 -0700
+Message-ID: <CAGZ79kat76NhYW1wbV+4=CaYdZ6ESMtBeUJuyi6yvRF2vJjFRQ@mail.gmail.com>
 Subject: Re: [PATCH v10 00/36] Add directory rename detection to git
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -64,15 +65,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 19, 2018 at 10:57 AM, Elijah Newren <newren@gmail.com> wrote:
-> This series is a reboot of the directory rename detection series that was
-> merged to master and then reverted due to the final patch having a buggy
-> can-skip-update check, as noted at
->   https://public-inbox.org/git/xmqqmuya43cs.fsf@gitster-ct.c.googlers.com/
-> This series based on top of master.
+On Thu, Apr 19, 2018 at 11:35 AM, Elijah Newren <newren@gmail.com> wrote:
+> On Thu, Apr 19, 2018 at 10:57 AM, Elijah Newren <newren@gmail.com> wrote:
+>> This series is a reboot of the directory rename detection series that was
+>> merged to master and then reverted due to the final patch having a buggy
+>> can-skip-update check, as noted at
+>>   https://public-inbox.org/git/xmqqmuya43cs.fsf@gitster-ct.c.googlers.com/
+>> This series based on top of master.
+>
+> ...and merges cleanly to next but apparently has some minor conflicts
+> with both ds/lazy-load-trees and ps/test-chmtime-get from pu.
+>
+> What's the preferred way to resolve this?  Rebase and resubmit my
+> series on pu, or something else?
 
-...and merges cleanly to next but apparently has some minor conflicts
-with both ds/lazy-load-trees and ps/test-chmtime-get from pu.
+If you were to base it off of pu, this series would depend on all other
+series that pu contains. This is bad for the progress of this series.
+(If it were to be merged to next, all other series would automatically
+merge to next as well)
 
-What's the preferred way to resolve this?  Rebase and resubmit my
-series on pu, or something else?
+If the conflicts are minor, then Junio resolves them; if you want to be
+nice, pick your merge point as
+
+    git checkout origin/master
+    git merge ds/lazy-load-trees
+    git merge ps/test-chmtime-get
+    git tag my-anchor
+
+and put the series on top of that anchor.
+
+If you do this, you'd want to be reasonably sure that
+those two series are not in too much flux.
+
+Thanks,
+Stefan
