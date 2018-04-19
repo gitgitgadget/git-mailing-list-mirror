@@ -6,91 +6,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCCC71F424
-	for <e@80x24.org>; Thu, 19 Apr 2018 10:39:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 404CF1F424
+	for <e@80x24.org>; Thu, 19 Apr 2018 10:42:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751695AbeDSKjw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 06:39:52 -0400
-Received: from zucker2.schokokeks.org ([178.63.68.90]:50777 "EHLO
+        id S1752665AbeDSKmb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 06:42:31 -0400
+Received: from zucker2.schokokeks.org ([178.63.68.90]:43709 "EHLO
         zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751136AbeDSKjv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 06:39:51 -0400
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Apr 2018 06:39:51 EDT
+        with ESMTP id S1751168AbeDSKm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 06:42:29 -0400
 Received: from localhost (localhost [::1])
   (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-  by zucker.schokokeks.org with ESMTPSA; Thu, 19 Apr 2018 12:35:06 +0200
-  id 000000000000010F.000000005AD870DA.00002DC2
-Date:   Thu, 19 Apr 2018 12:34:47 +0200
+  by zucker.schokokeks.org with ESMTPSA; Thu, 19 Apr 2018 12:37:43 +0200
+  id 00000000000000EE.000000005AD87177.000032EC
+Date:   Thu, 19 Apr 2018 12:37:25 +0200
 From:   Simon Ruderich <simon@ruderich.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Silly "git gc" UI issue.
-Message-ID: <20180419103447.GA19591@ruderich.org>
-References: <CA+55aFxSZLuk++Dz6SonD+JhbbSDt9G9VcBx5f1CV=6nJC9hvg@mail.gmail.com>
- <xmqqr2ncezdc.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH/RFC 0/5] Keep all info in command-list.txt in git binary
+Message-ID: <20180419103725.GB19591@ruderich.org>
+References: <20180326165520.802-1-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
-In-Reply-To: <xmqqr2ncezdc.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20180326165520.802-1-pclouds@gmail.com>
 User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 19, 2018 at 10:52:47AM +0900, Junio C Hamano wrote:
-> It turns out that prune silently goes away given a bad expiry
->
->     $ git prune --expire=nyah ; echo $?
->     129
+Hello,
 
-I noticed that git log --since/--after/--before/--until have a
-similar behavior and ignore date parsing errors in those options
-completely. Is this expected or should we warn the user with
-something like the following?
+When running make -j$(nproc) with the current pu f9f8c1f765
+(Merge branch 'hn/bisect-first-parent' into pu) I see the
+following error:
 
-diff --git a/revision.c b/revision.c
-index 4e0e193e57..e5ba6c7dfc 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1794,19 +1794,31 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->max_age = atoi(optarg);
- 		return argcount;
- 	} else if ((argcount = parse_long_opt("since", argv, &optarg))) {
--		revs->max_age = approxidate(optarg);
-+		int err = 0;
-+		revs->max_age = approxidate_careful(optarg, &err);
-+		if (err)
-+			return error("--since: invalid time '%s'", optarg);
- 		return argcount;
- 	} else if ((argcount = parse_long_opt("after", argv, &optarg))) {
--		revs->max_age = approxidate(optarg);
-+		int err = 0;
-+		revs->max_age = approxidate_careful(optarg, &err);
-+		if (err)
-+			return error("--after: invalid time '%s'", optarg);
- 		return argcount;
- 	} else if ((argcount = parse_long_opt("min-age", argv, &optarg))) {
- 		revs->min_age = atoi(optarg);
- 		return argcount;
- 	} else if ((argcount = parse_long_opt("before", argv, &optarg))) {
--		revs->min_age = approxidate(optarg);
-+		int err = 0;
-+		revs->min_age = approxidate_careful(optarg, &err);
-+		if (err)
-+			return error("--before: invalid time '%s'", optarg);
- 		return argcount;
- 	} else if ((argcount = parse_long_opt("until", argv, &optarg))) {
--		revs->min_age = approxidate(optarg);
-+		int err = 0;
-+		revs->min_age = approxidate_careful(optarg, &err);
-+		if (err)
-+			return error("--until: invalid time '%s'");
- 		return argcount;
- 	} else if (!strcmp(arg, "--first-parent")) {
- 		revs->first_parent_only = 1;
+GIT_VERSION = 2.17.0.732.gf9f8c1f765
+    * new build flags
+    * new prefix flags
+    GEN common-cmds.h
+    * new link flags
+    CC ident.o
+    CC hex.o
+    CC json-writer.o
+./generate-cmdlist.sh: 73: ./generate-cmdlist.sh: Bad substitution
+
+This doesn't occur on a non-parallel build.
 
 Regards
 Simon
