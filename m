@@ -2,123 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 213C11F424
-	for <e@80x24.org>; Thu, 19 Apr 2018 08:23:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB0BB1F424
+	for <e@80x24.org>; Thu, 19 Apr 2018 08:28:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750974AbeDSIXa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 04:23:30 -0400
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:33514 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750858AbeDSIX2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 04:23:28 -0400
-Received: by mail-wr0-f178.google.com with SMTP id z73-v6so11586125wrb.0
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 01:23:28 -0700 (PDT)
+        id S1752507AbeDSI2j (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 04:28:39 -0400
+Received: from mail-wr0-f181.google.com ([209.85.128.181]:39899 "EHLO
+        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751150AbeDSI2g (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 04:28:36 -0400
+Received: by mail-wr0-f181.google.com with SMTP id q3-v6so1575941wrj.6
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 01:28:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=SB4vQlymVG/M7zFUvR8ueJiXSNkg0fiXmVFPgk+GXsM=;
-        b=GKYrrqUitg2/yC7StuDrsNukaaDPF1TneQrGAvihWg8XHJrVrlL5p/2SaFM842SBw7
-         0s5EgMbxDJjvlo4qq+blT4pbuFpd8G3ELkl4PXibQC0eQiXIezkqaurtUibTUFXvxSTs
-         DwRjW3dsdEvk7lAqbFRgGl7ryZu1u3LzvDnEisnlml/EbqnLvcmny3e8klvwcCAOxn+2
-         WJmYfuUEVsnH4cHXMqfG3mkkAcNW/8xOR9YwJKowNmiw7+dsFE+UpRb1zw2BQyCdRlfn
-         /S28DVQ6Xkbl5oJAxIfT0mXfduDEEQ0ciUodtKQ+I246TLOID0kJm9qH1LgUDAdNwB5S
-         VpkA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=kujTB2Rqs0/egzsaudmqyRaAPlgP3kEkIfDmU2aNLvk=;
+        b=nc5Z4bQXq9tzrtv89XoC5AcuV5MO/gsU4SSeIqcPDDYxiWJ6aY5mfhsrb2M9AtIJXU
+         JpZlQeptaCQqgh8rz0IumxJ/kUU9fUeuiinVzo6B2vfWYly72jQkJq8tsaODdGMieH4v
+         ZjKrcGNCRP1Pdwi46Qi0RoBYieCOwc7j0rjGcj8C+WbLIy08UGso5803LdLXvM1TQ2+H
+         78oB0mA80tLwYWa7eR7foQwV9u3h2oH97MFGxdH4NQry+yEb/S+d2BAHe0xev2FLkrO7
+         KjSMG+UBvm+Q7PvpdVgvkpYyAKRjPmO+IzJBHQlHKkhfXFFRzYCX6PFzUYCoXgS/NlpY
+         pmTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=SB4vQlymVG/M7zFUvR8ueJiXSNkg0fiXmVFPgk+GXsM=;
-        b=tB1XupojmEzAI51H4bdB2C+jb3++O7kGKgZIqQ59uZ5PXjUHdLeNayASV/c0crMUh/
-         BTSqisj/OPkhqDnZiNSILlVmjNnT6laItSyrAwlTLEW3L2b6cxmVXrf8TdNkw1lnCPpB
-         5jnhC3ACCJoWQD1Bgw50JM0sIwSWoIDQZvmcOSSSTxrcigQnQ2YfbY8wXjtBfugIZFT0
-         D+oDFY9SNEWsNvQtkXtLEjhEadsLxfeKLY/E35yEnCVinTuySPXWvFoz9yp+SYy6JFVn
-         NJG55nuMllpcrYNbKHqWrqjBkrmL6XFAX2fpiE3DkPbmlx7WuhTbXAZSLPiqIaStBx+n
-         Q21Q==
-X-Gm-Message-State: ALQs6tCDPyW+23vYw+KgFNZjtLzj5in17WmJmktpUBA7qZkGswzc4iLq
-        JVwO5oiD2S9pdxEzoJkokOlS/ZQjTbr8LqmYvL8=
-X-Google-Smtp-Source: AIpwx4+8rrgzUh+oI0XeZDNmLq7vWV9b7Hcv3tkWQYe27RxIMH/At4ia/EoQngu9kM8IhqoOqf2ihFGq8GUUJKx9ToI=
-X-Received: by 10.80.171.72 with SMTP id t8mr7488024edc.133.1524126207407;
- Thu, 19 Apr 2018 01:23:27 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=kujTB2Rqs0/egzsaudmqyRaAPlgP3kEkIfDmU2aNLvk=;
+        b=fiy2GDEqEtpp3SXXMx1WMasrO//bRk/evD7vvkIj5Ac/ooc761Y5RrZahmqlr6kfbn
+         oZ/EvHbyLth7eaxU08msNzvhwGCJzmtYxwkEkxjrgLm3WIQLAAlDzxngiNOmt7uJvAES
+         zvDSze62VeJ4z/Oh/G9VZWjshw9XcNNx+RuFpGxiaKjtcY2K8I+BT/i36E3NNs2hF6jm
+         oijPbq6WJ7cMsU2s9GMRlN9olHvlccpkxDRdMchvfN6IJaiDQwbhjYSDzNgIsumF12MG
+         hrh2Os9JEeiRLlf2VqsqIUdo3GWIk+OzWZRx9LeMXwHw6+ZYH9sKLE7eujbto9Jv30k+
+         ++DA==
+X-Gm-Message-State: ALQs6tD2/DVTgLHviKFUf5QepSb1JitHKnUyCqE6AgxflBmD6xHH/Q5V
+        9Z6dz/fSNacuf1Bf0XdaritcLpD1
+X-Google-Smtp-Source: AIpwx4/Su/hEkyQZC33jT1beDwQqWnpQVsRLXL8Xbxd1yLdt9xvpYOXB3OHUzK1wMYBHdrUaSLiCeg==
+X-Received: by 10.80.142.9 with SMTP id 9mr7317306edw.101.1524126514333;
+        Thu, 19 Apr 2018 01:28:34 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id x49sm2273156edb.94.2018.04.19.01.28.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 19 Apr 2018 01:28:33 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <junio@pobox.com>,
+        demerphq <demerphq@gmail.com>
+Subject: Re: [RFC WIP PATCH] merge: implement -s theirs -X N
+References: <87sh7sdtc1.fsf@evledraar.gmail.com> <xmqqpo2verc6.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqpo2verc6.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 19 Apr 2018 10:28:32 +0200
+Message-ID: <87r2nbeh1r.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.80.180.180 with HTTP; Thu, 19 Apr 2018 01:23:06 -0700 (PDT)
-In-Reply-To: <87fu3r257z.fsf@javad.com>
-References: <cover.1519680483.git.johannes.schindelin@gmx.de>
- <cover.1523362469.git.johannes.schindelin@gmx.de> <87tvsj6rn2.fsf@javad.com>
- <nycvar.QRO.7.76.6.1804110009080.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <871sfm737e.fsf@javad.com> <nycvar.QRO.7.76.6.1804111324350.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <87h8oh51jm.fsf@javad.com> <CA+P7+xq8KJKJ0d1unW3btUhKVjOZM3EdTSKdDs96pn5J3WwSKA@mail.gmail.com>
- <87sh810ym4.fsf@javad.com> <CA+P7+xq8LOUZxVd832cOQFi4V=2YvydxtT6_y4NLKvFkki4QdA@mail.gmail.com>
- <nycvar.QRO.7.76.6.1804130002090.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <5d522cc9-3922-9f24-3a1e-0c121c47ca96@talktalk.net> <nycvar.QRO.7.76.6.1804140146450.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <87fu3r257z.fsf@javad.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 19 Apr 2018 01:23:06 -0700
-Message-ID: <CA+P7+xrv54RBFx1eYbvgVyqQ88uxT73vOf3jazCVsvuXwvd-gA@mail.gmail.com>
-Subject: Re: [PATCH v6 00/15] rebase -i: offer to recreate commit topology
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 18, 2018 at 9:24 PM, Sergey Organov <sorganov@gmail.com> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> Hi Phillip,
->>
->> On Fri, 13 Apr 2018, Phillip Wood wrote:
->>
->>> On 12/04/18 23:02, Johannes Schindelin wrote:
->>> >
->>> > [...]
->>> >
->>> > So: the order of the 3-way merges does matter.
->>> >
->>> > [...]
->>>
->>> Those conflicts certainly look intimidating (and the ones in your later
->>> reply with the N way merge example still look quite complicated). One
->>> option would be just to stop and have the user resolve the conflicts
->>> after each conflicting 3-way merge rather than at the end of all the
->>> merges. There are some downsides: there would need to be a way to
->>> explain to the user that this is an intermediate step (and what that
->>> step was); the code would have to do some book keeping to know where it
->>> had got to; and it would stop and prompt the user to resolve conflicts
->>> more often which could be annoying but hopefully they'd be clearer to
->>> resolve because they weren't nested.
->>
->> I thought about that. But as I pointed out: the order of the merges *does*
->> matter. Otherwise we force the user to resolve conflicts that they
->> *already* resolved during this rebase...
->
-> How it's relevant to what Phillip suggested? How the order of taking 2
-> steps, A and B, affects an ability to stop after the first step? It's
-> still either "A,stop,B" or "B,stop,A", depending on the chosen order.
->
-> What's the _actual_ problem here, if any?
->
-> -- Sergey
 
-I believe the order of the merges changes which ones cause conflicts,
-but it's possible to generate pre-images (i.e. a set of parents to
-merge) which cause conflicts regardless of which ordering we pick, so
-I'm not sure there is a "best ordering".
+On Thu, Apr 19 2018, Junio C. Hamano wrote:
 
-Thanks,
-Jake
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>
+>> We have a -s ours, but not a -s theirs. This is a WIP patch to implement
+>> that. It works, but I haven't dealt with this part of the internal API
+>> before, comments most welcome.
+>>
+>> The purpose of this is that I'm working with a rollout tool that is
+>> capable of doing hotfixes on top of old commits on "master".
+>>
+>> It does this by cherry-picking a commit from origin/master, and then
+>> merges it with origin/master & pushes it back, before finally reset
+>> --hard to the cherry-pick & rolling out.
+>>
+>> The reason it's doing this is to maintain the guarantee that all rolled
+>> out commits are reachable from "master", and to handle the more general
+>> case where original work is made during a hotfix, we don't want to then
+>> do a subsequent "normal" rollout and miss the fix.
+>
+> This question has nothing to do with your "-s theirs" but let me see
+> if I got the above correctly.  Suppose you have a deployed branch
+> (say, "prod"), all developments happen on "master" elsewhere that
+> can be seen as "origin/master", so you may have a few fixes that is
+> not yet in "prod" you would want to cherry-pick from origin/master.
+>
+>     $ git checkout prod
+>     $ git cherry-pick origin/master~2
+>     $ git cherry-pick origin/master
+>
+> Let's say that "master" had a fix at HEAD~2, HEAD~1 is a feature
+> enhancement that is not yet ready for "prod", and HEAD is another
+> fix.  Up to this point you successfully back-ported the fixes to
+> "prod".
+>
+> Then you do merge the tip into "master", i.e.
+>
+>     $ git checkout origin/master && git merge -s ours prod
+>     $ git push origin HEAD:master
+>     $ git checkout prod
+>
+> to make sure that the "master" at the source of truth knows that
+> it already has what our "prod" with these two cherry-picks have.
+>
+> Is that what is going on here?
+>
+> I am just wondering what would and should happen to the non-fix
+> commit in the middle in the above example.  Perhaps your workflow
+> automatically does the right thing to it, perhaps not.
+>
+>
+> [Footnote]
+>
+> Obviously you can do this the other way around if you had "-s
+> theirs", i.e. instead of the last two lines from the above sequence,
+> you could do
+>
+>     $ git merge -s nth -X 2 origin/master
+>     $ git push origin HEAD:master
+>     $ git reset --hard HEAD@{1}
+>
+> but it is not all that interesting (at least to me) either way, as a
+> larger issue with the above I'd imagine people would see is that
+> even temporarily you would expose "master" material in that working
+> tree you usually have "prod" checkout.  That would irritate those
+> who consider that "push to deploy" aka "live site is actually a
+> working tree" is sensible more than the lack of "-s theirs" I would
+> think.
+
+Yeah this -s theirs is redundant to just doing it the other way around
+as you describe.
+
+The reason I want it is to always do the hotfix merge the same way
+whether I'm dealing with a case where there's original work in the
+hotfix (rare) or the case where there's just stuff to "prod"
+cherry-picked from "master" (common).
+
+I.e. I have:
+
+ 1. No original work on the hotfix. As determined by comparing the
+    patch-id output of @{u}.. and ..@{u} and seeing if the patch ids I
+    have cherry-picked are from commits that exist since there was last
+    a full rollout.
+
+ 2. Original work during the hotfix on top of "prod", which we'll then
+    want in the next rollout (when it'll be synced with "master").
+
+Only #1 should use `-s theirs -X 2`, but #2 will just use the normal
+merge strategy, i.e. it's possible we'll conflict, but then we should
+resolve the conflict and push the fix to "master" (or at least
+explicitly decide not to keep it).
+
+I think that supporting this use-case explicitly in git is better than
+having some unintuitive workaround where I'll first need to check out
+the other branch purely because git-merge has an artificial limitation
+of the "ours" driver having no mode to pick the Nth commit.
