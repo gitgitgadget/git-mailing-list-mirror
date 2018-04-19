@@ -2,126 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC8C61F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 17:21:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A55891F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 17:32:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752976AbeDSRVQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 13:21:16 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:47056 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752640AbeDSRVP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 13:21:15 -0400
-Received: by mail-wr0-f195.google.com with SMTP id d1-v6so16065863wrj.13
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 10:21:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=SWB72GH0YPOKeBLNbx40fbhi8Cte0ftgk62yGwWH4uw=;
-        b=g/fuNUPpGICHH88EJ8EiiFoDoU0Cbn/NP5/pGf+Z0ZtwUL6amMXr47WjSt+hkrS9tV
-         VPhEeGdRE3XXMmfLWJiITr4dOH08bS5UyFe2TuTcQGxy0S+E44UxI381MT7gRc+3jY+B
-         m9hLBkKSpTxfSkNAdv8ZssAq7O8CWEq7ultOkPMHJuqDb4At4MLBVN0pX8nZLwa+t8pk
-         AugcxxIQxMZXpZ0huVFb4YVa4E2AbNyyo4vVxbwC6NJ0U4j7f0PNs35qtfNib3EtY+4Y
-         J4K2Takj0s1vjZ1jEnFgfxOAXeOYf8WLLZfGPmzQWOKjWpFV1Xc2Onj4/SbHfQkHrzig
-         PLzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=SWB72GH0YPOKeBLNbx40fbhi8Cte0ftgk62yGwWH4uw=;
-        b=fgAFbkNZwyvGGYKQPppUFS07X+0bmmq9bqwd/ZCaR/Z0Jde2FdJjtha6BDuN19zo8B
-         NZPuwsHjR4rQpJgIAvIVSoAz/VtuDHnzJjMpQgSGuJ1pniIm53UP8KKxuTnaEa/IyaEF
-         8Y+8omxT4AtrBUlNkAOSmeXyWgfRBMHNoDqcO/Zgul7ULAage6qNkU65YL+2UFLNPpcg
-         ccFuovdDKjkGo53RoI2d8ehzQHGQsY0F2tpfNHKK8RfW/ZEvycRlSXkwsYzu4pUNkIZ9
-         0Rz3l7XrPS7Pscnkit6+c3jlvPwwG7UCfJWCikOwpSjvxEDU5pQjhJyEZK6JPvZ70iDW
-         0NxA==
-X-Gm-Message-State: ALQs6tCqzfyob8yS73SVdjpRJwv853ASflWhw6sxnbomzUGGuOevYdgM
-        JvNCi4LBOeHyQX6qFMk/JAI=
-X-Google-Smtp-Source: AIpwx48Iexs6f6roXhdBhED4kLEaZ/SrZdoqlsb/tmxYSLYghjRKlJlu3+UlgS0+p+5VEY9Ye6ja5Q==
-X-Received: by 10.28.12.129 with SMTP id 123mr5036250wmm.75.1524158474499;
-        Thu, 19 Apr 2018 10:21:14 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egc153.neoplus.adsl.tpnet.pl. [83.21.66.153])
-        by smtp.gmail.com with ESMTPSA id b105-v6sm7138351wrd.64.2018.04.19.10.21.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Apr 2018 10:21:12 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 04/12] commit-graph: parse commit from chosen graph
-References: <20180417181028.198397-1-dstolee@microsoft.com>
-        <20180417181028.198397-5-dstolee@microsoft.com>
-Date:   Thu, 19 Apr 2018 19:21:12 +0200
-In-Reply-To: <20180417181028.198397-5-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Tue, 17 Apr 2018 18:10:40 +0000")
-Message-ID: <86bmeff6yf.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1752953AbeDSRcg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 13:32:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51065 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752804AbeDSRcf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 13:32:35 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A4296E4511;
+        Thu, 19 Apr 2018 13:32:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=XOPqgl6aTvcmM
+        34phj24P5w1Fh4=; b=wuCxckN3JXBaLSooLcKm/LT7EdNI/tBn+6db0PLiJAfLH
+        W3+T2AkCFHkw0zaiCoZWq5Bbr6Qkxg+GzNq4FU70/NYUJrSD8Jri1Ua2obIhAVzk
+        zxPz7kdOs4f63TyHFvkb4etW1ArOwQ1Stwc15IeSxiHszZZz1G4hxReWHaHEUU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=CHn/noI
+        qH8reeUUFCf2kCdknLrzIbaj2NGPxJOKVVT/haajog+2EiRqZnk0aSkcN44TZqXR
+        5hmqTXt7aluaEaZGcLBlZo4nyiC/6rAnk/u7add0SHA1Eq1mCPqgLD/D/4g1EOHn
+        EEndgXW+pz0Qjs6mt2LzXYqd0fc2OYl+o+zM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9CBBEE4510;
+        Thu, 19 Apr 2018 13:32:32 -0400 (EDT)
+Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 285EFE450F;
+        Thu, 19 Apr 2018 13:32:32 -0400 (EDT)
+Date:   Thu, 19 Apr 2018 13:32:30 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: [PATCH] doc/clone: update caption for GIT URLS cross-reference
+Message-ID: <20180419173230.GZ29831@zaya.teonanacatl.net>
+References: <alpine.LFD.2.21.1804160538100.3564@localhost.localdomain>
+ <87y3hn5drx.fsf@linux-m68k.org>
+ <alpine.LFD.2.21.1804160918120.6924@localhost.localdomain>
+ <CA+P7+xrDsPXA6Bq77gYwWtc16Dz4drg+CHA80=vBNB9-NhxHVg@mail.gmail.com>
+ <xmqqefjewxr4.fsf@gitster-ct.c.googlers.com>
+ <alpine.LFD.2.21.1804170831190.6019@localhost.localdomain>
+ <CA+P7+xrebnWe_6P0uGu2yEmXZ0+qjpykjrv39Nhd2hUPzO_96g@mail.gmail.com>
+ <xmqqd0yxl6n9.fsf@gitster-ct.c.googlers.com>
+ <20180418205635.GU29831@zaya.teonanacatl.net>
+ <CAN0heSrrpvRXGi1hzUuRqXcQCOJQcBcLWAWQKXrivx6tkxAsBw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <CAN0heSrrpvRXGi1hzUuRqXcQCOJQcBcLWAWQKXrivx6tkxAsBw@mail.gmail.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Pobox-Relay-ID: A402F304-43F7-11E8-8CD1-67830C78B957-09356542!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+The description of the <repository> argument directs readers to "See the
+URLS section below".  When generating HTML this becomes a link to the
+"GIT URLS" section.  When reading the man page in a terminal, the
+caption is slightly misleading.  Use "GIT URLS" as the caption to avoid
+any confusion.
 
-> Before checking a commit-graph file against the object database, we
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+Martin =C5gren wrote:
+> On 18 April 2018 at 22:56, Todd Zullinger <tmz@pobox.com> wrote:
+>> Subject: [PATCH] doc/clone: update caption for GIT URLS cross-referenc=
+e
+>>
+>> The description of the <repository> argument directs readers to "See t=
+he
+>> URLS section below".  When generating HTML this becomes a link to the
+>> "GIT URLS" section.  When reading the man page in a terminal, the
+>> caption is slightly misleading.  Use "GIT URLS" as the caption to avoi=
+d
+>> an confusion.
+>=20
+> s/an/any/?
 
-Actually there is quite a few checks more that can be done without
-accessing the object database... I'll take a look at later commits why
-this one is that relatively early in the series.
+Indeed, thanks.
 
-> need to parse all commits from the given commit-graph file. Create
-> parse_commit_in_graph_one() to target a given struct commit_graph.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  commit-graph.c | 18 ++++++++++++++----
->  1 file changed, 14 insertions(+), 4 deletions(-)
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index c5e5a0f860..6d0d303a7a 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -308,17 +308,27 @@ static int find_commit_in_graph(struct commit *item, struct commit_graph *g, uin
->  	}
->  }
->  
-> -int parse_commit_in_graph(struct commit *item)
-> +int parse_commit_in_graph_one(struct commit_graph *g, struct commit *item)
->  {
->  	uint32_t pos;
->  
->  	if (item->object.parsed)
-> -		return 0;
-> +		return 1;
+>> The man page produced by asciidoc doesn't include hyperlinks.  The
+>> description of the <repository> argument simply
+>=20
+> Abandoned first attempt at log message? ;-)
 
-I am confused and befuddled by those apparent changes between returning
-0 or returning 1 when object was parsed.
+That or it was when a squirrel ran by my window. ;)
 
-> +
-> +	if (find_commit_in_graph(item, g, &pos))
-> +		return fill_commit_in_graph(item, g, pos);
-> +
-> +	return 0;
-> +}
-> +
-> +int parse_commit_in_graph(struct commit *item)
-> +{
->  	if (!core_commit_graph)
->  		return 0;
-> +
->  	prepare_commit_graph();
-> -	if (commit_graph && find_commit_in_graph(item, commit_graph, &pos))
-> -		return fill_commit_in_graph(item, commit_graph, pos);
-> +	if (commit_graph)
-> +		return parse_commit_in_graph_one(commit_graph, item);
->  	return 0;
->  }
+Thanks for catching both of these mistakes.
 
-Seems all right.
+ Documentation/git-clone.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 42ca7b5095..b844b9957c 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -260,7 +260,7 @@ or `--mirror` is given)
+=20
+ <repository>::
+ 	The (possibly remote) repository to clone from.  See the
+-	<<URLS,URLS>> section below for more information on specifying
++	<<URLS,GIT URLS>> section below for more information on specifying
+ 	repositories.
+=20
+ <directory>::
+--=20
+2.17.0
+
+--=20
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Whenever you find yourself on the side of the majority, it is time to
+pause and reflect.
+    -- Mark Twain
+
