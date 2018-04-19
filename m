@@ -7,108 +7,78 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE1581F424
-	for <e@80x24.org>; Thu, 19 Apr 2018 08:14:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0470E1F424
+	for <e@80x24.org>; Thu, 19 Apr 2018 08:16:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752192AbeDSIOe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 04:14:34 -0400
-Received: from mout.gmx.net ([212.227.15.15]:41381 "EHLO mout.gmx.net"
+        id S1751136AbeDSIQG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 04:16:06 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53777 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750974AbeDSIOc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 04:14:32 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MMkDH-1f4Ox21lpH-008dNI; Thu, 19
- Apr 2018 10:14:27 +0200
-Date:   Thu, 19 Apr 2018 10:14:10 +0200 (DST)
+        id S1750858AbeDSIQE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 04:16:04 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MfEZG-1elLsL2zEI-00Osfi; Thu, 19
+ Apr 2018 10:15:59 +0200
+Date:   Thu, 19 Apr 2018 10:15:43 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+To:     Stefan Beller <sbeller@google.com>
+cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH] Deprecate support for .git/info/grafts
-In-Reply-To: <CAPig+cREYENM7Y8SqtG2ket9+oJ6w0OU1_Qa8f-+O_yDyH=Aww@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804190944470.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <0f0942043678fe76f8d654306482ee26fac643f0.1523617836.git.johannes.schindelin@gmx.de> <CAPig+cREYENM7Y8SqtG2ket9+oJ6w0OU1_Qa8f-+O_yDyH=Aww@mail.gmail.com>
+In-Reply-To: <CAGZ79kawFhCuDbAndg2oU87jFT-PhpLBMoEBumN=J_DfGK=v9A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804191014430.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <0f0942043678fe76f8d654306482ee26fac643f0.1523617836.git.johannes.schindelin@gmx.de> <CAGZ79kbEec_U5wL_aOS5O_3+ZOshGwARALpjz801h-fRx-zotA@mail.gmail.com> <nycvar.QRO.7.76.6.1804132339130.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CAGZ79kawFhCuDbAndg2oU87jFT-PhpLBMoEBumN=J_DfGK=v9A@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:hCOU9cgdM50jeU6rerFBfOmBkI5FKcrYR1fnL2Q6x7S+51fs3OF
- s2yU5zJh00M+ZKn9lsgVBKgD5DpKnIVXThOtPnt5ZLA4lcRq4RRpI6vE5pa/JRqnGbuvVlo
- 0jJYf0Dg0JCWukb5N6a1IYrawRhsHXzQ6W4Jup5kNdfv+v5BHNeIA26Mok16PhGFnGADeCt
- vnxKBtadshYUMuBIhuegA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3oQ/0Jx7lFI=:A2YXgWNpPpi5vXIKYXNzEa
- qDrE2zkzAZKPCS4cxMnscGTpCO4PknAOEgMYyDOSbDIBOAD3x/XZT/H9O9A5vqvvEty64/4TK
- qh1uXrrKi96dXwCACFRd4VprNsI2ZXAs0Q7EMgzKuD/3dpUkiWbPsID0oCIQzRXfildQ2eshK
- AkydYhqATJwDr5uZS3IjQa3+MJDtcg2IWfbxV7xY0QkI4RuyXXLnhfKO4ciiSM516bCd2UxXn
- cSGH1mimgLbPnKYwZg598V7pa11KHTlbdBxtmL8q09ptDa1n+KbTjnSUrt+5udCemrXKKo8Fl
- CiU0W5purwykePZhQhQo45T2BctwE2ahmUQG4+QaVAf6n5YKy2qhiTGf3AsA/o1Qy5plridsF
- FUjiTSoRYzv9bLrqFAZlCmmI1Zydd+mlAF/k3b24tUySLU7068nQGvyp9NHZB/48Hze9TLCVN
- RvPx0nh/Kftt0Q1MsgKonJQJ/HYuhziWQehol7xRYL0Q7MD26i0d80c8QhYUTsNCnhFVEsizH
- 6a6epvLT8uEX2iApDKMikFgpysLGioYAWXZtAkpzX9xFdOTTEx+z0bqcp8sRzVERyfEDQ7zaI
- 46+gLzacWGvIehDPg70Vs9iStqRcoj2JTT5zCb0MttuS9xp/15ix1tyNpk0ZmLuB/FNUrs0th
- iFMCYsvKEsavRFhnKxLrNWybfH5sz/Gsb7dei46cjq6r/JEy3ucKO4VxMv/esWYInLUuTYcnb
- Sh82sYzl19JI9a/N2TAhVGeypx2vA4M8erzpLDrlAyALpAU916scaM9SvF8BReyOYQE6DzNTl
- iCZgbqRo7Bj1UGRYhbfk3lsh2KoRXiu4UQAxvVFwCcLTi1AG8U=
+X-Provags-ID: V03:K1:ZBvPAO+giidOit+VLwFPl7i1Dkz8dUbSVEkH6ReO+i77PZ4KG5c
+ 0azW67MT2aRJSY/n5H/PPflOcvnZ+EH4kSVkA2LAyCWQW5d8xr7Lc/Hiv19s8L3Cbd9UzH8
+ PzK8IGXZKT3+fpC+rZwiMJodfH/m+bUyOE7gX5SLTivDT5YEiw8coOacyIIn4kZIk9XHg2L
+ EORYFdQUjkpyOGx8bvlDA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:R2RokygGtGs=:4C33Fs9y1/H64qTrGrhgcu
+ Bl2fXIm0dML/AzrNvJh2Xnfo+S4svhiQjaAMxdwZbVIkKhZcRu4CLUPhwDcWDumT0KlZE476k
+ ssL9HmG8FoeZvGXihbenWWhZM1nkrSw8nXShTzgqY6UO2oQyplp7S+4wCopP0IU0I1FS/hOLX
+ T6Jvwr6x0bhJD3kSjRfZFhICy3VwhtERyO6AiO9Xp5JwDqYWfsmXx4iYuTTAZ/R1w40FLXrIZ
+ rKydZAuVT5sktMx1+SbYk10vVUhBftZi1/7ui92zvDYvDslDI6wCASh/uV2N4HDN+m/FakzOd
+ RW3z0dQDuWm5ekRb9cATbXG9ddiSNBOtyC7gUN7p3qb6oWzZGrXg7jDf62ZrrFNQtoq6b20xB
+ IX2JB0yJJNgtiTYb1xmNpWzufaKxU9LGgIxShE/a7HdVOf7FxBs5wyCNQpu/PMOJLxqjYvZKI
+ qTaazbRISzSai/lnyshQjjfzN9ZwbLphtGju3+gHHl1KWCC6QyJ/ePI4BT03MhTe+/akhFwz5
+ Pxy0qZlbOeziEw5RO2CKYceun3OfaJasVBrI/aBEu1EoIByAkORx/GYvkmSvahg4eviZB2AjT
+ DTfvF7dGD5Z3FBrqfOTN2Y0swxCgll3oN0vUBNgpMO68OXHiRkVhpZx2Mt40TYDvSmdyrEkX9
+ 0U32tbTspTrX2mokyArlNuGwydt4X+5qodZwOTv8jm0evr+uLgLMflPKc55vg+wV23exFABdR
+ 7rH/okRY+jsi+tA6iK4xSwVBNaVFAijvXcj4X4QzR9z9Hzbspi697AVQXUkWVOSWvdMnV8xQ2
+ T4DhQh2f1boKdhsVTmtCwEKThemT5ezpvnUh4BhHz/SKS55S10=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi Stefan,
 
-On Fri, 13 Apr 2018, Eric Sunshine wrote:
+On Fri, 13 Apr 2018, Stefan Beller wrote:
 
-> On Fri, Apr 13, 2018 at 7:11 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > The grafts feature was a convenient way to "stich together" ancient
-> > history to the fresh start of linux.git.
-> > [...]
-> > The much younger feature implemented as `git replace` set out to remedy
-> > those limitations and dangerous bugs.
-> >
-> > Seeing as `git replace` is pretty mature by now, it is time to deprecate
-> > support for the graft file, and to retire it eventually.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  advice.c                  | 2 ++
-> >  advice.h                  | 1 +
-> >  commit.c                  | 9 +++++++++
-> >  t/t6001-rev-list-graft.sh | 9 +++++++++
-> >  4 files changed, 21 insertions(+)
+> On Fri, Apr 13, 2018 at 3:35 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 > 
-> Perhaps, as part of this deprecation, the example in
-> Documentation/git-filter-branch.txt should be updated to suggest
-> git-replace instead of .git/info/grafts.
+> >> I wonder if we want to offer a migration tool or just leave it at
+> >> this hint.
+> >
+> > There is contrib/convert-grafts-to-replace-refs.sh.
+> 
+> Oh cool! I wonder if we want to expose it more such that people
+> discover it.
 
-Good point!
+Nah.
 
-> Maybe, also, Documentation/shallow.txt should talk about replace-refs
-> rather than .git/info/grafts.
+> > I wonder whether we have to care enough to implement a `git replace
+> > --convert-graft-file`...
+> 
+> I don't think so.
 
-Sure. Internally, of course, "shallow" is still handled very much like the
-graft file. In that sense, it is probably a good thing to keep referring
-to the graft file in technical/shallow *in addition* to replace refs.
-
-The reason why the graft file should be deprecated does not apply to
-the shallow file at all, either: the entire set of problems with grafts
-comes from the fact that you can *replace* the parents *with other
-parents*. That allows for pushing corrupt history to public repositories
-IIRC. The same problems do not arise with the shallow feature, where you
-can *cut* history, but not replace it.
-
-There is a notable difference between shallow commits and replace refs
-which I did not think about earlier (it actually only came up in testing):
-we currently disallow completely to replace merge commits when they
-contain mergetags, i.e. entries in the commit header that record the hash
-of the *tag* that was merged (if any). That includes the case where you
-want to replace the commit with a root commit, as would be needed for
-shallow commits.
-
-However, there are more reasons not to conflate the shallow commits with
-replaced commits: by nature, the "shallow" attribute is a lot more
-volatile than the "replaced" one, as we want to keep it easy to deepen the
-history (or to "unshallow" it).
+After reflecting about this in the back of my mind, I actually do. So I
+implemented it.
 
 Ciao,
 Dscho
