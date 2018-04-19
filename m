@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1D941F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 18:00:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E3D11F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 18:00:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753319AbeDSSAX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 14:00:23 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:42134 "EHLO
+        id S1753102AbeDSSAW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 14:00:22 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:42132 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752667AbeDSR6h (ORCPT
+        by vger.kernel.org with ESMTP id S1752618AbeDSR6h (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 19 Apr 2018 13:58:37 -0400
 Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w3JHw46a014669;
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w3JHw3B1014663;
         Thu, 19 Apr 2018 10:58:30 -0700
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2hdry1au89-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2hdry1au86-2;
         Thu, 19 Apr 2018 10:58:29 -0700
 Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id F072B22175AD;
-        Thu, 19 Apr 2018 10:58:28 -0700 (PDT)
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 4CCD022175D8;
+        Thu, 19 Apr 2018 10:58:29 -0700 (PDT)
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id E67EA2CDEED;
-        Thu, 19 Apr 2018 10:58:28 -0700 (PDT)
+        by smtp.yojoe.local (Postfix) with ESMTP id 3F1A02CDE6F;
+        Thu, 19 Apr 2018 10:58:29 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com,
         torvalds@linux-foundation.org, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v10 18/36] merge-recursive: add get_directory_renames()
-Date:   Thu, 19 Apr 2018 10:58:05 -0700
-Message-Id: <20180419175823.7946-19-newren@gmail.com>
+Subject: [PATCH v10 25/36] merge-recursive: fix overwriting dirty files involved in renames
+Date:   Thu, 19 Apr 2018 10:58:12 -0700
+Message-Id: <20180419175823.7946-26-newren@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.ge988e9ce2a
 In-Reply-To: <20180419175823.7946-1-newren@gmail.com>
 References: <20180419175823.7946-1-newren@gmail.com>
@@ -54,324 +54,279 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This populates a set of directory renames for us.  The set of directory
-renames is not yet used, but will be in subsequent commits.
-
-Note that the use of a string_list for possible_new_dirs in the new
-dir_rename_entry struct implies an O(n^2) algorithm; however, in practice
-I expect the number of distinct directories that files were renamed into
-from a single original directory to be O(1).  My guess is that n has a
-mode of 1 and a mean of less than 2, so, for now, string_list seems good
-enough for possible_new_dirs.
+This fixes an issue that existed before my directory rename detection
+patches that affects both normal renames and renames implied by
+directory rename detection.  Additional codepaths that only affect
+overwriting of dirty files that are involved in directory rename
+detection will be added in a subsequent commit.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- merge-recursive.c | 224 +++++++++++++++++++++++++++++++++++++++++++++-
- merge-recursive.h |  18 ++++
- 2 files changed, 239 insertions(+), 3 deletions(-)
+ merge-recursive.c                   | 85 ++++++++++++++++++++++-------
+ merge-recursive.h                   |  2 +
+ t/t3501-revert-cherry-pick.sh       |  2 +-
+ t/t6043-merge-rename-directories.sh |  2 +-
+ t/t7607-merge-overwrite.sh          |  2 +-
+ unpack-trees.c                      |  4 +-
+ unpack-trees.h                      |  4 ++
+ 7 files changed, 77 insertions(+), 24 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 30894c1cc7..22c5e8e5c9 100644
+index c1c4faf61e..7fdcba4f22 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -49,6 +49,44 @@ static unsigned int path_hash(const char *path)
- 	return ignore_case ? strihash(path) : strhash(path);
+@@ -337,32 +337,37 @@ static void init_tree_desc_from_tree(struct tree_desc *desc, struct tree *tree)
+ 	init_tree_desc(desc, tree->buffer, tree->size);
  }
  
-+static struct dir_rename_entry *dir_rename_find_entry(struct hashmap *hashmap,
-+						      char *dir)
-+{
-+	struct dir_rename_entry key;
-+
-+	if (dir == NULL)
-+		return NULL;
-+	hashmap_entry_init(&key, strhash(dir));
-+	key.dir = dir;
-+	return hashmap_get(hashmap, &key, NULL);
-+}
-+
-+static int dir_rename_cmp(const void *unused_cmp_data,
-+			  const void *entry,
-+			  const void *entry_or_key,
-+			  const void *unused_keydata)
-+{
-+	const struct dir_rename_entry *e1 = entry;
-+	const struct dir_rename_entry *e2 = entry_or_key;
-+
-+	return strcmp(e1->dir, e2->dir);
-+}
-+
-+static void dir_rename_init(struct hashmap *map)
-+{
-+	hashmap_init(map, dir_rename_cmp, NULL, 0);
-+}
-+
-+static void dir_rename_entry_init(struct dir_rename_entry *entry,
-+				  char *directory)
-+{
-+	hashmap_entry_init(entry, strhash(directory));
-+	entry->dir = directory;
-+	entry->non_unique_new_dir = 0;
-+	strbuf_init(&entry->new_dir, 0);
-+	string_list_init(&entry->possible_new_dirs, 0);
-+}
-+
- static void flush_output(struct merge_options *o)
+-static int git_merge_trees(int index_only,
++static int git_merge_trees(struct merge_options *o,
+ 			   struct tree *common,
+ 			   struct tree *head,
+ 			   struct tree *merge)
  {
- 	if (o->buffer_output < 2 && o->obuf.len) {
-@@ -1357,6 +1395,169 @@ static struct diff_queue_struct *get_diffpairs(struct merge_options *o,
- 	return ret;
+ 	int rc;
+ 	struct tree_desc t[3];
+-	struct unpack_trees_options opts;
+ 
+-	memset(&opts, 0, sizeof(opts));
+-	if (index_only)
+-		opts.index_only = 1;
++	memset(&o->unpack_opts, 0, sizeof(o->unpack_opts));
++	if (o->call_depth)
++		o->unpack_opts.index_only = 1;
+ 	else
+-		opts.update = 1;
+-	opts.merge = 1;
+-	opts.head_idx = 2;
+-	opts.fn = threeway_merge;
+-	opts.src_index = &the_index;
+-	opts.dst_index = &the_index;
+-	setup_unpack_trees_porcelain(&opts, "merge");
++		o->unpack_opts.update = 1;
++	o->unpack_opts.merge = 1;
++	o->unpack_opts.head_idx = 2;
++	o->unpack_opts.fn = threeway_merge;
++	o->unpack_opts.src_index = &the_index;
++	o->unpack_opts.dst_index = &the_index;
++	setup_unpack_trees_porcelain(&o->unpack_opts, "merge");
+ 
+ 	init_tree_desc_from_tree(t+0, common);
+ 	init_tree_desc_from_tree(t+1, head);
+ 	init_tree_desc_from_tree(t+2, merge);
+ 
+-	rc = unpack_trees(3, t, &opts);
++	rc = unpack_trees(3, t, &o->unpack_opts);
++	/*
++	 * unpack_trees NULLifies src_index, but it's used in verify_uptodate,
++	 * so set to the new index which will usually have modification
++	 * timestamp info copied over.
++	 */
++	o->unpack_opts.src_index = &the_index;
+ 	cache_tree_free(&active_cache_tree);
+ 	return rc;
+ }
+@@ -795,6 +800,20 @@ static int would_lose_untracked(const char *path)
+ 	return !was_tracked(path) && file_exists(path);
  }
  
-+static void get_renamed_dir_portion(const char *old_path, const char *new_path,
-+				    char **old_dir, char **new_dir)
++static int was_dirty(struct merge_options *o, const char *path)
 +{
-+	char *end_of_old, *end_of_new;
-+	int old_len, new_len;
++	struct cache_entry *ce;
++	int dirty = 1;
 +
-+	*old_dir = NULL;
-+	*new_dir = NULL;
++	if (o->call_depth || !was_tracked(path))
++		return !dirty;
 +
-+	/*
-+	 * For
-+	 *    "a/b/c/d/e/foo.c" -> "a/b/some/thing/else/e/foo.c"
-+	 * the "e/foo.c" part is the same, we just want to know that
-+	 *    "a/b/c/d" was renamed to "a/b/some/thing/else"
-+	 * so, for this example, this function returns "a/b/c/d" in
-+	 * *old_dir and "a/b/some/thing/else" in *new_dir.
-+	 *
-+	 * Also, if the basename of the file changed, we don't care.  We
-+	 * want to know which portion of the directory, if any, changed.
-+	 */
-+	end_of_old = strrchr(old_path, '/');
-+	end_of_new = strrchr(new_path, '/');
-+
-+	if (end_of_old == NULL || end_of_new == NULL)
-+		return;
-+	while (*--end_of_new == *--end_of_old &&
-+	       end_of_old != old_path &&
-+	       end_of_new != new_path)
-+		; /* Do nothing; all in the while loop */
-+	/*
-+	 * We've found the first non-matching character in the directory
-+	 * paths.  That means the current directory we were comparing
-+	 * represents the rename.  Move end_of_old and end_of_new back
-+	 * to the full directory name.
-+	 */
-+	if (*end_of_old == '/')
-+		end_of_old++;
-+	if (*end_of_old != '/')
-+		end_of_new++;
-+	end_of_old = strchr(end_of_old, '/');
-+	end_of_new = strchr(end_of_new, '/');
-+
-+	/*
-+	 * It may have been the case that old_path and new_path were the same
-+	 * directory all along.  Don't claim a rename if they're the same.
-+	 */
-+	old_len = end_of_old - old_path;
-+	new_len = end_of_new - new_path;
-+
-+	if (old_len != new_len || strncmp(old_path, new_path, old_len)) {
-+		*old_dir = xstrndup(old_path, old_len);
-+		*new_dir = xstrndup(new_path, new_len);
-+	}
++	ce = cache_file_exists(path, strlen(path), ignore_case);
++	dirty = (ce->ce_stat_data.sd_mtime.sec > 0 &&
++		 verify_uptodate(ce, &o->unpack_opts) != 0);
++	return dirty;
 +}
 +
-+static struct hashmap *get_directory_renames(struct diff_queue_struct *pairs,
-+					     struct tree *tree)
+ static int make_room_for_path(struct merge_options *o, const char *path)
+ {
+ 	int status, i;
+@@ -2687,6 +2706,7 @@ static int handle_modify_delete(struct merge_options *o,
+ 
+ static int merge_content(struct merge_options *o,
+ 			 const char *path,
++			 int file_in_way,
+ 			 struct object_id *o_oid, int o_mode,
+ 			 struct object_id *a_oid, int a_mode,
+ 			 struct object_id *b_oid, int b_mode,
+@@ -2761,7 +2781,7 @@ static int merge_content(struct merge_options *o,
+ 				return -1;
+ 	}
+ 
+-	if (df_conflict_remains) {
++	if (df_conflict_remains || file_in_way) {
+ 		char *new_path;
+ 		if (o->call_depth) {
+ 			remove_file_from_cache(path);
+@@ -2795,6 +2815,30 @@ static int merge_content(struct merge_options *o,
+ 	return mfi.clean;
+ }
+ 
++static int conflict_rename_normal(struct merge_options *o,
++				  const char *path,
++				  struct object_id *o_oid, unsigned int o_mode,
++				  struct object_id *a_oid, unsigned int a_mode,
++				  struct object_id *b_oid, unsigned int b_mode,
++				  struct rename_conflict_info *ci)
 +{
-+	struct hashmap *dir_renames;
-+	struct hashmap_iter iter;
-+	struct dir_rename_entry *entry;
-+	int i;
++	int clean_merge;
++	int file_in_the_way = 0;
 +
-+	/*
-+	 * Typically, we think of a directory rename as all files from a
-+	 * certain directory being moved to a target directory.  However,
-+	 * what if someone first moved two files from the original
-+	 * directory in one commit, and then renamed the directory
-+	 * somewhere else in a later commit?  At merge time, we just know
-+	 * that files from the original directory went to two different
-+	 * places, and that the bulk of them ended up in the same place.
-+	 * We want each directory rename to represent where the bulk of the
-+	 * files from that directory end up; this function exists to find
-+	 * where the bulk of the files went.
-+	 *
-+	 * The first loop below simply iterates through the list of file
-+	 * renames, finding out how often each directory rename pair
-+	 * possibility occurs.
-+	 */
-+	dir_renames = xmalloc(sizeof(struct hashmap));
-+	dir_rename_init(dir_renames);
-+	for (i = 0; i < pairs->nr; ++i) {
-+		struct string_list_item *item;
-+		int *count;
-+		struct diff_filepair *pair = pairs->queue[i];
-+		char *old_dir, *new_dir;
-+
-+		/* File not part of directory rename if it wasn't renamed */
-+		if (pair->status != 'R')
-+			continue;
-+
-+		get_renamed_dir_portion(pair->one->path, pair->two->path,
-+					&old_dir,        &new_dir);
-+		if (!old_dir)
-+			/* Directory didn't change at all; ignore this one. */
-+			continue;
-+
-+		entry = dir_rename_find_entry(dir_renames, old_dir);
-+		if (!entry) {
-+			entry = xmalloc(sizeof(struct dir_rename_entry));
-+			dir_rename_entry_init(entry, old_dir);
-+			hashmap_put(dir_renames, entry);
-+		} else {
-+			free(old_dir);
-+		}
-+		item = string_list_lookup(&entry->possible_new_dirs, new_dir);
-+		if (!item) {
-+			item = string_list_insert(&entry->possible_new_dirs,
-+						  new_dir);
-+			item->util = xcalloc(1, sizeof(int));
-+		} else {
-+			free(new_dir);
-+		}
-+		count = item->util;
-+		*count += 1;
++	if (was_dirty(o, path)) {
++		file_in_the_way = 1;
++		output(o, 1, _("Refusing to lose dirty file at %s"), path);
 +	}
 +
-+	/*
-+	 * For each directory with files moved out of it, we find out which
-+	 * target directory received the most files so we can declare it to
-+	 * be the "winning" target location for the directory rename.  This
-+	 * winner gets recorded in new_dir.  If there is no winner
-+	 * (multiple target directories received the same number of files),
-+	 * we set non_unique_new_dir.  Once we've determined the winner (or
-+	 * that there is no winner), we no longer need possible_new_dirs.
-+	 */
-+	hashmap_iter_init(dir_renames, &iter);
-+	while ((entry = hashmap_iter_next(&iter))) {
-+		int max = 0;
-+		int bad_max = 0;
-+		char *best = NULL;
-+
-+		for (i = 0; i < entry->possible_new_dirs.nr; i++) {
-+			int *count = entry->possible_new_dirs.items[i].util;
-+
-+			if (*count == max)
-+				bad_max = max;
-+			else if (*count > max) {
-+				max = *count;
-+				best = entry->possible_new_dirs.items[i].string;
-+			}
-+		}
-+		if (bad_max == max)
-+			entry->non_unique_new_dir = 1;
-+		else {
-+			assert(entry->new_dir.len == 0);
-+			strbuf_addstr(&entry->new_dir, best);
-+		}
-+		/*
-+		 * The relevant directory sub-portion of the original full
-+		 * filepaths were xstrndup'ed before inserting into
-+		 * possible_new_dirs, and instead of manually iterating the
-+		 * list and free'ing each, just lie and tell
-+		 * possible_new_dirs that it did the strdup'ing so that it
-+		 * will free them for us.
-+		 */
-+		entry->possible_new_dirs.strdup_strings = 1;
-+		string_list_clear(&entry->possible_new_dirs, 1);
-+	}
-+
-+	return dir_renames;
++	/* Merge the content and write it out */
++	clean_merge = merge_content(o, path, file_in_the_way,
++				    o_oid, o_mode, a_oid, a_mode, b_oid, b_mode,
++				    ci);
++	if (clean_merge > 0 && file_in_the_way)
++		clean_merge = 0;
++	return clean_merge;
 +}
 +
- /*
-  * Get information of all renames which occurred in 'pairs', making use of
-  * any implicit directory renames inferred from the other side of history.
-@@ -1668,8 +1869,21 @@ struct rename_info {
- 	struct string_list *merge_renames;
- };
+ /* Per entry merge function */
+ static int process_entry(struct merge_options *o,
+ 			 const char *path, struct stage_data *entry)
+@@ -2814,9 +2858,12 @@ static int process_entry(struct merge_options *o,
+ 		switch (conflict_info->rename_type) {
+ 		case RENAME_NORMAL:
+ 		case RENAME_ONE_FILE_TO_ONE:
+-			clean_merge = merge_content(o, path,
+-						    o_oid, o_mode, a_oid, a_mode, b_oid, b_mode,
+-						    conflict_info);
++			clean_merge = conflict_rename_normal(o,
++							     path,
++							     o_oid, o_mode,
++							     a_oid, a_mode,
++							     b_oid, b_mode,
++							     conflict_info);
+ 			break;
+ 		case RENAME_DIR:
+ 			clean_merge = 1;
+@@ -2912,7 +2959,7 @@ static int process_entry(struct merge_options *o,
+ 	} else if (a_oid && b_oid) {
+ 		/* Case C: Added in both (check for same permissions) and */
+ 		/* case D: Modified in both, but differently. */
+-		clean_merge = merge_content(o, path,
++		clean_merge = merge_content(o, path, 0 /* file_in_way */,
+ 					    o_oid, o_mode, a_oid, a_mode, b_oid, b_mode,
+ 					    NULL);
+ 	} else if (!o_oid && !a_oid && !b_oid) {
+@@ -2953,7 +3000,7 @@ int merge_trees(struct merge_options *o,
+ 		return 1;
+ 	}
  
--static void initial_cleanup_rename(struct diff_queue_struct *pairs)
-+static void initial_cleanup_rename(struct diff_queue_struct *pairs,
-+				   struct hashmap *dir_renames)
- {
-+	struct hashmap_iter iter;
-+	struct dir_rename_entry *e;
-+
-+	hashmap_iter_init(dir_renames, &iter);
-+	while ((e = hashmap_iter_next(&iter))) {
-+		free(e->dir);
-+		strbuf_release(&e->new_dir);
-+		/* possible_new_dirs already cleared in get_directory_renames */
-+	}
-+	hashmap_free(dir_renames, 1);
-+	free(dir_renames);
-+
- 	free(pairs->queue);
- 	free(pairs);
- }
-@@ -1682,6 +1896,7 @@ static int handle_renames(struct merge_options *o,
- 			  struct rename_info *ri)
- {
- 	struct diff_queue_struct *head_pairs, *merge_pairs;
-+	struct hashmap *dir_re_head, *dir_re_merge;
- 	int clean;
+-	code = git_merge_trees(o->call_depth, common, head, merge);
++	code = git_merge_trees(o, common, head, merge);
  
- 	ri->head_renames = NULL;
-@@ -1693,6 +1908,9 @@ static int handle_renames(struct merge_options *o,
- 	head_pairs = get_diffpairs(o, common, head);
- 	merge_pairs = get_diffpairs(o, common, merge);
- 
-+	dir_re_head = get_directory_renames(head_pairs, head);
-+	dir_re_merge = get_directory_renames(merge_pairs, merge);
-+
- 	ri->head_renames  = get_renames(o, head_pairs, head,
- 					 common, head, merge, entries);
- 	ri->merge_renames = get_renames(o, merge_pairs, merge,
-@@ -1704,8 +1922,8 @@ static int handle_renames(struct merge_options *o,
- 	 * data structures are still needed and referenced in
- 	 * process_entry().  But there are a few things we can free now.
- 	 */
--	initial_cleanup_rename(head_pairs);
--	initial_cleanup_rename(merge_pairs);
-+	initial_cleanup_rename(head_pairs, dir_re_head);
-+	initial_cleanup_rename(merge_pairs, dir_re_merge);
- 
- 	return clean;
- }
+ 	if (code != 0) {
+ 		if (show(o, 4) || o->call_depth)
 diff --git a/merge-recursive.h b/merge-recursive.h
-index 80d69d1401..fe64c78de4 100644
+index 50a4e6af4e..d863cf8867 100644
 --- a/merge-recursive.h
 +++ b/merge-recursive.h
-@@ -29,6 +29,24 @@ struct merge_options {
+@@ -1,6 +1,7 @@
+ #ifndef MERGE_RECURSIVE_H
+ #define MERGE_RECURSIVE_H
+ 
++#include "unpack-trees.h"
+ #include "string-list.h"
+ 
+ struct merge_options {
+@@ -27,6 +28,7 @@ struct merge_options {
+ 	struct strbuf obuf;
+ 	struct hashmap current_file_dir_set;
  	struct string_list df_conflict_file_set;
++	struct unpack_trees_options unpack_opts;
  };
  
-+/*
-+ * For dir_rename_entry, directory names are stored as a full path from the
-+ * toplevel of the repository and do not include a trailing '/'.  Also:
-+ *
-+ *   dir:                original name of directory being renamed
-+ *   non_unique_new_dir: if true, could not determine new_dir
-+ *   new_dir:            final name of directory being renamed
-+ *   possible_new_dirs:  temporary used to help determine new_dir; see comments
-+ *                       in get_directory_renames() for details
-+ */
-+struct dir_rename_entry {
-+	struct hashmap_entry ent; /* must be the first member! */
-+	char *dir;
-+	unsigned non_unique_new_dir:1;
-+	struct strbuf new_dir;
-+	struct string_list possible_new_dirs;
-+};
+ /*
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index ccbc118514..c9a1f783f5 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -141,7 +141,7 @@ test_expect_success 'cherry-pick "-" works with arguments' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_failure 'cherry-pick works with dirty renamed file' '
++test_expect_success 'cherry-pick works with dirty renamed file' '
+ 	test_commit to-rename &&
+ 	git checkout -b unrelated &&
+ 	test_commit unrelated &&
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
+index 0b60eb8053..b94ba066fe 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -3298,7 +3298,7 @@ test_expect_success '11a-setup: Avoid losing dirty contents with simple rename'
+ 	)
+ '
+ 
+-test_expect_failure '11a-check: Avoid losing dirty contents with simple rename' '
++test_expect_success '11a-check: Avoid losing dirty contents with simple rename' '
+ 	(
+ 		cd 11a &&
+ 
+diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
+index 9c422bcd7c..dd8ab7ede1 100755
+--- a/t/t7607-merge-overwrite.sh
++++ b/t/t7607-merge-overwrite.sh
+@@ -92,7 +92,7 @@ test_expect_success 'will not overwrite removed file with staged changes' '
+ 	test_cmp important c1.c
+ '
+ 
+-test_expect_failure 'will not overwrite unstaged changes in renamed file' '
++test_expect_success 'will not overwrite unstaged changes in renamed file' '
+ 	git reset --hard c1 &&
+ 	git mv c1.c other.c &&
+ 	git commit -m rename &&
+diff --git a/unpack-trees.c b/unpack-trees.c
+index e73745051e..79fd97074e 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1509,8 +1509,8 @@ static int verify_uptodate_1(const struct cache_entry *ce,
+ 		add_rejected_path(o, error_type, ce->name);
+ }
+ 
+-static int verify_uptodate(const struct cache_entry *ce,
+-			   struct unpack_trees_options *o)
++int verify_uptodate(const struct cache_entry *ce,
++		    struct unpack_trees_options *o)
+ {
+ 	if (!o->skip_sparse_checkout && (ce->ce_flags & CE_NEW_SKIP_WORKTREE))
+ 		return 0;
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 6c48117b84..41178ada94 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -1,6 +1,7 @@
+ #ifndef UNPACK_TREES_H
+ #define UNPACK_TREES_H
+ 
++#include "tree-walk.h"
+ #include "string-list.h"
+ 
+ #define MAX_UNPACK_TREES 8
+@@ -78,6 +79,9 @@ struct unpack_trees_options {
+ extern int unpack_trees(unsigned n, struct tree_desc *t,
+ 		struct unpack_trees_options *options);
+ 
++int verify_uptodate(const struct cache_entry *ce,
++		    struct unpack_trees_options *o);
 +
- /* merge_trees() but with recursive ancestor consolidation */
- int merge_recursive(struct merge_options *o,
- 		    struct commit *h1,
+ int threeway_merge(const struct cache_entry * const *stages,
+ 		   struct unpack_trees_options *o);
+ int twoway_merge(const struct cache_entry * const *src,
 -- 
 2.17.0.290.ge988e9ce2a
 
