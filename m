@@ -2,92 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C4701F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 21:33:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7FC21F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 21:44:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753486AbeDSVdZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 17:33:25 -0400
-Received: from mxin.vub.ac.be ([134.184.129.114]:55799 "EHLO mxin.vub.ac.be"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752725AbeDSVdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 17:33:25 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2HQBAANCtla/wsxuIZbhU4ogyGJJ44MF?=
- =?us-ascii?q?HuTB4FkC4RpAoJjOBQBAgEBAQEBAQICAmgohSMBAQEBAgE6PxALGAkMGQ8FKCE?=
- =?us-ascii?q?ThHUDDQipPoRYg2qCG4laP4Qagk+BX4EEgnGCJAKFOIIShVqKSQiLDYMlh0WFE?=
- =?us-ascii?q?5AngSUzIoFSTSAYgn6CIBeOGT0wkEEBAQ?=
-X-IPAS-Result: =?us-ascii?q?A2HQBAANCtla/wsxuIZbhU4ogyGJJ44MFHuTB4FkC4RpAoJ?=
- =?us-ascii?q?jOBQBAgEBAQEBAQICAmgohSMBAQEBAgE6PxALGAkMGQ8FKCEThHUDDQipPoRYg?=
- =?us-ascii?q?2qCG4laP4Qagk+BX4EEgnGCJAKFOIIShVqKSQiLDYMlh0WFE5AngSUzIoFSTSA?=
- =?us-ascii?q?Ygn6CIBeOGT0wkEEBAQ?=
-Received: from igwe11.vub.ac.be (HELO igwe.rave.org) ([134.184.49.11])
-  by smtp.vub.ac.be with ESMTP/TLS/AES128-GCM-SHA256; 19 Apr 2018 23:33:22 +0200
-Received: from kgybels by igwe.rave.org with local (Exim 4.84_2)
-        (envelope-from <kgybels@infogroep.be>)
-        id 1f9HBC-0005xi-Lc; Thu, 19 Apr 2018 23:33:22 +0200
-Date:   Thu, 19 Apr 2018 23:33:22 +0200
-From:   Kim Gybels <kgybels@infogroep.be>
+        id S1753500AbeDSVoe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 17:44:34 -0400
+Received: from mx.mylinuxtime.de ([148.251.109.235]:49206 "EHLO
+        mx.mylinuxtime.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753460AbeDSVod (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 17:44:33 -0400
+Received: from leda (p200300CF2F166A00625718FFFE7F1598.dip0.t-ipconnect.de [IPv6:2003:cf:2f16:6a00:6257:18ff:fe7f:1598])
+        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx.mylinuxtime.de (Postfix) with ESMTPSA id 6A06226768;
+        Thu, 19 Apr 2018 23:44:31 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mx.mylinuxtime.de 6A06226768
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
+        t=1524174271; bh=Xf6A8nehLCW7uTdcD4M7/rR47j9UmMcYgQ7p4KpcLE8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References;
+        b=UxWYaKMIYJAT3vDpInUut4FGito0xozNWV8nIx8L0M5nz5DkXwZZJW1wyzkN0XvMM
+         xqn/duio3Qzypja0v+i6RKEj6rEFuSASVjTlVC1o6R4H2NjaDnjJMMLjyS8i8dACHA
+         573tqU/VzsHpQzOpSTmepeO9Ta9dOPuAlvrk371c=
+Date:   Thu, 19 Apr 2018 23:44:20 +0200
+From:   Christian Hesse <mail@eworm.de>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] daemon: use timeout for uninterruptible poll
-Message-ID: <20180419213322.GA19500@infogroep.be>
-References: <20180412210757.7792-1-kgybels@infogroep.be>
- <20180412210757.7792-2-kgybels@infogroep.be>
- <xmqq36zw16gv.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1804182251070.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <xmqqy3hkfais.fsf@gitster-ct.c.googlers.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?UTF-8?B?w7A=?= Bjarmason 
+        <avarab@gmail.com>, Dan Jacques <dnj@chromium.org>
+Subject: Re: [PATCH v3 1/1] perl: fix installing modules from contrib
+Message-ID: <20180419234420.0dd66dce@leda>
+In-Reply-To: <xmqq36zsgpfb.fsf@gitster-ct.c.googlers.com>
+References: <xmqqpo3620tz.fsf@gitster-ct.c.googlers.com>
+        <20180411065120.9432-1-mail@eworm.de>
+        <xmqq36zsgpfb.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: %O:rCSk<c"<MpJ:yn<>HSKf7^4uF|FD$9$I0}g$nbnS1{DYPvs#:,~e`).mzj\$P9]V!WCveE/XdbL,L!{)6v%x4<jA|JaB-SKm74~Wa1m;|\QFlOg>\Bt!b#{;dS&h"7l=ow'^({02!2%XOugod|u*mYBVm-OS:VpZ"ZrRA4[Q&zye,^j;ftj!Hxx\1@;LM)Pz)|B%1#sfF;s;,N?*K*^)
+Face:   iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEUZFRFENy6KVTKEd23CiGHeqofJvrX4+vdHgItOAAAACXBIWXMAAA3XAAAN1wFCKJt4AAACUklEQVQ4y2VUTZeqMAxNxXG2Io5uGd64L35unbF9ax0b3OLxgFs4PcLff0lBHeb1QIq5uelNCEJNq/TIFGyeC+iugH0WJr+B1MvzWASpuP4CYHOB0VfoDdddwA7OIFQIEHjXDiCtV5e9QX0WMu8AG0mB7g7WP4GqeqVdsi4vv/5kFBvaF/zD7zDquL4DxbrDGDyAsgNYOsJOYzth4Q9ZF6iLV+6TLAT1pi2kuvgAtZxSjoG8cL+8vIn251uoe1OOEWwbIPU04gHsmMsoxyyhYsD2FdIigF1yxaVbBuSOCAlCoX324I7wNMhrO1bhOLsRoA6DC6wQ5eQiSG5BiWQfM4gN+uItQTRDMaJUhVbGyKWCuaaUGSVFVKpl4PdoDn3yY8J+YxQxyhlHfoYOyPgyDcO+cSQK6Bvabjcy2nwRo3pxgA8jslnCuYw23ESOzHAPYwo4ITNQMaOO+RGPEGhSlPEZBh2jmBEjQ5cKbxmr0ruAe/WCriUxW76I8T3h7vqY5VR5wXLdERodg2rHEzdxxk5KpXTL4FwnarvndKM5/MWDY5CuBBdQ+3/0ivsUJHicuHd+Xh3jOdBL+FjSGq4SPCwco+orpWlERRTNo7BHCvbNXFVSIQMp+P5QsIL9upmr8kMTUOfxEHoanwzKRcNAe76WbjBwex/RkdHu48xT5YqP70DaMOhBcTHmAVDxLaBdle93oJy1QKFUh2GXT4am+YH/GGel1CeI98GdMXsytjCKIq/9cMrlgxFCROv+3/BU1fijNpcVD6DxE8VfLBaxUGr1D5usgDYdjwiPAAAAAElFTkSuQmCC
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqy3hkfais.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ boundary="Sig_/YJ.GFRoK1b910YIPajy4I9A"; protocol="application/pgp-signature"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On (19/04/18 06:51), Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+--Sig_/YJ.GFRoK1b910YIPajy4I9A
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-> > In other words, you scolded Kim for something that this patch did not
-> > introduce, but which was already there.
+Junio C Hamano <gitster@pobox.com> on Thu, 2018/04/19 06:44:
+> Christian Hesse <mail@eworm.de> writes:
+>=20
+> > Commit 20d2a30f (Makefile: replace perl/Makefile.PL with simple make
+> > rules) removed a target that allowed Makefiles from contrib/ to get the
+> > correct install path. This introduces a new target for main Makefile and
+> > fixes installation for Mediawiki module.
+> >
+> > v2: Pass prefix as that can have influence as well, add single quotes
+> >     for _SQ variant.
+> > v3: Rename target, add to .PHONY.
+> >
+> > Signed-off-by: Christian Hesse <mail@eworm.de>
+> > --- =20
+>=20
+> Thanks for rerolling.  I should have made it a bit more clear that
+> the say-* thing was merely a personal preference "I would be writing
+> it that way if I were doing it", not a "You should write it this way
+> when working on this project".=20
 
-I didn't feel scolded, just Junio raising a concern about maintainability of
-the code.
+Well,  it's you who maintains the code. So I am fine with whatever you
+prefer. ;)
 
-> > Unless I am misunderstanding violently what you say, that is, in which
-> > case I would like to ask for a clarification why this patch (which does
-> > not change a thing unless NO_POLL is defined!) must be rejected, and while
-> > at it, I would like to ask you how introducing a layer of indirection with
-> > a full new function that is at least moderately misleading (as it would be
-> > named xpoll() despite your desire that it should do things that poll()
-> > does *not* do) would be preferable to this here patch that changes but a
-> > few lines to introduce a regular heartbeat check for platforms that
-> 
-> Our xwrite() and other xfoo() are to "fix" undesirable aspect of the
-> underlying pure POSIX API to make it more suitable for our codebase.
-> When pure POSIX poll() that requires the implementing or emulating
-> platform pays attention to the children being waited on is not
-> appropriate for the codepath we are using (i.e. the place where the
-> patch is touching), it would be in line to introduce a "fixed" API
-> that allows us to pass that information, so that we can build on top
-> of that abstraction that is *not* pure POSIX abstraction, no?  After
-> all, you are the one who constantly whine that Git is implemented on
-> POSIX API and it is inconvenient for other platforms.
+> I think .PHONY is still a good idea
+> to have, even for only its documentation value (it is unlikely that
+> anybody would create a file "perllibdir").
+>=20
+> Let me queue this on top of the v2 queued in 'next' as an
+> incremental update.
 
-There is another issue with the existing code that this new "xpoll" will need
-to take into account. If a SIGCHLD arrives between the call to
-check_dead_children and poll, the poll will not be interupted by it, resulting
-in the child not being reaped until another child terminates or a client
-connects. Currently, the effect is just a zombie process for a longer time,
-however, the proposed patch (daemon: graceful shutdown of client connection)
-relies on the cleanup to close the client connection.
+Thanks a lot!
+--=20
+Best regards,
+Chris
 
-When I have time, I will reroll including a change to ppoll.
+--Sig_/YJ.GFRoK1b910YIPajy4I9A
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
--Kim
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEvYTecfST32gUsBZyVO3JFgm8kYMFAlrZDbQACgkQVO3JFgm8
+kYPNAhAAkKCNhzohf3KIBa6S/xrEuOLBQ2yp33wjFR4jwlyp69esLF1dzTfQE10S
+wwgxNYe+PD/qIANBjTAlSqbr9fFT0cucujtWzGSZDWirus0YBQ7phL5ZmQKNUXjz
+HlFeHR9RMdaKYyX4nOIfT/bfLG0YGCTCGHG+fwP7NZrTNpodiWVjASauJbEQ6TZ+
+5xqwIm7jZGWb7LeilHMWVSoqGg3Es52LgYYuz1lTg3+WKk6c4/zU9hMNBAfUKsW2
+Eytos8jTn0lzaVKDe5y9kkUK16/CZR3uKZxEJ0JLnSGD+UWMCHSHW+Or3wh+X+sh
+AxDTZeWp96PeIZeNh79/iTJhVWlvLMl1wu/UFGtYeBe4vDi/PT/yn/yeJTUeoITI
+KW6pr1OPgDO6iNudRaMD0RasRoPFhKP1stLpDHfkKogH6tKVzVX/tAcuYzaJpUr7
+BWuIxKnfU6ABtXHtupuZlkr5tX8A9LFS8vr5MMQFna6pPcfINTJwExJIPa0EllNX
+RjsaRgXBhZuiSbx4BmPwUXTL2Kd3qIoN/LIf1Eve2F2ZhTHyQ6SVTJMWYsj3GXHJ
+jGzLNWj0BqAAeHu1lM8tTgwaK1cNzRfXd+Tcj2QD7V/lzY1T9ZbHq54NzEAnZiku
+6tZtrkiyAUwvi1+xEkjJOscBE8LrXRowCNbFw6P019Kyv7QXVVs=
+=IM1U
+-----END PGP SIGNATURE-----
+
+--Sig_/YJ.GFRoK1b910YIPajy4I9A--
