@@ -2,97 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B16371F424
-	for <e@80x24.org>; Thu, 19 Apr 2018 09:17:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9B131F424
+	for <e@80x24.org>; Thu, 19 Apr 2018 10:09:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751047AbeDSJRn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 05:17:43 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:13713 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750799AbeDSJRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 05:17:42 -0400
-Received: from [192.168.2.201] ([92.28.131.105])
-        by smtp.talktalk.net with SMTP
-        id 95hEfjNg8LjjA95hFfWsES; Thu, 19 Apr 2018 10:17:41 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1524129461;
-        bh=kvOKs0hegcoocIG3MXd8okGLwqfTGC12Oh7DGvW/ayY=;
-        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=GAwXIY7EIsStyrdoFD4KFx9t4+R0TxlIPZwQoO8BR+nkr2AXwA6IfBouD5++dBkgg
-         Du/FGbhflp8329MiGrWN+1w/DsBO1O/Upe0MtuVUeGU45cV2z8/Q8F+BI1ha5rTjQY
-         ELQSw+98d9DpJ2nhasPaMVFBawiNiR92EB4wdLZs=
-X-Originating-IP: [92.28.131.105]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=LZYSFAXi c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
- a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=412aXg1qx79Wy9O4sIwA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Bug: rebase -i creates committer time inversions on 'reword'
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-References: <5f5d5b88-b3ac-ed4f-ee24-6ce2cba2bd55@kdbg.org>
- <f56b84fa-9286-3a7b-fc5b-2307c9ff5b5e@philandanna.no-ip.org>
- <nycvar.QRO.7.76.6.1804141444060.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <ba17074b-865e-32ba-908d-0d94bedc50ad@talktalk.net>
-Message-ID: <041aabb4-4e61-30a1-2ab0-3ae1ddd47c38@talktalk.net>
-Date:   Thu, 19 Apr 2018 10:17:40 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1752120AbeDSKJj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 06:09:39 -0400
+Received: from mail-it0-f50.google.com ([209.85.214.50]:38841 "EHLO
+        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751449AbeDSKJi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 06:09:38 -0400
+Received: by mail-it0-f50.google.com with SMTP id 19-v6so5986813itw.3
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 03:09:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=1pYM/cpdk97Kvj4178vHKXtUEC1xFK8M5gmAOcLsWIg=;
+        b=qYSfM5HbHi6TVi+If6zXb24150ZIIjtP6cLk46uuRm4/Jq6ah/O8lOitxkMgmzm4kS
+         TQExDib3Sg1Z+BETnp9i9ARFd+0UzSY6aIErN//7cQWLZ63wZc82IU4YRzIJOmtp/0uM
+         oKTdvvvJ6tTHh/yXWSR4Vp/B1nboWYvBmeb/53Pbc5ClFcC1fAgvAr//zzxLi8RZxPCQ
+         BkJ15V4870Rqt5vdn8cv3Bh0M9QsTdcfxB/KnqN3Kc6fyXTcQAJPiM8I1ZLi60LAXcoZ
+         +mqPi3Qylt3uSHFz/cyD8t3fZNPYuE/4LNnEaAHY5NvCxWp9NneWx7okRwxz3OY6EbCM
+         y4Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=1pYM/cpdk97Kvj4178vHKXtUEC1xFK8M5gmAOcLsWIg=;
+        b=Fo5LUuGsqFUz+I1PkLN5FwO+rhdEFz8Std7O2T72aYh21Xw02nUtfYmIkDDyN6xghG
+         DHW6NwAwkfvxu6XGYiaE4o1rdTcyBinq2l77mQClzuG6XPhhDprUsGl5gnNmwRTpp9bO
+         M9o5JVoclqDUuO426sPhnNbUtAVoTQPRbE9mb6uznymBQqk8kIfYKgfB4nVy2m8LjJcv
+         61Z+P0sK/nTRL3v7u8fpRm6J0Un+RpbRbhYTFvTL+50DGpxjOLKPigonwBbHoyB3vHaQ
+         Nj4fCYRYa/seSOKFnT6A/hv8KAvIxx2SktylcsTOQvQJiA+pjYrIHf36QMomHw/KhI7r
+         OV1g==
+X-Gm-Message-State: ALQs6tAZp7JpSQ3sZXPZkwQi9zx7kmDGnKiccVRq+Bhpm8m+Hj9T5Mma
+        d6oI/Ydk7WRHrpq71z9uAm2CDNphAFtFYTAv1RQ=
+X-Google-Smtp-Source: AIpwx48B7ys/pgwGeeGLUL9xwjqYUYGxjiLZV/NB264Wf06zbepLeZP+Hd0CHPjPeZ4HQRBUI0Im31o+F7ZHi4LeK80=
+X-Received: by 2002:a24:538a:: with SMTP id n132-v6mr5521110itb.129.1524132577865;
+ Thu, 19 Apr 2018 03:09:37 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <ba17074b-865e-32ba-908d-0d94bedc50ad@talktalk.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfAx2hm+E2uog78J1z5HYBzeakKWuGZreYfTREFHPqB38KGpBEhnJ4s8T4dwcgqsu1CH9rqqjBboCWUJI/yRPvI0yjkJcMpX/pgZM68sUjm41Xld9U7tO
- 0/m4U64suYStHS8Ht25vPRfnHl6qjQez4kpn6WESKfrY2MnOgtK+Xj5uu/tSLYGp32x4SwEiXQqzFVST/lj5fLXnzroTJiAbyQP/FzY1v8XKoB31MhhGBox/
- 3uniPbk+sDaR00y7gcviAuBAHbCG9SCl28vltpoCoVbMgRcAuilVxe657RncQgl2
+Received: by 2002:a4f:22db:0:0:0:0:0 with HTTP; Thu, 19 Apr 2018 03:09:36
+ -0700 (PDT)
+In-Reply-To: <cecb82973f80fdd2db940410db2a7c3b23107c4b.1524125760.git.johannes.schindelin@gmx.de>
+References: <0f0942043678fe76f8d654306482ee26fac643f0.1523617836.git.johannes.schindelin@gmx.de>
+ <cover.1524125760.git.johannes.schindelin@gmx.de> <cecb82973f80fdd2db940410db2a7c3b23107c4b.1524125760.git.johannes.schindelin@gmx.de>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 19 Apr 2018 12:09:36 +0200
+Message-ID: <CAP8UFD3cH4JkKo97o4k+BW=sdaFviJR06R1V_JqS9FkwuP7ZKw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/7] replace: introduce --convert-graft-file
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/04/18 10:48, Phillip Wood wrote:
-> On 14/04/18 14:11, Johannes Schindelin wrote:
->> Hi,
->>
->> On Sat, 14 Apr 2018, Phillip Wood wrote:
->>
->> FWIW I agree with Hannes' patch.
->>
->>> I think 'git am' probably gives all patches the same commit time as well
->>> if the commit date is cached though it wont suffer from the time-travel
->>> problem.
->>
->> I thought that `git am` was the subject of such a complaint recently, but
->> I thought that had been resolved? Apparently I misremember...
-> 
-> I had a quick look and couldn't see anything about that, it looks to me
-> like it just calls commit_tree() and only does anything to change the
-> default commit date if '--committer-date-is-author-date' was given.
+On Thu, Apr 19, 2018 at 10:17 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
 
-Ah you were right, I just didn't look far enough back in the history
-.(it's a shame it calls reset_ident_date() in a different function to
-the one that creates the commit otherwise I would probably have noticed
-it when I wrote the original patches)
+> @@ -87,9 +88,13 @@ OPTIONS
+>         content as <commit> except that its parents will be
+>         [<parent>...] instead of <commit>'s parents. A replacement ref
+>         is then created to replace <commit> with the newly created
+> -       commit. See contrib/convert-grafts-to-replace-refs.sh for an
+> -       example script based on this option that can convert grafts to
+> -       replace refs.
+> +       commit. Use `--convert-graft-file` to convert a
+> +       `$GIT_DIR/info/grafts` file use replace refs instead.
 
-Best Wishes
+s/file use replace refs/file to use replace refs/
 
-Phillip
+> +--convert-graft-file::
+> +       Creates graft commits for all entries in `$GIT_DIR/info/grafts`
+> +       and deletes that file upon success. The purpose is to help users
+> +       with transitioning off of the now-deprecated graft file.
 
-> 
-> Best Wishes
-> 
-> Phillip
->> Ciao,
->> Dscho
->>
-> 
+I wonder if it would be better to rename the file to "old_grafts" or
+something, and perhaps tell the user that we renamed it and it can now
+be either deleted or moved somewhere else.
 
+Thanks for working on this,
+Christian.
