@@ -6,60 +6,63 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46C531F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 22:48:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFDD21F42D
+	for <e@80x24.org>; Thu, 19 Apr 2018 23:18:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753588AbeDSWsL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 18:48:11 -0400
-Received: from mail-wr0-f170.google.com ([209.85.128.170]:32888 "EHLO
-        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753537AbeDSWsK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 18:48:10 -0400
-Received: by mail-wr0-f170.google.com with SMTP id z73-v6so18089826wrb.0
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 15:48:09 -0700 (PDT)
+        id S1753755AbeDSXSE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 19:18:04 -0400
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:45213 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753636AbeDSXSD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 19:18:03 -0400
+Received: by mail-wr0-f177.google.com with SMTP id u11-v6so18153996wri.12
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 16:18:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=jH6g7ACByWIGrlHQ7afDRDGg98w/ZdjuT5DcSR9X+w8=;
-        b=SeF5MWbPpxJrrw8lRjL+vyf6Viqn0xU7RoMsjpUHHv6wyITJICroqTnCPXKidW3SXi
-         +6yI75x95Di4RJ79yBOwCMSoT0Dtu8l5aglAVT9bOWBywtmXY0gJbbI2T8Ect4atITrJ
-         n3a2qBbdkxHJ2XCKdg7fy+DLMOXB8verKrO3iK+B219x45qCBTZ1wBWOREZgHtOUpeHV
-         nuS/pgMKpTQ9b165+xiQlLSAMgrnPCj5GdqWTmQUjaFXF6RONAhGccJgRA76E7BvxtGq
-         7SlSu/5ALIm5uVw1GxwfQzW3S1NGhSDlfUooksssoWM9e1ZVr5FfgfU/rYhWE+K5hvIT
-         LZ8A==
+        bh=drIyq0UuZoahxhvw+4113SVk9QGuMmshYknY0eZUkjE=;
+        b=RU10JmXcBWuQrd4Slhb5AiW+htL9QFxVFE+mLk6OTlzXxNNeHCBqkDqLUE4ZbSmm8O
+         NtsZ9ZBnpJZtP3zGxf5AJmS02JOx4Q7gJR18KDjBkpGqlLoR9KmaahJyYkw7YcfCv6o0
+         xPy43cJCksgypiWYruAuk718SdsBZFLq7qn2bBPVzWs53qLHokdvJuvJ22YpNdG2fBr6
+         BYJocxkghT82T56hNLgr55/SMa9tiH9C8UR61dH9iCleagSAJhBPrX0ouwJuCvY7Xmz0
+         6O8UOrdMcO6qo0QwnUof+f8rUww6iZR28oKXNUuec+9BRp+JeC9wlbJboGt8zcJAJUWq
+         d3Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=jH6g7ACByWIGrlHQ7afDRDGg98w/ZdjuT5DcSR9X+w8=;
-        b=OME4UY7vc1e+2bSrOu1vbRbUcP9jAMAo4Jq2pYEdSTjcxjnlJvTxj2AjmNNZcunr2L
-         aNUdeSX68pwfV14OvMlipgQJLeziQDE1/yEQDljp76K2xL3x3C5k6mLZQhcSjMqEYB9S
-         w6uw8/uVKG3t199yG7NwEEp531rkovN9BK94ekV8W42haSOQbfD5Pkq4RvDHr/Xc7zRe
-         WUeWzcoQzP/4RfCIGHftHs0kvXIx8DBd9SgvQqASaOubzAtp+RUrq5PExkxOSGLOXERp
-         xXYySa9j+AOWx+y3X/K3oYECvJ90o2I5l0eXW1R4ckTrO0oOK2B1inFTFlMs+BXkEqhu
-         kq0w==
-X-Gm-Message-State: ALQs6tBfOZVx5OdhVygJPyIib6bbV/NnyVotRORuDNDU59iIJvRe8QIA
-        Tjsl76RQRunoNqIm1JLETQU=
-X-Google-Smtp-Source: AIpwx48WrLC8yfA2g3q7jeYylGbZAqPaC3jL7JgFK6J8+iUpgNgN7S19SSNp/4w/FPy8BmzWevBG4Q==
-X-Received: by 2002:adf:c088:: with SMTP id d8-v6mr5779726wrf.268.1524178088440;
-        Thu, 19 Apr 2018 15:48:08 -0700 (PDT)
+        bh=drIyq0UuZoahxhvw+4113SVk9QGuMmshYknY0eZUkjE=;
+        b=j9tg6dL0xGspSoI9lwTT3gRXgGN9cAFUI2U4SseQuRw8BjwPt4L3hXy8GL6ZaxSWZm
+         2XjlrSSzLAgvTnF6KRKvDv3grYwgwzCbCk04rk0fId4sTUl/zjb9JVt6b4/6zo6aTPRr
+         xvstCNrqrYhO2Ttj+wAGS7GiOlXVd5962aRYKGBl/XH4/lLgpViwsAGBOGhgspwSkuYz
+         7c1oIfYDVZM9tMRlBiA8nr6DdD9bM61vy80VS1oWbERwDowAjNu8bp/7ooMNtZyos4/P
+         TMrkyFl8SVRcxU+4JmzsXJyc9f2XMh4VlfcAUhGIZ6kTbYKsKT+7wI+JezVRz3SQ4JKB
+         RIXw==
+X-Gm-Message-State: ALQs6tAbkf+aTJml910oMQJtwT92VZDAgjTw2uuyLPMEsiGYgdje2ehO
+        bZJhTzrNgdUgl3XIUXsHXQ8=
+X-Google-Smtp-Source: AIpwx48KctOKIQdbFt4HPtyUoxGFyrqp2iHw0MgFSUzoD7aZdU26OHR1iqcs+0ja2p+PIb+bkRR4Vg==
+X-Received: by 10.28.46.208 with SMTP id u199mr324428wmu.99.1524179881482;
+        Thu, 19 Apr 2018 16:18:01 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id c18sm253101wmd.13.2018.04.19.15.48.07
+        by smtp.gmail.com with ESMTPSA id c124sm245568wmd.36.2018.04.19.16.18.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Apr 2018 15:48:07 -0700 (PDT)
+        Thu, 19 Apr 2018 16:18:00 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Isaac Chou <Isaac.Chou@microfocus.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [BUG] Git fast-export with import marks file omits merge commits
-References: <MW2PR18MB2284E3091991A3DB228CEBBEE5B50@MW2PR18MB2284.namprd18.prod.outlook.com>
-Date:   Fri, 20 Apr 2018 07:48:06 +0900
-In-Reply-To: <MW2PR18MB2284E3091991A3DB228CEBBEE5B50@MW2PR18MB2284.namprd18.prod.outlook.com>
-        (Isaac Chou's message of "Thu, 19 Apr 2018 21:46:38 +0000")
-Message-ID: <xmqq604mertl.fsf@gitster-ct.c.googlers.com>
+To:     Kim Gybels <kgybels@infogroep.be>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] daemon: use timeout for uninterruptible poll
+References: <20180412210757.7792-1-kgybels@infogroep.be>
+        <20180412210757.7792-2-kgybels@infogroep.be>
+        <xmqq36zw16gv.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1804182251070.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <xmqqy3hkfais.fsf@gitster-ct.c.googlers.com>
+        <20180419213322.GA19500@infogroep.be>
+Date:   Fri, 20 Apr 2018 08:18:00 +0900
+In-Reply-To: <20180419213322.GA19500@infogroep.be> (Kim Gybels's message of
+        "Thu, 19 Apr 2018 23:33:22 +0200")
+Message-ID: <xmqq1sfaeqfr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,76 +71,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Isaac Chou <Isaac.Chou@microfocus.com> writes:
+Kim Gybels <kgybels@infogroep.be> writes:
 
-> I inspected the source code (builtin/fast-export.c) for the
-> fast-export issue I encountered, and it looks like the merge
-> commit is discarded too early by the call to object_array_pop()
-> after only one of the two UNSHOWN parents is processed in the
-> method handle_tail().  The poped merge commit still has one
-> UNSHOWN parent, therefore it is not processed and is lost in the
-> output.  Can someone advise me on how to submit a code change or
-> bug report in order to get the fix into the code base?
+>> > In other words, you scolded Kim for something that this patch did not
+>> > introduce, but which was already there.
 >
-> Thanks,
->
-> Isaac
->
-> -----Original Message-----
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of Isaac Chou
-> Sent: Monday, April 16, 2018 3:58 PM
-> To: git@vger.kernel.org
-> Subject: Git fast-export with import marks file omits merge commits
->
-> Hello,
->
-> I came across a change of behavior with Git version 2.15 and later
-> where the fast-export command would omit the merge commits.  The
-> same use case works correctly with Git version 2.14 and older.
-> ...
+> I didn't feel scolded, just Junio raising a concern about maintainability of
+> the code.
 
-There indeed are some differences between v2.14 and v2.15 around the
-code that returns early when has_unshown_parent() says "yes" [*1*],
-but the decision to return early when the function says "yes" hasn't
-changed between that timeperiod---it dates back to f2dc849e ("Add
-'git fast-export', the sister of 'git fast-import'", 2007-12-02),
-i.e. the very beginning of the program's life.
+FWIW, I didn't mean to scold, either.
 
-I'll CC those who wrote the original and b3e8ca89 ("fast-export: do
-not copy from modified file", 2017-09-20) and 71992039
-("object_array: add and use `object_array_pop()`", 2017-09-23),
-which are the only two commits that touch the surrounding area
-during that timeperiod, to ask if something jumps at them.
+Rather I was pointing out that the code already maintains the number
+of remaining children, which means that a more portable abstraction
+than poll(), if we desired to have one, would merely be one step
+away, as we already know that at least need that information to help
+Windows.
 
-Thanks.
+> There is another issue with the existing code that this new
+> "xpoll" will need to take into account. If a SIGCHLD arrives
+> between the call to check_dead_children and poll, the poll will
+> not be interupted by it, resulting in the child not being reaped
+> until another child terminates or a client connects. Currently,
+> the effect is just a zombie process for a longer time, however,
+> the proposed patch (daemon: graceful shutdown of client
+> connection) relies on the cleanup to close the client connection.
+
+Good analysis.  That consideration may mean that xpoll() as I
+suggested is useless as a possible more portable abstraction (or,
+"an abstraction that is implementable easily in both POSIX and
+non-POSIX world"), but I suspect we would still want to have an
+internal "portable" API that serves the purpose similar to how we
+wanted POSIX poll() to serve.  The place the patch is touching is
+not the only place poll() is used in the codebase, and other places
+(and future ones we would add) may benefit from having one.
+
+Thanks for being constructive.
 
 
-[Footnotes]
-
-*1* An excerpt from 'git diff v2.14.0 v2.15.0 builtin/fast-export.c'
-    reads like so:
-
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index d412c0a8f3..2fb60d6d48 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-...
-@@ -630,15 +645,15 @@ static void *anonymize_tag(const void *old, size_t *len)
- 	return strbuf_detach(&out, len);
- }
- 
--static void handle_tail(struct object_array *commits, struct rev_info *revs)
-+static void handle_tail(struct object_array *commits, struct rev_info *revs,
-+			struct string_list *paths_of_changed_objects)
- {
- 	struct commit *commit;
- 	while (commits->nr) {
--		commit = (struct commit *)commits->objects[commits->nr - 1].item;
-+		commit = (struct commit *)object_array_pop(commits);
- 		if (has_unshown_parent(commit))
- 			return;
--		handle_commit(commit, revs);
--		commits->nr--;
-+		handle_commit(commit, revs, paths_of_changed_objects);
- 	}
- }
