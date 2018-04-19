@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 375721F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 18:00:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 715841F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 18:00:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753438AbeDSSAb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 14:00:31 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:41704 "EHLO
+        id S1753450AbeDSSAc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 14:00:32 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:41702 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752496AbeDSR6g (ORCPT
+        by vger.kernel.org with ESMTP id S1752294AbeDSR6g (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 19 Apr 2018 13:58:36 -0400
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w3JHnHYu028676;
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w3JHnDfE028656;
         Thu, 19 Apr 2018 10:58:29 -0700
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2hdryeas74-2;
-        Thu, 19 Apr 2018 10:58:29 -0700
+        by mx0a-00153501.pphosted.com with ESMTP id 2hdryeas75-1;
+        Thu, 19 Apr 2018 10:58:28 -0700
 Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 2A0F922175D1;
-        Thu, 19 Apr 2018 10:58:29 -0700 (PDT)
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id AF47D22175C5;
+        Thu, 19 Apr 2018 10:58:28 -0700 (PDT)
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 1F0C32CDEED;
-        Thu, 19 Apr 2018 10:58:29 -0700 (PDT)
+        by smtp.yojoe.local (Postfix) with ESMTP id A69D52CDE6F;
+        Thu, 19 Apr 2018 10:58:28 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com,
         torvalds@linux-foundation.org, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v10 22/36] merge-recursive: when comparing files, don't include trees
-Date:   Thu, 19 Apr 2018 10:58:09 -0700
-Message-Id: <20180419175823.7946-23-newren@gmail.com>
+Subject: [PATCH v10 11/36] directory rename detection: tests for handling overwriting dirty files
+Date:   Thu, 19 Apr 2018 10:57:58 -0700
+Message-Id: <20180419175823.7946-12-newren@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.ge988e9ce2a
 In-Reply-To: <20180419175823.7946-1-newren@gmail.com>
 References: <20180419175823.7946-1-newren@gmail.com>
@@ -54,71 +54,480 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-get_renames() would look up stage data that already existed (populated
-in get_unmerged(), taken from whatever unpack_trees() created), and if
-it didn't exist, would call insert_stage_data() to create the necessary
-entry for the given file.  The insert_stage_data() fallback becomes
-much more important for directory rename detection, because that creates
-a mechanism to have a file in the resulting merge that didn't exist on
-either side of history.  However, insert_stage_data(), due to calling
-get_tree_entry() loaded up trees as readily as files.  We aren't
-interested in comparing trees to files; the D/F conflict handling is
-done elsewhere.  This code is just concerned with what entries existed
-for a given path on the different sides of the merge, so create a
-get_tree_entry_if_blob() helper function and use it.
-
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- merge-recursive.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ t/t6043-merge-rename-directories.sh | 458 ++++++++++++++++++++++++++++
+ 1 file changed, 458 insertions(+)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index ecead3df4b..d569e3e893 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -421,6 +421,21 @@ static void get_files_dirs(struct merge_options *o, struct tree *tree)
- 	read_tree_recursive(tree, "", 0, 0, &match_all, save_files_dirs, o);
- }
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
+index a6cd38336c..8ea9ec49bc 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -3246,4 +3246,462 @@ test_expect_failure '10e-check: Does git complain about untracked file that is n
+ 	)
+ '
  
-+static int get_tree_entry_if_blob(const struct object_id *tree,
-+				  const char *path,
-+				  struct object_id *hashy,
-+				  unsigned int *mode_o)
-+{
-+	int ret;
++###########################################################################
++# SECTION 11: Handling dirty (not up-to-date) files
++#
++# unpack_trees(), upon which the recursive merge algorithm is based, aborts
++# the operation if untracked or dirty files would be deleted or overwritten
++# by the merge.  Unfortunately, unpack_trees() does not understand renames,
++# and if it doesn't abort, then it muddies up the working directory before
++# we even get to the point of detecting renames, so we need some special
++# handling.  This was true even of normal renames, but there are additional
++# codepaths that need special handling with directory renames.  Add
++# testcases for both renamed-by-directory-rename-detection and standard
++# rename cases.
++###########################################################################
 +
-+	ret = get_tree_entry(tree, path, hashy, mode_o);
-+	if (S_ISDIR(*mode_o)) {
-+		oidcpy(hashy, &null_oid);
-+		*mode_o = 0;
-+	}
-+	return ret;
-+}
++# Testcase 11a, Avoid losing dirty contents with simple rename
++#   Commit O: z/{a,b_v1},
++#   Commit A: z/{a,c_v1}, and z/c_v1 has uncommitted mods
++#   Commit B: z/{a,b_v2}
++#   Expected: ERROR_MSG(Refusing to lose dirty file at z/c) +
++#             z/a, staged version of z/c has sha1sum matching B:z/b_v2,
++#             z/c~HEAD with contents of B:z/b_v2,
++#             z/c with uncommitted mods on top of A:z/c_v1
 +
- /*
-  * Returns an index_entry instance which doesn't have to correspond to
-  * a real cache entry in Git's index.
-@@ -431,12 +446,12 @@ static struct stage_data *insert_stage_data(const char *path,
- {
- 	struct string_list_item *item;
- 	struct stage_data *e = xcalloc(1, sizeof(struct stage_data));
--	get_tree_entry(&o->object.oid, path,
--			&e->stages[1].oid, &e->stages[1].mode);
--	get_tree_entry(&a->object.oid, path,
--			&e->stages[2].oid, &e->stages[2].mode);
--	get_tree_entry(&b->object.oid, path,
--			&e->stages[3].oid, &e->stages[3].mode);
-+	get_tree_entry_if_blob(&o->object.oid, path,
-+			       &e->stages[1].oid, &e->stages[1].mode);
-+	get_tree_entry_if_blob(&a->object.oid, path,
-+			       &e->stages[2].oid, &e->stages[2].mode);
-+	get_tree_entry_if_blob(&b->object.oid, path,
-+			       &e->stages[3].oid, &e->stages[3].mode);
- 	item = string_list_insert(entries, path);
- 	item->util = e;
- 	return e;
++test_expect_success '11a-setup: Avoid losing dirty contents with simple rename' '
++	test_create_repo 11a &&
++	(
++		cd 11a &&
++
++		mkdir z &&
++		echo a >z/a &&
++		test_seq 1 10 >z/b &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z/b z/c &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		echo 11 >>z/b &&
++		git add z/b &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '11a-check: Avoid losing dirty contents with simple rename' '
++	(
++		cd 11a &&
++
++		git checkout A^0 &&
++		echo stuff >>z/c &&
++
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "Refusing to lose dirty file at z/c" out &&
++
++		test_seq 1 10 >expected &&
++		echo stuff >>expected &&
++		test_cmp expected z/c &&
++
++		git ls-files -s >out &&
++		test_line_count = 2 out &&
++		git ls-files -u >out &&
++		test_line_count = 1 out &&
++		git ls-files -o >out &&
++		test_line_count = 4 out &&
++
++		git rev-parse >actual \
++			:0:z/a :2:z/c &&
++		git rev-parse >expect \
++			 O:z/a  B:z/b &&
++		test_cmp expect actual &&
++
++		git hash-object z/c~HEAD >actual &&
++		git rev-parse B:z/b >expect &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 11b, Avoid losing dirty file involved in directory rename
++#   Commit O: z/a,         x/{b,c_v1}
++#   Commit A: z/{a,c_v1},  x/b,       and z/c_v1 has uncommitted mods
++#   Commit B: y/a,         x/{b,c_v2}
++#   Expected: y/{a,c_v2}, x/b, z/c_v1 with uncommitted mods untracked,
++#             ERROR_MSG(Refusing to lose dirty file at z/c)
++
++
++test_expect_success '11b-setup: Avoid losing dirty file involved in directory rename' '
++	test_create_repo 11b &&
++	(
++		cd 11b &&
++
++		mkdir z x &&
++		echo a >z/a &&
++		echo b >x/b &&
++		test_seq 1 10 >x/c &&
++		git add z x &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv x/c z/c &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv z y &&
++		echo 11 >>x/c &&
++		git add x/c &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '11b-check: Avoid losing dirty file involved in directory rename' '
++	(
++		cd 11b &&
++
++		git checkout A^0 &&
++		echo stuff >>z/c &&
++
++		git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "Refusing to lose dirty file at z/c" out &&
++
++		grep -q stuff z/c &&
++		test_seq 1 10 >expected &&
++		echo stuff >>expected &&
++		test_cmp expected z/c &&
++
++		git ls-files -s >out &&
++		test_line_count = 3 out &&
++		git ls-files -u >out &&
++		test_line_count = 0 out &&
++		git ls-files -m >out &&
++		test_line_count = 0 out &&
++		git ls-files -o >out &&
++		test_line_count = 4 out &&
++
++		git rev-parse >actual \
++			:0:x/b :0:y/a :0:y/c &&
++		git rev-parse >expect \
++			 O:x/b  O:z/a  B:x/c &&
++		test_cmp expect actual &&
++
++		git hash-object y/c >actual &&
++		git rev-parse B:x/c >expect &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 11c, Avoid losing not-up-to-date with rename + D/F conflict
++#   Commit O: y/a,         x/{b,c_v1}
++#   Commit A: y/{a,c_v1},  x/b,       and y/c_v1 has uncommitted mods
++#   Commit B: y/{a,c/d},   x/{b,c_v2}
++#   Expected: Abort_msg("following files would be overwritten by merge") +
++#             y/c left untouched (still has uncommitted mods)
++
++test_expect_success '11c-setup: Avoid losing not-uptodate with rename + D/F conflict' '
++	test_create_repo 11c &&
++	(
++		cd 11c &&
++
++		mkdir y x &&
++		echo a >y/a &&
++		echo b >x/b &&
++		test_seq 1 10 >x/c &&
++		git add y x &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv x/c y/c &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		mkdir y/c &&
++		echo d >y/c/d &&
++		echo 11 >>x/c &&
++		git add x/c y/c/d &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_success '11c-check: Avoid losing not-uptodate with rename + D/F conflict' '
++	(
++		cd 11c &&
++
++		git checkout A^0 &&
++		echo stuff >>y/c &&
++
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "following files would be overwritten by merge" err &&
++
++		grep -q stuff y/c &&
++		test_seq 1 10 >expected &&
++		echo stuff >>expected &&
++		test_cmp expected y/c &&
++
++		git ls-files -s >out &&
++		test_line_count = 3 out &&
++		git ls-files -u >out &&
++		test_line_count = 0 out &&
++		git ls-files -m >out &&
++		test_line_count = 1 out &&
++		git ls-files -o >out &&
++		test_line_count = 3 out
++	)
++'
++
++# Testcase 11d, Avoid losing not-up-to-date with rename + D/F conflict
++#   Commit O: z/a,         x/{b,c_v1}
++#   Commit A: z/{a,c_v1},  x/b,       and z/c_v1 has uncommitted mods
++#   Commit B: y/{a,c/d},   x/{b,c_v2}
++#   Expected: D/F: y/c_v2 vs y/c/d) +
++#             Warning_Msg("Refusing to lose dirty file at z/c) +
++#             y/{a,c~HEAD,c/d}, x/b, now-untracked z/c_v1 with uncommitted mods
++
++test_expect_success '11d-setup: Avoid losing not-uptodate with rename + D/F conflict' '
++	test_create_repo 11d &&
++	(
++		cd 11d &&
++
++		mkdir z x &&
++		echo a >z/a &&
++		echo b >x/b &&
++		test_seq 1 10 >x/c &&
++		git add z x &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv x/c z/c &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv z y &&
++		mkdir y/c &&
++		echo d >y/c/d &&
++		echo 11 >>x/c &&
++		git add x/c y/c/d &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '11d-check: Avoid losing not-uptodate with rename + D/F conflict' '
++	(
++		cd 11d &&
++
++		git checkout A^0 &&
++		echo stuff >>z/c &&
++
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "Refusing to lose dirty file at z/c" out &&
++
++		grep -q stuff z/c &&
++		test_seq 1 10 >expected &&
++		echo stuff >>expected &&
++		test_cmp expected z/c
++
++		git ls-files -s >out &&
++		test_line_count = 4 out &&
++		git ls-files -u >out &&
++		test_line_count = 1 out &&
++		git ls-files -o >out &&
++		test_line_count = 5 out &&
++
++		git rev-parse >actual \
++			:0:x/b :0:y/a :0:y/c/d :3:y/c &&
++		git rev-parse >expect \
++			 O:x/b  O:z/a  B:y/c/d  B:x/c &&
++		test_cmp expect actual &&
++
++		git hash-object y/c~HEAD >actual &&
++		git rev-parse B:x/c >expect &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 11e, Avoid deleting not-up-to-date with dir rename/rename(1to2)/add
++#   Commit O: z/{a,b},      x/{c_1,d}
++#   Commit A: y/{a,b,c_2},  x/d, w/c_1, and y/c_2 has uncommitted mods
++#   Commit B: z/{a,b,c_1},  x/d
++#   Expected: Failed Merge; y/{a,b} + x/d +
++#             CONFLICT(rename/rename) x/c_1 -> w/c_1 vs y/c_1 +
++#             ERROR_MSG(Refusing to lose dirty file at y/c)
++#             y/c~B^0 has O:x/c_1 contents
++#             y/c~HEAD has A:y/c_2 contents
++#             y/c has dirty file from before merge
++
++test_expect_success '11e-setup: Avoid deleting not-uptodate with dir rename/rename(1to2)/add' '
++	test_create_repo 11e &&
++	(
++		cd 11e &&
++
++		mkdir z x &&
++		echo a >z/a &&
++		echo b >z/b &&
++		echo c >x/c &&
++		echo d >x/d &&
++		git add z x &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z/ y/ &&
++		echo different >y/c &&
++		mkdir w &&
++		git mv x/c w/ &&
++		git add y/c &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv x/c z/ &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '11e-check: Avoid deleting not-uptodate with dir rename/rename(1to2)/add' '
++	(
++		cd 11e &&
++
++		git checkout A^0 &&
++		echo mods >>y/c &&
++
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "CONFLICT (rename/rename)" out &&
++		test_i18ngrep "Refusing to lose dirty file at y/c" out &&
++
++		git ls-files -s >out &&
++		test_line_count = 7 out &&
++		git ls-files -u >out &&
++		test_line_count = 4 out &&
++		git ls-files -o >out &&
++		test_line_count = 4 out &&
++
++		echo different >expected &&
++		echo mods >>expected &&
++		test_cmp expected y/c &&
++
++		git rev-parse >actual \
++			:0:y/a :0:y/b :0:x/d :1:x/c :2:w/c :2:y/c :3:y/c &&
++		git rev-parse >expect \
++			 O:z/a  O:z/b  O:x/d  O:x/c  O:x/c  A:y/c  O:x/c &&
++		test_cmp expect actual &&
++
++		git hash-object >actual \
++			y/c~B^0 y/c~HEAD &&
++		git rev-parse >expect \
++			O:x/c   A:y/c &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 11f, Avoid deleting not-up-to-date w/ dir rename/rename(2to1)
++#   Commit O: z/{a,b},        x/{c_1,d_2}
++#   Commit A: y/{a,b,wham_1}, x/d_2, except y/wham has uncommitted mods
++#   Commit B: z/{a,b,wham_2}, x/c_1
++#   Expected: Failed Merge; y/{a,b} + untracked y/{wham~B^0,wham~B^HEAD} +
++#             y/wham with dirty changes from before merge +
++#             CONFLICT(rename/rename) x/c vs x/d -> y/wham
++#             ERROR_MSG(Refusing to lose dirty file at y/wham)
++
++test_expect_success '11f-setup: Avoid deleting not-uptodate with dir rename/rename(2to1)' '
++	test_create_repo 11f &&
++	(
++		cd 11f &&
++
++		mkdir z x &&
++		echo a >z/a &&
++		echo b >z/b &&
++		test_seq 1 10 >x/c &&
++		echo d >x/d &&
++		git add z x &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z/ y/ &&
++		git mv x/c y/wham &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv x/d z/wham &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '11f-check: Avoid deleting not-uptodate with dir rename/rename(2to1)' '
++	(
++		cd 11f &&
++
++		git checkout A^0 &&
++		echo important >>y/wham &&
++
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "CONFLICT (rename/rename)" out &&
++		test_i18ngrep "Refusing to lose dirty file at y/wham" out &&
++
++		git ls-files -s >out &&
++		test_line_count = 4 out &&
++		git ls-files -u >out &&
++		test_line_count = 2 out &&
++		git ls-files -o >out &&
++		test_line_count = 4 out &&
++
++		test_seq 1 10 >expected &&
++		echo important >>expected &&
++		test_cmp expected y/wham &&
++
++		test_must_fail git rev-parse :1:y/wham &&
++		git hash-object >actual \
++			y/wham~B^0 y/wham~HEAD &&
++		git rev-parse >expect \
++			O:x/d      O:x/c &&
++		test_cmp expect actual &&
++
++		git rev-parse >actual \
++			:0:y/a :0:y/b :2:y/wham :3:y/wham &&
++		git rev-parse >expect \
++			 O:z/a  O:z/b  O:x/c     O:x/d &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
 -- 
 2.17.0.290.ge988e9ce2a
 
