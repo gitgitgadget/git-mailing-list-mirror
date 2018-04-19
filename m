@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAB851F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 15:58:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC8C61F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 17:21:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753562AbeDSP6j (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 11:58:39 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:42501 "EHLO
+        id S1752976AbeDSRVQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 13:21:16 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:47056 "EHLO
         mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753251AbeDSP6i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 11:58:38 -0400
-Received: by mail-wr0-f195.google.com with SMTP id s18-v6so15413271wrg.9
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 08:58:37 -0700 (PDT)
+        with ESMTP id S1752640AbeDSRVP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 13:21:15 -0400
+Received: by mail-wr0-f195.google.com with SMTP id d1-v6so16065863wrj.13
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 10:21:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=TTQNFwv26bJy7miB8Grf2EPgAKiu1LqH3QYYZ0OX0GA=;
-        b=ddIgsylpb15aNpB2EeYfW9skTKGUA9pqCqCzxijrrF3CZPv1ScovbmvX9Czn8Hs7A/
-         hRnzjIB2twCX5IAB+zG5WbaKuwlNu4tv1nasOdINY9hRGF5MaTWqkjVoeGNh0m41i/J/
-         koldU3CMox+Y3x/CQRwqijpUywkQSwwJd8z2yaKSqagzjOyCYKCEjA7amOYrB5fWs5U3
-         i/Rr02xsF7ZWqiKpPJR+GGPJ8GMspMcfi56i/9i9SsQFMlS+RiwYeGJzCKMAdiOdXgNe
-         Scs1HBJ95bhXgU5N+TL8iQQrWOHs2UDbm1grpCdJIB2NgTYCfdIXjwjxcCwhlKwzkr4F
-         UG7g==
+        bh=SWB72GH0YPOKeBLNbx40fbhi8Cte0ftgk62yGwWH4uw=;
+        b=g/fuNUPpGICHH88EJ8EiiFoDoU0Cbn/NP5/pGf+Z0ZtwUL6amMXr47WjSt+hkrS9tV
+         VPhEeGdRE3XXMmfLWJiITr4dOH08bS5UyFe2TuTcQGxy0S+E44UxI381MT7gRc+3jY+B
+         m9hLBkKSpTxfSkNAdv8ZssAq7O8CWEq7ultOkPMHJuqDb4At4MLBVN0pX8nZLwa+t8pk
+         AugcxxIQxMZXpZ0huVFb4YVa4E2AbNyyo4vVxbwC6NJ0U4j7f0PNs35qtfNib3EtY+4Y
+         J4K2Takj0s1vjZ1jEnFgfxOAXeOYf8WLLZfGPmzQWOKjWpFV1Xc2Onj4/SbHfQkHrzig
+         PLzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
          :message-id:user-agent:mime-version;
-        bh=TTQNFwv26bJy7miB8Grf2EPgAKiu1LqH3QYYZ0OX0GA=;
-        b=NNpswIstOp+WTFM7zrR4yRb8iByL2C7pQyHChP3zFI5AB0Ys0qVlb8Qp1nsYKF3hvv
-         UM1PrEZ3ClD9DG/i5YDGy1w1CbYT/PBgHd6nv9le+ZNIV+EzxX4GvIRka8SnraOclu3p
-         9JOB+B2Vhj6WEGdxg2c0cmD3BxunD4ohSZWFwUePJi7/ZM9gGI6eEEYm9a1/E1lfPwQ/
-         YrxIFgDznJuDR8v3ioEvkvHi2cYummS9MdmPFpnFJYTNktzIqGTawXE4pUpkCmTtxR3N
-         at6RlXxqq4bchYdAAznF9PbOk9vHrZoHIFgyyuAlwi46hTE6QoJqG5QI5YzGRl9qCmW1
-         Vquw==
-X-Gm-Message-State: ALQs6tAMglEyEprfHmC5VdrK8jn+D3laUktm8yKdCBgCnpM8X+zqAxDO
-        8h4a4wAeEq4/EzmDFBrZvzs=
-X-Google-Smtp-Source: AIpwx4/Njj1GJUQXObMYPKXEu0rzh5kek3aVmIPcte0Bu+nEQV1USSOklFphB4w+/YLvtThqtbCfaw==
-X-Received: by 2002:adf:a315:: with SMTP id c21-v6mr5534582wrb.195.1524153516805;
-        Thu, 19 Apr 2018 08:58:36 -0700 (PDT)
+        bh=SWB72GH0YPOKeBLNbx40fbhi8Cte0ftgk62yGwWH4uw=;
+        b=fgAFbkNZwyvGGYKQPppUFS07X+0bmmq9bqwd/ZCaR/Z0Jde2FdJjtha6BDuN19zo8B
+         NZPuwsHjR4rQpJgIAvIVSoAz/VtuDHnzJjMpQgSGuJ1pniIm53UP8KKxuTnaEa/IyaEF
+         8Y+8omxT4AtrBUlNkAOSmeXyWgfRBMHNoDqcO/Zgul7ULAage6qNkU65YL+2UFLNPpcg
+         ccFuovdDKjkGo53RoI2d8ehzQHGQsY0F2tpfNHKK8RfW/ZEvycRlSXkwsYzu4pUNkIZ9
+         0Rz3l7XrPS7Pscnkit6+c3jlvPwwG7UCfJWCikOwpSjvxEDU5pQjhJyEZK6JPvZ70iDW
+         0NxA==
+X-Gm-Message-State: ALQs6tCqzfyob8yS73SVdjpRJwv853ASflWhw6sxnbomzUGGuOevYdgM
+        JvNCi4LBOeHyQX6qFMk/JAI=
+X-Google-Smtp-Source: AIpwx48Iexs6f6roXhdBhED4kLEaZ/SrZdoqlsb/tmxYSLYghjRKlJlu3+UlgS0+p+5VEY9Ye6ja5Q==
+X-Received: by 10.28.12.129 with SMTP id 123mr5036250wmm.75.1524158474499;
+        Thu, 19 Apr 2018 10:21:14 -0700 (PDT)
 Received: from Laptop-Acer-Aspire-F15 (egc153.neoplus.adsl.tpnet.pl. [83.21.66.153])
-        by smtp.gmail.com with ESMTPSA id p25sm3702088wmi.14.2018.04.19.08.58.34
+        by smtp.gmail.com with ESMTPSA id b105-v6sm7138351wrd.64.2018.04.19.10.21.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Apr 2018 08:58:35 -0700 (PDT)
+        Thu, 19 Apr 2018 10:21:12 -0700 (PDT)
 From:   Jakub Narebski <jnareb@gmail.com>
 To:     Derrick Stolee <dstolee@microsoft.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 03/12] commit-graph: check file header information
+Subject: Re: [RFC PATCH 04/12] commit-graph: parse commit from chosen graph
 References: <20180417181028.198397-1-dstolee@microsoft.com>
-        <20180417181028.198397-4-dstolee@microsoft.com>
-Date:   Thu, 19 Apr 2018 17:58:34 +0200
-In-Reply-To: <20180417181028.198397-4-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Tue, 17 Apr 2018 18:10:39 +0000")
-Message-ID: <86fu3rfas5.fsf@gmail.com>
+        <20180417181028.198397-5-dstolee@microsoft.com>
+Date:   Thu, 19 Apr 2018 19:21:12 +0200
+In-Reply-To: <20180417181028.198397-5-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Tue, 17 Apr 2018 18:10:40 +0000")
+Message-ID: <86bmeff6yf.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,104 +70,58 @@ X-Mailing-List: git@vger.kernel.org
 
 Derrick Stolee <dstolee@microsoft.com> writes:
 
-> During a run of 'git commit-graph check', list the issues with the
-> header information in the commit-graph file. Some of this information
-> is inferred from the loaded 'struct commit_graph'.
+> Before checking a commit-graph file against the object database, we
+
+Actually there is quite a few checks more that can be done without
+accessing the object database... I'll take a look at later commits why
+this one is that relatively early in the series.
+
+> need to parse all commits from the given commit-graph file. Create
+> parse_commit_in_graph_one() to target a given struct commit_graph.
 >
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  commit-graph.c | 29 ++++++++++++++++++++++++++++-
->  1 file changed, 28 insertions(+), 1 deletion(-)
+>  commit-graph.c | 18 ++++++++++++++----
+>  1 file changed, 14 insertions(+), 4 deletions(-)
 >
 > diff --git a/commit-graph.c b/commit-graph.c
-> index cd0634bba0..c5e5a0f860 100644
+> index c5e5a0f860..6d0d303a7a 100644
 > --- a/commit-graph.c
 > +++ b/commit-graph.c
-> @@ -820,7 +820,34 @@ void write_commit_graph(const char *obj_dir,
->  	oids.nr = 0;
+> @@ -308,17 +308,27 @@ static int find_commit_in_graph(struct commit *item, struct commit_graph *g, uin
+>  	}
 >  }
 >  
-> +static int check_commit_graph_error;
-> +#define graph_report(...) { check_commit_graph_error = 1; printf(__VA_ARGS__); }
-
-Shouldn't 'do { ... } while(0);' trick be used here, like e.g. for
-trace_performance macro?
-
-> +
->  int check_commit_graph(struct commit_graph *g)
+> -int parse_commit_in_graph(struct commit *item)
+> +int parse_commit_in_graph_one(struct commit_graph *g, struct commit *item)
 >  {
-> -	return !g;
-> +	if (!g) {
-> +		graph_report(_("no commit-graph file loaded"));
+>  	uint32_t pos;
+>  
+>  	if (item->object.parsed)
+> -		return 0;
 > +		return 1;
-> +	}
-> +
-> +	check_commit_graph_error = 0;
-> +
 
-The load_commit_graph_one() function does its own checks, some of whose
-are present below, and some of whose are missing.
-
-If it is used, then why duplicate tests - you would not get here as you
-would die earlier.
-
-If it is not used, then some tests are missing.
-
-> +	if (get_be32(g->data) != GRAPH_SIGNATURE)
-> +		graph_report(_("commit-graph file has incorrect header"));
-
-The load_commit_graph_one() shows more detailed information:
-
-                     "graph signature %X does not match signature %X",
-		      graph_signature, GRAPH_SIGNATURE)
-
-Also, load_commit_graph_one() checks that the file is not too short, and
-we actually can access whole header.
+I am confused and befuddled by those apparent changes between returning
+0 or returning 1 when object was parsed.
 
 > +
-> +	if (*(g->data + 4) != 1)
-> +		graph_report(_("commit-graph file version is not 1"));
-
-Again:
-
-                     "graph version %X does not match version %X",
-		      graph_version, GRAPH_VERSION
-
-Also, here we hardcode the commit-graph file version to 1.
-
-Accidentally, don't we offer backward compatibility, in that if git can
-read commit-graph file version 2, it can also read commit-graph file
-version 1?
-
-> +	if (*(g->data + 5) != GRAPH_OID_VERSION)
-> +		graph_report(_("commit-graph OID version is not 1 (SHA1)"));
-
-In one part we use symbolic constant, on the other hardcoded values.  If
-GRAPH_OID_VERSION changes, what then?
-
-Also:
-
-                     "hash version %X does not match version %X",
-		      hash_version, GRAPH_OID_VERSION
-
+> +	if (find_commit_in_graph(item, g, &pos))
+> +		return fill_commit_in_graph(item, g, pos);
 > +
-> +	if (!g->chunk_oid_fanout)
-> +		graph_report(_("commit-graph is missing the OID Fanout chunk"));
-> +	if (!g->chunk_oid_lookup)
-> +		graph_report(_("commit-graph is missing the OID Lookup chunk"));
-> +	if (!g->chunk_commit_data)
-> +		graph_report(_("commit-graph is missing the Commit Data chunk"));
-
-All right.
-
-> +	if (g->hash_len != GRAPH_OID_LEN)
-> +		graph_report(_("commit-graph has incorrect hash length: %d"), g->hash_len);
-
-We could be more detailed in error report: what hash length should be,
-then?
-
+> +	return 0;
+> +}
 > +
-> +	return check_commit_graph_error;
+> +int parse_commit_in_graph(struct commit *item)
+> +{
+>  	if (!core_commit_graph)
+>  		return 0;
+> +
+>  	prepare_commit_graph();
+> -	if (commit_graph && find_commit_in_graph(item, commit_graph, &pos))
+> -		return fill_commit_in_graph(item, commit_graph, pos);
+> +	if (commit_graph)
+> +		return parse_commit_in_graph_one(commit_graph, item);
+>  	return 0;
 >  }
 
-No tests of malformed commit-graph file?
+Seems all right.
