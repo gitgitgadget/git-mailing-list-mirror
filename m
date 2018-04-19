@@ -2,130 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CF9B1F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 02:20:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C6BF1F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 02:29:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752634AbeDSCUJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 22:20:09 -0400
-Received: from mail.cmpwn.com ([45.56.77.53]:48360 "EHLO mail.cmpwn.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752077AbeDSCUI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 22:20:08 -0400
-X-Greylist: delayed 470 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Apr 2018 22:20:08 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cmpwn.com; s=cmpwn;
-        t=1524104229; bh=d+o3ASdMIIZgxzatuoWPbGb+2qg9w3Ben2bQW6Qs/YM=;
-        h=From:To:Cc:Subject:Date;
-        b=OeqPnlOGvnkSjLFoGUHVGILVdD6MKGcvTix7Qbhz/2o1SnXKRVPscP/pl2VLQcElH
-         FFEPC2kQt+P7kiCfzmEuNdStYaERzjRwGJ6VRditHdZsYUQQTKww7/UaqtZozaZhvH
-         7mTLTj6lCpvKTAQ+sRJAUckCtS7UDnT0IV0adA1I=
-From:   Drew DeVault <sir@cmpwn.com>
-To:     git@vger.kernel.org
-Cc:     Drew DeVault <sir@cmpwn.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] send-email: allow re-editing of message
-Date:   Wed, 18 Apr 2018 22:12:02 -0400
-Message-Id: <20180419021202.16025-1-sir@cmpwn.com>
-X-Mailer: git-send-email 2.17.0
+        id S1752617AbeDSC3t (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 22:29:49 -0400
+Received: from mail-io0-f174.google.com ([209.85.223.174]:37975 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752255AbeDSC3s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 22:29:48 -0400
+Received: by mail-io0-f174.google.com with SMTP id h9-v6so4852347iob.5
+        for <git@vger.kernel.org>; Wed, 18 Apr 2018 19:29:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=PPTaXCn7uzIL2iz6f5keOJYaAUNSo0MsjWZ4QkT++yw=;
+        b=TOI97YM7hF7g93uePAxqY6ZdP+oISCmGSAKbwqowcMReJCgmXMOlWfVYgeLlc0raWx
+         AADV7N7aa2o+S7S+mElBMzVlOmtdmR1TuAcqkRkcFWHKD/GMMbruTfKC0sJ3eQ5st5R5
+         6KvztQA/90equMd44JVwERY75HfVKxHOKRCeZmpRR3Det7ge6K90XDsecySfEaNCN1As
+         apxsy9bwvAaX8yTrxxwVXeqtMLDYo5fKfYwrrvoxNX0VH4Sx7Of6m1vwChv0etrmowiR
+         chGPe/SrvudPLfIawmVQNd4a9EWS+UHea8l1mvQ8eeSXhM2VL6YVNTbrDZ1wWZ7AaVvv
+         lFKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=PPTaXCn7uzIL2iz6f5keOJYaAUNSo0MsjWZ4QkT++yw=;
+        b=EjdV4pVOaEetpw3QB26Qt0EzZeZ0gQ3c/VWYVJwu9fFFHY+DbAvcvtgs7lS0xcW3m7
+         h9nwtlsUXdGC7LmkWsHxErNr8MHEuyh4VbeMp9UXaqo4piuECcYbP/q6IMlyqLp8824x
+         5lt3/KcbJxryeiCfGsXdLaSvBr3YjeGN81h5Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=PPTaXCn7uzIL2iz6f5keOJYaAUNSo0MsjWZ4QkT++yw=;
+        b=SB4w0rOeIJIU0/a83UhYORqxltSS0QeDTdEvNK6LQURS8qvwpQm+sPJXE4WUB1zRZZ
+         wHOWfaO1S38WV4JxSkXirLBo7RU8vHRNDF+Pyf92LlC/ovm7HT6AC58OBcutyY9qLvmr
+         BYNwXcuIiXW9XMWNwGK5upfO1XwbcYVJSJXCkMbNZ+n5eqa3ZTAbteojuFUO250kKDUY
+         VWsouGGXUiiy+d7P8nXuP2TIWieDY6zblXP41VYL0A5bENz6Vq60fvm53kwVQcFiUlS8
+         l78RI040XhRqtNvkcPtyzNX2Xr6OFryUIlgEciGlpsxeSPHkF5oGR7yrQ0m5z7h6RyYU
+         gqSQ==
+X-Gm-Message-State: ALQs6tCLvS34secA1p8kv+bWYMnADZA6wpVHQ+eYkdKzncpMNwryMYJm
+        rpt2YBOVww+asOLLjIK0bXN++xvHySlNUfR0ZNM=
+X-Google-Smtp-Source: AB8JxZqU/LzKMgHHOFc015WXpuHtrsbtIChgOpiC8G+U1yTX+esTRXPpJE0qMUchuFrHdd/vCoRW6jfTjSrxTDOA4xg=
+X-Received: by 2002:a6b:afdb:: with SMTP id p88-v6mr4379806ioo.257.1524104987831;
+ Wed, 18 Apr 2018 19:29:47 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.95.15 with HTTP; Wed, 18 Apr 2018 19:29:47 -0700 (PDT)
+In-Reply-To: <xmqqfu3seyad.fsf@gitster-ct.c.googlers.com>
+References: <CA+55aFxSZLuk++Dz6SonD+JhbbSDt9G9VcBx5f1CV=6nJC9hvg@mail.gmail.com>
+ <xmqqr2ncezdc.fsf@gitster-ct.c.googlers.com> <xmqqmuy0ez8b.fsf@gitster-ct.c.googlers.com>
+ <xmqqfu3seyad.fsf@gitster-ct.c.googlers.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Wed, 18 Apr 2018 19:29:47 -0700
+X-Google-Sender-Auth: yI9LL9VVeLxCodCYaZXNCDDd_qQ
+Message-ID: <CA+55aFztDdB9tVHREhQ7T0COs7p9ng81XfAHZCL3rx9WT2ecEQ@mail.gmail.com>
+Subject: Re: Silly "git gc" UI issue.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Content-Type: multipart/mixed; boundary="00000000000066bbb5056a2a58e5"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When shown the email summary, an opportunity is presented for the user
-to edit the email as if they had specified --annotate. This also permits
-them to edit it multiple times.
+--00000000000066bbb5056a2a58e5
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: Drew DeVault <sir@cmpwn.com>
-Reviewed-by: Simon Ser <contact@emersion.fr>
----
- git-send-email.perl | 35 ++++++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 7 deletions(-)
+On Wed, Apr 18, 2018 at 7:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> A few commands that parse --expire=<time> command line option
+> behaves silly when given nonsense input.  For example
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 2fa7818ca..14f2e8ae4 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1330,9 +1330,14 @@ sub file_name_is_absolute {
- 	return File::Spec::Functions::file_name_is_absolute($path);
- }
- 
--# Returns 1 if the message was sent, and 0 otherwise.
--# In actuality, the whole program dies when there
--# is an error sending a message.
-+# Prepares the email, then asks the user what to do.
-+#
-+# If the user chooses to send the email, it's sent and 1 is returned.
-+# If the user chooses not to send the email, 0 is returned.
-+# If the user decides they want to make further edits, -1 is returned and the
-+# caller is expected to call send_message again after the edits are performed.
-+#
-+# If an error occurs sending the email, this just dies.
- 
- sub send_message {
- 	my @recipients = unique_email_list(@to);
-@@ -1404,15 +1409,17 @@ Message-Id: $message_id
- 
- EOF
- 		}
--		# TRANSLATORS: Make sure to include [y] [n] [q] [a] in your
-+		# TRANSLATORS: Make sure to include [y] [n] [e] [q] [a] in your
- 		# translation. The program will only accept English input
- 		# at this point.
--		$_ = ask(__("Send this email? ([y]es|[n]o|[q]uit|[a]ll): "),
--		         valid_re => qr/^(?:yes|y|no|n|quit|q|all|a)/i,
-+		$_ = ask(__("Send this email? ([y]es|[n]o|[e]dit|[q]uit|[a]ll): "),
-+		         valid_re => qr/^(?:yes|y|no|n|edit|e|quit|q|all|a)/i,
- 		         default => $ask_default);
- 		die __("Send this email reply required") unless defined $_;
- 		if (/^n/i) {
- 			return 0;
-+		} elsif (/^e/i) {
-+			return -1;
- 		} elsif (/^q/i) {
- 			cleanup_compose_files();
- 			exit(0);
-@@ -1552,7 +1559,9 @@ $references = $initial_in_reply_to || '';
- $subject = $initial_subject;
- $message_num = 0;
- 
--foreach my $t (@files) {
-+sub process_file {
-+	my ($t) = @_;
-+
- 	open my $fh, "<", $t or die sprintf(__("can't open file %s"), $t);
- 
- 	my $author = undef;
-@@ -1755,6 +1764,10 @@ foreach my $t (@files) {
- 	}
- 
- 	my $message_was_sent = send_message();
-+	if ($message_was_sent == -1) {
-+		do_edit($t);
-+		return 0;
-+	}
- 
- 	# set up for the next message
- 	if ($thread && $message_was_sent &&
-@@ -1776,6 +1789,14 @@ foreach my $t (@files) {
- 		undef $auth;
- 		sleep($relogin_delay) if defined $relogin_delay;
- 	}
-+
-+	return 1;
-+}
-+
-+foreach my $t (@files) {
-+	while (!process_file($t)) {
-+		# This space deliberately left blank
-+	}
- }
- 
- # Execute a command (e.g. $to_cmd) to get a list of email addresses
--- 
-2.17.0
+So this patch definitely improves on the error message.
 
+But look at what happens for the kernel:
+
+    [torvalds@i7 linux]$ time git gc --prune=npw
+    Counting objects: 6006319, done.
+    Delta compression using up to 8 threads.
+    Compressing objects: 100% (912166/912166), done.
+    Writing objects: 100% (6006319/6006319), done.
+    Total 6006319 (delta 5050577), reused 6006319 (delta 5050577)
+    fatal: malformed expiration date 'npw'
+    error: failed to run prune
+
+    real        1m4.376s
+    user        0m59.963s
+    sys         0m5.182s
+
+
+
+Yes, I get that nice "malformed expiration date 'npw'" error, but I
+get it after 64 seconds has passed.
+
+So i think builtin/gc.c should use this same parse_expiry_date()
+parse_opt_expiry_date_cb() thing for its timestamp parsing.
+
+It does actually seem to do that for the gc_log_expire value that it
+loads from the config file.
+
+Maybe something like the attached patch? Then I get:
+
+    [torvalds@i7 linux]$ time git gc --prune=npw
+    fatal: Failed to parse prune expiry value npw
+
+    real        0m0.004s
+    user        0m0.002s
+    sys         0m0.002s
+
+and you could smush it into your commit (if you want my sign-off, take it)
+
+              Linus
+
+--00000000000066bbb5056a2a58e5
+Content-Type: text/x-patch; charset="US-ASCII"; name="patch.diff"
+Content-Disposition: attachment; filename="patch.diff"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jg5wqg8f0
+
+IGJ1aWx0aW4vZ2MuYyB8IDQgKysrKwogMSBmaWxlIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygrKQoK
+ZGlmZiAtLWdpdCBhL2J1aWx0aW4vZ2MuYyBiL2J1aWx0aW4vZ2MuYwppbmRleCAzZTY3MTI0ZWEu
+LmE0YjIwYWFhZiAxMDA2NDQKLS0tIGEvYnVpbHRpbi9nYy5jCisrKyBiL2J1aWx0aW4vZ2MuYwpA
+QCAtMzU0LDYgKzM1NCw3IEBAIGludCBjbWRfZ2MoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2
+LCBjb25zdCBjaGFyICpwcmVmaXgpCiAJY29uc3QgY2hhciAqbmFtZTsKIAlwaWRfdCBwaWQ7CiAJ
+aW50IGRhZW1vbml6ZWQgPSAwOworCXRpbWVzdGFtcF90IGR1bW15OwogCiAJc3RydWN0IG9wdGlv
+biBidWlsdGluX2djX29wdGlvbnNbXSA9IHsKIAkJT1BUX19RVUlFVCgmcXVpZXQsIE5fKCJzdXBw
+cmVzcyBwcm9ncmVzcyByZXBvcnRpbmciKSksCkBAIC0zOTIsNiArMzkzLDkgQEAgaW50IGNtZF9n
+YyhpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkKIAlpZiAo
+YXJnYyA+IDApCiAJCXVzYWdlX3dpdGhfb3B0aW9ucyhidWlsdGluX2djX3VzYWdlLCBidWlsdGlu
+X2djX29wdGlvbnMpOwogCisJaWYgKHBhcnNlX2V4cGlyeV9kYXRlKHBydW5lX2V4cGlyZSwgJmR1
+bW15KSkKKwkJZGllKF8oIkZhaWxlZCB0byBwYXJzZSBwcnVuZSBleHBpcnkgdmFsdWUgJXMiKSwg
+cHJ1bmVfZXhwaXJlKTsKKwogCWlmIChhZ2dyZXNzaXZlKSB7CiAJCWFyZ3ZfYXJyYXlfcHVzaCgm
+cmVwYWNrLCAiLWYiKTsKIAkJaWYgKGFnZ3Jlc3NpdmVfZGVwdGggPiAwKQo=
+--00000000000066bbb5056a2a58e5--
