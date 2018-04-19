@@ -2,115 +2,285 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBFFC1F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 12:35:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5F7A1F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 13:24:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751980AbeDSMfD convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 19 Apr 2018 08:35:03 -0400
-Received: from mail.efficios.com ([167.114.142.138]:46286 "EHLO
-        mail.efficios.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751227AbeDSMfC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 08:35:02 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mail.efficios.com (Postfix) with ESMTP id CA3441B2C32;
-        Thu, 19 Apr 2018 08:35:01 -0400 (EDT)
-Received: from mail.efficios.com ([127.0.0.1])
-        by localhost (mail02.efficios.com [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id DMoxJ5zuJimy; Thu, 19 Apr 2018 08:35:00 -0400 (EDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.efficios.com (Postfix) with ESMTP id E1B851B2C21;
-        Thu, 19 Apr 2018 08:35:00 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at efficios.com
-Received: from mail.efficios.com ([127.0.0.1])
-        by localhost (mail02.efficios.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id TKVbCqRWn-yB; Thu, 19 Apr 2018 08:35:00 -0400 (EDT)
-Received: from mail02.efficios.com (mail02.efficios.com [167.114.142.138])
-        by mail.efficios.com (Postfix) with ESMTP id CF19F1B2C18;
-        Thu, 19 Apr 2018 08:35:00 -0400 (EDT)
-Date:   Thu, 19 Apr 2018 08:35:00 -0400 (EDT)
-From:   Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-To:     Matthew Wilcox <willy@infradead.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git <git@vger.kernel.org>, rostedt <rostedt@goodmis.org>,
-        Minchan Kim <minchan@kernel.org>
-Message-ID: <646938104.13100.1524141300699.JavaMail.zimbra@efficios.com>
-In-Reply-To: <20180419121024.GD5556@bombadil.infradead.org>
-References: <20180418140503.GD27475@bombadil.infradead.org> <87tvs8e174.fsf@evledraar.gmail.com> <xmqqr2ncgqhl.fsf@gitster-ct.c.googlers.com> <20180419121024.GD5556@bombadil.infradead.org>
-Subject: Re: [PATCH] git-send-email: Cc more people
+        id S1752629AbeDSNYK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 09:24:10 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:43354 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752414AbeDSNYJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 09:24:09 -0400
+Received: by mail-lf0-f66.google.com with SMTP id v207-v6so118829lfa.10
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 06:24:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=uvESD/W3akTIFbQRsuQpgeWCqsF/yrOdvlgCiEUHwjE=;
+        b=Wln68uerjBypWbRaIzafxehKUlmJUpI9YpkpIyknXHTpECHmtCz5x5erRKXyvx9pXn
+         AmqJOHm+w0khuY199Yssia9t7pkVRcra4KHPxQdyaowVmA43kPZto8moNNhm4OiTNE8s
+         eAv2q7zNv2mG+2kCGLfpsVSwSQOE1TaNMMMCoLjSGYrlBxkk6+aCq200JSru94v2n9Ep
+         sVelS5A4BNLP9mCMG82N7w+YF6E/+soeml4Ex1WJr6mO7Q8tsXQvCzOvdy998Ew0jS8G
+         aWzyOsIMvSVqCZwO6Ct+EJF9D/mDc0qTSOfpMyqdSZZ+6kJErloqafVhfxxEG6GO9PTR
+         Gr2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=uvESD/W3akTIFbQRsuQpgeWCqsF/yrOdvlgCiEUHwjE=;
+        b=fIUoNvi9AQrxLhX9L592KngGOPxemVugbPmsII07zg7vgNFYnczw84nxU/GYAKeVa0
+         adnSVgW3Na9y+H69nmgDtRKbLfnNSYPiLWlJVqA8WGrS13xyTsqy4FcaIuyozYxkfyDo
+         JcJgChcR9G9uVccIhdBiDoVlfzHDSJaQp9Iug2Qb1pHOiWj9ekhSSMQt5YCzbdD0Vt0C
+         jn1WMDpUZMjIGT+wrymDfRUBw3VfbuSAUuHuhc311mCvwLnLrd240JIlB8XJ/G7yOGon
+         hX7ozRT4DwXf8673Z8+YNuZHIpF4R5DSJbHPYz5pSmDlRuvPqRbVCeLy7F2siqfKWSgL
+         HrKg==
+X-Gm-Message-State: ALQs6tA60wT5X9jsytAjke+gXOl/Afr/DUiXTC1AaIg/7I/bYiaSpst/
+        PoiDhkmsQj/cGcC9uKmNlsE=
+X-Google-Smtp-Source: AB8JxZogJx46Xbfv0WMHmstZiNTpVwvzpS7IIaI1JFLH1VsIGOf14/AYPuFzaiTjPlUWaH/XTyK3jw==
+X-Received: by 2002:a19:e206:: with SMTP id z6-v6mr63278lfg.58.1524144247519;
+        Thu, 19 Apr 2018 06:24:07 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 ([158.75.2.130])
+        by smtp.gmail.com with ESMTPSA id d27-v6sm747640lfb.6.2018.04.19.06.24.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 19 Apr 2018 06:24:06 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, "peff\@peff.net" <peff@peff.net>,
+        "sbeller\@google.com" <sbeller@google.com>
+Subject: Re: [RFC PATCH 02/12] commit-graph: add 'check' subcommand
+References: <20180417181028.198397-1-dstolee@microsoft.com>
+        <20180417181028.198397-3-dstolee@microsoft.com>
+Date:   Thu, 19 Apr 2018 15:24:06 +0200
+In-Reply-To: <20180417181028.198397-3-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Tue, 17 Apr 2018 18:10:39 +0000")
+Message-ID: <86o9iffhxl.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-X-Originating-IP: [167.114.142.138]
-X-Mailer: Zimbra 8.8.7_GA_1964 (ZimbraWebClient - FF52 (Linux)/8.8.7_GA_1964)
-Thread-Topic: git-send-email: Cc more people
-Thread-Index: Mtgjy9/6HIVJPy/zqhptA9vDcPr5EQ==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
------ On Apr 19, 2018, at 8:10 AM, Matthew Wilcox willy@infradead.org wrote:
+Derrick Stolee <dstolee@microsoft.com> writes:
 
-> On Thu, Apr 19, 2018 at 06:21:42AM +0900, Junio C Hamano wrote:
->> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->> 
->> > But IMO this patch is really lacking a few things before being ready:
->> >
->> > 1. You have no tests for this. See t/t9001-send-email.sh for examples,
->> > ...
->> > 2. Just a few lines down from your quoted hunk we have this:
->> > ... code about $supress_cc{<token>} ...
->> >    Your change should at least describe why those aren't being updated,
->> >    but probably we should add some other command-line option for
->> >    ignoring these wildcards, e.g. --[no-]wildcard-by-cc=reviewed
->> >    --[no-]wildcard-by-cc=seen etc, and we can make --[no-]signed-off-by
->> >    a historical alias for --[no-]wildcard-by-cc=signed-off.
->> > 3. Ditto all the documentation in "man git-send-email" about
->> > ...
->> 
->> Thanks, I agree that 2. (the lack of suppression) is a showstopper.
-> 
-> I agree with that (and the lack of tests, obviously)
-> 
->> I'd further say that these new CC-sources should be disabled by
->> default and made opt-in to avoid surprising existing users.
-> 
-> But I disagree with this.  The current behaviour is surprising to
-> existing users, to the point where people are writing their own scripts
-> to replace git send-email (which seems crazy to me).
+> If the commit-graph file becomes corrupt, we need a way to verify
+> its contents match the object database. In the manner of 'git fsck'
+> we will implement a 'git commit-graph check' subcommand to report
+> all issues with the file.
 
-We could perhaps go with a whitelist approach. The four
-main match I would be tempted to add are: Acked-by, Reported-by,
-Reviewed-by, and Tested-by.
+Bikeshed: should the subcommand be called 'check' or 'verify'?
 
-My workflow is to initially CC a bunch of relevant maintainers
-when sending out a patch, and as the Acked, Reviewed and Tested
-by tags come it, I replace those CC with the relevant tag.
-I never expected them to stop being CC'd when switching between
-those categories.
+>
+> Add the 'check' subcommand to the 'commit-graph' builtin and its
+> documentation. Add a simple test that ensures the command returns
+> a zero error code.
 
-Thanks,
+It would be nice to have the information that the 'check' subcommand is
+currently a [almost no-op] stub in the subject... but that might not
+have been possible to fit.
 
-Mathieu
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Documentation/git-commit-graph.txt |  7 +++++-
+>  builtin/commit-graph.c             | 38 ++++++++++++++++++++++++++++++
+>  commit-graph.c                     |  5 ++++
+>  commit-graph.h                     |  2 ++
+>  t/t5318-commit-graph.sh            |  5 ++++
+>  5 files changed, 56 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commi=
+t-graph.txt
+> index 4c97b555cc..93c7841ba2 100644
+> --- a/Documentation/git-commit-graph.txt
+> +++ b/Documentation/git-commit-graph.txt
+> @@ -9,10 +9,10 @@ git-commit-graph - Write and verify Git commit graph fi=
+les
+>  SYNOPSIS
+>  --------
+>  [verse]
+> +'git commit-graph check' [--object-dir <dir>]
+>  'git commit-graph read' [--object-dir <dir>]
+>  'git commit-graph write' <options> [--object-dir <dir>]
 
-> 
->> One thing we also need to be very careful about is that some of the
->> fields may not even have an e-mail address.  We can expect that
->> S-o-b and Cc would be of form "human readable name <email@addre.ss>"
->> by their nature, but it is perfectly fine to write only human
->> readable name without address on random lines like "suggeted-by" and
->> "helped-by".  There needs a way for the end-user to avoid using data
->> found on such lines as if they are valid e-mail addresses.
-> 
-> I also agree with this.  I'll add some test-cases and make sure we only
-> add these if they're valid email addresses.
+I still think that [--object-dir <dir>] should be the optional parameter
+to the "git" wrapper, not to the "git commit-graph" command, i.e.
 
--- 
-Mathieu Desnoyers
-EfficiOS Inc.
-http://www.efficios.com
+   'git [--object-dir=3D<dir>] commit-graph <command>'
+
+But this can be done later, in a separate patch series.
+
+>=20=20
+> -
+
+Stray change.
+
+>  DESCRIPTION
+>  -----------
+>=20=20
+> @@ -52,6 +52,11 @@ existing commit-graph file.
+>  Read a graph file given by the commit-graph file and output basic
+>  details about the graph file. Used for debugging purposes.
+>=20=20
+> +'check'::
+> +
+> +Read the commit-graph file and verify its contents against the object
+> +database. Used to check for corrupted data.
+> +
+
+I wonder if we should offer to verify file without checking against the
+object database (which is the costly part, I think).  But this too can
+be added later if needed.
+
+>=20=20
+>  EXAMPLES
+>  --------
+> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+> index 37420ae0fd..77c1a04932 100644
+> --- a/builtin/commit-graph.c
+> +++ b/builtin/commit-graph.c
+> @@ -7,11 +7,17 @@
+>=20=20
+>  static char const * const builtin_commit_graph_usage[] =3D {
+>  	N_("git commit-graph [--object-dir <objdir>]"),
+> +	N_("git commit-graph check [--object-dir <objdir>]"),
+>  	N_("git commit-graph read [--object-dir <objdir>]"),
+>  	N_("git commit-graph write [--object-dir <objdir>] [--append] [--stdin-=
+packs|--stdin-commits]"),
+>  	NULL
+
+Isn't the case that each command would support the
+[--object-dir <objdir>] parameter?
+
+>  };
+>=20=20
+> +static const char * const builtin_commit_graph_check_usage[] =3D {
+> +	N_("git commit-graph check [--object-dir <objdir>]"),
+> +	NULL
+> +};
+> +
+
+Looks good to me.
+
+>  static const char * const builtin_commit_graph_read_usage[] =3D {
+>  	N_("git commit-graph read [--object-dir <objdir>]"),
+>  	NULL
+> @@ -29,6 +35,36 @@ static struct opts_commit_graph {
+>  	int append;
+>  } opts;
+>=20=20
+> +
+> +static int graph_check(int argc, const char **argv)
+> +{
+> +	struct commit_graph *graph =3D 0;
+
+This is NULL, isn't it?  Shouldn't it be stated as such?
+
+> +	char *graph_name;
+> +
+> +	static struct option builtin_commit_graph_check_options[] =3D {
+> +		OPT_STRING(0, "object-dir", &opts.obj_dir,
+> +			   N_("dir"),
+> +			   N_("The object directory to store the graph")),
+
+This again is not the directory to _store_ the graph; this is the
+directory to _read_ graph from, or directory where the commit graph is
+_stored_.
+
+> +		OPT_END(),
+> +	};
+> +
+> +	argc =3D parse_options(argc, argv, NULL,
+> +			     builtin_commit_graph_check_options,
+> +			     builtin_commit_graph_check_usage, 0);
+> +
+> +	if (!opts.obj_dir)
+> +		opts.obj_dir =3D get_object_directory();
+> +
+> +	graph_name =3D get_commit_graph_filename(opts.obj_dir);
+> +	graph =3D load_commit_graph_one(graph_name);
+> +
+> +	if (!graph)
+> +		die("graph file %s does not exist", graph_name);
+
+Shouldn't we quote pathname?  Shouldn't this error message be marked for
+translation?  Shouldn't we use "commit graph file" explicitly?
+
+> +	FREE_AND_NULL(graph_name);
+> +
+> +	return check_commit_graph(graph);
+> +}
+> +
+>  static int graph_read(int argc, const char **argv)
+>  {
+>  	struct commit_graph *graph =3D NULL;
+> @@ -160,6 +196,8 @@ int cmd_commit_graph(int argc, const char **argv, con=
+st char *prefix)
+>  			     PARSE_OPT_STOP_AT_NON_OPTION);
+>=20=20
+>  	if (argc > 0) {
+> +		if (!strcmp(argv[0], "check"))
+> +			return graph_check(argc, argv);
+>  		if (!strcmp(argv[0], "read"))
+>  			return graph_read(argc, argv);
+>  		if (!strcmp(argv[0], "write"))
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 3f0c142603..cd0634bba0 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -819,3 +819,8 @@ void write_commit_graph(const char *obj_dir,
+>  	oids.alloc =3D 0;
+>  	oids.nr =3D 0;
+>  }
+> +
+> +int check_commit_graph(struct commit_graph *g)
+> +{
+> +	return !g;
+> +}
+
+I understand that it is just a start of implementing this feature, but
+it looks a bit strange that 'read' command does more sanity checks that
+the 'check' command...
+
+> diff --git a/commit-graph.h b/commit-graph.h
+> index 96cccb10f3..e8c8d99dff 100644
+> --- a/commit-graph.h
+> +++ b/commit-graph.h
+> @@ -53,4 +53,6 @@ void write_commit_graph(const char *obj_dir,
+>  			int nr_commits,
+>  			int append);
+>=20=20
+> +int check_commit_graph(struct commit_graph *g);
+> +
+>  #endif
+> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+> index 77d85aefe7..e91053271a 100755
+> --- a/t/t5318-commit-graph.sh
+> +++ b/t/t5318-commit-graph.sh
+> @@ -230,4 +230,9 @@ test_expect_success 'perform fast-forward merge in fu=
+ll repo' '
+>  	test_cmp expect output
+>  '
+>=20=20
+> +test_expect_success 'git commit-graph check' '
+> +	cd "$TRASH_DIRECTORY/full" &&
+> +	git commit-graph check >output
+> +'
+
+There should also be negative check, that 'git commit-graph check' fails
+if there is no commit-graph file, isn't it?
+
+> +
+>  test_done
+
+Best,
+--=20
+Jakub Nar=C4=99bski
