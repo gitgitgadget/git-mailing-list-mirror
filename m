@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 007F61F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 20:54:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 507481F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 20:55:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753411AbeDSUyt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 16:54:49 -0400
-Received: from mail-pl0-f51.google.com ([209.85.160.51]:37827 "EHLO
-        mail-pl0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752725AbeDSUys (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 16:54:48 -0400
-Received: by mail-pl0-f51.google.com with SMTP id f7-v6so3952198plr.4
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 13:54:48 -0700 (PDT)
+        id S1753450AbeDSUzN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 16:55:13 -0400
+Received: from mail-ua0-f170.google.com ([209.85.217.170]:33805 "EHLO
+        mail-ua0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752725AbeDSUzM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 16:55:12 -0400
+Received: by mail-ua0-f170.google.com with SMTP id t4so4362884ual.1
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 13:55:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=bOByWWOiLZYz2mT73IgCbyPjg+THdugeI475tkI/hts=;
-        b=S1m7zSuZQfAdBK+nyC9+naZHI86ckxXU03ZnBtXP736A1sSuUMpPNEhPhGOOqZ3PSK
-         xgmGt+hJWYM6PS2Ln3TyC9CUXOlCuN6a85mhHqWDoVn2UWK+oe79Kw6rrWgxT6kd8Qj4
-         +00gb8cMCxtR+dYofiFID7YoB11RttfHfhIalhVp+/mlBSCEprge11i2efRCSJ9gWYPs
-         9XGcqEP3A8mQ39rPxcpRZAwomQ0fKsY90BWUJjw/da+qgTRhInW2SRYaZ3wDHtVmrK17
-         MmptnK8mu20KC6mRGk/FBPIBr26xkU8NTzYCMJNXc0TFxQ0uNJji9yCyji//3pThN010
-         yf+A==
+        bh=8v6R/NbKdbm3RWmNeAHfz3Wp/mBeY3ou8RUlmuSUel4=;
+        b=Wv1+ELcNIiyPBe5XYoEE4LX0FPHR/of3Tn5OeUxqpqOrRYgixI9Kb82gxVCvMhAadF
+         KXBJSn0aC0mo8y2+KMqeziiYzPBKOj5q1GwIdDey46jvgtHenXmbUWlnOtYOl+4ij7UR
+         omNmpBv+DREGg7fn6xxgTLVdfEINXZ9OhJAhsLTRwwJS6ePzFDdJ5+nnrlIPMQczhiTG
+         qL0wxuTSMv/L2xLcWv+BzDclk3YV7+Eyga7saJp+FIhSaYq8ku7ml10S0coKxJcCwbzN
+         47PM3+9JwC50YXd8B7jVyils3h6N/eYkFk44FIcaWNE0bU/4R8s1vwDJNyQd14qCG75+
+         pH6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bOByWWOiLZYz2mT73IgCbyPjg+THdugeI475tkI/hts=;
-        b=BDQpSjKCZKAyt1CnACY9tgJB8FeT7+RTh7ZqPCn2LxVJxtAuxd45dtKbqKWQb/CxrK
-         8gNtWHcP7Uitdmhl+KCVyT1I8CP8bczP//Uhm20UWJHXvSvbom3eJ1h7ARQxNGHFGOoL
-         GCyffgwMdGW2LQUaF1kOoItY/s7q7vvl5s5ihsNUsxL5oSquuzWQRXIFhwW5m+545yDN
-         Ii9AqLUGTlnKQXcZYoMCSJJ9QitfEJB+qTtsnhb6UFMWpJJPiXokak0Q/F+EJs+YPLwo
-         PpDKuAvFmSPWGJFmd2k8CMeLNJVGBER3pL63pNxFtlfjYr1jk+kApdB3JQ7QIppoL1Ay
-         MDJQ==
-X-Gm-Message-State: ALQs6tBDP4aSK2cvHBKQpY3c6hxhKeBZUfGbHZiMz9/D17/pcCb6JD94
-        RZPxIosKeSzSh/dqYvr4ef51e5vjwO2yP1Jv9Xg=
-X-Google-Smtp-Source: AIpwx49jOi3zUm6Q+pD8+cOJEME280B2nnGG/KER8y6ISP34X1KpGGvXYm37r4YzqnGMtbqhfvIEwEfQxL+qP2dC1kQ=
-X-Received: by 2002:a17:902:74c3:: with SMTP id f3-v6mr7498372plt.7.1524171287659;
- Thu, 19 Apr 2018 13:54:47 -0700 (PDT)
+        bh=8v6R/NbKdbm3RWmNeAHfz3Wp/mBeY3ou8RUlmuSUel4=;
+        b=Zlu5w8ep/3L63xtxMLbuQYD9agMq9QiuIdyPPbE6ZFHQVi9ZZsjlfe4LSDRMrQ80Op
+         Vx7uPv2u6CTMVOBHp8dSlvGefTScVGZhzD2ru6EJ7HdZLHi/EN3gigVx3QNNjxEG51aL
+         SdlrZpX8UtVqxRSfsjb3JO+mNrW7KO3xFvPAvZrJzgKpyvo0MuRWwqkgv+GMDm7F6IpX
+         gHHqR0P6zzDqpfjXkYonGDR3Mx92N+UTyGoEeHAVfoj2waH+IzkIkEVDNqo6ZMqLaDmQ
+         0uW4/gtllppcZweh3fg7hHKELLxNQMva2gyTyElgqz5wFkgt5TUuwiaagW8I8kRvldl4
+         MNUA==
+X-Gm-Message-State: ALQs6tDPBWgNBI3ecisDI0czp+KGrtXeeMaG5oXbhAR0Oa/XAAeJv3ur
+        AcSPleiUEoQ8aY1fBOyyB+OtNRQzGRa9A/n3EiA=
+X-Google-Smtp-Source: AIpwx4/rUaPFnoGsYq85+QN8dJLr8wm98fl04ptcV2TUqzDWosnmgScHbBFoouiNDbFkoUqnGaG2qOcdIl+xsejGTL0=
+X-Received: by 10.176.90.38 with SMTP id l35mr5827158uad.79.1524171311884;
+ Thu, 19 Apr 2018 13:55:11 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.150.4 with HTTP; Thu, 19 Apr 2018 13:54:46 -0700 (PDT)
-In-Reply-To: <CAN0heSrSn1wYGoRD6+c_Jk+rAUTbY94JLspwfiki6z4h=mnPSQ@mail.gmail.com>
-References: <20180419175823.7946-1-newren@gmail.com> <20180419175823.7946-26-newren@gmail.com>
- <CAN0heSrSn1wYGoRD6+c_Jk+rAUTbY94JLspwfiki6z4h=mnPSQ@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 19 Apr 2018 22:54:46 +0200
-Message-ID: <CAN0heSpvjPoXESsyBnua2NsRPMv8OqCqUdddZYxYa+87+tERMQ@mail.gmail.com>
-Subject: Re: [PATCH v10 25/36] merge-recursive: fix overwriting dirty files
- involved in renames
-To:     Elijah Newren <newren@gmail.com>
+Received: by 10.176.95.4 with HTTP; Thu, 19 Apr 2018 13:55:11 -0700 (PDT)
+In-Reply-To: <20180419202641.13593-1-szeder.dev@gmail.com>
+References: <20180419175823.7946-1-newren@gmail.com> <20180419175823.7946-33-newren@gmail.com>
+ <20180419202641.13593-1-szeder.dev@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 19 Apr 2018 13:55:11 -0700
+Message-ID: <CABPp-BH1jf1g3AAtA0qxS8qtrFsZ++PKzeiwsAOn4xV1tizdJw@mail.gmail.com>
+Subject: Re: [PATCH v10 32/36] t6046: testcases checking whether updates can
+ be skipped in a merge
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
         Junio C Hamano <gitster@pobox.com>,
@@ -67,43 +67,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19 April 2018 at 22:48, Martin =C3=85gren <martin.agren@gmail.com> wrote=
-:
-> On 19 April 2018 at 19:58, Elijah Newren <newren@gmail.com> wrote:
->> -static int git_merge_trees(int index_only,
->> +static int git_merge_trees(struct merge_options *o,
->>                            struct tree *common,
->>                            struct tree *head,
->>                            struct tree *merge)
->>  {
-[...]
->> +       memset(&o->unpack_opts, 0, sizeof(o->unpack_opts));
-[...]
->> +       setup_unpack_trees_porcelain(&o->unpack_opts, "merge");
-[...]
->>  }
->
-> As mentioned in a reply to patch 33/36 [1], I've got a patch to add
-> `clear_unpack_trees_porcelain()` which frees the resources allocated by
-> `setup_unpack_trees_porcelain()`. Before this patch, I could easily call
-> it at the end of this function. After this, the ownership is less
-> obvious to me.
->
-> It turns out that the only user of `unpack_opts` outside this function
-> can indeed end up wanting to use the error messages that `clear_...()`
-> would set out to free. So yes, the call to `clear_...()` will need to go
-> elsewhere.
->
-> It does sort of make me wonder if we should memset `unpack_opts` to zero
-> somewhere early, so that we can then `clear_...()` it early here before
-> zeroizing it. So yes, we'd be constantly allocating and freeing those
-> strings. Am I right to assume that the code after your series would do
-> (roughly) the same number of calls to `setup_unpack_trees_porcelain()`,
-> i.e., `git_merge_trees()` as it did before?
+On Thu, Apr 19, 2018 at 1:26 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+> Just a couple of minor things:
 
-Or, of course, both `setup_...` and `clear_...` would go outside this
-function to churn less memory... Anyway, this still holds:
-
-> All of this is arguably irrelevant for this series. It might be better
-> if I clarify this memory ownership and do any adjustments as part of my
-> patch (series), rather than you shuffling things around at this time.
+Sweet, thanks for taking a look; will get these all fixed up.
