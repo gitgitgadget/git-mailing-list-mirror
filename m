@@ -6,133 +6,215 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 843351F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 04:46:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDEE01F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 05:10:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751957AbeDSEqV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 00:46:21 -0400
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:36835 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751184AbeDSEqU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 00:46:20 -0400
-Received: by mail-wr0-f177.google.com with SMTP id q13-v6so10242961wre.3
-        for <git@vger.kernel.org>; Wed, 18 Apr 2018 21:46:19 -0700 (PDT)
+        id S1753223AbeDSFKp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 01:10:45 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:46042 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751565AbeDSFKo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 01:10:44 -0400
+Received: by mail-wr0-f196.google.com with SMTP id u11-v6so10307375wri.12
+        for <git@vger.kernel.org>; Wed, 18 Apr 2018 22:10:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=efDOb/0JiqdGAAAKE0mWkLBTJQ28b34oDqgEdd59zhs=;
-        b=p6hNsL4i3Yw1KOIYxeYQoI0QK2skP73LR22GxHjDxnCM74Bz7GJCNh4CnhiMEO5MPb
-         JUt0MYLqIo+XfmqbB/feoumr9a/J5VMvnndpDqr0BcymdlOPp3Nk0kMmVeYszeO5GAFv
-         IbMoR/qlsZxEKTcxIQmq36Y+EJdTkGnhWTCdV3Mwy3mkqrALphpqpSg9xO2xT0fDTsWG
-         mZNi04epQjqiJ6zKyawrbuECJD5WV1OP+ll4if5GLBDx1T2ou/lPfQvY2VQXHszMzDI4
-         Sv+McSTOn6Def86ozda6pFCY4PbUa9QVIEZZDA3sGjOcsVSFWk7fmyy/m4qdcCMLxkaP
-         Bl4A==
+         :user-agent:mime-version;
+        bh=JTE2+tNTHkvpsmJrqcasXZ8txCLWmMoOwWLCYQnCf6w=;
+        b=ekN2B//T08HJ3fEnBKB2OxA7l2PWWAnDDlr9rWQ3L4QNAlIuUwBv3PJx1aEkKB6GjZ
+         KKiLaDLWBO4IRUaba4hFxEyhwFhKKLUAyskHmm9wd97qnKbFUpEx8VInRNBhic7JhN0U
+         OdUGenEaAMTJiSP7lhokvkGpE8MHk1J4m3Zn8F4U3K7g0Mfoc1DPFZW9HnH7h+qwTum0
+         iqwx9LpixHB8MjuGca7Db0bwi40Qi1d35GmAmp7VmK7sL7zBgBZp3H7AOw+toZHhBNSi
+         gXMORrSygRa9K+1Ii7GSjYcewHQLs9rXdKxUsCgMdUZI+DD/89Pd2zZJkfVlAKYZPpeX
+         Wqcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=efDOb/0JiqdGAAAKE0mWkLBTJQ28b34oDqgEdd59zhs=;
-        b=nGQvvmH3UDfzac472Y7cHC5GxwXqBUHB3Uzmh3LF1fwdqcMhxpjLqoGvPWvcJ5onBs
-         Be319aCWJH/nTSjxHsgU+PSyMFXQnaUHC6hQQrjLAjHiAt0DWA9pGINB6wUqVWol+BwY
-         7sfV5CIyrj1jbonTxe0cJNoVHF00S0qE5Wy7PL5YfbcNfYnbZLc9/bTMF/RnXvTnIP+3
-         /ZSRxA15ARhIcaeMfNqX/x8ToybYp+Lvo7h2P7jJ9g8fM9YjoYhOVPYdlfYJLCyf3IJ6
-         zj0aKS/zby92d93UjE8wJL164roG+6oekf+vsgn0zJpjF/WYVClsgxponO5RACIvATeW
-         JYCw==
-X-Gm-Message-State: ALQs6tBjRCJp91kfheSs9QMPUV/TbjfT6WRalb3jBflQNBhQh79uJs2q
-        qeI9n73mrFJhNCbVwWzujoI=
-X-Google-Smtp-Source: AIpwx4/UiOvLwbgkZmjgZwdlpZIwl6BKrZhVeILqMsK2mL7s419SZUvIPbp2xgdj4WqQqUt9tBJxzw==
-X-Received: by 2002:adf:8346:: with SMTP id 64-v6mr3448611wrd.151.1524113178675;
-        Wed, 18 Apr 2018 21:46:18 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=JTE2+tNTHkvpsmJrqcasXZ8txCLWmMoOwWLCYQnCf6w=;
+        b=kJuqYRfPXV1QSPjImVGBkN9FSRnJnAapfccG9V9Hbb39kXifwJc5lVmW6BbCoZIyw1
+         ofSpL6O7zxw/fI8jbUiEXmkWL4aNRcFTXKjT/eCXInAGTwFENMklfGXl0VyJKMt490Pj
+         Tj1NG8CcQotH7ALDQbvflbB/5q73kUxj0/E8MhHTSjG8erIJ8fQ0UmAHdBDJPWxFLhkZ
+         vfged2k8mStm0mnnOuDCmneXGb58qz9bFNDedMA8feGPrYCEzLzHIJ9o9HK7hrl3ERE0
+         3DfeluLK1N/VPqPUg7Kwr+G5jvteD0uu79/iJDsFVWqg2bhVHIGL2pM26Ufzz6uJpXyO
+         Sk8w==
+X-Gm-Message-State: ALQs6tB5/S2h3hh/Uji0AsxjMfxJ8xeuYj20w21pwjMburJtIWT53wfZ
+        m2J2alm9vZSLemy0vqeBEkA=
+X-Google-Smtp-Source: AIpwx48gBnYzcVHbl1fl7j7U0xYqWoAgU3xk0tjNAFy2yHfOL12V76+DmIVfAxZErIROho6nXfQpsw==
+X-Received: by 10.28.23.149 with SMTP id 143mr3619584wmx.0.1524114643037;
+        Wed, 18 Apr 2018 22:10:43 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id i141sm4807202wmd.6.2018.04.18.21.46.17
+        by smtp.gmail.com with ESMTPSA id m16sm3679423wmb.42.2018.04.18.22.10.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Apr 2018 21:46:18 -0700 (PDT)
+        Wed, 18 Apr 2018 22:10:40 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        "Jeff King" <peff@peff.net>, Junio C Hamano <junio@pobox.com>,
-        demerphq <demerphq@gmail.com>
-Subject: Re: [RFC WIP PATCH] merge: implement -s theirs -X N
-References: <87sh7sdtc1.fsf@evledraar.gmail.com>
-Date:   Thu, 19 Apr 2018 13:46:17 +0900
-In-Reply-To: <87sh7sdtc1.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 19 Apr 2018 00:48:30 +0200")
-Message-ID: <xmqqpo2verc6.fsf@gitster-ct.c.googlers.com>
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Subject: Re: Silly "git gc" UI issue.
+References: <CA+55aFxSZLuk++Dz6SonD+JhbbSDt9G9VcBx5f1CV=6nJC9hvg@mail.gmail.com>
+        <xmqqr2ncezdc.fsf@gitster-ct.c.googlers.com>
+        <xmqqmuy0ez8b.fsf@gitster-ct.c.googlers.com>
+        <xmqqfu3seyad.fsf@gitster-ct.c.googlers.com>
+        <CA+55aFztDdB9tVHREhQ7T0COs7p9ng81XfAHZCL3rx9WT2ecEQ@mail.gmail.com>
+Date:   Thu, 19 Apr 2018 14:10:40 +0900
+In-Reply-To: <CA+55aFztDdB9tVHREhQ7T0COs7p9ng81XfAHZCL3rx9WT2ecEQ@mail.gmail.com>
+        (Linus Torvalds's message of "Wed, 18 Apr 2018 19:29:47 -0700")
+Message-ID: <xmqqh8o7eq7j.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> We have a -s ours, but not a -s theirs. This is a WIP patch to implement
-> that. It works, but I haven't dealt with this part of the internal API
-> before, comments most welcome.
+> Maybe something like the attached patch? Then I get:
+> ...
+>     [torvalds@i7 linux]$ time git gc --prune=npw
+>     fatal: Failed to parse prune expiry value npw
 >
-> The purpose of this is that I'm working with a rollout tool that is
-> capable of doing hotfixes on top of old commits on "master".
+>     real        0m0.004s
+>     user        0m0.002s
+>     sys         0m0.002s
 >
-> It does this by cherry-picking a commit from origin/master, and then
-> merges it with origin/master & pushes it back, before finally reset
-> --hard to the cherry-pick & rolling out.
+> and you could smush it into your commit (if you want my sign-off, take it)
 >
-> The reason it's doing this is to maintain the guarantee that all rolled
-> out commits are reachable from "master", and to handle the more general
-> case where original work is made during a hotfix, we don't want to then
-> do a subsequent "normal" rollout and miss the fix.
+>               Linus
+>
+>  builtin/gc.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 3e67124ea..a4b20aaaf 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -354,6 +354,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+>  	const char *name;
+>  	pid_t pid;
+>  	int daemonized = 0;
+> +	timestamp_t dummy;
+>  
+>  	struct option builtin_gc_options[] = {
+>  		OPT__QUIET(&quiet, N_("suppress progress reporting")),
+> @@ -392,6 +393,9 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+>  	if (argc > 0)
+>  		usage_with_options(builtin_gc_usage, builtin_gc_options);
+>  
+> +	if (parse_expiry_date(prune_expire, &dummy))
+> +		die(_("Failed to parse prune expiry value %s"), prune_expire);
+> +
 
-This question has nothing to do with your "-s theirs" but let me see
-if I got the above correctly.  Suppose you have a deployed branch
-(say, "prod"), all developments happen on "master" elsewhere that
-can be seen as "origin/master", so you may have a few fixes that is
-not yet in "prod" you would want to cherry-pick from origin/master.
+At this point prune_expire could be NULL, so the if() needs a bit
+tightening, but otherwise it looks good.
 
-    $ git checkout prod
-    $ git cherry-pick origin/master~2
-    $ git cherry-pick origin/master
+Here is the final one (at least for today).
 
-Let's say that "master" had a fix at HEAD~2, HEAD~1 is a feature
-enhancement that is not yet ready for "prod", and HEAD is another
-fix.  Up to this point you successfully back-ported the fixes to
-"prod".
+-- >8 --
+Subject: [PATCH] parseopt: handle malformed --expire arguments nicer
 
-Then you do merge the tip into "master", i.e.
+A few commands that parse --expire=<time> command line option behave
+silly when given nonsense input.  For example
 
-    $ git checkout origin/master && git merge -s ours prod
-    $ git push origin HEAD:master
-    $ git checkout prod
+    $ git prune --no-expire
+    Segmentation falut
+    $ git prune --expire=npw; echo $?
+    129
 
-to make sure that the "master" at the source of truth knows that
-it already has what our "prod" with these two cherry-picks have.
+Both come from parse_opt_expiry_date_cb().
 
-Is that what is going on here?
+The former is because the function is not prepared to see arg==NULL
+(for "--no-expire", it is a norm; "--expire" at the end of the
+command line could be made to pass NULL, if it is told that the
+argument is optional, but we don't so we do not have to worry about
+that case).
 
-I am just wondering what would and should happen to the non-fix
-commit in the middle in the above example.  Perhaps your workflow
-automatically does the right thing to it, perhaps not.
+The latter is because it does not check the value returned from  the
+underlying parse_expiry_date().
 
+This seems to be a recent regression introduced while we attempted
+to avoid spewing the entire usage message when given a correct
+option but with an invalid value at 3bb0923f ("parse-options: do not
+show usage upon invalid option value", 2018-03-22).  Before that, we
+didn't fail silently but showed a full usage help (which arguably is
+not all that better).
 
-[Footnote]
+Also catch this error early when "git gc --prune=<expiration>" is
+misspelled by doing a dummy parsing before the main body of "gc"
+that is time consuming even begins.  Otherwise, we'd spend time to
+pack objects and then later have "git prune" first notice the error.
+Aborting "gc" in the middle that way is not harmful but is ugly and
+can be avoided.
 
-Obviously you can do this the other way around if you had "-s
-theirs", i.e. instead of the last two lines from the above sequence,
-you could do
+Helped-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/gc.c       |  4 ++++
+ parse-options-cb.c |  6 +++++-
+ t/t5304-prune.sh   | 10 ++++++++++
+ 3 files changed, 19 insertions(+), 1 deletion(-)
 
-    $ git merge -s nth -X 2 origin/master
-    $ git push origin HEAD:master
-    $ git reset --hard HEAD@{1}
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 3c5eae0edf..858aa444e1 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -353,6 +353,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	const char *name;
+ 	pid_t pid;
+ 	int daemonized = 0;
++	timestamp_t dummy;
+ 
+ 	struct option builtin_gc_options[] = {
+ 		OPT__QUIET(&quiet, N_("suppress progress reporting")),
+@@ -388,6 +389,9 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	if (argc > 0)
+ 		usage_with_options(builtin_gc_usage, builtin_gc_options);
+ 
++	if (prune_expire && parse_expiry_date(prune_expire, &dummy))
++		die(_("Failed to parse prune expiry value %s"), prune_expire);
++
+ 	if (aggressive) {
+ 		argv_array_push(&repack, "-f");
+ 		if (aggressive_depth > 0)
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index c6679cb2cd..872627eafe 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -38,7 +38,11 @@ int parse_opt_approxidate_cb(const struct option *opt, const char *arg,
+ int parse_opt_expiry_date_cb(const struct option *opt, const char *arg,
+ 			     int unset)
+ {
+-	return parse_expiry_date(arg, (timestamp_t *)opt->value);
++	if (unset)
++		arg = "never";
++	if (parse_expiry_date(arg, (timestamp_t *)opt->value))
++		die("malformed expiration date '%s'", arg);
++	return 0;
+ }
+ 
+ int parse_opt_color_flag_cb(const struct option *opt, const char *arg,
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 6694c19a1e..af69cdc112 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -320,4 +320,14 @@ test_expect_success 'prune: handle HEAD reflog in multiple worktrees' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'prune: handle expire option correctly' '
++	test_must_fail git prune --expire 2>error &&
++	test_i18ngrep "requires a value" error &&
++
++	test_must_fail git prune --expire=nyah 2>error &&
++	test_i18ngrep "malformed expiration" error &&
++
++	git prune --no-expire
++'
++
+ test_done
+-- 
+2.17.0-252-gfe0a9eaf31
 
-but it is not all that interesting (at least to me) either way, as a
-larger issue with the above I'd imagine people would see is that
-even temporarily you would expose "master" material in that working
-tree you usually have "prod" checkout.  That would irritate those
-who consider that "push to deploy" aka "live site is actually a
-working tree" is sensible more than the lack of "-s theirs" I would
-think.
