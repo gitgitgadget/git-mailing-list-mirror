@@ -2,223 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3F1C1F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 03:56:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 643601F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 04:18:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752743AbeDSD4k (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 23:56:40 -0400
-Received: from mail-ua0-f179.google.com ([209.85.217.179]:36791 "EHLO
-        mail-ua0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752705AbeDSD4j (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 23:56:39 -0400
-Received: by mail-ua0-f179.google.com with SMTP id v4so2573403uaj.3
-        for <git@vger.kernel.org>; Wed, 18 Apr 2018 20:56:38 -0700 (PDT)
+        id S1750998AbeDSESA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 00:18:00 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:43040 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750737AbeDSER7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 00:17:59 -0400
+Received: by mail-pf0-f193.google.com with SMTP id j11so1975704pff.10
+        for <git@vger.kernel.org>; Wed, 18 Apr 2018 21:17:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=/YN2K9+WwxOfS2Dg+qUEL8i3DzpeKbgNrjWWz3L4u0c=;
-        b=du6VLwn9wUB3WKnVIhf3h0BHYlG4CC+93478zN4dYJzghXM4z8h+JCmDyf/M3RSnwA
-         OwXD2Tmr7W+Do3IChRTQtOiVH9gIK/bj1mbcAZdsyMIkFrevWAcpXQODMAP3jfQnT0dT
-         a7H09BvYAIDgAQV1TC6p54IIo+C0fV3EXY7E7B3rdz4AWss9nDONu6w7zRGLzEkHjNr2
-         fwiVts5ZfCY82Dtc/5LDfvPMV4Lo+ZZNw22vcEc/1kUNJ0TFjAf+aFpM/lg/GFGBIoY+
-         aKpARQI/X2Tr816h2rBn+6sHxWp3jK5du5IpqEg8KvOzXFgeyXtqgF01jGXKIQ84DbhN
-         hSXg==
+         :cc;
+        bh=Kw3ctPGxzSllXMVHtA35ONc+RUtoeJV/wEGPUViMFsA=;
+        b=OmHQxXK5Uf8BqYOPjTuxjw4HO94RQlimOTVaAU/zwPvwhR48ubO/6J2/Fak73FsM4W
+         h8fFhE2a1/6N8zwWu+4O8Vsv60IDYG48b+1J2T8tnEDX7/juvV8a+xC1wI2nyggGNHsq
+         30ZU083A/J3iZr+JXLVUwht/eZZ0EjYJQkdiQYDxpMURbmhJzs2K4fjFurqDWSi3i6cD
+         iYp/mzrt49E5/phDBCv0+LT6rKwI42m+KGYZvo3T5erwpDh3SvC750R/CGUecOLCspE+
+         ER/AiOAel3ISJiIYB5DJILHjHw7Az3djB7+YZfHzspXgK/7P8BnFmOTJw2IoPoDtc2Nj
+         ALAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=/YN2K9+WwxOfS2Dg+qUEL8i3DzpeKbgNrjWWz3L4u0c=;
-        b=fWjPCpxsO6S1XQH5Bf8I2DPyL7gAyBkofbt4k8mrJf32xlx9zyl0LJdDEaPoTYrS8B
-         VZpha/IGvrVXW0osaRQSk+NZ670y36fT3FGmPqI11C9XSuSElF3oTnZCKCzQtKWVgPcl
-         ukystFMtyWQGr0BEDWIJ9D7sUDsIur2PklFIjWbsILk0bRSvqbfAfFpv53joaGoOcojw
-         9BV4YIeOrh0LOQKPbIzSfU+KiiurlavFm+ovOuXtCUBxGD7P0NctoFbSOGzrZKqwF0n1
-         Ss9hE7rH9PdFoy4aInczMKt622/WI0hnONEY9tJCtvcC2VnX3NawxQIDvUXZv8HWRYFN
-         AqLg==
-X-Gm-Message-State: ALQs6tBUgL0CfAKZYEJ7YTFKZL5zf8cnAFlm3s7Zqw6VvbVOVoYHaBFJ
-        e1VSMohgaPiFyvEzlO2BgVv8A7KHFR+VK4OwzTE=
-X-Google-Smtp-Source: AIpwx49pOu7YO4pED52QpPxagkRdx23GzeTxcFEkPm7jusVjaywJI2qHi7p5ao5q+edd7xWjYsgGwmAjMLwlby19hxI=
-X-Received: by 10.176.112.26 with SMTP id k26mr3418657ual.111.1524110197776;
- Wed, 18 Apr 2018 20:56:37 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=Kw3ctPGxzSllXMVHtA35ONc+RUtoeJV/wEGPUViMFsA=;
+        b=DHzplGPSfOTJFk1FxV3NOOL763Z61r1XOVRJlVd9uR/foF9fqNyWqu8eVMsqkIlCQO
+         Am5uYJkRg/6g/JbYmivGNTF3P6B2S3BCljOPrpbAIuGzxB0Y2NLFmHPaJla5XyxhQ/4g
+         BE1DBsbSSxO/hvd4dEgtT4oBe57l3VnW1Q8BhX9+uW+COmQ6spmreg7IT8+9b73hvdR/
+         HpvaNsm14jwh4LjRvSq3IA7tXYHKMB2S6Db+bZfJKvooliphknIo79hApYnNNONqzi0w
+         86X7E8Q2j+uFx9s9eYpiA2FQfXWj0sDhsScG1nGktMTU/dVF9p+ChN6Ure6mrgldPgKR
+         +cog==
+X-Gm-Message-State: ALQs6tAjLIXbRvQECOJoZ91/7CSwrfInkXQuOYjNssutOkAy81EqymdJ
+        XEsWcUly8JGGSJNN83b8EeypP5kWfEqcNFmlwXk=
+X-Google-Smtp-Source: AIpwx49MqjkwI0CqJSZa5M4BMDwD8HFG2DcF4Q8aQAp91gRm066JeeDp2DUk9uI40/UBW9Z0FuhZuWPWQjPKB67v+WU=
+X-Received: by 10.98.31.20 with SMTP id f20mr4425623pff.196.1524111478597;
+ Wed, 18 Apr 2018 21:17:58 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.3.236 with HTTP; Wed, 18 Apr 2018 20:55:57 -0700 (PDT)
-In-Reply-To: <CAJZjrdW3X8eaSit85otKV2HvHmu0NDGcnnnrtxHME03q=eWW-Q@mail.gmail.com>
-References: <20180418030655.19378-1-sxlijin@gmail.com> <20180418030655.19378-2-sxlijin@gmail.com>
- <CAN0heSqXwVR5cdMwipUdPrnbUyCU8v2GzWK=2-0_ZWoWw3SO2w@mail.gmail.com> <CAJZjrdW3X8eaSit85otKV2HvHmu0NDGcnnnrtxHME03q=eWW-Q@mail.gmail.com>
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Wed, 18 Apr 2018 20:55:57 -0700
-Message-ID: <CAJZjrdXci_vAj2LMJOMJstR0ggEpvjROJX2OwMQ1qmkwAEb4TA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] commit: fix --short and --porcelain
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.236.150.4 with HTTP; Wed, 18 Apr 2018 21:17:57 -0700 (PDT)
+In-Reply-To: <20180418205635.GU29831@zaya.teonanacatl.net>
+References: <alpine.LFD.2.21.1804160538100.3564@localhost.localdomain>
+ <87y3hn5drx.fsf@linux-m68k.org> <alpine.LFD.2.21.1804160918120.6924@localhost.localdomain>
+ <CA+P7+xrDsPXA6Bq77gYwWtc16Dz4drg+CHA80=vBNB9-NhxHVg@mail.gmail.com>
+ <xmqqefjewxr4.fsf@gitster-ct.c.googlers.com> <alpine.LFD.2.21.1804170831190.6019@localhost.localdomain>
+ <CA+P7+xrebnWe_6P0uGu2yEmXZ0+qjpykjrv39Nhd2hUPzO_96g@mail.gmail.com>
+ <xmqqd0yxl6n9.fsf@gitster-ct.c.googlers.com> <20180418205635.GU29831@zaya.teonanacatl.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 19 Apr 2018 06:17:57 +0200
+Message-ID: <CAN0heSrrpvRXGi1hzUuRqXcQCOJQcBcLWAWQKXrivx6tkxAsBw@mail.gmail.com>
+Subject: Re: man page for "git remote set-url" seems confusing/contradictory
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        Git Mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 18, 2018 at 8:55 PM, Samuel Lijin <sxlijin@gmail.com> wrote:
-> Thanks for the quick review!
+On 18 April 2018 at 22:56, Todd Zullinger <tmz@pobox.com> wrote:
+> Tangentially (and I don't know if it's worth fixing), while
+> poking around the documentation which includes urls.txt I
+> noticed that git-clone.txt refers readers to the "URLS
+> section below" when the name of the section is "GIT URLS".
 >
-> On Wed, Apr 18, 2018 at 11:38 AM, Martin =C3=85gren <martin.agren@gmail.c=
-om> wrote:
->> Hi Samuel,
->>
->> Welcome back. :-)
->>
->> On 18 April 2018 at 05:06, Samuel Lijin <sxlijin@gmail.com> wrote:
->>> Make invoking `git commit` with `--short` or `--porcelain` return statu=
-s
->>> code zero when there is something to commit.
->>>
->>> Mark the commitable flag in the wt_status object in the call to
->>> `wt_status_collect()`, instead of in `wt_longstatus_print_updated()`,
->>> and simplify the logic in the latter function to take advantage of the
->>> logic shifted to the former.
->>
->> The subject is sort of vague about what is being fixed. Maybe "commit:
->> fix return code of ...", or "wt-status: set `commitable` when
->> collecting, not when printing". Or something... I can't come up with
->> something brilliant off the top of my head.
->>
->> I did not understand the first paragraph until I had read the second and
->> peaked at the code. Maybe tell the story the other way around? Something
->> like this:
->>
->>   Mark the `commitable` flag in the wt_status object in
->>   `wt_status_collect()`, instead of in `wt_longstatus_print_updated()`,
->>   and simplify the logic in the latter function to take advantage of the
->>   logic shifted to the former.
->>
->>   This means that callers do need to actually use the printer function
->>   to collect the `commitable` flag -- it is sufficient to call
->>   `wt_status_collect()`.
->>
->>   As a result, invoking `git commit` with `--short` or `--porcelain`
->>   results in return status code zero when there is something to commit.
->>   This fixes two bugs documented in our test suite.
+> I doubt any readers would be confused, but it would be
+> consistent with the other files which include urls.txt to
+> use "GIT URLS" as the referenced section name.
 >
-> That definitely works better. Will fix when I reroll.
+> -- >& --
+> Subject: [PATCH] doc/clone: update caption for GIT URLS cross-reference
 >
->>>  t/t7501-commit.sh |  4 ++--
->>>  wt-status.c       | 39 +++++++++++++++++++++++++++------------
->>>  2 files changed, 29 insertions(+), 14 deletions(-)
->>
->> I tried to find somewhere in the documentation where this bug was
->> described (git-commit.txt or git-status.txt), but failed. So there
->> should be nothing to update there.
->>
->>> +static void wt_status_mark_commitable(struct wt_status *s) {
->>> +       int i;
->>> +
->>> +       for (i =3D 0; i < s->change.nr; i++) {
->>> +               struct wt_status_change_data *d =3D (s->change.items[i]=
-).util;
->>> +
->>> +               if (d->index_status && d->index_status !=3D DIFF_STATUS=
-_UNMERGED) {
->>> +                       s->commitable =3D 1;
->>> +                       return;
->>> +               }
->>> +       }
->>> +}
->>
->> This helper does exactly what the old code did inside
->> `wt_longstatus_print_updated()` with regards to `commitable`. Ok.
->>
->> This function does not reset `commitable` to 0, so reusing a `struct
->> wt_status` won't necessarily work out. I have not thought about whether
->> such a caller would be horribly broken for other reasons...
->>
->>>  void wt_status_collect(struct wt_status *s)
->>>  {
->>>         wt_status_collect_changes_worktree(s);
->>> @@ -726,7 +739,10 @@ void wt_status_collect(struct wt_status *s)
->>>                 wt_status_collect_changes_initial(s);
->>>         else
->>>                 wt_status_collect_changes_index(s);
->>> +
->>>         wt_status_collect_untracked(s);
->>> +
->>> +       wt_status_mark_commitable(s);
->>>  }
->>
->> So whenever we `..._collect()`, `commitable` is set for us. This is the
->> only caller of the new helper, so in order to be able to trust
->> `commitable`, one needs to call `wt_status_collect()`. Seems a
->> reasonable assumption to make that the caller will remember to do so
->> before printing. (And all current users do, so we're not regressing in
->> some user.)
->>
->>>  static void wt_longstatus_print_unmerged(struct wt_status *s)
->>> @@ -754,26 +770,25 @@ static void wt_longstatus_print_unmerged(struct w=
-t_status *s)
->>>
->>>  static void wt_longstatus_print_updated(struct wt_status *s)
->>>  {
->>> -       int shown_header =3D 0;
->>> -       int i;
->>> +       if (!s->commitable) {
->>> +               return;
->>> +       }
->>
->> Regarding my comment above: If you forget to `..._collect()` first, this
->> function is a no-op.
->>
->>> +
->>> +       wt_longstatus_print_cached_header(s);
->>>
->>> +       int i;
->>
->> You should leave this variable declaration at the top of the function.
->>
->>>         for (i =3D 0; i < s->change.nr; i++) {
->>>                 struct wt_status_change_data *d;
->>>                 struct string_list_item *it;
->>>                 it =3D &(s->change.items[i]);
->>>                 d =3D it->util;
->>> -               if (!d->index_status ||
->>> -                   d->index_status =3D=3D DIFF_STATUS_UNMERGED)
->>> -                       continue;
->>> -               if (!shown_header) {
->>> -                       wt_longstatus_print_cached_header(s);
->>> -                       s->commitable =3D 1;
->>> -                       shown_header =3D 1;
->>> +               if (d->index_status &&
->>> +                   d->index_status !=3D DIFF_STATUS_UNMERGED) {
->>> +                       wt_longstatus_print_change_data(s, WT_STATUS_UP=
-DATED, it);
->>>                 }
->>> -               wt_longstatus_print_change_data(s, WT_STATUS_UPDATED, i=
-t);
->>>         }
->>> -       if (shown_header)
->>> -               wt_longstatus_print_trailer(s);
->>> +
->>> +       wt_longstatus_print_trailer(s);
->>>  }
->>
->> This rewrite matches the original logic, assuming we can trust
->> `commitable`. The result is a function called `print()` which does not
->> modify the struct it is given for printing. Nice. So you can make the
->> argument a `const struct wt_status *`. Except this function uses helpers
->> that are missing the `const`.
->>
->> You fix that in patch 2/2. I would probably have made that patch as 1/2,
->> then done this patch as 2/2 ending the commit message with something
->> like "As a result, we can mark the argument as `const`.", or even just
->> silently inserting the `const` for this one function. Just a thought.
+> The description of the <repository> argument directs readers to "See the
+> URLS section below".  When generating HTML this becomes a link to the
+> "GIT URLS" section.  When reading the man page in a terminal, the
+> caption is slightly misleading.  Use "GIT URLS" as the caption to avoid
+> an confusion.
+
+s/an/any/?
+
 >
-> I originally ordered it the way I did because in the constify-first
-> scenario, "fix t7501" and "const-ify wt_longstatus_print_updated"
-> seemed like two logically separate patches to me (which would have
-> made the patch series three patches instead of two). I'm happy to
-> reroll in whichever fashion if people care strongly though.
+> The man page produced by asciidoc doesn't include hyperlinks.  The
+> description of the <repository> argument simply
 >
->> Martin
+
+Abandoned first attempt at log message? ;-)
+
+> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+> ---
+>  Documentation/git-clone.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> index 42ca7b5095..b844b9957c 100644
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -260,7 +260,7 @@ or `--mirror` is given)
+>
+>  <repository>::
+>         The (possibly remote) repository to clone from.  See the
+> -       <<URLS,URLS>> section below for more information on specifying
+> +       <<URLS,GIT URLS>> section below for more information on specifying
+>         repositories.
+
+Indeed. Matches urls.txt and the others who refer there.
+
+Martin
