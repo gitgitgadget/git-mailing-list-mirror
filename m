@@ -2,87 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5267D1F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 01:46:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5F7A1F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 01:52:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752247AbeDSBqC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 21:46:02 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:38662 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752116AbeDSBqB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 21:46:01 -0400
-Received: by mail-it0-f44.google.com with SMTP id 19-v6so4794343itw.3
-        for <git@vger.kernel.org>; Wed, 18 Apr 2018 18:46:01 -0700 (PDT)
+        id S1753187AbeDSBwv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 21:52:51 -0400
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:32971 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752826AbeDSBwu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 21:52:50 -0400
+Received: by mail-wr0-f182.google.com with SMTP id z73-v6so9623746wrb.0
+        for <git@vger.kernel.org>; Wed, 18 Apr 2018 18:52:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=9a2hX9eUZP5MSxsjkLsuioVgrmCzl4KbWhjciz9xliY=;
-        b=qm2LQQ7VLKTnb8pCELr2xN1iEpehE8zmymySMojnqzM6y2pLiq3S5jfyD8OQm1VdKQ
-         Z5csnZISBAVehpO1vbRoU9sHen2YP8VooDOBg3fWPbtSou8Tro7Cml2Il6Xr9rUU/EU+
-         GU2dkOONwDv7xpXxKXvuxMejedZjxoS6w9UYrZJlMEZAfVQdm2FxXIi6q5Gk0VwqLI2P
-         uj28UiVA10K38u914jFfHY6vixvijdD+liVutvW87sWRRYg3WNN6lWKT7GQNAyqnkl3T
-         lwa3ALGznaQ3CpTQrrIwy5bP03dvol2UT0zeBSYTC1tkxmchrgY+QDF5rEekpcvNewRL
-         Gs7g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=9a2hX9eUZP5MSxsjkLsuioVgrmCzl4KbWhjciz9xliY=;
-        b=c/C/OOmERG0UaA1Np97jXBget7BWmrsIvLIF7yMienZzCjIt+7eyb1tnrmbCG/KkeR
-         SI1t7olmsp9fRmw+/j/Hl5+NTIE24Fa0qskZ6aiY6zJ6cdh2HhQok3OVxLgU5RhNEM7g
-         DjtIFjE+gCz3FcXqyHXktOUEf11LISp7JIacU=
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=zakd0oROB/pzkdM3DnZW8QzHooMHVG/unMm+6oETBjc=;
+        b=mdoqEvyrFcO5ixvu5bcmulPV1gpazOuOsTd65M+Vbky0F9y5Q/6VoxRFq75vJZ5sY0
+         1cynt2FcLKKCVCqWuBU7XIbjRhPHR4HnHjT+HdBlZITvACIDtaJdofhxdZ++X9W+B1t5
+         kit7pFfm9d3UJKhGCHcNIAI4vAm56353h6RrF9PuB7vWPo3SxL1ylET3CDOc7uLrJseB
+         BtMV1otNaZWtZjkRlO1IpmiwYt+JP6PwmkM4aLX3RICOVUNgkFwFEnP14eZivnP15Wmn
+         efRLNsWm4eNhhA1Q4YgfV6SvamImELWT9gxTFQaKm+KVhp2qUv7abEqNbYOaa4p1X+U4
+         L46A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=9a2hX9eUZP5MSxsjkLsuioVgrmCzl4KbWhjciz9xliY=;
-        b=Q1cbjaUX8zdMIvhV2ohwOhyxwXmJ0Z+ltqihhxk9DNHFoQGBPdKUrf3GTQTbB4abuP
-         JisUhlGTH+dfq5f/a4omgveOj8mLKa+Jia7omtn2hhcuSnHGcCCeb6xtEKjiy5xsxelw
-         cuaLVms0dvDsBfn0LyU3cAacel66SKiSXDA9KrLLhd5aB0tG5dG8RKOW+bak/6jIuZo3
-         ZMTlhmwZpm6acHKwpP/ror18L6kWnmpbmoRUatJNR6CsSSp1Sa26ebRB4S8V6PxjGwv8
-         FzBU4DhcNqtayZsdz2U0O/l8wS1v+JWN6z2EnV2D/9rQOwjk23tz2k0QSoXRYZ8dvhGK
-         hVsQ==
-X-Gm-Message-State: ALQs6tBWrleFB6JLk91XuF4RaDkqFLgkHiMyY0WKiry9QoNyA3BmIl3y
-        65wDa97DycwLMc/DhZSYG5guCDzqzR2eWTLiRszgMA==
-X-Google-Smtp-Source: AIpwx4/JuunSmQJFFnkxiY9ISzdp+05H6YbfZ3KSLkUjaHuRopvPBZZbINdUn/hPiydyuBO7rik09DbHMB2OSfPKUhY=
-X-Received: by 2002:a24:5b02:: with SMTP id g2-v6mr4696512itb.100.1524102360456;
- Wed, 18 Apr 2018 18:46:00 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=zakd0oROB/pzkdM3DnZW8QzHooMHVG/unMm+6oETBjc=;
+        b=H0f73rzuhb6YvaoUQE9EAiQgnBbnOt1mi/xEeqMbiW+mVgratga4G2qIcqt4EXrTyO
+         L2Z80MIYuZcId0qwyUlUo9LYqzDFOqQ+qP7OZRExbVn9PXRO4Clbf6AEJGWUEA+Y5xwR
+         NVMoYlnZYL62Wasv5HaBZQIP5alkD7Tg8rWDSFvYSfztvPg87kiVcV1DzvjB7DC7ETm2
+         88ZJEup4xCPFvv3tys2s1NyjoeAzeVyzFoj9JOG15+JoBqkQb72RxCW9sPX0Oeli9nmA
+         8XcO6I1iXJRAXkWeU+4/dNGzMR4zAvfgY8oGnTeO/a7R29w2lPrjKosKBPEFvhgzpi8/
+         VyGQ==
+X-Gm-Message-State: ALQs6tCDg4vR+CNnWXjIhbnxMaWD8uQBQkVCL79MSEJTrWpduIKIGP+y
+        xLkN7uzUPXLaaXS0f2zA6bU=
+X-Google-Smtp-Source: AIpwx4/aKDB7ColGz66Y5b8qbBG3YnWUpxe0giT+XJlVLX2PSSXDW5JZmbcVaFaSEmOqCL6VIU24hg==
+X-Received: by 10.28.146.200 with SMTP id u191mr3247174wmd.115.1524102769256;
+        Wed, 18 Apr 2018 18:52:49 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id t76sm3276734wme.17.2018.04.18.18.52.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 18 Apr 2018 18:52:48 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Silly "git gc" UI issue.
+References: <CA+55aFxSZLuk++Dz6SonD+JhbbSDt9G9VcBx5f1CV=6nJC9hvg@mail.gmail.com>
+Date:   Thu, 19 Apr 2018 10:52:47 +0900
+In-Reply-To: <CA+55aFxSZLuk++Dz6SonD+JhbbSDt9G9VcBx5f1CV=6nJC9hvg@mail.gmail.com>
+        (Linus Torvalds's message of "Wed, 18 Apr 2018 18:45:59 -0700")
+Message-ID: <xmqqr2ncezdc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.95.15 with HTTP; Wed, 18 Apr 2018 18:45:59 -0700 (PDT)
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 18 Apr 2018 18:45:59 -0700
-X-Google-Sender-Auth: h44Xw89HnVZ49KzEx_AKK1-79wE
-Message-ID: <CA+55aFxSZLuk++Dz6SonD+JhbbSDt9G9VcBx5f1CV=6nJC9hvg@mail.gmail.com>
-Subject: Silly "git gc" UI issue.
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ok, this is ridiculous, but I've done it several times, so I thought
-I'd finally mention it to somebody on the git list that may care:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-  "My name is Linus, and I'm a klutz".
+> You get this:
+>
+>    git gc --prune=npw
+>
+> Yeah, that "npw" should be "now", which is where the klutz thing comes in.
+>
+> It turns out that git reacts ridiculously badly to this.
 
-what does that have to do with anything?
+    $ git gc --prune=npw
+    Counting objects: 10, done.
+    Delta compression using up to 8 threads.
+    Compressing objects: 100% (3/3), done.
+    Writing objects: 100% (10/10), done.
+    Total 10 (delta 2), reused 10 (delta 2)
+    error: failed to run prune
 
-Now, imagine you're a klutz. Imagine you want to clean up your .git
-directory. Combine those things, and what do you get?
+It turns out that prune silently goes away given a bad expiry
 
-You get this:
+    $ git prune --expire=nyah ; echo $?
+    129
 
-   git gc --prune=npw
+Regardless of your originai "git gc" issue, we should make "prune"
+say something on this error.  And when we do so, I would think that
+error message will come before the final "error: failed to run
+prune".
 
-Yeah, that "npw" should be "now", which is where the klutz thing comes in.
+Or perhaps we do so and then squelch "error: failed to run prune",
+trusting that a corrected "git prune" will always say something when
+it fails.
 
-It turns out that git reacts ridiculously badly to this.
 
-I'm just assuming that everybody else is scarily competent if I'm the
-first to have reported this.
 
-                  Linus
