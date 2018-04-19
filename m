@@ -2,111 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ECDE1F42D
-	for <e@80x24.org>; Thu, 19 Apr 2018 08:32:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B072E1F424
+	for <e@80x24.org>; Thu, 19 Apr 2018 09:15:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750972AbeDSIcL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 04:32:11 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:33004 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750884AbeDSIcJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 04:32:09 -0400
-Received: by mail-wr0-f193.google.com with SMTP id z73-v6so11657500wrb.0
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 01:32:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=cTdJAdG43HZxMFkVC0V/t7N7ddpWlul+dAxe912oK94=;
-        b=n54cjEAcKvRmqzjYKlX1fXvNHdRTJbXx0grxNFEqrwB5nbJXbfKpIdBaa2LjPNk7DN
-         Hx+uemRLKU3GjzDpGs2GscHOYskfEAFJiMH95QJWuIzGX67NXeD5Gh9G6hWHVvEpoTIm
-         9c7/z+UussTUEoT1128015PibavtUpxyjmM/etctAkGBolcixOS9RBRIzawlFUmHItJ+
-         WqZ2cM7qlWmJfCiQnHWmD4d4J5+swKk53cbrY7tmHJhzCfpTXLl8aV3eybUIuNWef6c6
-         ylYrV+UG0QYu8sWR5dIgXe8JqoWiKR5ubsnglTLWQqDcGq9WpqVm1eec0DsY55mf8FOz
-         LpMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=cTdJAdG43HZxMFkVC0V/t7N7ddpWlul+dAxe912oK94=;
-        b=OpFOo44rgSobj2mBqj+u5lfjq9tUGmsMvfxQl4TG5AFhyHz3VmualUs2Mw/Ti2yCnn
-         HApJrybnqVRT9kWYU9wZhu209HieOC2Gv7y6I3Fs7T+cF1XMwQiVuocwvetzVeZgUrp/
-         GU9gTGQvDP4eJjHrwCnPacGwXDUoaYEXi5XRcWVMqVibxg5GLkxambohmDkXm/A1fAwk
-         2FPlBlhzmdXRaZHUrP4viDB3++7BVgZ84fh5KYuxIZDJQVS3LUF4SMwi/WrNX1iygC1P
-         Djgz8IpKjvVT7YqTtK4LQ5ms3vI5PJpkAtK3XFfW9jbHshaSFphfbi2CGLQbNMoiTgfF
-         PqdQ==
-X-Gm-Message-State: ALQs6tCZDcaOzxfa0MiAhEDcbueHVmekGNfEJTrsS8DxJaudYaxZt2ya
-        ZnD9JlFRhSNVVQHejl9rImY=
-X-Google-Smtp-Source: AIpwx4+u6M57gxI+glUd6mYX3XgHuM4jEIet9oXDE6JvshaKPWOnWGufdZzrAJSAuQ1OBt7h1430iQ==
-X-Received: by 10.28.161.4 with SMTP id k4mr3958723wme.106.1524126728379;
-        Thu, 19 Apr 2018 01:32:08 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egc153.neoplus.adsl.tpnet.pl. [83.21.66.153])
-        by smtp.gmail.com with ESMTPSA id g75sm4407964wmc.47.2018.04.19.01.32.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Apr 2018 01:32:06 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "peff\@peff.net" <peff@peff.net>,
-        "stolee\@gmail.com" <stolee@gmail.com>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "sbeller\@google.com" <sbeller@google.com>,
-        "larsxschneider\@gmail.com" <larsxschneider@gmail.com>,
-        "bmwill\@google.com" <bmwill@google.com>,
-        "gitster\@pobox.com" <gitster@pobox.com>,
-        "sunshine\@sunshineco.com" <sunshine@sunshineco.com>,
-        "jonathantanmy\@google.com" <jonathantanmy@google.com>
-Subject: Re: [PATCH v3 7/9] commit: add short-circuit to paint_down_to_common()
-References: <20180409164131.37312-1-dstolee@microsoft.com>
-        <20180417170001.138464-1-dstolee@microsoft.com>
-        <20180417170001.138464-8-dstolee@microsoft.com>
-Date:   Thu, 19 Apr 2018 10:32:05 +0200
-In-Reply-To: <20180417170001.138464-8-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Tue, 17 Apr 2018 17:00:32 +0000")
-Message-ID: <86sh7rfvga.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1751042AbeDSJPV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 05:15:21 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:44432 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750799AbeDSJPU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 05:15:20 -0400
+Received: from [192.168.2.201] ([92.28.131.105])
+        by smtp.talktalk.net with SMTP
+        id 95eufjNMwLjjA95eufWs6G; Thu, 19 Apr 2018 10:15:18 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1524129318;
+        bh=ez+iaih6NkPskiES+2uOabzNm8Dqak04hLYXjTqB25g=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=cgMUsg4O+dO5iTTG+AGMQZ4tMS49kNVCl1Doy60S+dGpFZqMC5/XJ4Rt+QSZ4kPVu
+         lNrSNyrjXNHXN7U9pvFQQyfnqHOTg6/PpjAn+IRjoZjv2GJQ4jQlnrAqdvIDBI7mxn
+         Hrgo0wneGtHAgZDagGZG82u5JmBbuFdsvp0ze8zo=
+X-Originating-IP: [92.28.131.105]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=LZYSFAXi c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
+ a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
+ a=A9qS8gIqAAAA:8 a=Azke_Q7Ia2ubSVc2nHIA:9 a=GDDJ3KHeNOvwyqVH:21
+ a=l4QQF9d7wa0dfRPk:21 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
+ a=H28RkzuXznr5akrmL4QT:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH] ident: don't cache default date
+To:     Johannes Sixt <j6t@kdbg.org>, phillip.wood@dunelm.org.uk
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <5f5d5b88-b3ac-ed4f-ee24-6ce2cba2bd55@kdbg.org>
+ <20180418102236.7183-1-phillip.wood@talktalk.net>
+ <87vacoeovh.fsf@evledraar.gmail.com>
+ <85ecb584-77a7-f818-14c9-1019873d87f9@talktalk.net>
+ <d4aee85d-956f-ac93-b909-6dfeb5ea8fd7@kdbg.org>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <65ca9629-46b1-2963-9b6b-99f12a18689d@talktalk.net>
+Date:   Thu, 19 Apr 2018 10:15:15 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
+In-Reply-To: <d4aee85d-956f-ac93-b909-6dfeb5ea8fd7@kdbg.org>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfBKPrLm9F5XXq0fAnrA1cM/hTyHtboG+1UzWvDSaIsBI1eoxrgXtEGBFXYFsfjmpKcPING/CEp8YOc1dVzwto8ohSoW0EgXwUanSs0EKVH53Q2oArUMd
+ edH3jqzvHqCE3fenY0q8qrozA0nldWhyXIc+9BFPtR1rw3z4NcJfczNsCasCVBnwUkjATlzrNevGvfFBKVoKdLGag6mCr3IIKMDRGAHqbGIXNggz4OTMijy4
+ DHsXdMnUT/oOShKcPpsTXDnWM95k0Cantjt+TxoclzCbnDDeeSyUDvBHyalIKG7Sy4QE9Vt8qSCeO5r59yYBHdYVH3kloIV1LWteOxtQSNg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+On 18/04/18 19:15, Johannes Sixt wrote:
+> Am 18.04.2018 um 19:47 schrieb Phillip Wood:
+>> On 18/04/18 12:27, Ævar Arnfjörð Bjarmason wrote:
+>>> On Wed, Apr 18 2018, Phillip Wood wrote:
+>>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>>> as it is created by running an separate instance of 'git commit'.  If
+>>>> the reworded commit is follow by further picks, those later commits
+>>>> will have an earlier committer date than the reworded one. This is
+>>>> caused by git caching the default date used when GIT_COMMITTER_DATE is
+>>>> not set. Fix this by not caching the date.
+>>>>
+>>>> Users expect commits to have the same author and committer dates when
+>>>> the don't explicitly set them. As the date is now updated each time
+>>>> git_author_info() or git_committer_info() is run it is possible to end
+>>>> up with different author and committer dates. Fix this for
+>>>> 'commit-tree', 'notes' and 'merge' by using a single date in
+>>>> commit_tree_extended() and passing it explicitly to the new functions
+>>>> git_author_info_with_date() and git_committer_info_with_date() when
+>>>> neither the author date nor the committer date are explicitly
+>>>> set. 'commit' always passes the author date to commit_tree_extended()
+>>>> and relied on the date caching to have the same committer and author
+>>>> dates when neither was specified. Fix this by setting
+>>>> GIT_COMMITTER_DATE to be the same as the author date passed to
+>>>> commit_tree_extended().
+>>>>
+>>>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>>> Reported-by: Johannes Sixt <j6t@kdbg.org>
+>>>> ---
+>>>>
+>>>> I'm slightly nervous that setting GIT_COMMITTER_DATE in
+>>>> builtin/commit.c will break someone's hook script. Maybe it would be
+>>>> better to add a committer parameter to commit_tree() and
+>>>> commit_tree_extended().
+> 
+> While I like the basic theme of your patch, I think we should fix this
+> case in a much simpler way, namely, use the infrastructure that was
+> introduced for git-am.
+> 
+> I've shamelessly lifted the commit message from your patch.
 
-> @@ -876,7 +886,7 @@ static struct commit_list *merge_bases_many(struct co=
-mmit *one, int n, struct co
->  			return NULL;
+Thanks, that is a better way (I'm annoyed with myself for not having
+noticed reset_ident_date() when I edited the function above it)
+
+Best Wishes
+
+Phillip
+
+> ---- 8< ----
+> Subject: [PATCH] sequencer: reset the committer date before commits
+> 
+> Now that the sequencer commits without forking when the commit message
+> isn't edited all the commits that are picked have the same committer
+> date. If a commit is reworded it's committer date will be a later time
+> as it is created by running an separate instance of 'git commit'.  If
+> the reworded commit is follow by further picks, those later commits
+> will have an earlier committer date than the reworded one. This is
+> caused by git caching the default date used when GIT_COMMITTER_DATE is
+> not set. Reset the cached date before a commit is generated
+> in-process.
+> 
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+>  sequencer.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index f9d1001dee..f0bac903a0 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1148,6 +1148,8 @@ static int try_to_commit(struct strbuf *msg, const char *author,
+>  		goto out;
 >  	}
->=20=20
-> -	list =3D paint_down_to_common(one, n, twos);
-> +	list =3D paint_down_to_common(one, n, twos, 0);
->=20=20
->  	while (list) {
->  		struct commit *commit =3D pop_commit(&list);
-> @@ -943,7 +953,7 @@ static int remove_redundant(struct commit **array, in=
-t cnt)
->  			filled_index[filled] =3D j;
->  			work[filled++] =3D array[j];
->  		}
-> -		common =3D paint_down_to_common(array[i], filled, work);
-> +		common =3D paint_down_to_common(array[i], filled, work, 0);
->  		if (array[i]->object.flags & PARENT2)
->  			redundant[i] =3D 1;
->  		for (j =3D 0; j < filled; j++)
+>  
+> +	reset_ident_date();
+> +
+>  	if (commit_tree_extended(msg->buf, msg->len, &tree, parents,
+>  				 oid, author, opts->gpg_sign, extra)) {
+>  		res = error(_("failed to write commit object"));
+> 
 
-Wouldn't it be better and more readable to create a symbolic name for
-this 0, for example:
-
-  -	list =3D paint_down_to_common(one, n, twos);
-  +	list =3D paint_down_to_common(one, n, twos, GENERATION_NO_CUTOFF);
-
-Best,
---=20
-Jakub Nar=C4=99bski
