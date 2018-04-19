@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 747EB1F424
-	for <e@80x24.org>; Thu, 19 Apr 2018 08:18:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF6A71F424
+	for <e@80x24.org>; Thu, 19 Apr 2018 08:18:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752769AbeDSIR5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 04:17:57 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55893 "EHLO mout.gmx.net"
+        id S1752776AbeDSISO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 04:18:14 -0400
+Received: from mout.gmx.net ([212.227.17.21]:47461 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751957AbeDSIRz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 04:17:55 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MTBfe-1f1tld2H4w-00S6w1; Thu, 19
- Apr 2018 10:17:47 +0200
-Date:   Thu, 19 Apr 2018 10:17:31 +0200 (DST)
+        id S1751957AbeDSISM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 04:18:12 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MYKGj-1ew6LG06Hx-00V8xk; Thu, 19
+ Apr 2018 10:18:07 +0200
+Date:   Thu, 19 Apr 2018 10:17:50 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
@@ -28,76 +28,178 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 1/7] replace: "libify" create_graft()
+Subject: [PATCH v2 2/7] replace: introduce --convert-graft-file
 In-Reply-To: <cover.1524125760.git.johannes.schindelin@gmx.de>
-Message-ID: <1f1c64314088383570dd2232e08a88c8df3298f5.1524125760.git.johannes.schindelin@gmx.de>
+Message-ID: <cecb82973f80fdd2db940410db2a7c3b23107c4b.1524125760.git.johannes.schindelin@gmx.de>
 References: <0f0942043678fe76f8d654306482ee26fac643f0.1523617836.git.johannes.schindelin@gmx.de> <cover.1524125760.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:hhOojvWpAIvhc71l6Q/h4TeaymTiQhbcMthnUX5Eqb26IyCIPxL
- IF3YBBHvBSdqF40PxmATHrm8c7DEm9W8tBNqT1RMH6c8UEBB8uyL1wRg4ODTQezgli1YUPm
- IgMP8c4voxx8fh+nbv3BBjXB8N8+iyrN/Hu38rzl1hydn0o1wpe578iXDjoicF3FqYtNY77
- SFQN8L7yMPSWrwQOfmEqA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rQ9AsL14Mls=:0ISyQYU3P2MCVV/XQgNevk
- /I+UM5f37CmEOECwZIP8V6pYe33AoddFcMVAIG3DMlu+iTCwTBG+fvXQtXR93PNXQ+ZugfM4S
- iYZ3xLZIlEX+BxCkelonCBLITUD5HWyg8bONS1Ld9sGbTTp6z87iI59ZAAp8GnZP0Srvc9OCB
- Pm1c5qfMGrTqvVK3J5SPkSmwbhtYGsygLlkGC/m8MPhGDnOQ7pf2Vkj9oCb5UUo5hE8X7+cro
- 3cQHsOkW2AidvJxfWdpGfknRnckDv/ndTPfRNNQxDgKImLKXDh29sqPqvyzDc8ecfQ0LDjQRg
- MKR9DZlfXlXsoABTqUXXomq+2lybPcB8LfOhqQ/PVa4qRkB4DE7yjoG1T2slHVuk42c1C07JF
- 2gfiFb3bYGBOaEulbCC9rPHON8btAp7lnTaI8zmuR6SH1s6WrksDyl6vRhFJhQa0bzfHAlNmF
- 3Nus1WpV7EGp8FgA2GExBdV3GxqQApu2eW7B+x2jrFmVxFV4WesufTQ83doVJbiCQmnWf9vib
- igNTzuhqX3AwvrDaMUNeFgDwFTzByKDeMqNn4Att2rCZlr7vNXEKxo2iu1riI972YDGfKjB1o
- 9T1Du+sw9o/DRmsXbt+fddmqQFWriTODLFIhYoUPjnd5Nf9RjyL3pGsn/APtjtTF3NY4gwG6Q
- o7jleQcV/DvpBUxCi1O+oUPdXYd11C8gqHWRi9DJeljNx4tMZiIYYGCq/yP2R7goH3/mqYBLD
- tkCXr5UY+h+p61NmlN9tULqyC5ecHjzyjZslnfqNfpkhhdfU0tyHkTGjNg7w3KQn5gZuQAW1m
- MBsvWji7VfZ1Iv6BuPdSCNfgmc4XyFH+pNAJ/7apqOPz7nIW/8=
+X-Provags-ID: V03:K1:TXphj7wqwEjL/C5Xvco89wpzICsMsl8gWTpr3BGMejCFvPGR2qY
+ EhMIWTzdtMhSEjgKyJbUnUIaRQroSJy2rPeKdIeZWS4rDZnhNqiw6GVlHaXX1B+ozGZIk/X
+ 3rsWHbszln4pFwPpz5Kj9Ol8jyYKpSCz703C9fDUq2HQTVULRX9S5RKmWERegXj0ho2uIC5
+ mN5RspYwos18j6a7HbHvA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0Yje2ph0MYo=:RQF/1+jyAHGDL98l3tcUam
+ 8TxFm/eCRYwP2AYa0/mggAEoiE2YbsW/Mflh5OWzF5bEBpl6ykLU0WBAxGlKNcwXoixYgITid
+ WdR6ZpXzzG0ty2rDaH+uXQdSzRZIIYp2ojWMKXj980V+CJxZmHj27wxa7McNoeuc/mr2LtHUN
+ xFqU9IHkMktf7vSUH1AX1rhqQFQnVviMscrJA9oc6hfVFLjteFfYwySD7dNSFbHluyiqSEWna
+ p71za/NITgxZrc3zMuG5YAmrvxsIpiue3M6O4MjYvN7xPm82VA86NnTFBpLUNKaQ83A0In2ca
+ dozQgb82Z85prcy3X5BkO1IIicTsbsKlolY0bMKerz4vWDaAAIgkld3J48h7rMtz2T6Dm12Yy
+ JCXxAg2GakOv6rp8M/9m+7gX9znu/uFK9WxqEh4oVHlRgOskmReNRYsdzd5D9xnMO7rhMqxTd
+ W5xiXXADCRxpD8gU7OZ/FQmrAhGWGWw8WnOX86om+lp05qZ51F7LpHDOpgIS4srOY/0Wx3A2s
+ 4tktZ3heeg6aCmcG8F+YHAm4kHPXQG9WRbUzakGNqJ2Lfm6hiZnRq6QViCZW+EHnx84m8GaZ9
+ eF7DKCv3jbVemVcg4Od4gZl2dvs/q2fPiF9dSmFo1zOkeIX/gyBwmt6M1LBQg9eqfox2zB78q
+ z+R9wWpYyXbVNGhtHXSWP5koKIzyl7sCXWNM+RdxC15j1vKnwNwRAK2mVIC6HRXDbHe0sPTDq
+ dVJJEFjh4KrsVcfAey9n+oUbzflm1QMNhQ3VJHYcDMKyEhEQCaMiHh/+OJNcwh3graxXlVGxP
+ DTEb8jYwAX+bIOZJPKIq9T1sF1tfidy0EwzhnVuRHnhffWZUWw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is quite convenient to simply die() in builtins, in the absence of
-proper exception handling, because it allows us to just go belly up
-without having to implement error handling chains.
-
-Of course, for reusable library functions, this is a big no-no, so we
-(try to) restrict the usage of die() to one-shot commands, i.e. places
-where we know that the caller does not want to, say, give the user a
-useful high-level error message, i.e. a message that the function calling
-die() could not possibly know.
-
-The problem with this reasoning is that sooner or later, pretty much all
-useful functions will *need* to be libified: the more useful a function,
-the more likely it is to be called from a call chain where the outer
-function implements a high-level operation that needs to provide
-additional advice to the user in case of failure.
-
-This is the case here: the create_graft() function is useful enough to be
-called in a loop, say, in the upcoming patch to convert a graft file in
-one fell swoop. Therefore, this function must not be allowed to die(), nor
-any of its callees.
+This option is intended to help with the transition away from the
+now-deprecated graft file.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/replace.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/git-replace.txt | 11 +++++--
+ builtin/replace.c             | 59 ++++++++++++++++++++++++++++++++++-
+ 2 files changed, 66 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
+index e5c57ae6ef4..4dc0686f7d6 100644
+--- a/Documentation/git-replace.txt
++++ b/Documentation/git-replace.txt
+@@ -11,6 +11,7 @@ SYNOPSIS
+ 'git replace' [-f] <object> <replacement>
+ 'git replace' [-f] --edit <object>
+ 'git replace' [-f] --graft <commit> [<parent>...]
++'git replace' [-f] --convert-graft-file
+ 'git replace' -d <object>...
+ 'git replace' [--format=<format>] [-l [<pattern>]]
+ 
+@@ -87,9 +88,13 @@ OPTIONS
+ 	content as <commit> except that its parents will be
+ 	[<parent>...] instead of <commit>'s parents. A replacement ref
+ 	is then created to replace <commit> with the newly created
+-	commit. See contrib/convert-grafts-to-replace-refs.sh for an
+-	example script based on this option that can convert grafts to
+-	replace refs.
++	commit. Use `--convert-graft-file` to convert a
++	`$GIT_DIR/info/grafts` file use replace refs instead.
++
++--convert-graft-file::
++	Creates graft commits for all entries in `$GIT_DIR/info/grafts`
++	and deletes that file upon success. The purpose is to help users
++	with transitioning off of the now-deprecated graft file.
+ 
+ -l <pattern>::
+ --list <pattern>::
 diff --git a/builtin/replace.c b/builtin/replace.c
-index 935647be6bd..43264f0998e 100644
+index 43264f0998e..4cdc00a96df 100644
 --- a/builtin/replace.c
 +++ b/builtin/replace.c
-@@ -395,7 +395,9 @@ static int create_graft(int argc, const char **argv, int force)
+@@ -20,6 +20,7 @@ static const char * const git_replace_usage[] = {
+ 	N_("git replace [-f] <object> <replacement>"),
+ 	N_("git replace [-f] --edit <object>"),
+ 	N_("git replace [-f] --graft <commit> [<parent>...]"),
++	N_("git replace [-f] --convert-graft-file"),
+ 	N_("git replace -d <object>..."),
+ 	N_("git replace [--format=<format>] [-l [<pattern>]]"),
+ 	NULL
+@@ -423,6 +424,53 @@ static int create_graft(int argc, const char **argv, int force)
+ 	return replace_object_oid(old_ref, &old_oid, "replacement", &new_oid, force);
+ }
  
- 	if (get_oid(old_ref, &old_oid) < 0)
- 		die(_("Not a valid object name: '%s'"), old_ref);
--	commit = lookup_commit_or_die(&old_oid, old_ref);
-+	commit = lookup_commit_reference(&old_oid);
-+	if (!commit)
-+		return error(_("could not parse %s"), old_ref);
++static int convert_graft_file(int force)
++{
++	const char *graft_file = get_graft_file();
++	FILE *fp = fopen_or_warn(graft_file, "r");
++	struct strbuf buf = STRBUF_INIT, err = STRBUF_INIT;
++	struct argv_array args = ARGV_ARRAY_INIT;
++
++	if (!fp)
++		return -1;
++
++	while (strbuf_getline(&buf, fp) != EOF) {
++		int i = 0, j;
++
++		while (i != buf.len) {
++			char save;
++
++			for (j = i; j < buf.len && !isspace(buf.buf[j]); j++)
++				; /* look further */
++			save = buf.buf[j];
++			buf.buf[j] = '\0';
++			argv_array_push(&args, buf.buf + i);
++			buf.buf[j] = save;
++
++			while (j < buf.len && isspace(buf.buf[j]))
++				j++;
++			i = j;
++		}
++
++		if (create_graft(args.argc, args.argv, force))
++			strbuf_addf(&err, "\n\t%s", buf.buf);
++
++		argv_array_clear(&args);
++		strbuf_reset(&buf);
++	}
++
++	strbuf_release(&buf);
++	argv_array_clear(&args);
++
++	if (!err.len)
++		return unlink_or_warn(graft_file);
++
++	warning(_("could not convert the following graft(s):\n%s"), err.buf);
++	strbuf_release(&err);
++
++	return -1;
++}
++
+ int cmd_replace(int argc, const char **argv, const char *prefix)
+ {
+ 	int force = 0;
+@@ -434,6 +482,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		MODE_DELETE,
+ 		MODE_EDIT,
+ 		MODE_GRAFT,
++		MODE_CONVERT_GRAFT_FILE,
+ 		MODE_REPLACE
+ 	} cmdmode = MODE_UNSPECIFIED;
+ 	struct option options[] = {
+@@ -441,6 +490,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete replace refs"), MODE_DELETE),
+ 		OPT_CMDMODE('e', "edit", &cmdmode, N_("edit existing object"), MODE_EDIT),
+ 		OPT_CMDMODE('g', "graft", &cmdmode, N_("change a commit's parents"), MODE_GRAFT),
++		OPT_CMDMODE(0, "convert-graft-file", &cmdmode, N_("convert existing graft file"), MODE_CONVERT_GRAFT_FILE),
+ 		OPT_BOOL_F('f', "force", &force, N_("replace the ref if it exists"),
+ 			   PARSE_OPT_NOCOMPLETE),
+ 		OPT_BOOL(0, "raw", &raw, N_("do not pretty-print contents for --edit")),
+@@ -463,7 +513,8 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 	if (force &&
+ 	    cmdmode != MODE_REPLACE &&
+ 	    cmdmode != MODE_EDIT &&
+-	    cmdmode != MODE_GRAFT)
++	    cmdmode != MODE_GRAFT &&
++	    cmdmode != MODE_CONVERT_GRAFT_FILE)
+ 		usage_msg_opt("-f only makes sense when writing a replacement",
+ 			      git_replace_usage, options);
  
- 	buffer = get_commit_buffer(commit, &size);
- 	strbuf_add(&buf, buffer, size);
+@@ -496,6 +547,12 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 				      git_replace_usage, options);
+ 		return create_graft(argc, argv, force);
+ 
++	case MODE_CONVERT_GRAFT_FILE:
++		if (argc != 0)
++			usage_msg_opt("--convert-graft-file takes no argument",
++				      git_replace_usage, options);
++		return !!convert_graft_file(force);
++
+ 	case MODE_LIST:
+ 		if (argc > 1)
+ 			usage_msg_opt("only one pattern can be given with -l",
 -- 
 2.17.0.windows.1.4.g7e4058d72e3
 
