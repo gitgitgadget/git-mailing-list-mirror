@@ -2,142 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C6BF1F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 02:29:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 493251F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 02:47:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752617AbeDSC3t (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Apr 2018 22:29:49 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:37975 "EHLO
-        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752255AbeDSC3s (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Apr 2018 22:29:48 -0400
-Received: by mail-io0-f174.google.com with SMTP id h9-v6so4852347iob.5
-        for <git@vger.kernel.org>; Wed, 18 Apr 2018 19:29:48 -0700 (PDT)
+        id S1753262AbeDSCry (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Apr 2018 22:47:54 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:44829 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753251AbeDSCrx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Apr 2018 22:47:53 -0400
+Received: by mail-wr0-f195.google.com with SMTP id o15-v6so9784787wro.11
+        for <git@vger.kernel.org>; Wed, 18 Apr 2018 19:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=PPTaXCn7uzIL2iz6f5keOJYaAUNSo0MsjWZ4QkT++yw=;
-        b=TOI97YM7hF7g93uePAxqY6ZdP+oISCmGSAKbwqowcMReJCgmXMOlWfVYgeLlc0raWx
-         AADV7N7aa2o+S7S+mElBMzVlOmtdmR1TuAcqkRkcFWHKD/GMMbruTfKC0sJ3eQ5st5R5
-         6KvztQA/90equMd44JVwERY75HfVKxHOKRCeZmpRR3Det7ge6K90XDsecySfEaNCN1As
-         apxsy9bwvAaX8yTrxxwVXeqtMLDYo5fKfYwrrvoxNX0VH4Sx7Of6m1vwChv0etrmowiR
-         chGPe/SrvudPLfIawmVQNd4a9EWS+UHea8l1mvQ8eeSXhM2VL6YVNTbrDZ1wWZ7AaVvv
-         lFKA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=PPTaXCn7uzIL2iz6f5keOJYaAUNSo0MsjWZ4QkT++yw=;
-        b=EjdV4pVOaEetpw3QB26Qt0EzZeZ0gQ3c/VWYVJwu9fFFHY+DbAvcvtgs7lS0xcW3m7
-         h9nwtlsUXdGC7LmkWsHxErNr8MHEuyh4VbeMp9UXaqo4piuECcYbP/q6IMlyqLp8824x
-         5lt3/KcbJxryeiCfGsXdLaSvBr3YjeGN81h5Q=
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=x4Ft/n8MSs9UcGCApylO3ZBPT1MeMhOkyMnUV6MgzGc=;
+        b=kBnrGFWA+RdeqV14uhtnpr9+5itfMF63weNdT50mK5ZZnioSWGU3qr8Ap2iOywW0Ng
+         SOdZlnt7NAmK4cSMC5MfXMrWrJTBisb+twOQqgv2fLaBA/a11AJdGMbObsi8PrjF10ZX
+         Re6Qn0OA6MkDF2peU1zoIwFpxDPN4dAC0dmWCXes7vS46XfzepT3p2t4V64/IMm1qH9+
+         vnSoMbRaeGTXdnDxsEJQkUJB0P4OdcWe9CjfdTf8QyN7HxkcUV0pJLcA7yxGojT/5nf7
+         a55Prj9Qyncf2pg2UHMTlzHcu7JjXbKmgvM7M7/vVKJrEUdKHGzOd7nlv/mMHTuUndiu
+         DoCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=PPTaXCn7uzIL2iz6f5keOJYaAUNSo0MsjWZ4QkT++yw=;
-        b=SB4w0rOeIJIU0/a83UhYORqxltSS0QeDTdEvNK6LQURS8qvwpQm+sPJXE4WUB1zRZZ
-         wHOWfaO1S38WV4JxSkXirLBo7RU8vHRNDF+Pyf92LlC/ovm7HT6AC58OBcutyY9qLvmr
-         BYNwXcuIiXW9XMWNwGK5upfO1XwbcYVJSJXCkMbNZ+n5eqa3ZTAbteojuFUO250kKDUY
-         VWsouGGXUiiy+d7P8nXuP2TIWieDY6zblXP41VYL0A5bENz6Vq60fvm53kwVQcFiUlS8
-         l78RI040XhRqtNvkcPtyzNX2Xr6OFryUIlgEciGlpsxeSPHkF5oGR7yrQ0m5z7h6RyYU
-         gqSQ==
-X-Gm-Message-State: ALQs6tCLvS34secA1p8kv+bWYMnADZA6wpVHQ+eYkdKzncpMNwryMYJm
-        rpt2YBOVww+asOLLjIK0bXN++xvHySlNUfR0ZNM=
-X-Google-Smtp-Source: AB8JxZqU/LzKMgHHOFc015WXpuHtrsbtIChgOpiC8G+U1yTX+esTRXPpJE0qMUchuFrHdd/vCoRW6jfTjSrxTDOA4xg=
-X-Received: by 2002:a6b:afdb:: with SMTP id p88-v6mr4379806ioo.257.1524104987831;
- Wed, 18 Apr 2018 19:29:47 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=x4Ft/n8MSs9UcGCApylO3ZBPT1MeMhOkyMnUV6MgzGc=;
+        b=a3YN9nDsOShgeup6eLRB9XN5VF6wbqhBVWHN9l5hr9Momm0/6/EMWzlAUPrFKcr3eU
+         fhSlqAMmsE+22Epl5ka2/zWDE2o6+peq3BW1zYKCSxM2ctYngWTzbaItRI4TaEQrsA3j
+         cS2XBiS9D3X1Q0jAFmf+gGz9AuJ0/yxhl7Z3VtLJKeT/b8MmF+8vF23Yv/Sa/ZbDbAgH
+         vydILEkgfrUuC2q7gEDXJUcW+yfZhbbkpo9ThaWS7vlOhFpYNQRWiZdBdWcoVMEbCN6/
+         MIdJsNeqH+hPqLamnC3uHaIXPi0S68iZLGm3OMPHOJsoEwnyrp89DbHdnNsii8gcYbjQ
+         EBWA==
+X-Gm-Message-State: ALQs6tCJA9BUQQNPwnZB0vaA8F7sUuGqPBtJdhZpu3EnHLJ/wFWqihb6
+        leZHh7XESOqqxQWOjwRIIlU=
+X-Google-Smtp-Source: AIpwx4+EZRVzVsiIpFyStmKhyGXicCyGuKDZ1R84xHny88B8rAVsARp9R6dGIPNoaNgAXjDtqx1pbQ==
+X-Received: by 10.28.21.84 with SMTP id 81mr3283604wmv.36.1524106071862;
+        Wed, 18 Apr 2018 19:47:51 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v75-v6sm4999539wrc.65.2018.04.18.19.47.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 18 Apr 2018 19:47:50 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com, peff@peff.net
+Subject: Re: [PATCH v9 2/2] builtin/config.c: support `--type=<type>` as preferred alias for `--type`
+References: <20180328234719.595-1-me@ttaylorr.com>
+        <cover.1524087557.git.me@ttaylorr.com>
+        <20180418214335.GC36803@syl.local>
+Date:   Thu, 19 Apr 2018 11:47:50 +0900
+In-Reply-To: <20180418214335.GC36803@syl.local> (Taylor Blau's message of
+        "Wed, 18 Apr 2018 14:43:35 -0700")
+Message-ID: <xmqq8t9jgbe1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.95.15 with HTTP; Wed, 18 Apr 2018 19:29:47 -0700 (PDT)
-In-Reply-To: <xmqqfu3seyad.fsf@gitster-ct.c.googlers.com>
-References: <CA+55aFxSZLuk++Dz6SonD+JhbbSDt9G9VcBx5f1CV=6nJC9hvg@mail.gmail.com>
- <xmqqr2ncezdc.fsf@gitster-ct.c.googlers.com> <xmqqmuy0ez8b.fsf@gitster-ct.c.googlers.com>
- <xmqqfu3seyad.fsf@gitster-ct.c.googlers.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 18 Apr 2018 19:29:47 -0700
-X-Google-Sender-Auth: yI9LL9VVeLxCodCYaZXNCDDd_qQ
-Message-ID: <CA+55aFztDdB9tVHREhQ7T0COs7p9ng81XfAHZCL3rx9WT2ecEQ@mail.gmail.com>
-Subject: Re: Silly "git gc" UI issue.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Content-Type: multipart/mixed; boundary="00000000000066bbb5056a2a58e5"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---00000000000066bbb5056a2a58e5
-Content-Type: text/plain; charset="UTF-8"
+Taylor Blau <me@ttaylorr.com> writes:
 
-On Wed, Apr 18, 2018 at 7:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> A few commands that parse --expire=<time> command line option
-> behaves silly when given nonsense input.  For example
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 92fb8d56b1..bd7a8d0ce7 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -61,6 +61,58 @@ static int show_origin;
+>  #define TYPE_PATH		4
+>  #define TYPE_EXPIRY_DATE	5
+>  
+> +#define OPT_CALLBACK_VALUE(s, l, v, h, i) \
+> +	{ OPTION_CALLBACK, (s), (l), (v), NULL, (h), PARSE_OPT_NOARG | \
+> +	PARSE_OPT_NONEG, option_parse_type, (i) }
+> +
+> +static struct option builtin_config_options[];
+> +
+> +static int option_parse_type(const struct option *opt, const char *arg,
+> +			     int unset)
+> +{
 
-So this patch definitely improves on the error message.
+Declare all local variables here.  We do not accept decl-after-statement.
 
-But look at what happens for the kernel:
+> +	if (unset) {
+> +		*((int *) opt->value) = 0;
+> +		return 0;
+> +	}
+> +
+> +	/*
+> +	 * To support '--<type>' style flags, begin with new_type equal to
+> +	 * opt->defval.
+> +	 */
+> +	int new_type = opt->defval;
 
-    [torvalds@i7 linux]$ time git gc --prune=npw
-    Counting objects: 6006319, done.
-    Delta compression using up to 8 threads.
-    Compressing objects: 100% (912166/912166), done.
-    Writing objects: 100% (6006319/6006319), done.
-    Total 6006319 (delta 5050577), reused 6006319 (delta 5050577)
-    fatal: malformed expiration date 'npw'
-    error: failed to run prune
+Like this one and ...
 
-    real        1m4.376s
-    user        0m59.963s
-    sys         0m5.182s
+> +	if (!new_type) {
+> +		if (!strcmp(arg, "bool"))
+> +			new_type = TYPE_BOOL;
+> +		else if (!strcmp(arg, "int"))
+> +			new_type = TYPE_INT;
+> +		else if (!strcmp(arg, "bool-or-int"))
+> +			new_type = TYPE_BOOL_OR_INT;
+> +		else if (!strcmp(arg, "path"))
+> +			new_type = TYPE_PATH;
+> +		else if (!strcmp(arg, "expiry-date"))
+> +			new_type = TYPE_EXPIRY_DATE;
+> +		else
+> +			die(_("unrecognized --type argument, %s"), arg);
+> +	}
+> +
+> +	int *to_type = opt->value;
 
+... this one.
 
-
-Yes, I get that nice "malformed expiration date 'npw'" error, but I
-get it after 64 seconds has passed.
-
-So i think builtin/gc.c should use this same parse_expiry_date()
-parse_opt_expiry_date_cb() thing for its timestamp parsing.
-
-It does actually seem to do that for the gc_log_expire value that it
-loads from the config file.
-
-Maybe something like the attached patch? Then I get:
-
-    [torvalds@i7 linux]$ time git gc --prune=npw
-    fatal: Failed to parse prune expiry value npw
-
-    real        0m0.004s
-    user        0m0.002s
-    sys         0m0.002s
-
-and you could smush it into your commit (if you want my sign-off, take it)
-
-              Linus
-
---00000000000066bbb5056a2a58e5
-Content-Type: text/x-patch; charset="US-ASCII"; name="patch.diff"
-Content-Disposition: attachment; filename="patch.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_jg5wqg8f0
-
-IGJ1aWx0aW4vZ2MuYyB8IDQgKysrKwogMSBmaWxlIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygrKQoK
-ZGlmZiAtLWdpdCBhL2J1aWx0aW4vZ2MuYyBiL2J1aWx0aW4vZ2MuYwppbmRleCAzZTY3MTI0ZWEu
-LmE0YjIwYWFhZiAxMDA2NDQKLS0tIGEvYnVpbHRpbi9nYy5jCisrKyBiL2J1aWx0aW4vZ2MuYwpA
-QCAtMzU0LDYgKzM1NCw3IEBAIGludCBjbWRfZ2MoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2
-LCBjb25zdCBjaGFyICpwcmVmaXgpCiAJY29uc3QgY2hhciAqbmFtZTsKIAlwaWRfdCBwaWQ7CiAJ
-aW50IGRhZW1vbml6ZWQgPSAwOworCXRpbWVzdGFtcF90IGR1bW15OwogCiAJc3RydWN0IG9wdGlv
-biBidWlsdGluX2djX29wdGlvbnNbXSA9IHsKIAkJT1BUX19RVUlFVCgmcXVpZXQsIE5fKCJzdXBw
-cmVzcyBwcm9ncmVzcyByZXBvcnRpbmciKSksCkBAIC0zOTIsNiArMzkzLDkgQEAgaW50IGNtZF9n
-YyhpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkKIAlpZiAo
-YXJnYyA+IDApCiAJCXVzYWdlX3dpdGhfb3B0aW9ucyhidWlsdGluX2djX3VzYWdlLCBidWlsdGlu
-X2djX29wdGlvbnMpOwogCisJaWYgKHBhcnNlX2V4cGlyeV9kYXRlKHBydW5lX2V4cGlyZSwgJmR1
-bW15KSkKKwkJZGllKF8oIkZhaWxlZCB0byBwYXJzZSBwcnVuZSBleHBpcnkgdmFsdWUgJXMiKSwg
-cHJ1bmVfZXhwaXJlKTsKKwogCWlmIChhZ2dyZXNzaXZlKSB7CiAJCWFyZ3ZfYXJyYXlfcHVzaCgm
-cmVwYWNrLCAiLWYiKTsKIAkJaWYgKGFnZ3Jlc3NpdmVfZGVwdGggPiAwKQo=
---00000000000066bbb5056a2a58e5--
+> +	if (*to_type && *to_type != new_type) {
+> +		/*
+> +		 * Complain when there is a new type not equal to the old type.
+> +		 * This allows for combinations like '--int --type=int' and
+> +		 * '--type=int --type=int', but disallows ones like '--type=bool
+> +		 * --int' and '--type=bool
+> +		 * --type=int'.
+> +		 */
+> +		error("only one type at a time.");
+> +		usage_with_options(builtin_config_usage,
+> +			builtin_config_options);
+> +	}
+> +	*to_type = new_type;
+> +
+> +	return 0;
+> +}
+> +
