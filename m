@@ -7,164 +7,93 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D5971F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 20:48:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 511991F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 20:54:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753366AbeDSUsL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 16:48:11 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:42433 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753295AbeDSUsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 16:48:11 -0400
-Received: by mail-pl0-f66.google.com with SMTP id t20-v6so3929393ply.9
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 13:48:11 -0700 (PDT)
+        id S1753406AbeDSUy1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 16:54:27 -0400
+Received: from mail-ua0-f195.google.com ([209.85.217.195]:38004 "EHLO
+        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752725AbeDSUy0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 16:54:26 -0400
+Received: by mail-ua0-f195.google.com with SMTP id q38so4356264uad.5
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 13:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8zbkNYUw2CGUQlOBDWWJ/PQFdLTNb7D9Uem5H63nI5M=;
-        b=fURM7g6Uz3MYC5dREBYHYK8GEvOLOG1gTgpjM9IHkBL4dNdwaqq5OUxjgPvEI6zA56
-         AM6WQjPqq/m3obsCT3kWs8iHJcDpwQ8iNFOrNui3VwAZJJ7426EhVaMnqrziBq2gFyH+
-         YRvot3mXnQzLk9SZ3hwJqybKD8eT9AyK5bR8jy7kTcclmK3t9OT0Xo6Ti7qXQQI1gpCb
-         MaYiup3sRT+0iJK4PMhbXjMZXOkyz3OobNmwPYjqulQpajUaWMHfPA4nzs/EM/siRWmg
-         L05ik7eKWUpjBLEUhTLiZeTBkO6Qr8WddQ9k+YwMwVFpO3++YBEDie4JnGUGaNcz21qR
-         SdTQ==
+         :cc:content-transfer-encoding;
+        bh=P119ynbsgUuVJopw0Yn4u+c6+QDN8fC0VbVdK9ulPBw=;
+        b=bGVraqJyzenI/I2pTNNMAoylZ/+BUT7OZlmWRUygDQ7Mg2GhVrul1De1RqqMCXnzfc
+         kPQV7ZPk4X89MUyWc5nETWiCq4Cr0lPatIR3BV35MBcLjlX3JFFvTlM++dJKbBqe9oPt
+         GhMG7ybN3SNzFllustB9OeJ6P79KLrkf/OFMHnvHDeWfxlongRgByDihKyhuIgBblcbD
+         b4VF/8juqzdTgjv4du0GRsgyx676bltETQrFXSeYT87qi9LW3kqcasbuEz9gbG1ZRhSh
+         SxznIt4ZRKL8FANhYXlRLnmQlTrATpkTs+6uSkCl0wjwxkhWwLl0225B3j6pm6hNCzHa
+         CD4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8zbkNYUw2CGUQlOBDWWJ/PQFdLTNb7D9Uem5H63nI5M=;
-        b=U5E2EzXA+gFhVgzHRmbTQhwsvgFFOUHKf1ZWfFF2CCcg+nWKgzsAZKE0W6D9dQ2yuQ
-         Lzqf6MmLbxxtX+HVRp4YeVmnMXof8hRHW2U9XvdldVuMEUHqYF64kuz25m03wPEs+lw8
-         bPzh23y1JTMRwAE4DHaOuBLApyDZl+jlJdyZCGWF4rdFB5zZpsoxZT8TdnJq0KoamvnF
-         Vh9UfZKujcp+KLMmYwO4I+AzjvNSpJZlFG3v4saGtOXDwgA60+EUSjhiQAtM0CTuijEO
-         RGU9eZTd2Ajm/7YhA2SuS6S4zpsKzMYp1eZ8MNpmvKpj/TyS6fUx/ZbLj66/VzlVvmdR
-         KLyQ==
-X-Gm-Message-State: ALQs6tBgLCOy6nnZb2ULRCoCsE5pnD2sWaG6Hm+L+Rbl6HGSnL8t8jJk
-        k3sVyGX2VUDkDon07/9AfzAaGe17AwToUZLRGeFeBg+RmSE=
-X-Google-Smtp-Source: AIpwx4/f1CAF2+bh2viMKYA3d46ekbB4kk0r2fbdzgpY7+QiZuF+Krv5PeJ1w9tOD4GblZXGbtrAbhljT0MQPoz81+w=
-X-Received: by 2002:a17:902:1c7:: with SMTP id b65-v6mr5271338plb.298.1524170890736;
- Thu, 19 Apr 2018 13:48:10 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=P119ynbsgUuVJopw0Yn4u+c6+QDN8fC0VbVdK9ulPBw=;
+        b=Abe0poYbhFGMkf8cc1qGM+6Wq2gbpUyUVR68NZXT2w1U3GcR864bohD22VnyHjuFXY
+         qQ8/v339/BdgxVPs0Qc840/I3IRNDEXQ4tmDPmW7VSvI3Ksih+6yRozJjZIAM9R6CnHD
+         3WWyiU/4A0cA/YuKYaEmIuFD6aoQe8Wvzqu1fJkLACSr7rFhtXTCz4xe5eWNRiHejW8H
+         gPcT2FbmR/PVZSBRKFdWoANCJU9axYwDlFLApphIobElChldBlhr+wZRvIdaxuDLJArv
+         9Xj8Ch0KBjFg1lGEao09EuN9TbxQXCgofYwIJhJaK1zXIR0xlhQ+sx4+4IrnFWyRAJSr
+         OmCQ==
+X-Gm-Message-State: ALQs6tCg8i9ts+d3wxZSRxgv7spDzrLtJxvhO4V1vMtNBSMVHgqAA5Tk
+        ROgIAk8wW7fTGH+IZgN7AvYYVFSxNB/06LrIKJc=
+X-Google-Smtp-Source: AIpwx4/ld060v5YUL1hUvsAtAOMYj2hCTrxG92EGRbDxl9991YHahNa+VDK9MgjUE2ZxWWzMck+yST0HgSoEHoYZTaA=
+X-Received: by 10.176.19.226 with SMTP id n31mr5754018uae.199.1524171265705;
+ Thu, 19 Apr 2018 13:54:25 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.150.4 with HTTP; Thu, 19 Apr 2018 13:48:09 -0700 (PDT)
-In-Reply-To: <20180419175823.7946-26-newren@gmail.com>
-References: <20180419175823.7946-1-newren@gmail.com> <20180419175823.7946-26-newren@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 19 Apr 2018 22:48:09 +0200
-Message-ID: <CAN0heSrSn1wYGoRD6+c_Jk+rAUTbY94JLspwfiki6z4h=mnPSQ@mail.gmail.com>
-Subject: Re: [PATCH v10 25/36] merge-recursive: fix overwriting dirty files
- involved in renames
-To:     Elijah Newren <newren@gmail.com>
+Received: by 10.176.95.4 with HTTP; Thu, 19 Apr 2018 13:54:24 -0700 (PDT)
+In-Reply-To: <CAN0heSquJboMMgay+5XomqXCGoHtXxf1mJBmY_L7y+AA4eG0KA@mail.gmail.com>
+References: <20180419175823.7946-1-newren@gmail.com> <20180419175823.7946-34-newren@gmail.com>
+ <CAN0heSquJboMMgay+5XomqXCGoHtXxf1mJBmY_L7y+AA4eG0KA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 19 Apr 2018 13:54:24 -0700
+Message-ID: <CABPp-BF9gjC-Jw=NZQygxwQ7d_dbZEUB2OoQ-ieSG6bNUWs5BA@mail.gmail.com>
+Subject: Re: [PATCH v10 33/36] merge-recursive: fix was_tracked() to quit
+ lying with some renamed paths
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
         Junio C Hamano <gitster@pobox.com>,
         Linus Torvalds <torvalds@linux-foundation.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19 April 2018 at 19:58, Elijah Newren <newren@gmail.com> wrote:
-> This fixes an issue that existed before my directory rename detection
-> patches that affects both normal renames and renames implied by
-> directory rename detection.  Additional codepaths that only affect
-> overwriting of dirty files that are involved in directory rename
-> detection will be added in a subsequent commit.
+On Thu, Apr 19, 2018 at 1:39 PM, Martin =C3=85gren <martin.agren@gmail.com>=
+ wrote:
+> On 19 April 2018 at 19:58, Elijah Newren <newren@gmail.com> wrote:
+>> +       /* Free the extra index left from git_merge_trees() */
+>> +       /*
+>> +        * FIXME: Need to also data allocated by setup_unpack_trees_porc=
+elain()
+>> +        * tucked away in o->unpack_opts.msgs, but the problem is that o=
+nly
+>> +        * half of it refers to dynamically allocated data, while the ot=
+her
+>> +        * half points at static strings.
+>> +        */
 >
-> Reviewed-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  merge-recursive.c                   | 85 ++++++++++++++++++++++-------
->  merge-recursive.h                   |  2 +
->  t/t3501-revert-cherry-pick.sh       |  2 +-
->  t/t6043-merge-rename-directories.sh |  2 +-
->  t/t7607-merge-overwrite.sh          |  2 +-
->  unpack-trees.c                      |  4 +-
->  unpack-trees.h                      |  4 ++
->  7 files changed, 77 insertions(+), 24 deletions(-)
+> Timing. I've been preparing a patch that provides
+> `clear_unpack_trees_porcelain()` and fixes all such leaks. (About 10% of
+> all the leaks that are reported when I run the test-suite!) My patch
+
+Nice!
+
+> conflicts with this series for obvious reasons. Figuring out the
+> conflict resolution might be non-trivial, and I suspect it would even be
+> an evil merge. I'll be holding off on that patch until this has landed.
 >
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index c1c4faf61e..7fdcba4f22 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -337,32 +337,37 @@ static void init_tree_desc_from_tree(struct tree_desc *desc, struct tree *tree)
->         init_tree_desc(desc, tree->buffer, tree->size);
->  }
->
-> -static int git_merge_trees(int index_only,
-> +static int git_merge_trees(struct merge_options *o,
->                            struct tree *common,
->                            struct tree *head,
->                            struct tree *merge)
->  {
->         int rc;
->         struct tree_desc t[3];
-> -       struct unpack_trees_options opts;
->
-> -       memset(&opts, 0, sizeof(opts));
-> -       if (index_only)
-> -               opts.index_only = 1;
-> +       memset(&o->unpack_opts, 0, sizeof(o->unpack_opts));
-> +       if (o->call_depth)
-> +               o->unpack_opts.index_only = 1;
->         else
-> -               opts.update = 1;
-> -       opts.merge = 1;
-> -       opts.head_idx = 2;
-> -       opts.fn = threeway_merge;
-> -       opts.src_index = &the_index;
-> -       opts.dst_index = &the_index;
-> -       setup_unpack_trees_porcelain(&opts, "merge");
-> +               o->unpack_opts.update = 1;
-> +       o->unpack_opts.merge = 1;
-> +       o->unpack_opts.head_idx = 2;
-> +       o->unpack_opts.fn = threeway_merge;
-> +       o->unpack_opts.src_index = &the_index;
-> +       o->unpack_opts.dst_index = &the_index;
-> +       setup_unpack_trees_porcelain(&o->unpack_opts, "merge");
->
->         init_tree_desc_from_tree(t+0, common);
->         init_tree_desc_from_tree(t+1, head);
->         init_tree_desc_from_tree(t+2, merge);
->
-> -       rc = unpack_trees(3, t, &opts);
-> +       rc = unpack_trees(3, t, &o->unpack_opts);
-> +       /*
-> +        * unpack_trees NULLifies src_index, but it's used in verify_uptodate,
-> +        * so set to the new index which will usually have modification
-> +        * timestamp info copied over.
-> +        */
-> +       o->unpack_opts.src_index = &the_index;
->         cache_tree_free(&active_cache_tree);
->         return rc;
->  }
+> BTW: s/also data/also free data/. But since I'm promising to get rid of
+> this TODO quite soon after this is merged... ;-)
 
-As mentioned in a reply to patch 33/36 [1], I've got a patch to add
-`clear_unpack_trees_porcelain()` which frees the resources allocated by
-`setup_unpack_trees_porcelain()`. Before this patch, I could easily call
-it at the end of this function. After this, the ownership is less
-obvious to me.
-
-It turns out that the only user of `unpack_opts` outside this function
-can indeed end up wanting to use the error messages that `clear_...()`
-would set out to free. So yes, the call to `clear_...()` will need to go
-elsewhere.
-
-It does sort of make me wonder if we should memset `unpack_opts` to zero
-somewhere early, so that we can then `clear_...()` it early here before
-zeroizing it. So yes, we'd be constantly allocating and freeing those
-strings. Am I right to assume that the code after your series would do
-(roughly) the same number of calls to `setup_unpack_trees_porcelain()`,
-i.e., `git_merge_trees()` as it did before?
-
-All of this is arguably irrelevant for this series. It might be better
-if I clarify this memory ownership and do any adjustments as part of my
-patch (series), rather than you shuffling things around at this time.
-
-Mostly thinking out loud. If you have any thoughts, feel free to share.
-
-Martin
-
-[1] https://public-inbox.org/git/CAN0heSquJboMMgay+5XomqXCGoHtXxf1mJBmY_L7y+AA4eG0KA@mail.gmail.com/
+Oops, good catch.  I can fix it up since I need to fix the issues
+SZEDER found, but yeah if you're just going to implement the fix and
+rip this comment out then it's not that critical.
