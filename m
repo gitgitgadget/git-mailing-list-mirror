@@ -2,62 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 410C11F404
-	for <e@80x24.org>; Thu, 19 Apr 2018 05:43:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 282891F404
+	for <e@80x24.org>; Thu, 19 Apr 2018 06:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753323AbeDSFno (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 01:43:44 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:41936 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753293AbeDSFnj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 01:43:39 -0400
-Received: by mail-wr0-f173.google.com with SMTP id v24-v6so10455112wra.8
-        for <git@vger.kernel.org>; Wed, 18 Apr 2018 22:43:39 -0700 (PDT)
+        id S1751964AbeDSGHy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 02:07:54 -0400
+Received: from mail-wr0-f179.google.com ([209.85.128.179]:42376 "EHLO
+        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750913AbeDSGHx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 02:07:53 -0400
+Received: by mail-wr0-f179.google.com with SMTP id s18-v6so10589518wrg.9
+        for <git@vger.kernel.org>; Wed, 18 Apr 2018 23:07:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=GpzQXk4ErX9G3zpD0QEV0tR7/upG1KPU7F4oUW9DZhA=;
-        b=FD/B+rGle3hyfnxRHbzQwoTgabk3Iv1e97fLw4hLy0bwLW/6Vf1AZEPZJ67VgFtyWr
-         c9up5PgZmN7Gob0lNthsloUK6USKappHkO+AtJK6ytzRpdK2JmyaPbeXv4p2KaKdORRh
-         1HD7MTypqtJmyZKI/kKIXgzae6crbigPDZUVdIiOYQ/xbP7+4b7tKmw05705iTN0TNlt
-         3PaH8Lnqm0lplQ8BTFrvrHWJO0hG18onMo8IKXOX+M4k8pxkLYlFWb8fgMMFxJx/cQWm
-         w76/DRXO7R1z/Ah0rg/xLY+VJzGDSTZMeNVFgUpwbOn0gPljeS4BcixFGevoOcvEc6XX
-         7LwA==
+        bh=AKaqto3C3/aWVsCCv7TRkfkIpDCxGOBvwjsozIGOk3k=;
+        b=oF3Tzjw+0xvTaoVXtZQYKhtKKM3eHcofaY3hoHRzoGUlsTZKJ1gxznYy+yaffrswPm
+         P/nDldGF7/kdN7cHKAyrafJMfU4I/czb1nppWGzsaFn/1/gIXno79stSgspYnpBndxqP
+         Q/M+rXDD/EuYNO09mG4/WFsHlV9sAjonhwQ8WAktaot6SiKinyGmoZgwwRn3mgMluv5X
+         mxdy1g0etEElw8tMilQXXWxyPx4B+vayOqMTKTnqY2A4+IOUINnJ+VHBliEMnhJge67z
+         afn7cfmRIzSCosUvy3tMZ3IcLH8nDTfbAGVFBNSDy6pCrNQ8wuan/08lf6pOpcfiO9Au
+         MDCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GpzQXk4ErX9G3zpD0QEV0tR7/upG1KPU7F4oUW9DZhA=;
-        b=NV6SysYbye9hPkqQ8B0ug1te9hqrnKe0fyarg7Nqo47j24jNFVIn9gYr0vfv3mwQ03
-         nqg+pfmuRkJLrZ5JihpRmOekfMDPt1EJfwJq4rEReOrq8J3ageXcsbyWYHJFONS594q+
-         WryXNJGy8zewo1MYQmqLAbhFpxvyMLVL7zHRQ3WDeJ3u2+X0XAQpZ079opD6pkBpfp+5
-         jFbx5QIMfIrKAT+L/OVEsG0XK/xoGUqkrL3YG2VLxg5mnTj+fYmevYA1CHyd0mMjOe+W
-         fZKUJvHjlrYo0QoSH3BW9g/Z5+kmjMjXo63S83Ina2GG1EcHJc5WUYvhEHg//ZVLfO6i
-         4e7Q==
-X-Gm-Message-State: ALQs6tAOqWfNAzas94efxvjxY1R1F2+WJSEkIY8PNDxJreen2np3Tp3Z
-        Y6q+TFN4VhW89X7gIuMwmCFw+886oG44yPe1dkE=
-X-Google-Smtp-Source: AIpwx4+WBvKpdxBWaW9JJaK8vZczVOALMcz7cmVLiLxky5DKn0/ytWt8OGCi6L9ddAZVE8WJ+GUSYe+CaM0zR/OsSeo=
-X-Received: by 2002:adf:b937:: with SMTP id k52-v6mr3537311wrf.116.1524116618863;
- Wed, 18 Apr 2018 22:43:38 -0700 (PDT)
+        bh=AKaqto3C3/aWVsCCv7TRkfkIpDCxGOBvwjsozIGOk3k=;
+        b=cXSRRKupOOw6/GRLuNUvXkVpL7M9x6ps6LwpXHJHCnwaxfFfrS4My28jkGoeA3lQfZ
+         VF8iR5/XgdhG9625QlxmIYmS0ZGswD2D4u7M59CwtYHPFf+dO2AuCGMv8ahybBuv/gQ+
+         CO+FaiYKqd9NnLC2lrRDsZeIYF9atpLOIczG0JPXqqdKlsBXd/irhDBq1R3YKAISfDVm
+         a/5sLAsdF53BC1VPO20AGrGrac0JjxrtSrvm26Ny6YPV/GTr0Mmt2nC86FhebAQIclzL
+         7IJOmcy8q5DnE6XgrM9sjZowlcjUxDDoMxr9exCxmGMnl6ov12Ds7wdVhSqEgnAUco9X
+         CPag==
+X-Gm-Message-State: ALQs6tCv7QZnGk2+e9tmKb2aj2eJGTwpyPvpHjSTbdd1Fjl0FFAEUBAC
+        zzFVW0pkOEl1aBuzjGMYbgInLRZfTxETGLF2xBc=
+X-Google-Smtp-Source: AIpwx4/vDcAIIDwUoprLKXf32kIHx+eKSTSnjBi70k+O6KuroHj9yFjSjzhHtJr/dfV16HZcqTv+BccGWoq5RzrKMCU=
+X-Received: by 10.28.67.2 with SMTP id q2mr3288810wma.15.1524118072003; Wed,
+ 18 Apr 2018 23:07:52 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.223.146.194 with HTTP; Wed, 18 Apr 2018 22:43:38 -0700 (PDT)
-In-Reply-To: <CAGZ79kZL_+AZx2kFyoOokUPsqRzQFT32aj1XqHf8o7OJFwsABA@mail.gmail.com>
-References: <CAGZ79kbT+AnVu-AJ9=OSt=Z2ErM5ocfoLfgx=qmHFfbnkqJqwg@mail.gmail.com>
- <20180418223552.18345-1-eddy.petrisor@codeaurora.org> <CAGZ79kZL_+AZx2kFyoOokUPsqRzQFT32aj1XqHf8o7OJFwsABA@mail.gmail.com>
+Received: by 10.223.146.194 with HTTP; Wed, 18 Apr 2018 23:07:51 -0700 (PDT)
+In-Reply-To: <CAGZ79kbT+AnVu-AJ9=OSt=Z2ErM5ocfoLfgx=qmHFfbnkqJqwg@mail.gmail.com>
+References: <CAK0XTWdpKnMbXs5sq2qsERxQO20sQW6YwL=2kfBHmSwHMmunBg@mail.gmail.com>
+ <20180403222053.23132-1-eddy.petrisor@codeaurora.org> <20180403222053.23132-2-eddy.petrisor@codeaurora.org>
+ <CAK0XTWf=ubDK-4=FknLSFObZrShg=7UDgR5c6iNSjrwiDngayA@mail.gmail.com>
+ <CAGZ79kYu-9vzee=R7uE4fhhrRj19ZT0Z5+7fPLwOpXhEr7aqUw@mail.gmail.com>
+ <CAK0XTWdSQmfqo2-WuiPtOcn_4cf60jNZ_j9Uh_HpzxUwSpA7bw@mail.gmail.com> <CAGZ79kbT+AnVu-AJ9=OSt=Z2ErM5ocfoLfgx=qmHFfbnkqJqwg@mail.gmail.com>
 From:   =?UTF-8?Q?Eddy_Petri=C8=99or?= <eddy.petrisor@gmail.com>
-Date:   Thu, 19 Apr 2018 08:43:38 +0300
-Message-ID: <CAK0XTWcOpb5DS5c0MAomfaS2G0TPDTDtchm9FhkOSDBS5r5j+g@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 1/9] git-submodule.sh:cmd_update: if submodule
- branch exists, fetch that instead of default
+Date:   Thu, 19 Apr 2018 09:07:51 +0300
+Message-ID: <CAK0XTWecZASWULXYXGauV5WKhYinD7HXyXSTJntocQt3vzr4AA@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 2/2] t7406: add test for non-default branch in submodule
 To:     Stefan Beller <sbeller@google.com>
 Cc:     =?UTF-8?Q?Eddy_Petri=C8=99or?= <eddy.petrisor@codeaurora.org>,
-        Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -65,37 +68,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-04-19 2:53 GMT+03:00 Stefan Beller <sbeller@google.com>:
-> Hi Eddy,
+2018-04-05 0:41 GMT+03:00 Stefan Beller <sbeller@google.com>:
+> On Wed, Apr 4, 2018 at 1:37 PM, Eddy Petri=C8=99or <eddy.petrisor@gmail.c=
+om> wrote:
 >
-> all the following patches 3-9 are touching the test as added in patch
-> 2, which would go best with this patch.
-> Could you squash all commits into one?
+>>> you plan to later submit as one patch including both the change as well=
+ as
+>>> the test.
+>>
+>> Yes,
 
-Yes,
+I did not forget about having a single patch. Will do it once the
+details are ironed out.
 
-I did not have time yesterday to put all changes into a single commit
-with an associated note (because note managment seems to be a huge
-pain), so I preferred small commits.
-
-But I wanted to get your feedback on something, I'll reply in thread
-arm where you actually suspected the problem.
-
-> There are a couple ways to do it:
+>>>>> +       cd ../super5 &&
+>>>>> +       echo super_with_2_chained_modules > super5 &&
+>>>>> +       git add super5 &&
+>>>>> +       test_tick &&
+>>>>> +       git commit -m "commit on default branch in super5" &&
+>>>>> +       git submodule add ../submodl1b1 submodl1b1 &&
+>>>>> +       git config -f .gitmodules submodule."submodl1b1".branch b1 &&
+>>>>> +       git add .gitmodules &&
+>>>>> +       test_tick &&
+>>>>> +       git commit -m "add l1 module with branch b1 in super5" &&
+>>>
+>>> now we do this again without the nested submodule, just one repo
+>>> as a submodule?
+>>
+>> My intention was to have super5 -> submodl1b1@b1 -> submodl2b2@b2 on
+>> the "server" side.
+>> But are you saying I just implemented super5 -> sbmodl1b1@master due
+>> to the previous master checkout in submodl1b1?
 >
->   git reset --soft
->   git commit -a --reuse-commit-message=3D<...>
->
-> or using
->
->     git rebase --interactive origin/master
->     # and then marking all but the first as "fixup"
+> No. I was a little confused about the code.
 
-I am aware of git rebase -i and use it regularly, that's why patches
-3-9 have the 'fixup' prefix.
+Actually you were 100% correct. In order to link to submodl1b1@b1 I
+had to move the master branch checkout after the submobl2@b2 is added.
 
-> I think the end result looks good, but that is best reviewed as one
-> piece instead of 9 patches.
+Otherwise the submodule is added with the last commit on master, not
+the last one on b1 an b2, respectively.
+
+I suspect that in the tests, because the "server side" repos are
+local, the git fetch-by-sha1/cloning by hash will be done correctly,
+without the need of a branch hint, but the problem will still exist
+for servers such as github which do not support fetch-by-sha1.
+In case I realize that a server-side repo that doesn't support
+fetch-by-sha1 is needed, is there a mechanism to set that up in the
+test case, or do I have to rethink my approach?
+
+>>>>> +       git submodule init submodl1b1 &&
+>>>>> +       git clone super5 super &&
+>>>
+>>> does super exist here already? (I did not check, but IIRC
+>>> super and super{1-4} are there as we count upwards to
+>>> find a name that is ok.
+>>
+>> I created it in the first step of the test with the intention to have
+>> super5 as the "server" and "super" as the client clone.
+>
+> oh, ok.
+
+After using test_pause I realized 'super' is left over by some other
+test cases, so in my v4 (unjustifibly) long series I switch to using
+super_w because I was getting all sorts of issues and wanted to not
+interfere with the other tests.
+
+>> As a general idea for a test, does it look sane?
+>
+> Yes, I think it is a sane approach. Thanks for writing such a test!
+
+OK, thanks for the feedback.
+
+>> Do you think I should I start with a just one level of submodule with
+>> a non-default branch (super -> l1@b1), or it this OK?
+>> In my view, having 2 levels makes sure the recursive part is also
+>> addressed and verified.
+>
+> I totally agree.
 
 
 --=20
