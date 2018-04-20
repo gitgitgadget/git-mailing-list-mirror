@@ -3,85 +3,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00B491F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 03:05:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E45D71F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 05:08:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754203AbeDTDFU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 23:05:20 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:38972 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754100AbeDTDFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 23:05:19 -0400
-Received: by mail-wr0-f194.google.com with SMTP id q3-v6so8955626wrj.6
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 20:05:19 -0700 (PDT)
+        id S1751634AbeDTFH7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 01:07:59 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36953 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750841AbeDTFH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 01:07:58 -0400
+Received: by mail-pf0-f194.google.com with SMTP id p6so3723014pfn.4
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 22:07:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=lwWdHJd+wVB6+DnMuZAxB2JUbKj4gkVO4gU0XesXcNY=;
-        b=JF1DdJefsFEcoipGukcqKm2ZbKZ7Bum3FMPOVkrpHH77Ar52C/DU3alcsM5tPjptwd
-         qTtx0q13G680b+LcD5mVCNkvehklKQI/BsNm869WNxrwxZHie7ePo/2BPQKYVs8FCCsy
-         gcU9Pxdu4DxsM72uPol/cjbTRwKKTu2kniPHw8MLx3V2IerKCVy4pQ54XGEbmP10iZzM
-         xKWOcj2U2TNcpxHW7jiyi/HuYdgqmQFgdsbqCSBvbFFx1lbOjSMjo+CJwXwhgqv57fog
-         wLikWpa3f74oxWX3TJ6Iim9H7ZS+deGfxrq2aw7zjGgMCcafICi4NgkH6zGw7Fz0gxm4
-         3qiw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=n3FcNj5rsNPsqH11/wUbzva4NnXMBDc7OielEzcS/lU=;
+        b=T94vGGDqxHKwN8zFguOVIMoeV0VZ8Teo10kTKTt0tgphKssOmgNrF//UsJIQelS+aP
+         51J47eVScBAnfUyRCJhgaUO1d6kG85YXMrL+RK1FAO6GZwOZSsXVzrufLBIGgNLsun7t
+         mAVQxRyd5uhsdrdz5a1UQcdF4ZEiJg+DSLNKFSi30o6jim1GULOX4koiL4OipASA2SLh
+         sZAZzk+ulj4QaJpY66m2bfzkEiQrFDwQbsVF44Q3HCnBQccj1aiXRsZhamld2tSzLn1N
+         4Od1n5A8y8fB3KNHCKMZGxzl/CRLqRGC4wZJQUwUYojwUIXUT/pbpb7yM8LgT9I21SoT
+         qG1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=lwWdHJd+wVB6+DnMuZAxB2JUbKj4gkVO4gU0XesXcNY=;
-        b=D2/5y2DseYwpeUp/fxruwTQ3xp5wAolmMf/5T2AtNHeMpSZYcD/bGt7AJVcMRnK48O
-         hFYDNm/oq2L/bHw4lk7lZFz/+OTBrPXH+h+F59ilwvIQbV95XFLqyABwbJ0WjSURNe/R
-         xrylhIOa+Pi2bUXcNmy4AMb10LgsLf4Rh0pr5LVsA/1tsN7Bjr6mwWMFBAxot6rPibel
-         GC9MO3Rn6eanvH+SMP3K+bUeCRDKzi1aDfthwQgRyrDG/ccn0CqsczpF5qTrdRBYvn70
-         FlfcJEnsuEHHrU3qonoPeyNbtZqUZEIda7alHSU69Fn0UtuOwooXEMIwptoRyEC6DNZF
-         yobw==
-X-Gm-Message-State: ALQs6tAhIzPDB8C27ZelV/IL4tCAekgKCGismeZoPevaZZYOoyCdvqMy
-        Ykyc5z6gHi1UkkHk0Y6tSZQ=
-X-Google-Smtp-Source: AIpwx48tmdLMPOBV+WtXbQYWvcIJd5hSClOXzUflMPrVCfo4++QEN7wRS8Cue3aoXp6wFyU6rEsSHA==
-X-Received: by 10.28.58.81 with SMTP id h78mr598276wma.110.1524193518382;
-        Thu, 19 Apr 2018 20:05:18 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j3sm2224401wmf.23.2018.04.19.20.05.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Apr 2018 20:05:16 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Subject: Re: [PATCH v10 00/36] Add directory rename detection to git
-References: <20180419175823.7946-1-newren@gmail.com>
-        <CABPp-BEhfMPNEtAvdc3MsX5mWsq=YT_=rVeOzCfidJde7Mhh-Q@mail.gmail.com>
-Date:   Fri, 20 Apr 2018 12:05:16 +0900
-In-Reply-To: <CABPp-BEhfMPNEtAvdc3MsX5mWsq=YT_=rVeOzCfidJde7Mhh-Q@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 19 Apr 2018 11:35:19 -0700")
-Message-ID: <xmqqy3hibms3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=n3FcNj5rsNPsqH11/wUbzva4NnXMBDc7OielEzcS/lU=;
+        b=EltkXGH4XBbrEBGQnnOecPzVWb1LQ9XwUfBoVeBdrpLuIau3uaNuaw1/Uy2Wxuh4R0
+         9poPJO5fi5fxHKl7jWUhWivFekV6DaiMJXsd4fQvHSZiVaN0q96fUXSMfFSF6tH2K0DZ
+         Pyfqu2+fZAVPkNcn6FU4Kl5O25rKv3Mz29ege/Zc85PaT2ZvRxnAGmL9QU99MpM0pBEz
+         7etffXXxAU1srlSMTc2/bTAwdF/YmecLwBjzn2fRv016cxRy84gr8q+6gH8tVqiyf2GH
+         YDTk+rvDA3Vs7dMT7zFGTLisXLTA8y9tvOsQS1/3fO+kmTjwgX83LEIv8/MuuQSFqz1Z
+         Yg7Q==
+X-Gm-Message-State: ALQs6tBtwhHAvy5lSl41t8RuTCMbOHbaUupscMTn8l9rppin6ghfQPPj
+        cCBrHBK8whfBHjHb/Sw+DEi8AAiX+FUaO0m8dDY=
+X-Google-Smtp-Source: AIpwx49h/jzK+LdCMglwA5bkdKCuBkpsOBKr6/4wYb0On8KMHVpuJXM2Trmlx4OI6H5MVwFlhS7yOihq6yptZzgxJPo=
+X-Received: by 10.98.31.20 with SMTP id f20mr8431433pff.196.1524200878078;
+ Thu, 19 Apr 2018 22:07:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.236.150.4 with HTTP; Thu, 19 Apr 2018 22:07:57 -0700 (PDT)
+In-Reply-To: <xmqq604mertl.fsf@gitster-ct.c.googlers.com>
+References: <MW2PR18MB2284E3091991A3DB228CEBBEE5B50@MW2PR18MB2284.namprd18.prod.outlook.com>
+ <xmqq604mertl.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 20 Apr 2018 07:07:57 +0200
+Message-ID: <CAN0heSo9bdvNNzwX5-7nHXxg9_oZrsDixzwQmx6gnEtwny2NOA@mail.gmail.com>
+Subject: Re: [BUG] Git fast-export with import marks file omits merge commits
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Isaac Chou <Isaac.Chou@microfocus.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-
-> On Thu, Apr 19, 2018 at 10:57 AM, Elijah Newren <newren@gmail.com> wrote:
->> This series is a reboot of the directory rename detection series that was
->> merged to master and then reverted due to the final patch having a buggy
->> can-skip-update check, as noted at
->>   https://public-inbox.org/git/xmqqmuya43cs.fsf@gitster-ct.c.googlers.com/
->> This series based on top of master.
+On 20 April 2018 at 00:48, Junio C Hamano <gitster@pobox.com> wrote:
+> Isaac Chou <Isaac.Chou@microfocus.com> writes:
 >
-> ...and merges cleanly to next but apparently has some minor conflicts
-> with both ds/lazy-load-trees and ps/test-chmtime-get from pu.
+>> I inspected the source code (builtin/fast-export.c) for the
+>> fast-export issue I encountered, and it looks like the merge
+>> commit is discarded too early by the call to object_array_pop()
+>> after only one of the two UNSHOWN parents is processed in the
+>> method handle_tail().  The poped merge commit still has one
+>> UNSHOWN parent, therefore it is not processed and is lost in the
+>> output.  Can someone advise me on how to submit a code change or
+>> bug report in order to get the fix into the code base?
 >
-> What's the preferred way to resolve this?  Rebase and resubmit my
-> series on pu, or something else?
+> There indeed are some differences between v2.14 and v2.15 around the
+> code that returns early when has_unshown_parent() says "yes" [*1*],
+> but the decision to return early when the function says "yes" hasn't
+> changed between that timeperiod---it dates back to f2dc849e ("Add
+> 'git fast-export', the sister of 'git fast-import'", 2007-12-02),
+> i.e. the very beginning of the program's life.
+>
+> I'll CC those who wrote the original and b3e8ca89 ("fast-export: do
+> not copy from modified file", 2017-09-20) and 71992039
+> ("object_array: add and use `object_array_pop()`", 2017-09-23),
+> which are the only two commits that touch the surrounding area
+> during that timeperiod, to ask if something jumps at them.
+>
+> Thanks.
+>
+>
+> [Footnotes]
+>
+> *1* An excerpt from 'git diff v2.14.0 v2.15.0 builtin/fast-export.c'
+>     reads like so:
+>
+> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+> index d412c0a8f3..2fb60d6d48 100644
+> --- a/builtin/fast-export.c
+> +++ b/builtin/fast-export.c
+> ...
+> @@ -630,15 +645,15 @@ static void *anonymize_tag(const void *old, size_t *len)
+>         return strbuf_detach(&out, len);
+>  }
+>
+> -static void handle_tail(struct object_array *commits, struct rev_info *revs)
+> +static void handle_tail(struct object_array *commits, struct rev_info *revs,
+> +                       struct string_list *paths_of_changed_objects)
+>  {
+>         struct commit *commit;
+>         while (commits->nr) {
+> -               commit = (struct commit *)commits->objects[commits->nr - 1].item;
+> +               commit = (struct commit *)object_array_pop(commits);
+>                 if (has_unshown_parent(commit))
+>                         return;
+> -               handle_commit(commit, revs);
+> -               commits->nr--;
+> +               handle_commit(commit, revs, paths_of_changed_objects);
+>         }
+>  }
 
-The series as-is is fine, I think, from the maintainer's point of
-view.  Thanks.
+Indeed. This looks wrong and the guilty person would be me.
+
+If my 71992039 ("object_array: add and use `object_array_pop()`",
+2017-09-23) would instead have done something like
+s/commits->nr--/(void)object_array_pop(commits)/ it would not have
+screwed up as much. It could also use a peek+pop-pattern.
+
+Isaac, are you up for submitting a patch? Just let me know if you
+encounter any issues. Otherwise, I can submit a patch shortly since I
+was the one who dropped the ball originally.
+
+Thanks for diagnosing this.
+
+Martin
