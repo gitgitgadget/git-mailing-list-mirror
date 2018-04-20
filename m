@@ -2,93 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 633561F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 20:38:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97E6C1F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 20:40:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752273AbeDTUia (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 16:38:30 -0400
-Received: from mout.gmx.net ([212.227.17.21]:40781 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751228AbeDTUi3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 16:38:29 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLB89-1f9tmR1zCj-000KPx; Fri, 20
- Apr 2018 22:38:22 +0200
-Date:   Fri, 20 Apr 2018 22:38:05 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Stefan Beller <sbeller@google.com>
-cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/3] rebase -i: demonstrate bug with fixup!/squash! commit
- messages
-In-Reply-To: <nycvar.QRO.7.76.6.1804202149260.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Message-ID: <nycvar.QRO.7.76.6.1804202232360.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1524226637.git.johannes.schindelin@gmx.de> <ad2a1b2c60341d692e94b1cb997df05dd7cded88.1524226637.git.johannes.schindelin@gmx.de> <CAGZ79kZONQ_xuDYJ5Z8cUnF0odwz3+Sh+ST6g+5Tefav-QXEBw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1804202149260.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752667AbeDTUkQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 16:40:16 -0400
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:47092 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752337AbeDTUkP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 16:40:15 -0400
+Received: by mail-wr0-f171.google.com with SMTP id d1-v6so26043229wrj.13
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 13:40:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=q2DJqqwRyehmGoaXVKU6wFgB5WWBmicOx17ygV7Thcw=;
+        b=igeY8MXTzyxSNtNypo6uuOc+G5sXmrPGzR7Cqngy1/UOSg8yiY2EboXteh/E1YmVQg
+         bRcWHn5sg5BRqpwo+HMl/8E7D7J4kZljET57FOA0W+tbx03fpiy+QgEAAWPeIW/zpZmK
+         fXc4RxqbP9AGxbJmqrZh2G7DQhi9AvVN9gBww2ODE2CBDStUnbrsIoHoWV9ygfcFJn7y
+         GulAFKksbfPm0zoIxOS6WcY5M8qsQ5+jKMYuOgjW6RK4aZMtcirpM+/Owcs44qiQd936
+         QH2JYvfNY2rMGfm+LcBDWFtA4ovmgzBO+z1P1QuAXW+24s/X6vZpgZQwX4Too973BBdz
+         M89w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=q2DJqqwRyehmGoaXVKU6wFgB5WWBmicOx17ygV7Thcw=;
+        b=Dl49Ti4Zr1+Kfd4rlHxt7kNqNB5TgrG8cZKcvQlMMI+gIpVQwkYknxlGpWnAkMz9f+
+         RZnmJVlxaRRYKk1aIckliVkV2e7kS2GXBS/jEdKYzQTF5vq3K5O8ebBYOf7LBnTiq09d
+         BaR3jxQXsuyXfHgLXfkjtKgbywMAVp6iLt+1SgksdMueEC9G3kbiw8V7Wh6kSUlsuMga
+         9Zn2ValiuZdK8yuKMCiRfBZnWulqWn8V12ER5TxcwB570AH+8reCUly1XWX2zAQlvALT
+         CMhAWbL/4tP7al1Ik+R0T71FdiCd7duobXz2LxanOBKu6B7OJVbDTslunVEZ6CVd3ihF
+         hoRw==
+X-Gm-Message-State: ALQs6tDGlj1kTYVWDL4QVMh6h5t9WQO7ZFVLJm/gljTiOalq5JFzpNAo
+        B7UWXMKy934cebB6RQR2/qnGk4zXSCHfZP/ZlwY=
+X-Google-Smtp-Source: AIpwx4/icTS2xRagW33wMyUgM9YfVmL99CAoSGHe23d35fHe2QLEYgu+6pCEoM+EDhue9SfA3u2pLd5YPmgMDxWZ4i4=
+X-Received: by 10.80.241.93 with SMTP id z29mr15591383edl.62.1524256814015;
+ Fri, 20 Apr 2018 13:40:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:RGcc2q8vJYAiQjfupKHOOTrYU+ybX5VlMl7n0y/GvhegJAW23Jc
- Wa7CgHVmiaCRbb/uOhPz6tNIdst2T81+TEjf7LZOKkQbdoL//cAzhfk27T0eRxKRkuSKwax
- Ichg6u43OyLWRbu3QEfr03f4jJ4R7sdIN30VmCZmeEbTFH/56H1UZXjkiVu57nVABPuA2Mb
- BIEaEh7PMBzZOFt3kCLTA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Zu4Op/4gN8U=:5JUffDeq4NTRI1meuCfwPI
- Pkc6M8pi2BLLFY8fmPwo2gnoPPejcepphpUH+dyP32DDby9hVRrcLImv4um6z1qjzXj330KxR
- QpP62aj3DHw4jArn5jzzhptu6+u2HjyjQW4GY6alJalUUMCBC4wy37cDRXBnuZMOLRRsgx0RY
- /VyzjA1mZdnJ0YCgwcZ60YVjjM+hqRc7knq1cA5B6upy+FkluQtT8MhPYxbsg6lhxNDTf2RdG
- qiiHxvyPTJLpvdzLNkZbBHoC7NYgSb8jE5wCJAO+x9OQuVVsZ/GFcHnuGsG2+9LQNn8VlyqoD
- fF765ZVJBZLnbsuG8Hu9nUUFau19U+opQebNJdKr1Ba3P/Qsb0fVtQuj5LcEpsTcCH6qy7TqM
- KLW5r/nRJbLd+IK1D3QOXsylCBpnDDpX2Ko4dvY4BBaRjjbxAAUSm3bwCExynbtD2lto0/05c
- CjkTPNcIgNIRdpvq5dHUakhVh2nZOVtGCnu1TL5YsPOUFsh4EzDqvviuByzdDw1pBIDiGW7YT
- /prFkNHcvtEdtZFbUZpP4g2bglZYGnZNRaIv28aDHS6DpHT0iT6xGlTMDoIEqduKxG1qIcPE0
- ny+9jWcWth9EzCQA/DUvl3K5MFZzn++Vz5KZNwhA4frQbbctpMSz5JhnRk5S/QVB/SS13eapj
- Y5UUsS9SdgYiKYYccMexbDwAW2rySqYtTYg44Pn13QFTnPpW9Au96aOvIJrtRmPjt5LqiloI0
- RnUSHc2+4V72pi97ZjgVOu+0YsZ5jdyL4Ji6WZ4NoPIxbW9WE8cyCLQMfzjcivlV3W5iLk8Z1
- 6L8WSqNOpIKzTZ5IVll3bmnsC+vXKmHd79v83QVvMKg9JstHlM=
+Received: by 10.80.180.180 with HTTP; Fri, 20 Apr 2018 13:39:53 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1804201017450.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1519680483.git.johannes.schindelin@gmx.de>
+ <cover.1523362469.git.johannes.schindelin@gmx.de> <87tvsj6rn2.fsf@javad.com>
+ <nycvar.QRO.7.76.6.1804110009080.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <871sfm737e.fsf@javad.com> <nycvar.QRO.7.76.6.1804111324350.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <87h8oh51jm.fsf@javad.com> <CA+P7+xq8KJKJ0d1unW3btUhKVjOZM3EdTSKdDs96pn5J3WwSKA@mail.gmail.com>
+ <87sh810ym4.fsf@javad.com> <CA+P7+xq8LOUZxVd832cOQFi4V=2YvydxtT6_y4NLKvFkki4QdA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1804130002090.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <5d522cc9-3922-9f24-3a1e-0c121c47ca96@talktalk.net> <nycvar.QRO.7.76.6.1804140146450.234@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <87fu3r257z.fsf@javad.com> <CA+P7+xrv54RBFx1eYbvgVyqQ88uxT73vOf3jazCVsvuXwvd-gA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1804201017450.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 20 Apr 2018 13:39:53 -0700
+Message-ID: <CA+P7+xpA-1L83fGkUr+bnG7b9P3z+huOuSJO=eG5Em+Cpb759w@mail.gmail.com>
+Subject: Re: [PATCH v6 00/15] rebase -i: offer to recreate commit topology
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Sergey Organov <sorganov@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+On Fri, Apr 20, 2018 at 1:26 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Jake,
+>
+> On Thu, 19 Apr 2018, Jacob Keller wrote:
+>
+>> On Wed, Apr 18, 2018 at 9:24 PM, Sergey Organov <sorganov@gmail.com> wrote:
+>> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> >
+>> >> On Fri, 13 Apr 2018, Phillip Wood wrote:
+>> >>
+>> >>> On 12/04/18 23:02, Johannes Schindelin wrote:
+>> >>> >
+>> >>> > [...]
+>> >>> >
+>> >>> > So: the order of the 3-way merges does matter.
+>> >>> >
+>> >>> > [...]
+>> >>>
+>> >>> Those conflicts certainly look intimidating (and the ones in your later
+>> >>> reply with the N way merge example still look quite complicated). One
+>> >>> option would be just to stop and have the user resolve the conflicts
+>> >>> after each conflicting 3-way merge rather than at the end of all the
+>> >>> merges. There are some downsides: there would need to be a way to
+>> >>> explain to the user that this is an intermediate step (and what that
+>> >>> step was); the code would have to do some book keeping to know where it
+>> >>> had got to; and it would stop and prompt the user to resolve conflicts
+>> >>> more often which could be annoying but hopefully they'd be clearer to
+>> >>> resolve because they weren't nested.
+>> >>
+>> >> I thought about that. But as I pointed out: the order of the merges *does*
+>> >> matter. Otherwise we force the user to resolve conflicts that they
+>> >> *already* resolved during this rebase...
+>> >
+>> > How it's relevant to what Phillip suggested? How the order of taking 2
+>> > steps, A and B, affects an ability to stop after the first step? It's
+>> > still either "A,stop,B" or "B,stop,A", depending on the chosen order.
+>> >
+>> > What's the _actual_ problem here, if any?
+>> >
+>> > -- Sergey
+>>
+>> I believe the order of the merges changes which ones cause conflicts,
+>
+> That is a correct interpretation of the example I showed.
+>
+>> but it's possible to generate pre-images (i.e. a set of parents to
+>> merge) which cause conflicts regardless of which ordering we pick, so
+>> I'm not sure there is a "best ordering".
+>
+> In general, there is no best ordering, you are right. There is no silver
+> bullet.
+>
+> I am not satisfied with stating that and then leaving it at that.
+>
+> In the example I presented, you can see that there are common cases where
+> there *is* a best ordering. In the wrong order, even if you would force
+> the user to resolve the merge conflict in an intermediate merge (which
+> would introduce a nightmare for the user interface, I am sure you see
+> that), then the next merge would *again* show merge conflicts.
+>
+> And I, for one, am *really* certain what my decision would be when offered
+> the two options 1) force the user to resolve merge conflicts *twice*, or
+> 2) reorder the intermediate merges and present the user with exactly one
+> set of merge conflicts.
+>
+> So it is irrelevant that there might not be a "best order" in the general
+> case, when in the common cases quite frequently there is.
+>
+> It is just another example where theory disagrees with practice. Don't get
+> me wrong: it is good to start with theory. And likewise it is simply
+> necessary to continue from there, and put your theory to the test. And
+> then you need to turn this into something practical.
+>
+> Ciao,
+> Dscho
 
-On Fri, 20 Apr 2018, Johannes Schindelin wrote:
+I recall you suggested an approach of "try one way, if there are
+conflicts, check the other way and see if it had conflicts".
 
-> A brief test shows, however, that it is not quite as easy as
-> s/grep/test_i18ngrep/, something more seems to be broken.
+And I also agree that forcing the user to resolve conflicts in the
+middle of the operation is a huge nightmare of a user interface,
+probably worse than the issues with nested merge conflicts.
 
-It seems that this week is my Rabbit Hole Week.
-
-Turns out that we have a really, really long-standing bug in our rebase -i
-where we construct the commit messages for fixup/squash chains.
-
-Background: when having multiple fixup!/squash! commits for the same
-original commit, the intermediate commits have messages starting with the
-message
-
-	# This is a combination of <N> commits.
-
-and then every fixup/squash command increments that <N> and adds a header
-
-	# This is the commit message #<N>:
-
-before writing the respective commit message.
-
-The problem arises from the fact that we deduce <N> from parsing the first
-number in ASCII encoding on the first line.
-
-That breaks e.g. when compiling with GETTEXT_POISON, and it is probably
-not true in general, either.
-
-So I introduced a patch that handles the absence of an ASCII-encoded
-number gracefully, and now the test passes with and without
-GETTEXT_POISON.
-
-Thanks for the review that let me find and fix this bug!
-Dscho
+Thanks,
+Jake
