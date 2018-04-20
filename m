@@ -7,85 +7,73 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD9D41F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 21:01:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BA151F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 21:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752558AbeDTVBB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 17:01:01 -0400
-Received: from mout.gmx.net ([212.227.17.21]:38289 "EHLO mout.gmx.net"
+        id S1752273AbeDTVGF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 17:06:05 -0400
+Received: from mout.gmx.net ([212.227.17.20]:41745 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752047AbeDTVBA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 17:01:00 -0400
+        id S1752144AbeDTVGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 17:06:04 -0400
 Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzoSt-1eN2wx3r0t-0151lj; Fri, 20
- Apr 2018 23:00:53 +0200
-Date:   Fri, 20 Apr 2018 23:00:36 +0200 (DST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MT74k-1f1LEn26cg-00S8in; Fri, 20
+ Apr 2018 23:05:59 +0200
+Date:   Fri, 20 Apr 2018 23:05:42 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Isaac Chou <Isaac.Chou@microfocus.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] fast-export: fix regression skipping some
- merge-commits
-In-Reply-To: <CAN0heSreFmd_0QnTjgYdpOZ8y7iNc3J+dYcpo5oKJBF2ff5-jQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804202258071.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <MW2PR18MB228432C95C18DE786957DE70E5B40@MW2PR18MB2284.namprd18.prod.outlook.com> <20180420181248.2015922-1-martin.agren@gmail.com> <nycvar.QRO.7.76.6.1804202041400.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CAN0heSreFmd_0QnTjgYdpOZ8y7iNc3J+dYcpo5oKJBF2ff5-jQ@mail.gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/3] rebase -i: demonstrate bug with fixup!/squash! commit
+ messages
+In-Reply-To: <CAGZ79kbQCQPx01uFacxMWLdfJurn4jVcc+nvdnWHNVJNE3resw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804202304210.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1524226637.git.johannes.schindelin@gmx.de> <ad2a1b2c60341d692e94b1cb997df05dd7cded88.1524226637.git.johannes.schindelin@gmx.de> <CAGZ79kZONQ_xuDYJ5Z8cUnF0odwz3+Sh+ST6g+5Tefav-QXEBw@mail.gmail.com> <nycvar.QRO.7.76.6.1804202149260.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CAGZ79kbQCQPx01uFacxMWLdfJurn4jVcc+nvdnWHNVJNE3resw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1877655014-1524258052=:4241"
-X-Provags-ID: V03:K1:alGQJ4lx7PwWv6o3okDr2VgL6I5j7Nk9/4dN/e4XmoO849Oz70k
- Dx28HZd0zx3OHE8Jig7QxDnbIoVfr+KvEICCvtUMyWAMhErXIYZc51MZBFciH5Bgs1v2z+k
- 5kkgN+NaOloi9mEn09NwKK3t2C0wLjtO0Hv9axTmTIW8wYQ7EJo7PeXIL6WsCI26+f921RV
- 1sx0HEDNMGO2WMiFAfO+g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JeDko5NiESE=:bkvlaP72ntdzLN4ATJT8Hi
- GOAth38fSRwrMgMaXCHI8avfJhgThz1sbtq9nOuqCKIt0LaEtLpHdgyu8tkCIiYz4FK68zIss
- Gqoa6DwTu2A58y3XcvxnQqH6bjG0ER/CihErtPDeyAD7gYSVygQajjepOh4V0BwkRr/uo3j4a
- LQgu0Dulr8QJX0/Bq8iOLmiAEXO9J5JiFbcUnA+wX8BLKvCOT5CWA2RB30aHbD6IAVst/TAeL
- 3t3UaFjsfqi0OoJy0VzcJ+14SZgTamaO3o/Jo6qr7RJyvm7aC2GR66gjuH5Bg7dbnW32uR/0h
- BSBY5haHSVHglVtUTyXdDRncesHmsNVSJ7AAVkseNxEieOhBK5bPT0RBwAp1vkeQIzcDUiNV2
- tFt6xWE01XH2ptgoW4Ri5pj4I6FIa3hQ5Z0ouzuZlcFdv4ObG7Bb+8AhBzGx6ZEvc68EiDMT9
- vlBkH+9Xf9Z9XPhj/XTXNmj+2yElmk+stL3/0CGt2uNmeIx6pmZElltfAw/BT70DTP4vnloyy
- bIT78qtvKnFXvgYGKs0JBgPA5Dd0Od4GC25wfxh40BcEstsW6HBPKpxzvfMSkL0OMW1j6/lIB
- ROzG2Kcz85goYdBKhpKMrduP/WB8+Vrs4s8fzfS010BES/WdjHuMFX7ZespsEN50RmlpxQ7MR
- vL1P4HAZq6twp1p3XWjc1PZ5CvJSfp2vKDfQi5dOJXygesCo0JnihL3q5rVgQrjsDuGJThJFV
- BYqzYj1mJ2FiacdTYiJpcX4Zr+KshZBbrCCMtMOFoCgcZ64yaVe4B2Ap66H0GIuciwe050OKB
- M+NPg0n9jlk/APcU4HsPNqIuD8gYiGIk2LTyTxl/LiOk5TaHNk=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:pMc2xUn1/5U3V2ny+52VE/uEl55hU9qt4w1d5I6/GjTA/FjSxJy
+ YOr8PvGmy5Gy5pVvUjvrAzkb9FyyQMnZ6kz62psztFVPNldScCRWSWgX9NINvk7blGg/PGc
+ QRioeNh6Ah8izT1ssaY7Hd6Bx0yQqcQW+fMxWRI/hAciXhWUTyfPi2opxaQXSyXKuCuGrYN
+ rBSrJhP41mvtGoJsIqhtw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6R8s+t1Jl7c=:dvH3SlWoG4ObxKhBgvFwcK
+ F/IUfwDhP1Lq6GH0pgAmtphJwb2bpKdHMOJeL2dNHsIo12rXrHErjSeqnDKEB7AM5Xw7ZNN2e
+ nmz0vvo4f3GfjiiWJs02eOL2bo0jl4xWhfSG0C8qMz4TIki8sSlrEPCL2Y0ats7Ir5xW5Gktr
+ VjvjzfUmRd7Mi4kyPdewLPEfqmV2fTjO9TmTat9lbOgMZ2rxZy188j3v3krfV4yUioJ9IbCEi
+ VPHgEIg98WNqNYCQ4dfgjjywGOtXD6qnpOOsCW/Vo4RYPEi2qaDnB/TpXYF6vqzkMkU0f5HD0
+ c6ggzvI3gQPwR3tRwg7H3t/m/UoU1NunvQpku+Yq6Ke/hAHcHMjoblOXqj/Cn7bLSVrbD1G+P
+ O/de3NBednR4NNeaqO9ehxZfoS42JwQ8V/8EWQwcwzjYFN09jH+TP3METDUsAcigzlYOH1Lgl
+ WkPHEHqMZaLsolgCoUOABCENsPYFcCDGJRa/tg4tRsCM1bsTSxF60FFwoGrRSLHGO9h78HkFJ
+ n/9ekts7x4XiVv7+Sm3WdUZPCU6FGUm4s6F/xb2thdsExDIyXER1j+7cGOjUudMwQ7EJwDQ/J
+ cs6mfF3ymYSAGk2FYRCCXiBCWbU4VA6sH2kGfmZipqSlYgWngFaHoqnLYQwiQcaJu3QaE3/Kt
+ 6a+GMt+C6K4qNAkpPLp32yoaLV8ZX0UbkwMO1vmCjpaiSeffsRleZT/VC0LcmnO117FFjccU5
+ ljpBI35Gne+YEGahjijqBOL9M4FBbVqzbqKXjfwUITSMS/d/CEOzV+q2VrMsuo71GiPxAR8sO
+ zu6uKEno/DQQ3Jytf0/c5CfDPsiMLhlyMvqkcfNseDVto/4C8s=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Stefan,
 
---8323329-1877655014-1524258052=:4241
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Fri, 20 Apr 2018, Stefan Beller wrote:
 
-Hi Martin,
+> > Funny thing is: I tested this with GETTEXT_POISON=1, and it succeeded.
+> 
+> I actually wanted to review the code leading to this commit, and to find
+> where to start reviewing I had 'git grep "This is a combination of"' which
+> lead me to the translation files.
 
-On Fri, 20 Apr 2018, Martin =C3=85gren wrote:
+Heh...
 
-> Thanks a lot for your comments. I will give this some testing, check
-> that your proposed test fails and succeeds as it should, and so on, then
-> try to wrap this up.
+> s/grep/test_i18ngrep/ doesn't work as the syntax is slightly off,
+> s/ ! grep/ test_i18n_grep !/ would work, just pointing out the obvious.
 
-Thank you so much!
-
-> Between you cleaning up the test and providing a different
-> implementation, there's not much left for me to take credit for. Can I
-> forge your From: and Signed-off-by: on this?
-
-I disagree, all I did was to play a variation of your tune. You are the
-composer of this patch, you performed all the hard work (analysis,
-implementation & testing), and you deserve the credit.
-
-It would please my ego a bit, of course, if you could add a "Helped-by:
-Dscho" line... ;-)
+Yes, I actually knew that, but my usage of a s/// as a shorthand for the
+idea to replace `grep` with `test_i18ngrep` was indeed misleading. Sorry
+about that, and thank you for helping me getting this right.
 
 Ciao,
 Dscho
---8323329-1877655014-1524258052=:4241--
