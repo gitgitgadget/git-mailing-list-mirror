@@ -2,106 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB7D81F424
-	for <e@80x24.org>; Fri, 20 Apr 2018 08:34:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 756051F424
+	for <e@80x24.org>; Fri, 20 Apr 2018 08:39:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754140AbeDTIex (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 04:34:53 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52195 "EHLO mout.gmx.net"
+        id S1754159AbeDTIjg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 04:39:36 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:57586 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753957AbeDTIew (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 04:34:52 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lz0aC-1eMxc30KuG-014ADy; Fri, 20
- Apr 2018 10:34:43 +0200
-Date:   Fri, 20 Apr 2018 10:34:25 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v7 07/17] # This is a combination of 2 commits. # This
- is the 1st commit message:
-In-Reply-To: <CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804201027010.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1523362469.git.johannes.schindelin@gmx.de> <cover.1524139900.git.johannes.schindelin@gmx.de> <f3d13a304aa8586dd49a19947f09c00966590340.1524139900.git.johannes.schindelin@gmx.de>
- <CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753918AbeDTIjf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 04:39:35 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id CAA1B1F424;
+        Fri, 20 Apr 2018 08:39:34 +0000 (UTC)
+Date:   Fri, 20 Apr 2018 08:39:34 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: commit -> public-inbox link helper
+Message-ID: <20180420083934.GA696@dcvr>
+References: <nycvar.QRO.7.76.6.1804041821420.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:PvWZGeA0OzwimMbfo+xfANz6TqNDQ6gT2pmNF7V6ATecUHKN0Wh
- rSIupYiZHIQtvxTbVH/OoWEHJ3fbHOV3HPlSx/bLYc98dAQ0nI2fp5uscKwFW71JvDpJK68
- Q0g7QzYjlVdaf58eeMq0WDhhEmBFfCSrd2NlQqsdRPr1KkHSTYVeEtgAu1zL7nYfNBbI9hf
- AcNTSPxk4I5nCdoidDzIg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/XCYhSFbpss=:d3RINvliYhXhwe8bkkthBs
- McpZhrrsF6hVzjC+iQOa3f6uE8kJ6w+iRJ3kBmZ0m4+y0LiWne02gTu9mP8ibCZwRjemQI8OO
- VTXVUeix1AhZ8EhB68QNp+aADOqgj7sCBWHDQ14DtWJDtQ7FPIr+nJRz9H+R7H+47C8YffopH
- HOrqBaxTvQkSqjN9qa9G87zKHmHWGrv3w/kjSaK0NLq3IzVO84W9LkluGsETpPXc6re3Z31nU
- LV7HKHZyd+YU+w+oDMm4DTY1xd46d7q80RPmVT8ZIYiEk4TdJkZh3uItVTo1kzsYo79+GuASY
- ChdJcLXOBswCvzp7gvKnPz166u2M6u6K1kiDpNO3ofbwECRj4FLj6zulT+kHKP1T0EMpl95BH
- JqKbQ12W7Z+a6mGyzBptF4a3V5+TjrXoiu5GSjSFNKQOGClFGHl4Ut53ZryP6l+JxX3JGOWom
- VkF4NTLsqyH7UdORzsH2U8donfFAN0eNoiYcjygCpApowDr1H0Fogyo6g4kvM/VNIa2UVczNN
- QHza6Z5AMzuzyK19rqP2I1PUKiTpwdBrWBua0QTZaTT3FG3vzwSebwxw8Zo8HGLVdE0ixC5G1
- 3eNyA9Wy7k4Xvn9/dDbuLUyeRu2CU5+q6uQsOtVrVgtd3LAGTGyKwS2n0+ob2pOld7uZUTaSQ
- bB10jfYeMV8SpJgMlwWz3RcZlAePKxJBxjoKv0zGSv+Nmq5OiTNyeAiFtCIZb0yPnXwVUgQ4X
- PYzdVIdspcGA1d6osH67p401P4a4piCPbAGdVMrQl8kZseXUk48GUfOuCmpowJ3x1BbFRwqrK
- ajy70bmKgon9PnnIDvDXSgz0+oQnrgRaEGQmgws6UEUlxhFC6E=
+Content-Type: multipart/mixed; boundary="YiEDa0DAkWCtVeE4"
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1804041821420.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
 
-On Fri, 20 Apr 2018, Eric Sunshine wrote:
+--YiEDa0DAkWCtVeE4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-> On Thu, Apr 19, 2018 at 8:20 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > # This is a combination of 2 commits. # This is the 1st commit message:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi team,
 > 
-> Botched squash/fixup?
+> I found myself in dear need to quickly look up mails in the public-inbox
+> mail archive corresponding to any given commit in git.git. Some time ago,
+> I wrote a shell script to help me with that, and I found myself using it a
+> couple of times, so I think it might be useful for others, too.
 
-Sure was!
+Hello, I think you can dump all the info you need more quickly
+without cloning 1G of data by dumping NNTP OVER(view)
+information instead.
 
-> > sequencer: introduce the `merge` command
-> >
-> > This patch is part of the effort to reimplement `--preserve-merges` with
-> > a substantially improved design, a design that has been developed in the
-> > Git for Windows project to maintain the dozens of Windows-specific patch
-> > series on top of upstream Git.
-> > [...]
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > # The commit message #2 will be skipped:
-> >
-> > # fixup! sequencer: introduce the `merge` command
-> 
-> Bloop.
+I've attached a short Perl script which dumps the tab-delimited
+file to stdout so you can process it with whatever.  Columns
+relevant to you would probably be 2-5:
 
-Obviously, this was not processed properly (I certainly did not have this
-in my editor, otherwise it would have been stripped). This is not the
-first time this happened. I think there is a bug in sequencer.c (i.e. in
-my partial reimplementation of git-rebase--interactive in C), but I do not
-have time right now to investigate further... Will try to find some time
-soon.
+	NUM	Subject	From	Date	Message-ID
 
-Or maybe I'll just install a post-rewrite hook that notifies me of this
-problem so that I can investigate right when it happened...
+On public-inbox-nntpd, Dates are normalized to UTC in the OVER
+response right now, so you'd need to use TZ=UTC with --date=rfc-local
 
-Oh scratch that. Now I am too annoyed with what I perceive a bug in *my*
-code. I'll hunt it down.
+It works with both nntp://news.gmane.org/gmane.comp.version-control.git
+nntp://news.public-inbox.org/inbox.comp.version-control.git
 
-Thanks,
-Dscho
+> Note: the way mails are matched is by timestamp. In practice, this works
+> amazingly often (although not always, I reported findings short after
+> GitMerge 2017). My plan was to work on this when/as needed.
+
+Thanks for that.  I've added dt: (date-time) searching to public-inbox
+(d: (date-only) has been there forever):
+
+        d:       date range as YYYYMMDD  e.g. d:19931002..20101002
+                 Open-ended ranges such as d:19931002.. and d:..20101002
+                 are also supported
+        dt:      date-time range as YYYYMMDDhhmmss (e.g. dt:19931002011000..19931002011200)
+
+To match an exact timestamp, both the begining and end range should
+be the same.
+
+(It'd be nice if Xapian + Perl bindings could get date parsing as
+ good as git's.  Too bad C++ / XS overwhelms my tiny brain and
+ waiting for builds overwhelm my patience)
+
+> git rev-parse --quiet --verify \
+> 	b60d038730d2c2bb8ab2b48c117db917ad529cf7 >/dev/null 2>&1 ||
+> die "Not a public-inbox directory: $(pwd)"
+
+Eep.  I'd don't think it's good to put such a hard dependency on
+a particular mirror I started.  Somebody could start another one
+which wasn't sourced from gmane and the Received: headers would
+be different.
+
+...And I'm pondering a conversion of what's running on
+https://public-inbox.org/git/ to the new v2 repository format:
+
+	https://public-inbox.org/meta/20180419015813.GA20051@dcvr/
+	https://public-inbox.org/meta/20180209205140.GA11047@dcvr/
+	https://public-inbox.org/meta/20180215105509.GA22409@dcvr/
+
+--YiEDa0DAkWCtVeE4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: attachment; filename="over.perl"
+
+#!/usr/bin/perl -w
+use strict;
+use warnings;
+use IO::Socket::INET;
+my $usage = "$0 news://example.com/group.name [MIN] [MAX]\n";
+my $url = shift or die $usage;
+my $umin = shift;
+my $umax = shift;
+my ($host, $port, $group) = ($url =~ m!://([^/]+)?(?::(\d+))?/(.+)!);
+$port ||= 119;
+defined $group or die "missing group in $url\n";
+my %opts = ( Proto => 'tcp', PeerHost => $host, PeerPort => $port );
+my $s = IO::Socket::INET->new(%opts) or die "connect to $host:$port: $!\n";
+my $l = $s->getline;
+$l =~ /\A2\d\d / or die "bad greeting: $l\n";
+
+$s->print("GROUP $group\n") or die "print $!";
+$l = $s->getline;
+$l =~ /\A211 \d+ (\d+) (\d+) / or die "bad GROUP response: $l\n";
+my ($min, $max) = ($1, $2);
+$min = $umin if $umin;
+$max = $umax if $umax;
+
+$s->print("OVER $min-$max\n") or die "print $!";
+$l = $s->getline;
+$l =~ /\A224 / or die "bad OVER response: $l\n";
+
+while ($l = $s->getline) {
+	last if $l eq ".\r\n";
+	print $l;
+}
+
+--YiEDa0DAkWCtVeE4--
