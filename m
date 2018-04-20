@@ -2,70 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F07A21F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 21:39:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40C5C1F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 22:13:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752047AbeDTVjL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 17:39:11 -0400
-Received: from mail-yb0-f181.google.com ([209.85.213.181]:33300 "EHLO
-        mail-yb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751258AbeDTVjL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 17:39:11 -0400
-Received: by mail-yb0-f181.google.com with SMTP id y5-v6so3524539ybg.0
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 14:39:10 -0700 (PDT)
+        id S1752159AbeDTWNj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 18:13:39 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:36987 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751338AbeDTWNi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 18:13:38 -0400
+Received: by mail-wr0-f193.google.com with SMTP id f14-v6so26498577wre.4
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 15:13:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GZRE/TUj3cWrXt99mQIaNo9PKtau2zzI39M1v/JUsII=;
-        b=sk9pOWzWwOhJ+RoQtukkTBMK/8nU+7L0D2dsvOs+1qzH4Gj7sVCQhj9JKufu3lQTYp
-         SkXrTRq/FTyrwIDH/4Z6DM/4XHbXEEMN/I8B7HnAsatMm5ZJf4ihUAmR2djiN3J4NCnA
-         rCzPF5Ujg3Dl9FuUX/vvHtXRSoM8zc0MwQBd5i/kwSZw73Ht/SWs8nhqO1XSvv0RXPsi
-         ufs7Pp1XMx+xlLvpYb84/QShgBNSLlskT/VMFpp6E/QOoz/2TvmJfNvMFRMOB6RMcrsJ
-         q8musGsIsMk+ft7g+LsVqLdyVvN1P6LgtAGADa3Ib/VYuvBlDd/hRIDjvaL2xQk2DzFc
-         mO1g==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=+XAn5ruR4YvMfgvFtU+gf0fBVSBuUyr1Hh3/nq7RN5I=;
+        b=Yskuh+tt5WM8HlruIX+56mLT8enDOLi3DWbHriLYRFX5qpgkvZ3wpOdrRENKh3jflD
+         /OltQzTXrgZOsacbKoNVRd5vci6MQw6zInwNSn4lG9rcu5a/mN2qokElUT73nqqubGln
+         TVtLX/r7OynX9/c+4H+V1MCH13obOv511KWhpzf6k3VUqE5RBHAO6xlsFX0GYIGXqlyC
+         m85q+8ZZ39RFuP8XQvHxSmMl0mVDZ4dSZXrj89CLRy+jNVPq1XZoTo6f5jqLLOhSzfN8
+         UoSfViBgEbjvv/T2O6cbwzWIYlGAkBV7nZBuCa6mnwm5bLPCMsb2MFx99zLLB6IwbD7w
+         IbSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GZRE/TUj3cWrXt99mQIaNo9PKtau2zzI39M1v/JUsII=;
-        b=muUZDL1jrJmP/5OKaRaU8py51AtSe5D+rHnVTdYS/zSbF+1auM5jrGOeG0Luk3ykxF
-         DfhNAKhkbbHto8jTlghQsGTfw7u4Umwg1KDOHogDQ1vl7pCtj5z2CvJCXLqWG7lul4sk
-         loBGO1gtV72BbpfjhSNiAf9EB/0hFixWP2wVYuoUIs11G2MCA9kip1XrWEMyPenExZOf
-         YwEuPhlLCBqCL+bB6jpLXTSk2UWjCPytWXBnKYgh71aYqmyuyCLYsi2Ka+RJAji8WLWy
-         JRPGJgTwBlxowPnDSgTYfqh5nI6GbiwT12CBNVWHAZqpYxXa9aOnhBTnrOQ4vnv8JE7b
-         FFBw==
-X-Gm-Message-State: ALQs6tD7i4SObJVaWG+qSd+UdB+jyspdGtD5WE0BAt5cL0TUNt5Lxfhy
-        b6erZmsEAZuKNmqmT09SQADEWKEy35T4tKhilETpjQ==
-X-Google-Smtp-Source: AIpwx48RBgxSlpX5NaJNDLiaYrcjB50QKNIl8I/pkfYqelBZyIL0QpzC+eJb6qnmSdawH788CuD02kCT1uk4QNeYV38=
-X-Received: by 2002:a25:6cc2:: with SMTP id h185-v6mr7170515ybc.307.1524260350062;
- Fri, 20 Apr 2018 14:39:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=+XAn5ruR4YvMfgvFtU+gf0fBVSBuUyr1Hh3/nq7RN5I=;
+        b=FLExCh7M1YUNTVl5Ti4jxEV7lS5E877Os/bh2IMxeLOZFbqv8anGyoP5lRr/2qjxJs
+         kPNZsVUrgd7jPGlCjhI2bYrppDc56K5hUvvlmS7L+XVAZ6t1cUmP8SSMWg+eruDAAeB9
+         ZDvHgWi/iSFgzM9kSgsk5bDraZ8ZHvhepl9dU02pjdvwbJADEpjYorVaLu/IhLz8iHOb
+         pNhFeMG8wHYtg6OHZc9igVrdyo3WYmuM5QinHQyy8g7j89j2d4eu4f6isvzRnLeU4QO2
+         qdZg0HEYYIqG/fEP2tv6Gu+Sjt4yBARoAnnqfedx9W0Xwq4qt0BZdkvDSNwktJKpgTWp
+         5omQ==
+X-Gm-Message-State: ALQs6tBtCMOrGEYF962ZpGODUBka2dU2Q2+xoVpED0OoufvSxzyvw08j
+        X/8VuLU58tpnAducaHfoWfXnv51Q
+X-Google-Smtp-Source: AIpwx4/xbB5jVxLcKIg50P13/OG2MofoVOcdJr7fWOgY0ZrFHucVnr5ApIFQcZCOU7vzOaxi50bsTA==
+X-Received: by 10.28.55.129 with SMTP id e123mr2859326wma.141.1524262417210;
+        Fri, 20 Apr 2018 15:13:37 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id p128sm3661840wmd.45.2018.04.20.15.13.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 20 Apr 2018 15:13:35 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Isaac Chou <Isaac.Chou@microfocus.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH v3] fast-export: fix regression skipping some merge-commits
+Date:   Sat, 21 Apr 2018 00:12:31 +0200
+Message-Id: <20180420221231.4131611-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.17.0
+In-Reply-To: <nycvar.QRO.7.76.6.1804202258071.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <nycvar.QRO.7.76.6.1804202258071.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Fri, 20 Apr 2018 14:39:09
- -0700 (PDT)
-In-Reply-To: <CAMSYVsc7c3Gw7OYLDRi5GiZX1m4Cx=eGJJUutRTX9Bn=z9EDMw@mail.gmail.com>
-References: <CAMSYVsc7c3Gw7OYLDRi5GiZX1m4Cx=eGJJUutRTX9Bn=z9EDMw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 20 Apr 2018 14:39:09 -0700
-Message-ID: <CAGZ79kYuhFPW6SHnPDB6iTcn_Bf29Y+Rn1xKB5AyOvibyz9yYA@mail.gmail.com>
-Subject: Re: Feature requst
-To:     Yuri Weinstein <yuri.weinstein@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 20, 2018 at 2:31 PM, Yuri Weinstein
-<yuri.weinstein@gmail.com> wrote:
-> "git grep xxx" currently does not follow symlinks.
-> Please consider adding this functionality
+7199203937 (object_array: add and use `object_array_pop()`, 2017-09-23)
+noted that the pattern `object = array.objects[--array.nr].item` could
+be abstracted as `object = object_array_pop(&array)`.
 
-Is this related to
-https://public-inbox.org/git/20180409090047.lfru2ul5fbnggfg7@bod/ ?
+Unfortunately, one of the conversions was horribly wrong. Between
+grabbing the last object (i.e., peeking at it) and decreasing the object
+count, the original code would sometimes return early. The updated code
+on the other hand, will always pop the last element, then maybe do the
+early return without doing anything with the object.
+
+The end result is that merge commits where all the parents have still
+not been exported will simply be dropped, meaning that they will be
+completely missing from the exported data.
+
+Re-add a commit when it is not yet time to handle it. An alternative
+that was considered was to peek-then-pop. That carries some risk with it
+since the peeking and poping need to act on the same object, in a
+concerted fashion.
+
+Add a test that would have caught this.
+
+Reported-by: Isaac Chou <Isaac.Chou@microfocus.com>
+Analyzed-by: Isaac Chou <Isaac.Chou@microfocus.com>
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+This v3 is similar in spirit to v1/v2, but with a reworked test and a
+different fix approach, both based on Dscho's suggestions.
+
+>> Between you cleaning up the test and providing a different
+>> implementation, there's not much left for me to take credit for. Can I
+>> forge your From: and Signed-off-by: on this?
+>
+> I disagree, all I did was to play a variation of your tune. You are the
+> composer of this patch, you performed all the hard work (analysis,
+> implementation & testing), and you deserve the credit.
+
+Ok.
+
+> It would please my ego a bit, of course, if you could add a "Helped-by:
+> Dscho" line... ;-)
+
+That's a given! Again, thanks for really helpful suggestions.
+
+Martin
+
+ t/t9350-fast-export.sh | 18 ++++++++++++++++++
+ builtin/fast-export.c  |  5 ++++-
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index 866ddf6058..c699c88d00 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -540,4 +540,22 @@ test_expect_success 'when using -C, do not declare copy when source of copy is a
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'merge commit gets exported with --import-marks' '
++	test_create_repo merging &&
++	(
++		cd merging &&
++		test_commit initial &&
++		git checkout -b topic &&
++		test_commit on-topic &&
++		git checkout master &&
++		test_commit on-master &&
++		test_tick &&
++		git merge --no-ff -m Yeah topic &&
++
++		echo ":1 $(git rev-parse HEAD^^)" >marks &&
++		git fast-export --import-marks=marks master >out &&
++		grep Yeah out
++	)
++'
++
+ test_done
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 27b2cc138e..7b8dfc5af1 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -651,8 +651,11 @@ static void handle_tail(struct object_array *commits, struct rev_info *revs,
+ 	struct commit *commit;
+ 	while (commits->nr) {
+ 		commit = (struct commit *)object_array_pop(commits);
+-		if (has_unshown_parent(commit))
++		if (has_unshown_parent(commit)) {
++			/* Queue again, to be handled later */
++			add_object_array(&commit->object, NULL, commits);
+ 			return;
++		}
+ 		handle_commit(commit, revs, paths_of_changed_objects);
+ 	}
+ }
+-- 
+2.17.0
+
