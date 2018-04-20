@@ -7,152 +7,69 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62C561F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 12:18:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B5721F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 12:23:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754753AbeDTMSx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 08:18:53 -0400
-Received: from mout.gmx.net ([212.227.17.22]:44713 "EHLO mout.gmx.net"
+        id S1754736AbeDTMXZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 08:23:25 -0400
+Received: from mout.gmx.net ([212.227.17.22]:47867 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754688AbeDTMSw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 08:18:52 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8MyE-1eEcva1KhW-00vtcD; Fri, 20
- Apr 2018 14:18:48 +0200
-Date:   Fri, 20 Apr 2018 14:18:32 +0200 (DST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1754591AbeDTMXY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 08:23:24 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsfrR-1eOqWX4249-012DOx; Fri, 20
+ Apr 2018 14:23:21 +0200
+Date:   Fri, 20 Apr 2018 14:23:04 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 3/3] rebase --skip: clean up commit message after a failed
- fixup/squash
-In-Reply-To: <cover.1524226637.git.johannes.schindelin@gmx.de>
-Message-ID: <6d9f6ba1e73d2297cef3619a89ce69122438368d.1524226637.git.johannes.schindelin@gmx.de>
-References: <cover.1524226637.git.johannes.schindelin@gmx.de>
+To:     Harald Nordgren <haraldnordgren@gmail.com>
+cc:     git@vger.kernel.org, tiago@gitlab.com, christian.couder@gmail.com,
+        sbeller@google.com
+Subject: Re: [PATCH v4] bisect: create 'bisect_flags' parameter in
+ find_bisection()
+In-Reply-To: <20180418210535.1862-1-haraldnordgren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804201422390.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180415085841.1269-1-haraldnordgren@gmail.com> <20180418210535.1862-1-haraldnordgren@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:sI83kqNQjKU4W9+XwfUGRQaSHY7PbJbE/ZrH6X0a+INZk6gLqla
- n6U/NDZK8bePwGJtd/FqXttfIwVWVMjl913WQfxXcijwcSK0CEmqN5UWqf5IF5KhHUYHJCm
- kYs7LtYBnEkj/5Bj0R/J6ef5vTfuaXIY+ljNm+7Z0RhAb9zO28iMwvCKIpMeMNjlGL6F2aZ
- ccwfNlG8eUDA4c0YbCKvg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BdAOgZ+ZjUQ=:F/zWvTJ91rjA0XXx4wVNgz
- 65XBogLhg0jp0B2tRDd7x5c92A6oUzgvryr7lgVMugbQMeqyhYE1J5CyWwNVqeqUT+BZSGPyE
- U8mHRq08ekEKDboYZXjLt8dWzfnpfq0NY0yGuT+/gu2XqQE8MNApc2FD69jG7cMgyo+kwnDHf
- mMpKaGr9u2KKVgVkpyGMBLe+HxmqXaf54XIgNd0Y4MAz+6tZq9L98YVQV7RSmPmR8AqOZLeLW
- zs2IFsvlhbvVXwjXRGp5SfYjRccNm79nDiSRPtfp4Eyvzr++gmKC16L4cNex+gfNYX35aWsj5
- ENnI1Jdde4GwdABGe43z6XaqT7tT9eRV2P7SmdlRBLGiYG5GU25NGHM2OChI9Z1W+Z4wAdPZc
- ZbEaB04gAeQw0C3FxrDAQ+/ewfB/yjk95lwyH0FwKxZ0JRqF3n8UwwgHudSzG0sbwbUi6uLSL
- jpT5GqEPcALnNqJxOO8RmIieBEvK96dzfa7zIkzFQ6G9sFQbYjCNGLUP2lmaGacYprv/ibFza
- lUp4fJ7Ul40TYHPmh9M7B6aRrnd8b05iCTrkKLIl5CXX/9u1y1MpTTZuHl7z7WuaK8tbHrQs+
- rq3jDk+CL0UIJm2i6tL8jvWSrjQFyyEja4t1c6pTg37a+7AjQEzU39yzidTVOpHk6PyM0OtZd
- fi7KMBLIfy+UHZPY4rjEEz14Pz3KV8KdfBir9GyIBpGylYfaD7URzLovIvjSx7BlHHlXGGM2I
- IHCuFF/XL0K/+3aA40vPRIZF79NQVlrESiM5MZAIfLJcWlxs8mwfIm3AaqKJpsp41yuMa85pu
- NsLB+mAjpeSXVb6HKUh3e9VEd9Yf+8ZhxIhN/Zi2z9Deg0ciME=
+X-Provags-ID: V03:K1:0xbPEoYbowOnTzFn6nzs4fJHSINT8T5qi21uubhx4JdDL+mYhoW
+ +2wCLAMnpB1sX+IEkX8SYhka5LZV/7kpFl78z1+9UU1LjWTOstOnnTjI8roy0gh1ym2hRPz
+ PGIV2nidyflT8IZIAJFkFIo0fBs9GMP/2SOinBasK0qdVaJBuxZO+UgHcUTsPmrpzsAO3h9
+ RX0roGEgqocCw7zU1RMjw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jC1rv9RbLj8=:tnghQSyDFxq+QnoBcI1Rly
+ LgKkgyuPfju66eMfbCRMcM7WoUrgB+eAjdPE3psMSBtLyzfe+Os+t9uF0UD9ewqFJuP5mU9kS
+ xXzNDj1DEsGDvtVmv7yvyESpkGYuJAZfTNTqHtXKd3ZX06RZq4HkU8iH962sfsc43PU6tQL+N
+ omTo1Tc7oH0XnVtGQqoPcYwYGOraMHEXv0xP0ZvCiziG8A4sI0Ybl15yf1C4o80v/bkfy3If6
+ b4faIaq5F7hexZ2gLtplQ7kM+8fB+iVfkix386TJFRKzBVLwwuwR9WXFWSJh0Cfm1llB9wSow
+ RXk9TZa5jNmDxLoJjOQugVRVNcBRKlQJLlIgTspy0ZztdKFmjODXO/m98dUeLHDhGgsJwgW3F
+ 1IV5tolpHmbiewqKzo6O2jxxgHFZQSU5BQc60wR9RFKJsZXSok0fZh2GoUO/e/0uztatyP3DG
+ K65CMLcQl/4xPQfNoLa7UQQC7ARX3C48bD6Emj1/uN8KjgQD/V9n4Uh0PJnXtU8Hl7FfqAKir
+ 55IJTTPfbvfna0ZZh0McsQP7ZoM/nDxIIMOSZbFSnKAxfENbNuxkTEd/vuLzZ0vQHNFsWeLzH
+ fY/KZxu1V1mJS8duQR01oxtzzJ06dVA0nqSbA04wAuiksZYS1H2S/AbzMUaZ4NZPaXB8nADDT
+ aSEa7KxF2bKVw32JjwWxDTMnMLPciFafryP2lRhg1N7c+7ZfL9vdNSeEGoKXADuUxv1TZVOwY
+ ELldesDUro75rMKILOzqiaRxmrBNHIhmiTf4SiQdJsNCOPz3FY/AO+fMvtNHXT8UYrWUM1DpH
+ zGDHM4LfpFqsfJ0/kTfSG+AuVCVGPTSEpriV2Mo/muBHJ7N4tk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-During a series of fixup/squash commands, the interactive rebase builds
-up a commit message with comments. This will be presented to the user in
-the editor if at least one of those commands was a `squash`.
+Hi Harald,
 
-However, if the last of these fixup/squash commands fails with merge
-conflicts, and if the user then decides to skip it (or resolve it to a
-clean worktree and then continue the rebase), the current code fails to
-clean up the commit message.
+On Wed, 18 Apr 2018, Harald Nordgren wrote:
 
-This commit fixes that behavior.
+> Make it possible to implement bisecting only on first parents or on
+> merge commits by passing flags to find_bisection(), instead of just
+> a 'find_all' boolean.
+> 
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+> 
+> Notes:
+>     Use unsigned type and cache flag value
 
-The diff is best viewed with --color-moved.
+This version looks good to me.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sequencer.c                | 36 ++++++++++++++++++++++++++++--------
- t/t3418-rebase-continue.sh |  2 +-
- 2 files changed, 29 insertions(+), 9 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index a9c3bc26f84..f067b7b24c5 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2781,17 +2781,12 @@ static int continue_single_pick(void)
- 
- static int commit_staged_changes(struct replay_opts *opts)
- {
--	unsigned int flags = ALLOW_EMPTY | EDIT_MSG;
-+	unsigned int flags = ALLOW_EMPTY | EDIT_MSG, is_fixup = 0, is_clean;
- 
- 	if (has_unstaged_changes(1))
- 		return error(_("cannot rebase: You have unstaged changes."));
--	if (!has_uncommitted_changes(0)) {
--		const char *cherry_pick_head = git_path_cherry_pick_head();
- 
--		if (file_exists(cherry_pick_head) && unlink(cherry_pick_head))
--			return error(_("could not remove CHERRY_PICK_HEAD"));
--		return 0;
--	}
-+	is_clean = !has_uncommitted_changes(0);
- 
- 	if (file_exists(rebase_path_amend())) {
- 		struct strbuf rev = STRBUF_INIT;
-@@ -2804,16 +2799,41 @@ static int commit_staged_changes(struct replay_opts *opts)
- 		if (get_oid_hex(rev.buf, &to_amend))
- 			return error(_("invalid contents: '%s'"),
- 				rebase_path_amend());
--		if (oidcmp(&head, &to_amend))
-+		if (!is_clean && oidcmp(&head, &to_amend))
- 			return error(_("\nYou have uncommitted changes in your "
- 				       "working tree. Please, commit them\n"
- 				       "first and then run 'git rebase "
- 				       "--continue' again."));
-+		if (is_clean && !oidcmp(&head, &to_amend)) {
-+			strbuf_reset(&rev);
-+			/*
-+			 * Clean tree, but we may need to finalize a
-+			 * fixup/squash chain. A failed fixup/squash leaves the
-+			 * file amend-type in rebase-merge/; It is okay if that
-+			 * file is missing, in which case there is no such
-+			 * chain to finalize.
-+			 */
-+			read_oneliner(&rev, rebase_path_amend_type(), 0);
-+			if (!strcmp("squash", rev.buf))
-+				is_fixup = TODO_SQUASH;
-+			else if (!strcmp("fixup", rev.buf)) {
-+				is_fixup = TODO_FIXUP;
-+				flags = (flags & ~EDIT_MSG) | CLEANUP_MSG;
-+			}
-+		}
- 
- 		strbuf_release(&rev);
- 		flags |= AMEND_MSG;
- 	}
- 
-+	if (is_clean && !is_fixup) {
-+		const char *cherry_pick_head = git_path_cherry_pick_head();
-+
-+		if (file_exists(cherry_pick_head) && unlink(cherry_pick_head))
-+			return error(_("could not remove CHERRY_PICK_HEAD"));
-+		return 0;
-+	}
-+
- 	if (run_git_commit(rebase_path_message(), opts, flags))
- 		return error(_("could not commit staged changes."));
- 	unlink(rebase_path_amend());
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index b177baee322..4880bff82ff 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -88,7 +88,7 @@ test_expect_success 'rebase passes merge strategy options correctly' '
- 	git rebase --continue
- '
- 
--test_expect_failure '--continue after failed fixup cleans commit message' '
-+test_expect_success '--continue after failed fixup cleans commit message' '
- 	git checkout -b with-conflicting-fixup &&
- 	test_commit wants-fixup &&
- 	test_commit "fixup! wants-fixup" wants-fixup.t 1 wants-fixup-1 &&
--- 
-2.17.0.windows.1.15.gaa56ade3205
+Thanks,
+Johannes
