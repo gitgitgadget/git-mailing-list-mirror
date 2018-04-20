@@ -2,133 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFFB41F424
-	for <e@80x24.org>; Fri, 20 Apr 2018 09:59:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45DC11F424
+	for <e@80x24.org>; Fri, 20 Apr 2018 10:11:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754556AbeDTJ7c (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 05:59:32 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:34545 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754287AbeDTJ7b (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 05:59:31 -0400
-Received: by mail-wr0-f193.google.com with SMTP id p18-v6so2221836wrm.1
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 02:59:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=J0G8/nl892yylZ/Tmc3S5Ha33RgVUrwamtkXjrt1UiA=;
-        b=ShElkYFV7jdQSasD8pT2etaeYqa7PAqdt4ieHwQoa675VGUaA2tfCwX0vexdR6ce2F
-         OXax9iKhDnwQ0QiZqhI6PdoiwXW5QYEC43XDpbaDoqGBHj2Lv6c8mX+r1G723tvk7QEe
-         /Lh3X4d5xz+IUQXC+jbZ71QpJWLz0+kaFw7g8TSTxyEVtxr2UJiSPozwr0ZcRdnjwTqa
-         +taQbc0skg5KNz1MLpUbNqYT8QJxFtxkTZjopbbQehCFdjBC8NbAeJJvKbjG8lD4synJ
-         HhvyeAwUuYJYVx5dvUYpgk8DTD92sCf1lLjmqbVpyq3LBj5ZhmX6Ub7b18eCESZRgsmc
-         NCRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=J0G8/nl892yylZ/Tmc3S5Ha33RgVUrwamtkXjrt1UiA=;
-        b=sQuUPDIjAU59wMvOPB9ffJD2zSP40pM5APlj1ITACS+aAUrFAV4oXzTU/g7hXSnR6w
-         3SRFurFS5PYEZnLobmAFA30iMW5fvou+p2F/RfDNPkRpQKm7CovNogSsSoeXJG/iHDEs
-         Rpe3c9/C7T+TsITFp5pscPIYhgQUlaOYhIU6aJ6f5KGlFbTIa0xHTDGICgZPku2sSiuA
-         x3dj+5C0F1+i1EyMjeluapZrVPK1yimxhcJJPhbFCuVrK8hTYyX/F98a1eu+mB960hcI
-         e3DIqOE8Ht59b1iqRkLKWs4N13XevdJSTyTQVb7u7ZCKyrhY4ecZ+JPilzxs6mkYjktz
-         s4pg==
-X-Gm-Message-State: ALQs6tCtQiIlN8nTpaTQWX36tmaGOlHqEqYifcCYeUstJqJXnHkj9/RT
-        ZY5QvYW3rmooALWkkMZ8BI0=
-X-Google-Smtp-Source: AIpwx4+IuL2cfRRMKGftg2hoWMEqBt5YZ8PiXQXDCixHm58xO2hXAwlRL0bqtU6+zeDqaj+mwZtIuA==
-X-Received: by 2002:adf:d1cc:: with SMTP id m12-v6mr7001369wri.214.1524218369865;
-        Fri, 20 Apr 2018 02:59:29 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id 2sm962306wml.2.2018.04.20.02.59.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Apr 2018 02:59:28 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Dan Jacques <dnj@google.com>
-Subject: Re: [PATCH 1/3] gettext: avoid initialization if the locale dir is not present
-References: <cover.1524211375.git.johannes.schindelin@gmx.de> <6be8678b7d6b4d9116ea4666a0b28ff4dd938690.1524211375.git.johannes.schindelin@gmx.de>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <6be8678b7d6b4d9116ea4666a0b28ff4dd938690.1524211375.git.johannes.schindelin@gmx.de>
-Date:   Fri, 20 Apr 2018 11:59:28 +0200
-Message-ID: <87o9iedwqn.fsf@evledraar.gmail.com>
+        id S1754399AbeDTKLV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 06:11:21 -0400
+Received: from relaya.standardlife.com ([193.138.107.173]:11534 "EHLO
+        relaya.standardlife.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754306AbeDTKLU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 06:11:20 -0400
+From:   Andrew Ducker <andrew_ducker@standardlife.com>
+To:     'Bryan Turner' <bturner@atlassian.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Bug Report - Pull remote branch does not retrieve new tags
+Thread-Topic: Bug Report - Pull remote branch does not retrieve new tags
+Thread-Index: AdPX5XNOymz7t1oeS5WHVE1MIFeBEQAPe58AABr5IHA=
+Date:   Fri, 20 Apr 2018 10:11:07 +0000
+Message-ID: <f41243c52aff4001801d58dee1c5ccb6@standardlife.com>
+References: <adc410f016e8405fb81fa92e45675e2a@standardlife.com>
+ <CAGyf7-G7GDX6DtpAqQvQ-8Rwad1VS6_xdDw_Rt_p5kT-C7dFZA@mail.gmail.com>
+In-Reply-To: <CAGyf7-G7GDX6DtpAqQvQ-8Rwad1VS6_xdDw_Rt_p5kT-C7dFZA@mail.gmail.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.31.85.137]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
+X-CFilter-Loop: Reflected
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Apr 20 2018, Johannes Schindelin wrote:
-
-> The runtime of a simple `git.exe version` call on Windows is currently
-> dominated by the gettext setup, adding a whopping ~150ms to the ~210ms
-> total.
->
-> Given that this cost is added to each and every git.exe invocation goes
-> through common-main's invocation of git_setup_gettext(), and given that
-> scripts have to call git.exe dozens, if not hundreds, of times, this is
-> a substantial performance penalty.
->
-> This is particularly pointless when considering that Git for Windows
-> ships without localization (to keep the installer's size to a bearable
-> ~34MB): all that time setting up gettext is for naught.
->
-> So let's be smart about it and skip setting up gettext if the locale
-> directory is not even present.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  gettext.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/gettext.c b/gettext.c
-> index baba28343c3..701355d66e7 100644
-> --- a/gettext.c
-> +++ b/gettext.c
-> @@ -163,6 +163,9 @@ void git_setup_gettext(void)
->  	if (!podir)
->  		podir = system_path(GIT_LOCALE_PATH);
->
-> +	if (!is_directory(podir))
-> +		return;
-> +
->  	bindtextdomain("git", podir);
->  	setlocale(LC_MESSAGES, "");
->  	setlocale(LC_TIME, "");
-
-I wish we could fix the root cause and just make gettext faster (or ship
-with a small shimmy of our own), but leaving that aside, I don't see how
-this patch makes sense.
-
-If you don't ship git for windows with gettext or a podir, then compile
-with NO_GETTEXT, then we won't even compile this function you're
-patching here. See line 30 and beyond of gettext.h.
-
-Are you instead compiling git for windows with gettext support with an
-optional add-on package for i18n, so then this podir conditional would
-pass?
-
-In any case, if this is actually the desired behavior I think it's worth
-clearly explaining the interaction with NO_GETTEXT in the commit
-message, and if you *actually* don't want NO_GETTEXT I think it's useful
-to guard this with something like MAYBE_GETTEXT on top, so this code
-doesn't unintentionally hide installation errors on other
-platforms. I.e. something like:
-
-	int have_podir = is_directory(podir);
-	if (!have_podir)
-#ifdef MAYBE_GETTEXT
-		return;
-#else
-		BUG("Broken installation, can't find '%s'!", podir);
-#endif
+VGhhbmtzIEJyeWFuLCB0aGF0IGRvZXMgY2xlYXIgaXQgdXAgYSBiaXQuDQoNClRoZSByZWFzb24g
+dGhhdCB0aGlzIGNhbWUgdXAgaXMgdGhhdCBWaXN1YWwgU3R1ZGlvIENvZGUgaGFzIHN3aXRjaGVk
+IGZyb20gImdpdCBwdWxsIiB0byAiZ2l0IHB1bGwgcmVtb3RlIGJyYW5jaCIgd2hlbiB0aGUgInN5
+bmMiIGJ1dHRvbiBpcyBjbGlja2VkLCBhbmQgdGhpcyBoYXMgbWVhbnQgdGhhdCB0YWdzIGFyZSBu
+byBsb25nZXIgYmVpbmcgZmV0Y2hlZC4NCg0KV2hhdCBfZG9lc18gc2VlbSB0byB3b3JrIGlzIGFk
+ZGluZyAiLS10YWdzIiBvbiB0aGUgZW5kIG9mIHRoZSBnaXQgcHVsbC4gIEJ1dCB0aGlzIGlzbid0
+IGFjdHVhbGx5IGluIHRoZSBkb2N1bWVudGF0aW9uWzFdLCBhbmQgSSdtIGEgYml0IG5lcnZvdXMg
+dGhhdCB0aGlzIGlzIG1pZC1kZXByZWNhdGlvbi4NCg0KSXMgIi0tdGFncyIgZ29pbmcgYXdheSBz
+aG9ydGx5PyAgT3IgYXJlIHRoZXkgb2sgdG8gZGVwZW5kIG9uIHRoaXM/DQoNClRoZSBidWcgaXMg
+YXQgaHR0cHM6Ly9naXRodWIuY29tL01pY3Jvc29mdC92c2NvZGUvaXNzdWVzLzQ4MjExIGlmIGFu
+eW9uZSB3YW50cyB0byBjaGltZSBpbiB3aXRoIGFkdmljZSBvdmVyIHRoZXJlIDotKQ0KDQpUaGFu
+a3MsDQoNCkFuZHkNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBCcnlh
+biBUdXJuZXIgW21haWx0bzpidHVybmVyQGF0bGFzc2lhbi5jb21dDQo+IFNlbnQ6IDE5IEFwcmls
+IDIwMTggMjM6MTQNCj4gVG86IEFuZHJldyBEdWNrZXINCj4gQ2M6IGdpdEB2Z2VyLmtlcm5lbC5v
+cmcNCj4gU3ViamVjdDogUmU6IEJ1ZyBSZXBvcnQgLSBQdWxsIHJlbW90ZSBicmFuY2ggZG9lcyBu
+b3QgcmV0cmlldmUgbmV3IHRhZ3MNCj4NCj4gQW5kcmV3LA0KPg0KPiBPbiBUaHUsIEFwciAxOSwg
+MjAxOCBhdCA2OjU1IEFNLCBBbmRyZXcgRHVja2VyDQo+IDxhbmRyZXdfZHVja2VyQHN0YW5kYXJk
+bGlmZS5jb20+IHdyb3RlOg0KPiA+DQo+ID4gV2hhdCBoYXBwZW5zOg0KPiA+IFdoZW4gSSBjcmVh
+dGUgYSBuZXcgdGFnIG9uIHRoZSByZW1vdGUgKGNoYW5naW5nIG5vdGhpbmcgZWxzZSkNCj4gPiAi
+Z2l0IHB1bGwgb3JpZ2luIG1hc3RlciIgcHJvZHVjZXMgdGhlIGZvbGxvd2luZzoNCj4gPiAgIEZy
+b20gZ2l0LmludGVybmFsLmNvbXBhbnkuY29tOnRlYW0vdGVzdHJlcG8NCj4gPiAgICAqIGJyYW5j
+aCAgICAgICAgICAgIG1hc3RlciAgICAgLT4gRkVUQ0hfSEVBRA0KPiA+ICAgQWxyZWFkeSB1cC10
+by1kYXRlLg0KPiA+DQo+ID4gSWYgSSBpbnN0ZWFkIGRvIGEgImdpdCBwdWxsIiBJIGdldDoNCj4g
+PiAgIEZyb20gZ2l0LmludGVybmFsLmNvbXBhbnkuY29tOnRlYW0vdGVzdHJlcG8NCj4gPiAgICAq
+IFtuZXcgdGFnXSAgICAgICAgIFRlc3RpbmcxMSAgLT4gVGVzdGluZzExDQo+ID4gICBBbHJlYWR5
+IHVwLXRvLWRhdGUuDQo+ID4NCj4gPiBXaGF0IEkgdGhpbmsgc2hvdWxkIGhhcHBlbjoNCj4gPiBU
+aGUgImdpdCBwdWxsIG9yaWdpbiBtYXN0ZXIiIHNob3VsZCByZXRyaWV2ZSB0aGUgdGFnLg0KPiA+
+DQo+ID4gVGhpcyBpcyB3aXRoIDIuMTYuMi53aW5kb3dzLjEsIGJ1dCBhbHNvIG9jY3VycmVkIG9u
+IG15IHByZXZpb3VzbHkgaW5zdGFsbGVkDQo+IHZlcnNpb24gKDIuMTIuMi53aW5kb3dzLjIpDQo+
+ID4NCj4gPiBNeSB1bmRlcnN0YW5kaW5nIGlzIHRoYXQgImdpdCBwdWxsIiBhbmQgImdpdCBwdWxs
+ICRyZXBvICRjdXJyZW50YnJhbmNoIg0KPiBzaG91bGQgZnVuY3Rpb24gaWRlbnRpY2FsbHkuDQo+
+ID4NCj4gPiBJcyB0aGlzIGEgYnVnLCBvciBhbSBJIG1pc3VuZGVyc3RhbmRpbmcgdGhlIG1hbnVh
+bCBwYWdlPw0KPg0KPiBMb29rcyBsaWtlIGEgbWlzdW5kZXJzdGFuZGluZywgdG8gbWUuIFBlcmhh
+cHMgSSBjYW4gaGVscCBjbGFyaWZ5Lg0KPg0KPiAiZ2l0IHB1bGwiIHdpdGhvdXQgYXJndW1lbnRz
+IGZldGNoZXMgZnJvbSB0aGUgIm9yaWdpbiIgcmVwb3NpdG9yeQ0KPiB1c2luZyB0aGUgY29uZmln
+dXJlZCAiZmV0Y2giIHJlZnNwZWNzLCB3aGljaCB0eXBpY2FsbHkgbG9va3Mgc29tZXRoaW5nDQo+
+IGxpa2UgImZldGNoID0gK3JlZnMvaGVhZHMvKjpyZWZzL3JlbW90ZXMvb3JpZ2luLyoiLiBJdCBf
+ZG9lc24ndF8NCj4gYWN0dWFsbHkgZmV0Y2ggYWxsIHRhZ3MsIGJ1dCBhbnkgdGFnIHJlZmVyZW5j
+aW5nIGFueSBvYmplY3QvY29tbWl0DQo+IGluY2x1ZGVkIGluIHRoZSBicmFuY2hlcyBpcyBicm91
+Z2h0IGFsb25nIGZvciB0aGUgcmlkZS4gVGhpcyBpcw0KPiBkb2N1bWVudGVkIG9uICJnaXQgcHVs
+bCI6DQo+DQo+IC0tbm8tdGFncw0KPg0KPiAgICAgQnkgZGVmYXVsdCwgdGFncyB0aGF0IHBvaW50
+IGF0IG9iamVjdHMgdGhhdCBhcmUgZG93bmxvYWRlZCBmcm9tDQo+IHRoZSByZW1vdGUgcmVwb3Np
+dG9yeSBhcmUgZmV0Y2hlZCBhbmQgc3RvcmVkIGxvY2FsbHkuIFRoaXMgb3B0aW9uDQo+IGRpc2Fi
+bGVzIHRoaXMgYXV0b21hdGljIHRhZyBmb2xsb3dpbmcuIFRoZSBkZWZhdWx0IGJlaGF2aW9yIGZv
+ciBhDQo+IHJlbW90ZSBtYXkgYmUgc3BlY2lmaWVkIHdpdGggdGhlIHJlbW90ZS48bmFtZT4udGFn
+T3B0IHNldHRpbmcuIFNlZQ0KPiBnaXQtY29uZmlnKDEpLg0KPg0KPiBCeSBjb21wYXJpc29uLCBv
+biB5b3VyICJnaXQgcHVsbCAkcmVwbyAkY3VycmVudEJyYW5jaCIsIHdoYXQgeW91J3JlDQo+IGNh
+bGxpbmcgIiRjdXJyZW50QnJhbmNoIiBpcyBhY3R1YWxseSAiWzxyZWZzcGVjPi4uLl0iIGZyb20g
+dGhlDQo+IGRvY3VtZW50YXRpb24uIEluIG90aGVyIHdvcmRzLCBieSBwYXNzaW5nICJtYXN0ZXIi
+LCB5b3UndmUgdG9sZCAiZ2l0DQo+IHB1bGwiIHRvIGZldGNoIF9ub3RoaW5nIGJ1dCAibWFzdGVy
+Il8sIGlnbm9yaW5nIHRoZSBjb25maWd1cmVkDQo+IHJlZnNwZWMocykuIEFkZGl0aW9uYWxseSwg
+c2luY2UgeW91IGhhdmVuJ3QgdG9sZCAiZ2l0IHB1bGwiIHdoZXJlIHRvDQo+IF9wdXRfICJtYXN0
+ZXIiIG9uY2UgaXQncyBmZXRjaGVkLCBpdCB3cml0ZXMgaXQgdG8gIkZFVENIX0hFQUQiLiBJZiB5
+b3UNCj4gaGF2ZSBhIHRyYWNraW5nIGJyYW5jaCBzZXR1cCwgImdpdCBwdWxsIG9yaWdpbiBtYXN0
+ZXIiIHdpbGwgYWxzbw0KPiB1cGRhdGUgdGhlIHRyYWNraW5nIGJyYW5jaC4gRm9yIGV4YW1wbGUs
+IHRoZSBzYW1lIGNvbW1hbmQgZm9yIG1lDQo+IHByb2R1Y2VzOg0KPg0KPiAkIGdpdCBwdWxsIG9y
+aWdpbiBtYXN0ZXINCj4gRnJvbSAuLi4NCj4gICogYnJhbmNoICAgICAgICAgICAgICAgICAgICBt
+YXN0ZXIgICAgIC0+IEZFVENIX0hFQUQNCj4gICAgYWNhNWViMGZlZjUuLmFkNDg0NDc3NTA4ICBt
+YXN0ZXIgICAgIC0+IG9yaWdpbi9tYXN0ZXINCj4NCj4gQXMgeW91IGNhbiBzZWUsIGJvdGggRkVU
+Q0hfSEVBRCBhbmQgb3JpZ2luL21hc3RlciB3ZXJlIHVwZGF0ZWQsIHNpbmNlDQo+IG15IGxvY2Fs
+ICJtYXN0ZXIiIHRyYWNrcyAib3JpZ2luIidzICJtYXN0ZXIiOg0KPg0KPiBbYnJhbmNoICJtYXN0
+ZXIiXQ0KPiAgICAgICAgIHJlbW90ZSA9IG9yaWdpbg0KPiAgICAgICAgIG1lcmdlID0gcmVmcy9o
+ZWFkcy9tYXN0ZXINCj4NCj4gSG9wZSB0aGlzIGhlbHBzIQ0KPiBCcnlhbg0KQ29uZmlkZW50aWFs
+aXR5IC0gVGhpcyBlbWFpbCBpcyBjb25maWRlbnRpYWwuDQpOb3QgbWVhbnQgZm9yIHlvdT8gLSBJ
+ZiB5b3UgZG9uJ3QgdGhpbmsgdGhpcyBlbWFpbCBpcyBtZWFudCBmb3IgeW91LCBwbGVhc2UgbGV0
+IHVzIGtub3cuIERvIG5vdCBjb3B5IG9yIGZvcndhcmQgdGhlIGluZm9ybWF0aW9uIGl0IGNvbnRh
+aW5zLCBhbmQgZGVsZXRlIHRoaXMgZW1haWwgZnJvbSB5b3VyIHN5c3RlbS4NClZpZXdzIGV4cHJl
+c3NlZCAtIEFueSBwZXJzb25hbCB2aWV3cyBvciBvcGluaW9ucyBleHByZXNzZWQgaW4gdGhpcyBl
+bWFpbCBhcmUgdGhlIHNlbmRlcidzLCBhbmQgZG8gbm90IG5lY2Vzc2FyaWx5IHJlZmxlY3QgdGhl
+IHZpZXdzIG9mIFN0YW5kYXJkIExpZmUgQWJlcmRlZW4gZ3JvdXAuDQpNb25pdG9yaW5nIC0gV2Ug
+ZmlsdGVyIGFuZCBtb25pdG9yIGVtYWlscyB0byBwcm90ZWN0IG91ciBzeXN0ZW1zIGFuZCB0byBr
+ZWVwIHRoZW0gcnVubmluZyBzbW9vdGhseS4NCkVtYWlsaW5nIHVzIC0gRW1haWwgaXNuJ3QgYSBz
+ZWN1cmUgZm9ybSBvZiBjb21tdW5pY2F0aW9uLiBJZiB5b3Ugd2FudCB0byBzZW5kIHVzIGNvbmZp
+ZGVudGlhbCBpbmZvcm1hdGlvbiBwbGVhc2Ugc2VuZCBpdCBieSBwb3N0LiBIb3dldmVyLCBpZiB5
+b3UgZG8gY29tbXVuaWNhdGUgd2l0aCB1cyBieSBlbWFpbCBvbiBhbnkgc3ViamVjdCwgeW91IGFy
+ZSBnaXZpbmcgdXMgcGVybWlzc2lvbiB0byBlbWFpbCB5b3UgYmFjay4NClBob25pbmcgdXMgLSBD
+YWxscyBtYXkgYmUgbW9uaXRvcmVkIGFuZC9vciByZWNvcmRlZCB0byBwcm90ZWN0IGJvdGggeW91
+IGFuZCB1cyBhbmQgaGVscCB3aXRoIG91ciB0cmFpbmluZy4gQ2FsbCBjaGFyZ2VzIHdpbGwgdmFy
+eS4NClN0YW5kYXJkIExpZmUgQWJlcmRlZW4gZ3JvdXAgLSBTdGFuZGFyZCBMaWZlIEFiZXJkZWVu
+IGdyb3VwIGNvbXByaXNlcyBTdGFuZGFyZCBMaWZlIEFiZXJkZWVuIHBsYyBhbmQgaXRzIHN1YnNp
+ZGlhcmllcy4gRm9yIG1vcmUgaW5mb3JtYXRpb24gb24gU3RhbmRhcmQgTGlmZSBBYmVyZGVlbiBn
+cm91cCB2aXNpdCBvdXIgd2Vic2l0ZSBodHRwOi8vd3d3LnN0YW5kYXJkbGlmZWFiZXJkZWVuLmNv
+bS8uDQpTdGFuZGFyZCBMaWZlIEFiZXJkZWVuIHBsYyAoU0MyODY4MzIpLCBTdGFuZGFyZCBMaWZl
+IEFzc3VyYW5jZSBMaW1pdGVkIChTQzI4NjgzMykgYW5kIFN0YW5kYXJkIExpZmUgRW1wbG95ZWUg
+U2VydmljZXMgTGltaXRlZCAoU0MyNzEzNTUpIGFyZSBhbGwgcmVnaXN0ZXJlZCBpbiBTY290bGFu
+ZCBhdCBTdGFuZGFyZCBMaWZlIEhvdXNlLCAzMCBMb3RoaWFuIFJvYWQsIEVkaW5idXJnaCBFSDEg
+MkRILiBTdGFuZGFyZCBMaWZlIEFzc3VyYW5jZSBMaW1pdGVkIGlzIGF1dGhvcmlzZWQgYnkgdGhl
+IFBydWRlbnRpYWwgUmVndWxhdGlvbiBBdXRob3JpdHkgYW5kIHJlZ3VsYXRlZCBieSB0aGUgRmlu
+YW5jaWFsIENvbmR1Y3QgQXV0aG9yaXR5IGFuZCB0aGUgUHJ1ZGVudGlhbCBSZWd1bGF0aW9uIEF1
+dGhvcml0eS4NCkZvciBtb3JlIGluZm9ybWF0aW9uIG9uIFN0YW5kYXJkIExpZmUgQXNzdXJhbmNl
+IGxpbWl0ZWQgdmlzaXQgb3VyIHdlYnNpdGUgaHR0cDovL3d3dy5zdGFuZGFyZGxpZmUuY28udWsN
+Cg==
