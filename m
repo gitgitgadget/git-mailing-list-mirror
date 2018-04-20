@@ -2,127 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7AAB1F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 16:59:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F128D1F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 17:02:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753280AbeDTQ7P (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 12:59:15 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:41295 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752838AbeDTQ7O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 12:59:14 -0400
-Received: by mail-wr0-f193.google.com with SMTP id v24-v6so24676474wra.8
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 09:59:14 -0700 (PDT)
+        id S1753233AbeDTRCd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 13:02:33 -0400
+Received: from mail-ua0-f176.google.com ([209.85.217.176]:36555 "EHLO
+        mail-ua0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751092AbeDTRCc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 13:02:32 -0400
+Received: by mail-ua0-f176.google.com with SMTP id v4so6148964uaj.3
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 10:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=eQIsrjYZS9aIVAx7o3Mf3XdidtBkqyqZfXJFYrA27oQ=;
-        b=atpOd1hRj9nSvQe9I1YQn+nrl73bJcfW/xQYlLmbHw1+0o9AOu7KCXDK+kEgQ/XBGg
-         S/JpY+bIahM3YlmWnkRA5dVdQMGBZ1hOxyLX0J4qgH3Qm3M6aejCsnlEBu4SrXUkOoPm
-         8XkG/cU8NuUvEyldHuefS0PEu4VXEHnQ85pAKnRwWIE5yZyFGyO/+LHgCZa9/x0FAKcF
-         5eiUF3EiwMjKFM/5B4xpHRLIRNlx7ehaAa2p+y0LNqtBBsNfFVq1RRjykV4ziZtYnI6+
-         sGdKE9dt7YQ1c10GKAtuNQ6xHT9c1EsGqMXKak2F+KAb4+xy86UPAjHRi2NzxWZlPjD/
-         EfYg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=t1DKd4VGLmuDTkIKEBdMLjO/LPV5QahMdFZmB4zEMH4=;
+        b=PGthWTbOqpMWvSlFjeGCc7+CGU63alqrcdH6/AWAL2wC7AB5XkwsHLpyrUbynIVQ9I
+         BKvYW/GWXUhs3ObSmXzU23CVNuJktslEAlysldcV+E4oIyKWsOlMI0bcMx79ZQ2mCxL5
+         oyHjB/z/V1IFGCVDDYv8oK/XWQMPdFLGH2kGhFdADIVCQgCozsDiKHgk1r/X0QXNlLNq
+         tWKhcXztpaZsd4pyKCZt9PQckK+te5GtYzRIsNpYFAeQcasv4p2fhTXSsiDDs9yaCtaj
+         C2z7kn8N/oQTn81c5OLKTFSCe3ZWaVc5Rou62kV1K19C0CRfoGU/dZWVmGKqePElS5U0
+         LToA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=eQIsrjYZS9aIVAx7o3Mf3XdidtBkqyqZfXJFYrA27oQ=;
-        b=QerYzp9tAFkyiczr4hxax0uURLyBt0HaTr82+Qc5B8UcRMrNpekKNPRqnwMEzRQ8/5
-         WgY8qBIdR8bToPQ1YqItkGjq1vSDVaibZt+zi280mTEaUtGdWTd8aiwuwJ3U0LAl0rTY
-         4xbaXG0DIdlSyz2OQyJWnc2liwuc4WCYud5S5rqn8I9V/HvM+QWPbKjfKRt4bpqMw50D
-         P6qOmOkAMZ4sW82orvdMmcYGebsXIh4YH0JUUA55/lpkHZfFPoBw6Yl3Wc2tVCo1wFY0
-         uMmGwJyL9J31GBmW34I93Xs+QmfE8TA6BH/8+/HvKQbrq78ctPyoeVRvsd+/WcjQALEN
-         Vqrg==
-X-Gm-Message-State: ALQs6tBT4+bYwIpg9PK4doTrMv+Y/JKq7du25sxrDInHWvkaKqimVErP
-        /GvGxJZmiQGYE2GZ57hqsK8=
-X-Google-Smtp-Source: AIpwx49l7eZYKZxnFJ2kiKFHEqAA6jjXYTCvxAPKByJ9kNpJfa2r0mC6K78EZanB+/9ZFpc5vGlRig==
-X-Received: by 10.28.235.3 with SMTP id j3mr2592335wmh.146.1524243553502;
-        Fri, 20 Apr 2018 09:59:13 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egc153.neoplus.adsl.tpnet.pl. [83.21.66.153])
-        by smtp.gmail.com with ESMTPSA id u187sm1471835wmu.46.2018.04.20.09.59.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Apr 2018 09:59:12 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 09/12] fsck: check commit-graph
-References: <20180417181028.198397-1-dstolee@microsoft.com>
-        <20180417181028.198397-10-dstolee@microsoft.com>
-Date:   Fri, 20 Apr 2018 18:59:12 +0200
-In-Reply-To: <20180417181028.198397-10-dstolee@microsoft.com> (Derrick
-        Stolee's message of "Tue, 17 Apr 2018 18:10:44 +0000")
-Message-ID: <86bmedervj.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=t1DKd4VGLmuDTkIKEBdMLjO/LPV5QahMdFZmB4zEMH4=;
+        b=KxP9ew1PNrO0+dcGi9TMcGf0HUAcff3VUr0Sir5mDY4s6IWW847hpvbECmGKYICk3m
+         FI5D5bLFiQSzrTS6nQ45ZiEhy/y1e5V/0myC2gGVo02jVgDNfvusFtq+JNBUV9NYW2K/
+         HfQ1Pc2UdkgRSS5IBXTVyO5uK4g8lWkmktbu+FfubR6g0crxF73K0/MQ/w79oN8UYDSk
+         zf1aEypWyGukTDBKyz6cVkr9Js+eQqaiheQs6EzY44gjhT8IqF7iouzjCQeDNHy8NEyK
+         /GNa80ELx+G95x8crfi4iCPSF5Vtt+rNo7Vgx3jK4P+bRy3BZA5uW+8XvCbIwIiYJBAg
+         G7xQ==
+X-Gm-Message-State: ALQs6tDnVrk4rBH2kHy0C2VCJB9va2kIvSyBvrbyRV3c9nXrh4rwFOvc
+        NfMGtr5iEw8aQ+lnZRGGx1H7kaQO0aG0OedHL0E=
+X-Google-Smtp-Source: AIpwx49sAIxEqfcAGZPEf+mlKT+829uRj/QSM4X4b9aFmBsD2AuKky6wOfAKEryy3Agc4fbEKrzYQS6CrdTNrJYCQ6o=
+X-Received: by 10.159.56.15 with SMTP id p15mr5085804uad.112.1524243751853;
+ Fri, 20 Apr 2018 10:02:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.176.95.4 with HTTP; Fri, 20 Apr 2018 10:02:30 -0700 (PDT)
+In-Reply-To: <20180420133632.17580-2-benpeart@microsoft.com>
+References: <20180420133632.17580-1-benpeart@microsoft.com> <20180420133632.17580-2-benpeart@microsoft.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 20 Apr 2018 10:02:30 -0700
+Message-ID: <CABPp-BFANBs=tOhS5BFfTMkdQsNYbUDExWK8QB0V=qD9YwZyWw@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] merge: Add merge.renames config setting
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
-
-> If a commit-graph file exists, check its contents during 'git fsck'.
-
-Is it "if a commit-graph file exists", or is it core.commitGraph feature
-is turned on?
-
+On Fri, Apr 20, 2018 at 6:36 AM, Ben Peart <Ben.Peart@microsoft.com> wrote:
+> --- a/Documentation/merge-config.txt
+> +++ b/Documentation/merge-config.txt
+> @@ -37,6 +37,11 @@ merge.renameLimit::
+>         during a merge; if not specified, defaults to the value of
+>         diff.renameLimit.
 >
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  builtin/fsck.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
->
-> diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index ef78c6c00c..9712f230ba 100644
-> --- a/builtin/fsck.c
-> +++ b/builtin/fsck.c
-> @@ -16,6 +16,7 @@
->  #include "streaming.h"
->  #include "decorate.h"
->  #include "packfile.h"
-> +#include "run-command.h"
+> +merge.renames::
+> +       Whether and how Git detects renames.  If set to "false",
+> +       rename detection is disabled. If set to "true", basic rename
+> +       detection is enabled. This is the default.
 
-Couln't this be done internally, without run-command?  Or is it just
-preliminary implementation?
+One can already control o->detect_rename via the -Xno-renames and
+-Xfind-renames options.  I think the documentation should mention that
+"false" is the same as passing -Xno-renames, and "true" is the same as
+passing -Xfind-renames.  However, find-renames does take similarity
+threshold as a parameter, so there's a question whether this option
+should provide some way to do the same.  I'm not sure the answer to
+that; it may be that we'd want a separate config option for that, and
+we can wait to add it until someone actually wants it.
 
->  
->  #define REACHABLE 0x0001
->  #define SEEN      0x0002
-> @@ -45,6 +46,7 @@ static int name_objects;
->  #define ERROR_REACHABLE 02
->  #define ERROR_PACK 04
->  #define ERROR_REFS 010
-> +#define ERROR_COMMIT_GRAPH 020
-
-I see that these error status codes are not documented anywhere.  Still,
-I would expect at least mentioning commit-graph in the git-fsck manpage.
-
->  
->  static const char *describe_object(struct object *obj)
->  {
-> @@ -815,5 +817,16 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
->  	}
->  
->  	check_connectivity();
-> +
-> +	if (core_commit_graph) {
-> +		struct child_process commit_graph_check = CHILD_PROCESS_INIT;
-> +		const char *check_argv[] = { "commit-graph", "check", NULL, NULL };
-> +		commit_graph_check.argv = check_argv;
-> +		commit_graph_check.git_cmd = 1;
-> +
-> +		if (run_command(&commit_graph_check))
-> +			errors_found |= ERROR_COMMIT_GRAPH;
-> +	}
-> +
->  	return errors_found;
+>  merge.renormalize::
+>         Tell Git that canonical representation of files in the
+>         repository has changed over time (e.g. earlier commits record
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 9c05eb7f70..cd5367e890 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -3256,6 +3256,7 @@ static void merge_recursive_config(struct merge_options *o)
+>         git_config_get_int("merge.verbosity", &o->verbosity);
+>         git_config_get_int("diff.renamelimit", &o->diff_rename_limit);
+>         git_config_get_int("merge.renamelimit", &o->merge_rename_limit);
+> +       git_config_get_bool("merge.renames", &o->detect_rename);
+>         git_config(git_xmerge_config, NULL);
 >  }
+
+I would expect an explicitly passed -Xno-renames or -Xfind-renames to
+override the config setting.  Could you check if that's the case?
+
+Also, if someone sets merge.renameLimit (to anything) and sets
+merge.renames to false, then they've got a contradictory setup.  Does
+it make sense to check and warn about that anywhere?
