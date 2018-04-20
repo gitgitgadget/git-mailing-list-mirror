@@ -7,74 +7,89 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DABF1F424
-	for <e@80x24.org>; Fri, 20 Apr 2018 08:03:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61C7F1F424
+	for <e@80x24.org>; Fri, 20 Apr 2018 08:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754001AbeDTIDo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 04:03:44 -0400
-Received: from mout.gmx.net ([212.227.17.22]:59293 "EHLO mout.gmx.net"
+        id S1754091AbeDTIEB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 04:04:01 -0400
+Received: from mout.gmx.net ([212.227.17.22]:36613 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753777AbeDTIDh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 04:03:37 -0400
+        id S1753854AbeDTIDz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 04:03:55 -0400
 Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCtLD-1fIXhZ3KnD-009l6R; Fri, 20
- Apr 2018 10:03:30 +0200
-Date:   Fri, 20 Apr 2018 10:03:14 +0200 (DST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LdHLB-1eieuN0sqn-00iXux; Fri, 20
+ Apr 2018 10:03:50 +0200
+Date:   Fri, 20 Apr 2018 10:03:34 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Dan Jacques <dnj@google.com>
-Subject: [PATCH 0/3] Some add-on patches on top of dj/runtime-prefix
-Message-ID: <cover.1524211375.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 1/3] gettext: avoid initialization if the locale dir is not
+ present
+In-Reply-To: <cover.1524211375.git.johannes.schindelin@gmx.de>
+Message-ID: <6be8678b7d6b4d9116ea4666a0b28ff4dd938690.1524211375.git.johannes.schindelin@gmx.de>
+References: <cover.1524211375.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:DAwqhPfakyD6WLiD/lbdTJazx3NNsvoTLV+XZ2MlqpE40A4NTFS
- J4LqU/WFzoJSl3Cle/07LjfRxx7Y27qeQ1d4HHLkb5w+yVvVQPDzZzkY9IxLHaruaTVfpo2
- +trngtpptUrQCFtOMSHBph6gignSc/r1grEOzhMIPUt23qjeIyA95hVHCfXmRrimhbJMxFY
- Vbl3Px62Sq1g4YiidiyAA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Oez7aG2Ii04=:0/fo4wOGS2eIIDztCDTdQG
- 5F8SIY2Q2zHWUbQC0B2PZTkYtf8gF0k0fz/L3xNrhpCmaaU5lsk6UBUpmRNdl6upybMc4Ffdu
- 6Co4lmFqpBLPxjHt/boJkenqHp/qUOoJoR1axVlUIgB1XlUlT3JZQg1vz9JA8nZ1BQlGq1fc2
- icPI8Y0Wu72R0EiOdavvBtCAS6eb6b5/ZbcayDEDMWUcMmQcMT5bfSNlDoT4L8z3MEf5LZo4j
- gD0OW3E/oofcb3wzMh2S304su6EQlaY+GC1c7qCK1JBNrkad8HzMaUJ9Y9GRnMTZXQrJt1vbs
- EG/ufj0iW1i/XLN9gWBhNT2vN/1GF8eBKS6xbbHYbpeuIUGVjgOs887IXRWuR5tGKXpjF9p/l
- PSF8XIoIZfKNdzKTlbTEuYnwXLNI5EYFARJPB4ZJuYn0PAgLkS16NjqsuVbwFJKDbNUkLutjM
- kyfppeK73IJ6CfFaz0Ek5rFukcnK6yoPEJlGtFOCTzOfhdStHCkckPRkcaCRvWIieQdu00Rx9
- Bl5y7OpnXPlVV7SA2NSq3Ti5XZAWQ3A7HFYjNBrysJAx2ecfoZiLG2exnvjB/ichf/THCyW4u
- Lc0XDVDH8wruVpxNBdqtfg1Ic2qjDjLLlDZ1oQ54muS3dA/fRM3NP/ZLP8ubOKyVui7JdzQQN
- f3mgokn0ZXzTeZHUqE7DRoDLNW/ZzoYa1ek82E7OVJE3d2veY4NhlcOo+hxZr+8UftI/5oSis
- o2TD3Ku0e87fwjchD2ohWWh6CFUoK/Eqdq9kzWFAqwS91AMXS+w+uIGE2018j9WDhrHH6dSxI
- Aqnlx7DNq74N15mMvaeciPgv6O3i1qw6VGdtaAwLHie/g7pktU=
+X-Provags-ID: V03:K1:NaM1DZNao1yCucTUmgNRkTJ9YcU8aoRCrQyMARCaEGN7xCBWOko
+ btQCrGpuY35Nr0wLZ56pBd8iA9sCM7rN4YN9YDoN3Qe4xuZK0G81PYKWtc9BkLXVF9y3f6q
+ 9RdrZtnGcs/O8mzXEUwsIw7Z7cGp8txexwmuFfreTzRDZNpdvSoklZUHewsQ/GWL4ip2OVQ
+ XsOks2r8N5Wq2o1kfcWBQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:H3itjLvgtrw=:/4LY7T1mD+1eReYr+i7vbr
+ zzs5dOWET4JFGdZaM0g2Rv6RrmplGX9A5HVDnWATRINe04w4OgjMRH8RmBP4TI89hSs9IGhA8
+ 7PHKYdBmPVFQkl/D0ZXPDJpt3oOltXWwzeJ537zo8d68o5qKsLzxaTMi7bpyhECRQKs9psQ5Y
+ IrTVav2QFVzBT0veF8+DdoAODZPLpAwEtIek4zAlcImHyt93Z+3B6bJDtFrtfCqqY3Gk/ZOiW
+ XOjuLsNM+wyYduOqeMvMlyfDlFFP4d/mKlIbj9Sdxd+VmBq4mDGWTrOlo+h6rgD9zXB/IpXx/
+ ik2JSKTgppjDc5z3HfPQHHDcsD98HvZ513pFJLNcizlpF/6weTPpvBiIREmuaw+h+VMmLlau+
+ yHZofQalpl65DeVuzzWGf57uKk9065izpz0+w+22bv0fYt08eqTuppZaQMLaznh9VUvHL4AD0
+ /Wfk/tjmfBro+qKHVMac04/VJr+mWqgV1UlZ5uaJO+IjxvCnp+4yU43HQhIcY7QfDQFQnscoT
+ DWRSpq5pjkBBwUexgwFkXBOrBn7F4UD1hznMIqOBoXUzol/9yctNszNR2JlL9/+W9bIchQG56
+ Ad/hcQ7bI67Jaf7TJpzpYypyLtFHQjzn15qXgCNsjYk9DmbcwPjJvegIH8v3ZgKnhUHLSXA3L
+ uK2joRKgrwXAgUQyolzlZA7U9kPLinUeLs2DHUBLcQTRpJOyQijDq4vBum4HAtlNq6fpkikTP
+ Zm9S1F88egAeCNxYA+j0XnzrX+50ShZgI9qYC7FIinIeUkceSKrtbw8uItAhXnMaGZ6O034ZP
+ 0rd1IaVMj4oGb2sflizmzbi63cqkMDlgqChLFCmt+0xVas7HQc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We carried a slightly different version of the git_setup_gettext() patch
-(which took care of releasing the buffer allocated by system_path()),
-and we carry two more patches that touch the same area, so now that
-dj/runtime-prefix hit `next`, it seems a good time to contribute those,
-too.
+The runtime of a simple `git.exe version` call on Windows is currently
+dominated by the gettext setup, adding a whopping ~150ms to the ~210ms
+total.
 
+Given that this cost is added to each and every git.exe invocation goes
+through common-main's invocation of git_setup_gettext(), and given that
+scripts have to call git.exe dozens, if not hundreds, of times, this is
+a substantial performance penalty.
 
-Johannes Schindelin (2):
-  gettext: avoid initialization if the locale dir is not present
-  git_setup_gettext: plug memory leak
+This is particularly pointless when considering that Git for Windows
+ships without localization (to keep the installer's size to a bearable
+~34MB): all that time setting up gettext is for naught.
 
-Philip Oakley (1):
-  Avoid multiple PREFIX definitions
+So let's be smart about it and skip setting up gettext if the locale
+directory is not even present.
 
- Makefile   |  2 +-
- exec-cmd.c |  4 ++--
- gettext.c  | 10 +++++++++-
- sideband.c | 10 +++++-----
- 4 files changed, 17 insertions(+), 9 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ gettext.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-
-base-commit: 8a3641ab3abcf492e9443f88d82a7a22fa8b4816
-Published-As: https://github.com/dscho/git/releases/tag/runtime-prefix-addons-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git runtime-prefix-addons-v1
+diff --git a/gettext.c b/gettext.c
+index baba28343c3..701355d66e7 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -163,6 +163,9 @@ void git_setup_gettext(void)
+ 	if (!podir)
+ 		podir = system_path(GIT_LOCALE_PATH);
+ 
++	if (!is_directory(podir))
++		return;
++
+ 	bindtextdomain("git", podir);
+ 	setlocale(LC_MESSAGES, "");
+ 	setlocale(LC_TIME, "");
 -- 
 2.17.0.windows.1.15.gaa56ade3205
+
 
