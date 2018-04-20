@@ -7,158 +7,124 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F315E1F424
-	for <e@80x24.org>; Fri, 20 Apr 2018 08:04:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8AE71F424
+	for <e@80x24.org>; Fri, 20 Apr 2018 08:12:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754280AbeDTIEi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 04:04:38 -0400
-Received: from mout.gmx.net ([212.227.17.21]:36935 "EHLO mout.gmx.net"
+        id S1754308AbeDTIMe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 04:12:34 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52991 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754253AbeDTIEc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 04:04:32 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3NEK-1eIZQa0eo4-00r3O5; Fri, 20
- Apr 2018 10:04:28 +0200
-Date:   Fri, 20 Apr 2018 10:04:12 +0200 (DST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1754381AbeDTIMI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 04:12:08 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MI5rO-1f8tzD1eMY-003w3w; Fri, 20
+ Apr 2018 10:12:01 +0200
+Date:   Fri, 20 Apr 2018 10:11:45 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git@vger.kernel.org
-cc:     Philip Oakley <philipoakley@iee.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Dan Jacques <dnj@google.com>
-Subject: [PATCH 3/3] Avoid multiple PREFIX definitions
-In-Reply-To: <cover.1524211375.git.johannes.schindelin@gmx.de>
-Message-ID: <d134afdd22c9cdfd763213b37efac4ef0399a374.1524211375.git.johannes.schindelin@gmx.de>
-References: <cover.1524211375.git.johannes.schindelin@gmx.de>
+To:     phillip.wood@dunelm.org.uk
+cc:     Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] ident: don't cache default date
+In-Reply-To: <65ca9629-46b1-2963-9b6b-99f12a18689d@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1804201010120.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <5f5d5b88-b3ac-ed4f-ee24-6ce2cba2bd55@kdbg.org> <20180418102236.7183-1-phillip.wood@talktalk.net> <87vacoeovh.fsf@evledraar.gmail.com> <85ecb584-77a7-f818-14c9-1019873d87f9@talktalk.net> <d4aee85d-956f-ac93-b909-6dfeb5ea8fd7@kdbg.org>
+ <65ca9629-46b1-2963-9b6b-99f12a18689d@talktalk.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wun/HQn3NpBHdSTe6X7dD/zJg0uGuuxU7Z0742gUhn9eodiKVYH
- HmK/L5u2wYsvjNoeAzGxaffVDpIx3uIOhUCU/jl1mVN0kXvqZYJlbwtSZtWqtubzfwe/lCf
- UNs25fdVFfLSOSEVIz9Ixu3inEuupXjh+dxUF+gb878EexbS+rHRdEunfCj7NU5L9ALSyjb
- JNBPtrdSnB+lsyisM/nPA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kgu6zU4x00o=:JyE/zXLKFvkXKM+5+C9XX4
- 4nwdZQM/SPhuGklqOcZ6Wuf+ZTAnWNOnR1lClnO6wmb2u1r9JlLR8CM2cdcoFhdfR5VDc0Ecf
- RddFOcBR7P7r3EdtvwlRHSGTE0VeHqfLF0H2yWEuS+ZbrL/FxOzqJyQFN10ZntavFlWvnb+HC
- JU9PYXlVn6sIMd3QBiXdarKOBtrgA/nx/ub17m9k7eTe3HIAcBlLWVFPhLKquBJs2+fw2xzKB
- OWoMPs8TuYxxWR6NcKG9lg5wjje54/+/ZNAYkxPzGQIy9jRZ2+fRcT8iznOrHhK/MTM7aBs7p
- RzXlv1hBMIrwxcS9/ilYYawnEIJKQbegxBHmsTNmFxmqO0QluqugnxL79rECUNgS1ascgnsyE
- pgmf8wCZCkArMAr/TxpAsBquJwmjhdJlOVaHaEumjmZlTjjThEfUI2iXzKy614A+15h6o6gWy
- xIYoktFBjMDb69yRioLarT9qV4XxOaCmesPS91qYG8H58xu8iW5VCGJ8xPL8uKcWc838rROk8
- yeYl5xIQTyYuED+olw/cTUWLj298SELhSyRNB5X7luRENnQn2dFldTxVC1CgcvpULH0XfSP1U
- dXdBWDSO/tGGFEKGd60E7CMpO/CWx9YqweAoAt7pSzkwTnAuk6nhGDKUFZ8zeXKLqHYklc9BU
- ZN3kr2myz/a7e1Q/clm7qbLzEl83omXpec8Bn/UnMB2++osp5UBicwfZ6t8/+7mHOQcjznRGr
- 4dxWGA1a858KQnFRs5VVW/JTR8qaDrNbX7ujHGQsAMkDm9DbCpx8vMDuWknk/X7gofiwyoZ9Z
- aYrDPLzMjw8iyHenpTE7fhjkjwJzhutvJw4qheHTLSYpzD7mj4=
+Content-Type: multipart/mixed; boundary="8323329-1717360249-1524211921=:4241"
+X-Provags-ID: V03:K1:ooiBmSIYMktDFu2/LaslP5cYd3I/2kaMJElb2imm1AsGbnDX7fU
+ sTwfdSU3RE1P9M2nhsI76XOkUwe+2/cJkzOhKoaLz+23sI33L1o+tOca5BuDRjSxbpjtW9u
+ VKuhwbP8tbYtDVLx2EZ08xI93LcM5P1AA/aX0/xzW7I8TP+g6nyP9CNtPnfNVoWyKjzZSSv
+ J7YJEB1HPvxa7aaCjPXYQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DfPCwCuymjk=:VgrZr5cevX8i1pQhjUBwvN
+ NvPRPxjNq4jKFRywBHtKj0gz+i8W+HUxLhpDKA9GckNivczclTSMEWxQpK8XQf7NOyPrNtXsP
+ 4hXTDwviDkR4ycBkfwFMBjsSv3YiEzmjUBWEqXP4MuS4Qgp2czvNrWDQXdsBP3RexbXvjXE2p
+ gUDhWiixX5puv0I7IqT/BRD92euqt6Q8XeeDrdUeR/5xSKe0o5DPHrCXceuakpO9m3ztupMKU
+ iBzJXYt73jpZ/RDEvBIlByCDWFHwKCOZwww82NtgXRwujoZWfYApc69uJfFD2cDCK3KfXj4o7
+ +JrYt4o0jjlf4AKx9Dfv4bXn84AwBMZrb5JLToZbN04wAoD3K0f/AqreqK5toMXnKaEslTKog
+ Xd2ojh7hL8VJWDQ1C6BkT0MIxxidYOLUx7bC1GlBgOcNHIxq6YCRfG7SY5u0nAyQX8C7ShapE
+ YuFEDMkr/pCsB6jNI7fI4xPHaZQP+McYyxR4sU/3zHgJc7RLbBT6gDYlDqXffITh8Ec949Vsm
+ DDgTHC4PlPdZJrBqVqEFzp3fYqJEi7flUuI+Lo0ZvsagCGtOPQ6k6HDQJBXXIYCEGVimRAUdX
+ Be6Whva6ZWgqOqFieFZ0dRyX78IzX0sblP7nh7HioeQwVREQE/W7vEReyNmA1ANlF8uyMp9DJ
+ eoTi1vSdweLQOwH765JaAI04unKRyRiT8l9ERXm0fF5LseCwnwm0fi3eG6/i/1NmUpRJGKDZf
+ 1d80TgdjZmQrcvb5YV3s10ie/zAEGhlnq65P9UMzSYtTGN1b1Hz6N9i+jdYHCWHFN2eTeXm9O
+ pLVKILEUH72eTc3IuWh4fska/VpdXSyZiGDcH1OSg8AApf3R54=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philip Oakley <philipoakley@iee.org>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The short and sweet PREFIX can be confused when used in many places.
+--8323329-1717360249-1524211921=:4241
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Rename both usages to better describe their purpose. EXEC_CMD_PREFIX is
-used in full to disambiguate it from the nearby GIT_EXEC_PATH.
+Hi Phillip,
 
-The PREFIX in sideband.c, while nominally independant of the exec_cmd
-PREFIX, does reside within libgit[1], so the definitions would clash
-when taken together with a PREFIX given on the command line for use by
-exec_cmd.c.
+On Thu, 19 Apr 2018, Phillip Wood wrote:
 
-Noticed when compiling Git for Windows using MSVC/Visual Studio [1] which
-reports the conflict beteeen the command line definition and the
-definition in sideband.c within the libgit project.
+> On 18/04/18 19:15, Johannes Sixt wrote:
+> > Am 18.04.2018 um 19:47 schrieb Phillip Wood:
+> >> On 18/04/18 12:27, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >>> On Wed, Apr 18 2018, Phillip Wood wrote:
+> >>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >>>> as it is created by running an separate instance of 'git commit'.  I=
+f
+> >>>> the reworded commit is follow by further picks, those later commits
+> >>>> will have an earlier committer date than the reworded one. This is
+> >>>> caused by git caching the default date used when GIT_COMMITTER_DATE =
+is
+> >>>> not set. Fix this by not caching the date.
+> >>>>
+> >>>> Users expect commits to have the same author and committer dates whe=
+n
+> >>>> the don't explicitly set them. As the date is now updated each time
+> >>>> git_author_info() or git_committer_info() is run it is possible to e=
+nd
+> >>>> up with different author and committer dates. Fix this for
+> >>>> 'commit-tree', 'notes' and 'merge' by using a single date in
+> >>>> commit_tree_extended() and passing it explicitly to the new function=
+s
+> >>>> git_author_info_with_date() and git_committer_info_with_date() when
+> >>>> neither the author date nor the committer date are explicitly
+> >>>> set. 'commit' always passes the author date to commit_tree_extended(=
+)
+> >>>> and relied on the date caching to have the same committer and author
+> >>>> dates when neither was specified. Fix this by setting
+> >>>> GIT_COMMITTER_DATE to be the same as the author date passed to
+> >>>> commit_tree_extended().
+> >>>>
+> >>>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >>>> Reported-by: Johannes Sixt <j6t@kdbg.org>
+> >>>> ---
+> >>>>
+> >>>> I'm slightly nervous that setting GIT_COMMITTER_DATE in
+> >>>> builtin/commit.c will break someone's hook script. Maybe it would be
+> >>>> better to add a committer parameter to commit_tree() and
+> >>>> commit_tree_extended().
+> >=20
+> > While I like the basic theme of your patch, I think we should fix this
+> > case in a much simpler way, namely, use the infrastructure that was
+> > introduced for git-am.
+> >=20
+> > I've shamelessly lifted the commit message from your patch.
+>=20
+> Thanks, that is a better way (I'm annoyed with myself for not having
+> noticed reset_ident_date() when I edited the function above it)
 
-[1] the libgit functions are brought into a single sub-project
-within the Visual Studio construction script provided in contrib,
-and hence uses a single command for both exec_cmd.c and sideband.c.
+Don't be too annoyed. I did remember that The Linus had complained about
+something similar and assumed that it had been fixed in the meantime, but
+I failed to find it within 30 minutes where I tried to dig through
+public-inbox and pu.
 
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Makefile   |  2 +-
- exec-cmd.c |  4 ++--
- sideband.c | 10 +++++-----
- 3 files changed, 8 insertions(+), 8 deletions(-)
+Thanks Hannes for remembering, and for coming up with the final form of
+the patch!
 
-diff --git a/Makefile b/Makefile
-index 111e93d3bea..49cec672242 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2271,7 +2271,7 @@ exec-cmd.sp exec-cmd.s exec-cmd.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
- 	'-DGIT_LOCALE_PATH="$(localedir_relative_SQ)"' \
- 	'-DBINDIR="$(bindir_relative_SQ)"' \
--	'-DPREFIX="$(prefix_SQ)"'
-+	'-DFALLBACK_RUNTIME_PREFIX="$(prefix_SQ)"'
- 
- builtin/init-db.sp builtin/init-db.s builtin/init-db.o: GIT-PREFIX
- builtin/init-db.sp builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
-diff --git a/exec-cmd.c b/exec-cmd.c
-index 3b0a039083a..02d31ee8971 100644
---- a/exec-cmd.c
-+++ b/exec-cmd.c
-@@ -48,7 +48,7 @@ static const char *system_prefix(void)
- 	    !(prefix = strip_path_suffix(executable_dirname, GIT_EXEC_PATH)) &&
- 	    !(prefix = strip_path_suffix(executable_dirname, BINDIR)) &&
- 	    !(prefix = strip_path_suffix(executable_dirname, "git"))) {
--		prefix = PREFIX;
-+		prefix = FALLBACK_RUNTIME_PREFIX;
- 		trace_printf("RUNTIME_PREFIX requested, "
- 				"but prefix computation failed.  "
- 				"Using static fallback '%s'.\n", prefix);
-@@ -243,7 +243,7 @@ void git_resolve_executable_dir(const char *argv0)
-  */
- static const char *system_prefix(void)
- {
--	return PREFIX;
-+	return FALLBACK_RUNTIME_PREFIX;
- }
- 
- /*
-diff --git a/sideband.c b/sideband.c
-index 6d7f943e438..325bf0e974a 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -13,7 +13,7 @@
-  * the remote died unexpectedly.  A flush() concludes the stream.
-  */
- 
--#define PREFIX "remote: "
-+#define DISPLAY_PREFIX "remote: "
- 
- #define ANSI_SUFFIX "\033[K"
- #define DUMB_SUFFIX "        "
-@@ -49,7 +49,7 @@ int recv_sideband(const char *me, int in_stream, int out)
- 		switch (band) {
- 		case 3:
- 			strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
--				    PREFIX, buf + 1);
-+				    DISPLAY_PREFIX, buf + 1);
- 			retval = SIDEBAND_REMOTE_ERROR;
- 			break;
- 		case 2:
-@@ -67,7 +67,7 @@ int recv_sideband(const char *me, int in_stream, int out)
- 				int linelen = brk - b;
- 
- 				if (!outbuf.len)
--					strbuf_addstr(&outbuf, PREFIX);
-+					strbuf_addstr(&outbuf, DISPLAY_PREFIX);
- 				if (linelen > 0) {
- 					strbuf_addf(&outbuf, "%.*s%s%c",
- 						    linelen, b, suffix, *brk);
-@@ -81,8 +81,8 @@ int recv_sideband(const char *me, int in_stream, int out)
- 			}
- 
- 			if (*b)
--				strbuf_addf(&outbuf, "%s%s",
--					    outbuf.len ? "" : PREFIX, b);
-+				strbuf_addf(&outbuf, "%s%s", outbuf.len ?
-+					    "" : DISPLAY_PREFIX, b);
- 			break;
- 		case 1:
- 			write_or_die(out, buf + 1, len);
--- 
-2.17.0.windows.1.15.gaa56ade3205
+Ciao,
+Dscho
+--8323329-1717360249-1524211921=:4241--
