@@ -2,88 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C1BA1F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 12:17:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87C951F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 12:18:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754787AbeDTMR4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 08:17:56 -0400
-Received: from mout.gmx.net ([212.227.17.22]:59933 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754736AbeDTMRz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 08:17:55 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3ARX-1eJsGf05yh-00sst3; Fri, 20
- Apr 2018 14:17:50 +0200
-Date:   Fri, 20 Apr 2018 14:17:33 +0200 (DST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 0/3] rebase -i: avoid stale "# This is a combination of" in
- commit messages
-Message-ID: <cover.1524226637.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754791AbeDTMSD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 08:18:03 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:41216 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754726AbeDTMSC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 08:18:02 -0400
+Received: by mail-wr0-f193.google.com with SMTP id v24-v6so22423972wra.8
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 05:18:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=CKFmUJzvotRgKUzGBXAXGQ6lVmX4+hFmXkueP3dzpxw=;
+        b=H0aMICZAacQsQy6Yzw8wNY2QNJV29xPIelCJAgD8vkh95EBTTxquHNJLtakOhyxWsN
+         fUR8RruYm2b4uA0l7wp1XIIDGy0imvyBiegXxo/OD3fW5jjFdIXFaP5EiROuBuTpMtyn
+         OWtemAdBN1wL5taSuSDdg0CAq9KkkMGt8+oRTMAMaocQVvkGgS5GuZ+mtVovCIvpcMnn
+         tSEJD/aLJMP0UiUuakoQZpTicopk2Tq/oRdnnN1+gfToX7wluqbkP7iPTvUBh6HwlKQC
+         0CaoWzeqGAmGfbaNgFKSaJi+pJ88cHb8UW2qKhjFz0glvM4jcpLMa/YbhawfeVx4VDdK
+         Q+jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=CKFmUJzvotRgKUzGBXAXGQ6lVmX4+hFmXkueP3dzpxw=;
+        b=R539cb99Ks+o+28Ev6s4PB2y03aSF9x2PqanjLtbICMJf8SQ4d23JScoUm065JKEA7
+         vFrxxPv2KiUvrFh8e3+sMYpH5dIHpiEqRVC9NRBTYHTCP6nO6rYEr0a81S1B3efaN3nk
+         EP4uglqjYe2n8hNXnupqEcb3zg/Bk0MfEZG1A4buL8vXV02VbZsR23mn3DhIcT/nDfNc
+         +0Bxyfq42gFbST8GMdGoY+IT6qBFciN8JWybQt9Mr5qjmxVCiUa6W6NigVWxsfqE1DXf
+         yTr99WsN98rQ4vnZKmuHGcv9vC+yXSRuHtryuHB7MliDyMhazWGGuk1VRG0ogR46fdj+
+         jkEQ==
+X-Gm-Message-State: ALQs6tBzDF3eEd3sHuGi4hpi3ga5IAFm7LgOLZ/DIOzLKmS/CS5CWBXp
+        Iaw75jq/GcABGBColbxHq6qcNdOY
+X-Google-Smtp-Source: AIpwx489oUlXuhOaLARIy1l+uCfwNAcEQK/NF6mAwIL65aBMvMfdNWo/5mFmwEcG3lCaUUfAgtYBcA==
+X-Received: by 2002:adf:dfcc:: with SMTP id q12-v6mr2590390wrn.68.1524226681546;
+        Fri, 20 Apr 2018 05:18:01 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egc153.neoplus.adsl.tpnet.pl. [83.21.66.153])
+        by smtp.gmail.com with ESMTPSA id e185sm1860934wmg.5.2018.04.20.05.18.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Apr 2018 05:18:00 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH 07/12] commit-graph: load a root tree from specific graph
+References: <20180417181028.198397-1-dstolee@microsoft.com>
+        <20180417181028.198397-8-dstolee@microsoft.com>
+Date:   Fri, 20 Apr 2018 14:18:00 +0200
+In-Reply-To: <20180417181028.198397-8-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Tue, 17 Apr 2018 18:10:42 +0000")
+Message-ID: <86o9iedqbr.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:n8b6tYRpjiYZ/3aUNHScErZ7PHeAcYM+74tD6cpZTXxhyX1BayL
- k5cpqku8uc7qHm6HxH7j+PtKmkZx8/PCsgqKifbe93Luyq7j0iWEQwBTbKMqYIjQOeKARox
- oiDCIShpd7BL+uFbbQ5KZKYxUz+HekOdW/5+PAr57+M3+yRvPs2MoNr0o3rZKdZWhTEwsFb
- Uz4h3m9kXOAmGdKSXjxdA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cbZ0eb1pvjY=:i0J3qPz2zM8V5ur9Z/5+Ce
- 1koHv5G/LOKrhBtu+m1h+CCsEU2znuV+c82JrKERBXu1WXH/mshgiUkVhGqH3cKD/KLx4KZad
- +jlcFnNfsRRJdxgRsXa+4AM2/ZS9cemaZdQvcB91pCzD8kQhAePmeJEi2E4K+y7YN+jf4pxxD
- QNQ7nZEFuF+Xo5kFTKZySWfxRDpFAjcTzeysTG6E6N/Bt7JNcWM3/xP2oD6sRsvml2zbLXTIx
- lQLnagIcMLvLKhnMAKb4e3WL4PynChhdUH/Nb+so82FNzNY+Mqww9tl4/oxyOkQn0S4TTssSi
- p2BkKENiAtWyXxj+TVYhCNs9LaE4yaNrHDvfXqxmOoJvgavQju47vxvxmR0tHoZfzM9XjwsMv
- H6fFXx6CXAXWDDdjAZTvmOV5XcJa3l0cVDJXWwXRlF8jNWh1O6j6zPS9IyLf5X8r4rvV6TTCc
- tgTEqMqQ61scaBP0sylSlWs8tPg4mcvnhTvKlELSdpfO54hoOzlWp2ypF+pGSd87a3yG20gC0
- /ZSv7pSeKt+m+KktFmoO0Rc6S5V/9Zv227jTn3YJU1Ii2CYum3WMYeuKgkUSLPN/d+3q2S3H9
- qo05djlvPx4wQIeAP+ivFWKpddH0g2b3xHmQowlYC00zb4nXLQPyj26emPRyqYoaP8pW5j1yL
- krIHTvkfSp7Q2R3O9Ix0EGx+Vjw5R5RRx9LMInwz8ex+TLiP1pCpotnEF//jhs95zrF0JCpuB
- qNVPl/kv3WPa9uQ4MVUX4IyxrqRVw+j5eh6tPSF60JaUYGsp45ZX8w84WfgTfTiHNFfYSp+JE
- m57K4b3hwM1YlZ/tShhSJjrDVJFf/s3kC+hHfcGH/VxsKhnhiI=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine pointed out that I had such a commit message in
-https://public-inbox.org/git/CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com/
-and I went on a hunt to figure out how the heck this happened.
+Derrick Stolee <dstolee@microsoft.com> writes:
 
-Turns out that if there is a fixup/squash chain where the *last* command
-fails with merge conflicts, and we either --skip ahead or resolve the
-conflict to a clean tree and then --continue, our code does not do a
-final cleanup.
+> When lazy-loading a tree for a commit, it will be important to select
+> the tree from a specific struct commit_graph. Create a new method that
+> specifies the commit-graph file and use that in
+> get_commit_tree_in_graph().
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 
-Contrary to my initial gut feeling, this bug was not introduced by my
-rewrite in C of the core parts of rebase -i, but it looks to me as if
-that bug was with us for a very long time (at least the --skip part).
+Looks good to me.
 
-The developer (read: user of rebase -i) in me says that we would want to
-fast-track this, but the author of rebase -i in me says that we should
-be cautious and cook this in `next` for a while.
-
-
-Johannes Schindelin (3):
-  rebase -i: demonstrate bug with fixup!/squash! commit messages
-  sequencer: leave a tell-tale when a fixup/squash failed
-  rebase --skip: clean up commit message after a failed fixup/squash
-
- sequencer.c                | 57 ++++++++++++++++++++++++++++++++------
- t/t3418-rebase-continue.sh | 21 ++++++++++++++
- 2 files changed, 69 insertions(+), 9 deletions(-)
-
-
-base-commit: fe0a9eaf31dd0c349ae4308498c33a5c3794b293
-Published-As: https://github.com/dscho/git/releases/tag/clean-msg-after-fixup-continue-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git clean-msg-after-fixup-continue-v1
--- 
-2.17.0.windows.1.15.gaa56ade3205
-
+> ---
+>  commit-graph.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+[...]
