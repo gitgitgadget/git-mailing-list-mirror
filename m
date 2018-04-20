@@ -2,173 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9422D1F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 19:08:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BA781F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 19:10:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751258AbeDTTIw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 15:08:52 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:35639 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751092AbeDTTIv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 15:08:51 -0400
-Received: by mail-wr0-f196.google.com with SMTP id w3-v6so25538654wrg.2
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 12:08:50 -0700 (PDT)
+        id S1750927AbeDTTKW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 15:10:22 -0400
+Received: from mail-wr0-f178.google.com ([209.85.128.178]:37944 "EHLO
+        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750841AbeDTTKV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 15:10:21 -0400
+Received: by mail-wr0-f178.google.com with SMTP id h3-v6so25575803wrh.5
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 12:10:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=UEvOU/fm/9erRlUOvkkf/zxTxnUi+L9uV29FrEjOgtg=;
-        b=vTYWZclnRGqJ9dBlcwjAZ/kmZAp3Y5O+m4cJIiEjzRnyOTso/3cdxdLfhdat/peu37
-         Jwmj8U83OUtZm38FhPrgZ2oU8oK/mJh1W2EdjWzlx+czZNei38/fdA2JCpQzDJFS4sXQ
-         chPI5uI7GDFX0GK/w5AQCVT9R72aV4moTQ3RUqrK1Hnez2ektF6vYStWhieftRtWQ3oR
-         ogPFgPvJXTnPY92+9EUQmPEdXrVILCwlGDBeXNnKqyGlCW1mjskYixlO3JsKYz/HS1AB
-         wjaU5rSsrFou09y4P7OqlRV9jvoHvdGUYSWvHS6BfXvBupUurt8AVFCZ6QmFZ1r3f+yB
-         ga0w==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=oyJYhofjAEWdpXALeuFqGx+0LtPKtu2gMeU0S2Xqm4Y=;
+        b=mKH/EwQJFx6EFh/8ygUvqg5vVlVj712aOzCKiQBtNo3/aQt81rEsujlmTyvSSfDeyQ
+         UuFQ/3MxkQ32oVjMy5UasR244nvVWikXsKpXlz9439l84WKc4CzT8gP/zv2/t3TcRzkM
+         5DVufeN7Mo8Vyl5Z5aWI+0et2Qhlj9z6tKlqq5f0E2TDVF7LI7ZaOmFehWLqeOKGdp+T
+         vi8Dj7FXkO/96lQoOFACEiHUtYutV1a+nUZ05lXMmu8SItMDFNyw5wLD/i0aHOw0Lf2g
+         rDrrDYnv3cawLiMLhFGXuzfuiyjcMhSU/ZisYkRANHu/+ECQgwgvkMUOaXe6m01KlRWt
+         8kWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UEvOU/fm/9erRlUOvkkf/zxTxnUi+L9uV29FrEjOgtg=;
-        b=nWngp9Cv4BT2H2Y6VRqmpWf4M/yuNwzUz3U8120qJjM0rujsL9S7Arx6sKUOak7Pjo
-         iBtXH8WWp7FQZfJdatkP99z9WJVChZaG6R9OnCmIhDTCcc2QkS+4tZerpi4lpoWehXCv
-         LOYHJo88uFMsADSXWpQ360kx7F+DOz9QZEXwk7Zpo8weF3zdHwPdtzZ4rVBHJGNsqIcv
-         gMMj0ucaMvM1ucnOgH8pRtiWjDoft0tcw+3q57E3K+tDOUtNfXmw/0upTOnXJwENxxHW
-         it6AygsYHOIkfdeklm02p3E50rmp+bopSrc9yJA5l8I6B/h560GSsS7k8+vYc7vMJ9YE
-         7oTw==
-X-Gm-Message-State: ALQs6tBmiOiyhNj3uSB/jSHxK1XXuwj15JYdh81QOG0Z2mVJwczS6bHH
-        /qooKbLazrsxGWorug818a37Y5XAYm8=
-X-Google-Smtp-Source: AIpwx4/d8MwtYiaPFXy9jzUYjTTxK72OZdogRJdNX+vIb3vkVdQTxb5k/bpiQNLpvj4gucoL8SMfig==
-X-Received: by 2002:adf:c4a6:: with SMTP id m35-v6mr9324587wrf.103.1524251329697;
-        Fri, 20 Apr 2018 12:08:49 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id w186sm2383328wmw.27.2018.04.20.12.08.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 20 Apr 2018 12:08:48 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Isaac Chou <Isaac.Chou@microfocus.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v2] fast-export: fix regression skipping some merge-commits
-Date:   Fri, 20 Apr 2018 21:08:29 +0200
-Message-Id: <20180420190829.2433702-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.17.0
-In-Reply-To: <MW2PR18MB22841823133D9C96D4428CDDE5B40@MW2PR18MB2284.namprd18.prod.outlook.com>
-References: <MW2PR18MB22841823133D9C96D4428CDDE5B40@MW2PR18MB2284.namprd18.prod.outlook.com>
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=oyJYhofjAEWdpXALeuFqGx+0LtPKtu2gMeU0S2Xqm4Y=;
+        b=Y6he7VKWQvdZc9s9397z3y1uh/Fs1RMSOIYLRFp7ccaE+fhk1qsgeUHX27DhuPNadj
+         ighrHd/HfUQGrjknM0oh+kQrRjOfqxAyCsRk3D+zNeft1wQaqrN+c5lzkLPYfUkuG+DA
+         BaMQmaIwphQG0+49GQHUnhr1EnuwY8QnZjsfYGOsjuxeSBQqNz8sWhAO5EhszZAGZCSS
+         9/+sIb8r0MZYqdDcBn7Xd0Y6KVFjD24vBwUuIl89o6i+a6XJnkorFWlLqSDgfpz9xmAy
+         KQrJLHVJWi6SPZrdgTsyCDznJ62uFJlZn+WY8Ta6278wlpMbQ77pY77Y2C+MkEN/HOWD
+         sSoA==
+X-Gm-Message-State: ALQs6tAK9WgUrlzBzr3uBOiERr/6Zyfb2M6xVwfhY3KaFi2XxCgC88e3
+        6XivJEqdIsa/wVKI9XjHubAKxKBh
+X-Google-Smtp-Source: AIpwx4+/3VFCfcmiJym1h1IppbsIyTXAJkSKFzAC7d4gh979ebp2OOHvqoBMElZJXSymI8uPgh56tQ==
+X-Received: by 2002:adf:d1d1:: with SMTP id m17-v6mr4730503wri.96.1524251420022;
+        Fri, 20 Apr 2018 12:10:20 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egc153.neoplus.adsl.tpnet.pl. [83.21.66.153])
+        by smtp.gmail.com with ESMTPSA id 58-v6sm12822307wrv.41.2018.04.20.12.10.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Apr 2018 12:10:18 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH 12/12] commit-graph: update design document
+References: <20180417181028.198397-1-dstolee@microsoft.com>
+        <20180417181028.198397-13-dstolee@microsoft.com>
+Date:   Fri, 20 Apr 2018 21:10:18 +0200
+In-Reply-To: <20180417181028.198397-13-dstolee@microsoft.com> (Derrick
+        Stolee's message of "Tue, 17 Apr 2018 18:10:45 +0000")
+Message-ID: <86r2n9d78l.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-7199203937 (object_array: add and use `object_array_pop()`, 2017-09-23)
-noted that the pattern `object = array.objects[--array.nr].item` could
-be abstracted as `object = object_array_pop(&array)`.
+Derrick Stolee <dstolee@microsoft.com> writes:
 
-Unfortunately, one of the conversions was horribly wrong. Between
-grabbing the last object (i.e., peeking at it) and decreasing the object
-count, the original code would sometimes return early. The updated code
-on the other hand, will always pop the last element, then maybe do the
-early return before doing anything with the object.
+> The commit-graph feature is now integrated with 'fsck' and 'gc',
+> so remove those items from the "Future Work" section of the
+> commit-graph design document.
 
-The end result is that merge commits where all the parents have still
-not been exported will simply be dropped, meaning that they will be
-completely missing from the exported data.
+See comments below, but this looks good to me.
 
-Reintroduce the pattern of first grabbing the last object (using a new
-function `object_array_peek()`), then later poping it. Using
-`..._peek()` and `..._pop()` makes it clear that we are referring to the
-same item, i.e., we do not grab one element, then remove another one.
+What is missing from the "Future Work" section (and which was somewhat
+implied by now removed "When this feature stabilizes enough to recommend
+to most users") is safety against history [view] changing features:
+git-replace, shallow clone and grafts file.  I wrote about this in
+"Re: [PATCH v8 04/14] graph: add commit graph design document"
+https://public-inbox.org/git/86vacsjdcg.fsf@gmail.com/
 
-Add a test that would have caught this.
+JN> The problem in my opinion lies in different direction, namely that
+JN> commit grafts can change, changing the view of the history.  If we want
+JN> commit-graph file to follow user-visible view of the history of the
+JN> project, it needs to respect current version of commit grafts - but what
+JN> if commit grafts changed since commit-graph file was generated?
+JN> 
+JN> Actually, there are currently three ways to affect the view of the
+JN> history:
+JN> 
+JN> a. legacy commit grafts mechanism; it was first, but it is not safe,
+JN>    cannot be transferred on fetch / push, and is now deprecated.
+JN> 
+JN> b. shallow clones, which are kind of specialized and limited grafts;
+JN>    they used to limit available functionality, but restrictions are
+JN>    being lifted (or perhaps even got lifted)
+JN> 
+JN> c. git-replace mechanism, where we can create an "overlay" of any
+JN>    object, and is intended to be among others replacement for commit
+JN>    grafts; safe, transferable, can be turned off with "git
+JN>    --no-replace-objects <command>"
+JN> 
+JN> All those can change; some more likely than others.  The problem is if
+JN> they change between writing commit-graph file (respecting old view of
+JN> the history) and reading it (where we expect to see the new view).
+JN> 
+JN> a. grafts file can change: lines can be added, removed or changed
+JN> 
+JN> b. shallow clones can be deepened or shortened, or even make
+JN>    not shallow
+JN> 
+JN> c. new replacements can be added, old removed, and existing edited
+JN> 
+JN> 
+JN> There are, as far as I can see, two ways of handling the issue of Git
+JN> features that can change the view of the project's history, namely:
+JN> 
+JN>  * Disable commit-graph reading when any of this features are used, and
+JN>    always write full graph info.
+JN> 
+JN>    This may not matter much for shallow clones, where commit count
+JN>    should be small anyway, but when using git-replace to stitch together
+JN>    current repository with historical one, commit-graph would be
+JN>    certainly useful.  Also, git-replace does not need to change history.
+JN> 
+JN>    On the other hand I think it is the easier solution.
+JN> 
+JN> Or
+JN> 
+JN>  * Detect somehow that the view of the history changed, and invalidate
+JN>    commit-graph (perhaps even automatically regenerate it).
+JN> 
+JN>    For shallow clone changes I think one can still use the old
+JN>    commit-graph file to generate the new one.  For other cases, the
+JN>    metadata is simple to modify, but indices such as generation number
+JN>    would need to be at least partially calculated anew.
 
-Reported-by: Isaac Chou <Isaac.Chou@microfocus.com>
-Analyzed-by: Isaac Chou <Isaac.Chou@microfocus.com>
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
-Hmph. Version 1 described the test as "todo". This version uses a better
-description. No other changes.
+Note that in all cases one can simply discard generation number
+information (treating it as if it was ZERO), and use commit-graph as
+values before applying history-changing feature: replacements, grafts or
+shallow.
 
- t/t9350-fast-export.sh | 22 ++++++++++++++++++++++
- object.h               |  9 +++++++++
- builtin/fast-export.c  |  3 ++-
- 3 files changed, 33 insertions(+), 1 deletion(-)
+Well, at least for shallow you can do that for generation numbers: using
+grafts (deprecated) or replacements to join repository with historical
+one would mean that we are no longer have commit-graph transitively
+closed under reachability.
 
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 866ddf6058..194782b05b 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -540,4 +540,26 @@ test_expect_success 'when using -C, do not declare copy when source of copy is a
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'merge commit gets exported with --import-marks' '
-+	test_create_repo merging &&
-+	git -C merging commit --allow-empty -m initial &&
-+
-+	git -C merging checkout -b topic &&
-+	>merging/topic-file &&
-+	git -C merging add topic-file &&
-+	git -C merging commit -m topic-file &&
-+
-+	git -C merging checkout master &&
-+	>merging/master-file &&
-+	git -C merging add master-file &&
-+	git -C merging commit -m master-file &&
-+
-+	git -C merging merge --no-ff topic -m "merge the topic" &&
-+
-+	oid=$(git -C merging rev-parse HEAD^^) &&
-+	echo :1 $oid >merging/git-marks &&
-+	git -C merging fast-export --import-marks=git-marks refs/heads/master >out &&
-+	grep "merge the topic" out
-+'
-+
- test_done
-diff --git a/object.h b/object.h
-index f13f85b2a9..4d8ce280d9 100644
---- a/object.h
-+++ b/object.h
-@@ -129,6 +129,15 @@ void add_object_array_with_path(struct object *obj, const char *name, struct obj
-  */
- struct object *object_array_pop(struct object_array *array);
- 
-+/*
-+ * Returns NULL if the array is empty. Otherwise, returns the last object.
-+ * That is, the returned value is what `object_array_pop()` would have returned.
-+ */
-+inline struct object *object_array_peek(const struct object_array *array)
-+{
-+	return array->nr ? array->objects[array->nr - 1].item : NULL;
-+}
-+
- typedef int (*object_array_each_func_t)(struct object_array_entry *, void *);
- 
- /*
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 27b2cc138e..8377d27b46 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -650,9 +650,10 @@ static void handle_tail(struct object_array *commits, struct rev_info *revs,
- {
- 	struct commit *commit;
- 	while (commits->nr) {
--		commit = (struct commit *)object_array_pop(commits);
-+		commit = (struct commit *)object_array_peek(commits);
- 		if (has_unshown_parent(commit))
- 			return;
-+		(void)object_array_pop(commits);
- 		handle_commit(commit, revs, paths_of_changed_objects);
- 	}
- }
--- 
-2.17.0
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Documentation/technical/commit-graph.txt | 9 ---------
+>  1 file changed, 9 deletions(-)
+>
+> diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
+> index d9f2713efa..d04657b781 100644
+> --- a/Documentation/technical/commit-graph.txt
+> +++ b/Documentation/technical/commit-graph.txt
+> @@ -118,9 +118,6 @@ Future Work
+>  - The commit graph feature currently does not honor commit grafts. This can
+>    be remedied by duplicating or refactoring the current graft logic.
+>  
+> -- The 'commit-graph' subcommand does not have a "verify" mode that is
+> -  necessary for integration with fsck.
+> -
 
+All right (though "verify" mode is actually done via "check" command).
+
+>  - After computing and storing generation numbers, we must make graph
+>    walks aware of generation numbers to gain the performance benefits they
+>    enable. This will mostly be accomplished by swapping a commit-date-ordered
+> @@ -142,12 +139,6 @@ Future Work
+>    such as "ensure_tree_loaded(commit)" that fully loads a tree before
+>    using commit->tree.
+>  
+> -- The current design uses the 'commit-graph' subcommand to generate the graph.
+> -  When this feature stabilizes enough to recommend to most users, we should
+> -  add automatic graph writes to common operations that create many commits.
+> -  For example, one could compute a graph on 'clone', 'fetch', or 'repack'
+> -  commands.
+> -
+
+I'm not sure if this paragraph should be deleted as a whole; it depends
+on whether we decide that using git-gc to do automatic graph writes is
+enough (git-gc should be ran automatically by git if we get many new
+objects anyway, so this gives us almost "compute a graph on 'clone',
+'fetch', or 'repack'").
+
+>  - A server could provide a commit graph file as part of the network protocol
+>    to avoid extra calculations by clients. This feature is only of benefit if
+>    the user is willing to trust the file, because verifying the file is correct
