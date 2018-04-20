@@ -2,92 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F6E71F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 17:49:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3BA21F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 17:59:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753185AbeDTRtc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 13:49:32 -0400
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:35458 "EHLO
-        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752682AbeDTRtb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 13:49:31 -0400
-Received: by mail-yw0-f169.google.com with SMTP id l133-v6so108267ywb.2
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 10:49:31 -0700 (PDT)
+        id S1753494AbeDTR7e (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 13:59:34 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:35432 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752722AbeDTR7d (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 13:59:33 -0400
+Received: by mail-qt0-f173.google.com with SMTP id s2-v6so10758141qti.2
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 10:59:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/j6+pGvK9tmSGj9uJoMsPoghH+OfhxnoIl7Dr7D8dZ8=;
-        b=VDDvRZgYhb5k8CYJMcU1AYdWYOFgQeJ4YJEnQR8aIFeJroJWarGlYY+vejnBu1eDZK
-         t8fopzmeETqHEfNS5BIW1L8jROssm9VLtBpL3vu6o7BSXSdwj2dg/A4FUq4+EauVs2DS
-         F5o4rcS3rvfi4jc/nm0z58JyeDG7pc8PRcC1cpc7BbtSgoQuEmKI/9+4aTJSZxw4vXUy
-         iUJ1L5cDlYd4zAt1Fgn37okz1OoTG9iinCLfoSEJuEe8ruLCcy4H/4AQez8Xp637/QLc
-         ZyucSXZaEtKgaEINrv45lMu8r6wCw+SL96xmUH2ISijM/C6Xfj0FvqFhGwVqPWkSZs5u
-         8foA==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=WbYMrudo8DdV0k4dq6qwsocc9//9rvRQz04ux6VvV70=;
+        b=uEvyXXUzfzoyILDL1oJBXK9+RN0kcnSaXthWcBiLS7CNk5ECq4XvFKrDFbw5EXOXrj
+         Kf4/L8WWTIBhowR225C2/j77EtsyI1/XEi9pGk60CcOiAf6oGWD988AuKHRlrqJ8Hlyk
+         xwZwMdgVOnBeSC+NKopTQ9XPyRk5MfWHHLKmoYSj0t0+yYHHHOWrYx53qX7g3d2QuUuV
+         0Xd4iOFb3u7oT+MdzSN5oRtYwrsgzEuMUQOJPAVSDTQ1mqCEvXXqqwfzrGS9EScbYucf
+         8zKDWYXM2LT9YPmXRAFn9GL/XZAN/JSdJcxe/cvu0sNvu+kvp++aumSzuLI6PEDojYeP
+         eI5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/j6+pGvK9tmSGj9uJoMsPoghH+OfhxnoIl7Dr7D8dZ8=;
-        b=YGsmcFYK1jH6n7Up6uZ5YNWmYCB8jzz87j1P19jzt5Giir5f7ZfyX1udZ6C+0bwmie
-         oPVxY1f4JLBJLaTCHtL1JH2Sn4eQgbyhFj9VJsr+Ae+oPKf+/WzRZBeVq597gP3pMAf2
-         JWT9ayxSNADPYng6mkVnb52ZlD48mKU23GFwH+Q93XXuLBadp+rVdkapfEF0plC5pnk4
-         824frM2PiQRepPPD2WURVTiy9Nqakf04XfnfccLXdjaDD6+4/p8NniwRBeehg8OyKMYA
-         YTseopmFSMIQWhEjzjYVmn5UymkQFiAUHMLTH34329D/DvgIVOlChWAH5R5fuRe5LAdV
-         2tSw==
-X-Gm-Message-State: ALQs6tCd6Snei1Mwxb4nQlSe+7ynDl55A/+zqu6wh5u8bNcQXAdAmMJQ
-        NafuuSyWNwv8fabZ/fFBxF0JVsUuXg9iM6feSQosYw==
-X-Google-Smtp-Source: AIpwx48xAGPNpxmdKyEzLVGMgo8eYfbnRqGoRyIhKwx+q04Do1+V/33bnMKx/0IFU0r4mK3HKlDm/SJEWWXgLIou60M=
-X-Received: by 2002:a81:370c:: with SMTP id e12-v6mr6464340ywa.340.1524246570853;
- Fri, 20 Apr 2018 10:49:30 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Fri, 20 Apr 2018 10:49:30
- -0700 (PDT)
-In-Reply-To: <xmqqwox5i0f7.fsf@gitster-ct.c.googlers.com>
-References: <20180417163400.3875-1-jamill@microsoft.com> <xmqqwox5i0f7.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 20 Apr 2018 10:49:30 -0700
-Message-ID: <CAGZ79kbOQLkNZxHbR0bDwVHbT0x47v8qp81E2WFm72HdZJ4ZRA@mail.gmail.com>
-Subject: Re: [PATCH v1 0/5] Allocate cache entries from memory pool
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jameson Miller <jamill@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=WbYMrudo8DdV0k4dq6qwsocc9//9rvRQz04ux6VvV70=;
+        b=fply9Yr31LIVuexJQyAfylNnrSBLnw0ZfNVUsjmqWVyEDb0+liAnSrufWDZ3XuAy7U
+         I8dH1bfY/+fC6mbCg/Y/4/Mv4c/iGYQb+enFKk7NWJ3oVN6ndRBRg6mC540bDMHqaxPD
+         U3FzI81nSRRpbQcrpPB8vyxX5CgJvGJylTJRlQtn1pE90KBkcAER7BsXsvtH1cStO0LU
+         httDWu0ST/FE/a025R/pdtOkyAOXEOyDSiRahNpIvUVFFQGCX48rok1MFBBSBKkkJEJv
+         hZTl0PWZwy2DRdkR1ZlmvkLhxS4eqhXQ/4UOsc6E7MWI+UNawuqmNkmCUgmqnfINfbOR
+         s9dg==
+X-Gm-Message-State: ALQs6tCW74kBU67IQCte7g4imtYc/K7dbFCdlDS9r3U2E4bV7l8wCWeN
+        MZNQIuHNpEj2NoxKJvDf6Zw=
+X-Google-Smtp-Source: AIpwx490REy1E5PSOTN3YSOerKADnQDBUh+LqgSVfVHMYOzlaHlQzU2OKwNUjw3gGqIAYjUJ1CKX2w==
+X-Received: by 2002:ac8:181c:: with SMTP id q28-v6mr11671674qtj.309.1524247172361;
+        Fri, 20 Apr 2018 10:59:32 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id u42-v6sm5282425qtb.54.2018.04.20.10.59.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Apr 2018 10:59:31 -0700 (PDT)
+Subject: Re: [PATCH v1 1/2] merge: Add merge.renames config setting
+To:     Elijah Newren <newren@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "gitster@pobox.com" <gitster@pobox.com>,
         "pclouds@gmail.com" <pclouds@gmail.com>,
-        "jonathantanmy@google.com" <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>
+References: <20180420133632.17580-1-benpeart@microsoft.com>
+ <20180420133632.17580-2-benpeart@microsoft.com>
+ <CABPp-BFANBs=tOhS5BFfTMkdQsNYbUDExWK8QB0V=qD9YwZyWw@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <cd49481c-9665-124a-5f94-791f1a16657d@gmail.com>
+Date:   Fri, 20 Apr 2018 13:59:31 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
+MIME-Version: 1.0
+In-Reply-To: <CABPp-BFANBs=tOhS5BFfTMkdQsNYbUDExWK8QB0V=qD9YwZyWw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> base-commit: cafaccae98f749ebf33495aec42ea25060de8682
->
-> I couldn't quite figure out what these five patches were based on,
-> even with this line.  Basing on and referring to a commit that is
-> not part of our published history with "base-commit" is not all that
-> useful to others.
 
-I'd like to second this. In the object store refactoring, I am at a point where
-I'd want to migrate the memory management of {object, tree, commit, tag}.c
-which currently is done in alloc.c to a memory pool, that has a dedicated
-pointer to it.
 
-So I'd either have to refactor alloc.c to take the_repository[1] or
-I'd play around with the mem_pool to manage memory in the
-object layer. I guess this playing around can happen with
-what is at origin/jm/mem-pool, however the life cycle management
-part of the third patch[2] would allow for stopping memleaks there.
-So I am interested in this series as well.
+On 4/20/2018 1:02 PM, Elijah Newren wrote:
+> On Fri, Apr 20, 2018 at 6:36 AM, Ben Peart <Ben.Peart@microsoft.com> wrote:
+>> --- a/Documentation/merge-config.txt
+>> +++ b/Documentation/merge-config.txt
+>> @@ -37,6 +37,11 @@ merge.renameLimit::
+>>          during a merge; if not specified, defaults to the value of
+>>          diff.renameLimit.
+>>
+>> +merge.renames::
+>> +       Whether and how Git detects renames.  If set to "false",
+>> +       rename detection is disabled. If set to "true", basic rename
+>> +       detection is enabled. This is the default.
+> 
+> One can already control o->detect_rename via the -Xno-renames and
+> -Xfind-renames options.  
 
-[1] proof of concept in patches nearby
-https://public-inbox.org/git/20180206001749.218943-31-sbeller@google.com/
+Yes, but that requires people to know they need to do that and then 
+remember to pass it on the command line every time.  We've found that 
+doesn't typically happen, we just get someone complaining about slow 
+merges. :)
 
-[2] https://public-inbox.org/git/20180417163400.3875-5-jamill@microsoft.com/
+That is why we added them as config options which change the default. 
+That way we can then set them on the repo and the default behavior gives 
+them better performance.  They can still always override the config 
+setting with the command line options.
 
-Thanks,
-Stefan
+I think the documentation should mention that
+> "false" is the same as passing -Xno-renames, and "true" is the same as
+> passing -Xfind-renames.  However, find-renames does take similarity
+> threshold as a parameter, so there's a question whether this option
+> should provide some way to do the same.  I'm not sure the answer to
+> that; it may be that we'd want a separate config option for that, and
+> we can wait to add it until someone actually wants it.
+
+I'm of the opinion that we shouldn't bother adding features that we 
+aren't sure someone will want/use.  If it comes up, we can certainly add 
+it at a later date.
+
+> 
+>>   merge.renormalize::
+>>          Tell Git that canonical representation of files in the
+>>          repository has changed over time (e.g. earlier commits record
+>> diff --git a/merge-recursive.c b/merge-recursive.c
+>> index 9c05eb7f70..cd5367e890 100644
+>> --- a/merge-recursive.c
+>> +++ b/merge-recursive.c
+>> @@ -3256,6 +3256,7 @@ static void merge_recursive_config(struct merge_options *o)
+>>          git_config_get_int("merge.verbosity", &o->verbosity);
+>>          git_config_get_int("diff.renamelimit", &o->diff_rename_limit);
+>>          git_config_get_int("merge.renamelimit", &o->merge_rename_limit);
+>> +       git_config_get_bool("merge.renames", &o->detect_rename);
+>>          git_config(git_xmerge_config, NULL);
+>>   }
+> 
+> I would expect an explicitly passed -Xno-renames or -Xfind-renames to
+> override the config setting.  Could you check if that's the case?
+> 
+
+Yes, command line options override the config settings.  You can see 
+that in the code where the call to init_merge_options() which loads the 
+config settings is followed by parse_merge_opt() which loads the command 
+line options.  I've also verified the behavior in the debugger (it's on 
+by default in the code, the config setting turns it off, then the 
+command line option turns it back on).
+
+> Also, if someone sets merge.renameLimit (to anything) and sets
+> merge.renames to false, then they've got a contradictory setup.  Does
+> it make sense to check and warn about that anywhere?
+> 
+
+I don't think we need to.  The merge.renameLimit is only used if 
+detect_rename it turned on no matter how that gets turned on (default, 
+config setting, command line option) so there isn't really a change in 
+behavior here.
