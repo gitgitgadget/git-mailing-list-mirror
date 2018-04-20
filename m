@@ -2,131 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.0 required=3.0 tests=AWL,BAYES_50,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25E4D1F424
-	for <e@80x24.org>; Fri, 20 Apr 2018 10:52:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D06AE1F424
+	for <e@80x24.org>; Fri, 20 Apr 2018 10:54:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754663AbeDTKwm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 06:52:42 -0400
-Received: from bmmpi0403.jpx1.emslime.jp ([106.185.85.25]:59531 "EHLO
-        bmmpi0403.jpx1.emslime.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754511AbeDTKwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 06:52:42 -0400
-X-Greylist: delayed 1201 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Apr 2018 06:52:41 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1524221561;
-        s=giftex.201608; d=giftex.jp;
-        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=aaJhuS/LaFkF4B+7wu7NjE9lVQhgvg/PkLyjr2Gx/tc=;
-        b=ZaLSv+v/WSw5yk3O6GvWV7QFJKenCPx/0m0kPrfNNJWnEh0ckiRAG+nC2gJ4DTPs
-        NNMLJPA5burYOBUoiSmxEzSHxZdTsb/J3uMEibMdgf+15LXalb8nRoHGkr551118G86
-        xYYlVgBhdrTZQRb6T+qdaSrrKlKbfjZQ3u+6T0eI=
-Date:   Fri, 20 Apr 2018 19:32:33 +0900 (JST)
-From:   Eiichi Hasegawa LIFESTYLE EXPO TOKYO Show Management 
-        <zk-en@giftex.jp>
-Reply-To: giftex-eng@reedexpo.co.jp
-To:     git@vger.kernel.org
-Message-Id: <1524220353980.2018100060.rxjp006.0.22568.00000000@ad145se.mpse.jp>
-Subject: Looking for Japanese Importers/Distributors? [LIFESTYLE EXPO TOKYO
- 2018]
+        id S1754677AbeDTKyi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 06:54:38 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:42077 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754511AbeDTKyh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 06:54:37 -0400
+Received: by mail-pl0-f68.google.com with SMTP id t20-v6so5059785ply.9
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 03:54:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=yspUiynC4brGXyIIUONYOd258PHUikhwz9owInVLc28=;
+        b=oqkV8VHGuExdd5RV3EyBQ3OvCZ5tqRtvXU08BKa3Ds+Rsy3pt8FVFpY1TkE9zAUV5z
+         JuvrtPruKGPNvm1eP2j4PZCmSlyVT8RcaT8rIJaWJITKWNNLwuBD7yPJf6LeomYuoVT+
+         kT5i235ZMz9mrews7nLp8FFcbevIfu8507kvMlU9n/D2pLumAt7bxoE2lGWIJEfom5hg
+         qtvGTHgTFzhf6OsyYalDRaHeEqLMSfAadFSFU86O3iOuwxZWXAhsRtKqYDhjbYn+8lg3
+         lWOqjlfMWbJsSyFrV6mPjuYyvL5ut3zheREhxQMMDGcIt0FhLjNCnMfmeRNa/50NRddd
+         vXUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=yspUiynC4brGXyIIUONYOd258PHUikhwz9owInVLc28=;
+        b=YWDNuo7ZxJrmhNgGWZfCjZU4HLB9LOASWDbVLHLu1tX9dSQLsay8lF10Ne4KkMebzY
+         M5EKp3xu75gu3R1X7ZwxzwWXxaP2XQnaOIWxwQE0LBXSDonrItBb0IzYX09xZoWwawuM
+         qly2ul08sVtlf1vtJKETaTzxonqwLOhG5n2q/yVIbZaekfhdg0soXHAlqUACB6wnEpxP
+         XacpKqV3SVcOjxiq5niU2PZ69tIbjKEzKNin5oz3Y+/c55YCdBd6oczshn0bukjkbzjB
+         asQPcLkxwrRkEXzdhnkziQAIuIYqXARlCZLZF9QIxKdD4pDlz/wMVoiPXeoQ3hP5A0Mh
+         UhIQ==
+X-Gm-Message-State: ALQs6tAVSxHp5dPD56fq5u+E/bn5xlcOCOGnhmZKp6/60S0dtWmIU8JG
+        HczHzVm451NRVXo71sazPVfHhaZx+v4ensqChCE=
+X-Google-Smtp-Source: AIpwx4/Qwz7qqX76JoOdNMTp5aSZdYfMW2kHodF480heaToKmo78pulsZL/SkEht82aRSy0JB0tI2gINJV7fvOqVmwY=
+X-Received: by 2002:a17:902:b94c:: with SMTP id h12-v6mr9993452pls.321.1524221676916;
+ Fri, 20 Apr 2018 03:54:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Received: by 10.236.150.4 with HTTP; Fri, 20 Apr 2018 03:54:35 -0700 (PDT)
+In-Reply-To: <87o9iedwqn.fsf@evledraar.gmail.com>
+References: <cover.1524211375.git.johannes.schindelin@gmx.de>
+ <6be8678b7d6b4d9116ea4666a0b28ff4dd938690.1524211375.git.johannes.schindelin@gmx.de>
+ <87o9iedwqn.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 20 Apr 2018 12:54:35 +0200
+Message-ID: <CAN0heSpda1ZnFXgoCEgxGdBk-JYUSPAV0A=mQYMtOq7w8x+5=w@mail.gmail.com>
+Subject: Re: [PATCH 1/3] gettext: avoid initialization if the locale dir is
+ not present
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Dan Jacques <dnj@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear International Sales & Marketing Director,
-Zhejiang Wuchuan Industrial Co., Ltd
+On 20 April 2018 at 11:59, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
+mail.com> wrote:
+>
+> On Fri, Apr 20 2018, Johannes Schindelin wrote:
+>
+>> The runtime of a simple `git.exe version` call on Windows is currently
+>> dominated by the gettext setup, adding a whopping ~150ms to the ~210ms
+>> total.
+>>
+>> Given that this cost is added to each and every git.exe invocation goes
+>> through common-main's invocation of git_setup_gettext(), and given that
+>> scripts have to call git.exe dozens, if not hundreds, of times, this is
+>> a substantial performance penalty.
+>>
+>> This is particularly pointless when considering that Git for Windows
+>> ships without localization (to keep the installer's size to a bearable
+>> ~34MB): all that time setting up gettext is for naught.
+>>
+>> So let's be smart about it and skip setting up gettext if the locale
+>> directory is not even present.
 
-Hello, this is Eiichi Hasegawa from LIFESTYLE EXPO TOKYO (Formerly GIFTEX) Show Management, Reed Exhibitions Japan Ltd.
+> If you don't ship git for windows with gettext or a podir, then compile
+> with NO_GETTEXT, then we won't even compile this function you're
+> patching here. See line 30 and beyond of gettext.h.
+>
+> Are you instead compiling git for windows with gettext support with an
+> optional add-on package for i18n, so then this podir conditional would
+> pass?
+>
+> In any case, if this is actually the desired behavior I think it's worth
+> clearly explaining the interaction with NO_GETTEXT in the commit
+> message, and if you *actually* don't want NO_GETTEXT I think it's useful
+> to guard this with something like MAYBE_GETTEXT on top, so this code
+> doesn't unintentionally hide installation errors on other
+> platforms. I.e. something like:
+>
+>         int have_podir =3D is_directory(podir);
+>         if (!have_podir)
+> #ifdef MAYBE_GETTEXT
+>                 return;
+> #else
+>                 BUG("Broken installation, can't find '%s'!", podir);
+> #endif
 
-LIFESTYLE EXPO TOKYO is Japan's leading "B-to-B" show for Homeware, Lifestyle products, Fashion accessories, Beauty & Bath goods, Stationery and Gifts (July 4-6, 2018).
-http://www.giftex-expo.jp/en/
+Is it fair to say that such a broken installation would function more or
+less well before and after Dscho's patch, and that your approach would
+render such an installation quite useless? Do we have some other similar
+cases where we go BUG("I could not find a resource. I could manage
+fairly well without it, but you seemed to want it when you installed
+me.")? I wonder what other well-respected software do if they can't find
+their translations.
 
-Are you interested in meeting Importers/Distributors?
+I suppose the logic could be the other way round, i.e., with a flag
+REALLY_REQUIRE_GETTEXT_AT_RUNTIME. But I also wonder if a user who does
+not notice that the installation is broken without us screaming BUG in
+their face, really minds the "brokenness" that much.
 
-We have special support services exclusive to international exhibitors.
-In addition to buyers, you can meet importers and distributors!
+Disclaimer: I do not use translated Git, nor other non-English-language
+software.
 
-Special Services:
-1) Listing in Guidebook for Importers/Distributors
-     - Listing of international exhibitors only
-     - Japanese translation provided
-2) Direct mailing of this Guidebook to our Importers/Distributors database
-3) Email blast to our Importers/Distributors database
-
-
-To take advantage of our services, we strongly recommend you to contact us ASAP to receive more information on exhibiting. 
-And the deadline is coming VERY SOON!
-
-
-Please kindly fill in the following REPLY FORM.
-------------------------------------------------------------------------
-                   REPLY FORM
-------------------------------------------------------------------------
-giftex-eng@reedexpo.co.jp
-
-[  ] Send more exhibiting information:
-(  ) Cost Estimate - About (  ) sqm
-(  ) Available Booth Locations
-(  ) Information on the Packaged Booths
-(  ) Price List
-(  ) Visitors List
-
-Name:
-Company: 
-Title / Div.:
-Country:
-TEL#:
-Company Website:
-------------------------------------------------------------------------
-
-We look forward to hearing from you.
-
-
-Best regards, 
-
-
-Eiichi Hasegawa (Mr.), Chisato Miyawaki (Ms.), Mikako Shimada (Ms.)
-Qu Jun (Mr.), Choi Ilyong (Mr.)
-LIFESTYLE EXPO TOKYO Show Management
-Reed Exhibitions Japan Ltd.
-TEL: +81-3-3349-8505
-WEB: http://www.giftex-expo.jp/en/
-mailto:giftex-eng@reedexpo.co.jp
-
-========================================================================
-LIFESTYLE EXPO TOKYO 2018
-http://www.giftex-expo.jp/en/
-
-Dates: July 4 - 6, 2018
-Venue: Tokyo Big Sight, Japan
-Organised by: Reed Exhibitions Japan Ltd.
-========================================================================
-ID: E36-G1402-0075
-
-
-
-
-
-
-
-
-
-
-
-This message is delivered to you to provide details of exhibitions and conferences organised, co-organised, or managed by Reed Exhibitions Japan Ltd.
-If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
-
-<Update contact information> 
-Please click the URL below and follow the directions on the website to update your e-mail and other information.
-https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
-
-<Remove from list>
-Please reply to this mail changing the subject to "Remove from list".
-You will not receive any further information on this exhibition/conference.
+Martin
