@@ -2,168 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B9811F424
-	for <e@80x24.org>; Fri, 20 Apr 2018 07:27:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DABF1F424
+	for <e@80x24.org>; Fri, 20 Apr 2018 08:03:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754054AbeDTH1V (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 03:27:21 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:38534 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754049AbeDTH1T (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 03:27:19 -0400
-Received: by mail-wr0-f194.google.com with SMTP id h3-v6so20225489wrh.5
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 00:27:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=mLTbbgy+H8jpTExtgP0/gbnAgkVWmkYI+5P30p9xwVQ=;
-        b=U6HumYpd9Fy3kbyXQkE3qHxd1Lssjh2A0nhG7hjMCmWW03pNgEx1D11pN+KppeTuM2
-         8D6iGEjzBWF/1EUXtNrAhv4FkyON0O47w57tFmmwVJDAZguE+0lVpqs7P47WsGihT3UK
-         zoNVZTki4hDqoBdaVRwBXO5eNkk8gWt1CGN9JXHugK7ciY27VP+g6jTDSXF7m8p7Wauq
-         LsIoaYsUBOCYyJaLo5auTfzPjWC9ZXuez8wU+euq4OthU3j04AVtbtzrY5Rd9GfJHTZw
-         w3MA2BU8461ZR81BwOu2Yh3MKdBvlDJa7An5BRUoOz7CYjMMS4v+FV459vBvBfVVBRcD
-         Vdlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=mLTbbgy+H8jpTExtgP0/gbnAgkVWmkYI+5P30p9xwVQ=;
-        b=XMogWEG3a3f2+evthCZxf6tVmSlUxKizZsoRFD2osV8Ah0H4EAffi7CNxfRSGi2LCv
-         GcEiZrqmlIkCQFywUyuqarQ1pGnrSSFec1r5RRB3qRZ2DMmkX+1gaAnCO/fYVnpzEoAH
-         PH+ITacbr12vnXIsiuZSW2Sw2XzJPVrPuI9dJ51UJXdosf5uq0IRnD2nY35JuIaRfMQd
-         Yhs28ieES09usWD4HzDgZ7pQkSinMNkNNBAotNwdws0RhWvAUJzcejI1jMKmMlZLsi+0
-         h3z79tG13ifCdkdz54O578jQZauz1kfu4tJ8Nk3bywOxesCxjIuhrJ48o5CqzyN2dh4w
-         6ReQ==
-X-Gm-Message-State: ALQs6tD2V4j+4WJ1X2v/2wfvUoRGllJBWsq7Bf8BfM4tpyFR+CfQd9bE
-        eRMxjbn4kFkOkxwmDic7wXL+unJb
-X-Google-Smtp-Source: AB8JxZoHKv0xzk5QLtEJTg459Nw3c5MbHdJFSqAoj7jFPPVAeiMqJC3Qzv/+R0iHT8ALfNABGmhhvw==
-X-Received: by 10.28.193.11 with SMTP id r11mr1124126wmf.120.1524209237887;
-        Fri, 20 Apr 2018 00:27:17 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egc153.neoplus.adsl.tpnet.pl. [83.21.66.153])
-        by smtp.gmail.com with ESMTPSA id n64sm1044858wmd.11.2018.04.20.00.27.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Apr 2018 00:27:16 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 05/12] commit-graph: check fanout and lookup table
-References: <20180417181028.198397-1-dstolee@microsoft.com>
-        <20180417181028.198397-6-dstolee@microsoft.com>
-Date:   Fri, 20 Apr 2018 09:27:15 +0200
-In-Reply-To: <20180417181028.198397-6-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Tue, 17 Apr 2018 18:10:41 +0000")
-Message-ID: <864lk6fics.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1754001AbeDTIDo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 04:03:44 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59293 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753777AbeDTIDh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 04:03:37 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCtLD-1fIXhZ3KnD-009l6R; Fri, 20
+ Apr 2018 10:03:30 +0200
+Date:   Fri, 20 Apr 2018 10:03:14 +0200 (DST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>, Dan Jacques <dnj@google.com>
+Subject: [PATCH 0/3] Some add-on patches on top of dj/runtime-prefix
+Message-ID: <cover.1524211375.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:DAwqhPfakyD6WLiD/lbdTJazx3NNsvoTLV+XZ2MlqpE40A4NTFS
+ J4LqU/WFzoJSl3Cle/07LjfRxx7Y27qeQ1d4HHLkb5w+yVvVQPDzZzkY9IxLHaruaTVfpo2
+ +trngtpptUrQCFtOMSHBph6gignSc/r1grEOzhMIPUt23qjeIyA95hVHCfXmRrimhbJMxFY
+ Vbl3Px62Sq1g4YiidiyAA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Oez7aG2Ii04=:0/fo4wOGS2eIIDztCDTdQG
+ 5F8SIY2Q2zHWUbQC0B2PZTkYtf8gF0k0fz/L3xNrhpCmaaU5lsk6UBUpmRNdl6upybMc4Ffdu
+ 6Co4lmFqpBLPxjHt/boJkenqHp/qUOoJoR1axVlUIgB1XlUlT3JZQg1vz9JA8nZ1BQlGq1fc2
+ icPI8Y0Wu72R0EiOdavvBtCAS6eb6b5/ZbcayDEDMWUcMmQcMT5bfSNlDoT4L8z3MEf5LZo4j
+ gD0OW3E/oofcb3wzMh2S304su6EQlaY+GC1c7qCK1JBNrkad8HzMaUJ9Y9GRnMTZXQrJt1vbs
+ EG/ufj0iW1i/XLN9gWBhNT2vN/1GF8eBKS6xbbHYbpeuIUGVjgOs887IXRWuR5tGKXpjF9p/l
+ PSF8XIoIZfKNdzKTlbTEuYnwXLNI5EYFARJPB4ZJuYn0PAgLkS16NjqsuVbwFJKDbNUkLutjM
+ kyfppeK73IJ6CfFaz0Ek5rFukcnK6yoPEJlGtFOCTzOfhdStHCkckPRkcaCRvWIieQdu00Rx9
+ Bl5y7OpnXPlVV7SA2NSq3Ti5XZAWQ3A7HFYjNBrysJAx2ecfoZiLG2exnvjB/ichf/THCyW4u
+ Lc0XDVDH8wruVpxNBdqtfg1Ic2qjDjLLlDZ1oQ54muS3dA/fRM3NP/ZLP8ubOKyVui7JdzQQN
+ f3mgokn0ZXzTeZHUqE7DRoDLNW/ZzoYa1ek82E7OVJE3d2veY4NhlcOo+hxZr+8UftI/5oSis
+ o2TD3Ku0e87fwjchD2ohWWh6CFUoK/Eqdq9kzWFAqwS91AMXS+w+uIGE2018j9WDhrHH6dSxI
+ Aqnlx7DNq74N15mMvaeciPgv6O3i1qw6VGdtaAwLHie/g7pktU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+We carried a slightly different version of the git_setup_gettext() patch
+(which took care of releasing the buffer allocated by system_path()),
+and we carry two more patches that touch the same area, so now that
+dj/runtime-prefix hit `next`, it seems a good time to contribute those,
+too.
 
-> While running 'git commit-graph check', verify that the object IDs
-> are listed in lexicographic order and that the fanout table correctly
-> navigates into that list of object IDs.
 
-All right.  I think we can also sanity check the fanout table (for
-example that it has 256 elements), see below.
+Johannes Schindelin (2):
+  gettext: avoid initialization if the locale dir is not present
+  git_setup_gettext: plug memory leak
 
->
-> In anticipation of checking the commits in the commit-graph file
-> against the object database, parse the commits from that file in
-> advance. We perform this parse now to ensure the object cache contains
-> only commits from this commit-graph file.
+Philip Oakley (1):
+  Avoid multiple PREFIX definitions
 
-I guess this part could be a separate commit (a separate patch), because
-it is not connected to the earlier part.
+ Makefile   |  2 +-
+ exec-cmd.c |  4 ++--
+ gettext.c  | 10 +++++++++-
+ sideband.c | 10 +++++-----
+ 4 files changed, 17 insertions(+), 9 deletions(-)
 
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  commit-graph.c | 34 ++++++++++++++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
 
-No tests that it detects broken commit-graph file (e.g. one that is
-truncated)?
+base-commit: 8a3641ab3abcf492e9443f88d82a7a22fa8b4816
+Published-As: https://github.com/dscho/git/releases/tag/runtime-prefix-addons-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git runtime-prefix-addons-v1
+-- 
+2.17.0.windows.1.15.gaa56ade3205
 
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 6d0d303a7a..6e3c08cd5c 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -835,6 +835,9 @@ static int check_commit_graph_error;
->  
->  int check_commit_graph(struct commit_graph *g)
->  {
-> +	uint32_t i, cur_fanout_pos = 0;
-> +	struct object_id prev_oid, cur_oid;
-> +
->  	if (!g) {
->  		graph_report(_("no commit-graph file loaded"));
->  		return 1;
-> @@ -859,5 +862,36 @@ int check_commit_graph(struct commit_graph *g)
->  	if (g->hash_len != GRAPH_OID_LEN)
->  		graph_report(_("commit-graph has incorrect hash length: %d"), g->hash_len);
->  
-> +	for (i = 0; i < g->num_commits; i++) {
-> +		struct commit *graph_commit;
-> +
-> +		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
-> +
-> +		if (i > 0 && oidcmp(&prev_oid, &cur_oid) >= 0)
-> +			graph_report(_("commit-graph has incorrect oid order: %s then %s"),
-
-Good.  Reporting what problem is; we could have also reported the
-position at which there is this problem.
-
-> +
-> +		oid_to_hex(&prev_oid),
-> +		oid_to_hex(&cur_oid));
-> +		oidcpy(&prev_oid, &cur_oid);
-> +
-> +		while (cur_oid.hash[0] > cur_fanout_pos) {
-> +			uint32_t fanout_value = get_be32(g->chunk_oid_fanout + cur_fanout_pos);
-> +			if (i != fanout_value)
-> +				graph_report(_("commit-graph has incorrect fanout value: fanout[%d] = %u != %u"),
-
-Good.  Reporting details of the problem.
-
-> +					     cur_fanout_pos, fanout_value, i);
-> +
-> +			cur_fanout_pos++;
-> +		}
-
-One thing you don't check here is that fanout is closed, that is all the
-rest of fanout data up to 256th element (if they are any) all points at
-the same position past the last element of OID Lookup chunk.
-
-> +
-> +		graph_commit = lookup_commit(&cur_oid);
-> +
-> +		if (!parse_commit_in_graph_one(g, graph_commit))
-> +			graph_report(_("failed to parse %s from commit-graph"), oid_to_hex(&cur_oid));
-
-Doesn't whis check Commit Data (CDAT) chunk, and therefore should better
-be in a separate commit?
-
-> +
-> +		if (graph_commit->graph_pos != i)
-> +			graph_report(_("graph_pos for commit %s is %u != %u"), oid_to_hex(&cur_oid),
-> +				     graph_commit->graph_pos, i);
-
-Hmmm... it seems to me that the above does not check that commit-graph
-file is correct, but that the parsing code is correct.
-
-> +	}
-> +
->  	return check_commit_graph_error;
->  }
