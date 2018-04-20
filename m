@@ -7,126 +7,152 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6002E1F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 12:18:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62C561F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 12:18:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754761AbeDTMSc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 08:18:32 -0400
-Received: from mout.gmx.net ([212.227.17.20]:57741 "EHLO mout.gmx.net"
+        id S1754753AbeDTMSx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 08:18:53 -0400
+Received: from mout.gmx.net ([212.227.17.22]:44713 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754726AbeDTMSb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 08:18:31 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LxcbX-1eKyiN2y0R-017Ekb; Fri, 20
- Apr 2018 14:18:28 +0200
-Date:   Fri, 20 Apr 2018 14:18:13 +0200 (DST)
+        id S1754688AbeDTMSw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 08:18:52 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8MyE-1eEcva1KhW-00vtcD; Fri, 20
+ Apr 2018 14:18:48 +0200
+Date:   Fri, 20 Apr 2018 14:18:32 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 2/3] sequencer: leave a tell-tale when a fixup/squash
- failed
+Subject: [PATCH 3/3] rebase --skip: clean up commit message after a failed
+ fixup/squash
 In-Reply-To: <cover.1524226637.git.johannes.schindelin@gmx.de>
-Message-ID: <4f87b8ea2c47b45107e2ba1cdd6d04a66fea0d16.1524226637.git.johannes.schindelin@gmx.de>
+Message-ID: <6d9f6ba1e73d2297cef3619a89ce69122438368d.1524226637.git.johannes.schindelin@gmx.de>
 References: <cover.1524226637.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7QGndmVsU/mzrKRS77GdJiCyPHVxRaDYi6aXjUp8PpYMx791o9g
- c2whq4O3pYcYGfFSjail8je2ns9rnT/is1huM+4nIxhmpKGlgtoFBKK5d+uF0WpqQQJhJsZ
- W+E8TDeBn/AEEoUDgWqkw3z0Y6CYp/9bA52SgR2BzQIzVsjWanQXyzVVSFs4F+lOamV9w+T
- CWdJjJvMB/uuLK8VKlNlg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1if2kAXjwAk=:shLLVjjXWxNWfKEZ84OI4z
- 8keQjiNrkVMPBXiv94J72p9ki9O05/4v4BH+aU7fEV+sDiKHj8tkJaQQx1GXvzq2GJ/0rm+2Z
- 3a4S4fmdiA2lGu0g29CSrRegTAXV5FBdU3Rrj41KZG6uiYV6N23EnrfDj1uKMnaMOpHi96XM+
- h7qHXiGdqpace0X/1/FPMxQ3frY1eB8o1WOCcpO0rSljLBy0rtgb0ORzkXZE5qXKvkcbpANZk
- 5mAEKkGX5Xs6w+pUC/nTFAxOt79BagV3PhXZ6H58SzbTT2yId/YckeH84CtLMZhe+gRlgIkPg
- S7h3tSoGU6KIpOFisjQQMDPaoy9btPODugYzmoZqtLF6t/uibUVEfvjo2ZTzn1F/+KatTLxIH
- fivJH5KeVwXBEKGwYbx9sEktGDoOd3rl2RydHfDAX2kPgxCDreFH8CZ8GpKYS/lw34bmVXyw+
- IlNa55jgoofWih6Qug6U5kCK1jaVTYrTuVJYMfx9vJPsSGz5MpEORI/IqPYc5fOyEJGKxrjrC
- OJn7XZx+7zQ1/zS6PprZZtn15xXbAXCEfjl+JTTx11Thssp5ILrjQmY2yI7tti7ff5WjVgTTT
- Y9aJHtZMSJEEbCt8SeQqgdYAHKx7cJWSpOogZMK8FmfJhBP//mBUYDJ0XR/xuF8FdHITlBiQw
- qDS2PnFCpfjhElAxThxxqhQ1YHDu6dmXI/OMoQI94KwCDohHfOp/HL9zdMBhJH7RDzy3/767S
- PSJ9w+q+VK82RRL9fbY4s5DQlWysodR5Ujqq5qs5chvnCJ0+7Mjt6Bp6m7xXmb/APo7hIk/jK
- JOLAC2VnnHBtrb8oGKA8dIu5h3u3Y+DsmK43C3jR1A9xmnGXD0=
+X-Provags-ID: V03:K1:sI83kqNQjKU4W9+XwfUGRQaSHY7PbJbE/ZrH6X0a+INZk6gLqla
+ n6U/NDZK8bePwGJtd/FqXttfIwVWVMjl913WQfxXcijwcSK0CEmqN5UWqf5IF5KhHUYHJCm
+ kYs7LtYBnEkj/5Bj0R/J6ef5vTfuaXIY+ljNm+7Z0RhAb9zO28iMwvCKIpMeMNjlGL6F2aZ
+ ccwfNlG8eUDA4c0YbCKvg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BdAOgZ+ZjUQ=:F/zWvTJ91rjA0XXx4wVNgz
+ 65XBogLhg0jp0B2tRDd7x5c92A6oUzgvryr7lgVMugbQMeqyhYE1J5CyWwNVqeqUT+BZSGPyE
+ U8mHRq08ekEKDboYZXjLt8dWzfnpfq0NY0yGuT+/gu2XqQE8MNApc2FD69jG7cMgyo+kwnDHf
+ mMpKaGr9u2KKVgVkpyGMBLe+HxmqXaf54XIgNd0Y4MAz+6tZq9L98YVQV7RSmPmR8AqOZLeLW
+ zs2IFsvlhbvVXwjXRGp5SfYjRccNm79nDiSRPtfp4Eyvzr++gmKC16L4cNex+gfNYX35aWsj5
+ ENnI1Jdde4GwdABGe43z6XaqT7tT9eRV2P7SmdlRBLGiYG5GU25NGHM2OChI9Z1W+Z4wAdPZc
+ ZbEaB04gAeQw0C3FxrDAQ+/ewfB/yjk95lwyH0FwKxZ0JRqF3n8UwwgHudSzG0sbwbUi6uLSL
+ jpT5GqEPcALnNqJxOO8RmIieBEvK96dzfa7zIkzFQ6G9sFQbYjCNGLUP2lmaGacYprv/ibFza
+ lUp4fJ7Ul40TYHPmh9M7B6aRrnd8b05iCTrkKLIl5CXX/9u1y1MpTTZuHl7z7WuaK8tbHrQs+
+ rq3jDk+CL0UIJm2i6tL8jvWSrjQFyyEja4t1c6pTg37a+7AjQEzU39yzidTVOpHk6PyM0OtZd
+ fi7KMBLIfy+UHZPY4rjEEz14Pz3KV8KdfBir9GyIBpGylYfaD7URzLovIvjSx7BlHHlXGGM2I
+ IHCuFF/XL0K/+3aA40vPRIZF79NQVlrESiM5MZAIfLJcWlxs8mwfIm3AaqKJpsp41yuMa85pu
+ NsLB+mAjpeSXVb6HKUh3e9VEd9Yf+8ZhxIhN/Zi2z9Deg0ciME=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the upcoming patch to clean up fixup/squash commit messages even when
-skipping a final fixup/squash that failed with merge conflicts, we will
-need to have some indicator what happened.
+During a series of fixup/squash commands, the interactive rebase builds
+up a commit message with comments. This will be presented to the user in
+the editor if at least one of those commands was a `squash`.
 
-As we need to remove the message-fixup and message-squash files upon
-failure, we cannot use those. So let's just write an explicit amend-type
-file, containing either `fixup` or `squash`. The absence of that file
-indicates that the we were not in the middle of a fixup or squash when
-merge conflicts were happening.
+However, if the last of these fixup/squash commands fails with merge
+conflicts, and if the user then decides to skip it (or resolve it to a
+clean worktree and then continue the rebase), the current code fails to
+clean up the commit message.
+
+This commit fixes that behavior.
+
+The diff is best viewed with --color-moved.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ sequencer.c                | 36 ++++++++++++++++++++++++++++--------
+ t/t3418-rebase-continue.sh |  2 +-
+ 2 files changed, 29 insertions(+), 9 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 667f35ebdff..a9c3bc26f84 100644
+index a9c3bc26f84..f067b7b24c5 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -106,6 +106,13 @@ static GIT_PATH_FUNC(rebase_path_author_script, "rebase-merge/author-script")
-  * command is processed, this file is deleted.
-  */
- static GIT_PATH_FUNC(rebase_path_amend, "rebase-merge/amend")
-+/*
-+ * If there was a merge conflict in a fixup/squash series, we need to
-+ * record the type so that a `git rebase --skip` can clean up the commit
-+ * message as appropriate. This file will contain that type (`fixup` or
-+ * `squash`), and not exist otherwise.
-+ */
-+static GIT_PATH_FUNC(rebase_path_amend_type, "rebase-merge/amend-type")
- /*
-  * When we stop at a given patch via the "edit" command, this file contains
-  * the abbreviated commit name of the corresponding patch.
-@@ -2392,10 +2399,20 @@ static int error_with_patch(struct commit *commit,
- static int error_failed_squash(struct commit *commit,
- 	struct replay_opts *opts, int subject_len, const char *subject)
+@@ -2781,17 +2781,12 @@ static int continue_single_pick(void)
+ 
+ static int commit_staged_changes(struct replay_opts *opts)
  {
-+	const char *amend_type = "squash";
+-	unsigned int flags = ALLOW_EMPTY | EDIT_MSG;
++	unsigned int flags = ALLOW_EMPTY | EDIT_MSG, is_fixup = 0, is_clean;
+ 
+ 	if (has_unstaged_changes(1))
+ 		return error(_("cannot rebase: You have unstaged changes."));
+-	if (!has_uncommitted_changes(0)) {
+-		const char *cherry_pick_head = git_path_cherry_pick_head();
+ 
+-		if (file_exists(cherry_pick_head) && unlink(cherry_pick_head))
+-			return error(_("could not remove CHERRY_PICK_HEAD"));
+-		return 0;
+-	}
++	is_clean = !has_uncommitted_changes(0);
+ 
+ 	if (file_exists(rebase_path_amend())) {
+ 		struct strbuf rev = STRBUF_INIT;
+@@ -2804,16 +2799,41 @@ static int commit_staged_changes(struct replay_opts *opts)
+ 		if (get_oid_hex(rev.buf, &to_amend))
+ 			return error(_("invalid contents: '%s'"),
+ 				rebase_path_amend());
+-		if (oidcmp(&head, &to_amend))
++		if (!is_clean && oidcmp(&head, &to_amend))
+ 			return error(_("\nYou have uncommitted changes in your "
+ 				       "working tree. Please, commit them\n"
+ 				       "first and then run 'git rebase "
+ 				       "--continue' again."));
++		if (is_clean && !oidcmp(&head, &to_amend)) {
++			strbuf_reset(&rev);
++			/*
++			 * Clean tree, but we may need to finalize a
++			 * fixup/squash chain. A failed fixup/squash leaves the
++			 * file amend-type in rebase-merge/; It is okay if that
++			 * file is missing, in which case there is no such
++			 * chain to finalize.
++			 */
++			read_oneliner(&rev, rebase_path_amend_type(), 0);
++			if (!strcmp("squash", rev.buf))
++				is_fixup = TODO_SQUASH;
++			else if (!strcmp("fixup", rev.buf)) {
++				is_fixup = TODO_FIXUP;
++				flags = (flags & ~EDIT_MSG) | CLEANUP_MSG;
++			}
++		}
+ 
+ 		strbuf_release(&rev);
+ 		flags |= AMEND_MSG;
+ 	}
+ 
++	if (is_clean && !is_fixup) {
++		const char *cherry_pick_head = git_path_cherry_pick_head();
 +
-+	if (file_exists(rebase_path_fixup_msg())) {
-+		unlink(rebase_path_fixup_msg());
-+		amend_type = "fixup";
++		if (file_exists(cherry_pick_head) && unlink(cherry_pick_head))
++			return error(_("could not remove CHERRY_PICK_HEAD"));
++		return 0;
 +	}
-+	if (write_message(amend_type, strlen(amend_type),
-+		       rebase_path_amend_type(), 0))
-+		return error(_("could not write '%s'"),
-+			     rebase_path_amend_type());
 +
- 	if (rename(rebase_path_squash_msg(), rebase_path_message()))
- 		return error(_("could not rename '%s' to '%s'"),
- 			rebase_path_squash_msg(), rebase_path_message());
--	unlink(rebase_path_fixup_msg());
- 	unlink(git_path_merge_msg());
- 	if (copy_file(git_path_merge_msg(), rebase_path_message(), 0666))
- 		return error(_("could not copy '%s' to '%s'"),
-@@ -2572,6 +2589,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 			unlink(rebase_path_author_script());
- 			unlink(rebase_path_stopped_sha());
- 			unlink(rebase_path_amend());
-+			unlink(rebase_path_amend_type());
- 			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
- 		}
- 		if (item->command <= TODO_SQUASH) {
-@@ -2799,6 +2817,7 @@ static int commit_staged_changes(struct replay_opts *opts)
  	if (run_git_commit(rebase_path_message(), opts, flags))
  		return error(_("could not commit staged changes."));
  	unlink(rebase_path_amend());
-+	unlink(rebase_path_amend_type());
- 	return 0;
- }
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index b177baee322..4880bff82ff 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -88,7 +88,7 @@ test_expect_success 'rebase passes merge strategy options correctly' '
+ 	git rebase --continue
+ '
  
+-test_expect_failure '--continue after failed fixup cleans commit message' '
++test_expect_success '--continue after failed fixup cleans commit message' '
+ 	git checkout -b with-conflicting-fixup &&
+ 	test_commit wants-fixup &&
+ 	test_commit "fixup! wants-fixup" wants-fixup.t 1 wants-fixup-1 &&
 -- 
 2.17.0.windows.1.15.gaa56ade3205
-
-
