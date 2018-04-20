@@ -2,84 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87C951F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 12:18:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D63351F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 12:18:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754791AbeDTMSD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 08:18:03 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:41216 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754726AbeDTMSC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 08:18:02 -0400
-Received: by mail-wr0-f193.google.com with SMTP id v24-v6so22423972wra.8
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 05:18:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=CKFmUJzvotRgKUzGBXAXGQ6lVmX4+hFmXkueP3dzpxw=;
-        b=H0aMICZAacQsQy6Yzw8wNY2QNJV29xPIelCJAgD8vkh95EBTTxquHNJLtakOhyxWsN
-         fUR8RruYm2b4uA0l7wp1XIIDGy0imvyBiegXxo/OD3fW5jjFdIXFaP5EiROuBuTpMtyn
-         OWtemAdBN1wL5taSuSDdg0CAq9KkkMGt8+oRTMAMaocQVvkGgS5GuZ+mtVovCIvpcMnn
-         tSEJD/aLJMP0UiUuakoQZpTicopk2Tq/oRdnnN1+gfToX7wluqbkP7iPTvUBh6HwlKQC
-         0CaoWzeqGAmGfbaNgFKSaJi+pJ88cHb8UW2qKhjFz0glvM4jcpLMa/YbhawfeVx4VDdK
-         Q+jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=CKFmUJzvotRgKUzGBXAXGQ6lVmX4+hFmXkueP3dzpxw=;
-        b=R539cb99Ks+o+28Ev6s4PB2y03aSF9x2PqanjLtbICMJf8SQ4d23JScoUm065JKEA7
-         vFrxxPv2KiUvrFh8e3+sMYpH5dIHpiEqRVC9NRBTYHTCP6nO6rYEr0a81S1B3efaN3nk
-         EP4uglqjYe2n8hNXnupqEcb3zg/Bk0MfEZG1A4buL8vXV02VbZsR23mn3DhIcT/nDfNc
-         +0Bxyfq42gFbST8GMdGoY+IT6qBFciN8JWybQt9Mr5qjmxVCiUa6W6NigVWxsfqE1DXf
-         yTr99WsN98rQ4vnZKmuHGcv9vC+yXSRuHtryuHB7MliDyMhazWGGuk1VRG0ogR46fdj+
-         jkEQ==
-X-Gm-Message-State: ALQs6tBzDF3eEd3sHuGi4hpi3ga5IAFm7LgOLZ/DIOzLKmS/CS5CWBXp
-        Iaw75jq/GcABGBColbxHq6qcNdOY
-X-Google-Smtp-Source: AIpwx489oUlXuhOaLARIy1l+uCfwNAcEQK/NF6mAwIL65aBMvMfdNWo/5mFmwEcG3lCaUUfAgtYBcA==
-X-Received: by 2002:adf:dfcc:: with SMTP id q12-v6mr2590390wrn.68.1524226681546;
-        Fri, 20 Apr 2018 05:18:01 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egc153.neoplus.adsl.tpnet.pl. [83.21.66.153])
-        by smtp.gmail.com with ESMTPSA id e185sm1860934wmg.5.2018.04.20.05.18.00
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Apr 2018 05:18:00 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 07/12] commit-graph: load a root tree from specific graph
-References: <20180417181028.198397-1-dstolee@microsoft.com>
-        <20180417181028.198397-8-dstolee@microsoft.com>
-Date:   Fri, 20 Apr 2018 14:18:00 +0200
-In-Reply-To: <20180417181028.198397-8-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Tue, 17 Apr 2018 18:10:42 +0000")
-Message-ID: <86o9iedqbr.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1754792AbeDTMSO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 08:18:14 -0400
+Received: from mout.gmx.net ([212.227.17.20]:52131 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754726AbeDTMSO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 08:18:14 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mhdex-1engkk1dqd-00Mvwq; Fri, 20
+ Apr 2018 14:18:09 +0200
+Date:   Fri, 20 Apr 2018 14:17:53 +0200 (DST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 1/3] rebase -i: demonstrate bug with fixup!/squash! commit
+ messages
+In-Reply-To: <cover.1524226637.git.johannes.schindelin@gmx.de>
+Message-ID: <ad2a1b2c60341d692e94b1cb997df05dd7cded88.1524226637.git.johannes.schindelin@gmx.de>
+References: <cover.1524226637.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:z0eOnGHdMkFNGJowGgUXAlnOMQ3QlYb6Pj382BR+BNG3XvLMWpQ
+ CjpBL4vaHkxt6NzRIxBbmf4urAwrpucgk8Apy5MP05nptVGnGNe6mPP/kgSWZAfAD2ID/9c
+ 6GSPl9WQf7wVb8HJcOEt57zKGODm4UoVbmBfuJNWAa/lyPn/gk/1hDy48bRmvP1/MIjQL8b
+ /aRJ5ypPakPbL4ns0LBxg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9aGaRbhULUk=:vvWluzSpWlZl44bkFUnJTC
+ CLeQwzbSH/EWiy/X8N9gX6L2ZSJKDFVtFX8w3TV23oq6N4Si9G0DETEsVdJ/jIOfwvzaV6fVq
+ 9e564WyTEfQOQzwxhG0AW0zm8Lu4O11RfnoYC3uJq/M/QWsUC48F32/42TVZkEXGPyXtzAPb/
+ 5RO19GCYZrHvsJPh3wTY4QKU3AJiNSmwxYkVwxVmqbBNh+GRTVJTtHriYfT3quhV3CrVG2Q8q
+ z5XgVmgSl2SkahnrhnjTlwQKvWHN1ftCwzZ6SLZuVHDbqBu/wUxKE0xinW/l4rAVVCy0aLCvy
+ uXOq2CInciDmX4o/puV4wtnJU3CcE9UtG6kH8x3Q1z1b+YjHAw+Ju/zWvNM7ZCEa6x1D5Q1jO
+ xflAWDQxzcs3mOW3JC4jsfD8Wqu8ZbujWFrCNNVFBy/98gPSBvOSC6GaYiuvV409Vv88ngLZe
+ 8PrMx5hSBUi2x8yQcpz1AfrAZWQQRS+PYQ1uwgBvnzYmNlulNzunf6yWjuNul0kXJOAeoD3IZ
+ bmGkM18lYT7WG+KMc5jQoBnS0X2ve+jpS0qM+P+y1ia6Ypu8H4ehxOt8WpAesEY6nCNOJJncZ
+ lWGPOjMrDyVPqOYh7AimR/UlARZau3UhDYUdR9OgckO95amDe1g9kWSZVko+Ddqj5noj08aXF
+ RwJeDD41dBP45h1R+gkFuR6IsVnTh7dpfiZHgdXF13RpUMtkTByAhkO0ivRAXhc72Hnykfz2V
+ rRNYaSfzaRb7m6xEdqsPYhxMvfpXxKHz5L9ei8WbD83eI9E4uBit1MnO9+XFvAbNX+i3D754w
+ /COxV5nXW/Vmk3HN1w2FR35f8kBHF7siVfzL3nvpTojk9m2hpk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+When multiple fixup/squash commands are processed and the last one
+causes merge conflicts and is skipped, we leave the "This is a
+combination of ..." comments in the commit message.
 
-> When lazy-loading a tree for a commit, it will be important to select
-> the tree from a specific struct commit_graph. Create a new method that
-> specifies the commit-graph file and use that in
-> get_commit_tree_in_graph().
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Noticed by Eric Sunshine.
 
-Looks good to me.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t3418-rebase-continue.sh | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-> ---
->  commit-graph.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
-[...]
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index 9214d0bb511..b177baee322 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -88,6 +88,27 @@ test_expect_success 'rebase passes merge strategy options correctly' '
+ 	git rebase --continue
+ '
+ 
++test_expect_failure '--continue after failed fixup cleans commit message' '
++	git checkout -b with-conflicting-fixup &&
++	test_commit wants-fixup &&
++	test_commit "fixup! wants-fixup" wants-fixup.t 1 wants-fixup-1 &&
++	test_commit "fixup! wants-fixup" wants-fixup.t 2 wants-fixup-2 &&
++	test_commit "fixup! wants-fixup" wants-fixup.t 3 wants-fixup-3 &&
++	test_must_fail env FAKE_LINES="1 fixup 2 fixup 4" \
++		git rebase -i HEAD~4 &&
++
++	: now there is a conflict, and comments in the commit message &&
++	git show HEAD >out &&
++	grep "This is a combination of" out &&
++
++	: skip and continue &&
++	git rebase --skip &&
++
++	: now the comments in the commit message should have been cleaned up &&
++	git show HEAD >out &&
++	! grep "This is a combination of" out
++'
++
+ test_expect_success 'setup rerere database' '
+ 	rm -fr .git/rebase-* &&
+ 	git reset --hard commit-new-file-F3-on-topic-branch &&
+-- 
+2.17.0.windows.1.15.gaa56ade3205
+
+
