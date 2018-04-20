@@ -2,135 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62F821F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 18:19:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0C961F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 18:28:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753623AbeDTSTO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 14:19:14 -0400
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:44072 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753543AbeDTSTN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 14:19:13 -0400
-Received: by mail-qt0-f175.google.com with SMTP id j26-v6so10787682qtl.11
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 11:19:12 -0700 (PDT)
+        id S1753790AbeDTS2b (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 14:28:31 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:37025 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753627AbeDTS2a (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 14:28:30 -0400
+Received: by mail-wr0-f174.google.com with SMTP id f14-v6so25294381wre.4
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 11:28:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=p2aEbzuyXZZ+roRnrh3+lkDsrMQC63x2wFNQgvPGkro=;
-        b=OyTqkdn9oY9/5gAwNqj5mRM62Mwh8UkSPJG8CIUHuoB2yfMD3Lm0jBqb9Mg9Y271VW
-         jUY7YU7BRC7tgMdZAnRSeZc8L3Vw6jk+f4MDytdrzkQielcON4QAs+l5l6kbSwpeNkp6
-         SYPd61KfcBb9SgDx0+wzNmj+JtXq5xrx+1WmD8UlNh4yGFq5EhvW9nDdWH76JTy5byHk
-         YHemOFNhG/IMYPYASFqsBsuEQIDux/mLehmxidw1LRzLNSPnTxCApOVtit7SN+zOqE5H
-         RAXUIRFsaipfpByOOI+bmb2kPrpsscYNslAgli+S8wXrF8zzkxf0FrvCFJCPffQrFWRm
-         x7Tg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=1Oz041v4OTnJ1jV66IJULCxLDwfSLgMTX9OqVJddYO4=;
+        b=Qu8KEg8vgbjyPnxL65Lj8lMjZklL8BE9C9HV84xNyH4/9jUzu074VbCNZn/oPotrOi
+         Tv+pW3KK5+9IHlfv9afg6QjIQqlbj0KyJ8Fo7tf2E4WdIw1jSM6RcNo02AbblOtWaWEg
+         sH3KDQX7qRSHTqBDfNPKpjiPrxG6gVg1RbAC/6UrAHF1O3mRGM7iriwI82KKtj4jJFoD
+         V1V9AM+VLY4DZsS/0o7DFmdiLXqGwW59Am+K7m/bg/SL5Kr6zM1gz7B8TjQ0WF1hj20O
+         DXn8aaOsjEGF4Oosk+RQVGlO4eH8qJk3GwOsx4umVxrFrkCK8JU5EWmCbgWAzlLnH+1g
+         9Hbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=p2aEbzuyXZZ+roRnrh3+lkDsrMQC63x2wFNQgvPGkro=;
-        b=s2qZtCt5EebZKQpqD1O8I+/JJIAyv2kYF4t6uVdfR9Pbns3BGhK2TdmQacP5vBlARw
-         bzKOpYVSq41DUxf4lt3RtK/6uTQ9aYtI1pdREj1uFTj4T53yVpEA+m9DoLGEdZ/KaPV9
-         3nCDd9lE+nBNHVvR00cEig8x6VYo+TC4y2UJhUmlVCv6bamspKX1hPz6M5GfM1z0W0G+
-         khAn1W9HyuB7a4OiACM3/bw8q7gIMhElUQk5fFgFE6OCujj6eqEH9X1yiSsm5xs16NrK
-         4rtxzcARh7LdFgSfS3zrgNgOI1g0/9o/vsF9fNU61u6LwaDUNAXPxhbFjGu/ujqc7A3Y
-         6oFQ==
-X-Gm-Message-State: ALQs6tAkWkyCX6eE8hu9G8WS7CN6noW7zAz2nJNCXWA54u5v5joFyE0Q
-        bu+k5vFt+3pXJ+wnpcxIMuA=
-X-Google-Smtp-Source: AIpwx4+e/zR9/Pq3YqyqnX6a/IvuROr3TI90R8aoIYjsxDUJ/tkbo2mwhq1WnjBIkzwMjpVLiuOIrw==
-X-Received: by 2002:ac8:4293:: with SMTP id o19-v6mr12171890qtl.321.1524248351942;
-        Fri, 20 Apr 2018 11:19:11 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id o3-v6sm5342090qtp.72.2018.04.20.11.19.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Apr 2018 11:19:11 -0700 (PDT)
-Subject: Re: [PATCH v1 0/2] add additional config settings for merge
-To:     Elijah Newren <newren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>
-References: <20180420133632.17580-1-benpeart@microsoft.com>
- <CABPp-BEwwn+NwOEtWOKOdUKxoXfq6YwWeoH6OwkPjSwVtTm5=Q@mail.gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <e580712c-b375-c07e-a02e-5bb63a914611@gmail.com>
-Date:   Fri, 20 Apr 2018 14:19:11 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=1Oz041v4OTnJ1jV66IJULCxLDwfSLgMTX9OqVJddYO4=;
+        b=A+xrsLu7KvseOR8MkRBJW9Nq7Pj1iQkgsn65g75rtmH6ou+PuBl92DLxb7Em0nACHP
+         Qxg70X1y8TlzqJqvQEhlmtF5JPk7PWOjm0f9oEhvdhx7rTW0JS79X26j6gIPjXQF+4UF
+         lDfCLSgJdWTbV8lrwpDm7RLzwMi6DoA98wJyebWIxsM2jxrpZoht37e6/jxNQaFPr0t8
+         nUZDEldp5F8ZjeK7xIFr2D975epM52xHVs3YgCFx2r00Xz/TKK2GGr38s+FEtJfbPRM6
+         v2JMyoWBaJWqGC/NaT9/2Ah7WdPmJHrwNO2xoCSAme6yWxO2PP9rIF3dcI4Of/Y7b9Tz
+         5YEA==
+X-Gm-Message-State: ALQs6tBBQd4JQQEtRImI7dLhuDLVM4es6TtBNlHU3TcICP4SZDOBoD2v
+        N7aYP1lxDxaow3f7+d9YBRc=
+X-Google-Smtp-Source: AIpwx4/Sec3iaFUvDMhLA6ikfbsJe17XD1ZiBmBKAYFueN6DCRg/hNKhNbPuBGAdPSm+/rrq8mn9Fg==
+X-Received: by 10.28.11.207 with SMTP id 198mr2753331wml.70.1524248909602;
+        Fri, 20 Apr 2018 11:28:29 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id k126sm3989643wmg.6.2018.04.20.11.28.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Apr 2018 11:28:27 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v1] perf/aggregate: tighten option parsing
+References: <20180420121041.32558-1-chriscool@tuxfamily.org> <CAPig+cSDYVGpaV-beNVG57r3YfQ=Ey5zuyHRkk_tf86NNRdY6w@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAPig+cSDYVGpaV-beNVG57r3YfQ=Ey5zuyHRkk_tf86NNRdY6w@mail.gmail.com>
+Date:   Fri, 20 Apr 2018 20:27:24 +0200
+Message-ID: <87h8o5ensj.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BEwwn+NwOEtWOKOdUKxoXfq6YwWeoH6OwkPjSwVtTm5=Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Fri, Apr 20 2018, Eric Sunshine wrote:
 
-On 4/20/2018 1:34 PM, Elijah Newren wrote:
-> On Fri, Apr 20, 2018 at 6:36 AM, Ben Peart <Ben.Peart@microsoft.com> wrote:
->> This enables the user to set a couple of additional options for merge.
+> On Fri, Apr 20, 2018 at 8:10 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> When passing an option '--foo' that it does not recognize, the
+>> aggregate.perl script should die with an helpful error message
+>> like:
 >>
->> 1. merge.aggressive - this is to try to resolve a few more trivial
->>     merge cases.  It is documented in read-tree and is not something you
->>     can pass into merge itself.
+>>   unknown option '--foo' at ./aggregate.perl line 80.
 >>
->> 2. merge.renames - this is to save git from having to go through the entire
->>     3 trees to see if there were any renames that happened.
+>> rather than:
 >>
->> For the work item repro that I have been using this drops the merge time
->> from ~1 hour to ~5 minutes and the unmerged entries goes down from
->> ~40,000 to 1.
-> 
-> Ooh, this is *very* interesting.  Is there any chance I could also get
-> you to test performing the same merge with the version of git at
-> https://github.com/newren/git/tree/big-repo-small-cherry-pick and
-> report on your timings?
-> 
+>>   fatal: Needed a single revision
+>>   rev-parse --verify --foo: command returned error: 128
+>>
+>> While at it let's also prevent something like
+>> 'foo--sort-by=regression' to be handled as if
+>> '--sort-by=regression' had been used.
+>>
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>> diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
+>> @@ -46,7 +46,7 @@ while (scalar @ARGV) {
+>> -       if ($arg =~ /--sort-by(?:=(.*))?/) {
+>> +       if ($arg =~ /^--sort-by(?:=(.*))?$/) {
+>
+> Makes sense.
+>
+>> @@ -76,6 +76,9 @@ while (scalar @ARGV) {
+>> +       if ($arg =~ /^--.+$/) {
+>> +               die "unknown option '$arg'";
+>> +       }
+>
+> Nit: In this expression, the trailing +$ makes the match no tighter
+> than the simpler /^--./, so the latter would be good enough.
+>
+> Not necessarily worth a re-roll.
 
-Unfortunately, it isn't quite that simple.  My repo is _really_ big 
-(3.2M files and ~100K commits per week) and requires me to use a custom 
-fork of git that works with our GVFS solution for it to work at all.
+Not that it matters in this case, but just as a bit of Perl rx pedantry,
+yes his is tighter & more correct. You didn't consider how "." interacts
+with newlines:
 
-I've been watching your work in this area and am hoping it pays off for 
-us if/when we have users that want to do rename detection and override 
-our defaults.
+    $ perl -wE 'my @rx = (qr/^--./, qr/^--.+$/, qr/^--./m, qr/^--.+$/m, qr/^--./s, qr/^--.+$/s); for (@rx) { my $s = "--foo\n--bar"; say $_, "\t", ($s =~ $_ ? 1 : 0) }'
+    (?^u:^--.)      1
+    (?^u:^--.+$)    0
+    (?^um:^--.)     1
+    (?^um:^--.+$)   1
+    (?^us:^--.)     1
+    (?^us:^--.+$)   1
 
-> The 'big-repo-small-cherry-pick' name could be improved, but that
-> branch has a number of performance fixes for really poor rename
-> detection performance during merges.  From your description, I'm
-> pretty sure it'll apply to your case.  For my specific testcase,  I
-> got a speedup factor of 30.  Someone else on the list saw a factor of
-> 24[1].  Results are highly dependent on the specific repo, but it's
-> certainly possible that it gets much of your factor of 12 speedup that
-> you saw with these new config settings you added.
-> 
-> However, what makes this case even more interesting to me is that my
-> branch may not be quite as effective as your workarounds.  There are
-> other other performance issues in merge that I am aware of, but for
-> which I haven't had the time to write the patches yet (I've been
-> waiting for the directory rename detection stuff to land and settle
-> down before working more on the performance aspects).  I do not know
-> how big a factor those other performance issues are, but your
-> workarounds (namely the aggressive setting) may get around some of
-> those other issues as well, so I'm very interested to see how my
-> current branch compares to the speedups you got with these settings.
-> 
-> Thanks,
-> Elijah
-> 
-> 
-> [1] https://public-inbox.org/git/alpine.DEB.2.00.1711211303290.20686@ds9.cixit.se/
-> 
+I don't think it matters here, not like someone will pass \n in options
+to aggregate.perl...
