@@ -2,103 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19C161F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 22:40:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4F971F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 23:21:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753208AbeDTWjy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 18:39:54 -0400
-Received: from mout.gmx.net ([212.227.17.22]:38999 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752144AbeDTWjw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 18:39:52 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MBrCt-1fJFCD3Q7b-00AkQ8; Sat, 21
- Apr 2018 00:39:43 +0200
-Date:   Sat, 21 Apr 2018 00:39:26 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v7 06/17] sequencer: introduce new commands to reset the
- revision
-In-Reply-To: <fa4d22ec-0c40-b7ec-6715-67507b15181d@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1804210036400.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1523362469.git.johannes.schindelin@gmx.de> <cover.1524139900.git.johannes.schindelin@gmx.de> <77c08b61387057af1be57c2b50769651cc8ec898.1524139900.git.johannes.schindelin@gmx.de> <fa4d22ec-0c40-b7ec-6715-67507b15181d@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
+        id S1752306AbeDTXVk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 19:21:40 -0400
+Received: from mail-pl0-f49.google.com ([209.85.160.49]:38665 "EHLO
+        mail-pl0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751876AbeDTXVj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 19:21:39 -0400
+Received: by mail-pl0-f49.google.com with SMTP id c7-v6so6024841plr.5
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 16:21:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0mp1BrVeLqU7mOx/DDaUGeQ5nfDT+XU7TdfedI4mTE8=;
+        b=YZUjC6HpMfRCWX0UYl0qc3rxbAZ4H8tHp04QBtWO4dojMKY0feu3xv9tq8I3gLjHz+
+         vlS1lErnuZ91gGFGYVTIo6wSb1D/4J8Zyz8C0xu3pUm8RTASMtXqfzc08BzQax62JEEH
+         uAeyY/y+PnMOtnUAMF0U+uwjIWm4uI4mctlztEGgal4sOiKBQ55PqTjWUn5ZR+IO6Y+K
+         +/hUQmOGuJY/KSf6KZFDP9gJVtYCmDMrnqM22RkFcDSRoyTJujTQv9WZRgJtDANsPbcX
+         3WUdLXdxArAa+aQo0NQ13PKwIyO1r02xq2gnIMCUNCYyB6DrmsDwadkHvGmJakBHQNNB
+         WihQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0mp1BrVeLqU7mOx/DDaUGeQ5nfDT+XU7TdfedI4mTE8=;
+        b=dsX37mPecYwvsXHWth/Qq9bDk2ObWi7hfm5iK4w53TXWcPzXsd0z6x7pOICO/cGkiB
+         AGiYzkECcaEgoLNvjWtBV/KELOe8K3EUZ/rCOiSSYh1Gif8aZqIjU6fxZKpe/vUyIUIi
+         sJX9yVePr2r+++v13wvgeLEMroP7umPKfa2h3XLnNoT/IeGC19zu2lZZFaX+KWR0gxzP
+         9aEoHQzBoMPmMRw6UhkNlH80uvJ0zQlPomL15JcAUKUKq7rxAG35TInnYnnAWKZRWUG6
+         n40gkgZNFmzZSfKYFEo+85sg5xcvxvkzHg95E7C7cET/fU1PC0/2gGu10UEU2PZfmlQU
+         XPRw==
+X-Gm-Message-State: ALQs6tByYikdLzYMouqQ5WWr8AI40kOowvF9/AvYzSBuMKga4UCXJu4+
+        0Mft9QDZ9lWrqzfGxfPGbSPS8g==
+X-Google-Smtp-Source: AIpwx496ldIDaBNilkj0J0vUsNcbBLtI0MSpO4bXXJKcq0Fy8deIK5p78OtOTGgt/rmxMo5X8eeJ/Q==
+X-Received: by 2002:a17:902:5602:: with SMTP id h2-v6mr8843305pli.115.1524266498937;
+        Fri, 20 Apr 2018 16:21:38 -0700 (PDT)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id k83sm18917835pfg.153.2018.04.20.16.21.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Apr 2018 16:21:37 -0700 (PDT)
+Date:   Fri, 20 Apr 2018 16:21:36 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jameson Miller <jamill@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>
+Subject: Re: [PATCH v1 3/5] mem-pool: fill out functionality
+Message-Id: <20180420162136.144ac5529072f22067abb3b9@google.com>
+In-Reply-To: <20180417163400.3875-5-jamill@microsoft.com>
+References: <20180417163400.3875-1-jamill@microsoft.com>
+        <20180417163400.3875-5-jamill@microsoft.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:AfWPH/iOuVYw3r7uLrTvvUAOm/p0WfgJDFZLHXta+amx502v1yp
- n6QL9zXkeeYn7KsDyngRjRG+wHWLtIikoWCA3qTKQr355G5Uz04QisT0GBDsDer2qZFkLBi
- Hv+AIpIxVRYlYQ6nwqYrNQi9HZWFFf51Ff5M0e60SbtWuRFZqNu2DL5eTpmHXMEscsBCuuc
- gxDu7BdduKgI5DmiDo09g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CBoziHpIzzU=:7Wol/r8ULuWC8klmsux4J2
- O7wFQ4n20HPCOEGxiZTFSXhD8apiobBeuh0L4oiuKA7gNVS0qOjo9CseMRE/iEQhq7HuARhk3
- xMb5C6J/PCaoOy8AXHorjOekjv0nd61KZT8vf2nEJYoOmQkSOBFC21InrST8IQBp7lfj6k9Ju
- 1R8YmWlzt4iMp4X0w92/5CTS2m6DJVtEdYQ6w3uKct2KH5SxjCkJg1JKyVm4Dru8brLT+sURR
- TmPA6zCZtz8x68FOf15zxfSQ/Q+VQrKah5vUhfZxfpZKsG4xE/ZPmQTte+iEF+ysDKJ09tiQ4
- rHQlH0nfY2/p+bQi5OnYm/9MoWiwrdCHBry0PxLZ5f1bkbctqh8aqTXenXEEEX75x82wkxKoO
- wLbZHEFTTSYSlY1OAAk8Sbd5udLxcg4zLY/YljeMd6VKnKVcWiK6h3l85O95sF62QKUl8mb68
- FWknnhv+72hAa9tNywzHJ9aVWaH1unYgKJ9odsXiLlfj/XwGsJ4kSk89+vOxIe0sC+mkmtlzS
- hhE26mZAKpjfSFaqfsXyeHuAh+nKvGS6YcZMwP8mGHI2JbNSENV9hj3P6rN4b1m/8jRVcFGn8
- QGtKXfvcRWeyyOFPcJisizVqhN0rQryRy9EMoqNQR2sdfN7Ajvcf4gbgeS36DKr3N5eUZhHGq
- tuXPyXCIOALFbnxihlAnPPzrQx54wT2VfyKKiHWbz2HxPvMDLnK9Lq04TGkaDRCwT7G2Q8P0q
- YhDTPEogO1xNDj9HBAMtyqcRAk8KoQIi4k1UrsHVBcHP8FWq5kePf+2e+qOHrIFCbLwuS7V7q
- vh0W9AvLGX4tKhXQv2NcMTTlfZyggkjNYA0en05nNcsmWg/Izo=
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+On Tue, 17 Apr 2018 16:34:42 +0000
+Jameson Miller <jamill@microsoft.com> wrote:
 
-On Fri, 20 Apr 2018, Phillip Wood wrote:
+> @@ -19,8 +19,27 @@ struct mem_pool {
+>  
+>  	/* The total amount of memory allocated by the pool. */
+>  	size_t pool_alloc;
+> +
+> +	/*
+> +	 * Array of pointers to "custom size" memory allocations.
+> +	 * This is used for "large" memory allocations.
+> +	 * The *_end variables are used to track the range of memory
+> +	 * allocated.
+> +	 */
+> +	void **custom, **custom_end;
+> +	int nr, nr_end, alloc, alloc_end;
 
-> On 19/04/18 13:20, Johannes Schindelin wrote:
->
-> [... please cull long stretches of quoted mail that is not responded to ...]
->
-> > @@ -2665,6 +2846,12 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
-> >  				/* `current` will be incremented below */
-> >  				todo_list->current = -1;
-> >  			}
-> > +		} else if (item->command == TODO_LABEL) {
-> > +			if ((res = do_label(item->arg, item->arg_len)))
-> > +				goto reschedule;
-> 
-> I can see why you've implemented like this but I'm uneasy with jumping
-> into a block guarded with "if (item->command <= TODO_SQUASH)" when
-> item->command > TODO_SQUASH. I think it works OK at the moment but it's
-> possible that in the future someone will edit that block of code and add
-> something like
-> 
-> if (item->command == TODO_PICK)
-> 	do_something()
-> else
-> 	do_something_else()
-> 
-> assuming that item->command <= TODO_SQUASH because they haven't noticed
-> the goto jumping back into that block.
+This seems overly complicated - the struct mem_pool already has a linked
+list of pages, so couldn't you create a custom page and insert it behind
+the current front page instead whenever you needed a large-size page?
 
-I changed it by duplicating the rescheduling, as I agree that it is
-somewhat dangerous what with all the code going on after the rescheduling
-of a pick/fixup/squash/reword.
-
-My plan is to go over the documentation changes once more tomorrow, with a
-fresh set of eyes, and then submit the hopefully final iteration of this
-patch series.
-
-Ciao,
-Dscho
+Also, when combining, there could be some wasted space on one of the
+pages. I'm not sure if that's worth calling out, though.
