@@ -7,100 +7,98 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11EC31F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 22:27:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19C161F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 22:40:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752778AbeDTW1X (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 18:27:23 -0400
-Received: from mout.gmx.net ([212.227.17.20]:34935 "EHLO mout.gmx.net"
+        id S1753208AbeDTWjy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 18:39:54 -0400
+Received: from mout.gmx.net ([212.227.17.22]:38999 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752489AbeDTW1W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 18:27:22 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJSuF-1f7Aas3k1j-0038fO; Sat, 21
- Apr 2018 00:27:18 +0200
-Date:   Sat, 21 Apr 2018 00:27:02 +0200 (DST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1752144AbeDTWjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 18:39:52 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MBrCt-1fJFCD3Q7b-00AkQ8; Sat, 21
+ Apr 2018 00:39:43 +0200
+Date:   Sat, 21 Apr 2018 00:39:26 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
         Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 11/11] Remove obsolete script to convert grafts to replace
- refs
-In-Reply-To: <cover.1524262793.git.johannes.schindelin@gmx.de>
-Message-ID: <6c351dbd2391715a2737533af41dbea846ba294c.1524262793.git.johannes.schindelin@gmx.de>
-References: <cover.1524125760.git.johannes.schindelin@gmx.de> <cover.1524262793.git.johannes.schindelin@gmx.de>
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v7 06/17] sequencer: introduce new commands to reset the
+ revision
+In-Reply-To: <fa4d22ec-0c40-b7ec-6715-67507b15181d@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1804210036400.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1523362469.git.johannes.schindelin@gmx.de> <cover.1524139900.git.johannes.schindelin@gmx.de> <77c08b61387057af1be57c2b50769651cc8ec898.1524139900.git.johannes.schindelin@gmx.de> <fa4d22ec-0c40-b7ec-6715-67507b15181d@talktalk.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:8Lqey8vn9PuydcfQLV0EPBlHm9LSyC/BKsxtiro02uaJGaMaJKd
- XTb/YbGHktTmnKhImr8l6j1VZ50WqnGMerX9nOTyeKetKJf0+bMOzf5kMIcRWTuZEuE1VLT
- dANAGqDMMztPEsXCpg14UTIQdCY4borXN+HiS8RA9r4MEzvZ5Jys8OAtfYO+HUeX9JWPmim
- rOx6KcQ8OYJlJqGWoRnRA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:G0AIzW0T7yk=:XaLwFuzzfLmkM/FAE6bNmn
- tAgkR+yZF4DUQo2X1Q2E2TpZ9mq2q4Rprzg+LGc9qkyNXCtPJX3o6bei4skWK07oUfxUpbohj
- yAu2Ym5Tiwi2CqsH/sHT3qhkPD1sU2E0qbf5jA4k0gwj5ZqXZt2REUcZ7xWfMWyq5TXPG0nGq
- lAFkL0YC/SfNthX3vjjpQ+ZOidYuFzeDhMGtIYF72e9gDvLO3ufXt/Glh/kCVZBNvCj7E76ha
- UFMg8s6WRirIS3jXiknvoLPBn0cynqXXJ5K4DAxY5AYknDGQjwj6G6sy1MgfdnDvLeuwDesTO
- 02GQI+OM/ADA81zlW9B53ErkDu5q7J+kGtikeYbRCQWI+dN8M6HHp4R8sQq1dPYd+7n2KnsVn
- FXehZHiognnP2JRxmNnrXh6VgWIIGIibuI2ucdgACeeujm/I4aGaDFWAnjaLIOlfFzCke9wPM
- LxnOXwXErvLHm/OfmdHHcOBeSPZM+DKOM5wag52SWiRZLtheXwQcJdPbgSeWOWKPCIVcKR36Y
- EDhHWgF8BnQdCf3U50eoj5eQZ7kBO+zlW3laT2/GqQsXezISYRTZ97pZvUOsbnYnC4pJXsx6n
- z9fz8wSlxSm+psDRihb4wNULKFimc5UIZQSDH1Dk5Ltm45IYOB7E4nQ5N0onWuXgur23yOexz
- +Oq/bWZAhxFeA+KjRXlWXdQwjo/BBFNLC5K5M1hV+z4jWLfdbknJ4LC3G+taSYyH/VLxIDOde
- zGeSut7zhxVu1NEwtPMJjj6paSfpP2MeAJkqza9akEMkZZXB7PVQl9CfTtRuMKv3CqZML6dCG
- HjJbrZFmxA9HVthxcZeUSyXCpNbiYTiqayjM2taFJvFSdaKg58=
+X-Provags-ID: V03:K1:AfWPH/iOuVYw3r7uLrTvvUAOm/p0WfgJDFZLHXta+amx502v1yp
+ n6QL9zXkeeYn7KsDyngRjRG+wHWLtIikoWCA3qTKQr355G5Uz04QisT0GBDsDer2qZFkLBi
+ Hv+AIpIxVRYlYQ6nwqYrNQi9HZWFFf51Ff5M0e60SbtWuRFZqNu2DL5eTpmHXMEscsBCuuc
+ gxDu7BdduKgI5DmiDo09g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CBoziHpIzzU=:7Wol/r8ULuWC8klmsux4J2
+ O7wFQ4n20HPCOEGxiZTFSXhD8apiobBeuh0L4oiuKA7gNVS0qOjo9CseMRE/iEQhq7HuARhk3
+ xMb5C6J/PCaoOy8AXHorjOekjv0nd61KZT8vf2nEJYoOmQkSOBFC21InrST8IQBp7lfj6k9Ju
+ 1R8YmWlzt4iMp4X0w92/5CTS2m6DJVtEdYQ6w3uKct2KH5SxjCkJg1JKyVm4Dru8brLT+sURR
+ TmPA6zCZtz8x68FOf15zxfSQ/Q+VQrKah5vUhfZxfpZKsG4xE/ZPmQTte+iEF+ysDKJ09tiQ4
+ rHQlH0nfY2/p+bQi5OnYm/9MoWiwrdCHBry0PxLZ5f1bkbctqh8aqTXenXEEEX75x82wkxKoO
+ wLbZHEFTTSYSlY1OAAk8Sbd5udLxcg4zLY/YljeMd6VKnKVcWiK6h3l85O95sF62QKUl8mb68
+ FWknnhv+72hAa9tNywzHJ9aVWaH1unYgKJ9odsXiLlfj/XwGsJ4kSk89+vOxIe0sC+mkmtlzS
+ hhE26mZAKpjfSFaqfsXyeHuAh+nKvGS6YcZMwP8mGHI2JbNSENV9hj3P6rN4b1m/8jRVcFGn8
+ QGtKXfvcRWeyyOFPcJisizVqhN0rQryRy9EMoqNQR2sdfN7Ajvcf4gbgeS36DKr3N5eUZhHGq
+ tuXPyXCIOALFbnxihlAnPPzrQx54wT2VfyKKiHWbz2HxPvMDLnK9Lq04TGkaDRCwT7G2Q8P0q
+ YhDTPEogO1xNDj9HBAMtyqcRAk8KoQIi4k1UrsHVBcHP8FWq5kePf+2e+qOHrIFCbLwuS7V7q
+ vh0W9AvLGX4tKhXQv2NcMTTlfZyggkjNYA0en05nNcsmWg/Izo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The functionality is now implemented as `git replace
---convert-graft-file`.
+Hi Phillip,
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- contrib/convert-grafts-to-replace-refs.sh | 28 -----------------------
- 1 file changed, 28 deletions(-)
- delete mode 100755 contrib/convert-grafts-to-replace-refs.sh
+On Fri, 20 Apr 2018, Phillip Wood wrote:
 
-diff --git a/contrib/convert-grafts-to-replace-refs.sh b/contrib/convert-grafts-to-replace-refs.sh
-deleted file mode 100755
-index 0cbc917b8cf..00000000000
---- a/contrib/convert-grafts-to-replace-refs.sh
-+++ /dev/null
-@@ -1,28 +0,0 @@
--#!/bin/sh
--
--# You should execute this script in the repository where you
--# want to convert grafts to replace refs.
--
--GRAFTS_FILE="${GIT_DIR:-.git}/info/grafts"
--
--. $(git --exec-path)/git-sh-setup
--
--test -f "$GRAFTS_FILE" || die "Could not find graft file: '$GRAFTS_FILE'"
--
--grep '^[^# ]' "$GRAFTS_FILE" |
--while read definition
--do
--	if test -n "$definition"
--	then
--		echo "Converting: $definition"
--		git replace --graft $definition ||
--			die "Conversion failed for: $definition"
--	fi
--done
--
--mv "$GRAFTS_FILE" "$GRAFTS_FILE.bak" ||
--	die "Could not rename '$GRAFTS_FILE' to '$GRAFTS_FILE.bak'"
--
--echo "Success!"
--echo "All the grafts in '$GRAFTS_FILE' have been converted to replace refs!"
--echo "The grafts file '$GRAFTS_FILE' has been renamed: '$GRAFTS_FILE.bak'"
--- 
-2.17.0.windows.1.15.gaa56ade3205
+> On 19/04/18 13:20, Johannes Schindelin wrote:
+>
+> [... please cull long stretches of quoted mail that is not responded to ...]
+>
+> > @@ -2665,6 +2846,12 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+> >  				/* `current` will be incremented below */
+> >  				todo_list->current = -1;
+> >  			}
+> > +		} else if (item->command == TODO_LABEL) {
+> > +			if ((res = do_label(item->arg, item->arg_len)))
+> > +				goto reschedule;
+> 
+> I can see why you've implemented like this but I'm uneasy with jumping
+> into a block guarded with "if (item->command <= TODO_SQUASH)" when
+> item->command > TODO_SQUASH. I think it works OK at the moment but it's
+> possible that in the future someone will edit that block of code and add
+> something like
+> 
+> if (item->command == TODO_PICK)
+> 	do_something()
+> else
+> 	do_something_else()
+> 
+> assuming that item->command <= TODO_SQUASH because they haven't noticed
+> the goto jumping back into that block.
+
+I changed it by duplicating the rescheduling, as I agree that it is
+somewhat dangerous what with all the code going on after the rescheduling
+of a pick/fixup/squash/reword.
+
+My plan is to go over the documentation changes once more tomorrow, with a
+fresh set of eyes, and then submit the hopefully final iteration of this
+patch series.
+
+Ciao,
+Dscho
