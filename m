@@ -6,98 +6,113 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 647651F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 00:03:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 175691F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 00:09:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753848AbeDTADq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 20:03:46 -0400
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:41257 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753581AbeDTADp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 20:03:45 -0400
-Received: by mail-wr0-f178.google.com with SMTP id v24-v6so18329222wra.8
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 17:03:44 -0700 (PDT)
+        id S1753782AbeDTAI5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 20:08:57 -0400
+Received: from mail-wr0-f169.google.com ([209.85.128.169]:34440 "EHLO
+        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753581AbeDTAI4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 20:08:56 -0400
+Received: by mail-wr0-f169.google.com with SMTP id d19-v6so18386773wre.1
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 17:08:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=QZDDTvrp5favQgm2Th2QOFzTm2Qba3pfETseVtcPjJI=;
-        b=l1l3hLtVAtE9kUXR5kNLqnFRHpldrnUbIZaKFxC34ftveCgeOAwY8xLO6f3jlvxlFv
-         qNgEc7dEDo1HExbFWoEYlhGeFdfCwFedSWP8kRvNiWPRj18NtprznT67Fnmm0XTisWDT
-         xjG9uiVQkBRsw3/3+ZdC/A5ccpHWN2/6H/Af2OwbFukCCWUMlV2vR4hvSFeWJ4LHB109
-         8ZULu17VfwtCDyryevl9zNpVIhGW03IV4knzXtEzVVcYi3ZkXncL4DUKwkSKExIqtBKf
-         lsu0MhzGvFzh9RF6HlCcFfMwOU7ttU66t8tK1oNFCPoQXCo9KuqdF6ryZ7xire5MBPIt
-         yolQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=7cj+cECM9wnqX5B+3BcVqicpbusOvh1/Y02nhC0xZ+g=;
+        b=Y+a+vEFPTu0iHKZ0Mwjd0SIh12JTPjo6SZlt2IbWzAF0dhi/F3Be/O3HZTirG3ms7Q
+         K5+MbahYiyNpTBHm4AbEKonfrJ0ynwvjW3xHSCaI2swRBFr4b4HT71fj0rvOx8nydIPE
+         UIFSLzsTb5bjhqIBSWL+7+u79WQ4/mETsAAttVUoJ7K7uNXe62Kt2S/S4p4uJ4btVqxG
+         02OUUgTdf7u0i3w/ENrKXmWvHBmdzIGlExbizTJDE8iXPccJ0Ja6bUMe0ZX35K15pILn
+         2zerYOxnnxmM8sxYm2ytMc4MNfvc1ZI/tRcgncAfyXedSZp6G4eLuojVML2mAlRpqPRT
+         Ne5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
+        d=1e100.net; s=20130820;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=QZDDTvrp5favQgm2Th2QOFzTm2Qba3pfETseVtcPjJI=;
-        b=EBxB20QtjihPEg70biDxtSM18HN051or2PiMQlg5DiJMj9u/hkn1KjVUnFZklaG7Dz
-         u+30Wl818N5PmhFyjKZJq0/ZMbX9VTnKQ318frMCYySY4EZ1ADHhunceeWJH6LDfDS/P
-         7jHBsYmvF6nooM4Kcz66LEqEQq2mD98FQ3mfBqbYn2La2HC8G9QMZJJKN17CG3pajCaw
-         NVeRD0B1K8nsItngOGpHi3jMAg4H+JLgeDIGRLaJs2ctuyMOE58KzluMSJvYxKQGareO
-         sbBomMv5bPNEfbBtxEyUrBgSbbHS/YGHiT0vMo6wK1gYi+9tS5FgnGMz9N0aZdtALJP/
-         VDCA==
-X-Gm-Message-State: ALQs6tBRwdpmRVJHG/Qxdcjs4GXipF4OEEFw7nD5vXpBTA5p+ollwBwb
-        qa3FOQS5mnHYlQ7b29KkEmo=
-X-Google-Smtp-Source: AIpwx48l+gfxt6oCCLt8sxADcJj+zJ4OXD3T+qNf8C+fX/Janij6scqZKzQlTkYUGj57jm9CTusuAA==
-X-Received: by 2002:adf:e549:: with SMTP id z9-v6mr99095wrm.186.1524182623838;
-        Thu, 19 Apr 2018 17:03:43 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=7cj+cECM9wnqX5B+3BcVqicpbusOvh1/Y02nhC0xZ+g=;
+        b=kixoEclJmVSwqReL3d3W0bFibmmZhsy3cjQzuoa7ZaZve3oW03K5UWbElXgKMUPp3+
+         sg/DKMtWNEoWZXBGuSfeiWK2fyZ/1Jcm+Sdb0Hmn7POF6Nel3WauzbxsxNUVcZgRxB9N
+         IlQ8XA2dSTfNb9ijtDgwCpBUMrlkoNWH6S1/JIdxPVANSObmTWUHKRCMLGKi0MeItoV1
+         CgbsKf6NQRf6kykWJK6xDjwnPKWkTd5/ttjyQRZ6CpuLwSF6KNxde3u+L2vMDUP8/SD+
+         4d5URk1ridPSBeW5MVrrVvL8GO47LcO6CMmehv2jG08vGMkbEWdZ0UJl9DIbRxPddY2B
+         TTjA==
+X-Gm-Message-State: ALQs6tCHTb196ihlP0lS0Zw4YC04n7yTN5BXvEjDGJAQoUnGJIvLn5ZS
+        2P1zEFw1NeqZUFswqb8W7mk3ffWh
+X-Google-Smtp-Source: AB8JxZou1AF14QkWhJlouIGtc3js873Qwjww7KDPa97YTT0vnVa7FUs8nOFojaDNRddQk4QqgnSrEQ==
+X-Received: by 10.28.114.22 with SMTP id n22mr223151wmc.1.1524182935377;
+        Thu, 19 Apr 2018 17:08:55 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 39-v6sm7637368wry.89.2018.04.19.17.03.41
+        by smtp.gmail.com with ESMTPSA id s22sm347502wma.45.2018.04.19.17.08.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Apr 2018 17:03:42 -0700 (PDT)
+        Thu, 19 Apr 2018 17:08:54 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc:     Matthew Wilcox <willy@infradead.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
-        <avarab@gmail.com>, git <git@vger.kernel.org>,
-        rostedt <rostedt@goodmis.org>, Minchan Kim <minchan@kernel.org>
-Subject: Re: [PATCH] git-send-email: Cc more people
-References: <20180418140503.GD27475@bombadil.infradead.org>
-        <87tvs8e174.fsf@evledraar.gmail.com>
-        <xmqqr2ncgqhl.fsf@gitster-ct.c.googlers.com>
-        <20180419121024.GD5556@bombadil.infradead.org>
-        <646938104.13100.1524141300699.JavaMail.zimbra@efficios.com>
-Date:   Fri, 20 Apr 2018 09:03:41 +0900
-In-Reply-To: <646938104.13100.1524141300699.JavaMail.zimbra@efficios.com>
-        (Mathieu Desnoyers's message of "Thu, 19 Apr 2018 08:35:00 -0400
-        (EDT)")
-Message-ID: <xmqqtvs6d9r6.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <junio@pobox.com>,
+        demerphq <demerphq@gmail.com>
+Subject: Re: [RFC WIP PATCH] merge: implement -s theirs -X N
+References: <87sh7sdtc1.fsf@evledraar.gmail.com>
+        <xmqqpo2verc6.fsf@gitster-ct.c.googlers.com>
+        <87r2nbeh1r.fsf@evledraar.gmail.com>
+Date:   Fri, 20 Apr 2018 09:08:54 +0900
+In-Reply-To: <87r2nbeh1r.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Thu, 19 Apr 2018 10:28:32 +0200")
+Message-ID: <xmqqpo2ud9ih.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mathieu Desnoyers <mathieu.desnoyers@efficios.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
->>> I'd further say that these new CC-sources should be disabled by
->>> default and made opt-in to avoid surprising existing users.
->> 
->> But I disagree with this.  The current behaviour is surprising to
->> existing users, to the point where people are writing their own scripts
->> to replace git send-email (which seems crazy to me).
+> On Thu, Apr 19 2018, Junio C. Hamano wrote:
 >
-> We could perhaps go with a whitelist approach. The four
-> main match I would be tempted to add are: Acked-by, Reported-by,
-> Reviewed-by, and Tested-by.
+>> This question has nothing to do with your "-s theirs" but let me see
+>> if I got the above correctly.  Suppose you have a deployed branch
+>> (say, "prod"), all developments happen on "master" elsewhere that
+>> can be seen as "origin/master", so you may have a few fixes that is
+>> not yet in "prod" you would want to cherry-pick from origin/master.
+>>
+>>     $ git checkout prod
+>>     $ git cherry-pick origin/master~2
+>>     $ git cherry-pick origin/master
+>>
+>> Let's say that "master" had a fix at HEAD~2, HEAD~1 is a feature
+>> enhancement that is not yet ready for "prod", and HEAD is another
+>> fix.  Up to this point you successfully back-ported the fixes to
+>> "prod".
+>>
+>> Then you do merge the tip into "master", i.e.
+>>
+>>     $ git checkout origin/master && git merge -s ours prod
+>>     $ git push origin HEAD:master
+>>     $ git checkout prod
+>>
+>> to make sure that the "master" at the source of truth knows that
+>> it already has what our "prod" with these two cherry-picks have.
+>>
+>> Is that what is going on here?
+>>
+>> I am just wondering what would and should happen to the non-fix
+>> commit in the middle in the above example.  Perhaps your workflow
+>> automatically does the right thing to it, perhaps not.
+>>
+>>
+>> [Footnote]
+>> ...
+> Yeah this -s theirs is redundant to just doing it the other way around
+> as you describe.
+> ...
 
-A tool that suddenly starts sending e-mails to more addresses
-without letting the end-users know when and why the change in
-behaviour happened is a source of irritated "somebody made a stupid
-change to git-send-email without telling us that caused unwanted
-e-mails sent to unexpected places and embarrassed me" bug reports.
-I do agree with a whitelist approach from that point of view, and in
-the initial rollout of the feature, that whitelist should be limited
-to what we already send out.
-
-The users who learn about this new feature can opt into whitelisting
-the common 4 above before we enable them by default.  FWIW, I
-personally think these will be a sensible default (in addition to
-what we already Cc).  I however prefer an approach to introduce
-these more gradually.
-
+Heh, you responded to a much less relevant footnote without
+addressing the main part of the message which was a more interesting
+question to me ;-)
