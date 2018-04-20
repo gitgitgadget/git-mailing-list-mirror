@@ -2,155 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3BA21F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 17:59:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 755461F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 18:13:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753494AbeDTR7e (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 13:59:34 -0400
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:35432 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752722AbeDTR7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 13:59:33 -0400
-Received: by mail-qt0-f173.google.com with SMTP id s2-v6so10758141qti.2
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 10:59:33 -0700 (PDT)
+        id S1753670AbeDTSNq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 14:13:46 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:43081 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753091AbeDTSNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 14:13:45 -0400
+Received: by mail-wr0-f194.google.com with SMTP id v15-v6so7100616wrm.10
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 11:13:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WbYMrudo8DdV0k4dq6qwsocc9//9rvRQz04ux6VvV70=;
-        b=uEvyXXUzfzoyILDL1oJBXK9+RN0kcnSaXthWcBiLS7CNk5ECq4XvFKrDFbw5EXOXrj
-         Kf4/L8WWTIBhowR225C2/j77EtsyI1/XEi9pGk60CcOiAf6oGWD988AuKHRlrqJ8Hlyk
-         xwZwMdgVOnBeSC+NKopTQ9XPyRk5MfWHHLKmoYSj0t0+yYHHHOWrYx53qX7g3d2QuUuV
-         0Xd4iOFb3u7oT+MdzSN5oRtYwrsgzEuMUQOJPAVSDTQ1mqCEvXXqqwfzrGS9EScbYucf
-         8zKDWYXM2LT9YPmXRAFn9GL/XZAN/JSdJcxe/cvu0sNvu+kvp++aumSzuLI6PEDojYeP
-         eI5Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=AGthjebJfKuMF54WEkgFCamqBSJ6Ugv4sUOnETFOiWo=;
+        b=apEUtVlsWRPOu0nl5Col5+nB1CiTaANqhCjrJh95m3VjvhG27toH27WFx6zsz1R9xB
+         I25H5R3NA2V1WXwBK7i7CYhTIeCWLAuYUzEG+ZGee2XXpLJnJ9uWz8PSu9hwyVijDtGp
+         riuJ7oAb+F10Avl/AKFkZ2gIzkPULhe4vWwdjeEn0dpGTezuoE1NDp6N4UpCQaTb/3LV
+         zgTZli3PIRnAEGgm5aaS38cbKWDlgzAb7+EJKDaNG43p84A07Qr6XuhMm/TlI3KHh7gC
+         VJ4DDc8vycMnQDpebNIJXLik+9uU+n/RSSTDrg8ScEFvXLUULlAyEqR5EU0BVpRN2T6p
+         Ks0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=WbYMrudo8DdV0k4dq6qwsocc9//9rvRQz04ux6VvV70=;
-        b=fply9Yr31LIVuexJQyAfylNnrSBLnw0ZfNVUsjmqWVyEDb0+liAnSrufWDZ3XuAy7U
-         I8dH1bfY/+fC6mbCg/Y/4/Mv4c/iGYQb+enFKk7NWJ3oVN6ndRBRg6mC540bDMHqaxPD
-         U3FzI81nSRRpbQcrpPB8vyxX5CgJvGJylTJRlQtn1pE90KBkcAER7BsXsvtH1cStO0LU
-         httDWu0ST/FE/a025R/pdtOkyAOXEOyDSiRahNpIvUVFFQGCX48rok1MFBBSBKkkJEJv
-         hZTl0PWZwy2DRdkR1ZlmvkLhxS4eqhXQ/4UOsc6E7MWI+UNawuqmNkmCUgmqnfINfbOR
-         s9dg==
-X-Gm-Message-State: ALQs6tCW74kBU67IQCte7g4imtYc/K7dbFCdlDS9r3U2E4bV7l8wCWeN
-        MZNQIuHNpEj2NoxKJvDf6Zw=
-X-Google-Smtp-Source: AIpwx490REy1E5PSOTN3YSOerKADnQDBUh+LqgSVfVHMYOzlaHlQzU2OKwNUjw3gGqIAYjUJ1CKX2w==
-X-Received: by 2002:ac8:181c:: with SMTP id q28-v6mr11671674qtj.309.1524247172361;
-        Fri, 20 Apr 2018 10:59:32 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id u42-v6sm5282425qtb.54.2018.04.20.10.59.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Apr 2018 10:59:31 -0700 (PDT)
-Subject: Re: [PATCH v1 1/2] merge: Add merge.renames config setting
-To:     Elijah Newren <newren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>
-References: <20180420133632.17580-1-benpeart@microsoft.com>
- <20180420133632.17580-2-benpeart@microsoft.com>
- <CABPp-BFANBs=tOhS5BFfTMkdQsNYbUDExWK8QB0V=qD9YwZyWw@mail.gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <cd49481c-9665-124a-5f94-791f1a16657d@gmail.com>
-Date:   Fri, 20 Apr 2018 13:59:31 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=AGthjebJfKuMF54WEkgFCamqBSJ6Ugv4sUOnETFOiWo=;
+        b=QbeV/TDjTveOF0e1SC3mPNROV/kCNsTxwMELq7An9TP38A7WRDmLCXynZeUMjM/iH8
+         srlxut4bMWc2m1AE1KJzjVpKlSr2noJLDYrQsgOdNMd7F/N12hlU/FirtbpixaGh/t5a
+         jph1jPpi8Tz5ppX/j3dbJRaBHlXoJM4xCSHRh/GkVtibbL/z2v1U/jG+pA4dgmf3lLrJ
+         CcM0PWkYqy5sUT/I7rCj/Ks+O5jDipQ4oTiQ9eKdeiXVppkWxa7X/50TF4y+smQinf0f
+         +kkDF/7Y1UUPFeSDtxME7PD/6rCLsi6HPqkfwVJHJ5ZbLE5aTWOz+JdQf6FPHtBRWvrC
+         GKfA==
+X-Gm-Message-State: ALQs6tCNw3iP/3Foiz/MXgabOg8FSpIfIYa3Q4PNkQBhuaQlxbf3VnwR
+        sIh8PJ/gO7+TZH3jgcu8c5M7BmRuVdg=
+X-Google-Smtp-Source: AIpwx4/CNoZiRBo4Kev+SrySjicRlBCsSjGrMH752uD4PFt8AjyW522c4RnIPRPg2kc0g7KuhhNgeQ==
+X-Received: by 10.28.91.203 with SMTP id p194mr2836931wmb.52.1524248023115;
+        Fri, 20 Apr 2018 11:13:43 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id z18-v6sm384280wrc.36.2018.04.20.11.13.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 20 Apr 2018 11:13:42 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org, Isaac Chou <Isaac.Chou@microfocus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH] fast-export: fix regression skipping some merge-commits
+Date:   Fri, 20 Apr 2018 20:12:48 +0200
+Message-Id: <20180420181248.2015922-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.17.0
+In-Reply-To: <MW2PR18MB228432C95C18DE786957DE70E5B40@MW2PR18MB2284.namprd18.prod.outlook.com>
+References: <MW2PR18MB228432C95C18DE786957DE70E5B40@MW2PR18MB2284.namprd18.prod.outlook.com>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BFANBs=tOhS5BFfTMkdQsNYbUDExWK8QB0V=qD9YwZyWw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+7199203937 (object_array: add and use `object_array_pop()`, 2017-09-23)
+noted that the pattern `object = array.objects[--array.nr].item` could
+be abstracted as `object = object_array_pop(&array)`.
 
+Unfortunately, one of the conversions was horribly wrong. Between
+grabbing the last object (i.e., peeking at it) and decreasing the object
+count, the original code would sometimes return early. The updated code
+on the other hand, will always pop the last element, then maybe do the
+early return before doing anything with the object.
 
-On 4/20/2018 1:02 PM, Elijah Newren wrote:
-> On Fri, Apr 20, 2018 at 6:36 AM, Ben Peart <Ben.Peart@microsoft.com> wrote:
->> --- a/Documentation/merge-config.txt
->> +++ b/Documentation/merge-config.txt
->> @@ -37,6 +37,11 @@ merge.renameLimit::
->>          during a merge; if not specified, defaults to the value of
->>          diff.renameLimit.
->>
->> +merge.renames::
->> +       Whether and how Git detects renames.  If set to "false",
->> +       rename detection is disabled. If set to "true", basic rename
->> +       detection is enabled. This is the default.
-> 
-> One can already control o->detect_rename via the -Xno-renames and
-> -Xfind-renames options.  
+The end result is that merge commits where all the parents have still
+not been exported will simply be dropped, meaning that they will be
+completely missing from the exported data.
 
-Yes, but that requires people to know they need to do that and then 
-remember to pass it on the command line every time.  We've found that 
-doesn't typically happen, we just get someone complaining about slow 
-merges. :)
+Reintroduce the pattern of first grabbing the last object (using a new
+function `object_array_peek()`), then later poping it. Using
+`..._peek()` and `..._pop()` makes it clear that we are referring to the
+same item, i.e., we do not grab one element, then remove another one.
 
-That is why we added them as config options which change the default. 
-That way we can then set them on the repo and the default behavior gives 
-them better performance.  They can still always override the config 
-setting with the command line options.
+Add a test that would have caught this.
 
-I think the documentation should mention that
-> "false" is the same as passing -Xno-renames, and "true" is the same as
-> passing -Xfind-renames.  However, find-renames does take similarity
-> threshold as a parameter, so there's a question whether this option
-> should provide some way to do the same.  I'm not sure the answer to
-> that; it may be that we'd want a separate config option for that, and
-> we can wait to add it until someone actually wants it.
+Reported-by: Isaac Chou <Isaac.Chou@microfocus.com>
+Analyzed-by: Isaac Chou <Isaac.Chou@microfocus.com>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+Based on maint, but applies equally well on master.
 
-I'm of the opinion that we shouldn't bother adding features that we 
-aren't sure someone will want/use.  If it comes up, we can certainly add 
-it at a later date.
+My sincerest apologies for the stupid train-wreck that the original
+conversion was. Weird interactions between different components can make
+for fun bugs, but this one is just embarassing.
 
-> 
->>   merge.renormalize::
->>          Tell Git that canonical representation of files in the
->>          repository has changed over time (e.g. earlier commits record
->> diff --git a/merge-recursive.c b/merge-recursive.c
->> index 9c05eb7f70..cd5367e890 100644
->> --- a/merge-recursive.c
->> +++ b/merge-recursive.c
->> @@ -3256,6 +3256,7 @@ static void merge_recursive_config(struct merge_options *o)
->>          git_config_get_int("merge.verbosity", &o->verbosity);
->>          git_config_get_int("diff.renamelimit", &o->diff_rename_limit);
->>          git_config_get_int("merge.renamelimit", &o->merge_rename_limit);
->> +       git_config_get_bool("merge.renames", &o->detect_rename);
->>          git_config(git_xmerge_config, NULL);
->>   }
-> 
-> I would expect an explicitly passed -Xno-renames or -Xfind-renames to
-> override the config setting.  Could you check if that's the case?
-> 
+Isaac, this should solve the problem you are seeing. Unfortunately, I do
+not have any experience with building Git for Windows [1]. I really hope
+that this bug did not take up too much of your time. Or eat your data!
 
-Yes, command line options override the config settings.  You can see 
-that in the code where the call to init_merge_options() which loads the 
-config settings is followed by parse_merge_opt() which loads the command 
-line options.  I've also verified the behavior in the debugger (it's on 
-by default in the code, the config setting turns it off, then the 
-command line option turns it back on).
+Martin
 
-> Also, if someone sets merge.renameLimit (to anything) and sets
-> merge.renames to false, then they've got a contradictory setup.  Does
-> it make sense to check and warn about that anywhere?
-> 
+[1] The least I can do is provide a link:
+https://github.com/git-for-windows/git/wiki/Building-Git
 
-I don't think we need to.  The merge.renameLimit is only used if 
-detect_rename it turned on no matter how that gets turned on (default, 
-config setting, command line option) so there isn't really a change in 
-behavior here.
+ t/t9350-fast-export.sh | 22 ++++++++++++++++++++++
+ object.h               |  9 +++++++++
+ builtin/fast-export.c  |  3 ++-
+ 3 files changed, 33 insertions(+), 1 deletion(-)
+
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index 866ddf6058..2b46a83a49 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -540,4 +540,26 @@ test_expect_success 'when using -C, do not declare copy when source of copy is a
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'todo' '
++	test_create_repo merging &&
++	git -C merging commit --allow-empty -m initial &&
++
++	git -C merging checkout -b topic &&
++	>merging/topic-file &&
++	git -C merging add topic-file &&
++	git -C merging commit -m topic-file &&
++
++	git -C merging checkout master &&
++	>merging/master-file &&
++	git -C merging add master-file &&
++	git -C merging commit -m master-file &&
++
++	git -C merging merge --no-ff topic -m "merge the topic" &&
++
++	oid=$(git -C merging rev-parse HEAD^^) &&
++	echo :1 $oid >merging/git-marks &&
++	git -C merging fast-export --import-marks=git-marks refs/heads/master >out &&
++	grep "merge the topic" out
++'
++
+ test_done
+diff --git a/object.h b/object.h
+index f13f85b2a9..4d8ce280d9 100644
+--- a/object.h
++++ b/object.h
+@@ -129,6 +129,15 @@ void add_object_array_with_path(struct object *obj, const char *name, struct obj
+  */
+ struct object *object_array_pop(struct object_array *array);
+ 
++/*
++ * Returns NULL if the array is empty. Otherwise, returns the last object.
++ * That is, the returned value is what `object_array_pop()` would have returned.
++ */
++inline struct object *object_array_peek(const struct object_array *array)
++{
++	return array->nr ? array->objects[array->nr - 1].item : NULL;
++}
++
+ typedef int (*object_array_each_func_t)(struct object_array_entry *, void *);
+ 
+ /*
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 27b2cc138e..8377d27b46 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -650,9 +650,10 @@ static void handle_tail(struct object_array *commits, struct rev_info *revs,
+ {
+ 	struct commit *commit;
+ 	while (commits->nr) {
+-		commit = (struct commit *)object_array_pop(commits);
++		commit = (struct commit *)object_array_peek(commits);
+ 		if (has_unshown_parent(commit))
+ 			return;
++		(void)object_array_pop(commits);
+ 		handle_commit(commit, revs, paths_of_changed_objects);
+ 	}
+ }
+-- 
+2.17.0
+
