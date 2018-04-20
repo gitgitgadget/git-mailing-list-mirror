@@ -2,109 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 463401F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 12:11:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D367E1F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 12:13:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754735AbeDTMLL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 08:11:11 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:44534 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754607AbeDTMLJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 08:11:09 -0400
-Received: by mail-wr0-f193.google.com with SMTP id o15-v6so22380436wro.11
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 05:11:09 -0700 (PDT)
+        id S1754691AbeDTMNg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 08:13:36 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:32812 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754591AbeDTMNf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 08:13:35 -0400
+Received: by mail-wr0-f196.google.com with SMTP id z73-v6so22449434wrb.0
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 05:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=8mhknhIhA91ENXz8b+Rh61zn0JBtKkUdXfF5rPNVmrk=;
-        b=Vr8WEKM4Fwqjpsa9cXcxi4GK/SAXPDJN50x7gn7VFo1ySh09WWT6WZzVGUPaE9dtkg
-         mqXuOJMK/xbbh3bptrrL2+ALlvf/gWfumtBrH/4nZyqvQs4BWORCNBep08+sIQXrYI63
-         UP6qx0mEwIYB+sAeJSKbTaqu+f2y6iPdFzRR1eISaVDqsnIJTQe2eryTeTr3hv21OC9v
-         +P5Kj2GucN7GlfYYESRItsWCHMWHdtpjsYdVQr889sSh7wvmQDN+s0Ip3/82+KfUsOTc
-         JKWjv0Ae08Tq8YRWAjzWy2gxwBNcpZMk0mkesNp61w7qELG45e6ZWIWdpSW7oWgaxnpB
-         owZQ==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=YKebbf6vHSm5GgLVdzjMnOcuCZQay6e97Mw1Wb4NynA=;
+        b=e3+Ul1k5nbUF5ZORjx+19HL8PxgfIt3NcSmU/E10FtL7Cuu71cInt8eCFhJbIyKjxV
+         pMMy8Unld/88Qlqvx+85rsNgEyp60bLufShX+NsC8TlU6J0iItqqPr8VmjynpcPDNdBP
+         NCPHfKovJ2OT0wbkY6q0pX0oV2GWAnNihvHv6C4gBdbGQwNv/0JPQDmwDVLPQfEoBTwp
+         /IVqdBnL7x1uHkPtwxnbmIoFGpPavWDbsnuULB2gADOMNvgl0IcA8Csnp2WmpNyYIwiG
+         /eUMe2/4HG08DUJ9aX2w9/sG3Ef8ttoLEhXqDk67w6Kian/WbXnVW1CXR7ifZCIBY8w+
+         9ilQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=8mhknhIhA91ENXz8b+Rh61zn0JBtKkUdXfF5rPNVmrk=;
-        b=l01RxPG1dcVaK0N40lwUscxCuaGLJgcbkEN6HTIy60Has/uAGfwD9hX84aRpB/8PPI
-         UUmc7vuKOuHAG7fJVSQuXqUHmXCmooY8DC7mscz++swsk2Tz6cXiW9SLAzE4NqtZpZiX
-         huY9EiB/TZ/X3X1w5qxrzh4Wcw562KuccGfdNz2ZHyKkAu9WBagO9kWGsgJl2MzJj/DE
-         NS9IPhkZ0Lzyh2Fq6ZysM1UyuvbaYGav4MGm4xPx1JGB4i7e4mYJlUWMNAHg0CHSJT5h
-         p9QEKN7hPwOkj/ruEwdt8pT//ogSWjA0cBhkQzUskd1K07z/QX5x/n+eiBL28NcnuAWd
-         Hp6g==
-X-Gm-Message-State: ALQs6tBtAfRStiAMW7OnB69g1/ixlQuAzoPdYtgl2cXKaRO0xwFVJt1t
-        TY4VrfAa0cw0ATaZ2dAZIkIehgHx
-X-Google-Smtp-Source: AIpwx48t2694pk6XXzS2x+wEekQW53EOqkZJm0hYuHnVvzqCFjQCK92MgSVIPWCQrv8rmACmf1r9IA==
-X-Received: by 10.28.179.67 with SMTP id c64mr1685066wmf.144.1524226267880;
-        Fri, 20 Apr 2018 05:11:07 -0700 (PDT)
-Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id h16-v6sm4764515wri.16.2018.04.20.05.11.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Apr 2018 05:11:06 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v1] perf/aggregate: tighten option parsing
-Date:   Fri, 20 Apr 2018 14:10:41 +0200
-Message-Id: <20180420121041.32558-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.17.0.257.g28b659db43
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=YKebbf6vHSm5GgLVdzjMnOcuCZQay6e97Mw1Wb4NynA=;
+        b=dBqA8JNNyitA6xYWhbgf/kJt+ZoKF781BFQdlBZScL9ez8lgKJl1dUwuktETCRzGWI
+         aI2I8KJ6Y+UAoaMO7mFDP/U2Dm2sT2UiUgtVYJE/y4TAxQjAHuh3YARdyiWC8a2hxZ75
+         vUV+ew0n2mNhuFffHpCk3K2wi943DAUwLq/pZvUPwMhBJb7aSjqJgRlrM2Xpei2pSEu+
+         rIUbmGGWfHx/q95XW/7Hby95iiIpoWMONWpmIhpCaxCrb2RiiPbbtxz2E5IEZ6DlD1Kg
+         8mSArV16Zl2EaMHuNwWYaYuGR+y7wXuVgtANLxlIIoM/h9JJTpO6NewwVqtyhy8VF4+x
+         JSgA==
+X-Gm-Message-State: ALQs6tBSUempsZLsNtMTBAhqg4z9W2FW2yJpw5Mghz0SxjpmYe7CmqIN
+        Yi8WJtbXgErcntxbvtaoEy0=
+X-Google-Smtp-Source: AIpwx48KcU+5j4FufbaBzD2C+3uTBiXKDPR14SWTUOEIVre8SFNRql3Js6uFH+giLi+cnNqKG51wXw==
+X-Received: by 2002:adf:9f09:: with SMTP id l9-v6mr7437538wrf.185.1524226414293;
+        Fri, 20 Apr 2018 05:13:34 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egc153.neoplus.adsl.tpnet.pl. [83.21.66.153])
+        by smtp.gmail.com with ESMTPSA id o20-v6sm6136919wro.7.2018.04.20.05.13.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Apr 2018 05:13:32 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH 06/12] commit: force commit to parse from object database
+References: <20180417181028.198397-1-dstolee@microsoft.com>
+        <20180417181028.198397-7-dstolee@microsoft.com>
+Date:   Fri, 20 Apr 2018 14:13:32 +0200
+In-Reply-To: <20180417181028.198397-7-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Tue, 17 Apr 2018 18:10:41 +0000")
+Message-ID: <86tvs6dqj7.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When passing an option '--foo' that it does not recognize, the
-aggregate.perl script should die with an helpful error message
-like:
+Derrick Stolee <dstolee@microsoft.com> writes:
 
-  unknown option '--foo' at ./aggregate.perl line 80.
+> In anticipation of checking commit-graph file contents against the
+> object database, create parse_commit_internal() to allow side-stepping
+> the commit-graph file and parse directly from the object database.
 
-rather than:
+Nitpick/Bikeshed painting: do we have any naming convention for such
+functions (*_internal() here)?
 
-  fatal: Needed a single revision
-  rev-parse --verify --foo: command returned error: 128
+>
+> Due to the use of generation numbers, this method should not be called
+> unless the intention is explicit in avoiding commits from the
+> commit-graph file.
 
-While at it let's also prevent something like
-'foo--sort-by=regression' to be handled as if
-'--sort-by=regression' had been used.
+Looks good to me, except for some stray whitespace changes in the
+patch.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/perf/aggregate.perl | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  commit.c | 14 ++++++++++----
+>  commit.h |  1 +
+>  2 files changed, 11 insertions(+), 4 deletions(-)
+>
+> diff --git a/commit.c b/commit.c
+> index 9ef6f699bd..07752d8503 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -392,7 +392,8 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
+>  	return 0;
+>  }
+>  
+> -int parse_commit_gently(struct commit *item, int quiet_on_missing)
+> +
 
-diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
-index 48637ef64b..2cc9eb0ac5 100755
---- a/t/perf/aggregate.perl
-+++ b/t/perf/aggregate.perl
-@@ -46,7 +46,7 @@ while (scalar @ARGV) {
- 		shift @ARGV;
- 		next;
- 	}
--	if ($arg =~ /--sort-by(?:=(.*))?/) {
-+	if ($arg =~ /^--sort-by(?:=(.*))?$/) {
- 		shift @ARGV;
- 		if (defined $1) {
- 			$sortby = $1;
-@@ -76,6 +76,9 @@ while (scalar @ARGV) {
- 		}
- 		next;
- 	}
-+	if ($arg =~ /^--.+$/) {
-+		die "unknown option '$arg'";
-+	}
- 	last if -f $arg or $arg eq "--";
- 	if (! -d $arg) {
- 		my $rev = Git::command_oneline(qw(rev-parse --verify), $arg);
--- 
-2.17.0.257.g28b659db43
+Stray empty line, though I think it may improve readability of the code
+by using two empty lines between separate functions.
 
+But to be consistent with the rest of the file, there shouldn't be this
+extra empty line.
+
+> +int parse_commit_internal(struct commit *item, int quiet_on_missing, int use_commit_graph)
+>  {
+>  	enum object_type type;
+>  	void *buffer;
+> @@ -403,17 +404,17 @@ int parse_commit_gently(struct commit *item, int quiet_on_missing)
+>  		return -1;
+>  	if (item->object.parsed)
+>  		return 0;
+> -	if (parse_commit_in_graph(item))
+> +	if (use_commit_graph && parse_commit_in_graph(item))
+>  		return 0;
+
+All right.
+
+>  	buffer = read_sha1_file(item->object.oid.hash, &type, &size);
+>  	if (!buffer)
+>  		return quiet_on_missing ? -1 :
+>  			error("Could not read %s",
+> -			     oid_to_hex(&item->object.oid));
+> +					oid_to_hex(&item->object.oid));
+
+Stray whitespace change (looks like spaces to tabs conversion).
+
+>  	if (type != OBJ_COMMIT) {
+>  		free(buffer);
+>  		return error("Object %s not a commit",
+> -			     oid_to_hex(&item->object.oid));
+> +				oid_to_hex(&item->object.oid));
+
+Stray whitespace change (looks like spaces to tabs conversion).
+
+>  	}
+>  	ret = parse_commit_buffer(item, buffer, size, 0);
+>  	if (save_commit_buffer && !ret) {
+> @@ -424,6 +425,11 @@ int parse_commit_gently(struct commit *item, int quiet_on_missing)
+>  	return ret;
+>  }
+>  
+> +int parse_commit_gently(struct commit *item, int quiet_on_missing)
+> +{
+> +	return parse_commit_internal(item, quiet_on_missing, 1);
+> +}
+
+All right; if it is internal details of implementations, I don't mind
+this slightly cryptic "1" as the value of last parameters.
+
+> +
+>  void parse_commit_or_die(struct commit *item)
+>  {
+>  	if (parse_commit(item))
+> diff --git a/commit.h b/commit.h
+> index b5afde1ae9..5fde74fcd7 100644
+> --- a/commit.h
+> +++ b/commit.h
+> @@ -73,6 +73,7 @@ struct commit *lookup_commit_reference_by_name(const char *name);
+>  struct commit *lookup_commit_or_die(const struct object_id *oid, const char *ref_name);
+>  
+>  int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long size, int check_graph);
+> +int parse_commit_internal(struct commit *item, int quiet_on_missing, int use_commit_graph);
+>  int parse_commit_gently(struct commit *item, int quiet_on_missing);
+>  static inline int parse_commit(struct commit *item)
+>  {
+
+All right.
