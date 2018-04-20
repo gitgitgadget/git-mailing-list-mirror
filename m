@@ -7,130 +7,126 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AE621F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 21:07:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A5EA1F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 21:08:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752590AbeDTVHk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 17:07:40 -0400
-Received: from mout.gmx.net ([212.227.17.21]:39983 "EHLO mout.gmx.net"
+        id S1752749AbeDTVIH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 17:08:07 -0400
+Received: from mout.gmx.net ([212.227.17.22]:39365 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752291AbeDTVHj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 17:07:39 -0400
+        id S1752744AbeDTVID (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 17:08:03 -0400
 Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMXVC-1f3ZF00Uhy-008IZu; Fri, 20
- Apr 2018 23:07:36 +0200
-Date:   Fri, 20 Apr 2018 23:07:20 +0200 (DST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MC8iq-1fISwo2SiO-008osh; Fri, 20
+ Apr 2018 23:07:58 +0200
+Date:   Fri, 20 Apr 2018 23:07:42 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 2/4] rebase -i: Handle "combination of <n> commits" with
- GETTEXT_POISON
+Subject: [PATCH v2 3/4] sequencer: leave a tell-tale when a fixup/squash
+ failed
 In-Reply-To: <cover.1524258351.git.johannes.schindelin@gmx.de>
-Message-ID: <6fe8b38c7097c826f17e5f45e39ffbc35a529849.1524258351.git.johannes.schindelin@gmx.de>
+Message-ID: <c23608f35af1ac9b8f7e0b9c17e2fa1fdf189ab1.1524258351.git.johannes.schindelin@gmx.de>
 References: <CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com> <cover.1524258351.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:km3HBH2PHeZhuqsR8zuuyQKAT/O+NEC0CwDoN+/ZRH42tRdtTK1
- tdEGDaFjiAOStlbBXkGUkwPs6HDotbQFr3lFChuI+EI4Z0vbp5RC9OFmotgvbUGIpG0eEJK
- FQFzlun3XvRE/AFUp0svrIXWg1GDLb1fLBL0LByot0r9PE4vpjAPLIkj/oWK8rhGUtXkzlj
- rdw08v6abJTT17gj61HcA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Yb0E8S1qOds=:PMXEtq7XSBjL2obp28bdiV
- RHhPtQeBifIOwOQsDXwy3z139unsYybbdtV2j6B9rgq87x8C1GYkztch569xkGEzFWfEV4Qov
- JHBjwURdTKRF/XR+PrOWsYSKVXwmGiM5SjnOtLfZpnoZPeTg7zq7VL8L2yJt/HGXMMNo4D89A
- 2dqcUWO+A7euHpXhZBGrx3EOhcxyxWC9NXhi0ygdUFBAmAqt02t1LqbP7PW4dgaOGH8gIPHAs
- k+KpESZVtLhNRSxTr9KjrYeqKWwvwHAbv3nf+y2jgeceQ+HyDc6ohL+sjzHN9QNOeQ6UJP4q6
- /MsBuBapT/rlJRnfkPr566jn6vTeBtj7QB4kz0EpR6j5VM3Wu83k4ww0ZDe/mbiXm7wZT6sXH
- R0Km2ziiOD+ZYsBgz+j649QbJgs9/3t3bGcjqPA12udEFdbrcCwn88GPNMz+vUnGHZN5aFglr
- cgT/HeytzuSZLH6oFmL7BR37Tl5Uyv2FLvoUtsTO7OShl5RKMLps5YxTSkvds66RCOoj2Lq2u
- TOpZkGOHiqhhIXIScE9lmdFIgfbH1zCYZVwCZL6wd6VJiLu7mR2ux4NScuVlTQIBV6tPFiwfh
- aDrJt7oA71jK4PUhlEVMwwPl2qaPUDLPfn6+kPzlvxXeEZhMRTugyamy9ExfbmvTX5JEMta1S
- lEAr8wiCbPyIvEBe8D9vXZ2IGUdC2xvkYm0eRXUcwfImsvWlsvYBw7j/FO6aiBET6olQnxSOL
- pS1a1JN2E7tB3ZS3Y7IsnIcyglmJjFYP46CnkLzE6thYF3lxekICDu4Jp7cO4S02Dn2jHIJAy
- +e/1Dwz26r/eaMpnb9YhxFw3+n6LWJc5OXk6lB86ZmkQGq6D98=
+X-Provags-ID: V03:K1:eHUTBnhuKxd7ODRTnURAIiTCzA4jZCSlcqN2srNZgsRCa0NggZy
+ DWkRKZRvU8o8yaXDOxLL/KFBGcao/8dFmJS0V3Q8bvqoUHSm0R7Eu/3vWH7rJNm9q/Hsno9
+ 41+dG6jM+OCW0JNI0mnlMjcPBkMfrEf+ejC0Sc/DUv0cYLBlw344TNQGK59FF4/9d8sZq8I
+ cJOzvaH2SUshKtc2HIUHA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gh32byxRZSI=:Okw8icevCgv46jxAEzmKYS
+ oHk6nw/f+BGt/MYYd6p3L7AU3obSvWvzZ58SqA+kaqcq7nUJaXvxrSTtmgS13aLLFOu6FZTG4
+ 16aIxwZ2ECJx7T7S2kUn/PNG3xi/o75lNfHjQqu+9CLn1xp7J1rHgicKsSrhs04VZQDf+mtYC
+ L3bFwEJ0XiBG8Hy8WdH05x/Yykd47U0ZEoAuQl6UbCjGxZ6P0UmzTQvpaK96us+pgHZOIqdGt
+ sK6Vo80+NbgS2+GymwWXE1kXPzzVjGhkkvXxLhp0oFrFQIp8qaVdT1wygNNaWvtkF9qbNJLp5
+ 2gHYHWovqKYaCoNltq8d8eAviHsfQfts+MNo5ci1OGUGgkg+xB9nWDKCBs1kjctlEW+X12b/s
+ gACa0rGSb0LBJ+9wZ6CpkBLUi3Cj8o3CCDK0o0W4eVWu5Lqf4tMhmEvOW8dpOzSa3loT/+Rm4
+ lFoJO3MbxCOVw4dNnuPpvaC14sthBC3OO8P4xRZbOOys0IsPW8bxXQFZjL1zkbAjV6HwNT8tH
+ 5Qq4Am/htpCV0rmdnnHSCZ7uXqZmNDGAMPZwmQFATlVi0oVBwGxqnB6wpK364ltuMSxVVFrb0
+ 4KEBfNxkzBKru5B2pZdvjlN6A9mCU9HiSQHVNuSdUTtKMDXBQEOaFCqTBQwST7Kt1A/tZoOS4
+ ZkHPB8HlxC3Zi4GRHxJy/JRTaos81Y4K11+kfDZoxoYLz7tMHXz3vnCZ28ETdbOncgHI5ApiZ
+ 1IMc3EoeQGS8jA4XrnxarCld55N5xoJr2+HIk4FTL2U3xdb5vz3EIyMx/gjd2pMvwNRqxmIUC
+ PpaIegJ3cqhCVz1vtUDbojzLG6KuuA7VXzAZdpF1OMLU3g2rV4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We previously relied on the localized versions of
+In the upcoming patch to clean up fixup/squash commit messages even when
+skipping a final fixup/squash that failed with merge conflicts, we will
+need to have some indicator what happened.
 
-	# This is a combination of <N> commits
-
-(which we write into the commit messages during fixup/squash chains)
-to contain <N> as ASCII.
-
-Thisis not true in general, and certainly not in GETTEXT_POISON, as
-demonstrated by the regression test we just introduced in t3418.
+As we need to remove the message-fixup and message-squash files upon
+failure, we cannot use those. So let's just write an explicit amend-type
+file, containing either `fixup` or `squash`. The absence of that file
+indicates that we were not in the middle of a fixup or squash when merge
+conflicts were happening.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 36 ++++++++++++++++++++++--------------
- 1 file changed, 22 insertions(+), 14 deletions(-)
+ sequencer.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 667f35ebdff..dc482e76a28 100644
+index dc482e76a28..a6a4efeaae2 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1343,19 +1343,18 @@ static int update_squash_messages(enum todo_command command,
- 		eol = strchrnul(buf.buf, '\n');
- 		if (buf.buf[0] != comment_line_char ||
- 		    (p += strcspn(p, "0123456789\n")) == eol)
--			return error(_("unexpected 1st line of squash message:"
--				       "\n\n\t%.*s"),
--				     (int)(eol - buf.buf), buf.buf);
--		count = strtol(p, NULL, 10);
--
--		if (count < 1)
--			return error(_("invalid 1st line of squash message:\n"
--				       "\n\t%.*s"),
--				     (int)(eol - buf.buf), buf.buf);
-+			count = -1;
-+		else
-+			count = strtol(p, NULL, 10);
+@@ -106,6 +106,13 @@ static GIT_PATH_FUNC(rebase_path_author_script, "rebase-merge/author-script")
+  * command is processed, this file is deleted.
+  */
+ static GIT_PATH_FUNC(rebase_path_amend, "rebase-merge/amend")
++/*
++ * If there was a merge conflict in a fixup/squash series, we need to
++ * record the type so that a `git rebase --skip` can clean up the commit
++ * message as appropriate. This file will contain that type (`fixup` or
++ * `squash`), and not exist otherwise.
++ */
++static GIT_PATH_FUNC(rebase_path_amend_type, "rebase-merge/amend-type")
+ /*
+  * When we stop at a given patch via the "edit" command, this file contains
+  * the abbreviated commit name of the corresponding patch.
+@@ -2400,10 +2407,20 @@ static int error_with_patch(struct commit *commit,
+ static int error_failed_squash(struct commit *commit,
+ 	struct replay_opts *opts, int subject_len, const char *subject)
+ {
++	const char *amend_type = "squash";
++
++	if (file_exists(rebase_path_fixup_msg())) {
++		unlink(rebase_path_fixup_msg());
++		amend_type = "fixup";
++	}
++	if (write_message(amend_type, strlen(amend_type),
++		       rebase_path_amend_type(), 0))
++		return error(_("could not write '%s'"),
++			     rebase_path_amend_type());
++
+ 	if (rename(rebase_path_squash_msg(), rebase_path_message()))
+ 		return error(_("could not rename '%s' to '%s'"),
+ 			rebase_path_squash_msg(), rebase_path_message());
+-	unlink(rebase_path_fixup_msg());
+ 	unlink(git_path_merge_msg());
+ 	if (copy_file(git_path_merge_msg(), rebase_path_message(), 0666))
+ 		return error(_("could not copy '%s' to '%s'"),
+@@ -2580,6 +2597,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 			unlink(rebase_path_author_script());
+ 			unlink(rebase_path_stopped_sha());
+ 			unlink(rebase_path_amend());
++			unlink(rebase_path_amend_type());
+ 			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
+ 		}
+ 		if (item->command <= TODO_SQUASH) {
+@@ -2807,6 +2825,7 @@ static int commit_staged_changes(struct replay_opts *opts)
+ 	if (run_git_commit(rebase_path_message(), opts, flags))
+ 		return error(_("could not commit staged changes."));
+ 	unlink(rebase_path_amend());
++	unlink(rebase_path_amend_type());
+ 	return 0;
+ }
  
- 		strbuf_addf(&header, "%c ", comment_line_char);
--		strbuf_addf(&header,
--			    _("This is a combination of %d commits."), ++count);
-+		if (count < 1)
-+			strbuf_addf(&header, _("This is a combination of "
-+					       "several commits."));
-+		else
-+			strbuf_addf(&header,
-+				    _("This is a combination of %d commits."),
-+				    ++count);
- 		strbuf_splice(&buf, 0, eol - buf.buf, header.buf, header.len);
- 		strbuf_release(&header);
- 	} else {
-@@ -1398,13 +1397,22 @@ static int update_squash_messages(enum todo_command command,
- 	if (command == TODO_SQUASH) {
- 		unlink(rebase_path_fixup_msg());
- 		strbuf_addf(&buf, "\n%c ", comment_line_char);
--		strbuf_addf(&buf, _("This is the commit message #%d:"), count);
-+		if (count < 2)
-+			strbuf_addf(&buf, _("This is the next commit "
-+					    "message:"));
-+		else
-+			strbuf_addf(&buf, _("This is the commit message #%d:"),
-+				    count);
- 		strbuf_addstr(&buf, "\n\n");
- 		strbuf_addstr(&buf, body);
- 	} else if (command == TODO_FIXUP) {
- 		strbuf_addf(&buf, "\n%c ", comment_line_char);
--		strbuf_addf(&buf, _("The commit message #%d will be skipped:"),
--			    count);
-+		if (count < 2)
-+			strbuf_addf(&buf, _("The next commit message will be "
-+					    "skipped:"));
-+		else
-+			strbuf_addf(&buf, _("The commit message #%d will be "
-+					    "skipped:"), count);
- 		strbuf_addstr(&buf, "\n\n");
- 		strbuf_add_commented_lines(&buf, body, strlen(body));
- 	} else
 -- 
 2.17.0.windows.1.15.gaa56ade3205
 
