@@ -2,103 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AEFC1F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 21:25:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAC481F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 21:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751467AbeDTVZi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 17:25:38 -0400
-Received: from mail-yb0-f174.google.com ([209.85.213.174]:34385 "EHLO
-        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751227AbeDTVZh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 17:25:37 -0400
-Received: by mail-yb0-f174.google.com with SMTP id b14-v6so3510865ybk.1
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 14:25:36 -0700 (PDT)
+        id S1752514AbeDTVcd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 17:32:33 -0400
+Received: from mail-yw0-f178.google.com ([209.85.161.178]:35604 "EHLO
+        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752427AbeDTVcc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 17:32:32 -0400
+Received: by mail-yw0-f178.google.com with SMTP id l133-v6so308640ywb.2
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 14:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Fsiw6ZgIcvwLcLm0FNd/6EaaF9tjzHi5eTsq2xkMNHI=;
-        b=T2r0ujhZZ64sKJimLKNGna3K1MXRQgqo83VjpGWWkyj8r2bEsyHe5W5uwyss3nxywJ
-         aauEYgv7j6GWP9YSXgd9mxFEm5R/DF0aIjm33ejrCVB1Trk8OOwlFTVDnOTttDARwQSD
-         HWYvPNyzrXzeSY+KtF/ctM+gd59dIJ4n5d/35yJ/SOpvGqpt9GFR1kPu/9bejFg6VFqI
-         v8TPO6HM0mo4bh86oyxrSJ3+TiO8ftjeKzGuAIzqegIWNEmLcxt3TpSQAD94N7yElQ8A
-         v+jQjE2zipB21yqAYPj0FwqmHcJ1BHssyD5FpsoE/uGbbUswkR9TfU4eNOSCurp9lF/r
-         tkzg==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=sHfx1BzaF0N3e2mZXTgx4fP+ldY68vI/0l8jQ7d7c9c=;
+        b=lGrjpUd/rVb+WJnbLkBaZg1uC5awlD54SO8fV8tf0kzIwkWkjaiJSmK8263Lw33xL/
+         c0/Rq42BEHxuhcKP6NsBph/TPLfw8Ab/h1PUSD5G4R/vis1SIvF7l2ANPopO4iB1Cr/C
+         RNSlmO+x8XK5WKh9k+FvD3or6GfwmYPmf3i5m+7AsOmQU2fm2aLYFEoNV8O2vttrNRGQ
+         JUY/vAf/UlKc6I3Bl5j4Q1mXP+xLKwuycZQ4kSlUw5K2tdqgwYdiLr1GrggXtZRIpiEX
+         Mbp9kOtvvUvqdZ02heKr1pDvJGsMedHbtZs50aofAZSzQ4mGmz2dYu0p2b4QM5bV/n+T
+         VCYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Fsiw6ZgIcvwLcLm0FNd/6EaaF9tjzHi5eTsq2xkMNHI=;
-        b=P/j4ShSmAu4zdmOyY1SwhPKpPFIcguv9Ggo7axdMeJgbTwAKKHgcamJVFpJvTEUui7
-         KDR4hSQPtFvst+nf416Hs43MP8/xKInggmYpmC5+BLyoww7IP3fyZDqbze0HNDa5qA8x
-         J5LEojTVMmDxlvswuIl7Rw+gkYY/9f+WBA8QMr57Twtz3feZ0XdNKTvyptf7E7O80ZZF
-         OleelFqBorZ6u/i2N2UAp/cM4EyV2YgkeJuhu0Hp3DVw+85f2HDREPkYZUh82a4CbD20
-         36SFa3YJ1GN56hlCmpYccFqLiD1mZ0XqdxfVG880D3Ntd6bHuaMmf9/wdUGuQmXl84zI
-         1fIQ==
-X-Gm-Message-State: ALQs6tAwDtd2wdBeOXcuN1dqqmYWCWsui85RKCM4PgJEvt6hvLlD/bLA
-        63HT25gbEqghMWej3FiZ/tW6qJ6PsTeQs/MECs98UQ==
-X-Google-Smtp-Source: AIpwx48a7w7Ra0ZBNaMyxG5WhwKScpecRy6LJYvVM3/KFNy+rnBLxYq7rLaMc/BezfEe/RkMTBGnuDlSyUv7bBDaT1s=
-X-Received: by 2002:a25:2704:: with SMTP id n4-v6mr7096962ybn.167.1524259535988;
- Fri, 20 Apr 2018 14:25:35 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=sHfx1BzaF0N3e2mZXTgx4fP+ldY68vI/0l8jQ7d7c9c=;
+        b=DteOxqpFx3E3aGkdHGqt8G3tsLM0O06SNMXoz08yV9bXYm5WNgepKukmfOmKCjgcOW
+         x7IpqGS/rtdgdG3jBDJj3KY8bwNaQLk6IUAyWPrc5G2WHd0JvQP76+AzuLCPJ4iqIkjb
+         ROV7c/rrBBkY0WUV4Q1oiNvQ2xyndHYlqde8ppah4kbitqkiPCbxJnnQpfSO7mwIvUkE
+         GhwyCrAUirmQiDCEtq9NQt/zz9Ftpgis0AXoAtwH5FKRk0XwNHghUXHcm7B5O+9U6DLu
+         0gi3GOEft6LfqPvg6Udzk+ri4yQDWdexbb39sDKdoI/DxEyclfrhLX9Y0Wjj7Dm6KMhc
+         d61A==
+X-Gm-Message-State: ALQs6tDYXzzyDA4nB0V6J6r8yiOqVhhank9GEXPLXo343kTWwpDEx3TZ
+        ldA/DN//7bV0AzbPJhQzlyjRWpw6MBew6btCnUNsRUfG
+X-Google-Smtp-Source: AIpwx4+fKEHTrakCTkfc8tT77Rx13ipyYsi6Td1rqfmkPJjLGbSUBMiEJNa8Q+JveZSy611D+2LWai4QiYsnoht8Pfk=
+X-Received: by 2002:a81:9ed2:: with SMTP id v201-v6mr6812051ywg.288.1524259951301;
+ Fri, 20 Apr 2018 14:32:31 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Fri, 20 Apr 2018 14:25:35
- -0700 (PDT)
-In-Reply-To: <c23608f35af1ac9b8f7e0b9c17e2fa1fdf189ab1.1524258351.git.johannes.schindelin@gmx.de>
-References: <CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com>
- <cover.1524258351.git.johannes.schindelin@gmx.de> <c23608f35af1ac9b8f7e0b9c17e2fa1fdf189ab1.1524258351.git.johannes.schindelin@gmx.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 20 Apr 2018 14:25:35 -0700
-Message-ID: <CAGZ79kaQXWi0GmHH_6D_yeQU=M3W_esAy6Y7QweDzp07x7z7dQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] sequencer: leave a tell-tale when a fixup/squash failed
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+Received: by 10.13.230.146 with HTTP; Fri, 20 Apr 2018 14:31:50 -0700 (PDT)
+From:   Yuri Weinstein <yuri.weinstein@gmail.com>
+Date:   Fri, 20 Apr 2018 14:31:50 -0700
+Message-ID: <CAMSYVsc7c3Gw7OYLDRi5GiZX1m4Cx=eGJJUutRTX9Bn=z9EDMw@mail.gmail.com>
+Subject: Feature requst
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  static GIT_PATH_FUNC(rebase_path_amend, "rebase-merge/amend")
-> +/*
-> + * If there was a merge conflict in a fixup/squash series, we need to
-> + * record the type so that a `git rebase --skip` can clean up the commit
-> + * message as appropriate. This file will contain that type (`fixup` or
-> + * `squash`), and not exist otherwise.
-> + */
+"git grep xxx" currently does not follow symlinks.
+Please consider adding this functionality
 
-Thanks for the documentation here, is there some other high level doc that
-describes all things to know about the internals of the rebase-merge dir
-or is this the definitive guide?
-
-> +static GIT_PATH_FUNC(rebase_path_amend_type, "rebase-merge/amend-type")
->  /*
->   * When we stop at a given patch via the "edit" command, this file contains
->   * the abbreviated commit name of the corresponding patch.
-> @@ -2400,10 +2407,20 @@ static int error_with_patch(struct commit *commit,
->  static int error_failed_squash(struct commit *commit,
->         struct replay_opts *opts, int subject_len, const char *subject)
->  {
-> +       const char *amend_type = "squash";
-> +
-> +       if (file_exists(rebase_path_fixup_msg())) {
-> +               unlink(rebase_path_fixup_msg());
-> +               amend_type = "fixup";
-> +       }
-> +       if (write_message(amend_type, strlen(amend_type),
-> +                      rebase_path_amend_type(), 0))
-> +               return error(_("could not write '%s'"),
-> +                            rebase_path_amend_type());
-
-Do we want to wait with unlinking rebase_path_fixup_msg()
-until after we are sure there is no error returned?
-I first thought so as to preserve the state as before, but
-then it only signals the amend type. But we're downgrading the
-amend type from "squash" to "fixup", which means that if
-this error happens and the user just retries the git command
-we'll end up with a "fixup", i.e. not opening their editor?
+Thx
+YuriW
