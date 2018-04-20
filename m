@@ -2,98 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41DC01F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 22:16:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FF121F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 22:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752144AbeDTWQH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 18:16:07 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:38644 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751325AbeDTWQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 18:16:06 -0400
-Received: by mail-qk0-f195.google.com with SMTP id b39so10243221qkb.5
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 15:16:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=YeGTNNTIIEDkWkmNQWcyqSCkqqxpl4fQGgNUHoN/Uz8=;
-        b=nfh1NwV34zmmqePHEMRZ2ODSxy+jNZ5F7zmp7MavNEgldZJLSSTlLMYb2piYhCPhSD
-         O16e5WUNm7sDtbrgfm2xVCXjCJRaGaG9JTlPgaNrHmRPFd4Vn2roz+AQ11C7JQejnhck
-         ZqhhAbKF/IGOwDWB7u3FvzKn6FqqUEdbehjyJxM+5Mu+A0sGJppv2zqxTV/pa2dPtnFv
-         G5W6RlGoMBAUbA/aPX6FMFvPvNNXgtcMd208alBouclo43UpXAw+rVXBqoCJHVq8O2Ln
-         023sAjeBOgXiQote7CEf1e0trNa9NtWpwqRKkt3RlHP4Radp9B+ru483c+RZxECAHWxR
-         xe8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=YeGTNNTIIEDkWkmNQWcyqSCkqqxpl4fQGgNUHoN/Uz8=;
-        b=ShiZQ089a/2LC+6dGiHX6qNq48Dzi/zlGI69FwYUZbyN5HM2/lUPRC6c46x2lDPLjw
-         nbDn7zpk8zf53UkkHd9bDjO/wioguBTN1/yHycN7uF67j26vVGJVMF+CHb9aMi3rPlzC
-         mnvKLhDLgvBhulSixBIDcfZNEHSWatWeMwazuxyYXaYtCBwUYnmiJzxDcXj7h+KDEcsM
-         j+0qpz4LWW1oGD76uc6JpH0c+xOoobdkVge0+DxB56PH5r2D0eI6u7ehb58qYO6WQ8pU
-         QEcpITYMtPCg26KoO3VtMRibLjWjZRihSbVRvvjtkqBy+PIVfJcFlO+ITwAThgN99a8J
-         ZjPQ==
-X-Gm-Message-State: ALQs6tCso/o6KiDqMKD/XyCnqSg1hX19NMbBAZZy3trzpBYkfL6QedHn
-        5K3RghgieZLtE2b4ry3mLKHK0PLKeaDK28koAr4=
-X-Google-Smtp-Source: AB8JxZqeHBEcaeBv3pfnOM5YyCKLl1PTwY5qdGRwZ3i5qQCEqS+3kLlQ+tvRFmQEqDY0Lc1VCMgVMz5+MTacKiMfpBM=
-X-Received: by 10.233.220.1 with SMTP id q1mr11882285qkf.361.1524262566036;
- Fri, 20 Apr 2018 15:16:06 -0700 (PDT)
+        id S1752844AbeDTWTS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 18:19:18 -0400
+Received: from mout.gmx.net ([212.227.17.21]:39557 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752634AbeDTWTQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 18:19:16 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LviG8-1eMD340cI8-017S2M; Sat, 21
+ Apr 2018 00:19:10 +0200
+Date:   Sat, 21 Apr 2018 00:18:53 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: js/rebase-recreate-merges, was Re: What's cooking in git.git (Apr
+ 2018, #02; Tue, 17)
+In-Reply-To: <xmqqzi22tlfx.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1804210017020.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <xmqqzi22tlfx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Fri, 20 Apr 2018 15:16:05 -0700 (PDT)
-In-Reply-To: <20180420221231.4131611-1-martin.agren@gmail.com>
-References: <nycvar.QRO.7.76.6.1804202258071.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <20180420221231.4131611-1-martin.agren@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 20 Apr 2018 18:16:05 -0400
-X-Google-Sender-Auth: cNwL1tUAmTZo7G457qa5TUmFlt4
-Message-ID: <CAPig+cSKBAq3h4CAe4phFoG+APDV_qzApJgCpYK6AZrjW-+xxw@mail.gmail.com>
-Subject: Re: [PATCH v3] fast-export: fix regression skipping some merge-commits
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Isaac Chou <Isaac.Chou@microfocus.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:QKw0eQCHn0h928nWO7AOkXjiCzd4zVNObKzO3/u63XOXgBV2m+/
+ 125GolqOD9a6njzqKoOt+xkNYBAOzKVw3P99dsBUl3ZVqTPmi4uZ1WM8e7asQrehRw+D7fu
+ wefgwqJsq8NNC/mIxqd2jXM/nkwNYvML+W4kicNIPhe/el9ihkVxFnV+hN2qpEfPJ+kwHD7
+ n6gzP0Ok35L86fuZxtMNQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1fUCeFCugbY=:KDb/IJnEEW6IIt0dqrCXvL
+ mnPZGl+k7gRouFVYv32DlUYt2y0b9LTuDaicyIvqxQYBZbZPUG/Azvx3mKvEPExEOnkealN7x
+ zfdlKtFin42PZsdo28PxrQRVcyWie1+nllH6LqT4KOz974iuQiijeb0F8zS4cDDulWtVIc6If
+ 7j+bFdLz3vDz8mBPVOUEPhlUbiOHRg9+9FstOtzLNaFlb7A81zUZghjl7LN24KVoiaCudb4s0
+ jZOJBxQsgUVo081aWhyCOUouyIzF7n/73Bw9n11HE4RUGzyl/LORlOdMavv08zmYIKkKKtqcr
+ 0iXyeMwd1p/AR9gv6RR4AYVGmJzUWLcYHAqtZ1ff6HKoT9xbG9mw6AjDg4iDmFku8jo2jwHva
+ RLcR7D560na81gfP7gVULmKIldEBbqe47WYeHI06UWx0uQX6hYq2it3G+u0wZAOIY4Yop/XlN
+ l3bH8zKHjyvMJz91BkBXkH5dal8mVpEoljxr8WljwoaG/BnLdmjhV1iy9yBv2VzLmD2ogXbuK
+ ho05L1eF19/2lVx3nEMZdsC96dQCXiN3kDYpqs56kFOHY6/o6VtQQDoNZFnZGYtJoMYWCv5+N
+ DO4g/jV55mQbsN6lIUTZGOetJOOqY6Q6wetFZSG88ZxS23hTQX8dVsDlZY2ynMOSqT3oWGbPt
+ vdlR8QGh0l019MIX85ka1sfNzrpY7hBTNSfMDNYn0bg6U86KnyYc1QSVyoUF0w2doAbBb7mfv
+ hlqlghytBtPZj9V+ofBNNNY433o9gIcsB9KuX9WeY6j9x7TgnsUJODNSoI26KS4YixSPZ5R+9
+ mKsU7sGrk8MhabYkZULydVCLh4/kUb3oc16lIYNWuG9+tdt01w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 20, 2018 at 6:12 PM, Martin =C3=85gren <martin.agren@gmail.com>=
- wrote:
-> 7199203937 (object_array: add and use `object_array_pop()`, 2017-09-23)
-> noted that the pattern `object =3D array.objects[--array.nr].item` could
-> be abstracted as `object =3D object_array_pop(&array)`.
->
-> Unfortunately, one of the conversions was horribly wrong. Between
-> grabbing the last object (i.e., peeking at it) and decreasing the object
-> count, the original code would sometimes return early. The updated code
-> on the other hand, will always pop the last element, then maybe do the
-> early return without doing anything with the object.
->
-> The end result is that merge commits where all the parents have still
-> not been exported will simply be dropped, meaning that they will be
-> completely missing from the exported data.
->
-> Re-add a commit when it is not yet time to handle it. An alternative
-> that was considered was to peek-then-pop. That carries some risk with it
-> since the peeking and poping need to act on the same object, in a
+Hi Junio,
 
-s/poping/popping/
+On Tue, 17 Apr 2018, Junio C Hamano wrote:
 
-> concerted fashion.
->
-> Add a test that would have caught this.
->
-> Reported-by: Isaac Chou <Isaac.Chou@microfocus.com>
-> Analyzed-by: Isaac Chou <Isaac.Chou@microfocus.com>
-> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+> * js/rebase-recreate-merge (2018-04-11) 15 commits
+>  - rebase -i --rebase-merges: add a section to the man page
+>  - rebase -i: introduce --rebase-merges=[no-]rebase-cousins
+>  - pull: accept --rebase=merges to recreate the branch topology
+>  - rebase --rebase-merges: avoid "empty merges"
+>  - sequencer: handle post-rewrite for merge commands
+>  - sequencer: make refs generated by the `label` command worktree-local
+>  - rebase --rebase-merges: add test for --keep-empty
+>  - rebase: introduce the --rebase-merges option
+>  - rebase-helper --make-script: introduce a flag to rebase merges
+>  - sequencer: fast-forward `merge` commands, if possible
+>  - sequencer: introduce the `merge` command
+>  - sequencer: introduce new commands to reset the revision
+>  - git-rebase--interactive: clarify arguments
+>  - sequencer: make rearrange_squash() a bit more obvious
+>  - sequencer: avoid using errno clobbered by rollback_lock_file()
+> 
+>  "git rebase" learned "--rebase-merges" to transplant the whole
+>  topology of commit graph elsewhere.
+> 
+>  This looked more or less ready for 'next'.  Please stop me if there
+>  are remaining issues I forgot about.
+
+Phillip pointed out some ugliness in the way I reschedule commands after
+they failed fatally, and I will fix that, I will also fix the erroneous
+commit message starting with "# This is a combination of ...", and then I
+wanted to go over the added documentation one last time (with a fresh set
+of eyes, after looking at so much other code).
+
+So: please do not yet merge this to `next`. I think I need one more
+iteration.
+
+Ciao,
+Dscho
