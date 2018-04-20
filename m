@@ -6,59 +6,60 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0F021F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 01:38:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00B491F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 03:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753897AbeDTBiW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Apr 2018 21:38:22 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:45713 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753761AbeDTBiW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Apr 2018 21:38:22 -0400
-Received: by mail-wr0-f193.google.com with SMTP id u11-v6so18650782wri.12
-        for <git@vger.kernel.org>; Thu, 19 Apr 2018 18:38:21 -0700 (PDT)
+        id S1754203AbeDTDFU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Apr 2018 23:05:20 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:38972 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754100AbeDTDFT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Apr 2018 23:05:19 -0400
+Received: by mail-wr0-f194.google.com with SMTP id q3-v6so8955626wrj.6
+        for <git@vger.kernel.org>; Thu, 19 Apr 2018 20:05:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=B2Xt+z663oqvg3+BqNKY8Us/VBiAuH029VMgxNMO6Bc=;
-        b=j8Y4cXl2jy8OpoNysd/QAmD9qzqOkPKk6NuAe2K/ttGccurPzfd9Qzd3+aBzGo5w5Q
-         Y8xqvtlpGN0tGy4Q8JyT/Ijyu6MH4lbzWxogsQlLzioQ8XuddEK0cM7yC0+PXOeIPHxj
-         axDhIrV6HwkJZioh2tFO4cu/9CatZgUypvUOT00/t6dQOYorsufAFDibZvNeNk2LlFPq
-         anrcFLOElLUqZk3yM6ElWm0rMbATHzBU9O/aGqelMK6+PcX9H2VlKjL9qzVDyoKZOzT5
-         DXgwBX4tWM5L7U44l6f9V9IxSbVSw0FmGhYMPvUu3Wnk3n1Qg6e4vpzpCaZ/mKJqVkjS
-         fTMw==
+        bh=lwWdHJd+wVB6+DnMuZAxB2JUbKj4gkVO4gU0XesXcNY=;
+        b=JF1DdJefsFEcoipGukcqKm2ZbKZ7Bum3FMPOVkrpHH77Ar52C/DU3alcsM5tPjptwd
+         qTtx0q13G680b+LcD5mVCNkvehklKQI/BsNm869WNxrwxZHie7ePo/2BPQKYVs8FCCsy
+         gcU9Pxdu4DxsM72uPol/cjbTRwKKTu2kniPHw8MLx3V2IerKCVy4pQ54XGEbmP10iZzM
+         xKWOcj2U2TNcpxHW7jiyi/HuYdgqmQFgdsbqCSBvbFFx1lbOjSMjo+CJwXwhgqv57fog
+         wLikWpa3f74oxWX3TJ6Iim9H7ZS+deGfxrq2aw7zjGgMCcafICi4NgkH6zGw7Fz0gxm4
+         3qiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=B2Xt+z663oqvg3+BqNKY8Us/VBiAuH029VMgxNMO6Bc=;
-        b=fm0X7bsnPxuwYmMZyRMW/zUGU3PAXOt50m0uO6+V2HH57lX2SfJ4XF6nHOEuOMvcAz
-         +m3ALJh9sjaCTLIMuVbKINSS6VmjVgw4QIMgNIgr5WJfGvlw+3EduX7/y5xFd8DZv3s/
-         z8aSfZBlLshzEbF5ySLyqB3WAcTYuUZNH0BpycVwxfr2Nhmhp8fh+PbMbFiTicdNswRY
-         XQikZRAHTTDsp0Km6H1W809nOpRIJA/M/bZ1m0UbUsQ/uBV8T3daTJNj0e41Sdu/wme4
-         rGPEDTlnTmNwk6RA5GFvYjSjCrGyUaKycdsxWGnLBLNQrq+2HG0KXTfW7CDM76x2HD0P
-         GMFA==
-X-Gm-Message-State: ALQs6tDoonuy1DhTFyC5Z3mJ9tLiZInjV9OQlYPuYeFc8Hwqmm+vlLpt
-        TKUaIxgZTVi2zJfsnfGEAuY=
-X-Google-Smtp-Source: AIpwx48VW+veUsoBNmx5pl3jXoQYEDCF+Um5CIafz3I2HPiFM9Ic7UBSa/ukBoIIPKRrCztcRK5zGQ==
-X-Received: by 10.28.86.132 with SMTP id k126mr566031wmb.17.1524188300545;
-        Thu, 19 Apr 2018 18:38:20 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id r200sm1339398wmb.39.2018.04.19.18.38.19
+        bh=lwWdHJd+wVB6+DnMuZAxB2JUbKj4gkVO4gU0XesXcNY=;
+        b=D2/5y2DseYwpeUp/fxruwTQ3xp5wAolmMf/5T2AtNHeMpSZYcD/bGt7AJVcMRnK48O
+         hFYDNm/oq2L/bHw4lk7lZFz/+OTBrPXH+h+F59ilwvIQbV95XFLqyABwbJ0WjSURNe/R
+         xrylhIOa+Pi2bUXcNmy4AMb10LgsLf4Rh0pr5LVsA/1tsN7Bjr6mwWMFBAxot6rPibel
+         GC9MO3Rn6eanvH+SMP3K+bUeCRDKzi1aDfthwQgRyrDG/ccn0CqsczpF5qTrdRBYvn70
+         FlfcJEnsuEHHrU3qonoPeyNbtZqUZEIda7alHSU69Fn0UtuOwooXEMIwptoRyEC6DNZF
+         yobw==
+X-Gm-Message-State: ALQs6tAhIzPDB8C27ZelV/IL4tCAekgKCGismeZoPevaZZYOoyCdvqMy
+        Ykyc5z6gHi1UkkHk0Y6tSZQ=
+X-Google-Smtp-Source: AIpwx48tmdLMPOBV+WtXbQYWvcIJd5hSClOXzUflMPrVCfo4++QEN7wRS8Cue3aoXp6wFyU6rEsSHA==
+X-Received: by 10.28.58.81 with SMTP id h78mr598276wma.110.1524193518382;
+        Thu, 19 Apr 2018 20:05:18 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j3sm2224401wmf.23.2018.04.19.20.05.16
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Apr 2018 18:38:19 -0700 (PDT)
+        Thu, 19 Apr 2018 20:05:16 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2 0/2] completion: improvements for git stash
-References: <20180417212945.24002-1-t.gummerer@gmail.com>
-        <20180419232514.16572-1-t.gummerer@gmail.com>
-Date:   Fri, 20 Apr 2018 10:38:19 +0900
-In-Reply-To: <20180419232514.16572-1-t.gummerer@gmail.com> (Thomas Gummerer's
-        message of "Fri, 20 Apr 2018 00:25:12 +0100")
-Message-ID: <xmqq36zqd5dg.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Subject: Re: [PATCH v10 00/36] Add directory rename detection to git
+References: <20180419175823.7946-1-newren@gmail.com>
+        <CABPp-BEhfMPNEtAvdc3MsX5mWsq=YT_=rVeOzCfidJde7Mhh-Q@mail.gmail.com>
+Date:   Fri, 20 Apr 2018 12:05:16 +0900
+In-Reply-To: <CABPp-BEhfMPNEtAvdc3MsX5mWsq=YT_=rVeOzCfidJde7Mhh-Q@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 19 Apr 2018 11:35:19 -0700")
+Message-ID: <xmqqy3hibms3.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,20 +68,20 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> I didn't find a good way to implement "reluctant completion" (I'm also
-> by no means an expert in bash completion, so there may well be a way I
-> couldn't find by googl'ing around), so I left that out of this
-> series.
+> On Thu, Apr 19, 2018 at 10:57 AM, Elijah Newren <newren@gmail.com> wrote:
+>> This series is a reboot of the directory rename detection series that was
+>> merged to master and then reverted due to the final patch having a buggy
+>> can-skip-update check, as noted at
+>>   https://public-inbox.org/git/xmqqmuya43cs.fsf@gitster-ct.c.googlers.com/
+>> This series based on top of master.
 >
-> I don't think it's strictly necessary for the deprecation either, as
-> we can just print a warning message when the user actually uses 'git
-> stash save' at some point, which would make a message printed when
-> using the completion redundant anyway.  I feel like that warning
-> message is not something we're quite ready for yet and I'd rather wait
-> a few more releases before doing that though.
+> ...and merges cleanly to next but apparently has some minor conflicts
+> with both ds/lazy-load-trees and ps/test-chmtime-get from pu.
+>
+> What's the preferred way to resolve this?  Rebase and resubmit my
+> series on pu, or something else?
 
-Yeah, I agree that what you outined above is quite sensible.
-
-Thanks, will queue.
+The series as-is is fine, I think, from the maintainer's point of
+view.  Thanks.
