@@ -2,169 +2,274 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90E901F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 18:57:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10B201F404
+	for <e@80x24.org>; Fri, 20 Apr 2018 19:08:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751639AbeDTS5g (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 14:57:36 -0400
-Received: from prvmx02.microfocus.com ([130.57.1.217]:19926 "EHLO
-        prvmx02.microfocus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751338AbeDTS5f (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 14:57:35 -0400
-Received: from prvxcaht03.microfocus.com (Not Verified[137.65.248.137]) by prvmx02.microfocus.com with Trustwave SEG (v7,5,8,10121) (using TLS: TLSv1.2, AES256-SHA256)
-        id <B5ada38250000>; Fri, 20 Apr 2018 12:57:41 -0600
-Received: from NAM03-BY2-obe.outbound.protection.outlook.com (137.65.224.20)
- by mail.microfocus.com (137.65.248.137) with Microsoft SMTP Server (TLS) id
- 14.3.339.0; Fri, 20 Apr 2018 12:57:34 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=MicroFocusInternational.onmicrosoft.com; s=selector1-microfocus-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=Ba1Csgvb4vB0Hz4afhHR/kpJMpzp1PN2otdSAEvMbtQ=;
- b=m40u86nvTBHKhq0WnZQjtzN8kdokUZOUPt4Q1izgs69MAz2rL6Lhbx12L/Qw04MtKDRBqeeG1qENQu5SeotG1T4UqZSIw0O16/0i3rOYcSAQdIn/ibhe5As8xBWu9I+BDQLRIdJmu/46LT6BBjMi58xkpxmauRzNNJ+hV1bT99w=
-Received: from MW2PR18MB2284.namprd18.prod.outlook.com (52.132.183.149) by
- MW2PR18MB2252.namprd18.prod.outlook.com (52.132.183.141) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.696.12; Fri, 20 Apr 2018 18:57:33 +0000
-Received: from MW2PR18MB2284.namprd18.prod.outlook.com
- ([fe80::1953:6149:ff4d:80b3]) by MW2PR18MB2284.namprd18.prod.outlook.com
- ([fe80::1953:6149:ff4d:80b3%13]) with mapi id 15.20.0675.015; Fri, 20 Apr
- 2018 18:57:32 +0000
-From:   Isaac Chou <Isaac.Chou@microfocus.com>
-To:     =?utf-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        id S1751381AbeDTTH7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 15:07:59 -0400
+Received: from mout.gmx.net ([212.227.17.22]:54281 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751092AbeDTTH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 15:07:58 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MeMOx-1emH7537M7-00QAyH; Fri, 20
+ Apr 2018 21:07:48 +0200
+Date:   Fri, 20 Apr 2018 21:07:32 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+cc:     git@vger.kernel.org, Isaac Chou <Isaac.Chou@microfocus.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: RE: [PATCH] fast-export: fix regression skipping some merge-commits
-Thread-Topic: [PATCH] fast-export: fix regression skipping some merge-commits
-Thread-Index: AQHT2NNXwtD8cfALHkqS6+JA1CU0FaQJ/mkA
-Date:   Fri, 20 Apr 2018 18:57:32 +0000
-Message-ID: <MW2PR18MB22841823133D9C96D4428CDDE5B40@MW2PR18MB2284.namprd18.prod.outlook.com>
-References: <MW2PR18MB228432C95C18DE786957DE70E5B40@MW2PR18MB2284.namprd18.prod.outlook.com>
- <20180420181248.2015922-1-martin.agren@gmail.com>
+Subject: Re: [PATCH] fast-export: fix regression skipping some
+ merge-commits
 In-Reply-To: <20180420181248.2015922-1-martin.agren@gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Isaac.Chou@microfocus.com; 
-x-originating-ip: [73.253.66.81]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;MW2PR18MB2252;7:t8Jr8IGUDypRIqdWwj/P54gO4tzafyI+Chi3AgACE/W43ffqkp3/HAwfQumQujdtsUMaUe0mJxz4iq2YJ0EMcGwiLc86uTgi5k1rKivILTz4q2I/cDs1cAcTxT5VAUMolTmy9yXYj6gN9ZPUx9fGLJJRFNekWp7iJ3b4dtIXT+7Z9cSvVl0gKx/9CijJ2PDS7vSaClHLo383aLyTwWoYtjXh/EUCG83QNSKzRCWAfd3l72uJZXXp3jjcDtzLhH78
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(2017052603328)(7153060)(7193020);SRVR:MW2PR18MB2252;
-x-ms-traffictypediagnostic: MW2PR18MB2252:
-x-microsoft-antispam-prvs: <MW2PR18MB2252F9E42B02E9F210D96E88E5B40@MW2PR18MB2252.namprd18.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(26323138287068)(166708455590820)(9452136761055)(85827821059158)(211936372134217)(153496737603132)(100324003535756);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(3002001)(10201501046)(93006095)(93001095)(3231232)(944501397)(52105095)(6041310)(20161123564045)(20161123558120)(20161123560045)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011);SRVR:MW2PR18MB2252;BCL:0;PCL:0;RULEID:;SRVR:MW2PR18MB2252;
-x-forefront-prvs: 0648FCFFA8
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(346002)(396003)(39860400002)(366004)(39380400002)(51914003)(377424004)(13464003)(25786009)(2900100001)(2501003)(446003)(72206003)(966005)(102836004)(316002)(53546011)(6506007)(59450400001)(5250100002)(74316002)(14454004)(305945005)(11346002)(478600001)(7736002)(186003)(476003)(26005)(3846002)(6116002)(86362001)(4326008)(53936002)(8666007)(229853002)(66066001)(6306002)(55016002)(9686003)(5660300001)(6246003)(6436002)(39060400002)(33656002)(99286004)(7696005)(81166006)(8676002)(8936002)(76176011)(2906002)(110136005)(3280700002)(54906003)(8656006)(3660700001)(14547495005);DIR:OUT;SFP:1102;SCL:1;SRVR:MW2PR18MB2252;H:MW2PR18MB2284.namprd18.prod.outlook.com;FPR:;SPF:None;LANG:en;MLV:ovrnspm;PTR:InfoNoRecords;
-received-spf: None (protection.outlook.com: microfocus.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: c5dd4lH0nwPoUrQQqgqBhD3RKwJjXhlooEUDlBMgNOel3HK+3tDEsD0/UFNTe/6onC5+bQhqW8uQ6hCkNSyhdMQ5jgvoP3sVtTTvJ1f7SbKHLbeaIJ37aqmFgb30KOsLCAaAOe1r3MtLa6T1LcZNrJj8uX+2n51WEBBlpIX4c/2cEZtBl0Cnx+pOb9Rza1M5
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Message-ID: <nycvar.QRO.7.76.6.1804202041400.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <MW2PR18MB228432C95C18DE786957DE70E5B40@MW2PR18MB2284.namprd18.prod.outlook.com> <20180420181248.2015922-1-martin.agren@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 3f09c0e5-7dcf-4603-0f7d-08d5a6f092e3
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3f09c0e5-7dcf-4603-0f7d-08d5a6f092e3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Apr 2018 18:57:32.8884
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 856b813c-16e5-49a5-85ec-6f081e13b527
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW2PR18MB2252
-X-OriginatorOrg: microfocus.com
+Content-Type: multipart/mixed; boundary="8323329-372011290-1524251268=:4241"
+X-Provags-ID: V03:K1:0lN3u3G22vqCws8t7ZPcX2oghpBvhD4iRplhBctynPK5WWhBb4z
+ +ML1RhvUXXIHm8+Hs8iF9bxOnhpD8dJMNpocJFgLv9lRrqk+Wkk9ndDuAiV36khyUCrPjUp
+ atCSp5mEArEeqj8vuxXXVlMsauRWokjW+LnvnqM3MWV/aDwy6e26xyzC05T3D4Zt7nVESWA
+ Nl0tooN4gxj40fQtDqd5g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EpDnYkAdbIQ=:XPSFTbHmAMC3u2PogBhSjf
+ jz8AOkt/eJ8mn1ynPrX78X15vLsYQVkwjp8P1lokrkKWqliF9IndwMzmwf7//zWMexChK/LRv
+ 9EJEJHVBjZ3FY98tegG259N+jAfPV/lCL8pXlgKf696tqNkDpXeYHRIbUKz0HV9zDGQ1zRBxo
+ ehSZ43jVujQxitm08fUAMsKlSs/8WcJERbM6hTrXHTRZTqM0OYCFfNGRcMF3VOXYa8Or9AAX5
+ IoDXy0ZhfOEbA/uqTMCywCQCylUggu9+31uPG+gA7ZDNi8FtPgR456qZDAIj5azUxDx5vlsAo
+ 5PeIinMhEfav7hj8bMEiSZYSqb33tjEM4DXNhCnUEJshxkODPpDJsUvm/ZSlzTDWVY6kB5qxZ
+ k77/seNHxc1wKkCGZ/I8NDHI4h6Mt+q2Q4Q4wU5ZekyhwFvHOAXARE6KNA5fQ5c5uwgAf6565
+ 1ir7Iy/pDQVU8B8HNtQixTGL6ZHGQDzt6Rt/YrBhWQQa86oDFL/OQYvn4p7Hs+nVW8kmjf9+G
+ 6nxMeQ44uUi3azYFoW/mk52jm8cJUJ39SRw7SdXBt5jATW5jfFQfGTwfK3yfV5WnjmSIqRn0u
+ DHvb8S6ESNR2v+n8dJGqCn5zjerkeNHqmnOk47YkCDpRihhQ83XUtl+cqy0ZhfqU3HWAGNMBP
+ GNV6xm1dWyqA6/fj8NgpMqk5XDiMaPwEWdA0Sl4QnuRUesmfFW2qTQ87RaJAAVJBLh1TV1woT
+ tTvuiOEgz9bkvivt0CLovFrgUPnyvu2mUDIvqii2MHQF5g+05a8HrJwf76YajLHa2TicjAIOh
+ hr8iqn268Z98XApfsGc5HJcJnJi2Fr2+AyxGHOb7/c92QlZ3Hg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGkgTWFydGluLA0KDQpObyBwcm9ibGVtIGF0IGFsbC4gIFRoYW5rcyBmb3IgdGhlIHN1cGVyIHF1
-aWNrIHR1cm5hcm91bmQuICA6LSkNCg0KSXNhYWMNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0t
-LS0NCkZyb206IE1hcnRpbiDDhWdyZW4gW21haWx0bzptYXJ0aW4uYWdyZW5AZ21haWwuY29tXSAN
-ClNlbnQ6IEZyaWRheSwgQXByaWwgMjAsIDIwMTggMjoxMyBQTQ0KVG86IGdpdEB2Z2VyLmtlcm5l
-bC5vcmc7IElzYWFjIENob3UgPElzYWFjLkNob3VAbWljcm9mb2N1cy5jb20+DQpDYzogSnVuaW8g
-QyBIYW1hbm8gPGdpdHN0ZXJAcG9ib3guY29tPjsgSm9oYW5uZXMgU2NoaW5kZWxpbiA8am9oYW5u
-ZXMuc2NoaW5kZWxpbkBnbXguZGU+OyBKb25hdGhhbiBUYW4gPGpvbmF0aGFudGFubXlAZ29vZ2xl
-LmNvbT4NClN1YmplY3Q6IFtQQVRDSF0gZmFzdC1leHBvcnQ6IGZpeCByZWdyZXNzaW9uIHNraXBw
-aW5nIHNvbWUgbWVyZ2UtY29tbWl0cw0KDQo3MTk5MjAzOTM3IChvYmplY3RfYXJyYXk6IGFkZCBh
-bmQgdXNlIGBvYmplY3RfYXJyYXlfcG9wKClgLCAyMDE3LTA5LTIzKSBub3RlZCB0aGF0IHRoZSBw
-YXR0ZXJuIGBvYmplY3QgPSBhcnJheS5vYmplY3RzWy0tYXJyYXkubnJdLml0ZW1gIGNvdWxkIGJl
-IGFic3RyYWN0ZWQgYXMgYG9iamVjdCA9IG9iamVjdF9hcnJheV9wb3AoJmFycmF5KWAuDQoNClVu
-Zm9ydHVuYXRlbHksIG9uZSBvZiB0aGUgY29udmVyc2lvbnMgd2FzIGhvcnJpYmx5IHdyb25nLiBC
-ZXR3ZWVuIGdyYWJiaW5nIHRoZSBsYXN0IG9iamVjdCAoaS5lLiwgcGVla2luZyBhdCBpdCkgYW5k
-IGRlY3JlYXNpbmcgdGhlIG9iamVjdCBjb3VudCwgdGhlIG9yaWdpbmFsIGNvZGUgd291bGQgc29t
-ZXRpbWVzIHJldHVybiBlYXJseS4gVGhlIHVwZGF0ZWQgY29kZSBvbiB0aGUgb3RoZXIgaGFuZCwg
-d2lsbCBhbHdheXMgcG9wIHRoZSBsYXN0IGVsZW1lbnQsIHRoZW4gbWF5YmUgZG8gdGhlIGVhcmx5
-IHJldHVybiBiZWZvcmUgZG9pbmcgYW55dGhpbmcgd2l0aCB0aGUgb2JqZWN0Lg0KDQpUaGUgZW5k
-IHJlc3VsdCBpcyB0aGF0IG1lcmdlIGNvbW1pdHMgd2hlcmUgYWxsIHRoZSBwYXJlbnRzIGhhdmUg
-c3RpbGwgbm90IGJlZW4gZXhwb3J0ZWQgd2lsbCBzaW1wbHkgYmUgZHJvcHBlZCwgbWVhbmluZyB0
-aGF0IHRoZXkgd2lsbCBiZSBjb21wbGV0ZWx5IG1pc3NpbmcgZnJvbSB0aGUgZXhwb3J0ZWQgZGF0
-YS4NCg0KUmVpbnRyb2R1Y2UgdGhlIHBhdHRlcm4gb2YgZmlyc3QgZ3JhYmJpbmcgdGhlIGxhc3Qg
-b2JqZWN0ICh1c2luZyBhIG5ldyBmdW5jdGlvbiBgb2JqZWN0X2FycmF5X3BlZWsoKWApLCB0aGVu
-IGxhdGVyIHBvcGluZyBpdC4gVXNpbmcgYC4uLl9wZWVrKClgIGFuZCBgLi4uX3BvcCgpYCBtYWtl
-cyBpdCBjbGVhciB0aGF0IHdlIGFyZSByZWZlcnJpbmcgdG8gdGhlIHNhbWUgaXRlbSwgaS5lLiwg
-d2UgZG8gbm90IGdyYWIgb25lIGVsZW1lbnQsIHRoZW4gcmVtb3ZlIGFub3RoZXIgb25lLg0KDQpB
-ZGQgYSB0ZXN0IHRoYXQgd291bGQgaGF2ZSBjYXVnaHQgdGhpcy4NCg0KUmVwb3J0ZWQtYnk6IElz
-YWFjIENob3UgPElzYWFjLkNob3VAbWljcm9mb2N1cy5jb20+DQpBbmFseXplZC1ieTogSXNhYWMg
-Q2hvdSA8SXNhYWMuQ2hvdUBtaWNyb2ZvY3VzLmNvbT4NClNpZ25lZC1vZmYtYnk6IE1hcnRpbiDD
-hWdyZW4gPG1hcnRpbi5hZ3JlbkBnbWFpbC5jb20+DQotLS0NCkJhc2VkIG9uIG1haW50LCBidXQg
-YXBwbGllcyBlcXVhbGx5IHdlbGwgb24gbWFzdGVyLg0KDQpNeSBzaW5jZXJlc3QgYXBvbG9naWVz
-IGZvciB0aGUgc3R1cGlkIHRyYWluLXdyZWNrIHRoYXQgdGhlIG9yaWdpbmFsIGNvbnZlcnNpb24g
-d2FzLiBXZWlyZCBpbnRlcmFjdGlvbnMgYmV0d2VlbiBkaWZmZXJlbnQgY29tcG9uZW50cyBjYW4g
-bWFrZSBmb3IgZnVuIGJ1Z3MsIGJ1dCB0aGlzIG9uZSBpcyBqdXN0IGVtYmFyYXNzaW5nLg0KDQpJ
-c2FhYywgdGhpcyBzaG91bGQgc29sdmUgdGhlIHByb2JsZW0geW91IGFyZSBzZWVpbmcuIFVuZm9y
-dHVuYXRlbHksIEkgZG8gbm90IGhhdmUgYW55IGV4cGVyaWVuY2Ugd2l0aCBidWlsZGluZyBHaXQg
-Zm9yIFdpbmRvd3MgWzFdLiBJIHJlYWxseSBob3BlIHRoYXQgdGhpcyBidWcgZGlkIG5vdCB0YWtl
-IHVwIHRvbyBtdWNoIG9mIHlvdXIgdGltZS4gT3IgZWF0IHlvdXIgZGF0YSENCg0KTWFydGluDQoN
-ClsxXSBUaGUgbGVhc3QgSSBjYW4gZG8gaXMgcHJvdmlkZSBhIGxpbms6DQpodHRwczovL2dpdGh1
-Yi5jb20vZ2l0LWZvci13aW5kb3dzL2dpdC93aWtpL0J1aWxkaW5nLUdpdA0KDQogdC90OTM1MC1m
-YXN0LWV4cG9ydC5zaCB8IDIyICsrKysrKysrKysrKysrKysrKysrKysNCiBvYmplY3QuaCAgICAg
-ICAgICAgICAgIHwgIDkgKysrKysrKysrDQogYnVpbHRpbi9mYXN0LWV4cG9ydC5jICB8ICAzICsr
-LQ0KIDMgZmlsZXMgY2hhbmdlZCwgMzMgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KDQpk
-aWZmIC0tZ2l0IGEvdC90OTM1MC1mYXN0LWV4cG9ydC5zaCBiL3QvdDkzNTAtZmFzdC1leHBvcnQu
-c2ggaW5kZXggODY2ZGRmNjA1OC4uMmI0NmE4M2E0OSAxMDA3NTUNCi0tLSBhL3QvdDkzNTAtZmFz
-dC1leHBvcnQuc2gNCisrKyBiL3QvdDkzNTAtZmFzdC1leHBvcnQuc2gNCkBAIC01NDAsNCArNTQw
-LDI2IEBAIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3doZW4gdXNpbmcgLUMsIGRvIG5vdCBkZWNsYXJl
-IGNvcHkgd2hlbiBzb3VyY2Ugb2YgY29weSBpcyBhDQogCXRlc3RfY21wIGV4cGVjdGVkIGFjdHVh
-bA0KICcNCiANCit0ZXN0X2V4cGVjdF9zdWNjZXNzICd0b2RvJyAnDQorCXRlc3RfY3JlYXRlX3Jl
-cG8gbWVyZ2luZyAmJg0KKwlnaXQgLUMgbWVyZ2luZyBjb21taXQgLS1hbGxvdy1lbXB0eSAtbSBp
-bml0aWFsICYmDQorDQorCWdpdCAtQyBtZXJnaW5nIGNoZWNrb3V0IC1iIHRvcGljICYmDQorCT5t
-ZXJnaW5nL3RvcGljLWZpbGUgJiYNCisJZ2l0IC1DIG1lcmdpbmcgYWRkIHRvcGljLWZpbGUgJiYN
-CisJZ2l0IC1DIG1lcmdpbmcgY29tbWl0IC1tIHRvcGljLWZpbGUgJiYNCisNCisJZ2l0IC1DIG1l
-cmdpbmcgY2hlY2tvdXQgbWFzdGVyICYmDQorCT5tZXJnaW5nL21hc3Rlci1maWxlICYmDQorCWdp
-dCAtQyBtZXJnaW5nIGFkZCBtYXN0ZXItZmlsZSAmJg0KKwlnaXQgLUMgbWVyZ2luZyBjb21taXQg
-LW0gbWFzdGVyLWZpbGUgJiYNCisNCisJZ2l0IC1DIG1lcmdpbmcgbWVyZ2UgLS1uby1mZiB0b3Bp
-YyAtbSAibWVyZ2UgdGhlIHRvcGljIiAmJg0KKw0KKwlvaWQ9JChnaXQgLUMgbWVyZ2luZyByZXYt
-cGFyc2UgSEVBRF5eKSAmJg0KKwllY2hvIDoxICRvaWQgPm1lcmdpbmcvZ2l0LW1hcmtzICYmDQor
-CWdpdCAtQyBtZXJnaW5nIGZhc3QtZXhwb3J0IC0taW1wb3J0LW1hcmtzPWdpdC1tYXJrcyByZWZz
-L2hlYWRzL21hc3RlciA+b3V0ICYmDQorCWdyZXAgIm1lcmdlIHRoZSB0b3BpYyIgb3V0DQorJw0K
-Kw0KIHRlc3RfZG9uZQ0KZGlmZiAtLWdpdCBhL29iamVjdC5oIGIvb2JqZWN0LmgNCmluZGV4IGYx
-M2Y4NWIyYTkuLjRkOGNlMjgwZDkgMTAwNjQ0DQotLS0gYS9vYmplY3QuaA0KKysrIGIvb2JqZWN0
-LmgNCkBAIC0xMjksNiArMTI5LDE1IEBAIHZvaWQgYWRkX29iamVjdF9hcnJheV93aXRoX3BhdGgo
-c3RydWN0IG9iamVjdCAqb2JqLCBjb25zdCBjaGFyICpuYW1lLCBzdHJ1Y3Qgb2JqDQogICovDQog
-c3RydWN0IG9iamVjdCAqb2JqZWN0X2FycmF5X3BvcChzdHJ1Y3Qgb2JqZWN0X2FycmF5ICphcnJh
-eSk7DQogDQorLyoNCisgKiBSZXR1cm5zIE5VTEwgaWYgdGhlIGFycmF5IGlzIGVtcHR5LiBPdGhl
-cndpc2UsIHJldHVybnMgdGhlIGxhc3Qgb2JqZWN0Lg0KKyAqIFRoYXQgaXMsIHRoZSByZXR1cm5l
-ZCB2YWx1ZSBpcyB3aGF0IGBvYmplY3RfYXJyYXlfcG9wKClgIHdvdWxkIGhhdmUgcmV0dXJuZWQu
-DQorICovDQoraW5saW5lIHN0cnVjdCBvYmplY3QgKm9iamVjdF9hcnJheV9wZWVrKGNvbnN0IHN0
-cnVjdCBvYmplY3RfYXJyYXkgDQorKmFycmF5KSB7DQorCXJldHVybiBhcnJheS0+bnIgPyBhcnJh
-eS0+b2JqZWN0c1thcnJheS0+bnIgLSAxXS5pdGVtIDogTlVMTDsgfQ0KKw0KIHR5cGVkZWYgaW50
-ICgqb2JqZWN0X2FycmF5X2VhY2hfZnVuY190KShzdHJ1Y3Qgb2JqZWN0X2FycmF5X2VudHJ5ICos
-IHZvaWQgKik7DQogDQogLyoNCmRpZmYgLS1naXQgYS9idWlsdGluL2Zhc3QtZXhwb3J0LmMgYi9i
-dWlsdGluL2Zhc3QtZXhwb3J0LmMgaW5kZXggMjdiMmNjMTM4ZS4uODM3N2QyN2I0NiAxMDA2NDQN
-Ci0tLSBhL2J1aWx0aW4vZmFzdC1leHBvcnQuYw0KKysrIGIvYnVpbHRpbi9mYXN0LWV4cG9ydC5j
-DQpAQCAtNjUwLDkgKzY1MCwxMCBAQCBzdGF0aWMgdm9pZCBoYW5kbGVfdGFpbChzdHJ1Y3Qgb2Jq
-ZWN0X2FycmF5ICpjb21taXRzLCBzdHJ1Y3QgcmV2X2luZm8gKnJldnMsICB7DQogCXN0cnVjdCBj
-b21taXQgKmNvbW1pdDsNCiAJd2hpbGUgKGNvbW1pdHMtPm5yKSB7DQotCQljb21taXQgPSAoc3Ry
-dWN0IGNvbW1pdCAqKW9iamVjdF9hcnJheV9wb3AoY29tbWl0cyk7DQorCQljb21taXQgPSAoc3Ry
-dWN0IGNvbW1pdCAqKW9iamVjdF9hcnJheV9wZWVrKGNvbW1pdHMpOw0KIAkJaWYgKGhhc191bnNo
-b3duX3BhcmVudChjb21taXQpKQ0KIAkJCXJldHVybjsNCisJCSh2b2lkKW9iamVjdF9hcnJheV9w
-b3AoY29tbWl0cyk7DQogCQloYW5kbGVfY29tbWl0KGNvbW1pdCwgcmV2cywgcGF0aHNfb2ZfY2hh
-bmdlZF9vYmplY3RzKTsNCiAJfQ0KIH0NCi0tDQoyLjE3LjANCg0K
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-372011290-1524251268=:4241
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Hi Martin,
+
+On Fri, 20 Apr 2018, Martin =C3=85gren wrote:
+
+> 7199203937 (object_array: add and use `object_array_pop()`, 2017-09-23)
+> noted that the pattern `object =3D array.objects[--array.nr].item` could
+> be abstracted as `object =3D object_array_pop(&array)`.
+>=20
+> Unfortunately, one of the conversions was horribly wrong. Between
+> grabbing the last object (i.e., peeking at it) and decreasing the object
+> count, the original code would sometimes return early. The updated code
+> on the other hand, will always pop the last element, then maybe do the
+> early return before doing anything with the object.
+>=20
+> The end result is that merge commits where all the parents have still
+> not been exported will simply be dropped, meaning that they will be
+> completely missing from the exported data.
+
+Excellent explanation.
+
+> Reintroduce the pattern of first grabbing the last object (using a new
+> function `object_array_peek()`), then later poping it. Using
+> `..._peek()` and `..._pop()` makes it clear that we are referring to the
+> same item, i.e., we do not grab one element, then remove another one.
+
+Instead of using _peek() and _pop() and having to reason about the
+correctness, maybe we should simply re-push? See below for my suggested
+alternative.
+
+> My sincerest apologies for the stupid train-wreck that the original
+> conversion was. Weird interactions between different components can make
+> for fun bugs, but this one is just embarassing.
+
+The only way to fail is by doing something. You did something. That is
+much better than not doing anything. So please do not be sorry about
+introducing a breakage. You did fix it, which makes you double awesome.
+
+> Isaac, this should solve the problem you are seeing. Unfortunately, I do
+> not have any experience with building Git for Windows [1]. I really hope
+> that this bug did not take up too much of your time. Or eat your data!
+
+It is as easy as
+
+=09git clone --depth=3D1 https://github.com/git-for-windows/git-sdk-64
+
+(downloading half a gigabyte of objects, but then you have almost
+everything except for the Git source and one support repository for Git
+for Windows), then starting git-bash.exe in its toplevel directory and
+calling
+
+=09sdk build git
+
+in there. The `sdk` helper is in its infancy, so I could imagine that a
+really neat thing would be to be able to build custom branches and bundle
+them in a portable Git. Something like `sdk build portable-git --patch
+https://public-inbox.org/git/20180420181248.2015922-1-martin.agren@gmail.co=
+m/`.
+
+In the meantime, it should still be doable by calling
+
+=09sdk cd git
+=09sdk init build-extra
+=09/usr/src/build-extra/apply-from-public-inbox.sh https://public-inbox.org=
+/git/20180420181248.2015922-1-martin.agren@gmail.com/
+=09make -j15 && make -j15 strip && make -j15 install
+=09sdk build installer
+
+and then running that installer.
+
+You could also build a portable Git instead by replacing the last line
+with
+
+=09/usr/src/build-extra/portable/release.sh 0-test
+
+Or if you want to avoid building a portable Git installer, and instead
+copy the files directly, you could try this sequence:
+
+=09pacman -S --noconfirm rsync
+=09mkdir ~/my-test-git
+=09(cd / && rsync -Rau $(ARCH=3Dx86_64 BITNESS=3D64 \
+=09=09usr/src/build-extra/make-file-list.sh) ~/my-test-git/)
+
+Please let me know how it is going, I am always eager to make the Git for
+Windows SDK easier to use, as it will ultimately save me time.
+
+> diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+> index 866ddf6058..2b46a83a49 100755
+> --- a/t/t9350-fast-export.sh
+> +++ b/t/t9350-fast-export.sh
+> @@ -540,4 +540,26 @@ test_expect_success 'when using -C, do not declare c=
+opy when source of copy is a
+>  =09test_cmp expected actual
+>  '
+> =20
+> +test_expect_success 'todo' '
+> +=09test_create_repo merging &&
+> +=09git -C merging commit --allow-empty -m initial &&
+
+I see that you copied the style of the latest test case, but I have to
+admit that I would find it much easier to read if it said:
+
+=09(
+=09=09cd merging &&
+=09=09test_commit initial &&
+=09=09git checkout -b topic &&
+=09=09test_commit on-branch &&
+=09=09git checkout master &&
+=09=09test_commit on-master &&
+=09=09test_tick &&
+=09=09git merge --no-ff -m Yeah topic &&
+
+=09=09echo ":1 $(git rev-parse HEAD^^)" >marks &&
+=09=09git fast-export --import-marks=3Dmarks master >out &&
+=09=09grep Yeah out
+=09)
+
+i.e. using the subshell where you cd into merging/ first thing, and then
+making extensive use of `test_commit`.
+
+> +
+> +=09git -C merging checkout -b topic &&
+> +=09>merging/topic-file &&
+> +=09git -C merging add topic-file &&
+> +=09git -C merging commit -m topic-file &&
+> +
+> +=09git -C merging checkout master &&
+> +=09>merging/master-file &&
+> +=09git -C merging add master-file &&
+> +=09git -C merging commit -m master-file &&
+> +
+> +=09git -C merging merge --no-ff topic -m "merge the topic" &&
+> +
+> +=09oid=3D$(git -C merging rev-parse HEAD^^) &&
+> +=09echo :1 $oid >merging/git-marks &&
+> +=09git -C merging fast-export --import-marks=3Dgit-marks refs/heads/mast=
+er >out &&
+> +=09grep "merge the topic" out
+> +'
+> +
+>  test_done
+> diff --git a/object.h b/object.h
+> index f13f85b2a9..4d8ce280d9 100644
+> --- a/object.h
+> +++ b/object.h
+> @@ -129,6 +129,15 @@ void add_object_array_with_path(struct object *obj, =
+const char *name, struct obj
+>   */
+>  struct object *object_array_pop(struct object_array *array);
+> =20
+> +/*
+> + * Returns NULL if the array is empty. Otherwise, returns the last objec=
+t.
+> + * That is, the returned value is what `object_array_pop()` would have r=
+eturned.
+> + */
+> +inline struct object *object_array_peek(const struct object_array *array=
+)
+
+I looked, and this would be the first use of `inline` without `static`...
+
+> +{
+> +=09return array->nr ? array->objects[array->nr - 1].item : NULL;
+> +}
+> +
+>  typedef int (*object_array_each_func_t)(struct object_array_entry *, voi=
+d *);
+> =20
+>  /*
+> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+> index 27b2cc138e..8377d27b46 100644
+> --- a/builtin/fast-export.c
+> +++ b/builtin/fast-export.c
+> @@ -650,9 +650,10 @@ static void handle_tail(struct object_array *commits=
+, struct rev_info *revs,
+>  {
+>  =09struct commit *commit;
+>  =09while (commits->nr) {
+> -=09=09commit =3D (struct commit *)object_array_pop(commits);
+> +=09=09commit =3D (struct commit *)object_array_peek(commits);
+>  =09=09if (has_unshown_parent(commit))
+>  =09=09=09return;
+> +=09=09(void)object_array_pop(commits);
+>  =09=09handle_commit(commit, revs, paths_of_changed_objects);
+>  =09}
+>  }
+
+As I stated above, I think we can make this a bit easier to reason about
+(and less easy to break by future additions) if we avoided the _peek()
+function altogether, like this:
+
+ {
+ =09struct commit *commit;
+ =09while (commits->nr) {
+ =09=09commit =3D (struct commit *)object_array_pop(commits);
+-=09=09if (has_unshown_parent(commit))
++=09=09if (has_unshown_parent(commit)) {
++=09=09=09/* Queue again, to be handled later */
++=09=09=09add_object_array(commits, NULL, commit);
+ =09=09=09return;
++=09=09}
+ =09=09handle_commit(commit, revs, paths_of_changed_objects);
+ =09}
+ }
+
+(I did not test this, and I was honestly surprised that there is no
+object_array_push() counterpart to _pop() ;-) So this might be all wrong.)
+
+Ciao,
+Johannes
+--8323329-372011290-1524251268=:4241--
