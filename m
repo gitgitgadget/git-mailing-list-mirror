@@ -2,91 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D7801F404
-	for <e@80x24.org>; Sat, 21 Apr 2018 03:45:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC4971F404
+	for <e@80x24.org>; Sat, 21 Apr 2018 03:50:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752831AbeDUDps (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 23:45:48 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34389 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752809AbeDUDpr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 23:45:47 -0400
-Received: by mail-pf0-f196.google.com with SMTP id q9so5088621pff.1
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 20:45:46 -0700 (PDT)
+        id S1752778AbeDUDuY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 23:50:24 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:35483 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752629AbeDUDuX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 23:50:23 -0400
+Received: by mail-wr0-f194.google.com with SMTP id w3-v6so27509698wrg.2
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 20:50:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Y5sGpXFe7gC+wDxoTkkbKnDPrkVOfFJT7S5xCazQmiY=;
-        b=T3r2w5zX2oJmS0mck0wG1jcRaQpNEre+JLubfTcEdaoGMW2GcVjYDx5rrBZImeLdXM
-         IhfITZZHZUyDjX/hV61U89tn23XaKW3pVc5i0XK3TWvy7i0VZTxSw1kAK+83dcQwShry
-         hY/Hd2Fz79bb8M+7MbkNGWceDVmyZMAns8MWjJWSSeJ9NZA0P/YWJDP07GF4tssdqewc
-         4hoNcuLT7Ry1913NYodM5VHrbbpq25W5MzT1F54tohXa/L1dGwRGZNrJuLKsoodlPxuu
-         a0NLeZ05K+o5JiiTHuTI6qIIjTl8MdzlV1zIj4AyjOJtNOlId58vKvQQnZriH0GbD0oB
-         BRcQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=Y3oGUFGcSZSibrQSZIzDTaLB82X2VdUHv3zRjBM6hW0=;
+        b=Jm7e3E1LvtQM99ViMbFzXBcuwTPuq9ZP0KI3CMCC6vpyl2RS6o38M25g4Hb2Xz2vun
+         xU+1XASVTdNg6B3KjZxs20sE+ZBWJFZiM+pvWOI4CAKkKX+7d0I05HdWKi0ii1nxVLEm
+         klatVaHzILoQLWDMo4GfFAhvsv6kY/lesXZAk4EjaICl9H6Sy1o27duvZe+xhdN0IDqU
+         t4i5Y+cwZzlrkyPvXTVANJc/GOE+gkKgr79+kXkW5hQhix8qNDNdf6luh9Puex1AIvg0
+         FPF/FHwqHGLnhMbyCbSqIH95o+mprQ3vuQgcHwMBZS/JI9vqXku2HrZtWNU48L7PZghW
+         jRqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Y5sGpXFe7gC+wDxoTkkbKnDPrkVOfFJT7S5xCazQmiY=;
-        b=EiO5zyfYv5G/qax4Guhj6Uw0qmLV+15Of56UfyTZHXGbTdBh3wYQn4beE5ZLBIspFX
-         0K4MV+ksp6zpGZElYCtWF52R4hedziF3VjwAAa5tp54FM9McwKw4F8mhv/JiYBcMnaiH
-         c08ekFQ/mjSgOuymf9BIPN/PPvDRvCl4tYTYfJO4OoIXcbfW/ewXDb9+IWVkgojoYTMp
-         ThaVpgt+X0JWzgpDAnk2RJfDgFS+SUPug51fSjtLTKCKRjO9fnJ3h/9LJi9qfkbrxUfB
-         M6artConD1cePPzPZoOVkROUL4WfFU43LRl+9DZO5aHUu2oGrJ4OPIfHjiRympOoWbBX
-         ro0A==
-X-Gm-Message-State: ALQs6tBPE0AmPjXAtTpUUuHEJbgcNZ6iClCXTay4QVReU0hGvQ4eSZen
-        WQAJ7bM/nyNg9tC0aWvShMI1fYkKURU=
-X-Google-Smtp-Source: AIpwx49NILcg85bnPkdX2hsG080BqO50riyQC5yTXqfK1IWsTCSX93jgLUB4JZGrInu7LWRnmo9lbQ==
-X-Received: by 10.99.103.131 with SMTP id b125mr10100014pgc.177.1524282345699;
-        Fri, 20 Apr 2018 20:45:45 -0700 (PDT)
-Received: from localhost ([2601:602:9500:1120:ddb8:3db2:8ad2:955])
-        by smtp.gmail.com with ESMTPSA id l3sm15255057pfg.49.2018.04.20.20.45.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Apr 2018 20:45:44 -0700 (PDT)
-Date:   Fri, 20 Apr 2018 20:45:43 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, l.s.r@web.de, peff@peff.net
-Subject: [PATCH 6/6] contrib/git-jump/git-jump: use column number when
- grep-ing
-Message-ID: <20180421034543.GG24606@syl.local>
-References: <cover.1524281843.git.me@ttaylorr.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=Y3oGUFGcSZSibrQSZIzDTaLB82X2VdUHv3zRjBM6hW0=;
+        b=PfnBahCQsNB7BAGeIft0iWvRCFV/RzJZDSJw9jGBIfl3IBZVhzmDoWkHE6VxoXXQ69
+         Nqk56LpvCw5iQI0WHD32vsIxrPO3WPKgRi2c21NxZ4znLejaJooD36eoPvr0+/lQNiLy
+         pyMLcRUpUSnP585+m6S1uEV6DqXrmwuiK3bgAR6ZAevQ3dbPHuY9Y4YC7aneM94l9WL1
+         GO/wx28h8A6POdZ9wxUuUR7+Brv9W7hwiV14dCQjGOQzr0GwuOx2+ZUns1/LCV5DgUYV
+         ZiMZh3aMzt01Jp3F7sZ7kktdH6JIKgSFCPwWm1KuuPHp2PVWGgKCGJf4JGlDss2y6Mtu
+         DHcg==
+X-Gm-Message-State: ALQs6tBL2Qm6up5sjX360a6tY7ceudLqc0CQ+yx66Y04cngGsfUtI5rd
+        sdC9+w6Q72MxPrncAqN9dAvsryxg
+X-Google-Smtp-Source: AIpwx48e1J2T8MLXnCGCTzqfTYVJ4ZY0YTn9Q2AdYkKF8PhigmOKJNciTDGihE7tmVtOkHdHaSLGMw==
+X-Received: by 2002:adf:86ed:: with SMTP id 42-v6mr10277727wry.158.1524282622266;
+        Fri, 20 Apr 2018 20:50:22 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f2-v6sm5757274wre.76.2018.04.20.20.50.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 20 Apr 2018 20:50:21 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v1] perf/aggregate: tighten option parsing
+References: <20180420121041.32558-1-chriscool@tuxfamily.org>
+        <CAPig+cSDYVGpaV-beNVG57r3YfQ=Ey5zuyHRkk_tf86NNRdY6w@mail.gmail.com>
+        <87h8o5ensj.fsf@evledraar.gmail.com>
+Date:   Sat, 21 Apr 2018 12:50:21 +0900
+In-Reply-To: <87h8o5ensj.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Fri, 20 Apr 2018 20:27:24 +0200")
+Message-ID: <xmqqd0ytb4le.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1524281843.git.me@ttaylorr.com>
-User-Agent: Mutt/1.9.3 (2018-01-21)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch adds the '--column-number' synonym '-m' to the default
-grep command so that callers are brought to the correct line _and_
-column of each matched location.
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- contrib/git-jump/git-jump | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>> Not necessarily worth a re-roll.
+>
+> Not that it matters in this case, but just as a bit of Perl rx pedantry,
+> yes his is tighter & more correct. You didn't consider how "." interacts
+> with newlines:
+>
+>     $ perl -wE 'my @rx = (qr/^--./, qr/^--.+$/, qr/^--./m, qr/^--.+$/m, qr/^--./s, qr/^--.+$/s); for (@rx) { my $s = "--foo\n--bar"; say $_, "\t", ($s =~ $_ ? 1 : 0) }'
+>     (?^u:^--.)      1
+>     (?^u:^--.+$)    0
+>     (?^um:^--.)     1
+>     (?^um:^--.+$)   1
+>     (?^us:^--.)     1
+>     (?^us:^--.+$)   1
+>
+> I don't think it matters here, not like someone will pass \n in options
+> to aggregate.perl...
 
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 80ab0590bc..2706963690 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -52,7 +52,7 @@ mode_merge() {
- # editor shows them to us in the status bar.
- mode_grep() {
- 	cmd=$(git config jump.grepCmd)
--	test -n "$cmd" || cmd="git grep -n"
-+	test -n "$cmd" || cmd="git grep -n -m"
- 	$cmd "$@" |
- 	perl -pe '
- 	s/[ \t]+/ /g;
--- 
-2.17.0
+Hmph, do we want the command not to barf when "--foo\n--bar" is
+given from the command line and we cannot find such an option?
+
+I thought that the location the match under discussion is used does
+want to see a hit with any option looking string that begins with
+double dashes.  I would have expected "tigher and hence incorrect",
+in other words.
+
+Somewhat puzzled...
