@@ -6,54 +6,54 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC3441F404
-	for <e@80x24.org>; Sat, 21 Apr 2018 03:45:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FA2A1F404
+	for <e@80x24.org>; Sat, 21 Apr 2018 03:45:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752775AbeDUDpe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 23:45:34 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:38747 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752552AbeDUDpd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 23:45:33 -0400
-Received: by mail-pl0-f68.google.com with SMTP id c7-v6so6248107plr.5
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 20:45:33 -0700 (PDT)
+        id S1752783AbeDUDph (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 23:45:37 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:47043 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752552AbeDUDpf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 23:45:35 -0400
+Received: by mail-pg0-f65.google.com with SMTP id t12so4769995pgp.13
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 20:45:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=t+OrLt1sUPE3WHgDPzu7gz09bzu4VQ9JvIR5k/2pItg=;
-        b=JzSxbzvY7IXqQdQscWRy8p6b5inzF/6NVBZmImasUjZqBMuhmKVPIbfFYFIh+ZbjsA
-         uKc/c4G5CaceyzAqg3buqXt693e2IAMj3CyrQNISXoA2SpERbctd/Yzqg1+L40uhGq7B
-         YDNpABfk7lIQVZsqqW9hgSnpytWtdvfC+cj/KQUCay8dzlVgHyjAFDZtWIg8/+rz7vKb
-         U8FLk70ma3VhdZ+8s65MLACbf2QWu7TgbvpquFtD22TloGU6WP9lFkAgGDb+XUajnUbR
-         FUjFcll/F9zLufB1YPVuZ5uHQJrXB7YU1j3MaQ9z1zPC5ICV4CKGOnbpfHoTq46Tu9GZ
-         rYIw==
+        bh=WJvWHtLKSFvTGIpMq/DpICNlZq6OmV94JHAT/RbvCxo=;
+        b=08UuGI+yg+HcTVYYoRV+ZS0qq5iL7zSKR2gYkPIcejL/1V5oYVhaEucq1v1b4HgXiK
+         IZ6VWsTYDAVBsiGatIgXSf2RN12naD4p9I04KOajk5Pqglrin8xz7LIjGRhVn/EhoSiu
+         MIZBv/LOewlAAbwE1DWxeKU7LJFsHvXBR0uPR7I7bNsmkZRzBmhmW+v9K6kqrAHN3gTY
+         AvdmzkQ/zQYrifU6okacG5UNLRgSgZVJeHW9pcMkjRbubiImWZ2gN/bEZlznu8m4DuEF
+         UpSV3DfFe+e7a6pgYC307SsXkEmTUighx2IaCn2IOrKzjfTPn79235QYLXWg+vrLY4SM
+         67Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=t+OrLt1sUPE3WHgDPzu7gz09bzu4VQ9JvIR5k/2pItg=;
-        b=PP4WxPSlu4/afKtbnfq4gpkj1F5M9aBEePx/V2QN+qpTHvRjNKe+6DiReKxOFErr3r
-         +H7k2ja0YSgYhDOTDK/jGWox70wysQ4JV7fu+w3KwUBADCFXKTitkJITi9kgNhKp8f3z
-         nPniGbOAwK3J/y/d1L8OKt1x51/nB+WsmvHE9a9ySw/n50ML2df+AsktbqEkOW/c07T0
-         ppEaZd3COFInVIktQwV9kCSWdzlwIObrPrMah7sqJT1NCk3Qf6DTq8U12lInsTTXY6wY
-         9LazjPv59NSkLg+VyeqsS4RO/dpdp2+OyqhzNFxeHt2j0FAGYPBOnZd1XEwpq+GfVh4u
-         hfpQ==
-X-Gm-Message-State: ALQs6tCtYPowN6ysx0jaxaS0bmeHWViVeKF+pLH1Fc7e6qh9ok7ZrWnE
-        PAhdWJyCQF7HU/yg1c05ro1pVvYMr5g=
-X-Google-Smtp-Source: AIpwx4+gsMP8HzsSUG4e5Mv5E1Kwx0Hp8ssmm1s4ZU2GPOcrflBWDoJjjteLVYJaAgPw5dnDaf24ig==
-X-Received: by 2002:a17:902:6e08:: with SMTP id u8-v6mr12270466plk.96.1524282332005;
-        Fri, 20 Apr 2018 20:45:32 -0700 (PDT)
+        bh=WJvWHtLKSFvTGIpMq/DpICNlZq6OmV94JHAT/RbvCxo=;
+        b=lQQbOWvf/rBTpFfoQy71oQ+gv38f5KqoDV0gNFlTvCLWoxYp8Ldc8J+SmSOeNlMH6q
+         5A+S8azlt7QXInV2Lc0efDdYQ1jFBQfmgA6KJO1GZrL8tv16+LR1KCqYLCQIR0vAsE8s
+         tTy2zaZzS4ejRXVzfD4L+5Dcy2dN4qngiU6XpcJjWD2Z+vk4cfJhUZUL4DUbAdPRX4GY
+         O3/f4P6TJIjD8MGjtvZqpAxB7fdGris9SzbGa/gg64aou5ViD0qI4i8f4ocfkK0m85A6
+         oGTpOELePR65WbcvzPbGsd0CxjfSVmzFUo+BUZ6s2kmAWrCqfu2H7UB5c8tJUeI4yNzL
+         Ox2Q==
+X-Gm-Message-State: ALQs6tAsHcNwrRGpC+z/iKobXPPDJmXzez/2GNOcFzD9lGpfoZmJGgwa
+        /8rFgOcKygUTdMLZi6rPZyFPJieHyF0=
+X-Google-Smtp-Source: AIpwx4+XCPr3AIYtXZ5eeG1e/hHt6weTOFNEl9EAgRViaZgNmepAm8opwklaTYdLNx8xA1KyHd+BvQ==
+X-Received: by 10.98.63.78 with SMTP id m75mr11686004pfa.176.1524282334569;
+        Fri, 20 Apr 2018 20:45:34 -0700 (PDT)
 Received: from localhost ([2601:602:9500:1120:ddb8:3db2:8ad2:955])
-        by smtp.gmail.com with ESMTPSA id k24sm9066547pff.147.2018.04.20.20.45.30
+        by smtp.gmail.com with ESMTPSA id d23sm11611683pfn.22.2018.04.20.20.45.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Apr 2018 20:45:30 -0700 (PDT)
-Date:   Fri, 20 Apr 2018 20:45:30 -0700
+        Fri, 20 Apr 2018 20:45:33 -0700 (PDT)
+Date:   Fri, 20 Apr 2018 20:45:32 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, l.s.r@web.de, peff@peff.net
-Subject: [PATCH 1/6] grep.c: take regmatch_t as argument in match_line()
-Message-ID: <20180421034530.GB24606@syl.local>
+Subject: [PATCH 2/6] grep.c: take column number as argument to show_line()
+Message-ID: <20180421034532.GC24606@syl.local>
 References: <cover.1524281843.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -65,68 +65,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a subsequent patch, we teach show_line() to optionally include the
-column number of the first match on each matched line.
+show_line() currently receives the line number within the
+'grep_opt->buf' in order to determine which line number to display. In
+order to display information about the matching column number--if
+requested--we must additionally take in that information.
 
-The regmatch_t involved in match_line() and match_one_pattern() both
-contain this information (via regmatch_t->rm_so), but their current
-implementation throws this stack variable away at the end of the call.
+To do so, we extend the signature of show_line() to take in an
+additional unsigned "cno". "cno" is either:
 
-Instead, let's teach match_line() to take in a 'regmatch_t *' so that
-callers can inspect the result of their calls. This will prove useful in
-a subsequent commit when a caller will forward on information from the
-regmatch_t into show_line (as described above).
+  * A 1-indexed column number of the first match on the given line, or
+  * 0, if the column number is irrelevant (when displaying a function
+    name, context lines, etc).
 
-The return condition remains unchanged, therefore the only change
-required of callers is the addition of a single argument.
+We additionally modify all calls to show_line() in order to pass the new
+required argument.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- grep.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ grep.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/grep.c b/grep.c
-index 65b90c10a3..1c25782355 100644
+index 1c25782355..29bc799ecf 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -1299,17 +1299,17 @@ static int match_expr(struct grep_opt *opt, char *bol, char *eol,
+@@ -1361,7 +1361,7 @@ static int next_match(struct grep_opt *opt, char *bol, char *eol,
  }
  
- static int match_line(struct grep_opt *opt, char *bol, char *eol,
--		      enum grep_context ctx, int collect_hits)
-+		      regmatch_t *match, enum grep_context ctx,
-+		      int collect_hits)
+ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+-		      const char *name, unsigned lno, char sign)
++		      const char *name, unsigned lno, unsigned cno, char sign)
  {
- 	struct grep_pat *p;
--	regmatch_t match;
+ 	int rest = eol - bol;
+ 	const char *match_color, *line_color = NULL;
+@@ -1501,7 +1501,7 @@ static void show_funcname_line(struct grep_opt *opt, struct grep_source *gs,
+ 			break;
  
- 	if (opt->extended)
- 		return match_expr(opt, bol, eol, ctx, collect_hits);
- 
- 	/* we do not call with collect_hits without being extended */
- 	for (p = opt->pattern_list; p; p = p->next) {
--		if (match_one_pattern(p, bol, eol, ctx, &match, 0))
-+		if (match_one_pattern(p, bol, eol, ctx, match, 0))
- 			return 1;
+ 		if (match_funcname(opt, gs, bol, eol)) {
+-			show_line(opt, bol, eol, gs->name, lno, '=');
++			show_line(opt, bol, eol, gs->name, lno, 0, '=');
+ 			break;
+ 		}
  	}
- 	return 0;
-@@ -1699,6 +1699,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 	int try_lookahead = 0;
- 	int show_function = 0;
- 	struct userdiff_driver *textconv = NULL;
-+	regmatch_t match;
- 	enum grep_context ctx = GREP_CONTEXT_HEAD;
- 	xdemitconf_t xecfg;
+@@ -1566,7 +1566,7 @@ static void show_pre_context(struct grep_opt *opt, struct grep_source *gs,
  
-@@ -1788,7 +1789,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 		if ((ctx == GREP_CONTEXT_HEAD) && (eol == bol))
- 			ctx = GREP_CONTEXT_BODY;
+ 		while (*eol != '\n')
+ 			eol++;
+-		show_line(opt, bol, eol, gs->name, cur, sign);
++		show_line(opt, bol, eol, gs->name, cur, 0, sign);
+ 		bol = eol + 1;
+ 		cur++;
+ 	}
+@@ -1830,7 +1830,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 				show_pre_context(opt, gs, bol, eol, lno);
+ 			else if (opt->funcname)
+ 				show_funcname_line(opt, gs, bol, lno);
+-			show_line(opt, bol, eol, gs->name, lno, ':');
++			show_line(opt, bol, eol, gs->name, lno, match.rm_so+1, ':');
+ 			last_hit = lno;
+ 			if (opt->funcbody)
+ 				show_function = 1;
+@@ -1859,7 +1859,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 			/* If the last hit is within the post context,
+ 			 * we need to show this line.
+ 			 */
+-			show_line(opt, bol, eol, gs->name, lno, '-');
++			show_line(opt, bol, eol, gs->name, lno, match.rm_so+1, '-');
+ 		}
  
--		hit = match_line(opt, bol, eol, ctx, collect_hits);
-+		hit = match_line(opt, bol, eol, &match, ctx, collect_hits);
- 		*eol = ch;
- 
- 		if (collect_hits)
+ 	next_line:
 -- 
 2.17.0
 
