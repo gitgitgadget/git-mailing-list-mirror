@@ -2,165 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A03B1F424
-	for <e@80x24.org>; Sat, 21 Apr 2018 11:19:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 679A11F404
+	for <e@80x24.org>; Sat, 21 Apr 2018 15:42:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752514AbeDULTE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Apr 2018 07:19:04 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58381 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751868AbeDULTD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Apr 2018 07:19:03 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIzGn-1f7Mdf0aYz-002XD3; Sat, 21
- Apr 2018 13:18:58 +0200
-Date:   Sat, 21 Apr 2018 13:18:42 +0200 (DST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git@vger.kernel.org
-cc:     Philip Oakley <philipoakley@iee.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Dan Jacques <dnj@google.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 3/3] Avoid multiple PREFIX definitions
-In-Reply-To: <cover.1524309209.git.johannes.schindelin@gmx.de>
-Message-ID: <nycvar.QRO.7.76.6.1804211316370.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1524211375.git.johannes.schindelin@gmx.de> <cover.1524309209.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752814AbeDUPmR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Apr 2018 11:42:17 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:3588 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751476AbeDUPmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Apr 2018 11:42:16 -0400
+Received: from [192.168.2.240] ([92.28.131.105])
+        by smtp.talktalk.net with SMTP
+        id 9ueSfvzPdC0Wb9ueSfAtDw; Sat, 21 Apr 2018 16:42:14 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1524325334;
+        bh=dp9hujggu8wAuEDTsesvNY2UpEIPGLFHWUuv2I2VFwc=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=RozV9iu1gjqTBkjeZuK5mfZsKqku3aLT3EAziZxpFJdnXpbyOyTkVQnNNLCwheuvO
+         C3u/NdnFBZ3S6hfN69VtiAOHzOUYYZIPe2zqifOzX6sgP7igbrXeR43kOj5afdTsrk
+         lYSnyeAgh/kYGy/g03dklPKHR9xZ0mAIGkqErAUk=
+X-Originating-IP: [92.28.131.105]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Q+T8Hb+a c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
+ a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=XAvJNIN0JOCOFWxeGV8A:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 3/3] rebase --skip: clean up commit message after a
+ failedfixup/squash
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <cover.1524226637.git.johannes.schindelin@gmx.de>
+ <6d9f6ba1e73d2297cef3619a89ce69122438368d.1524226637.git.johannes.schindelin@gmx.de>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <b6512eae-e214-9699-4d69-77117a0daec3@talktalk.net>
+Date:   Sat, 21 Apr 2018 16:42:12 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dlr2zDAv6O6yJ8uHZdNVaeEINMKdeoaAOjW7kWtdoM8smbw4oMp
- F+Zs8Sy90NIyC7neN3uVtafyUnuGB3+z0xfOLYg+/KijLBOOQy+aOKvprLg/DvtnvqV8XKV
- 70xhD85FgxcM8GkS97mpGvR8K8NeTRnKpaxPx+TWwf8fWTszUCWy2OXXp+FWs71BrTOZhTm
- lKDNXecr9OvQE0vTSZstQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:TwT3S2j+gg4=:HecObuwwvZZCCcyQMAJz5T
- dkfKHsIyVmnateu5BlRf4HazCrQIYYUF0DnAC9BoK5lcyAGVi+4BgOmAdFuAJGC19au/RNkOW
- KCDRhtlH3M2jcqY1uwETeYpC1ql/I4YJvfASgU/bZGkOah/vs0xIeWyRbavg8QkhqXzLeh7ts
- mgih0F32a2BDVw8XmJZ+Vgm2Je6sQCxzhCIwA3Xtku5oI6r8SH36LFCPhZih+pEUsKA4/3roT
- /DEE18n2SsbB9vgari0CKI2sgn/DlDWA7Sfy6HhyyRIMUTz0uEpEqf7UxoosBcv1nZA2Dc7db
- OOFjoOB9oxtmsUtHoriYsFx9XsZS9Z09jt2VncVRcGRKNk+W4+0eG4UFSQwM9N3vntG6/mv7i
- 6xjCNab6jopQT+/lUCftO7iuo7JwPwIMHAC8U+T4qinCNp3yjqepVlOgL6+jvKsqvxSiV47+n
- MXMRBCC8q0gBynHR6urW1+jGMjstahVhkCFEMK7DujwarbFv5ICutm8sa0gRonhraM4ho6x3r
- PtHUcdV8Poqp1r77v46Qoffsq2fvM9yRPZMi2+HQ9IwLF6KqAgqVONZWn1B86UeCyGlLhwvS8
- vQu9UltTRxPpu5cRxPvO6RjddQ3Bd0jL72xUiH08kLcPNdszJnC0fAOdZDC69O1UDhwBRce3f
- c6ZcT7wRXiyW45ZMG8yOk37NodR4HCh0VG1RP7XProaQ9+Z31LI3HhLcxEiHerzJn54seTRv6
- s7apAuH5JUuo8HZ3NwvmB9+bAwm/IPWVPRsMxgicV4o00HgFXlptI6ZFdRWLNQrOosKhgzYQM
- QrcFwsVtyYPTo9tqLCbp4LHTxQduuvNbHLnBNoTXzPqVVNFGQ4=
+In-Reply-To: <6d9f6ba1e73d2297cef3619a89ce69122438368d.1524226637.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfC3jpQpUn8XK5j9irsavshG0rIMAXCk+hZGqqQBS6iL1f6I92Zdi5m5w6ywgF4/HrX4ZBuYB2LHSMM+4hqQP6vU6Ed3Zsjfv1qAwMtm29hDCWTuj2/Ia
+ t5QVXTnKfkQTRFOmx0X4LjFjwtmurhXVhwPElbkAZgsT1T0mgh4XBlCuuzScZ5YpDFVLozWhje7lOF4RacmjtPKqpUG2qF+kf4GNfcrecVQk1C24Blv6zHRb
+ +WBxmsi4ncHHI/OfVF7Jd8RAphhZbfHfBYzFDN6Poxrv37GclUDyakgKpeEpWaNr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philip Oakley <philipoakley@iee.org>
+On 20/04/18 13:18, Johannes Schindelin wrote:
+> 
+> During a series of fixup/squash commands, the interactive rebase builds
+> up a commit message with comments. This will be presented to the user in
+> the editor if at least one of those commands was a `squash`.
+> 
+> However, if the last of these fixup/squash commands fails with merge
+> conflicts, and if the user then decides to skip it (or resolve it to a
+> clean worktree and then continue the rebase), the current code fails to
+> clean up the commit message.
 
-The short and sweet PREFIX can be confused when used in many places.
+Thanks for taking the time to track this down and fix it.
 
-Rename both usages to better describe their purpose. EXEC_CMD_PREFIX is
-used in full to disambiguate it from the nearby GIT_EXEC_PATH.
+> 
+> This commit fixes that behavior.
+> 
+> The diff is best viewed with --color-moved.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   sequencer.c                | 36 ++++++++++++++++++++++++++++--------
+>   t/t3418-rebase-continue.sh |  2 +-
+>   2 files changed, 29 insertions(+), 9 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index a9c3bc26f84..f067b7b24c5 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2781,17 +2781,12 @@ static int continue_single_pick(void)
+>   
+>   static int commit_staged_changes(struct replay_opts *opts)
+>   {
+> -	unsigned int flags = ALLOW_EMPTY | EDIT_MSG;
+> +	unsigned int flags = ALLOW_EMPTY | EDIT_MSG, is_fixup = 0, is_clean;
+>   
+>   	if (has_unstaged_changes(1))
+>   		return error(_("cannot rebase: You have unstaged changes."));
+> -	if (!has_uncommitted_changes(0)) {
+> -		const char *cherry_pick_head = git_path_cherry_pick_head();
+>   
+> -		if (file_exists(cherry_pick_head) && unlink(cherry_pick_head))
+> -			return error(_("could not remove CHERRY_PICK_HEAD"));
+> -		return 0;
+> -	}
+> +	is_clean = !has_uncommitted_changes(0);
+>   
+>   	if (file_exists(rebase_path_amend())) {
+>   		struct strbuf rev = STRBUF_INIT;
+> @@ -2804,16 +2799,41 @@ static int commit_staged_changes(struct replay_opts *opts)
+>   		if (get_oid_hex(rev.buf, &to_amend))
+>   			return error(_("invalid contents: '%s'"),
+>   				rebase_path_amend());
+> -		if (oidcmp(&head, &to_amend))
+> +		if (!is_clean && oidcmp(&head, &to_amend))
+>   			return error(_("\nYou have uncommitted changes in your "
+>   				       "working tree. Please, commit them\n"
+>   				       "first and then run 'git rebase "
+>   				       "--continue' again."));
+> +		if (is_clean && !oidcmp(&head, &to_amend)) {
 
-The PREFIX in sideband.c, while nominally independant of the exec_cmd
-PREFIX, does reside within libgit[1], so the definitions would clash
-when taken together with a PREFIX given on the command line for use by
-exec_cmd.c.
+Looking at pick_commits() it only writes to rebase_path_amend() if there 
+are conflicts, not if the command has been rescheduled so this is safe.
 
-Noticed when compiling Git for Windows using MSVC/Visual Studio [1] which
-reports the conflict beteeen the command line definition and the
-definition in sideband.c within the libgit project.
+> +			strbuf_reset(&rev);
+> +			/*
+> +			 * Clean tree, but we may need to finalize a
+> +			 * fixup/squash chain. A failed fixup/squash leaves the
+> +			 * file amend-type in rebase-merge/; It is okay if that
+> +			 * file is missing, in which case there is no such
+> +			 * chain to finalize.
+> +			 */
+> +			read_oneliner(&rev, rebase_path_amend_type(), 0);
+> +			if (!strcmp("squash", rev.buf))
+> +				is_fixup = TODO_SQUASH;
+> +			else if (!strcmp("fixup", rev.buf)) {
+> +				is_fixup = TODO_FIXUP;
+> +				flags = (flags & ~EDIT_MSG) | CLEANUP_MSG;
 
-[1] the libgit functions are brought into a single sub-project
-within the Visual Studio construction script provided in contrib,
-and hence uses a single command for both exec_cmd.c and sideband.c.
+I was going to say this should probably be (flags & ~(EDIT_MSG | 
+VERIFY_MSG)) but for some reason VERIFY_MSG isn't set here - I wonder if 
+it should be as I think it's set elsewhere when we edit the message.
 
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Makefile   |  2 +-
- exec-cmd.c |  4 ++--
- sideband.c | 10 +++++-----
- 3 files changed, 8 insertions(+), 8 deletions(-)
+> +			}
+> +		}
+>   
+>   		strbuf_release(&rev);
+>   		flags |= AMEND_MSG;
+>   	}
+>   
+> +	if (is_clean && !is_fixup) {
+> +		const char *cherry_pick_head = git_path_cherry_pick_head();
+> +
+> +		if (file_exists(cherry_pick_head) && unlink(cherry_pick_head))
+> +			return error(_("could not remove CHERRY_PICK_HEAD"));
+> +		return 0;
+> +	}
+> +
+>   	if (run_git_commit(rebase_path_message(), opts, flags))
 
-diff --git a/Makefile b/Makefile
-index 111e93d3bea..49cec672242 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2271,7 +2271,7 @@ exec-cmd.sp exec-cmd.s exec-cmd.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
- 	'-DGIT_LOCALE_PATH="$(localedir_relative_SQ)"' \
- 	'-DBINDIR="$(bindir_relative_SQ)"' \
--	'-DPREFIX="$(prefix_SQ)"'
-+	'-DFALLBACK_RUNTIME_PREFIX="$(prefix_SQ)"'
- 
- builtin/init-db.sp builtin/init-db.s builtin/init-db.o: GIT-PREFIX
- builtin/init-db.sp builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
-diff --git a/exec-cmd.c b/exec-cmd.c
-index 3b0a039083a..02d31ee8971 100644
---- a/exec-cmd.c
-+++ b/exec-cmd.c
-@@ -48,7 +48,7 @@ static const char *system_prefix(void)
- 	    !(prefix = strip_path_suffix(executable_dirname, GIT_EXEC_PATH)) &&
- 	    !(prefix = strip_path_suffix(executable_dirname, BINDIR)) &&
- 	    !(prefix = strip_path_suffix(executable_dirname, "git"))) {
--		prefix = PREFIX;
-+		prefix = FALLBACK_RUNTIME_PREFIX;
- 		trace_printf("RUNTIME_PREFIX requested, "
- 				"but prefix computation failed.  "
- 				"Using static fallback '%s'.\n", prefix);
-@@ -243,7 +243,7 @@ void git_resolve_executable_dir(const char *argv0)
-  */
- static const char *system_prefix(void)
- {
--	return PREFIX;
-+	return FALLBACK_RUNTIME_PREFIX;
- }
- 
- /*
-diff --git a/sideband.c b/sideband.c
-index 6d7f943e438..325bf0e974a 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -13,7 +13,7 @@
-  * the remote died unexpectedly.  A flush() concludes the stream.
-  */
- 
--#define PREFIX "remote: "
-+#define DISPLAY_PREFIX "remote: "
- 
- #define ANSI_SUFFIX "\033[K"
- #define DUMB_SUFFIX "        "
-@@ -49,7 +49,7 @@ int recv_sideband(const char *me, int in_stream, int out)
- 		switch (band) {
- 		case 3:
- 			strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
--				    PREFIX, buf + 1);
-+				    DISPLAY_PREFIX, buf + 1);
- 			retval = SIDEBAND_REMOTE_ERROR;
- 			break;
- 		case 2:
-@@ -67,7 +67,7 @@ int recv_sideband(const char *me, int in_stream, int out)
- 				int linelen = brk - b;
- 
- 				if (!outbuf.len)
--					strbuf_addstr(&outbuf, PREFIX);
-+					strbuf_addstr(&outbuf, DISPLAY_PREFIX);
- 				if (linelen > 0) {
- 					strbuf_addf(&outbuf, "%.*s%s%c",
- 						    linelen, b, suffix, *brk);
-@@ -81,8 +81,8 @@ int recv_sideband(const char *me, int in_stream, int out)
- 			}
- 
- 			if (*b)
--				strbuf_addf(&outbuf, "%s%s",
--					    outbuf.len ? "" : PREFIX, b);
-+				strbuf_addf(&outbuf, "%s%s", outbuf.len ?
-+					    "" : DISPLAY_PREFIX, b);
- 			break;
- 		case 1:
- 			write_or_die(out, buf + 1, len);
--- 
-2.17.0.windows.1.15.gaa56ade3205
+If a squash command has been skipped, then rebase_path_message() still 
+contains the message of the skipped commit. If it passed NULL instead 
+then the user would get to edit the previous version of the squash 
+message without the skipped commit message in it.
+
+Also I think we only want to re-commit if the skipped squash/fixup was 
+preceded by another squash/fixup. If the user skips the first 
+squash/fixup in a chain then HEAD has the commit message from the 
+original pick so does not need amending. The first patch could perhaps 
+avoid writing rebase_path_amend_type() in that case by reading the 
+squash message and checking the message count is greater than two.
+
+Best Wishes
+
+Phillip
+
+>   		return error(_("could not commit staged changes."));
+>   	unlink(rebase_path_amend());
+> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+> index b177baee322..4880bff82ff 100755
+> --- a/t/t3418-rebase-continue.sh
+> +++ b/t/t3418-rebase-continue.sh
+> @@ -88,7 +88,7 @@ test_expect_success 'rebase passes merge strategy options correctly' '
+>   	git rebase --continue
+>   '
+>   
+> -test_expect_failure '--continue after failed fixup cleans commit message' '
+> +test_expect_success '--continue after failed fixup cleans commit message' '
+>   	git checkout -b with-conflicting-fixup &&
+>   	test_commit wants-fixup &&
+>   	test_commit "fixup! wants-fixup" wants-fixup.t 1 wants-fixup-1 &&
+> 
+
