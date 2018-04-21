@@ -2,105 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2652F1F404
-	for <e@80x24.org>; Fri, 20 Apr 2018 23:34:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 463721F404
+	for <e@80x24.org>; Sat, 21 Apr 2018 02:58:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752778AbeDTXeq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 19:34:46 -0400
-Received: from mail-pl0-f51.google.com ([209.85.160.51]:43134 "EHLO
-        mail-pl0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752306AbeDTXeo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 19:34:44 -0400
-Received: by mail-pl0-f51.google.com with SMTP id a39-v6so6021810pla.10
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 16:34:44 -0700 (PDT)
+        id S1752771AbeDUC6p (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 22:58:45 -0400
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:42574 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752546AbeDUC6p (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 22:58:45 -0400
+Received: by mail-qt0-f170.google.com with SMTP id j3-v6so11962283qtn.9
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 19:58:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qv5Nh15cy8ZpsGGE1kNxW7OlZgWDoa8doMIcSWJOux0=;
-        b=Rp/UG8xAuY58mKI3UuqO1AVb9MapNaMFiKeTSd/3dCgz3nFSQ8LjExJTZpaymCy4bX
-         SpZ1w7/DSfrD7SqhKy3/JPOas7KBt6ZXT+0MRYq9g6aeC2JubNUFfw+5sAPeljtv1np+
-         jxD/tBHJ1BBLiRZJBQdmYKgqgkbpfLW3LwyoxSuylqOIM/5ifCIQMuQ7My08/CnF+2JV
-         yCZ/oXtLyb4W2Y21OLVYBEB45StLDsGOWjDFpc2KVYHk2ElVZ4rOmiu9kc0MTfE7ux5K
-         IEwA3YcaUIvTtf7dZj6AlzBjuxNIs8cNkJFum6hLFWF/bldhGAtoAEUQe5AjmVWNonJR
-         Z7Pg==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=YUeCU+Vmbaat0DmzZbFsc2n38PJ3Ki5Rf92m5ANDp2M=;
+        b=WLMo202nDj38tg2PaALEVIE2nHBRc8j39jjHgxHfNrxg1mzzynF+1PIrtSyLPwt7UY
+         ogN6yj1U2IGFVGdW8sfMnFPsG7gmqEj2dgjdAWG1vuULCs3UrjU97haw9sAbOwFEAq1t
+         qaTHv+E7FvAiQ4WDY8zva4WHPPClybj/fV7NV0l8LzwkSm9hISMbMIn4tXcW83d2d4nn
+         DV428v2EflNaZyZ8T7GY3Fr4dGKuErFYSJfOtw52XArI02rKkw5NVlAh3aLo2jtRLGUz
+         IXYeInFmFEu6N7Xrdh6V6sKg+WWaPb6O8JUWBZmGK8xsd3Z19kvUPG9lNNpGSy7LNm0n
+         +yxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qv5Nh15cy8ZpsGGE1kNxW7OlZgWDoa8doMIcSWJOux0=;
-        b=uFO0FaTlpe0wg5F/yvB6kXY8CTKn5eVpDMbcNsI4kdGrDt7Q4U5Mh0BMcNIEBJ4SYz
-         PEauqCxnzu49tFIjIJ4RTmRDUiC+bjrD/oAYDhp3AajCzQVeyQsk94d94DJdtvb96Ez/
-         zH5Dl2GX0PTDo7EeqEjgr9PNZYSucY3EZUL+WTqVysIZSzooILGXZFS/0kGHXFCN/tk+
-         Ey7dYQTjiec0fVdudUL0C91aOJEdewIc01wKETGgCLFpEJcLIFekvMxUwXIq2wVuGcaD
-         binF9ybDrZNuBoaZLa2xN3toBDqVqg5RruPcPhD1rKlNrz4aqA4ib1cy5Cq6DrwGZrV9
-         CQfg==
-X-Gm-Message-State: ALQs6tA3Gvp2X1VRhRh2+cvSNsLD2/OLtwXTaktcO+mySIOX1qo9hG6r
-        mgK/ef8nIfcCNG7DjqNMxWCFJQ==
-X-Google-Smtp-Source: AIpwx4/p2sGvFXBUoa57g4Iblbvvw0UpxdyPz49AYrZPJV1Q9h7IXfXXb0WRDvEYKwi1HeWjZebPcQ==
-X-Received: by 2002:a17:902:228:: with SMTP id 37-v6mr11702097plc.141.1524267283560;
-        Fri, 20 Apr 2018 16:34:43 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id n8sm11992813pfj.24.2018.04.20.16.34.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Apr 2018 16:34:42 -0700 (PDT)
-Date:   Fri, 20 Apr 2018 16:34:41 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>
-Subject: Re: [PATCH v1 0/5] Allocate cache entries from memory pool
-Message-Id: <20180420163441.208644d772a25ddbbdbb1616@google.com>
-In-Reply-To: <20180417163400.3875-1-jamill@microsoft.com>
-References: <20180417163400.3875-1-jamill@microsoft.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=YUeCU+Vmbaat0DmzZbFsc2n38PJ3Ki5Rf92m5ANDp2M=;
+        b=tqUlulmaco/QpOvm4mh01+kOeSKy+niFp2VLpTxiDBfRAwXW8yW46JnX32MrCFktJx
+         5Z2NMolTTTBL1O/whJAa4ve10/2P2m8ighuPv5qcosbyBrIXpZ4rNfyK4dce1xY4rA+C
+         rs34bXe8XZ8OisEU3fYj2QC7DUt83Uqy9Dy6L4zIxmOuQucykCxk8FGHjGXjW9PjmbUX
+         JOQlpq+ABnEVoO29BVyLE/pjCCYgo1K5r/rBPNkqjYczxY711skiUk+HcbkG85VN20mP
+         pWM7fmOHJVrh6q5eJV5PTfXbWg2CstvxUPniJPnJPtxnkv94SZ7xpryD3WbSsCuHjYJY
+         7DHQ==
+X-Gm-Message-State: ALQs6tCxmRsuFeXvTUKwydxLeHnqi1YJp1y0ypB+N4j/ihw/ma20uPDT
+        TRnV7HiTIsXu34SWhJ1YFw13WQw6z4mBKsNAso1U8Q==
+X-Google-Smtp-Source: AIpwx4+FSCQ0WaIiAPytoJwuIGRD3dL4yTfyWiOsO3sQjokdkjsPe3s58mwDRxu16pefmnCaTqiSdjs8G2gRvPNRx+s=
+X-Received: by 2002:ac8:1113:: with SMTP id c19-v6mr13430580qtj.307.1524279524112;
+ Fri, 20 Apr 2018 19:58:44 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.12.191.15 with HTTP; Fri, 20 Apr 2018 19:58:43 -0700 (PDT)
+From:   Yutian Li <hotpxless@gmail.com>
+Date:   Fri, 20 Apr 2018 19:58:43 -0700
+Message-ID: <CABvSBngwh_C5dna=U9dLpg3r=BWQH8imsa-3q=yiLFeYdbT17Q@mail.gmail.com>
+Subject: [USABILITY] git-reset removes directories
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 17 Apr 2018 16:34:39 +0000
-Jameson Miller <jamill@microsoft.com> wrote:
+Ok I have been bitten by this issue twice. :(
 
-> Jameson Miller (5):
->   read-cache: teach refresh_cache_entry to take istate
->   Add an API creating / discarding cache_entry structs
->   mem-pool: fill out functionality
->   Allocate cache entries from memory pools
->   Add optional memory validations around cache_entry lifecyle
+`git reset --hard` will reset modifications in the working directory
+(of course). But if I remove a file, add a directory with the same
+name, `git reset --hard` will erase that whole directory.
+Specifically the following steps:
+```
+touch file
+git add file
+git commit -m "add file"
+# now the HEAD is constructed
+rm file
+mkdir file
+touch file/a
+# now here is the issue
+git reset --hard # this will remove the directory and all its files
+```
 
-In this patch set, there is no enforcement that the cache entry created
-by make_index_cache_entry() goes into the correct index when
-add_index_entry() is invoked. (Junio described similar things, I
-believe, in [1].) This might be an issue when we bring up and drop
-multiple indexes, and dropping one index causes a cache entry in another
-to become invalidated.
+I guess this has to do with Git not tracking "changing a file to a
+directory", especially because one is a blob and another is a tree.
 
-One solution is to store the index for which the cache entry was created
-in the cache entry itself, but that does increase its size. Another is
-to change the API such that a cache entry is created and added in the
-same function, and then have some rollback if the cache entry turns out
-to be invalid (to support add-empty-entry -> fill -> verify), but I
-don't know if this is feasible. Anyway, all these alternatives should be
-at least discussed in the commit message, I think.
+In case of `git reset --hard`, people would expect reverting
+modifications, bringing up removed files, but not removing a whole
+directory with the same name. Especially if the directory is already
+populated. Then the whole thing is gone.
+I think it would better if Git could output a warning and abort, like
+in case of checkout ("Updating the following ... would lose ...").
 
-The make_transient_cache_entry() function might be poorly named, since
-as far as I can tell, the entries produced by that function are actually
-the longest lasting, since they are never freed.
-
-Along those lines, I was slightly surprised to find out in patch 4 that
-cache entry freeing is a no-op. That's fine, but in that case, it would
-be better to delete all the calls to the "discard" function, and
-document in the others that the entries they create will only be freed
-when the memory pool itself is discarded.
-
-[1] https://public-inbox.org/git/xmqqwox5i0f7.fsf@gitster-ct.c.googlers.com/
+But honestly I usually take `git reset --hard` seriously and will
+double check before invocation. What actually bit me was `git stash`.
+It will call `git reset --hard -q` after saving the working directory.
+But in the case I just described, since the new directory is not
+tracked, it will not be saved and will be erased. `git stash` usually
+gives me the mental model of "saving stuff in working directory", but
+not like in this case where it also deletes stuff in working
+directory.
