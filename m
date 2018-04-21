@@ -2,60 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2B111F424
-	for <e@80x24.org>; Sat, 21 Apr 2018 06:43:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BA2E1F424
+	for <e@80x24.org>; Sat, 21 Apr 2018 06:58:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750860AbeDUGnW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Apr 2018 02:43:22 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:34207 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750806AbeDUGnW (ORCPT <rfc822;Git@vger.kernel.org>);
-        Sat, 21 Apr 2018 02:43:22 -0400
-Received: by mail-it0-f52.google.com with SMTP id t192-v6so4802893itc.1
-        for <Git@vger.kernel.org>; Fri, 20 Apr 2018 23:43:21 -0700 (PDT)
+        id S1751373AbeDUG6f (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Apr 2018 02:58:35 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:42240 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750931AbeDUG6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Apr 2018 02:58:34 -0400
+Received: by mail-pg0-f48.google.com with SMTP id e12so4899953pgn.9
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 23:58:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=sD5SjoEEgu1ZzsvzOcpdv19MSmWexrPa1/ygzQaF2T4=;
-        b=DTMcKD4mZFZvDrPT0SQ4dUWXtEGI52wMAGtl8kSREvZlpzTI+tBKlrUTZyk0hh1GiL
-         E4x+DdE0/seljjaXHwowaaIpBX0YQWbV6gumVlNOEnJnx3W6NMVLsXELMCXYhruo7MBz
-         up8d7PjYx5Q1J+V74p8LcjvD3bn73fOl04K+E+k6cho8y5DHWVMFPbISR5VyMdaso02+
-         5UAJvg8GOa6ldK5WlAAzIg49N+gH9KB79Hba+Kn2woPWHS96in6zp5P5N6g9wNKaMUHP
-         Ns5h4GTMGHHo3R9BZEYVkcOHBTqEPu/7TG7A+RLZ504GhrN6ibm0siJYDW9YHoZe904w
-         5wGA==
+        bh=W4wgxf6lSpstibZzN3N3OHUMRwRq5zUL8DWAzs5ANto=;
+        b=WSHwpXagPZrhuQrE1J1C8AcKPu8iY78KhcR3ZDDvFeVpNIMYMHgHtj0x8pTeUS2CRh
+         YmhnWXhlZ5xgAFHzY4ZQW98eCo8p2gwu2hsAZaf+Vl1OOZw2/LBWDqECSjI6UOhxmj+o
+         J7ZpOqWhtPzv5FCAh+1Er6vln7UDkqli0YV6wkCfvUEQxpX6Ejh1tosfkFeGkKdEKH4e
+         hlsBK+gszezseNYXKjPtguqJgoarT4FNLT8N6s90acR3ir8baSIl4Uv6E81Unx3kqyoB
+         Se8rKOHGEsD3PrvONX+jshiXX05Zp9Gkc6ljE/nW45Jr5wdARuaaH29x37ogcbaL3bPZ
+         3Y9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=sD5SjoEEgu1ZzsvzOcpdv19MSmWexrPa1/ygzQaF2T4=;
-        b=UbWQgVjKG9NfgX0aE+X2Cdk7kDa/02c6BuSGfpI0t4lLcKY+5iOKjoYwwkgN0Hmkgq
-         +xXxv9QEH26ljnjzps1Urf2whpIvS4XVghhcOkGAorh7zSCve+4I9SPCz0y6cjhgZ2mH
-         B8Ookhnc8pQBBoJEPFVrbANm1nNsyQBAl96gIttVXd/RI5quf1ElfxnpMAGYNY5hkXx/
-         jR+sIN0FMBiw2bz7Hy2C9Hxj7JCUM38MJGVJpr/4Ya+n1eQxKe3VGRdiHFX0Lo/9RdES
-         VLK6Y1vE034QkRjzogwWS3EddO4r7WmB9wu7uZOXL9LUpipSvVZb1OMQcV5pkIoiS7aH
-         pfLg==
-X-Gm-Message-State: ALQs6tCv7ufjVGQCuKvWuo+F+ZYwZJXHn4f8ieAqG/HqheiFceMClsn0
-        HavURQaj8mZGITDyB7D+RFKZlcU9rPztk/J41aw=
-X-Google-Smtp-Source: AIpwx490oVDQA2OWXDHftMcJJ27JDXzJ6Ibc603kwCigX4DoRg606quUV3G7wdDgZwfRH5eSV18YnKUIciUqr3bDfns=
-X-Received: by 2002:a24:3d0d:: with SMTP id n13-v6mr5801344itn.81.1524293001308;
- Fri, 20 Apr 2018 23:43:21 -0700 (PDT)
+        bh=W4wgxf6lSpstibZzN3N3OHUMRwRq5zUL8DWAzs5ANto=;
+        b=FeFpDUrl8rPgQXoZQmc92x1Lj6cuz4Nx2o1srMRFkdd4JPL9zrUgmzkqy/w1LD66g7
+         A1fve/bUDHoKKSFMl1wJjE4vhWI3Hq/vPHWts5e0kbMuE92kZtVFKprcPke18ew4EJM7
+         95ouAwbQAj7uy6wPEAc19OJ/fpIzGFAlm3Opmlbpde6V4LI2Gyzg/oUPN2jhQNg34UTB
+         jnr8e26GM5UIdcnxmN7qeiCB/tFxqK3MXFQfnwsuCoTtXzgh02IPClhv6exvWYJni8S/
+         V9TekjzKAXU8raShnfQCYRXRe/08dK1avSF7pDGi8oxqvKhz3tZxMoaBJKcAQzFRhD85
+         9HEg==
+X-Gm-Message-State: ALQs6tBCArCAY/bS67WuGfPQqe0m8qBZa6NIRjmc7TomuE1YKxa0mYrt
+        TXO/QPu08v5vGBDQEFjlTHC3743u8KkdhQb+q24=
+X-Google-Smtp-Source: AIpwx4915y7Vri2P1zAdmUhD/LzkTzFs8KmUT61+XzObhLLhLY1ID46UITZEDomRLcOapkjMWVRqY/s+Dv2aAHXMUGc=
+X-Received: by 10.98.237.17 with SMTP id u17mr12189261pfh.78.1524293913845;
+ Fri, 20 Apr 2018 23:58:33 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4f:22db:0:0:0:0:0 with HTTP; Fri, 20 Apr 2018 23:43:20
- -0700 (PDT)
-In-Reply-To: <CAEbJ=SN0h_eO+0CJQGEnEafhzgAYdgXByUqb_vsC1rgGw7jNAw@mail.gmail.com>
-References: <CAEbJ=SN0h_eO+0CJQGEnEafhzgAYdgXByUqb_vsC1rgGw7jNAw@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 21 Apr 2018 08:43:20 +0200
-Message-ID: <CAP8UFD1H9vUVkx2rCJ03954jZp==Wj+O06hO1YYPQcVHbSV_Zw@mail.gmail.com>
-Subject: Re: Git archeology
-To:     Vladimir Gorshenin <gorshenin.vladimir@googlemail.com>
-Cc:     git <Git@vger.kernel.org>
+Received: by 10.236.150.4 with HTTP; Fri, 20 Apr 2018 23:58:33 -0700 (PDT)
+In-Reply-To: <CAPig+cSKBAq3h4CAe4phFoG+APDV_qzApJgCpYK6AZrjW-+xxw@mail.gmail.com>
+References: <nycvar.QRO.7.76.6.1804202258071.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <20180420221231.4131611-1-martin.agren@gmail.com> <CAPig+cSKBAq3h4CAe4phFoG+APDV_qzApJgCpYK6AZrjW-+xxw@mail.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sat, 21 Apr 2018 08:58:33 +0200
+Message-ID: <CAN0heSpu0sJkpr1DJCYv_Yu7zsZ2ewO-z_ERYbX29yf3y-Rn9w@mail.gmail.com>
+Subject: Re: [PATCH v3] fast-export: fix regression skipping some merge-commits
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Isaac Chou <Isaac.Chou@microfocus.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,50 +67,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Sat, Apr 21, 2018 at 8:19 AM, Vladimir Gorshenin
-<gorshenin.vladimir@googlemail.com> wrote:
-> Hi,
+On 21 April 2018 at 00:16, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, Apr 20, 2018 at 6:12 PM, Martin =C3=85gren <martin.agren@gmail.co=
+m> wrote:
+>> Re-add a commit when it is not yet time to handle it. An alternative
+>> that was considered was to peek-then-pop. That carries some risk with it
+>> since the peeking and poping need to act on the same object, in a
 >
-> My team and I as well as millions of other developers are excited to
-> have such tool at hand as Git. It helps us a lot.
->
-> Now we challenged ourselves to be even more productive with Git
-> analyzing our usage history.
+> s/poping/popping/
 
-What kind of analysis do you want to do? Is it the same kind of
-analysis as described in the "Token-based authorship information from
-Git" article (https://lwn.net/Articles/698425/) on LWN.net?
+Thanks. I remember looking at that and going "hmmm". Apparently I left
+it at that, since I see now that my spell-checker would have complained
+about it.
 
-> And there is a problem, which I believe is fundamental for Git (please
-> prove me wrong): how to find all overlapping commits, e.g. touching
-> the same lines of code?
-
-It is not very clear what you would consider overlapping commits or
-commits touching the same lines of code. If some lines of code have
-been duplicated in different files, for example, are the commits
-touching the original lines relevant to what happened to the
-duplicated lines? And what about lines that were moved from one file
-to another or in the same file?
-
-> I played with =E2=80=9CGit diff=E2=80=9D and =E2=80=9CGit blame=E2=80=9D =
-but without a reliable
-> result. =E2=80=9CGit diff=E2=80=9D gives only relative number of lines an=
-d it=E2=80=99s not
-> easy to track these number through 1000+ commits. =E2=80=9CGit blame=E2=
-=80=9D has nice
-> output but without any information about deletion.
-
-Did you try 'git log -L' as Szeder G=C3=A1bor just suggested?
-
-> What would you advice me to do?
-
-If 'git log -L' and other git commands are not doing what you want,
-you might want to take a look at cregit
-(https://github.com/cregit/cregit) and maybe at other work from the
-people who developed it. The above LWN.net article is about their
-early work.
-
-There are links related to this tool in:
-https://git.github.io/rev_news/2017/05/17/edition-27/
+Martin
