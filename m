@@ -7,112 +7,137 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D73581F424
-	for <e@80x24.org>; Sat, 21 Apr 2018 09:42:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B18C11F424
+	for <e@80x24.org>; Sat, 21 Apr 2018 09:43:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751496AbeDUJmr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Apr 2018 05:42:47 -0400
-Received: from mout.gmx.net ([212.227.17.22]:33859 "EHLO mout.gmx.net"
+        id S1751816AbeDUJnu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Apr 2018 05:43:50 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53975 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750987AbeDUJmq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Apr 2018 05:42:46 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LwF9u-1eM2FK1Ais-01849t; Sat, 21
- Apr 2018 11:42:40 +0200
-Date:   Sat, 21 Apr 2018 11:42:23 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1750987AbeDUJnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Apr 2018 05:43:49 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MEo4s-1fBWx93yUU-00G3j1; Sat, 21
+ Apr 2018 11:43:46 +0200
+Date:   Sat, 21 Apr 2018 11:43:29 +0200 (DST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
         Jakub Narebski <jnareb@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
+        Stefan Beller <sbeller@google.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 06/11] Add a test for `git replace
- --convert-graft-file`
-In-Reply-To: <20180421062054.4290-1-szeder.dev@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804211140170.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1524125760.git.johannes.schindelin@gmx.de> <cover.1524262793.git.johannes.schindelin@gmx.de> <de1d455d6e526cf264ce1291c1923b97271969c3.1524262793.git.johannes.schindelin@gmx.de> <20180421062054.4290-1-szeder.dev@gmail.com>
+Subject: [PATCH v4 00/11] Deprecate .git/info/grafts
+In-Reply-To: <cover.1524262793.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1524303776.git.johannes.schindelin@gmx.de>
+References: <cover.1524262793.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1802354994-1524303760=:4241"
-X-Provags-ID: V03:K1:ZD230mJLqL4UHJ/Gz9u9lhspUNVNVIqertaIEAuNMv9Zc0X9mnp
- kdrwN24LiJa8rMWdiSuF/xvfY767d++H5Na1u2hrq8wdFcU9E2sHBN0OiiO09TB2sXEMNL2
- N/nMtRULtJehSJWBDCrxbopoJSazuIDF7mqFjOb3DwVt7RMOV2taNIoiNFvLd7l0uAw/iMk
- VaNjHlZOd193/AxosUEHw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:h6ZKAq0b4pE=:jpqFIUT2YqmPaBh/whiesx
- uupWQpmJE8OQgCPcnlfbF+MUKqye9PRbwjxltmRmDGHtse0VsikUxxBdQH70YCIXFFroFiyfZ
- lDkya18SGAYsdzLZYlTQtw6ZImLSRyjA+vy94tN7m/cXkZxum22T1ydIF0++Ehmoip7d9VoeV
- Yv47UE1QxB1nZk3VXONd62IRRGAF8UK2Hd6+VhDGsJRSIrXPjxrvVyj2B/+pDUV6KecoOLI1N
- E3gh0jnUcPPw0VLuXOlTE+CIWEfnK/4AhI5/7FUkp7jOgSz6dsJiBOEbscs7hkM1Ew70swzM+
- ocdfAzglKP7zoB9M/e7UYmGMFbr3mM7eBYDSs8xKYu71lqTi0LVJdg5wihwM/UG+rpgC/foRb
- eiDpVZpUhX7KHjf3zo+6eJHNe0OQToK8VBY4jML3KLY0OH4oOFVZUKnSV+HDBrmkqWGjsOkL9
- ltXdE9dtPcMrl9GNiXQowS0wBtB1/vpBFDl4aRywoEvQoTpusYyMN7ZAnouJAAh0LQ9rMp/2F
- Wun2nYdI4Iptwn+W/bT8oEB5qGo2iLXW+NhcCI4Sy+wh1ExJdy15AbeKhSMZQuxqg5aI+MbfU
- bugvv7RBdeHz2DGC0Xvqi8pQv41jXiqynDeHoleIH4KtbMAyFh9ub+9o10ICuKpgxhJdksMr6
- Y5UREt98L5l34zHlLoAh/WihP/nD6UAowsWWjMpl1yBvQ0lZIX7toFE4Sse0eK3CZ/xsJA+nH
- nzlMpV4JQ4ataCKDgfU4x7sTQrvozGhnIXmdF0XzPvuctCC7P1PL1dK7pfoJRoxSARTdykXWo
- k/Jxw7mWI+cXl1AZaO5XB5vH7VJ9bhpSpOOIqp1lzYAfCseetg=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HMLIPqbgHA77AjlJm1UmMjHrzVdLDlfxB+Vb7rEKLroD4N4Dh9V
+ onQdW4lGsLN9sh1i9vtZm+lUXm993fA2VR+I9hrhmvCRliAY2qe/I2kPor7J+icy91Ul/yV
+ gY6k9aJCtuCGHFTVXXLdH3h8VZIC5sJJiLV+NuHiB7VqJD7aQ7fJhC5DeJzWzsUK5mlUcfp
+ uiXDw5pruMjBh0kmzIXRw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:APkyHGqFLzI=:xt6/D0KSsz3PzINC9B3Hdq
+ ncoQJlV20NebHIAl/sKn7aI0lpbHqanQBHvLbA6hca6I0p8bk/jPOGlnUxFaC2lz9HFx0VKUG
+ wiU5SXG8bkOpaE+kRZLlSYeGt2Gp7dpd/OfU5ES+3ouSL37TU4FDdCprzk7Tnv3MetKn0Nud9
+ UDLt1sMizIwFWtB3mzXUOVaHZHrSLC9Qt80SZvxH9QQXhUqw+hwg8KPo52Bsmd2zFXAFUJz2Q
+ Rli4Q4Uh98T2cS38RH+KWy8HoojVYDjvAG3vHvBkvitljPLd7ZIR6PuIzFpLKhNx91zfjYO8f
+ kE7xChv9wzntphJtCQKldJYcCJ4klUiQ21jegM4youcwRO/+M6KLVrLcaZMiUd4JxW03PZTK5
+ F7P2KcjAtqB2GsdosL3CKU7sb1e6nEJwwr66pSq5537V9IAwmmEgji64BVGZbnPtB2LRhlOdw
+ D+oIkzymOs1QiEbJIFYVSYvv1b8nflNy1X7AW/1zQ/rSOSn+O+iyOurVHEAVo2TMvMRSnz/Nj
+ v1nvbj54BsJpnAirt3id54yvuDA2qk09HuDHXDePOmCHtLVcSK25yHLG2SmXHVKRzPTaDQ6LC
+ vNj9jkAnDVwLrLaATJe4UzOUo1+XeilkO9JRVJPmjVf2SUnovBGEBKkmHXY2E6vGfOczdRqsg
+ IL6QIp2xWHm6EyyQ2vyBsnpvM2IXn3a94ZyLIbKDgk7xt19UkVXPnCtTTuG0SfmYJr1ikHDqR
+ YDV6ZzwyuJ6UjrN2sYr0HyWQ/lb8ehnoACJEF11VUxpqqqu9583JhMu2BxxLKChmXHSYYN1cA
+ b5KGgYTHYdW/KHL4Wxjbj+27GMZ8b6jdtXoMrbhyhXvc2PpYks=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+It is fragile, as there is no way for the revision machinery to say "but
+now I want to traverse the graph ignoring the graft file" e.g. when
+pushing commits to a remote repository (which, as a consequence, can
+miss commits).
 
---8323329-1802354994-1524303760=:4241
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+And we already have a better solution with `git replace --graft <comit>
+[<parent>...]`.
 
-Hi G=C3=A1bor,
+Changes since v3:
 
-On Sat, 21 Apr 2018, SZEDER G=C3=A1bor wrote:
+- The argv_array_split() declaration now has a clear comment indicating
+  that it does not perform any "un-quoting" but goes purely by
+  whitespace.
 
-> > The proof, as the saying goes, lies in the pudding. So here is a
-> > regression test that not only demonstrates what the option is supposed =
-to
-> > accomplish, but also demonstrates that it does accomplish it.
-> >=20
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  t/t6050-replace.sh | 20 ++++++++++++++++++++
-> >  1 file changed, 20 insertions(+)
-> >=20
-> > diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-> > index c630aba657e..8a3ee7c3db9 100755
-> > --- a/t/t6050-replace.sh
-> > +++ b/t/t6050-replace.sh
-> > @@ -444,4 +444,24 @@ test_expect_success GPG '--graft on a commit with =
-a mergetag' '
-> >  =09git replace -d $HASH10
-> >  '
-> > =20
-> > +test_expect_success '--convert-graft-file' '
-> > +=09: add and convert graft file &&
-> > +=09printf "%s\n%s %s\n\n# comment\n%s\n" \
-> > +=09=09$(git rev-parse HEAD^^ HEAD^ HEAD^^ HEAD^2) \
-> > +=09=09>.git/info/grafts &&
-> > +=09git replace --convert-graft-file &&
-> > +=09test_path_is_missing .git/info/grafts &&
-> > +
-> > +=09: verify that the history is now "grafted" &&
-> > +=09git rev-list HEAD >out &&
-> > +=09test_line_count =3D 4 out &&
-> > +
-> > +=09: create invalid graft file and verify that it is not deleted &&
-> > +=09test_when_finished "rm -f .git/info/grafts" &&
-> > +=09echo $EMPTY_BLOB $EMPTY_TREE >.git/info/grafts &&
-> > +=09test_must_fail git replace --convert-graft-file 2>err &&
-> > +=09grep "$EMPTY_BLOB $EMPTY_TREE" err &&
->=20
-> This should be 'test_i18ngrep'.  Apparently this error message is
-> translated, and, consequently, the check fails in a GETTEXT_POISON
-> build.
+- Fixed t6050 under GETTEXT_POISON.
 
-Sure enough, you're right! I thought it would not be translated, what with
-being an parameter to a formatted string...
 
-Will fix,
-Dscho
---8323329-1802354994-1524303760=:4241--
+Johannes Schindelin (11):
+  argv_array: offer to split a string by whitespace
+  commit: Let the callback of for_each_mergetag return on error
+  replace: avoid using die() to indicate a bug
+  replace: "libify" create_graft() and callees
+  replace: introduce --convert-graft-file
+  Add a test for `git replace --convert-graft-file`
+  Deprecate support for .git/info/grafts
+  filter-branch: stop suggesting to use grafts
+  technical/shallow: describe the relationship with replace refs
+  technical/shallow: describe why shallow cannot use replace refs
+  Remove obsolete script to convert grafts to replace refs
+
+ Documentation/git-filter-branch.txt       |   2 +-
+ Documentation/git-replace.txt             |  11 +-
+ Documentation/technical/shallow.txt       |  24 ++-
+ advice.c                                  |   2 +
+ advice.h                                  |   1 +
+ argv-array.c                              |  20 +++
+ argv-array.h                              |   2 +
+ builtin/replace.c                         | 189 +++++++++++++++-------
+ commit.c                                  |  18 ++-
+ commit.h                                  |   4 +-
+ contrib/convert-grafts-to-replace-refs.sh |  28 ----
+ log-tree.c                                |  13 +-
+ t/t6001-rev-list-graft.sh                 |   9 ++
+ t/t6050-replace.sh                        |  20 +++
+ 14 files changed, 236 insertions(+), 107 deletions(-)
+ delete mode 100755 contrib/convert-grafts-to-replace-refs.sh
+
+
+base-commit: fe0a9eaf31dd0c349ae4308498c33a5c3794b293
+Published-As: https://github.com/dscho/git/releases/tag/deprecate-grafts-v4
+Fetch-It-Via: git fetch https://github.com/dscho/git deprecate-grafts-v4
+
+Interdiff vs v3:
+ diff --git a/argv-array.h b/argv-array.h
+ index c7c397695df..750c30d2f2c 100644
+ --- a/argv-array.h
+ +++ b/argv-array.h
+ @@ -19,6 +19,7 @@ LAST_ARG_MUST_BE_NULL
+  void argv_array_pushl(struct argv_array *, ...);
+  void argv_array_pushv(struct argv_array *, const char **);
+  void argv_array_pop(struct argv_array *);
+ +/* Splits by whitespace; does not handle quoted arguments! */
+  void argv_array_split(struct argv_array *, const char *);
+  void argv_array_clear(struct argv_array *);
+  const char **argv_array_detach(struct argv_array *);
+ diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+ index 8a3ee7c3db9..bed86a0af3d 100755
+ --- a/t/t6050-replace.sh
+ +++ b/t/t6050-replace.sh
+ @@ -460,8 +460,8 @@ test_expect_success '--convert-graft-file' '
+  	test_when_finished "rm -f .git/info/grafts" &&
+  	echo $EMPTY_BLOB $EMPTY_TREE >.git/info/grafts &&
+  	test_must_fail git replace --convert-graft-file 2>err &&
+ -	grep "$EMPTY_BLOB $EMPTY_TREE" err &&
+ -	grep "$EMPTY_BLOB $EMPTY_TREE" .git/info/grafts
+ +	test_i18ngrep "$EMPTY_BLOB $EMPTY_TREE" err &&
+ +	test_i18ngrep "$EMPTY_BLOB $EMPTY_TREE" .git/info/grafts
+  '
+  
+  test_done
+-- 
+2.17.0.windows.1.15.gaa56ade3205
+
