@@ -6,206 +6,137 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0A841F404
-	for <e@80x24.org>; Sat, 21 Apr 2018 03:13:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0A311F404
+	for <e@80x24.org>; Sat, 21 Apr 2018 03:44:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752558AbeDUDNR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Apr 2018 23:13:17 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:35308 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752212AbeDUDNQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Apr 2018 23:13:16 -0400
-Received: by mail-wr0-f194.google.com with SMTP id w3-v6so27411219wrg.2
-        for <git@vger.kernel.org>; Fri, 20 Apr 2018 20:13:15 -0700 (PDT)
+        id S1752609AbeDUDnd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Apr 2018 23:43:33 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:45169 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752552AbeDUDnc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Apr 2018 23:43:32 -0400
+Received: by mail-wr0-f196.google.com with SMTP id u11-v6so27466986wri.12
+        for <git@vger.kernel.org>; Fri, 20 Apr 2018 20:43:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Bq7lnDUqIMwup3rBHf+JmlwccucH2S+eoL+3RRUz6+8=;
-        b=tupnAqSS68NMFJrdhtvHWqmKvqNHCtrzrwB/XgAvzkpO/4+FVw/vORFhPOwcGfGLpB
-         F2iLRVbdDAEFQy+x/k+4/pGlo3gpWj9wmoITaNU1GJsmh4m93Mj4W3M2GTKDYIIBTny6
-         KOiOj/qMjs7RLpjQIkTDFwnGCE/nJEDxWwCpb988ik9UJSc3PVIjTCBj9hyn7P+bIw/3
-         eeByFPfvDRG0LBWPXc+HHwxxYgm+vVV16ZN7UPO05pVE2mXuz682Oym24hj5wTqYygHb
-         +v5k+/0waQZb9k95yYza+uReQRMy6chKtrHFZklNCbcFzhcaK9Mc05V0HwsEmydBoAor
-         97aQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=zwxfbGcib6BoSygbXQng21L4A8In5VPT+b/aczIk79Q=;
+        b=eSMu00SGWqH1iz3eJWUgDywukxxvgk/IvGauGwnRMgQYjEqyjsprQGvTItT9vpE632
+         fUQYBO9j7hv4JRTsr56JeuuLDnKvPe8VAzotFXHRIkcqoE8DNkphh5roynPwz4nY2an1
+         2zYeAslsd2Bg4m0lAmE6wXzeRYGSbTVtbYv+I69T8vNL7yL2/U//Jt3YMhf7eKwlra7P
+         H3zcUAliTj73aLiBq9Lvn+T+845Gl1jCkfdJrnwFkC+xca0ZloZ/dKjExeInT3V8+W5f
+         OZWi6dupO6fXa95xkUZsHdBtBvrSkQ9sUAmlQKQm8woj/LX0c6SU5H3oSn+GPE01azXO
+         AnVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Bq7lnDUqIMwup3rBHf+JmlwccucH2S+eoL+3RRUz6+8=;
-        b=PKjMFNFW96GPYfS3Qw4son2G7p8typttimQWmJkweu9Fr8F62/Wdy6pfNV95XO1Do3
-         HB6zJt86W7OzF7cwLnn4WbQZcjYIFlYorrXGmJSU3h+z4Buv0nrWRjSj8ehcufSsHISo
-         Tu/Cq90z1NKcyg24mZTtGKMkJ1VJsK2nwmigbc2FmFzazeQjfakqpDMcab0nhzhrXC3P
-         KBcyatp8XLEZwMyK2apescobPkXHWfDGMu2tPNHn8SupL+KLjYFjfH6WYmGUL/951CjO
-         0PlY802F+9g3Tw9XxAxdmXKq+1ztPy7Eykh76E09DWhR+9W80NvISBn+79cgmDC9ok5b
-         vYNQ==
-X-Gm-Message-State: ALQs6tBXE1C5x0Irl5KSbCkmuluiDKpfgU9rChPEEn/hR/t3E37B60xc
-        pB2EAgifsbyaq5nHEbhicUM=
-X-Google-Smtp-Source: AIpwx4/8IXicolVPp/NmfiU02TYBiQwLMx4hqXnz8kcMjkMj28HA6v3BYMKkTXz16c30ii7tj/olJA==
-X-Received: by 10.28.17.18 with SMTP id 18mr3555639wmr.125.1524280394664;
-        Fri, 20 Apr 2018 20:13:14 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=zwxfbGcib6BoSygbXQng21L4A8In5VPT+b/aczIk79Q=;
+        b=h2qaruhphJxOporJbnR030SDcMbthdA4kj80fDPH9a+lKwqQGipY06pZPKdZ7OlenQ
+         d+YL2CRfoV9jVF+IGFc/6lN+FZ4jy2SpAIzPTI/WlAuTPfRGj5KrCnSlOFD9M2dJ2Fww
+         Bs0P2eKKXEJW2g+ne/wK0SGfq3QHn4Zp3UhZv3dLINHprhqUnDgQDsQLQvUU46N82IiB
+         KrelhDpPvlLSOVMapxOSLWhUTHTuom7IS8TWixp2LQplTTPo5NZSqLUeuavkWOEe5jEj
+         2Yqz+kGAaOK7/jtboxo7m6o+y5IrBpTQMYV1Ym+KCnLP+u/Ancndr9CjJ5qlJLZ1ywAN
+         cqJQ==
+X-Gm-Message-State: ALQs6tD/WQdmyD0ZSzlXgFo3Fq9R6bQqjcFLQgcf0MMWLsJHEPbu7vvr
+        DZf6f6YcJxXj0iOe2uZnfhwKFbSi
+X-Google-Smtp-Source: AIpwx4+kYi6CNb2E7fkCTsPGW0Ipq7pj8UzCzehWaPSIpmi/QkEmSFoF3G4Tg1nSBmfJZQraaxwiUg==
+X-Received: by 10.28.58.81 with SMTP id h78mr3226259wma.110.1524282210939;
+        Fri, 20 Apr 2018 20:43:30 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 55-v6sm13412476wrw.52.2018.04.20.20.13.13
+        by smtp.gmail.com with ESMTPSA id m83sm3043745wma.17.2018.04.20.20.43.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Apr 2018 20:13:13 -0700 (PDT)
+        Fri, 20 Apr 2018 20:43:28 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Simon Ruderich <simon@ruderich.org>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Subject: Re: Silly "git gc" UI issue.
-References: <CA+55aFxSZLuk++Dz6SonD+JhbbSDt9G9VcBx5f1CV=6nJC9hvg@mail.gmail.com>
-        <xmqqr2ncezdc.fsf@gitster-ct.c.googlers.com>
-        <xmqqmuy0ez8b.fsf@gitster-ct.c.googlers.com>
-        <xmqqfu3seyad.fsf@gitster-ct.c.googlers.com>
-        <CA+55aFztDdB9tVHREhQ7T0COs7p9ng81XfAHZCL3rx9WT2ecEQ@mail.gmail.com>
-        <xmqqh8o7eq7j.fsf@gitster-ct.c.googlers.com>
-        <20180420072701.GB13462@ruderich.org>
-Date:   Sat, 21 Apr 2018 12:13:13 +0900
-In-Reply-To: <20180420072701.GB13462@ruderich.org> (Simon Ruderich's message
-        of "Fri, 20 Apr 2018 09:27:01 +0200")
-Message-ID: <xmqqlgdhb6ba.fsf@gitster-ct.c.googlers.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Isaac Chou <Isaac.Chou@microfocus.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v3] fast-export: fix regression skipping some merge-commits
+References: <nycvar.QRO.7.76.6.1804202258071.4241@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <20180420221231.4131611-1-martin.agren@gmail.com>
+Date:   Sat, 21 Apr 2018 12:43:27 +0900
+In-Reply-To: <20180420221231.4131611-1-martin.agren@gmail.com> ("Martin
+        =?utf-8?Q?=C3=85gren=22's?= message of "Sat, 21 Apr 2018 00:12:31 +0200")
+Message-ID: <xmqqh8o5b4ww.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Simon Ruderich <simon@ruderich.org> writes:
+Martin Ågren <martin.agren@gmail.com> writes:
 
-> On Thu, Apr 19, 2018 at 02:10:40PM +0900, Junio C Hamano wrote:
->> diff --git a/parse-options-cb.c b/parse-options-cb.c
->> index c6679cb2cd..872627eafe 100644
->> --- a/parse-options-cb.c
->> +++ b/parse-options-cb.c
->> @@ -38,7 +38,11 @@ int parse_opt_approxidate_cb(const struct option *opt, const char *arg,
->>  int parse_opt_expiry_date_cb(const struct option *opt, const char *arg,
->>  			     int unset)
->>  {
->> -	return parse_expiry_date(arg, (timestamp_t *)opt->value);
->> +	if (unset)
->> +		arg = "never";
->> +	if (parse_expiry_date(arg, (timestamp_t *)opt->value))
->> +		die("malformed expiration date '%s'", arg);
->> +	return 0;
->>  }
->
-> Should this error get translated?
+> +test_expect_success 'merge commit gets exported with --import-marks' '
+> +	test_create_repo merging &&
+> +	(
+> +		cd merging &&
+> +		test_commit initial &&
+> +		git checkout -b topic &&
+> +		test_commit on-topic &&
+> +		git checkout master &&
+> +		test_commit on-master &&
+> +		test_tick &&
+> +		git merge --no-ff -m Yeah topic &&
+> +
+> +		echo ":1 $(git rev-parse HEAD^^)" >marks &&
+> +		git fast-export --import-marks=marks master >out &&
+> +		grep Yeah out
+> +	)
+> +'
 
-Sure.  The new test to check this codepath even protects itself from
-such a translation by using test_i18ngrep, so this is safe to mark
-for translation from day one.
+This test looks much better than the one in the earlier iteration,
+but I do not think the updated "fix" below is better.  It might be
+just aesthetics and I suspect I won't find it as disturbing if we
+could push with
 
-Thanks.
+	object_array_push(commits, (struct object *)commit);
 
--- >8 --
-Subject: [PATCH v2] parseopt: handle malformed --expire arguments more nicely
+or something that is more clearly symmetric to object_array_pop().
+The "Queue again" comment is needed only because use of "add"
+highlights the lack of symmetry.
 
-A few commands that parse --expire=<time> command line option behave
-sillily when given nonsense input.  For example
+With add_object_array(), it looks somewhat more odd than your
+previous
 
-    $ git prune --no-expire
-    Segmentation falut
-    $ git prune --expire=npw; echo $?
-    129
+	peek it to check;
+	if (it should not be molested)
+		return;
+	pop to mark it consumed;
+	consume it;
 
-Both come from parse_opt_expiry_date_cb().
+sequence, in which peek() and pop() were more obviously related
+operations on the same "array" object.
 
-The former is because the function is not prepared to see arg==NULL
-(for "--no-expire", it is a norm; "--expire" at the end of the
-command line could be made to pass NULL, if it is told that the
-argument is optional, but we don't so we do not have to worry about
-that case).
+And I do not think it is a good idea to introduce _push() only for
+symmetry (it would merely be a less capable version of add whose
+name is spelled differently).  Hence my preference for peek-check-pop
+over pop-oops-push-again-but-push-spelled-as-add.
 
-The latter is because it does not check the value returned from the
-underlying parse_expiry_date().
+Not worth a reroll, though.  I just wanted to spread better design
+sense to contributors ;-)
 
-This seems to be a recent regression introduced while we attempted
-to avoid spewing the entire usage message when given a correct
-option but with an invalid value at 3bb0923f ("parse-options: do not
-show usage upon invalid option value", 2018-03-22).  Before that, we
-didn't fail silently but showed a full usage help (which arguably is
-not all that better).
-
-Also catch this error early when "git gc --prune=<expiration>" is
-misspelled by doing a dummy parsing before the main body of "gc"
-that is time consuming even begins.  Otherwise, we'd spend time to
-pack objects and then later have "git prune" first notice the error.
-Aborting "gc" in the middle that way is not harmful but is ugly and
-can be avoided.
-
-Helped-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * marking the new message in parse_opt_expiry_date_cb() function
-   for i18n is the only change from the previous round.
-
- builtin/gc.c       |  4 ++++
- parse-options-cb.c |  6 +++++-
- t/t5304-prune.sh   | 10 ++++++++++
- 3 files changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 3c5eae0edf..858aa444e1 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -353,6 +353,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 	const char *name;
- 	pid_t pid;
- 	int daemonized = 0;
-+	timestamp_t dummy;
- 
- 	struct option builtin_gc_options[] = {
- 		OPT__QUIET(&quiet, N_("suppress progress reporting")),
-@@ -388,6 +389,9 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 	if (argc > 0)
- 		usage_with_options(builtin_gc_usage, builtin_gc_options);
- 
-+	if (prune_expire && parse_expiry_date(prune_expire, &dummy))
-+		die(_("Failed to parse prune expiry value %s"), prune_expire);
-+
- 	if (aggressive) {
- 		argv_array_push(&repack, "-f");
- 		if (aggressive_depth > 0)
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index c6679cb2cd..0f9f311a7a 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -38,7 +38,11 @@ int parse_opt_approxidate_cb(const struct option *opt, const char *arg,
- int parse_opt_expiry_date_cb(const struct option *opt, const char *arg,
- 			     int unset)
- {
--	return parse_expiry_date(arg, (timestamp_t *)opt->value);
-+	if (unset)
-+		arg = "never";
-+	if (parse_expiry_date(arg, (timestamp_t *)opt->value))
-+		die(_("malformed expiration date '%s'"), arg);
-+	return 0;
- }
- 
- int parse_opt_color_flag_cb(const struct option *opt, const char *arg,
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 6694c19a1e..af69cdc112 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -320,4 +320,14 @@ test_expect_success 'prune: handle HEAD reflog in multiple worktrees' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'prune: handle expire option correctly' '
-+	test_must_fail git prune --expire 2>error &&
-+	test_i18ngrep "requires a value" error &&
-+
-+	test_must_fail git prune --expire=nyah 2>error &&
-+	test_i18ngrep "malformed expiration" error &&
-+
-+	git prune --no-expire
-+'
-+
- test_done
-
-
-
+>  test_done
+> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+> index 27b2cc138e..7b8dfc5af1 100644
+> --- a/builtin/fast-export.c
+> +++ b/builtin/fast-export.c
+> @@ -651,8 +651,11 @@ static void handle_tail(struct object_array *commits, struct rev_info *revs,
+>  	struct commit *commit;
+>  	while (commits->nr) {
+>  		commit = (struct commit *)object_array_pop(commits);
+> -		if (has_unshown_parent(commit))
+> +		if (has_unshown_parent(commit)) {
+> +			/* Queue again, to be handled later */
+> +			add_object_array(&commit->object, NULL, commits);
+>  			return;
+> +		}
+>  		handle_commit(commit, revs, paths_of_changed_objects);
+>  	}
+>  }
