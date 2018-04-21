@@ -7,105 +7,92 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA90A1F424
-	for <e@80x24.org>; Sat, 21 Apr 2018 11:14:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83F311F424
+	for <e@80x24.org>; Sat, 21 Apr 2018 11:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752547AbeDULOa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Apr 2018 07:14:30 -0400
-Received: from mout.gmx.net ([212.227.17.22]:35821 "EHLO mout.gmx.net"
+        id S1752605AbeDULOs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Apr 2018 07:14:48 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53145 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752480AbeDULO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Apr 2018 07:14:29 -0400
+        id S1752480AbeDULOr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Apr 2018 07:14:47 -0400
 Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7DVi-1eFO2L3Ud4-00x2pP; Sat, 21
- Apr 2018 13:14:23 +0200
-Date:   Sat, 21 Apr 2018 13:14:08 +0200 (DST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LlGoc-1ebKjt49lW-00b68k; Sat, 21
+ Apr 2018 13:14:44 +0200
+Date:   Sat, 21 Apr 2018 13:14:28 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Dan Jacques <dnj@google.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/3] gettext: avoid initialization if the locale dir is
- not present
+Subject: [PATCH v2 2/3] git_setup_gettext: plug memory leak
 In-Reply-To: <cover.1524309209.git.johannes.schindelin@gmx.de>
-Message-ID: <4ac5d3b9ace6ea8a41e97c036c8122f0d26d3c5a.1524309209.git.johannes.schindelin@gmx.de>
+Message-ID: <34971f7dd4c4b5df1f7924759d5aee9784c82fc6.1524309209.git.johannes.schindelin@gmx.de>
 References: <cover.1524211375.git.johannes.schindelin@gmx.de> <cover.1524309209.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+SmX3YNLi+wu1Qeq8/2Mv9B50TMnjgndsS4eabweeNFnina574k
- NDc7j0mTwjK0LB3YxT8ZBLmH4LAV03Xy9WZXefiQpso5CVJrR1tGmOafduijdFSFM1/MNrd
- AeLpRPOwaHkdHTLBu6gOX2yAOrQIvnMR+w3hw320XO6CCHl6xYk5lX7nL70f9IbuC18RMVm
- eCOq3DxDso3AQCQfavQGQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:g8lzmjDFRFM=:o8v7uKzwLJRn+BImTS6itP
- byBSVxV7LfkCo3MRUr4nPHaD7aO+AGYvuYoFikV6gL0sGLhvzXos0fcK/VC5tIIfzEG0W4qYL
- uA2PRzcX4XYXRPZjrdW+WlX4lajRCIxoAq+sLYQHMYgt6McSt7wR96PExZGAQfmhsJD7NkZ/6
- WWtqZGRfwXNlMFiabNQgcjeRkDbQtcKB1d3K4aMvkhf9byxq6th4il4gFFQ1+d1Xk78ZWQddM
- 9OEUrcU0nKxe1EGm4SL9XIxXkfYN0DrQXf4AYUBAFT3+xZudnWOsjdYhpISsQqWZifiPklm4I
- WJo3tSjO5BxvUC3KSeT+A1/icnPQbxlxaXTgQFNAjiZ1iG7ws2QvBpFokr6/tKA4zUZMpDFKK
- u6ipq18m7/ug4oQIrRxhQsPdYsI2KQckHSxkrVw64vSnKgJa3H2azs8Mtssf0qByGC/FDYm/T
- pWO89P0GMJZV2YoKXISDLpDwDGhu46dCbBqXWcPeAVXSFbN+k71q7qsjJMMFIESJHj1O1tIeI
- Aj5zpPs24gkUqI23Y2LYh0yKm8FFpzDflhJgyh6spyhEbgFRsx5/07QsBWdRQLeTnQ0liy0BQ
- FvErQoMTM8U1vUnkoK21q1V8o53ku1RHH+ka6aqs/F/NxVwFov2h+KJUFUDUihMdSP9ZexqGZ
- SNBi2dGVgKq66IQCs7Fiuzbwf3nDZR/+YVDjHH4jbEXbY+y6gtETpXYOk4GdKylZ5yhrYde1e
- Dhyxx/KSyuXPJTCEciRvEWVrOiCQyd/bGuPbms1CrWTsg/vTKsgXgfyM599OTZ5u0RDThsgm6
- B2r4QRVxyrPxlQnEeIu+mw1M5tXwwewEZVpYIDeKnXkd0VjoGw=
+X-Provags-ID: V03:K1:oSnMp060fzcaWvJ92nzppP47+jsn8LSURRfNqpNcb2QBkXiYX8e
+ Q8TbYrAjX5cgM9gAb1RvL/eoAkrmyrRD4fUJufBsg3B+RsYucg2XbowZYr9nTIJNRhv6wSt
+ ubBfmMqZ2dk4TpUK1A0xBeLHyqf7aMFrw1Ex1wHC3Z0R+rGHvaeRgRO57RDbmFZescmr5JG
+ iEKpGKVjIFis7u2ti32+Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2p0NSYBSVRo=:dDcExAFPhq4Qb3n1+hl2YA
+ 1Bqqcq08JSuW+VLbJs9aBDVu93EtdW834VFnyplE8YXz1UTTIeJpcT9tQeY5TGfCa1fCBjuQk
+ qXJAy2kx/godxdDWr5maiNGx4TyomFEhrrtyLSYvZuVmN77uDpd0jdWko8dIz5JzJn7dR0uFl
+ L5IM5JncAyh3IMHthbXEy6d0f+H9S/8Iez0vnn7rWGS9FuVBjBjIM08xpkj1MYwqAtBwGshJ7
+ EmqVVItEDA7Aryjhe23ARYtKXK48epKClIm20ANLzM4aB9jQ6WSaDrms1uj2eYVqvE4zIUFD7
+ HDZfNEIWmoT3gq16x6YXDQU+1OqZXcCNbJIYLWJB1GWrEdganzkio1AgtMqvT0VKHhGhmN/Zq
+ CBPYeXXw7loqKz3KuSGAcnWacq9yY8ADzmtkycSjdK6vfS3w7DHH25svTMkDInQaGZs6ujxOy
+ 4VfhUdK7j4E3Gc7tfiF1lz1s+JqKrx/IyXqn2uxiXuXhv1nE+yp0MkEvwWvCc3TbwrprO6BNi
+ 488ebW+sQNiwJKA8vcH6UgRjtVV86/GAaGbE7paVgXs2O4di6wO0h14W/bGrpQ+ft0mgPxu5A
+ ifPx3p55r5tH3YWUwxQHrwkkRVR84iI9QA7sIXe9DLCHOgO4XEBOnCKuDgn5YUlXP3ZK0la6/
+ +0kmdb9cHIF/rb8KXkWls5wYDwPfCPBX2acvN0RZ/oncUHEQXSWVQUbk5Bgp7K4vg8JptO1xS
+ z95lT1ZRqJTYIckHMnW7d2/z2DuTHh2nc/UGHzUM3b9sWTQ9e+IgWVTeuwaepL1MJjJQzpQvb
+ 5DFSW2glN7C9u9Ps6Y9xCMgY2p2vhq2Kp30t6B+qlXZMALyBIo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The runtime of a simple `git.exe version` call on Windows is currently
-dominated by the gettext setup, adding a whopping ~150ms to the ~210ms
-total.
-
-Given that this cost is added to each and every git.exe invocation goes
-through common-main's invocation of git_setup_gettext(), and given that
-scripts have to call git.exe dozens, if not hundreds, of times, this is
-a substantial performance penalty.
-
-This is particularly pointless when considering that Git for Windows
-ships without localization (to keep the installer's size to a bearable
-~34MB): all that time setting up gettext is for naught.
-
-To be clear, Git for Windows *needs* to be compiled with localization,
-for the following reasons:
-
-- to allow users to copy add-on localization in case they want it, and
-
-- to fix the nasty error message
-
-	BUG: your vsnprintf is broken (returned -1)
-
-  by using libgettext's override of vsnprintf() that does not share the
-  behavior of msvcrt.dll's version of vsnprintf().
-
-So let's be smart about it and skip setting up gettext if the locale
-directory is not even present.
-
-Since localization might be missing for not-yet-supported locales, this
-will not break anything.
+The system_path() function returns a freshly-allocated string. We need
+to release it.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- gettext.c | 3 +++
- 1 file changed, 3 insertions(+)
+ gettext.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/gettext.c b/gettext.c
-index baba28343c3..701355d66e7 100644
+index 701355d66e7..7272771c8e4 100644
 --- a/gettext.c
 +++ b/gettext.c
-@@ -163,6 +163,9 @@ void git_setup_gettext(void)
- 	if (!podir)
- 		podir = system_path(GIT_LOCALE_PATH);
+@@ -159,18 +159,23 @@ static void init_gettext_charset(const char *domain)
+ void git_setup_gettext(void)
+ {
+ 	const char *podir = getenv(GIT_TEXT_DOMAIN_DIR_ENVIRONMENT);
++	char *p = NULL;
  
-+	if (!is_directory(podir))
-+		return;
-+
+ 	if (!podir)
+-		podir = system_path(GIT_LOCALE_PATH);
++		podir = p = system_path(GIT_LOCALE_PATH);
+ 
+-	if (!is_directory(podir))
++	if (!is_directory(podir)) {
++		free(p);
+ 		return;
++	}
+ 
  	bindtextdomain("git", podir);
  	setlocale(LC_MESSAGES, "");
  	setlocale(LC_TIME, "");
+ 	init_gettext_charset("git");
+ 	textdomain("git");
++
++	free(p);
+ }
+ 
+ /* return the number of columns of string 's' in current locale */
 -- 
 2.17.0.windows.1.15.gaa56ade3205
 
