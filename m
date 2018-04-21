@@ -7,23 +7,24 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 883021F424
-	for <e@80x24.org>; Sat, 21 Apr 2018 10:32:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94E7C1F424
+	for <e@80x24.org>; Sat, 21 Apr 2018 10:32:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752478AbeDUKcG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Apr 2018 06:32:06 -0400
-Received: from mout.gmx.net ([212.227.17.21]:44833 "EHLO mout.gmx.net"
+        id S1752848AbeDUKcj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Apr 2018 06:32:39 -0400
+Received: from mout.gmx.net ([212.227.17.22]:47431 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751436AbeDUKcF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Apr 2018 06:32:05 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LiTrM-1eZght3RTo-00cipW; Sat, 21
- Apr 2018 12:31:57 +0200
-Date:   Sat, 21 Apr 2018 12:31:41 +0200 (DST)
+        id S1752748AbeDUKci (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Apr 2018 06:32:38 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXUmw-1exH203LXy-00WWXS; Sat, 21
+ Apr 2018 12:32:30 +0200
+Date:   Sat, 21 Apr 2018 12:32:14 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
+cc:     Stefan Beller <stefanbeller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Philip Oakley <philipoakley@iee.org>,
@@ -33,79 +34,74 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Sergey Organov <sorganov@gmail.com>,
         =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v8 04/16] sequencer: offer helpful advice when a command was
- rescheduled
+Subject: [PATCH v8 05/16] git-rebase--interactive: clarify arguments
 In-Reply-To: <cover.1524306546.git.johannes.schindelin@gmx.de>
-Message-ID: <b768f1bbfdc5c8b03d7bd67bf6915549d18934f2.1524306546.git.johannes.schindelin@gmx.de>
+Message-ID: <b071b84a4cd4d3f3017a6568ffaab0bd19bf16d2.1524306546.git.johannes.schindelin@gmx.de>
 References: <cover.1524139900.git.johannes.schindelin@gmx.de> <cover.1524306546.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:WDEi0wzvtRnoYL+NDKKRf1j6SS39MIvswFH71ouozdsz1Efc4tZ
- AWr+rCPOfmeCCmicSn0r4+rw2M4R9lPPy6gpwMjqdFSjInLJ5veY+AcStv3tKYykGkpuwAe
- 7Yu7SZjSYknI7l1/5dngIN7P7i4oqI7xDmwpTd/CwhfAARe9w/aYlsdqsTN4lGyrTcjMMNV
- 88QNZaGXpP8xoolq2vkgg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QeFuJs2Mzvw=:+gsbm6oLgarGAPBKlT/XaZ
- H+9uy0XGUc21w00zgCFFMjuV9WwBgH46o9pEB88wEzXWrHFecWYU2Co4r2R8VWgYZOKoZNejH
- AgoGJ8NkT+cAtdfLozXNJSgJyKUSskc2U5u0o8coYXf1ljRZTjCu0KaEMPr0y37LdnslB73/m
- TUne7uX6hGhiH5QT1TKxdQksWKgVGcdRYiQrXDihgg5s3Xc8JIgpatxZpd3egJvA+IF8M6YJy
- fhp9sWafvLtnuW8P0N6FilE6DxuZd/tK3ZirZSrfnGm26bZ3KriWoUup5kRwCy+rFTmz2wnDy
- V3uRfM3qbybHg+UnDUKaEvco399h1jm/3wiqWwVhT8t5Gzs9JS0PjexOiO9I+O9aZoLYjRsrB
- SQVG1Y/QVST8ArDQLYUF9LiYaiVxkzk5s/xkx2x6e6uPOC5mjYuCslsGFbrD+v7soZOL2M2td
- s59e3647EMwPXLnlRT/BURd3GSHohdoKXCHKIsM0GROGj0txZ5kPQUWyKJqG2B1fvtvN5I3rP
- CwZKDiVvqaxnDzns8D6tthYynvI9406SC5YW2wBgb5np0RktFAgr6lQ1F26Wkrja1L2htgT5f
- 24AVgP/HSH/Q0oqI7Yvxm/isI1eMCxqZCStQcmb7Hwe6NMTHK8DvwNnT9yuQ/mtnLS9oVILRK
- OPCv7MeU3QOc3Kq+IFdnV/eIiwf1sJDAT82fZO7WAdiR8c2nyGs8cr+R63eCALkavI7QHs9u+
- GucuceJz4+8hnZpB+8TTqyHyBPGPsahKJivYGe9EwuadNzofqwlyFKhuOXMoqCSIs1T/ci9zQ
- lKwtVQyMJx7x97Big7rv4KlOBNlplaTdPHipWDxRXasoHe17jQ=
+X-Provags-ID: V03:K1:jB7T1h3ecrmckGAg+MM8n9NzrKv3+waJY7CuqpZNuAVN2cAyjdT
+ JlxdGW7bmSO1ifjdsH1GtkE2Pd0RvLc7RSoWCKktNRtBvnwxuQ4yjGJgVR09rfj1He0Y0Di
+ Ygiy7u4W8WzDSefRIYCnLcmsdRoPCnR5IC8AXeM5QrqDPsMjkgFODHKh6EodY4ewaZwFceG
+ K615lNkLcz+IgvkD6KCZA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:a3PCjI69X4I=:nMQDTri/jvUIe+UERxfLvY
+ 7ePpsSH+CSK9pmwNeHGprE1NUw+YYFJkCa6rIz0DSQDV8f2lZdUOOp+Zz27wPLkwACNP/crsD
+ plSLC8XLBOIR/1pHihT/uavq4qGV1Irajisk7ZGHB8Zxh81Nf1MjeCTU27VPT3EI+KN5wcQHq
+ D6E3Yo/xFonkSAnyWXBlU3GbdRGJNr2XnCkC1tMyyZCKI3sCiQsrbgQgk+GxW2SFqNlecPa3U
+ ivdWdBtw4kxMUy3lMHlRlAw/cNFbOvIoyJP9CBZt6A6nqAPAPChqJ+Mpahr7xfv3Id6ETQwRT
+ uLdnaM0qusKVHLM6St9xIa9dcP/m2b/d/q/GYsA72gX7fSUNkXxE/Ak71G0MdJqNKLEvEwerY
+ wRsfsC57NYg/3Xb2h1WhtuG+v5raVrqVhEsWoDhWnwuYvbynCS7imfi7iE/aApXStsZQaYqhA
+ K+VxAjVLyNH4LtX+3xLbO3fcONj2OhEa3Md/VUQDXk9zvX95pDgtN9z8OdGI818bBBS3jeC0D
+ IjNrxNlD/Rl2WJfKJ+Bp4NM6t6kfRDips1TYkw1/9lmbnd4PvhoVhL1epVMKm6OAP3cXpm/wm
+ pkKB4KO0Crk1aIBEefrte6MoI3fvB3PdPcXznVrA59cJn1FyMBAmWamGhwJdE+CwlEXBNjZXL
+ 2tENoJEtoWou20bX52NHjsZtNJbTrh4JZgPTa1jhiezDGcM/yzQk9ozY7anXNRbnIcei+DuNA
+ 2js8UorzKc35WTl5oCbqRRCgciNCVM2cIXFtjaNvv+9Cx8zI6PX1oRkZaJ2R28l+bg/MmBszg
+ 1+KdESASM1BCjaq5cltEaGPQdGiCiovdkHLENQ5TikogOd5fGY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, we did that just magically, and potentially left some users
-quite puzzled. Let's err on the safe side instead, telling the user what
-is happening, and how they are supposed to continue.
+From: Stefan Beller <stefanbeller@gmail.com>
 
+Up to now each command took a commit as its first argument and ignored
+the rest of the line (usually the subject of the commit)
+
+Now that we are about to introduce commands that take different
+arguments, clarify each command by giving the argument list.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ git-rebase--interactive.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 3d0a45ab25a..01443e0f245 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2555,6 +2555,17 @@ static const char *reflog_message(struct replay_opts *opts,
- 	return buf.buf;
- }
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 50323fc2735..e1b865f43f2 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -155,13 +155,13 @@ reschedule_last_action () {
+ append_todo_help () {
+ 	gettext "
+ Commands:
+-p, pick = use commit
+-r, reword = use commit, but edit the commit message
+-e, edit = use commit, but stop for amending
+-s, squash = use commit, but meld into previous commit
+-f, fixup = like \"squash\", but discard this commit's log message
+-x, exec = run command (the rest of the line) using shell
+-d, drop = remove commit
++p, pick <commit> = use commit
++r, reword <commit> = use commit, but edit the commit message
++e, edit <commit> = use commit, but stop for amending
++s, squash <commit> = use commit, but meld into previous commit
++f, fixup <commit> = like \"squash\", but discard this commit's log message
++x, exec <commit> = run command (the rest of the line) using shell
++d, drop <commit> = remove commit
  
-+static const char rescheduled_advice[] =
-+N_("Could not execute the todo command\n"
-+"\n"
-+"    %.*s"
-+"\n"
-+"It has been rescheduled; To edit the command before continuing, please\n"
-+"edit the todo list first:\n"
-+"\n"
-+"    git rebase --edit-todo\n"
-+"    git rebase --continue\n");
-+
- static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- {
- 	int res = 0;
-@@ -2600,6 +2611,11 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 					opts, is_final_fixup(todo_list));
- 			if (is_rebase_i(opts) && res < 0) {
- 				/* Reschedule */
-+				advise(_(rescheduled_advice),
-+				       get_item_line_length(todo_list,
-+							    todo_list->current),
-+				       get_item_line(todo_list,
-+						     todo_list->current));
- 				todo_list->current--;
- 				if (save_todo(todo_list, opts))
- 					return -1;
+ These lines can be re-ordered; they are executed from top to bottom.
+ " | git stripspace --comment-lines >>"$todo"
 -- 
 2.17.0.windows.1.15.gaa56ade3205
 
