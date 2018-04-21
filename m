@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C43AD1F404
-	for <e@80x24.org>; Sat, 21 Apr 2018 16:54:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C46D41F404
+	for <e@80x24.org>; Sat, 21 Apr 2018 16:54:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753156AbeDUQyl (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Apr 2018 12:54:41 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:41199 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753139AbeDUQyi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Apr 2018 12:54:38 -0400
-Received: by mail-lf0-f67.google.com with SMTP id o123-v6so6629070lfe.8
-        for <git@vger.kernel.org>; Sat, 21 Apr 2018 09:54:37 -0700 (PDT)
+        id S1753168AbeDUQyr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Apr 2018 12:54:47 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:34938 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753057AbeDUQyg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Apr 2018 12:54:36 -0400
+Received: by mail-lf0-f68.google.com with SMTP id r125-v6so9229989lfe.2
+        for <git@vger.kernel.org>; Sat, 21 Apr 2018 09:54:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=U3OIJsD23PPxisVVjS3wbneFkfYzfiiATSKaTjqacjU=;
-        b=YxR/5unkamtq+PZSZDcxKfkmjsLvwUzzL7In/Q/PT3l3LkUqKALhuf2V3KI+etQvic
-         iuZOWuRQpXFEaddKiZZt+8Jxupkjg6Wvp7vuQe6VctGuru6/PYqwa3GaU5Ir53yJdMB0
-         uhT3XrGt+djDqoxU5KwU1MI14zxgV4cUuO/u3ZY/9Ic1vk+pTzslRnpU1A5aMhpqNtZ5
-         Ba2Vp0yAerklqyIaY1BhhwGUHfFpT/7VmuQXI1ZFAIwo4o5h07Y8mIw+zcmJkl9L1up+
-         NZObv92xDuyeHn+UBEqR+0qc+bwx5cBx5qoRlV+8UEp7olYIEhFYpUJAnNiF7ViVqkKc
-         ExSQ==
+        bh=nN7NKqk7v97cOyvRTjQ+5Y4DQdj3OHaVnX3mJ0RDNLI=;
+        b=kdZdlvf40aRY0V13vkevjCITWkwBjYg6UxqBTqqUc3nAR5ppsqsm7ovtww5uyuUfNb
+         B7L1hwXw2tujHL4FUC5mChHh2sFKAHb9/kfOmYDFR78k1/K4jr95mf0rl1fVTKiX/mfa
+         CDI/kIT4e6RZE4+SXjYeZMRnGsMDfargjE/RXcruTLntlavm5R+r91+m/rIhHZEPwUoR
+         8Vyv03q346pZilKSQE4epwnSshCDos4qOfOEu6h8mx5JU7cjRAaCmcxEhB2i2dlQm3DW
+         PtThKQnTgUWx6JjIIdElEQ9vQ6E2WnEtN0qzAk2jTHKtA0xYM2ZNFtfjNMIzcrDUu86u
+         7nOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=U3OIJsD23PPxisVVjS3wbneFkfYzfiiATSKaTjqacjU=;
-        b=E6QktgfkaH68S3D+Cc+8+55JuR58Db0wz3vLZIod9xAT49dqnrnfA1BH7V2sXgQ7j9
-         XnDuxcNHZjfMSlc8sYVOQ2gTUAUBA9KAkeg2VbjBBlqV1Q0xHvPEPIYbGod6h86PfohH
-         ESigz1H7Th9vuDwKChyFi44DL/64ADslITijsolfSoyNCVC4eqeLqrVaocPFmKqpLw4d
-         cYhhSFW7m6rhsfy1j6QX/i0UyCWRSALJ/LjXU+t6IsFDtQvNTdCbgzDc/69mVx3oJ7ae
-         X74EFrJxZU7Fe7EvDdYbKryyrWKXpP9DWB0mMWnStx1y2KqQE00aQh9tehactrPxqcL4
-         q6Tg==
-X-Gm-Message-State: ALQs6tDDcU61Yqg5Vpjg5GhwFifMp3c5NcGZ/CdtaX4dgMj2mWqtk71x
-        h3KNQuz2VDbN2GesKVuf40M=
-X-Google-Smtp-Source: AIpwx48dYdXhh5vIKYD1C9Wl+o+mcqQT+IGOjZi4UBS6AxSr82bu3NNuVUE0RYQCeg7tRvIsIsUYzQ==
-X-Received: by 10.46.151.70 with SMTP id f6mr10206283ljj.140.1524329676455;
-        Sat, 21 Apr 2018 09:54:36 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g81sm1526523ljb.12.2018.04.21.09.54.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=nN7NKqk7v97cOyvRTjQ+5Y4DQdj3OHaVnX3mJ0RDNLI=;
+        b=X6uSve4ON9SGRSsESfeF/9CFXa1TeKsSr/XwTyoC7tUqRHf14VMi8ehuYiupxQjnZE
+         QgBWKCqjtBieLeNb48tyUUhd4EcKs732xg3mRpkK4r6DxP3wQPeLvUqD7Ytdq+KxmUcw
+         gqcKZa1wGLZb6iCNEtqVA8EZIuYMEgq1wlCynPyvjJxhtKNv3ikXCP0JqFKDmazgwiVE
+         HWB5Wy2MkU1LIHQLaQuLS/0YzyfHfC62bro7+iy1d/vLi1R37LCiR83q8lMdEScyWeIP
+         bCiEVzoSVWzW/3Ytt8yxEw+ab9HFcYFttidtFNZ58/++3DVvvm4j5dAG8QHTUX7jwLq7
+         sw3w==
+X-Gm-Message-State: ALQs6tDxE6VRxG2wIosnRy509vchqFubD5zabBOrDCuhoRSYaXk1KXp4
+        zgY3FRuVJk7ErMZfCckaBKM=
+X-Google-Smtp-Source: AIpwx4+fi270V73s7sCWHDRO03zslSBOhG5JjyPZozeIKGj3E130JllqZQOqmRHbvrQmaxv4zsXdQQ==
+X-Received: by 10.46.146.131 with SMTP id d3mr9523845ljh.18.1524329675240;
         Sat, 21 Apr 2018 09:54:35 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id g81sm1526523ljb.12.2018.04.21.09.54.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 21 Apr 2018 09:54:34 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, philipoakley@iee.org,
         sunshine@sunshineco.com, szeder.dev@gmail.com
-Subject: [PATCH v3 6/6] help: use command-list.txt for the source of guides
-Date:   Sat, 21 Apr 2018 18:54:14 +0200
-Message-Id: <20180421165414.30051-7-pclouds@gmail.com>
+Subject: [PATCH v3 5/6] help: add "-a --verbose" to list all commands with synopsis
+Date:   Sat, 21 Apr 2018 18:54:13 +0200
+Message-Id: <20180421165414.30051-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.367.g5dd2e386c3
 In-Reply-To: <20180421165414.30051-1-pclouds@gmail.com>
 References: <20180415164238.9107-1-pclouds@gmail.com>
@@ -69,184 +69,191 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The help command currently hard codes the list of guides and their
-summary in C. Let's move this list to command-list.txt. This lets us
-extract summary lines from Documentation/git*.txt. This also
-potentially lets us lists guides in git.txt, but I'll leave that for
-now.
+This lists all recognized commands [1] by category. The group order
+follows closely git.txt.
+
+[1] We may actually show commands that are not built (e.g. if you set
+NO_PERL you don't have git-instaweb but it's still listed here). I
+ignore the problem because on Linux a git package could be split
+anyway. The "git-core" package may not contain git-instaweb even if
+it's built because it may end up in a separate package. We can't know
+anyway.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/gitattributes.txt |  2 +-
- Documentation/gitmodules.txt    |  2 +-
- Documentation/gitrevisions.txt  |  2 +-
- builtin/help.c                  | 32 --------------------------------
- command-list.txt                |  8 ++++++++
- generate-cmdlist.sh             |  6 +++++-
- help.c                          | 22 ++++++++++++++++++++++
- help.h                          |  1 +
- 8 files changed, 39 insertions(+), 36 deletions(-)
+ Documentation/git-help.txt |  4 ++-
+ builtin/help.c             |  7 ++++
+ help.c                     | 69 ++++++++++++++++++++++++++++++++++++++
+ help.h                     |  1 +
+ t/t0012-help.sh            |  9 +++++
+ 5 files changed, 89 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 1094fe2b5b..083c2f380d 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -3,7 +3,7 @@ gitattributes(5)
- 
- NAME
- ----
--gitattributes - defining attributes per path
-+gitattributes - Defining attributes per path
- 
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index 40d328a4b3..a40fc38d8b 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -8,7 +8,7 @@ git-help - Display help information about Git
  SYNOPSIS
  --------
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index db5d47eb19..4d63def206 100644
---- a/Documentation/gitmodules.txt
-+++ b/Documentation/gitmodules.txt
-@@ -3,7 +3,7 @@ gitmodules(5)
+ [verse]
+-'git help' [-a|--all] [-g|--guide]
++'git help' [-a|--all [--verbose]] [-g|--guide]
+ 	   [-i|--info|-m|--man|-w|--web] [COMMAND|GUIDE]
  
- NAME
- ----
--gitmodules - defining submodule properties
-+gitmodules - Defining submodule properties
+ DESCRIPTION
+@@ -42,6 +42,8 @@ OPTIONS
+ --all::
+ 	Prints all the available commands on the standard output. This
+ 	option overrides any given command or guide name.
++	When used with `--verbose` print description for all recognized
++	commands.
  
- SYNOPSIS
- --------
-diff --git a/Documentation/gitrevisions.txt b/Documentation/gitrevisions.txt
-index 27dec5b91d..1f6cceaefb 100644
---- a/Documentation/gitrevisions.txt
-+++ b/Documentation/gitrevisions.txt
-@@ -3,7 +3,7 @@ gitrevisions(7)
- 
- NAME
- ----
--gitrevisions - specifying revisions and ranges for Git
-+gitrevisions - Specifying revisions and ranges for Git
- 
- SYNOPSIS
- --------
+ -g::
+ --guides::
 diff --git a/builtin/help.c b/builtin/help.c
-index 0e0af8426a..5727fb5e51 100644
+index 598867cfea..0e0af8426a 100644
 --- a/builtin/help.c
 +++ b/builtin/help.c
-@@ -402,38 +402,6 @@ static void show_html_page(const char *git_cmd)
- 	open_html(page_path.buf);
- }
+@@ -36,6 +36,7 @@ static const char *html_path;
  
--static struct {
--	const char *name;
--	const char *help;
--} common_guides[] = {
--	{ "attributes", N_("Defining attributes per path") },
--	{ "everyday", N_("Everyday Git With 20 Commands Or So") },
--	{ "glossary", N_("A Git glossary") },
--	{ "ignore", N_("Specifies intentionally untracked files to ignore") },
--	{ "modules", N_("Defining submodule properties") },
--	{ "revisions", N_("Specifying revisions and ranges for Git") },
--	{ "tutorial", N_("A tutorial introduction to Git (for version 1.5.1 or newer)") },
--	{ "workflows", N_("An overview of recommended workflows with Git") },
--};
--
--static void list_common_guides_help(void)
--{
--	int i, longest = 0;
--
--	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
--		if (longest < strlen(common_guides[i].name))
--			longest = strlen(common_guides[i].name);
--	}
--
--	puts(_("The common Git guides are:\n"));
--	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
--		printf("   %s   ", common_guides[i].name);
--		mput_char(' ', longest - strlen(common_guides[i].name));
--		puts(_(common_guides[i].help));
--	}
--	putchar('\n');
--}
--
- static const char *check_git_cmd(const char* cmd)
- {
- 	char *alias;
-diff --git a/command-list.txt b/command-list.txt
-index 2c81d8db74..1835f1a928 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -149,3 +149,11 @@ gitweb                                  ancillaryinterrogators
- git-whatchanged                         ancillaryinterrogators
- git-worktree                            mainporcelain
- git-write-tree                          plumbingmanipulators
-+gitattributes                           guide
-+giteveryday                             guide
-+gitglossary                             guide
-+gitignore                               guide
-+gitmodules                              guide
-+gitrevisions                            guide
-+gittutorial                             guide
-+gitworkflows                            guide
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index 05722b1392..86d59419b3 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -58,7 +58,11 @@ command_list "$1" |
- sort |
- while read cmd category tags
- do
--	prefix=git-
-+	if [ "$category" = guide ]; then
-+		prefix=git
-+	else
-+		prefix=git-
-+	fi
- 	name=$(echo $cmd | sed "s/^${prefix}//")
- 	sed -n '
- 		/^NAME/,/'"$cmd"'/H
+ static int show_all = 0;
+ static int show_guides = 0;
++static int verbose;
+ static unsigned int colopts;
+ static enum help_format help_format = HELP_FORMAT_NONE;
+ static int exclude_guides;
+@@ -48,6 +49,7 @@ static struct option builtin_help_options[] = {
+ 			HELP_FORMAT_WEB),
+ 	OPT_SET_INT('i', "info", &help_format, N_("show info page"),
+ 			HELP_FORMAT_INFO),
++	OPT__VERBOSE(&verbose, N_("print command description")),
+ 	OPT_END(),
+ };
+ 
+@@ -463,6 +465,11 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 
+ 	if (show_all) {
+ 		git_config(git_help_config, NULL);
++		if (verbose) {
++			setup_pager();
++			list_all_cmds_help();
++			return 0;
++		}
+ 		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
+ 		load_command_list("git-", &main_cmds, &other_cmds);
+ 		list_commands(colopts, &main_cmds, &other_cmds);
 diff --git a/help.c b/help.c
-index ae5281601a..88127fdd6f 100644
+index 6688653f99..ae5281601a 100644
 --- a/help.c
 +++ b/help.c
-@@ -314,6 +314,28 @@ static void list_commands_by_category(int cat, struct cmdname_help *cmds,
+@@ -285,6 +285,75 @@ void list_porcelain_cmds(void)
  	}
  }
  
-+void list_common_guides_help(void)
++static int cmd_category_cmp(const void *elem1, const void *elem2)
++{
++	const struct cmdname_help *e1 = elem1;
++	const struct cmdname_help *e2 = elem2;
++
++	if (e1->category < e2->category)
++		return -1;
++	if (e1->category > e2->category)
++		return 1;
++	return strcmp(e1->name, e2->name);
++}
++
++static void list_commands_by_category(int cat, struct cmdname_help *cmds,
++				      int nr, int longest)
++{
++	int i;
++
++	for (i = 0; i < nr; i++) {
++		struct cmdname_help *cmd = cmds + i;
++
++		if (cmd->category != cat)
++			continue;
++
++		printf("   %s   ", cmd->name);
++		mput_char(' ', longest - strlen(cmd->name));
++		puts(_(cmd->help));
++	}
++}
++
++void list_all_cmds_help(void)
 +{
 +	int i, longest = 0;
 +	int nr = ARRAY_SIZE(command_list);
 +	struct cmdname_help *cmds = command_list;
 +
-+	QSORT(cmds, nr, cmd_category_cmp);
-+
 +	for (i = 0; i < nr; i++) {
 +		struct cmdname_help *cmd = cmds + i;
 +
-+		if (cmd->category != CAT_guide)
-+			continue;
 +		if (longest < strlen(cmd->name))
 +			longest = strlen(cmd->name);
 +	}
 +
-+	puts(_("The common Git guides are:\n"));
-+	list_commands_by_category(CAT_guide, cmds, nr, longest);
-+	putchar('\n');
++	QSORT(cmds, nr, cmd_category_cmp);
++
++	printf("%s\n\n", _("Main Porcelain Commands"));
++	list_commands_by_category(CAT_mainporcelain, cmds, nr, longest);
++
++	printf("\n%s\n\n", _("Ancillary Commands / Manipulators"));
++	list_commands_by_category(CAT_ancillarymanipulators, cmds, nr, longest);
++
++	printf("\n%s\n\n", _("Ancillary Commands / Interrogators"));
++	list_commands_by_category(CAT_ancillaryinterrogators, cmds, nr, longest);
++
++	printf("\n%s\n\n", _("Interacting with Others"));
++	list_commands_by_category(CAT_foreignscminterface, cmds, nr, longest);
++
++	printf("\n%s\n\n", _("Low-level Commands / Manipulators"));
++	list_commands_by_category(CAT_plumbingmanipulators, cmds, nr, longest);
++
++	printf("\n%s\n\n", _("Low-level Commands / Interrogators"));
++	list_commands_by_category(CAT_plumbinginterrogators, cmds, nr, longest);
++
++	printf("\n%s\n\n", _("Low-level Commands / Synching Repositories"));
++	list_commands_by_category(CAT_synchingrepositories, cmds, nr, longest);
++
++	printf("\n%s\n\n", _("Low-level Commands / Internal Helpers"));
++	list_commands_by_category(CAT_purehelpers, cmds, nr, longest);
 +}
 +
- void list_all_cmds_help(void)
+ int is_in_cmdlist(struct cmdnames *c, const char *s)
  {
- 	int i, longest = 0;
+ 	int i;
 diff --git a/help.h b/help.h
-index 62449f1b7e..de094e9e65 100644
+index 33e2210ebd..62449f1b7e 100644
 --- a/help.h
 +++ b/help.h
-@@ -18,6 +18,7 @@ static inline void mput_char(char c, unsigned int num)
+@@ -17,6 +17,7 @@ static inline void mput_char(char c, unsigned int num)
+ }
  
  extern void list_common_cmds_help(void);
- extern void list_all_cmds_help(void);
-+extern void list_common_guides_help(void);
++extern void list_all_cmds_help(void);
  extern void list_all_cmds(void);
  extern void list_porcelain_cmds(void);
  extern const char *help_unknown_cmd(const char *cmd);
+diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+index fd2a7f27dc..53208ab20e 100755
+--- a/t/t0012-help.sh
++++ b/t/t0012-help.sh
+@@ -25,6 +25,15 @@ test_expect_success "setup" '
+ 	EOF
+ '
+ 
++# make sure to exercise these code paths, the output is a bit tricky
++# to verify
++test_expect_success 'basic help commands' '
++	git help >/dev/null &&
++	git help -a >/dev/null &&
++	git help -g >/dev/null &&
++	git help -av >/dev/null
++'
++
+ test_expect_success "works for commands and guides by default" '
+ 	configure_help &&
+ 	git help status &&
 -- 
 2.17.0.367.g5dd2e386c3
 
