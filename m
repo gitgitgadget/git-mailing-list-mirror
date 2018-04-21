@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9F9F1F424
-	for <e@80x24.org>; Sat, 21 Apr 2018 09:48:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 409D91F424
+	for <e@80x24.org>; Sat, 21 Apr 2018 09:48:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752762AbeDUJsN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Apr 2018 05:48:13 -0400
-Received: from mout.gmx.net ([212.227.17.22]:47005 "EHLO mout.gmx.net"
+        id S1751850AbeDUJsj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Apr 2018 05:48:39 -0400
+Received: from mout.gmx.net ([212.227.17.20]:35325 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751462AbeDUJsM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Apr 2018 05:48:12 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lkiqm-1ebroh25pc-00aY5k; Sat, 21
- Apr 2018 11:48:07 +0200
-Date:   Sat, 21 Apr 2018 11:47:50 +0200 (DST)
+        id S1750987AbeDUJsi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Apr 2018 05:48:38 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mcyxq-1erkHb12kU-00IGp9; Sat, 21
+ Apr 2018 11:48:33 +0200
+Date:   Sat, 21 Apr 2018 11:48:17 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
@@ -29,371 +29,163 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Stefan Beller <sbeller@google.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4 04/11] replace: "libify" create_graft() and callees
+Subject: [PATCH v4 05/11] replace: introduce --convert-graft-file
 In-Reply-To: <cover.1524303776.git.johannes.schindelin@gmx.de>
-Message-ID: <f962f8043fb1125b47090a82c35e2d67d3d9d216.1524303776.git.johannes.schindelin@gmx.de>
+Message-ID: <fd4ea54ad8da5e4e93fafd558e104b0a19f6268c.1524303776.git.johannes.schindelin@gmx.de>
 References: <cover.1524262793.git.johannes.schindelin@gmx.de> <cover.1524303776.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:iMbsFEJT+m1aPYxAr+lg8NgYdJzNX4UD1l/3uMGmULxqVKy4DrK
- 6dP8AvdfMiNmOFrmQ+2iJ/xDH2gEUqS4Bsj39G7cMyRDfkRYP4p+v9MMz/s064J1kwNSxAR
- vGRwMyBwphfP8saJb4+wFpoAoJt6LMP5wRYgeLCIYB2M+PrhJOxsKDoye7Ko+RajHxmRo9b
- J2W+tQHVv4W8ZJC1SJjzQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wQWOSheXDPs=:bIunYBm7h3OCfKrSIUBUxr
- /B2t8Xr3Lm5bY+REWVDLolb7D4Gpx1n9WWdqSaBlJXcRGGlhjcSlzgLr0v+maZaFsHUQytifr
- vLP4LVsOfvgCgt/LmGNJqkbJs0XtmTKaYGc+5yYkJG7NEnHwbOOQhQ76a+Xl3QyPef9niujkk
- iXa7lRkydcpi+YxO2hLvvVYzQLdafeBDLRdIic+S96x3kwaaEzJO+w+vha/KvKthTn7cXIA0q
- JcsEWQCKfdiHu8U3IJ6djqAYhbnyfsM223rIkL/opK/mPqeG9EH8ah2AKI3eo1lVb7M/rc/1m
- 3Ewy1wuoTvyUuAJ5uJrtQMFxPoAvxF3A5VGLeDieH8ikMr/6k9KZmpCWVzHi5mTZBe8xRX0mF
- Ax9lQ1sDEo/dpbR68wWYCmWqpKIWxjnsLsiFZ9NVX5jjswiCJMW6xTQ3jeHLVCNQ0mbh3763T
- LJAD5I9v3C7oqIuqhflEg7ro1fH4QKYZKV91d+sBUvKfXZPVhaKTlAjZY0YTMXo+v8zlQyEqN
- VkpLG3RKmxvIgVIWGhpGib4pau0dm3UI2w7rUELMT4wgeEeSaBuRMXzaJaeUepaoH8lPWU5El
- u//XYyqJDLxFgt1XhnpIxfaCellAv4Sip1z2dO2HSplWQYNeE3/Cm+XxwekFn2jjjsapOUcCA
- 5oEyfZaGCmjmg5Z4eCLEP/nmKtB9pd5uQ+srFXujz8c0Wg2JnwOY6QrxByqdiUvtaIlO/GkBN
- zzDv4aICdB2uC+JASvajZ7lJDYdeEnVi+BfIUVNYbg/K9UEQr0CwfC4fYGQx3JeKoGv3nAhO3
- qF2F1tHamK2xW4C7yxL+59eS3sfH1Ub6/IjeWshnECK1jgrUIM=
+X-Provags-ID: V03:K1:YtPx/O76qnfeYZQJ3eIi82rs3JemV+wlAFu9MSDR/7EXuJyMb3C
+ CT5EjwviTtyHjcyenAPYlSKHfIcQlIjABr4EM3umVSxzJINS0NOH/ot1yXt+rtWT/oAZGo9
+ 4njnUR/F36zdECFZIVcUgZqq9xRBtE/+mEzHAb6hEV6hp52tBPEOUCpxlaJNadFVkO34YOh
+ Kgm2qbHHtARgq6+Ms2wEA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2u+JWpLJDT8=:uitvZD6aDTyr1KxzspP+MT
+ 4T/hWd2qxd1MzYo3RudpfBLxemMrCiIx2cFhYJKs+cGMdADH7R2Mz3e0YeYZe0ts2qh1Xn4/C
+ rgQIh5Zp+zr885fWr5RfNuJxoO/hDn5H/R6Hpm16Ui06IuuAuJ4k17u0714MYFHiYM1r3sbWm
+ Ya0x8n+WJaS+dyli8uP9MgpA9bkEvSrycg9yCIo9FmH2uoJz22SCuzhsxf7GL+UpB7f0Omb+T
+ 5mU3GB8COdgS/3QCREqh0jnuntXhV1UcjMyzKhNNBMNXCmk6m+rzQGfKFOd+Tf4JbxDwHj96j
+ DikN7nzHBiX5EQpNyLyyUkgDigk/UGTEPdu+LdR9K5pHWtMLHU5g/arb8J8JwYq7LQIjokuSh
+ 4OUwWiRuzQ01Vv+NtLlmsRqTcyq4Q5TeL4pw/auZeJlkxrlJ6CSvMPJbREMN0RXT5Z98u4zDA
+ Jburzx2UuUA6G7KhHYObp+MINiPuw/Yjx6CMb5Vcgospn9Vf81w33s+EoNrtM17aWJwn3uV7n
+ 1iR/F39SoT2jD25i+hD8QYWSaK1ALXTzp1lN5fzl86V4EqfgAOQy2oDqdsFlyBuP63CEKu1bS
+ mKUjareGCHsy+AJheL3M6xHil2YHtYIiiZvtmUdeicCz80DI6T/C+fTd3RZ54FB2HXO1PSHiB
+ ehoVHUX3bqMJ84h+EIseGxtaMsSTugJ7VqQuC4XCX/v3YpRSIfRcS5/J08Jy6a2f4PuLy0Ji8
+ VORO2eFI/o1aHHe55gTV1fvZ2mbYKoUQD6rASNCTyOZKR3UK58pYm6g+8WQYWdBI6h7vXpsFj
+ dJQ77Ee2Ty6INlYAthG9E0T+UO28EwOI5N8HmkcvcU/4Zof+e0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-File this away as yet another patch in the "libification" category.
-
-As with all useful functions, in the next commit we want to use
-create_graft() from a higher-level function where it would be
-inconvenient if the called function simply die()s: if there is a
-problem, we want to let the user know how to proceed, and the callee
-simply has no way of knowing what to say.
+This option is intended to help with the transition away from the
+now-deprecated graft file.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/replace.c | 135 ++++++++++++++++++++++++++++------------------
- 1 file changed, 84 insertions(+), 51 deletions(-)
+ Documentation/git-replace.txt | 11 ++++++---
+ builtin/replace.c             | 44 ++++++++++++++++++++++++++++++++++-
+ 2 files changed, 51 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
+index e5c57ae6ef4..246dc9943c2 100644
+--- a/Documentation/git-replace.txt
++++ b/Documentation/git-replace.txt
+@@ -11,6 +11,7 @@ SYNOPSIS
+ 'git replace' [-f] <object> <replacement>
+ 'git replace' [-f] --edit <object>
+ 'git replace' [-f] --graft <commit> [<parent>...]
++'git replace' [-f] --convert-graft-file
+ 'git replace' -d <object>...
+ 'git replace' [--format=<format>] [-l [<pattern>]]
+ 
+@@ -87,9 +88,13 @@ OPTIONS
+ 	content as <commit> except that its parents will be
+ 	[<parent>...] instead of <commit>'s parents. A replacement ref
+ 	is then created to replace <commit> with the newly created
+-	commit. See contrib/convert-grafts-to-replace-refs.sh for an
+-	example script based on this option that can convert grafts to
+-	replace refs.
++	commit. Use `--convert-graft-file` to convert a
++	`$GIT_DIR/info/grafts` file and use replace refs instead.
++
++--convert-graft-file::
++	Creates graft commits for all entries in `$GIT_DIR/info/grafts`
++	and deletes that file upon success. The purpose is to help users
++	with transitioning off of the now-deprecated graft file.
+ 
+ -l <pattern>::
+ --list <pattern>::
 diff --git a/builtin/replace.c b/builtin/replace.c
-index e345a5a0f1c..f63df405fd0 100644
+index f63df405fd0..6b3e0301e90 100644
 --- a/builtin/replace.c
 +++ b/builtin/replace.c
-@@ -79,9 +79,9 @@ static int list_replace_refs(const char *pattern, const char *format)
- 	else if (!strcmp(format, "long"))
- 		data.format = REPLACE_FORMAT_LONG;
- 	else
--		die("invalid replace format '%s'\n"
--		    "valid formats are 'short', 'medium' and 'long'\n",
--		    format);
-+		return error("invalid replace format '%s'\n"
-+			     "valid formats are 'short', 'medium' and 'long'\n",
-+			     format);
- 
- 	for_each_replace_ref(show_reference, (void *)&data);
- 
-@@ -134,7 +134,7 @@ static int delete_replace_ref(const char *name, const char *ref,
- 	return 0;
+@@ -20,6 +20,7 @@ static const char * const git_replace_usage[] = {
+ 	N_("git replace [-f] <object> <replacement>"),
+ 	N_("git replace [-f] --edit <object>"),
+ 	N_("git replace [-f] --graft <commit> [<parent>...]"),
++	N_("git replace [-f] --convert-graft-file"),
+ 	N_("git replace -d <object>..."),
+ 	N_("git replace [--format=<format>] [-l [<pattern>]]"),
+ 	NULL
+@@ -454,6 +455,38 @@ static int create_graft(int argc, const char **argv, int force)
+ 	return replace_object_oid(old_ref, &old_oid, "replacement", &new_oid, force);
  }
  
--static void check_ref_valid(struct object_id *object,
-+static int check_ref_valid(struct object_id *object,
- 			    struct object_id *prev,
- 			    struct strbuf *ref,
- 			    int force)
-@@ -142,12 +142,13 @@ static void check_ref_valid(struct object_id *object,
- 	strbuf_reset(ref);
- 	strbuf_addf(ref, "%s%s", git_replace_ref_base, oid_to_hex(object));
- 	if (check_refname_format(ref->buf, 0))
--		die("'%s' is not a valid ref name.", ref->buf);
-+		return error("'%s' is not a valid ref name.", ref->buf);
- 
- 	if (read_ref(ref->buf, prev))
- 		oidclr(prev);
- 	else if (!force)
--		die("replace ref '%s' already exists", ref->buf);
-+		return error("replace ref '%s' already exists", ref->buf);
-+	return 0;
- }
- 
- static int replace_object_oid(const char *object_ref,
-@@ -161,28 +162,31 @@ static int replace_object_oid(const char *object_ref,
- 	struct strbuf ref = STRBUF_INIT;
- 	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
-+	int res = 0;
- 
- 	obj_type = oid_object_info(object, NULL);
- 	repl_type = oid_object_info(repl, NULL);
- 	if (!force && obj_type != repl_type)
--		die("Objects must be of the same type.\n"
--		    "'%s' points to a replaced object of type '%s'\n"
--		    "while '%s' points to a replacement object of type '%s'.",
--		    object_ref, type_name(obj_type),
--		    replace_ref, type_name(repl_type));
-+		return error("Objects must be of the same type.\n"
-+			     "'%s' points to a replaced object of type '%s'\n"
-+			     "while '%s' points to a replacement object of "
-+			     "type '%s'.",
-+			     object_ref, type_name(obj_type),
-+			     replace_ref, type_name(repl_type));
- 
--	check_ref_valid(object, &prev, &ref, force);
-+	if (check_ref_valid(object, &prev, &ref, force))
++static int convert_graft_file(int force)
++{
++	const char *graft_file = get_graft_file();
++	FILE *fp = fopen_or_warn(graft_file, "r");
++	struct strbuf buf = STRBUF_INIT, err = STRBUF_INIT;
++	struct argv_array args = ARGV_ARRAY_INIT;
++
++	if (!fp)
 +		return -1;
- 
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, ref.buf, repl, &prev,
- 				   0, NULL, &err) ||
- 	    ref_transaction_commit(transaction, &err))
--		die("%s", err.buf);
-+		res = error("%s", err.buf);
- 
- 	ref_transaction_free(transaction);
- 	strbuf_release(&ref);
--	return 0;
-+	return res;
- }
- 
- static int replace_object(const char *object_ref, const char *replace_ref, int force)
-@@ -190,9 +194,11 @@ static int replace_object(const char *object_ref, const char *replace_ref, int f
- 	struct object_id object, repl;
- 
- 	if (get_oid(object_ref, &object))
--		die("Failed to resolve '%s' as a valid ref.", object_ref);
-+		return error("Failed to resolve '%s' as a valid ref.",
-+			     object_ref);
- 	if (get_oid(replace_ref, &repl))
--		die("Failed to resolve '%s' as a valid ref.", replace_ref);
-+		return error("Failed to resolve '%s' as a valid ref.",
-+			     replace_ref);
- 
- 	return replace_object_oid(object_ref, &object, replace_ref, &repl, force);
- }
-@@ -202,7 +208,7 @@ static int replace_object(const char *object_ref, const char *replace_ref, int f
-  * If "raw" is true, then the object's raw contents are printed according to
-  * "type". Otherwise, we pretty-print the contents for human editing.
-  */
--static void export_object(const struct object_id *oid, enum object_type type,
-+static int export_object(const struct object_id *oid, enum object_type type,
- 			  int raw, const char *filename)
++
++	while (strbuf_getline(&buf, fp) != EOF) {
++		if (*buf.buf == '#')
++			continue;
++
++		argv_array_split(&args, buf.buf);
++		if (args.argc && create_graft(args.argc, args.argv, force))
++			strbuf_addf(&err, "\n\t%s", buf.buf);
++		argv_array_clear(&args);
++	}
++
++	strbuf_release(&buf);
++	argv_array_clear(&args);
++
++	if (!err.len)
++		return unlink_or_warn(graft_file);
++
++	warning(_("could not convert the following graft(s):\n%s"), err.buf);
++	strbuf_release(&err);
++
++	return -1;
++}
++
+ int cmd_replace(int argc, const char **argv, const char *prefix)
  {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
-@@ -210,7 +216,7 @@ static void export_object(const struct object_id *oid, enum object_type type,
+ 	int force = 0;
+@@ -465,6 +498,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		MODE_DELETE,
+ 		MODE_EDIT,
+ 		MODE_GRAFT,
++		MODE_CONVERT_GRAFT_FILE,
+ 		MODE_REPLACE
+ 	} cmdmode = MODE_UNSPECIFIED;
+ 	struct option options[] = {
+@@ -472,6 +506,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete replace refs"), MODE_DELETE),
+ 		OPT_CMDMODE('e', "edit", &cmdmode, N_("edit existing object"), MODE_EDIT),
+ 		OPT_CMDMODE('g', "graft", &cmdmode, N_("change a commit's parents"), MODE_GRAFT),
++		OPT_CMDMODE(0, "convert-graft-file", &cmdmode, N_("convert existing graft file"), MODE_CONVERT_GRAFT_FILE),
+ 		OPT_BOOL_F('f', "force", &force, N_("replace the ref if it exists"),
+ 			   PARSE_OPT_NOCOMPLETE),
+ 		OPT_BOOL(0, "raw", &raw, N_("do not pretty-print contents for --edit")),
+@@ -494,7 +529,8 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 	if (force &&
+ 	    cmdmode != MODE_REPLACE &&
+ 	    cmdmode != MODE_EDIT &&
+-	    cmdmode != MODE_GRAFT)
++	    cmdmode != MODE_GRAFT &&
++	    cmdmode != MODE_CONVERT_GRAFT_FILE)
+ 		usage_msg_opt("-f only makes sense when writing a replacement",
+ 			      git_replace_usage, options);
  
- 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
- 	if (fd < 0)
--		die_errno("unable to open %s for writing", filename);
-+		return error_errno("unable to open %s for writing", filename);
+@@ -527,6 +563,12 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 				      git_replace_usage, options);
+ 		return create_graft(argc, argv, force);
  
- 	argv_array_push(&cmd.args, "--no-replace-objects");
- 	argv_array_push(&cmd.args, "cat-file");
-@@ -223,7 +229,8 @@ static void export_object(const struct object_id *oid, enum object_type type,
- 	cmd.out = fd;
- 
- 	if (run_command(&cmd))
--		die("cat-file reported failure");
-+		return error("cat-file reported failure");
-+	return 0;
- }
- 
- /*
-@@ -231,14 +238,14 @@ static void export_object(const struct object_id *oid, enum object_type type,
-  * interpreting it as "type", and writing the result to the object database.
-  * The sha1 of the written object is returned via sha1.
-  */
--static void import_object(struct object_id *oid, enum object_type type,
-+static int import_object(struct object_id *oid, enum object_type type,
- 			  int raw, const char *filename)
- {
- 	int fd;
- 
- 	fd = open(filename, O_RDONLY);
- 	if (fd < 0)
--		die_errno("unable to open %s for reading", filename);
-+		return error_errno("unable to open %s for reading", filename);
- 
- 	if (!raw && type == OBJ_TREE) {
- 		const char *argv[] = { "mktree", NULL };
-@@ -250,27 +257,38 @@ static void import_object(struct object_id *oid, enum object_type type,
- 		cmd.in = fd;
- 		cmd.out = -1;
- 
--		if (start_command(&cmd))
--			die("unable to spawn mktree");
-+		if (start_command(&cmd)) {
-+			close(fd);
-+			return error("unable to spawn mktree");
-+		}
- 
--		if (strbuf_read(&result, cmd.out, 41) < 0)
--			die_errno("unable to read from mktree");
-+		if (strbuf_read(&result, cmd.out, 41) < 0) {
-+			close(fd);
-+			close(cmd.out);
-+			return error_errno("unable to read from mktree");
-+		}
- 		close(cmd.out);
- 
--		if (finish_command(&cmd))
--			die("mktree reported failure");
--		if (get_oid_hex(result.buf, oid) < 0)
--			die("mktree did not return an object name");
-+		if (finish_command(&cmd)) {
-+			strbuf_release(&result);
-+			return error("mktree reported failure");
-+		}
-+		if (get_oid_hex(result.buf, oid) < 0) {
-+			strbuf_release(&result);
-+			return error("mktree did not return an object name");
-+		}
- 
- 		strbuf_release(&result);
- 	} else {
- 		struct stat st;
- 		int flags = HASH_FORMAT_CHECK | HASH_WRITE_OBJECT;
- 
--		if (fstat(fd, &st) < 0)
--			die_errno("unable to fstat %s", filename);
-+		if (fstat(fd, &st) < 0) {
-+			close(fd);
-+			return error_errno("unable to fstat %s", filename);
-+		}
- 		if (index_fd(oid, fd, &st, type, NULL, flags) < 0)
--			die("unable to write object to database");
-+			return error("unable to write object to database");
- 		/* index_fd close()s fd for us */
- 	}
- 
-@@ -278,6 +296,7 @@ static void import_object(struct object_id *oid, enum object_type type,
- 	 * No need to close(fd) here; both run-command and index-fd
- 	 * will have done it for us.
- 	 */
-+	return 0;
- }
- 
- static int edit_and_replace(const char *object_ref, int force, int raw)
-@@ -288,19 +307,23 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
- 	struct strbuf ref = STRBUF_INIT;
- 
- 	if (get_oid(object_ref, &old_oid) < 0)
--		die("Not a valid object name: '%s'", object_ref);
-+		return error("Not a valid object name: '%s'", object_ref);
- 
- 	type = oid_object_info(&old_oid, NULL);
- 	if (type < 0)
--		die("unable to get object type for %s", oid_to_hex(&old_oid));
-+		return error("unable to get object type for %s",
-+			     oid_to_hex(&old_oid));
- 
--	check_ref_valid(&old_oid, &prev, &ref, force);
-+	if (check_ref_valid(&old_oid, &prev, &ref, force))
-+		return -1;
- 	strbuf_release(&ref);
- 
--	export_object(&old_oid, type, raw, tmpfile);
-+	if (export_object(&old_oid, type, raw, tmpfile))
-+		return -1;
- 	if (launch_editor(tmpfile, NULL, NULL) < 0)
--		die("editing object file failed");
--	import_object(&new_oid, type, raw, tmpfile);
-+		return error("editing object file failed");
-+	if (import_object(&new_oid, type, raw, tmpfile))
-+		return -1;
- 
- 	free(tmpfile);
- 
-@@ -310,7 +333,7 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
- 	return replace_object_oid(object_ref, &old_oid, "replacement", &new_oid, force);
- }
- 
--static void replace_parents(struct strbuf *buf, int argc, const char **argv)
-+static int replace_parents(struct strbuf *buf, int argc, const char **argv)
- {
- 	struct strbuf new_parents = STRBUF_INIT;
- 	const char *parent_start, *parent_end;
-@@ -328,8 +351,10 @@ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
- 	for (i = 0; i < argc; i++) {
- 		struct object_id oid;
- 		if (get_oid(argv[i], &oid) < 0)
--			die(_("Not a valid object name: '%s'"), argv[i]);
--		lookup_commit_or_die(&oid, argv[i]);
-+			return error(_("Not a valid object name: '%s'"),
-+				     argv[i]);
-+		if (!lookup_commit_reference(&oid))
-+			return error(_("could not parse %s"), argv[i]);
- 		strbuf_addf(&new_parents, "parent %s\n", oid_to_hex(&oid));
- 	}
- 
-@@ -338,6 +363,7 @@ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
- 		      new_parents.buf, new_parents.len);
- 
- 	strbuf_release(&new_parents);
-+	return 0;
- }
- 
- struct check_mergetag_data {
-@@ -358,21 +384,23 @@ static int check_one_mergetag(struct commit *commit,
- 	hash_object_file(extra->value, extra->len, type_name(OBJ_TAG), &tag_oid);
- 	tag = lookup_tag(&tag_oid);
- 	if (!tag)
--		die(_("bad mergetag in commit '%s'"), ref);
-+		return error(_("bad mergetag in commit '%s'"), ref);
- 	if (parse_tag_buffer(tag, extra->value, extra->len))
--		die(_("malformed mergetag in commit '%s'"), ref);
-+		return error(_("malformed mergetag in commit '%s'"), ref);
- 
- 	/* iterate over new parents */
- 	for (i = 1; i < mergetag_data->argc; i++) {
- 		struct object_id oid;
- 		if (get_oid(mergetag_data->argv[i], &oid) < 0)
--			die(_("Not a valid object name: '%s'"), mergetag_data->argv[i]);
-+			return error(_("Not a valid object name: '%s'"),
-+				     mergetag_data->argv[i]);
- 		if (!oidcmp(&tag->tagged->oid, &oid))
- 			return 0; /* found */
- 	}
- 
--	die(_("original commit '%s' contains mergetag '%s' that is discarded; "
--	      "use --edit instead of --graft"), ref, oid_to_hex(&tag_oid));
-+	return error(_("original commit '%s' contains mergetag '%s' that is "
-+		       "discarded; use --edit instead of --graft"), ref,
-+		     oid_to_hex(&tag_oid));
- }
- 
- static int check_mergetags(struct commit *commit, int argc, const char **argv)
-@@ -394,24 +422,29 @@ static int create_graft(int argc, const char **argv, int force)
- 	unsigned long size;
- 
- 	if (get_oid(old_ref, &old_oid) < 0)
--		die(_("Not a valid object name: '%s'"), old_ref);
--	commit = lookup_commit_or_die(&old_oid, old_ref);
-+		return error(_("Not a valid object name: '%s'"), old_ref);
-+	commit = lookup_commit_reference(&old_oid);
-+	if (!commit)
-+		return error(_("could not parse %s"), old_ref);
- 
- 	buffer = get_commit_buffer(commit, &size);
- 	strbuf_add(&buf, buffer, size);
- 	unuse_commit_buffer(commit, buffer);
- 
--	replace_parents(&buf, argc - 1, &argv[1]);
-+	if (replace_parents(&buf, argc - 1, &argv[1]) < 0)
-+		return -1;
- 
- 	if (remove_signature(&buf)) {
- 		warning(_("the original commit '%s' has a gpg signature."), old_ref);
- 		warning(_("the signature will be removed in the replacement commit!"));
- 	}
- 
--	check_mergetags(commit, argc, argv);
-+	if (check_mergetags(commit, argc, argv))
-+		return -1;
- 
- 	if (write_object_file(buf.buf, buf.len, commit_type, &new_oid))
--		die(_("could not write replacement commit for: '%s'"), old_ref);
-+		return error(_("could not write replacement commit for: '%s'"),
-+			     old_ref);
- 
- 	strbuf_release(&buf);
- 
++	case MODE_CONVERT_GRAFT_FILE:
++		if (argc != 0)
++			usage_msg_opt("--convert-graft-file takes no argument",
++				      git_replace_usage, options);
++		return !!convert_graft_file(force);
++
+ 	case MODE_LIST:
+ 		if (argc > 1)
+ 			usage_msg_opt("only one pattern can be given with -l",
 -- 
 2.17.0.windows.1.15.gaa56ade3205
 
