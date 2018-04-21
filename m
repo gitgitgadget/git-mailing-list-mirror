@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 362841F404
-	for <e@80x24.org>; Sat, 21 Apr 2018 16:54:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD8B91F404
+	for <e@80x24.org>; Sat, 21 Apr 2018 16:54:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753138AbeDUQyh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Apr 2018 12:54:37 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:46534 "EHLO
+        id S1753148AbeDUQyi (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Apr 2018 12:54:38 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:44668 "EHLO
         mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753059AbeDUQyd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Apr 2018 12:54:33 -0400
-Received: by mail-lf0-f66.google.com with SMTP id j68-v6so9179870lfg.13
-        for <git@vger.kernel.org>; Sat, 21 Apr 2018 09:54:32 -0700 (PDT)
+        with ESMTP id S1753088AbeDUQye (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Apr 2018 12:54:34 -0400
+Received: by mail-lf0-f66.google.com with SMTP id g203-v6so9198511lfg.11
+        for <git@vger.kernel.org>; Sat, 21 Apr 2018 09:54:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QwvxSGeMKVC7WmcwG9S0ke3Xegnkk90aOSjCBDrdQME=;
-        b=hTG/IXHt3aSkv77zv8iYjHIoZjeJ7qIp1eIABp5jdpBfZvCMaQ3wlSsWWtriL0INK0
-         9vaxbmU8XAfp11L9TiJp99a3hdmp/eFOOXvAD//um43MTBwiZGmmMg0dQa9jHejsc2i3
-         FPsQ921gfmUoR8acE8PSzlkizB4RH0yexM+rZwjR9QewZtJs0pBaQGL7ETrGakgScVSV
-         +CaqRSrJD40kurHdht696zuwxwDtZmJR5tfM5B//uxCsYw9B/Ca3h5xp3gWSlCImEvsa
-         KA6RCWgSLL5oSaIfGfuYohBOuTEIbLtURFF/hua9SsoLNlUOVTdTVALEZI082trK0dIV
-         MHmQ==
+        bh=rw5Q+iPIDh6R4dAQcyt/mhlZtdvhtcOwVV1eDwoFVt4=;
+        b=HXBs1H9MW/m3krJ95afcOUhUimONcXmk1NeYS8DeYc+5P3JxSYe6HS/SBe/dc4k0HO
+         Ia23VPl+R9fMw2+7eNlegvNhOre7FIEUEyUu+hQ/6sPGjzGLTXRalWPHs4/5Y0eDpxZl
+         /VuuWmqIFHjrtvIwdG8W+28etpMUc4+INSI0g1mR3j9DbJqSww+Rk+F1bGJhGrhkP8tG
+         JsljhT8XVdaXPjxEYJ2bt5MMbRSRTHbOnWoLLB9Ty0HKBebAuuDIorNnuRdS6CAiLKTc
+         NPlakFVrm3EOKC87Wom45Nj883Bep9tO65AAXG4lzNmyK6Ul33QxCegWAWcv3irb/cKx
+         cygg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QwvxSGeMKVC7WmcwG9S0ke3Xegnkk90aOSjCBDrdQME=;
-        b=BRdOgrl/QFndbf8T3H3QZtanOtVTurPxHJ2rRN5pWQwgg9XV863gMkeKM5pneBplHx
-         kOo7NyDThfisqvhBmZ1X2V4nH+hVouWg4HomQFcTdIy6HTeZtDyTEM+uVx5av1JfnxNn
-         08D2FvCORqLijhO4mPDUSczaCpmWoPF2GNSrOwnHczYBgsKFHvREkOJjj+P4aIveAkRL
-         7quF8+tBvcbQv9qhcVn1lXFNPsD7b1UtrcWg2ehRqz+jGLmAyY2QbaTJdFN9QvI2avgn
-         lPpWpiU+cHvsNLoJtHCNXwobE9jacLPLK8N0NJuTQqBvBWar0T7Sz7g6eq02UUPTLdBV
-         uXtQ==
-X-Gm-Message-State: ALQs6tBM2wjwglErabtNWtgZxWLJAiPwrBeH//wEDsiSgTWSHr8WyPmq
-        Av21s3cNnVJWzAy+zQLOZ6TtpA==
-X-Google-Smtp-Source: AIpwx4+V4fyTPtfy9KOYD7E3urfk2wDl31Qnix2kmwyrOKwJ1Xor+pu2z5a69K+KuKZvUKY9zWWQxg==
-X-Received: by 10.46.77.214 with SMTP id c83mr9461927ljd.126.1524329671759;
-        Sat, 21 Apr 2018 09:54:31 -0700 (PDT)
+        bh=rw5Q+iPIDh6R4dAQcyt/mhlZtdvhtcOwVV1eDwoFVt4=;
+        b=gV7bj0tottn1Zo1cZepWvwZyvtVqB+W+xLb9fOG+CJjP8BDpb0uqD/MX3dQ4EIv24v
+         w4qeSFhMdT5aidqxkOT9bbXCWZsRB32PNPJBUQqMjPERD3bQlE9kzGB4eaT0MGduhnDg
+         7IMvWFrySjiz9afkAk14PoWGtt+5spxTeJ5bYqaWcrLhns17feQUP4GmjLBVhFk0+iyF
+         4K17Q4RVGvGEsdpnMZo3TG7KGCeeIjhyeFR+oIX/Nhm25ZrJsxWAcAJts03riLoPRbaw
+         1muHiely+9tEdUlUrRtLeHxkjlWIkoOpi9gXey/ey6pmjOo2HekL3flvlmlr0Gh7A4Wf
+         Yvww==
+X-Gm-Message-State: ALQs6tBG0fQwMhSWyFyDA5NzqSGhT7Y0FLxYjZ5S9CCQZVea7JcMYBO8
+        NNwflQ+r8TrWcobg1BtyOk1/sg==
+X-Google-Smtp-Source: AIpwx4/ohRjUDjTpQYX2x9HcrkxYKuScGmQZP4ofgDhAUKrdYO100FlFBnjxsC1IrxYA++IkyATjSQ==
+X-Received: by 10.46.89.212 with SMTP id g81mr10309336ljf.4.1524329673008;
+        Sat, 21 Apr 2018 09:54:33 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g81sm1526523ljb.12.2018.04.21.09.54.30
+        by smtp.gmail.com with ESMTPSA id g81sm1526523ljb.12.2018.04.21.09.54.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Apr 2018 09:54:30 -0700 (PDT)
+        Sat, 21 Apr 2018 09:54:32 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, philipoakley@iee.org,
         sunshine@sunshineco.com, szeder.dev@gmail.com
-Subject: [PATCH v3 2/6] git.c: implement --list-cmds=all and use it in git-completion.bash
-Date:   Sat, 21 Apr 2018 18:54:10 +0200
-Message-Id: <20180421165414.30051-3-pclouds@gmail.com>
+Subject: [PATCH v3 3/6] generate-cmdlist.sh: keep all information in common-cmds.h
+Date:   Sat, 21 Apr 2018 18:54:11 +0200
+Message-Id: <20180421165414.30051-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.367.g5dd2e386c3
 In-Reply-To: <20180421165414.30051-1-pclouds@gmail.com>
 References: <20180415164238.9107-1-pclouds@gmail.com>
@@ -69,81 +69,232 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+common-cmds.h is used to extract the list of common commands (by
+group) and a one-line summary of each command. Some information is
+dropped, for example command category or summary of other commands.
+Update generate-cmdlist.sh to keep all the information. The extra info
+will be used shortly.
+
+The "deprecated" column is dropped from command-list.txt since it's
+not really used and the new parsing code can't deal with it. When we
+do need deprecated attribute, we could add it back and adjust
+generate-cmdlist.sh at the same time.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- contrib/completion/git-completion.bash |  2 +-
- git.c                                  |  2 ++
- help.c                                 | 18 ++++++++++++++++++
- help.h                                 |  1 +
- 4 files changed, 22 insertions(+), 1 deletion(-)
+ command-list.txt    |  2 +-
+ generate-cmdlist.sh | 53 +++++++++++++++++++++++++++++++--------------
+ help.c              | 43 +++++++++++++++++++++++++++++++-----
+ 3 files changed, 75 insertions(+), 23 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 3556838759..a5f13ade20 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -839,7 +839,7 @@ __git_commands () {
- 	then
- 		printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
- 	else
--		git help -a|egrep '^  [a-zA-Z0-9]'
-+		git --list-cmds=all
- 	fi
- }
+diff --git a/command-list.txt b/command-list.txt
+index a1fad28fd8..2c81d8db74 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -9,7 +9,7 @@ history      grow, mark and tweak your common history
+ remote       collaborate (see also: git help workflows)
  
-diff --git a/git.c b/git.c
-index 28bfa96d87..64f67e7f7f 100644
---- a/git.c
-+++ b/git.c
-@@ -228,6 +228,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				list_builtins(0, '\n');
- 			else if (!strcmp(cmd, "parseopt"))
- 				list_builtins(NO_PARSEOPT, ' ');
-+			else if (!strcmp(cmd, "all"))
-+				list_all_cmds();
- 			else
- 				die("unsupported command listing type '%s'", cmd);
- 			exit(0);
+ ### command list (do not change this line)
+-# command name                          category [deprecated] [common]
++# command name                          category                [common]
+ git-add                                 mainporcelain           worktree
+ git-am                                  mainporcelain
+ git-annotate                            ancillaryinterrogators
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index eeea4b67ea..05722b1392 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -1,17 +1,30 @@
+ #!/bin/sh
+ 
++# Don't let locale affect this script.
++LC_ALL=C
++LANG=C
++export LC_ALL LANG
++
++command_list () {
++	sed '1,/^### command list/d;/^#/d' "$1"
++}
++
++category_list () {
++	command_list "$1" | awk '{print $2;}' | sort | uniq
++}
++
+ echo "/* Automatically generated by generate-cmdlist.sh */
+ struct cmdname_help {
+-	char name[16];
++	char name[32];
+ 	char help[80];
+-	unsigned char group;
++	unsigned int category;
++	unsigned int group;
+ };
+ 
+ static const char *common_cmd_groups[] = {"
+ 
+ grps=grps$$.tmp
+-match=match$$.tmp
+-trap "rm -f '$grps' '$match'" 0 1 2 3 15
++trap "rm -f '$grps'" 0 1 2 3 15
+ 
+ sed -n '
+ 	1,/^### common groups/b
+@@ -23,28 +36,36 @@ sed -n '
+ 	' "$1"
+ printf '};\n\n'
+ 
++echo "#define GROUP_NONE 0xff"
+ n=0
+-substnum=
+ while read grp
+ do
+-	echo "^git-..*[ 	]$grp"
+-	substnum="$substnum${substnum:+;}s/[ 	]$grp/$n/"
++	echo "#define GROUP_${grp:-NONE} $n"
+ 	n=$(($n+1))
+-done <"$grps" >"$match"
++done <"$grps"
++echo
++
++n=0
++category_list "$1" |
++while read category; do
++	echo "#define CAT_$category $n"
++	n=$(($n+1))
++done
++echo
+ 
+-printf 'static struct cmdname_help common_cmds[] = {\n'
+-grep -f "$match" "$1" |
+-sed 's/^git-//' |
++printf 'static struct cmdname_help command_list[] = {\n'
++command_list "$1" |
+ sort |
+-while read cmd tags
++while read cmd category tags
+ do
+-	tag=$(echo "$tags" | sed "$substnum; s/[^0-9]//g")
++	prefix=git-
++	name=$(echo $cmd | sed "s/^${prefix}//")
+ 	sed -n '
+-		/^NAME/,/git-'"$cmd"'/H
++		/^NAME/,/'"$cmd"'/H
+ 		${
+ 			x
+-			s/.*git-'"$cmd"' - \(.*\)/	{"'"$cmd"'", N_("\1"), '$tag'},/
++			s/.*'"$cmd"' - \(.*\)/	{"'"$name"'", N_("\1"), CAT_'$category', GROUP_'${tags:-NONE}' },/
+ 			p
+-		}' "Documentation/git-$cmd.txt"
++		}' "Documentation/$cmd.txt"
+ done
+ echo "};"
 diff --git a/help.c b/help.c
-index 60071a9bea..e155c39870 100644
+index e155c39870..e63006c333 100644
 --- a/help.c
 +++ b/help.c
-@@ -228,6 +228,24 @@ void list_common_cmds_help(void)
+@@ -190,6 +190,28 @@ void list_commands(unsigned int colopts,
  	}
  }
  
-+void list_all_cmds(void)
++static void extract_common_cmds(struct cmdname_help **p_common_cmds,
++				int *p_nr)
 +{
-+	struct cmdnames main_cmds, other_cmds;
-+	int i;
++	int i, nr = 0;
++	struct cmdname_help *common_cmds;
 +
-+	memset(&main_cmds, 0, sizeof(main_cmds));
-+	memset(&other_cmds, 0, sizeof(other_cmds));
-+	load_command_list("git-", &main_cmds, &other_cmds);
++	ALLOC_ARRAY(common_cmds, ARRAY_SIZE(command_list));
 +
-+	for (i = 0; i < main_cmds.cnt; i++)
-+		puts(main_cmds.names[i]->name);
-+	for (i = 0; i < other_cmds.cnt; i++)
-+		puts(other_cmds.names[i]->name);
++	for (i = 0; i < ARRAY_SIZE(command_list); i++) {
++		const struct cmdname_help *cmd = command_list + i;
 +
-+	clean_cmdnames(&main_cmds);
-+	clean_cmdnames(&other_cmds);
++		if (cmd->category != CAT_mainporcelain ||
++		    cmd->group == GROUP_NONE)
++			continue;
++
++		common_cmds[nr++] = *cmd;
++	}
++
++	*p_common_cmds = common_cmds;
++	*p_nr = nr;
 +}
 +
- int is_in_cmdlist(struct cmdnames *c, const char *s)
+ static int cmd_group_cmp(const void *elem1, const void *elem2)
  {
- 	int i;
-diff --git a/help.h b/help.h
-index b21d7c94e8..0bf29f8dc5 100644
---- a/help.h
-+++ b/help.h
-@@ -17,6 +17,7 @@ static inline void mput_char(char c, unsigned int num)
+ 	const struct cmdname_help *e1 = elem1;
+@@ -206,17 +228,21 @@ void list_common_cmds_help(void)
+ {
+ 	int i, longest = 0;
+ 	int current_grp = -1;
++	int nr = 0;
++	struct cmdname_help *common_cmds;
++
++	extract_common_cmds(&common_cmds, &nr);
+ 
+-	for (i = 0; i < ARRAY_SIZE(common_cmds); i++) {
++	for (i = 0; i < nr; i++) {
+ 		if (longest < strlen(common_cmds[i].name))
+ 			longest = strlen(common_cmds[i].name);
+ 	}
+ 
+-	QSORT(common_cmds, ARRAY_SIZE(common_cmds), cmd_group_cmp);
++	QSORT(common_cmds, nr, cmd_group_cmp);
+ 
+ 	puts(_("These are common Git commands used in various situations:"));
+ 
+-	for (i = 0; i < ARRAY_SIZE(common_cmds); i++) {
++	for (i = 0; i < nr; i++) {
+ 		if (common_cmds[i].group != current_grp) {
+ 			printf("\n%s\n", _(common_cmd_groups[common_cmds[i].group]));
+ 			current_grp = common_cmds[i].group;
+@@ -226,6 +252,7 @@ void list_common_cmds_help(void)
+ 		mput_char(' ', longest - strlen(common_cmds[i].name));
+ 		puts(_(common_cmds[i].help));
+ 	}
++	free(common_cmds);
  }
  
- extern void list_common_cmds_help(void);
-+extern void list_all_cmds(void);
- extern const char *help_unknown_cmd(const char *cmd);
- extern void load_command_list(const char *prefix,
- 			      struct cmdnames *main_cmds,
+ void list_all_cmds(void)
+@@ -301,8 +328,9 @@ static const char bad_interpreter_advice[] =
+ 
+ const char *help_unknown_cmd(const char *cmd)
+ {
+-	int i, n, best_similarity = 0;
++	int i, n, best_similarity = 0, nr_common;
+ 	struct cmdnames main_cmds, other_cmds;
++	struct cmdname_help *common_cmds;
+ 
+ 	memset(&main_cmds, 0, sizeof(main_cmds));
+ 	memset(&other_cmds, 0, sizeof(other_cmds));
+@@ -317,6 +345,8 @@ const char *help_unknown_cmd(const char *cmd)
+ 	QSORT(main_cmds.names, main_cmds.cnt, cmdname_compare);
+ 	uniq(&main_cmds);
+ 
++	extract_common_cmds(&common_cmds, &nr_common);
++
+ 	/* This abuses cmdname->len for levenshtein distance */
+ 	for (i = 0, n = 0; i < main_cmds.cnt; i++) {
+ 		int cmp = 0; /* avoid compiler stupidity */
+@@ -331,10 +361,10 @@ const char *help_unknown_cmd(const char *cmd)
+ 			die(_(bad_interpreter_advice), cmd, cmd);
+ 
+ 		/* Does the candidate appear in common_cmds list? */
+-		while (n < ARRAY_SIZE(common_cmds) &&
++		while (n < nr_common &&
+ 		       (cmp = strcmp(common_cmds[n].name, candidate)) < 0)
+ 			n++;
+-		if ((n < ARRAY_SIZE(common_cmds)) && !cmp) {
++		if ((n < nr_common) && !cmp) {
+ 			/* Yes, this is one of the common commands */
+ 			n++; /* use the entry from common_cmds[] */
+ 			if (starts_with(candidate, cmd)) {
+@@ -347,6 +377,7 @@ const char *help_unknown_cmd(const char *cmd)
+ 		main_cmds.names[i]->len =
+ 			levenshtein(cmd, candidate, 0, 2, 1, 3) + 1;
+ 	}
++	FREE_AND_NULL(common_cmds);
+ 
+ 	QSORT(main_cmds.names, main_cmds.cnt, levenshtein_compare);
+ 
 -- 
 2.17.0.367.g5dd2e386c3
 
