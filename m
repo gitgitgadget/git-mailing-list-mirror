@@ -2,172 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACEB31F424
-	for <e@80x24.org>; Sun, 22 Apr 2018 15:32:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCA2B1F424
+	for <e@80x24.org>; Sun, 22 Apr 2018 15:58:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753922AbeDVPcf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Apr 2018 11:32:35 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:17352 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754918AbeDVPcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Apr 2018 11:32:22 -0400
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id AGyRf24UL4ZqzAGyRflP1v; Sun, 22 Apr 2018 16:32:21 +0100
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=E/fjW5Vl c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=xtxXYLxNAAAA:8
- a=FZMEZzhCIBRuA2dCDVsA:9 a=wPNLvfGTeEIA:10 a=xts0dhWdiJbonKbuqhAr:22
-Message-ID: <AE53F7B8907A4FE3BFDC8806B5C21AB3@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Johannes Schindelin" <johannes.schindelin@gmx.de>,
-        "Git List" <git@vger.kernel.org>
-Cc:     "Junio C Hamano" <gitster@pobox.com>,
-        "Dan Jacques" <dnj@google.com>
-References: <cover.1524211375.git.johannes.schindelin@gmx.de> <d134afdd22c9cdfd763213b37efac4ef0399a374.1524211375.git.johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] Avoid multiple PREFIX definitions
-Date:   Sun, 22 Apr 2018 16:32:24 +0100
-Organization: OPDS
+        id S1754320AbeDVP6n (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Apr 2018 11:58:43 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:40022 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754370AbeDVP6l (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Apr 2018 11:58:41 -0400
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id AHNufXQWKFj1OAHNvfzk5Q; Sun, 22 Apr 2018 16:58:40 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=COIEoyjD c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=UDQfy_OZ0vHeqFShigAA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v3 0/6] Keep all info in command-list.txt in git binary
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20180415164238.9107-1-pclouds@gmail.com>
+ <20180421165414.30051-1-pclouds@gmail.com>
+ <20180421165618.GA30287@duynguyen.home>
+ <a5dc36f7-fc79-46ba-7e73-e9473cf1aec9@ramsayjones.plus.com>
+ <CACsJy8Cj57=p5nKH1T2UZmFbDv2d_JRO+GcAo29SAZcSxgKCkw@mail.gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <9303a7ef-5895-a974-84dc-98521be14793@ramsayjones.plus.com>
+Date:   Sun, 22 Apr 2018 16:58:38 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180422-0, 22/04/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfA0J72UR3S7HPPyuLJE2u81j8VXGZ4/kiaNyTCQkhOQfGxLnJcYjsUb6QYqzrF5oifSZmmqV1stbVCDh8Gaf8JgQZB9CJ1e2CfOMUbtxzJvDH58zgM7C
- FxNFfLWdMKZ2Lm3YDNmTSRzWN+kEo2WXCwBUeJ/9OQi7Sxzg7+Qsl8rJYgoieoEEJ+DqUSP5AXKvuwk+l+MsBbmoIyoOQdZ76nuSzbGTDdgqYO79uFnWUYq6
- OIAcmfAnGV7HvVxOXV58Bg==
+In-Reply-To: <CACsJy8Cj57=p5nKH1T2UZmFbDv2d_JRO+GcAo29SAZcSxgKCkw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfDZNlJZuIPVDA3rGIxcvDUeW8+ODL9td+zw0RCactxLtDq9bxQVDslSwivAqpjk22+cZG+2MEuCfqbpJ6nnRbSgeQfs5Btzffg6M/7L2B2ieOhFQ2gaM
+ ELF1lPuEMILz3zObCJPpHDHmqV7I8Tp/qdgG2M2g4bjBrfTtiiRXGuAE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
-> From: Philip Oakley <philipoakley@iee.org>
->
-> The short and sweet PREFIX can be confused when used in many places.
->
-> Rename both usages to better describe their purpose. EXEC_CMD_PREFIX is
-> used in full to disambiguate it from the nearby GIT_EXEC_PATH.
 
-@dcsho; Thanks for keeping up with this and all your work. LGTM Philip.
 
->
-> The PREFIX in sideband.c, while nominally independant of the exec_cmd
-> PREFIX, does reside within libgit[1], so the definitions would clash
-> when taken together with a PREFIX given on the command line for use by
-> exec_cmd.c.
->
-> Noticed when compiling Git for Windows using MSVC/Visual Studio [1] which
-> reports the conflict beteeen the command line definition and the
-> definition in sideband.c within the libgit project.
->
-> [1] the libgit functions are brought into a single sub-project
-> within the Visual Studio construction script provided in contrib,
-> and hence uses a single command for both exec_cmd.c and sideband.c.
->
-> Signed-off-by: Philip Oakley <philipoakley@iee.org>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> Makefile   |  2 +-
-> exec-cmd.c |  4 ++--
-> sideband.c | 10 +++++-----
-> 3 files changed, 8 insertions(+), 8 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 111e93d3bea..49cec672242 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2271,7 +2271,7 @@ exec-cmd.sp exec-cmd.s exec-cmd.o: EXTRA_CPPFLAGS =
-> \
->  '-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
->  '-DGIT_LOCALE_PATH="$(localedir_relative_SQ)"' \
->  '-DBINDIR="$(bindir_relative_SQ)"' \
-> - '-DPREFIX="$(prefix_SQ)"'
-> + '-DFALLBACK_RUNTIME_PREFIX="$(prefix_SQ)"'
->
-> builtin/init-db.sp builtin/init-db.s builtin/init-db.o: GIT-PREFIX
-> builtin/init-db.sp builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
-> diff --git a/exec-cmd.c b/exec-cmd.c
-> index 3b0a039083a..02d31ee8971 100644
-> --- a/exec-cmd.c
-> +++ b/exec-cmd.c
-> @@ -48,7 +48,7 @@ static const char *system_prefix(void)
->      !(prefix = strip_path_suffix(executable_dirname, GIT_EXEC_PATH)) &&
->      !(prefix = strip_path_suffix(executable_dirname, BINDIR)) &&
->      !(prefix = strip_path_suffix(executable_dirname, "git"))) {
-> - prefix = PREFIX;
-> + prefix = FALLBACK_RUNTIME_PREFIX;
->  trace_printf("RUNTIME_PREFIX requested, "
->  "but prefix computation failed.  "
->  "Using static fallback '%s'.\n", prefix);
-> @@ -243,7 +243,7 @@ void git_resolve_executable_dir(const char *argv0)
->  */
-> static const char *system_prefix(void)
-> {
-> - return PREFIX;
-> + return FALLBACK_RUNTIME_PREFIX;
-> }
->
-> /*
-> diff --git a/sideband.c b/sideband.c
-> index 6d7f943e438..325bf0e974a 100644
-> --- a/sideband.c
-> +++ b/sideband.c
-> @@ -13,7 +13,7 @@
->  * the remote died unexpectedly.  A flush() concludes the stream.
->  */
->
-> -#define PREFIX "remote: "
-> +#define DISPLAY_PREFIX "remote: "
->
-> #define ANSI_SUFFIX "\033[K"
-> #define DUMB_SUFFIX "        "
-> @@ -49,7 +49,7 @@ int recv_sideband(const char *me, int in_stream, int
-> out)
->  switch (band) {
->  case 3:
->  strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
-> -     PREFIX, buf + 1);
-> +     DISPLAY_PREFIX, buf + 1);
->  retval = SIDEBAND_REMOTE_ERROR;
->  break;
->  case 2:
-> @@ -67,7 +67,7 @@ int recv_sideband(const char *me, int in_stream, int
-> out)
->  int linelen = brk - b;
->
->  if (!outbuf.len)
-> - strbuf_addstr(&outbuf, PREFIX);
-> + strbuf_addstr(&outbuf, DISPLAY_PREFIX);
->  if (linelen > 0) {
->  strbuf_addf(&outbuf, "%.*s%s%c",
->      linelen, b, suffix, *brk);
-> @@ -81,8 +81,8 @@ int recv_sideband(const char *me, int in_stream, int
-> out)
->  }
->
->  if (*b)
-> - strbuf_addf(&outbuf, "%s%s",
-> -     outbuf.len ? "" : PREFIX, b);
-> + strbuf_addf(&outbuf, "%s%s", outbuf.len ?
-> +     "" : DISPLAY_PREFIX, b);
->  break;
->  case 1:
->  write_or_die(out, buf + 1, len);
-> -- 
-> 2.17.0.windows.1.15.gaa56ade3205
->
+On 22/04/18 16:22, Duy Nguyen wrote:
+> On Sun, Apr 22, 2018 at 4:45 PM, Ramsay Jones
+> <ramsay@ramsayjones.plus.com> wrote:
+>>
+>>
+>> On 21/04/18 17:56, Duy Nguyen wrote:
+>>> On Sat, Apr 21, 2018 at 06:54:08PM +0200, Nguyễn Thái Ngọc Duy wrote:
+>>>> Changes:
+>>>>
+>>>> - remove the deprecated column in command-list.txt. My change break it
+>>>>   anyway if anyone uses it.
+>>>> - fix up failed tests that I marked in the RFC and kinda forgot about it.
+>>>> - fix bashisms in generate-cmdlist.sh
+>>>> - fix segfaul in "git help"
+>>>
+>>> Sorry I forgot the interdiff
+>>>
+>> [snip]
+>>
+>>> diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+>>> index fd2a7f27dc..53208ab20e 100755
+>>> --- a/t/t0012-help.sh
+>>> +++ b/t/t0012-help.sh
+>>> @@ -25,6 +25,15 @@ test_expect_success "setup" '
+>>>       EOF
+>>>  '
+>>>
+>>> +# make sure to exercise these code paths, the output is a bit tricky
+>>> +# to verify
+>>> +test_expect_success 'basic help commands' '
+>>> +     git help >/dev/null &&
+>>> +     git help -a >/dev/null &&
+>>> +     git help -g >/dev/null &&
+>>> +     git help -av >/dev/null
+>>> +'
+>>> +
+>> I think you need to try a little harder than this! ;-)
+> 
+> Yeah. I did think about grepping the output but decided not to because
+> of gettext poison stuff and column output in "git help". If we do want
+> to test this, how about I extend --list-cmds= option to take a few
+> more parameters? --list-cmds=common would output all common commands,
+> --list-cmds=<category> does the same for other command category. This
+> way we can verify without worrying about text formatting, paging or
+> translation.
+
+Hmm, my immediate reaction would be to prefer my simple tests.
+Yes, they are not exactly rigorous and they would be affected 
+by changing the help formatting, but they are effective. ;-)
+
+[I don't think the formatting would change that often, or at
+all - whoever submits that patch would get to update the tests!]
+
+What did you think about adding the BUG() checks?
+
+ATB,
+Ramsay Jones
+
 
