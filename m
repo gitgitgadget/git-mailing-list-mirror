@@ -2,228 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A04E71F424
-	for <e@80x24.org>; Sun, 22 Apr 2018 18:37:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BEF21F424
+	for <e@80x24.org>; Sun, 22 Apr 2018 19:50:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753417AbeDVShk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Apr 2018 14:37:40 -0400
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:39969 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753385AbeDVShj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Apr 2018 14:37:39 -0400
-Received: by mail-wr0-f176.google.com with SMTP id v60-v6so35282977wrc.7
-        for <git@vger.kernel.org>; Sun, 22 Apr 2018 11:37:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=RzUDYwj1kvhN/5I5XQ1ogxha8hbxdn6JMmGvaLZjPA8=;
-        b=PJBZ44xDDMavti9v+cT0rp8boZ+c6QRVDdLK4jF3visC6bijMynNO8/80lz3nSXgU6
-         sMH9Tr7wDkfjPvmYSIGQsF+55m37CGdJ3KoKMLw0qS+YnakbfIzu43M8IqUYF+9D0acw
-         fQkKpI2/kb9e5l3Ty1YYs1PEx2+kMLquar4j8ls0WjowVG0gy7XW60IPcj8KI7PM6Z0e
-         f1IPcdbFLZQ4NXKIf89uh6UFXYFMdJDUfRfp+dxMnlVxqWtNt7u7Hct4DMPcsudynjOJ
-         53M0dQP19R/KD9TeKI0MoXNGt4iPIYC/oaZ6RSFrEIhwKAIbYOLPQIV0GX3bcz9tPkcY
-         gCdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=RzUDYwj1kvhN/5I5XQ1ogxha8hbxdn6JMmGvaLZjPA8=;
-        b=JeKF4gjd3OBFlVgGFxkyPUMuXu4oWN0GsFhJUaoQ7OC+F7JmIvnH052qcTIESxKRou
-         udimeBFWAkpVwXcVYU49PgJFJCKWJFbiS+US7fpwTTHN12JKBHTgbLigaRGMEvBPuCQ1
-         ZEL89ZUYIFcrIQ2v+ukZeZ8dtMSjAwleJDp+uaNeYyAkjA/lVkPMmxqBRb5zU9YZHs0c
-         CHpMkpWILVLUwqxCJFTWjVGK1FH/kdFm8LO7ikrQeVRbikLrXwug/bJIV/06LhRD6J+m
-         KtdxPttUPWcENXKTiRfCfAhokBjFRc6MIRDJ6/DMHqv0l+k3LknkMRs8k3ACo+onz3BJ
-         iYCg==
-X-Gm-Message-State: ALQs6tC73cRkap23u/cGLSAok7Yz+aZmb/+IOQpy2doeGgNcNilQNw4E
-        tLQryIFzd8a4uT7Z/UaYJDr4g/in
-X-Google-Smtp-Source: AIpwx4+ht1JfWEf/U830Ca17Zriq2DRjHL7d8ecQfE7cc3t8ED+asjhwbr5BvoKCFKCPhodERsh7Uw==
-X-Received: by 10.80.129.227 with SMTP id 90mr20675297ede.252.1524422258096;
-        Sun, 22 Apr 2018 11:37:38 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id e14sm6488933edk.29.2018.04.22.11.37.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 22 Apr 2018 11:37:37 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Andreas Heiduk <asheiduk@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: RFC: How should we handle un-deleted remote branches?
-References: <87in8mdqhr.fsf@evledraar.gmail.com> <3fcd1b50-2aeb-0ea4-fea7-b5705e76c027@gmail.com> <87d0yrebhw.fsf@evledraar.gmail.com> <f2fc89c6-14a9-b700-b7c9-a646148e9206@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <f2fc89c6-14a9-b700-b7c9-a646148e9206@gmail.com>
-Date:   Sun, 22 Apr 2018 20:37:36 +0200
-Message-ID: <87bmebdr4f.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        id S1753443AbeDVTu3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Apr 2018 15:50:29 -0400
+Received: from gateway31.websitewelcome.com ([192.185.143.234]:25450 "EHLO
+        gateway31.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751008AbeDVTu2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 22 Apr 2018 15:50:28 -0400
+X-Greylist: delayed 1502 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Apr 2018 15:50:28 EDT
+Received: from cm13.websitewelcome.com (cm13.websitewelcome.com [100.42.49.6])
+        by gateway31.websitewelcome.com (Postfix) with ESMTP id B54F0202378
+        for <git@vger.kernel.org>; Sun, 22 Apr 2018 14:01:12 -0500 (CDT)
+Received: from gator3035.hostgator.com ([50.87.144.38])
+        by cmsmtp with SMTP
+        id AKEafVHxgQUwqAKEafGfD1; Sun, 22 Apr 2018 14:01:12 -0500
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=schemaczar.com; s=default; h=To:References:Message-Id:
+        Content-Transfer-Encoding:Cc:Date:In-Reply-To:From:Subject:Mime-Version:
+        Content-Type:Sender:Reply-To:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=ehi/BiCY31wHc5Nq3orY0r+B/dtxrKopIvfWHLTPby4=; b=m2mnTwlbRdyl2PtawUAo2Cfui
+        IOyHeNo/FGH2KalmrzURfL3H6i8OwvHCvAV/XS4HlObputuFV0glZV7OUQJnm99qs+5V0QtkhLBVQ
+        KmYuyRjO1TmPdlhbdmiv8xpAQBr0ILicie/QREy01bPNmG9MmV9VWNEXwb2OLn2D6KGlU=;
+Received: from pool-100-0-63-86.bstnma.fios.verizon.net ([100.0.63.86]:53100 helo=awolfe.local)
+        by gator3035.hostgator.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89_1)
+        (envelope-from <andrew@schemaczar.com>)
+        id 1fAKEZ-003HhH-SX; Sun, 22 Apr 2018 14:01:11 -0500
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 11.3 \(3445.6.18\))
+Subject: Re: Git enhancement request - checkout (clone) set modified dates to
+ commit date
+From:   Andrew Wolfe <andrew@schemaczar.com>
+In-Reply-To: <20180422180912.GK14631@genre.crustytoothpaste.net>
+Date:   Sun, 22 Apr 2018 15:01:10 -0400
+Cc:     Andrew D Wolfe Jr <andrew@schemaczar.com>, git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <1FCE6958-FC75-4A9B-88A3-05AE991815E4@schemaczar.com>
+References: <585A3A2E-7DA6-4718-BF85-2D17AAAF3EF5@schemaczar.com>
+ <20180422180912.GK14631@genre.crustytoothpaste.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+X-Mailer: Apple Mail (2.3445.6.18)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator3035.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - schemaczar.com
+X-BWhitelist: no
+X-Source-IP: 100.0.63.86
+X-Source-L: No
+X-Exim-ID: 1fAKEZ-003HhH-SX
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-100-0-63-86.bstnma.fios.verizon.net (awolfe.local) [100.0.63.86]:53100
+X-Source-Auth: andrew@schemaczar.com
+X-Email-Count: 1
+X-Source-Cap: b3VybGlnaHQ7b3VybGlnaHQ7Z2F0b3IzMDM1Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Brian,
 
-On Sun, Apr 22 2018, Andreas Heiduk wrote:
+Not completely sure what you're saying.  If the files on master are not =
+changed, the changed files' commit timestamps will be older than the =
+branch commit timestamps.
 
-> Am 22.04.2018 um 13:17 schrieb Ævar Arnfjörð Bjarmason:
->>
->> On Sun, Apr 22 2018, Andreas Heiduk wrote:
->>
->>> Am 20.04.2018 um 14:14 schrieb Ævar Arnfjörð Bjarmason:
->>>> But this is a possible work-around:
->>>>
->>>>     git init /tmp/empty.git
->>>>     git remote add avar file:///tmp/empty.git
->>>>     git remote prune avar
->>>>     git remote remove avar
->>>
->>> This won't do it also?
->>>
->>> 	git remote prune origin
->>
->> Yes, in this particular case, but that's just emergent behavior in how
->> we handle refspec prunign, and the fact that it "works" is arguably a
->> bug in "prune". i.e. this:
->
-> Its not emergent because "origin" is the other remote responsible for
-> that ref and cleaning stuff "belonging" to the remote is the job
-> description (I'm arguing from a user's perspective, not as a git-developer).
+However, if I check out master after committing to a branch, the =
+modifications will necessarily disappear because they haven't been =
+committed to master.  Instead, under my proposal, each will get the =
+timestamp of its prior commit.
 
-Right, I should have said something closer to "inconsistent", at least
-from the user's perspective. I.e. "remove" doesn't delete your branches
-because another ref "owns" them, but "prune" will happily clobber
-another remote's refs without warning.
+If you're doing a merge, it will entail a commit and, again, the =
+modified files will be newer.
 
-Maybe we're happy to keep that, pruning is a bit of an oddity already,
-see the "Git has a default disposition of keeping[...]" docs and the
-rest of the "PRUNING" section I added to git-fetch in 2.17.0, but this
-is osmething worth keeping in mind.
+I don't think your use case breaks my proposal.
 
->>
->>     (
->>         rm -rf /tmp/git &&
->>         git clone --bare --mirror git@github.com:git/git.git /tmp/git &&
->>         cd /tmp/git &&
->>         git remote add avar git@github.com:avar/git.git &&
->>         git remote add peff git@github.com:peff/git.git &&
->>         git fetch --all &&
->>         git remote remove avar &&
->>         git remote prune origin
->>     )
->>
->> Will delete all the avar/* and peff/* branches, even though I still have
->> a "peff" remote.
->
-> Exactly my point: When you are in a the bad situation of "shared
-> responsibility", then there is no easy and always correct way out,
-> because there are uncountable possible situations.
->
-> To give another, slightly modified example expanding the problem space:
->
-> (
->     rm -rf /tmp/git &&
->     git clone --bare --mirror https://github.com/git/git.git /tmp/git &&
->     cd /tmp/git &&
->     git remote add github https://github.com/avar/git.git &&
->     git fetch github &&
->     git fetch origin &&
->     # note new fetches for "github/master" using with "(forced update)"
-> )
->
-> For ... reasons the first repo publishes some references like
->
-> 	github/maint
-> 	github/master
-> 	github/pu
->
-> So when this repo is mirrored AND another, suitably named remote is
-> added then there will be also namespace conflicts. You can call
->
->     git fetch github
->     git fetch origin
->
-> in a loop and most likely each fetch will update the same refs, always
-> toggling between two states.
->
-> So: not only "remote remove" and "remote prune" are at stake but every
-> command handling remote references.
+- Andrew Wolfe
 
-Right, there's certainly a lot of insanity you can create with
-overlapping refs, but to bring this thread around a bit, the edge cases
-I'm interested in addressing are those where "git remote <whatever>"
-silently doesn't do its job, or does it too eagerly, resulting in a
-hard-to-repair repo state.
+> On Apr 22, 2018, at 2:09 PM, brian m. carlson =
+<sandals@crustytoothpaste.net> wrote:
+>=20
+> On Sun, Apr 22, 2018 at 01:18:10PM -0400, Andrew Wolfe wrote:
+>> I would like to propose that the checkout process set the create and =
+modification times of a file to the timestamp at which a file was =
+committed.
+>=20
+> The reason Git doesn't do this is pretty simple: make and various =
+other
+> tools do rebuilds depending on timestamps.
+>=20
+> If I create a branch off master and make some commits, then switch =
+back
+> to master, I will want the changed files to have their timestamps
+> updated to be newer so that a make on master will rebuild dependencies
+> based on those files.  If I set the files to the commit timestamp, =
+those
+> files would be set to the timestamp of master, which is older than my
+> new branch, and make wouldn't work properly.
+>=20
+> There are some cases where people want the behavior you requested, =
+such
+> as for reproducible builds, and in such cases, you can use a
+> post-checkout hook to set timestamps with touch.
+> --=20
+> brian m. carlson: Houston, Texas, US
+> OpenPGP: https://keybase.io/bk2204
 
-> How should "git remote remove github" work in both situations? Remove
-> the refs/remotes/github/master & co? remove them only if the last fetch
-> was for "github" but not when the last update was for "origin"? Should
-> "git fetch" use the same logic?
-
-Until we move to some other ref store implementation that namespaces
-things properly, the best we can do is simply to assume that
-refs/remotes/<name>/ is owned by the <name> remote for the purposes of
-remove/prune etc.
-
-That'll of course leave open this edge case you're pointing out where
-you're mirroring another remote into refs/* and it creates a
-remote/<name>/ branch, but I think it's sufficient for the purposes of
-sane UI to just document that fetching into refs/* creates such caveats.
-
-> So it seems better to me to avoid that bad situation altogether. Don't
-> allow overlapping/conflicting refspecs when adding a new remote. Using
-> *your* last examples both
->
->>         git remote add avar git@github.com:avar/git.git &&
->>         git remote add peff git@github.com:peff/git.git &&
->
-> should have failed and hence the "prune" problems won't exist. Same for
-> my example.
-
-I think this is a non-started. There's plenty of legitimate reasons to
-have overlapping refspecs, e.g. the GitLab case where they're creating a
-"geo" remote which is a mirror of other refs they push to.
-
-Even if that wasn't the case, it would be very fragile to solve these
-cases by disallowing adding such remotes, since users can edit the
-config file, we'd need to detect it on the fly.
-
->>> Possible 5):
->>>
->>> 	Don't fix "git remote remove" but "git remote add" to complain that its
->>> ref-namespace is already occupied by some other remote. Add "--force"
->>> for the experts.
->>
->> Indeed, that's another bug here, i.e. in the above example:
->>
->>     git remote remove peff && # won't delete peff/ branches
->>     git remote add peff git@github.com:peff/git.git
->>
->> Will happily add the "peff" remote again, even though as you point out
->> it could be an entirely different remote.
->
-> Ummm. That was not my point. My is: "git clone --mirror" uses a refspec
->
-> 	fetch = +refs/*:refs/*
->
-> and hence "occupies" the complete "refs/*" namespace. So adding another
-> remote (for the first time or for the second time is as irrelevant as
-> the url) will use
->
-> 	fetch = +refs/heads/*:refs/remotes/peff/*
->
-> and now the "refs/remotes/peff/*" part is in conflict with "refs/*" from
-> above. The conflict exists not only for "prune" or "remove" but also for
-> "fetch", "rename" (didn't check) .
->
-> This kind of conflict should not be allowed right from the start - when
-> the first "git remote add peff..." is executed. Then prune, remove AND
-> fetch would be OK.
-
-As noted above we need to deal with this overlap, and it has to be
-allowed, but we can still do better than we do now with "remove" /
-"prune" et al, i.e. simply inform & ask the user what he'd like to do.
