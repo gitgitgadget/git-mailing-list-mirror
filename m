@@ -2,116 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C5B21F424
-	for <e@80x24.org>; Sun, 22 Apr 2018 23:15:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EC1F1F424
+	for <e@80x24.org>; Sun, 22 Apr 2018 23:24:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753782AbeDVXPB (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Apr 2018 19:15:01 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:37382 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753647AbeDVXPA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Apr 2018 19:15:00 -0400
-Received: by mail-qt0-f194.google.com with SMTP id w12-v6so15734233qti.4
-        for <git@vger.kernel.org>; Sun, 22 Apr 2018 16:15:00 -0700 (PDT)
+        id S1753613AbeDVXYv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Apr 2018 19:24:51 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:44537 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753495AbeDVXYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Apr 2018 19:24:50 -0400
+Received: by mail-pf0-f182.google.com with SMTP id p15so7670350pff.11
+        for <git@vger.kernel.org>; Sun, 22 Apr 2018 16:24:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=GPIZTQz8rGOAynnI4z467M0DNrkLvLKQbWAIPgAvT88=;
-        b=HXtJMGNqy4VCBpLhpZTTM2KLnEmFllo2edOt9UglZw1cgrpC5+UI+ilMqmjurdLaP0
-         Fj0pQjHziDuTes6/q468Ad/+HsFmmk85YkUZpwNKiYQ3Gd7wsSPDip2CwAWZNBjFq1PZ
-         OI5of5PduV+d7zEFyI9wLons5YtTjajbI9BXXwh1qzpNIhsjwIpYYzHuK5AcUKlnA95g
-         pVwcc9LyJXg/yVa0456QMxpfQnlQX2mFNdq0psLWLeH2CRa1GlddEkj4+zHJ+t3UWL0M
-         8tM3M5/J/8a5TY7NJ4RIAgmcxewca+4owLukXSV1Ul1i8HwmP9wW131sgTU4j3oXzf8R
-         fd6g==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=cAXlcqY7whhINLxFJ7KI6NydPnIZQkiB5kTpPHvzBG0=;
+        b=IYpQY3nA5iZ7HfXTIdL32gn9Vu0dHJ+V8hpHB44tbOFWCcwc4sf1piPRBb9vedjeVy
+         7+cadNpApAXBvqfg79PUolmfaJudE0+bQA/CN8pvpcLJyUxPUtcmcdRjLK6dfY4uWaH2
+         WCUaxMVj8wtFXnErLWQ4tBwP1m7xfcPaqH86jld+WxCxEp+XI7sAfeJlYMZDdNOhGfyK
+         FKxcfH+8IfZjr4lu3c1Ve1X+PSu8xEAZCJToDy7pNl7atV6HTTNn6ia1iLjaN8R2Y6Nf
+         +NGOJbwQ2YcF8+IMqInJ14kdQfEpVxQ+Pi6wc+E1YLHXVnL86joCGTDlHIRrFQI1W9YT
+         nUqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=GPIZTQz8rGOAynnI4z467M0DNrkLvLKQbWAIPgAvT88=;
-        b=TuK9kKPM0XsejErMWYDViUYlUxyQq4axrmwAWtG+xPerFF81AFTz1gglUXjqAoe4f+
-         UJSIivFkd99NgGT0k39m9BuVyEMk7VQMEDAT3DoRHOy464oXoDgdxrvyntiNS6/XuzVn
-         D+rsNjn9h8eouZ3SIboxYmeFlYMrUNflYlP9Krz+IAFQTOyFzn2mQlRT2QkMQJF0u/XD
-         sOlBIOS/DNClgvFleVkobUrHlu2jRipoWR1oD8CFytSyOpiGQOeMPBuQ4C9c+do6Xf0m
-         DFV1kbV8wBChvg6kLp+4uFJ6E1r4lSaBObc51+tv6oYVWYayIduJM/EpDYeI3kcwBFwf
-         gedQ==
-X-Gm-Message-State: ALQs6tAV7TBbeLCfASoa1GMi8Ogx5gODUGtFnSSwNigbXHjMWvs3rxu3
-        FLY723gOAh5vip9KgLnfzJXFxQ2uCFs5/4rQwdU=
-X-Google-Smtp-Source: AB8JxZrrEbDyeN1vY8w9RguB1qa4+PlRt6p5ZgNTuP9ZSQJIqaioIwOQ8dw/zb45pY3ynCqdAwsKcHSn7kyDKQgxUBA=
-X-Received: by 2002:ac8:17d1:: with SMTP id r17-v6mr20418292qtk.314.1524438899492;
- Sun, 22 Apr 2018 16:14:59 -0700 (PDT)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=cAXlcqY7whhINLxFJ7KI6NydPnIZQkiB5kTpPHvzBG0=;
+        b=NRCIaJOhdQmVlxMoZ+vsHX8WBo9A8ltty6kandkcRYqs5e+oUB0U/j3ZwVPMvD/u9d
+         ElKo5zVCowbbqW60pM4F+KaJMTdUAfSGLM51eAMVioqgfbdoA3cOoQbBL5HdgR87iepn
+         npyLN5ZP/yRbEQDLQSJuPAwwGsMzz9f/uoSLBYbMPEZ49ofpfJlPCpzsouUAoclV7Vtf
+         pd7GHdRcl51nk1oh3+GeuMQB4dG/7Vc+akGkEjW7uTgy2M+DLZmvivgzXhIR8HnQykQd
+         /YTeoJXyhKibd3rJP7VukPvGEZilztmeEdyuA/xK5ZiYxoDPMEURAXPizGeXJxeBlscX
+         OWmg==
+X-Gm-Message-State: ALQs6tDZQrCIvf0hQjY+LHXT3nN78ozJaIJk4r1x55abBf2WD+dNSGqa
+        mXdtNdfzTl+MEZyfAr55JVuWUw==
+X-Google-Smtp-Source: AIpwx4853mrFVgtUdCwzQL4TDxdIEOQ7BnmUB1ThLaM98MZWJtNgncMJRNAbdBH0QjuuQcwt01CDJw==
+X-Received: by 2002:a17:902:d909:: with SMTP id c9-v6mr18279075plz.229.1524439489732;
+        Sun, 22 Apr 2018 16:24:49 -0700 (PDT)
+Received: from localhost ([2601:602:9500:1120:e8b3:eaad:c134:baec])
+        by smtp.gmail.com with ESMTPSA id z8sm16940030pgc.90.2018.04.22.16.24.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 22 Apr 2018 16:24:48 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Sun, 22 Apr 2018 16:24:47 -0700
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        gitster@pobox.com, l.s.r@web.de, martin.agren@gmail.com,
+        peff@peff.net
+Subject: Re: [PATCH v2 3/6] grep.[ch]: teach columnnum, color_columnno to
+ grep_opt
+Message-ID: <20180422232447.GA48072@syl.local>
+References: <20180421034530.GB24606@syl.local>
+ <cover.1524429778.git.me@ttaylorr.com>
+ <47f06ae36ce6af48fca06b140bdb5af2582116e1.1524429778.git.me@ttaylorr.com>
+ <87a7tuex47.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Sun, 22 Apr 2018 16:14:58 -0700 (PDT)
-In-Reply-To: <73eb315b1f9daa518405c3ab1b28087c38f27ce5.1524429778.git.me@ttaylorr.com>
-References: <20180421034530.GB24606@syl.local> <cover.1524429778.git.me@ttaylorr.com>
- <73eb315b1f9daa518405c3ab1b28087c38f27ce5.1524429778.git.me@ttaylorr.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 22 Apr 2018 19:14:58 -0400
-X-Google-Sender-Auth: NJMRrqUfwJsdGTDynpsqaVXYekA
-Message-ID: <CAPig+cRfCZQ8aPvc6AVoojtpuiWgNS_9A+9m5mV2mOC1BwemQQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] grep.c: take regmatch_t as argument in match_line()
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87a7tuex47.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 22, 2018 at 4:47 PM, Taylor Blau <me@ttaylorr.com> wrote:
-> In a subsequent patch, we teach show_line() to optionally include the
-> column number of the first match on each matched line.
+On Sun, Apr 22, 2018 at 11:42:48PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> On Sun, Apr 22 2018, Taylor Blau wrote:
 >
-> The regmatch_t involved in match_line() and match_one_pattern() both
-> contain this information (via regmatch_t->rm_so), but their current
-> implementation throws this stack variable away at the end of the call.
+> > In preparation of adding --column-number to 'git-grep(1)', we extend
+> > grep_opt to take in the requisite new members.
 >
-> Instead, let's teach match_line() to take in a 'regmatch_t *' so that
-> callers can inspect the result of their calls. This will prove useful in
-> a subsequent commit when a caller will forward on information from the
-> regmatch_t into show_line (as described above).
->
-> The return condition remains unchanged, therefore the only change
-> required of callers is the addition of a single argument.
+> Just a nit: Makes sense to refer to these camel-cased in docs & commit
+> messages.
 
-Is 'rm_so' the only piece of information which callers will ever want
-to extract from 'regmatch_t'? If so, this patch's approach might be
-overly broad, unnecessarily exposing too much of match_lines()'s
-internal implementation. An alternative would be to narrow the
-interface and limit exposure by passing in an 'int *matched_col' or
-some such.
+Could you clarify which? I am not sure if you mean --column-number,
+'git-grep(1)', or grep_opt.
 
-(Not necessarily a big deal, but something to consider.)
 
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
-> diff --git a/grep.c b/grep.c
-> @@ -1299,17 +1299,17 @@ static int match_expr(struct grep_opt *opt, char *bol, char *eol,
->  static int match_line(struct grep_opt *opt, char *bol, char *eol,
-> -                     enum grep_context ctx, int collect_hits)
-> +                     regmatch_t *match, enum grep_context ctx,
-> +                     int collect_hits)
->  {
->         struct grep_pat *p;
-> -       regmatch_t match;
->
->         if (opt->extended)
->                 return match_expr(opt, bol, eol, ctx, collect_hits);
-
-The new 'match' argument has no impact in the 'opt->extended' case.
-Perhaps this deserves calling out in the commit message.
-
->         /* we do not call with collect_hits without being extended */
->         for (p = opt->pattern_list; p; p = p->next) {
-> -               if (match_one_pattern(p, bol, eol, ctx, &match, 0))
-> +               if (match_one_pattern(p, bol, eol, ctx, match, 0))
->                         return 1;
->         }
->         return 0;
+Thanks,
+Taylor
