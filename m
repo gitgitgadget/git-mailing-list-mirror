@@ -2,102 +2,695 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F38C91F424
-	for <e@80x24.org>; Sun, 22 Apr 2018 16:36:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 343061F424
+	for <e@80x24.org>; Sun, 22 Apr 2018 17:17:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752583AbeDVQgu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Apr 2018 12:36:50 -0400
-Received: from avasout01.plus.net ([84.93.230.227]:42285 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752089AbeDVQgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Apr 2018 12:36:50 -0400
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id AHypfXUs9Fj1OAHyqfzkoK; Sun, 22 Apr 2018 17:36:48 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=COIEoyjD c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=Rjm4DnASR5o6qngI6LYA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v3 0/6] Keep all info in command-list.txt in git binary
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+        id S1751787AbeDVRR1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Apr 2018 13:17:27 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:46987 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751296AbeDVRR0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Apr 2018 13:17:26 -0400
+Received: from [192.168.2.201] ([92.28.131.105])
+        by smtp.talktalk.net with SMTP
+        id AIc5fcnzuHCowAIc5fC1AL; Sun, 22 Apr 2018 18:17:24 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1524417444;
+        bh=Y9SHvUwbfJO39quZjt/XaGJ1Bi1EPEzjBl8FQzQsqzU=;
+        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=XVx+5bh7WI/8rP01/M06peUxtshQLb3pHxjJZ9cmmcpYzekelJe8aJhmMxWTTK2nF
+         F7vDiWA5zeAcGhqyk47Qt7jktCK5wFI6gKWMaZFx2IByK2PAHDCyEHnGAniJCgL+tw
+         dlzjDtKg8myqHEjXuXI7S842H4UCj+KFov5+7LyI=
+X-Originating-IP: [92.28.131.105]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=SfXZiMZu c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
+ a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=tjO7c0THXC7d9XdhWvQA:9
+ a=Z9v9l53701wMIkyR:21 a=o3VIZwRaYWTsRxYK:21 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
         Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <20180415164238.9107-1-pclouds@gmail.com>
- <20180421165414.30051-1-pclouds@gmail.com>
- <20180421165618.GA30287@duynguyen.home>
- <a5dc36f7-fc79-46ba-7e73-e9473cf1aec9@ramsayjones.plus.com>
- <CACsJy8Cj57=p5nKH1T2UZmFbDv2d_JRO+GcAo29SAZcSxgKCkw@mail.gmail.com>
- <9303a7ef-5895-a974-84dc-98521be14793@ramsayjones.plus.com>
- <CACsJy8AcTkPgVavDo_nUZkwPAFy335j94BY=BwATHbv5sdvu=w@mail.gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <9625f486-cbec-634f-10b6-f4b53a341b56@ramsayjones.plus.com>
-Date:   Sun, 22 Apr 2018 17:36:47 +0100
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
+References: <cover.1524139900.git.johannes.schindelin@gmx.de>
+ <cover.1524306546.git.johannes.schindelin@gmx.de>
+ <7360a072f6fdd276d30839613434329b645e2cce.1524306546.git.johannes.schindelin@gmx.de>
+ <b05915e6-2259-5dee-69d8-90a5a524662d@talktalk.net>
+Message-ID: <0b0555fb-9fec-cd9d-f2f2-cecb51412128@talktalk.net>
+Date:   Sun, 22 Apr 2018 18:17:21 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8AcTkPgVavDo_nUZkwPAFy335j94BY=BwATHbv5sdvu=w@mail.gmail.com>
+In-Reply-To: <b05915e6-2259-5dee-69d8-90a5a524662d@talktalk.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfH3kNHezILOxx5R0FIVHapgkeY1fNY1ivSUU2skVGzONXJQAVMZRDxG4QM7xTD1uMGRUXActNRSLrNRUA8saVnOTVx1YfKbnvd1qaM4vEcdPgYWhzTMa
- 81bwMJZdvNL3PIq3IYzGAftc525WUmL6hyx+84qLuaaVImHeq2yG/3la
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfI40Hg/SEJoHuLyaGTTFeGwtiPspDOSwBtrcGyz+/9I55Z9RtWp1mkxLrx+Va3STDCtOtNb3cyqxWmT54dJF0wxmUCKRtIKv0mXMD9XPkJYixxAMmC/g
+ T9AFuupUaT+v77YE95UB9qScOVr+0L/WaYNj83C/+SvW9dC4mpokj3R0uJ26+QFRyLUbKvcEKaW/pfxvNhiAYjVUYBUU/hreJEj35A+6voPsm6ikhAQsBzlR
+ Rfc2i5VxXUMOnIf+Pi2mJLwhWw3v88baiWvkVtsPyy4zKnNzEQ85oG8KWMT72xiL2mW0ynZPbZr4SwX8cM0Crsz2SX5D4fWTfSnDOoBAB3cK8y+RCtWfmnL6
+ rBZHw6YLf7JbBygYxa+8Xjmfa9ThWG2PO/6+yk4sVU3BtPFGxmhMw65STSEbWu1MhDtLnN7ZLt2GqyZtinEbvOLJZLSKz3VLMLLFxDYq14EttRpoCqS2XZI0
+ Se5D6d/siZNehwxlvsCTDdGZWnTyWElzxRd2ZQjHCIAnHDaaqNzLvIeCRBoNQGJpzh4hnMKs8II6cYNA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 22/04/18 17:12, Duy Nguyen wrote:
-> On Sun, Apr 22, 2018 at 5:58 PM, Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
->>>> I think you need to try a little harder than this! ;-)
->>>
->>> Yeah. I did think about grepping the output but decided not to because
->>> of gettext poison stuff and column output in "git help". If we do want
->>> to test this, how about I extend --list-cmds= option to take a few
->>> more parameters? --list-cmds=common would output all common commands,
->>> --list-cmds=<category> does the same for other command category. This
->>> way we can verify without worrying about text formatting, paging or
->>> translation.
+On 21/04/18 16:56, Phillip Wood wrote:
+> On 21/04/18 11:33, Johannes Schindelin wrote:
+>> This patch is part of the effort to reimplement `--preserve-merges` with
+>> a substantially improved design, a design that has been developed in the
+>> Git for Windows project to maintain the dozens of Windows-specific patch
+>> series on top of upstream Git.
 >>
->> Hmm, my immediate reaction would be to prefer my simple tests.
->> Yes, they are not exactly rigorous and they would be affected
->> by changing the help formatting, but they are effective. ;-)
+>> The previous patch implemented the `label` and `reset` commands to label
+>> commits and to reset to labeled commits. This patch adds the `merge`
+>> command, with the following syntax:
+> 
+> The two patches seem to have been fused together in this series.
+> 
+> If the reset command fails because it would overwrite untracked files it
+> says
+> 
+> error: Untracked working tree file 'b' would be overwritten by merge.
+> 
+> Followed by the hint to edit the todo file. Saying 'merge' rather
+> 'reset' is possibly confusing to users. Perhaps it could call
+> setup_unpack_trees_porcelain(), though that would need to be extended to
+> handle 'reset'.
+
+
+> Also it currently refuses to overwrite ignored files
+> which is either annoying or safe depending on one's point of view.
+
+Looking at the existing code this is consistent with (most) of the rest
+of the sequencer. The code to fast-forward commits will overwrite
+ignored files, and I think the initial checkout will as well but the
+rest (picking commits and the new merge command) will not.
+
+> Best Wishes
+> 
+> Phillip
+> 
 >>
->> [I don't think the formatting would change that often, or at
->> all - whoever submits that patch would get to update the tests!]
+>>     merge [-C <commit>] <rev> # <oneline>
+>>
+>> The <commit> parameter in this instance is the *original* merge commit,
+>> whose author and message will be used for the merge commit that is about
+>> to be created.
+>>
+>> The <rev> parameter refers to the (possibly rewritten) revision to
+>> merge. Let's see an example of a todo list:
+>>
+>>     label onto
+>>
+>>     # Branch abc
+>>     reset onto
+>>     pick deadbeef Hello, world!
+>>     label abc
+>>
+>>     reset onto
+>>     pick cafecafe And now for something completely different
+>>     merge -C baaabaaa abc # Merge the branch 'abc' into master
+>>
+>> To edit the merge commit's message (a "reword" for merges, if you will),
+>> use `-c` (lower-case) instead of `-C`; this convention was borrowed from
+>> `git commit` that also supports `-c` and `-C` with similar meanings.
+>>
+>> To create *new* merges, i.e. without copying the commit message from an
+>> existing commit, simply omit the `-C <commit>` parameter (which will
+>> open an editor for the merge message):
+>>
+>>     merge abc
+>>
+>> This comes in handy when splitting a branch into two or more branches.
+>>
+>> Note: this patch only adds support for recursive merges, to keep things
+>> simple. Support for octopus merges will be added later in a separate
+>> patch series, support for merges using strategies other than the
+>> recursive merge is left for the future.
+>>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> ---
+>>   git-rebase--interactive.sh |   6 +
+>>   sequencer.c                | 407 ++++++++++++++++++++++++++++++++++++-
+>>   2 files changed, 406 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+>> index e1b865f43f2..ccd5254d1c9 100644
+>> --- a/git-rebase--interactive.sh
+>> +++ b/git-rebase--interactive.sh
+>> @@ -162,6 +162,12 @@ s, squash <commit> = use commit, but meld into
+>> previous commit
+>>   f, fixup <commit> = like \"squash\", but discard this commit's log
+>> message
+>>   x, exec <commit> = run command (the rest of the line) using shell
+>>   d, drop <commit> = remove commit
+>> +l, label <label> = label current HEAD with a name
+>> +t, reset <label> = reset HEAD to a label
+>> +m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+>> +.       create a merge commit using the original merge commit's
+>> +.       message (or the oneline, if no original merge commit was
+>> +.       specified). Use -c <commit> to reword the commit message.
+>>     These lines can be re-ordered; they are executed from top to bottom.
+>>   " | git stripspace --comment-lines >>"$todo"
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 01443e0f245..35fcacbdf0f 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -23,6 +23,8 @@
+>>   #include "hashmap.h"
+>>   #include "notes-utils.h"
+>>   #include "sigchain.h"
+>> +#include "unpack-trees.h"
+>> +#include "worktree.h"
+>>     #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+>>   @@ -120,6 +122,13 @@ static GIT_PATH_FUNC(rebase_path_stopped_sha,
+>> "rebase-merge/stopped-sha")
+>>   static GIT_PATH_FUNC(rebase_path_rewritten_list,
+>> "rebase-merge/rewritten-list")
+>>   static GIT_PATH_FUNC(rebase_path_rewritten_pending,
+>>       "rebase-merge/rewritten-pending")
+>> +
+>> +/*
+>> + * The path of the file listing refs that need to be deleted after
+>> the rebase
+>> + * finishes. This is used by the `label` command to record the need
+>> for cleanup.
+>> + */
+>> +static GIT_PATH_FUNC(rebase_path_refs_to_delete,
+>> "rebase-merge/refs-to-delete")
+>> +
+>>   /*
+>>    * The following files are written by git-rebase just after parsing the
+>>    * command-line (and are only consumed, not modified, by the
+>> sequencer).
+>> @@ -244,18 +253,34 @@ static const char *gpg_sign_opt_quoted(struct
+>> replay_opts *opts)
+>>     int sequencer_remove_state(struct replay_opts *opts)
+>>   {
+>> -    struct strbuf dir = STRBUF_INIT;
+>> +    struct strbuf buf = STRBUF_INIT;
+>>       int i;
+>>   +    if (is_rebase_i(opts) &&
+>> +        strbuf_read_file(&buf, rebase_path_refs_to_delete(), 0) > 0) {
+>> +        char *p = buf.buf;
+>> +        while (*p) {
+>> +            char *eol = strchr(p, '\n');
+>> +            if (eol)
+>> +                *eol = '\0';
+>> +            if (delete_ref("(rebase -i) cleanup", p, NULL, 0) < 0)
+>> +                warning(_("could not delete '%s'"), p);
+>> +            if (!eol)
+>> +                break;
+>> +            p = eol + 1;
+>> +        }
+>> +    }
+>> +
+>>       free(opts->gpg_sign);
+>>       free(opts->strategy);
+>>       for (i = 0; i < opts->xopts_nr; i++)
+>>           free(opts->xopts[i]);
+>>       free(opts->xopts);
+>>   -    strbuf_addstr(&dir, get_dir(opts));
+>> -    remove_dir_recursively(&dir, 0);
+>> -    strbuf_release(&dir);
+>> +    strbuf_reset(&buf);
+>> +    strbuf_addstr(&buf, get_dir(opts));
+>> +    remove_dir_recursively(&buf, 0);
+>> +    strbuf_release(&buf);
+>>         return 0;
+>>   }
+>> @@ -1279,6 +1304,9 @@ enum todo_command {
+>>       TODO_SQUASH,
+>>       /* commands that do something else than handling a single commit */
+>>       TODO_EXEC,
+>> +    TODO_LABEL,
+>> +    TODO_RESET,
+>> +    TODO_MERGE,
+>>       /* commands that do nothing but are counted for reporting
+>> progress */
+>>       TODO_NOOP,
+>>       TODO_DROP,
+>> @@ -1297,6 +1325,9 @@ static struct {
+>>       { 'f', "fixup" },
+>>       { 's', "squash" },
+>>       { 'x', "exec" },
+>> +    { 'l', "label" },
+>> +    { 't', "reset" },
+>> +    { 'm', "merge" },
+>>       { 0,   "noop" },
+>>       { 'd', "drop" },
+>>       { 0,   NULL }
+>> @@ -1724,9 +1755,14 @@ static int read_and_refresh_cache(struct
+>> replay_opts *opts)
+>>       return 0;
+>>   }
+>>   +enum todo_item_flags {
+>> +    TODO_EDIT_MERGE_MSG = 1
+>> +};
+>> +
+>>   struct todo_item {
+>>       enum todo_command command;
+>>       struct commit *commit;
+>> +    unsigned int flags;
+>>       const char *arg;
+>>       int arg_len;
+>>       size_t offset_in_buf;
+>> @@ -1761,6 +1797,8 @@ static int parse_insn_line(struct todo_item
+>> *item, const char *bol, char *eol)
+>>       char *end_of_object_name;
+>>       int i, saved, status, padding;
+>>   +    item->flags = 0;
+>> +
+>>       /* left-trim */
+>>       bol += strspn(bol, " \t");
+>>   @@ -1802,13 +1840,29 @@ static int parse_insn_line(struct todo_item
+>> *item, const char *bol, char *eol)
+>>           return error(_("missing arguments for %s"),
+>>                    command_to_string(item->command));
+>>   -    if (item->command == TODO_EXEC) {
+>> +    if (item->command == TODO_EXEC || item->command == TODO_LABEL ||
+>> +        item->command == TODO_RESET) {
+>>           item->commit = NULL;
+>>           item->arg = bol;
+>>           item->arg_len = (int)(eol - bol);
+>>           return 0;
+>>       }
+>>   +    if (item->command == TODO_MERGE) {
+>> +        if (skip_prefix(bol, "-C", &bol))
+>> +            bol += strspn(bol, " \t");
+>> +        else if (skip_prefix(bol, "-c", &bol)) {
+>> +            bol += strspn(bol, " \t");
+>> +            item->flags |= TODO_EDIT_MERGE_MSG;
+>> +        } else {
+>> +            item->flags |= TODO_EDIT_MERGE_MSG;
+>> +            item->commit = NULL;
+>> +            item->arg = bol;
+>> +            item->arg_len = (int)(eol - bol);
+>> +            return 0;
+>> +        }
+>> +    }
+>> +
+>>       end_of_object_name = (char *) bol + strcspn(bol, " \t\n");
+>>       saved = *end_of_object_name;
+>>       *end_of_object_name = '\0';
+>> @@ -2465,6 +2519,305 @@ static int do_exec(const char *command_line)
+>>       return status;
+>>   }
+>>   +static int safe_append(const char *filename, const char *fmt, ...)
+>> +{
+>> +    va_list ap;
+>> +    struct lock_file lock = LOCK_INIT;
+>> +    int fd = hold_lock_file_for_update(&lock, filename,
+>> +                       LOCK_REPORT_ON_ERROR);
+>> +    struct strbuf buf = STRBUF_INIT;
+>> +
+>> +    if (fd < 0)
+>> +        return -1;
+>> +
+>> +    if (strbuf_read_file(&buf, filename, 0) < 0 && errno != ENOENT) {
+>> +        error_errno(_("could not read '%s'"), filename);
+>> +        rollback_lock_file(&lock);
+>> +        return -1;
+>> +    }
+>> +    strbuf_complete(&buf, '\n');
+>> +    va_start(ap, fmt);
+>> +    strbuf_vaddf(&buf, fmt, ap);
+>> +    va_end(ap);
+>> +
+>> +    if (write_in_full(fd, buf.buf, buf.len) < 0) {
+>> +        error_errno(_("could not write to '%s'"), filename);
+>> +        strbuf_release(&buf);
+>> +        rollback_lock_file(&lock);
+>> +        return -1;
+>> +    }
+>> +    if (commit_lock_file(&lock) < 0) {
+>> +        strbuf_release(&buf);
+>> +        rollback_lock_file(&lock);
+>> +        return error(_("failed to finalize '%s'"), filename);
+>> +    }
+>> +
+>> +    strbuf_release(&buf);
+>> +    return 0;
+>> +}
+>> +
+>> +static int do_label(const char *name, int len)
+>> +{
+>> +    struct ref_store *refs = get_main_ref_store();
+>> +    struct ref_transaction *transaction;
+>> +    struct strbuf ref_name = STRBUF_INIT, err = STRBUF_INIT;
+>> +    struct strbuf msg = STRBUF_INIT;
+>> +    int ret = 0;
+>> +    struct object_id head_oid;
+>> +
+>> +    if (len == 1 && *name == '#')
+>> +        return error("Illegal label name: '%.*s'", len, name);
+>> +
+>> +    strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
+>> +    strbuf_addf(&msg, "rebase -i (label) '%.*s'", len, name);
+>> +
+>> +    transaction = ref_store_transaction_begin(refs, &err);
+>> +    if (!transaction) {
+>> +        error("%s", err.buf);
+>> +        ret = -1;
+>> +    } else if (get_oid("HEAD", &head_oid)) {
+>> +        error(_("could not read HEAD"));
+>> +        ret = -1;
+>> +    } else if (ref_transaction_update(transaction, ref_name.buf,
+>> &head_oid,
+>> +                      NULL, 0, msg.buf, &err) < 0 ||
+>> +           ref_transaction_commit(transaction, &err)) {
+>> +        error("%s", err.buf);
+>> +        ret = -1;
+>> +    }
+>> +    ref_transaction_free(transaction);
+>> +    strbuf_release(&err);
+>> +    strbuf_release(&msg);
+>> +
+>> +    if (!ret)
+>> +        ret = safe_append(rebase_path_refs_to_delete(),
+>> +                  "%s\n", ref_name.buf);
+>> +    strbuf_release(&ref_name);
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +static const char *reflog_message(struct replay_opts *opts,
+>> +    const char *sub_action, const char *fmt, ...);
+>> +
+>> +static int do_reset(const char *name, int len, struct replay_opts *opts)
+>> +{
+>> +    struct strbuf ref_name = STRBUF_INIT;
+>> +    struct object_id oid;
+>> +    struct lock_file lock = LOCK_INIT;
+>> +    struct tree_desc desc;
+>> +    struct tree *tree;
+>> +    struct unpack_trees_options unpack_tree_opts;
+>> +    int ret = 0, i;
+>> +
+>> +    if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
+>> +        return -1;
+>> +
+>> +    /* Determine the length of the label */
+>> +    for (i = 0; i < len; i++)
+>> +        if (isspace(name[i]))
+>> +            len = i;
+>> +
+>> +    strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
+>> +    if (get_oid(ref_name.buf, &oid) &&
+>> +        get_oid(ref_name.buf + strlen("refs/rewritten/"), &oid)) {
+>> +        error(_("could not read '%s'"), ref_name.buf);
+>> +        rollback_lock_file(&lock);
+>> +        strbuf_release(&ref_name);
+>> +        return -1;
+>> +    }
+>> +
+>> +    memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
+>> +    unpack_tree_opts.head_idx = 1;
+>> +    unpack_tree_opts.src_index = &the_index;
+>> +    unpack_tree_opts.dst_index = &the_index;
+>> +    unpack_tree_opts.fn = oneway_merge;
+>> +    unpack_tree_opts.merge = 1;
+>> +    unpack_tree_opts.update = 1;
+>> +
+>> +    if (read_cache_unmerged()) {
+>> +        rollback_lock_file(&lock);
+>> +        strbuf_release(&ref_name);
+>> +        return error_resolve_conflict(_(action_name(opts)));
+>> +    }
+>> +
+>> +    if (!fill_tree_descriptor(&desc, &oid)) {
+>> +        error(_("failed to find tree of %s"), oid_to_hex(&oid));
+>> +        rollback_lock_file(&lock);
+>> +        free((void *)desc.buffer);
+>> +        strbuf_release(&ref_name);
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (unpack_trees(1, &desc, &unpack_tree_opts)) {
+>> +        rollback_lock_file(&lock);
+>> +        free((void *)desc.buffer);
+>> +        strbuf_release(&ref_name);
+>> +        return -1;
+>> +    }
+>> +
+>> +    tree = parse_tree_indirect(&oid);
+>> +    prime_cache_tree(&the_index, tree);
+>> +
+>> +    if (write_locked_index(&the_index, &lock, COMMIT_LOCK) < 0)
+>> +        ret = error(_("could not write index"));
+>> +    free((void *)desc.buffer);
+>> +
+>> +    if (!ret)
+>> +        ret = update_ref(reflog_message(opts, "reset", "'%.*s'",
+>> +                        len, name), "HEAD", &oid,
+>> +                 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
+>> +
+>> +    strbuf_release(&ref_name);
+>> +    return ret;
+>> +}
+>> +
+>> +static int do_merge(struct commit *commit, const char *arg, int arg_len,
+>> +            int flags, struct replay_opts *opts)
+>> +{
+>> +    int run_commit_flags = (flags & TODO_EDIT_MERGE_MSG) ?
+>> +        EDIT_MSG | VERIFY_MSG : 0;
+>> +    struct strbuf ref_name = STRBUF_INIT;
+>> +    struct commit *head_commit, *merge_commit, *i;
+>> +    struct commit_list *bases, *j, *reversed = NULL;
+>> +    struct merge_options o;
+>> +    int merge_arg_len, oneline_offset, ret;
+>> +    static struct lock_file lock;
+>> +    const char *p;
+>> +
+>> +    if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0) {
+>> +        ret = -1;
+>> +        goto leave_merge;
+>> +    }
+>> +
+>> +    head_commit = lookup_commit_reference_by_name("HEAD");
+>> +    if (!head_commit) {
+>> +        ret = error(_("cannot merge without a current revision"));
+>> +        goto leave_merge;
+>> +    }
+>> +
+>> +    oneline_offset = arg_len;
+>> +    merge_arg_len = strcspn(arg, " \t\n");
+>> +    p = arg + merge_arg_len;
+>> +    p += strspn(p, " \t\n");
+>> +    if (*p == '#' && (!p[1] || isspace(p[1]))) {
+>> +        p += 1 + strspn(p + 1, " \t\n");
+>> +        oneline_offset = p - arg;
+>> +    } else if (p - arg < arg_len)
+>> +        BUG("octopus merges are not supported yet: '%s'", p);
+>> +
+>> +    strbuf_addf(&ref_name, "refs/rewritten/%.*s", merge_arg_len, arg);
+>> +    merge_commit = lookup_commit_reference_by_name(ref_name.buf);
+>> +    if (!merge_commit) {
+>> +        /* fall back to non-rewritten ref or commit */
+>> +        strbuf_splice(&ref_name, 0, strlen("refs/rewritten/"), "", 0);
+>> +        merge_commit = lookup_commit_reference_by_name(ref_name.buf);
+>> +    }
+>> +
+>> +    if (!merge_commit) {
+>> +        ret = error(_("could not resolve '%s'"), ref_name.buf);
+>> +        goto leave_merge;
+>> +    }
+>> +
+>> +    if (commit) {
+>> +        const char *message = get_commit_buffer(commit, NULL);
+>> +        const char *body;
+>> +        int len;
+>> +
+>> +        if (!message) {
+>> +            ret = error(_("could not get commit message of '%s'"),
+>> +                    oid_to_hex(&commit->object.oid));
+>> +            goto leave_merge;
+>> +        }
+>> +        write_author_script(message);
+>> +        find_commit_subject(message, &body);
+>> +        len = strlen(body);
+>> +        ret = write_message(body, len, git_path_merge_msg(), 0);
+>> +        unuse_commit_buffer(commit, message);
+>> +        if (ret) {
+>> +            error_errno(_("could not write '%s'"),
+>> +                    git_path_merge_msg());
+>> +            goto leave_merge;
+>> +        }
+>> +    } else {
+>> +        struct strbuf buf = STRBUF_INIT;
+>> +        int len;
+>> +
+>> +        strbuf_addf(&buf, "author %s", git_author_info(0));
+>> +        write_author_script(buf.buf);
+>> +        strbuf_reset(&buf);
+>> +
+>> +        if (oneline_offset < arg_len) {
+>> +            p = arg + oneline_offset;
+>> +            len = arg_len - oneline_offset;
+>> +        } else {
+>> +            strbuf_addf(&buf, "Merge branch '%.*s'",
+>> +                    merge_arg_len, arg);
+>> +            p = buf.buf;
+>> +            len = buf.len;
+>> +        }
+>> +
+>> +        ret = write_message(p, len, git_path_merge_msg(), 0);
+>> +        strbuf_release(&buf);
+>> +        if (ret) {
+>> +            error_errno(_("could not write '%s'"),
+>> +                    git_path_merge_msg());
+>> +            goto leave_merge;
+>> +        }
+>> +    }
+>> +
+>> +    write_message(oid_to_hex(&merge_commit->object.oid), GIT_SHA1_HEXSZ,
+>> +              git_path_merge_head(), 0);
+>> +    write_message("no-ff", 5, git_path_merge_mode(), 0);
+>> +
+>> +    bases = get_merge_bases(head_commit, merge_commit);
+>> +    for (j = bases; j; j = j->next)
+>> +        commit_list_insert(j->item, &reversed);
+>> +    free_commit_list(bases);
+>> +
+>> +    read_cache();
+>> +    init_merge_options(&o);
+>> +    o.branch1 = "HEAD";
+>> +    o.branch2 = ref_name.buf;
+>> +    o.buffer_output = 2;
+>> +
+>> +    ret = merge_recursive(&o, head_commit, merge_commit, reversed, &i);
+>> +    if (ret <= 0)
+>> +        fputs(o.obuf.buf, stdout);
+>> +    strbuf_release(&o.obuf);
+>> +    if (ret < 0) {
+>> +        error(_("could not even attempt to merge '%.*s'"),
+>> +              merge_arg_len, arg);
+>> +        goto leave_merge;
+>> +    }
+>> +    /*
+>> +     * The return value of merge_recursive() is 1 on clean, and 0 on
+>> +     * unclean merge.
+>> +     *
+>> +     * Let's reverse that, so that do_merge() returns 0 upon success and
+>> +     * 1 upon failed merge (keeping the return value -1 for the cases
+>> where
+>> +     * we will want to reschedule the `merge` command).
+>> +     */
+>> +    ret = !ret;
+>> +
+>> +    if (active_cache_changed &&
+>> +        write_locked_index(&the_index, &lock, COMMIT_LOCK)) {
+>> +        ret = error(_("merge: Unable to write new index file"));
+>> +        goto leave_merge;
+>> +    }
+>> +
+>> +    rollback_lock_file(&lock);
+>> +    if (ret)
+>> +        rerere(opts->allow_rerere_auto);
+>> +    else
+>> +        ret = run_git_commit(git_path_merge_msg(), opts,
+>> +                     run_commit_flags);
+>> +
+>> +leave_merge:
+>> +    strbuf_release(&ref_name);
+>> +    rollback_lock_file(&lock);
+>> +    return ret;
+>> +}
+>> +
+>>   static int is_final_fixup(struct todo_list *todo_list)
+>>   {
+>>       int i = todo_list->current;
+>> @@ -2568,7 +2921,7 @@ N_("Could not execute the todo command\n"
+>>     static int pick_commits(struct todo_list *todo_list, struct
+>> replay_opts *opts)
+>>   {
+>> -    int res = 0;
+>> +    int res = 0, reschedule = 0;
+>>         setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
+>>       if (opts->allow_ff)
+>> @@ -2639,7 +2992,7 @@ static int pick_commits(struct todo_list
+>> *todo_list, struct replay_opts *opts)
+>>                       intend_to_amend();
+>>                   return error_failed_squash(item->commit, opts,
+>>                       item->arg_len, item->arg);
+>> -            } else if (res && is_rebase_i(opts))
+>> +            } else if (res && is_rebase_i(opts) && item->commit)
+>>                   return res | error_with_patch(item->commit,
+>>                       item->arg, item->arg_len, opts, res,
+>>                       item->command == TODO_REWORD);
+>> @@ -2665,9 +3018,41 @@ static int pick_commits(struct todo_list
+>> *todo_list, struct replay_opts *opts)
+>>                   /* `current` will be incremented below */
+>>                   todo_list->current = -1;
+>>               }
+>> +        } else if (item->command == TODO_LABEL) {
+>> +            if ((res = do_label(item->arg, item->arg_len)))
+>> +                reschedule = 1;
+>> +        } else if (item->command == TODO_RESET) {
+>> +            if ((res = do_reset(item->arg, item->arg_len, opts)))
+>> +                reschedule = 1;
+>> +        } else if (item->command == TODO_MERGE) {
+>> +            if ((res = do_merge(item->commit,
+>> +                        item->arg, item->arg_len,
+>> +                        item->flags, opts)) < 0)
+>> +                reschedule = 1;
+>> +            else if (res > 0)
+>> +                /* failed with merge conflicts */
+>> +                return error_with_patch(item->commit,
+>> +                            item->arg,
+>> +                            item->arg_len, opts,
+>> +                            res, 0);
+>>           } else if (!is_noop(item->command))
+>>               return error(_("unknown command %d"), item->command);
+>>   +        if (reschedule) {
+>> +            advise(_(rescheduled_advice),
+>> +                   get_item_line_length(todo_list,
+>> +                            todo_list->current),
+>> +                   get_item_line(todo_list, todo_list->current));
+>> +            todo_list->current--;
+>> +            if (save_todo(todo_list, opts))
+>> +                return -1;
+>> +            if (item->commit)
+>> +                return error_with_patch(item->commit,
+>> +                            item->arg,
+>> +                            item->arg_len, opts,
+>> +                            res, 0);
+>> +        }
+>> +
+>>           todo_list->current++;
+>>           if (res)
+>>               return res;
+>> @@ -3147,8 +3532,16 @@ int transform_todos(unsigned flags)
+>>                         short_commit_name(item->commit) :
+>>                         oid_to_hex(&item->commit->object.oid);
+>>   +            if (item->command == TODO_MERGE) {
+>> +                if (item->flags & TODO_EDIT_MERGE_MSG)
+>> +                    strbuf_addstr(&buf, " -c");
+>> +                else
+>> +                    strbuf_addstr(&buf, " -C");
+>> +            }
+>> +
+>>               strbuf_addf(&buf, " %s", oid);
+>>           }
+>> +
+>>           /* add all the rest */
+>>           if (!item->arg_len)
+>>               strbuf_addch(&buf, '\n');
+>>
 > 
-> Hmm.. for non-column output that's true. "git help" with column output
-> should probably fine as well because even though we add more and more
-> commands every month, these are not marked common (and unlikely so).
-> So yeah I agree.
-> 
->> What did you think about adding the BUG() checks?
-> 
-> I was thinking if there was a way to fail the build after running
-> ./generate-cmds.sh and generating empty output but it does not sound
-> easy to do. So yeah, BUG() checks sound good.
-
-Yeah, failing the build would be preferable, but I didn't get
-that far. ;-)
-
-[BTW, I just applied your patch series to the 'next' branch
-(I just couldn't be bothered to revert your last series from
-the 'pu' branch, etc.) and, as expected, everything built OK,
-passed the test-suite and 'git help' is working just fine.]
-
-Thanks!
-
-ATB,
-Ramsay Jones
 
