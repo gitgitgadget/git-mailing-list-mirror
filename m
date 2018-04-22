@@ -6,87 +6,123 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EC1F1F424
-	for <e@80x24.org>; Sun, 22 Apr 2018 23:24:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3F631F424
+	for <e@80x24.org>; Sun, 22 Apr 2018 23:26:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753613AbeDVXYv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Apr 2018 19:24:51 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:44537 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753495AbeDVXYu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Apr 2018 19:24:50 -0400
-Received: by mail-pf0-f182.google.com with SMTP id p15so7670350pff.11
-        for <git@vger.kernel.org>; Sun, 22 Apr 2018 16:24:50 -0700 (PDT)
+        id S1753609AbeDVX0k (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Apr 2018 19:26:40 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:37559 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753443AbeDVX0j (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Apr 2018 19:26:39 -0400
+Received: by mail-pg0-f53.google.com with SMTP id a13so2615056pgu.4
+        for <git@vger.kernel.org>; Sun, 22 Apr 2018 16:26:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=cAXlcqY7whhINLxFJ7KI6NydPnIZQkiB5kTpPHvzBG0=;
-        b=IYpQY3nA5iZ7HfXTIdL32gn9Vu0dHJ+V8hpHB44tbOFWCcwc4sf1piPRBb9vedjeVy
-         7+cadNpApAXBvqfg79PUolmfaJudE0+bQA/CN8pvpcLJyUxPUtcmcdRjLK6dfY4uWaH2
-         WCUaxMVj8wtFXnErLWQ4tBwP1m7xfcPaqH86jld+WxCxEp+XI7sAfeJlYMZDdNOhGfyK
-         FKxcfH+8IfZjr4lu3c1Ve1X+PSu8xEAZCJToDy7pNl7atV6HTTNn6ia1iLjaN8R2Y6Nf
-         +NGOJbwQ2YcF8+IMqInJ14kdQfEpVxQ+Pi6wc+E1YLHXVnL86joCGTDlHIRrFQI1W9YT
-         nUqg==
+        bh=NVij1scMADEK2dgMOpQbFtxIXZbV3Iy1XQn6mZJ6pXo=;
+        b=R2e6DmLZqvsyYkVTYu0yNfF3n82ov7EWKk9c78K/XZLy9I6aPa0sgcPowepPzxrbZr
+         WPZ+02bQ/SeLPc8jW1IlwPVMY0dFjbVrPKc8DHnonNS5LKutyjYSOTVNvsanjrWChqvd
+         dWKCPsFlPmJVWsaJHt0ho3nIAv2ySr7OJt1KIu/sVILDz/uZZR115S5Eto0S/2ge3441
+         FNJEymlNDp32V+xYQwp2NJdEOc3+FFiCuZ1VWJ7MtSLwxssNmr5m1UYV6pvY0GZgdhrL
+         2evjoTemFdne0OSwIPAsH0Pd4WTV3vUEqPrQ7KwLKKdPosyMA9ZVG0RtRAqLoRxHpdA7
+         gTWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=cAXlcqY7whhINLxFJ7KI6NydPnIZQkiB5kTpPHvzBG0=;
-        b=NRCIaJOhdQmVlxMoZ+vsHX8WBo9A8ltty6kandkcRYqs5e+oUB0U/j3ZwVPMvD/u9d
-         ElKo5zVCowbbqW60pM4F+KaJMTdUAfSGLM51eAMVioqgfbdoA3cOoQbBL5HdgR87iepn
-         npyLN5ZP/yRbEQDLQSJuPAwwGsMzz9f/uoSLBYbMPEZ49ofpfJlPCpzsouUAoclV7Vtf
-         pd7GHdRcl51nk1oh3+GeuMQB4dG/7Vc+akGkEjW7uTgy2M+DLZmvivgzXhIR8HnQykQd
-         /YTeoJXyhKibd3rJP7VukPvGEZilztmeEdyuA/xK5ZiYxoDPMEURAXPizGeXJxeBlscX
-         OWmg==
-X-Gm-Message-State: ALQs6tDZQrCIvf0hQjY+LHXT3nN78ozJaIJk4r1x55abBf2WD+dNSGqa
-        mXdtNdfzTl+MEZyfAr55JVuWUw==
-X-Google-Smtp-Source: AIpwx4853mrFVgtUdCwzQL4TDxdIEOQ7BnmUB1ThLaM98MZWJtNgncMJRNAbdBH0QjuuQcwt01CDJw==
-X-Received: by 2002:a17:902:d909:: with SMTP id c9-v6mr18279075plz.229.1524439489732;
-        Sun, 22 Apr 2018 16:24:49 -0700 (PDT)
+        bh=NVij1scMADEK2dgMOpQbFtxIXZbV3Iy1XQn6mZJ6pXo=;
+        b=AUEAVoTd/qcAlqG8CrulStdPC7Ep0S7lUFh10JWuiA58HAa8w+P5qy31vYhrOLJG2y
+         ikWKPQGiqr9L/02jvIN5QgpwQnX1AhDREV6rltC2mrm1AWra9E4gWVxFi/3th5ZjNlJy
+         Gu9MDc5eA7pAnSidbUFVUTFw+KG0UZ8IXXvmc4zbqr1xKhx0sYSzIymhLqXnUROhFr0n
+         9ZjwxfLew7q3069e5aGeuzeypkPriaaB9UBdPy9ZAzKW0BQzRM1rRpkb3sW1T4+OI68w
+         OBSLeA2FypbO+FfuTy5PvWXckwn3ecr8aTKh6RwbqSCMGsaAdPELwcsGK79BGdzA26Ge
+         M9yg==
+X-Gm-Message-State: ALQs6tBVBr0yENm/k+K2vG02dUEMLkWdhL1C51+BbAMGhyvIESZnXAmp
+        WMrBeIS83TKhFHh0hiC2pne4Lw==
+X-Google-Smtp-Source: AIpwx48R9jMIjdtWXU48lnC0NAiVDyZfKZffPl69l67Jw7Ryo8YDsLL8+JW0r2wAlJ1ybmDy++MfVA==
+X-Received: by 10.98.155.141 with SMTP id e13mr8395567pfk.157.1524439599264;
+        Sun, 22 Apr 2018 16:26:39 -0700 (PDT)
 Received: from localhost ([2601:602:9500:1120:e8b3:eaad:c134:baec])
-        by smtp.gmail.com with ESMTPSA id z8sm16940030pgc.90.2018.04.22.16.24.47
+        by smtp.gmail.com with ESMTPSA id b72sm13918135pfm.69.2018.04.22.16.26.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 Apr 2018 16:24:48 -0700 (PDT)
+        Sun, 22 Apr 2018 16:26:38 -0700 (PDT)
+Date:   Sun, 22 Apr 2018 16:26:37 -0700
 From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Sun, 22 Apr 2018 16:24:47 -0700
 To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
         gitster@pobox.com, l.s.r@web.de, martin.agren@gmail.com,
         peff@peff.net
-Subject: Re: [PATCH v2 3/6] grep.[ch]: teach columnnum, color_columnno to
- grep_opt
-Message-ID: <20180422232447.GA48072@syl.local>
+Subject: Re: [PATCH v2 5/6] builtin/grep.c: show column numbers via
+ --column-number
+Message-ID: <20180422232637.GB48072@syl.local>
 References: <20180421034530.GB24606@syl.local>
  <cover.1524429778.git.me@ttaylorr.com>
- <47f06ae36ce6af48fca06b140bdb5af2582116e1.1524429778.git.me@ttaylorr.com>
- <87a7tuex47.fsf@evledraar.gmail.com>
+ <6dd73ad84cad5a749bf05c500295955970577e04.1524429778.git.me@ttaylorr.com>
+ <878t9eewu2.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a7tuex47.fsf@evledraar.gmail.com>
+In-Reply-To: <878t9eewu2.fsf@evledraar.gmail.com>
 User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 22, 2018 at 11:42:48PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Sun, Apr 22, 2018 at 11:48:53PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>
 > On Sun, Apr 22 2018, Taylor Blau wrote:
 >
-> > In preparation of adding --column-number to 'git-grep(1)', we extend
-> > grep_opt to take in the requisite new members.
+> I think this part though...
 >
-> Just a nit: Makes sense to refer to these camel-cased in docs & commit
-> messages.
+> > While we're at it, change color.grep.linenumber to color.grep.lineNumber
+> > to match the casing of nearby variables.
+> > [...]
+> > -`linenumber`;;
+> > +`lineNumber`;;
+>
+> Makes sense as its own patch at the beginning of the series, since it's
+> just related cleanup.
 
-Could you clarify which? I am not sure if you mean --column-number,
-'git-grep(1)', or grep_opt.
+Thanks, I have adjusted this change in my copy and will attach it in a
+subsequent re-roll.
 
+> > +`columnNumber`;;
+> > +	column number prefix (when using `--column-number`)
+>
+> Here you're using --column-number...
+>
+> > +grep.columnNumber::
+> > +	If set to true, enable `-m` option by default.
+>
+> ...But not here. This needs to be updated
+>
+> > +grep.columnNumber::
+> > +	If set to true, enable `-m` option by default.
+> > +
+>
+> ...ditto.
+
+Fixed all of these, thanks for pointing them out :-).
+
+> > +--column-number::
+> > +	Prefix the 1-indexed column number of the first match on non-context lines.
+> > +
+> > [...]
+> >  		OPT_GROUP(""),
+> >  		OPT_BOOL('n', "line-number", &opt.linenum, N_("show line numbers")),
+> > +		OPT_BOOL(0, "column-number", &opt.columnnum, N_("show column numbers")),
+>
+> Maybe "show first matching column"? I.e. the main docs say "just shows
+> the first", but this seems to give a different impression.
+
+I settled on "show column number of first match", and have noted its use
+for callers like git-jump in the documentation.
 
 Thanks,
 Taylor
