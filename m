@@ -2,102 +2,205 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 849001F424
-	for <e@80x24.org>; Sun, 22 Apr 2018 20:36:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA351F42D
+	for <e@80x24.org>; Sun, 22 Apr 2018 20:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753560AbeDVUg2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Apr 2018 16:36:28 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:41130 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753529AbeDVUg1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Apr 2018 16:36:27 -0400
-Received: by mail-wr0-f195.google.com with SMTP id g21-v6so8294027wrb.8
-        for <git@vger.kernel.org>; Sun, 22 Apr 2018 13:36:27 -0700 (PDT)
+        id S1753551AbeDVUr0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Apr 2018 16:47:26 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:37704 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753490AbeDVUrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Apr 2018 16:47:25 -0400
+Received: by mail-pg0-f65.google.com with SMTP id a13so2464355pgu.4
+        for <git@vger.kernel.org>; Sun, 22 Apr 2018 13:47:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wb9vopGMpecDR65LbbZJWsIVzY6SZbfMgZYyYv3ooJ0=;
-        b=uy9DmTM9Dy3JyH/3+MCtwK+TfHcllI713QLhnd4/1AQHZmKldZwBJlxcuemJu5upac
-         nsfqC+Q/aZD28NLKzosTGSiFzlIqEySjPwhlv8iQtHxa3k+PYS9/R2MLE3uPPEf9lvyb
-         mmlxFJWZuMC+/KA9Vqbpfr5hwzZ+BZX0RzlyvdjG4IM9IIkIWeDNVipD0f6qDVvzOAkd
-         9MPcV7p5w64Sz5e7zqAUIeCkgOH/Xc9Ch/JwNzDqm/F4liF0xpQWGJyc5K3vmoTVkXLX
-         7EAycDCF5VET59WjEG/a07kypxKotO+J2ojgy++kJb+n6ARpVluO9QF5LBzVJFfUejVu
-         X+fw==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Ej7YjmOQ3c7gFUgBOfss9JVU+zgiNakHUI+JzMCVaQA=;
+        b=M0giaGVfeeYiu1zKHud3G+f0MHZkS6G0MdiGCqkmMrnwEp/Mc+GEAK9nWTLa1iOKWl
+         OpvfpCw6oXvxcxziiZQQOh+iMBxnA6IpYTLVs6Q4x7aTnjymqcDh6mZ3HUlHPUH94fSp
+         LQ6yw6RKsMMFsymmsw2VUvDurEwVpKtnU4VG+WhJeKybylL0nYC/bCD3arASe6pMUju2
+         9GP4RdGG+s8noD6bXdpOiAIJBgIdzxBX5ZMwNERC9voFvFCJ36No91mfNKvOyEbePFaA
+         hy1OPteJ+EkgM5/Ob9+cLAV0H4i46axnMs0Yz5LR12ZsGoqrQXqwsMsnin3+658a+Z5N
+         W4Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wb9vopGMpecDR65LbbZJWsIVzY6SZbfMgZYyYv3ooJ0=;
-        b=lEGMlaLg/2OgwPcKBFChrBORQGt9CdqTmumALDQn0iVjhXPExMN+ko5UuIQaF6UyR4
-         AVtf7yZuVo+HWQVxSDL4E+2LfyOJEtwrC4Nwp5UPYteFQ4UHrjXe5Ht3ck5ppeputv2R
-         RWGmSIoskL67+YNX79l0uBzmxLEMBE2dbZoqZRHYu4Wh69tEbPljfr6TbNIFuCQlBqps
-         RaK3O/WU8UhPOUAX3N3yLF9zZxwXvElXOc4Yo47aHowgHICUTahifC1LODBEpDepNjcj
-         XkOavhARYbjT1ncrBfvz0dWUP6x1xPySgs3Ta0YazRBeB/Cusy456C89eOc97T5aD8Tf
-         pkYQ==
-X-Gm-Message-State: ALQs6tCXqcd55jNSLuen4qNFxvTXxV/C12PfkhUIjLC5vXEZlsYa7zjO
-        5Ib7U0Mu0fArB1EQKfusNSc=
-X-Google-Smtp-Source: AIpwx4+ZddO8kHJztFy8RdSuuctdhkKVQOl8PXES8YCNuVDsh/B3Ex/FZ02hHmJMBmo1yPqs1QXY4w==
-X-Received: by 2002:adf:88b6:: with SMTP id f51-v6mr14390081wrf.55.1524429386590;
-        Sun, 22 Apr 2018 13:36:26 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id l73sm18375177wma.10.2018.04.22.13.36.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 22 Apr 2018 13:36:25 -0700 (PDT)
-Date:   Sun, 22 Apr 2018 21:36:32 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] completion: stop showing 'save' for stash by
- default
-Message-ID: <20180422203632.GA25294@hank>
-References: <20180417212945.24002-1-t.gummerer@gmail.com>
- <20180419232514.16572-1-t.gummerer@gmail.com>
- <20180419232514.16572-2-t.gummerer@gmail.com>
- <CACsJy8BByBCh_DuDu9otO4RLpCnQ+HY-vHi4EDC3_dNQHjM1dg@mail.gmail.com>
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Ej7YjmOQ3c7gFUgBOfss9JVU+zgiNakHUI+JzMCVaQA=;
+        b=FlnngDGDHuNV+CU93iTfb3RmVdxmZxlzagFavcZ6COr6j2eklJfWONYz0H6P72SKTo
+         9sNHzfW/TlDPlKodMhhsnE+9PaVPiu3mCj+D6S9Bji5P4ffjMPOFrdzt1rVXalkwTNjo
+         Y1DjnR4vykJd3xlBL4xJ4C3yiP/O9pUAMhQq96Y2xJTX/eVuuwvab0VGFtLtPi2Bk5P0
+         /MyNcweOhZnpTHEY+afbvlNfpkdZS/M7NjP8TMACAxl3Pe2j3UA5geeFff27yh5w7CsD
+         k0H/T755RwD6NsvNz7f18m8QTMz1aPqnJqzPK713Ppzeq1uGg0Azn4Gv31N2iauJSgku
+         VKpw==
+X-Gm-Message-State: ALQs6tCNTIqa7325CHukeVTLaO8CqpVSQqEOk9RtIa4JH0JGbYgYDQN6
+        v94KekD1n2f42G/MH9Sf8IAj4iFUIfM=
+X-Google-Smtp-Source: AIpwx4++kBdWIVbL16fvLtomn5VGK9DW6Y93pJspQ5Q/8BYhvkZPeDmCNR5+N9uBKbb/r9dwa6VGQw==
+X-Received: by 2002:a17:902:1744:: with SMTP id i62-v6mr14201300pli.267.1524430043717;
+        Sun, 22 Apr 2018 13:47:23 -0700 (PDT)
+Received: from localhost ([2601:602:9500:1120:e8b3:eaad:c134:baec])
+        by smtp.gmail.com with ESMTPSA id s7sm18130291pfm.114.2018.04.22.13.47.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 22 Apr 2018 13:47:22 -0700 (PDT)
+Date:   Sun, 22 Apr 2018 13:47:20 -0700
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, l.s.r@web.de, martin.agren@gmail.com,
+        peff@peff.net
+Subject: [PATCH v2 0/6] Teach '--column-number' to 'git-grep(1)'
+Message-ID: <cover.1524429778.git.me@ttaylorr.com>
+References: <20180421034530.GB24606@syl.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CACsJy8BByBCh_DuDu9otO4RLpCnQ+HY-vHi4EDC3_dNQHjM1dg@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180421034530.GB24606@syl.local>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/20, Duy Nguyen wrote:
-> On Fri, Apr 20, 2018 at 1:25 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > The 'save' subcommand in git stash has been deprecated in
-> > fd2ebf14db ("stash: mark "git stash save" deprecated in the man page",
-> > 2017-10-22).
-> >
-> > Stop showing it when the users enters 'git stash <tab>' or 'git stash
-> > s<tab>'.  Keep showing it however when the user enters 'git stash sa<tab>'
-> > or any more characters of the 'save' subcommand.
-> 
-> I don't think this is worth it. You only save two keystrokes for 've'
-> and already waste one on <tab>.
+Hi,
 
-I think the main reason for keeping the completion is not actually
-saving keystrokes, but rather not giving the users the false
-impression that we removed the command, or that something is wrong
-with it, without properly warning them before.  That was the main
-reason given in [1] why the completion is useful even for short
-commands such as 'rm'.
+Attached is a re-roll of the series to add --column-number to
+'git-grep(1)'.
 
-So while I had the same impression before re-reading that thread, I
-think keeping the completion for 'git stash sa<tab>' is the right
-thing to do, and we can remove it some time after we started warning
-about 'git stash save' being deprecated.
+Since last time, I have changed the following (an inter-diff is
+available below for easier consumption):
 
-[1]: <01020160a0004473-277c3d7c-4e3b-4c50-9d44-4a106f37f1d9-000000@eu-west-1.amazonses.com>
+  * Removed '-m' as an alias for '--column-number', per René's
+    suggestion [1].
 
-> -- 
-> Duy
+  * Fix some incorrect spelling of 'columnnumber'.
+
+  * Change casing of 'color.grep.linenumber' to 'color.grep.lineNumber'
+    to be consistent with 'color.grep.columnNumber'. This is an
+    unrelated change, and one which I am happy to drop from this series.
+    It was suggested by Martin in [2].
+
+Thanks in advance for your second round of review :-).
+
+
+Thanks,
+Taylor
+
+[1]: https://public-inbox.org/git/cef29224-718f-21e9-0242-8bcd8e9c20a6@web.de/
+[2]: https://public-inbox.org/git/CAN0heSp_bGqKF26g4TDOw6WpsvR2cEW6EqF3aJtKCv5POU_HmQ@mail.gmail.com/
+
+Taylor Blau (6):
+  grep.c: take regmatch_t as argument in match_line()
+  grep.c: take column number as argument to show_line()
+  grep.[ch]: teach columnnum, color_columnno to grep_opt
+  grep.c: display column number of first match
+  builtin/grep.c: show column numbers via --column-number
+  contrib/git-jump/git-jump: use column number when grep-ing
+
+ Documentation/config.txt   |  7 ++++++-
+ Documentation/git-grep.txt |  8 +++++++-
+ builtin/grep.c             |  1 +
+ contrib/git-jump/git-jump  |  2 +-
+ grep.c                     | 33 ++++++++++++++++++++++++---------
+ grep.h                     |  2 ++
+ t/t7810-grep.sh            | 22 ++++++++++++++++++++++
+ 7 files changed, 63 insertions(+), 12 deletions(-)
+
+Inter-diff (since v1):
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 02fd4b662b..1645fcf2ae 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1157,10 +1157,10 @@ color.grep.<slot>::
+ 	filename prefix (when not using `-h`)
+ `function`;;
+ 	function name lines (when using `-p`)
+-`linenumber`;;
++`lineNumber`;;
+ 	line number prefix (when using `-n`)
+-`columnnumber`;;
+-	column number prefix (when using `-m`)
++`columnNumber`;;
++	column number prefix (when using `--column-number`)
+ `match`;;
+ 	matching text (same as setting `matchContext` and `matchSelected`)
+ `matchContext`;;
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index dd90f74ded..b75a039768 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	   [-v | --invert-match] [-h|-H] [--full-name]
+ 	   [-E | --extended-regexp] [-G | --basic-regexp]
+ 	   [-P | --perl-regexp]
+-	   [-F | --fixed-strings] [-n | --line-number] [-m | --column-number]
++	   [-F | --fixed-strings] [-n | --line-number] [--column-number]
+ 	   [-l | --files-with-matches] [-L | --files-without-match]
+ 	   [(-O | --open-files-in-pager) [<pager>]]
+ 	   [-z | --null]
+@@ -172,7 +172,6 @@ providing this option will cause it to die.
+ --line-number::
+ 	Prefix the line number to matching lines.
+
+--m::
+ --column-number::
+ 	Prefix the 1-indexed column number of the first match on non-context lines.
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index faa65abab5..23ce97f998 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -829,7 +829,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			    GREP_PATTERN_TYPE_PCRE),
+ 		OPT_GROUP(""),
+ 		OPT_BOOL('n', "line-number", &opt.linenum, N_("show line numbers")),
+-		OPT_BOOL('m', "column-number", &opt.columnnum, N_("show column numbers")),
++		OPT_BOOL(0, "column-number", &opt.columnnum, N_("show column numbers")),
+ 		OPT_NEGBIT('h', NULL, &opt.pathname, N_("don't show filenames"), 1),
+ 		OPT_BIT('H', NULL, &opt.pathname, N_("show filenames"), 1),
+ 		OPT_NEGBIT(0, "full-name", &opt.relative,
+diff --git a/grep.c b/grep.c
+index 5aeb893263..23250e60d0 100644
+--- a/grep.c
++++ b/grep.c
+@@ -115,7 +115,7 @@ int grep_config(const char *var, const char *value, void *cb)
+ 		color = opt->color_function;
+ 	else if (!strcmp(var, "color.grep.linenumber"))
+ 		color = opt->color_lineno;
+-	else if (!strcmp(var, "color.grep.columnumber"))
++	else if (!strcmp(var, "color.grep.columnnumber"))
+ 		color = opt->color_columnno;
+ 	else if (!strcmp(var, "color.grep.matchcontext"))
+ 		color = opt->color_match_context;
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 0cf654824d..7349c7fadc 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -106,7 +106,7 @@ do
+ 			echo ${HC}file:5:foo mmap bar_mmap
+ 			echo ${HC}file:14:foo_mmap bar mmap baz
+ 		} >expected &&
+-		git -c grep.linenumber=false grep -m -w -e mmap $H >actual &&
++		git grep --column-number -w -e mmap $H >actual &&
+ 		test_cmp expected actual
+ 	'
+
+@@ -117,7 +117,7 @@ do
+ 			echo ${HC}file:4:5:foo mmap bar_mmap
+ 			echo ${HC}file:5:14:foo_mmap bar mmap baz
+ 		} >expected &&
+-		git -c grep.linenumber=false grep -n -m -w -e mmap $H >actual &&
++		git grep -n --column-number -w -e mmap $H >actual &&
+ 		test_cmp expected actual
+ 	'
+
+--
+2.17.0
