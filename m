@@ -2,108 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D91C41F404
-	for <e@80x24.org>; Sun, 22 Apr 2018 03:30:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22C511F404
+	for <e@80x24.org>; Sun, 22 Apr 2018 05:15:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753367AbeDVDa4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Apr 2018 23:30:56 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:44452 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753025AbeDVDaz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Apr 2018 23:30:55 -0400
-Received: by mail-qk0-f195.google.com with SMTP id h200so12118551qke.11
-        for <git@vger.kernel.org>; Sat, 21 Apr 2018 20:30:54 -0700 (PDT)
+        id S1750770AbeDVFPn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Apr 2018 01:15:43 -0400
+Received: from mail-ot0-f180.google.com ([74.125.82.180]:42466 "EHLO
+        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750747AbeDVFPl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Apr 2018 01:15:41 -0400
+Received: by mail-ot0-f180.google.com with SMTP id q10-v6so9077193oth.9
+        for <git@vger.kernel.org>; Sat, 21 Apr 2018 22:15:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=Bf5tN7yNdiB13oo43OWTxS5Cd/Tfr9jFKbKjGRtWoc4=;
-        b=ZEBQMteNVTPOwGEQszV0/EUO0EQ2clfBvYcfc7Y9/KAa+dGOT3Nmxgj5VNK6Ocku8j
-         OUZoSR8JIu2B/ShADTE3xEmvoTrBSxM8U4dL9wPGoa4/K9KLri1EYuqAlsw2QFxF52Yz
-         oMUae0l1Z4Gok/JKoL6OSn8z+fhTr+uPUd+XIi/1f8hhajDYOO8Ej4iXR3cclS9oMnrv
-         E9Sax28VY3Em/VHcLB3qAHehoxHVPSI5b0h+8bAA8f9uTAESOpXoXfTMkamISwZqG9y0
-         Yoo8qzn1C5mHqKa1oFYzZfXJGXDXW9qudMQmXDYHSZNtVUQmhw/gyUjiXcmLDBrTR/HC
-         NBJA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=pcT0bdvcxjJEiOfK7BeUXSbZOl8iN84ei5loGE5pNoA=;
+        b=MhIOWQsTRCGx0plSzl2KZf1UXyyUGJ4lgUeYHrFVTY50PUqdcy3Zlxge16cLcO5mCv
+         CREuTCcOcd98gtnYr8vuns5tmhaoqFsZyNpMqAoIZdggq+N6wzMfyRoq0nQk4oiBmcy6
+         OFFxgCksepjFLLOGlcnk4TMUJynDbghey21fQJy6P67Fo4mCxNiZRDS393R/ctlQDqLK
+         kROkDmcK1cp1Q9C/FcLwb7qkCTkttur8TM/Se2JzP9fpmQVHNVqJ08KnBPKRr+9KfVxU
+         f7MXqm8DdHl24VK6SHaUIop/Fi1Re8q4ixijkDmCBdlDpGCl+PFDm7vZDfk/YFHRDZx9
+         AvdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=Bf5tN7yNdiB13oo43OWTxS5Cd/Tfr9jFKbKjGRtWoc4=;
-        b=ZbP2M3W534j3pcIkzyrhWbIt+FqL4skroF624h0+RkFXnd7fkYbkf/MVhkIY+FWSlS
-         3R1CumwPaLwh44n+s02VFDtYmDa4wzoGn+p6lotnqhpZ4OwL5K/UVnZLnPJ7EbCuNZJ4
-         3ITyjRfDUfLJvbUcRpSCYTqex2DHU/eka3YPIPkzLnMNgSrSlg+GSYMXHJ6EjmEzk/gs
-         wNlAEiShtSO0vEMns1uIpuL+f9+Uo6jH73IzAlGadbYVEvULlrkcdy4YMBNloTsJyGpq
-         H6Q+A/6KXi3YlSgcikVmbuaO3T27yZpOOQBAThsZOaAc/tl1z16HWYsHJMV12T+4Zekm
-         l7qQ==
-X-Gm-Message-State: ALQs6tBeV9wE0GN9DeIOXalFrYb3zvww8/VG+usr7lBkOnq9BYKhlsyn
-        A0toXWiMfGd5zZeOeCG4cGNqGHYO/VDOoezqQxOmiA==
-X-Google-Smtp-Source: AB8JxZodvh7fPlYM8vM+32I6JqnUGJzj/0dmMTJXcVc5AQjqOaVhNDaKrO9XMbYVZy66qfHOFwMYyS/eaCrfLf2r+qA=
-X-Received: by 10.233.220.1 with SMTP id q1mr16221423qkf.361.1524367854449;
- Sat, 21 Apr 2018 20:30:54 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=pcT0bdvcxjJEiOfK7BeUXSbZOl8iN84ei5loGE5pNoA=;
+        b=CCKzGQr72GfK4R4OCjGnn0VGv9QNVYa87zrpJoegeUrSRGeZb1PipWnZtaiUhdr6ig
+         LsYCG5tNvgZQR7Hq7GuRYf0t+r89r5ZvCt7ooDln7xZfy82CBZQjkcZJ+qRwgy7re9dP
+         tW1e3fBx/uVNiTXUG9lrnHhgIGv1e5FaArFyeApBO8ZRSNGGhpz5Wh4LhPfawfjNkvai
+         uolNix9b98VyFWBL5KCQNoP9qwm3eZr0UiHPf6WewGiKeYN6yLnHFHxlVHS62N8/S3+j
+         9QRZmVo5RrYK46XYADljnldkbDANdI0Qg4xXBoIbMQOybq/ZeS5d4XKMyHV3SXCcYlQT
+         TP5Q==
+X-Gm-Message-State: ALQs6tB5N0tdahU315LFCCh1T32ACGpqFPZPYV53ysLY+w1DG7R1nLwW
+        RJ1e1/Z8E50vr6/ZmFwf9ahWtXQ3oSUplOcPflnUcw==
+X-Google-Smtp-Source: AIpwx4/T1Zqt/nKCb4WPFvoMLU3bRrqSz5FJbCtZvsb/vILzLYKmCWGb9OOyb/I2IlOXcsfbrMnif+PfG4Rx3tK5cpQ=
+X-Received: by 2002:a9d:21e5:: with SMTP id s92-v6mr11642651otb.165.1524374141183;
+ Sat, 21 Apr 2018 22:15:41 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Sat, 21 Apr 2018 20:30:53 -0700 (PDT)
-In-Reply-To: <fd4ea54ad8da5e4e93fafd558e104b0a19f6268c.1524303776.git.johannes.schindelin@gmx.de>
-References: <cover.1524262793.git.johannes.schindelin@gmx.de>
- <cover.1524303776.git.johannes.schindelin@gmx.de> <fd4ea54ad8da5e4e93fafd558e104b0a19f6268c.1524303776.git.johannes.schindelin@gmx.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 21 Apr 2018 23:30:53 -0400
-X-Google-Sender-Auth: VO8vXiuOi-WqlAisIJXYAMirKLo
-Message-ID: <CAPig+cTDbTtUeFYmkNtM773EBgE14Tpic4g4XEFuSVwSypdMjw@mail.gmail.com>
-Subject: Re: [PATCH v4 05/11] replace: introduce --convert-graft-file
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>
+Received: by 10.201.102.138 with HTTP; Sat, 21 Apr 2018 22:15:40 -0700 (PDT)
+In-Reply-To: <CAPig+cTw5GjB4VgFD2teDvMuyGPFFoNSCqbXbarEXCe3fVdLjQ@mail.gmail.com>
+References: <CA+FnnTxbg97A4P3AP7n5RT8+=W8PY0yx3644Ay2Zi9xgKD2aoA@mail.gmail.com>
+ <CAPig+cR19LS2vfjBQ71c3j2g61vSHnYRj1iSX1-V_E3Fj=kwOA@mail.gmail.com>
+ <CA+FnnTzfJMBuSMAD7PgUurRu8jOpirEgM6=+=i91zdGLWmfUpg@mail.gmail.com>
+ <CAPig+cQOzKbM0R6vKTg_BU6meEbAAJWL1T0jZkaCOF0uJ=_Lmw@mail.gmail.com>
+ <CA+FnnTzqaPrLgYv-8X9BDW0DR7331morN33B81w8T3vzOwn+Pw@mail.gmail.com>
+ <CA+FnnTz-qdVK5482GJo06QrvMktGYhJAJ6g-Naq0BgT-uoRvEA@mail.gmail.com>
+ <CAPig+cS+gf5gGM3fmnxk-6k7ezbtS=KQFqkkxVtcytHfcQApEQ@mail.gmail.com>
+ <CA+FnnTwvnA90nDARKW9r7p5iraoOGTvfDJ26n6Udc68bDSUASw@mail.gmail.com>
+ <CAPig+cRjYju4zEgiY_TuOOk0e7A8zNz+hu+40vQUEGDX6FGDxw@mail.gmail.com>
+ <CA+FnnTzFomd91d1F6O-a28hXQ6PxOiBd44da4nSVW0MuDKgkmw@mail.gmail.com> <CAPig+cTw5GjB4VgFD2teDvMuyGPFFoNSCqbXbarEXCe3fVdLjQ@mail.gmail.com>
+From:   Igor Korot <ikorot01@gmail.com>
+Date:   Sun, 22 Apr 2018 01:15:40 -0400
+Message-ID: <CA+FnnTzkZS7HP61Ck3y5p0EC7J_h=ToR5tq5cvEpJ79vYuSxZw@mail.gmail.com>
+Subject: Re: Is support for 10.8 dropped?
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 21, 2018 at 5:48 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> This option is intended to help with the transition away from the
-> now-deprecated graft file.
+Hi,
+Sorry for the long delay. Been busy with life things.
+
+I built git from sources. The build was successful.
+
+[code]
+MyMac:git-2.17.0 igorkorot$ cat config.mak
+NO_GETTEXT=Yes
+NO_OPENSSL=Yes
+[/code]
+
+Next I tried to do git pull for my project:
+
+[code]
+MyMac:dbhandler igorkorot$ /Users/igorkorot/git-2.17.0/git pull
+fatal: unable to access
+'https://github.com/oneeyeman1/dbhandler.git/': error:1407742E:SSL
+routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol version
+MyMac:dbhandler igorkorot$
+[/code]
+
+Thank you.
+
+
+On Wed, Apr 11, 2018 at 5:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Apr 11, 2018 at 12:28 AM, Igor Korot <ikorot01@gmail.com> wrote:
+>>>> Is there a way to check for OpenSSL presence?
+>>>
+>>> Not sure what you're asking. Are you asking how to determine if you
+>>> already have OpenSSL built on your machine?
+>>
+>> Yes, that's what I was asking...
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/builtin/replace.c b/builtin/replace.c
-> @@ -454,6 +455,38 @@ static int create_graft(int argc, const char **argv, int force)
-> +static int convert_graft_file(int force)
-> +{
-> +       const char *graft_file = get_graft_file();
-> +       FILE *fp = fopen_or_warn(graft_file, "r");
-> +       struct strbuf buf = STRBUF_INIT, err = STRBUF_INIT;
-> +       struct argv_array args = ARGV_ARRAY_INIT;
-> +
-> +       if (!fp)
-> +               return -1;
-> +
-> +       while (strbuf_getline(&buf, fp) != EOF) {
-> +               if (*buf.buf == '#')
-> +                       continue;
-> +
-> +               argv_array_split(&args, buf.buf);
-> +               if (args.argc && create_graft(args.argc, args.argv, force))
-> +                       strbuf_addf(&err, "\n\t%s", buf.buf);
-> +               argv_array_clear(&args);
-> +       }
-> +
-> +       strbuf_release(&buf);
-> +       argv_array_clear(&args);
-
-This argv_array_clear() is redundant, isn't it?
-
-> +       if (!err.len)
-> +               return unlink_or_warn(graft_file);
-> +
-> +       warning(_("could not convert the following graft(s):\n%s"), err.buf);
-> +       strbuf_release(&err);
-> +
-> +       return -1;
-> +}
+> Easiest way to determine it is to try to compile Git without setting NO_OPENSSL.
+>
+>> This is what I got trying to do just "make":
+>>
+>> MyMac:git-2.17.0 igorkorot$ make
+>>     * new build flags
+>>     CC credential-store.o
+>> In file included from credential-store.c:1:
+>> In file included from ./cache.h:9:
+>> ./gettext.h:17:11: fatal error: 'libintl.h' file not found
+>> #       include <libintl.h>
+>>                 ^
+>> 1 error generated.
+>
+> This is because you don't have gettext installed. You should be able
+> to set NO_GETTEXT to work around this.
+>
+>> And I am also confused. Which file am I suppose to modify here?
+>>
+>> MyMac:git-2.17.0 igorkorot$ ls -la conf*
+>> -rwxr-xr-x@ 1 igorkorot  staff  74461 Apr  2 10:13 config.c
+>> -rwxr-xr-x@ 1 igorkorot  staff   9888 Apr  2 10:13 config.h
+>> -rwxr-xr-x@ 1 igorkorot  staff    540 Apr  2 10:13 config.mak.in
+>> -rwxr-xr-x@ 1 igorkorot  staff  16940 Apr  2 10:13 config.mak.uname
+>> -rwxr-xr-x@ 1 igorkorot  staff  37509 Apr  2 10:13 configure.ac
+>> -rw-r--r--  1 igorkorot  staff  37500 Apr  8 18:52 configure.ac+
+>
+> You should create a new file named "config.mak". For instance, the
+> content of your config.mak file might be:
+>
+>     NO_GETTEXT=Yes
