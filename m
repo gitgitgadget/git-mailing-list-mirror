@@ -2,559 +2,233 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C593C1F424
-	for <e@80x24.org>; Sun, 22 Apr 2018 13:42:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 568D61F424
+	for <e@80x24.org>; Sun, 22 Apr 2018 14:30:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751296AbeDVNmb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Apr 2018 09:42:31 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:14287 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751163AbeDVNma (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Apr 2018 09:42:30 -0400
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id AFG3f1xnq4ZqzAFG4flNAj; Sun, 22 Apr 2018 14:42:28 +0100
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=E/fjW5Vl c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=6oXkjC2C-MGcmaTQZB0A:9
- a=Z7xIR6kX8k7ei8Ho:21 a=kuNYtJWhWsC9w2MA:21 a=0ixstvmRlOuBF6Ai:21
- a=wPNLvfGTeEIA:10
-Message-ID: <0023E61D311849B68FECAE76613839C4@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Johannes Schindelin" <johannes.schindelin@gmx.de>,
-        "Git List" <git@vger.kernel.org>
-Cc:     "Junio C Hamano" <gitster@pobox.com>,
-        "Jacob Keller" <jacob.keller@gmail.com>,
-        "Stefan Beller" <sbeller@google.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>,
-        "Phillip Wood" <phillip.wood@dunelm.org.uk>,
-        "Igor Djordjevic" <igor.d.djordjevic@gmail.com>,
-        "Johannes Sixt" <j6t@kdbg.org>,
-        "Sergey Organov" <sorganov@gmail.com>,
-        =?iso-8859-1?Q?Martin_=C5gren?= <martin.agren@gmail.com>
-References: <cover.1524139900.git.johannes.schindelin@gmx.de> <cover.1524306546.git.johannes.schindelin@gmx.de> <ff71f636d5171359d94097423b8e9e340ab2152a.1524306546.git.johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v8 08/16] rebase-helper --make-script: introduce a flag to rebase merges
-Date:   Sun, 22 Apr 2018 14:42:28 +0100
-Organization: OPDS
+        id S1757524AbeDVOah (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Apr 2018 10:30:37 -0400
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:34085 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757344AbeDVOac (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Apr 2018 10:30:32 -0400
+Received: by mail-wr0-f176.google.com with SMTP id p18-v6so15186814wrm.1
+        for <git@vger.kernel.org>; Sun, 22 Apr 2018 07:30:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=DCpmG18Abx/3hqmSL2loyo62LeFC7TZTVoy63ZOe5ko=;
+        b=G3nosfBPOFvkCdyS3Ri7wJxjIScavBD3w/sd+YP+K3zn9zuHBVhswpOltHQEpv27Pw
+         /RMaWSo11p8IaSHlejbF0hHlOtqlfE2Ca+800dq0OAKh+6wd4j5np7le6UazX7SRnk+P
+         XgcMIv1t5NRuRQQ55QM1p9+eke4qXFPAp1rVo42Jctcsb8nR13AESN9quR0k/ce5Zqs8
+         EwxqIyiGIlGytk0RXcBAaifCdekqm4hs3vMATaGXu/8Hs2d9G+QCzMzl48lu12ggV1ct
+         Ht//Ou0nJ6ll1yyVw23uu59Pu8GRjB6+/L4PCx0WA2qW3G7pvDmm1uxjo1rDSHQ0Xe7A
+         UkVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=DCpmG18Abx/3hqmSL2loyo62LeFC7TZTVoy63ZOe5ko=;
+        b=mqBKduNBEuNRdbwljEANURRsG6+/qBMmkVLwtv8deU4T7fXvvmjNEshwSWrHG1k6bM
+         +S6kbdDr7Y+mm7weZUBZjk+XapKoa4vjqvZmAqiU7M3YiipMNKSIUuf/7ATQ+m6cHhm1
+         rJWj4+peYokco6RNkXhHPQ0dNKxT1b9wOP/zmr5QvpXco/lMf84AjTx/ESN5drR9mg7J
+         LZezlNjwpsKQh0TDmn6aTaxcKsijua62FXpjSi4pXvuProGgABGImJl1AK3p4Ug35x/d
+         ht1sYbejFD2EGgg1GOgiyE9sEALhPd49e7kfHppMRX1bL4DYfhiJYxjXNUXcnOta9tFs
+         X5VQ==
+X-Gm-Message-State: ALQs6tAxqpKR30wUNxQrjHqiHoD/jxsy5ols2bqRk+UKz1CHsT/UwEhO
+        cFKH+8tmqRa7gvwzZnN7HhGiDw==
+X-Google-Smtp-Source: AIpwx4/pXHUwTgV5p5w9lS4mKoyus+y2F3Zubs2GupaZFAkI1j7/1B7CdFyZjgysap0gQ7Ubw51xug==
+X-Received: by 2002:adf:9d8c:: with SMTP id p12-v6mr8426395wre.14.1524407429900;
+        Sun, 22 Apr 2018 07:30:29 -0700 (PDT)
+Received: from ?IPv6:2001:a62:81d:ab01:1c9c:1351:48bb:17f9? ([2001:a62:81d:ab01:1c9c:1351:48bb:17f9])
+        by smtp.googlemail.com with ESMTPSA id b5-v6sm14290680wrh.67.2018.04.22.07.30.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 22 Apr 2018 07:30:29 -0700 (PDT)
+Subject: Re: RFC: How should we handle un-deleted remote branches?
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <87in8mdqhr.fsf@evledraar.gmail.com>
+ <3fcd1b50-2aeb-0ea4-fea7-b5705e76c027@gmail.com>
+ <87d0yrebhw.fsf@evledraar.gmail.com>
+From:   Andreas Heiduk <asheiduk@gmail.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=asheiduk@gmail.com; prefer-encrypt=mutual; keydata=
+ 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
+ khKIKhAKu5lezA==
+Message-ID: <f2fc89c6-14a9-b700-b7c9-a646148e9206@gmail.com>
+Date:   Sun, 22 Apr 2018 16:30:28 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180422-0, 22/04/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfH6tqfKuCbrsY2ookvrlCFccJ+JEu2ViVpV4YpdjlmSfDmlImFJ4HvItjbF9Gy+yb76vdAg3r4UxgGdasLZjjy91SAhUVZ9YxfhpqqA0y6Tj6YenEfAQ
- t8rSjdCbP365+URqPoWCTQMoTbNwrQLlLFDluQNuCfn/LYKZN2FcG5PIgTxBgHUe7Mf0cE3FmHmPskOZIVMgxOSbNf3dREOPcHJlxvg6Xt5xzv56qrmcv0Dg
- p9wZH2lXjNzjZvj9OL4Ipl8PZHM8UzU9oml3LjjgztW6mBkphjijc6tPyA7sw3UxYNr0kS5+rKVW3X3HH4HUsUs3anP74SOQ4M0agFhDhwgIME8jfakPmOfm
- mW8AVV7chr6VYM1hzdKSGS6N4FisfpW2ppf1nW+7IZ1jqXDwiVgdSwg2pXOh7x0LWV8XEjLlSmCiwuckytjrXXVBeETUlE8+en/IUAuL7RIBmy4SvzmDjV/u
- yVIXIWiNgml3jU/FXtYvriv60kPIKJcXK8DpQg==
+In-Reply-To: <87d0yrebhw.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
+Am 22.04.2018 um 13:17 schrieb Ævar Arnfjörð Bjarmason:
+> 
+> On Sun, Apr 22 2018, Andreas Heiduk wrote:
+> 
+>> Am 20.04.2018 um 14:14 schrieb Ævar Arnfjörð Bjarmason:
+>>> But this is a possible work-around:
+>>>
+>>>     git init /tmp/empty.git
+>>>     git remote add avar file:///tmp/empty.git
+>>>     git remote prune avar
+>>>     git remote remove avar
+>>
+>> This won't do it also?
+>>
+>> 	git remote prune origin
+> 
+> Yes, in this particular case, but that's just emergent behavior in how
+> we handle refspec prunign, and the fact that it "works" is arguably a
+> bug in "prune". i.e. this:
 
-Sorry for the very late in the series comments..
+Its not emergent because "origin" is the other remote responsible for
+that ref and cleaning stuff "belonging" to the remote is the job
+description (I'm arguing from a user's perspective, not as a git-developer).
 
-> The sequencer just learned new commands intended to recreate branch
-> structure (similar in spirit to --preserve-merges, but with a
-> substantially less-broken design).
->
-> Let's allow the rebase--helper to generate todo lists making use of
-> these commands, triggered by the new --rebase-merges option. For a
-> commit topology like this (where the HEAD points to C):
->
-> - A - B - C
->     \   /
->       D
->
-> the generated todo list would look like this:
->
-> # branch D
-> pick 0123 A
-> label branch-point
-> pick 1234 D
-> label D
->
-> reset branch-point
-> pick 2345 B
-> merge -C 3456 D # C
->
-> To keep things simple, we first only implement support for merge commits
-> with exactly two parents, leaving support for octopus merges to a later
-> patch series.
->
-For the first time reader this (below) isn't as obvious as may be thought.
-maybe we should be a little more explicit here.
+> 
+>     (
+>         rm -rf /tmp/git &&
+>         git clone --bare --mirror git@github.com:git/git.git /tmp/git &&
+>         cd /tmp/git &&
+>         git remote add avar git@github.com:avar/git.git &&
+>         git remote add peff git@github.com:peff/git.git &&
+>         git fetch --all &&
+>         git remote remove avar &&
+>         git remote prune origin
+>     )
+> 
+> Will delete all the avar/* and peff/* branches, even though I still have
+> a "peff" remote.
 
-> As a special, hard-coded label, all merge-rebasing todo lists start with
-> the command `label onto`
+Exactly my point: When you are in a the bad situation of "shared
+responsibility", then there is no easy and always correct way out,
+because there are uncountable possible situations.
 
-.. which labels the start point head with the name 'onto' ...
+To give another, slightly modified example expanding the problem space:
 
-Maybe even:
-"All merge-rebasing todo lists start with, as a convenience, a hard-coded
-`label onto` line which will label the start point's head" ...
+(
+    rm -rf /tmp/git &&
+    git clone --bare --mirror https://github.com/git/git.git /tmp/git &&
+    cd /tmp/git &&
+    git remote add github https://github.com/avar/git.git &&
+    git fetch github &&
+    git fetch origin &&
+    # note new fetches for "github/master" using with "(forced update)"
+)
 
->                so that we can later always refer to the revision
-> onto which everything is rebased.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> builtin/rebase--helper.c |   4 +-
-> sequencer.c              | 351 ++++++++++++++++++++++++++++++++++++++-
-> sequencer.h              |   1 +
-> 3 files changed, 353 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-> index ad074705bb5..781782e7272 100644
-> --- a/builtin/rebase--helper.c
-> +++ b/builtin/rebase--helper.c
-> @@ -12,7 +12,7 @@ static const char * const builtin_rebase_helper_usage[]
-> = {
-> int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
-> {
->  struct replay_opts opts = REPLAY_OPTS_INIT;
-> - unsigned flags = 0, keep_empty = 0;
-> + unsigned flags = 0, keep_empty = 0, rebase_merges = 0;
->  int abbreviate_commands = 0;
->  enum {
->  CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
-> @@ -24,6 +24,7 @@ int cmd_rebase__helper(int argc, const char **argv,
-> const char *prefix)
->  OPT_BOOL(0, "keep-empty", &keep_empty, N_("keep empty commits")),
->  OPT_BOOL(0, "allow-empty-message", &opts.allow_empty_message,
->  N_("allow commits with empty messages")),
-> + OPT_BOOL(0, "rebase-merges", &rebase_merges, N_("rebase merge
-> commits")),
->  OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
->  CONTINUE),
->  OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
-> @@ -57,6 +58,7 @@ int cmd_rebase__helper(int argc, const char **argv,
-> const char *prefix)
->
->  flags |= keep_empty ? TODO_LIST_KEEP_EMPTY : 0;
->  flags |= abbreviate_commands ? TODO_LIST_ABBREVIATE_CMDS : 0;
-> + flags |= rebase_merges ? TODO_LIST_REBASE_MERGES : 0;
->  flags |= command == SHORTEN_OIDS ? TODO_LIST_SHORTEN_IDS : 0;
->
->  if (command == CONTINUE && argc == 1)
-> diff --git a/sequencer.c b/sequencer.c
-> index 5944d3a34eb..1e17a11ca32 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -25,6 +25,8 @@
-> #include "sigchain.h"
-> #include "unpack-trees.h"
-> #include "worktree.h"
-> +#include "oidmap.h"
-> +#include "oidset.h"
->
-> #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
->
-> @@ -3436,6 +3438,343 @@ void append_signoff(struct strbuf *msgbuf, int
-> ignore_footer, unsigned flag)
->  strbuf_release(&sob);
-> }
->
-> +struct labels_entry {
-> + struct hashmap_entry entry;
-> + char label[FLEX_ARRAY];
-> +};
-> +
-> +static int labels_cmp(const void *fndata, const struct labels_entry *a,
-> +       const struct labels_entry *b, const void *key)
-> +{
-> + return key ? strcmp(a->label, key) : strcmp(a->label, b->label);
-> +}
-> +
-> +struct string_entry {
-> + struct oidmap_entry entry;
-> + char string[FLEX_ARRAY];
-> +};
-> +
-> +struct label_state {
-> + struct oidmap commit2label;
-> + struct hashmap labels;
-> + struct strbuf buf;
-> +};
-> +
-> +static const char *label_oid(struct object_id *oid, const char *label,
-> +      struct label_state *state)
-> +{
-> + struct labels_entry *labels_entry;
-> + struct string_entry *string_entry;
-> + struct object_id dummy;
-> + size_t len;
-> + int i;
-> +
-> + string_entry = oidmap_get(&state->commit2label, oid);
-> + if (string_entry)
-> + return string_entry->string;
-> +
-> + /*
-> + * For "uninteresting" commits, i.e. commits that are not to be
-> + * rebased, and which can therefore not be labeled, we use a unique
-> + * abbreviation of the commit name. This is slightly more complicated
-> + * than calling find_unique_abbrev() because we also need to make
-> + * sure that the abbreviation does not conflict with any other
-> + * label.
-> + *
-> + * We disallow "interesting" commits to be labeled by a string that
-> + * is a valid full-length hash, to ensure that we always can find an
-> + * abbreviation for any uninteresting commit's names that does not
-> + * clash with any other label.
-> + */
-> + if (!label) {
-> + char *p;
-> +
-> + strbuf_reset(&state->buf);
-> + strbuf_grow(&state->buf, GIT_SHA1_HEXSZ);
-> + label = p = state->buf.buf;
-> +
-> + find_unique_abbrev_r(p, oid, default_abbrev);
-> +
-> + /*
-> + * We may need to extend the abbreviated hash so that there is
-> + * no conflicting label.
-> + */
-> + if (hashmap_get_from_hash(&state->labels, strihash(p), p)) {
-> + size_t i = strlen(p) + 1;
-> +
-> + oid_to_hex_r(p, oid);
-> + for (; i < GIT_SHA1_HEXSZ; i++) {
-> + char save = p[i];
-> + p[i] = '\0';
-> + if (!hashmap_get_from_hash(&state->labels,
-> +    strihash(p), p))
-> + break;
-> + p[i] = save;
-> + }
-> + }
-> + } else if (((len = strlen(label)) == GIT_SHA1_RAWSZ &&
-> +     !get_oid_hex(label, &dummy)) ||
-> +    (len == 1 && *label == '#') ||
-> +    hashmap_get_from_hash(&state->labels,
-> + strihash(label), label)) {
-> + /*
-> + * If the label already exists, or if the label is a valid full
-> + * OID, or the label is a '#' (which we use as a separator
-> + * between merge heads and oneline), we append a dash and a
-> + * number to make it unique.
-> + */
-> + struct strbuf *buf = &state->buf;
-> +
-> + strbuf_reset(buf);
-> + strbuf_add(buf, label, len);
-> +
-> + for (i = 2; ; i++) {
-> + strbuf_setlen(buf, len);
-> + strbuf_addf(buf, "-%d", i);
-> + if (!hashmap_get_from_hash(&state->labels,
-> +    strihash(buf->buf),
-> +    buf->buf))
-> + break;
-> + }
-> +
-> + label = buf->buf;
-> + }
-> +
-> + FLEX_ALLOC_STR(labels_entry, label, label);
-> + hashmap_entry_init(labels_entry, strihash(label));
-> + hashmap_add(&state->labels, labels_entry);
-> +
-> + FLEX_ALLOC_STR(string_entry, string, label);
-> + oidcpy(&string_entry->entry.oid, oid);
-> + oidmap_put(&state->commit2label, string_entry);
-> +
-> + return string_entry->string;
-> +}
-> +
-> +static int make_script_with_merges(struct pretty_print_context *pp,
-> +    struct rev_info *revs, FILE *out,
-> +    unsigned flags)
-> +{
-> + int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
-> + struct strbuf buf = STRBUF_INIT, oneline = STRBUF_INIT;
-> + struct strbuf label = STRBUF_INIT;
-> + struct commit_list *commits = NULL, **tail = &commits, *iter;
-> + struct commit_list *tips = NULL, **tips_tail = &tips;
-> + struct commit *commit;
-> + struct oidmap commit2todo = OIDMAP_INIT;
-> + struct string_entry *entry;
-> + struct oidset interesting = OIDSET_INIT, child_seen = OIDSET_INIT,
-> + shown = OIDSET_INIT;
-> + struct label_state state = { OIDMAP_INIT, { NULL }, STRBUF_INIT };
-> +
-> + int abbr = flags & TODO_LIST_ABBREVIATE_CMDS;
-> + const char *cmd_pick = abbr ? "p" : "pick",
-> + *cmd_label = abbr ? "l" : "label",
-> + *cmd_reset = abbr ? "t" : "reset",
-> + *cmd_merge = abbr ? "m" : "merge";
-> +
-> + oidmap_init(&commit2todo, 0);
-> + oidmap_init(&state.commit2label, 0);
-> + hashmap_init(&state.labels, (hashmap_cmp_fn) labels_cmp, NULL, 0);
-> + strbuf_init(&state.buf, 32);
-> +
-> + if (revs->cmdline.nr && (revs->cmdline.rev[0].flags & BOTTOM)) {
-> + struct object_id *oid = &revs->cmdline.rev[0].item->oid;
-> + FLEX_ALLOC_STR(entry, string, "onto");
-> + oidcpy(&entry->entry.oid, oid);
-> + oidmap_put(&state.commit2label, entry);
-> + }
-> +
-> + /*
-> + * First phase:
-> + * - get onelines for all commits
-> + * - gather all branch tips (i.e. 2nd or later parents of merges)
-> + * - label all branch tips
-> + */
-> + while ((commit = get_revision(revs))) {
-> + struct commit_list *to_merge;
-> + int is_octopus;
-> + const char *p1, *p2;
-> + struct object_id *oid;
-> + int is_empty;
-> +
-> + tail = &commit_list_insert(commit, tail)->next;
-> + oidset_insert(&interesting, &commit->object.oid);
-> +
-> + is_empty = is_original_commit_empty(commit);
-> + if (!is_empty && (commit->object.flags & PATCHSAME))
-> + continue;
-> +
-> + strbuf_reset(&oneline);
-> + pretty_print_commit(pp, commit, &oneline);
-> +
-> + to_merge = commit->parents ? commit->parents->next : NULL;
-> + if (!to_merge) {
-> + /* non-merge commit: easy case */
-> + strbuf_reset(&buf);
-> + if (!keep_empty && is_empty)
-> + strbuf_addf(&buf, "%c ", comment_line_char);
-> + strbuf_addf(&buf, "%s %s %s", cmd_pick,
-> +     oid_to_hex(&commit->object.oid),
-> +     oneline.buf);
-> +
-> + FLEX_ALLOC_STR(entry, string, buf.buf);
-> + oidcpy(&entry->entry.oid, &commit->object.oid);
-> + oidmap_put(&commit2todo, entry);
-> +
-> + continue;
-> + }
-> +
-> + is_octopus = to_merge && to_merge->next;
-> +
-> + if (is_octopus)
-> + BUG("Octopus merges not yet supported");
-> +
-> + /* Create a label */
-> + strbuf_reset(&label);
-> + if (skip_prefix(oneline.buf, "Merge ", &p1) &&
-> +     (p1 = strchr(p1, '\'')) &&
-> +     (p2 = strchr(++p1, '\'')))
-> + strbuf_add(&label, p1, p2 - p1);
-> + else if (skip_prefix(oneline.buf, "Merge pull request ",
-> +      &p1) &&
-> + (p1 = strstr(p1, " from ")))
-> + strbuf_addstr(&label, p1 + strlen(" from "));
-> + else
-> + strbuf_addbuf(&label, &oneline);
-> +
-> + for (p1 = label.buf; *p1; p1++)
-> + if (isspace(*p1))
-> + *(char *)p1 = '-';
-> +
-> + strbuf_reset(&buf);
-> + strbuf_addf(&buf, "%s -C %s",
-> +     cmd_merge, oid_to_hex(&commit->object.oid));
-> +
-> + /* label the tip of merged branch */
-> + oid = &to_merge->item->object.oid;
-> + strbuf_addch(&buf, ' ');
-> +
-> + if (!oidset_contains(&interesting, oid))
-> + strbuf_addstr(&buf, label_oid(oid, NULL, &state));
-> + else {
-> + tips_tail = &commit_list_insert(to_merge->item,
-> + tips_tail)->next;
-> +
-> + strbuf_addstr(&buf, label_oid(oid, label.buf, &state));
-> + }
-> + strbuf_addf(&buf, " # %s", oneline.buf);
-> +
-> + FLEX_ALLOC_STR(entry, string, buf.buf);
-> + oidcpy(&entry->entry.oid, &commit->object.oid);
-> + oidmap_put(&commit2todo, entry);
-> + }
-> +
-> + /*
-> + * Second phase:
-> + * - label branch points
-> + * - add HEAD to the branch tips
-> + */
-> + for (iter = commits; iter; iter = iter->next) {
-> + struct commit_list *parent = iter->item->parents;
-> + for (; parent; parent = parent->next) {
-> + struct object_id *oid = &parent->item->object.oid;
-> + if (!oidset_contains(&interesting, oid))
-> + continue;
-> + if (!oidset_contains(&child_seen, oid))
-> + oidset_insert(&child_seen, oid);
-> + else
-> + label_oid(oid, "branch-point", &state);
-> + }
-> +
-> + /* Add HEAD as implict "tip of branch" */
-> + if (!iter->next)
-> + tips_tail = &commit_list_insert(iter->item,
-> + tips_tail)->next;
-> + }
-> +
-> + /*
-> + * Third phase: output the todo list. This is a bit tricky, as we
-> + * want to avoid jumping back and forth between revisions. To
-> + * accomplish that goal, we walk backwards from the branch tips,
-> + * gathering commits not yet shown, reversing the list on the fly,
-> + * then outputting that list (labeling revisions as needed).
-> + */
-> + fprintf(out, "%s onto\n", cmd_label);
-> + for (iter = tips; iter; iter = iter->next) {
-> + struct commit_list *list = NULL, *iter2;
-> +
-> + commit = iter->item;
-> + if (oidset_contains(&shown, &commit->object.oid))
-> + continue;
-> + entry = oidmap_get(&state.commit2label, &commit->object.oid);
-> +
-> + if (entry)
-> + fprintf(out, "\n# Branch %s\n", entry->string);
-> + else
-> + fprintf(out, "\n");
-> +
-> + while (oidset_contains(&interesting, &commit->object.oid) &&
-> +        !oidset_contains(&shown, &commit->object.oid)) {
-> + commit_list_insert(commit, &list);
-> + if (!commit->parents) {
-> + commit = NULL;
-> + break;
-> + }
-> + commit = commit->parents->item;
-> + }
-> +
-> + if (!commit)
-> + fprintf(out, "%s onto\n", cmd_reset);
-> + else {
-> + const char *to = NULL;
-> +
-> + entry = oidmap_get(&state.commit2label,
-> +    &commit->object.oid);
-> + if (entry)
-> + to = entry->string;
-> +
-> + if (!to || !strcmp(to, "onto"))
-> + fprintf(out, "%s onto\n", cmd_reset);
-> + else {
-> + strbuf_reset(&oneline);
-> + pretty_print_commit(pp, commit, &oneline);
-> + fprintf(out, "%s %s # %s\n",
-> + cmd_reset, to, oneline.buf);
-> + }
-> + }
-> +
-> + for (iter2 = list; iter2; iter2 = iter2->next) {
-> + struct object_id *oid = &iter2->item->object.oid;
-> + entry = oidmap_get(&commit2todo, oid);
-> + /* only show if not already upstream */
-> + if (entry)
-> + fprintf(out, "%s\n", entry->string);
-> + entry = oidmap_get(&state.commit2label, oid);
-> + if (entry)
-> + fprintf(out, "%s %s\n",
-> + cmd_label, entry->string);
-> + oidset_insert(&shown, oid);
-> + }
-> +
-> + free_commit_list(list);
-> + }
-> +
-> + free_commit_list(commits);
-> + free_commit_list(tips);
-> +
-> + strbuf_release(&label);
-> + strbuf_release(&oneline);
-> + strbuf_release(&buf);
-> +
-> + oidmap_free(&commit2todo, 1);
-> + oidmap_free(&state.commit2label, 1);
-> + hashmap_free(&state.labels, 1);
-> + strbuf_release(&state.buf);
-> +
-> + return 0;
-> +}
-> +
-> int sequencer_make_script(FILE *out, int argc, const char **argv,
->    unsigned flags)
-> {
-> @@ -3446,11 +3785,16 @@ int sequencer_make_script(FILE *out, int argc,
-> const char **argv,
->  struct commit *commit;
->  int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
->  const char *insn = flags & TODO_LIST_ABBREVIATE_CMDS ? "p" : "pick";
-> + int rebase_merges = flags & TODO_LIST_REBASE_MERGES;
->
->  init_revisions(&revs, NULL);
->  revs.verbose_header = 1;
-> - revs.max_parents = 1;
-> - revs.cherry_pick = 1;
-> + if (rebase_merges)
-> + revs.cherry_mark = 1;
-> + else {
-> + revs.max_parents = 1;
-> + revs.cherry_pick = 1;
-> + }
->  revs.limited = 1;
->  revs.reverse = 1;
->  revs.right_only = 1;
-> @@ -3474,6 +3818,9 @@ int sequencer_make_script(FILE *out, int argc, const
-> char **argv,
->  if (prepare_revision_walk(&revs) < 0)
->  return error(_("make_script: error preparing revisions"));
->
-> + if (rebase_merges)
-> + return make_script_with_merges(&pp, &revs, out, flags);
-> +
->  while ((commit = get_revision(&revs))) {
->  strbuf_reset(&buf);
->  if (!keep_empty && is_original_commit_empty(commit))
-> diff --git a/sequencer.h b/sequencer.h
-> index e45b178dfc4..6bc4da17243 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -59,6 +59,7 @@ int sequencer_remove_state(struct replay_opts *opts);
-> #define TODO_LIST_KEEP_EMPTY (1U << 0)
-> #define TODO_LIST_SHORTEN_IDS (1U << 1)
-> #define TODO_LIST_ABBREVIATE_CMDS (1U << 2)
-> +#define TODO_LIST_REBASE_MERGES (1U << 3)
-> int sequencer_make_script(FILE *out, int argc, const char **argv,
->    unsigned flags);
->
-> -- 
-> 2.17.0.windows.1.15.gaa56ade3205
->
->
->
+For ... reasons the first repo publishes some references like
+
+	github/maint
+	github/master
+	github/pu
+
+So when this repo is mirrored AND another, suitably named remote is
+added then there will be also namespace conflicts. You can call
+
+    git fetch github
+    git fetch origin
+
+in a loop and most likely each fetch will update the same refs, always
+toggling between two states.
+
+So: not only "remote remove" and "remote prune" are at stake but every
+command handling remote references.
+
+How should "git remote remove github" work in both situations? Remove
+the refs/remotes/github/master & co? remove them only if the last fetch
+was for "github" but not when the last update was for "origin"? Should
+"git fetch" use the same logic?
+
+So it seems better to me to avoid that bad situation altogether. Don't
+allow overlapping/conflicting refspecs when adding a new remote. Using
+*your* last examples both
+
+>         git remote add avar git@github.com:avar/git.git &&
+>         git remote add peff git@github.com:peff/git.git &&
+
+should have failed and hence the "prune" problems won't exist. Same for
+my example.
+
+>> Possible 5):
+>>
+>> 	Don't fix "git remote remove" but "git remote add" to complain that its
+>> ref-namespace is already occupied by some other remote. Add "--force"
+>> for the experts.
+> 
+> Indeed, that's another bug here, i.e. in the above example:
+> 
+>     git remote remove peff && # won't delete peff/ branches
+>     git remote add peff git@github.com:peff/git.git
+> 
+> Will happily add the "peff" remote again, even though as you point out
+> it could be an entirely different remote.
+
+Ummm. That was not my point. My is: "git clone --mirror" uses a refspec
+
+	fetch = +refs/*:refs/*
+
+and hence "occupies" the complete "refs/*" namespace. So adding another
+remote (for the first time or for the second time is as irrelevant as
+the url) will use
+
+	fetch = +refs/heads/*:refs/remotes/peff/*
+
+and now the "refs/remotes/peff/*" part is in conflict with "refs/*" from
+above. The conflict exists not only for "prune" or "remove" but also for
+"fetch", "rename" (didn't check) .
+
+This kind of conflict should not be allowed right from the start - when
+the first "git remote add peff..." is executed. Then prune, remove AND
+fetch would be OK.
+
 
