@@ -2,116 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E34F51F424
-	for <e@80x24.org>; Sun, 22 Apr 2018 20:59:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E95651F424
+	for <e@80x24.org>; Sun, 22 Apr 2018 21:44:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753692AbeDVU7D (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Apr 2018 16:59:03 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:34134 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753569AbeDVU7C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Apr 2018 16:59:02 -0400
-Received: by mail-pg0-f42.google.com with SMTP id p10so6931126pgn.1
-        for <git@vger.kernel.org>; Sun, 22 Apr 2018 13:59:02 -0700 (PDT)
+        id S1753551AbeDVVmw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Apr 2018 17:42:52 -0400
+Received: from mail-wr0-f179.google.com ([209.85.128.179]:42765 "EHLO
+        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753529AbeDVVmv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Apr 2018 17:42:51 -0400
+Received: by mail-wr0-f179.google.com with SMTP id s18-v6so35955081wrg.9
+        for <git@vger.kernel.org>; Sun, 22 Apr 2018 14:42:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=YHtVd8Q6PVXkP9dISDgbTfXT/ruL1DmOplHx/27lJas=;
-        b=ungBbbm3SKBQRC3zcmFuLa/7kJsWAQtEC7eIvjnb1GXhrVVrJ8HhbmIsgCMYx9y8We
-         wcgXulxXRvV+TB0FrjXkqjULZIr5/smqnWE/qZdeXX3oI0dlTS57W76EmT8HXL2INE8q
-         zoTxwb/JcvTmH6vHDh6x6BIdxuthlsWjzc6nK00+nthxJm/s8X8GOXgRViu8rljVfMWp
-         fh5wLGvjzEfLKMSpzILtjO4IVdoC4N8VTmbJ26xmR210/S7OxnHdiqVgKnvOKFz5MDka
-         XycK6qtZOJmc3TXsxhleUNgjkH5MD6RyVrH5F8qbcoLYboiJ2gYKq2rjeMyQyw16S4MZ
-         zRhQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=v7V8GcrhAGCbRf10rqDQGjWeq5RU4AL1Dlkk3q8MW+M=;
+        b=UbobS0Otg2AsFAMpcKJSddeju8hr226csvGeF2ryVR7m0EnSSfLJYDI303JIoZ2mHF
+         Q4hgEMoCUWupLt4L1UTOx8c6q8CcyVlmg6EzQYmHzgc84800kS5V1qe/xwngYRIek9/w
+         oPyVMD0dwlsVJRcBY6Fy3LG7DdbQ5OUDuQsUhQIRdbHxX9awjjBBkchLUKyVdxRI63uc
+         2WWESFfO9Yh6ycyqaJzNnTTJ+AH0nlb0NBiT3iu4v4aAN0ZxWmjPxGCiYYzbHiM29+M4
+         0KxD3YxwkYKBhNuxTGJxtQZftzDZcrhks/ubCYr6qh7aHPx1UAm/c1BdkvMxtf5M4D0t
+         OTjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=YHtVd8Q6PVXkP9dISDgbTfXT/ruL1DmOplHx/27lJas=;
-        b=SkHD3dV/NVtU9uXBlnonRhT19scyFPxoC0WbLtScuQF2wEtmc3U432tob8M798k/Sp
-         CyHx5NzfGjBfNwuWhWpqLyACmUK6CEIO3mxNjfME8syZg9Ae5jmOkuxvHxwvBc6+yIZx
-         evKzj35m/Nttx+eiHhT6XM34Jwx/jpjhVumChgMdZOCHevfQcPPOXlBiG8hqoafCyLMy
-         0zfwgSMzc2zBar4MCe7w2Ew1ME6EY22HcLsJjPVsj46l8fgo6QA195KBkPf8j++wHM8S
-         bKbmLgNxTKlHcWC0gOFFdefwtC3fP+QYwLN+3XpKxbhDkOl8WOZBAmXrpwN1WMgGV5SK
-         8Rxw==
-X-Gm-Message-State: ALQs6tCYRvf1AbT3gSv4y++3kOFx5nd/BDwb6Z63Q4kJZxp6LLEgTWD7
-        hu4w95wWenQSHzACGQ9EuJeijaZz6tg=
-X-Google-Smtp-Source: AIpwx4+F2LaRIhcIDK9Cdf+BDyzhH8R1245sMRdyNicIjX4jwyZeEO8VyLC4oRPdvlq+2ywjtFLbKQ==
-X-Received: by 10.101.83.8 with SMTP id m8mr14844662pgq.28.1524430741492;
-        Sun, 22 Apr 2018 13:59:01 -0700 (PDT)
-Received: from localhost ([2601:602:9500:1120:e8b3:eaad:c134:baec])
-        by smtp.gmail.com with ESMTPSA id u28sm20819408pfl.15.2018.04.22.13.58.59
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 Apr 2018 13:59:00 -0700 (PDT)
-Date:   Sun, 22 Apr 2018 13:58:59 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Subject: Some mutt(1) patches and scripts
-Message-ID: <20180422205859.GA16261@syl.local>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=v7V8GcrhAGCbRf10rqDQGjWeq5RU4AL1Dlkk3q8MW+M=;
+        b=H8FvDfeVJEAiQMjk0D+KwDKrhDWsXrma/iMwWkDELouazurD7ooC6sHvf5nNbptMf3
+         RRxaR3GYVlIg5eBJbanwNXl7Jw3U7JlkhONe83G7d5c95vLr1IzEOvQhVlL5tS+DqJfV
+         FlbGQTnYHAFQQGdLxpHN7ercrf8Pmz3QnbqRtx7du9AOIwWZnzCQutUM50F+L80U50g1
+         UCiOPwiVkzw81yLOS0WNQ1CtfUJ7JZJPzfrdlUv2fa/LTSrC2XPKQcyvcWbTV2ifZ/Pc
+         Ila7Wz7aU5olJZd51GnIpNJdKQtqS8vDZ2Zz9TOpIF28i+6+C4QZwleKGvI7UUxHl2aL
+         vXEw==
+X-Gm-Message-State: ALQs6tBt1JTKIQl5+xl0cREym17ngYqmOY762GQg6GhhgTQ2XArYFt50
+        Y4jrqakIlbPmy0cMfMCGII8=
+X-Google-Smtp-Source: AIpwx4+TdlemuL2p8oVth0sveIpkDl8SEhdU78M91m9P94aqrjMojMYvxUIvp6Jcv+sKfJd/Yi8pAA==
+X-Received: by 10.167.208.210 with SMTP id u18mr10124441edo.97.1524433370567;
+        Sun, 22 Apr 2018 14:42:50 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id h13sm6565365edi.91.2018.04.22.14.42.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 22 Apr 2018 14:42:49 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, l.s.r@web.de,
+        martin.agren@gmail.com, peff@peff.net
+Subject: Re: [PATCH v2 3/6] grep.[ch]: teach columnnum, color_columnno to grep_opt
+References: <20180421034530.GB24606@syl.local> <cover.1524429778.git.me@ttaylorr.com> <47f06ae36ce6af48fca06b140bdb5af2582116e1.1524429778.git.me@ttaylorr.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <47f06ae36ce6af48fca06b140bdb5af2582116e1.1524429778.git.me@ttaylorr.com>
+Date:   Sun, 22 Apr 2018 23:42:48 +0200
+Message-ID: <87a7tuex47.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-I have spent more time contributing to the Git list lately, and as such
-have grown a number of patches and scripts that have been useful for my
-workflow. I am interested in sharing them here in the hopes that they
-will be useful for others as well :-).
+On Sun, Apr 22 2018, Taylor Blau wrote:
 
-My workflow is as follows:
+I think [345]/6 would make much more sense as just one patch. Comments
+on them to follow...
 
-  1. Write some commits.
+> In preparation of adding --column-number to 'git-grep(1)', we extend
+> grep_opt to take in the requisite new members.
 
-  2. Prepare them with 'git mail' (a wrapper over 'git-format-patch(1)').
+Just a nit: Makes sense to refer to these camel-cased in docs & commit
+messages.
 
-  3. Edit the cover letter template, and look them over in Mutt before
-     sending them to the list.
+> diff --git a/grep.c b/grep.c
+> [...]
 
-I suspect that (2) and (3) are somewhat unconventional. My 'git mail'
-script, in particular, has been useful to me. The contents looks
-(basically) as follows [1]:
-
-  mbox=$(mktemp)
-  git format-patch --stdout $@ >"$mbox" && mutt -f "$mbox"
-
-This has been useful in not having to move around many *.patch files in
-an out of a directory. I enjoy looking at a series as a thread in
-mutt(1) rather than as individual files in $EDITOR.
-
-Mutt is not particularly keen to resend email so I have had to teach it
-a few tricks:
-
-  1. Macros "b" and "B" to resend and force-resend the highlighted
-     message. [2]
-
-    macro index,pager b ":set edit_headers=yes<enter><resend-message>:set edit_headers=no<enter>"
-    macro index,pager B ":set editor=true<enter><resend-message><send-message>:set editor=$EDITOR<enter>"
-
-  2. A patch to not destroy the original Message-ID header when
-     resending email. Mutt (sensibly) does this by default, but it is
-     not suitable for my workflow, as when I edit the cover letter
-     template the Message-ID changes and subsequent patches are sent in
-     response to a non-existent message.
-
-     I have patched Mutt to remove this behavior, and (since I work on
-     macOS) set up a Homebrew tap to install mutt with
-     `--with-retain-messageid'. [3]
-
-Thanks,
-Taylor
-
-[1]: https://github.com/ttaylorr/dotfiles/blob/work-gh/bin/git-mail
-[2]: https://github.com/ttaylorr/dotfiles/blob/work-gh/mutt/.muttrc#L43-L44
-[3]: https://github.com/ttaylorr/homebrew-mutt
+All of the boilerplate looks fine.
