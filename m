@@ -2,106 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 705A01F424
-	for <e@80x24.org>; Sun, 22 Apr 2018 23:38:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 633BB1F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 00:16:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753613AbeDVXix (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Apr 2018 19:38:53 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:32786 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753495AbeDVXiw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Apr 2018 19:38:52 -0400
-Received: by mail-pg0-f49.google.com with SMTP id i194so7086228pgd.0
-        for <git@vger.kernel.org>; Sun, 22 Apr 2018 16:38:51 -0700 (PDT)
+        id S1753753AbeDWAQP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Apr 2018 20:16:15 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:33752 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753664AbeDWAQO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Apr 2018 20:16:14 -0400
+Received: by mail-qk0-f196.google.com with SMTP id c70so5631785qkg.0
+        for <git@vger.kernel.org>; Sun, 22 Apr 2018 17:16:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6IIiyEQljE44ed4uO+3+Q1UXGtEpD9eT2kNoUXna4z4=;
-        b=qk91QGO8PR0ioR1QUMqnw84PvQCvewV/aCM8PTT3G6MkZ7H2+yhNq2mKkvMZ0y80i8
-         bWKImJbnchnngb/xupcviCa9zCD6aU2AuhtRXF3hFkHuBcI5wH8G4m725NxTW7BXdIjq
-         iWj9mQOVX/EX6oZUrPinaKUq43fCdBMZsmzXxjr0eCjbyRXYYGaTcLfkZ4SBCOQp58ph
-         5k4OdbgppFVb5zr/hqCQj0LwqIlo/qm9VKCxRu32afpPDRyxDRVLU5FdISpUolxa/O+K
-         sFVLBT9213T6vrj8L05UaulfnNm/aYDh1wM9jmLjyLygMV40Ht4ZLdVvgPYB+O7yy6Xd
-         nQ2g==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=EpPCd1NMngMv48jQST/HVB7QfwAgkSOOIorJ6Qglevk=;
+        b=KUv6i21C5SNey4njX2RC4QUWgY4o6nzmFa6qGAW4yZKXflFhSJstD65GtmcZLiBl03
+         F+4RTmTppMNA5cCUup6QOPblO+trv5EPntnS0Hg6jFoDhZpUsBIrHP09uprdK5KeraiQ
+         hLXrIW+dBkp3sU2MkDUZpxmwd+EWay7EuxH7X3VlbKY0CSWBphiWOdHtBtlm1M8H6tJ/
+         9byR5BX2aTZqm4IysvkkS+oxTF3O2eSh+2jbWaHUuMeNczLkZ2Iqi78cm6xaBwbeoY1h
+         3cK/MILAMtlljrmF1b8rTZzE/EgKqhiAelDahbfyqg8tHHpNZFuG1OQIwD0Pdz8gZLRi
+         6VvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6IIiyEQljE44ed4uO+3+Q1UXGtEpD9eT2kNoUXna4z4=;
-        b=WbmF0Ex3DClKWCJOB8c/rm8to1cHZefwJ2gH3ketTaCrf9tQipFhH3r0As7LcZ0gjO
-         q107i0nOIfULSXD/AIZeAiBV4kfZO2Jh7lEbIuCQdZz/m5eur0vrpd3UWKVIkrdRsYvx
-         h/Yj2Ms0UTruEZ29vQy7+VPC8h1zs4UfT+7fAzRKlO5T1phsZoXDwiFEPU0h/z2x6fnX
-         Ul0KjYdfhCiGV+s1KEo8HlK1YJtUD+Lq35clZjkxhxpZYDm33DY6c85GjiS8WuyLZ8BB
-         SYmH5kdKtfpF/6CpzEiRkPOA69EinBIWPhMkFKXbqSKHegLpSO3vp7BjGLsaSxDIM+9V
-         SQgw==
-X-Gm-Message-State: ALQs6tA5oWovjbajAmb7PQsHocXAcn3AmGLrhw6woOLep4X6XCQ4h24f
-        AjcGouQQ/8PSdHhnuIeTNl26tA==
-X-Google-Smtp-Source: AIpwx4+Twq+oqwucoBYqXMi74VAgnxHKqw1CVPK0spxwvl6LlrVPvISZ02Gse/rdqdUclG19xc7Xrw==
-X-Received: by 10.99.158.85 with SMTP id r21mr15282586pgo.312.1524440330691;
-        Sun, 22 Apr 2018 16:38:50 -0700 (PDT)
-Received: from localhost ([2601:602:9500:1120:e8b3:eaad:c134:baec])
-        by smtp.gmail.com with ESMTPSA id k63sm22887463pfj.12.2018.04.22.16.38.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 Apr 2018 16:38:49 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Sun, 22 Apr 2018 16:38:48 -0700
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2018, #02; Tue, 17)
-Message-ID: <20180422233848.GA50345@syl.local>
-References: <xmqqzi22tlfx.fsf@gitster-ct.c.googlers.com>
- <20180422201755.GA92212@syl.local>
- <xmqqo9iaakaw.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=EpPCd1NMngMv48jQST/HVB7QfwAgkSOOIorJ6Qglevk=;
+        b=n/zHMc9JYgujFR3QTlNacvCiHtSA/a2CQfmVu448m825QykOE0g8hjaC45UOtVs4o9
+         4GORG0NMo83qdjITGYFgx090NuaZKpfNa8/B1bz9DyPuVg6sKEsY/0b2R3SU3Zk7CiM0
+         6BQkEbkLfn5oRXNDQAo3DC7E2ZXyIRir5+RzZw4fhRvh9k3oyTvLj6W4I2dcOVxTQnat
+         ByY0AI5Un6Opm/B+U/dAayvnJb6L+UORXyJ17F0DK/5DiTvKAp5tnCFWGtNErM7ixWhO
+         S+4HVO9XpQ5ahv0Vk7ZLhjMuHvPBAclBAh9jRlivdo4JU5/ovjt+jqW0uXl9WEon0/RS
+         GX7g==
+X-Gm-Message-State: ALQs6tALLe53iJKOcukNxkBB2TWFG0F0RHrq2h7Tede0Fej2mpzJsTBN
+        1wCvGK76Gx+Lspeq/Sua3HP1hI1IjHBe0WCGR1k=
+X-Google-Smtp-Source: AB8JxZpuudLUKwZMZgB4pCUT8RvTrnr+4nhkQIpi/2VA7dXK/eDz08lTn3AxpdjrizrQt5ntdnZT2bJOffY7clPUQQA=
+X-Received: by 10.55.79.9 with SMTP id d9mr20161518qkb.2.1524442573184; Sun,
+ 22 Apr 2018 17:16:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo9iaakaw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Received: by 10.12.174.202 with HTTP; Sun, 22 Apr 2018 17:16:12 -0700 (PDT)
+In-Reply-To: <5aaf7bebb27d385ea090cb83e97c596983ebae47.1524429778.git.me@ttaylorr.com>
+References: <20180421034530.GB24606@syl.local> <cover.1524429778.git.me@ttaylorr.com>
+ <5aaf7bebb27d385ea090cb83e97c596983ebae47.1524429778.git.me@ttaylorr.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 22 Apr 2018 20:16:12 -0400
+X-Google-Sender-Auth: j3HBg3HYs8PwSJbhjnIiuppj5tw
+Message-ID: <CAPig+cQ2+wTTXE0mhnGnp2pZug=Po0SCVwCO_2agxUDaOsFRLw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] grep.c: take column number as argument to show_line()
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 23, 2018 at 08:33:11AM +0900, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Sun, Apr 22, 2018 at 4:47 PM, Taylor Blau <me@ttaylorr.com> wrote:
+> show_line() currently receives the line number within the
+> 'grep_opt->buf' in order to determine which line number to display. In
+> order to display information about the matching column number--if
+> requested--we must additionally take in that information.
 >
-> > I noticed that tb/config-default, however, only landed two commits:
-> >
-> >   - builtin/config: introduce `color` type specifier
-> >   - config.c: introduce 'git_config_color' to parse ANSI colors
-> >
-> > but not:
-> >
-> >   - builtin/config: introduce `--default`
+> To do so, we extend the signature of show_line() to take in an
+> additional unsigned "cno". "cno" is either:
 >
-> Whenever something like this happens, especially the patch was
-> original sent more than several days ago, it is helpful to give the
-> message-id of what you are referring to to identify and retrieve it.
-> More often than not, it wasn't explicitly rejected but was simply
-> dropped, either by mistake or got delayed in delivery and got
-> forgotten.
->
-> Also for a pair of small series like these, when rerolling the
-> preparatory series for the final round, it is helpful to also send
-> the other series that depends on the preparatory one at the same
-> time, even if the latter hasn't changed since the last time.
->
-> Thanks.
+>   * A 1-indexed column number of the first match on the given line, or
+>   * 0, if the column number is irrelevant (when displaying a function
+>     name, context lines, etc).
 
-Thanks, these are both helpful to know, and I will be sure to include
-the relevant bits in the future.
+This information about how 'cno' is interpreted seems important enough
+to have as an in-code comment somewhere. Unfortunately, this patch
+never actually uses 'cno', so it's hard to add such a comment to
+non-existent code. In fact, the granularity of this patch feels wrong;
+it seems to exist for some purpose but, at the same time, is a
+do-nothing patch.
 
-For now, the Message-ID that I was referring to is:
-20180410001826.GB67209@syl.local. [1]
+This issue illustrates a larger problem with how this patch series is
+structured overall. In his review, =C3=86var suggested collapsing several
+patches into one, but the problems go deeper than that when you have
+patches which implement some bit of functionality but don't document
+that functionality until some later step which exposes some other bit
+of functionality, and so forth. As a reviewer, I expect a patch series
+to hold my hand and lead me on a straightforward journey from building
+blocks to final product, but this series tends to jump around without
+apparent logic.
 
+One way to achieve a more coherent patch series would be to build the
+machinery first and then expose it to the user in various ways. Also,
+each patch which implements some user-facing functionality should also
+document that functionality. For instance, a more understandable
+series might be structured something like this:
 
-Thanks,
-Taylor
+  1. grep: match_line: expose matched column
+  2. grep: extend grep_opt to allow showing matched column
+  3. grep: display column number of first match
+  4. builtin/grep: add --column-number option
+  5. grep: add configuration variables to show matched column
+  6. contrib/git-jump: jump to match column in addition to line
 
-[1]: https://public-inbox.org/git/20180410001826.GB67209@syl.local/
+There may be fewer or more patches than shown here (I believe =C3=86var
+suggested a cleanup patch), but this should give the general idea.
+Patches 4 and 5 might also be swapped if that seems more logical.
+
+(Sorry if any of the above sounds harsh; it's not meant to be, but is
+intended to be constructive.)
+
+> We additionally modify all calls to show_line() in order to pass the new
+> required argument.
+
+Nit: No need to state the obvious; this final sentence could easily be drop=
+ped.
+
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
