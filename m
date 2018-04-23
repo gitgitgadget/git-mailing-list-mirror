@@ -7,42 +7,42 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 064F01F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 23:41:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 003361F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 23:41:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932729AbeDWXk1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 19:40:27 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60562 "EHLO
+        id S932814AbeDWXlw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 19:41:52 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60632 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932687AbeDWXkU (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 23 Apr 2018 19:40:20 -0400
+        by vger.kernel.org with ESMTP id S932740AbeDWXkc (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 23 Apr 2018 19:40:32 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A8F3B60B37;
-        Mon, 23 Apr 2018 23:40:18 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 74E6D60400;
+        Mon, 23 Apr 2018 23:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1524526819;
-        bh=Y++OP3F89orICCnvyd/xA+jqiN9XF8qghD5VCcDKj1c=;
+        s=default; t=1524526830;
+        bh=audNftlfZhrH0d5w7/AWLOJk03xZkTLimPG9WKlnSmQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=xTJ/PPtW29FJe2ezSHhvCEtEXca+hv7YheOeHXI/vncelbYXxRBXrIAvtCaVpmizs
-         xhbzGhki5MkC49d4oOOZY3TEB0YiD/Q5tjMJeWaNbrvRRRpWj6r0KtHiMg4ULFeeJE
-         qTjYEVE6s7SbsSlz4JlfMoVMdvW++vzSKIhkJLqlP4DUusdVnlQm+PAydcH2IhTOn/
-         oaYqmb8e+7oKSCg851vpaKZAwU1yq2c8NsH5PggOjKfED41pXEogIURmLiqWBnW390
-         SPD9DIOdz7LhLJ6V7wLKPAfAkoxERgPmXAMTt6o1I6EincoHYjBAXggkV2xex26z0c
-         +CLHzl56astkRi6J8qFX1OA54Vjm84ZNc1Fv0PRthBzOYh8ZIzchcks10/9hDZq+yC
-         h1+Ib4C9I0slVrvG+MDVOWqIgexDjUXXB9zeKjPL/hpHms27PmvDUgs3Qore8PdeGL
-         5tcbOQQhSfoC0U11c18EXD08pyq/bazS60N61jh65If5MvXldFR
+        b=wC6jGHYo9wUmibpNloh02Kg+POFJLPBFLRfo/9i2TyK5ygFjpv0D4VOdYZ8MKo7+L
+         31j/Pc/Hf9UV4DtWcmW2SSmFv4ltLh2CllLbT3urVWFvRmUbnCdlE7ycr4XE6qncP2
+         qOo7/VYHmgyXw+cAoM3uhLucvusTp83HC5xJ/MUYwuV+XnDZiwPV+/GWqGC14HZhIg
+         f5yAwDc9Sl8tdNFGakrqcQeYBO9JayRKjL0cLoKCRKEIinCKuwz6ElorTF66Pc0u4q
+         b3n5w1Fg4P1QSsN/thQ6Wye8VU5yYCCX+tRz3g5xvIfL7WMVSA9F70SH4lz4nbT7mI
+         zzKrbWp422/qKU1sx1hWjxHrjnmCSRQKHuwWyM+2AjH1bYKLixHElCeAqpouA6Ssbz
+         hR/u+q8RgiFUDLEs8w6WsXcPUJ9kFs40CNMkGUi2LMZJqm2O0406bP0FBFC7hE/hgv
+         GLlX4ZLKd117BOm+yhnhDlG1dHTq6wOQkJpPyRmpHLnOpFGmkNt
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 13/41] fsck: convert static functions to struct object_id
-Date:   Mon, 23 Apr 2018 23:39:23 +0000
-Message-Id: <20180423233951.276447-14-sandals@crustytoothpaste.net>
+Subject: [PATCH 24/41] diff: specify abbreviation size in terms of the_hash_algo
+Date:   Mon, 23 Apr 2018 23:39:34 +0000
+Message-Id: <20180423233951.276447-25-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180423233951.276447-1-sandals@crustytoothpaste.net>
 References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
@@ -52,90 +52,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert two static functions to use struct object_id and parse_oid_hex,
-instead of relying on harcoded 20 and 40-based constants.
+Instead of using hard-coded 40 constants, refer to the_hash_algo for the
+current hash size.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- fsck.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ diff.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/fsck.c b/fsck.c
-index 9218c2a643..768011f812 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -711,30 +711,31 @@ static int fsck_ident(const char **ident, struct object *obj, struct fsck_option
- static int fsck_commit_buffer(struct commit *commit, const char *buffer,
- 	unsigned long size, struct fsck_options *options)
- {
--	unsigned char tree_sha1[20], sha1[20];
-+	struct object_id tree_oid, oid;
- 	struct commit_graft *graft;
- 	unsigned parent_count, parent_line_count = 0, author_count;
- 	int err;
- 	const char *buffer_begin = buffer;
-+	const char *p;
- 
- 	if (verify_headers(buffer, size, &commit->object, options))
- 		return -1;
- 
- 	if (!skip_prefix(buffer, "tree ", &buffer))
- 		return report(options, &commit->object, FSCK_MSG_MISSING_TREE, "invalid format - expected 'tree' line");
--	if (get_sha1_hex(buffer, tree_sha1) || buffer[40] != '\n') {
-+	if (parse_oid_hex(buffer, &tree_oid, &p) || *p != '\n') {
- 		err = report(options, &commit->object, FSCK_MSG_BAD_TREE_SHA1, "invalid 'tree' line format - bad sha1");
- 		if (err)
- 			return err;
+diff --git a/diff.c b/diff.c
+index 314c57e3c0..b1666b9b2d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3897,13 +3897,14 @@ static void fill_metainfo(struct strbuf *msg,
+ 		*must_show_header = 0;
  	}
--	buffer += 41;
-+	buffer = p + 1;
- 	while (skip_prefix(buffer, "parent ", &buffer)) {
--		if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n') {
-+		if (parse_oid_hex(buffer, &oid, &p) || *p != '\n') {
- 			err = report(options, &commit->object, FSCK_MSG_BAD_PARENT_SHA1, "invalid 'parent' line format - bad sha1");
- 			if (err)
- 				return err;
+ 	if (one && two && oidcmp(&one->oid, &two->oid)) {
+-		int abbrev = o->flags.full_index ? 40 : DEFAULT_ABBREV;
++		const unsigned hexsz = the_hash_algo->hexsz;
++		int abbrev = o->flags.full_index ? hexsz : DEFAULT_ABBREV;
+ 
+ 		if (o->flags.binary) {
+ 			mmfile_t mf;
+ 			if ((!fill_mmfile(&mf, one) && diff_filespec_is_binary(one)) ||
+ 			    (!fill_mmfile(&mf, two) && diff_filespec_is_binary(two)))
+-				abbrev = 40;
++				abbrev = hexsz;
  		}
--		buffer += 41;
-+		buffer = p + 1;
- 		parent_line_count++;
- 	}
- 	graft = lookup_commit_graft(&commit->object.oid);
-@@ -773,7 +774,7 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
- 	if (err)
- 		return err;
- 	if (!commit->tree) {
--		err = report(options, &commit->object, FSCK_MSG_BAD_TREE, "could not load commit's tree %s", sha1_to_hex(tree_sha1));
-+		err = report(options, &commit->object, FSCK_MSG_BAD_TREE, "could not load commit's tree %s", oid_to_hex(&tree_oid));
- 		if (err)
- 			return err;
- 	}
-@@ -799,11 +800,12 @@ static int fsck_commit(struct commit *commit, const char *data,
- static int fsck_tag_buffer(struct tag *tag, const char *data,
- 	unsigned long size, struct fsck_options *options)
- {
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	int ret = 0;
- 	const char *buffer;
- 	char *to_free = NULL, *eol;
- 	struct strbuf sb = STRBUF_INIT;
-+	const char *p;
+ 		strbuf_addf(msg, "%s%sindex %s..%s", line_prefix, set,
+ 			    diff_abbrev_oid(&one->oid, abbrev),
+@@ -4138,6 +4139,11 @@ void diff_setup_done(struct diff_options *options)
+ 			      DIFF_FORMAT_NAME_STATUS |
+ 			      DIFF_FORMAT_CHECKDIFF |
+ 			      DIFF_FORMAT_NO_OUTPUT;
++	/*
++	 * This must be signed because we're comparing against a potentially
++	 * negative value.
++	 */
++	const int hexsz = the_hash_algo->hexsz;
  
- 	if (data)
- 		buffer = data;
-@@ -834,12 +836,12 @@ static int fsck_tag_buffer(struct tag *tag, const char *data,
- 		ret = report(options, &tag->object, FSCK_MSG_MISSING_OBJECT, "invalid format - expected 'object' line");
- 		goto done;
+ 	if (options->set_default)
+ 		options->set_default(options);
+@@ -4218,8 +4224,8 @@ void diff_setup_done(struct diff_options *options)
+ 			 */
+ 			read_cache();
  	}
--	if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n') {
-+	if (parse_oid_hex(buffer, &oid, &p) || *p != '\n') {
- 		ret = report(options, &tag->object, FSCK_MSG_BAD_OBJECT_SHA1, "invalid 'object' line format - bad sha1");
- 		if (ret)
- 			goto done;
- 	}
--	buffer += 41;
-+	buffer = p + 1;
+-	if (40 < options->abbrev)
+-		options->abbrev = 40; /* full */
++	if (hexsz < options->abbrev)
++		options->abbrev = hexsz; /* full */
  
- 	if (!skip_prefix(buffer, "type ", &buffer)) {
- 		ret = report(options, &tag->object, FSCK_MSG_MISSING_TYPE_ENTRY, "invalid format - expected 'type' line");
+ 	/*
+ 	 * It does not make sense to show the first hit we happened
+@@ -4797,8 +4803,8 @@ int diff_opt_parse(struct diff_options *options,
+ 		options->abbrev = strtoul(arg, NULL, 10);
+ 		if (options->abbrev < MINIMUM_ABBREV)
+ 			options->abbrev = MINIMUM_ABBREV;
+-		else if (40 < options->abbrev)
+-			options->abbrev = 40;
++		else if (the_hash_algo->hexsz < options->abbrev)
++			options->abbrev = the_hash_algo->hexsz;
+ 	}
+ 	else if ((argcount = parse_long_opt("src-prefix", av, &optarg))) {
+ 		options->a_prefix = optarg;
