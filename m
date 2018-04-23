@@ -2,119 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3CC21F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 17:27:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C61E61F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 17:28:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932109AbeDWR1V (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 13:27:21 -0400
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:33347 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932076AbeDWR1U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 13:27:20 -0400
-Received: by mail-qt0-f169.google.com with SMTP id f16-v6so14807109qth.0
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 10:27:20 -0700 (PDT)
+        id S1755308AbeDWR20 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 13:28:26 -0400
+Received: from mail-vk0-f53.google.com ([209.85.213.53]:44292 "EHLO
+        mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754900AbeDWR2Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 13:28:25 -0400
+Received: by mail-vk0-f53.google.com with SMTP id r184so9891534vke.11
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 10:28:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=N2DgHhz6j74E9Eibrn8aiK2bUZ56QtOMS8oelb0s6qc=;
-        b=EtvrTLLdf/0Or5JyZDV9svKX34IYY8PlFVQY50BNRsbop0iby/T6e1g7usCgUZa6Qk
-         d2spfC+t5TsZDnlwSZ98AhU5ruV6ctnbJqkRnd7tFh3Eo5tVp/5fgBJSYxlNZFJKDi6s
-         saYIJdqkj+FMawLJxAH28Sj5E5rxDeJ5nrdy9/3uskYgMUf32aWrj9yLuIc+qhe7CLSH
-         veolc+sGkvHu3vCKqgN/uM9n0fvdERh6XUd5a2Lej/Zf8M1VvxZahywDbdc84t6PLEG1
-         hcLphu4zhbG68+MrqYcTeVdRF06sCw4RdY0ehRefkcJI1TQQB1+hc4/Nfw2wQlMAxaP+
-         hGhA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=85Eo8yf45nSF9NFkpNV6NONVTVP4h2k/suq/7QXTuss=;
+        b=GdzMX6MAA5edSPdtN7DhSs79iWeWtIY8LAvVgxelOEOLAjBYXDeJBAqFSJFOohUCzn
+         CtyFEGyQrTzcjvEq3wWZBb9MAy8dosQOUwAo4+t+AeRu3ToSG7S9iROYr3YptgxU/Kk1
+         GZhha9J+2RvZ+7dTwh0vOZSlWUY6Ub7tZ5nQFbz8P4GfuDyGapSOhmwUzJOWDjWAdPb6
+         c5NogvuyCK9xWe1GMBNhgnUW5VHUPm/fkuvFIwt1yXN/A75fVQElZKr2AnVgJ8ZKQQpr
+         RSUbsg5gcNlvdgFJVzeGBvLPqSUV6huZ71mlS4QTvW9KnoYTQQMaWX9B4BAKYh6SpeE+
+         AjqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=N2DgHhz6j74E9Eibrn8aiK2bUZ56QtOMS8oelb0s6qc=;
-        b=pw3LZkKnbwdtC0fh3BGazFSRs8etiWGshCKN8r4xzpxvPJfhCtUs6vV9vdnLsYzIGa
-         6pN3Y7k27UMLjH9U9FbzY6UpdrPrK4149IroWxsI9ZOFsdZth4wY3204LEQd+x5R+JIe
-         C8Y5jBZKrJb9VPvToGyUVUQqXDO48Xon0XUyfWPsiuCRfe44MrsrE2XKoi//xyVYN67p
-         huTfa3LfTGO6j9ZdKVb7wCqOz7ZhEIXtQQECW3yQ3E47kfOp0LxsSfdP4C8CI4x7RAE9
-         FFX9N2+oLjVr37xIoRZaLo8gZ9/jHOdG5QuGuFGbw+JHjAKFS5+xewOlv5Dum5/hSqKR
-         EUZQ==
-X-Gm-Message-State: ALQs6tBucJQEWzdW2EaaLtr/EyOGZAps+cwJx2qJNan84E3/lxF23uFG
-        aOlcCdWs2gOpuHjo3OrOc7c=
-X-Google-Smtp-Source: AIpwx4/eRJGVlInREbJ/kR/HRgytUg3cCux3ZeB8qhk9J1hVg11IeNML91D7yeOD2TZB/BuAUN+xAw==
-X-Received: by 2002:ac8:d44:: with SMTP id r4-v6mr24987111qti.187.1524504440270;
-        Mon, 23 Apr 2018 10:27:20 -0700 (PDT)
-Received: from localhost.localdomain ([2001:4898:8010:1:1060:bd2c:4297:50e])
-        by smtp.gmail.com with ESMTPSA id d4-v6sm10824918qtm.68.2018.04.23.10.27.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Apr 2018 10:27:19 -0700 (PDT)
-Subject: Re: [PATCH v1 3/5] mem-pool: fill out functionality
-To:     Jonathan Tan <jonathantanmy@google.com>,
-        Jameson Miller <jamill@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>
-References: <20180417163400.3875-1-jamill@microsoft.com>
- <20180417163400.3875-5-jamill@microsoft.com>
- <20180420162136.144ac5529072f22067abb3b9@google.com>
-From:   Jameson Miller <jameson.miller81@gmail.com>
-Message-ID: <898c0b43-b090-fb1f-45d5-ea4041843cdb@gmail.com>
-Date:   Mon, 23 Apr 2018 13:27:09 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=85Eo8yf45nSF9NFkpNV6NONVTVP4h2k/suq/7QXTuss=;
+        b=Z/W+z8YBsrCbcAjIzAr2zYOb/ACgc/c3S2DFKTYj/x1JdCvRgkiOWXJ2JbhrgnttxT
+         yk9XpacK6S4/HjgU7z7VBL1xm9WSbwz7xRlrL2zcC5C96kbNUZ9FcAURzo2a/zn/zwwJ
+         r5oC6OV5ycg3OYQurf5FAMfPhZm+MlW5Et6Ef95s4ajnCEX1IW1mIEM/9+iZDIdmxpA8
+         VcF/hVZQRC0RIvFYCbtVcWh4U1vlUUsG4q4EaeR+kuT3Y03vzMHfzPZa/OBszhQtSkIX
+         0dM9Zo6F5wVZLnio/nVZG4wQ4CvrFvNH05d3fK2s7eQQJpvviCIAiNlAE8W49JQ3WRpb
+         ZITw==
+X-Gm-Message-State: ALQs6tBN9d7malbqmnuk294EYLadLnyeHiXpKHef4ydtxQNJVuOMfUdE
+        IjwUxOQgQZL8g3uPOqN6QyFgIhJJEpJruvO/f6z99Q==
+X-Google-Smtp-Source: AIpwx49KmlA6osxOLUSpKCzPZgec1ont9D6T/BwzMcdqNglxYJ2DWVRsk51xziJ0m/nP7c1UZzzBXWaeqEm032IlCxk=
+X-Received: by 10.31.165.10 with SMTP id o10mr15284408vke.187.1524504503918;
+ Mon, 23 Apr 2018 10:28:23 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180420162136.144ac5529072f22067abb3b9@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.176.95.4 with HTTP; Mon, 23 Apr 2018 10:28:23 -0700 (PDT)
+In-Reply-To: <20180419175823.7946-1-newren@gmail.com>
+References: <20180419175823.7946-1-newren@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 23 Apr 2018 10:28:23 -0700
+Message-ID: <CABPp-BHMt1Hjr8A_wkxvSExV9ALgG5032vV5uEE2-HtpYuA9QQ@mail.gmail.com>
+Subject: Re: [PATCH v10 00/36] Add directory rename detection to git
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Apr 19, 2018 at 10:57 AM, Elijah Newren <newren@gmail.com> wrote:
+> Additional testing:
+>
+>   * I've re-merged all ~13k merge commits in git.git with both
+>     git-2.17.0 and this version of git, comparing the results to each
+>     other in detail.  (Including stdout & stderr, as well as the output
+>     of subsequent commands like `git status`, `git ls-files -s`, `git
+>     diff -M`, `git diff -M --staged`).  The only differences were in 23
+>     merges of either git-gui or gitk which involved directory renames
+>     (e.g. git-2.17.0's merge would result in files like 'lib/tools.tcl'
+>     or 'po/ru.po' instead of the expected 'git-gui/lib/tools.tcl' or
+>     'gitk-git/po/ru.po')
+>
+>   * I'm trying to do the same with linux.git, but it looks like that will
+>     take nearly a week to complete...
 
+Results after restarting[1] and throwing some big hardware at it to
+get faster completion:
 
-On 04/20/2018 07:21 PM, Jonathan Tan wrote:
-> On Tue, 17 Apr 2018 16:34:42 +0000
-> Jameson Miller <jamill@microsoft.com> wrote:
-> 
->> @@ -19,8 +19,27 @@ struct mem_pool {
->>   
->>   	/* The total amount of memory allocated by the pool. */
->>   	size_t pool_alloc;
->> +
->> +	/*
->> +	 * Array of pointers to "custom size" memory allocations.
->> +	 * This is used for "large" memory allocations.
->> +	 * The *_end variables are used to track the range of memory
->> +	 * allocated.
->> +	 */
->> +	void **custom, **custom_end;
->> +	int nr, nr_end, alloc, alloc_end;
-> 
-> This seems overly complicated - the struct mem_pool already has a linked
-> list of pages, so couldn't you create a custom page and insert it behind
-> the current front page instead whenever you needed a large-size page?
+Out of 53288 merge commits with exactly two parents in linux.git:
+  - 48491 merged identically
+  - 4737 merged the same other than a few different "Auto-merging
+    <filename>" output lines (as expected due to patch 35/36)
+  - 53 merged the same other than different "Checking out files: ..."
+    output (I just did a plain merge; no flags like --no-progress)
+  - the remaining 7 commits had non-trivial merge differences, all
+    attributable to directory rename detection kicking in
 
-Yes - that is another option. However, the linked list of pages includes 
-memory that *could* have space for an allocation, while the "custom" 
-region will never have left over memory that can be used for other 
-allocations. When searching pages for memory to satisfy a request, there 
-is no reason to search through the "custom" pages. There is a trade-off 
-between complexity and implementation, so I am open to suggestions.
+So, it looks good to me.  If anyone has suggestions for other testing
+to do, let me know.
 
-This was discussed in [1], where it originally was implemented closer to 
-what you describe here.
-
-> 
-> Also, when combining, there could be some wasted space on one of the
-> pages. I'm not sure if that's worth calling out, though.
-> 
-
-Yes, we bring over the whole page. However, these pages are now 
-available for new allocations.
-
-[1]
-https://public-inbox.org/git/xmqqk1u2k91l.fsf@gitster-ct.c.googlers.com/
+[1] Restarted so it could include my unpack_trees fix (from
+Message-Id20180421193736.12722-1-newren@gmail.com) plus a couple minor
+fixup commits (fixing some testcase nits and a comment typo).
