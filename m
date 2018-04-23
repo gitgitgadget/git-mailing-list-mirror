@@ -3,96 +3,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 007DA1F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 23:23:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F3F91F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 23:24:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932666AbeDWXXv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 19:23:51 -0400
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:46567 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932567AbeDWXXu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 19:23:50 -0400
-Received: by mail-wr0-f176.google.com with SMTP id d1-v6so45593240wrj.13
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 16:23:49 -0700 (PDT)
+        id S932615AbeDWXY0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 19:24:26 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:41798 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932567AbeDWXYZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 19:24:25 -0400
+Received: by mail-pf0-f194.google.com with SMTP id v63so1007151pfk.8
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 16:24:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=i9fR6kwlmUHIO6yXTs+Jsb/xyvANcqzk8mla4WT18fI=;
-        b=hnXHJRZ75yOnqCSLMKxyrzaBy/nAAP5KTqJzWWj2New2LKgyManeYznqIhDewed0O9
-         EEhBPVHUcXQs4AMhxiWfxYVn/d0H9PQr18VBbvFeE1zLwSHO26zmmk2i/qnmhVxyJcmD
-         8E0Lw8KCc5DWZzWRnn+dyHQ8H8a3dqWTNJcLBM0yY5S3uSDwEUR8aynVXQsFTEsMkJXx
-         y9+3aAqklB6i7A60Dn2RZr5uBK7eBC6HboxRAev2QNSqY6WM3f+vI53ZqcQMT50KWvYo
-         g0egYta02EMLoTDwX8kPLeoX7RurlK2C7c983h/9ane3rnTXKq3pD4H+sQV+OyCd3Bxm
-         9mvw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=kZCCjjOX/iac9xoJ1mYbkz1KO5l/rJO/V4yfCOodFHE=;
+        b=AJGpxzUgOOHniUxYsFK0nIoBe3jWAlE3K6wZOdBmFL6dSwchkWVRbE8s18sklrD5/Q
+         Jc0fLbbE3Y9QV+aHhgMtYsnL0xM3OD/6hbHjDFEHIwJul3xGu8kZYIUq6IwcDQxtsKp2
+         Ueuafq2u7QPHJCAchEBygLHEoeuC+u88HxksfMQWv6JSQfQ4GB9+yRSsU/EaBVWvJIjg
+         0dFgDfhkadVMmognwbCdCiDHT0zMnOn4jE3le3u9mQK0Ulc+T90wV8Mhr5yBezxtVo5U
+         IIMUgxKFFjzTmyseeybBYhsQWSVFiNEqz4lHFuay4zLdVbLd4ztp4vZ6MyHzvdzKhaFO
+         NoTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=i9fR6kwlmUHIO6yXTs+Jsb/xyvANcqzk8mla4WT18fI=;
-        b=n9O2/8tSe+dM7wN+2xfv1O4E0NH+YtHHMainieNEUxzJB3il4vClNGY+JeYZtyKI1D
-         wE8AQbcB3PXuG+5BL0gW+OEZbJv4V7GEXJCH1hW+kJuzVFP3CZDv3KG3octSPVZIWPEd
-         V/A0PZ5/ETeCUsBJ5kuhEOLMiN6T2pvgRV2AGDtq1OH2akIYWZoUfimsAnDSq96Gow6o
-         j9hh8Kq25mu58x+QycK/jMcWt5BlJYW+pKIEvgTa5+hqsiZItPowjo0bAHXibPPaPSXs
-         LrAMjq9EskuIQtGuIou1NNMnBHL6aHhis24U27xRpnJK8WGdfLfqeaoq0GQ1/4mSXVEn
-         cW/g==
-X-Gm-Message-State: ALQs6tAo3uQDowoMRDqQRoCwV6IJ49MEmsKvQMKoJEpKFlQsNR7VJea4
-        /7pbIZUMHeHp524ihfTm/1g=
-X-Google-Smtp-Source: AIpwx4+GwQYWCqFsj3aIJp7T0LtfTR5OU2KtI9defUPZkWzR4bbDj3pji0a0Ne3KBzvqX7POwBfu8Q==
-X-Received: by 10.28.51.6 with SMTP id z6mr10650461wmz.63.1524525828742;
-        Mon, 23 Apr 2018 16:23:48 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q21-v6sm13055448wra.24.2018.04.23.16.23.47
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=kZCCjjOX/iac9xoJ1mYbkz1KO5l/rJO/V4yfCOodFHE=;
+        b=NOi1etlfUOO/7M5mCjIifxAsp6vuV6a4joudYoUQfycIRYbA4IO7XSc368oE6GG9s9
+         lnVXM2ZueilxX2B4jrpDRCu3FrUy1gB8NKqwjIkPvrVeJrE3flze9GFAkr+YzzHsCK/3
+         qwN4tfok5AWsGkBy7Tq5Nni9yRQC2ESU2GPWmOXN3A9AYFlMv7cfWSAAJEacI0MHfvDX
+         1VFOgVvDs65eywl4QmsUpyF6PrerZS+x/7bFt6STWJkIqBabNyCTkHjnc1Q50Y/zTbFH
+         7Up5omGvBrv1By+bE8AcYcxUPnD8oOzXhCw4V+itJmPZQ9OEV9oclpd/IlMZTwWi7wmJ
+         gP9Q==
+X-Gm-Message-State: ALQs6tBnr8TIfwpF8FEwKLlGTJNu9dDDHcuk2Qy2ru7Ay8mRA7HnHGCJ
+        q4jKz/gM0Ha4Ml0yZwcKP+o=
+X-Google-Smtp-Source: AIpwx4/2UNzyiQvkAiLxcdk48mEYd3X5eWgHkln3V8EqREjN0A283rcaRMldLpNFhnlCOf0aoE4ZRw==
+X-Received: by 2002:a17:902:bcc8:: with SMTP id o8-v6mr22095712pls.84.1524525864892;
+        Mon, 23 Apr 2018 16:24:24 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id m185sm28081023pfc.88.2018.04.23.16.24.23
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Apr 2018 16:23:47 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "peff\@peff.net" <peff@peff.net>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>,
-        "vmiklos\@frugalware.org" <vmiklos@frugalware.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        "Johannes.Schindelin\@gmx.de" <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v1 1/2] merge: Add merge.renames config setting
-References: <20180420133632.17580-1-benpeart@microsoft.com>
-        <20180420133632.17580-2-benpeart@microsoft.com>
-        <CABPp-BFANBs=tOhS5BFfTMkdQsNYbUDExWK8QB0V=qD9YwZyWw@mail.gmail.com>
-        <cd49481c-9665-124a-5f94-791f1a16657d@gmail.com>
-        <CABPp-BFqj2TFiHUDsysafq0NHC4MV-QYZVxOZe1TNRrXMOQfng@mail.gmail.com>
-        <xmqqwox19ohw.fsf@gitster-ct.c.googlers.com>
-        <1fb11850-4c20-5327-a63a-6d1f5aa18ea4@gmail.com>
-Date:   Tue, 24 Apr 2018 08:23:47 +0900
-In-Reply-To: <1fb11850-4c20-5327-a63a-6d1f5aa18ea4@gmail.com> (Ben Peart's
-        message of "Mon, 23 Apr 2018 12:00:49 -0400")
-Message-ID: <xmqqy3hd8q2k.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Mon, 23 Apr 2018 16:24:24 -0700 (PDT)
+Date:   Mon, 23 Apr 2018 16:24:22 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Dan Jacques <dnj@google.com>, Junio C Hamano <gitster@pobox.com>,
+        Johannes.Schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
+        Brandon Williams <bmwill@google.com>
+Subject: [PATCH 1/2] Makefile: remove unused @@PERLLIBDIR@@ substitution
+ variable
+Message-ID: <20180423232422.GC25128@aiede.svl.corp.google.com>
+References: <f0ad1ad4-67d8-21e2-fdd0-0a08328c1eaa@kdbg.org>
+ <20171205212625.6616-1-dnj@google.com>
+ <xmqq7eu0j1th.fsf@gitster.mtv.corp.google.com>
+ <e0a22ee4-9503-760f-293c-be56fa46fa04@kdbg.org>
+ <20180423232326.GB25128@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180423232326.GB25128@aiede.svl.corp.google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Junio noticed that this variable is not quoted correctly when it is
+passed to sed.  As a shell-quoted string, it should be inside
+single-quotes like $(perllibdir_relative_SQ), not outside them like
+$INSTLIBDIR.
 
->> I also had to wonder how "merge -s resolve" faired, if the project
->> is not interested in renamed paths at all.
->>
->
-> To be clear, it isn't that we're not interested in detecting renamed
-> files and paths.  We're just opposed to it taking an hour to figure
-> that out!
+In fact, this substitution variable is not used.  Simplify by removing
+it.
 
-Yeah, but as opposed to passing "oh, let's see if we can get a
-reasonable result without rename detection just this time" from the
-command line, configuring merge.renames=false in would mean exactly
-that: "we don't need rename detection, just want to skip the cycles
-spent for it".  That is why I wondered how well the resolve strategy
-would have fit your needs.
+Reported-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+An unrelated cleanup noticed while looking over this code.
 
+ Makefile | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 154929f1c8..8f4cb506ff 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2109,7 +2109,6 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
+ 	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
+ 	sed -e 's=@@PATHSEP@@=$(pathsep)=g' \
+ 	    -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' \
+-	    -e 's=@@PERLLIBDIR@@='$(perllibdir_SQ)'=g' \
+ 	    -e 's=@@PERLLIBDIR_REL@@=$(perllibdir_relative_SQ)=g' \
+ 	    -e 's=@@GITEXECDIR_REL@@=$(gitexecdir_relative_SQ)=g' \
+ 	    -e 's=@@LOCALEDIR_REL@@=$(localedir_relative_SQ)=g' \
+-- 
+2.17.0.441.gb46fe60e1d
 
