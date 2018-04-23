@@ -2,83 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CA171F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 16:22:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C28281F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 16:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755549AbeDWQWq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 12:22:46 -0400
-Received: from tak.tresgeek.net ([68.90.68.206]:35816 "EHLO
-        bevomill.tresgeek.net" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1755418AbeDWQWp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 12:22:45 -0400
-X-Greylist: delayed 541 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Apr 2018 12:22:45 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by bevomill.tresgeek.net (Postfix) with ESMTP id 9698F2003005
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 11:13:43 -0500 (CDT)
-Received: from bevomill.tresgeek.net ([127.0.0.1])
-        by localhost (bevomill.tresgeek.net [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id zpnO8JhNni1H for <git@vger.kernel.org>;
-        Mon, 23 Apr 2018 11:13:42 -0500 (CDT)
-Received: from localhost (localhost [127.0.0.1])
-        by bevomill.tresgeek.net (Postfix) with ESMTP id 71C1E2003006
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 11:13:42 -0500 (CDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 bevomill.tresgeek.net 71C1E2003006
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tresgeek.net;
-        s=EF7A3342-164F-11E6-87A2-DFDB960215AC; t=1524500022;
-        bh=WbmYTpMX/R4RZ3XnJb2b7oHZfQ8TSU/gAqqODN5IKT4=;
-        h=Date:From:To:Message-ID:MIME-Version;
-        b=tLwmg2+XJ/u+X7KJeL9l7ztT/Eb03sdvv5EFDEyuUr3eshRnDzmXUEYWuzYRKw3Cf
-         xXMsADTY0qUkHzTMRC83ZD2W6l3WfKP1J22RiM1BL8RRnlMA8q5+Pa7w5dt80ei46n
-         D9t6O65qtYf6pXbBU7tG9LMwP/25eoxLfKBLices=
-X-Virus-Scanned: amavisd-new at tresgeek.net
-Received: from bevomill.tresgeek.net ([127.0.0.1])
-        by localhost (bevomill.tresgeek.net [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id A0v1SJn10DtX for <git@vger.kernel.org>;
-        Mon, 23 Apr 2018 11:13:42 -0500 (CDT)
-Received: from bevomill.tresgeek.net (bevomill.tresgeek.net [68.90.68.206])
-        by bevomill.tresgeek.net (Postfix) with ESMTP id 5296A2003005
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 11:13:42 -0500 (CDT)
-Date:   Mon, 23 Apr 2018 11:13:41 -0500 (CDT)
-From:   "Jason B. Nance" <jason@tresgeek.net>
-To:     git@vger.kernel.org
-Message-ID: <2048535297.1044.1524500021908.JavaMail.zimbra@tresgeek.net>
-Subject: SEC_E_BUFFER_TOO_SMALL on Windows
+        id S1755115AbeDWQbq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 12:31:46 -0400
+Received: from mail-oi0-f51.google.com ([209.85.218.51]:35854 "EHLO
+        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754788AbeDWQbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 12:31:45 -0400
+Received: by mail-oi0-f51.google.com with SMTP id v2-v6so1089286oif.3
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 09:31:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=U7Nj+pQL4VGe62HNL8LPha5qkQckG1M2U7ayIACgK4s=;
+        b=Y+SlnQvUazDx+9M/UtR1mXwx5SdmT+hYc3Ls/YPJEmdr54VTisbrVhgTMq9+lnhnXW
+         rBeDchy7uS3BLPaFa5+DGT67IV56tS9hRNQQAxfh38YF2Hh5thWxUFPvOFR3ry14YMOX
+         WoKBP7MjxgWa6qLuu58rwHQztWW03+MWRKRtFZvR2+wvCDChyTm1OSxzu8fJUj1AUxj9
+         u1herkqWI8m9IQEfiHOeT1qElbQc+uWoAFalswI9VhD9g5tp5dFRcZiBM6SVIxiRs9KY
+         XvX71xzrWGXR0B1k0fAUlhvrOhid+7W67skIJOpy9WlKAnCXyDFphvSv21bjlfILgWMX
+         O/PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=U7Nj+pQL4VGe62HNL8LPha5qkQckG1M2U7ayIACgK4s=;
+        b=HumjfyOLUpy6tDSoId52gSGPi44LMvTlAHjzHHQAHPSag7XdwikzMlkkd7fT+01zLi
+         N2DOvRMfbR16ybwbyISllZkUt/r/yS/PY4kjj3SnkwSBOmCAWap4CfznfgIlIhVOi8Ev
+         QOu5kGF0H2I4EKmvt2lQDuJtSJxB2bqcRAfzT+XouDkNsrt3A8FMkI1xiUWT5BWI6yWx
+         4ICLV6tp88sX4uJPWSDcgF4L8qJL/qu4xr55jBi5mW3OJXoku1VivDyG00FxrBgfOTxg
+         otQx1cojkM1c4HWQPWLm9Q5/QrkfHciaHqfGsp6JeUaZiIxq/8rN+eHU8uF1d0Hxm2qQ
+         20gA==
+X-Gm-Message-State: ALQs6tBHoahb9qs7Jyx/4osZS9nTuMW2trVN//3ImjZKs8brRehiE+zh
+        NkwUc/MiE2GspX43GV5Shj9yS5ufBJbZBBFGRPI=
+X-Google-Smtp-Source: AIpwx48lprfCVatnH75ClO3EYt94O7ZCK7mKcT2M2glESSb+fp8SXCXP+RJxfiz0oqo2qDF7BT8viRWcznh9VY8Jpcg=
+X-Received: by 2002:aca:d16:: with SMTP id 22-v6mr8778030oin.245.1524501104965;
+ Mon, 23 Apr 2018 09:31:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 8.7.11_GA_1854 (ZimbraWebClient - FF52 (Win)/8.7.11_GA_1854)
-Thread-Index: qiC8jF54ZRrvRj62hqJ3gsCExnyjjA==
-Thread-Topic: SEC_E_BUFFER_TOO_SMALL on Windows
+Received: by 10.201.112.67 with HTTP; Mon, 23 Apr 2018 09:31:44 -0700 (PDT)
+In-Reply-To: <CAPig+cT0ogLmiviWhdZTLxDM7+VN3hk7wgkKnvX96Ym-yXR5bA@mail.gmail.com>
+References: <CA+FnnTxbg97A4P3AP7n5RT8+=W8PY0yx3644Ay2Zi9xgKD2aoA@mail.gmail.com>
+ <CAPig+cR19LS2vfjBQ71c3j2g61vSHnYRj1iSX1-V_E3Fj=kwOA@mail.gmail.com>
+ <CA+FnnTzfJMBuSMAD7PgUurRu8jOpirEgM6=+=i91zdGLWmfUpg@mail.gmail.com>
+ <CAPig+cQOzKbM0R6vKTg_BU6meEbAAJWL1T0jZkaCOF0uJ=_Lmw@mail.gmail.com>
+ <CA+FnnTzqaPrLgYv-8X9BDW0DR7331morN33B81w8T3vzOwn+Pw@mail.gmail.com>
+ <CA+FnnTz-qdVK5482GJo06QrvMktGYhJAJ6g-Naq0BgT-uoRvEA@mail.gmail.com>
+ <CAPig+cS+gf5gGM3fmnxk-6k7ezbtS=KQFqkkxVtcytHfcQApEQ@mail.gmail.com>
+ <CA+FnnTwvnA90nDARKW9r7p5iraoOGTvfDJ26n6Udc68bDSUASw@mail.gmail.com>
+ <CAPig+cRjYju4zEgiY_TuOOk0e7A8zNz+hu+40vQUEGDX6FGDxw@mail.gmail.com>
+ <CA+FnnTzFomd91d1F6O-a28hXQ6PxOiBd44da4nSVW0MuDKgkmw@mail.gmail.com>
+ <CAPig+cTw5GjB4VgFD2teDvMuyGPFFoNSCqbXbarEXCe3fVdLjQ@mail.gmail.com>
+ <CA+FnnTzkZS7HP61Ck3y5p0EC7J_h=ToR5tq5cvEpJ79vYuSxZw@mail.gmail.com> <CAPig+cT0ogLmiviWhdZTLxDM7+VN3hk7wgkKnvX96Ym-yXR5bA@mail.gmail.com>
+From:   Igor Korot <ikorot01@gmail.com>
+Date:   Mon, 23 Apr 2018 11:31:44 -0500
+Message-ID: <CA+FnnTxXOwORs_qYvOdSj41UX1aBfj+Hd1+kxPa8j+34xgjhgQ@mail.gmail.com>
+Subject: Re: Is support for 10.8 dropped?
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+Hi, Eric,
 
-We are seeing intermittent errors with Git 2.16.2.windows.1 on Windows 7 connecting to TFS 2017 (running in a Jenkins slave process):
+On Sun, Apr 22, 2018 at 12:37 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sun, Apr 22, 2018 at 1:15 AM, Igor Korot <ikorot01@gmail.com> wrote:
+>> MyMac:git-2.17.0 igorkorot$ cat config.mak
+>> NO_GETTEXT=Yes
+>> NO_OPENSSL=Yes
+>>
+>> MyMac:dbhandler igorkorot$ /Users/igorkorot/git-2.17.0/git pull
+>> fatal: unable to access
+>> 'https://github.com/oneeyeman1/dbhandler.git/': error:1407742E:SSL
+>> routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol version
+>> MyMac:dbhandler igorkorot$
+>
+> Try re-building with OpenSSL enabled (remove NO_OPENSSL from
+> config.make). You may need to build/install OpenSSL yourself to get
+> this to work.
 
-    ERROR: Error cloning remote repo 'origin' hudson.plugins.git.GitException: Command "C:\tools\Git\bin\git.exe fetch --tags --progress https://internal-tfs-server/tfs/project/_git/repo +refs/heads/*:refs/remotes/origin/*" returned status code 128:
-    stdout: 
-    stderr: fatal: unable to access 'https://internal-tfs-server/tfs/project/_git/repo/': schannel: next InitializeSecurityContext failed: SEC_E_BUFFER_TOO_SMALL (0x80090321) - The buffers supplied to a function was too small.
+2 things:
+1. Is the file name "config.mak" or "config.make"?
+2. Do I have to do "make clean" or just remove the line and o "make"?
 
-I found the following thread from 2015 on a cURL list that seems to be similar:
-
-    https://curl.haxx.se/mail/lib-2015-04/0136.html
-
-However, it looks like a patch was released for that issue:
-
-    https://curl.haxx.se/mail/lib-2015-04/0152.html
-
-Rebooting the Windows client appears to resolve the issue for a time.
-
-Has anyone else experienced this and found a resolution or workaround?
-
-Thank you,
-
-j
+Thank you.
