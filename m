@@ -7,42 +7,42 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 574C21F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 23:42:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 374621F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 23:42:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932818AbeDWXmF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 19:42:05 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60536 "EHLO
+        id S932678AbeDWXmH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 19:42:07 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60552 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932716AbeDWXkV (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 23 Apr 2018 19:40:21 -0400
+        by vger.kernel.org with ESMTP id S932684AbeDWXkS (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 23 Apr 2018 19:40:18 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6D1C860B38;
-        Mon, 23 Apr 2018 23:40:19 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4041B6099D;
+        Mon, 23 Apr 2018 23:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1524526819;
-        bh=//bmgidpS5Jo/vbie374hc8MdFjC3RUZzhN270p+SzE=;
+        s=default; t=1524526817;
+        bh=qKIgG64QG3/HN8ePJjAXAcXXi+hVNH0qbMOvtdjuWC0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Brh+TY9txroq6kAcjIvudt24h46fMSzg3/lZlr3hSIbTuPg2F0xhYOFG5Dw2NkB8d
-         86VWOOvYEdNQ/QyGrvjf0J7NmNykwJW1X95gPbH7GHlHv+00BW4yYwgZjVlqwvKcMX
-         2gchdjbFBNXQbnOhNSsfIlLwIybNRaLLxR9SwE+SmArwl+CvhuBycWuMDivh4GpRmd
-         QQHu6WhJqbF9GWrpRb8/Bs6sbRR1kWFOCLALKw2wuODl0KwyM98Qvl65w8elSwFjU1
-         NrxRxeYVizSktVgQHarSOvzRpE+zDf+mA8LWKmMFNZs0d+3FjUYjc0965I57dAadMM
-         X+WP9PD0cXAdC8nESdqdPrp6aMZkNNDX6tEHrQKOkjvF+g3LbMI9UldfW4XtJVpgN9
-         eh4xROpYh8UzZS+N85895bMohd9SlfSQiacd6+ceHvW83H47b2dscWHN+MH8Ec4JFK
-         4phg9qFPU8zi+V0/4oumH9bepNfAPAZr8nzZN4QVdRz62iflocQ
+        b=Lsesf0Jx4EJfpcNtWpQ4Ray0FY0dbpthsUiAevcm8AcIY9TNhcKqsqU0eRn0GCmDf
+         357FttMX+9ZPFoSceUUsoWwTF3ZqoV5P9LHBooz01QQyBWRg3icET//zjPKXq8Le7B
+         tZdwljM5+xKPlYIE0mRi7UcxyT5kTT+saHu56v+sSyxlITi1Ixq7b9KqTaTadR0uI9
+         F22KLhIe2UmIfROOgu6VUWJ1edSmp3pCxmDOua5ZY3P3S030dLLzuf0+jsPSC76rBG
+         cEE04vKvR85ObQrZ1/6VwAoLdjA6eG0lqyAw1JQtgbfp1OhPm5XXtuBxVYwpnMcNBC
+         VYeNDMOtTw1tksrIPfUpgnGcBcTmBJSyElZgfM7vpF9OFtWdLvu8uHPY1SjCVYqGGn
+         qd7v6jJJBjIBNGS3UdLXdutgVpT5tWTPkIa5WaNm3l3m0SBdzy6v8qVDOwK2YI5TJn
+         8G5MFX1C/d/s2/YXUzjcLRQAgy6GaskEifAi3QHyPZKxJ8YtRTb
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 14/41] submodule-config: convert structures to object_id
-Date:   Mon, 23 Apr 2018 23:39:24 +0000
-Message-Id: <20180423233951.276447-15-sandals@crustytoothpaste.net>
+Subject: [PATCH 12/41] tree-walk: convert get_tree_entry_follow_symlinks to object_id
+Date:   Mon, 23 Apr 2018 23:39:22 +0000
+Message-Id: <20180423233951.276447-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180423233951.276447-1-sandals@crustytoothpaste.net>
 References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
@@ -52,259 +52,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert struct submodule and struct parse_config_parameter to use struct
-object_id.  Adjust the functions which take members of these structures
-as arguments to also use struct object_id.  Include cache.h into
-submodule-config.h to make struct object_id visible.
+Since the only caller of this function already uses struct object_id,
+update get_tree_entry_follow_symlinks to use it in parameters and
+internally.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- submodule-config.c | 66 +++++++++++++++++++++++-----------------------
- submodule-config.h |  7 ++---
- 2 files changed, 37 insertions(+), 36 deletions(-)
+ sha1_name.c |  4 ++--
+ tree-walk.c | 16 ++++++++--------
+ tree-walk.h |  2 +-
+ 3 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 3f2075764f..5537c88727 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -44,7 +44,7 @@ static int config_path_cmp(const void *unused_cmp_data,
- 	const struct submodule_entry *b = entry_or_key;
- 
- 	return strcmp(a->config->path, b->config->path) ||
--	       hashcmp(a->config->gitmodules_sha1, b->config->gitmodules_sha1);
-+	       oidcmp(&a->config->gitmodules_oid, &b->config->gitmodules_oid);
- }
- 
- static int config_name_cmp(const void *unused_cmp_data,
-@@ -56,7 +56,7 @@ static int config_name_cmp(const void *unused_cmp_data,
- 	const struct submodule_entry *b = entry_or_key;
- 
- 	return strcmp(a->config->name, b->config->name) ||
--	       hashcmp(a->config->gitmodules_sha1, b->config->gitmodules_sha1);
-+	       oidcmp(&a->config->gitmodules_oid, &b->config->gitmodules_oid);
- }
- 
- static struct submodule_cache *submodule_cache_alloc(void)
-@@ -109,17 +109,17 @@ void submodule_cache_free(struct submodule_cache *cache)
- 	free(cache);
- }
- 
--static unsigned int hash_sha1_string(const unsigned char *sha1,
--				     const char *string)
-+static unsigned int hash_oid_string(const struct object_id *oid,
-+				    const char *string)
- {
--	return memhash(sha1, 20) + strhash(string);
-+	return memhash(oid->hash, the_hash_algo->rawsz) + strhash(string);
- }
- 
- static void cache_put_path(struct submodule_cache *cache,
- 			   struct submodule *submodule)
- {
--	unsigned int hash = hash_sha1_string(submodule->gitmodules_sha1,
--					     submodule->path);
-+	unsigned int hash = hash_oid_string(&submodule->gitmodules_oid,
-+					    submodule->path);
- 	struct submodule_entry *e = xmalloc(sizeof(*e));
- 	hashmap_entry_init(e, hash);
- 	e->config = submodule;
-@@ -129,8 +129,8 @@ static void cache_put_path(struct submodule_cache *cache,
- static void cache_remove_path(struct submodule_cache *cache,
- 			      struct submodule *submodule)
- {
--	unsigned int hash = hash_sha1_string(submodule->gitmodules_sha1,
--					     submodule->path);
-+	unsigned int hash = hash_oid_string(&submodule->gitmodules_oid,
-+					    submodule->path);
- 	struct submodule_entry e;
- 	struct submodule_entry *removed;
- 	hashmap_entry_init(&e, hash);
-@@ -142,8 +142,8 @@ static void cache_remove_path(struct submodule_cache *cache,
- static void cache_add(struct submodule_cache *cache,
- 		      struct submodule *submodule)
- {
--	unsigned int hash = hash_sha1_string(submodule->gitmodules_sha1,
--					     submodule->name);
-+	unsigned int hash = hash_oid_string(&submodule->gitmodules_oid,
-+					    submodule->name);
- 	struct submodule_entry *e = xmalloc(sizeof(*e));
- 	hashmap_entry_init(e, hash);
- 	e->config = submodule;
-@@ -151,14 +151,14 @@ static void cache_add(struct submodule_cache *cache,
- }
- 
- static const struct submodule *cache_lookup_path(struct submodule_cache *cache,
--		const unsigned char *gitmodules_sha1, const char *path)
-+		const struct object_id *gitmodules_oid, const char *path)
- {
- 	struct submodule_entry *entry;
--	unsigned int hash = hash_sha1_string(gitmodules_sha1, path);
-+	unsigned int hash = hash_oid_string(gitmodules_oid, path);
- 	struct submodule_entry key;
- 	struct submodule key_config;
- 
--	hashcpy(key_config.gitmodules_sha1, gitmodules_sha1);
-+	oidcpy(&key_config.gitmodules_oid, gitmodules_oid);
- 	key_config.path = path;
- 
- 	hashmap_entry_init(&key, hash);
-@@ -171,14 +171,14 @@ static const struct submodule *cache_lookup_path(struct submodule_cache *cache,
- }
- 
- static struct submodule *cache_lookup_name(struct submodule_cache *cache,
--		const unsigned char *gitmodules_sha1, const char *name)
-+		const struct object_id *gitmodules_oid, const char *name)
- {
- 	struct submodule_entry *entry;
--	unsigned int hash = hash_sha1_string(gitmodules_sha1, name);
-+	unsigned int hash = hash_oid_string(gitmodules_oid, name);
- 	struct submodule_entry key;
- 	struct submodule key_config;
- 
--	hashcpy(key_config.gitmodules_sha1, gitmodules_sha1);
-+	oidcpy(&key_config.gitmodules_oid, gitmodules_oid);
- 	key_config.name = name;
- 
- 	hashmap_entry_init(&key, hash);
-@@ -207,12 +207,12 @@ static int name_and_item_from_var(const char *var, struct strbuf *name,
- }
- 
- static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
--		const unsigned char *gitmodules_sha1, const char *name)
-+		const struct object_id *gitmodules_oid, const char *name)
- {
- 	struct submodule *submodule;
- 	struct strbuf name_buf = STRBUF_INIT;
- 
--	submodule = cache_lookup_name(cache, gitmodules_sha1, name);
-+	submodule = cache_lookup_name(cache, gitmodules_oid, name);
- 	if (submodule)
- 		return submodule;
- 
-@@ -230,7 +230,7 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 	submodule->branch = NULL;
- 	submodule->recommend_shallow = -1;
- 
--	hashcpy(submodule->gitmodules_sha1, gitmodules_sha1);
-+	oidcpy(&submodule->gitmodules_oid, gitmodules_oid);
- 
- 	cache_add(cache, submodule);
- 
-@@ -341,12 +341,12 @@ int parse_push_recurse_submodules_arg(const char *opt, const char *arg)
- 	return parse_push_recurse(opt, arg, 1);
- }
- 
--static void warn_multiple_config(const unsigned char *treeish_name,
-+static void warn_multiple_config(const struct object_id *treeish_name,
- 				 const char *name, const char *option)
- {
- 	const char *commit_string = "WORKTREE";
- 	if (treeish_name)
--		commit_string = sha1_to_hex(treeish_name);
-+		commit_string = oid_to_hex(treeish_name);
- 	warning("%s:.gitmodules, multiple configurations found for "
- 			"'submodule.%s.%s'. Skipping second one!",
- 			commit_string, name, option);
-@@ -354,8 +354,8 @@ static void warn_multiple_config(const unsigned char *treeish_name,
- 
- struct parse_config_parameter {
- 	struct submodule_cache *cache;
--	const unsigned char *treeish_name;
--	const unsigned char *gitmodules_sha1;
-+	const struct object_id *treeish_name;
-+	const struct object_id *gitmodules_oid;
- 	int overwrite;
+diff --git a/sha1_name.c b/sha1_name.c
+index 7043652a24..7c2d08a202 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1685,8 +1685,8 @@ static int get_oid_with_context_1(const char *name,
+ 			if (new_filename)
+ 				filename = new_filename;
+ 			if (flags & GET_OID_FOLLOW_SYMLINKS) {
+-				ret = get_tree_entry_follow_symlinks(tree_oid.hash,
+-					filename, oid->hash, &oc->symlink_path,
++				ret = get_tree_entry_follow_symlinks(&tree_oid,
++					filename, oid, &oc->symlink_path,
+ 					&oc->mode);
+ 			} else {
+ 				ret = get_tree_entry(&tree_oid, filename, oid,
+diff --git a/tree-walk.c b/tree-walk.c
+index 27797c5406..8f5090862b 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -488,7 +488,7 @@ int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info)
+ struct dir_state {
+ 	void *tree;
+ 	unsigned long size;
+-	unsigned char sha1[20];
++	struct object_id oid;
  };
  
-@@ -371,7 +371,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 		return 0;
+ static int find_tree_entry(struct tree_desc *t, const char *name, struct object_id *result, unsigned *mode)
+@@ -576,7 +576,7 @@ int get_tree_entry(const struct object_id *tree_oid, const char *name, struct ob
+  * See the code for enum follow_symlink_result for a description of
+  * the return values.
+  */
+-enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_sha1, const char *name, unsigned char *result, struct strbuf *result_path, unsigned *mode)
++enum follow_symlinks_result get_tree_entry_follow_symlinks(struct object_id *tree_oid, const char *name, struct object_id *result, struct strbuf *result_path, unsigned *mode)
+ {
+ 	int retval = MISSING_OBJECT;
+ 	struct dir_state *parents = NULL;
+@@ -589,7 +589,7 @@ enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_s
  
- 	submodule = lookup_or_create_by_name(me->cache,
--					     me->gitmodules_sha1,
-+					     me->gitmodules_oid,
- 					     name.buf);
+ 	init_tree_desc(&t, NULL, 0UL);
+ 	strbuf_addstr(&namebuf, name);
+-	hashcpy(current_tree_oid.hash, tree_sha1);
++	oidcpy(&current_tree_oid, tree_oid);
  
- 	if (!strcmp(item.buf, "path")) {
-@@ -389,7 +389,7 @@ static int parse_config(const char *var, const char *value, void *data)
+ 	while (1) {
+ 		int find_result;
+@@ -609,11 +609,11 @@ enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_s
+ 			ALLOC_GROW(parents, parents_nr + 1, parents_alloc);
+ 			parents[parents_nr].tree = tree;
+ 			parents[parents_nr].size = size;
+-			hashcpy(parents[parents_nr].sha1, root.hash);
++			oidcpy(&parents[parents_nr].oid, &root);
+ 			parents_nr++;
+ 
+ 			if (namebuf.buf[0] == '\0') {
+-				hashcpy(result, root.hash);
++				oidcpy(result, &root);
+ 				retval = FOUND;
+ 				goto done;
+ 			}
+@@ -663,7 +663,7 @@ enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_s
+ 
+ 		/* We could end up here via a symlink to dir/.. */
+ 		if (namebuf.buf[0] == '\0') {
+-			hashcpy(result, parents[parents_nr - 1].sha1);
++			oidcpy(result, &parents[parents_nr - 1].oid);
+ 			retval = FOUND;
+ 			goto done;
  		}
- 	} else if (!strcmp(item.buf, "fetchrecursesubmodules")) {
- 		/* when parsing worktree configurations we can die early */
--		int die_on_error = is_null_sha1(me->gitmodules_sha1);
-+		int die_on_error = is_null_oid(me->gitmodules_oid);
- 		if (!me->overwrite &&
- 		    submodule->fetch_recurse != RECURSE_SUBMODULES_NONE)
- 			warn_multiple_config(me->treeish_name, submodule->name,
-@@ -511,10 +511,10 @@ static const struct submodule *config_from(struct submodule_cache *cache,
+@@ -677,7 +677,7 @@ enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_s
  
- 	switch (lookup_type) {
- 	case lookup_name:
--		submodule = cache_lookup_name(cache, oid.hash, key);
-+		submodule = cache_lookup_name(cache, &oid, key);
- 		break;
- 	case lookup_path:
--		submodule = cache_lookup_path(cache, oid.hash, key);
-+		submodule = cache_lookup_path(cache, &oid, key);
- 		break;
- 	}
- 	if (submodule)
-@@ -526,8 +526,8 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 
- 	/* fill the submodule config into the cache */
- 	parameter.cache = cache;
--	parameter.treeish_name = treeish_name->hash;
--	parameter.gitmodules_sha1 = oid.hash;
-+	parameter.treeish_name = treeish_name;
-+	parameter.gitmodules_oid = &oid;
- 	parameter.overwrite = 0;
- 	git_config_from_mem(parse_config, CONFIG_ORIGIN_SUBMODULE_BLOB, rev.buf,
- 			config, config_size, &parameter);
-@@ -536,9 +536,9 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 
- 	switch (lookup_type) {
- 	case lookup_name:
--		return cache_lookup_name(cache, oid.hash, key);
-+		return cache_lookup_name(cache, &oid, key);
- 	case lookup_path:
--		return cache_lookup_path(cache, oid.hash, key);
-+		return cache_lookup_path(cache, &oid, key);
- 	default:
- 		return NULL;
- 	}
-@@ -567,7 +567,7 @@ static int gitmodules_cb(const char *var, const char *value, void *data)
- 
- 	parameter.cache = repo->submodule_cache;
- 	parameter.treeish_name = NULL;
--	parameter.gitmodules_sha1 = null_sha1;
-+	parameter.gitmodules_oid = &null_oid;
- 	parameter.overwrite = 1;
- 
- 	return parse_config(var, value, &parameter);
-diff --git a/submodule-config.h b/submodule-config.h
-index a5503a5d17..11729fbc74 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -1,6 +1,7 @@
- #ifndef SUBMODULE_CONFIG_CACHE_H
- #define SUBMODULE_CONFIG_CACHE_H
- 
-+#include "cache.h"
- #include "hashmap.h"
- #include "submodule.h"
- #include "strbuf.h"
-@@ -17,13 +18,13 @@ struct submodule {
- 	const char *ignore;
- 	const char *branch;
- 	struct submodule_update_strategy update_strategy;
--	/* the sha1 blob id of the responsible .gitmodules file */
--	unsigned char gitmodules_sha1[20];
-+	/* the object id of the responsible .gitmodules file */
-+	struct object_id gitmodules_oid;
- 	int recommend_shallow;
+ 		if (S_ISDIR(*mode)) {
+ 			if (!remainder) {
+-				hashcpy(result, current_tree_oid.hash);
++				oidcpy(result, &current_tree_oid);
+ 				retval = FOUND;
+ 				goto done;
+ 			}
+@@ -687,7 +687,7 @@ enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_s
+ 				      1 + first_slash - namebuf.buf);
+ 		} else if (S_ISREG(*mode)) {
+ 			if (!remainder) {
+-				hashcpy(result, current_tree_oid.hash);
++				oidcpy(result, &current_tree_oid);
+ 				retval = FOUND;
+ 			} else {
+ 				retval = NOT_DIR;
+diff --git a/tree-walk.h b/tree-walk.h
+index 4617deeb0e..805f58f00f 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -64,7 +64,7 @@ enum follow_symlinks_result {
+ 		       */
  };
  
- #define SUBMODULE_INIT { NULL, NULL, NULL, RECURSE_SUBMODULES_NONE, \
--	NULL, NULL, SUBMODULE_UPDATE_STRATEGY_INIT, {0}, -1 };
-+	NULL, NULL, SUBMODULE_UPDATE_STRATEGY_INIT, { { 0 } }, -1 };
+-enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_sha1, const char *name, unsigned char *result, struct strbuf *result_path, unsigned *mode);
++enum follow_symlinks_result get_tree_entry_follow_symlinks(struct object_id *tree_oid, const char *name, struct object_id *result, struct strbuf *result_path, unsigned *mode);
  
- struct submodule_cache;
- struct repository;
+ struct traverse_info {
+ 	const char *traverse_path;
