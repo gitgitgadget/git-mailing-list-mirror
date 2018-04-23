@@ -2,109 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26B8D1F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 17:09:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB70D1F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 17:14:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755749AbeDWRJe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 13:09:34 -0400
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:46273 "EHLO
-        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755473AbeDWRJV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 13:09:21 -0400
-Received: by mail-vk0-f47.google.com with SMTP id v205so9859002vkv.13
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 10:09:21 -0700 (PDT)
+        id S932079AbeDWROu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 13:14:50 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:46897 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755473AbeDWROt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 13:14:49 -0400
+Received: by mail-qk0-f193.google.com with SMTP id s70so16866984qks.13
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 10:14:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2MAddTWA86YB3zPKOZayQ0gvpT+Vs2sWU0KNx57YBx4=;
-        b=AJkkcUvMMP8e3kIMtzf7dP4/hhUuNArOAKf40Y3j+08urMJ08/p40Psp1s/VDEHx64
-         ZzPYarxt6g8pNEDW3cD8DZre7wpaNRjvkHUD9AWWSYpfBttlsew2pYobuaN4HvuEF/42
-         OFaYfXJbj5KGtuqYfMkaeuhAXSwSEniKLCGMhd4ppx+lDZyl1+oxNNujx8mkmRZ4qGiX
-         QwqSVzL2aKb01Lidh3A58KDwP0wrve6Ueto793lKPHbdImX4f0MP9rMldM+jiAqoRT4f
-         3WAxeLLJwD1dxADiKs9K9M7v/H9sWuiMQoX6VkOlPHTFlgxqeGAXydeQ7lCK4PrvJD5s
-         hEYw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ChNbi71LnJoU4yy2SCUr6BC/ka9yCSxkNOeowwWdS+A=;
+        b=MuYey2ULGsEF77M5yylyBaIj8hvNkhvL8YF/26rRRzmJXBr4YWtpqL5dSoJwjycnpw
+         Fztrce6kCbRWeTvJ8j5Z2cdEVeL+3wGtGq3ExyVgKtsbBz217lTa85CYRE/atSo+kdQR
+         Nsdy24L0k4PDEnpCro+Ot6pMkWin2P5Og1sCnwRrapQE8FAknqk8j3DljIM5iNf01qt/
+         vk/PlQOjZqT2zOPURyKqpanAnspo82Ta4XeQaa1v+T04OJN79EaBixo3gvqZ4KoD3SoW
+         WdJlygeDIQ+XnzBduX+1J8xAUZFfmKUzlpDpT8VwNIdpm8bQ+mJNRFKaG733Mywu7+ax
+         gzxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2MAddTWA86YB3zPKOZayQ0gvpT+Vs2sWU0KNx57YBx4=;
-        b=VsqGIs3JmsKP+iTf3YDFpkEbFHuCCL4u/sIPEOFvwm1ikbJvZqRQGg2OeIOj/vzSPO
-         /F8VfLE+98iAYnNuzdjT/jZgt6oie1ow/QtrETSVax+0BJwC8bxOv6tOqaCCpZAlDlVf
-         yy6zLOMBT/XsZpXmt35QXvfG1Sy7GFLMvAw0TdQeZZmNhD6bA54W7aQhXZDilydrPwUX
-         xvwsi205onPEIl6QkyOefJ6p0fj1jQThtuxHtsUCmJ1mNEJCU+DbNNCTs0Z6bSkrKQAe
-         NqwLybywBXb6qBlIluqw86NhCNnbcsQHa5oZheudNiFwFaff4ntSRkXKpf/AH9fcrd6r
-         2ecw==
-X-Gm-Message-State: ALQs6tC57Nl//pgKOeuQKWrukwL1DGdiCXt+FYvmZjZg5TywCsvyCA5d
-        6lVGVa0XJzcduSu+R6FhHhiOoHZu7td30oMU/78=
-X-Google-Smtp-Source: AIpwx49mrRd8V8ho8jjQYF1iSmQAH6lkCQoFyDyU3C9b69DfdINqsVMsomQHPdC5nwwNSPKS/QsN6knRr7LUBHkC2YA=
-X-Received: by 10.31.148.135 with SMTP id w129mr15108450vkd.7.1524503360924;
- Mon, 23 Apr 2018 10:09:20 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ChNbi71LnJoU4yy2SCUr6BC/ka9yCSxkNOeowwWdS+A=;
+        b=sCRSJFDHYf8vVCUhoqqQ+Hj8QPhE1BsQQhLN1R15wasUFVw2mYfA4ieRt00ywL2XPe
+         vYg/FfcH096QJgTBEODp3+FXK90/6hfEDiwb8W1R4nmLdYu+eCNWqE5/HepC5wEPC/4F
+         7FxkDQPbslHKbqsXVGA+T7vc6dpV2uRJGtvocm97LTQP+XYOJWdmjSjOm2TIPPbem9b5
+         VaLoSS6RjjZrELdn90BJuT7b2mXfGW9fWP7SCzoj2cDI/gAnt1YDqzjwkGbfgf6p7Xr9
+         rL5nA77IV00FmG/RO+9D8J900zgX0enn/ek6LiaXn9CjgnwmhQiy6M9uV5g+INVlZ25y
+         bnOw==
+X-Gm-Message-State: ALQs6tAtbn8FFYKkIJljd9kRfrrUy9CQc8GRO3A3ZtqDVAdtkKa2+B/t
+        iHtsS3+Xm5oEc1FApzC0jtAUT0IH
+X-Google-Smtp-Source: AB8JxZpWwTJbIFMdz6RoP36cC9iwyNhNMcKCDthJAiVHUUNE/DtyKlN8L6KLs7TCAaMc/FPprI0MCQ==
+X-Received: by 10.55.165.66 with SMTP id o63mr23335111qke.262.1524503688451;
+        Mon, 23 Apr 2018 10:14:48 -0700 (PDT)
+Received: from localhost.localdomain ([2001:4898:8010:1:1060:bd2c:4297:50e])
+        by smtp.gmail.com with ESMTPSA id n64sm9974632qkc.56.2018.04.23.10.14.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Apr 2018 10:14:48 -0700 (PDT)
+Subject: Re: [PATCH v1 0/5] Allocate cache entries from memory pool
+To:     Jonathan Tan <jonathantanmy@google.com>,
+        Jameson Miller <jamill@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>
+References: <20180417163400.3875-1-jamill@microsoft.com>
+ <20180420163441.208644d772a25ddbbdbb1616@google.com>
+From:   Jameson Miller <jameson.miller81@gmail.com>
+Message-ID: <8866ddf7-399c-c596-5fb5-c78bc040f4ac@gmail.com>
+Date:   Mon, 23 Apr 2018 13:14:35 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Mon, 23 Apr 2018 10:09:20 -0700 (PDT)
-In-Reply-To: <CACsJy8D4OYphLG5vStr+M9qkiqyH_LR517M-JOPS2wJeTFNGRg@mail.gmail.com>
-References: <20180420122355.21416-1-szeder.dev@gmail.com> <20180421193736.12722-1-newren@gmail.com>
- <CACsJy8D4OYphLG5vStr+M9qkiqyH_LR517M-JOPS2wJeTFNGRg@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 23 Apr 2018 10:09:20 -0700
-Message-ID: <CABPp-BFuuywXrJuzfb4V1bRLb9eVZpLKiCDwQWetHk8bymC6EQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v10 32.5/36] unpack_trees: fix memory corruption with
- split_index when src != dst
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180420163441.208644d772a25ddbbdbb1616@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-On Sun, Apr 22, 2018 at 5:38 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->>   - there's a better, more performant fix or there is some way to actually
->>     share a split_index between two independent index_state objects.
->
-> A cleaner way of doing this would be something to the line [1]
->
->     move_index_extensions(&o->result, o->dst_index);
->
-> near the end of this function. This could be where we compare the
-> result index with the source index's shared file and see if it's worth
-> keeping the shared index or not. Shared index is designed to work with
-> huge index files though, any operations that go through all index
-> entries will usually not be cheap. But at least it's safer.
 
-Yeah, it looks like move_index_extensions() currently has no logic for
-the split_index.  Adding it sounds to me like a patch series of its
-own, and I'm keen to limit additional changes since my patch series
-already broke things pretty badly once already.
+On 04/20/2018 07:34 PM, Jonathan Tan wrote:
+> On Tue, 17 Apr 2018 16:34:39 +0000
+> Jameson Miller <jamill@microsoft.com> wrote:
+> 
+>> Jameson Miller (5):
+>>    read-cache: teach refresh_cache_entry to take istate
+>>    Add an API creating / discarding cache_entry structs
+>>    mem-pool: fill out functionality
+>>    Allocate cache entries from memory pools
+>>    Add optional memory validations around cache_entry lifecyle
+> 
+> In this patch set, there is no enforcement that the cache entry created
+> by make_index_cache_entry() goes into the correct index when
+> add_index_entry() is invoked. (Junio described similar things, I
+> believe, in [1].) This might be an issue when we bring up and drop
+> multiple indexes, and dropping one index causes a cache entry in another
+> to become invalidated.
 
->> However, with this fix, all the tests pass both normally and under
->> GIT_TEST_SPLIT_INDEX=DareISayYes.  Without this patch, when
->> GIT_TEST_SPLIT_INDEX is set, my directory rename detection series will fail
->> several tests, as reported by SZEDER.
->
-> Yes, the change looks good.
+Correct - it is up to the caller here to coordinate this. The code 
+should be set up so this is not a problem here. In the case of a 
+split-index, the cache entries should be allocated from the memory pool 
+associated with the "most common" / base index. If you found a place I 
+missed or seems questionable, or have suggestions, I would be glad to 
+look into it.
 
-Great, thanks for looking over it.
+> 
+> One solution is to store the index for which the cache entry was created
+> in the cache entry itself, but that does increase its size. Another is
 
-> [1] To me the second parameter should be src_index, not dst_index.
-> We're copying entries from _source_ index to "result" and we should
-> also copy extensions from the source index. That line happens to work
-> only when dst_index is the same as src_index, which is the common use
-> case so far.
+Yes, this is an option. For this initial patch series, I decided to not 
+add extra fields to the cache_entry type, but I think incorporating this 
+in cache_entry is a viable option, and has some positive properties.
 
-That makes sense; this sounds like another fix that should be
-submitted.  Did you want to submit a patch making that change?  Do you
-want me to?
+> to change the API such that a cache entry is created and added in the
+> same function, and then have some rollback if the cache entry turns out
+> to be invalid (to support add-empty-entry -> fill -> verify), but I
+> don't know if this is feasible. Anyway, all these alternatives should be
+> at least discussed in the commit message, I think.
 
-Elijah
+I can include a discussion of these in the commit message. Thanks.
+
+> 
+> The make_transient_cache_entry() function might be poorly named, since
+> as far as I can tell, the entries produced by that function are actually
+> the longest lasting, since they are never freed.
+
+They should always be freed (and are usually freed close to where they 
+are allocated, or by the calling function). If you see an instance where 
+this is not the case, please point it out, because that is not the 
+intention.
+
+> 
+> Along those lines, I was slightly surprised to find out in patch 4 that
+> cache entry freeing is a no-op. That's fine, but in that case, it would
+> be better to delete all the calls to the "discard" function, and
+> document in the others that the entries they create will only be freed
+> when the memory pool itself is discarded.
+
+I can add a comment inside the function body. In the next commit, I do 
+add logic to perform extra (optional) verification in the discard 
+function. I did wrestle with this fact, but I feel there is value in 
+having the locations where it is appropriate to free these entries in 
+code, even if this particular implementation is not utilizing it right 
+now. Hopefully the verification logic added in 5/5 is enough to justify 
+keeping this function around.
+
+> 
+> [1] https://public-inbox.org/git/xmqqwox5i0f7.fsf@gitster-ct.c.googlers.com/
+> 
