@@ -7,153 +7,184 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 942931F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 19:45:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA7741F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 19:45:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932345AbeDWTpI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 15:45:08 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33386 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932244AbeDWTpH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 15:45:07 -0400
-Received: by mail-wr0-f196.google.com with SMTP id z73-v6so44457815wrb.0
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 12:45:07 -0700 (PDT)
+        id S932364AbeDWTpT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 15:45:19 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:44972 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932244AbeDWTpR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 15:45:17 -0400
+Received: by mail-wr0-f193.google.com with SMTP id o15-v6so44424698wro.11
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 12:45:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4F93TPKu93M0O7wgXhA4JkU9HGS8R1npq1TkrnjuObc=;
-        b=OoK6kdjLjGbUySxYBz5m23j43mDaoe9JgQanN1oBIpx2Ft8knGs/Lag5f5wNT98tXA
-         yGuM5+i+YByBFsZSVAZNtzO5w4PaRoVQ0TDSpvPwDW1z4KsDVIuzRfqG/Dv4YlCZnWM1
-         LXTWSo4tgpa9psaLwR8IjeX9hpW1IJln6pf3umwxpJW2JDgIPDwJ+udlWUevIO0b0U1o
-         KO0KwTC0QwtBgOqsvcuGipGHa4TIXQrkE03me+loRJIeqFa0xy2Tfx4enocN4c4eVszV
-         BVunBkFV7HrUJ9E2cHR0esTtHVBgne7oItPKCwCpn+XvErTIwnM30JV0oE4NxZio0oHp
-         Z6Mg==
+        bh=bws7Qb059c9xUUxni8CKRiIupa7k5hEWEaMub/tEK7o=;
+        b=OBS+YlEKFQZHUT23/egF67+Ws8X4sqVSP970hvRsM1KAdlVP5vsVfVhPu7a+8C71JN
+         sSfUY/ekhlDtWgTk4BG2iaVpetEinxW1M53/0q0/yaQbXj5AZ6QJ6EhXcbYlxVJCG11h
+         iolSPadmD38y57efDibjaRdX5siiM7RyKquK6cqIW/z0DEVPxP3lHHrAPzgF5QKr5orH
+         2TWKqlTv+nHgOEmuD9Mebcj3OHSLsR/XzlP+0sYhoj3f9+Vo9Ae8O/aKskvTgxfwEzhz
+         A/vSGXn8DUqX05vTmmvo55rqoyfOo/551tG25RjuETsJzelCnA9BLMDmgXZRpefc6Cep
+         BCCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4F93TPKu93M0O7wgXhA4JkU9HGS8R1npq1TkrnjuObc=;
-        b=kfBAr6V4m++DqwBsHzZUym8Xrq3fBrcEdbO3/oeRr6NXFiEI/t/Fkk3yeDCfkb20jY
-         ABMGleQEmlFgf5ejrcFmDGm8gbHdWGmFFtDjqciKnP9YGt4GL7KpcMJR6NlpzQJ1KN0X
-         8NeKJHhiUt33hkwzTQzCDyr7PE4J+gsdttoCUuqEsQBP1Jncy0TG5Q3OOxHZlKewWw+j
-         7Dkx8WqkfVMGp++aOudJyDJfyiu/QXkZREv0PmJjnQUKQONhnCNTn8YU7tQdyGwpsl26
-         7r7qPlIUFneBNRyoUSUCxRrI8kYxjgVQcVo8+Av2GouS04fzIrxsuvKbhKcOcyx1V2xU
-         FypA==
-X-Gm-Message-State: ALQs6tD4JBTpJhqb2i+8SvuNpE6gW1OanY+27lvg4j+KfRNe5AclCgTt
-        b10QIBjtV2deANAno5yQDKoCTUPG
-X-Google-Smtp-Source: AIpwx4/iYXnfcl7QH+EjBAHrSCszdA+1X5h08UXOUlvq0QHJxk6SjeLIgnyVIU0woTAB/nJA9Ok5qg==
-X-Received: by 2002:adf:b067:: with SMTP id g36-v6mr18618569wra.128.1524512706063;
-        Mon, 23 Apr 2018 12:45:06 -0700 (PDT)
+        bh=bws7Qb059c9xUUxni8CKRiIupa7k5hEWEaMub/tEK7o=;
+        b=gm6FQjjZQpxuLTwV8C1zA13HcThLvFdxlU2xpcYm/3YP7IkP3/bFVJhsNGODddOOxI
+         /Ob9C7IqSEUc6QvWNFQsUy8BKplnUGr0F+hnhLo8bJS3dcpzS9/iMeeQuag/b0GJIp6w
+         NoCt7fPbiu9EzMOXuLPNv7JM+p3WNSUUaaG4IKeq9vLWDDNw4KYoJTzLtsUh7RIJVVQh
+         yh7hp7LvFF3SfzKgdMKGC9IV3YWWQDOo4Dnu1inK0COaHNAfwateJ1l/cMR2d/TdEiC/
+         B7BqZYFidXsNt8wYazmBy4B25JWyRI6DRDlXJjJBxdQTYwHhCaPMX8bqp/BIdhOc867W
+         v4tQ==
+X-Gm-Message-State: ALQs6tASW1rrxaYVCVjSw8bp0FPq+7pTxwB3bCr1PC5qXUR+y9IkF7Oz
+        2XznkgGMpoN9d5TqgMIbMgCow8qN
+X-Google-Smtp-Source: AIpwx48GnVg8DHVYfn7kv5/MpUPRU5xxZJLQdjPEE9T1+qTkCX9TC3j7QfVJRwFqtK/KFRjGAezoaA==
+X-Received: by 2002:adf:c003:: with SMTP id z3-v6mr17648107wre.177.1524512716115;
+        Mon, 23 Apr 2018 12:45:16 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id f5-v6sm169184wrh.35.2018.04.23.12.45.04
+        by smtp.gmail.com with ESMTPSA id v111-v6sm15269181wrb.30.2018.04.23.12.45.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Apr 2018 12:45:04 -0700 (PDT)
+        Mon, 23 Apr 2018 12:45:15 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v8 0/4] worktree: teach "add" to check out existing branches
-Date:   Mon, 23 Apr 2018 20:38:44 +0100
-Message-Id: <20180423193848.5159-1-t.gummerer@gmail.com>
+Subject: [PATCH v8 1/4] worktree: remove extra members from struct add_opts
+Date:   Mon, 23 Apr 2018 20:38:45 +0100
+Message-Id: <20180423193848.5159-2-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.16.1.74.g7afd1c25cc.dirty
-In-Reply-To: <20180415202917.4360-1-t.gummerer@gmail.com>
+In-Reply-To: <20180423193848.5159-1-t.gummerer@gmail.com>
 References: <20180415202917.4360-1-t.gummerer@gmail.com>
+ <20180423193848.5159-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Eric and Junio for the review the suggestions in the last
-round.
+There are two members of 'struct add_opts', which are only used inside
+the 'add()' function, but being part of 'struct add_opts' they are
+needlessly also passed to the 'add_worktree' function.
 
-Previous rounds are at <20180121120208.12760-1-t.gummerer@gmail.com>,
-<20180204221305.28300-1-t.gummerer@gmail.com>,
-<20180317220830.30963-1-t.gummerer@gmail.com>,
-<20180317222219.4940-1-t.gummerer@gmail.com>,
-<20180325134947.25828-1-t.gummerer@gmail.com>,
-<20180331151804.30380-1-t.gummerer@gmail.com> and
-<20180415202917.4360-1-t.gummerer@gmail.com>.
+Make them local to the 'add()' function to make it clearer where they
+are used.
 
-This round updates the output for "resetting branch ..." to not have
-braces embedded inside of another pair of braces, and is not correctly
-printing "checking out '<branch>'" when 'git worktree add <path>
-<local-branch>' is used.  Both these changes are in patch 2/4, the
-other patches are the same as in the previous round.
-
-Interdiff below:
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ builtin/worktree.c | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index f5a5283b39..d52495f312 100644
+index 7cef5b120b..4d96a21a45 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -353,7 +353,8 @@ static int add_worktree(const char *path, const char *refname,
- 	return ret;
- }
+@@ -27,8 +27,6 @@ struct add_opts {
+ 	int detach;
+ 	int checkout;
+ 	int keep_locked;
+-	const char *new_branch;
+-	int force_new_branch;
+ };
  
--static void print_preparing_worktree_line(const char *branch,
-+static void print_preparing_worktree_line(int detach,
-+					  const char *branch,
- 					  const char *new_branch,
- 					  const char *new_branch_force,
- 					  int checkout_existing_branch)
-@@ -365,19 +366,27 @@ static void print_preparing_worktree_line(const char *branch,
- 		if (!commit)
- 			printf_ln(_("Preparing worktree (new branch '%s')"), new_branch_force);
- 		else
--			printf_ln(_("Preparing worktree (resetting branch '%s' (was at %s))"),
-+			printf_ln(_("Preparing worktree (resetting branch '%s'; was at %s)"),
- 				  new_branch_force,
- 				  find_unique_abbrev(commit->object.oid.hash,
- 						     DEFAULT_ABBREV));
- 	} else if (new_branch) {
- 		printf_ln(_("Preparing worktree (new branch '%s')"), new_branch);
- 	} else {
--		struct commit *commit = lookup_commit_reference_by_name(branch);
--		if (!commit)
--			die(_("invalid reference: %s"), branch);
--		printf_ln(_("Preparing worktree (detached HEAD %s)"),
--			  find_unique_abbrev(commit->object.oid.hash,
--					     DEFAULT_ABBREV));
-+		struct strbuf s = STRBUF_INIT;
-+		if (!detach && !strbuf_check_branch_ref(&s, branch) &&
-+		    ref_exists(s.buf))
-+			printf_ln(_("Preparing worktree (checking out '%s')"),
-+				  branch);
-+		else {
-+			struct commit *commit = lookup_commit_reference_by_name(branch);
-+			if (!commit)
-+				die(_("invalid reference: %s"), branch);
-+			printf_ln(_("Preparing worktree (detached HEAD %s)"),
-+				  find_unique_abbrev(commit->object.oid.hash,
-+						     DEFAULT_ABBREV));
-+		}
-+		strbuf_release(&s);
+ static int show_only;
+@@ -363,10 +361,11 @@ static int add(int ac, const char **av, const char *prefix)
+ 	const char *new_branch_force = NULL;
+ 	char *path;
+ 	const char *branch;
++	const char *new_branch = NULL;
+ 	const char *opt_track = NULL;
+ 	struct option options[] = {
+ 		OPT__FORCE(&opts.force, N_("checkout <branch> even if already checked out in other worktree")),
+-		OPT_STRING('b', NULL, &opts.new_branch, N_("branch"),
++		OPT_STRING('b', NULL, &new_branch, N_("branch"),
+ 			   N_("create a new branch")),
+ 		OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
+ 			   N_("create or reset a branch")),
+@@ -384,7 +383,7 @@ static int add(int ac, const char **av, const char *prefix)
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.checkout = 1;
+ 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
+-	if (!!opts.detach + !!opts.new_branch + !!new_branch_force > 1)
++	if (!!opts.detach + !!new_branch + !!new_branch_force > 1)
+ 		die(_("-b, -B, and --detach are mutually exclusive"));
+ 	if (ac < 1 || ac > 2)
+ 		usage_with_options(worktree_usage, options);
+@@ -395,33 +394,32 @@ static int add(int ac, const char **av, const char *prefix)
+ 	if (!strcmp(branch, "-"))
+ 		branch = "@{-1}";
+ 
+-	opts.force_new_branch = !!new_branch_force;
+-	if (opts.force_new_branch) {
++	if (new_branch_force) {
+ 		struct strbuf symref = STRBUF_INIT;
+ 
+-		opts.new_branch = new_branch_force;
++		new_branch = new_branch_force;
+ 
+ 		if (!opts.force &&
+-		    !strbuf_check_branch_ref(&symref, opts.new_branch) &&
++		    !strbuf_check_branch_ref(&symref, new_branch) &&
+ 		    ref_exists(symref.buf))
+ 			die_if_checked_out(symref.buf, 0);
+ 		strbuf_release(&symref);
  	}
- }
  
-@@ -481,7 +490,7 @@ static int add(int ac, const char **av, const char *prefix)
+-	if (ac < 2 && !opts.new_branch && !opts.detach) {
++	if (ac < 2 && !new_branch && !opts.detach) {
+ 		int n;
+ 		const char *s = worktree_basename(path, &n);
+-		opts.new_branch = xstrndup(s, n);
++		new_branch = xstrndup(s, n);
+ 		if (guess_remote) {
+ 			struct object_id oid;
+ 			const char *remote =
+-				unique_tracking_name(opts.new_branch, &oid);
++				unique_tracking_name(new_branch, &oid);
+ 			if (remote)
+ 				branch = remote;
  		}
  	}
  
--	print_preparing_worktree_line(branch, new_branch, new_branch_force,
-+	print_preparing_worktree_line(opts.detach, branch, new_branch, new_branch_force,
- 				      checkout_existing_branch);
+-	if (ac == 2 && !opts.new_branch && !opts.detach) {
++	if (ac == 2 && !new_branch && !opts.detach) {
+ 		struct object_id oid;
+ 		struct commit *commit;
+ 		const char *remote;
+@@ -430,25 +428,25 @@ static int add(int ac, const char **av, const char *prefix)
+ 		if (!commit) {
+ 			remote = unique_tracking_name(branch, &oid);
+ 			if (remote) {
+-				opts.new_branch = branch;
++				new_branch = branch;
+ 				branch = remote;
+ 			}
+ 		}
+ 	}
  
- 	if (new_branch) {
-
-Thomas Gummerer (4):
-  worktree: remove extra members from struct add_opts
-  worktree: improve message when creating a new worktree
-  worktree: factor out dwim_branch function
-  worktree: teach "add" to check out existing branches
-
- Documentation/git-worktree.txt |   9 +++-
- builtin/worktree.c             | 111 +++++++++++++++++++++++++++++++----------
- t/t2025-worktree-add.sh        |  26 +++++++---
- 3 files changed, 110 insertions(+), 36 deletions(-)
-
+-	if (opts.new_branch) {
++	if (new_branch) {
+ 		struct child_process cp = CHILD_PROCESS_INIT;
+ 		cp.git_cmd = 1;
+ 		argv_array_push(&cp.args, "branch");
+-		if (opts.force_new_branch)
++		if (new_branch_force)
+ 			argv_array_push(&cp.args, "--force");
+-		argv_array_push(&cp.args, opts.new_branch);
++		argv_array_push(&cp.args, new_branch);
+ 		argv_array_push(&cp.args, branch);
+ 		if (opt_track)
+ 			argv_array_push(&cp.args, opt_track);
+ 		if (run_command(&cp))
+ 			return -1;
+-		branch = opts.new_branch;
++		branch = new_branch;
+ 	} else if (opt_track) {
+ 		die(_("--[no-]track can only be used if a new branch is created"));
+ 	}
 -- 
 2.16.1.74.g7afd1c25cc.dirty
 
