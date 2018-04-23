@@ -6,92 +6,104 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 325301F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 04:52:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D53E51F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 05:36:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751117AbeDWEwe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 00:52:34 -0400
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:44327 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750915AbeDWEwd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 00:52:33 -0400
-Received: by mail-qt0-f179.google.com with SMTP id j26-v6so16263635qtl.11
-        for <git@vger.kernel.org>; Sun, 22 Apr 2018 21:52:33 -0700 (PDT)
+        id S1752767AbeDWFgW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 01:36:22 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:38405 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754105AbeDWFgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 01:36:18 -0400
+Received: by mail-qk0-f195.google.com with SMTP id b39so14988545qkb.5
+        for <git@vger.kernel.org>; Sun, 22 Apr 2018 22:36:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=2r/ykE2jkInUCEoq3JxIWoU9ef6PbYoZU7Z0FPbnOC8=;
-        b=XnlBo25Q2ddW3sRegNx5MNqlH1uE4RO2YbFSZHZf87cpGP9dtqynOtop7m+XPQUvvq
-         vYya1GNsX75SNfaRrJv+1sg5JT5DYq4r8pJe1hGRerdbtr/otNWMmY/V/poiQzs5JGOl
-         jK+Zn4+tcXVMfRbLIsIS9u41j2el5/UyzArNixjj1QxJiPb7Lpc2h9TyMX4BovULrJX3
-         ki7AwnyVYK1JMdLJZwZKN2KDB3//T89FfdkNPJ3+j2KoFLlwJZ4QJiDOvPYQkxmvWW1L
-         HgNvilBaw77MZiuoempljMXzNMiiyVmolJ0vubdllZtrsOBKSGBYXCV02dGqwn4Lz+Gm
-         cpug==
+         :subject:to:cc:content-transfer-encoding;
+        bh=kBrp8Xp/rO7w8e0NQvPkHsv1TbaJy3BIpVbjfBmZwks=;
+        b=ZWtuX85opvooYwF2oRQjYF+5o5OHkHTjO1dXoMbBZbRLMY2szGdiW07kzQefxG3fBW
+         2URM/sUoRNRUhn2hSxuBz2rIqNAfN9Nav0BQFLX+QoD5tv2/N4FFlkc69EflJaqBfhQH
+         /GmHUV6dwRtmc0g33g44hP87y1f6zVPD5x7nFTzmsw89ryBx4R48JnzBhNRD9GDzuSwZ
+         rMRizJK6yyrKpjNslF7KSDD2ERJceZEta+IbU1GHfo5mm7u1BvQw6n+QuoYjHSKaMSuA
+         DrE8qDmv2jMJRNea3LJQAH3w7yE+3zfF4N9uZBErOGm7gOS7T1iyua8KfqwYbvwK0RY+
+         CFLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=2r/ykE2jkInUCEoq3JxIWoU9ef6PbYoZU7Z0FPbnOC8=;
-        b=hZCjxmr42r6d1Pahr+Q1q2EX90sVzVhv2V3KXTQFCobmIhNaxF/ioMU/P6kYWqEwD6
-         VftMDxz42/45ZRN1NkbbJ5LLUqcnPkEDhfwgBdLQMyu88SMQTfu+G1cFPwL9pJwYXIiX
-         i1efpgpmn6P7MBCF3Igtw+PsjANXHYhDOZ5gNKVX8XWhrgfuV0LPC4AIFrm9APZ3whm1
-         ZtTu2Yb07dC9Korg2HVnBfSwXV+JltekHlq01XbIHCwJQO09GRMji8Jtst39BYeRP/g2
-         ZTO76FDMJOAIWyJNKFi6BwCP857CPeTXJCRFRWysiaqf3AY+8v24LBQQMmTjiu03dm5J
-         2Rkg==
-X-Gm-Message-State: ALQs6tC7Ftg2g+LQx94woj8jVDDhk6fghpy7LqWVibzM91Lqa2COxHCu
-        SSqLb7bsmcW5T1Z/p+jhaNel+Qg/ppPMpDVXD0Q=
-X-Google-Smtp-Source: AB8JxZpXMM0lTx+EyPDKjJzrXJZ/NkwlN+EhLtH7FV4AAWUHyPfIW56dcv7PbDFrt4JQVxfnJ8NZ3gDgbKSxKPbzTvw=
-X-Received: by 2002:ac8:1204:: with SMTP id x4-v6mr8408598qti.35.1524459152711;
- Sun, 22 Apr 2018 21:52:32 -0700 (PDT)
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=kBrp8Xp/rO7w8e0NQvPkHsv1TbaJy3BIpVbjfBmZwks=;
+        b=hzBWsOXshRstnqpdHNjDrIVhI+fST+Om2EhZkcoQmT8htljGDRj09F3hJ9qWbynqVE
+         Y0z8dEyRXUawqZAKlaIOLN0EhUxs/EvAfBb64mZaPi6L7thZZmeHLfxs3pHOU4hETdPi
+         Kb2iGpCt2AjdIaed59OKttVMe+R0uaZQn7FBbJpU9omcUQyZ7yFOkj24oTuLMyuuqs4T
+         Bra+k+NGAqWTE5gSG9tcq8lMbx3VjGPyIpJeBrbUOkViprpCBjTA7bKoyRkGpjKwc8k/
+         osCXcQXJygiwdDU7+OVMDD66dZKs5N4tg3A0z40zvUMvJlCYevwwEs0qoOVAKgem+7Tz
+         f2Eg==
+X-Gm-Message-State: ALQs6tBbXGLcBwDhTZK/MpfFpQRWiljCaM/wkrqfsR7iTIx3KAID3qr8
+        8hFdibA9xXqe0uxpwZdH+kwIR6uPczzPGVZeZck=
+X-Google-Smtp-Source: AB8JxZpVBUZ4gkzKc7etZ+EjpwgTVdpX3TdOZ+zYJNDADmGzWeN+MNXx3NdUMCLgzAj9HYsZgZk6b1uKwwDWtUuYMEc=
+X-Received: by 10.55.79.9 with SMTP id d9mr20797616qkb.2.1524461777804; Sun,
+ 22 Apr 2018 22:36:17 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Sun, 22 Apr 2018 21:52:32 -0700 (PDT)
-In-Reply-To: <20180415202917.4360-1-t.gummerer@gmail.com>
-References: <20180331151804.30380-1-t.gummerer@gmail.com> <20180415202917.4360-1-t.gummerer@gmail.com>
+Received: by 10.12.174.202 with HTTP; Sun, 22 Apr 2018 22:36:17 -0700 (PDT)
+In-Reply-To: <20180417181300.23683-1-pclouds@gmail.com>
+References: <20180417181300.23683-1-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 23 Apr 2018 00:52:32 -0400
-X-Google-Sender-Auth: IFRk1EiK3G0n5rR7yy6YvNVOdIM
-Message-ID: <CAPig+cS=8na1Rm-DkZANez_kitU_WFQAbsqLxYe5dWUtsfdO8g@mail.gmail.com>
-Subject: Re: [PATCH v7 0/4] worktree: teach "add" to check out existing branches
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Date:   Mon, 23 Apr 2018 01:36:17 -0400
+X-Google-Sender-Auth: Z9nnvzCRs9vzOV_qV2TDyAyU2GQ
+Message-ID: <CAPig+cRkUrdtbyGEsY=DQCDoEWTrC-9n4=vKXHEap2gokB2uQg@mail.gmail.com>
+Subject: Re: [PATCH/RFC] completion: complete all possible -no-<options>
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 15, 2018 at 4:29 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> The main change once again in this series is the user interface.  It
-> feels like we went in a complete circle here now, as this iteration is
-> bringing the "Preparing ..." line back (although in a slightly
-> different form than the original), and is moving away from printing
-> it's own "HEAD is now at..." line again.  This also means we don't
-> need the new hidden option to 'git reset' anymore, which is nice.
-
-I'm glad to see the proposed hidden git-reset option go away, and am
-likewise happy to see that worktree no longer wants to print "HEAD is
-now at" itself. I'm much more pleased with the direction this series
-is now taking than in earlier rounds. It's also much simpler, which is
-a nice plus.
-
-> I do like the new UI more than what we had in the last round (which I
-> already liked more than the original UI) :)
+On Tue, Apr 17, 2018 at 2:13 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> The problem with completing --no- form is that the number of
+> completable options now usually doubles, taking precious screen space
+> and also making it hard to find the option you want.
 >
-> To demonstrate the UI updates, let's compare the new UI and the old UI
-> again.  This is the same commands as used for the demonstration in the
-> last iteration, so please have a look at <20180331151804.30380-1-t.gummerer@gmail.com>
-> for an example of what it looked like after the last round.
+> So the other half of this patch, the part in git-completion.bash, is
+> to uncomplete --no- options. When you do "git checkout --<tab>",
+> instead of displaying all --no- options, this patch simply displays
+> one item: the --no- prefix. If you do "git checkout --no-<tab>" then
+> all negative options are displayed. This helps reduce completable
+> options quite efficiently.
+>
+> After all this "git checkout --<tab>" now looks like this
+>
+>     > ~/w/git $ git co --
+>     --conflict=3D                   --orphan=3D
+>     --detach                      --ours
+>     --ignore-other-worktrees      --patch
+>     --ignore-skip-worktree-bits   --progress
+>     --merge                       --quiet
+>     --no-                         --recurse-submodules
+>     --no-detach                   --theirs
+>     --no-quiet                    --track
+>     --no-track
 
-Thanks for presenting examples of the new UI under various conditions.
-Like you, I find the new "Preparing..." message superior to and much
-more useful than the original.
+I haven't looked at the implementation, so this may be an entirely
+stupid suggestion, but would it be possible to instead render the
+completions as?
 
-Aside from the problem pointed out in my review of 2/4 in which it
-incorrectly shows "detached HEAD" for "git worktree add wt
-existing-local-branch", I think this series is just about ready, and
-hope to see it land with the next re-roll.
+    % git checkout --<tab>
+    --[no-]conflict=3D                   --[no-]patch
+    --[no-]detach                      --[no-]progress
+    --[no-]ignore-other-worktrees      --[no-]quiet
+    --[no-]ignore-skip-worktree-bits   --[no-]recurse-submodules
+    --[no-]merge                       --theirs
+    --[no-]orphan=3D                     --[no-]track
+    --ours
 
-Thanks for working on it.
+This would address the problem of the --no-* options taking double the
+screen space.
+
+It's also more intuitive than that lone and somewhat weird-looking
+"--no-" suggestion.
