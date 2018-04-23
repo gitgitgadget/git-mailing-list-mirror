@@ -2,105 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F3F91F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 23:24:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 792BD1F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 23:25:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932615AbeDWXY0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 19:24:26 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:41798 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932567AbeDWXYZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 19:24:25 -0400
-Received: by mail-pf0-f194.google.com with SMTP id v63so1007151pfk.8
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 16:24:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=kZCCjjOX/iac9xoJ1mYbkz1KO5l/rJO/V4yfCOodFHE=;
-        b=AJGpxzUgOOHniUxYsFK0nIoBe3jWAlE3K6wZOdBmFL6dSwchkWVRbE8s18sklrD5/Q
-         Jc0fLbbE3Y9QV+aHhgMtYsnL0xM3OD/6hbHjDFEHIwJul3xGu8kZYIUq6IwcDQxtsKp2
-         Ueuafq2u7QPHJCAchEBygLHEoeuC+u88HxksfMQWv6JSQfQ4GB9+yRSsU/EaBVWvJIjg
-         0dFgDfhkadVMmognwbCdCiDHT0zMnOn4jE3le3u9mQK0Ulc+T90wV8Mhr5yBezxtVo5U
-         IIMUgxKFFjzTmyseeybBYhsQWSVFiNEqz4lHFuay4zLdVbLd4ztp4vZ6MyHzvdzKhaFO
-         NoTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kZCCjjOX/iac9xoJ1mYbkz1KO5l/rJO/V4yfCOodFHE=;
-        b=NOi1etlfUOO/7M5mCjIifxAsp6vuV6a4joudYoUQfycIRYbA4IO7XSc368oE6GG9s9
-         lnVXM2ZueilxX2B4jrpDRCu3FrUy1gB8NKqwjIkPvrVeJrE3flze9GFAkr+YzzHsCK/3
-         qwN4tfok5AWsGkBy7Tq5Nni9yRQC2ESU2GPWmOXN3A9AYFlMv7cfWSAAJEacI0MHfvDX
-         1VFOgVvDs65eywl4QmsUpyF6PrerZS+x/7bFt6STWJkIqBabNyCTkHjnc1Q50Y/zTbFH
-         7Up5omGvBrv1By+bE8AcYcxUPnD8oOzXhCw4V+itJmPZQ9OEV9oclpd/IlMZTwWi7wmJ
-         gP9Q==
-X-Gm-Message-State: ALQs6tBnr8TIfwpF8FEwKLlGTJNu9dDDHcuk2Qy2ru7Ay8mRA7HnHGCJ
-        q4jKz/gM0Ha4Ml0yZwcKP+o=
-X-Google-Smtp-Source: AIpwx4/2UNzyiQvkAiLxcdk48mEYd3X5eWgHkln3V8EqREjN0A283rcaRMldLpNFhnlCOf0aoE4ZRw==
-X-Received: by 2002:a17:902:bcc8:: with SMTP id o8-v6mr22095712pls.84.1524525864892;
-        Mon, 23 Apr 2018 16:24:24 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id m185sm28081023pfc.88.2018.04.23.16.24.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Apr 2018 16:24:24 -0700 (PDT)
-Date:   Mon, 23 Apr 2018 16:24:22 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Dan Jacques <dnj@google.com>, Junio C Hamano <gitster@pobox.com>,
-        Johannes.Schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
-        Brandon Williams <bmwill@google.com>
-Subject: [PATCH 1/2] Makefile: remove unused @@PERLLIBDIR@@ substitution
- variable
-Message-ID: <20180423232422.GC25128@aiede.svl.corp.google.com>
-References: <f0ad1ad4-67d8-21e2-fdd0-0a08328c1eaa@kdbg.org>
- <20171205212625.6616-1-dnj@google.com>
- <xmqq7eu0j1th.fsf@gitster.mtv.corp.google.com>
- <e0a22ee4-9503-760f-293c-be56fa46fa04@kdbg.org>
- <20180423232326.GB25128@aiede.svl.corp.google.com>
-MIME-Version: 1.0
+        id S932679AbeDWXZT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 19:25:19 -0400
+Received: from agora.rdrop.com ([199.26.172.34]:3697 "EHLO agora.rdrop.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932567AbeDWXZS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 19:25:18 -0400
+Received: from agora.rdrop.com (66@localhost [127.0.0.1])
+        by agora.rdrop.com (8.13.1/8.12.7) with ESMTP id w3NNP7nD000161
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Mon, 23 Apr 2018 16:25:09 -0700 (PDT)
+        (envelope-from perryh@pluto.rain.com)
+Received: (from uucp@localhost)
+        by agora.rdrop.com (8.13.1/8.14.2/Submit) with UUCP id w3NNP62K000157;
+        Mon, 23 Apr 2018 16:25:06 -0700 (PDT)
+        (envelope-from perryh@pluto.rain.com)
+Received: from fbsd81 by pluto.rain.com (4.1/SMI-4.1-pluto-M2060407)
+        id AA08532; Mon, 23 Apr 18 16:16:46 PDT
+Date:   Mon, 23 Apr 2018 16:16:40 -0700
+From:   perryh@pluto.rain.com (Perry Hutchison)
+To:     ikorot01@gmail.com
+Cc:     tboegi@web.de, git@vger.kernel.org, sunshine@sunshineco.us
+Subject: Re: Is support for 10.8 dropped?
+Message-Id: <5ade6958.+rSvEziDyo1bWxZm%perryh@pluto.rain.com>
+References: <CA+FnnTxbg97A4P3AP7n5RT8+=W8PY0yx3644Ay2Zi9xgKD2aoA@mail.gmail.com>
+ <CA+FnnTzfJMBuSMAD7PgUurRu8jOpirEgM6=+=i91zdGLWmfUpg@mail.gmail.com>
+ <CAPig+cQOzKbM0R6vKTg_BU6meEbAAJWL1T0jZkaCOF0uJ=_Lmw@mail.gmail.com>
+ <CA+FnnTzqaPrLgYv-8X9BDW0DR7331morN33B81w8T3vzOwn+Pw@mail.gmail.com>
+ <CA+FnnTz-qdVK5482GJo06QrvMktGYhJAJ6g-Naq0BgT-uoRvEA@mail.gmail.com>
+ <CAPig+cS+gf5gGM3fmnxk-6k7ezbtS=KQFqkkxVtcytHfcQApEQ@mail.gmail.com>
+ <CA+FnnTwvnA90nDARKW9r7p5iraoOGTvfDJ26n6Udc68bDSUASw@mail.gmail.com>
+ <CAPig+cRjYju4zEgiY_TuOOk0e7A8zNz+hu+40vQUEGDX6FGDxw@mail.gmail.com>
+ <CA+FnnTzFomd91d1F6O-a28hXQ6PxOiBd44da4nSVW0MuDKgkmw@mail.gmail.com>
+ <CAPig+cTw5GjB4VgFD2teDvMuyGPFFoNSCqbXbarEXCe3fVdLjQ@mail.gmail.com>
+ <CA+FnnTzkZS7HP61Ck3y5p0EC7J_h=ToR5tq5cvEpJ79vYuSxZw@mail.gmail.com>
+ <CAPig+cT0ogLmiviWhdZTLxDM7+VN3hk7wgkKnvX96Ym-yXR5bA@mail.gmail.com>
+ <CA+FnnTxXOwORs_qYvOdSj41UX1aBfj+Hd1+kxPa8j+34xgjhgQ@mail.gmail.com>
+ <CAPig+cQzX04JuoUOnxOxWtqMCpHCUi=hMOSDL+jpNuML0iE+Tw@mail.gmail.com>
+ <05560086-232c-f14c-f82b-e21b7ecce1b3@web.de>
+ <CAPig+cSbAaNby++AvCx4CkJ0KcRkx5Q=xs8VSbNmY=dgi-F9jg@mail.gmail.com>
+ <CA+FnnTy1spOxnPYFb3=xCxUZJB3D=shoOGV-SQr=4LDZEHVSkQ@mail.gmail.com>
+In-Reply-To: <CA+FnnTy1spOxnPYFb3=xCxUZJB3D=shoOGV-SQr=4LDZEHVSkQ@mail.gmail.com>
+User-Agent: nail 11.25 7/29/05
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180423232326.GB25128@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio noticed that this variable is not quoted correctly when it is
-passed to sed.  As a shell-quoted string, it should be inside
-single-quotes like $(perllibdir_relative_SQ), not outside them like
-$INSTLIBDIR.
+Igor Korot <ikorot01@gmail.com> wrote:
+> This laptop is old and doesn't have too big of a hard drive.
+> And I'm trying to create a big program
 
-In fact, this substitution variable is not used.  Simplify by removing
-it.
-
-Reported-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-An unrelated cleanup noticed while looking over this code.
-
- Makefile | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index 154929f1c8..8f4cb506ff 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2109,7 +2109,6 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
- 	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
- 	sed -e 's=@@PATHSEP@@=$(pathsep)=g' \
- 	    -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' \
--	    -e 's=@@PERLLIBDIR@@='$(perllibdir_SQ)'=g' \
- 	    -e 's=@@PERLLIBDIR_REL@@=$(perllibdir_relative_SQ)=g' \
- 	    -e 's=@@GITEXECDIR_REL@@=$(gitexecdir_relative_SQ)=g' \
- 	    -e 's=@@LOCALEDIR_REL@@=$(localedir_relative_SQ)=g' \
--- 
-2.17.0.441.gb46fe60e1d
-
+Building OpenSSL via homebrew or MacPorts would likely take less
+space than building all of git that way, but if even that is
+too much perhaps it is time to consider moving the development
+environment onto an external hard drive (via USB, eSATA, or even
+FireWire) -- the presumption being that the development environment
+may not need to be lugged around when using the laptop as a laptop.
