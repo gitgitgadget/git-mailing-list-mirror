@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B34511F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 22:46:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8463A1F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 22:46:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932569AbeDWWqj (ORCPT <rfc822;e@80x24.org>);
+        id S932574AbeDWWqm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 18:46:42 -0400
+Received: from mail-qk0-f202.google.com ([209.85.220.202]:34443 "EHLO
+        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932514AbeDWWqj (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 Apr 2018 18:46:39 -0400
-Received: from mail-qt0-f201.google.com ([209.85.216.201]:40596 "EHLO
-        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932565AbeDWWqh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 18:46:37 -0400
-Received: by mail-qt0-f201.google.com with SMTP id t24-v6so11164793qtn.7
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 15:46:36 -0700 (PDT)
+Received: by mail-qk0-f202.google.com with SMTP id e21so12161106qkm.1
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 15:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=Twt6ypFhWt3+1Gh41O14P4tytCSkdlNR5DJE9/QKWFc=;
-        b=Nwl/PllpPOj7vvkfYB+NBRYNYD7y0Bc+h1W92sA+tO3DgESuZww6L2pzxYSYPBU1w+
-         K11ZJF08Pyyfe9xWdHjYETVKZEkNwCe5fpsjKu0+QlJho/q+q+tJUvOKguBg+bpkugGq
-         fuc012tqmnSgFSZXJN8d/q5SP7ArFftEaZY8dHvAkyRxwZdeRIEHeaCej2pve2yXLqpt
-         TMRXXKTMaOVY4b3TXX7MCC7AK/3SoQ7H5FMReWntvBK9wah7kTjWhRY4c+E61ooAXbZB
-         YY2tCpyE5Lx9J5wgm5KfK936E1njtl4h2dcp+0nG1LzNLRSWZDMWwSWpthHDL0H8wnGA
-         iMJg==
+        bh=iTlOFxgGEJ5K55cGLRczodPAcMnQi7wOTsWaWDpBfOA=;
+        b=mOzhGzb6AGxfbbqkum7PPnQqvmRTmb6To/0siKzzU0vPazgTw2/1D7eGjpBLlOskDB
+         IDhr8cUh5aB2kzlfsvBFtGKWJUQqGx64yzzmsS87DRhItyQ/1lusOavJZBUIWC8lPNF5
+         GlZVj8iM3za+cqGstPcA5/cHCtOjVNiRRjlpNgqtzNKmxy7HeqcU16PtyThyZ4g79d+W
+         eyk19+UIr4xdj/Zn00tOlw1jFQdzHWs5afUiKEXDpBTAarOMuGVi0VrD7D7BEibj+ffD
+         tUeb1njgNObzXiJzu+t9JCyaiZ/Dml6uWA+kimMty3Kkerz4Mb2cJct0tmrukMjPgmx1
+         mrgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=Twt6ypFhWt3+1Gh41O14P4tytCSkdlNR5DJE9/QKWFc=;
-        b=l16e7cFCvQAVvmk1ZwWAMDbqWzi5A2JmS9dmdb97PmZbp2naGpusLDLnQbn/QzObAQ
-         K2Uv92Wfo2+nxJBFVOvnnZ7mNd1qvcTp7t4ocRqr2u13jIpBleAH1SOCTK+TTP6bLBBU
-         zMG5wwRtj+uujOw0ctKRG9jpnGv5qq0sTr2blxLWpz9mL8HPn3lvuSFPeDF+dnC8dfzw
-         NKCddkudxDQRcJs31E3c/sgU73ewjeigTOg87D3zEbX9kW0JMkPITjv6/Vf7UOJeNzbm
-         qE4yHOXeYmXuedX6TO138BEW9qZ9rGGeDQ2KViSSOr4R1RtE2gz/klfBOg7+Fl0u6A/1
-         d/KA==
-X-Gm-Message-State: ALQs6tDvwAB7Ro87HMj/PxDL7AXokS9m6jSl9rO8UOYhOkPAbTWtqFCo
-        d8OeutSDHiP95+SFs047a9AHavzEAPyrQoRij2k/bYUW7oi2RVHq71pFsjaDtg4G7/tE48g2ouD
-        aWlkUJHyLQqqmzg/msS9tg4qshp0c+VzIBRtYGE9+hYvqzmrbTD8O8mj3dA==
-X-Google-Smtp-Source: AB8JxZrXM4+JeYjuhpf3aAcPase39ABRW4XpHmEIm+s+Sbtc9q4ZLa/mE2eYlZDGylqIkvbmWWApMEePs98=
+        bh=iTlOFxgGEJ5K55cGLRczodPAcMnQi7wOTsWaWDpBfOA=;
+        b=PzcbZEqA3G3GRLdifdCTl5eJk1ADqAM5hjtMwPgneYxQkmiqp0FIx7ZQ01v2ohLO0e
+         exx447E8TJhxKcf3fTpvZOy/sZLVShAg2Zz2NUjh40hKgCVhtaP7AhZBiJt9vbYIKWAC
+         v2upmz4PMIo8dX0xEgL1WQeuIzRH0nWBtA8i0/mQdwC0EIqpf47Cu2HfXyXmYmkn+rXA
+         vNq8TqxiDYdgqWq37dImYVXjIK62xn/iKjT443am9SASeXkv8I3FVls+pQ961q3bXUuM
+         eBgQN+aWNs8UkxCIwGXpeq+mvVHtHwhDIXk8x4tKYURyFJozvwAD9mr8mNVzgLIz3TUJ
+         NxTA==
+X-Gm-Message-State: ALQs6tDmNaUqVdHtxbOcOiCqPWbAAsE4Ia3gpDV9uDJFXJKEsVXUj9Gw
+        s6AFwN49LskS3lxujHcSoiVPFHwd7m1q5IlPEhrmbmkRYKJ+PKlvt02kMxWUT40qrVeJAiYJ4qG
+        2KHiMdY8y3uIkucDZWUSGWpVJ0k7+XCfjPrihVJJt9UZQjrSta9nXTlJ6nA==
+X-Google-Smtp-Source: AIpwx4/OHl7KQ3X57XHktbUJDjAzyjYBt7en4wP3nZG5leBXeLcN2abg4QHujiROJ5eZEPPG8eC5jjOI3MA=
 MIME-Version: 1.0
-X-Received: by 2002:ac8:7246:: with SMTP id l6-v6mr10664003qtp.53.1524523596137;
- Mon, 23 Apr 2018 15:46:36 -0700 (PDT)
-Date:   Mon, 23 Apr 2018 15:46:23 -0700
+X-Received: by 2002:aed:3d76:: with SMTP id h51-v6mr13787819qtf.35.1524523598502;
+ Mon, 23 Apr 2018 15:46:38 -0700 (PDT)
+Date:   Mon, 23 Apr 2018 15:46:24 -0700
 In-Reply-To: <20180423224624.213341-1-bmwill@google.com>
-Message-Id: <20180423224624.213341-3-bmwill@google.com>
+Message-Id: <20180423224624.213341-4-bmwill@google.com>
 References: <20180423224624.213341-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
-Subject: [PATCH 2/3] ls-remote: send server options when using protocol v2
+Subject: [PATCH 3/3] fetch: send server options when using protocol v2
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, bmwill@google.com
 Cc:     Brandon Williams <bmwill@google.com>
@@ -62,9 +62,9 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach ls-remote to optionally accept server options by specifying them
-on the cmdline via '-o' or '--server-option'.  These server options are
-sent to the remote end when querying for the remote end's refs using
+Teach fetch to optionally accept server options by specifying them on
+the cmdline via '-o' or '--server-option'.  These server options are
+sent to the remote end when performing a fetch communicating using
 protocol version 2.
 
 If communicating using a protocol other than v2 the provided options are
@@ -72,22 +72,21 @@ ignored and not sent to the remote end.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Documentation/git-ls-remote.txt |  8 ++++++++
- builtin/ls-remote.c             |  4 ++++
- connect.c                       |  9 ++++++++-
- remote.h                        |  4 +++-
+ Documentation/fetch-options.txt |  8 ++++++++
+ builtin/fetch.c                 |  5 +++++
+ fetch-pack.c                    |  7 +++++++
+ fetch-pack.h                    |  1 +
  t/t5702-protocol-v2.sh          | 16 ++++++++++++++++
- transport.c                     |  2 +-
- transport.h                     |  6 ++++++
- 7 files changed, 46 insertions(+), 3 deletions(-)
+ transport.c                     |  1 +
+ 6 files changed, 38 insertions(+)
 
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index 5f2628c8f..e5defb1b2 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -60,6 +60,14 @@ OPTIONS
- 	upload-pack only shows the symref HEAD, so it will be the only
- 	one shown by ls-remote.
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 8631e365f..97d3217df 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -188,6 +188,14 @@ endif::git-pull[]
+ 	is specified. This flag forces progress status even if the
+ 	standard error stream is not directed to a terminal.
  
 +-o <option>::
 +--server-option=<option>::
@@ -97,144 +96,108 @@ index 5f2628c8f..e5defb1b2 100644
 +	When multiple `--server-option=<option>` are given, they are all
 +	sent to the other side in the order listed on the command line.
 +
- <repository>::
- 	The "remote" repository to query.  This parameter can be
- 	either a URL or the name of a remote (see the GIT URLS and
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 380c18027..3150bfb92 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -45,6 +45,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	const char *uploadpack = NULL;
- 	const char **pattern = NULL;
- 	struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
-+	struct string_list server_options = STRING_LIST_INIT_DUP;
+ -4::
+ --ipv4::
+ 	Use IPv4 addresses only, ignoring IPv6 addresses.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 7ee83ac0f..5a6f6b2dc 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -62,6 +62,7 @@ static int shown_url = 0;
+ static int refmap_alloc, refmap_nr;
+ static const char **refmap_array;
+ static struct list_objects_filter_options filter_options;
++static struct string_list server_options = STRING_LIST_INIT_DUP;
  
- 	struct remote *remote;
- 	struct transport *transport;
-@@ -67,6 +68,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 			      2, PARSE_OPT_NOCOMPLETE),
- 		OPT_BOOL(0, "symref", &show_symref_target,
- 			 N_("show underlying ref in addition to the object pointed by it")),
-+		OPT_STRING_LIST('o', "server-option", &server_options, N_("server-specific"), N_("option to transmit")),
- 		OPT_END()
- 	};
- 
-@@ -107,6 +109,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	transport = transport_get(remote, NULL);
- 	if (uploadpack != NULL)
- 		transport_set_option(transport, TRANS_OPT_UPLOADPACK, uploadpack);
-+	if (server_options.nr)
-+		transport->server_options = &server_options;
- 
- 	ref = transport_get_remote_refs(transport, &ref_prefixes);
- 	if (transport_disconnect(transport))
-diff --git a/connect.c b/connect.c
-index 54971166a..3000768c7 100644
---- a/connect.c
-+++ b/connect.c
-@@ -408,7 +408,8 @@ static int process_ref_v2(const char *line, struct ref ***list)
- 
- struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 			     struct ref **list, int for_push,
--			     const struct argv_array *ref_prefixes)
-+			     const struct argv_array *ref_prefixes,
-+			     const struct string_list *server_options)
+ static int git_fetch_config(const char *k, const char *v, void *cb)
  {
- 	int i;
- 	*list = NULL;
-@@ -419,6 +420,12 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	if (server_supports_v2("agent", 0))
- 		packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
+@@ -170,6 +171,7 @@ static struct option builtin_fetch_options[] = {
+ 		 N_("accept refs that update .git/shallow")),
+ 	{ OPTION_CALLBACK, 0, "refmap", NULL, N_("refmap"),
+ 	  N_("specify fetch refmap"), PARSE_OPT_NONEG, parse_refmap_arg },
++	OPT_STRING_LIST('o', "server-option", &server_options, N_("server-specific"), N_("option to transmit")),
+ 	OPT_SET_INT('4', "ipv4", &family, N_("use IPv4 addresses only"),
+ 			TRANSPORT_FAMILY_IPV4),
+ 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+@@ -1417,6 +1419,9 @@ static int fetch_one(struct remote *remote, int argc, const char **argv, int pru
+ 		}
+ 	}
  
-+	if (server_options && server_options->nr &&
-+	    server_supports_v2("server-option", 1))
-+		for (i = 0; i < server_options->nr; i++)
-+			packet_write_fmt(fd_out, "server-option=%s",
-+					 server_options->items[i].string);
++	if (server_options.nr)
++		gtransport->server_options = &server_options;
 +
- 	packet_delim(fd_out);
- 	/* When pushing we don't want to request the peeled tags */
- 	if (!for_push)
-diff --git a/remote.h b/remote.h
-index 2b3180f94..93dd97e25 100644
---- a/remote.h
-+++ b/remote.h
-@@ -153,6 +153,7 @@ void free_refs(struct ref *ref);
- struct oid_array;
- struct packet_reader;
- struct argv_array;
-+struct string_list;
- extern struct ref **get_remote_heads(struct packet_reader *reader,
- 				     struct ref **list, unsigned int flags,
- 				     struct oid_array *extra_have,
-@@ -161,7 +162,8 @@ extern struct ref **get_remote_heads(struct packet_reader *reader,
- /* Used for protocol v2 in order to retrieve refs from a remote */
- extern struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 				    struct ref **list, int for_push,
--				    const struct argv_array *ref_prefixes);
-+				    const struct argv_array *ref_prefixes,
-+				    const struct string_list *server_options);
+ 	sigchain_push_common(unlock_pack_on_signal);
+ 	atexit(unlock_pack);
+ 	refspec = parse_fetch_refspec(ref_nr, refs);
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 216d1368b..199eb8a1d 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1174,6 +1174,13 @@ static int send_fetch_request(int fd_out, const struct fetch_pack_args *args,
+ 		packet_buf_write(&req_buf, "command=fetch");
+ 	if (server_supports_v2("agent", 0))
+ 		packet_buf_write(&req_buf, "agent=%s", git_user_agent_sanitized());
++	if (args->server_options && args->server_options->nr &&
++	    server_supports_v2("server-option", 1)) {
++		int i;
++		for (i = 0; i < args->server_options->nr; i++)
++			packet_write_fmt(fd_out, "server-option=%s",
++					 args->server_options->items[i].string);
++	}
  
- int resolve_remote_symref(struct ref *ref, struct ref *list);
- int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid);
+ 	packet_buf_delim(&req_buf);
+ 	if (args->use_thin_pack)
+diff --git a/fetch-pack.h b/fetch-pack.h
+index 667024a76..f4ba851c6 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -15,6 +15,7 @@ struct fetch_pack_args {
+ 	const char *deepen_since;
+ 	const struct string_list *deepen_not;
+ 	struct list_objects_filter_options filter_options;
++	const struct string_list *server_options;
+ 	unsigned deepen_relative:1;
+ 	unsigned quiet:1;
+ 	unsigned keep_pack:1;
 diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 56f7c3c32..71ef1aee1 100755
+index 71ef1aee1..dbfd0691c 100755
 --- a/t/t5702-protocol-v2.sh
 +++ b/t/t5702-protocol-v2.sh
-@@ -154,6 +154,22 @@ test_expect_success 'ref advertisment is filtered with ls-remote using protocol
- 	test_cmp actual expect
+@@ -217,6 +217,22 @@ test_expect_success 'ref advertisment is filtered during fetch using protocol v2
+ 	! grep "refs/tags/three" log
  '
  
-+test_expect_success 'server-options are sent when using ls-remote' '
++test_expect_success 'server-options are sent when fetching' '
 +	test_when_finished "rm -f log" &&
 +
-+	GIT_TRACE_PACKET="$(pwd)/log" git -c protocol.version=2 \
-+		ls-remote -o hello -o world "file://$(pwd)/file_parent" master >actual &&
++	test_commit -C file_parent four &&
 +
-+	cat >expect <<-EOF &&
-+	$(git -C file_parent rev-parse refs/heads/master)$(printf "\t")refs/heads/master
-+	EOF
++	GIT_TRACE_PACKET="$(pwd)/log" git -C file_child -c protocol.version=2 \
++		fetch -o hello -o world origin master &&
 +
-+	test_cmp actual expect &&
++	git -C file_child log -1 --format=%s origin/master >actual &&
++	git -C file_parent log -1 --format=%s >expect &&
++	test_cmp expect actual &&
++
 +	grep "server-option=hello" log &&
 +	grep "server-option=world" log
 +'
 +
-+
- test_expect_success 'clone with file:// using protocol v2' '
- 	test_when_finished "rm -f log" &&
- 
+ # Test protocol v2 with 'http://' transport
+ #
+ . "$TEST_DIRECTORY"/lib-httpd.sh
 diff --git a/transport.c b/transport.c
-index 4d8beaaab..42fd468f3 100644
+index 42fd468f3..b088bcd49 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -218,7 +218,7 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- 	switch (data->version) {
- 	case protocol_v2:
- 		get_remote_refs(data->fd[1], &reader, &refs, for_push,
--				ref_prefixes);
-+				ref_prefixes, transport->server_options);
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
-diff --git a/transport.h b/transport.h
-index e783cfa07..73a7be3c8 100644
---- a/transport.h
-+++ b/transport.h
-@@ -71,6 +71,12 @@ struct transport {
- 	 */
- 	const struct string_list *push_options;
+@@ -266,6 +266,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.no_dependents = data->options.no_dependents;
+ 	args.filter_options = data->options.filter_options;
+ 	args.stateless_rpc = transport->stateless_rpc;
++	args.server_options = transport->server_options;
  
-+	/*
-+	 * These strings will be passed to the remote side on each command
-+	 * request, if both sides support the server-option capability.
-+	 */
-+	const struct string_list *server_options;
-+
- 	char *pack_lockfile;
- 	signed verbose : 3;
- 	/**
+ 	if (!data->got_remote_heads)
+ 		refs_tmp = get_refs_via_connect(transport, 0, NULL);
 -- 
 2.17.0.484.g0c8726318c-goog
 
