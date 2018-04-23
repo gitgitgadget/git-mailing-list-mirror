@@ -2,144 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A8091F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 15:54:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 115A81F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 16:00:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755856AbeDWPyH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 11:54:07 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:16573 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755388AbeDWPyE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 11:54:04 -0400
-Received: from [192.168.2.240] ([92.28.131.105])
-        by smtp.talktalk.net with SMTP
-        id Admyf3qUr4ZqzAdmyflx2i; Mon, 23 Apr 2018 16:54:02 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1524498842;
-        bh=FPuLMNb+mWtd79h+U1bBRpQ/yeBxj5A3v4BOXDo5GKk=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=TJAnjJcbD6u8A7eW1Bab1wsnqAlwkTD+ZfPZG1aP48hyqYCjkjgL/GAHZuv+lBKpm
-         iFFxoXS9IVBq7mr8y6PaBnGpLOT7JOhsYbsAcHSjMp0hhAcam+6MK4Oe3jpCMeVMGL
-         kk0SEc2gqIaL7Ncu5kjun/hwPkxYGAt25qVoGm8E=
-X-Originating-IP: [92.28.131.105]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=E/fjW5Vl c=1 sm=1 tr=0 a=D1tPBkQZhJ8hQpCscnDOhQ==:117
- a=D1tPBkQZhJ8hQpCscnDOhQ==:17 a=IkcTkHD0fZMA:10 a=1o7kRuN_d7eZc5pIrcoA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-References: <cover.1524139900.git.johannes.schindelin@gmx.de>
- <cover.1524306546.git.johannes.schindelin@gmx.de>
- <7360a072f6fdd276d30839613434329b645e2cce.1524306546.git.johannes.schindelin@gmx.de>
- <b05915e6-2259-5dee-69d8-90a5a524662d@talktalk.net>
- <nycvar.QRO.7.76.6.1804231405230.15174@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <ec58f482-ffde-1959-ff4a-9b128905ccb0@talktalk.net>
-Date:   Mon, 23 Apr 2018 16:54:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        id S1755549AbeDWQAw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 12:00:52 -0400
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:34044 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755114AbeDWQAu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 12:00:50 -0400
+Received: by mail-qt0-f174.google.com with SMTP id a25-v6so18277834qtm.1
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 09:00:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=8poLOK2BhkhhloqDTKbFyR+IfdxjxkH+yQ4VugP23cY=;
+        b=OJDXPX2N/3iLrE9gxFWm7MyxrKj0FC2bq41cMWTnMlHslf7ualDPlK0h8HG70ubOim
+         eMIrtxlyWdexikBsSzSmIcNnZPRyi4Oe3JrGk0vwR4dW4KKo3cQJdCTYZPyXEQuyfCgu
+         bSaf75h/j15fNDoVwWadnY1L5evJ6MPEKwOzIV1LgTx4D527G+fwr9xX7buXfDhewk2r
+         4S0rdp2vNgJX3ruDivDst9xVYN3RZIEhevMzJ9nfrXrRhPXMhudEsnD+XgO5eXyfch+l
+         oCA6f8t+Y9rPr04qXlkpchNe8v3UqjENEET+gWzu5d37pnjkCeC9fzzvWpca1/fGLYFy
+         0U0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=8poLOK2BhkhhloqDTKbFyR+IfdxjxkH+yQ4VugP23cY=;
+        b=JoO1NmjRl9uliu+9NRWLu5Owg1D6jhbogZsD5JO77FleYk3fv/irG0MWBPozsXqNPC
+         Mu0s2XgfnrRt7crHVr3jXuXqlEBXZoMQhObD7GCV59gKUEW+ePtY6Od55gMi1V7JC9Mz
+         BZz1Uv4tTuv1HSxLEfxhK124kOZh1qX3c9eLZ45Gq6J19XoCuPjjh9CLg8XiUkHmi+oK
+         9hwMSem6DfwDwAPjg2VGLYufyw2UZ99XCgN9U2ZUjmtKRyroA2/umPmoskFsiLlWuy+U
+         1K94Y62BF7u/YXKMbd+gH7oBd/m7XFkv51pYMK/4T9f34zXH6dVz47Q2Y5tBEZr2gpzm
+         9Fog==
+X-Gm-Message-State: ALQs6tBAsaSufZ2zGnzrT/KTuxEykA7c7fv1rH8fjXaNDPHk806CmL6u
+        o9lNv0GhYF3Cdk3TX2r4qu8=
+X-Google-Smtp-Source: AB8JxZrWpUvkQSwk4oUo1qAipEJtxeh893sei1l1ZkmdFSKUaulaCpD60cXnkMy+IeWmKiH/+O9Jow==
+X-Received: by 10.12.189.37 with SMTP id m37mr1961004qvg.209.1524499249866;
+        Mon, 23 Apr 2018 09:00:49 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id d199sm10826258qka.26.2018.04.23.09.00.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Apr 2018 09:00:49 -0700 (PDT)
+Subject: Re: [PATCH v1 1/2] merge: Add merge.renames config setting
+To:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>
+References: <20180420133632.17580-1-benpeart@microsoft.com>
+ <20180420133632.17580-2-benpeart@microsoft.com>
+ <CABPp-BFANBs=tOhS5BFfTMkdQsNYbUDExWK8QB0V=qD9YwZyWw@mail.gmail.com>
+ <cd49481c-9665-124a-5f94-791f1a16657d@gmail.com>
+ <CABPp-BFqj2TFiHUDsysafq0NHC4MV-QYZVxOZe1TNRrXMOQfng@mail.gmail.com>
+ <xmqqwox19ohw.fsf@gitster-ct.c.googlers.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <1fb11850-4c20-5327-a63a-6d1f5aa18ea4@gmail.com>
+Date:   Mon, 23 Apr 2018 12:00:49 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1804231405230.15174@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+In-Reply-To: <xmqqwox19ohw.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfCQAfJHApkNLGa2Q4J4VMS1AKBid0mmpEYgScLPrBnxoBsdA41tSwEepZOHbn73tauBdzxaIN7wjIffqhfjnDZnwV7NBsRf3zD1jc4mzWvhgxdmBqmI+
- Hd7LsLNKFt/PLaHNUwaDLV35WKWksA3xHyQabavDOqww/tU76uQwuj0nzGbt3UPOsPnSy8ODBCtegyg+xKB8yJKGTsL21zPvf0qF7CbLkdOalzMCw1g7pMwD
- fDE/FXuM70iReED0fDhM4JMR5yFhzubk953aSNOmGV0AgWanqoLiwa1yhvBiGJQZdxtFvRsHOn6zEFJ+g7SRTshVIMY7Odd0CuPb3546krnhEtk9vTZ8NJ/1
- c2kcEVrXVF6L8pVmje4fKJnQjq5wxZVG3m4YcUFglloMLxBLP8zg0VlTXJ8Jy1IxwT/BhVuhfWrpII9w2ufc/fepSoWcqom9DsFc534bFPY7JskuWvDD4pQS
- MLx9VbekQ6NrEkhDdtzk7rwY7l0/LgY1NOuyGvfhQlAPXdLcgZn37/RO+MOEjN6Ty95LQ6ys9yymiuhC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/04/18 13:20, Johannes Schindelin wrote:
-> Hi Phillip,
-> 
-> On Sat, 21 Apr 2018, Phillip Wood wrote:
-> 
->> On 21/04/18 11:33, Johannes Schindelin wrote:
->>> This patch is part of the effort to reimplement `--preserve-merges` with
->>> a substantially improved design, a design that has been developed in the
->>> Git for Windows project to maintain the dozens of Windows-specific patch
->>> series on top of upstream Git.
->>>
->>> The previous patch implemented the `label` and `reset` commands to label
->>> commits and to reset to labeled commits. This patch adds the `merge`
->>> command, with the following syntax:
->>
->> The two patches seem to have been fused together in this series.
-> 
-> Indeed. I have yet to investigate further how that happened, it could be a
-> bug in my series after all.
-> 
->> If the reset command fails because it would overwrite untracked files it
->> says
->>
->> error: Untracked working tree file 'b' would be overwritten by merge.
->>
->> Followed by the hint to edit the todo file. Saying 'merge' rather 'reset' is
->> possibly confusing to users. Perhaps it could call
->> setup_unpack_trees_porcelain(), though that would need to be extended to
->> handle 'reset'.
-> 
-> Yes, and it changes global state :-(
-> 
-> Maybe we can leave it as-is for now? After all, it should be clear to the
-> user what is happening. The most important part is the "Untracked working
-> tree file"...
-
-I'm fine with leaving it, I've might get round to doing a small series 
-to clean things up slightly in a few weeks. At the moment 
-setup_unpack_trees_porcelain() leaks memory as it is called for each 
-merge and allocates new strings each time. It would also be nice if the 
-error messages reflected the command, so it said 'cherry-pick', 'revert' 
-or 'reset' rather than 'merge'
-
->> Also it currently refuses to overwrite ignored files which is either
->> annoying or safe depending on one's point of view.
-> 
-> Let me think about that. My gut feeling says: if it is easy to do, then
-> let's nuke ignored files, but keep untracked files. But I do not think
-> that the unpack-trees machinery was taught to know about .gitignore...
-> 
-> Seeing as `label` and `reset` really are mostly about revisions we see
-> along the lines, I think that the common case will *not* overwrite any
-> untracked files, ever. You would have to use `reset` on a
-> not-previously-seen commit and/or add `exec` commands designed to
-> interfere with the `reset`.
-> 
-> So I tend to want to not bother with discerning between untracked and
-> ignored files here.
-
-I don't think it's a pressing concern. In the past I once had a patch 
-series that removed some tracked files in favor of having the build 
-system generate them and added them to .gitignore. Each time I rebased I 
-had to manually remove them at some stage which was annoying but that is 
-quite a rare occurrence.
-
-Best Wishes
-
-Phillip
 
 
-> Ciao,
-> Dscho
+On 4/21/2018 12:23 AM, Junio C Hamano wrote:
+> Elijah Newren <newren@gmail.com> writes:
+> 
+>>>>> +merge.renames::
+>>>>> +       Whether and how Git detects renames.  If set to "false",
+>>>>> +       rename detection is disabled. If set to "true", basic rename
+>>>>> +       detection is enabled. This is the default.
+>>>>
+>>>>
+>>>> One can already control o->detect_rename via the -Xno-renames and
+>>>> -Xfind-renames options.
+>> ...
+>> Sorry, I think I wasn't being clear.  The documentation for the config
+>> options for e.g. diff.renameLimit, fetch.prune, log.abbrevCommit, and
+>> merge.ff all mention the equivalent command line parameters.  Your
+>> patch doesn't do that for merge.renames, but I think it would be
+>> helpful if it did.
+> 
+> Yes, and if we are adding a new configuration, we should do so in
+> such a way that we do not have to come back and extend it when we
+> know what the command line option does and the configuration being
+> proposed is less capable already.
+
+Between all the different command line options, config settings, merge 
+strategies and the interactions between the diff and merge versions, I
+was trying to keep things as simple and consistent as possible.  To that 
+end 'merge.renames' was modeled after the existing 'diff.renames.'
+
+I wonder if we can just add a
+> single configuration whose value can be "never" to pretend as if
+> "--Xno-renames" were given, and some similarity score like "50" to
+> pretend as if "--Xfind-renames=50" were given.
+> 
+> That is, merge.renames does not have to a simple "yes-no to control
+> the --Xno-renames option".  And it would of course be better to
+> document it.
 > 
 
+With the existing differences in how these options are passed on the 
+command line, I'm hesitant to add yet another pattern in the config 
+settings that combines 'renames' and '--find-renames[=<n>]'.
+
+I _have_ wondered why this all isn't configured via find-renames with 
+find-renames=0 meaning renames=false (instead of mapping 0 to 32K).  I 
+think that could have eliminated the need for splitting rename across 
+two different settings (which is what I think you are proposing above). 
+I'd then want the config setting and command line option to be the same 
+syntax and behavior.
+
+Moving the existing settings to this model and updating the config and 
+command line options to be consistent without breaking backwards 
+compatibility is outside the intended scope of this patch.
+
+> I also had to wonder how "merge -s resolve" faired, if the project
+> is not interested in renamed paths at all.
+> 
+
+To be clear, it isn't that we're not interested in detecting renamed 
+files and paths.  We're just opposed to it taking an hour to figure that 
+out!
+
+> Thanks.
+> 
