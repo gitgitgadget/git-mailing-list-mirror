@@ -2,126 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B09D1F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 22:47:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E2D91F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 23:23:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932582AbeDWWr5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 18:47:57 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:43443 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932514AbeDWWr5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 18:47:57 -0400
-Received: by mail-pg0-f68.google.com with SMTP id f132so9368828pgc.10
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 15:47:56 -0700 (PDT)
+        id S932660AbeDWXXa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 19:23:30 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:46204 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932611AbeDWXX3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 19:23:29 -0400
+Received: by mail-pf0-f195.google.com with SMTP id h69so10585458pfe.13
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 16:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=1CbSO/p4DfuqB1YH6nyOev+DAXMjBFJIlMG1HLRezeI=;
-        b=TXlM5Wz49ENXgfIk5rp62lHG1DtLf+oZqcfcaiS3IG373bdpCGEqi2SGwfA+3RYBrR
-         OPQrLEleu9Cfgr6sj8f06ge0VtZ2ygVztrJ44uFbzImmXBpbv5vFCIV7SCUinukAYalT
-         GY+hkv/gS6w3a+j4eFpPCDfk+6jM3BsvFdT+DQZNFzzdIHWuh5lPknQ2Ac79tBHr7//b
-         qTsFOOplyEEYh1bgkC+UlG3wMUZtnkFOc+kuu+9Hpoje2oeIITEwDDhxyoU3b3zVvlV4
-         2l4lIh7lW5r178NApB6ysjjH7LHJjqbFkOVHZyaTgPmZ99rwVryXSByxlIlNjA7z2wMP
-         aJ/w==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Bh+gRWFre8ld070lr/GtnW0Vlp5M3P6g5OcP1tw797k=;
+        b=XdTibxMleuosQWi5hP0ct+SndpMKRqx5RRQjgHf+vY/s8fk8gJyHaZbCV5zjQBLKs1
+         KstMV3kTbqweNud+u4UfolE5LLshPYQJs5aYtQpN7CIzWsYpqVnNlQ1LYM+vk0EsY//s
+         IoZWUtp+FJokQlVf1fKQz1b3OBVIq6GNCrQTgeDM+lqcyqUc5Wm06GOvEHjl1EeNLxTW
+         7xkRf7qWTd36fgT8jY2XZImr6jrl8SJuzj1Hnf7TJK5dGcUiY84vfiYSpz48IgKBQh/D
+         oC+m6zuFCd7MhT2vid89E2KS0iFpdAZX20j54cVXnUV9dlSQ+NfII+stATzfBI4aS0p0
+         XCtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1CbSO/p4DfuqB1YH6nyOev+DAXMjBFJIlMG1HLRezeI=;
-        b=qKESGF5+DjvjWFyCKvtj3G8TpHRFJ+qQVuLiFag/WnrORo1Z6EVJM9nf2Cr4NUGhA+
-         2FBHLHwaeRGz2wErL93e5YH2lGAors9uRkNNzaPIKAzFDmCZ6F5uETRdGz4T/PlJasXZ
-         GK/Ad5XDJsuHq9GvBnomqDxwr9cEV1C/YZ1K7eZvqwSWU5Aqx0MOun27ShBXqE7XvF1Y
-         tEumU8QRy35X8RXuxGE4kQSzI8AbtgIqKWl9qqMtvwTBM9csjptIA8P4Psdj/azLD04p
-         lqZ9bebJ1crajYX3vr41njH1icdm3+ksj2jMz2NhfBzOysvP7y9pjIUdVn1hNR3znX95
-         2SLg==
-X-Gm-Message-State: ALQs6tBy+jkjUTCt+DBbYPcr+AnX7dfpfNpTyI0KIekvfcaPCQ68MZkd
-        KdAboSNB1r7aKTP5Yl5inH4W7ZgzJxE=
-X-Google-Smtp-Source: AIpwx4+Wdumy7AzMNQIxU+clxd3bdGgwLLtBfr+lCsK7TtyVJ9qdbojl/9HOME9IyHOy8MEWppMndg==
-X-Received: by 10.101.100.214 with SMTP id t22mr13307897pgv.41.1524523675445;
-        Mon, 23 Apr 2018 15:47:55 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id p6sm22353576pfn.140.2018.04.23.15.47.53
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Bh+gRWFre8ld070lr/GtnW0Vlp5M3P6g5OcP1tw797k=;
+        b=pYAVjojdf15iA3U6iBtbMLNHkCZNuHCz8Hi9xB/NT3aqqjOERLZZyTtne9AfTSzwZh
+         Y8if+n7Z5I+FfaijK3CS4qW0R+lUgtZv95cK/2o/aI2I4jr+EjRGuIdoTpkXwB+iEFDS
+         C1UEB/92p1ySyvgx9//v/ZP/HeZR9V7ORMLKh6Wwbe+T8oik4/fcS1ssJlouE4yzBH3B
+         vBx0Bh66gsvfrRIFIRxrWqgRc7QdW5stjm6jmuS90/y6B/JxoBpt4tgKDCwpHeNkYKdJ
+         AR5bqlVqBabMDQu7Qz31GQGwlgq3eS7N3cGFLueu5H1ZrFymV0eA9ZadSFY3vL+ozHTg
+         xg8A==
+X-Gm-Message-State: ALQs6tDdwu/+XmIQYmyzz2n5RLGX/I87iTEe6tRpYUg3Lbbf35pK3oiX
+        09+v6iu8PENplL3wMdEqZbU=
+X-Google-Smtp-Source: AIpwx49rDkBRknbEwWhjXTjWbxZ6O1yAi5zjTyKD6bFVSSoRieDM27UQKdT6EywbvvBMII9b252lmg==
+X-Received: by 2002:a17:902:2a43:: with SMTP id i61-v6mr23017621plb.54.1524525808766;
+        Mon, 23 Apr 2018 16:23:28 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id g64sm32061814pfd.75.2018.04.23.16.23.27
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Apr 2018 15:47:54 -0700 (PDT)
-Date:   Mon, 23 Apr 2018 15:47:53 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Subject: Re: [PATCH 0/3] optionally send server-options when using v2
-Message-ID: <20180423224753.GA29052@google.com>
-References: <20180423224624.213341-1-bmwill@google.com>
+        Mon, 23 Apr 2018 16:23:28 -0700 (PDT)
+Date:   Mon, 23 Apr 2018 16:23:26 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Dan Jacques <dnj@google.com>, Junio C Hamano <gitster@pobox.com>,
+        Johannes.Schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
+        Brandon Williams <bmwill@google.com>
+Subject: [PATCH dj/runtime-prefix 0/2] Handle $IFS in $INSTLIBDIR
+Message-ID: <20180423232326.GB25128@aiede.svl.corp.google.com>
+References: <f0ad1ad4-67d8-21e2-fdd0-0a08328c1eaa@kdbg.org>
+ <20171205212625.6616-1-dnj@google.com>
+ <xmqq7eu0j1th.fsf@gitster.mtv.corp.google.com>
+ <e0a22ee4-9503-760f-293c-be56fa46fa04@kdbg.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20180423224624.213341-1-bmwill@google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e0a22ee4-9503-760f-293c-be56fa46fa04@kdbg.org>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/23, Brandon Williams wrote:
-> Building on top of protocol version 2 this series adds the ability to
-> optionally send server specific options when using protocol v2. This
-> resembles the "push-options" feature except server options are sent as
-> capability lines during a command request allowing for all current and
-> future commands to benefit from sending arbitrary server options (and
-> not requiring that sending server specific options be re-implemented for
-> each and every command that may want to make use of them in the future).
-> 
-> These options can be provided by the user via the command line by giving
-> "-o <option>" or "--server-option=<option>" to either ls-remote or
-> fetch.
-> 
-> Command request example:
-> 
-> 	command=fetch
-> 	server-option=hello
-> 	server-option=world
-> 	0001
-> 	want A
-> 	want B
-> 	have X
-> 	have Y
-> 	0000
-> 
-> These options are only transmitted to the remote end when communicating
-> using protocol version 2.
+Hi,
 
-Forgot to mention that this series is based on current upstream master
-(fe0a9eaf3) and a merge of origin/bw/protocol-v2.
+Johannes Sixt wrote:
+> Am 05.12.2017 um 22:35 schrieb Junio C Hamano:
+> > Dan Jacques <dnj@google.com> writes:
 
-> 
-> Brandon Williams (3):
->   serve: introduce the server-option capability
->   ls-remote: send server options when using protocol v2
->   fetch: send server options when using protocol v2
-> 
->  Documentation/fetch-options.txt         |  8 +++++++
->  Documentation/git-ls-remote.txt         |  8 +++++++
->  Documentation/technical/protocol-v2.txt | 10 ++++++++
->  builtin/fetch.c                         |  5 ++++
->  builtin/ls-remote.c                     |  4 ++++
->  connect.c                               |  9 ++++++-
->  fetch-pack.c                            |  7 ++++++
->  fetch-pack.h                            |  1 +
->  remote.h                                |  4 +++-
->  serve.c                                 |  1 +
->  t/t5701-git-serve.sh                    | 21 ++++++++++++++++
->  t/t5702-protocol-v2.sh                  | 32 +++++++++++++++++++++++++
->  transport.c                             |  3 ++-
->  transport.h                             |  6 +++++
->  14 files changed, 116 insertions(+), 3 deletions(-)
-> 
-> -- 
-> 2.17.0.484.g0c8726318c-goog
-> 
+>>> Thanks for checking! The patch that you quoted above looks like it's from
+>>> this "v4" thread; however, the patch that you are diffing against in your
+>>> latest reply seems like it is from an earlier version.
+>>>
+>>> I believe that the $(pathsep) changes in your proposed patch are already
+>>> present in v4,...
+>>
+>> You're of course right.  The patches I had in my tree are outdated.
+>>
+>> Will replace, even though I won't be merging them to 'pu' while we
+>> wait for Ævar's perl build procedure update to stabilize.
+>
+> The updated series works for me now. Nevertheless, I suggest to squash
+> in the following change to protect against IFS and globbing characters in
+> $INSTLIBDIR.
+>
+> diff --git a/Makefile b/Makefile
+> index 7ac4458f11..08c78a1a63 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2072,7 +2072,7 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES perl/perl.mak Makefile
+>  	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
+>  	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
+>  	sed -e 's=@@PATHSEP@@=$(pathsep)=g' \
+> -	    -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' \
+> +	    -e 's=@@INSTLIBDIR@@='"$$INSTLIBDIR"'=g' \
+>  	    -e 's=@@GITEXECDIR@@=$(gitexecdir_relative_SQ)=g' \
+>  	    -e 's=@@PERLLIBDIR@@=$(perllibdir_relative_SQ)=g' \
+
+I just ran into this.  Here's a pair of patches to fix it.
+
+Thanks,
+Jonathan Nieder (2):
+  Makefile: remove unused substitution variable @@PERLLIBDIR@@
+  Makefile: quote $INSTLIBDIR when passing it to sed
+
+ Makefile | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 -- 
-Brandon Williams
+2.17.0.441.gb46fe60e1d
+
