@@ -2,106 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B716E1F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 20:34:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30B8B1F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 21:01:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755308AbeDWUeh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 16:34:37 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:16944 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755165AbeDWUeg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 16:34:36 -0400
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id AiARfRQZylWlTAiARfQHDt; Mon, 23 Apr 2018 21:34:35 +0100
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=N4gH6V1B c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=XM0nyQBuu00CSQUsQo0A:9
- a=wPNLvfGTeEIA:10
-Message-ID: <0E6803122A5241F98148087A045993BC@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Cc:     "Git List" <git@vger.kernel.org>,
-        "Junio C Hamano" <gitster@pobox.com>,
-        "Jacob Keller" <jacob.keller@gmail.com>,
-        "Stefan Beller" <sbeller@google.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>,
-        "Phillip Wood" <phillip.wood@dunelm.org.uk>,
-        "Igor Djordjevic" <igor.d.djordjevic@gmail.com>,
-        "Johannes Sixt" <j6t@kdbg.org>,
-        "Sergey Organov" <sorganov@gmail.com>,
-        =?iso-8859-1?Q?Martin_=C5gren?= <martin.agren@gmail.com>
-References: <cover.1524139900.git.johannes.schindelin@gmx.de> <cover.1524306546.git.johannes.schindelin@gmx.de> <7360a072f6fdd276d30839613434329b645e2cce.1524306546.git.johannes.schindelin@gmx.de> <9270DF86352B4E3493AADA159E7FFE33@PhilipOakley> <nycvar.QRO.7.76.6.1804231401130.15174@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
-Date:   Mon, 23 Apr 2018 21:34:35 +0100
-Organization: OPDS
+        id S932225AbeDWVBN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 17:01:13 -0400
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:44536 "EHLO
+        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932157AbeDWVBN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 17:01:13 -0400
+Received: by mail-yw0-f174.google.com with SMTP id u10-v6so5078633ywl.11
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 14:01:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=5Z4voRzrI8YRYppuR3RaySq725gaFPdYqRhGVp/RT+Q=;
+        b=ADlddcWWR1KfP19NU85uf0hZFQQfVkFeiXT95WTW79VeNPB6LABPbq7hKXfMhalXWj
+         QruDKqyhK95GvUpJonOpxcGzfeFL1hHZmUA3OAWesuGb2/ObD0HZl5xN1cXjxJDiYUnV
+         kE5N1GUJc2Z3tDUQsVIzrZPbDMm3KkxllceA0Cd5sP5Y5uvztjdpOI4XdY6/31REJ3sy
+         haNg3Iri8VMEAgGTBszhkGOuxWr1QxLjO96Lwn5YBel9Ldg0I4oeQZsPyw8SmN33K+Qq
+         ejj/rh+lA0F5NhJiFG465urEr95dG78xVL4vROVWW6s+Prs+Po8UpCkGxw7BERGgpsO3
+         wM3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=5Z4voRzrI8YRYppuR3RaySq725gaFPdYqRhGVp/RT+Q=;
+        b=dj+ekIXODqa35gUtSfGnKzHTqsipldz02RWEFn8PWLhtxJ7O70wVGaQSCUDMrs2upV
+         BBCoaIIjtFEWuCOVfNdRqBEzXN+dCOMsbzidNLYkilo6UYqvPGdoGsHRdO1NPXXspQg9
+         9a7X96LnGSdEgGOpj4n8dxg+GuPaBE21v2FPM0Er1gk56zEHvmvgb8IqtEnLF4kUZJR6
+         YmIEgBI0c8k8Zrx5ELhYIggD/OmB69Tjbr5MZxpzquz2Jn+ypL5jW5cvDNjerVkxfNfF
+         FWWdtkVvrX0AIbr0RROe+XRLF2jhO5UCccwKUu4PpjMdo6gad7YmVP/+1nu2/Lhr82O5
+         cyVw==
+X-Gm-Message-State: ALQs6tCj6kL6osZZdTt8EEcGklrNFhnPPb49rIKssNYP1ENflT4+Llqc
+        ma3jf8FfIiR8wOmaulZD1a169j2HWrNaK3NCOfViUAPdsJg=
+X-Google-Smtp-Source: AIpwx4+fTF8exFhnc0d9cfRpU/5qvyUAZKrhAfCRYrN1Kq4dYj0V4z9tnAaXIeDBRZvQ9N1sErOFnD5jyK4K7SyCJ4o=
+X-Received: by 2002:a0d:e28e:: with SMTP id l136-v6mr11561314ywe.500.1524517271890;
+ Mon, 23 Apr 2018 14:01:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180423-2, 23/04/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfG3Hnn1Z9h8t1dYmR6yO6SDZMeQy4+3xw8ESyFBnJImuqiXNLv7Mc18qmm6fFS5TaJgpmjze82Y3NBDA8zwk/SoMCgI3NhQfJuZ/XGZ0JwMi9PN4X7Hs
- M5MEnHNjU7oa38zhQ8QEL2umkK2zK6+QqgsHJvKjjz2E6S86lTAise4PwC2XtK20y37EngMcTXAe51hqV1lkBx0mc6Xw9bRNcnuq7oboWtKV6BkgzufDJzye
- ke/74w7OQSAeka6S06lDGT4shsZUQ0cw+mMgCvKdv1Rj/s8D7shuAhFnzr6FMrfADQHeykyrETHNrVSV+NYS6hU/LqW6o7DCWKD68jbXGLeyPhCrnlJgJ41V
- cUsz6gfc4VUU1SlxHRquvYzV4tFxBStP4pzVy9b8IDWChiZomFyT3TwmvQvykyCPaR+1PpEGH40JxzBkTYgyaLLK7BUoJ8sfpBz+43n23N1iAVHJ4NMN0iUl
- EY92tREGTf7KtLRztAt6k9wfS/2GOBXOsyYzTw==
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Mon, 23 Apr 2018 14:01:11
+ -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 23 Apr 2018 14:01:11 -0700
+Message-ID: <CAGZ79kbzFGn2-xcrWFi1+ZUgSGGHdUPEQOexu8Lan796LCsvBg@mail.gmail.com>
+Subject: GSoC students and mentors in 2018
+To:     git <git@vger.kernel.org>
+Cc:     Pratik Karki <predatoramigo@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        alban.gruin@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de> : Monday, April 23, 
-2018 1:03 PM
-Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
+Hi Git community,
 
+This year we'll participate once again in Google Summer or Code!
+We'll have 3 students and 3 mentors, which is more than in recent years.
 
-> Hi Philip,
->
-[...]
->
->> > label onto
->> >
->> > # Branch abc
->> > reset onto
->>
->> Is this reset strictly necessary. We are already there @head.
->
-> No, this is not strictly necessary, but
+Paul-Sebastian Ungureanu mentored by DScho, wants to convert git-stash
+into a builtin.
 
-I've realised my misunderstanding. I was thinking this (and others) was 
-equivalent to
+Alban Gruin and Pratik Karki want to convert parts of git-rebase into
+a builtin. Both are mentored by Christian and myself.
 
-$  git reset <thatHead'onto'> # maybe even --hard,
+The slots were just announced today, please join me in welcoming them
+to the Git mailing list! (Although you may remember them from the
+micro projects[1,2,3])
 
-i.e. affecting the worktree
+[1] https://public-inbox.org/git/20180319155929.7000-1-ungureanupaulsebastian@gmail.com/
+[2] https://public-inbox.org/git/20180301111907.17607-1-alban.gruin@gmail.com/
+[3] https://public-inbox.org/git/20180327173137.5970-1-predatoramigo@gmail.com/
 
-rather that just being a movement of the Head rev (though I may be having 
-brain fade here regarding untracked files etc..)
-
->
-> - it makes it easier to auto-generate (otherwise you would have to keep
->  track of the "current HEAD" while generating that todo list, and
->
-> - if I keep the `reset onto` there, then it is *a lot* easier to reorder
->  topic branches.
->
-> Ciao,
-> Dscho
->
-Thanks
-
-Philip 
-
+Thanks,
+Stefan
