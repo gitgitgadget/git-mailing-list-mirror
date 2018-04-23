@@ -2,80 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 115A81F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 16:00:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FB2C1F42D
+	for <e@80x24.org>; Mon, 23 Apr 2018 16:19:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755549AbeDWQAw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 12:00:52 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:34044 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755114AbeDWQAu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 12:00:50 -0400
-Received: by mail-qt0-f174.google.com with SMTP id a25-v6so18277834qtm.1
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 09:00:50 -0700 (PDT)
+        id S932123AbeDWQTU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 12:19:20 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:38949 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932085AbeDWQTT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 12:19:19 -0400
+Received: by mail-qt0-f195.google.com with SMTP id f1-v6so1163958qtj.6
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 09:19:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8poLOK2BhkhhloqDTKbFyR+IfdxjxkH+yQ4VugP23cY=;
-        b=OJDXPX2N/3iLrE9gxFWm7MyxrKj0FC2bq41cMWTnMlHslf7ualDPlK0h8HG70ubOim
-         eMIrtxlyWdexikBsSzSmIcNnZPRyi4Oe3JrGk0vwR4dW4KKo3cQJdCTYZPyXEQuyfCgu
-         bSaf75h/j15fNDoVwWadnY1L5evJ6MPEKwOzIV1LgTx4D527G+fwr9xX7buXfDhewk2r
-         4S0rdp2vNgJX3ruDivDst9xVYN3RZIEhevMzJ9nfrXrRhPXMhudEsnD+XgO5eXyfch+l
-         oCA6f8t+Y9rPr04qXlkpchNe8v3UqjENEET+gWzu5d37pnjkCeC9fzzvWpca1/fGLYFy
-         0U0w==
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=w9Mdt0+neoplx6b9TKb8LMi979eGdLpXNNU8A37+FaE=;
+        b=rqZNlbKekLDUGVLChcR+ghv89hGkUHDrHeOj2BkHHhoGE+M//ilVzofzOSvyLP2W6U
+         gbtImgrSwtQDFWfX4FEl/fzwQhl2s/QtM2MmxbLl7klGX3UdocVpYQZUqGY8fOAUzwOb
+         rKqJLWa90W3r8xZgkDmHON5t4ubCZohLf4z85sf6sLdcOqHldNT12AFSZOJlvmAGw1XE
+         f9aEy6s3yv3wQBo13eXM9Vv+sw7bMTJya5mjUg7t12OB/OwO7MNnPArxPrwpWgKz19cB
+         jkRQgIih9FAGGUOWnTa9DSFW+o1Dze0p3leXew5bOu4BiulqUAJTp1/sUUOutkjyJSWA
+         f0/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=8poLOK2BhkhhloqDTKbFyR+IfdxjxkH+yQ4VugP23cY=;
-        b=JoO1NmjRl9uliu+9NRWLu5Owg1D6jhbogZsD5JO77FleYk3fv/irG0MWBPozsXqNPC
-         Mu0s2XgfnrRt7crHVr3jXuXqlEBXZoMQhObD7GCV59gKUEW+ePtY6Od55gMi1V7JC9Mz
-         BZz1Uv4tTuv1HSxLEfxhK124kOZh1qX3c9eLZ45Gq6J19XoCuPjjh9CLg8XiUkHmi+oK
-         9hwMSem6DfwDwAPjg2VGLYufyw2UZ99XCgN9U2ZUjmtKRyroA2/umPmoskFsiLlWuy+U
-         1K94Y62BF7u/YXKMbd+gH7oBd/m7XFkv51pYMK/4T9f34zXH6dVz47Q2Y5tBEZr2gpzm
-         9Fog==
-X-Gm-Message-State: ALQs6tBAsaSufZ2zGnzrT/KTuxEykA7c7fv1rH8fjXaNDPHk806CmL6u
-        o9lNv0GhYF3Cdk3TX2r4qu8=
-X-Google-Smtp-Source: AB8JxZrWpUvkQSwk4oUo1qAipEJtxeh893sei1l1ZkmdFSKUaulaCpD60cXnkMy+IeWmKiH/+O9Jow==
-X-Received: by 10.12.189.37 with SMTP id m37mr1961004qvg.209.1524499249866;
-        Mon, 23 Apr 2018 09:00:49 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id d199sm10826258qka.26.2018.04.23.09.00.48
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=w9Mdt0+neoplx6b9TKb8LMi979eGdLpXNNU8A37+FaE=;
+        b=agscZnJKbnw/A8f/Tu3zgOTlVqRpQyWBwVAzW385nycGYQjbEiqnJQ9dvylHHQuK9z
+         jmYjE2Gm71uyHHzuaLMBvL7j8Ws2GlzGnKQ3ssOH/q45ru+nUQvN1v0Pr084kpjY8Uer
+         IRqnnwXzO/qxrzOnTYBf+G6/tn9BRwV694BeAkhnhyHAa7CyuOX0+duv0fjshFJ8JYu1
+         6bIdj0lFWCuqNDpQdU699sMJqigP5cFQZsUSiigJvn1lv/hteZ4y4A5RRJOGvUBOLTdU
+         nFl76cLEfYKabFBxqk9l5g8M4utd+Tmqz1NipmQ4kc5O79+oEi4wdqJ9JU3oyhp6hqDH
+         mG8Q==
+X-Gm-Message-State: ALQs6tAFENd7sCT9K9gvLS4fp0no07chM8Ij3EDT4xCYhGlKrJ5aiXOq
+        2B5Jd+dNI4MKnhx96+9Jvek=
+X-Google-Smtp-Source: AIpwx48/5+P4Y48FWvUaJRcgpyQ2M1VUpsd68hQ4XFVy4td89PLY7lroBjFWyrnn5LEOu6xQHbB8tA==
+X-Received: by 2002:ac8:1e82:: with SMTP id c2-v6mr23930961qtm.402.1524500358794;
+        Mon, 23 Apr 2018 09:19:18 -0700 (PDT)
+Received: from localhost.localdomain ([2001:4898:8010:1:1060:bd2c:4297:50e])
+        by smtp.gmail.com with ESMTPSA id y13-v6sm9747124qti.84.2018.04.23.09.19.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Apr 2018 09:00:49 -0700 (PDT)
-Subject: Re: [PATCH v1 1/2] merge: Add merge.renames config setting
+        Mon, 23 Apr 2018 09:19:18 -0700 (PDT)
+Subject: Re: [PATCH v1 0/5] Allocate cache entries from memory pool
 To:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
+        Jameson Miller <jamill@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         "pclouds@gmail.com" <pclouds@gmail.com>,
-        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>
-References: <20180420133632.17580-1-benpeart@microsoft.com>
- <20180420133632.17580-2-benpeart@microsoft.com>
- <CABPp-BFANBs=tOhS5BFfTMkdQsNYbUDExWK8QB0V=qD9YwZyWw@mail.gmail.com>
- <cd49481c-9665-124a-5f94-791f1a16657d@gmail.com>
- <CABPp-BFqj2TFiHUDsysafq0NHC4MV-QYZVxOZe1TNRrXMOQfng@mail.gmail.com>
- <xmqqwox19ohw.fsf@gitster-ct.c.googlers.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <1fb11850-4c20-5327-a63a-6d1f5aa18ea4@gmail.com>
-Date:   Mon, 23 Apr 2018 12:00:49 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+        "jonathantanmy@google.com" <jonathantanmy@google.com>
+References: <20180417163400.3875-1-jamill@microsoft.com>
+ <xmqqwox5i0f7.fsf@gitster-ct.c.googlers.com>
+From:   Jameson Miller <jameson.miller81@gmail.com>
+Message-ID: <cb1c1c86-48f7-5cf6-16ff-0d54550fe958@gmail.com>
+Date:   Mon, 23 Apr 2018 12:19:05 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqwox19ohw.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwox5i0f7.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -83,66 +75,88 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 4/21/2018 12:23 AM, Junio C Hamano wrote:
-> Elijah Newren <newren@gmail.com> writes:
-> 
->>>>> +merge.renames::
->>>>> +       Whether and how Git detects renames.  If set to "false",
->>>>> +       rename detection is disabled. If set to "true", basic rename
->>>>> +       detection is enabled. This is the default.
->>>>
->>>>
->>>> One can already control o->detect_rename via the -Xno-renames and
->>>> -Xfind-renames options.
->> ...
->> Sorry, I think I wasn't being clear.  The documentation for the config
->> options for e.g. diff.renameLimit, fetch.prune, log.abbrevCommit, and
->> merge.ff all mention the equivalent command line parameters.  Your
->> patch doesn't do that for merge.renames, but I think it would be
->> helpful if it did.
-> 
-> Yes, and if we are adding a new configuration, we should do so in
-> such a way that we do not have to come back and extend it when we
-> know what the command line option does and the configuration being
-> proposed is less capable already.
+On 04/18/2018 12:49 AM, Junio C Hamano wrote:
+> Jameson Miller <jamill@microsoft.com> writes:
+>
+>> This patch series improves the performance of loading indexes by
+>> reducing the number of malloc() calls. ...
+>>
+>> Jameson Miller (5):
+>>    read-cache: teach refresh_cache_entry to take istate
+>>    Add an API creating / discarding cache_entry structs
+>>    mem-pool: fill out functionality
+>>    Allocate cache entries from memory pools
+>>    Add optional memory validations around cache_entry lifecyle
+>>
+>>   apply.c                |  26 +++---
+>>   blame.c                |   5 +-
+>>   builtin/checkout.c     |   8 +-
+>>   builtin/difftool.c     |   8 +-
+>>   builtin/reset.c        |   6 +-
+>>   builtin/update-index.c |  26 +++---
+>>   cache.h                |  40 ++++++++-
+>>   git.c                  |   3 +
+>>   mem-pool.c             | 136 ++++++++++++++++++++++++++++-
+>>   mem-pool.h             |  34 ++++++++
+>>   merge-recursive.c      |   4 +-
+>>   read-cache.c           | 229 +++++++++++++++++++++++++++++++++++++++----------
+>>   resolve-undo.c         |   6 +-
+>>   split-index.c          |  31 +++++--
+>>   tree.c                 |   4 +-
+>>   unpack-trees.c         |  27 +++---
+>>   16 files changed, 476 insertions(+), 117 deletions(-)
+>>
+>>
+>> base-commit: cafaccae98f749ebf33495aec42ea25060de8682
+> I couldn't quite figure out what these five patches were based on,
+> even with this line.  Basing on and referring to a commit that is
+> not part of our published history with "base-commit" is not all that
+> useful to others.
+My apologies - this patch series should be applied to the 'next'
+branch.  It applies cleanly on top of
+b46fe60e1d ("merge-fix/ps/test-chmtime-get", 2018-04-20), which
+is a commit in the 'next' branch.
+> Offhand without applying these patches and viewing the changes in
+> wider contexts, one thing that makes me wonder is how the two
+> allocation schemes can be used with two implementations of free().
+> Upon add_index_entry() that replaces an index entry for an existing
+> path, we'd discard an entry that was originally read as part of
+> read_cache().  If we do that again, the second add_index_entry()
+> will be discading, in its call to replace_index_entry(), the entry
+> that was allocated by the caller of the first add_index_entry()
+> call.  And replace_index_entry() would not have a way to know from
+> which allocation the entry's memory came from.
+>
+> Perhaps it is not how you are using the "transient" stuff, and from
+> the comment in 2/5, it is for "entries that are not meant to go into
+> the index", but then higher stage index entries in unpack_trees seem
+> to be allocated via the "transient" stuff, so I am not sure what the
+> plans are for things like merge_recursive() that uses unpack_trees()
+> to prepare the index and then later "fix it up" by further futzing
+> around the index to adjust for renames it finds, etc.
 
-Between all the different command line options, config settings, merge 
-strategies and the interactions between the diff and merge versions, I
-was trying to keep things as simple and consistent as possible.  To that 
-end 'merge.renames' was modeled after the existing 'diff.renames.'
+Good points. The intention with this logic is that any entries
+that *could* go into an index are allocated from the memory
+pool. The "transient" entries only exist for a short period of
+time. These have a defined lifetime and we can always trace the
+corresponding "free" call. make_transient_cache_entry() is only
+used to construct a temporary cache_entry to pass to the
+checkout_entry() / write_entry(). There is a note in checkout.c
+indicating that write_entry() needs to be re-factored to not take
+a cache_entry.
 
-I wonder if we can just add a
-> single configuration whose value can be "never" to pretend as if
-> "--Xno-renames" were given, and some similarity score like "50" to
-> pretend as if "--Xfind-renames=50" were given.
-> 
-> That is, merge.renames does not have to a simple "yes-no to control
-> the --Xno-renames option".  And it would of course be better to
-> document it.
-> 
+The cache_entry type could gain knowledge about where it was
+allocated from. This would allow us to only have a
+single "free()" function, which could inspect the cache_entry to
+see if it was allocated from a mem_pool (and possibly which
+mem_pool) and take the appropriate action. The downside of this
+approach is that cache_entry would need to gain a field to track
+this information, and I *think* all of the bit field spots are
+taken.
 
-With the existing differences in how these options are passed on the 
-command line, I'm hesitant to add yet another pattern in the config 
-settings that combines 'renames' and '--find-renames[=<n>]'.
-
-I _have_ wondered why this all isn't configured via find-renames with 
-find-renames=0 meaning renames=false (instead of mapping 0 to 32K).  I 
-think that could have eliminated the need for splitting rename across 
-two different settings (which is what I think you are proposing above). 
-I'd then want the config setting and command line option to be the same 
-syntax and behavior.
-
-Moving the existing settings to this model and updating the config and 
-command line options to be consistent without breaking backwards 
-compatibility is outside the intended scope of this patch.
-
-> I also had to wonder how "merge -s resolve" faired, if the project
-> is not interested in renamed paths at all.
-> 
-
-To be clear, it isn't that we're not interested in detecting renamed 
-files and paths.  We're just opposed to it taking an hour to figure that 
-out!
-
+> Let me read it fully once we know where these patches are to be
+> applied, but before that I cannot say much about them X-<.
+>
 > Thanks.
-> 
+>
+
