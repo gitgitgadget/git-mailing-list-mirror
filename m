@@ -2,111 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A24F1F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 00:32:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2E791F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 00:44:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753791AbeDWAca (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Apr 2018 20:32:30 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:34720 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753669AbeDWAc3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Apr 2018 20:32:29 -0400
-Received: by mail-qt0-f178.google.com with SMTP id a25-v6so15878466qtm.1
-        for <git@vger.kernel.org>; Sun, 22 Apr 2018 17:32:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=BBcqUx/SkGnvWxib1emZ9x/nxROXhxUoE/d5zbf9aXI=;
-        b=PWAiGtSjV6soFYvtOHk/Pwaeu7TsKPbWcaC1lnZau5mnNW4O6wsySHUpUSG9/PHJiU
-         d/7QDEBv9R1eVf/iNycMbTk7AXKqb0sFJSNCN/t9KfXxP9y5ukbSneFlCeKVOnoRKS9z
-         dqA71ZFIN9EBtOyGtqegX3ub0R1Jne2fhQIJEofGPZpTEZrQW1577MpgUY++pR6WHCf8
-         toIVxSFUprXno/MwYRuhId3wrdcsVIQAsuOfPNKUajkfzWuhwDE+PX7OguwiExH9Hv7i
-         vHPYiQrDb4rn6EYL5thXLWCiNwc2MCL2xgBBRFMbRbyGr/lMNl7/lK/uWdVlh6MgeNKa
-         JLXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=BBcqUx/SkGnvWxib1emZ9x/nxROXhxUoE/d5zbf9aXI=;
-        b=FZKw4+NZllHgho4jgumvQXMQzhe+yo1NTRZ6YBW/Mxm14qDbFR4FdNXbexDCR0oU3K
-         N9yXyZrFOEmW28JctEALvhcOi+Y+1JFbrb305NkGHS741Lbw92SuizvzoJHI2iVVv07o
-         U8hceAiuk+ys+8Q0PdpV6/SBjBMSBZPZSZwjW7YdZJjfmrmkdRZH6bJzlkbIixWCoMa0
-         okeL/4zeHwrruKe6NfbKXDMNI/XhJjaiJRC5oqa6/26dVke47fRJfYPelOMcRzWvMp77
-         SpCxP8TWcBdSihhWIwh6h5V3NpIAqxcYKnwzGksHM7c/VYVQHQPqMwE0+bmGK2Y4elbh
-         wunw==
-X-Gm-Message-State: ALQs6tCdGXcWPsscNrS95lmbO8A+rLVq+Bgo0B/AjpvPE7De+RcKQFat
-        ieZyZD3EEUr0ol6o/SKQvpWzs4j/dCCS3f0drfs=
-X-Google-Smtp-Source: AB8JxZoN3j+i8HnxVC+uNa2leRKjqp9/vH188cT/q+7NDqSYV4aPMcB9wEggq2HkcDu7NJ0az+Y+wPoG83UzuaLfuqM=
-X-Received: by 2002:aed:26a4:: with SMTP id q33-v6mr20580462qtd.165.1524443548908;
- Sun, 22 Apr 2018 17:32:28 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Sun, 22 Apr 2018 17:32:28 -0700 (PDT)
-In-Reply-To: <6dd73ad84cad5a749bf05c500295955970577e04.1524429778.git.me@ttaylorr.com>
-References: <20180421034530.GB24606@syl.local> <cover.1524429778.git.me@ttaylorr.com>
- <6dd73ad84cad5a749bf05c500295955970577e04.1524429778.git.me@ttaylorr.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 22 Apr 2018 20:32:28 -0400
-X-Google-Sender-Auth: Ja-aZXOr_ALTw0n8P4Qu3fXwKVE
-Message-ID: <CAPig+cTozduqSAxh+w4H85m7en72Yo09asdx+1KSTswqbnBr4w@mail.gmail.com>
-Subject: Re: [PATCH v2 5/6] builtin/grep.c: show column numbers via --column-number
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+        id S1753806AbeDWAoX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Apr 2018 20:44:23 -0400
+Received: from gateway30.websitewelcome.com ([192.185.146.7]:34583 "EHLO
+        gateway30.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753752AbeDWAoW (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 22 Apr 2018 20:44:22 -0400
+X-Greylist: delayed 1240 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Apr 2018 20:44:22 EDT
+Received: from cm12.websitewelcome.com (cm12.websitewelcome.com [100.42.49.8])
+        by gateway30.websitewelcome.com (Postfix) with ESMTP id 8A700EAB8
+        for <git@vger.kernel.org>; Sun, 22 Apr 2018 19:23:41 -0500 (CDT)
+Received: from gator3035.hostgator.com ([50.87.144.38])
+        by cmsmtp with SMTP
+        id APGffyItTlAdrAPGffYdqY; Sun, 22 Apr 2018 19:23:41 -0500
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=schemaczar.com; s=default; h=To:References:Message-Id:
+        Content-Transfer-Encoding:Cc:Date:In-Reply-To:From:Subject:Mime-Version:
+        Content-Type:Sender:Reply-To:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=/94t2fk0/Fk3T5gEn6tmZXduce2DO6WXnkxKaeAGixY=; b=Mq8RLkAKWTIlVjjxpHqsSXUzg
+        Qz5k3SESKWSd42xmyrehrMBoQCskfGSws0UjBgIvHizAb/Iz4VIjQHJhQigqsYQkSVFBU9LgS1oTB
+        WkEVBtfcBkGQ8OTgrhrc0PD/pAA+3tRXHzS0tfcKyR+Na4txkiYQCc9DTeD1aYy+4Zu1U=;
+Received: from pool-100-0-63-86.bstnma.fios.verizon.net ([100.0.63.86]:49680 helo=[172.24.1.103])
+        by gator3035.hostgator.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89_1)
+        (envelope-from <andrew@schemaczar.com>)
+        id 1fAPGd-001vbU-Hl; Sun, 22 Apr 2018 19:23:39 -0500
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 11.3 \(3445.6.18\))
+Subject: Re: Git enhancement request - checkout (clone) set modified dates to
+ commit date
+From:   Andrew Wolfe <andrew@schemaczar.com>
+In-Reply-To: <20180422195923.GA10082@alpha>
+Date:   Sun, 22 Apr 2018 20:23:37 -0400
+Cc:     Andrew D Wolfe Jr <andrew@schemaczar.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3BCD276C-BC6B-47BD-A27C-05D7C0C07280@schemaczar.com>
+References: <585A3A2E-7DA6-4718-BF85-2D17AAAF3EF5@schemaczar.com>
+ <20180422180912.GK14631@genre.crustytoothpaste.net>
+ <1FCE6958-FC75-4A9B-88A3-05AE991815E4@schemaczar.com>
+ <20180422195923.GA10082@alpha>
+To:     Kevin Daudt <me@ikke.info>
+X-Mailer: Apple Mail (2.3445.6.18)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator3035.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - schemaczar.com
+X-BWhitelist: no
+X-Source-IP: 100.0.63.86
+X-Source-L: No
+X-Exim-ID: 1fAPGd-001vbU-Hl
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-100-0-63-86.bstnma.fios.verizon.net ([172.24.1.103]) [100.0.63.86]:49680
+X-Source-Auth: andrew@schemaczar.com
+X-Email-Count: 1
+X-Source-Cap: b3VybGlnaHQ7b3VybGlnaHQ7Z2F0b3IzMDM1Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 22, 2018 at 4:47 PM, Taylor Blau <me@ttaylorr.com> wrote:
-> This commit teaches 'git-grep(1)' a new option, '--column-number'. This
-> option builds upon previous commits to show the column number of the
-> first match on a non-context line.
+Kevin, thanks for your feedback.
 
-Imperative mood (and dropping unnecessary "builds upon previous"):
+You have a reasonable point, because usually you don't put the outputs =
+of a build into version control, but the build script checks them for =
+being current.
 
-    Teach 'git-grep(1)' a new option '--column-number' which shows the
-    column number of the first match on a non-context line.
+On the other hand, when you change branches, your existing output =
+directories are worthless problems anyway =E2=80=94 even if you have all =
+the interdependencies correct.  Because of this, I'm inclined to =
+consider this use case as intrinsically hazardous.  When I do a =
+checkout, I always want to purge all the intermediate and end targets =
+regardless.
 
-> For example:
->
->   $ ./git-grep -n --column-number foo | head -n3
->   .clang-format:51:14:# myFunction(foo, bar, baz);
->   .clang-format:64:7:# int foo();
->   .clang-format:75:8:# void foo()
->
-> Now that configuration variables such as grep.columnNumber and
-> color.grep.columnNumber have a visible effect, we document them in this
-> patch as well.
+When doing a build, it's often useful to put the current commit/branch =
+into the output directories as documentation; I usually do this in my =
+build scripts.  This also makes it simple to detect when the branch is =
+changed and clean the outputs.
 
-As mentioned in my review of patch 2, document the configuration
-variables in the patch which introduces them.
+- Andrew
 
-> While we're at it, change color.grep.linenumber to color.grep.lineNumber
-> to match the casing of nearby variables.
->
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
-> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-> @@ -99,6 +99,28 @@ do
-> +       test_expect_success "grep -w $L" '
-> +               ...
-> +       '
-> +
-> +       test_expect_success "grep -w $L" '
-> +               ...
-> +       '
-> +
->         test_expect_success "grep -w $L" '
+> On Apr 22, 2018, at 3:59 PM, Kevin Daudt <me@ikke.info> wrote:
+>=20
+> On Sun, Apr 22, 2018 at 03:01:10PM -0400, Andrew Wolfe wrote:
+>> Hi Brian,
+>>=20
+>> Not completely sure what you're saying.  If the files on master are
+>> not changed, the changed files' commit timestamps will be older than
+>> the branch commit timestamps.
+>>=20
+>> However, if I check out master after committing to a branch, the
+>> modifications will necessarily disappear because they haven't been
+>> committed to master.  Instead, under my proposal, each will get the
+>> timestamp of its prior commit.
+>>=20
+>=20
+> Say I build the project while on a certain branch. Then I checkout a
+> different branch and build again. You would expect that the targets of
+> every source file that have changed are rebuilt.
+>=20
+> When you would restore the timestamp back to the commit timestamp, the
+> timestamp will be older then the target, and make will not rebuild it,
+> leaving you with outdated build targets.
 
-I realize that several existing tests in this script are already
-guilty of this sin, but please give each new test a distinct title
-reflective of what it is actually testing in order to make it easier
-to correlate failed test output with the actual test code.
