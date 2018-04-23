@@ -2,106 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A30831F404
-	for <e@80x24.org>; Mon, 23 Apr 2018 11:07:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9E521F404
+	for <e@80x24.org>; Mon, 23 Apr 2018 11:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754614AbeDWLHv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 07:07:51 -0400
-Received: from mout.gmx.net ([212.227.17.21]:39545 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754449AbeDWLHu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 07:07:50 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LqE5k-1eWoex3HUW-00dlzz; Mon, 23
- Apr 2018 13:07:47 +0200
-Date:   Mon, 23 Apr 2018 13:07:32 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Philip Oakley <philipoakley@iee.org>
-cc:     git@vger.kernel.org
-Subject: Re: Fw: New Defects reported by Coverity Scan for git [argv_array:
- offer to split a string by whitespace]
-In-Reply-To: <04F34371EF174E1F8E6E762D1BCA6C4F@PhilipOakley>
-Message-ID: <nycvar.QRO.7.76.6.1804231307090.15174@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <04F34371EF174E1F8E6E762D1BCA6C4F@PhilipOakley>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754693AbeDWLUV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 07:20:21 -0400
+Received: from mail-ua0-f182.google.com ([209.85.217.182]:45670 "EHLO
+        mail-ua0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754614AbeDWLUU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 07:20:20 -0400
+Received: by mail-ua0-f182.google.com with SMTP id j18so9904909uae.12
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 04:20:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=rGxu5+w7IqD92ZJhXkZFJFvMQZvGcpwcCWhijDJB1So=;
+        b=WwgevGKczqA/3Jh+YVpl2DmfPZYxUweAGJwhOUyqHy0h51g6t1inMyIwhrbL7jTw2o
+         h9Ok/gy9isIwN01QxBtB2vAaL5jGbb0Jozs2Ciz7s+Egv1KIqVZ3Sh0G/FjL6C59acdG
+         gtDuWmqNLpgX0m684e6Qv4a1QE8A4AmDf5niJWDH6dE65hmzXl3krvsdG83VjVS/m0BL
+         e/TaLftAsTQTt8BLgxWnRm9TpvkVMz0LW/v37WAFl8z68hC+VCBVNXuk/Gm4WHeWV2pW
+         /ST+yST1F3IqZ5RXrK/OE6Q3/08W7n5CVj+R7w2J4k5hsmNzMNEIG/PlKuHUXxFcz0lF
+         ZAgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=rGxu5+w7IqD92ZJhXkZFJFvMQZvGcpwcCWhijDJB1So=;
+        b=Xt2PBO55FvYLA/k0F5pmiWatV/+dog456vxDJmtsET5fF5bh8FjTW/juSmEV8nU0dP
+         6xnUPTrNPCepUt7qGZqyPu154MIHTo1ABz7dsd0pUPqkyVhGAk2zJ7nCVFJ6tyZTYiiq
+         xYPElxTOK+wdBxEYk3oKw10XqlIrlcaINzEpTXAtJwYB2hmDG3tOMtw1tVCrRMKUkALi
+         nL5/bcKoHNaNc5fJewUXcHhYNhk8gTdxucTGUq0xOn95x3NhbyJ14GJFsRORLx4t38U7
+         9OUMgPamlvCFNh3TXtWZG8Q0XoI/gZd25pHBVemCjawuzwu5/E/A0+oPbsrQ5or9+yty
+         qsdA==
+X-Gm-Message-State: ALQs6tAcCEN+LtQRTO4Enac+gVncMCEevE7OClIbHzdWEuuKH7Fm0w70
+        j2Fj1of12o8HxSnZDgkmgGtOsgGhYJ84pq/xDc4=
+X-Google-Smtp-Source: AIpwx48H088ojdFJe5+M/miBaL5uKt2Th/t9DII21Vgf6gnJwT70uaSdtJ440naSe7sT705XG52J9C+9/1y0xIkyKAQ=
+X-Received: by 10.176.10.129 with SMTP id d1mr7887088uak.39.1524482420079;
+ Mon, 23 Apr 2018 04:20:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:yRDJr3yZN3zMhSNeK4DIFFUopWKcQNaGaHTWCbGzbu0PiO491++
- AfE+tUHA6o36hCNt9qd+ynVccoG+tx22Lch5I+2xvOy2a3qIEavw01ZjGZTewNO69dbxrmY
- kKf7TTCMniE76/KbcttILcwQFIh4n82FyuMBAJy5VLjCI4DvQXseIJmSa3my5Vl3WVOcqU3
- cOMpXdQjynriGIfKuNRwg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Hy9pEJcY+7Y=:mk6E1I/I0EmoyO7OowihJq
- gFwRxc3j3HHs5/lQMLoHJhN/S3QSKqZX962NiumzkmmWrufDs0f9E8oxUGVeGtAs4wAEMYWvV
- Bthd8/ixPgK41yqauQG+VsTNhu8VDp5PyEfkC07+v+g3uY8Vo8QrtStP20Tpc4HPLrWQKiYns
- MfbG9K3Cvo+aJAFcmlYhkdhsvA2TOO6lIttKsSwBzQUNJzo0EUcTpdqGRuHsbidgejigw0cTq
- 3I/oVn7P8eRGeUlMoOxLDOjtUPHcTlwvrvdheaHa9sy6BnCIuruq0IXFjvTgc88SaD01FOPH8
- 9MqgzSQ+p2p0sMxIMGitxpWg1ulZOFZBZOD5bW1vn/FIt5++uR3UIOtRQMQU2sRk90JfbkQUN
- 002r8rgpYF5eFEUEQ2kvZjKARsr01WXVZG8tl7FDGTKcgCa6xX9zaqEBlF5vZLoTTNsCwFNZF
- kixZ1FXJLBvEg9pMvMAn87mfBZc+mEBPqk74843oKFB7tGULTQJfMs4Nk4MT0Op6UXSYYFGws
- Q6f9mXqcTKqJqfaNFhWJlee1S9DTp0cBP6onPZHTMLw/tiZFAWIC6Nhm9JXe7CCP1EewJIuKO
- UHOp/a68I+GVx4bmgibrkLmAJG713PQXW3Xk8Cyv0+3sGxDuGD9hkTTy6JJXFAP66ds0v6AWN
- JoVRfSacPVkCL5bzuyo72Haor+NkE1TO9f09rCpnCZEI44lzFScxy8mAwq4yu1XFu3FEJsRyS
- mXtQnkCVA1m3H4hohUlCUg/3/n7zOIcbTrBkf5emy+/paxmkb3v+V+1pR80lai3HCOpLIq44B
- u5dRDBOyszLiQ3FysUMWfo5e3DhrumfMiUJCh7feDsPtAgEOCs=
+Received: by 10.159.34.195 with HTTP; Mon, 23 Apr 2018 04:20:19 -0700 (PDT)
+In-Reply-To: <20180421165414.30051-3-pclouds@gmail.com>
+References: <20180415164238.9107-1-pclouds@gmail.com> <20180421165414.30051-1-pclouds@gmail.com>
+ <20180421165414.30051-3-pclouds@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Mon, 23 Apr 2018 13:20:19 +0200
+Message-ID: <CAM0VKjk_vvVgUHAQDRAs6+dyBd55qKO+ZG_-X2DgaqnNtPjGUg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/6] git.c: implement --list-cmds=all and use it in git-completion.bash
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+On Sat, Apr 21, 2018 at 6:54 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
 
-On Sun, 22 Apr 2018, Philip Oakley wrote:
-
-> is this part of your series "argv_array: offer to split a string by
-> whitespace"?
-> 
-> https://public-inbox.org/git/CAPig+cTDbTtUeFYmkNtM773EBgE14Tpic4g4XEFuSVwSypdMjw@mail.gmail.com/
-> 
-> ----- Original Message ----- From: <scan-admin@coverity.com>
-> Sent: Saturday, April 21, 2018 10:53 AM
-> Subject: New Defects reported by Coverity Scan for git
-> 
-> > New defect(s) Reported-by: Coverity Scan
-> > Showing 1 of 1 defect(s)
-> >
-> >
-> > ** CID 1434982:  Memory - corruptions  (OVERRUN)
-> >
-> >
-> > ________________________________________________________________________________________________________
-> > *** CID 1434982:  Memory - corruptions  (OVERRUN)
-> > /builtin/replace.c: 475 in convert_graft_file()
-> > 469
-> > 470     while (strbuf_getline(&buf, fp) != EOF) {
-> > 471     if (*buf.buf == '#')
-> > 472     continue;
-> > 473
-> > 474     argv_array_split(&args, buf.buf);
-> > > > >     CID 1434982:  Memory - corruptions  (OVERRUN)
-> > > > >     Overrunning buffer pointed to by "args.argv" of 8 bytes by passing
-> > > > > it to a function which accesses it at byte offset 8.
-> > 475     if (args.argc && create_graft(args.argc, args.argv, force))
-> > 476     strbuf_addf(&err, "\n\t%s", buf.buf);
-> > 477     argv_array_clear(&args);
-> > 478     }
-> > 479
-> > 480     strbuf_release(&buf);
-
-Yes, it is. Coverity has problems to figure out what is really happening
-here, and it has the exact same problems with strbufs.
-
-We initialize both of these structs using static initializers, with
-specific, empty arrays. When we need to reallocate, we figure out that the
-empty array was still there and replace it with a NULL so we can realloc.
-So there is no buffer overrun, but Coverity cannot figure that out, and as
-much as I tried, I could not come up with a "template" to shut up
-Coverity.
-
-Ciao,
-Dscho
+Oh, look, an empty commit message! :)
+So what does this option do and why use it in the completion script?
