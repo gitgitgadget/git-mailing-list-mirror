@@ -2,84 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30B8B1F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 21:01:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B24091F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 21:04:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932225AbeDWVBN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 17:01:13 -0400
-Received: from mail-yw0-f174.google.com ([209.85.161.174]:44536 "EHLO
-        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932157AbeDWVBN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 17:01:13 -0400
-Received: by mail-yw0-f174.google.com with SMTP id u10-v6so5078633ywl.11
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 14:01:12 -0700 (PDT)
+        id S932295AbeDWVEg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 17:04:36 -0400
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:38551 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932157AbeDWVEf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 17:04:35 -0400
+Received: by mail-qt0-f181.google.com with SMTP id z23-v6so19457852qti.5
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 14:04:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=5Z4voRzrI8YRYppuR3RaySq725gaFPdYqRhGVp/RT+Q=;
-        b=ADlddcWWR1KfP19NU85uf0hZFQQfVkFeiXT95WTW79VeNPB6LABPbq7hKXfMhalXWj
-         QruDKqyhK95GvUpJonOpxcGzfeFL1hHZmUA3OAWesuGb2/ObD0HZl5xN1cXjxJDiYUnV
-         kE5N1GUJc2Z3tDUQsVIzrZPbDMm3KkxllceA0Cd5sP5Y5uvztjdpOI4XdY6/31REJ3sy
-         haNg3Iri8VMEAgGTBszhkGOuxWr1QxLjO96Lwn5YBel9Ldg0I4oeQZsPyw8SmN33K+Qq
-         ejj/rh+lA0F5NhJiFG465urEr95dG78xVL4vROVWW6s+Prs+Po8UpCkGxw7BERGgpsO3
-         wM3Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=1HvKOOtH57zP7OhSGumiAOKd9lc43zbq3Tr4Unreui8=;
+        b=a78/MR2m0Q1vKmvamJiuara5Tts6RTbEFrOR9VzylI081CjabdJD03cTZTxqua3YVU
+         UVsshVr0NxTTm1EaJoo7/wBzw0dlMCvSnp4LLkwj+WfCEDVImESXmMfPtdBvcFYOd0XZ
+         awL+dAL0kz3pgvoy6uX1PEjlIEu85uNTaZUhO14rFTaHDRGET6a7zhhbc2I+47WGjiCn
+         4f1xHWWE4jsq5yFE+/fF6OZCBNxMmKaFXNo6lU9/0mWjxifU620GQhSd0h1s5UMjp5pJ
+         cm3Twqt6bABymqW1I2hDsdcHDemwKfmK7DnbETqbo8N87+FC7LNGRikErbYKI7d4X/Ej
+         ljjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=5Z4voRzrI8YRYppuR3RaySq725gaFPdYqRhGVp/RT+Q=;
-        b=dj+ekIXODqa35gUtSfGnKzHTqsipldz02RWEFn8PWLhtxJ7O70wVGaQSCUDMrs2upV
-         BBCoaIIjtFEWuCOVfNdRqBEzXN+dCOMsbzidNLYkilo6UYqvPGdoGsHRdO1NPXXspQg9
-         9a7X96LnGSdEgGOpj4n8dxg+GuPaBE21v2FPM0Er1gk56zEHvmvgb8IqtEnLF4kUZJR6
-         YmIEgBI0c8k8Zrx5ELhYIggD/OmB69Tjbr5MZxpzquz2Jn+ypL5jW5cvDNjerVkxfNfF
-         FWWdtkVvrX0AIbr0RROe+XRLF2jhO5UCccwKUu4PpjMdo6gad7YmVP/+1nu2/Lhr82O5
-         cyVw==
-X-Gm-Message-State: ALQs6tCj6kL6osZZdTt8EEcGklrNFhnPPb49rIKssNYP1ENflT4+Llqc
-        ma3jf8FfIiR8wOmaulZD1a169j2HWrNaK3NCOfViUAPdsJg=
-X-Google-Smtp-Source: AIpwx4+fTF8exFhnc0d9cfRpU/5qvyUAZKrhAfCRYrN1Kq4dYj0V4z9tnAaXIeDBRZvQ9N1sErOFnD5jyK4K7SyCJ4o=
-X-Received: by 2002:a0d:e28e:: with SMTP id l136-v6mr11561314ywe.500.1524517271890;
- Mon, 23 Apr 2018 14:01:11 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=1HvKOOtH57zP7OhSGumiAOKd9lc43zbq3Tr4Unreui8=;
+        b=tImGVd7QSPO8Upo2rUmwwy01MSAPb10O5jnXHDtuAjybMqlD4fElN9ExnocfPvZuNr
+         s7Q4gluoQ5kIKvTK7nCdZPVKcnr04qs86KwMXmEygbSPgImAKjHDFwfy5ugB7nDwzUq7
+         UgnaEl3/RE065StneDW+H3atU5ErLOS20s80tAs1PToiDqztz5RSsJOVzXi/65dW4Y5n
+         sp4RM4dy8RNsGcQvyVgOXqd743PCIXlGO9PZVahkEMVloliTiKy2vwOd9BcRv/+gU0mG
+         kIrjzUjCYMEH4KfGKqApTBC0JmKb68Fl885gE9KkT7KhPR/B5PWLCObJywghz1xqnkek
+         r1jg==
+X-Gm-Message-State: ALQs6tANupzBxdOnWybnKRrY/gSg8wiJWp7tI3aBuOCEOH4uL0LUWT4F
+        DWccNSFvk4cxKcRwKay8YlfHlTF90eNxVJ4IbW8=
+X-Google-Smtp-Source: AB8JxZrwv2rpbdMVhrfa0Gl83VlqWLqpU71kesyic8yk7SNaF+DFWOvJkZJQ7WYyxJQlWCiwOA8wvKtxJeZg/5BbcAU=
+X-Received: by 2002:aed:26a4:: with SMTP id q33-v6mr24312977qtd.165.1524517474810;
+ Mon, 23 Apr 2018 14:04:34 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Mon, 23 Apr 2018 14:01:11
- -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 23 Apr 2018 14:01:11 -0700
-Message-ID: <CAGZ79kbzFGn2-xcrWFi1+ZUgSGGHdUPEQOexu8Lan796LCsvBg@mail.gmail.com>
-Subject: GSoC students and mentors in 2018
-To:     git <git@vger.kernel.org>
-Cc:     Pratik Karki <predatoramigo@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        alban.gruin@gmail.com
+Received: by 10.12.174.202 with HTTP; Mon, 23 Apr 2018 14:04:34 -0700 (PDT)
+In-Reply-To: <05560086-232c-f14c-f82b-e21b7ecce1b3@web.de>
+References: <CA+FnnTxbg97A4P3AP7n5RT8+=W8PY0yx3644Ay2Zi9xgKD2aoA@mail.gmail.com>
+ <CA+FnnTzfJMBuSMAD7PgUurRu8jOpirEgM6=+=i91zdGLWmfUpg@mail.gmail.com>
+ <CAPig+cQOzKbM0R6vKTg_BU6meEbAAJWL1T0jZkaCOF0uJ=_Lmw@mail.gmail.com>
+ <CA+FnnTzqaPrLgYv-8X9BDW0DR7331morN33B81w8T3vzOwn+Pw@mail.gmail.com>
+ <CA+FnnTz-qdVK5482GJo06QrvMktGYhJAJ6g-Naq0BgT-uoRvEA@mail.gmail.com>
+ <CAPig+cS+gf5gGM3fmnxk-6k7ezbtS=KQFqkkxVtcytHfcQApEQ@mail.gmail.com>
+ <CA+FnnTwvnA90nDARKW9r7p5iraoOGTvfDJ26n6Udc68bDSUASw@mail.gmail.com>
+ <CAPig+cRjYju4zEgiY_TuOOk0e7A8zNz+hu+40vQUEGDX6FGDxw@mail.gmail.com>
+ <CA+FnnTzFomd91d1F6O-a28hXQ6PxOiBd44da4nSVW0MuDKgkmw@mail.gmail.com>
+ <CAPig+cTw5GjB4VgFD2teDvMuyGPFFoNSCqbXbarEXCe3fVdLjQ@mail.gmail.com>
+ <CA+FnnTzkZS7HP61Ck3y5p0EC7J_h=ToR5tq5cvEpJ79vYuSxZw@mail.gmail.com>
+ <CAPig+cT0ogLmiviWhdZTLxDM7+VN3hk7wgkKnvX96Ym-yXR5bA@mail.gmail.com>
+ <CA+FnnTxXOwORs_qYvOdSj41UX1aBfj+Hd1+kxPa8j+34xgjhgQ@mail.gmail.com>
+ <CAPig+cQzX04JuoUOnxOxWtqMCpHCUi=hMOSDL+jpNuML0iE+Tw@mail.gmail.com> <05560086-232c-f14c-f82b-e21b7ecce1b3@web.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 23 Apr 2018 17:04:34 -0400
+X-Google-Sender-Auth: iQMCLE90zFXiwULls8kNhrkL_yE
+Message-ID: <CAPig+cSbAaNby++AvCx4CkJ0KcRkx5Q=xs8VSbNmY=dgi-F9jg@mail.gmail.com>
+Subject: Re: Is support for 10.8 dropped?
+To:     =?UTF-8?Q?Totsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Igor Korot <ikorot01@gmail.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Git community,
+On Mon, Apr 23, 2018 at 3:58 PM, Totsten B=C3=B6gershausen <tboegi@web.de> =
+wrote:
+> On 2018-04-23 18:53, Eric Sunshine wrote:
+>> On Mon, Apr 23, 2018 at 12:31 PM, Igor Korot <ikorot01@gmail.com> wrote:
+>>> 1. Is the file name "config.mak" or "config.make"?
+>>
+>> "config.mak"
+>
+> I am confused, I have these file in my tree:
+> config.mak.in  config.mak.uname   Makefile
+> Setting options is documentend in Makefile
 
-This year we'll participate once again in Google Summer or Code!
-We'll have 3 students and 3 mentors, which is more than in recent years.
+You can place custom build settings in a file named "config.mak" which
+you create; it's not part of the distribution. The other files are not
+intended for modification.
 
-Paul-Sebastian Ungureanu mentored by DScho, wants to convert git-stash
-into a builtin.
+> I would actually try to install openssl / openssl-dev (or however it is
+> called) via "mac ports" or "home brew".
+>
+> Both should work (but I don't have a system to test on)
 
-Alban Gruin and Pratik Karki want to convert parts of git-rebase into
-a builtin. Both are mentored by Christian and myself.
+Igor indicated earlier[1] in the thread that he wanted to avoid
+Homebrew (and Macports, etc., presumably). If he'd be willing to use
+Homebrew, then easiest would be simply to install Git itself via
+Homebrew: "brew install git"
 
-The slots were just announced today, please join me in welcoming them
-to the Git mailing list! (Although you may remember them from the
-micro projects[1,2,3])
-
-[1] https://public-inbox.org/git/20180319155929.7000-1-ungureanupaulsebastian@gmail.com/
-[2] https://public-inbox.org/git/20180301111907.17607-1-alban.gruin@gmail.com/
-[3] https://public-inbox.org/git/20180327173137.5970-1-predatoramigo@gmail.com/
-
-Thanks,
-Stefan
+[1]: https://public-inbox.org/git/CA+FnnTzfJMBuSMAD7PgUurRu8jOpirEgM6=3D+=
+=3Di91zdGLWmfUpg@mail.gmail.com/
