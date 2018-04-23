@@ -2,75 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27B2F1F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 23:41:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 741C21F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 23:41:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932696AbeDWXlG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 19:41:06 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60740 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932745AbeDWXkq (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 23 Apr 2018 19:40:46 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1B88160D54;
-        Mon, 23 Apr 2018 23:40:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1524526845;
-        bh=0suzklJG0d1MNG2nlWN/45tMrCsFv4BO4ihcXECL36Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=atjjEHtqlopnFabnnolnjX4GooQwRt9BXB1SOVvR8TXzLEZKtBm4qDMM3Tc7EMByd
-         eLIhpYGCaQE/LQPAVuu9L3ZnOE5uZhFgkikUE47A99dyJJrq7RZdjMtumDfiGmNCoa
-         hCjkCoAHFuwd7qYzADTsdgTqU7TCOBEGKPU8OhCINDgLqs2Q2kjLv1WMfKh5l7aHCB
-         N9yPGmNWAfDT86huwvugMqULV+OCjs1AE8MnPo1UqezDxz7371AxtGASNw4DBW2/Ur
-         L/fPGcg6SLdkN3AgxL1zZVeF65CudJiPVQ9OZiC4UTfoO5jRxMLKtdGijRfW/ZDzm1
-         yOy0RKzv/w/cp9G2Kt4aMYhT6W4KMwRuSjTjy2M3z8r8JrF5D1QmJQAqv6MqNrnTI0
-         MRnNWOqBTKUq6BpDQzHpBOiyUsOUvKR/1D0nFJWPxe8ZNCAz7CwVFyEeMLz6eOhw8D
-         +G3nxcfDP6EY2XiLpl5Yo07Fm5qVRYTrNW9V7l0VvfgSKHZraZ0
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 37/41] dir: use the_hash_algo for empty blob object ID
-Date:   Mon, 23 Apr 2018 23:39:47 +0000
-Message-Id: <20180423233951.276447-38-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.17.0.290.gded63e768a
-In-Reply-To: <20180423233951.276447-1-sandals@crustytoothpaste.net>
-References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S932745AbeDWXlM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 19:41:12 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:46127 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932697AbeDWXlK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 19:41:10 -0400
+Received: by mail-wr0-f194.google.com with SMTP id d1-v6so45658490wrj.13
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 16:41:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=9kDC4rkHYyGldvtSnm9RYJ8Qs/K3bFDWKB9WpOPYZus=;
+        b=XsvrIj0k+88dK4jwPytB3qHFov2bsvh4QH3eTB7rWQEp64iJIID4y4R1qM+tr4L16A
+         9iCJPE3oGA0J9/XJoWYjBagDZHAObJYf0Y8WwaLyobb4HgoIcpmzmbhoxco9BAc3FOeT
+         3q4JoBdx6S8QTYmwM89fczCy8zbeqkl2iF5N4qmdq0ifaXbPjTqRAsU1IC59XmyoBLRZ
+         2f6oxr7EMMOiOhmSKxLFZcD18kUwdQmgqPp7x1tcQsSqxZfwpk9H27joF+I/h19yCgoK
+         g+L1YB9vIjdfRIE2mF1ydko3JmERFN2AWEE7uPNybBEYBhXAaZ2ykORtPFE6ssFC1XOI
+         eldg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=9kDC4rkHYyGldvtSnm9RYJ8Qs/K3bFDWKB9WpOPYZus=;
+        b=WZL5WtoN8Gz0V2Ef4oyj8of07+qVhoJnmLrqGZXWWXsNAvmr8QLcqZXBADnlj3hWjb
+         dbIZ0BGzingD8pXd8DcPExjz+po7SCu5+831pvSAg3q+H8VghYe6cunqWth/D2Nkedtt
+         iYuS5StWgUtQ5SL2ag1qmoQEo86rrGTZoWjQW3uOaw2lsZqlKE3whw54uIfHBAXldXxh
+         vSzzUWBMAeFt5s9M82YEjF+34s3ZQO0PhPQotC17mQ1j02ORmh/e3ycopPy7MK9BByCX
+         S4HEHoaRIeJ5lJquFiOb+TggPMIGCVM3r/0uw8NsW+muqrFbmfn6aH7txb6mTmaCi5mQ
+         qPAg==
+X-Gm-Message-State: ALQs6tAILdH4ciWJ+GkpediYm9F2UotI2eHWqtk/bGhBvXPo9kxQblmC
+        Frj7pj4aSHL97bU5tKWjFaE=
+X-Google-Smtp-Source: AIpwx4/8jRoVe59YAW78xe+2PSFbbM/Li3WwjL5YOrUdbkVLZr6HCYsnSDSORQ1jAD1iUSjvHx9Uzw==
+X-Received: by 2002:adf:8466:: with SMTP id 93-v6mr17279839wrf.189.1524526868617;
+        Mon, 23 Apr 2018 16:41:08 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 55-v6sm28848585wrw.52.2018.04.23.16.41.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 23 Apr 2018 16:41:08 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Robin H. Johnson" <robbat2@gentoo.org>
+Cc:     =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
+References: <20180413170129.15310-1-mgorny@gentoo.org>
+        <robbat2-20180423T200557-844830385Z@orbis-terrarum.net>
+Date:   Tue, 24 Apr 2018 08:41:07 +0900
+In-Reply-To: <robbat2-20180423T200557-844830385Z@orbis-terrarum.net> (Robin
+        H. Johnson's message of "Mon, 23 Apr 2018 20:07:04 +0000")
+Message-ID: <xmqqtvs18p9o.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To ensure that we are hash algorithm agnostic, use the_hash_algo to look
-up the object ID for the empty blob instead of using the empty_tree_oid
-variable.
+"Robin H. Johnson" <robbat2@gentoo.org> writes:
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> On Fri, Apr 13, 2018 at 07:01:29PM +0200, Michał Górny wrote:
+>> Currently git does not control mtimes of files being checked out.  This
+>> means that the only assumption you could make is that all files created
+>> or modified within a single checkout action will have mtime between
+>> start time and end time of this checkout.  The relations between mtimes
+>> of different files depend on the order in which they are checked out,
+>> filesystem speed and timestamp precision.
+>> ...
+> Junio: ping for review or inclusion of this patch?
 
-diff --git a/dir.c b/dir.c
-index 06f4c4a8bf..e879c34c2e 100644
---- a/dir.c
-+++ b/dir.c
-@@ -828,7 +828,7 @@ static int add_excludes(const char *fname, const char *base, int baselen,
- 		if (size == 0) {
- 			if (oid_stat) {
- 				fill_stat_data(&oid_stat->stat, &st);
--				oidcpy(&oid_stat->oid, &empty_blob_oid);
-+				oidcpy(&oid_stat->oid, the_hash_algo->empty_blob);
- 				oid_stat->valid = 1;
- 			}
- 			close(fd);
+I personally did not think this is a good idea and not worth any
+code contamination with calls to utime().  Is there anybody sane who
+thought this was a good idea in the discussion thread?
+
