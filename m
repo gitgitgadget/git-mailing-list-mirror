@@ -2,133 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 373E71F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 18:20:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D5B01F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 18:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932275AbeDWSUc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 14:20:32 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:37423 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932109AbeDWSU0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 14:20:26 -0400
-Received: by mail-qk0-f172.google.com with SMTP id d74so17122788qkg.4
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 11:20:26 -0700 (PDT)
+        id S932264AbeDWSuF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 14:50:05 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:43498 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932085AbeDWSuD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 14:50:03 -0400
+Received: by mail-wr0-f174.google.com with SMTP id v15-v6so25939800wrm.10
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 11:50:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9dL3yck+XpLwEoHW4FSMf6pFVDOgC8BViUnPEOgV5o8=;
-        b=Mndzzgn62PSQQQjXK+5Ww/JFQNjKretCywwpGlC45HRfF24OQyvAzUjJh7rJViQw2v
-         ZWrQpKZd4yaMtHu1vICAH9zr0s49wkrx6vsoj04QWsYIaue1k24XUajcdLpxLRy2FSHJ
-         qTSm9hZPHpMWLTNm1GY7JHL13SpbK4q5gQPU1ku9UEL6rqXbRBwum6umF8yKnVT2uJUu
-         OdmQjw7Tkfp6/2wPMj5aHHiyq+EYmv5yqkl3qTIVFpWtQ/GxoUiTwIx2Jx1++xWsylK/
-         BfD9nNGeJu6qoeqet3p4XOayg27dpygmgK7KSDaGqFGeUzMi0ogeC0+q9H9llF6KY7BI
-         jKYQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XQnow9kyrp0ImgrrGENVXrpG6seHRrTSkA34Irmg07E=;
+        b=LRfi/WVvfoe23Ujn/ol3UFcZL367uUjgovQ/9GHz0CVWYocAQLfnIWn3U3Itpdbzl1
+         iL9sotmjMjYbIhvzWqwwboLPbvhg1exIfhrnP2Ftagt0tfEjPGq1Pt8TjYyrtwF4omQn
+         3kdr3FetVWRRYz4yPyimqXxCZ+dxpfloOycCMgQmdcTtUAXus+8bkZgLbh9Txov42B4O
+         hNnTsh0AACvvCNju1iZObqcMKwXwPhqRDobYPeTTkTeKq/l1lOXOwRQHCHD7QFN2+pmg
+         tRG/vXDnHtG0BDA04ZtjkvBctaAqv6QEPE+PFsG+YjJ4TZGx9oCJR3jP6F0ApAUheMc/
+         PQWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=9dL3yck+XpLwEoHW4FSMf6pFVDOgC8BViUnPEOgV5o8=;
-        b=qV2p8bpwUnk2c4Nzc5IbZI9zGjb49RHAtA5wDz6hpHVdwQtgGb2GVBXGRhwWGrzbEB
-         k6bVgiEVn1szptRO2RQtmdh4Mq/qFiGBltReVeQ3o6MOsCwKS71oMbNcSIgF4tPZTdaT
-         iin+RgxidCLJopxsFe3oJyODhbCHpaCzEBqRtbr18HLYunqvkVPc54cPkrU3vRouw7+6
-         1i1FFEwy1Vo1J8yDfWiDN/r0O2FQuX/W332vMGWzZnDQoPN9vBoTbrrfBNSoQezAT3G4
-         yYYwwPepx8fGUW44TVKvFZmjabSb6cXD1kpyWX56O2qSbkORZ3RMVXFPAMwFtv+UMPog
-         IgGw==
-X-Gm-Message-State: ALQs6tBok2pSMY9m3gWtAee+7eo/7rbONJmrf7sQyr7qL/H4Xt5ry3+2
-        AStC7hHUdLvZzBcnnO+0F50=
-X-Google-Smtp-Source: AB8JxZpkjvM0gQulpkqIPie2kv5Qc293N8j6rrshg08FK64+VNu8gwnul5+RkOEQd4u9jstM5WxokQ==
-X-Received: by 10.55.93.71 with SMTP id r68mr24576851qkb.70.1524507625814;
-        Mon, 23 Apr 2018 11:20:25 -0700 (PDT)
-Received: from localhost.localdomain ([2001:4898:8010:1:1060:bd2c:4297:50e])
-        by smtp.gmail.com with ESMTPSA id y6-v6sm10235685qtn.56.2018.04.23.11.20.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Apr 2018 11:20:25 -0700 (PDT)
-Subject: Re: [PATCH v1 3/5] mem-pool: fill out functionality
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Jameson Miller <jamill@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>
-References: <20180417163400.3875-1-jamill@microsoft.com>
- <20180417163400.3875-5-jamill@microsoft.com>
- <20180420162136.144ac5529072f22067abb3b9@google.com>
- <898c0b43-b090-fb1f-45d5-ea4041843cdb@gmail.com>
- <20180423104931.c465b6a260219c96feba41ff@google.com>
-From:   Jameson Miller <jameson.miller81@gmail.com>
-Message-ID: <5584faf6-23a0-366a-bd87-cf9e420f212c@gmail.com>
-Date:   Mon, 23 Apr 2018 14:20:14 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XQnow9kyrp0ImgrrGENVXrpG6seHRrTSkA34Irmg07E=;
+        b=sHP2Se46ASkmqojvcjXK5FUgSCcYUpX4GwhsWTBEQpQ3IQn4q5yKF8Zg2NoA0a9fs1
+         fzEHAv9Dvi5b8C+lh9PSPNhEXf7dQbTfIh3exUDsKiPKcdNofWiAJBveORvWyQTefIz6
+         McRbhjO2Mmn03bZZV5CQ+ynSb1Onr48Kekf2H6iQP23Mzpax2lQgC1rFA2EP9saR3PV6
+         mj2hhvIIPlRoeifwHpZ4BkYxqm7cV0Sg4ccfwmAT06vuAaV0lDyU2HHRkYq1mTurkn4Y
+         1ARXnFA0bu8fY1XrUsDHvGgdvhWv6+bmQqSIx32mee/E1sLeA0q0yKZAfKbvsIhuxkv9
+         7vUg==
+X-Gm-Message-State: ALQs6tD2kGD9hsTSQSpwMpVT9CVR1MF+lC+FcrcPfr2LpNesDG/hPZ+Q
+        1Cbq1llL0MaLfPWj1zfRm82Nj2Op
+X-Google-Smtp-Source: AIpwx4/D/GFQtVw/tLO8iE6LxK8sTdIMFD2C6bHQxqEnviLwjFQ3bHoaKpB55rxZhfcj3aiR17PCxw==
+X-Received: by 10.28.94.210 with SMTP id s201mr10852357wmb.140.1524509401824;
+        Mon, 23 Apr 2018 11:50:01 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id f10-v6sm12581058wrg.0.2018.04.23.11.49.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 23 Apr 2018 11:50:00 -0700 (PDT)
+Date:   Mon, 23 Apr 2018 19:50:08 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 2/4] worktree: improve message when creating a new
+ worktree
+Message-ID: <20180423185008.GB25294@hank>
+References: <20180331151804.30380-1-t.gummerer@gmail.com>
+ <20180415202917.4360-1-t.gummerer@gmail.com>
+ <20180415202917.4360-3-t.gummerer@gmail.com>
+ <CAPig+cQSgY3yqYtZwTCY7Mq1e66WczbV3vM7=KsKH4b7peDw+Q@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20180423104931.c465b6a260219c96feba41ff@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQSgY3yqYtZwTCY7Mq1e66WczbV3vM7=KsKH4b7peDw+Q@mail.gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 04/23/2018 01:49 PM, Jonathan Tan wrote:
-> On Mon, 23 Apr 2018 13:27:09 -0400
-> Jameson Miller <jameson.miller81@gmail.com> wrote:
+On 04/23, Eric Sunshine wrote:
+> On Sun, Apr 15, 2018 at 4:29 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > Currently 'git worktree add' produces output like the following:
+> >
+> >     Preparing ../foo (identifier foo)
+> >     HEAD is now at 26da330922 <title>
+> > [...]
+> > Instead of this message, print a message that gives the user a bit more
+> > detail of what exactly 'git worktree' is doing.  There are various dwim
+> > modes which are perform some magic under the hood, which should be
+> > helpful to users.  Just from the output of the command it is not always
+> > visible to users what exactly has happened.
+> >
+> > Help the users a bit more by modifying the "Preparing ..." message and
+> > adding some additional information of what 'git worktree add' did under
+> > the hood, while not displaying the identifier anymore.
+> >
+> > Currently this ends up in three different cases:
+> >
+> >   - 'git worktree add -b ...' or 'git worktree add <path>' [...]
+> >
+> >   - 'git worktree add -B ...', which may either create a new branch if
+> >     the branch with the given name does not exist yet, or resets an
+> >     existing branch to the current HEAD, or the commit-ish given.
+> >     Depending on which action is taken, we'll end up with the following
+> >     output:
+> >
+> >       Preparing worktree (resetting branch 'next' (was at caa68db14))
+> >       HEAD is now at 26da330922 <title>
 > 
->>> This seems overly complicated - the struct mem_pool already has a linked
->>> list of pages, so couldn't you create a custom page and insert it behind
->>> the current front page instead whenever you needed a large-size page?
->>
->> Yes - that is another option. However, the linked list of pages includes
->> memory that *could* have space for an allocation, while the "custom"
->> region will never have left over memory that can be used for other
->> allocations. When searching pages for memory to satisfy a request, there
->> is no reason to search through the "custom" pages. There is a trade-off
->> between complexity and implementation, so I am open to suggestions.
->>
->> This was discussed in [1], where it originally was implemented closer to
->> what you describe here.
->>
->>> Also, when combining, there could be some wasted space on one of the
->>> pages. I'm not sure if that's worth calling out, though.
->>
->> Yes, we bring over the whole page. However, these pages are now
->> available for new allocations.
->>
->> [1]
->> https://public-inbox.org/git/xmqqk1u2k91l.fsf@gitster-ct.c.googlers.com/
+> The (...) embedded inside another (...) is ugly and hard to read.
+> Better perhaps:
 > 
-> Ah, I didn't realize that the plan was to search over all pages when
-> allocating memory from the pool, instead of only searching the last
-> page. This seems like a departure from the fast-import.c way, where as
-> far as I can tell, new_object() searches only one page. If we do plan to
-> do this, searching all pages doesn't seem like a good idea to me,
-> especially since the objects we're storing in the pool are of similar
-> size.
-
-I see. However, the new_object() logic in fast-import is a different 
-than the logic mem_pool was abstracting, and is not covered by the 
-mem_pool functionality. The behavior of searching over all pages for one 
-to satisfy the request existed previously and was not changed in the 
-mem_pool implementation.
-
+>     Preparing worktree (resetting branch 'next'; was at caa68db14)
 > 
-> If we decide to go ahead with searching all the pages, though, the
-> "custom" pages should probably be another linked list instead of an
-> array.
+> Not necessarily worth a re-roll. It would be nice to see this series
+> land; perhaps this can be tweaked later.
+
+I'll tweak it while fixing the other bit.
+
+> >     or:
+> >
+> >       Preparing worktree (new branch '<branch>')
+> >       HEAD is now at 26da330922 <title>
+> >
+> >   - 'git worktree add --detach' or 'git worktree add <path> <branch>',
+> >     both of which create a new worktree with a detached HEAD, for which
+> >     we will print the following output:
+> >
+> >       Preparing worktree (detached HEAD 26da330922)
+> >       HEAD is now at 26da330922 <title>
 > 
+> This is inaccurate, isn't it? Certainly, specifying something like
+> "origin/floop" for <branch> ends up detached:
 
-This is an option - I went with the current design because we only need 
-pointers to a block of memory (as well tracking how large the allocation 
-is for verification purposes). We don't necessarily need the extra 
-overhead of a structure to track the linked list nodes, when it is 
-provided by the existing array manipulation functions. I am open to 
-feedback on this point, however.
+Ah indeed, this was the case I missed.  I thought I managed to go
+through all of them, but this one slipped through the cracks.  Thanks
+for catching this, will fix in a re-roll.
 
+>     % git worktree add w1 origin/floop
+>     ...
+>     % git worktree list
+>     /proj     fe0a9eaf31 [master]
+>     /proj/w1  b46fe60e1d (detached HEAD)
+> 
+> but specifying an existing local branch (say "wip") does not end up detached:
+> 
+>     % git worktree add w2 wip
+>     ...
+>     % git worktree list
+>     /proj     fe0a9eaf31 [master]
+>     /proj/w1  b46fe60e1d (detached HEAD)
+>     /proj/w2  820ed2a513 [wip]
+> 
+> > Additionally currently the "Preparing ..." line is printed to stderr,
+> > while the "HEAD is now at ..." line is printed to stdout by 'git reset
+> > --hard', which is used internally by 'git worktree add'.  Fix this
+> > inconsistency by printing the "Preparing ..." message to stdout as
+> > well.  As "Preparing ..." is not an error, stdout also seems like the
+> > more appropriate output stream.
+> >
+> > Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
