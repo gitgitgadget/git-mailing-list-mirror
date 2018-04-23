@@ -6,56 +6,59 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D53E51F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 05:36:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 074371F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 06:07:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752767AbeDWFgW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 01:36:22 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:38405 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754105AbeDWFgS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 01:36:18 -0400
-Received: by mail-qk0-f195.google.com with SMTP id b39so14988545qkb.5
-        for <git@vger.kernel.org>; Sun, 22 Apr 2018 22:36:18 -0700 (PDT)
+        id S1751324AbeDWGH5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 02:07:57 -0400
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:35849 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751268AbeDWGH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 02:07:56 -0400
+Received: by mail-qk0-f169.google.com with SMTP id a202so15061188qkg.3
+        for <git@vger.kernel.org>; Sun, 22 Apr 2018 23:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=kBrp8Xp/rO7w8e0NQvPkHsv1TbaJy3BIpVbjfBmZwks=;
-        b=ZWtuX85opvooYwF2oRQjYF+5o5OHkHTjO1dXoMbBZbRLMY2szGdiW07kzQefxG3fBW
-         2URM/sUoRNRUhn2hSxuBz2rIqNAfN9Nav0BQFLX+QoD5tv2/N4FFlkc69EflJaqBfhQH
-         /GmHUV6dwRtmc0g33g44hP87y1f6zVPD5x7nFTzmsw89ryBx4R48JnzBhNRD9GDzuSwZ
-         rMRizJK6yyrKpjNslF7KSDD2ERJceZEta+IbU1GHfo5mm7u1BvQw6n+QuoYjHSKaMSuA
-         DrE8qDmv2jMJRNea3LJQAH3w7yE+3zfF4N9uZBErOGm7gOS7T1iyua8KfqwYbvwK0RY+
-         CFLA==
+        bh=4OnKuApOJl655/zlMXEZH5q8Y1ExQxwqlJEpCl203Is=;
+        b=ES9jGW8fIvHkLV6hBpT40wNXkJGx0GDvTAbJWalP96Vb9cGiR/tLn7xC8PCQpmu6e7
+         5AHEdyGwzgIPPf3aKexNzyjhjOTs8lTbKyY12j5JQ5H7RJNCV2P8YOPV0rDAmdgvV5U3
+         lDDCbjxtJ/JlmUHNL4SAQQLfYUaJo3UmheldGBq3laMRkudyhR17+GXH7hXi4467GMUY
+         rW9XuxO/UB8B34pYzLR5PWFAFPoUdPlNNH35ig9XlrfPULqei4apzm9+uFcvQ18YEvpF
+         ymWdZg6r9l0RcabFyoR1Jg5150NLMAX0/kU6g4bnSd8LdjqtNfg/eGcwsmbeMVKx3RAJ
+         I7mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=kBrp8Xp/rO7w8e0NQvPkHsv1TbaJy3BIpVbjfBmZwks=;
-        b=hzBWsOXshRstnqpdHNjDrIVhI+fST+Om2EhZkcoQmT8htljGDRj09F3hJ9qWbynqVE
-         Y0z8dEyRXUawqZAKlaIOLN0EhUxs/EvAfBb64mZaPi6L7thZZmeHLfxs3pHOU4hETdPi
-         Kb2iGpCt2AjdIaed59OKttVMe+R0uaZQn7FBbJpU9omcUQyZ7yFOkj24oTuLMyuuqs4T
-         Bra+k+NGAqWTE5gSG9tcq8lMbx3VjGPyIpJeBrbUOkViprpCBjTA7bKoyRkGpjKwc8k/
-         osCXcQXJygiwdDU7+OVMDD66dZKs5N4tg3A0z40zvUMvJlCYevwwEs0qoOVAKgem+7Tz
-         f2Eg==
-X-Gm-Message-State: ALQs6tBbXGLcBwDhTZK/MpfFpQRWiljCaM/wkrqfsR7iTIx3KAID3qr8
-        8hFdibA9xXqe0uxpwZdH+kwIR6uPczzPGVZeZck=
-X-Google-Smtp-Source: AB8JxZpVBUZ4gkzKc7etZ+EjpwgTVdpX3TdOZ+zYJNDADmGzWeN+MNXx3NdUMCLgzAj9HYsZgZk6b1uKwwDWtUuYMEc=
-X-Received: by 10.55.79.9 with SMTP id d9mr20797616qkb.2.1524461777804; Sun,
- 22 Apr 2018 22:36:17 -0700 (PDT)
+        bh=4OnKuApOJl655/zlMXEZH5q8Y1ExQxwqlJEpCl203Is=;
+        b=QZPA2UuGeHgesyWfU3P06c+YzzFOFMGyUSmw/QX/9a9JMio49ZpTF1mU0Ds9Q0JauP
+         RU3BZhB4si1/BpaNFhilGuAPf11S+1ExiSDSWKT/pcPIBXGsC76UcBDkmZjZWWeaIxBA
+         UraB8+NQMqKPn0D9Zir3JjbUtp9TcyiK3HqwM5hW2zHFJwaaYdxpHa5RKEUs2eaJWiWb
+         9X6RxqKz0ypGqzAe1CabEKJhtvF0RwYrvkloIFHXAgp49OfBuSSmb4UgECssm01G4VYQ
+         FQAU36+aCdWHHnIZHzHB0OOPh13m7F2SUSTwhXD7R5cYUSFUK9zPcEA+7eGFruQPYTz+
+         y5Ig==
+X-Gm-Message-State: ALQs6tCw6iMp7dw3Ac4pa9czXbN0F7DC1LLDgDZH5K6eChBHBkXlATuw
+        KNYO2EK5tOuJAEwMZgX0xW4lbBcDitgv8WMGbTo=
+X-Google-Smtp-Source: AB8JxZoCOyJOsuimMWP4i0KLHjmPeZn6pA0IT37fXlwXfudQda//B6dw2Zv06f4T/q9Cge8vyQmVCSpprbsWDi6QB0w=
+X-Received: by 10.233.220.1 with SMTP id q1mr20073862qkf.361.1524463675417;
+ Sun, 22 Apr 2018 23:07:55 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Sun, 22 Apr 2018 22:36:17 -0700 (PDT)
-In-Reply-To: <20180417181300.23683-1-pclouds@gmail.com>
-References: <20180417181300.23683-1-pclouds@gmail.com>
+Received: by 10.12.174.202 with HTTP; Sun, 22 Apr 2018 23:07:55 -0700 (PDT)
+In-Reply-To: <20180421165414.30051-7-pclouds@gmail.com>
+References: <20180415164238.9107-1-pclouds@gmail.com> <20180421165414.30051-1-pclouds@gmail.com>
+ <20180421165414.30051-7-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 23 Apr 2018 01:36:17 -0400
-X-Google-Sender-Auth: Z9nnvzCRs9vzOV_qV2TDyAyU2GQ
-Message-ID: <CAPig+cRkUrdtbyGEsY=DQCDoEWTrC-9n4=vKXHEap2gokB2uQg@mail.gmail.com>
-Subject: Re: [PATCH/RFC] completion: complete all possible -no-<options>
+Date:   Mon, 23 Apr 2018 02:07:55 -0400
+X-Google-Sender-Auth: 5_oorZI6Al_yKPnjet-wYzUhd2o
+Message-ID: <CAPig+cQnmpR_WGZqb+A8zoH3D60VeJ0CWZkR0hXA_fgJSjWLUQ@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] help: use command-list.txt for the source of guides
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,47 +66,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 17, 2018 at 2:13 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+On Sat, Apr 21, 2018 at 12:54 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
 <pclouds@gmail.com> wrote:
-> The problem with completing --no- form is that the number of
-> completable options now usually doubles, taking precious screen space
-> and also making it hard to find the option you want.
+> The help command currently hard codes the list of guides and their
+> summary in C. Let's move this list to command-list.txt. This lets us
+> extract summary lines from Documentation/git*.txt. This also
+> potentially lets us lists guides in git.txt, but I'll leave that for
+> now.
 >
-> So the other half of this patch, the part in git-completion.bash, is
-> to uncomplete --no- options. When you do "git checkout --<tab>",
-> instead of displaying all --no- options, this patch simply displays
-> one item: the --no- prefix. If you do "git checkout --no-<tab>" then
-> all negative options are displayed. This helps reduce completable
-> options quite efficiently.
->
-> After all this "git checkout --<tab>" now looks like this
->
->     > ~/w/git $ git co --
->     --conflict=3D                   --orphan=3D
->     --detach                      --ours
->     --ignore-other-worktrees      --patch
->     --ignore-skip-worktree-bits   --progress
->     --merge                       --quiet
->     --no-                         --recurse-submodules
->     --no-detach                   --theirs
->     --no-quiet                    --track
->     --no-track
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+> @@ -58,7 +58,11 @@ command_list "$1" |
+>  do
+> -       prefix=3Dgit-
+> +       if [ "$category" =3D guide ]; then
 
-I haven't looked at the implementation, so this may be an entirely
-stupid suggestion, but would it be possible to instead render the
-completions as?
+Style:
 
-    % git checkout --<tab>
-    --[no-]conflict=3D                   --[no-]patch
-    --[no-]detach                      --[no-]progress
-    --[no-]ignore-other-worktrees      --[no-]quiet
-    --[no-]ignore-skip-worktree-bits   --[no-]recurse-submodules
-    --[no-]merge                       --theirs
-    --[no-]orphan=3D                     --[no-]track
-    --ours
+    if test "$category" =3D guide
+    then
+        ...
 
-This would address the problem of the --no-* options taking double the
-screen space.
-
-It's also more intuitive than that lone and somewhat weird-looking
-"--no-" suggestion.
+> +               prefix=3Dgit
+> +       else
+> +               prefix=3Dgit-
+> +       fi
