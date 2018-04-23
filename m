@@ -2,89 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32CFB1F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 18:11:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 373E71F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 18:20:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932256AbeDWSLI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 14:11:08 -0400
-Received: from mail-yb0-f175.google.com ([209.85.213.175]:38558 "EHLO
-        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932164AbeDWSLH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 14:11:07 -0400
-Received: by mail-yb0-f175.google.com with SMTP id w14-v6so4274197ybm.5
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 11:11:07 -0700 (PDT)
+        id S932275AbeDWSUc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 14:20:32 -0400
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:37423 "EHLO
+        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932109AbeDWSU0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 14:20:26 -0400
+Received: by mail-qk0-f172.google.com with SMTP id d74so17122788qkg.4
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 11:20:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RwsdBpuAO8jkrDfWIi6wuJqmd2dMZDg2GdWIQHqYjac=;
-        b=ppxJ1WMvWbJHADMPHFwOD+AVroWnUlgRCbe1mGnf7uaMdYmpKUP0+cGyxVjbMp7HUu
-         pMAqkwBcFXSi4dcpbMmSSRavvtivAnH4KmFoouUcMDAbths39iBLZjf9kMMjvwSgyNj0
-         7+dvqM9/iaV9JPVxsi0tqPKTw+tok3JLydNhg5zdmBGPMvgYR59fXGz5ewW6QaSw9pn5
-         bRS1ahfba7GWgizqun6XJEs68mkIBWIBEp4fXkf2yNW7dj5b1//ZalGZOHBJtXdbBx8x
-         42eIXCk7VeHmwfkS+kEz7qGb4JOVAlem4JLcjEyfBJO4SL1hbYhJXnllYCOgnpVFJgXQ
-         yERg==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=9dL3yck+XpLwEoHW4FSMf6pFVDOgC8BViUnPEOgV5o8=;
+        b=Mndzzgn62PSQQQjXK+5Ww/JFQNjKretCywwpGlC45HRfF24OQyvAzUjJh7rJViQw2v
+         ZWrQpKZd4yaMtHu1vICAH9zr0s49wkrx6vsoj04QWsYIaue1k24XUajcdLpxLRy2FSHJ
+         qTSm9hZPHpMWLTNm1GY7JHL13SpbK4q5gQPU1ku9UEL6rqXbRBwum6umF8yKnVT2uJUu
+         OdmQjw7Tkfp6/2wPMj5aHHiyq+EYmv5yqkl3qTIVFpWtQ/GxoUiTwIx2Jx1++xWsylK/
+         BfD9nNGeJu6qoeqet3p4XOayg27dpygmgK7KSDaGqFGeUzMi0ogeC0+q9H9llF6KY7BI
+         jKYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RwsdBpuAO8jkrDfWIi6wuJqmd2dMZDg2GdWIQHqYjac=;
-        b=QCUbVAyvNZUbATWHryb9tVx/IbGe4YSZvg87gSvcO6Jc7B36zjyfBDoIXQeieAo32N
-         w+lrf4BwqwaxcDz8FTz/0TyTPZboTyVHjmRos1Q9WHieqeptyMvP7LquLVx+kx1e0W/D
-         rhMBG+wGKhNK1yJ+TUCK5Uz2ZymcRo6YhNj5Y7SaAKlXkhUF2P49N+2aCJxeEv6W4M9K
-         17PozIA2yi+SUQzx4fa9tcsBUSs1DXXh3vMLRzgZ5NfLFwU9cKn2ybnYLDFTISjwkfFb
-         l9ICvFwbxAa0QcxmMjSGp1mHtU5q91PjNnefPcSy7JJvmeSjKcX3m9BZcbhyB/M6ZET/
-         +mSA==
-X-Gm-Message-State: ALQs6tAnvTLdg8sRMNIoXsRfOoKKhvcyh6MsVDH8YGhRxjArPYc7TVtj
-        tHXEc8FzeZKvjiNeIAULtbLI2cT/Um9RezFwi1uhoQ==
-X-Google-Smtp-Source: AIpwx4/DS/h58uoO64gK81Z4x1bY+htPl/CiE3rygmJlzjHe0/g8gXcwv/55AyvcQJJdKKaeVWDdCAqTA6ksLBLlZF8=
-X-Received: by 2002:a25:8e09:: with SMTP id p9-v6mr12315242ybl.352.1524507066684;
- Mon, 23 Apr 2018 11:11:06 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=9dL3yck+XpLwEoHW4FSMf6pFVDOgC8BViUnPEOgV5o8=;
+        b=qV2p8bpwUnk2c4Nzc5IbZI9zGjb49RHAtA5wDz6hpHVdwQtgGb2GVBXGRhwWGrzbEB
+         k6bVgiEVn1szptRO2RQtmdh4Mq/qFiGBltReVeQ3o6MOsCwKS71oMbNcSIgF4tPZTdaT
+         iin+RgxidCLJopxsFe3oJyODhbCHpaCzEBqRtbr18HLYunqvkVPc54cPkrU3vRouw7+6
+         1i1FFEwy1Vo1J8yDfWiDN/r0O2FQuX/W332vMGWzZnDQoPN9vBoTbrrfBNSoQezAT3G4
+         yYYwwPepx8fGUW44TVKvFZmjabSb6cXD1kpyWX56O2qSbkORZ3RMVXFPAMwFtv+UMPog
+         IgGw==
+X-Gm-Message-State: ALQs6tBok2pSMY9m3gWtAee+7eo/7rbONJmrf7sQyr7qL/H4Xt5ry3+2
+        AStC7hHUdLvZzBcnnO+0F50=
+X-Google-Smtp-Source: AB8JxZpkjvM0gQulpkqIPie2kv5Qc293N8j6rrshg08FK64+VNu8gwnul5+RkOEQd4u9jstM5WxokQ==
+X-Received: by 10.55.93.71 with SMTP id r68mr24576851qkb.70.1524507625814;
+        Mon, 23 Apr 2018 11:20:25 -0700 (PDT)
+Received: from localhost.localdomain ([2001:4898:8010:1:1060:bd2c:4297:50e])
+        by smtp.gmail.com with ESMTPSA id y6-v6sm10235685qtn.56.2018.04.23.11.20.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Apr 2018 11:20:25 -0700 (PDT)
+Subject: Re: [PATCH v1 3/5] mem-pool: fill out functionality
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jameson Miller <jamill@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>
+References: <20180417163400.3875-1-jamill@microsoft.com>
+ <20180417163400.3875-5-jamill@microsoft.com>
+ <20180420162136.144ac5529072f22067abb3b9@google.com>
+ <898c0b43-b090-fb1f-45d5-ea4041843cdb@gmail.com>
+ <20180423104931.c465b6a260219c96feba41ff@google.com>
+From:   Jameson Miller <jameson.miller81@gmail.com>
+Message-ID: <5584faf6-23a0-366a-bd87-cf9e420f212c@gmail.com>
+Date:   Mon, 23 Apr 2018 14:20:14 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Mon, 23 Apr 2018 11:11:05
- -0700 (PDT)
-In-Reply-To: <cover.1524296064.git.johannes.schindelin@gmx.de>
-References: <CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com>
- <cover.1524296064.git.johannes.schindelin@gmx.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 23 Apr 2018 11:11:05 -0700
-Message-ID: <CAGZ79kbK7j0njrZ8-d_Da6+XyH_RVRhBu=hcpzr7EFsOCSFJVQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] rebase -i: avoid stale "# This is a combination
- of" in commit messages
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180423104931.c465b6a260219c96feba41ff@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 21, 2018 at 12:34 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Eric Sunshine pointed out that I had such a commit message in
-> https://public-inbox.org/git/CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com/
-> and I went on a hunt to figure out how the heck this happened.
->
-> Turns out that if there is a fixup/squash chain where the *last* command
-> fails with merge conflicts, and we either --skip ahead or resolve the
-> conflict to a clean tree and then --continue, our code does not do a
-> final cleanup.
->
-> Contrary to my initial gut feeling, this bug was not introduced by my
-> rewrite in C of the core parts of rebase -i, but it looks to me as if
-> that bug was with us for a very long time (at least the --skip part).
->
-> The developer (read: user of rebase -i) in me says that we would want to
-> fast-track this, but the author of rebase -i in me says that we should
-> be cautious and cook this in `next` for a while.
 
-I looked through the patches again and think this series is good to go.
 
-Thanks,
-Stefan
+On 04/23/2018 01:49 PM, Jonathan Tan wrote:
+> On Mon, 23 Apr 2018 13:27:09 -0400
+> Jameson Miller <jameson.miller81@gmail.com> wrote:
+> 
+>>> This seems overly complicated - the struct mem_pool already has a linked
+>>> list of pages, so couldn't you create a custom page and insert it behind
+>>> the current front page instead whenever you needed a large-size page?
+>>
+>> Yes - that is another option. However, the linked list of pages includes
+>> memory that *could* have space for an allocation, while the "custom"
+>> region will never have left over memory that can be used for other
+>> allocations. When searching pages for memory to satisfy a request, there
+>> is no reason to search through the "custom" pages. There is a trade-off
+>> between complexity and implementation, so I am open to suggestions.
+>>
+>> This was discussed in [1], where it originally was implemented closer to
+>> what you describe here.
+>>
+>>> Also, when combining, there could be some wasted space on one of the
+>>> pages. I'm not sure if that's worth calling out, though.
+>>
+>> Yes, we bring over the whole page. However, these pages are now
+>> available for new allocations.
+>>
+>> [1]
+>> https://public-inbox.org/git/xmqqk1u2k91l.fsf@gitster-ct.c.googlers.com/
+> 
+> Ah, I didn't realize that the plan was to search over all pages when
+> allocating memory from the pool, instead of only searching the last
+> page. This seems like a departure from the fast-import.c way, where as
+> far as I can tell, new_object() searches only one page. If we do plan to
+> do this, searching all pages doesn't seem like a good idea to me,
+> especially since the objects we're storing in the pool are of similar
+> size.
+
+I see. However, the new_object() logic in fast-import is a different 
+than the logic mem_pool was abstracting, and is not covered by the 
+mem_pool functionality. The behavior of searching over all pages for one 
+to satisfy the request existed previously and was not changed in the 
+mem_pool implementation.
+
+> 
+> If we decide to go ahead with searching all the pages, though, the
+> "custom" pages should probably be another linked list instead of an
+> array.
+> 
+
+This is an option - I went with the current design because we only need 
+pointers to a block of memory (as well tracking how large the allocation 
+is for verification purposes). We don't necessarily need the extra 
+overhead of a structure to track the linked list nodes, when it is 
+provided by the existing array manipulation functions. I am open to 
+feedback on this point, however.
+
