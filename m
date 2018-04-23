@@ -2,191 +2,237 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 603331F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 21:32:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 020B91F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 21:40:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932312AbeDWVcd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 17:32:33 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:41715 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932129AbeDWVcc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 17:32:32 -0400
-Received: by mail-wr0-f194.google.com with SMTP id g21-v6so17643906wrb.8
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 14:32:31 -0700 (PDT)
+        id S932635AbeDWVir (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 17:38:47 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:46093 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932517AbeDWVin (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 17:38:43 -0400
+Received: by mail-wr0-f195.google.com with SMTP id d1-v6so45117154wrj.13
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 14:38:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=13rOUpCrGurZSFqCc1oaKHcRLnFDGyzpFCITQ4Icm80=;
-        b=Im2jzIKHP8DrThTyLts6lUT6eMB8NP7byFgJ7YAk4HblgNUbhEdCxbbGyVnhLXyFNL
-         +JihJiYaP1wm2MgFdvy/fi45ailJ7vZ3f0z0gXnraDFl0LJz20eBJmGOqhQn7otF8Iml
-         lO5Gya3ay0lHb8trkPH6IvQ6D70+YBfT6PHZcZC60jlsgPLctdYgJn0nla4ncz+r6xHG
-         GeKtBl10UWEicn4eeRwcGkGav9FBN+vPPuDBFeI3TndHARJemRrFOX2H+1A71T0Iiyvw
-         n4fGW8yxkr6G87ELax2c+0UOmZL1gyVdH/1EQepjGghsLUhMkNPcdB4Knynzp2a3/nQm
-         gNEQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=OLn3iCXWvAispZtpiACL+axY1LpXPYAAKgBkBNzfD+4=;
+        b=UrHJr612pXVHou/E1+Tyt6IS3ZrXA+lftg06gIA/emNvL9C9xK01JaiAz70QujS9Ih
+         aFFXt6BfsHNt3WAK6dhq0a67HxjrTIhLsLLLkvC3nB0fFMblRAvojogRXOxewjeuMm1M
+         N7AzUZt5inBJrqRytAgO0B7WFg6UKZunjzIe+491o0fHPCH2piAKVQ6VV1CtWDO9N2wM
+         ThxFBRLV9oXAToWQLHGR9rFLbEudFi/OQvgkqIFE6b99MqzbgE+/dPqRdU5f2dhEqRF1
+         hQbGssvQKeVv4o/9nf9uW5hnShh5GMO2E8vsZ0/+aNZWCDaq6cmY9VGU8WoUmyIU4oK3
+         bcOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=13rOUpCrGurZSFqCc1oaKHcRLnFDGyzpFCITQ4Icm80=;
-        b=fitDBFoD0og2O339tZGqUoZcL0ZiwJtJWZlWTRpGKiOvnHqDgaI45rmEHzSnYkgcrn
-         CD5f8AeQhrIohYk5vj0V4vezrWoEHGT3shlsJKCd/J2WZM2IQLa9HiOUIQey/0V5C5D5
-         R2LogMdciL167zh+kfpwSO8E6ZQi85dgNRYz17TQECyHUizmbTwEeNg/QK6cExiFY3hx
-         l0F37AWSh/cPniq01XuXAPdylWxTYXwUcWIRz263Dfnbv5nlO7cP0qwt47Bp+vvHb9Rh
-         pbdFVeVznuxo+XRe+yK6+bi1GT1ZyAr8dDIdGxm1Ns4tPKqIiNB0jm9Jjcl1CUPc0cMC
-         kO5g==
-X-Gm-Message-State: ALQs6tCp4XziYLH4wO6HQHTmDsL4Cw31eYEc55A+CHvsujBtrt0xLsnX
-        /1xfg0r3CWEHwFy7byHjOvk=
-X-Google-Smtp-Source: AIpwx48yV4Zaf+OwkRo57Kd5SoPbRmOs1ljrDKGab0BID770Wz5yhEKBdUHeFvnCEf4C5zAem5EOlg==
-X-Received: by 10.28.131.211 with SMTP id f202mr11188549wmd.20.1524519151017;
-        Mon, 23 Apr 2018 14:32:31 -0700 (PDT)
-Received: from esm (ipbcc18eac.dynamic.kabel-deutschland.de. [188.193.142.172])
-        by smtp.gmail.com with ESMTPSA id c50-v6sm25657814wrc.11.2018.04.23.14.32.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Apr 2018 14:32:30 -0700 (PDT)
-From:   "Eckhard =?iso-8859-1?Q?Maa=DF?=" <eckhard.s.maass@googlemail.com>
-X-Google-Original-From: Eckhard =?iso-8859-1?Q?Maa=DF?= <eckhard.s.maass@gmail.com>
-Date:   Mon, 23 Apr 2018 23:32:28 +0200
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Eckhard =?iso-8859-1?Q?Maa=DF?= <eckhard.s.maass@googlemail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v1 1/2] merge: Add merge.renames config setting
-Message-ID: <20180423213228.GA20391@esm>
-References: <20180420133632.17580-1-benpeart@microsoft.com>
- <20180420133632.17580-2-benpeart@microsoft.com>
- <CABPp-BFANBs=tOhS5BFfTMkdQsNYbUDExWK8QB0V=qD9YwZyWw@mail.gmail.com>
- <cd49481c-9665-124a-5f94-791f1a16657d@gmail.com>
- <CABPp-BFqj2TFiHUDsysafq0NHC4MV-QYZVxOZe1TNRrXMOQfng@mail.gmail.com>
- <20180422120718.GA29956@esm>
- <0eea1726-d511-6818-aa29-add6c13900da@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=OLn3iCXWvAispZtpiACL+axY1LpXPYAAKgBkBNzfD+4=;
+        b=G4QFYd6JsOnT+oTS2QRIAf/OPE7DxHPlbMHpaHZfspYVyTFZVFCLkCNmEPD0UogQkP
+         jmdLPYLJS4UeCouJ2hYSWoOzP+na47RIAkvqaPA+eFVIiCFi3O7aEEfGAio8/CfDQy5r
+         lwngwV5Y6z1tSK66ikm+TYg7woG6tFKjfdqq9Mwb4DhzMFOGNv1wpydHnNWsWdLxDDxt
+         +9jaxN0y+xRYNx1bmT00YG0YPt78RPaUU2rqOsSZhO3/YDGHUowx8RnnqAGarwfH7q9P
+         A7VOkYSo2zSlMmpFJPZYlREn3ZF+2lGdIRabs9as0mlgxvJR9q+j7NdIgBo/ujPEzhtD
+         xhgQ==
+X-Gm-Message-State: ALQs6tAQ8ZkF/RihRS9vMSZAE4vKZ+PnX0+LGVBqPZ0S2uG4HYu77d7W
+        IhR+8vEUnne8hHTIKj6+TkYlGNqU
+X-Google-Smtp-Source: AIpwx4+EwdsmqnfEjnAzNazCcHEkWTxd/IdrbxzYp9VjLMhhHQlrmotYlvLq0Z8Kt8/LeYM0yWpJaA==
+X-Received: by 10.28.28.85 with SMTP id c82mr11034702wmc.69.1524519521725;
+        Mon, 23 Apr 2018 14:38:41 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (eey82.neoplus.adsl.tpnet.pl. [83.21.36.82])
+        by smtp.gmail.com with ESMTPSA id 55-v6sm28279075wrw.52.2018.04.23.14.38.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 23 Apr 2018 14:38:40 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        "peff\@peff.net" <peff@peff.net>,
+        "avarab\@gmail.com" <avarab@gmail.com>,
+        "sbeller\@google.com" <sbeller@google.com>,
+        "larsxschneider\@gmail.com" <larsxschneider@gmail.com>,
+        "bmwill\@google.com" <bmwill@google.com>,
+        "gitster\@pobox.com" <gitster@pobox.com>,
+        "sunshine\@sunshineco.com" <sunshine@sunshineco.com>,
+        "jonathantanmy\@google.com" <jonathantanmy@google.com>
+Subject: Re: [PATCH v3 7/9] commit: add short-circuit to paint_down_to_common()
+References: <20180409164131.37312-1-dstolee@microsoft.com>
+        <20180417170001.138464-1-dstolee@microsoft.com>
+        <20180417170001.138464-8-dstolee@microsoft.com>
+        <86bmeggl1m.fsf@gmail.com>
+        <bd2011f0-41d4-4550-5392-65a3816ed4d3@gmail.com>
+Date:   Mon, 23 Apr 2018 23:38:40 +0200
+In-Reply-To: <bd2011f0-41d4-4550-5392-65a3816ed4d3@gmail.com> (Derrick
+        Stolee's message of "Mon, 23 Apr 2018 10:40:54 -0400")
+Message-ID: <86efj5fvrz.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0eea1726-d511-6818-aa29-add6c13900da@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 23, 2018 at 09:15:09AM -0400, Ben Peart wrote:
-> In commit 2a2ac926547 when merge.renamelimit was added, it was decided to
-> have separate settings for merge and diff to give users the ability to
-> control that behavior.  In this particular case, it will default to the
-> value of diff.renamelimit when it isn't set.  That isn't consistent with the
-> other merge settings.
+Derrick Stolee <stolee@gmail.com> writes:
 
-However, it seems like a desirable way to do it.
+> On 4/18/2018 7:19 PM, Jakub Narebski wrote:
+>> Derrick Stolee <dstolee@microsoft.com> writes:
+>>
+> [...]
+>>> [...], and this saves time during 'git branch --contains' queries
+>>> that would otherwise walk "around" the commit we are inspecting.
+>>>
+>> If I understand the code properly, what happens is that we can now
+>> short-circuit if all commits that are left are lower than the target
+>> commit.
+>>
+>> This is because max-order priority queue is used: if the commit with
+>> maximum generation number is below generation number of target commit,
+>> then target commit is not reachable from any commit in the priority
+>> queue (all of which has generation number less or equal than the commit
+>> at head of queue, i.e. all are same level or deeper); compare what I
+>> have written in [1]
+>>
+>> [1]: https://public-inbox.org/git/866052dkju.fsf@gmail.com/
+>>
+>> Do I have that right?  If so, it looks all right to me.
+>
+> Yes, the priority queue needs to compare via generation number first
+> or there will be errors. This is why we could not use commit time
+> before.
 
-Maybe let me throw in some code for discussion (test and documentation
-is missing, mainly to form an idea what the change in options should
-be). I admit the patch below is concerned only with diff.renames, but
-whatever we come up with for merge should be reflected there, too,
-doesn't it?
+I was more concerned about getting right the order in the priority queue
+(does it return minimal or maximal generation number).
 
-Greetings,
-Eckhard
+I understand that the cutoff could not be used without generation
+numbers because of the possibility of clock skew - using cutoff on dates
+could lead to wrong results.
 
--- >8 --
+>>> For a copy of the Linux repository, where HEAD is checked out at
+>>> v4.13~100, we get the following performance improvement for
+>>> 'git branch --contains' over the previous commit:
+>>>
+>>> Before: 0.21s
+>>> After:  0.13s
+>>> Rel %: -38%
+>> [...]
+>>>   		flags =3D commit->object.flags & (PARENT1 | PARENT2 | STALE);
+>>>   		if (flags =3D=3D (PARENT1 | PARENT2)) {
+>>>   			if (!(commit->object.flags & RESULT)) {
+>>> @@ -876,7 +886,7 @@ static struct commit_list *merge_bases_many(struct =
+commit *one, int n, struct co
+>>>   			return NULL;
+>>>   	}
+>>>   -	list =3D paint_down_to_common(one, n, twos);
+>>> +	list =3D paint_down_to_common(one, n, twos, 0);
+>>>     	while (list) {
+>>>   		struct commit *commit =3D pop_commit(&list);
+>>> @@ -943,7 +953,7 @@ static int remove_redundant(struct commit **array, =
+int cnt)
+>>>   			filled_index[filled] =3D j;
+>>>   			work[filled++] =3D array[j];
+>>>   		}
+>>> -		common =3D paint_down_to_common(array[i], filled, work);
+>>> +		common =3D paint_down_to_common(array[i], filled, work, 0);
+>>>   		if (array[i]->object.flags & PARENT2)
+>>>   			redundant[i] =3D 1;
+>>>   		for (j =3D 0; j < filled; j++)
+>>> @@ -1067,7 +1077,7 @@ int in_merge_bases_many(struct commit *commit, in=
+t nr_reference, struct commit *
+>>>   	if (commit->generation > min_generation)
+>>>   		return 0;
+>>>   -	bases =3D paint_down_to_common(commit, nr_reference, reference);
+>>> +	bases =3D paint_down_to_common(commit, nr_reference, reference, commi=
+t->generation);
+>>
+>> Is it the only case where we would call paint_down_to_common() with
+>> non-zero last parameter?  Would we always use commit->generation where
+>> commit is the first parameter of paint_down_to_common()?
+>>
+>> If both are true and will remain true, then in my humble opinion it is
+>> not necessary to change the signature of this function.
+>
+> We need to change the signature some way, but maybe the way I chose is
+> not the best.
 
-From e8a88111f2aaf338a4c19e83251c7178f7152129 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Eckhard=20S=2E=20Maa=C3=9F?= <eckhard.s.maass@gmail.com>
-Date: Sun, 22 Apr 2018 23:29:08 +0200
-Subject: [PATCH] diff: enhance diff.renames to be able to set rename score
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+No, after taking longer I think the new signature is a good choice.
 
-Signed-off-by: Eckhard S. Maaﬂ <eckhard.s.maass@gmail.com>
----
- diff.c | 35 ++++++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 7 deletions(-)
+> To elaborate: paint_down_to_common() is used for multiple
+> purposes. The caller here that supplies 'commit->generation' is used
+> only to compute reachability (by testing if the flag PARENT2 exists on
+> the commit, then clears all flags). The other callers expect the full
+> walk down to the common commits, and keeps those PARENT1, PARENT2, and
+> STALE flags for future use (such as reporting merge bases). Usually
+> the call to paint_down_to_common() is followed by a revision walk that
+> only halts when reaching root commits or commits with both PARENT1 and
+> PARENT2 flags on, so always short-circuiting on generations would
+> break the functionality; this is confirmed by the
+> t5318-commit-graph.sh.
 
-diff --git a/diff.c b/diff.c
-index 1289df4b1f..a3cedad5cf 100644
---- a/diff.c
-+++ b/diff.c
-@@ -30,6 +30,7 @@
- #endif
- 
- static int diff_detect_rename_default;
-+static int diff_rename_score_default;
- static int diff_indent_heuristic = 1;
- static int diff_rename_limit_default = 400;
- static int diff_suppress_blank_empty;
-@@ -177,13 +178,33 @@ static int parse_submodule_params(struct diff_options *options, const char *valu
- 	return 0;
- }
- 
-+int parse_rename_score(const char **cp_p);
-+
-+static int git_config_rename_score(const char *value)
-+{
-+	int parsed_rename_score = parse_rename_score(&value);
-+	if (parsed_rename_score == -1)
-+		return error("invalid argument to diff.renamescore: %s", value);
-+	diff_rename_score_default = parsed_rename_score;
-+	return 0;
-+}
-+
- static int git_config_rename(const char *var, const char *value)
- {
--	if (!value)
--		return DIFF_DETECT_RENAME;
--	if (!strcasecmp(value, "copies") || !strcasecmp(value, "copy"))
--		return  DIFF_DETECT_COPY;
--	return git_config_bool(var,value) ? DIFF_DETECT_RENAME : 0;
-+	if (!value) {
-+		diff_detect_rename_default = DIFF_DETECT_RENAME;
-+		return 0;
-+	}
-+	if (skip_to_optional_arg(value, "copies", &value) || skip_to_optional_arg(value, "copy", &value)) {
-+		diff_detect_rename_default = DIFF_DETECT_COPY;
-+		return git_config_rename_score(value);
-+	}
-+	if (skip_to_optional_arg(value, "renames", &value) || skip_to_optional_arg(value, "rename", &value)) {
-+		diff_detect_rename_default = DIFF_DETECT_RENAME;
-+		return git_config_rename_score(value);
-+	}
-+	diff_detect_rename_default = git_config_bool(var,value) ? DIFF_DETECT_RENAME : 0;
-+	return 0;
- }
- 
- long parse_algorithm_value(const char *value)
-@@ -307,8 +328,7 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 	if (!strcmp(var, "diff.renames")) {
--		diff_detect_rename_default = git_config_rename(var, value);
--		return 0;
-+		return git_config_rename(var, value);
- 	}
- 	if (!strcmp(var, "diff.autorefreshindex")) {
- 		diff_auto_refresh_index = git_config_bool(var, value);
-@@ -4116,6 +4136,7 @@ void diff_setup(struct diff_options *options)
- 	options->add_remove = diff_addremove;
- 	options->use_color = diff_use_color_default;
- 	options->detect_rename = diff_detect_rename_default;
-+	options->rename_score = diff_rename_score_default;
- 	options->xdl_opts |= diff_algorithm;
- 	if (diff_indent_heuristic)
- 		DIFF_XDL_SET(options, INDENT_HEURISTIC);
--- 
-2.17.0.252.gfe0a9eaf31
+Right.
 
+I have realized that just after sending the email.  I'm sorry about this.
+
+>
+> An alternative to the signature change is to add a boolean parameter
+> "use_cutoff" or something, that specifies "don't walk beyond the
+> commit". This may give a more of a clear description of what it will
+> do with the generation value, but since we are already performing
+> generation comparisons before calling paint_down_to_common() I find
+> this simple enough.
+
+Two things:
+
+1. The signature proposed in the patch is more generic.  The cutoff does
+   not need to be equal to the generation number of the commit, though
+   currently it always (all of one time the new mechanism is used) is.
+
+   So now I think the new signature of paint_down_to_common() is all
+   right as it is proposed here.
+
+2. The way generation numbers are defined (with 0 being a special case,
+   and generation numbers starting from 1 for parent-less commits), and
+   the way they are compared (using strict comparison, to avoid having
+   to special-case _ZERO, _MAX and _INFINITY generation numbers) the
+   cutoff of 0 means no cutoff.
+
+   On the other hand cutoff of 0 can be understood as meaning no cutoff
+   as a special case.
+
+   It could be made more clear to use (as I proposed elsewhere in this
+   thread) symbolic name for this no-cutoff case via preprocessor
+   constants or enums, e.g. GENERATION_NO_CUTOFF:
+
+    @@ -876,7 +886,7 @@ static struct commit_list *merge_bases_many(struct =
+commit *one, int n, struct co
+      			return NULL;
+      	}
+      -	list =3D paint_down_to_common(one, n, twos);
+    +	list =3D paint_down_to_common(one, n, twos, GENERATION_NO_CUTOFF);
+        	while (list) {
+      		struct commit *commit =3D pop_commit(&list);
+    @@ -943,7 +953,7 @@ static int remove_redundant(struct commit **array, =
+int cnt)
+      			filled_index[filled] =3D j;
+      			work[filled++] =3D array[j];
+      		}
+    -		common =3D paint_down_to_common(array[i], filled, work);
+    +		common =3D paint_down_to_common(array[i], filled, work, GENERATION_N=
+O_CUTOFF);
+      		if (array[i]->object.flags & PARENT2)
+      			redundant[i] =3D 1;
+      		for (j =3D 0; j < filled; j++)
+
+
+   But whether it makes code more readable, or less readable, is a
+   matter of opinion and taste.
+
+Best,
+--=20
+Jakub Nar=C4=99bski
