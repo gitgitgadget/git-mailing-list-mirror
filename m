@@ -7,53 +7,54 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6753D1F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 12:57:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5062B1F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 13:15:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755285AbeDWM5b (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 08:57:31 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:45078 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755161AbeDWM50 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 08:57:26 -0400
-Received: by mail-qk0-f173.google.com with SMTP id c136so15966163qkb.12
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 05:57:26 -0700 (PDT)
+        id S1754897AbeDWNPM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 09:15:12 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:34425 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754825AbeDWNPK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 09:15:10 -0400
+Received: by mail-qk0-f176.google.com with SMTP id p186so13354978qkd.1
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 06:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=nAN4ikKM+g9CvyPJg2YUHAYOyi7v2XDtDzmkiA8JwVs=;
-        b=uIdnKB0ONMfZlok3nFh9LB4YhlmQMjh2lzejbeSXLbLegyVqtgS73a3oB2m/7tLtT9
-         uZ5RrRopoPA9PB8c+LrCiKaHB2WRQR3ilUegtp+M4KXvDeebYmshUQY58kMFo//G6sdO
-         np9dZzGhVwkO7SBlhRhHyO6acdY0DvxbHanYgg+FGUErjYOnaGG9q9JRo69BaqxWRl93
-         uXOcuDrgQr3QcHZK5Hk48l81t6HsSOWH6JZdIFyOz03kE5rZwmKpWDcfqufuysHl8KtP
-         S7VYd5DYkvBt6E47ouPdnCSce31IikQMJKw8Dz6yj9Q26wLXLiP4Tu23Pvt6QlvEsOXF
-         JdsQ==
+        bh=4iM1SXPT6obfl015rX6PGSbY6x5pUQm40e4ZQZ0Inxk=;
+        b=bf8Ujax9ijxTG9Hef3+8VKWm5NR56ixZ1JoWYIysnECAj7tyO8kJpnSawzFQOEnWoJ
+         fi9mJ5nzMBpc6Cxd27a8fATev6NWsS1w2aFybCNrSJpFXBNoGO+wm9ds/poYWEZ//rRN
+         eYnOp6JbuPvjHVepK2h8EHEXZTqRe7fmZkzhFrJUhwWJ3U4kYczxIaZvnDjz0FGJgS3o
+         9kjo4h2RDyX11zMrGN7yPteGC+oHeiQuC1KZ7eqts1LElr+/XE9dxBsQeS5S6d/uGgjy
+         Y8wka8t1MCdfjE1D6ioyXyxRnbolM7WN9phr6spT28iPlbPW+YESsic52988vGNlDu4n
+         Cgpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=nAN4ikKM+g9CvyPJg2YUHAYOyi7v2XDtDzmkiA8JwVs=;
-        b=a7kcKYdEM0f6GrSifGbRXknAoG7peUwa7AOJYPemF0O61fpZoEALjN/q1n/7+tJykx
-         4qdSmlU0RcYqb0NipuMqRnHQ+eEBIVbOWlc9eskcScR6qjmRXVdLotAekty8mL0/cIs3
-         zIDd4W4/CSWZNeCmMFIgPmFHijfkgZcWf4i4uRTxZqaYPbzlQxLOn43WAvOcbwtLH9oB
-         n8I4e3bSDSVojWdtuLrFVBV7bSrulfntrqNOQqjjfeVHhBMHz2hqi7CMsfwyz7ee2pJc
-         m4J7loqZ/lq62/1JtBhe6hX2hiHC+02mVvWCCaE6uEhVQHuEiIQTd+yRIJTyPYPar7FM
-         dmAQ==
-X-Gm-Message-State: ALQs6tD8emc2sPTO3PcYIE7uQ6afZku8Z05gBqeFxbFhRKp8Dz3raZXS
-        WUHd2NxZ3udU1eiUgcuBSak=
-X-Google-Smtp-Source: AB8JxZpwZ3ndcyl1OKpWLg0Pf+E/oXHAOgXDajTyJKnTFU2T6KlYzkstAnHbkSdMAmB9noemusgRqg==
-X-Received: by 10.55.31.132 with SMTP id n4mr21334279qkh.375.1524488245538;
-        Mon, 23 Apr 2018 05:57:25 -0700 (PDT)
+        bh=4iM1SXPT6obfl015rX6PGSbY6x5pUQm40e4ZQZ0Inxk=;
+        b=H6TtwSX0cK1oFZ+z7ydSlcFrItZxehuZJeR4fCriAxsPrV0WkJ5yrPhpl72UYHThtQ
+         GimM/3nKX9IHBnU6a6YGbFTuU9bV4l8fflJX+zNYRZUy5Z2xQ9Trw4fMAtHU4i+0AyiO
+         to15Nk4y9t7aRgGt08F59RfJ1iWPntZmCbM7o5QpPZhoVvx/gsWCvOP1DENtiu+ivn4T
+         HWLNVrhfOrahzeTJTWzQELOA/4zMbCbAlFMMdu6ypUkGSpVBz/Jc2/PxrOdHdp/yKMgi
+         ARIYip0He91h8dyRYOZo+4HyRMdG7lNl0oOw+JR0nensHYY2Yt3iuWEaEnKBs4IKsWKu
+         N+yg==
+X-Gm-Message-State: ALQs6tCT6UDF1+wvUfIK/6MnURB1jEofadisySpUZ2GW0LFJOMC4+YWU
+        sfuK3If6iaF6AaI+72dwfyY=
+X-Google-Smtp-Source: AB8JxZoD+c83cV2W1UTrCzlt6U6XOg61UrnL/K1NNPmaoemAnkjQ6dX7MJCPzVHJ9EAnCxNJTUWmVg==
+X-Received: by 10.55.92.198 with SMTP id q189mr22361903qkb.63.1524489309860;
+        Mon, 23 Apr 2018 06:15:09 -0700 (PDT)
 Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id z23-v6sm9714554qto.13.2018.04.23.05.57.23
+        by smtp.gmail.com with ESMTPSA id w51-v6sm4448717qtc.97.2018.04.23.06.15.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Apr 2018 05:57:24 -0700 (PDT)
+        Mon, 23 Apr 2018 06:15:09 -0700 (PDT)
 Subject: Re: [PATCH v1 1/2] merge: Add merge.renames config setting
-To:     Elijah Newren <newren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+To:     =?UTF-8?Q?Eckhard_Maa=c3=9f?= <eckhard.s.maass@googlemail.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
         "peff@peff.net" <peff@peff.net>,
         "gitster@pobox.com" <gitster@pobox.com>,
         "pclouds@gmail.com" <pclouds@gmail.com>,
@@ -63,17 +64,19 @@ Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
 References: <20180420133632.17580-1-benpeart@microsoft.com>
  <20180420133632.17580-2-benpeart@microsoft.com>
  <CABPp-BFANBs=tOhS5BFfTMkdQsNYbUDExWK8QB0V=qD9YwZyWw@mail.gmail.com>
- <CABPp-BEhvLVTL3+0scUucAp9ZMBiiT_0VG3eeKm9qRnHG=y+tw@mail.gmail.com>
+ <cd49481c-9665-124a-5f94-791f1a16657d@gmail.com>
+ <CABPp-BFqj2TFiHUDsysafq0NHC4MV-QYZVxOZe1TNRrXMOQfng@mail.gmail.com>
+ <20180422120718.GA29956@esm>
 From:   Ben Peart <peartben@gmail.com>
-Message-ID: <82d8c76d-b8fa-4b72-5ebd-25b650f89980@gmail.com>
-Date:   Mon, 23 Apr 2018 08:57:24 -0400
+Message-ID: <0eea1726-d511-6818-aa29-add6c13900da@gmail.com>
+Date:   Mon, 23 Apr 2018 09:15:09 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BEhvLVTL3+0scUucAp9ZMBiiT_0VG3eeKm9qRnHG=y+tw@mail.gmail.com>
+In-Reply-To: <20180422120718.GA29956@esm>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -81,41 +84,49 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 4/20/2018 1:26 PM, Elijah Newren wrote:
-> On Fri, Apr 20, 2018 at 10:02 AM, Elijah Newren <newren@gmail.com> wrote:
->> On Fri, Apr 20, 2018 at 6:36 AM, Ben Peart <Ben.Peart@microsoft.com> wrote:
->>> --- a/Documentation/merge-config.txt
->>> +++ b/Documentation/merge-config.txt
->>> @@ -37,6 +37,11 @@ merge.renameLimit::
->>>          during a merge; if not specified, defaults to the value of
->>>          diff.renameLimit.
->>>
->>> +merge.renames::
->>> +       Whether and how Git detects renames.  If set to "false",
->>> +       rename detection is disabled. If set to "true", basic rename
->>> +       detection is enabled. This is the default.
->>
->> One can already control o->detect_rename via the -Xno-renames and
->> -Xfind-renames options.  I think the documentation should mention that
->> "false" is the same as passing -Xno-renames, and "true" is the same as
->> passing -Xfind-renames.  However, find-renames does take similarity
->> threshold as a parameter, so there's a question whether this option
->> should provide some way to do the same.  I'm not sure the answer to
->> that; it may be that we'd want a separate config option for that, and
->> we can wait to add it until someone actually wants it.
+On 4/22/2018 8:07 AM, Eckhard Maaß wrote:
+> On Fri, Apr 20, 2018 at 11:34:25AM -0700, Elijah Newren wrote:
+>> Sorry, I think I wasn't being clear.  The documentation for the config
+>> options for e.g. diff.renameLimit, fetch.prune, log.abbrevCommit, and
+>> merge.ff all mention the equivalent command line parameters.  Your
+>> patch doesn't do that for merge.renames, but I think it would be
+>> helpful if it did.
 > 
-> I just realized another issue, though it also affects -Xno-renames.
-> Even if rename detection is turned off for the merge, it is
-> unconditionally turned on for the diffstat.  In builtin/merge.c,
-> function finish(), there is the code:
+> I wonder here what the relation to the diff.* options should be in this
+> regard anyway. There is already diff.renames. Naively, I would assume
+> that these options are in sync, that is you control the behavior of both
+> the normal diff family like git show and git merge. The reasoning, at
+> least for me, is to keep consistency between the outcome of rename
+> detection while merging and a later simple "git show MERGE_BASE..HEAD".
+> I would expect those to give me the same style of rename detection.
 > 
->      if (new_head && show_diffstat) {
->          ...
->          opts.detect_rename = DIFF_DETECT_RENAME;
-> 
-> It seems that this option should affect that line as well.  (Do you
-> have diffstat turned off by chance?  If not, you may be able to
-> improve your performance even more...)
-> 
+> Hence, I would like to use diff.renames and maybe enhance this option to
+> also carry the score in backward compatible way (or introduce a second
+> configuration option?). Is this idea going in a good direction? If yes,
+> I will try to submit a patch for this.
 
-Seems reasonable to me.  I'll update the patch to do that.
+It's a fair question.  If you look at all the options in 
+Documentation/merge-config.txt, you will see many merge specific 
+settings.  I think the ability to control these settings separately is 
+pretty well established.
+
+In commit 2a2ac926547 when merge.renamelimit was added, it was decided 
+to have separate settings for merge and diff to give users the ability 
+to control that behavior.  In this particular case, it will default to 
+the value of diff.renamelimit when it isn't set.  That isn't consistent 
+with the other merge settings.
+
+Changing that behavior across the rest of the merge settings is outside 
+the scope of this patch.  I don't have a strong opinion as to whether 
+that is a good or bad thing.
+
+> 
+> Ah, by the way: for people that have not touched diff.renames there will
+> be no visible change in how Git behaves - the default for diff.renames
+> is a rename with 50% score with is the same for merge. So it will only
+> change if one has tweaked diff.renames already. But I wonder if one does
+> that and expect the merge to use a different rename detection anyway.
+> 
+> Greetings,
+> Eckhard
+> 
