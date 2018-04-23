@@ -2,115 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAB931F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 23:25:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4F3D1F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 23:40:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932681AbeDWXZj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 19:25:39 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:42547 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932567AbeDWXZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 19:25:38 -0400
-Received: by mail-pf0-f194.google.com with SMTP id o16so10584773pfk.9
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 16:25:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=CWygTvjbYcHXWMOlF36965VLT90+9pgdTbqgOaHyN2M=;
-        b=tUC9zebPPHXIsLleUJ3woradMNSGQy58VDUnSUpdw+nxhCif+NV+tiJWitK/W3jH3U
-         R088wygw5Hjq3CUDvHvZ0Jus9CjjJMHfSZLziy31HDvMEvqjmNv2Tq6jXzW8aGZ6S4Zc
-         EVLxIyc5zGQgsQuW+S4Ou+YjzCC1+JVUqpU3ocTzq+bgn/on6IfxPKj1hfjJHg4e2URL
-         HZNIp3uhwW4F3Ssw9TDztUErepcui1sIZa3ump5edrgJ+BlsCoulV3gETing8feSqH4a
-         3OMsVBD1UvX4Ijp/sTTzF6vkGeLk/1/Y9lzwS+cUXb2N0YuIhl7o7Rgeh7zHWnxQw8+R
-         V5kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=CWygTvjbYcHXWMOlF36965VLT90+9pgdTbqgOaHyN2M=;
-        b=bfZGUojZP/yNEgr7Cr5JV5P7skGy6ZLe4HuMiQhL5EwZJAlLlrYVEHMKo4tLadkOCw
-         BNAtODn+1r2M1gupoY6ADq8kvpFpRymB/IlaxhjRgOoViLOy0v1VhuSTSvzCAJKGT/r1
-         eo7PF9n0eCfSl7BGMMTgXsn/FXqBWEmUHWUn3KdtZ9eIaA3GozKNtQY+ztq2dOCWnTs3
-         qobTrT+FytecsVuC73O2BG4PlWjn13+a4WLi1N0r577DSlkMzg1GXIM2JAdquZXG6Q8I
-         rqxCUnkGrv3WDVFXTsYH8eDPQ/6B2GHQGyd3Wjqq/iTRi6mYy4+5sVrL8CkEJx5Jcqc5
-         hwkQ==
-X-Gm-Message-State: ALQs6tBcguUip40groyhIRnlpamtUm0SfMmGYpXIK2rXQufuJFApWg76
-        UzUcDz1ZlBq4Gh8vxIpBwPQ0HwUS
-X-Google-Smtp-Source: AIpwx48zTfdVQ4Mhiu3NqjBLc5ojjD2g7RpvJWZWVeNqloFHXpt07yeFn3b+u/ZWd4Cv+oCUD331qQ==
-X-Received: by 10.98.198.195 with SMTP id x64mr21471346pfk.11.1524525937771;
-        Mon, 23 Apr 2018 16:25:37 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id c28sm33462618pfe.27.2018.04.23.16.25.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Apr 2018 16:25:37 -0700 (PDT)
-Date:   Mon, 23 Apr 2018 16:25:35 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Dan Jacques <dnj@google.com>, Junio C Hamano <gitster@pobox.com>,
-        Johannes.Schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
-        Brandon Williams <bmwill@google.com>
-Subject: [PATCH 2/2] Makefile: quote $INSTLIBDIR when passing it to sed
-Message-ID: <20180423232535.GD25128@aiede.svl.corp.google.com>
-References: <f0ad1ad4-67d8-21e2-fdd0-0a08328c1eaa@kdbg.org>
- <20171205212625.6616-1-dnj@google.com>
- <xmqq7eu0j1th.fsf@gitster.mtv.corp.google.com>
- <e0a22ee4-9503-760f-293c-be56fa46fa04@kdbg.org>
- <20180423232326.GB25128@aiede.svl.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180423232326.GB25128@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+        id S932671AbeDWXkF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 19:40:05 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60460 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932707AbeDWXkA (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 23 Apr 2018 19:40:00 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4A14D60400;
+        Mon, 23 Apr 2018 23:39:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1524526799;
+        bh=m2UjInMuWEFP+HbBAoD57YFDKsPTB99bnECsjosZfbM=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=vxbBwrtEGMeUPj9BONv9T1qUVYZUXlN9ECgzo0MiIm9N8oB5PjEKtZIzZ/eI+x+Kp
+         /ru0LaLPcT1V4HdL+1K2CWEFKkTxwz3WO4Ypu4R86H5Y0LkpXl3HUV1m15n4rYKLP7
+         ok5/IcoTyE1zyaFe9qnRlhcKckWd9B94tATpHqqaLPgV75oFhyj5RhjuM0BV8Z8Ytl
+         NXJ7i6IbgKlwVF1Vu9vvbKr+sI0JCyMB0IkvmENvm+T29Dw7YQKI13YN6dc+8OXF5q
+         MquMlF1Uowd5fDUwY8cPkNluP3M7kMah4t5jkqbdwfn1kohSviRR5rNJrvwYj/fh6y
+         WG+/Lp1KARh9eEXFN91wYthNxwvH2fvvgS55hti+BNt2ElqTplZibZxFKd+BzsiiD3
+         tG5mfdpoOf2nycmsCD3K9oNp2KSxRm0BH4VB8Mi4+B6JLSEUgBa173L9mhLFXsThOY
+         F9W7iBIW9Fz5Foao1EA624HSYxHe+jnMmZNM4+CElw4SkPIg3AV
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 00/41] object_id part 13
+Date:   Mon, 23 Apr 2018 23:39:10 +0000
+Message-Id: <20180423233951.276447-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.17.0.290.gded63e768a
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-f6a0ad4b (Makefile: generate Perl header from template file,
-2018-04-10) moved code for generating the 'use lib' lines at the top
-of perl scripts from the $(SCRIPT_PERL_GEN) rule to a separate
-GIT-PERL-HEADER rule.
+This is the thirteenth series of patches to convert to struct object_id
+and the_hash_algo.
 
-This rule first populates INSTLIBDIR and then substitutes it into the
-GIT-PERL-HEADER using sed:
+The series adds an oidread function to read object IDs from a buffer,
+removes unused structure members (which therefore don't require
+conversion), converts various functions to struct object_id, and
+improves usage of the_hash_algo.  It also makes empty_blob_oid and
+empty_tree_oid static, exposed only through the hash algorithm
+abstraction, and updates all the hard-coded instances of the empty blob
+and empty tree object IDs in scripts (excepting the testsuite).
 
-	INSTLIBDIR=... something ...
-	sed -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' $< > $@
+Outside of the testsuite, these are the only changes required to use a
+different 160-bit hash algorithm.  To get the testsuite working will
+require two additional sets of patches, one of which I will send out
+soon.
 
-Because $INSTLIBDIR is not surrounded by double quotes, the shell
-splits it at each space, causing errors if INSTLIBDIR contains an $IFS
-character:
+I expect part 14 to be the last (or next to it) of the object_id series.
+I'm starting work on testing the codebase with a 256-bit hash[0], and I
+expect that part 14 (or possibly a 15) will include the final pieces
+necessary to make it pass the testsuite with a 256-bit hash (sans
+multi-hash support).
 
- sed: 1: "s=@@INSTLIBDIR@@=/usr/l ...": unescaped newline inside substitute pattern
+[0] I can synthesize blobs, trees, and commits, but things are currently
+totally broken, which is, I suppose, to be expected.
 
-Add back the missing double-quotes to make it work again.
+brian m. carlson (41):
+  cache: add a function to read an object ID from a buffer
+  server-info: remove unused members from struct pack_info
+  Remove unused member in struct object_context
+  packfile: remove unused member from struct pack_entry
+  packfile: convert has_sha1_pack to object_id
+  sha1_file: convert freshen functions to object_id
+  packfile: convert find_pack_entry to object_id
+  packfile: abstract away hash constant values
+  pack-objects: abstract away hash algorithm
+  pack-redundant: abstract away hash algorithm
+  tree-walk: avoid hard-coded 20 constant
+  tree-walk: convert get_tree_entry_follow_symlinks to object_id
+  fsck: convert static functions to struct object_id
+  submodule-config: convert structures to object_id
+  split-index: convert struct split_index to object_id
+  Update struct index_state to use struct object_id
+  pack-redundant: convert linked lists to use struct object_id
+  index-pack: abstract away hash function constant
+  commit: convert uses of get_sha1_hex to get_oid_hex
+  dir: convert struct untracked_cache_dir to object_id
+  http: eliminate hard-coded constants
+  revision: replace use of hard-coded constants
+  upload-pack: replace use of several hard-coded constants
+  diff: specify abbreviation size in terms of the_hash_algo
+  builtin/receive-pack: avoid hard-coded constants for push certs
+  builtin/am: convert uses of EMPTY_TREE_SHA1_BIN to the_hash_algo
+  builtin/merge: switch tree functions to use object_id
+  merge: convert empty tree constant to the_hash_algo
+  sequencer: convert one use of EMPTY_TREE_SHA1_HEX
+  submodule: convert several uses of EMPTY_TREE_SHA1_HEX
+  wt-status: convert two uses of EMPTY_TREE_SHA1_HEX
+  builtin/receive-pack: convert one use of EMPTY_TREE_SHA1_HEX
+  builtin/reset: convert use of EMPTY_TREE_SHA1_BIN
+  sha1_file: convert cached object code to struct object_id
+  cache-tree: use is_empty_tree_oid
+  sequencer: use the_hash_algo for empty tree object ID
+  dir: use the_hash_algo for empty blob object ID
+  sha1_file: only expose empty object constants through git_hash_algo
+  Update shell scripts to compute empty tree object ID
+  add--interactive: compute the empty tree value
+  merge-one-file: compute empty blob object ID
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Thanks for reading.
-
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index 8f4cb506ff..727eca5d0a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2108,7 +2108,7 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
- 	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
- 	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
- 	sed -e 's=@@PATHSEP@@=$(pathsep)=g' \
--	    -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' \
-+	    -e 's=@@INSTLIBDIR@@='"$$INSTLIBDIR"'=g' \
- 	    -e 's=@@PERLLIBDIR_REL@@=$(perllibdir_relative_SQ)=g' \
- 	    -e 's=@@GITEXECDIR_REL@@=$(gitexecdir_relative_SQ)=g' \
- 	    -e 's=@@LOCALEDIR_REL@@=$(localedir_relative_SQ)=g' \
--- 
-2.17.0.441.gb46fe60e1d
+ builtin/am.c                         |  8 +--
+ builtin/count-objects.c              |  2 +-
+ builtin/fsck.c                       |  2 +-
+ builtin/index-pack.c                 |  3 +-
+ builtin/merge.c                      | 14 ++---
+ builtin/pack-objects.c               | 32 +++++------
+ builtin/pack-redundant.c             | 62 ++++++++++++----------
+ builtin/prune-packed.c               |  2 +-
+ builtin/receive-pack.c               |  8 +--
+ builtin/reset.c                      |  2 +-
+ builtin/rev-parse.c                  |  4 +-
+ cache-tree.c                         |  4 +-
+ cache.h                              | 25 +++------
+ commit.c                             |  4 +-
+ diff.c                               | 20 ++++---
+ dir.c                                | 25 ++++-----
+ dir.h                                |  5 +-
+ fsck.c                               | 20 +++----
+ git-add--interactive.perl            | 11 +++-
+ git-filter-branch.sh                 |  4 +-
+ git-merge-one-file.sh                |  2 +-
+ git-rebase--interactive.sh           |  4 +-
+ http.c                               | 11 ++--
+ merge.c                              |  5 +-
+ packfile.c                           | 79 +++++++++++++++-------------
+ packfile.h                           |  4 +-
+ read-cache.c                         | 34 ++++++------
+ resolve-undo.c                       |  2 +-
+ revision.c                           |  7 +--
+ sequencer.c                          |  5 +-
+ server-info.c                        |  3 --
+ sha1_file.c                          | 69 +++++++++++++-----------
+ sha1_name.c                          |  5 +-
+ split-index.c                        | 10 ++--
+ split-index.h                        |  4 +-
+ submodule-config.c                   | 66 +++++++++++------------
+ submodule-config.h                   |  7 +--
+ submodule.c                          |  6 +--
+ t/helper/test-dump-split-index.c     |  4 +-
+ t/helper/test-dump-untracked-cache.c |  2 +-
+ templates/hooks--pre-commit.sample   |  2 +-
+ tree-walk.c                          | 18 +++----
+ tree-walk.h                          |  2 +-
+ unpack-trees.c                       |  2 +-
+ upload-pack.c                        | 18 +++----
+ wt-status.c                          |  6 ++-
+ 46 files changed, 333 insertions(+), 301 deletions(-)
 
