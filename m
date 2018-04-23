@@ -2,82 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E41621F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 16:53:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26B8D1F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 17:09:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932234AbeDWQxt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 12:53:49 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:45881 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932217AbeDWQxs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 12:53:48 -0400
-Received: by mail-qk0-f172.google.com with SMTP id c136so16788996qkb.12
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 09:53:47 -0700 (PDT)
+        id S1755749AbeDWRJe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 13:09:34 -0400
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:46273 "EHLO
+        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755473AbeDWRJV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 13:09:21 -0400
+Received: by mail-vk0-f47.google.com with SMTP id v205so9859002vkv.13
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 10:09:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=t6vBAYmBref93EQFv5soxnXordo10oPkY/YqYXSnudo=;
-        b=GAayF0qhP7mhjrW5VQAr4LLliDY1BJHM6af5KjR1cR3Xov+1YCaKaT4b5w42H9P1SF
-         LgEBazi9jEwQS8YWSoXPq3QruHKsyRSVGuMHHnl7JsllTBXEpLsnHZqVzYm9nXUtNseH
-         axVIOkqHauc55wxpXJeXUYPzBomcWS9dlGVG2A50/XR43oTXS8Ei/6Y6ChSrZxYq1h6X
-         yRohUV0nXTIezCEYTXizphgj1S23HhkBD6Nf55kTxjs2CihBXpdv2Xp/vArjcuvkB0bK
-         C0Wwo0Ob56+aAzkq8LgYxgkreiMVtvlL1De/qOk8UAaJMq8EdwwIxvVIg58zXYsx2nxW
-         wgxA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2MAddTWA86YB3zPKOZayQ0gvpT+Vs2sWU0KNx57YBx4=;
+        b=AJkkcUvMMP8e3kIMtzf7dP4/hhUuNArOAKf40Y3j+08urMJ08/p40Psp1s/VDEHx64
+         ZzPYarxt6g8pNEDW3cD8DZre7wpaNRjvkHUD9AWWSYpfBttlsew2pYobuaN4HvuEF/42
+         OFaYfXJbj5KGtuqYfMkaeuhAXSwSEniKLCGMhd4ppx+lDZyl1+oxNNujx8mkmRZ4qGiX
+         QwqSVzL2aKb01Lidh3A58KDwP0wrve6Ueto793lKPHbdImX4f0MP9rMldM+jiAqoRT4f
+         3WAxeLLJwD1dxADiKs9K9M7v/H9sWuiMQoX6VkOlPHTFlgxqeGAXydeQ7lCK4PrvJD5s
+         hEYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=t6vBAYmBref93EQFv5soxnXordo10oPkY/YqYXSnudo=;
-        b=KyBgXyypg/xgR/q51h6FN8A3vVSqACc23C2vWcKeteWzFLaPFreuT+tLN3q785HW22
-         OhZXGxXWibAxCic4KIZSUxenyugXrLNxxHxWHl1rKTRogpjVCiEnYJEZPJw5MZ8gKzqd
-         atWSaa2n6jvwLmKS61VsHnUvi+kvv8PJI8SGuVbVNfSwS44cxiIhzqOwWJUkdP3IegK+
-         a9+5fWcz/eRBDoLoHY/UvZWxXf8rE66f8Piq4E389KNzRsIVhmzdyszdwL3ySBba8ZK9
-         j/F6MyPdOWq4/zO7FYNRalju8fqnI8qcOutWEkIoNImaC7mGs9RON79EYJ5irwnVL85I
-         HXIA==
-X-Gm-Message-State: ALQs6tDhCVCVZoiE2VKrqPqTKKsKxftcf3+gsr19rCuRjjg9e6z+kClh
-        NNRPYyFVz//RFeZaQhMOr0Xpe3kTy09wokWC068=
-X-Google-Smtp-Source: AB8JxZpfT+6aKmkcrrauASh1N3FposRfZd7xoU3555iTfNBgsi3gt+iz5vaCgJycw+Q4lUiUYXOqRyUTn+Bc5eKfi/w=
-X-Received: by 10.55.190.134 with SMTP id o128mr21264021qkf.141.1524502427345;
- Mon, 23 Apr 2018 09:53:47 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2MAddTWA86YB3zPKOZayQ0gvpT+Vs2sWU0KNx57YBx4=;
+        b=VsqGIs3JmsKP+iTf3YDFpkEbFHuCCL4u/sIPEOFvwm1ikbJvZqRQGg2OeIOj/vzSPO
+         /F8VfLE+98iAYnNuzdjT/jZgt6oie1ow/QtrETSVax+0BJwC8bxOv6tOqaCCpZAlDlVf
+         yy6zLOMBT/XsZpXmt35QXvfG1Sy7GFLMvAw0TdQeZZmNhD6bA54W7aQhXZDilydrPwUX
+         xvwsi205onPEIl6QkyOefJ6p0fj1jQThtuxHtsUCmJ1mNEJCU+DbNNCTs0Z6bSkrKQAe
+         NqwLybywBXb6qBlIluqw86NhCNnbcsQHa5oZheudNiFwFaff4ntSRkXKpf/AH9fcrd6r
+         2ecw==
+X-Gm-Message-State: ALQs6tC57Nl//pgKOeuQKWrukwL1DGdiCXt+FYvmZjZg5TywCsvyCA5d
+        6lVGVa0XJzcduSu+R6FhHhiOoHZu7td30oMU/78=
+X-Google-Smtp-Source: AIpwx49mrRd8V8ho8jjQYF1iSmQAH6lkCQoFyDyU3C9b69DfdINqsVMsomQHPdC5nwwNSPKS/QsN6knRr7LUBHkC2YA=
+X-Received: by 10.31.148.135 with SMTP id w129mr15108450vkd.7.1524503360924;
+ Mon, 23 Apr 2018 10:09:20 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Mon, 23 Apr 2018 09:53:46 -0700 (PDT)
-In-Reply-To: <CA+FnnTxXOwORs_qYvOdSj41UX1aBfj+Hd1+kxPa8j+34xgjhgQ@mail.gmail.com>
-References: <CA+FnnTxbg97A4P3AP7n5RT8+=W8PY0yx3644Ay2Zi9xgKD2aoA@mail.gmail.com>
- <CAPig+cR19LS2vfjBQ71c3j2g61vSHnYRj1iSX1-V_E3Fj=kwOA@mail.gmail.com>
- <CA+FnnTzfJMBuSMAD7PgUurRu8jOpirEgM6=+=i91zdGLWmfUpg@mail.gmail.com>
- <CAPig+cQOzKbM0R6vKTg_BU6meEbAAJWL1T0jZkaCOF0uJ=_Lmw@mail.gmail.com>
- <CA+FnnTzqaPrLgYv-8X9BDW0DR7331morN33B81w8T3vzOwn+Pw@mail.gmail.com>
- <CA+FnnTz-qdVK5482GJo06QrvMktGYhJAJ6g-Naq0BgT-uoRvEA@mail.gmail.com>
- <CAPig+cS+gf5gGM3fmnxk-6k7ezbtS=KQFqkkxVtcytHfcQApEQ@mail.gmail.com>
- <CA+FnnTwvnA90nDARKW9r7p5iraoOGTvfDJ26n6Udc68bDSUASw@mail.gmail.com>
- <CAPig+cRjYju4zEgiY_TuOOk0e7A8zNz+hu+40vQUEGDX6FGDxw@mail.gmail.com>
- <CA+FnnTzFomd91d1F6O-a28hXQ6PxOiBd44da4nSVW0MuDKgkmw@mail.gmail.com>
- <CAPig+cTw5GjB4VgFD2teDvMuyGPFFoNSCqbXbarEXCe3fVdLjQ@mail.gmail.com>
- <CA+FnnTzkZS7HP61Ck3y5p0EC7J_h=ToR5tq5cvEpJ79vYuSxZw@mail.gmail.com>
- <CAPig+cT0ogLmiviWhdZTLxDM7+VN3hk7wgkKnvX96Ym-yXR5bA@mail.gmail.com> <CA+FnnTxXOwORs_qYvOdSj41UX1aBfj+Hd1+kxPa8j+34xgjhgQ@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 23 Apr 2018 12:53:46 -0400
-X-Google-Sender-Auth: EKXBdsRZNjN29xn2q1Ge8inxVYU
-Message-ID: <CAPig+cQzX04JuoUOnxOxWtqMCpHCUi=hMOSDL+jpNuML0iE+Tw@mail.gmail.com>
-Subject: Re: Is support for 10.8 dropped?
-To:     Igor Korot <ikorot01@gmail.com>
-Cc:     git <git@vger.kernel.org>
+Received: by 10.176.95.4 with HTTP; Mon, 23 Apr 2018 10:09:20 -0700 (PDT)
+In-Reply-To: <CACsJy8D4OYphLG5vStr+M9qkiqyH_LR517M-JOPS2wJeTFNGRg@mail.gmail.com>
+References: <20180420122355.21416-1-szeder.dev@gmail.com> <20180421193736.12722-1-newren@gmail.com>
+ <CACsJy8D4OYphLG5vStr+M9qkiqyH_LR517M-JOPS2wJeTFNGRg@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 23 Apr 2018 10:09:20 -0700
+Message-ID: <CABPp-BFuuywXrJuzfb4V1bRLb9eVZpLKiCDwQWetHk8bymC6EQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v10 32.5/36] unpack_trees: fix memory corruption with
+ split_index when src != dst
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 23, 2018 at 12:31 PM, Igor Korot <ikorot01@gmail.com> wrote:
-> 1. Is the file name "config.mak" or "config.make"?
+Hi,
 
-"config.mak"
+On Sun, Apr 22, 2018 at 5:38 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>   - there's a better, more performant fix or there is some way to actually
+>>     share a split_index between two independent index_state objects.
+>
+> A cleaner way of doing this would be something to the line [1]
+>
+>     move_index_extensions(&o->result, o->dst_index);
+>
+> near the end of this function. This could be where we compare the
+> result index with the source index's shared file and see if it's worth
+> keeping the shared index or not. Shared index is designed to work with
+> huge index files though, any operations that go through all index
+> entries will usually not be cheap. But at least it's safer.
 
-> 2. Do I have to do "make clean" or just remove the line and o "make"?
+Yeah, it looks like move_index_extensions() currently has no logic for
+the split_index.  Adding it sounds to me like a patch series of its
+own, and I'm keen to limit additional changes since my patch series
+already broke things pretty badly once already.
 
-"make clean" would not hurt.
+>> However, with this fix, all the tests pass both normally and under
+>> GIT_TEST_SPLIT_INDEX=DareISayYes.  Without this patch, when
+>> GIT_TEST_SPLIT_INDEX is set, my directory rename detection series will fail
+>> several tests, as reported by SZEDER.
+>
+> Yes, the change looks good.
+
+Great, thanks for looking over it.
+
+> [1] To me the second parameter should be src_index, not dst_index.
+> We're copying entries from _source_ index to "result" and we should
+> also copy extensions from the source index. That line happens to work
+> only when dst_index is the same as src_index, which is the common use
+> case so far.
+
+That makes sense; this sounds like another fix that should be
+submitted.  Did you want to submit a patch making that change?  Do you
+want me to?
+
+Elijah
