@@ -2,75 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A818E1F424
-	for <e@80x24.org>; Mon, 23 Apr 2018 13:56:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A344C1F424
+	for <e@80x24.org>; Mon, 23 Apr 2018 14:09:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755207AbeDWN4E (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 09:56:04 -0400
-Received: from mail-wr0-f181.google.com ([209.85.128.181]:40564 "EHLO
-        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755010AbeDWN4D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 09:56:03 -0400
-Received: by mail-wr0-f181.google.com with SMTP id v60-v6so41547568wrc.7
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 06:56:03 -0700 (PDT)
+        id S1755437AbeDWOJ0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 10:09:26 -0400
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:38177 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755281AbeDWOJV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 10:09:21 -0400
+Received: by mail-qt0-f177.google.com with SMTP id z23-v6so17779453qti.5
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 07:09:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XWsRNRtW5/rAVe22iM2E8FFn2Ez85DSVo10l2H0C6oE=;
-        b=mr5gOyOyje3X1kmZ75kRK045Qh/WHSyvkC12s2ZEBxiCfwlGbfcYcCRIGM9gG2vVMv
-         n6rLufjap4m9huR4oKUuIJVaA/cYfGCgrRCroTEHMhW+YwwWLjJEbkph86IUw1vhsDcX
-         RH94LIGtsGdT4lGlNxu0OfZzJ8HdctbTg/6VAWn4zbgYrbYsR5sXU3mh7pTkBQzHomLU
-         Rs/c+JeXClnwBZrOhfMdvf1o6RtYB6H6JmQxsbOt5oJA45BCYfoSYwNf8QBoED3NuNgK
-         gWZv+uejclGWJ6eI1thYJyaIrKsZzHuHHK51OGpKtfcGJss+gfwLgAW5KBBlIuQSStna
-         YiwQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=ykekuDPy2Vw/zZ5PHoLMbFazgS3e3i9yFpF2toMf4/A=;
+        b=TqnHhqT2hufGOGs/MpYps7ziKHGiM/X94nyJEWSgSguBUdok/LgQsItd4X9s0hOrW5
+         lIbaud7TrtPMYOd07PjUGVXsjc37onohwDwjHht/r4u/USJeE8X/cjU4qlRaF1JJ8aKD
+         fa5xHVLKKLpoxhDXVRj00ff8yRKFK6n0ZIOceUFCDAAS0Q92He3DTqh8DuUGy+FcmPLR
+         DMJl03GP7ZOrBiWhQDdmKDNCNfoW1sQ9TLaMjYXw4XQVkVMwF/2DGpcIHK2aUX0Iucm+
+         KXtO0IMpetkvefbfmh8gk9t1RQuvotvJPY5dlc/CjRoNNrp2CbG1WySSOOK/IdSnLnOQ
+         8b/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XWsRNRtW5/rAVe22iM2E8FFn2Ez85DSVo10l2H0C6oE=;
-        b=Lf7wrh7Bbc3nAA8Nd3E/wpJqh9B6ERF9JmQs7h0MHpkXFObKpmLy+sTO+KnOb5201X
-         gMYxjLQHLtZVndsdykNABcmeJXD2BqnQyDzjVTBXCAxWAJ4/SdzPdZqr0ICJaA/rEG8U
-         fgUR9kGGS4f5ZXiQy9sx/zzicN1TAYftBz4RpgDaydZ05t+ZOg3MXcf0pnPYG4/nroNV
-         SG3hM+oYG/n8yDQU/AOils1nTdtlhdU6NzhD0qP2OBfsXkZs8SfCPGI2luOReXd1Bs0p
-         CBv8PW+yq45X6G0dboGiebJnIWd3/Qh4BIts5+tjFly8BTtluZi/T3jV4XeePfBxTD90
-         BkFg==
-X-Gm-Message-State: ALQs6tDJIXf8bglFV+K0xlDGu4TGso8zcO47Qara2kvIjqRnADEO3Spm
-        sMekJb9C3fh+x5xdlq/5RJs=
-X-Google-Smtp-Source: AIpwx4+eESeQ+WhvMggLKFAfGV39OsfQ9T5E6aFoBjrRnRlnkUXnfzpgKPvz8RavKYHZRjXTg6pGtQ==
-X-Received: by 10.28.144.134 with SMTP id s128mr10262121wmd.26.1524491762243;
-        Mon, 23 Apr 2018 06:56:02 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 109-v6sm8920652wra.32.2018.04.23.06.56.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Apr 2018 06:56:01 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2018, #02; Tue, 17)
-References: <xmqqzi22tlfx.fsf@gitster-ct.c.googlers.com>
-        <20180422201755.GA92212@syl.local>
-        <xmqqo9iaakaw.fsf@gitster-ct.c.googlers.com>
-        <20180422233848.GA50345@syl.local>
-Date:   Mon, 23 Apr 2018 22:56:01 +0900
-In-Reply-To: <20180422233848.GA50345@syl.local> (Taylor Blau's message of
-        "Sun, 22 Apr 2018 16:38:48 -0700")
-Message-ID: <xmqq36zm9gcu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=ykekuDPy2Vw/zZ5PHoLMbFazgS3e3i9yFpF2toMf4/A=;
+        b=J5SN/hXbNA1Zvxy5x/S6j9xXz2fcmU/PZSpmjTRhuDcr5/TzWltlRN2sDqv0+DtHb5
+         ZVrOxSsKlS2pAAKD4XNTorDoWGbe0g5aft0mgokZl8OuLL1gMfb4pnN6l5WSnaIa6IDl
+         Dvy6R2uMhTlKMIqtg1kk56J11oID06yME0XDZyY2tWxRmtqD/uPXCpCxCv60JGLd2gR+
+         Civ/a2ozsM45QNQ2sOn8ARiYC3iroZEc1Bjav3PyR5IQT0eSv7W70h1yMHcVYNsbZAQZ
+         9NE533OWE1A27N6RwDO7if4dwZXtDvZyLUAbTSHK+RwkhRmIetH89KMLhxFakk3aWqiw
+         48yA==
+X-Gm-Message-State: ALQs6tCK3AprjdNzy0MTX1F4KLk71hgg8OJ9QZooUorkDFGV1Mgq8ZeQ
+        QR5DeabgsIJBbc4qvaybgqo=
+X-Google-Smtp-Source: AB8JxZp3v5H7cJ4a64stlkQiQ3aoOBDGt1tzJdMRXr7BLsiLRMMRhL9aMOB4r0s+GKWcccJP4Sf6Fg==
+X-Received: by 2002:ac8:72c2:: with SMTP id o2-v6mr18822200qtp.253.1524492561020;
+        Mon, 23 Apr 2018 07:09:21 -0700 (PDT)
+Received: from localhost.localdomain ([2001:4898:8010:1:1060:bd2c:4297:50e])
+        by smtp.gmail.com with ESMTPSA id k43-v6sm11193926qtc.5.2018.04.23.07.09.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Apr 2018 07:09:20 -0700 (PDT)
+Subject: Re: [PATCH v1 0/5] Allocate cache entries from memory pool
+To:     Ben Peart <peartben@gmail.com>,
+        Jameson Miller <jamill@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "jonathantanmy@google.com" <jonathantanmy@google.com>
+References: <20180417163400.3875-1-jamill@microsoft.com>
+ <d2743302-43dd-da3e-f0ba-55dcb824c0f4@gmail.com>
+From:   Jameson Miller <jameson.miller81@gmail.com>
+Message-ID: <b11211ab-4133-84b4-d27b-5dabcd2a6612@gmail.com>
+Date:   Mon, 23 Apr 2018 10:09:07 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <d2743302-43dd-da3e-f0ba-55dcb824c0f4@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
 
-> For now, the Message-ID that I was referring to is:
-> 20180410001826.GB67209@syl.local. [1]
 
-Thanks.
+On 04/17/2018 02:39 PM, Ben Peart wrote:
+>
+>
+> On 4/17/2018 12:34 PM, Jameson Miller wrote:
+>
+>> 100K
+>>
+>> Test                                       baseline [4] block_allocation
+>> ------------------------------------------------------------------------------------
+>> 0002.1: read_cache/discard_cache 1 times   0.03(0.01+0.01) 
+>> 0.02(0.01+0.01) -33.3%
+>>
+>> 1M:
+>>
+>> Test                                       baseline block_allocation
+>> ------------------------------------------------------------------------------------
+>> 0002.1: read_cache/discard_cache 1 times   0.23(0.12+0.11) 
+>> 0.17(0.07+0.09) -26.1%
+>>
+>> 2M:
+>>
+>> Test                                       baseline block_allocation
+>> ------------------------------------------------------------------------------------
+>> 0002.1: read_cache/discard_cache 1 times   0.45(0.26+0.19) 
+>> 0.39(0.17+0.20) -13.3%
+>>
+>>
+>> 100K is not a large enough sample size to show the perf impact of this
+>> change, but we can see a perf improvement with 1M and 2M entries.
+>
+> I see a 33% change with 100K files which is a substantial improvement 
+> even in the 100K case.  I do see that the actual wall clock savings 
+> aren't nearly as much with a small repo as it is with the larger repos 
+> which makes sense.
+
+You are correct - I should have been more careful in my wording. What I 
+meant is that the wall time savings with 100K is not large, because this 
+operation is already very fast.
+
