@@ -2,113 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38DFB1F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 03:05:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD9F41F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 03:26:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932813AbeDXDF4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 23:05:56 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:39575 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932753AbeDXDF4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 23:05:56 -0400
-Received: by mail-wr0-f195.google.com with SMTP id q3-v6so36425629wrj.6
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 20:05:55 -0700 (PDT)
+        id S932827AbeDXD0n (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 23:26:43 -0400
+Received: from mail-qt0-f178.google.com ([209.85.216.178]:35643 "EHLO
+        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932776AbeDXD0m (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 23:26:42 -0400
+Received: by mail-qt0-f178.google.com with SMTP id s2-v6so20306733qti.2
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 20:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=LzWGEuzHqDv+mVsc5XmNiCdA7fVWERQIrq0xcoPcwVg=;
-        b=S14WB4QbuYoSnwXrL0ZeINaA9ZmEJKJmeFl7oq1LG4yqd653Yp9jbmLyP2yaRLfwvK
-         gP/yEcZYxiVYRKeR1wbCRJk0Wdlvul/wxTcxBE3i2Ixq8KwYvQc/eakOJ1wTeHqja8iE
-         tsij/E1d1V1aGAX1GxEkzf1UQPc5NiqPHXR9S0AgRFajvZOIktwG4FRzr3fLWfkrxIfS
-         dzkAnsIGmNk3kMftvAT5vV9nC91OiNPj57kbfvnA2HgT8GIuka7HT4SzXMA54b15ZSnz
-         EJjU4hqH8GDZx/YfML+bKUyxaUC7fpQTZiSQFf4UdwuBNtYW0rJCB/n1tXiKYAvoBBLh
-         FTuw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=sAo9kbI8PEey0FBrR6hAjiZsQnesTehrHRw9GVw0Rso=;
+        b=kNvZOujRudkNntDMuFOvQZRDpdL6Kz1j0vkccyok99ZIos52ZVMWyFNsUVvjRhSzsc
+         jTwJ3AOmQM5KBF1pPrpnMkdM4TIpO7HkEJPiBdtBhykVgC3cFd5BrYtIaV82lbdgGbi/
+         c84Q7+NBVpy4F+l/bvpDVnR60OPkgEiSBVruvuXmNNktDkaD1gbduz15Dx8W0ILub/DT
+         SVSpLzxpgXO/zCv5btVk60iR0KOUFVNH7Ag5ppRkT7Nf09JgRrZm7+t6RlJhTwQIOiSM
+         BfE5Ko6ga6p2EtEM5lKI2Zvd3G3DpgocHfKW9NJxhHdFZTQE4U4mwmFsfLiHPumUvP8N
+         b5sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=LzWGEuzHqDv+mVsc5XmNiCdA7fVWERQIrq0xcoPcwVg=;
-        b=aWXWeUbaOqLg1LDx3WY3rT5uAkk/nUF0YtK4fxtnUHCsHDHZ/qPjFRIRe0Ha9bZ0lN
-         AkrRQvhjQfkFTf0NgglmVGwQ2qMAyVtC5m0FHtj6YyJb8dGqb8idmDI6b7VQcuHZgp+4
-         X4BJsNMMNQ01QICpRjSgeiXLPcC1jenyJNtK89HWGX1omfiC5rmZjn/x6Dd4tzwCDtP5
-         oMmjMuJa07tUXg5v7oLdXUOJJm0UL9s4eZXS/UiurFzPyzkNYMva7yG/6UmKyoQX5gRp
-         ONxEoLg0lhtCKHVAR9noqL+3nxtvVDMCTypPA5vAHpWcdeJDRbWW+FZXL86M4Hnhcx5q
-         0aCQ==
-X-Gm-Message-State: ALQs6tDKYmBg+uXoDhX/1QZp2MO3b38Hg139QGHOovgMMkG7lYX9UEqq
-        hpAMyUQHQ0zM/ACYqSBPiSk=
-X-Google-Smtp-Source: AIpwx48AL0QnSJ7JxewijBzZQCYf3egVI+alFji1FuWKgitk3Sw0rCQugwC4RaHiL6+sDXKQzDEfPQ==
-X-Received: by 2002:adf:874c:: with SMTP id 12-v6mr18811042wrz.275.1524539154570;
-        Mon, 23 Apr 2018 20:05:54 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id m83sm10155619wma.17.2018.04.23.20.05.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Apr 2018 20:05:53 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com
-Subject: Re: [PATCH v2] unpack_trees: fix breakage when o->src_index != o->dst_index
-References: <CABPp-BGQy=-k1TN-i2U89x7gJ7z8_ciTM3DJzTnVKsvi94LpBg@mail.gmail.com>
-        <20180424002423.11373-1-newren@gmail.com>
-Date:   Tue, 24 Apr 2018 12:05:53 +0900
-In-Reply-To: <20180424002423.11373-1-newren@gmail.com> (Elijah Newren's
-        message of "Mon, 23 Apr 2018 17:24:23 -0700")
-Message-ID: <xmqq604h717y.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=sAo9kbI8PEey0FBrR6hAjiZsQnesTehrHRw9GVw0Rso=;
+        b=GniZqUcACMEeli5egmhYpcCunbwTGWBxaqMVkvIFRKWA3cOpXHYOMgSsLoviWvHUA4
+         e/T3uRTV138EyIVie9buDgvYX3wj+xG4tuGiCpkVIuCw77XNkcYeqouT7UvPmbABiOIl
+         kU8gSL9nHmckGp/ftRLLFjbuPMcy+iMirDPSqNohiYpjtcpOANwDDAzghSOPEQ4WAQlN
+         1YfkSrir78EnSbJRs3xfkYTJXeeGZiGNwonmXamYOgkPkW6EQ6eH1TQ6tWtLKrhm+5pa
+         lab/+b0deXohCVUxcsPtHNGQamXH0TWNLsNnmJPX5cMTN6jZPzjXo0636I6ZknLP9jyB
+         nSDA==
+X-Gm-Message-State: ALQs6tAO4KsTsvv8fzTvob+dCRVF4k4aTGgLdUTfXDAcOAlv38Z4O3Mp
+        KThNAX5P2jTm+W4zN0/E1kYJs50iQTy/3DaoGRo=
+X-Google-Smtp-Source: AB8JxZpGOZ4/SFqfdRjv1UwxCJzIQ5xQ34wIKyjGISZWPE3ShRi4pshPR2OsB8MYUQPAzijvRV8lYr+MLunRnJkWSr4=
+X-Received: by 2002:aed:26a4:: with SMTP id q33-v6mr25289849qtd.165.1524540401824;
+ Mon, 23 Apr 2018 20:26:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.174.202 with HTTP; Mon, 23 Apr 2018 20:26:41 -0700 (PDT)
+In-Reply-To: <20180423193848.5159-2-t.gummerer@gmail.com>
+References: <20180415202917.4360-1-t.gummerer@gmail.com> <20180423193848.5159-1-t.gummerer@gmail.com>
+ <20180423193848.5159-2-t.gummerer@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 23 Apr 2018 23:26:41 -0400
+X-Google-Sender-Auth: iBaU4P-Rfz9TAHCzxq_U3IlQEcY
+Message-ID: <CAPig+cSH1ouZBU9BT64vL5vBz4cD+UFCoFH4fZyf8JrM7dKe5Q@mail.gmail.com>
+Subject: Re: [PATCH v8 1/4] worktree: remove extra members from struct add_opts
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-
->  unpack-trees.c | 17 ++++++++++++++---
->  1 file changed, 14 insertions(+), 3 deletions(-)
+On Mon, Apr 23, 2018 at 3:38 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> There are two members of 'struct add_opts', which are only used inside
+> the 'add()' function, but being part of 'struct add_opts' they are
+> needlessly also passed to the 'add_worktree' function.
 >
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index e73745051e..08f6cab82e 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1284,9 +1284,20 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->  	o->result.timestamp.sec = o->src_index->timestamp.sec;
->  	o->result.timestamp.nsec = o->src_index->timestamp.nsec;
->  	o->result.version = o->src_index->version;
-> -	o->result.split_index = o->src_index->split_index;
-> -	if (o->result.split_index)
-> +	if (!o->src_index->split_index) {
-> +		o->result.split_index = NULL;
-> +	} else if (o->src_index == o->dst_index) {
-> +		/*
-> +		 * o->dst_index (and thus o->src_index) will be discarded
-> +		 * and overwritten with o->result at the end of this function,
-> +		 * so just use src_index's split_index to avoid having to
-> +		 * create a new one.
-> +		 */
-> +		o->result.split_index = o->src_index->split_index;
->  		o->result.split_index->refcount++;
-> +	} else {
-> +		o->result.split_index = init_split_index(&o->result);
-> +	}
->  	hashcpy(o->result.sha1, o->src_index->sha1);
->  	o->merge_size = len;
->  	mark_all_ce_unused(o->src_index);
-> @@ -1412,7 +1423,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->  						  WRITE_TREE_SILENT |
->  						  WRITE_TREE_REPAIR);
->  		}
-> -		move_index_extensions(&o->result, o->dst_index);
-> +		move_index_extensions(&o->result, o->src_index);
+> Make them local to the 'add()' function to make it clearer where they
+> are used.
+>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> @@ -27,8 +27,6 @@ struct add_opts {
+>         int keep_locked;
+> -       const char *new_branch;
+> -       int force_new_branch;
+>  };
+> @@ -395,33 +394,32 @@ static int add(int ac, const char **av, const char *prefix)
+> -       if (ac < 2 && !opts.new_branch && !opts.detach) {
+> +       if (ac < 2 && !new_branch && !opts.detach) {
+>                 int n;
+>                 const char *s = worktree_basename(path, &n);
+> -               opts.new_branch = xstrndup(s, n);
+> +               new_branch = xstrndup(s, n);
 
-Can src_index be NULL here?  I am getting segfaults everywhere,
-starting from t0000-basic that populates the index by reading one
-tree object via read-tree.
-
->  		discard_index(o->dst_index);
->  		*o->dst_index = o->result;
->  	} else {
+Sorry for not noticing this earlier, but when 'new_branch' was part of
+'opts', this leaked xstrndup'd string was covered by the UNLEAK(opts)
+at the end of the function. However, now that 'new_branch' is a
+standalone variable, it needs its own UNLEAK().
