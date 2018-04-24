@@ -2,88 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DD411F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 18:59:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 524301F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 19:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752532AbeDXS7u (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 14:59:50 -0400
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:37981 "EHLO
-        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751785AbeDXS7s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 14:59:48 -0400
-Received: by mail-ua0-f194.google.com with SMTP id q38so13291474uad.5
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 11:59:47 -0700 (PDT)
+        id S1751565AbeDXTDa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 15:03:30 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:34898 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751213AbeDXTD3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 15:03:29 -0400
+Received: by mail-yb0-f195.google.com with SMTP id i69-v6so4825684ybg.2
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 12:03:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Ulo6bX+yZraCUvbr/pHwcefXbxORZ8huFEIyIitx02g=;
-        b=cuSX2+/DGbSetNZ3QEaF9xlF4/C7D2O827Vw7g/TiVoVanfY45GH76KcsKg/kF1TfS
-         x/CPDPeqwK9uOMFKh1Fd2dT7dOSDhLvDmNndiNthsiXd8/xHpTwrJGvmezW53KLv7ygT
-         AHxuxf5nvtwr1k8uSHYUifxQc+Qu3BBbP/0cMzQR4LikBUPnmewtwNYoHoiypdYPcwGS
-         sCtL/d5bd7CdH9YAnSb9BMMQDQoserQQgu2NfcQJkk+TDwk26crSnltrNS/PRTzl4NlB
-         D8kITrLwJIxX/+1unVt0lU3c5fDAr3TZ+zAwqfbAlOXMBJzq8e794weFRSQRdjvk9jhG
-         YQYg==
+        bh=zET42x2OIXt8+TspraVj33+97cbSeCop0YkQf1wIi6k=;
+        b=iODO6AM4IGj2WpI3Pdcu3z46ELAzxIyyaoxpnlIY04Ws8+u5xM0gwYM6mrHMZ5xC6S
+         26GS6hzwgAymDbp9P/YEayNllQXLYHOajIRSBq5I1IVXQISqOX6gRjmkTfPUvrNRYTBn
+         SzF3+3jd8uI9CCuxY3P+GHAIaQfzHyiNqCbt9vqEIQg68o+hAUM7ZLUVBlMeMtAA+fIj
+         MA++GG6sm+oSb3nyL1AcD7d2QrSWFQ2LsiG8x0NatZxIgUMFyMBnVRzmV535ZVI/w2kf
+         W54+ycN96wlWFeqvuLqviTjAADSvB5FmKSrb6ENbJK+SFFmHieUEFRR9OrXef937s+uV
+         wD+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Ulo6bX+yZraCUvbr/pHwcefXbxORZ8huFEIyIitx02g=;
-        b=SIa1n6fXV/93FxaEVLVFvUXPvDXPSIKC92OGOiXANBYbWL7/xSnzraX0MNU6eo0aju
-         njGqjnw/8dvNvXNLIb42yerd8na5DUC4uI3vFxJvXG6XSt0jgciH1cw2KJzlsk+ZBR49
-         97gKkI8CeXZgBDrJfVqHfJh5DPJRFPJSQiCSixLY/NhWbiWxndjjlKtQ5O7jqSoBw0SL
-         J5X7QIdteP4WFt25s3qY+HihjfDWD1QDSP1i53okBV8VbMoO+3JszgBHvUjL0fd163v0
-         OyLVplaA9yhXVp+iHR4VfNbBvISDV+jQVQ3WQY2XeSoq6mWPwvGshXmIr5DwKq5kdCtR
-         S95A==
-X-Gm-Message-State: ALQs6tCeNfb0UOkjzjKjd+tRYbmPslsRYRh7VekrQY7JSMi1PyIDPsZC
-        AsdByDV5aZKBXzJb7Np80TIpu0usqe81vt1pj5Y=
-X-Google-Smtp-Source: AIpwx49acxt3olmEtx1aBAC8zKMF9GigU2Ze27uvk97Vbipjlpzy6YUnP2ru1FCo8+90o+68+DKeSYvAKrBp0vUYLyI=
-X-Received: by 10.176.24.88 with SMTP id j24mr20238989uag.94.1524596387329;
- Tue, 24 Apr 2018 11:59:47 -0700 (PDT)
+        bh=zET42x2OIXt8+TspraVj33+97cbSeCop0YkQf1wIi6k=;
+        b=CpJY4i90oDWayg7nrNdkSzNF7K9HWXjbPg42DOJyBoqDU3bz/zAopkOU/g1UIZBTB1
+         bVF9pfGjdVvdvC/DVbPTxOReg+frB6BXgEp4N5AVWlfxOOJwxLdBsBxtuGZC0UpXGRNe
+         pnN276u9eqbseZNkN2BywC7w+dbeZQHf0sdORHGtU8NCp20PirucO84ar+GS3pv5y5vT
+         UrNRwkCZgA4QynUshf16orVV+cu0jMHn6K0peQViUwln6IxpSjMvKLgaY2TZankLT78L
+         66Aq38ALwnuFnlKeMeV0tD5J86ZmFmSnAfYKyhWKBn7sp0FY3noevoekOin/aQBqcd9N
+         HQ5w==
+X-Gm-Message-State: ALQs6tAmXmMMxT8wT6AFVwB0V1yS/NvqV49WJ+hN9ZinLOxqP1gfh1rt
+        C5eQjlGzBGV2zFaw8CPgPvnDBVuVV2yQLSDzDKigIqlj
+X-Google-Smtp-Source: AIpwx4/UBN7d/X06q+KVzBvKJHujZvXYQJoRoeSPkJ84I9GNTMgYklTF3r4aps5dcJWAXD1NR5v4bkQ6SjMZ1o5Ssgs=
+X-Received: by 2002:a25:fc16:: with SMTP id v22-v6mr14735805ybd.247.1524596608195;
+ Tue, 24 Apr 2018 12:03:28 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Tue, 24 Apr 2018 11:59:46 -0700 (PDT)
-In-Reply-To: <20180424171124.12064-2-benpeart@microsoft.com>
-References: <20180420133632.17580-1-benpeart@microsoft.com>
- <20180424171124.12064-1-benpeart@microsoft.com> <20180424171124.12064-2-benpeart@microsoft.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 24 Apr 2018 11:59:46 -0700
-Message-ID: <CABPp-BFTywvVFV3Wx1jv9RyoFk_cE7XE8x1neuLVt4qwyw0EMw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] merge: Add merge.renames config setting
-To:     Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
-        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Tue, 24 Apr 2018 12:03:27
+ -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1804242048360.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1524262793.git.johannes.schindelin@gmx.de>
+ <cover.1524303776.git.johannes.schindelin@gmx.de> <f962f8043fb1125b47090a82c35e2d67d3d9d216.1524303776.git.johannes.schindelin@gmx.de>
+ <CAGZ79ka=BLGCCTOw848m0SE9O+ZKhQfiW9RUz99W4=Gdg+7ofQ@mail.gmail.com> <nycvar.QRO.7.76.6.1804242048360.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 24 Apr 2018 12:03:27 -0700
+Message-ID: <CAGZ79kZgpvcAzpttwHyjnSDcfGYa0gfKRBG9zBqiXfBZetGLtg@mail.gmail.com>
+Subject: Re: [PATCH v4 04/11] replace: "libify" create_graft() and callees
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry, I noticed something else I missed on my last reading...
+Hi Johannes,
 
-On Tue, Apr 24, 2018 at 10:11 AM, Ben Peart <Ben.Peart@microsoft.com> wrote:
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 8746c5e3e8..3be52cd316 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -424,6 +424,7 @@ static void finish(struct commit *head_commit,
->                 opts.output_format |=
->                         DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
->                 opts.detect_rename = DIFF_DETECT_RENAME;
-> +               git_config_get_bool("merge.renames", &opts.detect_rename);
->                 diff_setup_done(&opts);
->                 diff_tree_oid(head, new_head, "", &opts);
->                 diffcore_std(&opts);
+On Tue, Apr 24, 2018 at 11:51 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
-Shouldn't this also be turned off if either (a) merge.renames is unset
-and diff.renames is false, or (b) the user specifies -Xno-renames?
+>
+> Oy vey. How many more mistakes can I introduce in one commit...
+>
+
+I ask this myself all the time, but Software is hard when not having
+computer assisted checks. The test suite doesn't quite count here,
+as it doesn't yell loudly enough for leaks in corner cases.
+
+Thanks for taking these seriously, I was unsure if the
+first issues (close() clobbering the errno) were sever enough
+to bother. It complicates the code, but the effect is theoretical)
+(for EBADF) or a real niche corner case (EINTR).
+
+Speaking of that, I wonder if we eventually want to have
+a wrapper
+
+int xclose(int fd)
+{
+    int err = errno;
+    int ret = close(fd)
+    if (errno == EINTR)
+        /* on linux we don't care about this, other OSes? */
+        ;
+    errno = err;
+    return ret;
+}
+
+Though not in this series.
+
+Thanks,
+Stefan
