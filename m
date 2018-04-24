@@ -6,56 +6,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 748431F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 05:08:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E36A71F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 05:08:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755877AbeDXFIB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 01:08:01 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34858 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755793AbeDXFHy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 01:07:54 -0400
-Received: by mail-pf0-f195.google.com with SMTP id j5so11240609pfh.2
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 22:07:53 -0700 (PDT)
+        id S1755883AbeDXFID (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 01:08:03 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33407 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755709AbeDXFHt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 01:07:49 -0400
+Received: by mail-pg0-f68.google.com with SMTP id i194so9969419pgd.0
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 22:07:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=s4fJssExTs+XbxSZy/Iob4denxci4B2d+18CM0kW3gE=;
-        b=ltPVEADcth8YFCF4vXLwNPIep3EyafNWtl1F2JB0ut28hRKoGSXSIzvopbkKShfbIL
-         6tdCYJU3LbrSBJLdfB8wqBlr1YDQx3KyAXe10M1+jSL96zdXMrooJ/3mqPISGfcJjW5K
-         RDHqlVbr/0b2rLPfFIL/DutCaSFL+UeTLhiHcEsBEbsXPyTJkHp5hR7nKKSKzg2ZFsGJ
-         wkT+q/iyzBP2CEVuf2IPUM2SOGBbiMDPir+kz7iBq39+OXsSa6DIuXPrnnKKckSgFiKn
-         U+E8epBU1y6cBr6FRPmgCnSq2uu8g65x/hAal4R392pIit4TXx6z2eAvwXe4W0YLPgnj
-         xzqQ==
+        bh=b9XsBX040sMfZNhDS2n8KEvZcKP6PMy/OsYG8fWAJoo=;
+        b=XVxynM3qeFiOg5ND1b9iEP0jaGZ7b+GjmO4NYxN6RZuapq6zGdj/Xm6a2ZTGEMtNfv
+         +5seSlM+saQK+AVFw+1zMrJzDcxcl+BiLNPAYrSJdUHfQlPL0Y0Fzd30llJpwZ565dft
+         cs6Qz0voZFwXDeAs/4ll9dOheDmEJNMsPsZ1ipvHdCMuitOaVzlUmg6HuNO/O3CedCkV
+         xPeooy6hyikX9yMzd8PGGIIgWC+v25bTi8hjXYne8WjCTFKfxlRXuIRcOdMLe1csX2GN
+         cDWiv7WNxQ1SUkDr+D2zNwOMhEyw9t7Y/L1pEHLWT+SJePtDBQoAqalnIoaguHhcTjCh
+         Yf1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=s4fJssExTs+XbxSZy/Iob4denxci4B2d+18CM0kW3gE=;
-        b=WrkwWvmZDXP7lXSs+IE8pg/0zOEchG0TYIAUynvK7edQfuKpbDVOOllZgyrktCQCxL
-         HGu9wQa4qmpcKTK256y5L/HiuOyvvem6RSa8k0/H8jRiemA6op1vCOSiR0CIpqf7ObMc
-         M/jBcGYVM5OdsS4NgD0pOdsj58J1btveHzNRxyoWvgBuBwqO0SGV8+vd6AvbWU2mwzef
-         b+waIC+OrJZriduKwREklLLcyo9lWpt5vu3i7I1lzSyBwRtxbbbzoZHBOhUwThqYVFwK
-         LrSqLgZo7cQpcxefnmguDEYIsiKBZ8WMVcLF1J1fSoNkMo941GhBqk+GoRsSafGgvSkP
-         /t6g==
-X-Gm-Message-State: ALQs6tAaRnfWEwNjLfunLupU9Uwuu55GD8b3wWdQ8OWzi9keengsAOFv
-        PUPK9JPWNVuYUuH1Bl4zVi0PoRg529ww3A==
-X-Google-Smtp-Source: AIpwx4/2J7W2WQ7EYC+lkNIsX/5ij85asze094vndzvuxxQlAg/JjZ5muuUDEHJ9SJqOlt6gusy0qQ==
-X-Received: by 10.101.70.141 with SMTP id h13mr19269577pgr.166.1524546472933;
-        Mon, 23 Apr 2018 22:07:52 -0700 (PDT)
+        bh=b9XsBX040sMfZNhDS2n8KEvZcKP6PMy/OsYG8fWAJoo=;
+        b=EVx/5Rf4a//jRG5Nf3LMyCOGLC7SEKDcO/hW/biKvV8aHqBhPQI+CZzxX0iRZAw52P
+         McHzaCh8Y3NvrbkA2UV9Li4WaaNtPRlG3TsnhINfF1e5eWt/tX8vgunu0C+BOro4mK04
+         MFQeRlaUVQsk2HKMvDFGwrdzvAnmMm5lTc2SgcqzsH60vGy6ieby4cnAIfAlIE6913vo
+         0w2YbuR9RO5TyfwpQVeUZyce+r3Q0m/RKg3OIzQeZ6cq5NCM1ww0sIdYwTZdyirMSfDU
+         UTk/x98I8kZRPDN5lsCWd7u2OH+0w4lFU3vw+81lrub8E/1KDmRZvPdm/F4RjVZDVmMm
+         pvZw==
+X-Gm-Message-State: ALQs6tBYJGdw9wmjv1e0qVJg52viID05MTzql0N1g8mFSHBNCb7PfKGC
+        bPsw0lFl4g8Q83Zv9LdpuRlXivkOXTwtPw==
+X-Google-Smtp-Source: AIpwx49cn/fdCETeO7yVcrBxYRL8/lGpOfN37ubBNmzzQ5V2QdjsSY1wTApfynDDJEtRqlquGyA/bw==
+X-Received: by 10.99.62.201 with SMTP id l192mr18973227pga.318.1524546468292;
+        Mon, 23 Apr 2018 22:07:48 -0700 (PDT)
 Received: from localhost ([2601:602:9500:1120:3dfa:3e1b:ab89:1ffb])
-        by smtp.gmail.com with ESMTPSA id v16sm20834428pfj.123.2018.04.23.22.07.51
+        by smtp.gmail.com with ESMTPSA id t9sm28412925pgr.37.2018.04.23.22.07.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Apr 2018 22:07:51 -0700 (PDT)
-Date:   Mon, 23 Apr 2018 22:07:51 -0700
+        Mon, 23 Apr 2018 22:07:47 -0700 (PDT)
+Date:   Mon, 23 Apr 2018 22:07:46 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, gitster@pobox.com, l.s.r@web.de,
         martin.agren@gmail.com, peff@peff.net, sunshine@sunshineco.com
-Subject: [PATCH v3 7/7] contrib/git-jump/git-jump: jump to match column in
- addition to line
-Message-ID: <23ea226b544e9e5fcdbbcda3adb5982e2cae2123.1524545768.git.me@ttaylorr.com>
+Subject: [PATCH v3 5/7] builtin/grep.c: add '--column-number' option to
+ 'git-grep(1)'
+Message-ID: <21857b3e647f3de0d23253c41fb9aaf9f614d323.1524545768.git.me@ttaylorr.com>
 References: <20180421034530.GB24606@syl.local>
  <cover.1524545768.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -68,30 +68,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Take advantage of 'git-grep(1)''s new option, '--column-number' in order
-to teach Peff's 'git-jump' script how to jump to the correct column for
-any given match.
+Teach 'git-grep(1)' a new option, '--column-number', to show the column
+number of the first match on a non-context line.
 
-'git-grep(1)''s output is in the correct format for Vim's jump list, so
-no additional cleanup is necessary.
+For example:
+
+  $ ./git-grep -n --column-number foo | head -n3
+  .clang-format:51:14:# myFunction(foo, bar, baz);
+  .clang-format:64:7:# int foo();
+  .clang-format:75:8:# void foo()
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- contrib/git-jump/git-jump | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-grep.txt |  5 ++++-
+ builtin/grep.c             |  1 +
+ t/t7810-grep.sh            | 22 ++++++++++++++++++++++
+ 3 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 80ab0590bc..8bc57ea0f8 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -52,7 +52,7 @@ mode_merge() {
- # editor shows them to us in the status bar.
- mode_grep() {
- 	cmd=$(git config jump.grepCmd)
--	test -n "$cmd" || cmd="git grep -n"
-+	test -n "$cmd" || cmd="git grep -n --column-number"
- 	$cmd "$@" |
- 	perl -pe '
- 	s/[ \t]+/ /g;
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 18b494731f..51dcfa5093 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	   [-v | --invert-match] [-h|-H] [--full-name]
+ 	   [-E | --extended-regexp] [-G | --basic-regexp]
+ 	   [-P | --perl-regexp]
+-	   [-F | --fixed-strings] [-n | --line-number]
++	   [-F | --fixed-strings] [-n | --line-number] [--column-number]
+ 	   [-l | --files-with-matches] [-L | --files-without-match]
+ 	   [(-O | --open-files-in-pager) [<pager>]]
+ 	   [-z | --null]
+@@ -169,6 +169,9 @@ providing this option will cause it to die.
+ --line-number::
+ 	Prefix the line number to matching lines.
+ 
++--column-number::
++	Prefix the 1-indexed column number of the first match on non-context lines.
++
+ -l::
+ --files-with-matches::
+ --name-only::
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 5f32d2ce84..512f60c591 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -829,6 +829,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			    GREP_PATTERN_TYPE_PCRE),
+ 		OPT_GROUP(""),
+ 		OPT_BOOL('n', "line-number", &opt.linenum, N_("show line numbers")),
++		OPT_BOOL(0, "column-number", &opt.columnnum, N_("show column number of first match")),
+ 		OPT_NEGBIT('h', NULL, &opt.pathname, N_("don't show filenames"), 1),
+ 		OPT_BIT('H', NULL, &opt.pathname, N_("show filenames"), 1),
+ 		OPT_NEGBIT(0, "full-name", &opt.relative,
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 1797f632a3..bbce57c8b1 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -99,6 +99,28 @@ do
+ 		test_cmp expected actual
+ 	'
+ 
++	test_expect_success "grep -w $L (with --column-number)" '
++		{
++			echo ${HC}file:5:foo mmap bar
++			echo ${HC}file:14:foo_mmap bar mmap
++			echo ${HC}file:5:foo mmap bar_mmap
++			echo ${HC}file:14:foo_mmap bar mmap baz
++		} >expected &&
++		git grep --column-number -w -e mmap $H >actual &&
++		test_cmp expected actual
++	'
++
++	test_expect_success "grep -w $L (with --{line,column}-number)" '
++		{
++			echo ${HC}file:1:5:foo mmap bar
++			echo ${HC}file:3:14:foo_mmap bar mmap
++			echo ${HC}file:4:5:foo mmap bar_mmap
++			echo ${HC}file:5:14:foo_mmap bar mmap baz
++		} >expected &&
++		git grep -n --column-number -w -e mmap $H >actual &&
++		test_cmp expected actual
++	'
++
+ 	test_expect_success "grep -w $L" '
+ 		{
+ 			echo ${HC}file:1:foo mmap bar
 -- 
 2.17.0
+
