@@ -2,84 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 973C51F404
-	for <e@80x24.org>; Tue, 24 Apr 2018 07:53:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 470C91F404
+	for <e@80x24.org>; Tue, 24 Apr 2018 08:12:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755997AbeDXHxk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 03:53:40 -0400
-Received: from zucker2.schokokeks.org ([178.63.68.90]:58229 "EHLO
-        zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755504AbeDXHxj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 03:53:39 -0400
-Received: from localhost (localhost [::1])
-  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-  by zucker.schokokeks.org with ESMTPSA; Tue, 24 Apr 2018 09:54:05 +0200
-  id 000000000000009B.000000005ADEE29D.00001C2F
-Date:   Tue, 24 Apr 2018 09:53:37 +0200
-From:   Simon Ruderich <simon@ruderich.org>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 23/41] upload-pack: replace use of several hard-coded
- constants
-Message-ID: <20180424075337.GA24895@ruderich.org>
-References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
- <20180423233951.276447-24-sandals@crustytoothpaste.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-In-Reply-To: <20180423233951.276447-24-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+        id S1756531AbeDXIL5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 04:11:57 -0400
+Received: from mout.gmx.net ([212.227.15.18]:49209 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756488AbeDXILw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 04:11:52 -0400
+Received: from [10.49.234.97] ([95.208.59.141]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M5uLh-1eDaOD2xvl-00xqHJ; Tue, 24
+ Apr 2018 10:11:41 +0200
+Date:   Tue, 24 Apr 2018 10:11:37 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Philip Oakley <philipoakley@iee.org>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
+In-Reply-To: <0E6803122A5241F98148087A045993BC@PhilipOakley>
+Message-ID: <nycvar.QRO.7.76.6.1804241006230.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1524139900.git.johannes.schindelin@gmx.de> <cover.1524306546.git.johannes.schindelin@gmx.de> <7360a072f6fdd276d30839613434329b645e2cce.1524306546.git.johannes.schindelin@gmx.de> <9270DF86352B4E3493AADA159E7FFE33@PhilipOakley>
+ <nycvar.QRO.7.76.6.1804231401130.15174@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <0E6803122A5241F98148087A045993BC@PhilipOakley>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:IeMh8wE7OqnS84Zl9TE1/N13oY+1EBZx8Bcrx+6MCc9/mS3sihr
+ YiYxlUu03n8jkmsse8Ikt1cLhPhzO2yRbQ37uUG+JJpnABN2l4aYYI5t+Jw/pciYcaGsue2
+ zT/9g+tN8aOAsYByEdbIFE6+ozljtIV5PxZNUfyB/iW8UnoT1khat/drCsmk/PXiSuQjhQr
+ 6xtmGqoQGKGemqrLn0zvg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7dxGIZsgxWw=:nC7Y3niCuDhveDZTBHpkhO
+ O5sbk926mf8oYptUXKv6pCg18cNZXMC4HeVb/I6lcak8nIvd3aZcK7C7izgwFTDeyHPLzK8NF
+ /FO2Inft6ervxbNcXMLYUpWsxBo2CBh1xvcnuCWs7s6xqihExv7Uz1TVCbhiSWlIVK9rYA7LZ
+ KIKwqEMqB4lRhQMX2q8gno8SmMme9e83C56/5gfj4e3/s2twTwSIFJhtNOIaJ5iHtndIRoWRv
+ lM8EE7m9Za/Yy3qsdf8UfIbuT8JYfrsgOoAlfpm5RKfJTxURwttxt3l2Jixyhx9eabeP7nVBJ
+ 2xKebCnlg42d12WuebC/1Wbj/8Zy5bs8UQXljTvzqiz20NWKWhgWe6dbcoQHWYChhhfpU4azM
+ 8XkfE1BZUWXPqRULXs0sGfaq2BXw6A9+/Wu/7btxU8WfxZmyCHl39pfK2lEye5NI5txsTJouY
+ vWGyPwFIaDWlhsKtsAS0Vi4423Pg1iHfhq0mTzly/QcnM/4fOSdO0NXETmcomw/+6FidWnhZi
+ 39IjkGjsdcEgaG74SDJdS9ooKfzOBnMAJ6kg24kqXSP6mzBLP37cc5o2CAxbOOe3NF0RbXFge
+ tuoqWklO80ohlwpUX3VupiHLlxkMGwJwrJHgFNwtCcfzfteuY/N15zFPSPpiVPMJeygwP4odf
+ vhE+JftOb1DROIvE9F6gYXTrR/HFmFSyAPj42e+S1/UHCoh+PFbcLdwkHcCex+Y/ks7BupsQ7
+ v2zVQvVGVo0tJ1Jf5T6K4hTgArQApZ+KZn591jPy0xjVcZIYWqP0HPK1JaeeuTyccDRBfgiJT
+ a+YBZbRg/koT+4MYps7gAvnpsmrM9v5nCSamYIa3+RlXR4w/rw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 23, 2018 at 11:39:33PM +0000, brian m. carlson wrote:
-> [snip]
->
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 4a82602be5..0858527c5b 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -450,7 +450,7 @@ static int get_common_commits(void)
->  				break;
->  			default:
->  				got_common = 1;
-> -				memcpy(last_hex, oid_to_hex(&oid), 41);
-> +				oid_to_hex_r(last_hex, &oid);
->  				if (multi_ack == 2)
->  					packet_write_fmt(1, "ACK %s common\n", last_hex);
->  				else if (multi_ack)
-> @@ -492,7 +492,7 @@ static int do_reachable_revlist(struct child_process *cmd,
->  		"rev-list", "--stdin", NULL,
->  	};
->  	struct object *o;
-> -	char namebuf[42]; /* ^ + SHA-1 + LF */
-> +	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + SHA-1 + LF */
+Hi Philip,
 
-I think this comment should be "^ + hash as hex + LF".
+On Mon, 23 Apr 2018, Philip Oakley wrote:
 
-> @@ -561,15 +561,17 @@ static int get_reachable_list(struct object_array *src,
->  	struct child_process cmd = CHILD_PROCESS_INIT;
->  	int i;
->  	struct object *o;
-> -	char namebuf[42]; /* ^ + SHA-1 + LF */
-> +	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + SHA-1 + LF */
-> +	const unsigned hexsz = the_hash_algo->hexsz;
+> From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de> : Monday, April 23,
+> 2018 1:03 PM
+> Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
+> 
+> [...]
+> >
+> > > > label onto
+> > > >
+> > > > # Branch abc
+> > > > reset onto
+> > >
+> > > Is this reset strictly necessary. We are already there @head.
+> >
+> > No, this is not strictly necessary, but
+> 
+> I've realised my misunderstanding. I was thinking this (and others) was
+> equivalent to
+> 
+> $  git reset <thatHead'onto'> # maybe even --hard,
+> 
+> i.e. affecting the worktree
 
-Dito.
+Oh, but it *is* affecting the worktree. In this case, since we label HEAD
+and then immediately reset to the label, there is just nothing to change.
 
-Regards
-Simon
--- 
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
+Consider this example, though:
+
+	label onto
+
+	# Branch: from-philip
+	reset onto
+	pick abcdef something
+	label from-philip
+
+	# Branch: with-love
+	reset onto
+	pick 012345 else
+	label with-love
+
+	reset onto
+	merge -C 98765 from-philip
+	merge -C 43210 with-love
+
+Only in the first instance is the `reset onto` a no-op, an incidental one.
+After picking `something` and labeling the result as `from-philip`,
+though, the next `reset onto` really resets the worktree.
+
+> rather that just being a movement of the Head rev (though I may be having
+> brain fade here regarding untracked files etc..)
+
+The current way of doing things does not allow the `reset` to overwrite
+untracked, nor ignored files (I think, I only verified the former, not the
+latter).
+
+But yeah, it is not just a movement of HEAD. It does reset the worktree,
+although quite a bit more gently (and safely) than `git reset --hard`. In
+that respect, this patch series is a drastic improvement over the Git
+garden shears (which is the shell script I use in Git for Windows which
+inspired this here patch series).
+
+Ciao,
+Dscho
