@@ -7,50 +7,52 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B2451F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 00:31:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFDB91F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 00:34:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932625AbeDXAbS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 20:31:18 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60838 "EHLO
+        id S932633AbeDXAeW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 20:34:22 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60846 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932574AbeDXAbS (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 23 Apr 2018 20:31:18 -0400
+        by vger.kernel.org with ESMTP id S932574AbeDXAeV (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 23 Apr 2018 20:34:21 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4D06C60400;
-        Tue, 24 Apr 2018 00:31:15 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 55B5460400;
+        Tue, 24 Apr 2018 00:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1524529875;
-        bh=QRtGTowD6hRtOLPNQCdVsvouyaTYsSYjfqWMXisM1A0=;
+        s=default; t=1524530059;
+        bh=U0WyMvW/iyLOCP9Bn4LGro07vQityzdwXxNGUNWrZM8=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=ao4NkGgaz9i6yr3QUEkXKQsozOx8szjd1EFU3p1oobLKDJIbeKZVexF+yt1jxyXkS
-         omuXRYoRTKSfqAPEYkCcLqmgntHTJKVDB/Ax/L9PKvOdWKHfRG1zQI+MDn14z+uBtm
-         eV2vhF0fatn0A6J78JkiyQ2kh1wvyqzJa9E7DOqYeMmL8kSlHgjpJxLXnUzAI//doT
-         xSxfotYZ2SV1+oU+5NZf0qH8xI87A6wln0vN+UMW3Iqm1xiCqDZiw9oiq6YPMwZ0vq
-         dIThYCs9u364a7aLyhRRpqjfMOuD0rX53TUmcIr+wtRGZZnCUx3+qahQUFhS75mpHC
-         fG4UqwOTkIFq6HhqN6VVJCxuCWSK1mqFCPHKltEo3Uhw/XJr+xJ3olcsLkjeXfzQCI
-         kGbnQGfKs9tnZH4caiF/ANopQTJsPLNgeYbYizd3uwdFwYTsqMZZIcic7vbMcM+64Y
-         cW5F0mGEh3HPQmgFjgFWB6cPQfF+dWW5YqxAVGhY6HyV//jtpQr
-Date:   Tue, 24 Apr 2018 00:31:09 +0000
+        b=tm3Ku+Li313Vwb1WtsOAl3jNp3KWRzZ9zv4l5VN4f+j45F789RnmpLE0R1tP8LgV2
+         F2mmWn7KZEcSQalXIz+q+jFf1SWpV/Ztd/9PJZncEp154HCiQ39Tfa3MkgdBHcup93
+         IMlD/Rbwqm43a9Y6gGnGulnfBZyzt+0u8VQRyrWzOa+UTav3CXMjbt1Xh/O5A8Zoab
+         y0pfBWxKpSwF6d1zVBGyc03wsY5szLZ8487j2BCtjQwsM/dgWhw+T6/KA6rGiJmuKZ
+         llpQNo7PD+OxUIZTAe5VPV9oPzL+e4ML/yan3JKrcg2F2Yjby6stv8sS1CMRrGftIW
+         +O4sOnlKv/pR9vViRQ6M895vV54l2hn1jQPgBRe29MEiAlNwG8nMZRBlBxJBmJY+Y9
+         mIKXO7dKm7lHDYClW8Yr/EHK0q/LtmYgg1MMnv5iFOq21+9EQN4qIkJZNjyp9xdrQn
+         AT1S/FTjN3Nt++w363OYGiuu8of9LZl5cCJV81HGceDzE3ZOYdw
+Date:   Tue, 24 Apr 2018 00:34:15 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/9] cache.h: add repository argument to oid_object_info
-Message-ID: <20180424003109.GA245996@genre.crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 9/9] cache.h: allow sha1_object_info to handle arbitrary
+ repositories
+Message-ID: <20180424003414.GB245996@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+        Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        Jonathan Nieder <jrnieder@gmail.com>
 References: <20180423234327.250484-1-sbeller@google.com>
- <20180423234327.250484-3-sbeller@google.com>
+ <20180423234327.250484-10-sbeller@google.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nFreZHaLTZJo0R7j"
+        protocol="application/pgp-signature"; boundary="8GpibOaaTibBMecb"
 Content-Disposition: inline
-In-Reply-To: <20180423234327.250484-3-sbeller@google.com>
+In-Reply-To: <20180423234327.250484-10-sbeller@google.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.16.0-trunk-amd64)
 User-Agent: Mutt/1.9.5 (2018-04-13)
@@ -61,50 +63,44 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---nFreZHaLTZJo0R7j
+--8GpibOaaTibBMecb
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 23, 2018 at 04:43:20PM -0700, Stefan Beller wrote:
-> Add a repository argument to allow the callers of oid_object_info
-> to be more specific about which repository to handle. This is a small
-> mechanical change; it doesn't change the implementation to handle
-> repositories other than the_repository yet.
->=20
-> In the expanded macro the identifier `the_repository` is not actually use=
-d,
-> so the compiler does not catch if the repository.h header is not included
-> at the call site. call sites needing that #include were identified by
-> changing the macro to definition to
->=20
->       #define sha1_object_info(r, sha1, size) \
->           (r, sha1_object_info_##r(sha1, size)).
+On Mon, Apr 23, 2018 at 04:43:27PM -0700, Stefan Beller wrote:
+> This involves also adapting sha1_object_info_extended and a some
+> internal functions that are used to implement these. It all has to
+> happen in one patch, because of a single recursive chain of calls visits
+> all these functions.
 
-I think you may have wanted to write "oid_object_info" here.
+Ah, yes, I remember that recursive call chain.
+
+Anyway, other than the one item I mentioned earlier, this series looked
+good to me.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---nFreZHaLTZJo0R7j
+--8GpibOaaTibBMecb
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.5 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrees0ACgkQv1NdgR9S
-9otnmBAAiw2pcei8hR0ovQszqDuDVsJrnFMD/AboTRYlrInaSFQJM23e/AYAVNqc
-xEYWqMwWeEMj1k6iSPjr9MQzSJr5cli8QesgNdtMdjHibdTEnNl2MOF2JV7HRuMg
-MZitX+xp6ia8n90YBZTb5Zwr/tfKbT5qeyamUE7XjoIZwfm9GlMqlGCPVscvI8PK
-uZ1WXr9gazR7gZ5q46fDcXSomhx7dTNivlf9Gys/RtnROI14jC/gyO2n28dLcxjK
-Kbe4zLhJOWp0+tMmFZ3h3RAWrA38T24YlfuKW9u0tEDUl1gnj5hTqPnYOacYAzzR
-YeW2nYeJA4CPHsgB9mAk5FXOFZHSRIeNiFh4KeAnY6Zs8+A9w28/IlWc/uN0Wgo9
-c+CX2y6I6CZG3HdHpQuLdnHqBv/rYikWOcvkxrn1V4cMVLhoY/8I0RKITdrjZI11
-X8JT+KJ4O1JvlQXEMkdflLIzlvjPxVk/C9KqDuRQ0ZPRAOf3T3eMUK/qglww9NUq
-kzZItsM1d+yzlE5yY71F/TMa+kvCS7E4lJ7MQ0FUekzIUXKtdBi6d+MlwDCopFt6
-v3n8yKXQlBepBTPgqhyB82tdSTqNho1KjLN/Hvh2HV9FIx49eK2GG4ZSm24sDQii
-kf2AI3P1OtJJOh4qPeRk+QG6WWLMIZX9PCDyMirzba2vd2tlw10=
-=Df6r
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlree4YACgkQv1NdgR9S
+9osKKw/9EXYRdBZ6KqP3cwCRY2MLE8JTUiLwkqq7cw7e+phZv0zGVmSxCc+5P3h3
+r+v0IvzQNuiZO7hY5atbugq2CNgTE0oBEGkiBi9Vx0R/vhMevEMjuPlsx6Qm6vJm
+F4eNQZiB6W/d5sIKYjYcDuGM89+UYO7YAG7iN5mwTixM/ZQTmW3zbr0omWiWaS9i
+69lRz+wc5HKURpFqeQSCvWqfoNWph7v1ZY1AA3ccR9Vnf2uqDkQsaxKCcdB0NuFq
+LIK/nyy9E3wOnWf5XBkBD/0Lu4Q4Gdir+XV14XomrEqjhyYHBYuyLCnIzA+mrvzp
+Qf0owiQWMr4zRcFNTa7jX09ha4X2M+vhb7uCX8ZHEJFCOrgFicKY+W2tjPFBZdZT
+QIyPRJK23KzLQs/9Cudw9UKnhh++A+yk3M6uNeFBLMmWoH80GDXYZ1suomdoz16P
+2vBfAfVocpzU0/Hs3xjvUk2mk6jfFco1mtZf9r6snWPLMOL7g7RbbR16fSEhc1ig
+GDnIoi1j33DuQXuQzUgMf0TDqktl6Fp0ntKLpT8baHw/eMriP2oPrYXIh3PlVzez
+smPmnbHusT1E0GWjHROYFF2v8EopEYBCwJ8EXMHSexWr5Pit8UxMUYUDYmL+rcn/
+VUekh4PqwCu/Vf16QzPP49lJeYi1uqIEpiKDJH13sLL53OoGM8Q=
+=qL5g
 -----END PGP SIGNATURE-----
 
---nFreZHaLTZJo0R7j--
+--8GpibOaaTibBMecb--
