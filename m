@@ -7,124 +7,92 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 470C91F404
-	for <e@80x24.org>; Tue, 24 Apr 2018 08:12:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1F811F404
+	for <e@80x24.org>; Tue, 24 Apr 2018 08:22:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756531AbeDXIL5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 04:11:57 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49209 "EHLO mout.gmx.net"
+        id S1756147AbeDXIWv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 04:22:51 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57231 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756488AbeDXILw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 04:11:52 -0400
-Received: from [10.49.234.97] ([95.208.59.141]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M5uLh-1eDaOD2xvl-00xqHJ; Tue, 24
- Apr 2018 10:11:41 +0200
-Date:   Tue, 24 Apr 2018 10:11:37 +0200 (DST)
+        id S1755887AbeDXIWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 04:22:49 -0400
+Received: from [10.49.234.97] ([95.208.59.141]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbuIK-1ejDyt262W-00jMes; Tue, 24
+ Apr 2018 10:22:39 +0200
+Date:   Tue, 24 Apr 2018 10:22:35 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Philip Oakley <philipoakley@iee.org>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+cc:     Phillip Wood <phillip.wood@talktalk.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
         Igor Djordjevic <igor.d.djordjevic@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+        Sergey Organov <sorganov@gmail.com>
 Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
-In-Reply-To: <0E6803122A5241F98148087A045993BC@PhilipOakley>
-Message-ID: <nycvar.QRO.7.76.6.1804241006230.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1524139900.git.johannes.schindelin@gmx.de> <cover.1524306546.git.johannes.schindelin@gmx.de> <7360a072f6fdd276d30839613434329b645e2cce.1524306546.git.johannes.schindelin@gmx.de> <9270DF86352B4E3493AADA159E7FFE33@PhilipOakley>
- <nycvar.QRO.7.76.6.1804231401130.15174@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <0E6803122A5241F98148087A045993BC@PhilipOakley>
+In-Reply-To: <cover.1524545557.git.martin.agren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804241015470.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <ec58f482-ffde-1959-ff4a-9b128905ccb0@talktalk.net> <cover.1524545557.git.martin.agren@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:IeMh8wE7OqnS84Zl9TE1/N13oY+1EBZx8Bcrx+6MCc9/mS3sihr
- YiYxlUu03n8jkmsse8Ikt1cLhPhzO2yRbQ37uUG+JJpnABN2l4aYYI5t+Jw/pciYcaGsue2
- zT/9g+tN8aOAsYByEdbIFE6+ozljtIV5PxZNUfyB/iW8UnoT1khat/drCsmk/PXiSuQjhQr
- 6xtmGqoQGKGemqrLn0zvg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7dxGIZsgxWw=:nC7Y3niCuDhveDZTBHpkhO
- O5sbk926mf8oYptUXKv6pCg18cNZXMC4HeVb/I6lcak8nIvd3aZcK7C7izgwFTDeyHPLzK8NF
- /FO2Inft6ervxbNcXMLYUpWsxBo2CBh1xvcnuCWs7s6xqihExv7Uz1TVCbhiSWlIVK9rYA7LZ
- KIKwqEMqB4lRhQMX2q8gno8SmMme9e83C56/5gfj4e3/s2twTwSIFJhtNOIaJ5iHtndIRoWRv
- lM8EE7m9Za/Yy3qsdf8UfIbuT8JYfrsgOoAlfpm5RKfJTxURwttxt3l2Jixyhx9eabeP7nVBJ
- 2xKebCnlg42d12WuebC/1Wbj/8Zy5bs8UQXljTvzqiz20NWKWhgWe6dbcoQHWYChhhfpU4azM
- 8XkfE1BZUWXPqRULXs0sGfaq2BXw6A9+/Wu/7btxU8WfxZmyCHl39pfK2lEye5NI5txsTJouY
- vWGyPwFIaDWlhsKtsAS0Vi4423Pg1iHfhq0mTzly/QcnM/4fOSdO0NXETmcomw/+6FidWnhZi
- 39IjkGjsdcEgaG74SDJdS9ooKfzOBnMAJ6kg24kqXSP6mzBLP37cc5o2CAxbOOe3NF0RbXFge
- tuoqWklO80ohlwpUX3VupiHLlxkMGwJwrJHgFNwtCcfzfteuY/N15zFPSPpiVPMJeygwP4odf
- vhE+JftOb1DROIvE9F6gYXTrR/HFmFSyAPj42e+S1/UHCoh+PFbcLdwkHcCex+Y/ks7BupsQ7
- v2zVQvVGVo0tJ1Jf5T6K4hTgArQApZ+KZn591jPy0xjVcZIYWqP0HPK1JaeeuTyccDRBfgiJT
- a+YBZbRg/koT+4MYps7gAvnpsmrM9v5nCSamYIa3+RlXR4w/rw=
+Content-Type: multipart/mixed; boundary="8323329-369143892-1524558158=:64"
+X-Provags-ID: V03:K1:SwRKyWUWHWYgAAcjAjim/Sw8atpuk2QHx9Mx96p38hOwR10ROFw
+ g/9kS03tHw29Bu+jvpP0rb7fDlqHuqqjRgb+zVwNH5hxGOjIhWBtAtU/A3kL7aJtQv2KxNt
+ bSPLmM6sGQsx/dicOS60xo6lcdf0PpkYmXb6lxcp3j4KwTSMpZjJYxCKaENgka5MOPc8TQD
+ 2ihjz2K2ezD4D2NxTTnjQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Jxvm0TUDefQ=:vXR79NHaZrrM3dnnMSJOIM
+ PBL6c+mDvU/wd9LxhUoVKrd+qbPIxG3+DZCtgh8kUnee8xdNCQDo2KoyrEgvhLUwyYFJd4+vE
+ CTSP9/nvFwXPuyi35/7Z+8eC5iAyFaQv0TbcpwrbIW8fo8EvJ6x8TC34scWJ2KwzA1J5u/PPM
+ WOJHcKupxrws4elfNdzHZR/3KiKUl1j+l0OXIt0YP0+Ly1XZOAyrSMfve22CqytVKPuNNTAeT
+ W1M17/2qs6n6SfEU3pxzOhiIZI1yFtz1En43ryNlk7JL0eeuerm2T0MsPAC9FW2jYpr7T8PXk
+ rPoroI7sZTpYIho+FUFUcigAGDtt3JL+yEpnKpPQi0fIuX2d1rekQMp7dc9wwJnbFoMay7OhN
+ 34hRm6EAaosAwgpRRegIVFNmvsII2s6P7YNld2iA7rA/iWDLHPRa3p7FTVS1nXaPNkwHFHpRQ
+ GtJ+qf3a23IjKY5bp/7nDt8o/vjTuc3jKuH68O7ijzKm5lcdnv0fQqI//ENYIWNBcZORbPISS
+ v6Q0cmOPhk3UZ/nf1BuUBUJULbMpVBHvXoksV8bt0ZWcIUgc1aqRrcNEf7Zuy9bqIptHfEFmZ
+ ZyzPx3FSr0y7twEe74FvHr7xBjtgSyx2FO468e9+v3b06Srud35krMgsviGl2Ub1Vt2kaNI7/
+ ozXku6M0VtUhGcU48CDBeqaoNulq+uP7cR+gm42zBC9cLF7vD01+zTAPhZ/i9yR60GKF1maXU
+ minlK+3e5YtMuV90mJfQGSRs1gc6UipOwyB50Je8wm4byx5eIomk5NviRnDI4f7gO97DfulNj
+ MqB2JJEQAJYobmEjYrh+rQyf4fg7Ce/KXU7QkIm7D5Glxinkd8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 23 Apr 2018, Philip Oakley wrote:
+--8323329-369143892-1524558158=:64
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de> : Monday, April 23,
-> 2018 1:03 PM
-> Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
-> 
-> [...]
-> >
-> > > > label onto
-> > > >
-> > > > # Branch abc
-> > > > reset onto
-> > >
-> > > Is this reset strictly necessary. We are already there @head.
-> >
-> > No, this is not strictly necessary, but
-> 
-> I've realised my misunderstanding. I was thinking this (and others) was
-> equivalent to
-> 
-> $  git reset <thatHead'onto'> # maybe even --hard,
-> 
-> i.e. affecting the worktree
+Hi Martin,
 
-Oh, but it *is* affecting the worktree. In this case, since we label HEAD
-and then immediately reset to the label, there is just nothing to change.
+On Tue, 24 Apr 2018, Martin =C3=85gren wrote:
 
-Consider this example, though:
+> On 23 April 2018 at 17:54, Phillip Wood <phillip.wood@talktalk.net> wrote=
+:
+> > I'm fine with leaving it, I've might get round to doing a small series =
+to
+> > clean things up slightly in a few weeks. At the moment
+> > setup_unpack_trees_porcelain() leaks memory as it is called for each me=
+rge
+> > and allocates new strings each time. It would also be nice if the error
+> > messages reflected the command, so it said 'cherry-pick', 'revert' or
+> > 'reset' rather than 'merge'
+>=20
+> This is a small patch series to introduce and use
+> `clear_unpack_trees_porcelain()`.
 
-	label onto
+Great. Now I have no excuse but must change the sequencer code to output
+"reset" instead of "merge" ;-)
 
-	# Branch: from-philip
-	reset onto
-	pick abcdef something
-	label from-philip
-
-	# Branch: with-love
-	reset onto
-	pick 012345 else
-	label with-love
-
-	reset onto
-	merge -C 98765 from-philip
-	merge -C 43210 with-love
-
-Only in the first instance is the `reset onto` a no-op, an incidental one.
-After picking `something` and labeling the result as `from-philip`,
-though, the next `reset onto` really resets the worktree.
-
-> rather that just being a movement of the Head rev (though I may be having
-> brain fade here regarding untracked files etc..)
-
-The current way of doing things does not allow the `reset` to overwrite
-untracked, nor ignored files (I think, I only verified the former, not the
-latter).
-
-But yeah, it is not just a movement of HEAD. It does reset the worktree,
-although quite a bit more gently (and safely) than `git reset --hard`. In
-that respect, this patch series is a drastic improvement over the Git
-garden shears (which is the shell script I use in Git for Windows which
-inspired this here patch series).
+Seriously speaking again: thank you for those patches. This is truly
+exciting! I mean, we all touch the same code and move it forward, and
+somehow it all works out.
 
 Ciao,
 Dscho
+--8323329-369143892-1524558158=:64--
