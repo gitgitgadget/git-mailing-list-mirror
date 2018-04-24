@@ -2,147 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F87E1F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 22:37:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DB7D1F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 22:49:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751356AbeDXWhx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 18:37:53 -0400
-Received: from mail-yb0-f171.google.com ([209.85.213.171]:40122 "EHLO
-        mail-yb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751242AbeDXWhw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 18:37:52 -0400
-Received: by mail-yb0-f171.google.com with SMTP id c10-v6so7557283ybn.7
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 15:37:52 -0700 (PDT)
+        id S1750929AbeDXWtP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 18:49:15 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:39042 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750835AbeDXWtO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 18:49:14 -0400
+Received: by mail-pf0-f176.google.com with SMTP id z9so13485112pfe.6
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 15:49:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GZtnOREU9kz3xG/C3LgZSVW6coth6LnbT1tajUjhECE=;
-        b=AhCx27hxTrPg8XxsC9fAcv51AEC35b4SfE8Bv0IE7/9jC9r54/2z4sT0vtJNeXtYq4
-         ToCYm7FVnQjCFyYV01WjbdUnwAZhUJU5VXYHQuE6+zW4Tjrz48ZoDV5Pb0ZWZmDjKNPT
-         6n0HMgJ8LzDIWFzWsrpvOa3JGYeFMff6+8jj0g6nFlmA3GFbdQ5INm1O2HASxrFEoU/B
-         eA1jwaWcxO2iHfLxZURC3xGt98joVAaXSq3U7eb5oZzhGN63m9LJaJz6Gg1QrTn9eVyi
-         MXdRcCnosiaSQj6lg9ERB1DlfXzB1PplVDaaEZ7LLDm4utvsmxaGtTgme+LZWW9LmTqo
-         mQUA==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=lFMmQW6qKMR64sFRT7QSnw73Yr7rFkgdaS5Jiejq5ik=;
+        b=NSgNGw058aCUwhTj2iCuVeBcEhwCiSJjuXlLbfwBSMLmoIytUfqNSqNMrn2BmaDuMB
+         TFp7i06wv0wLmkXShR+F4Ra1BKH0yiconKN3Fnh2k7n+yhkTJUqwoGdukonIl0T4vSOg
+         ZYVa/s1ObW/MKT1BMEWrf3mfXXZ+audcm8zGqaYNtL68LpIWq3FmM9vbWFvuNMFf9EKT
+         MYl20kd5HzhrB4J9TuZTM4JRYXM2OED6eSORnKrgB7WJnNYfh1U0JGf4ZzVqayTjWSiP
+         98u8L37c/UyQTAhRcAfwSsNP/rPmgUqYSighYJ6ylTDabufTUTmBiPDRyeT4Za7g3whb
+         y8sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GZtnOREU9kz3xG/C3LgZSVW6coth6LnbT1tajUjhECE=;
-        b=CpRdkHCfCYwKSATc9POvSuTj/L2MNgRBe3/VLnFZNq1Q0isjsGd0i+8GxUyh0uL42Z
-         zIawBMECU5xYbLzlCZ7oHjv/bO3dpUnYBEBwbg4y9m4BoS72qjre1abqtQZ3YiB7VftH
-         tDPeEYw41KQBLrDayh2MBaDD8ZIMIlQJ/NPbWR8wwuS+mafH35cPpS2KPioXNIyp4L0v
-         nctcX3At77tpAOPrvLNst6vQ2IFuqPOLP9xcmaH1e9sZg0bb+Eka5BCu49EksBAO6JM2
-         5O53RZ60WzQRmIf5lrEozi25I7yODaOuElY+oyQ1CTPbYZI9Er9nlPqdE7iY7OADlDEX
-         13nA==
-X-Gm-Message-State: ALQs6tDMvsiv4ADfkIM0ln+5U5pHt1LmGJJQ6bS8vsa5uvVpICUujMj7
-        4tozMZGJG6R7tod7pTFR/IdlDSYVqIdn7lJTnvPoDA==
-X-Google-Smtp-Source: AIpwx4/jZLwiKon/oYt7YhZbsQcr+itzJ9fQ0IFpbPuFEHlp7ZM0M1LUpqpTrMWyecEjrd6SlO2LI50RF+1il+ZKXSA=
-X-Received: by 2002:a0d:e28e:: with SMTP id l136-v6mr13721271ywe.500.1524609471525;
- Tue, 24 Apr 2018 15:37:51 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Tue, 24 Apr 2018 15:37:51
- -0700 (PDT)
-In-Reply-To: <20180424145050.e0ad29d4f304216441656057@google.com>
-References: <20180424210330.87861-1-sbeller@google.com> <20180424210330.87861-6-sbeller@google.com>
- <20180424145050.e0ad29d4f304216441656057@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 24 Apr 2018 15:37:51 -0700
-Message-ID: <CAGZ79ka9Tdk=ijbw6Hyxs9OsBMK9O69_3_cY8oX2j=wRc_F5-g@mail.gmail.com>
-Subject: Re: [PATCH 5/7] diff.c: add a blocks mode for moved code detection
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Simon Ruderich <simon@ruderich.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=lFMmQW6qKMR64sFRT7QSnw73Yr7rFkgdaS5Jiejq5ik=;
+        b=AlOSOcm9wdbtPHrK2CzcN9bDuPJ2u1Ps4idQptzozo1/Vzb2bMnDUqf5HXRp819AEI
+         9fmNDiPh2MkuV1lyGEpu/sOrZnF6XHBl8gBJMcAGuVYRNioc0p7S/a0YLlD5yzNEl+ce
+         kXPkoALp3tNYfEbVSkN1+hSN0hpkiQ8SUS7tFjpVhYPy5NG7n+S58GysTq4vzGA1vQA0
+         z9LLAB0ETOP3c4IbMjakA+G3IfcbRYjfKW3w2Can44tBoINjhiC5lsmzIzHKsWnE9vyJ
+         S4G0jaiumSIcCUtca+EljEidfjPEwjiegBkLqye3SodY6+U3PTdrW8yL4gFPpa2nPk3D
+         sa3g==
+X-Gm-Message-State: ALQs6tA+4PtpKwFqOEHI6NAGaatAPlfoKw5DS/7qQ0yrVwQ9EDrARAOh
+        o6fQYFAWRWiMeHvYfIaFDLcyCA==
+X-Google-Smtp-Source: AIpwx4/qM9BBkIVzzdAQPRvalUZa00x/vu889uAY9dfkyU3EKrSYg+OoxG1S/9AZtxKw3eJIXqwavg==
+X-Received: by 10.99.95.130 with SMTP id t124mr21894472pgb.150.1524610153450;
+        Tue, 24 Apr 2018 15:49:13 -0700 (PDT)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id s27sm5257470pgo.91.2018.04.24.15.49.12
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Apr 2018 15:49:12 -0700 (PDT)
+Date:   Tue, 24 Apr 2018 15:49:11 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, bmwill@google.com,
+        sandals@crustytoothpaste.net, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv2 9/9] cache.h: allow oid_object_info to handle
+ arbitrary repositories
+Message-Id: <20180424154911.54ab50bc2f95bc92ef88350a@google.com>
+In-Reply-To: <20180424215910.22201-10-sbeller@google.com>
+References: <20180424215910.22201-1-sbeller@google.com>
+        <20180424215910.22201-10-sbeller@google.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 24, 2018 at 2:50 PM, Jonathan Tan <jonathantanmy@google.com> wr=
-ote:
-> On Tue, 24 Apr 2018 14:03:28 -0700
-> Stefan Beller <sbeller@google.com> wrote:
->
->> Suggested-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->>  (https://public-inbox.org/git/87o9j0uljo.fsf@evledraar.gmail.com/)
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->
-> Firstly, I don't know if this is the right solution- as written
-> in the linked e-mail [1], the issue might be more that the config
-> conflates 2 unrelated things, not that a certain intersection is
-> missing.
+On Tue, 24 Apr 2018 14:59:09 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-The "plain zebra" or as I call them "blocks", has the "heuristic
-for a minimum of 20 characters" and "few colors" as its defining
-features, which solves that use case.
+> This involves also adapting oid_object_info_extended and a some
+> internal functions that are used to implement these. It all has to
+> happen in one patch, because of a single recursive chain of calls visits
+> all these functions.
 
-Stepping back a bit, we have different "building blocks"
-at our disposal:
-* move detection by line or block
-* alternating blocks
-* a heuristic to skip over small chunks (20 alnum chars)
+I wrote about delta_base_cache in a reply [1] to an earlier version,
+which is indeed safe (as discussed), but I think that other reviewers
+might have questions about that too so I think it's worth noting that in
+the commit message. Maybe write something like:
 
-These can be combined independently, so would
-you expect the user to expect two options for them?
-For example "--color-moved=3Dzebra" could be split
-into  "--skip-small --alternate-blocks"
+  Among the functions modified to handle arbitrary repositories,
+  unpack_entry() is one of them. Note that it still references the
+  globals "delta_base_cache" and "delta_base_cached", but those are safe
+  to be referenced (the former is indexed partly by "struct packed_git
+  *", which is repo-specific, and the latter is only used to limit the
+  size of the former as an optimization).
 
-Eventually we'll use various colors to inform the user
-what these building blocks made of the diff.
+[1] https://public-inbox.org/git/20180424112332.38c0d04d96689f030e96825a@google.com/
 
-=C3=86var wrote:
+> sha1_object_info_extended is also used in partial clones, which allow
+> fetching missing objects. As this series will not add the repository
+> struct to the transport code and fetch_object(), add a TODO note and
+> bug out if a user tries to use a partial clone in a repository other than
+> the_repository.
 
-> Which is what I mean by the current config conflating two (to me)
-> unrelated things. One is how we, via any method, detect what's moved or
-> not, and the other is what color/format we use to present this to the
-> user.
+s/sha1_object/oid_object/ (in the 2nd paragraph)
 
-So instead of building blocks we rather want to split into algorithms
-and presentation layer?
+Also, you sent 2 versions of PATCHv2 9/9.
+  
+> @@ -1290,9 +1291,12 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
+>  		if (fetch_if_missing && repository_format_partial_clone &&
+>  		    !already_retried) {
+>  			/*
+> -			 * TODO Investigate haveing fetch_object() return
+> +			 * TODO Investigate having fetch_object() return
+>  			 * TODO error/success and stopping the music here.
+> +			 * TODO Pass a repository struct through fetch_object.
+>  			 */
+> +			if (r != the_repository)
+> +				die(_("partial clones only supported in the_repository"));
+>  			fetch_object(repository_format_partial_clone, real->hash);
+>  			already_retried = 1;
+>  			continue;
 
-The presentation layer would be things like:
-* use a different color for moved things
-* alternate colors for adjacent blocks
-* paint border of a block (dimmed zebra)
-
-The algorithm side would be
-* detect moves
-* detect moves as blocks
-* skip small heuristic
-
-Am I still missing the big picture?
-
-> [1] https://public-inbox.org/git/87muykuij7.fsf@evledraar.gmail.com/
->
-> Optional: Probably better to put the link inline, instead of in the
-> trailer.
-
-ok.
-
->
->> -test_expect_success 'detect permutations inside moved code -- dimmed_ze=
-bra' '
->> +test_expect_success 'detect blocks of moved code' '
->>       git reset --hard &&
->>       cat <<-\EOF >lines.txt &&
->>               long line 1
->> @@ -1271,6 +1271,52 @@ test_expect_success 'detect permutations inside m=
-oved code -- dimmed_zebra' '
->>       test_config color.diff.newMovedDimmed "normal cyan" &&
->>       test_config color.diff.oldMovedAlternativeDimmed "normal blue" &&
->>       test_config color.diff.newMovedAlternativeDimmed "normal yellow" &=
-&
->
-> Add a comment here explaining that these colors do not appear in the
-> output, but merely set to recognizable values to ensure that they do not
-> appear in the output.
-
-ok.
+This most likely means that a partial clone with a submodule would
+wrongly error out here. Instead, the "r == the_repository" check should
+be done in the same "if" statement as repository_format_partial_clone
+(and no "die"-ing occurs if it fails - just that there will be no
+fetching of objects).
