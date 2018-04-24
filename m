@@ -2,138 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9907F1F404
-	for <e@80x24.org>; Tue, 24 Apr 2018 09:04:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C0B71F404
+	for <e@80x24.org>; Tue, 24 Apr 2018 09:36:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753084AbeDXJEO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 05:04:14 -0400
-Received: from mout.gmx.net ([212.227.15.19]:48757 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753257AbeDXJEH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 05:04:07 -0400
-Received: from [10.49.234.97] ([95.208.59.141]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LvVYZ-1eSNwe3aYl-010ctP; Tue, 24
- Apr 2018 11:03:48 +0200
-Date:   Tue, 24 Apr 2018 11:03:45 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Philip Oakley <philipoakley@iee.org>,
-        Git List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
+        id S1754617AbeDXJgh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 05:36:37 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:47033 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752953AbeDXJgg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 05:36:36 -0400
+Received: by mail-pg0-f43.google.com with SMTP id t12so10439489pgp.13
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 02:36:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0zGsqTzPyHc7UwYrANXGyl4uJ30w6oA9G3AJro3/+pU=;
+        b=ko4YUCULMGQrITxSJygoeTs2ozs7cYQ7FmE11IlG4FCQjUSQpvSeChjItqHtXzoCFX
+         0kKQWQ7auayMk1la1u2Ov55WEgJHdmGAGxCraexRPgI6nqGeX/u/xRHCNl+82bzdBJhY
+         DyobQPpsHDcAXnaQ1y1gspPCi+hR9/gRhwrlzlJk4jR5VbgZ1Km2YmucI1PDaMO3RbKX
+         wqTS6e1Ic9eUXgUO/LNqBqHfmXtv0QzgbYVjSM7vykS9mAvCvSUDmL6SM5TElFh8M3E0
+         ow4d2S/IPZ5cuBdo1KelL4UNZoKvcr1qjbkSmVeG+I34qzMOuBvco8Sbfrw9y4EY0qDJ
+         5izQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0zGsqTzPyHc7UwYrANXGyl4uJ30w6oA9G3AJro3/+pU=;
+        b=PbSvca9Mk30X96+b4wFJp/Ac+21FutI/ZHoPy5I9V8HadJaaGAKBCsBBTOQE9lGS/m
+         VJ0WxUQZi3BzbUgqMtmyIthSBfNchobLbRi6PdepQeuZDAIeRR6AYfMhI52dm55dtgQ9
+         TGErKYCZFkFy5MOj1jRnuixxC2MutdTItQimx6yPjkAzuV4Ua87otHsx/vQkW3Yyc+81
+         9pUhzGbjnceZQd07AaVdOwM7TgAQlbgC6Gtw1r5u9Ho5zEnFpDd6sKJltuhIDiBxf5PM
+         0SkVeJe9AtNAkk9Ax4MEFC8WE7ieDDAFX1NoOr+n/9rYHs/hoWF3L3dMsyIL6Li7YVUs
+         mcqA==
+X-Gm-Message-State: ALQs6tBrKjGM5zjBBD03wP0oU9TKuYcvKDerNjZ0gEnBw6TXTBpkCRmD
+        qPdIG6M9mpmsmOJ1thKpX4BGb/Z6f4dAVlAc6S0=
+X-Google-Smtp-Source: AIpwx49SZY5beNvd7drwJcSarpcnBxmHxHfOV2ZTjkQOLXrTh6nt8/6QmOPM8St5Ajvw9o0W5iZC6NYXBCZWbAJs2eU=
+X-Received: by 10.101.99.206 with SMTP id n14mr3174871pgv.316.1524562595624;
+ Tue, 24 Apr 2018 02:36:35 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.236.150.4 with HTTP; Tue, 24 Apr 2018 02:36:34 -0700 (PDT)
+In-Reply-To: <CA+P7+xqP8b1i4-C242de2_P9dFsZ03pcRGo45scyfK2ohd-ykw@mail.gmail.com>
+References: <ec58f482-ffde-1959-ff4a-9b128905ccb0@talktalk.net>
+ <cover.1524545557.git.martin.agren@gmail.com> <f140d2795b9dce8b805cd2ebaf076742978ab8ae.1524545557.git.martin.agren@gmail.com>
+ <CA+P7+xqP8b1i4-C242de2_P9dFsZ03pcRGo45scyfK2ohd-ykw@mail.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 24 Apr 2018 11:36:34 +0200
+Message-ID: <CAN0heSqo43YkHa-1e7jaZqxktenonj3HZFrF=AKYR4+3ciZ2Sg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] merge: setup `opts` later in `checkout_fast_forward()`
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Phillip Wood <phillip.wood@talktalk.net>,
+        Git mailing list <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
         Igor Djordjevic <igor.d.djordjevic@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v8 09/16] rebase: introduce the --rebase-merges option
-In-Reply-To: <xmqq1sf56vvb.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1804241042400.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1524139900.git.johannes.schindelin@gmx.de> <cover.1524306546.git.johannes.schindelin@gmx.de> <0c92bdd1829328544269722cbbd3edcd169bb148.1524306547.git.johannes.schindelin@gmx.de> <E8BADD438B3F4D20B33BCC2CD92BC004@PhilipOakley>
- <xmqq1sf56vvb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:aOrrk+AnfoOi3k8tQCLMQq8RD/L3WUGNgsMXk44N3Q9jQDctKM3
- /5deqzrBEnYcY+4n67aXsq+3W0ciXXmECjzlOBklYek1je6M97bmfnV2zPWKmQlRMlovPLS
- slCoS3uiAZ/617R4Q8ePKk+1Ne+SNXTEjous3Sdm9qJAr7+qzNHu9y6S5H07ttTrxH+6b6U
- 1RG/nwo0+0/jDti3Ddvew==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uOOYzLNEDXs=:KbpIT3boaqO0yy5mFlPG/8
- GQZ2Bf1Sh6TKJZXLCgupWy50DJ3SKsAanSwkxVDbji8NzjfxkQlQIntrVyZUtXUfxR7XE5IgH
- n/LtyPuxeG9DTRIXk694LCQNugmYPwlBobhGbjSafgQxphueg08krNTsxWL7y+Q/orBh+Emsn
- 6qIPLHhiH78Up7mwKfeU6V7CAQYM97gvGYDR+JYhiZDxmzFwhv8/I5E3ob6cwWFU6+ha9XUd4
- MPeCFItmlJXOj+KN7Q3RmV3eYphYmqGqbRmuaJcWme/UO7i04NXDPX5rS5l5G9i3lnhmQe34A
- CHa4nH3sRxtGDhC4RzPf/1AWiDfTZh6tfwgE7hYKhJu3UmBcUnKCQLIV67K2anfBcsCRTSR1u
- dhKP3xc3EZH0zajWvyWvirFFjAOkJZLYX1THcRPQrjU8d8KzJXjKsv+oyXmlbk5JDqhIMPZEE
- dMfgw7Hu/wYn98p7DimIMHWXgCq+pZ/YAlHiMDzqoWVEmaYZutHu85S8Xk+8JIMcePSrkrTkz
- 5iuz0mvgwcHfSlo9eFqByh1yWlSPAR0UALOkUX+YzT3E6wvFdMaTPLqCyXRd6HcHMy4im3HXO
- +4DXK2xVYGpXW283OaxITl9jRwxy+Gxv2lsy6wCclmfzpNlPMB1pdgUPeuAj2lcbhERw7Uc2+
- qSMOlDzfqalbpiyezmwTXiRZtqygHQp3yqkkUsVhffiENMt4oogoPehwuwWepWr9nbqAcy8CH
- e4lH48nzdHyjJnH5iXRrqxo5Li5LnLy3hw7SKZg83TPe8ZiaMGDpu8X/q+BSGmoE+kI8ow77g
- 9hXMn0Jrba6FMvrLhvHiIi4PCi+avkjJg1lEcI7t0nTzIDrGXw=
+        Sergey Organov <sorganov@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 24 April 2018 at 08:20, Jacob Keller <jacob.keller@gmail.com> wrote:
+> I'm guessing the diff algorithm simply found that this was a more
+> compact representation of the change? It's a bit confusing when your
+> description indicates you "moved" some code down, but it looks like
+> you moved code up.
 
-On Tue, 24 Apr 2018, Junio C Hamano wrote:
+Agreed. I'll play with --anchored and other magic stuff to see if I can
+improve this. Or I could instead try to sell this patch as "move some
+other stuff out of the way" ;-) That seems a bit less direct though.
 
-> "Philip Oakley" <philipoakley@iee.org> writes:
-> 
-> >> +-r::
-> >> +--rebase-merges::
-> >> + By default, a rebase will simply drop merge commits and only rebase
-> >> + the non-merge commits. With this option, it will try to preserve
-> >> + the branching structure within the commits that are to be rebased,
-> >> + by recreating the merge commits. If a merge commit resolved any merge
-
-It is funny how nobody caught the missing "conflicts" in "If a merge
-commit resolved any merge [conflicts]"...
-
-> >> + or contained manual amendments, then they will have to be re-applied
-> >> + manually.
-> >> ++
-> >> +This mode is similar in spirit to `--preserve-merges`, but in contrast to
-> >> +that option works well in interactive rebases: commits can be reordered,
-> >> +inserted and dropped at will.
-> >> ++
-> >> +It is currently only possible to recreate the merge commits using the
-> >> +`recursive` merge strategy; Different merge strategies can be used only
-> >> via
-> >> +explicit `exec git merge -s <strategy> [...]` commands.
-> >> +
-> >> -p::
-> >> --preserve-merges::
-> >>  Recreate merge commits instead of flattening the history by replaying
-> >
-> > Flatten is here in the context lines but its just a blunt statement that 'it
-> > is what it is'...
-> 
-> The first paragraph that explains --rebase-merges talks about what
-> happens when the option is not given, and says "drop merge commits
-> and only rebase the non-merge commits", which is not incorrect
-> per-se but does not make it explicit how the resulting topology
-> looks like.
-
-Correct. And it would be the wrong place to describe in detail what a
-rebase *without --rebase-merges* does, right?
-
-> I think it is easier to understand if it mentioned "flattening" as well.
-> If flatten is not the word you want, perhaps "make it linear" or
-> something like that?
-
-I fear that we all here are way too deeply in "Git think". If I ask a
-random Git user what it means to "make commits linear", I am sure I would
-get only puzzled, nervous looks as a response.
-
-So I am rather certain that the suggested wording is something I want to
-avoid.
-
-Besides, we really should expect the reader to know a little about the way
-the interactive rebase works by the time they read the explanation of
-`--rebase-merges`.
-
-Therefore, I think I can sidestep the entire thing by saying this instead:
-
--r::
---rebase-merges::
-        By default, a rebase will simply drop merge commits from the todo
-        list, and put the rebased commits into a single, linear branch.
-        With `--rebase-merges`, the rebase will instead try to preserve
-        the branching structure within the commits that are to be rebased,
-        by recreating the merge commits. Any resolved merge conflicts or
-        manual amendments in these merge commits will have to be
-        resolved/re-applied manually.
-
-Thank you for helping me improve the documentation part of this patch,
-which I think is really, really important,
-Dscho
+Thanks
+Martin
