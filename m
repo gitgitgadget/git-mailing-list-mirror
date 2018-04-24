@@ -2,87 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02BA61F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 00:38:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BDC01F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 00:53:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932652AbeDXAi0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 20:38:26 -0400
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:43954 "EHLO
-        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932611AbeDXAi0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 20:38:26 -0400
-Received: by mail-yw0-f172.google.com with SMTP id y3-v6so4181272ywi.10
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 17:38:25 -0700 (PDT)
+        id S932665AbeDXAx1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 20:53:27 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35202 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932635AbeDXAx0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 20:53:26 -0400
+Received: by mail-wr0-f193.google.com with SMTP id w3-v6so45942267wrg.2
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 17:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=TQwoWky4W/NLpEKgCfnWy+QAHHGc/UZp23HwIQ6at74=;
-        b=WawPxpIPXqJRMqCZwryDHCMxbCOslU4wctT1foJ9177NZIwE36Y3d4+hAEXh44on7i
-         MGqnZS4jWcF66ucag9Pdqgw0xtTl6nq+5wJl1U8PDrtuTXUadYrNBe5g0EN1jy6727Ah
-         D5KaP2k7065mtJvvO5she3L6xdTamI+CqZTc/RN/7HEbpyBTvQaCnJaiCJWYXx9t86jq
-         Q6Koj4a7DhwmanDmEYkmHAZNnk8bsoN5jiiiUhdUodSXShm7kVZx3CKfUqrW31ZJjA/j
-         VbDi4HZKzQV3VJk3oy0nnVggsO0pS0Q3ZLH1vVID2lp6YjFzHEsWV20NunHBCv/1H0l7
-         tR2Q==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=c+L33e3mwl59wzaLyP3XB+lX1qGaJ3+qCTgqyiaApp4=;
+        b=CR/fnWpJfuBIwhrXs7oG2I9n/YZjWZI+DNVqfOMeHEy9RwEtuZbUVWRODuECkrJz+g
+         fkzRw5LdC43gsVj3eNUf7zbfI1wfJ5nwMXtxLbM0rqGGcaJ1ieJfZDrnjuOV/QmQ5ioT
+         rxA3r5eYw5bbWb5igRcHHCHVgD5dmr2NLq6ca7KT3Fnf3LMVTc1PXJyVkY0tAuvGIXHw
+         5BhLDxW0A1rNc4inxdHo/ELjQRhZxe/ie5Ta+2rpLx8QzmnuUC8ER8TDhzZTbmPpKF8Y
+         IKEkpeAloRy3md3kwOZ0BD/Vu+l7fMfPZTbz1f8HKhvunfxKfPYgZ/YIRwtGOJwRcK4a
+         Ypfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=TQwoWky4W/NLpEKgCfnWy+QAHHGc/UZp23HwIQ6at74=;
-        b=dNb1rEVudxBlyq0MRZ/SDQXdqRxRUnbqsBQS8Wa/UTkPmH2xLnk3OdzhKIrgFUsMv9
-         VrU6brOH7g4mo0kQrhI6VrGsYyy0xCzQEVb9vqadNtJqH3/HLylYZKQu12VkkZA8eLyU
-         yzN3gw1GHcxWzvPOGv6HVK4y2ZkBxOApk+MCxHq+hyKARCk9R5S1gSz0slQmN7g8ZtcI
-         Zjqo0hQ957J/d7NuuaWMP3hBkfDGh5pJvMLWpQytT9gxXPP7A1pWRPCGYwmj66po1NbY
-         I3ybTc/bi9dEAlpHmQmCrOzy7Di6a6S0jz7B0HX1ne87YFZT18sK+wfwUmQRHhqoq9Qi
-         LG6Q==
-X-Gm-Message-State: ALQs6tCwZ4SyklkFc61zymO42qYwncsA6qnzQZYljempdLTwwOcPBmOs
-        d47blZ53XpXMraXqXGE6TE9PZNwPBsCG7fwNud4sdg==
-X-Google-Smtp-Source: AIpwx48ZLJ+BKF/pBx5gbJMCyiRigl6Z36UViycJykGCkiwEdEZ04F1LgOSeKDjGKXR/HWGrCHdF72/FpRhTuyEnY2w=
-X-Received: by 2002:a81:2cc3:: with SMTP id s186-v6mr11823498yws.414.1524530304941;
- Mon, 23 Apr 2018 17:38:24 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=c+L33e3mwl59wzaLyP3XB+lX1qGaJ3+qCTgqyiaApp4=;
+        b=Ges2maQL30o8cl1Qji9Zx3EP/WPbuHr38jU4H1sVM+1kCcHOJe2vhagMP+FSqXd/ZO
+         qs3zUP7gviR/XJQl1HMPdwIzYkA0Wj9sWPxHekz5zBJSYTM9ffOyfQD/EBLORsPJhpiO
+         IFUsQEIW6N/L7Vl3jEZ6Ks/MCIg8RqAmCF0tq/wtaN4dmH/NTr2/k+nAvuay6EKsU1LD
+         hVMhJfwfCUTzuAlLComWQri49TNB39o8xCk4TgSBc02KV+DZUpFNotdiMMf2Dnoeve9y
+         ZCdiIuROf6lbfaWc1DOHCYtHYmFXNDBWM6tJfFzgnEqbVup+u1xqCclqYQmq5RffhR25
+         2tfg==
+X-Gm-Message-State: ALQs6tAKTc3zuJy/xcNxLERZ0j/MjepaLfIhd8v4XaxQl7hGCNthKKx8
+        y1691DF9MnWyQ+Ngltbx69A=
+X-Google-Smtp-Source: AB8JxZp0zRz18OJLbD/dX+f5FJrUyedbIev4XVauDrgkT6E7rNj0FPw/DLIVVlFshejRAdWZSIav9g==
+X-Received: by 10.28.109.27 with SMTP id i27mr11156165wmc.109.1524531205406;
+        Mon, 23 Apr 2018 17:53:25 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a139sm8616203wma.43.2018.04.23.17.53.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 23 Apr 2018 17:53:24 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Dan Jacques <dnj@google.com>,
+        Johannes.Schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH 2/2] Makefile: quote $INSTLIBDIR when passing it to sed
+References: <f0ad1ad4-67d8-21e2-fdd0-0a08328c1eaa@kdbg.org>
+        <20171205212625.6616-1-dnj@google.com>
+        <xmqq7eu0j1th.fsf@gitster.mtv.corp.google.com>
+        <e0a22ee4-9503-760f-293c-be56fa46fa04@kdbg.org>
+        <20180423232326.GB25128@aiede.svl.corp.google.com>
+        <20180423232535.GD25128@aiede.svl.corp.google.com>
+Date:   Tue, 24 Apr 2018 09:53:24 +0900
+In-Reply-To: <20180423232535.GD25128@aiede.svl.corp.google.com> (Jonathan
+        Nieder's message of "Mon, 23 Apr 2018 16:25:35 -0700")
+Message-ID: <xmqqin8h8lx7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Mon, 23 Apr 2018 17:38:24
- -0700 (PDT)
-In-Reply-To: <20180424003414.GB245996@genre.crustytoothpaste.net>
-References: <20180423234327.250484-1-sbeller@google.com> <20180423234327.250484-10-sbeller@google.com>
- <20180424003414.GB245996@genre.crustytoothpaste.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 23 Apr 2018 17:38:24 -0700
-Message-ID: <CAGZ79kYzUbR-OSUn-174f9SwKjNQ7LTw2FcSiSpnZmmdPrAuMA@mail.gmail.com>
-Subject: Re: [PATCH 9/9] cache.h: allow sha1_object_info to handle arbitrary repositories
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 23, 2018 at 5:34 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Mon, Apr 23, 2018 at 04:43:27PM -0700, Stefan Beller wrote:
->> This involves also adapting sha1_object_info_extended and a some
->> internal functions that are used to implement these. It all has to
->> happen in one patch, because of a single recursive chain of calls visits
->> all these functions.
->
-> Ah, yes, I remember that recursive call chain.
->
-> Anyway, other than the one item I mentioned earlier, this series looked
-> good to me.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Thanks for the quick review!
+> diff --git a/Makefile b/Makefile
+> index 8f4cb506ff..727eca5d0a 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2108,7 +2108,7 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
+>  	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
+>  	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
+>  	sed -e 's=@@PATHSEP@@=$(pathsep)=g' \
+> -	    -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' \
+> +	    -e 's=@@INSTLIBDIR@@='"$$INSTLIBDIR"'=g' \
 
-Well, this very paragraph that you quote also mentions
-*sha1*_object_info_extended, so I'll fix that, too
+Good find.  FWIW, I'd find it a lot easier to read if the whole
+thing were enclosed inside a single pair of dq.
 
-I'll wait until tomorrow for a resend to give others
-the opportunity to weigh in as well.
-
-Thanks,
-Stefan
