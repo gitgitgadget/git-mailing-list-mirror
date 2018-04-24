@@ -2,142 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E4B11F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 21:34:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 860561F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 21:50:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751046AbeDXVe2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 17:34:28 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:38977 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750882AbeDXVe1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 17:34:27 -0400
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id B5Zof7Udi4ZqzB5ZvfnqR8; Tue, 24 Apr 2018 22:34:26 +0100
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=E/fjW5Vl c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=BCjA09oAAAAA:8
- a=fAg4IBucyuwCp2N5FAMA:9 a=wPNLvfGTeEIA:10 a=jYKBPJSq9nmHKCndOPe9:22
-Message-ID: <538CF27C224E4AE0A1C45374AE367C3A@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Cc:     <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>,
-        "Jakub Narebski" <jnareb@gmail.com>,
-        "Stefan Beller" <sbeller@google.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>,
-        "Christian Couder" <christian.couder@gmail.com>
-References: <cover.1524125760.git.johannes.schindelin@gmx.de> <cover.1524262793.git.johannes.schindelin@gmx.de> <853b0a445ab1d78e8cbe19dacd09e70892b34b03.1524262793.git.johannes.schindelin@gmx.de> <52C2C5A51FE7400E937F06B7641F4319@PhilipOakley> <nycvar.QRO.7.76.6.1804242106220.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Subject: Re: [PATCH v3 09/11] technical/shallow: describe the relationship with replace refs
-Date:   Tue, 24 Apr 2018 22:34:16 +0100
-Organization: OPDS
-MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180424-4, 24/04/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfCBFPTnAjCeSQjMwTvnLTgfgFtKAcgNoViKhv0SAw4oM5fcH8KDV8XuRw6m87VRbv6Tt1ZsceROlfoU/Qs89IN7JLUyiYlDC/VyPUhJoTG8PWvIEfxLh
- aN5EWCcP/4a/Zs1Clduhxqgd7wkogz4Qppw5rh/1xcXFhG7eZZkUbU/uXji0JYTbIbYsvr3lldYAILq3sUGSS1BXpABuk/rQsu+F+s4LFIpfnjGTvtdYbTmP
- OFwUamiTepo1J/qN9bDm9uN8jK4mzFWfSocpmizHis5xFs2W6McDrr0I+N4LN6n5JJKDbBmio4XHPTe+STtDUJFkaa2YtvIYEwchHFsLQiPYKn3+DYMNduLm
- jNVZA6h8AxxUHF2oOp9rafNMvVo5bw==
+        id S1751003AbeDXVuy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 17:50:54 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35940 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750786AbeDXVux (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 17:50:53 -0400
+Received: by mail-pf0-f194.google.com with SMTP id g14so13385611pfh.3
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 14:50:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=xR6yDI4vwwbrfy//8a25IGH0dYee1pLmH0+dK7s+mV0=;
+        b=fq8uL/juFUhuSo573ISGeAVW9S0SrCW3GWWDQSDBKXD+t28rZm+44OQBc92ZhcGRol
+         gCc2PcVRhPejYeu3SglrByRXnf+vQRICFh8fMc2RAiehvIerFZaBLn1f/+i09WDf/Xff
+         zM6FBxGI9AIOus+RGSui5/QYuNfNYFVTLmHoRGJMrJs9nJj5Xh7kH/Jh5q0V8WXQlSq2
+         gAK5UhlNqv2sYJAg4JsOwFlpK4WdrnAka4YPVaZd0FNmlMD5JUCClfTmxu2425cNHnt3
+         +RjKMhJCr3bhTfm3jnBRDRscSk8xgqRv6ULQ2bk7UNAYx5xUsniJQjZwdR+yNCLuvyNS
+         n7RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=xR6yDI4vwwbrfy//8a25IGH0dYee1pLmH0+dK7s+mV0=;
+        b=qW67zPzgoAzFUvk50ZdSY2+IS/AZZgbbQN5/LhApQP0EspEEepT4UvySTHEOEEAwys
+         nUbFDCOFjubYjKPuAm/EXUdsx00h7xeNwkLdhEFhQAK4WNpYDgz3RR7Cc0qIDpXobh4t
+         /lVRmjsM1vPEodZRlAmZIfVNHgQHUGVp7Akz7u08SADoBDlEeNOe1lx4/sPXGU9SRYr9
+         D+lubHGVhD42QAp2vSOunb8/hdzzWfryohVjNphg1U7oko/o6Mhu1H6HfAWYFAhlLyA0
+         jn2t0kkTzvWOy8hEB7I78gLrs4s55DMmpcOaSa7LEaTrbBX9lITG83Zzn/xRUO6z0yNV
+         xTiQ==
+X-Gm-Message-State: ALQs6tBA+K84mjUHaGrgJtV9xWC52ChF124YU5chjfGSwJzRSniUeKz6
+        /Vzhu32B+FsI1ugmCEWeAiX1Qg==
+X-Google-Smtp-Source: AIpwx48tCXjFWpfJFamDcCiPRqJyA8SBF6kN/9dTMYdKTeq7TAKkws30CcoQWx58cBJIMhMJssKIuw==
+X-Received: by 10.101.93.2 with SMTP id e2mr21455647pgr.100.1524606652404;
+        Tue, 24 Apr 2018 14:50:52 -0700 (PDT)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id y17sm1196888pfl.19.2018.04.24.14.50.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Apr 2018 14:50:51 -0700 (PDT)
+Date:   Tue, 24 Apr 2018 14:50:50 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, simon@ruderich.org, avarab@gmail.com,
+        jacob.keller@gmail.com
+Subject: Re: [PATCH 5/7] diff.c: add a blocks mode for moved code detection
+Message-Id: <20180424145050.e0ad29d4f304216441656057@google.com>
+In-Reply-To: <20180424210330.87861-6-sbeller@google.com>
+References: <20180424210330.87861-1-sbeller@google.com>
+        <20180424210330.87861-6-sbeller@google.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi dscho
+On Tue, 24 Apr 2018 14:03:28 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de> : Tuesday, April 
-24, 2018 8:10 PM
-> On Sun, 22 Apr 2018, Philip Oakley wrote:
->
->> From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
->> > Now that grafts are deprecated, we should start to assume that readers
->> > have no idea what grafts are. So it makes more sense to describe the
->> > "shallow" feature in terms of replace refs.
+> Suggested-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
+>  (https://public-inbox.org/git/87o9j0uljo.fsf@evledraar.gmail.com/)
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 
-Here we say we should drop the term "grafts"
->> >
->> > Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
->> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> > ---
->> > Documentation/technical/shallow.txt | 19 +++++++++++--------
->> > 1 file changed, 11 insertions(+), 8 deletions(-)
->> >
->> > diff --git a/Documentation/technical/shallow.txt
->> > b/Documentation/technical/shallow.txt
->> > index 5183b154229..b3ff23c25f6 100644
->> > --- a/Documentation/technical/shallow.txt
->> > +++ b/Documentation/technical/shallow.txt
->> > @@ -9,14 +9,17 @@ these commits have no parents.
->> > *********************************************************
->> >
->> > The basic idea is to write the SHA-1s of shallow commits into
->> > -$GIT_DIR/shallow, and handle its contents like the contents
->> > -of $GIT_DIR/info/grafts (with the difference that shallow
->> > -cannot contain parent information).
->> > -
->> > -This information is stored in a new file instead of grafts, or
->> > -even the config, since the user should not touch that file
->> > -at all (even throughout development of the shallow clone, it
->> > -was never manually edited!).
->> > +$GIT_DIR/shallow, and handle its contents similar to replace
->> > +refs (with the difference that shallow does not actually
->> > +create those replace refs) and
->>
->> If grafts are deprecated, why not alse get rid of this mention and simply
->> leave the 'what it does' part.
->
-> Internally, shallow commits are implemented using the graft code path, and
+Firstly, I don't know if this is the right solution- as written
+in the linked e-mail [1], the issue might be more that the config
+conflates 2 unrelated things, not that a certain intersection is
+missing.
 
-however the change here is just to the documentation, independent of th code 
-path's name.
+[1] https://public-inbox.org/git/87muykuij7.fsf@evledraar.gmail.com/
 
-> they always will be: we will always need a list of the shallow commits,
-> and we will always need to be able to lift the "shallow" attribute
-> quickly, when deepening a shallow clone.
->
-> So it makes sense to mention that here, because we are deep in technical
-> details in Documentation/technical/.
->
->> >                                               very much like the 
->> > deprecated
->> > +graft file (with
+Optional: Probably better to put the link inline, instead of in the
+trailer.
 
-I was looking to snip this 'graft' reference, as per the commit message..
+> -test_expect_success 'detect permutations inside moved code -- dimmed_zeb=
+ra' '
+> +test_expect_success 'detect blocks of moved code' '
+>  	git reset --hard &&
+>  	cat <<-\EOF >lines.txt &&
+>  		long line 1
+> @@ -1271,6 +1271,52 @@ test_expect_success 'detect permutations inside mo=
+ved code -- dimmed_zebra' '
+>  	test_config color.diff.newMovedDimmed "normal cyan" &&
+>  	test_config color.diff.oldMovedAlternativeDimmed "normal blue" &&
+>  	test_config color.diff.newMovedAlternativeDimmed "normal yellow" &&
 
->>
->> >                           the difference that shallow commits will
->> > +always have their parents grafted away, not replaced by
->> s/their parents grafted away/no parents/ (rather than being replaced..)
+Add a comment here explaining that these colors do not appear in the
+output, but merely set to recognizable values to ensure that they do not
+appear in the output.
 
-Then I botched this substitution
+> +
+> +	git diff HEAD --no-renames --color-moved=3Dblocks --color |
+> +		grep -v "index" |
+> +		test_decode_color >actual &&
+> +	cat <<-\EOF >expected &&
+> +	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
+> +	<BOLD>--- a/lines.txt<RESET>
+> +	<BOLD>+++ b/lines.txt<RESET>
+> +	<CYAN>@@ -1,16 +1,16 @@<RESET>
+> +	<MAGENTA>-long line 1<RESET>
+> +	<MAGENTA>-long line 2<RESET>
+> +	<MAGENTA>-long line 3<RESET>
+> +	 line 4<RESET>
+> +	 line 5<RESET>
+> +	 line 6<RESET>
+> +	 line 7<RESET>
+> +	 line 8<RESET>
+> +	 line 9<RESET>
+> +	<CYAN>+<RESET><CYAN>long line 1<RESET>
+> +	<CYAN>+<RESET><CYAN>long line 2<RESET>
+> +	<CYAN>+<RESET><CYAN>long line 3<RESET>
+> +	<CYAN>+<RESET><CYAN>long line 14<RESET>
+> +	<CYAN>+<RESET><CYAN>long line 15<RESET>
+> +	<CYAN>+<RESET><CYAN>long line 16<RESET>
+> +	 line 10<RESET>
+> +	 line 11<RESET>
+> +	 line 12<RESET>
+> +	 line 13<RESET>
+> +	<MAGENTA>-long line 14<RESET>
+> +	<MAGENTA>-long line 15<RESET>
+> +	<MAGENTA>-long line 16<RESET>
+> +	EOF
+> +	test_cmp expected actual
+> +
+> +'
 
->
-> But the commits will typically have parents. So they really will have
-> their parents grafted away as long as they are marked "shallow"...
-
-OK, maybe I mis-used the figurative 'no parents', when it means the literal 
-'parents not present'.
-
-Perhaps something like:
-+$GIT_DIR/shallow, and handle its contents similar to replace
-+refs (with the difference that shallow does not actually
-+create those replace refs) with the difference that shallow commits will
-+always have their parents not present.
-
---
-Philip 
-
+[snip]
