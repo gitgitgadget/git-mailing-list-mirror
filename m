@@ -2,108 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48AF81F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 18:42:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 914FC1F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 18:51:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751295AbeDXSmh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 14:42:37 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:35316 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750841AbeDXSmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 14:42:36 -0400
-Received: by mail-pf0-f180.google.com with SMTP id j5so13001445pfh.2
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 11:42:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=27g0P0bF3OYj9XRFg5Knt2iyM0pTlfjtu2XE1ZoBbNk=;
-        b=Ilo3phAMy55iBPD+Bs42u43WgRA1u5AxtmKGf3Wad7Cqp/XS0IJdpODooNZSrYaqpN
-         Iun2yQjSLTv2IENqhUlpSXfLMxjSTWyPTbgqLDyEVxY6GrASpeaR1OR6Dex+0NQzqoPd
-         M+FS/ZVUUeHx+alHM1gMVlgXCz7cfx1EfS/ADD+xq395GSpL7S8JjjQJjGz6AufKvkJf
-         jsHuX0f4UbEcxHEUVgAaOgangFplXR100l3Td09ctjE2WVpApTQW7z7G8Vhc6kvLUXhv
-         nsWHxV3fN82RYMtSg3XghGdRWcgFTRs4sG48zBWez+2oK//FOAogqW7i4pcpcUBpxwn1
-         tN2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=27g0P0bF3OYj9XRFg5Knt2iyM0pTlfjtu2XE1ZoBbNk=;
-        b=XZUQQ5M42yJ2VVF3NPDjkNkMj613M/FK0Mj/ZlvLubhf/SeXxb5Zbo9Ci7oeLrcQyk
-         bFBAgV9tXweBZHd3D7JO045xQhq5fIeW78IeugVLX3SbHNE+PZlR1005b3Dh6/MxZeE+
-         1BlmxFPGocpOqXEn+mD0DhGmw9htf25yAoX6NnoXLIBzmgd4WrwJLi9g4k1rCeDP9xJY
-         fE+jevKqt03CYBVAHmuNqWjftrRMWOGIFjo+Nsth/yIcJ/lDYWz6u38TVLuPT6YXWnYJ
-         3n+ibSWvEc0J2h7bXehIMYVtQhnPE3N6dzRlp6HSuxmbx9UNdP9rLN8HogTLvEjE+92x
-         uwwg==
-X-Gm-Message-State: ALQs6tB4xq4RAL+D/646UmXjTrWZzzczkjm8Xo7tuMPnEb0PFiFK4hCG
-        lw4QUQsI1s/VB1/N/LdnsAhuEA==
-X-Google-Smtp-Source: AIpwx49HAWUdKwJc4/warYZgDd0do7ZUw+BuRw+MKWKt5HWyhoZqlEo/3uu2CtM22UMoIr7jWbfCfA==
-X-Received: by 2002:a17:902:5602:: with SMTP id h2-v6mr23239803pli.115.1524595355692;
-        Tue, 24 Apr 2018 11:42:35 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id t12sm22656387pgp.3.2018.04.24.11.42.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Apr 2018 11:42:34 -0700 (PDT)
-Date:   Tue, 24 Apr 2018 11:42:33 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 9/9] cache.h: allow sha1_object_info to handle arbitrary
- repositories
-Message-ID: <20180424184233.GA90854@google.com>
-References: <20180423234327.250484-1-sbeller@google.com>
- <20180423234327.250484-10-sbeller@google.com>
- <20180424112332.38c0d04d96689f030e96825a@google.com>
+        id S1752851AbeDXSvg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 14:51:36 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60601 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751995AbeDXSvf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 14:51:35 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MUUWN-1f1K8g1wQt-00RJef; Tue, 24
+ Apr 2018 20:51:29 +0200
+Date:   Tue, 24 Apr 2018 20:51:21 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Stefan Beller <sbeller@google.com>
+cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v4 04/11] replace: "libify" create_graft() and callees
+In-Reply-To: <CAGZ79ka=BLGCCTOw848m0SE9O+ZKhQfiW9RUz99W4=Gdg+7ofQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804242048360.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1524262793.git.johannes.schindelin@gmx.de> <cover.1524303776.git.johannes.schindelin@gmx.de> <f962f8043fb1125b47090a82c35e2d67d3d9d216.1524303776.git.johannes.schindelin@gmx.de>
+ <CAGZ79ka=BLGCCTOw848m0SE9O+ZKhQfiW9RUz99W4=Gdg+7ofQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180424112332.38c0d04d96689f030e96825a@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:2+o/2495sq1LayZ3d/5dQYmKkLS58crON9Dmn/rea/Ur1ouK/rd
+ ToyMr8WgGfVW863DaxIJOXa0bFyi6GVoXvtvMuCFlp32xRVpSO2LaH6IAGm2GVrTf8VGuiU
+ J9Ye7Nbltj/v+qcJoXVuD7gthqFacW+1OLM4oGyUteaw7Hh6dM0UaBaDUKy6XxeYyVBelz7
+ oOWV/Pm/j3Y49xIgQ+tgw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RkZnuFsY95w=:3C/m25pRClLlHXJz3bHrMv
+ D+HCPvC6szE/i/Ee3s8YUkZAVSUg9usNVzwHy6ycpxwj0+e5eN+Pai2wE5k7exN7XUdUBtdv+
+ kIT1fQlGZuk26p01dkk/qV5H6YvdpFHSLKjGqF7jaQQ3JxSQbWlBSOpFdB7L5cGK6ONetgrZG
+ j65fTYosGNunoAl6eAIM/w/CODhShGsxd6TG0hwtpCLeQeRtudlgMnTkUcme7plVz6YQuDD1i
+ MWh0RTUtXSXqPkzb0TmZlNIvRmbtBBG/OTQ+XvXWUent0RryJ501KFESo1J8THeLM8vuxgQv+
+ W27mwhe7jQBb5PMyx+SrM2ZJaEbdSOvX9zu/M8nYD0KSWACJgSYqCLYcEVSAgPGz3IIM0LYax
+ KIA5fpv/Lflfo0jyvjqcLvPuJa5Co8AtWzjbN5MpcxJx12fX8lSjXNJFbvtboM9b9DpTDTPyg
+ ZrL6EHUPcI1sV2+kufzOdOZEK7w2keko1RlAPIt3Ay2ick42lBb/spklZ31gHu28IOXcAEAD0
+ 2Busau6jOmpVmf6dmHnp+1RMeD0z1EmrLyz/KpIxZUzOz4ndG2cvrmuHtUlJwG80zn7PPCEuJ
+ DFSiK9zK7AJ3LIAW5J4YiDCrTmwq5u0Nc6cGB20Aj7BvUi/9BJi/1gz8fDQy0W57bM178z6OX
+ D3upj9877wroBHMnSWj74PjWsyLANc3j2U9FLjEb6BTKEqGB4OANUdjjMROu1utQZKyy/gU4u
+ 0Ilqk3NdImSGAKOBr2E6X4qtZmrtzwa9T9bkmEX7WmHPZfIeGReKkCIB2WP7Z/89srDreN2TO
+ uS0OR5mKfZs2FUF0lMjGpWaHf+sJkhDgZoEYVKkKNqD7yUIfj8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/24, Jonathan Tan wrote:
-> On Mon, 23 Apr 2018 16:43:27 -0700
-> Stefan Beller <sbeller@google.com> wrote:
+Hi Stefan,
+
+On Mon, 23 Apr 2018, Stefan Beller wrote:
+
+> On Fri, Apr 20, 2018 at 3:21 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > @@ -250,27 +257,38 @@ static void import_object(struct object_id *oid, enum object_type type,
+> > -               if (strbuf_read(&result, cmd.out, 41) < 0)
+> > -                       die_errno("unable to read from mktree");
+> > +               if (strbuf_read(&result, cmd.out, 41) < 0) {
+> > +                       close(fd);
+> > +                       close(cmd.out);
+> > +                       return error_errno("unable to read from mktree");
 > 
-> > This involves also adapting sha1_object_info_extended and a some
-> > internal functions that are used to implement these. It all has to
-> > happen in one patch, because of a single recursive chain of calls visits
-> > all these functions.
+> So before the errno is coming directly from strbuf_read,
+> which will set errno on error to the desired errno.
+> (It will come from an underlying read())
+
+Yes, you are right!
+
+> However close() may fail and clobber errno,
+> so I would think we'd need to
 > 
-> In packfile.c, unpack_entry() invokes get_delta_base_cache_entry(),
-> which references a global (delta_base_cache). Does delta_base_cache need
-> to be moved to the repo object (or object store object) first, or is
-> this safe?
+>     if (strbuf_read(&result, cmd.out, 41) < 0) {
+>       int err =  errno; /* close shall not clobber errno */
+>       close(fd);
+>       close(cmd.out);
+>       errno = err;
+>       return error_errno(...);
+>     }
 
-After looking at this, I think it should be safe for now since its a
-cache that requires a packed_git pointer to access (and those would be
-per repository).  We may want to move it in to the repository at some
-point though.
+I went for the easier route: call error_errno() before close(fd), and then
+return -1 after close(cmd.out). Since error_errno() always returns -1, the
+result is pretty much the same (I do not think that we want the caller of
+import_object() to rely on the errno).
 
+> > -               if (fstat(fd, &st) < 0)
+> > -                       die_errno("unable to fstat %s", filename);
+> > +               if (fstat(fd, &st) < 0) {
+> > +                       close(fd);
+> > +                       return error_errno("unable to fstat %s", filename);
+> > +               }
 > 
-> Also, in sha1_file.c, oid_object_info_extended() invokes fetch_object(),
-> which attempts to fetch a missing object. For this, I think that it's
-> best to guard with a "r == the_repository" check, or if there's a better
-> way to distinguish between the "default" repository and any repository
-> that we newly create (I vaguely remember some distinction when parsing
-> environment variables when determining repo paths - the envvars were
-> only used for the "default" repository, but not for the others).
+> Same here?
 
-This is a little more difficult and I'm not sure I know what the best
-course of action would be for this.  Mostly because then this puts a big
-recursive dependency on the whole fetch mechanism to handle arbitrary
-repositories at the same time these functions are converted.  So maybe
-throwing in the runtime check would be the best way to break the
-dependencies for now.
+Yep.
 
--- 
-Brandon Williams
+> An alternative would be to do
+>     ret = error_errno(...)
+>     close (..)
+>     return ret;
+
+I even saved one variable ;-)
+
+> > @@ -288,19 +307,23 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
+> >         struct strbuf ref = STRBUF_INIT;
+> >
+> >         if (get_oid(object_ref, &old_oid) < 0)
+> > -               die("Not a valid object name: '%s'", object_ref);
+> > +               return error("Not a valid object name: '%s'", object_ref);
+> >
+> >         type = oid_object_info(&old_oid, NULL);
+> >         if (type < 0)
+> > -               die("unable to get object type for %s", oid_to_hex(&old_oid));
+> > +               return error("unable to get object type for %s",
+> > +                            oid_to_hex(&old_oid));
+> >
+> > -       check_ref_valid(&old_oid, &prev, &ref, force);
+> > +       if (check_ref_valid(&old_oid, &prev, &ref, force))
+> > +               return -1;
+> >         strbuf_release(&ref);
+> >
+> > -       export_object(&old_oid, type, raw, tmpfile);
+> > +       if (export_object(&old_oid, type, raw, tmpfile))
+> > +               return -1;
+> >         if (launch_editor(tmpfile, NULL, NULL) < 0)
+> > -               die("editing object file failed");
+> > -       import_object(&new_oid, type, raw, tmpfile);
+> > +               return error("editing object file failed");
+> > +       if (import_object(&new_oid, type, raw, tmpfile))
+> > +               return -1;
+> >
+> >         free(tmpfile);
+> 
+> Do we need to free tmpfile in previous returns?
+
+Oy vey. How many more mistakes can I introduce in one commit...
+
+> > @@ -394,24 +422,29 @@ static int create_graft(int argc, const char **argv, int force)
+> >         unsigned long size;
+> >
+> >         if (get_oid(old_ref, &old_oid) < 0)
+> > -               die(_("Not a valid object name: '%s'"), old_ref);
+> > -       commit = lookup_commit_or_die(&old_oid, old_ref);
+> > +               return error(_("Not a valid object name: '%s'"), old_ref);
+> > +       commit = lookup_commit_reference(&old_oid);
+> > +       if (!commit)
+> > +               return error(_("could not parse %s"), old_ref);
+> >
+> >         buffer = get_commit_buffer(commit, &size);
+> >         strbuf_add(&buf, buffer, size);
+> >         unuse_commit_buffer(commit, buffer);
+> >
+> > -       replace_parents(&buf, argc - 1, &argv[1]);
+> > +       if (replace_parents(&buf, argc - 1, &argv[1]) < 0)
+> > +               return -1;
+> >
+> >         if (remove_signature(&buf)) {
+> >                 warning(_("the original commit '%s' has a gpg signature."), old_ref);
+> >                 warning(_("the signature will be removed in the replacement commit!"));
+> >         }
+> >
+> > -       check_mergetags(commit, argc, argv);
+> > +       if (check_mergetags(commit, argc, argv))
+> > +               return -1;
+> >
+> >         if (write_object_file(buf.buf, buf.len, commit_type, &new_oid))
+> > -               die(_("could not write replacement commit for: '%s'"), old_ref);
+> > +               return error(_("could not write replacement commit for: '%s'"),
+> > +                            old_ref);
+> >
+> >         strbuf_release(&buf);
+> 
+> Release &buf in the other return cases, too?
+
+Absolutely.
+
+Thank you for helping me improve these patches,
+Dscho
