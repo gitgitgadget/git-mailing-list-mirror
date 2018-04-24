@@ -2,148 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0A251F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 20:21:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6757F1F42D
+	for <e@80x24.org>; Tue, 24 Apr 2018 20:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751129AbeDXUVL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 16:21:11 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:34136 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750826AbeDXUVJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 24 Apr 2018 16:21:09 -0400
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w3OKHNes025690;
-        Tue, 24 Apr 2018 13:21:05 -0700
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2hg4b7v96t-1;
-        Tue, 24 Apr 2018 13:21:05 -0700
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 8A8E82289FAD;
-        Tue, 24 Apr 2018 13:21:05 -0700 (PDT)
-Received: from newren2-linux.yojoe.local (unknown [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 7163D2CDE67;
-        Tue, 24 Apr 2018 13:21:05 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, sbeller@google.com, szeder.dev@gmail.com,
-        martin.agren@gmail.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v10 2/2] fixup! t6046: testcases checking whether updates can be skipped in a merge
-Date:   Tue, 24 Apr 2018 13:21:00 -0700
-Message-Id: <20180424202100.23828-2-newren@gmail.com>
-X-Mailer: git-send-email 2.17.0.295.g791b7256b2.dirty
-In-Reply-To: <20180424202100.23828-1-newren@gmail.com>
-References: <xmqqy3hibms3.fsf@gitster-ct.c.googlers.com>
- <20180424202100.23828-1-newren@gmail.com>
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-04-24_05:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=431 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1711220000 definitions=main-1804240192
+        id S1750815AbeDXUbc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 16:31:32 -0400
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:39031 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750749AbeDXUbb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 16:31:31 -0400
+Received: by mail-qt0-f172.google.com with SMTP id f1-v6so6790308qtj.6
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 13:31:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=2U1cacgWzBRQii7rYJbuLcMHSF+eabqgZ+RRbfxBCvs=;
+        b=sXFdIppQ9QaYTiEm5CrwAkes158LXarO1BcOredmCjbwXjvTmSWJHwDiwbumWjlftS
+         INqpX+2rLsL6NhyMLISLGgd0iJhHryMZIh4bnMsZJDT2RiRpgK5H/ZLeEB9DV9C/YYuT
+         C7hIrLrihw3oekjBKqfiDYleeLQtOlv35l3ALs0XRBIy7T/T6Lr51wVrxhWL/vpjEzT1
+         GYdHEHKpR8PIbI+obaU87U7BuyHP5KawM49RXYSDVpfB1STHNMsGwA3sV692AMUYdIBV
+         z0UlUPL5VtM5eOviM6EI2W+UO7A/KRekliNm4fHJ4gwwGO77EYnQp/O5drKJ2jBC14wK
+         7d8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=2U1cacgWzBRQii7rYJbuLcMHSF+eabqgZ+RRbfxBCvs=;
+        b=eeStl0F/UN5LF4Vsq9BhTvcocRTs02l5TRttYm7dU5Ty3AFQ3ZtgZzSDkEgtlhuMhg
+         9oqDTVw5fiz/ztM5Yu/t4Ezsog6eC/Bu35HGw8bzJ8o0zOArSErf1L0uXrQdBlnO2K8+
+         0e5Kc8c97ubpcAtGtsFqD88ve4syrlT7gag0Y7H+RjV3WVKVDTBCdJp3ME10JFs/hcBg
+         qs6SF+k5GNAa8V3Q7t7995qbZKBt6lWOvaNeHIOVYjjTaHn4Zk0gXZNbfEEhMi5idNN/
+         xn/wuK0UJOeS1saZNvVcNBpFOnxdIzUGJONkvW7omm/bCvzB/uuiVyaY+fjMYwF0bxpx
+         loIw==
+X-Gm-Message-State: ALQs6tCqFOI2gdw9rLSZtm11KMg8mcsnYUfjzRxlmYFT8MsiTa8RpMWk
+        K50DIfxS+vkNyrenejSvYt4=
+X-Google-Smtp-Source: AB8JxZqIgisqZuEvRmKXWf9bB7co+jGon4GGYVbfhiumVAkJcuVR/65zx2qPbKIFDv4UcJu+oe9yGg==
+X-Received: by 2002:aed:22e5:: with SMTP id q34-v6mr22799431qtc.403.1524601890341;
+        Tue, 24 Apr 2018 13:31:30 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id g67sm7370551qkb.51.2018.04.24.13.31.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 24 Apr 2018 13:31:29 -0700 (PDT)
+Subject: Re: [PATCH v2 1/2] merge: Add merge.renames config setting
+To:     Elijah Newren <newren@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
+References: <20180420133632.17580-1-benpeart@microsoft.com>
+ <20180424171124.12064-1-benpeart@microsoft.com>
+ <20180424171124.12064-2-benpeart@microsoft.com>
+ <CABPp-BFTywvVFV3Wx1jv9RyoFk_cE7XE8x1neuLVt4qwyw0EMw@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <68fa18c0-1dac-f6dc-0c41-fa5722c2c227@gmail.com>
+Date:   Tue, 24 Apr 2018 16:31:30 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
+MIME-Version: 1.0
+In-Reply-To: <CABPp-BFTywvVFV3Wx1jv9RyoFk_cE7XE8x1neuLVt4qwyw0EMw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
- t/t6046-merge-skip-unneeded-updates.sh | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/t/t6046-merge-skip-unneeded-updates.sh b/t/t6046-merge-skip-unneeded-updates.sh
-index 880cd782d7..fcefffcaec 100755
---- a/t/t6046-merge-skip-unneeded-updates.sh
-+++ b/t/t6046-merge-skip-unneeded-updates.sh
-@@ -41,7 +41,7 @@ test_expect_success '1a-setup: Modify(A)/Modify(B), change on B subset of A' '
- 	(
- 		cd 1a &&
- 
--		test_write_lines 1 2 3 4 5 6 7 8 9 10 >b
-+		test_write_lines 1 2 3 4 5 6 7 8 9 10 >b &&
- 		git add b &&
- 		test_tick &&
- 		git commit -m "O" &&
-@@ -138,7 +138,7 @@ test_expect_success '2a-setup: Modify(A)/rename(B)' '
- 	(
- 		cd 2a &&
- 
--		test_seq 1 10 >b
-+		test_seq 1 10 >b &&
- 		git add b &&
- 		test_tick &&
- 		git commit -m "O" &&
-@@ -148,7 +148,7 @@ test_expect_success '2a-setup: Modify(A)/rename(B)' '
- 		git branch B &&
- 
- 		git checkout A &&
--		test_seq 1 11 > b &&
-+		test_seq 1 11 >b &&
- 		git add b &&
- 		test_tick &&
- 		git commit -m "A" &&
-@@ -229,7 +229,7 @@ test_expect_success '2b-setup: Rename+Mod(A)/Mod(B), B mods subset of A' '
- 	(
- 		cd 2b &&
- 
--		test_write_lines 1 2 3 4 5 6 7 8 9 10 >b
-+		test_write_lines 1 2 3 4 5 6 7 8 9 10 >b &&
- 		git add b &&
- 		test_tick &&
- 		git commit -m "O" &&
-@@ -337,7 +337,7 @@ test_expect_success '2c-setup: Modify b & add c VS rename b->c' '
- 	(
- 		cd 2c &&
- 
--		test_seq 1 10 >b
-+		test_seq 1 10 >b &&
- 		git add b &&
- 		test_tick &&
- 		git commit -m "O" &&
-@@ -443,7 +443,7 @@ test_expect_success '3a-setup: bq_1->foo/bq_2 on A, foo/->bar/ on B' '
- 		git branch B &&
- 
- 		git checkout A &&
--		test_seq 1 11 > bq &&
-+		test_seq 1 11 >bq &&
- 		git add bq &&
- 		git mv bq foo/ &&
- 		test_tick &&
-@@ -542,7 +542,7 @@ test_expect_success '3b-setup: bq_1->foo/bq_2 on A, foo/->bar/ on B' '
- 		git commit -m "A" &&
- 
- 		git checkout B &&
--		test_seq 1 11 > bq &&
-+		test_seq 1 11 >bq &&
- 		git add bq &&
- 		git mv foo/ bar/ &&
- 		test_tick &&
-@@ -624,7 +624,7 @@ test_expect_success '4a-setup: Change on A, change on B subset of A, dirty mods
- 	(
- 		cd 4a &&
- 
--		test_write_lines 1 2 3 4 5 6 7 8 9 10 >b
-+		test_write_lines 1 2 3 4 5 6 7 8 9 10 >b &&
- 		git add b &&
- 		test_tick &&
- 		git commit -m "O" &&
-@@ -698,7 +698,7 @@ test_expect_success '4b-setup: Rename+Mod(A)/Mod(B), change on B subset of A, di
- 	(
- 		cd 4b &&
- 
--		test_write_lines 1 2 3 4 5 6 7 8 9 10 >b
-+		test_write_lines 1 2 3 4 5 6 7 8 9 10 >b &&
- 		git add b &&
- 		test_tick &&
- 		git commit -m "O" &&
--- 
-2.17.0.295.g791b7256b2.dirty
 
+On 4/24/2018 2:59 PM, Elijah Newren wrote:
+> Sorry, I noticed something else I missed on my last reading...
+> 
+> On Tue, Apr 24, 2018 at 10:11 AM, Ben Peart <Ben.Peart@microsoft.com> wrote:
+>> diff --git a/builtin/merge.c b/builtin/merge.c
+>> index 8746c5e3e8..3be52cd316 100644
+>> --- a/builtin/merge.c
+>> +++ b/builtin/merge.c
+>> @@ -424,6 +424,7 @@ static void finish(struct commit *head_commit,
+>>                  opts.output_format |=
+>>                          DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
+>>                  opts.detect_rename = DIFF_DETECT_RENAME;
+>> +               git_config_get_bool("merge.renames", &opts.detect_rename);
+>>                  diff_setup_done(&opts);
+>>                  diff_tree_oid(head, new_head, "", &opts);
+>>                  diffcore_std(&opts);
+> 
+> Shouldn't this also be turned off if either (a) merge.renames is unset
+> and diff.renames is false, or (b) the user specifies -Xno-renames?
+> 
+
+This makes me think that I should probably remove the line that 
+overrides the detect_rename setting with the merge config setting.  As I 
+look at the code, none of the other merge options are reflected in the 
+diffstat; instead, all the settings are pretty much hard coded.  Perhaps 
+I shouldn't rock that boat.
