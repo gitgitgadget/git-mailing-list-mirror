@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60C8D1F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 21:03:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9325D1F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 21:03:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751463AbeDXVDk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 17:03:40 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:45697 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751336AbeDXVDg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 17:03:36 -0400
-Received: by mail-pf0-f193.google.com with SMTP id l27so13289373pfk.12
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 14:03:36 -0700 (PDT)
+        id S1751469AbeDXVDm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 17:03:42 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:38542 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751445AbeDXVDi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 17:03:38 -0400
+Received: by mail-pg0-f65.google.com with SMTP id b5so11739436pgv.5
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 14:03:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FS+1wcvo70WHie8diMI6J3yqBzUfDT7zsa8VnlLdFdg=;
-        b=wDd2do21uYrWTVZ2TTfeDwPvtcyUF1Pzl7WOa3GVd0r1Ilcjd0Omf/jII/aKwglhVG
-         untRu0P/Ns5D5AvxaZYDwFFMM9eieXRNpsr+sFbxZTuIzWyE0EK8uIQJXchyFImJD3qk
-         eQ0CKre0TnuVlrXKZ3dWViw66aAD2tmTnOQuSIxaO4d5H+IB8e2q0A9BY7wkncNlw3Tr
-         f98ZjkoTtcTe3WZp2j+nVRxW/MTb6hf018r8KuukGyZlx8opgqeUR9Auj3shThtDoSX0
-         kja+e/IeX0JBwLCJhl/oc1IIpY1bXskISIydJdKoPTUynce7wp838gntiYo+wqDZ+ogL
-         AqiQ==
+        bh=pXUHxhBn+U/ahnw1Hwe6mrTh22cTSoH+YGzNFPqcmVM=;
+        b=FueZO/UF4yNjUCyZhMQ7Nz0Z7S/7bseT+1J7juEvFIFs2FamUWY9Oc4r5B5ik6JxMO
+         LSp9e9SQOPr4289OlQrpLvjgfkdQPV+WaTTqL+c8uCgZt+vE7dkDDT4r3rMZ/8hK/tnQ
+         eEljEGsRGfcZhdSK9bq/S7+OIGrH/T9LHGi6teEt/l1u3MnXCv/H+/DF+iz1kXdxVKq1
+         zm3BwDcefVYE6CA+YuAXxs1I4YQ/0JLhtJgk8FkqrMTVx7tmo4XhE+0TZxfdZNhMrnI6
+         6XcyA9aZS1P+Z2cXvosovCJ2ZRjE3egi39cgu7XnEKE0hqZ0PJwuW6DqswMy4OcDl0rl
+         u2JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FS+1wcvo70WHie8diMI6J3yqBzUfDT7zsa8VnlLdFdg=;
-        b=bo1/ejCOdy8ajDE6pJgJTUB9PZDPuT6V13DXbFEjKHP3Qb3r1RsWFyl38CTD2F9iO5
-         6BTVBAl/rJImvWPD5IU/OxeQLu44NUNA0rnolGas3kUkb9k7y6SRu6u5rLhnKFNE4Qbn
-         +dN3bLEIjcQ0mwhCP/MSS4b9R84KQkSY7v4NIVLca56DjWp5IDba4A/+PTu0VZ9mNxKJ
-         XW4yVw32Ue7lb66gs+duYK4MXCZ0TSH4gmMBgzxq+jFu6nbiI7FbWOY8rnxc2KBu+AwT
-         UT25J4uulSPT1/tVj5IejaztSJVnOBNr2eYBStf43W133kPT/hrTgEXQnLSiD9Mp6UEa
-         mFBg==
-X-Gm-Message-State: ALQs6tDcrgWT60JzMQmkqrcleRTSmnoFjw4Q6ASuQw4Xk6DmgHGlkbfy
-        ZAzatR9E5iGKxg80frKBTK0Piuz3+KI=
-X-Google-Smtp-Source: AB8JxZoWzHZBf1QOSqGOC7nArVjyJXCJLaObrePOxidC0MUsN29fGdbsM9N/n8287soTfR1XRakBuQ==
-X-Received: by 2002:a17:902:74c6:: with SMTP id f6-v6mr3177042plt.7.1524603815530;
-        Tue, 24 Apr 2018 14:03:35 -0700 (PDT)
+        bh=pXUHxhBn+U/ahnw1Hwe6mrTh22cTSoH+YGzNFPqcmVM=;
+        b=IxcTurCgTyyfdI6SGRd9YhxNgG4cfGdSsErHaKhbUwN+EQD+9X0mkX5aoXmFaoYBxu
+         tqjHrWeVxMyyhPBMNKhxwugaqjixVhQMA4aYK+nAxIPX49VN1s7qyaFoOBRJ24b1cF6y
+         qMHLtCJ6BZaY4auCrAP0YMNhwgO/Mhnv72aNjQ2hD8zu4ij2Y4ncUo3VLPmX25PkLA5n
+         ccMiYvj6rkUaACdaoHbKAoTg2GyjCqar1oQHKyT+usGebl3VtKylCFjpSgQ0Li6qwElt
+         q4o3GLAt7Qtx9j68MsYUASxaMnWpDS9zCJOYUacVgkebC6R4XjA8O5leQbG0KeGb2MZC
+         DBmw==
+X-Gm-Message-State: ALQs6tDRLzV0wobj2fDuzIeJvay7e+IXJx+shm+RC4mtNk+9tHyH5GIZ
+        4fMTIyPDHWNMLbREGhTUDxI95dYsfU4=
+X-Google-Smtp-Source: AIpwx48tufzPgSj9SwaSho9ewJCXoeiuwBJJ99lS7vEglY0oOt3+bwWWyK6bygag8xmNtDkvz8YB8Q==
+X-Received: by 10.99.42.137 with SMTP id q131mr21266247pgq.379.1524603816894;
+        Tue, 24 Apr 2018 14:03:36 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id a4sm37516083pfj.107.2018.04.24.14.03.34
+        by smtp.gmail.com with ESMTPSA id l129sm25015584pgl.89.2018.04.24.14.03.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Apr 2018 14:03:34 -0700 (PDT)
+        Tue, 24 Apr 2018 14:03:36 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, simon@ruderich.org, avarab@gmail.com,
         jacob.keller@gmail.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/7] xdiff/xdiffi.c: remove unneeded function declarations
-Date:   Tue, 24 Apr 2018 14:03:25 -0700
-Message-Id: <20180424210330.87861-3-sbeller@google.com>
+Subject: [PATCH 3/7] diff.c: do not pass diff options as keydata to hashmap
+Date:   Tue, 24 Apr 2018 14:03:26 -0700
+Message-Id: <20180424210330.87861-4-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
 In-Reply-To: <20180424210330.87861-1-sbeller@google.com>
 References: <20180424210330.87861-1-sbeller@google.com>
@@ -63,53 +63,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is no need to forward-declare these functions, as they are used
-after their implementation only.
+When we initialize the hashmap, we give it a pointer to the
+diff_options, which it then passes along to each call of the
+hashmap_cmp_fn function. There's no need to pass it a second time as
+the "keydata" parameter, and our comparison functions never look at
+keydata.
 
+This was a mistake left over from an earlier round of 2e2d5ac184
+(diff.c: color moved lines differently, 2017-06-30), before hashmap
+learned to pass the data pointer for us.
+
+Explanation-by: Jeff King <peff@peff.net>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- xdiff/xdiffi.c | 17 -----------------
- 1 file changed, 17 deletions(-)
+ diff.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 0de1ef463b..3e8aff92bc 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -22,34 +22,17 @@
- 
- #include "xinclude.h"
- 
--
--
- #define XDL_MAX_COST_MIN 256
- #define XDL_HEUR_MIN_COST 256
- #define XDL_LINE_MAX (long)((1UL << (CHAR_BIT * sizeof(long) - 1)) - 1)
- #define XDL_SNAKE_CNT 20
- #define XDL_K_HEUR 4
- 
--
--
- typedef struct s_xdpsplit {
- 	long i1, i2;
- 	int min_lo, min_hi;
- } xdpsplit_t;
- 
--
--
--
--static long xdl_split(unsigned long const *ha1, long off1, long lim1,
--		      unsigned long const *ha2, long off2, long lim2,
--		      long *kvdf, long *kvdb, int need_min, xdpsplit_t *spl,
--		      xdalgoenv_t *xenv);
--static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1, long chg2);
--
--
--
--
--
- /*
-  * See "An O(ND) Difference Algorithm and its Variations", by Eugene Myers.
-  * Basically considers a "box" (off1, off2, lim1, lim2) and scan from both
+diff --git a/diff.c b/diff.c
+index 1289df4b1f..ce7bedc1b9 100644
+--- a/diff.c
++++ b/diff.c
+@@ -842,13 +842,13 @@ static void mark_color_as_moved(struct diff_options *o,
+ 		case DIFF_SYMBOL_PLUS:
+ 			hm = del_lines;
+ 			key = prepare_entry(o, n);
+-			match = hashmap_get(hm, key, o);
++			match = hashmap_get(hm, key, NULL);
+ 			free(key);
+ 			break;
+ 		case DIFF_SYMBOL_MINUS:
+ 			hm = add_lines;
+ 			key = prepare_entry(o, n);
+-			match = hashmap_get(hm, key, o);
++			match = hashmap_get(hm, key, NULL);
+ 			free(key);
+ 			break;
+ 		default:
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
