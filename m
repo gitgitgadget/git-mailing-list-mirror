@@ -2,127 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 054761F404
-	for <e@80x24.org>; Tue, 24 Apr 2018 10:37:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22C531F404
+	for <e@80x24.org>; Tue, 24 Apr 2018 10:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932746AbeDXKhu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 06:37:50 -0400
-Received: from mail-ot0-f175.google.com ([74.125.82.175]:37622 "EHLO
-        mail-ot0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932742AbeDXKhn (ORCPT <rfc822;Git@vger.kernel.org>);
-        Tue, 24 Apr 2018 06:37:43 -0400
-Received: by mail-ot0-f175.google.com with SMTP id 77-v6so14581350otd.4
-        for <Git@vger.kernel.org>; Tue, 24 Apr 2018 03:37:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+qTdL9SeIme2xXr7KIsffEPL+sPxE4yvRJEUJ7BonQs=;
-        b=JTTogByHrDWh/Dhz8+eL+qL6aP2OR9YN4g6Qn5zkcHJWDur16yTyP0hNTL6j28rWfp
-         L/WDkv2W38UnwDUq7hzNo4WX6FDu/DZLcTsUWy4T3FIJTJdGZkgXzyI15TB7z13vT8xy
-         DrkC8N6d6NwcpA87kNShD7h8H0yYaxKT6mQaOlD8NWmcIPv6NtZAt54U5bygl/fg40Tr
-         Eo9pRTtOav12q/BeakRTZC9Eb+vdvB8zBqwlfI8m6ME8b0ETk0pYtDptelYhIKoD4eat
-         lAOkAxmft9PfBxY7URlkobPEiS2zUk8R+k11DUp8DjmX062+f1eH7XpxVZyer2RLq3sx
-         csEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+qTdL9SeIme2xXr7KIsffEPL+sPxE4yvRJEUJ7BonQs=;
-        b=DysSPzTobfB8hW688qg6PaeM15MkHrskSXAwg7OMpium3pJaHO/Mt34g4ll0dRM+LY
-         KnGazxhWnUTwIff6OxRHozfrnPgpgHFiUAfPwwHs3tJS9CpugubYNECZ/JSf61gVWo1z
-         v90Mbq2jyBremRO+mAFND6v6J3O/14rf7lgLAhUswUbKnbxmvHw8l7plEhSA3lqaKcTf
-         QarnJIgxh7pbZyZi/BGYFgfV4oMKMk+07m493tT2XuSvWmlinELD9pvpe8yEb6ohiTE+
-         PGUKFZk0A+9F0F4LE2UKMvQoqWdk5r3duH+eSGdpyVH7V0WqcBJq0v7xpiHFYwgyn/WO
-         vyRg==
-X-Gm-Message-State: ALQs6tDGx91vVuh3mFxJAQ0iR7WNzkWyOQ/1hd0nOvgp/zTpnIZc4xvv
-        UuxOPosgmBeeHyt9DnsHmekWvwzf5m4LqUzyZA8=
-X-Google-Smtp-Source: AIpwx4+YTkNLwi/KbWEp+7MPcuDxLTGX6gh1Abhf0ex+0WRHL95df/ckyU2B7KAej/I8SU0Cm30O92thLKbHoDjSvRw=
-X-Received: by 2002:a9d:388e:: with SMTP id p14-v6mr16573179otc.38.1524566262614;
- Tue, 24 Apr 2018 03:37:42 -0700 (PDT)
+        id S1756587AbeDXKw4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 06:52:56 -0400
+Received: from mout.gmx.net ([212.227.17.20]:45795 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756568AbeDXKwz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 06:52:55 -0400
+Received: from [10.49.234.97] ([95.208.59.141]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lj25i-1eY0VZ44RK-00dH1W; Tue, 24
+ Apr 2018 12:52:44 +0200
+Date:   Tue, 24 Apr 2018 12:52:40 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Philip Oakley <philipoakley@iee.org>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v8 09/16] rebase: introduce the --rebase-merges option
+In-Reply-To: <83137354138143FD962AF49D37F93E9E@PhilipOakley>
+Message-ID: <nycvar.QRO.7.76.6.1804241105170.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1524139900.git.johannes.schindelin@gmx.de> <cover.1524306546.git.johannes.schindelin@gmx.de> <0c92bdd1829328544269722cbbd3edcd169bb148.1524306547.git.johannes.schindelin@gmx.de> <83137354138143FD962AF49D37F93E9E@PhilipOakley>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 2002:a9d:6058:0:0:0:0:0 with HTTP; Tue, 24 Apr 2018 03:37:42
- -0700 (PDT)
-In-Reply-To: <CAP8UFD1H9vUVkx2rCJ03954jZp==Wj+O06hO1YYPQcVHbSV_Zw@mail.gmail.com>
-References: <CAEbJ=SN0h_eO+0CJQGEnEafhzgAYdgXByUqb_vsC1rgGw7jNAw@mail.gmail.com>
- <CAP8UFD1H9vUVkx2rCJ03954jZp==Wj+O06hO1YYPQcVHbSV_Zw@mail.gmail.com>
-From:   Vladimir Gorshenin <gorshenin.vladimir@googlemail.com>
-Date:   Tue, 24 Apr 2018 12:37:42 +0200
-Message-ID: <CAEbJ=SMh0801GV6Yfibbj2ynL9sJQFpbi6N_q7UMXu-xayXoqw@mail.gmail.com>
-Subject: Re: Git archeology
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <Git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:XEld/ADIPrduhJS/SuHyCSdFUW+u0OqvAZ+64cdeYXq4vSE1gHI
+ A1ZZI2zVbD2h9ZuEBjx+mcLjekfkH42d3wiNb5ykg2K12n4YB4xQR9gEuV/8B5GArFTcsIW
+ BBxTjLWRvv2cCO/gu1+csLJHdEb+LORdII2dKy3oEHdMlUZtpie4byo9GJ49iOQclEchyFY
+ wn+1UhLgGlGerHq3QAhtw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xrLyy20/SE4=:DVzPzGKGdGj04PxIYMjNNq
+ S3c6UJKcUWmfShZjP/3P6fhMxzHbe9qPqzLzG0yIXnXtnh9XIx1ILYLZWe/eMfeMhXhbfw6Ur
+ QjpbAg0SjMMOWL5Y4CsU5itdvkHyY67HoEFTzUDSXN9SOG2eEBNjXNHN5SBYjshsBLVMVlBSx
+ YJoz2zSIQ3sahmBQgmBKeK2Wz9K64t2PwYuYEJUaKPJZmsrYm2str4j0/bOtvWrD6NOi2AKte
+ g50vcBuNF6AFc4SJlbLYYMJw18koFFV2VMUbm41ibX2JZguyD53l+uOFV8JZbzWmSVVGv/CHx
+ tjV95kvaeigPDFSfudfGevDqFAR4oKv8Lrwktm/vob8SV3s812o8Rwx/nmRMiG5Vbt9E15fWs
+ 5y0AkEW/tnKHQSmXCoR+oz8Lieo4UAFe3ROBgu0beZMQxj6eTT3lT36troP+Inm4/hm0Rh+v+
+ m+FHkHFXaVIqjlgwAWQho4BUrgjV5QwTTm4QT1m3AGaZrf9oiU2Onk+ffm4bVISw4lDUlcTpS
+ e46nzhkLaDvKnUjLuvgCOzWsJ1qhnN0xuL7iRQ8g3q8TGISTQfJKPQywP+DKKPIdhGm8zqEi8
+ suvNwTbZcrRqv/G+9mSKWDK9yA0VuyjVurdk3UgZRnUGqsy2X/yI8qYGyrAnH1FssPIQkGiA7
+ dMGy3ZMzpGaoQUp3rpVwCYEmb7vnByoh2cBr1YOJcWnSMdJx0NGZyeCfhxA3v9T4fZXmis+2a
+ 8y9jAUkwTIy+6uWP/mtQG4ZGvbgWtQVSgzMzxG2jzP90RcgwvCGXmSCjshjqBgFSMrwX8lZ6C
+ fjiiwsWRqx6u1Xn3m9mBtt3z0n0PKp+YUlYgv3KFwO1INhnMAg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+Hi Philip,
 
-Thank you for the reply.
+On Sun, 22 Apr 2018, Philip Oakley wrote:
 
-After I got the reply from Szedar I was so excited about git community
-passion for help. And your reply made me ever more assure in it.
-Once again thank your for the comprehensive answer. I appreciate
-Daniel German's research and going to try token based method in my
-task as well.
+> From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
+> > Once upon a time, this here developer thought: wouldn't it be nice if,
+> > say, Git for Windows' patches on top of core Git could be represented as
+> > a thicket of branches, and be rebased on top of core Git in order to
+> > maintain a cherry-pick'able set of patch series?
+> >
+> > The original attempt to answer this was: git rebase --preserve-merges.
+> >
+> > However, that experiment was never intended as an interactive option,
+> > and it only piggy-backed on git rebase --interactive because that
+> > command's implementation looked already very, very familiar: it was
+> > designed by the same person who designed --preserve-merges: yours truly.
+> >
+> > Some time later, some other developer (I am looking at you, Andreas!
+> > ;-)) decided that it would be a good idea to allow --preserve-merges to
+> > be combined with --interactive (with caveats!) and the Git maintainer
+> > (well, the interim Git maintainer during Junio's absence, that is)
+> > agreed, and that is when the glamor of the --preserve-merges design
+> > started to fall apart rather quickly and unglamorously.
+> >
+> > The reason? In --preserve-merges mode, the parents of a merge commit (or
+> > for that matter, of *any* commit) were not stated explicitly, but were
+> > *implied* by the commit name passed to the `pick` command.
+> >
+> Aside: I think this para should be extracted to the --preserve-merges
+> documentation to highlight what it does / why it is 'wrong' (not what would be
+> expected in some case). It may also need to discuss the (figurative) Cousins
+> vs. Siblings distinction [merge of branches external, or internal, to the
+> rebase.
 
-Have a nice day,
+Quite honestly, I'd much rather spend time improving --rebase-merges than
+improving --preserve-merges documentation. In my mind, the latter is
+pretty useless, especially once the former lands in an official Git
+version.
 
-Vladimir
+Of course, feel free to disagree with me by sending a patch to improve the
+documentation of --preserve-merges ;-)
 
-2018-04-21 8:43 GMT+02:00 Christian Couder <christian.couder@gmail.com>:
-> Hi,
->
-> On Sat, Apr 21, 2018 at 8:19 AM, Vladimir Gorshenin
-> <gorshenin.vladimir@googlemail.com> wrote:
->> Hi,
->>
->> My team and I as well as millions of other developers are excited to
->> have such tool at hand as Git. It helps us a lot.
->>
->> Now we challenged ourselves to be even more productive with Git
->> analyzing our usage history.
->
-> What kind of analysis do you want to do? Is it the same kind of
-> analysis as described in the "Token-based authorship information from
-> Git" article (https://lwn.net/Articles/698425/) on LWN.net?
->
->> And there is a problem, which I believe is fundamental for Git (please
->> prove me wrong): how to find all overlapping commits, e.g. touching
->> the same lines of code?
->
-> It is not very clear what you would consider overlapping commits or
-> commits touching the same lines of code. If some lines of code have
-> been duplicated in different files, for example, are the commits
-> touching the original lines relevant to what happened to the
-> duplicated lines? And what about lines that were moved from one file
-> to another or in the same file?
->
->> I played with =E2=80=9CGit diff=E2=80=9D and =E2=80=9CGit blame=E2=80=9D=
- but without a reliable
->> result. =E2=80=9CGit diff=E2=80=9D gives only relative number of lines a=
-nd it=E2=80=99s not
->> easy to track these number through 1000+ commits. =E2=80=9CGit blame=E2=
-=80=9D has nice
->> output but without any information about deletion.
->
-> Did you try 'git log -L' as Szeder G=C3=A1bor just suggested?
->
->> What would you advice me to do?
->
-> If 'git log -L' and other git commands are not doing what you want,
-> you might want to take a look at cregit
-> (https://github.com/cregit/cregit) and maybe at other work from the
-> people who developed it. The above LWN.net article is about their
-> early work.
->
-> There are links related to this tool in:
-> https://git.github.io/rev_news/2017/05/17/edition-27/
+> "In --preserve-merges, the commit being selected for merging is implied by the
+> commit name  passed to the `pick` command (i.e. of the original merge commit),
+> not that of the rebased version of that parent."
+
+It is much, much worse:
+
+	In --preserve-merges, no commit can change its ancestry. Every
+	rebased commit's parents will be the rebased original parents.
+
+Or some such. But really, why bother describing something *that* broken?
+Why not work toward a solution that makes that broken option obsolete?
+Like, say, --rebase-merges? ;-)
+
+> A similar issue occurs with (figuratively) '--ancestry-path --first parent'
+> searches which lacks the alternate '--lead parent' post-walk selection. [1]. I
+> don't think there is a dot notation to select the merge cousins, nor merge
+> siblings either A.,B ? (that's dot-comma ;-)
+
+I actually had missed `--ancestry-path`... I should probably use it in the
+description of the "cousins".
+
+> [... lots of quoted text...]
+
+Could I ask you to make it easier for me by cutting quoted text that is
+irrelevant to your reply? The way I read mails forces me to scroll down
+(sometimes on a phone) all the way to the end, just to find that that time
+was spent in vain.
+
+Thanks,
+Dscho
+
+
