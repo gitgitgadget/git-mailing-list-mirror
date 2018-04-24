@@ -2,130 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C1781F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 05:08:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA6BD1F42D
+	for <e@80x24.org>; Tue, 24 Apr 2018 05:14:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755754AbeDXFHt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 01:07:49 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:38592 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755709AbeDXFHp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 01:07:45 -0400
-Received: by mail-pf0-f193.google.com with SMTP id o76so6528406pfi.5
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 22:07:45 -0700 (PDT)
+        id S1755628AbeDXFOA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 01:14:00 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:34504 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755165AbeDXFN7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 01:13:59 -0400
+Received: by mail-wr0-f195.google.com with SMTP id p18-v6so27711589wrm.1
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 22:13:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=LOL8hxCc7m4rnbzhgjqL8Nx/yPAETdgL748ftH9Fzj4=;
-        b=p4Zr+OzR7zk9zgrvQ1roe0/Ofy2zr7OMxg/h/qPsrVfDCeNhbxrmYaLLGH9xVBAtq+
-         oQo6HohOG/b/6gnr4rhwkgQ4cBFSxsauQES5htcoldDHWypOFhZris2zH2AZcnRPRzmy
-         afANZHO0Q/moFiqSLr/wf4O9/IiP9pqHXcaNEllobbDdngG/pO7Y5lH6VUWwOiXrC+Zq
-         5XQsfxzT2aCv0cxsRo7gYkE4Pern5MDmHamwTEmWhYbZOgydJPtIXzG0VwR/Q3twaIqm
-         xIUOh+3Y466ap1KqSpPc6wHwTJUdMyFMyJ3kb0m+/PWEDVe2mI1NFRFmQK6t/4qdW/1n
-         OUyg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=wa4YRUxKDMkuXIILuSJllhd/lPe7lnDbp9wsVo2QM9c=;
+        b=Tg7BJk7eRYgx1OH4MyK4p1MiM+P5rqt1qjSwwsjLopEXnVGzhYA0qK6+qN3dN5EuT5
+         HXuMiSV1y4/cW621dHC+2TVZVmJciORiOrwtK2TXkrA62Q093kFRTDq0sKO6+N251yUr
+         jVj/oXvD5AV5LZTQR9tw95ccA5BIjDO2MB+fRaq5o3y03TlAHf56rstCiuauewi+r6dK
+         UTE+6eFhhaUGFsmk7aDas2uaWGy+wk1Fgm+3nZC051B9WyNKqM4aUheY+DAawj7s4JS6
+         dDEIbjbiCgSdyhyYOpOIW+c7Vdzyy7iS6yqWcltdM3pUHYVsBKEiIeKKbmn/EcA3APN2
+         W9Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LOL8hxCc7m4rnbzhgjqL8Nx/yPAETdgL748ftH9Fzj4=;
-        b=l/CKutErEGhGdf2bLy+xMv5NHlpxkDv8hQ2syc2qkwaB9M699tYcXC6nsX3DOCtrdD
-         atztXMtyL99oWdT5zIqZRKS6BwOeum+vVtw+FQFwEBcqa/cjyUv5agSKMuU1dk5VmtEa
-         UsfJouN97Pyk/1EXM+K7DRUQ7Mc5QCM/0p+gpMhMgIA5Rtxbl+DXhXNbjv7cOUiAs80y
-         XtY4DvLA1JAJwtiFf7+PQ8/MMLfaCZ3f8pwXsiVPrexoHDY033RUyETHTSa4Yfd4eLYL
-         +kMcRuUvuoCuz/dxjrFwrt/cn9/VtyJR/kh76X3HE4jK83kcBh//yCW5cIjKOae8JtZq
-         uvyw==
-X-Gm-Message-State: ALQs6tC2Xooz/JBnD8SyFTQ6HYGNO32EimZPo6vMSMam86l3VA1TYHHp
-        JrNSTHbJ8of+KoDNI/KGvdVbVSF2fo+P4A==
-X-Google-Smtp-Source: AIpwx4+KIniv4/FFT8v5yLdS+20nVr4MxHEEcR/6Sa7JNuq774NYpWO38NlKpyZjam8USl99Khf+kA==
-X-Received: by 2002:a17:902:780d:: with SMTP id p13-v6mr23609822pll.281.1524546463738;
-        Mon, 23 Apr 2018 22:07:43 -0700 (PDT)
-Received: from localhost ([2601:602:9500:1120:3dfa:3e1b:ab89:1ffb])
-        by smtp.gmail.com with ESMTPSA id c3sm27987712pfd.28.2018.04.23.22.07.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Apr 2018 22:07:42 -0700 (PDT)
-Date:   Mon, 23 Apr 2018 22:07:41 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, gitster@pobox.com, l.s.r@web.de,
-        martin.agren@gmail.com, peff@peff.net, sunshine@sunshineco.com
-Subject: [PATCH v3 3/7] grep.[ch]: extend grep_opt to allow showing matched
- column
-Message-ID: <49579b4ce7b0964c156435cb0314184e6e7d7a13.1524545768.git.me@ttaylorr.com>
-References: <20180421034530.GB24606@syl.local>
- <cover.1524545768.git.me@ttaylorr.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=wa4YRUxKDMkuXIILuSJllhd/lPe7lnDbp9wsVo2QM9c=;
+        b=ZKbY3fYQwOJZ4eBNMK1+1MH6tBi9nWVyD4dm30WL9wRwrjVOaiJr43vn7yc38/TNrh
+         tdCb/7GNzxyb0UW5VJ7s1P5CoeCBqWbZoL1x5daKjqtU1MKePr9ZG7TxVKpaVW21Cg/V
+         3XNJFw9lbnXQyCXhNwrBK1aMpYRd8WVt3ggmFHB5BpeG9JoV34TBKnaecCLFPc4sJ0Zn
+         Hm2YQdVYP0KgHA2PLRIueVS2x82x1JLpNRNfopT9nBdXt+4ix6+s5BRy6jZiwo63lwG5
+         zCSXt6a68sFOPDwlmjczzFbQceSxB2vBLBwjKfXAe4/0bXNX/ztaMYn37CLOY89GUc8R
+         12Mw==
+X-Gm-Message-State: ALQs6tALarMTWvs2myLX3a2lTv6Y5b+TmHL7R/Df7mqjspi6KS/i5+v8
+        69sz11nl1FhDcDgYcs7g9H0=
+X-Google-Smtp-Source: AIpwx484TK8fCA2nJdnXv6fQS1CxRToW7x7LquPhOJ6ah/myG/Fve/aw/2hkmdCvOrgn+yNATCpB9A==
+X-Received: by 10.28.93.1 with SMTP id r1mr11856487wmb.2.1524546837857;
+        Mon, 23 Apr 2018 22:13:57 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id q138sm13091233wmd.1.2018.04.23.22.13.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 23 Apr 2018 22:13:56 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>
+Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
+Date:   Tue, 24 Apr 2018 07:13:37 +0200
+Message-Id: <cover.1524545557.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.17.0
+In-Reply-To: <ec58f482-ffde-1959-ff4a-9b128905ccb0@talktalk.net>
+References: <ec58f482-ffde-1959-ff4a-9b128905ccb0@talktalk.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1524545768.git.me@ttaylorr.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To support showing the matched column when calling 'git-grep(1)', teach
-'grep_opt' the normal set of options to configure the default behavior
-and colorization of this feature.
+Hi Phillip,
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- grep.c | 3 +++
- grep.h | 2 ++
- 2 files changed, 5 insertions(+)
+On 23 April 2018 at 17:54, Phillip Wood <phillip.wood@talktalk.net> wrote:
+> I'm fine with leaving it, I've might get round to doing a small series to
+> clean things up slightly in a few weeks. At the moment
+> setup_unpack_trees_porcelain() leaks memory as it is called for each merge
+> and allocates new strings each time. It would also be nice if the error
+> messages reflected the command, so it said 'cherry-pick', 'revert' or
+> 'reset' rather than 'merge'
 
-diff --git a/grep.c b/grep.c
-index 1c25782355..fb0fa23231 100644
---- a/grep.c
-+++ b/grep.c
-@@ -46,6 +46,7 @@ void init_grep_defaults(void)
- 	color_set(opt->color_filename, "");
- 	color_set(opt->color_function, "");
- 	color_set(opt->color_lineno, "");
-+	color_set(opt->color_columnno, "");
- 	color_set(opt->color_match_context, GIT_COLOR_BOLD_RED);
- 	color_set(opt->color_match_selected, GIT_COLOR_BOLD_RED);
- 	color_set(opt->color_selected, "");
-@@ -155,6 +156,7 @@ void grep_init(struct grep_opt *opt, const char *prefix)
- 	opt->extended_regexp_option = def->extended_regexp_option;
- 	opt->pattern_type_option = def->pattern_type_option;
- 	opt->linenum = def->linenum;
-+	opt->columnnum = def->columnnum;
- 	opt->max_depth = def->max_depth;
- 	opt->pathname = def->pathname;
- 	opt->relative = def->relative;
-@@ -164,6 +166,7 @@ void grep_init(struct grep_opt *opt, const char *prefix)
- 	color_set(opt->color_filename, def->color_filename);
- 	color_set(opt->color_function, def->color_function);
- 	color_set(opt->color_lineno, def->color_lineno);
-+	color_set(opt->color_columnno, def->color_columnno);
- 	color_set(opt->color_match_context, def->color_match_context);
- 	color_set(opt->color_match_selected, def->color_match_selected);
- 	color_set(opt->color_selected, def->color_selected);
-diff --git a/grep.h b/grep.h
-index 399381c908..08a0b391c5 100644
---- a/grep.h
-+++ b/grep.h
-@@ -127,6 +127,7 @@ struct grep_opt {
- 	int prefix_length;
- 	regex_t regexp;
- 	int linenum;
-+	int columnnum;
- 	int invert;
- 	int ignore_case;
- 	int status_only;
-@@ -159,6 +160,7 @@ struct grep_opt {
- 	char color_filename[COLOR_MAXLEN];
- 	char color_function[COLOR_MAXLEN];
- 	char color_lineno[COLOR_MAXLEN];
-+	char color_columnno[COLOR_MAXLEN];
- 	char color_match_context[COLOR_MAXLEN];
- 	char color_match_selected[COLOR_MAXLEN];
- 	char color_selected[COLOR_MAXLEN];
+This is a small patch series to introduce and use
+`clear_unpack_trees_porcelain()`. Since Elijah is doing substantial
+rewrites to one of the users of `setup_unpack_trees_porcelain()` [1], I
+think we should hold off on these for now to avoid a quite evil merge.
+(I haven't studied the details enough to be confident, but I think the
+calls to `setup_...()` and `clear_...()` might need to be moved up the
+call-chain.)
+
+I'm posting this so we don't repeat each other's work. If you feel like
+picking these up and running with them, go ahead. Otherwise, I will try
+to get them in as soon as Elijah's series lands. I'll keep you posted.
+
+[1] https://public-inbox.org/git/CAN0heSquJboMMgay+5XomqXCGoHtXxf1mJBmY_L7y+AA4eG0KA@mail.gmail.com/#t
+
+Martin
+
+Martin Ågren (2):
+  merge: setup `opts` later in `checkout_fast_forward()`
+  unpack_trees_options: free messages when done
+
+ unpack-trees.h     |  5 +++++
+ builtin/checkout.c |  1 +
+ merge-recursive.c  |  1 +
+ merge.c            | 35 ++++++++++++++++++++---------------
+ unpack-trees.c     | 11 +++++++++++
+ 5 files changed, 38 insertions(+), 15 deletions(-)
+
 -- 
 2.17.0
 
