@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E3101F42D
-	for <e@80x24.org>; Tue, 24 Apr 2018 09:53:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A85491F404
+	for <e@80x24.org>; Tue, 24 Apr 2018 09:58:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756293AbeDXJxf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 05:53:35 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:45938 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756126AbeDXJxe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 05:53:34 -0400
-Received: by mail-pf0-f196.google.com with SMTP id l27so11807557pfk.12
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 02:53:34 -0700 (PDT)
+        id S1756913AbeDXJ6W (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 05:58:22 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:38381 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756841AbeDXJ6S (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 05:58:18 -0400
+Received: by mail-pf0-f195.google.com with SMTP id o76so7114446pfi.5
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 02:58:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=3Aex8qwts3DZCizmMBHuUBvTDnCTvdRr9qJRzmwD9uc=;
-        b=s/LgszewI41fLz/OA2xj+tuzdxVBHbXV1OG7w+JucWWmD68h88U5MmvLgIEGWu9udT
-         i5KybikJKNhkqGUSGeADV60zWv0LtkvemQdG5g2ych/tMVf7Ac792UoxTGJiiRoPVSw1
-         muCXJkgEe/SlilUV76J8J3qzT//pikUmO8pMfzZdwxmSylS0EFF7lbH+AdGs7aPknRXq
-         8qnALdjoyc0wkmCbO2yFL75UHqDAlM0kAAhKzTwkKpCdXwYW2/jxv5IhELQTbbayMtxj
-         mhqTJvVLnmiG/08us0Q+/+iJocf80Jq81wfrB6QYNQMajvkBoksg66zmNmRT3XVdueZY
-         AKCQ==
+        bh=4yNqcCdg1vbqvJQ0xDCozbFh/yiraEhKfxqx2yxv3ks=;
+        b=WFrX/bKXZxeHzBsgvKxPISURVZEVTtdhedEt9k4u05YUJ2s2NacwIq6vu7vEvsk3kj
+         yP1oW1eJHDwZPGPE0jloFeopZyjj/Cf7hYAZlcLXdjji++hFaZ2vf0KOF1+t9WCDhKKl
+         dovAKPNvkeS7iDsfowepX1JfC0Nvt2qYGy1AHJ2fcbDamtJQ6qayf0P6l/mBhB48j0CE
+         tg+bSgFChrOjkYcF2N+3lh10qW/HB0P1JmDi5P/LBHfT67nVz1hb5eGF2cR83kZH1xiN
+         QrUeATjV+Rqcg0BIGNyn6OE/3VVO4nVh4ihKrD1UkU36qRH2pkS6tLAVTw1/tnnT/MXE
+         tAeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=3Aex8qwts3DZCizmMBHuUBvTDnCTvdRr9qJRzmwD9uc=;
-        b=ieTPbeA+btVZdXh1Z3bbLpWFcUzsXgbi/yIYT28sHxd6g1Ng+nIJNIWJV9TO8OhXqs
-         7dJfgUI6AIEWIeCsIIBgsiGOyJRfOpc0mZrt6bte4MYtRN/rCZat+p+1ftyc9XH3g1AI
-         SFSXPOBEtKSHe3HLrmFbeYd07VzOC4ng7o8Q9uJ5Z0W/KlfWqwsTaPB/JBx/KOgOBKRL
-         b4wdTrRuf4gtIlXzaF7Y8hUSzYjEJcSE6l3DR0d7aO64+Ztq7rTKPr0wes7WPVP9N4iw
-         hpzpJM7l22BB8vo/gQ3KZY9FS/ScrGtuGZ0CNZOaO0q8DfCV+2Mp/reImKq5ffCPsSeH
-         h1Hw==
-X-Gm-Message-State: ALQs6tCMrdTny3wNkyoVsQH1lP4rLrZW9NJRl+EeWy6Dz5SBmi55I0NQ
-        0p9vF97CG7WR0uhEFiOhe4ZFUAI2NwDXmy3eMuM=
-X-Google-Smtp-Source: AIpwx4+PnplLCiEQRhwngGer7qkK3iz5RArX9hjsyfhVKB3VzAPYOBPHzo7j7gLXSJ0bTwjMVi80gEWfPymW4uU4icw=
-X-Received: by 10.98.11.3 with SMTP id t3mr23399086pfi.32.1524563613729; Tue,
- 24 Apr 2018 02:53:33 -0700 (PDT)
+        bh=4yNqcCdg1vbqvJQ0xDCozbFh/yiraEhKfxqx2yxv3ks=;
+        b=Xvqmixv55+SIaBeugHsJg87GY8jNzbA5UmV+oxOSnNN/rqOq+KUb3ics/X+GQ80yn5
+         onw9KEaJu7Y58QohALCXqyBusAlyzIYELFmyAUjUhh0+aThaC7MfV5MxLaI2kYpJJI37
+         j0m0HbN1lqnV6IZy/ULcNqucxvPpmPHU/lXu7jd5uQJS8cyiy89+FFlpw94ugAWMWDi/
+         xlXI5kLpKZnw0AwfT4fRTRdBbuusqbISGfqpocP3wxxMflZpYyEz+qUzqjjOYPmdX7IF
+         DQ2+m6lIxTq4orXdqOkHYQyhED8x/7tyIgafkurfsv7GwVztx7szihytcBh894JDagPi
+         t4Hw==
+X-Gm-Message-State: ALQs6tBwm2dDsX7q+Yt1EU/y9NfiV782AAz2sxqTrJ26iQPu2T+n/1hu
+        9LTm13oqgYip85Le+QF0fj2qEy2vF8DVi0gchKM=
+X-Google-Smtp-Source: AIpwx4+Q8bwQ6HjZKiWnqgC17gMrTb0D7pGYtRMRhZhekRl4i7OydGaukrzZIMY1ry1Yt0iVvZEhyiCtfLeypz9uIKI=
+X-Received: by 10.98.80.80 with SMTP id e77mr23555965pfb.16.1524563897654;
+ Tue, 24 Apr 2018 02:58:17 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.150.4 with HTTP; Tue, 24 Apr 2018 02:53:33 -0700 (PDT)
-In-Reply-To: <20180423233951.276447-22-sandals@crustytoothpaste.net>
-References: <20180423233951.276447-1-sandals@crustytoothpaste.net> <20180423233951.276447-22-sandals@crustytoothpaste.net>
+Received: by 10.236.150.4 with HTTP; Tue, 24 Apr 2018 02:58:17 -0700 (PDT)
+In-Reply-To: <20180423233951.276447-26-sandals@crustytoothpaste.net>
+References: <20180423233951.276447-1-sandals@crustytoothpaste.net> <20180423233951.276447-26-sandals@crustytoothpaste.net>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 24 Apr 2018 11:53:33 +0200
-Message-ID: <CAN0heSoCsFYqDmwTRCzh2FGDnOghBqVBTCOa7yEw0jtQ3LxDbA@mail.gmail.com>
-Subject: Re: [PATCH 21/41] http: eliminate hard-coded constants
+Date:   Tue, 24 Apr 2018 11:58:17 +0200
+Message-ID: <CAN0heSoU4wDAcfF_EGYSA4gjbpCgTyk0fGPsmPTwv65FfZCQcg@mail.gmail.com>
+Subject: Re: [PATCH 25/41] builtin/receive-pack: avoid hard-coded constants
+ for push certs
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
@@ -66,41 +67,58 @@ X-Mailing-List: git@vger.kernel.org
 
 On 24 April 2018 at 01:39, brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-> Use the_hash_algo to find the right size for parsing pack names.
+> Use the GIT_SHA1_RAWSZ and GIT_SHA1_HEXSZ macros instead of hard-coding
+> the constants 20 and 40.  Switch one use of 20 with a format specifier
+> for a hex value to use the hex constant instead, as the original appears
+> to have been a typo.
+>
+> At this point, avoid converting the hard-coded use of SHA-1 to use
+> the_hash_algo.  SHA-1, even if not collision resistant, is secure in the
+> context in which it is used here, and the hash algorithm of the repo
+> need not match what is used here.  When we adopt a new hash algorithm,
+> we can simply adopt the new algorithm wholesale here, as the nonce is
+> opaque and its length and validity are entirely controlled by the
+> server.  Consequently, defer updating this code until that point.
 >
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
->  http.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
+>  builtin/receive-pack.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> diff --git a/http.c b/http.c
-> index 3034d10b68..ec70676748 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -2047,7 +2047,8 @@ int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
->         int ret = 0, i = 0;
->         char *url, *data;
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index c4272fbc96..5f35596c14 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -454,21 +454,21 @@ static void hmac_sha1(unsigned char *out,
+>         /* RFC 2104 2. (6) & (7) */
+>         git_SHA1_Init(&ctx);
+>         git_SHA1_Update(&ctx, k_opad, sizeof(k_opad));
+> -       git_SHA1_Update(&ctx, out, 20);
+> +       git_SHA1_Update(&ctx, out, GIT_SHA1_RAWSZ);
+>         git_SHA1_Final(out, &ctx);
+>  }
+
+Since we do HMAC with SHA-1, we use the functions `git_SHA1_foo()`. Ok.
+But then why not just use "20"? Isn't GIT_SHA1_RAWSZ coupled to the
+whole hash transition thing? This use of "20" is not, IMHO, the "length
+in bytes [...] of an object name" (quoting cache.h).
+
+>  static char *prepare_push_cert_nonce(const char *path, timestamp_t stamp)
+>  {
 >         struct strbuf buf = STRBUF_INIT;
 > -       unsigned char sha1[20];
-> +       unsigned char hash[GIT_MAX_RAWSZ];
-> +       const unsigned hexsz = the_hash_algo->hexsz;
+> +       unsigned char sha1[GIT_SHA1_RAWSZ];
 >
->         end_url_with_slash(&buf, base_url);
->         strbuf_addstr(&buf, "objects/info/packs");
-> @@ -2063,11 +2064,11 @@ int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
->                 switch (data[i]) {
->                 case 'P':
->                         i++;
-> -                       if (i + 52 <= buf.len &&
-> +                       if (i + hexsz + 12 <= buf.len &&
->                             starts_with(data + i, " pack-") &&
-> -                           starts_with(data + i + 46, ".pack\n")) {
-> -                               get_sha1_hex(data + i + 6, sha1);
-> -                               fetch_and_setup_pack_index(packs_head, sha1,
-> +                           starts_with(data + i + hexsz + 6, ".pack\n")) {
-> +                               get_sha1_hex(data + i + 6, hash);
-> +                               fetch_and_setup_pack_index(packs_head, hash,
->                                                       base_url);
->                                 i += 51;
+>         strbuf_addf(&buf, "%s:%"PRItime, path, stamp);
+>         hmac_sha1(sha1, buf.buf, buf.len, cert_nonce_seed, strlen(cert_nonce_seed));;
+>         strbuf_release(&buf);
+>
+>         /* RFC 2104 5. HMAC-SHA1-80 */
+> -       strbuf_addf(&buf, "%"PRItime"-%.*s", stamp, 20, sha1_to_hex(sha1));
+> +       strbuf_addf(&buf, "%"PRItime"-%.*s", stamp, GIT_SHA1_HEXSZ, sha1_to_hex(sha1));
+>         return strbuf_detach(&buf, NULL);
+>  }
 
-s/51/hexsz + 11/ ?
+Same comment here.
+
+Martin
