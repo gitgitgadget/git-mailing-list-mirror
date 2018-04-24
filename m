@@ -2,94 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1F361F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 22:37:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F87E1F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 22:37:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751346AbeDXWhj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 18:37:39 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:44714 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751265AbeDXWhi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 18:37:38 -0400
-Received: by mail-pf0-f169.google.com with SMTP id p15so13451893pff.11
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 15:37:38 -0700 (PDT)
+        id S1751356AbeDXWhx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 18:37:53 -0400
+Received: from mail-yb0-f171.google.com ([209.85.213.171]:40122 "EHLO
+        mail-yb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751242AbeDXWhw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 18:37:52 -0400
+Received: by mail-yb0-f171.google.com with SMTP id c10-v6so7557283ybn.7
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 15:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QzingdOJuTjv9HtXJ4CdAeKMkRpqZfqwEh0j10NfadU=;
-        b=I2vKlGeLK4NxFsgRIwfMq1lx1UYRsufpy62oFoMnItrKW3BKzL3LQjWCE9DrnDtCAJ
-         9ecr+Rz6w0mIHJUWr1XLHlX8kdp6jigmaLP+KjrQd5xPraM4o73YbQcw9Whh5ENuSEGb
-         fs9L7sI+Rqpc1aWrkwK4Cfim7KowxUIBmNDl8GLrKt6YaAb0iR4Sr3T8WJIRd1zsPr4w
-         7HtALKzpKg3cHcHhpnr/yDyOG4uAlpQIP2LCSGDcjmH/tVqk7gpqGhkj8a41/m0SEOyY
-         x/LFhrFv3zzYcnvqzM9YMEBGodFY0zmF8PyEJwlAgX+mgMzs5iB/yEVTbC43EOCsZDXN
-         xE6w==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=GZtnOREU9kz3xG/C3LgZSVW6coth6LnbT1tajUjhECE=;
+        b=AhCx27hxTrPg8XxsC9fAcv51AEC35b4SfE8Bv0IE7/9jC9r54/2z4sT0vtJNeXtYq4
+         ToCYm7FVnQjCFyYV01WjbdUnwAZhUJU5VXYHQuE6+zW4Tjrz48ZoDV5Pb0ZWZmDjKNPT
+         6n0HMgJ8LzDIWFzWsrpvOa3JGYeFMff6+8jj0g6nFlmA3GFbdQ5INm1O2HASxrFEoU/B
+         eA1jwaWcxO2iHfLxZURC3xGt98joVAaXSq3U7eb5oZzhGN63m9LJaJz6Gg1QrTn9eVyi
+         MXdRcCnosiaSQj6lg9ERB1DlfXzB1PplVDaaEZ7LLDm4utvsmxaGtTgme+LZWW9LmTqo
+         mQUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QzingdOJuTjv9HtXJ4CdAeKMkRpqZfqwEh0j10NfadU=;
-        b=YvslLlKvX0krrGgVsbl1WkyGVgqRdKhdnXdWnSlbm6cs7SvOzKfFmJLy/d76I9Tyhh
-         kV1pLDi1kfw30CYyR17+BVY8aSqJrdCVaN4Aw/2Yivh8YxMt7cdA63So66VT+nOOqL4z
-         Pz/Zo69fjBsTyY+8bFz68VPvx4REuT04blUJUHhnaUpaVnEJttgZ24Oor4VGMW06R4Kv
-         jcQMFQFJogOjVJMjua/Ba7eMm56ZOZWOm25iQemG/6TpXdWewj/qFJ/06YVRsEzz7xxJ
-         A/SUH9mS4R1sQyA64jBZ24PDDCXvbuXtPOkcwdhArMo8wPNfZpnuhtPUOSDoH0V4s/aA
-         vroA==
-X-Gm-Message-State: ALQs6tCMgvZ1JWR0EiUO8EbGmvkFe1YMucCa2d5RrQweSNgH8XLpryRR
-        CSMSF1bCNPnCbgw9L+8eA/30ig==
-X-Google-Smtp-Source: AIpwx48DPCr8vrTInK6BuDhxsyzxmAa6EX4F3YV5OV2ZERwrDHI32tdrKnF4hNWI1gMVRLAjAtek8Q==
-X-Received: by 2002:a17:902:9a90:: with SMTP id w16-v6mr26489101plp.390.1524609458182;
-        Tue, 24 Apr 2018 15:37:38 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id s4sm13140849pgp.35.2018.04.24.15.37.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Apr 2018 15:37:37 -0700 (PDT)
-Date:   Tue, 24 Apr 2018 15:37:36 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, simon@ruderich.org, avarab@gmail.com,
-        jacob.keller@gmail.com
-Subject: Re: [PATCHv2 0/7] Moved code detection: ignore space on uniform
- indentation
-Message-Id: <20180424153736.480b609d0af412ec46311eb6@google.com>
-In-Reply-To: <20180424210330.87861-1-sbeller@google.com>
-References: <20180424210330.87861-1-sbeller@google.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GZtnOREU9kz3xG/C3LgZSVW6coth6LnbT1tajUjhECE=;
+        b=CpRdkHCfCYwKSATc9POvSuTj/L2MNgRBe3/VLnFZNq1Q0isjsGd0i+8GxUyh0uL42Z
+         zIawBMECU5xYbLzlCZ7oHjv/bO3dpUnYBEBwbg4y9m4BoS72qjre1abqtQZ3YiB7VftH
+         tDPeEYw41KQBLrDayh2MBaDD8ZIMIlQJ/NPbWR8wwuS+mafH35cPpS2KPioXNIyp4L0v
+         nctcX3At77tpAOPrvLNst6vQ2IFuqPOLP9xcmaH1e9sZg0bb+Eka5BCu49EksBAO6JM2
+         5O53RZ60WzQRmIf5lrEozi25I7yODaOuElY+oyQ1CTPbYZI9Er9nlPqdE7iY7OADlDEX
+         13nA==
+X-Gm-Message-State: ALQs6tDMvsiv4ADfkIM0ln+5U5pHt1LmGJJQ6bS8vsa5uvVpICUujMj7
+        4tozMZGJG6R7tod7pTFR/IdlDSYVqIdn7lJTnvPoDA==
+X-Google-Smtp-Source: AIpwx4/jZLwiKon/oYt7YhZbsQcr+itzJ9fQ0IFpbPuFEHlp7ZM0M1LUpqpTrMWyecEjrd6SlO2LI50RF+1il+ZKXSA=
+X-Received: by 2002:a0d:e28e:: with SMTP id l136-v6mr13721271ywe.500.1524609471525;
+ Tue, 24 Apr 2018 15:37:51 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Tue, 24 Apr 2018 15:37:51
+ -0700 (PDT)
+In-Reply-To: <20180424145050.e0ad29d4f304216441656057@google.com>
+References: <20180424210330.87861-1-sbeller@google.com> <20180424210330.87861-6-sbeller@google.com>
+ <20180424145050.e0ad29d4f304216441656057@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 24 Apr 2018 15:37:51 -0700
+Message-ID: <CAGZ79ka9Tdk=ijbw6Hyxs9OsBMK9O69_3_cY8oX2j=wRc_F5-g@mail.gmail.com>
+Subject: Re: [PATCH 5/7] diff.c: add a blocks mode for moved code detection
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>, Simon Ruderich <simon@ruderich.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 24 Apr 2018 14:03:23 -0700
-Stefan Beller <sbeller@google.com> wrote:
+On Tue, Apr 24, 2018 at 2:50 PM, Jonathan Tan <jonathantanmy@google.com> wr=
+ote:
+> On Tue, 24 Apr 2018 14:03:28 -0700
+> Stefan Beller <sbeller@google.com> wrote:
+>
+>> Suggested-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>>  (https://public-inbox.org/git/87o9j0uljo.fsf@evledraar.gmail.com/)
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>
+> Firstly, I don't know if this is the right solution- as written
+> in the linked e-mail [1], the issue might be more that the config
+> conflates 2 unrelated things, not that a certain intersection is
+> missing.
 
-> v2:
-> I think I have addressed Jonathans feedback
-> * by using a string instead of counting the first character only.
-> * refined tests slightly (easier to read)
-> * moved white space handling for moved blocks into its own flag field,
->   keeping the enum for the actual mode of move detection.
+The "plain zebra" or as I call them "blocks", has the "heuristic
+for a minimum of 20 characters" and "few colors" as its defining
+features, which solves that use case.
 
-For reference, v1 is here:
-https://public-inbox.org/git/20180402224854.86922-1-sbeller@google.com/
+Stepping back a bit, we have different "building blocks"
+at our disposal:
+* move detection by line or block
+* alternating blocks
+* a heuristic to skip over small chunks (20 alnum chars)
 
-> Stefan Beller (7):
->   xdiff/xdiff.h: remove unused flags
->   xdiff/xdiffi.c: remove unneeded function declarations
->   diff.c: do not pass diff options as keydata to hashmap
->   diff.c: adjust hash function signature to match hashmap expectation
->   diff.c: add a blocks mode for moved code detection
->   diff.c: decouple white space treatment from move detection algorithm
->   diff.c: add --color-moved-ignore-space-delta option
+These can be combined independently, so would
+you expect the user to expect two options for them?
+For example "--color-moved=3Dzebra" could be split
+into  "--skip-small --alternate-blocks"
 
-I'm not sure if we should add a new "blocks" mode, or if we should
-modify the existing plain mode to have the minimum block length instead.
-I reviewed the code as if we want the new "blocks" mode.
+Eventually we'll use various colors to inform the user
+what these building blocks made of the diff.
+
+=C3=86var wrote:
+
+> Which is what I mean by the current config conflating two (to me)
+> unrelated things. One is how we, via any method, detect what's moved or
+> not, and the other is what color/format we use to present this to the
+> user.
+
+So instead of building blocks we rather want to split into algorithms
+and presentation layer?
+
+The presentation layer would be things like:
+* use a different color for moved things
+* alternate colors for adjacent blocks
+* paint border of a block (dimmed zebra)
+
+The algorithm side would be
+* detect moves
+* detect moves as blocks
+* skip small heuristic
+
+Am I still missing the big picture?
+
+> [1] https://public-inbox.org/git/87muykuij7.fsf@evledraar.gmail.com/
+>
+> Optional: Probably better to put the link inline, instead of in the
+> trailer.
+
+ok.
+
+>
+>> -test_expect_success 'detect permutations inside moved code -- dimmed_ze=
+bra' '
+>> +test_expect_success 'detect blocks of moved code' '
+>>       git reset --hard &&
+>>       cat <<-\EOF >lines.txt &&
+>>               long line 1
+>> @@ -1271,6 +1271,52 @@ test_expect_success 'detect permutations inside m=
+oved code -- dimmed_zebra' '
+>>       test_config color.diff.newMovedDimmed "normal cyan" &&
+>>       test_config color.diff.oldMovedAlternativeDimmed "normal blue" &&
+>>       test_config color.diff.newMovedAlternativeDimmed "normal yellow" &=
+&
+>
+> Add a comment here explaining that these colors do not appear in the
+> output, but merely set to recognizable values to ensure that they do not
+> appear in the output.
+
+ok.
