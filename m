@@ -2,152 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5A6A1F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 06:21:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F4A21F404
+	for <e@80x24.org>; Tue, 24 Apr 2018 06:50:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756354AbeDXGVO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 02:21:14 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36233 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756058AbeDXGVN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 02:21:13 -0400
-Received: by mail-wr0-f196.google.com with SMTP id u18-v6so19988106wrg.3
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 23:21:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=x1PuBOffSPXfadXxIu+gV4c+u5G43SUoXFZ1JXg9XR4=;
-        b=Cf8mVQfpCx/kWn/YITsWnLfif8wPKAugu/DQi/+0jzbd8zkT+RYVborBYV0VkUnIu7
-         nFNjPYCvCyfPS7gAbiZK3ckk/7JSz5sTpCR92ZD/fpEMkZNOb9+OKAtdZwqioL+6N7FS
-         NINhHhMmpAoX3H1m25/o2iug3mEW3P/NcwOgYuDXnCZFV+kMqlY0njAvgGVVhTB5tHX1
-         JojepBj7+xze2ear5Uefnq6BciwhpxVmmWmpKMQFJkIFs8vslWvgjBlXv3W4sXk6z24A
-         NUgtklxVKCRcbzFmpgqrh7Xwl/VbvyIlt1EnqIyBp0wtNB/oy0scohkCsdd/PKWNOHID
-         yELg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=x1PuBOffSPXfadXxIu+gV4c+u5G43SUoXFZ1JXg9XR4=;
-        b=csc8vK37EezJOP9cLeSMGbOCB3rtYeAY4utJAH23GMTzowNoeVGnFEOYxGMhDAz1oa
-         96kYUmFQ928JVdkUhWiGtWgLRzHqzZS0mrxTkw8stEYKPKzHq7RBwZrJ0hA5U40b/7Vy
-         qG2dnavGeti9I2APoblrJQzcbh8oU4o3n8aBzjZnBOEE+vMR1eT55kJLuwRRNyOQJ1nc
-         mBts9QAG7DeR6u7wC/byROiQZcFzhe3BkSvtNZaSUIpwxw5xKIQgNUSE80sBLhfNUhNd
-         aBN6s69+A66b3kjpHqYORGeN1OvkmH5OaoDasvwxhVv+MEYkHrBqyATSCvchjnAQsfxq
-         TiOg==
-X-Gm-Message-State: ALQs6tBFJ4VdJLVG1oWOncy2D9l3Lzb+XwCqiNOZN4TT+OaTLescdV4u
-        s4GzAbMOc3059f8EVXi2VP4mjWOsoE6MO4TAMsYUBA==
-X-Google-Smtp-Source: AIpwx4+M/u7KaR8h3ARdJkmQQ+X55Fl5ATqy7gAD+Y/HyxV84edn1qVwg9mAOqSg22nhGfWi8qgqsU2dd7C6TWzxPYo=
-X-Received: by 10.80.192.145 with SMTP id k17mr31937380edf.303.1524550872016;
- Mon, 23 Apr 2018 23:21:12 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.80.180.180 with HTTP; Mon, 23 Apr 2018 23:20:51 -0700 (PDT)
-In-Reply-To: <f140d2795b9dce8b805cd2ebaf076742978ab8ae.1524545557.git.martin.agren@gmail.com>
-References: <ec58f482-ffde-1959-ff4a-9b128905ccb0@talktalk.net>
- <cover.1524545557.git.martin.agren@gmail.com> <f140d2795b9dce8b805cd2ebaf076742978ab8ae.1524545557.git.martin.agren@gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 23 Apr 2018 23:20:51 -0700
-Message-ID: <CA+P7+xqP8b1i4-C242de2_P9dFsZ03pcRGo45scyfK2ohd-ykw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] merge: setup `opts` later in `checkout_fast_forward()`
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        Git mailing list <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1755907AbeDXGuy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 02:50:54 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:39178 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755614AbeDXGux (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 24 Apr 2018 02:50:53 -0400
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w3O6n8OE011413;
+        Mon, 23 Apr 2018 23:50:50 -0700
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2hg35h3acm-1;
+        Mon, 23 Apr 2018 23:50:50 -0700
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 4A73722128B5;
+        Mon, 23 Apr 2018 23:50:50 -0700 (PDT)
+Received: from newren2-linux.yojoe.local (unknown [10.100.71.66])
+        by smtp.yojoe.local (Postfix) with ESMTP id 42DFB2CDE67;
+        Mon, 23 Apr 2018 23:50:50 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, pclouds@gmail.com,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v3] unpack_trees: fix breakage when o->src_index != o->dst_index
+Date:   Mon, 23 Apr 2018 23:50:45 -0700
+Message-Id: <20180424065045.13905-1-newren@gmail.com>
+X-Mailer: git-send-email 2.17.0.253.g32393f1d0a
+In-Reply-To: <xmqq604h717y.fsf@gitster-ct.c.googlers.com>
+References: <xmqq604h717y.fsf@gitster-ct.c.googlers.com>
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-04-24_01:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=15 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1711220000 definitions=main-1804240069
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 23, 2018 at 10:13 PM, Martin =C3=85gren <martin.agren@gmail.com=
-> wrote:
-> After we initialize the various fields in `opts` but before we actually
-> use them, we might return early. Move the initialization further down,
-> to immediately before we use `opts`.
->
-> This limits the scope of `opts` and will help a subsequent commit fix a
-> memory leak without having to worry about those early returns.
->
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-> ---
->  merge.c | 32 +++++++++++++++++---------------
->  1 file changed, 17 insertions(+), 15 deletions(-)
->
-> diff --git a/merge.c b/merge.c
-> index f06a4773d4..f123658e58 100644
-> --- a/merge.c
-> +++ b/merge.c
-> @@ -94,8 +94,24 @@ int checkout_fast_forward(const struct object_id *head=
-,
->                 return -1;
->
->         memset(&trees, 0, sizeof(trees));
-> -       memset(&opts, 0, sizeof(opts));
->         memset(&t, 0, sizeof(t));
-> +
-> +       trees[nr_trees] =3D parse_tree_indirect(head);
-> +       if (!trees[nr_trees++]) {
-> +               rollback_lock_file(&lock_file);
-> +               return -1;
-> +       }
-> +       trees[nr_trees] =3D parse_tree_indirect(remote);
-> +       if (!trees[nr_trees++]) {
-> +               rollback_lock_file(&lock_file);
-> +               return -1;
-> +       }
-> +       for (i =3D 0; i < nr_trees; i++) {
-> +               parse_tree(trees[i]);
-> +               init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
-> +       }
-> +
-> +       memset(&opts, 0, sizeof(opts));
->         if (overwrite_ignore) {
->                 memset(&dir, 0, sizeof(dir));
+Currently, all callers of unpack_trees() set o->src_index == o->dst_index.
+The code in unpack_trees() does not correctly handle them being different.
+There are two separate issues:
 
-I'm guessing the diff algorithm simply found that this was a more
-compact representation of the change? It's a bit confusing when your
-description indicates you "moved" some code down, but it looks like
-you moved code up.
+First, there is the possibility of memory corruption.  Since
+unpack_trees() creates a temporary index in o->result and then discards
+o->dst_index and overwrites it with o->result, in the special case that
+o->src_index == o->dst_index, it is safe to just reuse o->src_index's
+split_index for o->result.  However, when src and dst are different,
+reusing o->src_index's split_index for o->result will cause the
+split_index to be shared.  If either index then has entries replaced or
+removed, it will result in the other index referring to free()'d memory.
 
-Thanks,
-Jake
+Second, we can drop the index extensions.  Previously, we were moving
+index extensions from o->dst_index to o->result.  Since o->src_index is
+the one that will have the necessary extensions (o->dst_index is likely to
+be a new index temporary index created to store the results), we should be
+moving the index extensions from there.
 
->                 dir.flags |=3D DIR_SHOW_IGNORED;
-> @@ -112,20 +128,6 @@ int checkout_fast_forward(const struct object_id *he=
-ad,
->         opts.fn =3D twoway_merge;
->         setup_unpack_trees_porcelain(&opts, "merge");
->
-> -       trees[nr_trees] =3D parse_tree_indirect(head);
-> -       if (!trees[nr_trees++]) {
-> -               rollback_lock_file(&lock_file);
-> -               return -1;
-> -       }
-> -       trees[nr_trees] =3D parse_tree_indirect(remote);
-> -       if (!trees[nr_trees++]) {
-> -               rollback_lock_file(&lock_file);
-> -               return -1;
-> -       }
-> -       for (i =3D 0; i < nr_trees; i++) {
-> -               parse_tree(trees[i]);
-> -               init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
-> -       }
->         if (unpack_trees(nr_trees, t, &opts)) {
->                 rollback_lock_file(&lock_file);
->                 return -1;
-> --
-> 2.17.0
->
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+
+Differences from v2:
+  - Don't NULLify src_index until we're done using it
+  - Actually built and tested[1]
+
+But it now passes the testsuite on both linux and mac[2], and I even re-merged
+all 53288 merge commits in linux.git (with a merge of this patch together with
+the directory rename detection series) for good measure.  [Only 7 commits
+showed a difference, all due to directory rename detection kicking in.]
+
+[1] Turns out that getting all fancy with an m4.10xlarge and nice levels of
+parallelization are great until you realize that your new setup omitted a
+critical step, leaving you running a slightly stale version of git instead...
+:-(
+
+[2] Actually, I get two test failures on mac from t0050-filesystem.sh, both
+with unicode normalization tests, but those two tests fail before my changes
+too.  All the other tests pass.
+
+ unpack-trees.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/unpack-trees.c b/unpack-trees.c
+index e73745051e..49526d70aa 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1284,9 +1284,20 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	o->result.timestamp.sec = o->src_index->timestamp.sec;
+ 	o->result.timestamp.nsec = o->src_index->timestamp.nsec;
+ 	o->result.version = o->src_index->version;
+-	o->result.split_index = o->src_index->split_index;
+-	if (o->result.split_index)
++	if (!o->src_index->split_index) {
++		o->result.split_index = NULL;
++	} else if (o->src_index == o->dst_index) {
++		/*
++		 * o->dst_index (and thus o->src_index) will be discarded
++		 * and overwritten with o->result at the end of this function,
++		 * so just use src_index's split_index to avoid having to
++		 * create a new one.
++		 */
++		o->result.split_index = o->src_index->split_index;
+ 		o->result.split_index->refcount++;
++	} else {
++		o->result.split_index = init_split_index(&o->result);
++	}
+ 	hashcpy(o->result.sha1, o->src_index->sha1);
+ 	o->merge_size = len;
+ 	mark_all_ce_unused(o->src_index);
+@@ -1401,7 +1412,6 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		}
+ 	}
+ 
+-	o->src_index = NULL;
+ 	ret = check_updates(o) ? (-2) : 0;
+ 	if (o->dst_index) {
+ 		if (!ret) {
+@@ -1412,12 +1422,13 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 						  WRITE_TREE_SILENT |
+ 						  WRITE_TREE_REPAIR);
+ 		}
+-		move_index_extensions(&o->result, o->dst_index);
++		move_index_extensions(&o->result, o->src_index);
+ 		discard_index(o->dst_index);
+ 		*o->dst_index = o->result;
+ 	} else {
+ 		discard_index(&o->result);
+ 	}
++	o->src_index = NULL;
+ 
+ done:
+ 	clear_exclude_list(&el);
+-- 
+2.17.0.253.g32393f1d0a
+
