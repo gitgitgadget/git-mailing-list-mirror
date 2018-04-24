@@ -3,133 +3,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B0781F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 02:18:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 162601F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 02:39:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932684AbeDXCSi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Apr 2018 22:18:38 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34573 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932670AbeDXCSh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Apr 2018 22:18:37 -0400
-Received: by mail-pf0-f193.google.com with SMTP id a14so397408pfi.1
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 19:18:37 -0700 (PDT)
+        id S932729AbeDXCjE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Apr 2018 22:39:04 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:45581 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932709AbeDXCjD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Apr 2018 22:39:03 -0400
+Received: by mail-wr0-f195.google.com with SMTP id p5-v6so18545995wre.12
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 19:39:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=zh/vTCvoU/XeFgWdraWYbYHIw4VYogzrWRIJ7dxSVUg=;
-        b=mGiL0mjUS33dlWDpDv3GRnHYXdViMulTYtR+zDvvlwVS4U1u0unWl8BjGoGzaKOa7R
-         b+xfa0BxTJPSyPF2V4N6hGX1nkA4BriAniu+coO+Vm1TtBHeTxhVmbe7ixLLi3p+DlMd
-         QD1lsDklGJzY9iydw8Ky9Q+mWUlGdIG48WroVp8gJuxNeIq6cgEHxAozLg0s7Tn/9VwA
-         L6HQ5g2R2wjm5JL3ywTJ0r+TAKmQV5QkvnaKWSD0Aq+2wDF3FGlQOJYbDQp8FLWVj8g5
-         6jMbqwDc8uTrUJZUSMOnZDEntQWThLCjwB12BdCgcp8PSf+w1Jfw9KjW8yOzfDmU/eFp
-         vaWQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=1lPJtRdLOF8IbiyMsKeLrnyHg0+YISG793u+s8Ekbvw=;
+        b=sC8DzOskjDzMSQEkNJFHnEJz3hY/wKfchWkoQROmcH2cZx2c7mYRUhG1Bp2BJ73cFK
+         9b293ciMICC0G4tfXhPj2FMdyrgT3HijI8bjZHM6Hb8tKA3qYDmlbO1ksOh/iagRCMQj
+         9WcRpCRqfwdXTaJjYaP7BP/iURmMTGYgkNBckyFzD0awqw7d8CJ9G6N9nz1aMMf90li/
+         vX0RtI1M7a7W6dLeIsJCrFQp86TT8i+VTGvzqQQzlWB8OGUbbYSSEgel/OoxUI+4P5K8
+         WCtCAADQDIJv0xqVrucjWvEwOEV7ExbiJ+BeKDyOWrdh0RJb9MX7q28XpJ4nEK+N9Q2m
+         USbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=zh/vTCvoU/XeFgWdraWYbYHIw4VYogzrWRIJ7dxSVUg=;
-        b=PEU2P/gyFJkv4mtOfxC4/s2vdRJXiaf2RLTC2VOJ1CaFQomU1rJROZkQhhIRA7f0jY
-         XoguPA/uaJLHSu8LUPfNF8nkh5LFjefHYhmLamn8SuoNzyZsJ2uajIVDMdaOJMkNC0U/
-         7fTsgGvt06gdOmYMFd/jdj26N/mzwmANjQdKGjJlaO6A7oXlMoyqxmmBx96J51lXqr+m
-         ch09eLi6iNKys5/Ji3GwwMyN++xucMGpS3iierCyRaqqSS+Wrx+NPIO0NSy0Bg9d4Gae
-         4KXXMKSUz8qdX2X+DqE4DFSxO5PVUbopqqbPxXJNiCz+qkxtpJOc1hkR9AfpAJc2JAju
-         Mq6g==
-X-Gm-Message-State: ALQs6tAlZvoIVPLVX4wD7gukn1HgYhpmbqlCdWWpXcJe+fkhWCVH0+Fp
-        11mAm5ag2xYsedGs/cNRD9Q=
-X-Google-Smtp-Source: AIpwx4+3RJ6lmoedAoGu7cGFmnScJ2Z9Xa1R6JgIBU1lI+2TxVbIKqxxb6uRYiBX8no9nbJMN/KXNQ==
-X-Received: by 10.99.116.74 with SMTP id e10mr18606171pgn.169.1524536316529;
-        Mon, 23 Apr 2018 19:18:36 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id p71sm21025225pfl.170.2018.04.23.19.18.35
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=1lPJtRdLOF8IbiyMsKeLrnyHg0+YISG793u+s8Ekbvw=;
+        b=mSMqJ4kBfk6/KwY7HA0zKOdvQfADDW4WO45Z0mT9BLJ+bxNnI9WLR4uQx62jaqTmlj
+         GZ5Z3/f9nw9yVKcVlt23dX1mqiNxrjUkCv3DMUVuMm+gjc+m9DZFVpTmg4VHc57mTb9x
+         NoGaT4e+OcoKrrr9bNWl5brG0H7RRzYJh3JFLCdt5ywaZRF14l3Bg+E7ciXuartF8/Eg
+         60wjBI9oAXYRiaSzxlPV+54O90dpuBd4Bh/umyt/lkhsM5DJx9OK1+qsa15oxucMl1Wa
+         6eOHyhXONTrifKdni2BOlPN/1+JECTwQsy0e69DDA9icpk+HCx9nYF28gnltvJ5XKW77
+         /jSg==
+X-Gm-Message-State: ALQs6tAppB5EQ3pZzP58TYkZ+jjSEbStY+MDPDufjXSn/IZCxE0BxK3d
+        wupA4Z7kGYY2iYJjorDFxdI=
+X-Google-Smtp-Source: AIpwx4/4xUe1q8HxXPc0etWN8vC5rJMLv9IJmweHXbmdb8g8uH1Pnkc6XgfGkj9rJRORclVps+OLkw==
+X-Received: by 2002:adf:afe4:: with SMTP id y36-v6mr19387243wrd.107.1524537541640;
+        Mon, 23 Apr 2018 19:39:01 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x67sm16478676wma.23.2018.04.23.19.38.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Apr 2018 19:18:35 -0700 (PDT)
-Date:   Mon, 23 Apr 2018 19:18:34 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Dan Jacques <dnj@google.com>,
-        Johannes.Schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
-        Brandon Williams <bmwill@google.com>
-Subject: [PATCH 2/2 v2] Makefile: quote $INSTLIBDIR when passing it to sed
-Message-ID: <20180424021834.GE25128@aiede.svl.corp.google.com>
-References: <f0ad1ad4-67d8-21e2-fdd0-0a08328c1eaa@kdbg.org>
- <20171205212625.6616-1-dnj@google.com>
- <xmqq7eu0j1th.fsf@gitster.mtv.corp.google.com>
- <e0a22ee4-9503-760f-293c-be56fa46fa04@kdbg.org>
- <20180423232326.GB25128@aiede.svl.corp.google.com>
- <20180423232535.GD25128@aiede.svl.corp.google.com>
- <xmqqin8h8lx7.fsf@gitster-ct.c.googlers.com>
+        Mon, 23 Apr 2018 19:38:59 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v4 01/11] argv_array: offer to split a string by whitespace
+References: <cover.1524262793.git.johannes.schindelin@gmx.de>
+        <cover.1524303776.git.johannes.schindelin@gmx.de>
+        <6ec155b834768f38765c63907a48b1bd7ab6bafc.1524303776.git.johannes.schindelin@gmx.de>
+        <xmqq8t9d8kvm.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 24 Apr 2018 11:38:58 +0900
+In-Reply-To: <xmqq8t9d8kvm.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 24 Apr 2018 10:15:57 +0900")
+Message-ID: <xmqqefj572gt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqin8h8lx7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-f6a0ad4b (Makefile: generate Perl header from template file,
-2018-04-10) moved some code for generating the 'use lib' lines at the
-top of perl scripts from the $(SCRIPT_PERL_GEN) rule to a separate
-GIT-PERL-HEADER rule.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This rule first populates INSTLIBDIR and then substitutes it into the
-GIT-PERL-HEADER using sed:
-
-	INSTLIBDIR=... something ...
-	sed -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' $< > $@
-
-Because $INSTLIBDIR is not surrounded by double quotes, the shell
-splits it at each space, causing errors if INSTLIBDIR contains a
-space:
-
- sed: 1: "s=@@INSTLIBDIR@@=/usr/l ...": unescaped newline inside substitute pattern
-
-Add back the missing double-quotes to make it work again.
-
-Improved-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Hi,
-
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-
->> +++ b/Makefile
->> @@ -2108,7 +2108,7 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
->>  	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
->>  	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
->>  	sed -e 's=@@PATHSEP@@=$(pathsep)=g' \
->> -	    -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' \
->> +	    -e 's=@@INSTLIBDIR@@='"$$INSTLIBDIR"'=g' \
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 >
-> Good find.  FWIW, I'd find it a lot easier to read if the whole
-> thing were enclosed inside a single pair of dq.
+>> +void argv_array_split(struct argv_array *array, const char *to_split)
+>> +{
+>> +	while (isspace(*to_split))
+>> +		to_split++;
+>> +	for (;;) {
+>> +		const char *p = to_split;
+>> +
+>> +		if (!*p)
+>> +			break;
+>> +
+>> +		while (*p && !isspace(*p))
+>> +			p++;
+>> +		argv_array_push_nodup(array, xstrndup(to_split, p - to_split));
+>
+> Can *p be '\0' at this point?
 
-Thanks. I agree, so here's an updated version doing that.
+My thinko.  We do want to stop on NUL even though our isspace() says
+NUL is not a space.  And using while (isspace(*p)) below without
+checking for NUL also makes sense.
 
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Sorry for the noise.
 
-diff --git a/Makefile b/Makefile
-index 2327ccb906..5e25441861 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2116,7 +2116,7 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
- 	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
- 	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
- 	sed -e 's=@@PATHSEP@@=$(pathsep)=g' \
--	    -e 's=@@INSTLIBDIR@@='$$INSTLIBDIR'=g' \
-+	    -e "s=@@INSTLIBDIR@@=$$INSTLIBDIR=g" \
- 	    -e 's=@@PERLLIBDIR@@='$(perllibdir_SQ)'=g' \
- 	    -e 's=@@PERLLIBDIR_REL@@=$(perllibdir_relative_SQ)=g' \
- 	    -e 's=@@GITEXECDIR_REL@@=$(gitexecdir_relative_SQ)=g' \
--- 
-2.17.0.441.gb46fe60e1d
+
 
