@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFBDD1F404
-	for <e@80x24.org>; Tue, 24 Apr 2018 09:41:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1E941F42D
+	for <e@80x24.org>; Tue, 24 Apr 2018 09:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753225AbeDXJli (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 05:41:38 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:42581 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752947AbeDXJlh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 05:41:37 -0400
-Received: by mail-pg0-f65.google.com with SMTP id e12so10453960pgn.9
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 02:41:37 -0700 (PDT)
+        id S1756256AbeDXJuS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 05:50:18 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:38361 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756126AbeDXJuR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 05:50:17 -0400
+Received: by mail-pf0-f194.google.com with SMTP id o76so7097995pfi.5
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 02:50:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=rqFOGxbUCabeeweTpQrB94FhGLsldM6/bf1eIcZrU4Q=;
-        b=Du1MS65Wn5hk5gqgGSmmoS6fUExS77gzovoweRlU3jAKs/FP4H4eX85qVN5ElLWtp9
-         B3diCvAPatt11/J+rdc7W70b1Tf8Xz9uhhuD3/bh8fn0WLp3C5i6qOPSwa6sSClOSnhS
-         4XwqgleN1zDC6JCDKySVxYbiUofXad0BzWQGnvKZbOqpQ9nBO7XWgOfK7HMPRFCoEaMA
-         Cjqayg2SkzNcNNAAPQ6HiU406qBpvii5kikhWg1Nuch8F4AVKzt3oXuNdyBRJFbEa33Y
-         7lsATL2idR4zgejH66tc2XDfAW/nw6DkyGEqi4w7ZHnJcjPsX0s+5RbcgHPdDP5QA1ZF
-         5xqQ==
+        bh=PhWxhaF77a1vdj2+LWIIAzkcSl34ZiR8SGfFXWFPFTo=;
+        b=KHKnLM5/VpuQ8HHBMpox5sASzhygVIgxn/+Y0fjtuyB4/R4Esv3KEnB7i+Ix5xD0Pl
+         HyioLzYtsCMXAXwhaPWs3olxeMWN/Rdzt8gGmL4HOWdUcl8fBzllwQ2f89njFSF9O24T
+         OxTS5OQXTKdBZSTZvCDHo+wVRYimp1oG9dkY0z+V5LloEh7fq+ht5lvWgK9dcL1Sqb4A
+         fWaKjsh+U2w1McTMGQt1kBYVmht9oq3zsqhqXq4adFfW/YUiwfHKiHViHh6hp4GybhNJ
+         OtjTnBDLK8H+/nOoWwarFwRt0T7rubMVGoQr1SN5l0T3nZKAOrxS9RiICYeDSpT7hkeU
+         rB4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=rqFOGxbUCabeeweTpQrB94FhGLsldM6/bf1eIcZrU4Q=;
-        b=gLy+no6d3kHE+8HL4gNweLjISR1PjKyFUzUvNGe9y/60jUY3G6J+XZX9s/p23Azo0V
-         8VHQ/ZR6q10f1WMr/vSJLRGdrmqRPDviiRG6dFgFqmh+l0vTiFyh6NVzrmx4UkVDWZR7
-         25XjNTTqepAf61vVej+8I2WCenh9vjCyx/QGAdDTRnWRTd5ggzh2eLUaMSrlZR88KMMB
-         VfVIlAughAXTNU9b0MoPdpQPDg1fwn2wiyBMaunPa8KXnfAU6zcn8y/5DO5D8gsR3H9G
-         Gltx+dWCNgevkZOL16x3pKpQo5dCBQ/A7pBWFIeYqX49oxZ6YkBFgJiEsDi2tinID5qt
-         2Svg==
-X-Gm-Message-State: ALQs6tAj3UxS9n8uRsGiYaounKjioSc1H6x8gJSgcO8m9CKrfRYZV/2t
-        VA2/JJr2Pkj9EX+7xGTgDR0BK5Cfzlv502ecuzg=
-X-Google-Smtp-Source: AIpwx4/9dRjxCNKfmBmV3Nwo8TjOgu1mpInwVho3JDJxACnkSrKwfKGwysXJk1Gq0ow7+0QWU0lRiem3tzUZHZTuqxI=
-X-Received: by 10.98.80.80 with SMTP id e77mr23512080pfb.16.1524562897356;
- Tue, 24 Apr 2018 02:41:37 -0700 (PDT)
+        bh=PhWxhaF77a1vdj2+LWIIAzkcSl34ZiR8SGfFXWFPFTo=;
+        b=KL+dezMF+JC5CoAZNMGxkt7EuRHLt2wDnaVLXEmfdKDQAiXMD5PQQX+oR1ccc1dOTT
+         0LfCukvLg26pXpuRwr0mBq5x4pgf2MSkVpkxhG6u1CtgMwc6r/L5+w35JnlEoSGICIVf
+         lvFg+EfNdgnqT1ApcZK9+yaBd/AZOb1MGw7sBDC06fUKh3oz9Fx8Sd5PbJhKfvJA0vLO
+         hLcGFafb3kbSxDXBKjoYHo596zv9yKWVYDTQoU6Eff0B6FkVPJ3/g/HI0zaRfaJv943u
+         qBwS4xatPy2BV9EeeSXaD3lLyfJci8Udcq5S2u1xGk1/Kuxphw7EMCpD4aBICIuw85jx
+         AKTg==
+X-Gm-Message-State: ALQs6tAU2nVzvJO62PI1aBc66v7qPtCWP/neKTjY3f8+bPmTqhNGG5Mb
+        IURffzQXDnNqa+NNcvjj6Zx62B7gnc4LXX1bPuc=
+X-Google-Smtp-Source: AIpwx4+Si8zEFJYtthEwqlYodwgktjr7LyElHVfpCQDoTEbby+tmfCcMMfWEwjz9iY/14/ttDbEmKI//jlicwfJUybc=
+X-Received: by 10.101.88.140 with SMTP id d12mr19561412pgu.408.1524563416955;
+ Tue, 24 Apr 2018 02:50:16 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.150.4 with HTTP; Tue, 24 Apr 2018 02:41:36 -0700 (PDT)
-In-Reply-To: <20180423233951.276447-3-sandals@crustytoothpaste.net>
-References: <20180423233951.276447-1-sandals@crustytoothpaste.net> <20180423233951.276447-3-sandals@crustytoothpaste.net>
+Received: by 10.236.150.4 with HTTP; Tue, 24 Apr 2018 02:50:15 -0700 (PDT)
+In-Reply-To: <20180423233951.276447-19-sandals@crustytoothpaste.net>
+References: <20180423233951.276447-1-sandals@crustytoothpaste.net> <20180423233951.276447-19-sandals@crustytoothpaste.net>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 24 Apr 2018 11:41:36 +0200
-Message-ID: <CAN0heSroUKRz_gZSTbXxO0jkB-WWd45aykpjASrWt8aB=q0iPw@mail.gmail.com>
-Subject: Re: [PATCH 02/41] server-info: remove unused members from struct pack_info
+Date:   Tue, 24 Apr 2018 11:50:16 +0200
+Message-ID: <CAN0heSouHbAj8TbiROe=XRsBJ788Vi6P4a_Wvv=7OrdsXqQXHw@mail.gmail.com>
+Subject: Re: [PATCH 18/41] index-pack: abstract away hash function constant
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
@@ -66,22 +66,37 @@ X-Mailing-List: git@vger.kernel.org
 
 On 24 April 2018 at 01:39, brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-> The head member of struct pack_info is completely unused and the
-> nr_heads member is used only in one place, which is an assignment.
-> Since these structure members are not useful, remove them.
+> The code for reading certain pack v2 offsets had a hard-coded 5
+> representing the number of uint32_t words that we needed to skip over.
+> Specify this value in terms of a value from the_hash_algo.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  builtin/index-pack.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index d81473e722..c1f94a7da6 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -1543,12 +1543,13 @@ static void read_v2_anomalous_offsets(struct packed_git *p,
+>  {
+>         const uint32_t *idx1, *idx2;
+>         uint32_t i;
+> +       const uint32_t hashwords = the_hash_algo->rawsz / sizeof(uint32_t);
 
-Good catch.
+Should we round up? Or just what should we do if a length is not
+divisible by 4? (I am not aware of any such hash functions, but one
+could exist for all I know.) Another question is whether such an
+index-pack v2 will ever contain non-SHA-1 oids to begin with. I can't
+find anything suggesting that it could, but this is unfamiliar code to
+me.
 
-> @@ -228,7 +226,6 @@ static void init_pack_info(const char *infofile, int force)
->         for (i = 0; i < num_pack; i++) {
->                 if (stale) {
->                         info[i]->old_num = -1;
-> -                       info[i]->nr_heads = 0;
->                 }
->         }
-
-Minor nits: The braces could go. Not something you're introducing, but
-the nesting of the `for` and the `if` looks odd. There used to be more
-inside this loop, which explains this.
-
-Martin
+>         /* The address of the 4-byte offset table */
+>         idx1 = (((const uint32_t *)p->index_data)
+>                 + 2 /* 8-byte header */
+>                 + 256 /* fan out */
+> -               + 5 * p->num_objects /* 20-byte SHA-1 table */
+> +               + hashwords * p->num_objects /* object ID table */
+>                 + p->num_objects /* CRC32 table */
+>                 );
