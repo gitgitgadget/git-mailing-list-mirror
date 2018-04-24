@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1E941F42D
-	for <e@80x24.org>; Tue, 24 Apr 2018 09:50:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E3101F42D
+	for <e@80x24.org>; Tue, 24 Apr 2018 09:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756256AbeDXJuS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 05:50:18 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:38361 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756126AbeDXJuR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 05:50:17 -0400
-Received: by mail-pf0-f194.google.com with SMTP id o76so7097995pfi.5
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 02:50:17 -0700 (PDT)
+        id S1756293AbeDXJxf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 05:53:35 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:45938 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756126AbeDXJxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 05:53:34 -0400
+Received: by mail-pf0-f196.google.com with SMTP id l27so11807557pfk.12
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 02:53:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=PhWxhaF77a1vdj2+LWIIAzkcSl34ZiR8SGfFXWFPFTo=;
-        b=KHKnLM5/VpuQ8HHBMpox5sASzhygVIgxn/+Y0fjtuyB4/R4Esv3KEnB7i+Ix5xD0Pl
-         HyioLzYtsCMXAXwhaPWs3olxeMWN/Rdzt8gGmL4HOWdUcl8fBzllwQ2f89njFSF9O24T
-         OxTS5OQXTKdBZSTZvCDHo+wVRYimp1oG9dkY0z+V5LloEh7fq+ht5lvWgK9dcL1Sqb4A
-         fWaKjsh+U2w1McTMGQt1kBYVmht9oq3zsqhqXq4adFfW/YUiwfHKiHViHh6hp4GybhNJ
-         OtjTnBDLK8H+/nOoWwarFwRt0T7rubMVGoQr1SN5l0T3nZKAOrxS9RiICYeDSpT7hkeU
-         rB4w==
+        bh=3Aex8qwts3DZCizmMBHuUBvTDnCTvdRr9qJRzmwD9uc=;
+        b=s/LgszewI41fLz/OA2xj+tuzdxVBHbXV1OG7w+JucWWmD68h88U5MmvLgIEGWu9udT
+         i5KybikJKNhkqGUSGeADV60zWv0LtkvemQdG5g2ych/tMVf7Ac792UoxTGJiiRoPVSw1
+         muCXJkgEe/SlilUV76J8J3qzT//pikUmO8pMfzZdwxmSylS0EFF7lbH+AdGs7aPknRXq
+         8qnALdjoyc0wkmCbO2yFL75UHqDAlM0kAAhKzTwkKpCdXwYW2/jxv5IhELQTbbayMtxj
+         mhqTJvVLnmiG/08us0Q+/+iJocf80Jq81wfrB6QYNQMajvkBoksg66zmNmRT3XVdueZY
+         AKCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=PhWxhaF77a1vdj2+LWIIAzkcSl34ZiR8SGfFXWFPFTo=;
-        b=KL+dezMF+JC5CoAZNMGxkt7EuRHLt2wDnaVLXEmfdKDQAiXMD5PQQX+oR1ccc1dOTT
-         0LfCukvLg26pXpuRwr0mBq5x4pgf2MSkVpkxhG6u1CtgMwc6r/L5+w35JnlEoSGICIVf
-         lvFg+EfNdgnqT1ApcZK9+yaBd/AZOb1MGw7sBDC06fUKh3oz9Fx8Sd5PbJhKfvJA0vLO
-         hLcGFafb3kbSxDXBKjoYHo596zv9yKWVYDTQoU6Eff0B6FkVPJ3/g/HI0zaRfaJv943u
-         qBwS4xatPy2BV9EeeSXaD3lLyfJci8Udcq5S2u1xGk1/Kuxphw7EMCpD4aBICIuw85jx
-         AKTg==
-X-Gm-Message-State: ALQs6tAU2nVzvJO62PI1aBc66v7qPtCWP/neKTjY3f8+bPmTqhNGG5Mb
-        IURffzQXDnNqa+NNcvjj6Zx62B7gnc4LXX1bPuc=
-X-Google-Smtp-Source: AIpwx4+Si8zEFJYtthEwqlYodwgktjr7LyElHVfpCQDoTEbby+tmfCcMMfWEwjz9iY/14/ttDbEmKI//jlicwfJUybc=
-X-Received: by 10.101.88.140 with SMTP id d12mr19561412pgu.408.1524563416955;
- Tue, 24 Apr 2018 02:50:16 -0700 (PDT)
+        bh=3Aex8qwts3DZCizmMBHuUBvTDnCTvdRr9qJRzmwD9uc=;
+        b=ieTPbeA+btVZdXh1Z3bbLpWFcUzsXgbi/yIYT28sHxd6g1Ng+nIJNIWJV9TO8OhXqs
+         7dJfgUI6AIEWIeCsIIBgsiGOyJRfOpc0mZrt6bte4MYtRN/rCZat+p+1ftyc9XH3g1AI
+         SFSXPOBEtKSHe3HLrmFbeYd07VzOC4ng7o8Q9uJ5Z0W/KlfWqwsTaPB/JBx/KOgOBKRL
+         b4wdTrRuf4gtIlXzaF7Y8hUSzYjEJcSE6l3DR0d7aO64+Ztq7rTKPr0wes7WPVP9N4iw
+         hpzpJM7l22BB8vo/gQ3KZY9FS/ScrGtuGZ0CNZOaO0q8DfCV+2Mp/reImKq5ffCPsSeH
+         h1Hw==
+X-Gm-Message-State: ALQs6tCMrdTny3wNkyoVsQH1lP4rLrZW9NJRl+EeWy6Dz5SBmi55I0NQ
+        0p9vF97CG7WR0uhEFiOhe4ZFUAI2NwDXmy3eMuM=
+X-Google-Smtp-Source: AIpwx4+PnplLCiEQRhwngGer7qkK3iz5RArX9hjsyfhVKB3VzAPYOBPHzo7j7gLXSJ0bTwjMVi80gEWfPymW4uU4icw=
+X-Received: by 10.98.11.3 with SMTP id t3mr23399086pfi.32.1524563613729; Tue,
+ 24 Apr 2018 02:53:33 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.150.4 with HTTP; Tue, 24 Apr 2018 02:50:15 -0700 (PDT)
-In-Reply-To: <20180423233951.276447-19-sandals@crustytoothpaste.net>
-References: <20180423233951.276447-1-sandals@crustytoothpaste.net> <20180423233951.276447-19-sandals@crustytoothpaste.net>
+Received: by 10.236.150.4 with HTTP; Tue, 24 Apr 2018 02:53:33 -0700 (PDT)
+In-Reply-To: <20180423233951.276447-22-sandals@crustytoothpaste.net>
+References: <20180423233951.276447-1-sandals@crustytoothpaste.net> <20180423233951.276447-22-sandals@crustytoothpaste.net>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 24 Apr 2018 11:50:16 +0200
-Message-ID: <CAN0heSouHbAj8TbiROe=XRsBJ788Vi6P4a_Wvv=7OrdsXqQXHw@mail.gmail.com>
-Subject: Re: [PATCH 18/41] index-pack: abstract away hash function constant
+Date:   Tue, 24 Apr 2018 11:53:33 +0200
+Message-ID: <CAN0heSoCsFYqDmwTRCzh2FGDnOghBqVBTCOa7yEw0jtQ3LxDbA@mail.gmail.com>
+Subject: Re: [PATCH 21/41] http: eliminate hard-coded constants
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
@@ -66,37 +66,41 @@ X-Mailing-List: git@vger.kernel.org
 
 On 24 April 2018 at 01:39, brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-> The code for reading certain pack v2 offsets had a hard-coded 5
-> representing the number of uint32_t words that we needed to skip over.
-> Specify this value in terms of a value from the_hash_algo.
+> Use the_hash_algo to find the right size for parsing pack names.
 >
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
->  builtin/index-pack.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  http.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
 >
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index d81473e722..c1f94a7da6 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -1543,12 +1543,13 @@ static void read_v2_anomalous_offsets(struct packed_git *p,
->  {
->         const uint32_t *idx1, *idx2;
->         uint32_t i;
-> +       const uint32_t hashwords = the_hash_algo->rawsz / sizeof(uint32_t);
+> diff --git a/http.c b/http.c
+> index 3034d10b68..ec70676748 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -2047,7 +2047,8 @@ int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
+>         int ret = 0, i = 0;
+>         char *url, *data;
+>         struct strbuf buf = STRBUF_INIT;
+> -       unsigned char sha1[20];
+> +       unsigned char hash[GIT_MAX_RAWSZ];
+> +       const unsigned hexsz = the_hash_algo->hexsz;
+>
+>         end_url_with_slash(&buf, base_url);
+>         strbuf_addstr(&buf, "objects/info/packs");
+> @@ -2063,11 +2064,11 @@ int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
+>                 switch (data[i]) {
+>                 case 'P':
+>                         i++;
+> -                       if (i + 52 <= buf.len &&
+> +                       if (i + hexsz + 12 <= buf.len &&
+>                             starts_with(data + i, " pack-") &&
+> -                           starts_with(data + i + 46, ".pack\n")) {
+> -                               get_sha1_hex(data + i + 6, sha1);
+> -                               fetch_and_setup_pack_index(packs_head, sha1,
+> +                           starts_with(data + i + hexsz + 6, ".pack\n")) {
+> +                               get_sha1_hex(data + i + 6, hash);
+> +                               fetch_and_setup_pack_index(packs_head, hash,
+>                                                       base_url);
+>                                 i += 51;
 
-Should we round up? Or just what should we do if a length is not
-divisible by 4? (I am not aware of any such hash functions, but one
-could exist for all I know.) Another question is whether such an
-index-pack v2 will ever contain non-SHA-1 oids to begin with. I can't
-find anything suggesting that it could, but this is unfamiliar code to
-me.
-
->         /* The address of the 4-byte offset table */
->         idx1 = (((const uint32_t *)p->index_data)
->                 + 2 /* 8-byte header */
->                 + 256 /* fan out */
-> -               + 5 * p->num_objects /* 20-byte SHA-1 table */
-> +               + hashwords * p->num_objects /* object ID table */
->                 + p->num_objects /* CRC32 table */
->                 );
+s/51/hexsz + 11/ ?
