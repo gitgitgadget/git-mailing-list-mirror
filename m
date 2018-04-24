@@ -2,133 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32DE91F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 19:41:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 228ED1F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 19:57:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750835AbeDXTlp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 15:41:45 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:29989 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750735AbeDXTln (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 15:41:43 -0400
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id B3oof78Kq4ZqzB3oofniX5; Tue, 24 Apr 2018 20:41:41 +0100
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=E/fjW5Vl c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=xP4qXboQvojKe6j4mRgA:9
- a=wPNLvfGTeEIA:10
-Message-ID: <2494D111781E4353B9522D5FFA3D8F0E@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Cc:     "Git List" <git@vger.kernel.org>,
-        "Junio C Hamano" <gitster@pobox.com>,
-        "Jacob Keller" <jacob.keller@gmail.com>,
-        "Stefan Beller" <sbeller@google.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>,
-        "Phillip Wood" <phillip.wood@dunelm.org.uk>,
-        "Igor Djordjevic" <igor.d.djordjevic@gmail.com>,
-        "Johannes Sixt" <j6t@kdbg.org>,
-        "Sergey Organov" <sorganov@gmail.com>,
-        =?iso-8859-1?Q?Martin_=C5gren?= <martin.agren@gmail.com>
-References: <cover.1524139900.git.johannes.schindelin@gmx.de> <cover.1524306546.git.johannes.schindelin@gmx.de> <7360a072f6fdd276d30839613434329b645e2cce.1524306546.git.johannes.schindelin@gmx.de> <9270DF86352B4E3493AADA159E7FFE33@PhilipOakley> <nycvar.QRO.7.76.6.1804231401130.15174@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <0E6803122A5241F98148087A045993BC@PhilipOakley> <nycvar.QRO.7.76.6.1804241006230.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
-Date:   Tue, 24 Apr 2018 20:41:38 +0100
-Organization: OPDS
+        id S1752582AbeDXT5j (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 15:57:39 -0400
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:45581 "EHLO
+        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751995AbeDXT5i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 15:57:38 -0400
+Received: by mail-lf0-f50.google.com with SMTP id q5-v6so22101565lff.12
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 12:57:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Q5oXuuyrxyoxxtrJeHt4RnFhDjX+0ROrDnLn6DRerZo=;
+        b=SHyqlRzEAC2+axxVIFzAD7hqCpUj5/NsWddw5ap4qYwhoR+Gwc8q37+br0ZyVPUQjV
+         uucsuUsVrhX5oTCEbHItQGi7GDsFwwj4a0jsRM9Q9v2DdqZi5wh5OFC8Mg9ZyDnyAoRX
+         T7wDJHkgKc2DF0AA09u1yPsRgi8K6Jk6UjEKz2M6F1mlcBdsPvTP9gxTCIZloSgnMwBx
+         PxjrvjPEP63/Pqw80uI7OPQidvqRdLvZ7cbqjlUeMtmP1g/xKVMITu5X7h1Y53xEBzsW
+         p1mSVsqfRUMuXHBSsTaUHiKPuhDOi9gP2GMyYEojw+gTT6R7NOnZBhdToR+1hOMxslHC
+         RcFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Q5oXuuyrxyoxxtrJeHt4RnFhDjX+0ROrDnLn6DRerZo=;
+        b=NHwPWnQ0NwEh1ukpr+ahwcPhZSAfvgcnp8j/Dd30S17BFh+LToSOU5DHkF1bsLF+nM
+         CjTKUzygP7Ad4lAowOrN+iLaty38fCUm/nkK/WMz+/U9AOfITpm4cZOvjOUFBg1YNd2F
+         bGsQTayKP1huaiE2GtX7BNZ1P1y45/pKraLM2Pm94LGIhTLesmNQuP2Ht+zCdMan7Edb
+         rm5v+7jfjhC0fTpXYf+0AIfT6SJLN5E4PD17YKvQ2Kixnwi7PWORiYVckUsAMgbT4RVG
+         FTYMl3zXKolGDmEEU+nUCFIa7MiJJ53O3IrKhiLZlUaHTk3CfxneFdHURB6BTs0jAhBJ
+         JWiA==
+X-Gm-Message-State: ALQs6tC2vBrPh5KgtZO5HD0TniY8FDAaf6L9to55sYbaWp+4VlS5Riyt
+        oZ6l4fPKcTwCsZZ84CCJcH6U9pgXlUAK49tOqd47QI09lN0=
+X-Google-Smtp-Source: AB8JxZrSEmzcPdpmbFYxpBFeq7/IrIKR6htBsigVFUTpVBW3LZ8dDkpFefrwj2KAYC6Lu8l15gKZovNKXeC8qJxfvHo=
+X-Received: by 2002:a19:1462:: with SMTP id k95-v6mr12867473lfi.23.1524599856989;
+ Tue, 24 Apr 2018 12:57:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180424-4, 24/04/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfJ1m+CObmXlC2kcb6PJEMSPla9kZHPGVGozSxTYwclPFgn1YSC6Kt0Wf507xCYr2emuibrylFk+ndJ7K/oy4MzItmdpeJ0OFquVolDbwC7hSSCGq3UfY
- F3IPmuPX1pQYCZCpOnDI6h5xbzxvfQUclKaezjAgsqcq1dH6+sAVkK1hBwoIGVx+YB9XQIGg1+KrSCaTDu8g8D3TK+BGv+MAeqcoTSqGRhYD96VI/+qvIqbO
- o8Enn1vnv54GsuZYGj3LtO7Yggcm3+wpJpDz81ArPz7MxtDuBUATLPywRy+PEt0LI4C6t4dcoOZVpO70iT5LTJUuZqEPVDVJQnDs6AYSfK6LAC98dJD8gSgz
- qu0cuVDCADuz+7CgKjKyol5JCGTRhxdpDEfCUi1phCKc2k8URdmZaShZh7k9OLIpVka8QsXHdftvwmzW0XGr6w0SsAdGJq/W6blCfWq63VuFiEkkzXP4p2kK
- CCw7uzzoKbIknjX5ICotoWQi+NEd6gupLB5hmg==
+Received: by 2002:a19:9690:0:0:0:0:0 with HTTP; Tue, 24 Apr 2018 12:57:16
+ -0700 (PDT)
+From:   Wink Saville <wink@saville.com>
+Date:   Tue, 24 Apr 2018 12:57:16 -0700
+Message-ID: <CAKk8isrAmWOdioJe2CdY+2F_AzKxcTGwd+kBsrAmGx-U=ZHGgA@mail.gmail.com>
+Subject: Fetching tags overwrites existing tags
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-> On Mon, 23 Apr 2018, Philip Oakley wrote:
->
->> From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de> : Monday, April 
->> 23,
->> 2018 1:03 PM
->> Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
->>
->> [...]
->> >
->> > > > label onto
->> > > >
->> > > > # Branch abc
->> > > > reset onto
->> > >
->> > > Is this reset strictly necessary. We are already there @head.
->> >
->> > No, this is not strictly necessary, but
->>
->> I've realised my misunderstanding. I was thinking this (and others) was
->> equivalent to
->>
->> $  git reset <thatHead'onto'> # maybe even --hard,
->>
->> i.e. affecting the worktree
->
-> Oh, but it *is* affecting the worktree. In this case, since we label HEAD
-> and then immediately reset to the label, there is just nothing to change.
->
-> Consider this example, though:
->
-> label onto
->
-> # Branch: from-philip
-> reset onto
-> pick abcdef something
-> label from-philip
->
-> # Branch: with-love
-> reset onto
-> pick 012345 else
-> label with-love
->
-> reset onto
-> merge -C 98765 from-philip
-> merge -C 43210 with-love
->
-> Only in the first instance is the `reset onto` a no-op, an incidental one.
-> After picking `something` and labeling the result as `from-philip`,
-> though, the next `reset onto` really resets the worktree.
->
->> rather that just being a movement of the Head rev (though I may be having
->> brain fade here regarding untracked files etc..)
->
-> The current way of doing things does not allow the `reset` to overwrite
-> untracked, nor ignored files (I think, I only verified the former, not the
-> latter).
->
-> But yeah, it is not just a movement of HEAD. It does reset the worktree,
-> although quite a bit more gently (and safely) than `git reset --hard`. In
-> that respect, this patch series is a drastic improvement over the Git
-> garden shears (which is the shell script I use in Git for Windows which
-> inspired this here patch series).
->
-thanks for clarifying. Yes my reasoning  was a total brain fade ... Along 
-with the fact that it's a soft/safe/gentle reset.
---
-Philip 
+If have a repository with a tag "v1.0.0" and I add a remote repository
+which also has a tag "v1.0.0" tag is overwritten.
 
+Google found [1] from 2011 and option 3 is what I'd like to see. Has it been
+implemented and I just don't see it?
+
+[1]: https://groups.google.com/forum/#!topic/git-version-control/0l_rJFyTE60
+
+
+Here is an example demonstrating what I see:
+
+$ echo abc > abc.txt
+$ git init .
+Initialized empty Git repository in
+/home/wink/prgs/git/investigate-fetch-tags/.git/
+$ git add *
+$ git commit -m "Initial commit"
+[master (root-commit) 1116fdc] Initial commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 abc.txt
+$ git tag v1.0.0
+$ git remote add gbenchmark git@github.com:google/benchmark
+$ git log --graph --format="%h %s %d"
+* 1116fdc Initial commit  (HEAD -> master, tag: v1.0.0)
+$ git fetch --tags gbenchmark
+warning: no common commits
+remote: Counting objects: 4400, done.
+remote: Compressing objects: 100% (15/15), done.
+remote: Total 4400 (delta 5), reused 5 (delta 3), pack-reused 4382
+Receiving objects: 100% (4400/4400), 1.33 MiB | 2.81 MiB/s, done.
+Resolving deltas: 100% (2863/2863), done.
+From github.com:google/benchmark
+ * [new branch]      clangtidy       -> gbenchmark/clangtidy
+ * [new branch]      iter_report     -> gbenchmark/iter_report
+ * [new branch]      master          -> gbenchmark/master
+ * [new branch]      releasing       -> gbenchmark/releasing
+ * [new branch]      reportercleanup -> gbenchmark/reportercleanup
+ * [new branch]      rmheaders       -> gbenchmark/rmheaders
+ * [new branch]      v2              -> gbenchmark/v2
+ * [new tag]         v0.0.9          -> v0.0.9
+ * [new tag]         v0.1.0          -> v0.1.0
+ t [tag update]      v1.0.0          -> v1.0.0
+ * [new tag]         v1.1.0          -> v1.1.0
+ * [new tag]         v1.2.0          -> v1.2.0
+ * [new tag]         v1.3.0          -> v1.3.0
+ * [new tag]         v1.4.0          -> v1.4.0
+$ git log --graph --format="%h %s %d"
+* 1116fdc Initial commit  (HEAD -> master)
+
+As you can see the tag on 1116fdc is gone, v1.0.0 tag has been updated
+and now its pointing to the tag in gbenchmark:
+
+$ git log -5 --graph --format="%h %s %d" v1.0.0
+*   cd525ae Merge pull request #171 from eliben/update-doc-userealtime
+ (tag: v1.0.0)
+|\
+| * c7ab1b9 Update README to mention UseRealTime for wallclock time
+measurements.
+|/
+* f662e8b Rename OS_MACOSX macro to new name BENCHMARK_OS_MACOSX. Fix #169
+*   0a1f484 Merge pull request #166 from disconnect3d/master
+|\
+| * d2917bc Fixes #165: CustomArguments ret type in README
+|/
+
+Ideally I would have liked the tags fetched from gbenchmark to have a prefix
+of gbenchmark/, like the branches have, maybe something like:
+
+$ git fetch --tags gbenchmark
+...
+ * [new branch]      v2              -> gbenchmark/v2
+ * [new tag]         v0.0.9          -> gbenchmark/v0.0.9
+ * [new tag]         v0.1.0          -> gbenchmark/v0.1.0
+ * [new tag]         v1.0.0          -> gbenchmark/v1.0.0
+ * [new tag]         v1.1.0          -> gbenchmark/v1.1.0
+ * [new tag]         v1.2.0          -> gbenchmark/v1.2.0
+ * [new tag]         v1.3.0          -> gbenchmark/v1.3.0
+ * [new tag]         v1.4.0          -> gbenchmark/v1.4.0
+
+
+-- Wink
