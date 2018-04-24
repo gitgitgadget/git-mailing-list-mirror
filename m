@@ -7,389 +7,155 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD291F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 21:59:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 362971F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 22:00:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751419AbeDXV7l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 17:59:41 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:37155 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751322AbeDXV73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 17:59:29 -0400
-Received: by mail-pf0-f195.google.com with SMTP id p6so13389020pfn.4
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 14:59:29 -0700 (PDT)
+        id S1750853AbeDXWAk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 18:00:40 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:46459 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750779AbeDXWAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 18:00:39 -0400
+Received: by mail-pg0-f42.google.com with SMTP id t12so11831008pgp.13
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 15:00:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=v7+D6+BMA1IXX5e9lm7+HIX7XYhNatWp1j2VRFtN9dc=;
-        b=st69oDgfovuGz1bkq+DimKUedvN5jPYexnaZLm1oVVFzLhIHgEeN9xQTqAvGnK/n6H
-         QPO3sG7I2Iz4KpFj+/tDcvzzivD4Q4Z2kkG1KuK9gOmY8lLGSGAyRS0dvANlTBi7n4UE
-         h4KJzFA+XoX0PLIO2LcDYbZGHWZ5v2xJnQ7BJq9BoqaAjM6Wbf0IamQEiZ99W8syaKab
-         HlcUq55cBs+q5Dqs2sl/PbfMmW6NMtKyAAYyHu/DA26+kSFKpL3mpMl1n5lVbK8X5s71
-         cs29GzeJgVuWkkUjCPMoHcjN6+3/BHKIWZYRCs8IZZl7kBDpGBLFcXlz9tXP0QRA3xxf
-         2CaQ==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=t91GomudueULDTPa84kXvuUm/eLH4VUfejZfJKfgZCk=;
+        b=R7suF3qzSgcwFJRnapB1Nkdk/n3xryrXhbpB84Wf/HPguVmpyaL8kpLQKSCUtaXT2G
+         3o0eI+dpv7cDO6kUsX90zgkpqOwxF3cHnCTASbZmnTYRqtZWeynDM1PhCMPbqZUn+Kk/
+         bWz8dQWj7KhXFlwlS7c4N3WJB/kgJioHe360x/RUcIYlMGk7ojAyYHzhoq+ngyAGrwR8
+         WpaqKFORaZfqkAUHGVI6xfrmF8hi8zru+0ACVaFFdUpBpEg5w0pnx7o9wrRSpEwtc8c5
+         kSr7ns5z68vwvBj6ZjopZJzitILvMHEZfRiTYgX7HVo5Go9PAqj1hZRsFh1I5KRaG6c0
+         UgTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=v7+D6+BMA1IXX5e9lm7+HIX7XYhNatWp1j2VRFtN9dc=;
-        b=cU8wsk0iptZ92pR0CtPVD6lKJBYuWh0v6fpoNhUUPO4FNA3CjDhb05PI3ljDactjDr
-         7gw54CFYM4g5xGyl7xq7MVcxNURaVCrIcTs3z+es/iWnxq1GXsuKPr08UxiVn0eka0Kp
-         kiqp+ohgYoo7WwbVqhWEFnXmdL9lc9xsH0FpSKIKs3hTjTr5jCGaZ8AtVGSeDPodR5uM
-         avggBLvE6RwglcO80cVwFXp7tnKWdn96MZqG/emiEOBkXdwPMEaPvYnRqUeQtEbgrCVm
-         t+IY7CMVsRUVjA2YnT0gxCi2QXfSPDtKs77QNeTHc1ooHIH0pnjXwNWBvWwZMu7YBpfL
-         1rVQ==
-X-Gm-Message-State: ALQs6tCoOD9gLXGBBqA8mGHGLZlUik0qzFQ2EIOPA5gExZqex2yZegtB
-        0+uen5MXB9lgsBt2QSpoNN7841BLz8g=
-X-Google-Smtp-Source: AIpwx4/VzXw3Ikj5w14FMpfXR9a9Ev0CUn4t4Lsh3dxH/Z+PJtwiqSRzPypC9VgR2dnD1EELssLZkg==
-X-Received: by 10.99.128.73 with SMTP id j70mr21993431pgd.12.1524607168718;
-        Tue, 24 Apr 2018 14:59:28 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id m66sm34999042pfb.82.2018.04.24.14.59.27
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=t91GomudueULDTPa84kXvuUm/eLH4VUfejZfJKfgZCk=;
+        b=Xw6K5es4a7XqCiHwB8BO15TRF+i09u/puyYsBDf0e7VGuUD6k9q3KWtRXdSb1GDxPN
+         fnaGY3SorDccJdU5yUACkP6KWjUNxORefG3K2C+LaAA/kob8uLXFTub1NVAxakW1ZYhr
+         9dJGihycg69Wd3dBwVgtDh2+BSqyCry5fPY99Xm02dlr/jqM159yaGXbdQC1Xt3FeF0T
+         rwVtjI6gixAhZy2J06f7G3U/r3+0gln0BaDHBk3MVr3CjGPL5Ms2h57skbMm+CTn2S81
+         9oi6aD1mf6uvki/7+NjAJ60l6hXZtufhXYq/omR6EvIjpUC/w9rpiUuuoTXVTOOiSx+E
+         4TXQ==
+X-Gm-Message-State: ALQs6tAnA8HJbElNgujnHNIIoVi75TZNICxDBN6Ixqnq41xEYoOJ9DWa
+        QV91MmEJR+wQlrPAeZ6TNdWnGg==
+X-Google-Smtp-Source: AIpwx4+JCbAc3BYV7EFV9rdz2HlNjPNfIM59j0XCEDdoSLmQ+Hr8d+shplmRxd2WOBEygMCafJX/hg==
+X-Received: by 10.98.101.131 with SMTP id z125mr25506085pfb.208.1524607238603;
+        Tue, 24 Apr 2018 15:00:38 -0700 (PDT)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id w134sm32578573pfd.132.2018.04.24.15.00.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Apr 2018 14:59:28 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org, gitster@pobox.com
-Cc:     bmwill@google.com, jonathantanmy@google.com,
-        sandals@crustytoothpaste.net, Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCHv2 9/9] cache.h: allow sha1_object_info to handle arbitrary repositories
-Date:   Tue, 24 Apr 2018 14:59:10 -0700
-Message-Id: <20180424215910.22201-11-sbeller@google.com>
-X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-In-Reply-To: <20180424215910.22201-1-sbeller@google.com>
-References: <20180424215910.22201-1-sbeller@google.com>
+        Tue, 24 Apr 2018 15:00:37 -0700 (PDT)
+Date:   Tue, 24 Apr 2018 15:00:36 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, simon@ruderich.org, avarab@gmail.com,
+        jacob.keller@gmail.com
+Subject: Re: [PATCH 6/7] diff.c: decouple white space treatment from move
+ detection algorithm
+Message-Id: <20180424150036.8e7ca862525bedb91673ae46@google.com>
+In-Reply-To: <20180424210330.87861-7-sbeller@google.com>
+References: <20180424210330.87861-1-sbeller@google.com>
+        <20180424210330.87861-7-sbeller@google.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This involves also adapting sha1_object_info_extended and a some
-internal functions that are used to implement these. It all has to
-happen in one patch, because of a single recursive chain of calls visits
-all these functions.
+On Tue, 24 Apr 2018 14:03:29 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-sha1_object_info_extended is also used in partial clones, which allow
-fetching missing objects. As this series will not add the repository
-struct to the transport code and fetch_object(), add a TODO note and
-bug out if a user tries to use a partial clone in a repository other than
-the_repository.
+> As we change the default, we'll adjust the tests.
 
-Helped-by: Brandon Williams <bmwill@google.com>
-Helped-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- cache.h     |  9 ++++-----
- packfile.c  | 58 ++++++++++++++++++++++++++---------------------------
- packfile.h  |  8 ++++----
- sha1_file.c | 30 ++++++++++++++++-----------
- 4 files changed, 54 insertions(+), 51 deletions(-)
+This statement is probably better written as:
 
-diff --git a/cache.h b/cache.h
-index 6340b2c572..3a4d80e92b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1192,8 +1192,7 @@ static inline void *read_object_file(const struct object_id *oid, enum object_ty
- }
- 
- /* Read and unpack an object file into memory, write memory to an object file */
--#define oid_object_info(r, o, f) oid_object_info_##r(o, f)
--int oid_object_info_the_repository(const struct object_id *, unsigned long *);
-+int oid_object_info(struct repository *r, const struct object_id *, unsigned long *);
- 
- extern int hash_object_file(const void *buf, unsigned long len,
- 			    const char *type, struct object_id *oid);
-@@ -1675,9 +1674,9 @@ struct object_info {
- /* Do not check loose object */
- #define OBJECT_INFO_IGNORE_LOOSE 16
- 
--#define oid_object_info_extended(r, oid, oi, flags) \
--	oid_object_info_extended_##r(oid, oi, flags)
--int oid_object_info_extended_the_repository(const struct object_id *, struct object_info *, unsigned flags);
-+int oid_object_info_extended(struct repository *r,
-+			     const struct object_id *,
-+			     struct object_info *, unsigned flags);
- 
- /*
-  * Set this to 0 to prevent sha1_object_info_extended() from fetching missing
-diff --git a/packfile.c b/packfile.c
-index 8de87f904b..55d383ed0a 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1104,9 +1104,9 @@ static const unsigned char *get_delta_base_sha1(struct packed_git *p,
- 		return NULL;
- }
- 
--#define retry_bad_packed_offset(r, p, o) \
--	retry_bad_packed_offset_##r(p, o)
--static int retry_bad_packed_offset_the_repository(struct packed_git *p, off_t obj_offset)
-+static int retry_bad_packed_offset(struct repository *r,
-+				   struct packed_git *p,
-+				   off_t obj_offset)
- {
- 	int type;
- 	struct revindex_entry *revidx;
-@@ -1116,7 +1116,7 @@ static int retry_bad_packed_offset_the_repository(struct packed_git *p, off_t ob
- 		return OBJ_BAD;
- 	nth_packed_object_oid(&oid, p, revidx->nr);
- 	mark_bad_packed_object(p, oid.hash);
--	type = oid_object_info(the_repository, &oid, NULL);
-+	type = oid_object_info(r, &oid, NULL);
- 	if (type <= OBJ_NONE)
- 		return OBJ_BAD;
- 	return type;
-@@ -1124,13 +1124,12 @@ static int retry_bad_packed_offset_the_repository(struct packed_git *p, off_t ob
- 
- #define POI_STACK_PREALLOC 64
- 
--#define packed_to_object_type(r, p, o, t, w, c) \
--	packed_to_object_type_##r(p, o, t, w, c)
--static enum object_type packed_to_object_type_the_repository(struct packed_git *p,
--							     off_t obj_offset,
--							     enum object_type type,
--							     struct pack_window **w_curs,
--							     off_t curpos)
-+static enum object_type packed_to_object_type(struct repository *r,
-+					      struct packed_git *p,
-+					      off_t obj_offset,
-+					      enum object_type type,
-+					      struct pack_window **w_curs,
-+					      off_t curpos)
- {
- 	off_t small_poi_stack[POI_STACK_PREALLOC];
- 	off_t *poi_stack = small_poi_stack;
-@@ -1157,7 +1156,7 @@ static enum object_type packed_to_object_type_the_repository(struct packed_git *
- 		if (type <= OBJ_NONE) {
- 			/* If getting the base itself fails, we first
- 			 * retry the base, otherwise unwind */
--			type = retry_bad_packed_offset(the_repository, p, base_offset);
-+			type = retry_bad_packed_offset(r, p, base_offset);
- 			if (type > OBJ_NONE)
- 				goto out;
- 			goto unwind;
-@@ -1185,7 +1184,7 @@ static enum object_type packed_to_object_type_the_repository(struct packed_git *
- unwind:
- 	while (poi_stack_nr) {
- 		obj_offset = poi_stack[--poi_stack_nr];
--		type = retry_bad_packed_offset(the_repository, p, obj_offset);
-+		type = retry_bad_packed_offset(r, p, obj_offset);
- 		if (type > OBJ_NONE)
- 			goto out;
- 	}
-@@ -1272,15 +1271,15 @@ static void detach_delta_base_cache_entry(struct delta_base_cache_entry *ent)
- 	free(ent);
- }
- 
--#define cache_or_unpack_entry(r, p, bo, bs, t) cache_or_unpack_entry_##r(p, bo, bs, t)
--static void *cache_or_unpack_entry_the_repository(struct packed_git *p, off_t base_offset,
--	unsigned long *base_size, enum object_type *type)
-+static void *cache_or_unpack_entry(struct repository *r, struct packed_git *p,
-+				   off_t base_offset, unsigned long *base_size,
-+				   enum object_type *type)
- {
- 	struct delta_base_cache_entry *ent;
- 
- 	ent = get_delta_base_cache_entry(p, base_offset);
- 	if (!ent)
--		return unpack_entry(the_repository, p, base_offset, type, base_size);
-+		return unpack_entry(r, p, base_offset, type, base_size);
- 
- 	if (type)
- 		*type = ent->type;
-@@ -1334,8 +1333,8 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
- 	hashmap_add(&delta_base_cache, ent);
- }
- 
--int packed_object_info_the_repository(struct packed_git *p, off_t obj_offset,
--				      struct object_info *oi)
-+int packed_object_info(struct repository *r, struct packed_git *p,
-+		       off_t obj_offset, struct object_info *oi)
- {
- 	struct pack_window *w_curs = NULL;
- 	unsigned long size;
-@@ -1347,7 +1346,7 @@ int packed_object_info_the_repository(struct packed_git *p, off_t obj_offset,
- 	 * a "real" type later if the caller is interested.
- 	 */
- 	if (oi->contentp) {
--		*oi->contentp = cache_or_unpack_entry(the_repository, p, obj_offset, oi->sizep,
-+		*oi->contentp = cache_or_unpack_entry(r, p, obj_offset, oi->sizep,
- 						      &type);
- 		if (!*oi->contentp)
- 			type = OBJ_BAD;
-@@ -1381,7 +1380,7 @@ int packed_object_info_the_repository(struct packed_git *p, off_t obj_offset,
- 
- 	if (oi->typep || oi->type_name) {
- 		enum object_type ptot;
--		ptot = packed_to_object_type(the_repository, p, obj_offset,
-+		ptot = packed_to_object_type(r, p, obj_offset,
- 					     type, &w_curs, curpos);
- 		if (oi->typep)
- 			*oi->typep = ptot;
-@@ -1470,10 +1469,10 @@ struct unpack_entry_stack_ent {
- 	unsigned long size;
- };
- 
--#define read_object(r, o, t, s) read_object_##r(o, t, s)
--static void *read_object_the_repository(const struct object_id *oid,
--					enum object_type *type,
--					unsigned long *size)
-+static void *read_object(struct repository *r,
-+			 const struct object_id *oid,
-+			 enum object_type *type,
-+			 unsigned long *size)
- {
- 	struct object_info oi = OBJECT_INFO_INIT;
- 	void *content;
-@@ -1481,14 +1480,13 @@ static void *read_object_the_repository(const struct object_id *oid,
- 	oi.sizep = size;
- 	oi.contentp = &content;
- 
--	if (oid_object_info_extended(the_repository, oid, &oi, 0) < 0)
-+	if (oid_object_info_extended(r, oid, &oi, 0) < 0)
- 		return NULL;
- 	return content;
- }
- 
--void *unpack_entry_the_repository(struct packed_git *p, off_t obj_offset,
--				  enum object_type *final_type,
--				  unsigned long *final_size)
-+void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
-+		   enum object_type *final_type, unsigned long *final_size)
- {
- 	struct pack_window *w_curs = NULL;
- 	off_t curpos = obj_offset;
-@@ -1618,7 +1616,7 @@ void *unpack_entry_the_repository(struct packed_git *p, off_t obj_offset,
- 				      oid_to_hex(&base_oid), (uintmax_t)obj_offset,
- 				      p->pack_name);
- 				mark_bad_packed_object(p, base_oid.hash);
--				base = read_object(the_repository, &base_oid, &type, &base_size);
-+				base = read_object(r, &base_oid, &type, &base_size);
- 				external_base = base;
- 			}
- 		}
-diff --git a/packfile.h b/packfile.h
-index 1efa57a90e..fdfddb89b5 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -115,8 +115,7 @@ extern off_t nth_packed_object_offset(const struct packed_git *, uint32_t n);
- extern off_t find_pack_entry_one(const unsigned char *sha1, struct packed_git *);
- 
- extern int is_pack_valid(struct packed_git *);
--#define unpack_entry(r, p, of, ot, s) unpack_entry_##r(p, of, ot, s)
--extern void *unpack_entry_the_repository(struct packed_git *, off_t, enum object_type *, unsigned long *);
-+extern void *unpack_entry(struct repository *r, struct packed_git *, off_t, enum object_type *, unsigned long *);
- extern unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
- extern unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
- extern int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, unsigned long *);
-@@ -126,8 +125,9 @@ extern void release_pack_memory(size_t);
- /* global flag to enable extra checks when accessing packed objects */
- extern int do_check_packed_object_crc;
- 
--#define packed_object_info(r, p, o, oi) packed_object_info_##r(p, o, oi)
--extern int packed_object_info_the_repository(struct packed_git *pack, off_t offset, struct object_info *);
-+extern int packed_object_info(struct repository *r,
-+			      struct packed_git *pack,
-+			      off_t offset, struct object_info *);
- 
- extern void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
- extern const struct packed_git *has_packed_and_bad(const unsigned char *sha1);
-diff --git a/sha1_file.c b/sha1_file.c
-index 746ff8297a..94123e0299 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1231,7 +1231,8 @@ static int sha1_loose_object_info(struct repository *r,
- 
- int fetch_if_missing = 1;
- 
--int oid_object_info_extended_the_repository(const struct object_id *oid, struct object_info *oi, unsigned flags)
-+int oid_object_info_extended(struct repository *r, const struct object_id *oid,
-+			     struct object_info *oi, unsigned flags)
- {
- 	static struct object_info blank_oi = OBJECT_INFO_INIT;
- 	struct pack_entry e;
-@@ -1240,7 +1241,7 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
- 	int already_retried = 0;
- 
- 	if (flags & OBJECT_INFO_LOOKUP_REPLACE)
--		real = lookup_replace_object(the_repository, oid);
-+		real = lookup_replace_object(r, oid);
- 
- 	if (is_null_oid(real))
- 		return -1;
-@@ -1269,20 +1270,20 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
- 	}
- 
- 	while (1) {
--		if (find_pack_entry(the_repository, real->hash, &e))
-+		if (find_pack_entry(r, real->hash, &e))
- 			break;
- 
- 		if (flags & OBJECT_INFO_IGNORE_LOOSE)
- 			return -1;
- 
- 		/* Most likely it's a loose object. */
--		if (!sha1_loose_object_info(the_repository, real->hash, oi, flags))
-+		if (!sha1_loose_object_info(r, real->hash, oi, flags))
- 			return 0;
- 
- 		/* Not a loose object; someone else may have just packed it. */
- 		if (!(flags & OBJECT_INFO_QUICK)) {
--			reprepare_packed_git(the_repository);
--			if (find_pack_entry(the_repository, real->hash, &e))
-+			reprepare_packed_git(r);
-+			if (find_pack_entry(r, real->hash, &e))
- 				break;
- 		}
- 
-@@ -1290,9 +1291,12 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
- 		if (fetch_if_missing && repository_format_partial_clone &&
- 		    !already_retried) {
- 			/*
--			 * TODO Investigate haveing fetch_object() return
-+			 * TODO Investigate having fetch_object() return
- 			 * TODO error/success and stopping the music here.
-+			 * TODO Pass a repository struct through fetch_object.
- 			 */
-+			if (r != the_repository)
-+				die(_("partial clones only supported in the_repository"));
- 			fetch_object(repository_format_partial_clone, real->hash);
- 			already_retried = 1;
- 			continue;
-@@ -1307,10 +1311,10 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
- 		 * information below, so return early.
- 		 */
- 		return 0;
--	rtype = packed_object_info(the_repository, e.p, e.offset, oi);
-+	rtype = packed_object_info(r, e.p, e.offset, oi);
- 	if (rtype < 0) {
- 		mark_bad_packed_object(e.p, real->hash);
--		return oid_object_info_extended(the_repository, real, oi, 0);
-+		return oid_object_info_extended(r, real, oi, 0);
- 	} else if (oi->whence == OI_PACKED) {
- 		oi->u.packed.offset = e.offset;
- 		oi->u.packed.pack = e.p;
-@@ -1322,15 +1326,17 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
- }
- 
- /* returns enum object_type or negative */
--int oid_object_info_the_repository(const struct object_id *oid, unsigned long *sizep)
-+int oid_object_info(struct repository *r,
-+		    const struct object_id *oid,
-+		    unsigned long *sizep)
- {
- 	enum object_type type;
- 	struct object_info oi = OBJECT_INFO_INIT;
- 
- 	oi.typep = &type;
- 	oi.sizep = sizep;
--	if (oid_object_info_extended(the_repository, oid, &oi,
--				     OBJECT_INFO_LOOKUP_REPLACE) < 0)
-+	if (oid_object_info_extended(r, oid, &oi,
-+				      OBJECT_INFO_LOOKUP_REPLACE) < 0)
- 		return -1;
- 	return type;
- }
--- 
-2.17.0.441.gb46fe60e1d-goog
+  In some existing tests, options like --ignore-space-at-eol were used
+  to control the color of the output. They have been updated to use
+  options like --color-moved-ignore-space-at-eol instead.
 
+> +	unsigned flags = diffopt->color_moved_ws_handling
+> +			 & XDF_WHITESPACE_FLAGS;
+
+No need for "& XDF_WHITESPACE_FLAGS".
+
+> +	unsigned flags = o->color_moved_ws_handling & XDF_WHITESPACE_FLAGS;
+
+Same here.
+
+> @@ -214,6 +214,7 @@ struct diff_options {
+>  	} color_moved;
+>  	#define COLOR_MOVED_DEFAULT COLOR_MOVED_ZEBRA
+>  	#define COLOR_MOVED_MIN_ALNUM_COUNT 20
+> +	int color_moved_ws_handling;
+>  };
+
+Should the "int" be "unsigned"? I noticed that the flag-like xdl_opts is
+signed, but I think it's better for flags to be unsigned. Also, document
+what this stores. (And also, I would limit the bits.)
+
+> +test_expect_success 'only move detection ignores white spaces' '
+> +	git reset --hard &&
+> +	q_to_tab <<-\EOF >text.txt &&
+> +		a long line to exceed per-line minimum
+> +		another long line to exceed per-line minimum
+> +		original file
+> +	EOF
+> +	git add text.txt &&
+> +	git commit -m "add text" &&
+> +	q_to_tab <<-\EOF >text.txt &&
+> +		Qa long line to exceed per-line minimum
+> +		Qanother long line to exceed per-line minimum
+> +		new file
+> +	EOF
+> +
+> +	# Make sure we get a different diff using -w
+> +	git diff --color --color-moved -w \
+> +		--color-moved-no-ignore-all-space \
+> +		--color-moved-no-ignore-space-change \
+> +		--color-moved-no-ignore-space-at-eol |
+> +		grep -v "index" |
+> +		test_decode_color >actual &&
+> +	q_to_tab <<-\EOF >expected &&
+> +	<BOLD>diff --git a/text.txt b/text.txt<RESET>
+> +	<BOLD>--- a/text.txt<RESET>
+> +	<BOLD>+++ b/text.txt<RESET>
+> +	<CYAN>@@ -1,3 +1,3 @@<RESET>
+> +	 Qa long line to exceed per-line minimum<RESET>
+> +	 Qanother long line to exceed per-line minimum<RESET>
+> +	<RED>-original file<RESET>
+> +	<GREEN>+<RESET><GREEN>new file<RESET>
+> +	EOF
+> +	test_cmp expected actual &&
+> +
+> +	# And now ignoring white space only in the move detection
+> +	git diff --color --color-moved \
+> +		--color-moved-ignore-all-space \
+> +		--color-moved-ignore-space-change \
+> +		--color-moved-ignore-space-at-eol |
+> +		grep -v "index" |
+> +		test_decode_color >actual &&
+> +	q_to_tab <<-\EOF >expected &&
+> +	<BOLD>diff --git a/text.txt b/text.txt<RESET>
+> +	<BOLD>--- a/text.txt<RESET>
+> +	<BOLD>+++ b/text.txt<RESET>
+> +	<CYAN>@@ -1,3 +1,3 @@<RESET>
+> +	<BOLD;MAGENTA>-a long line to exceed per-line minimum<RESET>
+> +	<BOLD;MAGENTA>-another long line to exceed per-line minimum<RESET>
+> +	<RED>-original file<RESET>
+> +	<BOLD;YELLOW>+<RESET>Q<BOLD;YELLOW>a long line to exceed per-line minimum<RESET>
+> +	<BOLD;YELLOW>+<RESET>Q<BOLD;YELLOW>another long line to exceed per-line minimum<RESET>
+> +	<GREEN>+<RESET><GREEN>new file<RESET>
+> +	EOF
+> +	test_cmp expected actual
+>  '
+
+I know I suggested "per-line minimum", but I don't think there is one -
+I think we only have a per-block minimum. Maybe delete "per-line" in
+each of the lines.
