@@ -2,104 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E78B21F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 06:14:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5A6A1F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 06:21:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756168AbeDXGOD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 02:14:03 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33683 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755595AbeDXGOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 02:14:00 -0400
-Received: by mail-wr0-f194.google.com with SMTP id z73-v6so47232160wrb.0
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 23:13:59 -0700 (PDT)
+        id S1756354AbeDXGVO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 02:21:14 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36233 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756058AbeDXGVN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 02:21:13 -0400
+Received: by mail-wr0-f196.google.com with SMTP id u18-v6so19988106wrg.3
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 23:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=/w7bE+yME6heJ3UXgrqUtSeeOakDOWWC+9lzMB4I4pc=;
-        b=Yjf7vXKrM52EoGPzxjnpS7GDHysOXRV+bVwk2jxtC58f+/fPLg0LwLDnffV6hQ3gcA
-         zUccawEgUbJeU1ZhZ3fn1wyvefKxefcOVl1JOFjEls7eAbzP0A0a+GHBJfJiMsmbJTTf
-         TNNSmJ9Q7k7zLa5qeYNWsb3Y3crfMG+cZHZm4Q89qJbgkT49niGAigox9dkxQfEKXCdz
-         Cr5siqJ1N4gumBS5g4FHIv7z1yggjR8GE2LdVqiG4MlvDWBXO14XQJOlHwYSOo92o4sM
-         VcGMyBiHK0hXCcpNf+SpJm6mMyWJmXaLMSMNEtrdTIKOfT8squ/7jDZzkUyLLzl6OO1O
-         Eaaw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=x1PuBOffSPXfadXxIu+gV4c+u5G43SUoXFZ1JXg9XR4=;
+        b=Cf8mVQfpCx/kWn/YITsWnLfif8wPKAugu/DQi/+0jzbd8zkT+RYVborBYV0VkUnIu7
+         nFNjPYCvCyfPS7gAbiZK3ckk/7JSz5sTpCR92ZD/fpEMkZNOb9+OKAtdZwqioL+6N7FS
+         NINhHhMmpAoX3H1m25/o2iug3mEW3P/NcwOgYuDXnCZFV+kMqlY0njAvgGVVhTB5tHX1
+         JojepBj7+xze2ear5Uefnq6BciwhpxVmmWmpKMQFJkIFs8vslWvgjBlXv3W4sXk6z24A
+         NUgtklxVKCRcbzFmpgqrh7Xwl/VbvyIlt1EnqIyBp0wtNB/oy0scohkCsdd/PKWNOHID
+         yELg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=/w7bE+yME6heJ3UXgrqUtSeeOakDOWWC+9lzMB4I4pc=;
-        b=IcD5yQ74Q7Rzp/Agyq8dcCvk/7QISsY/JUNszgI/xYjXhltIZK+GMGMwXe/HCg/bmu
-         arC2me3pXay3M3rThYTS73Gw+zDlsvezpaNJ6vhV1VI0Y+/nxto868fFWZyl50hCRMpU
-         u80LCpyBNvDZBDmX9PRYtTYv0Byxo0dYxfXvm7CCjMI9XX0kj66XPyytWEX1oagxl6dl
-         ds7RrNXb4r7zX6I92FusaBecaaDkAXuErUh/5OlrrquGXfO3n42yYWIWeZe8/dRkar64
-         xBwSZ1hq9Jx/e5jiEEoyDBWfbjOZjozfBfOJzouo3id9gNBp677qGBJN+y7FGkER4BJ1
-         CKEQ==
-X-Gm-Message-State: ALQs6tCz58ycbv2DVj5H1ZDXlX3CMOX5o9xEpJJ/6KG/7L7P9bnv5iwR
-        SVrzBFUFtZrhbAQ9NDOCUG0=
-X-Google-Smtp-Source: AIpwx49Pp22Q+hLbEGH45NyRw3TPusIOvLSq70yN9OlPXr4SDQifFPFHtFGPnErte1J0tQfphs1h4Q==
-X-Received: by 2002:adf:959a:: with SMTP id p26-v6mr19887094wrp.211.1524550438687;
-        Mon, 23 Apr 2018 23:13:58 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id q188sm13722088wmb.37.2018.04.23.23.13.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Apr 2018 23:13:56 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>, Beat Bolli <dev+git@drbeat.li>
-Subject: Re: [PATCH v2 2/6] grep.c: take column number as argument to show_line()
-References: <20180421034530.GB24606@syl.local>
-        <cover.1524429778.git.me@ttaylorr.com>
-        <5aaf7bebb27d385ea090cb83e97c596983ebae47.1524429778.git.me@ttaylorr.com>
-        <CAPig+cQ2+wTTXE0mhnGnp2pZug=Po0SCVwCO_2agxUDaOsFRLw@mail.gmail.com>
-        <20180423011726.GD78148@syl.local>
-        <874lk2e4he.fsf@evledraar.gmail.com>
-Date:   Tue, 24 Apr 2018 15:13:55 +0900
-In-Reply-To: <874lk2e4he.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 23 Apr 2018 10:01:17 +0200")
-Message-ID: <xmqqtvs15dy4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=x1PuBOffSPXfadXxIu+gV4c+u5G43SUoXFZ1JXg9XR4=;
+        b=csc8vK37EezJOP9cLeSMGbOCB3rtYeAY4utJAH23GMTzowNoeVGnFEOYxGMhDAz1oa
+         96kYUmFQ928JVdkUhWiGtWgLRzHqzZS0mrxTkw8stEYKPKzHq7RBwZrJ0hA5U40b/7Vy
+         qG2dnavGeti9I2APoblrJQzcbh8oU4o3n8aBzjZnBOEE+vMR1eT55kJLuwRRNyOQJ1nc
+         mBts9QAG7DeR6u7wC/byROiQZcFzhe3BkSvtNZaSUIpwxw5xKIQgNUSE80sBLhfNUhNd
+         aBN6s69+A66b3kjpHqYORGeN1OvkmH5OaoDasvwxhVv+MEYkHrBqyATSCvchjnAQsfxq
+         TiOg==
+X-Gm-Message-State: ALQs6tBFJ4VdJLVG1oWOncy2D9l3Lzb+XwCqiNOZN4TT+OaTLescdV4u
+        s4GzAbMOc3059f8EVXi2VP4mjWOsoE6MO4TAMsYUBA==
+X-Google-Smtp-Source: AIpwx4+M/u7KaR8h3ARdJkmQQ+X55Fl5ATqy7gAD+Y/HyxV84edn1qVwg9mAOqSg22nhGfWi8qgqsU2dd7C6TWzxPYo=
+X-Received: by 10.80.192.145 with SMTP id k17mr31937380edf.303.1524550872016;
+ Mon, 23 Apr 2018 23:21:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.80.180.180 with HTTP; Mon, 23 Apr 2018 23:20:51 -0700 (PDT)
+In-Reply-To: <f140d2795b9dce8b805cd2ebaf076742978ab8ae.1524545557.git.martin.agren@gmail.com>
+References: <ec58f482-ffde-1959-ff4a-9b128905ccb0@talktalk.net>
+ <cover.1524545557.git.martin.agren@gmail.com> <f140d2795b9dce8b805cd2ebaf076742978ab8ae.1524545557.git.martin.agren@gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 23 Apr 2018 23:20:51 -0700
+Message-ID: <CA+P7+xqP8b1i4-C242de2_P9dFsZ03pcRGo45scyfK2ohd-ykw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] merge: setup `opts` later in `checkout_fast_forward()`
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Phillip Wood <phillip.wood@talktalk.net>,
+        Git mailing list <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-
-> I think when we add features to git-grep we should be as close to GNU
-> grep as possible (e.g. not add this -m alias meaning something different
-> as in your v1), but if GNU grep doesn't have something go with the trend
-> of other grep tools, as noted at
-> https://beyondgrep.com/feature-comparison/ (and I found another one that
-> has this: https://github.com/beyondgrep/website/pull/83), so there's
-> already 3 prominent grep tools that call this just --column.
+On Mon, Apr 23, 2018 at 10:13 PM, Martin =C3=85gren <martin.agren@gmail.com=
+> wrote:
+> After we initialize the various fields in `opts` but before we actually
+> use them, we might return early. Move the initialization further down,
+> to immediately before we use `opts`.
 >
-> I think we should just go with that.
+> This limits the scope of `opts` and will help a subsequent commit fix a
+> memory leak without having to worry about those early returns.
+>
+> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+> ---
+>  merge.c | 32 +++++++++++++++++---------------
+>  1 file changed, 17 insertions(+), 15 deletions(-)
+>
+> diff --git a/merge.c b/merge.c
+> index f06a4773d4..f123658e58 100644
+> --- a/merge.c
+> +++ b/merge.c
+> @@ -94,8 +94,24 @@ int checkout_fast_forward(const struct object_id *head=
+,
+>                 return -1;
+>
+>         memset(&trees, 0, sizeof(trees));
+> -       memset(&opts, 0, sizeof(opts));
+>         memset(&t, 0, sizeof(t));
+> +
+> +       trees[nr_trees] =3D parse_tree_indirect(head);
+> +       if (!trees[nr_trees++]) {
+> +               rollback_lock_file(&lock_file);
+> +               return -1;
+> +       }
+> +       trees[nr_trees] =3D parse_tree_indirect(remote);
+> +       if (!trees[nr_trees++]) {
+> +               rollback_lock_file(&lock_file);
+> +               return -1;
+> +       }
+> +       for (i =3D 0; i < nr_trees; i++) {
+> +               parse_tree(trees[i]);
+> +               init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
+> +       }
+> +
+> +       memset(&opts, 0, sizeof(opts));
+>         if (overwrite_ignore) {
+>                 memset(&dir, 0, sizeof(dir));
 
-OK.  If they called it --column-number, that might have been more in
-line with GNU grep's --line-number, but that is not something we can
-dictate retroactively anyway, so --column to match them would be
-better than trying to be consistent and ending up with being
-different from everybody else.
+I'm guessing the diff algorithm simply found that this was a more
+compact representation of the change? It's a bit confusing when your
+description indicates you "moved" some code down, but it looks like
+you moved code up.
 
-> Also, as a bonus question, since you're poking at this column code
-> anyway, interested in implementing -o (--only-matching)? That would be
-> super-useful (see
-> https://public-inbox.org/git/87in9ucsbb.fsf@evledraar.gmail.com/) :)
+Thanks,
+Jake
 
-Sounds good ;-).
-
+>                 dir.flags |=3D DIR_SHOW_IGNORED;
+> @@ -112,20 +128,6 @@ int checkout_fast_forward(const struct object_id *he=
+ad,
+>         opts.fn =3D twoway_merge;
+>         setup_unpack_trees_porcelain(&opts, "merge");
+>
+> -       trees[nr_trees] =3D parse_tree_indirect(head);
+> -       if (!trees[nr_trees++]) {
+> -               rollback_lock_file(&lock_file);
+> -               return -1;
+> -       }
+> -       trees[nr_trees] =3D parse_tree_indirect(remote);
+> -       if (!trees[nr_trees++]) {
+> -               rollback_lock_file(&lock_file);
+> -               return -1;
+> -       }
+> -       for (i =3D 0; i < nr_trees; i++) {
+> -               parse_tree(trees[i]);
+> -               init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
+> -       }
+>         if (unpack_trees(nr_trees, t, &opts)) {
+>                 rollback_lock_file(&lock_file);
+>                 return -1;
+> --
+> 2.17.0
+>
