@@ -7,92 +7,115 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1F811F404
-	for <e@80x24.org>; Tue, 24 Apr 2018 08:22:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1A331F404
+	for <e@80x24.org>; Tue, 24 Apr 2018 08:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756147AbeDXIWv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 04:22:51 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57231 "EHLO mout.gmx.net"
+        id S932974AbeDXIda (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 04:33:30 -0400
+Received: from mout.gmx.net ([212.227.15.19]:51739 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755887AbeDXIWt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 04:22:49 -0400
-Received: from [10.49.234.97] ([95.208.59.141]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbuIK-1ejDyt262W-00jMes; Tue, 24
- Apr 2018 10:22:39 +0200
-Date:   Tue, 24 Apr 2018 10:22:35 +0200 (DST)
+        id S932840AbeDXId1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 04:33:27 -0400
+Received: from [10.49.234.97] ([95.208.59.141]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lbdl5-1ehppt46Rf-00lG99; Tue, 24
+ Apr 2018 10:33:19 +0200
+Date:   Tue, 24 Apr 2018 10:33:13 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-cc:     Phillip Wood <phillip.wood@talktalk.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
+To:     Philip Oakley <philipoakley@iee.org>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
         Igor Djordjevic <igor.d.djordjevic@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>
-Subject: Re: [PATCH v8 06/16] sequencer: introduce the `merge` command
-In-Reply-To: <cover.1524545557.git.martin.agren@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804241015470.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <ec58f482-ffde-1959-ff4a-9b128905ccb0@talktalk.net> <cover.1524545557.git.martin.agren@gmail.com>
+        Sergey Organov <sorganov@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v8 08/16] rebase-helper --make-script: introduce a flag
+ to rebase merges
+In-Reply-To: <0023E61D311849B68FECAE76613839C4@PhilipOakley>
+Message-ID: <nycvar.QRO.7.76.6.1804241032030.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1524139900.git.johannes.schindelin@gmx.de> <cover.1524306546.git.johannes.schindelin@gmx.de> <ff71f636d5171359d94097423b8e9e340ab2152a.1524306546.git.johannes.schindelin@gmx.de> <0023E61D311849B68FECAE76613839C4@PhilipOakley>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-369143892-1524558158=:64"
-X-Provags-ID: V03:K1:SwRKyWUWHWYgAAcjAjim/Sw8atpuk2QHx9Mx96p38hOwR10ROFw
- g/9kS03tHw29Bu+jvpP0rb7fDlqHuqqjRgb+zVwNH5hxGOjIhWBtAtU/A3kL7aJtQv2KxNt
- bSPLmM6sGQsx/dicOS60xo6lcdf0PpkYmXb6lxcp3j4KwTSMpZjJYxCKaENgka5MOPc8TQD
- 2ihjz2K2ezD4D2NxTTnjQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Jxvm0TUDefQ=:vXR79NHaZrrM3dnnMSJOIM
- PBL6c+mDvU/wd9LxhUoVKrd+qbPIxG3+DZCtgh8kUnee8xdNCQDo2KoyrEgvhLUwyYFJd4+vE
- CTSP9/nvFwXPuyi35/7Z+8eC5iAyFaQv0TbcpwrbIW8fo8EvJ6x8TC34scWJ2KwzA1J5u/PPM
- WOJHcKupxrws4elfNdzHZR/3KiKUl1j+l0OXIt0YP0+Ly1XZOAyrSMfve22CqytVKPuNNTAeT
- W1M17/2qs6n6SfEU3pxzOhiIZI1yFtz1En43ryNlk7JL0eeuerm2T0MsPAC9FW2jYpr7T8PXk
- rPoroI7sZTpYIho+FUFUcigAGDtt3JL+yEpnKpPQi0fIuX2d1rekQMp7dc9wwJnbFoMay7OhN
- 34hRm6EAaosAwgpRRegIVFNmvsII2s6P7YNld2iA7rA/iWDLHPRa3p7FTVS1nXaPNkwHFHpRQ
- GtJ+qf3a23IjKY5bp/7nDt8o/vjTuc3jKuH68O7ijzKm5lcdnv0fQqI//ENYIWNBcZORbPISS
- v6Q0cmOPhk3UZ/nf1BuUBUJULbMpVBHvXoksV8bt0ZWcIUgc1aqRrcNEf7Zuy9bqIptHfEFmZ
- ZyzPx3FSr0y7twEe74FvHr7xBjtgSyx2FO468e9+v3b06Srud35krMgsviGl2Ub1Vt2kaNI7/
- ozXku6M0VtUhGcU48CDBeqaoNulq+uP7cR+gm42zBC9cLF7vD01+zTAPhZ/i9yR60GKF1maXU
- minlK+3e5YtMuV90mJfQGSRs1gc6UipOwyB50Je8wm4byx5eIomk5NviRnDI4f7gO97DfulNj
- MqB2JJEQAJYobmEjYrh+rQyf4fg7Ce/KXU7QkIm7D5Glxinkd8=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:m3dDY6+f8SrEqBkHhh6TpOTPqU0w8RRyeAuFChw+RZkGhwaU7cX
+ 2ieCjoi00OC7FlJVuhBiWX4cxruOYEKJjEliZsbEIRPT5YPTXf4rbSV2uEo3le9mRQKYyGd
+ CAbgba4aGliDXHYqMCjUMc+n2VXAiRLJ+xfPKK23hS120WutQwIe3rexesIqRfHvxT5rPyc
+ t0+1co389Nthda8p+HU6w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bnnVRJIIWw0=:ptJSsYv9Aq0mIoTXBTwtbL
+ UQBg4HdOQ7hBnuE/Rpf7/fGF9iYhr+/9Qn8/KM2PZVKPB9k5l2etjZ2X9pucZSVpPPJhPgY4+
+ ro9eu8eYlq2nL/fcLk4gPuOjdl5gYxJ3BYx0fq4tabd7odK4LVCrCpHBxFxEexWbO+muROCvA
+ WA0kovu6grMRxc+B5rJEeVtyceyVp1IbCzlc3T82GMO4nVUJx1DzJX0tfrau2ZHCTL4wz7XEm
+ tGF63dI8QkwcqQX0ZULYFvdOnl1lLM3nA6D4i1NqdTbPB4GedPpRSE8s+MQnSikQ1VRjjfPQI
+ B629Jf+x6WTdBx1GUAK7LE2QfLFW449YmSoZcsR1pUF7cRN9MEBW6uqEO1EOZKbHFbEo6Rv5T
+ C9+7BnBGfgeZIay9Z9+pGaPPwsVpLGblm9XoWxF1YC13PTa1WOSWY9tgp/yyovmrWal8DBX7o
+ qs8+lKtZprZrJit2sor+8OgZ23/kbTpm4gCh6dZjKGAzQcClsXWM0LuT+i9U6fTEEWq7Rg/1v
+ x4e285538ihoGRkHiDACdmvj42UMsWK7Yr7bXdr50gkjjxHoDvD+gw3B2dvFwiWPWnFSfWPOl
+ Etkyoi7HL59r2lLrJeW8dBUpYXfD/P3xX6BYd3U8fhwU46vchrD0WalGF60n9eHzkkt7+FbpC
+ 6uX0s7ZB/XLQtYy+fxlBPUA+o/jvQFgHIWM0xQT5iBGpiMZH8UQwrbSRfpP9Sxor5u2veUMqt
+ 5AekDUFVUWO/yt19WKxb7cKbQkWvH8Cl6MEXFVj2RXw16EgSCjbX3zmGj3tZ/KutOQmDv8SfJ
+ 8brj9I7HrE6H8S0aupzkxHvFbfFrGafO9QpB1E0iIjyGwrPDu8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Philip,
 
---8323329-369143892-1524558158=:64
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Sun, 22 Apr 2018, Philip Oakley wrote:
 
-Hi Martin,
+> From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
+> 
+> Sorry for the very late in the series comments..
+> 
+> > The sequencer just learned new commands intended to recreate branch
+> > structure (similar in spirit to --preserve-merges, but with a
+> > substantially less-broken design).
+> >
+> > Let's allow the rebase--helper to generate todo lists making use of
+> > these commands, triggered by the new --rebase-merges option. For a
+> > commit topology like this (where the HEAD points to C):
+> >
+> > - A - B - C
+> >     \   /
+> >       D
+> >
+> > the generated todo list would look like this:
+> >
+> > # branch D
+> > pick 0123 A
+> > label branch-point
+> > pick 1234 D
+> > label D
+> >
+> > reset branch-point
+> > pick 2345 B
+> > merge -C 3456 D # C
+> >
+> > To keep things simple, we first only implement support for merge commits
+> > with exactly two parents, leaving support for octopus merges to a later
+> > patch series.
+> >
+> For the first time reader this (below) isn't as obvious as may be thought.
+> maybe we should be a little more explicit here.
+> 
+> > As a special, hard-coded label, all merge-rebasing todo lists start with
+> > the command `label onto`
+> 
+> .. which labels the start point head with the name 'onto' ...
+> 
+> Maybe even:
+> "All merge-rebasing todo lists start with, as a convenience, a hard-coded
+> `label onto` line which will label the start point's head" ...
 
-On Tue, 24 Apr 2018, Martin =C3=85gren wrote:
+I changed it to
 
-> On 23 April 2018 at 17:54, Phillip Wood <phillip.wood@talktalk.net> wrote=
-:
-> > I'm fine with leaving it, I've might get round to doing a small series =
-to
-> > clean things up slightly in a few weeks. At the moment
-> > setup_unpack_trees_porcelain() leaks memory as it is called for each me=
-rge
-> > and allocates new strings each time. It would also be nice if the error
-> > messages reflected the command, so it said 'cherry-pick', 'revert' or
-> > 'reset' rather than 'merge'
->=20
-> This is a small patch series to introduce and use
-> `clear_unpack_trees_porcelain()`.
-
-Great. Now I have no excuse but must change the sequencer code to output
-"reset" instead of "merge" ;-)
-
-Seriously speaking again: thank you for those patches. This is truly
-exciting! I mean, we all touch the same code and move it forward, and
-somehow it all works out.
+    All merge-rebasing todo lists start with a hard-coded `label onto` line.
+    This makes it convenient to refer later on to the revision onto which
+    everything is rebased, e.g. as starting point for branches other than
+    the very first one.
 
 Ciao,
 Dscho
---8323329-369143892-1524558158=:64--
