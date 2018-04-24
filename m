@@ -2,179 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4457A1F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 05:14:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FE271F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 05:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755834AbeDXFOR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 01:14:17 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:41267 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755768AbeDXFOQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 01:14:16 -0400
-Received: by mail-wr0-f193.google.com with SMTP id g21-v6so19433759wrb.8
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 22:14:15 -0700 (PDT)
+        id S1755976AbeDXFhi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 01:37:38 -0400
+Received: from mail-qt0-f171.google.com ([209.85.216.171]:42719 "EHLO
+        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755905AbeDXFhh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 01:37:37 -0400
+Received: by mail-qt0-f171.google.com with SMTP id c2-v6so2855618qtn.9
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 22:37:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kXdLdVbfe+DzQv0INsN3Z6CBhMyexYZSdq9J6wY6YDI=;
-        b=SziKsKpI8qYV678Ia9qRUE+68o0n1SxAPSYIpIdAT7kBQcERHLwzDER8JhcNoA6GMf
-         6oz1OCIEqFnU4HZ1FDYAjMtkw/2+ofNpWGmJ5wO9C1m12L0bXUBu1npc9ppG/PLnvSK9
-         wIar6lfoiIXiW0+TihsJBNm0O2lEhgsmuWyDDvkI8VW7eXSWLuzCPY4a5qMqqZiR4CtS
-         T5njFWxulkeFOTGru8MBDlqgfHWhEXfq9dfeS4nloPVP/lZRWQyUYJZpMA+iVHdIUfqG
-         NHUfUWBS+Y3Y8BZjpMZN57T2OkkuR1aMSWIslo2/Y6aq7iCXc9q3XPLin/BITY0+dgeT
-         tv5g==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=BTVR82rq24j8FnMpdyn1o295CKS3A8LbEb80rWsFKl8=;
+        b=o0wfN5iALvF7nk0pZWXZGVgmGypIgWZoDDVMKPPyCDf0YTQ2RFIlZdAUFPkmDdQTqp
+         h77OPb6gdRtB5CBWig19GIzGWXdzi+PzSP1ErjpbYA+iZK6J+iFkgG3q9C4rOZ5jt0cl
+         /8r8zja1QuiOiLZVM6FLelTGz2TGp0X5O5X16d0cAfDUpGgUf08KIXf5GOcWPjMXAold
+         03ljIyqwLhSOSgALPHdE0+12z7ElZrnEojs6vnyEU8Csejn28lsK9qFoDC9hsAyf5Q2F
+         PbDtpVjIJSDwwq+LnFglHQE04lXMbvCO+zL+24CfYBCjIGCYaL8AUCmIIr6obBP9fFWW
+         WtOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kXdLdVbfe+DzQv0INsN3Z6CBhMyexYZSdq9J6wY6YDI=;
-        b=OmJjVQN8qlVPoYGKi/bbZDERndHonuMwtMJqs+jLsGeSh+ZPM4lzrqT0FyqoO/ZVaT
-         9fAGnwPLhZql8bpV6sXknhHQwj5Ob7nJOOuDxdu8c0nrmx1h6QCBR10obhSXqA/KGxz0
-         FfkFA55uh3bbNGa8WnSeRR9XF6AMBEibo5rAlpGsWdrzMAo+uPvLTlPFSm0iA+mLlJB+
-         sLquExp3pkVmwgWa+2voGAigK2m6uyH35uDo6Ec8JGqaI5/mDo65TZIL3Kbm5l97hb1D
-         +ILhTBR9/krXZP4e+Kk9m3PyKBkFzImUne9OPxLQaGPW1hxHxwTt8jtJwLT5Cdlk5PO3
-         XwNg==
-X-Gm-Message-State: ALQs6tCRojAUDFH4+GhaL4y6TcEfjaqfKFlnWkQ9tQYBouvM5ooOtQEb
-        BbA8KTIKjk+7Cz2gxwmMkrk=
-X-Google-Smtp-Source: AIpwx48W/iC7liEkgVNRMXdjgXyaAMRdBUdQBt4NDlIwmIpu9LPz6UGOWnMhza39e/65B8T49omGOQ==
-X-Received: by 2002:adf:c792:: with SMTP id l18-v6mr19064450wrg.224.1524546855187;
-        Mon, 23 Apr 2018 22:14:15 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id q138sm13091233wmd.1.2018.04.23.22.14.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 23 Apr 2018 22:14:14 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH 2/2] unpack_trees_options: free messages when done
-Date:   Tue, 24 Apr 2018 07:13:39 +0200
-Message-Id: <5cfb43fad88cfb14e77bb0febdac297b78500dc0.1524545557.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.17.0
-In-Reply-To: <cover.1524545557.git.martin.agren@gmail.com>
-References: <ec58f482-ffde-1959-ff4a-9b128905ccb0@talktalk.net> <cover.1524545557.git.martin.agren@gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=BTVR82rq24j8FnMpdyn1o295CKS3A8LbEb80rWsFKl8=;
+        b=pd9h4JoXLRkT+xPGzlT5ffKnua70rJ2ka/nsvhwf0oIvDju01pFuyIfpRCF2qSNU7R
+         fG3CMKs6YMOXQMHb5Litgv+hnkJmEdT3wEFcJgHls+rhieVR/Ap2A3pzBvTzcAjjs9EM
+         uhGuJ8Ta67MqsFnAz2PQEkt0HNEcBZ5csKYGTrUHleO4H2xt/nyURu4Mt4hp6ChjKQor
+         WpL7O9UDZGl8AWO7XyuMfUmAAQqsYsJk1B7XPrDwdamlw0yZJNcLC2OUnJtzOVwMYis5
+         grJ4O8gvgwHmmQvNLGOmCaNNCSfVka59mYIYFFNZ/AgGW+frCzA3ga+mUZ0cJpgUugyN
+         ft3A==
+X-Gm-Message-State: ALQs6tCC/1nZOc6OLvaiH9xxwLlwGvM37qFDxitLsOCa2nqGDSo2Ij+X
+        pt1erlDIZOxXxzEwqAaRm0K7vAaEYj/25BoC2yM=
+X-Google-Smtp-Source: AB8JxZqqV244wUvn49C0BahYVGjiiI9QpCYjH1OUeg6/08d8xQTJp1A10Kr0jGx9+V9Ds5irFU42a8CTjqcquklTTbM=
+X-Received: by 2002:ac8:3267:: with SMTP id y36-v6mr26571883qta.25.1524548256700;
+ Mon, 23 Apr 2018 22:37:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.12.174.202 with HTTP; Mon, 23 Apr 2018 22:37:36 -0700 (PDT)
+In-Reply-To: <23ea226b544e9e5fcdbbcda3adb5982e2cae2123.1524545768.git.me@ttaylorr.com>
+References: <20180421034530.GB24606@syl.local> <cover.1524545768.git.me@ttaylorr.com>
+ <23ea226b544e9e5fcdbbcda3adb5982e2cae2123.1524545768.git.me@ttaylorr.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 24 Apr 2018 01:37:36 -0400
+X-Google-Sender-Auth: nuu3zQdInW-6_DSPiUVqJOmkcXM
+Message-ID: <CAPig+cTep_WuRy3qVHpZUMstc9Tgt9gFW=F8_0E8CZQQ8Jyq7g@mail.gmail.com>
+Subject: Re: [PATCH v3 7/7] contrib/git-jump/git-jump: jump to match column in
+ addition to line
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The strings allocated in `setup_unpack_trees_porcelain()` are never
-freed. Provide a function `clear_unpack_trees_porcelain()` to do so and
-call it in the functions which use `setup_unpack_trees_porcelain()`.
+On Tue, Apr 24, 2018 at 1:07 AM, Taylor Blau <me@ttaylorr.com> wrote:
+> Take advantage of 'git-grep(1)''s new option, '--column-number' in order
+> to teach Peff's 'git-jump' script how to jump to the correct column for
+> any given match.
+>
+> 'git-grep(1)''s output is in the correct format for Vim's jump list, so
+> no additional cleanup is necessary.
+>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  contrib/git-jump/git-jump | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-In all current callers, the pointers are about to go out of scope, so we
-do not need to set them to NULL. Let's do so anyway so that a future
-caller or restructured code doesn't suddenly start accessing dangling
-pointers.
+Based upon =C3=86var review[1], I was expecting to see git-jump/README
+modified by this patch, as well. Perhaps you overlooked or forgot
+about that review comment, or perhaps you disagreed with it?
 
-Note that we only take responsibility for the memory allocated in
-`setup_unpack_trees_porcelain()` and not any other members of the
-`struct unpack_trees_options`.
+[1]: https://public-inbox.org/git/874lk2e4he.fsf@evledraar.gmail.com/
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- unpack-trees.h     |  5 +++++
- builtin/checkout.c |  1 +
- merge-recursive.c  |  1 +
- merge.c            |  3 +++
- unpack-trees.c     | 11 +++++++++++
- 5 files changed, 21 insertions(+)
-
-diff --git a/unpack-trees.h b/unpack-trees.h
-index 6c48117b84..8c56cf0150 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -32,6 +32,11 @@ enum unpack_trees_error_types {
- void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
- 				  const char *cmd);
- 
-+/*
-+ * Frees resources allocated by setup_unpack_trees_porcelain().
-+ */
-+extern void clear_unpack_trees_porcelain(struct unpack_trees_options *opts);
-+
- struct unpack_trees_options {
- 	unsigned int reset,
- 		     merge,
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index b49b582071..5cebe170fc 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -526,6 +526,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 		init_tree_desc(&trees[1], tree->buffer, tree->size);
- 
- 		ret = unpack_trees(2, trees, &topts);
-+		clear_unpack_trees_porcelain(&topts);
- 		if (ret == -1) {
- 			/*
- 			 * Unpack couldn't do a trivial merge; either
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 0c0d48624d..8229b91e2f 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -301,6 +301,7 @@ static int git_merge_trees(int index_only,
- 	init_tree_desc_from_tree(t+2, merge);
- 
- 	rc = unpack_trees(3, t, &opts);
-+	clear_unpack_trees_porcelain(&opts);
- 	cache_tree_free(&active_cache_tree);
- 	return rc;
- }
-diff --git a/merge.c b/merge.c
-index f123658e58..b433291d0c 100644
---- a/merge.c
-+++ b/merge.c
-@@ -130,8 +130,11 @@ int checkout_fast_forward(const struct object_id *head,
- 
- 	if (unpack_trees(nr_trees, t, &opts)) {
- 		rollback_lock_file(&lock_file);
-+		clear_unpack_trees_porcelain(&opts);
- 		return -1;
- 	}
-+	clear_unpack_trees_porcelain(&opts);
-+
- 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 		return error(_("unable to write new index file"));
- 	return 0;
-diff --git a/unpack-trees.c b/unpack-trees.c
-index e73745051e..4c76a29241 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -179,6 +179,17 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
- 		opts->unpack_rejects[i].strdup_strings = 1;
- }
- 
-+void clear_unpack_trees_porcelain(struct unpack_trees_options *opts)
-+{
-+	char **msgs = (char **)opts->msgs;
-+
-+	free(msgs[ERROR_WOULD_OVERWRITE]);
-+	free(msgs[ERROR_WOULD_LOSE_UNTRACKED_REMOVED]);
-+	free(msgs[ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN]);
-+
-+	memset(opts->msgs, 0, sizeof(opts->msgs));
-+}
-+
- static int do_add_entry(struct unpack_trees_options *o, struct cache_entry *ce,
- 			 unsigned int set, unsigned int clear)
- {
--- 
-2.17.0
-
+> diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
+> index 80ab0590bc..8bc57ea0f8 100755
+> --- a/contrib/git-jump/git-jump
+> +++ b/contrib/git-jump/git-jump
+> @@ -52,7 +52,7 @@ mode_merge() {
+>  # editor shows them to us in the status bar.
+>  mode_grep() {
+>         cmd=3D$(git config jump.grepCmd)
+> -       test -n "$cmd" || cmd=3D"git grep -n"
+> +       test -n "$cmd" || cmd=3D"git grep -n --column-number"
+>         $cmd "$@" |
+>         perl -pe '
+>         s/[ \t]+/ /g;
+> --
+> 2.17.0
