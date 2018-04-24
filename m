@@ -2,197 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C26321F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 04:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84F881F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 04:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751361AbeDXEZS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 00:25:18 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:34695 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750731AbeDXEZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 00:25:17 -0400
-Received: by mail-io0-f194.google.com with SMTP id d6-v6so21143081iog.1
-        for <git@vger.kernel.org>; Mon, 23 Apr 2018 21:25:17 -0700 (PDT)
+        id S1751454AbeDXE1o (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 00:27:44 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:37913 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751401AbeDXE1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 00:27:43 -0400
+Received: by mail-pf0-f169.google.com with SMTP id o76so6449954pfi.5
+        for <git@vger.kernel.org>; Mon, 23 Apr 2018 21:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jyo3YoS3hUkmBCHwEv69uihQZ+4NA3e+Yh19SjK1QiY=;
-        b=MiED61+iG94S8mtEjyeXJgyDVwvZCNMaP4Ap4BVJQbhoesgnxL+NkfGlW4npH3LCVt
-         7clKLjtob2GCujfeHLALeehXXxKiNYU9VsqqkLsVLZ2tsftjbxM4Xp1AIFO8iXG8X+Hg
-         PSC1NvW4mq41GA6rrL5JVE2L+RbtVKW2xwD/fyygjyZlHvDoWZB5mS2v0dfxdXIsnRxQ
-         0U6uuTV9ryRmsb8eVH0pz6pGSwHYjIPCitGrAOfZrC3lsmuNCaCp2kjKWSHM+Rybsc9i
-         57vKmrpWbr82zS1JyI0B7n6sBdku4g8UiRRa1xb/UKHv+t9ZSZHw+dU3N+9RPdzSxCQS
-         O5lA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=hB3xtOx9tq7pK6khb/B7xFS67+z+TjkCkqPD/UxFNAk=;
+        b=rSrVjeYthh8vLJnW6b4AAsTU4jBf6yd1CEfHa0N1Ct9HqYYaYbnZBQ0qFt3G7Zu80j
+         ofvc0n2qgtC1TCa5XelauB9wTlUX40G21Kxo1KbVTcoX0/o9jT+SWnO2o0O+DfAOyT2J
+         eKDrQ/wRtc1asbHz07A+L6/Z4oGr5kxUHfH8fjeJ6RecpNWfFurA8VMFUf/fNMpsn/y1
+         +PgRTpUhGAvAOgOLbl70xJ8uERxkic08AFyfYQMZmlFRgq09P0c0nNXavG9bOCLkNVRM
+         ZZC4J+tw90UzU+RwAKRG0e7fpHJxgKPw+kSUtasy09OoremvK37YqcFgjtvxtytGgRRT
+         x9kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jyo3YoS3hUkmBCHwEv69uihQZ+4NA3e+Yh19SjK1QiY=;
-        b=Z9MzKt72Mrqm60ra4On9hn8J9kU25ElcF4UgYjNEFnC8zM6qQcLGC5j5tsRn4UiCON
-         KJlDhBR7sh8B648VE7M57tfTs0Y+Pfqw6R1AMJzUZPf5uOCWfDxeIE+/xgDCZ+rdtrIT
-         d/8056HMv1UcnA0jl+SxVapU5dJBUrOQttmZQsxyjlBVXb2z56KnyAXWfkpmE+bql+sO
-         P10Gpq9JGRznKi9Yj8jLVF0UQNaA6Gz9+Bc3Fml6G9/m9+lgwq8MjaKxqdOkQv+zQl0L
-         FCYCw3JebQCXfZlZ3LcKTXU+sTX1Cuk+y50gdsIhZBM57BMXQHwKgeb5EGy5ItTpy9eV
-         9LkQ==
-X-Gm-Message-State: ALQs6tAJUwj4nRvzFB8Y/OEvFLrftuAN7x/wRgZ4RH1zOvkMWVo7tLDi
-        OTuEkAzvkHFZPVCgbDqynq8=
-X-Google-Smtp-Source: AB8JxZprcdqA/TfNLfOL1p8AKbybIW8yk6fEGB4aWfq7zxDBXp8XItWGAc1aUzIX2NBybqI66KG36A==
-X-Received: by 2002:a6b:f207:: with SMTP id q7-v6mr24221493ioh.297.1524543916531;
-        Mon, 23 Apr 2018 21:25:16 -0700 (PDT)
-Received: from flurp.local (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id a188-v6sm4768837itg.21.2018.04.23.21.25.15
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=hB3xtOx9tq7pK6khb/B7xFS67+z+TjkCkqPD/UxFNAk=;
+        b=g1aRN569aFJg5SrHiHw7sy24raw0C5g9vZATcEmI0dGiH7eYILwLEHGc+CcaGYVIAA
+         N5duVjCMe98iNponuIaBshMedLdXwe9kApjGPzJIbae/ahU6/rKXeIj49TkWsGyOgvd7
+         fyopBEzjG1QRelPX/+xU/AlHAwhydoMdLwhv6lGU/qZ3cIoD9dePKLcTpEgcsrzBoK1+
+         JJ6CNAe6cPjx4HHLlk6NqhZua/Kd4GG2QsNpno6vi4Gk9j+WBLLOTq3frZERk3Fuz2GV
+         LYY2/njYgoWc1f+37pxA5FcCnwp07kQxox4C3ya4dJe7fifUNPuPLvECfC5VxpEGxd58
+         ul6A==
+X-Gm-Message-State: ALQs6tCc9E2GTvk7OG0t6psySG7t1AODiBsSGlS7MGPKl4KE2tBgCLW8
+        aQB+9XYTd6/cAiw2+O5dlG573Q==
+X-Google-Smtp-Source: AIpwx4/dEIiEe6Y1rc/uMU03w3f5j28zfZqxEMI2yt1cLsBAhblqwD7m40zeQyCCItUIel8NXaMjtA==
+X-Received: by 10.99.109.132 with SMTP id i126mr19085341pgc.414.1524544062541;
+        Mon, 23 Apr 2018 21:27:42 -0700 (PDT)
+Received: from localhost ([2601:602:9500:1120:3dfa:3e1b:ab89:1ffb])
+        by smtp.gmail.com with ESMTPSA id m65sm31541409pfg.135.2018.04.23.21.27.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Apr 2018 21:25:15 -0700 (PDT)
-Date:   Tue, 24 Apr 2018 00:25:10 -0400
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 4/4] worktree: teach "add" to check out existing
- branches
-Message-ID: <20180424042510.GA8431@flurp.local>
-References: <20180415202917.4360-1-t.gummerer@gmail.com>
- <20180423193848.5159-1-t.gummerer@gmail.com>
- <20180423193848.5159-5-t.gummerer@gmail.com>
+        Mon, 23 Apr 2018 21:27:40 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Mon, 23 Apr 2018 21:27:39 -0700
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/6] grep.c: take column number as argument to
+ show_line()
+Message-ID: <20180424042739.GA82093@syl.local>
+References: <20180421034530.GB24606@syl.local>
+ <cover.1524429778.git.me@ttaylorr.com>
+ <5aaf7bebb27d385ea090cb83e97c596983ebae47.1524429778.git.me@ttaylorr.com>
+ <CAPig+cQ2+wTTXE0mhnGnp2pZug=Po0SCVwCO_2agxUDaOsFRLw@mail.gmail.com>
+ <20180423011726.GD78148@syl.local>
+ <CAPig+cR0dP2Hrb4JhuqmCNFzDPoy7KdqYX3irso6mKdmh9Y4VQ@mail.gmail.com>
+ <87604ie61h.fsf@evledraar.gmail.com>
+ <CAPig+cRXkSrPHPyEEhp6_ndRBNW3hE7HkspSk1atPSE5pn_sMw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20180423193848.5159-5-t.gummerer@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cRXkSrPHPyEEhp6_ndRBNW3hE7HkspSk1atPSE5pn_sMw@mail.gmail.com>
 User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 23, 2018 at 3:38 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> Currently 'git worktree add <path>' creates a new branch named after the
-> basename of the path by default.  If a branch with that name already
-> exists, the command refuses to do anything, unless the '--force' option
-> is given.
+On Mon, Apr 23, 2018 at 03:34:21AM -0400, Eric Sunshine wrote:
+> On Mon, Apr 23, 2018 at 3:27 AM, Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
+> > On Mon, Apr 23 2018, Eric Sunshine wrote:
+> >> One important issue I noticed is that patch 3/7 neglects to update
+> >> grep.c:init_grep_defaults() to initialize opt.color_columnno.
+> >
+> > I think this is fine for fields that are 0 by default, since the struct
+> >  is already zero'd out. See my e62ba43244 ("grep: remove redundant
+> >  double assignment to 0", 2017-06-29) for some prior art.
 >
-> However we can do a little better than that, and check the branch out if
-> it is not checked out anywhere else.  This will help users who just want
-> to check an existing branch out into a new worktree, and save a few
-> keystrokes.
-> [...]
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> @@ -356,9 +356,12 @@ static int add_worktree(const char *path, const char *refname,
->  static void print_preparing_worktree_line(int detach,
->                                           const char *branch,
->                                           const char *new_branch,
-> -                                         const char *new_branch_force)
-> +                                         const char *new_branch_force,
-> +                                         int checkout_existing_branch)
->  {
-> -       if (new_branch_force) {
-> +       if (checkout_existing_branch) {
-> +               printf_ln(_("Preparing worktree (checking out '%s')"), branch);
+> Indeed, I wasn't worried about opt.columnnum, which is fine being
+> zero'd out by the memset(). What I was concerned about was
+> opt.color_columnno; the corresponding opt.color_lineno is handled
+> explicitly in init_grep_defaults():
+>
+>     color_set(opt->color_lineno, "");
+>
+> I'd expect opt.color_columnno to be treated likewise.
 
-Is the new 'checkout_existing_branch' argument and this new
-conditional really needed? Both 'new_branch' and 'new_branch_force'
-will be NULL in the case of an existing branch, so there should be no
-need for 'checkout_existing_branch' to state explicitly what is
-already indicated by their NULLness. With both of them NULL, the
-existing "(checking out '...')" message later in the function will
-kick in, so this new condition isn't needed.
+I agree with Ævar and Eric, we should certainly zero-out
+opt->color_lineno in grep.c's init_grep_defaults().
 
-> +       } else if (new_branch_force) {
-> @@ -387,11 +390,23 @@ static void print_preparing_worktree_line(int detach,
-> +static const char *dwim_branch(const char *path, const char **new_branch,
-> +                              int *checkout_existing_branch)
->  {
->         int n;
->         const char *s = worktree_basename(path, &n);
-> -       *new_branch = xstrndup(s, n);
-> +       const char *branchname = xstrndup(s, n);
-> +       struct strbuf ref = STRBUF_INIT;
-> +
-> +       if (!strbuf_check_branch_ref(&ref, branchname) &&
-> +           ref_exists(ref.buf)) {
-> +               *checkout_existing_branch = 1;
+I recall doing this in v1, but I think that I must have dropped this
+part of the patch on the floor. In either case, I have amended my local
+copy to include this color_set() invocation and will include it in v3
+(which I hope to send later this evening).
 
-See above regarding apparent lack of need for this new variable.
 
-> +               strbuf_release(&ref);
-> +               UNLEAK(branchname);
-> +               return branchname;
-> +       }
-
-Taking the above observation into account, I applied, atop this patch,
-the following fixup! which removes the 'checkout_existing_branch'
-gunk and still get the same output:
-
---- >8 ---
-diff --git a/builtin/worktree.c b/builtin/worktree.c
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -356,12 +356,9 @@ static int add_worktree(const char *path, const char *refname,
- static void print_preparing_worktree_line(int detach,
- 					  const char *branch,
- 					  const char *new_branch,
--					  const char *new_branch_force,
--					  int checkout_existing_branch)
-+					  const char *new_branch_force)
- {
--	if (checkout_existing_branch) {
--		printf_ln(_("Preparing worktree (checking out '%s')"), branch);
--	} else if (new_branch_force) {
-+	if (new_branch_force) {
- 		struct commit *commit = lookup_commit_reference_by_name(new_branch_force);
- 		if (!commit)
- 			printf_ln(_("Preparing worktree (new branch '%s')"), new_branch_force);
-@@ -390,8 +387,7 @@ static void print_preparing_worktree_line(int detach,
- 	}
- }
- 
--static const char *dwim_branch(const char *path, const char **new_branch,
--			       int *checkout_existing_branch)
-+static const char *dwim_branch(const char *path, const char **new_branch)
- {
- 	int n;
- 	const char *s = worktree_basename(path, &n);
-@@ -400,7 +396,6 @@ static const char *dwim_branch(const char *path, const char **new_branch,
- 
- 	if (!strbuf_check_branch_ref(&ref, branchname) &&
- 	    ref_exists(ref.buf)) {
--		*checkout_existing_branch = 1;
- 		strbuf_release(&ref);
- 		UNLEAK(branchname);
- 		return branchname;
-@@ -421,7 +416,6 @@ static int add(int ac, const char **av, const char *prefix)
- 	struct add_opts opts;
- 	const char *new_branch_force = NULL;
- 	char *path;
--	int checkout_existing_branch = 0;
- 	const char *branch;
- 	const char *new_branch = NULL;
- 	const char *opt_track = NULL;
-@@ -469,8 +463,7 @@ static int add(int ac, const char **av, const char *prefix)
- 	}
- 
- 	if (ac < 2 && !new_branch && !opts.detach) {
--		const char *s = dwim_branch(path, &new_branch,
--					    &checkout_existing_branch);
-+		const char *s = dwim_branch(path, &new_branch);
- 		if (s)
- 			branch = s;
- 	}
-@@ -490,8 +483,7 @@ static int add(int ac, const char **av, const char *prefix)
- 		}
- 	}
- 
--	print_preparing_worktree_line(opts.detach, branch, new_branch, new_branch_force,
--				      checkout_existing_branch);
-+	print_preparing_worktree_line(opts.detach, branch, new_branch, new_branch_force);
- 
- 	if (new_branch) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
---- >8 ---
+Thanks,
+Taylor
