@@ -7,95 +7,113 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A4BF1F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 19:04:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31ED61F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 19:10:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751417AbeDXTEd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 15:04:33 -0400
-Received: from mout.gmx.net ([212.227.17.22]:42371 "EHLO mout.gmx.net"
+        id S1751165AbeDXTKq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 15:10:46 -0400
+Received: from mout.gmx.net ([212.227.17.21]:37333 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751095AbeDXTEc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 15:04:32 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LhwAY-1efmoM0pSU-00nCR7; Tue, 24
- Apr 2018 21:04:24 +0200
-Date:   Tue, 24 Apr 2018 21:04:17 +0200 (DST)
+        id S1750778AbeDXTKq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 15:10:46 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQdAP-1eynGU0faH-00TyTO; Tue, 24
+ Apr 2018 21:10:39 +0200
+Date:   Tue, 24 Apr 2018 21:10:32 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+To:     Philip Oakley <philipoakley@iee.org>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jakub Narebski <jnareb@gmail.com>,
         Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v4 05/11] replace: introduce --convert-graft-file
-In-Reply-To: <CAPig+cTDbTtUeFYmkNtM773EBgE14Tpic4g4XEFuSVwSypdMjw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804242103590.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1524262793.git.johannes.schindelin@gmx.de> <cover.1524303776.git.johannes.schindelin@gmx.de> <fd4ea54ad8da5e4e93fafd558e104b0a19f6268c.1524303776.git.johannes.schindelin@gmx.de>
- <CAPig+cTDbTtUeFYmkNtM773EBgE14Tpic4g4XEFuSVwSypdMjw@mail.gmail.com>
+Subject: Re: [PATCH v3 09/11] technical/shallow: describe the relationship
+ with replace refs
+In-Reply-To: <52C2C5A51FE7400E937F06B7641F4319@PhilipOakley>
+Message-ID: <nycvar.QRO.7.76.6.1804242106220.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1524125760.git.johannes.schindelin@gmx.de> <cover.1524262793.git.johannes.schindelin@gmx.de> <853b0a445ab1d78e8cbe19dacd09e70892b34b03.1524262793.git.johannes.schindelin@gmx.de> <52C2C5A51FE7400E937F06B7641F4319@PhilipOakley>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:VDRrk6wkE/9X6S2+204Uh9cVlX9OsL27vtfcfm3syVAZdaBD9aJ
- Qcv+0sHVFn6S2Tpo5sFrBRjEWV/9b/Xn0QtECLXEg+uzol9rdoyyrWu+PImHAV6wE8vztf9
- O4H9GD/JB5jRg5Zj2SccgCRNRuuVhrHTbEPHCn25M2+laoHv3FH5brVRJicPSVqDDrHX2nh
- g9BZuSdLy6vp+04wyDd+Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RSQyfvof4rk=:Jt+F5CRi5M0uMUgx4ybVWY
- 1CL+9tc2JGJKWJYW1+b03/wBp7bGmPAgdG+RGPhUN1cnWOF3MAiSVNoNUgT0DxXUl43/unK74
- K9H4uSMKc6MgEn8EvAWtTBOHDHfqp5dZ/p7QFHc0x8AkPQ7m1BX36/L4p2fN657IgNwmZCUty
- ldCq92l3qIONU80mD/HJW5VwJT1c+vqJlvc3jxHwiLTW/brGNSAJ+6lIFrnyeePZ8L5JcEwRc
- zfm+mIXe+/27A0YkvaKDJEOFVUwKCnqp4Wpi4UZ4SGH39IRoHA6jz0u5ZJzwgKiGd0vrDcQGU
- okEWxYzKJhbG6qJ+iQCKdTpAOT0dUYDyjdVA0PESWxzd0ApEXrgKXx3CqUEwpVE0WIEZX5P5h
- HXUXcFW6Px2jWYdNBR7u2cl2us8pQjcxOamzL2AHWYdAmfxjvUY0uhpn8i3nxiH/RhNVyn6GY
- RquRofN2F/GV11OwfEKC7ximt0ZYW/z5pkxlti63I6nnZ8moEHSCppr2MhnsfDghnCfMc07MN
- WYmwGY5NMn0Yn+VfJLGl2cpPo1c+oEGEhFJEdc38HPzHqRwZEHv4G6cTcoN0DGACQVv+7f0EK
- Zrb9p1CtESrBlH8r8uQ9c+IUdy/NkkwyL3Mw/uk7XKdFbvpxD9+qUEeKVCC8b/IOh76VuzjSg
- fzxxuumq57KCYNb5/OSMuK+bxQKKMjx8DyJsSK3nckHVDJ4PoH4xir5bhEo98eFn6pIUABT+N
- ZEvK619VObQcShlq1rOoOrNtFsNp+hSH3ZJI8Lj3blvBjtNfg6gmnhSH6Lou1fr7AlvuAt9nZ
- 186U546RE6T43R22yCHBD5mUpvvPZk+zFhppsfbVTjQ/N/xa2w=
+X-Provags-ID: V03:K1:fZaxyBTySixoDRNTaWheycHYUNt49I7/t6y9t+5b9Q0wukYle8l
+ TAFuIsdO9SlPAJof2QxA3kOocwZmFXcTfdXUiR34kMNVITu6e59wAWaiFQRWW7xS/vghgoz
+ 2cwylNt0WfnEm+DWSDNkamRMeOa/4yQnPgz7xtQpzzAk1BctqAuM13x/j5G0mrZwHBqYVui
+ PBnP4I14vSU9BOP7FpzAA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0Pg9SpOfpMY=:WoKXxh+NhoKW0AxgVD7fFu
+ 2Yq6pHZG5VP9oSJmshQqByp663XwqnsWbb5jqbI7JKqtS+PyJ5rFX/R2BCRilQiKIZPtZtL71
+ oGhHDyFKMxQsAw2JTCvCtu2D6/Wwfnj+ugvjrnoAoRW3iWV40/Z9Bwj3H/38SqEQ0fZ6XUKKW
+ FInnRBxJksMwzpCMpU3rVGuSJBJJW2YLyFWzdzVW1PFdeyUR3OEOGN/Kb0vASGF+bu2HteRIb
+ dN4rmi0WQN1Aur5i5WRVnZoPpF8Qgg/DAR2lsotGOodrfDid8dDn6S1eOJG/2Rp8WUKsQNa4P
+ O8oPsVtrF83KntyzsWfZ4I39JrP48rI7lQm6avH9uMvuXob4AD1EcIM7U9STC/m0lYtRWwEas
+ 4wAnJsTJohVgJxVCj9K5rR9LMDt4n2cM1WUPVm7wwYxmXGrcz5zAtXQRVQCpVdsyDvpbj0yQS
+ 6Rg8tOMDxfD9TGpeJRO5JNOCHN7sTcxRxjR1iu9eAUOWI0+GbGRUivx9UVOaUINUL4t6sGQqe
+ 6srb8WLL2J3//LZP8p7AIICPSrT0oGb8j+AKuFzGb9ouEFyH/EkP3cBzvkyQ6Q8qO4TFJryRj
+ od9AcY7HzuCU+MZI/RfWvKyGqc4U4FGlYJx+RiUoIv8YbHxM9NWVW/Y+nuRD0WwfLqmNVIgxs
+ LQdAxQ5CTemnTe4xK3NRXAndHkKIZ4lOj9TTp3KG0bQRCPwH4Y12Sye4O+scykHE4bvb+AlvR
+ zdySFWI3MQ9c+QgjMrm8YLG5OYlKo3M4E+yon1LxnkudjajESF13k8nagy78ZBXwGv610VOnn
+ Sy591kqNBTIeMwTJK7vZHdGJQdf6WkiSTQxf5BPm0KXN0fucTA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi Philip,
 
-On Sat, 21 Apr 2018, Eric Sunshine wrote:
+On Sun, 22 Apr 2018, Philip Oakley wrote:
 
-> On Sat, Apr 21, 2018 at 5:48 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > This option is intended to help with the transition away from the
-> > now-deprecated graft file.
+> From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
+> > Now that grafts are deprecated, we should start to assume that readers
+> > have no idea what grafts are. So it makes more sense to describe the
+> > "shallow" feature in terms of replace refs.
 > >
+> > Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> > diff --git a/builtin/replace.c b/builtin/replace.c
-> > @@ -454,6 +455,38 @@ static int create_graft(int argc, const char **argv, int force)
-> > +static int convert_graft_file(int force)
-> > +{
-> > +       const char *graft_file = get_graft_file();
-> > +       FILE *fp = fopen_or_warn(graft_file, "r");
-> > +       struct strbuf buf = STRBUF_INIT, err = STRBUF_INIT;
-> > +       struct argv_array args = ARGV_ARRAY_INIT;
-> > +
-> > +       if (!fp)
-> > +               return -1;
-> > +
-> > +       while (strbuf_getline(&buf, fp) != EOF) {
-> > +               if (*buf.buf == '#')
-> > +                       continue;
-> > +
-> > +               argv_array_split(&args, buf.buf);
-> > +               if (args.argc && create_graft(args.argc, args.argv, force))
-> > +                       strbuf_addf(&err, "\n\t%s", buf.buf);
-> > +               argv_array_clear(&args);
-> > +       }
-> > +
-> > +       strbuf_release(&buf);
-> > +       argv_array_clear(&args);
+> > Documentation/technical/shallow.txt | 19 +++++++++++--------
+> > 1 file changed, 11 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/Documentation/technical/shallow.txt
+> > b/Documentation/technical/shallow.txt
+> > index 5183b154229..b3ff23c25f6 100644
+> > --- a/Documentation/technical/shallow.txt
+> > +++ b/Documentation/technical/shallow.txt
+> > @@ -9,14 +9,17 @@ these commits have no parents.
+> > *********************************************************
+> >
+> > The basic idea is to write the SHA-1s of shallow commits into
+> > -$GIT_DIR/shallow, and handle its contents like the contents
+> > -of $GIT_DIR/info/grafts (with the difference that shallow
+> > -cannot contain parent information).
+> > -
+> > -This information is stored in a new file instead of grafts, or
+> > -even the config, since the user should not touch that file
+> > -at all (even throughout development of the shallow clone, it
+> > -was never manually edited!).
+> > +$GIT_DIR/shallow, and handle its contents similar to replace
+> > +refs (with the difference that shallow does not actually
+> > +create those replace refs) and
 > 
-> This argv_array_clear() is redundant, isn't it?
+> If grafts are deprecated, why not alse get rid of this mention and simply
+> leave the 'what it does' part.
 
-It sure is!
+Internally, shallow commits are implemented using the graft code path, and
+they always will be: we will always need a list of the shallow commits,
+and we will always need to be able to lift the "shallow" attribute
+quickly, when deepening a shallow clone.
 
-Thank you for the review,
+So it makes sense to mention that here, because we are deep in technical
+details in Documentation/technical/.
+
+> >                                               very much like the deprecated
+> > +graft file (with
+> 
+> >                           the difference that shallow commits will
+> > +always have their parents grafted away, not replaced by
+> s/their parents grafted away/no parents/ (rather than being replaced..)
+
+But the commits will typically have parents. So they really will have
+their parents grafted away as long as they are marked "shallow"...
+
+Thank you for reviewing!
 Dscho
