@@ -2,107 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E06BB1F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 21:11:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E4B11F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 21:34:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751234AbeDXVLf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 17:11:35 -0400
-Received: from mail-wr0-f179.google.com ([209.85.128.179]:37650 "EHLO
-        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750841AbeDXVLe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 17:11:34 -0400
-Received: by mail-wr0-f179.google.com with SMTP id c14-v6so11181938wrd.4
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 14:11:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9WwXgoAnm5gjVgs3r54K124Mja/g0CRKWwdZhV5L55w=;
-        b=eSz/6jokHcDhAR76cj5jPHHzvyzXCSk9TnOIwWDOi0o4X5g5ZLZF9ye8gaUX2YBfg4
-         LnFMo6q45AU4Y1J8caM0buyKwGFQF6qhmdGGvEvmfL2vxJLHPPg2mj/aBOxuQ2Z3lp3/
-         NbhEBCkQf64TG1u8Tyvv8Q+MSXWd+ttMg9MSkTZNEgwT4T0sI0PvRDt8gKag12R5EN6P
-         FF2n9oiba0xGV69FLONyD0UyCYnG4sdfRNKkMxBaVWxRP65GOmvbtptqtSjZozD7NMbr
-         CKB1sly89wZEBve3O760/wKg/xEpXt5tW0725dv9Volhk2z29DALAPhv2lDgKDjg50gg
-         9W1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=9WwXgoAnm5gjVgs3r54K124Mja/g0CRKWwdZhV5L55w=;
-        b=nCXnCa01u5Lb/BYyRGTsBgF32oCIZnP5N+9oI7DToIgiwPDuFyjRFaWfrhi9LV2ocJ
-         H+CDkfMe6k0mYDtKWdFeHabr/NNCA0LxZ/94x7zTf7+XChO9ATsRxgQGPtXnKX4fk31k
-         qiGpwVkFqM5xNUU6UESXdDwOeLylj8XBDVJilYTcntBW+U3hLD2JZ8vctnJJhiEufIqM
-         Bd/j/UpNifOhc8RnZi+Ak895ABysi/W17AWaJZYU0hsb7TZ0fg18TTeYB4ZqOimmfoW0
-         bjj6l8WpZmoGY8zQVbeuj3pB7t7qbSlAZedaqBbvhUOiAt/8+T1J9X5Yo6YwgFZfNvgQ
-         6RCg==
-X-Gm-Message-State: ALQs6tCt4RTdYHjtTffOFR7G92VAMhX3OPJsfVENUESutwUb5jPQtiwr
-        l1StsUo/aBZ9z3R6QEbCUds=
-X-Google-Smtp-Source: AIpwx4/X8kJhuDXytS8euPydI0GsmhCV1d4Wob8bWCqH0ZoubzSHLHGjU0Vx5Y3J15Lgn9mqlGYjwg==
-X-Received: by 2002:adf:b594:: with SMTP id c20-v6mr21783107wre.65.1524604293569;
-        Tue, 24 Apr 2018 14:11:33 -0700 (PDT)
-Received: from [192.168.0.103] ([92.55.154.57])
-        by smtp.gmail.com with ESMTPSA id u36-v6sm27454327wrf.87.2018.04.24.14.11.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Apr 2018 14:11:32 -0700 (PDT)
-Subject: Re: GSoC students and mentors in 2018
-To:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-Cc:     Pratik Karki <predatoramigo@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        alban.gruin@gmail.com
-References: <CAGZ79kbzFGn2-xcrWFi1+ZUgSGGHdUPEQOexu8Lan796LCsvBg@mail.gmail.com>
-From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Message-ID: <ee9499f1-5657-1f23-08a7-0abefc688ff1@gmail.com>
-Date:   Wed, 25 Apr 2018 00:11:31 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1751046AbeDXVe2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 17:34:28 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:38977 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750882AbeDXVe1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 17:34:27 -0400
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id B5Zof7Udi4ZqzB5ZvfnqR8; Tue, 24 Apr 2018 22:34:26 +0100
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=E/fjW5Vl c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=BCjA09oAAAAA:8
+ a=fAg4IBucyuwCp2N5FAMA:9 a=wPNLvfGTeEIA:10 a=jYKBPJSq9nmHKCndOPe9:22
+Message-ID: <538CF27C224E4AE0A1C45374AE367C3A@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Cc:     <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>,
+        "Jakub Narebski" <jnareb@gmail.com>,
+        "Stefan Beller" <sbeller@google.com>,
+        "Eric Sunshine" <sunshine@sunshineco.com>,
+        "Christian Couder" <christian.couder@gmail.com>
+References: <cover.1524125760.git.johannes.schindelin@gmx.de> <cover.1524262793.git.johannes.schindelin@gmx.de> <853b0a445ab1d78e8cbe19dacd09e70892b34b03.1524262793.git.johannes.schindelin@gmx.de> <52C2C5A51FE7400E937F06B7641F4319@PhilipOakley> <nycvar.QRO.7.76.6.1804242106220.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Subject: Re: [PATCH v3 09/11] technical/shallow: describe the relationship with replace refs
+Date:   Tue, 24 Apr 2018 22:34:16 +0100
+Organization: OPDS
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbzFGn2-xcrWFi1+ZUgSGGHdUPEQOexu8Lan796LCsvBg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
 Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 180424-4, 24/04/2018), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfCBFPTnAjCeSQjMwTvnLTgfgFtKAcgNoViKhv0SAw4oM5fcH8KDV8XuRw6m87VRbv6Tt1ZsceROlfoU/Qs89IN7JLUyiYlDC/VyPUhJoTG8PWvIEfxLh
+ aN5EWCcP/4a/Zs1Clduhxqgd7wkogz4Qppw5rh/1xcXFhG7eZZkUbU/uXji0JYTbIbYsvr3lldYAILq3sUGSS1BXpABuk/rQsu+F+s4LFIpfnjGTvtdYbTmP
+ OFwUamiTepo1J/qN9bDm9uN8jK4mzFWfSocpmizHis5xFs2W6McDrr0I+N4LN6n5JJKDbBmio4XHPTe+STtDUJFkaa2YtvIYEwchHFsLQiPYKn3+DYMNduLm
+ jNVZA6h8AxxUHF2oOp9rafNMvVo5bw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi dscho
 
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de> : Tuesday, April 
+24, 2018 8:10 PM
+> On Sun, 22 Apr 2018, Philip Oakley wrote:
+>
+>> From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
+>> > Now that grafts are deprecated, we should start to assume that readers
+>> > have no idea what grafts are. So it makes more sense to describe the
+>> > "shallow" feature in terms of replace refs.
 
-On 24.04.2018 00:01, Stefan Beller wrote:
-> Hi Git community,
-> 
-> This year we'll participate once again in Google Summer or Code!
-> We'll have 3 students and 3 mentors, which is more than in recent years.
-> 
-> Paul-Sebastian Ungureanu mentored by DScho, wants to convert git-stash
-> into a builtin.
-> 
-> Alban Gruin and Pratik Karki want to convert parts of git-rebase into
-> a builtin. Both are mentored by Christian and myself.
-> 
-> The slots were just announced today, please join me in welcoming them
-> to the Git mailing list! (Although you may remember them from the
-> micro projects[1,2,3])
-> 
-> [1] https://public-inbox.org/git/20180319155929.7000-1-ungureanupaulsebastian@gmail.com/
-> [2] https://public-inbox.org/git/20180301111907.17607-1-alban.gruin@gmail.com/
-> [3] https://public-inbox.org/git/20180327173137.5970-1-predatoramigo@gmail.com/
-> 
-> Thanks,
-> Stefan
-> 
+Here we say we should drop the term "grafts"
+>> >
+>> > Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
+>> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> > ---
+>> > Documentation/technical/shallow.txt | 19 +++++++++++--------
+>> > 1 file changed, 11 insertions(+), 8 deletions(-)
+>> >
+>> > diff --git a/Documentation/technical/shallow.txt
+>> > b/Documentation/technical/shallow.txt
+>> > index 5183b154229..b3ff23c25f6 100644
+>> > --- a/Documentation/technical/shallow.txt
+>> > +++ b/Documentation/technical/shallow.txt
+>> > @@ -9,14 +9,17 @@ these commits have no parents.
+>> > *********************************************************
+>> >
+>> > The basic idea is to write the SHA-1s of shallow commits into
+>> > -$GIT_DIR/shallow, and handle its contents like the contents
+>> > -of $GIT_DIR/info/grafts (with the difference that shallow
+>> > -cannot contain parent information).
+>> > -
+>> > -This information is stored in a new file instead of grafts, or
+>> > -even the config, since the user should not touch that file
+>> > -at all (even throughout development of the shallow clone, it
+>> > -was never manually edited!).
+>> > +$GIT_DIR/shallow, and handle its contents similar to replace
+>> > +refs (with the difference that shallow does not actually
+>> > +create those replace refs) and
+>>
+>> If grafts are deprecated, why not alse get rid of this mention and simply
+>> leave the 'what it does' part.
+>
+> Internally, shallow commits are implemented using the graft code path, and
 
-Hello,
+however the change here is just to the documentation, independent of th code 
+path's name.
 
-It is a pleasure and an honor for me to take part in Google Summer of 
-Code. I am sure it will be a exciting summer and I will definitely give 
-100% to successfully fulfill 'git stash' project!
+> they always will be: we will always need a list of the shallow commits,
+> and we will always need to be able to lift the "shallow" attribute
+> quickly, when deepening a shallow clone.
+>
+> So it makes sense to mention that here, because we are deep in technical
+> details in Documentation/technical/.
+>
+>> >                                               very much like the 
+>> > deprecated
+>> > +graft file (with
 
-Best regards,
-Paul Ungureanu
+I was looking to snip this 'graft' reference, as per the commit message..
+
+>>
+>> >                           the difference that shallow commits will
+>> > +always have their parents grafted away, not replaced by
+>> s/their parents grafted away/no parents/ (rather than being replaced..)
+
+Then I botched this substitution
+
+>
+> But the commits will typically have parents. So they really will have
+> their parents grafted away as long as they are marked "shallow"...
+
+OK, maybe I mis-used the figurative 'no parents', when it means the literal 
+'parents not present'.
+
+Perhaps something like:
++$GIT_DIR/shallow, and handle its contents similar to replace
++refs (with the difference that shallow does not actually
++create those replace refs) with the difference that shallow commits will
++always have their parents not present.
+
+--
+Philip 
+
