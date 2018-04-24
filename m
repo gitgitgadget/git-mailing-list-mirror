@@ -2,119 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 623721F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 22:59:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3BEF1F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 22:59:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751233AbeDXW7A (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 18:59:00 -0400
-Received: from mail-yb0-f179.google.com ([209.85.213.179]:37817 "EHLO
-        mail-yb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751046AbeDXW67 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 18:58:59 -0400
-Received: by mail-yb0-f179.google.com with SMTP id i13-v6so7586095ybl.4
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 15:58:59 -0700 (PDT)
+        id S1751285AbeDXW7v (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 18:59:51 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:34779 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750766AbeDXW7v (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 18:59:51 -0400
+Received: by mail-pg0-f54.google.com with SMTP id p10so11925425pgn.1
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 15:59:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=0qeyBreYUf2FLbmI7MFPmJglJ4atJ+lT6qxRbbVCzvw=;
-        b=b2kkig4tGHyAKaG8+IMpw8A9mjb0cmHP1PMGlb6S5Wplka08WbCQ46PXFsLpgL562i
-         Eo89n0GitQmW6rhP0eYI8yRTRGbvW0B0t6tluFeytNXgnHxkOS3lfGrfB0SS7s6mSWvM
-         WsdWgRQL7XLuX44215vO5in9cHpESwUXiqbDcA6osF+UHDo/6Ask6PPHxS03ynplOv1f
-         0Ek/swB5joJEXKXGp+2P12NUZC7AXMesGEbKJvv757IOd07jY+p+5PL9Wvcf5C2Q7qz9
-         Bh23HiqF3fMt0XG9EG3/z9fmHGHIAN2CbCnimLUo2GwCiwAYGp7jIdO/vFtarCqcywuY
-         gggA==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=lW1N0QzhB452Pfapc6wfdwyM1doY/LmuKCtbfu76SUo=;
+        b=Pb6s/rFTq8igxnuWTVHt+ic27vB4+yr1ec88T2BoL7bKZGrytBsuFvWADYxGmy6ra5
+         UTi+bPwN4OPZukvGbYl95CGRRIOf7tuJK4lE0+TvRF6YrUGPRiG+5JNKYO0U3a7UWZJL
+         jIQTobneGzKwE2SaJ2mNSEiibNg2MXs6wlhtcW/EWyKmCF3tXI+LoKEomNlz6bCwM4pm
+         x39498I5ZVSeczjBS8pbPr+mgwpG3/1I8EejCmlQBFQQT5aCw/g84OJdVT7sV6L06aPG
+         F53FGqEkVkkXsgI5MR1sv3L68d2Q5ez11QEh251zVHGJRO3o7nh4W/003ZCfpOzaOe3x
+         IZ6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0qeyBreYUf2FLbmI7MFPmJglJ4atJ+lT6qxRbbVCzvw=;
-        b=sI4TPGsWX8Tt+PoOSz/N1Src8Cs5bEk0E3IIFiVPmJ6QDeEVpOJOYOHhm3WXVELz/q
-         zjEnOuE1f/57S26Y/BZJE5u3O9TVls7TugnJ2Ei2ogmWwN1XnQ19xiY6RBMD1z5kHjOc
-         +zFo/OfjIHFwQn6eEAASiQiO6YC+Vii9PF2glQQnoSNQk7rsBWguOAZ/LQ4QA7kWZYMi
-         R/8JlLAQBFCAL0Y7rQrNgjnMeRexu0mpnieymE75/g27pbvExWoqBECwC49MGE1eJZDv
-         CR3hG/vAww6oxpDn6wDV6MW0ZbIWOtYfR8r3xWz7k4eNw27DNmfO/MlRxi8ZQxvSofN1
-         D6Tg==
-X-Gm-Message-State: ALQs6tAZoRu0Zi2rUzhv70rMC41bGLosMkb/1rsH0p8w4lFOC7CYbjJ5
-        azkAv8hl2RcGud1JBEqDlYr5vpkKjGedtRV+d3+h3A==
-X-Google-Smtp-Source: AIpwx48NpftYFb7dkEdRM+tcVYeNHJY7a9pZdd3aijKf5E5acckeOyrtwr2h1RS5g+wObmUMuvepmzDmcsP5kTmHZ/I=
-X-Received: by 2002:a0d:d0c7:: with SMTP id s190-v6mr13745392ywd.33.1524610738441;
- Tue, 24 Apr 2018 15:58:58 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Tue, 24 Apr 2018 15:58:57
- -0700 (PDT)
-In-Reply-To: <20180424153736.480b609d0af412ec46311eb6@google.com>
-References: <20180424210330.87861-1-sbeller@google.com> <20180424153736.480b609d0af412ec46311eb6@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 24 Apr 2018 15:58:57 -0700
-Message-ID: <CAGZ79kZSMURd_s6yxUCJoDjQzu-NjnFzp+740GFnYZurnw_2yw@mail.gmail.com>
-Subject: Re: [PATCHv2 0/7] Moved code detection: ignore space on uniform indentation
-To:     Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=lW1N0QzhB452Pfapc6wfdwyM1doY/LmuKCtbfu76SUo=;
+        b=Z+4KBBceOwBv8fl6x0O6DgXnpNKf0cPt3AvkSFP2Sdm987UoctrgYo2ElpskVSMXrh
+         gD/VImrbMH1nwCtPLT9PMTe0CK/e7AHC9mfOdyFXCPOMAA9PduwOJbLh+NND3XWs5wKj
+         H9QySh5jd43nD0yORPUQEST1SKWJQg7GZbAqb59zFLLGSJxqnicz7un8usRIIPm5DWXv
+         /FdNW/g8lLCtjNVHfasMH7zpZOQ1m5u9x93xO/ipVsivGBt3wMeRsVRg5lkdyq4Ewxzx
+         dVFm/Vh/83nuK9HX8k61kzdHSpYvHz3dTGpd/07az+NUdeXrsEAJ1xlKB/g31jGBiiKG
+         wBPg==
+X-Gm-Message-State: ALQs6tAWIFg1FOvOAUemOF7ybNSVjUywqZxzBTRov1ySTrhDONGDpudQ
+        aDSsrzlH4Q87roUZT+1Hla64lQ==
+X-Google-Smtp-Source: AIpwx48o6VpI3+zGf2Hb0RguOmimRUXoHKwKKDbzY4XtUXdDWs2fNix9RM90wFlBLc+DzP0QkyvCvg==
+X-Received: by 2002:a17:902:760c:: with SMTP id k12-v6mr26873688pll.338.1524610790428;
+        Tue, 24 Apr 2018 15:59:50 -0700 (PDT)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id m7sm34753540pga.46.2018.04.24.15.59.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Apr 2018 15:59:49 -0700 (PDT)
+Date:   Tue, 24 Apr 2018 15:59:48 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     git <git@vger.kernel.org>, Simon Ruderich <simon@ruderich.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 5/7] diff.c: add a blocks mode for moved code detection
+Message-Id: <20180424155948.e37a0d12fdf0e2fdafde153d@google.com>
+In-Reply-To: <CAGZ79ka9Tdk=ijbw6Hyxs9OsBMK9O69_3_cY8oX2j=wRc_F5-g@mail.gmail.com>
+References: <20180424210330.87861-1-sbeller@google.com>
+        <20180424210330.87861-6-sbeller@google.com>
+        <20180424145050.e0ad29d4f304216441656057@google.com>
+        <CAGZ79ka9Tdk=ijbw6Hyxs9OsBMK9O69_3_cY8oX2j=wRc_F5-g@mail.gmail.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 24, 2018 at 3:37 PM, Jonathan Tan <jonathantanmy@google.com> wr=
-ote:
-> On Tue, 24 Apr 2018 14:03:23 -0700
-> Stefan Beller <sbeller@google.com> wrote:
->
->> v2:
->> I think I have addressed Jonathans feedback
->> * by using a string instead of counting the first character only.
->> * refined tests slightly (easier to read)
->> * moved white space handling for moved blocks into its own flag field,
->>   keeping the enum for the actual mode of move detection.
->
-> For reference, v1 is here:
-> https://public-inbox.org/git/20180402224854.86922-1-sbeller@google.com/
->
->> Stefan Beller (7):
->>   xdiff/xdiff.h: remove unused flags
->>   xdiff/xdiffi.c: remove unneeded function declarations
->>   diff.c: do not pass diff options as keydata to hashmap
->>   diff.c: adjust hash function signature to match hashmap expectation
->>   diff.c: add a blocks mode for moved code detection
->>   diff.c: decouple white space treatment from move detection algorithm
->>   diff.c: add --color-moved-ignore-space-delta option
->
-> I'm not sure if we should add a new "blocks" mode, or if we should
-> modify the existing plain mode to have the minimum block length instead.
-> I reviewed the code as if we want the new "blocks" mode.
+On Tue, 24 Apr 2018 15:37:51 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-Thanks for the review!
+> These can be combined independently, so would
+> you expect the user to expect two options for them?
+> For example "--color-moved=zebra" could be split
+> into  "--skip-small --alternate-blocks"
 
-I think keeping plain is useful, see 176841f0c9 (diff.c: color
-moved lines differently, plain mode, 2017-06-30)
+Yes, this is a good explanation. Reusing your terms below, --skip-small
+controls the algorithm, and --alternate-blocks controls the presentation
+layer.
 
-    diff.c: color moved lines differently, plain mode
+> So instead of building blocks we rather want to split into algorithms
+> and presentation layer?
+> 
+> The presentation layer would be things like:
+> * use a different color for moved things
+> * alternate colors for adjacent blocks
+> * paint border of a block (dimmed zebra)
+> 
+> The algorithm side would be
+> * detect moves
+> * detect moves as blocks
+> * skip small heuristic
 
-    Add the 'plain' mode for move detection of code. This omits the checkin=
-g
-    for adjacent blocks, so it is not as useful. If you have a lot of the
-    same blocks moved in the same patch, the 'Zebra' would end up slow as i=
-t
-    is O(n^2) (n is number of same blocks). So this may be useful there and
-    is generally easy to add. Instead be very literal at the move detection=
-,
-    do not skip over short blocks here.
+Yes.
 
-
-Although if we do not care about that use case we can just add heuristics t=
-o
-plain.
-
-As eluded to in =C3=86vars email, we might want to break it up into multipl=
-e
-options as well?
+This was just brainstorming, though - this might not be the direction we
+want to take in this patch. (The right solution might just be to always
+use blocks - thereby simplifying the algorithm aspect.)
