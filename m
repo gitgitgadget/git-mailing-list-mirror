@@ -2,133 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ACEE1F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 18:39:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48AF81F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 18:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751419AbeDXSj3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 14:39:29 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:38130 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750916AbeDXSj2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 14:39:28 -0400
-Received: by mail-pf0-f193.google.com with SMTP id o76so8285470pfi.5
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 11:39:28 -0700 (PDT)
+        id S1751295AbeDXSmh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 14:42:37 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35316 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750841AbeDXSmg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 14:42:36 -0400
+Received: by mail-pf0-f180.google.com with SMTP id j5so13001445pfh.2
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 11:42:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=vid/p+ZPFCOtJEicGOtUXBeU9myFf0HKdaIjusDsDuU=;
-        b=EXqirHG4yNjoE+muUr8Ga5qumNcIdsHSEFgoaIb8yiXsGPikr0Bwl0KujHRpIyznCd
-         sBXX9IXhC4N7E2Dyy0k6hI3xloxNBEKqf6LwrC7SBKo0fIZF+CDgweJYcWPnZW8IAvZU
-         ld+IWczrDbx89osfjcuvi4BClxSZTMKV05xcNnRw+6655+7q8SBNtJUZmb3ZPIHxdTHl
-         2Ib/MCuSjHLSWUvWmo6mDnOZudslNQVqGAzaGzK6+THbsiliCPKMGMiVMd2b7gl5Iah9
-         kXiwx0+A2tpUwXCUtUdgwLldoXXJV1vccOEUUBdwKhl/u5olZ5zicQiySdQGlipL+KCa
-         XjSA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=27g0P0bF3OYj9XRFg5Knt2iyM0pTlfjtu2XE1ZoBbNk=;
+        b=Ilo3phAMy55iBPD+Bs42u43WgRA1u5AxtmKGf3Wad7Cqp/XS0IJdpODooNZSrYaqpN
+         Iun2yQjSLTv2IENqhUlpSXfLMxjSTWyPTbgqLDyEVxY6GrASpeaR1OR6Dex+0NQzqoPd
+         M+FS/ZVUUeHx+alHM1gMVlgXCz7cfx1EfS/ADD+xq395GSpL7S8JjjQJjGz6AufKvkJf
+         jsHuX0f4UbEcxHEUVgAaOgangFplXR100l3Td09ctjE2WVpApTQW7z7G8Vhc6kvLUXhv
+         nsWHxV3fN82RYMtSg3XghGdRWcgFTRs4sG48zBWez+2oK//FOAogqW7i4pcpcUBpxwn1
+         tN2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=vid/p+ZPFCOtJEicGOtUXBeU9myFf0HKdaIjusDsDuU=;
-        b=e6TrhrvGmmBpuS5heSF+6VOnnad3pioysSSU/owFSRWR297n2jXrB7k+8cPxu+7bDb
-         0P/V6MF7U3sgd4mrCNfNLKciiHr5IZNcQIJTlYPG6u+xhCS1q5g70xccaHpL7pegEdUL
-         QIZiBbPjUxqh8bm0FeejY6l08x5ePKtFzSQ4gxFGMRY/M8ZwGnnAgaTArRv82EK8McFo
-         UoBw+jY9wChYauPU6HnV39Cs0SK9aZAFY+tq1GZiWWc5AyL7759a9USE0F9ftL7kHOAh
-         EKmSsV8rcT+04ybStvB9H9ZoXFNC+EG7o8PWvtIqMusYw0iTcSZl580EAHJeiG1BT9sF
-         j4zA==
-X-Gm-Message-State: ALQs6tDGLwW5ad5KogRAbv4P8Jwdx6BWjUWYBbf8mGbM7OcnQl+wagOd
-        zUgRgBsfYRqCSgp48ciT2+tyIg==
-X-Google-Smtp-Source: AIpwx4/VqbM1XNBIdaXqWX+XGlwpwU662wuipwetf0pj8fIMipbLxUNOatl+0CzQSRGOzEpLQOuEug==
-X-Received: by 2002:a17:902:51ee:: with SMTP id y101-v6mr25173309plh.359.1524595167805;
-        Tue, 24 Apr 2018 11:39:27 -0700 (PDT)
-Received: from localhost ([2601:602:9500:1120:3dfa:3e1b:ab89:1ffb])
-        by smtp.gmail.com with ESMTPSA id d3sm78814pgc.12.2018.04.24.11.39.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Apr 2018 11:39:26 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Tue, 24 Apr 2018 11:39:25 -0700
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 7/7] contrib/git-jump/git-jump: jump to match column
- in addition to line
-Message-ID: <20180424183925.GA13637@syl.local>
-References: <20180421034530.GB24606@syl.local>
- <cover.1524545768.git.me@ttaylorr.com>
- <23ea226b544e9e5fcdbbcda3adb5982e2cae2123.1524545768.git.me@ttaylorr.com>
- <CAPig+cTep_WuRy3qVHpZUMstc9Tgt9gFW=F8_0E8CZQQ8Jyq7g@mail.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=27g0P0bF3OYj9XRFg5Knt2iyM0pTlfjtu2XE1ZoBbNk=;
+        b=XZUQQ5M42yJ2VVF3NPDjkNkMj613M/FK0Mj/ZlvLubhf/SeXxb5Zbo9Ci7oeLrcQyk
+         bFBAgV9tXweBZHd3D7JO045xQhq5fIeW78IeugVLX3SbHNE+PZlR1005b3Dh6/MxZeE+
+         1BlmxFPGocpOqXEn+mD0DhGmw9htf25yAoX6NnoXLIBzmgd4WrwJLi9g4k1rCeDP9xJY
+         fE+jevKqt03CYBVAHmuNqWjftrRMWOGIFjo+Nsth/yIcJ/lDYWz6u38TVLuPT6YXWnYJ
+         3n+ibSWvEc0J2h7bXehIMYVtQhnPE3N6dzRlp6HSuxmbx9UNdP9rLN8HogTLvEjE+92x
+         uwwg==
+X-Gm-Message-State: ALQs6tB4xq4RAL+D/646UmXjTrWZzzczkjm8Xo7tuMPnEb0PFiFK4hCG
+        lw4QUQsI1s/VB1/N/LdnsAhuEA==
+X-Google-Smtp-Source: AIpwx49HAWUdKwJc4/warYZgDd0do7ZUw+BuRw+MKWKt5HWyhoZqlEo/3uu2CtM22UMoIr7jWbfCfA==
+X-Received: by 2002:a17:902:5602:: with SMTP id h2-v6mr23239803pli.115.1524595355692;
+        Tue, 24 Apr 2018 11:42:35 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id t12sm22656387pgp.3.2018.04.24.11.42.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Apr 2018 11:42:34 -0700 (PDT)
+Date:   Tue, 24 Apr 2018 11:42:33 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 9/9] cache.h: allow sha1_object_info to handle arbitrary
+ repositories
+Message-ID: <20180424184233.GA90854@google.com>
+References: <20180423234327.250484-1-sbeller@google.com>
+ <20180423234327.250484-10-sbeller@google.com>
+ <20180424112332.38c0d04d96689f030e96825a@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cTep_WuRy3qVHpZUMstc9Tgt9gFW=F8_0E8CZQQ8Jyq7g@mail.gmail.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+In-Reply-To: <20180424112332.38c0d04d96689f030e96825a@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 24, 2018 at 01:37:36AM -0400, Eric Sunshine wrote:
-> On Tue, Apr 24, 2018 at 1:07 AM, Taylor Blau <me@ttaylorr.com> wrote:
-> > Take advantage of 'git-grep(1)''s new option, '--column-number' in order
-> > to teach Peff's 'git-jump' script how to jump to the correct column for
-> > any given match.
-> >
-> > 'git-grep(1)''s output is in the correct format for Vim's jump list, so
-> > no additional cleanup is necessary.
-> >
-> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> > ---
-> >  contrib/git-jump/git-jump | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> Based upon Ævar review[1], I was expecting to see git-jump/README
-> modified by this patch, as well. Perhaps you overlooked or forgot
-> about that review comment, or perhaps you disagreed with it?
+On 04/24, Jonathan Tan wrote:
+> On Mon, 23 Apr 2018 16:43:27 -0700
+> Stefan Beller <sbeller@google.com> wrote:
+> 
+> > This involves also adapting sha1_object_info_extended and a some
+> > internal functions that are used to implement these. It all has to
+> > happen in one patch, because of a single recursive chain of calls visits
+> > all these functions.
+> 
+> In packfile.c, unpack_entry() invokes get_delta_base_cache_entry(),
+> which references a global (delta_base_cache). Does delta_base_cache need
+> to be moved to the repo object (or object store object) first, or is
+> this safe?
 
-Yes, and thank you for pointing that out. I recall reading his mail and
-thought that when I prepared v3 that I had already included his changes,
-but I had in fact not done so.
+After looking at this, I think it should be safe for now since its a
+cache that requires a packed_git pointer to access (and those would be
+per repository).  We may want to move it in to the repository at some
+point though.
 
-I amended the git-jump's README to prepare for v4, but was somewhat
-confused by Ævar's comment when I reread [1]. I believe he was
-suggesting updating the example to remove a reference to ag(1)'s
-'--column' when configuring jump.grepCmd to 'ag --column'. Since
-git-{grep,jump} support this now by default, I changed that line to
-simply 'ag', instead of 'ag --column', as such:
+> 
+> Also, in sha1_file.c, oid_object_info_extended() invokes fetch_object(),
+> which attempts to fetch a missing object. For this, I think that it's
+> best to guard with a "r == the_repository" check, or if there's a better
+> way to distinguish between the "default" repository and any repository
+> that we newly create (I vaguely remember some distinction when parsing
+> environment variables when determining repo paths - the envvars were
+> only used for the "default" repository, but not for the others).
 
-diff --git a/contrib/git-jump/README b/contrib/git-jump/README
-index 4484bda410..7630e16854 100644
---- a/contrib/git-jump/README
-+++ b/contrib/git-jump/README
-@@ -37,3 +37,3 @@ Git-jump can generate four types of interesting lists:
+This is a little more difficult and I'm not sure I know what the best
+course of action would be for this.  Mostly because then this puts a big
+recursive dependency on the whole fetch mechanism to handle arbitrary
+repositories at the same time these functions are converted.  So maybe
+throwing in the runtime check would be the best way to break the
+dependencies for now.
 
--  3. Any grep matches.
-+  3. Any grep matches, including the column of the first match on a line.
-
-@@ -67,3 +67,3 @@ git jump grep -i foo_bar
- # use the silver searcher for git jump grep
--git config jump.grepCmd "ag --column"
-+git config jump.grepCmd "ag"
- --------------------------------------------------
-@@ -84,3 +84,3 @@ leaving you to locate subsequent hits in that file or other files using
- the editor or pager. By contrast, git-jump provides the editor with a
--complete list of files and line numbers for each match.
-+complete list of files, lines, and a column number for each match.
-
----
-
-Does this look OK?
-
-Thanks,
-Taylor
+-- 
+Brandon Williams
