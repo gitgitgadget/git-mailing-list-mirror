@@ -7,151 +7,103 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E6311F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 17:36:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B4C11F424
+	for <e@80x24.org>; Tue, 24 Apr 2018 17:47:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753006AbeDXRgb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 13:36:31 -0400
-Received: from mail-vk0-f41.google.com ([209.85.213.41]:35347 "EHLO
-        mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753004AbeDXRgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 13:36:25 -0400
-Received: by mail-vk0-f41.google.com with SMTP id h134so12167903vke.2
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 10:36:25 -0700 (PDT)
+        id S1753241AbeDXRrf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 13:47:35 -0400
+Received: from mail-ua0-f173.google.com ([209.85.217.173]:44048 "EHLO
+        mail-ua0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752891AbeDXRrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 13:47:31 -0400
+Received: by mail-ua0-f173.google.com with SMTP id h15so6701942uan.11
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 10:47:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=O0zt0f6Ag/7DRXV1vn/6dS15Lb2Lcb3qh9iSRIHCt2Y=;
-        b=u+6nQgMovk5De7OjYadAHl74k3tH5DBNjijBdqJa80LXa4aPAvbQ78gOAweuac8k88
-         YYzzC9u+A10zSkNapep6iAVUDtXsf4Z3bAuO7arAdiALrn/vMkeyMdUhsycpKHs90Ihx
-         Z+f6Q4qAvvQDz/a4O1efSmrptVlrUBB+rq5nXgrybneNeL3+AT7EDt8QgxH/5Vqfmmn5
-         /NS9bLCjZYi5ZXlwHT9RR7+Q6WnPSYLih1DQQnxEPDemzUt7jJ1KbEduajvWyPTZOnv3
-         gPsL7QxXKDectJbyP2Sj/XFKF7PQOqq24R/JX2uLKgr25w/LLWZVq4gObuvZ0motB0Tb
-         5Tvw==
+        bh=QDn55Ec4E/iCQ90hQ3iRzsa4Ojwp1sr460SLiilB1yw=;
+        b=Y5Zoww5qR1A275goPdHxV7T8F7jP8wB7ct2okEqyqal+aMMCtiYw29nSVI/ceUbYR5
+         ZerPn9uMo5JDK4s5Xg565lJx+f5OUHvip2F8QbHDoyNrebeC7egX21HlnnxN/CdmAYRS
+         OgcMSt+0B+VJIOrfwO+ETWV0sH8NpMsy3orRulmmV1doUn4X3YH5uYu841SydxcD/79D
+         MNgiqYyKHvdslPMBsE3QNPbXJJMY6BGZfFVpGEiUvRVMhP2VuqXZNBuZkJeTKKUb3sc5
+         jXo04/7wY4eeSR0D1t6wXCC8RSYAx5w3B61MSQV4B/h2k96uwvJgu+TEbNTBtyoIB+nC
+         siaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=O0zt0f6Ag/7DRXV1vn/6dS15Lb2Lcb3qh9iSRIHCt2Y=;
-        b=YhNs20NJwbvi5HY5WUFMM8LTaapTx9GqVSxJl73txuwWC0oh/a7SJ/Pw/CfQc7alD+
-         hU3EpePeKvqA65zITNAhtYmR28XXzq2f9vRc/ebiVZw8U8/rY31PRVWM9DJTTgDysXDV
-         v/EPGxwv4YLIu8Db/9qOo7ci/vFLaFcqTCAe9e2tY4ii4h/8oGHVhMds5ErJy/jM+ojs
-         0tNkMhWnBs1OS6mgTXG27ElyB00akFSivTKsGm29mncqffHvQ9riezsCON5N+hAnzbE2
-         G8CqSWbE7g5XVOYxl4klIuk+AoQF6sflnyCxw8OCLWuzToxZE255CZhXcM9mOWqrHLvM
-         xmTw==
-X-Gm-Message-State: ALQs6tBGSkMq7EJ+2RxVuEqC3Pu0BcQjuY1JlNREGpNd9lI1enBRefI7
-        8iJLCq9j7ksC+pOKCWdpQitW9uuNHSPfM5xCq7M=
-X-Google-Smtp-Source: AIpwx4/7yjvD/oDjnSjG6PQD0V1bl/hWn2TDtioI3JfMS9jqbpABdRULuFr9vZu2dbzKQAUy3oLI8aOQoFamgAZNAO4=
-X-Received: by 10.31.165.10 with SMTP id o10mr18241445vke.187.1524591383925;
- Tue, 24 Apr 2018 10:36:23 -0700 (PDT)
+        bh=QDn55Ec4E/iCQ90hQ3iRzsa4Ojwp1sr460SLiilB1yw=;
+        b=RK3Wfya/SjsEbskqRukM8FnVx5+uFBVtDkk8yhdITdkJOX31y+Y7cajqdK5aWeIl5C
+         Xmz+OD3YCncOACiHn9F5HMkh0hdLBngY642BnQbC8C6g7FaMglJMqB84LQU6u3aQc31w
+         ITB4O+P0FTgUqLbC+2OIljwNgVLC83kECAqcYi6Tmr4xTI67DYJfsyJQ2Dol7OqjITf6
+         +aSzfba+53HzvK52dq29FRQIhJEvSKeU6STpDpPWcBXXzSjV/voqd4463SfFUA60LXEq
+         M/ftLeDP7WmOaZ6PjbWDe+sRFpWmZsomEQRPbJbAvjm7e44ZL3vA+WdJLRNGVtdSMwDh
+         x86w==
+X-Gm-Message-State: ALQs6tA3Xhka/0zPyAF849EsKE+1WoksZ6xwgdSAMRu52wAbcNCytiEw
+        7LqvhZKl1hd3bqL/fWp7/9rldO0eR1KqBHrfj78=
+X-Google-Smtp-Source: AIpwx49GWrjieLCOGvO1Snv10HG6w0iE0nb+1hfNCKRF4kgbw30qiDU+PCY8jOH7oNyhoWdZFUqjMqQ6PScAW9rmcUU=
+X-Received: by 10.159.56.15 with SMTP id p15mr15794341uad.112.1524592050519;
+ Tue, 24 Apr 2018 10:47:30 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Tue, 24 Apr 2018 10:36:23 -0700 (PDT)
-In-Reply-To: <a34144ff-b91e-6f00-93e8-b472ad5887d0@gmail.com>
+Received: by 10.176.95.4 with HTTP; Tue, 24 Apr 2018 10:47:29 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1804241354520.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 References: <20180420133632.17580-1-benpeart@microsoft.com>
- <20180420133632.17580-3-benpeart@microsoft.com> <CABPp-BFXwbZfFe0bZYMwWxz_Qxw=KQ6XE5SEBmgiE+TzaSycuQ@mail.gmail.com>
- <a34144ff-b91e-6f00-93e8-b472ad5887d0@gmail.com>
+ <20180420133632.17580-2-benpeart@microsoft.com> <CABPp-BFANBs=tOhS5BFfTMkdQsNYbUDExWK8QB0V=qD9YwZyWw@mail.gmail.com>
+ <cd49481c-9665-124a-5f94-791f1a16657d@gmail.com> <CABPp-BFqj2TFiHUDsysafq0NHC4MV-QYZVxOZe1TNRrXMOQfng@mail.gmail.com>
+ <xmqqwox19ohw.fsf@gitster-ct.c.googlers.com> <1fb11850-4c20-5327-a63a-6d1f5aa18ea4@gmail.com>
+ <xmqqy3hd8q2k.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1804241354520.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 24 Apr 2018 10:36:23 -0700
-Message-ID: <CABPp-BHYrxyg1W0+144M=Bstunuw36ZCtRJhvu5G_kCm1g7e4w@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] merge: Add merge.aggressive config setting
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+Date:   Tue, 24 Apr 2018 10:47:29 -0700
+Message-ID: <CABPp-BFwN7nkA1ss0Ca+TSgrqsJLrBscWCOn7Eu0ZS5TmnopvA@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] merge: Add merge.renames config setting
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Ben Peart <peartben@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
         "git@vger.kernel.org" <git@vger.kernel.org>,
         "peff@peff.net" <peff@peff.net>,
-        "gitster@pobox.com" <gitster@pobox.com>,
         "pclouds@gmail.com" <pclouds@gmail.com>,
         "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>
+        Kevin Willford <kewillf@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ben,
+Hi Dscho,
 
-On Tue, Apr 24, 2018 at 9:45 AM, Ben Peart <peartben@gmail.com> wrote:
-> On 4/20/2018 1:22 PM, Elijah Newren wrote:
->> On Fri, Apr 20, 2018 at 6:36 AM, Ben Peart <Ben.Peart@microsoft.com>
->> wrote:
->>>
->>> Add the ability to control the aggressive flag passed to read-tree via a
->>> config setting.
->>
->> This feels like a workaround to the performance problems with index
->> updates in merge-recursive.c.
+On Tue, Apr 24, 2018 at 4:58 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Junio,
 >
-> This change wasn't done to solve performance problems.  We turned it on
-> because it reduced the number of unmerged entries (from 40K to 1) in the
-> particular merge we were looking at.  The additional 3 scenarios that
-> --aggressive resolves made that much difference.
+> On Tue, 24 Apr 2018, Junio C Hamano wrote:
 >
-> That said, it makes sense to me to do
-
-Um...color me perplexed here.  aggressive exists just to do some
-resolutions that higher-level strategies can and totally ought to be
-able to handle easily (the rules are almost trivially
-straight-forward), but deferring allows the higher level strategies
-(either merge-recursive or resolve's git-merge-one-file) to handle
-slightly differently (e.g. by detecting renames).  merge-recursive
-should be able to resolve anything that the unpack_trees aggressive
-setting handles.  If it can't, it sounds like there's a horrible bug
-somewhere.
-
-Perhaps fixing that bug is the real problem?
-
-Is there any chance you can dig out more details about any of these
-conflicts or come up with a simple testcase where running 'git merge
--X no-renames' gives a merge conflict but running with this option
-would run to completion?
-
->> this when rename detection is turned off.  In fact, I think you'd
->> automatically want to set aggressive to true whenever rename detection
->> is turned off (whether by your merge.renames option or the
->> -Xno-renames flag).
->> > I can't think of any reason this setting would be useful separate from
->> turning rename detection off, and it'd actively harm rename detection
->> performance improvements I have in the pipeline.  I'd really prefer to
->> not add this option, and instead combine the setting of aggressive
->> with the other flag.  Do you have an independent reason for wanting
->> this?
->>
+>> Yeah, but as opposed to passing "oh, let's see if we can get a
+>> reasonable result without rename detection just this time" from the
+>> command line, configuring merge.renames=false in would mean exactly
+>> that: "we don't need rename detection, just want to skip the cycles
+>> spent for it".  That is why I wondered how well the resolve strategy
+>> would have fit your needs.
 >
-> While combining them would work for our specific use scenario (since we turn
-> both on already along with turning off merge.stat), I really hesitate to tie
-> these two different flags and code paths together with a single config
-> setting.
+> Please do not forget that the context is GVFS, where you would cause a lot
+> of pain and suffering by letting users forget to specify that command-line
+> option all the time, resulting in several gigabytes of objects having to
+> be downloaded just for the sake of rename detection.
 >
-> While I don't want to needlessly complicate your optimizations in this area
-> (they are already complex enough!) I believe we need to keep the option to
-> turn on --aggressive without turning off rename detection as a viable
-> option.  Perhaps if that is the case, your optimizations have less impact or
-> don't apply but the user should be able to make that choice for their
-> specific situation.
+> So there is a pretty good point in doing this as a config option.
 
-I totally buy that you need at least one option to avoid waiting for
-(current) rename detection in some fashion, and that you don't want
-lots of spurious conflicts.  But I don't understand why you believe
-that we need to keep the option to turn on the aggressive flag
-independently.  What's the usecase?  It wasn't possible before in the
-code, no one else has asked for it, and even you say you don't need it
-as a separate option.  Is it a concern that turning on aggressive
-whenever rename-detection is turned off will break something?  The
-only reason I can see to keep the aggressive codepath in unpack_trees
-behind a branch instead of it always running unconditionally for every
-single caller throughout the codebase is because of renames.  So the
-fact that you're turning renames off, to me, suggests that aggressive
-flag should automatically be turned on.  I'd even call pre-existing
-code (e.g. the -X no-renames option in merge-recursive) that doesn't
-turn on the aggressive flag buggy (even if the only result is
-suboptimal-performance).
+I agree you need a config option, but I think Junio has a good point
+that it's worth at least checking out the possibility of a different
+one.  In particular, you could add a merge.defaultStrategy (or maybe
+merge.twohead to be similar to pull.twohead??) that is set to
+'resolve', and use that to avoid rename detection.
 
-I don't see how an option to turn on the aggressive flag independently
-is possibly useful to anyone.  Further, we have strong reason to
-believe it will soon be actively harmful.  So...why?  It's totally
-possible I'm just missing something.  If there's a good reason for it,
-providing some kind of benefit that the user could weigh in a
-tradeoff, then I can get on board with providing it as an option, but
-right now I just don't see it.
+Perhaps performance considerations rule out the resolve strategy and
+favor recursive, or maybe you need the 'recursive' part of the
+recursive strategy (rather than the rename part), or perhaps there's
+some other special reason you need to go this route, but since you are
+avoiding renames right now it's at least worth considering the resolve
+strategy.
+
+Elijah
