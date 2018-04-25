@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 922C91F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 18:23:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA24B1F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 18:23:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756265AbeDYSVa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 14:21:30 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:42795 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756155AbeDYSVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 14:21:18 -0400
-Received: by mail-pf0-f193.google.com with SMTP id o16so15921992pfk.9
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:21:18 -0700 (PDT)
+        id S1756326AbeDYSV0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 14:21:26 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:46993 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755758AbeDYSVQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 14:21:16 -0400
+Received: by mail-pf0-f194.google.com with SMTP id h69so15928919pfe.13
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:21:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=48amZqz71/F57pSRd0V/tdmxPu/tno9/m4Nz61ixpVk=;
-        b=R/9tOBLIvQdyZRHAJeE6ScB2F/0lsASiYHPM6szfjDI+zcSVuL8xzST9TNa33Lro50
-         QLFPncd63Y9XVukyg3TfEvVp+AZ2OvdUIuvfq0XmI0T7uLGZ9ECnIlQkre/o17AetNDx
-         XEOngDaB9hPCKV5cK9i7X6FhmwDbFvpV4UHdV0aRnmxQ6o906OZyrdfX3KmZ//mQeLgZ
-         uJ13BFKSZaA5DjSKLEvmWsoK1Or+9Jq93Dk+1aPkVDTEFn4DYNsmBVHznhxgml2HHfVD
-         WLRARbC/3kw+9ubD4HtT+hrQSUF75N7BtjOFhJDpcQ+odagovfBR/oD7q86i1tgcNhXF
-         q2sA==
+        bh=hFxyQ3atK3wVBnz9I6srBSM7mcyc6imJff8CUmEtndw=;
+        b=BB50QPZXje3ZiVDZPhXMkDBFxReASSHI8VtwvZPHDX4+Rhgs5O496BWaobJ9W7dh5Q
+         /TEqTHethzr3dIgyLjE11mW/XHYPFNKNVHCX6KyexbOBBSDb+Cp8q6X3MFs694H0THUJ
+         yY6Qq27eLESBAYRN9s/5S3X3XpCyqXGP9A0bIybIb3dAgGCZyPTIBKqTPqAJUE5uauJ6
+         oxFDJaCd8H6DQ+dgsJMmCs1UoYNqgawsxLU4SJuYoRGkQF+WT5kxoB+GWqw+VdC/M0+v
+         BYtoLSvmha7s/pYPQ8Ef6avElJP8tJNY0BVVelhyvwGkyWb6CJ56fQ4lU4uKdTmjzrRI
+         2Qzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=48amZqz71/F57pSRd0V/tdmxPu/tno9/m4Nz61ixpVk=;
-        b=eWR+3eomDRyjS/EyoYlQA9DryBUOGJZ6SSj1T6UyrJGXbbO6xILqQgPKG5cIzC2BDN
-         C7uOA5PGlhqA5PsVM3zVioq+246+StJwSqkHTCi1TCCchobBQbTDNcBWqBjRjXyqMYuU
-         +ZhWO2tYOZEHJPcFX1c4RIgBhfpTaEPoa1tkE5wUUcHsJ53tc2rTFlwyQfv7kM9hPuCi
-         U/PmORnQumx702YEef6M0ixJ+I+C9NG87XjVjvaWxbKXugmjuEK/iFn0MtC86khJtss4
-         HzeCt3XyHmX2An6HSNRJRiiz8bf89DeVKO3T6eGYsWYI33LFHh/cX1w+tlgcYbJJ883t
-         LHFA==
-X-Gm-Message-State: ALQs6tBlV4eysWmfaPJYqsKMX1Pxh/hZ80Tl5Vf+H2n0eyGiwXbOkxr/
-        0sWK6dCHFzUr5nBqD5lIizkSbg==
-X-Google-Smtp-Source: AB8JxZrODGAnXdcRIwiRVLUu1NwK6A8ez0wwIkx99PsLUv1hIN5PJnK9+cEbP2sMp04THtwuc8GBfg==
-X-Received: by 10.99.111.77 with SMTP id k74mr4299374pgc.112.1524680477859;
-        Wed, 25 Apr 2018 11:21:17 -0700 (PDT)
+        bh=hFxyQ3atK3wVBnz9I6srBSM7mcyc6imJff8CUmEtndw=;
+        b=Mhm2QHG0/y9TzFovk7u12kKtPh+lSM38JJAt9HUzsb3PK/tpEgm8Q/avnxH1h+x3cd
+         kNgg09Afsn2bThhdz4jZO/SFrtmcsEKR3oylPCbYjgAHJMQ0mGa68yzgQdmZy09ClHeo
+         kWg6sl5U/WuGUMoHf7IR7BoHTygvcXy9Gav5n7tNzNbpxi/uWt6KV39IGFj893VfyOf9
+         JW6uMe3++aKx8k257S6zRgJmiFJXOGqg/dtrzfhOLbtooWdC8bXLpM1f/UBlyoOtcE1l
+         AJqGrWLi9LKeqpt7kSdOl6hyFZL+tnRap3CXah7sXqatbrlfG8XscTYkqTHn6QbSFXub
+         9WWQ==
+X-Gm-Message-State: ALQs6tA2pj9SmQyv+zTiOO3FwReMfY0nt+495V1yWkZEfZKmkR9LYdo1
+        l4L6jTJ5Hqy/Aiy1GUrLLLw0KA==
+X-Google-Smtp-Source: AB8JxZoRpPHhk/nmiSrHvg+KA8Kc2uOSfoXfNr36X04w+6xaMvd/bYMD73QOuGJeZZlvbe9IynU7Wg==
+X-Received: by 10.98.65.93 with SMTP id o90mr2378170pfa.140.1524680475963;
+        Wed, 25 Apr 2018 11:21:15 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id d8sm29061803pgu.60.2018.04.25.11.21.16
+        by smtp.gmail.com with ESMTPSA id v8sm16474604pfn.136.2018.04.25.11.21.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Apr 2018 11:21:16 -0700 (PDT)
+        Wed, 25 Apr 2018 11:21:15 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jonathantanmy@google.com, sandals@crustytoothpaste.net,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCHv3 5/9] packfile: add repository argument to packed_object_info
-Date:   Wed, 25 Apr 2018 11:21:02 -0700
-Message-Id: <20180425182106.162972-6-sbeller@google.com>
+Subject: [PATCHv3 4/9] packfile: add repository argument to packed_to_object_type
+Date:   Wed, 25 Apr 2018 11:21:01 -0700
+Message-Id: <20180425182106.162972-5-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
 In-Reply-To: <20180425182106.162972-1-sbeller@google.com>
 References: <20180424215910.22201-1-sbeller@google.com>
@@ -65,10 +65,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Nieder <jrnieder@gmail.com>
-
-Add a repository argument to allow callers of packed_object_info to be
-more specific about which repository to handle. This is a small
+Add a repository argument to allow the callers of packed_to_object_type
+to be more specific about which repository to handle. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
 
@@ -78,68 +76,43 @@ repository other than the_repository at compile time.
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/pack-objects.c | 3 ++-
- packfile.c             | 4 ++--
- packfile.h             | 3 ++-
- sha1_file.c            | 2 +-
- 4 files changed, 7 insertions(+), 5 deletions(-)
+ packfile.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8d4111f748..d65eb4a947 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1572,7 +1572,8 @@ static void drop_reused_delta(struct object_entry *entry)
- 
- 	oi.sizep = &entry->size;
- 	oi.typep = &entry->type;
--	if (packed_object_info(entry->in_pack, entry->in_pack_offset, &oi) < 0) {
-+	if (packed_object_info(the_repository, entry->in_pack,
-+			       entry->in_pack_offset, &oi) < 0) {
- 		/*
- 		 * We failed to get the info from this pack for some reason;
- 		 * fall back to sha1_object_info, which may find another copy.
 diff --git a/packfile.c b/packfile.c
-index 3ecfba66af..5fa7d27d3b 100644
+index d2b3f3503b..3ecfba66af 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1333,8 +1333,8 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
- 	hashmap_add(&delta_base_cache, ent);
- }
+@@ -1124,11 +1124,13 @@ static int retry_bad_packed_offset_the_repository(struct packed_git *p, off_t ob
  
--int packed_object_info(struct packed_git *p, off_t obj_offset,
--		       struct object_info *oi)
-+int packed_object_info_the_repository(struct packed_git *p, off_t obj_offset,
-+				      struct object_info *oi)
+ #define POI_STACK_PREALLOC 64
+ 
+-static enum object_type packed_to_object_type(struct packed_git *p,
+-					      off_t obj_offset,
+-					      enum object_type type,
+-					      struct pack_window **w_curs,
+-					      off_t curpos)
++#define packed_to_object_type(r, p, o, t, w, c) \
++	packed_to_object_type_##r(p, o, t, w, c)
++static enum object_type packed_to_object_type_the_repository(struct packed_git *p,
++							     off_t obj_offset,
++							     enum object_type type,
++							     struct pack_window **w_curs,
++							     off_t curpos)
  {
- 	struct pack_window *w_curs = NULL;
- 	unsigned long size;
-diff --git a/packfile.h b/packfile.h
-index a92c0b241c..bc8d840b1b 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -125,7 +125,8 @@ extern void release_pack_memory(size_t);
- /* global flag to enable extra checks when accessing packed objects */
- extern int do_check_packed_object_crc;
+ 	off_t small_poi_stack[POI_STACK_PREALLOC];
+ 	off_t *poi_stack = small_poi_stack;
+@@ -1378,8 +1380,8 @@ int packed_object_info(struct packed_git *p, off_t obj_offset,
  
--extern int packed_object_info(struct packed_git *pack, off_t offset, struct object_info *);
-+#define packed_object_info(r, p, o, oi) packed_object_info_##r(p, o, oi)
-+extern int packed_object_info_the_repository(struct packed_git *pack, off_t offset, struct object_info *);
- 
- extern void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
- extern const struct packed_git *has_packed_and_bad(const unsigned char *sha1);
-diff --git a/sha1_file.c b/sha1_file.c
-index 93f25c6c6a..746ff8297a 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1307,7 +1307,7 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
- 		 * information below, so return early.
- 		 */
- 		return 0;
--	rtype = packed_object_info(e.p, e.offset, oi);
-+	rtype = packed_object_info(the_repository, e.p, e.offset, oi);
- 	if (rtype < 0) {
- 		mark_bad_packed_object(e.p, real->hash);
- 		return oid_object_info_extended(the_repository, real, oi, 0);
+ 	if (oi->typep || oi->type_name) {
+ 		enum object_type ptot;
+-		ptot = packed_to_object_type(p, obj_offset, type, &w_curs,
+-					     curpos);
++		ptot = packed_to_object_type(the_repository, p, obj_offset,
++					     type, &w_curs, curpos);
+ 		if (oi->typep)
+ 			*oi->typep = ptot;
+ 		if (oi->type_name) {
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
