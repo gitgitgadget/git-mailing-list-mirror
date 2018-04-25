@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 605A21F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 12:29:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61F781F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 12:29:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753790AbeDYM3P (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 08:29:15 -0400
-Received: from mout.gmx.net ([212.227.17.20]:42215 "EHLO mout.gmx.net"
+        id S1753946AbeDYM3X (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 08:29:23 -0400
+Received: from mout.gmx.net ([212.227.17.21]:58233 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753946AbeDYM3L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 08:29:11 -0400
+        id S1752650AbeDYM3V (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 08:29:21 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
- (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0M4CB5-1eLPkJ18RX-00rt2o; Wed, 25 Apr 2018 14:29:04 +0200
+ (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0M3zG2-1eL8dE0uBu-00rW62; Wed, 25 Apr 2018 14:29:14 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -32,499 +32,391 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Sixt <j6t@kdbg.org>,
         Sergey Organov <sorganov@gmail.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v9 09/17] rebase-helper --make-script: introduce a flag to rebase merges
-Date:   Wed, 25 Apr 2018 14:29:03 +0200
-Message-Id: <3f2b8cf277917b185d03507e5d4a3b3b7a80c4d1.1524659287.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v9 10/17] rebase: introduce the --rebase-merges option
+Date:   Wed, 25 Apr 2018 14:29:04 +0200
+Message-Id: <922adf04f1cbb04e83f075cb99c6673d2fee5026.1524659287.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.33.gfcbb1fa0445
 MIME-Version: 1.0
 In-Reply-To: <cover.1524659287.git.johannes.schindelin@gmx.de>
 References: <cover.1524306546.git.johannes.schindelin@gmx.de> <cover.1524659287.git.johannes.schindelin@gmx.de>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:kXjo6rCtzh6HvVlpDcUcPCRPHpysDVg4d2U+EkyyJ6DUsTmUDEp
- Vw8LJNy1N//nPQV9oghFoU4Xii6GSx8M+pgNW7P+yU2LZa6Uv/glEMjGIsmUWy7vxyAg/3v
- dtPPeg0uDlsE+z/xgY7sUt2fyqM9aNP0w6T9yCW6/ijVlK0SOirxROfRsaxSu90vDlioiX1
- bIvkf7kAdijcXK2s5qgVA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Y+YIjI+6Wyo=:izqdFL+F0W3fLiUlg0XDOh
- NtTdZ99D9c84vqASgVRK0J2AFaCsl2sPhIcsi9KsotChOCPjddUAnD1E9elsHqtcDhjKzvXC3
- MMqqNZunZekCPGCWSwMq8Zrorjz0vjVwqfXcpUoVDM2uS6I785lR0EqqurB8jwgxRgZhOcByK
- 4lxVgcAA10z7EawCQ+jebKU4pG2dx9WWBHJTlmzUXw8J2akwXhBP739tJYoOXvv0RIMk6adaW
- BlO4aQN1mUhQoz1UGwGHACUhbQ5zqB5CDgQN/jUeCgx3E9XjkTiAUiXHL61mKslp8a3qPNQ9b
- X2M4x0E73ypkqk6v1sMy+e1j6chyurmqmhBBNwj36yzj1TzcuTUWZ+4AJyyUXJWqsLbuNP1Aw
- PmN6ynoJeF0S1SUcC9TiOVUXqpQWJUMBVQvnTX0jPXMePR27WRM7VYT6uQ4eavLBMu+aAQqFy
- BqeGDwJk8CMZlpSSs6ZbQ23ynfPSXTpscmHaPhSxwifO5iTcCikw6poiOs2ETuJYrJxkmIBiN
- YMSvMO02uJCAUmfjGGZmyBSrrnGlqsN11vXHDR2jXyfFu+N3qE3Hgc82YO+G1k2iklX6tNRyW
- MRBsbomMrrNp5BPmnAvJbTZqjaOj2lcPjJu51X15SVE3jRlRLTeQWNfZnYM7CBXBnse3vuXbf
- xX4+erg2upixNUQQKxMpP4uBM/gGOs63UNB7XgwSlWui2SawoU15uP6ik8RJdvvmxRu/kv00v
- 0Q9xjoiBF5D9yNzaUi424g90KTSmUflk0bsHTewMginfRbwm8EEEOXU4teNRjVOzJXf28MwH5
- E+Xs7uf2DvkOgqaVUf7gEuTM1lOca0oQudNhw8Hn8qgz9eBI0uoIA0EcC0AVbpTWfaHgy7l
+X-Provags-ID: V03:K1:UwaFYEM18NTLXQonqEM7B0QJMWb+uIjkHm/fyxg6t2GO3/rk1Cc
+ vSfYu/vNN4VY7PB3/8o7qeVswlOHsHTRnLMZQaD6ToeNaBX7JRc45nQuc8DHgx5wg8VNJ8n
+ 5cuwHMq/3KWTELVImqTTLpmAqODQ68fT4HpvV5RT9Ljedu7jNOqRPwno/62cqOxnnTbGRb+
+ awYmNSIxIxGKycuLvc05Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Jl4j2RRwrUw=:OpD+9UhKF89r9ONjnJmxH8
+ gfj5kYbHNciybn4/no4lIPwYpwuiZplkJf48veFyjOFMRv0hm5bIQbBIitzyzgJvRnbPCxWKK
+ 9cnzV3bCVZm49fkWLiZkRDDIDfrYzBtpaFH16dhMF71yZ/zMXyxuk9yLHYqZLP0AqJpXri9wr
+ gOWwfJV8JMuajCbJr54OrcbzWmX9z/2MMhTEVWRHBEuj0picjSjvATWdchWblfs2QdHsobD34
+ he/e7Z+T0YLNrU+R0CdV0+0flrtYflXfOI3AkHk+pyWcREDqnoJ9ij3XRstCpKa/ipQ5XEuzu
+ 63w+os1G8RKjW1obNu66sd/2bQJi8KIB8JNVm+xByrCAbtnE91Xtj2J6a/tmfD7FJC25qy52C
+ kZ3hRHt+HW33abyoIbPTMHNzV42PqZdbyzzbM0m0FNIQXdg+CGVkKWgw5Nm87MEEjNmbN7G9w
+ jsPJXLOtxPrR+DP9TxWlF8yv/EJpQeEz7wBfku8AXe1ZgIdWQwEOUOI7BV3pnsFe9Lj68ajCa
+ rZXYNp8Q76YLERP8xCbTrGDFCuOoiwhrlwnSQPOu13e+nhItuZPKZGauyZM3yqdogfFdbuBio
+ A65aQRG9xYzlvjX5Jitik40FNr1R1LGTUqAdYg0sfKroW4nnVeyqRnhL+klcYh8RZhO7lmieP
+ Au+OlENVkr5CE977qnAtlYFfsihyw8r/z2MIHxyzlIBEh27zCNw7SJveUj6WN6yS+B6G6zpgw
+ 0t/30wRTc28Am3odfBbvqrEyfy9/4f4w4MSMs3i9ncaONideqa9sOQ5ahCtbiNxy0mZ/G2jIl
+ y3yLu0a9NvT7atJA3662vE7tbnaENjlW7PgBtHa6Ertz4yii1ucyOqgu/0YpORONc88+tmC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The sequencer just learned new commands intended to recreate branch
-structure (similar in spirit to --preserve-merges, but with a
-substantially less-broken design).
+Once upon a time, this here developer thought: wouldn't it be nice if,
+say, Git for Windows' patches on top of core Git could be represented as
+a thicket of branches, and be rebased on top of core Git in order to
+maintain a cherry-pick'able set of patch series?
 
-Let's allow the rebase--helper to generate todo lists making use of
-these commands, triggered by the new --rebase-merges option. For a
-commit topology like this (where the HEAD points to C):
+The original attempt to answer this was: git rebase --preserve-merges.
 
-	- A - B - C
-	    \   /
-	      D
+However, that experiment was never intended as an interactive option,
+and it only piggy-backed on git rebase --interactive because that
+command's implementation looked already very, very familiar: it was
+designed by the same person who designed --preserve-merges: yours truly.
 
-the generated todo list would look like this:
+Some time later, some other developer (I am looking at you, Andreas!
+;-)) decided that it would be a good idea to allow --preserve-merges to
+be combined with --interactive (with caveats!) and the Git maintainer
+(well, the interim Git maintainer during Junio's absence, that is)
+agreed, and that is when the glamor of the --preserve-merges design
+started to fall apart rather quickly and unglamorously.
 
-	# branch D
-	pick 0123 A
-	label branch-point
-	pick 1234 D
-	label D
+The reason? In --preserve-merges mode, the parents of a merge commit (or
+for that matter, of *any* commit) were not stated explicitly, but were
+*implied* by the commit name passed to the `pick` command.
 
-	reset branch-point
-	pick 2345 B
-	merge -C 3456 D # C
+This made it impossible, for example, to reorder commits. Not to mention
+to move commits between branches or, deity forbid, to split topic branches
+into two.
 
-To keep things simple, we first only implement support for merge commits
-with exactly two parents, leaving support for octopus merges to a later
-patch series.
+Alas, these shortcomings also prevented that mode (whose original
+purpose was to serve Git for Windows' needs, with the additional hope
+that it may be useful to others, too) from serving Git for Windows'
+needs.
 
-All merge-rebasing todo lists start with a hard-coded `label onto` line.
-This makes it convenient to refer later on to the revision onto which
-everything is rebased, e.g. as starting point for branches other than
-the very first one.
+Five years later, when it became really untenable to have one unwieldy,
+big hodge-podge patch series of partly related, partly unrelated patches
+in Git for Windows that was rebased onto core Git's tags from time to
+time (earning the undeserved wrath of the developer of the ill-fated
+git-remote-hg series that first obsoleted Git for Windows' competing
+approach, only to be abandoned without maintainer later) was really
+untenable, the "Git garden shears" were born [*1*/*2*]: a script,
+piggy-backing on top of the interactive rebase, that would first
+determine the branch topology of the patches to be rebased, create a
+pseudo todo list for further editing, transform the result into a real
+todo list (making heavy use of the `exec` command to "implement" the
+missing todo list commands) and finally recreate the patch series on
+top of the new base commit.
+
+That was in 2013. And it took about three weeks to come up with the
+design and implement it as an out-of-tree script. Needless to say, the
+implementation needed quite a few years to stabilize, all the while the
+design itself proved itself sound.
+
+With this patch, the goodness of the Git garden shears comes to `git
+rebase -i` itself. Passing the `--rebase-merges` option will generate
+a todo list that can be understood readily, and where it is obvious
+how to reorder commits. New branches can be introduced by inserting
+`label` commands and calling `merge <label>`. And once this mode will
+have become stable and universally accepted, we can deprecate the design
+mistake that was `--preserve-merges`.
+
+Link *1*:
+https://github.com/msysgit/msysgit/blob/master/share/msysGit/shears.sh
+Link *2*:
+https://github.com/git-for-windows/build-extra/blob/master/shears.sh
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase--helper.c |   4 +-
- sequencer.c              | 346 ++++++++++++++++++++++++++++++++++++++-
- sequencer.h              |   1 +
- 3 files changed, 349 insertions(+), 2 deletions(-)
+ Documentation/git-rebase.txt           |  21 ++-
+ contrib/completion/git-completion.bash |   2 +-
+ git-rebase--interactive.sh             |   1 +
+ git-rebase.sh                          |   6 +
+ t/t3430-rebase-merges.sh               | 179 +++++++++++++++++++++++++
+ 5 files changed, 207 insertions(+), 2 deletions(-)
+ create mode 100755 t/t3430-rebase-merges.sh
 
-diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index ad074705bb5..781782e7272 100644
---- a/builtin/rebase--helper.c
-+++ b/builtin/rebase--helper.c
-@@ -12,7 +12,7 @@ static const char * const builtin_rebase_helper_usage[] = {
- int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- {
- 	struct replay_opts opts = REPLAY_OPTS_INIT;
--	unsigned flags = 0, keep_empty = 0;
-+	unsigned flags = 0, keep_empty = 0, rebase_merges = 0;
- 	int abbreviate_commands = 0;
- 	enum {
- 		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
-@@ -24,6 +24,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "keep-empty", &keep_empty, N_("keep empty commits")),
- 		OPT_BOOL(0, "allow-empty-message", &opts.allow_empty_message,
- 			N_("allow commits with empty messages")),
-+		OPT_BOOL(0, "rebase-merges", &rebase_merges, N_("rebase merge commits")),
- 		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
- 				CONTINUE),
- 		OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
-@@ -57,6 +58,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index dd852068b1d..7f1756f1eba 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -379,6 +379,24 @@ The commit list format can be changed by setting the configuration option
+ rebase.instructionFormat.  A customized instruction format will automatically
+ have the long commit hash prepended to the format.
  
- 	flags |= keep_empty ? TODO_LIST_KEEP_EMPTY : 0;
- 	flags |= abbreviate_commands ? TODO_LIST_ABBREVIATE_CMDS : 0;
-+	flags |= rebase_merges ? TODO_LIST_REBASE_MERGES : 0;
- 	flags |= command == SHORTEN_OIDS ? TODO_LIST_SHORTEN_IDS : 0;
- 
- 	if (command == CONTINUE && argc == 1)
-diff --git a/sequencer.c b/sequencer.c
-index 6722095655d..e9297122633 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -25,6 +25,8 @@
- #include "sigchain.h"
- #include "unpack-trees.h"
- #include "worktree.h"
-+#include "oidmap.h"
-+#include "oidset.h"
- 
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
-@@ -3448,6 +3450,343 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
- 	strbuf_release(&sob);
- }
- 
-+struct labels_entry {
-+	struct hashmap_entry entry;
-+	char label[FLEX_ARRAY];
-+};
++-r::
++--rebase-merges::
++	By default, a rebase will simply drop merge commits from the todo
++	list, and put the rebased commits into a single, linear branch.
++	With `--rebase-merges`, the rebase will instead try to preserve
++	the branching structure within the commits that are to be rebased,
++	by recreating the merge commits. Any resolved merge conflicts or
++	manual amendments in these merge commits will have to be
++	resolved/re-applied manually.
+++
++This mode is similar in spirit to `--preserve-merges`, but in contrast to
++that option works well in interactive rebases: commits can be reordered,
++inserted and dropped at will.
+++
++It is currently only possible to recreate the merge commits using the
++`recursive` merge strategy; Different merge strategies can be used only via
++explicit `exec git merge -s <strategy> [...]` commands.
 +
-+static int labels_cmp(const void *fndata, const struct labels_entry *a,
-+		      const struct labels_entry *b, const void *key)
-+{
-+	return key ? strcmp(a->label, key) : strcmp(a->label, b->label);
+ -p::
+ --preserve-merges::
+ 	Recreate merge commits instead of flattening the history by replaying
+@@ -781,7 +799,8 @@ BUGS
+ The todo list presented by `--preserve-merges --interactive` does not
+ represent the topology of the revision graph.  Editing commits and
+ rewording their commit messages should work fine, but attempts to
+-reorder commits tend to produce counterintuitive results.
++reorder commits tend to produce counterintuitive results. Use
++`--rebase-merges` in such scenarios instead.
+ 
+ For example, an attempt to rearrange
+ ------------
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 01dd9ff07a2..e6469004099 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1944,7 +1944,7 @@ _git_rebase ()
+ 	--*)
+ 		__gitcomp "
+ 			--onto --merge --strategy --interactive
+-			--preserve-merges --stat --no-stat
++			--rebase-merges --preserve-merges --stat --no-stat
+ 			--committer-date-is-author-date --ignore-date
+ 			--ignore-whitespace --whitespace=
+ 			--autosquash --no-autosquash
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index acb4bfd3fc8..e29da634339 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -970,6 +970,7 @@ git_rebase__interactive () {
+ 	init_revisions_and_shortrevisions
+ 
+ 	git rebase--helper --make-script ${keep_empty:+--keep-empty} \
++		${rebase_merges:+--rebase-merges} \
+ 		$revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
+ 	die "$(gettext "Could not generate todo list")"
+ 
+diff --git a/git-rebase.sh b/git-rebase.sh
+index ded5de085a8..a553f969d11 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -17,6 +17,7 @@ q,quiet!           be quiet. implies --no-stat
+ autostash          automatically stash/stash pop before and after
+ fork-point         use 'merge-base --fork-point' to refine upstream
+ onto=!             rebase onto given branch instead of upstream
++r,rebase-merges!   try to rebase merges instead of skipping them
+ p,preserve-merges! try to recreate merges instead of ignoring them
+ s,strategy=!       use the given merge strategy
+ no-ff!             cherry-pick all commits, even if unchanged
+@@ -89,6 +90,7 @@ type=
+ state_dir=
+ # One of {'', continue, skip, abort}, as parsed from command line
+ action=
++rebase_merges=
+ preserve_merges=
+ autosquash=
+ keep_empty=
+@@ -280,6 +282,10 @@ do
+ 	--no-keep-empty)
+ 		keep_empty=
+ 		;;
++	--rebase-merges)
++		rebase_merges=t
++		test -z "$interactive_rebase" && interactive_rebase=implied
++		;;
+ 	--preserve-merges)
+ 		preserve_merges=t
+ 		test -z "$interactive_rebase" && interactive_rebase=implied
+diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+new file mode 100755
+index 00000000000..5f0febb9970
+--- /dev/null
++++ b/t/t3430-rebase-merges.sh
+@@ -0,0 +1,179 @@
++#!/bin/sh
++#
++# Copyright (c) 2018 Johannes E. Schindelin
++#
++
++test_description='git rebase -i --rebase-merges
++
++This test runs git rebase "interactively", retaining the branch structure by
++recreating merge commits.
++
++Initial setup:
++
++    -- B --                   (first)
++   /       \
++ A - C - D - E - H            (master)
++       \       /
++         F - G                (second)
++'
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-rebase.sh
++
++test_cmp_graph () {
++	cat >expect &&
++	git log --graph --boundary --format=%s "$@" >output &&
++	sed "s/ *$//" <output >output.trimmed &&
++	test_cmp expect output.trimmed
 +}
 +
-+struct string_entry {
-+	struct oidmap_entry entry;
-+	char string[FLEX_ARRAY];
-+};
++test_expect_success 'setup' '
++	write_script replace-editor.sh <<-\EOF &&
++	mv "$1" "$(git rev-parse --git-path ORIGINAL-TODO)"
++	cp script-from-scratch "$1"
++	EOF
 +
-+struct label_state {
-+	struct oidmap commit2label;
-+	struct hashmap labels;
-+	struct strbuf buf;
-+};
++	test_commit A &&
++	git checkout -b first &&
++	test_commit B &&
++	git checkout master &&
++	test_commit C &&
++	test_commit D &&
++	git merge --no-commit B &&
++	test_tick &&
++	git commit -m E &&
++	git tag -m E E &&
++	git checkout -b second C &&
++	test_commit F &&
++	test_commit G &&
++	git checkout master &&
++	git merge --no-commit G &&
++	test_tick &&
++	git commit -m H &&
++	git tag -m H H
++'
 +
-+static const char *label_oid(struct object_id *oid, const char *label,
-+			     struct label_state *state)
-+{
-+	struct labels_entry *labels_entry;
-+	struct string_entry *string_entry;
-+	struct object_id dummy;
-+	size_t len;
-+	int i;
++test_expect_success 'create completely different structure' '
++	cat >script-from-scratch <<-\EOF &&
++	label onto
 +
-+	string_entry = oidmap_get(&state->commit2label, oid);
-+	if (string_entry)
-+		return string_entry->string;
++	# onebranch
++	pick G
++	pick D
++	label onebranch
 +
-+	/*
-+	 * For "uninteresting" commits, i.e. commits that are not to be
-+	 * rebased, and which can therefore not be labeled, we use a unique
-+	 * abbreviation of the commit name. This is slightly more complicated
-+	 * than calling find_unique_abbrev() because we also need to make
-+	 * sure that the abbreviation does not conflict with any other
-+	 * label.
-+	 *
-+	 * We disallow "interesting" commits to be labeled by a string that
-+	 * is a valid full-length hash, to ensure that we always can find an
-+	 * abbreviation for any uninteresting commit's names that does not
-+	 * clash with any other label.
-+	 */
-+	if (!label) {
-+		char *p;
++	# second
++	reset onto
++	pick B
++	label second
 +
-+		strbuf_reset(&state->buf);
-+		strbuf_grow(&state->buf, GIT_SHA1_HEXSZ);
-+		label = p = state->buf.buf;
++	reset onto
++	merge -C H second
++	merge onebranch # Merge the topic branch '\''onebranch'\''
++	EOF
++	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
++	test_tick &&
++	git rebase -i -r A &&
++	test_cmp_graph <<-\EOF
++	*   Merge the topic branch '\''onebranch'\''
++	|\
++	| * D
++	| * G
++	* |   H
++	|\ \
++	| |/
++	|/|
++	| * B
++	|/
++	* A
++	EOF
++'
 +
-+		find_unique_abbrev_r(p, oid, default_abbrev);
++test_expect_success 'generate correct todo list' '
++	cat >expect <<-\EOF &&
++	label onto
 +
-+		/*
-+		 * We may need to extend the abbreviated hash so that there is
-+		 * no conflicting label.
-+		 */
-+		if (hashmap_get_from_hash(&state->labels, strihash(p), p)) {
-+			size_t i = strlen(p) + 1;
++	reset onto
++	pick d9df450 B
++	label E
 +
-+			oid_to_hex_r(p, oid);
-+			for (; i < GIT_SHA1_HEXSZ; i++) {
-+				char save = p[i];
-+				p[i] = '\0';
-+				if (!hashmap_get_from_hash(&state->labels,
-+							   strihash(p), p))
-+					break;
-+				p[i] = save;
-+			}
-+		}
-+	} else if (((len = strlen(label)) == GIT_SHA1_RAWSZ &&
-+		    !get_oid_hex(label, &dummy)) ||
-+		   (len == 1 && *label == '#') ||
-+		   hashmap_get_from_hash(&state->labels,
-+					 strihash(label), label)) {
-+		/*
-+		 * If the label already exists, or if the label is a valid full
-+		 * OID, or the label is a '#' (which we use as a separator
-+		 * between merge heads and oneline), we append a dash and a
-+		 * number to make it unique.
-+		 */
-+		struct strbuf *buf = &state->buf;
++	reset onto
++	pick 5dee784 C
++	label branch-point
++	pick ca2c861 F
++	pick 088b00a G
++	label H
 +
-+		strbuf_reset(buf);
-+		strbuf_add(buf, label, len);
++	reset branch-point # C
++	pick 12bd07b D
++	merge -C 2051b56 E # E
++	merge -C 233d48a H # H
 +
-+		for (i = 2; ; i++) {
-+			strbuf_setlen(buf, len);
-+			strbuf_addf(buf, "-%d", i);
-+			if (!hashmap_get_from_hash(&state->labels,
-+						   strihash(buf->buf),
-+						   buf->buf))
-+				break;
-+		}
++	EOF
 +
-+		label = buf->buf;
-+	}
++	grep -v "^#" <.git/ORIGINAL-TODO >output &&
++	test_cmp expect output
++'
 +
-+	FLEX_ALLOC_STR(labels_entry, label, label);
-+	hashmap_entry_init(labels_entry, strihash(label));
-+	hashmap_add(&state->labels, labels_entry);
++test_expect_success '`reset` refuses to overwrite untracked files' '
++	git checkout -b refuse-to-reset &&
++	test_commit dont-overwrite-untracked &&
++	git checkout @{-1} &&
++	: >dont-overwrite-untracked.t &&
++	echo "reset refs/tags/dont-overwrite-untracked" >script-from-scratch &&
++	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
++	test_must_fail git rebase -r HEAD &&
++	git rebase --abort
++'
 +
-+	FLEX_ALLOC_STR(string_entry, string, label);
-+	oidcpy(&string_entry->entry.oid, oid);
-+	oidmap_put(&state->commit2label, string_entry);
++test_expect_success 'failed `merge` writes patch (may be rescheduled, too)' '
++	test_when_finished "test_might_fail git rebase --abort" &&
++	git checkout -b conflicting-merge A &&
 +
-+	return string_entry->string;
-+}
++	: fail because of conflicting untracked file &&
++	>G.t &&
++	echo "merge -C H G" >script-from-scratch &&
++	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
++	test_tick &&
++	test_must_fail git rebase -ir HEAD &&
++	grep "^merge -C .* G$" .git/rebase-merge/done &&
++	grep "^merge -C .* G$" .git/rebase-merge/git-rebase-todo &&
++	test_path_is_file .git/rebase-merge/patch &&
 +
-+static int make_script_with_merges(struct pretty_print_context *pp,
-+				   struct rev_info *revs, FILE *out,
-+				   unsigned flags)
-+{
-+	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
-+	struct strbuf buf = STRBUF_INIT, oneline = STRBUF_INIT;
-+	struct strbuf label = STRBUF_INIT;
-+	struct commit_list *commits = NULL, **tail = &commits, *iter;
-+	struct commit_list *tips = NULL, **tips_tail = &tips;
-+	struct commit *commit;
-+	struct oidmap commit2todo = OIDMAP_INIT;
-+	struct string_entry *entry;
-+	struct oidset interesting = OIDSET_INIT, child_seen = OIDSET_INIT,
-+		shown = OIDSET_INIT;
-+	struct label_state state = { OIDMAP_INIT, { NULL }, STRBUF_INIT };
++	: fail because of merge conflict &&
++	rm G.t .git/rebase-merge/patch &&
++	git reset --hard &&
++	test_commit conflicting-G G.t not-G conflicting-G &&
++	test_must_fail git rebase --continue &&
++	! grep "^merge -C .* G$" .git/rebase-merge/git-rebase-todo &&
++	test_path_is_file .git/rebase-merge/patch
++'
 +
-+	int abbr = flags & TODO_LIST_ABBREVIATE_CMDS;
-+	const char *cmd_pick = abbr ? "p" : "pick",
-+		*cmd_label = abbr ? "l" : "label",
-+		*cmd_reset = abbr ? "t" : "reset",
-+		*cmd_merge = abbr ? "m" : "merge";
++test_expect_success 'with a branch tip that was cherry-picked already' '
++	git checkout -b already-upstream master &&
++	base="$(git rev-parse --verify HEAD)" &&
 +
-+	oidmap_init(&commit2todo, 0);
-+	oidmap_init(&state.commit2label, 0);
-+	hashmap_init(&state.labels, (hashmap_cmp_fn) labels_cmp, NULL, 0);
-+	strbuf_init(&state.buf, 32);
++	test_commit A1 &&
++	test_commit A2 &&
++	git reset --hard $base &&
++	test_commit B1 &&
++	test_tick &&
++	git merge -m "Merge branch A" A2 &&
 +
-+	if (revs->cmdline.nr && (revs->cmdline.rev[0].flags & BOTTOM)) {
-+		struct object_id *oid = &revs->cmdline.rev[0].item->oid;
-+		FLEX_ALLOC_STR(entry, string, "onto");
-+		oidcpy(&entry->entry.oid, oid);
-+		oidmap_put(&state.commit2label, entry);
-+	}
++	git checkout -b upstream-with-a2 $base &&
++	test_tick &&
++	git cherry-pick A2 &&
 +
-+	/*
-+	 * First phase:
-+	 * - get onelines for all commits
-+	 * - gather all branch tips (i.e. 2nd or later parents of merges)
-+	 * - label all branch tips
-+	 */
-+	while ((commit = get_revision(revs))) {
-+		struct commit_list *to_merge;
-+		int is_octopus;
-+		const char *p1, *p2;
-+		struct object_id *oid;
-+		int is_empty;
++	git checkout already-upstream &&
++	test_tick &&
++	git rebase -i -r upstream-with-a2 &&
++	test_cmp_graph upstream-with-a2.. <<-\EOF
++	*   Merge branch A
++	|\
++	| * A1
++	* | B1
++	|/
++	o A2
++	EOF
++'
 +
-+		tail = &commit_list_insert(commit, tail)->next;
-+		oidset_insert(&interesting, &commit->object.oid);
-+
-+		is_empty = is_original_commit_empty(commit);
-+		if (!is_empty && (commit->object.flags & PATCHSAME))
-+			continue;
-+
-+		strbuf_reset(&oneline);
-+		pretty_print_commit(pp, commit, &oneline);
-+
-+		to_merge = commit->parents ? commit->parents->next : NULL;
-+		if (!to_merge) {
-+			/* non-merge commit: easy case */
-+			strbuf_reset(&buf);
-+			if (!keep_empty && is_empty)
-+				strbuf_addf(&buf, "%c ", comment_line_char);
-+			strbuf_addf(&buf, "%s %s %s", cmd_pick,
-+				    oid_to_hex(&commit->object.oid),
-+				    oneline.buf);
-+
-+			FLEX_ALLOC_STR(entry, string, buf.buf);
-+			oidcpy(&entry->entry.oid, &commit->object.oid);
-+			oidmap_put(&commit2todo, entry);
-+
-+			continue;
-+		}
-+
-+		is_octopus = to_merge && to_merge->next;
-+
-+		if (is_octopus)
-+			BUG("Octopus merges not yet supported");
-+
-+		/* Create a label */
-+		strbuf_reset(&label);
-+		if (skip_prefix(oneline.buf, "Merge ", &p1) &&
-+		    (p1 = strchr(p1, '\'')) &&
-+		    (p2 = strchr(++p1, '\'')))
-+			strbuf_add(&label, p1, p2 - p1);
-+		else if (skip_prefix(oneline.buf, "Merge pull request ",
-+				     &p1) &&
-+			 (p1 = strstr(p1, " from ")))
-+			strbuf_addstr(&label, p1 + strlen(" from "));
-+		else
-+			strbuf_addbuf(&label, &oneline);
-+
-+		for (p1 = label.buf; *p1; p1++)
-+			if (isspace(*p1))
-+				*(char *)p1 = '-';
-+
-+		strbuf_reset(&buf);
-+		strbuf_addf(&buf, "%s -C %s",
-+			    cmd_merge, oid_to_hex(&commit->object.oid));
-+
-+		/* label the tip of merged branch */
-+		oid = &to_merge->item->object.oid;
-+		strbuf_addch(&buf, ' ');
-+
-+		if (!oidset_contains(&interesting, oid))
-+			strbuf_addstr(&buf, label_oid(oid, NULL, &state));
-+		else {
-+			tips_tail = &commit_list_insert(to_merge->item,
-+							tips_tail)->next;
-+
-+			strbuf_addstr(&buf, label_oid(oid, label.buf, &state));
-+		}
-+		strbuf_addf(&buf, " # %s", oneline.buf);
-+
-+		FLEX_ALLOC_STR(entry, string, buf.buf);
-+		oidcpy(&entry->entry.oid, &commit->object.oid);
-+		oidmap_put(&commit2todo, entry);
-+	}
-+
-+	/*
-+	 * Second phase:
-+	 * - label branch points
-+	 * - add HEAD to the branch tips
-+	 */
-+	for (iter = commits; iter; iter = iter->next) {
-+		struct commit_list *parent = iter->item->parents;
-+		for (; parent; parent = parent->next) {
-+			struct object_id *oid = &parent->item->object.oid;
-+			if (!oidset_contains(&interesting, oid))
-+				continue;
-+			if (!oidset_contains(&child_seen, oid))
-+				oidset_insert(&child_seen, oid);
-+			else
-+				label_oid(oid, "branch-point", &state);
-+		}
-+
-+		/* Add HEAD as implict "tip of branch" */
-+		if (!iter->next)
-+			tips_tail = &commit_list_insert(iter->item,
-+							tips_tail)->next;
-+	}
-+
-+	/*
-+	 * Third phase: output the todo list. This is a bit tricky, as we
-+	 * want to avoid jumping back and forth between revisions. To
-+	 * accomplish that goal, we walk backwards from the branch tips,
-+	 * gathering commits not yet shown, reversing the list on the fly,
-+	 * then outputting that list (labeling revisions as needed).
-+	 */
-+	fprintf(out, "%s onto\n", cmd_label);
-+	for (iter = tips; iter; iter = iter->next) {
-+		struct commit_list *list = NULL, *iter2;
-+
-+		commit = iter->item;
-+		if (oidset_contains(&shown, &commit->object.oid))
-+			continue;
-+		entry = oidmap_get(&state.commit2label, &commit->object.oid);
-+
-+		if (entry)
-+			fprintf(out, "\n# Branch %s\n", entry->string);
-+		else
-+			fprintf(out, "\n");
-+
-+		while (oidset_contains(&interesting, &commit->object.oid) &&
-+		       !oidset_contains(&shown, &commit->object.oid)) {
-+			commit_list_insert(commit, &list);
-+			if (!commit->parents) {
-+				commit = NULL;
-+				break;
-+			}
-+			commit = commit->parents->item;
-+		}
-+
-+		if (!commit)
-+			fprintf(out, "%s onto\n", cmd_reset);
-+		else {
-+			const char *to = NULL;
-+
-+			entry = oidmap_get(&state.commit2label,
-+					   &commit->object.oid);
-+			if (entry)
-+				to = entry->string;
-+
-+			if (!to || !strcmp(to, "onto"))
-+				fprintf(out, "%s onto\n", cmd_reset);
-+			else {
-+				strbuf_reset(&oneline);
-+				pretty_print_commit(pp, commit, &oneline);
-+				fprintf(out, "%s %s # %s\n",
-+					cmd_reset, to, oneline.buf);
-+			}
-+		}
-+
-+		for (iter2 = list; iter2; iter2 = iter2->next) {
-+			struct object_id *oid = &iter2->item->object.oid;
-+			entry = oidmap_get(&commit2todo, oid);
-+			/* only show if not already upstream */
-+			if (entry)
-+				fprintf(out, "%s\n", entry->string);
-+			entry = oidmap_get(&state.commit2label, oid);
-+			if (entry)
-+				fprintf(out, "%s %s\n",
-+					cmd_label, entry->string);
-+			oidset_insert(&shown, oid);
-+		}
-+
-+		free_commit_list(list);
-+	}
-+
-+	free_commit_list(commits);
-+	free_commit_list(tips);
-+
-+	strbuf_release(&label);
-+	strbuf_release(&oneline);
-+	strbuf_release(&buf);
-+
-+	oidmap_free(&commit2todo, 1);
-+	oidmap_free(&state.commit2label, 1);
-+	hashmap_free(&state.labels, 1);
-+	strbuf_release(&state.buf);
-+
-+	return 0;
-+}
-+
- int sequencer_make_script(FILE *out, int argc, const char **argv,
- 			  unsigned flags)
- {
-@@ -3458,10 +3797,12 @@ int sequencer_make_script(FILE *out, int argc, const char **argv,
- 	struct commit *commit;
- 	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
- 	const char *insn = flags & TODO_LIST_ABBREVIATE_CMDS ? "p" : "pick";
-+	int rebase_merges = flags & TODO_LIST_REBASE_MERGES;
- 
- 	init_revisions(&revs, NULL);
- 	revs.verbose_header = 1;
--	revs.max_parents = 1;
-+	if (!rebase_merges)
-+		revs.max_parents = 1;
- 	revs.cherry_mark = 1;
- 	revs.limited = 1;
- 	revs.reverse = 1;
-@@ -3486,6 +3827,9 @@ int sequencer_make_script(FILE *out, int argc, const char **argv,
- 	if (prepare_revision_walk(&revs) < 0)
- 		return error(_("make_script: error preparing revisions"));
- 
-+	if (rebase_merges)
-+		return make_script_with_merges(&pp, &revs, out, flags);
-+
- 	while ((commit = get_revision(&revs))) {
- 		int is_empty  = is_original_commit_empty(commit);
- 
-diff --git a/sequencer.h b/sequencer.h
-index e45b178dfc4..6bc4da17243 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -59,6 +59,7 @@ int sequencer_remove_state(struct replay_opts *opts);
- #define TODO_LIST_KEEP_EMPTY (1U << 0)
- #define TODO_LIST_SHORTEN_IDS (1U << 1)
- #define TODO_LIST_ABBREVIATE_CMDS (1U << 2)
-+#define TODO_LIST_REBASE_MERGES (1U << 3)
- int sequencer_make_script(FILE *out, int argc, const char **argv,
- 			  unsigned flags);
- 
++test_done
 -- 
 2.17.0.windows.1.33.gfcbb1fa0445
 
