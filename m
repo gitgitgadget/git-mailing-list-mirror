@@ -2,145 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E8741F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 15:22:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36B641F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 16:01:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754761AbeDYPWi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 11:22:38 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:35692 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754749AbeDYPWf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 11:22:35 -0400
-Received: by mail-qk0-f196.google.com with SMTP id b131so18626839qkg.2
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 08:22:34 -0700 (PDT)
+        id S1755416AbeDYQBa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 12:01:30 -0400
+Received: from mail-ua0-f196.google.com ([209.85.217.196]:43195 "EHLO
+        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932080AbeDYQBZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 12:01:25 -0400
+Received: by mail-ua0-f196.google.com with SMTP id s15so15230152uae.10
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 09:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=O96R17LKWQbfr017rXk2VdH4I3m9DKSnJ2bXQvke10k=;
-        b=cINP2RxLb8clBq2W5VdMbxS8zHwN8901kCffJze5kpPnLwSxGuTcJVONFMjDp6O0Sn
-         u7ukabkAL9uhyKT+oUxRYypJY4IPHwBN5gE78jUTCmCAA5yLYqW82ire+4Byq2ISwmVo
-         iyo2lmkzNhrxCiGnh0PQ21yZ7jbWQDbhQNJiqF+f91HixaOIVihZrg0L3oC84IZUuDHs
-         EO69bqdjmXpeIABjERM77HFOsKr1I1ZwPGRyPiuWkDc16fYWXQAVjWNhckEjoWqizw6J
-         SUNqPv9Ja1FbQ5Odyn/qaP1eveR8yxZ6bT7vQL0MXinz0eOVhuAUfD/TOcahwyxZem4o
-         843g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=7MS+7Nez6HFJKrvsqIcTlcI8tNKBVPRfucIzv1FO88A=;
+        b=ZfZ5bMTceKoiPP3buF6l5DfS6VzFDnHTWn479nxKZwxb+hj1co5KkLyN0fZCeL/pin
+         SY4i0LqzSwAkABp5jDIgQIbJ9NKRo0VlPQRnuPJWbqadXvRq3q6zduHqGvEPoxJ/GQYX
+         btG8AILYw03sBcSJhVq4R8iQt1PA4uEmrpq47V/8i0QA3RCexvgPAvglvOiu2go2YViW
+         ZQ69IbKeTPEAtycXyEM++M+t4IpUj7K+POiezZaHbx9vdue04F5HGGCFe5a1lEdcZ8V0
+         Vj68PVSpizbx2mGlB9Oqp+mI8eY8wCVbbaKvvh5Tk8bPg0n7JgVSEtdGovjkaWN4X1ST
+         orTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=O96R17LKWQbfr017rXk2VdH4I3m9DKSnJ2bXQvke10k=;
-        b=O8QJISkObdEiZPZgYD/C02CbMmpsgGjQt10NsZZmiq7NF/ANdaS8HC01oYwG9cHBWm
-         2DQIZgjUi+/gmsRgj/uO202pP3O5UprfoNxkrhcgce+8gsoExD5NMd1EJB2zVzRs7wZl
-         VVDew1T7YUc5elQr16BqufRfDVb4cUIO7oYzuoCRjGypEUBBWZwf04MaPZ8jAWh+/6z3
-         ZFbZF5gIDjzfo51g+uQS6HfqW/yVWvFQOu2nPurSmF1F4yiGZhZJEBVOztnaBZSOLS5N
-         NNPM3eUBVti5CWCu0j3fjRK00DK/cBbg/dOmyyzjEVj58Nj7JOS8subVHju5xZrK/Fp0
-         7Scw==
-X-Gm-Message-State: ALQs6tCtNqwDIcIg4135KrpfM6/xY1GkRrzSXV6RWlwOG0h8OgX3xiUG
-        pxccGoy4pLC620+AlrmZFa4=
-X-Google-Smtp-Source: AB8JxZq4yxj66lHF5r5ku2f1XstsMrG6SNmEVECaFanCm+MQfia4CAO9XF2IqfrUJ6Xt/hQmJtNYdw==
-X-Received: by 10.55.162.143 with SMTP id l137mr30631824qke.200.1524669753714;
-        Wed, 25 Apr 2018 08:22:33 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id g12-v6sm13080141qtj.42.2018.04.25.08.22.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Apr 2018 08:22:32 -0700 (PDT)
-Subject: Re: [PATCH v2 0/2] add additional config settings for merge
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "newren@gmail.com" <newren@gmail.com>,
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=7MS+7Nez6HFJKrvsqIcTlcI8tNKBVPRfucIzv1FO88A=;
+        b=LrTTX4jSZ6CtCP0O8zi7TyOlF8OKnLqWsQG/jxpVt24AChtusApfHmWd3gOmCEaVXK
+         HV058/oUse5JB4u1OlKkI7SxjTJP6Z/HqgfCjofX5wzhLd8PSrOsJEycchi+9YF1NrOE
+         Qh1ZZQpIOxJdCyKffL9TkXFdeFInVlzESVRnwJs37bSee7SMBoeHBuY/+szyBOzQgeil
+         RVdEjYCNLwJbLdVIuidCkwv9mNmm2SV566r3MxwOlYzH+/e1CFaBpJltd6jE8ZfnR6uP
+         QU/EfCu0eD0LL7jhxurageVsp0CsXliGhgI3aQNCchT72Xz8z3umMHdLd4rpHIsQ+pBr
+         Otjw==
+X-Gm-Message-State: ALQs6tAZiKLdQV9VGdlAEbJcvI+8JaS5nPNb6Wqgk1+s0tZ7woirzQD7
+        xGGYtbwc5gyj7Z9tjqCa9S5HdIIvfS0jwXiYSts=
+X-Google-Smtp-Source: AB8JxZo3zgLuMbHCZ58tWiY2HK8Tn/dhV3bUEKEa4Ftl94Hi8QKrcHh88ldKumofCH3p335DLMNLp2WBQfOzy5w9XQ4=
+X-Received: by 10.176.30.139 with SMTP id o11mr1588755uak.154.1524672083055;
+ Wed, 25 Apr 2018 09:01:23 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.176.95.4 with HTTP; Wed, 25 Apr 2018 09:01:21 -0700 (PDT)
+In-Reply-To: <68fa18c0-1dac-f6dc-0c41-fa5722c2c227@gmail.com>
+References: <20180420133632.17580-1-benpeart@microsoft.com>
+ <20180424171124.12064-1-benpeart@microsoft.com> <20180424171124.12064-2-benpeart@microsoft.com>
+ <CABPp-BFTywvVFV3Wx1jv9RyoFk_cE7XE8x1neuLVt4qwyw0EMw@mail.gmail.com> <68fa18c0-1dac-f6dc-0c41-fa5722c2c227@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 25 Apr 2018 09:01:21 -0700
+Message-ID: <CABPp-BGGtLGKVGY_ry8=sdi=s=EDphzTADt+0UR1F4NJpSqmFw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] merge: Add merge.renames config setting
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
         "peff@peff.net" <peff@peff.net>,
+        "gitster@pobox.com" <gitster@pobox.com>,
         "pclouds@gmail.com" <pclouds@gmail.com>,
         "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
         Kevin Willford <kewillf@microsoft.com>,
         "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
         "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
-References: <20180420133632.17580-1-benpeart@microsoft.com>
- <20180424171124.12064-1-benpeart@microsoft.com>
- <xmqqd0yo5ejb.fsf@gitster-ct.c.googlers.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <365838dc-d988-b72c-ef29-20369a7f54a2@gmail.com>
-Date:   Wed, 25 Apr 2018 11:22:33 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqd0yo5ejb.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Apr 24, 2018 at 1:31 PM, Ben Peart <peartben@gmail.com> wrote:
+> On 4/24/2018 2:59 PM, Elijah Newren wrote:
+>> On Tue, Apr 24, 2018 at 10:11 AM, Ben Peart <Ben.Peart@microsoft.com>
+>> wrote:
+>>>
+>>> diff --git a/builtin/merge.c b/builtin/merge.c
+>>> index 8746c5e3e8..3be52cd316 100644
+>>> --- a/builtin/merge.c
+>>> +++ b/builtin/merge.c
+>>> @@ -424,6 +424,7 @@ static void finish(struct commit *head_commit,
+>>>                  opts.output_format |=
+>>>                          DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
+>>>                  opts.detect_rename = DIFF_DETECT_RENAME;
+>>> +               git_config_get_bool("merge.renames",
+>>> &opts.detect_rename);
+>>>                  diff_setup_done(&opts);
+>>>                  diff_tree_oid(head, new_head, "", &opts);
+>>>                  diffcore_std(&opts);
+>>
+>>
+>> Shouldn't this also be turned off if either (a) merge.renames is unset
+>> and diff.renames is false, or (b) the user specifies -Xno-renames?
+>>
+>
+> This makes me think that I should probably remove the line that overrides
+> the detect_rename setting with the merge config setting.  As I look at the
+> code, none of the other merge options are reflected in the diffstat;
+> instead, all the settings are pretty much hard coded.  Perhaps I shouldn't
+> rock that boat.
 
+Actually, stat_graph_width respects the diff.statGraphWidth config
+option, even though it's slightly hidden due to the magic value of -1,
+and being handled from diff.c.
 
-On 4/24/2018 8:13 PM, Junio C Hamano wrote:
-> Ben Peart <Ben.Peart@microsoft.com> writes:
-> 
->>   diff.renameLimit::
->>   	The number of files to consider when performing the copy/rename
->> -	detection; equivalent to the 'git diff' option `-l`.
->> +	detection; equivalent to the 'git diff' option `-l`. This setting
->> +	has no effect if rename detection is turned off.
-> 
-> You mean "turned off via diff.renames"?
-> 
-> This is not meant as a suggestion to rewrite this paragraph
-> further---but if the answer is "no", then that might be an
-> indication that the sentence is inviting a misunderstanding.
-> 
-
-Yes, this is referring to turned off via the config setting 
-"diff.renames" but it could also be turned off by passing "--no-renames" 
-on the command line.
-
-To be clear, this documentation change isn't trying to document any 
-changes to the code or behavior - it is just an attempt to clarify what 
-the existing behavior is.  If it isn't helping, I can remove it.
-
->>   diff.renames::
->>   	Whether and how Git detects renames.  If set to "false",
->> diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
->> index 5a9ab969db..38492bcb98 100644
->> --- a/Documentation/merge-config.txt
->> +++ b/Documentation/merge-config.txt
->> @@ -39,7 +39,8 @@ include::fmt-merge-msg-config.txt[]
->>   merge.renameLimit::
->>   	The number of files to consider when performing rename detection
->>   	during a merge; if not specified, defaults to the value of
->> -	diff.renameLimit.
->> +	diff.renameLimit. This setting has no effect if rename detection
->> +	is turned off.
-> 
-> Ditto.  If your design is to make the merge machinery completely
-> ignore diff.renames and only pay attention to merge.renames [*1*],
-> then it probably is a good idea to be more specific here, by saying
-> "... is turned off via ...", though.
-> 
->>   merge.renames::
->>   	Whether and how Git detects renames.  If set to "false",
-> 
-> [Footnote]
-> 
-> *1* ...which I do not think is such a good idea, by the way.  I'd
-> personally expect merge.renames to allow overriding and falling back
-> to diff.renames, just like the {merge,diff}.renameLimit pair does.
-> 
-
-It looks like I'm in the minority on whether the merge settings should 
-inherit from the corresponding diff settings so I will submit a new 
-patch series that does it the same way as the {merge,diff}.renameLimit 
-pair works.
-
-I'll leave it as an exercise for someone else [1] to change any other 
-merge settings that should behave that way.
-
-[1] 
-https://public-inbox.org/git/20180420133632.17580-1-benpeart@microsoft.com/T/#m52a3dbd0945360bfb873fd3b553472558ef3b796
+However, trying to get this suggestion of mine hooked up, particularly
+with -Xno-renames and -Xfind-renames (the latter because it might need
+to override a merge.renames or diff.renames config setting), might be
+slightly tricky because the -X options are only passed down to a
+single merge strategy but this code is outside of the merge
+strategies.  So making it a separate patch, or even a separate patch
+series may make sense.  I'm still interested in this change if you
+aren't, but I'm fine with it not being part of your series if you
+don't want to tackle it.
