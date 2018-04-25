@@ -7,416 +7,85 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61F781F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 12:29:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6C941F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 12:29:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753946AbeDYM3X (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 08:29:23 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58233 "EHLO mout.gmx.net"
+        id S1753956AbeDYM30 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 08:29:26 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53215 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752650AbeDYM3V (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 08:29:21 -0400
+        id S1753142AbeDYM3X (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 08:29:23 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
- (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0M3zG2-1eL8dE0uBu-00rW62; Wed, 25 Apr 2018 14:29:14 +0200
+ (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0M6wWn-1eQL9t0mCj-00wlvT; Wed, 25 Apr 2018 14:29:16 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
         Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
         Igor Djordjevic <igor.d.djordjevic@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Sergey Organov <sorganov@gmail.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v9 10/17] rebase: introduce the --rebase-merges option
-Date:   Wed, 25 Apr 2018 14:29:04 +0200
-Message-Id: <922adf04f1cbb04e83f075cb99c6673d2fee5026.1524659287.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v9 11/17] rebase --rebase-merges: add test for --keep-empty
+Date:   Wed, 25 Apr 2018 14:29:14 +0200
+Message-Id: <23a1e05c64edc54c15f6d22c5fd6120b3711fd2a.1524659287.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.33.gfcbb1fa0445
 MIME-Version: 1.0
 In-Reply-To: <cover.1524659287.git.johannes.schindelin@gmx.de>
 References: <cover.1524306546.git.johannes.schindelin@gmx.de> <cover.1524659287.git.johannes.schindelin@gmx.de>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:UwaFYEM18NTLXQonqEM7B0QJMWb+uIjkHm/fyxg6t2GO3/rk1Cc
- vSfYu/vNN4VY7PB3/8o7qeVswlOHsHTRnLMZQaD6ToeNaBX7JRc45nQuc8DHgx5wg8VNJ8n
- 5cuwHMq/3KWTELVImqTTLpmAqODQ68fT4HpvV5RT9Ljedu7jNOqRPwno/62cqOxnnTbGRb+
- awYmNSIxIxGKycuLvc05Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Jl4j2RRwrUw=:OpD+9UhKF89r9ONjnJmxH8
- gfj5kYbHNciybn4/no4lIPwYpwuiZplkJf48veFyjOFMRv0hm5bIQbBIitzyzgJvRnbPCxWKK
- 9cnzV3bCVZm49fkWLiZkRDDIDfrYzBtpaFH16dhMF71yZ/zMXyxuk9yLHYqZLP0AqJpXri9wr
- gOWwfJV8JMuajCbJr54OrcbzWmX9z/2MMhTEVWRHBEuj0picjSjvATWdchWblfs2QdHsobD34
- he/e7Z+T0YLNrU+R0CdV0+0flrtYflXfOI3AkHk+pyWcREDqnoJ9ij3XRstCpKa/ipQ5XEuzu
- 63w+os1G8RKjW1obNu66sd/2bQJi8KIB8JNVm+xByrCAbtnE91Xtj2J6a/tmfD7FJC25qy52C
- kZ3hRHt+HW33abyoIbPTMHNzV42PqZdbyzzbM0m0FNIQXdg+CGVkKWgw5Nm87MEEjNmbN7G9w
- jsPJXLOtxPrR+DP9TxWlF8yv/EJpQeEz7wBfku8AXe1ZgIdWQwEOUOI7BV3pnsFe9Lj68ajCa
- rZXYNp8Q76YLERP8xCbTrGDFCuOoiwhrlwnSQPOu13e+nhItuZPKZGauyZM3yqdogfFdbuBio
- A65aQRG9xYzlvjX5Jitik40FNr1R1LGTUqAdYg0sfKroW4nnVeyqRnhL+klcYh8RZhO7lmieP
- Au+OlENVkr5CE977qnAtlYFfsihyw8r/z2MIHxyzlIBEh27zCNw7SJveUj6WN6yS+B6G6zpgw
- 0t/30wRTc28Am3odfBbvqrEyfy9/4f4w4MSMs3i9ncaONideqa9sOQ5ahCtbiNxy0mZ/G2jIl
- y3yLu0a9NvT7atJA3662vE7tbnaENjlW7PgBtHa6Ertz4yii1ucyOqgu/0YpORONc88+tmC
+X-Provags-ID: V03:K1:N0vmB5H1nezbv33S4qA7lMA4dHOKYyOX7s7So3uDESvl6K/fmPO
+ 2/p7QTRQQTqs5OVeZgDzjZPWh+PmRu7AJq60ipOJwGsUhROYC+MaJS1+GlDQOt9LvRmkSzM
+ wWtVbIcr/pOpwxaFXNXAKqOb8oogYsq2S9W/8tbHUHMvPJHPtbbfWChNe7ZAtWnKqo8xD/j
+ 1fyq+LSI6n5inUwmUQiTg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5Nm70tsE6YI=:oIC2pmSQlpJhEXktbdxFWS
+ HJUGbulUxZucc0tgTy7EbwT54Me/07nnPUYEZNbafnQ7xmcH3hoOesnWjTiaoY+FWq2BIEr4A
+ lBhr2ITeJRJt2pes/D22atq9qdQ4f3mH6A15zF3zj5htpwrCwiyMXKRn0CSWqRUaBJ5D5VQLl
+ 1bWZY2M65aWEK4KUXVCLp22w8eaSawZnyQKGkXcS5MIovxMy0hJc4at3u91+/525UhPt89W4L
+ MMEokPW8mz4NXVCmB4wvIr7Swf0f8vLkAq6F6VjM1Zp8CLbU69Z2owLNxLEwi9AsoT30zoOL+
+ 0TxBjQY02YgdKdPVhFcPZSw3lK5Fx57PfliER8G98DBdsYm1i743a0it5Bn5Xms7nimIhWmVv
+ vsEMPct6/S9LMKxgicS5qTF64EaAfNON0IQ9KpLtK5tvofe/oFmILF/8ZTJARhYhubJdLS4/s
+ C+G/UsQSqE/1QrGByMLFY1eyYG7V27NySvsKuXfY+bBmN4HQC794NCmE2h3OkNpi+fjSoI/WZ
+ y3k7e6gLZL5p14S98zkmvPaVBRrNmv4ZwQmLv0+HEWaKeB5VWuve+s3mhs4bGw2fKoGGXJCJP
+ mkaLkvfxo/lKixao+Kfwq7YVW30XHs2XZMvcSeKKUcQ6+3fOnkRPrzdgoxlWeX2XJomX5J++v
+ nh2cgYkgrAbf2vZneT4K5SqH8FbJi0PMhxpsztpk7AueVycZu/Y2Ebq+V2NRoZSVEnKX7SWx0
+ UAm+pdHeCKiN5OoJwfBsIqOd/ZQ+wJIeoXJwOJH1+nYTJY4+k2stUlM9mH5I3gixUuLyfuPaM
+ IKoaE3LzhLgQESAa0D7ZCEukyrXzHJbuZMPLlq4nDOjume2ZSugCsZdzekhqhwPNzZXFURS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Once upon a time, this here developer thought: wouldn't it be nice if,
-say, Git for Windows' patches on top of core Git could be represented as
-a thicket of branches, and be rebased on top of core Git in order to
-maintain a cherry-pick'able set of patch series?
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-The original attempt to answer this was: git rebase --preserve-merges.
+If there are empty commits on the left hand side of $upstream...HEAD
+then the empty commits on the right hand side that we want to keep are
+being pruned.
 
-However, that experiment was never intended as an interactive option,
-and it only piggy-backed on git rebase --interactive because that
-command's implementation looked already very, very familiar: it was
-designed by the same person who designed --preserve-merges: yours truly.
-
-Some time later, some other developer (I am looking at you, Andreas!
-;-)) decided that it would be a good idea to allow --preserve-merges to
-be combined with --interactive (with caveats!) and the Git maintainer
-(well, the interim Git maintainer during Junio's absence, that is)
-agreed, and that is when the glamor of the --preserve-merges design
-started to fall apart rather quickly and unglamorously.
-
-The reason? In --preserve-merges mode, the parents of a merge commit (or
-for that matter, of *any* commit) were not stated explicitly, but were
-*implied* by the commit name passed to the `pick` command.
-
-This made it impossible, for example, to reorder commits. Not to mention
-to move commits between branches or, deity forbid, to split topic branches
-into two.
-
-Alas, these shortcomings also prevented that mode (whose original
-purpose was to serve Git for Windows' needs, with the additional hope
-that it may be useful to others, too) from serving Git for Windows'
-needs.
-
-Five years later, when it became really untenable to have one unwieldy,
-big hodge-podge patch series of partly related, partly unrelated patches
-in Git for Windows that was rebased onto core Git's tags from time to
-time (earning the undeserved wrath of the developer of the ill-fated
-git-remote-hg series that first obsoleted Git for Windows' competing
-approach, only to be abandoned without maintainer later) was really
-untenable, the "Git garden shears" were born [*1*/*2*]: a script,
-piggy-backing on top of the interactive rebase, that would first
-determine the branch topology of the patches to be rebased, create a
-pseudo todo list for further editing, transform the result into a real
-todo list (making heavy use of the `exec` command to "implement" the
-missing todo list commands) and finally recreate the patch series on
-top of the new base commit.
-
-That was in 2013. And it took about three weeks to come up with the
-design and implement it as an out-of-tree script. Needless to say, the
-implementation needed quite a few years to stabilize, all the while the
-design itself proved itself sound.
-
-With this patch, the goodness of the Git garden shears comes to `git
-rebase -i` itself. Passing the `--rebase-merges` option will generate
-a todo list that can be understood readily, and where it is obvious
-how to reorder commits. New branches can be introduced by inserting
-`label` commands and calling `merge <label>`. And once this mode will
-have become stable and universally accepted, we can deprecate the design
-mistake that was `--preserve-merges`.
-
-Link *1*:
-https://github.com/msysgit/msysgit/blob/master/share/msysGit/shears.sh
-Link *2*:
-https://github.com/git-for-windows/build-extra/blob/master/shears.sh
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- Documentation/git-rebase.txt           |  21 ++-
- contrib/completion/git-completion.bash |   2 +-
- git-rebase--interactive.sh             |   1 +
- git-rebase.sh                          |   6 +
- t/t3430-rebase-merges.sh               | 179 +++++++++++++++++++++++++
- 5 files changed, 207 insertions(+), 2 deletions(-)
- create mode 100755 t/t3430-rebase-merges.sh
+ t/t3421-rebase-topology-linear.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index dd852068b1d..7f1756f1eba 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -379,6 +379,24 @@ The commit list format can be changed by setting the configuration option
- rebase.instructionFormat.  A customized instruction format will automatically
- have the long commit hash prepended to the format.
+diff --git a/t/t3421-rebase-topology-linear.sh b/t/t3421-rebase-topology-linear.sh
+index b078f930462..e7438ad06ac 100755
+--- a/t/t3421-rebase-topology-linear.sh
++++ b/t/t3421-rebase-topology-linear.sh
+@@ -217,6 +217,7 @@ test_run_rebase success ''
+ test_run_rebase success -m
+ test_run_rebase success -i
+ test_run_rebase failure -p
++test_run_rebase success --rebase-merges
  
-+-r::
-+--rebase-merges::
-+	By default, a rebase will simply drop merge commits from the todo
-+	list, and put the rebased commits into a single, linear branch.
-+	With `--rebase-merges`, the rebase will instead try to preserve
-+	the branching structure within the commits that are to be rebased,
-+	by recreating the merge commits. Any resolved merge conflicts or
-+	manual amendments in these merge commits will have to be
-+	resolved/re-applied manually.
-++
-+This mode is similar in spirit to `--preserve-merges`, but in contrast to
-+that option works well in interactive rebases: commits can be reordered,
-+inserted and dropped at will.
-++
-+It is currently only possible to recreate the merge commits using the
-+`recursive` merge strategy; Different merge strategies can be used only via
-+explicit `exec git merge -s <strategy> [...]` commands.
-+
- -p::
- --preserve-merges::
- 	Recreate merge commits instead of flattening the history by replaying
-@@ -781,7 +799,8 @@ BUGS
- The todo list presented by `--preserve-merges --interactive` does not
- represent the topology of the revision graph.  Editing commits and
- rewording their commit messages should work fine, but attempts to
--reorder commits tend to produce counterintuitive results.
-+reorder commits tend to produce counterintuitive results. Use
-+`--rebase-merges` in such scenarios instead.
- 
- For example, an attempt to rearrange
- ------------
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 01dd9ff07a2..e6469004099 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1944,7 +1944,7 @@ _git_rebase ()
- 	--*)
- 		__gitcomp "
- 			--onto --merge --strategy --interactive
--			--preserve-merges --stat --no-stat
-+			--rebase-merges --preserve-merges --stat --no-stat
- 			--committer-date-is-author-date --ignore-date
- 			--ignore-whitespace --whitespace=
- 			--autosquash --no-autosquash
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index acb4bfd3fc8..e29da634339 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -970,6 +970,7 @@ git_rebase__interactive () {
- 	init_revisions_and_shortrevisions
- 
- 	git rebase--helper --make-script ${keep_empty:+--keep-empty} \
-+		${rebase_merges:+--rebase-merges} \
- 		$revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
- 	die "$(gettext "Could not generate todo list")"
- 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index ded5de085a8..a553f969d11 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -17,6 +17,7 @@ q,quiet!           be quiet. implies --no-stat
- autostash          automatically stash/stash pop before and after
- fork-point         use 'merge-base --fork-point' to refine upstream
- onto=!             rebase onto given branch instead of upstream
-+r,rebase-merges!   try to rebase merges instead of skipping them
- p,preserve-merges! try to recreate merges instead of ignoring them
- s,strategy=!       use the given merge strategy
- no-ff!             cherry-pick all commits, even if unchanged
-@@ -89,6 +90,7 @@ type=
- state_dir=
- # One of {'', continue, skip, abort}, as parsed from command line
- action=
-+rebase_merges=
- preserve_merges=
- autosquash=
- keep_empty=
-@@ -280,6 +282,10 @@ do
- 	--no-keep-empty)
- 		keep_empty=
- 		;;
-+	--rebase-merges)
-+		rebase_merges=t
-+		test -z "$interactive_rebase" && interactive_rebase=implied
-+		;;
- 	--preserve-merges)
- 		preserve_merges=t
- 		test -z "$interactive_rebase" && interactive_rebase=implied
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-new file mode 100755
-index 00000000000..5f0febb9970
---- /dev/null
-+++ b/t/t3430-rebase-merges.sh
-@@ -0,0 +1,179 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2018 Johannes E. Schindelin
-+#
-+
-+test_description='git rebase -i --rebase-merges
-+
-+This test runs git rebase "interactively", retaining the branch structure by
-+recreating merge commits.
-+
-+Initial setup:
-+
-+    -- B --                   (first)
-+   /       \
-+ A - C - D - E - H            (master)
-+       \       /
-+         F - G                (second)
-+'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+test_cmp_graph () {
-+	cat >expect &&
-+	git log --graph --boundary --format=%s "$@" >output &&
-+	sed "s/ *$//" <output >output.trimmed &&
-+	test_cmp expect output.trimmed
-+}
-+
-+test_expect_success 'setup' '
-+	write_script replace-editor.sh <<-\EOF &&
-+	mv "$1" "$(git rev-parse --git-path ORIGINAL-TODO)"
-+	cp script-from-scratch "$1"
-+	EOF
-+
-+	test_commit A &&
-+	git checkout -b first &&
-+	test_commit B &&
-+	git checkout master &&
-+	test_commit C &&
-+	test_commit D &&
-+	git merge --no-commit B &&
-+	test_tick &&
-+	git commit -m E &&
-+	git tag -m E E &&
-+	git checkout -b second C &&
-+	test_commit F &&
-+	test_commit G &&
-+	git checkout master &&
-+	git merge --no-commit G &&
-+	test_tick &&
-+	git commit -m H &&
-+	git tag -m H H
-+'
-+
-+test_expect_success 'create completely different structure' '
-+	cat >script-from-scratch <<-\EOF &&
-+	label onto
-+
-+	# onebranch
-+	pick G
-+	pick D
-+	label onebranch
-+
-+	# second
-+	reset onto
-+	pick B
-+	label second
-+
-+	reset onto
-+	merge -C H second
-+	merge onebranch # Merge the topic branch '\''onebranch'\''
-+	EOF
-+	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
-+	test_tick &&
-+	git rebase -i -r A &&
-+	test_cmp_graph <<-\EOF
-+	*   Merge the topic branch '\''onebranch'\''
-+	|\
-+	| * D
-+	| * G
-+	* |   H
-+	|\ \
-+	| |/
-+	|/|
-+	| * B
-+	|/
-+	* A
-+	EOF
-+'
-+
-+test_expect_success 'generate correct todo list' '
-+	cat >expect <<-\EOF &&
-+	label onto
-+
-+	reset onto
-+	pick d9df450 B
-+	label E
-+
-+	reset onto
-+	pick 5dee784 C
-+	label branch-point
-+	pick ca2c861 F
-+	pick 088b00a G
-+	label H
-+
-+	reset branch-point # C
-+	pick 12bd07b D
-+	merge -C 2051b56 E # E
-+	merge -C 233d48a H # H
-+
-+	EOF
-+
-+	grep -v "^#" <.git/ORIGINAL-TODO >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success '`reset` refuses to overwrite untracked files' '
-+	git checkout -b refuse-to-reset &&
-+	test_commit dont-overwrite-untracked &&
-+	git checkout @{-1} &&
-+	: >dont-overwrite-untracked.t &&
-+	echo "reset refs/tags/dont-overwrite-untracked" >script-from-scratch &&
-+	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
-+	test_must_fail git rebase -r HEAD &&
-+	git rebase --abort
-+'
-+
-+test_expect_success 'failed `merge` writes patch (may be rescheduled, too)' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	git checkout -b conflicting-merge A &&
-+
-+	: fail because of conflicting untracked file &&
-+	>G.t &&
-+	echo "merge -C H G" >script-from-scratch &&
-+	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
-+	test_tick &&
-+	test_must_fail git rebase -ir HEAD &&
-+	grep "^merge -C .* G$" .git/rebase-merge/done &&
-+	grep "^merge -C .* G$" .git/rebase-merge/git-rebase-todo &&
-+	test_path_is_file .git/rebase-merge/patch &&
-+
-+	: fail because of merge conflict &&
-+	rm G.t .git/rebase-merge/patch &&
-+	git reset --hard &&
-+	test_commit conflicting-G G.t not-G conflicting-G &&
-+	test_must_fail git rebase --continue &&
-+	! grep "^merge -C .* G$" .git/rebase-merge/git-rebase-todo &&
-+	test_path_is_file .git/rebase-merge/patch
-+'
-+
-+test_expect_success 'with a branch tip that was cherry-picked already' '
-+	git checkout -b already-upstream master &&
-+	base="$(git rev-parse --verify HEAD)" &&
-+
-+	test_commit A1 &&
-+	test_commit A2 &&
-+	git reset --hard $base &&
-+	test_commit B1 &&
-+	test_tick &&
-+	git merge -m "Merge branch A" A2 &&
-+
-+	git checkout -b upstream-with-a2 $base &&
-+	test_tick &&
-+	git cherry-pick A2 &&
-+
-+	git checkout already-upstream &&
-+	test_tick &&
-+	git rebase -i -r upstream-with-a2 &&
-+	test_cmp_graph upstream-with-a2.. <<-\EOF
-+	*   Merge branch A
-+	|\
-+	| * A1
-+	* | B1
-+	|/
-+	o A2
-+	EOF
-+'
-+
-+test_done
+ #       m
+ #      /
 -- 
 2.17.0.windows.1.33.gfcbb1fa0445
 
