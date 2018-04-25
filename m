@@ -7,108 +7,97 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 254DF1F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 13:06:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E63A81F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 13:46:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752868AbeDYNGy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 09:06:54 -0400
-Received: from mail-ua0-f196.google.com ([209.85.217.196]:42898 "EHLO
-        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752722AbeDYNGx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 09:06:53 -0400
-Received: by mail-ua0-f196.google.com with SMTP id f3so9277075uan.9
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 06:06:53 -0700 (PDT)
+        id S1753571AbeDYNq2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 09:46:28 -0400
+Received: from mail-ua0-f171.google.com ([209.85.217.171]:37561 "EHLO
+        mail-ua0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752949AbeDYNq1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 09:46:27 -0400
+Received: by mail-ua0-f171.google.com with SMTP id i3so3650536uad.4
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 06:46:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=6V9sAEiLR4fSzvqtnaMC4YtLmgQpkXcfq6II/S/4Yho=;
-        b=fXLtSRQ+WcAs1QvW8UeyzfUcI5Xx+bme2XPEmiYwhhXsQhop68S7Zfdn4F8pocun/x
-         /UPIShpHOh1nwLYBNL894E7FfkqxCVTaSWIX5Vlr9G9TTyb5WZp30QAiz6gFxDSDEOYv
-         5PtQgA4ptsMgfVlJqraoSU2opTXRgmPTE3jqSGLGvi3qbDkUZmKR0KmYCRIgnfp7rJ9L
-         Ej+GU61gJjUYNYqp9owSSzV0uFn6DL0sY4TLkBmJ8THgz4QYBZg/fvYZjsMdICIyrCmX
-         OTvojLnpxgeyXU8d3EP0VEqdcptBJEqaZ/gcGlSXXJqPtLzOKxC7fusd4uewYKEX8bPK
-         +KBA==
+         :cc;
+        bh=FQp3+naEAXCJWdKwigZt9ECJHCD1nyeMAGOCz8dTwEQ=;
+        b=n0gHawBQheVtZQ4LAJjiiiHOFXUWjl8LhDWXDHELfP0D6qcD1fxbtHr1aSnGZGlkfP
+         pR51nX0axWux3dfmRp0F8WRrnYPgHFU2yj74s1fFZdU7FOclbhqiuh9XnVIj6Rl/LRRB
+         +MwrSClbHub5kQgQ+uj0cgDK3zkSOMhZdJ1Q1FcO4bCE+uvnFBI5I6S/COtDohfP/yt2
+         Ku34uTERA5cFJ6XHtkMtpeVTQdI+kRbK0p8PjfaE62UD6cYC0YMtzHb+5TU3SwZVLuJI
+         H7KVv/OuHYs0NZTA4tVEukiHk89BYzxtnmdHLLcy+fbHzl6LjZpdwC5y3NToi25ZBxum
+         MkfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6V9sAEiLR4fSzvqtnaMC4YtLmgQpkXcfq6II/S/4Yho=;
-        b=I3O3X0c2fzmCWPdu8ok0CqmnZdngnCVz5Ytf5mUaqT35d7MK/G8I79hd1jGwupXLz5
-         wUY57R5Hv/5xXcSSPS6qFOvqJxDCWDBSiRWUY66O6KOGCC52XlZoFiRDP8zVoDTaiL5+
-         tyR51TdWPsVKPZ5UZrseqmIyrJ3olvhVfw8xlKh+r+0O3QUcGbXuIKL0OIPbXtceE5hq
-         Ff5KBeQ8zUSyjfCeACU67AxLyIrHgsXjwkfOsd25cn/LVaf8d51ytvs00/q411C4qLMX
-         zouZlzeiP12RYX/srQZ150r1j9CQbtoqZjliCdxsRMSOay8/dAW2Fdff4W3IIgFtGo0C
-         LMkg==
-X-Gm-Message-State: ALQs6tC04hsOR94mlA5POnOxTzdcNpP9VDLpp1CvypvqsDAHpCNT5WVr
-        63R7ipW0hm+MtBEdo6f1GV3Syx/5i6w8ztmdWaM=
-X-Google-Smtp-Source: AIpwx49P7vcft2qDzq8EqSA0x0xGYOES6P2M36Zpuz+WigGHY/JMC9UyOjfo6+Yg0UKVIyb3ZXb8WrLoxmP5FTsA/dY=
-X-Received: by 10.176.91.86 with SMTP id v22mr14917425uae.31.1524661613075;
- Wed, 25 Apr 2018 06:06:53 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=FQp3+naEAXCJWdKwigZt9ECJHCD1nyeMAGOCz8dTwEQ=;
+        b=bHj/60Qo/qXw+zhg66MCSaqFr9KqEGmoHY4kyTNLjUSb6WDpfqrPB26M0MOkLAiX8a
+         7xeYE+qzp4ASa7jTBl+TRIw7zrZLYKvNRWDwWPcZYf5TyY4MLHdEfXYHd4HJ+5r7dtH/
+         xWLpinAyq/PpfWYVuXEwj2hgbyc7ktGf/BZR6rqSAxQRUvDAES9pqHkZfajsbdZ4g/MJ
+         XYvuCVKEN2GFsjF/31pZeYR3O+FcxbRSJdlbLh7kMJSEFJSXGWy7glcbqSDKhMBtqQEB
+         YWo5gnu8sxADS7zVM57f8wzRnjFSKxNMAz5H1khWEJD0OzidKAZGtuYSLXmC3970lffe
+         fUYg==
+X-Gm-Message-State: ALQs6tAQ2N4Fs3EiFRMivAvir3rRyFXenkUkL+HjIprHBSwcX8E+JvWP
+        ZltgWl+j7cD8gN0UhTJYS69U49z6mzjfNo9oFAw=
+X-Google-Smtp-Source: AB8JxZrAnmEjxzmtGwkx7wDULfCQVDCosmNN+6u1dnTKa7ZXlawYJv+SkH2vNj6TGB6jGtsRrzlQHaUnff3XE+q0LRI=
+X-Received: by 10.176.91.146 with SMTP id y18mr468337uae.48.1524663986697;
+ Wed, 25 Apr 2018 06:46:26 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.159.34.195 with HTTP; Wed, 25 Apr 2018 06:06:52 -0700 (PDT)
-In-Reply-To: <20180421165414.30051-5-pclouds@gmail.com>
+Received: by 10.159.34.195 with HTTP; Wed, 25 Apr 2018 06:46:26 -0700 (PDT)
+In-Reply-To: <CACsJy8DWcofCqg=QKo2pLcLQ91GKohnS71Wns8siVZ_sufjgUA@mail.gmail.com>
 References: <20180415164238.9107-1-pclouds@gmail.com> <20180421165414.30051-1-pclouds@gmail.com>
- <20180421165414.30051-5-pclouds@gmail.com>
+ <20180421165414.30051-5-pclouds@gmail.com> <CAM0VKjkd7OZspeTPumi4NVOM=7yXEq=nSjCNntkJ9d-8mPfR2w@mail.gmail.com>
+ <CACsJy8B0bFzh5h+QE+NMgCHfoShfu8MvCzmxPPCVi-g_Ud3sUw@mail.gmail.com> <CACsJy8DWcofCqg=QKo2pLcLQ91GKohnS71Wns8siVZ_sufjgUA@mail.gmail.com>
 From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Wed, 25 Apr 2018 15:06:52 +0200
-Message-ID: <CAM0VKjmZeVF6GV9ZRXLdwZJJyFi8oLnGvKe7tQYi_QRLoAk4Og@mail.gmail.com>
+Date:   Wed, 25 Apr 2018 15:46:26 +0200
+Message-ID: <CAM0VKjnD4ZnZjwO6M=P1NcJCfJCfJb=tR5CKwSOeCBvUbjcB=Q@mail.gmail.com>
 Subject: Re: [PATCH v3 4/6] git.c: implement --list-cmds=porcelain
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 21, 2018 at 6:54 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index a5f13ade20..7d17ca23f6 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -835,18 +835,23 @@ __git_complete_strategy ()
+On Tue, Apr 24, 2018 at 6:17 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Apr 24, 2018 at 6:12 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> git-completion.bash will be updated to ask git "give me the commands
+>> in the mainporcelain, completable or external category". This also
+>> addresses another thing that bugs me: I wanted an option to let me
+>> complete all commands instead of just porcelain. This approach kinda
+>> generalizes that and it would be easy to let the user choose what
+>> category they want to complete.
+>
+> To complete this: there could also be yet another special category
+> "custom", where --list-cmds=custom simply returns a list of commands
+> specified in config file. With this the user can pick the "custom"
+> category to have total control of what command shows up at "git <tab>"
+> if they are not satisfied with the predefined categories.
 
-> +__git_list_commands ()
+Note that config settings can be repository-specific, which might
+cause surprises if the user sets a custom command list in one
+repository's config file, but not (or a different one!) in others.
+Then the list of completed commands will depend on where the user
+happened to be when first hitting 'git <TAB>'.  Unless you forgo
+caching the list of commands and run 'git --list-cmds=...' every time
+the user hits 'git <TAB>', but that will add the overhead of fork()ing
+a subshell and a git command.
 
-Please add a comment before this function to mention its mandatory
-argument and that is should correspond to a category in
-'command-list.txt'
-
-
-> -__git_list_all_commands ()
-
-> -__git_list_porcelain_commands ()
-
-Users can have their own completion scriptlets for their own git
-commands, and these should be able to rely on helper functions in
-git-completion.bash to do things like refs completion and what not.
-Therefore, we tend not to remove or alter those helper functions in a
-backwards incompatible way, because we don't want to break those
-completion scriptlets.
-
-Your patch removes these two functions.  At first I let it slide,
-because first I thought that anyone who needs the list of all git
-commands is better off calling __git_compute_all_commands() and then
-using $__git_all_commands (same goes for porcelains), because it
-involves less fork()ed subshells and external processes.  Then I
-thought why would anyone possibly need the list of git commands in a
-custom completion scriptlet in the first place...  what for?!
-
-Well, it turns out that there is at least one completion script out
-there that does rely on __git_list_all_commands() [1].
-
-Please keep these two functions as a thin wrapper around
-__git_list_commands().
-
-[1] And in a rather curious way at that:
-
-    https://github.com/github/hub/blob/master/etc/hub.bash_completion.sh#L1=
-2
+Once upon a time I toyed with the idea of introducing environment
+variables like $GIT_COMPLETION_EXCLUDE_COMMANDS and
+$GIT_COMPLETION_INCLUDE_COMMANDS, to exclude and include commands from
+'git <TAB>'.  I wanted to exclude 'git cherry', because I have never
+ever used it but it's always in the way when I want to cherry-pick.
+And I wanted to include 'git for-each-ref' back when I was running it
+frequently while working on speeding up refs completion, but it
+wouldn't have brought that much benefits, because I have a 'git
+for-each-commit' script, too.
+Never really pursued it, though, just patched the long list in
+__git_list_porcelain_commands() in my git clone :)
