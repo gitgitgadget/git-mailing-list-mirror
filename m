@@ -2,123 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 833AE1F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 15:18:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E8741F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 15:22:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754463AbeDYPS3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 11:18:29 -0400
-Received: from smtp66.ord1c.emailsrvr.com ([108.166.43.66]:40836 "EHLO
-        smtp66.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753508AbeDYPS2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Apr 2018 11:18:28 -0400
-Received: from smtp25.relay.ord1c.emailsrvr.com (localhost [127.0.0.1])
-        by smtp25.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id BF75A20675;
-        Wed, 25 Apr 2018 11:18:27 -0400 (EDT)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp25.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 464BB2042A;
-        Wed, 25 Apr 2018 11:18:27 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [192.168.222.13] (cable-192.222.220.61.electronicbox.net [192.222.220.61])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Wed, 25 Apr 2018 11:18:27 -0400
-Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
+        id S1754761AbeDYPWi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 11:22:38 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:35692 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754749AbeDYPWf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 11:22:35 -0400
+Received: by mail-qk0-f196.google.com with SMTP id b131so18626839qkg.2
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 08:22:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=O96R17LKWQbfr017rXk2VdH4I3m9DKSnJ2bXQvke10k=;
+        b=cINP2RxLb8clBq2W5VdMbxS8zHwN8901kCffJze5kpPnLwSxGuTcJVONFMjDp6O0Sn
+         u7ukabkAL9uhyKT+oUxRYypJY4IPHwBN5gE78jUTCmCAA5yLYqW82ire+4Byq2ISwmVo
+         iyo2lmkzNhrxCiGnh0PQ21yZ7jbWQDbhQNJiqF+f91HixaOIVihZrg0L3oC84IZUuDHs
+         EO69bqdjmXpeIABjERM77HFOsKr1I1ZwPGRyPiuWkDc16fYWXQAVjWNhckEjoWqizw6J
+         SUNqPv9Ja1FbQ5Odyn/qaP1eveR8yxZ6bT7vQL0MXinz0eOVhuAUfD/TOcahwyxZem4o
+         843g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=O96R17LKWQbfr017rXk2VdH4I3m9DKSnJ2bXQvke10k=;
+        b=O8QJISkObdEiZPZgYD/C02CbMmpsgGjQt10NsZZmiq7NF/ANdaS8HC01oYwG9cHBWm
+         2DQIZgjUi+/gmsRgj/uO202pP3O5UprfoNxkrhcgce+8gsoExD5NMd1EJB2zVzRs7wZl
+         VVDew1T7YUc5elQr16BqufRfDVb4cUIO7oYzuoCRjGypEUBBWZwf04MaPZ8jAWh+/6z3
+         ZFbZF5gIDjzfo51g+uQS6HfqW/yVWvFQOu2nPurSmF1F4yiGZhZJEBVOztnaBZSOLS5N
+         NNPM3eUBVti5CWCu0j3fjRK00DK/cBbg/dOmyyzjEVj58Nj7JOS8subVHju5xZrK/Fp0
+         7Scw==
+X-Gm-Message-State: ALQs6tCtNqwDIcIg4135KrpfM6/xY1GkRrzSXV6RWlwOG0h8OgX3xiUG
+        pxccGoy4pLC620+AlrmZFa4=
+X-Google-Smtp-Source: AB8JxZq4yxj66lHF5r5ku2f1XstsMrG6SNmEVECaFanCm+MQfia4CAO9XF2IqfrUJ6Xt/hQmJtNYdw==
+X-Received: by 10.55.162.143 with SMTP id l137mr30631824qke.200.1524669753714;
+        Wed, 25 Apr 2018 08:22:33 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id g12-v6sm13080141qtj.42.2018.04.25.08.22.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Apr 2018 08:22:32 -0700 (PDT)
+Subject: Re: [PATCH v2 0/2] add additional config settings for merge
 To:     Junio C Hamano <gitster@pobox.com>,
-        "Robin H. Johnson" <robbat2@gentoo.org>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
-        Jeff King <peff@peff.net>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20180413170129.15310-1-mgorny@gentoo.org>
- <robbat2-20180423T200557-844830385Z@orbis-terrarum.net>
- <xmqqtvs18p9o.fsf@gitster-ct.c.googlers.com>
- <robbat2-20180425T060717-325652820Z@orbis-terrarum.net>
- <xmqqin8f4qoq.fsf@gitster-ct.c.googlers.com>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <ad4d0d66-58f4-5cab-d314-a30a50e8ad32@xiplink.com>
-Date:   Wed, 25 Apr 2018 11:18:26 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "newren@gmail.com" <newren@gmail.com>,
+        "peff@peff.net" <peff@peff.net>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
+References: <20180420133632.17580-1-benpeart@microsoft.com>
+ <20180424171124.12064-1-benpeart@microsoft.com>
+ <xmqqd0yo5ejb.fsf@gitster-ct.c.googlers.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <365838dc-d988-b72c-ef29-20369a7f54a2@gmail.com>
+Date:   Wed, 25 Apr 2018 11:22:33 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqin8f4qoq.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqd0yo5ejb.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-CA
-Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-04-25 04:48 AM, Junio C Hamano wrote:
-> "Robin H. Johnson" <robbat2@gentoo.org> writes:
+
+
+On 4/24/2018 8:13 PM, Junio C Hamano wrote:
+> Ben Peart <Ben.Peart@microsoft.com> writes:
 > 
->> In the thread from 6 years ago, you asked about tar's behavior for
->> mtimes. 'tar xf' restores mtimes from the tar archive, so relative
->> ordering after restore would be the same, and would only rebuild if the
->> original source happened to be dirty.
->>
->> This behavior is already non-deterministic in Git, and would be improved
->> by the patch.
+>>   diff.renameLimit::
+>>   	The number of files to consider when performing the copy/rename
+>> -	detection; equivalent to the 'git diff' option `-l`.
+>> +	detection; equivalent to the 'git diff' option `-l`. This setting
+>> +	has no effect if rename detection is turned off.
 > 
-> But Git is not an archiver (tar), but is a source code control
-> system, so I do not think we should spend any extra cycles to
-> "improve" its behaviour wrt the relative ordering, at least for the
-> default case.  Only those who rely on having build artifact *and*
-> source should pay the runtime (and preferrably also the
-> maintainance) cost.
+> You mean "turned off via diff.renames"?
+> 
+> This is not meant as a suggestion to rewrite this paragraph
+> further---but if the answer is "no", then that might be an
+> indication that the sentence is inviting a misunderstanding.
+> 
 
-Anyone who uses "make" or some other mtime-based tool is affected by 
-this.  I agree that it's not "Everyone" but it sure is a lot of people.
+Yes, this is referring to turned off via the config setting 
+"diff.renames" but it could also be turned off by passing "--no-renames" 
+on the command line.
 
-Are we all that sure that the performance hit is that drastic?  After 
-all, we've just done write_entry().  Calling utime() at that point 
-should just hit the filesystem cache.
+To be clear, this documentation change isn't trying to document any 
+changes to the code or behavior - it is just an attempt to clarify what 
+the existing behavior is.  If it isn't helping, I can remove it.
 
-> The best approach to do so is to have those people do the "touch"
-> thing in their own post-checkout hook.  People who use Git as the
-> source control system won't have to pay runtime cost of doing the
-> touch thing, and we do not have to maintain such a hook script.
-> Only those who use the "feature" would.
+>>   diff.renames::
+>>   	Whether and how Git detects renames.  If set to "false",
+>> diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
+>> index 5a9ab969db..38492bcb98 100644
+>> --- a/Documentation/merge-config.txt
+>> +++ b/Documentation/merge-config.txt
+>> @@ -39,7 +39,8 @@ include::fmt-merge-msg-config.txt[]
+>>   merge.renameLimit::
+>>   	The number of files to consider when performing rename detection
+>>   	during a merge; if not specified, defaults to the value of
+>> -	diff.renameLimit.
+>> +	diff.renameLimit. This setting has no effect if rename detection
+>> +	is turned off.
+> 
+> Ditto.  If your design is to make the merge machinery completely
+> ignore diff.renames and only pay attention to merge.renames [*1*],
+> then it probably is a good idea to be more specific here, by saying
+> "... is turned off via ...", though.
+> 
+>>   merge.renames::
+>>   	Whether and how Git detects renames.  If set to "false",
+> 
+> [Footnote]
+> 
+> *1* ...which I do not think is such a good idea, by the way.  I'd
+> personally expect merge.renames to allow overriding and falling back
+> to diff.renames, just like the {merge,diff}.renameLimit pair does.
+> 
 
-The post-checkout hook approach is not exactly straightforward.
+It looks like I'm in the minority on whether the merge settings should 
+inherit from the corresponding diff settings so I will submit a new 
+patch series that does it the same way as the {merge,diff}.renameLimit 
+pair works.
 
-Naively, it's simply
+I'll leave it as an exercise for someone else [1] to change any other 
+merge settings that should behave that way.
 
-	for F in `git diff --name-only $1 $2`; do touch "$F"; done
-
-But consider:
-
-* Symlinks can cause the wrong file to be touched.  (Granted, Michał's 
-proposed patch also doesn't deal with symlinks.)  Let's assume that a 
-hook can be crafted will all possible sophistication.  There are still 
-some fundamental problems:
-
-* In a "file checkout" ("git checkout -- path/to/file"), $1 and $2 are 
-identical so the above loop does nothing.  Offhand I'm not even sure how 
-a hook might get the right files in this case.
-
-* The hook has to be set up in every repo and submodule (at least until 
-something like Ævar's experiments come to fruition).
-
-* A fresh clone can't run the hook.  This is especially important when 
-dealing with submodules.  (In one case where we were bit by this, make 
-though that half of a fresh submodule clone's files were stale, and 
-decided to re-autoconf the entire thing.)
-
-
-I just don't think the hook approach can completely solve the problem.
-
-I appreciate Ævar's concern that there are more than just two mtime 
-requests floating around.  But I think git's users are best served by a 
-built-in approach, with a config setting to control the desired mtime 
-handling (defaulting to the current behaviour).  People who want a 
-different mtime solution will at least have a clear place in the code to 
-propose a patch.
-
-		M.
-
+[1] 
+https://public-inbox.org/git/20180420133632.17580-1-benpeart@microsoft.com/T/#m52a3dbd0945360bfb873fd3b553472558ef3b796
