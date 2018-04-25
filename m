@@ -2,71 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CC1A1F424
-	for <e@80x24.org>; Tue, 24 Apr 2018 23:57:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 130881FAEA
+	for <e@80x24.org>; Wed, 25 Apr 2018 00:06:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750826AbeDXX53 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 19:57:29 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:50784 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750766AbeDXX52 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 19:57:28 -0400
-Received: by mail-wm0-f42.google.com with SMTP id t67so4141526wmt.0
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 16:57:27 -0700 (PDT)
+        id S1750791AbeDYAGA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 20:06:00 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:44272 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750766AbeDYAF7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 20:05:59 -0400
+Received: by mail-wr0-f196.google.com with SMTP id o15-v6so51580402wro.11
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 17:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=s9vgjJOZq8gLiZV3lsM+5fLqz9STZaOEla7YJi69YcE=;
-        b=J70Dp55tvjIXEGqKclJM9zWHsG1yAYtjPzQ/riEePnj69L78GtnUdop7sBpjKN+Kyz
-         jp2Ox18v0skqrJfrEJdLi6OcQELV23G7kvFv2tLwuvWXlqR0aN4ToX4x3qcm1atADi44
-         ij3AMgB2O21/9ZR/tg3OsQjUcMPWmjdQuw7+V+G3nSQijoHyg8+vg6G7KDi77lhc5Y/H
-         bHxZWnBbOeLlHuBHBadGQxxUirRaP8qH4r9+kDH0bAuXlCKNTVfRV4k+IPFZ1UyboJ2g
-         JNecHjO1vOyg5lpqPir8DBsurUeyhhQr3sebuZPSLCjWjvxwt2CsT3h6pCUoYrKOYkW9
-         WHQg==
+        bh=Dp4MNcDT/EG/xM17zLq22RNCaOllxas9HQ392NgyuAc=;
+        b=XFAXjQOdlmZCAS8VIUf1AddZg3UkQiW9qIefxdsbj1Jvi3MfDLWW8xryxB811n3EYx
+         xUphyRiWtAf18aCN1VG4KQnSOrkRRcgixPZvb6GZUhbpEEh/SCgcEEeN2513iiR10hyO
+         lEXTtMZMxpzUDCZ2LfaNduKW8jN4kJzarOBp/YoJ31keGUFVNH9JuUb1bgNDomMRWrrX
+         fgsoJhSioxmI9HsqyV1km6mzK0gyt6pN018D1saiy7iU9OZAKDDiFpTkA7ZD/wiGHGkP
+         71MwYPtJkEwUuPjRbNkQbTGQB+w4aTrv29zfusdagcMFyA+IUJriztKAzCTjVVbIbwPk
+         LiFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=s9vgjJOZq8gLiZV3lsM+5fLqz9STZaOEla7YJi69YcE=;
-        b=bw8Atn7La4/fF7JDyBQ9cdgw5sSGhMXaPNZsj7dvgJ+s3b0Nn53GcUUcb6Aj9Tb/Pr
-         WBAfeN0OQsNlb+OzbE/bn9UnuIbGzFBrqO4Xul61M7CrueuXr6imwrDo5rzq7c0UmIFK
-         q7bEZLI9r66A41NlnSCHrfVeroodRf5QzOtIj4sub48g6kSS5XDiCMVZsAG3fgCw0MMQ
-         +0nefr9ChOtSIwW6zI0ibrMlTgdoeBgnHc21wPjwYxSUdaicI/KNEgMJFBV9BNWnTPRa
-         PUMTzh35AEdgnijGtEt/19QCRtz/VoOu+5tVohvOu4745gb24b21V0pLAbYHK6gSScEL
-         FIsA==
-X-Gm-Message-State: ALQs6tADdZ8KF5rlhyhmRZPqPZny4AFn6BTq96jpw4A5rKfNBdGu6Zl9
-        Bux7MYwmGmSnvgmdoJMcgOk=
-X-Google-Smtp-Source: AB8JxZo3hpHXxs0XhLObilFESkIySXk9LJghWHM3XOG9B8YyS/jer85L9lJIO7+YexrsfB1I9NEY6A==
-X-Received: by 10.28.72.196 with SMTP id v187mr250877wma.115.1524614246872;
-        Tue, 24 Apr 2018 16:57:26 -0700 (PDT)
+        bh=Dp4MNcDT/EG/xM17zLq22RNCaOllxas9HQ392NgyuAc=;
+        b=umK0TyhIYQ0oziVEcCerfOep3S7s0Vh77zIHmbGdSFJPqyubKjA84oq2kYlBupvklR
+         Y1MUUWyPZFO9DvSSUEL/elh5tVVZgcH2puF62Gi5w10Y5xCo2bpJN/0gkmQ9+DIkhxEC
+         GVjeo3C7IBKrcipv/HDVUXs0Fl7Ml2q3o25oeiWz81jELHg6HPGHaX36zbptStrzBqz+
+         RMSW/kR318wm4H7RiKYq3kZjT3B1ENRGFLC9WUy0Yz7y30j28cQR7frvWQwNZsIPGLiZ
+         TL8MSHbJl9ZWZPnTNo648PuZbKYYR+/g/+nJDRE58wrVIyyXEzQLZYgmV6H4VRouno9B
+         OPVw==
+X-Gm-Message-State: ALQs6tCP/ILe01D1HRo+EOxTnABz+gf576Qno2xPi6zox3Fk35Ym6FJF
+        oL/iuFRVFQwRIRv5RY/KifI=
+X-Google-Smtp-Source: AIpwx49g8K7RHcbUyUydJs5vE0pJC2UturbF1q9sd0vXwcs+wU0AVDSVQ3ohiOYZ4YXsA5eM3ljXcQ==
+X-Received: by 2002:adf:8672:: with SMTP id 47-v6mr18774498wrw.102.1524614757561;
+        Tue, 24 Apr 2018 17:05:57 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id k126sm18321863wmg.6.2018.04.24.16.57.25
+        by smtp.gmail.com with ESMTPSA id l53-v6sm37278634wrc.80.2018.04.24.17.05.56
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Apr 2018 16:57:25 -0700 (PDT)
+        Tue, 24 Apr 2018 17:05:56 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "peff\@peff.net" <peff@peff.net>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>,
-        "vmiklos\@frugalware.org" <vmiklos@frugalware.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        "Johannes.Schindelin\@gmx.de" <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v1 2/2] merge: Add merge.aggressive config setting
-References: <20180420133632.17580-1-benpeart@microsoft.com>
-        <20180420133632.17580-3-benpeart@microsoft.com>
-        <CABPp-BFXwbZfFe0bZYMwWxz_Qxw=KQ6XE5SEBmgiE+TzaSycuQ@mail.gmail.com>
-        <a34144ff-b91e-6f00-93e8-b472ad5887d0@gmail.com>
-Date:   Wed, 25 Apr 2018 08:57:25 +0900
-In-Reply-To: <a34144ff-b91e-6f00-93e8-b472ad5887d0@gmail.com> (Ben Peart's
-        message of "Tue, 24 Apr 2018 12:45:00 -0400")
-Message-ID: <xmqqlgdc5fa2.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] git: add -N as a short option for --no-pager
+References: <d91e98a8-7801-a3de-3865-f0480e18ba0e@kdbg.org>
+Date:   Wed, 25 Apr 2018 09:05:56 +0900
+In-Reply-To: <d91e98a8-7801-a3de-3865-f0480e18ba0e@kdbg.org> (Johannes Sixt's
+        message of "Tue, 24 Apr 2018 18:59:39 +0200")
+Message-ID: <xmqqh8o05evv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,34 +65,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> That said, it makes sense to me to do
->> this when rename detection is turned off.  In fact, I think you'd
->> automatically want to set aggressive to true whenever rename detection
->> is turned off (whether by your merge.renames option or the
->> -Xno-renames flag).
->> ...
+> In modern setups, less, the pager, uses alternate screen to show
+> the content. When it is closed, it switches back to the original
+> screen, and all content is gone.
 >
-> While combining them would work for our specific use scenario (since
-> we turn both on already along with turning off merge.stat), I really
-> hesitate to tie these two different flags and code paths together with
-> a single config setting.
+> It is not uncommon to request that the output remains visible in
+> the terminal. For this, the option --no-pager can be used. But
+> it is a bit cumbersome to type, even when command completion is
+> available. Provide a short option, -N, to make the option easier
+> accessible.
+>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
 
-The cases that non-agressive variant leaves unmerged are not
-auto-resolved only because marking them as merged will rob the
-chance from the rename detection logic to notice which ones are
-"new" paths that could be matched with "deleted" ones to turn into
-renames.  If rename deteciton is not done, there is no reason to
-leave it non aggressive, as "#1 = missing, #2 = something and #3 =
-missing" entry (just one example that is not auto-resolved by
-non-agressive, but the principle is the same) left unmerged in the
-index will get resolved to keep the current entry by the post
-processing logic anyway.
+Heh, I used to append "|cat", which is four keystrokes that is a bit
+shorter than " --no-pager", but that is only acceptable when you do
+not care about colored output ;-)
 
-In fact, checking git-merge-resolve would tell us that we already
-use "aggresive" variant there unconditionally.
+I am not absolutely certain about the choice of a single letter. I
+already checked we do not use "git -N cmd" for anything else right
+now, so I am certain about the availability, but I am not sure if
+capital 'N' is the best choice, when the other side is lowercase 'p'
+(and more importantly, the other side 'p' has mneomonic value for
+'pagination', but 'N' merely stands for 'no' and could be negating
+anything, not related to pagination). But I agree that a short-hand
+would be welcome.
 
-So, I think Elijah is correct---there is no reason not to enable
-this setting when the other one to refuse rename detection is in
-effect.
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 4767860e72..17b50b0dc6 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -11,7 +11,7 @@ SYNOPSIS
+>  [verse]
+>  'git' [--version] [--help] [-C <path>] [-c <name>=<value>]
+>      [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+> -    [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+> +    [-p|--paginate|-N|--no-pager] [--no-replace-objects] [--bare]
+>      [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+>      [--super-prefix=<path>]
+>      <command> [<args>]
+> @@ -103,6 +103,7 @@ foo.bar= ...`) sets `foo.bar` to the empty string which `git config
+>  	configuration options (see the "Configuration Mechanism" section
+>  	below).
+>  
+> +-N::
+>  --no-pager::
+>  	Do not pipe Git output into a pager.
