@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2AA91F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 16:32:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A46D31F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 16:32:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755758AbeDYQcC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 12:32:02 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:38383 "EHLO
+        id S1755788AbeDYQcE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 12:32:04 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:33548 "EHLO
         mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755391AbeDYQbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 12:31:34 -0400
-Received: by mail-lf0-f65.google.com with SMTP id z130-v6so26393213lff.5
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 09:31:34 -0700 (PDT)
+        with ESMTP id S1755444AbeDYQbd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 12:31:33 -0400
+Received: by mail-lf0-f65.google.com with SMTP id m18-v6so9081011lfb.0
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 09:31:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=z5wZDShF1sAMxgMuCaRsrO926tf02iRunChJXTH4b4U=;
-        b=mM9LI+yq3AHWE8eziyCDPWoFv6raXP/tqyPUvrTR0aCBr1icBDwuFnVc2nplstkdnS
-         4J543Ze8t3PgCEkM4Nql3hwiqSF1iXB8zyxc6mRrsIerZ67sZGhgHkj+TbaVPvajhXzz
-         KMiYCnDjtP6De9xvHROcwDbnXkPCakhMbmB/clIUGGqN2V/6v9cT/Qhe1vNgJcXTSWuG
-         JOMlRpOhPCdNo4bWhHdpgt07RmSMvy9RGyXXcovrfaTCY804Qjo+xCb5FxGlwDOc+umr
-         g5mpGGe01Kq7bvUQfVYLCAZWen2+bciDT24RPPum7vhCFmksLzB2iJjGIIU24htN6kFJ
-         yvrg==
+        bh=hlw1jgJebIyRclGER4QuEG+Fkyt/d6RbvC9IKuubqrY=;
+        b=DPWcbMs+o1Gf28nL7BtVi0bMfwkTWQ+q5AYCQiIslpkZcA3LJWNCYSN5/etB6gfDw8
+         kXs22UbSsz2P3G8YZMfP+FP2iuDMKOCOk5+aALk2yNYojN2cxAqRFIxnEQf+fb7Hp17u
+         bdv12McDc5LSaWsEXiOPnXwYU8x/dEC72wRiFDl1HHCK+8v+I5Qe+gvpSnQmyID/DiRO
+         W2o4X5wGeetm64kH7d3y3F1H4H5UxAW1xhWplQuq+/T6mrvK3Vz2S7CQv1lWfIPk+Lv7
+         IKmu4rXZVDIvIbob1Lxuneg2hmRRY85CkaK9S6BZ+XRKuPIiIB0m4L3tLLdBO3kJnbua
+         vnZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=z5wZDShF1sAMxgMuCaRsrO926tf02iRunChJXTH4b4U=;
-        b=fk+pyMEagdTNMBVRW14HmtnurrhmoWe+1DqvzidU11952xU0m8XsXq94lG3vTRKxP1
-         go0LAzLsmEIPfWYNSaWMR4ubkza37F/XBoTamWMjxUtNqEBJ9WBv8vuXuFv8dgOTNrGD
-         TMjb68nVOQynXETICdfWUZsnMT6R3+GRUYYGnuQ3hfYfWPG8f5oElOtkJzK9Cb8QZZfM
-         ds+PaFShEgoeYUYVrVFwn4/Y2oXPwpZSNixFS1i0yXF9YXPswtEhJv8522J3kvfW0bU+
-         ivivv8+S9R7P/GZVDnhCfAdGM5GHWZ1SGQ2RnXqV0o8S8uTe3IE9H5ijXSf43d1vDL4c
-         RiDg==
-X-Gm-Message-State: ALQs6tD+Cf/Vx28ek266x2vdqwl4oiUHGJEE403pzQGLsyVyNPBKdTRr
-        YdHJcA9ZtZBjEJHoQxdfBgteQg==
-X-Google-Smtp-Source: AB8JxZpSkeD4aF/vX4GtXieQdgN5QOv+mQXsO1U27lg14s3t86GQ4DJF3MthQsD1WRLw+IjO+al7EQ==
-X-Received: by 10.46.151.206 with SMTP id m14mr975189ljj.102.1524673893234;
-        Wed, 25 Apr 2018 09:31:33 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id t24sm518370ljg.65.2018.04.25.09.31.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=hlw1jgJebIyRclGER4QuEG+Fkyt/d6RbvC9IKuubqrY=;
+        b=daoSr/CNfrhm2Y10HV9oC662bDXbmgnXNam9VNwaw758NEPomLXm1u3sPwKZk3jRC6
+         DlxLAPWat4zY/mSDgFkrDw16YqpInq5KzcAbLYoc3VBwDKYs6XX+OP6eokvu0ul3qSVS
+         Vr7Qel1lJA6AD/hN+s/gOQHFtUk4JWFP7c7GaXdFDrd2O5d5foC1P2PyAs33tX2q4csV
+         cqLDb8ZRqNMAniy+ks1pnCzwFYbtAI8BVUMlkUl7s7LVCeHRq/MY2FLTNH565Hd6tADt
+         OQH1A68fdZBzRiaSzqAy182Vk7ZwczQQL+HqwkIV9nkwhVNGLpW3GaeRgU+hCiP9PGlZ
+         q4Nw==
+X-Gm-Message-State: ALQs6tDIj66RCSu52ulgdXiGecLvl5m4tMb7DfDPg8NKtvyMyhMZ/Irh
+        En/EWZVtY4UpxUPIkHE+o2MfFQ==
+X-Google-Smtp-Source: AIpwx486RPTIzctZlJQbH4+1Grl8PkFWrNDGKKKFqJOH0IA1+scaji1F9xHID2bDO01oybRhMEm8pw==
+X-Received: by 10.46.2.90 with SMTP id 87mr20647265ljc.46.1524673892119;
         Wed, 25 Apr 2018 09:31:32 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id t24sm518370ljg.65.2018.04.25.09.31.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Apr 2018 09:31:31 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         szeder.dev@gmail.com
-Subject: [PATCH v4/wip 05/12] git.c: convert --list-*builtins to --list-cmds=*
-Date:   Wed, 25 Apr 2018 18:31:00 +0200
-Message-Id: <20180425163107.10399-6-pclouds@gmail.com>
+Subject: [PATCH v4/wip 04/12] Remove common-cmds.h
+Date:   Wed, 25 Apr 2018 18:30:59 +0200
+Message-Id: <20180425163107.10399-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.519.gb89679a4aa
 In-Reply-To: <20180425163107.10399-1-pclouds@gmail.com>
 References: <20180421165414.30051-1-pclouds@gmail.com>
@@ -69,65 +69,147 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Even if these are hidden options, let's make them a bit more generic
-since we're introducing more listing types shortly.
+After the last patch, common-cmds.h is no longer used (and it was
+actually broken). Remove all related code. command-list.h will take
+its place from now on.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- contrib/completion/git-completion.bash |  2 +-
- git.c                                  | 12 +++++++-----
- t/t0012-help.sh                        |  2 +-
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ .gitignore          |  1 -
+ Makefile            | 17 ++++++-----------
+ generate-cmdlist.sh | 46 +++------------------------------------------
+ 3 files changed, 9 insertions(+), 55 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index a757073945..3556838759 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -3049,7 +3049,7 @@ __git_complete_common () {
- __git_cmds_with_parseopt_helper=
- __git_support_parseopt_helper () {
- 	test -n "$__git_cmds_with_parseopt_helper" ||
--		__git_cmds_with_parseopt_helper="$(__git --list-parseopt-builtins)"
-+		__git_cmds_with_parseopt_helper="$(__git --list-cmds=parseopt)"
+diff --git a/.gitignore b/.gitignore
+index d4c3914167..0836083992 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -179,7 +179,6 @@
+ /gitweb/gitweb.cgi
+ /gitweb/static/gitweb.js
+ /gitweb/static/gitweb.min.*
+-/common-cmds.h
+ /command-list.h
+ *.tar.gz
+ *.dsc
+diff --git a/Makefile b/Makefile
+index 5c58b0b692..a60a78ee67 100644
+--- a/Makefile
++++ b/Makefile
+@@ -757,7 +757,7 @@ LIB_FILE = libgit.a
+ XDIFF_LIB = xdiff/lib.a
+ VCSSVN_LIB = vcs-svn/lib.a
  
- 	case " $__git_cmds_with_parseopt_helper " in
- 	*" $1 "*)
-diff --git a/git.c b/git.c
-index 3a89893712..28bfa96d87 100644
---- a/git.c
-+++ b/git.c
-@@ -223,11 +223,13 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			}
- 			(*argv)++;
- 			(*argc)--;
--		} else if (!strcmp(cmd, "--list-builtins")) {
--			list_builtins(0, '\n');
--			exit(0);
--		} else if (!strcmp(cmd, "--list-parseopt-builtins")) {
--			list_builtins(NO_PARSEOPT, ' ');
-+		} else if (skip_prefix(cmd, "--list-cmds=", &cmd)) {
-+			if (!strcmp(cmd, "builtins"))
-+				list_builtins(0, '\n');
-+			else if (!strcmp(cmd, "parseopt"))
-+				list_builtins(NO_PARSEOPT, ' ');
-+			else
-+				die("unsupported command listing type '%s'", cmd);
- 			exit(0);
- 		} else {
- 			fprintf(stderr, _("unknown option: %s\n"), cmd);
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index 487b92a5de..fd2a7f27dc 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -50,7 +50,7 @@ test_expect_success "--help does not work for guides" "
+-GENERATED_H += common-cmds.h command-list.h
++GENERATED_H += command-list.h
+ 
+ LIB_H = $(shell $(FIND) . \
+ 	-name .git -prune -o \
+@@ -1914,9 +1914,9 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+ 		$(filter %.o,$^) $(LIBS)
+ 
+-help.sp help.s help.o: common-cmds.h command-list.h
++help.sp help.s help.o: command-list.h
+ 
+-builtin/help.sp builtin/help.s builtin/help.o: common-cmds.h command-list.h GIT-PREFIX
++builtin/help.sp builtin/help.s builtin/help.o: command-list.h GIT-PREFIX
+ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
+ 	'-DGIT_HTML_PATH="$(htmldir_relative_SQ)"' \
+ 	'-DGIT_MAN_PATH="$(mandir_relative_SQ)"' \
+@@ -1935,11 +1935,6 @@ $(BUILT_INS): git$X
+ 	ln -s $< $@ 2>/dev/null || \
+ 	cp $< $@
+ 
+-common-cmds.h: generate-cmdlist.sh command-list.txt
+-
+-common-cmds.h: $(wildcard Documentation/git-*.txt)
+-	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh command-list.txt COMMON >$@+ && mv $@+ $@
+-
+ command-list.h: generate-cmdlist.sh command-list.txt
+ 
+ command-list.h: $(wildcard Documentation/git-*.txt)
+@@ -2153,7 +2148,7 @@ else
+ # Dependencies on header files, for platforms that do not support
+ # the gcc -MMD option.
+ #
+-# Dependencies on automatically generated headers such as common-cmds.h or command-list.h
++# Dependencies on automatically generated headers such as command-list.h
+ # should _not_ be included here, since they are necessary even when
+ # building an object for the first time.
+ 
+@@ -2532,7 +2527,7 @@ sparse: $(SP_OBJ)
+ style:
+ 	git clang-format --style file --diff --extensions c,h
+ 
+-check: common-cmds.h command-list.h
++check: command-list.h
+ 	@if sparse; \
+ 	then \
+ 		echo >&2 "Use 'make sparse' instead"; \
+@@ -2780,7 +2775,7 @@ clean: profile-clean coverage-clean
+ 	$(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
+ 	$(RM) -r bin-wrappers $(dep_dirs)
+ 	$(RM) -r po/build/
+-	$(RM) *.pyc *.pyo */*.pyc */*.pyo common-cmds.h command-list.h $(ETAGS_TARGET) tags cscope*
++	$(RM) *.pyc *.pyo */*.pyc */*.pyo command-list.h $(ETAGS_TARGET) tags cscope*
+ 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
+ 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
+ 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 88968160e3..57f9800123 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -70,46 +70,6 @@ struct cmdname_help {
+ 	uint32_t category;
+ };
  "
- 
- test_expect_success 'generate builtin list' '
--	git --list-builtins >builtins
-+	git --list-cmds=builtins >builtins
- '
- 
- while read builtin
+-if [ -z "$2" ]
+-then
+-	define_categories "$1"
+-	echo
+-	print_command_list "$1"
+-	exit 0
+-fi
+-
+-echo "static const char *common_cmd_groups[] = {"
+-
+-grps=grps$$.tmp
+-match=match$$.tmp
+-trap "rm -f '$grps' '$match'" 0 1 2 3 15
+-
+-sed -n '
+-	1,/^### common groups/b
+-	/^### command list/q
+-	/^#/b
+-	/^[ 	]*$/b
+-	h;s/^[^ 	][^ 	]*[ 	][ 	]*\(.*\)/	N_("\1"),/p
+-	g;s/^\([^ 	][^ 	]*\)[ 	].*/\1/w '$grps'
+-	' "$1"
+-printf '};\n\n'
+-
+-n=0
+-substnum=
+-while read grp
+-do
+-	echo "^git-..*[ 	]$grp"
+-	substnum="$substnum${substnum:+;}s/[ 	]$grp/$n/"
+-	n=$(($n+1))
+-done <"$grps" >"$match"
+-
+-printf 'static struct cmdname_help common_cmds[] = {\n'
+-grep -f "$match" "$1" |
+-sed 's/^git-//' |
+-sort |
+-while read cmd tags
+-do
+-	tag=$(echo "$tags" | sed "$substnum; s/[^0-9]//g")
+-	echo "	{\"$cmd\", $(get_synopsis git-$cmd), $tag},"
+-done
+-echo "};"
++define_categories "$1"
++echo
++print_command_list "$1"
 -- 
 2.17.0.519.gb89679a4aa
 
