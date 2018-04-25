@@ -3,59 +3,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AC821F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 01:30:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B00C1F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 01:31:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750997AbeDYBaM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 21:30:12 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:56135 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750938AbeDYBaL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 21:30:11 -0400
-Received: by mail-wm0-f42.google.com with SMTP id a8so4360371wmg.5
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 18:30:11 -0700 (PDT)
+        id S1751117AbeDYBbv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 21:31:51 -0400
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:36687 "EHLO
+        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751037AbeDYBbu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 21:31:50 -0400
+Received: by mail-lf0-f52.google.com with SMTP id d20-v6so23072544lfe.3
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 18:31:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Lqd+jXPDOs6PPw+CYj2HluzlB88t2gTqMp4TP+LBVl0=;
-        b=ZVcXWC65LglyYQw8DAYvJ1XjT7q6gnEf4ZJbj9+YdCOiOXRDnNhU4MMBm1nOdGNPuh
-         PiuaCmdGXP8rhK1wtxmpe/e5OFBm+xkFd9M5C5LEhAgfvcy00JAEQxJ3hiNnzSAr8iqM
-         pvabqxWGBOCNIwbWrl+3BRgzSYE12Kp3kwf08FoP524jFQlxqpHAK6XGNs3TeZE9n2I/
-         zrm7qTMubH+NeY6l+nvqa3zdfMC+MkhChij+cPH1Hn2OmuMbIA6/FSPEPV8U4LsXIxM2
-         RczbRPY8QzJRn7IDhNiTpi1HixKHBFUS6voam5MMeIyQ4Rh10Ra5AjQtz0dlusXHnbsd
-         vZkQ==
+        bh=hqPTJWjkyOX5auyniCWKWmipF/pUHj8HG9xB2PFTXCg=;
+        b=tFbuEb+wP+7UWKC8hiNv+cKqCp41o7FzIqLt6vG6QLJNlkk7PEhgRPu1QY6BfMGG6w
+         b9BzqRkep/CubPCJPRqxir0ZM3woYmpVjQ8pe1ZyLtk+jtD49DzeNRQrYB0Q2Iow12uT
+         dB0NckOyluNASsoTUDa066+0wDmYeryJWRthBIlZMMeTLUTgrTfaGeEaMAjYIqLNluJq
+         m/Oaojg5mPCCOkrMhpXVl38y2TNJLytUYZH2dkCvutLnF4sN1MdkxtOlseOh+TnZN74o
+         c7maHgkUQbbZGRclVqs4MJmqRUtQaVWNIsmfFhNhjINZJzJ4xGwCSxYZYxZOfwAr/miO
+         +rKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Lqd+jXPDOs6PPw+CYj2HluzlB88t2gTqMp4TP+LBVl0=;
-        b=Y3Im+JW8e8uRNUFAdc5K03nlgJsWtZiYsCtaH68ZC8tvPXdtu/hT+Qm402rDmTQzJG
-         lHPLUXaF/wjN/28L9z+9N6A83THoMDGlNm5q53qjO0Yu6RhMwsUdEOGzohYpTPXJlBhg
-         NP85dDtcgpKGf5DhHfjhM3suXjEGFXSygZ34sauqTzaau5N7p/neTg8SgC/RTtXUmPPv
-         TP9ooEY7cAhmyikAB45iYCBdKw5MQC6XoNCphJUT307ZufrjIBG4APEjznalTsr4KvP5
-         i0pLmePOvwA94UdYB6D6HUGML3o6ZlILP8H8lB2E0uSy5FR83lEVvGGqOIP3ozVcFP/d
-         tCBw==
-X-Gm-Message-State: ALQs6tA7/VuXRsNqJceu5NA0iwRMo7M/kdSkzZzEJhzmpJtCRl7xeF0O
-        zwtE2QgUjMsUuPOBCjA8Z29rujxDcO+XNy9AT2aH2g==
-X-Google-Smtp-Source: AIpwx4+Cq3bBAhmDUz4ZWRVNnJS9BX48J6vHjZXqT2uiqN0PmBq7xx9tdz0Eylm8SFJm11Yz4yWhtVDnd1wuZ19Vwbw=
-X-Received: by 10.80.175.2 with SMTP id g2mr35933180edd.84.1524619810592; Tue,
- 24 Apr 2018 18:30:10 -0700 (PDT)
+        bh=hqPTJWjkyOX5auyniCWKWmipF/pUHj8HG9xB2PFTXCg=;
+        b=IXgGnR7sIu8g6Q8uFYpF8Vas3VaAjhC3l7KSjKlDx2Z+QRZqAPHv6GzrivHmGaAOtc
+         k8SqX0yvHhLeHjor0vcrJF4u3ja4AfelN+GdbB1SIcQ7nySwQeFAM3iCIKFgnu8vyk/6
+         aNnJiQMaBaesy0WrDNyb45gUQNK1LGz5kSh/Kje7QPMbZY818o2RpiMhIIKw0XcXQ4TQ
+         +XGzZg1McQs94dYZ8HNzlBQpRu3O4WvOnUseUbkw/AjTICDY8D1fbsTrYPx8p/ylFU2v
+         ZZKovFDd/SfzvPwPWl4dvObDssIXq02dMVWZsz6MFAZJTHIGQCBjYmUuxs2zf9AUF01H
+         Hm/A==
+X-Gm-Message-State: ALQs6tAHhcpJu7DetV49UQJB/DhSqwzvxUZyeaXiOFIafrj7ezzT3QwA
+        jOK0QswzXNBJl2f05FTM/83Y19F4TDwcZcqI0OWC/rR+bDg=
+X-Google-Smtp-Source: AB8JxZqnYxN2lxEaU73mPd5LTREYkfc2uTjOCv4mOGEG25PX4qzWVnDMTJrYSLcrlqCO92AAloHr+UKS5FXQTxK2+W4=
+X-Received: by 10.46.151.6 with SMTP id r6mr4189490lji.5.1524619908728; Tue,
+ 24 Apr 2018 18:31:48 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.80.180.180 with HTTP; Tue, 24 Apr 2018 18:29:50 -0700 (PDT)
+Received: by 2002:a19:9690:0:0:0:0:0 with HTTP; Tue, 24 Apr 2018 18:31:28
+ -0700 (PDT)
 In-Reply-To: <xmqqzi1s3y5h.fsf@gitster-ct.c.googlers.com>
 References: <CAKk8isrAmWOdioJe2CdY+2F_AzKxcTGwd+kBsrAmGx-U=ZHGgA@mail.gmail.com>
  <xmqqzi1s3y5h.fsf@gitster-ct.c.googlers.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 24 Apr 2018 18:29:50 -0700
-Message-ID: <CA+P7+xr3cdLB+s+6A81Y9WzZUYupSECjQ1bAOKTHsUJjQQi90A@mail.gmail.com>
+From:   Wink Saville <wink@saville.com>
+Date:   Tue, 24 Apr 2018 18:31:28 -0700
+Message-ID: <CAKk8isr-7bSVqEv8EjF2UgFfw75D2oVZPJFui30pbY6kWfeL_Q@mail.gmail.com>
 Subject: Re: Fetching tags overwrites existing tags
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Wink Saville <wink@saville.com>, Git List <git@vger.kernel.org>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -104,9 +104,37 @@ On Tue, Apr 24, 2018 at 5:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > refs/tags/ hierarchy over there to your refs/remote-tags/origin/
 > hierarchy locally.
 
-It should be noted, that remote-tags would not be integrated into "git
-tag" or many other places in git commands, so it may be significantly
-less visible.
+Interesting that kinda works, what about teaching git-remote to
+understand a "--prefix-tags" option which would create the
+"fetch = refs/tags/*:refs/remote-tags/origin" entry. And teach
+git-fetch to use that entry if it exists and not require the "--no-tags"?
 
-Thanks,
-Jake
+Of course I'm sure there are "lots" of other things to change, doing
+a search for "remotes/" gives the following:
+
+$ find . -type f -name '*.c' | xargs grep '\bremotes/' | sort -uk1,1
+./builtin/branch.c: fmt = "refs/remotes/%s";
+./builtin/checkout.c: skip_prefix(argv0, "remotes/", &argv0);
+./builtin/clone.c: strbuf_addf(&branch_top, "refs/remotes/%s/", option_origin);
+./builtin/describe.c:     !skip_prefix(path, "refs/remotes/", &path_to_match)) {
+./builtin/fast-export.c: "refs/remotes/",
+./builtin/fetch.c: else if (starts_with(rm->name, "refs/remotes/")) {
+./builtin/merge.c: if (starts_with(found_ref, "refs/remotes/")) {
+./builtin/pull.c: * refs/heads/<branch_name> to
+refs/remotes/<remote_name>/<branch_name>.
+./builtin/remote.c: strbuf_addf(tmp, "refs/heads/%s:refs/remotes/%s/%s",
+./builtin/rev-parse.c: handle_ref_opt(arg, "refs/remotes/");
+./builtin/show-branch.c: if (!starts_with(refname, "refs/remotes/"))
+./contrib/examples/builtin-fetch--tool.c: else if
+(!strncmp(remote_name, "refs/remotes/", 13)) {
+./help.c: if (skip_prefix(refname, "refs/remotes/", &remote) &&
+./log-tree.c: else if (starts_with(refname, "refs/remotes/"))
+./ref-filter.c:        skip_prefix(refname, "refs/remotes/", &refname) ||
+./refs.c: return refs_for_each_ref_in(refs, "refs/remotes/", fn, cb_data);
+./remote.c: FILE *f = fopen_or_warn(git_path("remotes/%s", remote->name), "r");
+./revision.c: for_each_glob_ref_in(handle_one_ref, optarg,
+"refs/remotes/", &cb);
+./sha1_name.c:     starts_with(refname, "refs/remotes/"))
+./wt-status.c: skip_prefix(from, "refs/remotes/", &from);
+
+-- wink
