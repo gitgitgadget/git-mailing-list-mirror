@@ -2,62 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E33891F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 14:41:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C696F1F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 14:45:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754649AbeDYOk6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 10:40:58 -0400
-Received: from mail-ua0-f176.google.com ([209.85.217.176]:37988 "EHLO
-        mail-ua0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754203AbeDYOk5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 10:40:57 -0400
-Received: by mail-ua0-f176.google.com with SMTP id y8so1356753ual.5
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 07:40:57 -0700 (PDT)
+        id S1754600AbeDYOpO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 10:45:14 -0400
+Received: from mail-oi0-f50.google.com ([209.85.218.50]:34697 "EHLO
+        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754585AbeDYOpN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 10:45:13 -0400
+Received: by mail-oi0-f50.google.com with SMTP id e23-v6so21092412oiy.1
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 07:45:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=6GsGi7VfNCCE+L+6fgzcg1QM0FE4QOWQZeA1fGr9ves=;
-        b=HUcmBpe9vDfF9YeZmKXhRF3evCHyZI5dXt/2Y8TijACA9OAMca8ezUinnTm+TCLUiT
-         /hUe09EMrFuSsTaqfhdr+t6PTTO+YyTVvhupdjD5i1B7UuY8otCzSbDtaSRVbM/E/AVj
-         selNz0/ufftzbFBIN8+iPjFIufflVGzCwnjIsU/eerwkr8WDokwuQ98z+qVQsu7MVDbH
-         xjaQcHkwm0zPq3Zfs8FxD4wJaYd7IErahdQigF8+08oFGCeHqcQ7zad60jWosqY/IvGk
-         HAaEZkb5UPHfQp/U3nGjF9MhCFeF4wDCB/B1cvbtw6Vpc8I5ni/2NnBRqkSGnpKPerd1
-         y0RQ==
+         :cc:content-transfer-encoding;
+        bh=pTCkPMv5EeVC1at3nNUnSx3nxCWyiDjLF7sAE6odoZ4=;
+        b=rVBRa3bnuLW/prLZIdEuNZ80FmRjTeWNQkarcfr4HoyYVjQ4ApkPZEbY2PKPdHpcq3
+         HWhcTvWJAto95vIZPGIf7VKfyOQPrilLER74w8DJuKeiLqG7+cb5Rb3emEDlqt76DWeM
+         tageMG7anT72qaoXwO4RVMGNgl+asRehld2HyifWpP/qiSWmY3xFORGqLH+8d+TpysLM
+         rMS0SLxSoOLJn07vYEZUt/zZstxu++Q8LsP3g/hXa0PKX7s6BHElcWGgiO3Exa6/8ew0
+         jpYtNS+f3E0KQNGS+/nsXxXvmt3tVDp37pN6EFRmXjM1Lkfj1IrIkzwSuAbiZKRkI2+S
+         e2jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=6GsGi7VfNCCE+L+6fgzcg1QM0FE4QOWQZeA1fGr9ves=;
-        b=qR+DvE2DX5GqUPgs+H651qxmVu2tVaTlsGVBQ9+9M3IE8lOZB3VvG4n/kgOOWo9qNs
-         t8e5ES8Sn9W1l56soaBP1p57JcGHuYar3WifDiLCh+76KZFRsCWQMKyWIReKS1Jnjdx6
-         V+mkDsg+CqAC0cWZZJQAy8CcjoFAhJ1eN9vZMjRZHF+RnYwELrmHXGHuL+1VVLGEzheX
-         kc8QmB6U52hLzVlCyUy9zXojmi5YXMaA0Pz9qbLGEOil41zxSjoTWnK/qFpyum4y8cci
-         Xp6fZNTHQnBySMc/nA+jHnoniFHuxaA2wlHQm+02UOzcUvljvWSOr7SJfg655cC8gnZb
-         PcZg==
-X-Gm-Message-State: ALQs6tAesIHPTzQTYTpWSNxEuhoMoOuOAZS9fshY1yzrUK8OvakYhwqb
-        ds9GuX89OC759Hu+cIcNKhyMrsl4ugP2auov4rM=
-X-Google-Smtp-Source: AIpwx4+7M+TXdHVzP7B2XH5o66x4eCcVusxW+50DUWeUXXGXRlUt4qyF0GYfEWNffyFK2hE7cbofqWk3MTLvbob5SrU=
-X-Received: by 10.176.27.172 with SMTP id k44mr21721897uai.5.1524667256876;
- Wed, 25 Apr 2018 07:40:56 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=pTCkPMv5EeVC1at3nNUnSx3nxCWyiDjLF7sAE6odoZ4=;
+        b=Jlw1Vn1JiHydz8F7WuKV658OQtCVOuERgkCcUlSCmezoxu0VGrEdNwq8VHf5aqnl90
+         xU/wlPaS71QXtWNDTN1CzmwR3EmBjgEdr5jfVFmqZMoGj3/HbZKjKgX9gnz6LjyPERdk
+         ovzXj9xRjkhVM1ySDAsUn75lYC4uKW2q5FylIKVe+6KueTS7pYIAOiFvrifxh5lKP3Xv
+         VDuwvgmSW4KGRZseVyLyPVhubZWOk6dUm/tApEAtncMRclcGGf01JdIS9h9pb9iHzn7F
+         MqkToO+DL7OL4NeAxp8/DaOhY0FWU8Zs0miDU0DNcS8/uXLy37u+ZHsjCyWsaDHwZfGU
+         lQhw==
+X-Gm-Message-State: ALQs6tDdYnSmNbDEQpgzvPMzvMzLM3E7Yq5lyviqTCfl5TJ5gQ7hs4lO
+        5zHzDz/3kfZjcqqvDr3y5RwW9Zt+NhlGYSWhoRo=
+X-Google-Smtp-Source: AIpwx49QmBCCYS3TshTej/1z8lNuAMT96phvqAFc0gvrTFf1xEkI+0gde42KzXBb5qGrU+08XKUA4uTKwUvheK2pz8E=
+X-Received: by 2002:aca:aad3:: with SMTP id t202-v6mr18340818oie.30.1524667512750;
+ Wed, 25 Apr 2018 07:45:12 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.159.34.195 with HTTP; Wed, 25 Apr 2018 07:40:56 -0700 (PDT)
-In-Reply-To: <CAM0VKjmJBzBFDAi1FQAgytb82-Q7JhO+aOfKi=YBZ3YtNxwPTQ@mail.gmail.com>
-References: <CAM0VKj=pDVxfJtUZx7c6uCmPxwQFPBOQYdd7NH=YnVG86iK0Pw@mail.gmail.com>
- <20180419190725.GA8555@furore> <CAM0VKjmJBzBFDAi1FQAgytb82-Q7JhO+aOfKi=YBZ3YtNxwPTQ@mail.gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Wed, 25 Apr 2018 16:40:56 +0200
-Message-ID: <CAM0VKj=MVY15SbRanfhXP3pPjNEuhZ=dbQmhXox6n5AOFyz2oQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] completion: load completion file for external subcommand
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
+Received: by 10.74.198.152 with HTTP; Wed, 25 Apr 2018 07:44:42 -0700 (PDT)
+In-Reply-To: <CAM0VKjnD4ZnZjwO6M=P1NcJCfJCfJb=tR5CKwSOeCBvUbjcB=Q@mail.gmail.com>
+References: <20180415164238.9107-1-pclouds@gmail.com> <20180421165414.30051-1-pclouds@gmail.com>
+ <20180421165414.30051-5-pclouds@gmail.com> <CAM0VKjkd7OZspeTPumi4NVOM=7yXEq=nSjCNntkJ9d-8mPfR2w@mail.gmail.com>
+ <CACsJy8B0bFzh5h+QE+NMgCHfoShfu8MvCzmxPPCVi-g_Ud3sUw@mail.gmail.com>
+ <CACsJy8DWcofCqg=QKo2pLcLQ91GKohnS71Wns8siVZ_sufjgUA@mail.gmail.com> <CAM0VKjnD4ZnZjwO6M=P1NcJCfJCfJb=tR5CKwSOeCBvUbjcB=Q@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 25 Apr 2018 16:44:42 +0200
+Message-ID: <CACsJy8Bw0+Zdq6yhw4J0W=HccB57_ssFHaHgShuM5bWiDyhtMg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] git.c: implement --list-cmds=porcelain
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -65,64 +68,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 23, 2018 at 5:12 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+On Wed, Apr 25, 2018 at 3:46 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
 rote:
-> On Thu, Apr 19, 2018 at 9:07 PM, Florian Gamb=C3=B6ck <mail@floga.de> wro=
-te:
->> On 2018-04-18 21:51, SZEDER G=C3=A1bor wrote:
->>> I believe the main bash-completion repository can be found at:
->>>
->>>  https://github.com/scop/bash-completion.git
->>>
->>> This repository still contains the branch 'dynamic-loading'; for the
->>> record it points to 3b029892f6f9db3b7210a7f66d636be3e5ec5fa2.
->>>
->>> Two commits on that branch are worth mentioning:
->>>
->>>   20c05b43 (Load completions in separate files dynamically, get rid of
->>>             have()., 2011-10-12)
->>>   5baebf81 (Add _xfunc for loading and calling functions on demand,
->>>             use it in apt-get, cvsps, rsync, and sshfs., 2011-10-13)
-
->>>> I think the easiest method is to use a function that is defined by
->>>> bash-completion v2.0+, namely __load_completion.
->>>
->>> This is wrong, __load_completion() was introduced in cad3abfc
->>> (__load_completion: New function, use in _completion_loader and _xfunc,
->>> 2015-07-15), and the first release tag containg it is '2.2' from 2016-0=
-3-03.
-
->>> Would it be possible to use _xfunc() instead to plug that hole?  It see=
-ms
->>> the be tricky, because that function not only sources but also _calls_ =
-the
->>> completion function.
+> On Tue, Apr 24, 2018 at 6:17 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Tue, Apr 24, 2018 at 6:12 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>> git-completion.bash will be updated to ask git "give me the commands
+>>> in the mainporcelain, completable or external category". This also
+>>> addresses another thing that bugs me: I wanted an option to let me
+>>> complete all commands instead of just porcelain. This approach kinda
+>>> generalizes that and it would be easy to let the user choose what
+>>> category they want to complete.
 >>
->> But isn't this exactly what we want?
+>> To complete this: there could also be yet another special category
+>> "custom", where --list-cmds=3Dcustom simply returns a list of commands
+>> specified in config file. With this the user can pick the "custom"
+>> category to have total control of what command shows up at "git <tab>"
+>> if they are not satisfied with the predefined categories.
 >
-> No, that's definitely not what we want.
+> Note that config settings can be repository-specific, which might
+> cause surprises if the user sets a custom command list in one
+> repository's config file, but not (or a different one!) in others.
+> Then the list of completed commands will depend on where the user
+> happened to be when first hitting 'git <TAB>'.
 
-In my previous emails I overlooked the _completion_loader() helper
-function.
+I think that is expected when the word "config file" is mentioned.
+It's no different than aliases, which could also be repo specific and
+affects completion.
 
-It seems that this function does almost exactly what we want.  It was
-introduced along with dynamic completion loading back in 20c05b43, so
-it's available for us even in older LTS/Enterprise releases.  Since
-cad3abfc it's a wrapper around __load_completion() and thus benefits
-from all the improvements, notably searching for completion scripts in
-a user-specified directory ($BASH_COMPLETION_USER_DIR) or in the
-user's home directory ($XDG_DATA_HOME or ~/.local/...) as well.  It
-loads the matching completion script, but does not call the completion
-function unconditionally.
+> Unless you forgo
+> caching the list of commands and run 'git --list-cmds=3D...' every time
+> the user hits 'git <TAB>', but that will add the overhead of fork()ing
+> a subshell and a git command.
 
-The "almost" refers to he case when _completion_loader() can't find a
-completion script with a matching name to load, and then registers the
-_minimal() completion function for the given command to do basic path
-completion as fallback.  I don't think this matters in practice,
-because in this case the given command is a git command in its dashed
-form, e.g. 'git-diff-index', and those have been deprecated for a long
-time.
+This is a good point. I'd rather forgo caching iff the "custom"
+strategy is used (technically we could still cache if we know the
+source if $HOME/.gitconfig or higher but it's not worth the effort).
+Just make it clear to the user that if they go with "custom" strategy
+then they may hit some performance hit.
 
-I think all you need to do is run a
-s/__load_completion/_completion_loader/ on your patch and update the
-commit message with relevant bits from the above discussion.
+> Once upon a time I toyed with the idea of introducing environment
+> variables like $GIT_COMPLETION_EXCLUDE_COMMANDS and
+> $GIT_COMPLETION_INCLUDE_COMMANDS, to exclude and include commands from
+> 'git <TAB>'.  I wanted to exclude 'git cherry', because I have never
+> ever used it but it's always in the way when I want to cherry-pick.
+> And I wanted to include 'git for-each-ref' back when I was running it
+> frequently while working on speeding up refs completion, but it
+> wouldn't have brought that much benefits, because I have a 'git
+> for-each-commit' script, too.
+> Never really pursued it, though, just patched the long list in
+> __git_list_porcelain_commands() in my git clone :)
+
+I'm tempted to support "delta custom list" (e.g. "+cherry-pick" in the
+config variable means "add that command on the existing list", or
+"-blame" means exclude it) but that's probably too much work.
+--=20
+Duy
