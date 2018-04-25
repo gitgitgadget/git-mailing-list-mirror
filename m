@@ -2,119 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A2DB1F404
-	for <e@80x24.org>; Wed, 25 Apr 2018 07:10:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50A261F404
+	for <e@80x24.org>; Wed, 25 Apr 2018 07:13:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751277AbeDYHKT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 03:10:19 -0400
-Received: from mout.gmx.net ([212.227.17.22]:39899 "EHLO mout.gmx.net"
+        id S1751261AbeDYHNQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 03:13:16 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:47982 "EHLO smtp.gentoo.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750929AbeDYHKR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 03:10:17 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsOsW-1eE05K07aK-011wFk; Wed, 25
- Apr 2018 09:10:10 +0200
-Date:   Wed, 25 Apr 2018 09:10:08 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Stefan Beller <sbeller@google.com>
-cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v4 04/11] replace: "libify" create_graft() and callees
-In-Reply-To: <CAGZ79kZgpvcAzpttwHyjnSDcfGYa0gfKRBG9zBqiXfBZetGLtg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804250905110.4978@tvgsbejvaqbjf.bet>
-References: <cover.1524262793.git.johannes.schindelin@gmx.de> <cover.1524303776.git.johannes.schindelin@gmx.de> <f962f8043fb1125b47090a82c35e2d67d3d9d216.1524303776.git.johannes.schindelin@gmx.de> <CAGZ79ka=BLGCCTOw848m0SE9O+ZKhQfiW9RUz99W4=Gdg+7ofQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.1804242048360.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAGZ79kZgpvcAzpttwHyjnSDcfGYa0gfKRBG9zBqiXfBZetGLtg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:bn7fm9GN0uAvPynFg2FWnP/t4tK3GMhXR5BRqeisrpEbe/khfIL
- 03COFlrOjBIulgAVlIFLsaX++l6vy5SfoCj/N7TzPpJlq86uSUb/DM+1qs4LqbrTUb5PwDp
- JgiONPWkgp2MFazRTCVe/e2JDIFouoYT/wfuD4+4kBR1z33aGm5g9QNpi8q+bPAFqZ8aq0N
- sULIrCFiCmlBiKT+DMd/Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2S4BXGEkeSM=:VqVyyVCcS9lk7lg7n9qh6K
- pRnjbR3w/JG7JzXgf6ZomQyTd2T+j3OumWmoVWIa/2X5HKnYasNJYEFpLfZJgRoMINysg8iS+
- D8u5F07WDjffzN/3sw2xSu+/EesaKNDFgcIQwf/e2NzDCkawjtYm4u/xrxV2sNawLs7xsbIAA
- nSmrirIaCuj52qmF0zHo2tcPiQb2L/FhpsZ8LmxFY1eyXPl5seYT0TZF/JF5F5qYPGzCacM7A
- T+rZbtkA3seTCULMhgHuXmNr+WEptkTHu1pY1dNaHx3y6G5VR9Lp5giOhR7dfvXzyEDsYNY9V
- RaV7xNSWSp6akJgSufXcj5U0JUrjvxr7AlLT8Epn9bItvfiCwrzXw74UjkfgBgs4NXY60VNwm
- 9LNqftaq7gXkEAi+XjscKtOvE/VMK7RWkmEPMzuyfGhfr3K+ukS1LGvBubYLgQVr0M+uvlkNj
- RHuSBHABnxfzHH1IO2bvw7Z5B9j/M7O+uonFIz2uCbbHiwkPuEHm6gJLylt9J9zk84kZTL5UG
- 7iro3f3Gl9MAHcq9Era7M/P210pVUyGaR0cyWcRNBRTGDv8+4B7mgyejRaNPAXWOc0fQywGoH
- BMzLnzV8cwd6Bz02geh8fbiMA1qdUwov+q0SaihMa9WS/2epGAQI/pLPEoWdr3xwRPPN0iiMY
- n1ekwPs8FzIG9JFAc6kaqEIusXZ26PSkawsV/y/F4MEzMdiOLKDdnXamY6Ps8xsMNAecS6IhY
- b6YQ1zLTsWgKwqSgKVChH5OQKRn1iwRylh7qbbTt9Rw5OKAk7415IaIq3mYW1acN/+T/uo96w
- PbnZlrmK2HtfAAM3ULc9+SE0KchGxPgO6g4keJFV52Y/BPcr9Y=
+        id S1750969AbeDYHNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 03:13:16 -0400
+Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgorny)
+        by smtp.gentoo.org (Postfix) with ESMTPSA id DE3D0335C0A;
+        Wed, 25 Apr 2018 07:13:14 +0000 (UTC)
+Message-ID: <1524640391.1104.26.camel@gentoo.org>
+Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
+From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
+To:     "Robin H. Johnson" <robbat2@gentoo.org>,
+        Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 25 Apr 2018 09:13:11 +0200
+In-Reply-To: <robbat2-20180425T065446-231760424Z@orbis-terrarum.net>
+References: <20180413170129.15310-1-mgorny@gentoo.org>
+         <robbat2-20180425T065446-231760424Z@orbis-terrarum.net>
+Organization: Gentoo
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.24.6 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
-
-On Tue, 24 Apr 2018, Stefan Beller wrote:
-
-> On Tue, Apr 24, 2018 at 11:51 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+W dniu śro, 25.04.2018 o godzinie 06∶58 +0000, użytkownik Robin H.
+Johnson napisał:
+> On Fri, Apr 13, 2018 at 07:01:29PM +0200, Michał Górny wrote:
+> > --- a/entry.c
+> > +++ b/entry.c
+> > @@ -411,6 +411,7 @@ int checkout_entry(struct cache_entry *ce,
+> >  {
+> >  	static struct strbuf path = STRBUF_INIT;
+> >  	struct stat st;
+> > +	int ret;
+> >  
+> >  	if (topath)
+> >  		return write_entry(ce, topath, state, 1);
 > 
-> >
-> > Oy vey. How many more mistakes can I introduce in one commit...
-> >
+> mgorny: Should the topath case trigger utime as well?
+
+I don't think so.  AFAIU topath case is only used by 'git checkout-index 
+--all', and it implies that data is written to temporary files rather
+than actual working copy files, so mtimes do not really matter there.
+
 > 
-> I ask this myself all the time, but Software is hard when not having
-> computer assisted checks.
+> Other questions:
+> - Would there be be any value in hoisting the utime change into
+>   write_entry's finish block rather than having it in checkout_entry?
 
-Right. I still hope to find some time to play with Infer (Open Source
-alternative to Coverity, started at Facebook). Windows support is not
-there yet, which is the main hold-up for me (if I had the time, I would
-spend it on adding Windows support to Infer). I could imagine that Infer
-might be flexible enough to ask these questions programmatically:
+I've attempted to reduce the scope of my changes to minimum, therefore
+checkout_entry() seemed like the 'closest' thing to where it is set
+and where it could be implemented.  I see no problem in doing that
+in write_entry(), though.  In fact, it might be useful to do that before
+filling the stat cache.
 
-- is there a code path that forgets to close() file handles?
+> - Should mtimes on directories be set if the directory is explicitly
+>   created?
 
-- is there a code path that forgets to release strbufs?
+I don't think there's really a purpose in that.  I can't think of any
+reason why anybody would be able to use directory mtimes reliably, so
+maybe keeping their standard behavior is better here.
 
-- are there redundant strbuf_release() calls?
+> - Maybe using futimens on supported platforms?
 
-> The test suite doesn't quite count here, as it doesn't yell loudly
-> enough for leaks in corner cases.
+I'm all for that.  However, this is something the git maintainers should
+decide as it probably implies some maintenance burden.
 
-Right, and running everything through valgrind is not fast enough.
-Besides, this misses non-Linux code paths.
+-- 
+Best regards,
+Michał Górny
 
-> Thanks for taking these seriously, I was unsure if the
-> first issues (close() clobbering the errno) were sever enough
-> to bother. It complicates the code, but the effect is theoretical)
-> (for EBADF) or a real niche corner case (EINTR).
-
-Maybe it might not be *that* serious currently. It is incorrect, though,
-and makes the code less reusable. I like to copy-edit my code a lot when
-refactoring is not an option.
-
-> Speaking of that, I wonder if we eventually want to have
-> a wrapper
-> 
-> int xclose(int fd)
-> {
->     int err = errno;
->     int ret = close(fd)
->     if (errno == EINTR)
->         /* on linux we don't care about this, other OSes? */
->         ;
->     errno = err;
->     return ret;
-> }
-> 
-> Though not in this series.
-
-Or maybe a Coccinelle rule? (Still not in this series, though.)
-
-Ciao,
-Dscho
