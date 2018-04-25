@@ -7,55 +7,54 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AF2F1F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 18:21:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5647B1F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 18:21:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756422AbeDYSVi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 14:21:38 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:44854 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756298AbeDYSV0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 14:21:26 -0400
-Received: by mail-pf0-f193.google.com with SMTP id q22so984069pff.11
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:21:26 -0700 (PDT)
+        id S1756420AbeDYSVf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 14:21:35 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:33830 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756088AbeDYSVO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 14:21:14 -0400
+Received: by mail-pf0-f173.google.com with SMTP id a14so5422344pfi.1
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:21:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=PWma/ypxerKNLRwofzSdW+zoB6J0Jyk/n5vvMcUiSoM=;
-        b=qU4A8LuUxW07CCiKXKzs4tTyObP7tYJC3wdq5SQ2XZb0qxzTJz+erxRcucGJffNf5o
-         bP2AT4DW9BWR4gTGgUablpp82/65YA0pfnS9F/sDw6D6nTBTeQruqCJuda0Sbh4OgIWE
-         DPZPm+Su/s5Iv8vcYkRT+CUadaABgG1pQwPtSoLX5C14owcH3pO88IyOJI32Y8yAGxL1
-         R6QlgdXWCcER9RenWCve2qg6rmo9yfruRl1AEve9zKexkWl+9HpggRx4a07gAV8v3LlR
-         jrhS0B9buIZV3U0tIjuGI2ByAtNJfynKVoKui0+l09KTsAi3pfrrqWrzKUFG1elxHup8
-         jtzQ==
+        bh=qNFihDFB90+wYawwx4T6/QSxL1Niw9xpqhtFRyk59aM=;
+        b=lmtMJAjcJvWZCMKyOUkRq6TsqNy8cLRsYmIuGGQ8PysM/GwUC3kCpfZioHPPAC9Fsx
+         SpzWK2kPUbPjfC0F1rt/cQOIar28PYcn/SsNNLC0DnvQwQYW2r7Q21eB8Uw2VXDAbPOd
+         QRXOjNMjFI8/1JKVI8UUXZtzM30WmfIaXzmMdG+O7MxTM63T6Fez6xzLr+OHErG3ctOU
+         SZI0RlXbOaba1LTaV2yyBNgMpVJ+i39GVUKzNMLDRHODVglj4KlQNvuyYY7+oCdsc9hO
+         JfbVaKlLUhUnSK0vIv1p5Fp6Qf2pEq4H0r4FeQbh00K2NNGYyZ5D9vTaa5X/g12tMYTv
+         ZOAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=PWma/ypxerKNLRwofzSdW+zoB6J0Jyk/n5vvMcUiSoM=;
-        b=O+RL+27oT4UUgYgTm8pJtf2zVD/hG8V87pydagItA519DP7bTc11THj5bPThSL/G9e
-         lsKEYsg1CH/OO8enjstiUxZD0ICN6OVSBtHymds3WvTLCI7mYohkqR73mx/jHZfunfkn
-         mVibwfKAi+0bweo9yaqq0TyAg9gnWsOxjpqvcxYD38nX9+WIMHtXdj6hpobjQNOKDD3s
-         05oYE40pxo4wCkcbCVI6TyOk3Tog5qnZo4jfugxcm+lLIQ/1gNFYQ6AjZwRifu7mT4qc
-         xFqNZOfXw/+FW+InIFKA/qkWiSx3+W0hot25xn7WAPIdJP7oG9Y0R8K2+KWQHhn6Xx2h
-         JGFA==
-X-Gm-Message-State: ALQs6tCTMfat5i4afZ6M4V0c6FsGhDk2q5ZjJCt97/AmvWWzA7ee3W0F
-        iLvxRLqlg++/LQi7jGe4Pz/IAw==
-X-Google-Smtp-Source: AIpwx4/AP5BleLNIvKf+Wj8N6XLtyOUXll/pYQTEW2vze3Oohj5My+WjuE6n9CiRxtcgoo0SJ2ko3g==
-X-Received: by 2002:a17:902:9686:: with SMTP id n6-v6mr29507624plp.136.1524680485392;
-        Wed, 25 Apr 2018 11:21:25 -0700 (PDT)
+        bh=qNFihDFB90+wYawwx4T6/QSxL1Niw9xpqhtFRyk59aM=;
+        b=fnBkOZq0AcmuDye8mEK+guPFcTloogkoL7j39WkdqvhNHMYsfyfyp+IePz3GMGml0/
+         Rdw2X5rHZKHVuZSUbH+w4QlRVxT5auHkBRYTlIA9pODqe9sFB8U9Jz9H5NtYf2iE88+G
+         OFCqWgOi38zmBAjtU1+OZoDS95OZ9ZFmmkCjtKnmr+Lp/FWxPtiibcsQNnpxak6j//jL
+         Zp9/72yWoL/NZvJZomgpFom1WbWjk9jOru/xkG4d1GiBRNrth7oKLWPN4mf6m1DVnBBv
+         VGA/dUFUAV0SsVqcige8KeS1Fe2for7wXHdVgVQWStnl8pCy9dIA9PMj/u0rKpsW731i
+         SEWg==
+X-Gm-Message-State: ALQs6tBGsapO3WhWAe2Z7yUTE6D+v0Okdx0Dh+nUYwlSTcesjhLs83Zk
+        1I/o04mUemB3CdKIgPPtVuxO/g==
+X-Google-Smtp-Source: AIpwx4/4lDmaPgUbOt9IbOXS9DEBscVvsX8WJJw9EUVR5CMMTJYiK1U43FQy6f6iMqBzTwev2ewqQQ==
+X-Received: by 10.98.60.16 with SMTP id j16mr21238244pfa.7.1524680472821;
+        Wed, 25 Apr 2018 11:21:12 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id e83sm47450008pfd.175.2018.04.25.11.21.22
+        by smtp.gmail.com with ESMTPSA id j125sm41826168pfg.188.2018.04.25.11.21.11
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Apr 2018 11:21:23 -0700 (PDT)
+        Wed, 25 Apr 2018 11:21:12 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
-        jonathantanmy@google.com, sandals@crustytoothpaste.net,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCHv3 9/9] cache.h: allow oid_object_info to handle arbitrary repositories
-Date:   Wed, 25 Apr 2018 11:21:06 -0700
-Message-Id: <20180425182106.162972-10-sbeller@google.com>
+        jonathantanmy@google.com, sandals@crustytoothpaste.net
+Subject: [PATCHv3 2/9] cache.h: add repository argument to oid_object_info
+Date:   Wed, 25 Apr 2018 11:20:59 -0700
+Message-Id: <20180425182106.162972-3-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
 In-Reply-To: <20180425182106.162972-1-sbeller@google.com>
 References: <20180424215910.22201-1-sbeller@google.com>
@@ -65,338 +64,655 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This involves also adapting oid_object_info_extended and a some
-internal functions that are used to implement these. It all has to
-happen in one patch, because of a single recursive chain of calls visits
-all these functions.
+Add a repository argument to allow the callers of oid_object_info
+to be more specific about which repository to handle. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
 
-oid_object_info_extended is also used in partial clones, which allow
-fetching missing objects. As this series will not add the repository
-struct to the transport code and fetch_object(), add a TODO note and
-omit fetching if a user tries to use a partial clone in a repository
-other than the_repository.
+As with the previous commits, use a macro to catch callers passing a
+repository other than the_repository at compile time.
 
-Among the functions modified to handle arbitrary repositories,
-unpack_entry() is one of them. Note that it still references the globals
-"delta_base_cache" and "delta_base_cached", but those are safe to be
-referenced (the former is indexed partly by "struct packed_git *", which
-is repo-specific, and the latter is only used to limit the size of the
-former as an optimization).
-
-Helped-by: Brandon Williams <bmwill@google.com>
-Helped-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- cache.h     |  9 ++++-----
- packfile.c  | 58 ++++++++++++++++++++++++++---------------------------
- packfile.h  |  8 ++++----
- sha1_file.c | 31 ++++++++++++++++------------
- 4 files changed, 54 insertions(+), 52 deletions(-)
+ archive-tar.c            |  2 +-
+ archive-zip.c            |  3 ++-
+ blame.c                  |  4 ++--
+ builtin/blame.c          |  2 +-
+ builtin/cat-file.c       |  6 +++---
+ builtin/describe.c       |  2 +-
+ builtin/fast-export.c    |  2 +-
+ builtin/fetch.c          |  2 +-
+ builtin/fsck.c           |  3 ++-
+ builtin/index-pack.c     |  4 ++--
+ builtin/ls-tree.c        |  2 +-
+ builtin/mktree.c         |  2 +-
+ builtin/pack-objects.c   |  8 +++++---
+ builtin/prune.c          |  3 ++-
+ builtin/replace.c        | 11 ++++++-----
+ builtin/tag.c            |  4 ++--
+ builtin/unpack-objects.c |  2 +-
+ cache.h                  |  3 ++-
+ diff.c                   |  3 ++-
+ fast-import.c            | 14 +++++++++-----
+ list-objects-filter.c    |  2 +-
+ object.c                 |  2 +-
+ pack-bitmap-write.c      |  3 ++-
+ packfile.c               |  2 +-
+ reachable.c              |  2 +-
+ refs.c                   |  2 +-
+ remote.c                 |  2 +-
+ sequencer.c              |  3 ++-
+ sha1_file.c              |  4 ++--
+ sha1_name.c              | 12 ++++++------
+ submodule.c              |  2 +-
+ tag.c                    |  2 +-
+ 32 files changed, 67 insertions(+), 53 deletions(-)
 
+diff --git a/archive-tar.c b/archive-tar.c
+index 3563bcb9f2..f93409324f 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -276,7 +276,7 @@ static int write_tar_entry(struct archiver_args *args,
+ 		memcpy(header.name, path, pathlen);
+ 
+ 	if (S_ISREG(mode) && !args->convert &&
+-	    oid_object_info(oid, &size) == OBJ_BLOB &&
++	    oid_object_info(the_repository, oid, &size) == OBJ_BLOB &&
+ 	    size > big_file_threshold)
+ 		buffer = NULL;
+ 	else if (S_ISLNK(mode) || S_ISREG(mode)) {
+diff --git a/archive-zip.c b/archive-zip.c
+index 6b20bce4d1..74f3fe9103 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -325,7 +325,8 @@ static int write_zip_entry(struct archiver_args *args,
+ 		compressed_size = 0;
+ 		buffer = NULL;
+ 	} else if (S_ISREG(mode) || S_ISLNK(mode)) {
+-		enum object_type type = oid_object_info(oid, &size);
++		enum object_type type = oid_object_info(the_repository, oid,
++							&size);
+ 
+ 		method = 0;
+ 		attr2 = S_ISLNK(mode) ? ((mode | 0777) << 16) :
+diff --git a/blame.c b/blame.c
+index 78c9808bd1..dfa24473dc 100644
+--- a/blame.c
++++ b/blame.c
+@@ -81,7 +81,7 @@ static void verify_working_tree_path(struct commit *work_tree, const char *path)
+ 		unsigned mode;
+ 
+ 		if (!get_tree_entry(commit_oid, path, &blob_oid, &mode) &&
+-		    oid_object_info(&blob_oid, NULL) == OBJ_BLOB)
++		    oid_object_info(the_repository, &blob_oid, NULL) == OBJ_BLOB)
+ 			return;
+ 	}
+ 
+@@ -504,7 +504,7 @@ static int fill_blob_sha1_and_mode(struct blame_origin *origin)
+ 		return 0;
+ 	if (get_tree_entry(&origin->commit->object.oid, origin->path, &origin->blob_oid, &origin->mode))
+ 		goto error_out;
+-	if (oid_object_info(&origin->blob_oid, NULL) != OBJ_BLOB)
++	if (oid_object_info(the_repository, &origin->blob_oid, NULL) != OBJ_BLOB)
+ 		goto error_out;
+ 	return 0;
+  error_out:
+diff --git a/builtin/blame.c b/builtin/blame.c
+index db38c0b307..bfdf7cc132 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -655,7 +655,7 @@ static int is_a_rev(const char *name)
+ 
+ 	if (get_oid(name, &oid))
+ 		return 0;
+-	return OBJ_NONE < oid_object_info(&oid, NULL);
++	return OBJ_NONE < oid_object_info(the_repository, &oid, NULL);
+ }
+ 
+ int cmd_blame(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 4ecdb9ff54..b8ecbea98e 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -116,7 +116,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 		/* else fallthrough */
+ 
+ 	case 'p':
+-		type = oid_object_info(&oid, NULL);
++		type = oid_object_info(the_repository, &oid, NULL);
+ 		if (type < 0)
+ 			die("Not a valid object name %s", obj_name);
+ 
+@@ -140,7 +140,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 	case 0:
+ 		if (type_from_string(exp_type) == OBJ_BLOB) {
+ 			struct object_id blob_oid;
+-			if (oid_object_info(&oid, NULL) == OBJ_TAG) {
++			if (oid_object_info(the_repository, &oid, NULL) == OBJ_TAG) {
+ 				char *buffer = read_object_file(&oid, &type,
+ 								&size);
+ 				const char *target;
+@@ -151,7 +151,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 			} else
+ 				oidcpy(&blob_oid, &oid);
+ 
+-			if (oid_object_info(&blob_oid, NULL) == OBJ_BLOB)
++			if (oid_object_info(the_repository, &blob_oid, NULL) == OBJ_BLOB)
+ 				return stream_blob_to_fd(1, &blob_oid, NULL, 0);
+ 			/*
+ 			 * we attempted to dereference a tag to a blob
+diff --git a/builtin/describe.c b/builtin/describe.c
+index de840f96a4..66c497f789 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -502,7 +502,7 @@ static void describe(const char *arg, int last_one)
+ 
+ 	if (cmit)
+ 		describe_commit(&oid, &sb);
+-	else if (oid_object_info(&oid, NULL) == OBJ_BLOB)
++	else if (oid_object_info(the_repository, &oid, NULL) == OBJ_BLOB)
+ 		describe_blob(oid, &sb);
+ 	else
+ 		die(_("%s is neither a commit nor blob"), arg);
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index a15898d641..373c794873 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -947,7 +947,7 @@ static void import_marks(char *input_file)
+ 		if (last_idnum < mark)
+ 			last_idnum = mark;
+ 
+-		type = oid_object_info(&oid, NULL);
++		type = oid_object_info(the_repository, &oid, NULL);
+ 		if (type < 0)
+ 			die("object not found: %s", oid_to_hex(&oid));
+ 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index dcdfc66f09..73be393b2e 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -637,7 +637,7 @@ static int update_local_ref(struct ref *ref,
+ 	struct branch *current_branch = branch_get(NULL);
+ 	const char *pretty_ref = prettify_refname(ref->name);
+ 
+-	type = oid_object_info(&ref->new_oid, NULL);
++	type = oid_object_info(the_repository, &ref->new_oid, NULL);
+ 	if (type < 0)
+ 		die(_("object %s not found"), oid_to_hex(&ref->new_oid));
+ 
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 087360a675..9d59d7d5a2 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -67,7 +67,8 @@ static const char *printable_type(struct object *obj)
+ 	const char *ret;
+ 
+ 	if (obj->type == OBJ_NONE) {
+-		enum object_type type = oid_object_info(&obj->oid, NULL);
++		enum object_type type = oid_object_info(the_repository,
++							&obj->oid, NULL);
+ 		if (type > 0)
+ 			object_as_type(obj, type, 0);
+ 	}
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index d81473e722..2d04a596f5 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -223,7 +223,7 @@ static unsigned check_object(struct object *obj)
+ 
+ 	if (!(obj->flags & FLAG_CHECKED)) {
+ 		unsigned long size;
+-		int type = oid_object_info(&obj->oid, &size);
++		int type = oid_object_info(the_repository, &obj->oid, &size);
+ 		if (type <= 0)
+ 			die(_("did not receive expected object %s"),
+ 			      oid_to_hex(&obj->oid));
+@@ -812,7 +812,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ 		enum object_type has_type;
+ 		unsigned long has_size;
+ 		read_lock();
+-		has_type = oid_object_info(oid, &has_size);
++		has_type = oid_object_info(the_repository, oid, &has_size);
+ 		if (has_type < 0)
+ 			die(_("cannot read existing object info %s"), oid_to_hex(oid));
+ 		if (has_type != type || has_size != size)
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index d44b4f9c27..409da4e835 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -94,7 +94,7 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
+ 			char size_text[24];
+ 			if (!strcmp(type, blob_type)) {
+ 				unsigned long size;
+-				if (oid_object_info(oid, &size) == OBJ_BAD)
++				if (oid_object_info(the_repository, oid, &size) == OBJ_BAD)
+ 					xsnprintf(size_text, sizeof(size_text),
+ 						  "BAD");
+ 				else
+diff --git a/builtin/mktree.c b/builtin/mktree.c
+index 263c530315..bb76b469fd 100644
+--- a/builtin/mktree.c
++++ b/builtin/mktree.c
+@@ -116,7 +116,7 @@ static void mktree_line(char *buf, size_t len, int nul_term_line, int allow_miss
+ 	}
+ 
+ 	/* Check the type of object identified by sha1 */
+-	obj_type = oid_object_info(&oid, NULL);
++	obj_type = oid_object_info(the_repository, &oid, NULL);
+ 	if (obj_type < 0) {
+ 		if (allow_missing) {
+ 			; /* no problem - missing objects are presumed to be of the right type */
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 4bdae5a1d8..8d4111f748 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1516,7 +1516,8 @@ static void check_object(struct object_entry *entry)
+ 		unuse_pack(&w_curs);
+ 	}
+ 
+-	entry->type = oid_object_info(&entry->idx.oid, &entry->size);
++	entry->type = oid_object_info(the_repository, &entry->idx.oid,
++				      &entry->size);
+ 	/*
+ 	 * The error condition is checked in prepare_pack().  This is
+ 	 * to permit a missing preferred base object to be ignored
+@@ -1578,7 +1579,8 @@ static void drop_reused_delta(struct object_entry *entry)
+ 		 * And if that fails, the error will be recorded in entry->type
+ 		 * and dealt with in prepare_pack().
+ 		 */
+-		entry->type = oid_object_info(&entry->idx.oid, &entry->size);
++		entry->type = oid_object_info(the_repository, &entry->idx.oid,
++					      &entry->size);
+ 	}
+ }
+ 
+@@ -2706,7 +2708,7 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
+ static int add_loose_object(const struct object_id *oid, const char *path,
+ 			    void *data)
+ {
+-	enum object_type type = oid_object_info(oid, NULL);
++	enum object_type type = oid_object_info(the_repository, oid, NULL);
+ 
+ 	if (type < 0) {
+ 		warning("loose object at %s could not be examined", path);
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 38ced18dad..518ffbea13 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -50,7 +50,8 @@ static int prune_object(const struct object_id *oid, const char *fullpath,
+ 	if (st.st_mtime > expire)
+ 		return 0;
+ 	if (show_only || verbose) {
+-		enum object_type type = oid_object_info(oid, NULL);
++		enum object_type type = oid_object_info(the_repository, oid,
++							NULL);
+ 		printf("%s %s\n", oid_to_hex(oid),
+ 		       (type > 0) ? type_name(type) : "unknown");
+ 	}
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 237ea656cf..14e142d5a8 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -55,8 +55,9 @@ static int show_reference(const char *refname, const struct object_id *oid,
+ 			if (get_oid(refname, &object))
+ 				return error("Failed to resolve '%s' as a valid ref.", refname);
+ 
+-			obj_type = oid_object_info(&object, NULL);
+-			repl_type = oid_object_info(oid, NULL);
++			obj_type = oid_object_info(the_repository, &object,
++						   NULL);
++			repl_type = oid_object_info(the_repository, oid, NULL);
+ 
+ 			printf("%s (%s) -> %s (%s)\n", refname, type_name(obj_type),
+ 			       oid_to_hex(oid), type_name(repl_type));
+@@ -164,8 +165,8 @@ static int replace_object_oid(const char *object_ref,
+ 	struct ref_transaction *transaction;
+ 	struct strbuf err = STRBUF_INIT;
+ 
+-	obj_type = oid_object_info(object, NULL);
+-	repl_type = oid_object_info(repl, NULL);
++	obj_type = oid_object_info(the_repository, object, NULL);
++	repl_type = oid_object_info(the_repository, repl, NULL);
+ 	if (!force && obj_type != repl_type)
+ 		die("Objects must be of the same type.\n"
+ 		    "'%s' points to a replaced object of type '%s'\n"
+@@ -292,7 +293,7 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
+ 	if (get_oid(object_ref, &old_oid) < 0)
+ 		die("Not a valid object name: '%s'", object_ref);
+ 
+-	type = oid_object_info(&old_oid, NULL);
++	type = oid_object_info(the_repository, &old_oid, NULL);
+ 	if (type < 0)
+ 		die("unable to get object type for %s", oid_to_hex(&old_oid));
+ 
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 8cff6d0b72..26d7729f57 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -212,7 +212,7 @@ static void create_tag(const struct object_id *object, const char *tag,
+ 	struct strbuf header = STRBUF_INIT;
+ 	char *path = NULL;
+ 
+-	type = oid_object_info(object, NULL);
++	type = oid_object_info(the_repository, object, NULL);
+ 	if (type <= OBJ_NONE)
+ 	    die(_("bad object type."));
+ 
+@@ -298,7 +298,7 @@ static void create_reflog_msg(const struct object_id *oid, struct strbuf *sb)
+ 	}
+ 
+ 	strbuf_addstr(sb, " (");
+-	type = oid_object_info(oid, NULL);
++	type = oid_object_info(the_repository, oid, NULL);
+ 	switch (type) {
+ 	default:
+ 		strbuf_addstr(sb, "object of unknown type");
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index b7755c6cc5..cfe9019f80 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -199,7 +199,7 @@ static int check_object(struct object *obj, int type, void *data, struct fsck_op
+ 
+ 	if (!(obj->flags & FLAG_OPEN)) {
+ 		unsigned long size;
+-		int type = oid_object_info(&obj->oid, &size);
++		int type = oid_object_info(the_repository, &obj->oid, &size);
+ 		if (type != obj->type || type <= 0)
+ 			die("object of unexpected type");
+ 		obj->flags |= FLAG_WRITTEN;
 diff --git a/cache.h b/cache.h
-index 6340b2c572..3a4d80e92b 100644
+index 588c4fff9a..6340b2c572 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1192,8 +1192,7 @@ static inline void *read_object_file(const struct object_id *oid, enum object_ty
+@@ -1192,7 +1192,8 @@ static inline void *read_object_file(const struct object_id *oid, enum object_ty
  }
  
  /* Read and unpack an object file into memory, write memory to an object file */
--#define oid_object_info(r, o, f) oid_object_info_##r(o, f)
--int oid_object_info_the_repository(const struct object_id *, unsigned long *);
-+int oid_object_info(struct repository *r, const struct object_id *, unsigned long *);
+-extern int oid_object_info(const struct object_id *, unsigned long *);
++#define oid_object_info(r, o, f) oid_object_info_##r(o, f)
++int oid_object_info_the_repository(const struct object_id *, unsigned long *);
  
  extern int hash_object_file(const void *buf, unsigned long len,
  			    const char *type, struct object_id *oid);
-@@ -1675,9 +1674,9 @@ struct object_info {
- /* Do not check loose object */
- #define OBJECT_INFO_IGNORE_LOOSE 16
+diff --git a/diff.c b/diff.c
+index 1289df4b1f..4753170fe1 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3638,7 +3638,8 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+ 	else {
+ 		enum object_type type;
+ 		if (size_only || (flags & CHECK_BINARY)) {
+-			type = oid_object_info(&s->oid, &s->size);
++			type = oid_object_info(the_repository, &s->oid,
++					       &s->size);
+ 			if (type < 0)
+ 				die("unable to read %s",
+ 				    oid_to_hex(&s->oid));
+diff --git a/fast-import.c b/fast-import.c
+index 99f8f56e8c..afe06bd7c1 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1917,7 +1917,8 @@ static void read_marks(void)
+ 			die("corrupt mark line: %s", line);
+ 		e = find_object(&oid);
+ 		if (!e) {
+-			enum object_type type = oid_object_info(&oid, NULL);
++			enum object_type type = oid_object_info(the_repository,
++								&oid, NULL);
+ 			if (type < 0)
+ 				die("object not found: %s", oid_to_hex(&oid));
+ 			e = insert_object(&oid);
+@@ -2447,7 +2448,8 @@ static void file_change_m(const char *p, struct branch *b)
+ 		enum object_type expected = S_ISDIR(mode) ?
+ 						OBJ_TREE: OBJ_BLOB;
+ 		enum object_type type = oe ? oe->type :
+-					oid_object_info(&oid, NULL);
++					oid_object_info(the_repository, &oid,
++							NULL);
+ 		if (type < 0)
+ 			die("%s not found: %s",
+ 					S_ISDIR(mode) ?  "Tree" : "Blob",
+@@ -2608,7 +2610,8 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
+ 			die("Not a blob (actually a %s): %s",
+ 				type_name(oe->type), command_buf.buf);
+ 	} else if (!is_null_oid(&oid)) {
+-		enum object_type type = oid_object_info(&oid, NULL);
++		enum object_type type = oid_object_info(the_repository, &oid,
++							NULL);
+ 		if (type < 0)
+ 			die("Blob not found: %s", command_buf.buf);
+ 		if (type != OBJ_BLOB)
+@@ -2895,7 +2898,7 @@ static void parse_new_tag(const char *arg)
+ 	} else if (!get_oid(from, &oid)) {
+ 		struct object_entry *oe = find_object(&oid);
+ 		if (!oe) {
+-			type = oid_object_info(&oid, NULL);
++			type = oid_object_info(the_repository, &oid, NULL);
+ 			if (type < 0)
+ 				die("Not a valid object: %s", from);
+ 		} else
+@@ -3053,7 +3056,8 @@ static struct object_entry *dereference(struct object_entry *oe,
+ 	unsigned long size;
+ 	char *buf = NULL;
+ 	if (!oe) {
+-		enum object_type type = oid_object_info(oid, NULL);
++		enum object_type type = oid_object_info(the_repository, oid,
++							NULL);
+ 		if (type < 0)
+ 			die("object not found: %s", oid_to_hex(oid));
+ 		/* cache it! */
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index 0ec83aaf18..ea94fe8af2 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -117,7 +117,7 @@ static enum list_objects_filter_result filter_blobs_limit(
+ 		assert(obj->type == OBJ_BLOB);
+ 		assert((obj->flags & SEEN) == 0);
  
--#define oid_object_info_extended(r, oid, oi, flags) \
--	oid_object_info_extended_##r(oid, oi, flags)
--int oid_object_info_extended_the_repository(const struct object_id *, struct object_info *, unsigned flags);
-+int oid_object_info_extended(struct repository *r,
-+			     const struct object_id *,
-+			     struct object_info *, unsigned flags);
+-		t = oid_object_info(&obj->oid, &object_length);
++		t = oid_object_info(the_repository, &obj->oid, &object_length);
+ 		if (t != OBJ_BLOB) { /* probably OBJ_NONE */
+ 			/*
+ 			 * We DO NOT have the blob locally, so we cannot
+diff --git a/object.c b/object.c
+index 66cffaf6e5..5044d08e96 100644
+--- a/object.c
++++ b/object.c
+@@ -257,7 +257,7 @@ struct object *parse_object(const struct object_id *oid)
  
- /*
-  * Set this to 0 to prevent sha1_object_info_extended() from fetching missing
+ 	if ((obj && obj->type == OBJ_BLOB && has_object_file(oid)) ||
+ 	    (!obj && has_object_file(oid) &&
+-	     oid_object_info(oid, NULL) == OBJ_BLOB)) {
++	     oid_object_info(the_repository, oid, NULL) == OBJ_BLOB)) {
+ 		if (check_object_signature(repl, NULL, 0, NULL) < 0) {
+ 			error("sha1 mismatch %s", oid_to_hex(oid));
+ 			return NULL;
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 41ae27fb19..cd1903e717 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -73,7 +73,8 @@ void bitmap_writer_build_type_index(struct pack_idx_entry **index,
+ 			break;
+ 
+ 		default:
+-			real_type = oid_object_info(&entry->idx.oid, NULL);
++			real_type = oid_object_info(the_repository,
++						    &entry->idx.oid, NULL);
+ 			break;
+ 		}
+ 
 diff --git a/packfile.c b/packfile.c
-index 8de87f904b..55d383ed0a 100644
+index d9914ba723..80c7fa734f 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1104,9 +1104,9 @@ static const unsigned char *get_delta_base_sha1(struct packed_git *p,
- 		return NULL;
- }
- 
--#define retry_bad_packed_offset(r, p, o) \
--	retry_bad_packed_offset_##r(p, o)
--static int retry_bad_packed_offset_the_repository(struct packed_git *p, off_t obj_offset)
-+static int retry_bad_packed_offset(struct repository *r,
-+				   struct packed_git *p,
-+				   off_t obj_offset)
- {
- 	int type;
- 	struct revindex_entry *revidx;
-@@ -1116,7 +1116,7 @@ static int retry_bad_packed_offset_the_repository(struct packed_git *p, off_t ob
+@@ -1114,7 +1114,7 @@ static int retry_bad_packed_offset(struct packed_git *p, off_t obj_offset)
  		return OBJ_BAD;
  	nth_packed_object_oid(&oid, p, revidx->nr);
  	mark_bad_packed_object(p, oid.hash);
--	type = oid_object_info(the_repository, &oid, NULL);
-+	type = oid_object_info(r, &oid, NULL);
+-	type = oid_object_info(&oid, NULL);
++	type = oid_object_info(the_repository, &oid, NULL);
  	if (type <= OBJ_NONE)
  		return OBJ_BAD;
  	return type;
-@@ -1124,13 +1124,12 @@ static int retry_bad_packed_offset_the_repository(struct packed_git *p, off_t ob
- 
- #define POI_STACK_PREALLOC 64
- 
--#define packed_to_object_type(r, p, o, t, w, c) \
--	packed_to_object_type_##r(p, o, t, w, c)
--static enum object_type packed_to_object_type_the_repository(struct packed_git *p,
--							     off_t obj_offset,
--							     enum object_type type,
--							     struct pack_window **w_curs,
--							     off_t curpos)
-+static enum object_type packed_to_object_type(struct repository *r,
-+					      struct packed_git *p,
-+					      off_t obj_offset,
-+					      enum object_type type,
-+					      struct pack_window **w_curs,
-+					      off_t curpos)
- {
- 	off_t small_poi_stack[POI_STACK_PREALLOC];
- 	off_t *poi_stack = small_poi_stack;
-@@ -1157,7 +1156,7 @@ static enum object_type packed_to_object_type_the_repository(struct packed_git *
- 		if (type <= OBJ_NONE) {
- 			/* If getting the base itself fails, we first
- 			 * retry the base, otherwise unwind */
--			type = retry_bad_packed_offset(the_repository, p, base_offset);
-+			type = retry_bad_packed_offset(r, p, base_offset);
- 			if (type > OBJ_NONE)
- 				goto out;
- 			goto unwind;
-@@ -1185,7 +1184,7 @@ static enum object_type packed_to_object_type_the_repository(struct packed_git *
- unwind:
- 	while (poi_stack_nr) {
- 		obj_offset = poi_stack[--poi_stack_nr];
--		type = retry_bad_packed_offset(the_repository, p, obj_offset);
-+		type = retry_bad_packed_offset(r, p, obj_offset);
- 		if (type > OBJ_NONE)
- 			goto out;
- 	}
-@@ -1272,15 +1271,15 @@ static void detach_delta_base_cache_entry(struct delta_base_cache_entry *ent)
- 	free(ent);
- }
- 
--#define cache_or_unpack_entry(r, p, bo, bs, t) cache_or_unpack_entry_##r(p, bo, bs, t)
--static void *cache_or_unpack_entry_the_repository(struct packed_git *p, off_t base_offset,
--	unsigned long *base_size, enum object_type *type)
-+static void *cache_or_unpack_entry(struct repository *r, struct packed_git *p,
-+				   off_t base_offset, unsigned long *base_size,
-+				   enum object_type *type)
- {
- 	struct delta_base_cache_entry *ent;
- 
- 	ent = get_delta_base_cache_entry(p, base_offset);
- 	if (!ent)
--		return unpack_entry(the_repository, p, base_offset, type, base_size);
-+		return unpack_entry(r, p, base_offset, type, base_size);
- 
- 	if (type)
- 		*type = ent->type;
-@@ -1334,8 +1333,8 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
- 	hashmap_add(&delta_base_cache, ent);
- }
- 
--int packed_object_info_the_repository(struct packed_git *p, off_t obj_offset,
--				      struct object_info *oi)
-+int packed_object_info(struct repository *r, struct packed_git *p,
-+		       off_t obj_offset, struct object_info *oi)
- {
- 	struct pack_window *w_curs = NULL;
- 	unsigned long size;
-@@ -1347,7 +1346,7 @@ int packed_object_info_the_repository(struct packed_git *p, off_t obj_offset,
- 	 * a "real" type later if the caller is interested.
+diff --git a/reachable.c b/reachable.c
+index a6ea33a5db..ffb976c33c 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -78,7 +78,7 @@ static void add_recent_object(const struct object_id *oid,
+ 	 * later processing, and the revision machinery expects
+ 	 * commits and tags to have been parsed.
  	 */
- 	if (oi->contentp) {
--		*oi->contentp = cache_or_unpack_entry(the_repository, p, obj_offset, oi->sizep,
-+		*oi->contentp = cache_or_unpack_entry(r, p, obj_offset, oi->sizep,
- 						      &type);
- 		if (!*oi->contentp)
- 			type = OBJ_BAD;
-@@ -1381,7 +1380,7 @@ int packed_object_info_the_repository(struct packed_git *p, off_t obj_offset,
+-	type = oid_object_info(oid, NULL);
++	type = oid_object_info(the_repository, oid, NULL);
+ 	if (type < 0)
+ 		die("unable to get object info for %s", oid_to_hex(oid));
  
- 	if (oi->typep || oi->type_name) {
- 		enum object_type ptot;
--		ptot = packed_to_object_type(the_repository, p, obj_offset,
-+		ptot = packed_to_object_type(r, p, obj_offset,
- 					     type, &w_curs, curpos);
- 		if (oi->typep)
- 			*oi->typep = ptot;
-@@ -1470,10 +1469,10 @@ struct unpack_entry_stack_ent {
- 	unsigned long size;
- };
+diff --git a/refs.c b/refs.c
+index 9b56fa9b81..27c88ba768 100644
+--- a/refs.c
++++ b/refs.c
+@@ -302,7 +302,7 @@ enum peel_status peel_object(const struct object_id *name, struct object_id *oid
+ 	struct object *o = lookup_unknown_object(name->hash);
  
--#define read_object(r, o, t, s) read_object_##r(o, t, s)
--static void *read_object_the_repository(const struct object_id *oid,
--					enum object_type *type,
--					unsigned long *size)
-+static void *read_object(struct repository *r,
-+			 const struct object_id *oid,
-+			 enum object_type *type,
-+			 unsigned long *size)
- {
- 	struct object_info oi = OBJECT_INFO_INIT;
- 	void *content;
-@@ -1481,14 +1480,13 @@ static void *read_object_the_repository(const struct object_id *oid,
- 	oi.sizep = size;
- 	oi.contentp = &content;
+ 	if (o->type == OBJ_NONE) {
+-		int type = oid_object_info(name, NULL);
++		int type = oid_object_info(the_repository, name, NULL);
+ 		if (type < 0 || !object_as_type(o, type, 0))
+ 			return PEEL_INVALID;
+ 	}
+diff --git a/remote.c b/remote.c
+index 91eb010ca9..481bf933f3 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1376,7 +1376,7 @@ static void add_missing_tags(struct ref *src, struct ref **dst, struct ref ***ds
+ 			continue; /* not a tag */
+ 		if (string_list_has_string(&dst_tag, ref->name))
+ 			continue; /* they already have it */
+-		if (oid_object_info(&ref->new_oid, NULL) != OBJ_TAG)
++		if (oid_object_info(the_repository, &ref->new_oid, NULL) != OBJ_TAG)
+ 			continue; /* be conservative */
+ 		item = string_list_append(&src_tag, ref->name);
+ 		item->util = ref;
+diff --git a/sequencer.c b/sequencer.c
+index 667f35ebdf..44f0518b9c 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2876,7 +2876,8 @@ int sequencer_pick_revisions(struct replay_opts *opts)
  
--	if (oid_object_info_extended(the_repository, oid, &oi, 0) < 0)
-+	if (oid_object_info_extended(r, oid, &oi, 0) < 0)
- 		return NULL;
- 	return content;
- }
- 
--void *unpack_entry_the_repository(struct packed_git *p, off_t obj_offset,
--				  enum object_type *final_type,
--				  unsigned long *final_size)
-+void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
-+		   enum object_type *final_type, unsigned long *final_size)
- {
- 	struct pack_window *w_curs = NULL;
- 	off_t curpos = obj_offset;
-@@ -1618,7 +1616,7 @@ void *unpack_entry_the_repository(struct packed_git *p, off_t obj_offset,
- 				      oid_to_hex(&base_oid), (uintmax_t)obj_offset,
- 				      p->pack_name);
- 				mark_bad_packed_object(p, base_oid.hash);
--				base = read_object(the_repository, &base_oid, &type, &base_size);
-+				base = read_object(r, &base_oid, &type, &base_size);
- 				external_base = base;
- 			}
- 		}
-diff --git a/packfile.h b/packfile.h
-index 1efa57a90e..fdfddb89b5 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -115,8 +115,7 @@ extern off_t nth_packed_object_offset(const struct packed_git *, uint32_t n);
- extern off_t find_pack_entry_one(const unsigned char *sha1, struct packed_git *);
- 
- extern int is_pack_valid(struct packed_git *);
--#define unpack_entry(r, p, of, ot, s) unpack_entry_##r(p, of, ot, s)
--extern void *unpack_entry_the_repository(struct packed_git *, off_t, enum object_type *, unsigned long *);
-+extern void *unpack_entry(struct repository *r, struct packed_git *, off_t, enum object_type *, unsigned long *);
- extern unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
- extern unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
- extern int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, unsigned long *);
-@@ -126,8 +125,9 @@ extern void release_pack_memory(size_t);
- /* global flag to enable extra checks when accessing packed objects */
- extern int do_check_packed_object_crc;
- 
--#define packed_object_info(r, p, o, oi) packed_object_info_##r(p, o, oi)
--extern int packed_object_info_the_repository(struct packed_git *pack, off_t offset, struct object_info *);
-+extern int packed_object_info(struct repository *r,
-+			      struct packed_git *pack,
-+			      off_t offset, struct object_info *);
- 
- extern void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
- extern const struct packed_git *has_packed_and_bad(const unsigned char *sha1);
+ 		if (!get_oid(name, &oid)) {
+ 			if (!lookup_commit_reference_gently(&oid, 1)) {
+-				enum object_type type = oid_object_info(&oid,
++				enum object_type type = oid_object_info(the_repository,
++									&oid,
+ 									NULL);
+ 				return error(_("%s: can't cherry-pick a %s"),
+ 					name, type_name(type));
 diff --git a/sha1_file.c b/sha1_file.c
-index 746ff8297a..dcd6b879ac 100644
+index 50a2dc5f0a..93f25c6c6a 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -1231,7 +1231,8 @@ static int sha1_loose_object_info(struct repository *r,
- 
- int fetch_if_missing = 1;
- 
--int oid_object_info_extended_the_repository(const struct object_id *oid, struct object_info *oi, unsigned flags)
-+int oid_object_info_extended(struct repository *r, const struct object_id *oid,
-+			     struct object_info *oi, unsigned flags)
- {
- 	static struct object_info blank_oi = OBJECT_INFO_INIT;
- 	struct pack_entry e;
-@@ -1240,7 +1241,7 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
- 	int already_retried = 0;
- 
- 	if (flags & OBJECT_INFO_LOOKUP_REPLACE)
--		real = lookup_replace_object(the_repository, oid);
-+		real = lookup_replace_object(r, oid);
- 
- 	if (is_null_oid(real))
- 		return -1;
-@@ -1269,29 +1270,31 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
- 	}
- 
- 	while (1) {
--		if (find_pack_entry(the_repository, real->hash, &e))
-+		if (find_pack_entry(r, real->hash, &e))
- 			break;
- 
- 		if (flags & OBJECT_INFO_IGNORE_LOOSE)
- 			return -1;
- 
- 		/* Most likely it's a loose object. */
--		if (!sha1_loose_object_info(the_repository, real->hash, oi, flags))
-+		if (!sha1_loose_object_info(r, real->hash, oi, flags))
- 			return 0;
- 
- 		/* Not a loose object; someone else may have just packed it. */
- 		if (!(flags & OBJECT_INFO_QUICK)) {
--			reprepare_packed_git(the_repository);
--			if (find_pack_entry(the_repository, real->hash, &e))
-+			reprepare_packed_git(r);
-+			if (find_pack_entry(r, real->hash, &e))
- 				break;
- 		}
- 
- 		/* Check if it is a missing object */
- 		if (fetch_if_missing && repository_format_partial_clone &&
--		    !already_retried) {
-+		    !already_retried && r == the_repository) {
- 			/*
--			 * TODO Investigate haveing fetch_object() return
-+			 * TODO Investigate having fetch_object() return
- 			 * TODO error/success and stopping the music here.
-+			 * TODO Pass a repository struct through fetch_object,
-+			 * such that arbitrary repositories work.
- 			 */
- 			fetch_object(repository_format_partial_clone, real->hash);
- 			already_retried = 1;
-@@ -1307,10 +1310,10 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
- 		 * information below, so return early.
- 		 */
- 		return 0;
--	rtype = packed_object_info(the_repository, e.p, e.offset, oi);
-+	rtype = packed_object_info(r, e.p, e.offset, oi);
- 	if (rtype < 0) {
- 		mark_bad_packed_object(e.p, real->hash);
--		return oid_object_info_extended(the_repository, real, oi, 0);
-+		return oid_object_info_extended(r, real, oi, 0);
- 	} else if (oi->whence == OI_PACKED) {
- 		oi->u.packed.offset = e.offset;
- 		oi->u.packed.pack = e.p;
-@@ -1322,15 +1325,17 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
+@@ -1322,7 +1322,7 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
  }
  
  /* returns enum object_type or negative */
--int oid_object_info_the_repository(const struct object_id *oid, unsigned long *sizep)
-+int oid_object_info(struct repository *r,
-+		    const struct object_id *oid,
-+		    unsigned long *sizep)
+-int oid_object_info(const struct object_id *oid, unsigned long *sizep)
++int oid_object_info_the_repository(const struct object_id *oid, unsigned long *sizep)
  {
  	enum object_type type;
  	struct object_info oi = OBJECT_INFO_INIT;
+@@ -1988,7 +1988,7 @@ int read_pack_header(int fd, struct pack_header *header)
  
- 	oi.typep = &type;
- 	oi.sizep = sizep;
--	if (oid_object_info_extended(the_repository, oid, &oi,
--				     OBJECT_INFO_LOOKUP_REPLACE) < 0)
-+	if (oid_object_info_extended(r, oid, &oi,
-+				      OBJECT_INFO_LOOKUP_REPLACE) < 0)
- 		return -1;
- 	return type;
+ void assert_oid_type(const struct object_id *oid, enum object_type expect)
+ {
+-	enum object_type type = oid_object_info(oid, NULL);
++	enum object_type type = oid_object_info(the_repository, oid, NULL);
+ 	if (type < 0)
+ 		die("%s is not a valid object", oid_to_hex(oid));
+ 	if (type != expect)
+diff --git a/sha1_name.c b/sha1_name.c
+index 5b93bf8da3..b5406b6eb2 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -223,7 +223,7 @@ static int finish_object_disambiguation(struct disambiguate_state *ds,
+ 
+ static int disambiguate_commit_only(const struct object_id *oid, void *cb_data_unused)
+ {
+-	int kind = oid_object_info(oid, NULL);
++	int kind = oid_object_info(the_repository, oid, NULL);
+ 	return kind == OBJ_COMMIT;
  }
+ 
+@@ -232,7 +232,7 @@ static int disambiguate_committish_only(const struct object_id *oid, void *cb_da
+ 	struct object *obj;
+ 	int kind;
+ 
+-	kind = oid_object_info(oid, NULL);
++	kind = oid_object_info(the_repository, oid, NULL);
+ 	if (kind == OBJ_COMMIT)
+ 		return 1;
+ 	if (kind != OBJ_TAG)
+@@ -247,7 +247,7 @@ static int disambiguate_committish_only(const struct object_id *oid, void *cb_da
+ 
+ static int disambiguate_tree_only(const struct object_id *oid, void *cb_data_unused)
+ {
+-	int kind = oid_object_info(oid, NULL);
++	int kind = oid_object_info(the_repository, oid, NULL);
+ 	return kind == OBJ_TREE;
+ }
+ 
+@@ -256,7 +256,7 @@ static int disambiguate_treeish_only(const struct object_id *oid, void *cb_data_
+ 	struct object *obj;
+ 	int kind;
+ 
+-	kind = oid_object_info(oid, NULL);
++	kind = oid_object_info(the_repository, oid, NULL);
+ 	if (kind == OBJ_TREE || kind == OBJ_COMMIT)
+ 		return 1;
+ 	if (kind != OBJ_TAG)
+@@ -271,7 +271,7 @@ static int disambiguate_treeish_only(const struct object_id *oid, void *cb_data_
+ 
+ static int disambiguate_blob_only(const struct object_id *oid, void *cb_data_unused)
+ {
+-	int kind = oid_object_info(oid, NULL);
++	int kind = oid_object_info(the_repository, oid, NULL);
+ 	return kind == OBJ_BLOB;
+ }
+ 
+@@ -350,7 +350,7 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
+ 	if (ds->fn && !ds->fn(oid, ds->cb_data))
+ 		return 0;
+ 
+-	type = oid_object_info(oid, NULL);
++	type = oid_object_info(the_repository, oid, NULL);
+ 	if (type == OBJ_COMMIT) {
+ 		struct commit *commit = lookup_commit(oid);
+ 		if (commit) {
+diff --git a/submodule.c b/submodule.c
+index 9a50168b23..bb133e9b93 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -818,7 +818,7 @@ static int check_has_commit(const struct object_id *oid, void *data)
+ {
+ 	struct has_commit_data *cb = data;
+ 
+-	enum object_type type = oid_object_info(oid, NULL);
++	enum object_type type = oid_object_info(the_repository, oid, NULL);
+ 
+ 	switch (type) {
+ 	case OBJ_COMMIT:
+diff --git a/tag.c b/tag.c
+index 86b1dcbb82..3d37c1bd25 100644
+--- a/tag.c
++++ b/tag.c
+@@ -41,7 +41,7 @@ int gpg_verify_tag(const struct object_id *oid, const char *name_to_report,
+ 	unsigned long size;
+ 	int ret;
+ 
+-	type = oid_object_info(oid, NULL);
++	type = oid_object_info(the_repository, oid, NULL);
+ 	if (type != OBJ_TAG)
+ 		return error("%s: cannot verify a non-tag object of type %s.",
+ 				name_to_report ?
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
