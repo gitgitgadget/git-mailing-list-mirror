@@ -3,61 +3,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB7CF1F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 18:24:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC75B1F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 18:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756142AbeDYSYv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 14:24:51 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:35844 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932201AbeDYSMo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 14:12:44 -0400
-Received: by mail-qk0-f195.google.com with SMTP id a202so23403139qkg.3
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:12:44 -0700 (PDT)
+        id S1755942AbeDYStt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 14:49:49 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:43123 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755295AbeDYSts (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 14:49:48 -0400
+Received: by mail-pf0-f195.google.com with SMTP id j11so15985135pff.10
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:49:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=1DzuLZgDQQeYue39LbjuWS74mBvcTWfHAawx8DRxz3o=;
-        b=NAVaibICZssNi59fHOI5U756lmL0qaazRvTz1If8j02j77smLMe39NtJu9WKamEO5g
-         M/MZkt57/Uec4O/rDKwiIjmq2ulZW29zTp6oLmI+8FjZX4AU44NJaBnq5hzBY9ocTTfX
-         czUVDbI3wjRndDhy+E0hKUvTG4gZgaauee8qDGBfxoZv9VgoZXSVyc7xDNB5KUmG1Nwi
-         CbFtfsf0xdhHkqRXss0R6f8VMEjotsNg6KYwwBtHfBg+EhtYfI2zd70TaKGzoZm1Bc7z
-         oboyq5YtNHmsCw7TpuMXotaszl1EFQRHDPQJI3Ah0dhZBiO4IDPLQuC7wBD5932x09IM
-         FEvg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=HYZ3QvD+g1OBO08lT+Lf2zZTMHZ+3Igm3J/Z307/I+Y=;
+        b=bVLEDXyXNXINsuUMmX7dpoUaqZ1P2S9QDm3V6nlGdw1sPjGIlcYDo4brQYzzAp3pct
+         lj1/keHH0HAR6+m9HFAjoyYShwev2/aS3zTufuFDC8w7FsYMPlmZFmERFtHoQSpg1/fn
+         RDEGsSYQVG5n1d0I87tiTICtYDpc/2YP70O2Nn7rdgvDczJFR+hXHYGUkT2t6bL9q8b7
+         mBpJ87ACpbVXX/vL02xvEeKYyn8XGlizae04pg2xn6oqjUPZh77dIEcMWEvHmG5ASeST
+         rSGNueVYRkzo6HfFKabxDW4bydPPJTml6escGSYQU2ltCTPtIEbxcg75S4y0AEXRoxE4
+         LkIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=1DzuLZgDQQeYue39LbjuWS74mBvcTWfHAawx8DRxz3o=;
-        b=tO20B3n/kdKJHcEfATxG1X+Ph3lzZ8U3BTy5sS63enIlFfMGhxivBqbBwfxuirj1HS
-         gGDX1OawJ0sG8Bb1HK0kozcCzMf0tb0ch2o152nXvAoz11ljBKzrrsDks6D42r5Lu+AD
-         BKjJma1KdJUwyQF07n+hG1oH4qiGMERMUd1UVjaE6ddWbd7zuYwxBl6+75duzEpDH9oT
-         Bjq07AkVoXaErOhk/rn8DabRh8JsuumCin78S7QwThdTVAr7PhZ/Gp3SgtPjZaYfJJ+q
-         mfEknCKtesyzaoGGyc0SBz/tkF2un0OXXguWVjabYzWMTVqmqhqO7pSIDtyslHl8Z6p2
-         SZvw==
-X-Gm-Message-State: ALQs6tB4qkh9vIvBgj5iratgtrDJMfuWCnilGnVnZFlaRgdzuw3/Z/by
-        P4LT72hVtQrf/w0XakuiezIUKybWFagTagWhTi8=
-X-Google-Smtp-Source: AB8JxZqrqVat/GtcRFfKBphHdXFDoBI9Vjo4vNqdNIrmeR9+m/uT4CCS2n9C5c+EYcY/R12CqvrnxOxtrO7igJp3tlc=
-X-Received: by 10.55.99.199 with SMTP id x190mr30339213qkb.91.1524679964176;
- Wed, 25 Apr 2018 11:12:44 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=HYZ3QvD+g1OBO08lT+Lf2zZTMHZ+3Igm3J/Z307/I+Y=;
+        b=B6I5aKgjLOxzXg9tzGckL7yfRcxN34llxx2fKLkDSblhl9fLZ1cyObexGvkT4zVuM9
+         1ADNNTT0yQh785NDrHdsgVEv2xFcsgcxmWVBJlDCI7M3b8/+d6ggQ5RsjBFu2fqWrgfP
+         yQKiQoI1QHgL8vmf7ETYs2y4f7MiYGrjF5M161xW1OevUfkjI4pKMkvf9nwEJVZMnZpY
+         Xpo5jOwGaVhwTXueckXj4p0g3B9yLdT/82/mwM6reQOWirZGYqm/Z8Gayz2sIoRTlc5e
+         u7P4sQ6ekMZuq0MzL3CInol6Mmjx/qKOf4FnJSriXUqNDDvzgeuWyffSi3DuHidAKehz
+         cBhA==
+X-Gm-Message-State: ALQs6tDh6Pd3fbN7hgxF9WYOCxUvSLW6QkG3Csz6rDZK4t91J6kZFoX0
+        j6/nQWWmqt92lbDpjljffgRnznw+K4JKvppPXLuPOIyJ
+X-Google-Smtp-Source: AIpwx4+tDNI3nXjzN+1rHo48ZYDG+iupBqxG6yaysS3xET9/b2c/+Khj0F2EIUsHDqhw25wBcUEGoXTEovmpQbrLqbg=
+X-Received: by 2002:a17:902:284b:: with SMTP id e69-v6mr29667579plb.240.1524682188475;
+ Wed, 25 Apr 2018 11:49:48 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Wed, 25 Apr 2018 11:12:43 -0700 (PDT)
-In-Reply-To: <20180425163107.10399-7-pclouds@gmail.com>
-References: <20180421165414.30051-1-pclouds@gmail.com> <20180425163107.10399-1-pclouds@gmail.com>
- <20180425163107.10399-7-pclouds@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 25 Apr 2018 14:12:43 -0400
-X-Google-Sender-Auth: r90I_kDu-lHhAGAZJhSWS9bAXOE
-Message-ID: <CAPig+cQCy_ZSUit83YcVBSCzpvXAX1kNWjpG0nh+76ESXRD8Mg@mail.gmail.com>
-Subject: Re: [PATCH v4/wip 06/12] git: accept multiple --list-cmds options
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Received: by 10.236.150.4 with HTTP; Wed, 25 Apr 2018 11:49:47 -0700 (PDT)
+In-Reply-To: <20180424235150.GD245996@genre.crustytoothpaste.net>
+References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
+ <20180423233951.276447-19-sandals@crustytoothpaste.net> <CAN0heSouHbAj8TbiROe=XRsBJ788Vi6P4a_Wvv=7OrdsXqQXHw@mail.gmail.com>
+ <20180424235150.GD245996@genre.crustytoothpaste.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 25 Apr 2018 20:49:47 +0200
+Message-ID: <CAN0heSqpj9JfTrnMFRbquraxve9iTwoowgWRUhcD-gXHMg3V=g@mail.gmail.com>
+Subject: Re: [PATCH 18/41] index-pack: abstract away hash function constant
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -65,16 +67,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 25, 2018 at 12:31 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
-<pclouds@gmail.com> wrote:
-> Later on we may support non-overlapping command groups to
-> --list-cmds. Allow the user to execute just one "git" process and get
-> multiple groups. This may matter for git-completion.bash on Windows
-> because we don't want the user to way for long when TAB-ing and
-
-s/way/wait/
-
-> Windows is slow on launching new processes.
+On 25 April 2018 at 01:51, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Tue, Apr 24, 2018 at 11:50:16AM +0200, Martin =C3=85gren wrote:
+>> On 24 April 2018 at 01:39, brian m. carlson
+>> <sandals@crustytoothpaste.net> wrote:
+>> > The code for reading certain pack v2 offsets had a hard-coded 5
+>> > representing the number of uint32_t words that we needed to skip over.
+>> > Specify this value in terms of a value from the_hash_algo.
+>> >
+>> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+>> > ---
+>> >  builtin/index-pack.c | 3 ++-
+>> >  1 file changed, 2 insertions(+), 1 deletion(-)
+>> >
+>> > diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+>> > index d81473e722..c1f94a7da6 100644
+>> > --- a/builtin/index-pack.c
+>> > +++ b/builtin/index-pack.c
+>> > @@ -1543,12 +1543,13 @@ static void read_v2_anomalous_offsets(struct p=
+acked_git *p,
+>> >  {
+>> >         const uint32_t *idx1, *idx2;
+>> >         uint32_t i;
+>> > +       const uint32_t hashwords =3D the_hash_algo->rawsz / sizeof(uin=
+t32_t);
+>>
+>> Should we round up? Or just what should we do if a length is not
+>> divisible by 4? (I am not aware of any such hash functions, but one
+>> could exist for all I know.) Another question is whether such an
+>> index-pack v2 will ever contain non-SHA-1 oids to begin with. I can't
+>> find anything suggesting that it could, but this is unfamiliar code to
+>> me.
 >
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
+> I opted not to simply because I know that our current hash is 20 bytes
+> and the new one will be 32, and I know those are both divisible by 4.  I
+> feel confident that any future hash we choose will also be divisible by
+> 4, and the code is going to be complicated if it isn't.
+>
+> I agree that pack v2 is not going to have anything but SHA-1.  However,
+> writing all the code such that it's algorithm agnostic means that we can
+> do testing of new algorithms by wholesale replacing the algorithm with a
+> new one, which simplifies things considerably.
+
+Ok. I do sort of wonder if a "successful" test run after globally
+substituting Hash-Foo for SHA-1 (regardless of whether the size changes
+or not) hints at a problem. That is, nowhere do we test that this code
+uses 20-byte SHA-1s, regardless of what other hash functions are
+available and configured. Of course, until soon, that did not really
+have to be tested since there was only one hash function available to
+choose from. As for identifying all the places that matter ... no idea.
+
+Of course I can see how this helps get things to a point where Git does
+not crash and burn because the hash has a different size, and where the
+test suite doesn't spew failures because the initial chaining value of
+"SHA-1" is changed.
+
+Once that is accomplished, I sort of suspect that this code will want to
+be updated to not always blindly use the_hash_algo, but to always work
+with SHA-1 sizes. Or rather, this would turn into more generic code to
+handle both "v2 with SHA-1" and "v3 with some hash function(s)". This
+commit might be a good first step in that direction.
+
+Long rambling short, yeah, I see your point.
+
+Martin
