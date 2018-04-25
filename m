@@ -6,55 +6,54 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B94E31F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 17:59:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C281B1F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 18:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754839AbeDYR7I (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 13:59:08 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:34054 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751084AbeDYR7H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 13:59:07 -0400
-Received: by mail-qt0-f196.google.com with SMTP id a25-v6so27998050qtm.1
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 10:59:07 -0700 (PDT)
+        id S1755989AbeDYSHL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 14:07:11 -0400
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:41790 "EHLO
+        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755846AbeDYSHF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 14:07:05 -0400
+Received: by mail-qk0-f170.google.com with SMTP id d125so7339053qkb.8
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:07:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=Z5jKW8ZfrKRhf/0Mnav9MOokZ7H2NZiWqDWkGhPotrI=;
-        b=ApVrf1hZ07Ww89J9i/zoqEnzWjEJE3DFMxwuNjwalN6qa4tXMZX1Dlau/BEqwSka4W
-         N4ijFmnD2An0x4YjyheRuBm/wvyiTUvfzrgXHjmfEIZbf42pe1BIK2xrPWQxG9RJpseB
-         qYVzSkLbDOILWHafPrmJAWmPgupK5rQsBuHpa11TamsaKKCuDSZQOY1hviPDEodDEvip
-         fZ2d1MSSi6DEA7R6LRubua4kyX6rjGXsXyjKBPP7xb8Jhuj+uaDjOoDL5PxhuQrs+kvT
-         6C3hr9EL1gz+JsppzptZlDFYjz/WmSdwu496Am/3kd+++dCHNfOZJTvWHLZzI4eald95
-         1K/g==
+        bh=n7cT0ikqcx7mIyahgwrlhIW99uvvKsI2IE7EH388+fs=;
+        b=JZilrit6yf90UQe81WqDfSnMPtyy3guDRimKf9pkNLmo2Zp9BVi+hHhMTv/IekDa6O
+         9kIVfsNZkVWOUboqxyPlQjpvQEUhqBOuAz9tSj3o+cmDV3PZ/EYuGgCMEV0KZBVOJaLU
+         WJiTnKbyyh5Bmg50deH12GG0IzojnX0abkv7WE2Vdunv+GCU20Zn6HyO/Jxq9BIN5jvi
+         Hbu+2tw9VrkOFiGhzdCXgtBWxu4R/m+Z4MXU+HO0vDWkFEYCfgtX7N5Z2BFC/YaTe2j3
+         w3kNqmfAeY1I8F84Vw/hBQDzGWEhNCHX89Vn77cCNjcxmus+Nuyyg3KuwGzfbKWqDen8
+         8oRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=Z5jKW8ZfrKRhf/0Mnav9MOokZ7H2NZiWqDWkGhPotrI=;
-        b=TZiGuN/q2cJo5HvY8WvymYwprGc3WaOeBlJc5Nga9y3iAWlIwtC4CuhR/GLi9mo5Rl
-         uQ16rIjcgBKYyEGUu75G+hXZr/97t2qBp0N7acBXuSz1IWnth+qMe2GRRvXf8jMeMbDo
-         X8PC1UyWU6filqZmB+OWuRQpZh4efpvJtJ89SvE5pnxXC8MJpx/Lbc2M5+IgA8yZnrLB
-         dJsLabmo8hCeucMej+14z6mEhH4DA020w+oW4vTeHPEUeKB0MBdRy9HDqhfj418V624k
-         JSrOK6A7pRFQ8pRwJNAsbQ5edib36hXdWmRXw4cn0Q53pSDxAYHg0/5qvc5FqsT2ZUpO
-         cnWg==
-X-Gm-Message-State: ALQs6tCkfak7PPmw17ZAIowBqL0nH+w+d1HGRJ6ep5NcbEVM0tWKUs0c
-        BErq+Dz1kbw7XE2NFYFE+cVkpVIi0arcY0rS1Dc=
-X-Google-Smtp-Source: AB8JxZpb6JnQ1n2CLmUYARwOlRn6dlvuvE5IULwAsjhe4nbjcPQqWB+TvWOe3+gpvoahsMENKgwhmjJAu5wvsxEBcZo=
-X-Received: by 2002:ac8:17d1:: with SMTP id r17-v6mr31673490qtk.314.1524679146612;
- Wed, 25 Apr 2018 10:59:06 -0700 (PDT)
+        bh=n7cT0ikqcx7mIyahgwrlhIW99uvvKsI2IE7EH388+fs=;
+        b=NkxjxGbEzNZMYRE83J/46UUAqSMfXLliUWu8WmRDIpY54/g2PZK5bHtOJNJrfaiW2Y
+         l5cCL/mPBqYcdZNAaAPOxWxQtPOS+hmc/vdR29hCdrZ3ZGpqaqostgqqEXlken/P6JYN
+         DL3M1VV/rFElVgZemM5hhAsjv+xNA0pqxLVbpr1AiSre8UYz02xytFK2hSbcf8Dlo+8Y
+         fQhzgbcEdO1N6unEIHvLgo+ONksb3uNGMGbef3ev3daiAOUG7yS+KpJ8SzBB0vpXM8sS
+         PqSdKcg90DRDposx4P6nGMfQwwDd91p1fb4o1f0y3EmKxqVLDI0WbDLbw1lwayB5e+sK
+         eJiQ==
+X-Gm-Message-State: ALQs6tAdmuyMqY1MVsQkaPkRaIC2GwjFCubOp9RnBp0EObc9YJmxVRzQ
+        Q4enW3Lvo2tzmhZdCd7mXrE3mCHDHqBobAVO+hs=
+X-Google-Smtp-Source: AB8JxZpHOPqsvg+O3YttJjMPxl8KDIfTFKqEUKIEZkr0j+TLT3KQ/+eSN9R6EiBsuBlTyhSPLKQ56adnFaaOZ+Tb1qA=
+X-Received: by 10.55.79.9 with SMTP id d9mr31007471qkb.2.1524679624200; Wed,
+ 25 Apr 2018 11:07:04 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Wed, 25 Apr 2018 10:59:06 -0700 (PDT)
-In-Reply-To: <20180425163107.10399-2-pclouds@gmail.com>
+Received: by 10.12.170.75 with HTTP; Wed, 25 Apr 2018 11:07:03 -0700 (PDT)
+In-Reply-To: <20180425163107.10399-3-pclouds@gmail.com>
 References: <20180421165414.30051-1-pclouds@gmail.com> <20180425163107.10399-1-pclouds@gmail.com>
- <20180425163107.10399-2-pclouds@gmail.com>
+ <20180425163107.10399-3-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 25 Apr 2018 13:59:06 -0400
-X-Google-Sender-Auth: vy9XfpHp4RSVK0pUUb0rPY60LEg
-Message-ID: <CAPig+cTQrbHq9bgge5Ftj+Fi8kMkuL2VtQzs7McuqU-ueVK4vw@mail.gmail.com>
-Subject: Re: [PATCH v4/wip 01/12] generate-cmds.sh: factor out synopsis
- extract code
+Date:   Wed, 25 Apr 2018 14:07:03 -0400
+X-Google-Sender-Auth: q7NuMssovLVqkOFGQxteq22z-B0
+Message-ID: <CAPig+cQ-ZfvHD6B-mK6tOBMdKiVzwz15M4rsOdBMBcgu0OmuxA@mail.gmail.com>
+Subject: Re: [PATCH v4/wip 02/12] generate-cmds.sh: export all commands to command-list.h
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
@@ -68,43 +67,30 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Apr 25, 2018 at 12:30 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
 <pclouds@gmail.com> wrote:
-> This makes it easier to reuse the same code in another place (very
-> soon).
+> The current generate-cmds.sh generates just enough to print "git help"
+> output. That is, it only extracts help text for common commands.
 >
+> The script is now updated to extract help text for all commands and
+> keep command classification a new file, command-list.h. This will be
+> useful later:
+> [...]
 > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
 om>
 > ---
 > diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-> @@ -1,5 +1,17 @@
-> +get_synopsis () {
-> +       local cmd=3D"$1"
+> @@ -12,14 +34,51 @@ get_synopsis () {
+> +define_categories() {
+> +       echo
+> +       echo "/* Command categories */"
+> +       bit=3D0
+> +       category_list "$1" |
+> +       while read cat
+> +       do
+> +               echo "#define CAT_$cat (1UL << $bit)"
+> +               bit=3D$(($bit+1))
+> +       done
+> +       test "$bit" -gt 32 && die "Urgh.. too many categories?"
 
-'local' is a Bash-ism, isn't it?
+Should this be '-ge' rather than '-gt'?
 
-> +       sed -n '
-> +               /^NAME/,/'"$cmd"'/H
-> +               ${
-> +                       x
-> +                       s/.*'"$cmd"' - \(.*\)/N_("\1")/
-> +                       p
-> +               }' "Documentation/$cmd.txt"
 > +}
-> +
->  echo "/* Automatically generated by generate-cmdlist.sh */
->  struct cmdname_help {
->         char name[16];
-> @@ -39,12 +51,6 @@ sort |
->  while read cmd tags
->  do
->         tag=3D$(echo "$tags" | sed "$substnum; s/[^0-9]//g")
-> -       sed -n '
-> -               /^NAME/,/git-'"$cmd"'/H
-> -               ${
-> -                       x
-> -                       s/.*git-'"$cmd"' - \(.*\)/      {"'"$cmd"'", N_("=
-\1"), '$tag'},/
-> -                       p
-> -               }' "Documentation/git-$cmd.txt"
-> +       echo "  {\"$cmd\", $(get_synopsis git-$cmd), $tag},"
->  done
->  echo "};"
