@@ -2,227 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C78F81F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 12:30:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7EB01F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 12:32:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753537AbeDYMaG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 08:30:06 -0400
-Received: from mout.gmx.net ([212.227.17.20]:36393 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753272AbeDYM34 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 08:29:56 -0400
-Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
- (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0LcmN9-1eVLMB3A6Z-00k8bX; Wed, 25 Apr 2018 14:29:49 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1752985AbeDYMcr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 08:32:47 -0400
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:38206 "EHLO
+        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751870AbeDYMcq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 08:32:46 -0400
+Received: by mail-lf0-f43.google.com with SMTP id z130-v6so25213884lff.5
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 05:32:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=dRJKr23jR1kZjfnBYPt2GHrswC64WHl/FP92leUvzuw=;
+        b=mwZj/YKmQKtnmmVKzAnY3M/mBqADRb1e+4/uHN3zysmmRf8QfwMNWqAwvp5b64vmO3
+         wsu6SfeXaNqdCuaSDHIaacY8LeeF4whXSsRTT2FPh38wgEvsBS7S7+U+qtlEB8goaKSW
+         fD05CT2ulXHXciqJI3IyCO+ObyT6WuYn1B3jSL33bbiMKZr0SUsmVkviQtWjgPmI8NU5
+         s+BY/nkJTe3GN1kkKagHDB3rFTUeaPXxx039bFnTJ7q6D51XTRJaXMwDRN1T48pR1LrV
+         oqfVwXkPaC4vbeYQInTiIVEeiiFRg7TN9SEdNOWazfewPta8aZAcZpHMOF5ICTrO3nbY
+         643g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=dRJKr23jR1kZjfnBYPt2GHrswC64WHl/FP92leUvzuw=;
+        b=qyYE0gjS/UhAYBXxi56oMfk19x3lJ9okW29Qtul8YxGaJh2rKPCF1oyXZkpjgsBv7U
+         UQM8tqqChmPahv1bDj3cez6sJdgflb/n7sPjFHb4aY8V/UVRo4c/FGDXFkAGzFaa8IPI
+         d0jxfRoMs3tSByVVdtrljIoAxonRXr794iyMFtb+nzXJvqLUS8X7T2FSt51QM+9mhIyj
+         SOb4uS6UZGE0/0HZitgMm94ddHmNCFfdHvXYxOgJ9uFE5HRf8EYnkiOGxbqPYTIoVgw5
+         dq997gek5u9OVs+Rs/AlrGt71yzVS/xJIMxuURtX+ekVzLfWgl2fQLUQvxnbiR1hfbo3
+         3LYw==
+X-Gm-Message-State: ALQs6tCbjYvRNh+yQ8VR7134+tCxckJM6zq7cX/t5DI0uGJXvhmqMm2s
+        3cdzwFl0+k0r8RscmdMFvVzPQO1d
+X-Google-Smtp-Source: AB8JxZqEhOMGj5l3Q50lP/1GZWnUA8Cc3hSF7+qc+NJMgkg7vCoTPUfAHOjGn+1Er3DKpdaBgdWrjQ==
+X-Received: by 10.46.153.153 with SMTP id w25mr4889686lji.34.1524659564717;
+        Wed, 25 Apr 2018 05:32:44 -0700 (PDT)
+Received: from [192.168.10.169] (c-3bd6225c.08-157-6c756e10.cust.bredbandsbolaget.se. [92.34.214.59])
+        by smtp.gmail.com with ESMTPSA id r8sm977188ljc.8.2018.04.25.05.32.43
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Apr 2018 05:32:44 -0700 (PDT)
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v9 17/17] rebase -i --rebase-merges: add a section to the man page
-Date:   Wed, 25 Apr 2018 14:29:47 +0200
-Message-Id: <673fb9cb8b5c7d57cb560b6ade45e419c8dd09fc.1524659287.git.johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.17.0.windows.1.33.gfcbb1fa0445
+From:   Abinsium <abinsium@gmail.com>
+Subject: `iconv` should have the encoding `ISO646-SE2`
+Message-ID: <6e8c0ae9-c699-6f39-014f-2008888722c8@gmail.com>
+Date:   Wed, 25 Apr 2018 14:32:43 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <cover.1524659287.git.johannes.schindelin@gmx.de>
-References: <cover.1524306546.git.johannes.schindelin@gmx.de> <cover.1524659287.git.johannes.schindelin@gmx.de>
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:L9Cv8GO0oOFazBimztCYmblT9+CV6AV47AW86Ahka//6oJmMIWi
- PXOjfFfuLSMXhYO/DWngC1Fl+0kJPGXgRBtRi/fp8HszCOP2eQdEdZMYsywSWO6idIh6hnW
- 5cu/XHCRfg9tOeE4Zu/4Gw2m5IyAVS0RSUcTjjWZVX8/yW9RKDxXDS53YWNn0hfDDL8cGpB
- vcL/Dlc7QqXzVjcQPcvTw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:E2yRZqStmkI=:wJ2fSVS90jRZvIH1Gb/TIg
- phIzg6JaAsaZd39sePdBm1zpci3Zz5/YVBGSP0+y0fzSrwENWEdAinnxBE98RznkJnJW7zSm3
- 78NfGzP5bh898t0pzmj7oXOpnNtaTia0kHroKl/7vdaRbP/YvfCwXXIAViOOXak/OgPSqcCOH
- sSpQBQVBHhuOY4+lNjETNFxqmVke/2QnQihB7gGAsF3jCzaDywCuA0SKX9nJ+1jaQVf/NmSvM
- SwCXj84pqwzorznQGg60VG2ibf9E7dUq+sbyfp3XDj5JURd/FQ3dq0Qi06+SY5dwYJiU7+8Kx
- PbGH5T7hri6p171NCguCz2LCD3PymWsuRVKMk9EJpouwEIjRwD18qm67m3JN5GO9L8fmdddQc
- tPvJQcyXl6ZbFbnaLR0oXLp31qn2t3auDS21WBtEQuwi8TVaqQzo47nHVthXVwyfZQ9x1USNi
- dYq7j6lhXVL7X3a5PmF+UgG6CQV3iUhrgjJu9U6/Fh8Ay/XS8nxQd5hqeiZ75b+N3YMvRMDc1
- UVdG4bj3d5soJNoUFY5kLN87Wu1AePaUC0J4z/lxGHrzvixq8i1gj/o//myB9VccFk1bJ9j5c
- y4sQt7OvIz1T3C9aw9bQpjT8Ma9c7oP4Par6t5ND/0WZkD+vkDIfeNzdxVkU6zHvJvAvAEBS4
- 097vnMixeUJDttq11xHnaw95P3HuuHcmHo77q7XVIOCFEKQ3EW9dZecXdqhoEvqmJpSt3N2oM
- 33mKJS9KoibJabjBthiokKM5J3Z9ZNPrdMj7g014wsBgs7v+IYhZjRkO2gyflz0MQfZfHJBF4
- 9yHYAv+AsDY6DttXXvEXiHqoT4AaqrZ7Zz88mLUDJnEicm7C8KOaWWPaspoREE81KaPG/Af
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The --rebase-merges mode is probably not half as intuitive to use as
-its inventor hopes, so let's document it some.
+I installed from `Git-2.16.2-64-bit.exe` from git-scm.com. `iconv` is 
+included in this package. I think `iconv` should have the encoding 
+`ISO646-SE2`. Ubuntu 16.04 has this encoding. I use it to read old 
+Swedish text files, which there are a lot of e.g.:
+`curl -s https://www.abc.se/programbanken/abc/abc80/asmkod/basicii.txt | 
+dos2unix | iconv -f ISO646-SE2 -t UTF8 | less`
+`ISO646-SE2` is used by e.g. the retro-computers Luxor 
+[ABC80](https://en.wikipedia.org/wiki/ABC_80) (1978) and 
+[ABC800](https://en.wikipedia.org/wiki/ABC_800)-series (1981). At my 
+university we only have Git Bash and not Ubuntu for WSL in Windows 10 
+computers.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-rebase.txt | 135 +++++++++++++++++++++++++++++++++++
- 1 file changed, 135 insertions(+)
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index fe681d69281..bd5ecff980e 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -403,6 +403,8 @@ reordered, inserted and dropped at will.
- It is currently only possible to recreate the merge commits using the
- `recursive` merge strategy; Different merge strategies can be used only via
- explicit `exec git merge -s <strategy> [...]` commands.
-++
-+See also REBASING MERGES below.
- 
- -p::
- --preserve-merges::
-@@ -801,6 +803,139 @@ The ripple effect of a "hard case" recovery is especially bad:
- 'everyone' downstream from 'topic' will now have to perform a "hard
- case" recovery too!
- 
-+REBASING MERGES
-+-----------------
-+
-+The interactive rebase command was originally designed to handle
-+individual patch series. As such, it makes sense to exclude merge
-+commits from the todo list, as the developer may have merged the
-+then-current `master` while working on the branch, only to rebase
-+all the commits onto `master` eventually (skipping the merge
-+commits).
-+
-+However, there are legitimate reasons why a developer may want to
-+recreate merge commits: to keep the branch structure (or "commit
-+topology") when working on multiple, inter-related branches.
-+
-+In the following example, the developer works on a topic branch that
-+refactors the way buttons are defined, and on another topic branch
-+that uses that refactoring to implement a "Report a bug" button. The
-+output of `git log --graph --format=%s -5` may look like this:
-+
-+------------
-+*   Merge branch 'report-a-bug'
-+|\
-+| * Add the feedback button
-+* | Merge branch 'refactor-button'
-+|\ \
-+| |/
-+| * Use the Button class for all buttons
-+| * Extract a generic Button class from the DownloadButton one
-+------------
-+
-+The developer might want to rebase those commits to a newer `master`
-+while keeping the branch topology, for example when the first topic
-+branch is expected to be integrated into `master` much earlier than the
-+second one, say, to resolve merge conflicts with changes to the
-+DownloadButton class that made it into `master`.
-+
-+This rebase can be performed using the `--rebase-merges` option.
-+It will generate a todo list looking like this:
-+
-+------------
-+label onto
-+
-+# Branch: refactor-button
-+reset onto
-+pick 123456 Extract a generic Button class from the DownloadButton one
-+pick 654321 Use the Button class for all buttons
-+label refactor-button
-+
-+# Branch: report-a-bug
-+reset refactor-button # Use the Button class for all buttons
-+pick abcdef Add the feedback button
-+label report-a-bug
-+
-+reset onto
-+merge -C a1b2c3 refactor-button # Merge 'refactor-button'
-+merge -C 6f5e4d report-a-bug # Merge 'report-a-bug'
-+------------
-+
-+In contrast to a regular interactive rebase, there are `label`, `reset`
-+and `merge` commands in addition to `pick` ones.
-+
-+The `label` command associates a label with the current HEAD when that
-+command is executed. These labels are created as worktree-local refs
-+(`refs/rewritten/<label>`) that will be deleted when the rebase
-+finishes. That way, rebase operations in multiple worktrees linked to
-+the same repository do not interfere with one another. If the `label`
-+command fails, it is rescheduled immediately, with a helpful message how
-+to proceed.
-+
-+The `reset` command resets the HEAD, index and worktree to the specified
-+revision. It is isimilar to an `exec git reset --hard <label>`, but
-+refuses to overwrite untracked files. If the `reset` command fails, it is
-+rescheduled immediately, with a helpful message how to edit the todo list
-+(this typically happens when a `reset` command was inserted into the todo
-+list manually and contains a typo).
-+
-+The `merge` command will merge the specified revision into whatever is
-+HEAD at that time. With `-C <original-commit>`, the commit message of
-+the specified merge commit will be used. When the `-C` is changed to
-+a lower-case `-c`, the message will be opened in an editor after a
-+successful merge so that the user can edit the message.
-+
-+If a `merge` command fails for any reason other than merge conflicts (i.e.
-+when the merge operation did not even start), it is rescheduled immediately.
-+
-+At this time, the `merge` command will *always* use the `recursive`
-+merge strategy, with no way to choose a different one. To work around
-+this, an `exec` command can be used to call `git merge` explicitly,
-+using the fact that the labels are worktree-local refs (the ref
-+`refs/rewritten/onto` would correspond to the label `onto`, for example).
-+
-+Note: the first command (`label onto`) labels the revision onto which
-+the commits are rebased; The name `onto` is just a convention, as a nod
-+to the `--onto` option.
-+
-+It is also possible to introduce completely new merge commits from scratch
-+by adding a command of the form `merge <merge-head>`. This form will
-+generate a tentative commit message and always open an editor to let the
-+user edit it. This can be useful e.g. when a topic branch turns out to
-+address more than a single concern and wants to be split into two or
-+even more topic branches. Consider this todo list:
-+
-+------------
-+pick 192837 Switch from GNU Makefiles to CMake
-+pick 5a6c7e Document the switch to CMake
-+pick 918273 Fix detection of OpenSSL in CMake
-+pick afbecd http: add support for TLS v1.3
-+pick fdbaec Fix detection of cURL in CMake on Windows
-+------------
-+
-+The one commit in this list that is not related to CMake may very well
-+have been motivated by working on fixing all those bugs introduced by
-+switching to CMake, but it addresses a different concern. To split this
-+branch into two topic branches, the todo list could be edited like this:
-+
-+------------
-+label onto
-+
-+pick afbecd http: add support for TLS v1.3
-+label tlsv1.3
-+
-+reset onto
-+pick 192837 Switch from GNU Makefiles to CMake
-+pick 918273 Fix detection of OpenSSL in CMake
-+pick fdbaec Fix detection of cURL in CMake on Windows
-+pick 5a6c7e Document the switch to CMake
-+label cmake
-+
-+reset onto
-+merge tlsv1.3
-+merge cmake
-+------------
-+
- BUGS
- ----
- The todo list presented by `--preserve-merges --interactive` does not
--- 
-2.17.0.windows.1.33.gfcbb1fa0445
+(Not clear where I should report this, but one should be able to report 
+issues with the configuration of the other programs than `git` in the 
+package somewhere. If there is a better place, please let me know.)
+Originally reported at https://github.com/git/git-scm.com/issues/1199
