@@ -7,181 +7,199 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40AEA1F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 18:21:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 846CB1F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 18:21:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756211AbeDYSVR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 14:21:17 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:40381 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756170AbeDYSVK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 14:21:10 -0400
-Received: by mail-pf0-f180.google.com with SMTP id f189so6818373pfa.7
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:21:10 -0700 (PDT)
+        id S1756226AbeDYSVT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 14:21:19 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:44012 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755673AbeDYSVM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 14:21:12 -0400
+Received: by mail-pf0-f194.google.com with SMTP id j11so15923903pff.10
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kQ00K9A6CsZH015KuOgF+07zMYC9PFYDbdSJCV5g0Ng=;
-        b=kQVG1K/SLio32qoS5nK4l8bgsYq2TBIdbI6U+QjKTVdEp+bTtkORSlRUFKjCTJwjLL
-         /p72JX5fk2uEHW56XKZhi4q1UOUclc5yPhLLi1EN+P29TimrFdxTtZ0rFt+Eijmvg+ya
-         S7eFPInDCMJwxzK+NKEIRuvlH8GmB0di1P3t6wEkjbcNNbEQP/0XLZWi4oLT5obIVraA
-         kbHzX3wsa2zHrjG/NdHNZfWHgAxIQ+aUZnWrx176ShrAxxoezk8DrCDfY144WxkRceO6
-         8X0qpJMeyFdXfMpWjL7vaUL/feRPTd4Lo3CTSl6j3wC8gUTOqHZAeOgYpTTPEwr9TKtN
-         2KqA==
+        bh=lJ0w2/xNcbIxlRNTuv/YiA8q0RyddFyMp9PJkO5ortE=;
+        b=qsDEx/6babl6ACw0iHC3NRd96QTDMG/JocbUS0up14Fq+nzth5eiVNCqjuy5rjKEPI
+         hsLDrLP3vigj+c01F2mwxqjg+/eLJsugZEANGshPAhRjiw6LgonjtyMS3punYjfvswpm
+         9zajz7uNgAHoy9Z45MlxcPo3akMhCnRDtvI3kGl2hlUQnufgSDpDH7EIRYH4g5qXvxoJ
+         fMbl71eLefE+Dv+A4horDO9eFGPlCRBobHdJd8G8XTOzKfe4rS0Ltfx6VcF2hkgZhNC1
+         a3GjaIwo/ty8rNc0ezrNkCa9EoDXYfY3v7XojYHcVqtSRiIPmsTs3CrHqyaER8g5UfRS
+         Uzaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=kQ00K9A6CsZH015KuOgF+07zMYC9PFYDbdSJCV5g0Ng=;
-        b=GQUZVkKvx2e/ziBOyItgGx9u1v23PHYMyN0bsefwo/YVFbMp1T7cv46JhiRNblbbjC
-         MnxXMytD58xMnTnRFPA4tX8pKubtLRvn9dLrK/SwypbcNi+QDLHzoRJwIcprT70pQ4yo
-         /x08CVZtzmdXX8+Igos3flQJIgSMHkKGdhTczS3olvFBxPPkSkyjrUnhEkio+KNq9W30
-         JBdXts3UAmY/Of0Dyg3J4mETE5xd8UZUlT3eu41Y00NIUQZnqRnWQPbpYPkTXhTEahXX
-         EpWGrXdLcz1zYKqY61np+l1b68m35PgYKAS2DXFpR8bbnrJWnDIfXb/fKp6czDGiSKSm
-         hTgQ==
-X-Gm-Message-State: ALQs6tBbqibcBzPgRMHHjZKEUeUKznKl1ZsutouuqC6+jiXbABPrRXB6
-        crgndCGtCEC8gaPtJzwABZdX2w==
-X-Google-Smtp-Source: AIpwx49Yu1DkNqkLaRCG/Tn4fJQAdTBYoIiASLM8EQ+HiC7hDhUNxMNUykg4xwV8/FrUlDI93D5PoA==
-X-Received: by 2002:a17:902:22a:: with SMTP id 39-v6mr30494660plc.128.1524680469471;
-        Wed, 25 Apr 2018 11:21:09 -0700 (PDT)
+        bh=lJ0w2/xNcbIxlRNTuv/YiA8q0RyddFyMp9PJkO5ortE=;
+        b=DBKrROL1MPCRhgy+P8I9gJYiWNQAmmG258EfgvcnqZMeJZaY6E5fhZjkf0qz55JDoR
+         fXDG2cbr46Ze7OncNMMbF3zPNDFrzN/lkjUK1cj7SvPnWikeAE1nS0nZv9WLX83r5JN/
+         OMibKPukgfM9N6Fbmmi4Kn2k1acFLOrBcMVVmTWNSRlev8/rljZ1buqK4BJDFJqsSQK7
+         zWFV8ejszSUU63smVx96W1lE5XoWgcibQ+5b9domXqLoRQFTiCIqVtIyye4qh4SsYvCy
+         BXIv75KAGwSQaTRbOTyZAUQA3wlxsWm1cu1UWOOQZFQLVgTqLA8EcF5EBi4KtwWWERX1
+         0cZQ==
+X-Gm-Message-State: ALQs6tB174HS+kytXLuXYrBrBzDcG1lEj1yPFnSP2W7PeYmsTqn8jqxH
+        F2B8VcSoAIdEVvrB8ja9ogFqI3Lo+XY=
+X-Google-Smtp-Source: AB8JxZqWxNr53kSEQ1Flhh2yI/vIPjPfl+6XeQcduOkEx8/kEr1GPcV+IEf6rnOuv2SdN7dJer6vUg==
+X-Received: by 10.101.102.86 with SMTP id z22mr1842023pgv.31.1524680471466;
+        Wed, 25 Apr 2018 11:21:11 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id a4sm43918860pfj.107.2018.04.25.11.21.08
+        by smtp.gmail.com with ESMTPSA id l19sm25285512pgn.44.2018.04.25.11.21.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Apr 2018 11:21:08 -0700 (PDT)
+        Wed, 25 Apr 2018 11:21:10 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jonathantanmy@google.com, sandals@crustytoothpaste.net
-Subject: [PATCHv3 0/9] object store: oid_object_info is the next contender
-Date:   Wed, 25 Apr 2018 11:20:57 -0700
-Message-Id: <20180425182106.162972-1-sbeller@google.com>
+Subject: [PATCHv3 1/9] cache.h: add repository argument to oid_object_info_extended
+Date:   Wed, 25 Apr 2018 11:20:58 -0700
+Message-Id: <20180425182106.162972-2-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-In-Reply-To: <20180424215910.22201-1-sbeller@google.com>
+In-Reply-To: <20180425182106.162972-1-sbeller@google.com>
 References: <20180424215910.22201-1-sbeller@google.com>
+ <20180425182106.162972-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v3:
-* fixed and extended the commit message of last commit
-* fixed the last patch, as Jonathan Tan suggested, see interdiff:
+Add a repository argument to allow oid_object_info_extended callers
+to be more specific about which repository to act on. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
 
-    $ git diff remotes/origin/sb/oid-object-info (which is v2)
-    diff --git c/sha1_file.c w/sha1_file.c
-    index 94123e0299..dcd6b879ac 100644
-    --- c/sha1_file.c
-    +++ w/sha1_file.c
-    @@ -1289,14 +1289,13 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
-     
-                    /* Check if it is a missing object */
-                    if (fetch_if_missing && repository_format_partial_clone &&
-    -                   !already_retried) {
-    +                   !already_retried && r == the_repository) {
-                            /*
-                             * TODO Investigate having fetch_object() return
-                             * TODO error/success and stopping the music here.
-    -                        * TODO Pass a repository struct through fetch_object.
-    +                        * TODO Pass a repository struct through fetch_object,
-    +                        * such that arbitrary repositories work.
-                             */
-    -                       if (r != the_repository)
-    -                               die(_("partial clones only supported in the_repository"));
-                            fetch_object(repository_format_partial_clone, real->hash);
-                            already_retried = 1;
-                            continue;
-    
-Thanks,
-Stefan
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ builtin/cat-file.c |  6 +++---
+ cache.h            |  5 ++++-
+ packfile.c         |  2 +-
+ sha1_file.c        | 10 +++++-----
+ streaming.c        |  2 +-
+ 5 files changed, 14 insertions(+), 11 deletions(-)
 
-v2:
-
-* fixed the sha1/oid typo
-* removed spurious new line
-* Brandon and Jonthan discovered another dependency that I missed due
-  to cherrypicking that commit from a tree before partial clone was a thing.
-  We error out when attempting to use fetch_object for repos that are not
-  the_repository.
-
-Thanks,
-Stefan
-
-v1:
-This applies on top of origin/sb/object-store-replace and is available as
-https://github.com/stefanbeller/git/tree/oid_object_info
-
-This continues the work of sb/packfiles-in-repository,
-extending the layer at which we have to pass in an explicit
-repository object to oid_object_info.
-
-A test merge to next shows only a minor merge conflicit (adding
-different #include lines in one c file), so this might be a good next
-step for the object store series.
-
-Notes on further object store series:
-I plan on converting the "parsed object store" next,
-which would be {alloc, object, tree, commit, tag}.c as that is a prerequisite
-for migrating shallow (which is intermingled with grafts) information to the
-object store.
-
-There is currently work going on in allocation (mempool - Jameson Miller)
-and grafts (deprecate grafts - DScho), which is why I am sending this
-series first. I think it can go in parallel to the "parsed object store"
-that is coming next.
-
-Thanks,
-Stefan
-
-Jonathan Nieder (1):
-  packfile: add repository argument to packed_object_info
-
-Stefan Beller (8):
-  cache.h: add repository argument to oid_object_info_extended
-  cache.h: add repository argument to oid_object_info
-  packfile: add repository argument to retry_bad_packed_offset
-  packfile: add repository argument to packed_to_object_type
-  packfile: add repository argument to read_object
-  packfile: add repository argument to unpack_entry
-  packfile: add repository argument to cache_or_unpack_entry
-  cache.h: allow oid_object_info to handle arbitrary repositories
-
- archive-tar.c            |  2 +-
- archive-zip.c            |  3 ++-
- blame.c                  |  4 ++--
- builtin/blame.c          |  2 +-
- builtin/cat-file.c       | 12 ++++++------
- builtin/describe.c       |  2 +-
- builtin/fast-export.c    |  2 +-
- builtin/fetch.c          |  2 +-
- builtin/fsck.c           |  3 ++-
- builtin/index-pack.c     |  4 ++--
- builtin/ls-tree.c        |  2 +-
- builtin/mktree.c         |  2 +-
- builtin/pack-objects.c   | 11 +++++++----
- builtin/prune.c          |  3 ++-
- builtin/replace.c        | 11 ++++++-----
- builtin/tag.c            |  4 ++--
- builtin/unpack-objects.c |  2 +-
- cache.h                  |  7 +++++--
- diff.c                   |  3 ++-
- fast-import.c            | 16 ++++++++++------
- list-objects-filter.c    |  2 +-
- object.c                 |  2 +-
- pack-bitmap-write.c      |  3 ++-
- pack-check.c             |  3 ++-
- packfile.c               | 40 +++++++++++++++++++++++-----------------
- packfile.h               |  6 ++++--
- reachable.c              |  2 +-
- refs.c                   |  2 +-
- remote.c                 |  2 +-
- sequencer.c              |  3 ++-
- sha1_file.c              | 37 +++++++++++++++++++++----------------
- sha1_name.c              | 12 ++++++------
- streaming.c              |  2 +-
- submodule.c              |  2 +-
- tag.c                    |  2 +-
- 35 files changed, 124 insertions(+), 93 deletions(-)
-
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 2c46d257cd..4ecdb9ff54 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -77,7 +77,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 	switch (opt) {
+ 	case 't':
+ 		oi.type_name = &sb;
+-		if (oid_object_info_extended(&oid, &oi, flags) < 0)
++		if (oid_object_info_extended(the_repository, &oid, &oi, flags) < 0)
+ 			die("git cat-file: could not get object info");
+ 		if (sb.len) {
+ 			printf("%s\n", sb.buf);
+@@ -88,7 +88,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 
+ 	case 's':
+ 		oi.sizep = &size;
+-		if (oid_object_info_extended(&oid, &oi, flags) < 0)
++		if (oid_object_info_extended(the_repository, &oid, &oi, flags) < 0)
+ 			die("git cat-file: could not get object info");
+ 		printf("%lu\n", size);
+ 		return 0;
+@@ -342,7 +342,7 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+ 	if (!data->skip_object_info &&
+-	    oid_object_info_extended(&data->oid, &data->info,
++	    oid_object_info_extended(the_repository, &data->oid, &data->info,
+ 				     OBJECT_INFO_LOOKUP_REPLACE) < 0) {
+ 		printf("%s missing\n",
+ 		       obj_name ? obj_name : oid_to_hex(&data->oid));
+diff --git a/cache.h b/cache.h
+index 027bd7ffc8..588c4fff9a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1673,7 +1673,10 @@ struct object_info {
+ #define OBJECT_INFO_QUICK 8
+ /* Do not check loose object */
+ #define OBJECT_INFO_IGNORE_LOOSE 16
+-extern int oid_object_info_extended(const struct object_id *, struct object_info *, unsigned flags);
++
++#define oid_object_info_extended(r, oid, oi, flags) \
++	oid_object_info_extended_##r(oid, oi, flags)
++int oid_object_info_extended_the_repository(const struct object_id *, struct object_info *, unsigned flags);
+ 
+ /*
+  * Set this to 0 to prevent sha1_object_info_extended() from fetching missing
+diff --git a/packfile.c b/packfile.c
+index 0bc67d0e00..d9914ba723 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1474,7 +1474,7 @@ static void *read_object(const struct object_id *oid, enum object_type *type,
+ 	oi.sizep = size;
+ 	oi.contentp = &content;
+ 
+-	if (oid_object_info_extended(oid, &oi, 0) < 0)
++	if (oid_object_info_extended(the_repository, oid, &oi, 0) < 0)
+ 		return NULL;
+ 	return content;
+ }
+diff --git a/sha1_file.c b/sha1_file.c
+index 64a5bd7d87..50a2dc5f0a 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1231,7 +1231,7 @@ static int sha1_loose_object_info(struct repository *r,
+ 
+ int fetch_if_missing = 1;
+ 
+-int oid_object_info_extended(const struct object_id *oid, struct object_info *oi, unsigned flags)
++int oid_object_info_extended_the_repository(const struct object_id *oid, struct object_info *oi, unsigned flags)
+ {
+ 	static struct object_info blank_oi = OBJECT_INFO_INIT;
+ 	struct pack_entry e;
+@@ -1310,7 +1310,7 @@ int oid_object_info_extended(const struct object_id *oid, struct object_info *oi
+ 	rtype = packed_object_info(e.p, e.offset, oi);
+ 	if (rtype < 0) {
+ 		mark_bad_packed_object(e.p, real->hash);
+-		return oid_object_info_extended(real, oi, 0);
++		return oid_object_info_extended(the_repository, real, oi, 0);
+ 	} else if (oi->whence == OI_PACKED) {
+ 		oi->u.packed.offset = e.offset;
+ 		oi->u.packed.pack = e.p;
+@@ -1329,7 +1329,7 @@ int oid_object_info(const struct object_id *oid, unsigned long *sizep)
+ 
+ 	oi.typep = &type;
+ 	oi.sizep = sizep;
+-	if (oid_object_info_extended(oid, &oi,
++	if (oid_object_info_extended(the_repository, oid, &oi,
+ 				     OBJECT_INFO_LOOKUP_REPLACE) < 0)
+ 		return -1;
+ 	return type;
+@@ -1347,7 +1347,7 @@ static void *read_object(const unsigned char *sha1, enum object_type *type,
+ 
+ 	hashcpy(oid.hash, sha1);
+ 
+-	if (oid_object_info_extended(&oid, &oi, 0) < 0)
++	if (oid_object_info_extended(the_repository, &oid, &oi, 0) < 0)
+ 		return NULL;
+ 	return content;
+ }
+@@ -1745,7 +1745,7 @@ int has_sha1_file_with_flags(const unsigned char *sha1, int flags)
+ 	if (!startup_info->have_repository)
+ 		return 0;
+ 	hashcpy(oid.hash, sha1);
+-	return oid_object_info_extended(&oid, NULL,
++	return oid_object_info_extended(the_repository, &oid, NULL,
+ 					flags | OBJECT_INFO_SKIP_CACHED) >= 0;
+ }
+ 
+diff --git a/streaming.c b/streaming.c
+index cce7b17ea7..d1e6b2dce6 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -117,7 +117,7 @@ static enum input_source istream_source(const struct object_id *oid,
+ 
+ 	oi->typep = type;
+ 	oi->sizep = &size;
+-	status = oid_object_info_extended(oid, oi, 0);
++	status = oid_object_info_extended(the_repository, oid, oi, 0);
+ 	if (status < 0)
+ 		return stream_error;
+ 
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
