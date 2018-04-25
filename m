@@ -2,97 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2789C1F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 01:29:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA0301F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 01:29:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750835AbeDYB26 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 21:28:58 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:40284 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750779AbeDYB25 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 21:28:57 -0400
-Received: by mail-wm0-f45.google.com with SMTP id j5so3851883wme.5
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 18:28:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=bH3YmCWZLH7I5SUFV7mJTz3ye3zEcO/RwRJUqXXayDE=;
-        b=TeSJf+hVlVGPtckTqVNQFe2Nvs0zAyticC1E1XeLMQsbHlJ5tcy8uJfUTxfk8kaDC1
-         oRjJgiBY5JXzkz7kljQn1bt36KI8akzfoM3cPQsk+O2jMtwobO2OSTY64mm4bhoB45gU
-         on+SdnJgu7UXL4KMXavcTDPgzyGeX+ZAhS0ttYdQlwkHZmPSoE9DfvRUtF5juZUVKT5Q
-         S5P+pmEyR5r+7YX2o6cV9uHtfYPAAAOIlpXR+ZTqvvDpSFcFPVJZltWVHZjBQVA22rwv
-         k+cwO9uCZ+ZIUzDrCaIxHHIQiqwwdbc4EC1KwwFQyvhFIbTjcwmd+jf7FwOOLq3X1CLt
-         VSAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=bH3YmCWZLH7I5SUFV7mJTz3ye3zEcO/RwRJUqXXayDE=;
-        b=YQ7ivHAklh7TzKpwV6jIJ224Hhi1ATTOQLMm9XJG+LNMvhumFaoRU7IQG1tmW9OLWn
-         yKGeANbGyb/AiqjcpIsTFG3JYOtDjTBEQap3HxKAUu+DzUsX+P5msRlK8I/eZ/CH6M73
-         ObNLNoWa87LPp/8LZKwEMb3jMiwOvN3Jwx4iX107BdfIpJddMqh6ChqtQMTvQ06CBJ23
-         9ujZ+jV2yRR5AWg42ooZvi5UDbkIGWQKKxEt3pytk/4G4stOytL66FnUIcjSAe5dOCjG
-         aTZT86k0CG+41sEcyBey5f3rtjSWzfLgKn3NkFX3cv88qn7MDoquoYJaHNFm5Ajj6Ccy
-         c2QQ==
-X-Gm-Message-State: ALQs6tAH6Gg5ahLYc/0R6WlMn++8k9H+2/ZlUo7uRQoc7gRyfyrFMjlX
-        n4s/sWk6P2J8EwORMmT5aSs=
-X-Google-Smtp-Source: AB8JxZp5LdK8HSYVYqh3NzOs2pK0AFR85Jdom0gxqHUR8sCFPEpdhkml+O0xER4DColUNwtsODUQ+w==
-X-Received: by 10.28.218.80 with SMTP id r77mr3880897wmg.105.1524619735932;
-        Tue, 24 Apr 2018 18:28:55 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b57-v6sm25974983wra.9.2018.04.24.18.28.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Apr 2018 18:28:54 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Dan Jacques <dnj@google.com>,
-        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v2 0/3] Some add-on patches on top of dj/runtime-prefix
-References: <cover.1524211375.git.johannes.schindelin@gmx.de>
-        <cover.1524309209.git.johannes.schindelin@gmx.de>
-        <xmqqzi1t74zo.fsf@gitster-ct.c.googlers.com>
-        <xmqqvach74qe.fsf@gitster-ct.c.googlers.com>
-        <xmqqa7tt72c9.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1804241646400.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Wed, 25 Apr 2018 10:28:54 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1804241646400.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Tue, 24 Apr 2018 16:48:04 +0200
-        (DST)")
-Message-ID: <xmqqr2n43wh5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1750862AbeDYB35 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 21:29:57 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33268 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750779AbeDYB34 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 24 Apr 2018 21:29:56 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5976060129;
+        Wed, 25 Apr 2018 01:29:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1524619795;
+        bh=B9QDRMp/WHuBzRgyXdg4CoqUc/dALsmPHsLIH3JX/MQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=RZCO61FDRybDoMElYfbk+zRKuqrQXI4bEy0pwBNi1BrJQKPwPZj3XSz7Ar01Mxa29
+         t7n1NYS5TnEcuXnWs3g8jpLtxu0wvnJjC1cdy3RxEJzjfL4OD3FOp+wLUglCKp1fG/
+         b9NDPihoGMd9S24L4FSFvA1NPTIMpqzFBxQmZXzc5h7dd3ri3behaDUCyGK5xJ/7fr
+         09CbYNjVlOfRmxhq9Iq5bCeSZf4qR6Sz/JfOyiGh/lfYBy8dRJs1j4NJTR6/DrFAul
+         eyvWRknfig7KQwvNnG7dhgAGFBwdixmrXZmiwE17746qowq2yzzLPnaQLwdBRjfo2Y
+         km1I8LDgh73Z54oBZB+D97n3YD6Ge/wMuA1x5Y39hqKaBNKdkyzcrQo83LIKz7sqZs
+         ALJfo5qfzEjnMx5a75E73emAoQNKN8WOLQgeeXTQMgQZ+jQqCy1lEPJvkZ0BbAKN5Y
+         O1e9scjqESFFtBrbf1o4CGKcBvPEkgMTCGbiqa7JUwL3928cCQt
+Date:   Wed, 25 Apr 2018 01:29:50 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 21/41] http: eliminate hard-coded constants
+Message-ID: <20180425012949.GE245996@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
+ <20180423233951.276447-22-sandals@crustytoothpaste.net>
+ <CAN0heSoCsFYqDmwTRCzh2FGDnOghBqVBTCOa7yEw0jtQ3LxDbA@mail.gmail.com>
+ <xmqqpo2o5fvw.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Dzs2zDY0zgkG72+7"
+Content-Disposition: inline
+In-Reply-To: <xmqqpo2o5fvw.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.16.0-trunk-amd64)
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Thank you, and sorry for the trouble. I am just too used to a Continuous
-> Integration setting with exactly one integration branch.
+--Dzs2zDY0zgkG72+7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Fixing problems close to the source (i.e. picking an appropriately
-aged base) and making sure everthing works near the tip ala CI style
-are not opposing goals.  It just takes an extra step (i.e. trial
-merge and testing the result) and discipline.  Until one gets used
-to do it so much that one can do in one's sleep, that is ;-)
+On Wed, Apr 25, 2018 at 08:44:19AM +0900, Junio C Hamano wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>=20
+> >>                 switch (data[i]) {
+> >>                 case 'P':
+> >>                         i++;
+> >> -                       if (i + 52 <=3D buf.len &&
+> >> +                       if (i + hexsz + 12 <=3D buf.len &&
+> >>                             starts_with(data + i, " pack-") &&
+> >> -                           starts_with(data + i + 46, ".pack\n")) {
+> >> -                               get_sha1_hex(data + i + 6, sha1);
+> >> -                               fetch_and_setup_pack_index(packs_head,=
+ sha1,
+> >> +                           starts_with(data + i + hexsz + 6, ".pack\n=
+")) {
+> >> +                               get_sha1_hex(data + i + 6, hash);
+> >> +                               fetch_and_setup_pack_index(packs_head,=
+ hash,
+> >>                                                       base_url);
+> >>                                 i +=3D 51;
+> >
+> > s/51/hexsz + 11/ ?
+>=20
+> Quite right.
 
-> I will make an effort in the future to figure out the best base branch for
-> patches that do not apply cleanly on `master` but require more stuff from
-> `next`/`pu`.
+Good point.  Will fix.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-The easiest is to leave that to the maintainer most of the time, as
-that is what maintainers do.
+--Dzs2zDY0zgkG72+7
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
 
-I really want to see that the runtime prefix stuff mature enough
-during this cycle, so these follow-up patches are all very much
-appreciated.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrf2g0ACgkQv1NdgR9S
+9ose5Q/7BqUwfhlxvo7zmtD1Ot/mq1yFmvIzkW5ZTQkTN5AiSl4IdZCx3f0mUmXH
+DO5PofNPAa51wKDJJ3YeIoewVYHieqWsCtZ7luzJJFpMRhxZ+WtKkrkXHjeh3qbo
+YMhNGmp3QKOLJ5oPNMSwcoOp6o2qUPX3TRzMwASm1cwyljE+R65CRjfq3OR6c3A4
+1Nd5FO7llmUOa1zfLdrCGMYCTz9LnB5gdNjz7byXKofWnwrBJ+W55DldayCbxHRX
+0NYSHMOk8bNMDoUGkSajHoY4QK19Ejjwv00wngEEnmZZ3WbdK8sD+mFFQ8q1HFIi
+ReDuXLaRKOUS/NTrPe8bUOav1WlKNIGwpvX9It2lJjIHNxBpbCKHeI1A7wCQiuRE
+ZKg11vdei+QRSRZnBDxHyo3vsQ5pHys1o7DmijBfj0pvHZwW2s+uhV+QXB1n6stD
+Cfiz5AfC9ilj1nwYAV1JhkzISaxffauOqgW/tDQzLBiG7AOovOWazV6E/VHhHZRv
+VKT9dmVBZYHPTd2K/r/JZS49qVH0iQNtLUsLsCW0fAtU+v9mLBPBoYt1xX6Hycsd
+RA58YJQlkXmVhZVmmMOcotAH+NELjbD3Xn1UvPyzxJMHlmC1aTK+XI/DDv7MjXDl
+IdHjpSTfN6iLbGAKHEQvwLKCKtRaPQ0orA0hpGAKnq7iCOkIds0=
+=qEf9
+-----END PGP SIGNATURE-----
+
+--Dzs2zDY0zgkG72+7--
