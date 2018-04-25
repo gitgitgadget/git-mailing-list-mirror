@@ -2,102 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 140181F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 12:48:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAECD1F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 12:55:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752851AbeDYMsv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 08:48:51 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50443 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752292AbeDYMsu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 08:48:50 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MS0c2-1enYrB2hBa-00T9Wb; Wed, 25
- Apr 2018 14:48:43 +0200
-Date:   Wed, 25 Apr 2018 14:48:23 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
-cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 0/4] rebase -i: avoid stale "# This is a combinationof"
- in commit messages
-In-Reply-To: <12fa9a1f-9dc2-9108-132f-48b75ae5a8d3@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1804251442510.4978@tvgsbejvaqbjf.bet>
-References: <CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com> <cover.1524296064.git.johannes.schindelin@gmx.de> <CAGZ79kbK7j0njrZ8-d_Da6+XyH_RVRhBu=hcpzr7EFsOCSFJVQ@mail.gmail.com> <12fa9a1f-9dc2-9108-132f-48b75ae5a8d3@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753953AbeDYMzY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 08:55:24 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:40584 "EHLO
+        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751934AbeDYMzR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 08:55:17 -0400
+Received: by mail-io0-f176.google.com with SMTP id t123-v6so26677214iof.7
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 05:55:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cu3QoBQgQvGNhVfwwkh+hyohg7AnFIU4MNF1S8yteks=;
+        b=t0X4sS18Rca0J9WId3s+CFPXirSMp/bNK8zWu+a7ehslzN3+NVU0+OBk0npTfRshPm
+         gqfrvR5GyaYi+tHQajJAanGHeNlwuQXIn4ACoMwEEMUvk//EwGtsR0bZQ9Z0Ih8lL+6W
+         HOG6wAsRYeynwd3Z4V+muxtNHvhCu7RK8X4k1wgYrArcX9kTM+VZ4nDiKpYdisqezTiw
+         h7AhIJiXhz9z1tNgJW1Tyuf7NFmURzlb4aGGtbTXTqzviEyr6T0GNo3hEXX9icZ6ptzc
+         Zl7OnA5tVFwCn4F5Jl80Kn1BnQMpLAn06D+Ja+r3RSYriP3lqGCRYtaHMSHFhVTuBLE7
+         Dslw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cu3QoBQgQvGNhVfwwkh+hyohg7AnFIU4MNF1S8yteks=;
+        b=fKtehjWohVTM52bip2Kl/WJnLxQTD0f224jrj0SPt6VwusgkBpgBsutzvIUdYD6khH
+         PICWAMitMy1CFHwrlWttT09BKFQgbQtM3Fh1Rk10gqhYJG30QmriDWFKLWSCByxpk4P/
+         mSRmNC/pFUsLRkQ3ViAJD7GIQXpb/fIKolvjDulogBi7fCELqysH4MckHs/YFCbDFw5a
+         hY4QRq95S7eFEPGgKNgc48VKMXfqCrkFOdvClLy/LiqTtl7fUWE1YYjrhRhOhBnk7GA2
+         aJ9rSjGZNYYrgt2x0Z4N8AN8VLzch8Gpcbz35UudMgzBzDIQYQr+tEVgVbmCSVnEpwm6
+         JsDQ==
+X-Gm-Message-State: ALQs6tCkZGcoPqyLqSU4LKo/3goB4qkspuQa2sRgr45teptGcAIdqDXX
+        LuRlvCaIG11wOrLPuZ1CluzgKz77dcz5svSxdLI=
+X-Google-Smtp-Source: AIpwx48yL2H1TFyOQ42MNnB6cLFbdklily75fOvlMMj6Jg0hyYrb0YHi/l0Dsa1fvYEnM0YJVOH7ktCz7hVqJfjGxXI=
+X-Received: by 2002:a6b:bdc4:: with SMTP id n187-v6mr30479799iof.147.1524660916204;
+ Wed, 25 Apr 2018 05:55:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Q0tVepMntkbz1nD2jB8nQRlxh7EtCCdY9uY2dw5eICk0+HJDPaJ
- SquVyXO1brdCCAGoV+7esaMWGB2TiZCn5KNbmvhlxI5QIrVViM0grkheyl42ZrJH412vm4F
- +xxJTrpggQvG1RyzoUttfOq4KGdv+xO5vOuOH/1Ey/RaW+yAGBP4aJ0Gml/yR9PCGCBvSyI
- EYDC9DrocZh+EVdyUWNAA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WkxMJDI/Omo=:FCZGHc3YHkPXWSizBc6XJG
- kll+hq8zTV79lcPwuxjQ7qvZkNTANon9vYha1ZX5otfnSaqqAasMbzaJN1B669zgpbH8SSuZw
- P7YK2gRC6uISOWKvsQ85vU90U/2P4SWO/ny8MT4ftD87d/8KMeUwUW+Mn4TNyWr7zteGYRXOs
- 02mRB3alkWyoitpTkkpo8qFGUjKggnJlCvjE+PJN2Npe2fdXRhzd75ZMQonA+3M8NASKj4U0T
- 8EFHNUvn0BUBvhmdCwwt+Maz0WO2mHsSEtzEWzNdCMtr/q/y/ckkuaeub1MCK4kbwbeY0IHl1
- wkAwy4ZVUKFTpRyue4DkWC0szMwF1SjZiFCnzBN/K+Olcdo4ogkjHRIp3+9ARxnDBJsdHrr7U
- iP9tAH+VoQH7FF15ZeR/lkAesX0DWsTKNyIoFQ9K00NKkG9bG75F8eArOJteOGlq+Ys1ruoKo
- 0Xh/LLZ8oXO+B44qv4Nr5xvAH8LljJ70Ea1dXaUNmwxyGZ/biiUzPlWiHCi4pGRg5fTyANxWZ
- ksBNJNx5Hm/Zp1GOaKoqLHakQW1qD2lMKHPZZ4nO5qaRoba2cYxtaTCP+KBlcZHlF79TwZJd+
- KFCQoazOZRkWriUVDX0GcXsi2Xx1W8ohHhrsoY1/56Jm0WrBm727j+vTxybRo/aT4s4c2MFAL
- 7zk3IRZ4pGcSohAmHfnkM3UlhpuRtOGGrbveklOWzFVzepEsCBl4F99ZZMnB6oVisLadPmVV3
- UNIFO5MinqcbHC8ImodvjK327yqMR10YsLgrcS2MedO+WhzyoMlR0UAsOu7N4I0/x8POQjCLd
- 3/x+EzvC7/FhxAokj6Hg3LnjBo8YIE5necdmgucuZHVyCNEp+1rGJvrgRhmHcvSd+rra0OE
+Received: by 2002:a4f:22db:0:0:0:0:0 with HTTP; Wed, 25 Apr 2018 05:55:15
+ -0700 (PDT)
+In-Reply-To: <xmqqd0ytb4le.fsf@gitster-ct.c.googlers.com>
+References: <20180420121041.32558-1-chriscool@tuxfamily.org>
+ <CAPig+cSDYVGpaV-beNVG57r3YfQ=Ey5zuyHRkk_tf86NNRdY6w@mail.gmail.com>
+ <87h8o5ensj.fsf@evledraar.gmail.com> <xmqqd0ytb4le.fsf@gitster-ct.c.googlers.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 25 Apr 2018 14:55:15 +0200
+Message-ID: <CAP8UFD1nkNEbbERvyhSGfSLBDNfD8QcmrYNRy_3J4Mrb7z2ekw@mail.gmail.com>
+Subject: Re: [PATCH v1] perf/aggregate: tighten option parsing
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+On Sat, Apr 21, 2018 at 5:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>>> Not necessarily worth a re-roll.
+>>
+>> Not that it matters in this case, but just as a bit of Perl rx pedantry,
+>> yes his is tighter & more correct. You didn't consider how "." interacts
+>> with newlines:
+>>
+>>     $ perl -wE 'my @rx =3D (qr/^--./, qr/^--.+$/, qr/^--./m, qr/^--.+$/m=
+, qr/^--./s, qr/^--.+$/s); for (@rx) { my $s =3D "--foo\n--bar"; say $_, "\=
+t", ($s =3D~ $_ ? 1 : 0) }'
+>>     (?^u:^--.)      1
+>>     (?^u:^--.+$)    0
+>>     (?^um:^--.)     1
+>>     (?^um:^--.+$)   1
+>>     (?^us:^--.)     1
+>>     (?^us:^--.+$)   1
+>>
+>> I don't think it matters here, not like someone will pass \n in options
+>> to aggregate.perl...
+>
+> Hmph, do we want the command not to barf when "--foo\n--bar" is
+> given from the command line and we cannot find such an option?
+>
+> I thought that the location the match under discussion is used does
+> want to see a hit with any option looking string that begins with
+> double dashes.  I would have expected "tigher and hence incorrect",
+> in other words.
+>
+> Somewhat puzzled...
 
-On Mon, 23 Apr 2018, Phillip Wood wrote:
+I guess it might be better at this point to just "use Getopt::Long;"
+(along with "Getopt::Long::Configure qw/ pass_through /;") as git
+send-email does. It might avoid mistakes and subtle discussions like
+the above.
 
-> On 23/04/18 19:11, Stefan Beller wrote:
-> > 
-> > On Sat, Apr 21, 2018 at 12:34 AM, Johannes Schindelin
-> > <johannes.schindelin@gmx.de> wrote:
-> > > Eric Sunshine pointed out that I had such a commit message in
-> > > https://public-inbox.org/git/CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com/
-> > > and I went on a hunt to figure out how the heck this happened.
-> > >
-> > > Turns out that if there is a fixup/squash chain where the *last* command
-> > > fails with merge conflicts, and we either --skip ahead or resolve the
-> > > conflict to a clean tree and then --continue, our code does not do a
-> > > final cleanup.
-> > >
-> > > Contrary to my initial gut feeling, this bug was not introduced by my
-> > > rewrite in C of the core parts of rebase -i, but it looks to me as if
-> > > that bug was with us for a very long time (at least the --skip part).
-> > >
-> > > The developer (read: user of rebase -i) in me says that we would want to
-> > > fast-track this, but the author of rebase -i in me says that we should
-> > > be cautious and cook this in `next` for a while.
-> > 
-> > I looked through the patches again and think this series is good to go.
-> 
-> I've just realized I commented on an outdated version as the new version was
-> posted there rather than as a reply to v1. I've just looked through it and I'm
-> not sure it addresses the unnecessary editing of the commit message of the
-> previous commit if a single squash command is skipped as outlined in
-> https://public-inbox.org/git/b6512eae-e214-9699-4d69-77117a0daec3@talktalk.net/
-
-I have not forgotten about this! I simply did not find the time yet, is
-all...
-
-The patch series still has not been merged to `next`, but I plan on
-working on your suggested changes as an add-on commit anyway. I am not
-quite sure yet how I want to handle the "avoid running commit for the
-first fixup/squash in the series" problem, but I think we will have to add
-*yet another* file that is written (in the "we already have comments in
-the commit message" conditional block in error_failed_squash())...
-
-Ciao,
-Dscho
+Thanks for the reviews,
+Christian.
