@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55F311F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 16:31:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55BD01F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 16:31:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755572AbeDYQbp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 12:31:45 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:45371 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755151AbeDYQbg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 12:31:36 -0400
-Received: by mail-lf0-f65.google.com with SMTP id q5-v6so26353487lff.12
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 09:31:36 -0700 (PDT)
+        id S1755593AbeDYQbr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 12:31:47 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:42477 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755449AbeDYQbf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 12:31:35 -0400
+Received: by mail-lf0-f66.google.com with SMTP id u21-v6so24771305lfu.9
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 09:31:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=pTt3BEd8vRXdvh+dz+HV5R8hmNbrtBmhumnFQiGhsfs=;
-        b=ewy89zMxT7AHHwMQ1IujpDtHT74rR5yIKFzdHB8ojBSBjuLrwrxhjc6j9nRDPhQnVY
-         GHVhdD8mo5a5xeiZYq7k5tyaOMPZCOu8a6DnHZsz4NDBJbJfb1B+CTITdzCFEFXJVxsp
-         hlb2+7MOgm7cJi9cR6+27+s74TF1RVYnwmyh79z/3Is2p/yXmQXLTGcvHgygaOpmiccD
-         eNAHBOkI5mTASDmmpjYolnZkM6KRWtZZecDBw5a2QsS1hhHn41ZEx9mLHbO3Zshm0zhh
-         ugI/DVpTJb4it8YiST6QQUx2omAT+cffRsCZcBhxF3CeeTjoXnNBawmrbh4e/9Ub9uER
-         XOBg==
+        bh=qSL+kyhLCpFPS6tdOe8xbccN41HUwXLaLSYWrTydqtA=;
+        b=Sp+hfQ/C9BL1aYbRrsHZQpOFAVbGETNaekDkD6ASfd1uUdrIYQax0ogmHJCmZY4mdO
+         foIzqooQtgp3j3tVRnjdCPjJyB3qmcxnSIQs8Xb3Y058RV5aXnMxTqBCHOVQ8WRIwbmk
+         tlYlO5JJhqFYTAFGd+QZtDLk1p0AINmVuuoizGDkakMn/2m0SjSuVIHYYYv5TjfvCmAs
+         PdnNwuxf3TTBRIpyQ76r69BXPP4KqCYHa1dBT1xVEzdJFvOv/33T9jPfLchSRP4OutYa
+         XdYEU0q2dBSETC1o8sihCnV1OYJ8KdcUc61sB8JGdyBD1BjeXGyt+r6Kbjj5MOMelffO
+         0X8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pTt3BEd8vRXdvh+dz+HV5R8hmNbrtBmhumnFQiGhsfs=;
-        b=iDHV3J+MLwBNozM9T1Nig66umtSwTj3TB8LrP+YurcItJJ4jpaCJBaXEmtd7dzcDEk
-         K+k7yzjPc3Ywdz3+LCnnvetxHpFVaZuaSh+dIryC5FJleTkP+lx9fZqsB/ptjkbXGcEa
-         pmZHvwtKL62y218uHgmv/EDT2ELX5QxUy3WGPUcLBMF1uKMUGDWIOz2oDwx4iAg8iR/7
-         PAOEUtcKlwS3LQ2OtqTm596P/PZUiNkmEzDp6T9eB5tgyAa0im29bmzHak/LyiO5yBoB
-         7asKRZTga46Uf+Lk7VvL/mrdPS9IcuPFjqnAQtiijJ+jJR3xUWiygzWfq5p/FBj7Rh2K
-         QLzg==
-X-Gm-Message-State: ALQs6tBbA+6CD9+0SuW9bqjKB/QLNFx+H3sF4NwmWtbkr/EgB1mjXL8k
-        RVEcsWa0HuMts8b+9ARLuDw=
-X-Google-Smtp-Source: AIpwx49KrG765TJOoSmuPU8qyZDCjUZ350Ib551wLaFsw3KP+JT+pqYa3wnv+q1OJGu4CoPwqi61Sw==
-X-Received: by 10.46.147.204 with SMTP id p12mr19628615ljh.80.1524673895635;
-        Wed, 25 Apr 2018 09:31:35 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id t24sm518370ljg.65.2018.04.25.09.31.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=qSL+kyhLCpFPS6tdOe8xbccN41HUwXLaLSYWrTydqtA=;
+        b=Tgkjy5po14NpruI2R4F4Kj0YtcQyBG9Bh7wOfXNHDpHFJPZpRrs8qlPRvc9RqMGWsF
+         kFaUwZOiFhHLOgobbE32MQEWE04gCN7Kqz8Q7iAvQ/BiHjdb0FlxCnCqw/7o2A2X0GYd
+         8d19xf3swIVnQxxekhlo4zdjEfMmgOkcF77g4Q4u1MCaCbUvT/8vCo/jWWq9snGGksNp
+         Jepojmg9nD8Sdkko9Lv19DhysMNC0aDRnD7woU0+epfGMkfZMlMb2eSR235FqQfztM4e
+         jtcVchika3P89Gv506uUcTY5HO7kShp2Oz6FGOcwdqp9D3xSk5lv4ZQdvrLUbtp886hH
+         fxkQ==
+X-Gm-Message-State: ALQs6tCmw7WxlZT+h5tqSdlyidvxiM54y643CSMlO8L2vFB5f8wRChsj
+        dTc3haVDCKDfLjlmx7hAIVI=
+X-Google-Smtp-Source: AIpwx4+9eNKP9KviQAREPhFILB0cm1M91RC4y7e2fz3AftYZ0CYAbhSbBwiv6eIo15xltuAyRsM7cg==
+X-Received: by 10.46.128.76 with SMTP id p12mr19866087ljg.71.1524673894398;
         Wed, 25 Apr 2018 09:31:34 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id t24sm518370ljg.65.2018.04.25.09.31.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Apr 2018 09:31:33 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         szeder.dev@gmail.com
-Subject: [PATCH v4/wip 07/12] completion: implement and use --list-cmds=all
-Date:   Wed, 25 Apr 2018 18:31:02 +0200
-Message-Id: <20180425163107.10399-8-pclouds@gmail.com>
+Subject: [PATCH v4/wip 06/12] git: accept multiple --list-cmds options
+Date:   Wed, 25 Apr 2018 18:31:01 +0200
+Message-Id: <20180425163107.10399-7-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.519.gb89679a4aa
 In-Reply-To: <20180425163107.10399-1-pclouds@gmail.com>
 References: <20180421165414.30051-1-pclouds@gmail.com>
@@ -69,85 +69,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of parsing "git help -a" output, which is tricky to get right,
-less elegant and also slow, make git provide the list in
-machine-friendly form.
+Later on we may support non-overlapping command groups to
+--list-cmds. Allow the user to execute just one "git" process and get
+multiple groups. This may matter for git-completion.bash on Windows
+because we don't want the user to way for long when TAB-ing and
+Windows is slow on launching new processes.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- contrib/completion/git-completion.bash |  2 +-
- git.c                                  |  2 ++
- help.c                                 | 18 ++++++++++++++++++
- help.h                                 |  1 +
- 4 files changed, 22 insertions(+), 1 deletion(-)
+ git.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 3556838759..a5f13ade20 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -839,7 +839,7 @@ __git_commands () {
- 	then
- 		printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
- 	else
--		git help -a|egrep '^  [a-zA-Z0-9]'
-+		git --list-cmds=all
- 	fi
- }
- 
 diff --git a/git.c b/git.c
-index a46263306d..fa6e542d06 100644
+index 28bfa96d87..a46263306d 100644
 --- a/git.c
 +++ b/git.c
-@@ -229,6 +229,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				list_builtins(0, '\n');
- 			else if (!strcmp(cmd, "parseopt"))
+@@ -64,6 +64,7 @@ void setup_auto_pager(const char *cmd, int def)
+ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ {
+ 	const char **orig_argv = *argv;
++	int commands_listed = 0;
+ 
+ 	while (*argc > 0) {
+ 		const char *cmd = (*argv)[0];
+@@ -230,7 +231,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
  				list_builtins(NO_PARSEOPT, ' ');
-+			else if (!strcmp(cmd, "all"))
-+				list_all_cmds();
  			else
  				die("unsupported command listing type '%s'", cmd);
- 			commands_listed++;
-diff --git a/help.c b/help.c
-index 5b4a2f1b4f..217864999e 100644
---- a/help.c
-+++ b/help.c
-@@ -287,6 +287,24 @@ void list_common_cmds_help(void)
- 	print_cmd_by_category(common_categories);
+-			exit(0);
++			commands_listed++;
+ 		} else {
+ 			fprintf(stderr, _("unknown option: %s\n"), cmd);
+ 			usage(git_usage_string);
+@@ -239,6 +240,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 		(*argv)++;
+ 		(*argc)--;
+ 	}
++	if (commands_listed)
++		exit(0);
+ 	return (*argv) - orig_argv;
  }
  
-+void list_all_cmds(void)
-+{
-+	struct cmdnames main_cmds, other_cmds;
-+	int i;
-+
-+	memset(&main_cmds, 0, sizeof(main_cmds));
-+	memset(&other_cmds, 0, sizeof(other_cmds));
-+	load_command_list("git-", &main_cmds, &other_cmds);
-+
-+	for (i = 0; i < main_cmds.cnt; i++)
-+		puts(main_cmds.names[i]->name);
-+	for (i = 0; i < other_cmds.cnt; i++)
-+		puts(other_cmds.names[i]->name);
-+
-+	clean_cmdnames(&main_cmds);
-+	clean_cmdnames(&other_cmds);
-+}
-+
- int is_in_cmdlist(struct cmdnames *c, const char *s)
- {
- 	int i;
-diff --git a/help.h b/help.h
-index b21d7c94e8..0bf29f8dc5 100644
---- a/help.h
-+++ b/help.h
-@@ -17,6 +17,7 @@ static inline void mput_char(char c, unsigned int num)
- }
- 
- extern void list_common_cmds_help(void);
-+extern void list_all_cmds(void);
- extern const char *help_unknown_cmd(const char *cmd);
- extern void load_command_list(const char *prefix,
- 			      struct cmdnames *main_cmds,
 -- 
 2.17.0.519.gb89679a4aa
 
