@@ -2,69 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EF731F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 00:13:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87CF51F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 00:23:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750853AbeDYANc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Apr 2018 20:13:32 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33963 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750786AbeDYANb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Apr 2018 20:13:31 -0400
-Received: by mail-wm0-f65.google.com with SMTP id w2so2493370wmw.1
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 17:13:30 -0700 (PDT)
+        id S1750841AbeDYAVI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Apr 2018 20:21:08 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:33583 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750779AbeDYAVH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Apr 2018 20:21:07 -0400
+Received: by mail-wr0-f195.google.com with SMTP id o4-v6so1341009wrm.0
+        for <git@vger.kernel.org>; Tue, 24 Apr 2018 17:21:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=6reiD+OdGy8B9eKnG0rwjYrxK3UY1LhByBDoehAaK68=;
-        b=AxSJUq5YO0koKyNpHfhFBaKFo6RMX56pYHZ0P81vD4/E37XskDGzjyUuPln+bCH6Y5
-         ARyugAgi5iqbIuHRTgYdxiVKVUyIprGXA7XK9W5mABMw1Sa75SVRCO7Gu2mOmFqyS7v8
-         55r5uQBS7mWx8IZ3PIrN8UA2+8ZXmQW49UCeYmKJxrL6W1/HDFOhyErZZk5vupO1sJC+
-         L2GJ5teXNlUDAVJJ2HhneDRLS2GjUtHNMAWhrS0cgqRNtw6hLov2h49EVDRuYJD4Wgny
-         G6wZYR44kJFKvVY+1xrUGg6OPGWJ6re8crlklEMficGdI8rwoIuHdEcha5TFLcHL16SA
-         nTPg==
+        bh=nRZEh9XXSVKyiGvEL8/lBeywjOxSXKyN3WR5g+XqrKY=;
+        b=Lcw2mzHw5D7kpLyI4bkayENkvZD2PftaxCWPT68Jtwvv96QbS48wBN3epXfesE2Jg6
+         M/l610Xklep1ygI3QqpDFWDVeZN23kttrsXzjEeMc6Th6UzK9b4i+jngBkGlbHvTg/YE
+         /LZ5lyJuOZR1BZ4qwLabrB7n0E8lmH0gC0T7vuBXT/uca6eyGurPG9VmM+Akm76ubUV+
+         BXFGyIBU+2dPqyAQ/+wn5tqUzYoaiPlmT97P/jCoTp7PIdKpY7I4lOdLVK5dp8BgYZnT
+         6r0JiWAw1wIvK0cMtJslgUq9TdFpTSmjE2HgSN+Dvrl4VUR+zHkyFHPU1mf73RjKJ0xd
+         /W1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=6reiD+OdGy8B9eKnG0rwjYrxK3UY1LhByBDoehAaK68=;
-        b=JZ84q1g/NcGMPYpgbvsUCM0Ms0AlXrjbO+PsTk2sAWpZv/jg0RpuoUhNRBdSYHHmlc
-         5t9ayjmEE8NjN9yZIh0v7xvDcIWR60kYJnbB5zIdLnBYp1wUxlHoHnj5tlNI7a6O4oe/
-         lsRkQTkaiT1UxEKNfJeDXXHmJTZskkshobN5UITSI8qN3FelXS/TyY2o7S2UZAwCX36R
-         UlJe5rx0ytqEGTVSyZMClI9Iru+/BASr0iIW6iOWa9q2fNxNLwQunTT9a+H+fy8kYRmM
-         zsD32+zBM0zF9JQQuqgmGz1HIMWfobQ+97mi5rhao/NmNFGtecHoSehykVC80Eqeg+ud
-         I1fw==
-X-Gm-Message-State: ALQs6tCNCpgzJIO9q1nfFlCALy/JZd2pM3V92VPTX6uAc0ymdCfmFt+3
-        DzAlf62rgMnyzabLYx2HjKk=
-X-Google-Smtp-Source: AB8JxZqEMEBnvTPBhJ+CtviKTM1F6FZUP682PvwxCKSJD4QgKPK2BJcpClYSPjnsuTfsl3Qt1xyJUA==
-X-Received: by 10.28.210.18 with SMTP id j18mr3306950wmg.29.1524615209588;
-        Tue, 24 Apr 2018 17:13:29 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g7-v6sm13865930wrb.60.2018.04.24.17.13.28
+        bh=nRZEh9XXSVKyiGvEL8/lBeywjOxSXKyN3WR5g+XqrKY=;
+        b=uFU8H4dZM937hZ+TxnKH0Lm4kZHP3YcmdbneKODKK+FK6VkMpAfKD8I9tP79WC2rR6
+         o3VUP3R2BkUUIEPY9mN0i9j27lvp8jXeEMeKK/14C44z6zg2Frc95Yh4/OYRI8RVhgQh
+         E+3bg8QN/reZ/HB3RpgLkNzt2ZJyBI5Lyw4n1CvL5ovTW1ndjeDNTdaNO/HJPhgT4Mz/
+         2JOQbfcho+mfJdfFJjIZvhKvsFdGM9ri7PyiYOzcttSgdA92w+YNpVaLIvLM3oHJAlrh
+         lK/BHiKNfgZkh4v//GgimcJMgRF5K2n9dlxpwvYMoSk6QDdxni3apcf1Xq52uGzMGtPM
+         oFrg==
+X-Gm-Message-State: ALQs6tC13k/G+stR7olnWyO6c/OzRJ9JfZWhuWFl1hZ7OHu7i9PDsX7I
+        G/eFfTbjGZ8r/2kwR7S4+7I=
+X-Google-Smtp-Source: AIpwx4+TS1aVXxYY2uP1s3kRAMF+T4NiDFP0ZQbLutQ0su+sVgkSsNNcTQoYj3Yb9RgStB65LWreRw==
+X-Received: by 2002:adf:9986:: with SMTP id y6-v6mr21794099wrb.40.1524615665726;
+        Tue, 24 Apr 2018 17:21:05 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l15-v6sm15280029wrb.85.2018.04.24.17.21.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 24 Apr 2018 17:13:28 -0700 (PDT)
+        Tue, 24 Apr 2018 17:21:05 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "newren\@gmail.com" <newren@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>,
-        "vmiklos\@frugalware.org" <vmiklos@frugalware.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        "Johannes.Schindelin\@gmx.de" <Johannes.Schindelin@gmx.de>,
-        "eckhard.s.maass\@googlemail.com" <eckhard.s.maass@googlemail.com>
-Subject: Re: [PATCH v2 0/2] add additional config settings for merge
-References: <20180420133632.17580-1-benpeart@microsoft.com>
-        <20180424171124.12064-1-benpeart@microsoft.com>
-Date:   Wed, 25 Apr 2018 09:13:28 +0900
-In-Reply-To: <20180424171124.12064-1-benpeart@microsoft.com> (Ben Peart's
-        message of "Tue, 24 Apr 2018 17:11:39 +0000")
-Message-ID: <xmqqd0yo5ejb.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 5/9] packfile: add repository argument to packed_object_info
+References: <20180423234327.250484-1-sbeller@google.com>
+        <20180423234327.250484-6-sbeller@google.com>
+        <20180424111616.bc81c1d16f1c511a497891ed@google.com>
+Date:   Wed, 25 Apr 2018 09:21:04 +0900
+In-Reply-To: <20180424111616.bc81c1d16f1c511a497891ed@google.com> (Jonathan
+        Tan's message of "Tue, 24 Apr 2018 11:16:16 -0700")
+Message-ID: <xmqq8t9c5e6n.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,44 +68,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <Ben.Peart@microsoft.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
->  diff.renameLimit::
->  	The number of files to consider when performing the copy/rename
-> -	detection; equivalent to the 'git diff' option `-l`.
-> +	detection; equivalent to the 'git diff' option `-l`. This setting
-> +	has no effect if rename detection is turned off.
+> On Mon, 23 Apr 2018 16:43:23 -0700
+> Stefan Beller <sbeller@google.com> wrote:
+>
+>> diff --git a/sha1_file.c b/sha1_file.c
+>> index 93f25c6c6a..b292e04fd3 100644
+>> --- a/sha1_file.c
+>> +++ b/sha1_file.c
+>> @@ -1307,7 +1307,8 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
+>>  		 * information below, so return early.
+>>  		 */
+>>  		return 0;
+>> -	rtype = packed_object_info(e.p, e.offset, oi);
+>> +
+>> +	rtype = packed_object_info(the_repository, e.p, e.offset, oi);
+>
+> Extra blank line introduced.
 
-You mean "turned off via diff.renames"?
-
-This is not meant as a suggestion to rewrite this paragraph
-further---but if the answer is "no", then that might be an
-indication that the sentence is inviting a misunderstanding.
-
->  diff.renames::
->  	Whether and how Git detects renames.  If set to "false",
-> diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-> index 5a9ab969db..38492bcb98 100644
-> --- a/Documentation/merge-config.txt
-> +++ b/Documentation/merge-config.txt
-> @@ -39,7 +39,8 @@ include::fmt-merge-msg-config.txt[]
->  merge.renameLimit::
->  	The number of files to consider when performing rename detection
->  	during a merge; if not specified, defaults to the value of
-> -	diff.renameLimit.
-> +	diff.renameLimit. This setting has no effect if rename detection
-> +	is turned off.
-
-Ditto.  If your design is to make the merge machinery completely
-ignore diff.renames and only pay attention to merge.renames [*1*],
-then it probably is a good idea to be more specific here, by saying
-"... is turned off via ...", though.
-
->  merge.renames::
->  	Whether and how Git detects renames.  If set to "false",
-
-[Footnote]
-
-*1* ...which I do not think is such a good idea, by the way.  I'd
-personally expect merge.renames to allow overriding and falling back
-to diff.renames, just like the {merge,diff}.renameLimit pair does.
+Yes, but from the way this function is formatted, I think the
+new paragraph break there makes sort of sense.
