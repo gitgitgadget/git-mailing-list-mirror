@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD1E81F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 12:30:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C78F81F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 12:30:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754045AbeDYM37 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 08:29:59 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55241 "EHLO mout.gmx.net"
+        id S1753537AbeDYMaG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 08:30:06 -0400
+Received: from mout.gmx.net ([212.227.17.20]:36393 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753723AbeDYM3q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 08:29:46 -0400
+        id S1753272AbeDYM34 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 08:29:56 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
  (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0M0Kp7-1eOANY3gwn-00uXj7; Wed, 25 Apr 2018 14:29:38 +0200
+ 0LcmN9-1eVLMB3A6Z-00k8bX; Wed, 25 Apr 2018 14:29:49 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -32,94 +32,197 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Sixt <j6t@kdbg.org>,
         Sergey Organov <sorganov@gmail.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v9 14/17] rebase --rebase-merges: avoid "empty merges"
-Date:   Wed, 25 Apr 2018 14:29:31 +0200
-Message-Id: <169bc4f09bff564032b93e0df9ffcb181d174793.1524659287.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v9 17/17] rebase -i --rebase-merges: add a section to the man page
+Date:   Wed, 25 Apr 2018 14:29:47 +0200
+Message-Id: <673fb9cb8b5c7d57cb560b6ade45e419c8dd09fc.1524659287.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.33.gfcbb1fa0445
 MIME-Version: 1.0
 In-Reply-To: <cover.1524659287.git.johannes.schindelin@gmx.de>
 References: <cover.1524306546.git.johannes.schindelin@gmx.de> <cover.1524659287.git.johannes.schindelin@gmx.de>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:46dovRwcDlOX2WqVMZRaFZyJZ+oIaJv2dzJq7qsUJBTFRskXnpL
- noeXJt+JIgeKoOF257oMavct/W5aSp7/l7sc6/LO0+PFTwOE2BAgTUPUuHmO0fwBUrwNQk9
- MER/4U+UGLlNWILX4qgjUZ9mSWM7BAz72cdt6q75xwrW9G0iXnago85gtAMt9C+MfqTU0oH
- YA+Tx24fpdYmVk1rOveQA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DdaXxlXDNxM=:iJVXx/1pk9exF8zkcIbL4i
- piY0ZhmRVxlGYiFBHAbQTZZdyve9JKSy/wYiQJaOm5mkVo8sdMnhUBQKkeJdm+Y21k3XEj96a
- njgR754zgpM8VSA/HEtCdSjKKjScM+2F4cwyzxWp9HIAGwq4i8NTA2fg8IlxGMwFeTceWAddm
- opNK5M8zsWb7sRObiBXJ0Tr42mlKO+us8PmqQ11H4sl+xI8bLx9aolZHJDmVCZqRJjrCS3RHY
- fcdz2mRvWUYwsxfKh4T/oZTxKTzfGU4wQOghNGdiGSFfkf7dvM+fyb2g09m5Rh0N1Iirbky0H
- stcvcIrlrpQYXnh8PgFBGJtB0KRT5/gr95LiU1+dpCaoQsqwSbEGI0NUi/wCQpxT1n0+D3xPq
- D1HQeV42dtq6c09/7SEKIpmFlagKHj53v2ArIXB4YuzhU+L3Ga+9/IYCColUKXLw0mRyA9RGy
- +aoqahywntnRpjC1k+rbFRv1tYunsP0FT542ouPSxwGQmRyOV6fTgRm/GBFpJFo/ZBxThuIt/
- 0kY4V0F6I/3LDkUIDoU2RJSLNALH5iyFTMeSaj1Q04hQHP7nZ5ASFgxXhed0RebaF20p3MDVl
- KjLPkkPeNqrsRFBcOWOdUifjoXVnPzKWN6kqPgcJtU1jdVNIi4ErZpxTq2O4rVtNFO9IRbuCo
- 6/wO6d45WTL//qOzTTCUuRyHPSAiZil5kx6KhXdOmLjKA++T+a4vDMi2zNIijHX1c5Rk9Wjh0
- diXsfRiNp9Yi7nbFsI1udOeekyi/1DAx+4/3JhgB7XuBq2ta1g27CTTfBKaVDljBEh7haH7M5
- LxtPh9zRjb7wo2aD5x8rhwalScD7qnbCEskUwRzQWEXseyDamMBxX1AN5q1HNg482ChS64o
+X-Provags-ID: V03:K1:L9Cv8GO0oOFazBimztCYmblT9+CV6AV47AW86Ahka//6oJmMIWi
+ PXOjfFfuLSMXhYO/DWngC1Fl+0kJPGXgRBtRi/fp8HszCOP2eQdEdZMYsywSWO6idIh6hnW
+ 5cu/XHCRfg9tOeE4Zu/4Gw2m5IyAVS0RSUcTjjWZVX8/yW9RKDxXDS53YWNn0hfDDL8cGpB
+ vcL/Dlc7QqXzVjcQPcvTw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:E2yRZqStmkI=:wJ2fSVS90jRZvIH1Gb/TIg
+ phIzg6JaAsaZd39sePdBm1zpci3Zz5/YVBGSP0+y0fzSrwENWEdAinnxBE98RznkJnJW7zSm3
+ 78NfGzP5bh898t0pzmj7oXOpnNtaTia0kHroKl/7vdaRbP/YvfCwXXIAViOOXak/OgPSqcCOH
+ sSpQBQVBHhuOY4+lNjETNFxqmVke/2QnQihB7gGAsF3jCzaDywCuA0SKX9nJ+1jaQVf/NmSvM
+ SwCXj84pqwzorznQGg60VG2ibf9E7dUq+sbyfp3XDj5JURd/FQ3dq0Qi06+SY5dwYJiU7+8Kx
+ PbGH5T7hri6p171NCguCz2LCD3PymWsuRVKMk9EJpouwEIjRwD18qm67m3JN5GO9L8fmdddQc
+ tPvJQcyXl6ZbFbnaLR0oXLp31qn2t3auDS21WBtEQuwi8TVaqQzo47nHVthXVwyfZQ9x1USNi
+ dYq7j6lhXVL7X3a5PmF+UgG6CQV3iUhrgjJu9U6/Fh8Ay/XS8nxQd5hqeiZ75b+N3YMvRMDc1
+ UVdG4bj3d5soJNoUFY5kLN87Wu1AePaUC0J4z/lxGHrzvixq8i1gj/o//myB9VccFk1bJ9j5c
+ y4sQt7OvIz1T3C9aw9bQpjT8Ma9c7oP4Par6t5ND/0WZkD+vkDIfeNzdxVkU6zHvJvAvAEBS4
+ 097vnMixeUJDttq11xHnaw95P3HuuHcmHo77q7XVIOCFEKQ3EW9dZecXdqhoEvqmJpSt3N2oM
+ 33mKJS9KoibJabjBthiokKM5J3Z9ZNPrdMj7g014wsBgs7v+IYhZjRkO2gyflz0MQfZfHJBF4
+ 9yHYAv+AsDY6DttXXvEXiHqoT4AaqrZ7Zz88mLUDJnEicm7C8KOaWWPaspoREE81KaPG/Af
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `git merge` command does not allow merging commits that are already
-reachable from HEAD: `git merge HEAD^`, for example, will report that we
-are already up to date and not change a thing.
-
-In an interactive rebase, such a merge could occur previously, e.g. when
-competing (or slightly modified) versions of a patch series were applied
-upstream, and the user had to `git rebase --skip` all of the local
-commits, and the topic branch becomes "empty" as a consequence.
-
-Let's teach the todo command `merge` to behave the same as `git merge`.
-
-Seeing as it requires some low-level trickery to create such merges with
-Git's commands in the first place, we do not even have to bother to
-introduce an option to force `merge` to create such merge commits.
+The --rebase-merges mode is probably not half as intuitive to use as
+its inventor hopes, so let's document it some.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c              | 7 +++++++
- t/t3430-rebase-merges.sh | 8 ++++++++
- 2 files changed, 15 insertions(+)
+ Documentation/git-rebase.txt | 135 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 135 insertions(+)
 
-diff --git a/sequencer.c b/sequencer.c
-index 558efc1af6e..afa155c2829 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2810,6 +2810,13 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
- 	write_message("no-ff", 5, git_path_merge_mode(), 0);
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index fe681d69281..bd5ecff980e 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -403,6 +403,8 @@ reordered, inserted and dropped at will.
+ It is currently only possible to recreate the merge commits using the
+ `recursive` merge strategy; Different merge strategies can be used only via
+ explicit `exec git merge -s <strategy> [...]` commands.
+++
++See also REBASING MERGES below.
  
- 	bases = get_merge_bases(head_commit, merge_commit);
-+	if (bases && !oidcmp(&merge_commit->object.oid,
-+			     &bases->item->object.oid)) {
-+		ret = 0;
-+		/* skip merging an ancestor of HEAD */
-+		goto leave_merge;
-+	}
-+
- 	for (j = bases; j; j = j->next)
- 		commit_list_insert(j->item, &reversed);
- 	free_commit_list(bases);
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index e9c5dc1cd95..1628c8dcc20 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -215,4 +215,12 @@ test_expect_success 'post-rewrite hook and fixups work for merges' '
- 	test_cmp expect actual
- '
+ -p::
+ --preserve-merges::
+@@ -801,6 +803,139 @@ The ripple effect of a "hard case" recovery is especially bad:
+ 'everyone' downstream from 'topic' will now have to perform a "hard
+ case" recovery too!
  
-+test_expect_success 'refuse to merge ancestors of HEAD' '
-+	echo "merge HEAD^" >script-from-scratch &&
-+	test_config -C wt sequence.editor \""$PWD"/replace-editor.sh\" &&
-+	before="$(git rev-parse HEAD)" &&
-+	git rebase -i HEAD &&
-+	test_cmp_rev HEAD $before
-+'
++REBASING MERGES
++-----------------
 +
- test_done
++The interactive rebase command was originally designed to handle
++individual patch series. As such, it makes sense to exclude merge
++commits from the todo list, as the developer may have merged the
++then-current `master` while working on the branch, only to rebase
++all the commits onto `master` eventually (skipping the merge
++commits).
++
++However, there are legitimate reasons why a developer may want to
++recreate merge commits: to keep the branch structure (or "commit
++topology") when working on multiple, inter-related branches.
++
++In the following example, the developer works on a topic branch that
++refactors the way buttons are defined, and on another topic branch
++that uses that refactoring to implement a "Report a bug" button. The
++output of `git log --graph --format=%s -5` may look like this:
++
++------------
++*   Merge branch 'report-a-bug'
++|\
++| * Add the feedback button
++* | Merge branch 'refactor-button'
++|\ \
++| |/
++| * Use the Button class for all buttons
++| * Extract a generic Button class from the DownloadButton one
++------------
++
++The developer might want to rebase those commits to a newer `master`
++while keeping the branch topology, for example when the first topic
++branch is expected to be integrated into `master` much earlier than the
++second one, say, to resolve merge conflicts with changes to the
++DownloadButton class that made it into `master`.
++
++This rebase can be performed using the `--rebase-merges` option.
++It will generate a todo list looking like this:
++
++------------
++label onto
++
++# Branch: refactor-button
++reset onto
++pick 123456 Extract a generic Button class from the DownloadButton one
++pick 654321 Use the Button class for all buttons
++label refactor-button
++
++# Branch: report-a-bug
++reset refactor-button # Use the Button class for all buttons
++pick abcdef Add the feedback button
++label report-a-bug
++
++reset onto
++merge -C a1b2c3 refactor-button # Merge 'refactor-button'
++merge -C 6f5e4d report-a-bug # Merge 'report-a-bug'
++------------
++
++In contrast to a regular interactive rebase, there are `label`, `reset`
++and `merge` commands in addition to `pick` ones.
++
++The `label` command associates a label with the current HEAD when that
++command is executed. These labels are created as worktree-local refs
++(`refs/rewritten/<label>`) that will be deleted when the rebase
++finishes. That way, rebase operations in multiple worktrees linked to
++the same repository do not interfere with one another. If the `label`
++command fails, it is rescheduled immediately, with a helpful message how
++to proceed.
++
++The `reset` command resets the HEAD, index and worktree to the specified
++revision. It is isimilar to an `exec git reset --hard <label>`, but
++refuses to overwrite untracked files. If the `reset` command fails, it is
++rescheduled immediately, with a helpful message how to edit the todo list
++(this typically happens when a `reset` command was inserted into the todo
++list manually and contains a typo).
++
++The `merge` command will merge the specified revision into whatever is
++HEAD at that time. With `-C <original-commit>`, the commit message of
++the specified merge commit will be used. When the `-C` is changed to
++a lower-case `-c`, the message will be opened in an editor after a
++successful merge so that the user can edit the message.
++
++If a `merge` command fails for any reason other than merge conflicts (i.e.
++when the merge operation did not even start), it is rescheduled immediately.
++
++At this time, the `merge` command will *always* use the `recursive`
++merge strategy, with no way to choose a different one. To work around
++this, an `exec` command can be used to call `git merge` explicitly,
++using the fact that the labels are worktree-local refs (the ref
++`refs/rewritten/onto` would correspond to the label `onto`, for example).
++
++Note: the first command (`label onto`) labels the revision onto which
++the commits are rebased; The name `onto` is just a convention, as a nod
++to the `--onto` option.
++
++It is also possible to introduce completely new merge commits from scratch
++by adding a command of the form `merge <merge-head>`. This form will
++generate a tentative commit message and always open an editor to let the
++user edit it. This can be useful e.g. when a topic branch turns out to
++address more than a single concern and wants to be split into two or
++even more topic branches. Consider this todo list:
++
++------------
++pick 192837 Switch from GNU Makefiles to CMake
++pick 5a6c7e Document the switch to CMake
++pick 918273 Fix detection of OpenSSL in CMake
++pick afbecd http: add support for TLS v1.3
++pick fdbaec Fix detection of cURL in CMake on Windows
++------------
++
++The one commit in this list that is not related to CMake may very well
++have been motivated by working on fixing all those bugs introduced by
++switching to CMake, but it addresses a different concern. To split this
++branch into two topic branches, the todo list could be edited like this:
++
++------------
++label onto
++
++pick afbecd http: add support for TLS v1.3
++label tlsv1.3
++
++reset onto
++pick 192837 Switch from GNU Makefiles to CMake
++pick 918273 Fix detection of OpenSSL in CMake
++pick fdbaec Fix detection of cURL in CMake on Windows
++pick 5a6c7e Document the switch to CMake
++label cmake
++
++reset onto
++merge tlsv1.3
++merge cmake
++------------
++
+ BUGS
+ ----
+ The todo list presented by `--preserve-merges --interactive` does not
 -- 
 2.17.0.windows.1.33.gfcbb1fa0445
-
-
