@@ -2,79 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A9BB1F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 18:22:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 922C91F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 18:23:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756222AbeDYSW3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 14:22:29 -0400
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:43903 "EHLO
-        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756098AbeDYSWM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 14:22:12 -0400
-Received: by mail-qk0-f171.google.com with SMTP id h19so4243371qkj.10
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:22:11 -0700 (PDT)
+        id S1756265AbeDYSVa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 14:21:30 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:42795 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756155AbeDYSVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 14:21:18 -0400
+Received: by mail-pf0-f193.google.com with SMTP id o16so15921992pfk.9
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:21:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=An6o4qgyvclu29ZVtMjuTtRaSJHDy/nGU6SddTuwLl0=;
-        b=ODHGXRYDsx17ZPl79A94KoqFzw1EEa8zKilgQh4gQP/8MBv8I+LoJtvIsovsZLjaYB
-         qpHekacYS4XjgHPA+Jd6pzm4XwM0o5N11mRu3XYj1s+s8HprEaPzI4l01Y29VvmzzK6k
-         L51kRW6lTxAww2UXRjjN0JX7oxmpv+Zr6fcVIBoh81zdGwspxxcf+911w14rgxDBfmSs
-         n+Yk6mYsVMNBL320I8fhiDBSGNhBvyETUvLDfMuzJUqsjHG2JBfQN8PFLs6vr0w9uw1p
-         umkRlmgjuqWh70OfGFicK7r9eJIvrNqz8xraJbAE0fZfFXGrWnNRa8ynclzIdxkEMGO6
-         OWRA==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=48amZqz71/F57pSRd0V/tdmxPu/tno9/m4Nz61ixpVk=;
+        b=R/9tOBLIvQdyZRHAJeE6ScB2F/0lsASiYHPM6szfjDI+zcSVuL8xzST9TNa33Lro50
+         QLFPncd63Y9XVukyg3TfEvVp+AZ2OvdUIuvfq0XmI0T7uLGZ9ECnIlQkre/o17AetNDx
+         XEOngDaB9hPCKV5cK9i7X6FhmwDbFvpV4UHdV0aRnmxQ6o906OZyrdfX3KmZ//mQeLgZ
+         uJ13BFKSZaA5DjSKLEvmWsoK1Or+9Jq93Dk+1aPkVDTEFn4DYNsmBVHznhxgml2HHfVD
+         WLRARbC/3kw+9ubD4HtT+hrQSUF75N7BtjOFhJDpcQ+odagovfBR/oD7q86i1tgcNhXF
+         q2sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=An6o4qgyvclu29ZVtMjuTtRaSJHDy/nGU6SddTuwLl0=;
-        b=KKwyHI3oxvybKXBwJlUUpSxo1b0c2amzf9AT4Bdpd7h5OVYVTvmp0r9CD9kl8Jzy9P
-         JGld7u8e0aU8NmjzaehdgD+nVsQ9nrGMGJNjLcTFYS7WjzZw9CWY3zHjod4h/CbTHfqY
-         GYEioz84qikgyuC1lMfCIsYyNReqsP06JVL3MnaoMxH8Hy5aggZEjD9xhDWKKWu4W2Gj
-         QctuOldkXOGs/TmgbX7J2ev7D+z06NlUscBTFUWywLgeUzN/EyUE5lQyEGj238PkDGTI
-         c0NjVb4GHucTl3t7TWkCV4PtVSwFzTxtW5vlDVVvSzzZMDDr+Sa8xfDk630ZXdeSJwAb
-         gFhA==
-X-Gm-Message-State: ALQs6tAfL/AgI/tnjrX4noDtCqUuRweXxJhFCb9gPhRUlAz4n13BfF1O
-        t+6Lur6VlrS81pSA3SY2C+xkFBBS3boQ4cSpLLk=
-X-Google-Smtp-Source: AB8JxZoQLCyyEryUTQfx40jH/vMIDmrZhKf/vwRTOnYU1IHKJgx6bEi8Mtd/Hcxkb74pbHzJcERhkYBz7HRMDBzLMjk=
-X-Received: by 10.55.190.134 with SMTP id o128mr29201733qkf.141.1524680531321;
- Wed, 25 Apr 2018 11:22:11 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Wed, 25 Apr 2018 11:22:10 -0700 (PDT)
-In-Reply-To: <20180425163107.10399-11-pclouds@gmail.com>
-References: <20180421165414.30051-1-pclouds@gmail.com> <20180425163107.10399-1-pclouds@gmail.com>
- <20180425163107.10399-11-pclouds@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 25 Apr 2018 14:22:10 -0400
-X-Google-Sender-Auth: ITNaZ2gbbdv4yqEWm0SJ2LxHyzM
-Message-ID: <CAPig+cQEOxFz-0UAKHFYSzVqnxKdgVAmvV3FoJ8fT2SnWvRwLg@mail.gmail.com>
-Subject: Re: [PATCH v4/wip 10/12] help: use command-list.txt for the source of guides
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=48amZqz71/F57pSRd0V/tdmxPu/tno9/m4Nz61ixpVk=;
+        b=eWR+3eomDRyjS/EyoYlQA9DryBUOGJZ6SSj1T6UyrJGXbbO6xILqQgPKG5cIzC2BDN
+         C7uOA5PGlhqA5PsVM3zVioq+246+StJwSqkHTCi1TCCchobBQbTDNcBWqBjRjXyqMYuU
+         +ZhWO2tYOZEHJPcFX1c4RIgBhfpTaEPoa1tkE5wUUcHsJ53tc2rTFlwyQfv7kM9hPuCi
+         U/PmORnQumx702YEef6M0ixJ+I+C9NG87XjVjvaWxbKXugmjuEK/iFn0MtC86khJtss4
+         HzeCt3XyHmX2An6HSNRJRiiz8bf89DeVKO3T6eGYsWYI33LFHh/cX1w+tlgcYbJJ883t
+         LHFA==
+X-Gm-Message-State: ALQs6tBlV4eysWmfaPJYqsKMX1Pxh/hZ80Tl5Vf+H2n0eyGiwXbOkxr/
+        0sWK6dCHFzUr5nBqD5lIizkSbg==
+X-Google-Smtp-Source: AB8JxZrODGAnXdcRIwiRVLUu1NwK6A8ez0wwIkx99PsLUv1hIN5PJnK9+cEbP2sMp04THtwuc8GBfg==
+X-Received: by 10.99.111.77 with SMTP id k74mr4299374pgc.112.1524680477859;
+        Wed, 25 Apr 2018 11:21:17 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id d8sm29061803pgu.60.2018.04.25.11.21.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 25 Apr 2018 11:21:16 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
+        jonathantanmy@google.com, sandals@crustytoothpaste.net,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCHv3 5/9] packfile: add repository argument to packed_object_info
+Date:   Wed, 25 Apr 2018 11:21:02 -0700
+Message-Id: <20180425182106.162972-6-sbeller@google.com>
+X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
+In-Reply-To: <20180425182106.162972-1-sbeller@google.com>
+References: <20180424215910.22201-1-sbeller@google.com>
+ <20180425182106.162972-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 25, 2018 at 12:31 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
-<pclouds@gmail.com> wrote:
-> The help command currently hard codes the list of guides and their
-> summary in C. Let's move this list to command-list.txt. This lets us
-> extract summary lines from Documentation/git*.txt. This also
-> potentially lets us lists guides in git.txt, but I'll leave that for
+From: Jonathan Nieder <jrnieder@gmail.com>
 
-s/lists/list/
+Add a repository argument to allow callers of packed_object_info to be
+more specific about which repository to handle. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
 
-> now.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
+As with the previous commits, use a macro to catch callers passing a
+repository other than the_repository at compile time.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ builtin/pack-objects.c | 3 ++-
+ packfile.c             | 4 ++--
+ packfile.h             | 3 ++-
+ sha1_file.c            | 2 +-
+ 4 files changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 8d4111f748..d65eb4a947 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1572,7 +1572,8 @@ static void drop_reused_delta(struct object_entry *entry)
+ 
+ 	oi.sizep = &entry->size;
+ 	oi.typep = &entry->type;
+-	if (packed_object_info(entry->in_pack, entry->in_pack_offset, &oi) < 0) {
++	if (packed_object_info(the_repository, entry->in_pack,
++			       entry->in_pack_offset, &oi) < 0) {
+ 		/*
+ 		 * We failed to get the info from this pack for some reason;
+ 		 * fall back to sha1_object_info, which may find another copy.
+diff --git a/packfile.c b/packfile.c
+index 3ecfba66af..5fa7d27d3b 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1333,8 +1333,8 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
+ 	hashmap_add(&delta_base_cache, ent);
+ }
+ 
+-int packed_object_info(struct packed_git *p, off_t obj_offset,
+-		       struct object_info *oi)
++int packed_object_info_the_repository(struct packed_git *p, off_t obj_offset,
++				      struct object_info *oi)
+ {
+ 	struct pack_window *w_curs = NULL;
+ 	unsigned long size;
+diff --git a/packfile.h b/packfile.h
+index a92c0b241c..bc8d840b1b 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -125,7 +125,8 @@ extern void release_pack_memory(size_t);
+ /* global flag to enable extra checks when accessing packed objects */
+ extern int do_check_packed_object_crc;
+ 
+-extern int packed_object_info(struct packed_git *pack, off_t offset, struct object_info *);
++#define packed_object_info(r, p, o, oi) packed_object_info_##r(p, o, oi)
++extern int packed_object_info_the_repository(struct packed_git *pack, off_t offset, struct object_info *);
+ 
+ extern void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
+ extern const struct packed_git *has_packed_and_bad(const unsigned char *sha1);
+diff --git a/sha1_file.c b/sha1_file.c
+index 93f25c6c6a..746ff8297a 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1307,7 +1307,7 @@ int oid_object_info_extended_the_repository(const struct object_id *oid, struct
+ 		 * information below, so return early.
+ 		 */
+ 		return 0;
+-	rtype = packed_object_info(e.p, e.offset, oi);
++	rtype = packed_object_info(the_repository, e.p, e.offset, oi);
+ 	if (rtype < 0) {
+ 		mark_bad_packed_object(e.p, real->hash);
+ 		return oid_object_info_extended(the_repository, real, oi, 0);
+-- 
+2.17.0.441.gb46fe60e1d-goog
+
