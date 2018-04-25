@@ -2,96 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C38F1F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 15:12:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 833AE1F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 15:18:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755153AbeDYPMm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 11:12:42 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36869 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754863AbeDYPMi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 11:12:38 -0400
-Received: by mail-wr0-f196.google.com with SMTP id c14-v6so13573051wrd.4
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 08:12:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=835d0HE1R+Miz1mnoIyhzL5ljUHXpF+/D51NSxWl/cw=;
-        b=ktSpBFLXcDtisJiGrvb13i8DhJ3M338gxBT1/lM4OFg45YRAPYtpQtvEqWpav+Ps1i
-         UPzRtJJa209gRSQrgCClQIfP8py/z89jXjCE8CzZrWxk0LBbYtevuyB7xlIC8vV6Xgfp
-         BG9wdvoDf4f1WBjFc6mJqlKzYmmX+QNu1wxfMFRPFROjG9WziIXT46Y1agHXXYjHE75q
-         rmGCZgMtrw0K+Is/XgMvktaxVw2w3Ct86kETjSnJIxmUIPhpan1/noCR+nO594unU18S
-         ftUohrB50fndivVoAIrf/EUJv7bT56Lru1H43ufsucKW8OuWwVC68RqLjv4g59f/eqg7
-         jhMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=835d0HE1R+Miz1mnoIyhzL5ljUHXpF+/D51NSxWl/cw=;
-        b=EuHVC/KleF5w8zdCh4D7Nc+B7LgOsoDNvIHcE707wS4dPxWA7Gy3qUWcSG52Gc/vHn
-         3asQPtEJwVnALtxOBX+KeILtTFH3DKGfk1+ruxJfId/hsGE9tg0jJM6VrmshrWPOYXq5
-         2USq03Yr8jgcbIgfAg9wIH7ClgflNBSYUa7W4Dw9hkggC6kKFEfgLcr8YtEsTw86UxiE
-         VWivxiruPUBSkHIvV1iuwYF1HlHbxy8pfBavs8mfSWwfJz+jX31W7h4q0g2IqikD2mOc
-         X8A9nKswfUQCWNz2GSQtXPFgKZSmpi03zulj4Xiebugov4fuLblKVJ4xBhsgCulboXGn
-         L+Ig==
-X-Gm-Message-State: ALQs6tALmBzdhHnrVKx+fvauuQp05yLaS0u7USUcT/tQ3lLsQifAbdv9
-        Y7FqlPLjQsi9IT/k6KTipq54PTo8XsV4Fg6BKRY=
-X-Google-Smtp-Source: AIpwx4/aFOI319LQ9QPFIgTPNlI1q77kjRD3ntbkYysAoPnbj1GTsCt9liDYoNKWFWbXhmZxhoUI98YwKSTkH5z9qY4=
-X-Received: by 2002:adf:b88f:: with SMTP id i15-v6mr22423471wrf.163.1524669157631;
- Wed, 25 Apr 2018 08:12:37 -0700 (PDT)
+        id S1754463AbeDYPS3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 11:18:29 -0400
+Received: from smtp66.ord1c.emailsrvr.com ([108.166.43.66]:40836 "EHLO
+        smtp66.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753508AbeDYPS2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 25 Apr 2018 11:18:28 -0400
+Received: from smtp25.relay.ord1c.emailsrvr.com (localhost [127.0.0.1])
+        by smtp25.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id BF75A20675;
+        Wed, 25 Apr 2018 11:18:27 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp25.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 464BB2042A;
+        Wed, 25 Apr 2018 11:18:27 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [192.168.222.13] (cable-192.222.220.61.electronicbox.net [192.222.220.61])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Wed, 25 Apr 2018 11:18:27 -0400
+Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
+To:     Junio C Hamano <gitster@pobox.com>,
+        "Robin H. Johnson" <robbat2@gentoo.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+        Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20180413170129.15310-1-mgorny@gentoo.org>
+ <robbat2-20180423T200557-844830385Z@orbis-terrarum.net>
+ <xmqqtvs18p9o.fsf@gitster-ct.c.googlers.com>
+ <robbat2-20180425T060717-325652820Z@orbis-terrarum.net>
+ <xmqqin8f4qoq.fsf@gitster-ct.c.googlers.com>
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <ad4d0d66-58f4-5cab-d314-a30a50e8ad32@xiplink.com>
+Date:   Wed, 25 Apr 2018 11:18:26 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 10.223.142.82 with HTTP; Wed, 25 Apr 2018 08:12:37 -0700 (PDT)
-In-Reply-To: <CAGZ79kbzFGn2-xcrWFi1+ZUgSGGHdUPEQOexu8Lan796LCsvBg@mail.gmail.com>
-References: <CAGZ79kbzFGn2-xcrWFi1+ZUgSGGHdUPEQOexu8Lan796LCsvBg@mail.gmail.com>
-From:   Pratik Karki <predatoramigo@gmail.com>
-Date:   Wed, 25 Apr 2018 20:57:37 +0545
-Message-ID: <CAOZc8M85e6V3XP++yay=DU0i1X613ACRFPfwgSes5PFV7dss6A@mail.gmail.com>
-Subject: Re: GSoC students and mentors in 2018
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqin8f4qoq.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-CA
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 24, 2018 at 2:46 AM, Stefan Beller <sbeller@google.com> wrote:
-> Hi Git community,
->
-> This year we'll participate once again in Google Summer or Code!
-> We'll have 3 students and 3 mentors, which is more than in recent years.
->
-> Paul-Sebastian Ungureanu mentored by DScho, wants to convert git-stash
-> into a builtin.
->
-> Alban Gruin and Pratik Karki want to convert parts of git-rebase into
-> a builtin. Both are mentored by Christian and myself.
->
-> The slots were just announced today, please join me in welcoming them
-> to the Git mailing list! (Although you may remember them from the
-> micro projects[1,2,3])
->
-> [1] https://public-inbox.org/git/20180319155929.7000-1-ungureanupaulsebastian@gmail.com/
-> [2] https://public-inbox.org/git/20180301111907.17607-1-alban.gruin@gmail.com/
-> [3] https://public-inbox.org/git/20180327173137.5970-1-predatoramigo@gmail.com/
->
-> Thanks,
-> Stefan
+On 2018-04-25 04:48 AM, Junio C Hamano wrote:
+> "Robin H. Johnson" <robbat2@gentoo.org> writes:
+> 
+>> In the thread from 6 years ago, you asked about tar's behavior for
+>> mtimes. 'tar xf' restores mtimes from the tar archive, so relative
+>> ordering after restore would be the same, and would only rebuild if the
+>> original source happened to be dirty.
+>>
+>> This behavior is already non-deterministic in Git, and would be improved
+>> by the patch.
+> 
+> But Git is not an archiver (tar), but is a source code control
+> system, so I do not think we should spend any extra cycles to
+> "improve" its behaviour wrt the relative ordering, at least for the
+> default case.  Only those who rely on having build artifact *and*
+> source should pay the runtime (and preferrably also the
+> maintainance) cost.
 
-Hi Git community, I will be working to convert parts of git-rebase into builtin.
-I hope my contribution will improve Git.
+Anyone who uses "make" or some other mtime-based tool is affected by 
+this.  I agree that it's not "Everyone" but it sure is a lot of people.
 
-Best of luck to Alban and Paul. Hope we get our patches merged this summer.
+Are we all that sure that the performance hit is that drastic?  After 
+all, we've just done write_entry().  Calling utime() at that point 
+should just hit the filesystem cache.
 
-Cheers,
-Pratik
+> The best approach to do so is to have those people do the "touch"
+> thing in their own post-checkout hook.  People who use Git as the
+> source control system won't have to pay runtime cost of doing the
+> touch thing, and we do not have to maintain such a hook script.
+> Only those who use the "feature" would.
+
+The post-checkout hook approach is not exactly straightforward.
+
+Naively, it's simply
+
+	for F in `git diff --name-only $1 $2`; do touch "$F"; done
+
+But consider:
+
+* Symlinks can cause the wrong file to be touched.  (Granted, Michał's 
+proposed patch also doesn't deal with symlinks.)  Let's assume that a 
+hook can be crafted will all possible sophistication.  There are still 
+some fundamental problems:
+
+* In a "file checkout" ("git checkout -- path/to/file"), $1 and $2 are 
+identical so the above loop does nothing.  Offhand I'm not even sure how 
+a hook might get the right files in this case.
+
+* The hook has to be set up in every repo and submodule (at least until 
+something like Ævar's experiments come to fruition).
+
+* A fresh clone can't run the hook.  This is especially important when 
+dealing with submodules.  (In one case where we were bit by this, make 
+though that half of a fresh submodule clone's files were stale, and 
+decided to re-autoconf the entire thing.)
+
+
+I just don't think the hook approach can completely solve the problem.
+
+I appreciate Ævar's concern that there are more than just two mtime 
+requests floating around.  But I think git's users are best served by a 
+built-in approach, with a config setting to control the desired mtime 
+handling (defaulting to the current behaviour).  People who want a 
+different mtime solution will at least have a clear place in the code to 
+propose a patch.
+
+		M.
+
