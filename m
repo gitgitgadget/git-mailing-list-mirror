@@ -2,62 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 205921F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 15:01:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A9E11F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 15:05:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754687AbeDYPBT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 11:01:19 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:36717 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753571AbeDYPBP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 11:01:15 -0400
-Received: by mail-wm0-f54.google.com with SMTP id n10so7377718wmc.1
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 08:01:15 -0700 (PDT)
+        id S1754570AbeDYPFi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 11:05:38 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:43931 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753632AbeDYPFh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 11:05:37 -0400
+Received: by mail-wr0-f196.google.com with SMTP id v15-v6so35570608wrm.10
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 08:05:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+        h=subject:to:references:from:openpgp:autocrypt:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=CdbI1Q+/I1lSWh17Ud4H1xxI6c0+O6iQOO6tr1Wpa7o=;
-        b=NJ7lvblPi+Z6AQqPWIJor5aYhicfYEpgkCJlhrUBeP6PKdElcXD7M0O0jOYemVhtQb
-         jOjf5s/097RrnNd/PmZ2hAuUyjBhaZPo9Tzmt/heh3tBCC7PsMK8ygpyElWYmxvNLxm0
-         y0KDu7vdky0bvc9/+YF9MBLCvVhBsiRSux9/NGKeeC6XaClNlKAIBHVMpPXpxYa0VHOf
-         7qh77Tud3Ac8DJDXdeQtCj8dvsHt52UmT7q6EMu/yg0ycM/cZEuR3E68eUGvhJeKQknL
-         eZoDPGO76s6WfocxPE+24/FY34nsbWlTqTOVeEYWnKEmyMIIPici63LzRkrfiBfF8Aoc
-         acUQ==
+        bh=peoBHOhBnwF+d+uiNOfEXJW0pOjiuyEvHYYNif1ohf8=;
+        b=fwHX6UsGncaXoJSB7DG3+mLhstqm6u91tVo3cY7kmiDd+47fgr+nLScCw8TCPxaZz6
+         xE3VCVMhZLum62oykGimqMcMiBN0s/aQASadXBuloHbCuX6ID4ExuEfGhzFcXoZl+jKP
+         J0LQMie6vTGyONuaVOT025DrVtSfOQme8LRsQqj/oPE0RvukglEGZNBztaxx+6PCmKCM
+         KGV6+Nj7cqoz1vpY07wWti+X87WeLdB1k/tCSFZZJrQ3L04pVL4A6dVDums5iWHcko3G
+         68rXemtEeJhFP1CFdo4/WfRyPAw95MG4wQbIOEjGfgkvQ2P82kHhSd7NK6zk0i8ut31O
+         IlWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+        h=x-gm-message-state:subject:to:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=CdbI1Q+/I1lSWh17Ud4H1xxI6c0+O6iQOO6tr1Wpa7o=;
-        b=qJUhiM74TWeN2rVbeWkCwJSL2mExTurUpb6b6FyAQKXMMPi5yJlNMiJFy8L9dH9MOd
-         kjHaaWOwmOBNRraK19jitG4dncgnLEkr/qfdeg6/FMiejqz3rI4pU/8+v3c2cYVOEEi6
-         QMg0Q+F9AmTPlgjcLPHQQlT8fLaE3OskYdKCy4b6HRG1EUzcFgysUqA/bOUWI1ULgZOe
-         +n4GphzvHBVTTigtjnq0IEibXx+aOn/HB+Fiduxi9RxDxUgo2iCKHtTeK9kK9UoXjs7i
-         jYeMwJJJqr5XKvCyFwqAMSaIoxC8eNV1t9TxOXiqooBsKUX6XbvHZG2mmtKUfFqvnWQu
-         CsZA==
-X-Gm-Message-State: ALQs6tB/G4ceG8H2xGUBVPipQQDkd0W/3M4jDqj2Im3ECTPZlCgdi8A1
-        ObFgAHBTthLhriDLwsU+doOALXUaj5c=
-X-Google-Smtp-Source: AIpwx48lsGMGUM1TeCxbRtsZGIsXNMtSxR+l2LdWur6GrZ/Jf21mzlI17RkYrGt45Wi8r1eGPtZdwg==
-X-Received: by 10.28.191.206 with SMTP id o75mr14283580wmi.122.1524668473910;
-        Wed, 25 Apr 2018 08:01:13 -0700 (PDT)
+        bh=peoBHOhBnwF+d+uiNOfEXJW0pOjiuyEvHYYNif1ohf8=;
+        b=cpAK4Aq+caH2v/T8AUt3wgxAxCrOjRtYlr36H838xITl/bkNeYAQ2TGeAZXanJWuRG
+         PW0aluMH/TUqk1/2DhInpWezHZtayIX0K3TSdaN5scGhtSiRIIZDhsxDIaq0QbvV9Vv7
+         JT21QsT0deyRXvV1O2X1kj5k9qAX2x2p/dt2PKyNnJkTa22YHOgumhjLgi1gPW7UVDPd
+         KSqfdk2o3hlZ7ZyLjDkkpTAAEqMLsUCPUjZUC66b/ehvkfy9WP+QMPF4xecGNFbk6wN0
+         FixoyAG5PIr2S7naXpNahTaSi00sP70GwqtBDs3uxsavf7JOQw6emUycOmvr7wc6a10c
+         eIww==
+X-Gm-Message-State: ALQs6tAxsqzPTFERffvBZPmdK1SYYW/BSNjobM8z55B60ATRPV6QvsCZ
+        9VenW3GIduv7RZ+Fc6UjSFWRfRf8
+X-Google-Smtp-Source: AIpwx48BwiRXodPDyizPguOAY0ecRY+Usoi5bdNv/T1xfo9hXPloAnjPy06c5vsnz9B1pVpDrsNxbQ==
+X-Received: by 2002:adf:96c2:: with SMTP id u60-v6mr24144497wrb.204.1524668735960;
+        Wed, 25 Apr 2018 08:05:35 -0700 (PDT)
 Received: from [192.168.0.104] (AToulouse-658-1-42-160.w86-221.abo.wanadoo.fr. [86.221.49.160])
-        by smtp.gmail.com with ESMTPSA id x73sm2624560wmf.21.2018.04.25.08.01.12
+        by smtp.gmail.com with ESMTPSA id b18-v6sm22716965wrb.55.2018.04.25.08.05.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Apr 2018 08:01:12 -0700 (PDT)
-Subject: Re: GSoC students and mentors in 2018
-To:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-Cc:     Pratik Karki <predatoramigo@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-References: <CAGZ79kbzFGn2-xcrWFi1+ZUgSGGHdUPEQOexu8Lan796LCsvBg@mail.gmail.com>
+        Wed, 25 Apr 2018 08:05:35 -0700 (PDT)
+Subject: Re: java diffs show no method context
+To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        git@vger.kernel.org
+References: <5AE07A3A020000A10002B5C5@gwsmtp1.uni-regensburg.de>
 From:   Alban Gruin <alban.gruin@gmail.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
@@ -99,12 +96,12 @@ Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
  k2nQJqHnxuIOjsCINOa+6Yb35Hm3sgJZLAcZmhmXccRSqgV+ogtGbWskHlCN5QQN8jplJeVE
  /OcVfXaAnWLixcTUh71y/+zyMDpwR6rW8pCS5xIsK+iFeiBvJB5gk9BKPZ1k+QpPXXE2krCl
  bZXihhDMGXGuuOpBlraxDnNtwXD5702FIOQkWqR4K98iOvTLrRKHM8g=
-Message-ID: <1064b009-26a4-8b7e-190c-36af9ea7f2c5@gmail.com>
-Date:   Wed, 25 Apr 2018 17:01:11 +0200
+Message-ID: <aae8d748-101d-1eb2-f8e8-9da2e53e2388@gmail.com>
+Date:   Wed, 25 Apr 2018 17:05:34 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbzFGn2-xcrWFi1+ZUgSGGHdUPEQOexu8Lan796LCsvBg@mail.gmail.com>
+In-Reply-To: <5AE07A3A020000A10002B5C5@gwsmtp1.uni-regensburg.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
@@ -113,33 +110,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le 23/04/2018 à 23:01, Stefan Beller a écrit :
-> Hi Git community,
+Le 25/04/2018 à 14:53, Ulrich Windl a écrit :
+> Hi!
 > 
-> This year we'll participate once again in Google Summer or Code!
-> We'll have 3 students and 3 mentors, which is more than in recent years.
-> 
-> Paul-Sebastian Ungureanu mentored by DScho, wants to convert git-stash
-> into a builtin.
-> 
-> Alban Gruin and Pratik Karki want to convert parts of git-rebase into
-> a builtin. Both are mentored by Christian and myself.
-> 
-> The slots were just announced today, please join me in welcoming them
-> to the Git mailing list! (Although you may remember them from the
-> micro projects[1,2,3])
-> 
-> [1] https://public-inbox.org/git/20180319155929.7000-1-ungureanupaulsebastian@gmail.com/
-> [2] https://public-inbox.org/git/20180301111907.17607-1-alban.gruin@gmail.com/
-> [3] https://public-inbox.org/git/20180327173137.5970-1-predatoramigo@gmail.com/
-> 
-> Thanks,
-> Stefan
-> 
+> This is for git 2.13.6, and it may be an FAQ or frequent feature request. Anyway:
+> I'm new to Java, and writing my first project using Git, I found that "git diff" only reports the class in the diff context, but not the method (as seen for C, for example).
+> I'd wish to have the method where the diff is located.
 
 Hi,
 
-it’s an honor for me too! I am excited to work with the git commity.
+to achieve this behaviour, you have to create a file named
+".gitattributes" at the root of your project, containing this line:
+
+*.java diff=java
+
+.gitattributes allows you to configure other things, as described in the
+documentation[1].
+
+I hope it helps.
+
+[1] https://www.git-scm.com/docs/gitattributes
 
 Cheers,
 Alban
