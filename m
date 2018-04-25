@@ -3,61 +3,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 841431F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 18:16:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C25F61F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 18:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932333AbeDYSNS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 14:13:18 -0400
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:44971 "EHLO
-        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932323AbeDYSNQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 14:13:16 -0400
-Received: by mail-ua0-f194.google.com with SMTP id h15so9053848uan.11
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:13:15 -0700 (PDT)
+        id S1756218AbeDYSQK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 14:16:10 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:36059 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756119AbeDYSQF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 14:16:05 -0400
+Received: by mail-qt0-f193.google.com with SMTP id q13-v6so28025169qtl.3
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 11:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=AC+8es72VyLa2vOo3RohZnCe4/yvDjMuunCbmzoIpAM=;
-        b=uwL1y8vZCP6nmLkKWGP/EILDWQXmIGWlmng2ykRc4zDtNNzCONuYk72GyJWebd+u8l
-         0fjB32sRQhD5Z8RzHCxvkmGbTIpevIObsAJGDkdGkhz5/0JpwLLmJuX/AKSkeJ9Ep+fI
-         Ab3bH/pSnDt4xZ4e0rXmanN0jUQcjT8O9EimwQVhy/+ojlZXUQilJd2rHkEulkYq//CP
-         KVWpFJxye2pzVlsN5E40BOrGNfII9L88PPlJJPgca/jkQhQ5XsyqjyDRfvOLorCDdMVX
-         6i/zDjwEGsArVI2rVOIwLwDazWS1EEgrjRpCjRCiy/E8QWpSx53CxT/Qzt6LXAw7uDpf
-         vrCA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=X4hDYi+n8+TD38gVWdDKZTzTekHrOLgJ5+Bmwg1t3nI=;
+        b=a/FiRuucelB42lx6PO2vgwyGss1p3/cwvkbYd+kzBNvRBl6gYeOAK7nsIikPBVX2xP
+         +lYyjXqfACBd/Q4p/5HLn+hN02zBYHNielp1zQWqRa8j5XQYjK1yi13WBLVlnE1TrPVQ
+         aa2YDc11Pn7RZsGhnB6vjsLKKyWBlfI+LCLe0ZjxZ5N0SYaSDGt1Etl/tsGrFnTf8G5P
+         Tw/9tPahw3502U4MbdkzmLOtzqBrlRr2nWxRWJZAjoIesLRk7O8bOJJdsWxO+G+D87/P
+         pQ6Hdl36v1iaF9JrEDFgowYNfBCFq6AcTeB1bFxzq3usaViyYk2c6lnKaacUU6k6P4sR
+         HmKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=AC+8es72VyLa2vOo3RohZnCe4/yvDjMuunCbmzoIpAM=;
-        b=ngO6mH6Ymo3/gTNr46rRllhanr4IklC2uGtkGJ4aXE14qP5B8Ir5b5Ppt72sBIlola
-         iwIaxv7W2yP3AhIKb+yfXgqaa2S4ZAC2z7VBlKhy1aRR6uRz/omKjjwc93axW25syw4g
-         LmdatCrVnTEZQAQ/RFz9eUrFq4XmEo4AopgwQ/6aYxbx/rObGcF7an1esstXKG41bgxC
-         qEOe57tlaCHgjFRbyBS7g7V1bglxUq/t8M2NBxzUzuWNqfmPdcmeOPekeMVYHQQcSV1T
-         uSgbLi5f1Y3zpjQV94Rn+lj7CAhID1C+WNyRUMpsO09pxl5WdA/jQlA0Nlw14INgY92O
-         7IRA==
-X-Gm-Message-State: ALQs6tBdhFSNmMMJcDol9h4HgerzmAPuPN7NmA7JAKruRXVeSBm8KfcL
-        WbMZkDNEdFw9zLM4WU0Y4dvVBQJ8Xavv9fqzCuI=
-X-Google-Smtp-Source: AIpwx492IKoz17fXUJ4TpMBdG60S2rBXi9+J3SZnBbfUIMC9vT+OMlmmeysChqAGCWHu2ksozr+nWE4A5vOv7jP2GZ0=
-X-Received: by 10.176.80.182 with SMTP id c51mr22587835uaa.149.1524679995421;
- Wed, 25 Apr 2018 11:13:15 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=X4hDYi+n8+TD38gVWdDKZTzTekHrOLgJ5+Bmwg1t3nI=;
+        b=rUwzwQGA4/SA8twCWFB7xfdCl8yE4zcV4OWELmk77Za7uD68TJkln9+zB1peTq0YG6
+         1Q72s5ERxwBOiGDgYt2xpna2t3UPy8Rx/w1YwXZndcgXuELmlZngZg8oZ91RpB5wjn6R
+         XtPgLkMHaUMdx5lXD/tYL9+he35RNB+ctc2A2plxeG32Ks0dq39dtcIzIvr1OE0id887
+         OAA36kHju2wO+45Y7zVaky7jGlJJdow1aWWJMR34dtqiwfMvxCz85JpP8H7617JSmb/4
+         6Z58hHN52oVOvQEXhkygqsnELY8D299voQ3YxbR/wfW3/GzaUgg6DltmwJxuT5AwmAak
+         QSMg==
+X-Gm-Message-State: ALQs6tA6n3Htb5LKE/PJqGGiJM+IgQ/MTwCO7JCEtrjeJa4ZC3ZmTJB+
+        ZQ0aJHxqb/l3ZSwzuV0TE3PL/2NfT0MZLtceMX8=
+X-Google-Smtp-Source: AB8JxZo2ckCzBfjGV02p5Og1FWN/cVtmyQCDYOGb+SCAWwyfi9vXVwj8Lblew6iZg1dEeJXVV2QevkIpXCB56Mrh/FQ=
+X-Received: by 2002:ac8:3267:: with SMTP id y36-v6mr33061824qta.25.1524680164795;
+ Wed, 25 Apr 2018 11:16:04 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.12.170.75 with HTTP; Wed, 25 Apr 2018 11:16:04 -0700 (PDT)
+In-Reply-To: <20180425163107.10399-9-pclouds@gmail.com>
 References: <20180421165414.30051-1-pclouds@gmail.com> <20180425163107.10399-1-pclouds@gmail.com>
- <20180425163107.10399-2-pclouds@gmail.com> <CAPig+cTQrbHq9bgge5Ftj+Fi8kMkuL2VtQzs7McuqU-ueVK4vw@mail.gmail.com>
-In-Reply-To: <CAPig+cTQrbHq9bgge5Ftj+Fi8kMkuL2VtQzs7McuqU-ueVK4vw@mail.gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Wed, 25 Apr 2018 18:13:04 +0000
-Message-ID: <CAM0VKjkbqmWRhuBQEg6+7AKE4YWX3gONCsyf2wnJuLSho2D+ow@mail.gmail.com>
-Subject: Re: [PATCH v4/wip 01/12] generate-cmds.sh: factor out synopsis
- extract code
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+ <20180425163107.10399-9-pclouds@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 25 Apr 2018 14:16:04 -0400
+X-Google-Sender-Auth: PCtoxuV56dCOibytm0xBSX18mJY
+Message-ID: <CAPig+cT2FJodBeVO8RO9CqSAFvmcMQbEwyTEsxPBYovA6ivXGQ@mail.gmail.com>
+Subject: Re: [PATCH v4/wip 08/12] git: support --list-cmds=<category>
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -65,29 +65,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 25, 2018 at 7:59 PM Eric Sunshine <sunshine@sunshineco.com>
-wrote:
+On Wed, Apr 25, 2018 at 12:31 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
+<pclouds@gmail.com> wrote:
+> This allows us to select any group of commands by a category defined
+> in command-list.txt. This is an internal/hidden option so we don't
+> have to be picky about the category name or worried about exposing too
+> much.
+>
+> This will be used later by git-completion.bash to retrieve certain
+> command groups.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+> diff --git a/help.c b/help.c
+> @@ -305,6 +305,25 @@ void list_all_cmds(void)
+> +void list_cmds_by_category(const char *cat)
+> +{
+> +       int i;
+> +       int cat_id =3D 0;
 
-> On Wed, Apr 25, 2018 at 12:30 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy
-> <pclouds@gmail.com> wrote:
-> > This makes it easier to reuse the same code in another place (very
-> > soon).
-> >
-> > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
-> > ---
-> > diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-> > @@ -1,5 +1,17 @@
-> > +get_synopsis () {
-> > +       local cmd=3D"$1"
+Should 'cat_id' be unsigned...
 
-> 'local' is a Bash-ism, isn't it?
+> +
+> +       for (i =3D 0; category_names[i]; i++) {
+> +               if (!strcmp(cat, category_names[i])) {
+> +                       cat_id =3D 1 << i;
 
-Well, strictly speaking it isn't, because many shells support it
-besides Bash.
+...since you're shifting it here?
 
-I don't remember seeing any complaints about 01d3a526ad (t0000: check
-whether the shell supports the "local" keyword, 2017-10-26), but we
-only have that commit for a couple or months / two releases, so it's
-still too early to start using 'local' in build scripts.
+> +                       break;
+> +               }
+> +       }
+> +       if (!cat_id)
+> +               die("unsupported command listing type '%s'", cat);
+> +
+> +       for (i =3D 0; command_list[i].name; i++)
+> +               if (command_list[i].category & cat_id)
+> +                       puts(command_list[i].name);
+> +}
