@@ -2,117 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A6FB1F424
-	for <e@80x24.org>; Wed, 25 Apr 2018 05:06:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55D741F424
+	for <e@80x24.org>; Wed, 25 Apr 2018 05:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750929AbeDYFGH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 01:06:07 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:41469 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750807AbeDYFGG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 01:06:06 -0400
-Received: by mail-pf0-f193.google.com with SMTP id v63so4583799pfk.8
-        for <git@vger.kernel.org>; Tue, 24 Apr 2018 22:06:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=ZnUTjgFx6JdtRiPEVmhdYtzdrVqzG1ehUdqqXmfsJOs=;
-        b=jRFSeWKz7Gb2SGpJ9v/4aottcav6EWqVvg287BzZJIud5EQYLVKixs3jAljxX2UsCd
-         1PN0yU8Xch8ICuqcNv+Em98n2sDB61bsUBqU4NtF5rxIfIAR2QNtSBSULJ6KIN2TYT1z
-         /uPx3cGm9ickpUjaI2nbGyA91FgABnwHQorHMoOgQJYmCkXi8rnd6lfhuytzd+rgEIjS
-         EPEONetSplw8G9QYv4U5dHg5wgBHbmGI8JAxj0CRX2gXWztfspGuAYfKT1wx7Q3uPzZ9
-         txrQzJkJUgJx4rtN+z0EIifMHLVsV7Uqo8VAKGfgHG0Y+Aur8V9tu8Snz3ziOVKsZBDN
-         Fv7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=ZnUTjgFx6JdtRiPEVmhdYtzdrVqzG1ehUdqqXmfsJOs=;
-        b=KFuweO9YM0lEVsuHTh30M/MycxoeeY7Q30YgY9Db/fEoppMUO+eELn9dzY7dgdJ2Qf
-         3SQ0ZrGzvTAqP4xWzZaOD/5SY2C44ZGXj9bF6W1/9ITByOT+JTyC9+zDt5h7cPuxlNTp
-         dZYOVtiDYrHMOXjOUXbx13zQhHKEM4rWKSTdXhe5dVMVhNpQM/C7VlOkVR0CNZQIiJ6p
-         ZZF1/lGDolUH0nLyOkMUfgNZ2gNBf2HvfXJXFfif7jaYItm9fJ20qisCp7J/vjaPAxZ2
-         NycJmCnSHifv/YP9l+oec1sfOBf0cDf9SB3zPq5hm/fiCXnS2Wcayay6MPNMDc92s+cF
-         6p+A==
-X-Gm-Message-State: ALQs6tAnZ04mCU0MOqxuekdYH9SlSovalNDmv3NxJrA4ZEW7j8Vl5cri
-        QvB50+MoeeUlrdtUBp6zx5iFUu+DjfvSeAjXOd8=
-X-Google-Smtp-Source: AIpwx4/FrQco+Zu9uLYR3lWPMdjO5ySqkPjUalRin5AR7Eo6f+2WLV+HkzUARU2C/55QvwctdKQmHsn6Fm9dPsqf1Nw=
-X-Received: by 10.98.80.80 with SMTP id e77mr26858872pfb.16.1524632765701;
- Tue, 24 Apr 2018 22:06:05 -0700 (PDT)
+        id S1751249AbeDYFpH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 01:45:07 -0400
+Received: from s019.cyon.net ([149.126.4.28]:44108 "EHLO s019.cyon.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750888AbeDYFpG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 01:45:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
+         s=default; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+        Subject:To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=nbz2+YyD/s/03Fp1alBP6roKcFZWc7Ntea0JWE0M7EM=; b=uvV6HgrS/HoAE0l8y5RO+Rs5ot
+        lFHnPttOaqSUISvk2q0oYow+mIc5GxeLFr4O5UExFvMxHuqMhdxyi0C/tfy9EPQwYlaDXJF1iP7Lx
+        ZWyq1ItIo8g2eKH7z+PbYkasm9RZ9qzY1WzwQDoU66ko7eGWozbWlyjpE5LzeKjfRWVUREDUMua9I
+        HknDijiUmlTZf48awu6u/9LAqw6LABVWhkCxmE6GJgtSvNyG1oBoQmWtjzOd5sInubkr0gxO1Z9OK
+        iF7+O1QnT7VNROEKal3cc3nZk0Y973Nfr9A2KdmD9mdYoE6dVokmmnm6p6gxkeWUUtG6DV2Gl1UWT
+        /8qrR7Zg==;
+Received: from [10.20.10.230] (port=24012 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.89_1)
+        (envelope-from <bb@drbeat.li>)
+        id 1fBDEj-0003cP-1s
+        for git@vger.kernel.org; Wed, 25 Apr 2018 07:45:04 +0200
+Received: by drbeat.li (Postfix, from userid 1000)
+        id 83E512021B; Wed, 25 Apr 2018 07:45:00 +0200 (CEST)
+Date:   Wed, 25 Apr 2018 07:45:00 +0200
+From:   "Beat Bolli <bbolli@ewanet.ch>" <bb@zbox.drbeat.li>
+To:     git@vger.kernel.org
+Subject: Re: [PATCH] git: add -N as a short option for --no-pager
+Message-ID: <20180425054500.GA31531@zbox.drbeat.li>
+References: <d91e98a8-7801-a3de-3865-f0480e18ba0e@kdbg.org>
+ <xmqqh8o05evv.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Received: by 10.236.150.4 with HTTP; Tue, 24 Apr 2018 22:06:04 -0700 (PDT)
-In-Reply-To: <20180425020013.GF245996@genre.crustytoothpaste.net>
-References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
- <20180423233951.276447-26-sandals@crustytoothpaste.net> <CAN0heSoU4wDAcfF_EGYSA4gjbpCgTyk0fGPsmPTwv65FfZCQcg@mail.gmail.com>
- <20180425020013.GF245996@genre.crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 25 Apr 2018 07:06:04 +0200
-Message-ID: <CAN0heSotp4ebXWc6NRHOa2j7kQg4XsCo+8RNz786dPGyUTvb-w@mail.gmail.com>
-Subject: Re: [PATCH 25/41] builtin/receive-pack: avoid hard-coded constants
- for push certs
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="AhhlLboLdkugWU4S"
+Content-Disposition: inline
+In-Reply-To: <xmqqh8o05evv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25 April 2018 at 04:00, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Tue, Apr 24, 2018 at 11:58:17AM +0200, Martin =C3=85gren wrote:
->> On 24 April 2018 at 01:39, brian m. carlson
->> > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
->> > index c4272fbc96..5f35596c14 100644
->> > --- a/builtin/receive-pack.c
->> > +++ b/builtin/receive-pack.c
->> > @@ -454,21 +454,21 @@ static void hmac_sha1(unsigned char *out,
->> >         /* RFC 2104 2. (6) & (7) */
->> >         git_SHA1_Init(&ctx);
->> >         git_SHA1_Update(&ctx, k_opad, sizeof(k_opad));
->> > -       git_SHA1_Update(&ctx, out, 20);
->> > +       git_SHA1_Update(&ctx, out, GIT_SHA1_RAWSZ);
->> >         git_SHA1_Final(out, &ctx);
->> >  }
->>
->> Since we do HMAC with SHA-1, we use the functions `git_SHA1_foo()`. Ok.
->> But then why not just use "20"? Isn't GIT_SHA1_RAWSZ coupled to the
->> whole hash transition thing? This use of "20" is not, IMHO, the "length
->> in bytes [...] of an object name" (quoting cache.h).
->
-> Originally, GIT_SHA1_RAWSZ was a good stand-in for the hard-coded uses
-> of 20 (and GIT_SHA1_HEXSZ for 40) for object IDs.  Recently, we've
-> started moving toward using the_hash_algo for the object ID-specific
-> hash values, so I've started using those constants only to identify
-> SHA-1 specific items.
->
-> In this case, using the constant makes it more obvious that what we're
-> passing is indeed an SHA-1 hash.  It also makes it easier to find all
-> the remaining instances of "20" in the codebase and analyze them
-> accordingly.
->
-> I agree that this isn't an object name strictly, but it's essentially
-> equivalent.  If you feel strongly, I can leave this the way it is.
 
-I see. So one could say that in the ideal end-game, GIT_SHA1_RAWSZ would
-be gone when the oid-hash-transition is over. Except since we also use
-SHA-1 for other stuff than object IDs, the real-world ideal end-game is
-that we only have a few users lingering in places that have nothing to
-do with oid, but only with SHA-1 (and maybe in the gluing for
-calculating SHA-1 oids..).
+--AhhlLboLdkugWU4S
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I do not feel strongly about this. I was just surprised to see it.
-Thank you for explaining this.
+On Wed, Apr 25, 2018 at 09:05:56AM +0900, Junio C Hamano wrote:
+> Johannes Sixt <j6t@kdbg.org> writes:
+>=20
+> > In modern setups, less, the pager, uses alternate screen to show
+> > the content. When it is closed, it switches back to the original
+> > screen, and all content is gone.
+> >
+> > It is not uncommon to request that the output remains visible in
+> > the terminal. For this, the option --no-pager can be used. But
+> > it is a bit cumbersome to type, even when command completion is
+> > available. Provide a short option, -N, to make the option easier
+> > accessible.
+> >
+> > Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> > ---
+>=20
+> Heh, I used to append "|cat", which is four keystrokes that is a bit
+> shorter than " --no-pager", but that is only acceptable when you do
+> not care about colored output ;-)
+>=20
+> I am not absolutely certain about the choice of a single letter. I
+> already checked we do not use "git -N cmd" for anything else right
+> now, so I am certain about the availability, but I am not sure if
+> capital 'N' is the best choice, when the other side is lowercase 'p'
+> (and more importantly, the other side 'p' has mneomonic value for
+> 'pagination', but 'N' merely stands for 'no' and could be negating
+> anything, not related to pagination). But I agree that a short-hand
+> would be welcome.
+>=20
 
-Martin
+I'm quite fond of the notation "-p-", but that would set a precedent for
+all other "--no-" options.
+
+Maybe the option parser could be enhanced to allow for both?
+
+Thanks,
+Beat
+
+> > diff --git a/Documentation/git.txt b/Documentation/git.txt
+> > index 4767860e72..17b50b0dc6 100644
+> > --- a/Documentation/git.txt
+> > +++ b/Documentation/git.txt
+> > @@ -11,7 +11,7 @@ SYNOPSIS
+> >  [verse]
+> >  'git' [--version] [--help] [-C <path>] [-c <name>=3D<value>]
+> >      [--exec-path[=3D<path>]] [--html-path] [--man-path] [--info-path]
+> > -    [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+> > +    [-p|--paginate|-N|--no-pager] [--no-replace-objects] [--bare]
+> >      [--git-dir=3D<path>] [--work-tree=3D<path>] [--namespace=3D<name>]
+> >      [--super-prefix=3D<path>]
+> >      <command> [<args>]
+> > @@ -103,6 +103,7 @@ foo.bar=3D ...`) sets `foo.bar` to the empty string=
+ which `git config
+> >  	configuration options (see the "Configuration Mechanism" section
+> >  	below).
+> > =20
+> > +-N::
+> >  --no-pager::
+> >  	Do not pipe Git output into a pager.
+
+--AhhlLboLdkugWU4S
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRJ1XlK6nf5B3ZP2J4wS5PPUGqQOgUCWuAV2AAKCRAwS5PPUGqQ
+Oi+DAKC+Zub6jWeMhBRueEYfWveFb3BougCfajLDr7oHP7n+x05ELSsJOjeeSrI=
+=jrkC
+-----END PGP SIGNATURE-----
+
+--AhhlLboLdkugWU4S--
