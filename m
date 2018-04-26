@@ -2,71 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 029A21F424
-	for <e@80x24.org>; Thu, 26 Apr 2018 19:39:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1F761F424
+	for <e@80x24.org>; Thu, 26 Apr 2018 20:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755242AbeDZTja (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 15:39:30 -0400
-Received: from mail-lf0-f45.google.com ([209.85.215.45]:37651 "EHLO
-        mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753665AbeDZTj3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 15:39:29 -0400
-Received: by mail-lf0-f45.google.com with SMTP id b23-v6so32478574lfg.4
-        for <git@vger.kernel.org>; Thu, 26 Apr 2018 12:39:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0GroDy7bjbCDqitJJ2aILzkoW2QkiADUAi0jDx/xmhk=;
-        b=XelBN6GK9yzyyNlwEOv67OAPokCIRQ6niXcFXqRnvVd9Dp2cPNYFZvuNFIsJZ034Xm
-         hf9n6HImAMqsiOh7QFj73wlr6oSnouft1ZfMlTVpCdpEpxPi9tWi/NVy8yzgguqTHgo/
-         Mzc+3e/F3sL1c+JrBrkIlv25t4gfjF5fR6YFmQA0YosAk3PFRBS6rt/PaVE2hMzC6tnK
-         vEUBvfTEdMzEOnKpc2I++hJ0Uxsbrd4rlbVGG/Rex3uDxV0VVVKTMNFUWJ7pmHTSxyvp
-         6B8XUNMx4YYQLU0y4p9F18BlxvNJ8Uakbyw3PmrfLYlU3N+I0om2twNzOvIGBytf3lsr
-         JVEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0GroDy7bjbCDqitJJ2aILzkoW2QkiADUAi0jDx/xmhk=;
-        b=SF6N0jfvcJmaCep6oqqITKCmI/UoFfL+q6PqVzrfWgr9G37M7j4nPrEMyUHdOV6OMG
-         P6vd7C3Dgzx3RcTbpvi0YnGRQWzOT1P3IOTvTVSKWzzFQtbVcLTZUFssyKawl05CyUKT
-         BMtlmyTpDwaqi7J8tNTUNonLN7aV7KvDZzCzwkAQJIb6Fsaxn7T/e1uv7ceHOBXZlb9E
-         L5AR8vQoLeJFB8GkRmD6WloqZQbw6tX/wGaN6D8/KBaxGxirOBcOsY7Jk3939xR/dtLY
-         DtWBpKp6h+W+Xe9GeiAJeSKJtHeV7AJlceWErojY1PV0TDku4rHVAJl5PamzW8IggeEA
-         QYcw==
-X-Gm-Message-State: ALQs6tDlrNvspxwvbk5cYDxWZClFl+3jMuEJ+n5NfxJF7qxBTVMuAcW+
-        KeqGLfUUn7S6QXvRSE53csqJcwnHlqFf6qsFpgZpWg==
-X-Google-Smtp-Source: AB8JxZo2KOtMGWSC6F30yx0Z+K1uXJx2qwZNfew11A0iRDInSgqARfYrg8htnshUrsO3HQ1bxessYQbIVMLApsl6zYU=
-X-Received: by 10.46.133.65 with SMTP id u1mr3529869ljj.10.1524771567457; Thu,
- 26 Apr 2018 12:39:27 -0700 (PDT)
+        id S1756338AbeDZUwX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 16:52:23 -0400
+Received: from mail-dm3nam03on0110.outbound.protection.outlook.com ([104.47.41.110]:50816
+        "EHLO NAM03-DM3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1754559AbeDZUwV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 16:52:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=6CGFW+0nU93lDa7OxHRqGWY29xOIP3JH83m/lhH5gp4=;
+ b=MnMVNyARGl9A6Lx4UWp4T8O6KZI3gronsgeUJfrcpBqswJzPw9HsXuW8EtJEGtB6kk+ZE3fwgre98s8rxGJa9UC6nm7JnUotwdB1hh89eav8atx4P6k8fjeQ0BkjUgLcoZS+SfUZOVJACXylz6Sp9F7XDoQLb4z+FIiTs3BlxJ4=
+Received: from DM5PR2101MB1016.namprd21.prod.outlook.com (52.132.133.38) by
+ DM5PR2101MB0997.namprd21.prod.outlook.com (52.132.133.31) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.715.5; Thu, 26 Apr 2018 20:52:19 +0000
+Received: from DM5PR2101MB1016.namprd21.prod.outlook.com
+ ([fe80::5d76:2e71:c400:8b83]) by DM5PR2101MB1016.namprd21.prod.outlook.com
+ ([fe80::5d76:2e71:c400:8b83%4]) with mapi id 15.20.0735.006; Thu, 26 Apr 2018
+ 20:52:19 +0000
+From:   Ben Peart <Ben.Peart@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     Ben Peart <Ben.Peart@microsoft.com>,
+        "newren@gmail.com" <newren@gmail.com>,
+        "peff@peff.net" <peff@peff.net>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
+Subject: [PATCH v3 1/3] merge: update documentation for
+ {merge,diff}.renameLimit
+Thread-Topic: [PATCH v3 1/3] merge: update documentation for
+ {merge,diff}.renameLimit
+Thread-Index: AQHT3aB3SwTkjZ2TKEa58LgGa4bazA==
+Date:   Thu, 26 Apr 2018 20:52:19 +0000
+Message-ID: <20180426205202.23056-2-benpeart@microsoft.com>
+References: <20180420133632.17580-1-benpeart@microsoft.com>
+ <20180426205202.23056-1-benpeart@microsoft.com>
+In-Reply-To: <20180426205202.23056-1-benpeart@microsoft.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [70.33.148.227]
+x-mailer: git-send-email 2.17.0.windows.1
+x-clientproxiedby: BN3PR03CA0084.namprd03.prod.outlook.com
+ (2a01:111:e400:7a4d::44) To DM5PR2101MB1016.namprd21.prod.outlook.com
+ (2603:10b6:4:a8::38)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;DM5PR2101MB0997;7:I2L2DR+XMXE+bIcuMwuuLB6pAeBrr5Qf0fsSiGSWzbCqcjtz1YannB5PCGpzEi4xI6szvxuj4q3oko/mumd2txOnfBpk2oT5plNMM5w1Ua42vqkOQoBmgiWY5r02tztorY6NUBZ33xBdxwfHbR2IHyfAcHxtxhD0sg9sApKZPvnsau+fLafBse0TatZmCGZXMFBvhRYBlIWJX8d2D3VEDHWhw6ZalAu0RHHmEGdVGmei3iU8O+YLHhkEHt+qTWn1;20:RpGRFLoJ0MB0M7e0FiLrosGM0LjNiDkrOfBOt8dNdwemhSntLoZ1HZYaUtj8x2YBqeayxxnBXBmH6B+MAI6bE1kZGgr/w07Ud8Lv6B7GgivSQD3SRnaBF5FZPEHuvK23GEYgxO1aAqx9Ar5V8skFjso6I4IhDb48+VnwRomssH8=
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(2017052603328)(7193020);SRVR:DM5PR2101MB0997;
+x-ms-traffictypediagnostic: DM5PR2101MB0997:
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Ben.Peart@microsoft.com; 
+x-microsoft-antispam-prvs: <DM5PR2101MB0997AA1F79C7A582EB32E074F48E0@DM5PR2101MB0997.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(3002001)(3231232)(944501410)(52105095)(10201501046)(93006095)(93001095)(6055026)(6041310)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123564045)(20161123562045)(6072148)(201708071742011);SRVR:DM5PR2101MB0997;BCL:0;PCL:0;RULEID:;SRVR:DM5PR2101MB0997;
+x-forefront-prvs: 0654257CF5
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(346002)(366004)(376002)(396003)(39380400002)(199004)(189003)(3846002)(39060400002)(106356001)(6116002)(97736004)(6916009)(81166006)(66066001)(2616005)(14454004)(53936002)(50226002)(6486002)(1730700003)(5640700003)(8676002)(6512007)(5250100002)(81156014)(15650500001)(1076002)(26005)(10090500001)(305945005)(8936002)(10290500003)(105586002)(25786009)(4326008)(68736007)(54906003)(2906002)(52116002)(7736002)(86612001)(22452003)(5660300001)(478600001)(102836004)(186003)(72206003)(6436002)(446003)(2351001)(11346002)(386003)(8666007)(8656006)(76176011)(99286004)(486006)(316002)(6506007)(3280700002)(36756003)(3660700001)(59450400001)(2501003)(2900100001)(476003)(22906009)(142933001);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR2101MB0997;H:DM5PR2101MB1016.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-microsoft-antispam-message-info: 5yFuB+CnF8sbD1xhgL5Lh7Hma8m13U9BQzKpdWCzMtsovO50ueo2JL5yLYwHF7NRdtB4xu0tq3pjiwmpGLTz6TudX9u84aRqn0gB8Xgv4vqKTPwN8CmDuL/Cg0xXMvBM3xgTEDrn6XloLtmay4/xnvpSVUdD7khAj9rprwOomSANoXNOaDNiA2MAY2zzTgiR
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Received: by 2002:a19:9690:0:0:0:0:0 with HTTP; Thu, 26 Apr 2018 12:39:06
- -0700 (PDT)
-In-Reply-To: <CAKk8isr-7bSVqEv8EjF2UgFfw75D2oVZPJFui30pbY6kWfeL_Q@mail.gmail.com>
-References: <CAKk8isrAmWOdioJe2CdY+2F_AzKxcTGwd+kBsrAmGx-U=ZHGgA@mail.gmail.com>
- <xmqqzi1s3y5h.fsf@gitster-ct.c.googlers.com> <CAKk8isr-7bSVqEv8EjF2UgFfw75D2oVZPJFui30pbY6kWfeL_Q@mail.gmail.com>
-From:   Wink Saville <wink@saville.com>
-Date:   Thu, 26 Apr 2018 12:39:06 -0700
-Message-ID: <CAKk8ispWBoG7D+u8x+s+iB+wzXUN=7vpxgmz5wjL67P6XUmw9g@mail.gmail.com>
-Subject: Re: Fetching tags overwrites existing tags
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Office365-Filtering-Correlation-Id: f098a26a-017c-48db-f159-08d5abb799a2
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f098a26a-017c-48db-f159-08d5abb799a2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Apr 2018 20:52:19.7157
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR2101MB0997
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've tried to teach 'git remote add' the --prefix-tags option using the
-technique Junio provided. At moment it is PR #486 on github [1]
-and I'd love some comments on whether or not this the right direction
-for fetching tags and putting them in the branches namespace.
+Update the documentation to better indicate that the renameLimit setting is
+ignored if rename detection is turned off via command line options or confi=
+g
+settings.
 
--- Wink
+Signed-off-by: Ben Peart <benpeart@microsoft.com>
+---
+ Documentation/diff-config.txt  | 3 ++-
+ Documentation/merge-config.txt | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-[1] https://github.com/git/git/pull/486
+diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+index 5ca942ab5e..77caa66c2f 100644
+--- a/Documentation/diff-config.txt
++++ b/Documentation/diff-config.txt
+@@ -112,7 +112,8 @@ diff.orderFile::
+=20
+ diff.renameLimit::
+ 	The number of files to consider when performing the copy/rename
+-	detection; equivalent to the 'git diff' option `-l`.
++	detection; equivalent to the 'git diff' option `-l`. This setting
++	has no effect if rename detection is turned off.
+=20
+ diff.renames::
+ 	Whether and how Git detects renames.  If set to "false",
+diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.tx=
+t
+index 12b6bbf591..48ee3bce77 100644
+--- a/Documentation/merge-config.txt
++++ b/Documentation/merge-config.txt
+@@ -35,7 +35,8 @@ include::fmt-merge-msg-config.txt[]
+ merge.renameLimit::
+ 	The number of files to consider when performing rename detection
+ 	during a merge; if not specified, defaults to the value of
+-	diff.renameLimit.
++	diff.renameLimit. This setting has no effect if rename detection
++	is turned off.
+=20
+ merge.renormalize::
+ 	Tell Git that canonical representation of files in the
+--=20
+2.17.0.windows.1
+
