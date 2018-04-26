@@ -2,159 +2,258 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFE131F424
-	for <e@80x24.org>; Thu, 26 Apr 2018 22:19:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 958A11F424
+	for <e@80x24.org>; Thu, 26 Apr 2018 22:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757168AbeDZWTi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 18:19:38 -0400
-Received: from mail-yb0-f169.google.com ([209.85.213.169]:32906 "EHLO
-        mail-yb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756583AbeDZWTh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 18:19:37 -0400
-Received: by mail-yb0-f169.google.com with SMTP id y5-v6so9964781ybg.0
-        for <git@vger.kernel.org>; Thu, 26 Apr 2018 15:19:37 -0700 (PDT)
+        id S1754336AbeDZWuT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 18:50:19 -0400
+Received: from mail-wr0-f175.google.com ([209.85.128.175]:35603 "EHLO
+        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753882AbeDZWuS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 18:50:18 -0400
+Received: by mail-wr0-f175.google.com with SMTP id w3-v6so58259199wrg.2
+        for <git@vger.kernel.org>; Thu, 26 Apr 2018 15:50:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DI8+sgaK19FXeCO6WkdTPEBcJxvMk1ks1u68kP8ovAg=;
-        b=jfs9no25D1iKTI0rCmlNvz1A5qRMzO1CfrBUEajHcqYo2zVZzQxr8mVKSU8IEOhhq2
-         AZE7bmGDo7XV1yAXMqH5EfT/B6m6IA9KvEgMY4yvbjsDUm/ge06ySKZ2g6Zg0wHQBcLu
-         T61PN3u3zRpw+OH2OLteGASvz0wksLkc1h0KwLSTTFDaacAqodfp3txggsUdmUPOUVfJ
-         xPQjupgbqvT9RdUJ8rRTc1TSST/q+wgqmczwVMN+SdXAJeJ4DU/1RHShId718W7EMT5Q
-         xgir48ZlF0BkmLRDI41ROuc7koP+r8A5+1jnV7pYW/qlYvSquIDDij8qerq5DLRTW/yi
-         wH/w==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=0kmce0t5mOZNjrCSwg5MbrpB053vco6SYy5XzCcebs4=;
+        b=ibubsbMBEPOguXC4svRYDY99MGYU1bxHlW82VhDkWi+S/9hvz+k5evWA9UnJ3n0jwj
+         HzgrKLbDSWz6Ve4pzVykR1m41abZBvUTNi20pQGpg9J5sSzU3T9TP/msvaUzSmnKFSAt
+         m5E4v9wIu7flKdHYZ1M0qJD9OyOOy3JlwJhUCaxIKv6XuXU8UxC5kX5EPnyY1IQHuIK3
+         K80ZowpXxsKkc5F3HQ3yMUn9MPk86VjEwmMpY4TxO0DJneMfaCCm1+lnbW+3fggx+H6N
+         dvjUEHD9sjAWlcPXiFrhhwcOBO/sYt1pKuKLXXAhcmq/+mpjJWw6gaIJ6zEXg1MfIgOz
+         F8Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DI8+sgaK19FXeCO6WkdTPEBcJxvMk1ks1u68kP8ovAg=;
-        b=IwpHTDXeLD0zgtxmdLgPAUvmOCdu3Bbd9vjqItMq3sIVwZdhgh6btC94a0Vt3zS3QC
-         wZcR/joq4Hj27ESEofn/j85tML2RTgnqIETGxfmKiVkzTNAhN/AebzBBJGK/T+EJ7ZdA
-         Tmu4E21iA9rzpJSR/fJDxBUlMZV0n0stG+1/pl8a+iBAkmGSNVJLuBRpkNHUogOMVayv
-         PCkPBk9FAuqZG7vXpIv7zTk5j3hPdW3m4dlUjTw86QFDqRnHURiQM+P/DB47jd/tR6bh
-         k+aX/fbeblmUWeVpPXr+n2G/BZQzGMGFQXku+QAEZARB6GJChwE4OilkLi4KVBZeVL0L
-         rLZw==
-X-Gm-Message-State: ALQs6tARcD9mBUk5eWn/p+dszHdDLiffQ3iKY5nC4xrEWX0w8ptcC57e
-        PtOyvKdp9+sTs0PBHE0OzEMxLPfooeGJpX+hzZePrQ==
-X-Google-Smtp-Source: AB8JxZppXeVScEf8FfX2Vexd9kppE3cuRunyHlAQwMeYtwA18KRv2bXFRXiAm3JG0JL4B0SiS8yVU3Am1VqCDj/gLUc=
-X-Received: by 2002:a25:500e:: with SMTP id e14-v6mr19430791ybb.334.1524781176762;
- Thu, 26 Apr 2018 15:19:36 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=0kmce0t5mOZNjrCSwg5MbrpB053vco6SYy5XzCcebs4=;
+        b=UPDcG3v/EhnLgnzIxnoXPbWmGM1anPQPY/wHTL0A3ETf2dlGdJVJreVnwQ18018rrB
+         uJOE51REj0tDPDmZxpd6kkKhz2ry4cKcSRQqvsKpJAIBiKFp8wYiLXGM3P1DyxJS1FEZ
+         J2N0qmuvUuFjOBEbZUQYRkSvYv61VahW83MbqsuWtW1CPvPiQUiaNgwbUxNAwjcmc1+e
+         Kuong7+5PI/WOmQGR3FjlXuu2YEhefpAZfq12RQC/PLeOkgNj2/GxI5nAm+0wAawnUCJ
+         5xS701tv0BuCXFTbC4UDE/vWYg36Y77DdbtKDeoFZOgSZF0LM3GIsU890OvpuPnnglqr
+         KkhQ==
+X-Gm-Message-State: ALQs6tA0mNwl+hvrgk+p+12EXFLqOWtcQ+EjMxHbuKFlT2edocOU34qv
+        Bna6kNiF8j5ZeA82yJrlkrtM50Bt
+X-Google-Smtp-Source: AIpwx49UAzr8w4EuxCthSPa5T2yMg4JVnlg9akhno+DqJnWJB7tLkYGGrF4/S4HFWp581EVcGsJkTg==
+X-Received: by 2002:adf:8df7:: with SMTP id o110-v6mr30565582wrb.251.1524783016139;
+        Thu, 26 Apr 2018 15:50:16 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id b10-v6sm27605337wrn.42.2018.04.26.15.50.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 26 Apr 2018 15:50:13 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Git List <git@vger.kernel.org>
+Cc:     Wink Saville <wink@saville.com>
+Subject: Re: Fetching tags overwrites existing tags
+References: <CAKk8isrAmWOdioJe2CdY+2F_AzKxcTGwd+kBsrAmGx-U=ZHGgA@mail.gmail.com>
+        <xmqqzi1s3y5h.fsf@gitster-ct.c.googlers.com>
+        <CAKk8isr-7bSVqEv8EjF2UgFfw75D2oVZPJFui30pbY6kWfeL_Q@mail.gmail.com>
+        <CAKk8ispWBoG7D+u8x+s+iB+wzXUN=7vpxgmz5wjL67P6XUmw9g@mail.gmail.com>
+Date:   Fri, 27 Apr 2018 07:50:13 +0900
+In-Reply-To: <CAKk8ispWBoG7D+u8x+s+iB+wzXUN=7vpxgmz5wjL67P6XUmw9g@mail.gmail.com>
+        (Wink Saville's message of "Thu, 26 Apr 2018 12:39:06 -0700")
+Message-ID: <xmqqfu3h1t22.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Thu, 26 Apr 2018 15:19:36
- -0700 (PDT)
-In-Reply-To: <CA+P7+xrUwq0G2YySC3SLKqyihhPnFPCiQnQpoVVa89+=W9O9+w@mail.gmail.com>
-References: <1524739599.20251.17.camel@klsmartin.com> <CAGZ79kZA_R-5bA6mPdoHkVW-C21pNn_0x6FayhuuXqnOTrmjWw@mail.gmail.com>
- <CA+P7+xrUwq0G2YySC3SLKqyihhPnFPCiQnQpoVVa89+=W9O9+w@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 26 Apr 2018 15:19:36 -0700
-Message-ID: <CAGZ79kaub2k-q-Mcj3H5o6ekyZ8ZZzG7+r5sHt5Ne25Nc3_nPQ@mail.gmail.com>
-Subject: Re: git merge banch w/ different submodule revision
-To:     Jacob Keller <jacob.keller@gmail.com>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     "Middelschulte, Leif" <Leif.Middelschulte@klsmartin.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan wrote:
-> See https://github.com/git/git/commit/68d03e4a6e448aa557f52adef92595ac4d6cd4bd
-> (68d03e4a6e (Implement automatic fast-forward merge for submodules, 2010-07-07)
-> to explain the situation you encounter. (specifically merge_submodule
-> at the end of the diff)
+Wink Saville <wink@saville.com> writes:
 
-+cc Heiko, author of that commit.
-
-On Thu, Apr 26, 2018 at 2:46 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Thu, Apr 26, 2018 at 10:56 AM, Stefan Beller <sbeller@google.com> wrote:
->> We often treating a submodule as a file from the superproject, but not always.
->> And in case of a merge, git seems to be a bit smarter than treating it
->> as a textfile with two different lines.
+> I've tried to teach 'git remote add' the --prefix-tags option using the
+> technique Junio provided. At moment it is PR #486 on github [1]
+> and I'd love some comments on whether or not this the right direction
+> for fetching tags and putting them in the branches namespace.
 >
-> Sure, but a submodule is checked out "at a commit", so if two branches
-> of history are merged, and they conflict over which place the
-> submodule is at.... shouldn't that produce a conflict??
+> -- Wink
+>
+> [1] https://github.com/git/git/pull/486
 
-Stepping back a little bit:
+FWIW, here is how that pull/486/head looks like.
 
-When two branches developed a file differently, they can be merged
-iff they do not change the same lines (plus a little bit of margin of 1
-extra line)
+-- >8 --
 
-That is the builtin merge-driver for "plain text files" and seems to be accepted
-widely as "good enough" or "that is how git merges".
+From: Wink Saville <wink@saville.com>
+Date: Thu, 26 Apr 2018 09:56:11 -0700
+Subject: [PATCH] Teach remote add the --prefix-tags option
 
-What if this text file happens to be the .gitmodules file and the changed lines
-happen to be 2 options in there (Say one option was the path, as one branch
-renamed the submodule, and the other option is submodule.branch) ?
+When --prefix-tags is passed to `git remote add` the tagopt is set to
+--prefix-tags and a second fetch line is added so tags are placed in
+the branches namespace.
 
-Then we could do better as we know the structure of the file. We would not
-need the extra buffer line as a cautious step, but instead could parse both
-sides of the merge and merge each config in-memory and then write out
-a .gitmodules file. I think David Turner proposed a custom merge driver
-for .gitmodules a couple month ago.
+For example:
+  $ git remote add -f --prefix-tags gbenchmark git@github.com:google/benchmark
+  Updating gbenchmark
+  warning: no common commits
+  remote: Counting objects: 4406, done.
+  remote: Compressing objects: 100% (18/18), done.
+  remote: Total 4406 (delta 7), reused 13 (delta 6), pack-reused 4382
+  Receiving objects: 100% (4406/4406), 1.34 MiB | 7.46 MiB/s, done.
+  Resolving deltas: 100% (2865/2865), done.
+  From github.com:google/benchmark
+   * [new branch]      clangtidy       -> gbenchmark/clangtidy
+   * [new branch]      iter_report     -> gbenchmark/iter_report
+   * [new branch]      master          -> gbenchmark/master
+   * [new branch]      releasing       -> gbenchmark/releasing
+   * [new branch]      reportercleanup -> gbenchmark/reportercleanup
+   * [new branch]      rmheaders       -> gbenchmark/rmheaders
+   * [new branch]      v2              -> gbenchmark/v2
+   * [new tag]         v0.0.9          -> refs/remote-tags/gbenchmark/v0.0.9
+   * [new tag]         v0.1.0          -> refs/remote-tags/gbenchmark/v0.1.0
+   * [new tag]         v1.0.0          -> refs/remote-tags/gbenchmark/v1.0.0
+   * [new tag]         v1.1.0          -> refs/remote-tags/gbenchmark/v1.1.0
+   * [new tag]         v1.2.0          -> refs/remote-tags/gbenchmark/v1.2.0
+   * [new tag]         v1.3.0          -> refs/remote-tags/gbenchmark/v1.3.0
+   * [new tag]         v1.4.0          -> refs/remote-tags/gbenchmark/v1.4.0
 
-Another example is the merge code respecting renames on one side
-(even for directories) and edits in the other side. Technically the rename
-of a file is a "delete of all lines in this path", which could also argued to
-just conflict with the edit on the other side.
+And the .git/config remote "gbenchmark" section looks like:
+  [remote "gbenchmark"]
+    url = git@github.com:google/benchmark
+    fetch = +refs/heads/*:refs/remotes/gbenchmark/*
+    fetch = +refs/tags/*:refs/remote-tags/gbenchmark/*
+    tagopt = --prefix-tags
+---
+ Documentation/git-remote.txt |  8 ++++--
+ builtin/remote.c             | 47 +++++++++++++++++++++++++++++++++---
+ remote.c                     |  2 ++
+ 3 files changed, 51 insertions(+), 6 deletions(-)
 
-With these examples given, I think it is legit to treat submodule changes
-not as "two lines of text differ at the same place, mark it as conflict",
-but we are allowed to be smarter about it.
-
-> I mean, how is the merge algorithm supposed to know which is right?
-
-Good question. As said above, the merge algorithm for text files is just
-correct for "plain text files". In source code, I can give an example
-which merges fine, but doesn't compile after merging: One side changes
-a function signature and the other side adds a call to the function (still using
-the old signature).
-
-Here you can see that our merge algorithm is wrong. It sucks.
-The solution is a custom merge driver for C code (or whatever
-language you happen to use).
-
-For submodules, the given commit made the assumption that
-progressing in history of a submodule is never bad, i.e. there are
-no reverts and no bugs introduced, only perfect features are added
-by new submodule commits. (I don't know which assumptions were
-actually made, I made this up).
-
-Maybe we need to revisit that decision?
-
-> The patch you linked appears to be able to resolve it to the one which
-> contains both commits.. but that may not actually be true since you
-> can rewind submodules since they're *pointers* to commits, not commits
-> themselves.
-
-Right, and that is the problem, as the pointer is a small thing, which
-doesn't allow for the dumb text merging strategy that is used in files.
-
-So we could always err out and have the user make a decision.
-Or we could provide a basic merge driver for submodules (which
-was implemented in that commit).
-
-If you use a different workflow this doesn't work for you, so
-obviously you want a different custom merge driver for
-submodules?
-
-> I'm not against that as a possible strategy to merge submodules, but
-> it seems like not necessarily something you would always want...
-
-I agree that it is reasonable to want different things, just like
-wanting a merge driver that works better with C code.
-(side note: I am rebasing a large series currently and one of the
-frequent conflicts were different #includes at the top of a file.
-You could totally automate merging that :/)
-
-Thanks,
-Stefan
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 4feddc0293..cdfd24e2ea 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git remote' [-v | --verbose]
+-'git remote add' [-t <branch>] [-m <master>] [-f] [--[no-]tags] [--mirror=<fetch|push>] <name> <url>
++'git remote add' [-t <branch>] [-m <master>] [-f] [--prefix-tags | --tags | --no-tags] [--mirror=<fetch|push>] <name> <url>
+ 'git remote rename' <old> <new>
+ 'git remote remove' <name>
+ 'git remote set-head' <name> (-a | --auto | -d | --delete | <branch>)
+@@ -54,7 +54,11 @@ With `-f` option, `git fetch <name>` is run immediately after
+ the remote information is set up.
+ +
+ With `--tags` option, `git fetch <name>` imports every tag from the
+-remote repository.
++remote repository to refs/tags, use --prefix-tags to import them
++to refs/remote-tags/<name>/<tag>.
+++
++With `--prefix-tags` option, `git fetch <name>` imports every tag from the
++remote repository to refs/remote-tags/<name>/<tag>.
+ +
+ With `--no-tags` option, `git fetch <name>` does not import tags from
+ the remote repository.
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 805ffc05cd..75813eeaa3 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -11,7 +11,7 @@
+ 
+ static const char * const builtin_remote_usage[] = {
+ 	N_("git remote [-v | --verbose]"),
+-	N_("git remote add [-t <branch>] [-m <master>] [-f] [--tags | --no-tags] [--mirror=<fetch|push>] <name> <url>"),
++	N_("git remote add [-t <branch>] [-m <master>] [-f] [--prefix-tags | --tags | --no-tags] [--mirror=<fetch|push>] <name> <url>"),
+ 	N_("git remote rename <old> <new>"),
+ 	N_("git remote remove <name>"),
+ 	N_("git remote set-head <name> (-a | --auto | -d | --delete | <branch>)"),
+@@ -101,7 +101,8 @@ static int fetch_remote(const char *name)
+ enum {
+ 	TAGS_UNSET = 0,
+ 	TAGS_DEFAULT = 1,
+-	TAGS_SET = 2
++	TAGS_SET = 2,
++	TAGS_SET_PREFIX = 3
+ };
+ 
+ #define MIRROR_NONE 0
+@@ -123,6 +124,16 @@ static void add_branch(const char *key, const char *branchname,
+ 	git_config_set_multivar(key, tmp->buf, "^$", 0);
+ }
+ 
++static void add_remote_tags(const char *key, const char *branchname,
++		       const char *remotename, struct strbuf *tmp)
++{
++	strbuf_reset(tmp);
++	strbuf_addch(tmp, '+');
++	strbuf_addf(tmp, "refs/tags/%s:refs/remote-tags/%s/%s",
++				branchname, remotename, branchname);
++	git_config_set_multivar(key, tmp->buf, "^$", 0);
++}
++
+ static const char mirror_advice[] =
+ N_("--mirror is dangerous and deprecated; please\n"
+    "\t use --mirror=fetch or --mirror=push instead");
+@@ -161,6 +172,9 @@ static int add(int argc, const char **argv)
+ 		OPT_SET_INT(0, "tags", &fetch_tags,
+ 			    N_("import all tags and associated objects when fetching"),
+ 			    TAGS_SET),
++		OPT_SET_INT(0, "prefix-tags", &fetch_tags,
++			    N_("import all tags and associated objects when fetching and prefix with <name>"),
++          TAGS_SET_PREFIX),
+ 		OPT_SET_INT(0, NULL, &fetch_tags,
+ 			    N_("or do not fetch any tag at all (--no-tags)"), TAGS_UNSET),
+ 		OPT_STRING_LIST('t', "track", &track, N_("branch"),
+@@ -215,10 +229,35 @@ static int add(int argc, const char **argv)
+ 	}
+ 
+ 	if (fetch_tags != TAGS_DEFAULT) {
++		if (fetch_tags == TAGS_SET_PREFIX) {
++			strbuf_reset(&buf);
++			strbuf_addf(&buf, "remote.%s.fetch", name);
++			if (track.nr == 0)
++				string_list_append(&track, "*");
++			for (i = 0; i < track.nr; i++) {
++				add_remote_tags(buf.buf, track.items[i].string,
++						name, &buf2);
++			}
++		}
++
+ 		strbuf_reset(&buf);
+ 		strbuf_addf(&buf, "remote.%s.tagopt", name);
+-		git_config_set(buf.buf,
+-			       fetch_tags == TAGS_SET ? "--tags" : "--no-tags");
++		char* config_val = NULL;
++		switch (fetch_tags) {
++		case TAGS_UNSET:
++			config_val = "--no-tags";
++			break;
++		case TAGS_SET:
++			config_val = "--tags";
++			break;
++		case TAGS_SET_PREFIX:
++			config_val = "--prefix-tags";
++			break;
++		default:
++			die(_("Unexpected TAGS enum %d"), fetch_tags);
++			break;
++		}
++		git_config_set(buf.buf, config_val);
+ 	}
+ 
+ 	if (fetch && fetch_remote(name))
+diff --git a/remote.c b/remote.c
+index 91eb010ca9..f383ce3cdf 100644
+--- a/remote.c
++++ b/remote.c
+@@ -447,6 +447,8 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 			remote->fetch_tags = -1;
+ 		else if (!strcmp(value, "--tags"))
+ 			remote->fetch_tags = 2;
++		else if (!strcmp(value, "--prefix-tags"))
++			remote->fetch_tags = -1; // A fetch for refs/tags is present so tags are retrieved
+ 	} else if (!strcmp(subkey, "proxy")) {
+ 		return git_config_string((const char **)&remote->http_proxy,
+ 					 key, value);
+-- 
+2.17.0-391-g1f1cddd558
