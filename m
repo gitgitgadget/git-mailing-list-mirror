@@ -2,258 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 958A11F424
-	for <e@80x24.org>; Thu, 26 Apr 2018 22:50:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F18741F424
+	for <e@80x24.org>; Thu, 26 Apr 2018 22:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754336AbeDZWuT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 18:50:19 -0400
-Received: from mail-wr0-f175.google.com ([209.85.128.175]:35603 "EHLO
-        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753882AbeDZWuS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 18:50:18 -0400
-Received: by mail-wr0-f175.google.com with SMTP id w3-v6so58259199wrg.2
-        for <git@vger.kernel.org>; Thu, 26 Apr 2018 15:50:17 -0700 (PDT)
+        id S1756931AbeDZWwW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 18:52:22 -0400
+Received: from mail-ua0-f196.google.com ([209.85.217.196]:44715 "EHLO
+        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756740AbeDZWwU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 18:52:20 -0400
+Received: by mail-ua0-f196.google.com with SMTP id h15so11881684uan.11
+        for <git@vger.kernel.org>; Thu, 26 Apr 2018 15:52:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=0kmce0t5mOZNjrCSwg5MbrpB053vco6SYy5XzCcebs4=;
-        b=ibubsbMBEPOguXC4svRYDY99MGYU1bxHlW82VhDkWi+S/9hvz+k5evWA9UnJ3n0jwj
-         HzgrKLbDSWz6Ve4pzVykR1m41abZBvUTNi20pQGpg9J5sSzU3T9TP/msvaUzSmnKFSAt
-         m5E4v9wIu7flKdHYZ1M0qJD9OyOOy3JlwJhUCaxIKv6XuXU8UxC5kX5EPnyY1IQHuIK3
-         K80ZowpXxsKkc5F3HQ3yMUn9MPk86VjEwmMpY4TxO0DJneMfaCCm1+lnbW+3fggx+H6N
-         dvjUEHD9sjAWlcPXiFrhhwcOBO/sYt1pKuKLXXAhcmq/+mpjJWw6gaIJ6zEXg1MfIgOz
-         F8Wg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=sC0nip+3e8cviVTWZaxvb9GlRZNcSzmz4VuGxZ+8wdk=;
+        b=vhCmwjm/Iyzu2QXhAt18GhSJLJeoHqpFCd49HbKGpKgKpX7vYqzolY0IH/Mfn0o7iY
+         gOysOX/OykrjSb3AGoWcAULGaBurSRiAuIenPccQW41MSR/mr6xdNISgsgOWb/pvTY/D
+         HNPESyyaDSscS3ZJ6cs2OFh2wOZJ7mI6zw0pTmyxAtqO56Dpfr7UUZuPrwDGkdLzA0Z9
+         gg5byN9KjCHE+ubvFK3qHVNCIU8GchbpFpBHDeDwcvHIwW8sD7e5up9k6OybPqHfHywn
+         Tp0SnPXe7nsWVF7gleXj2rtqfrwZQiAcAFQydRAgGP99zpZX8XQFJSsRF/5NmSsWBia4
+         UFSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=0kmce0t5mOZNjrCSwg5MbrpB053vco6SYy5XzCcebs4=;
-        b=UPDcG3v/EhnLgnzIxnoXPbWmGM1anPQPY/wHTL0A3ETf2dlGdJVJreVnwQ18018rrB
-         uJOE51REj0tDPDmZxpd6kkKhz2ry4cKcSRQqvsKpJAIBiKFp8wYiLXGM3P1DyxJS1FEZ
-         J2N0qmuvUuFjOBEbZUQYRkSvYv61VahW83MbqsuWtW1CPvPiQUiaNgwbUxNAwjcmc1+e
-         Kuong7+5PI/WOmQGR3FjlXuu2YEhefpAZfq12RQC/PLeOkgNj2/GxI5nAm+0wAawnUCJ
-         5xS701tv0BuCXFTbC4UDE/vWYg36Y77DdbtKDeoFZOgSZF0LM3GIsU890OvpuPnnglqr
-         KkhQ==
-X-Gm-Message-State: ALQs6tA0mNwl+hvrgk+p+12EXFLqOWtcQ+EjMxHbuKFlT2edocOU34qv
-        Bna6kNiF8j5ZeA82yJrlkrtM50Bt
-X-Google-Smtp-Source: AIpwx49UAzr8w4EuxCthSPa5T2yMg4JVnlg9akhno+DqJnWJB7tLkYGGrF4/S4HFWp581EVcGsJkTg==
-X-Received: by 2002:adf:8df7:: with SMTP id o110-v6mr30565582wrb.251.1524783016139;
-        Thu, 26 Apr 2018 15:50:16 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b10-v6sm27605337wrn.42.2018.04.26.15.50.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 26 Apr 2018 15:50:13 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Git List <git@vger.kernel.org>
-Cc:     Wink Saville <wink@saville.com>
-Subject: Re: Fetching tags overwrites existing tags
-References: <CAKk8isrAmWOdioJe2CdY+2F_AzKxcTGwd+kBsrAmGx-U=ZHGgA@mail.gmail.com>
-        <xmqqzi1s3y5h.fsf@gitster-ct.c.googlers.com>
-        <CAKk8isr-7bSVqEv8EjF2UgFfw75D2oVZPJFui30pbY6kWfeL_Q@mail.gmail.com>
-        <CAKk8ispWBoG7D+u8x+s+iB+wzXUN=7vpxgmz5wjL67P6XUmw9g@mail.gmail.com>
-Date:   Fri, 27 Apr 2018 07:50:13 +0900
-In-Reply-To: <CAKk8ispWBoG7D+u8x+s+iB+wzXUN=7vpxgmz5wjL67P6XUmw9g@mail.gmail.com>
-        (Wink Saville's message of "Thu, 26 Apr 2018 12:39:06 -0700")
-Message-ID: <xmqqfu3h1t22.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=sC0nip+3e8cviVTWZaxvb9GlRZNcSzmz4VuGxZ+8wdk=;
+        b=lqxSB8XtYR3yEHzE5WjoIjx4PtRPChM1PZwWEmPQvmZV4ZfrtkzVfVX40AyQUq3hWW
+         UME+AyitCUe+wta7mUqV09VDCIXkOzztJ4fa9yVSfiS2zekTL87Qn03/H9uYk8wQJEZG
+         oji9X7/4ihKdBC/3Kk61YruQYQW5xko15w/OA4AOUcxWSNLBjmCRtZaqQJYddVTzU7wU
+         aAVnpYPAHVNFNRa1BKm5Qbj2qtaHs4fEYs7HCbS1IEJ/vVNAUuaEj/VIQAt+3sI+80DO
+         qgVyzTj+HTWRvW+7Pa7UhgPa4P/2OJRABP5t5uQtA8qQTjGOEqMCZ7UEL16Y5d7ZDRAf
+         JrFA==
+X-Gm-Message-State: ALQs6tCvevZZduUDmgHDuuepUgUPqcmRCT9vTptkiWydqF0BHXwfpHBP
+        5PHnuwxmVd4MjE6NrspVS89FPVMlnZ5r5nHmNFM=
+X-Google-Smtp-Source: AIpwx4/z1Ed2BAArRdQmvpbs9RyQlVarfzFjCuqPSBIJEBYViCIhJDakBu7tZMD9U9diKkrna/7QE5/yieyX2UPSwMI=
+X-Received: by 10.176.90.48 with SMTP id l45mr19816489uad.79.1524783139570;
+ Thu, 26 Apr 2018 15:52:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.176.95.4 with HTTP; Thu, 26 Apr 2018 15:52:18 -0700 (PDT)
+In-Reply-To: <20180426205202.23056-3-benpeart@microsoft.com>
+References: <20180420133632.17580-1-benpeart@microsoft.com>
+ <20180426205202.23056-1-benpeart@microsoft.com> <20180426205202.23056-3-benpeart@microsoft.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 26 Apr 2018 15:52:18 -0700
+Message-ID: <CABPp-BE29rwZCDqFHH-nzrDub6MMdtoiorj0jv3K6B6cmfcaLA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] merge: Add merge.renames config setting
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wink Saville <wink@saville.com> writes:
+On Thu, Apr 26, 2018 at 1:52 PM, Ben Peart <Ben.Peart@microsoft.com> wrote:
 
-> I've tried to teach 'git remote add' the --prefix-tags option using the
-> technique Junio provided. At moment it is PR #486 on github [1]
-> and I'd love some comments on whether or not this the right direction
-> for fetching tags and putting them in the branches namespace.
->
-> -- Wink
->
-> [1] https://github.com/git/git/pull/486
+> +merge.renames::
+> +       Whether and how Git detects renames.  If set to "false",
+> +       rename detection is disabled. If set to "true", basic rename
+> +       detection is enabled.  If set to "copies" or "copy", Git will
+> +       detect copies, as well.  Defaults to the value of diff.renames.
+> +
 
-FWIW, here is how that pull/486/head looks like.
+We shouldn't allow users to force copy detection on for merges  The
+diff side of the code will detect them correctly but the code in
+merge-recursive will mishandle the copy pairs.  I think fixing it is
+somewhere between big can of worms and
+it's-a-configuration-that-doesn't-even-make-sense, but it's been a
+while since I thought about it.
 
--- >8 --
+> diff --git a/merge-recursive.h b/merge-recursive.h
+> index 80d69d1401..0c5f7eff98 100644
+> --- a/merge-recursive.h
+> +++ b/merge-recursive.h
+> @@ -17,7 +17,8 @@ struct merge_options {
+>         unsigned renormalize : 1;
+>         long xdl_opts;
+>         int verbosity;
+> -       int detect_rename;
+> +       int diff_detect_rename;
+> +       int merge_detect_rename;
+>         int diff_rename_limit;
+>         int merge_rename_limit;
+>         int rename_score;
+> @@ -28,6 +29,11 @@ struct merge_options {
+>         struct hashmap current_file_dir_set;
+>         struct string_list df_conflict_file_set;
+>  };
+> +inline int merge_detect_rename(struct merge_options *o)
+> +{
+> +       return o->merge_detect_rename >= 0 ? o->merge_detect_rename :
+> +               o->diff_detect_rename >= 0 ? o->diff_detect_rename : 1;
+> +}
 
-From: Wink Saville <wink@saville.com>
-Date: Thu, 26 Apr 2018 09:56:11 -0700
-Subject: [PATCH] Teach remote add the --prefix-tags option
-
-When --prefix-tags is passed to `git remote add` the tagopt is set to
---prefix-tags and a second fetch line is added so tags are placed in
-the branches namespace.
-
-For example:
-  $ git remote add -f --prefix-tags gbenchmark git@github.com:google/benchmark
-  Updating gbenchmark
-  warning: no common commits
-  remote: Counting objects: 4406, done.
-  remote: Compressing objects: 100% (18/18), done.
-  remote: Total 4406 (delta 7), reused 13 (delta 6), pack-reused 4382
-  Receiving objects: 100% (4406/4406), 1.34 MiB | 7.46 MiB/s, done.
-  Resolving deltas: 100% (2865/2865), done.
-  From github.com:google/benchmark
-   * [new branch]      clangtidy       -> gbenchmark/clangtidy
-   * [new branch]      iter_report     -> gbenchmark/iter_report
-   * [new branch]      master          -> gbenchmark/master
-   * [new branch]      releasing       -> gbenchmark/releasing
-   * [new branch]      reportercleanup -> gbenchmark/reportercleanup
-   * [new branch]      rmheaders       -> gbenchmark/rmheaders
-   * [new branch]      v2              -> gbenchmark/v2
-   * [new tag]         v0.0.9          -> refs/remote-tags/gbenchmark/v0.0.9
-   * [new tag]         v0.1.0          -> refs/remote-tags/gbenchmark/v0.1.0
-   * [new tag]         v1.0.0          -> refs/remote-tags/gbenchmark/v1.0.0
-   * [new tag]         v1.1.0          -> refs/remote-tags/gbenchmark/v1.1.0
-   * [new tag]         v1.2.0          -> refs/remote-tags/gbenchmark/v1.2.0
-   * [new tag]         v1.3.0          -> refs/remote-tags/gbenchmark/v1.3.0
-   * [new tag]         v1.4.0          -> refs/remote-tags/gbenchmark/v1.4.0
-
-And the .git/config remote "gbenchmark" section looks like:
-  [remote "gbenchmark"]
-    url = git@github.com:google/benchmark
-    fetch = +refs/heads/*:refs/remotes/gbenchmark/*
-    fetch = +refs/tags/*:refs/remote-tags/gbenchmark/*
-    tagopt = --prefix-tags
----
- Documentation/git-remote.txt |  8 ++++--
- builtin/remote.c             | 47 +++++++++++++++++++++++++++++++++---
- remote.c                     |  2 ++
- 3 files changed, 51 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 4feddc0293..cdfd24e2ea 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git remote' [-v | --verbose]
--'git remote add' [-t <branch>] [-m <master>] [-f] [--[no-]tags] [--mirror=<fetch|push>] <name> <url>
-+'git remote add' [-t <branch>] [-m <master>] [-f] [--prefix-tags | --tags | --no-tags] [--mirror=<fetch|push>] <name> <url>
- 'git remote rename' <old> <new>
- 'git remote remove' <name>
- 'git remote set-head' <name> (-a | --auto | -d | --delete | <branch>)
-@@ -54,7 +54,11 @@ With `-f` option, `git fetch <name>` is run immediately after
- the remote information is set up.
- +
- With `--tags` option, `git fetch <name>` imports every tag from the
--remote repository.
-+remote repository to refs/tags, use --prefix-tags to import them
-+to refs/remote-tags/<name>/<tag>.
-++
-+With `--prefix-tags` option, `git fetch <name>` imports every tag from the
-+remote repository to refs/remote-tags/<name>/<tag>.
- +
- With `--no-tags` option, `git fetch <name>` does not import tags from
- the remote repository.
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 805ffc05cd..75813eeaa3 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -11,7 +11,7 @@
- 
- static const char * const builtin_remote_usage[] = {
- 	N_("git remote [-v | --verbose]"),
--	N_("git remote add [-t <branch>] [-m <master>] [-f] [--tags | --no-tags] [--mirror=<fetch|push>] <name> <url>"),
-+	N_("git remote add [-t <branch>] [-m <master>] [-f] [--prefix-tags | --tags | --no-tags] [--mirror=<fetch|push>] <name> <url>"),
- 	N_("git remote rename <old> <new>"),
- 	N_("git remote remove <name>"),
- 	N_("git remote set-head <name> (-a | --auto | -d | --delete | <branch>)"),
-@@ -101,7 +101,8 @@ static int fetch_remote(const char *name)
- enum {
- 	TAGS_UNSET = 0,
- 	TAGS_DEFAULT = 1,
--	TAGS_SET = 2
-+	TAGS_SET = 2,
-+	TAGS_SET_PREFIX = 3
- };
- 
- #define MIRROR_NONE 0
-@@ -123,6 +124,16 @@ static void add_branch(const char *key, const char *branchname,
- 	git_config_set_multivar(key, tmp->buf, "^$", 0);
- }
- 
-+static void add_remote_tags(const char *key, const char *branchname,
-+		       const char *remotename, struct strbuf *tmp)
-+{
-+	strbuf_reset(tmp);
-+	strbuf_addch(tmp, '+');
-+	strbuf_addf(tmp, "refs/tags/%s:refs/remote-tags/%s/%s",
-+				branchname, remotename, branchname);
-+	git_config_set_multivar(key, tmp->buf, "^$", 0);
-+}
-+
- static const char mirror_advice[] =
- N_("--mirror is dangerous and deprecated; please\n"
-    "\t use --mirror=fetch or --mirror=push instead");
-@@ -161,6 +172,9 @@ static int add(int argc, const char **argv)
- 		OPT_SET_INT(0, "tags", &fetch_tags,
- 			    N_("import all tags and associated objects when fetching"),
- 			    TAGS_SET),
-+		OPT_SET_INT(0, "prefix-tags", &fetch_tags,
-+			    N_("import all tags and associated objects when fetching and prefix with <name>"),
-+          TAGS_SET_PREFIX),
- 		OPT_SET_INT(0, NULL, &fetch_tags,
- 			    N_("or do not fetch any tag at all (--no-tags)"), TAGS_UNSET),
- 		OPT_STRING_LIST('t', "track", &track, N_("branch"),
-@@ -215,10 +229,35 @@ static int add(int argc, const char **argv)
- 	}
- 
- 	if (fetch_tags != TAGS_DEFAULT) {
-+		if (fetch_tags == TAGS_SET_PREFIX) {
-+			strbuf_reset(&buf);
-+			strbuf_addf(&buf, "remote.%s.fetch", name);
-+			if (track.nr == 0)
-+				string_list_append(&track, "*");
-+			for (i = 0; i < track.nr; i++) {
-+				add_remote_tags(buf.buf, track.items[i].string,
-+						name, &buf2);
-+			}
-+		}
-+
- 		strbuf_reset(&buf);
- 		strbuf_addf(&buf, "remote.%s.tagopt", name);
--		git_config_set(buf.buf,
--			       fetch_tags == TAGS_SET ? "--tags" : "--no-tags");
-+		char* config_val = NULL;
-+		switch (fetch_tags) {
-+		case TAGS_UNSET:
-+			config_val = "--no-tags";
-+			break;
-+		case TAGS_SET:
-+			config_val = "--tags";
-+			break;
-+		case TAGS_SET_PREFIX:
-+			config_val = "--prefix-tags";
-+			break;
-+		default:
-+			die(_("Unexpected TAGS enum %d"), fetch_tags);
-+			break;
-+		}
-+		git_config_set(buf.buf, config_val);
- 	}
- 
- 	if (fetch && fetch_remote(name))
-diff --git a/remote.c b/remote.c
-index 91eb010ca9..f383ce3cdf 100644
---- a/remote.c
-+++ b/remote.c
-@@ -447,6 +447,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 			remote->fetch_tags = -1;
- 		else if (!strcmp(value, "--tags"))
- 			remote->fetch_tags = 2;
-+		else if (!strcmp(value, "--prefix-tags"))
-+			remote->fetch_tags = -1; // A fetch for refs/tags is present so tags are retrieved
- 	} else if (!strcmp(subkey, "proxy")) {
- 		return git_config_string((const char **)&remote->http_proxy,
- 					 key, value);
--- 
-2.17.0-391-g1f1cddd558
+Why did you split o->detect_rename into two fields?  You then
+recombine them in merge_detect_rename(), and after initial setup only
+ever access them through that function.  Having two fields worries me
+that people will accidentally introduce bugs by using one of them
+instead of the merge_detect_rename() function.  Is there a reason you
+decided against having the initial setup just set a single value and
+then use it directly?
