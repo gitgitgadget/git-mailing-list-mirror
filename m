@@ -6,66 +6,62 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6709F1F424
-	for <e@80x24.org>; Thu, 26 Apr 2018 03:51:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CEBB1F424
+	for <e@80x24.org>; Thu, 26 Apr 2018 04:10:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751940AbeDZDvc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 23:51:32 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:41772 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751525AbeDZDvb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 23:51:31 -0400
-Received: by mail-wr0-f196.google.com with SMTP id g21-v6so27747619wrb.8
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 20:51:30 -0700 (PDT)
+        id S1750924AbeDZEK2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 00:10:28 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:54055 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750760AbeDZEK0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 00:10:26 -0400
+Received: by mail-wm0-f68.google.com with SMTP id 66so10433819wmd.3
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 21:10:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ZE6NMIzGv+K2WK6Zd2U6LOwXY+w/3SQ5eqK3PxkmZuY=;
-        b=VgUY2kcfHV9na5AKo1sRFVpbPoRQAwwS+xJnlYiXY04+gx6Xe26YIRhhw+wiksNJ7j
-         bFRWedyzn6wGDLS5wd+R9aYu7kMC+iflBdjVqCcQdja5i70YbJToMot8285+JBBItqhv
-         wqPLEuFaOsKID75bxPSRFMA2NIIGId7VqU4lnri5O8XIi3V6zdPhkoh8feq0QY09KFsu
-         V7zLjV/ikQvjAYlNM/ifZjBHJ2F7063/0tvebM741YkhfJHQfi4jVQJiBb8lXjLoZm2v
-         TVe5v0B/7boBVEzwrMgBDFT0nTGzYrEBVYplfvQ8cAIrUp1AtUwFT2VnK4yjN7Mm9kgI
-         1EJw==
+        bh=qoqbuyc4WT0d5mjD6pzwGFe+aUJw/7FEJqWNu7u9Cnc=;
+        b=N9hAoQwjNS7JKylp1en8rhzDNbjFmq3JpOHawDNIL3gho5GR0nCuR/vsQF8oAzl9GR
+         lxA8S+bLrut2moPHW+nqgwtNtHmW+0Eok17r/fJuu4imQOCsSlc5lvWTzzqGsVuTRtEf
+         7Tnenwnce0GRbhCVX8b1ptNZf+24eo2ui7vJVUEPbgDiCnmLOLFkjLzYZCn/9IFWhBY/
+         EtER8Mj6k2rrRVBGqPZI5+AVMNlYjWyd35BDQX3aawtyZRz506fdyJQ/pF3SPr5w8oyb
+         IyJRBunofTTj3mNqwBZuIWua0JXesQPYAtJfZr0dtkum6EybWIX5f6MG4D5Uqm6mkAmY
+         bdig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZE6NMIzGv+K2WK6Zd2U6LOwXY+w/3SQ5eqK3PxkmZuY=;
-        b=tbEUGIuqdofXdmtIea9yawaScPyA4idbzMry+jiZuf/DZUuIGBA+xX8NpM2A0b493R
-         vYge2j9oheJurskJWoFdOaNlAfkY5EJjBkLyYnF0LwQPkgzuMY60+xljQLOnd6Gsl6uL
-         8q2sNK+vCSE6VVneIYSDLlOyyjd++rkZUXbaKUcD3rqcPrYdpirZdSZ7V+cPhOADKEPL
-         gF3skY2l55en9qULQUU5Osi8DWSCYvjMTWUtzGp2ACjISNOVhLKn8JrPiTMylTNg9Rc0
-         w7Js9RO6knYpJF2mbG098lmUvX1bGN4pcJmeXcgrAiDh+YCjglRM9UJwdWJJ5224taBC
-         0wNw==
-X-Gm-Message-State: ALQs6tAaf8Ipj4WVyhKciXntq3CHouUsSo3QWHYS3dOjdCY2KB3TMJBH
-        cYRtqgkYjrwgmExLD/oZSYI=
-X-Google-Smtp-Source: AIpwx49i2UoCg+nwpNT9PkCtRRS+eBbzPfMVSo8oo8gpBO/BsIzM+jZrbSKWk7IhWLoxYC6M3yO6Dw==
-X-Received: by 2002:adf:b8eb:: with SMTP id c40-v6mr23177129wrg.170.1524714689715;
-        Wed, 25 Apr 2018 20:51:29 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v75-v6sm35286698wrc.65.2018.04.25.20.51.28
+        bh=qoqbuyc4WT0d5mjD6pzwGFe+aUJw/7FEJqWNu7u9Cnc=;
+        b=Fk0TcqRuoonPKRlE6deUD+k4DvaMJjuJGWsbpCEf9f73wVyDfMGXFqdGj8MBbfmyd/
+         fWIp3/QczEXviAJ2jFm4gziz5SjI1BTDIYiE1cKUediLMJpVb7hCNxyoyN55DW+dJM3s
+         e1VL/QL6rsT6KFwoGIUOErHbYqgKtPnC3uRGF4Qxk6gIs0MtcSh4wYD5kbijI324VaKN
+         IFBNhRcZXgSYjNgSAnXuZldXqwDLuN5ZbzZS/IZjTfV4DPFhJ4R1k+XKxrSLJGN2rZQd
+         c7srf/tjve1wB+pfdmJ1FDdw/DNUvTjrPjVg3QwUwrfoCjgCBPBSKIJMygBv2Y+Q/aUF
+         YRJQ==
+X-Gm-Message-State: ALQs6tDbZ/xWtHSsaKqIgmGTZAZRtvVgQ1mndlsas2M+vXv+k4IFEGeV
+        4CUFUTKu3Z9ZkbPhCX5OTLA=
+X-Google-Smtp-Source: AB8JxZo0IecA0N+WDJY2fwYLiOXM86l9pgJmOf+xl2TV8bo0jQAcEt0oS12zD/kZCuisMgv2MmAZAQ==
+X-Received: by 10.28.173.198 with SMTP id w189mr12575781wme.15.1524715825436;
+        Wed, 25 Apr 2018 21:10:25 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id z5-v6sm4900479wrm.61.2018.04.25.21.10.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Apr 2018 20:51:28 -0700 (PDT)
+        Wed, 25 Apr 2018 21:10:24 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
+Cc:     git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
         Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Sergey Organov <sorganov@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v9 00/17] rebase -i: offer to recreate commit topology by rebasing merges
-References: <cover.1524306546.git.johannes.schindelin@gmx.de>
-        <cover.1524659287.git.johannes.schindelin@gmx.de>
-Date:   Thu, 26 Apr 2018 12:51:28 +0900
-In-Reply-To: <cover.1524659287.git.johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Wed, 25 Apr 2018 14:28:08 +0200")
-Message-ID: <xmqqmuxq39rz.fsf@gitster-ct.c.googlers.com>
+        Christian Couder <christian.couder@gmail.com>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: Re: [PATCH v5 00/11] Deprecate .git/info/grafts
+References: <cover.1524303776.git.johannes.schindelin@gmx.de>
+        <cover.1524650028.git.johannes.schindelin@gmx.de>
+Date:   Thu, 26 Apr 2018 13:10:24 +0900
+In-Reply-To: <cover.1524650028.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Wed, 25 Apr 2018 11:53:49 +0200")
+Message-ID: <xmqqin8e38wf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -76,45 +72,42 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> Changes since v8:
->
-> - Disentangled the patch introducing `label`/`reset` from the one
->   introducing `merge` again (this was one stupid, tired `git commit
->   --amend` too many).
->
-> - Augmented the commit message of "introduce the `merge` command" to
->   describe what the `label onto` is all about.
->
-> - Fixed the error message when `reset` would overwrite untracked files to
->   actually say that a "reset" failed (not a "merge").
->
-> - Clarified the rationale for `label onto` in the commit message of
->   "rebase-helper --make-script: introduce a flag to rebase merges".
->
-> - Edited the description of `--rebase-merges` heavily, for clarity, in
->   "rebase: introduce the --rebase-merges option".
->
-> - Edited the commit message of (and the documentation introduced by) " rebase
->   -i: introduce --rebase-merges=[no-]rebase-cousins" for clarity (also
->   mentioning the `--ancestry-path` option).
->
-> - When run_git_commit() fails after a successful merge, we now take pains
->   not to reschedule the `merge` command.
->
-> - Rebased the patch series on top of current `master`, i.e. both
->   `pw/rebase-keep-empty-fixes` and `pw/rebase-signoff`, to resolve merge
->   conflicts myself.
+>  -	if (export_object(&old_oid, type, raw, tmpfile))
+>  -		return -1;
+>  -	if (launch_editor(tmpfile, NULL, NULL) < 0)
+>  -		return error("editing object file failed");
+>  -	if (import_object(&new_oid, type, raw, tmpfile))
+>  +	tmpfile = git_pathdup("REPLACE_EDITOBJ");
+>  +	if (export_object(&old_oid, type, raw, tmpfile) ||
+>  +	    (launch_editor(tmpfile, NULL, NULL) < 0 &&
+>  +	     error("editing object file failed")) ||
+>  +	    import_object(&new_oid, type, raw, tmpfile)) {
+>  +		free(tmpfile);
+>   		return -1;
+>  -
+>  +	}
 
-Good to see the last item, as this gave me a chance to make sure
-that the conflict resolution I've been carrying matches how you
-would have resolved as the original author.  Applying these on the
-old base (with minor conflict resolution) to match the old iteration
-and merging the result to the new base1f1cddd5 ("The fourth batch
-for 2.18", 2018-04-25) resulted in the same tree as the tree that
-results from applying these on top of the new base.
+I know the above is to avoid leaking tmpfile, but a single if ()
+condition that makes multiple calls to functions primarily for their
+side effects is too ugly to live.  Perhaps something like
 
-That was done only to validate the result of the past resolution
-(and also seeing the interdiff from the old iteration).  There is no
-reason to keep this series back-portable to older tip of 'master',
-so I'll queue the result of applying the patches to the new base.
+	if (export_object(...))
+		goto clean_fail;
+	if (launch_editor(...)) {
+		error("editing object file failed");
+		goto clean_fail;
+	}
+	if (import_object(...)) {
+	clean_fail:
+		free(tmpfile);
+		return -1;
+	}
 
+would keep the ease-of-reading of the original while plugging the
+leak.  It would even be cleaner to move the body of clean_fail:
+completely out of line, instead of having it in the last of three
+steps like the above.
+
+Other than that, looked cleanly done.  Thanks for a pleasant read.
+
+Will queue.
