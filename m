@@ -6,79 +6,91 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 406D71F424
-	for <e@80x24.org>; Thu, 26 Apr 2018 01:56:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F7831F424
+	for <e@80x24.org>; Thu, 26 Apr 2018 02:11:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751528AbeDZB4I (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 21:56:08 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:35857 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750868AbeDZB4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 21:56:07 -0400
-Received: by mail-wm0-f52.google.com with SMTP id n10so10009285wmc.1
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 18:56:06 -0700 (PDT)
+        id S1751638AbeDZCL4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 22:11:56 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:38324 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751274AbeDZCLy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 22:11:54 -0400
+Received: by mail-wm0-f65.google.com with SMTP id i3so10062326wmf.3
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 19:11:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=IsuV72Q8xNSaZAXhtBdWPgSGBjKk5JHpGw+5m5TxnOA=;
-        b=hyqhpMT0PfHj0yTElMAha09MTuuwNk2ytKhWK8Yyg4RuiGJX9dZQpEJ+j83VyhRUXE
-         vU0VTY/XnSpIZxccocAuyKb9AwdSFS/yJjBPUUd/GoRm0w/Y4Qefd+tQ25lxlozpnyjj
-         4J+prKiUysZuLNwYk01I1YFJH1a/NLQXkOnUpxrN0KB/4WuJazAdx3e0lLuW52zvjamX
-         yC0UvrCTXLjzm1tiq2e+RBpvc+fELZPZs6KMhsW4A+ID859g7pKjhUHrI1GZhBkspAZ0
-         qhD0F+kXptj3umChWqZ3ctmpwISC4nqi/J7ii6gKGtWmyHoIie8vemv2m619HdCKhDVn
-         SkeA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=MYfDuTBMpAN/wPWkgvi1P5cGtSLIBjdDtVeJMNck4Ow=;
+        b=fxsDiSGH4A3Oxawl3kCsfEq1yAV40Fa+R5mcLeqhK2LhDQ1xQo3BlElkmrdl/1i4ZT
+         aujT9x8HDtbuojc4+6UlOBJvc84gauu6lGUbV932Vrp3flI351U84hydCNJgSRjOF+ti
+         SuW6HyX3ycYspunfkSOfgJxVASnOdmS/MeUEdhABjJgEp+P4CB5TzDLuuZtQ/VGHGXHY
+         leTfmFkmrtBnn4D5mvASug/NYePzKI89qqbisMDfRPryQ4AR0HzLVa5+dDeTCqdmuK6+
+         Y52PlFoG/Um/BpEOLJgO+7GthELezEJuh1FhldVRqqIaFvDTjCqH3qOUL7BGa5Dt2tvk
+         5Www==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=IsuV72Q8xNSaZAXhtBdWPgSGBjKk5JHpGw+5m5TxnOA=;
-        b=THVaIqVEnmMKSU28npY7JhvjPoDfiSdVmg8wqTb0H5o61Cc6YkWwCfw0XgzLc5buyI
-         zQulxMJGskq06KUXdl+cywCEAj/FCPhEnU4sxqjDseBYp8oHMehd02OdmFsg+SvXDqQL
-         1i4cMd01uwyf96doA0m+cRw44V8yTnsoUUv3H85C96225FvXP7GPcQYFqWgX5U2bBwbY
-         PdcQr6d4HE+JfzgVdsf6pc/S915njCaLiBTdFzMDAXIis6pb6DtXDNBXCpqckIXpnbBH
-         wPUOPYUiM3ooNlQZDk+v7lu34HuCD755+m7o5Byf67yqIWlSN93nm6IXyNYqKkFZCJKh
-         SJqQ==
-X-Gm-Message-State: ALQs6tBCf1LfjdZ190ax9cQtb5/V105kfKj8NS3tVyUBjEgB27NYcuUM
-        fr5K9VrtC0OgC+QWBFuZNHz4bWsoXAc=
-X-Google-Smtp-Source: AB8JxZqZ1L1VYwTbFWRjj+cpedVVr4O4QKOn766sTunM7zGfgzbzcQo1UFnE0fzGNFPSsXZOMRS2QA==
-X-Received: by 10.28.218.19 with SMTP id r19mr3335366wmg.2.1524707765860;
-        Wed, 25 Apr 2018 18:56:05 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a13-v6sm18796550wrc.19.2018.04.25.18.56.04
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=MYfDuTBMpAN/wPWkgvi1P5cGtSLIBjdDtVeJMNck4Ow=;
+        b=NMH7WotYG6kQtj1SEGKc/FJovyhrIXLeGy8rPIf5myjXMHUWsaj0GRgpxSHv8nLLOO
+         CoqTa2HPu2YzVZZSLKtR3s4dUTAiZuUnLu1d9BmYUQeIgLcQHqUunlLctqs6NK0p/OmO
+         5hM91DEW3aXj9MORwIBxwn4jr9NBe5obT59mymBrIRdeWHltBZGHSJWEx+DsjJEjzCOf
+         BwGNajX4B/Qt1qhOOYIPvz/0T30hTNYB49UJ2okEf5QRuJRrdw+tw+gsuP+OqCvkuWmy
+         MBr6g6cpUQD63/cLBkxwl31Qf87ux3XB+8wGxIDejO3tDoecPx6+yiXiJ8MMZca4oq9L
+         GAWw==
+X-Gm-Message-State: ALQs6tCBVYRr1oA7uTZ0qbc48F8Oj7ZBAMGqtRh10eowRuTZXWY0HMKB
+        nZMcQ4O6ikDUQhY9I7wuUAQ=
+X-Google-Smtp-Source: AB8JxZrCYvS2m+Qx7fuNBpvRe+5lilj0cFiATsH4qyiJ5WM/iSsZL5rnl0o3HIOW4Huuqu0ILdOwCA==
+X-Received: by 10.28.139.11 with SMTP id n11mr2348783wmd.12.1524708713034;
+        Wed, 25 Apr 2018 19:11:53 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q15sm2608973wmf.11.2018.04.25.19.11.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Apr 2018 18:56:05 -0700 (PDT)
+        Wed, 25 Apr 2018 19:11:52 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3] Make running git under other debugger-like programs easy
-References: <nycvar.QRO.7.76.6.1804101023100.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <20180424234645.8735-1-newren@gmail.com>
-        <nycvar.QRO.7.76.6.1804250923280.4978@tvgsbejvaqbjf.bet>
-Date:   Thu, 26 Apr 2018 10:56:04 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1804250923280.4978@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Wed, 25 Apr 2018 09:25:58 +0200
-        (DST)")
-Message-ID: <xmqq604e4tor.fsf@gitster-ct.c.googlers.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Clemens Buchacher <drizzd@gmx.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Manlio Perillo <manlio.perillo@gmail.com>
+Subject: Re: [PATCH 01/11] t9902-completion: add tests demonstrating issues with quoted pathnames
+References: <20180318012618.32691-1-szeder.dev@gmail.com>
+        <20180416224113.16993-1-szeder.dev@gmail.com>
+        <20180416224113.16993-2-szeder.dev@gmail.com>
+        <xmqq7ep6v6ft.fsf@gitster-ct.c.googlers.com>
+        <CAM0VKjk=JtdoduywJ4t5OPhLGgt90yxJA_Zif6R803XHA=Sfbg@mail.gmail.com>
+        <xmqqlgdljok5.fsf@gitster-ct.c.googlers.com>
+        <CAM0VKjkQfTm+qnurvZ_545VXJH2PwuPfkhXaa1sLj5ePSPjBwA@mail.gmail.com>
+Date:   Thu, 26 Apr 2018 11:11:51 +0900
+In-Reply-To: <CAM0VKjkQfTm+qnurvZ_545VXJH2PwuPfkhXaa1sLj5ePSPjBwA@mail.gmail.com>
+        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Thu, 26 Apr 2018 02:25:34
+ +0200")
+Message-ID: <xmqq1sf24syg.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
->> ...
->> 
->> There is also a handy shortcut of GIT_DEBUGGER=1 meaning the same as
->> GIT_DEBUGGER="gdb --args"
->> 
->> Original-patch-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> Signed-off-by: Elijah Newren <newren@gmail.com>
+> These new tests, however, are primarily interested in the inner
+> workings of __git_complete_index_file() in the presence of escapes
+> and/or quotes in the path to be completed and/or in the output of 'git
+> ls-files'.  For these kind of tests we could simply invoke
+> __git_complete_index_file() directly, like we call __git_refs()
+> directly to test refs completion.  Then we could set the current path
+> to be completed to whatever we want, including spaces, because it
+> won't be subject to field splitting like the command line given to
+> 'test_completion'.
 >
-> Looks good to me!
-> Dscho
+> So, I think for v2 I will rewrite these tests to call
+> __git_complete_index_file() directly instead of using
+> 'test_completion', and will include a test with spaces in path names.
 
-Thanks, both.
+Quite well thought-out reasoning.  Thanks.
