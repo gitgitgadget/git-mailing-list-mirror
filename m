@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A5A81F404
-	for <e@80x24.org>; Thu, 26 Apr 2018 07:51:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A93F11F404
+	for <e@80x24.org>; Thu, 26 Apr 2018 07:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753440AbeDZHvO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 03:51:14 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:36159 "EHLO
+        id S1753748AbeDZHvR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 03:51:17 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35638 "EHLO
         mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752018AbeDZHvM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 03:51:12 -0400
-Received: by mail-wr0-f193.google.com with SMTP id u18-v6so28447488wrg.3
-        for <git@vger.kernel.org>; Thu, 26 Apr 2018 00:51:11 -0700 (PDT)
+        with ESMTP id S1753545AbeDZHvP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 03:51:15 -0400
+Received: by mail-wr0-f193.google.com with SMTP id w3-v6so55695070wrg.2
+        for <git@vger.kernel.org>; Thu, 26 Apr 2018 00:51:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=90X0E6GBNvbn4u7euICffaAmUck2qVpaCYZkGRcWzCI=;
-        b=hc75mf2NUFShd7WQjUn5Nj0cWHhU6P6E9YuLYG12R0p3Po8VSrLKTM+yfVS8Zprl47
-         ex9pHa2u5djAiOqysOgmBYI3v2Z0209auHlyNhd/kRoCpJW2UWnQh4E+yhTgkOgXr4Dq
-         e0jHA1DNQ8SeEOvMv3KHbhVMk0YElsWhCJfoG61Fk8SV/jBtphy8yM6PbzvWNdYqPyWB
-         hJzIZqOtvP5EEeTl+tus/InP4mMstA3XYPtPDFrn5bH5d/PcbG1t/iL+5yiebI8LzD4h
-         1CaD9Hsd9kODdxQRQacxZ7xzCiMSZiZkRoBaBN9taBQrnqbWofs/fWk1fHCqJeOwk9mh
-         Dv8A==
+        bh=sfX9NPs4nLPXG8saphFGFj2chQVWMD9ty9opwjWuB+E=;
+        b=tZ0DubctOwGST4t/OZuwoAIsae5keaCyUWrlsiN9jLngvJ3SCWtzRlTYkXThx7AikG
+         RnG+eM/yRkTezY/aM41H9I+/m5z0tFqi1TIjjMbXvk5ORUvyAu9AtUUJrOoJfA420wJH
+         OUmFFbTwksUj3iNkIvMzkGtWI//0SdGfQ6yO+CuJWM7Oso5cgT+VF4eLH7yRRNbHbsvf
+         1xo/u+ZsuSkbI7AU1itHFs2CkAG0AxWXqldeZEUhWhVNem15CaDWm5KFeusH6sPqVl3v
+         jb7oug9Ocr6j22KdienkwU1Aaaed0F3AiG3sRR1D8X3M1Wz3A2cYKBa52ktwW8UuaSaU
+         L57g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=90X0E6GBNvbn4u7euICffaAmUck2qVpaCYZkGRcWzCI=;
-        b=STKgMeQMVLiDYiuR8n/gDlXSdlKvAJxxoQIMGfO0Jw46k1N0aK8iTAuzrmhpleiplF
-         YzXZY410sDqxiJ8bp8sugV49SWPdyFoB0MHuUt+1qNu8nY+IwK37lAnWkzxfYTad+KwN
-         JhNqPjjn4VI5d4SKnaHEfz6q4qhd77Huj4IUDvM97ZZdHZ22wNC2g+kwqVXUNjNrITTx
-         qZPY8tL2u4z6DC1OwT09WqG51Q8ZL1GDoJ5DCZRvAzYpYSeHhrHSZvzmVeYT6N/4K3K0
-         fqMw2pSealgquVyy3jIfqZs0BDS384qleyP9W/dJByRl4xbVbP85SBZcLiEZAM2NEcLd
-         a1UA==
-X-Gm-Message-State: ALQs6tBWmd1vAqEiz1sQRucvFL7mj1ZsxhGYC60Gllm3OKQcWFavu738
-        E2AfF3e2z1oSQ5kIprURP/dfdiDu
-X-Google-Smtp-Source: AIpwx4/TEsetY+y1/6mXKWpNwn668+Pma42EcwjX2Ic7t0ShOKjYl6sVZo0EawjoFal8kUsTptkyIw==
-X-Received: by 2002:adf:e64b:: with SMTP id b11-v6mr21918378wrn.51.1524729070625;
-        Thu, 26 Apr 2018 00:51:10 -0700 (PDT)
+        bh=sfX9NPs4nLPXG8saphFGFj2chQVWMD9ty9opwjWuB+E=;
+        b=hVmwuqN/tdIW/oO7S4b9j00A7MczPhR11KRQDX++eQdemjh9dKCuYvwCI4/bHq8KGW
+         2wyGo60Y6m+b8fghnZXS/Q0pEsctclvCLMH/byxhqPoeukWyXDbKALabHiXFx8NjSaXM
+         N34vOe/327h5II3A4cmkOUDQ8zfCh0D87tqoz+Wp1s81w9KrEjO+nykVophzzJ6Le9kd
+         ttkr3UwNVTI9J1nW3AFPrWRW5+h2QW2puso++PdQ9ACXS3vfByQRzPR62p/0OWAsXJTr
+         m1wwNObtbrsu0xY2qEvpP2niESBE3hrqaKzLW5UUUclmDR+F7saBYqeQiSz7v8yFyZKr
+         a/Fg==
+X-Gm-Message-State: ALQs6tC4KIsatvdvQFk7BMX0ue6el+iOJMxbEQJ1ssTqCce7dk1cXHYt
+        DATe+UQaDe4+jDw6R9REEqtcSdia
+X-Google-Smtp-Source: AIpwx4/wfe9ujfVJuDg686jldRoKaQFL47bF0+WBu/B2GRRnqUtRDfdC3WINrDlmdIlCglU6k8rl8Q==
+X-Received: by 2002:adf:cd08:: with SMTP id w8-v6mr23897731wrm.187.1524729073450;
+        Thu, 26 Apr 2018 00:51:13 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w6-v6sm3424551wra.16.2018.04.26.00.51.09
+        by smtp.gmail.com with ESMTPSA id w6-v6sm3424551wra.16.2018.04.26.00.51.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Apr 2018 00:51:09 -0700 (PDT)
+        Thu, 26 Apr 2018 00:51:12 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/3] .gitattributes: add *.pl extension for Perl
-Date:   Thu, 26 Apr 2018 07:50:56 +0000
-Message-Id: <20180426075058.9322-2-avarab@gmail.com>
+Subject: [PATCH 2/3] .gitattributes: use the "perl" differ for Perl
+Date:   Thu, 26 Apr 2018 07:50:57 +0000
+Message-Id: <20180426075058.9322-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180426075058.9322-1-avarab@gmail.com>
 References: <20180426075058.9322-1-avarab@gmail.com>
@@ -69,27 +69,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the list of Perl extensions added in 00ddc9d13c ("Fix build
-with core.autocrlf=true", 2017-05-09) to also include *.pl, we have
-some of those in the tree, e.g. in t/.
+As noted in gitattributes(5) this gives better patch context for these
+types of files.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .gitattributes | 1 +
- 1 file changed, 1 insertion(+)
+ .gitattributes | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/.gitattributes b/.gitattributes
-index 8ce9c6b888..482af05a6a 100644
+index 482af05a6a..aa08dd219d 100644
 --- a/.gitattributes
 +++ b/.gitattributes
-@@ -2,6 +2,7 @@
+@@ -1,9 +1,9 @@
+ * whitespace=!indent,trail,space
  *.[ch] whitespace=indent,trail,space diff=cpp
  *.sh whitespace=indent,trail,space eol=lf
- *.perl eol=lf
-+*.pl eof=lf
- *.pm eol=lf
+-*.perl eol=lf
+-*.pl eof=lf
+-*.pm eol=lf
++*.perl eol=lf diff=perl
++*.pl eof=lf diff=perl
++*.pm eol=lf diff=perl
  /Documentation/git-*.txt eol=lf
  /command-list.txt eol=lf
+ /GIT-VERSION-GEN eol=lf
 -- 
 2.17.0.290.gded63e768a
 
