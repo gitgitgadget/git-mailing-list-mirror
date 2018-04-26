@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33B991F42D
-	for <e@80x24.org>; Thu, 26 Apr 2018 07:47:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A42F1F404
+	for <e@80x24.org>; Thu, 26 Apr 2018 07:47:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754051AbeDZHrK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 03:47:10 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:40407 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753007AbeDZHrH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 03:47:07 -0400
-Received: by mail-pf0-f193.google.com with SMTP id f189so8491302pfa.7
-        for <git@vger.kernel.org>; Thu, 26 Apr 2018 00:47:07 -0700 (PDT)
+        id S1754086AbeDZHrd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 03:47:33 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:42022 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753582AbeDZHrc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 03:47:32 -0400
+Received: by mail-pf0-f196.google.com with SMTP id o16so17593385pfk.9
+        for <git@vger.kernel.org>; Thu, 26 Apr 2018 00:47:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=atlassian-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/QPSHJoe11A+6N7iAmSn3XlN0xvwzZ2sMot6RCfPjoc=;
-        b=oDc6xBzpPNKK95LLQ98ZjfeC3rwPZfPvwDiw0s4VLfbGbfRJnB/axEgdFim1ncy0M6
-         vIic/LY4ullEr9RWerYwmVUI/EOdr0mIBXBqPEwi8yd2CJtgA4IMciyvCBhdz96VbNzq
-         nFuJIPZXuECbreeC/e+8nSbOhpLfHS3I1kcdq4b1GdP3Lw/2cDx/wHxdwS7UMrMg+Q2Z
-         F4fub73/A1NvWuPFpz++mmH8n/fC4+ldi4waHutU3BtbuWqWULQXXhqsNzjgk5Kq8SAI
-         sO8OeRz5ewrLlQRtZGsP2RwFx4PYf2K4bAdZB7EnPxJYzSJjkxDPbYbUCPFtsdWR8rA4
-         JdCw==
+        bh=YuLzuBj5C65ReZVec18FYukMn1JvPo+fMmhF4OUNdII=;
+        b=XB+MmDjdV9vXQ/iBoqBlK4CKE/YLWo6S8Yk+r4dlcbuRDLM7PeMbVkWDnJd4DE/xVo
+         rZQcS82H0gst1fzxmtsP9AT+paGHCRxd/xzZGp2qnFY6fCX+GemIGZ8YazAd9tPeb6h0
+         LJuJ3rEVJLswkCPOTJiFU/MNVHYpFe+TU4pPpGm6T7/U3Y1BmEpquKR+mVLX9r77gR37
+         FaHKZGsKMkojBynY2vv8iCIuC4frkNb0uuMLlZ3GFPGvYUw1FdY0uYHegvwSm6lhIJPv
+         OU66oZou/R/d2ZfKFekGaObQQOlDyF40/AE5RdBp2MDRCTVVb6EHiVnZ2ya/uQzxNYnu
+         6VxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/QPSHJoe11A+6N7iAmSn3XlN0xvwzZ2sMot6RCfPjoc=;
-        b=N5TlvWXLutkKZVTplN64jEoBjZyl2T5RBw+27jLtawthfWtxYMp+Jne063sPVidEww
-         O4hu836YqdhqRfgYUq7jq/3QQS8Gz/TzOVUHLZ2l0m51oGu1N/SRzt9EDa0s4WNjB2CN
-         H9SY3GArAAfApDm7yBA1bRkgYi+xI1QbjWVTvo5GR6DxL3IyymPdwrGK2BQoyYAGYxwD
-         z3G8waCoTGnwgv2TuvKDRiQrd3ZDoLxYYmd021ftmMKfsLwVctKCERwR37T/HCWoo3FY
-         iKHZZQJZTwrYrNJllhsMkZhL76dJKEKB9A6BhFS0sC0aSwYihU2ETvwnd5WamBvRjCIt
-         Tnsg==
-X-Gm-Message-State: ALQs6tB1FNWs1TibyCbzL289T3bpl4CmYcDcESNqVlnfuVW/u1OfaOg9
-        OflJ9XDJMqy2Q9w3Vlf7u7MMwA==
-X-Google-Smtp-Source: AB8JxZrc3X2g2CGxHKngYU2roOSqcYiGBcZ6SbRYciwopl+Cp6aTOJ1J7lGaH5zJNZTbJNpzeHxAtw==
-X-Received: by 2002:a17:902:bf0a:: with SMTP id bi10-v6mr284098plb.235.1524728827341;
-        Thu, 26 Apr 2018 00:47:07 -0700 (PDT)
+        bh=YuLzuBj5C65ReZVec18FYukMn1JvPo+fMmhF4OUNdII=;
+        b=EQjtl7ov9o2srxeocWhm09I5t4mhJzFkq1ehA2neKTG4bTJVfonT4ZYg88shbG+3qp
+         h7fTq727wrvxy230bl86jj9Vun63sz3tJRvqGLZAXemhMWmY5eVMKzzrYQjJCuoH81ZM
+         +i0ywjH2NoIr1P2Nz7UlRACACmBSXf4ByWf9gvaKDIfpo+FYqWy1H9s1R8o8FetdaEHr
+         nhVSg3G5lxXNrmcdDFumLOT6dzy0eySItWR73PH+3GlwbVUh6a4FjuufxjMzsEqojILp
+         RXNwDpz96qdpaduFY8OkLrkl7nqjQoaSbumtOk4NFBgQKoHITN9S4igyec60kb/ZApRT
+         kU0w==
+X-Gm-Message-State: ALQs6tDQO70YCWPkt7eeeXUQ4hS80+eJvsUcruduCVv7E31VSStmPeQ2
+        OtbKo10a82Cyko7o/SJI4XjZ4g==
+X-Google-Smtp-Source: AIpwx49kzc+rI0zdpQaEC1ewDWSPu1WdIOvuCd83M56lPpedYGikS8L21HWtF3Hs5OeaADcMHyACTw==
+X-Received: by 10.101.89.14 with SMTP id f14mr16121515pgu.282.1524728851744;
+        Thu, 26 Apr 2018 00:47:31 -0700 (PDT)
 Received: from C02VT0RZHTDG.office.atlassian.com ([103.233.242.8])
-        by smtp.gmail.com with ESMTPSA id e10sm31007774pfn.67.2018.04.26.00.47.03
+        by smtp.gmail.com with ESMTPSA id e10sm31007774pfn.67.2018.04.26.00.47.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Apr 2018 00:47:06 -0700 (PDT)
+        Thu, 26 Apr 2018 00:47:31 -0700 (PDT)
 From:   istephens@atlassian.com
 To:     sunshine@sunshineco.com
 Cc:     szeder.dev@gmail.com, gitster@pobox.com, git@vger.kernel.org,
         peff@peff.net, bturner@atlassian.com, jacob.keller@gmail.com,
         Isabella Stephens <istephens@atlassian.com>
-Subject: [PATCH v4 1/2] blame: prevent error if range ends past end of file
-Date:   Thu, 26 Apr 2018 17:45:01 +1000
-Message-Id: <20180426074502.78318-2-istephens@atlassian.com>
+Subject: [PATCH v4 2/2] log: prevent error if line range ends past end of file
+Date:   Thu, 26 Apr 2018 17:45:02 +1000
+Message-Id: <20180426074502.78318-3-istephens@atlassian.com>
 X-Mailer: git-send-email 2.14.3 (Apple Git-98)
 In-Reply-To: <20180426074502.78318-1-istephens@atlassian.com>
 References: <CAPig+cSH-y7ChDE_LW55M_wB=KhD7uJHXX=OvZ=1ri5KfYQ5Sg@mail.gmail.com>
@@ -66,113 +66,73 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Isabella Stephens <istephens@atlassian.com>
 
-If the -L option is used to specify a line range in git blame, and the
-end of the range is past the end of the file, git will fail with a fatal
-error. This commit prevents such behavior - instead we display the blame
-for existing lines within the specified range. Tests and documentation
-are ammended accordingly.
+If the -L option is used to specify a line range in git log, and the end
+of the range is past the end of the file, git will fail with a fatal
+error. This commit prevents such behaviour - instead we perform the log
+for existing lines within the specified range.
 
-This commit also fixes two corner cases. Blaming -L n,-(n+1) now blames
-the first n lines of a file rather than from n to the end of the file.
-Blaming -L ,-n will complain of an empty range, rather than blaming the
-whole file.
+This commit also fixes a corner case where -L ,-n:file would be treated
+as a log over the whole file. Now we complain that this is an empty
+range.
 
 Signed-off-by: Isabella Stephens <istephens@atlassian.com>
 ---
- Documentation/git-blame.txt   | 10 ++++++++++
- builtin/blame.c               |  6 ++++--
- line-range.c                  |  2 +-
- t/t8003-blame-corner-cases.sh | 17 +++++++++++++----
- 4 files changed, 28 insertions(+), 7 deletions(-)
+ line-log.c          | 10 +++++++---
+ t/t4211-line-log.sh | 11 -----------
+ 2 files changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-index 16323eb80..8cb81f57a 100644
---- a/Documentation/git-blame.txt
-+++ b/Documentation/git-blame.txt
-@@ -152,6 +152,16 @@ Also you can use a regular expression to specify the line range:
- 
- which limits the annotation to the body of the `hello` subroutine.
- 
-+A range that begins or ends outside the bounds of the file will
-+blame the relevant lines. For example:
-+
-+	git blame -L 10,-20 foo
-+	git blame -L 10,+20 foo
-+
-+will respectively blame the first 10 and last 11 lines of a
-+20 line file. However, blaming a line range that is entirely
-+outside the bounds of the file will fail.
-+
- When you are not interested in changes older than version
- v2.6.18, or changes older than 3 weeks, you can use revision
- range specifiers  similar to 'git rev-list':
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 9dcb367b9..1204ab142 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -886,13 +886,15 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 				    nth_line_cb, &sb, lno, anchor,
- 				    &bottom, &top, sb.path))
- 			usage(blame_usage);
--		if (lno < top || ((lno || bottom) && lno < bottom))
-+		if (!bottom && top < 0)
+diff --git a/line-log.c b/line-log.c
+index cdc2257db..ad3987062 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -599,11 +599,15 @@ parse_lines(struct commit *commit, const char *prefix, struct string_list *args)
+ 				    lines, anchor, &begin, &end,
+ 				    full_name))
+ 			die("malformed -L argument '%s'", range_part);
+-		if (lines < end || ((lines || begin) && lines < begin))
+-			die("file %s has only %lu lines", name_part, lines);
++		if (!begin && end < 0)
 +			die("-L invalid empty range");
-+		if ((!lno && (top || bottom)) || lno < bottom)
- 			die(Q_("file %s has only %lu line",
- 			       "file %s has only %lu lines",
- 			       lno), path, lno);
- 		if (bottom < 1)
- 			bottom = 1;
--		if (top < 1)
-+		if (top < 1 || lno < top)
- 			top = lno;
- 		bottom--;
- 		range_set_append_unsafe(&ranges, bottom, top);
-diff --git a/line-range.c b/line-range.c
-index 323399d16..023aee1f5 100644
---- a/line-range.c
-+++ b/line-range.c
-@@ -47,7 +47,7 @@ static const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
- 			else if (!num)
- 				*ret = begin;
- 			else
--				*ret = begin + num;
-+				*ret = begin + num ? begin + num : -1;
- 			return term;
- 		}
- 		return spec;
-diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
-index 661f9d430..4a0c51658 100755
---- a/t/t8003-blame-corner-cases.sh
-+++ b/t/t8003-blame-corner-cases.sh
-@@ -216,14 +216,23 @@ test_expect_success 'blame -L with invalid start' '
++		if ((!lines && (begin || end)) || lines < begin)
++			die(Q_("file %s has only %lu line",
++				   "file %s has only %lu lines",
++				   lines), name_part, lines);
+ 		if (begin < 1)
+ 			begin = 1;
+-		if (end < 1)
++		if (end < 1 || lines < end)
+ 			end = lines;
+ 		begin--;
+ 		line_log_data_insert(&ranges, full_name, begin, end);
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index d0377fae5..0b96496e3 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -60,7 +60,6 @@ test_bad_opts "-L 1:nonexistent" "There is no path"
+ test_bad_opts "-L 1:simple" "There is no path"
+ test_bad_opts "-L '/foo:b.c'" "argument not .start,end:file"
+ test_bad_opts "-L 1000:b.c" "has only.*lines"
+-test_bad_opts "-L 1,1000:b.c" "has only.*lines"
+ test_bad_opts "-L :b.c" "argument not .start,end:file"
+ test_bad_opts "-L :foo:b.c" "no match"
+ 
+@@ -84,16 +83,6 @@ test_expect_success '-L ,Y (Y == nlines)' '
+ 	git log -L ,$n:b.c
  '
  
- test_expect_success 'blame -L with invalid end' '
--	test_must_fail git blame -L1,5 tres 2>errors &&
--	test_i18ngrep "has only 2 lines" errors
-+	git blame -L1,5 tres >out &&
-+	test_line_count = 2 out
- '
- 
- test_expect_success 'blame parses <end> part of -L' '
- 	git blame -L1,1 tres >out &&
--	cat out &&
--	test $(wc -l < out) -eq 1
-+	test_line_count = 1 out
-+'
-+
-+test_expect_success 'blame -Ln,-(n+1)' '
-+	git blame -L3,-4 nine_lines >out &&
-+	test_line_count = 3 out
-+'
-+
-+test_expect_success 'blame -L,-n' '
-+	test_must_fail git blame -L,-1 tres 2>errors &&
-+	test_i18ngrep "-L invalid empty range"
- '
- 
- test_expect_success 'indent of line numbers, nine lines' '
+-test_expect_success '-L ,Y (Y == nlines + 1)' '
+-	n=$(expr $(wc -l <b.c) + 1) &&
+-	test_must_fail git log -L ,$n:b.c
+-'
+-
+-test_expect_success '-L ,Y (Y == nlines + 2)' '
+-	n=$(expr $(wc -l <b.c) + 2) &&
+-	test_must_fail git log -L ,$n:b.c
+-'
+-
+ test_expect_success '-L with --first-parent and a merge' '
+ 	git checkout parallel-change &&
+ 	git log --first-parent -L 1,1:b.c
 -- 
 2.14.3 (Apple Git-98)
 
