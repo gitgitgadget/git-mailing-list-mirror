@@ -6,91 +6,153 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F7831F424
-	for <e@80x24.org>; Thu, 26 Apr 2018 02:11:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1B571F424
+	for <e@80x24.org>; Thu, 26 Apr 2018 02:36:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751638AbeDZCL4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 22:11:56 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:38324 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751274AbeDZCLy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 22:11:54 -0400
-Received: by mail-wm0-f65.google.com with SMTP id i3so10062326wmf.3
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 19:11:53 -0700 (PDT)
+        id S1751683AbeDZCgD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 22:36:03 -0400
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:34898 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751487AbeDZCgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 22:36:02 -0400
+Received: by mail-wr0-f173.google.com with SMTP id w3-v6so55112861wrg.2
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 19:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=MYfDuTBMpAN/wPWkgvi1P5cGtSLIBjdDtVeJMNck4Ow=;
-        b=fxsDiSGH4A3Oxawl3kCsfEq1yAV40Fa+R5mcLeqhK2LhDQ1xQo3BlElkmrdl/1i4ZT
-         aujT9x8HDtbuojc4+6UlOBJvc84gauu6lGUbV932Vrp3flI351U84hydCNJgSRjOF+ti
-         SuW6HyX3ycYspunfkSOfgJxVASnOdmS/MeUEdhABjJgEp+P4CB5TzDLuuZtQ/VGHGXHY
-         leTfmFkmrtBnn4D5mvASug/NYePzKI89qqbisMDfRPryQ4AR0HzLVa5+dDeTCqdmuK6+
-         Y52PlFoG/Um/BpEOLJgO+7GthELezEJuh1FhldVRqqIaFvDTjCqH3qOUL7BGa5Dt2tvk
-         5Www==
+         :user-agent:mime-version;
+        bh=gIeLdWZE7kpmSpIVcKPcD0HvH5DDHlTt+mYqdFGlT/A=;
+        b=RKqAKliK9swvT4eUBdrydesrK3gwu30/2PhSdXDvTxg5Y9i3XfzQMhoT8Ic8k/QLL8
+         nV641jACNcIGJhdt/HinaeTGtkBxUFSNi9u5uXdSOIBj9pePeDc45nYEvj4McvhDt1VZ
+         /ruhhYJ4wkpYzL3x4k2JFN7yN0dN64uEIlQg/WRh9VNsoRltpG9ZYMTTyRiD2j4gsx19
+         iPRXdAtcFNiKN0jVaQqI6ZN71ohIWOj+zaawfRRhZlwNLVaLBmlqC8hJwv6k/5FW1ubq
+         JWaIwN6V31WaX25WmyZaxmb9wmdb4MUd8wvnXCY1sn7n6Gwiqc14ArXtQCtVDvDYRNDu
+         QWNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=MYfDuTBMpAN/wPWkgvi1P5cGtSLIBjdDtVeJMNck4Ow=;
-        b=NMH7WotYG6kQtj1SEGKc/FJovyhrIXLeGy8rPIf5myjXMHUWsaj0GRgpxSHv8nLLOO
-         CoqTa2HPu2YzVZZSLKtR3s4dUTAiZuUnLu1d9BmYUQeIgLcQHqUunlLctqs6NK0p/OmO
-         5hM91DEW3aXj9MORwIBxwn4jr9NBe5obT59mymBrIRdeWHltBZGHSJWEx+DsjJEjzCOf
-         BwGNajX4B/Qt1qhOOYIPvz/0T30hTNYB49UJ2okEf5QRuJRrdw+tw+gsuP+OqCvkuWmy
-         MBr6g6cpUQD63/cLBkxwl31Qf87ux3XB+8wGxIDejO3tDoecPx6+yiXiJ8MMZca4oq9L
-         GAWw==
-X-Gm-Message-State: ALQs6tCBVYRr1oA7uTZ0qbc48F8Oj7ZBAMGqtRh10eowRuTZXWY0HMKB
-        nZMcQ4O6ikDUQhY9I7wuUAQ=
-X-Google-Smtp-Source: AB8JxZrCYvS2m+Qx7fuNBpvRe+5lilj0cFiATsH4qyiJ5WM/iSsZL5rnl0o3HIOW4Huuqu0ILdOwCA==
-X-Received: by 10.28.139.11 with SMTP id n11mr2348783wmd.12.1524708713034;
-        Wed, 25 Apr 2018 19:11:53 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q15sm2608973wmf.11.2018.04.25.19.11.52
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=gIeLdWZE7kpmSpIVcKPcD0HvH5DDHlTt+mYqdFGlT/A=;
+        b=dpjAPU9Ew+nI/QqRtjT52hUZxsdBPs6Crg57/FwWPQaEDVAoyoMPFpHjP81zUahDmk
+         mH6RxJ/tunUKoAeTN03ApMhKgI9w04EUzzC/O7uwDRj/WxeOGIDAvMQiLZ6eULNiApxC
+         RTNpzb33NTwgf9IPAhd4SMBEJxpFqCqCwMhHNwoXVsoFZ8qhJsVMTqOUfWP2linRZ4YD
+         oyVM9W+uGlxng88SxP7eMEPnciHL40gW6w/hz11DJuk10DIL1VKLBkMM78NeKTB02XgR
+         u99afntOHYpyirYYqFFWjNdTdzwvAkyaZG8dDG/a14fHeb7RUXiMrF/KQ3wUg/DWeqCo
+         XO1Q==
+X-Gm-Message-State: ALQs6tDKQUDQ3qPsWhYEt7MoEkUEDKmxZ0dZML5u62SprKcQWmO2BKeH
+        gle1eqsfkbFlFo3VRw5qvqA=
+X-Google-Smtp-Source: AIpwx4+uMnShC9cxwwAFXtnSbyzIMcu/GjsEu4A7b7nFZq+CnXkvOjt6RwnfC5RoMcDLfYUxD2Nj5A==
+X-Received: by 2002:adf:968b:: with SMTP id u11-v6mr25547721wrb.184.1524710160507;
+        Wed, 25 Apr 2018 19:36:00 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q16-v6sm22228263wrn.81.2018.04.25.19.35.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Apr 2018 19:11:52 -0700 (PDT)
+        Wed, 25 Apr 2018 19:35:59 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Clemens Buchacher <drizzd@gmx.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [PATCH 01/11] t9902-completion: add tests demonstrating issues with quoted pathnames
-References: <20180318012618.32691-1-szeder.dev@gmail.com>
-        <20180416224113.16993-1-szeder.dev@gmail.com>
-        <20180416224113.16993-2-szeder.dev@gmail.com>
-        <xmqq7ep6v6ft.fsf@gitster-ct.c.googlers.com>
-        <CAM0VKjk=JtdoduywJ4t5OPhLGgt90yxJA_Zif6R803XHA=Sfbg@mail.gmail.com>
-        <xmqqlgdljok5.fsf@gitster-ct.c.googlers.com>
-        <CAM0VKjkQfTm+qnurvZ_545VXJH2PwuPfkhXaa1sLj5ePSPjBwA@mail.gmail.com>
-Date:   Thu, 26 Apr 2018 11:11:51 +0900
-In-Reply-To: <CAM0VKjkQfTm+qnurvZ_545VXJH2PwuPfkhXaa1sLj5ePSPjBwA@mail.gmail.com>
-        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Thu, 26 Apr 2018 02:25:34
- +0200")
-Message-ID: <xmqq1sf24syg.fsf@gitster-ct.c.googlers.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "peff\@peff.net" <peff@peff.net>,
+        "jnareb\@gmail.com" <jnareb@gmail.com>,
+        "avarab\@gmail.com" <avarab@gmail.com>
+Subject: Re: [PATCH v4 03/10] commit-graph: compute generation numbers
+References: <20180417170001.138464-1-dstolee@microsoft.com>
+        <20180425143735.240183-1-dstolee@microsoft.com>
+        <20180425143735.240183-4-dstolee@microsoft.com>
+Date:   Thu, 26 Apr 2018 11:35:59 +0900
+In-Reply-To: <20180425143735.240183-4-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Wed, 25 Apr 2018 14:37:56 +0000")
+Message-ID: <xmqqvace3d9s.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Derrick Stolee <dstolee@microsoft.com> writes:
 
-> These new tests, however, are primarily interested in the inner
-> workings of __git_complete_index_file() in the presence of escapes
-> and/or quotes in the path to be completed and/or in the output of 'git
-> ls-files'.  For these kind of tests we could simply invoke
-> __git_complete_index_file() directly, like we call __git_refs()
-> directly to test refs completion.  Then we could set the current path
-> to be completed to whatever we want, including spaces, because it
-> won't be subject to field splitting like the command line given to
-> 'test_completion'.
->
-> So, I think for v2 I will rewrite these tests to call
-> __git_complete_index_file() directly instead of using
-> 'test_completion', and will include a test with spaces in path names.
+> @@ -439,6 +439,9 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+>  		else
+>  			packedDate[0] = 0;
+>  
+> +		if ((*list)->generation != GENERATION_NUMBER_INFINITY)
+> +			packedDate[0] |= htonl((*list)->generation << 2);
+> +
+>  		packedDate[1] = htonl((*list)->date);
+>  		hashwrite(f, packedDate, 8);
 
-Quite well thought-out reasoning.  Thanks.
+The ones that have infinity are written as zero here.  The code that
+reads the generation field off of a file in fill_commit_graph_info()
+and fill_commit_in_graph() both leave such a record in file as-is,
+so the reader of what we write out will think it is _ZERO, not _INF.
+
+Not that it matters, as it seems that most of the code being added
+by this series treat _ZERO and _INF more or less interchangeably.
+But it does raise another question, i.e. do we need both _ZERO and
+_INF, or is it sufficient to have just a single _UNKNOWN?
+
+> @@ -571,6 +574,46 @@ static void close_reachable(struct packed_oid_list *oids)
+>  	}
+>  }
+>  
+> +static void compute_generation_numbers(struct commit** commits,
+> +				       int nr_commits)
+> +{
+> +	int i;
+> +	struct commit_list *list = NULL;
+> +
+> +	for (i = 0; i < nr_commits; i++) {
+> +		if (commits[i]->generation != GENERATION_NUMBER_INFINITY &&
+> +		    commits[i]->generation != GENERATION_NUMBER_ZERO)
+> +			continue;
+> +
+> +		commit_list_insert(commits[i], &list);
+> +		while (list) {
+> +			struct commit *current = list->item;
+> +			struct commit_list *parent;
+> +			int all_parents_computed = 1;
+> +			uint32_t max_generation = 0;
+> +
+> +			for (parent = current->parents; parent; parent = parent->next) {
+> +				if (parent->item->generation == GENERATION_NUMBER_INFINITY ||
+> +				    parent->item->generation == GENERATION_NUMBER_ZERO) {
+> +					all_parents_computed = 0;
+> +					commit_list_insert(parent->item, &list);
+> +					break;
+> +				} else if (parent->item->generation > max_generation) {
+> +					max_generation = parent->item->generation;
+> +				}
+> +			}
+> +
+> +			if (all_parents_computed) {
+> +				current->generation = max_generation + 1;
+> +				pop_commit(&list);
+> +			}
+
+If we haven't computed all parents' generations yet,
+current->generation is undefined (or at least "left as
+initialized"), so it does not make much sense to attempt to clip it
+at _MAX at this point.  At leat not yet.
+
+IOW, shouldn't the following two lines be inside the "we now know
+genno of all parents, so we can compute genno for commit" block
+above?
+
+> +			if (current->generation > GENERATION_NUMBER_MAX)
+> +				current->generation = GENERATION_NUMBER_MAX;
+> +		}
+> +	}
+> +}
+> +
+>  void write_commit_graph(const char *obj_dir,
+>  			const char **pack_indexes,
+>  			int nr_packs,
+> @@ -694,6 +737,8 @@ void write_commit_graph(const char *obj_dir,
+>  	if (commits.nr >= GRAPH_PARENT_MISSING)
+>  		die(_("too many commits to write graph"));
+>  
+> +	compute_generation_numbers(commits.list, commits.nr);
+> +
+>  	graph_name = get_commit_graph_filename(obj_dir);
+>  	fd = hold_lock_file_for_update(&lk, graph_name, 0);
