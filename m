@@ -6,62 +6,62 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1B571F424
-	for <e@80x24.org>; Thu, 26 Apr 2018 02:36:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA37B1F424
+	for <e@80x24.org>; Thu, 26 Apr 2018 03:22:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751683AbeDZCgD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 22:36:03 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:34898 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751487AbeDZCgC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Apr 2018 22:36:02 -0400
-Received: by mail-wr0-f173.google.com with SMTP id w3-v6so55112861wrg.2
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 19:36:01 -0700 (PDT)
+        id S1752358AbeDZDWV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 23:22:21 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:44041 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751940AbeDZDWU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 23:22:20 -0400
+Received: by mail-wr0-f194.google.com with SMTP id o15-v6so55185717wro.11
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 20:22:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=gIeLdWZE7kpmSpIVcKPcD0HvH5DDHlTt+mYqdFGlT/A=;
-        b=RKqAKliK9swvT4eUBdrydesrK3gwu30/2PhSdXDvTxg5Y9i3XfzQMhoT8Ic8k/QLL8
-         nV641jACNcIGJhdt/HinaeTGtkBxUFSNi9u5uXdSOIBj9pePeDc45nYEvj4McvhDt1VZ
-         /ruhhYJ4wkpYzL3x4k2JFN7yN0dN64uEIlQg/WRh9VNsoRltpG9ZYMTTyRiD2j4gsx19
-         iPRXdAtcFNiKN0jVaQqI6ZN71ohIWOj+zaawfRRhZlwNLVaLBmlqC8hJwv6k/5FW1ubq
-         JWaIwN6V31WaX25WmyZaxmb9wmdb4MUd8wvnXCY1sn7n6Gwiqc14ArXtQCtVDvDYRNDu
-         QWNA==
+        bh=VechMvwuFRDLDGqkiw2ZerrlTSplVtLwsJX/XMoKRes=;
+        b=rZPWV0g4hOgbG1dNFZQeKAeR67XR5qiC3ylJ7kdg4KqnNP9HgJo5gy5d5gUhm2Rwv9
+         OCpE0AnUGa8SUKXZVadUm4TK1aHC1USDGU3c6I6JjBVceg1KhQidncE4LVP6vpw12BWc
+         Nx5FJ9YWhSfMacsVxeM7dtoiDzihlaB/rmb244nPds5xbvZmsF5tL0sO4FB2/tHB94zw
+         yxfyB0+G/hVQvxAOornP7sWht8ofmBCIrzQrtFTcXkke/4I0iLGihqyhutt9veOTXpux
+         AVlffMTqkdKGUkTQ2ASWj16H76QOC53fd//BtJyuyIVP4MXz4Pl/72zXwIUnNj6gVJ08
+         nprQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=gIeLdWZE7kpmSpIVcKPcD0HvH5DDHlTt+mYqdFGlT/A=;
-        b=dpjAPU9Ew+nI/QqRtjT52hUZxsdBPs6Crg57/FwWPQaEDVAoyoMPFpHjP81zUahDmk
-         mH6RxJ/tunUKoAeTN03ApMhKgI9w04EUzzC/O7uwDRj/WxeOGIDAvMQiLZ6eULNiApxC
-         RTNpzb33NTwgf9IPAhd4SMBEJxpFqCqCwMhHNwoXVsoFZ8qhJsVMTqOUfWP2linRZ4YD
-         oyVM9W+uGlxng88SxP7eMEPnciHL40gW6w/hz11DJuk10DIL1VKLBkMM78NeKTB02XgR
-         u99afntOHYpyirYYqFFWjNdTdzwvAkyaZG8dDG/a14fHeb7RUXiMrF/KQ3wUg/DWeqCo
-         XO1Q==
-X-Gm-Message-State: ALQs6tDKQUDQ3qPsWhYEt7MoEkUEDKmxZ0dZML5u62SprKcQWmO2BKeH
-        gle1eqsfkbFlFo3VRw5qvqA=
-X-Google-Smtp-Source: AIpwx4+uMnShC9cxwwAFXtnSbyzIMcu/GjsEu4A7b7nFZq+CnXkvOjt6RwnfC5RoMcDLfYUxD2Nj5A==
-X-Received: by 2002:adf:968b:: with SMTP id u11-v6mr25547721wrb.184.1524710160507;
-        Wed, 25 Apr 2018 19:36:00 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id q16-v6sm22228263wrn.81.2018.04.25.19.35.59
+        bh=VechMvwuFRDLDGqkiw2ZerrlTSplVtLwsJX/XMoKRes=;
+        b=jaVa8CYjDaUsyuG0FultWTZ6DnclZfUlfh4mb5x8DEn08F2jceatrKr4eOgY6ZnCe3
+         3TpdmXKUXPnFr+bbsDHUQAbPL7geXlV1hVhqjwxneKnlELxnafC96kZD8f10s0bKZQqO
+         CH7uxBRZYHcFu+o4Bm5Y2AYRZbKWkIvCcEh1/P3iSEQxxkhRY6kp383NbMURvXCxhiDO
+         dvE6lYolFQwQHnDa1UAPA7mewT8QDDLioEgPrne8xhXScH7/mQ6CX3bPLw7AEZTaG4xy
+         tAh+EQhGP1NnJIjMZugiasYr3HVcHmf80woq5AEf4hA/cu2pRPanza6sFxy6ifTlIp5Y
+         /DqA==
+X-Gm-Message-State: ALQs6tDB/qxPLlHWhjpodXRXkic4iL81eq2nK3WRdCqmgqHvLhyQ1RRw
+        jodAIXq2GxybnMZ5e1O/qBs=
+X-Google-Smtp-Source: AIpwx4/s4a6xse0+3R+tQ8koHVfxjeYMp5pOgStq1iJmm5HId20LNSusiUfuQOSp1nUeAXffMy4zRg==
+X-Received: by 2002:adf:b722:: with SMTP id l34-v6mr26675047wre.85.1524712938652;
+        Wed, 25 Apr 2018 20:22:18 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v6-v6sm18374586wrd.54.2018.04.25.20.22.16
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 25 Apr 2018 19:35:59 -0700 (PDT)
+        Wed, 25 Apr 2018 20:22:16 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Derrick Stolee <dstolee@microsoft.com>
 Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
         "peff\@peff.net" <peff@peff.net>,
         "jnareb\@gmail.com" <jnareb@gmail.com>,
         "avarab\@gmail.com" <avarab@gmail.com>
-Subject: Re: [PATCH v4 03/10] commit-graph: compute generation numbers
+Subject: Re: [PATCH v4 04/10] commit: use generations in paint_down_to_common()
 References: <20180417170001.138464-1-dstolee@microsoft.com>
         <20180425143735.240183-1-dstolee@microsoft.com>
-        <20180425143735.240183-4-dstolee@microsoft.com>
-Date:   Thu, 26 Apr 2018 11:35:59 +0900
-In-Reply-To: <20180425143735.240183-4-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Wed, 25 Apr 2018 14:37:56 +0000")
-Message-ID: <xmqqvace3d9s.fsf@gitster-ct.c.googlers.com>
+        <20180425143735.240183-5-dstolee@microsoft.com>
+Date:   Thu, 26 Apr 2018 12:22:15 +0900
+In-Reply-To: <20180425143735.240183-5-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Wed, 25 Apr 2018 14:37:57 +0000")
+Message-ID: <xmqqr2n23b4o.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,87 +72,71 @@ X-Mailing-List: git@vger.kernel.org
 
 Derrick Stolee <dstolee@microsoft.com> writes:
 
-> @@ -439,6 +439,9 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
->  		else
->  			packedDate[0] = 0;
->  
-> +		if ((*list)->generation != GENERATION_NUMBER_INFINITY)
-> +			packedDate[0] |= htonl((*list)->generation << 2);
-> +
->  		packedDate[1] = htonl((*list)->date);
->  		hashwrite(f, packedDate, 8);
+> Define compare_commits_by_gen_then_commit_date(), which uses generation
+> numbers as a primary comparison and commit date to break ties (or as a
+> comparison when both commits do not have computed generation numbers).
+>
+> Since the commit-graph file is closed under reachability, we know that
+> all commits in the file have generation at most GENERATION_NUMBER_MAX
+> which is less than GENERATION_NUMBER_INFINITY.
 
-The ones that have infinity are written as zero here.  The code that
-reads the generation field off of a file in fill_commit_graph_info()
-and fill_commit_in_graph() both leave such a record in file as-is,
-so the reader of what we write out will think it is _ZERO, not _INF.
+I suspect that my puzzlement may be coming from my not "getting"
+what you meant by "closed under reachability", but could you also
+explain how _INF and _ZERO interact with commits with normal
+generation numbers?  I've always assumed that genno will be used
+only when comparing two commits with valid genno and otherwise we'd
+fall back to the traditional date based one, but...
 
-Not that it matters, as it seems that most of the code being added
-by this series treat _ZERO and _INF more or less interchangeably.
-But it does raise another question, i.e. do we need both _ZERO and
-_INF, or is it sufficient to have just a single _UNKNOWN?
-
-> @@ -571,6 +574,46 @@ static void close_reachable(struct packed_oid_list *oids)
->  	}
->  }
->  
-> +static void compute_generation_numbers(struct commit** commits,
-> +				       int nr_commits)
+> +int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused)
 > +{
-> +	int i;
-> +	struct commit_list *list = NULL;
+> +	const struct commit *a = a_, *b = b_;
 > +
-> +	for (i = 0; i < nr_commits; i++) {
-> +		if (commits[i]->generation != GENERATION_NUMBER_INFINITY &&
-> +		    commits[i]->generation != GENERATION_NUMBER_ZERO)
-> +			continue;
-> +
-> +		commit_list_insert(commits[i], &list);
-> +		while (list) {
-> +			struct commit *current = list->item;
-> +			struct commit_list *parent;
-> +			int all_parents_computed = 1;
-> +			uint32_t max_generation = 0;
-> +
-> +			for (parent = current->parents; parent; parent = parent->next) {
-> +				if (parent->item->generation == GENERATION_NUMBER_INFINITY ||
-> +				    parent->item->generation == GENERATION_NUMBER_ZERO) {
-> +					all_parents_computed = 0;
-> +					commit_list_insert(parent->item, &list);
-> +					break;
-> +				} else if (parent->item->generation > max_generation) {
-> +					max_generation = parent->item->generation;
-> +				}
-> +			}
-> +
-> +			if (all_parents_computed) {
-> +				current->generation = max_generation + 1;
-> +				pop_commit(&list);
-> +			}
+> +	/* newer commits first */
+> +	if (a->generation < b->generation)
+> +		return 1;
+> +	else if (a->generation > b->generation)
+> +		return -1;
 
-If we haven't computed all parents' generations yet,
-current->generation is undefined (or at least "left as
-initialized"), so it does not make much sense to attempt to clip it
-at _MAX at this point.  At leat not yet.
+... this does not check if a->generation is _ZERO or _INF.  
 
-IOW, shouldn't the following two lines be inside the "we now know
-genno of all parents, so we can compute genno for commit" block
-above?
+Both being _MAX is OK (the control will fall through and use the
+dates below).  One being _MAX and the other being a normal value is
+also OK (the above comparisons will declare the commit with _MAX is
+farther than less-than-max one from a root).
 
-> +			if (current->generation > GENERATION_NUMBER_MAX)
-> +				current->generation = GENERATION_NUMBER_MAX;
-> +		}
-> +	}
+Or is the assumption that if one has _ZERO, that must have come from
+an ancient commit-graph file and none of the commits have anything
+but _ZERO?
+
+> +	/* use date as a heuristic when generations are equal */
+> +	if (a->date < b->date)
+> +		return 1;
+> +	else if (a->date > b->date)
+> +		return -1;
+> +	return 0;
 > +}
 > +
->  void write_commit_graph(const char *obj_dir,
->  			const char **pack_indexes,
->  			int nr_packs,
-> @@ -694,6 +737,8 @@ void write_commit_graph(const char *obj_dir,
->  	if (commits.nr >= GRAPH_PARENT_MISSING)
->  		die(_("too many commits to write graph"));
+>  int compare_commits_by_commit_date(const void *a_, const void *b_, void *unused)
+>  {
+>  	const struct commit *a = a_, *b = b_;
+> @@ -789,7 +807,7 @@ static int queue_has_nonstale(struct prio_queue *queue)
+>  /* all input commits in one and twos[] must have been parsed! */
+>  static struct commit_list *paint_down_to_common(struct commit *one, int n, struct commit **twos)
+>  {
+> -	struct prio_queue queue = { compare_commits_by_commit_date };
+> +	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+>  	struct commit_list *result = NULL;
+>  	int i;
 >  
-> +	compute_generation_numbers(commits.list, commits.nr);
-> +
->  	graph_name = get_commit_graph_filename(obj_dir);
->  	fd = hold_lock_file_for_update(&lk, graph_name, 0);
+> diff --git a/commit.h b/commit.h
+> index aac3b8c56f..64436ff44e 100644
+> --- a/commit.h
+> +++ b/commit.h
+> @@ -341,6 +341,7 @@ extern int remove_signature(struct strbuf *buf);
+>  extern int check_commit_signature(const struct commit *commit, struct signature_check *sigc);
+>  
+>  int compare_commits_by_commit_date(const void *a_, const void *b_, void *unused);
+> +int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused);
+>  
+>  LAST_ARG_MUST_BE_NULL
+>  extern int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...);
