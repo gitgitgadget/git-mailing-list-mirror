@@ -6,55 +6,54 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C9CA1F424
-	for <e@80x24.org>; Thu, 26 Apr 2018 05:58:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59C881F424
+	for <e@80x24.org>; Thu, 26 Apr 2018 05:58:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752889AbeDZF6i (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 01:58:38 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:41459 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750891AbeDZF6f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 01:58:35 -0400
-Received: by mail-pg0-f66.google.com with SMTP id m21so12081431pgv.8
-        for <git@vger.kernel.org>; Wed, 25 Apr 2018 22:58:34 -0700 (PDT)
+        id S1752262AbeDZF6l (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 01:58:41 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:44686 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752876AbeDZF6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 01:58:37 -0400
+Received: by mail-pg0-f43.google.com with SMTP id 82so5237979pge.11
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 22:58:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=dsqqcdSKwZxd/AYIq7Aky/mcIADeLi/E1vk0L2+wu3s=;
-        b=xihRAov7A6lNaB8HXzmBuyLMaakFd7jcYx0nFxCXvGHJz2mtE45HQl6y0Q25TWyGf8
-         KHKBlpcPRibvTpZ4YQJFfO7Ii0eA9qCJyIwUjxkqrsiAkxuquJFQVlnHcO7l95s2Lh9X
-         zRYLU08OoBXCDq0HBVnlFuqJrlSOOSLuhe8mvnWgq2KeHtrbOIdEFj5xsd/bvvmRMOm/
-         NtTOo9XIifjGgBFMrvk8ko3sn+kbIboQqEjvGjhDWI7OQth1UjZdbbm+E6A2d1fzN7BY
-         5klWTHZyMlEVUl2mDwZXGKGR3OvHPG3x9Ekyibe7VOgOxiPYpLV66T2oavee5RgstIdS
-         j0lA==
+        bh=SUebmHg9B5mXQg1ox1nnqWc4dFlxGIk9oZvGEXKPxt4=;
+        b=wn2N+C79R2M+WcOUNqzYAM/zn3Km+ACTGTahIWN8X6aR3ypl/OnIU0II6AZwy2UDKw
+         6Hjm0cBRxazPFFtOQB1rBIfBovJelZMEgbih+ChBEdktwQZTak1O7p+BDBXHl8NCBsFk
+         Ms9jrqAAmy6/g2Y6t51PE6xBvJk4awuFePBO3C2jnYx8iJqWCMdVEKYsN0fHerBUCpHl
+         1E3tQgjjkKo2O3GkbQHr4+egWWb/t+2Ou8MW02hrn+JJ9YwROdAn5ThYFCAveNPIFEWz
+         Kf2JyU2HOauHHYJiJDmprxqh201JiAmPS0fvMJg+qp4pSg2uATx6gj+tJ0qHXGSOAHYG
+         iAbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dsqqcdSKwZxd/AYIq7Aky/mcIADeLi/E1vk0L2+wu3s=;
-        b=DGVll85IFD1jnw3ZEnDYhp/7vTdM5QOYEHDXu88oJOkr4eGNh2JdZfS2IyJLURQjkK
-         igr3LsBuxctZGO+PONt7iVAquuuPDXebqETHLsrwXWcpVSgLva7/V8JMmwtkA8xP1nLj
-         zt0R3RQPYWORNGpvQiGpWDSd0Jm9h7Pmp8JLgNO5H7x2BbMgpKYLbUSZrzg2ogUqdksS
-         s+Vmj/f1bCyy/z3bHzRC5B6slrrK8vVzsrsN6n0fd1mjKIcSNnhtJLI4wYQBkDeln9lA
-         7cDkeaTbRP4mEE8ZgdtMfItmBKIOseBFmbCCe736CXgpKEhU6jbTuoGEKSFfFPgmDYR8
-         fn2w==
-X-Gm-Message-State: ALQs6tAOK1A4qkZXcM49iIiHfgs1FD5J48AbPg7vbKXNL/nOa8JD7RlD
-        CHX41oKqEne+gByyLB9bOIEZnFSLlJI=
-X-Google-Smtp-Source: AIpwx48Ck0AUaQQu+AbWc/w0e2DUybZNYPPRoN2JMCBocGZt3nML8HbyJCSnTtUWqcwX90N31Dlfow==
-X-Received: by 10.99.179.6 with SMTP id i6mr26114234pgf.434.1524722313719;
-        Wed, 25 Apr 2018 22:58:33 -0700 (PDT)
+        bh=SUebmHg9B5mXQg1ox1nnqWc4dFlxGIk9oZvGEXKPxt4=;
+        b=bi0aZK+FvtyRZl8ffhF+2S+OUEAlTRtgO3Ytauo0hnsoGlD4zdNKkaAax3EIuiVBj/
+         XTNM1dahMql/diNv/9Tb4K2iaUCAwKVoHb78VVZyHs/wlIpPfsTJr3X7GUr57kcIq3bu
+         NAYNIlZ8DQsFeiFkbYfwAcKFTe5kF9mT78yVN5JY4Qt1kdc81FV7UpHk09vSixMnUPc2
+         iv9pSoL6+jRSI1tLwxDqAho+cZ0n+TswzGDgEDgY+hDfW4lsHGuu6LUSjTS59hCNATB5
+         b9RZPvpPN802LEuuzL6IHQq8SL7DS1Hm69/PixtKmJBgUC1YpvUbuP4A2TgPL94Lt97t
+         Bp7Q==
+X-Gm-Message-State: ALQs6tBiLNBuxHJskb5s3AkjuUSUn/ovgulw+zldZlSXjYUtkNKIKSLv
+        EQdFYz8eedK0iTOew0GgrbxU15kCizQ=
+X-Google-Smtp-Source: AIpwx4/Bf5il2llbQpGC5V1LNO5qs/9DUQ06AUMuWeDR/wlObr+FwZqSvcKZM2Y/hi39CxIzonea0Q==
+X-Received: by 10.99.121.129 with SMTP id u123mr17548420pgc.328.1524722316240;
+        Wed, 25 Apr 2018 22:58:36 -0700 (PDT)
 Received: from localhost ([2601:602:9500:1120:b5ff:86d4:d359:c7bd])
-        by smtp.gmail.com with ESMTPSA id r80sm32157932pfe.44.2018.04.25.22.58.32
+        by smtp.gmail.com with ESMTPSA id e87sm34279890pfl.65.2018.04.25.22.58.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Apr 2018 22:58:32 -0700 (PDT)
-Date:   Wed, 25 Apr 2018 22:58:32 -0700
+        Wed, 25 Apr 2018 22:58:35 -0700 (PDT)
+Date:   Wed, 25 Apr 2018 22:58:34 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com
-Subject: [PATCH v2 2/5] builtin/config.c: support `--type=<type>` as
- preferred alias for `--<type>`
-Message-ID: <404da8bdeb9808d2dfcfdf09bc62c76195c9a08c.1524722247.git.me@ttaylorr.com>
+Subject: [PATCH v2 3/5] builtin/config: introduce `--default`
+Message-ID: <52b4b8962ea8668c3d89e1549465128a25c7dfcb.1524722247.git.me@ttaylorr.com>
 References: <cover.1524716420.git.me@ttaylorr.com>
  <cover.1524722247.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -67,296 +66,169 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`git config` has long allowed the ability for callers to provide a 'type
-specifier', which instructs `git config` to (1) ensure that incoming
-values can be interpreted as that type, and (2) that outgoing values are
-canonicalized under that type.
+For some use cases, callers of the `git-config(1)` builtin would like to
+fallback to default values when the variable asked for does not exist.
+In addition, users would like to use existing type specifiers to ensure
+that values are parsed correctly when they do exist in the
+configuration.
 
-In another series, we propose to extend this functionality with
-`--type=color` and `--default` to replace `--get-color`.
+For example, to fetch a value without a type specifier and fallback to
+`$fallback`, the following is required:
 
-However, we traditionally use `--color` to mean "colorize this output",
-instead of "this value should be treated as a color".
+  $ git config core.foo || echo "$fallback"
 
-Currently, `git config` does not support this kind of colorization, but
-we should be careful to avoid squatting on this option too soon, so that
-`git config` can support `--color` (in the traditional sense) in the
-future, if that is desired.
+This is fine for most values, but can be tricky for difficult-to-express
+`$fallback`'s, like ANSI color codes.
 
-In this patch, we support `--type=<int|bool|bool-or-int|...>` in
-addition to `--int`, `--bool`, and etc. This allows the aforementioned
-upcoming patch to support querying a color value with a default via
-`--type=color --default=...`, without squandering `--color`.
+This motivates `--get-color`, which is a one-off exception to the normal
+type specifier rules wherein a user specifies both the configuration
+variable and an optional fallback. Both are formatted according to their
+type specifier, which eases the burden on the user to ensure that values
+are correctly formatted.
 
-We retain the historic behavior of complaining when multiple,
-legacy-style `--<type>` flags are given, as well as extend this to
-conflicting new-style `--type=<type>` flags. `--int --type=int` (and its
-commutative pair) does not complain, but `--bool --type=int` (and its
-commutative pair) does.
+This commit (and those following it in this series) aim to eventually
+replace `--get-color` with a consistent alternative. By introducing
+`--default`, we allow the `--get-color` action to be promoted to a
+`--type=color` type specifier, retaining the "fallback" behavior via the
+`--default` flag introduced in this commit.
+
+For example, we aim to replace:
+
+  $ git config --get-color variable [default] [...]
+
+with:
+
+  $ git config --default default --type=color variable [...]
+
+Values filled by `--default` behave exactly as if they were present in
+the affected configuration file; they will be parsed by type specifiers
+without the knowledge that they are not themselves present in the
+configuration.
+
+Specifically, this means that the following will work:
+
+  $ git config --int --default 1M does.not.exist
+  1048576
+
+In subsequent commits, we will offer `--type=color`, which (in
+conjunction with `--default`) will be sufficient to replace
+`--get-color`.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-config.txt | 71 ++++++++++++++++++++----------------
- builtin/config.c             | 64 +++++++++++++++++++++++++++++---
- t/t1300-repo-config.sh       | 58 +++++++++++++++++++++++++++--
- 3 files changed, 153 insertions(+), 40 deletions(-)
+ Documentation/git-config.txt |  4 ++++
+ builtin/config.c             | 18 ++++++++++++++++++
+ t/t1310-config-default.sh    | 36 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 58 insertions(+)
+ create mode 100755 t/t1310-config-default.sh
 
 diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index e09ed5d7d5..b759009c75 100644
+index b759009c75..c3adafd78a 100644
 --- a/Documentation/git-config.txt
 +++ b/Documentation/git-config.txt
-@@ -9,13 +9,13 @@ git-config - Get and set repository or global options
- SYNOPSIS
- --------
- [verse]
--'git config' [<file-option>] [type] [--show-origin] [-z|--null] name [value [value_regex]]
--'git config' [<file-option>] [type] --add name value
--'git config' [<file-option>] [type] --replace-all name value [value_regex]
--'git config' [<file-option>] [type] [--show-origin] [-z|--null] --get name [value_regex]
--'git config' [<file-option>] [type] [--show-origin] [-z|--null] --get-all name [value_regex]
--'git config' [<file-option>] [type] [--show-origin] [-z|--null] [--name-only] --get-regexp name_regex [value_regex]
--'git config' [<file-option>] [type] [-z|--null] --get-urlmatch name URL
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] name [value [value_regex]]
-+'git config' [<file-option>] [--type=<type>] --add name value
-+'git config' [<file-option>] [--type=<type>] --replace-all name value [value_regex]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] --get name [value_regex]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] --get-all name [value_regex]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] [--name-only] --get-regexp name_regex [value_regex]
-+'git config' [<file-option>] [--type=<type>] [-z|--null] --get-urlmatch name URL
- 'git config' [<file-option>] --unset name [value_regex]
- 'git config' [<file-option>] --unset-all name [value_regex]
- 'git config' [<file-option>] --rename-section old_name new_name
-@@ -38,12 +38,10 @@ existing values that match the regexp are updated or unset.  If
- you want to handle the lines that do *not* match the regex, just
- prepend a single exclamation mark in front (see also <<EXAMPLES>>).
+@@ -240,6 +240,10 @@ Valid `<type>`'s include:
+ 	using `--file`, `--global`, etc) and `on` when searching all
+ 	config files.
  
--The type specifier can be either `--int` or `--bool`, to make
--'git config' ensure that the variable(s) are of the given type and
--convert the value to the canonical form (simple decimal number for int,
--a "true" or "false" string for bool), or `--path`, which does some
--path expansion (see `--path` below).  If no type specifier is passed, no
--checks or transformations are performed on the value.
-+The `--type=<type>` option instructs 'git config' to ensure that incoming and
-+outgoing values are canonicalize-able under the given <type>.  If no
-+`--type=<type>` is given, no canonicalization will be performed. Callers may
-+unset an existing `--type` specifier with `--no-type`.
- 
- When reading, the values are read from the system, global and
- repository local configuration files by default, and options
-@@ -160,30 +158,39 @@ See also <<FILES>>.
- --list::
- 	List all variables set in config file, along with their values.
- 
----bool::
--	'git config' will ensure that the output is "true" or "false"
-+--type <type>::
-+  'git config' will ensure that any input or output is valid under the given
-+  type constraint(s), and will canonicalize outgoing values in `<type>`'s
-+  canonical form.
-++
-+Valid `<type>`'s include:
-++
-+- 'bool': canonicalize values as either "true" or "false".
-+- 'int': canonicalize values as simple decimal numbers. An optional suffix of
-+  'k', 'm', or 'g' will cause the value to be multiplied by 1024, 1048576, or
-+  1073741824 upon input.
-+- 'bool-or-int': canonicalize according to either 'bool' or 'int', as described
-+  above.
-+- 'path': canonicalize by adding a leading `~` to the value of `$HOME` and
-+  `~user` to the home directory for the specified user. This specifier has no
-+  effect when setting the value (but you can use `git config section.variable
-+  ~/` from the command line to let your shell do the expansion.)
-+- 'expiry-date': canonicalize by converting from a fixed or relative date-string
-+  to a timestamp. This specifier has no effect when setting the value.
-++
- 
-+--bool::
- --int::
--	'git config' will ensure that the output is a simple
--	decimal number.  An optional value suffix of 'k', 'm', or 'g'
--	in the config file will cause the value to be multiplied
--	by 1024, 1048576, or 1073741824 prior to output.
--
- --bool-or-int::
--	'git config' will ensure that the output matches the format of
--	either --bool or --int, as described above.
--
- --path::
--	`git config` will expand a leading `~` to the value of
--	`$HOME`, and `~user` to the home directory for the
--	specified user.  This option has no effect when setting the
--	value (but you can use `git config section.variable ~/`
--	from the command line to let your shell do the expansion).
--
- --expiry-date::
--	`git config` will ensure that the output is converted from
--	a fixed or relative date-string to a timestamp. This option
--	has no effect when setting the value.
-+  Historical options for selecting a type specifier. Prefer instead `--type`,
-+  (see: above).
++--default <value>::
++  When using `--get`, and the requested variable is not found, behave as if
++  <value> were the value assigned to the that variable.
 +
-+--no-type::
-+  Un-sets the previously set type specifier (if one was previously set). This
-+  option requests that 'git config' not canonicalize the retrieved variable.
-+  `--no-type` has no effect without `--type=<type>` or `--<type>`.
- 
- -z::
- --null::
+ CONFIGURATION
+ -------------
+ `pager.config` is only respected when listing configuration, i.e., when
 diff --git a/builtin/config.c b/builtin/config.c
-index 92fb8d56b1..9eda01615b 100644
+index 9eda01615b..4f222a0ca9 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -61,6 +61,59 @@ static int show_origin;
- #define TYPE_PATH		4
- #define TYPE_EXPIRY_DATE	5
+@@ -26,6 +26,7 @@ static char term = '\n';
+ static int use_global_config, use_system_config, use_local_config;
+ static struct git_config_source given_config_source;
+ static int actions, type;
++static char *default_value;
+ static int end_null;
+ static int respect_includes_opt = -1;
+ static struct config_options config_options;
+@@ -148,6 +149,7 @@ static struct option builtin_config_options[] = {
+ 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
+ 	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include directives on lookup")),
+ 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
++	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use default value when missing entry")),
+ 	OPT_END(),
+ };
  
-+#define OPT_CALLBACK_VALUE(s, l, v, h, i) \
-+	{ OPTION_CALLBACK, (s), (l), (v), NULL, (h), PARSE_OPT_NOARG | \
-+	PARSE_OPT_NONEG, option_parse_type, (i) }
-+
-+static struct option builtin_config_options[];
-+
-+static int option_parse_type(const struct option *opt, const char *arg,
-+			     int unset)
-+{
-+	/*
-+	 * To support '--<type>' style flags, begin with new_type equal to
-+	 * opt->defval.
-+	 */
-+	int new_type = opt->defval;
-+	int *to_type = opt->value;
-+
-+	if (unset) {
-+		*((int *) opt->value) = 0;
-+		return 0;
+@@ -312,6 +314,16 @@ static int get_value(const char *key_, const char *regex_)
+ 	config_with_options(collect_config, &values,
+ 			    &given_config_source, &config_options);
+ 
++	if (!values.nr && default_value) {
++		struct strbuf *item;
++		ALLOC_GROW(values.items, values.nr + 1, values.alloc);
++		item = &values.items[values.nr++];
++		strbuf_init(item, 0);
++		if (format_config(item, key_, default_value) < 0)
++			die(_("failed to format default config value: %s"),
++				default_value);
 +	}
 +
-+	if (!new_type) {
-+		if (!strcmp(arg, "bool"))
-+			new_type = TYPE_BOOL;
-+		else if (!strcmp(arg, "int"))
-+			new_type = TYPE_INT;
-+		else if (!strcmp(arg, "bool-or-int"))
-+			new_type = TYPE_BOOL_OR_INT;
-+		else if (!strcmp(arg, "path"))
-+			new_type = TYPE_PATH;
-+		else if (!strcmp(arg, "expiry-date"))
-+			new_type = TYPE_EXPIRY_DATE;
-+		else
-+			die(_("unrecognized --type argument, %s"), arg);
-+	}
-+
-+	if (*to_type && *to_type != new_type) {
-+		/*
-+		 * Complain when there is a new type not equal to the old type.
-+		 * This allows for combinations like '--int --type=int' and
-+		 * '--type=int --type=int', but disallows ones like '--type=bool
-+		 * --int' and '--type=bool
-+		 * --type=int'.
-+		 */
-+		error("only one type at a time.");
+ 	ret = !values.nr;
+ 
+ 	for (i = 0; i < values.nr; i++) {
+@@ -650,6 +662,12 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	}
+ 
++	if (default_value && !(actions & ACTION_GET)) {
++		error("--default is only applicable to --get");
 +		usage_with_options(builtin_config_usage,
 +			builtin_config_options);
 +	}
-+	*to_type = new_type;
 +
-+	return 0;
-+}
-+
- static struct option builtin_config_options[] = {
- 	OPT_GROUP(N_("Config file location")),
- 	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
-@@ -84,11 +137,12 @@ static struct option builtin_config_options[] = {
- 	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [default]"), ACTION_GET_COLOR),
- 	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [stdout-is-tty]"), ACTION_GET_COLORBOOL),
- 	OPT_GROUP(N_("Type")),
--	OPT_SET_INT(0, "bool", &type, N_("value is \"true\" or \"false\""), TYPE_BOOL),
--	OPT_SET_INT(0, "int", &type, N_("value is decimal number"), TYPE_INT),
--	OPT_SET_INT(0, "bool-or-int", &type, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
--	OPT_SET_INT(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
--	OPT_SET_INT(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
-+	OPT_CALLBACK('t', "type", &type, "", N_("value is given this type"), option_parse_type),
-+	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\""), TYPE_BOOL),
-+	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_INT),
-+	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
-+	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
-+	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
- 	OPT_GROUP(N_("Other")),
- 	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
- 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index ed9b9cd344..1e3a1ace14 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -1613,13 +1613,65 @@ test_expect_success '--local requires a repo' '
+ 	if (actions & PAGING_ACTIONS)
+ 		setup_auto_pager("config", 1);
  
- cat >.git/config <<-\EOF &&
- [core]
-+foo = true
- number = 10
-+big = 1M
- EOF
- 
--test_expect_success 'later legacy specifiers are given precedence' '
--	git config --bool --int core.number >actual &&
--	echo 10 >expect &&
-+test_expect_success 'identical modern --type specifiers are allowed' '
-+	git config --type=int --type=int core.big >actual &&
-+	echo 1048576 >expect &&
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'identical legacy --type specifiers are allowed' '
-+	git config --int --int core.big >actual &&
-+	echo 1048576 >expect &&
+diff --git a/t/t1310-config-default.sh b/t/t1310-config-default.sh
+new file mode 100755
+index 0000000000..6049d91708
+--- /dev/null
++++ b/t/t1310-config-default.sh
+@@ -0,0 +1,36 @@
++#!/bin/sh
++
++test_description='Test git config in different settings (with --default)'
++
++. ./test-lib.sh
++
++test_expect_success 'uses --default when entry missing' '
++	echo quux >expect &&
++	git config -f config --default=quux core.foo >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'identical mixed --type specifiers are allowed' '
-+	git config --int --type=int core.big >actual &&
-+	echo 1048576 >expect &&
++test_expect_success 'does not use --default when entry present' '
++	echo bar >expect &&
++	git -c core.foo=bar config --default=baz core.foo >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'non-identical modern --type specifiers are not allowed' '
-+	test_must_fail git config --type=int --type=bool core.big 2>error &&
-+	test_i18ngrep "only one type at a time" error
-+'
-+
-+test_expect_success 'non-identical legacy --type specifiers are not allowed' '
-+	test_must_fail git config --int --bool core.big 2>error &&
-+	test_i18ngrep "only one type at a time" error
-+'
-+
-+test_expect_success 'non-identical mixed --type specifiers are not allowed' '
-+	test_must_fail git config --type=int --bool core.big 2>error &&
-+	test_i18ngrep "only one type at a time" error
-+'
-+
-+test_expect_success '--type allows valid type specifiers' '
-+	echo "true" >expect &&
-+	git config --type=bool core.foo >actual &&
++test_expect_success 'canonicalizes --default with appropriate type' '
++	echo true >expect &&
++	git config -f config --default=yes --bool core.foo >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success '--no-type unsets type specifiers' '
-+	echo "10" >expect &&
-+	git config --type=bool --no-type core.number >actual &&
-+	test_cmp expect actual
++test_expect_success 'dies when --default cannot be parsed' '
++	test_must_fail git config -f config --type=expiry-date --default=x --get \
++		not.a.section 2>error &&
++	test_i18ngrep "failed to format default config value" error
 +'
 +
-+test_expect_success 'unset type specifiers may be reset to conflicting ones' '
-+	echo 1048576 >expect &&
-+	git config --type=bool --no-type --type=int core.big >actual &&
-+	test_cmp expect actual
++test_expect_success 'does not allow --default without --get' '
++	test_must_fail git config --default=quux --unset a.section >output 2>&1 &&
++	test_i18ngrep "\-\-default is only applicable to" output
 +'
 +
-+test_expect_success '--type rejects unknown specifiers' '
-+	test_must_fail git config --type=nonsense core.foo 2>error &&
-+	test_i18ngrep "unrecognized --type argument" error
-+'
-+
- test_done
++test_done
 -- 
 2.17.0
 
