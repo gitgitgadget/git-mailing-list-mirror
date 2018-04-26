@@ -2,195 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9322B1F404
-	for <e@80x24.org>; Thu, 26 Apr 2018 09:02:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62FF21F404
+	for <e@80x24.org>; Thu, 26 Apr 2018 09:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754015AbeDZJCK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 05:02:10 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:34581 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752964AbeDZJCH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 05:02:07 -0400
-Received: by mail-wm0-f52.google.com with SMTP id w2so7744167wmw.1
-        for <git@vger.kernel.org>; Thu, 26 Apr 2018 02:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=lO73prfpqIrtzasMvwrkvNAg/rShfRYjjPL5qxr0oyw=;
-        b=VvtvUUHx9M3Fpn0s3lIuEAoeY6nivF5pJfBhkVgHWob18vR5SB4sx1ZkKyqcC8EA71
-         l3BGv8QUJnbblEACMhJnFwOiO456XgYo5T/KrWV8mBZTTgR6G0rOt6tTJXyLahu4iuk/
-         jR0AmQrWlvQDAloPJ4NsWEjYGgGwQBveZzo5RFyrep0VmadLGqtm6YkUmVA0fkmsaLuE
-         cN1fw0tOkK4R7qO2WoOtkHCo0nzg5R24QvDq4uQ/y8K2fJvyDkWqcFTpkL12bnIq7Jt5
-         GU+/atYh3iMPdT6aabBSa8Mps4U5hnAjAH8bd+u5oSvJwjmxvReh5Z2wj2KGY6+sWE4L
-         ZiTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=lO73prfpqIrtzasMvwrkvNAg/rShfRYjjPL5qxr0oyw=;
-        b=pLwpXBsN6QMpgCoj3MiITKUzdWDdzbNS/dL+KMIO/UkqqbKyOmlG1QRNGUFKwTHtNa
-         BeWRdQ2FkpDhovml4ksHTRLvukiFUPq99tVZaRqJwu6UGF/O19YJ4J9tqFCO2r0uaUrq
-         Y/FsSaAXW4WDbfvVg7Y7kO8l346t7v39sM75J8LRWMT8Dga6XJzpQ7JwSlh5bnosTfH3
-         YgmJTWOgND6E+Phhg8LoJ/M1BXpyDESSKk6mfqKiF89cWilWW4wouKNijCRm+t7nptae
-         xU0nQ2hoZVGw7zipNhQKMAz1PE9dRTQDxjWSKVQqY1Ji+wjrlDrWzT/K9w/sUQHjQwRb
-         12Cw==
-X-Gm-Message-State: ALQs6tAoPFnc7RHLrgOtdXEFkZ0IsWhkTR6zUfOfqRmWG6wmaC8P/JkR
-        UgiOIY55h+c8iP7zIjSDxGw=
-X-Google-Smtp-Source: AIpwx48pugyF6ownNqFEBARKcn+s5W41a7EMqriH8LniueiQuRXLKjX3xORqULdJR9Yshfxj+QlubQ==
-X-Received: by 10.28.12.129 with SMTP id 123mr17001378wmm.75.1524733325574;
-        Thu, 26 Apr 2018 02:02:05 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (efc10.neoplus.adsl.tpnet.pl. [83.21.40.10])
-        by smtp.gmail.com with ESMTPSA id o12-v6sm20708708wri.78.2018.04.26.02.02.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 26 Apr 2018 02:02:04 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v4 04/10] commit: use generations in paint_down_to_common()
-References: <20180417170001.138464-1-dstolee@microsoft.com>
-        <20180425143735.240183-1-dstolee@microsoft.com>
-        <20180425143735.240183-5-dstolee@microsoft.com>
-        <xmqqr2n23b4o.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 26 Apr 2018 11:02:02 +0200
-In-Reply-To: <xmqqr2n23b4o.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 26 Apr 2018 12:22:15 +0900")
-Message-ID: <86tvryjq7p.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1754054AbeDZJTz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 05:19:55 -0400
+Received: from mout.gmx.net ([212.227.17.20]:55165 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753676AbeDZJTv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 05:19:51 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzYY2-1eGvu80KF0-014kB3; Thu, 26
+ Apr 2018 11:19:42 +0200
+Date:   Thu, 26 Apr 2018 11:19:21 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: Re: [PATCH v5 09/11] technical/shallow: stop referring to grafts
+In-Reply-To: <CANQwDwfJgoXd+iH207S8WoaWOS4BQnrm+GAOtfe1BvW9uyKiYA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804261117480.4978@tvgsbejvaqbjf.bet>
+References: <cover.1524303776.git.johannes.schindelin@gmx.de> <cover.1524650028.git.johannes.schindelin@gmx.de> <a3403a69b692e4f4b0337800268a16818e790caa.1524650029.git.johannes.schindelin@gmx.de>
+ <CANQwDwfJgoXd+iH207S8WoaWOS4BQnrm+GAOtfe1BvW9uyKiYA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-784255118-1524734382=:4978"
+X-Provags-ID: V03:K1:ct3caORaZpbGyS5JkTf3jGg3Fc3zXH2GJVEEEuicAcnZW6ukjLW
+ kNuElw0YiJMoNWeDqCiidiAtxmGO1kftn7mpFxZRNT5DkLl2gRdtRLvJRgZK4+/gMb85xwf
+ j8sVsDm+cRmZ+fSFkA/AVLsHX8RIseFePypk0orRSkOs55VKSPty5TDKx0SO8GZa/Cs0D3f
+ 24UNopBjR9csTObm146tA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3l9OG4/mruA=:S9p8gGMiyssSmCwsIrOsWr
+ kkpNL8hfO7q+/aC8G3+WEFD+BYXinE1NcAgk61sS6jvAZe9+Xed5+l86aLnQGaCxxXkY4ru8O
+ zUTx6lpphaTECO/CqZz34Bvr5kK2Qz6m9lovsgtBDF+yfWer9HUEplALJqx7XLc77aWgPDeAb
+ WBGe1ThrY5D4ebTAwozKf9CvasD1bNGSSCKdlmnD3kp+/TzJJfZRbX5tH/XJwvLKsLskxLT1X
+ 0ZlYjWvrvywvdN5zQqI/yTW98jkLbZ7VZW8y/cbcZflMzQpiUcN6kXfwmHLUN6Ss6iWZLHBfP
+ 12kOXmwLBGgdCK//5LScB2xMgQ5QBtpFdfxanTIMEwdurDJSsb92hr+WZt/L4YNJLq8zUCVUJ
+ PYsij20wm0J0bg3e/Dv5voeaoPmcCzrrsaeotu3Zsf7oZ/wgBsPVS9vL1q658ZOMrrAed1w8Y
+ qB9skybwha/5PdBtutO5KZKSnBdbTL8omqsYU711C2Cpg1syOtxMHY911Ek+ZwFmjbGrZqdEI
+ GsLoWSAC7qEQCDbsZDdCzOinVgVDJUR87MfuBQNlt6xsh1jghxF/1A2LdVI5Wa5zUkx7KX0sG
+ Te54r4D7kB0gajdvjg0Y3mUlCBc5R+FKQltlg38VZEa73qiLldOYktKWHU0WePRafp8tqZra7
+ jZDJNQ1U9kwdcDCNlaQlQMmBdeLucVw4ReBopVkKIoEhLiI/pbp0WNP1OM1UO+M8M99XPbyeP
+ zkrgyLc0QXIazz7nM7Ht5qw5No4Dcfz1KX5+ZSFaOCd1LhGDwpbhWq8LFhJthtkSQ5TTkBqcQ
+ hKfJtlD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Derrick Stolee <dstolee@microsoft.com> writes:
->
->> Define compare_commits_by_gen_then_commit_date(), which uses generation
->> numbers as a primary comparison and commit date to break ties (or as a
->> comparison when both commits do not have computed generation numbers).
->>
->> Since the commit-graph file is closed under reachability, we know that
->> all commits in the file have generation at most GENERATION_NUMBER_MAX
->> which is less than GENERATION_NUMBER_INFINITY.
->
-> I suspect that my puzzlement may be coming from my not "getting"
-> what you meant by "closed under reachability",
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-It means that if commit A is in the commit graph, then all of its
-ancestors (all commits reachable from A) are also in the commit graph.
+--8323328-784255118-1524734382=:4978
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
->                                                but could you also
-> explain how _INF and _ZERO interact with commits with normal
-> generation numbers?  I've always assumed that genno will be used
-> only when comparing two commits with valid genno and otherwise we'd
-> fall back to the traditional date based one, but...
->
->> +int compare_commits_by_gen_then_commit_date(const void *a_, const void =
-*b_, void *unused)
->> +{
->> +	const struct commit *a =3D a_, *b =3D b_;
->> +
->> +	/* newer commits first */
->> +	if (a->generation < b->generation)
->> +		return 1;
->> +	else if (a->generation > b->generation)
->> +		return -1;
->
-> ... this does not check if a->generation is _ZERO or _INF.=20=20
->
-> Both being _MAX is OK (the control will fall through and use the
-> dates below).  One being _MAX and the other being a normal value is
-> also OK (the above comparisons will declare the commit with _MAX is
-> farther than less-than-max one from a root).
->
-> Or is the assumption that if one has _ZERO, that must have come from
-> an ancient commit-graph file and none of the commits have anything
-> but _ZERO?
+Hi Kuba,
 
-There is stronger and weaker version of the negative-cut criteria based
-on generation numbers.
+On Wed, 25 Apr 2018, Jakub Nar=C4=99bski wrote:
 
-The strong criteria:
+> On 25 April 2018 at 11:54, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > diff --git a/Documentation/technical/shallow.txt b/Documentation/techni=
+cal/shallow.txt
+> > index 5183b154229..4ec721335d2 100644
+> > --- a/Documentation/technical/shallow.txt
+> > +++ b/Documentation/technical/shallow.txt
+> > @@ -8,15 +8,10 @@ repo, and therefore grafts are introduced pretending =
+that
+> >  these commits have no parents.
+> >  *********************************************************
+> >
+> > -The basic idea is to write the SHA-1s of shallow commits into
+> > -$GIT_DIR/shallow, and handle its contents like the contents
+> > -of $GIT_DIR/info/grafts (with the difference that shallow
+> > -cannot contain parent information).
+> > -
+> > -This information is stored in a new file instead of grafts, or
+> > -even the config, since the user should not touch that file
+> > -at all (even throughout development of the shallow clone, it
+> > -was never manually edited!).
+> > +$GIT_DIR/shallow lists commit object names and tells Git to
+> > +pretend as if they are root commits (e.g. "git log" traversal
+> > +stops after showing them; "git fsck" does not complain saying
+> > +the commits listed on their "parent" lines do not exist).
+> >
+> >  Each line contains exactly one SHA-1. When read, a commit_graft
+> >  will be constructed, which has nr_parent < 0 to make it easier
+>=20
+> Is the removed information (repeated below) important or not?
+>=20
+>   the user should not touch that file
+>   at all (even throughout development of the shallow clone, it
+>   was never manually edited!).
 
-  if A !=3D B and gen(A) <=3D gen(B), then A cannot reach B
+Back in the days, it might have been necessary to tell people not to
+meddle with Git's internals. Nowadays I don't think that'd be necessary
+anymore, hence I removed it.
 
-The weaker criteria:
+Ciao,
+Dscho
 
-  if gen(A) < gen(B), then A cannot reach B
-
-
-Because commit-graph is closed under reachability, this means that
-
-  if A is in commit graph, and B is outside of it, then A cannot reach B
-
-If A is in commit graph, then either _MAX >=3D gen(A) >=3D 1,
-or gen(A) =3D=3D _ZERO.  Because _INFINITY > _MAX > _ZERO, then we have
-
-  if _MAX >=3D gen(A) >=3D 1 || gen(A) =3D=3D 0, and gen(B) =3D=3D _INFINITY
-  then A cannot reach B
-
-which also fullfils the weaker criteria
-
-  if gen(A) < gen(B), then A cannot reach B
-
-
-If both A and B are outside commit-graph, i.e. gen(A) =3D gen(B) =3D _INFIN=
-ITY,
-or if both A and B have gen(A) =3D gen(B) =3D _MAX,
-or if both A and B come from old commit graph with gen(A) =3D gen(B) =3D_ZE=
-RO,
-then we cannot say anything about reachability... and weak criteria
-also does not say anything about reachability.
-
-
-Maybe the following ASCII table would make it clear.
-
-             |                      gen(B)
-             |            ................................ :::::::
-gen(A)       | _INFINITY | _MAX     | larger   | smaller  | _ZERO
--------------+-----------+----------+----------+----------+--------
-_INFINITY    | =3D         | >        | >        | >        | >
-_MAX         | < Nn      | =3D        | >        | >        | >
-larger       | < Nn      | < Nn     | =3D n      | >        | >
-smaller      | < Nn      | < Nn     | < Nn     | =3D n      | >
-_ZERO        | < Nn      | < Nn     | < Nn     | < Nn     | =3D
-
-Here "n" denotes stronger condition, and "N" denotes weaker condition.
-We have _INFINITY > _MAX > larger > smaller > _ZERO.
-
-
-NOTE however that it is a *tradeoff*.  Using weaker criteria, with
-strict inequality, means that we don't need to handle _INFINITY, _MAX
-and _ZERO corner-cases in a special way; but it also means that we would
-walk slightly more commits than if we used stronger criteria, with less
-or equals.
-
-For Linux kernel public repository commit graph[1] we have maximum of 512
-commits sharing the same level, 5.43 sharing the same commit on average,
-and 50% of time only 2 commits sharing the same level (median, or 2nd
-quartile, or 50% percentile).  This is roughly the amount of commits we
-walk more with weaker cut-off condition.
-
-[1]: with 750k commits, but which is not largest commit graph any more :-0
-
->> +	/* use date as a heuristic when generations are equal */
->> +	if (a->date < b->date)
->> +		return 1;
->> +	else if (a->date > b->date)
->> +		return -1;
->> +	return 0;
->> +}
-
-HTH
---=20
-Jakub Nar=C4=99bski
+--8323328-784255118-1524734382=:4978--
