@@ -7,145 +7,171 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6BF71F424
-	for <e@80x24.org>; Thu, 26 Apr 2018 12:44:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B804F1F424
+	for <e@80x24.org>; Thu, 26 Apr 2018 12:59:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755645AbeDZMor (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 08:44:47 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:37631 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751713AbeDZMop (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 08:44:45 -0400
-Received: by mail-qt0-f170.google.com with SMTP id w12-v6so31228055qti.4
-        for <git@vger.kernel.org>; Thu, 26 Apr 2018 05:44:44 -0700 (PDT)
+        id S1756465AbeDZM7T (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 08:59:19 -0400
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:44576 "EHLO
+        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756392AbeDZM6n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 08:58:43 -0400
+Received: by mail-qk0-f172.google.com with SMTP id z8so9708937qki.11
+        for <git@vger.kernel.org>; Thu, 26 Apr 2018 05:58:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=88vF9dZUSokYm4OM9OlvRxlHNK+IDSSx1/Ai3UNfl1A=;
-        b=LWgI+1oj2m8jG4oJO8kZL/Katch6z1A9z0ktBeJeHZJeXZ/4rtY/PC8jnS7WqzUQtB
-         bYGSnAe0ahXh86Rc+E3XHYUbZHuZuOzJIUNahSfpFU38jUVfbv/6PozYr8B33/1VTGoM
-         M+b8b17CrBV1BGffYQf8wm0qF30I2x9iByJ9r+7ELx5duuayPCt8xRqEokeqjrUHW3Zp
-         JTs/ZJa/MVlJ0LJs45JvXRtedyHFkr9Jo3Mmcr1dYqUwBohUX8l2PCsB8tTFwJf09I6n
-         x6wFHQCuXnUJ584tU444m25hL6pvwQ0RLAgSBX7mQDKM+HrTbJNnzcdSfpyQgtExVp8+
-         mVDw==
+        bh=j7YHIz2hvGX6VWGAFD3ozgr2yC1I3oJiE7yURpkDlpQ=;
+        b=gw/LvUxLiUnWQAJHssggAi21J9Oow4p1vwtCVcWVHv691gzEASFLNL/nHECtRuMKMD
+         cWHhkV0qfT5SYHisUvdh3jagb2U5GXikWeXan4Pvj8yg4Kfmn0oK599h4Y1LaexVCbL+
+         qwRizfT8bphgv/LvGW6B8ucPVxtV8x3t3JompDdZK6Or9m62QACmssU9CagfldNdppMM
+         iK3tH8kjJS/oUnv8tQQQgs0WHiYFV/eqrvpHkHFveyfoG3zs5J7m0vzhgd3POqapJhpO
+         MTZxaI+RmvO5OuuCjTP1+uBFdDpqhzs1cHfm1nuVJQxAh7lOJEHmhwIM5H3oGAyVPRd8
+         eJrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=88vF9dZUSokYm4OM9OlvRxlHNK+IDSSx1/Ai3UNfl1A=;
-        b=AtOotBKT3sB9aHsgihiWJ50V1Jk2tZmUeGc8Uk3cqyxo4N2mU+RVKQKjlkF+jbC9P9
-         EH3+s+50IrA7AA01QoLQimGbhORgM8ztGDrdJyqCNNrjzDzo3WL5wEB83h+0fjruEG0w
-         fb6zwBVqqFFk5voeYkZTRpfbwBAVvx76Wiw7LSuKZN5QZBC/7ytE2VVYNQyEIh2gEvaY
-         LvxGRONEkDEEy8wowG5b79r++9cJxx3gYdwd5dviHr4S9+SI4jy/ZRmd3+9kbJbYiLmd
-         nAorWFKmVJ1FO1M8xwzcImkLTWdXVG6ouxKpPTwN6C8cOEHrb4x4Iaye746kTiW0FW09
-         vpBQ==
-X-Gm-Message-State: ALQs6tA8jGhiTmbGJHLT402IAOYMkE30co7UPxr2ge8zawG7mEKUWVC4
-        tgicVzKNH1UgY8JJo/cPZN4=
-X-Google-Smtp-Source: AB8JxZoLTI6tmsH8W/rLKKt71KHWYOEZKxUoMbnH7l5oin6hnxHVSsWq9JMWPZyUEyCXz4gYRGnK/w==
-X-Received: by 2002:ac8:1857:: with SMTP id n23-v6mr10851412qtk.42.1524746684231;
-        Thu, 26 Apr 2018 05:44:44 -0700 (PDT)
+        bh=j7YHIz2hvGX6VWGAFD3ozgr2yC1I3oJiE7yURpkDlpQ=;
+        b=Ddpnzrm6NlSePZxln5UYT5OvP/yHtGU2s1hJO7KMHW1DWnaVtSpD88V+L18rXmt8lt
+         +tewa6//eeqRs4hcUto6d1sN/AJtnC+14F5t18daTGpVJXWQzFEkuaCTVQLa0IhxlXAE
+         NgAe0avF3Up8wEKPcetpVale/2ci5+Xbbiph8a8VJo2v/dtSVjUtVQiyf4Cazmt82zeS
+         VjGdMRuamRq04QB/a1pUxWp27yDL3ntRpHzNH7hOufZDgg/7YOToMlXSQq/irpFi+GWk
+         JlZcU07kHnir2NTOdHfGMXPKI71dEmXVlIpn78ePpwGMsdDI+2PMn2236YQ/VOcJGtxV
+         3O0A==
+X-Gm-Message-State: ALQs6tBNnncKNuaujM7MQi4jJpI16Qaj2DQ4wD1/9o0SEY+Xb1T4a26Q
+        gCMcsBMjf/fvF+HBtqsZRU4=
+X-Google-Smtp-Source: AB8JxZrBV0zKSC/hkjTIwU70Yzvf9ahW59mJXROd3JCnRg7IoIPCMqE6ZmvPUblj0cDvr0QbH6Hs+Q==
+X-Received: by 10.55.42.217 with SMTP id q86mr34264308qkq.180.1524747522460;
+        Thu, 26 Apr 2018 05:58:42 -0700 (PDT)
 Received: from [172.22.150.178] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id r6-v6sm16409549qti.70.2018.04.26.05.44.43
+        by smtp.gmail.com with ESMTPSA id n66sm816192qkd.7.2018.04.26.05.58.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Apr 2018 05:44:43 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Apr 2018, #03; Wed, 25)
-To:     Brandon Williams <bmwill@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        Christian Hesse <mail@eworm.de>
-References: <xmqqmuxr4r6n.fsf@gitster-ct.c.googlers.com>
- <87zi1rd14k.fsf@evledraar.gmail.com> <20180425174300.GA49485@google.com>
+        Thu, 26 Apr 2018 05:58:41 -0700 (PDT)
+Subject: Re: [PATCH v4 03/10] commit-graph: compute generation numbers
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "jnareb@gmail.com" <jnareb@gmail.com>,
+        "avarab@gmail.com" <avarab@gmail.com>
+References: <20180417170001.138464-1-dstolee@microsoft.com>
+ <20180425143735.240183-1-dstolee@microsoft.com>
+ <20180425143735.240183-4-dstolee@microsoft.com>
+ <xmqqvace3d9s.fsf@gitster-ct.c.googlers.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4d0bd1a2-2f51-4a11-7e31-1e1ac5213c51@gmail.com>
-Date:   Thu, 26 Apr 2018 08:44:40 -0400
+Message-ID: <21272fff-acf9-8641-3aa9-1d026843ff3a@gmail.com>
+Date:   Thu, 26 Apr 2018 08:58:39 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <20180425174300.GA49485@google.com>
+In-Reply-To: <xmqqvace3d9s.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/25/2018 1:43 PM, Brandon Williams wrote:
-> On 04/25, Ævar Arnfjörð Bjarmason wrote:
->>> * bw/protocol-v2 (2018-03-15) 35 commits
->>>    (merged to 'next' on 2018-04-11 at 23ee234a2c)
->>>   + remote-curl: don't request v2 when pushing
->>>   + remote-curl: implement stateless-connect command
->>>   + http: eliminate "# service" line when using protocol v2
->>>   + http: don't always add Git-Protocol header
->>>   + http: allow providing extra headers for http requests
->>>   + remote-curl: store the protocol version the server responded with
->>>   + remote-curl: create copy of the service name
->>>   + pkt-line: add packet_buf_write_len function
->>>   + transport-helper: introduce stateless-connect
->>>   + transport-helper: refactor process_connect_service
->>>   + transport-helper: remove name parameter
->>>   + connect: don't request v2 when pushing
->>>   + connect: refactor git_connect to only get the protocol version once
->>>   + fetch-pack: support shallow requests
->>>   + fetch-pack: perform a fetch using v2
->>>   + upload-pack: introduce fetch server command
->>>   + push: pass ref prefixes when pushing
->>>   + fetch: pass ref prefixes when fetching
->>>   + ls-remote: pass ref prefixes when requesting a remote's refs
->>>   + transport: convert transport_get_remote_refs to take a list of ref prefixes
->>>   + transport: convert get_refs_list to take a list of ref prefixes
->>>   + connect: request remote refs using v2
->>>   + ls-refs: introduce ls-refs server command
->>>   + serve: introduce git-serve
->>>   + test-pkt-line: introduce a packet-line test helper
->>>   + protocol: introduce enum protocol_version value protocol_v2
->>>   + transport: store protocol version
->>>   + connect: discover protocol version outside of get_remote_heads
->>>   + connect: convert get_remote_heads to use struct packet_reader
->>>   + transport: use get_refs_via_connect to get refs
->>>   + upload-pack: factor out processing lines
->>>   + upload-pack: convert to a builtin
->>>   + pkt-line: add delim packet support
->>>   + pkt-line: allow peeking a packet line without consuming it
->>>   + pkt-line: introduce packet_read_with_status
->>>   (this branch is used by bw/server-options.)
->>>
->>>   The beginning of the next-gen transfer protocol.
->>>
->>>   Will cook in 'next'.
->> With a month & 10 days of no updates & this looking stable it would be
->> great to have it in master sooner than later to build on top of it in
->> the 2.18 window.
-> I personally think that this series is ready to graduate to master but I
-> mentioned to Junio off-list that it might be a good idea to wait until
-> it has undergone a little more stress testing.  We've been in the
-> process of trying to get this rolled out to our internal server but due
-> to a few roadblocks and people being out of the office its taken a bit
-> longer than I would have liked to get it up and running.  I'm hoping in
-> another few days/a week I'll have some more data on live traffic.  At
-> that point I think I'll be more convinced that it will be safe to merge it.
+n 4/25/2018 10:35 PM, Junio C Hamano wrote:
+> Derrick Stolee <dstolee@microsoft.com> writes:
 >
-> I may be overly cautions but I'm hoping that we can get this right
-> without needing to do another protocol version bump for a very long
-> time.  Technically using v2 is hidden behind an "experimental" config
-> flag so we should still be able to tweak it after the fact if we
-> absolutely needed to, but I'd like to avoid that if necessary.
+>> @@ -439,6 +439,9 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+>>   		else
+>>   			packedDate[0] = 0;
+>>   
+>> +		if ((*list)->generation != GENERATION_NUMBER_INFINITY)
+>> +			packedDate[0] |= htonl((*list)->generation << 2);
+>> +
+>>   		packedDate[1] = htonl((*list)->date);
+>>   		hashwrite(f, packedDate, 8);
+> The ones that have infinity are written as zero here.  The code that
+> reads the generation field off of a file in fill_commit_graph_info()
+> and fill_commit_in_graph() both leave such a record in file as-is,
+> so the reader of what we write out will think it is _ZERO, not _INF.
+>
+> Not that it matters, as it seems that most of the code being added
+> by this series treat _ZERO and _INF more or less interchangeably.
+> But it does raise another question, i.e. do we need both _ZERO and
+> _INF, or is it sufficient to have just a single _UNKNOWN?
 
-There's no testing better than production. I think if we have an 
-opportunity to test with realistic traffic, we should take advantage.
+This code is confusing. The 'if' condition is useless, since at this 
+point every commit should be finite (since we computed generation 
+numbers for everyone). We should just write the value always.
 
-But I also agree that this series looks stable.
+For the sake of discussion, the value _INFINITY means not in the graph 
+and _ZERO means in the graph without a computed generation number. It's 
+a small distinction, but it gives a single boundary to use for 
+reachability queries that test generation number.
 
-I realize it's hard to communicate both "this series is ready to merge" 
-and "I appreciate your caution."
+>
+>> @@ -571,6 +574,46 @@ static void close_reachable(struct packed_oid_list *oids)
+>>   	}
+>>   }
+>>   
+>> +static void compute_generation_numbers(struct commit** commits,
+>> +				       int nr_commits)
+>> +{
+>> +	int i;
+>> +	struct commit_list *list = NULL;
+>> +
+>> +	for (i = 0; i < nr_commits; i++) {
+>> +		if (commits[i]->generation != GENERATION_NUMBER_INFINITY &&
+>> +		    commits[i]->generation != GENERATION_NUMBER_ZERO)
+>> +			continue;
+>> +
+>> +		commit_list_insert(commits[i], &list);
+>> +		while (list) {
+>> +			struct commit *current = list->item;
+>> +			struct commit_list *parent;
+>> +			int all_parents_computed = 1;
+>> +			uint32_t max_generation = 0;
+>> +
+>> +			for (parent = current->parents; parent; parent = parent->next) {
+>> +				if (parent->item->generation == GENERATION_NUMBER_INFINITY ||
+>> +				    parent->item->generation == GENERATION_NUMBER_ZERO) {
+>> +					all_parents_computed = 0;
+>> +					commit_list_insert(parent->item, &list);
+>> +					break;
+>> +				} else if (parent->item->generation > max_generation) {
+>> +					max_generation = parent->item->generation;
+>> +				}
+>> +			}
+>> +
+>> +			if (all_parents_computed) {
+>> +				current->generation = max_generation + 1;
+>> +				pop_commit(&list);
+>> +			}
+> If we haven't computed all parents' generations yet,
+> current->generation is undefined (or at least "left as
+> initialized"), so it does not make much sense to attempt to clip it
+> at _MAX at this point.  At leat not yet.
+>
+> IOW, shouldn't the following two lines be inside the "we now know
+> genno of all parents, so we can compute genno for commit" block
+> above?
 
-Thanks,
+You're right! Good catch. This code sets every merge commit to _MAX. It 
+should be in the block above.
 
--Stolee
-
+>
+>> +			if (current->generation > GENERATION_NUMBER_MAX)
+>> +				current->generation = GENERATION_NUMBER_MAX;
+>> +		}
+>> +	}
+>> +}
+>> +
+>>   void write_commit_graph(const char *obj_dir,
+>>   			const char **pack_indexes,
+>>   			int nr_packs,
+>> @@ -694,6 +737,8 @@ void write_commit_graph(const char *obj_dir,
+>>   	if (commits.nr >= GRAPH_PARENT_MISSING)
+>>   		die(_("too many commits to write graph"));
+>>   
+>> +	compute_generation_numbers(commits.list, commits.nr);
+>> +
+>>   	graph_name = get_commit_graph_filename(obj_dir);
+>>   	fd = hold_lock_file_for_update(&lk, graph_name, 0);
