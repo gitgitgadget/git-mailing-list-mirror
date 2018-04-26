@@ -2,140 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47B721F424
-	for <e@80x24.org>; Thu, 26 Apr 2018 01:13:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCFD61F424
+	for <e@80x24.org>; Thu, 26 Apr 2018 01:25:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751528AbeDZBNp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Apr 2018 21:13:45 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33884 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751435AbeDZBNn (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Apr 2018 21:13:43 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 72DDB60400;
-        Thu, 26 Apr 2018 01:13:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1524705222;
-        bh=Rb9SUmKx+ID2BMwCSDwyETZq1xwXa3jZkcDAIbG5NeU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=WjrIrs5anWb5jk7+OLBUCjr4ldIC4EgN3MYufKWuVDXA8d5HtlC1awq6/P/DtvDm/
-         7oXdPySdUHNBIFfkTPbCIEXGlog/Lc7uO6zT/kS/MjvVmfgakKkMNG6XgjabDYhkju
-         0Ym3/HjaM+H+b+TsvbROYtExj/ueglmMWQgmGD/dLVfDK9JijAe+OrLoLJSpzbU/QL
-         pqLzBpOZYIoDakmzQwR0/N7O2noA2q/HkG59kE/ZlxIBhc8xKyfbBu/1B6BFcGNP12
-         Y8oDuiZim1VaCcOn9esAEaRlUytn18rc1+1Z8T/6L+gr9mmoidQnIMOFXGuc4G/GCn
-         GYnVNtDdnU+B+Y4suSjwSflfZvMte7/0U/iDNki6xtBlIdHFzB/eDv97M5/JRv1Kgo
-         hHLn3AwP3LsAPeHENxKTDKDcdNiKqjvhRn4ItL1oSERu02lii9fdHJUzpVZbEbmpLU
-         y7hKC7fa8mLRtH0Vpc+x/b+Mmy17zlWd7JWjRAs46kT5loQLP1J
-Date:   Thu, 26 Apr 2018 01:13:37 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2018, #03; Wed, 25)
-Message-ID: <20180426011337.GA722934@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqmuxr4r6n.fsf@gitster-ct.c.googlers.com>
+        id S1752129AbeDZBZr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Apr 2018 21:25:47 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:36019 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751212AbeDZBZq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Apr 2018 21:25:46 -0400
+Received: by mail-wm0-f50.google.com with SMTP id n10so9931220wmc.1
+        for <git@vger.kernel.org>; Wed, 25 Apr 2018 18:25:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Rs05nxDtFv+gEMMBb+W7cSUh4MemfcKBMH0wCJw3O24=;
+        b=Qmiy4coOI/kHvpc2zhV8IpArbZeORFU8qjpq2k8Jb0ltUCcXBcd99WxWvegpo8Pr45
+         KHn0u2zM2b36Z29HM1q+FRvXQytP9pCOht6aMzmZT81OMW/3zVegi20u78UE78cU5d2f
+         21q9boR5Tul2FGy/H7GXyIm1JtwHpl+DcUdv7UI78zgHHGJ8XNKlaAh3cUBqC1/4tisO
+         9x2seZi7K+goUVqapvNn5gFyPp/QuJUiLi2xqV3XiEOH+5w1nga4gHJ+GAuCiN9IufGx
+         g+JqqCk0C3FEk8+r7yZ/sKUto+7w6xpxleqsFT/r3TfVFexJj6D7oVkt+q2q+e2RchQQ
+         Lekw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Rs05nxDtFv+gEMMBb+W7cSUh4MemfcKBMH0wCJw3O24=;
+        b=tvS17x1JUILnt3RhehpGHyHzFS16e8bxb0rdXokhRsz15z7435XLngQcE4vFGv+Z4Q
+         zqQqBr6h3IJ3uo50ejhW5uXpumw2JBNefsy5ffbKBKnrCHjDU+Z/si8OhsSF7jfHcWl/
+         2iOVLBinfPOiHhBlzoxodOuCtmDxl+BeeEGcQmGyaV0ghqVgBwpTX0CA93O4ggcOa7bq
+         jvG4NiWKGDusOq2Q4A+4UdJDEfshV0C3olvEHTosi80HPxJcgvt0rpWmEjsQCApMs61I
+         kkoETbe1Yij/cBznSNgAJv3+8oInvcV13EcO6vxUw7b4y384gJakL8cl6RO01tBEqhcj
+         Z0iw==
+X-Gm-Message-State: ALQs6tDbB7L1P50YKKTBTs4mi2HdEsw/60qfRYwrfvlJLb3L6INDH8jt
+        Ht71QwQTUvBaZxCn6RZWwzA=
+X-Google-Smtp-Source: AB8JxZrDbyuBYM2qRj9RZtEcuLK4KpdJmXfmqZ4LnBwXllky8EoNU8XI4Oax4qKseGATIXflib+yJQ==
+X-Received: by 10.28.195.85 with SMTP id t82mr685281wmf.129.1524705944663;
+        Wed, 25 Apr 2018 18:25:44 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a13-v6sm8999714wrn.6.2018.04.25.18.25.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 25 Apr 2018 18:25:43 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Marc Branchaud <marcnarc@xiplink.com>
+Cc:     "Robin H. Johnson" <robbat2@gentoo.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+        Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
+References: <20180413170129.15310-1-mgorny@gentoo.org>
+        <robbat2-20180423T200557-844830385Z@orbis-terrarum.net>
+        <xmqqtvs18p9o.fsf@gitster-ct.c.googlers.com>
+        <robbat2-20180425T060717-325652820Z@orbis-terrarum.net>
+        <xmqqin8f4qoq.fsf@gitster-ct.c.googlers.com>
+        <ad4d0d66-58f4-5cab-d314-a30a50e8ad32@xiplink.com>
+Date:   Thu, 26 Apr 2018 10:25:43 +0900
+In-Reply-To: <ad4d0d66-58f4-5cab-d314-a30a50e8ad32@xiplink.com> (Marc
+        Branchaud's message of "Wed, 25 Apr 2018 11:18:26 -0400")
+Message-ID: <xmqqefj24v3c.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="dDRMvlgZJXvWKvBx"
-Content-Disposition: inline
-In-Reply-To: <xmqqmuxr4r6n.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.16.0-trunk-amd64)
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
---dDRMvlgZJXvWKvBx
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> But Git is not an archiver (tar), but is a source code control
+>> system, so I do not think we should spend any extra cycles to
+>> "improve" its behaviour wrt the relative ordering, at least for the
+>> default case.  Only those who rely on having build artifact *and*
+>> source should pay the runtime (and preferrably also the
+>> maintainance) cost.
+>
+> Anyone who uses "make" or some other mtime-based tool is affected by
+> this.  I agree that it's not "Everyone" but it sure is a lot of
+> people.
 
-On Wed, Apr 25, 2018 at 05:37:52PM +0900, Junio C Hamano wrote:
-> * bc/object-id (2018-04-24) 41 commits
->  - merge-one-file: compute empty blob object ID
->  - add--interactive: compute the empty tree value
->  - Update shell scripts to compute empty tree object ID
->  - sha1_file: only expose empty object constants through git_hash_algo
->  - dir: use the_hash_algo for empty blob object ID
->  - sequencer: use the_hash_algo for empty tree object ID
->  - cache-tree: use is_empty_tree_oid
->  - sha1_file: convert cached object code to struct object_id
->  - builtin/reset: convert use of EMPTY_TREE_SHA1_BIN
->  - builtin/receive-pack: convert one use of EMPTY_TREE_SHA1_HEX
->  - wt-status: convert two uses of EMPTY_TREE_SHA1_HEX
->  - submodule: convert several uses of EMPTY_TREE_SHA1_HEX
->  - sequencer: convert one use of EMPTY_TREE_SHA1_HEX
->  - merge: convert empty tree constant to the_hash_algo
->  - builtin/merge: switch tree functions to use object_id
->  - builtin/am: convert uses of EMPTY_TREE_SHA1_BIN to the_hash_algo
->  - builtin/receive-pack: avoid hard-coded constants for push certs
->  - diff: specify abbreviation size in terms of the_hash_algo
->  - upload-pack: replace use of several hard-coded constants
->  - revision: replace use of hard-coded constants
->  - http: eliminate hard-coded constants
->  - dir: convert struct untracked_cache_dir to object_id
->  - commit: convert uses of get_sha1_hex to get_oid_hex
->  - index-pack: abstract away hash function constant
->  - pack-redundant: convert linked lists to use struct object_id
->  - Update struct index_state to use struct object_id
->  - split-index: convert struct split_index to object_id
->  - submodule-config: convert structures to object_id
->  - fsck: convert static functions to struct object_id
->  - tree-walk: convert get_tree_entry_follow_symlinks to object_id
->  - tree-walk: avoid hard-coded 20 constant
->  - pack-redundant: abstract away hash algorithm
->  - pack-objects: abstract away hash algorithm
->  - packfile: abstract away hash constant values
->  - packfile: convert find_pack_entry to object_id
->  - sha1_file: convert freshen functions to object_id
->  - packfile: convert has_sha1_pack to object_id
->  - packfile: remove unused member from struct pack_entry
->  - Remove unused member in struct object_context
->  - server-info: remove unused members from struct pack_info
->  - cache: add a function to read an object ID from a buffer
->=20
->  Conversion from uchar[20] to struct object_id continues.
+That's an exaggerated misrepresentation.  Only those who put build
+artifacts as well as source to SCM *AND* depend on mtime are
+affected.
 
-I do plan to reroll this, and if you want to forge my sign-off on the
-patch I missed in the mean time, please do.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+A shipped tarball often contain configure.in as well as generated
+configure, so that consumers can just say ./configure without having
+the whole autoconf toolchain to regenerate it (I also heard horror
+stories that this is done to control the exact version of autoconf
+to avoid compatibility issues), but do people arrange configure to
+be regenerated from configure.in in their Makefile of such a project
+automatically when building the default target?  In any case, that is
+a tarball usecase, not a SCM one.
 
---dDRMvlgZJXvWKvBx
-Content-Type: application/pgp-signature; name="signature.asc"
+> Are we all that sure that the performance hit is that drastic?  After
+> all, we've just done write_entry().  Calling utime() at that point
+> should just hit the filesystem cache.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrhJ8AACgkQv1NdgR9S
-9ouIohAAvdK5ULZsFVr2YJcxdyFLSo+KuvUnR1tx4SP1hXDGu+iCutwWlzPUMVFe
-XQ5lr9uGXDViDlSNCnpjN4DKCmM1PNH2mL7DMQOnzYOg+72geEVgIDpbgidsnpMP
-soSv8Nj/+7RP1CPprx5IEkmSrBFVIP4D8dVcHG9zuQrdddDpO8uQ+6pPKD1NWQ24
-jo0jAMl7HBNUf5oFL0ctJJqLseUqDczy+iJnh6Lp++qxz3bPJwAh+AChh3neWpi9
-ivumeOSX9lcMVq1YUoCalxslcCY0Ii+3rotnznj0oWPhIZB57YRechHW0VtQwVfg
-KDHT7NpSqIJ7UFvmv9ED0pfnnK3krOnLg3jKy64LoGhwdeIPwbCJZHWxROzwp5K9
-vYgcPXagM9XSy8CaDF45iV9+A6+CciSDOzDBqlUnw3HpbnwsCRIggxe7d6x28jb2
-5vsTq3/HEjlFFvK7cvuQElX3mkH6y9B6No/s5fL/k4ogT2aIUHxwJBM0lDAC/xfP
-cF6ABKTssNHA9oPhWYrAZXJaTW/ihkEXT626Tpt9gwyUEB/GAarqQgts964JjlYA
-kPoYhE2ztjxUc6F2AN54F3FIQm0/M0bEEB7d8kq5c3nR6QqrPPxRBSj2Ymv4fXrY
-AWsWynUbJuSKf0t6a77OKqhPbOL2/qfcSsHX0qCFODhk1TyYpo0=
-=Vub/
------END PGP SIGNATURE-----
-
---dDRMvlgZJXvWKvBx--
+I do not know about others, but I personally am more disburbed by
+the conceptual ugliness that comes from having to have such a piece
+of code in the codebase.
