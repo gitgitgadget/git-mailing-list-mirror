@@ -7,54 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FA751F424
-	for <e@80x24.org>; Thu, 26 Apr 2018 23:00:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DFF51F424
+	for <e@80x24.org>; Thu, 26 Apr 2018 23:11:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757219AbeDZXAF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 19:00:05 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:44233 "EHLO
-        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756634AbeDZXAC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 19:00:02 -0400
-Received: by mail-vk0-f68.google.com with SMTP id r184so17083123vke.11
-        for <git@vger.kernel.org>; Thu, 26 Apr 2018 16:00:02 -0700 (PDT)
+        id S1755550AbeDZXLx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 19:11:53 -0400
+Received: from mail-ua0-f194.google.com ([209.85.217.194]:36962 "EHLO
+        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754166AbeDZXLw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 19:11:52 -0400
+Received: by mail-ua0-f194.google.com with SMTP id i3so19306uad.4
+        for <git@vger.kernel.org>; Thu, 26 Apr 2018 16:11:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ZhQq+c3d/fIJIsgmsOhu0spBzoZBus+6A+qUhvuSQnQ=;
-        b=lr4pzZL3AwdgSeFFHP0WKNGFzkw7vf8kBLL4iImfNbgExYTrXWj5f7c5k6NVG1fE7Q
-         hw3IXvg8YRl8KZohke9zhzpRJwpT5ChFyfZp2srSHHh8M6nmafHUYBOXmjQIZ8Urqr3X
-         Z7NWDI6Xopr4dr7m4+haRMO39Vrhk7YFgUkP8d50gi3JYULDxkXCaFbh5ZR6gWJDXCcB
-         7wVhtMOMID08aQ5DfuN1KxuQseCztXbT7j3F+PRmaPhKoO/UYOsUGKQm5cLp2KQqit3h
-         8fhNqp5LRYRpNg2f7eRrJ/SJ+YfuKGlhVFx+UqDrDryWG488GsWygB7D4bEhBTt22XR2
-         /tdw==
+        bh=ikMO05RXykUBbZ7bcAurLAVG7Yw5OciwhP2DgaEUbLs=;
+        b=DjqNqn1r1iMDwf3EUF0dXM+QzX/XQBWeK+vHZcGRu0GqNk2Y57U27aHizILY1GAeM4
+         qAFFNB9wa8A9hD8OMYPoSYMjM92xJEWWSO5Y+qXwjimssCMPr81p3X/MJMsj57vbhCkm
+         gA0/Z5vXUvPtxqYOTxAPVOm133SfOv/2nVV3m3FPJVzowN/AwLcLBQ/ytw5yVWIK2ftA
+         zy0PgA4GuIwmxQalsmYd87BNETx5conbisc7YrRkCQ8wfv97a0H7+IbZ22H1or0spFmY
+         YgPIaTKXbxxXJYklpqxBA0us/cs8oU/F6NOdfrrWe2aLfKAqwIjzAFOT1RIOmtywonSu
+         RiCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ZhQq+c3d/fIJIsgmsOhu0spBzoZBus+6A+qUhvuSQnQ=;
-        b=FUEXH1m0sCBwRtRUeIoh0w4iVsfS/2NlFNoW9h14MaLV+ybbrofOvacNdGQ2RjJD/Q
-         7RmG/6y6OCdsjy+JDu2q3i8V862bEyL2uzEihx/SA8q51JhLyE0tjfTu7YuAXiTSFGU8
-         GtseO+68blufuYPYshi2ycUcoV2KcJyDYs4roAxwwfwGTJ+D2MeYMDy9ykEy5YTXX1oe
-         wt5kqEjRVFYYrQxXHydBruY77l40+3pFv9qs4xOvq1JH8EyCla6wEqGqkkZ2hDtIRt74
-         UQcVSl0zHOt1zItUhMb6G3XACEf95w+D17OHm1LEyLfYEog0LKo+325DiybrGBvotZMl
-         ABnQ==
-X-Gm-Message-State: ALQs6tC57r422mbD8+zwf3cji+470pOABwJecahh2yosZ2PCAjUWQb0G
-        uZf44mE4e/lrVZnevFrVmv42k5WQyCT1mzOuvTU=
-X-Google-Smtp-Source: AIpwx494QPERl9TjTMDNfLl05K8TaWueOXFEBRgetxsE6LuBJuTRjvu69I3mvKZtfRyr2psbkGpOa8GnXkdeM4NqjsM=
-X-Received: by 10.31.148.135 with SMTP id w129mr24684721vkd.7.1524783601632;
- Thu, 26 Apr 2018 16:00:01 -0700 (PDT)
+        bh=ikMO05RXykUBbZ7bcAurLAVG7Yw5OciwhP2DgaEUbLs=;
+        b=bRVjRG/tqsqKEuiSKSZ2k7hES5ruqR0UWDhxQ614mrOGtr1AD1dtg1jM5cgOtq+7sq
+         Vnbm1+dZoM7SpMN6Byjr8voYoyZ0ESXOa+Nj73jD+kxlQG68TNv95ocXvZlYvgVPM64Q
+         p5RheBR+wPPARar7NJVn+QIDa6GseTNtHVQ4cpmPyuxJZg6Ap4HIdm9u/4e+Q0SuX5U2
+         2H9zwiO4yeGHeZcocrva1CjwiPHhjZmmjMgKrqEv4SDZ98VozIt/gDlEw5B0zqGsn2CY
+         ipIN6zcdUBwTgU9N0snwxVpbrhXWGmy4rtlNoPGEdaHjppsJxKDwryYFUn2H78vb8GxK
+         umQQ==
+X-Gm-Message-State: ALQs6tBgrdAoiE1QLTadIke31pRoXKPuFp16YaOeqfP5+U/imu6jrzF/
+        OtKbo20VE/3JvHA+mSTtcQ7VxudGZVFasKSkjx0=
+X-Google-Smtp-Source: AIpwx48lzu2acNvtyhPIKDi6yA39XYJoaPIvNA0jQ1a0/m70Hp9M85aFRa2d1JKLSY/fyNtAXKwtMBxkf8Iq1ESxOu4=
+X-Received: by 10.176.83.38 with SMTP id x35mr25541808uax.29.1524784311512;
+ Thu, 26 Apr 2018 16:11:51 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Thu, 26 Apr 2018 16:00:00 -0700 (PDT)
-In-Reply-To: <20180426205202.23056-4-benpeart@microsoft.com>
+Received: by 10.176.95.4 with HTTP; Thu, 26 Apr 2018 16:11:50 -0700 (PDT)
+In-Reply-To: <20180426205202.23056-2-benpeart@microsoft.com>
 References: <20180420133632.17580-1-benpeart@microsoft.com>
- <20180426205202.23056-1-benpeart@microsoft.com> <20180426205202.23056-4-benpeart@microsoft.com>
+ <20180426205202.23056-1-benpeart@microsoft.com> <20180426205202.23056-2-benpeart@microsoft.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 26 Apr 2018 16:00:00 -0700
-Message-ID: <CABPp-BHg++tvbd+Y8xCCNmi+fAv_4azXCkCWDucFLDj1sXeWAw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] merge: pass aggressive when rename detection is
- turned off
+Date:   Thu, 26 Apr 2018 16:11:50 -0700
+Message-ID: <CABPp-BEa2EDdeDfcXxRERKAuOPUYTsBGZB8XyTXDYN1JpHsbXA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] merge: update documentation for {merge,diff}.renameLimit
 To:     Ben Peart <Ben.Peart@microsoft.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         "peff@peff.net" <peff@peff.net>,
@@ -63,7 +62,8 @@ Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
         Kevin Willford <kewillf@microsoft.com>,
         "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
-        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
+        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -71,50 +71,50 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Thu, Apr 26, 2018 at 1:52 PM, Ben Peart <Ben.Peart@microsoft.com> wrote:
-> Set aggressive flag in git_merge_trees() when rename detection is turned off.
-> This allows read_tree() to auto resolve more cases that would have otherwise
-> been handled by the rename detection.
+> Update the documentation to better indicate that the renameLimit setting is
+> ignored if rename detection is turned off via command line options or config
+> settings.
 >
-> Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > Signed-off-by: Ben Peart <benpeart@microsoft.com>
 > ---
->  merge-recursive.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+>  Documentation/diff-config.txt  | 3 ++-
+>  Documentation/merge-config.txt | 3 ++-
+>  2 files changed, 4 insertions(+), 2 deletions(-)
 >
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 2637d34d87..6cc4404144 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -276,6 +276,7 @@ static void init_tree_desc_from_tree(struct tree_desc *desc, struct tree *tree)
->  }
+> diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+> index 5ca942ab5e..77caa66c2f 100644
+> --- a/Documentation/diff-config.txt
+> +++ b/Documentation/diff-config.txt
+> @@ -112,7 +112,8 @@ diff.orderFile::
 >
->  static int git_merge_trees(int index_only,
-> +                          int aggressive,
->                            struct tree *common,
->                            struct tree *head,
->                            struct tree *merge)
-> @@ -294,6 +295,7 @@ static int git_merge_trees(int index_only,
->         opts.fn = threeway_merge;
->         opts.src_index = &the_index;
->         opts.dst_index = &the_index;
-> +       opts.aggressive = aggressive;
->         setup_unpack_trees_porcelain(&opts, "merge");
+>  diff.renameLimit::
+>         The number of files to consider when performing the copy/rename
+> -       detection; equivalent to the 'git diff' option `-l`.
+> +       detection; equivalent to the 'git diff' option `-l`. This setting
+> +       has no effect if rename detection is turned off.
 >
->         init_tree_desc_from_tree(t+0, common);
-> @@ -1993,7 +1995,7 @@ int merge_trees(struct merge_options *o,
->                 return 1;
->         }
+>  diff.renames::
+>         Whether and how Git detects renames.  If set to "false",
+> diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
+> index 12b6bbf591..48ee3bce77 100644
+> --- a/Documentation/merge-config.txt
+> +++ b/Documentation/merge-config.txt
+> @@ -35,7 +35,8 @@ include::fmt-merge-msg-config.txt[]
+>  merge.renameLimit::
+>         The number of files to consider when performing rename detection
+>         during a merge; if not specified, defaults to the value of
+> -       diff.renameLimit.
+> +       diff.renameLimit. This setting has no effect if rename detection
+> +       is turned off.
 >
-> -       code = git_merge_trees(o->call_depth, common, head, merge);
-> +       code = git_merge_trees(o->call_depth, !merge_detect_rename(o), common, head, merge);
->
->         if (code != 0) {
->                 if (show(o, 4) || o->call_depth)
+>  merge.renormalize::
+>         Tell Git that canonical representation of files in the
 > --
 > 2.17.0.windows.1
 
-Patch looks fine but as a heads up -- since merge_options is a
-parameter in git_merge_trees after the
-en/rename-directory-detection-reboot lands, we'll be able to switch
-this patch to set opts.aggressive directly instead of needing to pass
-it in as a parameter.
+Patch looks fine, but it's hard for me not to notice a separate issue
+in this area independent of your series: I'm curious if we should
+document that the value of 0 is special here (as per Jonathan Tan's
+commit 89973554b52c ("diffcore-rename: make diff-tree -l0 mean
+-l<large>", 2017-11-29)), and doesn't actually drop the limit to 0.
+cc'ing Jonathan Tan for his thoughts.
