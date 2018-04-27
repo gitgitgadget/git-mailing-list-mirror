@@ -2,97 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 232C21F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 02:56:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8A181F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 03:28:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757360AbeD0C4v (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 22:56:51 -0400
-Received: from mail-oi0-f45.google.com ([209.85.218.45]:40138 "EHLO
-        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757356AbeD0C4u (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 22:56:50 -0400
-Received: by mail-oi0-f45.google.com with SMTP id c203-v6so364638oib.7
-        for <git@vger.kernel.org>; Thu, 26 Apr 2018 19:56:50 -0700 (PDT)
+        id S1757299AbeD0D2Q (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 23:28:16 -0400
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:36735 "EHLO
+        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757272AbeD0D2P (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 23:28:15 -0400
+Received: by mail-vk0-f65.google.com with SMTP id k67-v6so278932vkd.3
+        for <git@vger.kernel.org>; Thu, 26 Apr 2018 20:28:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=zQGInYu4++igMiFg7UsfAVPf7GbUDZ2B3y+/uQtnwwk=;
-        b=BqvHjnrzAsOkyLLSbUhLSwz82lHtUs9rw4HPKPRz+e8PSDpFxM+4WQUkcpX4Lq2kB3
-         aChitpk6HwmnkMxGULbZeJFQF4DQueECNKu5gQWP1eZPz7G7Zlz8rMOBV86+zhNIwdns
-         RtD7ebQJM+4opcw2lg9sDRobc/0qDfSPEcqMmrLJaMYwx8Yt/PSxOOMyjFk/ywpIYGYA
-         /o4tWUiAFdxmTwGWmD9MJ4D0wqZae1Nwkni2PtjcqKjAeDgZ2UN6wPGHi1NevYiZCSY+
-         zEdznC65UrUXUSKXMQ90WIIdB0GWWlJQFBDMUCuGcykDui890NL311h9a+yPsOH9T+0Z
-         GOuA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dQfn3WvkQRJ9tF5Lr3nxO9kaald666xB7PLtsOsQAvI=;
+        b=O15D7lFurF++rOJf2pbxdlavjcnGt5c390QwF1MCnILv5lgcYgKYyl+PSUg7PAb8wG
+         nyB19o9u1kytChV9SVvVY/2LExZPPVOxRbd61oaCPlxTLq1+Ii7RcCefT0OfxFOBQa7Q
+         biklQ+/R+NPTLgDp8sFis2oPw7TdNH6IyXCIWQxJFqgSGtpNg1z2h5TtHUzODYSJLFuz
+         WyEdfMOHwkBbwBqU98SMpcbHjKbVT46w1hL9U3KMndDfiId1ocN2nIOOpRV0aPLX4xa1
+         ogv1lFaXCMpaQAUaH5SIDjSD+oPlLb9YZ86ZpyFArG+jiEg6mV0WN5BCEWmJpmsllDq+
+         DrOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=zQGInYu4++igMiFg7UsfAVPf7GbUDZ2B3y+/uQtnwwk=;
-        b=HPo/UuswdSys4N5Hw6CtMTwuR1YUTKZYAKCAn1CwuvQ7lZkIj10aeLdw0ErQ1/nPfU
-         b4xGXe/AApixweiJKK+ZmfZbGM+ZoOJqzEjFgLzSkPuDgaz6AqfbDz+NaaoeZWvh9X6k
-         NwCu+b2SF2FsHQv6tsGIgv3CH4ncZlcCu/59KGO3dv8W1AP2UHCYPGqxeDrOODLr6TXI
-         Fr1MtOBHsWb0t6d4MmEc2PkSF6fhXZWvEol6smd1FX4RXM1JC16lNKHVeIW/jC/s7YpK
-         RX3pNA/UCZ40zQuZLPdluH5iUDPzUXrR9GhNzHDpQd68/IFQ+00t9ndEw0Uax32UZBQF
-         xuXA==
-X-Gm-Message-State: ALQs6tB0IEgFLA21OB/uGHfwfhI0by/etv4/djIyCJdgXLG7VeRP2bwG
-        rbAwHe4g3+AU/C8WjuCdzzVlxZzP0IjgMZjG0/HX0sO8
-X-Google-Smtp-Source: AB8JxZqq+zdsMhtIKD5gaiOTKrEpWN2SHXaFdUfaFHUgRao8ZA/2nvPq5VVFNsGa8bWFR/XWbPDJUFnQRigsq7lJyLM=
-X-Received: by 2002:aca:6545:: with SMTP id j5-v6mr294981oiw.151.1524797809905;
- Thu, 26 Apr 2018 19:56:49 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dQfn3WvkQRJ9tF5Lr3nxO9kaald666xB7PLtsOsQAvI=;
+        b=K2gHbm0u9wmXQjgYUKSnqOCxest5wOEIwTdvfl1P3EeobVpmmAGwY1JHCHXtSDPBse
+         N1PZX8k9BIyR5awrzTlaj1j1XMc0HOjo4XvMng3T1FWhCxSDchI8fiAbxVGaGPi0YChk
+         Y+FKXusIpi6SQ1Et7oAjzMNKipc1obPN1k37d7f4AqbiQBPwwibaSR5IyJpht1+HXnIM
+         1v1ViCr79Z32Txq3IKoMnSpTLIofZY0/iwNi+MjKBhWkuQBc3o/aA8dnCAwblaZSBPGl
+         W6W7pbf1VQ2U6T21ra39rNM6YlFGShuyCuOIItbYgc0TTpBN18exKFk+hZPiPDV8hr2q
+         0LYQ==
+X-Gm-Message-State: ALQs6tBE6nB/N2QiZBOLwG4aDGLB9QbMadv2+HKQFDpfNZrM8eWttTbP
+        zThqElNIKfzdPX60hTRdIg9eAyxxWTNfmRnEHQ0=
+X-Google-Smtp-Source: AB8JxZqnCjfQdK9tS7TEI4zTI8aJ24hH4bBGlzGuD0UTrg+4I8re3F+s0B1Hahd9C+iiZmF0D6LnQAaqv9DantpHo3Y=
+X-Received: by 2002:a1f:c155:: with SMTP id r82-v6mr369149vkf.76.1524799694664;
+ Thu, 26 Apr 2018 20:28:14 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.201.97.70 with HTTP; Thu, 26 Apr 2018 19:56:29 -0700 (PDT)
-From:   William Chargin <wchargin@gmail.com>
-Date:   Thu, 26 Apr 2018 19:56:29 -0700
-Message-ID: <CAFW+GMAJcCG4mKe4TxFXXrfdRhZKXv8ffC-rNShFLW2J1_FANA@mail.gmail.com>
-Subject: In some rebases, `exec git -C ...` has wrong working directory
-To:     git@vger.kernel.org
+Received: by 10.176.95.4 with HTTP; Thu, 26 Apr 2018 20:28:13 -0700 (PDT)
+In-Reply-To: <xmqqy3h9z8sj.fsf@gitster-ct.c.googlers.com>
+References: <20180420133632.17580-1-benpeart@microsoft.com>
+ <20180426205202.23056-1-benpeart@microsoft.com> <20180426205202.23056-3-benpeart@microsoft.com>
+ <CABPp-BE29rwZCDqFHH-nzrDub6MMdtoiorj0jv3K6B6cmfcaLA@mail.gmail.com>
+ <7de8f144-8a37-e471-48e8-0b6f17a7bf29@gmail.com> <xmqqy3h9z8sj.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 26 Apr 2018 20:28:13 -0700
+Message-ID: <CABPp-BERgc9EZ=hw4CepgXptO283mW3O30_pHrj4jtz3QSCFjQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] merge: Add merge.renames config setting
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Peart <peartben@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here is a repro script:
+On Thu, Apr 26, 2018 at 7:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ben Peart <peartben@gmail.com> writes:
+>
+>> Color me puzzled. :)  The consensus was that the default value for
+>> merge.renames come from diff.renames.  diff.renames supports copy
+>> detection which means that merge.renames will inherit that value.  My
+>> assumption was that is what was intended so when I reimplemented it, I
+>> fully implemented it that way.
+>>
+>> Are you now requesting to only use diff.renames as the default if the
+>> value is true or false but not if it is copy?  What should happen if
+>> diff.renames is actually set to copy?  Should merge silently change
+>> that to true, display a warning, error out, or something else?  Do you
+>> have some other behavior for how to handle copy being inherited from
+>> diff.renames you'd like to see?
+>>
+>> Can you write the documentation that clearly explains the exact
+>> behavior you want?  That would kill two birds with one stone... :)
+>
+> I think demoting from copy to rename-only is a good idea, at least
+> for now, because I do not believe we have figured out what we want
+> to happen when we detect copied files are involved in a merge.
+>
+> But I am not sure if we even want to fail merge.renames=copy as an
+> invalid configuration.  So my gut feeling of the best solution to
+> the above is to do something like:
+>
+>  - whether the configuration comes from diff.renames or
+>    merge.renames, turn *.renames=copy to true inside the merge
+>    recursive machinery.
+>
+>  - document the fact in "git merge-recursive" documentation (or "git
+>    merge" documentation) to say "_currently_ asking for rename
+>    detection to find copies and renames will do the same
+>    thing---copies are ignored", impliying "this might change in the
+>    future", in the BUGS section.
 
-    #!/bin/sh
-    set -eux
-    git --version
-    tmpdir="$(mktemp -d)"
-    cd "${tmpdir}"
-    mkdir target repo
-    cd repo
-    git init
-    touch file; git add file
-    git commit -m "Initial commit"
-    git rebase HEAD --exec "git -C ${tmpdir}/target init"
+Yes, I agree.  One more thing:
 
-The end of this script prints something like
+  - It may be best to avoid advertising "copies" as a vaild option for
+merge.renames since it doesn't have any current practical use
+anywhere.  (Remove the sentence 'If set to "copies" or "copy", Git
+will detect copies, as well.' from the documentation)
 
-    Executing: git -C /tmp/tmp.gd2q51jO93/target init
-    Reinitialized existing Git repository in /tmp/tmp.gd2q51jO93/repo/.git/
-    Successfully rebased and updated refs/heads/master.
+My rationale for translating "copy" to "true" is a little different
+than Junio's, though:
 
-But this is wrong: the repository should be initialized in `target`, not
-reinitialized in `repo`.
+1) The reason we have configuration options around renames and copies
+is primarily because they are expensive to compute.  So we let some
+users specify that they don't want them, other users are willing to
+pay for rename detection, and others are willing to pay for both
+rename and copy detection.
+2) If rename/copy detection were cheap, every part of git would just
+compute whatever level of detection was relevant and use it.
+3) The resolve and octopus merge strategies ignores diff.renames and
+merge.renames, because they don't have logic to use any rename
+information.  diff and log can use both renames and copies.  And the
+recursive merge machinery is code which can use renames but not
+copies.
+4) Therefore, translating from "copy" to "true" inside the merge
+recursive machinery is fine and not an error because we are using as
+much detection information as is relevant to the algorithm and which
+the user is willing to pay for.
 
-Notes:
+To throw one more wrinkle in here, merge.renames could actually be set
+to "copy" and make sense, because we compute diffs multiple times.
+Twice within the recursive merge machinery (for which we'd want to
+translate "copy" to "true"), and once for the diffstat at the end
+(which comes from builtin/merge.c, and for which it could make sense
+to detect copies).
 
-  - This propagates to subprocesses: if you run `exec make test` and
-    your test suite ends up calling `git -C`, then the same problem
-    occurs.
-
-  - Substituting `rebase --root` for `rebase HEAD` causes the problem to
-    go away.
-
-  - The `rebase HEAD` exec context adds the `GIT_DIR` environment
-    variable, and this is sufficient to reproduce the problem:
-    running `GIT_DIR="$PWD" git -C /tmp/target init` puts the repo in
-    the current working directory. The `rebase --root` context adds no
-    such environment variable. (You can use `--exec 'env >tempfile'` to
-    verify these.)
-
-My `git --version` is 2.16.2.
+(Kind of curious whether Junio agrees with my rationale or thinks I'm
+out in left field with it...)
