@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 706DE1F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 21:39:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52B2B1F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 21:39:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753588AbeD0Vje (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 17:39:34 -0400
-Received: from mout.gmx.net ([212.227.17.21]:42141 "EHLO mout.gmx.net"
+        id S1759245AbeD0Vjl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 17:39:41 -0400
+Received: from mout.gmx.net ([212.227.17.21]:45673 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1759084AbeD0Vjd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 17:39:33 -0400
+        id S1759082AbeD0Vjk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 17:39:40 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
- (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MGEv5-1f84td3795-00F8DN; Fri, 27 Apr 2018 23:39:26 +0200
+ (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0MBWIM-1f3y9x2d2U-00ASFV; Fri, 27 Apr 2018 23:39:35 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -28,94 +28,178 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Christian Couder <christian.couder@gmail.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v6 01/11] argv_array: offer to split a string by whitespace
-Date:   Fri, 27 Apr 2018 23:39:25 +0200
-Message-Id: <178058d887281fc87e5008367bbee5677a619320.1524865158.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v6 02/11] commit: Let the callback of for_each_mergetag return on error
+Date:   Fri, 27 Apr 2018 23:39:28 +0200
+Message-Id: <97428f56890413d16f1487309972c446b61f784f.1524865158.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.33.gfcbb1fa0445
 MIME-Version: 1.0
 In-Reply-To: <cover.1524865158.git.johannes.schindelin@gmx.de>
 References: <cover.1524650028.git.johannes.schindelin@gmx.de> <cover.1524865158.git.johannes.schindelin@gmx.de>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:1jGjp51pgpaAOHjGCVsOvEZ9UBloiyG0t6Wl8QjdW8bGmwOriAD
- 0jRVNiVMysmvrxSATmgipICZ2FCAHuDgbMHq8HMZtUcCBA+BB7Fg1/JPDDfNwsUzAZE/XYc
- Uq1Ih3KBITqcN9h5xLHnRHhkz70fNMUJ70q5NIRkFBdb4sqtqIUbQekLoOVZQ/eMz5PAo1A
- RvUJ3omDldcF3EF7czyog==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CInzXJqwhew=:tDppzQF6a9bl8LHc7Gfe7V
- bkji5xklItkCJpu0wCmUpWwSMF6j09DnYdAidCvhX9RJflwB7EPpYvKhTvfHUohpopOR+o3rG
- 86cVIRMd4MQKXJbtOBzPU/Ox9iGTfC3sTBI0bfplA2tcYMRo2A2qjwcNJtI/LSaU7U6Ttj9W/
- T8We8UPbNHqZ/bw2KLbKhXtjO3ASCSQD52FJ04Q9ujWR8NjeFHEfpouUA5VYZpD1WszO2bMB9
- O1HQ+OVYLOj8rkQiOg7F5EtS19Go8nW1qzFYeyWp6ci+klJtvvz7QmmRYHpOw6CHOUrbkNlKJ
- BV7nKWz6GqhovXdnlkWg0JVxQD1Hf9gfuVwn6SdkzKx3V6wS5IETiekFH9JUWk9GS/4HurVrU
- YVtdsIA/H0PC7qAsmRehbVGgqL4RNnG+uEiz7/KnCeb4nI8CgyzUefBh2+Om3suvzYAPs3dlJ
- X+Sxy0GIEqU1LCeSBbBTNHp3oWGmZyFbG4LqxmipBA1364u1mCsbD24k07Sjw53/YRi7hFF+s
- 7vRcPUaWqkqZe7EUhocnGImCQYZlHKI5NdMGdmDze4TeQb9S5fL0UpiBJYaVrs1vev9sqSgJA
- CFAct46KDmaLJTaaZ4sZPyUlEq6P5lmGllGV0ZB6egmSilobOJt7/8LvQz4g1UwwfTVropvId
- TP48MiepwDM5Y2e7skUBdMhxTnAtg+/yZoM2qbQoaXFGtx08gFr+THp+7T8xF1Ws8DxKAmVTd
- HVsRrbpDp1diUl2IzaMlsDFIN9XgeyI2KN2kfUve7TDRw5cHxkEwSgks2c+GbfN0Y2C1G8mxg
- AkIWSW3
+X-Provags-ID: V03:K1:UD0XONirzMyUA7o0145h/3bd7A5qxFS5z7g/wvyqPoXPIY7FA/5
+ aVWAWeIJEzO97/IzQ7KiIXrBq4gVjsipCzHE1fsRPaWYJV2UyuOwj77MmhuwYhcxIEEhbUp
+ S3f5Lcp2GgxNDH1Mhs6blEc/brlbq8xk5AzFWrPPL1ypAqMYExVaF6GFGUrBdzwnmdkPb4G
+ bTmLb0uaclncloewnwxAg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JMOdwlDXUZc=:Lo3lGgMlIKc+6rUfD8fU+V
+ lK1/1b1zdC6DHaiSGWPKUAtqi8CcAArLKrwiEK83YI9zRukcDeEQBGM77EW/Ys/Nn+JxRNOcK
+ YYfSOsoDf9B11ytKbxdJGDAH1SMDQ934VwX95owEUm+QAckUm6CXdXo+j+/vMQxs9xhf9ndnt
+ PIuM51DswO1zmaqFMlGGEjJcicwWN2aO4FaGacqZzx4B/BfeTiMS8vDU2nZazPx1nIWPJJOek
+ lv9NG2+STWQYhtMnbUizoE8VxGuWaCpdnk2cquijEfg++ZQcjpU/ahr8R4eMF0sQ1SCphFCzu
+ lR3VlxIMY3q23nx59ri/sy5kJ6wEHaJfNjFxtugr4WDjJ3IC1mQlphI70qOqFwpItor+Faw83
+ QgxC61tU7/FQsMA16Ebh57CcsQLeco3I8kjoCklGIl8tzUG6MRJq0p4lBxjKnhDJjZAl6IyJ1
+ VYK7dZLVkm+f8QFH44+4sDa+JHcW2EoLhopQM6BaBgJeiQeLXKvpCdMw9TAJrJwpFALm6l8mo
+ 8MZmBDPoy8w5h1ImU8JIBYkjmVw9u4Gt+kjFZOXh7qpQvV88XW7LydrsXfL3S4OralrVZWoC6
+ nRtJEx0roxHbd4+Hjr0FtoVfVzUmMqePT9oVmRyOhwn0VreEYU7zYzTWv4sZWuBmo5p1sJHPI
+ F7a01z8aVCw81KJzVm8e7nE1u/O+qD2SSIz7tF6+gxWa/i2KdzHPlZXctU6MG7COMFx1AtP0P
+ 3pkdyIZ+LF3+2d3QNCxZhXaYRAMeVY5WsLHuaE6RLkEowhPPv2bi2Wac6GDnUPTQHxq+cox1B
+ ekoLMpP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a simple function that will interpret a string as a whitespace
-delimited list of values, and add those values into the array.
+This is yet another patch to be filed under the keyword "libification".
 
-Note: this function does not (yet) offer to split by arbitrary delimiters,
-or keep empty values in case of runs of whitespace, or de-quote Unix shell
-style. All fo this functionality can be added later, when and if needed.
+There is one subtle change in behavior here, where a `git log` that has
+been asked to show the mergetags would now stop reporting the mergetags
+upon the first failure, whereas previously, it would have continued to the
+next mergetag, if any.
+
+In practice, that change should not matter, as it is 1) uncommon to
+perform octopus merges using multiple tags as merge heads, and 2) when the
+user asks to be shown those tags, they really should be there.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- argv-array.c | 20 ++++++++++++++++++++
- argv-array.h |  2 ++
- 2 files changed, 22 insertions(+)
+ builtin/replace.c |  8 ++++----
+ commit.c          |  8 +++++---
+ commit.h          |  4 ++--
+ log-tree.c        | 13 +++++++------
+ 4 files changed, 18 insertions(+), 15 deletions(-)
 
-diff --git a/argv-array.c b/argv-array.c
-index 5d370fa3366..cb5bcd2c064 100644
---- a/argv-array.c
-+++ b/argv-array.c
-@@ -64,6 +64,26 @@ void argv_array_pop(struct argv_array *array)
- 	array->argc--;
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 935647be6bd..245d3f4164e 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -345,7 +345,7 @@ struct check_mergetag_data {
+ 	const char **argv;
+ };
+ 
+-static void check_one_mergetag(struct commit *commit,
++static int check_one_mergetag(struct commit *commit,
+ 			       struct commit_extra_header *extra,
+ 			       void *data)
+ {
+@@ -368,20 +368,20 @@ static void check_one_mergetag(struct commit *commit,
+ 		if (get_oid(mergetag_data->argv[i], &oid) < 0)
+ 			die(_("Not a valid object name: '%s'"), mergetag_data->argv[i]);
+ 		if (!oidcmp(&tag->tagged->oid, &oid))
+-			return; /* found */
++			return 0; /* found */
+ 	}
+ 
+ 	die(_("original commit '%s' contains mergetag '%s' that is discarded; "
+ 	      "use --edit instead of --graft"), ref, oid_to_hex(&tag_oid));
  }
  
-+void argv_array_split(struct argv_array *array, const char *to_split)
-+{
-+	while (isspace(*to_split))
-+		to_split++;
-+	for (;;) {
-+		const char *p = to_split;
-+
-+		if (!*p)
-+			break;
-+
-+		while (*p && !isspace(*p))
-+			p++;
-+		argv_array_push_nodup(array, xstrndup(to_split, p - to_split));
-+
-+		while (isspace(*p))
-+			p++;
-+		to_split = p;
-+	}
-+}
-+
- void argv_array_clear(struct argv_array *array)
+-static void check_mergetags(struct commit *commit, int argc, const char **argv)
++static int check_mergetags(struct commit *commit, int argc, const char **argv)
  {
- 	if (array->argv != empty_argv) {
-diff --git a/argv-array.h b/argv-array.h
-index 29056e49a12..750c30d2f2c 100644
---- a/argv-array.h
-+++ b/argv-array.h
-@@ -19,6 +19,8 @@ LAST_ARG_MUST_BE_NULL
- void argv_array_pushl(struct argv_array *, ...);
- void argv_array_pushv(struct argv_array *, const char **);
- void argv_array_pop(struct argv_array *);
-+/* Splits by whitespace; does not handle quoted arguments! */
-+void argv_array_split(struct argv_array *, const char *);
- void argv_array_clear(struct argv_array *);
- const char **argv_array_detach(struct argv_array *);
+ 	struct check_mergetag_data mergetag_data;
  
+ 	mergetag_data.argc = argc;
+ 	mergetag_data.argv = argv;
+-	for_each_mergetag(check_one_mergetag, commit, &mergetag_data);
++	return for_each_mergetag(check_one_mergetag, commit, &mergetag_data);
+ }
+ 
+ static int create_graft(int argc, const char **argv, int force)
+diff --git a/commit.c b/commit.c
+index ca474a7c112..2952ec987c5 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1288,17 +1288,19 @@ struct commit_extra_header *read_commit_extra_headers(struct commit *commit,
+ 	return extra;
+ }
+ 
+-void for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data)
++int for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data)
+ {
+ 	struct commit_extra_header *extra, *to_free;
++	int res = 0;
+ 
+ 	to_free = read_commit_extra_headers(commit, NULL);
+-	for (extra = to_free; extra; extra = extra->next) {
++	for (extra = to_free; !res && extra; extra = extra->next) {
+ 		if (strcmp(extra->key, "mergetag"))
+ 			continue; /* not a merge tag */
+-		fn(commit, extra, data);
++		res = fn(commit, extra, data);
+ 	}
+ 	free_commit_extra_headers(to_free);
++	return res;
+ }
+ 
+ static inline int standard_header_field(const char *field, size_t len)
+diff --git a/commit.h b/commit.h
+index 0fb8271665c..9000895ad91 100644
+--- a/commit.h
++++ b/commit.h
+@@ -291,10 +291,10 @@ extern const char *find_commit_header(const char *msg, const char *key,
+ /* Find the end of the log message, the right place for a new trailer. */
+ extern int ignore_non_trailer(const char *buf, size_t len);
+ 
+-typedef void (*each_mergetag_fn)(struct commit *commit, struct commit_extra_header *extra,
++typedef int (*each_mergetag_fn)(struct commit *commit, struct commit_extra_header *extra,
+ 				 void *cb_data);
+ 
+-extern void for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data);
++extern int for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data);
+ 
+ struct merge_remote_desc {
+ 	struct object *obj; /* the named object, could be a tag */
+diff --git a/log-tree.c b/log-tree.c
+index d1c0bedf244..f3a51a6e726 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -488,9 +488,9 @@ static int is_common_merge(const struct commit *commit)
+ 		&& !commit->parents->next->next);
+ }
+ 
+-static void show_one_mergetag(struct commit *commit,
+-			      struct commit_extra_header *extra,
+-			      void *data)
++static int show_one_mergetag(struct commit *commit,
++			     struct commit_extra_header *extra,
++			     void *data)
+ {
+ 	struct rev_info *opt = (struct rev_info *)data;
+ 	struct object_id oid;
+@@ -502,7 +502,7 @@ static void show_one_mergetag(struct commit *commit,
+ 	hash_object_file(extra->value, extra->len, type_name(OBJ_TAG), &oid);
+ 	tag = lookup_tag(&oid);
+ 	if (!tag)
+-		return; /* error message already given */
++		return -1; /* error message already given */
+ 
+ 	strbuf_init(&verify_message, 256);
+ 	if (parse_tag_buffer(tag, extra->value, extra->len))
+@@ -536,11 +536,12 @@ static void show_one_mergetag(struct commit *commit,
+ 
+ 	show_sig_lines(opt, status, verify_message.buf);
+ 	strbuf_release(&verify_message);
++	return 0;
+ }
+ 
+-static void show_mergetag(struct rev_info *opt, struct commit *commit)
++static int show_mergetag(struct rev_info *opt, struct commit *commit)
+ {
+-	for_each_mergetag(show_one_mergetag, commit, opt);
++	return for_each_mergetag(show_one_mergetag, commit, opt);
+ }
+ 
+ void show_log(struct rev_info *opt)
 -- 
 2.17.0.windows.1.33.gfcbb1fa0445
 
