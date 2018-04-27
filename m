@@ -2,116 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_IMPORTANCE_HIGH,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8154A1F42D
-	for <e@80x24.org>; Fri, 27 Apr 2018 02:24:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 232C21F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 02:56:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757272AbeD0CYE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 22:24:04 -0400
-Received: from mail-wr0-f174.google.com ([209.85.128.174]:44811 "EHLO
-        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754298AbeD0CX7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 22:23:59 -0400
-Received: by mail-wr0-f174.google.com with SMTP id o15-v6so261110wro.11
-        for <git@vger.kernel.org>; Thu, 26 Apr 2018 19:23:58 -0700 (PDT)
+        id S1757360AbeD0C4v (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 22:56:51 -0400
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:40138 "EHLO
+        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757356AbeD0C4u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 22:56:50 -0400
+Received: by mail-oi0-f45.google.com with SMTP id c203-v6so364638oib.7
+        for <git@vger.kernel.org>; Thu, 26 Apr 2018 19:56:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:importance:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=OZxg4zqLgHhLavukY4MkaNPjWKqvWW5FoZLjt6i4Sas=;
-        b=IbaKOtQXKjkH87c9qD8Txe0wlgXIUDLDE8RhCB5HaakQ93RnH6p7QoVcingBvN+LhS
-         ylH1SucNSFyCGdPM+Vwl5GqtCsQ5GEtqy0Z9hgm5sY5Ok6mZ1hWAjrWCupIhc3Fh29qx
-         O9BFBFwqJQXwUefLRyrvkVKea4lTnzz5Ma1gll4cD1uu5nROMBPL781OUPFEo84Ylit6
-         vAOZSRoew568EehlQK9QvHYN0UQ/WEaFs6nxygcYP0ndpz/FFP4K8ai4yZ0+Wtqay+7/
-         S5Znwx+GS89vs4PiADtpnAasclORzCUv7xkRK/hIcZFC1ecXEuW4zfwgfuDQbkF5mCBR
-         iaNA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=zQGInYu4++igMiFg7UsfAVPf7GbUDZ2B3y+/uQtnwwk=;
+        b=BqvHjnrzAsOkyLLSbUhLSwz82lHtUs9rw4HPKPRz+e8PSDpFxM+4WQUkcpX4Lq2kB3
+         aChitpk6HwmnkMxGULbZeJFQF4DQueECNKu5gQWP1eZPz7G7Zlz8rMOBV86+zhNIwdns
+         RtD7ebQJM+4opcw2lg9sDRobc/0qDfSPEcqMmrLJaMYwx8Yt/PSxOOMyjFk/ywpIYGYA
+         /o4tWUiAFdxmTwGWmD9MJ4D0wqZae1Nwkni2PtjcqKjAeDgZ2UN6wPGHi1NevYiZCSY+
+         zEdznC65UrUXUSKXMQ90WIIdB0GWWlJQFBDMUCuGcykDui890NL311h9a+yPsOH9T+0Z
+         GOuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:importance
-         :date:in-reply-to:message-id:user-agent:mime-version;
-        bh=OZxg4zqLgHhLavukY4MkaNPjWKqvWW5FoZLjt6i4Sas=;
-        b=HgvsVAvom966xh+F2BmjXcx+Cmh9d/qdfbRIvmsx2lDEg53KbC+XsC9W7/EYKJYrcH
-         YsEgQCc/X/sZQSaaIcuAu1PGeoxZ0D0+CW9ksCws9GqrisqpiA8w2mn83N6VVykkLoqB
-         zg+pmP06zBlmhNn4ndRQAvZZ+HBEZMioqo1s5Ww16mdX6ppHbj/AIaMk7R3TUEX5DQWh
-         ZYkhZmsOgzWmPKFSI9pWU6oUs5HYz7knMQwfu4j7p9VqjHDAL7AVfIywcH+r/d5ObVXT
-         FyOuLA1GsoVV8MdIdJQ6ZsUUl9KZbSFNJVKvcxcYQprBWiDLt11FFw1Bo3sKHZumbQfe
-         cDiA==
-X-Gm-Message-State: ALQs6tDrrdlIsVygtKnT9OAB4ML73WbG2qh5cIB6cxeJgRt/Fp+WMgSQ
-        /kQC4OSqO/SSoTTC5Us1z9I=
-X-Google-Smtp-Source: AB8JxZpzaHaiLlGQTkss/BLG99R5bvDPumNfBEhhAC8D6UFEfj06wWbr0AaLXuzRnJNRCIU2Agw94w==
-X-Received: by 2002:adf:b807:: with SMTP id h7-v6mr255184wrf.113.1524795837593;
-        Thu, 26 Apr 2018 19:23:57 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i10sm63440wmf.24.2018.04.26.19.23.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 26 Apr 2018 19:23:56 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "peff\@peff.net" <peff@peff.net>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>,
-        "vmiklos\@frugalware.org" <vmiklos@frugalware.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        "Johannes.Schindelin\@gmx.de" <Johannes.Schindelin@gmx.de>,
-        "eckhard.s.maass\@googlemail.com" <eckhard.s.maass@googlemail.com>
-Subject: Re: [PATCH v3 2/3] merge: Add merge.renames config setting
-References: <20180420133632.17580-1-benpeart@microsoft.com>
-        <20180426205202.23056-1-benpeart@microsoft.com>
-        <20180426205202.23056-3-benpeart@microsoft.com>
-        <CABPp-BE29rwZCDqFHH-nzrDub6MMdtoiorj0jv3K6B6cmfcaLA@mail.gmail.com>
-        <7de8f144-8a37-e471-48e8-0b6f17a7bf29@gmail.com>
-Importance: high
-Date:   Fri, 27 Apr 2018 11:23:56 +0900
-In-Reply-To: <7de8f144-8a37-e471-48e8-0b6f17a7bf29@gmail.com> (Ben Peart's
-        message of "Thu, 26 Apr 2018 20:54:20 -0400")
-Message-ID: <xmqqy3h9z8sj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=zQGInYu4++igMiFg7UsfAVPf7GbUDZ2B3y+/uQtnwwk=;
+        b=HPo/UuswdSys4N5Hw6CtMTwuR1YUTKZYAKCAn1CwuvQ7lZkIj10aeLdw0ErQ1/nPfU
+         b4xGXe/AApixweiJKK+ZmfZbGM+ZoOJqzEjFgLzSkPuDgaz6AqfbDz+NaaoeZWvh9X6k
+         NwCu+b2SF2FsHQv6tsGIgv3CH4ncZlcCu/59KGO3dv8W1AP2UHCYPGqxeDrOODLr6TXI
+         Fr1MtOBHsWb0t6d4MmEc2PkSF6fhXZWvEol6smd1FX4RXM1JC16lNKHVeIW/jC/s7YpK
+         RX3pNA/UCZ40zQuZLPdluH5iUDPzUXrR9GhNzHDpQd68/IFQ+00t9ndEw0Uax32UZBQF
+         xuXA==
+X-Gm-Message-State: ALQs6tB0IEgFLA21OB/uGHfwfhI0by/etv4/djIyCJdgXLG7VeRP2bwG
+        rbAwHe4g3+AU/C8WjuCdzzVlxZzP0IjgMZjG0/HX0sO8
+X-Google-Smtp-Source: AB8JxZqq+zdsMhtIKD5gaiOTKrEpWN2SHXaFdUfaFHUgRao8ZA/2nvPq5VVFNsGa8bWFR/XWbPDJUFnQRigsq7lJyLM=
+X-Received: by 2002:aca:6545:: with SMTP id j5-v6mr294981oiw.151.1524797809905;
+ Thu, 26 Apr 2018 19:56:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.201.97.70 with HTTP; Thu, 26 Apr 2018 19:56:29 -0700 (PDT)
+From:   William Chargin <wchargin@gmail.com>
+Date:   Thu, 26 Apr 2018 19:56:29 -0700
+Message-ID: <CAFW+GMAJcCG4mKe4TxFXXrfdRhZKXv8ffC-rNShFLW2J1_FANA@mail.gmail.com>
+Subject: In some rebases, `exec git -C ...` has wrong working directory
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Here is a repro script:
 
-> Color me puzzled. :)  The consensus was that the default value for
-> merge.renames come from diff.renames.  diff.renames supports copy
-> detection which means that merge.renames will inherit that value.  My
-> assumption was that is what was intended so when I reimplemented it, I
-> fully implemented it that way.
->
-> Are you now requesting to only use diff.renames as the default if the
-> value is true or false but not if it is copy?  What should happen if
-> diff.renames is actually set to copy?  Should merge silently change
-> that to true, display a warning, error out, or something else?  Do you
-> have some other behavior for how to handle copy being inherited from
-> diff.renames you'd like to see?
->
-> Can you write the documentation that clearly explains the exact
-> behavior you want?  That would kill two birds with one stone... :)
+    #!/bin/sh
+    set -eux
+    git --version
+    tmpdir="$(mktemp -d)"
+    cd "${tmpdir}"
+    mkdir target repo
+    cd repo
+    git init
+    touch file; git add file
+    git commit -m "Initial commit"
+    git rebase HEAD --exec "git -C ${tmpdir}/target init"
 
-I think demoting from copy to rename-only is a good idea, at least
-for now, because I do not believe we have figured out what we want
-to happen when we detect copied files are involved in a merge.
+The end of this script prints something like
 
-But I am not sure if we even want to fail merge.renames=copy as an
-invalid configuration.  So my gut feeling of the best solution to
-the above is to do something like:
+    Executing: git -C /tmp/tmp.gd2q51jO93/target init
+    Reinitialized existing Git repository in /tmp/tmp.gd2q51jO93/repo/.git/
+    Successfully rebased and updated refs/heads/master.
 
- - whether the configuration comes from diff.renames or
-   merge.renames, turn *.renames=copy to true inside the merge
-   recursive machinery.
+But this is wrong: the repository should be initialized in `target`, not
+reinitialized in `repo`.
 
- - document the fact in "git merge-recursive" documentation (or "git
-   merge" documentation) to say "_currently_ asking for rename
-   detection to find copies and renames will do the same
-   thing---copies are ignored", impliying "this might change in the
-   future", in the BUGS section.
+Notes:
 
+  - This propagates to subprocesses: if you run `exec make test` and
+    your test suite ends up calling `git -C`, then the same problem
+    occurs.
+
+  - Substituting `rebase --root` for `rebase HEAD` causes the problem to
+    go away.
+
+  - The `rebase HEAD` exec context adds the `GIT_DIR` environment
+    variable, and this is sufficient to reproduce the problem:
+    running `GIT_DIR="$PWD" git -C /tmp/target init` puts the repo in
+    the current working directory. The `rebase --root` context adds no
+    such environment variable. (You can use `--exec 'env >tempfile'` to
+    verify these.)
+
+My `git --version` is 2.16.2.
