@@ -2,121 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8850A1F513
-	for <e@80x24.org>; Fri, 27 Apr 2018 17:18:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 813C31F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 17:18:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758762AbeD0RSX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 13:18:23 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:40930 "EHLO smtp.gentoo.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1758271AbeD0RSW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 13:18:22 -0400
-Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mgorny)
-        by smtp.gentoo.org (Postfix) with ESMTPSA id D92C5335C7F;
-        Fri, 27 Apr 2018 17:18:19 +0000 (UTC)
-Message-ID: <1524849496.1125.30.camel@gentoo.org>
-Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
-From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
-To:     Marc Branchaud <marcnarc@xiplink.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "Robin H. Johnson" <robbat2@gentoo.org>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Date:   Fri, 27 Apr 2018 19:18:16 +0200
-In-Reply-To: <ad4d0d66-58f4-5cab-d314-a30a50e8ad32@xiplink.com>
-References: <20180413170129.15310-1-mgorny@gentoo.org>
-         <robbat2-20180423T200557-844830385Z@orbis-terrarum.net>
-         <xmqqtvs18p9o.fsf@gitster-ct.c.googlers.com>
-         <robbat2-20180425T060717-325652820Z@orbis-terrarum.net>
-         <xmqqin8f4qoq.fsf@gitster-ct.c.googlers.com>
-         <ad4d0d66-58f4-5cab-d314-a30a50e8ad32@xiplink.com>
-Organization: Gentoo
+        id S1758831AbeD0RS1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 13:18:27 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:47098 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758271AbeD0RSY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 13:18:24 -0400
+Received: by mail-pf0-f196.google.com with SMTP id p12so1930693pff.13
+        for <git@vger.kernel.org>; Fri, 27 Apr 2018 10:18:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=JiNXUgZj4sd7ghU12E9RRPmJAZlAotxBL01iEHaBYzg=;
+        b=KhnidsJWIZ4ZV4+fTIsyn4HlMoVucCinZEF8OawTgfRPPINt/noSOCCCAO8RpipQsu
+         ANtIGuF2k7BXz4cfn5a7QDpVtoVQ4bYWLNPHkZYMnd0402ZOUTVmMq1nFR298jLWEer1
+         JGtXj7IKIHtzQE+L8nLvIU3LFgKOxJqpGYahWEnTCzLK9USmb46qePqhv0mBPCnOjltG
+         9Yum9/+YKuVOn2jlaFSRptczCwQgwp+7F9GxYCCyugNsdJ4I0bpmGBonWv4Vxw2HGNOH
+         PQ2uYxZo9ETeC4sobt22HOHAHnOsVZi4FoArSxauszsUSMm4nbQ3ntU4h7A0xMVGz8Vq
+         p9+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=JiNXUgZj4sd7ghU12E9RRPmJAZlAotxBL01iEHaBYzg=;
+        b=X9qeQGeFr7re9ld3wyaHiyqQMWIbXNgNLSYIxox7UDJ4Jp1ooP+UjUEk1f1Za0GBxj
+         M+YVcBHS9XOvs+DoTzmUVe8b8WWZPBvIOdMfo7lNOuXz0HSwMmE1/WodRPPhB1FTIOS5
+         w2GEds+kHSzwmfvJXDg0H4PQYkCFzR4YuqdL7eW35zzi24xPPa3P9ZzJdFW9Dq1vGEzn
+         RxI8akpNHItlU2YzuLn+Py6+OmkQIYsdMBRysUtuiTOZMfxumYjlF0rmg4LwsAusti67
+         waTZNurVgG/Un5wiLNMmhrMMeZW0W/E3SG0cQJi2gfpO6vCwXEMY8ig/uarR3Dpd2yzF
+         +ong==
+X-Gm-Message-State: ALQs6tCe0mJttNB4I4+Dbm/X2tHBlCgbKz/PMQDpZ/BQ1z5kaEQtKZlt
+        ePwNY0y6JGBHNI52v1DZ3Z+jPiiOkH0wuWS7FGw=
+X-Google-Smtp-Source: AB8JxZreivjs6tsb4pcuSttIgZONBV60o/GueGzCm+fMueTOzSqH9WkCbHdTS5hOfo67pqc46Is9EZX84XtLKQLIyh8=
+X-Received: by 10.98.237.17 with SMTP id u17mr2944148pfh.78.1524849504241;
+ Fri, 27 Apr 2018 10:18:24 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.236.187.139 with HTTP; Fri, 27 Apr 2018 10:18:23 -0700 (PDT)
+In-Reply-To: <20180427170440.30418-3-asheiduk@gmail.com>
+References: <20180410183224.10780-1-asheiduk@gmail.com> <20180427170440.30418-1-asheiduk@gmail.com>
+ <20180427170440.30418-3-asheiduk@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 27 Apr 2018 19:18:23 +0200
+Message-ID: <CAN0heSpdc51+7-uWcLVXU72qLZgZApdME8ywBJaQQy4DiWHAfg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] doc: align 'diff --no-index' in text with synopsis
+To:     Andreas Heiduk <asheiduk@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.24.6 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu śro, 25.04.2018 o godzinie 11∶18 -0400, użytkownik Marc Branchaud
-napisał:
-> On 2018-04-25 04:48 AM, Junio C Hamano wrote:
-> > "Robin H. Johnson" <robbat2@gentoo.org> writes:
-> > 
-> > > In the thread from 6 years ago, you asked about tar's behavior for
-> > > mtimes. 'tar xf' restores mtimes from the tar archive, so relative
-> > > ordering after restore would be the same, and would only rebuild if the
-> > > original source happened to be dirty.
-> > > 
-> > > This behavior is already non-deterministic in Git, and would be improved
-> > > by the patch.
-> > 
-> > But Git is not an archiver (tar), but is a source code control
-> > system, so I do not think we should spend any extra cycles to
-> > "improve" its behaviour wrt the relative ordering, at least for the
-> > default case.  Only those who rely on having build artifact *and*
-> > source should pay the runtime (and preferrably also the
-> > maintainance) cost.
-> 
-> Anyone who uses "make" or some other mtime-based tool is affected by 
-> this.  I agree that it's not "Everyone" but it sure is a lot of people.
-> 
-> Are we all that sure that the performance hit is that drastic?  After 
-> all, we've just done write_entry().  Calling utime() at that point 
-> should just hit the filesystem cache.
-> 
-> > The best approach to do so is to have those people do the "touch"
-> > thing in their own post-checkout hook.  People who use Git as the
-> > source control system won't have to pay runtime cost of doing the
-> > touch thing, and we do not have to maintain such a hook script.
-> > Only those who use the "feature" would.
-> 
-> The post-checkout hook approach is not exactly straightforward.
-> 
-> Naively, it's simply
-> 
-> 	for F in `git diff --name-only $1 $2`; do touch "$F"; done
-> 
-> But consider:
-> 
-> * Symlinks can cause the wrong file to be touched.  (Granted, Michał's 
-> proposed patch also doesn't deal with symlinks.)  Let's assume that a 
-> hook can be crafted will all possible sophistication.  There are still 
-> some fundamental problems:
-> 
-> * In a "file checkout" ("git checkout -- path/to/file"), $1 and $2 are 
-> identical so the above loop does nothing.  Offhand I'm not even sure how 
-> a hook might get the right files in this case.
-> 
-> * The hook has to be set up in every repo and submodule (at least until 
-> something like Ævar's experiments come to fruition).
-> 
-> * A fresh clone can't run the hook.  This is especially important when 
-> dealing with submodules.  (In one case where we were bit by this, make 
-> though that half of a fresh submodule clone's files were stale, and 
-> decided to re-autoconf the entire thing.)
-> 
-> 
-> I just don't think the hook approach can completely solve the problem.
-> 
+On 27 April 2018 at 19:04, Andreas Heiduk <asheiduk@gmail.com> wrote:
+> The two '<path>' parameters are not optional but the option
+> '--no-index' is. Also move the `--options` part to the same
+> place where the other variants show them.
 
-There's also the performance aspect.  If we deal with checkouts that
-include 1000+ files on a busy system (i.e. when mtimes really become
-relevant), calling utime() instantly has a good chance of hitting warm
-cache.  On the other hand, post-checkout hook has a greater risk of
-running cold cache, i.e. writing to all inodes twice.
+Should this commit message be updated after the changes you did to
+address Junio's comment? This text suggests you want to place --no-index
+in [] (and you did in v1) but you do not do that below.
 
--- 
-Best regards,
-Michał Górny
+> All three items are already correct in the synopsis.
 
+Same here, now you actually do change things there.
+
+> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+> Reviewed-by: Martin =C3=85gren <martin.agren@gmail.com>
+
+Strictly speaking, my Reviewed-by was on another patch. I do find this
+one better though thanks to Junio's suggestion (except the mismatch with
+the commit message).
+
+Thanks for continuing with this series.
+
+Martin
+
+> ---
+>  Documentation/git-diff.txt | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+> index b0c1bb95c8..6593b58299 100644
+> --- a/Documentation/git-diff.txt
+> +++ b/Documentation/git-diff.txt
+> @@ -13,7 +13,7 @@ SYNOPSIS
+>  'git diff' [options] --cached [<commit>] [--] [<path>...]
+>  'git diff' [options] <commit> <commit> [--] [<path>...]
+>  'git diff' [options] <blob> <blob>
+> -'git diff' [options] [--no-index] [--] <path> <path>
+> +'git diff' [options] --no-index [--] <path> <path>
+>
+>  DESCRIPTION
+>  -----------
+> @@ -29,7 +29,7 @@ two blob objects, or changes between two files on disk.
+>         further add to the index but you still haven't.  You can
+>         stage these changes by using linkgit:git-add[1].
+>
+> -'git diff' --no-index [--options] [--] [<path>...]::
+> +'git diff' [--options] --no-index [--] <path> <path>::
+>
+>         This form is to compare the given two paths on the
+>         filesystem.  You can omit the `--no-index` option when
