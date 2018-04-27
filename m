@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52B2B1F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 21:39:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 439B51F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 21:39:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759245AbeD0Vjl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 17:39:41 -0400
-Received: from mout.gmx.net ([212.227.17.21]:45673 "EHLO mout.gmx.net"
+        id S1759303AbeD0Vjo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 17:39:44 -0400
+Received: from mout.gmx.net ([212.227.17.22]:47949 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1759082AbeD0Vjk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 17:39:40 -0400
+        id S1759082AbeD0Vjm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 17:39:42 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
  (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MBWIM-1f3y9x2d2U-00ASFV; Fri, 27 Apr 2018 23:39:35 +0200
+ 0Lq9Ma-1ehDz70Msa-00dn10; Fri, 27 Apr 2018 23:39:37 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -28,178 +28,56 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Christian Couder <christian.couder@gmail.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v6 02/11] commit: Let the callback of for_each_mergetag return on error
-Date:   Fri, 27 Apr 2018 23:39:28 +0200
-Message-Id: <97428f56890413d16f1487309972c446b61f784f.1524865158.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v6 03/11] replace: avoid using die() to indicate a bug
+Date:   Fri, 27 Apr 2018 23:39:36 +0200
+Message-Id: <05642a8fb58086c9cc638fec1b4e61ffa8cc7506.1524865158.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.33.gfcbb1fa0445
 MIME-Version: 1.0
 In-Reply-To: <cover.1524865158.git.johannes.schindelin@gmx.de>
 References: <cover.1524650028.git.johannes.schindelin@gmx.de> <cover.1524865158.git.johannes.schindelin@gmx.de>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:UD0XONirzMyUA7o0145h/3bd7A5qxFS5z7g/wvyqPoXPIY7FA/5
- aVWAWeIJEzO97/IzQ7KiIXrBq4gVjsipCzHE1fsRPaWYJV2UyuOwj77MmhuwYhcxIEEhbUp
- S3f5Lcp2GgxNDH1Mhs6blEc/brlbq8xk5AzFWrPPL1ypAqMYExVaF6GFGUrBdzwnmdkPb4G
- bTmLb0uaclncloewnwxAg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JMOdwlDXUZc=:Lo3lGgMlIKc+6rUfD8fU+V
- lK1/1b1zdC6DHaiSGWPKUAtqi8CcAArLKrwiEK83YI9zRukcDeEQBGM77EW/Ys/Nn+JxRNOcK
- YYfSOsoDf9B11ytKbxdJGDAH1SMDQ934VwX95owEUm+QAckUm6CXdXo+j+/vMQxs9xhf9ndnt
- PIuM51DswO1zmaqFMlGGEjJcicwWN2aO4FaGacqZzx4B/BfeTiMS8vDU2nZazPx1nIWPJJOek
- lv9NG2+STWQYhtMnbUizoE8VxGuWaCpdnk2cquijEfg++ZQcjpU/ahr8R4eMF0sQ1SCphFCzu
- lR3VlxIMY3q23nx59ri/sy5kJ6wEHaJfNjFxtugr4WDjJ3IC1mQlphI70qOqFwpItor+Faw83
- QgxC61tU7/FQsMA16Ebh57CcsQLeco3I8kjoCklGIl8tzUG6MRJq0p4lBxjKnhDJjZAl6IyJ1
- VYK7dZLVkm+f8QFH44+4sDa+JHcW2EoLhopQM6BaBgJeiQeLXKvpCdMw9TAJrJwpFALm6l8mo
- 8MZmBDPoy8w5h1ImU8JIBYkjmVw9u4Gt+kjFZOXh7qpQvV88XW7LydrsXfL3S4OralrVZWoC6
- nRtJEx0roxHbd4+Hjr0FtoVfVzUmMqePT9oVmRyOhwn0VreEYU7zYzTWv4sZWuBmo5p1sJHPI
- F7a01z8aVCw81KJzVm8e7nE1u/O+qD2SSIz7tF6+gxWa/i2KdzHPlZXctU6MG7COMFx1AtP0P
- 3pkdyIZ+LF3+2d3QNCxZhXaYRAMeVY5WsLHuaE6RLkEowhPPv2bi2Wac6GDnUPTQHxq+cox1B
- ekoLMpP
+X-Provags-ID: V03:K1:Awvk839e8w0VASI3jfExUuaGJsEOld4HyAdbkttTouzZ0+9qGzA
+ kWpouRYAEH4GF0MKjR0Dk1MLeS2ndHb6Bi9+AQh6Qu1psYUokY79WG0KGnQ+Qs2oFwF9TRS
+ Zv/Y2+mb8J3dltNastJy0Proo2H0plFiJ+bTYruee2qY1B9gkvXS4uiGnTT6Qx7Y/JKpCUg
+ IJSo4zLh1ZtBBlvxxHVZA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cq5MOR1iNkE=:jH0aq1vf8dWYi9dKJ0JMun
+ cWpoVCO1mJTDEfGqqFIA4JimVfhiSjbgym9J64QhZ74itgmoz3XgjizcDf/WVD6jja4s79EYJ
+ LstLWgDult6E4aEqnxCji2ItraHIfY2fk0yl4yv44fOeW4iJ3uRUsK4O2nMpsbBN/pXsqHVOJ
+ O4deUwxAZq7Ep3yKaOjyoU7LUEqzbwProIMzwjRnT04Nwo90nj1VpZxbmUJzoySxkoiN4AnXr
+ tbsjAo/shtUc+Kw+82Wq76e8y+7QF5rgowDWJI/orrjlGFAOS0q+G8OtfxgmTKaBZmtwvo2r8
+ t3nWu9iT5eyRQ4lyi2F9E6womNtwh/rTpOSkYi4W4MAORx+CN56miru5Afmjul1shsh4AU9sg
+ l9QTu9p1yaCmEn9fKoD4Xoc3gtOQTiGvFskQ6JQTmRWeHgUi43EuDgEh/WzMkj1m9IVxwZvyi
+ POCsg/BZ07Q1B8hzNoPZWF0TXIepln36XLUlb/2JAMh6EcVPMvUP/Z+tJ6fvhzTZmOerlcUjd
+ iIfh+rIxwehpHPG2vNvI+kUyr0JaCsxCW0a0zbC0qbkjNCp4/G5Pce76jvK5Os03QdSlyydOg
+ Gx3CZ9l3YrsYtpimmX6FN1hVPMHS6uaPZEtBf3Gm2IyumZaSyC/d4m5ual4P2J5bFv+5tQPqj
+ cNWm9pG59MQIpAdnSuq7uxmhBTITJWax47jcfEWtD8/P0N9U0t28joHbUmSykeLpM7oeZ+5C4
+ Jmk13jz5+o4oSM1+rc7Rnbm/18FRpXst0xzgaoG+EfmrQ3RYC15H4XQWwYbDl4VjQqBUqyaDK
+ gxxEkWz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is yet another patch to be filed under the keyword "libification".
-
-There is one subtle change in behavior here, where a `git log` that has
-been asked to show the mergetags would now stop reporting the mergetags
-upon the first failure, whereas previously, it would have continued to the
-next mergetag, if any.
-
-In practice, that change should not matter, as it is 1) uncommon to
-perform octopus merges using multiple tags as merge heads, and 2) when the
-user asks to be shown those tags, they really should be there.
+We have the BUG() macro for that purpose.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/replace.c |  8 ++++----
- commit.c          |  8 +++++---
- commit.h          |  4 ++--
- log-tree.c        | 13 +++++++------
- 4 files changed, 18 insertions(+), 15 deletions(-)
+ builtin/replace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/replace.c b/builtin/replace.c
-index 935647be6bd..245d3f4164e 100644
+index 245d3f4164e..e345a5a0f1c 100644
 --- a/builtin/replace.c
 +++ b/builtin/replace.c
-@@ -345,7 +345,7 @@ struct check_mergetag_data {
- 	const char **argv;
- };
+@@ -501,6 +501,6 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		return list_replace_refs(argv[0], format);
  
--static void check_one_mergetag(struct commit *commit,
-+static int check_one_mergetag(struct commit *commit,
- 			       struct commit_extra_header *extra,
- 			       void *data)
- {
-@@ -368,20 +368,20 @@ static void check_one_mergetag(struct commit *commit,
- 		if (get_oid(mergetag_data->argv[i], &oid) < 0)
- 			die(_("Not a valid object name: '%s'"), mergetag_data->argv[i]);
- 		if (!oidcmp(&tag->tagged->oid, &oid))
--			return; /* found */
-+			return 0; /* found */
+ 	default:
+-		die("BUG: invalid cmdmode %d", (int)cmdmode);
++		BUG("invalid cmdmode %d", (int)cmdmode);
  	}
- 
- 	die(_("original commit '%s' contains mergetag '%s' that is discarded; "
- 	      "use --edit instead of --graft"), ref, oid_to_hex(&tag_oid));
  }
- 
--static void check_mergetags(struct commit *commit, int argc, const char **argv)
-+static int check_mergetags(struct commit *commit, int argc, const char **argv)
- {
- 	struct check_mergetag_data mergetag_data;
- 
- 	mergetag_data.argc = argc;
- 	mergetag_data.argv = argv;
--	for_each_mergetag(check_one_mergetag, commit, &mergetag_data);
-+	return for_each_mergetag(check_one_mergetag, commit, &mergetag_data);
- }
- 
- static int create_graft(int argc, const char **argv, int force)
-diff --git a/commit.c b/commit.c
-index ca474a7c112..2952ec987c5 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1288,17 +1288,19 @@ struct commit_extra_header *read_commit_extra_headers(struct commit *commit,
- 	return extra;
- }
- 
--void for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data)
-+int for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data)
- {
- 	struct commit_extra_header *extra, *to_free;
-+	int res = 0;
- 
- 	to_free = read_commit_extra_headers(commit, NULL);
--	for (extra = to_free; extra; extra = extra->next) {
-+	for (extra = to_free; !res && extra; extra = extra->next) {
- 		if (strcmp(extra->key, "mergetag"))
- 			continue; /* not a merge tag */
--		fn(commit, extra, data);
-+		res = fn(commit, extra, data);
- 	}
- 	free_commit_extra_headers(to_free);
-+	return res;
- }
- 
- static inline int standard_header_field(const char *field, size_t len)
-diff --git a/commit.h b/commit.h
-index 0fb8271665c..9000895ad91 100644
---- a/commit.h
-+++ b/commit.h
-@@ -291,10 +291,10 @@ extern const char *find_commit_header(const char *msg, const char *key,
- /* Find the end of the log message, the right place for a new trailer. */
- extern int ignore_non_trailer(const char *buf, size_t len);
- 
--typedef void (*each_mergetag_fn)(struct commit *commit, struct commit_extra_header *extra,
-+typedef int (*each_mergetag_fn)(struct commit *commit, struct commit_extra_header *extra,
- 				 void *cb_data);
- 
--extern void for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data);
-+extern int for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data);
- 
- struct merge_remote_desc {
- 	struct object *obj; /* the named object, could be a tag */
-diff --git a/log-tree.c b/log-tree.c
-index d1c0bedf244..f3a51a6e726 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -488,9 +488,9 @@ static int is_common_merge(const struct commit *commit)
- 		&& !commit->parents->next->next);
- }
- 
--static void show_one_mergetag(struct commit *commit,
--			      struct commit_extra_header *extra,
--			      void *data)
-+static int show_one_mergetag(struct commit *commit,
-+			     struct commit_extra_header *extra,
-+			     void *data)
- {
- 	struct rev_info *opt = (struct rev_info *)data;
- 	struct object_id oid;
-@@ -502,7 +502,7 @@ static void show_one_mergetag(struct commit *commit,
- 	hash_object_file(extra->value, extra->len, type_name(OBJ_TAG), &oid);
- 	tag = lookup_tag(&oid);
- 	if (!tag)
--		return; /* error message already given */
-+		return -1; /* error message already given */
- 
- 	strbuf_init(&verify_message, 256);
- 	if (parse_tag_buffer(tag, extra->value, extra->len))
-@@ -536,11 +536,12 @@ static void show_one_mergetag(struct commit *commit,
- 
- 	show_sig_lines(opt, status, verify_message.buf);
- 	strbuf_release(&verify_message);
-+	return 0;
- }
- 
--static void show_mergetag(struct rev_info *opt, struct commit *commit)
-+static int show_mergetag(struct rev_info *opt, struct commit *commit)
- {
--	for_each_mergetag(show_one_mergetag, commit, opt);
-+	return for_each_mergetag(show_one_mergetag, commit, opt);
- }
- 
- void show_log(struct rev_info *opt)
 -- 
 2.17.0.windows.1.33.gfcbb1fa0445
 
