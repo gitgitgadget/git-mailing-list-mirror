@@ -6,54 +6,54 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 836B61F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 17:33:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 190B11F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 17:36:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757430AbeD0Rd4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 13:33:56 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:43233 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751727AbeD0Rdz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 13:33:55 -0400
-Received: by mail-qt0-f194.google.com with SMTP id l11-v6so3268908qtj.10
-        for <git@vger.kernel.org>; Fri, 27 Apr 2018 10:33:55 -0700 (PDT)
+        id S1758989AbeD0Rgn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 13:36:43 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:40990 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758986AbeD0Rgk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 13:36:40 -0400
+Received: by mail-qk0-f173.google.com with SMTP id d125so2007038qkb.8
+        for <git@vger.kernel.org>; Fri, 27 Apr 2018 10:36:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=O6fxRrXEYZwu9foEOF2+EMqlLrM7Te6MWzQz6TSMzbA=;
-        b=DfD2XbmI4wuP7lE00sD+UAg3i9/KnQw0+OqEKFn0y25rNLZq8k4cxLvmxxYVwLSaFL
-         cLEGJAxVuJwmpuUFkSzHqqCpdPXhWqHKSb21NQXkHp5cRZRnT08i8j11ejVhTTzp4yCx
-         MrJDwrMx8TNS81dcOVRTEwCiz5yVFGvTQgxe+yPQlznjHYBOIXLW3f5d6JvMP6HVU8z9
-         s6dGmn81muaN+VeLpk8TFtbnxkhjrYO85DfGgAmU/5cZwEWxwRBIjb7CptYpXfAMZF8P
-         ShrySdzZT0tNN3uftXANxdrjOVjScV4hIhHh3iGOYXTtmhoVazTK7PH8t4SNBI5elYio
-         VvGw==
+        bh=pD4i3f6nkNyGHMvFi9DP/GeBaChuo+u+7cdZIqWn9GI=;
+        b=IwyGPTDXDhcHVbdbYzqNvqZzaUkV1GFKjMgifN1NSONhdLc+XIf5YjK0Xrl5rEfHII
+         5mkXL85pduO8v6ucOR7VfSnHSVJNFjq+z9OWRXKHAEtSSTty7yjUwnXVkfrGFTK5jkqQ
+         a1YmCYq71ULNSON7n2FRBv3yf/TOS5vaUfdU7k9kZDse62mZtln0au+tFXBoFIUNmAio
+         vhZ2uz2nHb/MXPJQE+T2o7rdEry2UOiqvmnBmGY8XV4EIUh43Aq7ry8H1k0dYkcMGZ4y
+         ccH0Sa+crlcAbaSMoVFQ4G1RPt50bPNn+hVsqzn90HYDT3EFoIjWjH9qfdTor0WTFde1
+         H20Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=O6fxRrXEYZwu9foEOF2+EMqlLrM7Te6MWzQz6TSMzbA=;
-        b=tfhc6H0VbSZXVF7Z7iTVQ55NKVaVTe4UwZZAtxQ28DqpsqwrmfGESxgRXn2PdpxOFh
-         NiqNyyUoWbmfPygT81/u9K2NkCvl6TWC5x4BmU8Nh1hFq4pSgw+Lr2ImfDtItfAYoks/
-         zVGddf7fKg/0T12wDeSggMpk81n3km5f46hZfCnGoOzijR+s8PkJ7UOF3vfnzRvxIWPC
-         AFpIKgmLJp+yX9jT48pv3D79kr2sbup28kQzZyEb4vRzbCbY+eUcDQZc+GkyYgQRkuEN
-         9U/8NWjtWXVLl0yK1IAcSIlBV1jYD8ttji9w0jz0SLcnEYevilKK7/tW5oOPL9FqGtfO
-         IINg==
-X-Gm-Message-State: ALQs6tC2od1j804ZEo5pyn0Ps9IZz06j6Od65ZdViAI1eVIVbBlOFHZu
-        tWRNzJixmCsPpxvgevlSDAbSu/9ovhvc/FMbbrs=
-X-Google-Smtp-Source: AB8JxZrVuZqxeDBQv/61RXYqfqfbFB6YBM6IZUo9gqxiqPX42ci5uuGrApqMUNKJHw9FeOG+OCbsXJ+jvQGru/MBXOA=
-X-Received: by 2002:ac8:3267:: with SMTP id y36-v6mr2974520qta.25.1524850434962;
- Fri, 27 Apr 2018 10:33:54 -0700 (PDT)
+        bh=pD4i3f6nkNyGHMvFi9DP/GeBaChuo+u+7cdZIqWn9GI=;
+        b=fPlJi5Ztwupg12Wi1Op4oA74Uh5TnDdzpl/VewlwJzkMnGMb8v6kD0HilCgFK86x7+
+         L8dpDyJm7r8uDhKLbBKsfKRB26ljFxSpYNbOdpC5lYCxiR4NUPEzpB3QfYVUu4TlrCIy
+         1M58+IwKWcveRv0kc/hwbrecnvKwADdKuiV/wBaLwSWfZlRdM36ubGJmyDeRScUghF9F
+         P6stWuxYAZz8zwgiVXf0mAb4OGDFzv1CyLOQ4g3KRYkWi05kpQRBHkWMToSfmqtbKRzN
+         pytToU62p+q++Fa9FqcjSDMvGR/yJwuIpnPozaU9rs2aa7KIloop/PuE9SerkpvjD3QC
+         c36Q==
+X-Gm-Message-State: ALQs6tAnNnpvT4zt9YImJwNhy2ggyT6j1grYKqJXgSaxOBIfqgxyQg/x
+        cglQSu4AmVoE/GwH3/J884Qu9+0fYl5YlIJ+SOo=
+X-Google-Smtp-Source: AB8JxZp5iOkEGPB4OORN66+fxEQ4tHJYAfFbVwGZ+0iIOGduio0gAwgY3Ggju54iCMy/4DbCGg1gLXJInaNniDF68ZU=
+X-Received: by 10.55.190.134 with SMTP id o128mr2624143qkf.141.1524850599007;
+ Fri, 27 Apr 2018 10:36:39 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Fri, 27 Apr 2018 10:33:54 -0700 (PDT)
-In-Reply-To: <20180427170440.30418-3-asheiduk@gmail.com>
+Received: by 10.12.170.75 with HTTP; Fri, 27 Apr 2018 10:36:38 -0700 (PDT)
+In-Reply-To: <20180427170440.30418-7-asheiduk@gmail.com>
 References: <20180410183224.10780-1-asheiduk@gmail.com> <20180427170440.30418-1-asheiduk@gmail.com>
- <20180427170440.30418-3-asheiduk@gmail.com>
+ <20180427170440.30418-7-asheiduk@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 27 Apr 2018 13:33:54 -0400
-X-Google-Sender-Auth: R0tE70VdF_xS9eWgy9CXsljT3fM
-Message-ID: <CAPig+cTM1J35hvwYwj9BOkFxw0tGQJFZjPL_WnCa=wDxzYzj0g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] doc: align 'diff --no-index' in text with synopsis
+Date:   Fri, 27 Apr 2018 13:36:38 -0400
+X-Google-Sender-Auth: ZvDBGp_O5-Wp6ajQB4lcR2G5PqU
+Message-ID: <CAPig+cRWn66C6wcmYv5G3qjfZAux6pVCp1H+w9c4+CzevfXMRg@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] doc: add note about shell quoting to revision.txt
 To:     Andreas Heiduk <asheiduk@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
@@ -65,23 +65,12 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Fri, Apr 27, 2018 at 1:04 PM, Andreas Heiduk <asheiduk@gmail.com> wrote:
-> The two '<path>' parameters are not optional but the option
-> '--no-index' is. Also move the `--options` part to the same
-> place where the other variants show them.
->
-> All three items are already correct in the synopsis.
->
 > Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+> Reviewed-by: Junio C Hamano <gitster@pobox.com>
 > ---
-> diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-> @@ -13,7 +13,7 @@ SYNOPSIS
-> -'git diff' [options] [--no-index] [--] <path> <path>
-> +'git diff' [options] --no-index [--] <path> <path>
-> @@ -29,7 +29,7 @@ two blob objects, or changes between two files on disk.
-> -'git diff' --no-index [--options] [--] [<path>...]::
-> +'git diff' [--options] --no-index [--] <path> <path>::
+> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+> @@ -186,6 +190,8 @@ existing tag object.
+> +  Depending on the given text the shell's word splitting rules might
+> +  require additional quoting.
 
-Not a problem introduced by this patch, but shouldn't this say
-"[options]" rather than "[--options]"? Since the aim of this patch
-series is to clean up botches and normalize documentation, perhaps it
-could also fix this oddness(?).
+s/text/&,/
