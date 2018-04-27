@@ -2,94 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 341B71F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 00:50:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E06FE1F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 00:54:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756991AbeD0Aud (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Apr 2018 20:50:33 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:45904 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756641AbeD0Auc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Apr 2018 20:50:32 -0400
-Received: by mail-wr0-f195.google.com with SMTP id p5-v6so135728wre.12
-        for <git@vger.kernel.org>; Thu, 26 Apr 2018 17:50:32 -0700 (PDT)
+        id S1753646AbeD0AyW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Apr 2018 20:54:22 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:37766 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751780AbeD0AyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Apr 2018 20:54:21 -0400
+Received: by mail-qk0-f194.google.com with SMTP id d74so172436qkg.4
+        for <git@vger.kernel.org>; Thu, 26 Apr 2018 17:54:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=eAf94X3bTkMxHJCQKGp+zBWP3KfK4D4pD6bEiqm0Q0E=;
-        b=sIqZWZir2+fFtc0CKbIAWEqY8rDjL0h3c/J5yNThfLw507JXNVkRnxfqciJSdiO62E
-         DXWohenzbDHTfJaT8upduI50s+nN0ye+iO7TMTkCt+qiHSFWnU9wwz6rMiF078mDXrIv
-         ATxHXFEtFufNkM553naosJEE38WZfA3jmz4oOqBIUoqhFwOcR0/VpDn7MezmUUlV1OxY
-         WkFFm7lrx56etBjiKRFsDYdRIfvVsyFjqs7b7KCiL41EDLTvKa63VpJkz+/Fzl32FcTU
-         x+ACfxb/8b4R0DH/gSwVQAP6lZkbTMacApdBYxOIRXze/nR/8GxjWNo7D50wSmCFYFDw
-         Cgxg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=z4eqC17Fw1M2XUQSOf+rYc/457YedUn1FZRMYyYzBkw=;
+        b=CoWY/pX/xWwHPJE67NvsPlojHYZBsirY3ACWlWUGtA0nQh6GJt6oMCuZBBa2YUcZBh
+         DD57ekt0jTXtC6n+Ey9+wCqdT0EH2WkQZ9IM5+y95vpnHUQ08vubPcbb55v6hpDx6pT7
+         ji0IOWKBmLEPpcB5R/RkVvMPOMeFqLGwZXAFaveCSTbybc9m21VQF5i8L7JRvhnrUIYM
+         wA49pDwRrcLT0Otvu1iek+zNusxMtKrPyDbBWFgqE+MyXcnxHDe8bGanhAygbvu0kPlv
+         AVLA6BfUkg4gnxrYpAXJbBEZysRTQ+d1FS59im4uYuYyQkfLPWuKFkF1eYNQX51mZlNN
+         lWTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=eAf94X3bTkMxHJCQKGp+zBWP3KfK4D4pD6bEiqm0Q0E=;
-        b=Ug7IzaX2GEUI4qxobAeszfbiw4RxMYLevC26pKh+6RDDNJX49GlHT7RslmfCf+uypx
-         0yNlhnPq6ogIpdoHOZmfibPim8FMITnBXrSswL1MmAkpFxhgtiPMUFhfHVs1LIwG/foS
-         jdgXGUZBpjQ+AlNEhH2Jt/OYstzDoudzw8eZ8EkMRZHAFsu9jg4VcuS1amCf5la7yO9V
-         DXGeZym9alZmbo78oyh1EALPXdh+T/AdRnGfLB8PpqkQPMAlqphHbPVMcSUoHZQPulbj
-         zan9Fbf5d3BR07UBcVOwz8se/hhFoaT9Xhxla95Kfcq++egTHXej0fzB5pwkPlVoqp2M
-         Yz2w==
-X-Gm-Message-State: ALQs6tAup8mzx5sPrqedrAuyWKvgxrqV5nqO40kMBgeeLUy19d1ZfUc0
-        MxxWSEHjnXmuZF+bHGWbFqc=
-X-Google-Smtp-Source: AB8JxZoBhLx6d0MoK0yE/pVSknP8IV8DuQT32ZYzrtq4xYYz1zqiHpCRJ1CsKe7GehWK1mtPg7EgeQ==
-X-Received: by 2002:adf:9789:: with SMTP id s9-v6mr159584wrb.28.1524790231492;
-        Thu, 26 Apr 2018 17:50:31 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y100sm1593783wmh.2.2018.04.26.17.50.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 26 Apr 2018 17:50:30 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     istephens@atlassian.com
-Cc:     sunshine@sunshineco.com, szeder.dev@gmail.com, git@vger.kernel.org,
-        peff@peff.net, bturner@atlassian.com, jacob.keller@gmail.com
-Subject: Re: [PATCH v4 1/2] blame: prevent error if range ends past end of file
-References: <CAPig+cSH-y7ChDE_LW55M_wB=KhD7uJHXX=OvZ=1ri5KfYQ5Sg@mail.gmail.com>
-        <20180426074502.78318-1-istephens@atlassian.com>
-        <20180426074502.78318-2-istephens@atlassian.com>
-Date:   Fri, 27 Apr 2018 09:50:30 +0900
-In-Reply-To: <20180426074502.78318-2-istephens@atlassian.com>
-        (istephens@atlassian.com's message of "Thu, 26 Apr 2018 17:45:01
-        +1000")
-Message-ID: <xmqq7eot1nhl.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=z4eqC17Fw1M2XUQSOf+rYc/457YedUn1FZRMYyYzBkw=;
+        b=NSmwOP3WGUTlnbuYxmROnWkQAUzavaaXvf8nQ8yEqhIByIXZXgK/3DjAKcZqO6/Ahs
+         cv6ToOr/GiqEbx9BWAiLLIvHzdXsyDcO8b8g863GO3rQ/rywcouGqc4DWApOLxZAT6gc
+         phhDOie1KtVa6CahOEk+lyM7OjO9dmRGXZkaejReh4+rBWxW/YdGZM6zMRsP8C5PWrbx
+         AxTmR60xCDmgTj+YtM5/FEsdhaO8mt+g9SBQK5C2Achp0M4b7bbA/KyUo/FBw53FiKGx
+         Wj3iREbwrj0ZPDbjg13JrzKtHdS3mauTZi4OsSTBLz3DIdc47Yx6jtxJ9PcILBKZGLev
+         FjNg==
+X-Gm-Message-State: ALQs6tBHspp2qzoHEri587wr93CyYBcAjKj/IgFHMdQSB9yNKY8SnBiR
+        tWc2t0Ei6lHBJfWuPjfanP4=
+X-Google-Smtp-Source: AB8JxZq60m+r5ufS9xBpIQs4QadKYoajK54KJY0/QImPu/xjcUc1pfbDTc143nKs+fJtb8gkG7/GpQ==
+X-Received: by 10.55.53.7 with SMTP id c7mr247849qka.58.1524790460369;
+        Thu, 26 Apr 2018 17:54:20 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id d1-v6sm124124qtk.57.2018.04.26.17.54.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Apr 2018 17:54:19 -0700 (PDT)
+Subject: Re: [PATCH v3 2/3] merge: Add merge.renames config setting
+To:     Elijah Newren <newren@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
+References: <20180420133632.17580-1-benpeart@microsoft.com>
+ <20180426205202.23056-1-benpeart@microsoft.com>
+ <20180426205202.23056-3-benpeart@microsoft.com>
+ <CABPp-BE29rwZCDqFHH-nzrDub6MMdtoiorj0jv3K6B6cmfcaLA@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <7de8f144-8a37-e471-48e8-0b6f17a7bf29@gmail.com>
+Date:   Thu, 26 Apr 2018 20:54:20 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CABPp-BE29rwZCDqFHH-nzrDub6MMdtoiorj0jv3K6B6cmfcaLA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-istephens@atlassian.com writes:
 
-> diff --git a/line-range.c b/line-range.c
-> index 323399d16..023aee1f5 100644
-> --- a/line-range.c
-> +++ b/line-range.c
-> @@ -47,7 +47,7 @@ static const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
->  			else if (!num)
->  				*ret = begin;
->  			else
-> -				*ret = begin + num;
-> +				*ret = begin + num ? begin + num : -1;
 
-When parsing "-L<something>,-20" to grab some lines before the line
-specified by <something>, if that something happens to be line #20,
-this gives -1 to *ret.  If it is line #19, *ret becomes -1, and if
-it is line #18 or before, *ret becomes -2, -3, ...
+On 4/26/2018 6:52 PM, Elijah Newren wrote:
+> On Thu, Apr 26, 2018 at 1:52 PM, Ben Peart <Ben.Peart@microsoft.com> wrote:
+> 
+>> +merge.renames::
+>> +       Whether and how Git detects renames.  If set to "false",
+>> +       rename detection is disabled. If set to "true", basic rename
+>> +       detection is enabled.  If set to "copies" or "copy", Git will
+>> +       detect copies, as well.  Defaults to the value of diff.renames.
+>> +
+> 
+> We shouldn't allow users to force copy detection on for merges  The
+> diff side of the code will detect them correctly but the code in
+> merge-recursive will mishandle the copy pairs.  I think fixing it is
+> somewhere between big can of worms and
+> it's-a-configuration-that-doesn't-even-make-sense, but it's been a
+> while since I thought about it.
 
-Is that what we really want here?  It is disturbing that only line
-#19 and #20 are treated identically in the above example.  If it
-were "if going backwards by -num lines from begin goes beyond the
-beginning of the file, clip it to the first line", I would
-understand it, but as written, I am not sure what the code is trying
-to do.
+Color me puzzled. :)  The consensus was that the default value for 
+merge.renames come from diff.renames.  diff.renames supports copy 
+detection which means that merge.renames will inherit that value.  My 
+assumption was that is what was intended so when I reimplemented it, I 
+fully implemented it that way.
+
+Are you now requesting to only use diff.renames as the default if the 
+value is true or false but not if it is copy?  What should happen if 
+diff.renames is actually set to copy?  Should merge silently change that 
+to true, display a warning, error out, or something else?  Do you have 
+some other behavior for how to handle copy being inherited from 
+diff.renames you'd like to see?
+
+Can you write the documentation that clearly explains the exact behavior 
+you want?  That would kill two birds with one stone... :)
+
+> 
+>> diff --git a/merge-recursive.h b/merge-recursive.h
+>> index 80d69d1401..0c5f7eff98 100644
+>> --- a/merge-recursive.h
+>> +++ b/merge-recursive.h
+>> @@ -17,7 +17,8 @@ struct merge_options {
+>>          unsigned renormalize : 1;
+>>          long xdl_opts;
+>>          int verbosity;
+>> -       int detect_rename;
+>> +       int diff_detect_rename;
+>> +       int merge_detect_rename;
+>>          int diff_rename_limit;
+>>          int merge_rename_limit;
+>>          int rename_score;
+>> @@ -28,6 +29,11 @@ struct merge_options {
+>>          struct hashmap current_file_dir_set;
+>>          struct string_list df_conflict_file_set;
+>>   };
+>> +inline int merge_detect_rename(struct merge_options *o)
+>> +{
+>> +       return o->merge_detect_rename >= 0 ? o->merge_detect_rename :
+>> +               o->diff_detect_rename >= 0 ? o->diff_detect_rename : 1;
+>> +}
+> 
+> Why did you split o->detect_rename into two fields?  You then
+> recombine them in merge_detect_rename(), and after initial setup only
+> ever access them through that function.  Having two fields worries me
+> that people will accidentally introduce bugs by using one of them
+> instead of the merge_detect_rename() function.  Is there a reason you
+> decided against having the initial setup just set a single value and
+> then use it directly?
+> 
+
+The setup of this value is split into 3 places that may or may not all 
+get called.  The initial values, the values that come from the config 
+settings and then any values passed on the command line.
+
+Because the merge value can now inherit from the diff value, you only 
+know the final value after you have received all possible inputs.  That 
+makes it necessary to be a calculated value.
+
+If you look at diff_rename_limit/merge_rename_limit, detect_rename 
+follow the same pattern for the same reasons.  It turns out 
+detect_rename was a little more complex because it is used in 3 
+different locations (vs just one) which is why I wrapped the inheritance 
+logic into the helper function merge_detect_rename().
