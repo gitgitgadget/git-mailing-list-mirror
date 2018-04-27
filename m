@@ -2,165 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6B881F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 21:08:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFCE91F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 21:28:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759287AbeD0VIe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 17:08:34 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34996 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1759077AbeD0VId (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 27 Apr 2018 17:08:33 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EB40B600FB;
-        Fri, 27 Apr 2018 21:08:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1524863309;
-        bh=7xclddLMZzIZNVDvbHRK1z6g09kNTnIDVHMu3UroANE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Hp4mYnRaNUz5CnJo6T41u0uARGBUoTs59jET76BP6kFVxKyhNXsirjrT2Nm8jwi0t
-         msIAqbJPuD/Etsy+3iUeWXkMmtKaTlMBafYNp/lg3Cw+GrNVTr6g+EJOkFBJndrfL6
-         /4YSKI9UubFnV7ZHi9C3YEpEo+xSqlSPnV9vqgfGl0IFVzRyqxpIDnyPP6fpGxhCkW
-         rULd63en/ajFYTKfxZxZ1pIXU98jiMYEPp2mPampAomDrpbyYYI0kF3Mxhv1PQ1YtI
-         LRBiImEZPrSTpfYlHIhoSh6JL4lRxPK+aNegoebwceG3u4mOrmdc7L0lmoub/Rm3U9
-         4mQp37i7MUHeXVtHof7atHO64kmrdsOoNNy13A/tGHxztLJUTGtPan1lQKDWBLycoj
-         YYjOJ7bP/77IBV44bkhogCymZGdfI4zXjwRCZCiclkDxVTv4iD0IxWx6ia0TdX63ON
-         YMKSAnV2v9qcRuqECX2sR/qhGgSyHU6xisEyYM5Pj82DQLtHfkm
-Date:   Fri, 27 Apr 2018 21:08:23 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 18/41] index-pack: abstract away hash function constant
-Message-ID: <20180427210823.GB722934@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
- <20180423233951.276447-19-sandals@crustytoothpaste.net>
- <CAN0heSouHbAj8TbiROe=XRsBJ788Vi6P4a_Wvv=7OrdsXqQXHw@mail.gmail.com>
- <20180424235150.GD245996@genre.crustytoothpaste.net>
- <CAN0heSqpj9JfTrnMFRbquraxve9iTwoowgWRUhcD-gXHMg3V=g@mail.gmail.com>
- <CACsJy8DUsFLDb786FmsR+eTriXaWGXEE+ZG8kCjq7JoipN1Phg@mail.gmail.com>
+        id S1759279AbeD0V24 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 17:28:56 -0400
+Received: from mail-yb0-f176.google.com ([209.85.213.176]:37582 "EHLO
+        mail-yb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759079AbeD0V24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 17:28:56 -0400
+Received: by mail-yb0-f176.google.com with SMTP id i13-v6so1127162ybl.4
+        for <git@vger.kernel.org>; Fri, 27 Apr 2018 14:28:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+KE4XYtvx2MuZ8VjmTSFQE+1TEra38BN1NNoYuQFIgI=;
+        b=hmnoZc8yg5tB0tQ2hgY8B8yFCyuzwUrGjOIuCAXu7of31j1qhVBLk+J+vPbxGEw/M8
+         RONch0IVXeDm25RX01JgI4RfKgRQrgfjwURTTWpp9q9SA/h5l/6WCJoWscoM+rKREoNc
+         1pYbghHovBYQ2Lh1UYl7+f9RHKJwqcinwxvPrtW85OwtV37+vJDI7xjgrSl42jyFg2O4
+         H4I1lgvjQK1HFbIbY7zFNpK6MYR7BVvjIoJn48t/Fu9q6l6Yh5crNrG3iJzXM7lts5D/
+         1zeUWWc/G9fsqm8J/dNh64oSrbKYMH9MS9ubpWufQi4HqV7JxzFtGLNFNijWLfYE59AK
+         sbKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+KE4XYtvx2MuZ8VjmTSFQE+1TEra38BN1NNoYuQFIgI=;
+        b=iBzsqGRNGVZLDKGVwvDmXdiZjwRrRZnzEG1dr8ueJZUzith9F7l6i1dw7q9W+VXTev
+         +PVnGsQNl/cQbiM51Vt6TKCWju5oDE0c41dhSoUnf+rO4/ttyRFrqIRinr5PmK38o7Zt
+         BwTnbMYw4zTqHUcWzATy4QA+b+lgpUEWNW2TmjcKrhyuO/5jJKk953OSt9VZJbqQVA3p
+         7xaWoA8h20AyId7oP6QV1bcZOaT4DvpmBRggqAXwYmmRTq2Mt9SRzF/fXXSoyIoAoCXn
+         YBZ4TwPmkFEMKUn96FbcUjppWmYiGP8pBVjAqqbRs7rH0jpKcPIHhZnJIY8cunppwZcW
+         qOEw==
+X-Gm-Message-State: ALQs6tASvtANVvr2NQKj3KwqPn6F90kdgQ6SGI1Gu3BfaHqermEwZxeV
+        GNBhqpqySjpHWShid+D6ULdD7LreiTeUYWjVHVpxeA==
+X-Google-Smtp-Source: AB8JxZphLfg94cHEw5+KTxbLgPU1ZdPXtuZr31olalIaRG4e/8zE7N4nkBMXP8v+jKZlAXxp+DXfXqUMNqMrN3q5UmA=
+X-Received: by 2002:a25:2704:: with SMTP id n4-v6mr2115855ybn.167.1524864534999;
+ Fri, 27 Apr 2018 14:28:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="yEPQxsgoJgBvi8ip"
-Content-Disposition: inline
-In-Reply-To: <CACsJy8DUsFLDb786FmsR+eTriXaWGXEE+ZG8kCjq7JoipN1Phg@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.16.0-trunk-amd64)
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Fri, 27 Apr 2018 14:28:54
+ -0700 (PDT)
+In-Reply-To: <08609b5f2d5bc7f3f6d010088db4b58695dfbd64.1524862093.git.johannes.schindelin@gmx.de>
+References: <CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com>
+ <cover.1524862093.git.johannes.schindelin@gmx.de> <08609b5f2d5bc7f3f6d010088db4b58695dfbd64.1524862093.git.johannes.schindelin@gmx.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 27 Apr 2018 14:28:54 -0700
+Message-ID: <CAGZ79kYJ--qt5AdM3EX9vwMb_AwD6gtWFp7wt2KP4OKsdOYLGQ@mail.gmail.com>
+Subject: Re: [PATCH v4 4/4] rebase --skip: clean up commit message after a
+ failed fixup/squash
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Apr 27, 2018 at 1:48 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> During a series of fixup/squash commands, the interactive rebase builds
+> up a commit message with comments. This will be presented to the user in
+> the editor if at least one of those commands was a `squash`.
 
---yEPQxsgoJgBvi8ip
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This sounds as if the whole series will be presented to the user, i.e.
 
-On Thu, Apr 26, 2018 at 05:46:28PM +0200, Duy Nguyen wrote:
-> On Wed, Apr 25, 2018 at 8:49 PM, Martin =C3=85gren <martin.agren@gmail.co=
-m> wrote:
-> > Once that is accomplished, I sort of suspect that this code will want to
-> > be updated to not always blindly use the_hash_algo, but to always work
-> > with SHA-1 sizes. Or rather, this would turn into more generic code to
-> > handle both "v2 with SHA-1" and "v3 with some hash function(s)". This
-> > commit might be a good first step in that direction.
->=20
-> I also have an uneasy feeling when things this close to on-disk file
-> format get hash-agnostic treatment. I think we would need to start
-> adding new file formats soon, from bottom up with simple things like
-> loose object files (cat-file and hash-object should be enough to test
-> blobs...), then moving up to pack files and more. This is when we can
-> really decide where to use the new hash and whether we should keep
-> some hashes as sha-1.
+ pick A
+ squash B
+ fixup C
 
-I agree that this is work which needs to be done soon.  There are
-basically a couple of pieces we need to handle NewHash:
+would present A+B+C in the editor. I always assumed the sequencer
+to be linear, i.e. pick A+B, open editor and then fixup C into the
+previous result?
 
-* Remove the dependencies on SHA-1 as much as possible.
-* Get the tests to pass with a different hash (almost done for 160-bit
-  hash; in progress for 256-bit hashes).
-* Write pack code.
-* Write loose object index code.
-* Write read-as-SHA-1 code.
-* Force the codebase to always use SHA-1 when dealing with fetch/push.
-* Distinguish between code which needs to use compatObjectFormat and
-  code which needs to use objectFormat.
-* Decide on NewHash.
+No need to resend it reworded, I just realize that I never tested my
+potentially wrong assumption.
 
-I'm working on the top two bullet points right now.  Others are welcome
-to pick up other pieces, or I'll get to them eventually.
+> The diff is best viewed with --color-moved.
 
-As much as I'm dreading having the bikeshedding discussion over what
-we're going to pick for NewHash, some of these pieces require knowing
-what algorithm it will be.  For example, we have some tests which either
-need to be completely rewritten or have a translation table written for
-them (think the ones that use colliding short names).  In order for
-those tests to have the translation table written, we need to be able to
-compute colliding values.  I'm annotating these with prerequisites, but
-there are quite a few tests which are skipped.
+... and web pages are "best viewed with IE 6.0" ;-)
 
-I expect writing the pack, loose object index, and read-as-SHA-1 code is
-going to require having some code for NewHash or stand-in present in
-order for it to compile and be tested.  It's possible that others could
-come up with more imaginative solutions that don't require that, but I
-have my doubts.
-
-> For trailing hashes for example, there's no need to move to a new hash
-> which only costs us more cycles. We just use it as a fancy checksum to
-> avoid bit flips. But then my assumption about cost may be completely
-> wrong without experimenting.
-
-I would argue that consistency is helpful.  Also, do we really want
-people to be able to (eventually) create colliding packs that contain
-different data?  That doesn't seem like a good idea.
-
-But also, some of the candidates we're considering for NewHash are
-actually faster than SHA-1.  So for performance reasons alone, it might
-be useful to adopt a consistent scheme.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---yEPQxsgoJgBvi8ip
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrjkUcACgkQv1NdgR9S
-9otlPhAAxvIeXpcb11aIwtErhf3oEpQoCtlyxirlSatNTsmh2PSL5KaovQIdfIjb
-8/pToFaRfqabC43Nx0qmt7OgYivoY81EpI4e4tQoUbLDpeHbYhUiKBSNPM8Z0TNR
-biDvKAevpMdDzeuYsHlrCy4i80Oa1jC+F0j77n+7MhKSInmURWy4kJ1HRx7ZQbTp
-v20AOohFEKF2QCWg4eGSAp9CKbG9NRnUIqTFNM8dxjSAg7ZfdleUIcfOQ/hgQJmd
-YjYhjKWEzUBFBd6JHhzuVVDCEWBlzECMjcnm4wjWclAHot+hDpiWgpVKyhsKGyen
-OGyRiVEiZAVxxuf5RYA2oqnH3qxeyGfVJQoaig/NUjTNaglsz2fbSfW2DC5BDIgf
-JtCSoIIZsUdacJQlCd5UKeO7zPpL5Po2yPWOcFVpI4HVXQcsM1tWC0uCv0bBXCKl
-pnJVyNyseFV7OrwM7YWTY7ZxEClaKMxb921WHb6bq3fZJsM7Biuu99h530k+7nnv
-+1HkZ+A8J6DTremuvvU7pnBRef2VseSbJxS0P/VWYHC7wjQfclIy5bXaYvdRwR4C
-HRNBXCWeuMGS8zosYOq37+Wmg5VhD9LUm6AQ6B4sw4WeoMq2La2QWyfPt5f8NCo9
-dIsuVjUIe91JgpY7GExIU0QGI9MoN8ndY5ez2iYIP+FUppYGYPk=
-=RY0/
------END PGP SIGNATURE-----
-
---yEPQxsgoJgBvi8ip--
+I found this so funny that I had to download the patches and actually
+look at them
+using the move detection only to find out that only very few lines are moved,
+as there are only very few deleted lines.
