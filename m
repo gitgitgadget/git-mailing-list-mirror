@@ -2,110 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67E201F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 17:15:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8850A1F513
+	for <e@80x24.org>; Fri, 27 Apr 2018 17:18:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758908AbeD0RPV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 13:15:21 -0400
-Received: from mail-ot0-f182.google.com ([74.125.82.182]:36552 "EHLO
-        mail-ot0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758271AbeD0RPT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 13:15:19 -0400
-Received: by mail-ot0-f182.google.com with SMTP id p2-v6so2837412otf.3
-        for <git@vger.kernel.org>; Fri, 27 Apr 2018 10:15:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=yIVwE0hR179b6DxTk6oJYeyz283pS2So/0VXXeaGY94=;
-        b=ef4gT+twFJcSthWohWfEnql/FohDk/KFy1nfZxvNgYYzw4OLE1YrnZKxMFEsNXlatz
-         JSWDuIgUvPD6kTEbPbp3kM82HHMY6n0B7kdISlsJZ7aZdeS0Xk+Co7SwBINrU+MrpgbN
-         xtE/+/6OwpW0hN/oK94NaSVLN3zaDl3wR4fZyn1bfI0HfsLpsacDbdlpZ8C1GAgJKlMf
-         qv37nxeHpEjHK1Vhg1uRyO3X+pJ9RX9cj+qz9XzVC/vfMKDSavI3FB4jsbFqc1wV1Bf6
-         IyJe+hLDU0W6defCpEDmsTmYAGtfv2cLREhRRHt2Loklwkzs+AaO3rv6ykq8NVo0Ie/e
-         v+mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=yIVwE0hR179b6DxTk6oJYeyz283pS2So/0VXXeaGY94=;
-        b=CDajN+bIxlXwwcIh4Vc2w6iIxvmizfSAyguIGnGa5AVddk1khdCNxGgsUTUw8sDAsL
-         qTdfktLxn67AX1Q4SHf3QvFh0mTPiAR9IRvEoiTdGvehZcqtWu78eUYE5EJDXRoogV7n
-         fb7NluVNJif9XAyJasRkCrvi1t20FpNSt3Gc/crPJUFlN0l5NCSGKXdAJM6QN/rKAIeH
-         qIaYMZlt+vhGA7Jh4h7t3p5dwH6PU2CexKRzrF8+EIpgR2HktLqENsBz2PAhVIeohyoy
-         xm0hmtRUooPBtsUKfysicrqXRc9vkcDm+/rdTiSTUUHz5gh/hl3V3NJ7zxq7cDhSAQ2x
-         oKHw==
-X-Gm-Message-State: ALQs6tBfi0QU2ppYpG3CBbVQgq5+95tc0g0F51ZYkr+rYT5LkeW/jNtM
-        bviesb7lls1ffBa2PKc+Gx332htWFFMcETg1g3s=
-X-Google-Smtp-Source: AB8JxZpFohtVTEi8So0E8Wwb2q5QRiNVLISrCTfkg7ymAW2sZbmIqWEoyJhxafV4kSBolm8TQVTrqYRVWmzwY6+WVhQ=
-X-Received: by 2002:a9d:5220:: with SMTP id e32-v6mr1932375oth.110.1524849318893;
- Fri, 27 Apr 2018 10:15:18 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.201.97.70 with HTTP; Fri, 27 Apr 2018 10:14:58 -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.76.6.1804270939400.72@tvgsbejvaqbjf.bet>
-References: <CAFW+GMAJcCG4mKe4TxFXXrfdRhZKXv8ffC-rNShFLW2J1_FANA@mail.gmail.com>
- <nycvar.QRO.7.76.6.1804270939400.72@tvgsbejvaqbjf.bet>
-From:   William Chargin <wchargin@gmail.com>
-Date:   Fri, 27 Apr 2018 10:14:58 -0700
-Message-ID: <CAFW+GMC5ST5tuSJAShDGkPeZ2ifLV1M9R3j_L+usPn+=+tAYaw@mail.gmail.com>
-Subject: Re: In some rebases, `exec git -C ...` has wrong working directory
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
+        id S1758762AbeD0RSX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 13:18:23 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:40930 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1758271AbeD0RSW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 13:18:22 -0400
+Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgorny)
+        by smtp.gentoo.org (Postfix) with ESMTPSA id D92C5335C7F;
+        Fri, 27 Apr 2018 17:18:19 +0000 (UTC)
+Message-ID: <1524849496.1125.30.camel@gentoo.org>
+Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
+From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
+To:     Marc Branchaud <marcnarc@xiplink.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Robin H. Johnson" <robbat2@gentoo.org>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Date:   Fri, 27 Apr 2018 19:18:16 +0200
+In-Reply-To: <ad4d0d66-58f4-5cab-d314-a30a50e8ad32@xiplink.com>
+References: <20180413170129.15310-1-mgorny@gentoo.org>
+         <robbat2-20180423T200557-844830385Z@orbis-terrarum.net>
+         <xmqqtvs18p9o.fsf@gitster-ct.c.googlers.com>
+         <robbat2-20180425T060717-325652820Z@orbis-terrarum.net>
+         <xmqqin8f4qoq.fsf@gitster-ct.c.googlers.com>
+         <ad4d0d66-58f4-5cab-d314-a30a50e8ad32@xiplink.com>
+Organization: Gentoo
 Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.24.6 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+W dniu śro, 25.04.2018 o godzinie 11∶18 -0400, użytkownik Marc Branchaud
+napisał:
+> On 2018-04-25 04:48 AM, Junio C Hamano wrote:
+> > "Robin H. Johnson" <robbat2@gentoo.org> writes:
+> > 
+> > > In the thread from 6 years ago, you asked about tar's behavior for
+> > > mtimes. 'tar xf' restores mtimes from the tar archive, so relative
+> > > ordering after restore would be the same, and would only rebuild if the
+> > > original source happened to be dirty.
+> > > 
+> > > This behavior is already non-deterministic in Git, and would be improved
+> > > by the patch.
+> > 
+> > But Git is not an archiver (tar), but is a source code control
+> > system, so I do not think we should spend any extra cycles to
+> > "improve" its behaviour wrt the relative ordering, at least for the
+> > default case.  Only those who rely on having build artifact *and*
+> > source should pay the runtime (and preferrably also the
+> > maintainance) cost.
+> 
+> Anyone who uses "make" or some other mtime-based tool is affected by 
+> this.  I agree that it's not "Everyone" but it sure is a lot of people.
+> 
+> Are we all that sure that the performance hit is that drastic?  After 
+> all, we've just done write_entry().  Calling utime() at that point 
+> should just hit the filesystem cache.
+> 
+> > The best approach to do so is to have those people do the "touch"
+> > thing in their own post-checkout hook.  People who use Git as the
+> > source control system won't have to pay runtime cost of doing the
+> > touch thing, and we do not have to maintain such a hook script.
+> > Only those who use the "feature" would.
+> 
+> The post-checkout hook approach is not exactly straightforward.
+> 
+> Naively, it's simply
+> 
+> 	for F in `git diff --name-only $1 $2`; do touch "$F"; done
+> 
+> But consider:
+> 
+> * Symlinks can cause the wrong file to be touched.  (Granted, Michał's 
+> proposed patch also doesn't deal with symlinks.)  Let's assume that a 
+> hook can be crafted will all possible sophistication.  There are still 
+> some fundamental problems:
+> 
+> * In a "file checkout" ("git checkout -- path/to/file"), $1 and $2 are 
+> identical so the above loop does nothing.  Offhand I'm not even sure how 
+> a hook might get the right files in this case.
+> 
+> * The hook has to be set up in every repo and submodule (at least until 
+> something like Ævar's experiments come to fruition).
+> 
+> * A fresh clone can't run the hook.  This is especially important when 
+> dealing with submodules.  (In one case where we were bit by this, make 
+> though that half of a fresh submodule clone's files were stale, and 
+> decided to re-autoconf the entire thing.)
+> 
+> 
+> I just don't think the hook approach can completely solve the problem.
+> 
 
-Thanks for your reply.
+There's also the performance aspect.  If we deal with checkouts that
+include 1000+ files on a busy system (i.e. when mtimes really become
+relevant), calling utime() instantly has a good chance of hitting warm
+cache.  On the other hand, post-checkout hook has a greater risk of
+running cold cache, i.e. writing to all inodes twice.
 
-Part of my confusion was regarding the interaction between `-C` and
-`--git-dir`. For instance, we have
+-- 
+Best regards,
+Michał Górny
 
-    $ git --git-dir target -C /tmp/tmp.Cl4aXMSVis init
-    Initialized empty Git repository in /tmp/tmp.Cl4aXMSVis/target/
-
-which makes sense and is what I expected: the `-C` and `--git-dir`
-values are joined, as suggested by the docs for `-C` in git(1). But with
-
-    $ git --git-dir /tmp/tmp.Cl4aXMSVis/repo -C /tmp/tmp.Cl4aXMSVis init
-    Initialized empty Git repository in /tmp/tmp.Cl4aXMSVis/repo/
-
-it appears that the `-C` argument is ignored entirely. Is this because
-running `git -C foo ...` is equivalent to running `cd foo; git ...` in a
-shell, so when the `--git-dir` is an absolute path the value of `-C` has
-no effect? (Assuming that `GIT_WORK_TREE` is unset.)
-
-In your example:
-
->        exec git -C /somewhere/else show HEAD:some-file >some-other-file
-
-isn't the behavior to copy the version of `some-file` in the repository
-being rebased to `some-other-file` in the current working directory,
-such that the `-C` has no effect, because the shell redirect is not
-affected by the `-C`? (This is what happens for me.) If so, why include
-the `-C` in the command?
-
-> I do not think that we can sensibly *remove* GIT_DIR from the environment
-> variables passed to the exec'ed command, as we have been doing that for
-> ages, and some scripts (as demonstrated above) started relying on that
-> behavior. So if we changed it, we would break backwards-compatibility,
-> which is something we try to avoid very much in Git.
-
-This makes sense; understood and agreed.
-
-Do you know why `rebase --root` does not set `GIT_DIR`?
-
-> Maybe you could a contribute a patch to the documentation?
-
-Sure; I'd be happy to do that once I understand this a bit better. :-)
-
-Best,
-WC
