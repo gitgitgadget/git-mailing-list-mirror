@@ -2,88 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CB431F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 21:03:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 124D21F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 21:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759146AbeD0VD3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 17:03:29 -0400
-Received: from mout.gmx.net ([212.227.17.22]:59219 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757592AbeD0VD2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 17:03:28 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSp1l-1emhjD0F8v-00Rofq; Fri, 27
- Apr 2018 23:03:22 +0200
-Date:   Fri, 27 Apr 2018 23:03:02 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH v5 00/11] Deprecate .git/info/grafts
-In-Reply-To: <xmqqin8e38wf.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1804272258380.72@tvgsbejvaqbjf.bet>
-References: <cover.1524303776.git.johannes.schindelin@gmx.de> <cover.1524650028.git.johannes.schindelin@gmx.de> <xmqqin8e38wf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1759255AbeD0VIJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 17:08:09 -0400
+Received: from mail-ua0-f180.google.com ([209.85.217.180]:33914 "EHLO
+        mail-ua0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759077AbeD0VII (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 17:08:08 -0400
+Received: by mail-ua0-f180.google.com with SMTP id f22so2028606uam.1
+        for <git@vger.kernel.org>; Fri, 27 Apr 2018 14:08:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=PCU/ccxTlwxih4FYRwBkna2cNJs+UkyzevrwVz8iMeI=;
+        b=HZBQe9AV3/WpZZdVg90HvENv1Hy0kYiXlAelbUuiALZqWqyBEjbJ1qxBjE+3eI4u6e
+         YkMRLF5S5RQ2R2WzP9MZ5HkfNIFVVu8NSYdCBiYA/h4+TtmLkf+xJbK5yc6tAdy8WB5b
+         MgNMu7UyXhZzHRTMGvJl/kAPSsjlikAiHhcm0xjQCkmMgel8DKEpYYTvT2A2FdKZmrcI
+         BPBzPmQgRsB75005hO6oni4f9uF0EG0rONnDOyETC8aL4JHI3xJAneXAerQHCgwiLawL
+         YLYmDlfsS+AncfCRLviKjecfGSuPxNZaWMTxkMBTq3CnzsHZ5c8TfRNow7TnchtczI2W
+         sMuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=PCU/ccxTlwxih4FYRwBkna2cNJs+UkyzevrwVz8iMeI=;
+        b=fSEG8cRQO9VtixJRnJRFiG1eQkua5EDvZLu2cwtDzeUBeZK1NjnEBj14tbTc/c2+Av
+         J6zJ/85VFv2YR4CMxBSkv6sbNL7Tcigj8YyxLEETPfpkVUFQa9z07nLgfnYDaWtsoWV5
+         mhdMwYFp/l11ceia3Sk6/hoLgSnXO8sxmHf1+n5nBP1++E+ep6exStoZ1jtmtWJU/kHh
+         EkL6/Xx1EnzRpl3F67X1P+l4q6Jrn1JG319pRcK31X+couNU3Y5RSi8vGIpE1oUO1dgh
+         ww7z1ZVg8z1NdDa0nekSuliuISc3w3Vu170KylqXdImndm6t2R7A5vO51SrJj6ScOBp3
+         Z/sw==
+X-Gm-Message-State: ALQs6tDyuyQzYPeqv4Fi/FHE5lXwNfuKP7FT9q1yZg1bNOhj5hyex5Ke
+        Hjb2wup18MvoF4dhJE2v3ZUhCAzeXsvLr/gV+D0=
+X-Google-Smtp-Source: AB8JxZpzaF39g/hfIj++kyrNFWZwjN8FpdjOTUSPJqNk4RB7LTA7OcT4mo+bUT6dEFbJRwZylx0J/MkDgjgv/PoZxX8=
+X-Received: by 10.176.90.48 with SMTP id l45mr2678197uad.79.1524863287585;
+ Fri, 27 Apr 2018 14:08:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:sM+RbXhNSkeh8NPNhHLIwR5LB9nYq+/MCLvk8j+0+T4dGTT2/A/
- JJL/ejGpzUhCCouN4G1Lv2urpgARW6RdAYSW56Sq7WEDuLP1zNaOQaX7y8faq25THijYWlf
- Kaa1T/zQ0A+vpX5wdvR2ywE/cjMRWnDbYsHYyMdgLPNDE6gdg7vJBKkDHN3YCPnxvkQhVAd
- C7dBbJE/3CAHvIRv4PR0w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IcCAjMCFf8s=:8F+5RTZ0mPA4OnWQGOxfhe
- P5/hzNwSYkYx+5o9qsIi/QRPpgqZ24UrdBoCJbrtcTSn6cq7C42jUwsmsEqnvf0IsIV7UXKVb
- 8Ms8MiMX5q5ojioibstW6JDI9I3E45cr7LwqiTL92vWTrkDKmlShZZML+VaYYWaVZYitzQaii
- a9mtzmf0vce/1rz7gTjHDifYEglbFVW+OD/nPuynuxAm+y9VDqJ2tW3cnHKgNgxFjUbPnEQ4l
- cSqzzTc8SJkOSCBW+qH7iJTDUD5JSGSo8FWx/3AW2W4U8bfuJyXCS4p4FN+3AYvrpDfxJI6RI
- fvnWKUoLo84F36X7964yf81/x9PncT5Fc/1FQCSuk0TWfkNVkMrBGtHpgDb8e4ZrvwqWg4p8d
- AZ0Z6Hl2L4ux6p2FrEwr2g00HtC8T5fXH9Z/FfHkK5Hs1aKK/gFNE+3v/yxAu02qEAAIFNg0n
- PHJiAcpvKzuiu67keBYTNFRSO9/HtKdK32Sozeg9JwL5bb5Dbs0/y1drrbacl59779P+ALmuR
- ElFRcuo3oNl79br9VYGOeCVggwu4NSIi/35jqegvdjDVxOQDn4voKGznN5tnXQoEAuhMFL2Yl
- qXyzJIkkG+8eRSfA6ynVWHRDb92JQ0cJ5JNZgwAkqUArLZe+WusxVdUN2nEYjRmbpQaSWnWsN
- +lMEaX4icyMTZNra3QS0Nj/IDjiWOzXdtAmbP7JMKFv7aKQV8TbjAtZ0HzObhLBzGhIhRs4q/
- NGR+VxPd4OGdXGR79Jzq+qnIeg9doohFUBSooCALJyuKupUX7P+D5SJU9RhGDa8IOIvnmWME4
- aBkRTX/
+Received: by 10.176.95.4 with HTTP; Fri, 27 Apr 2018 14:08:06 -0700 (PDT)
+In-Reply-To: <CACsJy8AVTkqDomQW7Np5opnK+bMk53pcMtCQRBr-=QXEXs8Nqg@mail.gmail.com>
+References: <20180413170129.15310-1-mgorny@gentoo.org> <robbat2-20180423T200557-844830385Z@orbis-terrarum.net>
+ <xmqqtvs18p9o.fsf@gitster-ct.c.googlers.com> <robbat2-20180425T060717-325652820Z@orbis-terrarum.net>
+ <xmqqin8f4qoq.fsf@gitster-ct.c.googlers.com> <ad4d0d66-58f4-5cab-d314-a30a50e8ad32@xiplink.com>
+ <CACsJy8AVTkqDomQW7Np5opnK+bMk53pcMtCQRBr-=QXEXs8Nqg@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 27 Apr 2018 14:08:06 -0700
+Message-ID: <CABPp-BGPA5BVh7NpBeat+9f0-=ryNg61tf1osgKXGLGDBN1U6w@mail.gmail.com>
+Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Marc Branchaud <marcnarc@xiplink.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Robin H. Johnson" <robbat2@gentoo.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+        Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Fri, Apr 27, 2018 at 10:03 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Apr 25, 2018 at 5:18 PM, Marc Branchaud <marcnarc@xiplink.com> wrote:
+>>
+>> * In a "file checkout" ("git checkout -- path/to/file"), $1 and $2 are
+>> identical so the above loop does nothing.  Offhand I'm not even sure how a
+>> hook might get the right files in this case.
+>
+> This is a limitation of the current post-checkout hook. $3==0 from the
+> hook lets us know this is not a branch switch, but it does not really
+> tell you the affected paths. If it somehow passes all the given
+> pathspec to you, then you should be able to do "git ls-files --
+> $pathspec" which gives you the exact same set of paths that
+> git-checkout updates. We could do this by setting $4 to "--" and put
+> all the pathspecs in $5+ [1] e.g. "HEAD@{1} HEAD 0 -- path/to/file" in
+> the above example.
+>
+> There is  third case here, if you do "git checkout <tree-ish> --
+> path/to/file" then it cannot be covered by the current design. I guess
+> we could set $3 to '2' (retrieve from a tree) to indicate this in
+> addition to 0 (from index) and 1 (from switching branch) and then $1
+> could be the tree in question (pathspecs are passed the same way
+> above)
+>
+> [1] I wonder if we could have a more generic approach to pass
+> pathspecs via environment, which could work for more than just this
+> one hook. Not sure if it's a good idea though.
 
-On Thu, 26 Apr 2018, Junio C Hamano wrote:
+Here's a crazy idea -- maybe instead of a list of pathspecs you just
+provide the timestamp of when git checkout started.  Then the hook
+could walk the tree, find all files with modification times at least
+that late, and modify them all back to the the timestamp of when the
+git checkout started.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> >  -	if (export_object(&old_oid, type, raw, tmpfile))
-> >  -		return -1;
-> >  -	if (launch_editor(tmpfile, NULL, NULL) < 0)
-> >  -		return error("editing object file failed");
-> >  -	if (import_object(&new_oid, type, raw, tmpfile))
-> >  +	tmpfile = git_pathdup("REPLACE_EDITOBJ");
-> >  +	if (export_object(&old_oid, type, raw, tmpfile) ||
-> >  +	    (launch_editor(tmpfile, NULL, NULL) < 0 &&
-> >  +	     error("editing object file failed")) ||
-> >  +	    import_object(&new_oid, type, raw, tmpfile)) {
-> >  +		free(tmpfile);
-> >   		return -1;
-> >  -
-> >  +	}
-> 
-> I know the above is to avoid leaking tmpfile, but a single if ()
-> condition that makes multiple calls to functions primarily for their
-> side effects is too ugly to live.
+Would that be enough?  Is that too crazy?
 
-I changed it back to individual conditional blocks, with every single one
-of them having their own free(tmpfile). That is at least clearer.
+Sure, people could concurrently edit a file or run another program
+that modified files, but if you're doing that you're already playing
+race games with whether your next incremental build is going to be
+able to be correct.  (Some (annoying) IDEs explicitly lock you out
+from editing files during a build to attempt to avoid this very
+problem.)
 
-Ciao,
-Dscho
+That does leave one other caveat: If people intentionally do really
+weird stuff with having files with modification timestamps far in the
+future.  However, it seems likely that the group of people doing that,
+if non-zero in number, is likely to be dis-joint with the group of
+folks that want this special
+uniform-timestamp-across-files-in-a-checkout behavior.
