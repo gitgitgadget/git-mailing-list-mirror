@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7E751F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 22:32:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C75B01F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 22:32:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932997AbeD0WcD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 18:32:03 -0400
-Received: from mout.gmx.net ([212.227.17.21]:43715 "EHLO mout.gmx.net"
+        id S932990AbeD0WcQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 18:32:16 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55571 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932889AbeD0WcB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 18:32:01 -0400
+        id S932889AbeD0WcO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 18:32:14 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
  (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0LnUna-1ek1or0aw2-00hfiK; Sat, 28 Apr 2018 00:31:57 +0200
+ 0MVsUW-1esS5w3hSS-00X3Qu; Sat, 28 Apr 2018 00:32:09 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -28,97 +28,95 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Christian Couder <christian.couder@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Wink Saville <wink@saville.com>
-Subject: [PATCH 5/6] rebase --rebase-merges: a "merge" into a new root is a fast-forward
-Date:   Sat, 28 Apr 2018 00:31:32 +0200
-Message-Id: <0b7379b576be2cee807b8237dc52e5412663a2fd.1524868165.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 6/6] rebase --rebase-merges: root commits can be cousins, too
+Date:   Sat, 28 Apr 2018 00:31:58 +0200
+Message-Id: <270b8fdf477b6c876e203ae6a6b461b010d25f76.1524868165.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.33.gfcbb1fa0445
 MIME-Version: 1.0
 In-Reply-To: <cover.1524868165.git.johannes.schindelin@gmx.de>
 References: <cover.1524868165.git.johannes.schindelin@gmx.de>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:bWHWrZqvfqVyWMlBljPN9oVG67ZQ2ktLMTNhCpas33SjMNJOZuS
- Yj9t9wUJTDYAiFb2M7AchcqbyHjpGP7XTaS/8CLsqI4XkJb6kkgBmoJo7MR2J4CDRlW6fO5
- O/yelKTvcGgCopxMT7Rl/S2VbCAmofbsM2+cEq0jf7HGo5cFNOxuRfn4uOyB8n8y7tsDCs7
- 6NHGLGrS6ieOv5nrEUlnQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lONlMk0vjpU=:me9I+qz9hRyJkqmNVIAta3
- 73+ZtrXgUy2e5/cSc3sd/+r7B8FApINRpVuqPud7oEh9F3I3Ly43ianrgYDivVwfjyUy3n99K
- dB03YrzhUO4HiV9c0HQ2Wk5F5ro/R/a0xEzUUxvOXMwOkbzp/aGMUxkZsSxBa2aQaZvMmO2vl
- 3m1J59sq2d7ete/XnhtM0jRJ8EEd3zBZZ8ff6rLssJqyCaSSTmbAO2aFdsJ10a2TMAQEHOlXE
- ph7GT9StQD5blqxkZFZSRi5XtIgs9lGJwgl3c3CX5JUQwbCr5Ty1tla0trOQWuFVKTrvomoHb
- QkhOlgVqPbWYX/33fG5E+FrujkucYbhH9vVlFiKCBr1PFkaqGPD4f79Pd86amxPcE3chgZEPG
- g52f5rdsLNQ7CwcyiWYmIJsw8ZDvqbgroioEAkxUk1TEig5n+9yOX7iFYAzIYwTVi3oSGwgyv
- muwRDMM6oxpWlNcrWH7EayMhmMytZYaj4AD41SM76dAs0hMuW64qwld0vyo/PKy1scIXxTMx2
- Z0Jaq+t+xPSZtLBOnJm22b/fHsLvCE2anJ7QrrOv+qpYSUYn9sTErd9ZOYS07ZTH/a954fmgE
- /yRsBN9Ftx5+hC4683xxGpJvJS2849QAe6XERDpSBJ6ndY1dfwgyfpSnPH8bVMRjgcCAd+J62
- 1nU9bxLFETCJEDzJGIrGIMeENT37S5iUWEuYbMWSSH+/od/EvwjqvNqGAz/INQOwHR85ghBOe
- vuPFcQzkNBGJ6/X5H/3UaVBn9kaBoamr25r6fp9V3x3mYRwkPm32U9pZg4R8iPTHgXn+fyld1
- 4RSI4vD
+X-Provags-ID: V03:K1:M/Wo30usLJBrb19QX03+7PRhKj0GD4fMOBXcTDYMfm5sYUkScKe
+ A+0MHch8UGVtBCst7Sb8kO8Swf1AiZdFeyfO6xVXeuANxs5VoSXKJI/D6jlXURVEhAT9RqT
+ 6mgjULsEb67mBRI0Zlr/tRVHvYPCMwk43pQqZn88fwvDcNPCjz4PYJXNK6CgsDAilxz49yv
+ YdmWtzEkvSm/yTgb/gLoQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1l2jQ7KhYRU=:99FYhEhrU/dhyjeYsczExN
+ ogsfnMiG8DenfjIKSDEFYHFn0ydkbNUmJq5xNdmEssIaYPaCaa+OMJzjAmz7+2htvKxCTMmcv
+ 1/3mIfsH/jq1f4bGQJXd7UjlAx4vS0uI8Mt3va0cZGJC1PPHttBEWCSw1ENn0M/OGvsFNgbPx
+ zobdEnLLDLseM730yn0sI4WJPzTcn9BvAfG9uRNU8fjvBWFuUi+MVu4qmUzALM9E/ExNWE3Av
+ sIxRlm4uJKEZJ14lPVwmG63gLXrXx/LpaQnYnGaC3UY8Zp6v4gd8JYeT2tufPOs/9aSEhu+35
+ ZeWScRgsBifKyOVCUbQ8FaPzQMh+V4yzFeUd7gpfy2VC9Y5uPJFqUk+QObuqlGKJUPP6gGKls
+ 4QKM/jjepZi/pMBg4iLLKjy3l3Yzyw8SbVkkhFzfHIb0SfUgPGbXFpDKCgOCcTTY39wfn3LFy
+ 1iCRUCmq9Xwk+YFOCyjVgJ+b9kNXnCO2w65eeTrFebH3R4sW0zIzhOCkzk6lpwxz+6vc3EppS
+ UHGta+q8Ci7VioCwsC1cLY+fjz5wwqVhDg1pm4PvQ5bJgmV0mjrZP5XS6Ez9ML5/P9mUFXVVR
+ MojpP4nXig9WgqCjr+Yr4VgArP0okDs6ljtKoS+wri8nbqp5CAyV3Bi3bfHlM/1EC16GcGscg
+ /gl/I45JCaAdISZGzlvMEn7QWWOv13YJHHfELtABxXtPN27vVfePnuMN2k5DBJ9ZIJwKgNlzD
+ gXpGWabAbcOKw9pIRXshn1dOmh2/Hm8FqzHquwnwKvFjSf/ah3FaM3WBpHGo1M6HdkZv67ItU
+ VWvzaNI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a user provides a todo list containing something like
-
-	reset [new root]
-	merge my-branch
-
-let's do the same as if pulling into an orphan branch: simply
-fast-forward.
+Reported by Wink Saville: when rebasing with no-rebase-cousins, we
+will want to refrain from rebasing all of them, even when they are
+root commits.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c              | 12 ++++++++++++
- t/t3430-rebase-merges.sh | 13 +++++++++++++
- 2 files changed, 25 insertions(+)
+ sequencer.c              |  3 ++-
+ t/t3430-rebase-merges.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index d10ebd62520..ad5ff2709a6 100644
+index ad5ff2709a6..2bcd13e1fc6 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2850,6 +2850,18 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
- 		goto leave_merge;
- 	}
+@@ -3883,7 +3883,8 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 		}
  
-+	if (opts->have_squash_onto &&
-+	    !oidcmp(&head_commit->object.oid, &opts->squash_onto)) {
-+		/*
-+		 * When the user tells us to "merge" something into a
-+		 * "[new root]", let's simply fast-forward to the merge head.
-+		 */
-+		rollback_lock_file(&lock);
-+		ret = fast_forward_to(&merge_commit->object.oid,
-+				       &head_commit->object.oid, 0, opts);
-+		goto leave_merge;
-+	}
-+
- 	if (commit) {
- 		const char *message = get_commit_buffer(commit, NULL);
- 		const char *body;
+ 		if (!commit)
+-			fprintf(out, "%s onto\n", cmd_reset);
++			fprintf(out, "%s %s\n", cmd_reset,
++				rebase_cousins ? "onto" : "[new root]");
+ 		else {
+ 			const char *to = NULL;
+ 
 diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 35260862fcb..5543f1d5a34 100755
+index 5543f1d5a34..ce6de6f491e 100755
 --- a/t/t3430-rebase-merges.sh
 +++ b/t/t3430-rebase-merges.sh
-@@ -275,4 +275,17 @@ test_expect_success 'root commits' '
- 	test_cmp_rev HEAD $before
+@@ -287,5 +287,30 @@ test_expect_success 'a "merge" into a root commit is a fast-forward' '
+ 	test_cmp_rev HEAD $head
  '
  
-+test_expect_success 'a "merge" into a root commit is a fast-forward' '
-+	head=$(git rev-parse HEAD) &&
-+	cat >script-from-scratch <<-EOF &&
-+	reset [new root]
-+	merge $head
-+	EOF
-+	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
++test_expect_success 'A root commit can be a cousin, treat it that way' '
++	git checkout --orphan khnum &&
++	test_commit yama &&
++	git checkout -b asherah master &&
++	test_commit shamkat &&
++	git merge --allow-unrelated-histories khnum &&
 +	test_tick &&
-+	git rebase -i -r HEAD^ &&
-+	test_cmp_rev HEAD $head
++	git rebase -f -r HEAD^ &&
++	! test_cmp_rev HEAD^2 khnum &&
++	test_cmp_graph HEAD^.. <<-\EOF &&
++	*   Merge branch '\''khnum'\'' into asherah
++	|\
++	| * yama
++	o shamkat
++	EOF
++	test_tick &&
++	git rebase --rebase-merges=rebase-cousins HEAD^ &&
++	test_cmp_graph HEAD^.. <<-\EOF
++	*   Merge branch '\''khnum'\'' into asherah
++	|\
++	| * yama
++	|/
++	o shamkat
++	EOF
 +'
-+
-+
+ 
  test_done
 -- 
 2.17.0.windows.1.33.gfcbb1fa0445
-
-
