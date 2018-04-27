@@ -7,54 +7,53 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 410F51F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 18:45:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6665B1F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 18:46:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757856AbeD0Sph (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 14:45:37 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34476 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757523AbeD0Spg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 14:45:36 -0400
-Received: by mail-pg0-f50.google.com with SMTP id p10-v6so2197373pgn.1
-        for <git@vger.kernel.org>; Fri, 27 Apr 2018 11:45:36 -0700 (PDT)
+        id S1758200AbeD0Sqn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 14:46:43 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:34452 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758154AbeD0Sqm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 14:46:42 -0400
+Received: by mail-pg0-f68.google.com with SMTP id p10-v6so2199260pgn.1
+        for <git@vger.kernel.org>; Fri, 27 Apr 2018 11:46:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=oGmtY9SStaIN3de88kcjmdM0w8/cQJFuWcUtLjgeWDc=;
-        b=fUNIzpOo9J/xyjq0XzQfgvu5qwbmfcxaFYew/m4LhTSGz0iZqAJ9KxOHs4z5dV6iML
-         XS04Q5uicwNNVw7Jhznw8/TO/kSdo4xtxObwtkj7ncekhdw7qd1lsHs2WkUk28QK9KIx
-         pjjTFmDd29v1ti1QQx8SHY82TCb9jsv9HHgZWvcxkePN6ZSHGAhQdfZ1Mj5fPHNiaJQV
-         NU/TDyGjOgyPNcqz+rkB5iu6gwUIDAZgnRhf6GVMhQUE9uIoUQwkCtFArQxc+mMLuasp
-         HqN8oy4guqooIVqG8LfBy9n7ZltxY9qubgxXh7xt4v0LTuYJEnWuq3TcbYQTEUdZ3ss+
-         MfQg==
+        bh=cRkH2TqxUKTiwHj+hh3+GTn43jJiLMwIItx38fA5aUU=;
+        b=UURiV2FXgz09rNdZgfrjXy5VyhCm+GaFD9WYaRN2+afFom3grL0ZPjcSOLPfVCDpy7
+         HgOs3DqnnfX5R6IRaMxecpuCol45VoL4isdS8TFkqe8xPT+pJ8mB7EB7qaBFmNNFHu4O
+         SUYOK+DJdLshF0SCXpo5NC1Dbh2MtQZUZJrxumj5QY7N6O9nKcMGDMnxPHIPBHiqZD3n
+         OpqGSc91U0Jf70Zw/Y0eDrVlje+u12aJz0egbkm7gvBI9YSTVCTqGCkq7K97HdbOiBsG
+         MxebtWG9Ptx/1V05YZk+E5/w72DDI7aL7+Cd0NYh2WvBrsWAAjqIAgjql/ZB4ED+ZJj8
+         C+MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=oGmtY9SStaIN3de88kcjmdM0w8/cQJFuWcUtLjgeWDc=;
-        b=WDL96WzpW/dtuy0tBxc6xXFFDOQnLd+MII338LZxpp4/cmaD3+7NXWG6Se5G2ey9R2
-         BJb8rMVfG78S7kqwSKxVxjYUw77+DGJ5BbZE8/uwhbP0wTv0hsJuMMHK5PVYqCDECVi8
-         QHCx7K3eJQao4MUO5PgQ8nIUisFmY5ZATQTyeI7lwquGV1dUGZnJJVsp+7zKOojZg+t7
-         1w6DRAPMown1k14XKDjs2LzL+ETBHhmP1ra2sbJ3ErIz5Yfh7OqesQwU5eyx1PutbCCD
-         lpI32FdUc6RUkaNberhkznAYbLXsuxjYpf6OsmPhkc2+F4B1uSBAQ2yRyNFIohXArsL0
-         vZ8g==
-X-Gm-Message-State: ALQs6tAS3fl0h5Z3mrzVH7n7egEthcY2PcmrmeJAJz4HUg5zS0o2fpEn
-        7eEw1gBjIDNr771PhGQDzLH2ag1SFM+tuQiNihk=
-X-Google-Smtp-Source: AB8JxZq6DcyHWYnUQnOUsr5x4ZjqZ1j6/LdJF0f2qJMF8AhIsddQmTUxugWM21VAbPw/u1O81TsVASwo6ngiPSSHrnQ=
-X-Received: by 2002:a17:902:1c7:: with SMTP id b65-v6mr3243331plb.298.1524854736042;
- Fri, 27 Apr 2018 11:45:36 -0700 (PDT)
+        bh=cRkH2TqxUKTiwHj+hh3+GTn43jJiLMwIItx38fA5aUU=;
+        b=HOEZrs5UAZWC4rFrt8YxuN5A+G/cZyw1nBa4lXuTSoWz7l3qgXMV9Okw7J3slZ9Wc4
+         EoBfL1gj+/8rWeXT4n8AilmGyZ3bXvFg646bP36mXpuk4YxqKnRCja+Csq2w/LJuvq9G
+         RxF7pP1L+tK225eRdthRKN2xyeS07LBuG8myPgVCMjH51P5V484KLETUPGMHtF8H172K
+         TwlQ7p1ezzYKKKtv58JY4IqqyKRsTRovlYf5CgkcsdolJ5RrNq1RFJWIaVEXXL8zxQHb
+         nBN87tNS/BDFbIsTiwRaFxOetCbzIilyq00y+CIn7evgrDAKSdCrRRi1mRdek74alWo1
+         /xzw==
+X-Gm-Message-State: ALQs6tAuviWAU/j6PDLdALrpQNjVRX+kwGadpmjM09q9h7/h81cj/THJ
+        duMbc7jmB4KkC5XliUPS0EvFPcRcZKbDs4QDsPs=
+X-Google-Smtp-Source: AB8JxZpfSTJJN3tP7TX4geGq/JvR7W3W7ltRCf6nuWSSegtLH2wOrZRrCS4XNTai+3iMgkw0M84OSdBlWKRgyQHaoYs=
+X-Received: by 10.98.216.199 with SMTP id e190mr3140219pfg.161.1524854801669;
+ Fri, 27 Apr 2018 11:46:41 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Fri, 27 Apr 2018 11:45:35 -0700 (PDT)
-In-Reply-To: <a3253c99-63a4-22bc-53a0-4d94c01a564c@gmail.com>
+Received: by 10.236.187.139 with HTTP; Fri, 27 Apr 2018 11:46:40 -0700 (PDT)
+In-Reply-To: <20180427170440.30418-2-asheiduk@gmail.com>
 References: <20180410183224.10780-1-asheiduk@gmail.com> <20180427170440.30418-1-asheiduk@gmail.com>
- <20180427170440.30418-3-asheiduk@gmail.com> <CAN0heSpdc51+7-uWcLVXU72qLZgZApdME8ywBJaQQy4DiWHAfg@mail.gmail.com>
- <a3253c99-63a4-22bc-53a0-4d94c01a564c@gmail.com>
+ <20180427170440.30418-2-asheiduk@gmail.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 27 Apr 2018 20:45:35 +0200
-Message-ID: <CAN0heSquZ9WGQE=SCZ0DkgsbKPc80r5TmYhNXOGKFJ6MaJ_sOQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] doc: align 'diff --no-index' in text with synopsis
+Date:   Fri, 27 Apr 2018 20:46:40 +0200
+Message-ID: <CAN0heSrd8ej0YMmWrNXw-DRpwEZi=sTL91zNFvHA4tiqz=KAfA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] doc: improve formatting in githooks.txt
 To:     Andreas Heiduk <asheiduk@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
@@ -65,48 +64,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27 April 2018 at 20:28, Andreas Heiduk <asheiduk@gmail.com> wrote:
-> Am 27.04.2018 um 19:18 schrieb Martin =C3=85gren:
->> On 27 April 2018 at 19:04, Andreas Heiduk <asheiduk@gmail.com> wrote:
->>> The two '<path>' parameters are not optional but the option
->>> '--no-index' is. Also move the `--options` part to the same
->>> place where the other variants show them.
->>
->> Should this commit message be updated after the changes you did to
->> address Junio's comment? This text suggests you want to place --no-index
->> in [] (and you did in v1) but you do not do that below.
->>
->>> All three items are already correct in the synopsis.
->>
->> Same here, now you actually do change things there.
->>
->>> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
->>> Reviewed-by: Martin =C3=85gren <martin.agren@gmail.com>
->>
->> Strictly speaking, my Reviewed-by was on another patch. I do find this
+On 27 April 2018 at 19:04, Andreas Heiduk <asheiduk@gmail.com> wrote:
+> Typeset commands and similar things with as `git foo` instead of
+> 'git foo' or 'git-foo' and add linkgit to the commands which run
+> the hooks.
 >
-> Sorry, I've added that trailer after reading "The diff LGTM.", then
-> applied Junio's changes and forgot to remove the trailer.
->
->> one better though thanks to Junio's suggestion (except the mismatch with
->> the commit message).
->
-> I'll fix that with this:
->
->         doc: align 'diff --no-index' in text with synopsis
+> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+> Reviewed-by: Martin =C3=85gren <martin.agren@gmail.com>
 
-s/with/and/ since they both change? It's not that the first changes to
-match the second, but they actually both change to match each other (and
-to be correct, obviously).
+Indeed. The difference between last time (the original patch and the two
+fixups) and this patch is precisely the small tweaks that I suggested.
 
->         Make the two '<path>' parameters in DESCRIPTION mandatory and
->         move the `--options` part to the same place where the other
->         variants show them. And finally make `--no-index` in SYNOPSIS
->         as mandatory as in DESCRIPTION.
-
-Great! Junio had some good reasoning about how --no-index is
-sometimes optional, but not always. Not sure if it's worth spelling that
-out. (Although one could argue that it already did trip us up once. :-))
-
-Eric's point about "--options" vs "options" seemed right to me. If you
-address that, note that this message says "--options".
+Thanks
+Martin
