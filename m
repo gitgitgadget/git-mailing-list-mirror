@@ -7,100 +7,105 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 690371F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 21:41:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB5C1F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 21:45:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759378AbeD0VlF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 17:41:05 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56595 "EHLO mout.gmx.net"
+        id S1759310AbeD0Vpu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 17:45:50 -0400
+Received: from mout.web.de ([217.72.192.78]:49931 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1759343AbeD0VlE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 17:41:04 -0400
-Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
- (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MSHax-1enFh90J4d-00TSe7; Fri, 27 Apr 2018 23:41:00 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v6 11/11] Remove obsolete script to convert grafts to replace refs
-Date:   Fri, 27 Apr 2018 23:40:54 +0200
-Message-Id: <b321979f88589e7b006466159c470800db948d66.1524865158.git.johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.17.0.windows.1.33.gfcbb1fa0445
+        id S1759305AbeD0Vpt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 17:45:49 -0400
+Received: from [192.168.209.26] ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LgpJ4-1eZ0xh24e6-00oDOC; Fri, 27
+ Apr 2018 23:45:47 +0200
+Subject: Re: BUG report: unicode normalization on APFS (Mac OS High Sierra)
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <CABPp-BEe+BK6Ew0ZLnkgCn=1J6kyJa5VTaibuJOEVeDdgLd_Ow@mail.gmail.com>
+ <94c6fa4d-afe0-5a08-f844-85d3c091d3b2@web.de>
+ <CABPp-BHitvta8we8di-tFiNdVV7vXnMNAhiAs2=CrQc-gGuSJw@mail.gmail.com>
+From:   =?UTF-8?Q?Totsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <7f9feab0-3638-56cd-18bb-4de0122aabad@web.de>
+Date:   Fri, 27 Apr 2018 23:45:42 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <cover.1524865158.git.johannes.schindelin@gmx.de>
-References: <cover.1524650028.git.johannes.schindelin@gmx.de> <cover.1524865158.git.johannes.schindelin@gmx.de>
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:7XYLFY3YdjyGRu/jQJdxuV46h8RkchyHi6/Obr2FxKfg6hCRlh/
- vji40xtHK6/1ODwY+tPgUFasoHQebWxualQD1Nb4CAUpmY7jASPpZQBlhJnMgOX9xTKdKzX
- ESLebHtXTf9Yq916rSdrVA3FDkRwd6nzy9topv9qngLVvWvQ+IarjQgGPssExrYZkDbQRul
- c7Hgi+gR3ueNYc9+V809g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WhLqA8LnksY=:Kp+CfD1STdTA9lT+aa5QcT
- zLTu/N2Qhj8G/8sels9cX1cazlQqQCB6KDwecPgBIJyD6pat1nXloumHuBwAJEHt4aVSgZWPM
- x3FZ+r0rMp+hOGvwiEJAdMWWf4OE1UX0HvG1WU3cX/urAeNOkwr2708/4Sq0YbELFvEFx7dht
- gSgxCUDk8Od2WlgHXd7J4w7YdfVf/QUXlhMsxm6AvTKjxLgMsHujLBocjvBm0yb1s8pD4etiM
- 7+MoMAmyYcUsy5o2Ht7f8ZlUpYfPi/67AB7/X6ma2ZYTMkYa6WumnDyQXpi5ME7Zh3ownQvuM
- N5mrG0ycvQZHpngCnANw8exh+42BX3MvlnIWPLjyTjXMJLE0RlXD5sd6SaLTV5V4mt9k0FrzW
- RX3dpk/MJZFk+37uR5FIgZ/q/vql8IzjzG5JEavOE+p0nDPyNGrioquMA74CrP1hOyyzMTdCk
- oD5J9OdM+5+nckkPftOH02IpT55HGlg8dSwprhIffLmfwWti1mLyE/BvXA6T3zIc+LV/7fA/H
- peOBhtwvvD+gNXihugFknbcWdd4dskgtbnv1DYYGR7ps75z3laCROIWx8EPNdCGOdAIZJITn1
- B+lfihciPbm/X99a6iJPnNGueS0zLm+m5IyUc0eejqrcovl5Zo86TrZYcXu3xrtdlkxxpHYyd
- VnEyU296LViNKNULLWywgRKoVTm8VRPNkOf8eBfGCuN2rc7vVAKqOoTvNmEH+iSQU6gt7IGEH
- wWCFhRyprw7YlJlgTXtISsk94tGICV7g12DKEGb0gPlybgPEGEcMHApogrLxXL/1gew9ykuVt
- f/DHDQG
+In-Reply-To: <CABPp-BHitvta8we8di-tFiNdVV7vXnMNAhiAs2=CrQc-gGuSJw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:xQ4hdVNRgLbdSjN/CPdzcJNzDAEHjP45TrRREdGE8IZwt+OeBnc
+ jCf54M28TiuF8AbrD/uG2cH9jD8oQIdl4jIxiET8g7gyG/xRqDj0NDkEoC0pAMCmYYdY1ZE
+ iIvhN3aI++Qjw0N6Lw4AyQdDHInIKxcVSFxlKyF2Xy/fozNQgaREkw8ERMQcug+INnwjR2U
+ Y6wHqvhA0/WV93p+dVALA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:T2eAy7Twy5c=:v5GAeAp0zb2ihTTPhLMsE8
+ 5SWEiYXZ8qwcfYUsoDKupWr0N8JWTppSmoTAP/8EvOR0bG9SxUbnQZx27+lni64M/Tlzavr9n
+ F2hpOdchUBAlf1QKV2Piiyw8/dbtYrNt6kZlsZUw2U1ZMuLnjkRHdMxQjDBU3TXNaz+PhnbiW
+ CTDRTwakZOF9s5wl6MCJN77plfbUpt/OojObpgwfEhyg1tftV4UXmB6YwQgLC8YSjesezwJJQ
+ wQgR2+3NwLW9vbgDheJOM8Yf0P8nZGS8NeBsLWTFmOyanKmdkseRQa+jp/3YYYjopoVheY97+
+ ReO5KlyvzQhKa4CaZqUM5ioajV/PM9QhfNQjrEyJEH74zIQ5VIvxLfx+3JBbZ7JeZPp+W2DTR
+ 3Ptz9YKK9wuVlJFW6F7D0QZz9CUcQt1z3SgJFwh3MHc/oucWidCAVTZfIHhAbHSnL0z+ddKPp
+ MYagKO9pFIFBz759BAbTFKRWSf25LZPEFClYhyDRFzn6m50WRBHLupHRHSSbrXnoSoMWFVoI4
+ 59hrYi3ssmO6DNAe3jUn0pboDoCzIBPpjmo1/NO3IHG+VyMMNhK3oolVKxSeudmln8gW/hlLy
+ aX9Kr70RjQe+4o4EdzEg7TmDbxn0wXcMxnIMSVqdjIIIDcq4DlJ7eMeSoOFbtBK5jinVOzX71
+ c94WeTUEQBDM50N2PrLHEwcm2+dgDORokIUvUllWs+w33J4PsS4KQdQ3hkJwei4rLaB8U+u/f
+ awnw/BfziyWQ0fpbcgbXUeo0wRuTbCJQF1WLmnB13uEYUhycU7o67BS4Y/pcf/GZ+V6B8m7sa
+ Lqr7Ywe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The functionality is now implemented as `git replace
---convert-graft-file`.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- contrib/convert-grafts-to-replace-refs.sh | 28 -----------------------
- 1 file changed, 28 deletions(-)
- delete mode 100755 contrib/convert-grafts-to-replace-refs.sh
 
-diff --git a/contrib/convert-grafts-to-replace-refs.sh b/contrib/convert-grafts-to-replace-refs.sh
-deleted file mode 100755
-index 0cbc917b8cf..00000000000
---- a/contrib/convert-grafts-to-replace-refs.sh
-+++ /dev/null
-@@ -1,28 +0,0 @@
--#!/bin/sh
--
--# You should execute this script in the repository where you
--# want to convert grafts to replace refs.
--
--GRAFTS_FILE="${GIT_DIR:-.git}/info/grafts"
--
--. $(git --exec-path)/git-sh-setup
--
--test -f "$GRAFTS_FILE" || die "Could not find graft file: '$GRAFTS_FILE'"
--
--grep '^[^# ]' "$GRAFTS_FILE" |
--while read definition
--do
--	if test -n "$definition"
--	then
--		echo "Converting: $definition"
--		git replace --graft $definition ||
--			die "Conversion failed for: $definition"
--	fi
--done
--
--mv "$GRAFTS_FILE" "$GRAFTS_FILE.bak" ||
--	die "Could not rename '$GRAFTS_FILE' to '$GRAFTS_FILE.bak'"
--
--echo "Success!"
--echo "All the grafts in '$GRAFTS_FILE' have been converted to replace refs!"
--echo "The grafts file '$GRAFTS_FILE' has been renamed: '$GRAFTS_FILE.bak'"
--- 
-2.17.0.windows.1.33.gfcbb1fa0445
+On 2018-04-26 19:23, Elijah Newren wrote:
+> On Thu, Apr 26, 2018 at 10:13 AM, Torsten Bögershausen <tboegi@web.de> wrote:
+>> Hm,
+>> thanks for the report.
+>> I don't have a high sierra box, but I can probably get one.
+>> t0050 -should- pass automagically, so I feel that I can do something.
+>> Unless someone is faster of course.
+> 
+> Sweet, thanks for taking a look.
+> 
+>> Is it possible that  you run
+>> debug=t verbose=t ./t0050-filesystem.sh
+>> and send the output to me ?
+> 
+> Sure.  First, though, note that I can make it pass (or at least "not
+> ok...TODO known breakage") with the following patch (may be
+> whitespace-damaged by gmail):
+> 
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 483c8d6d7..770b91f8c 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1106,12 +1106,7 @@ test_lazy_prereq UTF8_NFD_TO_NFC '
+>          auml=$(printf "\303\244")
+>          aumlcdiar=$(printf "\141\314\210")
+>          >"$auml" &&
+> -       case "$(echo *)" in
+> -       "$aumlcdiar")
+> -               true ;;
+> -       *)
+> -               false ;;
+> -       esac
+> +       stat "$aumlcdiar" >/dev/null 2>/dev/null
+
+Nicely analyzed and improved.
+
+The "stat" statement is technically correct.
+I think that a more git-style fix would be
+[] ---
++       test -r "$aumlcdiar"
+
+instead of the stat.
+
+I looked into the 2 known breakages.
+In short: they test use cases which are not sooo important for a user in 
+practice, but do a good test if the code is broken.
+IOW: I can't see a need for immediate action.
+
+As you already did all the analyzes:
+Do you want to send a patch ?
