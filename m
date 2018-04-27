@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF5821F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 22:31:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7E751F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 22:32:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932957AbeD0Wbj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 18:31:39 -0400
-Received: from mout.gmx.net ([212.227.17.21]:48475 "EHLO mout.gmx.net"
+        id S932997AbeD0WcD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 18:32:03 -0400
+Received: from mout.gmx.net ([212.227.17.21]:43715 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932940AbeD0Wbi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 18:31:38 -0400
+        id S932889AbeD0WcB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 18:32:01 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
- (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MfAog-1f0jpW0O8A-00OsDI; Sat, 28 Apr 2018 00:31:32 +0200
+ (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0LnUna-1ek1or0aw2-00hfiK; Sat, 28 Apr 2018 00:31:57 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -28,151 +28,94 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Christian Couder <christian.couder@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Wink Saville <wink@saville.com>
-Subject: [PATCH 4/6] sequencer: allow introducing new root commits
-Date:   Sat, 28 Apr 2018 00:31:30 +0200
-Message-Id: <8a7f575141218c8780b94d5df948906695294a2f.1524868165.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 5/6] rebase --rebase-merges: a "merge" into a new root is a fast-forward
+Date:   Sat, 28 Apr 2018 00:31:32 +0200
+Message-Id: <0b7379b576be2cee807b8237dc52e5412663a2fd.1524868165.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.33.gfcbb1fa0445
 MIME-Version: 1.0
 In-Reply-To: <cover.1524868165.git.johannes.schindelin@gmx.de>
 References: <cover.1524868165.git.johannes.schindelin@gmx.de>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:IyAlg3Q9i2HFaRAVOOg3K+MXJd8uBJhUVoM7O+FIZBp03ubJdAd
- erNLQnhi11y4h1cVXOqlvy2eWpyhMFDPF8a0Z2WgwWxkXcpPywFTYaUwvymI4MNSckIlUfa
- asoHOMoi1oWtdfYMgMJlMPh079eHr3YaFTrIdNyB+frIHXNbw/vuO/lZe0Yi9DEAiCW04wL
- 5aPmMCsPr55VOBe1h8MpA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nZJxoG/j7Io=:HZivnQ+jmR6kIgQHe/DayP
- J7vK4Pjn2kmuORmeIhkBYcjRXf0PZ2RspYo7AUCXYZ+eDx28vFNw6+hLZCCXKHFhZ/hHbfyaF
- a32/sjevMuFonBo0CfKo9Va7jlEhJVM0oqUfe5ciTMPdXDy9NtQ/9SyOraOEs9U8DBGTiSWB8
- B2MhjEmWDJqea06sDobDMwAnzhESYspTxO02cFFkVs2LcORA1KnxxQ42As37tGpUC5E+7dAHH
- V1sYenXqBI/maG5pjp1YD+drmVKNCgSwcEkJnNElglpm5cfqOYix4hl03BKU40KQGML3jZDbm
- dNgEHRbb01VNsHhBlMgDelSE7uFt15Y7WGVYQIMTueEQtUxAUX6wgC+8J2R1QegDAsVDkD/fn
- HaGKxeD4aSasPC64GU4rgPN1DerphrwfAezcmGmEoCjcCbxVptNEBZU3xMPUla4dHSw7oxT+u
- QjlBm0wucvZA5Z+3bHzwR/vpznO702MqZ9BH16CJqM/YbOO0U3t2d7ySN1Z8mb/Y10DQ/f81Y
- ojLZvhaqfkHRGPUfMlS+x4/CORD1UnvwWVrOTknda1FaOii556oQrwwQ7zx5+iJ81ECvWYm4K
- QBFO/bXlc4ILUPqnzJ2LIS/GwQBEi9Dnhzph8SyfffnwImuIGHsufiSne/GToxHT0tNc2WjGe
- nbEiPgAP8ytMlrFZ8mDHMRXBWhlZbJdjpMInlMjtTpNMuYhfzyxbIdzNzWWET3yNbYNVt8bks
- 3TNuennK7MBcP6FmMMljd2gWqt8iI7E7CAMQbnbyYW5kH35fxoj6Gr71sidIgVJKuqqziJJGq
- zIQEyf4
+X-Provags-ID: V03:K1:bWHWrZqvfqVyWMlBljPN9oVG67ZQ2ktLMTNhCpas33SjMNJOZuS
+ Yj9t9wUJTDYAiFb2M7AchcqbyHjpGP7XTaS/8CLsqI4XkJb6kkgBmoJo7MR2J4CDRlW6fO5
+ O/yelKTvcGgCopxMT7Rl/S2VbCAmofbsM2+cEq0jf7HGo5cFNOxuRfn4uOyB8n8y7tsDCs7
+ 6NHGLGrS6ieOv5nrEUlnQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lONlMk0vjpU=:me9I+qz9hRyJkqmNVIAta3
+ 73+ZtrXgUy2e5/cSc3sd/+r7B8FApINRpVuqPud7oEh9F3I3Ly43ianrgYDivVwfjyUy3n99K
+ dB03YrzhUO4HiV9c0HQ2Wk5F5ro/R/a0xEzUUxvOXMwOkbzp/aGMUxkZsSxBa2aQaZvMmO2vl
+ 3m1J59sq2d7ete/XnhtM0jRJ8EEd3zBZZ8ff6rLssJqyCaSSTmbAO2aFdsJ10a2TMAQEHOlXE
+ ph7GT9StQD5blqxkZFZSRi5XtIgs9lGJwgl3c3CX5JUQwbCr5Ty1tla0trOQWuFVKTrvomoHb
+ QkhOlgVqPbWYX/33fG5E+FrujkucYbhH9vVlFiKCBr1PFkaqGPD4f79Pd86amxPcE3chgZEPG
+ g52f5rdsLNQ7CwcyiWYmIJsw8ZDvqbgroioEAkxUk1TEig5n+9yOX7iFYAzIYwTVi3oSGwgyv
+ muwRDMM6oxpWlNcrWH7EayMhmMytZYaj4AD41SM76dAs0hMuW64qwld0vyo/PKy1scIXxTMx2
+ Z0Jaq+t+xPSZtLBOnJm22b/fHsLvCE2anJ7QrrOv+qpYSUYn9sTErd9ZOYS07ZTH/a954fmgE
+ /yRsBN9Ftx5+hC4683xxGpJvJS2849QAe6XERDpSBJ6ndY1dfwgyfpSnPH8bVMRjgcCAd+J62
+ 1nU9bxLFETCJEDzJGIrGIMeENT37S5iUWEuYbMWSSH+/od/EvwjqvNqGAz/INQOwHR85ghBOe
+ vuPFcQzkNBGJ6/X5H/3UaVBn9kaBoamr25r6fp9V3x3mYRwkPm32U9pZg4R8iPTHgXn+fyld1
+ 4RSI4vD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the context of the new --rebase-merges mode, which was designed
-specifically to allow for changing the existing branch topology
-liberally, a user may want to extract commits into a completely fresh
-branch that starts with a newly-created root commit.
-
-This is now possible by inserting the command `reset [new root]` before
-`pick`ing the commit that wants to become a root commit. Example:
+When a user provides a todo list containing something like
 
 	reset [new root]
-	pick 012345 a commit that is about to become a root commit
-	pick 234567 this commit will have the previous one as parent
+	merge my-branch
 
-This does not conflict with other uses of the `reset` command because
-`[new root]` is not (part of) a valid ref name: both the opening bracket
-as well as the space are illegal in ref names.
+let's do the same as if pulling into an orphan branch: simply
+fast-forward.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c              | 40 ++++++++++++++++++++++++++++------------
- t/t3430-rebase-merges.sh | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 62 insertions(+), 12 deletions(-)
+ sequencer.c              | 12 ++++++++++++
+ t/t3430-rebase-merges.sh | 13 +++++++++++++
+ 2 files changed, 25 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index fc124596b53..d10ebd62520 100644
+index d10ebd62520..ad5ff2709a6 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2727,18 +2727,34 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
- 	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
- 		return -1;
- 
--	/* Determine the length of the label */
--	for (i = 0; i < len; i++)
--		if (isspace(name[i]))
--			len = i;
--
--	strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
--	if (get_oid(ref_name.buf, &oid) &&
--	    get_oid(ref_name.buf + strlen("refs/rewritten/"), &oid)) {
--		error(_("could not read '%s'"), ref_name.buf);
--		rollback_lock_file(&lock);
--		strbuf_release(&ref_name);
--		return -1;
-+	if (len == 10 && !strncmp("[new root]", name, len)) {
-+		if (!opts->have_squash_onto) {
-+			const char *hex;
-+			if (commit_tree("", 0, the_hash_algo->empty_tree,
-+					NULL, &opts->squash_onto,
-+					NULL, NULL))
-+				return error(_("writing fake root commit"));
-+			opts->have_squash_onto = 1;
-+			hex = oid_to_hex(&opts->squash_onto);
-+			if (write_message(hex, strlen(hex),
-+					  rebase_path_squash_onto(), 0))
-+				return error(_("writing squash-onto"));
-+		}
-+		oidcpy(&oid, &opts->squash_onto);
-+	} else {
-+		/* Determine the length of the label */
-+		for (i = 0; i < len; i++)
-+			if (isspace(name[i]))
-+				len = i;
-+
-+		strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
-+		if (get_oid(ref_name.buf, &oid) &&
-+		    get_oid(ref_name.buf + strlen("refs/rewritten/"), &oid)) {
-+			error(_("could not read '%s'"), ref_name.buf);
-+			rollback_lock_file(&lock);
-+			strbuf_release(&ref_name);
-+			return -1;
-+		}
+@@ -2850,6 +2850,18 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
+ 		goto leave_merge;
  	}
  
- 	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
++	if (opts->have_squash_onto &&
++	    !oidcmp(&head_commit->object.oid, &opts->squash_onto)) {
++		/*
++		 * When the user tells us to "merge" something into a
++		 * "[new root]", let's simply fast-forward to the merge head.
++		 */
++		rollback_lock_file(&lock);
++		ret = fast_forward_to(&merge_commit->object.oid,
++				       &head_commit->object.oid, 0, opts);
++		goto leave_merge;
++	}
++
+ 	if (commit) {
+ 		const char *message = get_commit_buffer(commit, NULL);
+ 		const char *body;
 diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 3d4dfdf7bec..35260862fcb 100755
+index 35260862fcb..5543f1d5a34 100755
 --- a/t/t3430-rebase-merges.sh
 +++ b/t/t3430-rebase-merges.sh
-@@ -241,4 +241,38 @@ test_expect_success 'refuse to merge ancestors of HEAD' '
+@@ -275,4 +275,17 @@ test_expect_success 'root commits' '
  	test_cmp_rev HEAD $before
  '
  
-+test_expect_success 'root commits' '
-+	git checkout --orphan unrelated &&
-+	(GIT_AUTHOR_NAME="Parsnip" GIT_AUTHOR_EMAIL="root@example.com" \
-+	 test_commit second-root) &&
-+	test_commit third-root &&
-+	cat >script-from-scratch <<-\EOF &&
-+	pick third-root
-+	label first-branch
++test_expect_success 'a "merge" into a root commit is a fast-forward' '
++	head=$(git rev-parse HEAD) &&
++	cat >script-from-scratch <<-EOF &&
 +	reset [new root]
-+	pick second-root
-+	merge first-branch # Merge the 3rd root
++	merge $head
 +	EOF
 +	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
 +	test_tick &&
-+	git rebase -i --force --root -r &&
-+	test "Parsnip" = "$(git show -s --format=%an HEAD^)" &&
-+	test $(git rev-parse second-root^0) != $(git rev-parse HEAD^) &&
-+	test $(git rev-parse second-root:second-root.t) = \
-+		$(git rev-parse HEAD^:second-root.t) &&
-+	test_cmp_graph HEAD <<-\EOF &&
-+	*   Merge the 3rd root
-+	|\
-+	| * third-root
-+	* second-root
-+	EOF
-+
-+	: fast forward if possible &&
-+	before="$(git rev-parse --verify HEAD)" &&
-+	test_might_fail git config --unset sequence.editor &&
-+	test_tick &&
-+	git rebase -i --root -r &&
-+	test_cmp_rev HEAD $before
++	git rebase -i -r HEAD^ &&
++	test_cmp_rev HEAD $head
 +'
++
 +
  test_done
 -- 
