@@ -2,101 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F6571F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 17:05:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67E201F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 17:15:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758850AbeD0RFj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 13:05:39 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:43091 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758824AbeD0RFh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 13:05:37 -0400
-Received: by mail-wr0-f195.google.com with SMTP id v15-v6so2423746wrm.10
-        for <git@vger.kernel.org>; Fri, 27 Apr 2018 10:05:36 -0700 (PDT)
+        id S1758908AbeD0RPV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 13:15:21 -0400
+Received: from mail-ot0-f182.google.com ([74.125.82.182]:36552 "EHLO
+        mail-ot0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758271AbeD0RPT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 13:15:19 -0400
+Received: by mail-ot0-f182.google.com with SMTP id p2-v6so2837412otf.3
+        for <git@vger.kernel.org>; Fri, 27 Apr 2018 10:15:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=jOsmGRkGdCTKSE5GHSNgUvBG7EoaXkBa9gXnyhGpfqw=;
-        b=kOfE5SEyiXD8+J8zGQOmsjMVxuhmMkfzKdrJgAlK3VWTJvqHOUxKcLMSkHUmZn1tB5
-         CbnhxpRhStYVL+bLQcQehQnxHso9F6x8JWrqvUaaXJrjXyW/8qGZaW2rNrNhmo5aE3uC
-         7acN6oz3Hfr9pHaZ/VSX23/DsUOdcB1li8YkjTe1G8t4y7TArT6yWx5olFED7xFJSV+c
-         dT64U4kx8sW2Y2dm1O7mYChZbR0VgajxOEdWWOWSuMH8PAfxCsapri9lrrUq5Ozi1O5D
-         2VyoBmXbCesO3UNpVfN/VX6di+HhwHBSE9Kbcdek5mIX/GgYRQAwx8rOEn6U1K1tOSKf
-         s78A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yIVwE0hR179b6DxTk6oJYeyz283pS2So/0VXXeaGY94=;
+        b=ef4gT+twFJcSthWohWfEnql/FohDk/KFy1nfZxvNgYYzw4OLE1YrnZKxMFEsNXlatz
+         JSWDuIgUvPD6kTEbPbp3kM82HHMY6n0B7kdISlsJZ7aZdeS0Xk+Co7SwBINrU+MrpgbN
+         xtE/+/6OwpW0hN/oK94NaSVLN3zaDl3wR4fZyn1bfI0HfsLpsacDbdlpZ8C1GAgJKlMf
+         qv37nxeHpEjHK1Vhg1uRyO3X+pJ9RX9cj+qz9XzVC/vfMKDSavI3FB4jsbFqc1wV1Bf6
+         IyJe+hLDU0W6defCpEDmsTmYAGtfv2cLREhRRHt2Loklwkzs+AaO3rv6ykq8NVo0Ie/e
+         v+mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=jOsmGRkGdCTKSE5GHSNgUvBG7EoaXkBa9gXnyhGpfqw=;
-        b=Oy1tS66y5ff+FMbaly4aScd/FDhd21F8YIPZys+YxpeCRGOh8awBIgg4jM2QJg0XoD
-         bMx+/U8HS4faARjC52nEYu74+hw4601IY73m5YhGbE7EeKvcf6TvpWyz+CqBmIBYwnCE
-         3QQ4Bym3NKOzl2hEyjS5AQHLvtfihoaezYXFAs2ZUvFbp5bRPYlGnSM77DzwGvTPXSya
-         nnS0gvoe280xR5J0p5sx+HLcPcrrlQF9lr6Yf0A9WFOKJ91rQVqAWpYMugvF2ayPAwPJ
-         JfRaFFGYO90wo6qaJ1C54Hkm1FCJj2QoFLEQrxPB4NJW+UgyR7LWV07+LcakZNXtyrhI
-         Zi3Q==
-X-Gm-Message-State: ALQs6tCQcAkhvbhhOSxGJ3CTA7Dj+k7DMQ8wbZBlejEpfdaI3WqNtxqw
-        Itv2uyktqjOQD2XV1Evq9c5txf6S
-X-Google-Smtp-Source: AB8JxZqxu5p02lsuO+Gh1oOguJGMiIG6QRCSNX+VBleWTXMqSB5pvGA3RBzdb4Em7u047r1uuPu1qg==
-X-Received: by 2002:adf:e1ce:: with SMTP id l14-v6mr2401718wri.148.1524848735438;
-        Fri, 27 Apr 2018 10:05:35 -0700 (PDT)
-Received: from arrakeen.fritz.box ([2001:a62:81d:ab01:dd1e:a7ac:6cfc:1274])
-        by smtp.gmail.com with ESMTPSA id o10-v6sm1765745wrg.90.2018.04.27.10.05.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 27 Apr 2018 10:05:34 -0700 (PDT)
-From:   Andreas Heiduk <asheiduk@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Andreas Heiduk <asheiduk@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 6/6] doc: add note about shell quoting to revision.txt
-Date:   Fri, 27 Apr 2018 19:04:40 +0200
-Message-Id: <20180427170440.30418-7-asheiduk@gmail.com>
-X-Mailer: git-send-email 2.16.2
-In-Reply-To: <20180427170440.30418-1-asheiduk@gmail.com>
-References: <20180427170440.30418-1-asheiduk@gmail.com>
-In-Reply-To: <20180410183224.10780-1-asheiduk@gmail.com>
-References: <20180410183224.10780-1-asheiduk@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yIVwE0hR179b6DxTk6oJYeyz283pS2So/0VXXeaGY94=;
+        b=CDajN+bIxlXwwcIh4Vc2w6iIxvmizfSAyguIGnGa5AVddk1khdCNxGgsUTUw8sDAsL
+         qTdfktLxn67AX1Q4SHf3QvFh0mTPiAR9IRvEoiTdGvehZcqtWu78eUYE5EJDXRoogV7n
+         fb7NluVNJif9XAyJasRkCrvi1t20FpNSt3Gc/crPJUFlN0l5NCSGKXdAJM6QN/rKAIeH
+         qIaYMZlt+vhGA7Jh4h7t3p5dwH6PU2CexKRzrF8+EIpgR2HktLqENsBz2PAhVIeohyoy
+         xm0hmtRUooPBtsUKfysicrqXRc9vkcDm+/rdTiSTUUHz5gh/hl3V3NJ7zxq7cDhSAQ2x
+         oKHw==
+X-Gm-Message-State: ALQs6tBfi0QU2ppYpG3CBbVQgq5+95tc0g0F51ZYkr+rYT5LkeW/jNtM
+        bviesb7lls1ffBa2PKc+Gx332htWFFMcETg1g3s=
+X-Google-Smtp-Source: AB8JxZpFohtVTEi8So0E8Wwb2q5QRiNVLISrCTfkg7ymAW2sZbmIqWEoyJhxafV4kSBolm8TQVTrqYRVWmzwY6+WVhQ=
+X-Received: by 2002:a9d:5220:: with SMTP id e32-v6mr1932375oth.110.1524849318893;
+ Fri, 27 Apr 2018 10:15:18 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.201.97.70 with HTTP; Fri, 27 Apr 2018 10:14:58 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1804270939400.72@tvgsbejvaqbjf.bet>
+References: <CAFW+GMAJcCG4mKe4TxFXXrfdRhZKXv8ffC-rNShFLW2J1_FANA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1804270939400.72@tvgsbejvaqbjf.bet>
+From:   William Chargin <wchargin@gmail.com>
+Date:   Fri, 27 Apr 2018 10:14:58 -0700
+Message-ID: <CAFW+GMC5ST5tuSJAShDGkPeZ2ifLV1M9R3j_L+usPn+=+tAYaw@mail.gmail.com>
+Subject: Re: In some rebases, `exec git -C ...` has wrong working directory
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
-Reviewed-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/revisions.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+Hi Johannes,
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index dfcc49c72c..c1d3a40a90 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -7,6 +7,10 @@ syntax.  Here are various ways to spell object names.  The
- ones listed near the end of this list name trees and
- blobs contained in a commit.
- 
-+NOTE: This document shows the "raw" syntax as seen by git. The shell
-+and other UIs might require additional quoting to protect special
-+characters and to avoid word splitting.
-+
- '<sha1>', e.g. 'dae86e1950b1277e545cee180551750029cfe735', 'dae86e'::
-   The full SHA-1 object name (40-byte hexadecimal string), or
-   a leading substring that is unique within the repository.
-@@ -186,6 +190,8 @@ existing tag object.
-   is matched. ':/!-foo' performs a negative match, while ':/!!foo' matches a
-   literal '!' character, followed by 'foo'. Any other sequence beginning with
-   ':/!' is reserved for now.
-+  Depending on the given text the shell's word splitting rules might
-+  require additional quoting.
- 
- '<rev>:<path>', e.g. 'HEAD:README', ':README', 'master:./README'::
-   A suffix ':' followed by a path names the blob or tree
--- 
-2.16.2
+Thanks for your reply.
 
+Part of my confusion was regarding the interaction between `-C` and
+`--git-dir`. For instance, we have
+
+    $ git --git-dir target -C /tmp/tmp.Cl4aXMSVis init
+    Initialized empty Git repository in /tmp/tmp.Cl4aXMSVis/target/
+
+which makes sense and is what I expected: the `-C` and `--git-dir`
+values are joined, as suggested by the docs for `-C` in git(1). But with
+
+    $ git --git-dir /tmp/tmp.Cl4aXMSVis/repo -C /tmp/tmp.Cl4aXMSVis init
+    Initialized empty Git repository in /tmp/tmp.Cl4aXMSVis/repo/
+
+it appears that the `-C` argument is ignored entirely. Is this because
+running `git -C foo ...` is equivalent to running `cd foo; git ...` in a
+shell, so when the `--git-dir` is an absolute path the value of `-C` has
+no effect? (Assuming that `GIT_WORK_TREE` is unset.)
+
+In your example:
+
+>        exec git -C /somewhere/else show HEAD:some-file >some-other-file
+
+isn't the behavior to copy the version of `some-file` in the repository
+being rebased to `some-other-file` in the current working directory,
+such that the `-C` has no effect, because the shell redirect is not
+affected by the `-C`? (This is what happens for me.) If so, why include
+the `-C` in the command?
+
+> I do not think that we can sensibly *remove* GIT_DIR from the environment
+> variables passed to the exec'ed command, as we have been doing that for
+> ages, and some scripts (as demonstrated above) started relying on that
+> behavior. So if we changed it, we would break backwards-compatibility,
+> which is something we try to avoid very much in Git.
+
+This makes sense; understood and agreed.
+
+Do you know why `rebase --root` does not set `GIT_DIR`?
+
+> Maybe you could a contribute a patch to the documentation?
+
+Sure; I'd be happy to do that once I understand this a bit better. :-)
+
+Best,
+WC
