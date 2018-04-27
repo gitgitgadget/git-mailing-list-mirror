@@ -2,129 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA621F42D
-	for <e@80x24.org>; Fri, 27 Apr 2018 19:08:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 767C21F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 19:08:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758326AbeD0TIW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 15:08:22 -0400
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:40415 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758062AbeD0TIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 15:08:21 -0400
-Received: by mail-wr0-f176.google.com with SMTP id v60-v6so2700116wrc.7
-        for <git@vger.kernel.org>; Fri, 27 Apr 2018 12:08:21 -0700 (PDT)
+        id S932604AbeD0TIw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 15:08:52 -0400
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:36002 "EHLO
+        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932574AbeD0TIu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 15:08:50 -0400
+Received: by mail-lf0-f42.google.com with SMTP id w8-v6so4156830lfe.3
+        for <git@vger.kernel.org>; Fri, 27 Apr 2018 12:08:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=fdPbaa0oC5QcWOxBz+air1htx3hy2/RLOOyzyHVUKCk=;
-        b=J/NrQUX+dimWmcDPwj0MM8WR8UK0hxWSTWAN0CKUMcxk+JF5+s/O3zG4xV1mMxyubK
-         DbPw67piHLxM76wBfpi5g99Aqv39dJyiSDY1b5qf9FwWF8KBEb3u379iNce8qDe0ErO8
-         el4vztM7aXCQEPXr5LOugVZUUtjw6f97HgbOf4vb71dy9ORR7DpDpZQVX+i3+Ojr9bL4
-         97ZDD2IRNVJmBzNSQC6cohgXBR5wx+Nf59JQmdhslWpDE2d/PuN33EuzAXz0sf3pGQys
-         X3Fuaj9CzCY8VwTsD+XJxWkFpPf7llyyZfhyghXhwmeRqTvpNMVVuR+wUD0BhTUcwFMM
-         cvWg==
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=20kY4k/W/l6P2ks10L8BEFk4iErTibak8V4TzcoG/EM=;
+        b=YLLweyoa4okcmVzRoso69vToueUs5G+CaLEtDmvi9O/iO/po6rdFG7+F02IAGj/uA4
+         URXtYaod9vYUXYArlRBA0gugd4pays7vZSs0ul32jFszYnybGvklt/MI6/FhNvjsmD/H
+         4TYIWzbI9U9wQO36neSh3EUKMHYgmwsIS2zOSjpu1D4346TsDd5Ta0Lejq2moCWGPTnJ
+         W1+3E3WoYBRR1UiZM8Pv9jzVGle76vqcyam8FP8APOfV5UzW2NKcQ1NlfDObslBI+qwo
+         Tqntbdw18XuN+CV1NhOPkmUN7EjH95sBFudcLdA0jEX/UBv01dxC+HPODHLjJOvubTeK
+         IpgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=fdPbaa0oC5QcWOxBz+air1htx3hy2/RLOOyzyHVUKCk=;
-        b=pIaO7Fkd5ixoysTn7I/NRnRlirr+nvqJxRPnxVCoTMHFLA5/Z5p4HfDJw1VcAg/e2h
-         yoJLEvDtGVQynvqsNP7SspQ30GpAH7fLbnSA2I6R5FoyWaU0Ihrp73c0gORBf4HoZ/E3
-         SXmZdQ20h9oDHQF0YTBRFVcq9UQxbwMVr07C9gZvZPaOumubjkiVE/w91hSV57XuZ9wx
-         Kv6PjnU6sLXyHrGfYMbIv8mEt+r98amfHwNKwOjZgHBA/j9jQdxhiu4g37NKQvBUy4Iv
-         hlbqbp6grqsr8qJm8coCGOV62Lf0ilziA61Fh1b+36Dfi82tFsyjGvOpK0TKEnvMxkEN
-         9N7A==
-X-Gm-Message-State: ALQs6tCwNCP8EaYLY7AtcfEe61yEs/zX8rB7ZCvIKvHzfresSftgboEj
-        ppTP5+dtoCrtZSRzDuPaFatnYB4E
-X-Google-Smtp-Source: AB8JxZpjjCNFr6GeW8oK8WNAnYXzedCHJPHDpQfL8CUxAj02xYSvINgFY4rOpK8u/G5PzrPexSPDXw==
-X-Received: by 2002:adf:b972:: with SMTP id b47-v6mr2647622wrg.238.1524856100631;
-        Fri, 27 Apr 2018 12:08:20 -0700 (PDT)
-Received: from ?IPv6:2001:a62:81d:ab01:b0f7:2e70:f673:62a9? ([2001:a62:81d:ab01:b0f7:2e70:f673:62a9])
-        by smtp.googlemail.com with ESMTPSA id v66sm1895441wmd.4.2018.04.27.12.08.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 27 Apr 2018 12:08:19 -0700 (PDT)
-Subject: Re: [PATCH v2 2/6] doc: align 'diff --no-index' in text with synopsis
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
-References: <20180410183224.10780-1-asheiduk@gmail.com>
- <20180427170440.30418-1-asheiduk@gmail.com>
- <20180427170440.30418-3-asheiduk@gmail.com>
- <CAN0heSpdc51+7-uWcLVXU72qLZgZApdME8ywBJaQQy4DiWHAfg@mail.gmail.com>
- <a3253c99-63a4-22bc-53a0-4d94c01a564c@gmail.com>
- <CAN0heSquZ9WGQE=SCZ0DkgsbKPc80r5TmYhNXOGKFJ6MaJ_sOQ@mail.gmail.com>
-From:   Andreas Heiduk <asheiduk@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <61a137f6-f4bd-c15e-b8c9-00c8425c11ac@gmail.com>
-Date:   Fri, 27 Apr 2018 21:08:18 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=20kY4k/W/l6P2ks10L8BEFk4iErTibak8V4TzcoG/EM=;
+        b=SpfsdGzpz/3aKECxTgcdW12F8fpKZXbf1VwzaiA3DysLZUyaIHQw4V9yklUM7v7JLh
+         PvhOx9OyDTEgpt/JYClqo9KCK7QznY5SXLcCbRLmZNlsKZ1YNQiN/G4iKYOclmB+1ZRw
+         IJ65kP7RIltblfBQ2qDWvMN2p+1097EvNAFaT/mAoUC/pbvu6xfBKbnpEt+sLjO6Rd5q
+         F+qU6nHaZBlb+6xpgHnn98YRrunL/yHyzQ4yCXRvl0ygGVhvAlSaBDRnFpYqZHlppgRJ
+         4PyCoMPcZ+HrsWMma5bL++6jNSB5ZtXf0ZyR5AAkP+qc1K2VAwynY+iq6tnlmitkr/GO
+         D9LA==
+X-Gm-Message-State: ALQs6tDLqGe2ARdbXbEQI4n/cnIe0tXXmvhBh+dAKvj7siOriGCu6S23
+        Js0VCCf9lU+zsxG0Rc2raYIurqcqIFYzVZ37cEApoiiNDCQ=
+X-Google-Smtp-Source: AB8JxZpETxKAK5ZLmoMUdLtrq0HJUW92nMJqiD4S5zZpXm2BDRnhe84f4FCtsvAQ+JO0wBaXSHTXvztpamxdVHb20dc=
+X-Received: by 2002:a19:5386:: with SMTP id h6-v6mr1971946lfl.45.1524856128507;
+ Fri, 27 Apr 2018 12:08:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSquZ9WGQE=SCZ0DkgsbKPc80r5TmYhNXOGKFJ6MaJ_sOQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-BE
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a19:9ecc:0:0:0:0:0 with HTTP; Fri, 27 Apr 2018 12:08:27
+ -0700 (PDT)
+In-Reply-To: <xmqqbme51rgn.fsf@gitster-ct.c.googlers.com>
+References: <CAKk8isrAmWOdioJe2CdY+2F_AzKxcTGwd+kBsrAmGx-U=ZHGgA@mail.gmail.com>
+ <xmqqzi1s3y5h.fsf@gitster-ct.c.googlers.com> <CAKk8isr-7bSVqEv8EjF2UgFfw75D2oVZPJFui30pbY6kWfeL_Q@mail.gmail.com>
+ <CAKk8ispWBoG7D+u8x+s+iB+wzXUN=7vpxgmz5wjL67P6XUmw9g@mail.gmail.com>
+ <xmqqfu3h1t22.fsf@gitster-ct.c.googlers.com> <xmqqbme51rgn.fsf@gitster-ct.c.googlers.com>
+From:   Wink Saville <wink@saville.com>
+Date:   Fri, 27 Apr 2018 12:08:27 -0700
+Message-ID: <CAKk8isqAd11W4DpjNkd9AeMDGi=ESyhVSFXcvwteasTfHMPGLA@mail.gmail.com>
+Subject: Re: Fetching tags overwrites existing tags
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.04.2018 um 20:45 schrieb Martin Ågren:
-> On 27 April 2018 at 20:28, Andreas Heiduk <asheiduk@gmail.com> wrote:
->> Am 27.04.2018 um 19:18 schrieb Martin Ågren:
->>> On 27 April 2018 at 19:04, Andreas Heiduk <asheiduk@gmail.com> wrote:
->>>> The two '<path>' parameters are not optional but the option
->>>> '--no-index' is. Also move the `--options` part to the same
->>>> place where the other variants show them.
->>>
->>> Should this commit message be updated after the changes you did to
->>> address Junio's comment? This text suggests you want to place --no-index
->>> in [] (and you did in v1) but you do not do that below.
->>>
->>>> All three items are already correct in the synopsis.
->>>
->>> Same here, now you actually do change things there.
->>>
->>>> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
->>>> Reviewed-by: Martin Ågren <martin.agren@gmail.com>
->>>
->>> Strictly speaking, my Reviewed-by was on another patch. I do find this
->>
->> Sorry, I've added that trailer after reading "The diff LGTM.", then
->> applied Junio's changes and forgot to remove the trailer.
->>
->>> one better though thanks to Junio's suggestion (except the mismatch with
->>> the commit message).
->>
->> I'll fix that with this:
->>
->>         doc: align 'diff --no-index' in text with synopsis
-> 
-> s/with/and/ since they both change? It's not that the first changes to
-> match the second, but they actually both change to match each other (and
-> to be correct, obviously).
+On Thu, Apr 26, 2018 at 4:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>
+> Hence (1) we should detect and error out when --prefix-tags is used
+> with mirror fetch near where we do the same for track used without
+> mirror fetch already, (2) detect and error out when --prefix-tags is
+> used with track, and (3) add "+refs/tags/*:refs/remote-tags/$name/*"
+> just once without paying attention to track here.  We may not even
+> want add_remote_tags() helper function if we go that route.
+>
 
-Corrected
+I've replied to the thread using format-email/send-email with the
+subject: "[RFC PATCH v2] Teach remote add the --prefix-tags option",
+but I misspelled Junio's email address :(
 
-> 
->>         Make the two '<path>' parameters in DESCRIPTION mandatory and
->>         move the `--options` part to the same place where the other
->>         variants show them. And finally make `--no-index` in SYNOPSIS
->>         as mandatory as in DESCRIPTION.
-> 
-> Great! Junio had some good reasoning about how --no-index is
-> sometimes optional, but not always. Not sure if it's worth spelling that
-> out. (Although one could argue that it already did trip us up once. :-))
+I've tried to address the issues pointed out by Junio. But I've choosen
+not to do "(2) detect and error out when --prefix-tags is used with track".
+My thinking is tags are independent of tracking and it seems reasonable
+that they sould be included if requested. If I'm wrong I'll certainly fix it.
 
-The post-context already explains that.
+The other change was rather than using ""+refs/tags/*:refs/remote-tags/$name/*"
+I've changed it to "+refs/tags/*:refs/remote/tags/$name/*" which seems cleaner.
+Again, if remote-tags is preferred I'll change it back.
 
-> Eric's point about "--options" vs "options" seemed right to me. If you
-> address that, note that this message says "--options".
+One other question, I'm not sure "--prefix-tags" is the best name for
+the option,
+maybe "--sub-tags" or "--nested-tags" or ...
 
+-- Wink
