@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6365D1F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 20:48:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD94A1F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 20:48:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759269AbeD0Usc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 16:48:32 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51707 "EHLO mout.gmx.net"
+        id S1759282AbeD0Usl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 16:48:41 -0400
+Received: from mout.gmx.net ([212.227.17.21]:35405 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1759261AbeD0Us2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 16:48:28 -0400
+        id S1759274AbeD0Usf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 16:48:35 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
- (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0LtDpH-1eDu6p20zr-012ndA; Fri, 27 Apr 2018 22:48:20 +0200
+ (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0MOBOi-1fHg412YVQ-005XQy; Fri, 27 Apr 2018 22:48:29 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -26,88 +26,64 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Stefan Beller <sbeller@google.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v4 1/4] rebase -i: demonstrate bugs with fixup!/squash! commit messages
-Date:   Fri, 27 Apr 2018 22:48:16 +0200
-Message-Id: <49b9f6562e3fd32f1dab706de29057d536d3d2de.1524862093.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v4 3/4] sequencer: always commit without editing when asked for
+Date:   Fri, 27 Apr 2018 22:48:28 +0200
+Message-Id: <b4c41988ab591e5b67c78cca91c834ddfc8ded84.1524862093.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.33.gfcbb1fa0445
 MIME-Version: 1.0
 In-Reply-To: <cover.1524862093.git.johannes.schindelin@gmx.de>
 References: <CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com> <cover.1524862093.git.johannes.schindelin@gmx.de>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:QbfiICyHY/aDtALvBzSIVc82NgPDI1+5oHALZb3yDq4Jx6Jdaki
- mvMrCshO+CiGgfpzT4R0pvXjltv8JiV1kFZIAkRSVkg3jxxvxdp1sR08O7ecokYUwTNiWBA
- q85mPKSdbaGn6X1dNAutdLgQ5d2aKvvlTJhbgyJbr7rdYZx1NL+yXqQ9G62x3xI9gumz1bA
- T4FnoboI1yb5QvJ+r7nXQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ceVB1Sf88TM=:PDbiJ8GiEWzRLjVWXdDsk3
- 6uIMIEc18IaA2F7r6ttdgvQE527dtXxBRrUMe8gf2L98KF+8WDcLIjSF0DV1wrzz7vOigpW1C
- fnwwTaBALd8ebPNygpmqGd0jvlNX+meSQfXkY3J6evy9xX7mABltUXwanblM+B69kJAbtJ+Ho
- 6UGsfQgTdDBI/ubYfd4jiTHpLLtsgoHKQOm8CSN5Vxf4wz3O1h8uOVAe8hJfo4ysHSKLKv4k6
- zvseyDRS1sppy5Uvoq8/E755CbO+ObcdLWVT4aGjgkugIsf9t+dJ7ACGNJw+AwUnEe90rt8Ls
- bv+az66488IE3UljzQMQKLsAwJq123Yifwe82oswjOMajzilveES+U8qdukaVctBnS2Z90n/o
- eQTaIDrNZ0ZvUCQdzuXf+ej5sVCJDk/R6thv7DPIkbHVb2hHuxpQ5XhKJRLsbSL5ENeAVOyhm
- zf661EL/Cd8qc3mwIAS+GcT7ut3Smt5M8N6VB0pedd4/r3d1n869MXU39coHurKZ66FWKhMuI
- BDKoFpbnLO6iRkBmDeM8Bc2n18VTggcbw25f8NwtSLMDqOKMl0cKe4NFtcBvCe+G7YlYqziWK
- FbPZD/aUHOEykuzOU3PR7Hgqu16CPR2u9N9QX0uzq110I72b3Sms/dmWqnXL4S5FoDbHOEZTq
- fBsn90yXLKadg0Lc5dbbp1OR2gr/BwxlkFUQl9lBCBiVsk1W2lycroyxXDBHtS9BfPTKb1g1d
- 1Cq7YHl5SZTUb4XhmWAorUYT9eyf/5N2qDhBD6yMzuAtCchHxxS1vRREzrmBop7gI/zpeRrtY
- weN3ucC
+X-Provags-ID: V03:K1:7xUDorn8xfkcmtnKDTfgFPvKX87DDLLNjA90lXN7NKUx85V17bg
+ S2rnlfd9rX8GvzaprqbO5NsouB8UHgyUctR0XbGqswfFyP3mLEv79hyu0Mc3GQIcDRlPtCL
+ Jv2haguGsfAUOyxx1K+hJbj0CdUNbtt4+D1qDUqi4rknARQJMZWEwFsi5SvmYl1DRvVrg7y
+ fZpVyoE3JaoBhFyKj3nww==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0u5uQ5dkhQU=:PXMxGZf/ekleqqOUXNaHyE
+ omNEukwFGQ0Ejr+zhbzCHbOemWWyf70/Kp5/GrSexZy7iifWj1Vc5mOlh2ryIRp8oHisxlMAa
+ KXQGSHa7MTLWmVKgB8w4d85jwUzy23aL/75h0NB+W10kyBOXM9kDlmoq1ouJk9eINE2XDU0zK
+ HGIdU7GUfmYyqzgpd1mT5li/XmQxyduLycQ/5Eh/DEnsc4nffzoYaFKgNztffuT8xItxqmZmP
+ bkxmQFNsBFb0ZPAP4Zs/n0ExA6x9qz6WDIxVjDvqS1mWzu/9FiTKzJEg5VTpsi2xY+8pMacEp
+ 1+4BoE3dJc7/mHixWRq06TCSR/QeSAkWNdYpxc7dXQZS1nGdtXYVlsFJF0z1qA3xnYAxBjkcb
+ LvvG3iMuYAjRu+HXVLm6noCUZlKTmYLLJ8llr1DwMBADJ7Vtc2+8Ok61EC7420Zv6UzV8s67N
+ UG1dSRYiUv9d07iCSddOjdyzCzKAEx0sgPJ69JcbdL93g/ceM29gKNw+s/WFFr+0rIkzx0fQs
+ O2OeQOHuWSvaC4se90NYf0jd9MYPfuw/TyBzch2DMeXd9npvvJ1/TIG1x37rc6cqU2rSu56lh
+ y8JAJDTWGVc5igYqsJG1sTJAn+W/Pybq4NWWaZnapfpRyfYjkxKwOMtixeM4/JjlAxLxLERCm
+ ted3psFTu1mDktb9WpCcf2itsIaJhP9r0qwmy9cu4gemSQOHabtkRztBmZUpj479qQ4TCsnZ/
+ 49+JUZxMTnnZezwUmKc+FdoGUiqC318RlS1ioKkwgj2uYipbVRLh8LRBrnHw8xURO3kEXgJd9
+ gSyxcXS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When multiple fixup/squash commands are processed and the last one
-causes merge conflicts and is skipped, we leave the "This is a
-combination of ..." comments in the commit message.
+Previously, we only called run_git_commit() without EDIT_MSG when we also
+passed in a default message.
 
-Noticed by Eric Sunshine.
+However, an upcoming caller will want to commit without EDIT_MSG and
+*without* a default message: to clean up fixup/squash comments in HEAD's
+commit message.
 
-This regression test also demonstrates that we rely on the localized
-version of
-
-	# This is a combination of <number> commits
-
-to contain the <number> in ASCII, which breaks under GETTEXT_POISON.
+Let's prepare for that.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3418-rebase-continue.sh | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ sequencer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index 9214d0bb511..3874f187246 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -88,6 +88,28 @@ test_expect_success 'rebase passes merge strategy options correctly' '
- 	git rebase --continue
- '
- 
-+test_expect_failure '--skip after failed fixup cleans commit message' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	git checkout -b with-conflicting-fixup &&
-+	test_commit wants-fixup &&
-+	test_commit "fixup! wants-fixup" wants-fixup.t 1 wants-fixup-1 &&
-+	test_commit "fixup! wants-fixup" wants-fixup.t 2 wants-fixup-2 &&
-+	test_commit "fixup! wants-fixup" wants-fixup.t 3 wants-fixup-3 &&
-+	test_must_fail env FAKE_LINES="1 fixup 2 fixup 4" \
-+		git rebase -i HEAD~4 &&
-+
-+	: now there is a conflict, and comments in the commit message &&
-+	git show HEAD >out &&
-+	grep "fixup! wants-fixup" out &&
-+
-+	: skip and continue &&
-+	git rebase --skip &&
-+
-+	: now the comments in the commit message should have been cleaned up &&
-+	git show HEAD >out &&
-+	! grep "fixup! wants-fixup" out
-+'
-+
- test_expect_success 'setup rerere database' '
- 	rm -fr .git/rebase-* &&
- 	git reset --hard commit-new-file-F3-on-topic-branch &&
+diff --git a/sequencer.c b/sequencer.c
+index d2e6f33023d..56166b0d6c7 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -717,6 +717,8 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+ 	if (defmsg)
+ 		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
++	else if (!(flags & EDIT_MSG))
++		argv_array_pushl(&cmd.args, "-C", "HEAD", NULL);
+ 	if ((flags & CLEANUP_MSG))
+ 		argv_array_push(&cmd.args, "--cleanup=strip");
+ 	if ((flags & EDIT_MSG))
 -- 
 2.17.0.windows.1.33.gfcbb1fa0445
 
