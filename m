@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 566B21F424
-	for <e@80x24.org>; Fri, 27 Apr 2018 22:30:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3660B1F424
+	for <e@80x24.org>; Fri, 27 Apr 2018 22:31:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932432AbeD0WaN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Apr 2018 18:30:13 -0400
-Received: from mout.gmx.net ([212.227.15.18]:35323 "EHLO mout.gmx.net"
+        id S932923AbeD0WbU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Apr 2018 18:31:20 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50335 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753569AbeD0WaM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Apr 2018 18:30:12 -0400
+        id S932453AbeD0WbT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Apr 2018 18:31:19 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
- (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MaZWz-1ewavs0r1t-00KCQc; Sat, 28 Apr 2018 00:30:05 +0200
+ (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0MZlEg-1exPw61Zmg-00LZ5j; Sat, 28 Apr 2018 00:31:12 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -28,93 +28,98 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Christian Couder <christian.couder@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Wink Saville <wink@saville.com>
-Subject: [PATCH 0/6] Let the sequencer handle `git rebase -i --root`
-Date:   Sat, 28 Apr 2018 00:29:26 +0200
-Message-Id: <cover.1524868165.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 1/6] sequencer: extract helper to update active_cache_tree
+Date:   Sat, 28 Apr 2018 00:30:05 +0200
+Message-Id: <ad31aab8e735f7de813860cacb32abbc406f43d1.1524868165.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.33.gfcbb1fa0445
 MIME-Version: 1.0
+In-Reply-To: <cover.1524868165.git.johannes.schindelin@gmx.de>
+References: <cover.1524868165.git.johannes.schindelin@gmx.de>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:D21jVWXkNJVR5h2iBCLtJ2uPgpSwHTJlfdbJgeh1wFqyTy4kPgw
- OEYXbY840GrkiMnAYcJkTSKWBDujMN+xzK5E7E01fUN6wJE3BUf2oi4BE7UvoP6jAkUt3uB
- YCPPilXDaZhXq90FISMlX71Vic/3CM81KO2GcDQigFbayimSMjHBUCLRUK6K65R4lKSuC+u
- Wjm6hB3tP93UCbjF/NPGQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MMJL3WVCsqY=:NP0EtbfCOc73z4tG5lNF5i
- Fis3pciZ+u3lasyGVJUE0bnvy/Kw+ufJMzZersS5gGdNtFuLJJJ5e7wWeoTIobIQuMVKh9Dwv
- IatEM30O+DN3PY78cANRxLxlDFLhnTZ4Cjfac+boUUxAgV93Cql54Wx31a08ZOKylU7LNEIxz
- myHGpGOQbQ3EKgYvuzftM5LtudPbB6mNTArvUw2fuNStl6dIY7uwf1nYCFQ9YBPTwcQ/LWMG8
- PgXG3+8mEeTb1J/mp5IWqHoFi+RxqNY3hean6ZlypQ5k8wp0oJK7PuibLtwKJqVLttnV4H6SK
- WUu4HAszLG8WjkdW59w0M58GYqdXuzg1UKVnEJcO+v9CziraKsSL/CX/y6N/Ml7qLDkz1M/3t
- CPMk+Zz3fgqT6kAiOXcj37JjZKWWI2yK3xfwTyP1XcsGRq6JbM89yg7qwh1aBe2cfOIgnilbV
- TIPE0gtsC5thR05IllXMOs7YEPqDBPrMrVMsJ3GBWfETI2nhZGJ0V1tQVXpHkkuK9QKBnrHj+
- 0+hkfpeqQwCAoc06v3gghEcLtNtm3VbQq7GJIuICROrROV/ISLQGVsrX6eTnu7X31QrD5p0zD
- s+ohr5tL1sZQXbxnAtMur37xrJWUSvSMFWQm7Gy5Dr302S5icSSB6v0mB8uuGN7JCLvc1DhfW
- OErICl3U1iEAUlZ1ZrvNqKLKylh9Wx+FpeBnwOaH97eCjfOyel53i7hq8oCRrp3HctonLQZNC
- lIJ2+CwhIBDze7P/YMzhQsQzfIDstX8JHSEjszglb2/ItDRQSe6KGyflMI5GNmaXpWTGFYqhM
- NX8SPaO
+X-Provags-ID: V03:K1:1oXljhwg1U7or6Jt5s0rZy6c2pX8+R5iR3U+YKK+E7TZotftUK3
+ ABeNDyjRsCdOEvEfiNRkP9MZgZ2vOws4UCNjg+2EspHpZTSDdtFwY8KrQzmlL4m/NbvEHn0
+ GLw0Kk/0UaCAF3TdnEfVIY2fPAhYbxG7lRsRlTxzP9uK6CGpJcg5XvnlZgmO1xTvrk2c6bf
+ XzSQOF1Uhgot+IvazXnhQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XELYbHTps0Y=:WIMPkLrJGZf4FIdggBEFZy
+ lF8jE49hCuDyhuafhyW0nf0FP+BEYGOrBLtjoAuXhXC0ktY0X71VD2ZMHze1nwRO8Am6+GlKa
+ BRBgSKecmMU2+TzndZZWmYp5o1CIsIkk/yTVzgSCT8MC1p+l9I8/YnNXlYxKFrtOcvdEvYnxE
+ nQeRWvOYEm3AyNqnZI/ljnY7YpbkdUK9hbaHeqpb8ASKumVhNIMLNObOA5AM4Aix4/GOMcWqT
+ Ibx+SyPT345fBnUUEHQWhrGIfIivGu4ZQqf4WEH8eMzj+Oo6fvSPF1uL8YXFor2meHHZjftqo
+ DN7N0PqXexeV0xeDoPFaFP8JuJJzaSWfMNvv2qgjfBu+vQ5ZBjrDsrz4UZwzBnkn7F/fVcL5B
+ teEQ57PLWVqqVv8jVueRjkZSblos000OfQMn76yLnMBEfzpovCsagHU7SZdLd4A2XppVGActp
+ z2R6QZiI1AO9utRS2mdiYZYKWu9Kcvx2BC2JQjKgah8Fw4F4DBRbEdrAZ0h+HW3msQgafSOx+
+ 5bvw0jR6m1pWqo9ZqqJoy0HxvqBn/h18yh0l2VnHL+Jlctns4Cu3Q0H2wGOe3LrPudkvMbh0W
+ UPp5XeeH00dBEn3UrJ4SY/t5PWpAxonYa6MMMnkiRDYITt44B4P/5nEs87aT5rNbqe66YGMNS
+ 9K81P8K5JZAZRedrv2Ae4PHc+p0zoYYR9f8PXIIBMGnKc4Y0S0Y9hQ/8CGM5whYU3PIj9cg3Q
+ MqJiC4bGilr1hRMHRlEFZW1urCGXUoMI776yG0FD1xUw/r5fL4V5XMJwVhdyCR/1OmlfCmTTz
+ 23VCQAG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When I reimplemented the most performance-critical bits of the
-interactive rebase in the sequencer, to speed up `git rebase -i`
-particularly on Windows (even if the benefits are still quite notable on
-Linux or macOS), I punted on the --root part.
+This patch extracts the code from is_index_unchanged() to initialize or
+update the index' cache tree (i.e. a tree object reflecting the current
+index' top-level tree).
 
-I had always hoped that some other contributor (or I myself) would come
-back later to address the --root part in the sequencer, too, with the
-idea that this would move the last remaining complicated code from
-git-rebase--interactive.sh into sequencer.c, to facilitate converting
-the rest of git-rebase--interactive.sh.
+The new helper will be used in the upcoming code to support `git rebase
+-i --root` via the sequencer.
 
-When I say "the last remaining complicated code", of course I neglect
-the --preserve-merges code, but as I worked hard on the --rebase-merges
-patch series with the intention to eventually deprecate and maybe even
-remove the --preserve-merges mode, I always implicitly assume that the
---preserve-merges code will be moved into its own shell script
-(git-rebase--preserve-merges.sh, maybe?) and never be converted.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ sequencer.c | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-So here goes: the patches to move the handling of --root into the
-sequencer. After two preparatory patches, the real conversion takes
-place in the third patch. After that, we take care of the --root related
-concerns that arise in conjunction with the --rebase-merges mode.
-
-As the --rebase-merges/--root patches overlap quite a bit (not so much
-in the code itself as in philosophical considerations such as "what
-should happen if you try to merge a branch into a new root", or the
-fact that the label/reset/merge commands make it desirable to be able to
-create a new root commit in the middle of a todo list), I had to
-consider in which order to contribute them. In the end, I decided to go
-with --rebase-merges first, so the --root patches are based on the
---rebase-merges patch series.
-
-I consider this patch series a critical prerequisite for Alban's Google
-Summer of Code project to convert rebase -i into a builtin.
-
-
-Johannes Schindelin (6):
-  sequencer: extract helper to update active_cache_tree
-  sequencer: learn about the special "fake root commit" handling
-  rebase -i --root: let the sequencer handle even the initial part
-  sequencer: allow introducing new root commits
-  rebase --rebase-merges: a "merge" into a new root is a fast-forward
-  rebase --rebase-merges: root commits can be cousins, too
-
- git-rebase--interactive.sh        |   4 +-
- sequencer.c                       | 186 ++++++++++++++++++++++++++----
- sequencer.h                       |   4 +
- t/t3404-rebase-interactive.sh     |  19 ++-
- t/t3421-rebase-topology-linear.sh |   6 +-
- t/t3430-rebase-merges.sh          |  72 ++++++++++++
- 6 files changed, 256 insertions(+), 35 deletions(-)
-
-
-base-commit: 673fb9cb8b5c7d57cb560b6ade45e419c8dd09fc
-Based-On: recreate-merges at https://github.com/dscho/git
-Fetch-Base-Via: git fetch https://github.com/dscho/git recreate-merges
-Published-As: https://github.com/dscho/git/releases/tag/sequencer-and-root-commits-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git sequencer-and-root-commits-v1
+diff --git a/sequencer.c b/sequencer.c
+index e2f83942843..90c8218aa9a 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -562,9 +562,23 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	return !clean;
+ }
+ 
++static struct object_id *get_cache_tree_oid(void)
++{
++	if (!active_cache_tree)
++		active_cache_tree = cache_tree();
++
++	if (!cache_tree_fully_valid(active_cache_tree))
++		if (cache_tree_update(&the_index, 0)) {
++			error(_("unable to update cache tree"));
++			return NULL;
++		}
++
++	return &active_cache_tree->oid;
++}
++
+ static int is_index_unchanged(void)
+ {
+-	struct object_id head_oid;
++	struct object_id head_oid, *cache_tree_oid;
+ 	struct commit *head_commit;
+ 
+ 	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL))
+@@ -583,15 +597,10 @@ static int is_index_unchanged(void)
+ 	if (parse_commit(head_commit))
+ 		return -1;
+ 
+-	if (!active_cache_tree)
+-		active_cache_tree = cache_tree();
+-
+-	if (!cache_tree_fully_valid(active_cache_tree))
+-		if (cache_tree_update(&the_index, 0))
+-			return error(_("unable to update cache tree"));
++	if (!(cache_tree_oid = get_cache_tree_oid()))
++		return -1;
+ 
+-	return !oidcmp(&active_cache_tree->oid,
+-		       &head_commit->tree->object.oid);
++	return !oidcmp(cache_tree_oid, &head_commit->tree->object.oid);
+ }
+ 
+ static int write_author_script(const char *message)
 -- 
 2.17.0.windows.1.33.gfcbb1fa0445
+
 
