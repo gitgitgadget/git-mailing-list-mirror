@@ -7,113 +7,93 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49B671F404
-	for <e@80x24.org>; Sat, 28 Apr 2018 07:26:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50FEC1F404
+	for <e@80x24.org>; Sat, 28 Apr 2018 07:45:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752737AbeD1H04 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Apr 2018 03:26:56 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:54016 "EHLO
+        id S933456AbeD1HpT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Apr 2018 03:45:19 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:53502 "EHLO
         mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753203AbeD1H0m (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Apr 2018 03:26:42 -0400
-Received: by mail-wm0-f53.google.com with SMTP id 66so5729612wmd.3
-        for <git@vger.kernel.org>; Sat, 28 Apr 2018 00:26:41 -0700 (PDT)
+        with ESMTP id S933450AbeD1HpS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Apr 2018 03:45:18 -0400
+Received: by mail-wm0-f53.google.com with SMTP id 66so5770474wmd.3
+        for <git@vger.kernel.org>; Sat, 28 Apr 2018 00:45:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=kFh6vm8o6Oa6FFn4tWloCU9cqvxxEhq8IL8uaeidICU=;
-        b=dz9gOvOtTr8va6R5XZ50qAl9hbkrkTNH9+U+8/DAyzEvnhgZukCK4TQ82d2LmMN5Xt
-         bHBMir/IBuQo9TnTFeTPckqsYucWccFcg0zrPbxTBeJstvUy3/iToKy/YOq8BW487M/L
-         dF/4exXD5upJaOR/ZE1aNBY6ra1U7QnvnFig5KVM/MES844A+Hk/drA0cWbC6RajqK7D
-         7+RBxtlnWzaaTIQZylgAmQG9jVxAt/tkPAG2Gpa+vBuwCmc1YsxiTS5hioofApc8qTbJ
-         m+WtTOlcdgm2Qjav7F1P0Nl82kFGA0t2Lo7Hk97GImRwdDnzOdVJdvC5LRzLNRQN5XAB
-         LgDA==
+        bh=V3UPzM08TsASsl+Hy1hMMVZhQo96tSnicYhrSTOrViY=;
+        b=bR6S4PNGkg/OeFXZLkIjU7UR9VPL/rLQPSAC10kTpWiDoOFB+acsEIEzMq43Paar76
+         yJze8ZFFTBpNdaTctHNUBawq+kSBzHnvKOSlOUhDLbo3gKmIjCEQ8Gm7tSQoV8KFEy7E
+         T4ebScESDHBrU7kBCHmtPeC0n3UuV4FRRaksha/jawhtuQNTrfVAqx5BuhTcs7kxhR+8
+         OijHisyNVi8CpvxoBn/8/4kRln3gZCChU5F4qsNz+34iBcqNQwGDUijf+6k1G6Ewu8iu
+         gRaH2sZsl9GDhyCqQEn4eEKoiiBC9jAWPJ1UUVvzR4lGco/anDN7Zk88uKEJdJblJluI
+         8ZpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=kFh6vm8o6Oa6FFn4tWloCU9cqvxxEhq8IL8uaeidICU=;
-        b=notjy/2C8ZWuFkAtDMSIRD/4se33KrAF3spE3/NPe1kQC2CQKKjES6CCYU/8QYtbwt
-         mTKUhQUENSbvDdbAtCjQmX6h1cZkEVgiiH36AL+8FA2skRlZ4vnUXqpnmDxl1XasX8Pe
-         BQ1Cial0YkCWkcoY6j77l0ddPOdpalAEuY3PH6whOcv3nyprr7Ygw5owVqGjAaI2vxjZ
-         DGQntofR9OqO05qOHbRkujqkjwsldMY/Dzv6a/UQZcQ3LZc7ih4x24P7Z3lVTATcKZQa
-         94riGW310EXhwLwMAm3tOYj4rdJkZGQtcFO4gUlGDe0Wx9awhuk7prk6y9n73AHbwTiC
-         csDw==
-X-Gm-Message-State: ALQs6tCgAdxcgdLr6H9eioyYC45BVJf1OF2RtUKym4zvZwrDDdXtmBfW
-        453MyU40RyO6f/S2Uu5QucZilL3Pl8iIfze4UBk=
-X-Google-Smtp-Source: AB8JxZoX4B5ib9/YWw9fChIwxmhBtrM7dD/azvrAIea2A1jGzNDMPa0OMk4g+HwEwJklVR4CFUMNOn4gwBqg8g9DD44=
-X-Received: by 2002:a50:d002:: with SMTP id j2-v6mr6976336edf.44.1524900400935;
- Sat, 28 Apr 2018 00:26:40 -0700 (PDT)
+        bh=V3UPzM08TsASsl+Hy1hMMVZhQo96tSnicYhrSTOrViY=;
+        b=DwnP/dPux+B0FXzbJLQDuWUHXHFl4SCUrIDdsEyoPhIqQ+jNetgHMU3TqSw+q+Lmbp
+         1H+9i1HiR155EhIdRYAfrGsPIscL0XUG0oEwrVi4PTyHalj0oX6P3WSMrVlqHOCfFd7Y
+         HiMuPH+L8DShMpvFFX7Z3WDXNAcB+RRDAWNZ2wLS4igWGcq4Sn8GG3B8BIX2HDds1RlN
+         k0J7P7zU0Lx16r+ODRMlQhV5d3KHLeXAZdOkQetHdzLVljO4ugo1Qh7915MCm8mnelrx
+         rF/8vxz/KGrqkoYM9TKhz/dlH8L5/qNLFHJ63EUdtHYC0Wj0BxB7M3SGTp272jLogJyw
+         gqnQ==
+X-Gm-Message-State: ALQs6tBgz4dejVgqiGXYnQ1nb7gQvxLj59mLEOokDKCGZNHIcxs8xJMg
+        67bbpd//MPXSDewYX1x4r8R7yEG7ZzwLv2rYacE=
+X-Google-Smtp-Source: AB8JxZq/UuX+4jmSXINDm1Y7oq8Q3gTTwyuP8ipgaNwAES8cEY5I2J5M4zP4LMKM38poYPHjKYBc+iiXXVh6T/AyE5s=
+X-Received: by 2002:a50:d002:: with SMTP id j2-v6mr7037317edf.44.1524901517111;
+ Sat, 28 Apr 2018 00:45:17 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.80.180.180 with HTTP; Sat, 28 Apr 2018 00:26:20 -0700 (PDT)
-In-Reply-To: <CAKk8isqAd11W4DpjNkd9AeMDGi=ESyhVSFXcvwteasTfHMPGLA@mail.gmail.com>
-References: <CAKk8isrAmWOdioJe2CdY+2F_AzKxcTGwd+kBsrAmGx-U=ZHGgA@mail.gmail.com>
- <xmqqzi1s3y5h.fsf@gitster-ct.c.googlers.com> <CAKk8isr-7bSVqEv8EjF2UgFfw75D2oVZPJFui30pbY6kWfeL_Q@mail.gmail.com>
- <CAKk8ispWBoG7D+u8x+s+iB+wzXUN=7vpxgmz5wjL67P6XUmw9g@mail.gmail.com>
- <xmqqfu3h1t22.fsf@gitster-ct.c.googlers.com> <xmqqbme51rgn.fsf@gitster-ct.c.googlers.com>
- <CAKk8isqAd11W4DpjNkd9AeMDGi=ESyhVSFXcvwteasTfHMPGLA@mail.gmail.com>
+Received: by 10.80.180.180 with HTTP; Sat, 28 Apr 2018 00:44:56 -0700 (PDT)
+In-Reply-To: <d4d8d8208b6a41c380ecf20807763bcf@XCH15-05-02.nw.nos.boeing.com>
+References: <d4d8d8208b6a41c380ecf20807763bcf@XCH15-05-02.nw.nos.boeing.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sat, 28 Apr 2018 00:26:20 -0700
-Message-ID: <CA+P7+xrs1Dz7evfofrExbg1Pw0C2uR17yNa=yS8XtYBvnK_k4g@mail.gmail.com>
-Subject: Re: Fetching tags overwrites existing tags
-To:     Wink Saville <wink@saville.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Date:   Sat, 28 Apr 2018 00:44:56 -0700
+Message-ID: <CA+P7+xryOt_-vg7cpvqRapM7nWuhWXjhpUR1xi-5MY_RH5UwAQ@mail.gmail.com>
+Subject: Re: Branch deletion question / possible bug?
+To:     "Tang (US), Pik S" <Pik.S.Tang@boeing.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 27, 2018 at 12:08 PM, Wink Saville <wink@saville.com> wrote:
-> On Thu, Apr 26, 2018 at 4:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>
->> Hence (1) we should detect and error out when --prefix-tags is used
->> with mirror fetch near where we do the same for track used without
->> mirror fetch already, (2) detect and error out when --prefix-tags is
->> used with track, and (3) add "+refs/tags/*:refs/remote-tags/$name/*"
->> just once without paying attention to track here.  We may not even
->> want add_remote_tags() helper function if we go that route.
->>
+On Fri, Apr 27, 2018 at 5:29 PM, Tang (US), Pik S <Pik.S.Tang@boeing.com> wrote:
+> Hi,
 >
-> I've replied to the thread using format-email/send-email with the
-> subject: "[RFC PATCH v2] Teach remote add the --prefix-tags option",
-> but I misspelled Junio's email address :(
+> I discovered that I was able to delete the feature branch I was in, due to some fat fingering on my part and case insensitivity.  I never realized this could be done before.  A quick google search did not give me a whole lot to work with...
 >
-> I've tried to address the issues pointed out by Junio. But I've choosen
-> not to do "(2) detect and error out when --prefix-tags is used with track".
-> My thinking is tags are independent of tracking and it seems reasonable
-> that they sould be included if requested. If I'm wrong I'll certainly fix it.
+> Steps to reproduce:
+> 1. Create a feature branch, "editCss"
+> 2. git checkout master
+> 3. git checkout editCSS
+> 4. git checkout editCss
+> 5. git branch -d editCSS
 >
-> The other change was rather than using ""+refs/tags/*:refs/remote-tags/$name/*"
-> I've changed it to "+refs/tags/*:refs/remote/tags/$name/*" which seems cleaner.
-> Again, if remote-tags is preferred I'll change it back.
 
-The only main concern I have with "remote" is that it is very similar
-but not exactly the same as "remotes". Unfortunately, it is not
-possible in *every* circumstance to use remotes.
+Are you running on a case-insensitive file system? What version of
+git? I thought I recalled seeing commits to help avoid creating
+branches of the same name with separate case when we know we're on a
+file system which is case-insensitive..
 
-Personally, I'd prefer we used "refs/remote/<remote-name>/tags" rather
-than "refs/remote/tags/<remote-name>", and possibly plan to migrate
-from refs/remotes/<remote-name>/<branches> to
-refs/remote/<remote-name>/heads/<branches>
+> Normally, it should have been impossible for a user to delete the branch they're on.  And the deletion left me in a weird state that took a while to dig out of.
+>
+> I know this was a user error, but I was also wondering if this was a bug.
 
-This is mostly so that future additions of things like notes,
-replaces, or really *any* refs would automatically drop into
-"refs/remotes/<name>/<full remote ref name with refs prefix removed>",
-which is a longer term goal I've had for a while (though i haven't
-been able to put much time to it at present). Historically, I proposed
-using "tracking" instead of "remote", but I am ok with any name we
-choose as long as it doesn't create conflicts.
+If we have not yet done this, I think we should. Long term this would
+be fixed by using a separate format to store refs than the filesystem,
+which has a few projects being worked on but none have been put into a
+release.
 
 Thanks,
 Jake
 
 >
-> One other question, I'm not sure "--prefix-tags" is the best name for
-> the option,
-> maybe "--sub-tags" or "--nested-tags" or ...
 >
-> -- Wink
+> Thanks,
+>
+> Pik Tang
+>
