@@ -2,112 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B95011F428
-	for <e@80x24.org>; Sat, 28 Apr 2018 15:28:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DDDA1F428
+	for <e@80x24.org>; Sat, 28 Apr 2018 16:09:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751874AbeD1P2R (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Apr 2018 11:28:17 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:36467 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751354AbeD1P2Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Apr 2018 11:28:16 -0400
-Received: by mail-yb0-f196.google.com with SMTP id o14-v6so1732122ybq.3
-        for <git@vger.kernel.org>; Sat, 28 Apr 2018 08:28:16 -0700 (PDT)
+        id S1758043AbeD1QJu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Apr 2018 12:09:50 -0400
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:43502 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752029AbeD1QJt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Apr 2018 12:09:49 -0400
+Received: by mail-wr0-f171.google.com with SMTP id v15-v6so4378879wrm.10
+        for <git@vger.kernel.org>; Sat, 28 Apr 2018 09:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=7c7xvXJ1R3oob+8Lr+tXld3n8i1+T5cQeNBX3b/crl8=;
-        b=G6i+4n2VubFh/sdruNwaHVPYuTwYTJ24g7ZssIT4vou0sSSH6FwX7wPeHxl1OCQ5PY
-         OQGOrZg3WEclGSRLEuaelu8IsUhL9cwbdj9rY2/EWJfLCvH1001U9PQETNVi9nRZALyF
-         sghE3b/h03c34NTcj/qozhzcY+w2bNj0DSxpcUYu3JlfvLxeGO1h+GzwkJ5LwKIvY+3I
-         13xLcfYaPArOXqXPlew/eA+HWs+VgLOI7mO+qyg3FgB862ekz8jh6IF0fhDmjwDggiwd
-         B8BCsKm/cE/2IhE1bfsFEFaY+bEzArbvqiw+cRVlJyEFtOOOOyWDTIi8OIwBstpMLxpT
-         g2Hw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Hr9ka8aDeJa/eLCfh9FWxOlmHuRTbuxip71BryawcI4=;
+        b=EGj3pXQ2DKMoq0No5yDtTHfyvtX97M4hWK/a/ONGFXCVQECVk1EVZ94Ax/HgQHPYlF
+         98CVia+SRMKynPaRi3V+jK1QNGh5lLlkvdX0ODk8QJ4Cmn3QOWmgdKST+01XloVQi3sz
+         bccBVUziXrZlACokUAYHzxBqVaFRdVBBA3TsgxIlzYc38Oy7NQdzQMDX4FIHElnVM27j
+         dRXvjlQIyE/S29f67YIxvP4TO84woIohPcDckW22+BNc0XxotbQzCxnLaT94u3XGlpmQ
+         Fe8I3AkP7SGCEnGuJSesDTRGsev5hjXvAW72f6dPTzyH+xnR1l3wEVtRhSFD4nH4b00J
+         Ut0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=7c7xvXJ1R3oob+8Lr+tXld3n8i1+T5cQeNBX3b/crl8=;
-        b=T2eXzPWmORbULXF+q45DHHi86FrMDuBFglrgRRFA+ICfCRexFhG/vYcknm6qLpqHvG
-         DEn5WghWFK2lwN/rr8QxyEGxHRFzrkerVqsm4fkYtIYCUX4j2N4N/Sd8isvYW5eEs/W1
-         xglsmReWd9CyMBC+CXd3230ka2LcVr3AoWk6F1DCLxXsGAGiGfQMEcFPe2I05Y8njbBG
-         CGvorkNX7kvgZx7s9mLOCuX7WMH7FHtTf6Isismu6mLmgdPOsQddpyTkroDkvvVX7STa
-         8Gfb6m9Mbf/+WcedUYigNv4gKN76r9EvrxwrK3qRZYXqNh05gYVH4+gNOJbhb7e44KV/
-         iP6w==
-X-Gm-Message-State: ALQs6tCNTwScTWyFpaoxAqZoMKOkIAdhp4ZT5YT1IxMWw5QjYnbuhzY6
-        vN4/TBa82YSXKvSjNWSQMR5XCNOS4NzF9SnHfotDULq7aZQ=
-X-Google-Smtp-Source: AB8JxZr4Sw+2oTyCiehGlN/7+S6NSjG+EltuFev3oBBLkMY28RJrA69QWuCzRnt67MtagUUE5t1LZDrtk2Iq+50gPFo=
-X-Received: by 2002:a25:2704:: with SMTP id n4-v6mr3380085ybn.167.1524929295373;
- Sat, 28 Apr 2018 08:28:15 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Hr9ka8aDeJa/eLCfh9FWxOlmHuRTbuxip71BryawcI4=;
+        b=EW8br0bZGUnFLftaTLtM8gI/w+6iMkOQkQjjXZyE3uM6KUeCj35w7ThdMU0Y8HYaqI
+         fJrTqp38V4atW5zVc7c2Q5vDOQTtmZNCXM9mg7bx8k+sfTUXExMJDDPDS02KisycBIYH
+         cNN88+rjssRgAZkveRSeleuMSBj6L+xW68MbLPJSoZ1MxO4/3qNoZNC8etxg2KvPgGJa
+         v2AkjS+59b0A0IHR6iQXNzLuJe/ZlB5fZmcK2Wr35Xm1i4SDB04UngvOEct088ui4IeZ
+         dwb9RY7QilvBMy7RW9WjTB3m5YHpn8hn/q4ybOUB3Z/WJ01I76yRx8LkqW41vdMs8EdI
+         Qosw==
+X-Gm-Message-State: ALQs6tD8mAFDVAWXjsflO4IfnAWB7FFm87vsjxdjDXG4LZAJGIhm7sbR
+        Lp+HfXzM9V7Oiv09FbrLbU8=
+X-Google-Smtp-Source: AB8JxZpcb4KjGy7huGYGkWEeWp8PGcN+33dQ0OmUE9YVr4AMaCvEwXZf1oq6kD032AJbPrHxsaAx7g==
+X-Received: by 2002:adf:aac5:: with SMTP id i5-v6mr4276880wrc.16.1524931788653;
+        Sat, 28 Apr 2018 09:09:48 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id a139sm3222767wma.43.2018.04.28.09.09.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 28 Apr 2018 09:09:47 -0700 (PDT)
+Date:   Sat, 28 Apr 2018 17:09:50 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 0/4] worktree: teach "add" to check out existing
+ branches
+Message-ID: <20180428160950.GA17619@hank.intra.tgummerer.com>
+References: <20180423193848.5159-1-t.gummerer@gmail.com>
+ <20180424215635.9183-1-t.gummerer@gmail.com>
+ <CAPig+cRor4UXXZhoAkhOQfe6W+oC84YFmA-KwpLspuEh_A4Zng@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Sat, 28 Apr 2018 08:28:14
- -0700 (PDT)
-In-Reply-To: <ad31aab8e735f7de813860cacb32abbc406f43d1.1524868165.git.johannes.schindelin@gmx.de>
-References: <cover.1524868165.git.johannes.schindelin@gmx.de> <ad31aab8e735f7de813860cacb32abbc406f43d1.1524868165.git.johannes.schindelin@gmx.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Sat, 28 Apr 2018 08:28:14 -0700
-Message-ID: <CAGZ79kZbdkNPngcuQe-VWMRCkaHpcGFBa+DGkhU-91FqyhPbrg@mail.gmail.com>
-Subject: Re: [PATCH 1/6] sequencer: extract helper to update active_cache_tree
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Wink Saville <wink@saville.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRor4UXXZhoAkhOQfe6W+oC84YFmA-KwpLspuEh_A4Zng@mail.gmail.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On 04/27, Eric Sunshine wrote:
+> On Tue, Apr 24, 2018 at 5:56 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > Thanks Eric for the review and the suggestions on the previous round.
+> >
+> > Changes since the previous round:
+> >
+> > - UNLEAK new_branch after it was xstrndup'd
+> > - update the commit message of 2/4 according to Eric's suggestions
+> > - make force_new_branch a boolean flag in
+> >   print_preparing_worktree_line, instead of using it as the branch
+> >   name.  Instead use new_branch as the new branch name everywhere in
+> >   that function.
+> > - get rid of the ckeckout_existing_branch flag
+> 
+> Thanks. I did another full review of all the patches and played around
+> with the new functionality again for good measure. Everything looked
+> good, and I think the patches are now ready to graduate.
 
-On Fri, Apr 27, 2018 at 3:30 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> This patch extracts the code from is_index_unchanged() to initialize or
-> update the index' cache tree (i.e. a tree object reflecting the current
-> index' top-level tree).
->
-> The new helper will be used in the upcoming code to support `git rebase
-> -i --root` via the sequencer.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  sequencer.c | 27 ++++++++++++++++++---------
->  1 file changed, 18 insertions(+), 9 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index e2f83942843..90c8218aa9a 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -562,9 +562,23 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
->         return !clean;
->  }
->
-> +static struct object_id *get_cache_tree_oid(void)
-> +{
-> +       if (!active_cache_tree)
-> +               active_cache_tree = cache_tree();
-> +
-> +       if (!cache_tree_fully_valid(active_cache_tree))
-> +               if (cache_tree_update(&the_index, 0)) {
-> +                       error(_("unable to update cache tree"));
-> +                       return NULL;
-> +               }
+Thanks for all your review work on this series!
 
-This move is a verbatim move of the code below, except that
-we need to add braces. For some reason I fantasize of using
-the comma operator in C eventually (which we do not use in
-our code base AFAICT), then we could leave out the braces
-and have a
-
-    return error(...), NULL;
-
-Anyway, this patch is
-Reviewed-by: Stefan Beller <sbeller@google.com>
+> For what it's worth, the entire series is:
+> 
+> Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
