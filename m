@@ -2,98 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50FEC1F404
-	for <e@80x24.org>; Sat, 28 Apr 2018 07:45:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A07A31F404
+	for <e@80x24.org>; Sat, 28 Apr 2018 09:04:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933456AbeD1HpT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Apr 2018 03:45:19 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:53502 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933450AbeD1HpS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Apr 2018 03:45:18 -0400
-Received: by mail-wm0-f53.google.com with SMTP id 66so5770474wmd.3
-        for <git@vger.kernel.org>; Sat, 28 Apr 2018 00:45:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=V3UPzM08TsASsl+Hy1hMMVZhQo96tSnicYhrSTOrViY=;
-        b=bR6S4PNGkg/OeFXZLkIjU7UR9VPL/rLQPSAC10kTpWiDoOFB+acsEIEzMq43Paar76
-         yJze8ZFFTBpNdaTctHNUBawq+kSBzHnvKOSlOUhDLbo3gKmIjCEQ8Gm7tSQoV8KFEy7E
-         T4ebScESDHBrU7kBCHmtPeC0n3UuV4FRRaksha/jawhtuQNTrfVAqx5BuhTcs7kxhR+8
-         OijHisyNVi8CpvxoBn/8/4kRln3gZCChU5F4qsNz+34iBcqNQwGDUijf+6k1G6Ewu8iu
-         gRaH2sZsl9GDhyCqQEn4eEKoiiBC9jAWPJ1UUVvzR4lGco/anDN7Zk88uKEJdJblJluI
-         8ZpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=V3UPzM08TsASsl+Hy1hMMVZhQo96tSnicYhrSTOrViY=;
-        b=DwnP/dPux+B0FXzbJLQDuWUHXHFl4SCUrIDdsEyoPhIqQ+jNetgHMU3TqSw+q+Lmbp
-         1H+9i1HiR155EhIdRYAfrGsPIscL0XUG0oEwrVi4PTyHalj0oX6P3WSMrVlqHOCfFd7Y
-         HiMuPH+L8DShMpvFFX7Z3WDXNAcB+RRDAWNZ2wLS4igWGcq4Sn8GG3B8BIX2HDds1RlN
-         k0J7P7zU0Lx16r+ODRMlQhV5d3KHLeXAZdOkQetHdzLVljO4ugo1Qh7915MCm8mnelrx
-         rF/8vxz/KGrqkoYM9TKhz/dlH8L5/qNLFHJ63EUdtHYC0Wj0BxB7M3SGTp272jLogJyw
-         gqnQ==
-X-Gm-Message-State: ALQs6tBgz4dejVgqiGXYnQ1nb7gQvxLj59mLEOokDKCGZNHIcxs8xJMg
-        67bbpd//MPXSDewYX1x4r8R7yEG7ZzwLv2rYacE=
-X-Google-Smtp-Source: AB8JxZq/UuX+4jmSXINDm1Y7oq8Q3gTTwyuP8ipgaNwAES8cEY5I2J5M4zP4LMKM38poYPHjKYBc+iiXXVh6T/AyE5s=
-X-Received: by 2002:a50:d002:: with SMTP id j2-v6mr7037317edf.44.1524901517111;
- Sat, 28 Apr 2018 00:45:17 -0700 (PDT)
+        id S1759649AbeD1JE5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Apr 2018 05:04:57 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:56164 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759620AbeD1JEz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Apr 2018 05:04:55 -0400
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id CLmifcsI42vvYCLmjfb4nR; Sat, 28 Apr 2018 10:04:53 +0100
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=LLdIvqe9 c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=rhIh4dFitXp3uf_4HX8A:9
+ a=QEXdDO2ut3YA:10
+Message-ID: <A37AE6B64CF7414ABE41697663B2BEC4@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Johannes Schindelin" <johannes.schindelin@gmx.de>,
+        "Git List" <git@vger.kernel.org>
+Cc:     "Johannes Schindelin" <johannes.schindelin@gmx.de>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        "Jakub Narebski" <jnareb@gmail.com>,
+        "Stefan Beller" <sbeller@google.com>,
+        "Eric Sunshine" <sunshine@sunshineco.com>,
+        "Christian Couder" <christian.couder@gmail.com>
+References: <cover.1524650028.git.johannes.schindelin@gmx.de> <cover.1524865158.git.johannes.schindelin@gmx.de> <b321979f88589e7b006466159c470800db948d66.1524865158.git.johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v6 11/11] Remove obsolete script to convert grafts to replace refs
+Date:   Sat, 28 Apr 2018 10:04:46 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.80.180.180 with HTTP; Sat, 28 Apr 2018 00:44:56 -0700 (PDT)
-In-Reply-To: <d4d8d8208b6a41c380ecf20807763bcf@XCH15-05-02.nw.nos.boeing.com>
-References: <d4d8d8208b6a41c380ecf20807763bcf@XCH15-05-02.nw.nos.boeing.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sat, 28 Apr 2018 00:44:56 -0700
-Message-ID: <CA+P7+xryOt_-vg7cpvqRapM7nWuhWXjhpUR1xi-5MY_RH5UwAQ@mail.gmail.com>
-Subject: Re: Branch deletion question / possible bug?
-To:     "Tang (US), Pik S" <Pik.S.Tang@boeing.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 180428-4, 28/04/2018), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfKDbImX/AsOB057tRJW9HBJu3SUXi0mDfsQc4bzSc2d8ttigUlB/gKfxyCwRXa1EulCR7F7YVJQDFT4Nx2/M6x4TBftpawXBkwiAzQh6d+FrgAfbbUgX
+ 6WezyPjmuPX20GjkPbDivZo96/zu9li7CLds0Qv+tbUASUyuQSx8J/HuHEJanLqO7NFMibCqTBedOLEiay4JRbDD3d2mpTBZ0zxN8J+4lt1AkQptS+k7J+3g
+ g4gKPUSA7/x6/qTCvgXubtyL1F86xKyLJzXk91Cx7LJtJ4ZGrzGrAPA/3ogNf+qnR/PQK/YPlnwP3GcVMxOXiz3kxTsgCMa0+86Vcn67ohAK1cRjgVHeOfPF
+ P/5rKtBvu0n1MLGIvOOE8yNv/GiwRuIHE6rHej/XGQxctVk8neU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 27, 2018 at 5:29 PM, Tang (US), Pik S <Pik.S.Tang@boeing.com> wrote:
-> Hi,
+From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
+> The functionality is now implemented as `git replace
+> --convert-graft-file`.
+
+A rather late in the day thought: Should this go through the same
+deprecation dance?
+
+I.e. replace the body of the script with the new `git
+replace --convert-graft-file` and echo (or die!) a warning message that this
+script is now deprecated and will be removed?
+
+At least it will catch those who arrive via random web advice!
+
+--
+Philip
 >
-> I discovered that I was able to delete the feature branch I was in, due to some fat fingering on my part and case insensitivity.  I never realized this could be done before.  A quick google search did not give me a whole lot to work with...
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> contrib/convert-grafts-to-replace-refs.sh | 28 -----------------------
+> 1 file changed, 28 deletions(-)
+> delete mode 100755 contrib/convert-grafts-to-replace-refs.sh
 >
-> Steps to reproduce:
-> 1. Create a feature branch, "editCss"
-> 2. git checkout master
-> 3. git checkout editCSS
-> 4. git checkout editCss
-> 5. git branch -d editCSS
+> diff --git a/contrib/convert-grafts-to-replace-refs.sh
+> b/contrib/convert-grafts-to-replace-refs.sh
+> deleted file mode 100755
+> index 0cbc917b8cf..00000000000
+> --- a/contrib/convert-grafts-to-replace-refs.sh
+> +++ /dev/null
+> @@ -1,28 +0,0 @@
+> -#!/bin/sh
+> -
+> -# You should execute this script in the repository where you
+> -# want to convert grafts to replace refs.
+> -
+> -GRAFTS_FILE="${GIT_DIR:-.git}/info/grafts"
+> -
+> -. $(git --exec-path)/git-sh-setup
+> -
+> -test -f "$GRAFTS_FILE" || die "Could not find graft file: '$GRAFTS_FILE'"
+> -
+> -grep '^[^# ]' "$GRAFTS_FILE" |
+> -while read definition
+> -do
+> - if test -n "$definition"
+> - then
+> - echo "Converting: $definition"
+> - git replace --graft $definition ||
+> - die "Conversion failed for: $definition"
+> - fi
+> -done
+> -
+> -mv "$GRAFTS_FILE" "$GRAFTS_FILE.bak" ||
+> - die "Could not rename '$GRAFTS_FILE' to '$GRAFTS_FILE.bak'"
+> -
+> -echo "Success!"
+> -echo "All the grafts in '$GRAFTS_FILE' have been converted to replace
+> refs!"
+> -echo "The grafts file '$GRAFTS_FILE' has been renamed:
+> '$GRAFTS_FILE.bak'"
+> -- 
+> 2.17.0.windows.1.33.gfcbb1fa0445
 >
 
-Are you running on a case-insensitive file system? What version of
-git? I thought I recalled seeing commits to help avoid creating
-branches of the same name with separate case when we know we're on a
-file system which is case-insensitive..
-
-> Normally, it should have been impossible for a user to delete the branch they're on.  And the deletion left me in a weird state that took a while to dig out of.
->
-> I know this was a user error, but I was also wondering if this was a bug.
-
-If we have not yet done this, I think we should. Long term this would
-be fixed by using a separate format to store refs than the filesystem,
-which has a few projects being worked on but none have been put into a
-release.
-
-Thanks,
-Jake
-
->
->
-> Thanks,
->
-> Pik Tang
->
