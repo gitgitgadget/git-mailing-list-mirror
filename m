@@ -2,107 +2,207 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10BAE1F428
-	for <e@80x24.org>; Sat, 28 Apr 2018 22:33:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB6871F428
+	for <e@80x24.org>; Sat, 28 Apr 2018 22:35:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752268AbeD1Wds (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Apr 2018 18:33:48 -0400
-Received: from mout.gmx.net ([212.227.17.22]:53181 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751974AbeD1Wds (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Apr 2018 18:33:48 -0400
-Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
- (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MYwQh-1erG7B2bvX-00Vi2Q; Sun, 29 Apr 2018 00:33:42 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] tests: introduce test_unset_prereq, for debugging
-Date:   Sun, 29 Apr 2018 00:33:36 +0200
-Message-Id: <b94af009c1bc9c9b96d977b1c5775ff73669138f.1524954814.git.johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.17.0.windows.1.36.gdf4ca5fb72a
+        id S1752315AbeD1WfR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Apr 2018 18:35:17 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35716 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752014AbeD1WfQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Apr 2018 18:35:16 -0400
+Received: by mail-wm0-f66.google.com with SMTP id o78so8613520wmg.0
+        for <git@vger.kernel.org>; Sat, 28 Apr 2018 15:35:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=vECdhFFqNhHplpuMbLsjPvFHlVpICNJLQfQOSFPQhzU=;
+        b=eTg6vE+83ka7Bw5sjaOjGSE6vAFtQkb0OHp7u/vZ8jTILEeCbIc92eZqmSjuV1FICd
+         q+J3NyacpbCRAVuHLKXalczzakksX7meNWCnk7s0rL5QtZGjQjuZlqq+s4hL1DipUXzX
+         C2JiO1hRYwBUPVZnQ6MbDPwGi6N+64gcnXC6J2FnVYjFaUByCNaDRSdeSuCwrBT9WZM0
+         dw1sFHkuAQ+88qV33u6uUJITrNcaChx7L8yX/2B2zThRjGq0NWjCHbZtWNp16qbWLAuI
+         VgpbiNPeoOgfV8hTJLOygRhIicf4U1Bx/+3IyZ9pTaW/Bg3rJc1NGpsVdeGsjzVSZAR4
+         9GfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=vECdhFFqNhHplpuMbLsjPvFHlVpICNJLQfQOSFPQhzU=;
+        b=BvAE2WcXj3EfGS68k72HX7tIRQHQOQ4rJL4Q5d684ND80uQlbJQta/l6vQ8QVSLyCR
+         aQv7m1a7cD+v1AFnHTNojQTr4H1hzJfyGpsLExea0P4B7sil3j/b5oRZLH93Zj69uG2o
+         gVa1eCEAr/nHzCnS2LgBJwm864oJB9ztyrd+qezCGOnu6ssmfUgAIakFXvRxSF2oipTR
+         rpOns7XnDmrs89fIqOGYOY2U3IirR8oiwLKVjbGiGrEu3eZFc/9JSHr9muu6zfAG0fkq
+         Z/9JbZdrhE3brKbIRMFWkjvtad70Q6kEWnuUiDmDhOEAeVWlX3nA8uaRwLKSEYIGUc2W
+         gl3A==
+X-Gm-Message-State: ALQs6tCQzCgQh2hdRiqciu9BoVirUxwRXFKB0aqV5OOsbdWnbQXhCdbB
+        pA0C5uyL4v00mX3SNPRqras=
+X-Google-Smtp-Source: AB8JxZr9uz3FdZ9Gp/yPO0lIB/wOZY+pDKHbDM5TC2mZ73TENJSDRpdLSq+rlPfoRZnV/Qryj2PbRw==
+X-Received: by 10.28.51.201 with SMTP id z192mr3470037wmz.147.1524954915492;
+        Sat, 28 Apr 2018 15:35:15 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (abps22.neoplus.adsl.tpnet.pl. [83.8.60.22])
+        by smtp.gmail.com with ESMTPSA id 80sm7026360wml.44.2018.04.28.15.35.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 28 Apr 2018 15:35:14 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v4 02/10] commit: add generation number to struct commmit
+References: <20180417170001.138464-1-dstolee@microsoft.com>
+        <20180425143735.240183-1-dstolee@microsoft.com>
+        <20180425143735.240183-3-dstolee@microsoft.com>
+Date:   Sun, 29 Apr 2018 00:35:12 +0200
+In-Reply-To: <20180425143735.240183-3-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Wed, 25 Apr 2018 14:37:55 +0000")
+Message-ID: <86604bj6xr.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:UkhJSadKN7OHRBMizVRDVcnXNx9oVzqBG3OlYxHujfDSPnm/VeX
- B4RUJoq+e2zf4CEW/OO3xdCehXnQjegB8yP9tfAmYBLATRlKdwfBfur1H3tygbu1NYxCVTy
- +Ytda7DWA9pF9X2/9sl5FyDTBxyYx1KDWX3VM5Zq/Hn2VXokLNcrDGOrEKH3OQsSHQV2PDr
- Umb8G5lBKfjtwhHr0zcAA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DMrXH8WV8s8=:63lgUR3u5gvniXZh5PvZdL
- meYdlJK0NYvhBbhIRZfoOnjrrSq+JNi7B0lovyjyAoQ/ERITv38n+FQK/+C5Kyzdo0bWp5mw1
- twIRqU+Av76VrGNNHSf5akuyAkvLZ3o5EZq9WNKTJ5Y2uHsxUKSkl/uZ5yn1pl0XBceLZ2pcp
- SD7zhqWXuRkBIyBxeNMt8bz4jnu5M4IfX16NeS/9rPWVZpdDO41wwdLnG0Xo4qdjp+GkT+8dI
- PjVn3IVqHGDhzZ6KydU1cYvzYdazde4MMmQJMoyxD2yMPRiYShYMemW6ZkVDX8pO88d4RU/pr
- dZbFqLLXDZH+kzzePmme3yBvXw8XaREVlEcDYezHUIoyDyra0F/vPm5hwBuxLlxcbI5PuzP7w
- 7YtKt9UBgDs1V+3gKpaoepjbKVbSDiUVP33ED/I0ODDsPvVTmhON/9mK+hdIuNiRoOplYWMF+
- otKCEOFGVgDunqDpWU4EmHoIBJQKfNdRknMMK3g33qADlJowLXvbc+gKOiOe/GzlNwWh09UQE
- 9dOCM0unv2otAPqWOlTqo8naAUMyckZeD28JuVLInslRxtKAGJuNs0AOBU03oP5ur5B5TMOux
- 6lpQ0AP59vwmtPCQFDtkganTYt91xdOS/6zK8CIEvuygscXbqXsTpckaVB5poabSptyZ40zBP
- gtuwt46yz9vJHJIeid7ssgfJmiXFKa8IBDu6ehABYSKhZZgJIYO3ISiveP85zPptoUSjW5+tx
- OlxeVDcOuSARx4XbAZ8e0+oXb9hzUTNVQdjay9dni00nCjqZIlCwt1NadDe3IRmb2RhPnB0Xd
- TNqS2Yq
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While working on the --convert-graft-file test, I missed that I was
-relying on the GPG prereq, by using output of test cases that were only
-run under that prereq.
+Derrick Stolee <dstolee@microsoft.com> writes:
 
-For debugging, it was really convenient to force that prereq to be
-unmet, but there was no easy way to do that. So I came up with a way,
-and this patch reflects the cleaned-up version of that way.
+> The generation number of a commit is defined recursively as follows:
+>
+> * If a commit A has no parents, then the generation number of A is one.
+> * If a commit A has parents, then the generation number of A is one
+>   more than the maximum generation number among the parents of A.
 
-For convenience, the following two methods are now supported ways to
-pretend that a prereq is not met:
+Very minor nitpick: it would be more readable wrapped differently:
 
-	test_set_prereq !GPG
+  * If a commit A has parents, then the generation number of A is
+    one more than the maximum generation number among parents of A.
 
-and
+Very minor nitpick: possibly "parents", not "the parents", but I am
+not native English speaker.
 
-	test_unset_prereq GPG
+>
+> Add a uint32_t generation field to struct commit so we can pass this
+> information to revision walks. We use three special values to signal
+> the generation number is invalid:
+>
+> GENERATION_NUMBER_INFINITY 0xFFFFFFFF
+> GENERATION_NUMBER_MAX 0x3FFFFFFF
+> GENERATION_NUMBER_ZERO 0
+>
+> The first (_INFINITY) means the generation number has not been loaded or
+> computed. The second (_MAX) means the generation number is too large to
+> store in the commit-graph file. The third (_ZERO) means the generation
+> number was loaded from a commit graph file that was written by a version
+> of git that did not support generation numbers.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/test-unset-prereq-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git test-unset-prereq-v1
- t/test-lib-functions.sh | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+Good explanation; I wonder if we want to have it in some shortened form
+also in comments, and not only in the commit message.
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 7d620bf2a9a..76cd6630f29 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -278,8 +278,20 @@ write_script () {
- # The single parameter is the prerequisite tag (a simple word, in all
- # capital letters by convention).
- 
-+test_unset_prereq () {
-+	! test_have_prereq "$1" ||
-+	satisfied_prereq="${satisfied_prereq% $1 *} ${satisfied_prereq#* $1 }"
-+}
-+
- test_set_prereq () {
--	satisfied_prereq="$satisfied_prereq$1 "
-+	case "$1" in
-+	!*)
-+		test_unset_prereq "${1#!}"
-+		;;
-+	*)
-+		satisfied_prereq="$satisfied_prereq$1 "
-+		;;
-+	esac
- }
- satisfied_prereq=" "
- lazily_testable_prereq= lazily_tested_prereq=
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  alloc.c        | 1 +
+>  commit-graph.c | 2 ++
+>  commit.h       | 4 ++++
+>  3 files changed, 7 insertions(+)
 
-base-commit: 1f1cddd558b54bb0ce19c8ace353fd07b758510d
--- 
-2.17.0.windows.1.36.gdf4ca5fb72a
+I have reordered patches to make it easier to review.
+
+> diff --git a/commit.h b/commit.h
+> index 23a3f364ed..aac3b8c56f 100644
+> --- a/commit.h
+> +++ b/commit.h
+> @@ -10,6 +10,9 @@
+>  #include "pretty.h"
+>  
+>  #define COMMIT_NOT_FROM_GRAPH 0xFFFFFFFF
+> +#define GENERATION_NUMBER_INFINITY 0xFFFFFFFF
+> +#define GENERATION_NUMBER_MAX 0x3FFFFFFF
+> +#define GENERATION_NUMBER_ZERO 0
+
+I wonder if it wouldn't be good to have some short in-line comments
+explaining those constants, or a block comment above them.
+
+>  
+>  struct commit_list {
+>  	struct commit *item;
+> @@ -30,6 +33,7 @@ struct commit {
+>  	 */
+>  	struct tree *maybe_tree;
+>  	uint32_t graph_pos;
+> +	uint32_t generation;
+>  };
+>  
+>  extern int save_commit_buffer;
+
+All right, simple addition of the new field.  Nothing to go wrong here.
+
+Sidenote: With 0x7FFFFFFF being (if I am not wrong) maximum graph_pos
+and maximum number of nodes in commit graph, we won't hit 0x3FFFFFFF
+generation number limit for all except very, very linear histories.
+
+>
+> diff --git a/alloc.c b/alloc.c
+> index cf4f8b61e1..e8ab14f4a1 100644
+> --- a/alloc.c
+> +++ b/alloc.c
+> @@ -94,6 +94,7 @@ void *alloc_commit_node(void)
+>  	c->object.type = OBJ_COMMIT;
+>  	c->index = alloc_commit_index();
+>  	c->graph_pos = COMMIT_NOT_FROM_GRAPH;
+> +	c->generation = GENERATION_NUMBER_INFINITY;
+>  	return c;
+>  }
+
+All right, start with initializing it with "not from commit-graph" value
+after allocation.
+
+>  
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 70fa1b25fd..9ad21c3ffb 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -262,6 +262,8 @@ static int fill_commit_in_graph(struct commit *item, struct commit_graph *g, uin
+>  	date_low = get_be32(commit_data + g->hash_len + 12);
+>  	item->date = (timestamp_t)((date_high << 32) | date_low);
+>  
+> +	item->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
+> +
+
+I guess we should not worry about these "magical constants" sprinkled
+here, like "+ 8" above.
+
+Let's examine how it goes, taking a look at commit-graph-format.txt
+in Documentation/technical/commit-graph-format.txt
+
+ * The first H (g->hash_len) bytes are for the OID of the root tree.
+ * The next 8 bytes are for the positions of the first two parents [...]
+
+So 'commit_data + g->hash_len + 8' is our offset from the start of
+commit data.  All right.
+
+  * The next 8 bytes store the generation number of the commit and
+    the commit time in seconds since EPOCH.  The generation number
+    uses the higher 30 bits of the first 4 bytes. [...]
+
+The higher 30 bits of the 4 bytes, which is 32 bits, means that we need
+to shift 32-bit value 2 bits right, so that we get lower 30 bits of
+32-bit value.  All right.
+
+  All 4-byte numbers are in network order.
+
+Shouldn't it be ntohl() to convert from network order to host order, and
+not get_be32()?  I guess they are the same (network order is big-endian
+order), and get_be32() is what rest of git uses...
+
+Looks all right.
+
+>  	pptr = &item->parents;
+>  
+>  	edge_value = get_be32(commit_data + g->hash_len);
