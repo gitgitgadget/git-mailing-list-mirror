@@ -2,81 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CA981F428
-	for <e@80x24.org>; Sat, 28 Apr 2018 13:13:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A70821F428
+	for <e@80x24.org>; Sat, 28 Apr 2018 14:24:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933502AbeD1NNu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Apr 2018 09:13:50 -0400
-Received: from mout.gmx.net ([212.227.17.20]:48047 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933450AbeD1NNt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Apr 2018 09:13:49 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MS5jy-1eofUr05xC-00TE2Q; Sat, 28
- Apr 2018 15:13:43 +0200
-Date:   Sat, 28 Apr 2018 15:13:37 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Philip Oakley <philipoakley@iee.org>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v6 11/11] Remove obsolete script to convert grafts to
- replace refs
-In-Reply-To: <A37AE6B64CF7414ABE41697663B2BEC4@PhilipOakley>
-Message-ID: <nycvar.QRO.7.76.6.1804281513140.79@tvgsbejvaqbjf.bet>
-References: <cover.1524650028.git.johannes.schindelin@gmx.de> <cover.1524865158.git.johannes.schindelin@gmx.de> <b321979f88589e7b006466159c470800db948d66.1524865158.git.johannes.schindelin@gmx.de> <A37AE6B64CF7414ABE41697663B2BEC4@PhilipOakley>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751643AbeD1OYE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Apr 2018 10:24:04 -0400
+Received: from mail-oi0-f52.google.com ([209.85.218.52]:34386 "EHLO
+        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751552AbeD1OYD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Apr 2018 10:24:03 -0400
+Received: by mail-oi0-f52.google.com with SMTP id l1-v6so4075764oii.1
+        for <git@vger.kernel.org>; Sat, 28 Apr 2018 07:24:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=7Vzm+DIJrG0q/AWPjGg1xkJywxU+KUZEgDB1WukdgBE=;
+        b=txGFlDrNWHMp38fUA//Vq3c8TpAVXoay83pCLdfBmxkCtkkLyb7XmN2+a2XFp6+HJJ
+         BXtSb6QBqCGYnZ7FrDopGnJ5UBfB+3Lgal/qmlEUmAwnGkxQpc0RlgTW+20jIN49+xkZ
+         7RT5ZQG0iYZN54mWLT5cZ19eh6nzzEBM8yE7E4WqgqxjHXD5WMM5DaBuzWS2UaJVRx6v
+         u9LY6OnxOiwWI3Y9ZQWwGOZuJ3/6hgyCalKaC8k7bN6tdLTaPD665T9A5KOS51DV02yU
+         0Dbl54G1aD21+IQVtEZzMVDyLk2+X50lKYtA9l9/a+qQpFC/pXXoCwxSkaQ6ZQPzDzBH
+         AXJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7Vzm+DIJrG0q/AWPjGg1xkJywxU+KUZEgDB1WukdgBE=;
+        b=rs4A9Tsisfo8vLwK+5NB3NZNM+qm8GTpoEhFklgbkVCCebHsplkAgNvAb7DpYxOBak
+         OO+90IZACJT+9r0m/ZC3wPZxn8hm4F+OObqaJVfo+4JrGHNWFVbM+Am6CQr1gzpev2XI
+         JFxxLDP/uGBa1HcZGIb4K1CfGKNs/wdAT/ADCpkioEX6mudeamh12+2DLmwBYP5+shpL
+         yX2qn73+k0flz7Qs1CMpBjmJaGtzC9BtottAfnmMZp1tVJKHcOI8LPmgI6EWBHWSEqrV
+         SrNcrNtZyeDaYqNgRsnPDGsR3dpevq7rFPSueF9rl/43hfW5KkS0mE6GvhdwHKSC+1oo
+         AKGA==
+X-Gm-Message-State: ALQs6tD4jJ8/36GVz6A0egzION+sgwK4XCZOf3CHn1vNq78zraoZnG/y
+        PiUErL1WM3dXbTBG0rpUgO3zdDiTjP8K2mwDkf4=
+X-Google-Smtp-Source: AB8JxZp1S3YoTHzfkNA7T0PJmxcg1lEaZ54Jq6LpSGEX6tYL8bwjuf5g9JadujrUffpuhDHLBOBHgdkWoyqQoV+ypdE=
+X-Received: by 2002:aca:aad3:: with SMTP id t202-v6mr3769372oie.30.1524925442435;
+ Sat, 28 Apr 2018 07:24:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:x2+xPPAwftgDXZ14oULAEIsbSQ6Yx8g4mDukqcdm++BO8hAYN8F
- 8prI9qscYN/bm882wdpNy0EPeeLHZtfhENM664vt2r4kYLm42OqMY89B/P6FtOioonsKA9t
- pY40qd/xt2z4gzlZlRFbPCJ6GGgOO55xUZMND/qyX602JE5xhYfQfTr3G/GiwrRsXa6u1Go
- cWNlFFakXuNklpS2vQyVA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UtXb+muQKiI=:uIB6V7uRTPN8aEf206aRwn
- QId/d53JCI8WLxJd/lp0ZsLQFI8HbdwScnyfBbG1j9y81sgiKZABtjoFpS0WzUXtnIJRShT2L
- ZvUgdD0HBGV599+7JdMor2CCeBz3GvG1JgaMJXF20jE5eA7eIOIucVz253vu3ObO4shfPs7v6
- CptDzi1O8aZKakwcVTg2cZnti7OeylpXxICQqz1ch6TzNNmgFVRAPPP3wgcmbqKAoSK23MCJ5
- 2yt67/rZE5zS7yK1RFcJpLd0wfqMTrCKAh8jBS8fMrOhP9RPfZlyQBh7zc18fEZaoVwrqZpp4
- /6+AsrCBsbiDAQbxD5xygZ0L7+9W4jENrmZ8ljazDHXF4WcDXTfCWvYil9T1bIvB+eZ8BNh+R
- 62t5hBh2Sz5zfqr/FprRFCdh+UL/yhJhNXypp+K9DqE66o/7TPm56rawgAJs4HgzKqxWN7yVq
- UrZQYj8kBViZ9Y6DGCquDdCPEJ7NFDvqM+go++ReuuLNIHeyWr55yhbL6TU0++6117i8YPqnk
- dNqCtYdnre2ZBZyF/3H10cO77NFc8ZScv6jfu6ReHlHuIM1h1NcZgy021JB8sTgxUybPJlXot
- J4duIMoSjrsN1lifC+EV63CKTY1jcJTohOvxmZCW3107jqWB01hM4bmG8qZcFQRQo+megaXx+
- esG6Yn+T1lOw9bclKYIHTaMKNEdocf3MnRAMHlH3pFhbZbKIwp5QUpHBw/NFSILjbjl4q2op/
- 1TqECxP2FPydgrqT25mchpKtB3p9VE9iUTUZ9xmd3wMgQehSDDn+/XANRlnHS54XOce1InxzQ
- EGE7vwC
+Received: by 10.74.198.152 with HTTP; Sat, 28 Apr 2018 07:23:31 -0700 (PDT)
+In-Reply-To: <1524753972.1088.9.camel@gentoo.org>
+References: <20180413170129.15310-1-mgorny@gentoo.org> <robbat2-20180423T200557-844830385Z@orbis-terrarum.net>
+ <xmqqtvs18p9o.fsf@gitster-ct.c.googlers.com> <robbat2-20180425T060717-325652820Z@orbis-terrarum.net>
+ <xmqqin8f4qoq.fsf@gitster-ct.c.googlers.com> <ad4d0d66-58f4-5cab-d314-a30a50e8ad32@xiplink.com>
+ <xmqqefj24v3c.fsf@gitster-ct.c.googlers.com> <1524753972.1088.9.camel@gentoo.org>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 28 Apr 2018 16:23:31 +0200
+Message-ID: <CACsJy8AfE4XMgTLuM=9aWV7eX5Hd8CqmFMuEgQaSxsLfGoBb5w@mail.gmail.com>
+Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
+To:     =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Marc Branchaud <marcnarc@xiplink.com>,
+        "Robin H. Johnson" <robbat2@gentoo.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+On Thu, Apr 26, 2018 at 4:46 PM, Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org>=
+ wrote:
+> For the record, we're using this with ebuilds and respective cache files
+> (which are expensive to generate).  We are using separate repository
+> which combines sources and cache files to keep the development
+> repository clean.  I have researched different solutions for this but
+> git turned out the best option for incremental updates for us.
+>
+> Tarballs are out of question, unless you expect users to fetch >100 MiB
+> every time, and they are also expensive to update.  Deltas of tarballs
+> are just slow and require storing a lot of extra data.  Rsync is not
+> very efficient at frequent updates, and has significant overhead
+> on every run.  With all its disadvantages, git is still something that
+> lets our users fetch updates frequently with minimal network overhead.
 
-On Sat, 28 Apr 2018, Philip Oakley wrote:
+I assume you're talking about the metadata directory in gentoo-x86
+repo. This specific case could be solved by renaming metadata to
+_metadata or something to put it on the top. "git checkout" always
+updates files in strcmp(path) order. This guarantees time(_metadata)
+<=3D time(ebuild) for all ebuilds without any extra touching (either in
+git or in a post-checkout hook)
 
-> From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
-> > The functionality is now implemented as `git replace
-> > --convert-graft-file`.
-> 
-> A rather late in the day thought: Should this go through the same
-> deprecation dance?
-> 
-> I.e. replace the body of the script with the new `git
-> replace --convert-graft-file` and echo (or die!) a warning message that this
-> script is now deprecated and will be removed?
-> 
-> At least it will catch those who arrive via random web advice!
-
-Originally, I did not even want to remove it... I just did as I was told
-by Junio...
-
-Ciao,
-Dscho
+The behavior has been this way since forever and as far as I can tell
+very unlikely to change at least for branch switching (major changes
+involved around the index). It's a bit easier to accidentally change
+how "git checkout -- path" works though. I don't know if we could just
+make this checkout order a promise and guarantee not to break it
+though. For it it does not sound like it adds extra maintenance
+burden.
+--=20
+Duy
