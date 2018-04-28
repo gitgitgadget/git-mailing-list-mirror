@@ -7,83 +7,123 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D41FE1F428
-	for <e@80x24.org>; Sat, 28 Apr 2018 12:30:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4125E1F428
+	for <e@80x24.org>; Sat, 28 Apr 2018 12:43:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759914AbeD1Mae (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Apr 2018 08:30:34 -0400
-Received: from mout.gmx.net ([212.227.17.21]:38989 "EHLO mout.gmx.net"
+        id S933464AbeD1Mnm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Apr 2018 08:43:42 -0400
+Received: from mout.gmx.net ([212.227.17.22]:57847 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1759886AbeD1Mad (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Apr 2018 08:30:33 -0400
+        id S933450AbeD1Mnl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Apr 2018 08:43:41 -0400
 Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZU7V-1ew6V53LTB-00LHmJ; Sat, 28
- Apr 2018 14:30:26 +0200
-Date:   Sat, 28 Apr 2018 14:30:26 +0200 (DST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LZzY9-1eVsJ41zBN-00liwo; Sat, 28
+ Apr 2018 14:43:32 +0200
+Date:   Sat, 28 Apr 2018 14:43:30 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: Re: [PATCH 2/2] unpack_trees_options: free messages when done
-In-Reply-To: <20180428113257.25425-1-martin.agren@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804281428070.79@tvgsbejvaqbjf.bet>
-References: <20180424162939.20956-1-newren@gmail.com> <20180428113257.25425-1-martin.agren@gmail.com>
+To:     Philip Oakley <philipoakley@iee.org>
+cc:     Jacob Keller <jacob.keller@gmail.com>,
+        "Tang (US), Pik S" <Pik.S.Tang@boeing.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Branch deletion question / possible bug?
+In-Reply-To: <249C4D418B2B49B4AD5545B912FDA53D@PhilipOakley>
+Message-ID: <nycvar.QRO.7.76.6.1804281440570.79@tvgsbejvaqbjf.bet>
+References: <d4d8d8208b6a41c380ecf20807763bcf@XCH15-05-02.nw.nos.boeing.com> <CA+P7+xryOt_-vg7cpvqRapM7nWuhWXjhpUR1xi-5MY_RH5UwAQ@mail.gmail.com> <249C4D418B2B49B4AD5545B912FDA53D@PhilipOakley>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1264115101-1524918627=:79"
-X-Provags-ID: V03:K1:PIX60n+rVTAmxUYdSxOlS7BdrzDFCsdsJBSP/YQja+JHvXK1zC2
- hd1hk6m1n2qIkmfqE8hm8VyzKH9LVdwMderR4BRT35IaK/Yepi2gQ/sBdd7P72zyG4itGCv
- lcIQ8T9o4JzTu4aXFUHxqOP7uEGpYEQB8ZPG15LTRIT9xgYrQhzo9gUStmxlTlab0hnanKh
- aomYx7OJ7xyQCVacEx97A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cghbiR12Ci0=:Q0DsMxk3hLk7WoI7g9Stdp
- Vo9aRx1WcBZMcaaL2OSCuXDhvNEDn5rpmnQbGNBDkIhwUje46b0H9fvTa7UyweNsQ9zbkJrRK
- 9IUCm7IGrW/qlC4GYqsU8oDTMqPDFyiIq+3GH3wSoSVEvO1i8yylV6zka4Lxn3S043RUw5hzD
- GIGcGIULuAdqCCfK3K5ldnZsXUYUJtL2+thfBY5iwlscCHTO8Mjv4VehTWIUNQM/L5tOgxWR1
- 68yYQhx5gaPd8fjh1e5FGwYEEXtEzmotzRMG4xeMMGX4Yio1ABOxSwLLi9v38wN75B+hbchr+
- /4LdEPetpgkiLBEXTSkf3qGdoWodjqE2rZQVdwtbhlubOedzdHQZw/ARwmvihDtefu1NyS5kP
- NSSp8cQ3XZceQ/aBZ4ec5zx1KrJBQ6ozIaTeMFaAvnyd+qvQHg3TK0Fh9MsJoyYwqhoVJ5g5F
- VdK/UV6EhOQH93dh9b8OH8f+VhX6ymuCkuEyjQlct7Y46mvKP6VM7FsXcdYzRhtiXY4UBZPHp
- 1M6u8TLv5Tv3zsilmld53EDbGjCmpnWg8IdirUpdlpguSLtT7GnF1ASnoZ21QSSbuR902uAEd
- inYv3I9NMd0AZtFqFOGY7VP+DYTeNoUx0oGcXQEQ8/eCR0s/f+e1K8TRYYT8PTsNYrt0R5ztc
- 5BOVWkB2969haArGN/FYpq5GcYPMOuDgjOsIS0hwAry/igXbLLfSZmZHydTW160KN69VPJlXe
- ZaHARlelB5jZshggyf20wwfC0Kd3GO7qf4ZMktXmNc4XBvj7Zs5+ZaZVO05smSDsPBVnSqOmr
- ljYyy/2
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:DrYsoVookUvUutszez4QufzLiSqOATZJKp9rX7Mx/Lo1ZZ9WNX0
+ tlTlZYOpyDVan0k83ZnB545H1J9GoPcuHZyU9wJMlr33ipHlTdeq3yO0lK7Lg4LJY6TSovK
+ EM+djYcsU27g7STbOUxDkPHGHvdtKptfg/skxjTuJiw6jGRKmuqPtb3RYGWeOWtKV2GtJx7
+ FYAToKtIPWTJ/WiVRehsQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:v4n092jX9F4=:qMdttrfuWskXPrDh7DleUE
+ 749Ybyqtth6ckYjlLirVPOPwNgDqN+fkt+O9P6PaM0AGYOZzKI57r9H8qcJCTfxv/hgGzaiMp
+ wx1kElrzF9+RR4vBBaQbyeIA0YCsKJdP+3valVW0pMC8ZF/ZfzbwMafGh+gokFtZpudVO160K
+ r1pArqHdMu39shh4wyKtxZzwn9sDI0fNKfXIHGoIhbH/AaE76aq8ohJsJKznbsfTevB2go0+t
+ v07TRr84dahUOpS0eWQGh83x2HHtxgyPNE1x8R9ymu1VJW3VBJVXNDZwkYApJty/6kxbJAkKz
+ qE1Iumk93/kyKZgSPDR3btR/u/xHekbovB+zKg8T9D9oe7OQS8XU0ZzBxUM9JyfxbtpmrC789
+ Y6kcZ1U+jgfAK5ndSwgcYtKcZzmJePZwjajjAlN73OuXg29a5ecj10oIcjOBod0O7A1cFhJiT
+ OHQJAyCtzFwBZRwmRPaM+IP7X9W+tjXfBa+oiZRyimvAj6VO5H7MyZht3HlXg7ivmtuMIhO/6
+ 7h4brCLu+cnwZ7qZ7/E3+rbRceq/1NCXARgpzb6oAX30tNaXGjo+pHCvGSWx1UJ8TGo4/XbmY
+ IpkOH1+J7Hp6S7h4qq340MhWMWH2j5Y75Qs7/bysThq5b3ug0Lagach6wxL7g+IS9NSGiLdL7
+ MUlELHQznYGK5LFufDQsbt6H1cJAWiAXOVYVUNlv7vqn0gXJ3Hea3raeK1CUfoO3tpXUi0vJ9
+ mE2Bn6H9iYad20dkWtPGBa5U0JsTBKTxRaf8LmrtrptJiuuR91A8d3TctXJ5lWVMJC69wl1uE
+ Wwuyk3d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-1264115101-1524918627=:79
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Sat, 28 Apr 2018, Philip Oakley wrote:
 
-Hi Martin,
+> From: "Jacob Keller" <jacob.keller@gmail.com>
+> > On Fri, Apr 27, 2018 at 5:29 PM, Tang (US), Pik S <Pik.S.Tang@boeing.com>
+> > wrote:
+> > > Hi,
+> > >
+> > > I discovered that I was able to delete the feature branch I was in, due
+> > > to some fat fingering on my part and case insensitivity.  I never
+> > > realized this could be done before.  A quick google search did not give
+> > > me a whole lot to work with...
+> > >
+> > > Steps to reproduce:
+> > > 1. Create a feature branch, "editCss"
+> > > 2. git checkout master
+> > > 3. git checkout editCSS
+> > > 4. git checkout editCss
+> > > 5. git branch -d editCSS
+> > >
+> >
+> > Are you running on a case-insensitive file system? What version of
+> > git? I thought I recalled seeing commits to help avoid creating
+> > branches of the same name with separate case when we know we're on a
+> > file system which is case-insensitive..
+> >
+> > > Normally, it should have been impossible for a user to delete the branch
+> > > they're on.  And the deletion left me in a weird state that took a while
+> > > to dig out of.
+> > >
+> > > I know this was a user error, but I was also wondering if this was a bug.
+> >
+> > If we have not yet done this, I think we should. Long term this would
+> > be fixed by using a separate format to store refs than the filesystem,
+> > which has a few projects being worked on but none have been put into a
+> > release.
+> 
+> Yes, this is an on-going problem on Windows and other case insentive
+> systems. At the moment the branch name becomes embedded as a file name, so
+> when Git requests details of a branch from the filesystem, it can get a case
+> insensitive equivalent. Meanwhile, internally Git is checking for equality
+> in a case sensitive [Linux] way with obvious consequences such as this - The
+> most obvious being when there is no "*" current branch marker in the branch
+> status list.
+> 
+> It's a bit tricky to fix (internally the name and the path are passed down
+> different call chains), and depends on how one expects the case
+> insensitivity to work - the kicker is when someone does an edit of the name
+> via the file system and expects Git to cope (i.e. devs knowing, or think
+> they know, too much detail ;-).
+> 
+> The refs can also get packed, so the "bad spelling" gets baked in.
+> Ultimately it probably means that GfW and other systems will need  a case
+> sensitivity check when opening paths...
 
-On Sat, 28 Apr 2018, Martin =C3=85gren wrote:
+FWIW I outlined what I think is the best route to fix this for good:
 
-> -->8--
-> Subject: merge-recursive: provide pair of `unpack_trees_{start,finish}()`
->=20
-> Rename `git_merge_trees()` to `unpack_trees_start()` and extract the
-> call to `discard_index()` into a new function `unpack_trees_finish()`.
-> As a result, these are called early resp. late in `merge_trees()`,
-> making the resource handling clearer. The next commit will expand on
-> that, teaching `..._finish()` to free more memory. (So rather than
-> moving the TODO-comment, just drop it, since it will be addressed soon
-> enough.)
->=20
-> Also call `..._finish()` when `merge_trees()` returns early.
+https://github.com/git-for-windows/git/issues/1623#issuecomment-380085257
 
-Looks good! It is missing a Signed-off-by: line, and you probably want to
-start a new thread that also includes the "next commit", but other than
-that it is pretty nice and ready for contributing, methinks.
+Essentially, I think we should teach Git the trick to check the spelling
+before calling lstat() in refs/files-backend.c.
+
+To check the spelling, we would need an API to get the on-disk
+representation of a given path. On Windows, I know this call. On Linux,
+apparently canonicalize_file_name() might do the job, but that is a GNU
+libc extension, and won't help us on macOS.
+
+Any ideas?
 
 Ciao,
 Dscho
---8323328-1264115101-1524918627=:79--
