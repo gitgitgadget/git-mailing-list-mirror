@@ -2,72 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B6E61F428
-	for <e@80x24.org>; Sat, 28 Apr 2018 19:00:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE9CE1F428
+	for <e@80x24.org>; Sat, 28 Apr 2018 19:35:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751330AbeD1TA4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Apr 2018 15:00:56 -0400
-Received: from mail-lf0-f45.google.com ([209.85.215.45]:43583 "EHLO
-        mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751307AbeD1TAz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Apr 2018 15:00:55 -0400
-Received: by mail-lf0-f45.google.com with SMTP id g12-v6so7168337lfb.10
-        for <git@vger.kernel.org>; Sat, 28 Apr 2018 12:00:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=U9964JjhSQHGwCoFsqaXaY+znsp7qT3uiB6uTihrLb0=;
-        b=P4wouXZD/sPrRY00O2CQDaH+BHf+vE0BgS20BaJb0wTFIPyiC7sHtRWfNtrRRDLlL1
-         cZA0tcpjbk3QHMaetHuGeoL6lqODRJxK0+nNnd6Sfo2nqMnUN7vOzkhZgcykKLNFMgvF
-         ndGMENqw6RZL2pqHXcOHLxoz22iXN0XXU1vRcqQ4gZSCyZP+1WsS0+4h7vlZiP532ckl
-         7i4fE8AtgC7GsEmiIiQMvZk1CKefIqw0xfixgsAVt9BMXM/cBj8Ua8OQ5sQDdxryTXVl
-         4HNfP7x0VXMe1Tghn0bJDlqjaX+ORe9sgGqBVE6bqaG3bkTccqWP8gdlsVu4dsMWMB3f
-         LN5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=U9964JjhSQHGwCoFsqaXaY+znsp7qT3uiB6uTihrLb0=;
-        b=XsjWWDRH5o6ytw4O1MP4H4k4EbHV28C2WrEDGwV4K/4slEAUhDLXESJHnXvNd+/87X
-         cOln4+EVxH/kowe/ZQtdjV47XcMOCp+DzRAcENTDPcIr0PlT2Vo6CLs6ua4m+uPTjOIl
-         h9wCRtUTMBlYYOHwaKtUXcTkkjoV+Wud0G6ozy8vzQOe0XYNawC1F94YmFgj/jKQ2+UT
-         QwclQUedjeJkIVjH0h/NrlZ4T31/8PRl5wbghVldPhTEn7EvDPAqizMdhPQqhrpE3Gc6
-         cT8HPc5S3GSaznAXBJTAV/qkNAmCjULlaSg8Z8ICECteS4EYNrcBDhYgAIXin9dMCkQM
-         pFew==
-X-Gm-Message-State: ALQs6tBH4RsQo229yoJ4BoNE5DZ9f3AC8ijjn2Twr8hBrTGKeqh+EcyH
-        dBCzFBEIIV5Y5T8hqamshmwbaIiNxTQTI4aOafsAw1PGIRk=
-X-Google-Smtp-Source: AB8JxZr2gzA8FCL+FvVKGVobrrlV2xf2Yf5bMRMv96BnHoEEO3O09CoRKBhEq6WvZ/bTdpwoQ557a5NxLQ7iiYeqW7U=
-X-Received: by 2002:a2e:1082:: with SMTP id 2-v6mr4506856ljq.9.1524942053466;
- Sat, 28 Apr 2018 12:00:53 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a19:9ecc:0:0:0:0:0 with HTTP; Sat, 28 Apr 2018 12:00:32
- -0700 (PDT)
-In-Reply-To: <20180428182728.21696-1-wink@saville.com>
-References: <xmqqbme51rgn.fsf@gitster-ct.c.googlers.com> <20180428182728.21696-1-wink@saville.com>
-From:   Wink Saville <wink@saville.com>
-Date:   Sat, 28 Apr 2018 12:00:32 -0700
-Message-ID: <CAKk8isq9wXLpMJxT4SHzAtj6abm6phH4G-XjfUY4=0V6g3XxdQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v3] Teach remote add the --remote-tags option
-To:     Git List <git@vger.kernel.org>
-Cc:     Wink Saville <wink@saville.com>, Junio C Hamano <gitster@pobox.com>
+        id S1751414AbeD1Tf1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Apr 2018 15:35:27 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:35596 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751079AbeD1Tf1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Apr 2018 15:35:27 -0400
+Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgorny)
+        by smtp.gentoo.org (Postfix) with ESMTPSA id AC86F335C90;
+        Sat, 28 Apr 2018 19:35:24 +0000 (UTC)
+Message-ID: <1524944121.1013.13.camel@gentoo.org>
+Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
+From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Marc Branchaud <marcnarc@xiplink.com>,
+        "Robin H. Johnson" <robbat2@gentoo.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Date:   Sat, 28 Apr 2018 21:35:21 +0200
+In-Reply-To: <CACsJy8AfE4XMgTLuM=9aWV7eX5Hd8CqmFMuEgQaSxsLfGoBb5w@mail.gmail.com>
+References: <20180413170129.15310-1-mgorny@gentoo.org>
+         <robbat2-20180423T200557-844830385Z@orbis-terrarum.net>
+         <xmqqtvs18p9o.fsf@gitster-ct.c.googlers.com>
+         <robbat2-20180425T060717-325652820Z@orbis-terrarum.net>
+         <xmqqin8f4qoq.fsf@gitster-ct.c.googlers.com>
+         <ad4d0d66-58f4-5cab-d314-a30a50e8ad32@xiplink.com>
+         <xmqqefj24v3c.fsf@gitster-ct.c.googlers.com>
+         <1524753972.1088.9.camel@gentoo.org>
+         <CACsJy8AfE4XMgTLuM=9aWV7eX5Hd8CqmFMuEgQaSxsLfGoBb5w@mail.gmail.com>
+Organization: Gentoo
 Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.24.6 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In this version I changed "+refs/tags/*:refs/remotes/tags/%s/*"
-back to "+refs/tags/*:refs/remote-tags/%s/*" as Junio originally
-suggested. This way don't have remotename collisions as Bryan
-pointed out.
+W dniu sob, 28.04.2018 o godzinie 16∶23 +0200, użytkownik Duy Nguyen
+napisał:
+> On Thu, Apr 26, 2018 at 4:46 PM, Michał Górny <mgorny@gentoo.org> wrote:
+> > For the record, we're using this with ebuilds and respective cache files
+> > (which are expensive to generate).  We are using separate repository
+> > which combines sources and cache files to keep the development
+> > repository clean.  I have researched different solutions for this but
+> > git turned out the best option for incremental updates for us.
+> > 
+> > Tarballs are out of question, unless you expect users to fetch >100 MiB
+> > every time, and they are also expensive to update.  Deltas of tarballs
+> > are just slow and require storing a lot of extra data.  Rsync is not
+> > very efficient at frequent updates, and has significant overhead
+> > on every run.  With all its disadvantages, git is still something that
+> > lets our users fetch updates frequently with minimal network overhead.
+> 
+> I assume you're talking about the metadata directory in gentoo-x86
+> repo. This specific case could be solved by renaming metadata to
+> _metadata or something to put it on the top. "git checkout" always
+> updates files in strcmp(path) order. This guarantees time(_metadata)
+> <= time(ebuild) for all ebuilds without any extra touching (either in
+> git or in a post-checkout hook)
 
-Since I don't like "--prefix-tags" I changed the option to
-"--remote-tags" but obviously open to anything else.
+We can't really rename it without breaking compatibility with all
+package managers out there.  Preparing to do such a major change for
+the sake of abusing implementation detail of git doesn't look like
+a worthwhile idea.
 
-I think jacob.keller (+ demerphq) suggestion is probably good,
-but for the moment just using remote-tags as seems simplest.
+> 
+> The behavior has been this way since forever and as far as I can tell
+> very unlikely to change at least for branch switching (major changes
+> involved around the index). It's a bit easier to accidentally change
+> how "git checkout -- path" works though. I don't know if we could just
+> make this checkout order a promise and guarantee not to break it
+> though. For it it does not sound like it adds extra maintenance
+> burden.
+
+-- 
+Best regards,
+Michał Górny
+
