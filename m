@@ -2,119 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D20E1F404
-	for <e@80x24.org>; Sat, 28 Apr 2018 10:30:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32C8E1F404
+	for <e@80x24.org>; Sat, 28 Apr 2018 11:34:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759820AbeD1Ka0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Apr 2018 06:30:26 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:48249 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759756AbeD1KaZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Apr 2018 06:30:25 -0400
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id CN7UfcvpI2vvYCN7Xfb5Xa; Sat, 28 Apr 2018 11:30:24 +0100
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=LLdIvqe9 c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=JBLUpSMPAAAA:8 a=rqu3hC5EQOz17NpVQyEA:9 a=QEXdDO2ut3YA:10
- a=o8iT8L5u9Sa769JGGcpz:22
-Message-ID: <249C4D418B2B49B4AD5545B912FDA53D@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Jacob Keller" <jacob.keller@gmail.com>,
-        "Tang \(US\), Pik S" <Pik.S.Tang@boeing.com>
-Cc:     "Git List" <git@vger.kernel.org>
-References: <d4d8d8208b6a41c380ecf20807763bcf@XCH15-05-02.nw.nos.boeing.com> <CA+P7+xryOt_-vg7cpvqRapM7nWuhWXjhpUR1xi-5MY_RH5UwAQ@mail.gmail.com>
-Subject: Re: Branch deletion question / possible bug?
-Date:   Sat, 28 Apr 2018 11:30:21 +0100
-Organization: OPDS
-MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180428-4, 28/04/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfHk+b+EqUX9X88aqnuQftqI/L6GwzQ3xOtnyahCPmnIEDfUP1Zmseo0fanzJ75BfWl0GfYrPk4Y85QHgSyyQlyxO045z51eUoeLfzmAxwxuSwrXctWwl
- yaAAotV4pNuZYUW88+97NbE9oWRTRmtYGZ8hH4sNmbQJ2oTHcs6/QZRpnOG+gFKgAUsm00lMiAy7YOJTE8Vz0HZXp/OyMcexq0blBNq/eELvro0fE/XW3Ayq
+        id S1759838AbeD1LeB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Apr 2018 07:34:01 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:39589 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759801AbeD1LeA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Apr 2018 07:34:00 -0400
+Received: by mail-wr0-f193.google.com with SMTP id q3-v6so3993420wrj.6
+        for <git@vger.kernel.org>; Sat, 28 Apr 2018 04:34:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=G7Z+zeK4661wXkxhEDSOOuZUMJOndkyJJA4+RkOa6nk=;
+        b=qqqFCk7+9sk/B47BtNN76De+03y31hmcvoAgrTmQXSk7i0+OjgWzIeT27He0f/jemu
+         N203Kn/u68vVku96L7L1ETXBXdzlfr67mSsbWr7cOQ5ddENkggG1e4RpAPizgmp3PjrA
+         vTbrlsJyljLKt8If5Lb6sunUo/Lsm4kyuA05OBZQpRIi+FRH7yJ72If6lEQY7ZfTW+qN
+         ngePdmGVXHHugrdp2NK5ya1pVUNkCAD23phfCo76qNHT7tQZjxKe6tidmarAP59Qq09o
+         bpEwTuBGmN7YzRDhGIrOx9IA2xK8Cd8jTINuPldOo4+IJBUYrDGwJ3dlIIFS+hIQU5iK
+         ADlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=G7Z+zeK4661wXkxhEDSOOuZUMJOndkyJJA4+RkOa6nk=;
+        b=KYzVstpDr+JfH65Rk8wHpc1i0V7vo1CZJdTPJ3N8+++g7npAY0zxOrYoCkqf/BjsAn
+         Oz1nYn0/f8CZzuhOWha91XOhL/3GHn7sF2jj749xaHeknvGuyBAoNAw3YlJR1sNxayLC
+         pC+AklyiHTKAVr8FwaDAYuSf66IUjDpd7fiuCiyPEy3v+M8tF/eafaWDkA9gYbJDkhSg
+         gtOMbetyrTi9LkU6ycdLTUEuokNHlzK+unNwFMcCKz7JQlRBZ4U+4bLnwawImCFcPGiB
+         Sx0t1m9FenSMb9FgSDSUN+1dTJzYVoqieb2bDSdcPXR9CE46d/J/yrODl6wZRQ6BU6OY
+         06XA==
+X-Gm-Message-State: ALQs6tAyNLzCscH3iAicp7GPWCsRm59livbpVYgw9s4hgukkR7obKNdu
+        rT/pLJihQVBogpGzgNd5o3o=
+X-Google-Smtp-Source: AB8JxZouBnqdMMoRz9yRPxPwiMH2yt/KvURwig95pVgaP52p2Y9reQ6QIoWOUKqCrlPH6ASjzyAi0w==
+X-Received: by 2002:adf:a9aa:: with SMTP id b39-v6mr4393223wrd.36.1524915239436;
+        Sat, 28 Apr 2018 04:33:59 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id n23sm2737500wmc.23.2018.04.28.04.33.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 28 Apr 2018 04:33:58 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@talktalk.net>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Subject: Re: [PATCH 2/2] unpack_trees_options: free messages when done
+Date:   Sat, 28 Apr 2018 13:32:57 +0200
+Message-Id: <20180428113257.25425-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.17.0
+In-Reply-To: <20180424162939.20956-1-newren@gmail.com>
+References: <20180424162939.20956-1-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Jacob Keller" <jacob.keller@gmail.com>
-> On Fri, Apr 27, 2018 at 5:29 PM, Tang (US), Pik S <Pik.S.Tang@boeing.com>
-> wrote:
->> Hi,
->>
->> I discovered that I was able to delete the feature branch I was in, due
->> to some fat fingering on my part and case insensitivity.  I never
->> realized this could be done before.  A quick google search did not give
->> me a whole lot to work with...
->>
->> Steps to reproduce:
->> 1. Create a feature branch, "editCss"
->> 2. git checkout master
->> 3. git checkout editCSS
->> 4. git checkout editCss
->> 5. git branch -d editCSS
->>
->
-> Are you running on a case-insensitive file system? What version of
-> git? I thought I recalled seeing commits to help avoid creating
-> branches of the same name with separate case when we know we're on a
-> file system which is case-insensitive..
->
->> Normally, it should have been impossible for a user to delete the branch
->> they're on.  And the deletion left me in a weird state that took a while
->> to dig out of.
->>
->> I know this was a user error, but I was also wondering if this was a bug.
->
-> If we have not yet done this, I think we should. Long term this would
-> be fixed by using a separate format to store refs than the filesystem,
-> which has a few projects being worked on but none have been put into a
-> release.
+From: Elijah Newren <newren@gmail.com>
 
-Yes, this is an on-going problem on Windows and other case insentive
-systems. At the moment the branch name becomes embedded as a file name, so
-when Git requests details of a branch from the filesystem, it can get a case
-insensitive equivalent. Meanwhile, internally Git is checking for equality
-in a case sensitive [Linux] way with obvious consequences such as this - The
-most obvious being when there is no "*" current branch marker in the branch
-status list.
+Hi Elijah,
 
-It's a bit tricky to fix (internally the name and the path are passed down
-different call chains), and depends on how one expects the case
-insensitivity to work - the kicker is when someone does an edit of the name
-via the file system and expects Git to cope (i.e. devs knowing, or think
-they know, too much detail ;-).
+[Since this is leaving the topic of rename-detection in favour of 
+leak-plugging, I'm shortening the cc-list a bit.]
 
-The refs can also get packed, so the "bad spelling" gets baked in.
-Ultimately it probably means that GfW and other systems will need  a case
-sensitivity check when opening paths...
+> So, instead, I'd like to see something like the below
+> (built on top of my series):
 
-Philip
->
-> Thanks,
-> Jake
->
->>
->>
->> Thanks,
->>
->> Pik Tang
->>
->
+Thanks a lot. I now have the below patch in my tree as a preparatory
+part of a three-patch series on top of your series. Since the gist of
+this patch is entirely your creation, is it ok if I place your Author:
+and Signed-off-by: on it? Credit where credit is due.
+
+As you noted elsewhere [1], Ben is also working in this area. I'd be
+perfectly happy to sit on these patches until both of your contributions
+come through to master.
+
+[1] https://public-inbox.org/git/CABPp-BFh=gL6RnbST2bgtynkij1Z5TMgAr1Via5_VyteF5eBMg@mail.gmail.com/
+
+Martin
+
+-->8--
+Subject: merge-recursive: provide pair of `unpack_trees_{start,finish}()`
+
+Rename `git_merge_trees()` to `unpack_trees_start()` and extract the
+call to `discard_index()` into a new function `unpack_trees_finish()`.
+As a result, these are called early resp. late in `merge_trees()`,
+making the resource handling clearer. The next commit will expand on
+that, teaching `..._finish()` to free more memory. (So rather than
+moving the TODO-comment, just drop it, since it will be addressed soon
+enough.)
+
+Also call `..._finish()` when `merge_trees()` returns early.
+---
+ merge-recursive.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1de8dc1c53..e64102004a 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -337,10 +337,10 @@ static void init_tree_desc_from_tree(struct tree_desc *desc, struct tree *tree)
+ 	init_tree_desc(desc, tree->buffer, tree->size);
+ }
+ 
+-static int git_merge_trees(struct merge_options *o,
+-			   struct tree *common,
+-			   struct tree *head,
+-			   struct tree *merge)
++static int unpack_trees_start(struct merge_options *o,
++			      struct tree *common,
++			      struct tree *head,
++			      struct tree *merge)
+ {
+ 	int rc;
+ 	struct tree_desc t[3];
+@@ -378,6 +378,11 @@ static int git_merge_trees(struct merge_options *o,
+ 	return rc;
+ }
+ 
++static void unpack_trees_finish(struct merge_options *o)
++{
++	discard_index(&o->orig_index);
++}
++
+ struct tree *write_tree_from_memory(struct merge_options *o)
+ {
+ 	struct tree *result = NULL;
+@@ -3079,13 +3084,14 @@ int merge_trees(struct merge_options *o,
+ 		return 1;
+ 	}
+ 
+-	code = git_merge_trees(o, common, head, merge);
++	code = unpack_trees_start(o, common, head, merge);
+ 
+ 	if (code != 0) {
+ 		if (show(o, 4) || o->call_depth)
+ 			err(o, _("merging of trees %s and %s failed"),
+ 			    oid_to_hex(&head->object.oid),
+ 			    oid_to_hex(&merge->object.oid));
++		unpack_trees_finish(o);
+ 		return -1;
+ 	}
+ 
+@@ -3138,20 +3144,15 @@ int merge_trees(struct merge_options *o,
+ 
+ 		hashmap_free(&o->current_file_dir_set, 1);
+ 
+-		if (clean < 0)
++		if (clean < 0) {
++			unpack_trees_finish(o);
+ 			return clean;
++		}
+ 	}
+ 	else
+ 		clean = 1;
+ 
+-	/* Free the extra index left from git_merge_trees() */
+-	/*
+-	 * FIXME: Need to also data allocated by setup_unpack_trees_porcelain()
+-	 * tucked away in o->unpack_opts.msgs, but the problem is that only
+-	 * half of it refers to dynamically allocated data, while the other
+-	 * half points at static strings.
+-	 */
+-	discard_index(&o->orig_index);
++	unpack_trees_finish(o);
+ 
+ 	if (o->call_depth && !(*result = write_tree_from_memory(o)))
+ 		return -1;
+-- 
+2.17.0
 
