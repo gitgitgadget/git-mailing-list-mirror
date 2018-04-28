@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94FD61F428
-	for <e@80x24.org>; Sat, 28 Apr 2018 22:44:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5D591F428
+	for <e@80x24.org>; Sat, 28 Apr 2018 22:44:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752540AbeD1Wor (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Apr 2018 18:44:47 -0400
-Received: from mout.gmx.net ([212.227.17.22]:40657 "EHLO mout.gmx.net"
+        id S1752570AbeD1Wot (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Apr 2018 18:44:49 -0400
+Received: from mout.gmx.net ([212.227.17.21]:51367 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752502AbeD1Woq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Apr 2018 18:44:46 -0400
+        id S1752518AbeD1Wos (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Apr 2018 18:44:48 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
  (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MSHax-1ep4YT07x5-00TSlr; Sun, 29 Apr 2018 00:44:42 +0200
+ 0M9vnQ-1f5ukd28Gu-00B6gs; Sun, 29 Apr 2018 00:44:43 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -28,165 +28,83 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Christian Couder <christian.couder@gmail.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v7 06/12] replace: introduce --convert-graft-file
-Date:   Sun, 29 Apr 2018 00:44:35 +0200
-Message-Id: <7bf28028005b483e4d1b22b7e68bdbc042dfcf9d.1524955439.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v7 07/12] Add a test for `git replace --convert-graft-file`
+Date:   Sun, 29 Apr 2018 00:44:42 +0200
+Message-Id: <fd4edf238230d0ac52d9e7cc3055506cb18d71af.1524955439.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.36.gdf4ca5fb72a
 MIME-Version: 1.0
 In-Reply-To: <cover.1524955439.git.johannes.schindelin@gmx.de>
 References: <cover.1524865158.git.johannes.schindelin@gmx.de> <cover.1524955439.git.johannes.schindelin@gmx.de>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:R9SBBC1Q3KWOayq0YkgwMMnR7zYOk9C+0V8qpAkMfs6mm6kvzbm
- kECM7b/4p9F7Zssf85CACDSRbaeatGr1JgC9BCZIrt/cXzH47I5w3yBNtaOzQBvaaQKtO5E
- JwMu9QpNpUTNxYA58kJ6SDkhgCaTfvlRGgqayRuSQ5iyVE33qhZnIJtvUX7emrNjyx7D02m
- XVrOa66+xn7udLyLBIN0A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YkuSqDUMuCc=:u5XFoi+StvXNs1lhasR2yU
- ImmFxuN96RQ/13gbPRoAWKRuWrLS81lklwIgEX343CLDTDmccORcYUqoRyVw6M7LEQ+6tfrWv
- Lse7PXGLc+JBfiGhEbnaCipPa9uS1tiWrZ+9xUHai0aj6GL3CxleySbY7xonEB/BkDZ9X94qo
- 15+QwWAauoLHU41yq+fYP4nhQQc2iH6G8/cXdnZkGOIH8NDe0/BNAUdHIp2dZG3mYLQ9L+ApE
- Lc0TwCQj78lOqNmIWQiY1yRLDdhbogDOmcsK+jIfbIReQmxquElAh849IftcKvb/iWj6piTOl
- EV/TQWinGFvuInWjxulzV3osv6plULuSlenfk9WL/+pTWnFfZGI7ivkT8seW8azh/BMqIGGa1
- eDEJPnBjZ57P+9eFQIvl++ynHPcPwHxcXjadB8GTJzcGuDjPKqr9L95hLFplWzTjty5zV2g8B
- g41/EAwdgSGaV43ugbVg+suGlO6MfiHVSgfc2iBK/CtzVeKJdWQBsWDhlnZjOpNFEFCedhymw
- IWzedene8O+3kVc1LRJIcsBvuT6JNrUB59F7LeMmpMsg1nw4DM/FJrjy3HEgtgLP6ngw8UZEG
- woUFlFTG8zCgXmQC5Kx9jyZXBnS7R0UdQQDgZ4mo6xEzy9I+L2FoMCog4Yzdr5Dt6sYmMo8va
- 9vgw9j0Aoqp1FCMQfpvdt67O2A6qWDi1mQ/U1Vi9aGx0WO6dOrhCCV8UNWh2bMCJQCFuBUPK2
- jawOiTw2zU99Dw2Icx5SWMjT+MU4B4eF8zbp8dihWXlKEwTX9IsOHCuX41XgQ5q6ucgoM0/GW
- /d8U72Y
+X-Provags-ID: V03:K1:SLVpllUW7EdruZef5BQLMUYcDhsahFdGbzbwSUr1MQtu8d+m7oq
+ Ni/zSHCgjZNNr+9RldCH2/pFgDJ2Pvl6udbwDHH2h1+PoKMWr1zULz5cw3zO8L9Pfp6ws2w
+ azsAQ8oZJzhvDO1wes2BBhZpgCV01Xvnlg1kqZYyirqZ95kFARyP/irhFyTKj/rUsW8PBwj
+ dBLfI1rSB25Y6ElYGOfng==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+x9ZEPXWxtw=:XKNVu2bHd3XE+33fm9iD62
+ wKKrEnSntbru9lBFfb4YavlRPpGs2yUsCZucXG7C6K/nInrAoD5cduZsnXP2+K7a+tBTFJupW
+ zKwKLCJIN88J4BtNnhW15e13DGl6mt6kcFAbEn8rVWUUNtUg7Vzou4MJ2KkETiusSZ1qdxXvZ
+ DRByVaCNVf91uQ/Sqm2FfggRIPpX2SPI8Q3hiKpdv5oaer3oc7IJu7Mcwt79JCYnVU8wqksTc
+ l1GXQelU9ia3xSGZFLX2NP+5/qaWRE9AR5UTWPYu4g+unRqAukbI9sPAA9jOdzTZTwtfbM29y
+ /jgKzDm3HRLhQf4pxEqZNWUwEgZswcnC0z4UEk79/uVTox/RR6nxkVlARktMpL9u66r0sBnOw
+ 5RuG8YAXON8+PeEd3JcbzBQVBv4+HBD9RHz54POe2FwRcMIVe8g9tYGNMkLRocPIw7SjzpF/p
+ vtXIRvZ50qhte+aGc/biX6oNQugiuokiH+MghkC78eRaCTv7HctxFNS4XCxj79EiknjHzp5k7
+ 5Lq9zwVCd9pjM7TvDSZ+oxL8vaT2MSnAsJogrj3Tq/3OQfVAY7+GlLskXaY/vxU09Nc7wQRNZ
+ 1h44nD9ixGo8kr5zz7jUJlViBpP8y4zqbwR2z+PBhuoP+4VWye6PU8OvY4yjxJDZoh+4KK2ik
+ NguvkcobMtC2rMNhGG4mdLAcblHdZP8BPxSKa0HnZb8E3bbx+sY3iaI7wRfEnQ5d9FdN6RWz+
+ gnf6JQi8mZG/yZ8Opfuef9pcn6kBM2G92XSXL00Rt8GK7IbYYnqtLVKL+G/Nmmde1RvBEU4eg
+ rbM/98X
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This option is intended to help with the transition away from the
-now-deprecated graft file.
+The proof, as the saying goes, lies in the pudding. So here is a
+regression test that not only demonstrates what the option is supposed to
+accomplish, but also demonstrates that it does accomplish it.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-replace.txt | 11 ++++++---
- builtin/replace.c             | 44 ++++++++++++++++++++++++++++++++++-
- 2 files changed, 51 insertions(+), 4 deletions(-)
+ t/t6050-replace.sh | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
-index e5c57ae6ef4..246dc9943c2 100644
---- a/Documentation/git-replace.txt
-+++ b/Documentation/git-replace.txt
-@@ -11,6 +11,7 @@ SYNOPSIS
- 'git replace' [-f] <object> <replacement>
- 'git replace' [-f] --edit <object>
- 'git replace' [-f] --graft <commit> [<parent>...]
-+'git replace' [-f] --convert-graft-file
- 'git replace' -d <object>...
- 'git replace' [--format=<format>] [-l [<pattern>]]
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index c630aba657e..d174bfed309 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -444,4 +444,32 @@ test_expect_success GPG '--graft on a commit with a mergetag' '
+ 	git replace -d $HASH10
+ '
  
-@@ -87,9 +88,13 @@ OPTIONS
- 	content as <commit> except that its parents will be
- 	[<parent>...] instead of <commit>'s parents. A replacement ref
- 	is then created to replace <commit> with the newly created
--	commit. See contrib/convert-grafts-to-replace-refs.sh for an
--	example script based on this option that can convert grafts to
--	replace refs.
-+	commit. Use `--convert-graft-file` to convert a
-+	`$GIT_DIR/info/grafts` file and use replace refs instead.
++test_expect_success '--convert-graft-file' '
++	git checkout -b with-graft-file &&
++	test_commit root2 &&
++	git reset --hard root2^ &&
++	test_commit root1 &&
++	test_commit after-root1 &&
++	test_tick &&
++	git merge -m merge-root2 root2 &&
 +
-+--convert-graft-file::
-+	Creates graft commits for all entries in `$GIT_DIR/info/grafts`
-+	and deletes that file upon success. The purpose is to help users
-+	with transitioning off of the now-deprecated graft file.
- 
- -l <pattern>::
- --list <pattern>::
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 64f58112701..a87fca045be 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -20,6 +20,7 @@ static const char * const git_replace_usage[] = {
- 	N_("git replace [-f] <object> <replacement>"),
- 	N_("git replace [-f] --edit <object>"),
- 	N_("git replace [-f] --graft <commit> [<parent>...]"),
-+	N_("git replace [-f] --convert-graft-file"),
- 	N_("git replace -d <object>..."),
- 	N_("git replace [--format=<format>] [-l [<pattern>]]"),
- 	NULL
-@@ -481,6 +482,38 @@ static int create_graft(int argc, const char **argv, int force, int gentle)
- 	return replace_object_oid(old_ref, &old_oid, "replacement", &new_oid, force);
- }
- 
-+static int convert_graft_file(int force)
-+{
-+	const char *graft_file = get_graft_file();
-+	FILE *fp = fopen_or_warn(graft_file, "r");
-+	struct strbuf buf = STRBUF_INIT, err = STRBUF_INIT;
-+	struct argv_array args = ARGV_ARRAY_INIT;
++	: add and convert graft file &&
++	printf "%s\n%s %s\n\n# comment\n%s\n" \
++		$(git rev-parse HEAD^^ HEAD^ HEAD^^ HEAD^2) \
++		>.git/info/grafts &&
++	git replace --convert-graft-file &&
++	test_path_is_missing .git/info/grafts &&
 +
-+	if (!fp)
-+		return -1;
++	: verify that the history is now "grafted" &&
++	git rev-list HEAD >out &&
++	test_line_count = 4 out &&
 +
-+	while (strbuf_getline(&buf, fp) != EOF) {
-+		if (*buf.buf == '#')
-+			continue;
++	: create invalid graft file and verify that it is not deleted &&
++	test_when_finished "rm -f .git/info/grafts" &&
++	echo $EMPTY_BLOB $EMPTY_TREE >.git/info/grafts &&
++	test_must_fail git replace --convert-graft-file 2>err &&
++	test_i18ngrep "$EMPTY_BLOB $EMPTY_TREE" err &&
++	test_i18ngrep "$EMPTY_BLOB $EMPTY_TREE" .git/info/grafts
++'
 +
-+		argv_array_split(&args, buf.buf);
-+		if (args.argc && create_graft(args.argc, args.argv, force, 1))
-+			strbuf_addf(&err, "\n\t%s", buf.buf);
-+		argv_array_clear(&args);
-+	}
-+	fclose(fp);
-+
-+	strbuf_release(&buf);
-+
-+	if (!err.len)
-+		return unlink_or_warn(graft_file);
-+
-+	warning(_("could not convert the following graft(s):\n%s"), err.buf);
-+	strbuf_release(&err);
-+
-+	return -1;
-+}
-+
- int cmd_replace(int argc, const char **argv, const char *prefix)
- {
- 	int force = 0;
-@@ -492,6 +525,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
- 		MODE_DELETE,
- 		MODE_EDIT,
- 		MODE_GRAFT,
-+		MODE_CONVERT_GRAFT_FILE,
- 		MODE_REPLACE
- 	} cmdmode = MODE_UNSPECIFIED;
- 	struct option options[] = {
-@@ -499,6 +533,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete replace refs"), MODE_DELETE),
- 		OPT_CMDMODE('e', "edit", &cmdmode, N_("edit existing object"), MODE_EDIT),
- 		OPT_CMDMODE('g', "graft", &cmdmode, N_("change a commit's parents"), MODE_GRAFT),
-+		OPT_CMDMODE(0, "convert-graft-file", &cmdmode, N_("convert existing graft file"), MODE_CONVERT_GRAFT_FILE),
- 		OPT_BOOL_F('f', "force", &force, N_("replace the ref if it exists"),
- 			   PARSE_OPT_NOCOMPLETE),
- 		OPT_BOOL(0, "raw", &raw, N_("do not pretty-print contents for --edit")),
-@@ -521,7 +556,8 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
- 	if (force &&
- 	    cmdmode != MODE_REPLACE &&
- 	    cmdmode != MODE_EDIT &&
--	    cmdmode != MODE_GRAFT)
-+	    cmdmode != MODE_GRAFT &&
-+	    cmdmode != MODE_CONVERT_GRAFT_FILE)
- 		usage_msg_opt("-f only makes sense when writing a replacement",
- 			      git_replace_usage, options);
- 
-@@ -554,6 +590,12 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
- 				      git_replace_usage, options);
- 		return create_graft(argc, argv, force, 0);
- 
-+	case MODE_CONVERT_GRAFT_FILE:
-+		if (argc != 0)
-+			usage_msg_opt("--convert-graft-file takes no argument",
-+				      git_replace_usage, options);
-+		return !!convert_graft_file(force);
-+
- 	case MODE_LIST:
- 		if (argc > 1)
- 			usage_msg_opt("only one pattern can be given with -l",
+ test_done
 -- 
 2.17.0.windows.1.36.gdf4ca5fb72a
 
