@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E421E1F428
-	for <e@80x24.org>; Sat, 28 Apr 2018 22:45:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BB951F428
+	for <e@80x24.org>; Sat, 28 Apr 2018 22:45:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752661AbeD1WpS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Apr 2018 18:45:18 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49699 "EHLO mout.gmx.net"
+        id S1752705AbeD1Wp0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Apr 2018 18:45:26 -0400
+Received: from mout.gmx.net ([212.227.17.20]:59913 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752307AbeD1WpR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Apr 2018 18:45:17 -0400
+        id S1752307AbeD1WpZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Apr 2018 18:45:25 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
- (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0M3NEK-1eLYQi3s48-00r3Ob; Sun, 29 Apr 2018 00:45:13 +0200
+ (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0M9eHT-1f5e3D2tcl-00D1hK; Sun, 29 Apr 2018 00:45:20 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -28,59 +28,72 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Christian Couder <christian.couder@gmail.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v7 09/12] filter-branch: stop suggesting to use grafts
-Date:   Sun, 29 Apr 2018 00:44:53 +0200
-Message-Id: <fdda7416d47f145caead0c4282f62853c93ec64d.1524955439.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v7 10/12] technical/shallow: stop referring to grafts
+Date:   Sun, 29 Apr 2018 00:45:13 +0200
+Message-Id: <99e43b91665c99c566ebbc598fc30c26e3712abd.1524955439.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.36.gdf4ca5fb72a
 MIME-Version: 1.0
 In-Reply-To: <cover.1524955439.git.johannes.schindelin@gmx.de>
 References: <cover.1524865158.git.johannes.schindelin@gmx.de> <cover.1524955439.git.johannes.schindelin@gmx.de>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:6dcR7Or0PwNuYmc75zB9kRo2F3PPPuBvtc01q/ZkkbRq2QZBCWI
- W8xn3/6mukgU5He1pKkrH4q+Zh2P3g18LYmj68OxZiZJlcPjNDz17Rz+NkkOEQExFZCILX+
- VvXAXsn+nPSys2WyG6RKUR/FkV/PX5rODZurdSTUCRalzcFnFEAGM52WS+h4M0urQANDndh
- FHon8X9jeSKphshqAnyPQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yORwiBhJTJA=:sF/dhijzXZBLmp3ZDrwMRs
- JyAX91lfvcYpAmsx2imCbzVHo5nyDs8KtmKZBMEAMcm7n2K6vg0peyOkicHieF22KAN0QCRoE
- 2RERM5PHXY39AJcAz4N+mUmcPS0m4GP9P1xJG+w2Bh/jjfUm42ZbNfUYtsP8OlIpDL0aYF5om
- XlAuNb1zL0Fmt6Whk8SAhbwRAQezqrIujhK57p5F68kHzzj8QeUu+uk25ImUkpMjPfMUCjBR4
- TVTsvp1gcsqkiNGGNuFoAtCyQrIXIClo0YUjLoUobeFM2aiwUA36jaI18L6bHpqd6o/YbTmfW
- 2jetW4Nz75GhHBC0mW5/QKf49gNhM08mWsxowqbCDAHeuZ+w9z52/iA5I5Jp/O8Im1AiWSQU0
- vAsum3gMi2erEdSl9e7J8nUe2v20bojH4q2ssQbg8PaXVfrv0U7LY8cG4FJVuan/YCA6IWWfb
- 48gyYvyjUonyhraTSdNb7REyRPCrWhYP+VE8P0bVuesq9cyMMBbQ/gUFJWhJTnTyDymJsCGen
- pvzUqSLUHlBlB9ZSu30tQ9mW9mAS8Pyrh7r8UAV5LAXWA/+7xzwFvi5KdQGxfRmWAtIKKx1BB
- 1u5nFci4+wiQPEtcrhdoDrsu18cC9BC3RkP1edSrDepMrJjH+q4LelML1J2qc9QbR6CF9D5Ds
- uf/gLUSduygVR8C6v8DKlNIFHTThk6VE4fVIjwWuACHD2psrwaA0xvwx5N74Hi6P/i/6o3uyN
- SX7BdpFkM1g6J2/zuqPMHjr1k8eOkkjJ1uwi6+0cWL6hFcD4UhE9gPpYbUqFA0RdAfVjNjAIy
- 5xHpEx9
+X-Provags-ID: V03:K1:uyk3r4s6ZdCf0wcUAchmQG9OGjcXZMqkNQ0Kc2+Uv/YnFoKH7lJ
+ Z0ZbqXaXHRaaWTzMVKgjBD7txF9IgzTmedT3xph57dcVWn8WKSvVBaTMbysD0l5j4UnrGi5
+ 2yto4CBJD0az1BkZswm8XYeDDcgSKPmJW7JB6vAMz42+4R67TdhjhKGbAKxlwIxGVmupE+p
+ 7GtZW01szDFCOxvuYj/aw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ng0K9CgGKmo=:qWx8d/I3/xVeEDKLmYTogo
+ yeeVhxyeeMn9kg9cIcoXiQ6WBqr0ANj8Cg2G356dUNIw9zvbq/sMpadRUgzVmEvbzjvYUERMu
+ VBUU9EzTgI27RDCTM0NFueiFTsuooIVKN7qJq7yPxSmXXccnAR27rTM5R4WeQqLyf93w6UITR
+ zXuyHk0GGRutk+aMrYA30v4ZpfdNGQO2AAqMaJv92001XsEwzKYSj8SLXVOxcH5ypdl8nYquf
+ iavYOuhTuzmAKXTRLq6YPx9Hwnm2WpXk0+uJHk+ln5kJmWcv5mpQYp8cf8qJiWDSlW42cH1RJ
+ IAmd2TVXXi8QofZM+mFdtvEUEXq2wesAuxxxEY8xVs7PCVpUoEp+DNqDBZq5aS8ds1hdZzDGg
+ 3ttU/G/3/Z3ydpuD65jPa8oWHmL4xLSHsDw4OT14FLSrKKRjOerIUGzVZVPSGyDcc5aRuwTdv
+ bToDNoXgdRgzG4Q0k57Ptbx55Fur3C9X6QPpFTnn/N4Pk76aNj7DpCQRtbjaarK6Zf5vRdYWb
+ aKMKUUGYNNiiAbsazBNAKYdHHjRr4dyLO95j26ptEN2DlmcXrPGX21HtXFiHyDRNEIirWIVNP
+ MsWHLS9n2zI9StVHiGaLvKu5PXa8wYQ7AVk3ObtfBeWfgoa+99QUIF7O5oO9KmJeylGgvdvS4
+ VODV/iQWwGt0ADd5XGvfz99zmSS7/uNLrc2Ipnu90uU4t2vJzWTBzpx14wLVQHv+SrU9qtn4y
+ arYEg1//dMlAanoKGUfg+E6Xzphi9DwegQMGVsdqUQFf6pzU4TK1l9ZuYv9AUr+KXZdTU/osn
+ COPU9EJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The graft file is deprecated now, so let's use replace refs in the example
-in filter-branch's man page instead.
+Now that grafts are deprecated, we should start to assume that readers
+have no idea what grafts are. So it makes more sense to make the
+description of the "shallow" feature stand on its own.
 
 Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Junio Hamano <gitster@pobox.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-filter-branch.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/technical/shallow.txt | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index b634043183b..1d4d2f86045 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -288,7 +288,7 @@ git filter-branch --parent-filter \
- or even simpler:
+diff --git a/Documentation/technical/shallow.txt b/Documentation/technical/shallow.txt
+index 5183b154229..4ec721335d2 100644
+--- a/Documentation/technical/shallow.txt
++++ b/Documentation/technical/shallow.txt
+@@ -8,15 +8,10 @@ repo, and therefore grafts are introduced pretending that
+ these commits have no parents.
+ *********************************************************
  
- -----------------------------------------------
--echo "$commit-id $graft-id" >> .git/info/grafts
-+git replace --graft $commit-id $graft-id
- git filter-branch $graft-id..HEAD
- -----------------------------------------------
+-The basic idea is to write the SHA-1s of shallow commits into
+-$GIT_DIR/shallow, and handle its contents like the contents
+-of $GIT_DIR/info/grafts (with the difference that shallow
+-cannot contain parent information).
+-
+-This information is stored in a new file instead of grafts, or
+-even the config, since the user should not touch that file
+-at all (even throughout development of the shallow clone, it
+-was never manually edited!).
++$GIT_DIR/shallow lists commit object names and tells Git to
++pretend as if they are root commits (e.g. "git log" traversal
++stops after showing them; "git fsck" does not complain saying
++the commits listed on their "parent" lines do not exist).
  
+ Each line contains exactly one SHA-1. When read, a commit_graft
+ will be constructed, which has nr_parent < 0 to make it easier
 -- 
 2.17.0.windows.1.36.gdf4ca5fb72a
 
