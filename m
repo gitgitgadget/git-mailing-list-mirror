@@ -2,100 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89D641F428
-	for <e@80x24.org>; Sun, 29 Apr 2018 16:12:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 845CD1F428
+	for <e@80x24.org>; Sun, 29 Apr 2018 16:42:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753706AbeD2QM2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Apr 2018 12:12:28 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:33354 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753685AbeD2QM1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Apr 2018 12:12:27 -0400
-Received: by mail-oi0-f68.google.com with SMTP id 126-v6so5609238oig.0
-        for <git@vger.kernel.org>; Sun, 29 Apr 2018 09:12:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=bx0FAIplOev8ufPO/O00qCcbWDxWzCtLsxc9G0I9a50=;
-        b=fiF1tAb2kgsBs2fDo/FHMUMSpiL9/d+3rCFLXFqeYqpMfnFrlrDNiht1N1oyJqQyv+
-         X+eujJj6ENqkAd6LRSBJww1E48zzl1iXCY0QxiEzwZx3YVjzewFB7HHvoSnAEFxC0uPT
-         H65rV5sVeeJmDgNIXCb/b6jdSFmfFZZLxGjNuHNs3uUfuoYgQDPHjbSIOw4YZHKk3gYW
-         7kjo05r87p4yXlrCbeL+nyHMQGspwBDPO0RwoX97P8LY4IonFP0DaZcdIV8LtU8GuwlF
-         N/sV+Ei7LNQvHLHLlTAs+TwVo8JPxHPZL5OGkzEkej90OZ/bhrcfSCrkXQ+ivfFp8yID
-         2RMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bx0FAIplOev8ufPO/O00qCcbWDxWzCtLsxc9G0I9a50=;
-        b=p0cAevidWlzejNnwh7q0gIvfjqzEQqmBvfP7r8ui3wnTyvsvSEtWJSVzCEQB3q6kdn
-         hMjRv1yhMWQVpq6RjgdkBcK82cLVo8JTM2jkChiarofRc3ccEj3HqWy3i+zZCkVLueoi
-         AtT0nDrcoeLH/1VJOpaVrxSTioaMtzqhr9NR3YlSGPSjqVIRn+qA4jmg2GAEfXnKAn3Y
-         3ASQAq1fJ9+sMWz3flsXedKN3DmqJBNz75XE6N3iWokpLTh5OA1DV2YiukDyfewRHJ0S
-         mKM88dXq+XeLXeHbmZcwCsAiCDjEZGDMl+EM/xlRx4y/2M4/q+X5N2t6lKYNm2uzpB6E
-         bBUw==
-X-Gm-Message-State: ALQs6tBRo4il/cHsVZDXsCw5KpRet51zkTy3vHm1Jb2Y8KunIhaZxHWt
-        T2VxoTwF/pJ7RKfxzYYRh6Alw1XqyswTaviTItw=
-X-Google-Smtp-Source: AB8JxZqQPYO4jlhGFr0irFYw3f/8BI4XFfrPmB9RjHq1plRvPtyrH6AfmRWngithD5IdCaJTEywFzObffoqXAhAQFEA=
-X-Received: by 2002:aca:ce42:: with SMTP id e63-v6mr5930750oig.34.1525018347355;
- Sun, 29 Apr 2018 09:12:27 -0700 (PDT)
+        id S1753926AbeD2Qmv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Apr 2018 12:42:51 -0400
+Received: from mout.kundenserver.de ([212.227.126.130]:52885 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753839AbeD2Qmu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Apr 2018 12:42:50 -0400
+Received: from furore ([82.194.150.97]) by mrelayeu.kundenserver.de (mreue005
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 0M8M5O-1eQky10W1K-00vy84; Sun, 29
+ Apr 2018 18:42:43 +0200
+Date:   Sun, 29 Apr 2018 18:42:39 +0200
+From:   Florian =?utf-8?Q?Gamb=C3=B6ck?= <mail@floga.de>
+To:     git@vger.kernel.org
+Cc:     Szeder =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH v3 0/1] completion: dynamic completion loading
+Message-ID: <20180429164232.29337-1-mail@floga.de>
+Mail-Followup-To: git@vger.kernel.org,
+        Szeder =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
 MIME-Version: 1.0
-Received: by 10.74.198.152 with HTTP; Sun, 29 Apr 2018 09:11:56 -0700 (PDT)
-In-Reply-To: <CAPig+cQ-ZfvHD6B-mK6tOBMdKiVzwz15M4rsOdBMBcgu0OmuxA@mail.gmail.com>
-References: <20180421165414.30051-1-pclouds@gmail.com> <20180425163107.10399-1-pclouds@gmail.com>
- <20180425163107.10399-3-pclouds@gmail.com> <CAPig+cQ-ZfvHD6B-mK6tOBMdKiVzwz15M4rsOdBMBcgu0OmuxA@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 29 Apr 2018 18:11:56 +0200
-Message-ID: <CACsJy8AzAFVhQw-K_juFg2iF0tVHo0_fF-CRYwMR=xPcTUC-8Q@mail.gmail.com>
-Subject: Re: [PATCH v4/wip 02/12] generate-cmds.sh: export all commands to command-list.h
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-Mailer: git-send-email 2.16.1
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Provags-ID: V03:K1:JacmL3L5vQVAe374T5tBMT0Vyn2VCG0JGLYpYGqwR8KeNOL7aU6
+ ZkN2RGFdHXxW7sNeyAkdDanhlDFVklEEV3SuQ7hiCVX/5wEZOnPQunacLvrXBC539SbGHF/
+ w3PYz8wOVSMpbZ/21H9AkU53Of5a9XBJluqHo8tNDc8OLxC3fvuznnFaEr88oCflArVL5eE
+ HQIRRpnem0r8U8+iDmkxA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/t+pjCfEMwc=:WZJcmqpP1eGoPu54F12eoe
+ 0shZylrfDK2hChX2QtrG/VKEHVSA/4Wgh0PT9gxNW3ypT4hNltE8O7Y+e/t4GTy9IAckHmHab
+ qxr+4nr/uMmWcM5US72IHqOC6BcvnAuamuI5f4dypq7SJrxYzZtc701YFz2JMNwIy7NXzVZc+
+ 2T4p3+so3MltRwnSelVbCI3PXZuelGXkjpj45G1p0htRs/1HoiGKPVspQyh+mvC/IwPL1q3ee
+ s+9hxX3ILhpSFuoQ1XwX94Ca50KpiaaJ+vl49XrVXIbmiD7cGR8JIUK9uFjwXUa5ppuCnDaaN
+ 9mwofQ+X5rYplheGazzfVJvYPbgagEYu7DCLni250NJNJgt7XuWGa7YsYIEdqFFq3qBabEtte
+ vrNSHErfHKSJznWi+RNnczx6pqlBKgnVcLzZaksH0l2Klnd0V2MtFbHRXufzYs2sEEncilGGS
+ sNcrGzNMivMHa/+Ewd1rDq2vsZqHPUJTGB/ZpELMB1zm6/fEfefmaIVDsEiCqLeYxhzhua+o0
+ 3nygBJQpT/K39gcklD718yfJoVdn0+xn/Os6VMog9+Z5UhrMUjqVWxD9Wpu6dGDqIn+plkEZp
+ 0n36dhupG1Gwo6dRRi9MReu88yb5BCnvChQlDVJ2wP1ma7fkIROvLD0rMzkHfQv37naGvsyOr
+ 2EXz3UKuSnZ0w7Orqrxmr1rgiytbTckxSa/Zy0tK1zCE9iZBGZG7BbkrnmfMtzVFNmyw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 25, 2018 at 8:07 PM, Eric Sunshine <sunshine@sunshineco.com> wr=
-ote:
-> On Wed, Apr 25, 2018 at 12:30 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy
-> <pclouds@gmail.com> wrote:
->> The current generate-cmds.sh generates just enough to print "git help"
->> output. That is, it only extracts help text for common commands.
->>
->> The script is now updated to extract help text for all commands and
->> keep command classification a new file, command-list.h. This will be
->> useful later:
->> [...]
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
-com>
->> ---
->> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
->> @@ -12,14 +34,51 @@ get_synopsis () {
->> +define_categories() {
->> +       echo
->> +       echo "/* Command categories */"
->> +       bit=3D0
->> +       category_list "$1" |
->> +       while read cat
->> +       do
->> +               echo "#define CAT_$cat (1UL << $bit)"
->> +               bit=3D$(($bit+1))
->> +       done
->> +       test "$bit" -gt 32 && die "Urgh.. too many categories?"
->
-> Should this be '-ge' rather than '-gt'?
+In this small patch I want to introduce a way to dynamically load completion 
+scripts for external subcommands.
 
-After we print "1UL << 31" we increment it to 32 and exit the loop,
-then it's still within limits, -ge would incorrectly complain
---=20
-Duy
+A few years ago, you would put a completion script (which defines a Bash 
+function _git_foo for a custom git subcommand foo) into 
+/etc/bash_completion.d, or save it somewhere in your $HOME and source it 
+manually in your .bashrc.
+
+Starting with bash-completion v2.0 (or, to be absolutely exact, the preview 
+versions started at v1.90), completion scripts are not sourced at bash startup 
+anymore. Rather, when typing in a command and trigger completion by pressing 
+the TAB key, the new bash-completion's main script looks for a script with the 
+same name as the typed command in the completion directory, sources it, and 
+provides the completions defined in this script.
+
+However, that only works for top level commands. After a completion script has 
+been found, the logic is delegated to this script. This means, that the 
+completion of subcommands must be handled by the corresponding completion 
+script.
+
+As it is now, git is perfectly able to call custom completion functions, iff 
+they are already defined when calling the git completion. With my patch, git 
+uses an already defined loader function of bash-completion (or continues 
+silently if this function is not found), loads an external completion script, 
+and provides its completions.
+
+An example for an external completion script would be 
+/usr/share/bash-completion/completions/git-foo for a git subcommand foo.
+
+Changes since v2:
+
+-   Replaced __load_completion with _completion_loader, which was introduced 
+    way before the former and should therefor be available even in older 
+    distributions
+
+-   Updated commit message with explanations from Szeder Gábor
+
+Changes since v1 (RFC):
+
+-   Re-arranged if-fi statement to increase readability (suggested by Junio C 
+    Hamano)
+
+-   Re-worded commit message to include the exakt version of bashcomp that 
+    introduced dynamic loading (suggested by Stefan Beller)
+
+Florian Gamböck (1):
+  completion: load completion file for external subcommand
+
+ contrib/completion/git-completion.bash | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+-- 
+2.16.1
+
