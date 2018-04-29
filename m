@@ -2,176 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B74041F428
-	for <e@80x24.org>; Sun, 29 Apr 2018 20:53:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E58511F428
+	for <e@80x24.org>; Sun, 29 Apr 2018 21:45:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751924AbeD2UxR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Apr 2018 16:53:17 -0400
-Received: from mout.gmx.net ([212.227.17.22]:53589 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750815AbeD2UxQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Apr 2018 16:53:16 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LyA2L-1eH1tK46Kb-015bZ1; Sun, 29
- Apr 2018 22:53:12 +0200
-Date:   Sun, 29 Apr 2018 22:53:11 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3] unpack_trees: fix breakage when o->src_index !=
- o->dst_index
-In-Reply-To: <CACsJy8DyP_mXXJKn52Jzqe63N3GLpXePCr8ha97Lv9hr6u-M0w@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804292251000.79@tvgsbejvaqbjf.bet>
-References: <xmqq604h717y.fsf@gitster-ct.c.googlers.com> <20180424065045.13905-1-newren@gmail.com> <CACsJy8DyP_mXXJKn52Jzqe63N3GLpXePCr8ha97Lv9hr6u-M0w@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754214AbeD2Vo7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Apr 2018 17:44:59 -0400
+Received: from mail-yb0-f177.google.com ([209.85.213.177]:41064 "EHLO
+        mail-yb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754136AbeD2Vo6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Apr 2018 17:44:58 -0400
+Received: by mail-yb0-f177.google.com with SMTP id l9-v6so2458471ybm.8
+        for <git@vger.kernel.org>; Sun, 29 Apr 2018 14:44:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0pzK7fRZSLSzK0QLflJN8pIumJEgN6N6mCJbOPlTpe4=;
+        b=FiCoMypQklLclC0flA6R0GP+mXKUVa0r0dc+AE2PkwhehGSDDt6MXtQTS9u7fk64xp
+         1MXrZ8FlCA5Li2xEHw1aEwzKuDbcfyayiN49p1DM8dL1zL/VxLGaUVoHWWp8MJHbaVGy
+         ciiBSekGD2SDobLTesvH5otFoDDrtFiz3dyG3eeK5rauu+ZnmDgf4CNWBg10CjhtSGj4
+         qKczPZWqJWpMIpGkLe5Sdbskibro74+WThZ2qc0vpY5bXxH+B4nF7l+unUtPZmlIZWYA
+         gxqTYHmHMgy+W5wYw5dVJzIBulGS++HVnqIqO60Zj4eKmr0wjxn+aisna9NuQvhfM47o
+         2HkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0pzK7fRZSLSzK0QLflJN8pIumJEgN6N6mCJbOPlTpe4=;
+        b=bIsCn2MBJh6PE8kFfsOgU30y2zUOK3akqI5eRhcSMgAepSudO4bO+N36gLE6Qh0It6
+         X1MQ/71UVCnGfSMTkOroYx87BiTT+FhrtQ70vhhEdeb9PVovWee176EHxr9Fj3eFl+8n
+         zcZGUOGpJY8M3LqHB68cApVTXZggTMjXIpl5f5RaxR9bh/xD+RuS1/p2VRCKUg2JpJ5N
+         ObxUSGZmNj6C2jV6/UoAsxtIQU82DeQ8gCFftLUBbHUIMHbiiSV437DkCUsQ27yzdPPV
+         Coj9Va5dvPiMA6KQM+zcNPGRvqoYmAe6Xiq0zpRmhZLXG3mCPQvZzWcoybpyeEzGjDHz
+         fWqA==
+X-Gm-Message-State: ALQs6tAtAOL0Xd2iVxoD83Bbk5If4IEUrC7I6tSoppJEF8KHGigbrDAH
+        djdsZ7PmhoVLbEe0MPhd3/9hBEMrcErTBH6IIiL68A==
+X-Google-Smtp-Source: AB8JxZrxe9q+wtsfJVZq5PdOUITnOttsDuKKIdMQVGnMGGT14BIhTB07wQcWnFVHwVwNcovr0saN+yEInb1aggLTJ4U=
+X-Received: by 2002:a25:3bc5:: with SMTP id i188-v6mr3049445yba.352.1525038297504;
+ Sun, 29 Apr 2018 14:44:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:x8+t0ts61Q5gnmIvI4JEURsQabxnFvzOx3On0vSql6YA9dwo5KM
- N3ytAga9RmaRl1Lityw9EK3IkFgtrgezC1XM+d9zMzXDInJn5Xz+QIcEDwgLylGNKO63l8d
- W2sJt6c1vJx5KQmmxdw3vi/S8gzouFxhhjvP5IhY2OppWBLb/qJdgL8LVSI0LgwshfAstcy
- sJ5vNAF8NcUO0U74LiCJA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zhMz8UR5QTI=:K625JbcK1VCivZoY1k5WX8
- FHWx+fS2g1HjOx7HbUZwFmkjzWFcL39nf312UMEf4L1OsxeAlbnPpD1tKO4mp/j5O3m22m49r
- XHSn1u4HoeHihjr2lKiYih6Wo5EvokHqWJhLBcB9GoHqv1XM6BbZcpSi7ZnjQFAQgpoLyuxfV
- tAPT9xh0s9iZBR2W4UAaQLHrcBcAAuVEkcP1l2q/+nPrPIVpecpQ/JoTwzj2e65HsMuvKjrXY
- ukLvDIyGmX4PwMVezzvD7RL9alj85/LyssLSBVzwvd41A0TQ+mpw9QyZeF0rMf7VOvZkkSZAQ
- Oo4HGLhoInWtJZ8oUXUEJayT7EAEUluYj/z2s5BQAaDPb8NU5uLji5ah+mclIlLz3AohUF2KO
- P/v0ZmDLUcljvnkk3jJXC08kwXH28WiXRvppDK8BrWvnwXzXAWspyeyIu0Tz4cmnHjvL+Yu6W
- tQTH3gwMgbC+5mRQZZ/JRNHn9RslPVtbZe/ggUUFr6FYFogkxpbz9jTm81uDBdHol3o+d5OxK
- ldyXYQkZeEPQoDWhFkM1ktWaRFNkqbyr4HA5RXjijGGTli1PoOuETAZ40nCcjOWWKXBeVOs6k
- 3eRMbV9u9/mw/ZTCaI33/VTf3dGj/sHFlCu9EKJxw2WuJGhg1C3PBPugJRuXbHqdbdGgerJTr
- R2kFcTV4lmSuxE0zL6Gvyo/M7R3mm86WBHckK+cL1gSM3mPa6TM17FMLOW4oossSJHu2YDAPH
- mt9HbLh0v6mmOrXOxJN1u41VhalVHXEr8IuLfuiMeby+uL7Q1lP09CqP8020VnXJBoa98toBb
- Np18cUp
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Sun, 29 Apr 2018 14:44:56
+ -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1804291255010.79@tvgsbejvaqbjf.bet>
+References: <cover.1524868165.git.johannes.schindelin@gmx.de>
+ <42db734a98059fcfd67627aecc93cc8f0439fd37.1524868165.git.johannes.schindelin@gmx.de>
+ <CAGZ79kZJJadXVhcMfxqq2kH=F-6nKVuhOc_s-vgj_9w5YcOxkg@mail.gmail.com> <nycvar.QRO.7.76.6.1804291255010.79@tvgsbejvaqbjf.bet>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Sun, 29 Apr 2018 14:44:56 -0700
+Message-ID: <CAGZ79kbfOd9r9JGE4qP_=CVnYDbn2A2aY2i+UrttC_0x2xOFuQ@mail.gmail.com>
+Subject: Re: [PATCH 2/6] sequencer: learn about the special "fake root commit" handling
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Wink Saville <wink@saville.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
+Hi Johannes,
 
-On Sun, 29 Apr 2018, Duy Nguyen wrote:
+thanks for taking your time to explain things. It shows I am not
+familiar with the rebase code, yet.
 
-> On Tue, Apr 24, 2018 at 8:50 AM, Elijah Newren <newren@gmail.com> wrote:
-> > Currently, all callers of unpack_trees() set o->src_index == o->dst_index.
-> > The code in unpack_trees() does not correctly handle them being different.
-> > There are two separate issues:
-> >
-> > First, there is the possibility of memory corruption.  Since
-> > unpack_trees() creates a temporary index in o->result and then discards
-> > o->dst_index and overwrites it with o->result, in the special case that
-> > o->src_index == o->dst_index, it is safe to just reuse o->src_index's
-> > split_index for o->result.  However, when src and dst are different,
-> > reusing o->src_index's split_index for o->result will cause the
-> > split_index to be shared.  If either index then has entries replaced or
-> > removed, it will result in the other index referring to free()'d memory.
-> >
-> > Second, we can drop the index extensions.  Previously, we were moving
-> > index extensions from o->dst_index to o->result.  Since o->src_index is
-> > the one that will have the necessary extensions (o->dst_index is likely to
-> > be a new index temporary index created to store the results), we should be
-> > moving the index extensions from there.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >
-> > Differences from v2:
-> >   - Don't NULLify src_index until we're done using it
-> >   - Actually built and tested[1]
-> >
-> > But it now passes the testsuite on both linux and mac[2], and I even re-merged
-> > all 53288 merge commits in linux.git (with a merge of this patch together with
-> > the directory rename detection series) for good measure.  [Only 7 commits
-> > showed a difference, all due to directory rename detection kicking in.]
-> >
-> > [1] Turns out that getting all fancy with an m4.10xlarge and nice levels of
-> > parallelization are great until you realize that your new setup omitted a
-> > critical step, leaving you running a slightly stale version of git instead...
-> > :-(
-> >
-> > [2] Actually, I get two test failures on mac from t0050-filesystem.sh, both
-> > with unicode normalization tests, but those two tests fail before my changes
-> > too.  All the other tests pass.
-> >
-> >  unpack-trees.c | 19 +++++++++++++++----
-> >  1 file changed, 15 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/unpack-trees.c b/unpack-trees.c
-> > index e73745051e..49526d70aa 100644
-> > --- a/unpack-trees.c
-> > +++ b/unpack-trees.c
-> > @@ -1284,9 +1284,20 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
-> >         o->result.timestamp.sec = o->src_index->timestamp.sec;
-> >         o->result.timestamp.nsec = o->src_index->timestamp.nsec;
-> >         o->result.version = o->src_index->version;
-> > -       o->result.split_index = o->src_index->split_index;
-> > -       if (o->result.split_index)
-> > +       if (!o->src_index->split_index) {
-> > +               o->result.split_index = NULL;
-> > +       } else if (o->src_index == o->dst_index) {
-> > +               /*
-> > +                * o->dst_index (and thus o->src_index) will be discarded
-> > +                * and overwritten with o->result at the end of this function,
-> > +                * so just use src_index's split_index to avoid having to
-> > +                * create a new one.
-> > +                */
-> > +               o->result.split_index = o->src_index->split_index;
-> >                 o->result.split_index->refcount++;
-> > +       } else {
-> > +               o->result.split_index = init_split_index(&o->result);
-> > +       }
-> >         hashcpy(o->result.sha1, o->src_index->sha1);
-> >         o->merge_size = len;
-> >         mark_all_ce_unused(o->src_index);
-> > @@ -1401,7 +1412,6 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
-> >                 }
-> >         }
-> >
-> > -       o->src_index = NULL;
-> >         ret = check_updates(o) ? (-2) : 0;
-> >         if (o->dst_index) {
-> >                 if (!ret) {
-> > @@ -1412,12 +1422,13 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
-> >                                                   WRITE_TREE_SILENT |
-> >                                                   WRITE_TREE_REPAIR);
-> >                 }
-> > -               move_index_extensions(&o->result, o->dst_index);
-> > +               move_index_extensions(&o->result, o->src_index);
-> 
-> While this looks like the right thing to do on paper, I believe it's
-> actually broken for a specific case of untracked cache. In short,
-> please do not touch this line. I will send a patch to revert
-> edf3b90553 (unpack-trees: preserve index extensions - 2017-05-08),
-> which essentially deletes this line, with proper explanation and
-> perhaps a test if I could come up with one.
-> 
-> When we update the index, we depend on the fact that all updates must
-> invalidate the right untracked cache correctly. In this unpack
-> operations, we start copying entries over from src to result. Since
-> 'result' (at least from the beginning) does not have an untracked
-> cache, it has nothing to invalidate when we copy entries over. By the
-> time we have done preparing 'result', what's recorded in src's (or
-> dst's for that matter) untracked cache may or may not apply to
-> 'result'  index anymore. This copying only leads to more problems when
-> untracked cache is used.
+>
+> Having said that, *this* time round, what we need to do is actually very
+> similar to what builtin/am.c's read_author_script() does (even if we
+> cannot use it as-is: it populates part of a `struct am_state`). I'll have
+> to look into this more closely.
 
-Is there really no way to invalidate just individual entries?
+Heh, so my rambling was worth it. Thanks for looking into that.
 
-I have a couple of worktrees which are *huge*. And edf3b90553 really
-helped relieve the pain a bit when running `git status`. Now you say that
-even a `git checkout -b new-branch` would blow the untracked cache away
-again?
 
-It would be *really* nice if we could prevent that performance regression
-somehow.
+>> This part could be prefixed with
+>>     /* un-escape text: turn \\ into ' and remove single quotes. */
+>
+> If could be prefixed that way, but it would be incorrect. We never turn \\
+> into '. What we do here (and I do not want to repeat in a comment what the
+> code does): we dequote what we previously quoted using single quotes. So
+> we use the fact that we know that the value is of the form 'abc', or if it
+> contains single quotes: 'this has '\''single'\'' quotes'.
 
-Ciao,
-Dscho
+Is there a helper 'dequote' somewhere?
+
+>> > +/* Does this command create a (non-merge) commit? */
+>> > +static int is_pick_or_similar(enum todo_command command)
+>> > +{
+>> > +       return command <= TODO_SQUASH;
+>> > +}
+>>
+>> This code looks scary.
+[...]
+
+> The code already does things like that, by testing `command <
+> TODO_COMMENT`.
+
+ok great. So that is a widely used pattern for enum todo_command,
+such that rearranging their order would break a lot. (Hence people will
+find out quickly when doing so).
+
+> But I guess your concerns would go away if I made this a big honking
+> switch() statement that lists *explicitly* what should be considered "pick
+> or similar"?
+
+I did not spell that out as producing lots of lines of code is not the
+primary goal, but understandability is.
+
+And it looked like it would just pick the first section, so I thought about
+some different approaches, either by making the enum todo_command
+a lot more complex than an enum (an array of structs?) or adding
+a new parallel array, that contains additional information for each
+value at the given index, e.g.
+
+static int is_pick_or_similar(enum todo_command command)
+{
+    return todo_command_flags[value] & TODO_CMDS_IS_PICKING;
+}
+
+but all approaches I had were more complicated, such that the additional
+verbosity would not be enough of a trade off.
+
+I think this function was only scary as I was not familiar with the rebase
+code as that employs similar patterns already.
+
+>> > +                       if (is_fixup(command))
+>> > +                               return error(_("cannot fixup root commit"));
+>>
+>> I would expect you also cannot squash into root commit?
+>
+> In sequencer.c, `is_fixup()` really means "is it a fixup or a squash?". So
+> yes, you are correct that we also cannot squash into a root commit.
+>
+> However, a squash is the same as a fixup with the only difference being
+> that the squash lets you edit the final commit message (and does not
+> comment out the squash commit's message, in contrast to fixup).
+>
+> Is it really worth adding an ugly line break in the middle of the error()
+> statement just to say "cannot fixup/squash into root commit"? I'd rather
+> not.
+
+Makes sense,
+
+Thanks for your patience,
+Stefan
