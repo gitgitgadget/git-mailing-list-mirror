@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0CA51F428
-	for <e@80x24.org>; Sun, 29 Apr 2018 18:19:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5ECE1F428
+	for <e@80x24.org>; Sun, 29 Apr 2018 18:19:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754097AbeD2STR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Apr 2018 14:19:17 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:33318 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754065AbeD2STL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Apr 2018 14:19:11 -0400
-Received: by mail-lf0-f68.google.com with SMTP id m18-v6so9376399lfb.0
-        for <git@vger.kernel.org>; Sun, 29 Apr 2018 11:19:10 -0700 (PDT)
+        id S1754101AbeD2STS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Apr 2018 14:19:18 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:35244 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754064AbeD2STK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Apr 2018 14:19:10 -0400
+Received: by mail-lf0-f66.google.com with SMTP id r125-v6so9384702lfe.2
+        for <git@vger.kernel.org>; Sun, 29 Apr 2018 11:19:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gcNR7mKkvRjtvKMQr03Dv2vLf1MqT2ja/6jjE6N3Jg4=;
-        b=pxy1qkFNvFJstzgHidDMJAdD1XNAyDodYi0zFTZn4cq+CGgBasgqLIrafXNxzbWy/e
-         mh6EITMmLit/Qpgyx58wKVD+u5EkacF+RPWOVolgH978VfMesdUykABGSfG8WSVCLFeB
-         I5kGw4SJolMXh10S5VdozdMbz08Jr/nitirIev1uN7eR0DBQAouwH/XXmmdXw5ysrWSz
-         C9FEkW4LOwihLsiQglZOD7IPI7ygqvk9lmN3mJLtFEeBfyo9h5CuGNCDc1kWNLkge1uT
-         LTrMDwYKgNXrrWX83Gispb3i+Nk8JkqFWRv/cc7fhWfm0xCalcz2p/9Y/UXOK/HEBfop
-         ZXpQ==
+        bh=latKK9preKgRvscoHiakGHKHkRjdprOzfgY3uaUrNcs=;
+        b=bUV/x2yetw0rI6yx/KZIJcfoBQXRReOlSfatdBElId3ESmSOy8MsUBZGAmBZALCitC
+         uFXDXwNcOCYY8zarySRWpKX4joSo1pM7k5NgCnbdmlWoP4kErkbhVYnXW0QZ1eX04AYD
+         4Ie2DWvO9cIrYGisrLQrl2tt14iow5PSLo9lhl/UJGYrUoHv8BYYhbZaY+p3XTvrl7yh
+         ChiVxq1gbG6bPs9riKoFvrJ+OmSBq6ndZEelKurfp9PjwxA8I7X6dDpFEbuVdGniyHSo
+         PWpCth2eb3fAGvtKLr96U7PmjkDuvMmq6QtcI4nVLcjY1w0Nct+5NAfEd0cmzF1H8VIY
+         vJsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gcNR7mKkvRjtvKMQr03Dv2vLf1MqT2ja/6jjE6N3Jg4=;
-        b=j+bqIE5+MOaqVMSxdlrppJfGcmxG8bTFsuaporJ3jxM8rAPj0NrUFCHlyKwk70BF2d
-         iKbYpou23dCJAjiQWjvxEkDVHABdsbCfoXgEBSbDIRg8ndGjNp13Q5h90O1gN5vQ2PbW
-         fDfCoINicTvcwdOhvpytSjIgYePrO6RHf3y2frds/4ik19TVnefeXvqMV9FLsM3LeGIu
-         taDtd2tZ50irwXnZCfeOub5wgFNB3/Y3XhpLOBrsgl3I9bJ3FZhK2fEsXbxArE+p2eLE
-         2EhotEvQMrDo8hAzwhyrp1xORB2Bzb/MfxLHwNvtIZf9g80vkBiGvRi7wjxxgL3A85lK
-         O11A==
-X-Gm-Message-State: ALQs6tDl0+lZ+C4ovtwRwNJaSI6LMwSRW03a7w1Cit2MayJnnQ2OUn2P
-        JlRWvUx6TGvGhw2hSYHPH6s=
-X-Google-Smtp-Source: AB8JxZqoYclBqOtgjxtbDuH4faLavif1EThC3As7dqTmKaZecvzTE9Sv/FFopsC0JDuzEzHS6EikXg==
-X-Received: by 2002:a2e:2b96:: with SMTP id r22-v6mr6647204ljr.2.1525025949962;
-        Sun, 29 Apr 2018 11:19:09 -0700 (PDT)
+        bh=latKK9preKgRvscoHiakGHKHkRjdprOzfgY3uaUrNcs=;
+        b=mrAqxZ200YEOaEETYZkejToUbajzfyhlkV73RTGYHWA4huAhdebE7pDcZlZC4JGPT9
+         fOy6Pwgixy6MfIBoEdWI234pDLocdj+3uhcR5HUg1d+LolT6aQmv7tvukUZzgDNTGk6R
+         w9+4JhA2UfpjFN6N+MKrO261x8DXn+hhHuJ8b2wcvdu1CSzwgUpTCchdF/2cmqVC91x2
+         gLKbQFebcoQmudJ9YgvCsn+HCYg5OJ/4sL9C2sMu13m70SF5QHB3l5bKsH9svkloNYsw
+         Sv5NBsoWpelkbKkpZY61Lr8a3t+HjvwEn+0HRhdqyIlFCBb7pTTxR5KCxaApZQXbrUiW
+         Qt5g==
+X-Gm-Message-State: ALQs6tBd8UkP73zVyb5kuH8TQjXJGDaDLuNJAiS9JffXy6pP8RNEJW8r
+        1rrlaFxd0sr/PO7i42yydpY=
+X-Google-Smtp-Source: AB8JxZqrsHzks3kQQgR3vEHizR6WrnJA11yWQa68qdHzzdz6Ra8xh8klajf4f99+c3FchpZ5eNvkUA==
+X-Received: by 2002:a2e:2f07:: with SMTP id v7-v6mr6208604ljv.56.1525025948783;
+        Sun, 29 Apr 2018 11:19:08 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id r78-v6sm975376ljb.20.2018.04.29.11.19.08
+        by smtp.gmail.com with ESMTPSA id r78-v6sm975376ljb.20.2018.04.29.11.19.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 29 Apr 2018 11:19:09 -0700 (PDT)
+        Sun, 29 Apr 2018 11:19:08 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         szeder.dev@gmail.com
-Subject: [PATCH v5 06/10] completion: implement and use --list-cmds=main,others
-Date:   Sun, 29 Apr 2018 20:18:40 +0200
-Message-Id: <20180429181844.21325-7-pclouds@gmail.com>
+Subject: [PATCH v5 05/10] git.c: convert --list-*builtins to --list-cmds=*
+Date:   Sun, 29 Apr 2018 20:18:39 +0200
+Message-Id: <20180429181844.21325-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.664.g8924eee37a
 In-Reply-To: <20180429181844.21325-1-pclouds@gmail.com>
 References: <20180421165414.30051-1-pclouds@gmail.com>
@@ -69,103 +69,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of parsing "git help -a" output, which is tricky to get right,
-less elegant and also slow, make git provide the list in a
-machine-friendly form. This adds two separate listing types, main and
-others, instead of just "all" for more flexibility.
+Even if these are hidden options, let's make them a bit more generic
+since we're introducing more listing types shortly.
+
+This also allows combining multiple listing types, which is usually
+now (for combining parseopt and builtins) but future types will
+benefit from this.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
  contrib/completion/git-completion.bash |  2 +-
- git.c                                  |  4 ++++
- help.c                                 | 32 ++++++++++++++++++++++++++
- help.h                                 |  2 ++
- 4 files changed, 39 insertions(+), 1 deletion(-)
+ git.c                                  | 27 ++++++++++++++++++++------
+ t/t0012-help.sh                        |  2 +-
+ 3 files changed, 23 insertions(+), 8 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index d7b448fd94..77cfb8a20b 100644
+index 01dd9ff07a..d7b448fd94 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -834,7 +834,7 @@ __git_commands () {
- 	then
- 		printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
- 	else
--		git help -a|egrep '^  [a-zA-Z0-9]'
-+		git --list-cmds=main,others
- 	fi
- }
+@@ -3044,7 +3044,7 @@ __git_complete_common () {
+ __git_cmds_with_parseopt_helper=
+ __git_support_parseopt_helper () {
+ 	test -n "$__git_cmds_with_parseopt_helper" ||
+-		__git_cmds_with_parseopt_helper="$(__git --list-parseopt-builtins)"
++		__git_cmds_with_parseopt_helper="$(__git --list-cmds=parseopt)"
  
+ 	case " $__git_cmds_with_parseopt_helper " in
+ 	*" $1 "*)
 diff --git a/git.c b/git.c
-index ea9bbfb6a3..da161a74ae 100644
+index f598fae7b7..ea9bbfb6a3 100644
 --- a/git.c
 +++ b/git.c
-@@ -48,6 +48,10 @@ static int list_cmds(const char *spec)
- 			list_builtins(0, '\n');
- 		else if (len == 8 && !strncmp(spec, "parseopt", 8))
- 			list_builtins(NO_PARSEOPT, ' ');
-+		else if (len == 4 && !strncmp(spec, "main", 4))
-+			list_all_main_cmds();
-+		else if (len == 6 && !strncmp(spec, "others", 6))
-+			list_all_other_cmds();
- 		else
- 			die(_("unsupported command listing type '%s'"), spec);
- 		spec += len;
-diff --git a/help.c b/help.c
-index bf2738e9ef..71bc001570 100644
---- a/help.c
-+++ b/help.c
-@@ -297,6 +297,38 @@ void list_common_cmds_help(void)
- 	print_cmd_by_category(common_categories);
- }
+@@ -38,6 +38,25 @@ static int use_pager = -1;
  
-+void list_all_main_cmds(void)
+ static void list_builtins(unsigned int exclude_option, char sep);
+ 
++static int list_cmds(const char *spec)
 +{
-+	struct cmdnames main_cmds, other_cmds;
-+	int i;
++	while (*spec) {
++		const char *sep = strchrnul(spec, ',');
++		int len = sep - spec;
 +
-+	memset(&main_cmds, 0, sizeof(main_cmds));
-+	memset(&other_cmds, 0, sizeof(other_cmds));
-+	load_command_list("git-", &main_cmds, &other_cmds);
-+
-+	for (i = 0; i < main_cmds.cnt; i++)
-+		puts(main_cmds.names[i]->name);
-+
-+	clean_cmdnames(&main_cmds);
-+	clean_cmdnames(&other_cmds);
++		if (len == 8 && !strncmp(spec, "builtins", 8))
++			list_builtins(0, '\n');
++		else if (len == 8 && !strncmp(spec, "parseopt", 8))
++			list_builtins(NO_PARSEOPT, ' ');
++		else
++			die(_("unsupported command listing type '%s'"), spec);
++		spec += len;
++		if (*spec == ',')
++			spec++;
++	}
++	return 0;
 +}
 +
-+void list_all_other_cmds(void)
-+{
-+	struct cmdnames main_cmds, other_cmds;
-+	int i;
-+
-+	memset(&main_cmds, 0, sizeof(main_cmds));
-+	memset(&other_cmds, 0, sizeof(other_cmds));
-+	load_command_list("git-", &main_cmds, &other_cmds);
-+
-+	for (i = 0; i < other_cmds.cnt; i++)
-+		puts(other_cmds.names[i]->name);
-+
-+	clean_cmdnames(&main_cmds);
-+	clean_cmdnames(&other_cmds);
-+}
-+
- int is_in_cmdlist(struct cmdnames *c, const char *s)
- {
- 	int i;
-diff --git a/help.h b/help.h
-index b21d7c94e8..30e165773e 100644
---- a/help.h
-+++ b/help.h
-@@ -17,6 +17,8 @@ static inline void mput_char(char c, unsigned int num)
- }
+ static void commit_pager_choice(void) {
+ 	switch (use_pager) {
+ 	case 0:
+@@ -223,12 +242,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			}
+ 			(*argv)++;
+ 			(*argc)--;
+-		} else if (!strcmp(cmd, "--list-builtins")) {
+-			list_builtins(0, '\n');
+-			exit(0);
+-		} else if (!strcmp(cmd, "--list-parseopt-builtins")) {
+-			list_builtins(NO_PARSEOPT, ' ');
+-			exit(0);
++		} else if (skip_prefix(cmd, "--list-cmds=", &cmd)) {
++			exit(list_cmds(cmd));
+ 		} else {
+ 			fprintf(stderr, _("unknown option: %s\n"), cmd);
+ 			usage(git_usage_string);
+diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+index c096f33505..3c91a9024a 100755
+--- a/t/t0012-help.sh
++++ b/t/t0012-help.sh
+@@ -59,7 +59,7 @@ test_expect_success 'git help' '
+ '
  
- extern void list_common_cmds_help(void);
-+extern void list_all_main_cmds(void);
-+extern void list_all_other_cmds(void);
- extern const char *help_unknown_cmd(const char *cmd);
- extern void load_command_list(const char *prefix,
- 			      struct cmdnames *main_cmds,
+ test_expect_success 'generate builtin list' '
+-	git --list-builtins >builtins
++	git --list-cmds=builtins >builtins
+ '
+ 
+ while read builtin
 -- 
 2.17.0.664.g8924eee37a
 
