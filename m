@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D8971F428
-	for <e@80x24.org>; Sun, 29 Apr 2018 18:19:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A79331F42F
+	for <e@80x24.org>; Sun, 29 Apr 2018 18:19:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754110AbeD2ST2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Apr 2018 14:19:28 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:39917 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753989AbeD2STM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Apr 2018 14:19:12 -0400
-Received: by mail-lf0-f68.google.com with SMTP id j193-v6so9359310lfg.6
-        for <git@vger.kernel.org>; Sun, 29 Apr 2018 11:19:11 -0700 (PDT)
+        id S1754105AbeD2ST1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Apr 2018 14:19:27 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:33320 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754080AbeD2STN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Apr 2018 14:19:13 -0400
+Received: by mail-lf0-f66.google.com with SMTP id m18-v6so9376470lfb.0
+        for <git@vger.kernel.org>; Sun, 29 Apr 2018 11:19:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gUs+OmYiTGg7QDFK4cByKIyVDTtV7LgDMys7yqFhAL4=;
-        b=gkJdKDL0vktdpBJZHvq2fOdnqTPaYyFkLA+Loq9TJTY2rLKswZ5ni9GCSIA2N+ZHjc
-         XzATmW6oiQOzDRscLgLIf89wEUAo2q1YzsQnhr54U1T+vMKvCI3LzbKFvFPX7scumsU+
-         6H1PUdvK63c0KN1M+hbC0QZ8U47Mjeigju/DVj4iO1IsDll7sVYzGrKPC6NxyOqXz+fe
-         U4ypgN9mPI3jhabksS8al8h7EIrDE40vwOfMDJAmKVJVWdliesaAq3feH0lvqX7Hb2Ol
-         u9eAQkWLsbz7mkjoSaV/oSCi7+yGZ7S3H9yM0yqGOcQFZ9FBRFe0K03M7x3uNH0ocqky
-         InWA==
+        bh=EXyAApOVnG83dSaAbEkLdx14DSDcpqQoxL2NVZixFPo=;
+        b=sltEwK6ZxYhMxxeInuHhtlglsHLPwDmUgZyZQaEqT6OvuPhQdzfovDywS1BQi35o5h
+         MsTL+VZJyepyBmOeDC0aaKlY4/ii4SDFiexTiILxA0ymX2OhPkgrIuwji5gj+2rMCqe5
+         /0nHvlO3UKfVBBVCZxuVILHIfmIFyBm+NF7DWIS4VwhHtWSsK203Fwmzgf78nxhs8dcj
+         bFia6BJw3wp8kgGD0rh4ZWQidLoQdw1ECVYIoFcRKLcQ5DrH+HsIfMX65+TRiP6r0Yf9
+         kuXsyvhpI+wr+oUvxLDZ18zCVL7zq4oDxzwxwTkae4kN1oyoo9pbf9warGvplq8IWjTS
+         mjXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gUs+OmYiTGg7QDFK4cByKIyVDTtV7LgDMys7yqFhAL4=;
-        b=rIZ43KT28w8U0ZiWmaISBWusvq+o3+fxOI3MI6NLUXxR54xNCXahI84yFzlBjC8lYS
-         eMcBObbltlKod90qoT7/jui6JRMviKt18vs5TEYkkww5Z3jQQhkQmAW2RQiCabOfKvWn
-         z9KdEM8b+3CiK+V1/mFU6N7v3ukfb6k1aOMsEvQM+Aq7MBQZxkpma2L1OBAwnK3Fjfwy
-         1w+zqGWko0UfxuRbO/HsU2p90YKQ/K5l6hG560deDSklIDynqaPGy42JVzvbAx2CSODK
-         V51DUZbJGfXBLbd685c+GmkDqhGdd+tD8jtfxpy8Kq6AYGLjsPPpT7a5gIvgqBdiVNzO
-         kOgQ==
-X-Gm-Message-State: ALQs6tCfrcFmX092wj+brrLhM5Ynyz3g7fSh0uqxHJi8fi5h92vX8Dqq
-        EhHC+HSZSgII8AorNwi9pNI=
-X-Google-Smtp-Source: AB8JxZpWXjMSIcHEGxH0WCosEOSKOYW5rKV/Wm6NllUrn2UiG6YrgWv6VhwyxP8rrOQ+YoIbyug2aA==
-X-Received: by 2002:a2e:82d6:: with SMTP id n22-v6mr6174036ljh.142.1525025951101;
-        Sun, 29 Apr 2018 11:19:11 -0700 (PDT)
+        bh=EXyAApOVnG83dSaAbEkLdx14DSDcpqQoxL2NVZixFPo=;
+        b=gUkbsdQUVkwwJz3B2JeN1reYnfcqQNRy4zaeS4G3NlgArq2JQOAn6P7RhpctIBbZdP
+         ri6iBAzmso4NMmCPGwEwSL3ASAGBlvNTa2pzVn8CxGQ+eD+nRkuC+2f3IPzlap9gpF9o
+         2rvdc8nE2gDF2nSPcCuNXzUYv6sIHpV3kr1EsyngDLuWib9ja9OU9DN4mF62NfH0XhoJ
+         GNGsmCwDSdt1SXy7DIUWFm7F0bzw85b4Bx6xmcQrW6WzmVGzuhVm8IkN47zgoYJBHZ7b
+         wnOXL4ZN0zHnLSEdZ675VbwaOCGVKfrUaa4tjszqt16zjfR7YUSDMTgcTSV2tXndd+BH
+         kWUg==
+X-Gm-Message-State: ALQs6tD/qIHnw9ueKCw0/WRaz5nkTvrCFa3jl+xAbqxJbcqwq48BrP4a
+        8dpjnsTCP/2rvGj7e4a1EAk=
+X-Google-Smtp-Source: AB8JxZr+sT0pt5B+U8zdop3wnkUsQi9glCF4fQIjgbvF4SQvn34YaPRdF4lFp9L1gs7dqkOVpHJq4A==
+X-Received: by 2002:a2e:95d6:: with SMTP id y22-v6mr6025200ljh.90.1525025952170;
+        Sun, 29 Apr 2018 11:19:12 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id r78-v6sm975376ljb.20.2018.04.29.11.19.09
+        by smtp.gmail.com with ESMTPSA id r78-v6sm975376ljb.20.2018.04.29.11.19.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 29 Apr 2018 11:19:10 -0700 (PDT)
+        Sun, 29 Apr 2018 11:19:11 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         szeder.dev@gmail.com
-Subject: [PATCH v5 07/10] git: support --list-cmds=list-<category>
-Date:   Sun, 29 Apr 2018 20:18:41 +0200
-Message-Id: <20180429181844.21325-8-pclouds@gmail.com>
+Subject: [PATCH v5 08/10] help: add "-a --verbose" to list all commands with synopsis
+Date:   Sun, 29 Apr 2018 20:18:42 +0200
+Message-Id: <20180429181844.21325-9-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.664.g8924eee37a
 In-Reply-To: <20180429181844.21325-1-pclouds@gmail.com>
 References: <20180421165414.30051-1-pclouds@gmail.com>
@@ -69,118 +69,145 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This allows us to select any group of commands by a category defined
-in command-list.txt. This is an internal/hidden option so we don't
-have to be picky about the category name or worried about exposing too
-much.
+This lists all recognized commands [1] by category. The group order
+follows closely git.txt.
 
-This will be used later by git-completion.bash to retrieve certain
-command groups.
+[1] We may actually show commands that are not built (e.g. if you set
+NO_PERL you don't have git-instaweb but it's still listed here). I
+ignore the problem because on Linux a git package could be split
+anyway. The "git-core" package may not contain git-instaweb even if
+it's built because it may end up in a separate package. We can't know
+anyway.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- generate-cmdlist.sh | 17 +++++++++++++++++
- git.c               |  7 +++++++
- help.c              | 22 ++++++++++++++++++++++
- help.h              |  1 +
- 4 files changed, 47 insertions(+)
+ Documentation/git-help.txt |  4 +++-
+ builtin/help.c             |  7 +++++++
+ help.c                     | 16 ++++++++++++++++
+ help.h                     |  1 +
+ t/t0012-help.sh            |  9 +++++++++
+ 5 files changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index 015eef2804..bfd8ef0671 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -45,6 +45,21 @@ define_categories() {
- 	test "$bit" -gt 32 && die "Urgh.. too many categories?"
- }
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index 40d328a4b3..a40fc38d8b 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -8,7 +8,7 @@ git-help - Display help information about Git
+ SYNOPSIS
+ --------
+ [verse]
+-'git help' [-a|--all] [-g|--guide]
++'git help' [-a|--all [--verbose]] [-g|--guide]
+ 	   [-i|--info|-m|--man|-w|--web] [COMMAND|GUIDE]
  
-+define_category_names() {
-+	echo
-+	echo "/* Category names */"
-+	echo "static const char *category_names[] = {"
-+	bit=0
-+	category_list "$1" |
-+	while read cat
-+	do
-+		echo "	\"$cat\", /* (1UL << $bit) */"
-+		bit=$(($bit+1))
-+	done
-+	echo "	NULL"
-+	echo "};"
-+}
-+
- print_command_list() {
- 	echo "static struct cmdname_help command_list[] = {"
+ DESCRIPTION
+@@ -42,6 +42,8 @@ OPTIONS
+ --all::
+ 	Prints all the available commands on the standard output. This
+ 	option overrides any given command or guide name.
++	When used with `--verbose` print description for all recognized
++	commands.
  
-@@ -70,4 +85,6 @@ struct cmdname_help {
- "
- define_categories "$1"
- echo
-+define_category_names "$1"
-+echo
- print_command_list "$1"
-diff --git a/git.c b/git.c
-index da161a74ae..93927e34c4 100644
---- a/git.c
-+++ b/git.c
-@@ -52,6 +52,13 @@ static int list_cmds(const char *spec)
- 			list_all_main_cmds();
- 		else if (len == 6 && !strncmp(spec, "others", 6))
- 			list_all_other_cmds();
-+		else if (len > 5 && !strncmp(spec, "list-", 5)) {
-+			struct strbuf sb = STRBUF_INIT;
-+
-+			strbuf_add(&sb, spec + 5, len - 5);
-+			list_cmds_by_category(sb.buf);
-+			strbuf_release(&sb);
+ -g::
+ --guides::
+diff --git a/builtin/help.c b/builtin/help.c
+index 2d51071429..83a7d73afe 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -36,6 +36,7 @@ static const char *html_path;
+ 
+ static int show_all = 0;
+ static int show_guides = 0;
++static int verbose;
+ static unsigned int colopts;
+ static enum help_format help_format = HELP_FORMAT_NONE;
+ static int exclude_guides;
+@@ -48,6 +49,7 @@ static struct option builtin_help_options[] = {
+ 			HELP_FORMAT_WEB),
+ 	OPT_SET_INT('i', "info", &help_format, N_("show info page"),
+ 			HELP_FORMAT_INFO),
++	OPT__VERBOSE(&verbose, N_("print command description")),
+ 	OPT_END(),
+ };
+ 
+@@ -463,6 +465,11 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 
+ 	if (show_all) {
+ 		git_config(git_help_config, NULL);
++		if (verbose) {
++			setup_pager();
++			list_all_cmds_help();
++			return 0;
 +		}
- 		else
- 			die(_("unsupported command listing type '%s'"), spec);
- 		spec += len;
+ 		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
+ 		load_command_list("git-", &main_cmds, &other_cmds);
+ 		list_commands(colopts, &main_cmds, &other_cmds);
 diff --git a/help.c b/help.c
-index 71bc001570..156dde1bea 100644
+index 156dde1bea..f9da0214f1 100644
 --- a/help.c
 +++ b/help.c
-@@ -329,6 +329,28 @@ void list_all_other_cmds(void)
- 	clean_cmdnames(&other_cmds);
+@@ -27,6 +27,17 @@ static struct category_description common_categories[] = {
+ 	{ CAT_remote, N_("collaborate (see also: git help workflows)") },
+ 	{ 0, NULL }
+ };
++static struct category_description main_categories[] = {
++	{ CAT_mainporcelain, N_("Main Porcelain Commands") },
++	{ CAT_ancillarymanipulators, N_("Ancillary Commands / Manipulators") },
++	{ CAT_ancillaryinterrogators, N_("Ancillary Commands / Interrogators") },
++	{ CAT_foreignscminterface, N_("Interacting with Others") },
++	{ CAT_plumbingmanipulators, N_("Low-level Commands / Manipulators") },
++	{ CAT_plumbinginterrogators, N_("Low-level Commands / Interrogators") },
++	{ CAT_synchingrepositories, N_("Low-level Commands / Synching Repositories") },
++	{ CAT_purehelpers, N_("Low-level Commands / Internal Helpers") },
++	{ 0, NULL }
++};
+ 
+ static const char *drop_prefix(const char *name)
+ {
+@@ -351,6 +362,11 @@ void list_cmds_by_category(const char *cat)
+ 	}
  }
  
-+void list_cmds_by_category(const char *cat)
++void list_all_cmds_help(void)
 +{
-+	int i, n = ARRAY_SIZE(command_list);
-+	uint32_t cat_id = 0;
-+
-+	for (i = 0; category_names[i]; i++) {
-+		if (!strcmp(cat, category_names[i])) {
-+			cat_id = 1UL << i;
-+			break;
-+		}
-+	}
-+	if (!cat_id)
-+		die(_("unsupported command listing type '%s'"), cat);
-+
-+	for (i = 0; i < n; i++) {
-+		struct cmdname_help *cmd = command_list + i;
-+
-+		if (cmd->category & cat_id)
-+			puts(drop_prefix(cmd->name));
-+	}
++	print_cmd_by_category(main_categories);
 +}
 +
  int is_in_cmdlist(struct cmdnames *c, const char *s)
  {
  	int i;
 diff --git a/help.h b/help.h
-index 30e165773e..752368840a 100644
+index 752368840a..090d46ba01 100644
 --- a/help.h
 +++ b/help.h
-@@ -19,6 +19,7 @@ static inline void mput_char(char c, unsigned int num)
+@@ -17,6 +17,7 @@ static inline void mput_char(char c, unsigned int num)
+ }
+ 
  extern void list_common_cmds_help(void);
++extern void list_all_cmds_help(void);
  extern void list_all_main_cmds(void);
  extern void list_all_other_cmds(void);
-+extern void list_cmds_by_category(const char *category);
- extern const char *help_unknown_cmd(const char *cmd);
- extern void load_command_list(const char *prefix,
- 			      struct cmdnames *main_cmds,
+ extern void list_cmds_by_category(const char *category);
+diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+index 3c91a9024a..060df24c2d 100755
+--- a/t/t0012-help.sh
++++ b/t/t0012-help.sh
+@@ -25,6 +25,15 @@ test_expect_success "setup" '
+ 	EOF
+ '
+ 
++# make sure to exercise these code paths, the output is a bit tricky
++# to verify
++test_expect_success 'basic help commands' '
++	git help >/dev/null &&
++	git help -a >/dev/null &&
++	git help -g >/dev/null &&
++	git help -av >/dev/null
++'
++
+ test_expect_success "works for commands and guides by default" '
+ 	configure_help &&
+ 	git help status &&
 -- 
 2.17.0.664.g8924eee37a
 
