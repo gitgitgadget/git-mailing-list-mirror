@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BB721F428
-	for <e@80x24.org>; Sun, 29 Apr 2018 12:33:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6B311F428
+	for <e@80x24.org>; Sun, 29 Apr 2018 12:34:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753349AbeD2Mdb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Apr 2018 08:33:31 -0400
-Received: from mout.gmx.net ([212.227.17.21]:35543 "EHLO mout.gmx.net"
+        id S1753261AbeD2Mek (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Apr 2018 08:34:40 -0400
+Received: from mout.gmx.net ([212.227.17.21]:53309 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753130AbeD2Md3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Apr 2018 08:33:29 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIMyZ-1fE8IZ0HaJ-004AfO; Sun, 29
- Apr 2018 14:33:20 +0200
-Date:   Sun, 29 Apr 2018 14:33:01 +0200 (DST)
+        id S1752895AbeD2Meh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Apr 2018 08:34:37 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOBOi-1fG3Jt0wTc-005XPM; Sun, 29
+ Apr 2018 14:34:33 +0200
+Date:   Sun, 29 Apr 2018 14:34:11 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Stefan Beller <sbeller@google.com>
@@ -28,31 +28,31 @@ cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Pratik Karki <predatoramigo@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
         Wink Saville <wink@saville.com>
-Subject: Re: [PATCH 2/6] sequencer: learn about the special "fake root commit"
- handling
-In-Reply-To: <CAGZ79kZJJadXVhcMfxqq2kH=F-6nKVuhOc_s-vgj_9w5YcOxkg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804291255010.79@tvgsbejvaqbjf.bet>
-References: <cover.1524868165.git.johannes.schindelin@gmx.de> <42db734a98059fcfd67627aecc93cc8f0439fd37.1524868165.git.johannes.schindelin@gmx.de> <CAGZ79kZJJadXVhcMfxqq2kH=F-6nKVuhOc_s-vgj_9w5YcOxkg@mail.gmail.com>
+Subject: Re: [PATCH 3/6] rebase -i --root: let the sequencer handle even the
+ initial part
+In-Reply-To: <CAGZ79kYi5W+m9TQ_iEwPmEaXQ_tvpRjcycGioY5jThtfGM6mYw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804291433520.79@tvgsbejvaqbjf.bet>
+References: <cover.1524868165.git.johannes.schindelin@gmx.de> <1c8740eaa916351832cbea4cf75b77e5dc965db8.1524868165.git.johannes.schindelin@gmx.de> <CAGZ79kYi5W+m9TQ_iEwPmEaXQ_tvpRjcycGioY5jThtfGM6mYw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:N189+FtmuW4xPej+o4sPdzeQ0uurNCVIHKFoznEc6tmi871CpQn
- jQNXtPIwZXpR89Bw6HtbVAdKGe70KzpDcVE5b10RAPaLMamRCU8FMwzCvajeH3LZMb9GDSl
- 5bCSxO0aolWfW1braZaN0k9yIooUHik4NBaRWB1SdtakO1qyZvyqb+QeTzUnHMdz2JUKWwv
- dkM8OdTDCL5FfWXo0X1Ag==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yFtNVlyPNRs=:nOCpmj6hT/L0fwchL+bP1S
- fbnSMZDLn7g51iOJtKIe0oXU6uxar/6DXPhptN2hFhR71xDZaxQB7y4sNlSslBL4qGdw4V7J3
- ryEeL+dbIJ8RDwAJSu9iIqiyN/mA8675mQqQWZdHQ2TgdKF1C2lwrIgZDPedVmeAIn94nVY2p
- 2b9OSJFrUehD/tCa/OJOnOaES71Wg3B5ENPKh2pSMY01PajIb6g0uRzxiJZocf6hvEWxOsdkB
- zDB6BEKhHF0GXqO/s8YPLwHKu1XaAwvYxCgJmVXGdCSlwIoVXMTndjxrI3K6+r4I487rxKU89
- 8ZXax1BBL04So5G31ZatXFYXiTQkb1QbqnhKUXVRFdC5doT3d20aJt8ZH2x2wvNPH1TXCF+tW
- JbqjwXgh+F27HF3xUd7qDIH8cziVPpRgzXyYa/7SBy5KCFJMriyh5i+IqsxdCaKIxqeTAfhVO
- bYXKJWPHNkwDUlb1OHFnq/EbO7KCVn0JSIFh0fH9jD6TWG8FSRa6dg0Y7t7/UOor81wOsRM9a
- bCh7WzRoU1vuEvqQxIT2mxZc8W0VX5TNxcezlK7j/ZgZoZvgBaU/jVNgemgAhbKdHe9A+DsHo
- gbc0WHJqN5Y6gjqjy0dutl3j7s8mZiSDDzssHNY0+8c7CXWKqxdN0C8vHzSj+xJHUzxVLTVSM
- p0rSnFOpb8sF62G8tbeCXzftpDta5AQIzlHGrrv17CAmqm2czUtEHDyJQKcgq5hpS9IoEO2t4
- lq3EK5Y7K9AoqlU0ebkP+yt9vmfH6pQX0N02Vz8An7rgOfZkFfOOfYTNkAPssrELhoCFCJ4xZ
- 7XYvWPI
+X-Provags-ID: V03:K1:ushl53TCTqv0qE8IBV6bsymxm3yFkQEPBHMFEJYo5+gnPAw8TX/
+ GqgYaaU1UMmZLw9dENhsHf+5NoCa5lAifnHIB4AU+hzBwxlHEZr/DH904T2mxJopb+kaGwt
+ JsTFBUWv9+UMZu3gsxvtJ311ZPfOidkOjhPxg4vYo/KksPD1iknHtRc8z9/TyfpFbX8vLTD
+ K3TTks+3SV9QbP6UsFn6A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ucY51sCiBa8=:1zZofIPKCdWmsm6HHlh65U
+ GC/f5JST5uFOObsG/DlPV5hsZ6NBR2uSPaBPPXOJIaqjqY4ZqDFakwensU7K+116yio33Z3As
+ 1q7Lm801Jhb/E6NlFxo+aptF5KHRKMS1qQT8I232pVvELwPiScSMoD9EVOf/ro/p5qknTrDBu
+ RRH3ETV2rlTqlX5/zENFX429/jh1k2nLb/hs7UIIBzy76oZpgz3b0Xvb/wKLw+KLqGKvIg+Wc
+ 5kucrBBNbRzpAkv0OgCXnDxX3dvAtrb6D2DrBUh9yRknFIoCyW5pLbpYWlCLyGUn52vhdf51L
+ FGxfMr6Y8qnO8lfn1hgk4r0mVVRLNXKYeStD7Kb/ly6+mLu5gG/w0JajAmQpg9+wSA+r239/M
+ 9EaC8fXvd6NrdmpnsHcLgODXwbc3jD7ZkcRiJfia+RImgs4qILccBBkqjZ30alkELn9LG5dUe
+ p/R45VNiIf4kaLgFvOp4XKCym0YyB/LIcdo8JUtMbB+32gCyQrVJb5yJqerLDcBOX8I9MwEVm
+ rNyf2AEtT30aHumBAqTuYxalZaP4j/ExsFlImWwOAsrpk6yitfC3MgaLRa6x1nCQ8Dd9OrjPf
+ 3RONFXkdsCTny5c6hTDQRKpulb7lYJ8zqZpYZ2jUiUufL+9L3+kFw5dqJnAcvOHDIPK1lhwT/
+ hsrAY7UIOTdcA116p2YCJb/38pzMwB7Uemgohuc6nVI5qwWNv+qtjaZhHOfdJtj822NNMM98i
+ kcemnXraAmAFlXAGLi2aleJTHJqw6EZ2AOAm19d+8/knOQE6TupB+BGzD5iB0xtCp7SMplOzk
+ tFG48hC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,225 +64,63 @@ On Sat, 28 Apr 2018, Stefan Beller wrote:
 
 > On Fri, Apr 27, 2018 at 3:31 PM, Johannes Schindelin
 > <johannes.schindelin@gmx.de> wrote:
-> > When an interactive rebase wants to recreate a root commit, it
-> > - first creates a new, empty root commit,
-> > - checks it out,
-> > - converts the next `pick` command so that it amends the empty root
-> >   commit
+> > In this developer's earlier attempt to accelerate interactive rebases by
+> > converting large parts from Unix shell script into portable, performant
+> > C, the --root handling was specifically excluded (to simplify the task a
+> > little bit; it still took over a year to get that reduced set of patches
+> > into Git proper).
 > >
-> > Introduce support in the sequencer to handle such an empty root commit,
-> > by looking for the file <GIT_DIR>/rebase-merge/squash-onto; if it exists
-> > and contains a commit name, the sequencer will compare the HEAD to said
-> > root commit, and if identical, a new root commit will be created.
+> > This patch ties up that loose end: now only --preserve-merges uses the
+> > slow Unix shell script implementation to perform the interactive rebase.
 > >
-> > While converting scripted code into proper, portable C, we also do away
-> > with the old "amend with an empty commit message, then cherry-pick
-> > without committing, then amend again" dance and replace it with code
-> > that uses the internal API properly to do exactly what we want: create a
-> > new root commit.
+> > As the rebase--helper reports progress to stderr (unlike the scripted
+> > interactive rebase, which reports it to stdout, of all places), we have
+> > to adjust a couple of tests that did not expect that for `git rebase -i
+> > --root`.
 > >
-> > To keep the implementation simple, we always spawn `git commit` to create
-> > new root commits.
+> > This patch fixes -- at long last! -- the really old bug reported in
+> > 6a6bc5bdc4d (add tests for rebasing root, 2013-06-06) that rebasing with
+> > --root *always* rewrote the root commit, even if there were no changes.
+> >
+> > The bug still persists in --preserve-merges mode, of course, but that
+> > mode will be deprecated as soon as the new --rebase-merges mode
+> > stabilizes, anyway.
 > >
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> >  sequencer.c | 104 ++++++++++++++++++++++++++++++++++++++++++++++++++--
-> >  sequencer.h |   4 ++
-> >  2 files changed, 105 insertions(+), 3 deletions(-)
+> >  git-rebase--interactive.sh        |  4 +++-
+> >  t/t3404-rebase-interactive.sh     | 19 +++++++++++++------
+> >  t/t3421-rebase-topology-linear.sh |  6 +++---
+> >  3 files changed, 19 insertions(+), 10 deletions(-)
 > >
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 90c8218aa9a..fc124596b53 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -125,6 +125,12 @@ static GIT_PATH_FUNC(rebase_path_rewritten_list, "rebase-merge/rewritten-list")
-> >  static GIT_PATH_FUNC(rebase_path_rewritten_pending,
-> >         "rebase-merge/rewritten-pending")
-> >
-> > +/*
-> > + * The path of the file containig the OID of the "squash onto" commit, i.e.
-> > + * the dummy commit used for `reset [new root]`.
-> > + */
-> > +static GIT_PATH_FUNC(rebase_path_squash_onto, "rebase-merge/squash-onto")
-> > +
-> >  /*
-> >   * The path of the file listing refs that need to be deleted after the rebase
-> >   * finishes. This is used by the `label` command to record the need for cleanup.
-> > @@ -470,7 +476,8 @@ static int fast_forward_to(const struct object_id *to, const struct object_id *f
-> >         transaction = ref_transaction_begin(&err);
-> >         if (!transaction ||
-> >             ref_transaction_update(transaction, "HEAD",
-> > -                                  to, unborn ? &null_oid : from,
-> > +                                  to, unborn && !is_rebase_i(opts) ?
-> > +                                  &null_oid : from,
-> >                                    0, sb.buf, &err) ||
-> >             ref_transaction_commit(transaction, &err)) {
-> >                 ref_transaction_free(transaction);
-> > @@ -692,6 +699,42 @@ static char *get_author(const char *message)
-> >         return NULL;
+> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> > index cbf44f86482..2f4941d0fc9 100644
+> > --- a/git-rebase--interactive.sh
+> > +++ b/git-rebase--interactive.sh
+> > @@ -894,6 +894,8 @@ init_revisions_and_shortrevisions () {
+> >         else
+> >                 revisions=$onto...$orig_head
+> >                 shortrevisions=$shorthead
+> > +               test -z "$squash_onto" ||
+> > +               echo "$squash_onto" >"$state_dir"/squash-onto
+> >         fi
 > >  }
 > >
-> > +static const char *read_author_ident(struct strbuf *buf)
-> 
-> This seems to be the counter part of write_author_script(*msg),
-> would it make sense to either rename this to read_author_script
-> or rename the counter part to write_author_ident ?
-
-It is not really *the* counterpart of write_author_script(). There are
-many conceivable counterparts, one of them already exists and is called
-read_env_script(). They serve different purposes, even if both read the
-author-script file, and they parse things in a fundamentally different
-way. I had already pointed out something along those lines in the review
-of the patch introducing the read_env_script() and Junio did not believe
-me. To make sure, it was my fault that I failed to make a compelling
-enough argument. I am glad that I now have proof that I was right: just
-because you read the same file, for a similar purpose, does not
-necessarily imply that you can share code for those purposes. All you can
-share is the name of the input file.
-
-Having said that, *this* time round, what we need to do is actually very
-similar to what builtin/am.c's read_author_script() does (even if we
-cannot use it as-is: it populates part of a `struct am_state`). I'll have
-to look into this more closely.
-
-> > +{
-> > +       char *p, *p2;
-> > +
-> > +       if (strbuf_read_file(buf, rebase_path_author_script(), 256) <= 0)
-> 
-> The 256 is a hint for read_file how to size the buffer initially.
-> If not given it defaults to 8k, which presumably is too much for
-> an author identity.
-
-That is a correct reading of the code's intent.
-
-> > +       for (p = buf->buf; *p; p++)
-> > +               if (skip_prefix(p, "'\\\\''", (const char **)&p2))
-> > +                       strbuf_splice(buf, p - buf->buf, p2 - p, "'", 1);
-> > +               else if (*p == '\'')
-> > +                       strbuf_splice(buf, p-- - buf->buf, 1, "", 0);
-> 
-> This part could be prefixed with
->     /* un-escape text: turn \\ into ' and remove single quotes. */
-
-If could be prefixed that way, but it would be incorrect. We never turn \\
-into '. What we do here (and I do not want to repeat in a comment what the
-code does): we dequote what we previously quoted using single quotes. So
-we use the fact that we know that the value is of the form 'abc', or if it
-contains single quotes: 'this has '\''single'\'' quotes'.
-
-> 
-> > +       if (skip_prefix(buf->buf, "GIT_AUTHOR_NAME=", (const char **)&p)) {
-> > +               strbuf_splice(buf, 0, p - buf->buf, "", 0);
-> > +               p = strchr(buf->buf, '\n');
-> > +               if (skip_prefix(p, "\nGIT_AUTHOR_EMAIL=", (const char **)&p2)) {
-> > +                       strbuf_splice(buf, p - buf->buf, p2 - p, " <", 2);
-> > +                       p = strchr(p, '\n');
-> > +                       if (skip_prefix(p, "\nGIT_AUTHOR_DATE=@",
-> > +                                       (const char **)&p2)) {
-> > +                               strbuf_splice(buf, p - buf->buf, p2 - p,
-> > +                                             "> ", 2);
-> > +                               p = strchr(p, '\n');
-> > +                               if (p) {
-> > +                                       strbuf_setlen(buf, p - buf->buf);
-> > +                                       return buf->buf;
-> 
-> So here we have read GIT_AUTHOR_NAME, _EMAIL
-> and _DATE in that order and converted it to its form
-> "name <email> date" in a single line.
-> 
-> It would be better to invert the conditions and keep
-> the indentation level lower by:
-> 
->     if (!skip_prefix(...))
->         goto warning_and_return;
->     strbuf_splice(...);
->     ...
-> 
-> I wondered if we want to factor out the conversion of
-> "author string in commit form" to "author information
-> in script form" into their own functions, and keep the reading
-> writing out of them. But then again we only need them in
-> these use cases for now, and such a refactoring can happen
-> later if needed.
-
-Right, but there *is* an opportunity now to share code with builtin/am.c.
-
-> > +       warning(_("could not parse '%s'"), rebase_path_author_script());
-> 
-> This function needs all three environment variables in its correct order,
-> which sounds a little brittle, but then again we do not expect manual
-> editing of that file, but expect it to be written by Git.
-
-It would not hurt to make it less brittle, I agree. Maybe I can do that
-easily. If not, in my opinion it is not a big deal to expect that order,
-for the reason you stated: we expect to have written the file ourselves.
-
-> > @@ -1369,6 +1448,12 @@ static int is_fixup(enum todo_command command)
-> >         return command == TODO_FIXUP || command == TODO_SQUASH;
-> >  }
+> > @@ -948,7 +950,7 @@ EOF
+> >         die "Could not skip unnecessary pick commands"
 > >
-> > +/* Does this command create a (non-merge) commit? */
-> > +static int is_pick_or_similar(enum todo_command command)
-> > +{
-> > +       return command <= TODO_SQUASH;
-> > +}
+> >         checkout_onto
+> > -       if test -z "$rebase_root" && test ! -d "$rewritten"
+> > +       if test ! -d "$rewritten"
 > 
-> This code looks scary.
-> Fortunately the enum todo_command hints that the order matters,
-> such that we're probably protected from wild reordering in the future,
-> however this implies that the section /* commands that handle commits */
-> comes first and that TODO_SQUASH is the last entry of that section.
-> So maybe we'd want to add a /* must be last in section */ to
-> TODO_squash and also document that the section must be first?
+> I have the impression this is the line that is really well
+> explained in the commit message ("migrate to rebase
+> helper even when there is $rebase_root set")
 > 
-> Do we have other code that needs a very specific ordering
-> with similar further assumptions (section being first/last, a
-> command being first/last in their section)?
+> The rest of the patch is covered as "a couple of places
+> where we adjust stdout to stderr"?
 
-The code already does things like that, by testing `command <
-TODO_COMMENT`.
+Correct.
 
-But I guess your concerns would go away if I made this a big honking
-switch() statement that lists *explicitly* what should be considered "pick
-or similar"?
-
-> I wondered what the _or_similar means and by looking up
-> that enum, I would think a name like
-> 
-> static int handles_single_commit(enum todo_command)
-> 
-> might be better?
-
-No, that would be incorrect. TODO_MERGE also *potentially* handles a
-single commit (and one or more labels).
-
-I really mean "is it a pick or similar", i.e. does it cherry-pick a
-single, non-merge commit, possibly doing funny stuff such as `reword` on
-top of it.
-
-> > @@ -1523,7 +1608,14 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
-> >                         return error(_("your index file is unmerged."));
-> >         } else {
-> >                 unborn = get_oid("HEAD", &head);
-> > -               if (unborn)
-> > +               /* Do we want to generate a root commit? */
-> > +               if (is_pick_or_similar(command) && opts->have_squash_onto &&
-> > +                   !oidcmp(&head, &opts->squash_onto)) {
-> > +                       if (is_fixup(command))
-> > +                               return error(_("cannot fixup root commit"));
-> 
-> I would expect you also cannot squash into root commit?
-
-In sequencer.c, `is_fixup()` really means "is it a fixup or a squash?". So
-yes, you are correct that we also cannot squash into a root commit.
-
-However, a squash is the same as a fixup with the only difference being
-that the squash lets you edit the final commit message (and does not
-comment out the squash commit's message, in contrast to fixup).
-
-Is it really worth adding an ugly line break in the middle of the error()
-statement just to say "cannot fixup/squash into root commit"? I'd rather
-not.
-
-Ciao,
+Thanks for reviewing!
 Dscho
