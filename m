@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6660B1F428
-	for <e@80x24.org>; Sun, 29 Apr 2018 20:21:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8AB791F428
+	for <e@80x24.org>; Sun, 29 Apr 2018 20:21:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754255AbeD2UV1 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Apr 2018 16:21:27 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:40338 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754228AbeD2UVX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Apr 2018 16:21:23 -0400
-Received: by mail-wm0-f67.google.com with SMTP id j5so11156372wme.5
-        for <git@vger.kernel.org>; Sun, 29 Apr 2018 13:21:22 -0700 (PDT)
+        id S1754270AbeD2UVb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Apr 2018 16:21:31 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:40340 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754247AbeD2UVY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Apr 2018 16:21:24 -0400
+Received: by mail-wm0-f66.google.com with SMTP id j5so11156430wme.5
+        for <git@vger.kernel.org>; Sun, 29 Apr 2018 13:21:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=RbubgDxowMvVzlswFmDIc4olz5Yt9NhgMKRvk0jSCto=;
-        b=jHAkp6CuKhn2TrZJwK0xkIT9xZxUIUgTSzpCIL+OtQMblvh6Ky+jDBb14ApyOa+c/c
-         YS/YyTWSw1iPcor92BbwVsDS1GYGlbyjiQZG/VDb6s7rOzu97xWeE0YvFdHvVYMB7+37
-         tDdS1osW8dDYwqpjruAmB99AHnSVWRQhXV1eSANpGYu6ZSxYlNh935t6gF6HStWJpGZ3
-         AZkH17uqCwLUyelzbQjxUBPSwwBGbyqKqlilVWF4UDLIpj2E+fhI70lJtlLh12yLGHYs
-         7mBbie2q9irti8XhUTHDqJdsIG+53k40aHcO9S3VwPKg0u5rNfWVneFjjWKysqETsW1x
-         VZGg==
+        bh=+bHIm7PB8JLGb/EqtwO9wpZZPWinU7EB4rbuVFFPBfQ=;
+        b=rnj4h7vX7dfNNjSQu263H0WeCsi0S5df1XLbqnojNIzTdox7hB/x8D9tZXNgxoWQb0
+         sA+N65unskyKyiIIjFNUm6q5hQojr7U5pMv1av6xsq/5dQt1M2WiO3grM39x2BF74XWk
+         klym88wIaCz/nN3heIDPhv5xQtvmI4DIAK4GNDHSa4a8HmXoqAScMkWYrrg8iK90DRcf
+         pwsruLfZvVsa8hwsuFUxS7qRvu0P2e5aufgku3IyYNHAft7kWO8t8shKkbm4JLyGihkC
+         NlJA4a0auBjhh4ivhNPVFrFEmvjaIQdxfDzjv/8qtc9wz36Yl10KJKLmkyso4Jxdq+C5
+         +9nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=RbubgDxowMvVzlswFmDIc4olz5Yt9NhgMKRvk0jSCto=;
-        b=rxoC0dYGyei0D3GDMo48O5Yt4xUq1EtEWkdNSSmHDOvusDkfXn23a7YAxKSlonNjXp
-         MhoN4+hMl/clpVtOSvFg26VBqVIyC4ZsA7N19wKMoPkTWC6JMTJsBxULxo7gEi3K0oFY
-         RrVvnWAjcHLmn4AO8cuJ0ZvaFesxsYqZoWNzUsx8AEV3vtWqY4taflOO/qyLsHCjg4dV
-         ud0QVJP1o0DZkXXinWYR532lM3mE3ifb2xRMGMrr11Avag3Dq+sXCgjbbx5GpI6v1u4a
-         kRjagBTMIdKK81VlTijFQDg6xWfMDinAmZcvZErOCNSl0mUfSaL9WWFkMHE4dvEJFJ9K
-         uLFg==
-X-Gm-Message-State: ALQs6tDUFDDPHUJlVEjxfu+16MjPgcNBHPFxAPfOVl1/vZUnIOyyDbKO
-        G7/zB2Ger1eKgUBIafIsRrOnsUrt
-X-Google-Smtp-Source: AB8JxZpfqlc6KDe3YqTWjtJrbbz84d2hI2g2HTUYTbsmp6aZ7koKlDp0JcP5/tQKtaoAHHG4gT2l5A==
-X-Received: by 10.28.172.194 with SMTP id v185mr5705798wme.67.1525033281594;
-        Sun, 29 Apr 2018 13:21:21 -0700 (PDT)
+        bh=+bHIm7PB8JLGb/EqtwO9wpZZPWinU7EB4rbuVFFPBfQ=;
+        b=lofnoHY1rYpmkenib29HJM+nij0rpscOYQIV2dC67V8yOPDbwyC9s5YW0zbdpR3ZgL
+         Ai9foyj3JvLjZ0UWNnMlxSyaHCqUfM1519mmFz6ZlE8XH0G6TizqFuWsnB/ia4IoLE+6
+         RdIc0r+ok3EtUnToWcdgUNm8Ig2emnzwSY66hJlE5m+QVBoCTHF9IoSVb9K4quLkvTx0
+         vHfbN+ulQ0DndlNnkBXs9HP7SYQMDtfuid9XnJ3eKDIlLpXBTVmEzzSWv1NyF6rLCw4r
+         ocnj9fSrv1WUmKyCcQCj3FAXXUMopQ/2VBm0s2L7wQHMTACWvFt4aAwNuoUBZl7btj/2
+         6IuQ==
+X-Gm-Message-State: ALQs6tCZYRjwruW4hrH7u/MT4GT805L4gsEMJDDTkw5Wz2p9OXH2LM9K
+        nPYF8V0Ku5F81XCw8DZ7Alb+ZqH5
+X-Google-Smtp-Source: AB8JxZp5X/Ao7fY083jipGQfwqNAlKprS5qECwajqSe5kmr71yZNCYYjg83ovHZ361aUiyCHodU0bw==
+X-Received: by 10.28.66.73 with SMTP id p70mr5939447wma.17.1525033283103;
+        Sun, 29 Apr 2018 13:21:23 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id y42-v6sm8134917wry.21.2018.04.29.13.21.20
+        by smtp.gmail.com with ESMTPSA id y42-v6sm8134917wry.21.2018.04.29.13.21.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 29 Apr 2018 13:21:20 -0700 (PDT)
+        Sun, 29 Apr 2018 13:21:22 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Wink Saville <wink@saville.com>,
         <u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/8] push tests: fix logic error in "push" test assertion
-Date:   Sun, 29 Apr 2018 20:20:54 +0000
-Message-Id: <20180429202100.32353-3-avarab@gmail.com>
+Subject: [PATCH 3/8] push tests: add more testing for forced tag pushing
+Date:   Sun, 29 Apr 2018 20:20:55 +0000
+Message-Id: <20180429202100.32353-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180429202100.32353-1-avarab@gmail.com>
 References: <20180429202100.32353-1-avarab@gmail.com>
@@ -77,37 +77,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a logic error that's been here since this test was added in
-dbfeddb12e ("push: require force for refs under refs/tags/",
-2012-11-29).
-
-The intent of this test is to force-create a new tag pointing to
-HEAD~, and then assert that pushing it doesn't work without --force.
-
-Instead, the code was not creating a new tag at all, and then failing
-to push the previous tag for the unrelated reason of providing a
-refspec that doesn't make any sense.
+Improve the tests added in dbfeddb12e ("push: require force for refs
+under refs/tags/", 2012-11-29) to assert that the same behavior
+applies various forms other refspecs, and that "+" in a refspec will
+override the "--no-force" option (but not the other way around).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5516-fetch-push.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t5516-fetch-push.sh | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 7b5a553398..15c8d5a734 100755
+index 15c8d5a734..c9a2011915 100755
 --- a/t/t5516-fetch-push.sh
 +++ b/t/t5516-fetch-push.sh
-@@ -979,8 +979,8 @@ test_expect_success 'push requires --force to update lightweight tag' '
- 		git tag -f Tag &&
- 		test_must_fail git push ../child2 Tag &&
+@@ -981,7 +981,17 @@ test_expect_success 'push requires --force to update lightweight tag' '
  		git push --force ../child2 Tag &&
--		git tag -f Tag &&
--		test_must_fail git push ../child2 Tag HEAD~ &&
+ 		git tag -f Tag HEAD~ &&
+ 		test_must_fail git push ../child2 Tag &&
+-		git push --force ../child2 Tag
++		git push --force ../child2 Tag &&
++		git tag -f Tag &&
++		test_must_fail git push ../child2 "refs/tags/*:refs/tags/*" &&
++		git push --force ../child2 "refs/tags/*:refs/tags/*" &&
 +		git tag -f Tag HEAD~ &&
-+		test_must_fail git push ../child2 Tag &&
- 		git push --force ../child2 Tag
++		git push ../child2 "+refs/tags/*:refs/tags/*" &&
++		git tag -f Tag &&
++		git push --no-force ../child2 "+refs/tags/*:refs/tags/*" &&
++		git tag -f Tag HEAD~ &&
++		test_must_fail git push ../child2 tag Tag &&
++		git push --force ../child2 tag Tag
  	)
  '
+ 
 -- 
 2.17.0.290.gded63e768a
 
