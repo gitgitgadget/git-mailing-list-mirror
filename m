@@ -7,25 +7,25 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D8011F428
-	for <e@80x24.org>; Sun, 29 Apr 2018 22:18:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4301A1F428
+	for <e@80x24.org>; Sun, 29 Apr 2018 22:18:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754438AbeD2WSJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Apr 2018 18:18:09 -0400
-Received: from mout.gmx.net ([212.227.17.21]:34103 "EHLO mout.gmx.net"
+        id S1754455AbeD2WSh (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Apr 2018 18:18:37 -0400
+Received: from mout.gmx.net ([212.227.17.21]:46299 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754410AbeD2WSH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Apr 2018 18:18:07 -0400
+        id S1754403AbeD2WSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Apr 2018 18:18:36 -0400
 Received: from localhost.localdomain ([37.201.195.116]) by mail.gmx.com
- (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MbrR4-1etaqE1KnW-00JG5u; Mon, 30 Apr 2018 00:18:02 +0200
+ (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0MhQju-1ez79Z1hJK-00MfYg; Mon, 30 Apr 2018 00:18:31 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 2/6] t1406: prepare for the refs code to fail with BUG()
-Date:   Mon, 30 Apr 2018 00:17:58 +0200
-Message-Id: <9bbfd73a8e03a888a5e9e8800d853ece518a8bf5.1525040253.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 3/6] refs/*: report bugs using the BUG() macro
+Date:   Mon, 30 Apr 2018 00:18:02 +0200
+Message-Id: <b44ce003ae6d6bb8c7bb343168e48af7fbac867f.1525040253.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.36.gdf4ca5fb72a
 In-Reply-To: <cover.1525040253.git.johannes.schindelin@gmx.de>
 References: <cover.1525040253.git.johannes.schindelin@gmx.de>
@@ -33,89 +33,253 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:5uxBFFsyWncvPhX1NUnUwJoK2VcNCgBg+Cgp0vRcHMEkTkvQxQ+
- PorGZXmEv3L1WBERHbnrt0V3rtYYYH5flTqb21+Jw5tzyldKIklXi7KLF6sBUtWAHn4hKFA
- Yio4MJ7dwO9N7n/zClTxBUT72Lbi0f183lRUafwmidgIWy45XdTfxLqQzX1WTG6S8p1gU5J
- KHLmrGDUTJNZikOM+BmVQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:psB48F6gUEA=:/i6lzyp0brAbTgEccuLRhJ
- hVF3rJG44u/l3AsTZQCYsGs7832607OYEQR5SWFB9uS2mKVTGeXTXiNx3TePnQu5bopKqqk+a
- XzoNBrfPBvg0ewSt6GyJT9W8Ujkm4PZta+Hu8nlEGx3LQFkwNIPt/Dct4giRAsuMVqCvtIrkF
- sLQuWZu5CE7yDTPPhj5ojcbtl3JHvXIPgSY8MMjKJWhVQljOa0ip8tNstCFw7Pp3sTivLCrb3
- DBWSVxQTQHu5Cvg3xv2OMaWXAYdVjXHO2HqRgiuUt8EB+DBknxoy4bQvWnr/mZBtEJyuXhSZf
- bNuhuZXH2E9rQBACBFyyydGkE8TK/ZRArD8N/9tJvW9AA3QedXXzV322ppluxPd/NbUspRXB/
- zk5EkjQKLMvHd7LFWB6Texst9QilseX3DbPwiFWutKX7cAaHXTBZhARMBMOgTfGWzJgnqgCx6
- BC4eG52nOxBHfGga76/UQqm6wJN13UI1lbrYAIK4gbCWUQD5dBhOvry+WDSlnRc9pzB9IrPOb
- hUejMvqGj8aGtfOiFkbKBphJnOv0l/hskiYkiAJNq7CfHnQiwUKzAx32CU2gRDkhxchQN0P+0
- XpLtl12uvw3vS+AI3JbUZHJ/PhiS1p68ZYQkWWxJo+DuB8w5jubr9f0yFzTjAUxhPoV35il86
- H6IaNhUuvSgWdvArRmeydCk4ahjuiEPLOfhr9ftfFn84gZvggTd8BivV3y1OWivCnt6K9BS+K
- LK6c7ICWgaf3n2TM1S5RwCVkikXIUfWz8zNkn3zDsh/AKSLzVjiSdYV/fB5aK7ih+lmGvKPSr
- uzpaZwq
+X-Provags-ID: V03:K1:CQuBLfLECGbv7ccfnPH4rJzGb6rtDWWhIM/EPvfpXRDgAdpXGLb
+ 6jdGZZLq+9Wum04+73VLRoH+8Np0HhZ/88AMxdSwxuAQPPr+FlgdosN66Pmv/EuO87cCGn9
+ Q6gT+1rib71As2HfppqLU9tWfD7oXs6voa6zzX89cTjMbGPHg04IiP1lne7ddo8XJG4BR6p
+ EwwQyfonudbCIkeBEvJvw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:13ykQDgoO3U=:ORiqPxDUIKPBhRWM7rLOiv
+ qTfWh/gTTLdChxzdbT0ODg35ZmpT6HXQYX2JmOQlNGuKD0K0KOTgi4C6dWSBzo1/W2qNn4tiE
+ kfnPnTmUME7nuSp4Dvc7+01wc0wS5RvCJJfBo2ztm0G8UGAyuG6WcCn/RMNDVl+EiSvPCqeQY
+ UjAVP1aFiEiiZ3w8Ogd2Uus4AR9xSyEm4i43e3XVuj700SqAh5XuwvOfZb0QD3tcUh2CWLPJ/
+ YhbLeP9rAxtWKtD80rzkh+gC9V9m37ag+Z2wqNeCAxuxYyaXbZL+rtQgh6jbhC6uiAo8/jQHj
+ cQlMr0t4Pch/SlwwQRG3j2hFDxN/XTsr8y+VIlf9LwAG/aAlLg97KjKpdI1MrL/Wqk4kTJG7E
+ zA1Q5bTJD0MD+pJdOQTBXTVz166fpdFI1VVCNEXHbbtzUQx1XrEfEqDoUrh/nvxjD2/bIm24A
+ mXlRj0dExPxOgIwxqQnPM9CuPwyRXTn7XvlpxrjfaAuylV8eLXEpQQcTHOezP+vhgAHIVjxOI
+ A99BlqgePCxZbbedeA3ofk497qAU51iNtUtrTlct/u4QSIJpTqrOmI4IwiQ6APsjQyKkkn2w3
+ YnQLfM3wf4eoif58VHhrG37FjbuGQliz2QMFqYFexideK5JGRtvg9EiIUb5Eod1FDF37HD079
+ btDJjGoAawb2HNXn+4dhxJQkafxpvmD5lJkAig4lIAWgqH8+5gXUcx9xAsKgkOTWpqvncCzeG
+ lddfCZEnDOq7yAFqiAq+C4z/1eq/S6ej+rKlQ9B6LtLIQpRSl3GsXulR8WALZrFdV4fdRPI4x
+ TeLAWBd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-t1406 specifically verifies that certain code paths fail with a BUG: ...
-message.
+We just prepared t1406 to be okay with BUG reports resulting in SIGABRT
+instead of a regular exit code indicating failure. This commit now makes
+it so: by calling BUG() (which eventually calls `abort()`), we no longer
+exit with code 128 but instead throw that signal.
 
-In the upcoming commit, we will convert that message to be generated via
-BUG() instead of die("BUG: ..."), which implies SIGABRT instead of a
-regular exit code.
+This trick was performed by this invocation:
+
+	sed -i 's/die("BUG: /BUG("/' $(git grep -l 'die("BUG' refs/\*.c)
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t1406-submodule-ref-store.sh | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ refs/files-backend.c  | 20 ++++++++++----------
+ refs/iterator.c       |  6 +++---
+ refs/packed-backend.c | 16 ++++++++--------
+ refs/ref-cache.c      |  2 +-
+ 4 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
-index e093782cc37..0ea3457cae3 100755
---- a/t/t1406-submodule-ref-store.sh
-+++ b/t/t1406-submodule-ref-store.sh
-@@ -16,7 +16,7 @@ test_expect_success 'setup' '
- '
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index a92a2aa8213..332da47edd9 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -125,7 +125,7 @@ static void files_assert_main_repository(struct files_ref_store *refs,
+ 	if (refs->store_flags & REF_STORE_MAIN)
+ 		return;
  
- test_expect_success 'pack_refs() not allowed' '
--	test_must_fail $RUN pack-refs 3
-+	test_must_fail ok=sigabrt $RUN pack-refs 3
- '
+-	die("BUG: operation %s only allowed for main ref store", caller);
++	BUG("operation %s only allowed for main ref store", caller);
+ }
  
- test_expect_success 'peel_ref(new-tag)' '
-@@ -27,15 +27,18 @@ test_expect_success 'peel_ref(new-tag)' '
- '
+ /*
+@@ -141,13 +141,13 @@ static struct files_ref_store *files_downcast(struct ref_store *ref_store,
+ 	struct files_ref_store *refs;
  
- test_expect_success 'create_symref() not allowed' '
--	test_must_fail $RUN create-symref FOO refs/heads/master nothing
-+	test_must_fail ok=sigabrt \
-+		$RUN create-symref FOO refs/heads/master nothing
- '
+ 	if (ref_store->be != &refs_be_files)
+-		die("BUG: ref_store is type \"%s\" not \"files\" in %s",
++		BUG("ref_store is type \"%s\" not \"files\" in %s",
+ 		    ref_store->be->name, caller);
  
- test_expect_success 'delete_refs() not allowed' '
--	test_must_fail $RUN delete-refs 0 nothing FOO refs/tags/new-tag
-+	test_must_fail ok=sigabrt \
-+		$RUN delete-refs 0 nothing FOO refs/tags/new-tag
- '
+ 	refs = (struct files_ref_store *)ref_store;
  
- test_expect_success 'rename_refs() not allowed' '
--	test_must_fail $RUN rename-ref refs/heads/master refs/heads/new-master
-+	test_must_fail ok=sigabrt \
-+		$RUN rename-ref refs/heads/master refs/heads/new-master
- '
+ 	if ((refs->store_flags & required_flags) != required_flags)
+-		die("BUG: operation %s requires abilities 0x%x, but only have 0x%x",
++		BUG("operation %s requires abilities 0x%x, but only have 0x%x",
+ 		    caller, required_flags, refs->store_flags);
  
- test_expect_success 'for_each_ref(refs/heads/)' '
-@@ -91,11 +94,11 @@ test_expect_success 'reflog_exists(HEAD)' '
- '
+ 	return refs;
+@@ -166,7 +166,7 @@ static void files_reflog_path(struct files_ref_store *refs,
+ 		strbuf_addf(sb, "%s/logs/%s", refs->gitcommondir, refname);
+ 		break;
+ 	default:
+-		die("BUG: unknown ref type %d of ref %s",
++		BUG("unknown ref type %d of ref %s",
+ 		    ref_type(refname), refname);
+ 	}
+ }
+@@ -184,7 +184,7 @@ static void files_ref_path(struct files_ref_store *refs,
+ 		strbuf_addf(sb, "%s/%s", refs->gitcommondir, refname);
+ 		break;
+ 	default:
+-		die("BUG: unknown ref type %d of ref %s",
++		BUG("unknown ref type %d of ref %s",
+ 		    ref_type(refname), refname);
+ 	}
+ }
+@@ -2010,7 +2010,7 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
  
- test_expect_success 'delete_reflog() not allowed' '
--	test_must_fail $RUN delete-reflog HEAD
-+	test_must_fail ok=sigabrt $RUN delete-reflog HEAD
- '
+ 	}
+ 	if (!ret && sb.len)
+-		die("BUG: reverse reflog parser had leftover data");
++		BUG("reverse reflog parser had leftover data");
  
- test_expect_success 'create-reflog() not allowed' '
--	test_must_fail $RUN create-reflog HEAD 1
-+	test_must_fail ok=sigabrt $RUN create-reflog HEAD 1
- '
+ 	fclose(logfp);
+ 	strbuf_release(&sb);
+@@ -2088,7 +2088,7 @@ static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
+ static int files_reflog_iterator_peel(struct ref_iterator *ref_iterator,
+ 				   struct object_id *peeled)
+ {
+-	die("BUG: ref_iterator_peel() called for reflog_iterator");
++	BUG("ref_iterator_peel() called for reflog_iterator");
+ }
  
- test_done
+ static int files_reflog_iterator_abort(struct ref_iterator *ref_iterator)
+@@ -2873,7 +2873,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
+ 	assert(err);
+ 
+ 	if (transaction->state != REF_TRANSACTION_OPEN)
+-		die("BUG: commit called for transaction that is not open");
++		BUG("commit called for transaction that is not open");
+ 
+ 	/* Fail if a refname appears more than once in the transaction: */
+ 	for (i = 0; i < transaction->nr; i++)
+@@ -2899,7 +2899,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
+ 	 */
+ 	if (refs_for_each_rawref(&refs->base, ref_present,
+ 				 &affected_refnames))
+-		die("BUG: initial ref transaction called with existing refs");
++		BUG("initial ref transaction called with existing refs");
+ 
+ 	packed_transaction = ref_store_transaction_begin(refs->packed_ref_store, err);
+ 	if (!packed_transaction) {
+@@ -2912,7 +2912,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
+ 
+ 		if ((update->flags & REF_HAVE_OLD) &&
+ 		    !is_null_oid(&update->old_oid))
+-			die("BUG: initial ref transaction with old_sha1 set");
++			BUG("initial ref transaction with old_sha1 set");
+ 		if (refs_verify_refname_available(&refs->base, update->refname,
+ 						  &affected_refnames, NULL,
+ 						  err)) {
+diff --git a/refs/iterator.c b/refs/iterator.c
+index bd35da4e622..2ac91ac3401 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -54,7 +54,7 @@ static int empty_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ static int empty_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 				   struct object_id *peeled)
+ {
+-	die("BUG: peel called for empty iterator");
++	BUG("peel called for empty iterator");
+ }
+ 
+ static int empty_ref_iterator_abort(struct ref_iterator *ref_iterator)
+@@ -177,7 +177,7 @@ static int merge_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 		(struct merge_ref_iterator *)ref_iterator;
+ 
+ 	if (!iter->current) {
+-		die("BUG: peel called before advance for merge iterator");
++		BUG("peel called before advance for merge iterator");
+ 	}
+ 	return ref_iterator_peel(*iter->current, peeled);
+ }
+@@ -338,7 +338,7 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 			 * trimming, report it as a bug:
+ 			 */
+ 			if (strlen(iter->iter0->refname) <= iter->trim)
+-				die("BUG: attempt to trim too many characters");
++				BUG("attempt to trim too many characters");
+ 			iter->base.refname = iter->iter0->refname + iter->trim;
+ 		} else {
+ 			iter->base.refname = iter->iter0->refname;
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 369c34f886f..cec3fb9e00f 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -221,13 +221,13 @@ static struct packed_ref_store *packed_downcast(struct ref_store *ref_store,
+ 	struct packed_ref_store *refs;
+ 
+ 	if (ref_store->be != &refs_be_packed)
+-		die("BUG: ref_store is type \"%s\" not \"packed\" in %s",
++		BUG("ref_store is type \"%s\" not \"packed\" in %s",
+ 		    ref_store->be->name, caller);
+ 
+ 	refs = (struct packed_ref_store *)ref_store;
+ 
+ 	if ((refs->store_flags & required_flags) != required_flags)
+-		die("BUG: unallowed operation (%s), requires %x, has %x\n",
++		BUG("unallowed operation (%s), requires %x, has %x\n",
+ 		    caller, required_flags, refs->store_flags);
+ 
+ 	return refs;
+@@ -1036,7 +1036,7 @@ void packed_refs_unlock(struct ref_store *ref_store)
+ 			"packed_refs_unlock");
+ 
+ 	if (!is_lock_file_locked(&refs->lock))
+-		die("BUG: packed_refs_unlock() called when not locked");
++		BUG("packed_refs_unlock() called when not locked");
+ 	rollback_lock_file(&refs->lock);
+ }
+ 
+@@ -1089,7 +1089,7 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 	char *packed_refs_path;
+ 
+ 	if (!is_lock_file_locked(&refs->lock))
+-		die("BUG: write_with_updates() called while unlocked");
++		BUG("write_with_updates() called while unlocked");
+ 
+ 	/*
+ 	 * If packed-refs is a symlink, we want to overwrite the
+@@ -1563,21 +1563,21 @@ static int packed_create_symref(struct ref_store *ref_store,
+ 			       const char *refname, const char *target,
+ 			       const char *logmsg)
+ {
+-	die("BUG: packed reference store does not support symrefs");
++	BUG("packed reference store does not support symrefs");
+ }
+ 
+ static int packed_rename_ref(struct ref_store *ref_store,
+ 			    const char *oldrefname, const char *newrefname,
+ 			    const char *logmsg)
+ {
+-	die("BUG: packed reference store does not support renaming references");
++	BUG("packed reference store does not support renaming references");
+ }
+ 
+ static int packed_copy_ref(struct ref_store *ref_store,
+ 			   const char *oldrefname, const char *newrefname,
+ 			   const char *logmsg)
+ {
+-	die("BUG: packed reference store does not support copying references");
++	BUG("packed reference store does not support copying references");
+ }
+ 
+ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_store)
+@@ -1610,7 +1610,7 @@ static int packed_create_reflog(struct ref_store *ref_store,
+ 			       const char *refname, int force_create,
+ 			       struct strbuf *err)
+ {
+-	die("BUG: packed reference store does not support reflogs");
++	BUG("packed reference store does not support reflogs");
+ }
+ 
+ static int packed_delete_reflog(struct ref_store *ref_store,
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index e90bd3e727f..9b110c8494f 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -23,7 +23,7 @@ struct ref_dir *get_ref_dir(struct ref_entry *entry)
+ 	dir = &entry->u.subdir;
+ 	if (entry->flag & REF_INCOMPLETE) {
+ 		if (!dir->cache->fill_ref_dir)
+-			die("BUG: incomplete ref_store without fill_ref_dir function");
++			BUG("incomplete ref_store without fill_ref_dir function");
+ 
+ 		dir->cache->fill_ref_dir(dir->cache->ref_store, dir, entry->name);
+ 		entry->flag &= ~REF_INCOMPLETE;
 -- 
 2.17.0.windows.1.36.gdf4ca5fb72a
 
