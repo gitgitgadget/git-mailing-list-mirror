@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA6CD1F428
-	for <e@80x24.org>; Sun, 29 Apr 2018 18:19:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DB871F428
+	for <e@80x24.org>; Sun, 29 Apr 2018 18:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754034AbeD2STE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Apr 2018 14:19:04 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:45687 "EHLO
+        id S1754053AbeD2STG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Apr 2018 14:19:06 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:44019 "EHLO
         mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753989AbeD2STD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Apr 2018 14:19:03 -0400
-Received: by mail-lf0-f68.google.com with SMTP id y14-v6so9005903lfy.12
-        for <git@vger.kernel.org>; Sun, 29 Apr 2018 11:19:02 -0700 (PDT)
+        with ESMTP id S1754017AbeD2STE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Apr 2018 14:19:04 -0400
+Received: by mail-lf0-f68.google.com with SMTP id g12-v6so9357446lfb.10
+        for <git@vger.kernel.org>; Sun, 29 Apr 2018 11:19:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YotU4l5Y39uLh8N6I5jpQEetsBCmOwdzagA4AUsBBn4=;
-        b=ZVjDyyrr6CP9IW6y1Teb3EspWpo2lorQV5yGQFNjxsxjhqzjDTz3fQr8JPzFZ1/u6W
-         WYnW12voDTm5jKprecAka7/ONMjdQtmpUqg+VJlHGwkxtJwq2oiPfi3t1rDPXkgeVECa
-         XBg+7DmVcwdOMeLil+apKuNYSOoPlFEH8ymeSpQkJSawRE1A8HRtTtbPJvKViB4evRkF
-         SY4Naez80htGMnkJBa32zWCDXlWQqR6ZLjH3fVazYCnPdYYO2sumJIQK8Iy5eqBXQMlj
-         oTAQ7V8SseXyoFyFSUG0agx8IKBkZ4lsDGLEJOKwceuiIkcvYWCHwT6K3jZro0XjXPRj
-         9EVA==
+        bh=DmqF3DAtD1xYKD/ek8sNsi6L336nxfIAsMd8YsyHKFM=;
+        b=kwYCTAQyu1DyQFNXBW2qS/6mI+LZL+sWr79Yb5EgrCLhsx624ezDnPYpfoIUkJRaNs
+         qGmTcNcBudi3GEIyrxrmey9Aqg1mSspfiuIukMdCr/dY+q0oiLnY6ZVT+c4BmTNMjKzD
+         pjvZDFRukK9cUaEu5hSQpu+7qNhPQhG5nCgTPPuVNQcDoDurbczK9LAM4sECmC9/2KIq
+         9b8OxHVo4lNj5PnvoXWFmku2SlFXq/1M1l5Jim8HmJbhKR/VfhwEHWWxP/OdDku5tkiO
+         ajAMG6y9UWT50cBbI1Rs9UCgVfKKocHB5oLHCTLUATSxfwdvsunjdgjKJPhclouBR+Zb
+         C2rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YotU4l5Y39uLh8N6I5jpQEetsBCmOwdzagA4AUsBBn4=;
-        b=nUF471egvzz7RVfg+G5h5ROvmqf3a55iCWlvQJOWTyvi74sjY4EaAnVlTiEkrZFWyI
-         gPj7GizeQtFfNnOAGMbxlUcAZLsz3VqlVMTag9DPJRgClLPKOeMPFWy15wHQN3zxeDw6
-         d1rnNKjs1yIdu+4q+vfGEn2puks9lCmfc04livznxVhlGAkRq/ob/3PGCMSc/RETnJjN
-         eDtdlohKceykmMiNputGmLhSrrpgNrz6q+lP/y/hwu4rhNQQeoxsemPp8aUzZZvGMOB4
-         s9iRbq/Af8SI9VUXMJgYfvTw7IAPoBT+qLkbp4lbtMaOI2lSvF567QC7eufI45zR0BhR
-         c2zg==
-X-Gm-Message-State: ALQs6tBZYyPHYqlVszH+fwyORrt8V1PNeUfPawRm7HoBMOhwV8Gu1VJ7
-        VjRd4Ubyah9o/id7c07s/ow=
-X-Google-Smtp-Source: AB8JxZqT4Dc4utXsuu7Z7nFHTSCC8x3+WFwxUAH5xUldqj3xyQO5RiQf2BeCJ8V1tfANqyO80YGGfg==
-X-Received: by 2002:a2e:330c:: with SMTP id d12-v6mr6668240ljc.8.1525025941683;
-        Sun, 29 Apr 2018 11:19:01 -0700 (PDT)
+        bh=DmqF3DAtD1xYKD/ek8sNsi6L336nxfIAsMd8YsyHKFM=;
+        b=P7kNRHPOFF/2bS++IYdX1XHv4he/o+fz3S1pMnmrVMD9oNp8Z6XflYT0YtbJsgdxdp
+         QrG/RVoDryILjY+ZVVb/6IEJIx5gjVvnjTBH8WC2lQAzUmgKYxCWhh/HeC5uV3WS+nEz
+         Ltu9Oka/1TIgoSgy795gY/O5qd+mz7uV7Z0rs2P0sIKwkYpWqy3nffBOzLNt6L8cdOdM
+         w2BgMzqvdHAD2nQrB06WcaQnKhYXHpJnztIuEMzg6n+2bVzBoldeWpMOgcxCUfZJWgZQ
+         SElerMjOFmJDLAdmD7KNeCtzevWm/+mk5ZigyKqvxrILh26JMWR0pNtCce+1uoQyaQid
+         phmA==
+X-Gm-Message-State: ALQs6tDddG52UyeEkUNWgkVNGjV/cN53/meNhlfNE85LRVqxacZ54Nqd
+        SkOHHfQ/zkgdxHVpf7X8E8U=
+X-Google-Smtp-Source: AB8JxZr9yu203+4QmNmN0JbxL0F+5gnH9C2LD0dFj+ArHcXjiNHIz8GqE108JcZuc2M0Dp8E0L+BrA==
+X-Received: by 2002:a2e:8616:: with SMTP id a22-v6mr6029420lji.43.1525025942722;
+        Sun, 29 Apr 2018 11:19:02 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id r78-v6sm975376ljb.20.2018.04.29.11.19.00
+        by smtp.gmail.com with ESMTPSA id r78-v6sm975376ljb.20.2018.04.29.11.19.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 29 Apr 2018 11:19:00 -0700 (PDT)
+        Sun, 29 Apr 2018 11:19:02 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         szeder.dev@gmail.com
-Subject: [PATCH v5 00/10] Keep all info in command-list.txt in git binary
-Date:   Sun, 29 Apr 2018 20:18:34 +0200
-Message-Id: <20180429181844.21325-1-pclouds@gmail.com>
+Subject: [PATCH v5 01/10] generate-cmds.sh: factor out synopsis extract code
+Date:   Sun, 29 Apr 2018 20:18:35 +0200
+Message-Id: <20180429181844.21325-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.664.g8924eee37a
-In-Reply-To: <20180421165414.30051-1-pclouds@gmail.com>
+In-Reply-To: <20180429181844.21325-1-pclouds@gmail.com>
 References: <20180421165414.30051-1-pclouds@gmail.com>
+ <20180429181844.21325-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,59 +69,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I think v5 is getting close to what I wanted to achieve from the RFC
-version (I skip v4 since I sent out v4/wip and another v4 may confuse
-people).
+This makes it easier to reuse the same code in another place (very
+soon).
 
-Interdiff is too large to be helpful, but the summary of changes
-compared to v3 is:
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ generate-cmdlist.sh | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-- common-cmds.h is renamed to command-list.h
-- the common group description is moved from command-list.txt to
-  help.c to simplify command-list.txt format
-- generate-cmds.sh supports multiple categories per command, a new one
-  "complete" is added to aid git-completion.bash
-- multiple --list-cmds options is replaced with
-  --list-cmds=<type>[,<type>...]. This allows easier group
-  customization in git-completion.bash (not happens yet)
-- __git_list_all_commands() and __git_list_porcelain_commands() for
-  backward compatibility
-- "git help <tab>" completion also makes use of guide list in
-  command-list.txt
-- better tests from Ramsay
-
-There is one sticky point yet about the guides. I'll pull Phillip in
-and explain more in the relevant patch.
-
-Nguyễn Thái Ngọc Duy (10):
-  generate-cmds.sh: factor out synopsis extract code
-  generate-cmds.sh: export all commands to command-list.h
-  help: use command-list.h for common command list
-  Remove common-cmds.h
-  git.c: convert --list-*builtins to --list-cmds=*
-  completion: implement and use --list-cmds=main,others
-  git: support --list-cmds=list-<category>
-  help: add "-a --verbose" to list all commands with synopsis
-  help: use command-list.txt for the source of guides
-  completion: let git provide the completable command list
-
- .gitignore                             |   2 +-
- Documentation/git-help.txt             |   4 +-
- Documentation/gitattributes.txt        |   2 +-
- Documentation/gitmodules.txt           |   2 +-
- Documentation/gitrevisions.txt         |   2 +-
- Makefile                               |  16 +-
- builtin/help.c                         |  39 +----
- command-list.txt                       |  67 ++++----
- contrib/completion/git-completion.bash | 134 +++++-----------
- generate-cmdlist.sh                    | 126 ++++++++++-----
- git.c                                  |  38 ++++-
- help.c                                 | 209 +++++++++++++++++++++----
- help.h                                 |   5 +
- t/t0012-help.sh                        |  26 ++-
- t/t9902-completion.sh                  |   5 +-
- 15 files changed, 426 insertions(+), 251 deletions(-)
-
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index eeea4b67ea..31b6d886cb 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -1,5 +1,15 @@
+ #!/bin/sh
+ 
++get_synopsis () {
++	sed -n '
++		/^NAME/,/'"$1"'/H
++		${
++			x
++			s/.*'"$1"' - \(.*\)/N_("\1")/
++			p
++		}' "Documentation/$1.txt"
++}
++
+ echo "/* Automatically generated by generate-cmdlist.sh */
+ struct cmdname_help {
+ 	char name[16];
+@@ -39,12 +49,6 @@ sort |
+ while read cmd tags
+ do
+ 	tag=$(echo "$tags" | sed "$substnum; s/[^0-9]//g")
+-	sed -n '
+-		/^NAME/,/git-'"$cmd"'/H
+-		${
+-			x
+-			s/.*git-'"$cmd"' - \(.*\)/	{"'"$cmd"'", N_("\1"), '$tag'},/
+-			p
+-		}' "Documentation/git-$cmd.txt"
++	echo "	{\"$cmd\", $(get_synopsis git-$cmd), $tag},"
+ done
+ echo "};"
 -- 
 2.17.0.664.g8924eee37a
 
