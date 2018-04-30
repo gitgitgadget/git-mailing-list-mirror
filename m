@@ -2,161 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 113F221841
-	for <e@80x24.org>; Mon, 30 Apr 2018 11:38:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BB7121841
+	for <e@80x24.org>; Mon, 30 Apr 2018 11:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752080AbeD3Lii (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 07:38:38 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:37855 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751516AbeD3Lih (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 07:38:37 -0400
-Received: by mail-qt0-f196.google.com with SMTP id q13-v6so9655401qtp.4
-        for <git@vger.kernel.org>; Mon, 30 Apr 2018 04:38:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=dZF7KELy6h7ylM4nZ2fMP+oO0Ococy1BO8bnse4fGuc=;
-        b=Fysqm3doGxReyKJWfxxW7AwcJiHYzazIzxdafekVunPpxiB6NAEgZJlSbvbEEgVuvS
-         OrbMymOm8o3wHDxgG5VGWZvA1YJ0mpgZ+IweWaaXhzvSuR3flCFwNlv4VQp9YKKQXdgL
-         YSlBS3WeVZplg72SKpVzGCMAtyFX/gFSQuqy0aOFdmFk6CArQnbTvFwkFn0QNfIGv53C
-         DUW0EeoE1QK3XMB+XQ5JcNq8sXjWVI4mWFHEEMECR7W1IiiWgXOeyxsn0vJ0SeaCXBkt
-         GZ3AGFDZVjjFPm/IAKFR4YYTvZtU0XmA2N4FudF542oluLgkY9HqrochlO18aj5/+w2K
-         +8zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=dZF7KELy6h7ylM4nZ2fMP+oO0Ococy1BO8bnse4fGuc=;
-        b=Hb46rD0NHrjEhdteG4FzYbj49YI1wV5kbHnueWehVahSK7XqqJyNx+h56EVSkkbD/f
-         bm5IV5T8lqm+vphlizt5cBXqrhlKtRnIbZBnGW24xpEHsy7MOvLK3xWGovl4IreoZrKx
-         jj6lyBwhv7PSuxWGltFCmyh+xBwM0TD0cFo8L8YX8k6cOStGnyZZ3mixPQSqHB/Vn1jM
-         61O+Bck9C3bn3l9pbY+a/2vjT56d0hz3CC630iLewn3EXziI/i5PQZxEtL/YMi787vp1
-         zBuT0sHIoqOeKnIeN1Lz/KzduSGDlctq8jtiZl4BU563sBaO7oJuhlEYYPk+98V/Azmc
-         AukQ==
-X-Gm-Message-State: ALQs6tAfUTfURpNNW3e7Bc44ZvEseVp4KmbF10zlPA2tToADn4fAzBJG
-        xJcXJDydbQKBZOI0jQXxvIzZDyvz
-X-Google-Smtp-Source: AB8JxZqvauDyRSfKC8i6f9GBxVMdCVJVsDix5CskoPnBrHM2h7mVxQ7Y954Vu1AEEMDX5CS3ZN5SzA==
-X-Received: by 2002:a0c:ab45:: with SMTP id i5-v6mr10922423qvb.188.1525088316052;
-        Mon, 30 Apr 2018 04:38:36 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id x127sm5233268qke.87.2018.04.30.04.38.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Apr 2018 04:38:35 -0700 (PDT)
-Subject: Re: [PATCH] coccinelle: avoid wrong transformation suggestions from
- commit.cocci
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-References: <20180430093153.13040-1-szeder.dev@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <82a385c3-62fe-e471-73ae-0c0448640f3b@gmail.com>
-Date:   Mon, 30 Apr 2018 07:38:34 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1752151AbeD3L7R (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 07:59:17 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36598 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751938AbeD3L7Q (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 30 Apr 2018 07:59:16 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 44F8F60400;
+        Mon, 30 Apr 2018 11:59:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1525089555;
+        bh=CRe1kWj1rhwD5eNNeiJweVT+c/+wxvGeqtpQprTl7X4=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=yqVSU6gYP92soEHfLfR3cIAFOGIrlMnTwH3xbDZTEK/+3GReXfbYCmHemDG4JXeIR
+         2rW/jbYQm3+1mdnm7rriqXjgrYCK2wxyv+NDpDodpiyjV6ncASqPxu0C0TftL+rvgn
+         O7HH1c7A8bqYWyjoz7iA2yUpkzQj2wUzw1nee3xi28wjGERcFIu+sbdKdEg3CzDZ/A
+         0+nD03DuIRRRWtjdVTebcURyblQVVKkhJSvIia7vRMjlrScsU5gwIsSni+Yc0QnYtY
+         4qyUjARDTJcEOsBXhnxpLMlyLc62APOkOCYEKw67V3w11Ol4Q+SIS2mtIYwm+JxNdQ
+         8rsvrJXFpTGannOB7Zag3mtj+Z2tuIG0hGGnhiTaEOb5sU+Y02iphseqxUfMOv+M10
+         bEpVfI4dEpiHJFi7meGxDhK9CXP6511nRh+g4rjtA7XiMGL85YMqermXRoUrUJ9Jd9
+         IJjWYLqju0d5R/2yHiimlw666UKHi3iCZV0CIt03Zn76Oj/7GmU
+Date:   Mon, 30 Apr 2018 11:59:09 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Patrick Hemmer <git@stormcloud9.net>, git@vger.kernel.org
+Subject: Re: Bug: format-patch MIME boundary not added to cover letter when
+ attach enabled
+Message-ID: <20180430115909.GB13217@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Patrick Hemmer <git@stormcloud9.net>, git@vger.kernel.org
+References: <5e409069-835f-3c85-f55e-c27f534dc9e2@stormcloud9.net>
+ <20180430020930.GA13217@genre.crustytoothpaste.net>
+ <xmqqzi1lxte6.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <20180430093153.13040-1-szeder.dev@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pvezYHf7grwyp3Bc"
+Content-Disposition: inline
+In-Reply-To: <xmqqzi1lxte6.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-3-amd64)
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/30/2018 5:31 AM, SZEDER Gábor wrote:
-> The semantic patch 'contrib/coccinelle/commit.cocci' added in
-> 2e27bd7731 (treewide: replace maybe_tree with accessor methods,
-> 2018-04-06) is supposed to "ensure that all references to the
-> 'maybe_tree' member of struct commit are either mutations or accesses
-> through get_commit_tree()".  So get_commit_tree() clearly must be able
-> to directly access the 'maybe_tree' member, and 'commit.cocci' has a
-> bit of a roundabout workaround to ensure that get_commit_tree()'s
-> direct access in its return statement is not transformed: after all
-> references to 'maybe_tree' have been transformed to a call to
-> get_commit_tree(), including the reference in get_commit_tree()
-> itself, the last rule transforms back a 'return get_commit_tree()'
-> statement, back then found only in get_commit_tree() itself, to a
-> direct access.
->
-> Unfortunately, already the very next commit shows that this workaround
-> is insufficient: 7b8a21dba1 (commit-graph: lazy-load trees for
-> commits, 2018-04-06) extends get_commit_tree() with a condition
-> directly accessing the 'maybe_tree' member, and Coccinelle with
-> 'commit.cocci' promptly detects it and suggests a transformation to
-> avoid it.  This transformation is clearly wrong, because calling
-> get_commit_tree() to access 'maybe_tree' _in_ get_commit_tree() would
-> obviously lead to recursion.  Furthermore, the same commit added
-> another, more specialized getter function get_commit_tree_in_graph(),
-> whose legitimate direct access to 'maybe_tree' triggers a similar
-> wrong transformation suggestion.
 
-Thanks for catching this, Szeder. Sorry for the noise.
+--pvezYHf7grwyp3Bc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Exclude both of these getter functions from the general rule in
-> 'commit.cocci' that matches their direct accesses to 'maybe_tree'.
-> Also exclude load_tree_for_commit(), which, as static helper funcion
-> of get_commit_tree_in_graph(), has legitimate direct access to
-> 'maybe_tree' as well.
+On Mon, Apr 30, 2018 at 12:30:57PM +0900, Junio C Hamano wrote:
+> Thanks.  It is true that the current output from the tool is corrupt
+> mime multi-part, and we need to do something about it.
+>=20
+> I however have to wonder if it even makes sense for --cover to pay
+> attention to --attach and produce the cover template that has "BLURB
+> HERE" etc.  in a multi-part format.  Shouldn't we be making a simple
+> plain text file instead?
 
-This is an interesting feature of Coccinelle. Happy to learn it.
+I agree that multipart/mixed is not a useful content-type for only one
+plain text part.  I have a patch to add the trailing boundary, but I
+think you make a good argument that perhaps omitting the entire
+multipart portion would be better.
 
-> The last rule transforming back 'return get_commit_tree()' statements
-> to direct accesses thus became unnecessary, remove it.
->
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+I'll have to work on this after work, so expect a patch later today.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-I applied this locally on 'next' and ran the check. I succeeded with no 
-changes.
+--pvezYHf7grwyp3Bc
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks!
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
 
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrnBQwACgkQv1NdgR9S
+9osopQ/9GitRRKfUFH3WEnV6V6eRD/rrIRTXB9m1Pxq/YDnGqTyIXiZFCwTeV6/4
+gqIk4Z1JXlP6gMqUUYRiMrFz32nHTTs36rnpvwWlzn7E+0O1/DS1iRK8HazTLOiq
+66JsU7J0Enjyvc7i9i/klppTdvb7+wdUxv370VAwAxK6Jw8urwNPY0wnBLYei47c
+5itL8Y0b5I5xWTEb/c0BJ+k9PyqahZhM9FZqRoLWztzuskvP0QJaVdNDF1MJgPcw
+xNsEKfcq2OUXE1PUmzaEnzUMx62pwUBfpVpVH4G7uwhoq5S4AxCytW1UWTIyBBQu
+UT4tGxoqc21rP564seB98KdqRD87TfKDKNC/TwhooryfAfKDPOWGiqJyRSocLs8c
+v3rmf/fIu6rRtris5RpaBsvBKJZKYYwgxb4V0VWTUbvR9cLTbp0JnmzmqV27ekh7
+4BSwtQDcdJ41VfhdGIDB/eFspJHFTagly/8WEqDSsmF9Ng2+XwPo5Fd5cvPF4AnH
+ZT+PqgNHtLgxLl1rkxH7ANakYdBxHTRXisZXCJTRo7daaChQLQCF6YYISwdZKGim
+gMXRazGdigoQ9FJEQxTJ9RYhXMAMRwvbQnbgMbNX2n3NiOtOPZw+ZVWTUdm4rhpo
+VcvbpxEFS8HKGe/KV5Shb5YSmhdF0ZK+5dDuJiVZ+ngW7l3672E=
+=FKA4
+-----END PGP SIGNATURE-----
 
-
-> ---
->   contrib/coccinelle/commit.cocci | 10 ++++------
->   1 file changed, 4 insertions(+), 6 deletions(-)
->
-> diff --git a/contrib/coccinelle/commit.cocci b/contrib/coccinelle/commit.cocci
-> index ac38525941..a7e9215ffc 100644
-> --- a/contrib/coccinelle/commit.cocci
-> +++ b/contrib/coccinelle/commit.cocci
-> @@ -10,11 +10,15 @@ expression c;
->   - c->maybe_tree->object.oid.hash
->   + get_commit_tree_oid(c)->hash
->   
-> +// These excluded functions must access c->maybe_tree direcly.
->   @@
-> +identifier f !~ "^(get_commit_tree|get_commit_tree_in_graph|load_tree_for_commit)$";
->   expression c;
->   @@
-> +  f(...) {...
->   - c->maybe_tree
->   + get_commit_tree(c)
-> +  ...}
->   
->   @@
->   expression c;
-> @@ -22,9 +26,3 @@ expression s;
->   @@
->   - get_commit_tree(c) = s
->   + c->maybe_tree = s
-> -
-> -@@
-> -expression c;
-> -@@
-> -- return get_commit_tree(c);
-> -+ return c->maybe_tree;
-
+--pvezYHf7grwyp3Bc--
