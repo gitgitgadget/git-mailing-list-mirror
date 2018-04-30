@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68938215F4
-	for <e@80x24.org>; Mon, 30 Apr 2018 22:08:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3B2E215F4
+	for <e@80x24.org>; Mon, 30 Apr 2018 22:08:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754890AbeD3WIE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 18:08:04 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:39429 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754504AbeD3WID (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 18:08:03 -0400
-Received: by mail-wm0-f52.google.com with SMTP id f8so6047657wmc.4
-        for <git@vger.kernel.org>; Mon, 30 Apr 2018 15:08:02 -0700 (PDT)
+        id S1755055AbeD3WIH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 18:08:07 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:45963 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754504AbeD3WIF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Apr 2018 18:08:05 -0400
+Received: by mail-wr0-f194.google.com with SMTP id p5-v6so9370538wre.12
+        for <git@vger.kernel.org>; Mon, 30 Apr 2018 15:08:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GIgQofa41QXNzlcZr4+YKSkVKT1TtSUBF3MQni6vy5M=;
-        b=XYzKISSUxmyFLddSrHVo7NfU9z5p5wzynVyPpjIo2uenbSL+GRSb6PyT+2mvden9zI
-         5YO6/SCSKhhthiCVLCUwgqTSNJnZvmB4JvDWXRw0i+kQh2Txt8qhgedd5x+4ZFDR7Wy1
-         jCSHrH2Dtjnnvon7S0H2IRKLH5501APcP+r4DuvV0EtSQu8MfD4MYGiqBRrma9px+oI9
-         S+smAkbkUPBOiUIKwKUw5XH9yQ3K5nyC7vcGtHbUQhwFAA7niAzzyXzXxPYyZknMUGOR
-         5KnlIOsfjYlY5JB4GPKHrTvQovGijgYXKurD1tFB5te220b+MWQoJMV7VRWbhpj9GTeT
-         R17w==
+        bh=4P2zn2iOG7zMS/VYesEufuPvTkYaENuL7OMGFnP4hKs=;
+        b=QrCs8/7mAySoYJRWZu/rIbEThbBWOzFm/ixPZrZPY18j5kOnWQaK+iJPvjINTUxUSX
+         NL64cU+OQvU0cqOLNPGVDAmZgjaDi0ha/pPbXvSXcrtYSWBfwfGH8XzeUUR08AyrIgNI
+         NOKsNfQhPDZgh77WWy3s8Nb5MiH7vrkclL9Yth0fK2gZ/zccorNKbl8gpld/peMB5KyU
+         VYj/rd2s+MIwH2Pnqv1RGVcokGmc2KhDEVkI8nEMjr9bXWpTYDHrwn0AjE8IyhB05nTx
+         Qws7oIAkTW/mLwt/lzTbRIoGvXORH8Bdns453YKyBP5xrzMpTxdLbBpI8HodFyaRWT+n
+         WtIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GIgQofa41QXNzlcZr4+YKSkVKT1TtSUBF3MQni6vy5M=;
-        b=YLfhIP355naI4dHkPUoH81zOvcTVYnM1bDL693fb9bPreu42rUfL+TcB0di8sL2EV0
-         YBwsAuMKPIz1tl3dooWc4lBCVS7jc8smVWeVzO/9Jd6pTLQH70ZcGugMjA+8QjhbecEU
-         snvPAl8TyrRrrDZFxdmV1S2EMI3sV7wjtXzeUPssp0pbpqLU4l8OsBgZsc3xmzLMJIVa
-         /JA5FS1ixki291kU/gkeVFwb99BHFU25b7hJza2PIUSJkuld7CGFIny8rUw7nmCtNHQK
-         G+biaoywIUETRgP+GPOiVq87R5QOwajM63WxzYzrpNUWSTO7pNGjm6q8V16SCudFN9/t
-         yyHw==
-X-Gm-Message-State: ALQs6tCMYLcaHw0RM5c96ATMShmLafTss435v02bs5KLz2OC32ulX7Ip
-        qRWeBebJdjpKbg0ElA1iG4YMumEV
-X-Google-Smtp-Source: AB8JxZpVdRSkm5c+MS4Dp03NxlmYap0Sdu0cLHsp5cTZsThITCc311tjNzfd+D/hh77CNq2yZx/33A==
-X-Received: by 10.28.74.13 with SMTP id x13mr5740516wma.150.1525126081381;
-        Mon, 30 Apr 2018 15:08:01 -0700 (PDT)
+        bh=4P2zn2iOG7zMS/VYesEufuPvTkYaENuL7OMGFnP4hKs=;
+        b=KwbmLd1Yhp5oEVt6yPcivZw9fjSO4Fa0/vhflZWB+hy0n5C3LH4wavh7INx+jfVklo
+         tLFuTIs0UIlxJijH0zqn8KIuEhFFhRxtx3dMPK/IEpFHKHZSav+1l3Ahw41/oRHF2Ppa
+         UykxFRrIDIcgFu4cQcYDgdTc6nOzjAAXVl+KyUFVzk5SD1p05cRHpSsAO2uozIf/hjDb
+         a5bFwztd8BxrNkJzFm7rj5jQ6R7Qem76rgMilG4mc9bjizXgekrS609tEPdDtmjgUQuA
+         LKwxkJRBFj1tjP9BTBFIV1tvdZZo7q/1FPp0v1fRbMpsB+L16ACZaZQN6wv1KBxui424
+         Rh8w==
+X-Gm-Message-State: ALQs6tC+PWNRl1zCsHTYVDfiJEDUIyXlKVIoCG4wKjjVKxjWXAnEyEB3
+        FRCK7KKGKJhmKpv6Dd+BioTv7HBY
+X-Google-Smtp-Source: AB8JxZqrBv+hJVqBagTiaSRXdbWDy2iIVhzfTz1oy7m21m4qHG9YsQpj1ZMKYqSENNvO91uFLDmB1w==
+X-Received: by 2002:adf:ac4f:: with SMTP id v73-v6mr9580073wrc.5.1525126083647;
+        Mon, 30 Apr 2018 15:08:03 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id l53-v6sm24014633wrc.80.2018.04.30.15.08.00
+        by smtp.gmail.com with ESMTPSA id l53-v6sm24014633wrc.80.2018.04.30.15.08.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Apr 2018 15:08:00 -0700 (PDT)
+        Mon, 30 Apr 2018 15:08:02 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 6/9] get_short_oid: learn to disambiguate by ^{blob}
-Date:   Mon, 30 Apr 2018 22:07:31 +0000
-Message-Id: <20180430220734.30133-7-avarab@gmail.com>
+Subject: [PATCH 7/9] get_short_oid / peel_onion: ^{tree} should mean tree, not treeish
+Date:   Mon, 30 Apr 2018 22:07:32 +0000
+Message-Id: <20180430220734.30133-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180430220734.30133-1-avarab@gmail.com>
 References: <20180430220734.30133-1-avarab@gmail.com>
@@ -70,17 +70,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The disambiguation logic had all the pieces necessary to only print
-out those blobs that were ambiguous, but they hadn't been connected.
+After the recent series of patches ^{tag} and ^{blob} now work to get
+just the tags and blobs, but ^{tree} will still list any
+tree-ish (commits, tags and trees).
 
-The initial logic was added in daba53aeaf ("sha1_name.c: add support
-for disambiguating other types", 2012-07-02), and when the flags were
-propagated in 8a10fea49b ("get_sha1: propagate flags to child
-functions", 2016-09-26) GET_OID_BLOB wasn't added to lookup_flags.
+The previous behavior was added in ed1ca6025f ("peel_onion:
+disambiguate to favor tree-ish when we know we want a tree-ish",
+2013-03-31). I may have missed some special-case but this makes more
+sense to me.
 
-Before this change requests for blobs were simply ignored:
+Now "$sha1:" can be used as before to mean treeish
 
-    $ git rev-parse e8f2^{blob}
+    $ git rev-parse e8f2:
     error: short SHA1 e8f2 is ambiguous
     hint: The candidates are:
     hint:   e8f2650052 tag v2.17.0
@@ -91,61 +92,84 @@ Before this change requests for blobs were simply ignored:
     hint:   e8f25a3a50 tree
     hint:   e8f28d537c tree
     hint:   e8f2cf6ec0 tree
-    hint:   e8f21d02f7 blob
-    hint:   e8f21d577c blob
-    hint:   e8f2867228 blob
-    hint:   e8f2a35526 blob
-    e8f2^{blob}
     [...]
 
-But now we'll do the right thing and only print the blobs:
+But ^{tree} shows just the trees, but would previously be equivalent
+to the above:
 
-    $ git rev-parse e8f2^{blob}
+    $ git rev-parse e8f2^{tree}
     error: short SHA1 e8f2 is ambiguous
     hint: The candidates are:
-    hint:   e8f21d02f7 blob
-    hint:   e8f21d577c blob
-    hint:   e8f2867228 blob
-    hint:   e8f2a35526 blob
-    e8f2^{blob}
+    hint:   e8f2093055 tree
+    hint:   e8f25a3a50 tree
+    hint:   e8f28d537c tree
+    hint:   e8f2cf6ec0 tree
     [...]
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- sha1-name.c                         | 2 ++
- t/t1512-rev-parse-disambiguation.sh | 6 +++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ sha1-name.c                         |  2 +-
+ t/t1512-rev-parse-disambiguation.sh | 18 ++++++++++++++----
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/sha1-name.c b/sha1-name.c
-index 68d5f65362..023f9471a8 100644
+index 023f9471a8..b61c0558d9 100644
 --- a/sha1-name.c
 +++ b/sha1-name.c
-@@ -971,6 +971,8 @@ static int peel_onion(const char *name, int len, struct object_id *oid,
+@@ -970,7 +970,7 @@ static int peel_onion(const char *name, int len, struct object_id *oid,
+ 	else if (expected_type == OBJ_TAG)
  		lookup_flags |= GET_OID_TAG;
  	else if (expected_type == OBJ_TREE)
- 		lookup_flags |= GET_OID_TREEISH;
-+	else if (expected_type == OBJ_BLOB)
-+		lookup_flags |= GET_OID_BLOB;
+-		lookup_flags |= GET_OID_TREEISH;
++		lookup_flags |= GET_OID_TREE;
+ 	else if (expected_type == OBJ_BLOB)
+ 		lookup_flags |= GET_OID_BLOB;
  
- 	if (get_oid_1(name, sp - name - 2, &outer, lookup_flags))
- 		return -1;
 diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index c7ceda2f21..08ae73e2a5 100755
+index 08ae73e2a5..2acf564714 100755
 --- a/t/t1512-rev-parse-disambiguation.sh
 +++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -337,7 +337,11 @@ test_expect_success C_LOCALE_OUTPUT 'ambiguity hints respect type' '
- 	test_line_count = 7 hints &&
- 	git rev-parse 000000000^{tag} >stdout &&
- 	test_line_count = 1 stdout &&
--	grep -q ^0000000000f8f stdout
-+	grep -q ^0000000000f8f stdout &&
-+	test_must_fail git rev-parse 000000000^{blob} 2>stderr &&
-+	grep ^hint: stderr >hints &&
-+	# 5 blobs plus intro line &&
-+	test_line_count = 6 hints
+@@ -159,9 +159,13 @@ test_expect_failure 'two semi-ambiguous commit-ish' '
+ 	git log 0000000000...
  '
  
- test_expect_success C_LOCALE_OUTPUT 'failed type-selector still shows hint' '
+-test_expect_failure 'three semi-ambiguous tree-ish' '
++test_expect_success 'three semi-ambiguous tree-ish' '
+ 	# Likewise for tree-ish.  HEAD, v1.0.0 and HEAD^{tree} share
+ 	# the prefix but peeling them to tree yields the same thing
++	test_must_fail git rev-parse --verify 0000000000: &&
++
++	# For ^{tree} we can disambiguate because HEAD and v1.0.0 will
++	# be excluded.
+ 	git rev-parse --verify 0000000000^{tree}
+ '
+ 
+@@ -267,8 +271,12 @@ test_expect_success 'ambiguous commit-ish' '
+ # There are three objects with this prefix: a blob, a tree, and a tag. We know
+ # the blob will not pass as a treeish, but the tree and tag should (and thus
+ # cause an error).
+-test_expect_success 'ambiguous tags peel to treeish' '
+-	test_must_fail git rev-parse 0000000000f^{tree}
++test_expect_success 'ambiguous tags peel to treeish or tree' '
++	test_must_fail git rev-parse 0000000000f: &&
++	git rev-parse 0000000000f^{tree} >stdout &&
++	test_line_count = 1 stdout &&
++	grep -q ^0000000000fd8bcc56 stdout
++
+ '
+ 
+ test_expect_success 'rev-parse --disambiguate' '
+@@ -365,7 +373,9 @@ test_expect_success 'core.disambiguate config can prefer types' '
+ test_expect_success 'core.disambiguate does not override context' '
+ 	# treeish ambiguous between tag and tree
+ 	test_must_fail \
+-		git -c core.disambiguate=committish rev-parse $sha1^{tree}
++		git -c core.disambiguate=committish rev-parse $sha1: &&
++	# tree not ambiguous between tag and tree
++	git -c core.disambiguate=committish rev-parse $sha1^{tree}
+ '
+ 
+ test_done
 -- 
 2.17.0.290.gded63e768a
 
