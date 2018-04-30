@@ -2,95 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A5CD21841
-	for <e@80x24.org>; Mon, 30 Apr 2018 08:56:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08CF221841
+	for <e@80x24.org>; Mon, 30 Apr 2018 09:32:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751729AbeD3I4A (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 04:56:00 -0400
-Received: from mout.web.de ([212.227.15.4]:57959 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751234AbeD3I4A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 04:56:00 -0400
-Received: from [192.168.209.20] ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Mbhiv-1euaPW2POX-00J0Ft; Mon, 30
- Apr 2018 10:55:55 +0200
-Subject: Re: [PATCH v1 1/1] test: Correct detection of UTF8_NFD_TO_NFC for
- APFS
+        id S1752904AbeD3JcM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 05:32:12 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:35440 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751278AbeD3JcK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Apr 2018 05:32:10 -0400
+Received: by mail-wr0-f195.google.com with SMTP id i14-v6so4223777wre.2
+        for <git@vger.kernel.org>; Mon, 30 Apr 2018 02:32:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oWcm8tZl4XbPUlMs/e3/6geq1p72LwApqQT/kutTcoA=;
+        b=sTQLPPHP/fO7RhgBKKYhuIXPQizQDN7uJIFbFnaiX+Zs82EAGxM1jJumjSuQ0xcH6R
+         XYhvR5PGhoymvuHl7ZfYUcraZ1dpRs86f0JZ0OlXf9btkEzQ3Pcm1eGtmWPpfW+UxTzr
+         J5BMy8IPZnzG1NrAA5dV5C/lFzxtjI8rTovYngrhOAjue0NEuVMMb/8Zr93FYKtoUWf1
+         VemzhTEJMf7OzyXS1Sy6Cq6AvqSaGnt8TtlwDujLwFK8o/topTF3tB0UmiJRnBmFbJjM
+         YzmJAZdnjt2LAA11e0Rle4lIEDi5vKHZugjvvMA2dSo+IdsIrJJIMKXc7zQ6J3b7IY3p
+         5DiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oWcm8tZl4XbPUlMs/e3/6geq1p72LwApqQT/kutTcoA=;
+        b=i0wD7gxPtR08JBdDvGcO6iyT32gLa8Li75jT4hC6iZ+8PAc2Ww4KEA5AnDOII3CtVf
+         +OX9SSA8F7+znUJLGwxsKAPASPw9YvjR6a9zfuDaE15aAwni8S0bN8NklkG6PLypUrTy
+         vPC5Pj+C514Ni7VOVuxOCaliNqN7RDorKDeFzZ7b12wGEPSkOXF6xaSyw+rS5zWuqVne
+         1LVFPvSs0FW7FpgWqqQxd6sFifoRC8vVdCQg9jAS1hzxulSGLzmBD5pNS/kamptJFhPW
+         m+TSQNwUWezQ7a90Q9nRpHya1bsIllGK2mqi+gLYg5LNCdWH1dNyLH+eQrLN+1PKSr76
+         COoA==
+X-Gm-Message-State: ALQs6tArvCjQTMJi3w078Cb2YYGvn3Fi8n60e1WrbUHi2e5WsME6kmQS
+        AgNaJyk/WSniSrXMx9mXe18=
+X-Google-Smtp-Source: AB8JxZoYB6tIYbe4dsESZrkgemGsWHOmPsWoHm03B4vhb9cxPfoau9p+QaEqZHZxWA7RktUhZbS34w==
+X-Received: by 2002:adf:aa04:: with SMTP id p4-v6mr7606504wrd.226.1525080729656;
+        Mon, 30 Apr 2018 02:32:09 -0700 (PDT)
+Received: from localhost.localdomain (x590cef10.dyn.telefonica.de. [89.12.239.16])
+        by smtp.gmail.com with ESMTPSA id a79sm7602981wme.48.2018.04.30.02.32.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 30 Apr 2018 02:32:09 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, newren@gmail.com
-References: <CABPp-BHitvta8we8di-tFiNdVV7vXnMNAhiAs2=CrQc-gGuSJw@mail.gmail.com>
- <20180430063519.27122-1-tboegi@web.de>
- <xmqqvac9xh4d.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <255708be-3cf2-0285-b5e7-4fbc9e0e8ddd@web.de>
-Date:   Mon, 30 Apr 2018 10:55:50 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.7.0
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Lars Schneider <larsxschneider@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] coccinelle: avoid wrong transformation suggestions from commit.cocci
+Date:   Mon, 30 Apr 2018 11:31:53 +0200
+Message-Id: <20180430093153.13040-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.17.0.551.g86756ed296
 MIME-Version: 1.0
-In-Reply-To: <xmqqvac9xh4d.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:jwofcngA0PReGWjzf+ivf7PHKumrWaXgaQLe9iEmmqUEmL+oJA7
- hVd++GWYvV5ntrkGpuyPRW6YBAUYJbhU9pTmgRUOe2QKjl6jIVs5tpQWEXBo4eI03lF6FhJ
- MGqqqNnZStk50m2lSC5NU/req5dCU+rudY9imX4UELn+9RMiJMIVdm7oeiveMpIR5X+/ZJg
- 00H+tnECOiEMTtBsM6lJw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:oHuUfU9QoCg=:iBE5Fbvrv739bGLg+Hoxlq
- owK3/YEZysgGdtfDMxrEbb246B8JATgx6lhMlqrjUU2K1AJJR91aL+K9sR/KC2RKc4l4f3pE+
- hLZG5vUVmG7w+6DfrI5YUVg+n6gVTPj88e4Jfp5ynKlAcECuYT2vbPUZkpH3L5BvV41ZjnGlq
- f7snNrSnR7jy++lZdGdRO9pxZxmsD5Wi9ciDdWuUa5qvG6Swvjr4nuItC00rqHZL5WwHY677f
- La14GiXCSz8LGYsQhg7zzwInkU3pMxtT2EF61Cj+Nesb6IUzGlRF0et2NXN+wFPCS7nN9+82D
- 2pH/hO37WF+PVStuTCaBt5C++LHMN8k0Wr9mzecao2EY95QYflELiXmuE1ZotApuwAV5YAcHF
- czxMfQ5lonyAAmJjqau/KQ0g3SgQC0decJaLLEs9YbhJYYbFiByC30RWd9f26qsMAD3G04XsC
- fc8rfzQcDjc+UjODvPUFdLZhRMPgDpSOlQV7Z0TfflrQN8tBe0/6Enz8VNRjUcBXj2BfIzyx/
- GrQIWWbLJfC3DV8fqygx01e4ojIuApQ2LPdVHnZ6bIk2EJc9OlgRS6txz8RgE/C22BNbiIMlU
- e8Eeh5mwEK3My9+2Hlqzx0jEzcyqhyvVqJzB81bECpAk1CK3dJN2qCt4SU9rlmTt8fXToCvkx
- UR2Hdw19nBeY1qssh1ctyjSgE7laUh/nbBR9j0YGGPNSzMvioLzIH+3iQxA0rIzLKUOAOJ5Vk
- NeOzVBI9O4QOAlzbBi9pm72utoRYBbYHbhnaLmdNHwPs1v8rXXCHr4LHP1My0RAzTHPXWGW8+
- xvtnMS6Xq4hSAn8J4HJ76udtv9kW9+05dwXpCj5VYgmaqMVXw0f4DOT3csojjsPPEFgimFz0H
- NSMKCpm8TBRGPiFrqaOQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30.04.18 09:56, Junio C Hamano wrote:
-> tboegi@web.de writes:
-> 
->> From: Torsten Bögershausen <tboegi@web.de>
->>
->> On HFS (which is the default Mac filesystem prior to High Sierra),
->> unicode names are "decomposed" before recording.
->> On APFS, which appears to be the new default filesystem in Mac OS High
->> Sierra, filenames are recorded as specified by the user.
->>
->> APFS continues to allow the user to access it via any name
->> that normalizes to the same thing.
->>
->> This difference causes t0050-filesystem.sh to fail two tests.
->>
->> Improve the test for a NFD/NFC in test-lib.sh:
->> Test if the same file can be reached in pre- and decomposed unicode.
->>
->> Reported-By: Elijah Newren <newren@gmail.com>
->> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
->> ---
->>  t/test-lib.sh | 7 +------
->>  1 file changed, 1 insertion(+), 6 deletions(-)
-> 
-> Thanks.  
-> 
-> Wouldn't it logically make more sense to check for the target being
-> an existing file with "-f"?  It is not an essential part of the test
-> for the target to be "readable", but "can be stat(2)ed with the
-> other UTF-8 representation" is.
+The semantic patch 'contrib/coccinelle/commit.cocci' added in
+2e27bd7731 (treewide: replace maybe_tree with accessor methods,
+2018-04-06) is supposed to "ensure that all references to the
+'maybe_tree' member of struct commit are either mutations or accesses
+through get_commit_tree()".  So get_commit_tree() clearly must be able
+to directly access the 'maybe_tree' member, and 'commit.cocci' has a
+bit of a roundabout workaround to ensure that get_commit_tree()'s
+direct access in its return statement is not transformed: after all
+references to 'maybe_tree' have been transformed to a call to
+get_commit_tree(), including the reference in get_commit_tree()
+itself, the last rule transforms back a 'return get_commit_tree()'
+statement, back then found only in get_commit_tree() itself, to a
+direct access.
 
-That make sense.
-Would you like to amend the patch ?
+Unfortunately, already the very next commit shows that this workaround
+is insufficient: 7b8a21dba1 (commit-graph: lazy-load trees for
+commits, 2018-04-06) extends get_commit_tree() with a condition
+directly accessing the 'maybe_tree' member, and Coccinelle with
+'commit.cocci' promptly detects it and suggests a transformation to
+avoid it.  This transformation is clearly wrong, because calling
+get_commit_tree() to access 'maybe_tree' _in_ get_commit_tree() would
+obviously lead to recursion.  Furthermore, the same commit added
+another, more specialized getter function get_commit_tree_in_graph(),
+whose legitimate direct access to 'maybe_tree' triggers a similar
+wrong transformation suggestion.
 
+Exclude both of these getter functions from the general rule in
+'commit.cocci' that matches their direct accesses to 'maybe_tree'.
+Also exclude load_tree_for_commit(), which, as static helper funcion
+of get_commit_tree_in_graph(), has legitimate direct access to
+'maybe_tree' as well.
+
+The last rule transforming back 'return get_commit_tree()' statements
+to direct accesses thus became unnecessary, remove it.
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ contrib/coccinelle/commit.cocci | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/contrib/coccinelle/commit.cocci b/contrib/coccinelle/commit.cocci
+index ac38525941..a7e9215ffc 100644
+--- a/contrib/coccinelle/commit.cocci
++++ b/contrib/coccinelle/commit.cocci
+@@ -10,11 +10,15 @@ expression c;
+ - c->maybe_tree->object.oid.hash
+ + get_commit_tree_oid(c)->hash
+ 
++// These excluded functions must access c->maybe_tree direcly.
+ @@
++identifier f !~ "^(get_commit_tree|get_commit_tree_in_graph|load_tree_for_commit)$";
+ expression c;
+ @@
++  f(...) {...
+ - c->maybe_tree
+ + get_commit_tree(c)
++  ...}
+ 
+ @@
+ expression c;
+@@ -22,9 +26,3 @@ expression s;
+ @@
+ - get_commit_tree(c) = s
+ + c->maybe_tree = s
+-
+-@@
+-expression c;
+-@@
+-- return get_commit_tree(c);
+-+ return c->maybe_tree;
+-- 
+2.17.0.551.g86756ed296
 
