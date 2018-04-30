@@ -2,99 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5130D215F4
-	for <e@80x24.org>; Mon, 30 Apr 2018 13:16:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1251215F4
+	for <e@80x24.org>; Mon, 30 Apr 2018 14:01:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753092AbeD3NQl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 09:16:41 -0400
-Received: from mail-it0-f50.google.com ([209.85.214.50]:50545 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752086AbeD3NQk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 09:16:40 -0400
-Received: by mail-it0-f50.google.com with SMTP id p3-v6so9789272itc.0
-        for <git@vger.kernel.org>; Mon, 30 Apr 2018 06:16:40 -0700 (PDT)
+        id S1754035AbeD3OBv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 10:01:51 -0400
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:44050 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753922AbeD3OBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Apr 2018 10:01:50 -0400
+Received: by mail-qt0-f180.google.com with SMTP id d3-v6so10953134qtp.11
+        for <git@vger.kernel.org>; Mon, 30 Apr 2018 07:01:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RrEaYYBlNcik7wZsWt4xABn2Mo9VC0yz93ipKZtHC4g=;
-        b=iUWr957RG2+LZXI8FiWkyG5w8I3AWOeOHx175S1XXOiQWBVFNP3io+bs6lHpioqste
-         may4HCKkqmF7DVL+nL6mFWpN9xKUNQKG37nKN9YVgmvI8uL0CeQvFcFdGl9l8wYfTsrF
-         M/QBjUZwlg5Lv5qNO3WcD1SNzjIH+7qiy4asSRuob6iE3LKboDuYy2qXXoD9M0ZgZQaZ
-         tHnhZaTw91tTti6mWx7N7iV1yAjIwHqSYE3YB22M8a9rl1h8VGG+HDVJYr4U8Gw2Ebvv
-         jGQvUzpjb/tpvNnNyETtRYH57IeynMpCyGFURCgwL0GqzEyrDN6SUambkwjLTBcjO5p5
-         0Azg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=H0dcN7AgCh1PfjwbHRee/TkommnTv7GxeLx0epvg6Ms=;
+        b=HaFmBcZBFiQ3uyu9rceDOtv22cz4n/Kp7NNUngRDBSMpdY9Cl2wYrZ9tYSPzLALcRq
+         GeTmmcRjiaknBq0q4Pzxr1HejOZngjxYadSFZ9zB2l7a7C9YnBvUZNMwI4BhL6e7C/P5
+         4hSA57JIsc80zJblKA4wQlRKERRBqDJGXLsaDP5L4/gzDajpti3x4OyBGdG+0Aig/hoX
+         SbP7W8+YrDkddwoLAgXmhr2rsEHY604Z1s5C2aopOnt0GbnW0dHL70xqC8M3l0seDGme
+         SQMGvQ+MtYJ4n9nMT3qqVvpaPZAlmux+6GC6gT4oX18NQKzuD0tvDaxVPpq5Yj7+S/1s
+         EPkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RrEaYYBlNcik7wZsWt4xABn2Mo9VC0yz93ipKZtHC4g=;
-        b=EkqdNl+V1gK5WnxqAAbiLqW/7CP0EWqLTH4l7L5C72J9ubJf+2RX8QcS2T5/r5d5Ft
-         enQoOq4Zc9nrAly7+hDJNi6PH3pUmB8xB93u19tlsjViL5TG6FqgBs60nnTkKiTCIrx7
-         wHH9JZGouCA6W1OV1wSGvE/ZQidIjChF+juyztOmBxhe3xMg8+ykjHcEXWxw5Fm3nbIt
-         P9kCMhcwVpk4dB1Lv8um18iQFQeYBQU7JGJYJOBx0hrv6KUoFFlFPqtJEP8kUNfFsp9G
-         qL0UW6DeBIV6tQy7kNBld9rAxzxJUlV3vL3caja70YGKS+cmjMqNWPPdSOTNkk/202UM
-         HTww==
-X-Gm-Message-State: ALQs6tDfyyquVVNl0OJo/TZq2sMyx+Buuj+P7wRMRJTwOqxEBYVs7SZD
-        NqQfJlFiTqZycOmDraDNZTtGhFGd1Jnc6BUOJqKEYhWC
-X-Google-Smtp-Source: AB8JxZpEKzA09TfjSZsUGSWUwNDN97fb5Khs4fmOch8pTmyLsr9Pwdk2wUEaX4jpOk4tmbN9WHTw6pjhJFGCgPUVxFw=
-X-Received: by 2002:a24:d88b:: with SMTP id b133-v6mr11504566itg.119.1525094199713;
- Mon, 30 Apr 2018 06:16:39 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=H0dcN7AgCh1PfjwbHRee/TkommnTv7GxeLx0epvg6Ms=;
+        b=gzSKbWqnCWgFuh85wPMaotFJCpa4NvMfm2Y/GGQtq+FXk7hLeSCV0omvQct3OBkKCk
+         D0C8BmCK+GY0S21XTNvBsPxZZrpJTG2/temXSiAz3vl9xK3mCYcosSWUW4VqX9w+j348
+         VUsX1YwHIN7UvjoBLFtqqZNGRcvPkJeI1v8jlAkiyfqdWF3x5o8rCISMGf0MUE0StXek
+         E13HHYaSxpkcgq7L7RROmF5ZHdWhjd4ydLsnpw71GHvCx2mpWgvWFxuJTWPtQJwLugOD
+         9N1+gyXRh3OFsBotLQ0SfKU1F8Bl8X/8PXm/4UbucYOXzRULFC8EvLk0O9KkgpUjvNRx
+         JGxg==
+X-Gm-Message-State: ALQs6tC1nU2EEh+KODNSpwPNtciEwQxmsjbZhLJWQGXgIcmdIUqH8Uct
+        n8kUP0lPWkCKEA5LS1g9cAMsermE
+X-Google-Smtp-Source: AB8JxZpvFRLq/KvuJbnC6cDmIpGPotKqUAhz/+jDlh48H6Vu/0+iqpfqCzZDI8gsE9KnFh7enRLa9w==
+X-Received: by 2002:a0c:c90b:: with SMTP id r11-v6mr8472232qvj.202.1525096909141;
+        Mon, 30 Apr 2018 07:01:49 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id y41-v6sm5896261qty.84.2018.04.30.07.01.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Apr 2018 07:01:48 -0700 (PDT)
+Subject: Re: branch --contains / tag --merged inconsistency
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?Ferenc_W=c3=a1gner?= <wferi@niif.hu>
+Cc:     git@vger.kernel.org
+References: <20180427160344.12724-1-szeder.dev@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f73a956d-2782-11b3-f84b-67ce1e0ae047@gmail.com>
+Date:   Mon, 30 Apr 2018 10:01:47 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 10.107.114.23 with HTTP; Mon, 30 Apr 2018 06:16:19 -0700 (PDT)
-In-Reply-To: <CAEp-SHXXwtgDb=bzTmT88aPQ267ANLCN6S3teC4hjHYDL9NQ3Q@mail.gmail.com>
-References: <CAEp-SHXo2fnyUSMDqJnfOkh_R21R2FjFUtQ14u9s6-tV039tHg@mail.gmail.com>
- <CAEp-SHXXwtgDb=bzTmT88aPQ267ANLCN6S3teC4hjHYDL9NQ3Q@mail.gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 30 Apr 2018 15:16:19 +0200
-Message-ID: <CACBZZX4NMJE0kcgb0aB0z3X6yGhL8VJVx6V3tYfA3socbjTQfA@mail.gmail.com>
-Subject: Re: git-submodule is missing --dissociate option
-To:     Casey Fitzpatrick <kcghost@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180427160344.12724-1-szeder.dev@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 30, 2018 at 1:30 PM, Casey Fitzpatrick <kcghost@gmail.com> wrote:
-> It also seems to be missing "--progress", and I imagine others.
-> Perhaps submodule add/update should be reworked to automatically
-> accept all the options that clone would?
-
---progress is not missing, but I see that it isn't documented. It was
-added in 72c5f88311 ("clone: pass --progress decision to recursive
-submodules", 2016-09-22). What you're suggesting makes sense, but as
-shown in that commit it's not easy for it to happen automatically,
-there's a lot of boilerplate involved.
-
-But since you're interested you can see how to add new options with
-that patch, it should be easy for anyone not experienced with the
-codebase, it's all just boilerplate + adding a test.
-
-> On Mon, Apr 30, 2018 at 4:29 AM, Casey Fitzpatrick <kcghost@gmail.com> wrote:
->> This seems to be a hole in the git feature set. I believe it is fairly
->> easily worked around, but it would be best to provide the option for
->> ease of use (and maybe performance?).
+On 4/27/2018 12:03 PM, SZEDER Gábor wrote:
+> Szia Feri,
+>
+>> I'm moving the IRC discussion here, because this might be a bug report
+>> in the end.  So, kindly try these steps (103 MB free space required):
 >>
->> git clone has both a --reference feature and a --dissociate option,
->> with dissociate allowing for a reference to *only* speed up network
->> transfers rather than have the resulting clone rely upon the reference
->> always being there (creates an independent repo).
->> But git submodule only allows for --reference, so there isn't a an
->> option to make a speedy independent submodule clone in one shot:
->> https://git-scm.com/docs/git-submodule
->> I checked the latest online documentation (currently at 2.16.3) and
->> the documentation in the latest sources (almost 2.18):
->> https://github.com/git/git/blob/next/Documentation/git-submodule.txt
+>> $ git clone https://github.com/ClusterLabs/pacemaker.git && cd pacemaker
+>> [...]
+>> $ git branch --contains Pacemaker-0.6.1
+>> * master
+>> $ git tag --merged master | fgrep Pacemaker-0.6
+>> Pacemaker-0.6.0
+>> Pacemaker-0.6.2
+>> Pacemaker-0.6.3
+>> Pacemaker-0.6.4
+>> Pacemaker-0.6.5
+>> Pacemaker-0.6.6
 >>
->> As far as I am aware this can be worked around with 'git repack -a'
->> and manual removal of the objects/info/alternates file afterward.
->> Though I don't know if this results in a less speedy clone than
->> dissociate would.
+>> Notice that Pacemaker-0.6.1 is missing from the output.  Kind people on
+>> IRC didn't find a quick explanation, and we all had to go eventually.
+>> Is this expected behavior?  Reproduced with git 2.11.0 and 2.17.0.
+> The commit pointed to by the tag Pacemaker-0.6.1 and its parent have a
+> serious clock skew, i.e. they are a few months older than their parents:
+>
+> $ git log --format='%h %ad %cd%d%n    %s' --date=short Pacemaker-0.6.1^..47a8ef4c
+> 47a8ef4ce 2008-02-15 2008-02-15
+>      Low: TE: Logging - display the op's magic field for unexpected and foreign events
+> b9cfcd6b4 2007-12-10 2007-12-10 (tag: Pacemaker-0.6.2)
+>      haresources2cib.py: set default-action-timeout to the default (20s)
+> 52e7793e0 2007-12-10 2007-12-10
+>      haresources2cib.py: update ra parameters lists
+> dea277271 2008-02-14 2008-02-14
+>      Medium: Build: Turn on snmp support in rpm packages (patch from MATSUDA, Daiki)
+> f418742fe 2008-02-14 2008-02-14
+>      Low: Build: Update the .spec file with the one used by build service
+> ccfa716a5 2008-02-14 2008-02-14
+>      Medium: SNMP: Allow the snmp subagent to be built (patch from MATSUDA, Daiki)
+> 50f0ade2d 2008-02-14 2008-02-14
+>      Low: Build: Update last release number
+> 90f11667f 2008-02-14 2008-02-14
+>      Medium: Tools: Make sure the autoconf variables in haresources2cib are expanded
+> 9d2383c46 2008-02-11 2008-02-11 (tag: Pacemaker-0.6.1)
+>      High: cib: Ensure the archived file hits the disk before returning
+>
+> (branch|tag|describe|...) (--contains|--merged) use the commit timestamp
+> information as a heuristic to avoid traversing parts of the history,
+> which makes these operations, especially on big histories, an order of
+> magnitude or two faster.  Yeah, commit timestamps can't always be
+> trusted, but skewed commits are rare, and skewed commits with this much
+> skew are even rarer.
+>
+> I'm not sure how (or if it's at all possible) to turn off this
+> timestamp-based optimisation.
+
+This is actually a bit more complicated. The "--merged" check in 'git 
+tag' uses a different mechanism to detect which tags are reachable. It 
+uses a revision walk starting at the "merge commit" (master in your 
+case) and all tags with the "limited" option (to ensure the walk happens 
+during prepare_revision_walk()) but marks the merge commit as 
+UNINTERESTING. The limit_list() method stops when all commits are marked 
+UNINTERESTING - minus some "slop" related to the commits that start the 
+walk.
+
+One important note: the set of tags is important here. If you add a new 
+tag to the root commit (git tag MyTag a2d71961f) then the walk succeeds 
+by ensuring it walks until MyTag. This gets around the clock skew issue. 
+There may be other more-recent tags with a clock-skew issue, but since 
+Pacemaker-0.6.0 is the oldest tag, that requires the walk to continue 
+until at least that date.
+
+The commit-walk machinery in revision.c is rather complicated, and is 
+used for a lot of different reasons, such as "git log" and this 
+application in "git tag". It is on my list to refactor this code to use 
+the commit-graph and generation numbers, but as we can see by this 
+example, it is not easy to tease out what is happening in the code.
+
+In a world where generation numbers are expected to be available, we 
+could rewrite do_merge_filter() in ref-filter.c to call into 
+paint_down_to_common() in commit.c using the new "min_generation" 
+marker. By assigning the tags to be in the "twos" list and the merge 
+commit in the "one" commit, we can check if the tags have the PARENT1 
+flag after the walk in paint_down_to_common(). Due to the static nature 
+of paint_down_to_common(), we will likely want to abstract this into an 
+external method in commit.c, say can_reach_many(struct commit *from, 
+struct commit_list *to).
+
+> FWIW, much work is being done on a cached commit graph including commit
+> generation numbers, which will solve this issue both correctly and more
+> efficiently.  Perhaps it will already be included in the next release.
+
+The work in ds/generation-numbers is focused on the "git tag --contains" 
+method, which does return correctly here (it is the reverse of the 
+--merged condition):
+
+Which tags can reach Pacemaker-0.6.1?
+
+$ git tag --contains Pacemaker-0.6.1
+(returns a big list)
+
+This is the actual reverse lookup (which branches contain this tag?)
+
+$ git branch --contains Pacemaker-0.6.1 | grep master
+* master
+
+These commands work despite clock skew. The commit-graph feature makes 
+them faster.
+
+Thanks,
+-Stolee
+
