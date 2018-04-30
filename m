@@ -2,96 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E33461F404
-	for <e@80x24.org>; Mon, 30 Apr 2018 06:35:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B03421841
+	for <e@80x24.org>; Mon, 30 Apr 2018 07:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751631AbeD3GfZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 02:35:25 -0400
-Received: from mout.web.de ([212.227.15.4]:37473 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751581AbeD3GfY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 02:35:24 -0400
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LfAro-1ebRWj3DEu-00on4R; Mon, 30
- Apr 2018 08:35:21 +0200
-From:   tboegi@web.de
-To:     git@vger.kernel.org, newren@gmail.com
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v1 1/1] test: Correct detection of UTF8_NFD_TO_NFC for APFS
-Date:   Mon, 30 Apr 2018 08:35:19 +0200
-Message-Id: <20180430063519.27122-1-tboegi@web.de>
-X-Mailer: git-send-email 2.16.0.rc0.8.g5497051b43
-In-Reply-To: <CABPp-BHitvta8we8di-tFiNdVV7vXnMNAhiAs2=CrQc-gGuSJw@mail.gmail.com>
+        id S1752627AbeD3H4F (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 03:56:05 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:37683 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752216AbeD3H4E (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Apr 2018 03:56:04 -0400
+Received: by mail-wr0-f193.google.com with SMTP id c14-v6so7126046wrd.4
+        for <git@vger.kernel.org>; Mon, 30 Apr 2018 00:56:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=ZfFVP7ed5VW53gA7UqoWr5jM4LgByjz59hGSPDDx9S8=;
+        b=Rbz52kEW5at3GjrKry5VxXMP1xOjHTS3M0pRXIXsxZ6YONaCFhHIJ4OAu+88fSXonp
+         v7bdEvkpNmCvJZLxImvDcFupGYtT0Q7sOY8rYlXUgK1WXP2AJEapgWZGqUYkVGMlPXTE
+         swWL50HU6BjaudDrX41FhzPhhYAhsKPlAaR3GZdvh1giili2AF7xtU7p8YYiT7EaxS+k
+         C/jzaThnhLikSW6lhTolSpy6+gMDhfKtr8swR7MijV0K1Aldt275kksAasJ4wyJnJxFQ
+         7jJdUCo4oPMLw+KlJVOr9+R47E8tRLEB8v+JNl5kU0jpQlsOi+a1Oxcboxa6eo+giwwI
+         zhjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=ZfFVP7ed5VW53gA7UqoWr5jM4LgByjz59hGSPDDx9S8=;
+        b=AynTccJBhCrZXQPsodVB/9SC/M3sUkg2g3N5Qi2gIbPKhF/mbTwtaRy7cIyWq978zj
+         RhyJ1q6rJp/rdY5RST/rINOem/mmvjFagcsFCuNc9T+AiDvasxyIqV1ZgLFPLZfOBcyU
+         /UOZECL8sda5cDNusM0PgW60oe/hcC557DA6Za+gB/Hpamz/PWWLWhImcKb8v0hCqL77
+         B1/6Z3UARELQXcYIJ23i8+ysdnDVI32JZ3I1PCZVt9q4agiq6R13RUt2czDmGegI7mfk
+         wabi2fOpMMmF8mF1L1xEMQu3+HWfQy768U0KD3ujSd2+gcPn4qw3qVrl7NjiHDaqLjqq
+         cHuw==
+X-Gm-Message-State: ALQs6tCqOxocA+Imulyb7YKdvpha/XFFyB+pmTNFmgiBVc0mmJTt8j7Q
+        S1XxdVfALLB/lN+/z68qZ9+8B5y8
+X-Google-Smtp-Source: AB8JxZpUWiN9SfH99BqlDcKCXXkhWM3T/RucFOUE7dNPXNHvZDa0q1zXEnS53u3kr0mswj/bu1JO1w==
+X-Received: by 2002:adf:b90a:: with SMTP id k10-v6mr8943571wrf.283.1525074963264;
+        Mon, 30 Apr 2018 00:56:03 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id f10sm5707486wmc.0.2018.04.30.00.56.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 30 Apr 2018 00:56:02 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org, newren@gmail.com
+Subject: Re: [PATCH v1 1/1] test: Correct detection of UTF8_NFD_TO_NFC for APFS
 References: <CABPp-BHitvta8we8di-tFiNdVV7vXnMNAhiAs2=CrQc-gGuSJw@mail.gmail.com>
+        <20180430063519.27122-1-tboegi@web.de>
+Date:   Mon, 30 Apr 2018 16:56:02 +0900
+In-Reply-To: <20180430063519.27122-1-tboegi@web.de> (tboegi@web.de's message
+        of "Mon, 30 Apr 2018 08:35:19 +0200")
+Message-ID: <xmqqvac9xh4d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:d+Ya+SK6hb10lMNWxKgZO8aKfBZ2yuvY407uZ5gOVak0td//3UC
- pPIxa+ADNg8RP2TkTFOWY7FTizECqZ7vY5IUmhfSM8UqW/vC402esgm4MmALJkdztgFs4BS
- uGgoWrfkoVV+Jig4cwufyG+bvPsiOR5s6A0kV11AI77+rizhhst1Jeshg+wkYHcCCr5qbKo
- S+Z/aiZJJwSFA7FwnBTFw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:A30qS7M5ZYg=:CZsi5XFYT1BgnFR7ramGOZ
- aSobfGThTVxgr0enQFQs1AsuId7VDfB40QTmMa3zP30gyi93XDD1A5YYc1KGtEEUNK6Xa0eIy
- v+4dFjOaVB4pyKkb5e+Xr2HnYtvtV3roTh1uXql7ySI08JNGQLvQZrrPrBKxZdBx7ZdUxrRF8
- e41VxNsmbqizRKNDijM/AwEFr6XpQBuoTMPHJn2nRRbLoqIqKqTsWDvUBuJoVyU/P08Y+G63U
- ji8Oi+3JRhuaVFV96SWAaOnyJfD+EFLdyhzReeRwyZrx2k/msc5yGl3RMSzp2HJ/VVAjmnbLj
- nismhU0O3Lk0K7PN2BiMs5h0Tbr0+4NuXwlEmtMo+HzYpG4KZmNhMRvjz8Vdra2C2mXMeCeg0
- f03We4m1mqAkR7JVrH9J6kP1kVpYPPWN9PSi+WT+YF0yShwOjk7ZKZJwyjnFwamd1x8UdUMNt
- QVa5r3niIayIpKursSDBBLtkVFipAMSZV9+As9W6oFoZNXFiFTaqGOxcDs492Qs8s9WwJIe0d
- 99Mp90oUxNgX1CNwvUxWAGW/238BsQ3Wv1kLSkZ40K3HIJJBFsrCivwM9zpPbHLSVYBOD1mah
- isPQ+40gWeESKft2oJSqq75ZjfusuDICXq2kKsL1GusQQsqdaOexmJVzK1UaarePRQWV55SRA
- vDOYzNWkSTS+aCZKcXl/aOXSYI5vwpQn3nKBUyo4w3WD49pDBrFNIB1DgzyBdjw71Dvfkf8PM
- 2E8YViqTjk3hQHQYNDpB2XTPEp07OGIewu2yPr1sB43US0czYGDKqNrxFbCsr9v6JLyvIFEGq
- fJaK3Xb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten Bögershausen <tboegi@web.de>
+tboegi@web.de writes:
 
-On HFS (which is the default Mac filesystem prior to High Sierra),
-unicode names are "decomposed" before recording.
-On APFS, which appears to be the new default filesystem in Mac OS High
-Sierra, filenames are recorded as specified by the user.
+> From: Torsten Bögershausen <tboegi@web.de>
+>
+> On HFS (which is the default Mac filesystem prior to High Sierra),
+> unicode names are "decomposed" before recording.
+> On APFS, which appears to be the new default filesystem in Mac OS High
+> Sierra, filenames are recorded as specified by the user.
+>
+> APFS continues to allow the user to access it via any name
+> that normalizes to the same thing.
+>
+> This difference causes t0050-filesystem.sh to fail two tests.
+>
+> Improve the test for a NFD/NFC in test-lib.sh:
+> Test if the same file can be reached in pre- and decomposed unicode.
+>
+> Reported-By: Elijah Newren <newren@gmail.com>
+> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+> ---
+>  t/test-lib.sh | 7 +------
+>  1 file changed, 1 insertion(+), 6 deletions(-)
 
-APFS continues to allow the user to access it via any name
-that normalizes to the same thing.
+Thanks.  
 
-This difference causes t0050-filesystem.sh to fail two tests.
+Wouldn't it logically make more sense to check for the target being
+an existing file with "-f"?  It is not an essential part of the test
+for the target to be "readable", but "can be stat(2)ed with the
+other UTF-8 representation" is.
 
-Improve the test for a NFD/NFC in test-lib.sh:
-Test if the same file can be reached in pre- and decomposed unicode.
-
-Reported-By: Elijah Newren <newren@gmail.com>
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
----
- t/test-lib.sh | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ea2bbaaa7a..e206250d1b 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1106,12 +1106,7 @@ test_lazy_prereq UTF8_NFD_TO_NFC '
- 	auml=$(printf "\303\244")
- 	aumlcdiar=$(printf "\141\314\210")
- 	>"$auml" &&
--	case "$(echo *)" in
--	"$aumlcdiar")
--		true ;;
--	*)
--		false ;;
--	esac
-+	test -r "$aumlcdiar"
- '
- 
- test_lazy_prereq AUTOIDENT '
--- 
-2.16.0.rc0.8.g5497051b43
-
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index ea2bbaaa7a..e206250d1b 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1106,12 +1106,7 @@ test_lazy_prereq UTF8_NFD_TO_NFC '
+>  	auml=$(printf "\303\244")
+>  	aumlcdiar=$(printf "\141\314\210")
+>  	>"$auml" &&
+> -	case "$(echo *)" in
+> -	"$aumlcdiar")
+> -		true ;;
+> -	*)
+> -		false ;;
+> -	esac
+> +	test -r "$aumlcdiar"
+>  '
+>  
+>  test_lazy_prereq AUTOIDENT '
