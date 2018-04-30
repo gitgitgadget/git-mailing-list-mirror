@@ -2,201 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E01D215F4
-	for <e@80x24.org>; Mon, 30 Apr 2018 23:32:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58720215F4
+	for <e@80x24.org>; Mon, 30 Apr 2018 23:59:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753594AbeD3Xcx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 19:32:53 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:53493 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752614AbeD3Xcv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 19:32:51 -0400
-Received: by mail-wm0-f66.google.com with SMTP id a67so8130594wmf.3
-        for <git@vger.kernel.org>; Mon, 30 Apr 2018 16:32:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=3Kg7ox/AooWhVe/5enOtQXlU3or6LL9ZFx6Mj1U8Pyo=;
-        b=SGcSj3nc2ZFNk2BUGNMjrhl+u7s+oiXm9jlx6RDLiclJHCVETB+Ce6pNqxA/EdqEMA
-         31orYP+neBOZYrhhIAFeoyDNe4OWuM0Pt6I+yqHE0WvLKVzHUyXxTGhvDwphdi4YePLE
-         lQolaiUI66W57qMg2PzHsbvbcM3Dj1JDHjeqS0d23Py75xB42CTvYb+/9xexWl8TpNHL
-         2SxptDKnihX/HbEa4uIoe90XxAE//AHGkBg4SfhmJLMENRuPLoruvWBWIb7hmF701OBe
-         YVkCeKOHVDdUhCv8tn9zI1eMncckLVTdzaqxsGdLrlEu/hdk4A1iz1qRodeU8QnltNS4
-         YNOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=3Kg7ox/AooWhVe/5enOtQXlU3or6LL9ZFx6Mj1U8Pyo=;
-        b=XPtg2wj7x+AsAfc24ZPuFxD3LDerc97sg4PdyM2NGxXwJXUNRhiTht6Xr1PutNxlWa
-         RYPcarEZ+hZ2pJkiebt2k3OANUHvdv+xRePSsnBmgbyvY1SOMHpfvu0wuHjXFGHEjozK
-         8sK0/Mhe+UXd44Hoeczsb3kGsMl/MyiAOTfCOxfy6s5JJ+tEyOgsDURoEQf1JCJuJcEd
-         SkFsV3hdwh9uhI+LTmh046K7fGun5AgEZz0Ka6bjwrvvKJZ05iEDHAjQA5x15u/OnJfg
-         8sOUeM3fCTDgqFMxdI3PXXTnhfdZrFeJQX2U5GJJlayWAuPlTrUL7hI2rCo5GgDvUOva
-         vH1Q==
-X-Gm-Message-State: ALQs6tBxuoNKJVg5Fsal74T2ywhSpIf/mb2fqDbwgS/ZBIoofgALHBAP
-        0OkZuTf5FwxDot6VG21XborG6Exo
-X-Google-Smtp-Source: AB8JxZoZCydNQTVcuTjhQ8nNikMItz/qTliHCmS7y5V21p7d4aVcKOPdv39U9IzNYuJk9i2lnzddWA==
-X-Received: by 10.28.172.138 with SMTP id v132mr2528105wme.105.1525131170513;
-        Mon, 30 Apr 2018 16:32:50 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (abqa10.neoplus.adsl.tpnet.pl. [83.8.68.10])
-        by smtp.gmail.com with ESMTPSA id e7-v6sm8865920wrn.88.2018.04.30.16.32.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 30 Apr 2018 16:32:49 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v4 10/10] commit-graph.txt: update design document
-References: <20180417170001.138464-1-dstolee@microsoft.com>
-        <20180425143735.240183-1-dstolee@microsoft.com>
-        <20180425143735.240183-11-dstolee@microsoft.com>
-Date:   Tue, 01 May 2018 01:32:46 +0200
-In-Reply-To: <20180425143735.240183-11-dstolee@microsoft.com> (Derrick
-        Stolee's message of "Wed, 25 Apr 2018 14:38:03 +0000")
-Message-ID: <86d0ygfext.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1755558AbeD3X7x (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 19:59:53 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36904 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753953AbeD3X7v (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 30 Apr 2018 19:59:51 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 02D2560129;
+        Mon, 30 Apr 2018 23:59:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1525132789;
+        bh=6I3q1pIMwrhF8cT3PugzuypYmAvQ5GKvb5pZaKD1dqw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=QXcqrEwFXGgp2z8aI62/bH6FMQW5jReCJNlFnMz+W87H4MokzR9CaTZKpwYA1KDJr
+         1rwCJ5lVrWHMmu0i+A4TjkSeFyaAQcVxL3p7hTfPrDpYw7sww+FQWFO0EssITV/xrp
+         otckOjjib/JsHTqQKuV/od9kXZgHUE8Xb0sk7lvYxfb2uUXg7oDUfVU7De3KsupEG/
+         kPC0I7SdR/tmFlbi8vJ86t3pwK/x9PlXx6TlvKhArYgqJILmDIEhjbvydMD4+UwuTW
+         j0usvLlQhPkxBs8L4cgjvJ1iAzehpdk0N5MqjuTOn5xtXlTH79k5HQWyKHRno+T/QX
+         vtAic4ubIvmU+NHpJXbOZ7RRHOlWKBvFm3DeMC/3Y8qF1vO3vSGEnYjvCCwqik3z6+
+         FeA1okoddl+kAg9e0F+F7oPxoOyb34nt33FjP+85aZxxiMA85yJq2sGPaqASVjCexE
+         y2WF1iB3QuXk3EsXNtBcS2peMyGflFdI/VHfF3P2XvPU8IW4C0t
+Date:   Mon, 30 Apr 2018 23:59:43 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 00/41] object_id part 13
+Message-ID: <20180430235943.GC13217@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
+ <CACsJy8CX7cgd4EGSHVUtm35Aq92Us8WBA-r746vEaZiFP5Q5Lg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="hOcCNbCCxyk/YU74"
+Content-Disposition: inline
+In-Reply-To: <CACsJy8CX7cgd4EGSHVUtm35Aq92Us8WBA-r746vEaZiFP5Q5Lg@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-3-amd64)
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
 
-> We now calculate generation numbers in the commit-graph file and use
-> them in paint_down_to_common().
->
-> Expand the section on generation numbers to discuss how the three
-> special generation numbers GENERATION_NUMBER_INFINITY, _ZERO, and
-> _MAX interact with other generation numbers.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+--hOcCNbCCxyk/YU74
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Looks good.
+On Mon, Apr 30, 2018 at 08:03:12PM +0200, Duy Nguyen wrote:
+> On Tue, Apr 24, 2018 at 1:39 AM, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > [0] I can synthesize blobs, trees, and commits, but things are currently
+> > totally broken, which is, I suppose, to be expected.
+>=20
+> Yup. I was tired and bored so I went playing with the new hash.
+> Writing and reading blobs (with hash-object/cat-file) were relatively
+> easy after fixing up fill_sha1_path and get_oid_basic). Then I worked
+> my way up to update-index/ls-files so that I could make trees with
+> write-tree. And I hit the first road block: struct ondisk_cache_entry
+> hard codes hash size so I would need to re-organize the code for more
+> flexibility (or even redesign the file format if I want to keep byte
+> alignment). Eck...
+>=20
+> I guess I'll be helping review this series instead :D
 
-> ---
->  Documentation/technical/commit-graph.txt | 30 +++++++++++++++++++-----
->  1 file changed, 24 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/technical/commit-graph.txt b/Documentation/tec=
-hnical/commit-graph.txt
-> index 0550c6d0dc..d9f2713efa 100644
-> --- a/Documentation/technical/commit-graph.txt
-> +++ b/Documentation/technical/commit-graph.txt
-> @@ -77,6 +77,29 @@ in the commit graph. We can treat these commits as hav=
-ing "infinite"
->  generation number and walk until reaching commits with known generation
->  number.
->=20=20
-> +We use the macro GENERATION_NUMBER_INFINITY =3D 0xFFFFFFFF to mark commi=
-ts not
-> +in the commit-graph file. If a commit-graph file was written by a version
-> +of Git that did not compute generation numbers, then those commits will
-> +have generation number represented by the macro GENERATION_NUMBER_ZERO =
-=3D 0.
-> +
-> +Since the commit-graph file is closed under reachability, we can guarant=
-ee
-> +the following weaker condition on all commits:
-> +
-> +    If A and B are commits with generation numbers N amd M, respectively,
-> +    and N < M, then A cannot reach B.
-> +
-> +Note how the strict inequality differs from the inequality when we have
-> +fully-computed generation numbers. Using strict inequality may result in
-> +walking a few extra commits,
+Yeah, I have code to fix that, but it's ugly.
 
-The linux kernel commit graph has maximum of 513 commits sharing the
-same generation number, but is is 5.43 commits sharing the same
-generation number on average, with standard deviation 10.70; median is
-even lower: it is 2, with 5.35 median absolute deviation (MAD).
-
-So on average it would be a few extra commits.  Right.
-
->                               but the simplicity in dealing with commits
-> +with generation number *_INFINITY or *_ZERO is valuable.
-
-As I wrote before, handling those corner cases in more complicated, but
-not that complicated.  We could simply use stronger condition if both
-generation numbers are ordinary generation numbers, and weaker condition
-when at least one generation number has one of those special values.
-
-> +
-> +We use the macro GENERATION_NUMBER_MAX =3D 0x3FFFFFFF to for commits who=
-se
-> +generation numbers are computed to be at least this value. We limit at
-> +this value since it is the largest value that can be stored in the
-> +commit-graph file using the 30 bits available to generation numbers. This
-> +presents another case where a commit can have generation number equal to
-> +that of a parent.
-
-Ordinary generation numbers, where stronger condition holds, are those
-between GENERATION_NUMBER_ZERO < gen(C) < GENERATION_NUMBER_MAX.
-
-> +
->  Design Details
->  --------------
->=20=20
-> @@ -98,17 +121,12 @@ Future Work
->  - The 'commit-graph' subcommand does not have a "verify" mode that is
->    necessary for integration with fsck.
->=20=20
-> -- The file format includes room for precomputed generation numbers. These
-> -  are not currently computed, so all generation numbers will be marked as
-> -  0 (or "uncomputed"). A later patch will include this calculation.
-> -
-
-Good.
-
->  - After computing and storing generation numbers, we must make graph
->    walks aware of generation numbers to gain the performance benefits they
->    enable. This will mostly be accomplished by swapping a commit-date-ord=
-ered
->    priority queue with one ordered by generation number. The following
-> -  operations are important candidates:
-> +  operation is an important candidate:
->=20=20
-> -    - paint_down_to_common()
->      - 'log --topo-order'
-
-Another possible candidates:
-
-       - remove_redundant() - see comment in previous patch
-       - still_interesting() - where Git uses date slop to stop walking
-         too far
-
->=20=20
->  - Currently, parse_commit_gently() requires filling in the root tree
-
-One important issue left is handling features that change view of
-project history, and their interaction with commit-graph feature.
-
-What would happen, if we turn on commit-graph feature, generate commit
-graph file, and then:
-
-  * use graft file or remove graft entries to cut history, or remove cut
-    or join two [independent] histories.
-  * use git-replace mechanims to do the same
-  * in shallow clone, deepen or shorten the clone
-
-What would happen if without re-generating commit-graph file (assuming
-tha Git wouldn't do it for us), we run some feature that makes use of
-commit-graph data:
-
-  - git branch --contains
-  - git tag --contains
-  - git rev-list A..B
-
-Best,
+You can see the work on part2 and part3 of the test fixes, plus the
+fixes for all of that stuff on my object-id-part14 branch.
 --=20
-Jakub Nar=C4=99bski
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--hOcCNbCCxyk/YU74
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrnre8ACgkQv1NdgR9S
+9osYZA/+MY/gxS1MZ7alJfge5Y37Rk1rxZ4xRfXz6oxW3XPd1DJD3TY6Raad6tFC
+GHJ3mIyxZkv+NLwFVY7YVbG1iZeO0wYWbNz8YuPnk4L4UwnqygVWzNnFJtjtSgJr
+ckN1oGUAbNWXHB/KQFJZE9IRpGufUO3v+X+plhEO4FzVQyqAhbdiyQ+/Z2XBSDV1
+Ku25yZyKC3orhaRJrf8BWU0pGSvCmE+lDtmq4mRXCv2X/YSpLSVZrZi6rU+WSlD2
+hMJlZNJ8GJTk9phTE2glY4sDBW3YR4rTq8kF9rnikde7nf10j+KULM9DQAqmHWuT
+uhRg0f/lRLGaQ70ynLYlbTX8arW8EQ8E1RlNyDHV1S4lsNkGZ/VaRLwAW8ofopZY
+46SjjB3z5hIVV7ZVZ9g369VlGgXTR+7/I6qywWm+pDn8VzqpWw27iZFG5cMRmjM9
+gkmcEmzKWC0xPFg8NgVuOSR+brEktPiav/CcjWQa9r6X2ADLctNtitzyNKKJCiAL
+lwO24C7c5kKGhvjS1GIhZA8tYQfzoMMskAa1KJbnGrZQQE7o3OLaDIBYwBbnOdXz
+BcRkMrbTna8xvt6CFj5nj5RnnbsHsKIHwkQE/Sg8GBi/lA6XjApobjkaeUqHFRk4
+kxw2RLWaH7gguVGJoWMA/TcOiIY9oHEQoH1noMCqVyssaxKFGWA=
+=Szla
+-----END PGP SIGNATURE-----
+
+--hOcCNbCCxyk/YU74--
