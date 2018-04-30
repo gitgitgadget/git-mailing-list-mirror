@@ -2,77 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87DD121841
-	for <e@80x24.org>; Mon, 30 Apr 2018 08:29:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A5CD21841
+	for <e@80x24.org>; Mon, 30 Apr 2018 08:56:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751819AbeD3I3Z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 04:29:25 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:46266 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751323AbeD3I3Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 04:29:24 -0400
-Received: by mail-io0-f178.google.com with SMTP id f21-v6so9311757iob.13
-        for <git@vger.kernel.org>; Mon, 30 Apr 2018 01:29:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=ZcB4SUOzecn6nlffqFdMsFlnJx/+aTPmO7+LACNDgcg=;
-        b=Vnp97iPvL4kLZzxAVgw5HvNgRNhbrmQY+z50CPq+IkcvwIYc81hCNeN0HDsJzli1o2
-         ck2MhfCXimd3sh+EMWx4yNuATa8/iTrsqwYyoKoJFNryT1Twzi9me0SwpL5Mh49d5Gq5
-         TZJBCOASRsIgcOaROcVdCcIrO4ymOapbyazhIeG6BQTb596BwmVuUiqJVAEPdqLSBFV+
-         2+Uq3ejRwonu00GnlrSlnIp2Y6dSEcoFdZwKaSKZ6tujHwv8ruUAtuNGN9z3PthBTVyc
-         Sx7ONsD5yIukopmDjvhCnY3q1r84fj8Rqo4ieLIrYRo+LFAhSYEWGhSk5rqqPAoZ9+ok
-         98AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ZcB4SUOzecn6nlffqFdMsFlnJx/+aTPmO7+LACNDgcg=;
-        b=uNm4/M+udFReU6dRXogBaux35P+3lIMfOuQjKI+/HzonsMMoZcQoblRIMWOIrJtO3s
-         drGp+UyhLf97p6JUvC2aO8Td1O2k1XoSHp7psA9bISuRFWMG9QKM+DxOB1aJtvXVp669
-         CYjMIoDtvBXt1A6UcER52smahXunGjsbOlZz3uCAs01EBCIRyvVUN3BhQ6Ffw2CdMYI9
-         0EongKUpEw38+y///P92S6He3QHUc5MXtjE83n0y5omJ0XVNqHH2ZMSxWKYQHoMjBDmF
-         Lyo10eJtv7PaCBmipJ1xwIElFqji2/91xyrFF6G+hOWuQpDk2CYHILDRpaXjBOT+kDs+
-         9gjg==
-X-Gm-Message-State: ALQs6tBcFdIwRp8oN625C2MKeH12onFe5s/YQzdmTt8G5lQzxJfQF1SD
-        QmdQxFrXWmRdesgep2ZW8d4EIUUZaIPy7lUvspS9Vg==
-X-Google-Smtp-Source: AB8JxZos9ogURLzaUZIiAMlcJ9oGfNaNvnP6VeE8Y4hfn0zDbKhgZ66z4sMY0Xju/UP4ke1/upcyZMWGHqoezmr3GKQ=
-X-Received: by 2002:a6b:9b15:: with SMTP id d21-v6mr12317853ioe.243.1525076963896;
- Mon, 30 Apr 2018 01:29:23 -0700 (PDT)
+        id S1751729AbeD3I4A (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 04:56:00 -0400
+Received: from mout.web.de ([212.227.15.4]:57959 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751234AbeD3I4A (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Apr 2018 04:56:00 -0400
+Received: from [192.168.209.20] ([195.198.252.176]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Mbhiv-1euaPW2POX-00J0Ft; Mon, 30
+ Apr 2018 10:55:55 +0200
+Subject: Re: [PATCH v1 1/1] test: Correct detection of UTF8_NFD_TO_NFC for
+ APFS
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, newren@gmail.com
+References: <CABPp-BHitvta8we8di-tFiNdVV7vXnMNAhiAs2=CrQc-gGuSJw@mail.gmail.com>
+ <20180430063519.27122-1-tboegi@web.de>
+ <xmqqvac9xh4d.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <255708be-3cf2-0285-b5e7-4fbc9e0e8ddd@web.de>
+Date:   Mon, 30 Apr 2018 10:55:50 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
+ Gecko/20100101 Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 2002:a4f:7c91:0:0:0:0:0 with HTTP; Mon, 30 Apr 2018 01:29:23
- -0700 (PDT)
-From:   Casey Fitzpatrick <kcghost@gmail.com>
-Date:   Mon, 30 Apr 2018 04:29:23 -0400
-Message-ID: <CAEp-SHXo2fnyUSMDqJnfOkh_R21R2FjFUtQ14u9s6-tV039tHg@mail.gmail.com>
-Subject: git-submodule is missing --dissociate option
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqvac9xh4d.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:jwofcngA0PReGWjzf+ivf7PHKumrWaXgaQLe9iEmmqUEmL+oJA7
+ hVd++GWYvV5ntrkGpuyPRW6YBAUYJbhU9pTmgRUOe2QKjl6jIVs5tpQWEXBo4eI03lF6FhJ
+ MGqqqNnZStk50m2lSC5NU/req5dCU+rudY9imX4UELn+9RMiJMIVdm7oeiveMpIR5X+/ZJg
+ 00H+tnECOiEMTtBsM6lJw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oHuUfU9QoCg=:iBE5Fbvrv739bGLg+Hoxlq
+ owK3/YEZysgGdtfDMxrEbb246B8JATgx6lhMlqrjUU2K1AJJR91aL+K9sR/KC2RKc4l4f3pE+
+ hLZG5vUVmG7w+6DfrI5YUVg+n6gVTPj88e4Jfp5ynKlAcECuYT2vbPUZkpH3L5BvV41ZjnGlq
+ f7snNrSnR7jy++lZdGdRO9pxZxmsD5Wi9ciDdWuUa5qvG6Swvjr4nuItC00rqHZL5WwHY677f
+ La14GiXCSz8LGYsQhg7zzwInkU3pMxtT2EF61Cj+Nesb6IUzGlRF0et2NXN+wFPCS7nN9+82D
+ 2pH/hO37WF+PVStuTCaBt5C++LHMN8k0Wr9mzecao2EY95QYflELiXmuE1ZotApuwAV5YAcHF
+ czxMfQ5lonyAAmJjqau/KQ0g3SgQC0decJaLLEs9YbhJYYbFiByC30RWd9f26qsMAD3G04XsC
+ fc8rfzQcDjc+UjODvPUFdLZhRMPgDpSOlQV7Z0TfflrQN8tBe0/6Enz8VNRjUcBXj2BfIzyx/
+ GrQIWWbLJfC3DV8fqygx01e4ojIuApQ2LPdVHnZ6bIk2EJc9OlgRS6txz8RgE/C22BNbiIMlU
+ e8Eeh5mwEK3My9+2Hlqzx0jEzcyqhyvVqJzB81bECpAk1CK3dJN2qCt4SU9rlmTt8fXToCvkx
+ UR2Hdw19nBeY1qssh1ctyjSgE7laUh/nbBR9j0YGGPNSzMvioLzIH+3iQxA0rIzLKUOAOJ5Vk
+ NeOzVBI9O4QOAlzbBi9pm72utoRYBbYHbhnaLmdNHwPs1v8rXXCHr4LHP1My0RAzTHPXWGW8+
+ xvtnMS6Xq4hSAn8J4HJ76udtv9kW9+05dwXpCj5VYgmaqMVXw0f4DOT3csojjsPPEFgimFz0H
+ NSMKCpm8TBRGPiFrqaOQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This seems to be a hole in the git feature set. I believe it is fairly
-easily worked around, but it would be best to provide the option for
-ease of use (and maybe performance?).
+On 30.04.18 09:56, Junio C Hamano wrote:
+> tboegi@web.de writes:
+> 
+>> From: Torsten Bögershausen <tboegi@web.de>
+>>
+>> On HFS (which is the default Mac filesystem prior to High Sierra),
+>> unicode names are "decomposed" before recording.
+>> On APFS, which appears to be the new default filesystem in Mac OS High
+>> Sierra, filenames are recorded as specified by the user.
+>>
+>> APFS continues to allow the user to access it via any name
+>> that normalizes to the same thing.
+>>
+>> This difference causes t0050-filesystem.sh to fail two tests.
+>>
+>> Improve the test for a NFD/NFC in test-lib.sh:
+>> Test if the same file can be reached in pre- and decomposed unicode.
+>>
+>> Reported-By: Elijah Newren <newren@gmail.com>
+>> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+>> ---
+>>  t/test-lib.sh | 7 +------
+>>  1 file changed, 1 insertion(+), 6 deletions(-)
+> 
+> Thanks.  
+> 
+> Wouldn't it logically make more sense to check for the target being
+> an existing file with "-f"?  It is not an essential part of the test
+> for the target to be "readable", but "can be stat(2)ed with the
+> other UTF-8 representation" is.
 
-git clone has both a --reference feature and a --dissociate option,
-with dissociate allowing for a reference to *only* speed up network
-transfers rather than have the resulting clone rely upon the reference
-always being there (creates an independent repo).
-But git submodule only allows for --reference, so there isn't a an
-option to make a speedy independent submodule clone in one shot:
-https://git-scm.com/docs/git-submodule
-I checked the latest online documentation (currently at 2.16.3) and
-the documentation in the latest sources (almost 2.18):
-https://github.com/git/git/blob/next/Documentation/git-submodule.txt
+That make sense.
+Would you like to amend the patch ?
 
-As far as I am aware this can be worked around with 'git repack -a'
-and manual removal of the objects/info/alternates file afterward.
-Though I don't know if this results in a less speedy clone than
-dissociate would.
+
