@@ -7,28 +7,28 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F320215F4
-	for <e@80x24.org>; Mon, 30 Apr 2018 15:31:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CBD9215F4
+	for <e@80x24.org>; Mon, 30 Apr 2018 15:31:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754679AbeD3Pbp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 11:31:45 -0400
-Received: from mail-by2nam01on0136.outbound.protection.outlook.com ([104.47.34.136]:22710
-        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+        id S1754686AbeD3Pbs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 11:31:48 -0400
+Received: from mail-bn3nam01on0103.outbound.protection.outlook.com ([104.47.33.103]:2570
+        "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1754524AbeD3Pbn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 11:31:43 -0400
+        id S1753980AbeD3Pbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Apr 2018 11:31:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=00xnzm5Y0FAd2zjGYMOep57I2Zh6dsa1RXD0GjOCEb8=;
- b=RNS7d//wyYF7wcfZMWeuxHDBvMcL5WFaRJt7z9CyEvBd3w4l9krB0GyMZBhgmra2oqTz1oQg/pGw/t32+GOuFvv9gXXnGhRJozIqiNDO7Z8fIDXQxPZaUWbtQ3+yyNE5fsgUGiBt/NuYdPr3gc4bS5wyUr9t8VQrfZemER5eT14=
+ bh=76EpmzQ/zFd9b6cfnO18Z/cSYHQVsMyvodY+q8Fo1o8=;
+ b=CYvHBlyp1LcpKRkeRMNgIAi69x83rkUL37sqUTYc1Py7/6ON3V9Yw4r0/il11bQ6LDXSGy9xNDO2mSz19Cb7E5CFirnkfLSaWDd7ZafSSlY3+ccGvkmqz8UPGPZo/quxrfOc6rL/4CL81I6foEjghHAD/Y/8GbTXjN2Mu2lyKyc=
 Received: from BL0PR2101MB1106.namprd21.prod.outlook.com (52.132.24.29) by
- BL0PR2101MB1012.namprd21.prod.outlook.com (52.132.24.11) with Microsoft SMTP
+ BL0PR2101MB0914.namprd21.prod.outlook.com (52.132.23.151) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.735.4; Mon, 30 Apr 2018 15:31:41 +0000
+ 15.20.755.1; Mon, 30 Apr 2018 15:31:43 +0000
 Received: from BL0PR2101MB1106.namprd21.prod.outlook.com
  ([fe80::89b8:b210:812d:c7a0]) by BL0PR2101MB1106.namprd21.prod.outlook.com
  ([fe80::89b8:b210:812d:c7a0%4]) with mapi id 15.20.0755.002; Mon, 30 Apr 2018
- 15:31:41 +0000
+ 15:31:43 +0000
 From:   Jameson Miller <jamill@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "gitster@pobox.com" <gitster@pobox.com>,
@@ -36,12 +36,11 @@ CC:     "gitster@pobox.com" <gitster@pobox.com>,
         "jonathantanmy@google.com" <jonathantanmy@google.com>,
         "sbeller@google.com" <sbeller@google.com>,
         Jameson Miller <jamill@microsoft.com>
-Subject: [PATCH v2 1/5] read-cache: teach refresh_cache_entry() to take istate
-Thread-Topic: [PATCH v2 1/5] read-cache: teach refresh_cache_entry() to take
- istate
-Thread-Index: AQHT4JhWY6wuFrc8/UGVXPnqxflQkg==
-Date:   Mon, 30 Apr 2018 15:31:41 +0000
-Message-ID: <20180430153122.243976-2-jamill@microsoft.com>
+Subject: [PATCH v2 3/5] mem-pool: fill out functionality
+Thread-Topic: [PATCH v2 3/5] mem-pool: fill out functionality
+Thread-Index: AQHT4JhXgM+PkPx06Uufvuo1NfMsXQ==
+Date:   Mon, 30 Apr 2018 15:31:43 +0000
+Message-ID: <20180430153122.243976-4-jamill@microsoft.com>
 References: <20180417163400.3875-1-jamill@microsoft.com>
  <20180430153122.243976-1-jamill@microsoft.com>
 In-Reply-To: <20180430153122.243976-1-jamill@microsoft.com>
@@ -55,110 +54,259 @@ x-clientproxiedby: BN4PR13CA0007.namprd13.prod.outlook.com
  (2603:10b6:207:37::29)
 x-ms-exchange-messagesentrepresentingtype: 1
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1012;7:LYA+fBz4qs1irT7r0UM5N0DjcyqkP9SpgBWZhnzV8xTv+3K9l1+esaiRV7KmtuLbOUE9z6+Rw0b6sYq8CVzfiHpRVAcpEyR2pFYq7VSFUGa3PGNyEz3hC2DlgvuPFy096qedfHqHIy7ebPidwIHxFyLoXEPiNF/xmHptkB8VzC9SWdgBic3AgY98NULgwbbXX5QrayNFznVojWuM5xS5IdI8eT7O5y+wszWypd+FJ+6Z4x46P7hsYQuk283kzX3+;20:6i+qRrlFM6fC1whmyUAeMZMQPNU1Bntdy+IeUNO12Pz6UwN9bPvEmlWA+brnkoQyf0bi4R9egN7jQw0P8GZVCkAQPPHAuIOHfv7c9GQE/+FcobGkPP7IXz4NKCXw9Ab8sF2HU0BDkHxsLK+Ye4qniD9P9XUajn+Z2l0PcSC8XLU=
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0914;7:RsxeqDJc7rxPgqY/ZKIk1hFKqj4bk2EHmcegi1s1qJQyqtf1oWTml6c0yYxHYFfJ7lFqqp8Brzor+dJkSj4YJLU3v7sutBXD+W5LuAvwAyfGCJoxZTTuY+IfVQE7jOi9ZHrsZWpkAywCL1Lk7zFgO/vZVmOEPEaSMNHDBabE3gKGJK1s+p5cV/FOFYWPtRBN9qzIBqyus0Qf/KZsrjSMddj1cM1Qh5t7AtJA+OiH633VvLU+e1f3YHtMTJANPV9X;20:EzkmBHD6Dxzx4fx/H37308XwocRJF+Cj7IgS5eXbZ/NewLupmZLuqIktWc11qdlMK8qvO18GE5DlE9cFVg2vf0jEH3yc780aHq9jZjeqlwQjV4Bxnzp2kRP6qwmMOE/TXeU+c5uvWACh5Vy8azreE6ypHpLEeSQNw1kkOk/O5ik=
 x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(2017052603328)(7193020);SRVR:BL0PR2101MB1012;
-x-ms-traffictypediagnostic: BL0PR2101MB1012:
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB0914;
+x-ms-traffictypediagnostic: BL0PR2101MB0914:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=jamill@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB10128BE1D70A48E0A611BB5FCE820@BL0PR2101MB1012.namprd21.prod.outlook.com>
+x-microsoft-antispam-prvs: <BL0PR2101MB091480D67F7E0D9CE7E2C687CE820@BL0PR2101MB0914.namprd21.prod.outlook.com>
 x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3002001)(10201501046)(3231254)(2018427008)(944501410)(52105095)(6055026)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(20161123564045)(20161123560045)(20161123558120)(6072148)(201708071742011);SRVR:BL0PR2101MB1012;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1012;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(3002001)(10201501046)(93006095)(93001095)(3231254)(2018427008)(944501410)(52105095)(6055026)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123564045)(20161123560045)(20161123558120)(20161123562045)(6072148)(201708071742011);SRVR:BL0PR2101MB0914;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0914;
 x-forefront-prvs: 0658BAF71F
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39380400002)(376002)(346002)(39860400002)(366004)(396003)(199004)(189003)(10090500001)(6506007)(3660700001)(386003)(59450400001)(1730700003)(7736002)(81166006)(5660300001)(52116002)(305945005)(81156014)(8936002)(8676002)(186003)(3280700002)(476003)(2616005)(97736004)(446003)(11346002)(6116002)(86612001)(106356001)(46003)(99286004)(4326008)(102836004)(6916009)(105586002)(76176011)(1076002)(107886003)(2351001)(14454004)(54906003)(2906002)(6512007)(2900100001)(53936002)(36756003)(5640700003)(10290500003)(316002)(25786009)(39060400002)(8656006)(478600001)(68736007)(22452003)(5250100002)(486006)(6486002)(575784001)(86362001)(2501003)(6436002)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1012;H:BL0PR2101MB1106.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39380400002)(366004)(346002)(396003)(376002)(39860400002)(189003)(199004)(4326008)(36756003)(97736004)(8936002)(1730700003)(81156014)(81166006)(46003)(14454004)(22452003)(8676002)(86612001)(8656006)(186003)(6436002)(54906003)(6116002)(3660700001)(1076002)(105586002)(6512007)(53936002)(476003)(2906002)(107886003)(2616005)(316002)(6486002)(3280700002)(68736007)(2351001)(39060400002)(11346002)(5640700003)(446003)(2501003)(99286004)(486006)(6916009)(2900100001)(102836004)(5660300001)(7736002)(52116002)(6506007)(106356001)(386003)(305945005)(86362001)(10290500003)(25786009)(5250100002)(10090500001)(478600001)(76176011)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0914;H:BL0PR2101MB1106.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: 8vkmAZmjjNMfwbtUBW0uOey1tM/qpIQIaWzwGWidsrO+ZCN9xe65fkVKAN1OPhUuFUBZe3NqbTtTySJGyRkQP+0DwjOgj4PO8USU1+A786WfUvSBi1/kkgD4tUgcZwHhP7m0qOYNk7L+VxXkL1OltRw8fgi1f9xv5DOQCU6HrseF4vohzT6vLjLkLSLkH+pQ
+x-microsoft-antispam-message-info: 75/D/vm60wrNAYJ4ZVWxobXMIW8wKBQrNxs9kq4GhqbW9q1YMeb67+GJXoUB8eoyfRfwgdVyMXGf5Z0VLdNbHWfxVl06lqW15bxoQQVUWQZWN6BQ7fNPFDPSP6/ANQUJuzVNmT4NB5Y175U/+YM1JDiknmC9jMGaMY/xntIz/dkU3R2SoOGtDhnxNgsWyrPm
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 4f0bc339-abea-4d88-137c-08d5aeaf789a
+X-MS-Office365-Filtering-Correlation-Id: 169c547c-5d17-4c3b-f581-08d5aeaf79c7
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4f0bc339-abea-4d88-137c-08d5aeaf789a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Apr 2018 15:31:41.3800
+X-MS-Exchange-CrossTenant-Network-Message-Id: 169c547c-5d17-4c3b-f581-08d5aeaf79c7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Apr 2018 15:31:43.3033
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1012
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0914
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor refresh_cache_entry() to work on a specific index, instead of
-implicitly using the_index. This is in preparation for making the
-make_cache_entry function work on a specific index.
+Adds the following functionality to memory pools:
+
+ - Lifecycle management functions (init, discard)
+
+ - Test whether a memory location is part of the managed pool
+
+ - Function to combine 2 pools
+
+This also adds logic to track all memory allocations made by a memory
+pool.
+
+These functions will be used in a future commit in this commit series.
 
 Signed-off-by: Jameson Miller <jamill@microsoft.com>
 ---
- cache.h           | 2 +-
- merge-recursive.c | 2 +-
- read-cache.c      | 7 ++++---
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ mem-pool.c | 114 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++---
+ mem-pool.h |  32 +++++++++++++++++
+ 2 files changed, 142 insertions(+), 4 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 77b7acebb6..31f8f0420a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -743,7 +743,7 @@ extern void fill_stat_cache_info(struct cache_entry *ce=
-, struct stat *st);
- #define REFRESH_IGNORE_SUBMODULES	0x0010	/* ignore submodules */
- #define REFRESH_IN_PORCELAIN	0x0020	/* user friendly output, not "needs up=
-date" */
- extern int refresh_index(struct index_state *, unsigned int flags, const s=
-truct pathspec *pathspec, char *seen, const char *header_msg);
--extern struct cache_entry *refresh_cache_entry(struct cache_entry *, unsig=
-ned int);
-+extern struct cache_entry *refresh_cache_entry(struct index_state *, struc=
-t cache_entry *, unsigned int);
+diff --git a/mem-pool.c b/mem-pool.c
+index 389d7af447..a495885c4b 100644
+--- a/mem-pool.c
++++ b/mem-pool.c
+@@ -5,6 +5,8 @@
+ #include "cache.h"
+ #include "mem-pool.h"
 =20
- /*
-  * Opportunistically update the index but do not complain if we can't.
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 0c0d48624d..693f60e0a3 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -260,7 +260,7 @@ static int add_cacheinfo(struct merge_options *o,
- 	if (refresh) {
- 		struct cache_entry *nce;
-=20
--		nce =3D refresh_cache_entry(ce, CE_MATCH_REFRESH | CE_MATCH_IGNORE_MISSI=
-NG);
-+		nce =3D refresh_cache_entry(&the_index, ce, CE_MATCH_REFRESH | CE_MATCH_=
-IGNORE_MISSING);
- 		if (!nce)
- 			return err(o, _("addinfo_cache failed for path '%s'"), path);
- 		if (nce !=3D ce)
-diff --git a/read-cache.c b/read-cache.c
-index 10f1c6bb8a..2cb4f53b57 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -767,7 +767,7 @@ struct cache_entry *make_cache_entry(unsigned int mode,
- 	ce->ce_namelen =3D len;
- 	ce->ce_mode =3D create_ce_mode(mode);
-=20
--	ret =3D refresh_cache_entry(ce, refresh_options);
-+	ret =3D refresh_cache_entry(&the_index, ce, refresh_options);
- 	if (ret !=3D ce)
- 		free(ce);
- 	return ret;
-@@ -1448,10 +1448,11 @@ int refresh_index(struct index_state *istate, unsig=
-ned int flags,
- 	return has_errors;
- }
-=20
--struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
-+struct cache_entry *refresh_cache_entry(struct index_state *istate,
-+					       struct cache_entry *ce,
- 					       unsigned int options)
++#define BLOCK_GROWTH_SIZE 1024*1024 - sizeof(struct mp_block);
++
+ static struct mp_block *mem_pool_alloc_block(struct mem_pool *mem_pool, si=
+ze_t block_alloc)
  {
--	return refresh_cache_ent(&the_index, ce, options, NULL, NULL);
-+	return refresh_cache_ent(istate, ce, options, NULL, NULL);
+ 	struct mp_block *p;
+@@ -19,6 +21,60 @@ static struct mp_block *mem_pool_alloc_block(struct mem_=
+pool *mem_pool, size_t b
+ 	return p;
  }
 =20
++static void *mem_pool_alloc_custom(struct mem_pool *mem_pool, size_t block=
+_alloc)
++{
++	char *p;
++	ALLOC_GROW(mem_pool->custom, mem_pool->nr + 1, mem_pool->alloc);
++	ALLOC_GROW(mem_pool->custom_end, mem_pool->nr_end + 1, mem_pool->alloc_en=
+d);
++
++	p =3D xmalloc(block_alloc);
++	mem_pool->custom[mem_pool->nr++] =3D p;
++	mem_pool->custom_end[mem_pool->nr_end++] =3D p + block_alloc;
++
++	mem_pool->pool_alloc +=3D block_alloc;
++
++	return mem_pool->custom[mem_pool->nr];
++}
++
++void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size)
++{
++	if (!(*mem_pool))
++	{
++		*mem_pool =3D xmalloc(sizeof(struct mem_pool));
++		(*mem_pool)->pool_alloc =3D 0;
++		(*mem_pool)->mp_block =3D NULL;
++		(*mem_pool)->block_alloc =3D BLOCK_GROWTH_SIZE;
++		(*mem_pool)->custom =3D NULL;
++		(*mem_pool)->nr =3D 0;
++		(*mem_pool)->alloc =3D 0;
++		(*mem_pool)->custom_end =3D NULL;
++		(*mem_pool)->nr_end =3D 0;
++		(*mem_pool)->alloc_end =3D 0;
++
++		if (initial_size > 0)
++			mem_pool_alloc_block(*mem_pool, initial_size);
++	}
++}
++
++void mem_pool_discard(struct mem_pool *mem_pool)
++{
++	int i;
++	struct mp_block *block, *block_to_free;
++	for (block =3D mem_pool->mp_block; block;)
++	{
++		block_to_free =3D block;
++		block =3D block->next_block;
++		free(block_to_free);
++	}
++
++	for (i =3D 0; i < mem_pool->nr; i++)
++		free(mem_pool->custom[i]);
++
++	free(mem_pool->custom);
++	free(mem_pool->custom_end);
++	free(mem_pool);
++}
++
+ void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
+ {
+ 	struct mp_block *p;
+@@ -33,10 +89,8 @@ void *mem_pool_alloc(struct mem_pool *mem_pool, size_t l=
+en)
+ 			break;
 =20
+ 	if (!p) {
+-		if (len >=3D (mem_pool->block_alloc / 2)) {
+-			mem_pool->pool_alloc +=3D len;
+-			return xmalloc(len);
+-		}
++		if (len >=3D (mem_pool->block_alloc / 2))
++			return mem_pool_alloc_custom(mem_pool, len);
+=20
+ 		p =3D mem_pool_alloc_block(mem_pool, mem_pool->block_alloc);
+ 	}
+@@ -53,3 +107,55 @@ void *mem_pool_calloc(struct mem_pool *mem_pool, size_t=
+ count, size_t size)
+ 	memset(r, 0, len);
+ 	return r;
+ }
++
++int mem_pool_contains(struct mem_pool *mem_pool, void *mem)
++{
++	int i;
++	struct mp_block *p;
++
++	/* Check if memory is allocated in a block */
++	for (p =3D mem_pool->mp_block; p; p =3D p->next_block)
++		if ((mem >=3D ((void *)p->space)) &&
++		    (mem < ((void *)p->end)))
++			return 1;
++
++	/* Check if memory is allocated in custom block */
++	for (i =3D 0; i < mem_pool->nr; i++)
++		if ((mem >=3D mem_pool->custom[i]) &&
++		    (mem < mem_pool->custom_end[i]))
++			return 1;
++
++	return 0;
++}
++
++void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src)
++{
++	int i;
++	struct mp_block **tail =3D &dst->mp_block;
++
++	/* Find pointer of dst's last block (if any) */
++	while (*tail)
++		tail =3D &(*tail)->next_block;
++
++	/* Append the blocks from src to dst */
++	*tail =3D src->mp_block;
++
++	/* Combine custom allocations */
++	ALLOC_GROW(dst->custom, dst->nr + src->nr, dst->alloc);
++	ALLOC_GROW(dst->custom_end, dst->nr_end + src->nr_end, dst->alloc_end);
++
++	for (i =3D 0; i < src->nr; i++) {
++		dst->custom[dst->nr++] =3D src->custom[i];
++		dst->custom_end[dst->nr_end++] =3D src->custom_end[i];
++	}
++
++	dst->pool_alloc +=3D src->pool_alloc;
++	src->pool_alloc =3D 0;
++	src->mp_block =3D NULL;
++	src->custom =3D NULL;
++	src->nr =3D 0;
++	src->alloc =3D 0;
++	src->custom_end =3D NULL;
++	src->nr_end =3D 0;
++	src->alloc_end =3D 0;
++}
+diff --git a/mem-pool.h b/mem-pool.h
+index 829ad58ecf..34df4fa709 100644
+--- a/mem-pool.h
++++ b/mem-pool.h
+@@ -19,8 +19,27 @@ struct mem_pool {
+=20
+ 	/* The total amount of memory allocated by the pool. */
+ 	size_t pool_alloc;
++
++	/*
++	 * Array of pointers to "custom size" memory allocations.
++	 * This is used for "large" memory allocations.
++	 * The *_end variables are used to track the range of memory
++	 * allocated.
++	 */
++	void **custom, **custom_end;
++	int nr, nr_end, alloc, alloc_end;
+ };
+=20
++/*
++ * Initialize mem_pool specified initial.
++ */
++void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size);
++
++/*
++ * Discard a memory pool and free all the memory it is responsible for.
++ */
++void mem_pool_discard(struct mem_pool *mem_pool);
++
+ /*
+  * Alloc memory from the mem_pool.
+  */
+@@ -31,4 +50,17 @@ void *mem_pool_alloc(struct mem_pool *pool, size_t len);
+  */
+ void *mem_pool_calloc(struct mem_pool *pool, size_t count, size_t size);
+=20
++/*
++ * Move the memory associated with the 'src' pool to the 'dst' pool. The '=
+src'
++ * pool will be empty and not contain any memory. It still needs to be fre=
+e'd
++ * with a call to `mem_pool_discard`.
++ */
++void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src);
++
++/*
++ * Check if a memory pointed at by 'mem' is part of the range of
++ * memory managed by the specified mem_pool.
++ */
++int mem_pool_contains(struct mem_pool *mem_pool, void *mem);
++
+ #endif
 --=20
 2.14.3
 
