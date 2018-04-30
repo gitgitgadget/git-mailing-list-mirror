@@ -2,102 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A52681F428
-	for <e@80x24.org>; Mon, 30 Apr 2018 02:09:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A18A1F428
+	for <e@80x24.org>; Mon, 30 Apr 2018 02:53:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751291AbeD3CJj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Apr 2018 22:09:39 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36342 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750779AbeD3CJi (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 29 Apr 2018 22:09:38 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8BE5560400;
-        Mon, 30 Apr 2018 02:09:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525054177;
-        bh=eI0v5slvSBYJHq2R5s+BH1ZifD8HFr7eeEBGl0t0oBk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=geYDOVUH2PssMTh77evYZxhgWzdnjd83625C8A5QWcmryQ1ZfMMB+OrieiOGtgg5Y
-         SDJtwYFHNGAyrW9jesR8t5X1vdAbugT9dbZMKQAcZoi8qQMYYzd0vY6MvcviOTaPgi
-         +NU6BN4U7q6vaym0bGITOQqK861ghEaQ0+8GVplRrSwxUmGiVlxvcOMpOzhNhbuU8y
-         GVqFBC7u+SD+csH18LdTqHYdDiEzq63LFCtAiKHmgk9t2V+yJ4krl1M7t6hpJIZ5VD
-         5p/RoeonYG7zXsLGU5rU5RQajxUoLc3EIOr5iQZU0iKbyfIGJqVkMOWGk6CXb03+Re
-         /lcnMV0End50JVCdbzGvageYA7QDlFVAHa6BhbXIEPHYGMR0vTQqHXC0J0xNilODd7
-         v9b1PR6RDmXrRLmiGIJXYuWOsrjz4YIqPL+DChqtEgB2MxV7STtLYmpkFQE6fc7jGW
-         /Rs8GBSrEgp8rlr/8wa/Mba0wqMej0TEUQl65Arz6kqqo/nvW86
-Date:   Mon, 30 Apr 2018 02:09:31 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Patrick Hemmer <git@stormcloud9.net>
-Cc:     git@vger.kernel.org
-Subject: Re: Bug: format-patch MIME boundary not added to cover letter when
- attach enabled
-Message-ID: <20180430020930.GA13217@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Patrick Hemmer <git@stormcloud9.net>, git@vger.kernel.org
-References: <5e409069-835f-3c85-f55e-c27f534dc9e2@stormcloud9.net>
+        id S1751447AbeD3CxJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Apr 2018 22:53:09 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:44633 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751343AbeD3CxI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Apr 2018 22:53:08 -0400
+Received: by mail-qk0-f171.google.com with SMTP id z8so5698160qki.11
+        for <git@vger.kernel.org>; Sun, 29 Apr 2018 19:53:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=4r04dEOhNerrFRGTofyb6Cz7WzigGJQuIbVncvaZzEo=;
+        b=Jt8PR33eUtfb+8al3jprSE3+AH1N79Y4SWuCt3hiodHJGsCINGTM86sy5j+V0F8b5/
+         668mtno74G1o6svBOZamkneP7V4g2o5CcwTDu8R+dRTsKK6bttL5ruWM9EHwySgk6UXn
+         DYGhoDVSS2UiGVasC9qLktARK1drqvmD2AagC8/PIiP9d/PeszaO3tJsKtuSBMqMA466
+         IG1YhMsU1sgPSk73kH5Rw++Od1td3SNiMuPz4KHBVG/XYmUfaIAkH18YYNfhW5n8YJrX
+         FV0mwmqdBPFArmbNoHvzAiiFU+/KgxlKxGXKwhh687a0Pfu/AJMue2ggT88GhhOtwjXz
+         +hDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=4r04dEOhNerrFRGTofyb6Cz7WzigGJQuIbVncvaZzEo=;
+        b=SplRBYKJPeI3TaELjAFl265rqJ4gQpMiDoV8xNayZX3wXd+J/ntNb2F+NpBGz06uDA
+         BO7owovjQT3z4Pp7dgjAB5yZr0iINklBsbifvLZXs57Dr0JzbqfBwG1F55BNrx1LGbyl
+         dhR8a2vfzlUa7ALs9LdQclhcGOxx+CDdJHCgrJsa2KazcxJa1NaJyV8yWdPz7OM2TKzW
+         EpP3z+Dx7/34Kg62huCNoIZLO+dYT1MhsPDMICz/5/trWNVVp1C05vG1NO9cBJmUBfMD
+         mRSzSdff2bvIIxoFUpZEYFGLFG+PhfklQoV5XZAC3kYtj+DIjiIK5zMxr/SOuckx0gKv
+         i73w==
+X-Gm-Message-State: ALQs6tA0J7E1u1rRd1+InPIlmhoXVQDsy4hbNltpv+EkqdHAsPSgxTxR
+        jn19xdk8yh0vMHBkyGTwl13gHdfvGQLcMcUOCes=
+X-Google-Smtp-Source: AB8JxZq8axc/50AOF5+Uz04ovwPeg8Lir5gqFgPVclRXuGkSFUpRwcEIjSMGdeZWqMj1gmWq4pZez3kj1J7uOR1SBKw=
+X-Received: by 10.55.108.198 with SMTP id h189mr94997qkc.2.1525056787405; Sun,
+ 29 Apr 2018 19:53:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="UugvWAfsgieZRqgk"
-Content-Disposition: inline
-In-Reply-To: <5e409069-835f-3c85-f55e-c27f534dc9e2@stormcloud9.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-3-amd64)
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Received: by 10.12.170.75 with HTTP; Sun, 29 Apr 2018 19:53:06 -0700 (PDT)
+In-Reply-To: <0e85c7a16e3767eb03cdce0a7ed75a0c2b77d7d5.1525040254.git.johannes.schindelin@gmx.de>
+References: <cover.1525040253.git.johannes.schindelin@gmx.de> <0e85c7a16e3767eb03cdce0a7ed75a0c2b77d7d5.1525040254.git.johannes.schindelin@gmx.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 29 Apr 2018 22:53:06 -0400
+X-Google-Sender-Auth: VAkSVZz4jH4Q0jsGw6F3xDgXmGY
+Message-ID: <CAPig+cQbze2cZ9bsDC0o+es2j+E7a5qb30xgzT-m7ZNkpMuRDA@mail.gmail.com>
+Subject: Re: [PATCH 6/6] Convert remaining die*(BUG) messages
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Apr 29, 2018 at 6:19 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> These were not caught by the previous commit, as they did not match the
+> regular expression.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> diff --git a/submodule.c b/submodule.c
+> @@ -2043,7 +2043,7 @@ const char *get_superproject_working_tree(void)
+>                 if (super_sub_len > cwd_len ||
+>                     strcmp(&cwd[cwd_len - super_sub_len], super_sub))
+> -                       die (_("BUG: returned path string doesn't match cwd?"));
+> +                       BUG("returned path string doesn't match cwd?");
 
---UugvWAfsgieZRqgk
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sun, Apr 29, 2018 at 09:40:13PM -0400, Patrick Hemmer wrote:
-> When you use `git format-patch --cover-letter --attach`, the cover
-> letter does not have the trailing MIME boundary. RFC2046 states that the
-> last part must be followed by a closing boundary. This causes some email
-> clients (Thunderbird in my case) to discard the message body.
-> This is experienced with git 2.16.3.
-
-Thanks for reporting this.  I can confirm this with a reasonably recent
-next.  Let me see if I can come up with a patch.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---UugvWAfsgieZRqgk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrmetoACgkQv1NdgR9S
-9oth5w/9GMxkrNjuF+Vw/CKgLWaU7IqadBtDvvGop/14Pq9vR+FA2QsMDJL5NYbh
-kyaLD7pdkLqnPEIhfwqiXR937j4/anY6w9WdSx3lr5s5IvPLAZFGzuclGGWtXYGV
-8regLSaL6tkSfytB6rzKBrObbVvADdZ0/RJiyyGi/SsAaWKKhL32IWHfpv1iw3Fi
-Mp7jkzE1xXGiMaUbpGlQ/8ElUNH4wZAIme4AtLujRvBAtlX7yhdTqysPaeKAn3wb
-e6sgYxYDjHBVafR2RjFS1ThlcZ8qx3P5PkYiBC3tdt/tDGemRTOYBDUk2mFb/4Xr
-gpkye0NXiambk/8pBLS7FaMAAwPmQXr6Reng+HGuQy6Py4AHF1A1IXYFlXu4BjFO
-O2wilcnbYXTZIoDkqaXM5vgzRPhzoScD7jBBQjt+mXuuRW39S52TxZ35YYWLSk/F
-3AE7owVVDfSQ5e94O6a1Iqziky9s2b00Yh8GyxWeXLy4q0JRgJRZEd1qff6ilW+9
-/ZVKiJcHpRQfuRJg7zQL+73tabwP56HolQCmSdTgwO9eHMEiaaW5PmfSh8xJN0Ax
-MR3A+aJYXzY1enqZru3T0ppvIWVikfSpICQKAAKwQbOzLlFuO0wr69vYptwFgMAZ
-bwNWKEtB3jahcVL1TEXD0N8xxIT8JCxRzM2WX45tp23LUbPikUU=
-=vfr4
------END PGP SIGNATURE-----
-
---UugvWAfsgieZRqgk--
+This message used to be localizable but no longer is, which makes
+sense since it's not intended as a user-facing error message but
+rather is meant for Git developers. Good.
