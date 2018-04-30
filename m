@@ -2,107 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79C1C215F4
-	for <e@80x24.org>; Mon, 30 Apr 2018 15:17:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5480215F4
+	for <e@80x24.org>; Mon, 30 Apr 2018 15:29:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754403AbeD3PRz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 11:17:55 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:38859 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754239AbeD3PRx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 11:17:53 -0400
-Received: by mail-qt0-f194.google.com with SMTP id z23-v6so11317398qti.5
-        for <git@vger.kernel.org>; Mon, 30 Apr 2018 08:17:53 -0700 (PDT)
+        id S1754315AbeD3P3H (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 11:29:07 -0400
+Received: from mail-vk0-f46.google.com ([209.85.213.46]:34118 "EHLO
+        mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754559AbeD3P3G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Apr 2018 11:29:06 -0400
+Received: by mail-vk0-f46.google.com with SMTP id t63-v6so5315395vkb.1
+        for <git@vger.kernel.org>; Mon, 30 Apr 2018 08:29:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=z2QLkC6KVWV/VYKhggsPF9wqZ2UvbrFupJe1S1stZ5Q=;
-        b=SZheQr7v+79JLpR9/KH1Xhk2CsW97MS+EP4RbK/7lp0SytdxpkLG3ppDax6OiHJFJh
-         adsPfKkSAYGc2Ey3rb/JauxrQvDiXGEEic/vBRBggbkaDHEHmRz7nUurKaTQM+i/HOJ2
-         VITnlMeUmFwPAecQN3GIyip8oHxPgHMzSI+UN86JDUVhiW+/EM1v4JxnLhd9H/MwezK0
-         tz6Qt3vQwVUwU3AAjUZuBcG3/eKM69rdLpHUL2jBlegaXUSMldEwGc2wKj/jdxB8zuiL
-         QmrDLMQ+TB0WmxYcGnTY6hn6dEHlE9GqU2X6xdgxA8bUVOS0Z/9SLwYs9jpuho1inQ/x
-         Gu3A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=n5Ra7r7IuxV1nhnYq0uvz170xyRgvFTqAid3ACs926E=;
+        b=bZKWRtbWdu8WpnN8zCBNz6EQEWkf+4Z8HUatjHVr/OOMfUU0aVzCZuyU+zzNZE+9Sa
+         snQhfMEJ2kmUu6xixYCF6d9fF9Ha+TL4LeMqLX0ePeFGia/9YXYdo6bjPKV0q+5PohT+
+         +XuWizXD83sFkyO+r3LoWi0AacwjJ0ANMF6wy293pMZJLmuYcs3DuYiBUObiqqVLMUaf
+         B/MB/4RNA9sTh37jFdvq2ZR44ntZTe4XVT5K/aDRpMSRkCVFy5WGl7iLDRRtGbi85Ovd
+         yFkyIGlCJFoN4xUbjpuUQ9paaxgeWVOzAuYw9yPK+PcBXtOOQVkvYyAg6B/ixaOk7+8M
+         hZXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=z2QLkC6KVWV/VYKhggsPF9wqZ2UvbrFupJe1S1stZ5Q=;
-        b=m+uoJlJp6aRPnQvzP35zu48ZBtNsg6Y3BZXSHpIzNPbEIH6pvlhkHXPItRee8E5SDe
-         3441NTsBuXJ6dpss2E1Vp0Rbdx7chZuFxpYe8PUE2gqpZABMkRtT0F5WHRpIDrA4BdPi
-         JEBfrB0TgqyF2r7XQBd4SbO4jn6NchcUYa/5ucRNneLwdv25SrpATBwrQEw8VUm7hCLB
-         micWDjlAJ1b3rJKGA7NaINmY7rt6eWkDPMOturcqstFdWW43QK8CMuKEARvoPZGvvZu8
-         qB26db+rEHu149CgHJtKWCEoWy2ho1c9pPic9XFdY1rQU4jRs720m/8qi04G/wnP3061
-         PVbg==
-X-Gm-Message-State: ALQs6tCzPzYPn6VlqN61ogXLmQgDzGjDGE/dR4leRvEaNYLgphDVExvo
-        oOhs9rlzFZXsff2jP1Gasnk=
-X-Google-Smtp-Source: AB8JxZqoT/a19eUsn4UW5vipHiqFQnK29bWajoGL0TgdtDZO0UaKdjSmsuCs4L864JcBt25lvzUniw==
-X-Received: by 2002:aed:3f17:: with SMTP id p23-v6mr11623310qtf.57.1525101473024;
-        Mon, 30 Apr 2018 08:17:53 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id a4sm5746533qkc.83.2018.04.30.08.17.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Apr 2018 08:17:52 -0700 (PDT)
-Subject: Re: [PATCH v1] test-drop-caches: simplify delay loading of
- NtSetSystemInformation
-To:     Duy Nguyen <pclouds@gmail.com>, Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>
-References: <20180430142555.23260-1-benpeart@microsoft.com>
- <CACsJy8CY1fNY9OPq9nisDC3X93QXjntre-vFgQ0OeuO=B0YV=Q@mail.gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <c05d652d-3275-4b04-c350-452e1c409493@gmail.com>
-Date:   Mon, 30 Apr 2018 11:17:53 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=n5Ra7r7IuxV1nhnYq0uvz170xyRgvFTqAid3ACs926E=;
+        b=pvkwhjSISR5oqwpHjo6XB7Z+lTaC3hqJsL0ZS17Iw7s+koq5/VuOYLwvtoLUWLG/Ha
+         ZRXBnPGjIwI2h+S8y+mQnGXe1Gilkp0foMB0Pe6GAffbqdVJgz1chqYtTEYoG1DN3QLQ
+         xO339ySBQwLxcClJzz5tHSv3MZTsg1qXkUnlj58Ue3ZqkqbClt6rQEqjJ/P6wiO1z2KV
+         lcgFu6yZ4pkIWhmaqhoHU9rdh4bqKJoUdRBbTwRFr/hLbpm7mIVeg9TrBMb98vALeDRZ
+         0Mdvse7OiEyacQHxJ9xlmXt8nTWfIuGK7nPt/3dQcplNifxGwCm6WIEWMKRgBp7+2cAl
+         L+kQ==
+X-Gm-Message-State: ALQs6tDKD0knVdrVs572JhgvAUJAgacov1Y/IWD8VeRNi1gMlr9bzBvm
+        6s3VqSPp80QrB1rTrAC1NagetozwZ7Y+15gGtkg=
+X-Google-Smtp-Source: AB8JxZr471RIm0Bm51zS+KU5TPAmaYy+7/Hkn/nFoAN96i7vOlxksbEYj0xRSR6xZNOeEqofkoY7Rc/Gx0mxHycOZmw=
+X-Received: by 2002:a1f:a50a:: with SMTP id o10-v6mr9176775vke.187.1525102145111;
+ Mon, 30 Apr 2018 08:29:05 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8CY1fNY9OPq9nisDC3X93QXjntre-vFgQ0OeuO=B0YV=Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.176.95.4 with HTTP; Mon, 30 Apr 2018 08:29:04 -0700 (PDT)
+In-Reply-To: <7f9feab0-3638-56cd-18bb-4de0122aabad@web.de>
+References: <CABPp-BEe+BK6Ew0ZLnkgCn=1J6kyJa5VTaibuJOEVeDdgLd_Ow@mail.gmail.com>
+ <94c6fa4d-afe0-5a08-f844-85d3c091d3b2@web.de> <CABPp-BHitvta8we8di-tFiNdVV7vXnMNAhiAs2=CrQc-gGuSJw@mail.gmail.com>
+ <7f9feab0-3638-56cd-18bb-4de0122aabad@web.de>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 30 Apr 2018 08:29:04 -0700
+Message-ID: <CABPp-BG_uYuZuKzARRKgoKmihEVuibyG8E-QZ-XB79Yz0+GHAw@mail.gmail.com>
+Subject: Re: BUG report: unicode normalization on APFS (Mac OS High Sierra)
+To:     =?UTF-8?Q?Totsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+On Fri, Apr 27, 2018 at 2:45 PM, Totsten B=C3=B6gershausen <tboegi@web.de> =
+wrote:
+> On 2018-04-26 19:23, Elijah Newren wrote:
 
-On 4/30/2018 10:57 AM, Duy Nguyen wrote:
-> On Mon, Apr 30, 2018 at 4:26 PM, Ben Peart <Ben.Peart@microsoft.com> wrote:
->> Take advantage of the recent addition of support for lazy loading functions
->> on Windows to simplfy the loading of NtSetSystemInformation.
+>> Sure.  First, though, note that I can make it pass (or at least "not
+>> ok...TODO known breakage") with the following patch (may be
+>> whitespace-damaged by gmail):
 >>
->> Signed-off-by: Ben Peart <benpeart@microsoft.com>
->> ---
->>
->> Notes:
->>      Base Ref: master
->>      Web-Diff: https://github.com/benpeart/git/commit/6e6ce4a788
->>      Checkout: git fetch https://github.com/benpeart/git test-drop-caches-v1 && git checkout 6e6ce4a788
->>
->>   t/helper/test-drop-caches.c | 16 ++++------------
->>   1 file changed, 4 insertions(+), 12 deletions(-)
->>
->> diff --git a/t/helper/test-drop-caches.c b/t/helper/test-drop-caches.c
->> index 838760898b..dd41da1a2c 100644
->> --- a/t/helper/test-drop-caches.c
->> +++ b/t/helper/test-drop-caches.c
->> @@ -1,5 +1,6 @@
->>   #include "test-tool.h"
->>   #include "git-compat-util.h"
->> +#include "lazyload.h"
-> 
-> This is in compat/win32, should it be inside the "if defined
-> (GIT_WINDOWS_NATIVE)" block instead of here?
-> 
+>> diff --git a/t/test-lib.sh b/t/test-lib.sh
+>> index 483c8d6d7..770b91f8c 100644
+>> --- a/t/test-lib.sh
+>> +++ b/t/test-lib.sh
+>> @@ -1106,12 +1106,7 @@ test_lazy_prereq UTF8_NFD_TO_NFC '
+>>          auml=3D$(printf "\303\244")
+>>          aumlcdiar=3D$(printf "\141\314\210")
+>>          >"$auml" &&
+>> -       case "$(echo *)" in
+>> -       "$aumlcdiar")
+>> -               true ;;
+>> -       *)
+>> -               false ;;
+>> -       esac
+>> +       stat "$aumlcdiar" >/dev/null 2>/dev/null
+>
+>
+> Nicely analyzed and improved.
+>
+> The "stat" statement is technically correct.
+> I think that a more git-style fix would be
+> [] ---
+> +       test -r "$aumlcdiar"
+>
+> instead of the stat.
+>
+> I looked into the 2 known breakages.
+> In short: they test use cases which are not sooo important for a user in
+> practice, but do a good test if the code is broken.
+> IOW: I can't see a need for immediate action.
+>
+> As you already did all the analyzes:
+> Do you want to send a patch ?
 
-Yes, that does make sense.  No other platform will need/want it.  I'll 
-wait to see if there is any other feedback and will submit an updated 
-patch.  Thanks for the catch.
+You know, despite seeing the "test_expect_failure" and "TODO...known
+breakage" with these tests and even mentioning them, it somehow didn't
+sink in and I was still thinking that there might be some kind of
+unicode normalization handling in the codebase somewhere (similar to
+the case insensitivy handling that I've seen in a place or two) that
+now needed to be extended.  I should have realized that
+test_expect_failure meant there wasn't, and thus all we needed to do
+was to mark it as continuing to fail with the new filesystem,  Should
+have realized, but didn't.  Oops.
+
+Anyway, it looks like you've already submitted a patch and marked it
+as having been reported by me, which is just fine.  Thanks!
+
+Elijah
