@@ -6,59 +6,62 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14F821F428
-	for <e@80x24.org>; Mon, 30 Apr 2018 00:03:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEC611F428
+	for <e@80x24.org>; Mon, 30 Apr 2018 00:07:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754566AbeD3ADf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Apr 2018 20:03:35 -0400
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:37199 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754409AbeD3ADf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Apr 2018 20:03:35 -0400
-Received: by mail-wr0-f171.google.com with SMTP id c14-v6so6494344wrd.4
-        for <git@vger.kernel.org>; Sun, 29 Apr 2018 17:03:34 -0700 (PDT)
+        id S1754537AbeD3AHS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Apr 2018 20:07:18 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:54251 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754359AbeD3AHS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Apr 2018 20:07:18 -0400
+Received: by mail-wm0-f47.google.com with SMTP id a67so2904114wmf.3
+        for <git@vger.kernel.org>; Sun, 29 Apr 2018 17:07:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=sQsiG/GKGAkGxB5g9LaayznsYmfU+15/fKSWrXnW3Fs=;
-        b=KTH9No+us8Jy6wb4yzeUc+ClLL1s1VyNF4gD7YkuCHg5B6JDgrL6ky1HpJRCrM9YrL
-         FEz/VJLWDAf/k/8k5tXBWkPCBXDeGvo8iDl2KF0F9VdiFGoSNbXsLTKSiw+k4DynK/TE
-         aBAjOAtHrYFZYQ6iOKXxe+W+9yN9xYQgDT3acEbcc9RJGY+P0nHrTdIPt95fxld8wb09
-         3C5Oz271pXx2i+gB5wOq2gVHyekc5PYkm+NDPQFyfQoBUmUK3ainpIWWbE8j29SCkKBV
-         B93pI+GOHpu62tlbjHwhukAc6TYvUA9hoID9JGKpSSYgRlMFVJOfEqnygW5+4/40zUrw
-         J2IA==
+        bh=AIz2SPc+We/S5ZiKCso69h8dhn/kF8INYyD6oHy2u1g=;
+        b=jjhQt42seJjbzP0Ka9UbYNxJspbazYsgvZMAMoR5JKuSXZQlLx6ULG6SMMGwuLaWij
+         3xWZ8NBzX9pCI3PC0DFnjHhQkk9biz9UabZ0R40hh7PsOEmH3iyROZaI+vGVmG5I7GL3
+         5mChRIWI8Q+lvvxBI8EENEyJ8wfFuqwJrOLKg5J+SND+buV7q8C/5L8beDBeGrbbrvAG
+         ruplnkx7hwxN2mIbgV1DQ6JHqYwmDPI3A0H0RnIEPTkyMd1H31GdFn+AJ4JsfHVVoA2R
+         ZoCT6MkqikEUGGRihwG64FDr5n5xamwC7xQMmOBJ6VBdPn1Tdpi4TisIl+fvwyC8zKQX
+         EgVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=sQsiG/GKGAkGxB5g9LaayznsYmfU+15/fKSWrXnW3Fs=;
-        b=V3e9MIBZKzHJLLpV+7Dl6mJNGNlCp3W2wHaXnaQk+ZJlaJRGdNdJ5kMZoqiGT8wlJ1
-         SGLHTFyRHjt47+Nm2V8jW/Z+LHVK/VGnG9RPrnzq38NdiJaj7NWk/PekBYMfqY/9/o7G
-         +TkPSWizGzw5Zg6Jmao0Be0dfGTcU4DLHds15x2yx4aKoKi30vq9R2S/3sBySsfqgjki
-         mSkcYf4/WEBBIrRxn02ZQvsPDRzTkGhW6fyErKikjISQK7LKEIUrHlo3/ZO70Q6Bi8Ht
-         U3IXoX3bg4OPLm+mTFVo8OgoqA04v4JDKr1Ym0Qm71c1GQ6WdTL7+4VGOE3NnJAzQEtK
-         vQSA==
-X-Gm-Message-State: ALQs6tAJn8Gjbc4vRxE4zQRpdWDPwounutbVTNbV4HMwXuumGttNNbHc
-        CLivI5Zqm06HmVZ0WpVyjd0usAQf
-X-Google-Smtp-Source: AB8JxZrZEwgOd0hK0Qie2CzEI0Cd155iWd9ZmeAr8zyXkTJQU2/n05vm95VIKYkPqCUxEYX1UDpGiw==
-X-Received: by 2002:adf:a294:: with SMTP id s20-v6mr6927677wra.114.1525046613769;
-        Sun, 29 Apr 2018 17:03:33 -0700 (PDT)
+        bh=AIz2SPc+We/S5ZiKCso69h8dhn/kF8INYyD6oHy2u1g=;
+        b=Vhdg3rmWDKg+F5akt6/cHmWYNkHAtiYFC6R31dp+gOVErzAhLggqtBH+gx3vlg4AsP
+         MqG/vvVaDoxFyyxgWNidwsw0CShujmFVroqs4srqu6wMfTvEzAZ6Fg5fInDUiOVc0y06
+         o6Y0K2t7V8NZqQno7ZKiTNKwcqACR4XK4c/oPqx/vfOM14a00VK2bf4NVSrhONOsjFux
+         gDIunrDa45jUd4BQWvqyJqMUkNA2JL/Oi2TfrIS6sUXaqlr+y1Ng/2w+k7Y+SUQP5B9F
+         DFp3ZfFsFqNlKm6nZnBMs79Mg9mzmLg3TaLJRoD9QGt1qwB8WGUL6ZYxBOvhRIOxhu7E
+         fEYQ==
+X-Gm-Message-State: ALQs6tA9jsNoqoCxy71GDoMj8SsGLrOSJ2dEasNzdgXIDZC6TNPS+/qw
+        015fAuKjRCHcLGPc6efW81k=
+X-Google-Smtp-Source: AB8JxZp+nWDqtCleQzmZUpa8S425nvIEgBNBS61VUceqr1mV+cXn/b0mNI1gaP77FyoK5E1I6gjmYA==
+X-Received: by 10.28.140.207 with SMTP id o198mr6589028wmd.82.1525046836742;
+        Sun, 29 Apr 2018 17:07:16 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b10-v6sm14883151wrn.42.2018.04.29.17.03.32
+        by smtp.gmail.com with ESMTPSA id a14-v6sm1524781wra.84.2018.04.29.17.07.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 29 Apr 2018 17:03:32 -0700 (PDT)
+        Sun, 29 Apr 2018 17:07:16 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2018, #03; Wed, 25)
-References: <xmqqmuxr4r6n.fsf@gitster-ct.c.googlers.com>
-        <CAPig+cShfaKR_L+ypKwKZV_Hv8kwY37dGhJ8_WTSMZFqWX+EkA@mail.gmail.com>
-Date:   Mon, 30 Apr 2018 09:03:32 +0900
-In-Reply-To: <CAPig+cShfaKR_L+ypKwKZV_Hv8kwY37dGhJ8_WTSMZFqWX+EkA@mail.gmail.com>
-        (Eric Sunshine's message of "Fri, 27 Apr 2018 03:39:10 -0400")
-Message-ID: <xmqqlgd5zhkb.fsf@gitster-ct.c.googlers.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v9 0/4] worktree: teach "add" to check out existing branches
+References: <20180423193848.5159-1-t.gummerer@gmail.com>
+        <20180424215635.9183-1-t.gummerer@gmail.com>
+        <CAPig+cRor4UXXZhoAkhOQfe6W+oC84YFmA-KwpLspuEh_A4Zng@mail.gmail.com>
+        <20180428160950.GA17619@hank.intra.tgummerer.com>
+Date:   Mon, 30 Apr 2018 09:07:15 +0900
+In-Reply-To: <20180428160950.GA17619@hank.intra.tgummerer.com> (Thomas
+        Gummerer's message of "Sat, 28 Apr 2018 17:09:50 +0100")
+Message-ID: <xmqqh8ntzhe4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,21 +70,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> On Wed, Apr 25, 2018 at 4:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> * tg/worktree-add-existing-branch (2018-04-25) 4 commits
->>  - worktree: teach "add" to check out existing branches
->>  - worktree: factor out dwim_branch function
->>  - worktree: improve message when creating a new worktree
->>  - worktree: remove extra members from struct add_opts
->>
->>  "git worktree add" learned to check out an existing branch.
->>
->>  Is this ready for 'next'?
+> On 04/27, Eric Sunshine wrote:
+>> On Tue, Apr 24, 2018 at 5:56 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>> > Thanks Eric for the review and the suggestions on the previous round.
+>> >
+>> > Changes since the previous round:
+>> >
+>> > - UNLEAK new_branch after it was xstrndup'd
+>> > - update the commit message of 2/4 according to Eric's suggestions
+>> > - make force_new_branch a boolean flag in
+>> >   print_preparing_worktree_line, instead of using it as the branch
+>> >   name.  Instead use new_branch as the new branch name everywhere in
+>> >   that function.
+>> > - get rid of the ckeckout_existing_branch flag
+>> 
+>> Thanks. I did another full review of all the patches and played around
+>> with the new functionality again for good measure. Everything looked
+>> good, and I think the patches are now ready to graduate.
 >
-> I just gave v9 (which you have queued) a final full review and found
-> it satisfactory (and gave my Reviewed-by:), so yes, it seems ready for
-> 'next'.
+> Thanks for all your review work on this series!
 
 Thanks, both.
