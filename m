@@ -2,116 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 582C8215F4
-	for <e@80x24.org>; Mon, 30 Apr 2018 19:32:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3C9E215F4
+	for <e@80x24.org>; Mon, 30 Apr 2018 19:54:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756598AbeD3Tcr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 15:32:47 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:50033 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756590AbeD3Tcq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 15:32:46 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 40ZZSX5c2tz5tlD;
-        Mon, 30 Apr 2018 21:32:44 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 3456A1C94;
-        Mon, 30 Apr 2018 21:32:44 +0200 (CEST)
-Subject: Re: [PATCH 2/6] t1406: prepare for the refs code to fail with BUG()
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-References: <cover.1525040253.git.johannes.schindelin@gmx.de>
- <9bbfd73a8e03a888a5e9e8800d853ece518a8bf5.1525040253.git.johannes.schindelin@gmx.de>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <7087f0b9-1362-f8ca-315d-96d27b91b26b@kdbg.org>
-Date:   Mon, 30 Apr 2018 21:32:44 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
-MIME-Version: 1.0
-In-Reply-To: <9bbfd73a8e03a888a5e9e8800d853ece518a8bf5.1525040253.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
+        id S1756257AbeD3TyZ convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 30 Apr 2018 15:54:25 -0400
+Received: from ewa-mbsout-02.mbs.boeing.net ([130.76.20.195]:63271 "EHLO
+        ewa-mbsout-02.mbs.boeing.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756162AbeD3TyX (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 30 Apr 2018 15:54:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by ewa-mbsout-02.mbs.boeing.net (8.14.4/8.14.4/DOWNSTREAM_MBSOUT) with SMTP id w3UJsLtD054813;
+        Mon, 30 Apr 2018 12:54:22 -0700
+Received: from XCH15-05-03.nw.nos.boeing.com (xch15-05-03.nw.nos.boeing.com [137.137.100.66])
+        by ewa-mbsout-02.mbs.boeing.net (8.14.4/8.14.4/UPSTREAM_MBSOUT) with ESMTP id w3UJsHs1054777
+        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=OK);
+        Mon, 30 Apr 2018 12:54:17 -0700
+Received: from XCH15-05-02.nw.nos.boeing.com (2002:8989:643b::8989:643b) by
+ XCH15-05-03.nw.nos.boeing.com (2002:8989:6442::8989:6442) with Microsoft SMTP
+ Server (TLS) id 15.0.1365.1; Mon, 30 Apr 2018 12:54:17 -0700
+Received: from XCH15-05-02.nw.nos.boeing.com ([137.137.100.59]) by
+ XCH15-05-02.nw.nos.boeing.com ([137.137.100.59]) with mapi id 15.00.1365.000;
+ Mon, 30 Apr 2018 12:54:16 -0700
+From:   "Tang (US), Pik S" <Pik.S.Tang@boeing.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philip Oakley <philipoakley@iee.org>
+CC:     Jacob Keller <jacob.keller@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: RE: Branch deletion question / possible bug?
+Thread-Topic: Branch deletion question / possible bug?
+Thread-Index: AdPehldpPc+KUMHLSMmwYvYnxmB3kgAeSIQA//+48C6AAJp7AP/84VxA
+Date:   Mon, 30 Apr 2018 19:54:16 +0000
+Message-ID: <d7786ad6fd0e42c7ae789075076be6eb@XCH15-05-02.nw.nos.boeing.com>
+References: <d4d8d8208b6a41c380ecf20807763bcf@XCH15-05-02.nw.nos.boeing.com>
+ <CA+P7+xryOt_-vg7cpvqRapM7nWuhWXjhpUR1xi-5MY_RH5UwAQ@mail.gmail.com>
+ <249C4D418B2B49B4AD5545B912FDA53D@PhilipOakley>
+ <nycvar.QRO.7.76.6.1804281440570.79@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1804281440570.79@tvgsbejvaqbjf.bet>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [137.137.12.6]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+MIME-Version: 1.0
+X-TM-AS-MML: disable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.04.2018 um 00:17 schrieb Johannes Schindelin:
-> t1406 specifically verifies that certain code paths fail with a BUG: ...
-> message.
+Hello,
+
+Thank you for all your replies.  I am on a case insensitive system (Windows 10) running git version 2.14.1.windows.1.  
+
+While I can't comment on what the fix would be, it has been enlightening to learn a bit more about what's under the cover of git.  
+
+TIL :)
+Pik
+
+-----Original Message-----
+From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
+Sent: Saturday, April 28, 2018 5:44 AM
+To: Philip Oakley <philipoakley@iee.org>
+Cc: Jacob Keller <jacob.keller@gmail.com>; Tang (US), Pik S <Pik.S.Tang@boeing.com>; Git List <git@vger.kernel.org>
+Subject: Re: Branch deletion question / possible bug?
+
+Hi,
+
+On Sat, 28 Apr 2018, Philip Oakley wrote:
+
+> From: "Jacob Keller" <jacob.keller@gmail.com>
+> > On Fri, Apr 27, 2018 at 5:29 PM, Tang (US), Pik S 
+> > <Pik.S.Tang@boeing.com>
+> > wrote:
+> > > Hi,
+> > >
+> > > I discovered that I was able to delete the feature branch I was 
+> > > in, due to some fat fingering on my part and case insensitivity.  
+> > > I never realized this could be done before.  A quick google search 
+> > > did not give me a whole lot to work with...
+> > >
+> > > Steps to reproduce:
+> > > 1. Create a feature branch, "editCss"
+> > > 2. git checkout master
+> > > 3. git checkout editCSS
+> > > 4. git checkout editCss
+> > > 5. git branch -d editCSS
+> > >
+> >
+> > Are you running on a case-insensitive file system? What version of 
+> > git? I thought I recalled seeing commits to help avoid creating 
+> > branches of the same name with separate case when we know we're on a 
+> > file system which is case-insensitive..
+> >
+> > > Normally, it should have been impossible for a user to delete the 
+> > > branch they're on.  And the deletion left me in a weird state that 
+> > > took a while to dig out of.
+> > >
+> > > I know this was a user error, but I was also wondering if this was a bug.
+> >
+> > If we have not yet done this, I think we should. Long term this 
+> > would be fixed by using a separate format to store refs than the 
+> > filesystem, which has a few projects being worked on but none have 
+> > been put into a release.
 > 
-> In the upcoming commit, we will convert that message to be generated via
-> BUG() instead of die("BUG: ..."), which implies SIGABRT instead of a
-> regular exit code.
+> Yes, this is an on-going problem on Windows and other case insentive 
+> systems. At the moment the branch name becomes embedded as a file 
+> name, so when Git requests details of a branch from the filesystem, it 
+> can get a case insensitive equivalent. Meanwhile, internally Git is 
+> checking for equality in a case sensitive [Linux] way with obvious 
+> consequences such as this - The most obvious being when there is no 
+> "*" current branch marker in the branch status list.
 > 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   t/t1406-submodule-ref-store.sh | 15 +++++++++------
->   1 file changed, 9 insertions(+), 6 deletions(-)
+> It's a bit tricky to fix (internally the name and the path are passed 
+> down different call chains), and depends on how one expects the case 
+> insensitivity to work - the kicker is when someone does an edit of the 
+> name via the file system and expects Git to cope (i.e. devs knowing, 
+> or think they know, too much detail ;-).
 > 
-> diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
-> index e093782cc37..0ea3457cae3 100755
-> --- a/t/t1406-submodule-ref-store.sh
-> +++ b/t/t1406-submodule-ref-store.sh
-> @@ -16,7 +16,7 @@ test_expect_success 'setup' '
->   '
->   
->   test_expect_success 'pack_refs() not allowed' '
-> -	test_must_fail $RUN pack-refs 3
-> +	test_must_fail ok=sigabrt $RUN pack-refs 3
->   '
->   
->   test_expect_success 'peel_ref(new-tag)' '
-> @@ -27,15 +27,18 @@ test_expect_success 'peel_ref(new-tag)' '
->   '
->   
->   test_expect_success 'create_symref() not allowed' '
-> -	test_must_fail $RUN create-symref FOO refs/heads/master nothing
-> +	test_must_fail ok=sigabrt \
-> +		$RUN create-symref FOO refs/heads/master nothing
->   '
->   
->   test_expect_success 'delete_refs() not allowed' '
-> -	test_must_fail $RUN delete-refs 0 nothing FOO refs/tags/new-tag
-> +	test_must_fail ok=sigabrt \
-> +		$RUN delete-refs 0 nothing FOO refs/tags/new-tag
->   '
->   
->   test_expect_success 'rename_refs() not allowed' '
-> -	test_must_fail $RUN rename-ref refs/heads/master refs/heads/new-master
-> +	test_must_fail ok=sigabrt \
-> +		$RUN rename-ref refs/heads/master refs/heads/new-master
->   '
->   
->   test_expect_success 'for_each_ref(refs/heads/)' '
-> @@ -91,11 +94,11 @@ test_expect_success 'reflog_exists(HEAD)' '
->   '
->   
->   test_expect_success 'delete_reflog() not allowed' '
-> -	test_must_fail $RUN delete-reflog HEAD
-> +	test_must_fail ok=sigabrt $RUN delete-reflog HEAD
->   '
->   
->   test_expect_success 'create-reflog() not allowed' '
-> -	test_must_fail $RUN create-reflog HEAD 1
-> +	test_must_fail ok=sigabrt $RUN create-reflog HEAD 1
->   '
+> The refs can also get packed, so the "bad spelling" gets baked in.
+> Ultimately it probably means that GfW and other systems will need  a 
+> case sensitivity check when opening paths...
 
-I can't quite follow the rationale for this change. A 'BUG' error exit 
-must never be reached, otherwise it is a bug in the program by 
-definition. It cannot be OK that SIGABRT is a valid result from Git.
+FWIW I outlined what I think is the best route to fix this for good:
 
-If SIGABRT occurs as a result of BUG(), and we know that this happens 
-for certain cases, it means we have an unfixed bug. Should then not run 
-these cases under test_expect_failure instead of test_expect_success to 
-identify them as known bugs?
+https://github.com/git-for-windows/git/issues/1623#issuecomment-380085257
 
-Confused.
+Essentially, I think we should teach Git the trick to check the spelling before calling lstat() in refs/files-backend.c.
 
--- Hannes
+To check the spelling, we would need an API to get the on-disk representation of a given path. On Windows, I know this call. On Linux, apparently canonicalize_file_name() might do the job, but that is a GNU libc extension, and won't help us on macOS.
+
+Any ideas?
+
+Ciao,
+Dscho
+
+
