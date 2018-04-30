@@ -2,122 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D531215F4
-	for <e@80x24.org>; Mon, 30 Apr 2018 16:29:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D80D215F4
+	for <e@80x24.org>; Mon, 30 Apr 2018 16:34:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754757AbeD3Q3i (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 12:29:38 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:37272 "EHLO
-        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754713AbeD3Q3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 12:29:37 -0400
-Received: by mail-oi0-f53.google.com with SMTP id f63-v6so7925752oic.4
-        for <git@vger.kernel.org>; Mon, 30 Apr 2018 09:29:37 -0700 (PDT)
+        id S1754784AbeD3QeM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 12:34:12 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:32776 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754614AbeD3QeL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Apr 2018 12:34:11 -0400
+Received: by mail-wm0-f65.google.com with SMTP id x12so12020889wmc.0
+        for <git@vger.kernel.org>; Mon, 30 Apr 2018 09:34:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qP+KSYF8gZFRsUNjo6wYqX1OJl56A+YrHs7juGtY2RU=;
-        b=KTqj3Zd9k7gceRrW61JCnSpAIKFucpluGM5IJObfC2XHFqIoHzFD6KHpGvfF+tjnIC
-         vGNrMxwzaEeDvnAXAdhUDkdlzU/ymD+Qi6TeEGVAGghR1TucHJUOqkDZtFTo0pr0lZP1
-         1Slder2XQk9wVBwp2h4x1WqfBlpSTLfuGkhGFN2av8hCE0+YgVzJwq0HysSVGx2GroTs
-         PyyBwWIFKuZQEAcQozeuh4U701m/Jb/j++A8mu6RmsRQl1n/JX6xVfiPkuDNjcXlNTHq
-         djYAru8LiriLpTasWTL2vfbJR8fXLAs0dP6hJrAaLOp8ErKSWKiNBuRZL5uAh0B5pS95
-         lTCA==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=N4GKTdNCawEU0vi8ZyZBl0fOiCHE25ZZWj5rl0tLdhI=;
+        b=U1jXHzlD6zsan6SL7WipH1kVg259JuoSrRzk7PFk74yeD6F6+sDlQBKeuqWatg4ohC
+         nbWcDEKJvR2Tyzdfr5xICdBPEp2ufm1acEbgDPXZy8L4vJ4mzLMYCp2ElrGlOLQvt3C8
+         0ISL2TIdu7quHUxSbTGfvSo33IPwhmJ7kJbENTOndw9acWx/KD9ejI4+/ThKHWH1nAVv
+         WklpyTzDDYrXZjyJnygl8dtu/HQYLUZdi2LSciiY6vRJlNo7rlx0oDRPyatNFeTH2xGq
+         sJpvFvZoO0K0FVBM/kw3AGEH4SvyTrxvpi7FVrQYm6q3F2ex8rVkoWonVgJ8ywBPdg49
+         mJTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qP+KSYF8gZFRsUNjo6wYqX1OJl56A+YrHs7juGtY2RU=;
-        b=CvshZfuxfrxfIvwj3CQtmaImoRBIPgyKungIPoiKese3QjQpi2BYd2PDhB7aXdPxh0
-         L1AoEl4Nea3tI9iYaFGsjwd05fan+Hw+0Lx7cUMbaYF49jWgqpNT80Q7wzpNuG5TwTE0
-         9XskaBtHfOuQBnWD8faiQx1zxOsfwoYJWNZkW6oYKiCJqIo3UePwsUomqV+0J6k3qKdI
-         AYeepYQR9DQx3y+ZTsNwwRTHrm/9rOVacHzDq80wo97oxepas8lI25/Xsn9aatVBs8xy
-         SNof38i2oPSjzB0yJ4xAei6HFWKHI6yc7xqPVvzxnOXknEFsH2o25AiY6pbNck878hia
-         1/qA==
-X-Gm-Message-State: ALQs6tCULkos9SKHPBAowaLF8lCCGThsvT0X2XhaReteWInZe7cJNuaw
-        KmS14CV6iXqkjm4165UudrYbQn6lGVfPPB5Ss+s=
-X-Google-Smtp-Source: AB8JxZpzWTI2mExtOB56lrNKFuk8/r1cOcTg+UuopBVMPvJAH4rqqfVuS6y6LSOc2Vk6jtcNt3W6cD/kUZ1c8RITvtM=
-X-Received: by 2002:aca:51ce:: with SMTP id f197-v6mr7978418oib.32.1525105777353;
- Mon, 30 Apr 2018 09:29:37 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=N4GKTdNCawEU0vi8ZyZBl0fOiCHE25ZZWj5rl0tLdhI=;
+        b=smSru87Hc6pd1dbtzQFHJKupSoiGQQ4BAN9IZqGObotExiZmFiQhPkA6QM50ib2Lyf
+         vgA6S647Zk8apf2tMkrEes/WtNgZhCeNClPssX9loMbfmRLSJIDpmyLLZvZX4FYh0l2F
+         aH3g9LYJ8IPmPTJW3vDDHw8tzEaCqO3ink8mgacenA+YSZlJiVmayqhqQiXiIuT0ih68
+         nzvkjsdOF9q4NGajuVdPfwoO1xj55evOLtl1HxOZtgnY2/gBZYEhDEWv1WIVN5Y5b11w
+         GYV4T2CBjCSZVVhq9y1PA99m3+6qmahW9+x68jRnhpPDgbbWWh/aLX2YQkjqyh+Dbm4Q
+         PU2w==
+X-Gm-Message-State: ALQs6tBd2Y6/KyIGI0AGsj/N1XcbSGjl/DT8Wlp9ZW2ZXhZVRyq5MpeP
+        cEP36db8nEpA0vWtHDcVMQA=
+X-Google-Smtp-Source: AB8JxZqNOeIUJfSyYrlkCvVUXlrTGo4Qwcs2EWbDTKyX3/hA7E5vAHCnAsrTIJ3f0MV6a3ewUZ/mCw==
+X-Received: by 10.28.94.210 with SMTP id s201mr8777094wmb.140.1525106050274;
+        Mon, 30 Apr 2018 09:34:10 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (abqa10.neoplus.adsl.tpnet.pl. [83.8.68.10])
+        by smtp.gmail.com with ESMTPSA id b185sm7593452wmb.25.2018.04.30.09.34.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 30 Apr 2018 09:34:08 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v4 06/10] ref-filter: use generation number for --contains
+References: <20180417170001.138464-1-dstolee@microsoft.com>
+        <20180425143735.240183-1-dstolee@microsoft.com>
+        <20180425143735.240183-7-dstolee@microsoft.com>
+Date:   Mon, 30 Apr 2018 18:34:05 +0200
+In-Reply-To: <20180425143735.240183-7-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Wed, 25 Apr 2018 14:37:58 +0000")
+Message-ID: <86po2ghcw2.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Received: by 10.74.198.152 with HTTP; Mon, 30 Apr 2018 09:29:06 -0700 (PDT)
-In-Reply-To: <CABPp-BFsEPbTXq0cFE+gkXcXtP_1LOyQAUMMXBOdB16OJknDig@mail.gmail.com>
-References: <xmqq604h717y.fsf@gitster-ct.c.googlers.com> <20180424065045.13905-1-newren@gmail.com>
- <CACsJy8DyP_mXXJKn52Jzqe63N3GLpXePCr8ha97Lv9hr6u-M0w@mail.gmail.com>
- <nycvar.QRO.7.76.6.1804292251000.79@tvgsbejvaqbjf.bet> <CACsJy8Cqq5c1QC=2EjfajS3=+ofAF8eoFG2V4QeY+LzSykJOFw@mail.gmail.com>
- <CACsJy8DhDDzLCQNoAdc=F6jLUSJK=dDWhhqLBecGG5ru01gRCw@mail.gmail.com> <CABPp-BFsEPbTXq0cFE+gkXcXtP_1LOyQAUMMXBOdB16OJknDig@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 30 Apr 2018 18:29:06 +0200
-Message-ID: <CACsJy8CeDhrT9GXe9q5gqsAeq_sSQ8jyF2nMOFxzjwKtE31oPQ@mail.gmail.com>
-Subject: Re: [PATCH v3] unpack_trees: fix breakage when o->src_index != o->dst_index
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 30, 2018 at 6:19 PM, Elijah Newren <newren@gmail.com> wrote:
-> Hi Duy,
+Derrick Stolee <dstolee@microsoft.com> writes:
+
+> A commit A can reach a commit B only if the generation number of A
+> is strictly larger than the generation number of B. This condition
+> allows significantly short-circuiting commit-graph walks.
 >
-> On Mon, Apr 30, 2018 at 7:45 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Mon, Apr 30, 2018 at 4:42 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->>> On Sun, Apr 29, 2018 at 10:53 PM, Johannes Schindelin
->>> <Johannes.Schindelin@gmx.de> wrote:
->>>>> > @@ -1412,12 +1422,13 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->>>>> >                                                   WRITE_TREE_SILENT |
->>>>> >                                                   WRITE_TREE_REPAIR);
->>>>> >                 }
->>>>> > -               move_index_extensions(&o->result, o->dst_index);
->>>>> > +               move_index_extensions(&o->result, o->src_index);
->>>>>
->>>>> While this looks like the right thing to do on paper, I believe it's
->>>>> actually broken for a specific case of untracked cache. In short,
->>>>> please do not touch this line. I will send a patch to revert
->>>>> edf3b90553 (unpack-trees: preserve index extensions - 2017-05-08),
->>>>> which essentially deletes this line, with proper explanation and
->>>>> perhaps a test if I could come up with one.
->>>>>
->>>>> When we update the index, we depend on the fact that all updates must
->>>>> invalidate the right untracked cache correctly. In this unpack
->>>>> operations, we start copying entries over from src to result. Since
->>>>> 'result' (at least from the beginning) does not have an untracked
->>>>> cache, it has nothing to invalidate when we copy entries over. By the
->>>>> time we have done preparing 'result', what's recorded in src's (or
->>>>> dst's for that matter) untracked cache may or may not apply to
->>>>> 'result'  index anymore. This copying only leads to more problems when
->>>>> untracked cache is used.
->>>>
->>>> Is there really no way to invalidate just individual entries?
->>>
->>> Grr.... the short answer is the current code (i.e. without Elijah's
->>> changes) works but in a twisted way. So you get to keep untracked
->>> cache in the end.
->>
->> GAAAHH.. it works _with_ Elijah's changes (since he made the change
->> from dst to src) not without (and no performance regression).
+> Use generation number for '--contains' type queries.
 >
-> So...is that an Acked-by for the patch
+> On a copy of the Linux repository where HEAD is containd in v4.13
 
-Yes, Acked-by: me.
+Minor typo: containd -> contained.
 
-> or does the "two wrong make a
-> right, I guess" comment suggest that we should still drop the
-> move_index_extensions change (essentially reverting to v1 of the PATCH
-> as found at 20180421193736.12722-1-newren@gmail.com), and you'll fix
-> things up further in a separate series?
+> but no earlier tag, the command 'git tag --contains HEAD' had the
+> following peformance improvement:
+>
+> Before: 0.81s
+> After:  0.04s
+> Rel %:  -95%
 
-I think I'll stay away from this file for a while. When I gather
-enough courage, I'll need to read it through since it sounds like a
-mine field.
--- 
-Duy
+Very nice.  I guess that any performance changes for when commit-graph
+feature is not available are negligible / not measurable.
+
+Rel % = (before - after)/before * 100%, isn't it?.
+
+Good.
+
+>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  ref-filter.c | 24 ++++++++++++++++++++----
+>  1 file changed, 20 insertions(+), 4 deletions(-)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index aff24d93be..fb35067fc9 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -16,6 +16,7 @@
+>  #include "trailer.h"
+>  #include "wt-status.h"
+>  #include "commit-slab.h"
+> +#include "commit-graph.h"
+>  
+>  static struct ref_msg {
+>  	const char *gone;
+> @@ -1587,7 +1588,8 @@ static int in_commit_list(const struct commit_list *want, struct commit *c)
+>   */
+>  static enum contains_result contains_test(struct commit *candidate,
+>  					  const struct commit_list *want,
+> -					  struct contains_cache *cache)
+> +					  struct contains_cache *cache,
+> +					  uint32_t cutoff)
+>  {
+>  	enum contains_result *cached = contains_cache_at(cache, candidate);
+>  
+> @@ -1603,6 +1605,10 @@ static enum contains_result contains_test(struct commit *candidate,
+>  
+>  	/* Otherwise, we don't know; prepare to recurse */
+>  	parse_commit_or_die(candidate);
+> +
+> +	if (candidate->generation < cutoff)
+> +		return CONTAINS_NO;
+> +
+
+We use here weaker negative-cut criteria, which has the advantage of
+simply automatic handling of special values: _INFINITY, _MAX, _ZERO.
+
+Stronger version:
+
+  if A != B and A ---> B, then gen(A) > gen(B)
+
+  if gen(A) <= gen(B) and A != B, then A -/-> B
+
+Weaker version:
+
+  if gen(A) < gen(B), then A -/-> B
+
+If commit-graph feature is not available, then all generation numbers
+would be _INFINITY, and cutoff would also be _INFINITY - which means
+this operation is practically no-op.  One memory access (probably from
+cache) and one comparison is very cheap.
+
+All right.
+
+>  	return CONTAINS_UNKNOWN;
+>  }
+>  
+> @@ -1618,8 +1624,18 @@ static enum contains_result contains_tag_algo(struct commit *candidate,
+>  					      struct contains_cache *cache)
+>  {
+>  	struct contains_stack contains_stack = { 0, 0, NULL };
+> -	enum contains_result result = contains_test(candidate, want, cache);
+> +	enum contains_result result;
+> +	uint32_t cutoff = GENERATION_NUMBER_INFINITY;
+> +	const struct commit_list *p;
+> +
+> +	for (p = want; p; p = p->next) {
+> +		struct commit *c = p->item;
+> +		load_commit_graph_info(c);
+> +		if (c->generation < cutoff)
+> +			cutoff = c->generation;
+> +	}
+
+For each in wants, load generation numbers if needed and find lowest
+one.  Anything lower cannot reach any of wants.  All right.
+
+If commit-graph feature is not available, this is practically no-op.  It
+is fast, as it only accesses memory - it does not access disk, nor do it
+needs to do any decompression, un-deltafication or parsing.
+
+All right.
+
+>  
+> +	result = contains_test(candidate, want, cache, cutoff);
+>  	if (result != CONTAINS_UNKNOWN)
+>  		return result;
+>  
+> @@ -1637,7 +1653,7 @@ static enum contains_result contains_tag_algo(struct commit *candidate,
+>  		 * If we just popped the stack, parents->item has been marked,
+>  		 * therefore contains_test will return a meaningful yes/no.
+>  		 */
+> -		else switch (contains_test(parents->item, want, cache)) {
+> +		else switch (contains_test(parents->item, want, cache, cutoff)) {
+>  		case CONTAINS_YES:
+>  			*contains_cache_at(cache, commit) = CONTAINS_YES;
+>  			contains_stack.nr--;
+> @@ -1651,7 +1667,7 @@ static enum contains_result contains_tag_algo(struct commit *candidate,
+>  		}
+>  	}
+>  	free(contains_stack.contains_stack);
+> -	return contains_test(candidate, want, cache);
+> +	return contains_test(candidate, want, cache, cutoff);
+
+Those two just update callsite to new signatore.  All right.
+
+>  }
+>  
+>  static int commit_contains(struct ref_filter *filter, struct commit *commit,
