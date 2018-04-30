@@ -2,110 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11EDB215F4
-	for <e@80x24.org>; Mon, 30 Apr 2018 12:05:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1414421845
+	for <e@80x24.org>; Mon, 30 Apr 2018 12:51:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752325AbeD3MF5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 08:05:57 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:62531 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751938AbeD3MF4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 08:05:56 -0400
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id D7Yafgbcm2vvYD7Ysfc2JL; Mon, 30 Apr 2018 13:05:55 +0100
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=LLdIvqe9 c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=6MJWtnd550M94R2LqVEA:9 a=QEXdDO2ut3YA:10
-Message-ID: <DBD282FDAB204400AF90594C7957C135@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, <git@vger.kernel.org>
-Cc:     "Junio C Hamano" <gitster@pobox.com>,
-        "Avery Pennarun" <apenwarr@gmail.com>, "Jeff King" <peff@peff.net>,
-        "Stephen R Guglielmo" <srguglielmo@gmail.com>,
-        "A . Wilcox" <AWilcox@Wilcox-Tech.com>,
-        "David Aguilar" <davvid@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-References: <20180430095044.28492-1-avarab@gmail.com>
-Subject: Re: [PATCH 0/4] subtree: move out of contrib
-Date:   Mon, 30 Apr 2018 13:05:20 +0100
-Organization: OPDS
-MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 8bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180430-0, 30/04/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfJCrKu3MGUFriYfPUJrAFXM+WeVu83ap4DUKMMlBH7qHB4Z8acrJWYTkjznhFjNKcMpoId/Wd7dhDRO7OKNTKwkK/4VPX9Yc38U/QjDMgNrRfwuZx8PZ
- ps/aww9qJGgJn3+xQxWhuDTILdcRt2+G4AZ1jTFyPAoTcPlxG/7rGfPydhcHuFUwc0JSMrFFZ/PMwa+vR8i/u2jBXzfzocSZfi2MSNdNdE8DEcoeOF3XpaOA
- LA2lhmiqIE7tIyyrwNpIOZfxpBQvUH4MrwzUDI2zWhBVeESpa7cvLl+5u4TxlM2CmxYwEk9AJzE/2Aoil5TruSgWbZh2Xywq716gKE+h85AIOl931V5rZscx
- jegeOKT1q4JHAzwJJxtae/6b+oEwRpx79EHRlOGIwWzbFPL8P14=
+        id S1753399AbeD3Mvo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 08:51:44 -0400
+Received: from ao2.it ([92.243.12.208]:54901 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752430AbeD3Mvn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Apr 2018 08:51:43 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1fD8Fw-0001wb-C5; Mon, 30 Apr 2018 14:50:12 +0200
+Date:   Mon, 30 Apr 2018 14:51:14 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [RFC 00/10] Make .the gitmodules file path configurable
+Message-Id: <20180430145114.3c68c026b1e2844aaa9d4b6d@ao2.it>
+In-Reply-To: <20180423174709.GA25128@aiede.svl.corp.google.com>
+References: <20180412222047.5716-1-ao2@ao2.it>
+        <20180423174709.GA25128@aiede.svl.corp.google.com>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Ævar Arnfjörð Bjarmason" <avarab@gmail.com>
->I think at this point git-subtree is widely used enough to move out of
-> contrib/, maybe others disagree, but patches are always better for
-> discussion that patch-less ML posts.
+On Mon, 23 Apr 2018 10:47:09 -0700
+Jonathan Nieder <jrnieder@gmail.com> wrote:
+
+> Hi,
 >
 
-Assuming this lands in Git, then there will also need to be a simple follow 
-on into Duy's series that is updating the command-list.txt (Message-Id: 
-<20180429181844.21325-10-pclouds@gmail.com>). Duy's series also does the 
-completions thing IIUC;-).
---
-Philip
+Hi Jonathan, thank you for your comment.
 
-> Ævar Arnfjörð Bjarmason (4):
->  git-subtree: move from contrib/subtree/
->  subtree: remove support for git version <1.7
->  subtree: fix a test failure under GETTEXT_POISON
->  i18n: translate the git-subtree command
+> Antonio Ospite wrote:
+> 
+> > vcsh[1] uses bare git repositories and detached work-trees to manage
+> > *distinct* sets of configuration files directly into $HOME.
+> 
+> Cool!  I like the tooling you're creating for this, though keep in mind
+> that Git has some weaknesses as a tool for deployment.
 >
-> .gitignore                                    |   1 +
-> Documentation/git-submodule.txt               |   2 +-
-> .../subtree => Documentation}/git-subtree.txt |   3 +
-> Makefile                                      |   1 +
-> contrib/subtree/.gitignore                    |   7 -
-> contrib/subtree/COPYING                       | 339 ------------------
-> contrib/subtree/INSTALL                       |  28 --
-> contrib/subtree/Makefile                      |  97 -----
-> contrib/subtree/README                        |   8 -
-> contrib/subtree/t/Makefile                    |  86 -----
-> contrib/subtree/todo                          |  48 ---
-> .../subtree/git-subtree.sh => git-subtree.sh  | 109 +++---
-> {contrib/subtree/t => t}/t7900-subtree.sh     |  21 +-
-> 13 files changed, 78 insertions(+), 672 deletions(-)
-> rename {contrib/subtree => Documentation}/git-subtree.txt (99%)
-> delete mode 100644 contrib/subtree/.gitignore
-> delete mode 100644 contrib/subtree/COPYING
-> delete mode 100644 contrib/subtree/INSTALL
-> delete mode 100644 contrib/subtree/Makefile
-> delete mode 100644 contrib/subtree/README
-> delete mode 100644 contrib/subtree/t/Makefile
-> delete mode 100644 contrib/subtree/todo
-> rename contrib/subtree/git-subtree.sh => git-subtree.sh (84%)
-> rename {contrib/subtree/t => t}/t7900-subtree.sh (99%)
+
+I am not the author BTW, just a user trying to address the remaining
+corner cases.
+
+> In particular, keep in mind that when git updates a file, there is a
+> period of time while it is missing from the filesystem, which can be
+> problematic for dotfiles.
 >
-> -- 
-> 2.17.0.290.gded63e768a
+
+Thanks for the reminder, it may be worth mentioning this in vcsh
+documentation, however I don't have knowledge of users experiencing
+problems related to that.
+
+> [...]
+> > However when multiple repositories take turns using the same directory
+> > as their work-tree, and more than one of them want to use submodules,
+> > there could still be conflicts about the '.gitmodules' file because git
+> > hardcodes this path.
+> >
+> > For comparison, in case of '.gitignore' a similar conflict might arise,
+> > but git has alternative ways to specify exclude files, so vcsh solves
+> > this by setting core.excludesFile for each repository and track ignored
+> > files somewhere else (in ~/.gitignore.d/$VCSH_REPO_NAME).
+> 
+> For reference:
+> 
+> 	core.excludesFile
+> 		Specifies the pathname to the file that contains
+> 		patterns to describe paths that are not meant to be
+> 		tracked, in addition to .gitignore (per-directory) and
+> 		.git/info/exclude. Defaults to
+> 		$XDG_CONFIG_HOME/git/ignore. If $XDG_CONFIG_HOME is
+> 		either not set or empty, $HOME/.config/git/ignore is
+> 		used instead. See gitignore(5).
+> 
+> Using this as a substitute for <worktree>/.gitignore is a bit of a
+> hack.  It happens to work, though, so reading on. :)
+> 
+> [...]
+> > So this series proposes a mechanism to set an alternative path for the
+> > submodules configuration file (from now on "gitmodules file").
+> 
+> I am nervous about this.  I wonder if there is another way to
+> accomplish the goal.
 >
+> One possibility would be to handle the case where .gitmodules is
+> excluded by a sparse checkout specification and use .gitmodules from
+> the index in that case.  Would that work for you?
 > 
 
+Since part of the problem is that .gitmodules *collide* between
+repositories, a sparse-checkout approach make sense indeed.
+
+As discussed[1] with Stefan Beller having git use .gitmodules from the
+index without the need to have it checked out should work for us.
+
+[1] https://www.spinics.net/lists/git/msg329153.html
+
+Ideally git should also be able to write to that file when it's not
+checked out (e.g. when running "git submodule add"), to save the
+user from tedious sparse/unsparse rounds when operating with submodules.
+
+As suggested by Stefan I'll first try to remove the hardcoded references
+to .gitmodules in git-submodule.sh adding a helper sub-command to
+access .gitmodules in a more robust way, and after that git could
+be taught to use the file from the index, but this second part
+is currently beyond my current git knowledge.
+
+If this mechanism of using unchecked-out files from the index could be
+extended to .gitignore (and .gitattributes), then vcsh might even stop
+abusing core.excludesFile; sparse checkouts seem the more natural git
+way to deal with colliding files in a shared-workdir scenario.
+
+However, having users *write* to .gitignore and .gitattributes while
+they are not checked out still sounds quite problematic to me, but maybe
+this could be handled by vcsh itself, similarly to what is done for the
+file pointed by core.excludesFile.
+
+Ciao,
+   Antonio
+
+-- 
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
+
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
