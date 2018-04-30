@@ -2,111 +2,206 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BB7121841
-	for <e@80x24.org>; Mon, 30 Apr 2018 11:59:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5902F215F4
+	for <e@80x24.org>; Mon, 30 Apr 2018 12:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752151AbeD3L7R (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 07:59:17 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36598 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751938AbeD3L7Q (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 30 Apr 2018 07:59:16 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 44F8F60400;
-        Mon, 30 Apr 2018 11:59:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525089555;
-        bh=CRe1kWj1rhwD5eNNeiJweVT+c/+wxvGeqtpQprTl7X4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=yqVSU6gYP92soEHfLfR3cIAFOGIrlMnTwH3xbDZTEK/+3GReXfbYCmHemDG4JXeIR
-         2rW/jbYQm3+1mdnm7rriqXjgrYCK2wxyv+NDpDodpiyjV6ncASqPxu0C0TftL+rvgn
-         O7HH1c7A8bqYWyjoz7iA2yUpkzQj2wUzw1nee3xi28wjGERcFIu+sbdKdEg3CzDZ/A
-         0+nD03DuIRRRWtjdVTebcURyblQVVKkhJSvIia7vRMjlrScsU5gwIsSni+Yc0QnYtY
-         4qyUjARDTJcEOsBXhnxpLMlyLc62APOkOCYEKw67V3w11Ol4Q+SIS2mtIYwm+JxNdQ
-         8rsvrJXFpTGannOB7Zag3mtj+Z2tuIG0hGGnhiTaEOb5sU+Y02iphseqxUfMOv+M10
-         bEpVfI4dEpiHJFi7meGxDhK9CXP6511nRh+g4rjtA7XiMGL85YMqermXRoUrUJ9Jd9
-         IJjWYLqju0d5R/2yHiimlw666UKHi3iCZV0CIt03Zn76Oj/7GmU
-Date:   Mon, 30 Apr 2018 11:59:09 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Hemmer <git@stormcloud9.net>, git@vger.kernel.org
-Subject: Re: Bug: format-patch MIME boundary not added to cover letter when
- attach enabled
-Message-ID: <20180430115909.GB13217@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Patrick Hemmer <git@stormcloud9.net>, git@vger.kernel.org
-References: <5e409069-835f-3c85-f55e-c27f534dc9e2@stormcloud9.net>
- <20180430020930.GA13217@genre.crustytoothpaste.net>
- <xmqqzi1lxte6.fsf@gitster-ct.c.googlers.com>
+        id S1752092AbeD3MFJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 08:05:09 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:38705 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751938AbeD3MFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Apr 2018 08:05:07 -0400
+Received: by mail-qk0-f194.google.com with SMTP id b39so6388770qkb.5
+        for <git@vger.kernel.org>; Mon, 30 Apr 2018 05:05:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=/jEH2MytH87QxeEAkqfzvhEPx0Sn2IVzFKAdH5XLGKQ=;
+        b=OyqneqPBC2g6BShy8wUBd/ZEJAB7K4fY+/hRAD2vkXVyXVDUSxXhIxhhQC1LHvDLR4
+         BmuLbvMPuMv59RHwVLe7f1AYORdpdk1/7jdj43xyZ1/cHP5OTxlTqOU29TPH7Rxcoka7
+         2TF+lqydHzFoB4k5fFrj5ZUv8tJ8YqPqL+S94XJ5MGuCXSkP02H8fIA8Zf0OZbJgREBD
+         hfG7W+TSsr+Fdi4BsDt+bIKAbvd40l32CAzqoYBQ7HuFY8Y6P3oYuJ7jAYTZfkc58Y8T
+         uwscO40X+HutgQgPilsZg1/Dt5qJ1uPBPk0zfPpfJWlrXzSYO6FUMDk/uBEqr46EXwvG
+         Svdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=/jEH2MytH87QxeEAkqfzvhEPx0Sn2IVzFKAdH5XLGKQ=;
+        b=qVeQBPqkRFdzSTqeHdx+Fm/4QfCcDRouALKTbU7DyZgU/wiqYjHoUHYYfa7L2cZJAW
+         FZ/N9IIU1bqZjCURmx98GaGxCrUsd3sPMk/Po+yFttSAlGTqCA76Egw0TETnBrcuBbl4
+         WbyYYoM0gPezok2+wH8oU1by0CLuupVcO8B2NSHpFyxRbhEfXHEpYJzVB1qPAFFF8pc7
+         wPaqjhtqE3SfyNuBUOxT0Fl+5727jL3xW+PygggR12fa4p1Fo5P4ifiYNcriCT3a7reC
+         twEX1hSD0hLXRogvFYcSOP5mZuVZuErlySehJr3/jnLj+t55TEVZLv2CmPU6WckfsEJj
+         EHXw==
+X-Gm-Message-State: ALQs6tAaQLmUN+fBeuTEeEWQPeSZgrjMrJk7vINFjVPO51aGMIwSfNti
+        i5wvMWvY77WohYhMdkIFI9c=
+X-Google-Smtp-Source: AB8JxZpCccbew9igf1ddDghMaQ9lc044pL3uYJoT6CkWZTtqejcJxq47opYh0N+mYcRJ09j7jQ2Rrg==
+X-Received: by 10.55.173.17 with SMTP id f17mr9979479qkm.342.1525089906825;
+        Mon, 30 Apr 2018 05:05:06 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id s125sm5659283qke.96.2018.04.30.05.05.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Apr 2018 05:05:06 -0700 (PDT)
+Subject: Re: [PATCH v4 02/10] commit: add generation number to struct commmit
+To:     Jakub Narebski <jnareb@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20180417170001.138464-1-dstolee@microsoft.com>
+ <20180425143735.240183-1-dstolee@microsoft.com>
+ <20180425143735.240183-3-dstolee@microsoft.com> <86604bj6xr.fsf@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4d6aa9bf-7bb3-8e56-83c7-88962bd64308@gmail.com>
+Date:   Mon, 30 Apr 2018 08:05:04 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="pvezYHf7grwyp3Bc"
-Content-Disposition: inline
-In-Reply-To: <xmqqzi1lxte6.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-3-amd64)
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <86604bj6xr.fsf@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 4/28/2018 6:35 PM, Jakub Narebski wrote:
+> Derrick Stolee <dstolee@microsoft.com> writes:
+>
+>> The generation number of a commit is defined recursively as follows:
+>>
+>> * If a commit A has no parents, then the generation number of A is one.
+>> * If a commit A has parents, then the generation number of A is one
+>>    more than the maximum generation number among the parents of A.
+> Very minor nitpick: it would be more readable wrapped differently:
+>
+>    * If a commit A has parents, then the generation number of A is
+>      one more than the maximum generation number among parents of A.
+>
+> Very minor nitpick: possibly "parents", not "the parents", but I am
+> not native English speaker.
+>
+>> Add a uint32_t generation field to struct commit so we can pass this
+>> information to revision walks. We use three special values to signal
+>> the generation number is invalid:
+>>
+>> GENERATION_NUMBER_INFINITY 0xFFFFFFFF
+>> GENERATION_NUMBER_MAX 0x3FFFFFFF
+>> GENERATION_NUMBER_ZERO 0
+>>
+>> The first (_INFINITY) means the generation number has not been loaded or
+>> computed. The second (_MAX) means the generation number is too large to
+>> store in the commit-graph file. The third (_ZERO) means the generation
+>> number was loaded from a commit graph file that was written by a version
+>> of git that did not support generation numbers.
+> Good explanation; I wonder if we want to have it in some shortened form
+> also in comments, and not only in the commit message.
+>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> ---
+>>   alloc.c        | 1 +
+>>   commit-graph.c | 2 ++
+>>   commit.h       | 4 ++++
+>>   3 files changed, 7 insertions(+)
+> I have reordered patches to make it easier to review.
+>
+>> diff --git a/commit.h b/commit.h
+>> index 23a3f364ed..aac3b8c56f 100644
+>> --- a/commit.h
+>> +++ b/commit.h
+>> @@ -10,6 +10,9 @@
+>>   #include "pretty.h"
+>>   
+>>   #define COMMIT_NOT_FROM_GRAPH 0xFFFFFFFF
+>> +#define GENERATION_NUMBER_INFINITY 0xFFFFFFFF
+>> +#define GENERATION_NUMBER_MAX 0x3FFFFFFF
+>> +#define GENERATION_NUMBER_ZERO 0
+> I wonder if it wouldn't be good to have some short in-line comments
+> explaining those constants, or a block comment above them.
+>
+>>   
+>>   struct commit_list {
+>>   	struct commit *item;
+>> @@ -30,6 +33,7 @@ struct commit {
+>>   	 */
+>>   	struct tree *maybe_tree;
+>>   	uint32_t graph_pos;
+>> +	uint32_t generation;
+>>   };
+>>   
+>>   extern int save_commit_buffer;
+> All right, simple addition of the new field.  Nothing to go wrong here.
+>
+> Sidenote: With 0x7FFFFFFF being (if I am not wrong) maximum graph_pos
+> and maximum number of nodes in commit graph, we won't hit 0x3FFFFFFF
+> generation number limit for all except very, very linear histories.
 
---pvezYHf7grwyp3Bc
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Both of these limits are far away from being realistic. But we could 
+extend the maximum graph_pos independently from the maximum generation 
+number now that we have the "capped" logic.
 
-On Mon, Apr 30, 2018 at 12:30:57PM +0900, Junio C Hamano wrote:
-> Thanks.  It is true that the current output from the tool is corrupt
-> mime multi-part, and we need to do something about it.
->=20
-> I however have to wonder if it even makes sense for --cover to pay
-> attention to --attach and produce the cover template that has "BLURB
-> HERE" etc.  in a multi-part format.  Shouldn't we be making a simple
-> plain text file instead?
+>
+>> diff --git a/alloc.c b/alloc.c
+>> index cf4f8b61e1..e8ab14f4a1 100644
+>> --- a/alloc.c
+>> +++ b/alloc.c
+>> @@ -94,6 +94,7 @@ void *alloc_commit_node(void)
+>>   	c->object.type = OBJ_COMMIT;
+>>   	c->index = alloc_commit_index();
+>>   	c->graph_pos = COMMIT_NOT_FROM_GRAPH;
+>> +	c->generation = GENERATION_NUMBER_INFINITY;
+>>   	return c;
+>>   }
+> All right, start with initializing it with "not from commit-graph" value
+> after allocation.
+>
+>>   
+>> diff --git a/commit-graph.c b/commit-graph.c
+>> index 70fa1b25fd..9ad21c3ffb 100644
+>> --- a/commit-graph.c
+>> +++ b/commit-graph.c
+>> @@ -262,6 +262,8 @@ static int fill_commit_in_graph(struct commit *item, struct commit_graph *g, uin
+>>   	date_low = get_be32(commit_data + g->hash_len + 12);
+>>   	item->date = (timestamp_t)((date_high << 32) | date_low);
+>>   
+>> +	item->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
+>> +
+> I guess we should not worry about these "magical constants" sprinkled
+> here, like "+ 8" above.
+>
+> Let's examine how it goes, taking a look at commit-graph-format.txt
+> in Documentation/technical/commit-graph-format.txt
+>
+>   * The first H (g->hash_len) bytes are for the OID of the root tree.
+>   * The next 8 bytes are for the positions of the first two parents [...]
+>
+> So 'commit_data + g->hash_len + 8' is our offset from the start of
+> commit data.  All right.
+>
+>    * The next 8 bytes store the generation number of the commit and
+>      the commit time in seconds since EPOCH.  The generation number
+>      uses the higher 30 bits of the first 4 bytes. [...]
+>
+> The higher 30 bits of the 4 bytes, which is 32 bits, means that we need
+> to shift 32-bit value 2 bits right, so that we get lower 30 bits of
+> 32-bit value.  All right.
+>
+>    All 4-byte numbers are in network order.
+>
+> Shouldn't it be ntohl() to convert from network order to host order, and
+> not get_be32()?  I guess they are the same (network order is big-endian
+> order), and get_be32() is what rest of git uses...
 
-I agree that multipart/mixed is not a useful content-type for only one
-plain text part.  I have a patch to add the trailing boundary, but I
-think you make a good argument that perhaps omitting the entire
-multipart portion would be better.
+ntohl() takes a 32-bit value, while get_be32() takes a pointer. This 
+makes pulling network-bytes out of streams much cleaner with get_be32(), 
+so I try to use that whenever possible.
 
-I'll have to work on this after work, so expect a patch later today.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---pvezYHf7grwyp3Bc
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrnBQwACgkQv1NdgR9S
-9osopQ/9GitRRKfUFH3WEnV6V6eRD/rrIRTXB9m1Pxq/YDnGqTyIXiZFCwTeV6/4
-gqIk4Z1JXlP6gMqUUYRiMrFz32nHTTs36rnpvwWlzn7E+0O1/DS1iRK8HazTLOiq
-66JsU7J0Enjyvc7i9i/klppTdvb7+wdUxv370VAwAxK6Jw8urwNPY0wnBLYei47c
-5itL8Y0b5I5xWTEb/c0BJ+k9PyqahZhM9FZqRoLWztzuskvP0QJaVdNDF1MJgPcw
-xNsEKfcq2OUXE1PUmzaEnzUMx62pwUBfpVpVH4G7uwhoq5S4AxCytW1UWTIyBBQu
-UT4tGxoqc21rP564seB98KdqRD87TfKDKNC/TwhooryfAfKDPOWGiqJyRSocLs8c
-v3rmf/fIu6rRtris5RpaBsvBKJZKYYwgxb4V0VWTUbvR9cLTbp0JnmzmqV27ekh7
-4BSwtQDcdJ41VfhdGIDB/eFspJHFTagly/8WEqDSsmF9Ng2+XwPo5Fd5cvPF4AnH
-ZT+PqgNHtLgxLl1rkxH7ANakYdBxHTRXisZXCJTRo7daaChQLQCF6YYISwdZKGim
-gMXRazGdigoQ9FJEQxTJ9RYhXMAMRwvbQnbgMbNX2n3NiOtOPZw+ZVWTUdm4rhpo
-VcvbpxEFS8HKGe/KV5Shb5YSmhdF0ZK+5dDuJiVZ+ngW7l3672E=
-=FKA4
------END PGP SIGNATURE-----
-
---pvezYHf7grwyp3Bc--
