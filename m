@@ -2,95 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9F2A215F4
-	for <e@80x24.org>; Mon, 30 Apr 2018 18:19:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4ED95215F4
+	for <e@80x24.org>; Mon, 30 Apr 2018 18:43:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754335AbeD3STK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 14:19:10 -0400
-Received: from mail-yw0-f182.google.com ([209.85.161.182]:33600 "EHLO
-        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753900AbeD3STJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Apr 2018 14:19:09 -0400
-Received: by mail-yw0-f182.google.com with SMTP id g16-v6so2871750ywk.0
-        for <git@vger.kernel.org>; Mon, 30 Apr 2018 11:19:09 -0700 (PDT)
+        id S1754713AbeD3Snc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 14:43:32 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:55086 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754243AbeD3Snc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Apr 2018 14:43:32 -0400
+Received: by mail-it0-f54.google.com with SMTP id z6-v6so7161844iti.4
+        for <git@vger.kernel.org>; Mon, 30 Apr 2018 11:43:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=e9JJdIR/XJ0EiBLuRa1aZ0/56I0kzJUk8USqJWWVyZA=;
-        b=toXxUcTCUgPmWk0gMq3E7MXm3e2Qto2wZnk9jt1RHGYo77O068N2FMbsLB10RPUb/F
-         UboYaNzH+bEUJFtv9fRHTQvZj3qeqIvzpofQRjcOvDagewfZbOdiINbz15YFBqBQhtv3
-         jqZvqMiZRpRosf1F0nCbU30wssj3/TKYmFLYYzcf1elNdQPA6brmv8+qZu/vG/oTSw3C
-         vUf6dV35tFSmEgqqgOM3ChlZXb/m9iek8VL43PUGelQhpiU5ySNsUh3CYi/5vFEqgaxp
-         K1xpkEYW4AXpO3SW7iVI5EX94Tq8WJ5QtV+xPwJRxi1cILKE0dLpsYhHwQ2dAZNHvi3M
-         Zs7w==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mxHZMmRNV3gdYpTCEdweT4lXQhSq9j7I2rE+WUlWrL4=;
+        b=PtufG5Q+34K7Sg9uEDJ3BEV8+1cH/m3dy3TdhcoYCm0OIcljt5UM8ojBCUGC3DNUJM
+         0eoiC+6Fn5JktWCIbb8r4VEGYubfrksDyga9ePTb/NRECRRiKx68B2myYM5HuBZe0Muh
+         aka9KFuk8JaEsW/x1yF5FYaDqd+ATpK8IR3Y4M4x8BtSxB732JnFxLnMrN63ZXzDw5u3
+         SJugNrp862XP776FDh03abz//nd7fy1OFm+euHqtzWSCPUL+fLTAovMJ53uDSXphj9ez
+         trN0iE1TQg31c2L+ZPepx0cpFBYmvE9WudJUXLPQtheqaOLnvM3TgPtOKX+BY3iMpmfS
+         Pb7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=e9JJdIR/XJ0EiBLuRa1aZ0/56I0kzJUk8USqJWWVyZA=;
-        b=XNN+ZHsValNqkddbe/imCf5jxgqHD5lVc8eH+fZOr9y2/j+b6MR5LTpy9ocqmTfX37
-         f7nzlPmT7++cEINAOouj8rc3eKY35VeEh4GDwepzXqh0qgNgA6wYzREugQeC10IRcRNM
-         MBTch/lxvwgC7q/8cogBmIRWCe5xmmxl0c7CyEgRQ661gKa9Dr/4pNmzs99rZfAJUXUm
-         K6Zh15QeeCqnFNsXn8zpjLeF7OxN0D+BX5RFeTwSTty+aSpgikik8hx0zDcg90kS7Ach
-         T9C2Lbns2fujMqQiDFEEYkWMXeyZogCqlCbuwaeb7S4Xy4rxEyFQrAqFTvASNetmO6vP
-         rbQg==
-X-Gm-Message-State: ALQs6tADLPhvFJKOJBHSKPTqiuGy8m47ncAFZ+IvzSW7BnnrYu8WSXlh
-        MAJ2y4WbwIhZm0j5mqsX3O4WDghmn3QNKQpvLRPmrg==
-X-Google-Smtp-Source: AB8JxZoIqGmvhwxQZAEpY5dQPWu+Wd5sVq8TGIGrpdrGauBti3ewakZwQpqerFfs2s1paldbz6E6Tv3wpfced5Dkrug=
-X-Received: by 2002:a81:4ec9:: with SMTP id c192-v6mr7092344ywb.421.1525112348566;
- Mon, 30 Apr 2018 11:19:08 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=mxHZMmRNV3gdYpTCEdweT4lXQhSq9j7I2rE+WUlWrL4=;
+        b=oYvpPg02I5FvfNF768GPqDUnth1XYc2d2CPFZ6QJsr0n29ajznqTlWTojCdYm8kbMi
+         9XHlwvRAqK0Kj7y1cpP3l2lK41o6xZC2S/W5py+76ymDx+9lQkXVoeVwjMT0Dl8rkr44
+         95Jp7SLBXDgjJ3daRT6HWB6bmDYIEvgZpFven0DbjSVBNftO7E99Ygx6g4fAlKQ8xRtC
+         WUCyvGQLGy/+7te8+op6qIcp0NvO/3qqCfQ6y5yj6ygLlqxiY8pj3+9w/ZGU8QXqfZJQ
+         6IkKvbzZuoGb0GLZdI+1p5YuUUImMYmVx1jP8HPCGLEOuyP+fkJz/r05SMziJ70YxmnT
+         Inig==
+X-Gm-Message-State: ALQs6tCqp2es+DJ4KdfSCJGrT2o4tMYvyTe4YCP6bdjTO6zvapV9jznF
+        u9xdVkcy9a+rpOeO1QDP1z4BVEkc
+X-Google-Smtp-Source: AB8JxZqJLmOEWBWXa99N+bgeo/vxGibZzaAvvaU3jcLHIzmPSy8vfMzhbXAsxEvZMRw/6CqIsFMM9g==
+X-Received: by 2002:a24:4293:: with SMTP id i141-v6mr12376332itb.54.1525113811417;
+        Mon, 30 Apr 2018 11:43:31 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id d130-v6sm2746326iog.46.2018.04.30.11.43.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Apr 2018 11:43:30 -0700 (PDT)
+Subject: Re: [PATCH v1] test-drop-caches: simplify delay loading of
+ NtSetSystemInformation
+To:     Stefan Beller <sbeller@google.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>
+References: <20180430142555.23260-1-benpeart@microsoft.com>
+ <CAGZ79kZvyFTKadjY11Xu+KcV9OUe-4hbjgPzBDcD52X2nZKCzg@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <92ff364a-b46c-2274-a3fd-0b68eaa4159e@gmail.com>
+Date:   Mon, 30 Apr 2018 14:43:31 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Mon, 30 Apr 2018 11:19:08
- -0700 (PDT)
-In-Reply-To: <CAEp-SHXo2fnyUSMDqJnfOkh_R21R2FjFUtQ14u9s6-tV039tHg@mail.gmail.com>
-References: <CAEp-SHXo2fnyUSMDqJnfOkh_R21R2FjFUtQ14u9s6-tV039tHg@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 30 Apr 2018 11:19:08 -0700
-Message-ID: <CAGZ79kZQ3ce8QTJy2Siiuoz=pa6qWweNc8GTpoygkvKuoFXaAA@mail.gmail.com>
-Subject: Re: git-submodule is missing --dissociate option
-To:     Casey Fitzpatrick <kcghost@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAGZ79kZvyFTKadjY11Xu+KcV9OUe-4hbjgPzBDcD52X2nZKCzg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 30, 2018 at 1:29 AM, Casey Fitzpatrick <kcghost@gmail.com> wrote:
-> This seems to be a hole in the git feature set. I believe it is fairly
-> easily worked around, but it would be best to provide the option for
-> ease of use (and maybe performance?).
->
-> git clone has both a --reference feature and a --dissociate option,
-> with dissociate allowing for a reference to *only* speed up network
-> transfers rather than have the resulting clone rely upon the reference
-> always being there (creates an independent repo).
 
-With the advent of git-worktree, I claim that --reference without further
---dissociate is dangerous, such that the combination of these two are
-not the best UX, you could wish for.
 
-> But git submodule only allows for --reference, so there isn't a an
-> option to make a speedy independent submodule clone in one shot:
-> https://git-scm.com/docs/git-submodule
-> I checked the latest online documentation (currently at 2.16.3) and
-> the documentation in the latest sources (almost 2.18):
-> https://github.com/git/git/blob/next/Documentation/git-submodule.txt
->
-> As far as I am aware this can be worked around with 'git repack -a'
-> and manual removal of the objects/info/alternates file afterward.
-> Though I don't know if this results in a less speedy clone than
-> dissociate would.
+On 4/30/2018 2:12 PM, Stefan Beller wrote:
+> On Mon, Apr 30, 2018 at 7:26 AM, Ben Peart <Ben.Peart@microsoft.com> wrote:
+>> Take advantage of the recent addition of support for lazy loading functions
+> 
+> Care to specify "recent additions"? Are these in Git code or somewhere else?
+> 
+> I find this alias handy, as then I can describe commits
+> in commit messages via "git gcs <commitish>
+> 
+>    alias.gcs=show --date=short -s --pretty='format:%h (%s, %ad)'
+> 
+> Thanks,
+> Stefan
+> 
 
-That is an interesting workaround!
-I agree we should have the --dissociate option available for submodules.
-Care to implement it?
+I guess "recent" is relative. :)
 
-Thanks,
-Stefan
+db2f7c48cb (Win32: simplify loading of DLL functions, 2017-09-25)
