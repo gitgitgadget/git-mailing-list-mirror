@@ -2,98 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E64B9215F4
-	for <e@80x24.org>; Tue,  1 May 2018 20:23:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF4B1215F4
+	for <e@80x24.org>; Tue,  1 May 2018 20:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750823AbeEAUXL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 16:23:11 -0400
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:45001 "EHLO
-        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750743AbeEAUXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 16:23:11 -0400
-Received: by mail-yw0-f181.google.com with SMTP id l142-v6so2694286ywc.11
-        for <git@vger.kernel.org>; Tue, 01 May 2018 13:23:10 -0700 (PDT)
+        id S1750911AbeEAUZ2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 16:25:28 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:36535 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750743AbeEAUZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 16:25:27 -0400
+Received: by mail-qk0-f195.google.com with SMTP id a202so9678348qkg.3
+        for <git@vger.kernel.org>; Tue, 01 May 2018 13:25:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6jYBXGPPVwnkcyLvt+8LfTlmVnXzT+JLSq5V60bqcts=;
-        b=ObTWwmOzNVsfc3w9FNCXiRusgJbwhCztA5oovLrf6eQblIbG/XIDsFsf4JA/9WQuwn
-         bYCPvrFgneOmo3mHHKfo+vcDTNROUatVz/wbiarym2j0Abta+PLxmRuHcEsqkgQn0bzM
-         nSQQ8xUh2nyCqRT3+Yz5pTDoxvaKZfC4AKdWl4jOSKBtUB+ZcwiJ1NmLBjWheh6kn1Jo
-         qN2aqRYZCOi4vr8tXINREJhmxmjNW4iUPCdlS8yuIoIf7tdVR4hJegPdUOAx/dkVkK44
-         kj37Gjn6mlcvlzZeQQJl586FoPfDPbuJonWPjbH9AAomK6G4TUav62O+jGCzeR3ITXI6
-         4eFQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=aLOE0X/Hh/iZGT6vSJYq60JQEtum04MTqtWREK6vSEE=;
+        b=QvfC0UBJh3aq70K0/OFotaDwtD6DQFIZHDiogukjvth6AVVck+rk+1+jwmVLrnxlMc
+         MBKL5Yxp3NsWZEwJ4nTjx5FZiohcB6w6FQPZaDXnk+w9eOEBmgLm9RIGAE9zE2ID19+d
+         KVBSI+wpKqdMwUngcZpxKYkvZ0Uf7bciv5cOTn9yRKdJGeqKD5FbUakk9L+xzOpLhJnb
+         PkqF6uEGN+7caAf2QXjj0xk1oKhpG7rCxKPzz+AjgkWWwU9x61ZhRTJ2t4l86eG9dxh0
+         x5RJOWhTDpPFAXKGwiryISoqjXfUVjVBI8n5QtXj/78hLPLZlZvllDJtgUNkyfwz966k
+         MomA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6jYBXGPPVwnkcyLvt+8LfTlmVnXzT+JLSq5V60bqcts=;
-        b=HZLeri7G0f6OLeVKG4f5VMSErDY7DcqMe1xT17XMVDzBxgO9L3YnwbuoTw+dL/sZhv
-         VHPjQ1TjDIbSVtcSdWy7H8C3OEkuou8UfltYOeX2bdU6GQYgeOcMS63fnLEN+SirutbV
-         fZFQmeBS0IjxAfHz9g85Fk8QS5G849Qc4dyryu/MZrdCDeVkJiVnq3Zhz/D/IOx9yo7j
-         KPPKFFX0WCEV0WMkzSIohTOKdpQokbPresxdBboIG0/KJi8JlFPpGP86nhrpG2ILjW6f
-         VbwSMcdF0qUUr+juFysKUBvELlqp52WDZVr8Iq3zMNm5T1+IGiJpepMIh1sHdSjFJCfw
-         FXiQ==
-X-Gm-Message-State: ALQs6tDhDexYav+1yOys4ZH2t723LUIZMqoYBOjHmR8jNBObbZ+X5GVV
-        eYDRPgJZuEOOZgyesW9ZEe2ZDYsB/DeUlpaz8OHU+w==
-X-Google-Smtp-Source: AB8JxZptaiJf8t5lOPp8Cj7xA3pQzAfTzr9IJA5we/VHIPMYqTxn0ruIgcmndhaiN+gE2pvLEq153oJUlIXZgmTIbXw=
-X-Received: by 2002:a81:37ce:: with SMTP id e197-v6mr9653347ywa.340.1525206189855;
- Tue, 01 May 2018 13:23:09 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=aLOE0X/Hh/iZGT6vSJYq60JQEtum04MTqtWREK6vSEE=;
+        b=O+fT/5zu7vBNQBsSZtS1F55lYoDX3Xee9j0egrK608NzNKf2gKenLttN5aCgSOMnO6
+         L4+OtHkuLI9wywIBRETO0+u50SFJ/8Mr7EqJEJ3mn5F5wmgDWNzoDwmObV8NwaCysAin
+         8KRHxFne1zvU0N7rF0MpkUjptyaAYJN5HKy6gaI4PPVma5fEU2NJHWu/8wnyVNxtCROU
+         ixGtuGBWO9ZBKePNrI8GtVD2Oi8GeLPCQWdxyeQBoMPivirSYb9fWtIwNiqc+f7jZXdq
+         ozFj2jzBrb6AOYCmf0SNbyzUg3GSNIzPJQKpbxtZotQ50GlqylhHCjuVcpVowWEB1+bG
+         BAYg==
+X-Gm-Message-State: ALQs6tAlyh+W/9etbVxhVWu/ZbVxJhQvd9gqqJAwveHHoVgxIBd86eg2
+        CJK9vMOr8CgmOrStOD256nKWhvLEsHXJG5cF5RM=
+X-Google-Smtp-Source: AB8JxZrbDpLbpG47inwdHU8+5UiNBfcgvY/oxOqHA6lVSO+b74hKNsHdWcEQQKMZaimOggqQMSWxBIqPJB4wxc+IbWM=
+X-Received: by 10.233.220.1 with SMTP id q1mr12480845qkf.361.1525206326636;
+ Tue, 01 May 2018 13:25:26 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Tue, 1 May 2018 13:23:09 -0700 (PDT)
+Received: by 10.12.170.75 with HTTP; Tue, 1 May 2018 13:25:25 -0700 (PDT)
 In-Reply-To: <20180501180908.17443-3-kcghost@gmail.com>
 References: <CAEp-SHV4hP=v_=AJExRS3hqT-x9rXEONofWD=sVQZC79uewATA@mail.gmail.com>
  <20180501180908.17443-1-kcghost@gmail.com> <20180501180908.17443-3-kcghost@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 1 May 2018 13:23:09 -0700
-Message-ID: <CAGZ79kY686ptTPY8DVwr79F2vC6eC_BP=5M7isu9Gfu+eX7vDg@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 1 May 2018 16:25:25 -0400
+X-Google-Sender-Auth: s-8fQDvdPAm1_uXNHXUc4S2gyo8
+Message-ID: <CAPig+cSbOsdibX588ObTG5_O=Mmp1+pbxiaUFMx-P0jFLLUuHQ@mail.gmail.com>
 Subject: Re: [PATCH 2/2] submodule: Add --dissociate option to add/update commands
 To:     Casey Fitzpatrick <kcghost@gmail.com>
-Cc:     git <git@vger.kernel.org>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 1, 2018 at 11:09 AM, Casey Fitzpatrick <kcghost@gmail.com> wrote:
+On Tue, May 1, 2018 at 2:09 PM, Casey Fitzpatrick <kcghost@gmail.com> wrote:
+> submodule: Add --dissociate option to add/update commands
+
+s/Add/add/
+
+> Add --dissociate option to add and update commands, both clone helper commands
+> that already have the --reference option --dissociate pairs with.
+> Add documentation.
+> Add tests.
 >
-> +test_expect_success 'submodule add --reference with --dissociate doesnt use alternates' '
-> +       (
-> +               cd super &&
-> +               git submodule add --reference ../B --dissociate "file://$base_dir/A" sub-dissociate &&
-> +               git commit -m B-super-added &&
-> +               git repack -ad
-> +       ) &&
-> +       test_must_fail test_alternate_is_used super/.git/modules/sub-dissociate/objects/info/alternates super/sub-dissociate
+> Signed-off-by: Casey Fitzpatrick <kcghost@gmail.com>
+> ---
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> @@ -1075,6 +1075,9 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
+> +       if (dissociate) {
+> +               argv_array_push(&cp.args, "--dissociate");
+> +       }
 
-We do already have the unfortunate precedent of using "test_must_fail
-test_alternate_is_used"
-(and it was partially included by me in 31224cbdc72 (clone: recursive
-and reference option
-triggers submodule alternates, 2016-08-17), further used in
-bf03b790471 (submodule--helper:
-set alternateLocation for cloned submodules, 2016-12-08).
+Style: drop unnecessary braces
 
-I think it is the wrong approach though, as the test_must_fail only ensure that
-*something* doesn't return success. Usually we use it with
-"test_must_fail git ..."
-to ensure we properly error out on user requests, that are impossible
-to fulfill in
-the current implementation.
+> @@ -1208,6 +1212,8 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+> +               OPT_BOOL(0, "dissociate", &dissociate,
+> +                          N_("use --reference only while cloning")),
 
-For this test case I'd suggest we rather test that the no alternate is setup,
+s/reference/dissociate/
 
-    test_path_is_missing
-super/.git/modules/sub-dissociate/objects/info/alternates
+> @@ -1575,6 +1584,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+> +               OPT_BOOL(0, "dissociate", &suc.dissociate,
+> +                          N_("use --reference only while cloning")),
 
-as that tests the correctness of the --dissociate option?
+s/reference/dissociate/
 
-Thanks,
-Stefan
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> +               --dissociate)
+> +                       dissociate="--dissociate"
+> @@ -258,7 +262,7 @@ or you are unsure what this means choose another name with the '--name' option."
+> -               git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"$progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${depth:+"$depth"} || exit
+> +               git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"$progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"$dissociate"} ${depth:+"$depth"} || exit
+
+I realize that you're just following existing practice in this script,
+but it's a bit off-putting to see expansions for the new --progress
+and --dissociate options being done via unnecessarily complex
+${foobar:+"$foobar"} when the simpler $foobar would work just as well.
+
+Just a comment; not necessarily a request for change. (A separate
+preparatory cleanup patch which simplifies the existing complex
+expansion expressions would be welcome but could also be considered
+outside the scope of this patch series.)
+
+> @@ -493,6 +497,9 @@ cmd_update()
+> +               --dissociate)
+> +                       dissociate="--dissociate"
+> +                       ;;
+> @@ -550,6 +557,7 @@ cmd_update()
+>                 ${reference:+"$reference"} \
+> +               ${dissociate:+"$dissociate"} \
+>                 ${depth:+--depth "$depth"} \
