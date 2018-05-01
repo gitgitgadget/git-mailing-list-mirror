@@ -2,128 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08FB421841
-	for <e@80x24.org>; Tue,  1 May 2018 11:27:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C7D921841
+	for <e@80x24.org>; Tue,  1 May 2018 11:31:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754742AbeEAL1V (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 07:27:21 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:33294 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753993AbeEAL1U (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 07:27:20 -0400
-Received: by mail-wm0-f42.google.com with SMTP id x12so14597431wmc.0
-        for <git@vger.kernel.org>; Tue, 01 May 2018 04:27:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=ALfoEMErNzM8tdlGN9ra245RWO07CPEczomBId0hPgs=;
-        b=KekeZYtn4R/Lgei2gG9u6l5L9JKmoztgT531l/rVK9efG6wg7X4EN/n8ob7uG61dDV
-         3ogbak2DEbbgaojHzyIStW9tSqHnGMgprKn3CJLArFiM+IfZ0Bqe7AkWbI0dEas37HQ4
-         mWN/BeMgsS4FAW5qceeVWvaanmTCJMC35v8Q+XC4IINeBzg0DugomqCEeHZTzdF+Papl
-         YW8dr+QlxQ1vXRYmxHx40V0D7PXRqWFN5npClMeemlQoLvl/bwNVC0bW9EeJhpXxhyql
-         R8V2K3IeTLdXlGyRxmbQAjJfuJaBSUsR/GSjb3Pe4D1kf2dz+E4PEWhxrJA8gp5VKd3U
-         up6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=ALfoEMErNzM8tdlGN9ra245RWO07CPEczomBId0hPgs=;
-        b=uJLu2L6X8quBGNDmeuaj0sKsjvWvlkLYPsNgS83mDYBJcHFM2AVBLJkrlmanspvYk5
-         xEsyZ3WcfGfeJZ4+NlJmtNwGRR3Lh9HtD17MlgaOoPCfb6MLBm8KBrtO3g7dT7poOIC8
-         RKM1yCnPaOYet0yjK44XkPziy/2e5nMBsovykZUdVCJ1Ms6ecaIeDRZ23vkrgs7XZQC/
-         ACA4Dhijyl1cNH/WF0qo1kPfhaZto0eG49el1wr/ul/AbVfpHybWqmHrphwva6QBktOr
-         w7cYZnBcimaj0vaggl74w/1/iEz/8cN1i6QG7z6IdbacYzei7yqugCgnQ682ADP6r744
-         RYKw==
-X-Gm-Message-State: ALQs6tDdt+S7KaXj/OugBsN9e5wkjX5+wDj/5baLyWKdtbexr2e9oQ3z
-        3m+KQI8YjAw+wXa3v1xS65Y=
-X-Google-Smtp-Source: AB8JxZrTMV4Izwx4lk6CQVDXSmn1J7eC7PVzx6ALrFdkEqkbnw7Q0UErvZfE7UE9j3tVypW2SDhlog==
-X-Received: by 2002:a50:eb94:: with SMTP id y20-v6mr20246955edr.185.1525174038924;
-        Tue, 01 May 2018 04:27:18 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id f5-v6sm5644808edb.86.2018.05.01.04.27.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 01 May 2018 04:27:17 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 4/9] get_short_oid: sort ambiguous objects by type, then SHA-1
-References: <20180430220734.30133-1-avarab@gmail.com> <20180430220734.30133-5-avarab@gmail.com> <5f8b1ec1-258d-1acc-133e-a7c248b4083e@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <5f8b1ec1-258d-1acc-133e-a7c248b4083e@gmail.com>
-Date:   Tue, 01 May 2018 13:27:17 +0200
-Message-ID: <87a7tjzkdm.fsf@evledraar.gmail.com>
+        id S1754819AbeEALbS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 07:31:18 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55487 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753717AbeEALbQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 07:31:16 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lf0M7-1eZm2w1xmx-00qmVe; Tue, 01
+ May 2018 13:31:13 +0200
+Date:   Tue, 1 May 2018 13:31:14 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Tiago Botelho <tiago@gitlab.com>
+cc:     Christian Couder <christian.couder@gmail.com>,
+        Harald Nordgren <haraldnordgren@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH] Create '--merges-only' option for 'git bisect'
+In-Reply-To: <CAF2GuqvTvPPfGPXCwhBkTHJvRQcV1w9VebHkn+Kqw6dZ2b0xKQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1805011330510.79@tvgsbejvaqbjf.bet>
+References: <20180411225534.48658-1-haraldnordgren@gmail.com> <CAGZ79kbt=J5SHsHJTfOZYhgSdn9_gOjVBC3qp_oL0sC-b3ZRmw@mail.gmail.com> <CAHwyqnVg83xSQHRnDVz+aMxPPMj-3bWF4P8YUxEjurxnpDhFEQ@mail.gmail.com> <CAP8UFD3j-MGY7jHQK52zVLYMB=1vhCSFKxrvQ1JsRW-Rmnn8Qg@mail.gmail.com>
+ <CAF2Guqum5dak4us_HJtiW_gL0xgsihgUpidFEJzBgw-tEMunkQ@mail.gmail.com> <nycvar.QRO.7.76.6.1804121341590.65@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAF2GuqtooOo0P3nGXNEEu=j2XSuNZ2KRwEOAz82mMC3t3v7bXQ@mail.gmail.com> <nycvar.QRO.7.76.6.1804301330230.79@tvgsbejvaqbjf.bet>
+ <CAF2GuqvTvPPfGPXCwhBkTHJvRQcV1w9VebHkn+Kqw6dZ2b0xKQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-977641785-1525174275=:79"
+X-Provags-ID: V03:K1:M2RAsWjfz2rjhs5HMpGCny8XBnIVi8ucqKJA2mud7OUnzsLOkVT
+ /RlHt3yrhIAhH12WbIzJi/sMcO0wfIOs0MC8yE10YlYvBjBj00QXpLdEHJM3gYvqRPz3Uy4
+ cQzqhT6497bXJJkftiE2HgCAChub+JFoN0G35/giUI4OVD7Wkct8m2lF/S0NXvusmmRW7kN
+ dUm2mFoeUh+gowAC7F8wg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0XgOL8uAhWE=:P5NE8smjodVpFHQxHn4yV5
+ ZUhfxHsQjhBK3XFAv15OQ3hEfCIEIh7k9c52Ii+BwWnpiG6xUcU+iO/wUJVbs/JeRDE9LhJsQ
+ nznWPgVd+ZmeE2WO9KZCTSGNkDhCTkzxtJFRZNbjNC4QjjycuSB1Tv18CCPKpI4MWTAOBkCuS
+ GaYVMWmOxO4euD8AfdaPIR5slnw1HKwyOZGC4anNBoXtISOpdVRQ210VQmrM+r+4B6IS2wyZ1
+ 5Ts0AZ0mlhhOrYra/VSGuNldRIOzYUtg+lap70rLC5B4k/18tNXAMqIJhbZyyF/cQuOR1xygW
+ aaGt7rwsBdN1yH3dJuwZffi1g7GFObcyEcq3RynpUpbbAjb+1JJi2c6N5Dqn+FlVbMTiHRzlx
+ YuFuMaGHJC7FqoC2WUlMne9PlIMsRgcZcX8E2Z3tcH2RCtyt8kMi+kjUXL451VQhjRr/qL6r4
+ oDg7xjlT1cQSonUiSWzpmhOEYS2uuwXV3uIg5DN3ngcrX84GuaPXko0GxVB+Wi5FyBEW+xxyS
+ MheB7KUDxha4UxuHjEf6gY2rYbPMP88y7H1UtGHmmNs5jorJHNZGEmRt0lfzgk7tQKnZkfoFD
+ 3RYqXMS+zQx3+NP22IQZZVsw5iY2MLdTOOezj6k6DbRxzTCvtC5cHzC/q8zNKJiQycIs9Eg7X
+ +ruz5n0yIYNczfm12TJ18tsppQnflzgXfhku9La/tuP+Eo/5XwVFb+AxI2I0q5XbRJThC9/Wd
+ glivUapihuTijINVrUIiMgZGqZUiXqMz8dgZ/YNt+Noyyj3SY73SaB5jCiRM/DEflaZ0hdfLm
+ zILYNKA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, May 01 2018, Derrick Stolee wrote:
+--8323328-977641785-1525174275=:79
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> On 4/30/2018 6:07 PM, Ævar Arnfjörð Bjarmason wrote:
->> Since we show the commit data in the output that's nicely aligned once
->> we sort by object type. The decision to show tags before commits is
->> pretty arbitrary, but it's much less likely that we'll display a tag,
->> so if there is one it makes sense to show it first.
->
-> Here's a non-arbitrary reason: the object types are ordered
-> topologically (ignoring self-references):
->
-> tag -> commit, tree, blob
-> commit -> tree
-> tree -> blob
+Hi Tiago,
 
-Thanks. I'll add a patch with that comment to v2.
+On Mon, 30 Apr 2018, Tiago Botelho wrote:
 
->> @@ -421,7 +451,12 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
->>   			ds.fn = NULL;
->>     		advise(_("The candidates are:"));
->> -		for_each_abbrev(ds.hex_pfx, show_ambiguous_object, &ds);
->> +		for_each_abbrev(ds.hex_pfx, collect_ambiguous, &collect);
->> +		QSORT(collect.oid, collect.nr, sort_ambiguous);
->
-> I was wondering how the old code sorted by SHA even when the ambiguous
-> objects were loaded from different sources (multiple pack-files, loose
-> objects). Turns out that for_each_abbrev() does its own sort after
-> collecting the SHAs and then calls the given function pointer only
-> once per distinct object. This avoids multiple instances of the same
-> object, which may appear multiple times across pack-files.
->
-> I only ask because now we are doing two sorts. I wonder if it would be
-> more elegant to provide your sorting algorithm to for_each_abbrev()
-> and let it call show_ambiguous_object as before.
->
-> Another question is if we should use this sort generally for all calls
-> to for_each_abbrev(). The only other case I see is in
-> builtin/revparse.c.
+> On Mon, Apr 30, 2018 at 12:31 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> >> > On Thu, 12 Apr 2018, Tiago Botelho wrote:
+> >> >
+> >> >> On Thu, Apr 12, 2018 at 9:58 AM, Christian Couder
+> >> >> <christian.couder@gmail.com> wrote:
+> >> >> > On Thu, Apr 12, 2018 at 9:49 AM, Harald Nordgren
+> >> >> > <haraldnordgren@gmail.com> wrote:
+> >> >> >> I think it looks similar. But if I'm reading that thread correct=
+ly
+> >> >> >> then there was never a patch created, right?
+> >> >> >
+> >> >> > (It is customary on this mailing list to reply after the sentence=
+s we
+> >> >> > reply to. We don't "top post".)
+> >> >> >
+> >> >> > On the GSoC idea pages (like https://git.github.io/SoC-2018-Ideas=
+/) we
+> >> >> > have been suggesting "Implement git bisect --first-parent" and th=
+ere
+> >> >> > are the following related links:
+> >> >> >
+> >> >> > https://public-inbox.org/git/20150304053333.GA9584@peff.net/
+> >> >> > https://public-inbox.org/git/4D3CDDF9.6080405@intel.com/
+> >> >> >
+> >> >> > Tiago in Cc also tried at a recent London hackathon to implement =
+it
+> >> >> > and came up with the following:
+> >> >> >
+> >> >> > https://github.com/tiagonbotelho/git/pull/1/files
+> >> >> >
+> >> >> > I tried to help him by reworking his commit in the following bran=
+ch:
+> >> >> >
+> >> >> > https://github.com/chriscool/git/commits/myfirstparent
+> >> >>
+> >> >> Thank you for the cc Christian, I=E2=80=99ve been quite busy and wa=
+s not able
+> >> >> to work on the PR for quite some time.
+> >> >>
+> >> >> I intended to pick it back up again next week. If it is ok with
+> >> >> Harald I would love to finish the PR that I started, since it is
+> >> >> quite close to being finished (I think it was just specs missing if=
+ I
+> >> >> am not mistaken).
+> >
+> > It is now well after "next week". Are there any news? Or could you unbl=
+ock
+> > Harald by stating that you won't come back to it any time soon (in
+> > particular since the PR is not quite as finished from my reading as you
+> > made it sound...)?
+> >
+> > Ciao,
+> > Johannes
+>=20
+> I've been working on the feature for the past week
+> https://github.com/tiagonbotelho/git/commit/709e2e248ebfb1deab12fd7d3da46=
+11002dfaf86#diff-118df990fd68a0929bca5441fea06fc7
+>=20
+> I have some comments sent by Christian I plan on fixing this week
 
-When preparing v2 I realized how confusing this was, so I'd added this
-to the commit message of my WIP re-roll which should explain this:
+Okay, great! I was concerned because of the long silence.
 
-    A note on the implementation: I started out with something much
-    simpler which just replaced oid_array_sort() in sha1-array.c with a
-    custom sort function before calling oid_array_for_each_unique(). But
-    then dumbly noticed that it doesn't work because the output function
-    was tangled up with the code added in fad6b9e590 ("for_each_abbrev:
-    drop duplicate objects", 2016-09-26) to ensure we don't display
-    duplicate objects.
-    
-    That's why we're doing two passes here, first we need to sort the list
-    and de-duplicate the objects, then sort them in our custom order, and
-    finally output them without re-sorting them. I suppose we could also
-    make oid_array_for_each_unique() maintain a hashmap of emitted
-    objects, but that would increase its memory profile and wouldn't be
-    worth the complexity for this one-off use-case,
-    oid_array_for_each_unique() is used in many other places.
+Ciao,
+Johannes
+--8323328-977641785-1525174275=:79--
