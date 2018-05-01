@@ -7,114 +7,144 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58720215F4
-	for <e@80x24.org>; Mon, 30 Apr 2018 23:59:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D5DE215F4
+	for <e@80x24.org>; Tue,  1 May 2018 00:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755558AbeD3X7x (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Apr 2018 19:59:53 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36904 "EHLO
+        id S1755756AbeEAAC0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Apr 2018 20:02:26 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36912 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753953AbeD3X7v (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 30 Apr 2018 19:59:51 -0400
+        by vger.kernel.org with ESMTP id S1755681AbeEAACZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 30 Apr 2018 20:02:25 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 02D2560129;
-        Mon, 30 Apr 2018 23:59:48 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id ECC4D60129;
+        Tue,  1 May 2018 00:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525132789;
-        bh=6I3q1pIMwrhF8cT3PugzuypYmAvQ5GKvb5pZaKD1dqw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=QXcqrEwFXGgp2z8aI62/bH6FMQW5jReCJNlFnMz+W87H4MokzR9CaTZKpwYA1KDJr
-         1rwCJ5lVrWHMmu0i+A4TjkSeFyaAQcVxL3p7hTfPrDpYw7sww+FQWFO0EssITV/xrp
-         otckOjjib/JsHTqQKuV/od9kXZgHUE8Xb0sk7lvYxfb2uUXg7oDUfVU7De3KsupEG/
-         kPC0I7SdR/tmFlbi8vJ86t3pwK/x9PlXx6TlvKhArYgqJILmDIEhjbvydMD4+UwuTW
-         j0usvLlQhPkxBs8L4cgjvJ1iAzehpdk0N5MqjuTOn5xtXlTH79k5HQWyKHRno+T/QX
-         vtAic4ubIvmU+NHpJXbOZ7RRHOlWKBvFm3DeMC/3Y8qF1vO3vSGEnYjvCCwqik3z6+
-         FeA1okoddl+kAg9e0F+F7oPxoOyb34nt33FjP+85aZxxiMA85yJq2sGPaqASVjCexE
-         y2WF1iB3QuXk3EsXNtBcS2peMyGflFdI/VHfF3P2XvPU8IW4C0t
-Date:   Mon, 30 Apr 2018 23:59:43 +0000
+        s=default; t=1525132944;
+        bh=0YtoUYyuCrd67DkrJ9HOiVNgFjurmpM1hGfR//o9Kgg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=HKKbdE9Cxau/0IAPalSrLS2uAdTt2/s34R9sRoRzQ+YChnDhks2JOaqHf3GvN8qFU
+         RqaMQSqBMlGOffeqedYMQj19CttlQnAT3MMD41lS1EbRV6Qmz9QcV1PVUIdJ7P/R79
+         JV5nQ2R/y+vQdb2YxknwamRkyhNWuNuKGFHtDgo2cVoJqp/Lsz2Rpi7qQHZbCui6pv
+         k/9qHChA4wtBmvsoJrUsSVWeoJp6oLMqPt7dg5Ug2mLn7lF6F0ScprigLovpzTgHzb
+         WX6XgrPl/MmdABaGTp9NuPrsbqjuL5d+xAwlseWqUrq7mQ6m12gl5asas/TxGdH8yu
+         +txs63ldbYr9pkSDGjOS1lPy6MGUmvP9XZhmP/vKiBrOw6KEFY+m7Jczy7upuXG4qY
+         9lxDVhnUv14wcXNa9S0eccDAVBBOmZGDjAZpZBYoBCZIxrOGN4Cfen3lGvEqgdLt8E
+         UJxtvDrokjcvFXU+bPb39HaIM7Sb4KHy6GfpdfwC9DzCylIyORV
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 00/41] object_id part 13
-Message-ID: <20180430235943.GC13217@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
- <CACsJy8CX7cgd4EGSHVUtm35Aq92Us8WBA-r746vEaZiFP5Q5Lg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hOcCNbCCxyk/YU74"
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CX7cgd4EGSHVUtm35Aq92Us8WBA-r746vEaZiFP5Q5Lg@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-3-amd64)
-User-Agent: Mutt/1.9.5 (2018-04-13)
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Patrick Hemmer <git@stormcloud9.net>
+Subject: [PATCH] format-patch: make cover letters always text/plain
+Date:   Tue,  1 May 2018 00:02:14 +0000
+Message-Id: <20180501000214.833766-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
+In-Reply-To: <20180430020930.GA13217@genre.crustytoothpaste.net>
+References: <20180430020930.GA13217@genre.crustytoothpaste.net>
 X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When formatting a series of patches using --attach and --cover-letter,
+the cover letter lacks the closing MIME boundary, violating RFC 2046.
+Certain clients, such as Thunderbird, discard the message body in such a
+case.
 
---hOcCNbCCxyk/YU74
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Since the cover letter is just one part and sending it as
+multipart/mixed is not very useful, always emit it as text/plain,
+avoiding the boundary problem altogether.
 
-On Mon, Apr 30, 2018 at 08:03:12PM +0200, Duy Nguyen wrote:
-> On Tue, Apr 24, 2018 at 1:39 AM, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > [0] I can synthesize blobs, trees, and commits, but things are currently
-> > totally broken, which is, I suppose, to be expected.
->=20
-> Yup. I was tired and bored so I went playing with the new hash.
-> Writing and reading blobs (with hash-object/cat-file) were relatively
-> easy after fixing up fill_sha1_path and get_oid_basic). Then I worked
-> my way up to update-index/ls-files so that I could make trees with
-> write-tree. And I hit the first road block: struct ondisk_cache_entry
-> hard codes hash size so I would need to re-organize the code for more
-> flexibility (or even redesign the file format if I want to keep byte
-> alignment). Eck...
->=20
-> I guess I'll be helping review this series instead :D
+Reported-by: Patrick Hemmer <git@stormcloud9.net>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/log.c           | 2 +-
+ log-tree.c              | 7 ++++---
+ log-tree.h              | 3 ++-
+ t/t4014-format-patch.sh | 9 +++++++++
+ 4 files changed, 16 insertions(+), 5 deletions(-)
 
-Yeah, I have code to fix that, but it's ugly.
-
-You can see the work on part2 and part3 of the test fixes, plus the
-fixes for all of that stuff on my object-id-part14 branch.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---hOcCNbCCxyk/YU74
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrnre8ACgkQv1NdgR9S
-9osYZA/+MY/gxS1MZ7alJfge5Y37Rk1rxZ4xRfXz6oxW3XPd1DJD3TY6Raad6tFC
-GHJ3mIyxZkv+NLwFVY7YVbG1iZeO0wYWbNz8YuPnk4L4UwnqygVWzNnFJtjtSgJr
-ckN1oGUAbNWXHB/KQFJZE9IRpGufUO3v+X+plhEO4FzVQyqAhbdiyQ+/Z2XBSDV1
-Ku25yZyKC3orhaRJrf8BWU0pGSvCmE+lDtmq4mRXCv2X/YSpLSVZrZi6rU+WSlD2
-hMJlZNJ8GJTk9phTE2glY4sDBW3YR4rTq8kF9rnikde7nf10j+KULM9DQAqmHWuT
-uhRg0f/lRLGaQ70ynLYlbTX8arW8EQ8E1RlNyDHV1S4lsNkGZ/VaRLwAW8ofopZY
-46SjjB3z5hIVV7ZVZ9g369VlGgXTR+7/I6qywWm+pDn8VzqpWw27iZFG5cMRmjM9
-gkmcEmzKWC0xPFg8NgVuOSR+brEktPiav/CcjWQa9r6X2ADLctNtitzyNKKJCiAL
-lwO24C7c5kKGhvjS1GIhZA8tYQfzoMMskAa1KJbnGrZQQE7o3OLaDIBYwBbnOdXz
-BcRkMrbTna8xvt6CFj5nj5RnnbsHsKIHwkQE/Sg8GBi/lA6XjApobjkaeUqHFRk4
-kxw2RLWaH7gguVGJoWMA/TcOiIY9oHEQoH1noMCqVyssaxKFGWA=
-=Szla
------END PGP SIGNATURE-----
-
---hOcCNbCCxyk/YU74--
+diff --git a/builtin/log.c b/builtin/log.c
+index 71f68a3e4f..24868ed070 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1019,7 +1019,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	    open_next_file(NULL, rev->numbered_files ? NULL : "cover-letter", rev, quiet))
+ 		return;
+ 
+-	log_write_email_headers(rev, head, &pp.after_subject, &need_8bit_cte);
++	log_write_email_headers(rev, head, &pp.after_subject, &need_8bit_cte, 0);
+ 
+ 	for (i = 0; !need_8bit_cte && i < nr; i++) {
+ 		const char *buf = get_commit_buffer(list[i], NULL);
+diff --git a/log-tree.c b/log-tree.c
+index d1c0bedf24..9f5eb346a4 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -362,7 +362,8 @@ void fmt_output_email_subject(struct strbuf *sb, struct rev_info *opt)
+ 
+ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 			     const char **extra_headers_p,
+-			     int *need_8bit_cte_p)
++			     int *need_8bit_cte_p,
++			     int maybe_multipart)
+ {
+ 	const char *extra_headers = opt->extra_headers;
+ 	const char *name = oid_to_hex(opt->zero_commit ?
+@@ -385,7 +386,7 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 			       opt->ref_message_ids->items[i].string);
+ 		graph_show_oneline(opt->graph);
+ 	}
+-	if (opt->mime_boundary) {
++	if (opt->mime_boundary && maybe_multipart) {
+ 		static char subject_buffer[1024];
+ 		static char buffer[1024];
+ 		struct strbuf filename =  STRBUF_INIT;
+@@ -610,7 +611,7 @@ void show_log(struct rev_info *opt)
+ 
+ 	if (cmit_fmt_is_mail(opt->commit_format)) {
+ 		log_write_email_headers(opt, commit, &extra_headers,
+-					&ctx.need_8bit_cte);
++					&ctx.need_8bit_cte, 1);
+ 		ctx.rev = opt;
+ 		ctx.print_email_subject = 1;
+ 	} else if (opt->commit_format != CMIT_FMT_USERFORMAT) {
+diff --git a/log-tree.h b/log-tree.h
+index deba035187..e668628074 100644
+--- a/log-tree.h
++++ b/log-tree.h
+@@ -27,7 +27,8 @@ void format_decorations_extended(struct strbuf *sb, const struct commit *commit,
+ void show_decorations(struct rev_info *opt, struct commit *commit);
+ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 			     const char **extra_headers_p,
+-			     int *need_8bit_cte_p);
++			     int *need_8bit_cte_p,
++			     int maybe_multipart);
+ void load_ref_decorations(struct decoration_filter *filter, int flags);
+ 
+ #define FORMAT_PATCH_NAME_MAX 64
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 482112ca33..83c596a842 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1661,6 +1661,15 @@ test_expect_success 'format-patch --base with --attach' '
+ 	test_write_lines 1 2 >expect &&
+ 	test_cmp expect actual
+ '
++test_expect_success 'format-patch --attach cover-letter only is non-multipart' '
++	test_when_finished "rm -r patches" &&
++	git format-patch -o patches --cover-letter --attach=mimemime --base=HEAD~ -1 &&
++	! egrep "^--+mimemime" patches/0000*.patch &&
++	egrep "^--+mimemime$" patches/0001*.patch >output &&
++	test_line_count = 2 output &&
++	egrep "^--+mimemime--$" patches/0001*.patch >output &&
++	test_line_count = 1 output
++'
+ 
+ test_expect_success 'format-patch --pretty=mboxrd' '
+ 	sp=" " &&
