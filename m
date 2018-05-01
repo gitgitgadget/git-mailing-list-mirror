@@ -2,155 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E6C7215F4
-	for <e@80x24.org>; Tue,  1 May 2018 13:45:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C99DE215F4
+	for <e@80x24.org>; Tue,  1 May 2018 13:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754613AbeEANo5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 09:44:57 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:38558 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753800AbeEANo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 09:44:56 -0400
-Received: by mail-qk0-f180.google.com with SMTP id b39so8885318qkb.5
-        for <git@vger.kernel.org>; Tue, 01 May 2018 06:44:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=K8PQksEByXCqYys9RSDxAK3h+AtH30P1ZLUj9odAoXw=;
-        b=qx/c/2LuuFpUgsnQ/zoQyt7Wkscrh7v80SFiN8gPM4W7OMaQx35w+2amqTelre+i4Q
-         pCx0GKl9PTsLllpWG3YbO3TIh6NaD72AUVXfd8ciUz0NmRKXBFEU2+3dsaylb0dMxhrt
-         Gb/auYKoAQNj4uAtB8nCGny0+sMX68zPOsvzCOGO3XzahiBYH+p9O+zGi7X0cRNXVns9
-         kpPTPc7FKZvVys5MCzJLFjIWrRWwB7QPNw8FIiIcuRGpng3ueQy06kqK7l2wFZ5Dlr/P
-         TzFHrtNg0YghyRwfyf0L605L4TVwxsEvoJJQIIG1OJtcUheNFn9yI38tLUvLTAwske5W
-         CdJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=K8PQksEByXCqYys9RSDxAK3h+AtH30P1ZLUj9odAoXw=;
-        b=TX6uDfurRB/1wdpgDZRSoopMAdd1Fib5PNvvTwDWY+7PJXtc9VL05+ZNSkILAqIoGC
-         bX3jVuyBS5f7UemvZ5C+Ll6wpTfA7nk7NaC7u17FhbJseGmP4Oen4YZOPTa/BT8vok7D
-         k583FOdR+9wp5QpfH2ZYjFy/fmXWFV/8nj57IKt/SqlUB5Hh0i1GwTk9yzKR6mYwVu8t
-         1hUcW97LwFJCfKcYpKY2B9ZKxryzzPl63u2bXiCPyUHGHSEuVuzS443WwnrnFrQUzcht
-         0H89ezGvTRQ8d+ijUw23uCSla7rggCZxMd4qTsZt6raOmvVltgJSFP3kalHtn4+4VxYO
-         OYnQ==
-X-Gm-Message-State: ALQs6tCvVgqXkqTtJXY90ULPHbRHLNxWuXuxOR9+bqNkVxoqLFGV6j8U
-        FpIij1bxIL44eTuQM60PFfDB12Ao
-X-Google-Smtp-Source: AB8JxZrf3QGxfpKxcyYhkYF/ubFFaiFQdfps+qMmBoNECo1KaDvy/k0IgmgSE1FRxqTOq4pBoFYRfw==
-X-Received: by 10.55.26.21 with SMTP id a21mr12868215qka.381.1525182295351;
-        Tue, 01 May 2018 06:44:55 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id m24sm6757879qkk.67.2018.05.01.06.44.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 May 2018 06:44:53 -0700 (PDT)
-Subject: Re: [PATCH v2 06/11] get_short_oid: sort ambiguous objects by type,
- then SHA-1
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-References: <20180501120651.15886-1-avarab@gmail.com>
- <20180501130318.58251-1-dstolee@microsoft.com>
- <876047ze9v.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <40868abd-6d2f-3f05-e099-6f0d06cc0683@gmail.com>
-Date:   Tue, 1 May 2018 09:44:52 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1754511AbeEANrH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 09:47:07 -0400
+Received: from mout.gmx.net ([212.227.17.20]:38115 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754084AbeEANrH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 09:47:07 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MUpI8-1eqJNC281k-00YCP1; Tue, 01
+ May 2018 15:47:02 +0200
+Date:   Tue, 1 May 2018 15:46:58 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2018, #04; Mon, 30)
+In-Reply-To: <CAM0VKjmkn7eyooKheOEQnS=6HMZSTbhejoxQdKB7W+n=7D5KuQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1805011439580.79@tvgsbejvaqbjf.bet>
+References: <xmqq4ljtz87g.fsf@gitster-ct.c.googlers.com> <CAM0VKjmkn7eyooKheOEQnS=6HMZSTbhejoxQdKB7W+n=7D5KuQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <876047ze9v.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: multipart/mixed; boundary="8323328-1901552921-1525182424=:79"
+X-Provags-ID: V03:K1:lwIlqgjKlBSyTB2JIeS3b5xYnpno4Q1QLfWb8N1+st+yqptHIM+
+ /65p+sOKBiD97FIuUdeFYL0n0YODbCYz03aKXXFNNxa2hTDaXZAqtHcRg8d8hRrd4PrMoxr
+ 3EdKzTqn8NMb35vjZxT9xcRfb3W5R0ZDI2ZR82z2Tvt7k+fGJ23XYEyGyZsVnJXa7hXtKzz
+ o8q+zxSN1RhgO7kb8d9Nw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kk1hoXHtIOY=:QHF55O9cdseXDode+fC+ef
+ LKj46yTKRj/XSz/POQX2WSW6Iq1CllT39qJnYuqohn6qRp+WTuV9HGGwQ6QqmUJYSO4eLhbn5
+ ntFHB5o+ciz9tzrU5R7YMwWHr/WBrrKfKIK3ycn13ZvZX1Vvd1BWVChIgL5Josc54JlaIM6G6
+ 8rnPVpX2NM232myFOh1jPZ+UEEqr5/SMJKxXSQO4hD1GmjdNxWlF2k6tDB5jzio3JeznQKF6z
+ 8qboG2j6wTYI6X3Hgiui0RG5cTRZb/17BeZVEdzCoZGdpVNO3C+NTnouNRCH3ZgVzqAFP4KfX
+ ZwtS7c6aehUSuo+BuxVIlUh6nw96/V779/cW/oKLZawso61G2It4VSc7208nyll032L3gJ5Ah
+ x9yMtqvbIew3ZBVZ/iKQDcfjKZWOy8SYxS3FM8RvJRGKxoS1MzwH9AjCCiwSmGMo7X38pkH4B
+ FS6NmXLi1rhtNmqrySQwdaI3UXKjeyniYdfPgHtCjxEzEjIhhdrDRzEYaARqeCBy0MgYs2X1M
+ Ck2ZIh3OBYtFxdUeF6dxuobYd45jGGM6UHpZHzSC8Be1199kYCgXNa/Mx0oB4HOBIX1JLHA8n
+ yLhHHPVfOfECdajjLSKnkMFg1zRIUQe+BOXojx3+XDmXuu8SKqhbDxbQFspIZggd4mfJQH3Fj
+ hwJGiMLk7ogaJ/EchERr8LJRQOIARqpm55zpfXwzXIO0/hQNKzOQCbna0bI4fwh+eRZRMBDRl
+ dL/0sG0cq1Zdew3yyNdnfKvoOu0mfBKYkFoWE5/yEjpjeizArkN7DOOtAjlotyA5tBgkqXGCS
+ fBiQnDZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--8323328-1901552921-1525182424=:79
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-On 5/1/2018 9:39 AM, Ævar Arnfjörð Bjarmason wrote:
-> On Tue, May 01 2018, Derrick Stolee wrote:
->
->> From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->>
->> Here is what I mean by sorting during for_each_abbrev(). This seems to work for
->> me, so I don't know what the issue is with this one-pass approach.
->> [...]
->> +static int sort_ambiguous(const void *a, const void *b)
->> +{
->> +	int a_type = oid_object_info(a, NULL);
->> +	int b_type = oid_object_info(b, NULL);
->> +	int a_type_sort;
->> +	int b_type_sort;
->> +
->> +	/*
->> +	 * Sorts by hash within the same object type, just as
->> +	 * oid_array_for_each_unique() would do.
->> +	 */
->> +	if (a_type == b_type)
->> +		return oidcmp(a, b);
->> +
->> +	/*
->> +	 * Between object types show tags, then commits, and finally
->> +	 * trees and blobs.
->> +	 *
->> +	 * The object_type enum is commit, tree, blob, tag, but we
->> +	 * want tag, commit, tree blob. Cleverly (perhaps too
->> +	 * cleverly) do that with modulus, since the enum assigns 1 to
->> +	 * commit, so tag becomes 0.
->> +	 */
->> +	a_type_sort = a_type % 4;
->> +	b_type_sort = b_type % 4;
->> +	return a_type_sort > b_type_sort ? 1 : -1;
->> +}
->> +
->>   static int get_short_oid(const char *name, int len, struct object_id *oid,
->>   			  unsigned flags)
->>   {
->> @@ -451,6 +479,9 @@ int for_each_abbrev(const char *prefix, each_abbrev_fn fn, void *cb_data)
->>   	find_short_object_filename(&ds);
->>   	find_short_packed_object(&ds);
->>
->> +	QSORT(collect.oid, collect.nr, sort_ambiguous);
->> +	collect.sorted = 1;
->> +
-> Yes this works. You're right. I wasn't trying to intentionally omit
-> stuff in my recent 878t93zh60.fsf@evledraar.gmail.com, I'd just written
-> this code some days ago and forgotten why I did what I was doing (and
-> this is hard to test for), but it's all coming back to me now.
->
-> The actual requirement for oid_array_for_each_unique() working properly
-> is that you've got to feed it in hash order,
+Hi,
 
-To work properly, duplicate entries must be consecutive. Since duplicate 
-entries have the same type, our sort satisfies this condition.
+On Mon, 30 Apr 2018, SZEDER G=C3=A1bor wrote:
 
-> but my new sort_ambiguous()
-> still does that (barring any SHA-1 collisions, at which point we have
-> bigger problems), so two passes aren't needed. So yes, this apporoach
-> works and is one-pass.
->
-> But that's just an implementation detail of the current sort method,
-> when I wrote this I was initially playing with other sort orders,
-> e.g. sorting SHAs regardless of type by the mtime of the file I found
-> them in. With this approach I'd start printing duplicates if I changed
-> the internals of sort_ambiguous() like that.
+> On Mon, Apr 30, 2018 at 5:25 AM, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> > * js/rebase-i-clean-msg-after-fixup-continue (2018-04-30) 4 commits
+> >   - rebase --skip: clean up commit message after a failed fixup/squash
+> >   - sequencer: always commit without editing when asked for
+> >   - rebase -i: Handle "combination of <n> commits" with GETTEXT_POISON
+> >   - rebase -i: demonstrate bugs with fixup!/squash! commit messages
+>=20
+> >   "git rebase -i" sometimes left intermediate "# This is a
+> >   combination of N commits" message meant for the human consumption
+> >   inside an editor in the final result in certain corner cases, which
+> >   has been fixed.
+>=20
+> >   Will merge to 'next'.
+>=20
+> This topic branches off from v2.16.3.  However, its last patch uses
+> the sequencer's parse_head() function, which was only added in
+> v2.17.0-rc0~110^2~6 (sequencer: try to commit without forking 'git
+> commit', 2017-11-24), in topic 'pw/sequencer-in-process-commit',
+> leading to compilation errors.
 
-That makes sense.
+Great find.
 
-> But I think it's extremely implausible that we'll start sorting things
-> like that, so I'll just take this method of doing it and add some
-> comment saying we must hashcmp() the entries in our own sort function
-> for the de-duplication to work, I don't see us ever changing that.
+As luck has it, I recently played with tbdiff and compared what Junio
+applied vs what I have, and found only context line changes (and Junio's
+extra Signed-off-by: lines).
 
-Sounds good.
+So the problem you found is not a problem with *my* branch, of course, as
+I did not fork off of v2.16.3 (which is a bit arbitrary, I must say: if
+you want to fix these bugs for reals, you'd have to go all the way back to
+where fixup!/squash!  support was introduced).
 
-Thanks,
--Stolee
+However, as a maintainer I am sympathetic to the goal of wanting to have
+*one* branch that does not need to be backported.
+
+The patch to make all of this work is most likely this:
+
+-- snip --
+sequencer: backport parse_head()
+
+This function exists in v2.17.0, and will be used in the upcoming fixes
+for bugs when running `git rebase --skip` after a fixup/squash failed.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+--
+diff --git a/sequencer.c b/sequencer.c
+index a766796d1a7..f9c478a4d79 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -695,6 +695,29 @@ static int run_git_commit(const char *defmsg, struct r=
+eplay_opts *opts,
+ =09return run_command(&cmd);
+ }
+=20
++static int parse_head(struct commit **head)
++{
++=09struct commit *current_head;
++=09struct object_id oid;
++
++=09if (get_oid("HEAD", &oid)) {
++=09=09current_head =3D NULL;
++=09} else {
++=09=09current_head =3D lookup_commit_reference(&oid);
++=09=09if (!current_head)
++=09=09=09return error(_("could not parse HEAD"));
++=09=09if (oidcmp(&oid, &current_head->object.oid)) {
++=09=09=09warning(_("HEAD %s is not a commit!"),
++=09=09=09=09oid_to_hex(&oid));
++=09=09}
++=09=09if (parse_commit(current_head))
++=09=09=09return error(_("could not parse HEAD commit"));
++=09}
++=09*head =3D current_head;
++
++=09return 0;
++}
++
+ static int is_original_commit_empty(struct commit *commit)
+ {
+ =09const struct object_id *ptree_oid;
+-- snap --
+
+I also had to apply this to make things compile with DEVELOPER=3D1:
+
+-- snip --
+diff --git a/sequencer.c b/sequencer.c
+index f9c478a4d79..44b1874f459 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2345,7 +2345,7 @@ static int commit_staged_changes(struct replay_opts *=
+opts,
+ =09=09=09=09 * We need to update the squash message to skip
+ =09=09=09=09 * the latest commit message.
+ =09=09=09=09 */
+-=09=09=09=09struct commit *commit;
++=09=09=09=09struct commit *commit =3D NULL;
+ =09=09=09=09const char *path =3D rebase_path_squash_msg();
+=20
+ =09=09=09=09if (parse_head(&commit) ||
+-- snap --
+
+This should most likely be squashed into "rebase --skip: clean up commit
+message after a failed fixup/squash".
+
+Junio, for your convenience, I pushed what I have here to the
+`clean-msg-after-fixup-continue-backport-v2.16.3` branch on
+https://github.com/dscho/git
+
+For shiggles, I also looked how far back I could push this, and backported
+to v2.15.1, v2.14.3, v2.13.6, v2.12.5
+
+Things got painful only really with v2.12.5. Like, really painful. And in
+the end not even worth it... I managed to backport the changes, sure, but
+that code path is not even used ;-)
+
+For your convenience, I pushed all of the backports, just in case you want
+to use them. I did leave a couple of fixup! commits in place, to show a
+*little* better what I did and where.
+
+Ciao,
+Dscho
+--8323328-1901552921-1525182424=:79--
