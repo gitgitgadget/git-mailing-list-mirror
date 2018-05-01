@@ -2,120 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF4B1215F4
-	for <e@80x24.org>; Tue,  1 May 2018 20:25:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B4B21FADF
+	for <e@80x24.org>; Tue,  1 May 2018 20:34:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750911AbeEAUZ2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 16:25:28 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:36535 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750743AbeEAUZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 16:25:27 -0400
-Received: by mail-qk0-f195.google.com with SMTP id a202so9678348qkg.3
-        for <git@vger.kernel.org>; Tue, 01 May 2018 13:25:27 -0700 (PDT)
+        id S1751126AbeEAUeh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 16:34:37 -0400
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:42350 "EHLO
+        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750822AbeEAUeg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 16:34:36 -0400
+Received: by mail-lf0-f42.google.com with SMTP id u21-v6so17776531lfu.9
+        for <git@vger.kernel.org>; Tue, 01 May 2018 13:34:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=aLOE0X/Hh/iZGT6vSJYq60JQEtum04MTqtWREK6vSEE=;
-        b=QvfC0UBJh3aq70K0/OFotaDwtD6DQFIZHDiogukjvth6AVVck+rk+1+jwmVLrnxlMc
-         MBKL5Yxp3NsWZEwJ4nTjx5FZiohcB6w6FQPZaDXnk+w9eOEBmgLm9RIGAE9zE2ID19+d
-         KVBSI+wpKqdMwUngcZpxKYkvZ0Uf7bciv5cOTn9yRKdJGeqKD5FbUakk9L+xzOpLhJnb
-         PkqF6uEGN+7caAf2QXjj0xk1oKhpG7rCxKPzz+AjgkWWwU9x61ZhRTJ2t4l86eG9dxh0
-         x5RJOWhTDpPFAXKGwiryISoqjXfUVjVBI8n5QtXj/78hLPLZlZvllDJtgUNkyfwz966k
-         MomA==
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=HEnweCvXN3cgjJt/9QhAVSjToxkNhlWpHFyaG7VC4zs=;
+        b=PUYJOKDFGVkex+xVmnT13gG+l+fdvie/zIa5DUlZoi+cQquelYgHklf7U0qJWbZoet
+         NpiP+RVOdCnoVS/WBwsZAS59VzUomn7eZ75o8I9xiN6xf7lpedILbmPJ/kQyPET9ZC+j
+         oD5HvcLnR2vWjLl4rAsGSNXVdBOoQAHjovtNYlNYGdg89QiP/qyjIoRmmM/Oe8VyrPyj
+         N0dmXZHmvEEBnFXrkXGlAghHsw1Ts5J5gD28KrJH+aMKhZRzuifZI9FIS5yGuJ+A3DIr
+         difsoBgNlQnvK5o5KcmpZDvDiG86TX8TcoZCWAITOa0jPmnkbPQGY4Bytl0vDUvqyYQM
+         9SaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=aLOE0X/Hh/iZGT6vSJYq60JQEtum04MTqtWREK6vSEE=;
-        b=O+fT/5zu7vBNQBsSZtS1F55lYoDX3Xee9j0egrK608NzNKf2gKenLttN5aCgSOMnO6
-         L4+OtHkuLI9wywIBRETO0+u50SFJ/8Mr7EqJEJ3mn5F5wmgDWNzoDwmObV8NwaCysAin
-         8KRHxFne1zvU0N7rF0MpkUjptyaAYJN5HKy6gaI4PPVma5fEU2NJHWu/8wnyVNxtCROU
-         ixGtuGBWO9ZBKePNrI8GtVD2Oi8GeLPCQWdxyeQBoMPivirSYb9fWtIwNiqc+f7jZXdq
-         ozFj2jzBrb6AOYCmf0SNbyzUg3GSNIzPJQKpbxtZotQ50GlqylhHCjuVcpVowWEB1+bG
-         BAYg==
-X-Gm-Message-State: ALQs6tAlyh+W/9etbVxhVWu/ZbVxJhQvd9gqqJAwveHHoVgxIBd86eg2
-        CJK9vMOr8CgmOrStOD256nKWhvLEsHXJG5cF5RM=
-X-Google-Smtp-Source: AB8JxZrbDpLbpG47inwdHU8+5UiNBfcgvY/oxOqHA6lVSO+b74hKNsHdWcEQQKMZaimOggqQMSWxBIqPJB4wxc+IbWM=
-X-Received: by 10.233.220.1 with SMTP id q1mr12480845qkf.361.1525206326636;
- Tue, 01 May 2018 13:25:26 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=HEnweCvXN3cgjJt/9QhAVSjToxkNhlWpHFyaG7VC4zs=;
+        b=rZnw7pWD9NM8kENoo345gGxx8UdfJphzU1HA8Ib30raH25eSXxhm7fQMOVIaQey68R
+         QPRjulC2jM93Bm+vARq57uqjs+rK+2z9sjsT3Ek508TdwUQ+4WW+3J6XxVoBfwdayuNI
+         HHbtRYy4820oQ0wox4kaMLSo8FLUzQIx2WmyE/HsRfg8miMPZN17Ntwhp+uVhuUjcgTu
+         rQKm4FrjWXzHyGeVVLyqxw4Q/ArzoTsA/QNf54V9d6RdV4ZiUTjBL7XVKcACNshmb7RT
+         KJUR+lsa46nF4/akg0VcDeP/G5YorYLc8R4PBxyUcxe+fkmVaz9W5OMQf6sC4fW0l0qm
+         HlgQ==
+X-Gm-Message-State: ALQs6tD8Oon6nbC82+ivzn+/dQlywkDRATyzTUVida85Bk8PJNKBJG5q
+        mI6OAf4gKYTpokzyC9mf8KumQ9Kyy6Poz+jlEUttQw==
+X-Google-Smtp-Source: AB8JxZpPt62vYmRvmeNqZGziKKS2dERJeFYzPQczCewQWzJ9l11AaCcH3SXQ7EZwUanFBTF5k/A3ZkqL7/TGHOvY6M0=
+X-Received: by 2002:a19:4f5e:: with SMTP id a30-v6mr9946350lfk.97.1525206874606;
+ Tue, 01 May 2018 13:34:34 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Tue, 1 May 2018 13:25:25 -0700 (PDT)
-In-Reply-To: <20180501180908.17443-3-kcghost@gmail.com>
-References: <CAEp-SHV4hP=v_=AJExRS3hqT-x9rXEONofWD=sVQZC79uewATA@mail.gmail.com>
- <20180501180908.17443-1-kcghost@gmail.com> <20180501180908.17443-3-kcghost@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 1 May 2018 16:25:25 -0400
-X-Google-Sender-Auth: s-8fQDvdPAm1_uXNHXUc4S2gyo8
-Message-ID: <CAPig+cSbOsdibX588ObTG5_O=Mmp1+pbxiaUFMx-P0jFLLUuHQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] submodule: Add --dissociate option to add/update commands
-To:     Casey Fitzpatrick <kcghost@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
+Received: by 2002:a19:9ecc:0:0:0:0:0 with HTTP; Tue, 1 May 2018 13:34:13 -0700 (PDT)
+In-Reply-To: <CA+P7+xry-dE0-TMtRzNjiJpR1ZVmGXDy5ObfMxKyWA+eR8XMsQ@mail.gmail.com>
+References: <xmqqbme51rgn.fsf@gitster-ct.c.googlers.com> <20180501165931.25515-1-wink@saville.com>
+ <87zi1jxjqn.fsf@evledraar.gmail.com> <CA+P7+xry-dE0-TMtRzNjiJpR1ZVmGXDy5ObfMxKyWA+eR8XMsQ@mail.gmail.com>
+From:   Wink Saville <wink@saville.com>
+Date:   Tue, 1 May 2018 13:34:13 -0700
+Message-ID: <CAKk8ispQD-HNDTq4J0hNiDro=eRrJSM18t6_A=Ej6LNn+xxHyA@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 0/3] Optional sub hierarchy for remote tags
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 1, 2018 at 2:09 PM, Casey Fitzpatrick <kcghost@gmail.com> wrote:
-> submodule: Add --dissociate option to add/update commands
+Jake & =C3=86var,
 
-s/Add/add/
+Thanks for the great feed back. As I mentioned previously,
+I'm going to be on vacation until May 17th, but will be following
+along on email as connedtivity allows.
 
-> Add --dissociate option to add and update commands, both clone helper commands
-> that already have the --reference option --dissociate pairs with.
-> Add documentation.
-> Add tests.
->
-> Signed-off-by: Casey Fitzpatrick <kcghost@gmail.com>
-> ---
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> @@ -1075,6 +1075,9 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
-> +       if (dissociate) {
-> +               argv_array_push(&cp.args, "--dissociate");
-> +       }
+I'm all for moving in the "perfect" direction so hopefully you guys can
+decide on a solution and start moving in that direction. When I
+get back I'll do whatever I can to help.
 
-Style: drop unnecessary braces
+My only criteria is that when a "remote" is added and fetched its tags
+are put in a different namespace and can be referenced easily.
 
-> @@ -1208,6 +1212,8 @@ static int module_clone(int argc, const char **argv, const char *prefix)
-> +               OPT_BOOL(0, "dissociate", &dissociate,
-> +                          N_("use --reference only while cloning")),
+Here are some suggestions for naming:
 
-s/reference/dissociate/
+  refs/subs
+  refs/sub-repos
+  refs/repos
+  refs/externals
+  refs/imports
 
-> @@ -1575,6 +1584,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
-> +               OPT_BOOL(0, "dissociate", &suc.dissociate,
-> +                          N_("use --reference only while cloning")),
 
-s/reference/dissociate/
+Arrivederci,
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> +               --dissociate)
-> +                       dissociate="--dissociate"
-> @@ -258,7 +262,7 @@ or you are unsure what this means choose another name with the '--name' option."
-> -               git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"$progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${depth:+"$depth"} || exit
-> +               git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"$progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"$dissociate"} ${depth:+"$depth"} || exit
-
-I realize that you're just following existing practice in this script,
-but it's a bit off-putting to see expansions for the new --progress
-and --dissociate options being done via unnecessarily complex
-${foobar:+"$foobar"} when the simpler $foobar would work just as well.
-
-Just a comment; not necessarily a request for change. (A separate
-preparatory cleanup patch which simplifies the existing complex
-expansion expressions would be welcome but could also be considered
-outside the scope of this patch series.)
-
-> @@ -493,6 +497,9 @@ cmd_update()
-> +               --dissociate)
-> +                       dissociate="--dissociate"
-> +                       ;;
-> @@ -550,6 +557,7 @@ cmd_update()
->                 ${reference:+"$reference"} \
-> +               ${dissociate:+"$dissociate"} \
->                 ${depth:+--depth "$depth"} \
+Wink
