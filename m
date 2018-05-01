@@ -7,162 +7,137 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D7C91FADF
-	for <e@80x24.org>; Tue,  1 May 2018 20:48:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2401A1FADF
+	for <e@80x24.org>; Tue,  1 May 2018 21:21:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751331AbeEAUsv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 16:48:51 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:41371 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751011AbeEAUsu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 16:48:50 -0400
-Received: by mail-io0-f194.google.com with SMTP id e12-v6so15024136iob.8
-        for <git@vger.kernel.org>; Tue, 01 May 2018 13:48:50 -0700 (PDT)
+        id S1751186AbeEAVVU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 17:21:20 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:44085 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751004AbeEAVVT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 17:21:19 -0400
+Received: by mail-io0-f193.google.com with SMTP id d11-v6so15089420iof.11
+        for <git@vger.kernel.org>; Tue, 01 May 2018 14:21:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=KRBdAfydkrTMMNgNy4Ea7ux9yhw9Cencatgo64HLriE=;
-        b=P+znurXjToqIQ6SKPG71At7mEuxlFo6aUSgoZ9isixPREu9WcHYIxPi80ls8f+utN9
-         pZZ9uj1VKlm3K2HS/umhC/cDidFSjDPZDJ0GQpEsmjaZoF9pzJtb5N3RlKggjjyiNGcV
-         na6i+bgTIlzsLenWL4B/IsE9cCndVk80QLv1Nhx5ttzhnH+N1DHxPxqbunvu61hzszq8
-         0R/VqpFIhcndTjf8+2MDGLEH46lm5Gd+qTHGCrWree0t9gizjWTdCXnLOjyvyG/F3qBM
-         /qZ8OMw1dV7rG4mF+3UcDQia+pZEGzMRc7GHgho5jWPdZsER+Ho/IqmmaYtoFriZdSxO
-         XcQA==
+        bh=DwaPhyOldE8nWGj3rvDNEVscPo4xCcc8cTMScXv/ZRc=;
+        b=jCdZVyhilsKaYTGhYBjbcIYf4+WVUlWNt2NuEB5PsswvM7WYoW3USgYuxZcijb9DAd
+         WgpDLWrI/CZK440yrJ/EZLLPie7rPjbfpAQK/dUIQ8e493I+nPLUOS7/RHlAbkGeiwsf
+         kJ+e3Uu1QFsNr4U86JZrPXrNlKOfCvFGaf6rvZyZscp9U7ViGFhJTx94CLDEsUS8asiX
+         z/EYmR9Nx9GGApajJCOM6hWqRNNgtexE8/ZRhawe9yKuRV9Lh3uP7nL8lBgSYcHDCvsW
+         wPFT6+ypxYdG4j/64PBGuHqW1GZvGlXRGcbxW3kq4hkf7s9sjOCawDhXFPRS5rJKabdF
+         GGIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=KRBdAfydkrTMMNgNy4Ea7ux9yhw9Cencatgo64HLriE=;
-        b=Y1CJ6ezZRpRYayNNUm3S8csKN0ZKHhXilr1q6sa7KCuAAceTLJ6X+Hh43aC8Sst6zk
-         MWty6kDAdVbXDlP0VXsQ7vIdMnwlftwq+tONU4Q+zmRJkTK6HM0yKmxXyvAj7JmX2qHY
-         +A2ks0GQIwvfx5hOmY3qOj8JkTziccGDUwATpQsCAuRhc8YgMJsAKTRaVaCNFDUfX/hG
-         bOAe+6qIVQDM7IC7nG5vYJQEWYyCI29WiusZ4Q9jUPzQWdHZIM/XEk0ur+LLXj6Gvm3B
-         sq5xZVJmeaL+EqspZcmVgOVthFlEWUJvDDtGX/hE0j+ycgJhVCrnAcF9NJ8+vQyOjfyh
-         2gQg==
-X-Gm-Message-State: ALQs6tAXJKxNAZvGHM9lA9xePJaFYArjX0yKMqGZbfnXa9iohgKddEDg
-        /BNS4NGRtxEAUviik3CJI7vvFIl9FV39Lq6JX1EnYPvx
-X-Google-Smtp-Source: AB8JxZrU9EssAvGWjgEprd/XRDmpgR1ItTAUkwzxIeN3ABdYkbEEAadO7vbKh2spaFRPS1nOWt5szeggXdf0zs2JOJk=
-X-Received: by 2002:a6b:35c1:: with SMTP id k62-v6mr9623246ioo.128.1525207729694;
- Tue, 01 May 2018 13:48:49 -0700 (PDT)
+        bh=DwaPhyOldE8nWGj3rvDNEVscPo4xCcc8cTMScXv/ZRc=;
+        b=bI6jz+uUBMEhiOCDZ48QlNKh7q/2y6ybX4y7sxYa+DEQtOhnNwyDtxDmsZvJVxXEX5
+         Ez745Rx7SXauvxWEbOKpKRqm/7h7aye5kRZulO+3YtpGmCGl/Laa9D/AZ+RO5U3dF751
+         aVOBeIKJaldgekpPwwPrBdzFEoU8eSdJ+haFvfJKZJc3JODpFxiFcCCPyRHvZNiwDLHM
+         1bWstNHqEbHfvtYeckgTuPFkpldGYcd9T/6XC5+hKv6BNXABZUrJvPqPstEJmWPxQ49a
+         SkWjI8Dt/fG7Jw3e/HFifUoizC4/NF4BCWkCmyKsB+uwg3Ao1BzRxnHybdkTacQCTnna
+         XdVA==
+X-Gm-Message-State: ALQs6tDMq5ctPLY0IyxDZUbNj6DJEitzgVGs3rq7bnAhmgksV8GtwNRw
+        9Mp0nR1GNEZoobPRY2W0gpzgQNRuVWdZu7SR1L31HwQb
+X-Google-Smtp-Source: AB8JxZrtEYMTIsDLwxiNGeeBYwD071cuDP0VqmTiQXAlhCymjHhp5Qz30TTQqUIVk8KfCF40aXFqWyqiabZYMgQWSms=
+X-Received: by 2002:a6b:9492:: with SMTP id w140-v6mr261026iod.243.1525209679244;
+ Tue, 01 May 2018 14:21:19 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4f:7c91:0:0:0:0:0 with HTTP; Tue, 1 May 2018 13:48:49 -0700 (PDT)
-In-Reply-To: <CAGZ79kbmVMgLWg8nW9Jnwie0vbfov7PaujMPeVr1oq5o24hcDw@mail.gmail.com>
+Received: by 2002:a4f:7c91:0:0:0:0:0 with HTTP; Tue, 1 May 2018 14:21:18 -0700 (PDT)
+In-Reply-To: <CAPig+cSbOsdibX588ObTG5_O=Mmp1+pbxiaUFMx-P0jFLLUuHQ@mail.gmail.com>
 References: <CAEp-SHV4hP=v_=AJExRS3hqT-x9rXEONofWD=sVQZC79uewATA@mail.gmail.com>
- <20180501180908.17443-1-kcghost@gmail.com> <20180501180908.17443-2-kcghost@gmail.com>
- <CAGZ79kbmVMgLWg8nW9Jnwie0vbfov7PaujMPeVr1oq5o24hcDw@mail.gmail.com>
+ <20180501180908.17443-1-kcghost@gmail.com> <20180501180908.17443-3-kcghost@gmail.com>
+ <CAPig+cSbOsdibX588ObTG5_O=Mmp1+pbxiaUFMx-P0jFLLUuHQ@mail.gmail.com>
 From:   Casey Fitzpatrick <kcghost@gmail.com>
-Date:   Tue, 1 May 2018 16:48:49 -0400
-Message-ID: <CAEp-SHXURpp3XuyHv-pNERRE8WK+o5ao8E2htDA3gdYZGAz5vA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] submodule: Add --progress option to add command
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
+Date:   Tue, 1 May 2018 17:21:18 -0400
+Message-ID: <CAEp-SHWwOin9dbLpYaX+5UFRWpGP=k7zHU_a54AEMc6C9FDCAw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] submodule: Add --dissociate option to add/update commands
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks, I'll clean it up based on your comments. I based the tests
-from t5606-clone-options.sh; I'm not sure why now but I thought I
-needed that clone -o thing from there, but it appears useless.
+Thanks, I will clean up the braces and commit message.
+
+I have to disagree with the 's/reference/dissociate/' comments. It
+appears this section of option descriptions mostly copies from the
+descriptions given by 'git clone -h', which outputs:
+    --reference <repo>    reference repository
+    --reference-if-able <repo>
+                          reference repository
+    --dissociate          use --reference only while cloning
+It is perhaps not the best description, but it means to say when
+--dissociate is used --reference is only in play for reducing network
+transfer, not keeping alternates.
+
+Those expansions *are* certainly off-putting, they make a long line
+even more difficult to parse. I just searched that file for ":+" for
+those types of expressions and I think a patch to fix them would be
+fairly short. I'll look into making that cleanup patch.
 
 
 
-On Tue, May 1, 2018 at 2:41 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, May 1, 2018 at 11:09 AM, Casey Fitzpatrick <kcghost@gmail.com> wrote:
->> --progress was missing from add command, was only in update.
->> Add --progress where it makes sense (both clone helper commands).
->> Add missing documentation entry.
->> Add test.
+On Tue, May 1, 2018 at 4:25 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, May 1, 2018 at 2:09 PM, Casey Fitzpatrick <kcghost@gmail.com> wrote:
+>> submodule: Add --dissociate option to add/update commands
 >
-> Maybe:
->   The '--progress' was introduced in 72c5f88311d (clone: pass --progress
->   decision to recursive submodules, 2016-09-22) to fix the progress reporting
->   of the clone command. Also add the progress option to the 'submodule add'
->   command. The update command already support the progress flag, but it
->   is not documented.
+> s/Add/add/
 >
->> @@ -117,6 +117,9 @@ cmd_add()
->>                 -q|--quiet)
->>                         GIT_QUIET=1
->>                         ;;
->> +               --progress)
->> +                       progress="--progress"
+>> Add --dissociate option to add and update commands, both clone helper commands
+>> that already have the --reference option --dissociate pairs with.
+>> Add documentation.
+>> Add tests.
+>>
+>> Signed-off-by: Casey Fitzpatrick <kcghost@gmail.com>
+>> ---
+>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>> @@ -1075,6 +1075,9 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
+>> +       if (dissociate) {
+>> +               argv_array_push(&cp.args, "--dissociate");
+>> +       }
+>
+> Style: drop unnecessary braces
+>
+>> @@ -1208,6 +1212,8 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>> +               OPT_BOOL(0, "dissociate", &dissociate,
+>> +                          N_("use --reference only while cloning")),
+>
+> s/reference/dissociate/
+>
+>> @@ -1575,6 +1584,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+>> +               OPT_BOOL(0, "dissociate", &suc.dissociate,
+>> +                          N_("use --reference only while cloning")),
+>
+> s/reference/dissociate/
+>
+>> diff --git a/git-submodule.sh b/git-submodule.sh
+>> +               --dissociate)
+>> +                       dissociate="--dissociate"
+>> @@ -258,7 +262,7 @@ or you are unsure what this means choose another name with the '--name' option."
+>> -               git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"$progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${depth:+"$depth"} || exit
+>> +               git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"$progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"$dissociate"} ${depth:+"$depth"} || exit
+>
+> I realize that you're just following existing practice in this script,
+> but it's a bit off-putting to see expansions for the new --progress
+> and --dissociate options being done via unnecessarily complex
+> ${foobar:+"$foobar"} when the simpler $foobar would work just as well.
+>
+> Just a comment; not necessarily a request for change. (A separate
+> preparatory cleanup patch which simplifies the existing complex
+> expansion expressions would be welcome but could also be considered
+> outside the scope of this patch series.)
+>
+>> @@ -493,6 +497,9 @@ cmd_update()
+>> +               --dissociate)
+>> +                       dissociate="--dissociate"
 >> +                       ;;
->
-> The code looks good, though unlike the other commands progress is a
-> boolean decision.
->
-> If we want to support --no-progress as well, we can do so by adding
->     --no-progress)
->         progress="--no-progress"
->         ;;
-> and then the submodule helper ought to cope with it.
->
->
->> +test_expect_success 'setup test repo' '
->> +       mkdir parent &&
->> +       (cd parent && git init &&
->> +        echo one >file && git add file &&
->> +        git commit -m one)
->> +'
->
-> Coding style:
->     (
->         parens open on its own line, and its contents
->         are indented by a tab.
->
-> Instead of coding this yourself, you could write the
-> test as:
->
->     test_create_repo parent &&
->     test_create_commit -C parent one
->
->> +test_expect_success 'clone -o' '
->
-> What are we testing here? I do not quite see the connection to
-> testing --progress here.
->
->> +       git clone -o foo parent clone-o &&
->> +       (cd clone-o && git rev-parse --verify refs/remotes/foo/master)
->
->
->> +test_expect_success 'redirected submodule add does not show progress' '
->> +       (
->> +               cd addtest &&
->
->
->
->> +               git submodule add "file://$submodurl/parent" submod-redirected \
->> +                       >out 2>err &&
->> +               ! grep % err &&
->
-> We're grepping for percent to see that there is no progress. At first I thought
-> the percent sign might be a special character, had to research it to know it's
-> meant literally. TiL!
->
->> +               test_i18ngrep ! "Checking connectivity" err
->
-> Makes sense.
->
->> +       )
->
-> We could omit the extra shell by using
->
->     git -C addtest submodule add "file://$... \
->             >../out 2>../err &&
->
-> Why do we need 'out' ?
->
->> +test_expect_success 'redirected submodule add --progress does show progress' '
->> +       (
->> +               cd addtest &&
->> +               git submodule add --progress "file://$submodurl/parent" \
->> +                       submod-redirected-progress >out 2>err && \
->> +               grep % err
->> +       )
->> +'
->
-> Thanks for writing these tests!
-> Stefan
+>> @@ -550,6 +557,7 @@ cmd_update()
+>>                 ${reference:+"$reference"} \
+>> +               ${dissociate:+"$dissociate"} \
+>>                 ${depth:+--depth "$depth"} \
