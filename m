@@ -2,142 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2401A1FADF
-	for <e@80x24.org>; Tue,  1 May 2018 21:21:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6553D1FADF
+	for <e@80x24.org>; Tue,  1 May 2018 21:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751186AbeEAVVU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 17:21:20 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:44085 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751004AbeEAVVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 17:21:19 -0400
-Received: by mail-io0-f193.google.com with SMTP id d11-v6so15089420iof.11
-        for <git@vger.kernel.org>; Tue, 01 May 2018 14:21:19 -0700 (PDT)
+        id S1750780AbeEAVeJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 17:34:09 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:42279 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750766AbeEAVeI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 17:34:08 -0400
+Received: by mail-pf0-f175.google.com with SMTP id a11so9964789pfn.9
+        for <git@vger.kernel.org>; Tue, 01 May 2018 14:34:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DwaPhyOldE8nWGj3rvDNEVscPo4xCcc8cTMScXv/ZRc=;
-        b=jCdZVyhilsKaYTGhYBjbcIYf4+WVUlWNt2NuEB5PsswvM7WYoW3USgYuxZcijb9DAd
-         WgpDLWrI/CZK440yrJ/EZLLPie7rPjbfpAQK/dUIQ8e493I+nPLUOS7/RHlAbkGeiwsf
-         kJ+e3Uu1QFsNr4U86JZrPXrNlKOfCvFGaf6rvZyZscp9U7ViGFhJTx94CLDEsUS8asiX
-         z/EYmR9Nx9GGApajJCOM6hWqRNNgtexE8/ZRhawe9yKuRV9Lh3uP7nL8lBgSYcHDCvsW
-         wPFT6+ypxYdG4j/64PBGuHqW1GZvGlXRGcbxW3kq4hkf7s9sjOCawDhXFPRS5rJKabdF
-         GGIw==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=rM0+zabTEOlrpFwED1xt7W/HnuKmew8GsBlFNzLxizA=;
+        b=qdKvTCiJioo8AYmI4IkgWg94j1XQIDK9L3POj2hjtgZDETrOYMG5/RbIzcydeqOokO
+         zajcoIVVNC2uSmvUbXWwxwjojcjjkZSynhqdQAVXOwYdMC0eQxdDgSBihUbjFt3Atw40
+         Ik+7ScSno5SMoPQVe6mawI0GGy95fcayYzPiPPZOu/ZNu8tQiei85Y/E3E951QfonS50
+         tdtyx0Y9VZ5h453f/1xi0WM76JAIWdBdHeiBZ+fvjuQGmb7A2MNfFZTO8R2U0OKGQho6
+         dHSbnlrzr+oulGSQ65wIo9wK9W4YAJalYaNVbNQww1alnAcDeq8YBUSY2GJvLTHMSIJ/
+         Gt2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DwaPhyOldE8nWGj3rvDNEVscPo4xCcc8cTMScXv/ZRc=;
-        b=bI6jz+uUBMEhiOCDZ48QlNKh7q/2y6ybX4y7sxYa+DEQtOhnNwyDtxDmsZvJVxXEX5
-         Ez745Rx7SXauvxWEbOKpKRqm/7h7aye5kRZulO+3YtpGmCGl/Laa9D/AZ+RO5U3dF751
-         aVOBeIKJaldgekpPwwPrBdzFEoU8eSdJ+haFvfJKZJc3JODpFxiFcCCPyRHvZNiwDLHM
-         1bWstNHqEbHfvtYeckgTuPFkpldGYcd9T/6XC5+hKv6BNXABZUrJvPqPstEJmWPxQ49a
-         SkWjI8Dt/fG7Jw3e/HFifUoizC4/NF4BCWkCmyKsB+uwg3Ao1BzRxnHybdkTacQCTnna
-         XdVA==
-X-Gm-Message-State: ALQs6tDMq5ctPLY0IyxDZUbNj6DJEitzgVGs3rq7bnAhmgksV8GtwNRw
-        9Mp0nR1GNEZoobPRY2W0gpzgQNRuVWdZu7SR1L31HwQb
-X-Google-Smtp-Source: AB8JxZrtEYMTIsDLwxiNGeeBYwD071cuDP0VqmTiQXAlhCymjHhp5Qz30TTQqUIVk8KfCF40aXFqWyqiabZYMgQWSms=
-X-Received: by 2002:a6b:9492:: with SMTP id w140-v6mr261026iod.243.1525209679244;
- Tue, 01 May 2018 14:21:19 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a4f:7c91:0:0:0:0:0 with HTTP; Tue, 1 May 2018 14:21:18 -0700 (PDT)
-In-Reply-To: <CAPig+cSbOsdibX588ObTG5_O=Mmp1+pbxiaUFMx-P0jFLLUuHQ@mail.gmail.com>
-References: <CAEp-SHV4hP=v_=AJExRS3hqT-x9rXEONofWD=sVQZC79uewATA@mail.gmail.com>
- <20180501180908.17443-1-kcghost@gmail.com> <20180501180908.17443-3-kcghost@gmail.com>
- <CAPig+cSbOsdibX588ObTG5_O=Mmp1+pbxiaUFMx-P0jFLLUuHQ@mail.gmail.com>
-From:   Casey Fitzpatrick <kcghost@gmail.com>
-Date:   Tue, 1 May 2018 17:21:18 -0400
-Message-ID: <CAEp-SHWwOin9dbLpYaX+5UFRWpGP=k7zHU_a54AEMc6C9FDCAw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] submodule: Add --dissociate option to add/update commands
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=rM0+zabTEOlrpFwED1xt7W/HnuKmew8GsBlFNzLxizA=;
+        b=KfS/UTZNSWyj1RIL13qstdl+WnJUHIgw7SGWZcmEObIoSL2pRpuri7fbwR7XKBCrgC
+         uXDz2Glv/LnUjMTrY929rBmgMKbddyaSKFHXMXz1qOE9GNchxLQhJVpammUj3uCbEz5B
+         RAy1bJMc0FSkVzvrnpoOvJToeKksInXtky9Pk6Da9u3wJ6EFu7FOjdqvX9i8KhuCB0LC
+         OUR2T6aubCTGitkl2oYHunNhtgSkn3PVkS2oVGbEQ+a8hW30jNHS74bqmcuIo2BXjOOi
+         +zPHkVqyjENCfKdDUPD5O/nw91u7Ak+YzmkDAUrkGnsoxIN91AijSeGDHgtTkk/DaoPi
+         mWlQ==
+X-Gm-Message-State: ALQs6tDFBgAPZfhL2GZcHKgIFF4xjk/t9IDuZ9aS4ulOf/m2ZJ9oCed8
+        mjhbSTRMW9Nu/xB3tPHQJpufEazrsMI=
+X-Google-Smtp-Source: AB8JxZoB4nTJCnn4J8j11yHBrtHf897rNjwV00fHz4/4QoITd7T4zQ682J9hu8t6oQF7VC9c6i4PdA==
+X-Received: by 2002:a63:5fd1:: with SMTP id t200-v6mr14514492pgb.246.1525210447604;
+        Tue, 01 May 2018 14:34:07 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id e4sm20650721pfa.128.2018.05.01.14.34.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 01 May 2018 14:34:06 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     jamill@microsoft.com, Stefan Beller <sbeller@google.com>
+Subject: [PATCH 00/13] object store: alloc 
+Date:   Tue,  1 May 2018 14:33:50 -0700
+Message-Id: <20180501213403.14643-1-sbeller@google.com>
+X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks, I will clean up the braces and commit message.
+This applies on top of sb/oid-object-info and is the logical continuum of
+the series that it builds on; this brings the object store into more of
+Gits code, removing global state, such that reasoning about the state of
+the in-memory representation of the repository is easier.
 
-I have to disagree with the 's/reference/dissociate/' comments. It
-appears this section of option descriptions mostly copies from the
-descriptions given by 'git clone -h', which outputs:
-    --reference <repo>    reference repository
-    --reference-if-able <repo>
-                          reference repository
-    --dissociate          use --reference only while cloning
-It is perhaps not the best description, but it means to say when
---dissociate is used --reference is only in play for reducing network
-transfer, not keeping alternates.
+My original plan was to convert lookup_commit_graft as the next series,
+which would be similar to lookup_replace_object, as in sb/object-store-replace.
+The grafts and shallow mechanism are very close to each other, such that
+they need to be converted at the same time, both depending on the
+"parsed object store" that is introduced in this commit.
 
-Those expansions *are* certainly off-putting, they make a long line
-even more difficult to parse. I just searched that file for ":+" for
-those types of expressions and I think a patch to fix them would be
-fairly short. I'll look into making that cleanup patch.
+The next series will then convert code in {object/blob/tree/commit/tag}.c
+hopefully finishing the lookup_* functions.
 
+I also debated if it is worth converting alloc.c via this patch series
+or if it might make more sense to use the new mem-pool by Jameson[1].
 
+I vaguely wonder about the performance impact, as the object allocation
+code seemed to be relevant in the past.
 
-On Tue, May 1, 2018 at 4:25 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, May 1, 2018 at 2:09 PM, Casey Fitzpatrick <kcghost@gmail.com> wrote:
->> submodule: Add --dissociate option to add/update commands
->
-> s/Add/add/
->
->> Add --dissociate option to add and update commands, both clone helper commands
->> that already have the --reference option --dissociate pairs with.
->> Add documentation.
->> Add tests.
->>
->> Signed-off-by: Casey Fitzpatrick <kcghost@gmail.com>
->> ---
->> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->> @@ -1075,6 +1075,9 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
->> +       if (dissociate) {
->> +               argv_array_push(&cp.args, "--dissociate");
->> +       }
->
-> Style: drop unnecessary braces
->
->> @@ -1208,6 +1212,8 @@ static int module_clone(int argc, const char **argv, const char *prefix)
->> +               OPT_BOOL(0, "dissociate", &dissociate,
->> +                          N_("use --reference only while cloning")),
->
-> s/reference/dissociate/
->
->> @@ -1575,6 +1584,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
->> +               OPT_BOOL(0, "dissociate", &suc.dissociate,
->> +                          N_("use --reference only while cloning")),
->
-> s/reference/dissociate/
->
->> diff --git a/git-submodule.sh b/git-submodule.sh
->> +               --dissociate)
->> +                       dissociate="--dissociate"
->> @@ -258,7 +262,7 @@ or you are unsure what this means choose another name with the '--name' option."
->> -               git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"$progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${depth:+"$depth"} || exit
->> +               git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"$progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"$dissociate"} ${depth:+"$depth"} || exit
->
-> I realize that you're just following existing practice in this script,
-> but it's a bit off-putting to see expansions for the new --progress
-> and --dissociate options being done via unnecessarily complex
-> ${foobar:+"$foobar"} when the simpler $foobar would work just as well.
->
-> Just a comment; not necessarily a request for change. (A separate
-> preparatory cleanup patch which simplifies the existing complex
-> expansion expressions would be welcome but could also be considered
-> outside the scope of this patch series.)
->
->> @@ -493,6 +497,9 @@ cmd_update()
->> +               --dissociate)
->> +                       dissociate="--dissociate"
->> +                       ;;
->> @@ -550,6 +557,7 @@ cmd_update()
->>                 ${reference:+"$reference"} \
->> +               ${dissociate:+"$dissociate"} \
->>                 ${depth:+--depth "$depth"} \
+[1] https://public-inbox.org/git/20180430153122.243976-1-jamill@microsoft.com/
+
+Any comments welcome,
+Thanks,
+Stefan
+
+Jonathan Nieder (1):
+  object: add repository argument to grow_object_hash
+
+Stefan Beller (12):
+  repository: introduce object parser field
+  object: add repository argument to create_object
+  alloc: add repository argument to alloc_blob_node
+  alloc: add repository argument to alloc_tree_node
+  alloc: add repository argument to alloc_commit_node
+  alloc: add repository argument to alloc_tag_node
+  alloc: add repository argument to alloc_object_node
+  alloc: add repository argument to alloc_report
+  alloc: add repository argument to alloc_commit_index
+  object: allow grow_object_hash to handle arbitrary repositories
+  object: allow create_object to handle arbitrary repositories
+  alloc: allow arbitrary repositories for alloc functions
+
+ alloc.c           | 69 +++++++++++++++++++++++------------
+ alloc.h           | 21 +++++++++++
+ blame.c           |  3 +-
+ blob.c            |  5 ++-
+ cache.h           |  9 -----
+ commit.c          |  4 +-
+ merge-recursive.c |  3 +-
+ object.c          | 93 +++++++++++++++++++++++++++++++++--------------
+ object.h          | 18 ++++++++-
+ repository.c      |  7 ++++
+ repository.h      | 11 +++++-
+ tag.c             |  4 +-
+ tree.c            |  4 +-
+ 13 files changed, 182 insertions(+), 69 deletions(-)
+ create mode 100644 alloc.h
+
+-- 
+2.17.0.441.gb46fe60e1d-goog
+
