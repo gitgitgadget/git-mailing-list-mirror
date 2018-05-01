@@ -2,108 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DA8821841
-	for <e@80x24.org>; Tue,  1 May 2018 11:37:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00E4421841
+	for <e@80x24.org>; Tue,  1 May 2018 11:38:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754599AbeEALhL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 07:37:11 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:54946 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754437AbeEALhK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 07:37:10 -0400
-Received: by mail-wm0-f68.google.com with SMTP id f6so17378033wmc.4
-        for <git@vger.kernel.org>; Tue, 01 May 2018 04:37:09 -0700 (PDT)
+        id S1754523AbeEALiS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 07:38:18 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:44048 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751920AbeEALiR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 07:38:17 -0400
+Received: by mail-oi0-f68.google.com with SMTP id e80-v6so9828292oig.11
+        for <git@vger.kernel.org>; Tue, 01 May 2018 04:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=kttyNHtzFSAtD7BtTBBzhYkRjyVIbehEDZAGEHEaCsQ=;
-        b=IyjvOY4U7XdXPTeXmG13r4UsRFzofPoAHV395NMqemI3cDpp7eqA+dX2JU89isswib
-         4TPRILwC5B1Htpn9z635srgx1iqX0oYROnG7T9Vhd0jq9K3sxt4F9jeIkeogaE6ae2/P
-         /jnwr0xQF9baktWo9FapLxDgy9C6D5IrzZUpB2a329Qgk6lXVDsTe0nEJAOIIcoE6ChQ
-         bA42mJPkezQgoXHhKKsqvV9TQqopvCXA33MDBcaGzdRoWRYoiQ1rzrn/d5gysJE1MVSN
-         KYMt158FbXoesLoW/FKTKZFq3FI2hMR32A/FZFHtyAsygNTNVtYpzzqoLowSF6sY5u9L
-         8EvQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Tf1mcTFmt85W30K3kMncrHkA6eVfLretN5EaBm2bz4Y=;
+        b=FBm9DabAPJyVo3SbQ/VEulo345bCAqx7OsVDn5vmxOjMQmfcNIBPqlIrzx5FwS0sbO
+         Qro7Ql5IHcEpJzTBz9qfk29eO/enrerqAhDOwMWTjV5rd1BYgIgPLOhlxE09ZRSHxf8N
+         KqOnuPO7ZjcRyQMGKutYFOlsKrma+lecH5WOTpmhcKfbxQq4PBpqvGlMmjqWyIz6bsWC
+         eU6Dtib/EnOa0vIBK42fLycfyqD9dhae//7TrvV6G4uwC8Nwi4eGQHjrkFXi2P3dCdeH
+         TkQ23HOjPAUkjuMaMZ4wVh0TlRp+BPZGhRqMG6L7q1g8/q4eJUePEMRCnPh5xo7sNcpD
+         xlXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=kttyNHtzFSAtD7BtTBBzhYkRjyVIbehEDZAGEHEaCsQ=;
-        b=EzOHUhZlSpbZK1ukKxBu7pIBFdr6UV8+DsMJPWduDgWfNe6ljOJHypmISE3iJsbbKA
-         iRVLl5A9UW+F42gTFp6Db/JhaGbkvtG02wwwaK4e+eVZ7SgXrhHgmZkJwZsggmoBJnFV
-         1T8AAJw+bZEh+aE/FQQ4BEEe2ybAP9EMOdH1QUeWhYQM3h7p18pHjAbU1hJvYPIDQXeZ
-         AIGuV80UfB3AVcj+tnUvRqOdXBzDpJ+jvr5GyieLo6ltVIv4SrYdA3mmbEKJnKmx0xev
-         DL3ve6m6NH26ari5tXVidxELtptJ+QlzdH+ovwqzmYbQ5z/0+cZkkPt6PUD97lr73g9Z
-         /pZA==
-X-Gm-Message-State: ALQs6tAu9lWo67SBGW18W6wC0n/3x9oLrfpMqZEY7vErdJeIggPIxWUE
-        hEwODZvGNscqbFG9s/l7CNI=
-X-Google-Smtp-Source: AB8JxZpMC/EXb+iVfMfbcqmEa4nndjcarka1qlW/CWx6QzTYzJ5vwPgAeAaJo2ityoJ/f+eFYFMpRw==
-X-Received: by 2002:a50:860f:: with SMTP id o15-v6mr20918543edo.243.1525174629042;
-        Tue, 01 May 2018 04:37:09 -0700 (PDT)
-Received: from esm (ipbcc18eac.dynamic.kabel-deutschland.de. [188.193.142.172])
-        by smtp.gmail.com with ESMTPSA id q22-v6sm5369694edr.71.2018.05.01.04.37.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 May 2018 04:37:08 -0700 (PDT)
-From:   "Eckhard =?iso-8859-1?Q?Maa=DF?=" <eckhard.s.maass@googlemail.com>
-X-Google-Original-From: Eckhard =?iso-8859-1?Q?Maa=DF?= <eckhard.s.maass@gmail.com>
-Date:   Tue, 1 May 2018 13:37:06 +0200
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Eckhard =?iso-8859-1?Q?S=2E_Maa=DF?= 
-        <eckhard.s.maass@googlemail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>,
-        Ben Peart <peartben@gmail.com>
-Subject: Re: [PATCH v2] wt-status: use rename settings from
- init_diff_ui_defaults
-Message-ID: <20180501113706.GA13919@esm>
-References: <c466854f-6087-e7f1-264a-1d2df9fd9b5a@gmail.com>
- <20180501094940.17772-1-eckhard.s.maass@gmail.com>
- <87bmdzzlll.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Tf1mcTFmt85W30K3kMncrHkA6eVfLretN5EaBm2bz4Y=;
+        b=OATTsbsgrgy9GzY9SAmVaQnY8toEV2Z9PRkDdy2VIXfPVQjXybDCupOwljTQSfV7+X
+         tDYn6Dqi/tJRyI7dB4RZqaq3/lYXsMLYRs63n6cOz8hmTHAD+pD3wbuBPx7aEkLOTN/p
+         W2fdIf/8mmU4uY6U9yyc6rigoKePL056y3jWzh43mdzu+mZ4Of9d6XLisiKUUbDxe0fi
+         q7pMPiVsqNCfgcFuKkJJubaDwzzgj0eN/UvJviMCjrDNRj97weHdouKx10aA9667Frz7
+         YcGb5nvNy78oC55iEiECFAMUKmhmAtUdXsLg4ffMHoKc3BrG2K4+lNBrAEqM0H8v92cB
+         pkOQ==
+X-Gm-Message-State: ALQs6tAsCTwnWX2kTTvFaC6Mg9MuFFVfY+AT/3aoC3b/oQM7suZwdlmU
+        4N8OrN4EmCp/6ozDrwK6RTQPeFNMSEPt2R7Dcic=
+X-Google-Smtp-Source: AB8JxZqWG74PGuBqvV2dcCdJvDK/V5Le3m5oU9i/U0DupIl98MUUcwg1+POG5k9rwqmSLjoL5W6V+fa3b/AhHHxZ+9s=
+X-Received: by 2002:aca:2e09:: with SMTP id u9-v6mr9739328oiu.228.1525174696753;
+ Tue, 01 May 2018 04:38:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87bmdzzlll.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Received: by 10.74.198.152 with HTTP; Tue, 1 May 2018 04:37:46 -0700 (PDT)
+In-Reply-To: <20180430095044.28492-1-avarab@gmail.com>
+References: <20180430095044.28492-1-avarab@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 1 May 2018 13:37:46 +0200
+Message-ID: <CACsJy8D3ERpbpHRh-fdsuBm1e31Z8zdyRmjSm=btKaSU5mnFog@mail.gmail.com>
+Subject: Re: [PATCH 0/4] subtree: move out of contrib
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Avery Pennarun <apenwarr@gmail.com>, Jeff King <peff@peff.net>,
+        Stephen R Guglielmo <srguglielmo@gmail.com>,
+        "A . Wilcox" <AWilcox@wilcox-tech.com>,
+        David Aguilar <davvid@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 01, 2018 at 01:00:54PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> So didn't we use diff heuristics to begin with, and then regressed? I've
-> only given this a skimming, but it's useful to have that sort of
-> historical context mentioned explicitly with commit ids.
+On Mon, Apr 30, 2018 at 11:50 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> I think at this point git-subtree is widely used enough to move out of
+> contrib/, maybe others disagree, but patches are always better for
+> discussion that patch-less ML posts.
 
-Sorry for not making this too explicit: I traced wt-status.c to its
-beginning in c91f0d92ef ("git-commit.sh: convert run_status to a C
-builtin", 2006-09-08). Here I lost track of other changes - but the
-commit you gave is earlier also has rename detection hard coded in the
-status command. Should I add this as a starting point instead of the
-commit mentioned so far? And this also seems like the very beginning of
-git status.
+After narrow/partial clone becomes real, it should be "easy" to
+implement some sort of narrow checkout that would achieve the same
+thing. But it took me forever with all other stuff to get back to
+this.
 
-The point I wanted to make, is that git show showed you renaming of
-files out of the box whereas other commands did not. At least I remember
-this form 5+ years ago.
-
-This changed with 5404c116aa, so that the out of the box behaviour is
-the same, but this is more a coincidence that the hard coded flag is the
-same as the default configuration value.
-
-My comment was targeted at the hard coded rename detection flag - the
-other two just have seem to pile up on that and I wanted to clean them
-up, too. Maybe a phrasing like "While at it, also remove the two other
-hard coded values concerning rename detection in git status." is better?
-Is my intent clearer now?
-
-Greetings,
-Eckhard
+If we remove it from contrib and there are people willing to
+update/maintain it, should it be a separate repository then? The
+willing people will have much more freedom to update it. And I don't
+have to answer the questions about who will maintain this thing in
+git.git. I don't like the idea of adding new (official) shell-based
+commands either to be honest.
+--=20
+Duy
