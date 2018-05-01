@@ -2,94 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A13B21847
-	for <e@80x24.org>; Tue,  1 May 2018 23:28:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A42FA21847
+	for <e@80x24.org>; Tue,  1 May 2018 23:59:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751277AbeEAX2N (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 19:28:13 -0400
-Received: from mail-wr0-f179.google.com ([209.85.128.179]:36884 "EHLO
-        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751140AbeEAX2M (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 19:28:12 -0400
-Received: by mail-wr0-f179.google.com with SMTP id c14-v6so12085989wrd.4
-        for <git@vger.kernel.org>; Tue, 01 May 2018 16:28:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=wLxuohWEkpFBg5/0tngMKS4rc3zps1rzh8YjU+YkB1Y=;
-        b=o4psnDrJmkjduOyFzlRCMVRAoUCD52W+Y0ODZRRSKql6Qg+2dalicqDDxPGGBsn66q
-         1VJSUX+cMyioDbuEX+3sxe61DquO+BmOhaqZER/pEpITiTf/KwTyCvRFfgvo78EH25Z9
-         xZmX4yfwLCGk2aAw6MTP6s5haJyqVbSneUuAgXCYRJHlIKlyqYWATwDJweUmrwZVXyDu
-         bC+zg92jvX63oIk5Anm9rNMo76Mf8OHUIjzz4PyrHInyB9i4Fb0zQPuM1Y+qXC14dk8v
-         ETw/ElgyG0Ld1kQWgr0Oj6Vvw0udYW1TWHjzpYk9z1cxFKFuHzcsFvUFM1iV1J5vw7L8
-         tIbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=wLxuohWEkpFBg5/0tngMKS4rc3zps1rzh8YjU+YkB1Y=;
-        b=SQscQpWcLSbhFpVxZTJjrhIjIEKAWFq0J6Ayio+QDaROIKAm1JoEpdqGuvwCyPFiPj
-         HnGQghT978ZQKBf74JF6KzqDVR/0R+vM3YSuqxoeq8wyFl0IRlNQO1c6SlTZvQWiaeFG
-         Bx1lcgG9ROLtNtLbJ7fKPOZAH0L9eBOyjHhgFJa71jwTMgIcXFAkJKu1z9qDngUcvJV6
-         +nN9wDQXEMnA1fHjNnFWvbp5HR0gK+MstwwomyhyHrJeujC4gYJP1GeeIee9MieYWD7n
-         PZ4IBlt6cRTrE7wrAXqk1MahP/SNLlj+azq0oZ6McZSaSWLcRH5ulrkk55+qy3Mse86D
-         B2JQ==
-X-Gm-Message-State: ALQs6tBa7hC0wrdq3ngq03tK85l6Rn9Mh96WQdkYdcYQRWuv4sunyrMx
-        xk25jniPQLcBIZTANXAz+rQ=
-X-Google-Smtp-Source: AB8JxZr4SNNgFYkyYVZBcY+LLZsNTjIVxF2yObqunpjJyV/dDjU+Xc5KR3IqYvHQo8ifdKe9fR6DnA==
-X-Received: by 2002:adf:b004:: with SMTP id f4-v6mr13584124wra.75.1525217291096;
-        Tue, 01 May 2018 16:28:11 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z11-v6sm10455052wre.15.2018.05.01.16.28.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 01 May 2018 16:28:10 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Wink Saville <wink@saville.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH v4 0/3] Optional sub hierarchy for remote tags
-References: <xmqqbme51rgn.fsf@gitster-ct.c.googlers.com>
-        <20180501165931.25515-1-wink@saville.com>
-        <87zi1jxjqn.fsf@evledraar.gmail.com>
-Date:   Wed, 02 May 2018 08:28:10 +0900
-In-Reply-To: <87zi1jxjqn.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 01 May 2018 21:24:00 +0200")
-Message-ID: <xmqqd0yfx8fp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753321AbeEAX6r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 19:58:47 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37550 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753312AbeEAX6q (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 19:58:46 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6E40260400;
+        Tue,  1 May 2018 23:58:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1525219124;
+        bh=axFhLrxwtsCnt7RQcLHAxynUfAN7MJXablCQjmlypKE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=EVAftaZEhSGZAmFwISuLgRu6kmk9vPX8kEg/Yn7jyWilWPeSg8hGHi1SQIB+9gZQa
+         WArXs/H9PDgCQCGz8d5DZotrFWqShS5flizY1bTsYjloXG/TN16TQvccgADD4bnbL1
+         NS4kyFcEK6n4L2MovST2zlpv6bnyP5rrdsAMjgoN9sNBEVxyuv/7S+Ny6Nebx/60sH
+         jzyXsor8dDc5bnFkvvleJdlQMq2citPShOQjoTnw2xinPohTEIP3U9G+VkwD2X8hYt
+         4WD9tgc7Hi6370BJ3VEbZ7DjlwOImLOLA8fIKukCHzhCiqoeOd34IuKsUnxOIG5kqH
+         QkGFmxTsBP6iGbAjODmRTf/Qmh/R3XRfeh+M49dHFh0j9xnI+QB3/sY3nIxYIa43/1
+         XS2/9HYnJyB1Us8uwhkfALR0eBTUfX/LKkVyQVv34OS+tNfRhKLeFbzrpMNq7ZU2Ct
+         42z6jkiWb+frvI1zW06mL4nPDSbZNe5CVw2xPE2CT9TofaIlENg
+Date:   Tue, 1 May 2018 23:58:38 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 01/41] cache: add a function to read an object ID from a
+ buffer
+Message-ID: <20180501235837.GG13217@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
+ <20180423233951.276447-2-sandals@crustytoothpaste.net>
+ <20180501093603.GA15820@duynguyen.home>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="z9ECzHErBrwFF8sy"
+Content-Disposition: inline
+In-Reply-To: <20180501093603.GA15820@duynguyen.home>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-3-amd64)
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> As a workaround for that maybe we'll need something like:
->
->   [remote "gbenchmark"]
->     url = git@github.com:google/benchmark
->     fetch = +refs/heads/*:refs/remotes/gbenchmark/*
->     fetch = +refs/tags/*:refs/remote-tags/gbenchmark/*
-> 	tagStyle = remote
->     tagopt = --no-tags
+--z9ECzHErBrwFF8sy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Good thinking.  In the longer term we would probably want to
-deprecate tagopt that was invented in a very lazy way (it was
-originally meant to hold any random string that we can insert on the
-shell command that invokes "git fetch", which obviously is not a
-good idea in the production code) and replace it with something more
-"controlled", and the above looks like a good improvement to Wink's
-proposed change.
+On Tue, May 01, 2018 at 11:36:03AM +0200, Duy Nguyen wrote:
+> On Mon, Apr 23, 2018 at 11:39:11PM +0000, brian m. carlson wrote:
+> > diff --git a/cache.h b/cache.h
+> > index bbaf5c349a..4bca177cf3 100644
+> > --- a/cache.h
+> > +++ b/cache.h
+> > @@ -1008,6 +1008,11 @@ static inline void oidclr(struct object_id *oid)
+> >  	memset(oid->hash, 0, GIT_MAX_RAWSZ);
+> >  }
+> > =20
+> > +static inline void oidread(struct object_id *oid, const unsigned char =
+*hash)
+> > +{
+> > +	memcpy(oid->hash, hash, the_hash_algo->rawsz);
+>=20
+> If performance is a concern, should we go with GIT_MAX_RAWSZ instead
+> of the_hash_algo->rawsz which gives the compiler some more to bypass
+> actual memcpy function and generate copy code directly?
 
-> Or whatever, i.e. something where only the new version will fetch the
-> tags and ignore the tagopt option (which I never liked anyway). It's a
-> hack, but at least you don't end up with crap it your ref namespace by
-> flip-flopping between versions.
+I don't think we can do that.  If we have both NewHash and SHA-1
+compiled in and are using SHA-1, GIT_MAX_RAWSZ will be 32, but we may
+only have 20 bytes that are valid to read.
+
+> If it is not a performance problem, should we avoid inline and move
+> the implementation somewhere?
+
+I would like to make it as fast as possible if we can, especially since
+hashcpy is inline.  If you have concerns about performance, I can add a
+patch in a future series that does some sort of macro if we're using gcc
+that does something like the following:
+
+  ({
+    int rawsz =3D the_hash_algo->rawsz;
+    if (rawsz !=3D GIT_SHA1_RAWSZ && rawsz !=3D GIT_MAX_RAWSZ)
+      __builtin_trap(); /* never reached */
+    rawsz;
+   })
+
+And then use that instead of the_hash_algo->rawsz in performance
+sensitive paths.  That would mean the compiler would know that it was
+only one of those two values and it could optimize better.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--z9ECzHErBrwFF8sy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlro/y0ACgkQv1NdgR9S
+9osG3g/9E7MkDNihftE0XmqSvzyg3fBvAl99vS9H5HO0E+N4gQ02DCwlSNAGcxJ9
+GXrzyS3kXv4ucRkVBbjBJpJ+m0j0+5DBXvTG/LMNxP4mEq9h2xmEUqSLkZLeo9Ny
+iTljFlN1QgCAe5d4UeUA1ICWXaItygJX+qgVjC7pDLugWb066k8+pS9k6dQPpcDz
+66/m/Pn8WorBIWOY/cnvQA2eiAfkORmrwlKK+qwyPP07M4RM7ozwp34Rg6oDigJ8
+RY5GugLcPYyC/LYPLR63msp9fAj/TZkVBqak5EWumyTYQlfBeQbL6e0fl2OAt5lv
+/3HzCoach2Tud+vgL2FkwZa4itLgZW5H9JF9VOcBPb9KZ/QNqObRng6XCdPWYrAN
+mDlaUGTf2kcPpPQ8ngHIhL1VsirvI/okXYwIcMOd9jRpzFRcUwyiKTkGZRUOzpAz
+5BZilGDhIqSlVr1tON5MfaGC+7m+I7iLh1UjcTGMvQTV1E1CNVN32/Q41pPr+u/v
+sSw9E9RjX+gNVB5v/zCKEKUYpxfkhfzCMKhnePDMMh9UFgFwSOPtmrIDk0N/FxKe
+Uz5M9J8RKg4h48emMQray3v5huUsCjGNe/fzIXUzfq++OOo17wtjMWs6ADAcEFRU
+brpwAF3Dnd9ZkKm3GRozN2E3Tuc2gAshcX3nDDQBdLdsIAOdFUM=
+=d455
+-----END PGP SIGNATURE-----
+
+--z9ECzHErBrwFF8sy--
