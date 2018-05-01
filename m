@@ -2,131 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F114C215F4
-	for <e@80x24.org>; Tue,  1 May 2018 12:56:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98FD1215F4
+	for <e@80x24.org>; Tue,  1 May 2018 13:03:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755845AbeEAM4e convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 1 May 2018 08:56:34 -0400
-Received: from mut-mta1-se01a-zose1-fr.yulpa.io ([185.49.21.248]:43736 "EHLO
-        mut-mta1-se01a-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755015AbeEAM4b (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 08:56:31 -0400
-X-Greylist: delayed 1952 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 May 2018 08:56:31 EDT
-Received: from zose-mx-out01.web4all.fr ([185.49.20.46] helo=zose-mta-hub-out-web-02.w4a.fr)
-        by mut-mta1-se01b-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <matthieu.moy@matthieu-moy.fr>)
-        id 1fDUK2-000Izn-3e; Tue, 01 May 2018 14:23:55 +0200
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-web-02.w4a.fr (Postfix) with ESMTP id A68B8140EB5;
-        Tue,  1 May 2018 14:23:10 +0200 (CEST)
-Received: from zose-mta-hub-out-web-02.w4a.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-web-02.w4a.fr [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id AtjViVmUxuHF; Tue,  1 May 2018 14:23:09 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-web-02.w4a.fr (Postfix) with ESMTP id DA187140EBF;
-        Tue,  1 May 2018 14:23:09 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at zose1.web4all.fr
-Received: from zose-mta-hub-out-web-02.w4a.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-web-02.w4a.fr [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id qi8VrbiGxVNJ; Tue,  1 May 2018 14:23:09 +0200 (CEST)
-Received: from zose-store11.web4all.fr (zose-store11.web4all.fr [10.101.13.41])
-        by zose-mta-hub-out-web-02.w4a.fr (Postfix) with ESMTP id B6CB0140EB5;
-        Tue,  1 May 2018 14:23:09 +0200 (CEST)
-Date:   Tue, 1 May 2018 14:23:51 +0200 (CEST)
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     Eckhard =?utf-8?B?TWFhw58=?= <eckhard.s.maass@googlemail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Ben Peart <peartben@gmail.com>
-Message-ID: <1652522802.213664.1525177431907.JavaMail.zimbra@matthieu-moy.fr>
-In-Reply-To: <20180501114316.GB13919@esm>
-References: <c466854f-6087-e7f1-264a-1d2df9fd9b5a@gmail.com> <50c60ddfeb9a44a99f556be2c2ca9a34@BPMBX2013-01.univ-lyon1.fr> <907020160.11403426.1525172946040.JavaMail.zimbra@inria.fr> <20180501114316.GB13919@esm>
-Subject: Re: [PATCH v2] wt-status: use rename settings from
- init_diff_ui_defaults
+        id S1754976AbeEANDd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 09:03:33 -0400
+Received: from mail-sn1nam02on0100.outbound.protection.outlook.com ([104.47.36.100]:52067
+        "EHLO NAM02-SN1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1754805AbeEANDc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 09:03:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=6cHvKyjRHvppBMNmI84zzYtp5LZA2KxD7LIr71UjdU0=;
+ b=BB6yJHosCl9wCM60x/PEa8qvq0ErFMPB2V6XrbEMCfj8/SbAPrSQdytpKuxCOdWEwJZua4xUqse6guGmHY9pqXfwQs3rBjtCeiCJI9q+clBGPW7XDCVmes0wHCdWmZwxqmoEsGtQQv72EXxUq9S2X0b9FaKZ6AdcMluJ4y4yCEQ=
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
+ BL0PR2101MB1107.namprd21.prod.outlook.com (52.132.24.30) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.755.4; Tue, 1 May 2018 13:03:29 +0000
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::714b:5398:58e0:b4d8]) by BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::714b:5398:58e0:b4d8%2]) with mapi id 15.20.0755.007; Tue, 1 May 2018
+ 13:03:29 +0000
+From:   Derrick Stolee <dstolee@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "avarab@gmail.com" <avarab@gmail.com>
+CC:     "stolee@gmail.com" <stolee@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH v2 06/11] get_short_oid: sort ambiguous objects by type, then
+ SHA-1
+Thread-Topic: [PATCH v2 06/11] get_short_oid: sort ambiguous objects by type,
+ then SHA-1
+Thread-Index: AQHT4UzMmdV2zxg2YE2AKxWLdQV5Ag==
+Date:   Tue, 1 May 2018 13:03:28 +0000
+Message-ID: <20180501130318.58251-1-dstolee@microsoft.com>
+References: <20180501120651.15886-1-avarab@gmail.com>
+In-Reply-To: <20180501120651.15886-1-avarab@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: MW2PR16CA0060.namprd16.prod.outlook.com
+ (2603:10b6:907:1::37) To BL0PR2101MB1011.namprd21.prod.outlook.com
+ (2603:10b6:207:37::10)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1107;7:FSDMnHk+h3jiilF0gaubix4fVmoyoQwC3HNv2RcJdcotAlCPnj2Hx8QqMk0RFVplhGiFezahCoxkAE2F0rbwd+/pvnM0OaKbG1mc3D+tsjKYeYZf4A2PxdVQ59KAZtEpFgywaGr1GLQvj57XsVaYQdz94b9zli4Gx3o393FLZfqSQTPPsFIqagtI7NUg7GQdPY8KqUFMUlbo7J4JdxJxkM7wseR8pHWQkEy+MO/HB66YJsZ0w3GrYRwErisB6CP3;20:WgmbcOitMPPU6qjs8EjSdLR0ckVa0VjoP9sM804SzOvooKKZXsj10dxIMmz7CXhg1+G5JvgPvrAyELongpH6s9woPxyKzKyRt69467XVxbGp23xlQvSuYrREyNxKz9HlxNpMoyRlG83pTl4I1/52o/Yl28HngEScLZ6R+s2z54U=
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(2017052603328)(7193020);SRVR:BL0PR2101MB1107;
+x-ms-traffictypediagnostic: BL0PR2101MB1107:
+x-microsoft-antispam-prvs: <BL0PR2101MB1107E5331549C0959C9F50EFA1810@BL0PR2101MB1107.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(85827821059158);
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(10201501046)(93006095)(93001095)(3231254)(2018427008)(944501410)(52105095)(3002001)(6055026)(6041310)(20161123560045)(20161123562045)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(6072148)(201708071742011);SRVR:BL0PR2101MB1107;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1107;
+x-forefront-prvs: 06592CCE58
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(346002)(39380400002)(366004)(39860400002)(376002)(377424004)(189003)(199004)(86612001)(3660700001)(186003)(6346003)(2501003)(81156014)(81166006)(76176011)(106356001)(68736007)(575784001)(86362001)(4326008)(7736002)(25786009)(486006)(446003)(6506007)(2616005)(97736004)(105586002)(476003)(46003)(3280700002)(36756003)(11346002)(5250100002)(8676002)(102836004)(8936002)(6486002)(2900100001)(6116002)(53936002)(52116002)(386003)(59450400001)(10090500001)(54906003)(1076002)(39060400002)(6436002)(110136005)(107886003)(316002)(2906002)(305945005)(5660300001)(10290500003)(478600001)(6512007)(99286004)(22452003)(14454004)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1107;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=dstolee@microsoft.com; 
+x-microsoft-antispam-message-info: 2F/8pggljakOOsfzAByjrHxAe+u0SUN9cmkC1yOxfG1pLY6J3HO4QlEsVr0H44x2KozXav1pEpKYJBbFzqmPU6wm3i9UtfjKGWlKEeiWD6QyctAwJ+ydebZzDEFqqrVikQUovxVn8wSHCjLlEyYsmzgiZBV+op3KEHmaKl/8ssB4pDom6HfbP7uZts3rHlwY
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <2B0B8256A2AFD74F9D118AAFB8C62DFC@namprd21.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Zimbra 8.8.7_GA_1964 (ZimbraWebClient - FF59 (Linux)/8.8.7_GA_1964)
-Thread-Topic: wt-status: use rename settings from init_diff_ui_defaults
-Thread-Index: gJxySd6vaUYd+o1z6Ez3ffAVpT+wZA==
-X-Originating-IP: 185.49.20.46
-X-SpamExperts-Domain: zose1.web4all.fr
-X-SpamExperts-Username: 185.49.20.46
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.46@zose1.web4all.fr
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: Combined (0.02)
-X-Recommended-Action: accept
-X-Filter-ID: EX5BVjFpneJeBchSMxfU5s+9ULsWKKt+g80YTcatJT1602E9L7XzfQH6nu9C/Fh9KJzpNe6xgvOx
- q3u0UDjvOzQLEduLAcXHFw1qMW9qI5OLwc9Rs3iMd1Fy6obyR7hB3lPAJ7ZRYBAhWkUMwqPQ4C5U
- FTSjhxM5VZEuJ30S0veVzQvQj2NFf7qJ00FQaK4gsA8T52BBmstI99Y8QuVwFo8TB9sEhBjsbz+e
- Hypr4QiDfRodGV4O5ypDdTPeO/pizcnIJmV/EOrG3jtoSDbBLR5e973vehgRRMJdd1x498THN+L2
- AkAg9lYWFjNTtussUcju/Fd8gZoUQm8ysuFdGGspIwJnzwlNIWgZJ9f/oRJHkij6DyweSIB+n4RU
- gKg/RWZUep6PQVBxKCMU+7NVjOu2beRqilmjgQ6jA3UwYgk7jX2p2c6GOdi3L3Pzry/TbsR08q9t
- EAjFm2byf+NztHhQoI5t5B02WWv4WCWgmfFdiUlW7tV45H9nCrhB5S7UYEmwoKT+ioWBAn01erfy
- VvaWheN1jZdogD7YCfXh97xQef6Ceaw0tyEeHKZjklTreHL+whhAdKuW1jHRpItetlrVADbHjxX8
- D9l6cvPWmRoveeW/gESan/V7zrfiyk/e91/RgZ/6G91oVgy7k8J6YqsQ8ZpR+9NAPyZNieblXJtY
- FnLudr1cDBCmdxHRG9lwrSOIPpeqwlm2NDGXIJ2x7CjcVfdC5/6qMuamcDy5IyJTwu54QWpbuhaT
- bvr6RLxLefGz0qNnFBlHl+43ri77+ppu+2j1BysaEC8mRErDfRYMfqOjtzuwjS9w63NmUUSmA+el
- 3Hvzdw3iJnNgWQhMAwbhzhATAlYMjEocb2uQBsQEJu+PlY4mNgk9NuQxzGuTJJZulemVsWP9wHgr
- uDPX6WqNdgVDBhQX2Bc+ZhzMVyyGrnC47XFeJjjXu8tCsQQMz1LPkHI9Mrzo2c6qohujbISQOLYT
- Ua8ciIUdSU7SuMn1H/aAwarQpYDOYx/6JtUOyhxOMJmVV71jAHZ/eGxt7VMIrZxemgRtia2NRzRj
- IG2JXY9Z0Y7MfWkEfoGtOPo+JEWhXy1Le9Tb2y3Fkij411HsplMkkb/VBGfADMfD+gnvk4xC2BnA
- 2wbIfWgFjXcSjNZLbr04EXXkIgRE5hm4oYma6jdGLSzAN9vqTxqZ3CU=
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+X-MS-Office365-Filtering-Correlation-Id: 312fef5e-957e-4120-9eda-08d5af63eed3
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 312fef5e-957e-4120-9eda-08d5af63eed3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 May 2018 13:03:29.0168
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1107
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Eckhard Maaß" <eckhard.s.maass@googlemail.com>:
-
-> On Tue, May 01, 2018 at 01:09:06PM +0200, Matthieu Moy wrote:
-> > That init_diff_ui_defaults() should indeed have been before
-> > git_config() from the beginning. My bad, I'm the one who
-> > misplaced it apparently :-(.
-
-> Should I have done this "bug fix" in a separate commit or mention it in
-> the commit message?
-
-I'm fine with it as-is. Before your "fix", the config was ignored
-because overwritten by init_diff_ui_defaults() after reading the
-config, so effect of your change is indeed what the commit message
-describes.
-
-I'm often thinking aloud while reviewing, don't take my comments as
-objections.
-
-> > This "break_opt = 0" deserves a mention in the commit message IMHO.
-> > I'm not 100% sure it's a good change actually.
-
-> Hm, what problems do you see here?
-
-I don't see any "problem", I *think* your change is good, but I can't
-fully convince myself that it is without further explanation.
-
-Unlike the other two, this option has no corresponding configuration
-variable, so the "let the config" argument doesn't apply. For "git
-status", there's actually not even a command-line option. So, this
-assignment removed, there's no way in the user-interface to re-enable
-the previous behavior. *If* there was a good reason to get "break_opt
-= 0", then your patch is breaking it.
-
-Unfortunately, the commit introducing it doesn't help much: f714fb8
-(Enable rewrite as well as rename detection in git-status,
-2007-12-02) is just a one-liner message with a one-liner patch.
-
-But actually, I never used -B/--break-rewrites, and writting this
-message I tried to get a case where -B would make a difference and I'm
-not even able to find one. So, as someone who never understood the
-real point of -B, I'm not sure I'm qualified to juge on what's the
-best default ;-).
-
--- 
-Matthieu Moy
-https://matthieu-moy.fr/
+RnJvbTogw4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24gPGF2YXJhYkBnbWFpbC5jb20+DQoNCkhl
+cmUgaXMgd2hhdCBJIG1lYW4gYnkgc29ydGluZyBkdXJpbmcgZm9yX2VhY2hfYWJicmV2KCkuIFRo
+aXMgc2VlbXMgdG8gd29yayBmb3INCm1lLCBzbyBJIGRvbid0IGtub3cgd2hhdCB0aGUgaXNzdWUg
+aXMgd2l0aCB0aGlzIG9uZS1wYXNzIGFwcHJvYWNoLg0KDQpUaGFua3MsDQotU3RvbGVlDQoNCi0t
+ID44IC0tDQoNCkNoYW5nZSB0aGUgb3V0cHV0IGVtaXR0ZWQgd2hlbiBhbiBhbWJpZ3VvdXMgb2Jq
+ZWN0IGlzIGVuY291bnRlcmVkIHNvDQp0aGF0IHdlIHNob3cgdGFncyBmaXJzdCwgdGhlbiBjb21t
+aXRzLCBmb2xsb3dlZCBieSB0cmVlcywgYW5kIGZpbmFsbHkNCmJsb2JzLiBXaXRoaW4gZWFjaCB0
+eXBlIHdlIHNob3cgb2JqZWN0cyBpbiBoYXNoY21wKCkgb3JkZXIuIEJlZm9yZQ0KdGhpcyBjaGFu
+Z2UgdGhlIG9iamVjdHMgd2VyZSBvbmx5IG9yZGVyZWQgYnkgaGFzaGNtcCgpLg0KDQpUaGUgcmVh
+c29uIGZvciBkb2luZyB0aGlzIGlzIHRoYXQgdGhlIG91dHB1dCBsb29rcyBiZXR0ZXIgYXMgYSBy
+ZXN1bHQsDQplLmcuIHRoZSB2Mi4xNy4wIHRhZyBiZWZvcmUgdGhpcyBjaGFuZ2Ugb24gImdpdCBz
+aG93IGU4ZjIiIHdvdWxkDQpkaXNwbGF5Og0KDQogICAgaGludDogVGhlIGNhbmRpZGF0ZXMgYXJl
+Og0KICAgIGhpbnQ6ICAgZThmMjA5MzA1NSB0cmVlDQogICAgaGludDogICBlOGYyMWNhZjk0IGNv
+bW1pdCAyMDEzLTA2LTI0IC0gYmFzaCBwcm9tcHQ6IHByaW50IHVuaXF1ZSBkZXRhY2hlZCBIRUFE
+IGFiYnJldmlhdGVkIG9iamVjdCBuYW1lDQogICAgaGludDogICBlOGYyMWQwMmY3IGJsb2INCiAg
+ICBoaW50OiAgIGU4ZjIxZDU3N2MgYmxvYg0KICAgIGhpbnQ6ICAgZThmMjVhM2E1MCB0cmVlDQog
+ICAgaGludDogICBlOGYyNjI1MGZhIGNvbW1pdCAyMDE3LTAyLTAzIC0gTWVyZ2UgcHVsbCByZXF1
+ZXN0ICM5OTYgZnJvbSBqZWZmaG9zdGV0bGVyL2plZmZob3N0ZXRsZXIvcmVnaXN0ZXJfcmVuYW1l
+X3NyYw0KICAgIGhpbnQ6ICAgZThmMjY1MDA1MiB0YWcgdjIuMTcuMA0KICAgIGhpbnQ6ICAgZThm
+Mjg2NzIyOCBibG9iDQogICAgaGludDogICBlOGYyOGQ1MzdjIHRyZWUNCiAgICBoaW50OiAgIGU4
+ZjJhMzU1MjYgYmxvYg0KICAgIGhpbnQ6ICAgZThmMmJjMGMwNiBjb21taXQgMjAxNS0wNS0xMCAt
+IERvY3VtZW50YXRpb246IG5vdGUgYmVoYXZpb3IgZm9yIG11bHRpcGxlIHJlbW90ZS51cmwgZW50
+cmllcw0KICAgIGhpbnQ6ICAgZThmMmNmNmVjMCB0cmVlDQoNCk5vdyB3ZSdsbCBpbnN0ZWFkIHNo
+b3c6DQoNCiAgICBoaW50OiAgIGU4ZjI2NTAwNTIgdGFnIHYyLjE3LjANCiAgICBoaW50OiAgIGU4
+ZjIxY2FmOTQgY29tbWl0IDIwMTMtMDYtMjQgLSBiYXNoIHByb21wdDogcHJpbnQgdW5pcXVlIGRl
+dGFjaGVkIEhFQUQgYWJicmV2aWF0ZWQgb2JqZWN0IG5hbWUNCiAgICBoaW50OiAgIGU4ZjI2MjUw
+ZmEgY29tbWl0IDIwMTctMDItMDMgLSBNZXJnZSBwdWxsIHJlcXVlc3QgIzk5NiBmcm9tIGplZmZo
+b3N0ZXRsZXIvamVmZmhvc3RldGxlci9yZWdpc3Rlcl9yZW5hbWVfc3JjDQogICAgaGludDogICBl
+OGYyYmMwYzA2IGNvbW1pdCAyMDE1LTA1LTEwIC0gRG9jdW1lbnRhdGlvbjogbm90ZSBiZWhhdmlv
+ciBmb3IgbXVsdGlwbGUgcmVtb3RlLnVybCBlbnRyaWVzDQogICAgaGludDogICBlOGYyMDkzMDU1
+IHRyZWUNCiAgICBoaW50OiAgIGU4ZjI1YTNhNTAgdHJlZQ0KICAgIGhpbnQ6ICAgZThmMjhkNTM3
+YyB0cmVlDQogICAgaGludDogICBlOGYyY2Y2ZWMwIHRyZWUNCiAgICBoaW50OiAgIGU4ZjIxZDAy
+ZjcgYmxvYg0KICAgIGhpbnQ6ICAgZThmMjFkNTc3YyBibG9iDQogICAgaGludDogICBlOGYyODY3
+MjI4IGJsb2INCiAgICBoaW50OiAgIGU4ZjJhMzU1MjYgYmxvYg0KDQpTaW5jZSB3ZSBzaG93IHRo
+ZSBjb21taXQgZGF0YSBpbiB0aGUgb3V0cHV0IHRoYXQncyBuaWNlbHkgYWxpZ25lZCBvbmNlDQp3
+ZSBzb3J0IGJ5IG9iamVjdCB0eXBlLiBUaGUgZGVjaXNpb24gdG8gc2hvdyB0YWdzIGJlZm9yZSBj
+b21taXRzIGlzDQpwcmV0dHkgYXJiaXRyYXJ5LiBJIGRvbid0IHdhbnQgdG8gb3JkZXIgYnkgb2Jq
+ZWN0X3R5cGUgc2luY2UgdGhlcmUNCnRhZ3MgY29tZSBsYXN0IGFmdGVyIGJsb2JzLCB3aGljaCBk
+b2Vzbid0IG1ha2Ugc2Vuc2UgaWYgd2Ugd2FudCB0bw0Kc2hvdyB0aGUgbW9zdCBpbXBvcnRhbnQg
+dGhpbmdzIGZpcnN0Lg0KDQpJIGNvdWxkIGRpc3BsYXkgdGhlbSBhZnRlciBjb21taXRzLCBidXQg
+aXQncyBtdWNoIGxlc3MgbGlrZWx5IHRoYXQNCndlJ2xsIGRpc3BsYXkgYSB0YWcsIHNvIGlmIHRo
+ZXJlIGlzIG9uZSBpdCBtYWtlcyBzZW5zZSB0byBzaG93IGl0DQpwcm9taW5lbnRseSBhdCB0aGUg
+dG9wLg0KDQpTaWduZWQtb2ZmLWJ5OiDDg+KAoHZhciBBcm5masODwrZyw4PCsCBCamFybWFzb24g
+PGF2YXJhYkBnbWFpbC5jb20+DQpTaWduZWQtb2ZmLWJ5OiBEZXJyaWNrIFN0b2xlZSA8ZHN0b2xl
+ZUBtaWNyb3NvZnQuY29tPg0KLS0tDQogc2hhMS1uYW1lLmMgICAgICAgICAgICAgICAgICAgICAg
+ICAgfCAzMSArKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0KIHQvdDE1MTItcmV2LXBhcnNl
+LWRpc2FtYmlndWF0aW9uLnNoIHwgMjEgKysrKysrKysrKysrKysrKysrKw0KIDIgZmlsZXMgY2hh
+bmdlZCwgNTIgaW5zZXJ0aW9ucygrKQ0KDQpkaWZmIC0tZ2l0IGEvc2hhMS1uYW1lLmMgYi9zaGEx
+LW5hbWUuYw0KaW5kZXggNWRlZWJhYjU2ZC4uMDMzNjYzMGM2NCAxMDA2NDQNCi0tLSBhL3NoYTEt
+bmFtZS5jDQorKysgYi9zaGExLW5hbWUuYw0KQEAgLTM4NSw2ICszODUsMzQgQEAgc3RhdGljIGlu
+dCBjb2xsZWN0X2FtYmlndW91cyhjb25zdCBzdHJ1Y3Qgb2JqZWN0X2lkICpvaWQsIHZvaWQgKmRh
+dGEpDQogCXJldHVybiAwOw0KIH0NCiANCitzdGF0aWMgaW50IHNvcnRfYW1iaWd1b3VzKGNvbnN0
+IHZvaWQgKmEsIGNvbnN0IHZvaWQgKmIpDQorew0KKwlpbnQgYV90eXBlID0gb2lkX29iamVjdF9p
+bmZvKGEsIE5VTEwpOw0KKwlpbnQgYl90eXBlID0gb2lkX29iamVjdF9pbmZvKGIsIE5VTEwpOw0K
+KwlpbnQgYV90eXBlX3NvcnQ7DQorCWludCBiX3R5cGVfc29ydDsNCisNCisJLyoNCisJICogU29y
+dHMgYnkgaGFzaCB3aXRoaW4gdGhlIHNhbWUgb2JqZWN0IHR5cGUsIGp1c3QgYXMNCisJICogb2lk
+X2FycmF5X2Zvcl9lYWNoX3VuaXF1ZSgpIHdvdWxkIGRvLg0KKwkgKi8NCisJaWYgKGFfdHlwZSA9
+PSBiX3R5cGUpDQorCQlyZXR1cm4gb2lkY21wKGEsIGIpOw0KKw0KKwkvKg0KKwkgKiBCZXR3ZWVu
+IG9iamVjdCB0eXBlcyBzaG93IHRhZ3MsIHRoZW4gY29tbWl0cywgYW5kIGZpbmFsbHkNCisJICog
+dHJlZXMgYW5kIGJsb2JzLg0KKwkgKg0KKwkgKiBUaGUgb2JqZWN0X3R5cGUgZW51bSBpcyBjb21t
+aXQsIHRyZWUsIGJsb2IsIHRhZywgYnV0IHdlDQorCSAqIHdhbnQgdGFnLCBjb21taXQsIHRyZWUg
+YmxvYi4gQ2xldmVybHkgKHBlcmhhcHMgdG9vDQorCSAqIGNsZXZlcmx5KSBkbyB0aGF0IHdpdGgg
+bW9kdWx1cywgc2luY2UgdGhlIGVudW0gYXNzaWducyAxIHRvDQorCSAqIGNvbW1pdCwgc28gdGFn
+IGJlY29tZXMgMC4NCisJICovDQorCWFfdHlwZV9zb3J0ID0gYV90eXBlICUgNDsNCisJYl90eXBl
+X3NvcnQgPSBiX3R5cGUgJSA0Ow0KKwlyZXR1cm4gYV90eXBlX3NvcnQgPiBiX3R5cGVfc29ydCA/
+IDEgOiAtMTsNCit9DQorDQogc3RhdGljIGludCBnZXRfc2hvcnRfb2lkKGNvbnN0IGNoYXIgKm5h
+bWUsIGludCBsZW4sIHN0cnVjdCBvYmplY3RfaWQgKm9pZCwNCiAJCQkgIHVuc2lnbmVkIGZsYWdz
+KQ0KIHsNCkBAIC00NTEsNiArNDc5LDkgQEAgaW50IGZvcl9lYWNoX2FiYnJldihjb25zdCBjaGFy
+ICpwcmVmaXgsIGVhY2hfYWJicmV2X2ZuIGZuLCB2b2lkICpjYl9kYXRhKQ0KIAlmaW5kX3Nob3J0
+X29iamVjdF9maWxlbmFtZSgmZHMpOw0KIAlmaW5kX3Nob3J0X3BhY2tlZF9vYmplY3QoJmRzKTsN
+CiANCisJUVNPUlQoY29sbGVjdC5vaWQsIGNvbGxlY3QubnIsIHNvcnRfYW1iaWd1b3VzKTsNCisJ
+Y29sbGVjdC5zb3J0ZWQgPSAxOw0KKw0KIAlyZXQgPSBvaWRfYXJyYXlfZm9yX2VhY2hfdW5pcXVl
+KCZjb2xsZWN0LCBmbiwgY2JfZGF0YSk7DQogCW9pZF9hcnJheV9jbGVhcigmY29sbGVjdCk7DQog
+CXJldHVybiByZXQ7DQpkaWZmIC0tZ2l0IGEvdC90MTUxMi1yZXYtcGFyc2UtZGlzYW1iaWd1YXRp
+b24uc2ggYi90L3QxNTEyLXJldi1wYXJzZS1kaXNhbWJpZ3VhdGlvbi5zaA0KaW5kZXggYzdjZWRh
+MmYyMS4uNzRlN2Q5YzE3OCAxMDA3NTUNCi0tLSBhL3QvdDE1MTItcmV2LXBhcnNlLWRpc2FtYmln
+dWF0aW9uLnNoDQorKysgYi90L3QxNTEyLXJldi1wYXJzZS1kaXNhbWJpZ3VhdGlvbi5zaA0KQEAg
+LTM2NCw0ICszNjQsMjUgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAnY29yZS5kaXNhbWJpZ3VhdGUg
+ZG9lcyBub3Qgb3ZlcnJpZGUgY29udGV4dCcgJw0KIAkJZ2l0IC1jIGNvcmUuZGlzYW1iaWd1YXRl
+PWNvbW1pdHRpc2ggcmV2LXBhcnNlICRzaGExXnt0cmVlfQ0KICcNCiANCit0ZXN0X2V4cGVjdF9z
+dWNjZXNzIENfTE9DQUxFX09VVFBVVCAnYW1iaWd1b3VzIGNvbW1pdHMgYXJlIHByaW50ZWQgYnkg
+dHlwZSBmaXJzdCwgdGhlbiBoYXNoIG9yZGVyJyAnDQorCXRlc3RfbXVzdF9mYWlsIGdpdCByZXYt
+cGFyc2UgMDAwMCAyPnN0ZGVyciAmJg0KKwlncmVwIF5oaW50OiBzdGRlcnIgPmhpbnRzICYmDQor
+CWdyZXAgMDAwMCBoaW50cyA+b2JqZWN0cyAmJg0KKwljYXQgPmV4cGVjdGVkIDw8LVxFT0YgJiYN
+CisJdGFnDQorCWNvbW1pdA0KKwl0cmVlDQorCWJsb2INCisJRU9GDQorCWF3ayAie3ByaW50IFwk
+M30iIDxvYmplY3RzID5vYmplY3RzLnR5cGVzICYmDQorCXVuaXEgPG9iamVjdHMudHlwZXMgPm9i
+amVjdHMudHlwZXMudW5pcSAmJg0KKwl0ZXN0X2NtcCBleHBlY3RlZCBvYmplY3RzLnR5cGVzLnVu
+aXEgJiYNCisJZm9yIHR5cGUgaW4gdGFnIGNvbW1pdCB0cmVlIGJsb2INCisJZG8NCisJCWdyZXAg
+JHR5cGUgb2JqZWN0cyA+JHR5cGUub2JqZWN0cyAmJg0KKwkJc29ydCAkdHlwZS5vYmplY3RzID4k
+dHlwZS5vYmplY3RzLnNvcnRlZCAmJg0KKwkJdGVzdF9jbXAgJHR5cGUub2JqZWN0cy5zb3J0ZWQg
+JHR5cGUub2JqZWN0cw0KKwlkb25lDQorJw0KKw0KIHRlc3RfZG9uZQ0KLS0gDQoyLjE3LjAuMzku
+ZzY4NTE1N2Y3ZmINCg0K
