@@ -2,116 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF9BE215F4
-	for <e@80x24.org>; Tue,  1 May 2018 12:48:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F114C215F4
+	for <e@80x24.org>; Tue,  1 May 2018 12:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755355AbeEAMsh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 08:48:37 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33339 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755121AbeEAMsg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 08:48:36 -0400
-Received: by mail-wm0-f65.google.com with SMTP id x12so14810094wmc.0
-        for <git@vger.kernel.org>; Tue, 01 May 2018 05:48:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=2vcBPrpixgxeicCeM9puivJyF9yo5hHcar3k/V5P+MU=;
-        b=JBleDtyfG8RMt/V+JZsvcUeKNiOaZWbwttZd6uqfIM9nFsXiBMnprSD/EHtdotnlyk
-         YxNoDIlNBs57vIhnFU9C/4SQ4pVoOhfx82JQrgnwbP51v7hphP91UXOc4LQl5H3y8VbQ
-         9PPpvZAGPlOcBF36uVHLeChXC5YX+deDQ4QQYPsM5ej6BOOP6u6P7D7i/jkE9+DsNHwh
-         bGkLUYgeIx0bBF2vbkf7B97m1YY0kD8+iVr/LidWgbblkvEOAqwyTjwCHzLtOy6bo9ms
-         eRFdbMDiZMV/xsPwKA3J77QTBHIMO/hkjEXmCNCmeTT4iGNBInqdDFVuFXhTMW6HgR0R
-         aAIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=2vcBPrpixgxeicCeM9puivJyF9yo5hHcar3k/V5P+MU=;
-        b=rHZiA3TwtjWwEF4tt912YR/pIyTd2MglSMvDLoAfrnClexvKqXWGx4zWaEwre1FGBF
-         mG5B4msaZKV85ZSBHAp7w2gwHgMt5g0okRt454k9Nl/kG63HhZkwzy9lY/yLZCWm82dk
-         ouLy+8VwVtvKdr8VsrXl520cDhmBNfbJbbtIm64j7BF7/TmTGdSxZRLRpPfUM7Sgqm6V
-         ow5NS3I/DFy7HBpKMDhVg+PZHW4W3rPBIplnmnhUW6vtq7dXrocMjx+a2xGqzeXNS4cs
-         /E3vcyN07NjbOhjWxgFeSnXJfWZxY+gYkQg44SKSeBR3jylrPg9iKn5KmWB/d/jJeeMH
-         0guA==
-X-Gm-Message-State: ALQs6tCgfEYum2mn9Zkr9Nwnyiff79nIGek9hujoL5jkzp1qFLCUoo8l
-        fhHj310MZnYl04dMk7oFcjc=
-X-Google-Smtp-Source: AB8JxZovPpCJfIj9lDT+UTF97z53IxQ8DdGVR0Dce1Pi++jA24YxqQ6zwdfWepamPp5l5LaXfvo+5g==
-X-Received: by 2002:a50:ce1b:: with SMTP id y27-v6mr7215742edi.300.1525178915425;
-        Tue, 01 May 2018 05:48:35 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id a11-v6sm5353273edr.89.2018.05.01.05.48.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 01 May 2018 05:48:34 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Avery Pennarun <apenwarr@gmail.com>, Jeff King <peff@peff.net>,
-        Stephen R Guglielmo <srguglielmo@gmail.com>,
-        "A . Wilcox" <AWilcox@Wilcox-Tech.com>,
-        David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 0/4] subtree: move out of contrib
-References: <20180430095044.28492-1-avarab@gmail.com> <nycvar.QRO.7.76.6.1805011338490.79@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <nycvar.QRO.7.76.6.1805011338490.79@tvgsbejvaqbjf.bet>
-Date:   Tue, 01 May 2018 14:48:33 +0200
-Message-ID: <877eonzgm6.fsf@evledraar.gmail.com>
+        id S1755845AbeEAM4e convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 1 May 2018 08:56:34 -0400
+Received: from mut-mta1-se01a-zose1-fr.yulpa.io ([185.49.21.248]:43736 "EHLO
+        mut-mta1-se01a-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755015AbeEAM4b (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 08:56:31 -0400
+X-Greylist: delayed 1952 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 May 2018 08:56:31 EDT
+Received: from zose-mx-out01.web4all.fr ([185.49.20.46] helo=zose-mta-hub-out-web-02.w4a.fr)
+        by mut-mta1-se01b-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <matthieu.moy@matthieu-moy.fr>)
+        id 1fDUK2-000Izn-3e; Tue, 01 May 2018 14:23:55 +0200
+Received: from localhost (localhost [127.0.0.1])
+        by zose-mta-hub-out-web-02.w4a.fr (Postfix) with ESMTP id A68B8140EB5;
+        Tue,  1 May 2018 14:23:10 +0200 (CEST)
+Received: from zose-mta-hub-out-web-02.w4a.fr ([127.0.0.1])
+        by localhost (zose-mta-hub-out-web-02.w4a.fr [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id AtjViVmUxuHF; Tue,  1 May 2018 14:23:09 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by zose-mta-hub-out-web-02.w4a.fr (Postfix) with ESMTP id DA187140EBF;
+        Tue,  1 May 2018 14:23:09 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at zose1.web4all.fr
+Received: from zose-mta-hub-out-web-02.w4a.fr ([127.0.0.1])
+        by localhost (zose-mta-hub-out-web-02.w4a.fr [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id qi8VrbiGxVNJ; Tue,  1 May 2018 14:23:09 +0200 (CEST)
+Received: from zose-store11.web4all.fr (zose-store11.web4all.fr [10.101.13.41])
+        by zose-mta-hub-out-web-02.w4a.fr (Postfix) with ESMTP id B6CB0140EB5;
+        Tue,  1 May 2018 14:23:09 +0200 (CEST)
+Date:   Tue, 1 May 2018 14:23:51 +0200 (CEST)
+From:   Matthieu Moy <git@matthieu-moy.fr>
+To:     Eckhard =?utf-8?B?TWFhw58=?= <eckhard.s.maass@googlemail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        Ben Peart <peartben@gmail.com>
+Message-ID: <1652522802.213664.1525177431907.JavaMail.zimbra@matthieu-moy.fr>
+In-Reply-To: <20180501114316.GB13919@esm>
+References: <c466854f-6087-e7f1-264a-1d2df9fd9b5a@gmail.com> <50c60ddfeb9a44a99f556be2c2ca9a34@BPMBX2013-01.univ-lyon1.fr> <907020160.11403426.1525172946040.JavaMail.zimbra@inria.fr> <20180501114316.GB13919@esm>
+Subject: Re: [PATCH v2] wt-status: use rename settings from
+ init_diff_ui_defaults
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Zimbra 8.8.7_GA_1964 (ZimbraWebClient - FF59 (Linux)/8.8.7_GA_1964)
+Thread-Topic: wt-status: use rename settings from init_diff_ui_defaults
+Thread-Index: gJxySd6vaUYd+o1z6Ez3ffAVpT+wZA==
+X-Originating-IP: 185.49.20.46
+X-SpamExperts-Domain: zose1.web4all.fr
+X-SpamExperts-Username: 185.49.20.46
+Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.46@zose1.web4all.fr
+X-SpamExperts-Outgoing-Class: ham
+X-SpamExperts-Outgoing-Evidence: Combined (0.02)
+X-Recommended-Action: accept
+X-Filter-ID: EX5BVjFpneJeBchSMxfU5s+9ULsWKKt+g80YTcatJT1602E9L7XzfQH6nu9C/Fh9KJzpNe6xgvOx
+ q3u0UDjvOzQLEduLAcXHFw1qMW9qI5OLwc9Rs3iMd1Fy6obyR7hB3lPAJ7ZRYBAhWkUMwqPQ4C5U
+ FTSjhxM5VZEuJ30S0veVzQvQj2NFf7qJ00FQaK4gsA8T52BBmstI99Y8QuVwFo8TB9sEhBjsbz+e
+ Hypr4QiDfRodGV4O5ypDdTPeO/pizcnIJmV/EOrG3jtoSDbBLR5e973vehgRRMJdd1x498THN+L2
+ AkAg9lYWFjNTtussUcju/Fd8gZoUQm8ysuFdGGspIwJnzwlNIWgZJ9f/oRJHkij6DyweSIB+n4RU
+ gKg/RWZUep6PQVBxKCMU+7NVjOu2beRqilmjgQ6jA3UwYgk7jX2p2c6GOdi3L3Pzry/TbsR08q9t
+ EAjFm2byf+NztHhQoI5t5B02WWv4WCWgmfFdiUlW7tV45H9nCrhB5S7UYEmwoKT+ioWBAn01erfy
+ VvaWheN1jZdogD7YCfXh97xQef6Ceaw0tyEeHKZjklTreHL+whhAdKuW1jHRpItetlrVADbHjxX8
+ D9l6cvPWmRoveeW/gESan/V7zrfiyk/e91/RgZ/6G91oVgy7k8J6YqsQ8ZpR+9NAPyZNieblXJtY
+ FnLudr1cDBCmdxHRG9lwrSOIPpeqwlm2NDGXIJ2x7CjcVfdC5/6qMuamcDy5IyJTwu54QWpbuhaT
+ bvr6RLxLefGz0qNnFBlHl+43ri77+ppu+2j1BysaEC8mRErDfRYMfqOjtzuwjS9w63NmUUSmA+el
+ 3Hvzdw3iJnNgWQhMAwbhzhATAlYMjEocb2uQBsQEJu+PlY4mNgk9NuQxzGuTJJZulemVsWP9wHgr
+ uDPX6WqNdgVDBhQX2Bc+ZhzMVyyGrnC47XFeJjjXu8tCsQQMz1LPkHI9Mrzo2c6qohujbISQOLYT
+ Ua8ciIUdSU7SuMn1H/aAwarQpYDOYx/6JtUOyhxOMJmVV71jAHZ/eGxt7VMIrZxemgRtia2NRzRj
+ IG2JXY9Z0Y7MfWkEfoGtOPo+JEWhXy1Le9Tb2y3Fkij411HsplMkkb/VBGfADMfD+gnvk4xC2BnA
+ 2wbIfWgFjXcSjNZLbr04EXXkIgRE5hm4oYma6jdGLSzAN9vqTxqZ3CU=
+X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Eckhard Maaß" <eckhard.s.maass@googlemail.com>:
 
-On Tue, May 01 2018, Johannes Schindelin wrote:
+> On Tue, May 01, 2018 at 01:09:06PM +0200, Matthieu Moy wrote:
+> > That init_diff_ui_defaults() should indeed have been before
+> > git_config() from the beginning. My bad, I'm the one who
+> > misplaced it apparently :-(.
 
-> Hi Ævar,
->
-> On Mon, 30 Apr 2018, Ævar Arnfjörð Bjarmason wrote:
->
->> I think at this point git-subtree is widely used enough to move out of
->> contrib/, maybe others disagree, but patches are always better for
->> discussion that patch-less ML posts.
->
-> Sure, it is used widely enough.
->
-> However, it flies in the face of so many GSoC efforts to introduce yet
-> another one of those poorly portable Unix shell scripts, as central part
-> of Git's code base.
->
-> The script itself does look quite straight-forward to port to a builtin,
-> so why not give it a try?
+> Should I have done this "bug fix" in a separate commit or mention it in
+> the commit message?
 
-That's a valid point. I think it makes sense to leave that aside for
-now, maybe the consensus is that subtree is fine in every way except
-we'd like to have a policy not to introduce new shellscript built-ins.
+I'm fine with it as-is. Before your "fix", the config was ignored
+because overwritten by init_diff_ui_defaults() after reading the
+config, so effect of your change is indeed what the commit message
+describes.
 
-Let's first just assume it's in C already and look at it in terms of its
-functionality, to figure out if it's worth even getting to that point.
+I'm often thinking aloud while reviewing, don't take my comments as
+objections.
 
-> If you are completely opposed to porting it to C, I will be completely
-> opposed to moving it out of contrib/.
+> > This "break_opt = 0" deserves a mention in the commit message IMHO.
+> > I'm not 100% sure it's a good change actually.
 
-This series shows that we should split the concern about whether
-something lives in contrib/ from whether it's built/installed by
-default.
+> Hm, what problems do you see here?
 
-No matter if we decide that subtree should be a blessed default command
-it makes sense to move it out of contrib, purely because as can be seen
-from this series it'll replace >100 lines of hacks with 1 line in our
-main Makefile.
+I don't see any "problem", I *think* your change is good, but I can't
+fully convince myself that it is without further explanation.
 
-We can then just e.g. add a flag to guard for it,
-e.g. CONTRIB_SUBTREE=YesPlease.
+Unlike the other two, this option has no corresponding configuration
+variable, so the "let the config" argument doesn't apply. For "git
+status", there's actually not even a command-line option. So, this
+assignment removed, there's no way in the user-interface to re-enable
+the previous behavior. *If* there was a good reason to get "break_opt
+= 0", then your patch is breaking it.
 
-But that's just an internal implementation detail of how we manage code
-sitting in git.git.
+Unfortunately, the commit introducing it doesn't help much: f714fb8
+(Enable rewrite as well as rename detection in git-status,
+2007-12-02) is just a one-liner message with a one-liner patch.
+
+But actually, I never used -B/--break-rewrites, and writting this
+message I tried to get a case where -B would make a difference and I'm
+not even able to find one. So, as someone who never understood the
+real point of -B, I'm not sure I'm qualified to juge on what's the
+best default ;-).
+
+-- 
+Matthieu Moy
+https://matthieu-moy.fr/
