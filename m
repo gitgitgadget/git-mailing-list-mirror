@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B38E215F4
-	for <e@80x24.org>; Tue,  1 May 2018 12:07:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E174215F4
+	for <e@80x24.org>; Tue,  1 May 2018 12:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755108AbeEAMHi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 08:07:38 -0400
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:35239 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755066AbeEAMHg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 08:07:36 -0400
-Received: by mail-wr0-f180.google.com with SMTP id i14-v6so7478118wre.2
-        for <git@vger.kernel.org>; Tue, 01 May 2018 05:07:35 -0700 (PDT)
+        id S1755124AbeEAMHj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 08:07:39 -0400
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:44656 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754952AbeEAMHd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 08:07:33 -0400
+Received: by mail-wr0-f177.google.com with SMTP id o15-v6so10636823wro.11
+        for <git@vger.kernel.org>; Tue, 01 May 2018 05:07:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=Djydfvk5FDCOvGeRdNDrgDjTnSAkKVuGv7UN6PYrFI8=;
-        b=FCKTbO5mAOwCAoZyGh3DSoMRxgTjXpcD46ifkVUghBLJizQvegZ2egWigEQa9MFciE
-         DT1SO7ugg95hN4iuSdhNkEUZQDALQsvi72kkDv2g7uuF5a8WJPG9DYNORdLebJZOG8+9
-         IuzYL7aRjhppIK3oDyRQMc6DNwG7XZbYeJ2snO93cxgbfsmrXIz7xOX3uHTyOzMIKF63
-         5oy/3jqcgXttkJLPiW1orrWw1JhvAvFA1QPwy8RUhxOXTg2peofnyMhukdkiJ4McDlPR
-         BrNqhLc/jJzGGBKywJhklPUNJnAD0bMcw2kCA+NQ+58k+PSqXJVyyN7iidGj/jBej0m6
-         0mPg==
+        bh=/XJtxM2MD9J26yZfXsAwwhRUKb5FtpMHZQquERgh6tQ=;
+        b=qRKU/L2NdZjSnT/97VsyYBewIq6XCDsTnUSlskGI3p9YXus3RnvOBtKAOX4ls7sVn7
+         3zL7W/5ea502cor5P9CFV4sEOqZk+zWlDzU71qlwBISWE8issqrWXoPDaSIHORBuStr2
+         cE+xjjUUh1Av5GYZtwoBwQNVT6zkEvPobED7ZKYfJPQ/CvkjZD3mjhy4S/A5wceEvFLJ
+         OdKO1GyO1aqo/NPgtCmhORmweU1Li1EJr7m3JSxVsXWLTdD5HmVrCK/EZO2TH1IqAlMH
+         6r4WWgACl6xeBsWGR5/eadCOqJRkg9KKxm7Rwx1h07vIVWsop5jQEmd9fRmQCLorCgJU
+         v4ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=Djydfvk5FDCOvGeRdNDrgDjTnSAkKVuGv7UN6PYrFI8=;
-        b=twV0G9419wHZuy7AMiazucFw7mHykNtXm1AmjuVZu6yATOFY5fd5UTh8rjI3v+8NQF
-         o/5PTSzxOpz6u9mfpISIN23WSsg1BM33fuOz2f+PASErw6mGKIW3+TvUPw4VniuESdpS
-         Q/esK6jyTSuyw6nppKYlVFk73Fd5/8h21qsAE6btxnesPqEN+JQp/WvMmKIIgbDAu5Ww
-         tKEYdDJecKgwxFnt37hpwh4UvxuA1cov1aiY3Zlg2J2L578yu0bm9ADRpGfYwbKYox9q
-         KoX2eu2Y7YwK9VuQ+vbXQgZliZQIuul8uQqALEc66KqqrXwNFGXeyBc2pHUWGCqIv/xj
-         ErWA==
-X-Gm-Message-State: ALQs6tAY+LzoOjHOMr9Vk4Yxz/TgUyfUMN3afDb3MMLYnOcwSgR9kcKk
-        QzdieNY7zDCkKCEHAZKx4hNEdNDb
-X-Google-Smtp-Source: AB8JxZpKE8TjK/UI9LBq929JmgO0obLHAx1xxGEJyFvG9qjSQ9C6CDVvreTkKVLazDmQz3yboFYksg==
-X-Received: by 2002:adf:ac81:: with SMTP id o1-v6mr11094969wrc.220.1525176454012;
-        Tue, 01 May 2018 05:07:34 -0700 (PDT)
+        bh=/XJtxM2MD9J26yZfXsAwwhRUKb5FtpMHZQquERgh6tQ=;
+        b=eity0Lkc8otrIX6rCCDJvfgtYNaULmep+5J3Gn4A+OOds3tJs0WVGoPrgYvm8zPei8
+         SnLJGTMLX6smhuXVvybU0aTKrJosVxUi5MZ6bGxZq0qRhs+FtMCe/hadOlDAgpvy6sC6
+         HL2B7/L/BqwIQcRV/3WgHg9TJnoKwqhD+EArPu/5xjxeUfH0AkK7AoirERr91RNKPcFK
+         Dm7URF7b9C6KkTqYEXSnUR2L8tm3iOOgcKLphbeSZ1M8VYDTraNheEr58Q13FYRV6LAH
+         5S83FVfExxX9tWkhJjgYdASlzrsnDjxm6snVfVr5E3sMWSWUvVyGCp+4IydZzNPoG9Bh
+         vO4w==
+X-Gm-Message-State: ALQs6tCMGH2iySmvRm3Qnd9q1v/c7dBThayttAIEEW5RVkZqb+4av3bW
+        1woOSUGqrNMaKzK/puYvjIgSIOZL
+X-Google-Smtp-Source: AB8JxZo6nHQBAocwwZU8RdfNYlCfZPxbVhummQmWUtxxbfnA9OuDuee8j24G8uGbQWPkpoeiv3ZnIg==
+X-Received: by 2002:adf:8e44:: with SMTP id n62-v6mr11545815wrb.159.1525176452105;
+        Tue, 01 May 2018 05:07:32 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id m134sm11738710wmg.4.2018.05.01.05.07.32
+        by smtp.gmail.com with ESMTPSA id m134sm11738710wmg.4.2018.05.01.05.07.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 May 2018 05:07:33 -0700 (PDT)
+        Tue, 01 May 2018 05:07:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 07/12] get_short_oid: learn to disambiguate by ^{tag}
-Date:   Tue,  1 May 2018 12:06:46 +0000
-Message-Id: <20180501120651.15886-8-avarab@gmail.com>
+Subject: [PATCH v2 06/12] get_short_oid: sort ambiguous objects by type, then SHA-1
+Date:   Tue,  1 May 2018 12:06:45 +0000
+Message-Id: <20180501120651.15886-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180501120651.15886-1-avarab@gmail.com>
 References: <20180501120651.15886-1-avarab@gmail.com>
@@ -76,12 +76,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add support for ^{tag} to the disambiguation logic. Before this ^{tag}
-would simply be ignored:
+Change the output emitted when an ambiguous object is encountered so
+that we show tags first, then commits, followed by trees, and finally
+blobs. Within each type we show objects in hashcmp() order. Before
+this change the objects were only ordered by hashcmp().
 
-    $ git rev-parse e8f2^{tag}
-    error: short SHA1 e8f2 is ambiguous
+The reason for doing this is that the output looks better as a result,
+e.g. the v2.17.0 tag before this change on "git show e8f2" would
+display:
+
     hint: The candidates are:
+    hint:   e8f2093055 tree
+    hint:   e8f21caf94 commit 2013-06-24 - bash prompt: print unique detached HEAD abbreviated object name
+    hint:   e8f21d02f7 blob
+    hint:   e8f21d577c blob
+    hint:   e8f25a3a50 tree
+    hint:   e8f26250fa commit 2017-02-03 - Merge pull request #996 from jeffhostetler/jeffhostetler/register_rename_src
+    hint:   e8f2650052 tag v2.17.0
+    hint:   e8f2867228 blob
+    hint:   e8f28d537c tree
+    hint:   e8f2a35526 blob
+    hint:   e8f2bc0c06 commit 2015-05-10 - Documentation: note behavior for multiple remote.url entries
+    hint:   e8f2cf6ec0 tree
+
+Now we'll instead show:
+
     hint:   e8f2650052 tag v2.17.0
     hint:   e8f21caf94 commit 2013-06-24 - bash prompt: print unique detached HEAD abbreviated object name
     hint:   e8f26250fa commit 2017-02-03 - Merge pull request #996 from jeffhostetler/jeffhostetler/register_rename_src
@@ -94,99 +113,205 @@ would simply be ignored:
     hint:   e8f21d577c blob
     hint:   e8f2867228 blob
     hint:   e8f2a35526 blob
-    e8f2^{tag}
 
-Now the logic added in ed1ca6025f ("peel_onion: disambiguate to favor
-tree-ish when we know we want a tree-ish", 2013-03-31) has been
-extended to support it.
+Since we show the commit data in the output that's nicely aligned once
+we sort by object type. The decision to show tags before commits is
+pretty arbitrary. I don't want to order by object_type since there
+tags come last after blobs, which doesn't make sense if we want to
+show the most important things first.
 
-    $ git rev-parse e8f2^{tag}
-    e8f2650052f3ff646023725e388ea1112b020e79
+I could display them after commits, but it's much less likely that
+we'll display a tag, so if there is one it makes sense to show it
+prominently at the top.
+
+A note on the implementation: I started out with something much
+simpler which just replaced oid_array_sort() in sha1-array.c with a
+custom sort function before calling oid_array_for_each_unique(). But
+then dumbly noticed that it doesn't work because the output function
+was tangled up with the code added in fad6b9e590 ("for_each_abbrev:
+drop duplicate objects", 2016-09-26) to ensure we don't display
+duplicate objects.
+
+That's why we're doing two passes here, first we need to sort the list
+and de-duplicate the objects, then sort them in our custom order, and
+finally output them without re-sorting them. I suppose we could also
+make oid_array_for_each_unique() maintain a hashmap of emitted
+objects, but that would increase its memory profile and wouldn't be
+worth the complexity for this one-off use-case,
+oid_array_for_each_unique() is used in many other places.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- cache.h                             |  5 +++--
- sha1-name.c                         | 13 ++++++++++++-
- t/t1512-rev-parse-disambiguation.sh |  5 ++++-
- 3 files changed, 19 insertions(+), 4 deletions(-)
+ Documentation/technical/api-oid-array.txt | 17 +++++++----
+ sha1-array.c                              | 17 +++++++++++
+ sha1-array.h                              |  3 ++
+ sha1-name.c                               | 37 ++++++++++++++++++++++-
+ t/t1512-rev-parse-disambiguation.sh       | 21 +++++++++++++
+ 5 files changed, 88 insertions(+), 7 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 354903c3ea..a141995cc7 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1330,8 +1330,9 @@ struct object_context {
- #define GET_OID_TREE             010
- #define GET_OID_TREEISH          020
- #define GET_OID_BLOB             040
--#define GET_OID_FOLLOW_SYMLINKS 0100
--#define GET_OID_RECORD_PATH     0200
-+#define GET_OID_TAG             0100
-+#define GET_OID_FOLLOW_SYMLINKS 0200
-+#define GET_OID_RECORD_PATH     0400
- #define GET_OID_ONLY_TO_DIE    04000
+diff --git a/Documentation/technical/api-oid-array.txt b/Documentation/technical/api-oid-array.txt
+index b0c11f868d..94b529722c 100644
+--- a/Documentation/technical/api-oid-array.txt
++++ b/Documentation/technical/api-oid-array.txt
+@@ -35,13 +35,18 @@ Functions
+ 	Free all memory associated with the array and return it to the
+ 	initial, empty state.
  
- #define GET_OID_DISAMBIGUATORS \
++`oid_array_for_each`::
++	Iterate over each element of the list, executing the callback
++	function for each one. Does not sort the list, so any custom
++	hash order is retained. If the callback returns a non-zero
++	value, the iteration ends immediately and the callback's
++	return is propagated; otherwise, 0 is returned.
++
+ `oid_array_for_each_unique`::
+-	Efficiently iterate over each unique element of the list,
+-	executing the callback function for each one. If the array is
+-	not sorted, this function has the side effect of sorting it. If
+-	the callback returns a non-zero value, the iteration ends
+-	immediately and the callback's return is propagated; otherwise,
+-	0 is returned.
++	Iterate over each unique element of the list in sort order ,
++	but otherwise behaves like `oid_array_for_each`. If the array
++	is not sorted, this function has the side effect of sorting
++	it.
+ 
+ Examples
+ --------
+diff --git a/sha1-array.c b/sha1-array.c
+index 838b3bf847..5b2793615b 100644
+--- a/sha1-array.c
++++ b/sha1-array.c
+@@ -41,6 +41,23 @@ void oid_array_clear(struct oid_array *array)
+ 	array->sorted = 0;
+ }
+ 
++
++int oid_array_for_each(struct oid_array *array,
++		       for_each_oid_fn fn,
++		       void *data)
++{
++	int i;
++
++	/* No oid_array_sort() here! See the api-oid-array.txt docs! */
++
++	for (i = 0; i < array->nr; i++) {
++		int ret = fn(array->oid + i, data);
++		if (ret)
++			return ret;
++	}
++	return 0;
++}
++
+ int oid_array_for_each_unique(struct oid_array *array,
+ 				for_each_oid_fn fn,
+ 				void *data)
+diff --git a/sha1-array.h b/sha1-array.h
+index 1e1d24b009..232bf95017 100644
+--- a/sha1-array.h
++++ b/sha1-array.h
+@@ -16,6 +16,9 @@ void oid_array_clear(struct oid_array *array);
+ 
+ typedef int (*for_each_oid_fn)(const struct object_id *oid,
+ 			       void *data);
++int oid_array_for_each(struct oid_array *array,
++		       for_each_oid_fn fn,
++		       void *data);
+ int oid_array_for_each_unique(struct oid_array *array,
+ 			      for_each_oid_fn fn,
+ 			      void *data);
 diff --git a/sha1-name.c b/sha1-name.c
-index 46d8b1afa6..68d5f65362 100644
+index 9d7bbd3e96..46d8b1afa6 100644
 --- a/sha1-name.c
 +++ b/sha1-name.c
-@@ -221,6 +221,12 @@ static int finish_object_disambiguation(struct disambiguate_state *ds,
+@@ -378,6 +378,34 @@ static int collect_ambiguous(const struct object_id *oid, void *data)
  	return 0;
  }
  
-+static int disambiguate_tag_only(const struct object_id *oid, void *cb_data_unused)
++static int sort_ambiguous(const void *a, const void *b)
 +{
-+	int kind = oid_object_info(oid, NULL);
-+	return kind == OBJ_TAG;
++	int a_type = oid_object_info(a, NULL);
++	int b_type = oid_object_info(b, NULL);
++	int a_type_sort;
++	int b_type_sort;
++
++	/*
++	 * Sorts by hash within the same object type, just as
++	 * oid_array_for_each_unique() would do.
++	 */
++	if (a_type == b_type)
++		return oidcmp(a, b);
++
++	/*
++	 * Between object types show tags, then commits, and finally
++	 * trees and blobs.
++	 *
++	 * The object_type enum is commit, tree, blob, tag, but we
++	 * want tag, commit, tree blob. Cleverly (perhaps too
++	 * cleverly) do that with modulus, since the enum assigns 1 to
++	 * commit, so tag becomes 0.
++	 */
++	a_type_sort = a_type % 4;
++	b_type_sort = b_type % 4;
++	return a_type_sort > b_type_sort ? 1 : -1;
 +}
 +
- static int disambiguate_commit_only(const struct object_id *oid, void *cb_data_unused)
+ static int get_short_oid(const char *name, int len, struct object_id *oid,
+ 			  unsigned flags)
  {
- 	int kind = oid_object_info(oid, NULL);
-@@ -288,7 +294,8 @@ int set_disambiguate_hint_config(const char *var, const char *value)
- 		{ "committish", disambiguate_committish_only },
- 		{ "tree", disambiguate_tree_only },
- 		{ "treeish", disambiguate_treeish_only },
--		{ "blob", disambiguate_blob_only }
-+		{ "blob", disambiguate_blob_only },
-+		{ "tag", disambiguate_tag_only }
- 	};
- 	int i;
+@@ -409,6 +437,8 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
+ 	status = finish_object_disambiguation(&ds, oid);
  
-@@ -429,6 +436,8 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
- 		ds.fn = disambiguate_treeish_only;
- 	else if (flags & GET_OID_BLOB)
- 		ds.fn = disambiguate_blob_only;
-+	else if (flags & GET_OID_TAG)
-+		ds.fn = disambiguate_tag_only;
- 	else
- 		ds.fn = default_disambiguate_hint;
+ 	if (!quietly && (status == SHORT_NAME_AMBIGUOUS)) {
++		struct oid_array collect = OID_ARRAY_INIT;
++
+ 		error(_("short SHA1 %s is ambiguous"), ds.hex_pfx);
  
-@@ -958,6 +967,8 @@ static int peel_onion(const char *name, int len, struct object_id *oid,
- 	lookup_flags &= ~GET_OID_DISAMBIGUATORS;
- 	if (expected_type == OBJ_COMMIT)
- 		lookup_flags |= GET_OID_COMMITTISH;
-+	else if (expected_type == OBJ_TAG)
-+		lookup_flags |= GET_OID_TAG;
- 	else if (expected_type == OBJ_TREE)
- 		lookup_flags |= GET_OID_TREEISH;
+ 		/*
+@@ -421,7 +451,12 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
+ 			ds.fn = NULL;
  
+ 		advise(_("The candidates are:"));
+-		for_each_abbrev(ds.hex_pfx, show_ambiguous_object, &ds);
++		for_each_abbrev(ds.hex_pfx, collect_ambiguous, &collect);
++		QSORT(collect.oid, collect.nr, sort_ambiguous);
++
++		if (oid_array_for_each(&collect, show_ambiguous_object, &ds))
++			BUG("show_ambiguous_object shouldn't return non-zero");
++		oid_array_clear(&collect);
+ 	}
+ 
+ 	return status;
 diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index 2701462041..74e7d9c178 100755
+index 711704ba5a..2701462041 100755
 --- a/t/t1512-rev-parse-disambiguation.sh
 +++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -334,7 +334,10 @@ test_expect_success C_LOCALE_OUTPUT 'ambiguity hints respect type' '
- 	test_must_fail git rev-parse 000000000^{commit} 2>stderr &&
- 	grep ^hint: stderr >hints &&
- 	# 5 commits, 1 tag (which is a commitish), plus intro line
--	test_line_count = 7 hints
-+	test_line_count = 7 hints &&
-+	git rev-parse 000000000^{tag} >stdout &&
-+	test_line_count = 1 stdout &&
-+	grep -q ^0000000000f8f stdout
+@@ -361,4 +361,25 @@ test_expect_success 'core.disambiguate does not override context' '
+ 		git -c core.disambiguate=committish rev-parse $sha1^{tree}
  '
  
- test_expect_success C_LOCALE_OUTPUT 'failed type-selector still shows hint' '
++test_expect_success C_LOCALE_OUTPUT 'ambiguous commits are printed by type first, then hash order' '
++	test_must_fail git rev-parse 0000 2>stderr &&
++	grep ^hint: stderr >hints &&
++	grep 0000 hints >objects &&
++	cat >expected <<-\EOF &&
++	tag
++	commit
++	tree
++	blob
++	EOF
++	awk "{print \$3}" <objects >objects.types &&
++	uniq <objects.types >objects.types.uniq &&
++	test_cmp expected objects.types.uniq &&
++	for type in tag commit tree blob
++	do
++		grep $type objects >$type.objects &&
++		sort $type.objects >$type.objects.sorted &&
++		test_cmp $type.objects.sorted $type.objects
++	done
++'
++
+ test_done
 -- 
 2.17.0.290.gded63e768a
 
