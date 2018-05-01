@@ -2,177 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AA97215F4
-	for <e@80x24.org>; Tue,  1 May 2018 18:41:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFC68215F4
+	for <e@80x24.org>; Tue,  1 May 2018 18:41:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932104AbeEASlP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 14:41:15 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:37285 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756495AbeEASlA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 14:41:00 -0400
-Received: by mail-wm0-f52.google.com with SMTP id l1so20379592wmb.2
-        for <git@vger.kernel.org>; Tue, 01 May 2018 11:40:59 -0700 (PDT)
+        id S932126AbeEASle (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 14:41:34 -0400
+Received: from mail-yb0-f177.google.com ([209.85.213.177]:39481 "EHLO
+        mail-yb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932093AbeEASlO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 14:41:14 -0400
+Received: by mail-yb0-f177.google.com with SMTP id q74-v6so4440349ybg.6
+        for <git@vger.kernel.org>; Tue, 01 May 2018 11:41:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=kmD7MXxBCcVHXpa3214z3qUcEA1ETIFMyrBx0VmYYdc=;
-        b=LCR5JI1NNbCniAGCqNZR7eb4JMowQ0s0Kayd3U74bDnNItfscTf3c/zxHZ+2xGCgL6
-         InSiGSlutuyls9kVFRoq9t5DcAFetvQ4cQW3rHQx2fvfw/Ger9KpftPzosqpqXjVpVLd
-         vxIWvVWoxJPfUeNMweGqQ3CCwjGjEbpSDl3nVothgSDQMJBBaXjsTuuRjFMLnDteNtR4
-         V5YvX/b0qi0lMGsMyY4HQZl6/M+rpNljIdmPkHhYPrrh366geO2dzHlhZYkJ3JDoRBV8
-         qDHX9Aaxowaaptlvt/xbV85UC6vd+0BzdaXgNvEhyOKd1qNzjLPo1Ah9LZIMT9dSsFpK
-         InwA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=xtxFIsgL1LIf+ugwFLng67Qy+n9dNT62wiDIY6BVgZM=;
+        b=kppYuO0Ucbs7LPnqW+Wt/6p6Oca2Dfv7oUSkuwiE++14YIAd3ks+ZA26WylHt7JNEQ
+         cYrdb9mFZiPY/X+qC61u7KIXOqNJtsyhHLn9srEu3sB9WBhp587YLNL4PCfhDb79vKUj
+         1QxwxVdt0VEB4tyrX5dDarAN4MPAFHrEml9d3pYIV4VEIk5l6o8F2nwjx8Gsn/5bkmMB
+         +O5KYKs+JOCEK8qpjlFCSxAxHM39qcjzV8njpwu6iGj1YlUYpHH9/3B0zS5B1QuzhtQV
+         6eLBBotJlh0NW/w/6tDKLWgjU9DjQh4CXAW57Y/YowxIRjf3KPC1dKD+MG9Ppwrb4DlK
+         dvOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=kmD7MXxBCcVHXpa3214z3qUcEA1ETIFMyrBx0VmYYdc=;
-        b=VStviD+qI0s8HMpcNgfLzOX1AI5IDsCyH7pxaXTks7CCXdzCwJQSy9fNh7sfUYiEcy
-         5Q3f8gTRnz4YZxDEwS8io8T81YxgnIje/vp4R3KIJr0xY4tgXjoZMJvgbSw/G7qhRu+j
-         JTmEhfBBaq7S12i2i0icHupC0dI0PHQaJwraE2lpqU6JPBYWKkRj8uDXKHr7YMS/U1nl
-         OnR6dRbjd1QUWVAkqAUbW16d2m99YmpWxMo9iCbByI2Ljel9tnO0hR0BJnpg8v2VUrb6
-         XJ1F+oGhTbra1lpAR0Frc727gF9n8DPOtkJwvei4NU6lslyiqZoRXveQY+QTnKdCqh5u
-         l1OQ==
-X-Gm-Message-State: ALQs6tCpHkCxQEd95EGbIClHBxTXfqdXGJPIdMVSxRBVQFDPwXp2Jodp
-        XDZ/1hJ4hU1rOXd4YZ7ina00/7VV
-X-Google-Smtp-Source: AB8JxZrP5CJUaAmwa/ekAB1magOHs8Hd7UDBHgDRzXIGS/PB3hs35JvvXH06paYdeRxnGAwbH8cmSg==
-X-Received: by 10.28.145.196 with SMTP id t187mr9785138wmd.19.1525200058722;
-        Tue, 01 May 2018 11:40:58 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b57-v6sm15366920wra.9.2018.05.01.11.40.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 May 2018 11:40:57 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 12/12] get_short_oid: document & warn if we ignore the type selector
-Date:   Tue,  1 May 2018 18:40:16 +0000
-Message-Id: <20180501184016.15061-13-avarab@gmail.com>
-X-Mailer: git-send-email 2.17.0.290.gded63e768a
-In-Reply-To: <20180501184016.15061-1-avarab@gmail.com>
-References: <20180501184016.15061-1-avarab@gmail.com>
-In-Reply-To: <20180501120651.15886-1-avarab@gmail.com>
-References: <20180501120651.15886-1-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=xtxFIsgL1LIf+ugwFLng67Qy+n9dNT62wiDIY6BVgZM=;
+        b=Dbal+DHk8gfcWKVB7bi8UWLvT8E/irkkubsvqbxgrWly0dr8Esl7HFTz0lXUARG2P2
+         A7vUOshYxBeBBRMSf6YKq9/A6R9SLmw4TBu1/rTrUaqYmO+m2KNS6iE7Ue+p/D1xTaL2
+         owkFE/8hfpEnn69aPA31hYC7S8TfT9YAmmKcqxb/8yzEq4kzh/IHA+YlTJ52FQe96lEK
+         hNBJyzeBPVCX0AKPVh2jCnQSm/keTkYRAZ6hMMjv6buyI0RGQsMtDl2GwAU4+G0hKBV9
+         yaLDnBnP7E0WLZk1ZkzhVTsNw4rSh5AKxGNhZfKMgyL2JF/PkZUT3k15V7AISZBwxTi1
+         O/CA==
+X-Gm-Message-State: ALQs6tBDSJsb5YMOIY8Y5qEroZYu8QqH0Cz9JqJhcL56w+SdTiIX8lAS
+        hOCPSPM1kDePem8TT6rmGUcGuTv/KjyksnW5Evptww==
+X-Google-Smtp-Source: AB8JxZramlmXXxbnCAHTvveExWyoyDpU+tvCVx6BL7ayRj/3TQ1y/HqMDm7iDpsERcrhPclpe3BPjS/8WEPoi6I+8L0=
+X-Received: by 2002:a25:69cf:: with SMTP id e198-v6mr10732797ybc.247.1525200073373;
+ Tue, 01 May 2018 11:41:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Tue, 1 May 2018 11:41:12 -0700 (PDT)
+In-Reply-To: <20180501180908.17443-2-kcghost@gmail.com>
+References: <CAEp-SHV4hP=v_=AJExRS3hqT-x9rXEONofWD=sVQZC79uewATA@mail.gmail.com>
+ <20180501180908.17443-1-kcghost@gmail.com> <20180501180908.17443-2-kcghost@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 1 May 2018 11:41:12 -0700
+Message-ID: <CAGZ79kbmVMgLWg8nW9Jnwie0vbfov7PaujMPeVr1oq5o24hcDw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] submodule: Add --progress option to add command
+To:     Casey Fitzpatrick <kcghost@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The SHA1 prefix 06fa currently matches no blobs in git.git. When
-disambiguating short SHA1s we've been quietly ignoring the user's type
-selector as a fallback mechanism, this was intentionally added in
-1ffa26c461 ("get_short_sha1: list ambiguous objects on error",
-2016-09-26).
+On Tue, May 1, 2018 at 11:09 AM, Casey Fitzpatrick <kcghost@gmail.com> wrote:
+> --progress was missing from add command, was only in update.
+> Add --progress where it makes sense (both clone helper commands).
+> Add missing documentation entry.
+> Add test.
 
-I think that behavior makes sense, it's not very useful to just show
-nothing because a preference has been expressed via core.disambiguate,
-but it's bad that we're quietly doing this. The user might thing that
-we just didn't understand what e.g 06fa^{blob} meant.
+Maybe:
+  The '--progress' was introduced in 72c5f88311d (clone: pass --progress
+  decision to recursive submodules, 2016-09-22) to fix the progress reporting
+  of the clone command. Also add the progress option to the 'submodule add'
+  command. The update command already support the progress flag, but it
+  is not documented.
 
-Now we'll instead print a warning if no objects of the requested type
-were found:
+> @@ -117,6 +117,9 @@ cmd_add()
+>                 -q|--quiet)
+>                         GIT_QUIET=1
+>                         ;;
+> +               --progress)
+> +                       progress="--progress"
+> +                       ;;
 
-    $ git rev-parse 06fa^{blob}
-    error: short SHA1 06fa is ambiguous
-    hint: The candidates are:
-    [... no blobs listed ...]
-    warning: Your hint (via core.disambiguate or peel syntax) was ignored, we fell
-    back to showing all object types since no object of the requested type
-    matched the provide short SHA1 06fa
+The code looks good, though unlike the other commands progress is a
+boolean decision.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/config.txt            |  4 ++++
- sha1-name.c                         | 11 ++++++++++-
- t/t1512-rev-parse-disambiguation.sh |  5 ++++-
- 3 files changed, 18 insertions(+), 2 deletions(-)
+If we want to support --no-progress as well, we can do so by adding
+    --no-progress)
+        progress="--no-progress"
+        ;;
+and then the submodule helper ought to cope with it.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 14a3d57e77..e14f2c0492 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -922,6 +922,10 @@ Is set to `none` by default to show all object types. Can also be
- tags), `tree` (peel: `$sha1^{tree}`), `treeish` (everything except
- blobs, peel syntax: `$sha1:`), `blob` (peel: `$sha1^{blob}`) or `tag`
- (peel: `$sha1^{tag}`). The peel syntax will override any config value.
-++
-+If no objects of the selected type exist the disambiguation will fall
-+back to `none` and print a warning indicating no objects of the
-+selected type could be found for that prefix.
- 
- add.ignoreErrors::
- add.ignore-errors (deprecated)::
-diff --git a/sha1-name.c b/sha1-name.c
-index 1d2a74a29c..9789764a38 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -447,6 +447,7 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
- 
- 	if (!quietly && (status == SHORT_NAME_AMBIGUOUS)) {
- 		struct oid_array collect = OID_ARRAY_INIT;
-+		int ignored_hint = 0;
- 
- 		error(_("short SHA1 %s is ambiguous"), ds.hex_pfx);
- 
-@@ -456,8 +457,10 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
- 		 * that case, we still want to show them, so disable the hint
- 		 * function entirely.
- 		 */
--		if (!ds.ambiguous)
-+		if (!ds.ambiguous) {
- 			ds.fn = NULL;
-+			ignored_hint = 1;
-+		}
- 
- 		advise(_("The candidates are:"));
- 		for_each_abbrev(ds.hex_pfx, collect_ambiguous, &collect);
-@@ -466,6 +469,12 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
- 		if (oid_array_for_each(&collect, show_ambiguous_object, &ds))
- 			BUG("show_ambiguous_object shouldn't return non-zero");
- 		oid_array_clear(&collect);
-+
-+		if (ignored_hint) {
-+			warning(_("Your hint (via core.disambiguate or peel syntax) was ignored, we fell\n"
-+				  "back to showing all object types since no object of the requested type\n"
-+				  "matched the provide short SHA1 %s"), ds.hex_pfx);
-+		}
- 	}
- 
- 	return status;
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index b17973a266..940f323ee9 100755
---- a/t/t1512-rev-parse-disambiguation.sh
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -359,7 +359,10 @@ test_expect_success C_LOCALE_OUTPUT 'failed type-selector still shows hint' '
- 	echo 872 | git hash-object --stdin -w &&
- 	test_must_fail git rev-parse ee3d^{commit} 2>stderr &&
- 	grep ^hint: stderr >hints &&
--	test_line_count = 3 hints
-+	test_line_count = 3 hints &&
-+	grep ^warning stderr >warnings &&
-+	grep -q "Your hint.*was ignored" warnings &&
-+	grep -q "the provide short SHA1 ee3d" stderr
- '
- 
- test_expect_success 'core.disambiguate config can prefer types' '
--- 
-2.17.0.290.gded63e768a
 
+> +test_expect_success 'setup test repo' '
+> +       mkdir parent &&
+> +       (cd parent && git init &&
+> +        echo one >file && git add file &&
+> +        git commit -m one)
+> +'
+
+Coding style:
+    (
+        parens open on its own line, and its contents
+        are indented by a tab.
+
+Instead of coding this yourself, you could write the
+test as:
+
+    test_create_repo parent &&
+    test_create_commit -C parent one
+
+> +test_expect_success 'clone -o' '
+
+What are we testing here? I do not quite see the connection to
+testing --progress here.
+
+> +       git clone -o foo parent clone-o &&
+> +       (cd clone-o && git rev-parse --verify refs/remotes/foo/master)
+
+
+> +test_expect_success 'redirected submodule add does not show progress' '
+> +       (
+> +               cd addtest &&
+
+
+
+> +               git submodule add "file://$submodurl/parent" submod-redirected \
+> +                       >out 2>err &&
+> +               ! grep % err &&
+
+We're grepping for percent to see that there is no progress. At first I thought
+the percent sign might be a special character, had to research it to know it's
+meant literally. TiL!
+
+> +               test_i18ngrep ! "Checking connectivity" err
+
+Makes sense.
+
+> +       )
+
+We could omit the extra shell by using
+
+    git -C addtest submodule add "file://$... \
+            >../out 2>../err &&
+
+Why do we need 'out' ?
+
+> +test_expect_success 'redirected submodule add --progress does show progress' '
+> +       (
+> +               cd addtest &&
+> +               git submodule add --progress "file://$submodurl/parent" \
+> +                       submod-redirected-progress >out 2>err && \
+> +               grep % err
+> +       )
+> +'
+
+Thanks for writing these tests!
+Stefan
