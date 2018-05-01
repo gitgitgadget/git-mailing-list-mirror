@@ -7,97 +7,83 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72FD121841
-	for <e@80x24.org>; Tue,  1 May 2018 11:16:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CDF421841
+	for <e@80x24.org>; Tue,  1 May 2018 11:22:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754246AbeEALQR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 07:16:17 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:33740 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753072AbeEALQQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 07:16:16 -0400
-Received: by mail-qt0-f195.google.com with SMTP id e8-v6so9327642qth.0
-        for <git@vger.kernel.org>; Tue, 01 May 2018 04:16:15 -0700 (PDT)
+        id S1754494AbeEALWx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 07:22:53 -0400
+Received: from mail-ot0-f170.google.com ([74.125.82.170]:42065 "EHLO
+        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753851AbeEALWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 07:22:52 -0400
+Received: by mail-ot0-f170.google.com with SMTP id l13-v6so12607336otk.9
+        for <git@vger.kernel.org>; Tue, 01 May 2018 04:22:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=QrbWb3GGntyP2qMhKcnAXwC+S1cdUQ48DyFfhDA07Yk=;
-        b=klka4VPRAdg8eKei9Qg81JXju9wREBC99Wo+MoU+2bbzPRc9n++8nrZfgyMtw8kN5U
-         uvzOGzGjPio6U/aMQZuUvASOP4SfoMBbEM1McgRn9nYP6TgqiyvBaUpGB15nTjL2+ACB
-         Cm/8QVHFvPuT8nnjsmLW5GqaxBfG/ZEsXpKZiSBPoQZB91MvQIsi0vHOd8FbHGZe3UG5
-         Z7M+rmPBHoOLCvoGqFLp6BqsF5NZavbQvbu7MrTHrHbHJiCDWGoiS/1aGWNuTKZ1Mse4
-         2pwmEjxYxkx+3x8HafiRR8M8TgHYKcTq/ScC3MPg4/8ugC8WVokRQ1DSJS5KDmnBPm2u
-         EPug==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UPieGKfweWllvZBqxUoVbqj4CVusCfjfe/C/ADTVOg8=;
+        b=Xk0dyGdeyL0UMLxI2jv9+L0LefRvR7HfkoSO+k1KInQEB7JkWo5n8xThKoXNCAj/1X
+         f1CZSO7EWEctGbrGWuv/qdCHhw9ukuhD68uVncmtb8V8tlUh24tMJXEG1wo8CzO36Rte
+         7IJSXn/8XSQ7KnXsnPs/RgZatmeXn5qbs8P0S5HAMKyhw3KX8fNywkD8Z4Tau9n5xe3j
+         ZdVuPc2PAR+YiWbDPycCi1EV4mMa+blTQNl8XHVik1UCfc6ey8M+VnLnrRCPF37jYWS3
+         qWfbughkKZ2SaKc9LLHYSV5DEqAjDBxNJdppqxDL9J5ybUvKS7Vbd2df78zz/IPkR0qg
+         ACTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=QrbWb3GGntyP2qMhKcnAXwC+S1cdUQ48DyFfhDA07Yk=;
-        b=OSTPElOUIHXfJihfqSAIQEU52Is6Q4jBoF+WPjttATk0f8qc92GC0g+ozI6h4fq8Vs
-         vpjjt5pzoqD0S7SiP9Ti0NomsL54hhaKodZQxTUlKcr9kv4U6G+tRQ7ZIUfaKNz6cy3w
-         pV+QB0uVTRNsSbFs3IcgL3AzY6E10kBWtsjb8ZoMqlPMqgnzYzSy4ZFY7URKIdyPiCmf
-         iU8hPr9p7PWNN70GW+9B4uue1i+K8flTOFiIK6dY+4oJwd1pF6jCr3kFB0DJPiprXrym
-         d1OZsnBBqWuiLtaGtJqvavCpkn7Q4nlVV73tkYDN694gUFOTUPps3d7iu5WW5dlcWCIn
-         BIbw==
-X-Gm-Message-State: ALQs6tCHvYRquwk9NVXhd3r9qa6/TcVQVv/qIBP8T4JyMZXmbZlMOdHF
-        4u99SqjYuQwTCsbAWh1dWLk=
-X-Google-Smtp-Source: AB8JxZrw5VhaHlgFePuuu8zhZJbMYwKWcM+WPyJU1P1ImWxStZyOuJ+Es0i0gbl63ZrQgIDMEh5MDg==
-X-Received: by 2002:ac8:2c49:: with SMTP id e9-v6mr5472733qta.24.1525173375424;
-        Tue, 01 May 2018 04:16:15 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id v57-v6sm8254476qtj.47.2018.05.01.04.16.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 May 2018 04:16:14 -0700 (PDT)
-Subject: Re: [PATCH 0/9] get_short_oid UI improvements
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-References: <20180430220734.30133-1-avarab@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <49980177-b389-1ef2-e579-cd7f2f4b91f0@gmail.com>
-Date:   Tue, 1 May 2018 07:16:13 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UPieGKfweWllvZBqxUoVbqj4CVusCfjfe/C/ADTVOg8=;
+        b=jKjNW9VZd3W0x0rnuRThIIKZxglcD7wrF6frBgGgLK0KkUcsSfMyDe0J0HLBuUbtYb
+         qHuKC1NOWcAYHicMbAjrcqOiLBq8nUZKzAs+KUt4Q1DbQM0mxL1j6JnbOOKZC8ro8jLT
+         OscDJBcnLyvtxqzSovtpwk1iPTo8CPBv4UhGRZs7V7bXMzMuE955KPROsn6vlWENtrnF
+         AHDbIL3XLh0wDvl7ewKjwlHN2qLVHVUPbHNljSVxksVkJSvcBzrKx8lupb9M57o5OIb+
+         DlM897+8MG8ySBXylcK61YdFAsoiihrswvw+M0weyrhmNzJivE1TDzdol9IK2PGOus6K
+         PGRg==
+X-Gm-Message-State: ALQs6tBJiFqzJnxt1Yb5sfO8sy/SPPaOqb85NGewL/Z9hp8/AnIInBBe
+        Q1kOfzQ+Xotn9uKM9YfW9gvj98zIJqXC4dSIBLE=
+X-Google-Smtp-Source: AB8JxZooXi3EUfk86bgE2idUGoJf2XNhjPKodxZmMGungZZUMxlnfmYpNRmFBpJ6WkLlzo6tOOaa9JiT6iPcI8uIhWk=
+X-Received: by 2002:a9d:c61:: with SMTP id 88-v6mr1678225otr.173.1525173771856;
+ Tue, 01 May 2018 04:22:51 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180430220734.30133-1-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Received: by 10.74.198.152 with HTTP; Tue, 1 May 2018 04:22:21 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1805011257400.79@tvgsbejvaqbjf.bet>
+References: <cover.1525040253.git.johannes.schindelin@gmx.de>
+ <9bbfd73a8e03a888a5e9e8800d853ece518a8bf5.1525040253.git.johannes.schindelin@gmx.de>
+ <7087f0b9-1362-f8ca-315d-96d27b91b26b@kdbg.org> <nycvar.QRO.7.76.6.1805011257400.79@tvgsbejvaqbjf.bet>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 1 May 2018 13:22:21 +0200
+Message-ID: <CACsJy8BugBtVBZpL+1S5ix+UQzxPaM_L1bBio1fgED5ZQ2XfNA@mail.gmail.com>
+Subject: Re: [PATCH 2/6] t1406: prepare for the refs code to fail with BUG()
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/30/2018 6:07 PM, Ævar Arnfjörð Bjarmason wrote:
-> I started out just wanting to do 04/09 so I'd get prettier output, but
-> then noticed that ^{tag}, ^{commit}< ^{blob} and ^{tree} didn't behave
-> as expected with the disambiguation output, and that core.disambiguate
-> had never been documented.
+On Tue, May 1, 2018 at 1:04 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> If SIGABRT occurs as a result of BUG(), and we know that this happens for
+>> certain cases, it means we have an unfixed bug.
 >
-> Ævar Arnfjörð Bjarmason (9):
->    sha1-name.c: remove stray newline
->    sha1-array.h: align function arguments
->    sha1-name.c: move around the collect_ambiguous() function
->    get_short_oid: sort ambiguous objects by type, then SHA-1
->    get_short_oid: learn to disambiguate by ^{tag}
->    get_short_oid: learn to disambiguate by ^{blob}
->    get_short_oid / peel_onion: ^{tree} should mean tree, not treeish
->    get_short_oid / peel_onion: ^{tree} should mean commit, not commitish
->    config doc: document core.disambiguate
->
->   Documentation/config.txt            | 14 ++++++
->   cache.h                             |  5 ++-
->   sha1-array.c                        | 15 +++++++
->   sha1-array.h                        |  7 ++-
->   sha1-name.c                         | 69 ++++++++++++++++++++++++-----
->   t/t1512-rev-parse-disambiguation.sh | 32 ++++++++++---
->   6 files changed, 120 insertions(+), 22 deletions(-)
->
+> Not in this case: The code in question is in
+> https://github.com/git/git/blob/v2.17.0/t/helper/test-ref-store.c#L190-L201
+> and it is called in a way that fails to have the required flags for the
+> operation.
 
-This is a good series. Please take a look at my suggestion in Patch 4/9, 
-but feel free to keep this series as written.
+To elaborate, in this particular case, developers are not supposed to
+call calling create_reflog() on a submodule ref store because the
+store's implementation does not support it (yet). So it's definitely
+BUG() to catch devs from doing so. But due to the multiple layer
+abstractions, we also need to verify that ref code will bug out in
+this case :P
 
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+> This would normally indicate a bug, but in this case, that is
+> exactly what the regression test tries to trigger: we *want* such a bug to
+> cause a failure.
+-- 
+Duy
