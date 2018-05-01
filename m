@@ -2,199 +2,278 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85487215F4
-	for <e@80x24.org>; Tue,  1 May 2018 12:46:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F8BF215F4
+	for <e@80x24.org>; Tue,  1 May 2018 12:47:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755321AbeEAMq0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 08:46:26 -0400
-Received: from mail-by2nam01on0098.outbound.protection.outlook.com ([104.47.34.98]:27747
-        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+        id S1755307AbeEAMrH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 08:47:07 -0400
+Received: from mail-by2nam03on0102.outbound.protection.outlook.com ([104.47.42.102]:50394
+        "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1755267AbeEAMqZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 08:46:25 -0400
+        id S1755252AbeEAMrG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 08:47:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=VhX114ba8ab/qtah1elcMSP1tltPgvTI2IDdm6IlW9o=;
- b=kcJk5BN0o7o4mMwwE1DPhQ7X1mA2EJjd3Qlo7icUswomLYNgH3Ahvu0NZNY45pqfkpB5M2cB+l5u+l1HKP4BiniJZKqo8EtyOoEYRHlGsfu0ovVJrMOwg7ihOEPBG1xJwaQebh9xdaLA1Add+ZYuQHSyZ6nJ86GXjTgBKSCG+Hw=
-Received: from DM5PR2101MB1016.namprd21.prod.outlook.com (52.132.133.38) by
- DM5PR2101MB0918.namprd21.prod.outlook.com (52.132.132.163) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.755.4; Tue, 1 May 2018 12:46:22 +0000
-Received: from DM5PR2101MB1016.namprd21.prod.outlook.com
- ([fe80::5d76:2e71:c400:8b83]) by DM5PR2101MB1016.namprd21.prod.outlook.com
- ([fe80::5d76:2e71:c400:8b83%4]) with mapi id 15.20.0755.002; Tue, 1 May 2018
- 12:46:22 +0000
-From:   Ben Peart <Ben.Peart@microsoft.com>
+ bh=CJ32A/qp8DR7ZwEuy47McfPUUmvpRa6aSz7AV+nUekA=;
+ b=lxMliq0qrw8ixYemL1dcqTT9SOE0Pr6aeY6e4J40EOUssHsXi8fU75I3GcfxPPt7Zhync12EiPgvi4vwFu3oUERzK1Hx58IF/oTsOr1SQyPpQNHa/6mlFsXDGlqmVmA3XbG0OizP6o4nd2LPB+5TOtjuBVKNzIDWye8fqVwKYyQ=
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
+ BL0PR2101MB0977.namprd21.prod.outlook.com (52.132.20.158) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.755.1; Tue, 1 May 2018 12:47:03 +0000
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::714b:5398:58e0:b4d8]) by BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::714b:5398:58e0:b4d8%2]) with mapi id 15.20.0755.007; Tue, 1 May 2018
+ 12:47:03 +0000
+From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "gitster@pobox.com" <gitster@pobox.com>,
-        "j6t@kdbg.org" <j6t@kdbg.org>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "sunshine@sunshineco.com" <sunshine@sunshineco.com>,
-        "sbeller@google.com" <sbeller@google.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: [PATCH v2] test-drop-caches: simplify delay loading of
- NtSetSystemInformation
-Thread-Topic: [PATCH v2] test-drop-caches: simplify delay loading of
- NtSetSystemInformation
-Thread-Index: AQHT4UpoWdoxw7a2O0ammLxn933irA==
-Date:   Tue, 1 May 2018 12:46:22 +0000
-Message-ID: <20180501124603.21896-1-benpeart@microsoft.com>
-References: <20180430142555.23260-1-benpeart@microsoft.com>
-In-Reply-To: <20180430142555.23260-1-benpeart@microsoft.com>
+        "stolee@gmail.com" <stolee@gmail.com>,
+        "peff@peff.net" <peff@peff.net>,
+        "jnareb@gmail.com" <jnareb@gmail.com>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH v5 00/11] Compute and consume generation numbers
+Thread-Topic: [PATCH v5 00/11] Compute and consume generation numbers
+Thread-Index: AQHT4UqAGwcTYited0G1WVlBs+WHEA==
+Date:   Tue, 1 May 2018 12:47:03 +0000
+Message-ID: <20180501124652.155781-1-dstolee@microsoft.com>
+References: <20180425143735.240183-1-dstolee@microsoft.com>
+In-Reply-To: <20180425143735.240183-1-dstolee@microsoft.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [70.33.148.227]
-x-mailer: git-send-email 2.17.0.windows.1
-x-clientproxiedby: BN3PR03CA0063.namprd03.prod.outlook.com
- (2a01:111:e400:7a4d::23) To DM5PR2101MB1016.namprd21.prod.outlook.com
- (2603:10b6:4:a8::38)
+x-clientproxiedby: BN4PR12CA0005.namprd12.prod.outlook.com
+ (2603:10b6:403:2::15) To BL0PR2101MB1011.namprd21.prod.outlook.com
+ (2603:10b6:207:37::10)
 x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;DM5PR2101MB0918;7:KcpKQM54YUFa4DbJxP2XdKr5W4+XcNsbDmZ8pk1dAygjVWqmuIBn92NCk4wN31KB90d0K8ABhZqSNUtEz/+mErJ6vRSnOvzv8XZZOUV/f2/zWFqtAs1uLgCum33WjA1Db8sAOrmu9cgb3t5DzcN5elG3ufwwkCl3ZPGCYaiTQ1EjYFwuJo6mrsMF5aPyszVPxYsLYMNABBPK7GU1/7TJ4qkf3C6GFJt9xY9ukVV5Uv8LJX5astWiw5VzPMQgu93B;20:fC0y9j4qViY52vv+uolcXb1dcw78s1gPafmCbS5p1Siay7IXb9ZSA8WHRobet8aw4AalumKVKwNYd5eYljO8nDyhwYFjFTXYtFG3sVRD4Cc+bWOI4//BcoGh+E0QxUHLschNScOJj6/HVqcZyz/GpA3xPM4dkJvoBaY0kF2wcY4=
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0977;7:MkKKMxV9XgFIBuiQbA6rhjocajMC1xjjAAUPBP7ZCya7s97Ml56L8133xg8wyMuTD2X6Br63yGRyBUdMcNgked925eBVkSpEqtG8GA00ls59oyQU0GPb/x8O4zXj8vGvR/oGS8FvmUh3n0mfvaxubik/7Xphc8/ekxLJIt8/m2Wo/8W1q896vohYY8sXPAp8oTA+6CXMqrqmTRSqAG2gbxFGiZqQOnRpnXNkSxeXNB+xoZsXWnggPdrZF5caqZfR;20:ntWoZUF290qSHciQuj4MG2ML1dEJkmITc57lrPKp7U9XRiU4HibqRXs/6ANTGxRU9P6zZR5wgVf7dVMQB5LImv39TLpdGfHqf015l6KFbCpSWpIKe/5vWpqyVG2mNsCuYZQmcE/c/YEg1pk1bZj8ZD4bCVrUpHcKsQZlBDnZSoQ=
 x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:DM5PR2101MB0918;
-x-ms-traffictypediagnostic: DM5PR2101MB0918:
-x-microsoft-antispam-prvs: <DM5PR2101MB09181E31B2172813BADF6091F4810@DM5PR2101MB0918.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(166708455590820);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(10201501046)(3231254)(2018427008)(944501410)(52105095)(3002001)(6055026)(6041310)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123562045)(20161123560045)(6072148)(201708071742011);SRVR:DM5PR2101MB0918;BCL:0;PCL:0;RULEID:;SRVR:DM5PR2101MB0918;
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB0977;
+x-ms-traffictypediagnostic: BL0PR2101MB0977:
+x-microsoft-antispam-prvs: <BL0PR2101MB09774E6CA7A15958939D4771A1810@BL0PR2101MB0977.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(10201501046)(93006095)(93001095)(3231254)(2018427008)(944501410)(52105095)(3002001)(6055026)(6041310)(20161123560045)(20161123562045)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(6072148)(201708071742011);SRVR:BL0PR2101MB0977;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0977;
 x-forefront-prvs: 06592CCE58
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6029001)(376002)(396003)(366004)(39860400002)(39380400002)(346002)(377424004)(189003)(199004)(52116002)(26005)(97736004)(316002)(25786009)(3660700001)(476003)(6506007)(386003)(1076002)(105586002)(3280700002)(2616005)(5660300001)(106356001)(10290500003)(446003)(2900100001)(186003)(6346003)(2906002)(478600001)(36756003)(6486002)(72206003)(68736007)(99286004)(2351001)(54906003)(76176011)(6512007)(22452003)(11346002)(102836004)(50226002)(575784001)(4326008)(86612001)(966005)(6306002)(486006)(6116002)(8656006)(5250100002)(7736002)(53936002)(6436002)(305945005)(6916009)(8676002)(39060400002)(14454004)(1730700003)(81156014)(81166006)(3846002)(5640700003)(8936002)(66066001)(107886003)(2501003)(10090500001)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR2101MB0918;H:DM5PR2101MB1016.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(376002)(39860400002)(39380400002)(346002)(396003)(189003)(199004)(102836004)(53936002)(6506007)(386003)(59450400001)(99286004)(2900100001)(54906003)(5640700003)(3280700002)(3660700001)(2906002)(6512007)(6486002)(25786009)(39060400002)(4326008)(107886003)(86612001)(6436002)(6346003)(8656006)(36756003)(52116002)(76176011)(105586002)(106356001)(5660300001)(6916009)(5250100002)(2501003)(97736004)(7736002)(68736007)(8676002)(81166006)(81156014)(10290500003)(8936002)(478600001)(86362001)(486006)(10090500001)(6116002)(476003)(2351001)(1730700003)(186003)(1076002)(305945005)(446003)(22452003)(46003)(2616005)(316002)(11346002)(14454004)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0977;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
 authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Ben.Peart@microsoft.com; 
-x-microsoft-antispam-message-info: e3y+737LqPAlFlJU3AiURwl+O5GchnA9Rpu5/YPOngPrwTF6LknwSWs8hVCBT3diEYWDyt3kK3cNuAIOTetOWR56mB8Q8JxRzl5J68aJbMMUJnr0lrHhemMyklphCDvP70R4ndWUEVPP2Nct12Wb+/aMws4rDUtDDezgnbGeO1PaKIi/pqB766+pN0cn8qmt
+ smtp.mailfrom=dstolee@microsoft.com; 
+x-microsoft-antispam-message-info: V/VMcWYuR0YTXyTIUn/YPzc+MKlMBpzTRus2ClufBRJHBm/HcVib0d7+LIeeTJgWm2mDt7mEGjliFk4qlMY7ASAzheVAlDFwDM6bvGVvyGaHEUlqR2gbfloX6D1otAHJAn3VxSCjE55P+vXAW1M6I1UmOVHQfatiD+qbba3WNKrCxaaM9+1rfNhbS1IS3Q/6
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: a2b2caab-ec3e-40f0-8150-08d5af618b0b
+X-MS-Office365-Filtering-Correlation-Id: ee96f4c5-9b21-476b-c4ed-08d5af61a330
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a2b2caab-ec3e-40f0-8150-08d5af618b0b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 May 2018 12:46:22.8212
+X-MS-Exchange-CrossTenant-Network-Message-Id: ee96f4c5-9b21-476b-c4ed-08d5af61a330
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 May 2018 12:47:03.6270
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR2101MB0918
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0977
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Take advantage of the recent addition of support for lazy loading functions=
-[1]
-on Windows to simplify the loading of NtSetSystemInformation.
+Most of the changes from v4 are cosmetic, but there is one new commit:
 
-[1] db2f7c48cb (Win32: simplify loading of DLL functions, 2017-09-25)
+	commit: use generation number in remove_redundant()
 
-Signed-off-by: Ben Peart <benpeart@microsoft.com>
----
+Other changes are non-functional, but do clarify things.
 
-Notes:
-    Base Ref: master
-    Web-Diff: https://github.com/benpeart/git/commit/3c9974548a
-    Checkout: git fetch https://github.com/benpeart/git test-drop-caches-v2=
- && git checkout 3c9974548a
-   =20
-    ### Interdiff (v1..v2):
-   =20
-    diff --git a/t/helper/test-drop-caches.c b/t/helper/test-drop-caches.c
-    index dd41da1a2c..d6bcfddf13 100644
-    --- a/t/helper/test-drop-caches.c
-    +++ b/t/helper/test-drop-caches.c
-    @@ -1,8 +1,8 @@
-     #include "test-tool.h"
-     #include "git-compat-util.h"
-    -#include "lazyload.h"
-   =20
-     #if defined(GIT_WINDOWS_NATIVE)
-    +#include "lazyload.h"
-   =20
-     static int cmd_sync(void)
-     {
-    @@ -83,6 +83,7 @@ static int cmd_dropcaches(void)
-     {
-     	HANDLE hProcess =3D GetCurrentProcess();
-     	HANDLE hToken;
-    +	DECLARE_PROC_ADDR(ntdll.dll, DWORD, NtSetSystemInformation, INT, PVOI=
-D, ULONG);
-     	SYSTEM_MEMORY_LIST_COMMAND command;
-     	int status;
-   =20
-    @@ -94,7 +95,6 @@ static int cmd_dropcaches(void)
-   =20
-     	CloseHandle(hToken);
-   =20
-    -	DECLARE_PROC_ADDR(ntdll.dll, DWORD, NtSetSystemInformation, INT, PVOI=
-D, ULONG);
-     	if (!INIT_PROC_ADDR(NtSetSystemInformation))
-     		return error("Could not find NtSetSystemInformation() function");
-   =20
-    ### Patches
+Inter-diff from v4:
 
- t/helper/test-drop-caches.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+diff --git a/Documentation/technical/commit-graph.txt b/Documentation/techn=
+ical/commit-graph.txt
+index d9f2713efa..e1a883eb46 100644
+--- a/Documentation/technical/commit-graph.txt
++++ b/Documentation/technical/commit-graph.txt
+@@ -125,9 +125,10 @@ Future Work
+   walks aware of generation numbers to gain the performance benefits they
+   enable. This will mostly be accomplished by swapping a commit-date-order=
+ed
+   priority queue with one ordered by generation number. The following
+-  operation is an important candidate:
++  operations are important candidates:
 
-diff --git a/t/helper/test-drop-caches.c b/t/helper/test-drop-caches.c
-index 838760898b..d6bcfddf13 100644
---- a/t/helper/test-drop-caches.c
-+++ b/t/helper/test-drop-caches.c
-@@ -2,6 +2,7 @@
- #include "git-compat-util.h"
-=20
- #if defined(GIT_WINDOWS_NATIVE)
-+#include "lazyload.h"
-=20
- static int cmd_sync(void)
+     - 'log --topo-order'
++    - 'tag --merged'
+
+ - Currently, parse_commit_gently() requires filling in the root tree
+   object for a commit. This passes through lookup_tree() and consequently
+diff --git a/commit-graph.c b/commit-graph.c
+index aebd242def..a8c337dd77 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -248,6 +248,7 @@ static struct commit_list **insert_parent_or_die(struct=
+ commit_graph *g,
+ static void fill_commit_graph_info(struct commit *item, struct commit_grap=
+h *g, uint32_t pos)
  {
-@@ -82,8 +83,7 @@ static int cmd_dropcaches(void)
- {
- 	HANDLE hProcess =3D GetCurrentProcess();
- 	HANDLE hToken;
--	HMODULE ntdll;
--	DWORD(WINAPI *NtSetSystemInformation)(INT, PVOID, ULONG);
-+	DECLARE_PROC_ADDR(ntdll.dll, DWORD, NtSetSystemInformation, INT, PVOID, U=
-LONG);
- 	SYSTEM_MEMORY_LIST_COMMAND command;
- 	int status;
-=20
-@@ -95,14 +95,8 @@ static int cmd_dropcaches(void)
-=20
- 	CloseHandle(hToken);
-=20
--	ntdll =3D LoadLibrary("ntdll.dll");
--	if (!ntdll)
--		return error("Can't load ntdll.dll, wrong Windows version?");
--
--	NtSetSystemInformation =3D
--		(DWORD(WINAPI *)(INT, PVOID, ULONG))GetProcAddress(ntdll, "NtSetSystemIn=
-formation");
--	if (!NtSetSystemInformation)
--		return error("Can't get function addresses, wrong Windows version?");
-+	if (!INIT_PROC_ADDR(NtSetSystemInformation))
-+		return error("Could not find NtSetSystemInformation() function");
-=20
- 	command =3D MemoryPurgeStandbyList;
- 	status =3D NtSetSystemInformation(
-@@ -115,8 +109,6 @@ static int cmd_dropcaches(void)
- 	else if (status !=3D STATUS_SUCCESS)
- 		error("Unable to execute the memory list command %d", status);
-=20
--	FreeLibrary(ntdll);
--
- 	return status;
+        const unsigned char *commit_data =3D g->chunk_commit_data + GRAPH_D=
+ATA_WIDTH * pos;
++       item->graph_pos =3D pos;
+        item->generation =3D get_be32(commit_data + g->hash_len + 8) >> 2;
  }
-=20
 
-base-commit: 1f1cddd558b54bb0ce19c8ace353fd07b758510d
+@@ -454,8 +455,7 @@ static void write_graph_chunk_data(struct hashfile *f, =
+int hash_len,
+                else
+                        packedDate[0] =3D 0;
+
+-               if ((*list)->generation !=3D GENERATION_NUMBER_INFINITY)
+-                       packedDate[0] |=3D htonl((*list)->generation << 2);
++               packedDate[0] |=3D htonl((*list)->generation << 2);
+
+                packedDate[1] =3D htonl((*list)->date);
+                hashwrite(f, packedDate, 8);
+@@ -589,18 +589,17 @@ static void close_reachable(struct packed_oid_list *o=
+ids)
+        }
+ }
+
+-static void compute_generation_numbers(struct commit** commits,
+-                                      int nr_commits)
++static void compute_generation_numbers(struct packed_commit_list* commits)
+ {
+        int i;
+        struct commit_list *list =3D NULL;
+
+-       for (i =3D 0; i < nr_commits; i++) {
+-               if (commits[i]->generation !=3D GENERATION_NUMBER_INFINITY =
+&&
+-                   commits[i]->generation !=3D GENERATION_NUMBER_ZERO)
++       for (i =3D 0; i < commits->nr; i++) {
++               if (commits->list[i]->generation !=3D GENERATION_NUMBER_INF=
+INITY &&
++                   commits->list[i]->generation !=3D GENERATION_NUMBER_ZER=
+O)
+                        continue;
+
+-               commit_list_insert(commits[i], &list);
++               commit_list_insert(commits->list[i], &list);
+                while (list) {
+                        struct commit *current =3D list->item;
+                        struct commit_list *parent;
+@@ -621,10 +620,10 @@ static void compute_generation_numbers(struct commit*=
+* commits,
+                        if (all_parents_computed) {
+                                current->generation =3D max_generation + 1;
+                                pop_commit(&list);
+-                       }
+
+-                       if (current->generation > GENERATION_NUMBER_MAX)
+-                               current->generation =3D GENERATION_NUMBER_M=
+AX;
++                               if (current->generation > GENERATION_NUMBER=
+_MAX)
++                                       current->generation =3D GENERATION_=
+NUMBER_MAX;
++                       }
+                }
+        }
+ }
+@@ -752,7 +751,7 @@ void write_commit_graph(const char *obj_dir,
+        if (commits.nr >=3D GRAPH_PARENT_MISSING)
+                die(_("too many commits to write graph"));
+
+-       compute_generation_numbers(commits.list, commits.nr);
++       compute_generation_numbers(&commits);
+
+        graph_name =3D get_commit_graph_filename(obj_dir);
+        fd =3D hold_lock_file_for_update(&lk, graph_name, 0);
+diff --git a/commit.c b/commit.c
+index e2e16ea1a7..5064db4e61 100644
+--- a/commit.c
++++ b/commit.c
+@@ -835,7 +835,9 @@ static struct commit_list *paint_down_to_common(struct =
+commit *one, int n,
+                int flags;
+
+                if (commit->generation > last_gen)
+-                       BUG("bad generation skip");
++                       BUG("bad generation skip %8x > %8x at %s",
++                           commit->generation, last_gen,
++                           oid_to_hex(&commit->object.oid));
+                last_gen =3D commit->generation;
+
+                if (commit->generation < min_generation)
+@@ -947,6 +949,7 @@ static int remove_redundant(struct commit **array, int =
+cnt)
+                parse_commit(array[i]);
+        for (i =3D 0; i < cnt; i++) {
+                struct commit_list *common;
++               uint32_t min_generation =3D GENERATION_NUMBER_INFINITY;
+
+                if (redundant[i])
+                        continue;
+@@ -955,8 +958,12 @@ static int remove_redundant(struct commit **array, int=
+ cnt)
+                                continue;
+                        filled_index[filled] =3D j;
+                        work[filled++] =3D array[j];
++
++                       if (array[j]->generation < min_generation)
++                               min_generation =3D array[j]->generation;
+                }
+-               common =3D paint_down_to_common(array[i], filled, work, 0);
++               common =3D paint_down_to_common(array[i], filled, work,
++                                             min_generation);
+                if (array[i]->object.flags & PARENT2)
+                        redundant[i] =3D 1;
+                for (j =3D 0; j < filled; j++)
+@@ -1073,7 +1080,7 @@ int in_merge_bases_many(struct commit *commit, int nr=
+_reference, struct commit *
+        for (i =3D 0; i < nr_reference; i++) {
+                if (parse_commit(reference[i]))
+                        return ret;
+-               if (min_generation > reference[i]->generation)
++               if (reference[i]->generation < min_generation)
+                        min_generation =3D reference[i]->generation;
+        }
+
+
+-- >8 --
+
+Derrick Stolee (11):
+  ref-filter: fix outdated comment on in_commit_list
+  commit: add generation number to struct commmit
+  commit-graph: compute generation numbers
+  commit: use generations in paint_down_to_common()
+  commit-graph: always load commit-graph information
+  ref-filter: use generation number for --contains
+  commit: use generation numbers for in_merge_bases()
+  commit: add short-circuit to paint_down_to_common()
+  commit: use generation number in remove_redundant()
+  merge: check config before loading commits
+  commit-graph.txt: update design document
+
+ Documentation/technical/commit-graph.txt | 30 ++++++--
+ alloc.c                                  |  1 +
+ builtin/merge.c                          |  7 +-
+ commit-graph.c                           | 91 ++++++++++++++++++++----
+ commit-graph.h                           |  8 +++
+ commit.c                                 | 61 +++++++++++++---
+ commit.h                                 |  7 +-
+ object.c                                 |  2 +-
+ ref-filter.c                             | 26 +++++--
+ sha1_file.c                              |  2 +-
+ t/t5318-commit-graph.sh                  |  9 +++
+ 11 files changed, 204 insertions(+), 40 deletions(-)
+
+
+base-commit: 7b8a21dba1bce44d64bd86427d3d92437adc4707
 --=20
-2.17.0.windows.1
+2.17.0.39.g685157f7fb
 
