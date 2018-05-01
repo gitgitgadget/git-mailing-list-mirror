@@ -2,98 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A15DB21841
-	for <e@80x24.org>; Tue,  1 May 2018 11:04:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97A2C21841
+	for <e@80x24.org>; Tue,  1 May 2018 11:09:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754765AbeEALEk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 07:04:40 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49133 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753856AbeEALEi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 07:04:38 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LjdS8-1ecCNq2Pc0-00bbf8; Tue, 01
- May 2018 13:04:14 +0200
-Date:   Tue, 1 May 2018 13:04:14 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/6] t1406: prepare for the refs code to fail with
- BUG()
-In-Reply-To: <7087f0b9-1362-f8ca-315d-96d27b91b26b@kdbg.org>
-Message-ID: <nycvar.QRO.7.76.6.1805011257400.79@tvgsbejvaqbjf.bet>
-References: <cover.1525040253.git.johannes.schindelin@gmx.de> <9bbfd73a8e03a888a5e9e8800d853ece518a8bf5.1525040253.git.johannes.schindelin@gmx.de> <7087f0b9-1362-f8ca-315d-96d27b91b26b@kdbg.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753991AbeEALJI convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 1 May 2018 07:09:08 -0400
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:42878 "EHLO
+        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753072AbeEALJH (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 07:09:07 -0400
+X-IronPort-AV: E=Sophos;i="5.49,350,1520895600"; 
+   d="scan'208";a="325237186"
+Received: from zcs-store5.inria.fr ([128.93.142.32])
+  by mail2-relais-roc.national.inria.fr with ESMTP; 01 May 2018 13:09:06 +0200
+Date:   Tue, 1 May 2018 13:09:06 +0200 (CEST)
+From:   Matthieu Moy <git@matthieu-moy.fr>
+To:     Eckhard =?iso-8859-1?Q?S=2E_Maa=DF?= 
+        <eckhard.s.maass@googlemail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        Ben Peart <peartben@gmail.com>,
+        Eckhard =?iso-8859-1?Q?S=2E_Maa=DF?= <eckhard.s.maass@gmail.com>
+Message-ID: <907020160.11403426.1525172946040.JavaMail.zimbra@inria.fr>
+In-Reply-To: <50c60ddfeb9a44a99f556be2c2ca9a34@BPMBX2013-01.univ-lyon1.fr>
+References: <c466854f-6087-e7f1-264a-1d2df9fd9b5a@gmail.com> <50c60ddfeb9a44a99f556be2c2ca9a34@BPMBX2013-01.univ-lyon1.fr>
+Subject: Re: [PATCH v2] wt-status: use rename settings from
+ init_diff_ui_defaults
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:UUqpTBjWEmqycMcNO9aJnAW7lzXt1LGxjF/Jt90u6j31lD8t97g
- rZHMc6haTKTDpQyAp5c65gem6ngU+YzRGg29o2+Pgsms3BTlGr2h6l+EGNQQRS9z1XsXvLE
- V9wO5EHpPbY+sU7tCMnSRWGHj8bfdK8zRwpYdQ2jd2YcXO9BUwR8k2+MJwoYY4wVhaO+I5y
- RuWThJweQNS2s9NravlOg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EcTtGSuiytM=:2IIsKy8jLHrMk3+YJIeNcG
- 13FR0fo/ODP6sh4+q9hK0TX6WiJanMPf9eCnmZHWBGW3akxpuFn4ZYnkDIN1th0uKc63TbN4F
- DV4YAahUghwjC/tP5hkm3TdwBdwKXRNBET6fx39f4dhv1z6BctG2abcsVEMuJrj9w83h+8bEw
- FmJuzif8wOpPgA64rBP6oMCBaqa3vHkjlMUFxGxnSSH+QXLr2C9hb06/ccBRO5aWS5YzQMtAZ
- 1PG1KkYjhsalHzi4/oR7BMZKTiiROI08RfLL+xcbPrdexyP4H2jdNc3IVFNUeGiICk1z/9P1k
- YEZxZE8qiXW+LGnCZqshvwrzwQ298asWWpN7+4i6RBklLpgqd/HvzM8qf1pxu/g3d8MGZLWsA
- n53jywWIdBg9xnmNlAWCVWopsKW7hc/N6weaq3y8JrVhlK+JRRjBtGelP5AzOVE8R7CdvX2gn
- Da8J/pURPYTvEb48w81sa1KacOG+ENkpvm2z8Kzu/ENuepMEkrjo6gEgpwcqPtk2MnCLkGd8g
- +OQm4HvJx3rGBZGyDFTe0dST6k+XRSY5bOihAHYmElbtJBadalwQgVBf/TULftPMyxoD/02aR
- d9Qnizk8kxNW7NaCmmIt0D8IGFmNCkBfra6+6Dizt5ZCRd0FBpzDZrJNKdzVQNV/ucV/YDZa6
- /csT/HKasYgLAvhd62vrnun8Y76yxIK5pA9D0NS29GbVA/s9iLUCZC+Os8e8GPwyM865VjpEt
- TfpLkXmQiFmUeLTP+0UHm+Wi1wGfgaphud/p46plcMe7pdByVVUtdSziZHXS+PynHcFXhRdoD
- uQYJejt
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
+X-Originating-IP: [77.192.142.118]
+X-Mailer: Zimbra 8.7.11_GA_1854 (ZimbraWebClient - FF59 (Linux)/8.7.11_GA_1854)
+Thread-Topic: wt-status: use rename settings from init_diff_ui_defaults
+Thread-Index: AQHT4THW6GOAw9NMfUGeiE2eIB+tESSfh/lV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+"Eckhard S. Maaﬂ" <eckhard.s.maass@googlemail.com> wrote:
 
-On Mon, 30 Apr 2018, Johannes Sixt wrote:
+> Since the very beginning, git status behaved differently for rename
+> detection than other rename aware commands like git log or git show as
+> it has the use of rename hard coded into it.
 
-> Am 30.04.2018 um 00:17 schrieb Johannes Schindelin:
-> > t1406 specifically verifies that certain code paths fail with a BUG: ...
-> > message.
-> > 
-> > In the upcoming commit, we will convert that message to be generated via
-> > BUG() instead of die("BUG: ..."), which implies SIGABRT instead of a
-> > regular exit code.
-> >
-> > [...]
-> >
-> >   test_expect_success 'create-reflog() not allowed' '
-> > -	test_must_fail $RUN create-reflog HEAD 1
-> > +	test_must_fail ok=sigabrt $RUN create-reflog HEAD 1
-> >   '
-> 
-> I can't quite follow the rationale for this change. A 'BUG' error exit must
-> never be reached, otherwise it is a bug in the program by definition. It
-> cannot be OK that SIGABRT is a valid result from Git.
+My understanding is that the succession of events went stg like:
 
-I thought so at first, too. However, what these test cases run is not Git
-itself. Instead, they run a t/helper/ command *specifically* designed to
-hit the BUG code path, probably to ensure that bugs in future code will
-actually not be silently ignored, but do exit with an error.
+1) invent the rename detection, but consider it experimental
+   hence don't activate it by default;
 
-> If SIGABRT occurs as a result of BUG(), and we know that this happens for
-> certain cases, it means we have an unfixed bug.
+2) add commands using the rename detection, and since it works
+   well, use it by default;
 
-Not in this case: The code in question is in
-https://github.com/git/git/blob/v2.17.0/t/helper/test-ref-store.c#L190-L201
-and it is called in a way that fails to have the required flags for the
-operation. This would normally indicate a bug, but in this case, that is
-exactly what the regression test tries to trigger: we *want* such a bug to
-cause a failure.
+3) activate rename detection by default for diff.
 
-I'll do my best to clarify that in the commit message.
+The next logical step is what you patch does indeed.
 
-Ciao,
-Dscho
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -161,9 +161,9 @@ static void determine_whence(struct wt_status *s)
+> static void status_init_config(struct wt_status *s, config_fn_t fn)
+> {
+> 	wt_status_prepare(s);
+> +	init_diff_ui_defaults();
+> 	git_config(fn, s);
+> 	determine_whence(s);
+> -	init_diff_ui_defaults();
+> 	s->hints = advice_status_hints; /* must come after git_config() */
+> }
+
+That init_diff_ui_defaults() should indeed have been before
+git_config() from the beginning. My bad, I'm the one who
+misplaced it apparently :-(.
+
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -625,9 +625,6 @@ static void wt_status_collect_changes_index(struct wt_status
+> *s)
+> 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+> 	rev.diffopt.format_callback = wt_status_collect_updated_cb;
+> 	rev.diffopt.format_callback_data = s;
+> -	rev.diffopt.detect_rename = DIFF_DETECT_RENAME;
+> -	rev.diffopt.rename_limit = 200;
+> -	rev.diffopt.break_opt = 0;
+
+This "break_opt = 0" deserves a mention in the commit message
+IMHO. I'm not 100% sure it's a good change actually.
+
+break_opt is normally controlled by "-B/--break-rewrites".
+I'm not sure why it was set to 0.
+
+-- 
+Matthieu Moy
+https://matthieu-moy.fr/
