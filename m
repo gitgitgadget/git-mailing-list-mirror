@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4B2C215F4
-	for <e@80x24.org>; Tue,  1 May 2018 12:07:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 010EF215F4
+	for <e@80x24.org>; Tue,  1 May 2018 12:07:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755180AbeEAMHr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 08:07:47 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:35302 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755149AbeEAMHp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 08:07:45 -0400
-Received: by mail-wm0-f50.google.com with SMTP id o78so18795623wmg.0
-        for <git@vger.kernel.org>; Tue, 01 May 2018 05:07:44 -0700 (PDT)
+        id S1755160AbeEAMHo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 08:07:44 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33590 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755145AbeEAMHm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 08:07:42 -0400
+Received: by mail-wr0-f196.google.com with SMTP id o4-v6so10643222wrm.0
+        for <git@vger.kernel.org>; Tue, 01 May 2018 05:07:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=kmD7MXxBCcVHXpa3214z3qUcEA1ETIFMyrBx0VmYYdc=;
-        b=X2nNi8fGPoLgPo25b5W1XxuHNC8NLfpBAeqMe7zaHFHWENxvexMiw1aOGsn5shhvWq
-         tqaHbKtaIjNVWY6t2DmFAdsDW7kEHK61wl6cFGVB2LAdwY5LVVJp1lVAaOiepjvTKfr/
-         z2xQ8QvvNMsoA1cUfCM1Vc31C5J/ev502oTyzbX6Y4GXpHml9PakfTzKvjpWfrmVu802
-         CMRppTaw2dfvt4c2uL6eh3lGfC2rioln3FtLAH4owruCAb1D9Vf5tVoGOzWvoDLqgpUi
-         H3nm49sgT6+TMW7S2V6yOGQilAmt9L+6DA9NjJ9dxIl8GM0EyN0TNWa6cKcrLqJTlwjr
-         cdJg==
+        bh=UQdPsTBGQbTNiDbTfJb9hKPMhB/WVrDiYWmoKicFm6w=;
+        b=CNyka1z1xts5Lvvy+M7vS7Kfyr7sgR6M3Y/tCBiMW/c8igqjz1STFbZkfd9BKrIfeJ
+         Wk8osZf4TWX6AiqysHsV0hypVz1/D5lboKWisJiAegK9VnoUoxYqhp+1NYoVMrgrl4FU
+         K7er7aY3ke2Lre3gSAvfKsWZg84rzJpATle5MorkMB5ClVFN341DPVFsSTE011QfsT0z
+         PpzHyXwKLz5UiOqsRZEESInU3F4b9+gVzehPiz/YtWReTTfLFJkekqaVlrwZ2aXB2YAR
+         6U6XCio9ybAhoQE94uMDEJR0v1g61gbJyL7TOxjncV+4uVOHGYWGNwqYgUc5uxwr0FhS
+         R6bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=kmD7MXxBCcVHXpa3214z3qUcEA1ETIFMyrBx0VmYYdc=;
-        b=q8Zga7Lmw0CH5IuLTQ1EoIjNnX4G1C1c+2H5n23NaHidhOTb3+IllO+Xt9ADGuhLR7
-         t27Q760GgcCwpkD62CA0Zxb4iCfBz2PKTMyqT96p3yH0DaRhr4cNalNGIYsZyLb8VbXd
-         mvsYMWfJmcSxImiiyS/tv87AlL8weVWxIrpVsWlmYCfmOJ+18mnbvA+G3Sf2MpCbOULt
-         GbQeSqaBZdiEkgxq4ZWuB1zSD/fqri9cFc9STRCb7YbFqbJuU9iMw9ju5cu3T8kQF1cA
-         x5VrDztHa/dlXnhvBfhEZR+QSOtr5Raem0k1Oew/Lk7M+n/gAGEpT6HFvbUKK4UbIfo+
-         8vBA==
-X-Gm-Message-State: ALQs6tB7XPFZuzcOylw7xYst1hyUyWWKkNS1fSEgZKRNaGBZpU59LH8j
-        fZdS/uUl+N1LNS9KjKKK6X8owNns
-X-Google-Smtp-Source: AB8JxZqRrmVRlGEr57kMph08FFrBbUXeHXJBo3RRINblLL9nAmjT6/c9Qcuua0lyFAC9+cJ3BBHwyA==
-X-Received: by 10.28.232.84 with SMTP id f81mr9451495wmh.134.1525176463390;
-        Tue, 01 May 2018 05:07:43 -0700 (PDT)
+        bh=UQdPsTBGQbTNiDbTfJb9hKPMhB/WVrDiYWmoKicFm6w=;
+        b=tiNZDvXUNkvA7m9dEC9wwZYOH/mhPUSo+cq40QeGNU5Yihl2vz07USCf9HbrQ8mLqC
+         Jxm9w8RF14z3CSJ/Q7bPKSjrwbozZxycl7Ge5gvIjA4bPtZwggymDhcF7fxkuyGZtYOx
+         E3C5W5mOmG35ZuuoWHO7oS2fQp5vhs77w7dMdbD64qNva/mX1qB6yqA3Up0yWro/ArUS
+         YBTbLvX1KYUxWOr1X9e03iyhXq/Z8umnthpBgedvZn+1fL62AEirkhlpyIuDBFxGLflM
+         KuJcmS0mTHMPWo+HexrXFOC7Gybmf77jMcT3ZgVHrGub6JjdlN3A7+iJmukdQD3I/NXA
+         Xa9Q==
+X-Gm-Message-State: ALQs6tBpcaVHQ1nVXy7/woFrbici6QDBUTCUmXX3XCojmq50s3iUH8tm
+        Y+OWwcaC8oP4h2r2UuOmjpXDQyqD
+X-Google-Smtp-Source: AB8JxZr2mKYTsTxxgLpKOrg6KasNBrHpAapXWs9gstOOhut+SzX9ePlWPHWWsU/pD7D23ri324FNbg==
+X-Received: by 2002:adf:8607:: with SMTP id 7-v6mr11323273wrv.255.1525176461172;
+        Tue, 01 May 2018 05:07:41 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id m134sm11738710wmg.4.2018.05.01.05.07.42
+        by smtp.gmail.com with ESMTPSA id m134sm11738710wmg.4.2018.05.01.05.07.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 May 2018 05:07:42 -0700 (PDT)
+        Tue, 01 May 2018 05:07:40 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 12/12] get_short_oid: document & warn if we ignore the type selector
-Date:   Tue,  1 May 2018 12:06:51 +0000
-Message-Id: <20180501120651.15886-13-avarab@gmail.com>
+Subject: [PATCH v2 11/12] config doc: document core.disambiguate
+Date:   Tue,  1 May 2018 12:06:50 +0000
+Message-Id: <20180501120651.15886-12-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180501120651.15886-1-avarab@gmail.com>
 References: <20180501120651.15886-1-avarab@gmail.com>
@@ -76,103 +76,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The SHA1 prefix 06fa currently matches no blobs in git.git. When
-disambiguating short SHA1s we've been quietly ignoring the user's type
-selector as a fallback mechanism, this was intentionally added in
-1ffa26c461 ("get_short_sha1: list ambiguous objects on error",
-2016-09-26).
-
-I think that behavior makes sense, it's not very useful to just show
-nothing because a preference has been expressed via core.disambiguate,
-but it's bad that we're quietly doing this. The user might thing that
-we just didn't understand what e.g 06fa^{blob} meant.
-
-Now we'll instead print a warning if no objects of the requested type
-were found:
-
-    $ git rev-parse 06fa^{blob}
-    error: short SHA1 06fa is ambiguous
-    hint: The candidates are:
-    [... no blobs listed ...]
-    warning: Your hint (via core.disambiguate or peel syntax) was ignored, we fell
-    back to showing all object types since no object of the requested type
-    matched the provide short SHA1 06fa
+The core.disambiguate variable was added in
+5b33cb1fd7 ("get_short_sha1: make default disambiguation
+configurable", 2016-09-27) but never documented.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config.txt            |  4 ++++
- sha1-name.c                         | 11 ++++++++++-
- t/t1512-rev-parse-disambiguation.sh |  5 ++++-
- 3 files changed, 18 insertions(+), 2 deletions(-)
+ Documentation/config.txt | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 14a3d57e77..e14f2c0492 100644
+index 2659153cb3..14a3d57e77 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -922,6 +922,10 @@ Is set to `none` by default to show all object types. Can also be
- tags), `tree` (peel: `$sha1^{tree}`), `treeish` (everything except
- blobs, peel syntax: `$sha1:`), `blob` (peel: `$sha1^{blob}`) or `tag`
- (peel: `$sha1^{tag}`). The peel syntax will override any config value.
-++
-+If no objects of the selected type exist the disambiguation will fall
-+back to `none` and print a warning indicating no objects of the
-+selected type could be found for that prefix.
+@@ -910,6 +910,19 @@ core.abbrev::
+ 	abbreviated object names to stay unique for some time.
+ 	The minimum length is 4.
  
++core.disambiguate::
++	If Git is given a SHA-1 that's ambigous it'll suggest what
++	objects you might mean. By default it'll print out all
++	potential objects with that prefix regardless of their
++	type. This setting, along with the `^{<type>}` peel syntax
++	(see linkgit:gitrevisions[7]), allows for narrowing that down.
+++
++Is set to `none` by default to show all object types. Can also be
++`commit` (peel syntax: `$sha1^{commit}`), `committish` (commits and
++tags), `tree` (peel: `$sha1^{tree}`), `treeish` (everything except
++blobs, peel syntax: `$sha1:`), `blob` (peel: `$sha1^{blob}`) or `tag`
++(peel: `$sha1^{tag}`). The peel syntax will override any config value.
++
  add.ignoreErrors::
  add.ignore-errors (deprecated)::
-diff --git a/sha1-name.c b/sha1-name.c
-index 1d2a74a29c..9789764a38 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -447,6 +447,7 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
- 
- 	if (!quietly && (status == SHORT_NAME_AMBIGUOUS)) {
- 		struct oid_array collect = OID_ARRAY_INIT;
-+		int ignored_hint = 0;
- 
- 		error(_("short SHA1 %s is ambiguous"), ds.hex_pfx);
- 
-@@ -456,8 +457,10 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
- 		 * that case, we still want to show them, so disable the hint
- 		 * function entirely.
- 		 */
--		if (!ds.ambiguous)
-+		if (!ds.ambiguous) {
- 			ds.fn = NULL;
-+			ignored_hint = 1;
-+		}
- 
- 		advise(_("The candidates are:"));
- 		for_each_abbrev(ds.hex_pfx, collect_ambiguous, &collect);
-@@ -466,6 +469,12 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
- 		if (oid_array_for_each(&collect, show_ambiguous_object, &ds))
- 			BUG("show_ambiguous_object shouldn't return non-zero");
- 		oid_array_clear(&collect);
-+
-+		if (ignored_hint) {
-+			warning(_("Your hint (via core.disambiguate or peel syntax) was ignored, we fell\n"
-+				  "back to showing all object types since no object of the requested type\n"
-+				  "matched the provide short SHA1 %s"), ds.hex_pfx);
-+		}
- 	}
- 
- 	return status;
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index b17973a266..940f323ee9 100755
---- a/t/t1512-rev-parse-disambiguation.sh
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -359,7 +359,10 @@ test_expect_success C_LOCALE_OUTPUT 'failed type-selector still shows hint' '
- 	echo 872 | git hash-object --stdin -w &&
- 	test_must_fail git rev-parse ee3d^{commit} 2>stderr &&
- 	grep ^hint: stderr >hints &&
--	test_line_count = 3 hints
-+	test_line_count = 3 hints &&
-+	grep ^warning stderr >warnings &&
-+	grep -q "Your hint.*was ignored" warnings &&
-+	grep -q "the provide short SHA1 ee3d" stderr
- '
- 
- test_expect_success 'core.disambiguate config can prefer types' '
+ 	Tells 'git add' to continue adding files when some files cannot be
 -- 
 2.17.0.290.gded63e768a
 
