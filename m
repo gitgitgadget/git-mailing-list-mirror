@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72FE5215F4
-	for <e@80x24.org>; Tue,  1 May 2018 18:41:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BD0B215F4
+	for <e@80x24.org>; Tue,  1 May 2018 18:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756490AbeEASk6 (ORCPT <rfc822;e@80x24.org>);
+        id S932073AbeEASlA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 14:41:00 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:55856 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756480AbeEASk6 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 1 May 2018 14:40:58 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35123 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756473AbeEASk4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 14:40:56 -0400
-Received: by mail-wm0-f66.google.com with SMTP id o78so20387742wmg.0
-        for <git@vger.kernel.org>; Tue, 01 May 2018 11:40:55 -0700 (PDT)
+Received: by mail-wm0-f67.google.com with SMTP id a8so18981011wmg.5
+        for <git@vger.kernel.org>; Tue, 01 May 2018 11:40:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=HDJw5U3mU595w+AEKgWBavrH3Gy5+fOebH2ApKsOrUI=;
-        b=vYlcwtR7YJz8YvCb/uLO/T4WbcKsTO956TvWNEHA7nvwmBLyiSxz+6edhJIxuLIRQ8
-         H4gX24YZvd2yWzdcIcvpa7WNnJknh1+Um7oPWKjDutqfJIj2xo3PvCcwSR2ogUCb+Z4P
-         ggTEgKABug90/ckXyHcJkpBuPEb2VKg32ySLI4Cn7tj3QxYfRyqgL2X5nBJ8Y+z2fn8v
-         rKgVbTWkKAEMqc5b1cgwIb2Xt/rqY/aDE2nRX50RjBf+SSDuNAZEJvi3RZsoCF/9gNdW
-         s8S0Yw8nMemC0AncGIknESahvt49XoqTwDX9BUpyYtqetAodZ7EsMAd1VUquakPLLjGw
-         U7+w==
+        bh=UQdPsTBGQbTNiDbTfJb9hKPMhB/WVrDiYWmoKicFm6w=;
+        b=ObPAlorl8YaEZzHU9d5qJozr3s3wqVxTFuC5kU5FomUA1Tgt4+wmH75onjYbRhoQmC
+         haChdQAg87TT/m5h1hq011Cyo6KCHV+xLD91Hsk5Ps1lWpqT6/+rjc9AzcnpaaZMiizS
+         IwYhRNxX3GaiTghQz0TvDFMDGb0523qYT8Su6E8nMhGAYiUgWGIX+4JMciKmNH65Fal1
+         fA2Pq/XhWnv88WKwkY94uS4BttB10ett0ewHeG4Kp9qgk3RY4dGvc4MshFgJ9Y2eGYHy
+         PcKCCHVQMvwt4Mb2xMA+wGZb5T9zpww4Q1VkwQURTYsEeg44aWvl7JdefiKtOVHbiJ05
+         lxrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=HDJw5U3mU595w+AEKgWBavrH3Gy5+fOebH2ApKsOrUI=;
-        b=itHVEjhJFA0hhj/pkwKZOnKvPqQeSodc4Wk4U2fWPf9MjQ3cjj48quPysGl4VFbn06
-         jQd3dc+PbWWNL99aSdKjxTa+x+XHcI86a18znToF69LkV08Bzrem34XdJ5w9Y3l3zPGA
-         kyEjZiu7qk/V98R7PK7Nr4J7coXQLSnzoHdwBAX5yU1MPuksc30DprtsiHIJIG/qPT/3
-         88sJqzvT+uQuT4YgHFK5XJYO6dI99DqmnpRqBsDb1LJkcmp3FU64Mh4ygqgaRr8o431t
-         Ns0OYvdKGqepYO5It9jFhzAtebG1oPApME7d/zLd3XRD9P5bK/mV+a54HLd/kX9qQDxp
-         jmGQ==
-X-Gm-Message-State: ALQs6tBnT7Ox7PQJ+rbp6vFMv2kyTuc81UAEZCzMmsXkYDDth5jcCoXw
-        H4V1sdAaIavkJ1EIxcYODpOS1sMU
-X-Google-Smtp-Source: AB8JxZqdK+2rLIy5+eueUbN3RfJOgmIne1dgWNegah/2VIao90tEORhln0rhDUi8Gf5u46/1tHoJfQ==
-X-Received: by 10.28.63.199 with SMTP id m190mr9461031wma.158.1525200054481;
-        Tue, 01 May 2018 11:40:54 -0700 (PDT)
+        bh=UQdPsTBGQbTNiDbTfJb9hKPMhB/WVrDiYWmoKicFm6w=;
+        b=M8OXgAIbAYkh7kKxXEjLLkiysucN0nSnuqmDr7sm+9t1BxAKz9O20eglE6V3kH2jLj
+         Sm79u64f0T2WL0P6HzAb/HkkGOdsYCk3IXzzcs48YZZnHL4LrwQ28ohQowIKaQqmoh1X
+         xkUVN1aRx0sVWwm/w+k3q2fFuOf8ykVP7GMd+9zD1uiOJpm5JOALgQiKk50VIIGnuGhI
+         YDfDof+qkLbYb2Fe43N7f2w8wIaAA1IJFoKCPyHFKW2I99+JSPcddaR0IlzX+UzYgfDQ
+         UNM1y+eWzRbqaZmpoONUnbIU2KgcI2boXMYd3Pn8YwCjhUTgNDWb0sNAddTNBx4mhM53
+         4bdw==
+X-Gm-Message-State: ALQs6tBTBI6uqMZBr3WISGousnXLhCBHrYShdmGbsplVAVsfiTleaWbk
+        KU9gRjJOPvIkSuNeSrqfgEPbLtki
+X-Google-Smtp-Source: AB8JxZqy0u5s54IcAHBwL83aWwOxG2oyuOnZr5pc09QaC4Cats9xCAdyQGK2Cv1QqkibVFm30WhDQg==
+X-Received: by 10.28.116.7 with SMTP id p7mr9567293wmc.132.1525200056578;
+        Tue, 01 May 2018 11:40:56 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b57-v6sm15366920wra.9.2018.05.01.11.40.53
+        by smtp.gmail.com with ESMTPSA id b57-v6sm15366920wra.9.2018.05.01.11.40.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 May 2018 11:40:53 -0700 (PDT)
+        Tue, 01 May 2018 11:40:55 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 10/12] get_short_oid / peel_onion: ^{commit} should be commit, not committish
-Date:   Tue,  1 May 2018 18:40:14 +0000
-Message-Id: <20180501184016.15061-11-avarab@gmail.com>
+Subject: [PATCH v3 11/12] config doc: document core.disambiguate
+Date:   Tue,  1 May 2018 18:40:15 +0000
+Message-Id: <20180501184016.15061-12-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180501184016.15061-1-avarab@gmail.com>
 References: <20180501184016.15061-1-avarab@gmail.com>
@@ -76,63 +76,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the ^{commit} syntax to mean just commits instead of committish
-for the purpose of disambiguation. Before this e8f2^{commit} would
-show the v2.17.0 tag as a disambiguation candidate, but now it'll just
-show ambiguous commits:
-
-    $ git rev-parse e8f2^{commit}
-    error: short SHA1 e8f2 is ambiguous
-    hint: The candidates are:
-    hint:   e8f21caf94 commit 2013-06-24 - bash prompt: print unique detached HEAD abbreviated object name
-    hint:   e8f26250fa commit 2017-02-03 - Merge pull request #996 from jeffhostetler/jeffhostetler/register_rename_src
-    hint:   e8f2bc0c06 commit 2015-05-10 - Documentation: note behavior for multiple remote.url entries
-    [...]
+The core.disambiguate variable was added in
+5b33cb1fd7 ("get_short_sha1: make default disambiguation
+configurable", 2016-09-27) but never documented.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- sha1-name.c                         | 2 +-
- t/t1512-rev-parse-disambiguation.sh | 7 ++++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ Documentation/config.txt | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/sha1-name.c b/sha1-name.c
-index b61c0558d9..1d2a74a29c 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -966,7 +966,7 @@ static int peel_onion(const char *name, int len, struct object_id *oid,
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2659153cb3..14a3d57e77 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -910,6 +910,19 @@ core.abbrev::
+ 	abbreviated object names to stay unique for some time.
+ 	The minimum length is 4.
  
- 	lookup_flags &= ~GET_OID_DISAMBIGUATORS;
- 	if (expected_type == OBJ_COMMIT)
--		lookup_flags |= GET_OID_COMMITTISH;
-+		lookup_flags |= GET_OID_COMMIT;
- 	else if (expected_type == OBJ_TAG)
- 		lookup_flags |= GET_OID_TAG;
- 	else if (expected_type == OBJ_TREE)
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index 81076449a2..b17973a266 100755
---- a/t/t1512-rev-parse-disambiguation.sh
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -341,8 +341,8 @@ test_expect_success C_LOCALE_OUTPUT 'ambiguity hints' '
- test_expect_success C_LOCALE_OUTPUT 'ambiguity hints respect type' '
- 	test_must_fail git rev-parse 000000000^{commit} 2>stderr &&
- 	grep ^hint: stderr >hints &&
--	# 5 commits, 1 tag (which is a commitish), plus intro line
--	test_line_count = 7 hints &&
-+	# 5 commits plus intro line
-+	test_line_count = 6 hints &&
- 	git rev-parse 000000000^{tag} >stdout &&
- 	test_line_count = 1 stdout &&
- 	grep -q ^0000000000f8f stdout &&
-@@ -366,7 +366,8 @@ test_expect_success 'core.disambiguate config can prefer types' '
- 	# ambiguous between tree and tag
- 	sha1=0000000000f &&
- 	test_must_fail git rev-parse $sha1 &&
--	git rev-parse $sha1^{commit} &&
-+	# there is no commit so ^{commit} comes up empty
-+	test_must_fail git rev-parse $sha1^{commit} &&
- 	git -c core.disambiguate=committish rev-parse $sha1
- '
- 
++core.disambiguate::
++	If Git is given a SHA-1 that's ambigous it'll suggest what
++	objects you might mean. By default it'll print out all
++	potential objects with that prefix regardless of their
++	type. This setting, along with the `^{<type>}` peel syntax
++	(see linkgit:gitrevisions[7]), allows for narrowing that down.
+++
++Is set to `none` by default to show all object types. Can also be
++`commit` (peel syntax: `$sha1^{commit}`), `committish` (commits and
++tags), `tree` (peel: `$sha1^{tree}`), `treeish` (everything except
++blobs, peel syntax: `$sha1:`), `blob` (peel: `$sha1^{blob}`) or `tag`
++(peel: `$sha1^{tag}`). The peel syntax will override any config value.
++
+ add.ignoreErrors::
+ add.ignore-errors (deprecated)::
+ 	Tells 'git add' to continue adding files when some files cannot be
 -- 
 2.17.0.290.gded63e768a
 
