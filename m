@@ -2,151 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33EE0215F4
-	for <e@80x24.org>; Tue,  1 May 2018 12:36:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85487215F4
+	for <e@80x24.org>; Tue,  1 May 2018 12:46:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755233AbeEAMgn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 08:36:43 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:53328 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755044AbeEAMgm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 May 2018 08:36:42 -0400
-Received: by mail-wm0-f51.google.com with SMTP id a67so9970451wmf.3
-        for <git@vger.kernel.org>; Tue, 01 May 2018 05:36:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=WfNdD9qhzeFS9l9ulMl6ZCqOSoMQ/DQnb6kuP8H9enA=;
-        b=BoYTF6ymD50MbswXReP9hR/H8mcaRGEebfV7ED02J9/IvB6juK8XDC/V+dJ2aJqFBA
-         nr8MqY7Fcx880AcjSqZTlwgLqNgZRbUWYsGLmcbdILKrRqNZ779It7zqfcPlMbA6lNfK
-         bRragotIstMUJ6sfrtFhNZZCIQbsAyGXEKM2+mHv3I2FlLpfPMtWV1rBBNpwsWXka9Qu
-         a9ZsWU/oaV2twBYKsp3UMIkuUYEXrs16EmXgZM7rnvxojuQwKWJ8+fHSN8NQGqOCreyB
-         eNdodYRZanwTsZy7blQRL2KQFhOQiNQeIjBAbvo2G8AAaw4VqWWxH/p0FPvDFHCLSbOs
-         yruQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=WfNdD9qhzeFS9l9ulMl6ZCqOSoMQ/DQnb6kuP8H9enA=;
-        b=DO3bkzGmNW32WaBTXWygWW3vcKgDMan45uhxVr/KsPp6oft9YIlcOhzOWfx9ZPky/Z
-         VxwSsDBUWRmb5NsftGN+8JOZ8dGcmVeRrZXv9F/JQAebezlboXVxJiGY2vsVvOQIl46Z
-         Z6h+EktGMs5frlDYbpoLsO+1McWnI8vhJPiV0QbjnnrsJ8FoxHUGqA90GeDoG/4immz3
-         pt9FsOL7iCVj2Kg7UK+PeYOXJuQWM6kij0/8t4ZSHgrotWYYVXm5uSrSoJ6OjJFWTV6x
-         KRQ/vRfuS/6wNnrURYxPkhwsyJQlIPXG5TZzYNS+w7ENJTCZop1d4gMOcyzVvYHdU5hx
-         WTsQ==
-X-Gm-Message-State: ALQs6tA5L4A1h0aLY5ukPFnkktlgtZ1h6qkJvu18K6T5xxQpyEtR878v
-        1E0uTtzAOWpla93ZtivqOwg=
-X-Google-Smtp-Source: AB8JxZrzMv7fmT/jhN36A+5UGi9c6RvSPjxFY7+4VyAs6jA8aB5TBNKxHItXpThRFS6KI33+OvtCtw==
-X-Received: by 2002:a50:8561:: with SMTP id 88-v6mr21335523edr.119.1525178201159;
-        Tue, 01 May 2018 05:36:41 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id 49-v6sm4820234edz.87.2018.05.01.05.36.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 01 May 2018 05:36:40 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 4/9] get_short_oid: sort ambiguous objects by type, then SHA-1
-References: <20180430220734.30133-1-avarab@gmail.com>
-        <20180430220734.30133-5-avarab@gmail.com>
-        <5f8b1ec1-258d-1acc-133e-a7c248b4083e@gmail.com>
-        <87a7tjzkdm.fsf@evledraar.gmail.com>
-        <348f193f-47bb-112f-6ef5-571749bb01e2@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <348f193f-47bb-112f-6ef5-571749bb01e2@gmail.com>
-Date:   Tue, 01 May 2018 14:36:39 +0200
-Message-ID: <878t93zh60.fsf@evledraar.gmail.com>
+        id S1755321AbeEAMq0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 08:46:26 -0400
+Received: from mail-by2nam01on0098.outbound.protection.outlook.com ([104.47.34.98]:27747
+        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1755267AbeEAMqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 08:46:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=VhX114ba8ab/qtah1elcMSP1tltPgvTI2IDdm6IlW9o=;
+ b=kcJk5BN0o7o4mMwwE1DPhQ7X1mA2EJjd3Qlo7icUswomLYNgH3Ahvu0NZNY45pqfkpB5M2cB+l5u+l1HKP4BiniJZKqo8EtyOoEYRHlGsfu0ovVJrMOwg7ihOEPBG1xJwaQebh9xdaLA1Add+ZYuQHSyZ6nJ86GXjTgBKSCG+Hw=
+Received: from DM5PR2101MB1016.namprd21.prod.outlook.com (52.132.133.38) by
+ DM5PR2101MB0918.namprd21.prod.outlook.com (52.132.132.163) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.755.4; Tue, 1 May 2018 12:46:22 +0000
+Received: from DM5PR2101MB1016.namprd21.prod.outlook.com
+ ([fe80::5d76:2e71:c400:8b83]) by DM5PR2101MB1016.namprd21.prod.outlook.com
+ ([fe80::5d76:2e71:c400:8b83%4]) with mapi id 15.20.0755.002; Tue, 1 May 2018
+ 12:46:22 +0000
+From:   Ben Peart <Ben.Peart@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "gitster@pobox.com" <gitster@pobox.com>,
+        "j6t@kdbg.org" <j6t@kdbg.org>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "sunshine@sunshineco.com" <sunshine@sunshineco.com>,
+        "sbeller@google.com" <sbeller@google.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Subject: [PATCH v2] test-drop-caches: simplify delay loading of
+ NtSetSystemInformation
+Thread-Topic: [PATCH v2] test-drop-caches: simplify delay loading of
+ NtSetSystemInformation
+Thread-Index: AQHT4UpoWdoxw7a2O0ammLxn933irA==
+Date:   Tue, 1 May 2018 12:46:22 +0000
+Message-ID: <20180501124603.21896-1-benpeart@microsoft.com>
+References: <20180430142555.23260-1-benpeart@microsoft.com>
+In-Reply-To: <20180430142555.23260-1-benpeart@microsoft.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [70.33.148.227]
+x-mailer: git-send-email 2.17.0.windows.1
+x-clientproxiedby: BN3PR03CA0063.namprd03.prod.outlook.com
+ (2a01:111:e400:7a4d::23) To DM5PR2101MB1016.namprd21.prod.outlook.com
+ (2603:10b6:4:a8::38)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;DM5PR2101MB0918;7:KcpKQM54YUFa4DbJxP2XdKr5W4+XcNsbDmZ8pk1dAygjVWqmuIBn92NCk4wN31KB90d0K8ABhZqSNUtEz/+mErJ6vRSnOvzv8XZZOUV/f2/zWFqtAs1uLgCum33WjA1Db8sAOrmu9cgb3t5DzcN5elG3ufwwkCl3ZPGCYaiTQ1EjYFwuJo6mrsMF5aPyszVPxYsLYMNABBPK7GU1/7TJ4qkf3C6GFJt9xY9ukVV5Uv8LJX5astWiw5VzPMQgu93B;20:fC0y9j4qViY52vv+uolcXb1dcw78s1gPafmCbS5p1Siay7IXb9ZSA8WHRobet8aw4AalumKVKwNYd5eYljO8nDyhwYFjFTXYtFG3sVRD4Cc+bWOI4//BcoGh+E0QxUHLschNScOJj6/HVqcZyz/GpA3xPM4dkJvoBaY0kF2wcY4=
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:DM5PR2101MB0918;
+x-ms-traffictypediagnostic: DM5PR2101MB0918:
+x-microsoft-antispam-prvs: <DM5PR2101MB09181E31B2172813BADF6091F4810@DM5PR2101MB0918.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(166708455590820);
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(10201501046)(3231254)(2018427008)(944501410)(52105095)(3002001)(6055026)(6041310)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123562045)(20161123560045)(6072148)(201708071742011);SRVR:DM5PR2101MB0918;BCL:0;PCL:0;RULEID:;SRVR:DM5PR2101MB0918;
+x-forefront-prvs: 06592CCE58
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6029001)(376002)(396003)(366004)(39860400002)(39380400002)(346002)(377424004)(189003)(199004)(52116002)(26005)(97736004)(316002)(25786009)(3660700001)(476003)(6506007)(386003)(1076002)(105586002)(3280700002)(2616005)(5660300001)(106356001)(10290500003)(446003)(2900100001)(186003)(6346003)(2906002)(478600001)(36756003)(6486002)(72206003)(68736007)(99286004)(2351001)(54906003)(76176011)(6512007)(22452003)(11346002)(102836004)(50226002)(575784001)(4326008)(86612001)(966005)(6306002)(486006)(6116002)(8656006)(5250100002)(7736002)(53936002)(6436002)(305945005)(6916009)(8676002)(39060400002)(14454004)(1730700003)(81156014)(81166006)(3846002)(5640700003)(8936002)(66066001)(107886003)(2501003)(10090500001)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR2101MB0918;H:DM5PR2101MB1016.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Ben.Peart@microsoft.com; 
+x-microsoft-antispam-message-info: e3y+737LqPAlFlJU3AiURwl+O5GchnA9Rpu5/YPOngPrwTF6LknwSWs8hVCBT3diEYWDyt3kK3cNuAIOTetOWR56mB8Q8JxRzl5J68aJbMMUJnr0lrHhemMyklphCDvP70R4ndWUEVPP2Nct12Wb+/aMws4rDUtDDezgnbGeO1PaKIi/pqB766+pN0cn8qmt
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-MS-Office365-Filtering-Correlation-Id: a2b2caab-ec3e-40f0-8150-08d5af618b0b
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a2b2caab-ec3e-40f0-8150-08d5af618b0b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 May 2018 12:46:22.8212
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR2101MB0918
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Take advantage of the recent addition of support for lazy loading functions=
+[1]
+on Windows to simplify the loading of NtSetSystemInformation.
 
-On Tue, May 01 2018, Derrick Stolee wrote:
+[1] db2f7c48cb (Win32: simplify loading of DLL functions, 2017-09-25)
 
-> On 5/1/2018 7:27 AM, Ævar Arnfjörð Bjarmason wrote:
->> On Tue, May 01 2018, Derrick Stolee wrote:
->>
->>> On 4/30/2018 6:07 PM, Ævar Arnfjörð Bjarmason wrote:
->>>> Since we show the commit data in the output that's nicely aligned once
->>>> we sort by object type. The decision to show tags before commits is
->>>> pretty arbitrary, but it's much less likely that we'll display a tag,
->>>> so if there is one it makes sense to show it first.
->>> Here's a non-arbitrary reason: the object types are ordered
->>> topologically (ignoring self-references):
->>>
->>> tag -> commit, tree, blob
->>> commit -> tree
->>> tree -> blob
->> Thanks. I'll add a patch with that comment to v2.
->>
->>>> @@ -421,7 +451,12 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
->>>>    			ds.fn = NULL;
->>>>      		advise(_("The candidates are:"));
->>>> -		for_each_abbrev(ds.hex_pfx, show_ambiguous_object, &ds);
->>>> +		for_each_abbrev(ds.hex_pfx, collect_ambiguous, &collect);
->>>> +		QSORT(collect.oid, collect.nr, sort_ambiguous);
->>> I was wondering how the old code sorted by SHA even when the ambiguous
->>> objects were loaded from different sources (multiple pack-files, loose
->>> objects). Turns out that for_each_abbrev() does its own sort after
->>> collecting the SHAs and then calls the given function pointer only
->>> once per distinct object. This avoids multiple instances of the same
->>> object, which may appear multiple times across pack-files.
->>>
->>> I only ask because now we are doing two sorts. I wonder if it would be
->>> more elegant to provide your sorting algorithm to for_each_abbrev()
->>> and let it call show_ambiguous_object as before.
->>>
->>> Another question is if we should use this sort generally for all calls
->>> to for_each_abbrev(). The only other case I see is in
->>> builtin/revparse.c.
->> When preparing v2 I realized how confusing this was, so I'd added this
->> to the commit message of my WIP re-roll which should explain this:
->>
->>      A note on the implementation: I started out with something much
->>      simpler which just replaced oid_array_sort() in sha1-array.c with a
->>      custom sort function before calling oid_array_for_each_unique(). But
->>      then dumbly noticed that it doesn't work because the output function
->>      was tangled up with the code added in fad6b9e590 ("for_each_abbrev:
->>      drop duplicate objects", 2016-09-26) to ensure we don't display
->>      duplicate objects.
->>           That's why we're doing two passes here, first we need to
->> sort the list
->>      and de-duplicate the objects, then sort them in our custom order, and
->>      finally output them without re-sorting them. I suppose we could also
->>      make oid_array_for_each_unique() maintain a hashmap of emitted
->>      objects, but that would increase its memory profile and wouldn't be
->>      worth the complexity for this one-off use-case,
->>      oid_array_for_each_unique() is used in many other places.
->
-> How would sorting in our custom order before de-duplicating fail the
-> de-duplication? We will still pair identical OIDs as consecutive
-> elements and oid_array_for_each_unique only cares about consecutive
-> elements having distinct OIDs, not lex-ordered OIDs.
+Signed-off-by: Ben Peart <benpeart@microsoft.com>
+---
 
-Because there's no de-duplication without the array first being sorted
-in oidcmp() order, which oid_array_for_each_unique() checks for and
-re-sorts if !array->sorted. I.e. its de-duplication is just a state
-machine where it won't call the callback if the currently processed
-element has the same SHA1 as the last one.
+Notes:
+    Base Ref: master
+    Web-Diff: https://github.com/benpeart/git/commit/3c9974548a
+    Checkout: git fetch https://github.com/benpeart/git test-drop-caches-v2=
+ && git checkout 3c9974548a
+   =20
+    ### Interdiff (v1..v2):
+   =20
+    diff --git a/t/helper/test-drop-caches.c b/t/helper/test-drop-caches.c
+    index dd41da1a2c..d6bcfddf13 100644
+    --- a/t/helper/test-drop-caches.c
+    +++ b/t/helper/test-drop-caches.c
+    @@ -1,8 +1,8 @@
+     #include "test-tool.h"
+     #include "git-compat-util.h"
+    -#include "lazyload.h"
+   =20
+     #if defined(GIT_WINDOWS_NATIVE)
+    +#include "lazyload.h"
+   =20
+     static int cmd_sync(void)
+     {
+    @@ -83,6 +83,7 @@ static int cmd_dropcaches(void)
+     {
+     	HANDLE hProcess =3D GetCurrentProcess();
+     	HANDLE hToken;
+    +	DECLARE_PROC_ADDR(ntdll.dll, DWORD, NtSetSystemInformation, INT, PVOI=
+D, ULONG);
+     	SYSTEM_MEMORY_LIST_COMMAND command;
+     	int status;
+   =20
+    @@ -94,7 +95,6 @@ static int cmd_dropcaches(void)
+   =20
+     	CloseHandle(hToken);
+   =20
+    -	DECLARE_PROC_ADDR(ntdll.dll, DWORD, NtSetSystemInformation, INT, PVOI=
+D, ULONG);
+     	if (!INIT_PROC_ADDR(NtSetSystemInformation))
+     		return error("Could not find NtSetSystemInformation() function");
+   =20
+    ### Patches
 
-> Perhaps the noise is because we rely on oid_array_sort() to mark the
-> array as sorted inside oid_array_for_each_unique(), but that could be
-> remedied by calling our QSORT() inside for_each_abbrev() and marking
-> the array as sorted before calling oid_array_for_each_unique().
+ t/helper/test-drop-caches.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-As noted above this won't work, because the function inherently relies
-on the array being sorted to be able to de-duplicate. Doing this will
-yield duplicate entries.
+diff --git a/t/helper/test-drop-caches.c b/t/helper/test-drop-caches.c
+index 838760898b..d6bcfddf13 100644
+--- a/t/helper/test-drop-caches.c
++++ b/t/helper/test-drop-caches.c
+@@ -2,6 +2,7 @@
+ #include "git-compat-util.h"
+=20
+ #if defined(GIT_WINDOWS_NATIVE)
++#include "lazyload.h"
+=20
+ static int cmd_sync(void)
+ {
+@@ -82,8 +83,7 @@ static int cmd_dropcaches(void)
+ {
+ 	HANDLE hProcess =3D GetCurrentProcess();
+ 	HANDLE hToken;
+-	HMODULE ntdll;
+-	DWORD(WINAPI *NtSetSystemInformation)(INT, PVOID, ULONG);
++	DECLARE_PROC_ADDR(ntdll.dll, DWORD, NtSetSystemInformation, INT, PVOID, U=
+LONG);
+ 	SYSTEM_MEMORY_LIST_COMMAND command;
+ 	int status;
+=20
+@@ -95,14 +95,8 @@ static int cmd_dropcaches(void)
+=20
+ 	CloseHandle(hToken);
+=20
+-	ntdll =3D LoadLibrary("ntdll.dll");
+-	if (!ntdll)
+-		return error("Can't load ntdll.dll, wrong Windows version?");
+-
+-	NtSetSystemInformation =3D
+-		(DWORD(WINAPI *)(INT, PVOID, ULONG))GetProcAddress(ntdll, "NtSetSystemIn=
+formation");
+-	if (!NtSetSystemInformation)
+-		return error("Can't get function addresses, wrong Windows version?");
++	if (!INIT_PROC_ADDR(NtSetSystemInformation))
++		return error("Could not find NtSetSystemInformation() function");
+=20
+ 	command =3D MemoryPurgeStandbyList;
+ 	status =3D NtSetSystemInformation(
+@@ -115,8 +109,6 @@ static int cmd_dropcaches(void)
+ 	else if (status !=3D STATUS_SUCCESS)
+ 		error("Unable to execute the memory list command %d", status);
+=20
+-	FreeLibrary(ntdll);
+-
+ 	return status;
+ }
+=20
+
+base-commit: 1f1cddd558b54bb0ce19c8ace353fd07b758510d
+--=20
+2.17.0.windows.1
+
