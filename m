@@ -2,173 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44DA521841
-	for <e@80x24.org>; Wed,  2 May 2018 07:41:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5E6921841
+	for <e@80x24.org>; Wed,  2 May 2018 07:57:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751469AbeEBHl4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 03:41:56 -0400
-Received: from mout.gmx.net ([212.227.15.18]:35711 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750999AbeEBHlx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 03:41:53 -0400
-Received: from MININT-HARFK7P.southpacific.corp.microsoft.com
- ([37.201.195.116]) by mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 0MLfLH-1fE3F81XdL-000qsF; Wed, 02 May 2018 09:41:41 +0200
-Date:   Wed, 2 May 2018 09:41:39 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/6] t1406: prepare for the refs code to fail with
- BUG()
-In-Reply-To: <xmqqvac6wwrw.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1805020930340.73@tvgsbejvaqbjf.bet>
-References: <cover.1525040253.git.johannes.schindelin@gmx.de> <9bbfd73a8e03a888a5e9e8800d853ece518a8bf5.1525040253.git.johannes.schindelin@gmx.de> <CACsJy8A7K6-W=H_08JcJgtziz3aQ4B1WgOcsoMSMuSvEQDW8=A@mail.gmail.com>
- <xmqqvac6wwrw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751240AbeEBH5x (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 03:57:53 -0400
+Received: from mail-wr0-f172.google.com ([209.85.128.172]:36006 "EHLO
+        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751202AbeEBH5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 03:57:52 -0400
+Received: by mail-wr0-f172.google.com with SMTP id f2-v6so1107418wrm.3
+        for <git@vger.kernel.org>; Wed, 02 May 2018 00:57:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=7wEwSG2Cw01aqLI5TszEXeJI9PUhDtJj3ISR/ZA6SC4=;
+        b=lj1c0RngAKRO650/qK+Fk0IMkrIsC6hn0fB8R9Y9Sm8FgGKaw6P3UoATwvXEzFq69f
+         L3Sz/YLkxVXD3GKto2qU+S5Hny+Rpv542cguqC/dPq5bVB+3IVL4v+lEo5TUl97ISBee
+         dB5AiFmBwJmcjEZsduZ2bUmYoJMmPUlEuYAJ7fzBP8KzpuR+iA3OxR4tl4l1EBoyy46o
+         vJy+EJdIibSPlzWXK6m/GxjRAi1fNxi6iCSxg/lWRyfp/P5Cr7pNh1ysAb/07O5zlRrD
+         o4Pg31Aj5VBKlpEK4LmjVi8pApK71SxWrF1sFQYw8zLW4QlvWaGjZzotUhjtRsmg0E2H
+         EZoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=7wEwSG2Cw01aqLI5TszEXeJI9PUhDtJj3ISR/ZA6SC4=;
+        b=qu6/acsCt1VB2IJBOuU5VdgmNWLKoQB+ih7eM7yd75Ym0ef0xdAiUb1fKIF/+8MKeb
+         5krjVDjCSSMWer/zAiKKsnd9V7gXkSylpJ2lSRkzogA2kiBtWPL2xeto6Nqgl7yFHtdk
+         ohwe4wmH2o1A5zfOrchz8CdXBd9hoN8xUgWBiV7KeL2gDlu/Ax8BbmfD6MHVFRMZmh6E
+         MZZ8E0Iqck3GZu/Fxk7voHQTCaIrWPwQBCJk85r3G6MQeKG/96w/2YjOPRUXOmbJ7Yn2
+         T8d/cV724embNqtvZq+Q4isYN0sW79GH1MFzdiOSGzRO2otfNbQzh+o+nFPT4XEPrYsV
+         pnMA==
+X-Gm-Message-State: ALQs6tDVl7MKH1tKv9cUIpbNFNubXOWnqxqvfscZaj5wDRP4R0StQ5u1
+        pvUskRHZCSZpTB5Kfbyyr/w=
+X-Google-Smtp-Source: AB8JxZrw1nRcJpLvQhaRaflmBIv73qt06uF/GqzwS/RNBBHvnhE/5czQnRk4R0LVcpUwQYYmfgk6uw==
+X-Received: by 2002:adf:a970:: with SMTP id u103-v6mr13298198wrc.71.1525247871300;
+        Wed, 02 May 2018 00:57:51 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (afs230.neoplus.adsl.tpnet.pl. [83.25.148.230])
+        by smtp.gmail.com with ESMTPSA id a13-v6sm10611916wrc.19.2018.05.02.00.57.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 02 May 2018 00:57:49 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v4 10/10] commit-graph.txt: update design document
+References: <20180417170001.138464-1-dstolee@microsoft.com>
+        <20180425143735.240183-1-dstolee@microsoft.com>
+        <20180425143735.240183-11-dstolee@microsoft.com>
+        <86d0ygfext.fsf@gmail.com>
+        <2ea2c1d0-e2ad-2051-ba98-1584fcb51a46@gmail.com>
+Date:   Wed, 02 May 2018 09:57:45 +0200
+In-Reply-To: <2ea2c1d0-e2ad-2051-ba98-1584fcb51a46@gmail.com> (Derrick
+        Stolee's message of "Tue, 1 May 2018 08:00:51 -0400")
+Message-ID: <86o9hy1ocm.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:W/YV/3eGYAqTL6jqiHyTLwD+pJXrOykm5GR2dZRdlyX6cW3C5Ar
- mwYNGbly4ibnay2Iuk2onvS8pmFQbrGFgmwiBt3uLLuoJBypVOlvCF6Td5QogkwlPMN0jct
- EHFjd3rN/6/GHFQpu1CQt5nLYQ9aB3fqgYd9E5yh1cSJ2zD2hYJmG/HaWXAESgcHK+7zkLD
- 9v4RG5af+rFRdmLdxUeCA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:c202Vfk3ED8=:8HErixxZQF41F7ywq82qZK
- /so9q05qt1dkFGyOv3DKTivK9sj2k2/ANm8c1g04Q8waJ6k2vpyg+Evn6jxC9Q7RiNHxjyOmD
- 6d8gTffm1BwYKhodb8or9KECBRcVcTl8saL9Y0EiiGN4ihwwCEXBtXF01JmiTpEtOnAYCDNPv
- 06JGlHWsskV6J1LsfmyTMWueYhhs9uqOI+FHtus8b9wcMmtlEgmdyFAMrxMe4nOa6np049Y1J
- +9QDwl+tPhIcX9pxafhmwPlmSrGRiWuYY+spnquBgvMkT48S4uUFuBbw+7S0/HOZDRrwNlRsa
- m0Mop2HvfRjnBqMWkpzMXAGXrEWNxsJh95A1tWanAYwO+I8e1l4QNCQze/9bFD3TgCOJ2/wTa
- Lbg8sfgSQbDxjlcso2KsbZh6WiBJws0gXVV5j7SinLepf1IecgtmrszVIB4s88Rrt+hNKo5gx
- 2BpRoVajLcFIcPwahNL7xXu7+Aw2Uy1jeM65x84LZ0bznxmSurOWP4NKc7e9hJnyutQyEZRaj
- cncAVcf0/29Rm/p+Oy550rppafKOzLq+6oQ1wWWZjP8QzC3wsV2atryqh2yETINuJ74tMC9Hr
- 61Rx93Y8ygT7nVt9pmxFtISDCf08/eXVLi9wSttp4Trwg+4Pd+sE0c4gdMCSKzEQo2v+2Uphl
- mekgQSf8zJ0VNWYDG4K/iI+qT1EucDykDWL/4bxITtyzpmDzfOHMbE6Oda2pvDOCLLvZnek5V
- 142ZZgnZVMNz9gadweb6LV8ofjKzcMhB5YOQL9JkuLLxhNYXbp4VVi3IPUJnd1HE31kdt8WkS
- E0lNzQZ
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Derrick Stolee <stolee@gmail.com> writes:
 
-On Wed, 2 May 2018, Junio C Hamano wrote:
+> On 4/30/2018 7:32 PM, Jakub Narebski wrote:
+>> Derrick Stolee <dstolee@microsoft.com> writes:
+[...]
+>>>   - After computing and storing generation numbers, we must make graph
+>>>     walks aware of generation numbers to gain the performance benefits =
+they
+>>>     enable. This will mostly be accomplished by swapping a commit-date-=
+ordered
+>>>     priority queue with one ordered by generation number. The following
+>>> -  operations are important candidates:
+>>> +  operation is an important candidate:
+>>>   -    - paint_down_to_common()
+>>>       - 'log --topo-order'
+>>
+>> Another possible candidates:
+>>
+>>         - remove_redundant() - see comment in previous patch
+>>         - still_interesting() - where Git uses date slop to stop walking
+>>           too far
+>
+> remove_redundant() will be included in v5, thanks.
 
-> Duy Nguyen <pclouds@gmail.com> writes:
-> 
-> > On Mon, Apr 30, 2018 at 12:17 AM, Johannes Schindelin
-> > <johannes.schindelin@gmx.de> wrote:
-> >> t1406 specifically verifies that certain code paths fail with a BUG: ...
-> >> message.
-> >>
-> >> In the upcoming commit, we will convert that message to be generated via
-> >> BUG() instead of die("BUG: ..."), which implies SIGABRT instead of a
-> >> regular exit code.
-> >
-> > On the other hand, SIGABRT on linux creates core dumps. And on some
-> > setup (like mine) core dumps may be redirected to some central place
-> > via /proc/sys/kernel/core_pattern. I think systemd does it too but I
-> > didn't check.
-> >
-> > This moving to SIGABRT when we know it _will_ happen when running the
-> > test suite will accumulate core dumps over time and not cleaned up by
-> > the test suite. Maybe keeping die("BUG: here is a good compromise.
-> 
-> I do not think it is.  At regular runtime, we _do_ want Git to dump
-> core if it triggers BUG() condition, whose point is to mark
-> conditions that should never happen.
+Oh.  Nice.
 
-Indeed.
+I'll try to review the new patch in detail soon.
 
-> As discussed in this thread, tests that use t/helper/ executables
-> that try to trickle BUG() codepath to ensure that these "should
-> never happen" conditions are caught do need to deal with it.  If
-> dumping core is undesirable, tweaking BUG() implementation so that
-> it becomes die("BUG: ...") *ONLY* when the caller knows what it is
-> doing (e.g. running t/helper/ commands) is probably a good idea.
-> Perhaps GIT_TEST_OPTS can gain one feature "--bug-no-abort" and set
-> an environment variable so that implementation of BUG() can notice,
-> or something.
+> Instead of "still_interesting()" I'll add "git tag --merged" as the
+> candidate to consider, as discussed in [1].
+>
+> [1] https://public-inbox.org/git/87fu3g67ry.fsf@lant.ki.iif.hu/t/#u
+> =C2=A0=C2=A0=C2=A0 "branch --contains / tag --merged inconsistency"
 
-I think we can do even better than that. t/helper/*.c could set a global
-variable that no other code is supposed to set, to trigger an alternative
-to SIGABRT. Something like
+All right.  I have mentioned still_interesting() as a hint where
+possible additional generation numbers based optimization may lurk
+(because that's where heuristic based on dates is used - similarly to
+how it was done in this series with paint_down_to_common()).
 
--- snip --
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 87066ced62a..5176f9f20ae 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -47,7 +47,9 @@ static struct test_cmd cmds[] = {
- int cmd_main(int argc, const char **argv)
- {
- 	int i;
-+	extern int BUG_exit_code;
- 
-+	BUG_exit_code = 99;
- 	if (argc < 2)
- 		die("I need a test name!");
- 
-diff --git a/usage.c b/usage.c
-index cdd534c9dfc..9c84dccfa97 100644
---- a/usage.c
-+++ b/usage.c
-@@ -210,6 +210,9 @@ void warning(const char *warn, ...)
- 	va_end(params);
- }
- 
-+/* Only set this, ever, from t/helper/, when verifying that bugs are
-caught. */
-+int BUG_exit_code;
-+
- static NORETURN void BUG_vfl(const char *file, int line, const char *fmt,
-va_list params)
- {
- 	char prefix[256];
-@@ -221,6 +224,8 @@ static NORETURN void BUG_vfl(const char *file, int
-line, const char *fmt, va_lis
- 		snprintf(prefix, sizeof(prefix), "BUG: ");
- 
- 	vreportf(prefix, fmt, params);
-+	if (BUG_exit_code)
-+		exit(BUG_exit_code);
- 	abort();
- }
- 
--- snap --
+[...]
+>> One important issue left is handling features that change view of
+>> project history, and their interaction with commit-graph feature.
+>>
+>> What would happen, if we turn on commit-graph feature, generate commit
+>> graph file, and then:
+>>
+>>    * use graft file or remove graft entries to cut history, or remove cut
+>>      or join two [independent] histories.
+>>    * use git-replace mechanims to do the same
+>>    * in shallow clone, deepen or shorten the clone
+>>
+>> What would happen if without re-generating commit-graph file (assuming
+>> tha Git wouldn't do it for us), we run some feature that makes use of
+>> commit-graph data:
+>>
+>>    - git branch --contains
+>>    - git tag --contains
+>>    - git rev-list A..B
+>>
+>
+> The commit-graph is not supported in these scenarios (yet). grafts are
+> specifically mentioned in the future work section.
+>
+> I'm not particularly interested in supporting these features, so they
+> are good venues for other contributors to get involved in the
+> commit-graph feature. Eventually, they will be blockers to making the
+> commit-graph feature a "default" feature. That is when I will pay
+> attention to these situations. For now, a user must opt-in to having a
+> commit-graph file (and that same user has possibly opted in to these
+> history modifying features).
 
-I'll try to find some time to play with this.
+Well, that is sensible approach.  Get commit-graph features in working
+condition, and worry about beng able to make it on by default later.
 
-Ciao,
-Dscho
-> 
-> When we are testing normal parts of Git outside t/helper/, we never
-> want to hit BUG().  Aborting and dumping core when that happens is
-> an desirable outcome.  From that point of view, the idea in 1/6 of
-> this patch series to annotate test_must_fail and say "we know this
-> one is going to hit BUG()" is a sound one.  The implementation in
-> 1/6 to treat SIGABRT as an acceptable failure needs to be replaced
-> to instead use the above mechanism you would use to tell BUG() not
-> to abort but die with message to arrange that to happen before
-> running the git command (most likely something from t/helper/) under
-> test_must_fail ok=sigabrt; and then those who regularly break their
-> Git being tested (read: us devs) and hit BUG() could instead set the
-> environment variable (i.e. internal implementation detail) manually
-> in their environment to turn these BUG()s into die("BUG:...)s while
-> testing their early mistakes if they do not want core (of course,
-> you could just do "ulimit -c", and that may be simpler solution of
-> your "testing Git contaminates central core depot" issue).
-> 
-> 
-> 
-> 
-> 
-> 
-> 
+Nice to have it clarified.  I'll stop nagging about that, then ;-P
+
+One issue: 'grafts' are mentioned in the future work section of the
+technical documentation, but we don't have *any* warning about
+commit-graph limitations in user-facing documentation, that is
+git-commit-graph(1) manpage.
+
+Best,
+--=20
+Jakub Nar=C4=99bski
