@@ -2,142 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F324200B9
-	for <e@80x24.org>; Wed,  2 May 2018 23:06:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 297BF200B9
+	for <e@80x24.org>; Wed,  2 May 2018 23:17:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751447AbeEBXGC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 19:06:02 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38530 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751148AbeEBXGB (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 2 May 2018 19:06:01 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B2D986046C;
-        Wed,  2 May 2018 23:05:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525302360;
-        bh=qQaY2XcOe97YvaH/PAEpq6uIhDFWFAuv/YqqkMmonH8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=f96ZZx5a2DdPksFQv+V/2DQdL8ubSuB2Q6ZE5C3oeKMSSKz4aqMqTtQhFdubnc57p
-         58Af4ELl0tBUChTF0TsDyXodteeuGqaUZu+crNPyvzuwpquY8is68sEtFRK2xb0SxC
-         z8R+3O3CnTeTL9ODW0nCf+7OUXit0M55xh7uTKAidYDcdjkA+Bn3iC9UAM6RDI9y6Y
-         z8v0xOYD4JO6Hz96jYpd+26+tOvtdET3NrlDn08SDZ+UNcSyZmBHGkGpZ9rrHMTd9v
-         BmDgzWDjLKE8IVSsqfZT3W6FC1itpK+e9odqqc/8RjHj2OEOnyXnOfmYsHwHMDAvK6
-         AeU2R2+z3NUrweKP9YlJW69hqKWayh5EnQFSxg52fzROEq64UFK97xr3b3t1taKJ0/
-         DU3NdWC93qGEuj4yjduGxFFwuM2kHBF1xmJxXou2XB10J3YBwY9QZImgmJ7B3aJAwo
-         eU0v9EvCbhDR7bbFEqeIj7e7qSxJXhxC5enK6256ajGxV0MBQUV
-Date:   Wed, 2 May 2018 23:05:55 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 08/41] packfile: abstract away hash constant values
-Message-ID: <20180502230555.GK13217@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
- <20180423233951.276447-9-sandals@crustytoothpaste.net>
- <20180501102243.GE15820@duynguyen.home>
- <20180502001140.GH13217@genre.crustytoothpaste.net>
- <CACsJy8C1nLTOZFvdgrRYDTXbQhdt5vkbVxHSEiAVuH6Vo8WB_Q@mail.gmail.com>
+        id S1751741AbeEBXRV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 19:17:21 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:46180 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751562AbeEBXRU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 19:17:20 -0400
+Received: by mail-pf0-f177.google.com with SMTP id p12so13057734pff.13
+        for <git@vger.kernel.org>; Wed, 02 May 2018 16:17:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7/90R7Lkz6raL0RrUxMmHmG+6sCEfv8cl65ZpSnBn48=;
+        b=Mr4Zp2sRoIZJTeZbOqMNKtjdpPt5nkKYlebksJ8VuPJkd7dhumqkcEVc7ZoIMQuPXq
+         d4yQ7EiZ6UzJf47zATNTQ1v8MNy52p9zE1Ca+6vDV8UJoZEUjk+oGgLFX+RXp2OSPUyQ
+         ar+8Uw9sk6cTGpvcRRdPwg+S84ZYklDvM3Hn+Hb/n3cE1hZB5HNsHhFoIYoEZik2Dvmw
+         PPf+Zv2irTFkmDiH2VDbLCKJGpYU5cba+bmn4L2nfiLIdwtHIPYG6CSS0Fxl4Wr8MD9G
+         UrRIkodSgwiM4EUAy9Z0teIJC25hszhDNMDRQka3YvawZ4dICGbi0FaPsnB4NpQUIJOY
+         Dvaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7/90R7Lkz6raL0RrUxMmHmG+6sCEfv8cl65ZpSnBn48=;
+        b=ElbmdI90fILnI2yV77sVbSk8k1RyaHjxrcCnjP2lSd84uYVNrr4f2TwfiDUya806q3
+         gBibfKBNBMlW9tfoAKz2SRJx7D1kHQgVIIFQBAkFNhS0ih0zVy42l2pKgZ97Kq6oW2kq
+         IFDF0GhC+0XnLxsY3aRE+aDQyukJR2zrUIxqtQhY1kuT2JAh1sZU/3zog8EEF3DY09pv
+         J3ThKaCPJpRP9bQqsGcpUSuvGQzIHZNL06kibsww6FpFfgle6ZSzX8Sk2PgOSGGkVch9
+         qaZxXTOLN5jpMBTSv7kkWYaoe0/EcMxQbXSAYVJKRFl1wCDH8kswhzntnWfPUx0oGIbM
+         C2KQ==
+X-Gm-Message-State: ALQs6tCbVTRw6Pw8oke0sfFsRllQjouqp7peg+x80y90vnv2xOxsPpd0
+        VSlaYTOrqt6liOClJ1nK+X+YHw==
+X-Google-Smtp-Source: AB8JxZoo0v2dRoiQ+TnASgCcF/AOGGAqvzz7fT8A/65hEmm4Cy5MThKU/LxmyFc1VigZHsAHoxnXiQ==
+X-Received: by 2002:a63:7d13:: with SMTP id y19-v6mr17542618pgc.160.1525303039891;
+        Wed, 02 May 2018 16:17:19 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id v16sm35383861pfk.164.2018.05.02.16.17.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 02 May 2018 16:17:19 -0700 (PDT)
+Date:   Wed, 2 May 2018 16:17:16 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2018, #04; Mon, 30)
+Message-ID: <20180502231716.GB122314@google.com>
+References: <xmqq4ljtz87g.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="2EnvhqpWJq810sZn"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACsJy8C1nLTOZFvdgrRYDTXbQhdt5vkbVxHSEiAVuH6Vo8WB_Q@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-3-amd64)
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <xmqq4ljtz87g.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 04/30, Junio C Hamano wrote:
+> * bw/protocol-v2 (2018-03-15) 35 commits
+>   (merged to 'next' on 2018-04-11 at 23ee234a2c)
+>  + remote-curl: don't request v2 when pushing
+>  + remote-curl: implement stateless-connect command
+>  + http: eliminate "# service" line when using protocol v2
+>  + http: don't always add Git-Protocol header
+>  + http: allow providing extra headers for http requests
+>  + remote-curl: store the protocol version the server responded with
+>  + remote-curl: create copy of the service name
+>  + pkt-line: add packet_buf_write_len function
+>  + transport-helper: introduce stateless-connect
+>  + transport-helper: refactor process_connect_service
+>  + transport-helper: remove name parameter
+>  + connect: don't request v2 when pushing
+>  + connect: refactor git_connect to only get the protocol version once
+>  + fetch-pack: support shallow requests
+>  + fetch-pack: perform a fetch using v2
+>  + upload-pack: introduce fetch server command
+>  + push: pass ref prefixes when pushing
+>  + fetch: pass ref prefixes when fetching
+>  + ls-remote: pass ref prefixes when requesting a remote's refs
+>  + transport: convert transport_get_remote_refs to take a list of ref prefixes
+>  + transport: convert get_refs_list to take a list of ref prefixes
+>  + connect: request remote refs using v2
+>  + ls-refs: introduce ls-refs server command
+>  + serve: introduce git-serve
+>  + test-pkt-line: introduce a packet-line test helper
+>  + protocol: introduce enum protocol_version value protocol_v2
+>  + transport: store protocol version
+>  + connect: discover protocol version outside of get_remote_heads
+>  + connect: convert get_remote_heads to use struct packet_reader
+>  + transport: use get_refs_via_connect to get refs
+>  + upload-pack: factor out processing lines
+>  + upload-pack: convert to a builtin
+>  + pkt-line: add delim packet support
+>  + pkt-line: allow peeking a packet line without consuming it
+>  + pkt-line: introduce packet_read_with_status
+>  (this branch is used by bw/server-options.)
+> 
+>  The beginning of the next-gen transfer protocol.
+> 
+>  Will merge to 'master'.
 
---2EnvhqpWJq810sZn
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Awesome, I see you're already planning on merging this!  I was just
+going to drop by and saw that internal testing showed that this *should*
+be ready to be merged to master :)  Thanks!
 
-On Wed, May 02, 2018 at 05:26:25PM +0200, Duy Nguyen wrote:
-> On Wed, May 2, 2018 at 2:11 AM, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > On Tue, May 01, 2018 at 12:22:43PM +0200, Duy Nguyen wrote:
-> >> While we're abstracting away 20. There's the only 20 left in
-> >> sha1_file.c that should also be gone. But I guess you could do that
-> >> later since you need to rename fill_sha1_path to
-> >> fill_loose_object_path or something.
-> >
-> > I'm already working on knocking those out.
->=20
-> Yeah I checked out your part14 branch after writing this note :P You
-> still need to rename the function though. I can remind that again when
-> part14 is sent out.
-
-I've made a note in my project notes.
-
-> > Unfortunately, I can't, because it's not an object ID.  I think the
-> > decision was made to not transform non-object ID hashes into struct
-> > object_id, which makes sense.  I suppose we could have an equivalent
-> > struct hash or something for those other uses.
->=20
-> I probably miss something, is hashcmp() supposed to stay after the
-> conversion? And will it compare any hash (as configured in the_algo)
-> or will it for SHA-1 only?
-
-Yes, it will stick around for the handful of places where we have hashes
-like pack checksums.
-
-> If hashcmp() will eventually compare the_algo->rawsz then yes this makes =
-sense.
-
-That's my intention, yes.
-
-> > I believe this is the pack hash, which isn't an object ID.  I will
-> > transform it to be called something other than "sha1" and allocate more
-> > memory for it in a future series, though.
->=20
-> Ah ok, it's the "sha1" in the name that bugged me. I'm all good then.
-
-Also noted in my project notes.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---2EnvhqpWJq810sZn
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrqRFIACgkQv1NdgR9S
-9otxug//XkTDncvV+3VI8nc66Po0e4gBVKPvUbqjx6HaNADQE5aMVMB259qUBqsW
-hjstzEeZ+bGZRrG/HT1HjDf31FzjSGu4iCGDEBwAHP00PwBt5Qmcfp/RJVJ8EoTB
-pgSw+m3b8d9IVYaCTlfcIF+LCrx0mHQhxwaOxlvERvqQptxNmll0niyeybwRx00b
-Gzy9ySyjpxZInT8R5DGFMamCZkn70nkv8138/v6vvXgZ5UDwwEuAe6w2pMuSRpi6
-i6VWQUchC9F9ykLnqIJ4DFdZsm1UsjEV2yEgW4zi3qm0AeyJbjynQM+lEn/W0yMC
-t26UAluy/bHceoI7E93TK7FeBnOTXFs0D/S2APh9kWTHSxZsTiVyG75nUKENI3GX
-E078B8lc0htVlxBnOe1OGsrBp9QnjJTmv8ogUkQGdGuWCMvswTnSD5KgvAyM8uP5
-VT62vbea9m6REASPbVC2rWs2eV5xP/K+YIXwdv1TGJx1TrZVHmvEpOdsz59RdO8A
-er0wdM4hyC5iSgO8OKzJ0MemPBFqn7G+W5ca5p0F/t3409piNqmqSnknL2SWX1OD
-5Yd/pvLn+P+i6PYuEzQAY2LAaWSYyF4btk9dbIK6RCpXUwwJHffAmFcQFTcH3gXu
-GxXA1dN8uFVniOumIEb3nIFHt+u50+9Z1uFWTnO5HHGLRM31JUo=
-=RS6a
------END PGP SIGNATURE-----
-
---2EnvhqpWJq810sZn--
+-- 
+Brandon Williams
