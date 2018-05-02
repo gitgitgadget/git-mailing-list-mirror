@@ -2,273 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45D4621847
-	for <e@80x24.org>; Wed,  2 May 2018 15:32:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F0D621847
+	for <e@80x24.org>; Wed,  2 May 2018 15:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751867AbeEBPcc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 11:32:32 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:46895 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751529AbeEBPc3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 11:32:29 -0400
-Received: by mail-lf0-f65.google.com with SMTP id v85-v6so21449604lfa.13
-        for <git@vger.kernel.org>; Wed, 02 May 2018 08:32:28 -0700 (PDT)
+        id S1751585AbeEBPxf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 11:53:35 -0400
+Received: from mail-ua0-f177.google.com ([209.85.217.177]:38069 "EHLO
+        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750954AbeEBPxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 11:53:34 -0400
+Received: by mail-ua0-f177.google.com with SMTP id y8so9792344ual.5
+        for <git@vger.kernel.org>; Wed, 02 May 2018 08:53:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Dh/tW9yKytm/K2W1+FE480R728h1JzqfeE8N9jR9SdU=;
-        b=byvgDizuvEIcHmpo0+E0XZi1Oa8q4aso3fVSY429a+X7kdwid6Ve1qjhLHcpZOW7V5
-         YXwBduZvfN3lNMb3X755g3RApWuM0Sn0YCuHj81Tl8T5HmySY83MO+Pb+BKCo1fLDOnq
-         7VNm9taH6F++/OLPgMBNBKOTkJfpcuVVabJ5n+qLmfyQZfyy24Vb774eSQ6QZkz+O/MN
-         E4cOEk9Ug6xvXcbwAJ4vCrs9G7/ZxK3iZrbBW0yPw14agHe+N6duxB3Ku1KaKMy+YD/u
-         TWvUNSWq2KcaLeALK8hJXXvLRXbHFfXz30CIVp5QMXBYzJDQIm1clL6rDHwjPQszotsd
-         MYEQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=j9EF3GK176ZrGH4ut0u+178k4fblz19DtXKoE4GkffE=;
+        b=hREyvuuHJcs67kMKFWX4+lFXsEhaQz9SMbFcuAOE3T/z31ChzSacIWywQGVRB+rLwK
+         sBg7xhVorUgZJP3PrTRozEoK8S4s3YEy9jepKgYCrtUww71FUx0DWFyb0IO0wUW6tC9m
+         j3THHvY9P4rdQ85ctlSQbjdadVCv3MbRzR0Ee5+4gp7g04pm8NQdngqiYdwCc7s47Boy
+         3Y1C+u0aiTla84JCe3ROFq9mEL9pl8so3KwOrGYA4M7MK5sJsfAZwlwUx6bcKcQ23mBL
+         7NaLmTPhyV9UrJjxRSvvkpZ26/TRoIaX9vGjBnP774YsJKRWyUuGnNcoZNtyDgLBulXF
+         /gUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Dh/tW9yKytm/K2W1+FE480R728h1JzqfeE8N9jR9SdU=;
-        b=Dp6cHjS3ayRXM00arH89S2grYjO79XZjmvHfCOMN1we4FZvg++mJofjWSFV+VgquN1
-         0vacU4YOXdXfRZlXzVkubRfrjDp17Jv9pCDOSCw9bZocxy50zNYSXjgWtv0WAPM5iIy2
-         IruMi+hiqEQHG7PsfehAuLxhNS8sYkof/+NzeHSfDvFiDoHM3E99Or1Oks6Ghs35Mj4w
-         RVzASEFzPVLZdX+3ZHlUg/dbV02wkYhGE0IJMh1JAe7TmqnvZf+yT7IHREwGSx/p/hdp
-         23xK/GX13AcJuSraqCrGe83lLxQVXczUy3P/Mh4kgK43ck1k3gPEEnISRJjjkJZv+iYs
-         Z6Tw==
-X-Gm-Message-State: ALQs6tBUak6Q366Jz3cy7k3EKV91dp7Kq7RtIvPSUjYDVoFjPDJjsL0i
-        cZBH6J2lURtux3sdjno5ZBE=
-X-Google-Smtp-Source: AB8JxZqkhynKjaq5txOBaC18kZQ3COIHz1MLfPSkwzgcC1gJaAhxKr1Xzbmlqknbfg0XXjiw5GzQ2Q==
-X-Received: by 2002:a19:d14a:: with SMTP id i71-v6mr11767331lfg.1.1525275147801;
-        Wed, 02 May 2018 08:32:27 -0700 (PDT)
-Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id y24-v6sm2430427ljy.21.2018.05.02.08.32.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 02 May 2018 08:32:26 -0700 (PDT)
-Date:   Wed, 2 May 2018 17:32:24 +0200
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2 00/42] object_id part 13
-Message-ID: <20180502153224.GA8237@duynguyen.home>
-References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=j9EF3GK176ZrGH4ut0u+178k4fblz19DtXKoE4GkffE=;
+        b=s51si6pKXulAObLYrc6OOkiJUswNSiUEd6kORcgeoS009fUHxtUq+rzbyq9djqlB6O
+         RfA5xTwws1QxIjwyaG+OaY0ViWDP7uyBRQOjjmIUKaEUH5m3jLJK0Tc3OymbrvOLixZr
+         bd5qhzIey7YpYPq2uofZbqwipmOE9FliBysPZLSwNuzt0j4nRb0C+zGAaKwnXIyIzCz+
+         imbv7hCloWEM3JatXLc6ulc0nBjqdwBAJlfA3vCqAGXFue/l5PAszL0o/ATAXluQs+LU
+         HrooiYHtA2RQPfbig4xs8l+sp7ans6UEYv0dJpTM6cUZoyXkwnC9N7iQAt6ex14Mr9yK
+         9z+w==
+X-Gm-Message-State: ALQs6tC2JJ14HQCY0WAWRcseePRU9XzKjvcVbHoMKBVZKa4DCL4btnc8
+        DyCfJW0Esqz7VYwuGep+YEzm7mGR/YVGP2ti3lE=
+X-Google-Smtp-Source: AB8JxZqrbR3sjwSD2hL6F5ToNA6U1sg1jVxh0zSjnNPHXImbSOEfCfV2nrBSRYlbEEZn0qnqCWHHLxdP7F971COhGXs=
+X-Received: by 10.176.9.92 with SMTP id c28mr18779067uah.50.1525276413322;
+ Wed, 02 May 2018 08:53:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20180426092524.25264-1-sxlijin@gmail.com> <20180418030655.19378-1-sxlijin@gmail.com>
+ <20180426092524.25264-2-sxlijin@gmail.com> <xmqq36zawqr3.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq36zawqr3.fsf@gitster-ct.c.googlers.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Wed, 02 May 2018 15:52:56 +0000
+Message-ID: <CAJZjrdVXKx9em=soHSm0P3BCRffyrc23tqNJuFNuT6EG5hivow@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] commit: fix --short and --porcelain options
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 02, 2018 at 12:25:28AM +0000, brian m. carlson wrote:
-> Changes from v1:
-> * Add missing sign-off.
-> * Removed unneeded braces from init_pack_info.
-> * Express 51 in terms of the_hash_algo->hexsz.
-> * Fix comments referring to SHA-1.
-> * Update commit messages as suggested.
-> * Add and use empty_tree_oid_hex and empty_blob_oid_hex.
+On Tue, May 1, 2018 at 10:50 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-Interdiff for people who don't have time to read 42 patches yet
+> Samuel Lijin <sxlijin@gmail.com> writes:
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 8d75ebe64b..7084bcfdea 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -290,7 +290,7 @@ static void read_empty(const struct object_id *oid, int verbose)
- 		args[i++] = "-v";
- 	args[i++] = "-m";
- 	args[i++] = "-u";
--	args[i++] = oid_to_hex(the_hash_algo->empty_tree);
-+	args[i++] = empty_tree_oid_hex();
- 	args[i++] = oid_to_hex(oid);
- 	args[i] = NULL;
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index c31ceb30c2..dca523f50f 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -968,7 +968,7 @@ static const char *push_to_deploy(unsigned char *sha1,
- 		return "Working directory has unstaged changes";
- 
- 	/* diff-index with either HEAD or an empty tree */
--	diff_index[4] = head_has_history() ? "HEAD" : oid_to_hex(the_hash_algo->empty_tree);
-+	diff_index[4] = head_has_history() ? "HEAD" : empty_tree_oid_hex();
- 
- 	child_process_init(&child);
- 	child.argv = diff_index;
-diff --git a/cache.h b/cache.h
-index c5b041019b..71b3c1b15b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1033,6 +1033,9 @@ static inline int is_empty_tree_oid(const struct object_id *oid)
- 	return !oidcmp(oid, the_hash_algo->empty_tree);
- }
- 
-+const char *empty_tree_oid_hex(void);
-+const char *empty_blob_oid_hex(void);
-+
- /* set default permissions by passing mode arguments to open(2) */
- int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
- int git_mkstemp_mode(char *pattern, int mode);
-diff --git a/http.c b/http.c
-index ec70676748..312a5e1833 100644
---- a/http.c
-+++ b/http.c
-@@ -2070,7 +2070,7 @@ int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
- 				get_sha1_hex(data + i + 6, hash);
- 				fetch_and_setup_pack_index(packs_head, hash,
- 						      base_url);
--				i += 51;
-+				i += hexsz + 11;
- 				break;
- 			}
- 		default:
-diff --git a/sequencer.c b/sequencer.c
-index 12c1e1cdbb..94b6513402 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1480,8 +1480,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 		unborn = get_oid("HEAD", &head);
- 		if (unborn)
- 			oidcpy(&head, the_hash_algo->empty_tree);
--		if (index_differs_from(unborn ?
--				       oid_to_hex(the_hash_algo->empty_tree) : "HEAD",
-+		if (index_differs_from(unborn ? empty_tree_oid_hex() : "HEAD",
- 				       NULL, 0))
- 			return error_dirty_index(opts);
- 	}
-diff --git a/server-info.c b/server-info.c
-index 828ec5e538..7ce6dcd67b 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -223,11 +223,9 @@ static void init_pack_info(const char *infofile, int force)
- 	else
- 		stale = 1;
- 
--	for (i = 0; i < num_pack; i++) {
--		if (stale) {
-+	for (i = 0; i < num_pack; i++)
-+		if (stale)
- 			info[i]->old_num = -1;
--		}
--	}
- 
- 	/* renumber them */
- 	QSORT(info, num_pack, compare_info);
-diff --git a/sha1_file.c b/sha1_file.c
-index 794753bd54..bf6c8da3ff 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -109,6 +109,18 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 	},
- };
- 
-+const char *empty_tree_oid_hex(void)
-+{
-+	static char buf[GIT_MAX_HEXSZ + 1];
-+	return oid_to_hex_r(buf, the_hash_algo->empty_tree);
-+}
-+
-+const char *empty_blob_oid_hex(void)
-+{
-+	static char buf[GIT_MAX_HEXSZ + 1];
-+	return oid_to_hex_r(buf, the_hash_algo->empty_blob);
-+}
-+
- /*
-  * This is meant to hold a *small* number of objects that you would
-  * want read_sha1_file() to be able to return, but yet you do not want
-diff --git a/submodule.c b/submodule.c
-index 22a96b7af0..ee7eea4877 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1567,7 +1567,7 @@ static void submodule_reset_index(const char *path)
- 				   get_super_prefix_or_empty(), path);
- 	argv_array_pushl(&cp.args, "read-tree", "-u", "--reset", NULL);
- 
--	argv_array_push(&cp.args, oid_to_hex(the_hash_algo->empty_tree));
-+	argv_array_push(&cp.args, empty_tree_oid_hex());
- 
- 	if (run_command(&cp))
- 		die("could not reset submodule index");
-@@ -1659,9 +1659,9 @@ int submodule_move_head(const char *path,
- 		argv_array_push(&cp.args, "-m");
- 
- 	if (!(flags & SUBMODULE_MOVE_HEAD_FORCE))
--		argv_array_push(&cp.args, old_head ? old_head : oid_to_hex(the_hash_algo->empty_tree));
-+		argv_array_push(&cp.args, old_head ? old_head : empty_tree_oid_hex());
- 
--	argv_array_push(&cp.args, new_head ? new_head : oid_to_hex(the_hash_algo->empty_tree));
-+	argv_array_push(&cp.args, new_head ? new_head : empty_tree_oid_hex());
- 
- 	if (run_command(&cp)) {
- 		ret = -1;
-diff --git a/upload-pack.c b/upload-pack.c
-index 0858527c5b..1fb4942235 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -492,7 +492,7 @@ static int do_reachable_revlist(struct child_process *cmd,
- 		"rev-list", "--stdin", NULL,
- 	};
- 	struct object *o;
--	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + SHA-1 + LF */
-+	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
- 	int i;
- 
- 	cmd->argv = argv;
-@@ -561,7 +561,7 @@ static int get_reachable_list(struct object_array *src,
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	int i;
- 	struct object *o;
--	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + SHA-1 + LF */
-+	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
- 	const unsigned hexsz = the_hash_algo->hexsz;
- 
- 	if (do_reachable_revlist(&cmd, src, reachable) < 0)
-diff --git a/wt-status.c b/wt-status.c
-index 857724bd60..e44115b3be 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -600,11 +600,10 @@ static void wt_status_collect_changes_index(struct wt_status *s)
- {
- 	struct rev_info rev;
- 	struct setup_revision_opt opt;
--	char hex[GIT_MAX_HEXSZ + 1];
- 
- 	init_revisions(&rev, NULL);
- 	memset(&opt, 0, sizeof(opt));
--	opt.def = s->is_initial ? oid_to_hex_r(hex, the_hash_algo->empty_tree) : s->reference;
-+	opt.def = s->is_initial ? empty_tree_oid_hex() : s->reference;
- 	setup_revisions(0, NULL, &rev, &opt);
- 
- 	rev.diffopt.flags.override_submodule_config = 1;
-@@ -976,14 +975,13 @@ static void wt_longstatus_print_verbose(struct wt_status *s)
- 	struct setup_revision_opt opt;
- 	int dirty_submodules;
- 	const char *c = color(WT_STATUS_HEADER, s);
--	char hex[GIT_MAX_HEXSZ + 1];
- 
- 	init_revisions(&rev, NULL);
- 	rev.diffopt.flags.allow_textconv = 1;
- 	rev.diffopt.ita_invisible_in_index = 1;
- 
- 	memset(&opt, 0, sizeof(opt));
--	opt.def = s->is_initial ? oid_to_hex_r(hex, the_hash_algo->empty_tree) : s->reference;
-+	opt.def = s->is_initial ? empty_tree_oid_hex() : s->reference;
- 	setup_revisions(0, NULL, &rev, &opt);
- 
- 	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
+> > Mark the commitable flag in the wt_status object in the call to
+> > `wt_status_collect()`, instead of in `wt_longstatus_print_updated()`,
+> > and simplify the logic in the latter function to take advantage of the
+> > logic shifted to the former. This means that callers do not need to use
+> > `wt_longstatus_print_updated()` to collect the `commitable` flag;
+> > calling `wt_status_collect()` is sufficient.
+> >
+> > As a result, invoking `git commit` with `--short` or `--porcelain`
+> > (which imply `--dry-run`, but previously returned an inconsistent error
+> > code inconsistent with dry run behavior) correctly returns status code
+> > zero when there is something to commit. This fixes two bugs documented
+> > in the test suite.
 
 
---
-Duy
+> Hmm, I couldn't quite get what the above two paragraphs were trying
+> to say, but I think I figured out by looking at wt_status.c before
+> applying this patch, so let me see if I correctly understand what
+> this patch is about by thinking a bit aloud.
+
+> There are only two assignments to s->commitable in wt-status.c; one
+> happens in wt_longstatus_print_updated(), when the function notices
+> there is even one record to be shown (i.e. there is an "updated"
+> path) and the other in show_merge_in_progress() which is called by
+> wt_longstatus_prpint_state().  The latter codepath happens when we
+> are in a merge and there is no remaining conflicted paths (the code
+> allows the contents to be committed to be identical to HEAD).  Both
+> are called from wt_longstatus_print(), which in turn is called by
+> wt_status_print().
+
+> The implication of the above observation is that we do not set
+> commitable bit (by the way, shouldn't we spell it with two 'T's?)
+
+Yep, MW confirms: https://www.merriam-webster.com/dictionary/commitable
+
+I didn't think to check how common "commitable" is in the codebase, but it
+doesn't seem to be too many, looking at the output of `git grep
+commitable`, so I'll add that to the patch series when I reroll.
+
+> if we are not doing the long format status.  The title hints at it
+> but "fix" is too vague.  It would be easier to understand if it
+> began like this (i.e. state problem clearly first, before outlining
+> the solution):
+
+>          [PATCH 1/2] commit: fix exit status under --short/--porcelain
+options
+
+>          In wt-status.c, s->commitable bit is set only in the
+>          codepaths reachable from wt_status_print() when output
+>          format is STATUS_FORMAT_LONG as a side effect of printing
+>          bits of status.  Consequently, when running with --short and
+>          --porcelain options, the bit is not set to reflect if there
+>          is anything to be committed, and "git commit --short" or
+>          "--porcelain" (both of which imply "--dry-run") failed to
+>          signal if there is anything to commit with its exit status.
+
+>          Instead, update s->commitable bit in wt_status_collect(),
+>          regardless of the output format. ...
+
+> Is that what is going on here?  Yours made it sound as if moving the
+> code to _collect() was done for the sake of moving code around and
+> simplifying the logic, and bugfix fell out of the move merely as a
+> side effect, which probably was the source of my confusion.
+
+Yep, that's right. I wasn't sure if the imperative tone was required for
+the whole commit or just the description, hence the awkward structure. (I
+also wasn't sure how strict the 70 char limit on the description was.)
+
+> > +static void wt_status_mark_commitable(struct wt_status *s) {
+> > +     int i;
+> > +
+> > +     for (i = 0; i < s->change.nr; i++) {
+> > +             struct wt_status_change_data *d =
+(s->change.items[i]).util;
+> > +
+> > +             if (d->index_status && d->index_status !=
+DIFF_STATUS_UNMERGED) {
+> > +                     s->commitable = 1;
+> > +                     return;
+> > +             }
+> > +     }
+> > +}
+
+> I am not sure if this is sufficient.  From a cursory look of the
+> existing code (and vague recollection in my ageing brain ;-), I
+> think we say it is committable if
+
+>   (1) when not merging, there is something to show in the "to be
+>       committed" section (i.e. there must be something changed since
+>       HEAD in the index).
+
+>   (2) when merging, no conflicting paths remain (i.e. change.nr being
+>       zero is fine).
+
+> So it is unclear to me how you are dealing with (2) under "--short"
+> option, which does not call show_merge_in_progress() to catch that
+> case.
+
+And the answer there is that I'm not :) I had hoped that there was a test
+to catch mistakes like this but evidently not. Thanks for pointing that
+out, I'll add a test to catch that.
+
+I'm also realizing that I didn't const-ify wt_longstatus_print() in the
+next patch, which is another reason I didn't catch this.
+
+This seems a bit trickier to handle. What do you think of this approach:
+(1) move wt_status_state into wt_status and (2) move the call to
+wt_status_get_state from wt_longstatus_print/wt_porcelain_v2_print_tracking
+to wt_status_collect?
+
+(I kind of also want to suggest enum-ifying some of wt_status_state, but
+that feels beyond the scope of this and also prone to other pitfalls.)
