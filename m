@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_96_XX,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 550221F660
-	for <e@80x24.org>; Tue,  3 Jul 2018 11:26:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D1E01F660
+	for <e@80x24.org>; Tue,  3 Jul 2018 11:26:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753272AbeGCL0n (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 07:26:43 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35572 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752582AbeGCL0i (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 07:26:38 -0400
-Received: by mail-pf0-f194.google.com with SMTP id z9-v6so882181pfh.2
-        for <git@vger.kernel.org>; Tue, 03 Jul 2018 04:26:38 -0700 (PDT)
+        id S1753096AbeGCL0c (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 07:26:32 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:38367 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753203AbeGCL01 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 07:26:27 -0400
+Received: by mail-pf0-f195.google.com with SMTP id j17-v6so879037pfn.5
+        for <git@vger.kernel.org>; Tue, 03 Jul 2018 04:26:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc:cc;
-        bh=MnzhDcuwp4f6hd+Iw0eGyNsYoXQt+7CM2x5MZ9e8AjQ=;
-        b=u+r44a259HWJcBT7KxIajgx3fY7yKQ0hOjHVfzL7yVo1h8YLYm59UONM8W/NxLG7cF
-         Wsp7WPENVsSSp2tzxVs/xgu4+rTJ3PTJWJSBB9jhIpxT60ghemfn2VX2HjYkG85qxe9c
-         qRmiH/sfxVNjjka+vy+ksuq9YJLGEwUdSKUU7OQVPud7OjSyD8NkQGxKsyT3BNnhahBs
-         xjjPsdG2UsE859IzY4vteUWPGUqDaRcwOQpV+ubT2kmA0Hfl0kI05n0y7X1oV7uC4A7o
-         N2gFAsd5iJ1kp4EOAiRXlPBLmTwsMY2bRAe2/DFTC0c0wzasDtrs4Un3SzkGHw1isd11
-         kC9A==
+        bh=u4i4A4EyzsEFDis/9O1em9+tU+KwWTWqI0OqK2V/ow4=;
+        b=KxrIFrHeLUiRieztEMqhkz4CQhp3i6ZptEwmVhjSvOFcjwS6I0GHmmv3HbTMLS1iYg
+         0GKqTiaNCqRw8BWv4yhA55ATE1I3rAC4CkDzWyIggK5hlXXZSrcUVceotjBvFX/nok0K
+         on+MB8UwEZ/d6pYTAmTJzRW4L9XJdMq+oz7tw7cJquWGZp5+iBjdYWSUYG+MPCCN2Zyz
+         oSOPgcMT074VVRK4unDF25hRgJffH2Nv6SVHHg9X+d44hMUACSyf0SiOOfkv97243Fig
+         AkR0X315jtLZ2BdfqezvcaeOOpPqjWnZvPYfgjrXbl/S2moe+PtAlbtXv6yACFU5k0qZ
+         yrUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc:cc;
-        bh=MnzhDcuwp4f6hd+Iw0eGyNsYoXQt+7CM2x5MZ9e8AjQ=;
-        b=UFGUQ8NESIfkklpBr+XKZTJ92BNhv8p4YqALhDrBKBIX3kbxhdGjk+XJvMWSI4FbyN
-         cumGAJ6oX3WYl0nTMHeeHmQEXSjSi1c/fdFJV+1d9ceQdPSUvYg7Irv6WGMTgnfRTjIM
-         H8PI7vWYYduHVZLud+a2tFErVlq53aqqhAEZZDkX1O4V9OFU/ZEHX8PZhCaZkU8K2Arr
-         9BI+AeYAvnEeGCbdJ4qR2zhvAOGsE5N0+ZLjU3TLgSseiPDRi9k16Rl5mt+gGUY1NsWx
-         If8hhUo8f3k9bVLCYVadSUW5srO2qoXDoPecTw71n/sv9/kQv117I3bSQr/Vqs8Ho7Zi
-         tCOw==
-X-Gm-Message-State: APt69E3gK/uwZdhpbdYVW46mygM1PjFPtRNzpaMJlub/4Ov2+J8TFOLy
-        emiPt/zGJPkkQY7SHRgYZ6Qvzg==
-X-Google-Smtp-Source: ADUXVKJUTMaWk2uwVlmqBFz9bOpIRGbYZ3OA9Cs1I4kc3xhkO1GXuLDX/qRVCRny9B0KAXHI2VzaYQ==
-X-Received: by 2002:a63:8848:: with SMTP id l69-v6mr24635156pgd.377.1530617198146;
-        Tue, 03 Jul 2018 04:26:38 -0700 (PDT)
+        bh=u4i4A4EyzsEFDis/9O1em9+tU+KwWTWqI0OqK2V/ow4=;
+        b=WxzR/j50O3PH2DfyFA6fCyj27BuKIoacULhTeYmzvRiKObv8mM+RGqYiKJC15x0JUD
+         f6InTjlgppM/XXGDFSb4p3LdVWS5rEcQVOKjcup6KcfOt1i3BOUa31/D1pLYfXTpnZJI
+         JlMoMdGmzB6NSGRxgvXDLW0kSKeImwxMjMtVrYzfOP9wApfkGSqgW14gvTIiizW+idRn
+         iMeGlY+dec65Gqkdm8fh0l9jb/OJ5Nn6/d9H+HdKXJmX4gjpt2laqmj7mDN+ayPnXWFU
+         weMN3le9eYtYvpHjT03rgofVblpLUV9jztJKrxlNFjYG+89BBdAGHODCjImhfG5oCor2
+         o2zA==
+X-Gm-Message-State: APt69E2npPZBxUeZ2BR4PpVuyj/ipTzHvljehqaVgMdAnpmLBb6YGXae
+        8nlRlhbJtGHSC/e+MJ0Da/urSg==
+X-Google-Smtp-Source: ADUXVKJOxtnN8+Er6KKYr1T29Q4/lxGnjtMCAvyWsJcRZ433lxzOtdlQ1BFpdB4J59S/aV1/wguqFw==
+X-Received: by 2002:a65:61af:: with SMTP id i15-v6mr25506146pgv.349.1530617186784;
+        Tue, 03 Jul 2018 04:26:26 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id 10-v6sm1933578pgc.87.2018.07.03.04.26.36
+        by smtp.gmail.com with ESMTPSA id k10-v6sm2142673pgp.55.2018.07.03.04.26.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Jul 2018 04:26:37 -0700 (PDT)
-Message-Id: <4a68b95ce2a6463708c92d1bcc0208352c14f836.1530617166.git.gitgitgadget@gmail.com>
+        Tue, 03 Jul 2018 04:26:26 -0700 (PDT)
+Message-Id: <7273cc647971368d087b2bc76d3f44d8ca166123.1530617166.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1.v3.git.gitgitgadget@gmail.com>
 References: <cover.1525448066.git.johannes.schindelin@gmx.de>
         <pull.1.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 30 Jun 2018 22:41:41 +0200
-Subject: [PATCH v3 20/20] range-diff: make --dual-color the default mode
+Date:   Thu, 3 May 2018 01:32:19 +0200
+Subject: [PATCH v3 12/20] range-diff: use color for the commit pairs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,87 +71,128 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-After using this command extensively for the last two months, this
-developer came to the conclusion that even if the dual color mode still
-leaves a lot of room for confusion what was actually changed, the
-non-dual color mode is substantially worse in that regard.
+Arguably the most important part of `git range-diff`'s output is the
+list of commits in the two branches, together with their relationships.
 
-Therefore, we really want to make the dual color mode the default.
+For that reason, tbdiff introduced color-coding that is pretty
+intuitive, especially for unchanged patches (all dim yellow, like the
+first line in `git show`'s output) vs modified patches (old commit is
+red, new commit is green). Let's imitate that color scheme.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-range-diff.txt       | 13 ++++++++-----
- builtin/range-diff.c                   | 10 ++++++----
- contrib/completion/git-completion.bash |  2 +-
- 3 files changed, 15 insertions(+), 10 deletions(-)
+ range-diff.c | 47 ++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 34 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-diff.txt
-index 189236cc6..02d33ac43 100644
---- a/Documentation/git-range-diff.txt
-+++ b/Documentation/git-range-diff.txt
-@@ -31,11 +31,14 @@ all of their ancestors have been shown.
+diff --git a/range-diff.c b/range-diff.c
+index 8df73da4e..870c3680c 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -254,13 +254,19 @@ static void get_correspondences(struct string_list *a, struct string_list *b,
+ 	free(b2a);
+ }
  
- OPTIONS
- -------
----dual-color::
--	When the commit diffs differ, recreate the original diffs'
--	coloring, and add outer -/+ diff markers with the *background*
--	being red/green to make it easier to see e.g. when there was a
--	change in what exact lines were added.
-+--no-dual-color::
-+	When the commit diffs differ, `git range-diff` recreates the
-+	original diffs' coloring, and add outer -/+ diff markers with
-+	the *background* being red/green to make it easier to see e.g.
-+	when there was a change in what exact lines were added. This is
-+	known to `range-diff` as "dual coloring". Use `--no-dual-color`
-+	to revert to color all lines according to the outer diff markers
-+	(and completely ignore the inner diff when it comes to color).
- 
- --creation-factor=<percent>::
- 	Set the creation/deletion cost fudge factor to `<percent>`.
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index e8f7fe452..6cee0c73a 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -20,11 +20,11 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+-static void output_pair_header(struct strbuf *buf,
++static void output_pair_header(struct diff_options *diffopt, struct strbuf *buf,
+ 			       struct patch_util *a_util,
+ 			       struct patch_util *b_util)
  {
- 	int creation_factor = 60;
- 	struct diff_options diffopt = { NULL };
--	int dual_color = 0;
-+	int simple_color = -1;
- 	struct option options[] = {
- 		OPT_INTEGER(0, "creation-factor", &creation_factor,
- 			    N_("Percentage by which creation is weighted")),
--		OPT_BOOL(0, "dual-color", &dual_color,
-+		OPT_BOOL(0, "no-dual-color", &simple_color,
- 			    N_("color both diff and diff-between-diffs")),
- 		OPT_END()
- 	};
-@@ -53,8 +53,10 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 	argc = j;
- 	diff_setup_done(&diffopt);
+ 	static char *dashes;
+ 	struct object_id *oid = a_util ? &a_util->oid : &b_util->oid;
+ 	struct commit *commit;
++	char status;
++	const char *color_reset = diff_get_color_opt(diffopt, DIFF_RESET);
++	const char *color_old = diff_get_color_opt(diffopt, DIFF_FILE_OLD);
++	const char *color_new = diff_get_color_opt(diffopt, DIFF_FILE_NEW);
++	const char *color_commit = diff_get_color_opt(diffopt, DIFF_COMMIT);
++	const char *color;
  
--	if (dual_color) {
--		diffopt.use_color = 1;
-+	if (simple_color < 1) {
-+		if (!simple_color)
-+			/* force color when --dual-color was used */
-+			diffopt.use_color = 1;
- 		diffopt.flags.dual_color_diffed_diffs = 1;
+ 	if (!dashes) {
+ 		char *p;
+@@ -270,21 +276,33 @@ static void output_pair_header(struct strbuf *buf,
+ 			*p = '-';
  	}
  
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 402490673..e35fc28fc 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1981,7 +1981,7 @@ _git_range_diff ()
-   case "$cur" in
-   --*)
-           __gitcomp "
--	  	--creation-factor= --dual-color
-+	  	--creation-factor= --no-dual-color
-                   $__git_diff_common_options
-                   "
-           return
++	if (!b_util) {
++		color = color_old;
++		status = '<';
++	} else if (!a_util) {
++		color = color_new;
++		status = '>';
++	} else if (strcmp(a_util->patch, b_util->patch)) {
++		color = color_commit;
++		status = '!';
++	} else {
++		color = color_commit;
++		status = '=';
++	}
++
+ 	strbuf_reset(buf);
++	strbuf_addstr(buf, status == '!' ? color_old : color);
+ 	if (!a_util)
+ 		strbuf_addf(buf, "-:  %s ", dashes);
+ 	else
+ 		strbuf_addf(buf, "%d:  %s ", a_util->i + 1,
+ 			    find_unique_abbrev(&a_util->oid, DEFAULT_ABBREV));
+ 
+-	if (!a_util)
+-		strbuf_addch(buf, '>');
+-	else if (!b_util)
+-		strbuf_addch(buf, '<');
+-	else if (strcmp(a_util->patch, b_util->patch))
+-		strbuf_addch(buf, '!');
+-	else
+-		strbuf_addch(buf, '=');
++	if (status == '!')
++		strbuf_addf(buf, "%s%s", color_reset, color);
++	strbuf_addch(buf, status);
++	if (status == '!')
++		strbuf_addf(buf, "%s%s", color_reset, color_new);
+ 
+ 	if (!b_util)
+ 		strbuf_addf(buf, " -:  %s", dashes);
+@@ -297,12 +315,15 @@ static void output_pair_header(struct strbuf *buf,
+ 		const char *commit_buffer = get_commit_buffer(commit, NULL);
+ 		const char *subject;
+ 
++		if (status == '!')
++			strbuf_addf(buf, "%s%s", color_reset, color);
++
+ 		find_commit_subject(commit_buffer, &subject);
+ 		strbuf_addch(buf, ' ');
+ 		format_subject(buf, subject, " ");
+ 		unuse_commit_buffer(commit, commit_buffer);
+ 	}
+-	strbuf_addch(buf, '\n');
++	strbuf_addf(buf, "%s\n", color_reset);
+ 
+ 	fwrite(buf->buf, buf->len, 1, stdout);
+ }
+@@ -360,21 +381,21 @@ static void output(struct string_list *a, struct string_list *b,
+ 
+ 		/* Show unmatched LHS commit whose predecessors were shown. */
+ 		if (i < a->nr && a_util->matching < 0) {
+-			output_pair_header(&buf, a_util, NULL);
++			output_pair_header(diffopt, &buf, a_util, NULL);
+ 			i++;
+ 			continue;
+ 		}
+ 
+ 		/* Show unmatched RHS commits. */
+ 		while (j < b->nr && b_util->matching < 0) {
+-			output_pair_header(&buf, NULL, b_util);
++			output_pair_header(diffopt, &buf, NULL, b_util);
+ 			b_util = ++j < b->nr ? b->items[j].util : NULL;
+ 		}
+ 
+ 		/* Show matching LHS/RHS pair. */
+ 		if (j < b->nr) {
+ 			a_util = a->items[b_util->matching].util;
+-			output_pair_header(&buf, a_util, b_util);
++			output_pair_header(diffopt, &buf, a_util, b_util);
+ 			if (!(diffopt->output_format & DIFF_FORMAT_NO_OUTPUT))
+ 				patch_diff(a->items[b_util->matching].string,
+ 					   b->items[j].string, diffopt);
 -- 
 gitgitgadget
+
