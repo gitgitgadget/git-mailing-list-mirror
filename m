@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3DB821847
-	for <e@80x24.org>; Wed,  2 May 2018 00:26:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E256D21847
+	for <e@80x24.org>; Wed,  2 May 2018 00:26:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753428AbeEBA0h (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 20:26:37 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37660 "EHLO
+        id S1753452AbeEBA0o (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:26:44 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37698 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753414AbeEBA0e (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:34 -0400
+        by vger.kernel.org with ESMTP id S1753433AbeEBA0i (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:38 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C74BE60B13;
-        Wed,  2 May 2018 00:26:32 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 120CC60B38;
+        Wed,  2 May 2018 00:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525220793;
-        bh=Y++OP3F89orICCnvyd/xA+jqiN9XF8qghD5VCcDKj1c=;
+        s=default; t=1525220797;
+        bh=NvxzTlRT5yJ6DBdS6gnNCpgCyBqZHAo1KmYh77nuPV8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=HSL0KFOXJ/1gXOQC0UQydOIs05koapE4g/lrdns8ePV1YGRHCwpPuDaA3l14TQD6I
-         Nb7AYMEpLcKgcS77Artvt/T3lGdqAUnz0mfT6xKRRXtq5niKnxEYuVzMkNVBdZD7+t
-         uF6uhNDrGuOEQ3RXtkchcTJSBovH6hddJXi3DrityQv/NYbx54G6gNzpNGHrJaQcdt
-         lYhvsH1xlbURnZNR0IknCTNb/4mthpjoKyw6+rRR0IuTHoMazfxPYzVTVMOkslGF4/
-         espao/QL2xQmR/fWBy9PWUGp6X8aIaFJO+cGEWPhM7oMaef58gYLEh3bSCigVFJVYr
-         pkD4dbnIAj3ql3BXxufz5P7P5tU/EPQ4p56o9saiFWt7fDTC30cXTKZdGSDU+9U7o8
-         wVicQv2DSRuqsn8PkYaEx/RyJcylgw89MOtHSawy4xN5QuVKstp8K0DqMB66cKbEH6
-         p0qrY1r6PLX94JwUPVRikosMa46ZIdbwChp/Hhvs/wd7jXAfEHa
+        b=wJiD8eMH5dQddzmtIUSiKZakmrIw7Jn7NL4whU34HAz6oz5kjBao7DQHtKkCq8GV1
+         8uOMs9p4oPV2tsjNDm6hZla1++fbWvfFNx5LLhzu9tSva79rtN+TmqdDSTZngchk5s
+         Edc160srbELOdVm0p/4k4YHfeG9fhiFOdjIMkLRvv3wQJOL4IkfKbqM+0SRYaf1H9J
+         1Z+t+a6Ek4uR4V5ga5Y9w/bvoZjXsY2rALnSj0bHp5Hiq1CasVAWvgm8NgM43CwHEQ
+         rpK19lhq5OFC7LgoFu6rKsRfqqhe2D89vupMEZ29RF+8lCGvpFdd/WdxJy904Mn2Li
+         CP8ORZf8opeIOQm1E62ges1HVICarhWdzXLYLzLVbf9Zbvw6AIyvwnPkJLFZzThqbs
+         2j5obH+jIBiE0FeK9pZNOamo3Q8AeXvwAfJeM25QHTaHyZDHcxqanOgHWYR51XxUKl
+         xbMEIKZ448lJSzO6FSF1/xIeeXhxHkYdF68A52Egj0hwp6ihs0A
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 13/42] fsck: convert static functions to struct object_id
-Date:   Wed,  2 May 2018 00:25:41 +0000
-Message-Id: <20180502002610.915892-14-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 17/42] pack-redundant: convert linked lists to use struct object_id
+Date:   Wed,  2 May 2018 00:25:45 +0000
+Message-Id: <20180502002610.915892-18-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
 References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
@@ -54,90 +54,172 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert two static functions to use struct object_id and parse_oid_hex,
-instead of relying on harcoded 20 and 40-based constants.
+Convert struct llist_item and the rest of the linked list code to use
+struct object_id.  Add a use of GIT_MAX_HEXSZ to avoid a dependency on a
+hard-coded constant.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- fsck.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ builtin/pack-redundant.c | 50 +++++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 24 deletions(-)
 
-diff --git a/fsck.c b/fsck.c
-index 9218c2a643..768011f812 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -711,30 +711,31 @@ static int fsck_ident(const char **ident, struct object *obj, struct fsck_option
- static int fsck_commit_buffer(struct commit *commit, const char *buffer,
- 	unsigned long size, struct fsck_options *options)
- {
--	unsigned char tree_sha1[20], sha1[20];
-+	struct object_id tree_oid, oid;
- 	struct commit_graft *graft;
- 	unsigned parent_count, parent_line_count = 0, author_count;
- 	int err;
- 	const char *buffer_begin = buffer;
-+	const char *p;
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index 0fe1ff3cb7..0494dceff7 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -20,7 +20,7 @@ static int load_all_packs, verbose, alt_odb;
  
- 	if (verify_headers(buffer, size, &commit->object, options))
- 		return -1;
+ struct llist_item {
+ 	struct llist_item *next;
+-	const unsigned char *sha1;
++	const struct object_id *oid;
+ };
+ static struct llist {
+ 	struct llist_item *front;
+@@ -90,14 +90,14 @@ static struct llist * llist_copy(struct llist *list)
+ 		return ret;
  
- 	if (!skip_prefix(buffer, "tree ", &buffer))
- 		return report(options, &commit->object, FSCK_MSG_MISSING_TREE, "invalid format - expected 'tree' line");
--	if (get_sha1_hex(buffer, tree_sha1) || buffer[40] != '\n') {
-+	if (parse_oid_hex(buffer, &tree_oid, &p) || *p != '\n') {
- 		err = report(options, &commit->object, FSCK_MSG_BAD_TREE_SHA1, "invalid 'tree' line format - bad sha1");
- 		if (err)
- 			return err;
+ 	new_item = ret->front = llist_item_get();
+-	new_item->sha1 = list->front->sha1;
++	new_item->oid = list->front->oid;
+ 
+ 	old_item = list->front->next;
+ 	while (old_item) {
+ 		prev = new_item;
+ 		new_item = llist_item_get();
+ 		prev->next = new_item;
+-		new_item->sha1 = old_item->sha1;
++		new_item->oid = old_item->oid;
+ 		old_item = old_item->next;
  	}
--	buffer += 41;
-+	buffer = p + 1;
- 	while (skip_prefix(buffer, "parent ", &buffer)) {
--		if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n') {
-+		if (parse_oid_hex(buffer, &oid, &p) || *p != '\n') {
- 			err = report(options, &commit->object, FSCK_MSG_BAD_PARENT_SHA1, "invalid 'parent' line format - bad sha1");
- 			if (err)
- 				return err;
+ 	new_item->next = NULL;
+@@ -108,10 +108,10 @@ static struct llist * llist_copy(struct llist *list)
+ 
+ static inline struct llist_item *llist_insert(struct llist *list,
+ 					      struct llist_item *after,
+-					       const unsigned char *sha1)
++					      const struct object_id *oid)
+ {
+ 	struct llist_item *new_item = llist_item_get();
+-	new_item->sha1 = sha1;
++	new_item->oid = oid;
+ 	new_item->next = NULL;
+ 
+ 	if (after != NULL) {
+@@ -131,21 +131,21 @@ static inline struct llist_item *llist_insert(struct llist *list,
+ }
+ 
+ static inline struct llist_item *llist_insert_back(struct llist *list,
+-						   const unsigned char *sha1)
++						   const struct object_id *oid)
+ {
+-	return llist_insert(list, list->back, sha1);
++	return llist_insert(list, list->back, oid);
+ }
+ 
+ static inline struct llist_item *llist_insert_sorted_unique(struct llist *list,
+-			const unsigned char *sha1, struct llist_item *hint)
++			const struct object_id *oid, struct llist_item *hint)
+ {
+ 	struct llist_item *prev = NULL, *l;
+ 
+ 	l = (hint == NULL) ? list->front : hint;
+ 	while (l) {
+-		int cmp = hashcmp(l->sha1, sha1);
++		int cmp = oidcmp(l->oid, oid);
+ 		if (cmp > 0) { /* we insert before this entry */
+-			return llist_insert(list, prev, sha1);
++			return llist_insert(list, prev, oid);
  		}
--		buffer += 41;
-+		buffer = p + 1;
- 		parent_line_count++;
+ 		if (!cmp) { /* already exists */
+ 			return l;
+@@ -154,11 +154,11 @@ static inline struct llist_item *llist_insert_sorted_unique(struct llist *list,
+ 		l = l->next;
  	}
- 	graft = lookup_commit_graft(&commit->object.oid);
-@@ -773,7 +774,7 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
- 	if (err)
- 		return err;
- 	if (!commit->tree) {
--		err = report(options, &commit->object, FSCK_MSG_BAD_TREE, "could not load commit's tree %s", sha1_to_hex(tree_sha1));
-+		err = report(options, &commit->object, FSCK_MSG_BAD_TREE, "could not load commit's tree %s", oid_to_hex(&tree_oid));
- 		if (err)
- 			return err;
- 	}
-@@ -799,11 +800,12 @@ static int fsck_commit(struct commit *commit, const char *data,
- static int fsck_tag_buffer(struct tag *tag, const char *data,
- 	unsigned long size, struct fsck_options *options)
+ 	/* insert at the end */
+-	return llist_insert_back(list, sha1);
++	return llist_insert_back(list, oid);
+ }
+ 
+ /* returns a pointer to an item in front of sha1 */
+-static inline struct llist_item * llist_sorted_remove(struct llist *list, const unsigned char *sha1, struct llist_item *hint)
++static inline struct llist_item * llist_sorted_remove(struct llist *list, const struct object_id *oid, struct llist_item *hint)
  {
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	int ret = 0;
- 	const char *buffer;
- 	char *to_free = NULL, *eol;
- 	struct strbuf sb = STRBUF_INIT;
-+	const char *p;
+ 	struct llist_item *prev, *l;
  
- 	if (data)
- 		buffer = data;
-@@ -834,12 +836,12 @@ static int fsck_tag_buffer(struct tag *tag, const char *data,
- 		ret = report(options, &tag->object, FSCK_MSG_MISSING_OBJECT, "invalid format - expected 'object' line");
- 		goto done;
- 	}
--	if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n') {
-+	if (parse_oid_hex(buffer, &oid, &p) || *p != '\n') {
- 		ret = report(options, &tag->object, FSCK_MSG_BAD_OBJECT_SHA1, "invalid 'object' line format - bad sha1");
- 		if (ret)
- 			goto done;
- 	}
--	buffer += 41;
-+	buffer = p + 1;
+@@ -166,7 +166,7 @@ static inline struct llist_item * llist_sorted_remove(struct llist *list, const
+ 	l = (hint == NULL) ? list->front : hint;
+ 	prev = NULL;
+ 	while (l) {
+-		int cmp = hashcmp(l->sha1, sha1);
++		int cmp = oidcmp(l->oid, oid);
+ 		if (cmp > 0) /* not in list, since sorted */
+ 			return prev;
+ 		if (!cmp) { /* found */
+@@ -201,7 +201,7 @@ static void llist_sorted_difference_inplace(struct llist *A,
+ 	b = B->front;
  
- 	if (!skip_prefix(buffer, "type ", &buffer)) {
- 		ret = report(options, &tag->object, FSCK_MSG_MISSING_TYPE_ENTRY, "invalid format - expected 'type' line");
+ 	while (b) {
+-		hint = llist_sorted_remove(A, b->sha1, hint);
++		hint = llist_sorted_remove(A, b->oid, hint);
+ 		b = b->next;
+ 	}
+ }
+@@ -268,9 +268,11 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
+ 		/* cmp ~ p1 - p2 */
+ 		if (cmp == 0) {
+ 			p1_hint = llist_sorted_remove(p1->unique_objects,
+-					p1_base + p1_off, p1_hint);
++					(const struct object_id *)(p1_base + p1_off),
++					p1_hint);
+ 			p2_hint = llist_sorted_remove(p2->unique_objects,
+-					p1_base + p1_off, p2_hint);
++					(const struct object_id *)(p1_base + p1_off),
++					p2_hint);
+ 			p1_off += p1_step;
+ 			p2_off += p2_step;
+ 			continue;
+@@ -501,7 +503,7 @@ static void load_all_objects(void)
+ 		l = pl->all_objects->front;
+ 		while (l) {
+ 			hint = llist_insert_sorted_unique(all_objects,
+-							  l->sha1, hint);
++							  l->oid, hint);
+ 			l = l->next;
+ 		}
+ 		pl = pl->next;
+@@ -562,7 +564,7 @@ static struct pack_list * add_pack(struct packed_git *p)
+ 	base += 256 * 4 + ((p->index_version < 2) ? 4 : 8);
+ 	step = the_hash_algo->rawsz + ((p->index_version < 2) ? 4 : 0);
+ 	while (off < p->num_objects * step) {
+-		llist_insert_back(l.all_objects, base + off);
++		llist_insert_back(l.all_objects, (const struct object_id *)(base + off));
+ 		off += step;
+ 	}
+ 	/* this list will be pruned in cmp_two_packs later */
+@@ -603,8 +605,8 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 	struct pack_list *min, *red, *pl;
+ 	struct llist *ignore;
+-	unsigned char *sha1;
+-	char buf[42]; /* 40 byte sha1 + \n + \0 */
++	struct object_id *oid;
++	char buf[GIT_MAX_HEXSZ + 2]; /* hex hash + \n + \0 */
+ 
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage(pack_redundant_usage);
+@@ -652,10 +654,10 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
+ 	llist_init(&ignore);
+ 	if (!isatty(0)) {
+ 		while (fgets(buf, sizeof(buf), stdin)) {
+-			sha1 = xmalloc(20);
+-			if (get_sha1_hex(buf, sha1))
+-				die("Bad sha1 on stdin: %s", buf);
+-			llist_insert_sorted_unique(ignore, sha1, NULL);
++			oid = xmalloc(sizeof(*oid));
++			if (get_oid_hex(buf, oid))
++				die("Bad object ID on stdin: %s", buf);
++			llist_insert_sorted_unique(ignore, oid, NULL);
+ 		}
+ 	}
+ 	llist_sorted_difference_inplace(all_objects, ignore);
