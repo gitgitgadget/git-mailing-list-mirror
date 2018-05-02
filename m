@@ -2,62 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
 	DATE_IN_PAST_96_XX,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEA101F660
-	for <e@80x24.org>; Tue,  3 Jul 2018 11:26:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 989611F660
+	for <e@80x24.org>; Tue,  3 Jul 2018 11:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753180AbeGCL0P (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jul 2018 07:26:15 -0400
-Received: from mail-pl0-f45.google.com ([209.85.160.45]:42485 "EHLO
-        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753164AbeGCL0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jul 2018 07:26:11 -0400
-Received: by mail-pl0-f45.google.com with SMTP id y15-v6so897686pll.9
-        for <git@vger.kernel.org>; Tue, 03 Jul 2018 04:26:11 -0700 (PDT)
+        id S1753186AbeGCL0R (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jul 2018 07:26:17 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:41923 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753183AbeGCL0Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jul 2018 07:26:16 -0400
+Received: by mail-pg0-f49.google.com with SMTP id l65-v6so838982pgl.8
+        for <git@vger.kernel.org>; Tue, 03 Jul 2018 04:26:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc:cc;
-        bh=GVho3pzBtKAIn4pEL3M9HnVHKluepQV6gUa1GUPlp7E=;
-        b=fKemFSuvqm1BqfNyAvVsNvzhjiNlwA4HaU1dzyfN/JGNIyJZi5T5cXwJK1iJVXvOZT
-         vlT8Gm9A4yuQ1zFoOTyu2wRf6JUrlDrnkmLtPGuyM9y5RgH23VZDF1YTgsCFuIw6ZQgl
-         cz8yvdiTzGmj0UGNrLc4fV8AOoUl8Hj15/EPFWUaHueLRt/f0AIJ+QZrEud7XupKzlJ/
-         uN2ZIw5lY89tdVNCsVgEQRlVBF6goHBja/l0kShL2mxy44eXyiU1qCC4f+RbfCcqwCQI
-         oZUCm8lulirtITgf5PcvEwNX9g55Y6HNblutIbMERM/sRFgfCvxxRKGC0B5O9UicdOSc
-         HyfQ==
+        bh=y0tibTaStWh5MzYsgXV610jLSzwE2OZ5UWbjO0ySSJw=;
+        b=k+XeFiT889PrXyj743iVl92pHNpAcpUwan7tFj0zJ7lBnj74NIzKOtji2qfu6uog2U
+         yrjZRrWPjD1rc6ojOgWYSYFlRqn6UsV2VzK83imror8PEKXY36hcehARh0S/bVbdyOMz
+         vIZSPwkKUuMzAq1vlvv77Q/zEHL7vcbgZXlxl60gS4paOUPKqkg7DvXIy61MZwEOoRcX
+         RqZg1lDby+Cp2bQvKnge9J+XSXMNJTw4fNdC+UfGUR8N7VSIBP5WN2wWFH6IjjkbGzbq
+         59B/JJ2wgkvPHnUO5NxYwDVlu8QClcz9E7hlIHQNkS33HI4nWI8zY6pZokQQ0lHg2CmH
+         XvwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc:cc;
-        bh=GVho3pzBtKAIn4pEL3M9HnVHKluepQV6gUa1GUPlp7E=;
-        b=nyg1KaMlYk4j3RnzMC6+z7dHUmgESoM1d0FB23ntZ0NwD+kJbLscp9Hw/Bw35Sa2bC
-         EQ/gN8vxdN8wgSIPhnmAAzQC2Myuv2GiX3CZs3KC34i9BS5WgOp3aCkbCcskT1ib3y9Y
-         hh6OnYq7948hZZUtwUQ51HYX3XaFHabN4diUI0MZuzMr245/SmlL+24dg9lqVzkn2YIi
-         Fj4ZqkbYH53WHniiSghBPAV36KKhBxz/BWbMZJRs8krbROsReZ01KcyvWVZywnpFG6/H
-         NRTosg2QJ9C41VM3vbgKxbqJf8DCSFHCRfsCOeVQLwQmluE25NJFLzh+9mLkB4/a8pc6
-         dcpA==
-X-Gm-Message-State: APt69E1XUdUy3vN3CyNRaOXaw/IEGWdUINB8j3iO9n8sN258jlVW4K1K
-        zlz5q9pv/MrdQ1mqWv/39yllCA==
-X-Google-Smtp-Source: ADUXVKJmi6gm4Fizp1bp/wZo0GpLwX157WZJya4kGbBwcEaq2ZVrUgEQHJCWhQK7yfKPOZim6jxswA==
-X-Received: by 2002:a17:902:6b09:: with SMTP id o9-v6mr29243227plk.256.1530617170903;
-        Tue, 03 Jul 2018 04:26:10 -0700 (PDT)
+        bh=y0tibTaStWh5MzYsgXV610jLSzwE2OZ5UWbjO0ySSJw=;
+        b=pr47uPH5/FClOGocp/B9y1rk2p2R5dlFIgax48OA/Zqfev7QmvEufHWeEpkfNL0l+Z
+         ZSAUhquD08bWJqg6KmDzfeVvR4kdmFumzRbHECgkvjSM7TQZj2xg8mVZpK/GAjIs1fFQ
+         U9iTazTEeK3kVHfXe58WIWI0zGlPofp8mApd8QMRgTqwEoKhIUVCEwQ7Lg0eqOVKlK6x
+         3DAVBvFAHjTs/giD/I/4CkgqAj6weLtpLV1jN5PUev5eUPWwyg2PJJfjVmerOLIXvtOo
+         BlonbYRWLAa5LKG+v2oWfrYdiKIFtnKiqKUVT88VzAje1OdMz3QBqjgHkAeawpiq2dSb
+         DB8A==
+X-Gm-Message-State: APt69E1AcemNrhmpe1V5UmNVgANgO5yREzEzR+76lSoag+0O34tS+j7a
+        xakWlyL4SW8cRC+s30rbtcHGdw==
+X-Google-Smtp-Source: AAOMgpfmKvw6TzmIGYs/8YRCEgzSIz6jAFxStmO7Ng120v4JusYMD8gtILhn11fuhlYrJo926577Yw==
+X-Received: by 2002:a62:6882:: with SMTP id d124-v6mr29253043pfc.122.1530617175229;
+        Tue, 03 Jul 2018 04:26:15 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id q77-v6sm3992303pfk.152.2018.07.03.04.26.09
+        by smtp.gmail.com with ESMTPSA id 145-v6sm2303096pfz.69.2018.07.03.04.26.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Jul 2018 04:26:10 -0700 (PDT)
-Message-Id: <39272eefcfe66de3ca1aa2ee43d6626ce558caae.1530617166.git.gitgitgadget@gmail.com>
+        Tue, 03 Jul 2018 04:26:14 -0700 (PDT)
+Message-Id: <e98489c8cfd8d45fab5f70923a0788f5abe17789.1530617166.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1.v3.git.gitgitgadget@gmail.com>
 References: <cover.1525448066.git.johannes.schindelin@gmx.de>
         <pull.1.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 30 Apr 2018 23:54:13 +0200
-Subject: [PATCH v3 01/20] linear-assignment: a function to solve least-cost
- assignment problems
+Date:   Wed, 2 May 2018 12:22:29 +0200
+Subject: [PATCH v3 04/20] range-diff: improve the order of the shown commits
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,275 +71,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The problem solved by the code introduced in this commit goes like this:
-given two sets of items, and a cost matrix which says how much it
-"costs" to assign any given item of the first set to any given item of
-the second, assign all items (except when the sets have different size)
-in the cheapest way.
+This patch lets `git range-diff` use the same order as tbdiff.
 
-We use the Jonker-Volgenant algorithm to solve the assignment problem to
-answer questions such as: given two different versions of a topic branch
-(or iterations of a patch series), what is the best pairing of
-commits/patches between the different versions?
+The idea is simple: for left-to-right readers, it is natural to assume
+that the `git range-diff` is performed between an older vs a newer
+version of the branch. As such, the user is probably more interested in
+the question "where did this come from?" rather than "where did that one
+go?".
+
+To that end, we list the commits in the order of the second commit range
+("the newer version"), inserting the unmatched commits of the first
+commit range as soon as all their predecessors have been shown.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile            |   1 +
- linear-assignment.c | 203 ++++++++++++++++++++++++++++++++++++++++++++
- linear-assignment.h |  22 +++++
- 3 files changed, 226 insertions(+)
- create mode 100644 linear-assignment.c
- create mode 100644 linear-assignment.h
+ range-diff.c | 59 +++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 40 insertions(+), 19 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 0cb6590f2..c5ba124f1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -868,6 +868,7 @@ LIB_OBJS += gpg-interface.o
- LIB_OBJS += graph.o
- LIB_OBJS += grep.o
- LIB_OBJS += hashmap.o
-+LIB_OBJS += linear-assignment.o
- LIB_OBJS += help.o
- LIB_OBJS += hex.o
- LIB_OBJS += ident.o
-diff --git a/linear-assignment.c b/linear-assignment.c
-new file mode 100644
-index 000000000..0b0344b5f
---- /dev/null
-+++ b/linear-assignment.c
-@@ -0,0 +1,203 @@
-+/*
-+ * Based on: Jonker, R., & Volgenant, A. (1987). <i>A shortest augmenting path
-+ * algorithm for dense and sparse linear assignment problems</i>. Computing,
-+ * 38(4), 325-340.
-+ */
-+#include "cache.h"
-+#include "linear-assignment.h"
+diff --git a/range-diff.c b/range-diff.c
+index c374333a4..e71cf0ba7 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -12,7 +12,7 @@ struct patch_util {
+ 	struct hashmap_entry e;
+ 	const char *diff, *patch;
+ 
+-	int i;
++	int i, shown;
+ 	int diffsize;
+ 	size_t diff_offset;
+ 	/* the index of the matching item in the other branch, or -1 */
+@@ -256,28 +256,49 @@ static const char *short_oid(struct patch_util *util)
+ 
+ static void output(struct string_list *a, struct string_list *b)
+ {
+-	int i;
+-
+-	for (i = 0; i < b->nr; i++) {
+-		struct patch_util *util = b->items[i].util, *prev;
++	int i = 0, j = 0;
 +
-+#define COST(column, row) cost[(column) + column_count * (row)]
++	/*
++	 * We assume the user is really more interested in the second argument
++	 * ("newer" version). To that end, we print the output in the order of
++	 * the RHS (the `b` parameter). To put the LHS (the `a` parameter)
++	 * commits that are no longer in the RHS into a good place, we place
++	 * them once we have shown all of their predecessors in the LHS.
++	 */
 +
-+/*
-+ * The parameter `cost` is the cost matrix: the cost to assign column j to row
-+ * i is `cost[j + column_count * i].
-+ */
-+void compute_assignment(int column_count, int row_count, int *cost,
-+			int *column2row, int *row2column)
-+{
-+	int *v, *d;
-+	int *free_row, free_count = 0, saved_free_count, *pred, *col;
-+	int i, j, phase;
++	while (i < a->nr || j < b->nr) {
++		struct patch_util *a_util, *b_util;
++		a_util = i < a->nr ? a->items[i].util : NULL;
++		b_util = j < b->nr ? b->items[j].util : NULL;
 +
-+	memset(column2row, -1, sizeof(int) * column_count);
-+	memset(row2column, -1, sizeof(int) * row_count);
-+	ALLOC_ARRAY(v, column_count);
++		/* Skip all the already-shown commits from the LHS. */
++		while (i < a->nr && a_util->shown)
++			a_util = ++i < a->nr ? a->items[i].util : NULL;
 +
-+	/* column reduction */
-+	for (j = column_count - 1; j >= 0; j--) {
-+		int i1 = 0;
-+
-+		for (i = 1; i < row_count; i++)
-+			if (COST(j, i1) > COST(j, i))
-+				i1 = i;
-+		v[j] = COST(j, i1);
-+		if (row2column[i1] == -1) {
-+			/* row i1 unassigned */
-+			row2column[i1] = j;
-+			column2row[j] = i1;
-+		} else {
-+			if (row2column[i1] >= 0)
-+				row2column[i1] = -2 - row2column[i1];
-+			column2row[j] = -1;
++		/* Show unmatched LHS commit whose predecessors were shown. */
++		if (i < a->nr && a_util->matching < 0) {
++			printf("%d: %s < -: --------\n",
++			       i + 1, short_oid(a_util));
++			i++;
++			continue;
 +		}
-+	}
-+
-+	/* reduction transfer */
-+	ALLOC_ARRAY(free_row, row_count);
-+	for (i = 0; i < row_count; i++) {
-+		int j1 = row2column[i];
-+		if (j1 == -1)
-+			free_row[free_count++] = i;
-+		else if (j1 < -1)
-+			row2column[i] = -2 - j1;
-+		else {
-+			int min = COST(!j1, i) - v[!j1];
-+			for (j = 1; j < column_count; j++)
-+				if (j != j1 && min > COST(j, i) - v[j])
-+					min = COST(j, i) - v[j];
-+			v[j1] -= min;
+ 
+-		if (util->matching < 0)
++		/* Show unmatched RHS commits. */
++		while (j < b->nr && b_util->matching < 0) {
+ 			printf("-: -------- > %d: %s\n",
+-					i + 1, short_oid(util));
+-		else {
+-			prev = a->items[util->matching].util;
+-			printf("%d: %s ! %d: %s\n",
+-			       util->matching + 1, short_oid(prev),
+-			       i + 1, short_oid(util));
++			       j + 1, short_oid(b_util));
++			b_util = ++j < b->nr ? b->items[j].util : NULL;
+ 		}
+-	}
+-
+-	for (i = 0; i < a->nr; i++) {
+-		struct patch_util *util = a->items[i].util;
+ 
+-		if (util->matching < 0)
+-			printf("%d: %s < -: --------\n",
+-			       i + 1, short_oid(util));
++		/* Show matching LHS/RHS pair. */
++		if (j < b->nr) {
++			a_util = a->items[b_util->matching].util;
++			printf("%d: %s ! %d: %s\n",
++			       b_util->matching + 1, short_oid(a_util),
++			       j + 1, short_oid(b_util));
++			a_util->shown = 1;
++			j++;
 +		}
-+	}
-+
-+	if (free_count ==
-+	    (column_count < row_count ? row_count - column_count : 0)) {
-+		free(v);
-+		free(free_row);
-+		return;
-+	}
-+
-+	/* augmenting row reduction */
-+	for (phase = 0; phase < 2; phase++) {
-+		int k = 0;
-+
-+		saved_free_count = free_count;
-+		free_count = 0;
-+		while (k < saved_free_count) {
-+			int u1, u2;
-+			int j1 = 0, j2, i0;
-+
-+			i = free_row[k++];
-+			u1 = COST(j1, i) - v[j1];
-+			j2 = -1;
-+			u2 = INT_MAX;
-+			for (j = 1; j < column_count; j++) {
-+				int c = COST(j, i) - v[j];
-+				if (u2 > c) {
-+					if (u1 < c) {
-+						u2 = c;
-+						j2 = j;
-+					} else {
-+						u2 = u1;
-+						u1 = c;
-+						j2 = j1;
-+						j1 = j;
-+					}
-+				}
-+			}
-+			if (j2 < 0) {
-+				j2 = j1;
-+				u2 = u1;
-+			}
-+
-+			i0 = column2row[j1];
-+			if (u1 < u2)
-+				v[j1] -= u2 - u1;
-+			else if (i0 >= 0) {
-+				j1 = j2;
-+				i0 = column2row[j1];
-+			}
-+
-+			if (i0 >= 0) {
-+				if (u1 < u2)
-+					free_row[--k] = i0;
-+				else
-+					free_row[free_count++] = i0;
-+			}
-+			row2column[i] = j1;
-+			column2row[j1] = i;
-+		}
-+	}
-+
-+	/* augmentation */
-+	saved_free_count = free_count;
-+	ALLOC_ARRAY(d, column_count);
-+	ALLOC_ARRAY(pred, column_count);
-+	ALLOC_ARRAY(col, column_count);
-+	for (free_count = 0; free_count < saved_free_count; free_count++) {
-+		int i1 = free_row[free_count], low = 0, up = 0, last, k;
-+		int min, c, u1;
-+
-+		for (j = 0; j < column_count; j++) {
-+			d[j] = COST(j, i1) - v[j];
-+			pred[j] = i1;
-+			col[j] = j;
-+		}
-+
-+		j = -1;
-+		do {
-+			last = low;
-+			min = d[col[up++]];
-+			for (k = up; k < column_count; k++) {
-+				j = col[k];
-+				c = d[j];
-+				if (c <= min) {
-+					if (c < min) {
-+						up = low;
-+						min = c;
-+					}
-+					col[k] = col[up];
-+					col[up++] = j;
-+				}
-+			}
-+			for (k = low; k < up; k++)
-+				if (column2row[col[k]] == -1)
-+					goto update;
-+
-+			/* scan a row */
-+			do {
-+				int j1 = col[low++];
-+
-+				i = column2row[j1];
-+				u1 = COST(j1, i) - v[j1] - min;
-+				for (k = up; k < column_count; k++) {
-+					j = col[k];
-+					c = COST(j, i) - v[j] - u1;
-+					if (c < d[j]) {
-+						d[j] = c;
-+						pred[j] = i;
-+						if (c == min) {
-+							if (column2row[j] == -1)
-+								goto update;
-+							col[k] = col[up];
-+							col[up++] = j;
-+						}
-+					}
-+				}
-+			} while (low != up);
-+		} while (low == up);
-+
-+update:
-+		/* updating of the column pieces */
-+		for (k = 0; k < last; k++) {
-+			int j1 = col[k];
-+			v[j1] += d[j1] - min;
-+		}
-+
-+		/* augmentation */
-+		do {
-+			if (j < 0)
-+				BUG("negative j: %d", j);
-+			i = pred[j];
-+			column2row[j] = i;
-+			k = j;
-+			j = row2column[i];
-+			row2column[i] = k;
-+		} while (i1 != i);
-+	}
-+
-+	free(col);
-+	free(pred);
-+	free(d);
-+	free(v);
-+	free(free_row);
-+}
-diff --git a/linear-assignment.h b/linear-assignment.h
-new file mode 100644
-index 000000000..fc4c502c8
---- /dev/null
-+++ b/linear-assignment.h
-@@ -0,0 +1,22 @@
-+#ifndef HUNGARIAN_H
-+#define HUNGARIAN_H
-+
-+/*
-+ * Compute an assignment of columns -> rows (and vice versa) such that every
-+ * column is assigned to at most one row (and vice versa) minimizing the
-+ * overall cost.
-+ *
-+ * The parameter `cost` is the cost matrix: the cost to assign column j to row
-+ * i is `cost[j + column_count * i].
-+ *
-+ * The arrays column2row and row2column will be populated with the respective
-+ * assignments (-1 for unassigned, which can happen only if column_count !=
-+ * row_count).
-+ */
-+void compute_assignment(int column_count, int row_count, int *cost,
-+			int *column2row, int *row2column);
-+
-+/* The maximal cost in the cost matrix (to prevent integer overflows). */
-+#define COST_MAX (1<<16)
-+
-+#endif
+ 	}
+ }
+ 
 -- 
 gitgitgadget
 
