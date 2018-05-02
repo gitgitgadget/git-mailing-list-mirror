@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D64F21847
-	for <e@80x24.org>; Wed,  2 May 2018 00:28:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E79E921847
+	for <e@80x24.org>; Wed,  2 May 2018 00:28:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753660AbeEBA15 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 20:27:57 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37732 "EHLO
+        id S1753656AbeEBA1z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:27:55 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37698 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753423AbeEBA0o (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:44 -0400
+        by vger.kernel.org with ESMTP id S1753462AbeEBA0q (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:46 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 023D360B3C;
-        Wed,  2 May 2018 00:26:42 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E360360B3A;
+        Wed,  2 May 2018 00:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525220803;
-        bh=lbrjuRNp+Vxx6jdPrBW9KZBqW1TXM9mCmQpHC4oMdes=;
+        s=default; t=1525220805;
+        bh=audNftlfZhrH0d5w7/AWLOJk03xZkTLimPG9WKlnSmQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=m1HEXIqGYwjn36DvYpKBzLZRaY9mgbHKRmvGmvJLP9Jfh/JZzLYKo+3hjfbl1Tyib
-         LPdysXVgTK/g0mV8mCuiJ1ZgKv/XIux41Z5XP5stVfHBNH2aoGMt5yLJbKVaZHvyF2
-         r8pQfHyGHEMPE9P8cZZA/9Bi+bL7EImbrJB3lkRh5h/AC+gdH1UIh2GzgJY4J2la2f
-         P2+uoiE32AykjLuM28CU6Pe2uzbhl4DjiwPGrChcZNv1Jt6sHSpsSJixZoFDCI2y8s
-         aW80A1WMdJsmcD9F5gBWbnCfzekGMd6sCArkxZjMbrBUK0n+TK7zmk9Y0Y0H9zBEnr
-         hkX5EQUF1A4Zm9GIPVo/Njkl+KeC6umtj2SHuoUrhhFa0PoVf4h/442mEQFfn6R0Rr
-         hICkOSvVfeOFmyOxy/y/DCU3mmb0ooSyRhs5Fd2n/ROdD46v+iHsOXyJbjT9Nxy7bI
-         Rl2D4DIYi+bFY++M/mZNrURYo6X88Z+Sx24jXI9LoiE0DSV1B4z
+        b=wiULorcoviYaSB/yGZvmCeTC/yThjCXkNRn53qQrjyZMJyLFWQ4D0bcXoYMQZOzFX
+         8fpv/zhRbnSuWPA9xwrvJJ6zUCAwOoxvL70KaAAwtjBPi4dS0koOnTkMe3pqB/965I
+         SqcZr5P6lQAMcrNQ8eiikPtNEUIQaBe5rxUg1KqNJ2NjhDeMUsblrWnwJpsvs6ViaR
+         wy7Hw4+5CkHt5Rn17SBD30rCkgWxYF9kPwsE26p1qhBlMsurdezxhPO90/HrOphXIt
+         3LvVJ5ArgVJJUqb83nFUnIlhwyawhTVui68GuCninMrXHeHUy26YSC2X0hFBKrkY6y
+         wmi4jKr5fdnJHOYjrJIzG/urO9NQZJl6GeTCdd77cuGZ9UL+ERbnUAmVlNH3tTVqnu
+         m82SIdHhXiPiuJMvH6Wfvm+839rzSU6gTZPz5y+gKov+ZoW9TNOWXdigP93lCKfyjd
+         FehQ6Qxa2UAZ718ZLESB+Nw6S7BhBymassxciuy2HO3nvOqDIIB
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 22/42] revision: replace use of hard-coded constants
-Date:   Wed,  2 May 2018 00:25:50 +0000
-Message-Id: <20180502002610.915892-23-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 24/42] diff: specify abbreviation size in terms of the_hash_algo
+Date:   Wed,  2 May 2018 00:25:52 +0000
+Message-Id: <20180502002610.915892-25-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
 References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
@@ -54,34 +54,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace two uses of the hard-coded constant 40 with references to
-the_hash_algo.
+Instead of using hard-coded 40 constants, refer to the_hash_algo for the
+current hash size.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- revision.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ diff.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index ce0e7b71f2..daf7fe6ff4 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1751,6 +1751,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	const char *arg = argv[0];
- 	const char *optarg;
- 	int argcount;
-+	const unsigned hexsz = the_hash_algo->hexsz;
+diff --git a/diff.c b/diff.c
+index 314c57e3c0..b1666b9b2d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3897,13 +3897,14 @@ static void fill_metainfo(struct strbuf *msg,
+ 		*must_show_header = 0;
+ 	}
+ 	if (one && two && oidcmp(&one->oid, &two->oid)) {
+-		int abbrev = o->flags.full_index ? 40 : DEFAULT_ABBREV;
++		const unsigned hexsz = the_hash_algo->hexsz;
++		int abbrev = o->flags.full_index ? hexsz : DEFAULT_ABBREV;
  
- 	/* pseudo revision arguments */
- 	if (!strcmp(arg, "--all") || !strcmp(arg, "--branches") ||
-@@ -2038,8 +2039,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->abbrev = strtoul(optarg, NULL, 10);
- 		if (revs->abbrev < MINIMUM_ABBREV)
- 			revs->abbrev = MINIMUM_ABBREV;
--		else if (revs->abbrev > 40)
--			revs->abbrev = 40;
-+		else if (revs->abbrev > hexsz)
-+			revs->abbrev = hexsz;
- 	} else if (!strcmp(arg, "--abbrev-commit")) {
- 		revs->abbrev_commit = 1;
- 		revs->abbrev_commit_given = 1;
+ 		if (o->flags.binary) {
+ 			mmfile_t mf;
+ 			if ((!fill_mmfile(&mf, one) && diff_filespec_is_binary(one)) ||
+ 			    (!fill_mmfile(&mf, two) && diff_filespec_is_binary(two)))
+-				abbrev = 40;
++				abbrev = hexsz;
+ 		}
+ 		strbuf_addf(msg, "%s%sindex %s..%s", line_prefix, set,
+ 			    diff_abbrev_oid(&one->oid, abbrev),
+@@ -4138,6 +4139,11 @@ void diff_setup_done(struct diff_options *options)
+ 			      DIFF_FORMAT_NAME_STATUS |
+ 			      DIFF_FORMAT_CHECKDIFF |
+ 			      DIFF_FORMAT_NO_OUTPUT;
++	/*
++	 * This must be signed because we're comparing against a potentially
++	 * negative value.
++	 */
++	const int hexsz = the_hash_algo->hexsz;
+ 
+ 	if (options->set_default)
+ 		options->set_default(options);
+@@ -4218,8 +4224,8 @@ void diff_setup_done(struct diff_options *options)
+ 			 */
+ 			read_cache();
+ 	}
+-	if (40 < options->abbrev)
+-		options->abbrev = 40; /* full */
++	if (hexsz < options->abbrev)
++		options->abbrev = hexsz; /* full */
+ 
+ 	/*
+ 	 * It does not make sense to show the first hit we happened
+@@ -4797,8 +4803,8 @@ int diff_opt_parse(struct diff_options *options,
+ 		options->abbrev = strtoul(arg, NULL, 10);
+ 		if (options->abbrev < MINIMUM_ABBREV)
+ 			options->abbrev = MINIMUM_ABBREV;
+-		else if (40 < options->abbrev)
+-			options->abbrev = 40;
++		else if (the_hash_algo->hexsz < options->abbrev)
++			options->abbrev = the_hash_algo->hexsz;
+ 	}
+ 	else if ((argcount = parse_long_opt("src-prefix", av, &optarg))) {
+ 		options->a_prefix = optarg;
