@@ -2,177 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F0D621847
-	for <e@80x24.org>; Wed,  2 May 2018 15:53:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB1EE21847
+	for <e@80x24.org>; Wed,  2 May 2018 16:01:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751585AbeEBPxf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 11:53:35 -0400
-Received: from mail-ua0-f177.google.com ([209.85.217.177]:38069 "EHLO
-        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750954AbeEBPxe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 11:53:34 -0400
-Received: by mail-ua0-f177.google.com with SMTP id y8so9792344ual.5
-        for <git@vger.kernel.org>; Wed, 02 May 2018 08:53:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=j9EF3GK176ZrGH4ut0u+178k4fblz19DtXKoE4GkffE=;
-        b=hREyvuuHJcs67kMKFWX4+lFXsEhaQz9SMbFcuAOE3T/z31ChzSacIWywQGVRB+rLwK
-         sBg7xhVorUgZJP3PrTRozEoK8S4s3YEy9jepKgYCrtUww71FUx0DWFyb0IO0wUW6tC9m
-         j3THHvY9P4rdQ85ctlSQbjdadVCv3MbRzR0Ee5+4gp7g04pm8NQdngqiYdwCc7s47Boy
-         3Y1C+u0aiTla84JCe3ROFq9mEL9pl8so3KwOrGYA4M7MK5sJsfAZwlwUx6bcKcQ23mBL
-         7NaLmTPhyV9UrJjxRSvvkpZ26/TRoIaX9vGjBnP774YsJKRWyUuGnNcoZNtyDgLBulXF
-         /gUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=j9EF3GK176ZrGH4ut0u+178k4fblz19DtXKoE4GkffE=;
-        b=s51si6pKXulAObLYrc6OOkiJUswNSiUEd6kORcgeoS009fUHxtUq+rzbyq9djqlB6O
-         RfA5xTwws1QxIjwyaG+OaY0ViWDP7uyBRQOjjmIUKaEUH5m3jLJK0Tc3OymbrvOLixZr
-         bd5qhzIey7YpYPq2uofZbqwipmOE9FliBysPZLSwNuzt0j4nRb0C+zGAaKwnXIyIzCz+
-         imbv7hCloWEM3JatXLc6ulc0nBjqdwBAJlfA3vCqAGXFue/l5PAszL0o/ATAXluQs+LU
-         HrooiYHtA2RQPfbig4xs8l+sp7ans6UEYv0dJpTM6cUZoyXkwnC9N7iQAt6ex14Mr9yK
-         9z+w==
-X-Gm-Message-State: ALQs6tC2JJ14HQCY0WAWRcseePRU9XzKjvcVbHoMKBVZKa4DCL4btnc8
-        DyCfJW0Esqz7VYwuGep+YEzm7mGR/YVGP2ti3lE=
-X-Google-Smtp-Source: AB8JxZqrbR3sjwSD2hL6F5ToNA6U1sg1jVxh0zSjnNPHXImbSOEfCfV2nrBSRYlbEEZn0qnqCWHHLxdP7F971COhGXs=
-X-Received: by 10.176.9.92 with SMTP id c28mr18779067uah.50.1525276413322;
- Wed, 02 May 2018 08:53:33 -0700 (PDT)
+        id S1751535AbeEBQBP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 12:01:15 -0400
+Received: from mail-dm3nam03on0114.outbound.protection.outlook.com ([104.47.41.114]:36299
+        "EHLO NAM03-DM3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1750954AbeEBQBO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 12:01:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=UtTj5BHWSZcvcgM2EryaMDc5Xm30wVtDsyUyoQ0X/hU=;
+ b=CioQ/Fbu5Ad8kO1DP3jLdJH4jv5mHbJ7saeNHBaHGuROv6JsQWLmPJD7r2dEEOvlf4u8yLkIutZTMK3Fd8vcQKflc8EnsX8+7ArM6zSpKY6x00VPADaf1L18l68onMlOHAsECu9QBMlVAvmnViA718/MT68hzhfE8GIAPoVmiBU=
+Received: from DM5PR2101MB1016.namprd21.prod.outlook.com (52.132.133.38) by
+ DM5PR2101MB1015.namprd21.prod.outlook.com (52.132.133.37) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.755.1; Wed, 2 May 2018 16:01:12 +0000
+Received: from DM5PR2101MB1016.namprd21.prod.outlook.com
+ ([fe80::5d76:2e71:c400:8b83]) by DM5PR2101MB1016.namprd21.prod.outlook.com
+ ([fe80::5d76:2e71:c400:8b83%4]) with mapi id 15.20.0755.002; Wed, 2 May 2018
+ 16:01:12 +0000
+From:   Ben Peart <Ben.Peart@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     Ben Peart <Ben.Peart@microsoft.com>,
+        "newren@gmail.com" <newren@gmail.com>,
+        "peff@peff.net" <peff@peff.net>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
+Subject: [PATCH v4 0/3] add additional config settings for merge
+Thread-Topic: [PATCH v4 0/3] add additional config settings for merge
+Thread-Index: AQHT4i7KbwGnnv4EbU60ZFLpy/8JOA==
+Date:   Wed, 2 May 2018 16:01:11 +0000
+Message-ID: <20180502160056.5836-1-benpeart@microsoft.com>
+References: <20180420133632.17580-1-benpeart@microsoft.com>
+In-Reply-To: <20180420133632.17580-1-benpeart@microsoft.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [70.33.148.227]
+x-mailer: git-send-email 2.17.0.windows.1
+x-clientproxiedby: BN4PR12CA0016.namprd12.prod.outlook.com
+ (2603:10b6:403:2::26) To DM5PR2101MB1016.namprd21.prod.outlook.com
+ (2603:10b6:4:a8::38)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;DM5PR2101MB1015;7:hSbN+OF+nUb8vYHEmyq0OUmGfl3y/GKPlb4WoA7uOyHaEJEsCg+GUsGKORcp3BUNr+d9xWg+L1/0dcRzioyqYnvqzEn9+Lo7aWsVRTyl6zp+xQ/EImIcNT4oQiUc7FEuVl1qwOMfa4KagdH++wOfBI4dNxaPCYcUYrbPKLGNW6FVfQixqGpC8Z3cffpndOVkmdV5pwgRa9fFaPyqyrG31CdGHLfirlxennUIi9BRpZGTOKxxOnicWcrKiRHP0rYs;20:88+gtCwTdDii16Zn3nGHkW6iDHJj6NeOAqE4Gqm4Ah5k+9RrmBK4mZkE6n/XWbc5YpTBOqsbfDVQH0SNLw930Zwp15IOv4t7THqlytbVqYhRxUroSIafXpyLtGIS0DxvzzE6bggE+7NLL1tE0eeycN3BIQ167x5izmIVnUkRaUU=
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:DM5PR2101MB1015;
+x-ms-traffictypediagnostic: DM5PR2101MB1015:
+x-microsoft-antispam-prvs: <DM5PR2101MB10158619B37CAC2A932DF743F4800@DM5PR2101MB1015.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(166708455590820);
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(10201501046)(3231254)(2018427008)(944501410)(52105095)(93006095)(93001095)(3002001)(6055026)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123564045)(20161123562045)(20161123558120)(6072148)(201708071742011);SRVR:DM5PR2101MB1015;BCL:0;PCL:0;RULEID:;SRVR:DM5PR2101MB1015;
+x-forefront-prvs: 06607E485E
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(39380400002)(366004)(376002)(396003)(346002)(199004)(189003)(36756003)(39060400002)(102836004)(6346003)(486006)(26005)(25786009)(81166006)(81156014)(1730700003)(8676002)(14454004)(5640700003)(68736007)(316002)(54906003)(22452003)(11346002)(476003)(186003)(2616005)(52116002)(6116002)(76176011)(2906002)(59450400001)(386003)(6506007)(66066001)(3846002)(1076002)(446003)(86612001)(2351001)(575784001)(53936002)(6486002)(478600001)(50226002)(6436002)(3280700002)(10090500001)(7736002)(8656006)(72206003)(305945005)(10290500003)(966005)(99286004)(5250100002)(4326008)(8936002)(105586002)(2900100001)(106356001)(97736004)(2501003)(8666007)(6306002)(5660300001)(6512007)(3660700001)(6916009)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR2101MB1015;H:DM5PR2101MB1016.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Ben.Peart@microsoft.com; 
+x-microsoft-antispam-message-info: KIEuEk3adhr1BnK3jmxfmoWByGDV7tEFFNZXj8PDmkZsd0Vbnlg79NqiXgg1H4EXRlIkc8/ba77znrghkiCG0f5JaJ4iKNKgSOdGxSJJA75vizuiXfJHrtE42CUVTwmGJwChDpwJWhHRG8tf+cVHTz/F04PUQiHkGGn82YrjsBIX3XOhd2gAjXW8oazxM/a/
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20180426092524.25264-1-sxlijin@gmail.com> <20180418030655.19378-1-sxlijin@gmail.com>
- <20180426092524.25264-2-sxlijin@gmail.com> <xmqq36zawqr3.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq36zawqr3.fsf@gitster-ct.c.googlers.com>
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Wed, 02 May 2018 15:52:56 +0000
-Message-ID: <CAJZjrdVXKx9em=soHSm0P3BCRffyrc23tqNJuFNuT6EG5hivow@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] commit: fix --short and --porcelain options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Office365-Filtering-Correlation-Id: cdfcb864-a2f3-4c63-6e5f-08d5b045ecac
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cdfcb864-a2f3-4c63-6e5f-08d5b045ecac
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 May 2018 16:01:11.9243
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR2101MB1015
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 1, 2018 at 10:50 PM Junio C Hamano <gitster@pobox.com> wrote:
+This version incorporates Elijah's fixup patch and is now based on
+en/rename-directory-detection in next.
 
-> Samuel Lijin <sxlijin@gmail.com> writes:
+Base Ref: en/rename-directory-detection
+Web-Diff: https://github.com/benpeart/git/commit/16b175c25f
+Checkout: git fetch https://github.com/benpeart/git merge-renames-v4 && git=
+ checkout 16b175c25f
 
-> > Mark the commitable flag in the wt_status object in the call to
-> > `wt_status_collect()`, instead of in `wt_longstatus_print_updated()`,
-> > and simplify the logic in the latter function to take advantage of the
-> > logic shifted to the former. This means that callers do not need to use
-> > `wt_longstatus_print_updated()` to collect the `commitable` flag;
-> > calling `wt_status_collect()` is sufficient.
-> >
-> > As a result, invoking `git commit` with `--short` or `--porcelain`
-> > (which imply `--dry-run`, but previously returned an inconsistent error
-> > code inconsistent with dry run behavior) correctly returns status code
-> > zero when there is something to commit. This fixes two bugs documented
-> > in the test suite.
+### Patches
+
+Ben Peart (3):
+  merge: update documentation for {merge,diff}.renameLimit
+  merge: Add merge.renames config setting
+  merge: pass aggressive when rename detection is turned off
+
+ Documentation/diff-config.txt             |  3 ++-
+ Documentation/merge-config.txt            |  8 +++++-
+ Documentation/merge-strategies.txt        | 11 +++++---
+ diff.c                                    |  2 +-
+ diff.h                                    |  1 +
+ merge-recursive.c                         | 31 ++++++++++++++++++-----
+ merge-recursive.h                         |  8 +++++-
+ t/t3034-merge-recursive-rename-options.sh | 18 +++++++++++++
+ 8 files changed, 68 insertions(+), 14 deletions(-)
 
 
-> Hmm, I couldn't quite get what the above two paragraphs were trying
-> to say, but I think I figured out by looking at wt_status.c before
-> applying this patch, so let me see if I correctly understand what
-> this patch is about by thinking a bit aloud.
+base-commit: c5b761fb2711542073cf1906c0e86a34616b79ae
+--=20
+2.17.0.windows.1
 
-> There are only two assignments to s->commitable in wt-status.c; one
-> happens in wt_longstatus_print_updated(), when the function notices
-> there is even one record to be shown (i.e. there is an "updated"
-> path) and the other in show_merge_in_progress() which is called by
-> wt_longstatus_prpint_state().  The latter codepath happens when we
-> are in a merge and there is no remaining conflicted paths (the code
-> allows the contents to be committed to be identical to HEAD).  Both
-> are called from wt_longstatus_print(), which in turn is called by
-> wt_status_print().
 
-> The implication of the above observation is that we do not set
-> commitable bit (by the way, shouldn't we spell it with two 'T's?)
-
-Yep, MW confirms: https://www.merriam-webster.com/dictionary/commitable
-
-I didn't think to check how common "commitable" is in the codebase, but it
-doesn't seem to be too many, looking at the output of `git grep
-commitable`, so I'll add that to the patch series when I reroll.
-
-> if we are not doing the long format status.  The title hints at it
-> but "fix" is too vague.  It would be easier to understand if it
-> began like this (i.e. state problem clearly first, before outlining
-> the solution):
-
->          [PATCH 1/2] commit: fix exit status under --short/--porcelain
-options
-
->          In wt-status.c, s->commitable bit is set only in the
->          codepaths reachable from wt_status_print() when output
->          format is STATUS_FORMAT_LONG as a side effect of printing
->          bits of status.  Consequently, when running with --short and
->          --porcelain options, the bit is not set to reflect if there
->          is anything to be committed, and "git commit --short" or
->          "--porcelain" (both of which imply "--dry-run") failed to
->          signal if there is anything to commit with its exit status.
-
->          Instead, update s->commitable bit in wt_status_collect(),
->          regardless of the output format. ...
-
-> Is that what is going on here?  Yours made it sound as if moving the
-> code to _collect() was done for the sake of moving code around and
-> simplifying the logic, and bugfix fell out of the move merely as a
-> side effect, which probably was the source of my confusion.
-
-Yep, that's right. I wasn't sure if the imperative tone was required for
-the whole commit or just the description, hence the awkward structure. (I
-also wasn't sure how strict the 70 char limit on the description was.)
-
-> > +static void wt_status_mark_commitable(struct wt_status *s) {
-> > +     int i;
-> > +
-> > +     for (i = 0; i < s->change.nr; i++) {
-> > +             struct wt_status_change_data *d =
-(s->change.items[i]).util;
-> > +
-> > +             if (d->index_status && d->index_status !=
-DIFF_STATUS_UNMERGED) {
-> > +                     s->commitable = 1;
-> > +                     return;
-> > +             }
-> > +     }
-> > +}
-
-> I am not sure if this is sufficient.  From a cursory look of the
-> existing code (and vague recollection in my ageing brain ;-), I
-> think we say it is committable if
-
->   (1) when not merging, there is something to show in the "to be
->       committed" section (i.e. there must be something changed since
->       HEAD in the index).
-
->   (2) when merging, no conflicting paths remain (i.e. change.nr being
->       zero is fine).
-
-> So it is unclear to me how you are dealing with (2) under "--short"
-> option, which does not call show_merge_in_progress() to catch that
-> case.
-
-And the answer there is that I'm not :) I had hoped that there was a test
-to catch mistakes like this but evidently not. Thanks for pointing that
-out, I'll add a test to catch that.
-
-I'm also realizing that I didn't const-ify wt_longstatus_print() in the
-next patch, which is another reason I didn't catch this.
-
-This seems a bit trickier to handle. What do you think of this approach:
-(1) move wt_status_state into wt_status and (2) move the call to
-wt_status_get_state from wt_longstatus_print/wt_porcelain_v2_print_tracking
-to wt_status_collect?
-
-(I kind of also want to suggest enum-ifying some of wt_status_state, but
-that feels beyond the scope of this and also prone to other pitfalls.)
