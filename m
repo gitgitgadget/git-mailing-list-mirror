@@ -2,102 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CB2621841
-	for <e@80x24.org>; Wed,  2 May 2018 07:30:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44DA521841
+	for <e@80x24.org>; Wed,  2 May 2018 07:41:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750999AbeEBHac (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 03:30:32 -0400
-Received: from ironport.klsmartin.com ([212.211.191.11]:44306 "EHLO
-        ironport.klsmartin.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750895AbeEBHab (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 03:30:31 -0400
-X-IronPort-AV: E=Sophos;i="5.49,354,1520895600"; 
-   d="scan'208";a="16176878"
-Received: from unknown (HELO ares.klsmartin.com) ([172.30.5.65])
-  by ironport.klsmartin.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 02 May 2018 09:30:30 +0200
-Received: from SUMMAIL01.UMK.KLS.zentral ([172.25.1.63])
-        by ares.klsmartin.com (8.14.3/8.13.1/SuSE Linux 0.7) with ESMTP id w427URWb019916;
-        Wed, 2 May 2018 09:30:29 +0200
-Received: from SUMMBX01.UMK.KLS.zentral ([172.25.1.64]) by
- SUMMAIL01.UMK.KLS.zentral ([172.25.1.63]) with mapi id 14.03.0351.000; Wed, 2
- May 2018 09:30:26 +0200
-From:   "Middelschulte, Leif" <Leif.Middelschulte@klsmartin.com>
-To:     "hvoigt@hvoigt.net" <hvoigt@hvoigt.net>,
-        "sbeller@google.com" <sbeller@google.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "jacob.keller@gmail.com" <jacob.keller@gmail.com>
-Subject: Re: git merge banch w/ different submodule revision
-Thread-Topic: git merge banch w/ different submodule revision
-Thread-Index: AQHT3UxIUeHy1QVy7UGFBG3KFIVVC6QTM84AgABAJgCAAAk9AIAF8LqAgAKD5oA=
-Date:   Wed, 2 May 2018 07:30:25 +0000
-Message-ID: <1525246025.2176.12.camel@klsmartin.com>
-References: <1524739599.20251.17.camel@klsmartin.com>
-         <CAGZ79kZA_R-5bA6mPdoHkVW-C21pNn_0x6FayhuuXqnOTrmjWw@mail.gmail.com>
-         <CA+P7+xrUwq0G2YySC3SLKqyihhPnFPCiQnQpoVVa89+=W9O9+w@mail.gmail.com>
-         <CAGZ79kaub2k-q-Mcj3H5o6ekyZ8ZZzG7+r5sHt5Ne25Nc3_nPQ@mail.gmail.com>
-         <20180430170229.GA775@book.hvoigt.net>
-In-Reply-To: <20180430170229.GA775@book.hvoigt.net>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.25.70.68]
-x-kse-serverinfo: SUMMAIL01.UMK.KLS.zentral, 9
-x-kse-attachmentfiltering-interceptor-info: protection disabled
-x-kse-antivirus-interceptor-info: scan successful
-x-kse-antivirus-info: Clean, bases: 02.05.2018 03:45:00
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <475459F8B359D34397E1B862CB3741D3@klsmartin.de>
-Content-Transfer-Encoding: base64
+        id S1751469AbeEBHl4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 03:41:56 -0400
+Received: from mout.gmx.net ([212.227.15.18]:35711 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750999AbeEBHlx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 03:41:53 -0400
+Received: from MININT-HARFK7P.southpacific.corp.microsoft.com
+ ([37.201.195.116]) by mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 0MLfLH-1fE3F81XdL-000qsF; Wed, 02 May 2018 09:41:41 +0200
+Date:   Wed, 2 May 2018 09:41:39 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/6] t1406: prepare for the refs code to fail with
+ BUG()
+In-Reply-To: <xmqqvac6wwrw.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1805020930340.73@tvgsbejvaqbjf.bet>
+References: <cover.1525040253.git.johannes.schindelin@gmx.de> <9bbfd73a8e03a888a5e9e8800d853ece518a8bf5.1525040253.git.johannes.schindelin@gmx.de> <CACsJy8A7K6-W=H_08JcJgtziz3aQ4B1WgOcsoMSMuSvEQDW8=A@mail.gmail.com>
+ <xmqqvac6wwrw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:W/YV/3eGYAqTL6jqiHyTLwD+pJXrOykm5GR2dZRdlyX6cW3C5Ar
+ mwYNGbly4ibnay2Iuk2onvS8pmFQbrGFgmwiBt3uLLuoJBypVOlvCF6Td5QogkwlPMN0jct
+ EHFjd3rN/6/GHFQpu1CQt5nLYQ9aB3fqgYd9E5yh1cSJ2zD2hYJmG/HaWXAESgcHK+7zkLD
+ 9v4RG5af+rFRdmLdxUeCA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:c202Vfk3ED8=:8HErixxZQF41F7ywq82qZK
+ /so9q05qt1dkFGyOv3DKTivK9sj2k2/ANm8c1g04Q8waJ6k2vpyg+Evn6jxC9Q7RiNHxjyOmD
+ 6d8gTffm1BwYKhodb8or9KECBRcVcTl8saL9Y0EiiGN4ihwwCEXBtXF01JmiTpEtOnAYCDNPv
+ 06JGlHWsskV6J1LsfmyTMWueYhhs9uqOI+FHtus8b9wcMmtlEgmdyFAMrxMe4nOa6np049Y1J
+ +9QDwl+tPhIcX9pxafhmwPlmSrGRiWuYY+spnquBgvMkT48S4uUFuBbw+7S0/HOZDRrwNlRsa
+ m0Mop2HvfRjnBqMWkpzMXAGXrEWNxsJh95A1tWanAYwO+I8e1l4QNCQze/9bFD3TgCOJ2/wTa
+ Lbg8sfgSQbDxjlcso2KsbZh6WiBJws0gXVV5j7SinLepf1IecgtmrszVIB4s88Rrt+hNKo5gx
+ 2BpRoVajLcFIcPwahNL7xXu7+Aw2Uy1jeM65x84LZ0bznxmSurOWP4NKc7e9hJnyutQyEZRaj
+ cncAVcf0/29Rm/p+Oy550rppafKOzLq+6oQ1wWWZjP8QzC3wsV2atryqh2yETINuJ74tMC9Hr
+ 61Rx93Y8ygT7nVt9pmxFtISDCf08/eXVLi9wSttp4Trwg+4Pd+sE0c4gdMCSKzEQo2v+2Uphl
+ mekgQSf8zJ0VNWYDG4K/iI+qT1EucDykDWL/4bxITtyzpmDzfOHMbE6Oda2pvDOCLLvZnek5V
+ 142ZZgnZVMNz9gadweb6LV8ofjKzcMhB5YOQL9JkuLLxhNYXbp4VVi3IPUJnd1HE31kdt8WkS
+ E0lNzQZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-QW0gTW9udGFnLCBkZW4gMzAuMDQuMjAxOCwgMTk6MDIgKzAyMDAgc2NocmllYiBIZWlrbyBWb2ln
-dDoNCj4gT24gVGh1LCBBcHIgMjYsIDIwMTggYXQgMDM6MTk6MzZQTSAtMDcwMCwgU3RlZmFuIEJl
-bGxlciB3cm90ZToNCj4gPiBTdGVmYW4gd3JvdGU6DQo+ID4gPiBTZWUgaHR0cHM6Ly9naXRodWIu
-Y29tL2dpdC9naXQvY29tbWl0LzY4ZDAzZTRhNmU0NDhhYTU1N2Y1MmFkZWY5MjU5NWFjNGQ2Y2Q0
-YmQNCj4gPiA+ICg2OGQwM2U0YTZlIChJbXBsZW1lbnQgYXV0b21hdGljIGZhc3QtZm9yd2FyZCBt
-ZXJnZSBmb3Igc3VibW9kdWxlcywgMjAxMC0wNy0wNykNCj4gPiA+IHRvIGV4cGxhaW4gdGhlIHNp
-dHVhdGlvbiB5b3UgZW5jb3VudGVyLiAoc3BlY2lmaWNhbGx5IG1lcmdlX3N1Ym1vZHVsZQ0KPiA+
-ID4gYXQgdGhlIGVuZCBvZiB0aGUgZGlmZikNCj4gPiANCj4gPiArY2MgSGVpa28sIGF1dGhvciBv
-ZiB0aGF0IGNvbW1pdC4NCj4gDQo+IEluIHRoYXQgY29tbWl0IHdlIHRyaWVkIHRvIGJlIHZlcnkg
-Y2FyZWZ1bCBhYm91dC4gSSBkbyBub3QgdW5kZXJzdGFuZA0KPiB0aGUgc2l0dWF0aW9uIGluIHdo
-aWNoIHRoZSBjdXJyZW50IHN0cmF0ZWd5IHdvdWxkIGJlIHdyb25nIGJ5IGRlZmF1bHQuDQo+IA0K
-PiBXZSBvbmx5IG1lcmdlIGlmIHRoZSBmb2xsb3dpbmcgYXBwbGllczoNCj4gDQo+ICAqIFRoZSBj
-aGFuZ2VzIGluIHRoZSBzdXBlcnByb2plY3Qgb24gYm90aCBzaWRlcyBwb2ludCBmb3J3YXJkIGlu
-IHRoZQ0KPiAgICBzdWJtb2R1bGUuDQo+IA0KPiAgKiBPbmUgc2lkZSBpcyBjb250YWluZWQgaW4g
-dGhlIG90aGVyLiBDb250YWluZWQgZnJvbSB0aGUgc3VibW9kdWxlDQo+ICAgIHBlcnNwZWN0aXZl
-LiBTaWRlcyBmcm9tIHRoZSBzdXBlcnByb2plY3QgbWVyZ2UgcGVyc3BlY3RpdmUuDQo+IA0KPiBT
-byBpbiBjYXNlIG9mIHRoZSBtZW50aW9uZWQgcmV3aW5kIG9mIGEgc3VibW9kdWxlOiBPbmx5IG9u
-ZSBzaWRlIG9mIHRoZQ0KPiAzLXdheSBtZXJnZSB3b3VsZCBwb2ludCBmb3J3YXJkIGFuZCB0aGUg
-bWVyZ2Ugd291bGQgZmFpbC4NCj4gDQo+IEkgY2FuIGltYWdpbmUsIHRoYXQgaW4gY2FzZSBvZiBh
-IHRlbXBvcmFyeSByZXZlcnQgb2YgYSBjb21taXQgaW4gdGhlDQo+IHN1Ym1vZHVsZSB0aGF0IHlv
-dSB3b3VsZCBub3Qgd2FudCB0aGF0IG1lcmdlZCBpbnRvIHNvbWUgb3RoZXIgYnJhbmNoLg0KPiBC
-dXQgdGhhdCB3b3VsZCBiZSB0aGUgc2FtZSB3aXRob3V0IHN1Ym1vZHVsZXMuIElmIHlvdSBtZXJn
-ZSBhIHRlbXBvcmFyeQ0KPiByZXZlcnQgZnJvbSBhbm90aGVyIGJyYW5jaCB5b3Ugd2lsbCBub3Qg
-Z2V0IGFueSBjb25mbGljdC4NCj4gDQo+IFNvIG1heWJlIHNvbWVvbmUgY2FuIGV4cGxhaW4gdGhl
-IHVzZSBjYXNlIGluIHdoaWNoIG9uZSB3b3VsZCBnZXQgdGhlDQo+IHJlc3VsdHMgdGhhdCBzZWVt
-IHdyb25nPw0KSW4gYW4gaWRlYWwgd29ybGQsIHdoZXJlIHRoZXJlIGFyZSBubyByZWdyZXNzaW9u
-cyBiZXR3ZWVuIHJldmlzaW9ucywgYQ0KZmFzdC1mb3J3YXJkIGlzIGFwcHJvcHJpYXRlLiBIb3dl
-dmVyLCB3ZSBtaWdodCBoYXZlIHJlZ3Jlc3Npb25zIHdpdGhpbg0Kc3VibW9kdWxlcy4NCg0KU28g
-dGhlIHVzZWNhc2UgaXMgdGhlIGZvbGxvd2luZzoNCg0KRW52aXJvbm1lbnQ6DQotIFdlIGhhdmUg
-YSBiYXNlIGxpYnJhcnkgTCB0aGF0IGlzIGRldmVsb3BlZCBieSBzb21lIHRlYW0gKFRlYW0gQiku
-DQotIEFub3RoZXIgdGVhbSAoVGVhbSBBKSBkZXZlbG9wZXMgYSBwcm9kdWN0IFAgYmFzZWQgb24g
-dGhvc2UgbGlicmFyaWVzIHVzaW5nIGdpdC1mbG93Lg0KDQpDYXNlOg0KVGhlIHByb2JsZW0gb2Nj
-dXJzLCB3aGVuIGEgZGV2ZWxvcGVyIChEKSBvZiBUZWFtIEEgdHJpZXMgdG8gaGF2ZSBhIGZlYXR1
-cmUNCnRoYXQgaGUgZGV2ZWxvcGVkIG9uIGEgYnJhbmNoIGFjY2VwdGVkIGJ5IGEgY29yZSBkZXZl
-bG9wZXIgb2YgUDoNCklmIGEgY29yZSBkZXZlbG9wZXIgb2YgUCBhZHZhbmNlZCB0aGUgcmVmZXJl
-bmNlIG9mIEwgd2l0aGluIFAgKGxpbmVhciBoaXN0b3J5KSwgaGUgbWlnaHQNCmRlZW0gdGhlIHdv
-cmsgRCBpbnN1ZmZpY2llbnQuIE5vdCBiZWNhdXNlIG9mIHRoZSBhY3R1YWwgd29yayBieSBELCBi
-dXQgcmVncmVzc2lvbnMNCnRoYXQgc251Y2sgaW50byBMLiBUaGUgY29yZSBkZXZlbG9wZXIgd2ls
-bCBub3QgYmUgaW5mb3JtZWQgYWJvdXQgdGhlIG1pc3NtYXRjaGluZw0KcmV2aXNpb25zIG9mIEwu
-DQoNClNvIGl0IHdvdWxkIGJlIG5pY2UgaWYgdGhlcmUgd2FzIHNvbWUga2luZCBvZiBzd2l0Y2gg
-b3IgYXQgbGVhc3Qgc29tZSB0cmlnZ2VyLg0KDQpDaGVlcnMsDQoNCkxlaWYNCg0KDQo+IA0KPiBD
-aGVlcnMgSGVpa28NCj4g
+Hi,
+
+On Wed, 2 May 2018, Junio C Hamano wrote:
+
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+> > On Mon, Apr 30, 2018 at 12:17 AM, Johannes Schindelin
+> > <johannes.schindelin@gmx.de> wrote:
+> >> t1406 specifically verifies that certain code paths fail with a BUG: ...
+> >> message.
+> >>
+> >> In the upcoming commit, we will convert that message to be generated via
+> >> BUG() instead of die("BUG: ..."), which implies SIGABRT instead of a
+> >> regular exit code.
+> >
+> > On the other hand, SIGABRT on linux creates core dumps. And on some
+> > setup (like mine) core dumps may be redirected to some central place
+> > via /proc/sys/kernel/core_pattern. I think systemd does it too but I
+> > didn't check.
+> >
+> > This moving to SIGABRT when we know it _will_ happen when running the
+> > test suite will accumulate core dumps over time and not cleaned up by
+> > the test suite. Maybe keeping die("BUG: here is a good compromise.
+> 
+> I do not think it is.  At regular runtime, we _do_ want Git to dump
+> core if it triggers BUG() condition, whose point is to mark
+> conditions that should never happen.
+
+Indeed.
+
+> As discussed in this thread, tests that use t/helper/ executables
+> that try to trickle BUG() codepath to ensure that these "should
+> never happen" conditions are caught do need to deal with it.  If
+> dumping core is undesirable, tweaking BUG() implementation so that
+> it becomes die("BUG: ...") *ONLY* when the caller knows what it is
+> doing (e.g. running t/helper/ commands) is probably a good idea.
+> Perhaps GIT_TEST_OPTS can gain one feature "--bug-no-abort" and set
+> an environment variable so that implementation of BUG() can notice,
+> or something.
+
+I think we can do even better than that. t/helper/*.c could set a global
+variable that no other code is supposed to set, to trigger an alternative
+to SIGABRT. Something like
+
+-- snip --
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 87066ced62a..5176f9f20ae 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -47,7 +47,9 @@ static struct test_cmd cmds[] = {
+ int cmd_main(int argc, const char **argv)
+ {
+ 	int i;
++	extern int BUG_exit_code;
+ 
++	BUG_exit_code = 99;
+ 	if (argc < 2)
+ 		die("I need a test name!");
+ 
+diff --git a/usage.c b/usage.c
+index cdd534c9dfc..9c84dccfa97 100644
+--- a/usage.c
++++ b/usage.c
+@@ -210,6 +210,9 @@ void warning(const char *warn, ...)
+ 	va_end(params);
+ }
+ 
++/* Only set this, ever, from t/helper/, when verifying that bugs are
+caught. */
++int BUG_exit_code;
++
+ static NORETURN void BUG_vfl(const char *file, int line, const char *fmt,
+va_list params)
+ {
+ 	char prefix[256];
+@@ -221,6 +224,8 @@ static NORETURN void BUG_vfl(const char *file, int
+line, const char *fmt, va_lis
+ 		snprintf(prefix, sizeof(prefix), "BUG: ");
+ 
+ 	vreportf(prefix, fmt, params);
++	if (BUG_exit_code)
++		exit(BUG_exit_code);
+ 	abort();
+ }
+ 
+-- snap --
+
+I'll try to find some time to play with this.
+
+Ciao,
+Dscho
+> 
+> When we are testing normal parts of Git outside t/helper/, we never
+> want to hit BUG().  Aborting and dumping core when that happens is
+> an desirable outcome.  From that point of view, the idea in 1/6 of
+> this patch series to annotate test_must_fail and say "we know this
+> one is going to hit BUG()" is a sound one.  The implementation in
+> 1/6 to treat SIGABRT as an acceptable failure needs to be replaced
+> to instead use the above mechanism you would use to tell BUG() not
+> to abort but die with message to arrange that to happen before
+> running the git command (most likely something from t/helper/) under
+> test_must_fail ok=sigabrt; and then those who regularly break their
+> Git being tested (read: us devs) and hit BUG() could instead set the
+> environment variable (i.e. internal implementation detail) manually
+> in their environment to turn these BUG()s into die("BUG:...)s while
+> testing their early mistakes if they do not want core (of course,
+> you could just do "ulimit -c", and that may be simpler solution of
+> your "testing Git contaminates central core depot" issue).
+> 
+> 
+> 
+> 
+> 
+> 
+> 
