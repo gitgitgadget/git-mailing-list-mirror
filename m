@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9870A21847
-	for <e@80x24.org>; Wed,  2 May 2018 00:27:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28FA321847
+	for <e@80x24.org>; Wed,  2 May 2018 00:27:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753634AbeEBA1t (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 20:27:49 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37804 "EHLO
+        id S1753641AbeEBA1u (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:27:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37796 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753491AbeEBA0y (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:54 -0400
+        by vger.kernel.org with ESMTP id S1753414AbeEBA0x (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:53 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9D8E160B3C;
-        Wed,  2 May 2018 00:26:52 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D619F60129;
+        Wed,  2 May 2018 00:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525220813;
-        bh=OhRUBD6ZApUZBjb6N/wyLdfAK+wid9dNn0sN/yNWv4g=;
+        s=default; t=1525220812;
+        bh=DZhruOF5rbSf2cqXyaMYj/k+UKraeUEAFhQTrRrek6k=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=wLKNpoT7yTsN6dOjJpXt+HBgsGMcFmqbIyGIzPbiPEOf7/+n4lOg78LiNRo/cyH8K
-         ev5ndhiGGdQ8TAg9fY9w7Vawu+GXfdzRZMVV2haFP8GmJNzltZNw59Wd45WM8y1YW5
-         K5aeBrZ3/fuHqdZ3GQibwS/s7zHxhavpIjw7fDA0QyADUlApNMznuQggqjr6HZApKH
-         pNxH+GLG3XR7wn1g6oNNQsFVLBnhiM4zfh3LKNu6IVwAJOIn/c2+yhVo2fuhQD4Eyy
-         YJz3kU3LQa8d6JQmnXTuqr9DAENuFtvkzDupHCdP7tpJoMyS524tgZQq/2IIX/9Rh3
-         LQ7M8EW5gV3PVkWkzcFbSYCMGR6jTx4omD+XJ/0wfSAZPNPxtBlrm/JRK4EM5rmrkc
-         rhAN45utrd6AnHO5fX6psoNnyBpZxWVKx+e7aA1H3lsAtLGLM99hQN8eFkJVph6VJA
-         CLECYWKoiqcKStYBjV5xUzRVHwu1DBCAKCJggXxfdBEQ3g+ruVn
+        b=DUBGl3D1nD7tsmnM4+gyGBIdr7QGL9vn3d8OWfBvtubxPDCafiIHEsxfnDwFkQGb8
+         VaVhdYWT8mat5PRI2tP+qXs6wHt22/1Cg+S+1lb5wEWRa9VaY6yobD/Z23UwhXTtB9
+         sP2gtcXXeP2lGJi7Zto7EpFRdoI4VbODHKIoceWzhq3kgXFRPMvfLl4eXvQbSFQ72e
+         uvyYzratjeU6uAM593Oz+VAnwRYZpMdGf75S1BNrZqFs/4cumjGLjdO7BZ+6wyKSM3
+         5Sc2jQDhBmk6+Uqo3gh+WkdNnbIewltuNoQ4zxeMjVmyTCR8qQ0Zgv4yKBmtejSWbj
+         5mG9phVjtzNU7KZMsHWrRNNaigqbFDMvpCu5FpvJEal+kgUv6nsogF2ZGRIDjKEJgH
+         /gsAOuHF4WSdxLUI8ZTHj0FU6/OMrA88nwtk8Ak8RknmZwxV5quF8y/FMtkTfep3t2
+         OoYlj2dBlpErASsQZKzVT6jLNeKBGyDdZPxA86LFvaibUWQovKn
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 30/42] sequencer: convert one use of EMPTY_TREE_SHA1_HEX
-Date:   Wed,  2 May 2018 00:25:58 +0000
-Message-Id: <20180502002610.915892-31-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 29/42] merge: convert empty tree constant to the_hash_algo
+Date:   Wed,  2 May 2018 00:25:57 +0000
+Message-Id: <20180502002610.915892-30-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
 References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
@@ -54,24 +54,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert one use of EMPTY_TREE_SHA1_HEX to use empty_tree_oid_hex to
-avoid a dependency on a given hash algorithm.
+To avoid dependency on a particular hash algorithm, convert a use of
+EMPTY_TREE_SHA1_HEX to use the_hash_algo->empty_tree instead.  Since
+both branches now use oid_to_hex, condense the if statement into a
+ternary.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- sequencer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ merge.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 5e3a50fafc..75ed9676fe 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1481,7 +1481,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 		unborn = get_oid("HEAD", &head);
- 		if (unborn)
- 			oidcpy(&head, the_hash_algo->empty_tree);
--		if (index_differs_from(unborn ? EMPTY_TREE_SHA1_HEX : "HEAD",
-+		if (index_differs_from(unborn ? empty_tree_oid_hex() : "HEAD",
- 				       NULL, 0))
- 			return error_dirty_index(opts);
- 	}
+diff --git a/merge.c b/merge.c
+index f06a4773d4..5186cb6156 100644
+--- a/merge.c
++++ b/merge.c
+@@ -11,10 +11,7 @@
+ 
+ static const char *merge_argument(struct commit *commit)
+ {
+-	if (commit)
+-		return oid_to_hex(&commit->object.oid);
+-	else
+-		return EMPTY_TREE_SHA1_HEX;
++	return oid_to_hex(commit ? &commit->object.oid : the_hash_algo->empty_tree);
+ }
+ 
+ int index_has_changes(struct strbuf *sb)
