@@ -2,139 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A42FA21847
-	for <e@80x24.org>; Tue,  1 May 2018 23:59:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE29521847
+	for <e@80x24.org>; Wed,  2 May 2018 00:08:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753321AbeEAX6r (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 19:58:47 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37550 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753312AbeEAX6q (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 19:58:46 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6E40260400;
-        Tue,  1 May 2018 23:58:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525219124;
-        bh=axFhLrxwtsCnt7RQcLHAxynUfAN7MJXablCQjmlypKE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=EVAftaZEhSGZAmFwISuLgRu6kmk9vPX8kEg/Yn7jyWilWPeSg8hGHi1SQIB+9gZQa
-         WArXs/H9PDgCQCGz8d5DZotrFWqShS5flizY1bTsYjloXG/TN16TQvccgADD4bnbL1
-         NS4kyFcEK6n4L2MovST2zlpv6bnyP5rrdsAMjgoN9sNBEVxyuv/7S+Ny6Nebx/60sH
-         jzyXsor8dDc5bnFkvvleJdlQMq2citPShOQjoTnw2xinPohTEIP3U9G+VkwD2X8hYt
-         4WD9tgc7Hi6370BJ3VEbZ7DjlwOImLOLA8fIKukCHzhCiqoeOd34IuKsUnxOIG5kqH
-         QkGFmxTsBP6iGbAjODmRTf/Qmh/R3XRfeh+M49dHFh0j9xnI+QB3/sY3nIxYIa43/1
-         XS2/9HYnJyB1Us8uwhkfALR0eBTUfX/LKkVyQVv34OS+tNfRhKLeFbzrpMNq7ZU2Ct
-         42z6jkiWb+frvI1zW06mL4nPDSbZNe5CVw2xPE2CT9TofaIlENg
-Date:   Tue, 1 May 2018 23:58:38 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 01/41] cache: add a function to read an object ID from a
- buffer
-Message-ID: <20180501235837.GG13217@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
- <20180423233951.276447-2-sandals@crustytoothpaste.net>
- <20180501093603.GA15820@duynguyen.home>
+        id S1753323AbeEBAI2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:08:28 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:51587 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751825AbeEBAI1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 May 2018 20:08:27 -0400
+Received: by mail-wm0-f47.google.com with SMTP id j4so19892718wme.1
+        for <git@vger.kernel.org>; Tue, 01 May 2018 17:08:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=f2ClrTU6YyrYGa8H/TBdykgAEqe1+nqILOtc4oVjLAc=;
+        b=RN3f3cyUBblSuOW7NKiXIaadkVT2a8NzBryvt9F/7k/pkAnhaS+9DBU0yoJEyqh1c6
+         4LWaToG/EYxaW+NRVwc/om4/fcibgglGHPOVN9PVR3c/XxCU4EcX8NiWvS20Pdi2oaqy
+         mJSml97UPB9jyLJRuafObnoZJMSBLTg/n4fdQId+lkj6wDz5vmlhszdhYLxt8qPkE4Ga
+         gqVjSisrA93PZHI/hmQvHyrqafi2PEuMUS35C8ZlKoA51Jxpkxlb1SZyTzRp7VyZgQt5
+         Ivc4gVWimdtqE6AEhDOSK1zUM2Y8Y904knKWTIxqJ3x9GdvpIiNTu7Jy4Dc7lYCj8Nos
+         Wq5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=f2ClrTU6YyrYGa8H/TBdykgAEqe1+nqILOtc4oVjLAc=;
+        b=CL0CgcSsA3fYbMavwyZaV/Q5D1YAu7T7mlT1aOdSvWcIyGO9Pe3RQmqkBazvIOmiTR
+         fqeUG0daM1pJT8Wvc1FIVXEBVP6iOAWJ74rfBGC5gi7obhWytE1o1aQcx+f8Qo8vMhzX
+         5kHZENhxdGYiR97tOsW4LnDeKkztmAGGJhQX5/xGEdcdvBYDLQ2clfqAbgvLC0/ReuHu
+         HTMR2VmhrEaTo7SykezNavMvLQY7obFwOkeYcaYP2NKk3R8w/KW56AG6ytR0EwrRtbws
+         GzrnnBhCovzJ9ZL53ORL4Gk3Ixy5nlm4MeDJ/d+sFYqzeJNQt/RbewDgqq0jsQomdj7n
+         9ZPQ==
+X-Gm-Message-State: ALQs6tAxwr7zrs4V1RnE9E79ccvoxO7785ShxmLBbeayzYhicmbn9j6B
+        FYLpLnCyrSE0bL/vwVWpCWsC85GbVpZ3BOzY9Vo=
+X-Google-Smtp-Source: AB8JxZrAU5HHSn2fPbWo4eqJf1/1kIdjPzlopUEhz/m6+68awlcEtAAzx75eYz0oKSb/dYrIH1PWaDsRH2Nh5flt6Io=
+X-Received: by 2002:a50:da0c:: with SMTP id z12-v6mr7202078edj.62.1525219706612;
+ Tue, 01 May 2018 17:08:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="z9ECzHErBrwFF8sy"
-Content-Disposition: inline
-In-Reply-To: <20180501093603.GA15820@duynguyen.home>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-3-amd64)
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Received: by 10.80.180.180 with HTTP; Tue, 1 May 2018 17:08:06 -0700 (PDT)
+In-Reply-To: <xmqqh8nrx8m1.fsf@gitster-ct.c.googlers.com>
+References: <xmqqbme51rgn.fsf@gitster-ct.c.googlers.com> <20180501165931.25515-1-wink@saville.com>
+ <87zi1jxjqn.fsf@evledraar.gmail.com> <CA+P7+xry-dE0-TMtRzNjiJpR1ZVmGXDy5ObfMxKyWA+eR8XMsQ@mail.gmail.com>
+ <xmqqh8nrx8m1.fsf@gitster-ct.c.googlers.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 1 May 2018 17:08:06 -0700
+Message-ID: <CA+P7+xrPkMkt4zULuhEY-H9QHq8QE3gbkY-i+_HFk04W=vS29w@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 0/3] Optional sub hierarchy for remote tags
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Wink Saville <wink@saville.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, May 1, 2018 at 4:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+>> I also agree, I'd prefer if we aim for the mapping to be something
+>> which works for all refs in the future, even if such support isn't
+>> added now, which is why i've proposed using "refs/remote/<name>/" so
+>> that a tag would go from
+>>
+>> refs/tags/v1.7
+>>
+>> to
+>>
+>> refs/remote/<name>/tags/v1.7
+>>
+>> Ideally, we could work to update "refs/remotes/<name>" to go to
+>> "refs/remote/<name>/heads" as well.
+>
+> This is *not* imcompatible with having refs/remote-tags/* as an
+> interim solution.
 
---z9ECzHErBrwFF8sy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Sure. I'm just proposing that we pick a name that all the refs can move to now.
 
-On Tue, May 01, 2018 at 11:36:03AM +0200, Duy Nguyen wrote:
-> On Mon, Apr 23, 2018 at 11:39:11PM +0000, brian m. carlson wrote:
-> > diff --git a/cache.h b/cache.h
-> > index bbaf5c349a..4bca177cf3 100644
-> > --- a/cache.h
-> > +++ b/cache.h
-> > @@ -1008,6 +1008,11 @@ static inline void oidclr(struct object_id *oid)
-> >  	memset(oid->hash, 0, GIT_MAX_RAWSZ);
-> >  }
-> > =20
-> > +static inline void oidread(struct object_id *oid, const unsigned char =
-*hash)
-> > +{
-> > +	memcpy(oid->hash, hash, the_hash_algo->rawsz);
->=20
-> If performance is a concern, should we go with GIT_MAX_RAWSZ instead
-> of the_hash_algo->rawsz which gives the compiler some more to bypass
-> actual memcpy function and generate copy code directly?
+>
+> We'll have to support refs/remotes/<name>/<branch> anyway long after
+> we start using refs/remote/<name>/heads/<branch> by (1) switching
+> the fetch refspecs newer "git clone" writes to the latter format,
 
-I don't think we can do that.  If we have both NewHash and SHA-1
-compiled in and are using SHA-1, GIT_MAX_RAWSZ will be 32, but we may
-only have 20 bytes that are valid to read.
+Ofcourse we'll have to support this, and i didn't mean to imply we wouldn't.
 
-> If it is not a performance problem, should we avoid inline and move
-> the implementation somewhere?
+I was just hoping to avoid having even more places to check in the future.
 
-I would like to make it as fast as possible if we can, especially since
-hashcpy is inline.  If you have concerns about performance, I can add a
-patch in a future series that does some sort of macro if we're using gcc
-that does something like the following:
+> and (2) extending the dwim table to try both formats.  Having Wink's
+> solution as an interim step adds one more entry to (2) but the
+> machinery is already there.  And it does not change (1), either.
+>
 
-  ({
-    int rawsz =3D the_hash_algo->rawsz;
-    if (rawsz !=3D GIT_SHA1_RAWSZ && rawsz !=3D GIT_MAX_RAWSZ)
-      __builtin_trap(); /* never reached */
-    rawsz;
-   })
+Sure, we could. And yes, we have to do (1), which means we have to do
+(2) anyways. But we can still pick something which is more easily
+expandable than refs/remotes/<name> was.
 
-And then use that instead of the_hash_algo->rawsz in performance
-sensitive paths.  That would mean the compiler would know that it was
-only one of those two values and it could optimize better.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---z9ECzHErBrwFF8sy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlro/y0ACgkQv1NdgR9S
-9osG3g/9E7MkDNihftE0XmqSvzyg3fBvAl99vS9H5HO0E+N4gQ02DCwlSNAGcxJ9
-GXrzyS3kXv4ucRkVBbjBJpJ+m0j0+5DBXvTG/LMNxP4mEq9h2xmEUqSLkZLeo9Ny
-iTljFlN1QgCAe5d4UeUA1ICWXaItygJX+qgVjC7pDLugWb066k8+pS9k6dQPpcDz
-66/m/Pn8WorBIWOY/cnvQA2eiAfkORmrwlKK+qwyPP07M4RM7ozwp34Rg6oDigJ8
-RY5GugLcPYyC/LYPLR63msp9fAj/TZkVBqak5EWumyTYQlfBeQbL6e0fl2OAt5lv
-/3HzCoach2Tud+vgL2FkwZa4itLgZW5H9JF9VOcBPb9KZ/QNqObRng6XCdPWYrAN
-mDlaUGTf2kcPpPQ8ngHIhL1VsirvI/okXYwIcMOd9jRpzFRcUwyiKTkGZRUOzpAz
-5BZilGDhIqSlVr1tON5MfaGC+7m+I7iLh1UjcTGMvQTV1E1CNVN32/Q41pPr+u/v
-sSw9E9RjX+gNVB5v/zCKEKUYpxfkhfzCMKhnePDMMh9UFgFwSOPtmrIDk0N/FxKe
-Uz5M9J8RKg4h48emMQray3v5huUsCjGNe/fzIXUzfq++OOo17wtjMWs6ADAcEFRU
-brpwAF3Dnd9ZkKm3GRozN2E3Tuc2gAshcX3nDDQBdLdsIAOdFUM=
-=d455
------END PGP SIGNATURE-----
-
---z9ECzHErBrwFF8sy--
+Thanks,
+Jake
