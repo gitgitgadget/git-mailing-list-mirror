@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C11821847
-	for <e@80x24.org>; Wed,  2 May 2018 00:28:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BB8021847
+	for <e@80x24.org>; Wed,  2 May 2018 00:28:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753444AbeEBA0n (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 20:26:43 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37716 "EHLO
+        id S1753671AbeEBA2F (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:28:05 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37660 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753423AbeEBA0i (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:38 -0400
+        by vger.kernel.org with ESMTP id S1753438AbeEBA0n (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:43 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CA0FF60B37;
-        Wed,  2 May 2018 00:26:35 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A29D060B3B;
+        Wed,  2 May 2018 00:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525220796;
-        bh=GydLDBgVXphmhBs65BHUxbMPlzgqHE0UMVcVOIw2lJ8=;
+        s=default; t=1525220802;
+        bh=O97ovEQfJda5+CtJR0vs5YYmrvr2nG9KVoZooBCE70I=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=mdNZGLrTTDVFaRbD0ObOe3IUHBDTruTwGgnXU7nj3Y8+AYbL7uvi8CitfVcQma8Gs
-         r2XxtcP4BcZ4zJC138VVOTdq/oHme8yvF6LY/pOt+Ef6Ibk6shERpZErCWTd9Mhgro
-         GwIEtljdx9Upni3rvg3qwE69HKrkUiPqeSagIAsdQYl8M833G6bpZvmY8RB9Vfjbt7
-         BNnWC6uEN5yZSQSjwMt4ku0psASXCegMsqRc2okJ4s7KJR1KMIv9gVkG0kC0zfgwon
-         q2eZb7KzwuYc0hlaOeC1zPGRWEo+2L6BmV9Y5OhAnruuYhr48sjdwJZ0s8FhthPStm
-         Uo4GPemwMSpkHYAR2UksnjoRMULGeozPHXXBPuRDNCSyiWja8MW7j62nEPb7YYmKuj
-         09vq6vM+k1pCJq2Ea1vC/XY8KeUU//Ihab6SifFg0gANaxJUIxluCKEr43HWa0/mYX
-         gd0fMF/R/TPhAChmDvIsi5nv3Pa7yQkHSMJAL84EKejM9ynug8W
+        b=HQnVOA2CT1A7qxBQ9qnIE6slwa5PZHWKZY1ZRWKIbD/DFDtjJTuIJMsIUIyFIpH9D
+         C9iIenG8Fqie3Np6VsAfLSARvIXVPp2kvfUX18GEQiMi7anIPhncd5Zn26FJNrejIT
+         NT7wfTYGcVZ+7A8bpCsSZs5/i3/DtTrHRaJYS+68dq9fH7w3AeES5+fCrhhfM/kr4R
+         Bcrm1hd0pVs70N4e6ZOxQzqIn3ddEV4+39B2ziOKvNfZcVpygPBOTv1G2ZyhqVPRCt
+         fnBUs8prBTYSh0cHwWma/fpNx8ucVOfnOE8y2+/IUqfN2II+6erfitMr9CVtLENBMd
+         deFNUzobHTozIQc9F0JUlm91ptOlJfb3pAv/4HUDUpxYOhiwNgHbPQJqzZmYhqHgwk
+         91tBDsL8zd/M9ti9W0soTf/D39DvjnageZ9FzcGp9AJV2GgRN7bTbyGHcws4fL7LWD
+         kzXuPROfoL0sMf7A/+ne3o/FkdtES/84M9gXThtMSvcOJbfwVyk
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 16/42] Update struct index_state to use struct object_id
-Date:   Wed,  2 May 2018 00:25:44 +0000
-Message-Id: <20180502002610.915892-17-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 21/42] http: eliminate hard-coded constants
+Date:   Wed,  2 May 2018 00:25:49 +0000
+Message-Id: <20180502002610.915892-22-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
 References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
@@ -54,111 +54,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust struct index_state to use struct object_id instead of unsigned
-char [20].
+Use the_hash_algo to find the right size for parsing pack names.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h                          |  2 +-
- read-cache.c                     | 16 ++++++++--------
- t/helper/test-dump-split-index.c |  2 +-
- unpack-trees.c                   |  2 +-
- 4 files changed, 11 insertions(+), 11 deletions(-)
+ http.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index f06737fb78..37d081b8e4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -324,7 +324,7 @@ struct index_state {
- 		 drop_cache_tree : 1;
- 	struct hashmap name_hash;
- 	struct hashmap dir_hash;
+diff --git a/http.c b/http.c
+index 3034d10b68..312a5e1833 100644
+--- a/http.c
++++ b/http.c
+@@ -2047,7 +2047,8 @@ int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
+ 	int ret = 0, i = 0;
+ 	char *url, *data;
+ 	struct strbuf buf = STRBUF_INIT;
 -	unsigned char sha1[20];
-+	struct object_id oid;
- 	struct untracked_cache *untracked;
- 	uint64_t fsmonitor_last_update;
- 	struct ewah_bitmap *fsmonitor_dirty;
-diff --git a/read-cache.c b/read-cache.c
-index f47666b975..9dbaeeec43 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1806,7 +1806,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	if (verify_hdr(hdr, mmap_size) < 0)
- 		goto unmap;
++	unsigned char hash[GIT_MAX_RAWSZ];
++	const unsigned hexsz = the_hash_algo->hexsz;
  
--	hashcpy(istate->sha1, (const unsigned char *)hdr + mmap_size - the_hash_algo->rawsz);
-+	hashcpy(istate->oid.hash, (const unsigned char *)hdr + mmap_size - the_hash_algo->rawsz);
- 	istate->version = ntohl(hdr->hdr_version);
- 	istate->cache_nr = ntohl(hdr->hdr_entries);
- 	istate->cache_alloc = alloc_nr(istate->cache_nr);
-@@ -1902,10 +1902,10 @@ int read_index_from(struct index_state *istate, const char *path,
- 	base_oid_hex = oid_to_hex(&split_index->base_oid);
- 	base_path = xstrfmt("%s/sharedindex.%s", gitdir, base_oid_hex);
- 	ret = do_read_index(split_index->base, base_path, 1);
--	if (hashcmp(split_index->base_oid.hash, split_index->base->sha1))
-+	if (oidcmp(&split_index->base_oid, &split_index->base->oid))
- 		die("broken index, expect %s in %s, got %s",
- 		    base_oid_hex, base_path,
--		    sha1_to_hex(split_index->base->sha1));
-+		    oid_to_hex(&split_index->base->oid));
- 
- 	freshen_shared_index(base_path, 0);
- 	merge_base_index(istate);
-@@ -2194,7 +2194,7 @@ static int verify_index_from(const struct index_state *istate, const char *path)
- 	if (n != the_hash_algo->rawsz)
- 		goto out;
- 
--	if (hashcmp(istate->sha1, hash))
-+	if (hashcmp(istate->oid.hash, hash))
- 		goto out;
- 
- 	close(fd);
-@@ -2373,7 +2373,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 			return -1;
- 	}
- 
--	if (ce_flush(&c, newfd, istate->sha1))
-+	if (ce_flush(&c, newfd, istate->oid.hash))
- 		return -1;
- 	if (close_tempfile_gently(tempfile)) {
- 		error(_("could not close '%s'"), tempfile->filename.buf);
-@@ -2497,10 +2497,10 @@ static int write_shared_index(struct index_state *istate,
- 		return ret;
- 	}
- 	ret = rename_tempfile(temp,
--			      git_path("sharedindex.%s", sha1_to_hex(si->base->sha1)));
-+			      git_path("sharedindex.%s", oid_to_hex(&si->base->oid)));
- 	if (!ret) {
--		hashcpy(si->base_oid.hash, si->base->sha1);
--		clean_shared_index_files(sha1_to_hex(si->base->sha1));
-+		oidcpy(&si->base_oid, &si->base->oid);
-+		clean_shared_index_files(oid_to_hex(&si->base->oid));
- 	}
- 
- 	return ret;
-diff --git a/t/helper/test-dump-split-index.c b/t/helper/test-dump-split-index.c
-index 754e9bb624..63c689d6ee 100644
---- a/t/helper/test-dump-split-index.c
-+++ b/t/helper/test-dump-split-index.c
-@@ -14,7 +14,7 @@ int cmd__dump_split_index(int ac, const char **av)
- 	int i;
- 
- 	do_read_index(&the_index, av[1], 1);
--	printf("own %s\n", sha1_to_hex(the_index.sha1));
-+	printf("own %s\n", oid_to_hex(&the_index.oid));
- 	si = the_index.split_index;
- 	if (!si) {
- 		printf("not a split index\n");
-diff --git a/unpack-trees.c b/unpack-trees.c
-index e73745051e..038ef7b926 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1287,7 +1287,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	o->result.split_index = o->src_index->split_index;
- 	if (o->result.split_index)
- 		o->result.split_index->refcount++;
--	hashcpy(o->result.sha1, o->src_index->sha1);
-+	oidcpy(&o->result.oid, &o->src_index->oid);
- 	o->merge_size = len;
- 	mark_all_ce_unused(o->src_index);
- 
+ 	end_url_with_slash(&buf, base_url);
+ 	strbuf_addstr(&buf, "objects/info/packs");
+@@ -2063,13 +2064,13 @@ int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
+ 		switch (data[i]) {
+ 		case 'P':
+ 			i++;
+-			if (i + 52 <= buf.len &&
++			if (i + hexsz + 12 <= buf.len &&
+ 			    starts_with(data + i, " pack-") &&
+-			    starts_with(data + i + 46, ".pack\n")) {
+-				get_sha1_hex(data + i + 6, sha1);
+-				fetch_and_setup_pack_index(packs_head, sha1,
++			    starts_with(data + i + hexsz + 6, ".pack\n")) {
++				get_sha1_hex(data + i + 6, hash);
++				fetch_and_setup_pack_index(packs_head, hash,
+ 						      base_url);
+-				i += 51;
++				i += hexsz + 11;
+ 				break;
+ 			}
+ 		default:
