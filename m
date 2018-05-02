@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 472C221847
-	for <e@80x24.org>; Wed,  2 May 2018 00:26:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FEB221847
+	for <e@80x24.org>; Wed,  2 May 2018 00:26:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753375AbeEBA0Z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 20:26:25 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37608 "EHLO
+        id S1753382AbeEBA02 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:26:28 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37616 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753343AbeEBA0W (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:22 -0400
+        by vger.kernel.org with ESMTP id S1753377AbeEBA00 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:26 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0153D609A0;
-        Wed,  2 May 2018 00:26:20 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 130DF609A2;
+        Wed,  2 May 2018 00:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525220781;
-        bh=xyJVJlTJrF0jFwhl+DwOgMRL8F2rbQ6KioMBePPIv1A=;
+        s=default; t=1525220785;
+        bh=KkXxgqMfU6aPigoV0fXt9FMrNpDc5f62SQe2jW3zdf4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=AGj4KiAHUiEGCojLLjAYQ5DDB/XjKyaccbY5eLdj3u7YnH51T3/ilTqXuY17sV+4t
-         k8bho2z5XfvPaA/hwp+mGBBuAO/J6V5IPnjNanw+aV22IbRFd40b2XVm80rJzdKO+f
-         Xy2nux1KszKr2rtFzNUMBa82u3GCWRVewxUzTdZ7WKJX8DwWVd55Mj/MQLd9E4tzZU
-         oOLdrd4VoZNz0GW26PMZf8+937XYEJ9PooEVKbvHV9fIlVkoZrxDVp0cGTvWQjx5ie
-         fYafUwPCQdq1y7q6BW/IztpPtbCXTf+lu7PxwQ4Xhp6mFA1D+ph9bT830a8gBFo48y
-         RZuqV6d0Nw4S5cif/k9tCc1/5lsW/HROaCqrfmcE06/d5GrUzPs96zAJ/8i0YWjXl0
-         h5TeKvd792gdrTUQOlXhUY6zN4PleuaGR3CV5UGR1DO0zld5ORjwS/IveA5ADFG8sV
-         DenpMa0nrUB/V6x8YmZvQmJGwrpI7kBod8izEbng7Srn7RIzysh
+        b=KBvfYUz/v7SG55t/l8j5K2EPPig3fWgnzNH0we/kKLMw0eRRw9Sv3SOBtsicWZu8x
+         fhk7bcKcoEakC1JgrP2Ru+wbaiGGU8IP4U/kJduc+9BZzOBi9Iew5zdDY9OR1GM1TE
+         mg+1muHZxfqCe2qzPBK3Riyr18EkFU8P3CcCkP5O3s8vjhDB3euQS1DE2T6F+ruHZy
+         nT1od5gG2LHXCizmrFrg1oQIkobCXzKcM3RFe5Vd9o/sfVtsk982iCVyiRxwtpB+RD
+         8tn40HTXAKB7qMtq370Omq320mGQTvbwUh3cE9X0VRE14urUxhv9zzFS7PlUcvwpn7
+         j3nF6bENYOIDd6imyX+4+A5mb0jUKO9/sL1sKlfBe+/NaGu57HqUNdx6HjoJTJtyIg
+         K3PV+Aw1pg/OnokRF9PCUe3oI5AepWo6q6KDZSI4YqKWozBV1rAFnJWpl1E7jI9dS4
+         tVcSPkImC7eLuv9CS3KHBcwLYDW1dqmpON+OLAYdOEPL/uN3+D+
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 02/42] server-info: remove unused members from struct pack_info
-Date:   Wed,  2 May 2018 00:25:30 +0000
-Message-Id: <20180502002610.915892-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 06/42] sha1-file: convert freshen functions to object_id
+Date:   Wed,  2 May 2018 00:25:34 +0000
+Message-Id: <20180502002610.915892-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
 References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
@@ -54,43 +54,144 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The head member of struct pack_info is completely unused and the
-nr_heads member is used only in one place, which is an assignment.  This
-member was last usefully used in 3e15c67c90 (server-info: throw away T
-computation as well, 2005-12-04).
-
-Since this structure member is not useful, remove it.
+Convert the various functions for freshening objects and
+has_loose_object_nonlocal to use struct object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- server-info.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ builtin/pack-objects.c |  2 +-
+ cache.h                |  2 +-
+ sha1-file.c            | 36 ++++++++++++++++++------------------
+ 3 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/server-info.c b/server-info.c
-index 83460ec0d6..7ce6dcd67b 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -92,8 +92,6 @@ static struct pack_info {
- 	int old_num;
- 	int new_num;
- 	int nr_alloc;
--	int nr_heads;
--	unsigned char (*head)[20];
- } **info;
- static int num_pack;
- static const char *objdir;
-@@ -225,12 +223,9 @@ static void init_pack_info(const char *infofile, int force)
- 	else
- 		stale = 1;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 4bdae5a1d8..907e112331 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1012,7 +1012,7 @@ static int want_object_in_pack(const struct object_id *oid,
+ 	int want;
+ 	struct list_head *pos;
  
--	for (i = 0; i < num_pack; i++) {
--		if (stale) {
-+	for (i = 0; i < num_pack; i++)
-+		if (stale)
- 			info[i]->old_num = -1;
--			info[i]->nr_heads = 0;
--		}
--	}
+-	if (!exclude && local && has_loose_object_nonlocal(oid->hash))
++	if (!exclude && local && has_loose_object_nonlocal(oid))
+ 		return 0;
  
- 	/* renumber them */
- 	QSORT(info, num_pack, compare_info);
+ 	/*
+diff --git a/cache.h b/cache.h
+index 37d3f0104b..f06737fb78 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1275,7 +1275,7 @@ extern int has_object_file_with_flags(const struct object_id *oid, int flags);
+  * with the specified name.  This function does not respect replace
+  * references.
+  */
+-extern int has_loose_object_nonlocal(const unsigned char *sha1);
++extern int has_loose_object_nonlocal(const struct object_id *oid);
+ 
+ extern void assert_oid_type(const struct object_id *oid, enum object_type expect);
+ 
+diff --git a/sha1-file.c b/sha1-file.c
+index 77ccaab928..1617e25495 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -709,42 +709,42 @@ int check_and_freshen_file(const char *fn, int freshen)
+ 	return 1;
+ }
+ 
+-static int check_and_freshen_local(const unsigned char *sha1, int freshen)
++static int check_and_freshen_local(const struct object_id *oid, int freshen)
+ {
+ 	static struct strbuf buf = STRBUF_INIT;
+ 
+ 	strbuf_reset(&buf);
+-	sha1_file_name(the_repository, &buf, sha1);
++	sha1_file_name(the_repository, &buf, oid->hash);
+ 
+ 	return check_and_freshen_file(buf.buf, freshen);
+ }
+ 
+-static int check_and_freshen_nonlocal(const unsigned char *sha1, int freshen)
++static int check_and_freshen_nonlocal(const struct object_id *oid, int freshen)
+ {
+ 	struct alternate_object_database *alt;
+ 	prepare_alt_odb(the_repository);
+ 	for (alt = the_repository->objects->alt_odb_list; alt; alt = alt->next) {
+-		const char *path = alt_sha1_path(alt, sha1);
++		const char *path = alt_sha1_path(alt, oid->hash);
+ 		if (check_and_freshen_file(path, freshen))
+ 			return 1;
+ 	}
+ 	return 0;
+ }
+ 
+-static int check_and_freshen(const unsigned char *sha1, int freshen)
++static int check_and_freshen(const struct object_id *oid, int freshen)
+ {
+-	return check_and_freshen_local(sha1, freshen) ||
+-	       check_and_freshen_nonlocal(sha1, freshen);
++	return check_and_freshen_local(oid, freshen) ||
++	       check_and_freshen_nonlocal(oid, freshen);
+ }
+ 
+-int has_loose_object_nonlocal(const unsigned char *sha1)
++int has_loose_object_nonlocal(const struct object_id *oid)
+ {
+-	return check_and_freshen_nonlocal(sha1, 0);
++	return check_and_freshen_nonlocal(oid, 0);
+ }
+ 
+-static int has_loose_object(const unsigned char *sha1)
++static int has_loose_object(const struct object_id *oid)
+ {
+-	return check_and_freshen(sha1, 0);
++	return check_and_freshen(oid, 0);
+ }
+ 
+ static void mmap_limit_check(size_t length)
+@@ -1661,15 +1661,15 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 	return finalize_object_file(tmp_file.buf, filename.buf);
+ }
+ 
+-static int freshen_loose_object(const unsigned char *sha1)
++static int freshen_loose_object(const struct object_id *oid)
+ {
+-	return check_and_freshen(sha1, 1);
++	return check_and_freshen(oid, 1);
+ }
+ 
+-static int freshen_packed_object(const unsigned char *sha1)
++static int freshen_packed_object(const struct object_id *oid)
+ {
+ 	struct pack_entry e;
+-	if (!find_pack_entry(the_repository, sha1, &e))
++	if (!find_pack_entry(the_repository, oid->hash, &e))
+ 		return 0;
+ 	if (e.p->freshened)
+ 		return 1;
+@@ -1689,7 +1689,7 @@ int write_object_file(const void *buf, unsigned long len, const char *type,
+ 	 * it out into .git/objects/??/?{38} file.
+ 	 */
+ 	write_object_file_prepare(buf, len, type, oid, hdr, &hdrlen);
+-	if (freshen_packed_object(oid->hash) || freshen_loose_object(oid->hash))
++	if (freshen_packed_object(oid) || freshen_loose_object(oid))
+ 		return 0;
+ 	return write_loose_object(oid, hdr, hdrlen, buf, len, 0);
+ }
+@@ -1708,7 +1708,7 @@ int hash_object_file_literally(const void *buf, unsigned long len,
+ 
+ 	if (!(flags & HASH_WRITE_OBJECT))
+ 		goto cleanup;
+-	if (freshen_packed_object(oid->hash) || freshen_loose_object(oid->hash))
++	if (freshen_packed_object(oid) || freshen_loose_object(oid))
+ 		goto cleanup;
+ 	status = write_loose_object(oid, header, hdrlen, buf, len, 0);
+ 
+@@ -1726,7 +1726,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
+ 	int hdrlen;
+ 	int ret;
+ 
+-	if (has_loose_object(oid->hash))
++	if (has_loose_object(oid))
+ 		return 0;
+ 	buf = read_object(oid->hash, &type, &len);
+ 	if (!buf)
