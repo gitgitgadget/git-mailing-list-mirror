@@ -2,115 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48BCE21847
-	for <e@80x24.org>; Wed,  2 May 2018 18:07:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A25EE21847
+	for <e@80x24.org>; Wed,  2 May 2018 18:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751287AbeEBSHq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 14:07:46 -0400
-Received: from mail-by2nam01on0115.outbound.protection.outlook.com ([104.47.34.115]:52569
-        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751075AbeEBSHo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 14:07:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=aOAFHMXLoEeiExdG4h8ULcfgqMCG57NWi3GJCp7RN10=;
- b=JvoWwmipwuymVH0AeVXhEBwU03cO85Nzw+Y3zA79QBzuvlPUfeWMPFwQ8ZNGlOV/eC1w/U9B3YD7hvRLZXo6P/jM8YKJrz20ApEV0YnAEbO1ejGsPdCv4hfrItgdEoFtOmqiHIhF9ZQx3HkhgAaDVHjPkQTtjPR1eaLjYKHEckg=
-Received: from BL0PR2101MB1106.namprd21.prod.outlook.com (52.132.24.29) by
- BL0PR2101MB0897.namprd21.prod.outlook.com (52.132.23.146) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.755.1; Wed, 2 May 2018 18:07:42 +0000
-Received: from BL0PR2101MB1106.namprd21.prod.outlook.com
- ([fe80::89b8:b210:812d:c7a0]) by BL0PR2101MB1106.namprd21.prod.outlook.com
- ([fe80::89b8:b210:812d:c7a0%4]) with mapi id 15.20.0755.011; Wed, 2 May 2018
- 18:07:42 +0000
-From:   Jameson Miller <jamill@microsoft.com>
-To:     Duy Nguyen <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>
-CC:     Git Mailing List <git@vger.kernel.org>
-Subject: RE: [PATCH 00/13] object store: alloc
-Thread-Topic: [PATCH 00/13] object store: alloc
-Thread-Index: AQHT4ZQkT0wTvjJ5ek2bMhaifDxhu6Qcq1QAgAAQHeA=
-Date:   Wed, 2 May 2018 18:07:42 +0000
-Message-ID: <BL0PR2101MB1106C07DEE184F8DA2C7CA62CE800@BL0PR2101MB1106.namprd21.prod.outlook.com>
-References: <20180501213403.14643-1-sbeller@google.com>
- <CACsJy8DKnBRDZC=oBd8nTOAVzQf3UtoLCeoGKjcMHgUmXf-KqQ@mail.gmail.com>
-In-Reply-To: <CACsJy8DKnBRDZC=oBd8nTOAVzQf3UtoLCeoGKjcMHgUmXf-KqQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=jamill@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2018-05-02T18:07:40.0024842Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic;
- Sensitivity=General
-x-originating-ip: [2001:4898:8010:1:b2ec:da36:1ccf:fa06]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0897;7:siEf97EAxAgZmhWSUSP4E7Qv527YowA8snOYDanRwlHhgVs5oEpiW/BgQIbJKgKgWZ52vraENKcJ2yOp91d1z0KjxG+xfnxTiTUYeRIVRth4IFSaEfpx5dJNvpSiO0denne7uhMvh026XKJO7lMN1DdEA7tEGmvSsmT5qiFX07bRMFlxaxRywWNHZNEVs5wwWqJzBxc0A/wcjZfcXbdD9xTp+HMJ1T4Kg85L181902crgnnejWBYBa60Y9YycUuj;20:4yGIXKmrGgp09eOohWFnqs8JF6bL97Ut1lgNHcuK+IccoRBOxqrwFdIMJVNlYR/f0BKJo56QsMrkSbZmoVK/Fd7fO4kZAFOPfmVD8e1Y8mE2yv7jUODejP4HejH7wjL9JWxRCroOpEmhPFJwerY4OvoczSX8UAbaA101nxiikQs=
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(2017052603328)(7193020);SRVR:BL0PR2101MB0897;
-x-ms-traffictypediagnostic: BL0PR2101MB0897:
-x-microsoft-antispam-prvs: <BL0PR2101MB08978A4CD85BC25491A696D8CE800@BL0PR2101MB0897.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(9452136761055)(85827821059158)(211936372134217)(153496737603132);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(93006095)(93001095)(10201501046)(3231254)(2018427008)(944501410)(52105095)(3002001)(6055026)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123562045)(20161123564045)(20161123558120)(6072148)(201708071742011);SRVR:BL0PR2101MB0897;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0897;
-x-forefront-prvs: 06607E485E
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(366004)(376002)(39860400002)(39380400002)(346002)(199004)(189003)(13464003)(3280700002)(39060400002)(8990500004)(86612001)(2900100001)(14454004)(486006)(186003)(4326008)(97736004)(6246003)(10090500001)(5250100002)(102836004)(55016002)(9686003)(53546011)(6346003)(6116002)(53936002)(2906002)(476003)(8936002)(7736002)(6436002)(6506007)(229853002)(81156014)(68736007)(8676002)(99286004)(33656002)(478600001)(46003)(5660300001)(86362001)(11346002)(25786009)(110136005)(105586002)(7696005)(3660700001)(81166006)(22452003)(74316002)(305945005)(10290500003)(446003)(106356001)(316002)(76176011);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0897;H:BL0PR2101MB1106.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=jamill@microsoft.com; 
-x-microsoft-antispam-message-info: JkqRZDUQ72iMapXCZuiVhq6zaitaSr9TKE+89ICQvPQ5fGQAKqZf7TDiIFTrrTOlIvPOpjJ4z0M5avtCpO3tDHQEyLsL+eur6hmgbqlRqGTcng6NX0NnOA1HKXkFd7MBxWGZ6ZmMs1J2G5r1bPE8fnFj8xKHy81UeJa8VM7oo7TZWdQa/eo0ulaisaiuyeZ9
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1751316AbeEBSKb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 14:10:31 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:34717 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750944AbeEBSK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 14:10:27 -0400
+Received: by mail-oi0-f65.google.com with SMTP id l1-v6so13782762oii.1
+        for <git@vger.kernel.org>; Wed, 02 May 2018 11:10:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=kh0YqwGpwlkVLvp+v6VOIoh4sJePn9svaO6fDkUUv44=;
+        b=IZe2E3aWlIWd/iXqiMClTkU1Rm2FWKZmswnEC43FzugkgFQX49Yqb6/XzTjJeX8oIr
+         9UJcbR3ZgFJX+hpwaAaHu9MdU78m1xS7o2poSTdcEmcEbNVVttAkFveNLIw5LlHosm3R
+         +T76LATh1NFKNUXSAMk5bdCNp03VKdW9zOLjwhPD5RYsJ+P6TCxmHuNJHcrwWgZ2H27u
+         6TRWqee9Ct/h04hJysC/FaVbYcs5CKjs0pkpqCuSflwf7MslD9/QF+gOsa/hsBKJv5eH
+         EfTFETrDRZU1IPooOwPbxREEjwCuXpmsTBCR7NcfzI6F0MxNWM6kQCMdnlznpPUNcwm+
+         xOtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=kh0YqwGpwlkVLvp+v6VOIoh4sJePn9svaO6fDkUUv44=;
+        b=jhdI/pZLvxDXcpANtV4UCbE4bYI2f9yu/QwNzajjQNjqrRZ1KTlMOnWPcNr9bnG+Bx
+         yxfKlqJYbSXwyduh2A4dKbLw4lPCADmQKSaQ32ekmLDdVlVEkRGfNsBZIBteV3QFiaUi
+         TI3oWncepm2Oka6rK3l5XcW4/cb+hbsn8uHbn7gP6HXXQJPxKfQoyhiA1FhY6uDkeYO3
+         YP69kfxRSo/OHK9aJZeRkkFS6KOmnzLWgKH+yuhsojLYduiJC7eq411bJe7uzTN5SHbo
+         kbMsOQIivaKz2reE8A7iyTp9j8p5zbyORCypNK0+Jh31FTjYx9OTe5UyzxyXdxlx1sTb
+         iC/A==
+X-Gm-Message-State: ALQs6tCbRgTGIomaGmujGrgxhWTLsgu8VtwOcCrgFldd6hq7Cv5pkeqi
+        2Q5t37Uayt1riJp12HNSz/M4nqrNKZGTJf62SLU=
+X-Google-Smtp-Source: AB8JxZqmfqylxvlMrrEt5LMnPGP/MciFwOxzsfnD85iml3+/ry4A7d+Xq0ukBiGU5kkEmeCdWNtX2P5KtimbUG/pfLU=
+X-Received: by 2002:aca:51ce:: with SMTP id f197-v6mr13093492oib.32.1525284626656;
+ Wed, 02 May 2018 11:10:26 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 5d30a521-25d8-45dd-64be-08d5b0579965
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5d30a521-25d8-45dd-64be-08d5b0579965
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 May 2018 18:07:42.2934
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0897
+Received: by 10.74.178.133 with HTTP; Wed, 2 May 2018 11:09:56 -0700 (PDT)
+In-Reply-To: <CAPig+cTZyYC-1_TxL2PrfOF6HAktUxxM+g5EXcByS5fCDMdCHg@mail.gmail.com>
+References: <20180502105452.17583-1-avarab@gmail.com> <CACsJy8Ae9PP8BMbyX5mPJukGpC06jMvvbg0fMFL+fu+EUg1kPw@mail.gmail.com>
+ <CAPig+cTZyYC-1_TxL2PrfOF6HAktUxxM+g5EXcByS5fCDMdCHg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 2 May 2018 20:09:56 +0200
+Message-ID: <CACsJy8C9yY-uJf-j=orfPUnwZ2U=-0vVMqWEbS306P0v5_UbPw@mail.gmail.com>
+Subject: Re: [PATCH] checkout & worktree: introduce a core.DWIMRemote setting
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRHV5IE5ndXllbiA8cGNs
-b3Vkc0BnbWFpbC5jb20+DQo+IFNlbnQ6IFdlZG5lc2RheSwgTWF5IDIsIDIwMTggMTowMiBQTQ0K
-PiBUbzogU3RlZmFuIEJlbGxlciA8c2JlbGxlckBnb29nbGUuY29tPg0KPiBDYzogR2l0IE1haWxp
-bmcgTGlzdCA8Z2l0QHZnZXIua2VybmVsLm9yZz47IEphbWVzb24gTWlsbGVyDQo+IDxqYW1pbGxA
-bWljcm9zb2Z0LmNvbT4NCj4gU3ViamVjdDogUmU6IFtQQVRDSCAwMC8xM10gb2JqZWN0IHN0b3Jl
-OiBhbGxvYw0KPiANCj4gT24gVHVlLCBNYXkgMSwgMjAxOCBhdCAxMTozMyBQTSwgU3RlZmFuIEJl
-bGxlciA8c2JlbGxlckBnb29nbGUuY29tPiB3cm90ZToNCj4gPiBJIGFsc28gZGViYXRlZCBpZiBp
-dCBpcyB3b3J0aCBjb252ZXJ0aW5nIGFsbG9jLmMgdmlhIHRoaXMgcGF0Y2ggc2VyaWVzDQo+ID4g
-b3IgaWYgaXQgbWlnaHQgbWFrZSBtb3JlIHNlbnNlIHRvIHVzZSB0aGUgbmV3IG1lbS1wb29sIGJ5
-IEphbWVzb25bMV0uDQo+ID4NCj4gPiBJIHZhZ3VlbHkgd29uZGVyIGFib3V0IHRoZSBwZXJmb3Jt
-YW5jZSBpbXBhY3QsIGFzIHRoZSBvYmplY3QNCj4gPiBhbGxvY2F0aW9uIGNvZGUgc2VlbWVkIHRv
-IGJlIHJlbGV2YW50IGluIHRoZSBwYXN0Lg0KPiANCj4gSWYgSSByZW1lbWJlciBjb3JyZWN0bHks
-IGFsbG9jLmMgd2FzIGFkZGVkIGJlY2F1c2UgbWFsbG9jKCkgaGFzIHRvbyBoaWdoDQo+IG92ZXJo
-ZWFkIHBlciBhbGxvY2F0aW9uIChhbmQgd2UgY3JlYXRlIGxpa2UgbWlsbGlvbnMgb2YgdGhlbSku
-IEFzIGxvbmcgYXMgeW91DQo+IGtlZXAgYWxsb2NhdGlvbiBvdmVyaGVhZCBsb3csIGl0IHNob3Vs
-ZCBiZSBvay4gTm90ZSB0aGF0IHdlIGFsbG9jYXRlIGEgbG90IG1vcmUNCj4gdGhhbiB0aGUgbWVt
-LXBvb2wncyBtYWluIHRhcmdldCAoY2FjaGUgZW50cmllcyBpZiBJIHJlbWVtYmVyIGNvcnJlY3Rs
-eSkuIFdlDQo+IG1heSBoYXZlIGEgY291cGxlIHRob3VzYW5kcyBjYWNoZSBlbnRyaWVzLiAgV2Ug
-YWxyZWFkeSBkZWFsIHdpdGggYSBjb3VwbGUNCj4gbWlsbGlvbiBvZiBzdHJ1Y3Qgb2JqZWN0Lg0K
-DQpUaGUgd29yayB0byBtb3ZlIGNhY2hlIGVudHJ5IGFsbG9jYXRpb24gb250byBhIG1lbW9yeSBw
-b29sIHdhcyBtb3RpdmF0ZWQgYnkNCnRoZSBmYWN0IHRoYXQgd2UgYXJlIGxvb2tpbmcgYXQgaW5k
-ZXhlcyB3aXRoIG1pbGxpb25zIG9mIGVudHJpZXMuIElmIHRoZXJlIGlzIHNjYWxpbmcNCmNvbmNl
-cm4gd2l0aCB0aGUgY3VycmVudCB2ZXJzaW9uIG9mIG1lbS1wb29sLCB3ZSB3b3VsZCBsaWtlIHRv
-IGFkZHJlc3MgaXQgdGhlcmUNCmFzIHdlbGwuIE9yIGlmIHRoZXJlIGlzIGltcHJvdmVtZW50cyB0
-aGF0IGNhbiBiZSBzaGFyZWQsIHRoYXQgd291bGQgYmUgbmljZSBhcyB3ZWxsLg0KDQo+IC0tDQo+
-IER1eQ0K
+On Wed, May 2, 2018 at 8:00 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> 2. Building on #1: How well is the term "DWIM" understood by non-power
+> users? A term, such as "default" is more well known.
+
+I'm going off topic but I kinda dislike this term. First time I
+encountered it in the code I didn't even know what it meant. Since it
+has not been leaked to user documents (I only did a grep on
+Documentation/) perhaps a better term should be used, preferably not
+another acronym.
+--
+Duy
