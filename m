@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D0FF21847
-	for <e@80x24.org>; Wed,  2 May 2018 00:27:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A87C221847
+	for <e@80x24.org>; Wed,  2 May 2018 00:27:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753560AbeEBA1O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 20:27:14 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37878 "EHLO
+        id S1753562AbeEBA1P (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:27:15 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37866 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753470AbeEBA1C (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:27:02 -0400
+        by vger.kernel.org with ESMTP id S1753515AbeEBA1A (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:27:00 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8363A60D54;
-        Wed,  2 May 2018 00:27:00 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A2BEE60CF1;
+        Wed,  2 May 2018 00:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525220821;
-        bh=0suzklJG0d1MNG2nlWN/45tMrCsFv4BO4ihcXECL36Y=;
+        s=default; t=1525220820;
+        bh=KvyVCixoT/RQDUDsccJrhzo4t5nKGZXmEDGQhb4xhek=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=cWUfPa6768hZd7XNAeX2waJIurxfJfCls0dz9I/4cKHP394FcFzbn4LvsvFzL2AEA
-         QUFiHSSy/MaQ1jIErg7cgb6LMxyVh/MY8VEW1dlOLvlNfg0s4ufadr60qnsYV8sDVa
-         fPJBCEgVGuJUUZfVi7PfX5xFKgFDQcmbQHKDuQgpBA47C6LzodaxPmBFT+i1N2uvRb
-         9MJgZCbSI+d3lcOK/2oxkJw1kHgWYg7N0gbtg/BNw11uB2T9w87ZZQbs1iID7MCzhb
-         51CO9NlKDwOJLMMhZ+wHpJbHlRTppr1l/l0wSxBXbAs56tIIS2LKAusYdd0f+4T6tV
-         DdYB3IqWqdHo+I8mjqL8WloNG/QOThUDCewUa+DN2J1FpYc99onvGsexWusFT10lSP
-         +Sk/f8IB52g/JAkBt/8hxUI0m+KSunwzUPaUeqRGLp8Yy3kBzVFXvO88wR7R9nD+HX
-         x/+zjxVY48KclVWhkO13aBKjhiGB42pz1zwlP5vNmUhn2vuhDh3
+        b=cQBSyqKjCjzqhSDfFEEXG/7jP/7N5RnXzTkixUvSVv37+SOTCE+dDpZR66ae2bjO1
+         LMG9qltYlWXYc9W/O94EV8ngzdC0Q8CQeJo6s7/vh5mGc6BR1UNCME2TE+pdW7KLcw
+         cfBUTlS1iXoU6Q3mNBVPf6vgACfqZCmY0C5c/fB1YZkK2zrb9SAQ5mERhw/SZctQmM
+         heh54K2zdIUPp165OUfo6HoiqOcG6GOss8c9ozTJqUrYZfrRMv/Yu79MJC69JGb2sl
+         xtIzuJLRzvS8YGwv5Y6aQzq/eKPoMUD/NfFwAArLm28qblHk/616QHlgNLKSCeLKq7
+         C4Ar3avLYmZ9WY+ZcOhVXNDNtsOG87uhCHUI5P/Ez++Aqcuy5LM4hSe84qYa9bnt+B
+         WBM6qwokxzT74rHuRkTNH64t4so642XVzRLN1r6QWyXVNldCTZYGbBz0L4WwcibxXp
+         BD4SjaR33Kbyb9bxxrePjlCYWvRAcGseoOLSjAUrFvsxEd4erV0
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 38/42] dir: use the_hash_algo for empty blob object ID
-Date:   Wed,  2 May 2018 00:26:06 +0000
-Message-Id: <20180502002610.915892-39-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 37/42] sequencer: use the_hash_algo for empty tree object ID
+Date:   Wed,  2 May 2018 00:26:05 +0000
+Message-Id: <20180502002610.915892-38-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
 References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
@@ -55,24 +55,24 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 To ensure that we are hash algorithm agnostic, use the_hash_algo to look
-up the object ID for the empty blob instead of using the empty_tree_oid
+up the object ID for the empty tree instead of using the empty_tree_oid
 variable.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- dir.c | 2 +-
+ sequencer.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/dir.c b/dir.c
-index 06f4c4a8bf..e879c34c2e 100644
---- a/dir.c
-+++ b/dir.c
-@@ -828,7 +828,7 @@ static int add_excludes(const char *fname, const char *base, int baselen,
- 		if (size == 0) {
- 			if (oid_stat) {
- 				fill_stat_data(&oid_stat->stat, &st);
--				oidcpy(&oid_stat->oid, &empty_blob_oid);
-+				oidcpy(&oid_stat->oid, the_hash_algo->empty_blob);
- 				oid_stat->valid = 1;
- 			}
- 			close(fd);
+diff --git a/sequencer.c b/sequencer.c
+index 75ed9676fe..a487411fde 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1120,7 +1120,7 @@ static int try_to_commit(struct strbuf *msg, const char *author,
+ 
+ 	if (!(flags & ALLOW_EMPTY) && !oidcmp(current_head ?
+ 					      &current_head->tree->object.oid :
+-					      &empty_tree_oid, &tree)) {
++					      the_hash_algo->empty_tree, &tree)) {
+ 		res = 1; /* run 'git commit' to display error message */
+ 		goto out;
+ 	}
