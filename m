@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E256D21847
-	for <e@80x24.org>; Wed,  2 May 2018 00:26:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1347E21847
+	for <e@80x24.org>; Wed,  2 May 2018 00:26:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753452AbeEBA0o (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 20:26:44 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37698 "EHLO
+        id S1753459AbeEBA0p (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:26:45 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37660 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753433AbeEBA0i (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:38 -0400
+        by vger.kernel.org with ESMTP id S1753420AbeEBA0g (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:36 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 120CC60B38;
-        Wed,  2 May 2018 00:26:37 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CC99E60B36;
+        Wed,  2 May 2018 00:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525220797;
-        bh=NvxzTlRT5yJ6DBdS6gnNCpgCyBqZHAo1KmYh77nuPV8=;
+        s=default; t=1525220795;
+        bh=6/Lat8/wiIC9YpnlBXgmVAfkfEbM8cRZR6fJgCQ4O9o=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=wJiD8eMH5dQddzmtIUSiKZakmrIw7Jn7NL4whU34HAz6oz5kjBao7DQHtKkCq8GV1
-         8uOMs9p4oPV2tsjNDm6hZla1++fbWvfFNx5LLhzu9tSva79rtN+TmqdDSTZngchk5s
-         Edc160srbELOdVm0p/4k4YHfeG9fhiFOdjIMkLRvv3wQJOL4IkfKbqM+0SRYaf1H9J
-         1Z+t+a6Ek4uR4V5ga5Y9w/bvoZjXsY2rALnSj0bHp5Hiq1CasVAWvgm8NgM43CwHEQ
-         rpK19lhq5OFC7LgoFu6rKsRfqqhe2D89vupMEZ29RF+8lCGvpFdd/WdxJy904Mn2Li
-         CP8ORZf8opeIOQm1E62ges1HVICarhWdzXLYLzLVbf9Zbvw6AIyvwnPkJLFZzThqbs
-         2j5obH+jIBiE0FeK9pZNOamo3Q8AeXvwAfJeM25QHTaHyZDHcxqanOgHWYR51XxUKl
-         xbMEIKZ448lJSzO6FSF1/xIeeXhxHkYdF68A52Egj0hwp6ihs0A
+        b=WhWLmpb1sj0G4+xxxvtPO5F2af2ch66S6rj8Hl6618Toa3zR18E8SAogqTuBUiBZZ
+         hHGcSOR6LYvOwGBJBtyNYcp5GkGdh4d4AetDEXGq2cqcLJMNR2WSKSz9ulEuEZ/WsN
+         reQ6TAueSaLaWNb38MIfJ7XRMEDuIiGm4F7Mz4GWg+NyweMOaVJyUV9w0YJz7OXile
+         QTCNNOU2Vpe2J44fk0kkSj4YE9hzlR9+sA12PwTePSh40ms3Smd0XBwXwg/xiuy5Li
+         LSCCWYdgSRxlLXi1w1wx8cALs7CASjeO/LOsGg+pq72vLbedzeM6It7Rqv/eiqdVbN
+         KX8Hfjvyngm/Ec6jKPB6fgQaCDLx7fa3a7LFeZ9B/calxMN591rDucudYog5tfoB2q
+         pd2/XhaBpkWlhHPaAQaXsqlSnCJX+f7G9nYJwSlW3R55HopJHhYd7X01IpJinfMwAn
+         yeEOLrRvri+yMR4r8Ne5TKqm/s/mGQGi22hHbRutGMNBBIIIXF4
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 17/42] pack-redundant: convert linked lists to use struct object_id
-Date:   Wed,  2 May 2018 00:25:45 +0000
-Message-Id: <20180502002610.915892-18-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 15/42] split-index: convert struct split_index to object_id
+Date:   Wed,  2 May 2018 00:25:43 +0000
+Message-Id: <20180502002610.915892-16-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
 References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
@@ -54,172 +54,176 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert struct llist_item and the rest of the linked list code to use
-struct object_id.  Add a use of GIT_MAX_HEXSZ to avoid a dependency on a
-hard-coded constant.
+Convert the base_sha1 member of struct split_index to use struct
+object_id and rename it base_oid.  Include cache.h to make the structure
+visible.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/pack-redundant.c | 50 +++++++++++++++++++++-------------------
- 1 file changed, 26 insertions(+), 24 deletions(-)
+ builtin/rev-parse.c              |  4 ++--
+ read-cache.c                     | 22 +++++++++++-----------
+ split-index.c                    | 10 +++++-----
+ split-index.h                    |  4 +++-
+ t/helper/test-dump-split-index.c |  2 +-
+ 5 files changed, 22 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 0fe1ff3cb7..0494dceff7 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -20,7 +20,7 @@ static int load_all_packs, verbose, alt_odb;
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 36b2087782..55c0b90441 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -887,8 +887,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				if (read_cache() < 0)
+ 					die(_("Could not read the index"));
+ 				if (the_index.split_index) {
+-					const unsigned char *sha1 = the_index.split_index->base_sha1;
+-					const char *path = git_path("sharedindex.%s", sha1_to_hex(sha1));
++					const struct object_id *oid = &the_index.split_index->base_oid;
++					const char *path = git_path("sharedindex.%s", oid_to_hex(oid));
+ 					strbuf_reset(&buf);
+ 					puts(relative_path(path, prefix, &buf));
+ 				}
+diff --git a/read-cache.c b/read-cache.c
+index 10f1c6bb8a..f47666b975 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1878,7 +1878,7 @@ int read_index_from(struct index_state *istate, const char *path,
+ 	uint64_t start = getnanotime();
+ 	struct split_index *split_index;
+ 	int ret;
+-	char *base_sha1_hex;
++	char *base_oid_hex;
+ 	char *base_path;
  
- struct llist_item {
- 	struct llist_item *next;
--	const unsigned char *sha1;
-+	const struct object_id *oid;
- };
- static struct llist {
- 	struct llist_item *front;
-@@ -90,14 +90,14 @@ static struct llist * llist_copy(struct llist *list)
+ 	/* istate->initialized covers both .git/index and .git/sharedindex.xxx */
+@@ -1889,7 +1889,7 @@ int read_index_from(struct index_state *istate, const char *path,
+ 	trace_performance_since(start, "read cache %s", path);
+ 
+ 	split_index = istate->split_index;
+-	if (!split_index || is_null_sha1(split_index->base_sha1)) {
++	if (!split_index || is_null_oid(&split_index->base_oid)) {
+ 		post_read_index_from(istate);
  		return ret;
- 
- 	new_item = ret->front = llist_item_get();
--	new_item->sha1 = list->front->sha1;
-+	new_item->oid = list->front->oid;
- 
- 	old_item = list->front->next;
- 	while (old_item) {
- 		prev = new_item;
- 		new_item = llist_item_get();
- 		prev->next = new_item;
--		new_item->sha1 = old_item->sha1;
-+		new_item->oid = old_item->oid;
- 		old_item = old_item->next;
  	}
- 	new_item->next = NULL;
-@@ -108,10 +108,10 @@ static struct llist * llist_copy(struct llist *list)
+@@ -1899,12 +1899,12 @@ int read_index_from(struct index_state *istate, const char *path,
+ 	else
+ 		split_index->base = xcalloc(1, sizeof(*split_index->base));
  
- static inline struct llist_item *llist_insert(struct llist *list,
- 					      struct llist_item *after,
--					       const unsigned char *sha1)
-+					      const struct object_id *oid)
- {
- 	struct llist_item *new_item = llist_item_get();
--	new_item->sha1 = sha1;
-+	new_item->oid = oid;
- 	new_item->next = NULL;
+-	base_sha1_hex = sha1_to_hex(split_index->base_sha1);
+-	base_path = xstrfmt("%s/sharedindex.%s", gitdir, base_sha1_hex);
++	base_oid_hex = oid_to_hex(&split_index->base_oid);
++	base_path = xstrfmt("%s/sharedindex.%s", gitdir, base_oid_hex);
+ 	ret = do_read_index(split_index->base, base_path, 1);
+-	if (hashcmp(split_index->base_sha1, split_index->base->sha1))
++	if (hashcmp(split_index->base_oid.hash, split_index->base->sha1))
+ 		die("broken index, expect %s in %s, got %s",
+-		    base_sha1_hex, base_path,
++		    base_oid_hex, base_path,
+ 		    sha1_to_hex(split_index->base->sha1));
  
- 	if (after != NULL) {
-@@ -131,21 +131,21 @@ static inline struct llist_item *llist_insert(struct llist *list,
- }
+ 	freshen_shared_index(base_path, 0);
+@@ -2499,7 +2499,7 @@ static int write_shared_index(struct index_state *istate,
+ 	ret = rename_tempfile(temp,
+ 			      git_path("sharedindex.%s", sha1_to_hex(si->base->sha1)));
+ 	if (!ret) {
+-		hashcpy(si->base_sha1, si->base->sha1);
++		hashcpy(si->base_oid.hash, si->base->sha1);
+ 		clean_shared_index_files(sha1_to_hex(si->base->sha1));
+ 	}
  
- static inline struct llist_item *llist_insert_back(struct llist *list,
--						   const unsigned char *sha1)
-+						   const struct object_id *oid)
- {
--	return llist_insert(list, list->back, sha1);
-+	return llist_insert(list, list->back, oid);
- }
+@@ -2554,13 +2554,13 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 	if (!si || alternate_index_output ||
+ 	    (istate->cache_changed & ~EXTMASK)) {
+ 		if (si)
+-			hashclr(si->base_sha1);
++			oidclr(&si->base_oid);
+ 		ret = do_write_locked_index(istate, lock, flags);
+ 		goto out;
+ 	}
  
- static inline struct llist_item *llist_insert_sorted_unique(struct llist *list,
--			const unsigned char *sha1, struct llist_item *hint)
-+			const struct object_id *oid, struct llist_item *hint)
- {
- 	struct llist_item *prev = NULL, *l;
+ 	if (getenv("GIT_TEST_SPLIT_INDEX")) {
+-		int v = si->base_sha1[0];
++		int v = si->base_oid.hash[0];
+ 		if ((v & 15) < 6)
+ 			istate->cache_changed |= SPLIT_INDEX_ORDERED;
+ 	}
+@@ -2575,7 +2575,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
  
- 	l = (hint == NULL) ? list->front : hint;
- 	while (l) {
--		int cmp = hashcmp(l->sha1, sha1);
-+		int cmp = oidcmp(l->oid, oid);
- 		if (cmp > 0) { /* we insert before this entry */
--			return llist_insert(list, prev, sha1);
-+			return llist_insert(list, prev, oid);
+ 		temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
+ 		if (!temp) {
+-			hashclr(si->base_sha1);
++			oidclr(&si->base_oid);
+ 			ret = do_write_locked_index(istate, lock, flags);
+ 			goto out;
  		}
- 		if (!cmp) { /* already exists */
- 			return l;
-@@ -154,11 +154,11 @@ static inline struct llist_item *llist_insert_sorted_unique(struct llist *list,
- 		l = l->next;
+@@ -2595,7 +2595,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 	/* Freshen the shared index only if the split-index was written */
+ 	if (!ret && !new_shared_index) {
+ 		const char *shared_index = git_path("sharedindex.%s",
+-						    sha1_to_hex(si->base_sha1));
++						    oid_to_hex(&si->base_oid));
+ 		freshen_shared_index(shared_index, 1);
  	}
- 	/* insert at the end */
--	return llist_insert_back(list, sha1);
-+	return llist_insert_back(list, oid);
- }
  
- /* returns a pointer to an item in front of sha1 */
--static inline struct llist_item * llist_sorted_remove(struct llist *list, const unsigned char *sha1, struct llist_item *hint)
-+static inline struct llist_item * llist_sorted_remove(struct llist *list, const struct object_id *oid, struct llist_item *hint)
+diff --git a/split-index.c b/split-index.c
+index 3eb8ff1b43..660c75f31f 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -18,12 +18,12 @@ int read_link_extension(struct index_state *istate,
+ 	struct split_index *si;
+ 	int ret;
+ 
+-	if (sz < 20)
++	if (sz < the_hash_algo->rawsz)
+ 		return error("corrupt link extension (too short)");
+ 	si = init_split_index(istate);
+-	hashcpy(si->base_sha1, data);
+-	data += 20;
+-	sz -= 20;
++	hashcpy(si->base_oid.hash, data);
++	data += the_hash_algo->rawsz;
++	sz -= the_hash_algo->rawsz;
+ 	if (!sz)
+ 		return 0;
+ 	si->delete_bitmap = ewah_new();
+@@ -45,7 +45,7 @@ int write_link_extension(struct strbuf *sb,
+ 			 struct index_state *istate)
  {
- 	struct llist_item *prev, *l;
+ 	struct split_index *si = istate->split_index;
+-	strbuf_add(sb, si->base_sha1, 20);
++	strbuf_add(sb, si->base_oid.hash, the_hash_algo->rawsz);
+ 	if (!si->delete_bitmap && !si->replace_bitmap)
+ 		return 0;
+ 	ewah_serialize_strbuf(si->delete_bitmap, sb);
+diff --git a/split-index.h b/split-index.h
+index 43d66826eb..7a435ca2c9 100644
+--- a/split-index.h
++++ b/split-index.h
+@@ -1,12 +1,14 @@
+ #ifndef SPLIT_INDEX_H
+ #define SPLIT_INDEX_H
  
-@@ -166,7 +166,7 @@ static inline struct llist_item * llist_sorted_remove(struct llist *list, const
- 	l = (hint == NULL) ? list->front : hint;
- 	prev = NULL;
- 	while (l) {
--		int cmp = hashcmp(l->sha1, sha1);
-+		int cmp = oidcmp(l->oid, oid);
- 		if (cmp > 0) /* not in list, since sorted */
- 			return prev;
- 		if (!cmp) { /* found */
-@@ -201,7 +201,7 @@ static void llist_sorted_difference_inplace(struct llist *A,
- 	b = B->front;
++#include "cache.h"
++
+ struct index_state;
+ struct strbuf;
+ struct ewah_bitmap;
  
- 	while (b) {
--		hint = llist_sorted_remove(A, b->sha1, hint);
-+		hint = llist_sorted_remove(A, b->oid, hint);
- 		b = b->next;
+ struct split_index {
+-	unsigned char base_sha1[20];
++	struct object_id base_oid;
+ 	struct index_state *base;
+ 	struct ewah_bitmap *delete_bitmap;
+ 	struct ewah_bitmap *replace_bitmap;
+diff --git a/t/helper/test-dump-split-index.c b/t/helper/test-dump-split-index.c
+index 4e2fdb5e30..754e9bb624 100644
+--- a/t/helper/test-dump-split-index.c
++++ b/t/helper/test-dump-split-index.c
+@@ -20,7 +20,7 @@ int cmd__dump_split_index(int ac, const char **av)
+ 		printf("not a split index\n");
+ 		return 0;
  	}
- }
-@@ -268,9 +268,11 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
- 		/* cmp ~ p1 - p2 */
- 		if (cmp == 0) {
- 			p1_hint = llist_sorted_remove(p1->unique_objects,
--					p1_base + p1_off, p1_hint);
-+					(const struct object_id *)(p1_base + p1_off),
-+					p1_hint);
- 			p2_hint = llist_sorted_remove(p2->unique_objects,
--					p1_base + p1_off, p2_hint);
-+					(const struct object_id *)(p1_base + p1_off),
-+					p2_hint);
- 			p1_off += p1_step;
- 			p2_off += p2_step;
- 			continue;
-@@ -501,7 +503,7 @@ static void load_all_objects(void)
- 		l = pl->all_objects->front;
- 		while (l) {
- 			hint = llist_insert_sorted_unique(all_objects,
--							  l->sha1, hint);
-+							  l->oid, hint);
- 			l = l->next;
- 		}
- 		pl = pl->next;
-@@ -562,7 +564,7 @@ static struct pack_list * add_pack(struct packed_git *p)
- 	base += 256 * 4 + ((p->index_version < 2) ? 4 : 8);
- 	step = the_hash_algo->rawsz + ((p->index_version < 2) ? 4 : 0);
- 	while (off < p->num_objects * step) {
--		llist_insert_back(l.all_objects, base + off);
-+		llist_insert_back(l.all_objects, (const struct object_id *)(base + off));
- 		off += step;
- 	}
- 	/* this list will be pruned in cmp_two_packs later */
-@@ -603,8 +605,8 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
- 	int i;
- 	struct pack_list *min, *red, *pl;
- 	struct llist *ignore;
--	unsigned char *sha1;
--	char buf[42]; /* 40 byte sha1 + \n + \0 */
-+	struct object_id *oid;
-+	char buf[GIT_MAX_HEXSZ + 2]; /* hex hash + \n + \0 */
- 
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage(pack_redundant_usage);
-@@ -652,10 +654,10 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
- 	llist_init(&ignore);
- 	if (!isatty(0)) {
- 		while (fgets(buf, sizeof(buf), stdin)) {
--			sha1 = xmalloc(20);
--			if (get_sha1_hex(buf, sha1))
--				die("Bad sha1 on stdin: %s", buf);
--			llist_insert_sorted_unique(ignore, sha1, NULL);
-+			oid = xmalloc(sizeof(*oid));
-+			if (get_oid_hex(buf, oid))
-+				die("Bad object ID on stdin: %s", buf);
-+			llist_insert_sorted_unique(ignore, oid, NULL);
- 		}
- 	}
- 	llist_sorted_difference_inplace(all_objects, ignore);
+-	printf("base %s\n", sha1_to_hex(si->base_sha1));
++	printf("base %s\n", oid_to_hex(&si->base_oid));
+ 	for (i = 0; i < the_index.cache_nr; i++) {
+ 		struct cache_entry *ce = the_index.cache[i];
+ 		printf("%06o %s %d\t%s\n", ce->ce_mode,
