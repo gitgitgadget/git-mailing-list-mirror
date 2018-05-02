@@ -7,81 +7,72 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94C4F21841
-	for <e@80x24.org>; Wed,  2 May 2018 06:53:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9DD921841
+	for <e@80x24.org>; Wed,  2 May 2018 06:55:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751160AbeEBGx3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 02:53:29 -0400
-Received: from mout.gmx.net ([212.227.17.21]:35029 "EHLO mout.gmx.net"
+        id S1751007AbeEBGzz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 02:55:55 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52389 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750878AbeEBGx2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 02:53:28 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDn8s-1f8ocn07PK-00HAX5; Wed, 02
- May 2018 08:53:23 +0200
-Date:   Wed, 2 May 2018 08:53:16 +0200 (DST)
+        id S1750947AbeEBGzy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 02:55:54 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MGRhs-1f9Log0SJc-00DDYh; Wed, 02
+ May 2018 08:55:46 +0200
+Date:   Wed, 2 May 2018 08:55:38 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2018, #04; Mon, 30)
-In-Reply-To: <xmqqr2muwvvq.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1805020850400.73@tvgsbejvaqbjf.bet>
-References: <xmqq4ljtz87g.fsf@gitster-ct.c.googlers.com> <CAM0VKjmkn7eyooKheOEQnS=6HMZSTbhejoxQdKB7W+n=7D5KuQ@mail.gmail.com> <nycvar.QRO.7.76.6.1805011439580.79@tvgsbejvaqbjf.bet> <xmqqr2muwvvq.fsf@gitster-ct.c.googlers.com>
+To:     Ben Peart <Ben.Peart@microsoft.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "j6t@kdbg.org" <j6t@kdbg.org>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "sunshine@sunshineco.com" <sunshine@sunshineco.com>,
+        "sbeller@google.com" <sbeller@google.com>
+Subject: Re: [PATCH v2] test-drop-caches: simplify delay loading of
+ NtSetSystemInformation
+In-Reply-To: <20180501124603.21896-1-benpeart@microsoft.com>
+Message-ID: <nycvar.QRO.7.76.6.1805020854550.73@tvgsbejvaqbjf.bet>
+References: <20180430142555.23260-1-benpeart@microsoft.com> <20180501124603.21896-1-benpeart@microsoft.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:h4i/HsXbkhXjmFPA4IeMxwHffPSYZSRqx6Z7Fua5HeJIphFzg/z
- 28/WcQXVPJruCrDmC8/r8twvshMRboJxDN2EHk1/mEQc77FhXtFtfHia9KpWlplkzSr8kaY
- wyfYntI0PuSXdao4LU7UhJ59ob2ZFZnoM+EeF+HsLrzWNPsM3v+j3l/yMBfBVOqwXESKvux
- hXmtRIMgK9gDW85goYuLQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:G/fupMLNi74=:4ZyVuFHJta/Td4emLk9YLh
- vK0jeFWAcdK5X7JiQvCeqSiptzQk3Esq1DdTaF8nHLWOe6N5HD90J/vVTythPDLVzYNYoJ3x7
- LsNoF3KRLIZGeBC94CezktcKIaWRxNFQ2/YIAndR29poLIfVGWwoBZoEsElVEamOIkGtJb9yr
- azfu1MHXgnMXbCWZarmL7LhP9K0KJNwHOdtnPWcuELRj4DAcALPi2ZcqFSHf4mnR/4YtuXMxL
- u/RDeaGxAxSWted5+6CcYSEbyuZB4eraFcZQcyTDVJyldawmQnjj4rMGLpxozU2pbmb+ZY8bK
- EFb0phpiGjmgr2F5CszgNCOAYDY+Jfpi090lOM7/R1e9nBjjtr5UjddguZ9MEjqIVNRWMprTu
- 8aagLoWfyJJ5GYkVKb2NHyAgX8uF73LxCP3t1XxDAkGW3Qt7bsj9c2VGfkqH9VWITqyKk2aWq
- bdYDjAYSndcZSLJsX9TQ7H+DsUFPxC7yhsJeWU1RZf8PHqNrLWGv6vm/h3Cnh0iyNKelTPgu7
- 5wzMAkPKSCaxiB2n2tiMHzPGXu9KFkMF+d1sbV1zwex4V4VkBcRHV1VoWlWZFvuUyqV+BEskP
- CZKiEM007NliIhtK1KYAd+CgpmZNBCpnHpn1vxomfG3F4BB1Qv40kzZwVJon7043uVhvIhBX/
- T+3dcxlW1VLhCIpS7ds1GDUoU1tUFvhFLiVTRhnP9eg93oPl7Uo9v7ig1nGQx8DN6jkkfxnth
- e0JEjSB+BDZYFttd1yU5bmg8ODkterBwq/woDrVbJaSd+nMOzWOW8NsuTnVyYm2a0f9qBT7p6
- Zf4D7iH
+X-Provags-ID: V03:K1:P9fK6+NeKGj/admv+ncC87cyiiYBQcapN5lXG4gKoDGMsFLK7FJ
+ 41CsJ8rAnO+4dgklAP6SyQXPg/Kh4yYdy4QQA1lttMZBnifPoxl1Gi8kbq8OR7F880pT2BP
+ UySwRSvgPYrrp7AGLlH+vKV7W3FnsPeTwEeNa5sk1RQgzsm2MquL4cLmUJmDJ8yzMOKPwSg
+ lDapouVEpPUY2N5WG8yRA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fqpZlM3rYio=:glhVEEi9kLh584X01lcHnu
+ xkFS7quZVynyPwJwGNtIClsO+RJxoLWmje//UwGkhlJHQW2hEKSlWiBVdM1HZFkL5Z0R2NGJQ
+ hZPXvzoPiEh7V9+cKLf002Eapt4HWTPzaum3hOjoZ4QhTNZIBrag4jmQLWOiVVIsP4kIbX+/K
+ 3AzRWDI/Z5eo9RnsEtCGXrxF2Cbb5zjBYsjzVjhrlgESm6sg2DuEzvq5wdMz4SPhfZzxLgGSf
+ VAQQ/7E13EJ04WbVbnZoTbq+VeqEJCpcs1f+224d2seLL7NuXP/waL2JcsVeFtYFIBqhIuzJQ
+ y2kzlI4eWEUyS79gtKEVDpybE3Uf5phc4eEpUUM1JSMiRvoNlMc5xfLUaZhpqnFJh53/Z1uy0
+ vA7bQXbMhrrCX01VO2SuiZih6RDLt5xuxgfPiz4UfY7kuT+Kv94plFY4aCRLFciXm/vnH8Bxx
+ x/uqrzGudyHMYWn7sTDC+xKeVx2OzCxevnEP4GKjbeVwW7+2Y6hRA771d9xD7sXTfRats277N
+ rImTK58mO8l2SRGeydMjgf8fc2HQdfOcp9vIv+rb6PH6b+mwZYmmjOSpu1m5bg+TEeqSBrrCw
+ FJATz1mFG03kBNaY3WfGoBjMSF5sLk0vAhPzNDu9aXUjcn2gsjvQq6x3LGEvPjs6Arh8o6oO6
+ wlu7TGR+46udtyR7Y49gTXEVkqR4zPk0pBkxhJP4wl8erTa9lVhZm4xDGAxUdZ06gOtr0uhq6
+ MgvroZvK9lUuBq7T/iRRJ2XP7LZTtJtCkWhK/TaJwYLkp3gggL35z1ZrqIOQA3mz5oCc8JrY2
+ z9bKxDp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Ben,
 
-On Wed, 2 May 2018, Junio C Hamano wrote:
+On Tue, 1 May 2018, Ben Peart wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Take advantage of the recent addition of support for lazy loading functions[1]
+> on Windows to simplify the loading of NtSetSystemInformation.
 > 
-> > So the problem you found is not a problem with *my* branch, of course, as
-> > I did not fork off of ...
+> [1] db2f7c48cb (Win32: simplify loading of DLL functions, 2017-09-25)
 > 
-> Correct; there is no blame on you with the choice of the base.  It
-> was my mistake that I didn't check if the series could be queueable
-> on the maintenance track that is one release older than the current
-> 'maint'.
-> 
-> As I wrote elsewhere, for a low-impact and ralatively old issue like
-> this, it is OK for a fix to use supporting code that only exists in
-> more recent codebase and become unmergeable to anything older than
-> the concurrent 'maint' track as of the time when the fix is written.
-> Even though it is sometimes nicer if the fix were written to be
-> mergeable to codebase near the point where the issue originates, it
-> is often not worth doing so if it requires bending backwards to
-> refrain from using a newer and more convenient facility.
+> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+> ---
 
-So do you want me to clean up the backporting branches? I mean, we could
-easily fix that bug for the release trains v2.13.x - v2.16.x... Of course
-I do not propose to release them *now*, but if you find that another
-critical bug fix necessitates maintenance releases anyway, *and* if the
-branch ages well in `master`, you could simply merge them at that time.
+Thank you for your diligence. I read over the code, and it is still good,
+so you can add an Acked-by: or Reviewed-by: (or Junio can).
 
-Ciao,
-Dscho
+Thanks,
+Johannes
