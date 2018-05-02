@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A935F21847
-	for <e@80x24.org>; Wed,  2 May 2018 00:27:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0992421847
+	for <e@80x24.org>; Wed,  2 May 2018 00:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753530AbeEBA1E (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 20:27:04 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37698 "EHLO
+        id S1753547AbeEBA1I (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:27:08 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37660 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753477AbeEBA0u (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:50 -0400
+        by vger.kernel.org with ESMTP id S1753420AbeEBA0r (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:47 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DE30860B4E;
-        Wed,  2 May 2018 00:26:48 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C23C460B38;
+        Wed,  2 May 2018 00:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525220809;
-        bh=x51PJMsrCH5heIzxhVXS+KU8rIN0bdw+Iobv6FGrHDo=;
+        s=default; t=1525220806;
+        bh=+DHSPe8aAjf5H+Z0Ok+dMGiNcKg8VK5H3tE+gejeDMY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=qXTyZFJmNy0huA86wxgW8L0zP4XAWbtlek9pns7fF8MS1TCiVpjuOtmakzIA/B8uw
-         NOLfcJUJKqkWmTcYNcj0MnrL4InpR4O4kZekcWpw6sR6yfZwOhjCuXFJ0+MCe1ydyZ
-         grNo95HjCGKOz7dHWNeZOfE8MmaXCgfagERaoX1MMnhc0PZPIzzKJDi5mT0aG8MgG/
-         K0dDQ9UOr16f9ORJunHeh9ki/GD4whiORYtkpUjZJ7dPRRVJgsyPFooAc1XOZ/QhLy
-         +bZ76uXnIWxA3GHPAc3sMIOype8NSymRh6+l+IF2rolJQnN+GS2Mr6kLwG9Oi2h+Lv
-         1l3mVfzztLPlnzVJ2m1nxLLp57exI876Xhglov4d6GGStSmnbpewcnzqRpMXLN7KTQ
-         MSSiYO9Jd6HigYcozaNuDUzR12wN14Py6Sw9ayZAn2xQI200/1J/CmK3hTk/cPQlHd
-         uo6o/XyGGsR5j30S9bBH1Xq7lhHK1G8HR5RwFNtGn8pdHmvRC2C
+        b=06rbRGpVHOJzg60XZRXg5W3fMnGxsAj5MXEi16psHbvjtikYMdnIRxUkNncPsKvp+
+         Yyzk0lVMYVTc/CEJsfRHIPoBqLw2FN+6Q78mXMFPjvsP99qTjRp1LeZcnb1ke1z/4v
+         I8aWD4OCgo5aG1yMoquhgA+aUjiOgMvgewunaHJAIyJZBE1eqPT3fXwaLVfQr4qC6S
+         iUICCsNXwfBm2UYX4OntVf81XNfHocGadOwHS4TZSVmqR0Gr2BJgvNxr3jcJv+tpOT
+         /w8FxU7NO4Ua9f1+lJ0CbwiMl5WcD0BJkWXHWwcz8VVwEw74MCWLODwrEMuNQlkP4D
+         kc1e03DsW7zpNugUisPLv/+TXDXa5OvD1IFfPJxqnpnvPryEdR7M26qK208RsBv7aE
+         EJEGgC5qiPZvqh3bfvXey7eMkoFRuaVINEnZTs5IcAitNXFQ5sdJLeUNSysyEP+Saz
+         MMIYfnWC3186X5oZEjTf7lQrogMGrEoign/z2FCs7Uf1qHgpb2R
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 28/42] builtin/merge: switch tree functions to use object_id
-Date:   Wed,  2 May 2018 00:25:56 +0000
-Message-Id: <20180502002610.915892-29-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 25/42] builtin/receive-pack: avoid hard-coded constants for push certs
+Date:   Wed,  2 May 2018 00:25:53 +0000
+Message-Id: <20180502002610.915892-26-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
 References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
@@ -54,72 +54,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The read_empty and reset_hard functions are static and their callers
-have already changed to use struct object_id, so convert them as well.
-To avoid dependency on the hash algorithm in use, switch from using
-EMPTY_TREE_SHA1_HEX to using empty_tree_oid_hex.
+Use the GIT_SHA1_RAWSZ and GIT_SHA1_HEXSZ macros instead of hard-coding
+the constants 20 and 40.  Switch one use of 20 with a format specifier
+for a hex value to use the hex constant instead, as the original appears
+to have been a typo.
+
+At this point, avoid converting the hard-coded use of SHA-1 to use
+the_hash_algo.  SHA-1, even if not collision resistant, is secure in the
+context in which it is used here, and the hash algorithm of the repo
+need not match what is used here.  When we adopt a new hash algorithm,
+we can simply adopt the new algorithm wholesale here, as the nonce is
+opaque and its length and validity are entirely controlled by the
+server.  Consequently, defer updating this code until that point.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/merge.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ builtin/receive-pack.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 9db5a2cf16..7084bcfdea 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -280,7 +280,7 @@ static int save_state(struct object_id *stash)
- 	return rc;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 4b68a28e92..6501d6b6cf 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -454,21 +454,21 @@ static void hmac_sha1(unsigned char *out,
+ 	/* RFC 2104 2. (6) & (7) */
+ 	git_SHA1_Init(&ctx);
+ 	git_SHA1_Update(&ctx, k_opad, sizeof(k_opad));
+-	git_SHA1_Update(&ctx, out, 20);
++	git_SHA1_Update(&ctx, out, GIT_SHA1_RAWSZ);
+ 	git_SHA1_Final(out, &ctx);
  }
  
--static void read_empty(unsigned const char *sha1, int verbose)
-+static void read_empty(const struct object_id *oid, int verbose)
+ static char *prepare_push_cert_nonce(const char *path, timestamp_t stamp)
  {
- 	int i = 0;
- 	const char *args[7];
-@@ -290,15 +290,15 @@ static void read_empty(unsigned const char *sha1, int verbose)
- 		args[i++] = "-v";
- 	args[i++] = "-m";
- 	args[i++] = "-u";
--	args[i++] = EMPTY_TREE_SHA1_HEX;
--	args[i++] = sha1_to_hex(sha1);
-+	args[i++] = empty_tree_oid_hex();
-+	args[i++] = oid_to_hex(oid);
- 	args[i] = NULL;
+ 	struct strbuf buf = STRBUF_INIT;
+-	unsigned char sha1[20];
++	unsigned char sha1[GIT_SHA1_RAWSZ];
  
- 	if (run_command_v_opt(args, RUN_GIT_CMD))
- 		die(_("read-tree failed"));
+ 	strbuf_addf(&buf, "%s:%"PRItime, path, stamp);
+ 	hmac_sha1(sha1, buf.buf, buf.len, cert_nonce_seed, strlen(cert_nonce_seed));;
+ 	strbuf_release(&buf);
+ 
+ 	/* RFC 2104 5. HMAC-SHA1-80 */
+-	strbuf_addf(&buf, "%"PRItime"-%.*s", stamp, 20, sha1_to_hex(sha1));
++	strbuf_addf(&buf, "%"PRItime"-%.*s", stamp, GIT_SHA1_HEXSZ, sha1_to_hex(sha1));
+ 	return strbuf_detach(&buf, NULL);
  }
  
--static void reset_hard(unsigned const char *sha1, int verbose)
-+static void reset_hard(const struct object_id *oid, int verbose)
- {
- 	int i = 0;
- 	const char *args[6];
-@@ -308,7 +308,7 @@ static void reset_hard(unsigned const char *sha1, int verbose)
- 		args[i++] = "-v";
- 	args[i++] = "--reset";
- 	args[i++] = "-u";
--	args[i++] = sha1_to_hex(sha1);
-+	args[i++] = oid_to_hex(oid);
- 	args[i] = NULL;
- 
- 	if (run_command_v_opt(args, RUN_GIT_CMD))
-@@ -324,7 +324,7 @@ static void restore_state(const struct object_id *head,
- 	if (is_null_oid(stash))
- 		return;
- 
--	reset_hard(head->hash, 1);
-+	reset_hard(head, 1);
- 
- 	args[2] = oid_to_hex(stash);
- 
-@@ -1297,7 +1297,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		if (remoteheads->next)
- 			die(_("Can merge only exactly one commit into empty head"));
- 		remote_head_oid = &remoteheads->item->object.oid;
--		read_empty(remote_head_oid->hash, 0);
-+		read_empty(remote_head_oid, 0);
- 		update_ref("initial pull", "HEAD", remote_head_oid, NULL, 0,
- 			   UPDATE_REFS_DIE_ON_ERR);
- 		goto done;
