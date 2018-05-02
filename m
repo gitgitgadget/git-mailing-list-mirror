@@ -2,98 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C5B221847
-	for <e@80x24.org>; Wed,  2 May 2018 06:20:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94C4F21841
+	for <e@80x24.org>; Wed,  2 May 2018 06:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751069AbeEBGU4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 02:20:56 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:40333 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751007AbeEBGUz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 02:20:55 -0400
-Received: by mail-pg0-f54.google.com with SMTP id l2-v6so9859444pgc.7
-        for <git@vger.kernel.org>; Tue, 01 May 2018 23:20:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=OrDz865k30zTKA+Sp+0oVFrfAAqvhX9rJxell9psJfw=;
-        b=ITpQ462570SdG1ZhM38hWmn+fleMO/bQewwBaxy50a9ZzcpW4JpPr1vVz0VC6hsx7d
-         vxn1ABnHjc6Mq7Ff9IbJUkX4psn4AV2NwSw06KXeI/ShYzeixVXNkTcrtTP34qFvRBNg
-         YxTNW2cDeJJgYTK1z3uyWXKeEiwJmZq01TzwYI55SKg5PM2FCbRIQpp55kjX8knv0Tfw
-         VYInmlyJ5RzGol7G639pt/uAhb7HWp7b+njfKq458lXuWHRK+O4OVv6wb9m6rIq4uMNY
-         nZGBUiSFJAO25iujE6vOKguhNud0jTdZJdvbKdJgKrcbqhNsDEKj61Fm7CQ/EvCVxe1z
-         og2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=OrDz865k30zTKA+Sp+0oVFrfAAqvhX9rJxell9psJfw=;
-        b=q0TldGIycc1N9c9W7FLTA2cn9B7I8x2dYy+WEaiEc/VXqvXOrpRlWptRtAez6a2sna
-         1s5DvGCkRWux9tvWOCHTvPnl/gOtX65yV2x+DBUrQQxXgKKK29PF133NEG0ZHTmQLtjb
-         lzp5Bit8ts+FxhatfVu2Pmnm8G0nWiXUMppwxaIJZ6BBEg0YP/RaVJoG1MDb9gzOeoJW
-         he+WerpGdTyEbVxXjquEKityW8xF+DHBBvb7RMeWgdsC33xaOQxRvo0519FdnTf0pIdL
-         hhq7cLFCIX1464KTw4s3+xE/7voO4nwuPaXt1NFLsKOUDRL4FTegy+aKxxczf5WfR5rk
-         IzZQ==
-X-Gm-Message-State: ALQs6tAyHQxFWJxzd17N47oqReDvLRqmO5XLKpKEusr7c5NH9EM1CTki
-        g+Yauvt8EznVdikgrcRVqxOyuIKW1p9P7JTNzUI=
-X-Google-Smtp-Source: AB8JxZoawzlrRfJIzYD+XRY3xG71kCtfhTaR7xrIolcah/+hBDwi85aRJlHYpr1dB57OEP1qi2gxzhjHVOw1ITIkdm8=
-X-Received: by 2002:a17:902:9a90:: with SMTP id w16-v6mr18781795plp.390.1525242055305;
- Tue, 01 May 2018 23:20:55 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Tue, 1 May 2018 23:20:54 -0700 (PDT)
-In-Reply-To: <xmqq7eomwtid.fsf@gitster-ct.c.googlers.com>
-References: <20180430210430.14611-1-martin.agren@gmail.com> <xmqq7eomwtid.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 2 May 2018 08:20:54 +0200
-Message-ID: <CAN0heSqeMFq4yVHX=8Ug3wOTEzrLXwE=PcF7UFWTRg_AbZEWWg@mail.gmail.com>
-Subject: Re: [PATCH] revisions.txt: expand tabs to spaces in diagram
+        id S1751160AbeEBGx3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 02:53:29 -0400
+Received: from mout.gmx.net ([212.227.17.21]:35029 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750878AbeEBGx2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 02:53:28 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDn8s-1f8ocn07PK-00HAX5; Wed, 02
+ May 2018 08:53:23 +0200
+Date:   Wed, 2 May 2018 08:53:16 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2018, #04; Mon, 30)
+In-Reply-To: <xmqqr2muwvvq.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1805020850400.73@tvgsbejvaqbjf.bet>
+References: <xmqq4ljtz87g.fsf@gitster-ct.c.googlers.com> <CAM0VKjmkn7eyooKheOEQnS=6HMZSTbhejoxQdKB7W+n=7D5KuQ@mail.gmail.com> <nycvar.QRO.7.76.6.1805011439580.79@tvgsbejvaqbjf.bet> <xmqqr2muwvvq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:h4i/HsXbkhXjmFPA4IeMxwHffPSYZSRqx6Z7Fua5HeJIphFzg/z
+ 28/WcQXVPJruCrDmC8/r8twvshMRboJxDN2EHk1/mEQc77FhXtFtfHia9KpWlplkzSr8kaY
+ wyfYntI0PuSXdao4LU7UhJ59ob2ZFZnoM+EeF+HsLrzWNPsM3v+j3l/yMBfBVOqwXESKvux
+ hXmtRIMgK9gDW85goYuLQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:G/fupMLNi74=:4ZyVuFHJta/Td4emLk9YLh
+ vK0jeFWAcdK5X7JiQvCeqSiptzQk3Esq1DdTaF8nHLWOe6N5HD90J/vVTythPDLVzYNYoJ3x7
+ LsNoF3KRLIZGeBC94CezktcKIaWRxNFQ2/YIAndR29poLIfVGWwoBZoEsElVEamOIkGtJb9yr
+ azfu1MHXgnMXbCWZarmL7LhP9K0KJNwHOdtnPWcuELRj4DAcALPi2ZcqFSHf4mnR/4YtuXMxL
+ u/RDeaGxAxSWted5+6CcYSEbyuZB4eraFcZQcyTDVJyldawmQnjj4rMGLpxozU2pbmb+ZY8bK
+ EFb0phpiGjmgr2F5CszgNCOAYDY+Jfpi090lOM7/R1e9nBjjtr5UjddguZ9MEjqIVNRWMprTu
+ 8aagLoWfyJJ5GYkVKb2NHyAgX8uF73LxCP3t1XxDAkGW3Qt7bsj9c2VGfkqH9VWITqyKk2aWq
+ bdYDjAYSndcZSLJsX9TQ7H+DsUFPxC7yhsJeWU1RZf8PHqNrLWGv6vm/h3Cnh0iyNKelTPgu7
+ 5wzMAkPKSCaxiB2n2tiMHzPGXu9KFkMF+d1sbV1zwex4V4VkBcRHV1VoWlWZFvuUyqV+BEskP
+ CZKiEM007NliIhtK1KYAd+CgpmZNBCpnHpn1vxomfG3F4BB1Qv40kzZwVJon7043uVhvIhBX/
+ T+3dcxlW1VLhCIpS7ds1GDUoU1tUFvhFLiVTRhnP9eg93oPl7Uo9v7ig1nGQx8DN6jkkfxnth
+ e0JEjSB+BDZYFttd1yU5bmg8ODkterBwq/woDrVbJaSd+nMOzWOW8NsuTnVyYm2a0f9qBT7p6
+ Zf4D7iH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2 May 2018 at 06:50, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->
->> The diagram renders fine in AsciiDoc before and after this patch.
->> Asciidoctor, on the other hand, ignores the tabs entirely, which results
->> in different indentation for different lines. The graph illustration
->> earlier in the document already uses spaces instead of a tab.
->
-> Ouch.  We might want to teach Documentation/.gitattributes that
-> indent-with-tab is unwelcome in that directory, after making this
-> fix (and possibly similar ones to other files).
+Hi Junio,
 
-I actually grepped around a little for a leading tab, to see if I could
-immediately spot any similar issues. But there are tons of tabs here
-(about 13000). Most of them work out just fine, e.g., in the OPTIONS,
-where we tab-indent the descriptions.
+On Wed, 2 May 2018, Junio C Hamano wrote:
 
-So while we could try to move away from leading tabs in Documentation/,
-it would be a huge undertaking. Any kind of "do it while we're nearby"
-approach would take a long time to complete. And a one-off conversion
-would probably be a horrible idea. ;-)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > So the problem you found is not a problem with *my* branch, of course, as
+> > I did not fork off of ...
+> 
+> Correct; there is no blame on you with the choice of the base.  It
+> was my mistake that I didn't check if the series could be queueable
+> on the maintenance track that is one release older than the current
+> 'maint'.
+> 
+> As I wrote elsewhere, for a low-impact and ralatively old issue like
+> this, it is OK for a fix to use supporting code that only exists in
+> more recent codebase and become unmergeable to anything older than
+> the concurrent 'maint' track as of the time when the fix is written.
+> Even though it is sometimes nicer if the fix were written to be
+> mergeable to codebase near the point where the issue originates, it
+> is often not worth doing so if it requires bending backwards to
+> refrain from using a newer and more convenient facility.
 
-I just noticed another difference in how the tabs are handled. In
-git-add.txt, which I just picked at random, the three continuation lines
-in the synopsis indent differently in AsciiDoc (which indents them more
-than in the .txt) and Asciidoctor (which indents them less than in the
-.txt). To me, this is more of a "if I didn't sit down and compare the
-two outputs, I would never think about these indentations -- they're
-both fine".
+So do you want me to clean up the backporting branches? I mean, we could
+easily fix that bug for the release trains v2.13.x - v2.16.x... Of course
+I do not propose to release them *now*, but if you find that another
+critical bug fix necessitates maintenance releases anyway, *and* if the
+branch ages well in `master`, you could simply merge them at that time.
 
-So it might be that the only places where leading tabs really matter is
-this kind of diagrams. Maybe we have a handful such bugs lingering among
-the 13000 tab-indented lines...
-
-Martin
+Ciao,
+Dscho
