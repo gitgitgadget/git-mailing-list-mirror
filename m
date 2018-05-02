@@ -2,141 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA1A02023D
-	for <e@80x24.org>; Wed,  2 May 2018 20:50:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F324200B9
+	for <e@80x24.org>; Wed,  2 May 2018 23:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751420AbeEBUug (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 16:50:36 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:42516 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751394AbeEBUuc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 16:50:32 -0400
-Received: by mail-pf0-f180.google.com with SMTP id p14so1412493pfh.9
-        for <git@vger.kernel.org>; Wed, 02 May 2018 13:50:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WsrNeLWJ/ylfYUS438y2QiHXlQduJnbZfm/iW8ozODQ=;
-        b=Sp3Il4ZQnqBzkQAJ26mp48rmmRQgU+RMNIR8YEcAEOcNKDWpXAHVdOsrslk8pM/fXf
-         +9qLF4oL3XRPvSdYJh5G+ob2W+v2440eR0gOwl7caYdGXW8ag9rZqNEZN2ZOBFhl+eBx
-         rX/3Nt+AsxEGFgpz/ADTaH+Lz3wXssuiiO+FA4wfBSdM/mEf6N8xrQxXKz7VHfE5RyZV
-         eMC3j+l+dFURNaTEhAH5Bhc7JD9xyqOAEHPa3awjM+7DXeVj9BN0t23w7wtqUAGTCeGh
-         EK53gzVGNEi9NfSs9i0BEVv6kgsfbQEsHBATY0f2aitOcYlcIg14NawbuYd63yt+Xhyh
-         +Xtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WsrNeLWJ/ylfYUS438y2QiHXlQduJnbZfm/iW8ozODQ=;
-        b=AeTZuWmrWuDM3TsnwujQ6SQZkYjuEbuIdLdQOiX3J3DhOMX70i9aegvgr5n72NiXYy
-         4vcxjUF/2pKwmlHw1mgy2tL2al8eCfJi9imqDXr6V/OnhTE2zkn8a54oHrmD03e7j4Ug
-         fp6+gsLyo24sXruNdzY87FMGpz8H0CYnazLnBPukRKlnVU5OcdhiulQfInWmeEPHwKUD
-         Meuj2U59JmoJRZ414D0rKprdRaOHCXHFPPsupWf9ajSTWXw22kvM8+uwvhWDUBtZ9bgr
-         FpAVKVYoCjz3ZpWVuXSQwf3kXJCts6+BjGW6yKKVO+jVXGXgYuIIWC7/HERNfJTehvUQ
-         /7zQ==
-X-Gm-Message-State: ALQs6tCmKYDhaMHulaapPTo8+04FQOpv2YDsYtIYlUPAfKZSTVNciHcS
-        mjLk3MbdzJUmYndv0lOrI5eCiQ==
-X-Google-Smtp-Source: AB8JxZoGjlQlFVlDjC/+cmbdnQzgyneGSYkwanH8yQ3QvNrD+BlUVbU1bUU0YPJrmln51MZFmMbFSQ==
-X-Received: by 2002:a65:590e:: with SMTP id f14-v6mr17353622pgu.282.1525294231437;
-        Wed, 02 May 2018 13:50:31 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id b29sm25386659pfh.155.2018.05.02.13.50.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 02 May 2018 13:50:30 -0700 (PDT)
-Date:   Wed, 2 May 2018 13:50:29 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jamill@microsoft.com
-Subject: Re: [PATCH 13/13] alloc: allow arbitrary repositories for alloc
- functions
-Message-Id: <20180502135029.051dcaed75b18fb95ae6b28f@google.com>
-In-Reply-To: <20180501213403.14643-14-sbeller@google.com>
-References: <20180501213403.14643-1-sbeller@google.com>
-        <20180501213403.14643-14-sbeller@google.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S1751447AbeEBXGC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 19:06:02 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38530 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751148AbeEBXGB (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 2 May 2018 19:06:01 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B2D986046C;
+        Wed,  2 May 2018 23:05:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1525302360;
+        bh=qQaY2XcOe97YvaH/PAEpq6uIhDFWFAuv/YqqkMmonH8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=f96ZZx5a2DdPksFQv+V/2DQdL8ubSuB2Q6ZE5C3oeKMSSKz4aqMqTtQhFdubnc57p
+         58Af4ELl0tBUChTF0TsDyXodteeuGqaUZu+crNPyvzuwpquY8is68sEtFRK2xb0SxC
+         z8R+3O3CnTeTL9ODW0nCf+7OUXit0M55xh7uTKAidYDcdjkA+Bn3iC9UAM6RDI9y6Y
+         z8v0xOYD4JO6Hz96jYpd+26+tOvtdET3NrlDn08SDZ+UNcSyZmBHGkGpZ9rrHMTd9v
+         BmDgzWDjLKE8IVSsqfZT3W6FC1itpK+e9odqqc/8RjHj2OEOnyXnOfmYsHwHMDAvK6
+         AeU2R2+z3NUrweKP9YlJW69hqKWayh5EnQFSxg52fzROEq64UFK97xr3b3t1taKJ0/
+         DU3NdWC93qGEuj4yjduGxFFwuM2kHBF1xmJxXou2XB10J3YBwY9QZImgmJ7B3aJAwo
+         eU0v9EvCbhDR7bbFEqeIj7e7qSxJXhxC5enK6256ajGxV0MBQUV
+Date:   Wed, 2 May 2018 23:05:55 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 08/41] packfile: abstract away hash constant values
+Message-ID: <20180502230555.GK13217@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20180423233951.276447-1-sandals@crustytoothpaste.net>
+ <20180423233951.276447-9-sandals@crustytoothpaste.net>
+ <20180501102243.GE15820@duynguyen.home>
+ <20180502001140.GH13217@genre.crustytoothpaste.net>
+ <CACsJy8C1nLTOZFvdgrRYDTXbQhdt5vkbVxHSEiAVuH6Vo8WB_Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="2EnvhqpWJq810sZn"
+Content-Disposition: inline
+In-Reply-To: <CACsJy8C1nLTOZFvdgrRYDTXbQhdt5vkbVxHSEiAVuH6Vo8WB_Q@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-3-amd64)
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  1 May 2018 14:34:03 -0700
-Stefan Beller <sbeller@google.com> wrote:
 
-> +void *allocate_alloc_state(void)
-> +{
-> +	return xcalloc(1, sizeof(struct alloc_state));
-> +}
-> +
-> +void clear_alloc_state(struct alloc_state *s)
-> +{
-> +	while (s->slab_nr > 0) {
-> +		s->slab_nr--;
-> +		free(s->slabs[s->slab_nr]);
-> +	}
-> +}
+--2EnvhqpWJq810sZn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-These functions are asymmetrical. I understand why it is this way
-(because we use pointers, and we want to use FREE_AND_NULL), but would
-still prefer _INIT and _release().
+On Wed, May 02, 2018 at 05:26:25PM +0200, Duy Nguyen wrote:
+> On Wed, May 2, 2018 at 2:11 AM, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > On Tue, May 01, 2018 at 12:22:43PM +0200, Duy Nguyen wrote:
+> >> While we're abstracting away 20. There's the only 20 left in
+> >> sha1_file.c that should also be gone. But I guess you could do that
+> >> later since you need to rename fill_sha1_path to
+> >> fill_loose_object_path or something.
+> >
+> > I'm already working on knocking those out.
+>=20
+> Yeah I checked out your part14 branch after writing this note :P You
+> still need to rename the function though. I can remind that again when
+> part14 is sent out.
 
->  static inline void *alloc_node(struct alloc_state *s, size_t node_size)
->  {
->  	void *ret;
-> @@ -45,54 +63,56 @@ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
->  	ret = s->p;
->  	s->p = (char *)s->p + node_size;
->  	memset(ret, 0, node_size);
-> +
-> +	ALLOC_GROW(s->slabs, s->slab_nr + 1, s->slab_alloc);
-> +	s->slabs[s->slab_nr++] = ret;
-> +
->  	return ret;
->  }
+I've made a note in my project notes.
 
-This unconditionally grows the slabs for each node allocation. Shouldn't
-more than one node fit in each slab?
+> > Unfortunately, I can't, because it's not an object ID.  I think the
+> > decision was made to not transform non-object ID hashes into struct
+> > object_id, which makes sense.  I suppose we could have an equivalent
+> > struct hash or something for those other uses.
+>=20
+> I probably miss something, is hashcmp() supposed to stay after the
+> conversion? And will it compare any hash (as configured in the_algo)
+> or will it for SHA-1 only?
 
-> +extern struct alloc_state the_repository_blob_state;
-> +extern struct alloc_state the_repository_tree_state;
-> +extern struct alloc_state the_repository_commit_state;
-> +extern struct alloc_state the_repository_tag_state;
-> +extern struct alloc_state the_repository_object_state;
+Yes, it will stick around for the handful of places where we have hashes
+like pack checksums.
 
-(Context: these were in alloc.h)
+> If hashcmp() will eventually compare the_algo->rawsz then yes this makes =
+sense.
 
-These seem to be used only in object.c, and only in one function - could
-we declare them "static" inside that function instead?
+That's my intention, yes.
 
-> -struct object_parser *object_parser_new(void)
-> +struct object_parser *object_parser_new(int is_the_repo)
->  {
->  	struct object_parser *o = xmalloc(sizeof(*o));
->  	memset(o, 0, sizeof(*o));
-> +
-> +	if (is_the_repo) {
-> +		o->blob_state = &the_repository_blob_state;
-> +		o->tree_state = &the_repository_tree_state;
-> +		o->commit_state = &the_repository_commit_state;
-> +		o->tag_state = &the_repository_tag_state;
-> +		o->object_state = &the_repository_object_state;
-> +	} else {
-> +		o->blob_state = allocate_alloc_state();
-> +		o->tree_state = allocate_alloc_state();
-> +		o->commit_state = allocate_alloc_state();
-> +		o->tag_state = allocate_alloc_state();
-> +		o->object_state = allocate_alloc_state();
-> +	}
->  	return o;
->  }
+> > I believe this is the pack hash, which isn't an object ID.  I will
+> > transform it to be called something other than "sha1" and allocate more
+> > memory for it in a future series, though.
+>=20
+> Ah ok, it's the "sha1" in the name that bugged me. I'm all good then.
 
-I don't think saving 5 allocations is worth the code complexity (of the
-additional parameter).
+Also noted in my project notes.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--2EnvhqpWJq810sZn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrqRFIACgkQv1NdgR9S
+9otxug//XkTDncvV+3VI8nc66Po0e4gBVKPvUbqjx6HaNADQE5aMVMB259qUBqsW
+hjstzEeZ+bGZRrG/HT1HjDf31FzjSGu4iCGDEBwAHP00PwBt5Qmcfp/RJVJ8EoTB
+pgSw+m3b8d9IVYaCTlfcIF+LCrx0mHQhxwaOxlvERvqQptxNmll0niyeybwRx00b
+Gzy9ySyjpxZInT8R5DGFMamCZkn70nkv8138/v6vvXgZ5UDwwEuAe6w2pMuSRpi6
+i6VWQUchC9F9ykLnqIJ4DFdZsm1UsjEV2yEgW4zi3qm0AeyJbjynQM+lEn/W0yMC
+t26UAluy/bHceoI7E93TK7FeBnOTXFs0D/S2APh9kWTHSxZsTiVyG75nUKENI3GX
+E078B8lc0htVlxBnOe1OGsrBp9QnjJTmv8ogUkQGdGuWCMvswTnSD5KgvAyM8uP5
+VT62vbea9m6REASPbVC2rWs2eV5xP/K+YIXwdv1TGJx1TrZVHmvEpOdsz59RdO8A
+er0wdM4hyC5iSgO8OKzJ0MemPBFqn7G+W5ca5p0F/t3409piNqmqSnknL2SWX1OD
+5Yd/pvLn+P+i6PYuEzQAY2LAaWSYyF4btk9dbIK6RCpXUwwJHffAmFcQFTcH3gXu
+GxXA1dN8uFVniOumIEb3nIFHt+u50+9Z1uFWTnO5HHGLRM31JUo=
+=RS6a
+-----END PGP SIGNATURE-----
+
+--2EnvhqpWJq810sZn--
