@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4652A21847
-	for <e@80x24.org>; Wed,  2 May 2018 00:27:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26AE721847
+	for <e@80x24.org>; Wed,  2 May 2018 00:27:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753569AbeEBA1R (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 20:27:17 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37856 "EHLO
+        id S1753581AbeEBA1V (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:27:21 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37902 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753511AbeEBA1A (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:27:00 -0400
+        by vger.kernel.org with ESMTP id S1753533AbeEBA1G (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:27:06 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B3E036046C;
-        Wed,  2 May 2018 00:26:58 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DC18A609CB;
+        Wed,  2 May 2018 00:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525220819;
-        bh=pyqlJQGFubPK6DP1fI76k21mYRCGGBBxFmy+DWtPp+c=;
+        s=default; t=1525220825;
+        bh=1QcKAvhreT5MFmnNP3WyM5HZQbTKy+FVTwjVeFm6gj0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=AHhjQgdWOQwdMTr1e9mVy8DdbhNxIm4QydE5SDF04ZS3ELUJmDk3MS6ioNoHhdhuw
-         dcktU8je/CluEdbySf36LhnXhVhqDO80Z/ekz1e2zaVGT8FMLnDpIjX8M9bqyW7x6f
-         768dgCetBX4bjZqIUNsWK+2JsZkZn3i18qpGuuQ7rnY8yWebi0Nvcs3L7dKUjKJ4WP
-         41F7iSPFxLEODfyTOnAR6fp8QsraX0kpX1KTFaVzQS8/zU755MexRqTp4sgS8FvUBZ
-         SBffG1IPVK13rt45eu7O6l50/rTenjvJ0+GOq9hMw7LiNw5mKpzH/oXOq7qoMVIIeQ
-         EFlutRRqVH+o4UAml1P8lgXRQoFtlhYOgFkuXX/FEssvZjKLk/C4a1Pp7ntVjeQfby
-         YEeuEQ+75r0PGYbMRl8cYR9KTktDBrQfBhgaw7vJJatwsT0pCCxtPYT4Rqn9CD1KR2
-         11g+B3Otaem3g8mhCOsiWx3b9goQq/VQxGJ0nPsWN/y5Uz6i8Qh
+        b=lNd/KplVrBWtZwl1S9KuxzgIaUtsDx2UQRpxpvHerEywGdO552tZYdo9Ttc1fehQ0
+         GWkrPkclaqDoK3ZL6ws4B9drSowrzb6QXtbvKflcXjbCsdvZ9Ft1Ly0yLjuoh1ROti
+         BXvrTIhGaycp3ftqsn2nMyV6FDqW1IoroWaSqvVft2SiAVCeWdNzV+wZzj8cg2coRc
+         fMgtesOOw1FmIfVQfjN8egD15BZNoMdEBs/Svcl4Eriiy+AUQ3n0Cqt/WwKnOOMppA
+         3OxgqQkBNIfBlB+EfXblCgIhrgb+2Lf6rRyyZEoD2JBKcMMrUS+2AK+Eb02Z3q7KoO
+         lE5Yk/12Mck1s8YEZK0CONuikqDUYFf4csPBwAGmx4BtbUZ3OR36PRODFnP36IjAoq
+         u+UBt9l4LDNZxMe2FnCI6H6eSpjx4QIHp3HGROWI1kNtJBaYAhcnTBqIAYWwnVThva
+         SrJuK8ZA+W9VqDUMdJZdA90FYEJ/AvcbI9CjGnU2cpBj9SEhgjS
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 36/42] cache-tree: use is_empty_tree_oid
-Date:   Wed,  2 May 2018 00:26:04 +0000
-Message-Id: <20180502002610.915892-37-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 41/42] add--interactive: compute the empty tree value
+Date:   Wed,  2 May 2018 00:26:09 +0000
+Message-Id: <20180502002610.915892-42-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
 References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
@@ -54,26 +54,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When comparing an object ID against that of the empty tree, use the
-is_empty_tree_oid function to ensure that we abstract over the hash
-algorithm properly.  In addition, this is more readable than a plain
-oidcmp.
+The interactive add script hard-codes the object ID of the empty tree.
+To avoid any problems when changing hashes, compute this value when used
+and cache it for any future uses.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache-tree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ git-add--interactive.perl | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 8c7e1258a4..25663825b5 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -385,7 +385,7 @@ static int update_one(struct cache_tree *it,
- 		/*
- 		 * "sub" can be an empty tree if all subentries are i-t-a.
- 		 */
--		if (contains_ita && !oidcmp(oid, &empty_tree_oid))
-+		if (contains_ita && is_empty_tree_oid(oid))
- 			continue;
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index c1f52e457f..36f38ced90 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -205,8 +205,15 @@ my $status_head = sprintf($status_fmt, __('staged'), __('unstaged'), __('path'))
+ 	}
+ }
  
- 		strbuf_grow(&buffer, entlen + 100);
+-sub get_empty_tree {
+-	return '4b825dc642cb6eb9a060e54bf8d69288fbee4904';
++{
++	my $empty_tree;
++	sub get_empty_tree {
++		return $empty_tree if defined $empty_tree;
++
++		$empty_tree = run_cmd_pipe(qw(git hash-object -t tree /dev/null));
++		chomp $empty_tree;
++		return $empty_tree;
++	}
+ }
+ 
+ sub get_diff_reference {
