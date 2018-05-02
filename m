@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E79E921847
-	for <e@80x24.org>; Wed,  2 May 2018 00:28:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C11821847
+	for <e@80x24.org>; Wed,  2 May 2018 00:28:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753656AbeEBA1z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 20:27:55 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37698 "EHLO
+        id S1753444AbeEBA0n (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:26:43 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37716 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753462AbeEBA0q (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:46 -0400
+        by vger.kernel.org with ESMTP id S1753423AbeEBA0i (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:38 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E360360B3A;
-        Wed,  2 May 2018 00:26:44 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CA0FF60B37;
+        Wed,  2 May 2018 00:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525220805;
-        bh=audNftlfZhrH0d5w7/AWLOJk03xZkTLimPG9WKlnSmQ=;
+        s=default; t=1525220796;
+        bh=GydLDBgVXphmhBs65BHUxbMPlzgqHE0UMVcVOIw2lJ8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=wiULorcoviYaSB/yGZvmCeTC/yThjCXkNRn53qQrjyZMJyLFWQ4D0bcXoYMQZOzFX
-         8fpv/zhRbnSuWPA9xwrvJJ6zUCAwOoxvL70KaAAwtjBPi4dS0koOnTkMe3pqB/965I
-         SqcZr5P6lQAMcrNQ8eiikPtNEUIQaBe5rxUg1KqNJ2NjhDeMUsblrWnwJpsvs6ViaR
-         wy7Hw4+5CkHt5Rn17SBD30rCkgWxYF9kPwsE26p1qhBlMsurdezxhPO90/HrOphXIt
-         3LvVJ5ArgVJJUqb83nFUnIlhwyawhTVui68GuCninMrXHeHUy26YSC2X0hFBKrkY6y
-         wmi4jKr5fdnJHOYjrJIzG/urO9NQZJl6GeTCdd77cuGZ9UL+ERbnUAmVlNH3tTVqnu
-         m82SIdHhXiPiuJMvH6Wfvm+839rzSU6gTZPz5y+gKov+ZoW9TNOWXdigP93lCKfyjd
-         FehQ6Qxa2UAZ718ZLESB+Nw6S7BhBymassxciuy2HO3nvOqDIIB
+        b=mdNZGLrTTDVFaRbD0ObOe3IUHBDTruTwGgnXU7nj3Y8+AYbL7uvi8CitfVcQma8Gs
+         r2XxtcP4BcZ4zJC138VVOTdq/oHme8yvF6LY/pOt+Ef6Ibk6shERpZErCWTd9Mhgro
+         GwIEtljdx9Upni3rvg3qwE69HKrkUiPqeSagIAsdQYl8M833G6bpZvmY8RB9Vfjbt7
+         BNnWC6uEN5yZSQSjwMt4ku0psASXCegMsqRc2okJ4s7KJR1KMIv9gVkG0kC0zfgwon
+         q2eZb7KzwuYc0hlaOeC1zPGRWEo+2L6BmV9Y5OhAnruuYhr48sjdwJZ0s8FhthPStm
+         Uo4GPemwMSpkHYAR2UksnjoRMULGeozPHXXBPuRDNCSyiWja8MW7j62nEPb7YYmKuj
+         09vq6vM+k1pCJq2Ea1vC/XY8KeUU//Ihab6SifFg0gANaxJUIxluCKEr43HWa0/mYX
+         gd0fMF/R/TPhAChmDvIsi5nv3Pa7yQkHSMJAL84EKejM9ynug8W
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 24/42] diff: specify abbreviation size in terms of the_hash_algo
-Date:   Wed,  2 May 2018 00:25:52 +0000
-Message-Id: <20180502002610.915892-25-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 16/42] Update struct index_state to use struct object_id
+Date:   Wed,  2 May 2018 00:25:44 +0000
+Message-Id: <20180502002610.915892-17-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
 References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
@@ -54,66 +54,111 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of using hard-coded 40 constants, refer to the_hash_algo for the
-current hash size.
+Adjust struct index_state to use struct object_id instead of unsigned
+char [20].
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- diff.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ cache.h                          |  2 +-
+ read-cache.c                     | 16 ++++++++--------
+ t/helper/test-dump-split-index.c |  2 +-
+ unpack-trees.c                   |  2 +-
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 314c57e3c0..b1666b9b2d 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3897,13 +3897,14 @@ static void fill_metainfo(struct strbuf *msg,
- 		*must_show_header = 0;
- 	}
- 	if (one && two && oidcmp(&one->oid, &two->oid)) {
--		int abbrev = o->flags.full_index ? 40 : DEFAULT_ABBREV;
-+		const unsigned hexsz = the_hash_algo->hexsz;
-+		int abbrev = o->flags.full_index ? hexsz : DEFAULT_ABBREV;
+diff --git a/cache.h b/cache.h
+index f06737fb78..37d081b8e4 100644
+--- a/cache.h
++++ b/cache.h
+@@ -324,7 +324,7 @@ struct index_state {
+ 		 drop_cache_tree : 1;
+ 	struct hashmap name_hash;
+ 	struct hashmap dir_hash;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct untracked_cache *untracked;
+ 	uint64_t fsmonitor_last_update;
+ 	struct ewah_bitmap *fsmonitor_dirty;
+diff --git a/read-cache.c b/read-cache.c
+index f47666b975..9dbaeeec43 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1806,7 +1806,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 	if (verify_hdr(hdr, mmap_size) < 0)
+ 		goto unmap;
  
- 		if (o->flags.binary) {
- 			mmfile_t mf;
- 			if ((!fill_mmfile(&mf, one) && diff_filespec_is_binary(one)) ||
- 			    (!fill_mmfile(&mf, two) && diff_filespec_is_binary(two)))
--				abbrev = 40;
-+				abbrev = hexsz;
- 		}
- 		strbuf_addf(msg, "%s%sindex %s..%s", line_prefix, set,
- 			    diff_abbrev_oid(&one->oid, abbrev),
-@@ -4138,6 +4139,11 @@ void diff_setup_done(struct diff_options *options)
- 			      DIFF_FORMAT_NAME_STATUS |
- 			      DIFF_FORMAT_CHECKDIFF |
- 			      DIFF_FORMAT_NO_OUTPUT;
-+	/*
-+	 * This must be signed because we're comparing against a potentially
-+	 * negative value.
-+	 */
-+	const int hexsz = the_hash_algo->hexsz;
+-	hashcpy(istate->sha1, (const unsigned char *)hdr + mmap_size - the_hash_algo->rawsz);
++	hashcpy(istate->oid.hash, (const unsigned char *)hdr + mmap_size - the_hash_algo->rawsz);
+ 	istate->version = ntohl(hdr->hdr_version);
+ 	istate->cache_nr = ntohl(hdr->hdr_entries);
+ 	istate->cache_alloc = alloc_nr(istate->cache_nr);
+@@ -1902,10 +1902,10 @@ int read_index_from(struct index_state *istate, const char *path,
+ 	base_oid_hex = oid_to_hex(&split_index->base_oid);
+ 	base_path = xstrfmt("%s/sharedindex.%s", gitdir, base_oid_hex);
+ 	ret = do_read_index(split_index->base, base_path, 1);
+-	if (hashcmp(split_index->base_oid.hash, split_index->base->sha1))
++	if (oidcmp(&split_index->base_oid, &split_index->base->oid))
+ 		die("broken index, expect %s in %s, got %s",
+ 		    base_oid_hex, base_path,
+-		    sha1_to_hex(split_index->base->sha1));
++		    oid_to_hex(&split_index->base->oid));
  
- 	if (options->set_default)
- 		options->set_default(options);
-@@ -4218,8 +4224,8 @@ void diff_setup_done(struct diff_options *options)
- 			 */
- 			read_cache();
- 	}
--	if (40 < options->abbrev)
--		options->abbrev = 40; /* full */
-+	if (hexsz < options->abbrev)
-+		options->abbrev = hexsz; /* full */
+ 	freshen_shared_index(base_path, 0);
+ 	merge_base_index(istate);
+@@ -2194,7 +2194,7 @@ static int verify_index_from(const struct index_state *istate, const char *path)
+ 	if (n != the_hash_algo->rawsz)
+ 		goto out;
  
- 	/*
- 	 * It does not make sense to show the first hit we happened
-@@ -4797,8 +4803,8 @@ int diff_opt_parse(struct diff_options *options,
- 		options->abbrev = strtoul(arg, NULL, 10);
- 		if (options->abbrev < MINIMUM_ABBREV)
- 			options->abbrev = MINIMUM_ABBREV;
--		else if (40 < options->abbrev)
--			options->abbrev = 40;
-+		else if (the_hash_algo->hexsz < options->abbrev)
-+			options->abbrev = the_hash_algo->hexsz;
+-	if (hashcmp(istate->sha1, hash))
++	if (hashcmp(istate->oid.hash, hash))
+ 		goto out;
+ 
+ 	close(fd);
+@@ -2373,7 +2373,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 			return -1;
  	}
- 	else if ((argcount = parse_long_opt("src-prefix", av, &optarg))) {
- 		options->a_prefix = optarg;
+ 
+-	if (ce_flush(&c, newfd, istate->sha1))
++	if (ce_flush(&c, newfd, istate->oid.hash))
+ 		return -1;
+ 	if (close_tempfile_gently(tempfile)) {
+ 		error(_("could not close '%s'"), tempfile->filename.buf);
+@@ -2497,10 +2497,10 @@ static int write_shared_index(struct index_state *istate,
+ 		return ret;
+ 	}
+ 	ret = rename_tempfile(temp,
+-			      git_path("sharedindex.%s", sha1_to_hex(si->base->sha1)));
++			      git_path("sharedindex.%s", oid_to_hex(&si->base->oid)));
+ 	if (!ret) {
+-		hashcpy(si->base_oid.hash, si->base->sha1);
+-		clean_shared_index_files(sha1_to_hex(si->base->sha1));
++		oidcpy(&si->base_oid, &si->base->oid);
++		clean_shared_index_files(oid_to_hex(&si->base->oid));
+ 	}
+ 
+ 	return ret;
+diff --git a/t/helper/test-dump-split-index.c b/t/helper/test-dump-split-index.c
+index 754e9bb624..63c689d6ee 100644
+--- a/t/helper/test-dump-split-index.c
++++ b/t/helper/test-dump-split-index.c
+@@ -14,7 +14,7 @@ int cmd__dump_split_index(int ac, const char **av)
+ 	int i;
+ 
+ 	do_read_index(&the_index, av[1], 1);
+-	printf("own %s\n", sha1_to_hex(the_index.sha1));
++	printf("own %s\n", oid_to_hex(&the_index.oid));
+ 	si = the_index.split_index;
+ 	if (!si) {
+ 		printf("not a split index\n");
+diff --git a/unpack-trees.c b/unpack-trees.c
+index e73745051e..038ef7b926 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1287,7 +1287,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	o->result.split_index = o->src_index->split_index;
+ 	if (o->result.split_index)
+ 		o->result.split_index->refcount++;
+-	hashcpy(o->result.sha1, o->src_index->sha1);
++	oidcpy(&o->result.oid, &o->src_index->oid);
+ 	o->merge_size = len;
+ 	mark_all_ce_unused(o->src_index);
+ 
