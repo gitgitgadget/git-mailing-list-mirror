@@ -2,144 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED,WEIRD_PORT shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC11B21841
-	for <e@80x24.org>; Wed,  2 May 2018 11:41:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D1C221841
+	for <e@80x24.org>; Wed,  2 May 2018 11:47:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751428AbeEBLlq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 07:41:46 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:51879 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750954AbeEBLlp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 07:41:45 -0400
-Received: by mail-wm0-f68.google.com with SMTP id j4so22257795wme.1
-        for <git@vger.kernel.org>; Wed, 02 May 2018 04:41:44 -0700 (PDT)
+        id S1751073AbeEBLrw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 07:47:52 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:45049 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750897AbeEBLrv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 07:47:51 -0400
+Received: by mail-pf0-f196.google.com with SMTP id q22so11578226pff.11
+        for <git@vger.kernel.org>; Wed, 02 May 2018 04:47:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=iJ4JsNMjw/1hP+jKDpueYcv0puf/tQUtaOdLNxcFIYA=;
-        b=bMH0/frFfQoQ6QUj94EtADJIvvLXWUWe3B4Jo0zhcJRa3Xw2h3UvctmDndj4EETPHI
-         Z1bL6ZzEZ/UNKsrcSpW/8qQvXnL58mc5bfrph7juKi0iD3JLQalI4aAQQ7nES/Q6yDcl
-         iOoQXUJy0S4fsU4sDLXrNMPMNZmDediVnFOpvV4wCWhvwfiAMDGnnza01msRndYsuqC5
-         9yjlU2BPasxvZbYptFCcWRN/C6t/8z4ba1i9j/9DWhaMmhti6U1u/WrOhGGdJVPhk8Rh
-         pbwfYWDmtLKY0iUkcRUGbt770HVq9zQC+uypYTnA/ga1W2B4OwqcoBk0Ppe6ZxD+EU5C
-         RYog==
+        d=kojima-org.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=U7Ta6nks+gM+vgGpG5bj0KnIBBOSmgS9h+KFKZCzd9M=;
+        b=yCDBc9a6jDId+6JlLLREKPpYVkGvT82u1ZNxCJABSqRPkY2v1GRVmYSGxWbi7Hb0dV
+         YOOHMaLO7+kFTeUtn2Qe56xpQdl/+FJkXJImBFYCA67KU7kazoOIsxIwYeQiOBwOm6HI
+         f0J9WyxfGICagC4WmU1CfGX5xtl3dltq8vL2HGrFQ4Gvfl+ottvbalRRF6i5FvrBKJ2z
+         ucxvRZfAYrEjt8fWG9xB0Iih2CAMfBBHvwEOv3Zo1Zo+GLL0YAZ7gF4DH0aAuJ7qSdml
+         5fdI2uASRM7cXp/EyQzGZEWt+LxOEXOuCzSzqUDpNRkJnTo+gxJ904AfCli8rNGGRmNC
+         xypA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=iJ4JsNMjw/1hP+jKDpueYcv0puf/tQUtaOdLNxcFIYA=;
-        b=KV8u/oYJZS4Pvy6+I8zl/dXOxOgeZ4bb+s+7PNdUo8gwspERdmxnl6sqTdRZS+tQ1m
-         ZWzE4lgX/LxOKrWNqYjOUrAXU6Lrb3Xb0esDYb/EUyaWNCQJbgxs/jfBntMVPIKSP1nU
-         mbjaqrFiaV9ebMFS89vXJEbjxwJitTgGsK0gl0kwT8PgjhfnKiKIukh69AcVqzPQd0qM
-         ZRfqgWf9QNeTpz3IJVbmF6cmqHGss+ssU/gWX2N9Sd67VF9bfg5WIl015an/lx7M7NZB
-         Si3WDCe6655VmQgt3NfbWxlmb6OF/uP3JaRTBdWVGJqLvzeADUFiD+UdxK6NseuWIHZR
-         hNXw==
-X-Gm-Message-State: ALQs6tCRtAejVZGKrEfNo4xk4LpcCUEQCFEFgPOVoRS8YYObM5zzKYxg
-        w33LDx+ykY23UbDuQGPvbBU=
-X-Google-Smtp-Source: AB8JxZqR+lEon6ejeRPGNQ9FAWo/ac2Jg+nYQxk8Q80Ib+HH82NrfmmCBWkJKNerlMS8a5bS+1c7FA==
-X-Received: by 10.28.211.1 with SMTP id k1mr3741860wmg.43.1525261304043;
-        Wed, 02 May 2018 04:41:44 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egn45.neoplus.adsl.tpnet.pl. [83.21.77.45])
-        by smtp.gmail.com with ESMTPSA id z72sm12086685wmc.28.2018.05.02.04.41.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 02 May 2018 04:41:42 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v4 09/10] merge: check config before loading commits
-References: <20180417170001.138464-1-dstolee@microsoft.com>
-        <20180425143735.240183-1-dstolee@microsoft.com>
-        <20180425143735.240183-10-dstolee@microsoft.com>
-        <86po2gfgpp.fsf@gmail.com>
-        <214dea35-a89c-4115-a51a-5110c4e53314@gmail.com>
-Date:   Wed, 02 May 2018 13:41:38 +0200
-In-Reply-To: <214dea35-a89c-4115-a51a-5110c4e53314@gmail.com> (Derrick
-        Stolee's message of "Tue, 1 May 2018 07:52:26 -0400")
-Message-ID: <86h8nq1dzh.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=U7Ta6nks+gM+vgGpG5bj0KnIBBOSmgS9h+KFKZCzd9M=;
+        b=pYQf50CVEh2jSgnZW2oXyf6rSAhYh/4TL9xZD4QteSyreQc7yHt+lrwSJcJGS9fOOB
+         aRTIedgTTlBNB5+seZdz7KCjGH14o61HlIaWv/JCNsIyQxhtblJ/E+mGZIL/YAf9744g
+         sui/I1LzvM7AizYe4v9ubcHDN7ykSDw60HLYdQKFELWv8jh8irrtOvS+PH0HmvkFlqqN
+         ToLsTEkKIvuKLidmbW3JisO4lr7+uhD2CkvmYTVX1eA4Kzdl0LnlXSwr/K9Oy0UAfoll
+         20pVkbvcJKmtWu+W37CGJaLXGeACfSROUY1qhORlqFR+LFBEk6yRRm5QtnGQS5FZDNJQ
+         stGw==
+X-Gm-Message-State: ALQs6tD3c6ax2CF1V2dSA8TOXcs0eq3TroIxUQ1ellNMOB0htn81f7Kg
+        N1fKmww9IeQUcT2a+44JrucPoQ==
+X-Google-Smtp-Source: AB8JxZojaV782zyGPYhsqC2oQiZlKmQKcxgjKbY5bQ81EOFGoqNs2V3T37SXP5fbXsg+AyoMnaDkbA==
+X-Received: by 2002:a63:7514:: with SMTP id q20-v6mr15699663pgc.88.1525261670775;
+        Wed, 02 May 2018 04:47:50 -0700 (PDT)
+Received: from skmbp (pl40313.ag1212.nttpc.ne.jp. [203.138.175.121])
+        by smtp.gmail.com with ESMTPSA id j74sm23914071pfk.25.2018.05.02.04.47.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 02 May 2018 04:47:49 -0700 (PDT)
+Date:   Wed, 2 May 2018 20:47:45 +0900
+From:   Shin Kojima <shin@kojima.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Shin Kojima <shin@kojima.org>, git@vger.kernel.org,
+        jnareb@gmail.com
+Subject: Re: [PATCH] gitweb: Measure offsets against UTF-8 flagged string
+Message-ID: <20180502114743.cmetkapax2y5mipj@skmbp>
+Reply-To: shin@kojima.org
+References: <20180501064015.59977-1-shin@kojima.org>
+ <xmqqtvrqv632.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-2022-jp
+Content-Disposition: inline
+In-Reply-To: <xmqqtvrqv632.fsf@gitster-ct.c.googlers.com>
+User-Agent: NeoMutt/20180323
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
-> On 4/30/2018 6:54 PM, Jakub Narebski wrote:
->> Derrick Stolee <dstolee@microsoft.com> writes:
->>
->>> Now that we use generation numbers from the commit-graph, we must
->>> ensure that all commits that exist in the commit-graph are loaded
->>> from that file instead of from the object database. Since the
->>> commit-graph file is only checked if core.commitGraph is true, we
->>> must check the default config before we load any commits.
->>>
->>> In the merge builtin, the config was checked after loading the HEAD
->>> commit. This was due to the use of the global 'branch' when checking
->>> merge-specific config settings.
->>>
->>> Move the config load to be between the initialization of 'branch' and
->>> the commit lookup.
->>
->> Sidenote: I wonder why reading config was postponed to later in the
->> command lifetime... I guess it was to avoid having to read config if
->> HEAD was invalid.
->
-> The 'branch' does need to be loaded before the call to git_config (as
-> I found out after moving the config call too early), so I suppose it
-> was natural to pair that with resolving head_commit.
+> ideally we should be able to say "function X takes non-UTF8 and
+> works on it", "function Y takes UTF8 and works on it", and "function
+> Z takes non-UTF8 and gives UTF8 data back" for each functions
+> clearly, not "function W can take either UTF8 or any other garbage
+> and tries to return UTF8".
 
-Right, so there was only a limited number of places where call to
-git_config could be put correctly. Now I wonder no more.
+Yes, I totally agree with that.
 
-[...]
->>> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
->>> index a380419b65..77d85aefe7 100755
->>> --- a/t/t5318-commit-graph.sh
->>> +++ b/t/t5318-commit-graph.sh
->>> @@ -221,4 +221,13 @@ test_expect_success 'write graph in bare repo' '
->>>   graph_git_behavior 'bare repo with graph, commit 8 vs merge 1' bare c=
-ommits/8 merge/1
->>>   graph_git_behavior 'bare repo with graph, commit 8 vs merge 2' bare c=
-ommits/8 merge/2
->>>   +test_expect_success 'perform fast-forward merge in full repo' '
->>> +	cd "$TRASH_DIRECTORY/full" &&
->>> +	git checkout -b merge-5-to-8 commits/5 &&
->>> +	git merge commits/8 &&
->>> +	git show-ref -s merge-5-to-8 >output &&
->>> +	git show-ref -s commits/8 >expect &&
->>> +	test_cmp expect output
->>> +'
->> All right.  (though I wonder if this tests catches all problems where
->> BUG("bad generation skip") could have been encountered.
->
-> We will never know until we have this series running in the wild (and
-> even then, some features are very obscure) and enough people turn on
-> the config setting.
->
-> One goal of the "fsck and gc" series is to get this feature running
-> during the rest of the test suite as much as possible, so we can get
-> additional coverage. Also to get more experience from the community
-> dogfooding the feature.
 
-Sidenote: for two out of three features that change the view of history
-we could also update commit-graph automatically:
-* the shortening or deepening of shallow clone could also re-calculate
-  the commit graph (or invalidate it)
-* git-replace could check if the replacement modifies history, and if
-  so, recalculate the commit graph (or invalidate it/check its validity)
-* there is no such possibility for grafts, but they are deprecated anyway
+> Some codepaths in the resulting codeflow look even harder than they
+> already are.  For example, format_rem_add_lines_pair() calls
+> untabify() and then feeds its result to esc_html().
 
---=20
-Jakub Nar=C4=99bski
+Honestly, I discovered this problem exactly from
+format_rem_add_lines_pair().  In my environment($fallback_encoding
+= 'cp932'), some commitdiff shows garbled text only inside color-words
+portions.
+
+I added a reproduce process at the end of this message.
+
+After my investigation, I thought format_rem_add_lines_pair() tries to
+use split()/index()/substr()/etc against raw blob contents and that
+produces funny characters.  These builtin functions should be used to
+decoded string.
+
+untabify() looks proper place for me to decode blob contents
+beforehand, as it definitely is not to be used for binary contests
+like images and compressed snapshot files.
+
+I'm sure using to_utf8() in untabify() fixes this problem.  In fact,
+there is also another similar problem in blame function that assumes
+blob contents as if utf8 encoded:
+
+    binmode $fd, ':utf8';
+
+I personally consider text blob contents should be decoded as soon as
+possible and esc_html() should not contain to_utf8(), but the
+codeflow is slightly vast and I couldn't eliminate the possibility of
+calls from somewhere else that does not care character encodings.
+
+So yes, I would appreciate hearing your thoughts.
+
+
+> Also, does it even "fix" the problem to use to_utf8() here in the
+> first place?  Untabify is about aligning the character after a HT to
+> multiple of 8 display position, so we'd want measure display width,
+> which is not the same as either byte count or char count.
+
+Following is a reproduce process:
+
+    $ git --version
+        git version 2.17.0
+
+    $ mkdir test
+    $ cd test
+    $ git init
+    $ echo 'モバイル' | iconv -f UTF-8 -t Shift_JIS > dummy
+    $ git add .
+    $ git commit -m 'init'
+    $ echo 'インスタント' | iconv -f UTF-8 -t Shift_JIS > dummy
+    $ git commit -am 'change'
+    $ git instaweb
+    $ echo 'our $fallback_encoding = "cp932";' >> .git/gitweb/gitweb_config.perl
+    $ w3m -dump 'http://127.0.0.1:1234/?p=.git;a=commitdiff'
+
+What I got:
+
+    gitprojects / .git / commitdiff
+    [commit   ] ? search: [                    ] [ ]re
+    summary | shortlog | log | commit | commitdiff | tree
+    raw | patch | inline | side by side (parent: 79e26fe)
+    change master
+
+    author    Shin Kojima <shin@kojima.org>
+              Wed, 2 May 2018 10:55:01 +0000 (19:55 +0900)
+    committer Shin Kojima <shin@kojima.org>
+              Wed, 2 May 2018 10:55:01 +0000 (19:55 +0900)
+
+    dummy  patch | blob | history
+
+
+    diff --git a/dummy b/dummy
+    index ac37f38..31fb96a 100644 (file)
+    --- a/dummy
+    +++ b/dummy
+    @@ -1 +1 @@
+    -ｃoイル
+    +Cンスタント
+    Unnamed repository; edit this file 'description' to name the repository.
+    RSS Atom
+
+What I expected:
+
+    gitprojects / .git / commitdiff
+    [commit   ] ? search: [                    ] [ ]re
+    summary | shortlog | log | commit | commitdiff | tree
+    raw | patch | inline | side by side (parent: 79e26fe)
+    change master
+
+    author    Shin Kojima <shin@kojima.org>
+              Wed, 2 May 2018 10:55:01 +0000 (19:55 +0900)
+    committer Shin Kojima <shin@kojima.org>
+              Wed, 2 May 2018 10:55:01 +0000 (19:55 +0900)
+
+    dummy  patch | blob | history
+
+
+    diff --git a/dummy b/dummy
+    index ac37f38..31fb96a 100644 (file)
+    --- a/dummy
+    +++ b/dummy
+    @@ -1 +1 @@
+    -モバイル
+    +インスタント
+    Unnamed repository; edit this file 'description' to name the repository.
+    RSS Atom
+
+
+-- 
+Shin Kojima
