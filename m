@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CCFF21847
-	for <e@80x24.org>; Wed,  2 May 2018 00:26:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F37FA21847
+	for <e@80x24.org>; Wed,  2 May 2018 00:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753503AbeEBA04 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 May 2018 20:26:56 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37674 "EHLO
+        id S1753508AbeEBA06 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 May 2018 20:26:58 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37660 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753393AbeEBA0b (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:31 -0400
+        by vger.kernel.org with ESMTP id S1753389AbeEBA0a (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 May 2018 20:26:30 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8EBA8609A1;
-        Wed,  2 May 2018 00:26:29 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 205E460B13;
+        Wed,  2 May 2018 00:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525220790;
-        bh=+Xmb/Hl91GQhU/zP7WH3DcYrIXR6H1VJSK6wBIyHKmQ=;
+        s=default; t=1525220788;
+        bh=nm/N6HFR8Gd5iS6dBoi2Z8kiST8wlHZFLB2Im1gXLkg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=QU2SkbAYhXjPMpP755V5bmT1SHkCaCzdUGVmQpjs3A30bmpowQZ8OJAH/xwZLV/vr
-         CTrrlBiGMYyvaLPmRI9CJCIeo0scTKIGyfE25Sg0uBDzNEZzlfBANoFRSmR8NW3kzI
-         6o+7OtcN2fBgTliKNhI4ECCXghnOSIor7o5g+L/p/pNSAJ0BMQd7p1m3nByJhOJTsX
-         0jzfAc2HXLlwk5QMRD94nOYszMHkjzd+PVDvPf8lzra9JllNyRWRjQtc6/nwS8WEQT
-         g2ay50Y6wYDl0TuLwJQEt+ivJLgXtlYFO81TTzOqr7yoeYMKQ/C12SteFOrt9COYDm
-         941IpiokLm7XxXT/vkPOB+os+dpstUFYF6hhLfPp1b8xpVm+sPC0Ygtgj+/1DM7Xy4
-         TtdHhBYvh+PC7AriSgdkCjdax/Q7gpB/hryD7LGcGoCiD1qmN+TufMUEqyhPJrLIMJ
-         6gNtgyjlV9mHldmXfyK8gqeXFocYoOzfxVHDA8zmIApYKZF0uLE
+        b=m3T2wC9GIWfTPsAQVevgWV/NuSCtrVXZk8+yeir0ipki/Fo9Zxz8gcvmACD4T+K5m
+         88v+S16r+ymeUZ06C2Xc1anuNKnKLRxsSkAMCiDEQr9WbE1EhvL1cK5Jf8esp6Bz7S
+         jPn0zj+C35Saw2XwIPdlf7lH+SJW8JEJMHlrDwu+43LxfyGMSvYzK42OR1Bt/W1BNQ
+         PrB6IPxIJm/SfdltJGIHDpoXfkjPpDEmjfuENz2/uPGj7rsTq0G70eBcKyasgR2qKR
+         DtjOR92Eni15SI+ToXyWVhgOmiSKP9xhgWI7Dg8cS9dCAT9fZpkUoc0wv+P3TgBYgJ
+         bvb/tkC7bczASWkQXkg63MLPPl0bbA7yMaxBrLrPLmJ5scDLcGOhoCsR5YpWLWFaIp
+         f6CyJSswayLaPQr7sNqV1DCXMl/XVlpmDwwmtbwoBkVngLEhIJFaxUn3aLzdTp/DiJ
+         //Juw17PFtVVIy7F6jEvRJ4bPrUVaQUg1NxaLmBiHKrL5muRFHP
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -42,9 +42,9 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 10/42] pack-redundant: abstract away hash algorithm
-Date:   Wed,  2 May 2018 00:25:38 +0000
-Message-Id: <20180502002610.915892-11-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 09/42] pack-objects: abstract away hash algorithm
+Date:   Wed,  2 May 2018 00:25:37 +0000
+Message-Id: <20180502002610.915892-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180502002610.915892-1-sandals@crustytoothpaste.net>
 References: <20180502002610.915892-1-sandals@crustytoothpaste.net>
@@ -59,53 +59,117 @@ the_hash_algo to look up the correct constant.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/pack-redundant.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ builtin/pack-objects.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 354478a127..0fe1ff3cb7 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -252,13 +252,14 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
- 	unsigned long p1_off = 0, p2_off = 0, p1_step, p2_step;
- 	const unsigned char *p1_base, *p2_base;
- 	struct llist_item *p1_hint = NULL, *p2_hint = NULL;
-+	const unsigned int hashsz = the_hash_algo->rawsz;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 907e112331..f014523613 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -264,6 +264,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
+ 	enum object_type type;
+ 	void *buf;
+ 	struct git_istream *st = NULL;
++	const unsigned hashsz = the_hash_algo->rawsz;
  
- 	p1_base = p1->pack->index_data;
- 	p2_base = p2->pack->index_data;
- 	p1_base += 256 * 4 + ((p1->pack->index_version < 2) ? 4 : 8);
- 	p2_base += 256 * 4 + ((p2->pack->index_version < 2) ? 4 : 8);
--	p1_step = (p1->pack->index_version < 2) ? 24 : 20;
--	p2_step = (p2->pack->index_version < 2) ? 24 : 20;
-+	p1_step = hashsz + ((p1->pack->index_version < 2) ? 4 : 0);
-+	p2_step = hashsz + ((p2->pack->index_version < 2) ? 4 : 0);
+ 	if (!usable_delta) {
+ 		if (entry->type == OBJ_BLOB &&
+@@ -320,7 +321,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
+ 		dheader[pos] = ofs & 127;
+ 		while (ofs >>= 7)
+ 			dheader[--pos] = 128 | (--ofs & 127);
+-		if (limit && hdrlen + sizeof(dheader) - pos + datalen + 20 >= limit) {
++		if (limit && hdrlen + sizeof(dheader) - pos + datalen + hashsz >= limit) {
+ 			if (st)
+ 				close_istream(st);
+ 			free(buf);
+@@ -332,19 +333,19 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
+ 	} else if (type == OBJ_REF_DELTA) {
+ 		/*
+ 		 * Deltas with a base reference contain
+-		 * an additional 20 bytes for the base sha1.
++		 * additional bytes for the base object ID.
+ 		 */
+-		if (limit && hdrlen + 20 + datalen + 20 >= limit) {
++		if (limit && hdrlen + hashsz + datalen + hashsz >= limit) {
+ 			if (st)
+ 				close_istream(st);
+ 			free(buf);
+ 			return 0;
+ 		}
+ 		hashwrite(f, header, hdrlen);
+-		hashwrite(f, entry->delta->idx.oid.hash, 20);
+-		hdrlen += 20;
++		hashwrite(f, entry->delta->idx.oid.hash, hashsz);
++		hdrlen += hashsz;
+ 	} else {
+-		if (limit && hdrlen + datalen + 20 >= limit) {
++		if (limit && hdrlen + datalen + hashsz >= limit) {
+ 			if (st)
+ 				close_istream(st);
+ 			free(buf);
+@@ -376,6 +377,7 @@ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
+ 	unsigned char header[MAX_PACK_OBJECT_HEADER],
+ 		      dheader[MAX_PACK_OBJECT_HEADER];
+ 	unsigned hdrlen;
++	const unsigned hashsz = the_hash_algo->rawsz;
  
- 	while (p1_off < p1->pack->num_objects * p1_step &&
- 	       p2_off < p2->pack->num_objects * p2_step)
-@@ -359,13 +360,14 @@ static size_t sizeof_union(struct packed_git *p1, struct packed_git *p2)
- 	size_t ret = 0;
- 	unsigned long p1_off = 0, p2_off = 0, p1_step, p2_step;
- 	const unsigned char *p1_base, *p2_base;
-+	const unsigned int hashsz = the_hash_algo->rawsz;
+ 	if (entry->delta)
+ 		type = (allow_ofs_delta && entry->delta->idx.offset) ?
+@@ -411,7 +413,7 @@ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
+ 		dheader[pos] = ofs & 127;
+ 		while (ofs >>= 7)
+ 			dheader[--pos] = 128 | (--ofs & 127);
+-		if (limit && hdrlen + sizeof(dheader) - pos + datalen + 20 >= limit) {
++		if (limit && hdrlen + sizeof(dheader) - pos + datalen + hashsz >= limit) {
+ 			unuse_pack(&w_curs);
+ 			return 0;
+ 		}
+@@ -420,16 +422,16 @@ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
+ 		hdrlen += sizeof(dheader) - pos;
+ 		reused_delta++;
+ 	} else if (type == OBJ_REF_DELTA) {
+-		if (limit && hdrlen + 20 + datalen + 20 >= limit) {
++		if (limit && hdrlen + hashsz + datalen + hashsz >= limit) {
+ 			unuse_pack(&w_curs);
+ 			return 0;
+ 		}
+ 		hashwrite(f, header, hdrlen);
+-		hashwrite(f, entry->delta->idx.oid.hash, 20);
+-		hdrlen += 20;
++		hashwrite(f, entry->delta->idx.oid.hash, hashsz);
++		hdrlen += hashsz;
+ 		reused_delta++;
+ 	} else {
+-		if (limit && hdrlen + datalen + 20 >= limit) {
++		if (limit && hdrlen + datalen + hashsz >= limit) {
+ 			unuse_pack(&w_curs);
+ 			return 0;
+ 		}
+@@ -752,7 +754,7 @@ static off_t write_reused_pack(struct hashfile *f)
+ 		die_errno("unable to seek in reused packfile");
  
- 	p1_base = p1->index_data;
- 	p2_base = p2->index_data;
- 	p1_base += 256 * 4 + ((p1->index_version < 2) ? 4 : 8);
- 	p2_base += 256 * 4 + ((p2->index_version < 2) ? 4 : 8);
--	p1_step = (p1->index_version < 2) ? 24 : 20;
--	p2_step = (p2->index_version < 2) ? 24 : 20;
-+	p1_step = hashsz + ((p1->index_version < 2) ? 4 : 0);
-+	p2_step = hashsz + ((p2->index_version < 2) ? 4 : 0);
+ 	if (reuse_packfile_offset < 0)
+-		reuse_packfile_offset = reuse_packfile->pack_size - 20;
++		reuse_packfile_offset = reuse_packfile->pack_size - the_hash_algo->rawsz;
  
- 	while (p1_off < p1->num_objects * p1_step &&
- 	       p2_off < p2->num_objects * p2_step)
-@@ -558,7 +560,7 @@ static struct pack_list * add_pack(struct packed_git *p)
+ 	total = to_write = reuse_packfile_offset - sizeof(struct pack_header);
  
- 	base = p->index_data;
- 	base += 256 * 4 + ((p->index_version < 2) ? 4 : 8);
--	step = (p->index_version < 2) ? 24 : 20;
-+	step = the_hash_algo->rawsz + ((p->index_version < 2) ? 4 : 0);
- 	while (off < p->num_objects * step) {
- 		llist_insert_back(l.all_objects, base + off);
- 		off += step;
+@@ -1438,7 +1440,7 @@ static void check_object(struct object_entry *entry)
+ 			if (reuse_delta && !entry->preferred_base)
+ 				base_ref = use_pack(p, &w_curs,
+ 						entry->in_pack_offset + used, NULL);
+-			entry->in_pack_header_size = used + 20;
++			entry->in_pack_header_size = used + the_hash_algo->rawsz;
+ 			break;
+ 		case OBJ_OFS_DELTA:
+ 			buf = use_pack(p, &w_curs,
+@@ -1850,7 +1852,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 	/* Now some size filtering heuristics. */
+ 	trg_size = trg_entry->size;
+ 	if (!trg_entry->delta) {
+-		max_size = trg_size/2 - 20;
++		max_size = trg_size/2 - the_hash_algo->rawsz;
+ 		ref_depth = 1;
+ 	} else {
+ 		max_size = trg_entry->delta_size;
