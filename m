@@ -2,94 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B992F21841
-	for <e@80x24.org>; Wed,  2 May 2018 08:02:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0F5821841
+	for <e@80x24.org>; Wed,  2 May 2018 08:54:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751355AbeEBICA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 04:02:00 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:36250 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750897AbeEBIB5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 04:01:57 -0400
-Received: by mail-wm0-f43.google.com with SMTP id n10so22533871wmc.1
-        for <git@vger.kernel.org>; Wed, 02 May 2018 01:01:56 -0700 (PDT)
+        id S1750942AbeEBIyT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 04:54:19 -0400
+Received: from mail-it0-f45.google.com ([209.85.214.45]:55465 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750800AbeEBIyS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 04:54:18 -0400
+Received: by mail-it0-f45.google.com with SMTP id 144-v6so16591451iti.5
+        for <git@vger.kernel.org>; Wed, 02 May 2018 01:54:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=hWlKQG6Xg0z0u6QHK0t+hA+CWivHLs3VHz1zQngAWlo=;
-        b=CacKIMAWX/rYl2En/ztzZBdSZQuUNC342tLqMpm0QzLQSTLQ7NDql/sBqxlkYo8FFs
-         K8OHwex5+cdlAYvdfKnTk+27yv8g0GUUjgczB8NWciPLUwK7RLHIbAOGxKyT9C7g3dQn
-         KIYHUMzStahPHmdZgaYOui5cLqHZE6pAv2XSn5mYTWjbXYZNQXkPvfD1sXtVMTA7dHRA
-         kCCL1knrCx4ySlsYwVhWKsE8K496S41O3QftzS+nh2j5TSp37ASxcfobJm53LLcs+nLJ
-         UINQZVGYpsmruNzFyyfCJVh7TievHfAkhqgAHibilGc3Pg84sP3cXx5YF69m8tUwQt8G
-         8Zyw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=bLhmqlqfOMyz9vlwgv8WN1T9YdzRd3OllI1fjjXXo7Y=;
+        b=lfrtGaoAPS68hvTwUHkUkcxW17Wf5NqMqXGrRtMBdjCymY2DWhNfv8U/RC8Q1C483v
+         J4I2WGNOGH8FgVXJsX9pbYg1hJyGfaogXdWqTwcGgKPbq98GlWmscgMZRdAHL09fytu2
+         VCrY1omFXo41wF1LImC4RRDm83fgq8hIg/MtCwVwh43BY29hjr/2StuzNSBY78gBagOs
+         aZw8p7R5bK/f/JQ5oVUSwHCdHmXqOCP4z6GSzSIgyKh4KsUg4gtVMux+wcYkNdtLdWB0
+         QFug2KUsTj7qeJFITY+i5uH2SrtMPcwiqATxcvFAjhK4nJVEWVfReV7sLsUFwKITuPxX
+         rQhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=hWlKQG6Xg0z0u6QHK0t+hA+CWivHLs3VHz1zQngAWlo=;
-        b=LRAF6wdzvDc6XPsDBC8wHJ7gxAw47arltc0prk90951F2U/VygnwXtUBQC103Rz+x2
-         zfy3VSdqmGMBpdvCLs3+6wy0C2udDvVTGYAtM1R0MorO6Bub5RNumhk0gbTAYeSdIfyO
-         kKtadjqRRkBX4jaLFJm/xNJsjmbcttEHbDGbc9LS6AvkxmiyrRIoqP0PP9NMeZaSEMqF
-         fQ00OSRpG6aIm6uBP4bQxPm6p2piqoUdHERr80kTrlXKnGrkMRmg3AbUxJvJFXGODK8o
-         dVdVPXp63CwnzChB/h/lEBoNCpXz4DuOaKN+/n4C4fzDicLVj5j7lWsJ8E9JClyzTftr
-         x8Eg==
-X-Gm-Message-State: ALQs6tDaQY9YuIOEEjsU644IP0NlLaAVFaDEQEb5t1jtvsc64QaR63E8
-        jMJeQ/hli9+HTUx4y0N/2FQ=
-X-Google-Smtp-Source: AB8JxZr031Wlfkzo5A4ideohXZ1SGFt1HlOrihlazdrbW4VBrWiZfBHPSggT8odDcfkQqhSgMvXT/g==
-X-Received: by 10.28.113.196 with SMTP id d65mr10962795wmi.157.1525248114977;
-        Wed, 02 May 2018 01:01:54 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q81sm13764822wmg.8.2018.05.02.01.01.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 02 May 2018 01:01:54 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shin Kojima <shin@kojima.org>
-Cc:     git@vger.kernel.org, jnareb@gmail.com
-Subject: Re: [PATCH] gitweb: Measure offsets against UTF-8 flagged string
-References: <20180501064015.59977-1-shin@kojima.org>
-Date:   Wed, 02 May 2018 17:01:53 +0900
-In-Reply-To: <20180501064015.59977-1-shin@kojima.org> (Shin Kojima's message
-        of "Tue, 1 May 2018 15:40:15 +0900")
-Message-ID: <xmqqtvrqv632.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=bLhmqlqfOMyz9vlwgv8WN1T9YdzRd3OllI1fjjXXo7Y=;
+        b=CCjXcBcb4gopatEOJnunhupLFxc79jbQGlCQUctARZiHwwRhvxWUWpjIReD/Vaficm
+         j34pu4wblj//AfsaXyojytuJFoIvJkCTe5iRDQQ6UTrPG2OLN5Sa/3wKlpMRYMJxGEo9
+         8b6R+VH1l3wUAqDXCkoo98lO+B3lEdKS8ax/IcomGAJzaiyy7eZGs/uKi8oHcXWBfoE+
+         oV7IONgcaPFeAsyCtIlYgmspoKmd8uC92HNyRCJkvDRR3yNfX7t+iV5mxlKes9kgqcqK
+         j+kj+ordJEwCmajcnH7OizEJxCtkKswdG9CG7hB84xeqvGOwmsKTl7BA6/8AROC4mAkV
+         wrOA==
+X-Gm-Message-State: ALQs6tCKCU/D2aq4KLSszmSTKB/g7H1YgGzUiKWCOTt0VHYGvq/Vsgi8
+        62KD/qRCVgYbGt0Q5q1sOJvnTljrmK0iz3V2P4M=
+X-Google-Smtp-Source: AB8JxZoYCdjzrT6ntpcX+wFji2Q8woyWOmApj6EBczpD2yf2TWARyxoaJxCrpHwaDV+EfByGXNPevblcnzNjzpLLJrk=
+X-Received: by 2002:a24:5fca:: with SMTP id r193-v6mr17952775itb.89.1525251257541;
+ Wed, 02 May 2018 01:54:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a4f:7c91:0:0:0:0:0 with HTTP; Wed, 2 May 2018 01:54:17 -0700 (PDT)
+In-Reply-To: <xmqqefiuwu4a.fsf@gitster-ct.c.googlers.com>
+References: <CAEp-SHV4hP=v_=AJExRS3hqT-x9rXEONofWD=sVQZC79uewATA@mail.gmail.com>
+ <20180502005528.19740-1-kcghost@gmail.com> <xmqqefiuwu4a.fsf@gitster-ct.c.googlers.com>
+From:   Casey Fitzpatrick <kcghost@gmail.com>
+Date:   Wed, 2 May 2018 04:54:17 -0400
+Message-ID: <CAEp-SHVj=EN7tD+s14DrCrXp=0fPFqWFbQNyPHFj_w2RUyBM2Q@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Add --progress and --dissociate to git submodule
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shin Kojima <shin@kojima.org> writes:
+Thanks I was not aware of that option.
 
-> Offset positions should not be counted by byte length, but by actual
-> character length.
-> ...
->  # escape tabs (convert tabs to spaces)
->  sub untabify {
-> -	my $line = shift;
-> +	my $line = to_utf8(shift);
->  
->  	while ((my $pos = index($line, "\t")) != -1) {
->  		if (my $count = (8 - ($pos % 8))) {
-
-Some codepaths in the resulting codeflow look even hackier than they
-already are.  For example, format_rem_add_lines_pair() calls
-untabify() and then feeds its result to esc_html().  The first thing
-done in esc_html() is to call to_utf8().  I know that to_utf8()
-cheats and leaves the incoming string as-is if it is already UTF-8,
-so this may be a safe conversion, but ideally we should be able to
-say "function X takes non-UTF8 and works on it", "function Y takes
-UTF8 and works on it", and "function Z takes non-UTF8 and gives UTF8
-data back" for each functions clearly, not "function W can take
-either UTF8 or any other garbage and tries to return UTF8".
-
-Also, does it even "fix" the problem to use to_utf8() here in the
-first place?  Untabify is about aligning the character after a HT to
-multiple of 8 display position, so we'd want measure display width,
-which is not the same as either byte count or char count.
+On Wed, May 2, 2018 at 12:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Casey Fitzpatrick <kcghost@gmail.com> writes:
+>
+>> These patches add --progress and --dissociate options to git submodule.
+>>
+>> The --progress option existed beforehand, but only for the update command and
+>> it was left undocumented.
+>>
+>> Both add and update submodule commands supported --reference, but not its pair
+>> option --dissociate which allows for independent clones rather than depending
+>> on the reference.
+>>
+>> This is a resubmission with comments from Stefan Beller and Eric Sunshine
+>> addressed.
+>
+> Readers would really appreciate it if these are prepared with
+> format-patch with -v$N option.  Unless they read faster than you
+> post patches, they will find a few messages identically titled, all
+> unread in their mailbox, and it is not always easy to tell which
+> ones are the latest.
+>
+> Thanks.
