@@ -2,102 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B18621847
-	for <e@80x24.org>; Wed,  2 May 2018 05:59:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C5B221847
+	for <e@80x24.org>; Wed,  2 May 2018 06:20:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751063AbeEBF7w (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 May 2018 01:59:52 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33089 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751007AbeEBF7v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 01:59:51 -0400
-Received: by mail-wr0-f194.google.com with SMTP id o4-v6so12603732wrm.0
-        for <git@vger.kernel.org>; Tue, 01 May 2018 22:59:50 -0700 (PDT)
+        id S1751069AbeEBGU4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 02:20:56 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:40333 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751007AbeEBGUz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 02:20:55 -0400
+Received: by mail-pg0-f54.google.com with SMTP id l2-v6so9859444pgc.7
+        for <git@vger.kernel.org>; Tue, 01 May 2018 23:20:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=KU5KwUvvtyzUIjaUKek9B5IfB+MEhl23Nun1MPewVoE=;
-        b=XMn0gvfXFPmufANfzw0XbcOl0BBa2PqicfSeL4a7dzi4g8PVNQHsRJq9Z6BM7m//Z5
-         FAj39T3YNq9t2ZbgjD16RKtgU3CLIvHtxxI/UvhaFai8h65ZbPU/SdhozULO45LNBe6y
-         B2mgBIqtR1Tzgfe31BIJY8hU/BXEbF1v43hzSLcF0DhWPMien7C2dEjskefK4IcvZTNl
-         nVz372ig6wlLOwci4OzxDcm3mFdb1nlLaHQduQi8B+9nYemDhfsPv/V1teSQtU7JcvX6
-         hQ3YiHfoZE4jdtZFfKrRbSddvU9NGenWLgDcFkNFVz9g34rP+GDbiOeXsB4j2yh3x6Mw
-         zcyg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=OrDz865k30zTKA+Sp+0oVFrfAAqvhX9rJxell9psJfw=;
+        b=ITpQ462570SdG1ZhM38hWmn+fleMO/bQewwBaxy50a9ZzcpW4JpPr1vVz0VC6hsx7d
+         vxn1ABnHjc6Mq7Ff9IbJUkX4psn4AV2NwSw06KXeI/ShYzeixVXNkTcrtTP34qFvRBNg
+         YxTNW2cDeJJgYTK1z3uyWXKeEiwJmZq01TzwYI55SKg5PM2FCbRIQpp55kjX8knv0Tfw
+         VYInmlyJ5RzGol7G639pt/uAhb7HWp7b+njfKq458lXuWHRK+O4OVv6wb9m6rIq4uMNY
+         nZGBUiSFJAO25iujE6vOKguhNud0jTdZJdvbKdJgKrcbqhNsDEKj61Fm7CQ/EvCVxe1z
+         og2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=KU5KwUvvtyzUIjaUKek9B5IfB+MEhl23Nun1MPewVoE=;
-        b=dIHf+f7MhAsh+BnWen8crbCRlsldmR0VKr+kBsIKtXaq3aexzj20K2eAKFAJQEn413
-         RTtKyTo8Y/gAgV+k/v6YsN4tTTS2E3ZFWj1NBQ9MP0aDyugThEeWZe+icw/kkd+ItfSH
-         QomlZDo8DU0iz1J2znerqqN44obGCpyB6QRd+dzZbDwUSha4uFKNhx4haJV/TKUeAahL
-         T6wU53sOtQS2MvgjMk5b224NYq/jt7Do3dk64nK5J05zfDIij8f67wgh4bAwuz5Jy6T4
-         hMm0d6SzQZfWaByRVE/21gyHVTSb3gS3Ej/n29IBEeHMAmIjrVRmn02G5LZ6WIxvIpLP
-         80gw==
-X-Gm-Message-State: ALQs6tDiITUN6VseJRbBYbW54eDJOW9x9HpAFThfheIefg9SiLyKgETq
-        7OZG+PTLwYSi/n2a0NrHO0Y=
-X-Google-Smtp-Source: AB8JxZrb8kWxUbj6ahMBhONx9GSM5pCW6hi0yof40tKSx1LcwNCWdVPflRqvlbT1BYx8ZiB8cZ7Wkg==
-X-Received: by 2002:adf:da4b:: with SMTP id r11-v6mr13303295wrl.154.1525240789912;
-        Tue, 01 May 2018 22:59:49 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j76sm27575370wmf.33.2018.05.01.22.59.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 01 May 2018 22:59:49 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Casey Fitzpatrick <kcghost@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, sunshine@sunshineco.com
-Subject: Re: [PATCH 1/3] submodule: clean up subsititions in script
-References: <CAEp-SHV4hP=v_=AJExRS3hqT-x9rXEONofWD=sVQZC79uewATA@mail.gmail.com>
-        <20180502005528.19740-1-kcghost@gmail.com>
-        <20180502005528.19740-2-kcghost@gmail.com>
-Date:   Wed, 02 May 2018 14:59:48 +0900
-In-Reply-To: <20180502005528.19740-2-kcghost@gmail.com> (Casey Fitzpatrick's
-        message of "Tue, 1 May 2018 20:55:26 -0400")
-Message-ID: <xmqqy3h2vbqj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=OrDz865k30zTKA+Sp+0oVFrfAAqvhX9rJxell9psJfw=;
+        b=q0TldGIycc1N9c9W7FLTA2cn9B7I8x2dYy+WEaiEc/VXqvXOrpRlWptRtAez6a2sna
+         1s5DvGCkRWux9tvWOCHTvPnl/gOtX65yV2x+DBUrQQxXgKKK29PF133NEG0ZHTmQLtjb
+         lzp5Bit8ts+FxhatfVu2Pmnm8G0nWiXUMppwxaIJZ6BBEg0YP/RaVJoG1MDb9gzOeoJW
+         he+WerpGdTyEbVxXjquEKityW8xF+DHBBvb7RMeWgdsC33xaOQxRvo0519FdnTf0pIdL
+         hhq7cLFCIX1464KTw4s3+xE/7voO4nwuPaXt1NFLsKOUDRL4FTegy+aKxxczf5WfR5rk
+         IzZQ==
+X-Gm-Message-State: ALQs6tAyHQxFWJxzd17N47oqReDvLRqmO5XLKpKEusr7c5NH9EM1CTki
+        g+Yauvt8EznVdikgrcRVqxOyuIKW1p9P7JTNzUI=
+X-Google-Smtp-Source: AB8JxZoawzlrRfJIzYD+XRY3xG71kCtfhTaR7xrIolcah/+hBDwi85aRJlHYpr1dB57OEP1qi2gxzhjHVOw1ITIkdm8=
+X-Received: by 2002:a17:902:9a90:: with SMTP id w16-v6mr18781795plp.390.1525242055305;
+ Tue, 01 May 2018 23:20:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.236.187.139 with HTTP; Tue, 1 May 2018 23:20:54 -0700 (PDT)
+In-Reply-To: <xmqq7eomwtid.fsf@gitster-ct.c.googlers.com>
+References: <20180430210430.14611-1-martin.agren@gmail.com> <xmqq7eomwtid.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 2 May 2018 08:20:54 +0200
+Message-ID: <CAN0heSqeMFq4yVHX=8Ug3wOTEzrLXwE=PcF7UFWTRg_AbZEWWg@mail.gmail.com>
+Subject: Re: [PATCH] revisions.txt: expand tabs to spaces in diagram
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Casey Fitzpatrick <kcghost@gmail.com> writes:
+On 2 May 2018 at 06:50, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>
+>> The diagram renders fine in AsciiDoc before and after this patch.
+>> Asciidoctor, on the other hand, ignores the tabs entirely, which results
+>> in different indentation for different lines. The graph illustration
+>> earlier in the document already uses spaces instead of a tab.
+>
+> Ouch.  We might want to teach Documentation/.gitattributes that
+> indent-with-tab is unwelcome in that directory, after making this
+> fix (and possibly similar ones to other files).
 
-> 'recommend_shallow' and 'jobs' variables do not need quotes (they never contain
-> spaces) and do not require any additional prefix, therefore remove the
-> unnecessary subsitition.
+I actually grepped around a little for a leading tab, to see if I could
+immediately spot any similar issues. But there are tons of tabs here
+(about 13000). Most of them work out just fine, e.g., in the OPTIONS,
+where we tab-indent the descriptions.
 
-The resulting patch is good, but "they never contain spaces" is not
-a very good rationale.  The real reason is that (1) we use them only
-to hold a single token value (or leave them empty) in the current
-code, and (2) if the feature they represent is enhanced in the
-future to make them multi-token options (e.g. we may allow $jobs to
-contain, in addition to "--jobs=2", "--jobs 2" for whatever reason
-later), it is likely that we would want these multi-tokens split at
-$IFS (e.g. "--jobs" and "2" get passed as separate option, not a
-single "--jobs 2" string).
+So while we could try to move away from leading tabs in Documentation/,
+it would be a huge undertaking. Any kind of "do it while we're nearby"
+approach would take a long time to complete. And a one-off conversion
+would probably be a horrible idea. ;-)
 
-> 'progress' is a boolean value. Treat it like the other boolean values in the
-> script by using a substitution.
+I just noticed another difference in how the tabs are handled. In
+git-add.txt, which I just picked at random, the three continuation lines
+in the synopsis indent differently in AsciiDoc (which indents them more
+than in the .txt) and Asciidoctor (which indents them less than in the
+.txt). To me, this is more of a "if I didn't sit down and compare the
+two outputs, I would never think about these indentations -- they're
+both fine".
 
-This is OK.
+So it might be that the only places where leading tabs really matter is
+this kind of diagrams. Maybe we have a handful such bugs lingering among
+the 13000 tab-indented lines...
 
->  	git submodule--helper update-clone ${GIT_QUIET:+--quiet} \
-> -		${progress:+"$progress"} \
-> +		${progress:+"--progress"} \
->  		${wt_prefix:+--prefix "$wt_prefix"} \
->  		${prefix:+--recursive-prefix "$prefix"} \
->  		${update:+--update "$update"} \
->  		${reference:+"$reference"} \
->  		${depth:+--depth "$depth"} \
-> -		${recommend_shallow:+"$recommend_shallow"} \
-> -		${jobs:+$jobs} \
-> +		$recommend_shallow \
-> +		$jobs \
-
+Martin
