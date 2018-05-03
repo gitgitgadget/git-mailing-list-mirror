@@ -2,82 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28CC7200B9
-	for <e@80x24.org>; Thu,  3 May 2018 23:27:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83618200B9
+	for <e@80x24.org>; Thu,  3 May 2018 23:42:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751278AbeECX1M (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 19:27:12 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:47721 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751036AbeECX1L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 19:27:11 -0400
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id ENcvfgq2NgCgnENcvf6JTS; Fri, 04 May 2018 00:27:09 +0100
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=FNM1Odgs c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8
- a=d-mH9-6W5xbN2u8A67cA:9 a=QEXdDO2ut3YA:10
-Message-ID: <8DBB15A6A2AB48C7A9914B5B419E001F@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Johannes Schindelin" <johannes.schindelin@gmx.de>,
-        <git@vger.kernel.org>
-Cc:     "Johannes Schindelin" <johannes.schindelin@gmx.de>,
-        "Thomas Rast" <tr@thomasrast.ch>,
-        "Junio C Hamano" <gitster@pobox.com>,
-        "Thomas Gummerer" <t.gummerer@gmail.com>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <fe12b99a0b4f78ab75fcfbcf51c5edffb190c4e8.1525361419.git.johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 11/18] branch-diff: add tests
-Date:   Fri, 4 May 2018 00:27:04 +0100
-Organization: OPDS
-MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="utf-8";
-        reply-type=original
+        id S1751220AbeECXl6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 19:41:58 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:40172 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750965AbeECXl6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 19:41:58 -0400
+Received: by mail-pf0-f173.google.com with SMTP id f189so15960071pfa.7
+        for <git@vger.kernel.org>; Thu, 03 May 2018 16:41:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4KVvEw+1SIilEZKOnOViddZ5CGr0DL6eZZ4lUkkoY4o=;
+        b=Y6HxnT1AsH1TR2cPHRWpdnyBYwbhM4jDd1H7CApQZpIXDNf4ytryuRcdr8CSlEXGcU
+         ZMtbizxbyjXnt1Qiv7yxur4OH7RrHwUcSUzpREYCMdmZHhoUPDjZm0RCfD3MxbUOguhf
+         sPuEmGVfFLZI0A7mMvVg/KfM3j8Y57Mka5L9vo/Sz0Mufcv3XgeYjy5pleVEKe9B6+ay
+         Y2HZe+OEqwgbKdpHskW8LA/uQia889lXnWtH58pCTWmma8tu8cKZ6vZymt05Y88+HtPk
+         JE/X1uw/gET+rAHMyR11hXBKAns+dIVUM7Zdup9z0gY95WGXSzpWeO2SJYd5G7wfy7sA
+         qMDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4KVvEw+1SIilEZKOnOViddZ5CGr0DL6eZZ4lUkkoY4o=;
+        b=fhccwvJ5meyN73LYZ5tsPdurfjQ94+CRM289hO+nS0KWMX8ftCqAtVA/VJToO4O/vu
+         kO60EAc1+fru/PxzyusAp2/U2sFSSSrcnAfO6cyV9KvF18PhVzA0K6DrFfuWWUQNF67v
+         boz6wR57lIvom2YpjIh1syEvmmf0t3FXW4Wkkcp+HQJosboNKalcYIqFAJ+ZmMK7rXno
+         XQN/RJG2ZOL2c+RBuaaQJUOe4vLqcNYOq35JY4IH5pWWuNAsvcsLkDbaIflenq0iVgLm
+         /XGao2vb2NIcR+YE11bSq1py1rkCns/z2iI9kmD/sALQ1Aund+dSXRRGt3atL5iGewJC
+         zeyQ==
+X-Gm-Message-State: ALQs6tBhJR9u2luVaC9NMO9GcecMJoRK9m/2aAwqCYs6mJlmGgi314mG
+        2elGKVXfh9tnrlf/DPDxTEWkhg==
+X-Google-Smtp-Source: AB8JxZplGDFMNvy9LthsfMDuE2NX+Qzz0/Wzh+AduPNFUFtQPBeVHePl7haCnHYPe7TNhDVnWU9jWg==
+X-Received: by 2002:a17:902:bb93:: with SMTP id m19-v6mr6020305pls.74.1525390917425;
+        Thu, 03 May 2018 16:41:57 -0700 (PDT)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id u68sm27541545pfu.167.2018.05.03.16.41.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 03 May 2018 16:41:56 -0700 (PDT)
+Date:   Thu, 3 May 2018 16:41:55 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v2 1/3] upload-pack: fix error message typo
+Message-Id: <20180503164155.6112764a927d50e23600dc49@google.com>
+In-Reply-To: <CAGZ79kbTwqzKgZjN7GSXn-NpKX0kkDVYbXmdz6CC6TrDWbqyQg@mail.gmail.com>
+References: <cover.1525213052.git.jonathantanmy@google.com>
+        <cover.1525220786.git.jonathantanmy@google.com>
+        <177c6eb7058adc1996f0595ddc3cc848c91b578f.1525220786.git.jonathantanmy@google.com>
+        <CAGZ79kbTwqzKgZjN7GSXn-NpKX0kkDVYbXmdz6CC6TrDWbqyQg@mail.gmail.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180503-4, 03/05/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfAhcStYQbzVVWlVgtks4m3paEb/O+QYEKBuZcNWXERj+XRqCizZ4VL4zXCF42MuuwRyMuFcocjtIA/BbG77RMpfV/MrO52gTFQnG/dT4GNm9ijhDCEqh
- ywoNpgT0VALpGI+VECXJTD/1bEJMvHCAVQhiv4bfnpARieRPSEZ6SCiWteOBW5KUsUhv2AsdZIzw875XC2uYOHLXyrvuvTZL0NuycqNgM0kadcXc+tJsjqjy
- 0+y3I22uPxxuOYXcajFXDU28bSQ5MQWY6ylad/Me5vR7ZZyOuBUWBAgrnqSZIqBPO5Lz6gDlp+MATr6wuCgSJyw/kwdp8ZOoLRBINKJi18/+pjrVRA0tz5p+
- tBuKHEgR
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
-> From: Thomas Rast <tr@thomasrast.ch>
-> 
-> These are essentially lifted from https://github.com/trast/tbdiff, with
-> light touch-ups to account for the new command name.
-> 
-> Apart from renaming `tbdiff` to `branch-diff`, only one test case needed
-> to be adjusted: 11 - 'changed message'.
-> 
-> The underlying reason it had to be adjusted is that diff generation is
-> sometimes ambiguous. In this case, a comment line and an empty line are
-> added, but it is ambiguous whether they were added after the existing
-> empty line, or whether an empty line and the comment line are added
-> *before* the existing emtpy line. And apparently xdiff picks a different
+On Thu, 3 May 2018 11:58:59 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-s/emtpy/empty/
-
-> option here than Python's difflib.
+> > +       test_must_fail git -C server serve --stateless-rpc <in >/dev/null 2>err &&
 > 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-[...]
-Philip
+> Minor nit:
+> Why do we pipe stdout to /dev/null ?
+
+Usually there's a binary packfile produced, but not in this case. I'll
+remove it.
