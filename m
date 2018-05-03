@@ -7,87 +7,75 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BED1B200B9
-	for <e@80x24.org>; Thu,  3 May 2018 23:45:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57B3C200B9
+	for <e@80x24.org>; Thu,  3 May 2018 23:47:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751036AbeECXpN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 19:45:13 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36744 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750829AbeECXpM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 19:45:12 -0400
-Received: by mail-pf0-f195.google.com with SMTP id w129so10546113pfd.3
-        for <git@vger.kernel.org>; Thu, 03 May 2018 16:45:12 -0700 (PDT)
+        id S1751108AbeECXrL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 19:47:11 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34616 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750829AbeECXrK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 19:47:10 -0400
+Received: by mail-pf0-f181.google.com with SMTP id a14so15993325pfi.1
+        for <git@vger.kernel.org>; Thu, 03 May 2018 16:47:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=L8rARXhivffWgzhkq2Qf42gKdTb91KdhXRbpdSQSOFc=;
-        b=hDuMklyetspblMD2rl+yng6t2lG5dqgI3NB8szRE/wQ3OwLq16Rbl78RPHqJNzYZpQ
-         lS954Z0rUsrc8BSJukU2QMTApwhIwoZTZs/biRPyQysB9TBaCzSy4clT+IoV8Xo2SjGx
-         AGzYf+IOsMnpzFRfSJJcvn1gaylcRyZzdi0U2h1GeYp4gootX00QkPgkQkVq9qru7KOl
-         l6K4toRWIU5mHbinnlCJSm3qVO/TkVPC38DjEQ1ujBvlXiBp7oOg2YRCiPw9xVJxTT01
-         Cp12PnG4IHvNryE2Dbq+9Sb+gE3i6RjBH+h+ccjzbGURYjwPCXJ83c1uhQ/AonpXW8nE
-         v2jg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=VPl/exxKbujtVWDrrNZvy7iTEwe1Bixp8Pt8kmRD+rM=;
+        b=WZ6j4hERuSnj6Qj/sLYejhW8a7bVM/PVoyGv7rxeJkIfoNe1HU+OMePvpl+IpXaTco
+         Jc4aIeVa66Fv1sI1wSEtvi5XJqBNNTAkLA+PfPxdET5kebsr37cQkkyhSMU2et4nS7X+
+         J979E3sumDtDTmMzGquWuXpU5bmLc4m9v6HOYhRlCNA0K9tbTJaICHiuO1w/rgmbciGX
+         73pTR92SWS1OqRxB+q1yVzghJp1DeSFcrXanhqDxvom0nTwQf0M2nKZvD966GGsXP8XE
+         LSp8prwW7UYSq9O1tEFl+aI4q0ccevO2THyqaV8+Y1Se0fe3D1TB7Ay+swCpH2g1ioYe
+         1XQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=L8rARXhivffWgzhkq2Qf42gKdTb91KdhXRbpdSQSOFc=;
-        b=nzsBWKhQp9VNDR4pg3Uu7T6JiDksn9jFm+d84wibP6zmgr584aKvRX+C7QO6Bdy/1J
-         U0j87tyiY85n9Y6PnF6+amQPuWP7Y4zFtJ1C+kRMG6IT3I3fYnevAX30ulah964xlzXF
-         3GlIT7AkUhNRQNIFOoHDLS1CBJNj5evczRQV7zDzHs1lAIVSiTHIL/0FaX5CO+cSXUBl
-         97W2uVo2umIlsMxQ1TEWzwuf0RcdAIKkaJFeiudDPrsPnC5y4lua89fMF+CWCFKc57I/
-         QuEFEGlYtr8ShqFVbLtjx5UeFFTMzcWOOSJx2y9PhngioHvQ6ABiEuriVHqsocrhjjt2
-         +qfw==
-X-Gm-Message-State: ALQs6tBQu8gU1gDs33xKbLfd1yHxq5qWvVYLk+fnzQQde75P90us9O2b
-        wBrFI93+W6P/8k8sq9kvEZaccA==
-X-Google-Smtp-Source: AB8JxZrWrwQX2osq7P/zM5spYtUYsOHnj5dtn0n6+AdP7m3W20zJoh9Ik/zh2+BtJ7/ylWz7rKJxPg==
-X-Received: by 2002:a17:902:bc84:: with SMTP id bb4-v6mr14569680plb.84.1525391111892;
-        Thu, 03 May 2018 16:45:11 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=VPl/exxKbujtVWDrrNZvy7iTEwe1Bixp8Pt8kmRD+rM=;
+        b=UCiacOoPrQ5mOadGrUrsH+UPqBguZwaAsPpzcSgH0tmoUUCKxxZneXquA37oSrYhrD
+         s6PpS3StcVdD8xhRHLbuTJSvK3UZNPEHW21CGvcpyPHmKfr4HhcltofCU89fbKkJc6Bb
+         eMY7+sgeuwuFLBXdfUTIEQTR06AnkGY9UwbEMtZsMo84AQ9BxJhh3UTj6WO/vjyXSbID
+         2YrJCpQ9oBMza2bbjmGEV71tL6pXkWDMvKsgLokUwLXZZaNvd/WO5xxao2vvbxnp8AJY
+         2ehqDwFw0ILhKVkZxaj35qBXz/ekqJbN6CZLPUt4URuQUMP7BVyNJs8P+brYMdhvgGCf
+         CvZA==
+X-Gm-Message-State: ALQs6tDNcRLbEjEjV2R1bCyQopezQ7zTd4uDZpaPg1YvSX5YjEYhkiHy
+        6TplKpmCLYm2P0okvLyY4w19oEJC2HA=
+X-Google-Smtp-Source: AB8JxZowaUxEbS1w8EzMsWp3RKzsgkfMGE6KM9XpnUpYJ+BAVdGYhK4wIKHxZNghgn6v/nxanEPmRA==
+X-Received: by 2002:a17:902:ba87:: with SMTP id k7-v6mr17599322pls.193.1525391229277;
+        Thu, 03 May 2018 16:47:09 -0700 (PDT)
 Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id 4sm29109512pfn.38.2018.05.03.16.45.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 03 May 2018 16:45:10 -0700 (PDT)
-Date:   Thu, 3 May 2018 16:45:09 -0700
+        by smtp.gmail.com with ESMTPSA id a67-v6sm7924669pgc.23.2018.05.03.16.47.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 03 May 2018 16:47:08 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH v2 2/3] upload-pack: read config when serving protocol
- v2
-Message-Id: <20180503164509.83dd9c113ddb849584863c08@google.com>
-In-Reply-To: <CAGZ79kb4gHO=5aYMbT=AhZrOexkmkRakJRPRZd_GMrQJTF3WwQ@mail.gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, sbeller@google.com
+Subject: [PATCH v3 0/3] Supporting partial clones in protocol v2
+Date:   Thu,  3 May 2018 16:46:53 -0700
+Message-Id: <cover.1525391172.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
+In-Reply-To: <cover.1525213052.git.jonathantanmy@google.com>
 References: <cover.1525213052.git.jonathantanmy@google.com>
-        <cover.1525220786.git.jonathantanmy@google.com>
-        <6e85aaa555f6789156626330327085207b2d2dff.1525220786.git.jonathantanmy@google.com>
-        <CAGZ79kb4gHO=5aYMbT=AhZrOexkmkRakJRPRZd_GMrQJTF3WwQ@mail.gmail.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 3 May 2018 12:08:16 -0700
-Stefan Beller <sbeller@google.com> wrote:
+Changes from v2: followed all Stefan's comments.
 
-> test_path_is_missing ?
+Jonathan Tan (3):
+  upload-pack: fix error message typo
+  upload-pack: read config when serving protocol v2
+  {fetch,upload}-pack: support filter in protocol v2
 
-Thanks for the pointer. Done.
+ Documentation/technical/protocol-v2.txt |   9 ++
+ fetch-pack.c                            |  23 ++++-
+ t/t5701-git-serve.sh                    |  14 +++
+ t/t5702-protocol-v2.sh                  | 112 ++++++++++++++++++++++++
+ upload-pack.c                           |  19 +++-
+ 5 files changed, 171 insertions(+), 6 deletions(-)
 
-> > +       GIT_TRACE=/tmp/y git -c protocol.version=2 clone "file://$(pwd)/server" client &&
-> 
-> Why do we redirect GIT_TRACE outside the test suite? do we read that
-> back or want to read it out of the hook?
-> 
-> Is it possible to redirect to  /$(pwd)/trace or such?
+-- 
+2.17.0.441.gb46fe60e1d-goog
 
-Good catch - that was a leftover from debugging. I've just removed it.
-
-> > +       test -f server/.git/hookout
-> 
-> test_path_is_file ?
-
-Done.
