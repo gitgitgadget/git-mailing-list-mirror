@@ -2,108 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34873200B9
-	for <e@80x24.org>; Thu,  3 May 2018 05:28:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26D3C2023D
+	for <e@80x24.org>; Thu,  3 May 2018 06:43:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751881AbeECF2Q (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 01:28:16 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:43885 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751774AbeECF2P (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 01:28:15 -0400
-Received: by mail-wr0-f195.google.com with SMTP id v15-v6so16144864wrm.10
-        for <git@vger.kernel.org>; Wed, 02 May 2018 22:28:14 -0700 (PDT)
+        id S1752017AbeECGnr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 02:43:47 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:33332 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751951AbeECGnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 02:43:45 -0400
+Received: by mail-wm0-f45.google.com with SMTP id x12-v6so1562353wmc.0
+        for <git@vger.kernel.org>; Wed, 02 May 2018 23:43:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=EhqccVhbAOTfx23D7/nHeRbxM18xFqBIPN+Z6pjHakk=;
-        b=OII7R0qLqbyT81mn8S+nVa6W7NdMIjTjijx+MBBm2nONapRBhwlOaFZ2x53oFE8rsJ
-         yfwkzhdAHRbO/vOG4aYM4LGzKtCioqaMYJYyt+ndoOGVla37dWrAWBytJjwIdnTXqxFg
-         OnICr2eJS58XwFxgD2bbr9qTS7UgDCo2M8Hk7TKtPJuhZjZtxudzEx0dirmFgOtXnzaZ
-         96qp4DtTdVz/RFFz0BaKy82R3xwGULd2JBmB0Tm5oA98/mzcKblp6gO7NwfNlpYdBvJu
-         qXOmg+mTKRBcEyTywPrnM0BlQCRKm/HemDODIcgMX7k+9BSor2ZfAJBfBL85sFAA+cAj
-         cRPA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=L+HPKxmZgr6LRk3pPQDaZWiqfbz5o9Czab7ewfXXZVE=;
+        b=iQMP6EEs93uSkVRaxSZ7prLsrNkXLve6jb24lWb6lF88AvwvuQOXfxyOP/DDlJxNGx
+         PkBRGjH69hv/FWhnUY0SHb4iHvKUtXGASq7ZrVvq70VaOA8OagnD1qBP50GWIX5bR3fj
+         5lLNLg3UMPK0+CzP5MkGJZ+rAEdexH5RItHHqrOkJcsuKwaO5yzxZSqnH/5j41n3J+6x
+         ACRIRSNSTSlTibE8ttTq+820CFVr/bs7ZARGsSZph2pKW2ABFSKNc7NpD8PlS97CtsB7
+         XouFtIZHHowtD4FBXOIE5IEGBXJBDbGmu7Aq/6aN+lz8ki6dcj+6aaPbohhqKndUB3tM
+         jjzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=EhqccVhbAOTfx23D7/nHeRbxM18xFqBIPN+Z6pjHakk=;
-        b=IgTWg1ChxZGJ8USMSR1+yh9KJAawN3WHn5nQ0HuQZX4prihEe6p3Al5YWrvL/avYGw
-         dRhqGukU92ZoVdcQCbGjKIsXZumbow2ARALOWyH9rQdAvBk2G7JYr+/5Y0xREO5qBoKD
-         iLyc2bZaBhzU8SXHlnyRTluHuGmMgBIhcnQwYp19oMu8Xjz9gDbzCELmCQRUZrRuhgAn
-         HDmuVC940c4fprG94zjB/TwEY3BNIhSDF+w2pAqtuhiRb/FMkIrLC57x9pGvDLxgoHT8
-         0djkPhRFBPgfB+FezpcHN/bjf3Qfim0Gg+6KRN+7GA6UpXfP11QopX8BYhq9ld2odiSh
-         /ZbQ==
-X-Gm-Message-State: ALQs6tDkjC75lKb9enpT1Xui/8ZAiBaiSZL4+2TlyZOalvIVr7jneuM7
-        fthNenBKAI5dzqKnl4VOPcgjN2LZ
-X-Google-Smtp-Source: AB8JxZrVx2LjUUHyBbKhBx4bUZjfUZUtJ54oUDAkZzQEy3N5F4DpPNbza8IxVsxMHC3xEmEYTQP3Dg==
-X-Received: by 2002:adf:bd03:: with SMTP id j3-v6mr18613517wrh.138.1525325293776;
-        Wed, 02 May 2018 22:28:13 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h81sm16959638wmd.0.2018.05.02.22.28.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 02 May 2018 22:28:13 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=L+HPKxmZgr6LRk3pPQDaZWiqfbz5o9Czab7ewfXXZVE=;
+        b=jA9bBClt3fHGk+iTmxT2aTgvQ4smzt8IOoxkSiInUVSKBxXIyuqhqwAAtCZpTaLtSE
+         FlYDKYTUSlJrFbg5CcICYxTHO27OCx70CbXyGgA7VUilK0uooc5FjDvEt0mXOhpwMN5+
+         qFZJy8h9ptBEz3UWtteKc7OFDmTr/pR/H+0gFysxGGKmFYG4LWEn0UIYPo8q1QekGn1T
+         P9KcqzfdPDZTWjaCawEFCznPFp9AaXSk/xwnhu6qd1HfbWbhnpND500fvG8wba+Uzx94
+         4/DDfXyRDdwVWPIRb1MzfWxZuQb5h1eB4uu9T+rrFGFxhnZ9nVfu0H+wcH04jTmIoc3g
+         4dfA==
+X-Gm-Message-State: ALQs6tCELR+eSoVcuZXRkY8F+yMAEIdfTglF0X88aCD5FfcmE6+ByTMz
+        g8bhsXhgHfOSCVhNVvxhWA5xBM2eOHr49FyKfPQ=
+X-Google-Smtp-Source: AB8JxZrBmID2RMgBWeXSfmgFE+6wGqg8nBLQaTPvmUYOyf/Dx28WI0qSacHV/oafelWRGb88PX+6s+8zRxtbUvziGCc=
+X-Received: by 2002:a50:8f21:: with SMTP id 30-v6mr28795709edy.265.1525329816465;
+ Wed, 02 May 2018 23:43:36 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.80.234.135 with HTTP; Wed, 2 May 2018 23:43:16 -0700 (PDT)
+In-Reply-To: <385be5ef-7d0d-7e5d-4373-4d85c1a36a0d@gmail.com>
+References: <20180501120651.15886-1-avarab@gmail.com> <20180501184016.15061-1-avarab@gmail.com>
+ <f35aeda5-8f41-f457-736e-393e95f530ec@gmail.com> <385be5ef-7d0d-7e5d-4373-4d85c1a36a0d@gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 2 May 2018 23:43:16 -0700
+Message-ID: <CA+P7+xraqcnvg274_zaJO5Je1sJDfmEL=-orFZ4hL1Sg26Cd9Q@mail.gmail.com>
+Subject: Re: [PATCH v3 00/12] get_short_oid UI improvements
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 09/12] get_short_oid / peel_onion: ^{tree} should be tree, not treeish
-References: <20180501184016.15061-1-avarab@gmail.com>
-        <20180501120651.15886-1-avarab@gmail.com>
-        <20180501184016.15061-10-avarab@gmail.com>
-Date:   Thu, 03 May 2018 14:28:12 +0900
-In-Reply-To: <20180501184016.15061-10-avarab@gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Tue, 1 May 2018 18:40:13 +0000")
-Message-ID: <xmqqzi1htij7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
-
-> But ^{tree} shows just the trees, but would previously be equivalent
-> to the above:
+On Wed, May 2, 2018 at 6:45 AM, Derrick Stolee <stolee@gmail.com> wrote:
+> On 5/2/2018 8:42 AM, Derrick Stolee wrote:
+>>
+>> On 5/1/2018 2:40 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>>
+>>> The biggest change in v3 is the no change at all to the code, but a
+>>> lengthy explanation of why I didn't go for Derrick's simpler
+>>> implementation. Maybe I'm wrong about that, but I felt uneasy
+>>> offloading undocumented (or if I documented it, it would only be for
+>>> this one edge-case) magic on the oid_array API. Instead I'm just
+>>> making this patch a bit more complex.
+>>
+>>
+>> I think that's fair. Thanks for going along with me on the thought
+>> experiment.
 >
->     $ git rev-parse e8f2^{tree}
->     error: short SHA1 e8f2 is ambiguous
->     hint: The candidates are:
->     hint:   e8f2093055 tree
->     hint:   e8f25a3a50 tree
->     hint:   e8f28d537c tree
->     hint:   e8f2cf6ec0 tree
->     [...]
+>
+> Also, v3 looks good to me.
+>
+> Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+>
 
-When a user says "git $cmd e8f2^{tree}", the user is telling Git
-that s/he knows e8f2 *is* a tree-ish, but for whatever reason $cmd
-wants a tree and does not accept an arbitrary tree-ish---that is the
-whole piont of appending ^{tree} as a suffix.  A useful hint in such
-a case would be "oh, you said e8f2 is a tree-ish, but there are more
-than one tree-ish, so let me show them to you to help you decide
-which one among them is the one you meant".  When $cmd is rev-parse,
-I would even say that the user is saying "I know e8f2 is a tree-ish,
-and I know it not a tree--it merely is a tree-ish.  I want the tree
-that e8f2 thing points at".
+I also reviewed this, and it looks good to me as well.
 
-Limiting that hint to show only real trees does not make any sense
-to me.  I do not think we care _too_ deeply, because most of the
-time, command line location that expects a tree-ish can be given a
-tree-ish, so there is not much reason to use ^{tree} suffix these
-days.  But in a case where it _does_ matter, I think this change
-makes the "hint" almost useless.
-
-Or am I misleading what you wanted to achieve with this patch?
+Thanks,
+Jake
