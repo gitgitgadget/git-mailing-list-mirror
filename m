@@ -2,101 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DF40200B9
-	for <e@80x24.org>; Thu,  3 May 2018 15:16:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8BB4200B9
+	for <e@80x24.org>; Thu,  3 May 2018 15:30:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751286AbeECPQg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 11:16:36 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:36970 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751007AbeECPQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 11:16:35 -0400
-Received: by mail-pf0-f172.google.com with SMTP id e9so10978789pfi.4
-        for <git@vger.kernel.org>; Thu, 03 May 2018 08:16:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kojima-org.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=X59ujwpjflWR4nWeA9t725jt/bfKQJIjrgTTTxXKxTU=;
-        b=WXV7wGG60PRltGLU/opy+qolM84NKrQlD6F7x28e1x/87lnw5b/ZkKuWzrMO9D69dp
-         oGv0fVn0Ko6iDjZz/5dJhJPbNsCiRiNnfmfwpC706duipm7li7njEulzI8eVdMyI9SA+
-         AmgwfnlNvRZxmeRzi9KI7F55S77ugGfQR9q1vI3x3y3lPvgRI7hfR7nhrV6fVpgLY28z
-         qmBexTszd36e06xaZjg1TKdU3Pq9uEnxRqGXwkdlQRcwyMbEyRczL2yl2VC0Px5rJ5nW
-         O2OGGycRTpgcRb5NJ9RYAgUSNhvPdH1Gxj5JPEDqQtkjuUHrT3VNMl+59BMhj32XOv7J
-         adhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=X59ujwpjflWR4nWeA9t725jt/bfKQJIjrgTTTxXKxTU=;
-        b=bkQvjtFNRpcA1x8IAxVpCKMkN2YvwOoCEb0km1EqLZo8TgohGtmq5w8u8V+t/BfYzH
-         fr4P/G3nE/Qw0axfxeyIApVf1bel1gRxny2KnSCDZthuBNp3Czhk1zESQxJm4q05OEio
-         XG7MLcclYi5iH2EyXZTKj4gLD0hIENilZHVgaTrScHY5p0ZRz7Q9YJUufOIndCK46bs/
-         K5NGDtGFliQzNj36dANniuroJTUEKnzNlepnj1TqluLfYCfp9TSERtE0D+GpSABdnlGu
-         d20wHsPaQ20CO9e0MCf+9vW+mjanfb37NrTwFrtX8gEifgyTPcK5Al8J9qFbuaIawkVx
-         Ee7A==
-X-Gm-Message-State: ALQs6tBDpMtVGdZnIc9PYofSt/SaAFRc7dBIryS+Uk2WvoWMXJQSTQaN
-        NVULNYZwYw+6PfTK96pz2jfmtQ==
-X-Google-Smtp-Source: AB8JxZqWSThR1uKHZmCb9LzILoW0yueWz7kTgCT1Bd7e4Gmqf2kjICirH2DPGCqAHz/jFgsiR18hRw==
-X-Received: by 10.98.61.84 with SMTP id k81mr23494071pfa.193.1525360594869;
-        Thu, 03 May 2018 08:16:34 -0700 (PDT)
-Received: from skmbp (218-228-157-73f1.hyg1.eonet.ne.jp. [218.228.157.73])
-        by smtp.gmail.com with ESMTPSA id u68sm26633928pfu.167.2018.05.03.08.16.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 03 May 2018 08:16:33 -0700 (PDT)
-Date:   Fri, 4 May 2018 00:16:29 +0900
-From:   Shin Kojima <shin@kojima.org>
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Shin Kojima <shin@kojima.org>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] gitweb: Measure offsets against UTF-8 flagged string
-Message-ID: <20180503151627.45pt2veqcjzbk44q@skmbp>
-Reply-To: shin@kojima.org
-References: <20180501064015.59977-1-shin@kojima.org>
- <xmqqtvrqv632.fsf@gitster-ct.c.googlers.com>
- <86k1skzzc4.fsf@gmail.com>
+        id S1751276AbeECPad (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 11:30:33 -0400
+Received: from mout.gmx.net ([212.227.17.20]:35007 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751133AbeECPac (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 11:30:32 -0400
+Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
+ (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0LqF9o-1ejcKr3W8u-00dpjl; Thu, 03 May 2018 17:30:25 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 00/18] Add `branch-diff`, a `tbdiff` lookalike
+Date:   Thu,  3 May 2018 17:30:20 +0200
+Message-Id: <cover.1525361419.git.johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.17.0.409.g0f525fc0ba7
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Content-Disposition: inline
-In-Reply-To: <86k1skzzc4.fsf@gmail.com>
-User-Agent: NeoMutt/20180323
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:jUKgJAahPbISM+YMKApGo7frLfrh/RbsqtpqaNty3gVjzF4JtgM
+ kmCNrK9QqlHQ87aZzUFrxTjPUANTRGQWPDq7OfduxUb2NSWjElsXdi+KbpA3+yEJF9xQCut
+ dQIEZdWWjpOzIDyhu5Ks7bDNJkiMoWtQe9gdDSQEvtiF0V25JH4GC0HDXHXetT35WsJYxs+
+ B48etxbkiYFVY3DOfD0Ug==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+thg21maFVs=:R+l8UNSzPtmIt9lnzkBEkF
+ wru206tlCUag6y5X/8KDj1LsXlgm80n7OTpHCmNocqRzQ6/aEcPGRkyhc1VgbVvHlUYSoPAsB
+ I+k0h+pVAHOtjqjuljfX29vdu04OhSMs3x4/THx5kThyMPH+bTRH36HSux+kJNLTHlly/ngwZ
+ OQp5yZwOTuLLQKJ7ESWMnyUz03A7Qjr+kkraZJmWPRivzAOpBRNg6RMONG2vzeo9XF1V4gk3H
+ d9HxdB/5V2mk7BO9r27PeTarIF/czKqTefnqyPJBcrq2lWWGWFAu1U3RvSfKyNhKt9Y9AbGQ2
+ q7hHxmP15jXG/ZHUKeer4Hi8VLl//zib25Wk2DfLJJ57iebDEpJ+V71rW/dDeyJsZa2wkffxQ
+ qNpdieJ5w68w8sILaFeN3e7k02uKNalarCC82van+zHIQvtrtRStrLbg9O46sNrq9GcxOwau4
+ 48NlMkIqz9TlNsQk5aiHexeqOim+iKSekc1xUTiKOVJnPkOWDLndqouKqYsCukuTO2SXNKwhW
+ Ao62iYaxUtefDz6aTFStFZft871HMzYVC6ug/dye3B8ZmiEpMaUNjSlpPgXeZ5v01b3bGdxNv
+ Ho4J34kdJIPGGR9SVpcvt2rpPjNEZkxT3z351zKESyA1WccXLqcmyWUZOU76IU6rHFjvQxfsE
+ xXnUbZUAKqnTtVIAVNdnKlEM7iHWSYdVrWneM62KUbxkOrC8n5KHLz/CJFsj/EUTe0evmgMnN
+ t/CQIPhOeXG3l2Ko13PyLw6Lm6DhStpwK8MHELgJ4eqd9oEsIcxwYJTBitrIxOnwIyukYllLZ
+ 8qDSmQv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> One solution would be to force conversion to UTF-8 on input via "open"
-> pragma (e.g. "use open ':encoding(UTF-8)';").  But there is no
-> UTF-8-with_fallback encoding available - we would have to write one, and
-> install it as module (or fake it via Perl trickery).  This mechanism is
-> almost the same to what we currently use in gitwbe.
+The incredibly useful `git-tbdiff` tool to compare patch series (say, to see
+what changed between two iterations sent to the Git mailing list) is slightly
+less useful for this developer due to the fact that it requires the `hungarian`
+and `numpy` Python packages which are for some reason really hard to build in
+MSYS2. So hard that I even had to give up, because it was simply easier to
+reimplement the whole shebang as a builtin command.
 
-Yes, I tried using `Encode::Guess` with "open" pragma, but no luck.
-https://perldoc.perl.org/Encode/Guess.html
+The project at https://github.com/trast/tbdiff seems to be dormant, anyway.
+Funny (and true) story: I looked at the open Pull Requests to see how active
+that project is, only to find to my surprise that I had submitted one in August
+2015, and that it was still unanswered let alone merged.
 
-I'm also afraid of "open" pragma does not work properly while using
-git_blame_common().  Let's say someone using non-ASCII characters in
-his/her name, committing non-UTF8 encoded characters.  git-blame will
-combine them in the same line.  Following is an example:
+While at it, I forward-ported AEvar's patch to force `--decorate=no` because
+`git -p tbdiff` would fail otherwise.
 
-$ git blame dummy | xxd
-00000000: 3461 6464 3565 6331 2028 e585 90e5 b3b6  4add5ec1 (......
-00000010: 20e6 96b0 2032 3031 382d 3035 2d30 3320   ... 2018-05-03
-00000020: 3232 3a34 383a 3432 202b 3039 3030 2031  22:48:42 +0900 1
-00000030: 2920 8367 8389 8343 0a                   ) .g...C.
 
-    * e585 90e5 b3b6 20e6 96b0 : my name, encoded with UTF-8
-    * 8367 8389 8343           : "トライ" encoded with Shift_JIS
+Johannes Schindelin (17):
+  Add a function to solve least-cost assignment problems
+  Add a new builtin: branch-diff
+  branch-diff: first rudimentary implementation
+  branch-diff: improve the order of the shown commits
+  branch-diff: also show the diff between patches
+  branch-diff: right-trim commit messages
+  branch-diff: indent the diffs just like tbdiff
+  branch-diff: suppress the diff headers
+  branch-diff: adjust the output of the commit pairs
+  branch-diff: do not show "function names" in hunk headers
+  branch-diff: use color for the commit pairs
+  color: provide inverted colors, too
+  diff: add an internal option to dual-color diffs of diffs
+  branch-diff: offer to dual-color the diffs
+  branch-diff --dual-color: work around bogus white-space warning
+  branch-diff: add a man page
+  completion: support branch-diff
 
-It means I need to split each lines of git-blame output at the very
-beginning, then convert the first-half as UTF-8 and the second-half as
-Shift_JIS.
+Thomas Rast (1):
+  branch-diff: add tests
 
-Sincerely,
+ .gitignore                             |   1 +
+ Documentation/git-branch-diff.txt      | 239 ++++++++++
+ Makefile                               |   2 +
+ builtin.h                              |   1 +
+ builtin/branch-diff.c                  | 531 ++++++++++++++++++++++
+ color.h                                |   6 +
+ command-list.txt                       |   1 +
+ contrib/completion/git-completion.bash |  18 +
+ diff.c                                 |  76 +++-
+ diff.h                                 |   6 +-
+ git.c                                  |   1 +
+ hungarian.c                            | 205 +++++++++
+ hungarian.h                            |  19 +
+ t/.gitattributes                       |   1 +
+ t/t7910-branch-diff.sh                 | 144 ++++++
+ t/t7910/history.export                 | 604 +++++++++++++++++++++++++
+ 16 files changed, 1843 insertions(+), 12 deletions(-)
+ create mode 100644 Documentation/git-branch-diff.txt
+ create mode 100644 builtin/branch-diff.c
+ create mode 100644 hungarian.c
+ create mode 100644 hungarian.h
+ create mode 100755 t/t7910-branch-diff.sh
+ create mode 100644 t/t7910/history.export
 
+
+base-commit: 1f1cddd558b54bb0ce19c8ace353fd07b758510d
+Published-As: https://github.com/dscho/git/releases/tag/branch-diff-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git branch-diff-v1
 -- 
-Shin Kojima
+2.17.0.395.g6a618d6010f.dirty
+
