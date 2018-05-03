@@ -2,174 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B105F2023F
-	for <e@80x24.org>; Thu,  3 May 2018 18:45:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AB892023F
+	for <e@80x24.org>; Thu,  3 May 2018 18:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751261AbeECSpf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 14:45:35 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:41093 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751166AbeECSpe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 14:45:34 -0400
-Received: by mail-wr0-f193.google.com with SMTP id g21-v6so18629882wrb.8
-        for <git@vger.kernel.org>; Thu, 03 May 2018 11:45:33 -0700 (PDT)
+        id S1751195AbeECSsp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 14:48:45 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:37332 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750969AbeECSso (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 14:48:44 -0400
+Received: by mail-wm0-f54.google.com with SMTP id l1-v6so628717wmb.2
+        for <git@vger.kernel.org>; Thu, 03 May 2018 11:48:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Rq/S5bcLinTgwXWCwY6rnEXOOAWljy5MrRVOeqElL9g=;
-        b=k9IbUGoOj9yrwErpPNx+h+CidAHosMJ2Crt1WG5Dq0QfVn6olv1KYlVVDWqAYac1S8
-         PX8kBPUxNV5SyVn2tz29dpK7ENZUXNnF26TLDUC3TkYB2CFenf3nECO0ZgHT3SDPlpGh
-         tYEl0zrAxcA/Y4P4smOaA8pwmxqrW8jS985xIfDwjpFJLuLykM5EuHoPyLNLxGCSDFtX
-         N70ktBCNy8Ck/UWT53klHzbHjIJLLPWpHmnrFmW8mvNeFX1vXC1KQCohybfEbHHYtHSd
-         Tft6zGAi54Rvw5JQVlPpM+nLxcxH0ECSP332vWcBSOSiuTZKNAD+2MDt3+zP4BNdmsmz
-         YsDw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=dodTb/Bv3FpU8IBLDToj16bcEUvelbDbm0M5fwz+NY8=;
+        b=TfulElGMPI/5CU4AHyw7ajPTlr7918kI1d9+cpM16Tb7jLl+WyxMV3T2av6nNRjE0c
+         ++jU38cHURmYOsYw0yYUeqSdwRgvw8eNgsh6BbyJe483CW4Tte0pL4HQfCaJ+1yEAsy7
+         9PVaZFzagtF3MoIh2DGRRV4DrZ3FdFNwDuS1kVYJYqNUikoQtZltmaDAW3KXGJZPfB3q
+         LJrugtU0m+MJYqk5V05Du/gug9UFDjJ7Nyji9++8rZJ5ERztZF/eNorlFuFDxLxCd5Iw
+         tAquB/YQyU8RgwepzIvwyW37ZIQidRb6dtNy+e9AWCD96G743ryywlIoxbNRIwMJIkkU
+         n2xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=Rq/S5bcLinTgwXWCwY6rnEXOOAWljy5MrRVOeqElL9g=;
-        b=FIxS0dZCtWpM2FaMigTG0G68t9RqpNFXabZ/RHh2dH+56NP8xRGMfXFuS+it6s1nme
-         X8qiPE+vq9r+C3xq3epMIajDr3747og0b+wh7COOpEL2Y7mvJ6nCbjK8eMQgXw6E59bw
-         8oixANCiLH2rieHgrxWn4PrG46cKGYJVG5DrzHPisV1WcVf7/iP2BevHeaoL5qleJvZP
-         vTJAoYwl+YIecH23WDksT+W4/qRBiWM/w6kAUhN4QsZlF4AeGMjol0eB92lIpSV5mJTd
-         R/gkShnWtcxaAg+VMH0sXlHut4QkOQLAUhHnFoTGafMjH9aqhE1KBTVc4/sXgevqwr9h
-         QEvg==
-X-Gm-Message-State: ALQs6tDL4HoESYwMAhvdO/c1dklycF/14GQQY0VcCl5dVXjf7QfbX3OR
-        ZzGbCnHTrSLzhq7mKe2+zzA=
-X-Google-Smtp-Source: AB8JxZr6u+J6DWuRS9hHFjau4dBstXo093jyCmJIW6ilZrdG4jo+PFVpJxfsVtjsgJCW7kxjydJCbA==
-X-Received: by 2002:adf:83a2:: with SMTP id 31-v6mr19079664wre.19.1525373132988;
-        Thu, 03 May 2018 11:45:32 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egn45.neoplus.adsl.tpnet.pl. [83.21.77.45])
-        by smtp.gmail.com with ESMTPSA id t203-v6sm171157wmt.33.2018.05.03.11.45.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 03 May 2018 11:45:31 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v5 09/11] commit: use generation number in remove_redundant()
-References: <20180425143735.240183-1-dstolee@microsoft.com>
-        <20180501124652.155781-1-dstolee@microsoft.com>
-        <20180501124652.155781-10-dstolee@microsoft.com>
-Date:   Thu, 03 May 2018 20:45:27 +0200
-In-Reply-To: <20180501124652.155781-10-dstolee@microsoft.com> (Derrick
-        Stolee's message of "Tue, 1 May 2018 12:47:21 +0000")
-Message-ID: <867eokzigo.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=dodTb/Bv3FpU8IBLDToj16bcEUvelbDbm0M5fwz+NY8=;
+        b=lIWBYVWIzk2XahaSV5Uvm36yZ3GHs61F4yURjTIhPQDl0/g0wjXMQZ0/sT+D1D7u71
+         95eKG1tTh6U/HbKv0Oxhksa1e9bBQgXmOWkyhMy6AxmJTvMfIgtb9HK/eMKbLGK9bwyW
+         0d30rk99s+b6gr1SSijm4OoFkjaYY3oFa3T39ER7IkDMk4eeJtJq0mWyhaAcEc/X3fr2
+         Qg/dXKcPWedTgK+gQPP02DJTrnaVeCygAarEKBh9X9ceagEoKdbE7J3HXJERKmV5K3Lb
+         e7xcgDNTilQX/kd9Jf7p+9huQwcHEM79JyiUMY8NExrGDPvwlEoa3cxjtqYI0igwlUsK
+         qtYQ==
+X-Gm-Message-State: ALQs6tC9fAUwkc+M8rM8pZmGLt70XC/4fwKI+tY4lBMCNFU4574YJPxj
+        HI99y7woVFllC/DL/zw0v1GpUA==
+X-Google-Smtp-Source: AB8JxZpZA8pqoESO6lHefCWjQfVR2yUt1Sx8lIEE2B42PwPl2UdOzBiQEY2phbEI8643rb0F4CvoEw==
+X-Received: by 10.28.170.1 with SMTP id t1mr7400767wme.10.1525373323115;
+        Thu, 03 May 2018 11:48:43 -0700 (PDT)
+Received: from arrakeen.fritz.box ([2001:a62:81d:ab01:a521:6b31:5c87:9e4b])
+        by smtp.gmail.com with ESMTPSA id f83-v6sm198322wmh.32.2018.05.03.11.48.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 03 May 2018 11:48:42 -0700 (PDT)
+From:   Andreas Heiduk <asheiduk@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Andreas Heiduk <asheiduk@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+Subject: [PATCH v3 0/7] Some doc-fixes
+Date:   Thu,  3 May 2018 20:48:23 +0200
+Message-Id: <20180503184830.11889-1-asheiduk@gmail.com>
+X-Mailer: git-send-email 2.16.2
+In-Reply-To: <20180427170440.30418-1-asheiduk@gmail.com>
+References: <20180427170440.30418-1-asheiduk@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+Changes since the last reroll:
 
-> The static remove_redundant() method is used to filter a list
-> of commits by removing those that are reachable from another
-> commit in the list. This is used to remove all possible merge-
-> bases except a maximal, mutually independent set.
->
-> To determine these commits are independent, we use a number of
-> paint_down_to_common() walks and use the PARENT1, PARENT2 flags
-> to determine reachability. Since we only care about reachability
-> and not the full set of merge-bases between 'one' and 'twos', we
-> can use the 'min_generation' parameter to short-circuit the walk.
->
-> When no commit-graph exists, there is no change in behavior.
->
-> For a copy of the Linux repository, we measured the following
-> performance improvements:
->
-> git merge-base v3.3 v4.5
->
-> Before: 234 ms
->  After: 208 ms
->  Rel %: -11%
->
-> git merge-base v4.3 v4.5
->
-> Before: 102 ms
->  After:  83 ms
->  Rel %: -19%
->
-> The experiments above were chosen to demonstrate that we are
-> improving the filtering of the merge-base set. In the first
-> example, more time is spent walking the history to find the
-> set of merge bases before the remove_redundant() call. The
-> starting commits are closer together in the second example,
-> therefore more time is spent in remove_redundant(). The relative
-> change in performance differs as expected.
->
-> Reported-by: Jakub Narebski <jnareb@gmail.com>
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+- Better commit comment for "doc: align 'diff --no-index' in text and synopsis"
+  This includes Martin's `s/with/and/` comment.
+- Eric's typo fix in "doc: add note about shell quoting to revision.txt"
+- Added new patch for git-diff.txt with s/--options/options/.
+  This addresses Eric's and Martin's comments.
+  
 
-Good description.
+Andreas Heiduk (7):
+  doc: improve formatting in githooks.txt
+  doc: align 'diff --no-index' in text and synopsis
+  doc: clarify ignore rules for git ls-files
+  doc: add '-d' and '-o' for 'git push'
+  git-svn: remove ''--add-author-from' for 'commit-diff'
+  doc: add note about shell quoting to revision.txt
+  doc: normalize [--options] to [options] in git-diff
 
-> ---
->  commit.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
+ Documentation/git-diff.txt     |  16 +++---
+ Documentation/git-ls-files.txt |   3 +-
+ Documentation/git-push.txt     |   3 +-
+ Documentation/git-svn.txt      |   2 +-
+ Documentation/githooks.txt     | 115 +++++++++++++++++++++--------------------
+ Documentation/revisions.txt    |   6 +++
+ 6 files changed, 77 insertions(+), 68 deletions(-)
 
-Let me extend context a bit to make it easier to review.
+-- 
+2.16.2
 
-> diff --git a/commit.c b/commit.c
-> index 9875feec01..5064db4e61 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -949,6 +949,7 @@ static int remove_redundant(struct commit **array, in=
-t cnt)
->  		parse_commit(array[i]);
->  	for (i =3D 0; i < cnt; i++) {
->  		struct commit_list *common;
-> +		uint32_t min_generation =3D GENERATION_NUMBER_INFINITY;
-
-As you have noticed, and how it is already fixed in 'pu' it should be
-
-  +		uint32_t min_generation =3D array[i]->generation;
-
->=20=20
->  		if (redundant[i])
->  			continue;
-> @@ -957,8 +958,12 @@ static int remove_redundant(struct commit **array, i=
-nt cnt)
->  				continue;
->  			filled_index[filled] =3D j;
->  			work[filled++] =3D array[j];
-> +
-> +			if (array[j]->generation < min_generation)
-> +				min_generation =3D array[j]->generation;
-
-remove_redundant() checks if i-th commit is reachable from commits
-i+1..cnt, and vice versa - via checking PARENT1 and PARENT2 flag,
-respectively.
-
-As you have noticed this means that the min_generation cutoff should be
-minimum of array[i]->generation, and all of array[j]->generation for
-j=3Di+1..cnt.  There is no reason going further down if we are interested
-only in reachability, and not actually in merge bases.
-
->  		}
-> -		common =3D paint_down_to_common(array[i], filled, work, 0);
-> +		common =3D paint_down_to_common(array[i], filled, work,
-> +					      min_generation);
->  		if (array[i]->object.flags & PARENT2)
->  			redundant[i] =3D 1;
->  		for (j =3D 0; j < filled; j++)
-   			if (work[j]->object.flags & PARENT1)
-   				redundant[filled_index[j]] =3D 1;
-
-Beside this issue, nice and simple speedup.  Good.
-
-Best,
---=20
-Jakub Nar=C4=99bski
