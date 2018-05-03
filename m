@@ -2,124 +2,336 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 340E6200B9
-	for <e@80x24.org>; Thu,  3 May 2018 16:10:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5458200B9
+	for <e@80x24.org>; Thu,  3 May 2018 16:18:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751075AbeECQKP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 12:10:15 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:33064 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750947AbeECQKO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 12:10:14 -0400
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id EGo7fDWrUsD7bEGo8fYjUR; Thu, 03 May 2018 17:10:13 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=7fXGaTHkJTKYXlyk9sUA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de>
- <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <71b00bbf-07e7-11e1-046b-f0241b82ebd3@ramsayjones.plus.com>
-Date:   Thu, 3 May 2018 17:10:11 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1751257AbeECQSs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 12:18:48 -0400
+Received: from mail-ot0-f194.google.com ([74.125.82.194]:34462 "EHLO
+        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751121AbeECQSr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 12:18:47 -0400
+Received: by mail-ot0-f194.google.com with SMTP id i5-v6so9602974otf.1
+        for <git@vger.kernel.org>; Thu, 03 May 2018 09:18:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=uoL6C5yUgEu+hbr3sk6CeMJD2iu+yI/E+3AOAg9nP60=;
+        b=rGEOTtHvVjx4jW69sZ+qgHw6P5hVQxXQwc6b0aCRcd/uBxzBeT25/4iZq4IFPvPHvR
+         j36zhMWkHfK4K/kB0ItWNk4WPiAwhqL+ezY/5325RByiM0HFMCtbcGeP5TGhjvBG8v0Z
+         6FGhHkUE7pqY+LOQ/VuJVgKP+Lb5nOrkQAenSuAWTleRE/VvEzpGB5kjq04aiRjlJdrC
+         OC88LAP8cywvXEP20twzsl+0VdKCgXq83eYsTp8sH473M2MBXEo2HFWHpfHF75hJ2TaB
+         7+NaGRsn12FeCDLPPE6MVmX75xrhQNn5U+LZWxdXk86UEDy+SDDdIfEjD/9+rZiB7Gh4
+         2UjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=uoL6C5yUgEu+hbr3sk6CeMJD2iu+yI/E+3AOAg9nP60=;
+        b=WSnIuOuoM1IPBgqmB/FBxqoYnbZcCAKuBblp88zPzUxqwoDfLYDIM42csfDsLqY6YX
+         u91RKaRr34Cmw9ScP+Lb++OQ35SFUSEHDQHcAyCeqC9zx0qdntl3oqyDITM5Nev4XV4K
+         YJ4FgbWekyCDz6z7sRXNLd6p0qjxXUtGqkhIJ4Omhl/SCtveUXDOTG1w7/td/CBZmIGj
+         k02hthqFphm9n/yhx5CPMR7SN3kPqXx8HPkoS6uh3bNAT/xrtXH7EaCg90quOkEsZVOD
+         x3pQOYu4Vq3c0+vBBd3dQ0SjuGzZbO7vh2kWN15Clql8lJ+hvHrLWmlIZ8RE1CvcXDoL
+         sLZA==
+X-Gm-Message-State: ALQs6tCnp1Oatvh3+TkCDRFXcBtaEINzNo7Wt/91B1g+mMYF8VyX5/Nq
+        kRR3tc8YlYtAwWogp2ejjUYYR9kbvmBr4MLyDIA=
+X-Google-Smtp-Source: AB8JxZq7jYM/+FNnMSJ0/vCK4z8mHUKAWLpbn3Xms61EUCfCrXW8G2RFpoCXy8aQCz3Ti4QvQYykLD3tZxd9tfCYxEw=
+X-Received: by 2002:a9d:2fa6:: with SMTP id r35-v6mr18318634otb.356.1525364326735;
+ Thu, 03 May 2018 09:18:46 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOk4cKB2piQXJE8aGXXh3u0eyO18TAC0Q+y/eDQFaNZDIktb33o5elRyjKlxR6C/hGcKsiSnb50QrJ0IArI+hl6N9vXKkM4ugz2m5G36dUov4ipT686z
- mT4+NSm7zckvhefYXnGEE3vD9UrW3rRA/WRYhuI0txDnCthdaK7etUMr
+Received: by 10.74.178.133 with HTTP; Thu, 3 May 2018 09:18:16 -0700 (PDT)
+In-Reply-To: <20180430153122.243976-4-jamill@microsoft.com>
+References: <20180417163400.3875-1-jamill@microsoft.com> <20180430153122.243976-1-jamill@microsoft.com>
+ <20180430153122.243976-4-jamill@microsoft.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 3 May 2018 18:18:16 +0200
+Message-ID: <CACsJy8DR4wNoucfL0++-k73EPnJL1YSsoB5prjG6YtDPzu9qRQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] mem-pool: fill out functionality
+To:     Jameson Miller <jamill@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "jonathantanmy@google.com" <jonathantanmy@google.com>,
+        "sbeller@google.com" <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Another I noticed in the jm/mem-pool series is this loop in mem_pool_alloc()
 
+for (p = mem_pool->mp_block; p; p = p->next_block)
+        if (p->end - p->next_free >= len)
+                break;
 
-On 03/05/18 16:30, Johannes Schindelin wrote:
-> This builtin does not do a whole lot so far, apart from showing a usage
-> that is oddly similar to that of `git tbdiff`. And for a good reason:
-> the next commits will turn `branch-diff` into a full-blown replacement
-> for `tbdiff`.
-> 
-> At this point, we ignore tbdiff's color options, as they will all be
-> implemented later and require some patches to the diff machinery.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  .gitignore            |  1 +
->  Makefile              |  1 +
->  builtin.h             |  1 +
->  builtin/branch-diff.c | 40 ++++++++++++++++++++++++++++++++++++++++
->  command-list.txt      |  1 +
->  git.c                 |  1 +
->  6 files changed, 45 insertions(+)
->  create mode 100644 builtin/branch-diff.c
-> 
-> diff --git a/.gitignore b/.gitignore
-> index 833ef3b0b78..1346a64492f 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -20,6 +20,7 @@
->  /git-bisect--helper
->  /git-blame
->  /git-branch
-> +/git-branch-diff
->  /git-bundle
->  /git-cat-file
->  /git-check-attr
-> diff --git a/Makefile b/Makefile
-> index 96f2e76a904..9b1984776d8 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -953,6 +953,7 @@ BUILTIN_OBJS += builtin/archive.o
->  BUILTIN_OBJS += builtin/bisect--helper.o
->  BUILTIN_OBJS += builtin/blame.o
->  BUILTIN_OBJS += builtin/branch.o
-> +BUILTIN_OBJS += builtin/branch-diff.o
->  BUILTIN_OBJS += builtin/bundle.o
->  BUILTIN_OBJS += builtin/cat-file.o
->  BUILTIN_OBJS += builtin/check-attr.o
-> diff --git a/builtin.h b/builtin.h
-> index 42378f3aa47..e1c4d2a529a 100644
-> --- a/builtin.h
-> +++ b/builtin.h
-> @@ -135,6 +135,7 @@ extern int cmd_archive(int argc, const char **argv, const char *prefix);
->  extern int cmd_bisect__helper(int argc, const char **argv, const char *prefix);
->  extern int cmd_blame(int argc, const char **argv, const char *prefix);
->  extern int cmd_branch(int argc, const char **argv, const char *prefix);
-> +extern int cmd_branch_diff(int argc, const char **argv, const char *prefix);
->  extern int cmd_bundle(int argc, const char **argv, const char *prefix);
->  extern int cmd_cat_file(int argc, const char **argv, const char *prefix);
->  extern int cmd_checkout(int argc, const char **argv, const char *prefix);
-> diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-> new file mode 100644
-> index 00000000000..97266cd326d
-> --- /dev/null
-> +++ b/builtin/branch-diff.c
-> @@ -0,0 +1,40 @@
-> +#include "cache.h"
-> +#include "parse-options.h"
+You always go from the start (mp_block) but at some point those first
+blocks are filled up and we don't really need to walk from the start
+anymore. If we allow the mem-pool user to set a "minimum alloc" limit,
+then we can determine if the remaining space in a block is not useful
+for any future allocation, we can just skip it and start looking for
+an available from a new pointer, avail_block or something.
+
+I'm writing this with alloc.c in mind because we have a lot more
+blocks to allocate there. Unlike read-cache, you can't really estimate
+how many mp_blocks you're going to need. This linked list could become
+long. And because alloc.c does fixed size allocation, we use up one
+block after another and will never find free space in previous blocks.
+
+On Mon, Apr 30, 2018 at 5:31 PM, Jameson Miller <jamill@microsoft.com> wrote:
+> diff --git a/mem-pool.c b/mem-pool.c
+> index 389d7af447..a495885c4b 100644
+> --- a/mem-pool.c
+> +++ b/mem-pool.c
+> @@ -5,6 +5,8 @@
+>  #include "cache.h"
+>  #include "mem-pool.h"
+>
+> +#define BLOCK_GROWTH_SIZE 1024*1024 - sizeof(struct mp_block);
+
+#define BLOCK_GROWTH_SIZE (1024*1024 - sizeof(struct mp_block))
+
+(wrapped in brackets and no trailing semicolon)
+
 > +
-> +static const char * const builtin_branch_diff_usage[] = {
-> +	N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
+>  static struct mp_block *mem_pool_alloc_block(struct mem_pool *mem_pool, size_t block_alloc)
+>  {
+>         struct mp_block *p;
+> @@ -19,6 +21,60 @@ static struct mp_block *mem_pool_alloc_block(struct mem_pool *mem_pool, size_t b
+>         return p;
+>  }
+>
+> +static void *mem_pool_alloc_custom(struct mem_pool *mem_pool, size_t block_alloc)
+> +{
+> +       char *p;
 
-s/rebase--helper/branch-diff/
+An empty line between variable declaration and function body would be nice.
 
-ATB,
-Ramsay Jones
+> +       ALLOC_GROW(mem_pool->custom, mem_pool->nr + 1, mem_pool->alloc);
+> +       ALLOC_GROW(mem_pool->custom_end, mem_pool->nr_end + 1, mem_pool->alloc_end);
+> +
 
+If you put both custom and custom_end in a struct, then you can grow
+just one array (of the new struct) and have fewer support variables
+like nr_end and alloc_end
+
+The only downside that I can see is the potential padding between
+struct increasing memory consumption here. but since you don't care
+about reallocation cost (i.e. large memory allocations should be
+rare), it probably  does not matter either.
+
+But wait, can we just reuse struct mp_block for this? You allocate a
+new mp_block (for just one allocation) as usual, then you can can
+maintain a linked list of custom alloc in "struct mp_block
+*mp_custom_block" or something. This way we can walk both bulk and
+custom allocation the same way.
+
+> +       p = xmalloc(block_alloc);
+> +       mem_pool->custom[mem_pool->nr++] = p;
+> +       mem_pool->custom_end[mem_pool->nr_end++] = p + block_alloc;
+> +
+> +       mem_pool->pool_alloc += block_alloc;
+> +
+> +       return mem_pool->custom[mem_pool->nr];
+> +}
+> +
+> +void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size)
+> +{
+> +       if (!(*mem_pool))
+
+I think (!*mem_pool) should be enough, although you could avoid the
+operator precedence headache by doing
+
+if (*mem_pool)
+        return;
+
+> +       {
+> +               *mem_pool = xmalloc(sizeof(struct mem_pool));
+
+I think we tend to do *mem_pool = xmalloc(sizeof(**mem_pool));
+
+> +               (*mem_pool)->pool_alloc = 0;
+
+Eghh.. perhaps just declare
+
+struct mem_pool *pool;
+
+then allocate a new memory to this, initialize everything and only do
+
+*mem_pool = pool;
+
+at the end? It's much less of this (*mem_pool)->
+
+> +               (*mem_pool)->mp_block = NULL;
+
+Just memset() it once (or use xcallo) and only initialize
+non-zero/null fields afterwards.
+
+> +               (*mem_pool)->block_alloc = BLOCK_GROWTH_SIZE;
+> +               (*mem_pool)->custom = NULL;
+> +               (*mem_pool)->nr = 0;
+> +               (*mem_pool)->alloc = 0;
+> +               (*mem_pool)->custom_end = NULL;
+> +               (*mem_pool)->nr_end = 0;
+> +               (*mem_pool)->alloc_end = 0;
+> +
+> +               if (initial_size > 0)
+> +                       mem_pool_alloc_block(*mem_pool, initial_size);
+> +       }
+> +}
+> +
+> +void mem_pool_discard(struct mem_pool *mem_pool)
+> +{
+> +       int i;
+> +       struct mp_block *block, *block_to_free;
+> +       for (block = mem_pool->mp_block; block;)
+> +       {
+> +               block_to_free = block;
+> +               block = block->next_block;
+> +               free(block_to_free);
+> +       }
+> +
+> +       for (i = 0; i < mem_pool->nr; i++)
+> +               free(mem_pool->custom[i]);
+> +
+> +       free(mem_pool->custom);
+> +       free(mem_pool->custom_end);
+> +       free(mem_pool);
+> +}
+> +
+>  void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
+>  {
+>         struct mp_block *p;
+> @@ -33,10 +89,8 @@ void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
+>                         break;
+>
+>         if (!p) {
+> -               if (len >= (mem_pool->block_alloc / 2)) {
+> -                       mem_pool->pool_alloc += len;
+> -                       return xmalloc(len);
+> -               }
+> +               if (len >= (mem_pool->block_alloc / 2))
+> +                       return mem_pool_alloc_custom(mem_pool, len);
+>
+>                 p = mem_pool_alloc_block(mem_pool, mem_pool->block_alloc);
+>         }
+> @@ -53,3 +107,55 @@ void *mem_pool_calloc(struct mem_pool *mem_pool, size_t count, size_t size)
+>         memset(r, 0, len);
+>         return r;
+>  }
+> +
+> +int mem_pool_contains(struct mem_pool *mem_pool, void *mem)
+> +{
+> +       int i;
+> +       struct mp_block *p;
+> +
+> +       /* Check if memory is allocated in a block */
+> +       for (p = mem_pool->mp_block; p; p = p->next_block)
+> +               if ((mem >= ((void *)p->space)) &&
+> +                   (mem < ((void *)p->end)))
+> +                       return 1;
+> +
+> +       /* Check if memory is allocated in custom block */
+> +       for (i = 0; i < mem_pool->nr; i++)
+> +               if ((mem >= mem_pool->custom[i]) &&
+> +                   (mem < mem_pool->custom_end[i]))
+> +                       return 1;
+> +
+> +       return 0;
+> +}
+> +
+> +void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src)
+> +{
+> +       int i;
+> +       struct mp_block **tail = &dst->mp_block;
+> +
+> +       /* Find pointer of dst's last block (if any) */
+> +       while (*tail)
+> +               tail = &(*tail)->next_block;
+> +
+> +       /* Append the blocks from src to dst */
+> +       *tail = src->mp_block;
+> +
+> +       /* Combine custom allocations */
+> +       ALLOC_GROW(dst->custom, dst->nr + src->nr, dst->alloc);
+> +       ALLOC_GROW(dst->custom_end, dst->nr_end + src->nr_end, dst->alloc_end);
+> +
+> +       for (i = 0; i < src->nr; i++) {
+> +               dst->custom[dst->nr++] = src->custom[i];
+> +               dst->custom_end[dst->nr_end++] = src->custom_end[i];
+> +       }
+> +
+> +       dst->pool_alloc += src->pool_alloc;
+> +       src->pool_alloc = 0;
+> +       src->mp_block = NULL;
+> +       src->custom = NULL;
+> +       src->nr = 0;
+> +       src->alloc = 0;
+> +       src->custom_end = NULL;
+> +       src->nr_end = 0;
+> +       src->alloc_end = 0;
+> +}
+> diff --git a/mem-pool.h b/mem-pool.h
+> index 829ad58ecf..34df4fa709 100644
+> --- a/mem-pool.h
+> +++ b/mem-pool.h
+> @@ -19,8 +19,27 @@ struct mem_pool {
+>
+>         /* The total amount of memory allocated by the pool. */
+>         size_t pool_alloc;
+> +
+> +       /*
+> +        * Array of pointers to "custom size" memory allocations.
+> +        * This is used for "large" memory allocations.
+> +        * The *_end variables are used to track the range of memory
+> +        * allocated.
+> +        */
+> +       void **custom, **custom_end;
+> +       int nr, nr_end, alloc, alloc_end;
+>  };
+>
+> +/*
+> + * Initialize mem_pool specified initial.
+> + */
+> +void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size);
+> +
+> +/*
+> + * Discard a memory pool and free all the memory it is responsible for.
+> + */
+> +void mem_pool_discard(struct mem_pool *mem_pool);
+> +
+>  /*
+>   * Alloc memory from the mem_pool.
+>   */
+> @@ -31,4 +50,17 @@ void *mem_pool_alloc(struct mem_pool *pool, size_t len);
+>   */
+>  void *mem_pool_calloc(struct mem_pool *pool, size_t count, size_t size);
+>
+> +/*
+> + * Move the memory associated with the 'src' pool to the 'dst' pool. The 'src'
+> + * pool will be empty and not contain any memory. It still needs to be free'd
+> + * with a call to `mem_pool_discard`.
+> + */
+> +void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src);
+> +
+> +/*
+> + * Check if a memory pointed at by 'mem' is part of the range of
+> + * memory managed by the specified mem_pool.
+> + */
+> +int mem_pool_contains(struct mem_pool *mem_pool, void *mem);
+> +
+>  #endif
+> --
+> 2.14.3
+>
+
+
+
+-- 
+Duy
