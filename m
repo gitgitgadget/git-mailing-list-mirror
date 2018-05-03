@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43538200B9
-	for <e@80x24.org>; Thu,  3 May 2018 15:30:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4082200B9
+	for <e@80x24.org>; Thu,  3 May 2018 15:30:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751371AbeECPai (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 11:30:38 -0400
-Received: from mout.gmx.net ([212.227.17.22]:45419 "EHLO mout.gmx.net"
+        id S1751403AbeECPak (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 11:30:40 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60557 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751133AbeECPaf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 11:30:35 -0400
+        id S1751277AbeECPah (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 11:30:37 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
- (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0Lcjdr-1eWduc26dj-00k42h; Thu, 03 May 2018 17:30:29 +0200
+ (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0MOCSm-1fJmUc3lQa-005bLH; Thu, 03 May 2018 17:30:31 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -27,9 +27,9 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 01/18] Add a function to solve least-cost assignment problems
-Date:   Thu,  3 May 2018 17:30:26 +0200
-Message-Id: <3f51970cbc44bfe34133c48c0844ed3723e83808.1525361419.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 02/18] Add a new builtin: branch-diff
+Date:   Thu,  3 May 2018 17:30:30 +0200
+Message-Id: <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.409.g0f525fc0ba7
 In-Reply-To: <cover.1525361419.git.johannes.schindelin@gmx.de>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de>
@@ -37,290 +37,153 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:N0QkoOaDsY+LlmyZosiEYYNljDTS1Z6f19ceRA62bjLAjph+/YA
- w6Ds+WXiwx4GJiyzrmQT1aXzfX5V3HdpbZj3fDMmg5I2DH/KenmIqAZG9yW3dEFROqUOp99
- iHNg7sKDfv/8n4MUO07i4pBeMZucZCB6bKGxEw9e4xCntx2QDNAo135VBlP/apKEGwT3OuC
- H8l8aGod07MtDesHsdDpQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QHNCwega4GE=:PXciRVAgCQ3S/9BEaJtuwZ
- BmZAVeI5GK+ESGptygKTodP1E9Gggzhe8tPeLUnlOMs+Zn9PDJsPVLRwFHbRZhgtoakpqUtz1
- wu8Y+zOQ69WKIIs0lmzRZXlpEqysBBvsAlIuWNNcN591vLtbxHYU+hJfY7Lo8hcWyfgaQmlZH
- FPtxhRzBBoUzHDI9SG/4knRbwhvZPtEzhQyrjz3wrTm5BFxPBwhhJ1Ttuks0Epq4i1Sxlm9iX
- wMwMuT3h6muorFH/pDr4ohWn0sTvByrUs28D3mR5cN9tf4R85yCgGYCTNZgcd3wuNz0J3Mtx9
- OvZgqANG819pBpLxwHGoDGrzaNERf3iIAYLyU7tt+9SUtFulFAmInaerk2I9YmGG0u36bGjyh
- zFFjdVUJHycDYHKk48PJqiHk8W32mqfiy/9dgT70nG3afNxaKwJ6Xl6E6hU6MoKx93+B3kaUV
- lzSi6T21D4Tu9VULLDr37VGVpCrhVwbG/r4wDmjUroKx77rtD2XJWALEi2Nbj0AOfadxXSdXE
- apb34on+tNV+yyo36QcFhDWI37X/mLtAOqnNYO1/peouAaXgu6zlwuS4ApOK6wqctbrU3UE7C
- CLAHlBrU9GYxiw0PFUevJpH5uJWEKFnhG0jBvnrzFUi+1ff9Nc5MHPtZZH+yQJGnbgIhpyN0p
- MkTUMsqC/SZvhvkRW9tPQ0BZ1igp/ExaxNWL1Coktf0THLlrue8RyfEL/2Yguc0wcz8PGjyr1
- WlPt/j0ATS6KrU+snf1W65i4JwHDRwSMUmkXGED10whJoNhgGcno0oMuMNs4rn5McIFUAT7n8
- rMgzgDC
+X-Provags-ID: V03:K1:8Gvq54tC91qvxkJcx2mCkeswek0K0khr7Aj1T5fPcLSfDm51VXv
+ Dy2l3Vsdc8NXV2AkNpikq0d6dTa7q0ZC2/3WKazCmf0pBGLM+MixRLqmncMvwgQIkAbg3ma
+ BylVhiMNu3L3FBLhSxs74pcwtY7YplafIh9JxkUUt+cY+S7XchT/zRWrVBvwHcL7Z4VIIUD
+ 188R2WmQfyt1QJ664MicQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2OLHwQcXAN8=:4lKbFSSbjmy72r2x3RtH2j
+ tnrLr/ezq9dCHHI/+ZHBKytKhmbm0hsYT3FIqPkk6v5jIWGCFu9527A7mzkn33SVYGiX2cuvs
+ Dop4ssE3azL+PGHgK2Lr5H/KHvdOOqOS4E5z7ju2tJahWdHb6Z1SUZDw+fk69Tozoqi1JTwHt
+ lcMBmSRaBDDGy9R9ms8a6N9EffPKZGroqwJllbvzflIMOQdRLPYhhQ8kf7fZixr3M7CVsYT+k
+ gCylEn1DK1SguB5fRioPEQk7ERGlbkWNwtcyZQ1HKlRwaJHmLrwYDLcHdih+nhaVc0ckHxOZb
+ bzlhWTXOURFP7R47MYztbWAehCu+ivlzbNtZqCAxDWI9t8awTmFNk3TNCR4SWDu7dWCtgIsgm
+ FbX2/FDOBAC6/IuY9K0PWjPREdB6qJpSEts//P4iKanJyeMw1uoIiGg7La3KvkRcJfJkRndep
+ Ds0ueslPfRSbZX9v6NHE86rrTavweTOzf0UCzM2PARaTOVjKQabXCQvj7ZFQSEbWU3mryIZ51
+ i/yl3ZUMgtkuHlVtCMhEdi8QiM2tM6c+WrQY/LkDtC91DchZRSSPxCGU/TUuyNyXy/9Ay6avq
+ 6irzecnhe/kMr5gUYsJ9m9Cs8PmCz13P54OqXdkUqyEjIlHeSgt2S/w4hdKpDIn6Kjk7Yzfwm
+ MmryhoyV91KyPWs0xlS3ZTVtmkyV59X3HqTugBawgjIXY9G9Wk3BF4Nsd1+0I8Yq7Z4b4jRPC
+ x4XV+jy9MsFFv9s2sjaS+Eu+rKM5tpCBBUZ8jCg+e9BocQXdbSBJzsoFzhsmwdop8GUJwmCzo
+ 282NFtw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The Jonker-Volgenant algorithm was implemented to answer questions such
-as: given two different versions of a topic branch (or iterations of a
-patch series), what is the best pairing of commits/patches between the
-different versions?
+This builtin does not do a whole lot so far, apart from showing a usage
+that is oddly similar to that of `git tbdiff`. And for a good reason:
+the next commits will turn `branch-diff` into a full-blown replacement
+for `tbdiff`.
+
+At this point, we ignore tbdiff's color options, as they will all be
+implemented later and require some patches to the diff machinery.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile    |   1 +
- hungarian.c | 205 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- hungarian.h |  19 +++++
- 3 files changed, 225 insertions(+)
- create mode 100644 hungarian.c
- create mode 100644 hungarian.h
+ .gitignore            |  1 +
+ Makefile              |  1 +
+ builtin.h             |  1 +
+ builtin/branch-diff.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ command-list.txt      |  1 +
+ git.c                 |  1 +
+ 6 files changed, 45 insertions(+)
+ create mode 100644 builtin/branch-diff.c
 
+diff --git a/.gitignore b/.gitignore
+index 833ef3b0b78..1346a64492f 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -20,6 +20,7 @@
+ /git-bisect--helper
+ /git-blame
+ /git-branch
++/git-branch-diff
+ /git-bundle
+ /git-cat-file
+ /git-check-attr
 diff --git a/Makefile b/Makefile
-index 50da82b0169..96f2e76a904 100644
+index 96f2e76a904..9b1984776d8 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -829,6 +829,7 @@ LIB_OBJS += gpg-interface.o
- LIB_OBJS += graph.o
- LIB_OBJS += grep.o
- LIB_OBJS += hashmap.o
-+LIB_OBJS += hungarian.o
- LIB_OBJS += help.o
- LIB_OBJS += hex.o
- LIB_OBJS += ident.o
-diff --git a/hungarian.c b/hungarian.c
+@@ -953,6 +953,7 @@ BUILTIN_OBJS += builtin/archive.o
+ BUILTIN_OBJS += builtin/bisect--helper.o
+ BUILTIN_OBJS += builtin/blame.o
+ BUILTIN_OBJS += builtin/branch.o
++BUILTIN_OBJS += builtin/branch-diff.o
+ BUILTIN_OBJS += builtin/bundle.o
+ BUILTIN_OBJS += builtin/cat-file.o
+ BUILTIN_OBJS += builtin/check-attr.o
+diff --git a/builtin.h b/builtin.h
+index 42378f3aa47..e1c4d2a529a 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -135,6 +135,7 @@ extern int cmd_archive(int argc, const char **argv, const char *prefix);
+ extern int cmd_bisect__helper(int argc, const char **argv, const char *prefix);
+ extern int cmd_blame(int argc, const char **argv, const char *prefix);
+ extern int cmd_branch(int argc, const char **argv, const char *prefix);
++extern int cmd_branch_diff(int argc, const char **argv, const char *prefix);
+ extern int cmd_bundle(int argc, const char **argv, const char *prefix);
+ extern int cmd_cat_file(int argc, const char **argv, const char *prefix);
+ extern int cmd_checkout(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
 new file mode 100644
-index 00000000000..346299a97d9
+index 00000000000..97266cd326d
 --- /dev/null
-+++ b/hungarian.c
-@@ -0,0 +1,205 @@
-+/*
-+ * Based on: Jonker, R., & Volgenant, A. (1987). <i>A shortest augmenting path
-+ * algorithm for dense and sparse linear assignment problems</i>. Computing,
-+ * 38(4), 325-340.
-+ */
++++ b/builtin/branch-diff.c
+@@ -0,0 +1,40 @@
 +#include "cache.h"
-+#include "hungarian.h"
-+#include <float.h>
++#include "parse-options.h"
 +
-+#define COST(column, row) cost[(column) + column_count * (row)]
++static const char * const builtin_branch_diff_usage[] = {
++	N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
++	NULL
++};
 +
-+/*
-+ * The parameter `cost` is the cost matrix: the cost to assign column j to row
-+ * i is `cost[j + column_count * i].
-+ */
-+int compute_assignment(int column_count, int row_count, double *cost,
-+		       int *column2row, int *row2column)
++#define COLOR_DUAL_MODE 2
++
++static int parse_creation_weight(const struct option *opt, const char *arg,
++				 int unset)
 +{
-+	double *v = xmalloc(sizeof(double) * column_count), *d;
-+	int *free_row, free_count = 0, saved_free_count, *pred, *col;
-+	int i, j, phase;
++	double *d = opt->value;
++	if (unset)
++		*d = 0.6;
++	else
++		*d = atof(arg);
++	return 0;
++}
 +
-+	memset(column2row, -1, sizeof(int) * column_count);
-+	memset(row2column, -1, sizeof(int) * row_count);
++int cmd_branch_diff(int argc, const char **argv, const char *prefix)
++{
++	int no_patches = 0;
++	double creation_weight = 0.6;
++	struct option options[] = {
++		OPT_BOOL(0, "no-patches", &no_patches,
++			 N_("short format (no diffs)")),
++		{ OPTION_CALLBACK,
++			0, "creation-weight", &creation_weight, N_("factor"),
++			N_("Fudge factor by which creation is weighted [0.6]"),
++			0, parse_creation_weight },
++		OPT_END()
++	};
 +
-+	/* column reduction */
-+	for (j = column_count - 1; j >= 0; j--) {
-+		int i1 = 0;
-+
-+		for (i = 1; i < row_count; i++)
-+			if (COST(j, i1) > COST(j, i))
-+				i1 = i;
-+		v[j] = COST(j, i1);
-+		if (row2column[i1] == -1) {
-+			/* row i1 unassigned */
-+			row2column[i1] = j;
-+			column2row[j] = i1;
-+		} else {
-+			if (row2column[i1] >= 0)
-+				row2column[i1] = -2 - row2column[i1];
-+			column2row[j] = -1;
-+		}
-+	}
-+
-+	/* reduction transfer */
-+	free_row = xmalloc(sizeof(int) * row_count);
-+	for (int i = 0; i < row_count; i++) {
-+		int j1 = row2column[i];
-+		if (j1 == -1)
-+			free_row[free_count++] = i;
-+		else if (j1 < -1)
-+			row2column[i] = -2 - j1;
-+		else {
-+			double min = COST(!j1, i) - v[!j1];
-+			for (j = 1; j < column_count; j++)
-+				if (j != j1 && min > COST(j, i) - v[j])
-+					min = COST(j, i) - v[j];
-+			v[j1] -= min;
-+		}
-+	}
-+
-+	if (free_count ==
-+	    (column_count < row_count ? row_count - column_count : 0)) {
-+		free(v);
-+		free(free_row);
-+		return 0;
-+	}
-+
-+	/* augmenting row reduction */
-+	for (phase = 0; phase < 2; phase++) {
-+		int k = 0;
-+
-+		saved_free_count = free_count;
-+		free_count = 0;
-+		while (k < saved_free_count) {
-+			double u1, u2;
-+			int j1 = 0, j2, i0;
-+
-+			i = free_row[k++];
-+			u1 = COST(j1, i) - v[j1];
-+			j2 = -1;
-+			u2 = DBL_MAX;
-+			for (j = 1; j < column_count; j++) {
-+				double c = COST(j, i) - v[j];
-+				if (u2 > c) {
-+					if (u1 < c) {
-+						u2 = c;
-+						j2 = j;
-+					} else {
-+						u2 = u1;
-+						u1 = c;
-+						j2 = j1;
-+						j1 = j;
-+					}
-+				}
-+			}
-+			if (j2 < 0) {
-+				j2 = j1;
-+				u2 = u1;
-+			}
-+
-+			i0 = column2row[j1];
-+			if (u1 < u2)
-+				v[j1] -= u2 - u1;
-+			else if (i0 >= 0) {
-+				j1 = j2;
-+				i0 = column2row[j1];
-+			}
-+
-+			if (i0 >= 0) {
-+				if (u1 < u2)
-+					free_row[--k] = i0;
-+				else
-+					free_row[free_count++] = i0;
-+			}
-+			row2column[i] = j1;
-+			column2row[j1] = i;
-+		}
-+	}
-+
-+	/* augmentation */
-+	saved_free_count = free_count;
-+	d = xmalloc(sizeof(double) * column_count);
-+	pred = xmalloc(sizeof(int) * column_count);
-+	col = xmalloc(sizeof(int) * column_count);
-+	for (free_count = 0; free_count < saved_free_count; free_count++) {
-+		int i1 = free_row[free_count], low = 0, up = 0, last, k;
-+		double min, c, u1;
-+
-+		for (j = 0; j < column_count; j++) {
-+			d[j] = COST(j, i1) - v[j];
-+			pred[j] = i1;
-+			col[j] = j;
-+		}
-+
-+		j = -1;
-+		do {
-+			last = low;
-+			min = d[col[up++]];
-+			for (k = up; k < column_count; k++) {
-+				j = col[k];
-+				c = d[j];
-+				if (c <= min) {
-+					if (c < min) {
-+						up = low;
-+						min = c;
-+					}
-+					col[k] = col[up];
-+					col[up++] = j;
-+				}
-+			}
-+			for (k = low; k < up; k++)
-+				if (column2row[col[k]] == -1)
-+					goto update;
-+
-+			/* scan a row */
-+			do {
-+				int j1 = col[low++];
-+
-+				i = column2row[j1];
-+				u1 = COST(j1, i) - v[j1] - min;
-+				for (k = up; k < column_count; k++) {
-+					j = col[k];
-+					c = COST(j, i) - v[j] - u1;
-+					if (c < d[j]) {
-+						d[j] = c;
-+						pred[j] = i;
-+						if (c == min) {
-+							if (column2row[j] == -1)
-+								goto update;
-+							col[k] = col[up];
-+							col[up++] = j;
-+						}
-+					}
-+				}
-+			} while (low != up);
-+		} while (low == up);
-+
-+update:
-+		/* updating of the column pieces */
-+		for (k = 0; k < last; k++) {
-+			int j1 = col[k];
-+			v[j1] += d[j1] - min;
-+		}
-+
-+		/* augmentation */
-+		do {
-+			if (j < 0)
-+				BUG("negative j: %d", j);
-+			i = pred[j];
-+			column2row[j] = i;
-+			k = j;
-+			j = row2column[i];
-+			row2column[i] = k;
-+		} while (i1 != i);
-+	}
-+
-+	free(col);
-+	free(pred);
-+	free(d);
-+	free(v);
-+	free(free_row);
++	argc = parse_options(argc, argv, NULL, options,
++			builtin_branch_diff_usage, 0);
 +
 +	return 0;
 +}
-diff --git a/hungarian.h b/hungarian.h
-new file mode 100644
-index 00000000000..e7cee4bb039
---- /dev/null
-+++ b/hungarian.h
-@@ -0,0 +1,19 @@
-+#ifndef HUNGARIAN_H
-+#define HUNGARIAN_H
-+
-+/*
-+ * Compute an assignment of columns -> rows (and vice versa) such that every
-+ * column is assigned to at most one row (and vice versa) minimizing the
-+ * overall cost.
-+ *
-+ * The parameter `cost` is the cost matrix: the cost to assign column j to row
-+ * i is `cost[j + column_count * i].
-+ *
-+ * The arrays column2row and row2column will be populated with the respective
-+ * assignments (-1 for unassigned, which can happen only if column_count !=
-+ * row_count).
-+ */
-+int compute_assignment(int column_count, int row_count, double *cost,
-+		       int *column2row, int *row2column);
-+
-+#endif
+diff --git a/command-list.txt b/command-list.txt
+index a1fad28fd82..c89ac8f417f 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -19,6 +19,7 @@ git-archive                             mainporcelain
+ git-bisect                              mainporcelain           info
+ git-blame                               ancillaryinterrogators
+ git-branch                              mainporcelain           history
++git-branch-diff                         mainporcelain           info
+ git-bundle                              mainporcelain
+ git-cat-file                            plumbinginterrogators
+ git-check-attr                          purehelpers
+diff --git a/git.c b/git.c
+index f598fae7b7a..d2794fb6f5d 100644
+--- a/git.c
++++ b/git.c
+@@ -377,6 +377,7 @@ static struct cmd_struct commands[] = {
+ 	{ "bisect--helper", cmd_bisect__helper, RUN_SETUP },
+ 	{ "blame", cmd_blame, RUN_SETUP },
+ 	{ "branch", cmd_branch, RUN_SETUP | DELAY_PAGER_CONFIG },
++	{ "branch-diff", cmd_branch_diff, RUN_SETUP | USE_PAGER },
+ 	{ "bundle", cmd_bundle, RUN_SETUP_GENTLY | NO_PARSEOPT },
+ 	{ "cat-file", cmd_cat_file, RUN_SETUP },
+ 	{ "check-attr", cmd_check_attr, RUN_SETUP },
 -- 
 2.17.0.395.g6a618d6010f.dirty
 
