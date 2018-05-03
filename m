@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4082200B9
-	for <e@80x24.org>; Thu,  3 May 2018 15:30:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3578200B9
+	for <e@80x24.org>; Thu,  3 May 2018 15:30:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751403AbeECPak (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 11:30:40 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60557 "EHLO mout.gmx.net"
+        id S1751416AbeECPao (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 11:30:44 -0400
+Received: from mout.gmx.net ([212.227.17.20]:43899 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751277AbeECPah (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 11:30:37 -0400
+        id S1751382AbeECPak (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 11:30:40 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
- (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MOCSm-1fJmUc3lQa-005bLH; Thu, 03 May 2018 17:30:31 +0200
+ (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0LevUh-1eYqpf06NL-00qgiq; Thu, 03 May 2018 17:30:36 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -27,9 +27,9 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 02/18] Add a new builtin: branch-diff
-Date:   Thu,  3 May 2018 17:30:30 +0200
-Message-Id: <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 03/18] branch-diff: first rudimentary implementation
+Date:   Thu,  3 May 2018 17:30:31 +0200
+Message-Id: <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.409.g0f525fc0ba7
 In-Reply-To: <cover.1525361419.git.johannes.schindelin@gmx.de>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de>
@@ -37,153 +37,419 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:8Gvq54tC91qvxkJcx2mCkeswek0K0khr7Aj1T5fPcLSfDm51VXv
- Dy2l3Vsdc8NXV2AkNpikq0d6dTa7q0ZC2/3WKazCmf0pBGLM+MixRLqmncMvwgQIkAbg3ma
- BylVhiMNu3L3FBLhSxs74pcwtY7YplafIh9JxkUUt+cY+S7XchT/zRWrVBvwHcL7Z4VIIUD
- 188R2WmQfyt1QJ664MicQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2OLHwQcXAN8=:4lKbFSSbjmy72r2x3RtH2j
- tnrLr/ezq9dCHHI/+ZHBKytKhmbm0hsYT3FIqPkk6v5jIWGCFu9527A7mzkn33SVYGiX2cuvs
- Dop4ssE3azL+PGHgK2Lr5H/KHvdOOqOS4E5z7ju2tJahWdHb6Z1SUZDw+fk69Tozoqi1JTwHt
- lcMBmSRaBDDGy9R9ms8a6N9EffPKZGroqwJllbvzflIMOQdRLPYhhQ8kf7fZixr3M7CVsYT+k
- gCylEn1DK1SguB5fRioPEQk7ERGlbkWNwtcyZQ1HKlRwaJHmLrwYDLcHdih+nhaVc0ckHxOZb
- bzlhWTXOURFP7R47MYztbWAehCu+ivlzbNtZqCAxDWI9t8awTmFNk3TNCR4SWDu7dWCtgIsgm
- FbX2/FDOBAC6/IuY9K0PWjPREdB6qJpSEts//P4iKanJyeMw1uoIiGg7La3KvkRcJfJkRndep
- Ds0ueslPfRSbZX9v6NHE86rrTavweTOzf0UCzM2PARaTOVjKQabXCQvj7ZFQSEbWU3mryIZ51
- i/yl3ZUMgtkuHlVtCMhEdi8QiM2tM6c+WrQY/LkDtC91DchZRSSPxCGU/TUuyNyXy/9Ay6avq
- 6irzecnhe/kMr5gUYsJ9m9Cs8PmCz13P54OqXdkUqyEjIlHeSgt2S/w4hdKpDIn6Kjk7Yzfwm
- MmryhoyV91KyPWs0xlS3ZTVtmkyV59X3HqTugBawgjIXY9G9Wk3BF4Nsd1+0I8Yq7Z4b4jRPC
- x4XV+jy9MsFFv9s2sjaS+Eu+rKM5tpCBBUZ8jCg+e9BocQXdbSBJzsoFzhsmwdop8GUJwmCzo
- 282NFtw
+X-Provags-ID: V03:K1:1jFfZ3dQ9GFUoaj2NZ51IFXLV7JZogUj1vSNpUDkKNaCXAb1Brw
+ QzkUUVXqGDQ7Yz01s+nJpT3LK3A+4iwh1a2Ur9DsjbLJpCEXw7HagM/Mx0Se4XIbc/XuPPC
+ e/FVr2YZLRlbhbkBTx+qlN30Hw2l0XtTEcmGcxMGmsSiw6sgu45og3jm++A4b/jj2LEfpEj
+ a+b6AcXPia00CF2R2CkJQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4WjilgVMG8M=:2okuDxlY10Fk1imPMhLIhD
+ z6PbZWNRrEoRjxryi6aBspASixda4bg7hkZrRPKQJJbEIIvsUigRTpkCpcYz6u2tYelRbCwG8
+ eF39S/b+UQ+4JIjMaLnvq6v82KJcTc3TcdFkR2fzffTL1ypjxly6/ezyTz/H2WWTiLxwub2rY
+ OBZ0eJKy2XMjjwJWWv6WX/ybTjDSZZ7XlJvQIUmJCLIDRyWpK00B/qWvkhUKthlXC9BfC3UNC
+ 2donI5nEwD41/mr/fu2IDVk27C5FpMHiQcZr2dRbOYUAYmE/uwKJkiVg6RCl/Avn/hIMfl1pX
+ 5OhhnmqgJZQfXrGu8rFQl6tZP495HI36/Tu4IcRR9907vh9re7GM96UFiTAMdrtKB/rbVYcsY
+ dN8paMrhFg1+DQpok79XaKLVBSKZXJ1HogrmrFzVAdI1pKXKZyGh0KDjMx3wU1Mf2TrQmnvSH
+ NLMJA/QvEdNQsv9kBBORToYJ0s+QU1ffGV0jLjwSZ+5EUU20ZpYMjgILVkuGF7Asv53pbZhNX
+ fSjPOocxXwhTILx33QbeQ3cZt0/D8Tv4Yv0CJsX3kmoZDjEfA2gXPcbpu4Tki2QXRPwXHZer6
+ e5Svgm57HaU0cLubdC0caGKS8vsRJWQhkU/e0NXpSdSA15U0Mn6a1HUh+Im1eLj7v8Ce9kTy3
+ M1YCEmAyXrwpwlNNHL0iUv0eB1hotZNNZvLlVhcwcRBAM7W2g1QM7PrhzlyfCxh4rHggxaFcW
+ qj5wp8Fb1cmVsk4Jkg67RIWXUnpOk2dLaPxPWByf5e/rpUEW7a3GrUAAjg/ziPsZo0bGuIt9a
+ BQ2qCwy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This builtin does not do a whole lot so far, apart from showing a usage
-that is oddly similar to that of `git tbdiff`. And for a good reason:
-the next commits will turn `branch-diff` into a full-blown replacement
-for `tbdiff`.
+At this stage, `git branch-diff` can determine corresponding commits of
+two related commit ranges. This makes use of the recently introduced
+implementation of the Hungarian algorithm.
 
-At this point, we ignore tbdiff's color options, as they will all be
-implemented later and require some patches to the diff machinery.
+The core of this patch is a straight port of the ideas of tbdiff, the
+seemingly dormant project at https://github.com/trast/tbdiff.
+
+The output does not at all match `tbdiff`'s output yet, as this patch
+really concentrates on getting the patch matching part right.
+
+Note: due to differences in the diff algorithm (`tbdiff` uses the
+Pythong module `difflib`, Git uses its xdiff fork), the cost matrix
+calculated by `branch-diff` is different (but very similar) to the one
+calculated by `tbdiff`. Therefore, it is possible that they find
+different matching commits in corner cases (e.g. when a patch was split
+into two patches of roughly equal length).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .gitignore            |  1 +
- Makefile              |  1 +
- builtin.h             |  1 +
- builtin/branch-diff.c | 40 ++++++++++++++++++++++++++++++++++++++++
- command-list.txt      |  1 +
- git.c                 |  1 +
- 6 files changed, 45 insertions(+)
- create mode 100644 builtin/branch-diff.c
+ builtin/branch-diff.c | 337 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 334 insertions(+), 3 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 833ef3b0b78..1346a64492f 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -20,6 +20,7 @@
- /git-bisect--helper
- /git-blame
- /git-branch
-+/git-branch-diff
- /git-bundle
- /git-cat-file
- /git-check-attr
-diff --git a/Makefile b/Makefile
-index 96f2e76a904..9b1984776d8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -953,6 +953,7 @@ BUILTIN_OBJS += builtin/archive.o
- BUILTIN_OBJS += builtin/bisect--helper.o
- BUILTIN_OBJS += builtin/blame.o
- BUILTIN_OBJS += builtin/branch.o
-+BUILTIN_OBJS += builtin/branch-diff.o
- BUILTIN_OBJS += builtin/bundle.o
- BUILTIN_OBJS += builtin/cat-file.o
- BUILTIN_OBJS += builtin/check-attr.o
-diff --git a/builtin.h b/builtin.h
-index 42378f3aa47..e1c4d2a529a 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -135,6 +135,7 @@ extern int cmd_archive(int argc, const char **argv, const char *prefix);
- extern int cmd_bisect__helper(int argc, const char **argv, const char *prefix);
- extern int cmd_blame(int argc, const char **argv, const char *prefix);
- extern int cmd_branch(int argc, const char **argv, const char *prefix);
-+extern int cmd_branch_diff(int argc, const char **argv, const char *prefix);
- extern int cmd_bundle(int argc, const char **argv, const char *prefix);
- extern int cmd_cat_file(int argc, const char **argv, const char *prefix);
- extern int cmd_checkout(int argc, const char **argv, const char *prefix);
 diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-new file mode 100644
-index 00000000000..97266cd326d
---- /dev/null
+index 97266cd326d..02dc06a57ca 100644
+--- a/builtin/branch-diff.c
 +++ b/builtin/branch-diff.c
-@@ -0,0 +1,40 @@
-+#include "cache.h"
-+#include "parse-options.h"
+@@ -1,13 +1,17 @@
+ #include "cache.h"
+ #include "parse-options.h"
++#include "string-list.h"
++#include "run-command.h"
++#include "argv-array.h"
++#include "hashmap.h"
++#include "xdiff-interface.h"
++#include "hungarian.h"
+ 
+ static const char * const builtin_branch_diff_usage[] = {
+ 	N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
+ 	NULL
+ };
+ 
+-#define COLOR_DUAL_MODE 2
+-
+ static int parse_creation_weight(const struct option *opt, const char *arg,
+ 				 int unset)
+ {
+@@ -19,6 +23,279 @@ static int parse_creation_weight(const struct option *opt, const char *arg,
+ 	return 0;
+ }
+ 
++struct patch_util {
++	/* For the search for an exact match */
++	struct hashmap_entry e;
++	const char *diff, *patch;
 +
-+static const char * const builtin_branch_diff_usage[] = {
-+	N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
-+	NULL
++	int i;
++	int diffsize;
++	size_t diff_offset;
++	/* the index of the matching item in the other branch, or -1 */
++	int matching;
++	struct object_id oid;
 +};
 +
-+#define COLOR_DUAL_MODE 2
-+
-+static int parse_creation_weight(const struct option *opt, const char *arg,
-+				 int unset)
++/*
++ * Reads the patches into a string list, with the `util` field being populated
++ * as struct object_id (will need to be free()d).
++ */
++static int read_patches(const char *range, struct string_list *list)
 +{
-+	double *d = opt->value;
-+	if (unset)
-+		*d = 0.6;
-+	else
-+		*d = atof(arg);
++	struct child_process cp = CHILD_PROCESS_INIT;
++	FILE *in;
++	struct strbuf buf = STRBUF_INIT, line = STRBUF_INIT;
++	struct patch_util *util = NULL;
++	int in_header = 1;
++
++	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
++			"--reverse", "--date-order", "--decorate=no",
++			"--no-abbrev-commit", range,
++			NULL);
++	cp.out = -1;
++	cp.no_stdin = 1;
++	cp.git_cmd = 1;
++
++	if (start_command(&cp))
++		return error_errno(_("could not start `log`"));
++	in = fdopen(cp.out, "r");
++	if (!in) {
++		error_errno(_("could not read `log` output"));
++		finish_command(&cp);
++		return -1;
++	}
++
++	while (strbuf_getline(&line, in) != EOF) {
++		const char *p;
++
++		if (skip_prefix(line.buf, "commit ", &p)) {
++			if (util) {
++				string_list_append(list, buf.buf)->util = util;
++				strbuf_reset(&buf);
++			}
++			util = xcalloc(sizeof(*util), 1);
++			if (get_oid(p, &util->oid)) {
++				error(_("could not parse commit '%s'"), p);
++				free(util);
++				string_list_clear(list, 1);
++				strbuf_release(&buf);
++				strbuf_release(&line);
++				fclose(in);
++				finish_command(&cp);
++				return -1;
++			}
++			util->matching = -1;
++			in_header = 1;
++			continue;
++		}
++
++		if (starts_with(line.buf, "diff --git")) {
++			in_header = 0;
++			strbuf_addch(&buf, '\n');
++			if (!util->diff_offset)
++				util->diff_offset = buf.len;
++			strbuf_addbuf(&buf, &line);
++		} else if (in_header) {
++			if (starts_with(line.buf, "Author: ")) {
++				strbuf_addbuf(&buf, &line);
++				strbuf_addstr(&buf, "\n\n");
++			} else if (starts_with(line.buf, "    ")) {
++				strbuf_addbuf(&buf, &line);
++				strbuf_addch(&buf, '\n');
++			}
++
++			continue;
++		} else if (starts_with(line.buf, "@@ "))
++			strbuf_addstr(&buf, "@@");
++		else if (line.buf[0] && !starts_with(line.buf, "index "))
++			/*
++			 * A completely blank (not ' \n', which is context)
++			 * line is not valid in a diff.  We skip it
++			 * silently, because this neatly handles the blank
++			 * separator line between commits in git-log
++			 * output.
++			 */
++			strbuf_addbuf(&buf, &line);
++		else
++			continue;
++
++		strbuf_addch(&buf, '\n');
++		util->diffsize++;
++	}
++	fclose(in);
++
++	if (util)
++		string_list_append(list, buf.buf)->util = util;
++	strbuf_release(&buf);
++
++	if (finish_command(&cp))
++		return -1;
++
 +	return 0;
 +}
 +
-+int cmd_branch_diff(int argc, const char **argv, const char *prefix)
++static int patch_util_cmp(const void *dummy, const struct patch_util *a,
++		     const struct patch_util *b, const char *keydata)
 +{
-+	int no_patches = 0;
-+	double creation_weight = 0.6;
-+	struct option options[] = {
-+		OPT_BOOL(0, "no-patches", &no_patches,
-+			 N_("short format (no diffs)")),
-+		{ OPTION_CALLBACK,
-+			0, "creation-weight", &creation_weight, N_("factor"),
-+			N_("Fudge factor by which creation is weighted [0.6]"),
-+			0, parse_creation_weight },
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, NULL, options,
-+			builtin_branch_diff_usage, 0);
-+
-+	return 0;
++	return strcmp(a->diff, keydata ? keydata : b->diff);
 +}
-diff --git a/command-list.txt b/command-list.txt
-index a1fad28fd82..c89ac8f417f 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -19,6 +19,7 @@ git-archive                             mainporcelain
- git-bisect                              mainporcelain           info
- git-blame                               ancillaryinterrogators
- git-branch                              mainporcelain           history
-+git-branch-diff                         mainporcelain           info
- git-bundle                              mainporcelain
- git-cat-file                            plumbinginterrogators
- git-check-attr                          purehelpers
-diff --git a/git.c b/git.c
-index f598fae7b7a..d2794fb6f5d 100644
---- a/git.c
-+++ b/git.c
-@@ -377,6 +377,7 @@ static struct cmd_struct commands[] = {
- 	{ "bisect--helper", cmd_bisect__helper, RUN_SETUP },
- 	{ "blame", cmd_blame, RUN_SETUP },
- 	{ "branch", cmd_branch, RUN_SETUP | DELAY_PAGER_CONFIG },
-+	{ "branch-diff", cmd_branch_diff, RUN_SETUP | USE_PAGER },
- 	{ "bundle", cmd_bundle, RUN_SETUP_GENTLY | NO_PARSEOPT },
- 	{ "cat-file", cmd_cat_file, RUN_SETUP },
- 	{ "check-attr", cmd_check_attr, RUN_SETUP },
++
++static void find_exact_matches(struct string_list *a, struct string_list *b)
++{
++	struct hashmap map;
++	int i;
++
++	hashmap_init(&map, (hashmap_cmp_fn)patch_util_cmp, NULL, 0);
++
++	/* First, add the patches of a to a hash map */
++	for (i = 0; i < a->nr; i++) {
++		struct patch_util *util = a->items[i].util;
++
++		util->i = i;
++		util->patch = a->items[i].string;
++		util->diff = util->patch + util->diff_offset;
++		hashmap_entry_init(util, strhash(util->diff));
++		hashmap_add(&map, util);
++	}
++
++	/* Now try to find exact matches in b */
++	for (i = 0; i < b->nr; i++) {
++		struct patch_util *util = b->items[i].util, *other;
++
++		util->i = i;
++		util->patch = b->items[i].string;
++		util->diff = util->patch + util->diff_offset;
++		hashmap_entry_init(util, strhash(util->diff));
++		other = hashmap_remove(&map, util, NULL);
++		if (other) {
++			if (other->matching >= 0)
++				BUG("already assigned!");
++
++			other->matching = i;
++			util->matching = other->i;
++		}
++	}
++
++	hashmap_free(&map, 0);
++}
++
++static void diffsize_consume(void *data, char *line, unsigned long len)
++{
++	(*(int *)data)++;
++}
++
++static int diffsize(const char *a, const char *b)
++{
++	xpparam_t pp = { 0 };
++	xdemitconf_t cfg = { 0 };
++	mmfile_t mf1, mf2;
++	int count = 0;
++
++	mf1.ptr = (char *)a;
++	mf1.size = strlen(a);
++	mf2.ptr = (char *)b;
++	mf2.size = strlen(b);
++
++	cfg.ctxlen = 3;
++	if (!xdi_diff_outf(&mf1, &mf2, diffsize_consume, &count, &pp, &cfg))
++		return count;
++
++	error(_("failed to generate diff"));
++	return INT_MAX;
++}
++
++static int get_correspondences(struct string_list *a, struct string_list *b,
++			       double creation_weight)
++{
++	int n = a->nr + b->nr;
++	double *cost = xmalloc(sizeof(double) * n * n), c;
++	int *a2b = xmalloc(sizeof(int) * n), *b2a = xmalloc(sizeof(int) * n);
++	int i, j, res;
++
++	for (i = 0; i < a->nr; i++) {
++		struct patch_util *a_util = a->items[i].util;
++
++		for (j = 0; j < b->nr; j++) {
++			struct patch_util *b_util = b->items[j].util;
++
++			if (a_util->matching == j)
++				c = 0;
++			else if (a_util->matching < 0 && b_util->matching < 0)
++				c = diffsize(a_util->diff, b_util->diff);
++			else
++				c = INT_MAX;
++			cost[i + n * j] = c;
++		}
++
++		c = a_util->matching < 0 ?
++			a_util->diffsize * creation_weight : INT_MAX;
++		for (j = b->nr; j < n; j++)
++			cost[i + n * j] = c;
++	}
++
++	for (j = 0; j < b->nr; j++) {
++		struct patch_util *util = b->items[j].util;
++
++		c = util->matching < 0 ?
++			util->diffsize * creation_weight : INT_MAX;
++		for (i = a->nr; i < n; i++)
++			cost[i + n * j] = c;
++	}
++
++	for (i = a->nr; i < n; i++)
++		for (j = b->nr; j < n; j++)
++			cost[i + n * j] = 0;
++
++	res = compute_assignment(n, n, cost, a2b, b2a);
++
++	for (i = 0; i < a->nr; i++)
++		if (a2b[i] >= 0 && a2b[i] < b->nr) {
++			struct patch_util *a_util = a->items[i].util;
++			struct patch_util *b_util = b->items[a2b[i]].util;
++
++			a_util->matching = a2b[i];
++			b_util->matching = i;
++		}
++
++	free(cost);
++	free(a2b);
++	free(b2a);
++
++	return res;
++}
++
++static const char *short_oid(struct patch_util *util)
++{
++	return find_unique_abbrev(&util->oid, DEFAULT_ABBREV);
++}
++
++static void output(struct string_list *a, struct string_list *b)
++{
++	int i;
++
++	for (i = 0; i < b->nr; i++) {
++		struct patch_util *util = b->items[i].util, *prev;
++
++		if (util->matching < 0)
++			printf("-: -------- > %d: %s\n",
++					i + 1, short_oid(util));
++		else {
++			prev = a->items[util->matching].util;
++			printf("%d: %s ! %d: %s\n",
++			       util->matching + 1, short_oid(prev),
++			       i + 1, short_oid(util));
++		}
++	}
++
++	for (i = 0; i < a->nr; i++) {
++		struct patch_util *util = a->items[i].util;
++
++		if (util->matching < 0)
++			printf("%d: %s < -: --------\n",
++			       i + 1, short_oid(util));
++	}
++}
++
+ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+ {
+ 	int no_patches = 0;
+@@ -32,9 +309,63 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+ 			0, parse_creation_weight },
+ 		OPT_END()
+ 	};
++	int res = 0;
++	struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
++	struct string_list branch1 = STRING_LIST_INIT_DUP;
++	struct string_list branch2 = STRING_LIST_INIT_DUP;
+ 
+ 	argc = parse_options(argc, argv, NULL, options,
+ 			builtin_branch_diff_usage, 0);
+ 
+-	return 0;
++	if (argc == 2) {
++		if (!strstr(argv[0], ".."))
++			warning(_("no .. in range: '%s'"), argv[0]);
++		strbuf_addstr(&range1, argv[0]);
++
++		if (!strstr(argv[1], ".."))
++			warning(_("no .. in range: '%s'"), argv[1]);
++		strbuf_addstr(&range2, argv[1]);
++	} else if (argc == 3) {
++		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
++		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
++	} else if (argc == 1) {
++		const char *b = strstr(argv[0], "..."), *a = argv[0];
++		int a_len;
++
++		if (!b)
++			die(_("single arg format requires a symmetric range"));
++
++		a_len = (int)(b - a);
++		if (!a_len) {
++			a = "HEAD";
++			a_len = strlen(a);
++		}
++		b += 3;
++		if (!*b)
++			b = "HEAD";
++		strbuf_addf(&range1, "%s..%.*s", b, a_len, a);
++		strbuf_addf(&range2, "%.*s..%s", a_len, a, b);
++	} else {
++		error("Need two commit ranges");
++		usage_with_options(builtin_branch_diff_usage, options);
++	}
++
++	if (read_patches(range1.buf, &branch1))
++		res = error(_("could not parse log for '%s'"), range1.buf);
++	if (!res && read_patches(range2.buf, &branch2))
++		res = error(_("could not parse log for '%s'"), range2.buf);
++
++	if (!res) {
++		find_exact_matches(&branch1, &branch2);
++		res = get_correspondences(&branch1, &branch2, creation_weight);
++		if (!res)
++			output(&branch1, &branch2);
++	}
++
++	strbuf_release(&range1);
++	strbuf_release(&range2);
++	string_list_clear(&branch1, 1);
++	string_list_clear(&branch2, 1);
++
++	return !!res;
+ }
 -- 
 2.17.0.395.g6a618d6010f.dirty
 
