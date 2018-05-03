@@ -2,113 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72390200B9
-	for <e@80x24.org>; Thu,  3 May 2018 21:19:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF3FB200B9
+	for <e@80x24.org>; Thu,  3 May 2018 21:48:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751133AbeECVTn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 17:19:43 -0400
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:40764 "EHLO
-        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750911AbeECVTm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 17:19:42 -0400
-Received: by mail-yw0-f172.google.com with SMTP id p144-v6so6104356ywg.7
-        for <git@vger.kernel.org>; Thu, 03 May 2018 14:19:42 -0700 (PDT)
+        id S1751236AbeECVs0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 17:48:26 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:32999 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751178AbeECVsZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 17:48:25 -0400
+Received: by mail-wm0-f46.google.com with SMTP id x12-v6so4598667wmc.0
+        for <git@vger.kernel.org>; Thu, 03 May 2018 14:48:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=e3qRYoCYEsECwVeNHhvMzrQ0J/rlXPoimFFs2wgNlB4=;
-        b=R6kBUIh99FpcXrgUql7hq2RAIMw8HuoPyaN+31CyH3j6uzik4PZZv9k9TAzCy+7vTM
-         JKySp3Iz6QXGk4b66VWeRJSum99VmivpZ1NwtCz3qtWvVDX9g1AVAY1yjuPcaFC6bB7q
-         xjUg8zSxdvqeCbUFCjw9VVTlpHhPqMD749pU44McJnhOPlFBfMKvTeT/OEbd35ozHuRB
-         EMRcRlxGkX/SE8HO8K0L+4djQYBDbiAWXPpr7bZnXhPEzmFA1dN5liiGh//dCdYhhZSw
-         fKQJwjBJk4nrira3y6nqVke3DKsefCOBD4KAP+E5l07Gy3yenI5nllAk7srPV7GWXMfy
-         es/g==
+        d=gmail.com; s=20161025;
+        h=to:from:subject:cc:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=etSClSsHzEZJB5kHop2+wwI+CXy7s78IsOpg880lzaA=;
+        b=Kyijh8CLMOV4RNQx95nfjefl/QcGohNnlHuOT5G+qMMAKoQzkvgaAcW+g0jP5TmZ7k
+         4FoI4OMKi3LtGFXbJxYugeBgpSeEacWHDCOMrka6es/x26h3yvX3DNfWU92oVdMABnWT
+         JBJP8qVyPohM40JqL2kyPODqQc3hQNr5vZ6ZicaiSDmrL7xTtze9KkDWm+h86tGePNxz
+         jkhOyr6ex1EZBqJLOw+zOPDMeZxZcXfpRUtKsz2wxNFu7L9AD8jQ/JqCk0/a8i0BZM0d
+         cwFqENaJpGWr7mlx6gMIz0T4j5GhTeuj7zlYb/oeQUt6c8hahc2coqcTnW3dIpOYQcTY
+         KpIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=e3qRYoCYEsECwVeNHhvMzrQ0J/rlXPoimFFs2wgNlB4=;
-        b=Y6JBu+flRXb6snxlDQrFhPeHGxjfek56q5xiEBtrJP8vWIVaponaVgNE2mbhi4rO3d
-         rcNpJIZr+HNZZQ3CTDWmIcGavo1kC27UktHo32crAmJs7+NTIL9ILbcRQD4TAWAFbu5C
-         5vmkkmnjQkR9vwnQZ3MavkWy3xJ2iwNLKUR8C73KF0GbCoNVAiEqBt3fHbQW1df+W9fa
-         oGG9nFIikTYvBJj7QNicdZFahVySdo9zG87xzkuNRA7TxaBQp4+EqW47vsTsohVNN3eg
-         uWoR11IWSnYPmiiHNaicnyZJCVn8dqwaBCLiGfnC9aA7vlWySOxcG/jUTDqd/Ss80Awa
-         JnbQ==
-X-Gm-Message-State: ALQs6tCC5oxXlG+7ddFdaKM7w5ort7d7nCFbY1tSBOIGX/SuDwDeZc1Y
-        iR+sj/nM6+RzqSB4CDBSqYuxg3UFvJhRDphmTic7Tw==
-X-Google-Smtp-Source: AB8JxZpvx41XVwFV5mPU3++hA8k2/rTfbNEyYL/pyZVXZgGvW1SD43pZVF/Gn4g6OOeZznDs+jvaKyNqqiUbNYtz6JA=
-X-Received: by 2002:a0d:e28e:: with SMTP id l136-v6mr14164489ywe.500.1525382381314;
- Thu, 03 May 2018 14:19:41 -0700 (PDT)
+        h=x-gm-message-state:to:from:subject:cc:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=etSClSsHzEZJB5kHop2+wwI+CXy7s78IsOpg880lzaA=;
+        b=CjVvwKAfhQ9rnFs4ms5QiQqg8cy242fKGRArO2VI4EsBglNOFmBj4ZFhB+fxwMa5L/
+         YJhTlOTToieOjY/7DKBWXWwwclvshrCXLN50jxqLGV/T2UXEP3+tCrL+f3RKbmxO2xZ9
+         rByCDiagH/xL7t+/ZkqPPs59f7YXxvIfnQOgYXr3k4PcXkdADZEQMewrPTSmh/6V4VN8
+         +/ZOM4Mr9fj/Jjlx4Y1XfNY4+wfRJFdMOwBn3hntJx1l0jvF8lVfyUik7WXqd1IFq82p
+         dkUuPSeVqnJ/PB14AR5A7STmXGtlAcVdVS2F7o+3h0VGFw/n3WZjIGWRpvVZOanFxWbO
+         Fl5Q==
+X-Gm-Message-State: ALQs6tDs/1J+mWEub3yy+WYUJeNUbC8l4xl1Dsw3jdfQXjUUfwkEl48U
+        oaeq3ifRPXzbBYn8j8vc0Q57YEdY
+X-Google-Smtp-Source: AB8JxZpCz8q2J3O1kzc/khr8Z5zSp5FH4Dl2oPKIhUx/0WYgybcqkC83MBnXc5fujf3MLMs8boohVA==
+X-Received: by 10.28.197.136 with SMTP id v130mr1915313wmf.135.1525384103876;
+        Thu, 03 May 2018 14:48:23 -0700 (PDT)
+Received: from [192.168.0.103] ([92.55.154.57])
+        by smtp.gmail.com with ESMTPSA id k126sm504785wmd.45.2018.05.03.14.48.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 03 May 2018 14:48:22 -0700 (PDT)
+To:     Git Mailing List <git@vger.kernel.org>
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Subject: [GSoC] A blog about 'git stash' project
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Message-ID: <67e6d306-0885-9340-13c8-3e3d4333dc20@gmail.com>
+Date:   Fri, 4 May 2018 00:48:21 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Thu, 3 May 2018 14:19:40 -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.76.6.1805032246040.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de>
- <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de>
- <CAGZ79kYzZkdZKdR4hMK0V6D6=cm4damct01MGidGA0g-dtW+gQ@mail.gmail.com> <nycvar.QRO.7.76.6.1805032246040.77@tvgsbejvaqbjf.bet>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 3 May 2018 14:19:40 -0700
-Message-ID: <CAGZ79kZQ+mq1O_sL11jC4_Lt18nO6b_6pSPBahOqyZ+izrRm7w@mail.gmail.com>
-Subject: Re: [PATCH 03/18] branch-diff: first rudimentary implementation
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> To be honest, the main reason I spawn here is that I did not want to be
-> bothered with resetting the commit flags after traversing the first commit
-> range. But I guess I was just too cheap and should really do it?
+Hello everybody,
 
-Oh right, you'd have to do multiple revision walks.
+The community bonding period started. It is well known that for a 
+greater rate of success, it is recommended to send weekly reports 
+regarding project status. But, what would be a good form for such a 
+report? I, for one, think that starting a blog is one of the best 
+options because all the content will be stored in one place. Without 
+further ado, I would like you to present my blog [1].
 
-> OTOH spawning here is a lot easier than not spawning, so maybe it would be
-> premature optimization?
+Any feedback is greatly appreciated! Thank you!
 
-Most likely.
+[1]
+https://ungps.github.io/
 
->
->> In addition to that patch, we'd have to buffer commit messages
->> and buffer multiple commits, as that only buffers a diff of a single
->> commit.
->
-> ... and make sure that the moved-code logic (which is currently the only
-> user of emitted_symbols, correct?) would never be called at the same time
-> as we generate the diff.
-
-The moved detection is all part of the flags of an emitted symbol.
-
-By design the emitted symbol has easy access to the raw line of the output,
-which made it easy for the move detection to work on the lines. AFAICT this
-is also desired here as lines are put into a hashmap for comparisons.
-(and having it colored differently would make finding the same line
-complex using hashmaps)
-
-I just entertain the thought of having move detection active in a
-branch-diff. That would be really cool actually.
-
->
->> The benefit would be no invocation of new processes, letting us
->> do more in core. This would allow for tweaking revision walking
->> internally, e.g. passing of options to this command such as rename
->> detection factors, can be passed through easily without the need
->> of translating it back to the command line.
->
-> On the other hand, we can simply copy those options to the command-line
-> for `log`. Which might even be better, as e.g. `--format` changes global
-> state :-(
-
-ok.
-
-Thanks for your patience,
-Stefan
+Best regards,
+Paul Ungureanu
