@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B53CA200B9
-	for <e@80x24.org>; Thu,  3 May 2018 23:01:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34B7F200B9
+	for <e@80x24.org>; Thu,  3 May 2018 23:01:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751447AbeECXBf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 19:01:35 -0400
-Received: from mout.gmx.net ([212.227.17.21]:38699 "EHLO mout.gmx.net"
+        id S1751461AbeECXBi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 19:01:38 -0400
+Received: from mout.gmx.net ([212.227.17.20]:45499 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751423AbeECXBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 19:01:33 -0400
+        id S1751423AbeECXBg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 19:01:36 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
- (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0LqF9o-1ejQ883ume-00dpny; Fri, 04 May 2018 01:01:29 +0200
+ (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0MTfZc-1eo4uw1udM-00QTuM; Fri, 04 May 2018 01:01:30 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -28,9 +28,9 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Christian Couder <christian.couder@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Wink Saville <wink@saville.com>
-Subject: [PATCH v2 5/6] rebase --rebase-merges: a "merge" into a new root is a fast-forward
-Date:   Fri,  4 May 2018 01:01:28 +0200
-Message-Id: <29d7a9265e30fb9b27b87aba1d6cd5efff93a596.1525388473.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 6/6] rebase --rebase-merges: root commits can be cousins, too
+Date:   Fri,  4 May 2018 01:01:29 +0200
+Message-Id: <f7ee1b3de12e2163c6b370eac5fbbc62c718b973.1525388473.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.windows.1.38.g05ca542f78d
 In-Reply-To: <cover.1525388472.git.johannes.schindelin@gmx.de>
 References: <cover.1524868165.git.johannes.schindelin@gmx.de> <cover.1525388472.git.johannes.schindelin@gmx.de>
@@ -38,88 +38,86 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:qcyrD4AuRBdNBnBTsJEREfieX7ys0qsKSoQNaNiMe78L0Cxw0dR
- hGKF+54PkaKO9s0HZ/pF4aVY/ha68VRASzFkmSCfaIm4c/gAEqRx0iPCpfqlxBq8xMS78lv
- 2kkhhxLJQGvLCOayAWLB9FnIsb7Jh9GTKD/VJYY5hh0gl05J3bTlvOh1iYMh04iRxXRkDdY
- IYPAR7zUCxDE2UTDXuzKg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Xi4IxXbbUCg=:bxw5XKIOrgqdAeMlhHYn3a
- ukPnOMddweWrDR5tAVR+kWeKv/6YkAECEtqkR0RaKM/0y5dYjaaW3n1i/CCyvc2dJkean7kgn
- pgFLEMZqGuT1/matvXbcjYSmEg1CViifHKomwX8LE6DmJJx2ja1zRR4T+WjNMoAXAEnVGUifQ
- OQUF6ZSLw8MfkzVuqRH1bD2PDohxUrToZCAFBxqC8pGz3sG2cp6fpw3X1LJnJ168ku8RxdHtZ
- EBAMCTEZw44kUidMDopKGPtuAlhazrh0su2kQ/ETzXOYxHw0CMgX4pc90t7qrnKnGH9nR/W7n
- YZ4Kff6L5V23yXM3npUYWKzDVVFYE0YjENpV80ycW5Fn/Zk/QMioToqV3662ACwWW039T5H1x
- A3agWonxji5LipVO8ZSaf2vfPyjRXjvICiL32zqm2D8B0H20pgDrLBRCbRkszeISosidzGZBi
- xSub/YipwvNXptxgHFxNOWlxFcWQI6sw8W8mIb0Xk4Wc0wd4FXxof6BW9rXDlcBxz6c59jbgB
- vkVNfMiUN75stRRgGUfWrGEjtQ/yfacqkUX5bBFJmH1NrZFV0FOEu0ZIgV2dvOcJGWhw7lEyS
- 3jfSnFGLbJ8Z4PTojvn78wau4c1LglcOJGvFPux/gvDAsItAAbQsWROlEh6TSWbOPBkWT8/Gy
- zzhBqXk1tBXILyMAJwXqVoTGx0H/eL5Ovom8IWfcWLpbNhNeaqTfscrutiwD9a++YoA5ZnC8R
- OlnmVULHUaYxDN4O3wIhCl/TLd2dB/wX5814oj9IGDpFe/Im49ezG56lckEBVHjDMD3cbsw2b
- Oyljf1l
+X-Provags-ID: V03:K1:u7lyrwUujjMlSPtnClLswUoTjcECL0tr0nkF7iAIS5ShiIpL6uc
+ 2RUkYmPUImgZnJjRfDC1xx1x4lWOSvryYlNVCjhF6tuJhIgxT1kb5oIx6wxj1clRpkB6O3B
+ YRzhzpIHfFXfo4uFFDMIWPCgmMhYjyjCQdHe/1Xk5sCMFgc4h+Zp9ybN2ML2XfHM4akrbhh
+ k3wqhw1JkILQ/dkMex7TA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BVaGq2i1ypU=:EvbUovcIXslfVBLMyc4j1x
+ H1Qe5tUrbKYpk9cpUSWT2SfYriHsoTA1TehzrFxW+CUggbgYgl8DhzI/gnruqisExWRTP4xjr
+ Iw1o8L49bvEkC8s4+CYBRWKqLMXzXbTw0hAXQ7ARsXUTidwDIRoU4p463JJJnpobZi6bOooA0
+ 61s4/gtDKSewXial7txQ3W3cqZJEpUVToGI+Hhfy3E3BDqs9kEwyg3fPNpMKmbKQYAlOorDI9
+ r7Sd2A6flHedMmYS1LBZImoKeENXTaQGWmF1uLvp79p7zVfc+DvaTgfzkqBEpD9zXkVvypJs3
+ vwxEob8LmTYGe0XYC0keIKi7qILzlx1HG1r4AdDwmXlnkjdKPjSIk9RVvYbxc4qXVDlCGTwxM
+ 3rqfSEprFVw4cSjMsTm9E1KaSIqHY0lwZL2X4nPUZeIkYjnGDA5XNrgSLracT/iJQ9oBZaoxZ
+ hZ3O3id51kSPqR11Idf8KLf4cT/0EpY7lWMsA2rxr44npgK4RMFIj/NNCJb3lEsK8/y8dlgmy
+ 8UiPz2ZV3C13Z5YP9b618BWlUKLsoWF1bgUFEneg17rbdkmgGOFDTuVbhgTTR+IlbeaQBaIpO
+ zK2TbTqn8lUIbVkjmyAD7rCXtFYlo5HwsKcIq9dThKNHry7LIUa/s60lLrmDsGhq1Y6Sd8GnV
+ dNnPsh35YxH7dgXDXKvNdFdIl7fBhuXm7Pv2SbtYBGgjcon8/3Sp0aLnwRNBCCwn02ebEGoL6
+ VnLbjwzPfSdoZuNpyp2iKZU89OYA9WI/+gkgrPiVzYLLaoJKdQ8AbrQDKw4gQDwvN7E+zrpA0
+ DsthRJO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a user provides a todo list containing something like
-
-	reset [new root]
-	merge my-branch
-
-let's do the same as if pulling into an orphan branch: simply
-fast-forward.
+Reported by Wink Saville: when rebasing with no-rebase-cousins, we
+will want to refrain from rebasing all of them, even when they are
+root commits.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c              | 12 ++++++++++++
- t/t3430-rebase-merges.sh | 13 +++++++++++++
- 2 files changed, 25 insertions(+)
+ sequencer.c              |  3 ++-
+ t/t3430-rebase-merges.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index a7832399b1f..65a8c493781 100644
+index 65a8c493781..01e561bc20e 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2870,6 +2870,18 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
- 		goto leave_merge;
- 	}
+@@ -3903,7 +3903,8 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 		}
  
-+	if (opts->have_squash_onto &&
-+	    !oidcmp(&head_commit->object.oid, &opts->squash_onto)) {
-+		/*
-+		 * When the user tells us to "merge" something into a
-+		 * "[new root]", let's simply fast-forward to the merge head.
-+		 */
-+		rollback_lock_file(&lock);
-+		ret = fast_forward_to(&merge_commit->object.oid,
-+				       &head_commit->object.oid, 0, opts);
-+		goto leave_merge;
-+	}
-+
- 	if (commit) {
- 		const char *message = get_commit_buffer(commit, NULL);
- 		const char *body;
+ 		if (!commit)
+-			fprintf(out, "%s onto\n", cmd_reset);
++			fprintf(out, "%s %s\n", cmd_reset,
++				rebase_cousins ? "onto" : "[new root]");
+ 		else {
+ 			const char *to = NULL;
+ 
 diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 35260862fcb..5543f1d5a34 100755
+index 5543f1d5a34..ce6de6f491e 100755
 --- a/t/t3430-rebase-merges.sh
 +++ b/t/t3430-rebase-merges.sh
-@@ -275,4 +275,17 @@ test_expect_success 'root commits' '
- 	test_cmp_rev HEAD $before
+@@ -287,5 +287,30 @@ test_expect_success 'a "merge" into a root commit is a fast-forward' '
+ 	test_cmp_rev HEAD $head
  '
  
-+test_expect_success 'a "merge" into a root commit is a fast-forward' '
-+	head=$(git rev-parse HEAD) &&
-+	cat >script-from-scratch <<-EOF &&
-+	reset [new root]
-+	merge $head
-+	EOF
-+	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
++test_expect_success 'A root commit can be a cousin, treat it that way' '
++	git checkout --orphan khnum &&
++	test_commit yama &&
++	git checkout -b asherah master &&
++	test_commit shamkat &&
++	git merge --allow-unrelated-histories khnum &&
 +	test_tick &&
-+	git rebase -i -r HEAD^ &&
-+	test_cmp_rev HEAD $head
++	git rebase -f -r HEAD^ &&
++	! test_cmp_rev HEAD^2 khnum &&
++	test_cmp_graph HEAD^.. <<-\EOF &&
++	*   Merge branch '\''khnum'\'' into asherah
++	|\
++	| * yama
++	o shamkat
++	EOF
++	test_tick &&
++	git rebase --rebase-merges=rebase-cousins HEAD^ &&
++	test_cmp_graph HEAD^.. <<-\EOF
++	*   Merge branch '\''khnum'\'' into asherah
++	|\
++	| * yama
++	|/
++	o shamkat
++	EOF
 +'
-+
-+
+ 
  test_done
 -- 
 2.17.0.windows.1.38.g05ca542f78d
-
-
