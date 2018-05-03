@@ -2,117 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9311E200B9
-	for <e@80x24.org>; Thu,  3 May 2018 20:45:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1ED8200B9
+	for <e@80x24.org>; Thu,  3 May 2018 20:58:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751126AbeECUpH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 16:45:07 -0400
-Received: from mout.gmx.net ([212.227.17.20]:44369 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751081AbeECUpG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 16:45:06 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNuwp-1fFi0f3M7f-007TCa; Thu, 03
- May 2018 22:44:58 +0200
-Date:   Thu, 3 May 2018 22:44:59 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH 03/18] branch-diff: first rudimentary implementation
-In-Reply-To: <24af8d6e-da6f-2d0b-22a0-6a2a215ac55f@ramsayjones.plus.com>
-Message-ID: <nycvar.QRO.7.76.6.1805032242510.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de> <24af8d6e-da6f-2d0b-22a0-6a2a215ac55f@ramsayjones.plus.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751108AbeECU6l (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 16:58:41 -0400
+Received: from mail-yb0-f173.google.com ([209.85.213.173]:41287 "EHLO
+        mail-yb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750822AbeECU6k (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 16:58:40 -0400
+Received: by mail-yb0-f173.google.com with SMTP id l9-v6so6990690ybm.8
+        for <git@vger.kernel.org>; Thu, 03 May 2018 13:58:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=hQZoT+ychztGrguJlE6Q0yYqn23+jswhjk/PMaBjcUU=;
+        b=aXIWiGzOTPi4hfR5mAFJFlltOnNPk9+HecPISA+AWQ7ItsF2Ng0O+DplZ7qAPmksfT
+         rluFSWLQkLEHfMyVrkoyJNLjk6x5EQNkTj4fgCsp9vWeaVV27fzNZZZpHnWLnePvcBT9
+         gv+cb1aFnPjS6NDx+1xLWNgoKNAliNGzN6PoTzcmBm/S8hqgPoPEk5jjTRz3ka8VscXC
+         l7HuE8Jfkx9N1431qwhSV7KaZ3kD5Kjo3axHGko9hR018LVDTj8/f1MignWZPY4btTME
+         LPx4YrzD4xGjzcCxfnN88rGtE3NJwttituCw3Zxa4fU8dJL61Jp+zXuCkXGHbRAj99U6
+         cAXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=hQZoT+ychztGrguJlE6Q0yYqn23+jswhjk/PMaBjcUU=;
+        b=j18P1ByMtUzIP7m9Dn4ifmlngCebHeE7u2yK+6PBZZ+szA5W+qtYgrBmiJfZgaL7+m
+         KvLGjEkUZ1mfyhEASOu1SMLXNQujNT2nx1SLLF2JqEcYIvJ+aE7VJnkAZJoTNADydX4R
+         fZndyDVVZPh+0LLYtyWamh3EbOLQp9jiTTQzmaVDcAScnnLJiRyWVQTv+WTOE39hHi82
+         jcgeogBCdCDS3b83tA1OHurq67IOYBB2FjeMAPolajO4jD1sAlD+Tl7VgOw9dx5ePM2u
+         8FF/rreLZmPUYcXIuUT1DvVAZzUzrlkbYnOpnMKKQTii3++4ZuHUFwXs8GayRd1OY/VN
+         6M1g==
+X-Gm-Message-State: ALQs6tCBN8Rej82/y7BljN5uGGeWSxdnLfJpj6slFRtC7AAG+f2AJ9dH
+        EUnlyLPdQQy9B8cb1VCpxVpgCkAH3sAd8nXAt5+s4w==
+X-Google-Smtp-Source: AB8JxZqUicPpD8udsyHn8FT93//Q+tMxZHP8SdrTxiFh3+F6BepXIcRzaeqgXdN+ThMOJJuCzuT4zcA1VoUTOUtJVBw=
+X-Received: by 2002:a25:3bc5:: with SMTP id i188-v6mr13427593yba.352.1525381119614;
+ Thu, 03 May 2018 13:58:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:OdyLVQ70woTwPSNdp1larTQcyajtm8aEfTQjN+G5EScaK+WLniF
- 2PKh3HmU45eqhudC5A5/Z+hSB7912vvdIWy8YNVs/UFfGmFT/B6oTgbveWAnplRtcEBut2D
- jTRPPEiqJy7Bz4rapLty/4Fs8RutPxM7qrcB/oD02Spp+6u+1SEegamy8Vsxca33fSzqRK/
- /Reulsj85K7h7kzVhNOUg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:J0db7FMJgGI=:uIqt5M9LtHp4FjGiBp/7I4
- gCjL+xQNuxY6BG9AjBAge/lr7n9pm80U3h4i1pnSAWh1jujwjK+HA4uvic48uOV0kJ2qMIFcb
- BVoT6I5sMj+NHwykrK3bbPBxR0omvmrPuOv7462Kl5ODGd4K4voFQbJix7ixtcLemxr4Wrnmi
- WMLS6r/JTrWQsGGn5Iv1xGkcn7ItqGB0T6G9BGsE+E3In+/Rm/gPKPpR4GzDbRiuS8YwQg2aE
- B3UEF1rBCAm8ssAn0+CgxcL/8l8TaNgZn4eH9tQdqHXOA4iVqdzj6U26nCG2gGQJHXuUo0qN+
- 7oRo/p8gd5qSh1kb9jGkt8yoQf+hszyQx5m4QYwtTSmZT+nsGc6mgKxGsnqEhhTOp8hFgETkM
- JMR2SjruRmmm+hWEwOFJBFZxB5ZCgQEoBxfh4ZL59xqg1Y2CVZno8GkLgb8Z6ODOjz+pn6AB2
- Eh1woBZxX3FSCMpf+2fiFs2GTbKsmYuP4Idh6a/7q1wZZbR4CXKTH7fYIqqx0Ym8Wi61nYrkE
- M9iS8HCOilGKXLJXvlmzxgSGygu0Nkb+Po3thknaA4FNsySOzz32OmFMfNv3GY2xx47xtLxaF
- dKlmsDALFBPAuG6aCCL5Ktcrh1gr9A5AAhrjmHvRvsF+w4Ppxf6SnJN9FvSl90P+OlfOyoEsi
- bGIMKtw3ZYrwhVgCofUk0806ryhsjGs1rwGV1WiTUM6WxECneCX4yZyR2IsAyObVosUTO5I8p
- ARnTdmHkaUjvetGYgit/j5oPLdKVdGN8punao03xBJfJE478ophGnPg0jhTQaSnyu76wysqrc
- iGko/7c
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Thu, 3 May 2018 13:58:38 -0700 (PDT)
+In-Reply-To: <CACsJy8DF40o3gesuNbHACK+NiE=iZuXxLacyEQjECYewDy_icw@mail.gmail.com>
+References: <20180417163400.3875-1-jamill@microsoft.com> <20180430153122.243976-1-jamill@microsoft.com>
+ <CACsJy8C3yZ6bSZGw1d5DjwcPgHMDE7iGGUOn9SvyLmshzs9DvQ@mail.gmail.com>
+ <CAGZ79kbyPya0igC9v5JwNTsi0TSp-sj6v5SB4MOt625+yVB-Gg@mail.gmail.com> <CACsJy8DF40o3gesuNbHACK+NiE=iZuXxLacyEQjECYewDy_icw@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 3 May 2018 13:58:38 -0700
+Message-ID: <CAGZ79kb1K9iysibzmn2SUfyTayXOn97wTsoL4s557j+_ievkBA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] Allocate cache entries from memory pool
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jameson Miller <jamill@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "jonathantanmy@google.com" <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ramsay,
+On Thu, May 3, 2018 at 12:17 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>
+>> To me it is also a clear yes when it comes to combining these
+>> two memory pools.
+>
+> I also did not notice that jm/mem-pool already landed in master.
 
-On Thu, 3 May 2018, Ramsay Jones wrote:
+Oh, thanks for telling! Now that I look at it, I am doubting it;
 
-> On 03/05/18 16:30, Johannes Schindelin wrote:
-> > At this stage, `git branch-diff` can determine corresponding commits of
-> > two related commit ranges. This makes use of the recently introduced
-> > implementation of the Hungarian algorithm.
-> > 
-> > The core of this patch is a straight port of the ideas of tbdiff, the
-> > seemingly dormant project at https://github.com/trast/tbdiff.
-> > 
-> > The output does not at all match `tbdiff`'s output yet, as this patch
-> > really concentrates on getting the patch matching part right.
-> > 
-> > Note: due to differences in the diff algorithm (`tbdiff` uses the
-> > Pythong module `difflib`, Git uses its xdiff fork), the cost matrix
-> > calculated by `branch-diff` is different (but very similar) to the one
-> > calculated by `tbdiff`. Therefore, it is possible that they find
-> > different matching commits in corner cases (e.g. when a patch was split
-> > into two patches of roughly equal length).
-> > 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  builtin/branch-diff.c | 337 +++++++++++++++++++++++++++++++++++++++++-
-> >  1 file changed, 334 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-> > index 97266cd326d..02dc06a57ca 100644
-> > --- a/builtin/branch-diff.c
-> > +++ b/builtin/branch-diff.c
-> > @@ -1,13 +1,17 @@
-> >  #include "cache.h"
-> >  #include "parse-options.h"
-> > +#include "string-list.h"
-> > +#include "run-command.h"
-> > +#include "argv-array.h"
-> > +#include "hashmap.h"
-> > +#include "xdiff-interface.h"
-> > +#include "hungarian.h"
-> >  
-> >  static const char * const builtin_branch_diff_usage[] = {
-> >  	N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
-> >  	NULL
-> >  };
-> >  
-> > -#define COLOR_DUAL_MODE 2
-> > -
-> 
-> This #define was introduced in the previous patch, without being
-> used in that patch, and is now deleted here.
+The reason for my doubt is the potential quadratic behavior for
+new allocations, in mem_pool_alloc() we walk all mp_blocks to
+see if we can fit the requested allocation in one of the later blocks.
+So if we call mem_pool_alloc a million times, we get a O(n)
+mp_blocks which we'd have to walk in each call.
 
-Darn, darn, darn. You know, this macro simply won't die. I tried to kill
-it off but it keeps showing its ugly head everywhere.
+However in alloc.c we do know that a slab is full as soon as we
+look take the next slab. That is the beauty of knowing 'len' at
+construction time of the allocator.
 
-I *think* I finally killed it for good.
+So I guess I'll just re-use the mp_block and introduce another
+struct fixed_sized_mem_pool, which will not look into other mp_blocks
+but the current.
 
-Thanks!
-Dscho
+
+> Have
+> you tried measure (both memory usage and allocation speed) of it and
+> alloc.c?
+
+No, I was about to, but then started reading the code in an attempt to replace
+alloc.c by a mempool and saw the quadratic behavior.
+
+> Just take some big repo as an example and do count-objects -v
+> to see how many blobs/trees/commits it has, then allocate the same
+> amount with both alloc.c and mem-pool.c and measure both speed/mem.
+> I'm pretty sure you're right that mem-pool.c is a clear yes. I was
+> just being more conservative because we do (slightly) change
+> allocator's behavior when we make the switch. But it's also very
+> likely that any performance difference will be insignificant.
+>
+> I'm asking this because if mem-pool.c is a clear winner, you can start
+> to update you series to use it now and kill alloc.c in the process.
+
+I'll implement the fixed_sized_mem_pool and take some measurements.
+
+>
+> PS. Is Jeff back yet?
+
+His last email on the public list is Apr 10th, stating that he'll be offline for
+"a few weeks", in <20180406175349.GB32228@sigill.intra.peff.net> he
+said the vacation part is 3 weeks. So I think he is done with vacation and
+is just hiding to figure out a nice comeback. ;-)
+
+> I'm sure Junio is listening and all but I'm
+> afraid he's too busy being a maintainer so Jeff's opinion in this area
+> is really valuable. He has all the fun and weird use cases to play
+> with at github.
+
+ok. I'll cc him for these patches.
+
+Thanks,
+Stefan
