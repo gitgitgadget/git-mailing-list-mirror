@@ -2,238 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8930C200B9
-	for <e@80x24.org>; Thu,  3 May 2018 18:12:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B105F2023F
+	for <e@80x24.org>; Thu,  3 May 2018 18:45:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751095AbeECSMa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 14:12:30 -0400
-Received: from mail-yb0-f174.google.com ([209.85.213.174]:44899 "EHLO
-        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750947AbeECSM3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 14:12:29 -0400
-Received: by mail-yb0-f174.google.com with SMTP id v63-v6so6824318ybi.11
-        for <git@vger.kernel.org>; Thu, 03 May 2018 11:12:29 -0700 (PDT)
+        id S1751261AbeECSpf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 14:45:35 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:41093 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751166AbeECSpe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 14:45:34 -0400
+Received: by mail-wr0-f193.google.com with SMTP id g21-v6so18629882wrb.8
+        for <git@vger.kernel.org>; Thu, 03 May 2018 11:45:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=B+usi2iqMgM/Q5Ywp2o67/j3R7Qs7+L2864lrTGVCx8=;
-        b=XHzSINz+/T2pr+UlgcaAWS0P6Q+UYoiMy0VSaNELOiXrHz4rDGfIuMiaBa3gTcuFQI
-         JzYN1HwCsvD6d4QBv+SYcOYrjm7Gh7biuT6b+0dMdh320YjYNMaZ5dpOw8ssYzW+1/Gt
-         ug8jK8B8/xytzr2nP8azWN+CEIvAHBKnMc5pSo74M6Qw246C6TnVjCuv8tD2H/QzhjcQ
-         S4gvHavm/XJPJq1oqiesNSA86yNadgrFp62BeJ38BvH2mwEGXJjwWdE+zmpMaZgRpxbH
-         GKhF+7nAJXdJnGLb6l/7IuhtQW7jD8IjtLjT7o/szlMQVVAR9hNMIdtFYPsKwMFg9elT
-         c47g==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=Rq/S5bcLinTgwXWCwY6rnEXOOAWljy5MrRVOeqElL9g=;
+        b=k9IbUGoOj9yrwErpPNx+h+CidAHosMJ2Crt1WG5Dq0QfVn6olv1KYlVVDWqAYac1S8
+         PX8kBPUxNV5SyVn2tz29dpK7ENZUXNnF26TLDUC3TkYB2CFenf3nECO0ZgHT3SDPlpGh
+         tYEl0zrAxcA/Y4P4smOaA8pwmxqrW8jS985xIfDwjpFJLuLykM5EuHoPyLNLxGCSDFtX
+         N70ktBCNy8Ck/UWT53klHzbHjIJLLPWpHmnrFmW8mvNeFX1vXC1KQCohybfEbHHYtHSd
+         Tft6zGAi54Rvw5JQVlPpM+nLxcxH0ECSP332vWcBSOSiuTZKNAD+2MDt3+zP4BNdmsmz
+         YsDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=B+usi2iqMgM/Q5Ywp2o67/j3R7Qs7+L2864lrTGVCx8=;
-        b=XtpM+7S2Oaa8TAGnD1QEH0z4SNKARUPKje051yEQnQOfxkKZSJvUDFHjyB2KTTefVJ
-         Are+UOk1/u/tlFbKrHmPzWELATH0q3aA03lxrxUc7q2Z/2fRHUpFRZRFOZz623l7GD2Y
-         8YwqykqwOFM8pgBUYWuOoAFCbww2OtAlZ3rzHvFxq6fY2gSa3VIWZb96/1h3p9vwDsus
-         ztnWkBfgh4S0atLuc2Mjy2yO4X2/FoOF3JZnkulrXUYkvJwqOo6YLQKgZ0SffaETZ4pz
-         xzN2SWL/Z/T/f24c8MLBztyd6oxcSajjgwJlIp68Xim6Jlk8OfWOBhz3IbvsAAtjoySy
-         TFlw==
-X-Gm-Message-State: ALQs6tAvk/wtaqqUhATSiWWhKK0khcgdZoROQakPSdkqXsuYc5L6nE0D
-        A1xtueCs6pBAdBAGB+++Yc27fMJfwnWs2Hq3XO5MNA==
-X-Google-Smtp-Source: AB8JxZp/7hL8PPaQ9qAx6Mt5vHo3/3lgm1qBDvNfVRNRqyOKYZimTQ/DlT59zixXkGaKIE6ciz6io1zIXV0bIOR5hXg=
-X-Received: by 2002:a5b:14f:: with SMTP id c15-v6mr15612995ybp.292.1525371147938;
- Thu, 03 May 2018 11:12:27 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=Rq/S5bcLinTgwXWCwY6rnEXOOAWljy5MrRVOeqElL9g=;
+        b=FIxS0dZCtWpM2FaMigTG0G68t9RqpNFXabZ/RHh2dH+56NP8xRGMfXFuS+it6s1nme
+         X8qiPE+vq9r+C3xq3epMIajDr3747og0b+wh7COOpEL2Y7mvJ6nCbjK8eMQgXw6E59bw
+         8oixANCiLH2rieHgrxWn4PrG46cKGYJVG5DrzHPisV1WcVf7/iP2BevHeaoL5qleJvZP
+         vTJAoYwl+YIecH23WDksT+W4/qRBiWM/w6kAUhN4QsZlF4AeGMjol0eB92lIpSV5mJTd
+         R/gkShnWtcxaAg+VMH0sXlHut4QkOQLAUhHnFoTGafMjH9aqhE1KBTVc4/sXgevqwr9h
+         QEvg==
+X-Gm-Message-State: ALQs6tDL4HoESYwMAhvdO/c1dklycF/14GQQY0VcCl5dVXjf7QfbX3OR
+        ZzGbCnHTrSLzhq7mKe2+zzA=
+X-Google-Smtp-Source: AB8JxZr6u+J6DWuRS9hHFjau4dBstXo093jyCmJIW6ilZrdG4jo+PFVpJxfsVtjsgJCW7kxjydJCbA==
+X-Received: by 2002:adf:83a2:: with SMTP id 31-v6mr19079664wre.19.1525373132988;
+        Thu, 03 May 2018 11:45:32 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egn45.neoplus.adsl.tpnet.pl. [83.21.77.45])
+        by smtp.gmail.com with ESMTPSA id t203-v6sm171157wmt.33.2018.05.03.11.45.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 03 May 2018 11:45:31 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v5 09/11] commit: use generation number in remove_redundant()
+References: <20180425143735.240183-1-dstolee@microsoft.com>
+        <20180501124652.155781-1-dstolee@microsoft.com>
+        <20180501124652.155781-10-dstolee@microsoft.com>
+Date:   Thu, 03 May 2018 20:45:27 +0200
+In-Reply-To: <20180501124652.155781-10-dstolee@microsoft.com> (Derrick
+        Stolee's message of "Tue, 1 May 2018 12:47:21 +0000")
+Message-ID: <867eokzigo.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Thu, 3 May 2018 11:12:27 -0700 (PDT)
-In-Reply-To: <20180503104754.6aefd8ba38eb5a8871281b01@google.com>
-References: <20180503005358.89082-1-sbeller@google.com> <20180503005358.89082-2-sbeller@google.com>
- <20180503104754.6aefd8ba38eb5a8871281b01@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 3 May 2018 11:12:27 -0700
-Message-ID: <CAGZ79kYq0Qs7tvG0NEYwKHeYxF_tN1-eZA2skdjCiDZ4JkyuRQ@mail.gmail.com>
-Subject: Re: [PATCH 1/5] submodule foreach: correct '$path' in nested
- submodules from a subdirectory
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 3, 2018 at 10:47 AM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> On Wed,  2 May 2018 17:53:54 -0700
-> Stefan Beller <sbeller@google.com> wrote:
+Derrick Stolee <dstolee@microsoft.com> writes:
+
+> The static remove_redundant() method is used to filter a list
+> of commits by removing those that are reachable from another
+> commit in the list. This is used to remove all possible merge-
+> bases except a maximal, mutually independent set.
 >
->> From: Prathamesh Chavan <pc44800@gmail.com>
->>
->> When running 'git submodule foreach --recursive' from a subdirectory of
->> your repository, nested submodules get a bogus value for $path:
+> To determine these commits are independent, we use a number of
+> paint_down_to_common() walks and use the PARENT1, PARENT2 flags
+> to determine reachability. Since we only care about reachability
+> and not the full set of merge-bases between 'one' and 'twos', we
+> can use the 'min_generation' parameter to short-circuit the walk.
 >
-> I know I said in a previous e-mail [1] that we should use $path instead
-> of $sm_path, but now I got confused because the test shows a difference
-> in $sm_path, not $path. Maybe add "(and $sm_path, which is an alias of
-> $path)".
+> When no commit-graph exists, there is no change in behavior.
 >
-> [1] https://public-inbox.org/git/20180206145406.b759164cead02cd3bb3fdce0@google.com/
+> For a copy of the Linux repository, we measured the following
+> performance improvements:
 >
->> There are three different possible solutions that have more value:
->> (a) The path value is documented as the path from the toplevel of the
->>     superproject to the mount point of the submodule. If 'the' refers to
->>     the superproject holding this submodule ('sub' holding 'nested'),
->>     the path would be expected to be path='nested'.
+> git merge-base v3.3 v4.5
 >
-> What is "the", and why is it quoted?
-
-because it is unclear what is emphasizes.
-It could be the intermediate (direct) superproject, or it
-could be the topmost superproject (where the command was run from).
-
-Just having "the", makes it unclear which of both it refers to.
-
-> Also, in (c), you use the same indicative present tense as "The path
-> value is documented" to describe the current situation, whereas this
-> seems like a situation you're proposing. It would be clearer to use the
-> imperative here ("Document $path to be the path from the toplevel...").
-> Do the same for the others.
+> Before: 234 ms
+>  After: 208 ms
+>  Rel %: -11%
 >
-> Also, whenever you mention "superproject", make it clear which
-> superproject you're referring to ("outermost superproject" and
-> "immediate superproject" seem like good terms to me).
-
-ok, I'll rewrite the commit message with clearer superproject
-annotations.
-
->> (b) In case 'the' superproject is referring to the toplevel, which
->>     is the superproject in which the original command was invoked,
->>     then path is expected to be path='sub/nested'.
+> git merge-base v4.3 v4.5
 >
-> Same comment about "the", and I think s/toplevel, which is the
-> superproject in which the original command was invoked/outermost
-> superproject/.
-
-The outermost superproject may not be the one you invoke the
-command in.
-
-We have
-* the direct superproject. You can access it currently via $toplevel,
-  which is misleading
-* the superproject, where the command was invoked from,
-  Currently only the undocumented $displaypath gives hints
-  at this
-* the outermost superproject, which may be even further
-  out than the previous superproject in this list; Consider
-  a layout with 4 git repositories nested as follows:
-
-    outmost/invoked/direct/submodule
-
-Submodule is part of the superproject "direct", but the command
-could have been invoked from outmost/invoked/dir which has "direct"
-as a submodule at '../direct' and itself is a submodule of outmost.
-
-IMHO 'outmost' is of no relevance to the discussion. If you care about
-it, discover it yourself via repeated calls to
-'git rev-parse --show-superproject-working-tree'
-
-'invoked' is only interesting for $displaypath, but apart from that
-there is no benefit in knowing that at the time of processing
-'submodule'. (It doesn't contain information for submodule, as
-all those configs are in 'direct')
-
-'direct' is a better name than 'toplevel', which is confusing as it
-could be understood as any of 'direct', 'invoked' or 'outmost'.
-
->> (c) The documentation explains $path as [...] "relative to the
->>     superproject", following 091a6eb0fe (submodule: drop the
->>     top-level requirement, 2013-06-16), such that the nested submodule
->>     would be expected as path='../sub/nested', when "the" superproject
->>     is the superproject, where the command was run from
+> Before: 102 ms
+>  After:  83 ms
+>  Rel %: -19%
 >
-> How does "relative to the superproject" result in "../" appearing in the
-> path? I would expect "../" to appear only if a path is relative to $pwd.
-
-Gah. I messed that up. I wanted to emphasize *relative* and not the
-superproject that is merely mentioned to form a sentence there.
-
+> The experiments above were chosen to demonstrate that we are
+> improving the filtering of the merge-base set. In the first
+> example, more time is spent walking the history to find the
+> set of merge bases before the remove_redundant() call. The
+> starting commits are closer together in the second example,
+> therefore more time is spent in remove_redundant(). The relative
+> change in performance differs as expected.
 >
->> (d) or the value of path='nested' is expected if we take the
->>     intermediate superproject into account. [This is the same as
->>     (a); it highlights that the documentation is not clear, but
->>     technically correct if we were to revert 091a6eb0fe.]
+> Reported-by: Jakub Narebski <jnareb@gmail.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+
+Good description.
+
+> ---
+>  commit.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 >
-> How exactly are we taking the intermediate superproject into account?
 
-'nested' is the full in-tree path from the intermediate (direct) superproject
-to that submodule.
+Let me extend context a bit to make it easier to review.
 
->> The behavior for (c) was introduced in 091a6eb0fe (submodule: drop the
->> top-level requirement, 2013-06-16) the intent for $path seemed to be
->> relative to $cwd to the submodule worktree, but that did not work for
->> nested submodules, as the intermittent submodules were not included in
->> the path.
->
-> I think "pwd" is more used in the Git project than "cwd", so maybe use
-> $pwd here.
+> diff --git a/commit.c b/commit.c
+> index 9875feec01..5064db4e61 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -949,6 +949,7 @@ static int remove_redundant(struct commit **array, in=
+t cnt)
+>  		parse_commit(array[i]);
+>  	for (i =3D 0; i < cnt; i++) {
+>  		struct commit_list *common;
+> +		uint32_t min_generation =3D GENERATION_NUMBER_INFINITY;
 
-ok.
+As you have noticed, and how it is already fixed in 'pu' it should be
 
->
->> If we were to fix the meaning of the $path using (a), (d) such that "path"
->> is "the path from the intermediate superproject to the mount point of the
->> submodule", we would break any existing submodule user that runs foreach
->> from non-root of the superproject as the non-nested submodule
->> '../sub' would change its path to 'sub'.
->>
->> If we were to fix the meaning of $path using (b) such that "path"
->> is "the path from the topmost superproject to the mount point of the
->> submodule", then we would break any user that uses nested submodules
->> (even from the root directory) as the 'nested' would become 'sub/nested'.
->>
->> If we were to fix the meaning of $path using (c) such that "path"
->> is "the display path from where the original command was invoked to the
->> submodule", then we would break users that rely on the assumption that
->> "$toplevel / $path" is the absolute path of the submodule.
->>
->> All groups can be found in the wild.  The author has no data if one group
->> outweighs the other by large margin, and offending each one seems equally
->> bad at first.  However in the authors imagination it is better to go with
->> (a) as running from a sub directory sounds like it is carried out by a
->> human rather than by some automation task.  With a human on the keyboard
->> the feedback loop is short and the changed behavior can be adapted to
->> quickly unlike some automation that can break silently.
->
-> As I said in my previous e-mail, this is a good analysis.
->
->> Another argument in favor of (a) is the consistency of the variables
->> provided, "$toplevel / $path" gives the absolute path of the submodule,
->> with 'toplevel' (both the variable as well as the documentation) referring
->> to the immediate superproject of the submodule.
->
-> It's confusing to me that $toplevel is not the path to the outermost
-> superproject,
+  +		uint32_t min_generation =3D array[i]->generation;
 
-yes. That confused me for a while, too. Maybe deprecate that (just like we
-deprecate $path) and introduce $superproject to mean the direct
-superproject that holds the submodule currently being processed?
+>=20=20
+>  		if (redundant[i])
+>  			continue;
+> @@ -957,8 +958,12 @@ static int remove_redundant(struct commit **array, i=
+nt cnt)
+>  				continue;
+>  			filled_index[filled] =3D j;
+>  			work[filled++] =3D array[j];
+> +
+> +			if (array[j]->generation < min_generation)
+> +				min_generation =3D array[j]->generation;
 
+remove_redundant() checks if i-th commit is reachable from commits
+i+1..cnt, and vice versa - via checking PARENT1 and PARENT2 flag,
+respectively.
 
-> but the path to the immediate superproject, so I'm not
-> sure that the goodness of "$toplevel/$path" exists. I would omit this
-> paragraph.
+As you have noticed this means that the min_generation cutoff should be
+minimum of array[i]->generation, and all of array[j]->generation for
+j=3Di+1..cnt.  There is no reason going further down if we are interested
+only in reachability, and not actually in merge bases.
 
-This exists for all nested submodules currently as these are run
-from its root tree. For non-nested submodules, you still have the
-part that is relative from pwd to the submodule.
+>  		}
+> -		common =3D paint_down_to_common(array[i], filled, work, 0);
+> +		common =3D paint_down_to_common(array[i], filled, work,
+> +					      min_generation);
+>  		if (array[i]->object.flags & PARENT2)
+>  			redundant[i] =3D 1;
+>  		for (j =3D 0; j < filled; j++)
+   			if (work[j]->object.flags & PARENT1)
+   				redundant[filled_index[j]] =3D 1;
 
+Beside this issue, nice and simple speedup.  Good.
 
->> Documentation of the variable is adjusted in a follow-up patch.
->
-> By "the variable", I assume you mean $toplevel? If yes, this doesn't
-> seem relevant to this patch, since this patch does not change the
-> meaning of $toplevel at all.
-
-ok.
+Best,
+--=20
+Jakub Nar=C4=99bski
