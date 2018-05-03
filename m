@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B804D2023F
-	for <e@80x24.org>; Thu,  3 May 2018 15:30:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B57F7200B9
+	for <e@80x24.org>; Thu,  3 May 2018 15:30:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751443AbeECPav (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 11:30:51 -0400
-Received: from mout.gmx.net ([212.227.17.21]:33901 "EHLO mout.gmx.net"
+        id S1751447AbeECPax (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 11:30:53 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49329 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751417AbeECPas (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 11:30:48 -0400
+        id S1751141AbeECPat (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 11:30:49 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
  (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0LjLwB-1edGgN2pBf-00dX1f; Thu, 03 May 2018 17:30:44 +0200
+ 0MfjJY-1f2Feb4BgS-00N7p8; Thu, 03 May 2018 17:30:46 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -27,9 +27,9 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 05/18] branch-diff: also show the diff between patches
-Date:   Thu,  3 May 2018 17:30:43 +0200
-Message-Id: <141e5b63e4511c13380216fad9b8601d2bc6051e.1525361419.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 06/18] branch-diff: right-trim commit messages
+Date:   Thu,  3 May 2018 17:30:45 +0200
+Message-Id: <303419c56c4ea7d59381f48b3b613418dfd0043b.1525361419.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.409.g0f525fc0ba7
 In-Reply-To: <cover.1525361419.git.johannes.schindelin@gmx.de>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de>
@@ -37,160 +37,54 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:0roZLWMZnVKwEUdgFxlmTHtxg3ZY+0Iotj0olh3pyWukkZPMJVN
- nhYO9YifufZXSWeIzWGg/5S+Bn4/IxksU+Z2yJVIURO8/gqRrgoa/4SEdsxvRcDzmETxtUm
- DqL8dwOM/dj0ZapAoMJNjZdvGNcXZTGwC92D0YdZMKLnmXI5kiYhOzC51iKUrBNLFo8oLdU
- HlBZlZd/kMCkhloQmabBQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wt0/8XecBB0=:IJqmKmSgEWyJ/YZeQf0dYi
- FiF86QNj6dEY8dsWl1hZsjD69u33sJ36mEWXG1KePybRSUMIyfxvmORUJ83trTV7wMdRx2npi
- 1fTBJCzFpcJsjWePoVDS8K9CbJ0C+rvnyyfE5g8UjOUcF11PXXuE9v5OHZQ1ufEuJlfSNQYnL
- M9AntJ/38Fe7LL+VJQjX0U1Lz7l2iJ7VgRzOd/UYZ+Q8kpZmdklMC7zHGrxCp8XGL490kf9ZZ
- NXlX1LQNLtsiVn6EXQF+J2RX8hwoKACNQa0XeuSJLzbe81hx+8+JucfOwa/vAtLPNJmkYsLTg
- SMZMwgsZwSNgSQxEFsoCxOmvt5tCvXZeOB6ALFQQubiQucTeNqB5W0LlqCNUNu6vwGnuTmBFB
- yKUgRVsH+pWwTAjY3nrQBM4I9NQ+etLV+Wi8fMUBaHiPS/thp+k6P1Pevaimcg9jdBVS4ZK7a
- b/oLGWx2P1FlD8KwcAJjiMMqnuIpqIsye0heihxr6fWn4bvXItv1M21UU6H5hsFGO3lL/kDrH
- ARSg7Ai10QvnKXu10Z87ZLd5U0TCVg5SkXnsRiHjZHVTZoKm1eY07pobt0suuy++DvBFQPWtG
- hY2MJq8aIyaysPRO6f39w0OBd4g5bsH1ImJq3OuONhYlTc2Qi6sNIA4GeJ0lzzz5Ijc2F6+e8
- /Fmoie2uLirVGbvjCCXzCx3eRIjXPe0h5KvOceFx7/au6LtcKsT1SxVl0S5xueQYPFuZUQdMN
- Pvk3G2ruLmZIqtcu83KvKsoOW1Kysi4ecy4O0UchRJAPjDakNeit8g5OIe6CrDQwEk2S+6miq
- GLC0la+
+X-Provags-ID: V03:K1:sJaV8IvILONGHaJGVECIPp8Ei6nF5acKGshZODagPGjMkk5+TMa
+ CTgnJ2Gd8io7btytaTDKBPmxUhR7qMdqV1OvvF60CWc+1uGbyTXbIcfgZSYAAaukw0Sr0Ku
+ P8Z7gA4Eo/Ks/QfccMEJfH+l6i2SaRTTUGRXR78ak5Hp0JSCRnPlE89KRji8dkTHGBZ+R2p
+ YossmLBV3JXYMzo3WpOGw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2Jx+bi8X63s=:rBcQ3wBVinilxdd20Zyu1o
+ aP84HGlrusOcghRgybpBc3ywMC2J9AfLjV4jKJ1ty8UrW/RoJNagk82w7UMWF7XVot64gQkcn
+ Q9mVNMwLv3byek8IqRJVR25jX8E4lKZQSKuIpP2Nt+wlQUNydhAtvRIk9Zm3hpfsMC6TCRS2X
+ kGLpqZypQol8C5LNOEMTJ9DBYbAdeJeCxvykO+a/em1w3yP4MEmnKx1RmTvTXTY5tO6iJaCYa
+ i11dkKrizn7DvvJPitDKvPVy5wYT8OTFMPZtRYgmrDZ8dQpGTetlWG6vgV4IdRfTMuS/0/RbF
+ r0bWActw+P1ig8r5yjCs4la/s+Duj4iANT5rNxpz+CKVNeELsBkLqx10iog+cIS71iYQ5PKux
+ fXJUb/hVvhNyxIZQ4PH4gVeAOmxO3itG1j9YBNh36792cm/I76xzAHZn/Au5iWUV6ZT0ekxb1
+ tzj6YCvtf6eivWDk13sWfn23QOZGhaRGRzoECVmvKXvuuuQLLxmTRJOwHTHa8E4SFz6UCpSTs
+ VSzut6Q4nNxBl4/QGnSH4mMWzliqEfdwc2kBJcykLuHP8r9pC0M9i+2d4b5whlDD0KMLG6MOl
+ Dd6ElrrcuL5ZN+Lw3JhnpsZNg2gTX6+UyvXSNYm7UHGzCPBj3Uy1wxYDGWP5OV+kMLbyEY1he
+ VoJbx3aWG3l97sOtcZlqEmhve8xuhmjIpmPHBqAQi7cDTTdc+PVjUSnlaf1tWCOMZ+ChPmEga
+ lUhteJlLlIaZkz+BJSkvOjW9C39UJIfoNIEdsTXn6pK0nCl6FA1yv9+r0RN6BbB4UsYyyKxLr
+ lMR9VYt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just like tbdiff, we now show the diff between matching patches. This is
-a "diff of two diffs", so it can be a bit daunting to read for the
-beginnger.
+When comparing commit messages, we need to keep in mind that they are
+indented by four spaces. That is, empty lines are no longer empty, but
+have "trailing whitespace". When displaying them in color, that results
+in those nagging red lines.
 
-This brings branch-diff closer to be feature-complete with regard to
-tbdiff.
-
-An alternative would be to display an interdiff, i.e. the hypothetical
-diff which is the result of first reverting the old diff and then
-applying the new diff.
-
-Especially when rebasing often, an interdiff is often not feasible,
-though: if the old diff cannot be applied in reverse (due to a moving
-upstream), an interdiff can simply not be inferred.
-
-Note: while we now parse diff options such as --color, the effect is not
-yet the same as in tbdiff, where also the commit pairs would be colored.
-This is left for a later commit.
+Let's just right-trim the lines in the commit message, it's not like
+trailing white-space in the commit messages are important enough to care
+about in branch-diff.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/branch-diff.c | 56 +++++++++++++++++++++++++++++++++++++------
- 1 file changed, 49 insertions(+), 7 deletions(-)
+ builtin/branch-diff.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-index 59423498194..3b565a37492 100644
+index 3b565a37492..9dc581087bb 100644
 --- a/builtin/branch-diff.c
 +++ b/builtin/branch-diff.c
-@@ -6,6 +6,8 @@
- #include "hashmap.h"
- #include "xdiff-interface.h"
- #include "hungarian.h"
-+#include "diff.h"
-+#include "diffcore.h"
- 
- static const char * const builtin_branch_diff_usage[] = {
- 	N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
-@@ -269,7 +271,31 @@ static const char *short_oid(struct patch_util *util)
- 	return find_unique_abbrev(&util->oid, DEFAULT_ABBREV);
- }
- 
--static void output(struct string_list *a, struct string_list *b)
-+static struct diff_filespec *get_filespec(const char *name, const char *p)
-+{
-+	struct diff_filespec *spec = alloc_filespec(name);
-+
-+	fill_filespec(spec, &null_oid, 0, 0644);
-+	spec->data = (char *)p;
-+	spec->size = strlen(p);
-+	spec->should_munmap = 0;
-+	spec->is_stdin = 1;
-+
-+	return spec;
-+}
-+
-+static void patch_diff(const char *a, const char *b,
-+			      struct diff_options *diffopt)
-+{
-+	diff_queue(&diff_queued_diff,
-+		   get_filespec("a", a), get_filespec("b", b));
-+
-+	diffcore_std(diffopt);
-+	diff_flush(diffopt);
-+}
-+
-+static void output(struct string_list *a, struct string_list *b,
-+		   struct diff_options *diffopt)
- {
- 	int i = 0, j = 0;
- 
-@@ -311,6 +337,9 @@ static void output(struct string_list *a, struct string_list *b)
- 			printf("%d: %s ! %d: %s\n",
- 			       b_util->matching + 1, short_oid(a_util),
- 			       j + 1, short_oid(b_util));
-+			if (!(diffopt->output_format & DIFF_FORMAT_NO_OUTPUT))
-+				patch_diff(a->items[b_util->matching].string,
-+					   b->items[j].string, diffopt);
- 			a_util->shown = 1;
- 			j++;
- 		}
-@@ -319,24 +348,37 @@ static void output(struct string_list *a, struct string_list *b)
- 
- int cmd_branch_diff(int argc, const char **argv, const char *prefix)
- {
--	int no_patches = 0;
-+	struct diff_options diffopt = { 0 };
- 	double creation_weight = 0.6;
- 	struct option options[] = {
--		OPT_BOOL(0, "no-patches", &no_patches,
--			 N_("short format (no diffs)")),
-+		OPT_SET_INT(0, "no-patches", &diffopt.output_format,
-+			    N_("short format (no diffs)"),
-+			    DIFF_FORMAT_NO_OUTPUT),
- 		{ OPTION_CALLBACK,
- 			0, "creation-weight", &creation_weight, N_("factor"),
- 			N_("Fudge factor by which creation is weighted [0.6]"),
- 			0, parse_creation_weight },
- 		OPT_END()
- 	};
--	int res = 0;
-+	int i, j, res = 0;
- 	struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
- 	struct string_list branch1 = STRING_LIST_INIT_DUP;
- 	struct string_list branch2 = STRING_LIST_INIT_DUP;
- 
-+	diff_setup(&diffopt);
-+	diffopt.output_format = DIFF_FORMAT_PATCH;
-+
- 	argc = parse_options(argc, argv, NULL, options,
--			builtin_branch_diff_usage, 0);
-+			builtin_branch_diff_usage, PARSE_OPT_KEEP_UNKNOWN);
-+
-+	for (i = j = 0; i < argc; i++) {
-+		int c = diff_opt_parse(&diffopt, argv + i, argc - i, prefix);
-+
-+		if (!c)
-+			argv[j++] = argv[i];
-+	}
-+	argc = j;
-+	diff_setup_done(&diffopt);
- 
- 	if (argc == 2) {
- 		if (!strstr(argv[0], ".."))
-@@ -380,7 +422,7 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
- 		find_exact_matches(&branch1, &branch2);
- 		res = get_correspondences(&branch1, &branch2, creation_weight);
- 		if (!res)
--			output(&branch1, &branch2);
-+			output(&branch1, &branch2, &diffopt);
- 	}
- 
- 	strbuf_release(&range1);
+@@ -102,6 +102,7 @@ static int read_patches(const char *range, struct string_list *list)
+ 				strbuf_addbuf(&buf, &line);
+ 				strbuf_addstr(&buf, "\n\n");
+ 			} else if (starts_with(line.buf, "    ")) {
++				strbuf_rtrim(&line);
+ 				strbuf_addbuf(&buf, &line);
+ 				strbuf_addch(&buf, '\n');
+ 			}
 -- 
 2.17.0.395.g6a618d6010f.dirty
 
