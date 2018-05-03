@@ -2,91 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5943200B9
-	for <e@80x24.org>; Thu,  3 May 2018 21:08:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01A93200B9
+	for <e@80x24.org>; Thu,  3 May 2018 21:13:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751176AbeECVH6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 17:07:58 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51873 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751126AbeECVH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 17:07:57 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOTRh-1fJYei0YhZ-005rxw; Thu, 03
- May 2018 23:07:53 +0200
-Date:   Thu, 3 May 2018 23:07:53 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 00/18] Add `branch-diff`, a `tbdiff` lookalike
-In-Reply-To: <87po2cy5qd.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1805032307160.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <87po2cy5qd.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751369AbeECVNA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 17:13:00 -0400
+Received: from mail-yb0-f171.google.com ([209.85.213.171]:42114 "EHLO
+        mail-yb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751108AbeECVM5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 17:12:57 -0400
+Received: by mail-yb0-f171.google.com with SMTP id 140-v6so7005807ybc.9
+        for <git@vger.kernel.org>; Thu, 03 May 2018 14:12:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tnQwBXUlWf/z04Yv82IX0HkepIXlQI82tNLYhKrNS9U=;
+        b=Ogt+Ko3HM+oO6iS85IrpvGpnrtgL2RbWqyPpaCMKwYybKP3evalxDnfDjsU5nGe7+v
+         MC8GkL5b1g8Ufy5OFINOAqqYU0/kZnbYIqWRo0r/aWyayf1bnmqCWckRJAS3VI4TUKf9
+         EtcgzD9dgOzB7790m0Y1z35IN8GAzcPKIPaHJ1gd6TlI7O8pXGRHJEMEzlKunneq7uY8
+         G1yU9HS65fJ37b6mW7Yn73Tpz/XDJzHHjQ8xAijcSmbrBvEz2fM4E3xnwhbGRTtU6pLL
+         L4sMKwbTLHjIHiR3xqIq80ZIOKukDsjNVDS3Jq2OVJWUaQTfpz27Dj7ATqoRj369eTLD
+         4kEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tnQwBXUlWf/z04Yv82IX0HkepIXlQI82tNLYhKrNS9U=;
+        b=II1j5KydwB2c1yTTapgh4qZttgCNFvtiw6dZOjodxCIgxExVtqQfXvWb97A7jFwveH
+         rA96eZLddb0hPDjjCQnSrv/0j1dVBfmprwnCYTu2xUQ7EcqZJJlEUNsUIMtDmNLg/2nW
+         bzGIUH8ti6Jprid0R4fYTngk+SaUjPuKf0l+8Ao7vXAYR0RSpMP13LdPqRhOq0Q6dn7X
+         K+qE6dQpoIe2ZVcmDcWfvuJrVspYU0keBjZKXttAry8zNaG7h6MhMwUnCbEGsHQ1q+xx
+         F3qfQOx7t/POk/VRI9cmfaFLvv2V4cElG2mJCr4RH8x8DsQDO3el0RWrpm9xusp5Nhfr
+         z4Qg==
+X-Gm-Message-State: ALQs6tC+FoJ7BYB/M35acxm7wl+NjT+AaWUk9q8jSHixCCAHNAsrmODz
+        Kz7Yz+wkkVvBqKvq5w9Kxn15//AUwjVDpOERQTLckg==
+X-Google-Smtp-Source: AB8JxZoqMbi7EpdHjGpSaLQUkmauTGD4w9EKKe3KDFcjehmeB+UOBpTR3psjGHEKMxgJQxgCmDV/THcRmwvhvkK3hs8=
+X-Received: by 2002:a25:2704:: with SMTP id n4-v6mr15624545ybn.167.1525381976311;
+ Thu, 03 May 2018 14:12:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-275019780-1525381674=:77"
-X-Provags-ID: V03:K1:0jDM5sBQEpCDumJVGoLBON2z1cXhHxyy0b06C8hqz2P32FAhGoC
- Y1LKCsjwAWGQ2iVAAA2ghuqNYYtfR7ZjHT/BllhprlR9kGCKfveDQ5uiTAANDnz0VqtLZXe
- pd+oT6CCu7cXIxEs8WsUZe0Z9u19KGf/iunI6GNoseHWTe/hL55rs/KoWNJpWXpBWWQpdwb
- x+6jirCKA3V+WxLoNw/KA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bMxFw5c9JlY=:xT6/BZVGUgUoZ283Wt/0uS
- s/6kDXl+47IRhf6mqJqbu06tLEGZN/11+RD4h8+g7dl0zo+t6XN34NdJ+0UyzQnCYuHmL1aUi
- FpYbwlzo9gF3PMFQC78UbmKnYI/vkIr4WLWenX4s9rNp0UtOIr/vUg5U+Wfb3TvsmbYnDA9LJ
- mYa6r1BQj1DNeNADBE4u3TG/lCQo+pPTCZg+VTANIhxvMwp3T88aAAs9+dN//qlDb6L1f8kku
- 7KA7jLJFXfqYvWDZjGt6n0WLLVq7sdOVvlXcLVDFY2dn8aZY8xtkbqqOTOkVqmSTiF2AcQjwi
- ljExqKPUjfN+/sLVm6dTOsRSO86bNXlCfxOg/mRAGJt43VpMNgaNYaYjK42z8wXW/MtI3tZCg
- yB/UmCgwpyBCb1NqUnDA5sMJSZjO2cC1QTRiBzSi4S3Plf0z595Maal3HzsVddf4115QCKjwL
- kuWTThMqchDjmcsjEdvDX5BqOmdYr+Nm/u4fZUU7mmERDfvTB/innNCXnfpY1FIfDIvjNe96L
- xcTP4Z78Fj5wl7NH/psmBIQ5MgEMaonQPSSbHI/fRID6LozfzQboRVyH2k0MSBkj0U0uD/RmY
- kjinFS9KDnphab9T4Facx38zlW5ae33ZQigxhS8b3umaF0R9Jdngc3rLowfUmAhESKcjNEh5/
- AP8CG2+QiBS9byAZASR3pYQQsSy3C36ymRegB+SDtmKyv06RjSI1qp7AR5C+SM1EN8/9QGtdh
- a8T9rtQIiZgDWj2okCWylB2hOjmJPMcJQqn/LCL7X8aB7EWsNop48if03uCDZL+snHVQdgxhM
- u8vn5nd
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Thu, 3 May 2018 14:12:55 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1805032227520.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+ <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
+ <CAGZ79kZAidPafdfu1NGwwpVo1Vy=vKOV+EREE2=-ct_sbo7Gkg@mail.gmail.com> <nycvar.QRO.7.76.6.1805032227520.77@tvgsbejvaqbjf.bet>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 3 May 2018 14:12:55 -0700
+Message-ID: <CAGZ79ka7RJq=tNnBsLs6wwL7Cf3hSJODM2iLW5tet-csAM20eg@mail.gmail.com>
+Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, May 3, 2018 at 1:42 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
---8323328-275019780-1525381674=:77
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+>> Speaking of colors, for origin/sb/blame-color Junio hinted at re-using
+>> cyan for "uninteresting" parts to deliver a consistent color scheme for
+>> Git. Eventually he dreams of having 2 layers of indirection IIUC, with
+>>     "uninteresting" -> cyan
+>>     "repeated lines in blame" -> uninteresting
+>>
+>> Maybe we can fit the coloring of this tool in this scheme, too?
+>
+> Sure. So you mean I should use cyan for... what part of the colored
+> output? ;-)
+>
 
-Hi =C3=86var,
+It is just a FYI heads up, not an actionable bikeshed painting plan. ;)
 
-On Thu, 3 May 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Do we need to dynamic of a floating point, or would a rather small range
+>> suffice here? (Also see rename detection settings, that take percents as
+>> integers)
+>
+> I guess you are right, and we do not need floats. It was just very, very
+> convenient to do that instead of using integers because
+>
+> - I already had the Jonker-Volgenant implementation "lying around" from my
+>   previous life as an image processing expert, using doubles (but it was
+>   in Java, not in C, so I quickly converted it for branch-diff).
+>
+> - I was actually not paying attention whether divisions are a thing in the
+>   algorithm. From a cursory glance, it would appear that we are never
+>   dividing in hungarian.c, so theoretically integers should be fine.
+>
+> - using doubles neatly side-steps the overflow problem. If I use integers
+>   instead, I always will have to worry what to do if, say, adding
+>   `INT_MAX` to `INT_MAX`.
+>
+> I am particularly worried about that last thing: it could easily lead to
+> incorrect results if we blindly, say, pretend that `INT_MAX + INT_MAX ==
+> INT_MAX` for the purpose of avoiding overflows.
+>
+> If, however, I misunderstood and you are only concerned about using
+> *double-precision* floating point numbers, and would suggest using `float`
+> typed variables instead, that would be totally cool with me.
 
-> On Thu, May 03 2018, Johannes Schindelin wrote:
->=20
-> > The incredibly useful `git-tbdiff` tool to compare patch series (say,
-> > to see what changed between two iterations sent to the Git mailing
-> > list) is slightly less useful for this developer due to the fact that
-> > it requires the `hungarian` and `numpy` Python packages which are for
-> > some reason really hard to build in MSYS2. So hard that I even had to
-> > give up, because it was simply easier to reimplement the whole shebang
-> > as a builtin command.
-> >
-> > The project at https://github.com/trast/tbdiff seems to be dormant,
-> > anyway.  Funny (and true) story: I looked at the open Pull Requests to
-> > see how active that project is, only to find to my surprise that I had
-> > submitted one in August 2015, and that it was still unanswered let
-> > alone merged.
->=20
-> I've been using branch-diff and haven't found issues with it yet, it
-> works like tbdiff but better. Faster, uses the same diff as git
-> (better), and spews to the pager by default.
+So by being worried about INT_MAX occurring, you are implying that
+we have to worry about a large range of values, so maybe floating points
+are the best choice here.
 
-Thanks for your enthusiasm!
-Dscho
---8323328-275019780-1525381674=:77--
+Looking through that algorithm the costs seem to be integers only
+measuring number of lines, so I would not be too worried about running
+into INT_MAX problems except for the costs that are assigned INT_MAX
+explicitly.
+
+I was more asking, if floating point is the right tool for the job.
+
+Stefan
