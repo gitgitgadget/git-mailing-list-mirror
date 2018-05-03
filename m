@@ -2,101 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66824200B9
-	for <e@80x24.org>; Thu,  3 May 2018 00:27:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9901B200B9
+	for <e@80x24.org>; Thu,  3 May 2018 00:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751741AbeECA1q convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 2 May 2018 20:27:46 -0400
-Received: from mail.pdinc.us ([67.90.184.27]:38080 "EHLO mail1.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751561AbeECA1p (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 May 2018 20:27:45 -0400
-X-Greylist: delayed 1759 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 May 2018 20:27:45 EDT
-Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail1.pdinc.us (8.14.4/8.14.4) with ESMTP id w42NwP79009744
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Wed, 2 May 2018 19:58:25 -0400
-Reply-To: <git@vger.kernel.org>
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     <git@vger.kernel.org>
-Subject: Blame / annotate with mixed mac line endings?
-Date:   Wed, 2 May 2018 19:57:28 -0400
-Organization: PD Inc
-Message-ID: <B8114616E07247C7A78F1DFF91E16A63@ad.pdinc.us>
+        id S1751727AbeECAr0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 May 2018 20:47:26 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:36312 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751410AbeECArZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 May 2018 20:47:25 -0400
+Received: by mail-qk0-f171.google.com with SMTP id a202so12743880qkg.3
+        for <git@vger.kernel.org>; Wed, 02 May 2018 17:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=IOKG7Yz/SVq73ov/xerqgSlLyEnkgqUM52iiLiLjto8=;
+        b=scEJ1DY9cQH16qto/7/157vNkq+J/hQTXdL4RHwJE1p4VKJp+c41Leif7A11kNEbRr
+         bJA6txtRybijNBRgD1FnVlkCEfp+8hxCMex+M+RJLm+qdqiZ70uqtwhm5J5a9ZEr68vI
+         bAup95RPmfY20E7UtMUC8oI3DFQIe3L20I0T4d3mbOLlbaOf5F9j/LQ7fk8L9pWuNQyn
+         xrmXGooFB8zvEGf/bSLp6LyYjAbmXIPPO6n7gxDFuzN3t7Y/hfpeCCu78Ze4Sq+IG0hn
+         yutiNVMkqTaP0ygV1FtVjolOK0luy+cbdcMtCEJkPNr8FXMEvGqxG37y5yovbG5PyuMr
+         ZtuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=IOKG7Yz/SVq73ov/xerqgSlLyEnkgqUM52iiLiLjto8=;
+        b=UqQqnRIsEBFMyP3b6cxsO9/XW9npeXpfPYzp4YBbbiDtNaX3yNBv2f6QUqE3+C6G6m
+         00ePCQ0khAF9Fv2wmoC+zIxLwAjizFqzZmyVDfKQxw/PiptYMXryE7s2upmbZ1bsOUye
+         WN4AqWRzypQQ4Tvw415M3+jv7k90qPxDHWNkDVBw8VagEkTjWdsILTgm23PwUHPDHtV5
+         MT84ZynSlUW1kcvMSfe3e1umwAIvjlTJgK9hz0O8xSxypMzEmnG4rRBGrxn7hjflNVp0
+         bxEjMFi8oGH7ab9mQ2saQCcZw0/cQNwB6kSWUCKmhCcWVre/qAxzy8IYMDXc4g927Npz
+         JyEA==
+X-Gm-Message-State: ALQs6tBtUhevcj7qraFuZxVI56Ht5tckK0EEaZyBHOq8pwOAZ0BFEViF
+        WvY1HpGyLOIzbb2LGCEF1Ge5rzuBECjrx3w2HQ4ccr2r
+X-Google-Smtp-Source: AB8JxZr6OUOUQfT+84XuxGpwHzCJFizCWr62fhNbwsHYp8IDLmZdntTvkAc6Dg2c01jbQc/FhUu8c8sRYAa9KouotbI=
+X-Received: by 10.55.166.215 with SMTP id p206mr16359809qke.197.1525308444787;
+ Wed, 02 May 2018 17:47:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Office Outlook 11
-Thread-Index: AdPicVNW81OhiBooTe6NvLiSxUt4Uw==
-X-MimeOLE: Produced By Microsoft MimeOLE
+Received: by 10.200.59.82 with HTTP; Wed, 2 May 2018 17:46:44 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1805020912210.73@tvgsbejvaqbjf.bet>
+References: <20180502033925.6744-1-predatoramigo@gmail.com> <nycvar.QRO.7.76.6.1805020912210.73@tvgsbejvaqbjf.bet>
+From:   Andrew Ardill <andrew.ardill@gmail.com>
+Date:   Thu, 3 May 2018 10:46:44 +1000
+Message-ID: <CAH5451mJO3Bgg9DST57fqcGGU-SPrcSECjXi0qOqeKsW0uaRzg@mail.gmail.com>
+Subject: Re: [GSoC] Info: new blog series of my work on Git GSoC '18
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Pratik Karki <predatoramigo@gmail.com>, git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I think this file may have been from a mac at one point. Note the lone CR (0x0d) line endings, with CRLFs later.
+On 2 May 2018 at 17:12, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi Pratik,
+>
+> On Wed, 2 May 2018, Pratik Karki wrote:
+>
+>> As promised in my proposal, I've started
+>> to write a blog series of GSoC '18 with Git. The initial blog is up.
+>> You can find it here[1]. The initial one is just to get started and
+>> from next iterations, I'll start detailing of my work towards converting
+>> rebase to builtin.
+>>
+>> [1]: https://prertik.github.io/categories/git/
+>
+> This is awesome! Thanks for doing this,
+> Dscho
 
-$ cat src/htdocs/hr/ats/rpts/incl/slt_org.cfm | sed 's/[a-zA-Z]/x/g;s/[0-9]/8/g' | hexdump -C
-00000000  3c 21 2d 2d 2d 0d 78 78  78 78 78 78 78 78 3a 20  |<!---.xxxxxxxx: |
-00000010  78 78 78 5f 78 78 78 2e  78 78 78 0d 78 78 78 78  |xxx_xxx.xxx.xxxx|
-00000020  78 78 3a 0d 78 78 78 78  78 78 78 3a 20 38 38 2f  |xx:.xxxxxxx: 88/|
-00000030  38 38 2f 38 38 38 38 20  38 38 3a 38 38 3a 38 38  |88/8888 88:88:88|
-00000040  20 78 78 0d 78 78 78 78  78 78 78 78 3a 20 38 38  | xx.xxxxxxxx: 88|
-00000050  2f 38 38 2f 38 38 38 38  20 38 38 3a 38 38 3a 38  |/88/8888 88:88:8|
-00000060  38 20 78 78 0d 78 78 78  78 78 78 78 78 78 78 78  |8 xx.xxxxxxxxxxx|
-00000070  3a 0d 2d 2d 2d 3e 0d 0d  3c 78 78 78 78 78 78 20  |:.--->..<xxxxxx |
-00000080  78 78 78 78 3d 22 78 78  78 5f 78 78 78 5f 78 78  |xxxx="xxx_xxx_xx|
-00000090  78 78 22 20 78 78 78 78  3d 22 38 22 20 78 78 78  |xx" xxxx="8" xxx|
-000000a0  78 78 78 78 78 3e 0d 0a  09 3c 78 78 78 78 78 78  |xxxxx>...<xxxxxx|
-000000b0  20 78 78 78 78 78 3d 22  22 3e 2d 20 78 78 78 78  | xxxxx="">- xxxx|
-000000c0  78 78 20 78 78 78 20 78  78 20 78 78 78 78 2d 3c  |xx xxx xx xxxx-<|
-000000d0  2f 78 78 78 78 78 78 3e  0d 0a 09 3c 78 78 78 78  |/xxxxxx>...<xxxx|
-000000e0  20 78 78 78 2e 78 78 78  78 78 78 78 78 78 78 20  | xxx.xxxxxxxxxx |
-000000f0  78 78 78 20 38 20 78 78  20 78 78 78 78 2e 78 78  |xxx 8 xx xxxx.xx|
-00000100  78 78 78 78 78 78 78 20  78 78 20 27 78 78 38 78  |xxxxxxx xx 'xx8x|
-00000110  27 3e 0d 0a 09 3c 78 78  78 78 78 78 20 78 78 78  |'>...<xxxxxx xxx|
-00000120  78 78 3d 22 3c 78 78 78  78 78 78 78 78 20 78 78  |xx="<xxxxxxxx xx|
-00000130  78 78 78 3d 22 78 78 78  78 78 78 78 78 78 78 22  |xxx="xxxxxxxxxx"|
-00000140  3e 23 78 78 78 5f 78 78  78 23 2c 3c 2f 78 78 78  |>#xxx_xxx#,</xxx|
-00000150  78 78 78 78 78 3e 78 78  78 22 3e 78 78 78 3c 2f  |xxxxx>xxx">xxx</|
-00000160  78 78 78 78 78 78 3e 0d  0a 09 3c 2f 78 78 78 78  |xxxxxx>...</xxxx|
-00000170  3e 0d 0a 3c 78 78 78 78  78 78 78 78 20 78 78 78  |>..<xxxxxxxx xxx|
-00000180  78 78 3d 22 78 78 78 78  78 78 78 78 78 78 22 3e  |xx="xxxxxxxxxx">|
-00000190  0d 0a 09 3c 78 78 78 78  78 78 20 78 78 78 78 78  |...<xxxxxx xxxxx|
-000001a0  3d 22 23 78 78 78 5f 78  78 78 23 22 3e 23 78 78  |="#xxx_xxx#">#xx|
-000001b0  78 5f 78 78 78 23 3c 2f  78 78 78 78 78 78 3e 0d  |x_xxx#</xxxxxx>.|
-000001c0  0a 3c 2f 78 78 78 78 78  78 78 78 3e 0d 0a 3c 2f  |.</xxxxxxxx>..</|
-000001d0  78 78 78 78 78 78 3e 0d  0a 0d 0a                 |xxxxxx>....|
-000001db
+Agreed, was fun to read.
 
-$ git annotate -L 13,17 --line-porcelain 'src/htdocs/hr/ats/rpts/incl/slt_org.cfm'
-fatal: file src/htdocs/hr/ats/rpts/incl/slt_org.cfm has only 10 lines
+I'd encourage you to post to the list when you blog, or perhaps
+include a link to the blog as part of any regular updates you give on
+your project progress.
 
-$ cat src/htdocs/hr/ats/rpts/incl/slt_org.cfm | wc -l
-10
+Would also make for an interesting addition to the newsletter.
 
-$ cat src/htdocs/hr/ats/rpts/incl/slt_org.cfm | mac2unix | wc -l
-18
+I know it can be difficult to sit down and write about what you're
+doing, especially when it feels like you could be focusing on 'real
+work'. Hopefully you will find the process rewarding; I'm looking
+forward to reading about what you find easy and hard, how you learn
+the git developer processes, and the challenges you find in converting
+shell scripts to a built-in. I'm sure other people are too, and I'll
+bet the ones who have been there before will have feedback for you as
+well.
 
-$ git -c core.autocrlf=false -c core.eol=cr annotate -L 13,17 --line-porcelain 'src/htdocs/hr/ats/rpts/incl/slt_org.cfm'
-fatal: file src/htdocs/hr/ats/rpts/incl/slt_org.cfm has only 10 lines
+I'd find it interesting even if it was a 5-line bullet list of what's
+going through your mind with respect to the project! Looking forward
+to following along.
 
-Any way to hit git with a stick to treat lone CR as a line break for blame/annotate?
+Regards,
 
--Jason
-
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
+Andrew Ardill
