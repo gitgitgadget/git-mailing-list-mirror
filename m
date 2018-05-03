@@ -2,96 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26D3C2023D
-	for <e@80x24.org>; Thu,  3 May 2018 06:43:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DCF12023D
+	for <e@80x24.org>; Thu,  3 May 2018 06:58:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752017AbeECGnr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 02:43:47 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:33332 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751951AbeECGnp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 02:43:45 -0400
-Received: by mail-wm0-f45.google.com with SMTP id x12-v6so1562353wmc.0
-        for <git@vger.kernel.org>; Wed, 02 May 2018 23:43:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=L+HPKxmZgr6LRk3pPQDaZWiqfbz5o9Czab7ewfXXZVE=;
-        b=iQMP6EEs93uSkVRaxSZ7prLsrNkXLve6jb24lWb6lF88AvwvuQOXfxyOP/DDlJxNGx
-         PkBRGjH69hv/FWhnUY0SHb4iHvKUtXGASq7ZrVvq70VaOA8OagnD1qBP50GWIX5bR3fj
-         5lLNLg3UMPK0+CzP5MkGJZ+rAEdexH5RItHHqrOkJcsuKwaO5yzxZSqnH/5j41n3J+6x
-         ACRIRSNSTSlTibE8ttTq+820CFVr/bs7ZARGsSZph2pKW2ABFSKNc7NpD8PlS97CtsB7
-         XouFtIZHHowtD4FBXOIE5IEGBXJBDbGmu7Aq/6aN+lz8ki6dcj+6aaPbohhqKndUB3tM
-         jjzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=L+HPKxmZgr6LRk3pPQDaZWiqfbz5o9Czab7ewfXXZVE=;
-        b=jA9bBClt3fHGk+iTmxT2aTgvQ4smzt8IOoxkSiInUVSKBxXIyuqhqwAAtCZpTaLtSE
-         FlYDKYTUSlJrFbg5CcICYxTHO27OCx70CbXyGgA7VUilK0uooc5FjDvEt0mXOhpwMN5+
-         qFZJy8h9ptBEz3UWtteKc7OFDmTr/pR/H+0gFysxGGKmFYG4LWEn0UIYPo8q1QekGn1T
-         P9KcqzfdPDZTWjaCawEFCznPFp9AaXSk/xwnhu6qd1HfbWbhnpND500fvG8wba+Uzx94
-         4/DDfXyRDdwVWPIRb1MzfWxZuQb5h1eB4uu9T+rrFGFxhnZ9nVfu0H+wcH04jTmIoc3g
-         4dfA==
-X-Gm-Message-State: ALQs6tCELR+eSoVcuZXRkY8F+yMAEIdfTglF0X88aCD5FfcmE6+ByTMz
-        g8bhsXhgHfOSCVhNVvxhWA5xBM2eOHr49FyKfPQ=
-X-Google-Smtp-Source: AB8JxZrBmID2RMgBWeXSfmgFE+6wGqg8nBLQaTPvmUYOyf/Dx28WI0qSacHV/oafelWRGb88PX+6s+8zRxtbUvziGCc=
-X-Received: by 2002:a50:8f21:: with SMTP id 30-v6mr28795709edy.265.1525329816465;
- Wed, 02 May 2018 23:43:36 -0700 (PDT)
+        id S1752038AbeECG6O (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 02:58:14 -0400
+Received: from mail2.luminati.io ([54.243.100.238]:60678 "EHLO
+        mail2.luminati.io" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751968AbeECG6N (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 02:58:13 -0400
+Received: (Haraka outbound); Thu, 03 May 2018 06:58:59 +0000
+Authentication-Results: mail2.luminati.io; auth=pass (cram-md5)
+Received: from [10.71.1.143] (wall-ext.hola.org [212.235.66.73])
+        by mail2.luminati.io (Haraka/2.8.18) with ESMTPSA id 93757947-F44D-4B8B-B3AB-9C559AB61987.1
+        envelope-from <michals@luminati.io> (authenticated bits=0)
+        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 verify=FAIL);
+        Thu, 03 May 2018 06:58:59 +0000
+Subject: Re: Generate more revenue from Git
+From:   Michal Sapozhnikov <michals@luminati.io>
+To:     git@vger.kernel.org
+References: <c3a424c5-bc14-00e1-af7f-a74200951edf@luminati.io>
+ <1524395775112-86a2bc81-14696dc9-89400ff8@luminati.io>
+Message-ID: <68d50093-ad42-4c37-182a-14c22a47f6b4@luminati.io>
+Date:   Thu, 3 May 2018 09:58:11 +0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 10.80.234.135 with HTTP; Wed, 2 May 2018 23:43:16 -0700 (PDT)
-In-Reply-To: <385be5ef-7d0d-7e5d-4373-4d85c1a36a0d@gmail.com>
-References: <20180501120651.15886-1-avarab@gmail.com> <20180501184016.15061-1-avarab@gmail.com>
- <f35aeda5-8f41-f457-736e-393e95f530ec@gmail.com> <385be5ef-7d0d-7e5d-4373-4d85c1a36a0d@gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 2 May 2018 23:43:16 -0700
-Message-ID: <CA+P7+xraqcnvg274_zaJO5Je1sJDfmEL=-orFZ4hL1Sg26Cd9Q@mail.gmail.com>
-Subject: Re: [PATCH v3 00/12] get_short_oid UI improvements
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1524395775112-86a2bc81-14696dc9-89400ff8@luminati.io>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Feedback-ID: regeneratemorerevenuefromgit:michals:smtp:luminati
+DKIM-Signature: v=1;a=rsa-sha256;bh=gYnAfsLV2IGk5d1Pz1xE/z0keq0k+hVVyg6YFTGyTH0=;c=relaxed/simple;d=luminati.io;h=from;s=dkim;b=CIfad+0O9fIfj5whvVzJKlpJkLvuqMWL5rn4ZMO4F4sTf6Z/cGXovo5GpTb2p/LJLK8lBTS8IrGYf3N3+89W/5Y+Ge6zx5WjmGedUU0FHNEInJYILMfbS5rzhOs/FSMzytlJTc4mPnEqrau7ZKGATC7j/xd7NuJoUsIARWp2wis=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 2, 2018 at 6:45 AM, Derrick Stolee <stolee@gmail.com> wrote:
-> On 5/2/2018 8:42 AM, Derrick Stolee wrote:
->>
->> On 5/1/2018 2:40 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>>
->>> The biggest change in v3 is the no change at all to the code, but a
->>> lengthy explanation of why I didn't go for Derrick's simpler
->>> implementation. Maybe I'm wrong about that, but I felt uneasy
->>> offloading undocumented (or if I documented it, it would only be for
->>> this one edge-case) magic on the oid_array API. Instead I'm just
->>> making this patch a bit more complex.
->>
->>
->> I think that's fair. Thanks for going along with me on the thought
->> experiment.
->
->
-> Also, v3 looks good to me.
->
-> Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
->
+Hello,
 
-I also reviewed this, and it looks good to me as well.
+Following up on my last email,
 
-Thanks,
-Jake
+It would be great to setup a call this week.
+
+Looking forward to your response.
+
+Best Regards,
+-- 
+Michal Sapozhnikov | Business Manager, Luminati SDK | +972-50-2826778 | Skype:
+live:michals_43
+http://luminati.io/sdk
+
+On 15-Apr-18 14:14, 7d (by eremind) wrote:
+> Hi,
+> 
+> ​​My name is Michal and I lead the SDK partnerships at Luminati.​ I assume your
+> software earns money by charging users for a premium subscription or by showing
+> ads - both models do not pay out much and harm the user experience.
+> 
+> We now offer you a third option.
+> 
+> Luminati’s monetization SDK for Windows desktop provides your users the option
+> to use the software for free, and in exchange we pay you $3,000 USD per month,
+> for every 100K daily active users.
+> Luminati is the largest proxy network, having millions of IPs based on other
+> developers who embedded our SDK. More information is available on
+> http://luminati.io/sdk_win.
+> 
+> I’d like to schedule a 15 minute call to let you know how we can start. Are you
+> available tomorrow at 12:30pm your local time?
+> 
+> Best Regards,
+> Michal
+> 
