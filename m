@@ -7,101 +7,86 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97F822023F
-	for <e@80x24.org>; Thu,  3 May 2018 18:49:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CBCB2023F
+	for <e@80x24.org>; Thu,  3 May 2018 18:49:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751246AbeECStA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 14:49:00 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:37608 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750969AbeECSs7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 14:48:59 -0400
-Received: by mail-wr0-f195.google.com with SMTP id c14-v6so18645819wrd.4
-        for <git@vger.kernel.org>; Thu, 03 May 2018 11:48:59 -0700 (PDT)
+        id S1751279AbeECStE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 14:49:04 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:50527 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750969AbeECStB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 14:49:01 -0400
+Received: by mail-wm0-f65.google.com with SMTP id t11so585238wmt.0
+        for <git@vger.kernel.org>; Thu, 03 May 2018 11:49:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aJkSANGI7eH8aPq+NI/tVQWq6CX6Nsb20m7LVtycTAk=;
-        b=cAWEOy8d3jebxC97p/AxlSaVjZZ85UiKpu3FgZrnGsQFnk9sKoMDMtU/tCAvAodOPX
-         /YxhHF2q60EPKVwtPpvNg9Unr7iVbjcH71fInjW9EZvcZFpf+WVFQQIQd2qlnq/uScLS
-         9rTpu3fQCQLa7up3XLLBtKlOACnpeXEcbuGvCaChwoEHuYcybo75WgzpUks8raX/bDmA
-         vRSLjL6h2yjfeQKcepxD4GpiU02faBnbfYk0KLQ2CX5o/DR/Lh5aHyKIItm6tIPSLHQ3
-         l2S+BKo/C/AoilIlm13a8sw4Y3bqnq1sP7w6TCQ5WsCMmkWelxjfZj6ONiCtmQP8tnBg
-         QcjQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=B4hXo5YaDn5U1Ksa0qpcR1iow8jFE++N91lY8/P4xFo=;
+        b=HioJfWw0yRNxjPPyIgA4/vmiLYPKioo7s5/XNapITkp/40WUZywssrHYuErYoq66rI
+         TctyUZudT6u+qyAUQHJwwv/8PUjfnNVY/NzJ65evrzSAgyXFIiNw3MbT/FgyTunVdD1W
+         IugfKuaAFLpKCUoMQcKfpRsQkuTpaQD/yzn+hGVkggM+KkPdaPhRjdVHXQNqN7lbfIpy
+         7TJsqXsD6sJiqAIkTQrfAW6kdYcCXk6120agODL+BGrmy1NI8kK0hDldFoDXmCU/5IaM
+         xVRx03ltK/KK11pvc1d5oD8F4QDrGY7NpY07uKZqBcMtawUWoiOxBdPLG9auNfmDIWdq
+         5AhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aJkSANGI7eH8aPq+NI/tVQWq6CX6Nsb20m7LVtycTAk=;
-        b=QHiciOFfvD63ZhPmpjKsUCGzAHQMZ7GbXpl5rdBrBM9hdsoK16XVftVLPeXwA5RYQy
-         j7Z8cEn0EXz76X5ZVZvGwxXOc6n19s4CXZaM1tWCr6Z2R5ljMoCTiwEzzQstoms4JFJb
-         khqvsH4e812w94dmRs0HBSMU6GcnY/v5Gk2E3225BCQvKtej2/j4Xb/avjq1wpcMVwqz
-         MCBJLdnMjA2rdqAWD2f7TvJoldfo6cJsSoGXpiF1+fS/oMoTnsMGfIVSZK+hTK1Wfg8+
-         +DPiyhkNPkbjUoc7friHxSjyx/qMySyVZ2HcAKxkYGNVI3T/K0QWBuHiI2L1Z/9Sf+d3
-         j31A==
-X-Gm-Message-State: ALQs6tAtyz5WzJ5t7jo6vmbWes9POMlz0XepsXiJyREmnia+P0YLuTxJ
-        tfoJuvjKHVc400w04LhTgiapOg5G
-X-Google-Smtp-Source: AB8JxZr2cmNSx9/HxufUUzy7LMatPOXNBnIAsyMEP0QTlSsa/J5kC39hRPSYZeYUxY2TqEWOlSh7QA==
-X-Received: by 2002:adf:96c2:: with SMTP id u60-v6mr19760137wrb.204.1525373338126;
-        Thu, 03 May 2018 11:48:58 -0700 (PDT)
+         :references;
+        bh=B4hXo5YaDn5U1Ksa0qpcR1iow8jFE++N91lY8/P4xFo=;
+        b=TlzXPVs/i9BJSUsNOzHD2WNAyJXHqHFMdS3lbUaqzgrmXzB+jm5rLwbAxk6zdu82/b
+         oW1WCg5vYaAQQUrHWfuza3zMqo4onu3y5o4164jbDluOgVjkoAmOgNIG5OsapPb9ckh+
+         fEPZRp9wnywv2ZqeYaBqPnqpQwpNyAOAMi4IqRUyOqv40j3zqnVzS7C6HVUlfwsrIpPV
+         iNhG9859ALPwVvEuSn85x/jo4hXlZbzk+lmSGnnbmHZeSujB/UIDe1WZYPVP4Cm11BbS
+         IQI1EDlijEts1sbUZgPJ0LG52tqd0E2xeA/Dlk7JpJ368AayW3Vqu2GEzbazsswcXU4f
+         GI0Q==
+X-Gm-Message-State: ALQs6tAEJetcoboU97833rAdKWVMHheodz5f6UvSotTRZ6dnyVgGNxOp
+        qrT4uZE0WSPs8ZhF1jC+TGmpmAqG
+X-Google-Smtp-Source: AB8JxZpppjvYA6PxJN+cCVScvvMRi/E0QhEj9t7mqUiBGPXvtEQ/W8/grtQ1Kbuj8C0MO4YKI19euw==
+X-Received: by 10.28.157.198 with SMTP id g189mr17019127wme.50.1525373340389;
+        Thu, 03 May 2018 11:49:00 -0700 (PDT)
 Received: from arrakeen.fritz.box ([2001:a62:81d:ab01:a521:6b31:5c87:9e4b])
-        by smtp.gmail.com with ESMTPSA id f83-v6sm198322wmh.32.2018.05.03.11.48.57
+        by smtp.gmail.com with ESMTPSA id f83-v6sm198322wmh.32.2018.05.03.11.48.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 May 2018 11:48:57 -0700 (PDT)
+        Thu, 03 May 2018 11:48:59 -0700 (PDT)
 From:   Andreas Heiduk <asheiduk@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Andreas Heiduk <asheiduk@gmail.com>,
         Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v3 2/7] doc: align 'diff --no-index' in text and synopsis
-Date:   Thu,  3 May 2018 20:48:25 +0200
-Message-Id: <20180503184830.11889-3-asheiduk@gmail.com>
+Subject: [PATCH v3 3/7] doc: clarify ignore rules for git ls-files
+Date:   Thu,  3 May 2018 20:48:26 +0200
+Message-Id: <20180503184830.11889-4-asheiduk@gmail.com>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <20180503184830.11889-1-asheiduk@gmail.com>
 References: <20180427170440.30418-1-asheiduk@gmail.com>
  <20180503184830.11889-1-asheiduk@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make the two '<path>' parameters in DESCRIPTION mandatory and
-move the `--options` part to the same place where the other
-variants show them. And finally make `--no-index` in SYNOPSIS
-as mandatory as in DESCRIPTION.
+Explain that `git ls-files --ignored` requires at least one
+of the `--exclude*` options to do its job.
 
 Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
-Reviewed-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/git-diff.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git-ls-files.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index b0c1bb95c8..6593b58299 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 'git diff' [options] --cached [<commit>] [--] [<path>...]
- 'git diff' [options] <commit> <commit> [--] [<path>...]
- 'git diff' [options] <blob> <blob>
--'git diff' [options] [--no-index] [--] <path> <path>
-+'git diff' [options] --no-index [--] <path> <path>
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 3ac3e3a77d..f3474b2ede 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -53,7 +53,8 @@ OPTIONS
+ 	Show only ignored files in the output. When showing files in the
+ 	index, print only those matched by an exclude pattern. When
+ 	showing "other" files, show only those matched by an exclude
+-	pattern.
++	pattern. Standard ignore rules are not automatically activated,
++	therefore at least one of the `--exclude*` options is required.
  
- DESCRIPTION
- -----------
-@@ -29,7 +29,7 @@ two blob objects, or changes between two files on disk.
- 	further add to the index but you still haven't.  You can
- 	stage these changes by using linkgit:git-add[1].
- 
--'git diff' --no-index [--options] [--] [<path>...]::
-+'git diff' [--options] --no-index [--] <path> <path>::
- 
- 	This form is to compare the given two paths on the
- 	filesystem.  You can omit the `--no-index` option when
+ -s::
+ --stage::
 -- 
 2.16.2
 
