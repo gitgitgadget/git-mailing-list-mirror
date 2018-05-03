@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A7DA2024E
-	for <e@80x24.org>; Thu,  3 May 2018 15:31:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8056200B9
+	for <e@80x24.org>; Thu,  3 May 2018 15:31:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751508AbeECPbG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 11:31:06 -0400
-Received: from mout.gmx.net ([212.227.17.21]:49031 "EHLO mout.gmx.net"
+        id S1751511AbeECPbH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 11:31:07 -0400
+Received: from mout.gmx.net ([212.227.17.20]:46743 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751455AbeECPbA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 11:31:00 -0400
+        id S1751476AbeECPa6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 11:30:58 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
- (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MfmZs-1f2FeO36YO-00NDaP; Thu, 03 May 2018 17:30:57 +0200
+ (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0LcVOE-1eWv162gje-00jtgL; Thu, 03 May 2018 17:30:54 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
         Thomas Rast <tr@thomasrast.ch>,
+        Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 12/18] branch-diff: use color for the commit pairs
-Date:   Thu,  3 May 2018 17:30:55 +0200
-Message-Id: <c89937afc2820bb105f59963176a2024e79d6095.1525361419.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 11/18] branch-diff: add tests
+Date:   Thu,  3 May 2018 17:30:53 +0200
+Message-Id: <fe12b99a0b4f78ab75fcfbcf51c5edffb190c4e8.1525361419.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.409.g0f525fc0ba7
 In-Reply-To: <cover.1525361419.git.johannes.schindelin@gmx.de>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de>
@@ -37,161 +37,823 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:OdXgJ+WitNcV5jF/K/X514XxcoPM/oEhVKOihNmdkl6dtAtGWRF
- sH+oMMfbSmoxEsnYtmkbs7RuzmqJwJYXThIz01noPspAq1VHXR3Jl5owXw3cKnNcbQRLoNe
- o3EK9Hut+T/HRb1WVAwIPuGNPkviDKIMwZGyzdVZ9D5Uhq3ltL7cRe2zh13e5XSZQGus5u8
- zHsmpupW5kvZ4qVpeSefQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:i13mkCR9rVk=:q0q7uGjy9tc3NdwdPs4awQ
- z/WgmZ4pRarFVXpvjkZcmDZHfQgkbXyK2/jSIHKNUzn+AIk9Kw4RygiLtnjvhLEi27G/sy7nx
- LMLyK/yvBd94/REIlwfuxMRu7XDUF6FppXGelFIbSjpTdQP2pL732vDEwKo5KiPtCB8SPt3Gt
- sLgwKJgK3xEpX15yryV1SV82o2FKfaDDrRIXCctmWhl3FGc5pqNUxeiMP9cjfWzQ1OteVlGVL
- 8W9b7++9JBG/nBuO5z/oZr6xGnWWp4Tr0Z43Mq/oM+9ow3PPEVFjXYCqKFgmE7i31j82MmVYH
- eSKlgxDJR25PU8FQiek19Jiwl45799p6bKwuwrJC6/qORWalZaTetkIQXfErhJstgcDQJSUUH
- Y0mNZFyaTAH/vjlyMtfhDo81Cmt2mzFDx2RmuenJEMnaMC+Wz6FP7C2Vly3Ruq2cYcmfAPJ4R
- MmJuMy12HfYLiqDQaQxllz9bctX+9k56ONUdSWvF+XuaG52jzgS8SHAVBX8zQbgL/Tn+LATmt
- 5ctxirWJDxN+wGOkf8dDK3bAf1jIZgrp/DixirTwF8C6gtPVNl1cMrJ7ugsApF+7iTqSa/ImD
- rHEf5KKz+b8N1q/SUEWOqQLm3gl5i4rl8bgp6TnALiueUph8DxAqv7SsUodOteilOLQ9GBpeO
- 2jamuAGVLhmZ7CqIAziiVfHBPRNAZBwIYGOlr8O0y8XH3SVyV9+CLaOLuwVoMCDNUXlLVWJcX
- eDG8IdjSvtCKrdvFXTokruevcQu/2SCYUxf8+gX+FDESEfLGl0nlFqews8paUik/xiG8c32SL
- vG+xOJo
+X-Provags-ID: V03:K1:W+KcdjYN/HXCRWk0Dr3zH5UecQneX8RiWbGVN4DhLCO6udtsfOn
+ DLiIlDvFENrI2DdCqDNQ1DFokOM1VmlBWz58fTuZXwG5/w09mcLMbWUyv6zT7hlBHJFhvh7
+ Slr9yTnQAxueB5YydMZYQpL2BRCsQ7t5iRo0TQgLtkw1OYtjoNyyDuDMAjz6hBn2w4WYjYJ
+ hNjtM5f2mCLzcGUXJmhcg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZFOFPkiy0iA=:CWYWwE5gfFhRKneU7iFx1k
+ Mms/QA0R5e8cmwSgL5U2upF8TOpQB08vz0lCPwAO9rCiTZMcpj1BZvft0QzlVtMHHR+6b6jhV
+ s3shCs7sosnvyxsznGzm8OulwmFfHF2byt9nwPwoiwO0N5pefleXLgGzukq9RBPB9b1hC4Rce
+ 2c4v1MfyHo1Q+H6RFTcyr091gERuT07LSIqt4gNuvN7OrxkfB6XC5LtLT1JNGRPKsUY0fMbg3
+ 2QwIZg6853LepOzqlqHtUhepTV9Mw9g9yzgVsCfCS+ERi0SojRLCYPDiRV1oa3SwxsB9RSaCo
+ IokUzrEsTN75Z8YGOMlg4Cqm0I3++wIpkXgkSeVgmt6dU/CHU6Y6U086kZyQyJma9c3UeINCP
+ onT4GAsAtuSOlMxncaSzIpuj136X83CbER9/ly8mGi5s7FePg0jNEMkKtkbwzDCNMJP88BrsS
+ hOSdvHv3OksUjTp7eFmKVxW/dtK/ciOo0W/9BrzyISiIPNnSdhDoUS4zZI132e0TdpRDAGaCM
+ zeWI7C63aZiJ1JXMMt4mx9dyWwOdyo10jEB1wbNrqb2N5XxtWsAjsFn+My0c5GqRuye68qytF
+ Fe0O20buCPMVJTYAlJAcBvEAMnmNlp0XshK/dfEKy/8uJ76rd322gZwEj4fH0aZhRhixgsqrX
+ ZmVAytdL1SwQMi+Nxw5s/CvqlZUXE1E0rF+7ivWfmMU8BjzdJ8QuTyTqzbQ0Fq+t/pfW1Vq3z
+ PfUzk/5kK0K57J3rVhG5nMB5l1KVGfdJTv7qS6dGDKzHRg7yu90I/hYc/fWrMzGOUqdC4prUn
+ Bh6zxf0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Arguably the most important part of branch-diff's output is the list of
-commits in the two branches, together with their relationships.
+From: Thomas Rast <tr@thomasrast.ch>
 
-For that reason, tbdiff introduced color-coding that is pretty
-intuitive, especially for unchanged patches (all dim yellow, like the
-first line in `git show`'s output) vs modified patches (old commit is
-red, new commit is green). Let's imitate that color scheme.
+These are essentially lifted from https://github.com/trast/tbdiff, with
+light touch-ups to account for the new command name.
 
-While at it, also copy tbdiff's change of the fragment color to magenta.
+Apart from renaming `tbdiff` to `branch-diff`, only one test case needed
+to be adjusted: 11 - 'changed message'.
+
+The underlying reason it had to be adjusted is that diff generation is
+sometimes ambiguous. In this case, a comment line and an empty line are
+added, but it is ambiguous whether they were added after the existing
+empty line, or whether an empty line and the comment line are added
+*before* the existing emtpy line. And apparently xdiff picks a different
+option here than Python's difflib.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/branch-diff.c | 49 +++++++++++++++++++++++++++++++------------
- 1 file changed, 36 insertions(+), 13 deletions(-)
+ t/.gitattributes       |   1 +
+ t/t7910-branch-diff.sh | 144 ++++++++++
+ t/t7910/history.export | 604 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 749 insertions(+)
+ create mode 100755 t/t7910-branch-diff.sh
+ create mode 100644 t/t7910/history.export
 
-diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-index 7625da09e6f..e505b696d11 100644
---- a/builtin/branch-diff.c
-+++ b/builtin/branch-diff.c
-@@ -270,13 +270,19 @@ static int get_correspondences(struct string_list *a, struct string_list *b,
- 	return res;
- }
- 
--static void output_pair_header(struct strbuf *buf,
-+static void output_pair_header(struct diff_options *diffopt, struct strbuf *buf,
- 			       int i, struct patch_util *a_util,
- 			       int j, struct patch_util *b_util)
- {
- 	static char *dashes;
- 	struct object_id *oid = a_util ? &a_util->oid : &b_util->oid;
- 	struct commit *commit;
-+	char status;
-+	const char *color_reset = diff_get_color_opt(diffopt, DIFF_RESET);
-+	const char *color_old = diff_get_color_opt(diffopt, DIFF_FILE_OLD);
-+	const char *color_new = diff_get_color_opt(diffopt, DIFF_FILE_NEW);
-+	const char *color_commit = diff_get_color_opt(diffopt, DIFF_COMMIT);
-+	const char *color;
- 
- 	if (!dashes) {
- 		char *p;
-@@ -286,21 +292,33 @@ static void output_pair_header(struct strbuf *buf,
- 			*p = '-';
- 	}
- 
-+	if (j < 0) {
-+		color = color_old;
-+		status = '<';
-+	} else if (i < 0) {
-+		color = color_new;
-+		status = '>';
-+	} else if (strcmp(a_util->patch, b_util->patch)) {
-+		color = color_commit;
-+		status = '!';
-+	} else {
-+		color = color_commit;
-+		status = '=';
-+	}
+diff --git a/t/.gitattributes b/t/.gitattributes
+index 3bd959ae523..af15d5aeedd 100644
+--- a/t/.gitattributes
++++ b/t/.gitattributes
+@@ -18,5 +18,6 @@ t[0-9][0-9][0-9][0-9]/* -whitespace
+ /t5515/* eol=lf
+ /t556x_common eol=lf
+ /t7500/* eol=lf
++/t7910/* eol=lf
+ /t8005/*.txt eol=lf
+ /t9*/*.dump eol=lf
+diff --git a/t/t7910-branch-diff.sh b/t/t7910-branch-diff.sh
+new file mode 100755
+index 00000000000..a7fece88045
+--- /dev/null
++++ b/t/t7910-branch-diff.sh
+@@ -0,0 +1,144 @@
++#!/bin/sh
 +
- 	strbuf_reset(buf);
-+	strbuf_addstr(buf, status == '!' ? color_old : color);
- 	if (i < 0)
- 		strbuf_addf(buf, "-:  %s ", dashes);
- 	else
- 		strbuf_addf(buf, "%d:  %s ", i + 1,
- 			    find_unique_abbrev(&a_util->oid, DEFAULT_ABBREV));
- 
--	if (i < 0)
--		strbuf_addch(buf, '>');
--	else if (j < 0)
--		strbuf_addch(buf, '<');
--	else if (strcmp(a_util->patch, b_util->patch))
--		strbuf_addch(buf, '!');
--	else
--		strbuf_addch(buf, '=');
-+	if (status == '!')
-+		strbuf_addf(buf, "%s%s", color_reset, color);
-+	strbuf_addch(buf, status);
-+	if (status == '!')
-+		strbuf_addf(buf, "%s%s", color_reset, color_new);
- 
- 	if (j < 0)
- 		strbuf_addf(buf, " -:  %s", dashes);
-@@ -313,12 +331,15 @@ static void output_pair_header(struct strbuf *buf,
- 		const char *commit_buffer = get_commit_buffer(commit, NULL);
- 		const char *subject;
- 
-+		if (status == '!')
-+			strbuf_addf(buf, "%s%s", color_reset, color);
++test_description='branch-diff tests'
 +
- 		find_commit_subject(commit_buffer, &subject);
- 		strbuf_addch(buf, ' ');
- 		format_subject(buf, subject, " ");
- 		unuse_commit_buffer(commit, commit_buffer);
- 	}
--	strbuf_addch(buf, '\n');
-+	strbuf_addf(buf, "%s\n", color_reset);
- 
- 	fwrite(buf->buf, buf->len, 1, stdout);
- }
-@@ -381,21 +402,21 @@ static void output(struct string_list *a, struct string_list *b,
- 
- 		/* Show unmatched LHS commit whose predecessors were shown. */
- 		if (i < a->nr && a_util->matching < 0) {
--			output_pair_header(&buf, i, a_util, -1, NULL);
-+			output_pair_header(diffopt, &buf, i, a_util, -1, NULL);
- 			i++;
- 			continue;
- 		}
- 
- 		/* Show unmatched RHS commits. */
- 		while (j < b->nr && b_util->matching < 0) {
--			output_pair_header(&buf, -1, NULL, j, b_util);
-+			output_pair_header(diffopt, &buf, -1, NULL, j, b_util);
- 			b_util = ++j < b->nr ? b->items[j].util : NULL;
- 		}
- 
- 		/* Show matching LHS/RHS pair. */
- 		if (j < b->nr) {
- 			a_util = a->items[b_util->matching].util;
--			output_pair_header(&buf,
-+			output_pair_header(diffopt, &buf,
- 					   b_util->matching, a_util, j, b_util);
- 			if (!(diffopt->output_format & DIFF_FORMAT_NO_OUTPUT))
- 				patch_diff(a->items[b_util->matching].string,
-@@ -427,6 +448,8 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
- 	struct string_list branch1 = STRING_LIST_INIT_DUP;
- 	struct string_list branch2 = STRING_LIST_INIT_DUP;
- 
-+	git_diff_basic_config("diff.color.frag", "magenta", NULL);
++. ./test-lib.sh
 +
- 	diff_setup(&diffopt);
- 	diffopt.output_format = DIFF_FORMAT_PATCH;
- 	diffopt.flags.suppress_diff_headers = 1;
++# Note that because of git-branch-diff's heuristics, test_commit does more
++# harm than good.  We need some real history.
++
++test_expect_success 'setup' '
++	git fast-import < "$TEST_DIRECTORY"/t7910/history.export
++'
++
++test_expect_success 'simple A..B A..C (unmodified)' '
++	git branch-diff --no-color master..topic master..unmodified >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  35b9b25 s/5/A/
++	2:  fccce22 = 2:  de345ab s/4/A/
++	3:  147e64e = 3:  9af6654 s/11/B/
++	4:  a63e992 = 4:  2901f77 s/12/B/
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'simple B...C (unmodified)' '
++	git branch-diff --no-color topic...unmodified >actual &&
++	# same "expected" as above
++	test_cmp expected actual
++'
++
++test_expect_success 'simple A B C (unmodified)' '
++	git branch-diff --no-color master topic unmodified >actual &&
++	# same "expected" as above
++	test_cmp expected actual
++'
++
++test_expect_success 'trivial reordering' '
++	git branch-diff --no-color master topic reordered >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  aca177a s/5/A/
++	3:  147e64e = 2:  14ad629 s/11/B/
++	4:  a63e992 = 3:  ee58208 s/12/B/
++	2:  fccce22 = 4:  307b27a s/4/A/
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'removed a commit' '
++	git branch-diff --no-color master topic removed >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  7657159 s/5/A/
++	2:  fccce22 < -:  ------- s/4/A/
++	3:  147e64e = 2:  43d84d3 s/11/B/
++	4:  a63e992 = 3:  a740396 s/12/B/
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'added a commit' '
++	git branch-diff --no-color master topic added >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  2716022 s/5/A/
++	2:  fccce22 = 2:  b62accd s/4/A/
++	-:  ------- > 3:  df46cfa s/6/A/
++	3:  147e64e = 4:  3e64548 s/11/B/
++	4:  a63e992 = 5:  12b4063 s/12/B/
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'new base, A B C' '
++	git branch-diff --no-color master topic rebased >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  cc9c443 s/5/A/
++	2:  fccce22 = 2:  c5d9641 s/4/A/
++	3:  147e64e = 3:  28cc2b6 s/11/B/
++	4:  a63e992 = 4:  5628ab7 s/12/B/
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'new base, B...C' '
++	# this syntax includes the commits from master!
++	git branch-diff --no-color topic...rebased >actual &&
++	cat >expected <<-EOF &&
++	-:  ------- > 1:  a31b12e unrelated
++	1:  4de457d = 2:  cc9c443 s/5/A/
++	2:  fccce22 = 3:  c5d9641 s/4/A/
++	3:  147e64e = 4:  28cc2b6 s/11/B/
++	4:  a63e992 = 5:  5628ab7 s/12/B/
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'changed commit' '
++	git branch-diff --no-color topic...changed >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  a4b3333 s/5/A/
++	2:  fccce22 = 2:  f51d370 s/4/A/
++	3:  147e64e ! 3:  0559556 s/11/B/
++	    @@ -10,7 +10,7 @@
++	      9
++	      10
++	     -11
++	    -+B
++	    ++BB
++	      12
++	      13
++	      14
++	4:  a63e992 ! 4:  d966c5c s/12/B/
++	    @@ -8,7 +8,7 @@
++	     @@
++	      9
++	      10
++	    - B
++	    + BB
++	     -12
++	     +B
++	      13
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'changed message' '
++	git branch-diff --no-color topic...changed-message >actual &&
++	sed s/Z/\ /g >expected <<-EOF &&
++	1:  4de457d = 1:  f686024 s/5/A/
++	2:  fccce22 ! 2:  4ab067d s/4/A/
++	    @@ -2,6 +2,8 @@
++	    Z
++	    Z    s/4/A/
++	    Z
++	    +    Also a silly comment here!
++	    +
++	    Zdiff --git a/file b/file
++	    Z--- a/file
++	    Z+++ b/file
++	3:  147e64e = 3:  b9cb956 s/11/B/
++	4:  a63e992 = 4:  8add5f1 s/12/B/
++	EOF
++	test_cmp expected actual
++'
++
++test_done
+diff --git a/t/t7910/history.export b/t/t7910/history.export
+new file mode 100644
+index 00000000000..b8ffff0940d
+--- /dev/null
++++ b/t/t7910/history.export
+@@ -0,0 +1,604 @@
++blob
++mark :1
++data 51
++1
++2
++3
++4
++5
++6
++7
++8
++9
++10
++11
++12
++13
++14
++15
++16
++17
++18
++19
++20
++
++reset refs/heads/removed
++commit refs/heads/removed
++mark :2
++author Thomas Rast <trast@inf.ethz.ch> 1374424921 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374484724 +0200
++data 8
++initial
++M 100644 :1 file
++
++blob
++mark :3
++data 51
++1
++2
++3
++4
++A
++6
++7
++8
++9
++10
++11
++12
++13
++14
++15
++16
++17
++18
++19
++20
++
++commit refs/heads/topic
++mark :4
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
++
++blob
++mark :5
++data 51
++1
++2
++3
++A
++A
++6
++7
++8
++9
++10
++11
++12
++13
++14
++15
++16
++17
++18
++19
++20
++
++commit refs/heads/topic
++mark :6
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++data 7
++s/4/A/
++from :4
++M 100644 :5 file
++
++blob
++mark :7
++data 50
++1
++2
++3
++A
++A
++6
++7
++8
++9
++10
++B
++12
++13
++14
++15
++16
++17
++18
++19
++20
++
++commit refs/heads/topic
++mark :8
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++data 8
++s/11/B/
++from :6
++M 100644 :7 file
++
++blob
++mark :9
++data 49
++1
++2
++3
++A
++A
++6
++7
++8
++9
++10
++B
++B
++13
++14
++15
++16
++17
++18
++19
++20
++
++commit refs/heads/topic
++mark :10
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++data 8
++s/12/B/
++from :8
++M 100644 :9 file
++
++blob
++mark :11
++data 10
++unrelated
++
++commit refs/heads/master
++mark :12
++author Thomas Rast <trast@inf.ethz.ch> 1374485127 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485127 +0200
++data 10
++unrelated
++from :2
++M 100644 :11 otherfile
++
++commit refs/heads/rebased
++mark :13
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485137 +0200
++data 7
++s/5/A/
++from :12
++M 100644 :3 file
++
++commit refs/heads/rebased
++mark :14
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485138 +0200
++data 7
++s/4/A/
++from :13
++M 100644 :5 file
++
++commit refs/heads/rebased
++mark :15
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485138 +0200
++data 8
++s/11/B/
++from :14
++M 100644 :7 file
++
++commit refs/heads/rebased
++mark :16
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485138 +0200
++data 8
++s/12/B/
++from :15
++M 100644 :9 file
++
++commit refs/heads/added
++mark :17
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
++
++commit refs/heads/added
++mark :18
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
++data 7
++s/4/A/
++from :17
++M 100644 :5 file
++
++blob
++mark :19
++data 51
++1
++2
++3
++A
++A
++A
++7
++8
++9
++10
++11
++12
++13
++14
++15
++16
++17
++18
++19
++20
++
++commit refs/heads/added
++mark :20
++author Thomas Rast <trast@inf.ethz.ch> 1374485186 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
++data 7
++s/6/A/
++from :18
++M 100644 :19 file
++
++blob
++mark :21
++data 50
++1
++2
++3
++A
++A
++A
++7
++8
++9
++10
++B
++12
++13
++14
++15
++16
++17
++18
++19
++20
++
++commit refs/heads/added
++mark :22
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
++data 8
++s/11/B/
++from :20
++M 100644 :21 file
++
++blob
++mark :23
++data 49
++1
++2
++3
++A
++A
++A
++7
++8
++9
++10
++B
++B
++13
++14
++15
++16
++17
++18
++19
++20
++
++commit refs/heads/added
++mark :24
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
++data 8
++s/12/B/
++from :22
++M 100644 :23 file
++
++commit refs/heads/reordered
++mark :25
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
++
++blob
++mark :26
++data 50
++1
++2
++3
++4
++A
++6
++7
++8
++9
++10
++B
++12
++13
++14
++15
++16
++17
++18
++19
++20
++
++commit refs/heads/reordered
++mark :27
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
++data 8
++s/11/B/
++from :25
++M 100644 :26 file
++
++blob
++mark :28
++data 49
++1
++2
++3
++4
++A
++6
++7
++8
++9
++10
++B
++B
++13
++14
++15
++16
++17
++18
++19
++20
++
++commit refs/heads/reordered
++mark :29
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
++data 8
++s/12/B/
++from :27
++M 100644 :28 file
++
++commit refs/heads/reordered
++mark :30
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
++data 7
++s/4/A/
++from :29
++M 100644 :9 file
++
++commit refs/heads/changed
++mark :31
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
++
++commit refs/heads/changed
++mark :32
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
++data 7
++s/4/A/
++from :31
++M 100644 :5 file
++
++blob
++mark :33
++data 51
++1
++2
++3
++A
++A
++6
++7
++8
++9
++10
++BB
++12
++13
++14
++15
++16
++17
++18
++19
++20
++
++commit refs/heads/changed
++mark :34
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
++data 8
++s/11/B/
++from :32
++M 100644 :33 file
++
++blob
++mark :35
++data 50
++1
++2
++3
++A
++A
++6
++7
++8
++9
++10
++BB
++B
++13
++14
++15
++16
++17
++18
++19
++20
++
++commit refs/heads/changed
++mark :36
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
++data 8
++s/12/B/
++from :34
++M 100644 :35 file
++
++commit refs/heads/changed-message
++mark :37
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485530 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
++
++commit refs/heads/changed-message
++mark :38
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485530 +0200
++data 35
++s/4/A/
++
++Also a silly comment here!
++from :37
++M 100644 :5 file
++
++commit refs/heads/changed-message
++mark :39
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485536 +0200
++data 8
++s/11/B/
++from :38
++M 100644 :7 file
++
++commit refs/heads/changed-message
++mark :40
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485536 +0200
++data 8
++s/12/B/
++from :39
++M 100644 :9 file
++
++commit refs/heads/unmodified
++mark :41
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485631 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
++
++commit refs/heads/unmodified
++mark :42
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485631 +0200
++data 7
++s/4/A/
++from :41
++M 100644 :5 file
++
++commit refs/heads/unmodified
++mark :43
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485632 +0200
++data 8
++s/11/B/
++from :42
++M 100644 :7 file
++
++commit refs/heads/unmodified
++mark :44
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485632 +0200
++data 8
++s/12/B/
++from :43
++M 100644 :9 file
++
++commit refs/heads/removed
++mark :45
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374486061 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
++
++commit refs/heads/removed
++mark :46
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374486061 +0200
++data 8
++s/11/B/
++from :45
++M 100644 :26 file
++
++commit refs/heads/removed
++mark :47
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374486061 +0200
++data 8
++s/12/B/
++from :46
++M 100644 :28 file
++
++reset refs/heads/removed
++from :47
++
 -- 
 2.17.0.395.g6a618d6010f.dirty
 
