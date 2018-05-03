@@ -2,112 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5695E200B9
-	for <e@80x24.org>; Thu,  3 May 2018 17:15:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E78AE200B9
+	for <e@80x24.org>; Thu,  3 May 2018 17:21:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751287AbeECRPM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 13:15:12 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:15932 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750954AbeECRPL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 13:15:11 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 40cMGP1Nsvz5tlL;
-        Thu,  3 May 2018 19:15:09 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 990443AB;
-        Thu,  3 May 2018 19:15:08 +0200 (CEST)
-Subject: [PATCH v2] git: add -P as a short option for --no-pager
-To:     Git Mailing List <git@vger.kernel.org>
-References: <d91e98a8-7801-a3de-3865-f0480e18ba0e@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <23493ba1-1704-1e8c-f448-95540a36f886@kdbg.org>
-Date:   Thu, 3 May 2018 19:15:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1751166AbeECRVo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 13:21:44 -0400
+Received: from mail-yb0-f182.google.com ([209.85.213.182]:34476 "EHLO
+        mail-yb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750947AbeECRVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 13:21:43 -0400
+Received: by mail-yb0-f182.google.com with SMTP id b14-v6so6772363ybk.1
+        for <git@vger.kernel.org>; Thu, 03 May 2018 10:21:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=9cv5Luy/NdCY++eT8hIPElGCFGyEVjsf+uEx97JCTXs=;
+        b=V+Sraug6gQ0M9bBWKFY2M0qJ5q0CzL9D4xM4y8domCdmF9M6Any3wxZPNGEJ7I8pJH
+         pchvMTacsNzEeHHVF4cIqmaijsBy91Suhl0h9cuntE/iT+yl3Yspvr0DsNF2PBg7g3DA
+         HCGVY1YnAiBY8SzL/uRzVZODM52e2KYwm6JguBj8PpVDk+f+KkKXUJuS9SAzmec34l89
+         8wS8PbmpqVHkIFSAMsOFP3E5tWJtzDARedR/MweyXffXbTsiVj66NVgZi7YNR3D0KAkC
+         tiAyB9MbusZ6X69QvcWJs3a/nxZ4qqjCzYF1+amrJd8h8+qneNXZJbbHGBSgzKsu83VT
+         2zzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=9cv5Luy/NdCY++eT8hIPElGCFGyEVjsf+uEx97JCTXs=;
+        b=ugBMsx4Fl5IBp3mz4FheOxNhcrk1KPJexlEuKaIcREI44SEE4Tv+YHDJyns1xCER4D
+         gIyUnhSkxTQ7zLlOPT4ZER72YSnb0NkXyGkWCZat7W978EaNuacw+Qo9zoDUpvN4/yZx
+         F+Q4/p/QymizRSxjKEl+RL/kzN76qoJ91IlFphZDy0GmhBLBjPQEJ3Ft5LpH0T1nJiXH
+         1nixknAqMZIqOqtlk6/rkwUI0aEWmz18YYVHmLt+VCb4Rst7F5HItIhzAQHq8UfKcyV3
+         qbH4/IJ3G8b0+ytjYpvdv5ZJqcrDxkB09miRLDxkhDlInQRzTTQ6Mx7VDZuTJUC7ClbD
+         u/Hg==
+X-Gm-Message-State: ALQs6tDVrR9poDjuTXvDHouyKlbbdKXfmXPZS2arG0To0Sx+yu+4WMzh
+        oN8Abx4SGFvm6NN4Jld5NWBPUukZuSZqoIs6QCgUyg==
+X-Google-Smtp-Source: AB8JxZqVQFCWWQibhyib+vl7k8x1UbGYDKfDSgZJmhTNgBOlUsCJzkkysZKLS4Osg/qh+S6JPC7VjmWeydRqqWh7/gs=
+X-Received: by 2002:a25:2704:: with SMTP id n4-v6mr15198515ybn.167.1525368102588;
+ Thu, 03 May 2018 10:21:42 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <d91e98a8-7801-a3de-3865-f0480e18ba0e@kdbg.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Thu, 3 May 2018 10:21:42 -0700 (PDT)
+In-Reply-To: <CACsJy8C3yZ6bSZGw1d5DjwcPgHMDE7iGGUOn9SvyLmshzs9DvQ@mail.gmail.com>
+References: <20180417163400.3875-1-jamill@microsoft.com> <20180430153122.243976-1-jamill@microsoft.com>
+ <CACsJy8C3yZ6bSZGw1d5DjwcPgHMDE7iGGUOn9SvyLmshzs9DvQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 3 May 2018 10:21:42 -0700
+Message-ID: <CAGZ79kbyPya0igC9v5JwNTsi0TSp-sj6v5SB4MOt625+yVB-Gg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] Allocate cache entries from memory pool
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jameson Miller <jamill@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "jonathantanmy@google.com" <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is possible to configure 'less', the pager, to use an alternate
-screen to show the content, for example, by setting LESS=RS in the
-environment. When it is closed in this configuration, it switches
-back to the original screen, and all content is gone.
+On Thu, May 3, 2018 at 9:35 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Mon, Apr 30, 2018 at 5:31 PM, Jameson Miller <jamill@microsoft.com> wrote:
+>> This patch series improves the performance of loading indexes by
+>> reducing the number of malloc() calls. Loading the index from disk is
+>> partly dominated by the time in malloc(), which is called for each
+>> index entry. This patch series reduces the number of times malloc() is
+>> called as part of loading the index, and instead allocates a block of
+>> memory upfront that is large enough to hold all of the cache entries,
+>> and chunks this memory itself. This change builds on [1].
+>
+> I have only looked at the mem-pool related patches to see if
+> mem-pool.c is good enough to replace alloc.c. To me, it's a "yes"
+> after we optimize mem_pool_alloc() a bit (not that performance really
+> matters in alloc.c case, but that may be because it's already
+> blazingly fast that we never noticed about it).
 
-It is not uncommon to request that the output remains visible in
-the terminal. For this, the option --no-pager can be used. But
-it is a bit cumbersome to type, even when command completion is
-available. Provide a short option, -P, to make the option easier
-accessible.
+alloc.c was not just about speed, but mostly about dense packing?
+855419f764a (Add specialized object allocator, 2006-06-19)
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- Given the positive feedback, I resurrect the patch.
-
- Changes since v1:
- - Use -P instead of -N
- - Commit message changed as proposed by Kaartic
-
- Documentation/git.txt | 3 ++-
- git.c                 | 4 ++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 4767860e72..c662f41c1d 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git' [--version] [--help] [-C <path>] [-c <name>=<value>]
-     [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
--    [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
-+    [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
-     [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-     [--super-prefix=<path>]
-     <command> [<args>]
-@@ -103,6 +103,7 @@ foo.bar= ...`) sets `foo.bar` to the empty string which `git config
- 	configuration options (see the "Configuration Mechanism" section
- 	below).
- 
-+-P::
- --no-pager::
- 	Do not pipe Git output into a pager.
- 
-diff --git a/git.c b/git.c
-index ceaa58ef40..71d013424e 100644
---- a/git.c
-+++ b/git.c
-@@ -7,7 +7,7 @@
- const char git_usage_string[] =
- 	N_("git [--version] [--help] [-C <path>] [-c <name>=<value>]\n"
- 	   "           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
--	   "           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]\n"
-+	   "           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n"
- 	   "           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
- 	   "           <command> [<args>]");
- 
-@@ -81,7 +81,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			exit(0);
- 		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
- 			use_pager = 1;
--		} else if (!strcmp(cmd, "--no-pager")) {
-+		} else if (!strcmp(cmd, "-P") || !strcmp(cmd, "--no-pager")) {
- 			use_pager = 0;
- 			if (envchanged)
- 				*envchanged = 1;
--- 
-2.17.0.69.g0c1d01d9b6
+To me it is also a clear yes when it comes to combining these
+two memory pools.
