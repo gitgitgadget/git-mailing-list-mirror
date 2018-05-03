@@ -2,299 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4797C200B9
-	for <e@80x24.org>; Thu,  3 May 2018 16:29:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76CEF200B9
+	for <e@80x24.org>; Thu,  3 May 2018 16:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751517AbeECQ3S (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 12:29:18 -0400
-Received: from mail-ot0-f174.google.com ([74.125.82.174]:40610 "EHLO
-        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751445AbeECQ3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 12:29:13 -0400
-Received: by mail-ot0-f174.google.com with SMTP id n1-v6so21329035otf.7
-        for <git@vger.kernel.org>; Thu, 03 May 2018 09:29:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=beEDd4DdI3/fFO4DjxdRyNeeFCTgm4sJxWadYgY1ZFU=;
-        b=mq978wELS46I1ajIJm+Uw5PHHaoW6Kxn/k5pV/nOWOQXP0vBeaiFk0sMyJakJhtDdn
-         BPdqmHo7dkfs8SFXl5I4Ci/k23qOpVB+PBtmWmUtS4ytJYsGUYYclC6Sr3FmtdXZ8BUw
-         yoZ+OW8+TTJr8uehZBNHdL+3/hRWLQ6b11RaCgRASleSVGV8tSAEbuQ3duhvihNFueQ/
-         QTmLVVM2Bv+M1TYJEXFl1+S36DnrwVhfMKlfRId0Evgu+gpqL8VCXHipYB/QAd+OvWxP
-         H2qsVbvbNTmggf5SWQkC8dO0LUzYthGoeC/upNTsXLd8RiusZSIpnoKXAZVKu5IUufSI
-         0+2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=beEDd4DdI3/fFO4DjxdRyNeeFCTgm4sJxWadYgY1ZFU=;
-        b=EuPAmG3E7HWiueBRuWvMSf+MqwUxDQ3hWStsQLM7kKIwfOftHbJrvKAdTivVpfelJP
-         hjJzzKlBmOnpb0n+ZWGyiNbc/F/bwLCMHyaQQWFg+kwBJXOSLqgmHGFhTaonPpaGtIcA
-         R6afufQm46Gte0zUCDinlvZU0eyOzHwJ5uNPNVC86Sc9kVrPgaMW2bXRhHRdhxSmyzm5
-         I8RLtaWFbozJkwRmmyUciRFmdbqjdGJxj9QMavmc2XvaVvZ6X4R7p2OfesWwlbMDirpi
-         hx2Xk/a/GMz4QtcMLK7jHFpn1ALuJNQM2Y8TxeWW9ze6up3o0R+GCxjSTS//q3/DMyKj
-         29dw==
-X-Gm-Message-State: ALQs6tA++40vEQJ9o2o13hD1lNblCLbX6+2qJy8GENna7BaHatO2usy6
-        eRunuQIy1y/jQAc5fuLgCG7oqp58YOLw6qLlN4k=
-X-Google-Smtp-Source: AB8JxZpcOMPtZodYWIiCR0kd3MfPLyQjC4ae/kofKXVtQ6U+QDnzzvCDbEce7UMVKFVqOmeGJ7F3VNy93OTRj+YqHIQ=
-X-Received: by 2002:a9d:4197:: with SMTP id p23-v6mr17907802ote.75.1525364952251;
- Thu, 03 May 2018 09:29:12 -0700 (PDT)
+        id S1751741AbeECQbA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 12:31:00 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:34836 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751736AbeECQa7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 12:30:59 -0400
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id EH8DfDZwTsD7bEH8EfYkHn; Thu, 03 May 2018 17:30:58 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8 a=5kEWciQYd5VufjT58f8A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 03/18] branch-diff: first rudimentary implementation
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+ <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <24af8d6e-da6f-2d0b-22a0-6a2a215ac55f@ramsayjones.plus.com>
+Date:   Thu, 3 May 2018 17:30:57 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Thu, 3 May 2018 09:28:41 -0700 (PDT)
-In-Reply-To: <20180430153122.243976-6-jamill@microsoft.com>
-References: <20180417163400.3875-1-jamill@microsoft.com> <20180430153122.243976-1-jamill@microsoft.com>
- <20180430153122.243976-6-jamill@microsoft.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 3 May 2018 18:28:41 +0200
-Message-ID: <CACsJy8Dxz8dph=Ouy2C9PXQaJUJw86FHdobvJxcR-Dx+w5iO0Q@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] block alloc: add validations around cache_entry lifecyle
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "jonathantanmy@google.com" <jonathantanmy@google.com>,
-        "sbeller@google.com" <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfNfCndNPRfD+vM97j+M0KE2P0/Jh34R9cyU2LoGBEZmRy9sDHmFmQ+kBnG82kSrUNb0hG6w52wgIVcVG0xoyxH2dahkmP3SE0vTRFjIuP1oJ+lkL4WLU
+ 1uKBu7h7hFBsifhVI+1iN9qpcI/1T9k6nU7P01W/wG0tEiU74DzPRe5Z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 30, 2018 at 5:31 PM, Jameson Miller <jamill@microsoft.com> wrote:
-> Add an option (controlled by an environment variable) perform extra
-> validations on mem_pool allocated cache entries. When set:
->
->   1) Invalidate cache_entry memory when discarding cache_entry.
->
->   2) When discarding index_state struct, verify that all cache_entries
->      were allocated from expected mem_pool.
->
->   3) When discarding mem_pools, invalidate mem_pool memory.
 
-On linux step 3 could be better achieved by allocating blocks with
-mmap() and freeing them with munmap(). Access to already munmap()'d
-blocks will result in segmentation fault regardless of values.  I
-guess Windows also has something similar (I vaguely remember something
-about "locking memory" and stuff, but my win32 knowledge is decade old
-at this point)
 
-(Actually with glibc on linux, i'm pretty sure mmap is already used
-for large allocation so step 3 is achieved without doing anything; not
-sure about other libc implementations)
-
-> This should provide extra checks that mem_pools and their allocated
-> cache_entries are being used as expected.
->
-> Signed-off-by: Jameson Miller <jamill@microsoft.com>
+On 03/05/18 16:30, Johannes Schindelin wrote:
+> At this stage, `git branch-diff` can determine corresponding commits of
+> two related commit ranges. This makes use of the recently introduced
+> implementation of the Hungarian algorithm.
+> 
+> The core of this patch is a straight port of the ideas of tbdiff, the
+> seemingly dormant project at https://github.com/trast/tbdiff.
+> 
+> The output does not at all match `tbdiff`'s output yet, as this patch
+> really concentrates on getting the patch matching part right.
+> 
+> Note: due to differences in the diff algorithm (`tbdiff` uses the
+> Pythong module `difflib`, Git uses its xdiff fork), the cost matrix
+> calculated by `branch-diff` is different (but very similar) to the one
+> calculated by `tbdiff`. Therefore, it is possible that they find
+> different matching commits in corner cases (e.g. when a patch was split
+> into two patches of roughly equal length).
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  cache.h      |  7 +++++++
->  git.c        |  3 +++
->  mem-pool.c   | 24 +++++++++++++++++++++++-
->  mem-pool.h   |  2 ++
->  read-cache.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
->  5 files changed, 82 insertions(+), 1 deletion(-)
->
-> diff --git a/cache.h b/cache.h
-> index 7ed68f28e0..8f10f0649b 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -369,6 +369,13 @@ void discard_index_cache_entry(struct cache_entry *ce);
->   */
->  void discard_transient_cache_entry(struct cache_entry *ce);
->
-> +/*
-> + * Validate the cache entries in the index.  This is an internal
-> + * consistency check that the cache_entry structs are allocated from
-> + * the expected memory pool.
-> + */
-> +void validate_cache_entries(const struct index_state *istate);
-> +
->  #ifndef NO_THE_INDEX_COMPATIBILITY_MACROS
->  #define active_cache (the_index.cache)
->  #define active_nr (the_index.cache_nr)
-> diff --git a/git.c b/git.c
-> index f598fae7b7..28ec7a6c4f 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -347,7 +347,10 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
->
->         trace_argv_printf(argv, "trace: built-in: git");
->
-> +       validate_cache_entries(&the_index);
->         status = p->fn(argc, argv, prefix);
-> +       validate_cache_entries(&the_index);
-> +
->         if (status)
->                 return status;
->
-> diff --git a/mem-pool.c b/mem-pool.c
-> index a495885c4b..77adb5d5b9 100644
-> --- a/mem-pool.c
-> +++ b/mem-pool.c
-> @@ -60,21 +60,43 @@ void mem_pool_discard(struct mem_pool *mem_pool)
->  {
->         int i;
->         struct mp_block *block, *block_to_free;
-> +       int invalidate_memory = should_validate_cache_entries();
+>  builtin/branch-diff.c | 337 +++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 334 insertions(+), 3 deletions(-)
+> 
+> diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
+> index 97266cd326d..02dc06a57ca 100644
+> --- a/builtin/branch-diff.c
+> +++ b/builtin/branch-diff.c
+> @@ -1,13 +1,17 @@
+>  #include "cache.h"
+>  #include "parse-options.h"
+> +#include "string-list.h"
+> +#include "run-command.h"
+> +#include "argv-array.h"
+> +#include "hashmap.h"
+> +#include "xdiff-interface.h"
+> +#include "hungarian.h"
+>  
+>  static const char * const builtin_branch_diff_usage[] = {
+>  	N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
+>  	NULL
+>  };
+>  
+> -#define COLOR_DUAL_MODE 2
+> -
 
-Heh.. cache-entries logic should not enter mem-pool.c.
+This #define was introduced in the previous patch, without being
+used in that patch, and is now deleted here.
 
-> +
->         for (block = mem_pool->mp_block; block;)
->         {
->                 block_to_free = block;
->                 block = block->next_block;
-> +
-> +               if (invalidate_memory)
-> +                       memset(block_to_free->space, 0xDD, ((char *)block_to_free->end) - ((char *)block_to_free->space));
-> +
->                 free(block_to_free);
->         }
->
-> -       for (i = 0; i < mem_pool->nr; i++)
-> +       for (i = 0; i < mem_pool->nr; i++) {
-> +               memset(mem_pool->custom[i], 0xDD, ((char *)mem_pool->custom_end[i]) - ((char *)mem_pool->custom[i]));
-
-"if (invalidate_memory)" missing
-
->                 free(mem_pool->custom[i]);
-> +       }
->
->         free(mem_pool->custom);
->         free(mem_pool->custom_end);
->         free(mem_pool);
->  }
->
-> +int should_validate_cache_entries(void)
-> +{
-> +       static int validate_index_cache_entries = -1;
-> +
-> +       if (validate_index_cache_entries < 0) {
-> +               if (getenv("GIT_TEST_VALIDATE_INDEX_CACHE_ENTRIES"))
-
-There's a safer version that you can use, get_env_bool()
-
-> +                       validate_index_cache_entries = 1;
-> +               else
-> +                       validate_index_cache_entries = 0;
-> +       }
-> +
-> +       return validate_index_cache_entries;
-> +}
-> +
->  void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
->  {
->         struct mp_block *p;
-> diff --git a/mem-pool.h b/mem-pool.h
-> index 34df4fa709..b1f9a920ba 100644
-> --- a/mem-pool.h
-> +++ b/mem-pool.h
-> @@ -63,4 +63,6 @@ void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src);
->   */
->  int mem_pool_contains(struct mem_pool *mem_pool, void *mem);
->
-> +int should_validate_cache_entries(void);
-> +
->  #endif
-> diff --git a/read-cache.c b/read-cache.c
-> index 01cd7fea41..e1dc9f7f33 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1270,6 +1270,8 @@ int add_index_entry(struct index_state *istate, struct cache_entry *ce, int opti
->  {
->         int pos;
->
-> +       validate_cache_entries(istate);
-
-Validating _all_ entries every time an entry is added sounds way too expensive.
-
-> +
->         if (option & ADD_CACHE_JUST_APPEND)
->                 pos = istate->cache_nr;
->         else {
-> @@ -1290,6 +1292,8 @@ int add_index_entry(struct index_state *istate, struct cache_entry *ce, int opti
->                            istate->cache_nr - pos - 1);
->         set_index_entry(istate, pos, ce);
->         istate->cache_changed |= CE_ENTRY_ADDED;
-> +
-> +       validate_cache_entries(istate);
->         return 0;
->  }
->
-> @@ -2013,6 +2017,8 @@ int is_index_unborn(struct index_state *istate)
->
->  int discard_index(struct index_state *istate)
->  {
-> +       validate_cache_entries(istate);
-> +
->         resolve_undo_clear_index(istate);
->         istate->cache_nr = 0;
->         istate->cache_changed = 0;
-> @@ -2035,6 +2041,43 @@ int discard_index(struct index_state *istate)
->         return 0;
->  }
->
-> +
-> +/*
-> + * Validate the cache entries of this index.
-> + * All cache entries associated with this index
-> + * should have been allocated by the memory pool
-> + * associated with this index, or by a referenced
-> + * split index.
-> + */
-> +void validate_cache_entries(const struct index_state *istate)
-> +{
-> +       int i;
-> +       int validate_index_cache_entries = should_validate_cache_entries();
-> +
-> +       if (!validate_index_cache_entries)
-> +               return;
-> +
-> +       if (!istate || !istate->initialized)
-> +               return;
-> +
-> +       for (i = 0; i < istate->cache_nr; i++) {
-> +               if (!istate) {
-> +                       die("internal error: cache entry is not allocated from expected memory pool");
-> +               } else if (!istate->ce_mem_pool ||
-> +                       !mem_pool_contains(istate->ce_mem_pool, istate->cache[i])) {
-> +                       if (!istate->split_index ||
-> +                               !istate->split_index->base ||
-> +                               !istate->split_index->base->ce_mem_pool ||
-> +                               !mem_pool_contains(istate->split_index->base->ce_mem_pool, istate->cache[i])) {
-> +                               die("internal error: cache entry is not allocated from expected memory pool");
-> +                       }
-> +               }
-> +       }
-> +
-> +       if (istate->split_index)
-> +               validate_cache_entries(istate->split_index->base);
-> +}
-> +
->  int unmerged_index(const struct index_state *istate)
->  {
->         int i;
-> @@ -2828,6 +2871,10 @@ void move_index_extensions(struct index_state *dst, struct index_state *src)
->   */
->  void discard_index_cache_entry(struct cache_entry *ce)
->  {
-> +       int invalidate_cache_entry = should_validate_cache_entries();
-> +
-> +       if (ce && invalidate_cache_entry)
-> +               memset(ce, 0xCD, cache_entry_size(ce->ce_namelen));
->  }
->
->  void discard_transient_cache_entry(struct cache_entry *ce)
-> --
-> 2.14.3
->
-
-
-
--- 
-Duy
+ATB,
+Ramsay Jones
