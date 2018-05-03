@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08B8B200B9
-	for <e@80x24.org>; Thu,  3 May 2018 18:48:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97F822023F
+	for <e@80x24.org>; Thu,  3 May 2018 18:49:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751240AbeECSsv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 14:48:51 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:39876 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750969AbeECSst (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 14:48:49 -0400
-Received: by mail-wm0-f54.google.com with SMTP id f8-v6so605674wmc.4
-        for <git@vger.kernel.org>; Thu, 03 May 2018 11:48:49 -0700 (PDT)
+        id S1751246AbeECStA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 14:49:00 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:37608 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750969AbeECSs7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 14:48:59 -0400
+Received: by mail-wr0-f195.google.com with SMTP id c14-v6so18645819wrd.4
+        for <git@vger.kernel.org>; Thu, 03 May 2018 11:48:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lJehS2iIy+tYzUmEOqqn5/DYtwuAvUWnt/DO3hZav0w=;
-        b=YhaMv44cXskeUh5ipCDQ910YOcigv31EDygaudoXLxHey8QVr2eESivfRptUwcl67Q
-         TkeMTaYrf1GMiG/SbXcMl2irExbsLZFtVrKLTKg0T+Xb7pDSQ2ZouhXLvZj8T99ekO1l
-         PDnBI39E4+k2/x2z0DOpF9E11wDy0ARW58v3EEWJ4eKLjpjoFhOtBfjQ/N42D4gqmeuT
-         ogleBwvZZR6KEuyeFSHRbZqvcSsekTosi139iigRLAV3mNtanMGSmAIB1xNCNDSJbJYw
-         +MLPni9hmD31eTDJT74SglaaJQxk5tE9aUDA/n3T8NjKtVFRghX6f2YbnpIW4kNS/L3G
-         vAZg==
+        bh=aJkSANGI7eH8aPq+NI/tVQWq6CX6Nsb20m7LVtycTAk=;
+        b=cAWEOy8d3jebxC97p/AxlSaVjZZ85UiKpu3FgZrnGsQFnk9sKoMDMtU/tCAvAodOPX
+         /YxhHF2q60EPKVwtPpvNg9Unr7iVbjcH71fInjW9EZvcZFpf+WVFQQIQd2qlnq/uScLS
+         9rTpu3fQCQLa7up3XLLBtKlOACnpeXEcbuGvCaChwoEHuYcybo75WgzpUks8raX/bDmA
+         vRSLjL6h2yjfeQKcepxD4GpiU02faBnbfYk0KLQ2CX5o/DR/Lh5aHyKIItm6tIPSLHQ3
+         l2S+BKo/C/AoilIlm13a8sw4Y3bqnq1sP7w6TCQ5WsCMmkWelxjfZj6ONiCtmQP8tnBg
+         QcjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lJehS2iIy+tYzUmEOqqn5/DYtwuAvUWnt/DO3hZav0w=;
-        b=VTTFkm7EMAFAaWui4Cw97QNxdU/YlRY6Ml8FcznE9AX2ItpeT6uomcRYJk/refMYNp
-         HbXj4arjT/z7y7nvwCc8d3L5DWoMVgD+rxl9AJCZlJp1+Eq8mXlNaniIUt7ORJ66B/9K
-         WfAPf+xx+erzMtVnbGzoifxDVaMv/fwrWmc5q8mFi+HwaG76li/2qatp2ZKBf1EHnhYv
-         XUd4rHPV2Rb/eJd5zzBzg33bo0A/VL85IMVml64MqYn8HfauWdpSlkI4vKof3Z1yV3Xx
-         HyCsiwYPvT07yABkrncffPtsIxaOVynFbU8eQ0W5J455WQgvHub803JpYf3D6KiMJ0DJ
-         tPzQ==
-X-Gm-Message-State: ALQs6tA/KmSgxfA5b2kPxL+/21t/tx+iFvqDt4/iSeiTqsduWY2sMbwi
-        3LswGuHMMAtEeTGlR1H1GaWbUPoA
-X-Google-Smtp-Source: AB8JxZoUTHM3ZIX+dL7xXKXG+cu/Gla6H/yxe7r7w6Th0GYtGKa99Y50jGc7tQ15RSjFJJp0dRUNew==
-X-Received: by 10.28.156.199 with SMTP id f190mr10785404wme.79.1525373327989;
-        Thu, 03 May 2018 11:48:47 -0700 (PDT)
+        bh=aJkSANGI7eH8aPq+NI/tVQWq6CX6Nsb20m7LVtycTAk=;
+        b=QHiciOFfvD63ZhPmpjKsUCGzAHQMZ7GbXpl5rdBrBM9hdsoK16XVftVLPeXwA5RYQy
+         j7Z8cEn0EXz76X5ZVZvGwxXOc6n19s4CXZaM1tWCr6Z2R5ljMoCTiwEzzQstoms4JFJb
+         khqvsH4e812w94dmRs0HBSMU6GcnY/v5Gk2E3225BCQvKtej2/j4Xb/avjq1wpcMVwqz
+         MCBJLdnMjA2rdqAWD2f7TvJoldfo6cJsSoGXpiF1+fS/oMoTnsMGfIVSZK+hTK1Wfg8+
+         +DPiyhkNPkbjUoc7friHxSjyx/qMySyVZ2HcAKxkYGNVI3T/K0QWBuHiI2L1Z/9Sf+d3
+         j31A==
+X-Gm-Message-State: ALQs6tAtyz5WzJ5t7jo6vmbWes9POMlz0XepsXiJyREmnia+P0YLuTxJ
+        tfoJuvjKHVc400w04LhTgiapOg5G
+X-Google-Smtp-Source: AB8JxZr2cmNSx9/HxufUUzy7LMatPOXNBnIAsyMEP0QTlSsa/J5kC39hRPSYZeYUxY2TqEWOlSh7QA==
+X-Received: by 2002:adf:96c2:: with SMTP id u60-v6mr19760137wrb.204.1525373338126;
+        Thu, 03 May 2018 11:48:58 -0700 (PDT)
 Received: from arrakeen.fritz.box ([2001:a62:81d:ab01:a521:6b31:5c87:9e4b])
-        by smtp.gmail.com with ESMTPSA id f83-v6sm198322wmh.32.2018.05.03.11.48.46
+        by smtp.gmail.com with ESMTPSA id f83-v6sm198322wmh.32.2018.05.03.11.48.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 May 2018 11:48:47 -0700 (PDT)
+        Thu, 03 May 2018 11:48:57 -0700 (PDT)
 From:   Andreas Heiduk <asheiduk@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Andreas Heiduk <asheiduk@gmail.com>,
         Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v3 1/7] doc: improve formatting in githooks.txt
-Date:   Thu,  3 May 2018 20:48:24 +0200
-Message-Id: <20180503184830.11889-2-asheiduk@gmail.com>
+Subject: [PATCH v3 2/7] doc: align 'diff --no-index' in text and synopsis
+Date:   Thu,  3 May 2018 20:48:25 +0200
+Message-Id: <20180503184830.11889-3-asheiduk@gmail.com>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <20180503184830.11889-1-asheiduk@gmail.com>
 References: <20180427170440.30418-1-asheiduk@gmail.com>
@@ -69,374 +69,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Typeset commands and similar things with as `git foo` instead of
-'git foo' or 'git-foo' and add linkgit to the commands which run
-the hooks.
+Make the two '<path>' parameters in DESCRIPTION mandatory and
+move the `--options` part to the same place where the other
+variants show them. And finally make `--no-index` in SYNOPSIS
+as mandatory as in DESCRIPTION.
 
 Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
 Reviewed-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/githooks.txt | 115 +++++++++++++++++++++++----------------------
- 1 file changed, 58 insertions(+), 57 deletions(-)
+ Documentation/git-diff.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index f877f7b7cd..e3c283a174 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -31,7 +31,7 @@ Hooks can get their arguments via the environment, command-line
- arguments, and stdin. See the documentation for each hook below for
- details.
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index b0c1bb95c8..6593b58299 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 'git diff' [options] --cached [<commit>] [--] [<path>...]
+ 'git diff' [options] <commit> <commit> [--] [<path>...]
+ 'git diff' [options] <blob> <blob>
+-'git diff' [options] [--no-index] [--] <path> <path>
++'git diff' [options] --no-index [--] <path> <path>
  
--'git init' may copy hooks to the new repository, depending on its
-+`git init` may copy hooks to the new repository, depending on its
- configuration. See the "TEMPLATE DIRECTORY" section in
- linkgit:git-init[1] for details. When the rest of this document refers
- to "default hooks" it's talking about the default template shipped
-@@ -45,9 +45,9 @@ HOOKS
- applypatch-msg
- ~~~~~~~~~~~~~~
+ DESCRIPTION
+ -----------
+@@ -29,7 +29,7 @@ two blob objects, or changes between two files on disk.
+ 	further add to the index but you still haven't.  You can
+ 	stage these changes by using linkgit:git-add[1].
  
--This hook is invoked by 'git am'.  It takes a single
-+This hook is invoked by linkgit:git-am[1].  It takes a single
- parameter, the name of the file that holds the proposed commit
--log message.  Exiting with a non-zero status causes 'git am' to abort
-+log message.  Exiting with a non-zero status causes `git am` to abort
- before applying the patch.
+-'git diff' --no-index [--options] [--] [<path>...]::
++'git diff' [--options] --no-index [--] <path> <path>::
  
- The hook is allowed to edit the message file in place, and can
-@@ -61,7 +61,7 @@ The default 'applypatch-msg' hook, when enabled, runs the
- pre-applypatch
- ~~~~~~~~~~~~~~
- 
--This hook is invoked by 'git am'.  It takes no parameter, and is
-+This hook is invoked by linkgit:git-am[1].  It takes no parameter, and is
- invoked after the patch is applied, but before a commit is made.
- 
- If it exits with non-zero status, then the working tree will not be
-@@ -76,33 +76,33 @@ The default 'pre-applypatch' hook, when enabled, runs the
- post-applypatch
- ~~~~~~~~~~~~~~~
- 
--This hook is invoked by 'git am'.  It takes no parameter,
-+This hook is invoked by linkgit:git-am[1].  It takes no parameter,
- and is invoked after the patch is applied and a commit is made.
- 
- This hook is meant primarily for notification, and cannot affect
--the outcome of 'git am'.
-+the outcome of `git am`.
- 
- pre-commit
- ~~~~~~~~~~
- 
--This hook is invoked by 'git commit', and can be bypassed
-+This hook is invoked by linkgit:git-commit[1], and can be bypassed
- with the `--no-verify` option.  It takes no parameters, and is
- invoked before obtaining the proposed commit log message and
- making a commit.  Exiting with a non-zero status from this script
--causes the 'git commit' command to abort before creating a commit.
-+causes the `git commit` command to abort before creating a commit.
- 
- The default 'pre-commit' hook, when enabled, catches introduction
- of lines with trailing whitespaces and aborts the commit when
- such a line is found.
- 
--All the 'git commit' hooks are invoked with the environment
-+All the `git commit` hooks are invoked with the environment
- variable `GIT_EDITOR=:` if the command will not bring up an editor
- to modify the commit message.
- 
- prepare-commit-msg
- ~~~~~~~~~~~~~~~~~~
- 
--This hook is invoked by 'git commit' right after preparing the
-+This hook is invoked by linkgit:git-commit[1] right after preparing the
- default log message, and before the editor is started.
- 
- It takes one to three parameters.  The first is the name of the file
-@@ -114,7 +114,7 @@ commit is a merge or a `.git/MERGE_MSG` file exists); `squash`
- (if a `.git/SQUASH_MSG` file exists); or `commit`, followed by
- a commit SHA-1 (if a `-c`, `-C` or `--amend` option was given).
- 
--If the exit status is non-zero, 'git commit' will abort.
-+If the exit status is non-zero, `git commit` will abort.
- 
- The purpose of the hook is to edit the message file in place, and
- it is not suppressed by the `--no-verify` option.  A non-zero exit
-@@ -127,7 +127,7 @@ help message found in the commented portion of the commit template.
- commit-msg
- ~~~~~~~~~~
- 
--This hook is invoked by 'git commit' and 'git merge', and can be
-+This hook is invoked by linkgit:git-commit[1] and linkgit:git-merge[1], and can be
- bypassed with the `--no-verify` option.  It takes a single parameter,
- the name of the file that holds the proposed commit log message.
- Exiting with a non-zero status causes the command to abort.
-@@ -143,16 +143,16 @@ The default 'commit-msg' hook, when enabled, detects duplicate
- post-commit
- ~~~~~~~~~~~
- 
--This hook is invoked by 'git commit'. It takes no parameters, and is
-+This hook is invoked by linkgit:git-commit[1]. It takes no parameters, and is
- invoked after a commit is made.
- 
- This hook is meant primarily for notification, and cannot affect
--the outcome of 'git commit'.
-+the outcome of `git commit`.
- 
- pre-rebase
- ~~~~~~~~~~
- 
--This hook is called by 'git rebase' and can be used to prevent a
-+This hook is called by linkgit:git-rebase[1] and can be used to prevent a
- branch from getting rebased.  The hook may be called with one or
- two parameters.  The first parameter is the upstream from which
- the series was forked.  The second parameter is the branch being
-@@ -161,17 +161,17 @@ rebased, and is not set when rebasing the current branch.
- post-checkout
- ~~~~~~~~~~~~~
- 
--This hook is invoked when a 'git checkout' is run after having updated the
-+This hook is invoked when a linkgit:git-checkout[1] is run after having updated the
- worktree.  The hook is given three parameters: the ref of the previous HEAD,
- the ref of the new HEAD (which may or may not have changed), and a flag
- indicating whether the checkout was a branch checkout (changing branches,
- flag=1) or a file checkout (retrieving a file from the index, flag=0).
--This hook cannot affect the outcome of 'git checkout'.
-+This hook cannot affect the outcome of `git checkout`.
- 
--It is also run after 'git clone', unless the --no-checkout (-n) option is
-+It is also run after linkgit:git-clone[1], unless the `--no-checkout` (`-n`) option is
- used. The first parameter given to the hook is the null-ref, the second the
--ref of the new HEAD and the flag is always 1. Likewise for 'git worktree add'
--unless --no-checkout is used.
-+ref of the new HEAD and the flag is always 1. Likewise for `git worktree add`
-+unless `--no-checkout` is used.
- 
- This hook can be used to perform repository validity checks, auto-display
- differences from the previous HEAD if different, or set working dir metadata
-@@ -180,10 +180,10 @@ properties.
- post-merge
- ~~~~~~~~~~
- 
--This hook is invoked by 'git merge', which happens when a 'git pull'
-+This hook is invoked by linkgit:git-merge[1], which happens when a `git pull`
- is done on a local repository.  The hook takes a single parameter, a status
- flag specifying whether or not the merge being done was a squash merge.
--This hook cannot affect the outcome of 'git merge' and is not executed,
-+This hook cannot affect the outcome of `git merge` and is not executed,
- if the merge failed due to conflicts.
- 
- This hook can be used in conjunction with a corresponding pre-commit hook to
-@@ -194,10 +194,10 @@ for an example of how to do this.
- pre-push
- ~~~~~~~~
- 
--This hook is called by 'git push' and can be used to prevent a push from taking
--place.  The hook is called with two parameters which provide the name and
--location of the destination remote, if a named remote is not being used both
--values will be the same.
-+This hook is called by linkgit:git-push[1] and can be used to prevent
-+a push from taking place.  The hook is called with two parameters
-+which provide the name and location of the destination remote, if a
-+named remote is not being used both values will be the same.
- 
- Information about what is to be pushed is provided on the hook's standard
- input with lines of the form:
-@@ -216,7 +216,7 @@ SHA-1>` will be 40 `0`.  If the local commit was specified by something other
- than a name which could be expanded (such as `HEAD~`, or a SHA-1) it will be
- supplied as it was originally given.
- 
--If this hook exits with a non-zero status, 'git push' will abort without
-+If this hook exits with a non-zero status, `git push` will abort without
- pushing anything.  Information about why the push is rejected may be sent
- to the user by writing to standard error.
- 
-@@ -224,8 +224,8 @@ to the user by writing to standard error.
- pre-receive
- ~~~~~~~~~~~
- 
--This hook is invoked by 'git-receive-pack' when it reacts to
--'git push' and updates reference(s) in its repository.
-+This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
-+`git push` and updates reference(s) in its repository.
- Just before starting to update refs on the remote repository, the
- pre-receive hook is invoked.  Its exit status determines the success
- or failure of the update.
-@@ -246,7 +246,7 @@ updated. If the hook exits with zero, updating of individual refs can
- still be prevented by the <<update,'update'>> hook.
- 
- Both standard output and standard error output are forwarded to
--'git send-pack' on the other end, so you can simply `echo` messages
-+`git send-pack` on the other end, so you can simply `echo` messages
- for the user.
- 
- The number of push options given on the command line of
-@@ -265,8 +265,8 @@ linkgit:git-receive-pack[1] for some caveats.
- update
- ~~~~~~
- 
--This hook is invoked by 'git-receive-pack' when it reacts to
--'git push' and updates reference(s) in its repository.
-+This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
-+`git push` and updates reference(s) in its repository.
- Just before updating the ref on the remote repository, the update hook
- is invoked.  Its exit status determines the success or failure of
- the ref update.
-@@ -279,7 +279,7 @@ three parameters:
-  - and the new object name to be stored in the ref.
- 
- A zero exit from the update hook allows the ref to be updated.
--Exiting with a non-zero status prevents 'git-receive-pack'
-+Exiting with a non-zero status prevents `git receive-pack`
- from updating that ref.
- 
- This hook can be used to prevent 'forced' update on certain refs by
-@@ -299,7 +299,7 @@ membership. See linkgit:git-shell[1] for how you might use the login
- shell to restrict the user's access to only git commands.
- 
- Both standard output and standard error output are forwarded to
--'git send-pack' on the other end, so you can simply `echo` messages
-+`git send-pack` on the other end, so you can simply `echo` messages
- for the user.
- 
- The default 'update' hook, when enabled--and with
-@@ -310,8 +310,8 @@ unannotated tags to be pushed.
- post-receive
- ~~~~~~~~~~~~
- 
--This hook is invoked by 'git-receive-pack' when it reacts to
--'git push' and updates reference(s) in its repository.
-+This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
-+`git push` and updates reference(s) in its repository.
- It executes on the remote repository once after all the refs have
- been updated.
- 
-@@ -320,7 +320,7 @@ arguments, but gets the same information as the
- <<pre-receive,'pre-receive'>>
- hook does on its standard input.
- 
--This hook does not affect the outcome of 'git-receive-pack', as it
-+This hook does not affect the outcome of `git receive-pack`, as it
- is called after the real work is done.
- 
- This supersedes the <<post-update,'post-update'>> hook in that it gets
-@@ -328,7 +328,7 @@ both old and new values of all the refs in addition to their
- names.
- 
- Both standard output and standard error output are forwarded to
--'git send-pack' on the other end, so you can simply `echo` messages
-+`git send-pack` on the other end, so you can simply `echo` messages
- for the user.
- 
- The default 'post-receive' hook is empty, but there is
-@@ -349,8 +349,8 @@ will be set to zero, `GIT_PUSH_OPTION_COUNT=0`.
- post-update
- ~~~~~~~~~~~
- 
--This hook is invoked by 'git-receive-pack' when it reacts to
--'git push' and updates reference(s) in its repository.
-+This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
-+`git push` and updates reference(s) in its repository.
- It executes on the remote repository once after all the refs have
- been updated.
- 
-@@ -358,7 +358,7 @@ It takes a variable number of parameters, each of which is the
- name of ref that was actually updated.
- 
- This hook is meant primarily for notification, and cannot affect
--the outcome of 'git-receive-pack'.
-+the outcome of `git receive-pack`.
- 
- The 'post-update' hook can tell what are the heads that were pushed,
- but it does not know what their original and updated values are,
-@@ -368,20 +368,20 @@ updated values of the refs. You might consider it instead if you need
- them.
- 
- When enabled, the default 'post-update' hook runs
--'git update-server-info' to keep the information used by dumb
-+`git update-server-info` to keep the information used by dumb
- transports (e.g., HTTP) up to date.  If you are publishing
- a Git repository that is accessible via HTTP, you should
- probably enable this hook.
- 
- Both standard output and standard error output are forwarded to
--'git send-pack' on the other end, so you can simply `echo` messages
-+`git send-pack` on the other end, so you can simply `echo` messages
- for the user.
- 
- push-to-checkout
- ~~~~~~~~~~~~~~~~
- 
--This hook is invoked by 'git-receive-pack' when it reacts to
--'git push' and updates reference(s) in its repository, and when
-+This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
-+`git push` and updates reference(s) in its repository, and when
- the push tries to update the branch that is currently checked out
- and the `receive.denyCurrentBranch` configuration variable is set to
- `updateInstead`.  Such a push by default is refused if the working
-@@ -400,8 +400,8 @@ when the tip of the current branch is updated to the new commit, and
- exit with a zero status.
- 
- For example, the hook can simply run `git read-tree -u -m HEAD "$1"`
--in order to emulate 'git fetch' that is run in the reverse direction
--with `git push`, as the two-tree form of `read-tree -u -m` is
-+in order to emulate `git fetch` that is run in the reverse direction
-+with `git push`, as the two-tree form of `git read-tree -u -m` is
- essentially the same as `git checkout` that switches branches while
- keeping the local changes in the working tree that do not interfere
- with the difference between the branches.
-@@ -410,15 +410,16 @@ with the difference between the branches.
- pre-auto-gc
- ~~~~~~~~~~~
- 
--This hook is invoked by 'git gc --auto'. It takes no parameter, and
--exiting with non-zero status from this script causes the 'git gc --auto'
--to abort.
-+This hook is invoked by `git gc --auto` (see linkgit:git-gc[1]). It
-+takes no parameter, and exiting with non-zero status from this script
-+causes the `git gc --auto` to abort.
- 
- post-rewrite
- ~~~~~~~~~~~~
- 
--This hook is invoked by commands that rewrite commits (`git commit
----amend`, 'git-rebase'; currently 'git-filter-branch' does 'not' call
-+This hook is invoked by commands that rewrite commits
-+(linkgit:git-commit[1] when called with `--amend` and
-+linkgit:git-rebase[1]; currently `git filter-branch` does 'not' call
- it!).  Its first argument denotes the command it was invoked by:
- currently one of `amend` or `rebase`.  Further command-dependent
- arguments may be passed in the future.
-@@ -450,16 +451,16 @@ processed by rebase.
- sendemail-validate
- ~~~~~~~~~~~~~~~~~~
- 
--This hook is invoked by 'git send-email'.  It takes a single parameter,
-+This hook is invoked by linkgit:git-send-email[1].  It takes a single parameter,
- the name of the file that holds the e-mail to be sent.  Exiting with a
--non-zero status causes 'git send-email' to abort before sending any
-+non-zero status causes `git send-email` to abort before sending any
- e-mails.
- 
- fsmonitor-watchman
- ~~~~~~~~~~~~~~~~~~
- 
--This hook is invoked when the configuration option core.fsmonitor is
--set to .git/hooks/fsmonitor-watchman.  It takes two arguments, a version
-+This hook is invoked when the configuration option `core.fsmonitor` is
-+set to `.git/hooks/fsmonitor-watchman`.  It takes two arguments, a version
- (currently 1) and the time in elapsed nanoseconds since midnight,
- January 1, 1970.
- 
-@@ -478,7 +479,7 @@ directories are checked for untracked files based on the path names
- given.
- 
- An optimized way to tell git "all files have changed" is to return
--the filename '/'.
-+the filename `/`.
- 
- The exit status determines whether git will use the data from the
- hook to limit its search.  On error, it will fall back to verifying
+ 	This form is to compare the given two paths on the
+ 	filesystem.  You can omit the `--no-index` option when
 -- 
 2.16.2
 
