@@ -2,266 +2,304 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17CA32023D
-	for <e@80x24.org>; Thu,  3 May 2018 11:05:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2FDB2023D
+	for <e@80x24.org>; Thu,  3 May 2018 11:18:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751190AbeECLFK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 07:05:10 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:36414 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750920AbeECLFD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 07:05:03 -0400
-Received: by mail-qt0-f195.google.com with SMTP id q6-v6so22260726qtn.3
-        for <git@vger.kernel.org>; Thu, 03 May 2018 04:05:03 -0700 (PDT)
+        id S1751101AbeECLSc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 07:18:32 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:40548 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751075AbeECLSa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 07:18:30 -0400
+Received: by mail-wm0-f50.google.com with SMTP id j5so29725713wme.5
+        for <git@vger.kernel.org>; Thu, 03 May 2018 04:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ztaXQqRx1a6POp4n9bBpJa3BCi7cVS/9C/PiABQso+c=;
-        b=QeYcWLWSUx3VCD3wrd3J0lWIg4OiFI+QUvWbO0HCo/IfkJahe0I7wjvcLdsxwdTOYB
-         WRkJDdpyBia7zrYP0twFFfFmePa++6US/ItkNZshpEL8ZEgjxM7XHSLJQYBdtDmCl/Py
-         0vmxaLFnQbn13FVTlDWiKrgE1uTEztOfPhHm9memJX9bMYWzT3VP/a9xD4WBGabMKyIv
-         E5lHplxAUMpYWkfmEinGljQfcFkqWr7Yb7Ehd8dYmQS110RdU/PWNC2DhQ4b/Wq1lIkO
-         bUdWI4N1VQpI9yUpkU67e5f6IWE+eY0hz9Qhuc+J3IEhrBXyLi5sxsciJC4p+3RoK5O0
-         Dozg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=+Op4zoVvgqvp6+0o/eKP+BjMwGx5uuh/kjqD88pGkQQ=;
+        b=J/e7goGdbWZNNJkusyY+2WRYIzCSvCxF02MOx7xFoqoUJ35NWAjAnjTIHLupoFW69S
+         zyl5fNL4m/lsAZ5PhMjApcIcwdDSKmkdeKwHT4JNgStfXlnLaNiw0taHMaWhchAkOhgc
+         MvimK/rV5tdsPnjNp6VxN28Ak87Ud8HM+umXvWkOa6+PZkC+qF4jQe1I0LHNvUhBiSk4
+         /y4J0z6dIWx+XIanWM1le4ebRydjAdFQpbQuRv/Yv8jbfLYMWTuaMWmitSUWjpmZrqNi
+         nPtPcZGVpCsZXAl+ngThDQ/h9Yv9BtwM6BF9kt2AhhqmZueseHHZ1Gi0X8sowsOpzluR
+         /fpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ztaXQqRx1a6POp4n9bBpJa3BCi7cVS/9C/PiABQso+c=;
-        b=cAh3vXBHmhU8CqoA5wL1QIacwpEoRryl3jCSjHvieoZdLx9klSsVloqX0YhsOAqxAT
-         Y0iIoHFpJj8Z7+dAUUbC5UhPU5FPGMNKVfPcOlNjxdZQuajsw7fJferivfWs6qttsf7a
-         uJsFW8CC9YLIt1Dqn2BiGkpIEjXW2s8/pTa5F5G7lTEds0NSNP9hNX5BoDDeetFurYUi
-         TaA803zS1u4VuII7nZ2N/jUW2MtR8zzDFstjqm6ZiQ6DOkYFVYXBtTymSKww5Aj7HYmg
-         JU4aAGMs2WQC03UgQrRA4eNWec9TxGZ1toidnb3AFKsY8OokihYvcbN4bQ2X3XbRD0yp
-         G0Rw==
-X-Gm-Message-State: ALQs6tDSZI8E81G1QXfc9PVk5DJFb8cf4JEAe/2dwZyy4hjWNxAVjPcz
-        VcImkF/Hh7X8A0QHobaOZM+TaBnK
-X-Google-Smtp-Source: AB8JxZpJ6mK3jc6JWbmQQ8X5UZeulauQPr6ciuf+fvKvRPeaQ7/1A8krzlRYUZ12Ehmt6HJtL091nQ==
-X-Received: by 2002:a0c:91c2:: with SMTP id r2-v6mr19119042qvr.43.1525345502437;
-        Thu, 03 May 2018 04:05:02 -0700 (PDT)
-Received: from localhost.localdomain (64-121-142-251.s4089.c3-0.eas-cbr1.atw-eas.pa.cable.rcncustomer.com. [64.121.142.251])
-        by smtp.gmail.com with ESMTPSA id o14-v6sm12840833qta.23.2018.05.03.04.05.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 03 May 2018 04:05:01 -0700 (PDT)
-From:   Casey Fitzpatrick <kcghost@gmail.com>
-To:     git@vger.kernel.org, sbeller@google.com, sunshine@sunshineco.com,
-        gitster@pobox.com
-Cc:     Casey Fitzpatrick <kcghost@gmail.com>
-Subject: [PATCH v4 3/3] submodule: add --dissociate option to add/update commands
-Date:   Thu,  3 May 2018 06:53:46 -0400
-Message-Id: <20180503105346.1758-4-kcghost@gmail.com>
-X-Mailer: git-send-email 2.17.0.1.ge0414f29c.dirty
-In-Reply-To: <20180503105346.1758-1-kcghost@gmail.com>
-References: <20180503105346.1758-1-kcghost@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=+Op4zoVvgqvp6+0o/eKP+BjMwGx5uuh/kjqD88pGkQQ=;
+        b=ZnutdXPvpMF8Y6f2Ts7VxadhClabk9ZIkgOFHFk+WEhAeZ1wgh8mV/bNVa2c4cLZhk
+         EaOyy8zltgMofKFDs1OBE9oBvirri/LKFt42Qux5gal+6e1QvKdaUL25XHMVTCzYXO0g
+         g9WWgLep1jwuIAXj7b6XHDm8Z9W2w5umpUcQFn4gKSDZt+DdyGvYF3nX/Dx+upqxCOWU
+         mxAIC7dq+Eergc+kHyBwwQA6APQ5flJXv7rOf89Bb8//IsS1xWtEQU+1OGe8Yay3lz7x
+         JUtBb7uG7mwV2gX6ySTLMtgHC2e5kcncBEGefJCOg9LyILXjNEFCkybc9/jZBW0+ijFe
+         3hlA==
+X-Gm-Message-State: ALQs6tD23XjXcB21dW+w7lHUIlNHOvQI9aT8aVOBURVHDV46D/YMmWpf
+        jqXcFlBCwJm4fKnCW3CFq4Y=
+X-Google-Smtp-Source: AB8JxZrVfo0Tvpcw8VSbmYTl07FUs89OqM4E+/ymMzdIeMPcejEHqToRglu8sTgn32I/zntv8TOF+A==
+X-Received: by 10.28.177.9 with SMTP id a9mr9386160wmf.18.1525346309203;
+        Thu, 03 May 2018 04:18:29 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egn45.neoplus.adsl.tpnet.pl. [83.21.77.45])
+        by smtp.gmail.com with ESMTPSA id 12sm20652415wmn.27.2018.05.03.04.18.26
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 03 May 2018 04:18:27 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v5 00/11] Compute and consume generation numbers
+References: <20180425143735.240183-1-dstolee@microsoft.com>
+        <20180501124652.155781-1-dstolee@microsoft.com>
+Date:   Thu, 03 May 2018 13:18:24 +0200
+In-Reply-To: <20180501124652.155781-1-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Tue, 1 May 2018 12:47:03 +0000")
+Message-ID: <86sh79yolb.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add --dissociate option to add and update commands, both clone helper commands
-that already have the --reference option --dissociate pairs with.
+Derrick Stolee <dstolee@microsoft.com> writes:
 
-Signed-off-by: Casey Fitzpatrick <kcghost@gmail.com>
----
- Documentation/git-submodule.txt | 10 +++++++++-
- builtin/submodule--helper.c     | 16 +++++++++++++---
- git-submodule.sh                | 10 +++++++++-
- t/t7408-submodule-reference.sh  | 17 +++++++++++++++++
- 4 files changed, 48 insertions(+), 5 deletions(-)
+> Most of the changes from v4 are cosmetic, but there is one new commit:
+>
+> 	commit: use generation number in remove_redundant()
+>
+> Other changes are non-functional, but do clarify things.
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index d1ebe32e8..a75b95043 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -369,7 +369,15 @@ the submodule itself.
- 	this option will be passed to the linkgit:git-clone[1] command.
- +
- *NOTE*: Do *not* use this option unless you have read the note
--for linkgit:git-clone[1]'s `--reference` and `--shared` options carefully.
-+for linkgit:git-clone[1]'s `--reference`, `--shared`, and `--dissociate`
-+options carefully.
-+
-+--dissociate::
-+	This option is only valid for add and update commands.  These
-+	commands sometimes need to clone a remote repository. In this case,
-+	this option will be passed to the linkgit:git-clone[1] command.
-++
-+*NOTE*: see the NOTE for the `--reference` option.
- 
- --recursive::
- 	This option is only valid for foreach, update, status and sync commands.
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 6ba8587b6..a85b30419 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1056,7 +1056,7 @@ static int module_deinit(int argc, const char **argv, const char *prefix)
- }
- 
- static int clone_submodule(const char *path, const char *gitdir, const char *url,
--			   const char *depth, struct string_list *reference,
-+			   const char *depth, struct string_list *reference, int dissociate,
- 			   int quiet, int progress)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
-@@ -1075,6 +1075,8 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
- 			argv_array_pushl(&cp.args, "--reference",
- 					 item->string, NULL);
- 	}
-+	if (dissociate)
-+		argv_array_push(&cp.args, "--dissociate");
- 	if (gitdir && *gitdir)
- 		argv_array_pushl(&cp.args, "--separate-git-dir", gitdir, NULL);
- 
-@@ -1190,6 +1192,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	char *p, *path = NULL, *sm_gitdir;
- 	struct strbuf sb = STRBUF_INIT;
- 	struct string_list reference = STRING_LIST_INIT_NODUP;
-+	int dissociate = 0;
- 	char *sm_alternate = NULL, *error_strategy = NULL;
- 
- 	struct option module_clone_options[] = {
-@@ -1208,6 +1211,8 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 		OPT_STRING_LIST(0, "reference", &reference,
- 			   N_("repo"),
- 			   N_("reference repository")),
-+		OPT_BOOL(0, "dissociate", &dissociate,
-+			   N_("use --reference only while cloning")),
- 		OPT_STRING(0, "depth", &depth,
- 			   N_("string"),
- 			   N_("depth for shallow clones")),
-@@ -1247,7 +1252,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 
- 		prepare_possible_alternates(name, &reference);
- 
--		if (clone_submodule(path, sm_gitdir, url, depth, &reference,
-+		if (clone_submodule(path, sm_gitdir, url, depth, &reference, dissociate,
- 				    quiet, progress))
- 			die(_("clone of '%s' into submodule path '%s' failed"),
- 			    url, path);
-@@ -1300,6 +1305,7 @@ struct submodule_update_clone {
- 	int quiet;
- 	int recommend_shallow;
- 	struct string_list references;
-+	int dissociate;
- 	const char *depth;
- 	const char *recursive_prefix;
- 	const char *prefix;
-@@ -1315,7 +1321,7 @@ struct submodule_update_clone {
- 	int failed_clones_nr, failed_clones_alloc;
- };
- #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
--	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, \
-+	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, \
- 	NULL, NULL, NULL, \
- 	STRING_LIST_INIT_DUP, 0, NULL, 0, 0}
- 
-@@ -1442,6 +1448,8 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 		for_each_string_list_item(item, &suc->references)
- 			argv_array_pushl(&child->args, "--reference", item->string, NULL);
- 	}
-+	if (suc->dissociate)
-+		argv_array_push(&child->args, "--dissociate");
- 	if (suc->depth)
- 		argv_array_push(&child->args, suc->depth);
- 
-@@ -1575,6 +1583,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 			   N_("rebase, merge, checkout or none")),
- 		OPT_STRING_LIST(0, "reference", &suc.references, N_("repo"),
- 			   N_("reference repository")),
-+		OPT_BOOL(0, "dissociate", &suc.dissociate,
-+			   N_("use --reference only while cloning")),
- 		OPT_STRING(0, "depth", &suc.depth, "<depth>",
- 			   N_("Create a shallow clone truncated to the "
- 			      "specified number of revisions")),
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 39c241a1d..1fddc098f 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -42,6 +42,7 @@ prefix=
- custom_name=
- depth=
- progress=
-+dissociate=
- 
- die_if_unmatched ()
- {
-@@ -128,6 +129,9 @@ cmd_add()
- 		--reference=*)
- 			reference_path="${1#--reference=}"
- 			;;
-+		--dissociate)
-+			dissociate=1
-+			;;
- 		--name)
- 			case "$2" in '') usage ;; esac
- 			custom_name=$2
-@@ -258,7 +262,7 @@ or you are unsure what this means choose another name with the '--name' option."
- 				eval_gettextln "Reactivating local git directory for submodule '\$sm_name'."
- 			fi
- 		fi
--		git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"--progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${depth:+"$depth"} || exit
-+		git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"--progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
- 		(
- 			sanitize_submodule_env
- 			cd "$sm_path" &&
-@@ -493,6 +497,9 @@ cmd_update()
- 		--reference=*)
- 			reference="$1"
- 			;;
-+		--dissociate)
-+			dissociate=1
-+			;;
- 		-m|--merge)
- 			update="merge"
- 			;;
-@@ -550,6 +557,7 @@ cmd_update()
- 		${prefix:+--recursive-prefix "$prefix"} \
- 		${update:+--update "$update"} \
- 		${reference:+"$reference"} \
-+		${dissociate:+"--dissociate"} \
- 		${depth:+--depth "$depth"} \
- 		$recommend_shallow \
- 		$jobs \
-diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
-index e159fc503..82656747f 100755
---- a/t/t7408-submodule-reference.sh
-+++ b/t/t7408-submodule-reference.sh
-@@ -59,6 +59,16 @@ test_expect_success 'submodule add --reference uses alternates' '
- 	test_alternate_is_used super/.git/modules/sub/objects/info/alternates super/sub
- '
- 
-+test_expect_success 'submodule add --reference with --dissociate doesnt use alternates' '
-+	(
-+		cd super &&
-+		git submodule add --reference ../B --dissociate "file://$base_dir/A" sub-dissociate &&
-+		git commit -m B-super-added &&
-+		git repack -ad
-+	) &&
-+	test_path_is_missing super/.git/modules/sub-dissociate/objects/info/alternates
-+'
-+
- test_expect_success 'that reference gets used with add' '
- 	(
- 		cd super/sub &&
-@@ -82,6 +92,13 @@ test_expect_success 'updating superproject keeps alternates' '
- 	test_alternate_is_used super-clone/.git/modules/sub/objects/info/alternates super-clone/sub
- '
- 
-+test_expect_success 'updating superproject with --dissociate doesnt keep alternates' '
-+	test_when_finished "rm -rf super-clone" &&
-+	git clone super super-clone &&
-+	git -C super-clone submodule update --init --reference ../B --dissociate &&
-+	test_path_is_missing super-clone/.git/modules/sub/objects/info/alternates
-+'
-+
- test_expect_success 'submodules use alternates when cloning a superproject' '
- 	test_when_finished "rm -rf super-clone" &&
- 	git clone --reference super --recursive super super-clone &&
--- 
-2.17.0.1.ge0414f29c.dirty
+I wonder if out perf framework in t/perf could help here to show
+performance gains for the whole series.  Though it may not include
+operations that are most helped by this one.
 
+For commit-graph feature if would be nice, if feasible, to see changes
+in performance from before version, checking both state where feature is
+enabled to see the gains, and state where feature is disabled to see if
+there are no performance regressions.
+
+>
+> Inter-diff from v4:
+
+O.K., now to commenting on inter-changes.
+
+> diff --git a/Documentation/technical/commit-graph.txt b/Documentation/tec=
+hnical/commit-graph.txt
+> index d9f2713efa..e1a883eb46 100644
+> --- a/Documentation/technical/commit-graph.txt
+> +++ b/Documentation/technical/commit-graph.txt
+> @@ -125,9 +125,10 @@ Future Work
+>    walks aware of generation numbers to gain the performance benefits they
+>    enable. This will mostly be accomplished by swapping a commit-date-ord=
+ered
+>    priority queue with one ordered by generation number. The following
+> -  operation is an important candidate:
+> +  operations are important candidates:
+>
+>      - 'log --topo-order'
+> +    - 'tag --merged'
+>
+>  - Currently, parse_commit_gently() requires filling in the root tree
+>    object for a commit. This passes through lookup_tree() and consequently
+
+O.K., this is about discussion in "branch --contains / tag --merged
+inconsistency" thread:
+
+  https://public-inbox.org/git/87fu3g67ry.fsf@lant.ki.iif.hu/t/#u
+
+> diff --git a/commit-graph.c b/commit-graph.c
+> index aebd242def..a8c337dd77 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -248,6 +248,7 @@ static struct commit_list **insert_parent_or_die(stru=
+ct commit_graph *g,
+>  static void fill_commit_graph_info(struct commit *item, struct commit_gr=
+aph *g, uint32_t pos)
+>  {
+>         const unsigned char *commit_data =3D g->chunk_commit_data + GRAPH=
+_DATA_WIDTH * pos;
+> +       item->graph_pos =3D pos;
+>         item->generation =3D get_be32(commit_data + g->hash_len + 8) >> 2;
+>  }
+>
+
+Minor bugfix.
+
+> @@ -454,8 +455,7 @@ static void write_graph_chunk_data(struct hashfile *f=
+, int hash_len,
+>                 else
+>                         packedDate[0] =3D 0;
+>
+> -               if ((*list)->generation !=3D GENERATION_NUMBER_INFINITY)
+> -                       packedDate[0] |=3D htonl((*list)->generation << 2=
+);
+> +               packedDate[0] |=3D htonl((*list)->generation << 2);
+>
+>                 packedDate[1] =3D htonl((*list)->date);
+>                 hashwrite(f, packedDate, 8);
+
+Minor bugfix.
+
+> @@ -589,18 +589,17 @@ static void close_reachable(struct packed_oid_list =
+*oids)
+>         }
+>  }
+>
+> -static void compute_generation_numbers(struct commit** commits,
+> -                                      int nr_commits)
+> +static void compute_generation_numbers(struct packed_commit_list* commit=
+s)
+>  {
+>         int i;
+>         struct commit_list *list =3D NULL;
+>
+> -       for (i =3D 0; i < nr_commits; i++) {
+> -               if (commits[i]->generation !=3D GENERATION_NUMBER_INFINIT=
+Y &&
+> -                   commits[i]->generation !=3D GENERATION_NUMBER_ZERO)
+> +       for (i =3D 0; i < commits->nr; i++) {
+> +               if (commits->list[i]->generation !=3D GENERATION_NUMBER_I=
+NFINITY &&
+> +                   commits->list[i]->generation !=3D GENERATION_NUMBER_Z=
+ERO)
+>                         continue;
+>
+> -               commit_list_insert(commits[i], &list);
+> +               commit_list_insert(commits->list[i], &list);
+>                 while (list) {
+>                         struct commit *current =3D list->item;
+>                         struct commit_list *parent;
+
+Refactoring: signature change from pair of struct commit** + int to
+struct packed_commit_list*.
+
+I think that it makes code a bit uglier for no gain, but that is just my
+personal opinion; it is a matter of taste.
+
+> @@ -621,10 +620,10 @@ static void compute_generation_numbers(struct commi=
+t** commits,
+>                         if (all_parents_computed) {
+>                                 current->generation =3D max_generation + =
+1;
+>                                 pop_commit(&list);
+> -                       }
+>
+> -                       if (current->generation > GENERATION_NUMBER_MAX)
+> -                               current->generation =3D GENERATION_NUMBER=
+_MAX;
+> +                               if (current->generation > GENERATION_NUMB=
+ER_MAX)
+> +                                       current->generation =3D GENERATIO=
+N_NUMBER_MAX;
+> +                       }
+>                 }
+>         }
+>  }
+
+Bugfix (though it didn't result in wrong information writen out, just in
+inconsistent state in the middle of computation).
+
+> @@ -752,7 +751,7 @@ void write_commit_graph(const char *obj_dir,
+>         if (commits.nr >=3D GRAPH_PARENT_MISSING)
+>                 die(_("too many commits to write graph"));
+>
+> -       compute_generation_numbers(commits.list, commits.nr);
+> +       compute_generation_numbers(&commits);
+>
+>         graph_name =3D get_commit_graph_filename(obj_dir);
+>         fd =3D hold_lock_file_for_update(&lk, graph_name, 0);
+
+The other side of signature change.
+
+> diff --git a/commit.c b/commit.c
+> index e2e16ea1a7..5064db4e61 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -835,7 +835,9 @@ static struct commit_list *paint_down_to_common(struc=
+t commit *one, int n,
+>                 int flags;
+>
+>                 if (commit->generation > last_gen)
+> -                       BUG("bad generation skip");
+> +                       BUG("bad generation skip %8x > %8x at %s",
+> +                           commit->generation, last_gen,
+> +                           oid_to_hex(&commit->object.oid));
+>                 last_gen =3D commit->generation;
+>
+>                 if (commit->generation < min_generation)
+
+More detailed BUG() message, always nice to have.
+
+> @@ -947,6 +949,7 @@ static int remove_redundant(struct commit **array, in=
+t cnt)
+>                 parse_commit(array[i]);
+>         for (i =3D 0; i < cnt; i++) {
+>                 struct commit_list *common;
+> +               uint32_t min_generation =3D GENERATION_NUMBER_INFINITY;
+>
+>                 if (redundant[i])
+>                         continue;
+> @@ -955,8 +958,12 @@ static int remove_redundant(struct commit **array, i=
+nt cnt)
+>                                 continue;
+>                         filled_index[filled] =3D j;
+>                         work[filled++] =3D array[j];
+> +
+> +                       if (array[j]->generation < min_generation)
+> +                               min_generation =3D array[j]->generation;
+>                 }
+> -               common =3D paint_down_to_common(array[i], filled, work, 0=
+);
+> +               common =3D paint_down_to_common(array[i], filled, work,
+> +                                             min_generation);
+>                 if (array[i]->object.flags & PARENT2)
+>                         redundant[i] =3D 1;
+>                 for (j =3D 0; j < filled; j++)
+
+New commit in series.  Change looks quite short, gives measurable
+performance gains (in appropriate case).
+
+> @@ -1073,7 +1080,7 @@ int in_merge_bases_many(struct commit *commit, int =
+nr_reference, struct commit *
+>         for (i =3D 0; i < nr_reference; i++) {
+>                 if (parse_commit(reference[i]))
+>                         return ret;
+> -               if (min_generation > reference[i]->generation)
+> +               if (reference[i]->generation < min_generation)
+>                         min_generation =3D reference[i]->generation;
+>         }
+>
+>
+
+Style change.
+
+> -- >8 --
+>
+> Derrick Stolee (11):
+>   ref-filter: fix outdated comment on in_commit_list
+>   commit: add generation number to struct commmit
+>   commit-graph: compute generation numbers
+>   commit: use generations in paint_down_to_common()
+>   commit-graph: always load commit-graph information
+>   ref-filter: use generation number for --contains
+>   commit: use generation numbers for in_merge_bases()
+>   commit: add short-circuit to paint_down_to_common()
+>   commit: use generation number in remove_redundant()
+>   merge: check config before loading commits
+>   commit-graph.txt: update design document
+
+It looks like the series is maturing nicely.
+
+Best,
+--=20
+Jakub Nar=C4=99bski
