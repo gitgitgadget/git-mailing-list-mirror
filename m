@@ -2,105 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53517200B9
-	for <e@80x24.org>; Thu,  3 May 2018 21:51:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1646D200B9
+	for <e@80x24.org>; Thu,  3 May 2018 22:00:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751276AbeECVvQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 17:51:16 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:34911 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751190AbeECVvP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 17:51:15 -0400
-Received: by mail-wm0-f44.google.com with SMTP id o78-v6so1423751wmg.0
-        for <git@vger.kernel.org>; Thu, 03 May 2018 14:51:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+nmpjJH91rlFAXTwhh5SXXUFLvVbE/eCN08an6VkIB4=;
-        b=RFKqW6TdWraHHFIrqGahgw5SMlcV/ty8xv2Cc82QjmJ75QjqxI9o3XtsxfhvQ2Pn3k
-         Hvkwy61F7TFEIngLLsUpfUjK3dq8vW6SoRjlDRMhLjax/szSkIycxjVsJzL1zCMMSbSp
-         nABK6UhX9um5YgI8OG3+0sR3FqNSTsPo1vGsNCIU2sDbYohBd24qrPckPdv3a7+53XV3
-         WT6u1copRQVVDQNqOTomu7oTpG9gcSd5y9b2I03txs/1giVYMy08V82VCbSCOz0u8/5t
-         m9GYT/RA9JiTCSx/CwS14v7Dwx/LWXni12rGN1d8AfZXoeIR/ngOd9MyTstZSxWPsgy1
-         taqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+nmpjJH91rlFAXTwhh5SXXUFLvVbE/eCN08an6VkIB4=;
-        b=r8kthMy21JOIrq4gdirAQjlyeecJixyUBfJ9vXS1ai9Z6IOVeQfPRtVcvItS/QTmr/
-         kicxGGNLvfrB4qCHAIoCVzbYRmf9ZAPXZvRsgK0kenn6AvOmBWbcSxMo9Wifyzht3jWd
-         qTQy8gtD4+XvHFC7n35dnlYWa0Ql5v2E/LlMbxutDEDiM23fgNRwAJxVc3iQ3aud+avr
-         kjUbaEa2Oyr4tX6chZd3lHaNMFpMzPDddltKAN45LbHvnrgGolv2geDLJKzjEHv/rJED
-         Pmx82wigfj/LWAJEEbr+FMWL/SnRIzi2e7YCq2DoXoO+IYpnZu+SOE+WQ97wIhcAdBrp
-         WMaw==
-X-Gm-Message-State: ALQs6tBbPtgLrzYWVwVEOCfow0R+lfSR+E5agXR7FCWsnx5KUQn+7rYb
-        to/HX2Tay8YV/1lpBGC+h7uO5/202iXPsvPqu/0=
-X-Google-Smtp-Source: AB8JxZov8vBbscBevA2Iq3Vsii2hO0ATRB+7VxiQTuZ928J0/CY7Ml0IcS9uufbUXi8LXNZf5tIUVSrECBJ0hi4M6fg=
-X-Received: by 2002:a50:cd45:: with SMTP id d5-v6mr32271534edj.118.1525384274455;
- Thu, 03 May 2018 14:51:14 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.80.234.135 with HTTP; Thu, 3 May 2018 14:50:54 -0700 (PDT)
-In-Reply-To: <87po2cy5qd.fsf@evledraar.gmail.com>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <87po2cy5qd.fsf@evledraar.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 3 May 2018 14:50:54 -0700
-Message-ID: <CA+P7+xrHeAtYjOCNd28t3Kv7G0hsvdVm+dwyVWuGx=XjS3nskQ@mail.gmail.com>
-Subject: Re: [PATCH 00/18] Add `branch-diff`, a `tbdiff` lookalike
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+        id S1750942AbeECWAh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 18:00:37 -0400
+Received: from mout.gmx.net ([212.227.17.21]:51619 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750829AbeECWAh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 18:00:37 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MK0bZ-1fFBDk3IzF-001Pod; Fri, 04
+ May 2018 00:00:29 +0200
+Date:   Fri, 4 May 2018 00:00:29 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Stefan Beller <sbeller@google.com>
+cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH 03/18] branch-diff: first rudimentary implementation
+In-Reply-To: <CAGZ79kZQ+mq1O_sL11jC4_Lt18nO6b_6pSPBahOqyZ+izrRm7w@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1805032352380.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de> <CAGZ79kYzZkdZKdR4hMK0V6D6=cm4damct01MGidGA0g-dtW+gQ@mail.gmail.com> <nycvar.QRO.7.76.6.1805032246040.77@tvgsbejvaqbjf.bet>
+ <CAGZ79kZQ+mq1O_sL11jC4_Lt18nO6b_6pSPBahOqyZ+izrRm7w@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-1251477679-1525384831=:77"
+X-Provags-ID: V03:K1:aMx+V0E2rnRZu78grvT2TNBedtjasq2dzPiftNP+SqtC7f4hwQw
+ oXiL8bxVyAtpVIzJ4UV/lwpfibn6AOHXe4maOlQHxMSKvItSdGYKjygKGdLjz93NdyhY/WM
+ LsQOAgdsfkjSaLeE+Y9fBxM1YNKKieIRU/uUGEGX4E01kIBApeAo/NOhL+7PWvKsXwfIXwe
+ F5N+aHmEfpfNQDSIA6buA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ccpOmG2kOV8=:DlJRo3BEzUWnW/xrAPkr5E
+ mCW4QC5DyteMxJfAr+fJwUXxWdvBVQ9o6nx60DW0ugP58WjsKwZkrbMEhaYVsOkTU/WqjA3rO
+ ZH5rP71LwD6T5ERXwyTItqIMNeEJNNSaouj7mYCd7BWGwghM6pue26jFcqIHbWnKg8Lgdr3/S
+ mthRnCT+SOgUJV1XdbvLMJlUsGw0991GfvuIz/ar/1pAQ4Z0IrLbwpgYKoV+cPgL+MOK80CE9
+ ejs6c+TremZmLJ9Eu6/h1UG6Boj+jjaICV09ypolb0/fR5DYKYM/diQjWa7UOd9qIPZZR4+6Q
+ Hq9QDpOI2l46dF+bUDcP+UZcN5ce42z5Vm7hUFcxEKLDMJpH6CFwHdghtVLxT+2rHGDKkROyK
+ HYliGalVnw5d55lyrCEWJ0pkXtJcAiCre0aae4PQxJ1P/S2At738f3BzYldF4IOYObqvzSi1O
+ ZXDvhLTylFOLyHuMVfw+6lsoLrbn6DDlNiJvx+ucbkm4ou2FC6hs694EHdqMngtcWbZcue3Ri
+ P7b8T03yYHkcRSqgNmwQ+/FI0ie0i+O7bCtRKfrFkKLoMyeo0oD9XjweprDtAJ03EEiiZnivw
+ CKKGbZXXnvsQ5eCx+xg9XFPDu5sCigns+6w/wFB38SZ0rp4LdYGSRcwDo2gSfFepDCLrUDefy
+ QBeuiqid/xdSgPu+l4YSb6v3Jd8MesQhLC4XPGTFmG20Ho2QLJMqTkMg3N67pKjsAb6O5luE8
+ C0UfTG0cNX4sjW08GUVpbAbeTYeAa4KHlna377GEJfgXp6Pwi3ng1sO6AWANFZslL9FT+dy89
+ ijHlxeo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 3, 2018 at 11:05 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Thu, May 03 2018, Johannes Schindelin wrote:
->
->> The incredibly useful `git-tbdiff` tool to compare patch series (say, to=
- see
->> what changed between two iterations sent to the Git mailing list) is sli=
-ghtly
->> less useful for this developer due to the fact that it requires the `hun=
-garian`
->> and `numpy` Python packages which are for some reason really hard to bui=
-ld in
->> MSYS2. So hard that I even had to give up, because it was simply easier =
-to
->> reimplement the whole shebang as a builtin command.
->>
->> The project at https://github.com/trast/tbdiff seems to be dormant, anyw=
-ay.
->> Funny (and true) story: I looked at the open Pull Requests to see how ac=
-tive
->> that project is, only to find to my surprise that I had submitted one in=
- August
->> 2015, and that it was still unanswered let alone merged.
->
-> I've been using branch-diff and haven't found issues with it yet, it
-> works like tbdiff but better. Faster, uses the same diff as git
-> (better), and spews to the pager by default.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I'm hoping to take a look at this as well, I remember looking into
-tbdiff in the past, but also had trouble getting it to work. I've
-tried a variety of similar things, including 4-way parent diffs, but
-nothing quite gave the results I expected.
+--8323328-1251477679-1525384831=:77
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Thanks!
+Hi Stefan,
 
-Regards,
-Jake
+On Thu, 3 May 2018, Stefan Beller wrote:
+
+> >> In addition to that patch, we'd have to buffer commit messages and
+> >> buffer multiple commits, as that only buffers a diff of a single
+> >> commit.
+> >
+> > ... and make sure that the moved-code logic (which is currently the
+> > only user of emitted_symbols, correct?) would never be called at the
+> > same time as we generate the diff.
+>=20
+> The moved detection is all part of the flags of an emitted symbol.
+>=20
+> By design the emitted symbol has easy access to the raw line of the outpu=
+t,
+> which made it easy for the move detection to work on the lines. AFAICT th=
+is
+> is also desired here as lines are put into a hashmap for comparisons.
+> (and having it colored differently would make finding the same line
+> complex using hashmaps)
+>=20
+> I just entertain the thought of having move detection active in a
+> branch-diff. That would be really cool actually.
+
+There are two separate times when we generate a diff in branch-diff: the
+first time in that `git log -p <range>` call for both ranges, and later,
+when displaying the changes of old/new commits.
+
+(There is actually a third time, when the cost is calculated, but those
+diffs are not shown, only their line count is used.)
+
+It would be relatively easy to use move detection in the diff between
+old/new commits. But it would be harder to do that with the `git log -p`
+diffs, as we only color-code them later, not at the time they are
+generated.
+
+In fact, =C3=86var mentioned that he was pretty happy about the fact that `=
+git
+branch-diff` accepts all kinds of diff options, when tbdiff emulated only
+two of them. =C3=86var mentioned specifically the use of `--color-words`...
+
+> >> The benefit would be no invocation of new processes, letting us do
+> >> more in core. This would allow for tweaking revision walking
+> >> internally, e.g. passing of options to this command such as rename
+> >> detection factors, can be passed through easily without the need of
+> >> translating it back to the command line.
+> >
+> > On the other hand, we can simply copy those options to the
+> > command-line for `log`. Which might even be better, as e.g. `--format`
+> > changes global state :-(
+>=20
+> ok.
+
+I really appreciate the sanity check. It would benefit me on Windows if I
+could avoid spawning... But I think in this case, it would save me 2*50ms,
+which is not really worth doing the work for, so far.
+
+> Thanks for your patience,
+
+And thank you for yours! It *is* important to challenge beliefs during
+code review, so that the choices are made for the right reasons.
+
+Thanks,
+Dscho
+--8323328-1251477679-1525384831=:77--
