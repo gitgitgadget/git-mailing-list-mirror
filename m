@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0EF5200B9
-	for <e@80x24.org>; Thu,  3 May 2018 15:30:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B804D2023F
+	for <e@80x24.org>; Thu,  3 May 2018 15:30:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751420AbeECPar (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 11:30:47 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58119 "EHLO mout.gmx.net"
+        id S1751443AbeECPav (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 11:30:51 -0400
+Received: from mout.gmx.net ([212.227.17.21]:33901 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751417AbeECPaq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 11:30:46 -0400
+        id S1751417AbeECPas (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 11:30:48 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
  (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0M6874-1ePKKu3eQ6-00y6jd; Thu, 03 May 2018 17:30:43 +0200
+ 0LjLwB-1edGgN2pBf-00dX1f; Thu, 03 May 2018 17:30:44 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -27,9 +27,9 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 04/18] branch-diff: improve the order of the shown commits
-Date:   Thu,  3 May 2018 17:30:36 +0200
-Message-Id: <6a618d6010f5767590ba88480e22835b1257316b.1525361419.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 05/18] branch-diff: also show the diff between patches
+Date:   Thu,  3 May 2018 17:30:43 +0200
+Message-Id: <141e5b63e4511c13380216fad9b8601d2bc6051e.1525361419.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.409.g0f525fc0ba7
 In-Reply-To: <cover.1525361419.git.johannes.schindelin@gmx.de>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de>
@@ -37,126 +37,160 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:q2bgot8K7O3T2meieijBco7rLEpkrGy32BsiJbfVmIbOHj9phKL
- CQr9/6iKySDDRi58Zpiq+7KxVQEIUXcqPD37kJ3l8NQ+DHbgLMmYCnXrzfiNq17AZH/QM1i
- N8UorLymZhC6nqFpqv1Zen3Rao/xBoGmNg9STjBVvILQHrxlt0eapnNl1hacT0Nry0ciyY+
- 57BvpQG+M7xu0u1Cp9BoA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GMm3gPQlCQI=:LK8lgvoOOgXn1Zu9BF8MXe
- 7DC6Go9e6lRFeG2bPs1c+uoQWzc62hLoBtqXcs++Zu+cNulVhflVDVbNaFY3RKzdOZ2wwSzKY
- dx51bQ6+H3UiSUwZDeddhHEXm3RSVDDXOEVtkvnWrpIpThXW/Y6g1ei+WE03eXoOnGeVLXAje
- viw+bpR28I4/LX4uglsy7qmDwPvLJoezlYtt+dm5CsMPXN8Jzmw2cLFL5qxw12smgwwIffxlE
- cqjEv2ob1rHV2aABrZepiEbvXpiMmDFLY2eSNdXW9EK97stL2vMSq+7yqiHrtVluFDDz0suXX
- Z3LMCM6TBvNR5oVsYg3WhtWmXIXFfGHorjgFND8oX3vubXTTOq4VohEKC2v8UII6UzuJ6YlOg
- gtwMdg3hlEW9cHrjK07muyovV6lVFfD8NuSjFgQsr7ClkHulTIQBkoXpd2HHluasz0kT+snUP
- bpgVgfUMxaZLuBGJx93JAR7kI8sChzJIbG0eiW/tWxPfBkyBpHvYMhvloU5ulX0wH6Lh/RChI
- XmuBOFExFw1XoxlJ4RTe+8/lwBKP4QlhfI7HXKc/nwWSm0Kl0vhWZl413D8bdaXQKReSGL8mf
- cPIfrCrt1rHSTivI1nvF1jnqyMZjaOQn5kpyNT+vOiK2BaUCBUlkB2oY2afL3WxeWCLU3E7fP
- UyiD/8+lV3R9HF28nt3tRNvKjqMwshvC2HEGezJMPOsCPd1DrlMUN4DfCt0E4OjW74vrTBveE
- oghc9NO4mzGL1Hg+IJUQaDbdDPE8zlNZ2KHg/nZ//S24vNectbuZh+RhIM0rQhFYB3aeXj2bL
- klh5vAr
+X-Provags-ID: V03:K1:0roZLWMZnVKwEUdgFxlmTHtxg3ZY+0Iotj0olh3pyWukkZPMJVN
+ nhYO9YifufZXSWeIzWGg/5S+Bn4/IxksU+Z2yJVIURO8/gqRrgoa/4SEdsxvRcDzmETxtUm
+ DqL8dwOM/dj0ZapAoMJNjZdvGNcXZTGwC92D0YdZMKLnmXI5kiYhOzC51iKUrBNLFo8oLdU
+ HlBZlZd/kMCkhloQmabBQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wt0/8XecBB0=:IJqmKmSgEWyJ/YZeQf0dYi
+ FiF86QNj6dEY8dsWl1hZsjD69u33sJ36mEWXG1KePybRSUMIyfxvmORUJ83trTV7wMdRx2npi
+ 1fTBJCzFpcJsjWePoVDS8K9CbJ0C+rvnyyfE5g8UjOUcF11PXXuE9v5OHZQ1ufEuJlfSNQYnL
+ M9AntJ/38Fe7LL+VJQjX0U1Lz7l2iJ7VgRzOd/UYZ+Q8kpZmdklMC7zHGrxCp8XGL490kf9ZZ
+ NXlX1LQNLtsiVn6EXQF+J2RX8hwoKACNQa0XeuSJLzbe81hx+8+JucfOwa/vAtLPNJmkYsLTg
+ SMZMwgsZwSNgSQxEFsoCxOmvt5tCvXZeOB6ALFQQubiQucTeNqB5W0LlqCNUNu6vwGnuTmBFB
+ yKUgRVsH+pWwTAjY3nrQBM4I9NQ+etLV+Wi8fMUBaHiPS/thp+k6P1Pevaimcg9jdBVS4ZK7a
+ b/oLGWx2P1FlD8KwcAJjiMMqnuIpqIsye0heihxr6fWn4bvXItv1M21UU6H5hsFGO3lL/kDrH
+ ARSg7Ai10QvnKXu10Z87ZLd5U0TCVg5SkXnsRiHjZHVTZoKm1eY07pobt0suuy++DvBFQPWtG
+ hY2MJq8aIyaysPRO6f39w0OBd4g5bsH1ImJq3OuONhYlTc2Qi6sNIA4GeJ0lzzz5Ijc2F6+e8
+ /Fmoie2uLirVGbvjCCXzCx3eRIjXPe0h5KvOceFx7/au6LtcKsT1SxVl0S5xueQYPFuZUQdMN
+ Pvk3G2ruLmZIqtcu83KvKsoOW1Kysi4ecy4O0UchRJAPjDakNeit8g5OIe6CrDQwEk2S+6miq
+ GLC0la+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch lets branch-diff use the same order as tbdiff.
+Just like tbdiff, we now show the diff between matching patches. This is
+a "diff of two diffs", so it can be a bit daunting to read for the
+beginnger.
 
-The idea is simple: for left-to-right readers, it is natural to assume
-that the branch-diff is performed between an older vs a newer version of
-the branch. As such, the user is probably more interested in the
-question "where did this come from?" rather than "where did that one
-go?".
+This brings branch-diff closer to be feature-complete with regard to
+tbdiff.
 
-To that end, we list the commits in the order of the second commit range
-("the newer version"), inserting the unmatched commits of the first
-commit range as soon as all their predecessors have been shown.
+An alternative would be to display an interdiff, i.e. the hypothetical
+diff which is the result of first reverting the old diff and then
+applying the new diff.
+
+Especially when rebasing often, an interdiff is often not feasible,
+though: if the old diff cannot be applied in reverse (due to a moving
+upstream), an interdiff can simply not be inferred.
+
+Note: while we now parse diff options such as --color, the effect is not
+yet the same as in tbdiff, where also the commit pairs would be colored.
+This is left for a later commit.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/branch-diff.c | 59 +++++++++++++++++++++++++++++--------------
- 1 file changed, 40 insertions(+), 19 deletions(-)
+ builtin/branch-diff.c | 56 +++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 49 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-index 02dc06a57ca..59423498194 100644
+index 59423498194..3b565a37492 100644
 --- a/builtin/branch-diff.c
 +++ b/builtin/branch-diff.c
-@@ -28,7 +28,7 @@ struct patch_util {
- 	struct hashmap_entry e;
- 	const char *diff, *patch;
+@@ -6,6 +6,8 @@
+ #include "hashmap.h"
+ #include "xdiff-interface.h"
+ #include "hungarian.h"
++#include "diff.h"
++#include "diffcore.h"
  
--	int i;
-+	int i, shown;
- 	int diffsize;
- 	size_t diff_offset;
- 	/* the index of the matching item in the other branch, or -1 */
-@@ -271,28 +271,49 @@ static const char *short_oid(struct patch_util *util)
- 
- static void output(struct string_list *a, struct string_list *b)
- {
--	int i;
--
--	for (i = 0; i < b->nr; i++) {
--		struct patch_util *util = b->items[i].util, *prev;
-+	int i = 0, j = 0;
-+
-+	/*
-+	 * We assume the user is really more interested in the second argument
-+	 * ("newer" version). To that end, we print the output in the order of
-+	 * the RHS (the `b` parameter). To put the LHS (the `a` parameter)
-+	 * commits that are no longer in the RHS into a good place, we place
-+	 * them once we have shown all of their predecessors in the LHS.
-+	 */
-+
-+	while (i < a->nr || j < b->nr) {
-+		struct patch_util *a_util, *b_util;
-+		a_util = i < a->nr ? a->items[i].util : NULL;
-+		b_util = j < b->nr ? b->items[j].util : NULL;
-+
-+		/* Skip all the already-shown commits from the LHS. */
-+		while (i < a->nr && a_util->shown)
-+			a_util = ++i < a->nr ? a->items[i].util : NULL;
-+
-+		/* Show unmatched LHS commit whose predecessors were shown. */
-+		if (i < a->nr && a_util->matching < 0) {
-+			printf("%d: %s < -: --------\n",
-+			       i + 1, short_oid(a_util));
-+			i++;
-+			continue;
-+		}
- 
--		if (util->matching < 0)
-+		/* Show unmatched RHS commits. */
-+		while (j < b->nr && b_util->matching < 0) {
- 			printf("-: -------- > %d: %s\n",
--					i + 1, short_oid(util));
--		else {
--			prev = a->items[util->matching].util;
--			printf("%d: %s ! %d: %s\n",
--			       util->matching + 1, short_oid(prev),
--			       i + 1, short_oid(util));
-+			       j + 1, short_oid(b_util));
-+			b_util = ++j < b->nr ? b->items[j].util : NULL;
- 		}
--	}
--
--	for (i = 0; i < a->nr; i++) {
--		struct patch_util *util = a->items[i].util;
- 
--		if (util->matching < 0)
--			printf("%d: %s < -: --------\n",
--			       i + 1, short_oid(util));
-+		/* Show matching LHS/RHS pair. */
-+		if (j < b->nr) {
-+			a_util = a->items[b_util->matching].util;
-+			printf("%d: %s ! %d: %s\n",
-+			       b_util->matching + 1, short_oid(a_util),
-+			       j + 1, short_oid(b_util));
-+			a_util->shown = 1;
-+			j++;
-+		}
- 	}
+ static const char * const builtin_branch_diff_usage[] = {
+ 	N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
+@@ -269,7 +271,31 @@ static const char *short_oid(struct patch_util *util)
+ 	return find_unique_abbrev(&util->oid, DEFAULT_ABBREV);
  }
  
+-static void output(struct string_list *a, struct string_list *b)
++static struct diff_filespec *get_filespec(const char *name, const char *p)
++{
++	struct diff_filespec *spec = alloc_filespec(name);
++
++	fill_filespec(spec, &null_oid, 0, 0644);
++	spec->data = (char *)p;
++	spec->size = strlen(p);
++	spec->should_munmap = 0;
++	spec->is_stdin = 1;
++
++	return spec;
++}
++
++static void patch_diff(const char *a, const char *b,
++			      struct diff_options *diffopt)
++{
++	diff_queue(&diff_queued_diff,
++		   get_filespec("a", a), get_filespec("b", b));
++
++	diffcore_std(diffopt);
++	diff_flush(diffopt);
++}
++
++static void output(struct string_list *a, struct string_list *b,
++		   struct diff_options *diffopt)
+ {
+ 	int i = 0, j = 0;
+ 
+@@ -311,6 +337,9 @@ static void output(struct string_list *a, struct string_list *b)
+ 			printf("%d: %s ! %d: %s\n",
+ 			       b_util->matching + 1, short_oid(a_util),
+ 			       j + 1, short_oid(b_util));
++			if (!(diffopt->output_format & DIFF_FORMAT_NO_OUTPUT))
++				patch_diff(a->items[b_util->matching].string,
++					   b->items[j].string, diffopt);
+ 			a_util->shown = 1;
+ 			j++;
+ 		}
+@@ -319,24 +348,37 @@ static void output(struct string_list *a, struct string_list *b)
+ 
+ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+ {
+-	int no_patches = 0;
++	struct diff_options diffopt = { 0 };
+ 	double creation_weight = 0.6;
+ 	struct option options[] = {
+-		OPT_BOOL(0, "no-patches", &no_patches,
+-			 N_("short format (no diffs)")),
++		OPT_SET_INT(0, "no-patches", &diffopt.output_format,
++			    N_("short format (no diffs)"),
++			    DIFF_FORMAT_NO_OUTPUT),
+ 		{ OPTION_CALLBACK,
+ 			0, "creation-weight", &creation_weight, N_("factor"),
+ 			N_("Fudge factor by which creation is weighted [0.6]"),
+ 			0, parse_creation_weight },
+ 		OPT_END()
+ 	};
+-	int res = 0;
++	int i, j, res = 0;
+ 	struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
+ 	struct string_list branch1 = STRING_LIST_INIT_DUP;
+ 	struct string_list branch2 = STRING_LIST_INIT_DUP;
+ 
++	diff_setup(&diffopt);
++	diffopt.output_format = DIFF_FORMAT_PATCH;
++
+ 	argc = parse_options(argc, argv, NULL, options,
+-			builtin_branch_diff_usage, 0);
++			builtin_branch_diff_usage, PARSE_OPT_KEEP_UNKNOWN);
++
++	for (i = j = 0; i < argc; i++) {
++		int c = diff_opt_parse(&diffopt, argv + i, argc - i, prefix);
++
++		if (!c)
++			argv[j++] = argv[i];
++	}
++	argc = j;
++	diff_setup_done(&diffopt);
+ 
+ 	if (argc == 2) {
+ 		if (!strstr(argv[0], ".."))
+@@ -380,7 +422,7 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+ 		find_exact_matches(&branch1, &branch2);
+ 		res = get_correspondences(&branch1, &branch2, creation_weight);
+ 		if (!res)
+-			output(&branch1, &branch2);
++			output(&branch1, &branch2, &diffopt);
+ 	}
+ 
+ 	strbuf_release(&range1);
 -- 
 2.17.0.395.g6a618d6010f.dirty
 
