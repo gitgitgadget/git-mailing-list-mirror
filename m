@@ -2,89 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D290200B9
-	for <e@80x24.org>; Thu,  3 May 2018 21:05:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5943200B9
+	for <e@80x24.org>; Thu,  3 May 2018 21:08:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751214AbeECVF4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 17:05:56 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51053 "EHLO mout.gmx.net"
+        id S1751176AbeECVH6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 17:07:58 -0400
+Received: from mout.gmx.net ([212.227.17.22]:51873 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751074AbeECVFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 17:05:55 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lk81O-1ecWlL1ZGc-00c8Mz; Thu, 03
- May 2018 23:05:49 +0200
-Date:   Thu, 3 May 2018 23:05:50 +0200 (DST)
+        id S1751126AbeECVH5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 17:07:57 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOTRh-1fJYei0YhZ-005rxw; Thu, 03
+ May 2018 23:07:53 +0200
+Date:   Thu, 3 May 2018 23:07:53 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Stefan Beller <sbeller@google.com>
-cc:     git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-Subject: Re: [PATCH 11/18] branch-diff: add tests
-In-Reply-To: <CAGZ79kY_kXpiXScjE+cNWRN1r71B3KkGNGZQjCHpKNe+tdMipw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1805032303540.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <fe12b99a0b4f78ab75fcfbcf51c5edffb190c4e8.1525361419.git.johannes.schindelin@gmx.de> <CAGZ79kY_kXpiXScjE+cNWRN1r71B3KkGNGZQjCHpKNe+tdMipw@mail.gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 00/18] Add `branch-diff`, a `tbdiff` lookalike
+In-Reply-To: <87po2cy5qd.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1805032307160.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <87po2cy5qd.fsf@evledraar.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:czUyooTA4CO+Bk0zQyuGstDEXL1AhXTwf2lB1/eGuFGSj2FUFVp
- /THNs44c4D4iBbX8OAvnUWoA4ZH/8p7kkP7VySeto7YL/PkDttrll23HRdr9XeRzhBXT8Mm
- yCRHvrJc6q7zOVu6icbc+106UjvFWmy+t7ze/zk2P5dXCYyGp2yUvdTrmVwdOdADDeDGGdV
- bmAo0VQJxugHtY7Z0AExg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uCaceyDsjJA=:MVjhsvpZwoZdtsontQq9bT
- XxUguPT1wX06DMfH6q7iXHLoMxrnItTcK9koBwITLL5LzTEzxiCsMRczsrdwvsR/c414NgE8g
- cliiSg91+r4GnkfbvZxD1c0lFscPv3m73vrj890LPI8Lv3NY56ENmCRqnK9RIEBKTbFANFzMI
- 2sPu4aitcHVmnzAelLggEHzb9cn16v1c9337ZWio3XysYv8qhNZ4ZjyOpWg3x1u50wEB4RNqe
- bAmE6cltcpzxn6DV3H2eL9rLO4zKYV2InaWAJigdblQrUzVljbBSJEaqlgTKBoTQLF9kj6eWk
- eCpbHB2ulFRbJcqtaYIUjDJgd6K09zwRcWvEnWXePHVHavY06ZKSfxBjd/Q5wdw/5eIFYMZ6X
- Dv7VvLcspQMy7cjkJy4dXK8xdDdd3tEstfMiOU/Mayc+Qx9EfvRtR5NQI2rmq6dmmeUbs1x+d
- SVmmP8T8yHe2zTKt9ZWjbmC+xDEZ/OkRFv5/+b33en8Sn333URcLqSm9c/JFfuzBIdVPjr8/V
- J7ozZDllLTSTKDpjHi64GdY1JPwLfqY6KRiqzMwkG0TD2qRG3GBiVjr/m7rDQ/WIHc+qARn47
- WR/xnXrUp8p/P06DVCtS1RFgD47ASJZ9UQGsqk9wWj1fFhGFk9ry0XBz4vINMeR8ZKvQ5gYxK
- mnvqvjHcSy5AnZH9sWwgiUHqwNb3HgKGBm+jdttwYTQHkfA2eMRmb3BY58KcQs8PrZklj80kS
- 02eqnERR0kb83GLUCEMvxXFnG7lGeiM8v2c4KNoeLqvyegYTPApm6Cut+cyNK4xUIN2+5j5AT
- 4Ra9sst
+Content-Type: multipart/mixed; boundary="8323328-275019780-1525381674=:77"
+X-Provags-ID: V03:K1:0jDM5sBQEpCDumJVGoLBON2z1cXhHxyy0b06C8hqz2P32FAhGoC
+ Y1LKCsjwAWGQ2iVAAA2ghuqNYYtfR7ZjHT/BllhprlR9kGCKfveDQ5uiTAANDnz0VqtLZXe
+ pd+oT6CCu7cXIxEs8WsUZe0Z9u19KGf/iunI6GNoseHWTe/hL55rs/KoWNJpWXpBWWQpdwb
+ x+6jirCKA3V+WxLoNw/KA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bMxFw5c9JlY=:xT6/BZVGUgUoZ283Wt/0uS
+ s/6kDXl+47IRhf6mqJqbu06tLEGZN/11+RD4h8+g7dl0zo+t6XN34NdJ+0UyzQnCYuHmL1aUi
+ FpYbwlzo9gF3PMFQC78UbmKnYI/vkIr4WLWenX4s9rNp0UtOIr/vUg5U+Wfb3TvsmbYnDA9LJ
+ mYa6r1BQj1DNeNADBE4u3TG/lCQo+pPTCZg+VTANIhxvMwp3T88aAAs9+dN//qlDb6L1f8kku
+ 7KA7jLJFXfqYvWDZjGt6n0WLLVq7sdOVvlXcLVDFY2dn8aZY8xtkbqqOTOkVqmSTiF2AcQjwi
+ ljExqKPUjfN+/sLVm6dTOsRSO86bNXlCfxOg/mRAGJt43VpMNgaNYaYjK42z8wXW/MtI3tZCg
+ yB/UmCgwpyBCb1NqUnDA5sMJSZjO2cC1QTRiBzSi4S3Plf0z595Maal3HzsVddf4115QCKjwL
+ kuWTThMqchDjmcsjEdvDX5BqOmdYr+Nm/u4fZUU7mmERDfvTB/innNCXnfpY1FIfDIvjNe96L
+ xcTP4Z78Fj5wl7NH/psmBIQ5MgEMaonQPSSbHI/fRID6LozfzQboRVyH2k0MSBkj0U0uD/RmY
+ kjinFS9KDnphab9T4Facx38zlW5ae33ZQigxhS8b3umaF0R9Jdngc3rLowfUmAhESKcjNEh5/
+ AP8CG2+QiBS9byAZASR3pYQQsSy3C36ymRegB+SDtmKyv06RjSI1qp7AR5C+SM1EN8/9QGtdh
+ a8T9rtQIiZgDWj2okCWylB2hOjmJPMcJQqn/LCL7X8aB7EWsNop48if03uCDZL+snHVQdgxhM
+ u8vn5nd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 3 May 2018, Stefan Beller wrote:
+--8323328-275019780-1525381674=:77
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> On Thu, May 3, 2018 at 8:30 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > From: Thomas Rast <tr@thomasrast.ch>
+Hi =C3=86var,
+
+On Thu, 3 May 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> On Thu, May 03 2018, Johannes Schindelin wrote:
+>=20
+> > The incredibly useful `git-tbdiff` tool to compare patch series (say,
+> > to see what changed between two iterations sent to the Git mailing
+> > list) is slightly less useful for this developer due to the fact that
+> > it requires the `hungarian` and `numpy` Python packages which are for
+> > some reason really hard to build in MSYS2. So hard that I even had to
+> > give up, because it was simply easier to reimplement the whole shebang
+> > as a builtin command.
 > >
-> > These are essentially lifted from https://github.com/trast/tbdiff, with
-> > light touch-ups to account for the new command name.
-> >
-> > Apart from renaming `tbdiff` to `branch-diff`, only one test case needed
-> > to be adjusted: 11 - 'changed message'.
-> >
-> > The underlying reason it had to be adjusted is that diff generation is
-> > sometimes ambiguous. In this case, a comment line and an empty line are
-> > added, but it is ambiguous whether they were added after the existing
-> > empty line, or whether an empty line and the comment line are added
-> > *before* the existing emtpy line. And apparently xdiff picks a different
-> > option here than Python's difflib.
-> 
-> I think that is the fallout of the diff heuristics. If you are keen on
-> a 1:1 port, you can disable the diff sliding heuristics and it should
-> produce the same diff with trailing new lines.
+> > The project at https://github.com/trast/tbdiff seems to be dormant,
+> > anyway.  Funny (and true) story: I looked at the open Pull Requests to
+> > see how active that project is, only to find to my surprise that I had
+> > submitted one in August 2015, and that it was still unanswered let
+> > alone merged.
+>=20
+> I've been using branch-diff and haven't found issues with it yet, it
+> works like tbdiff but better. Faster, uses the same diff as git
+> (better), and spews to the pager by default.
 
-I am not keen on a 1:1 port. I am fine with having xdiff generate
-different diffs than Python's difflib. That's par for the course when
-relying on a not-quite-well-defined metric.
-
-Ciao,
+Thanks for your enthusiasm!
 Dscho
+--8323328-275019780-1525381674=:77--
