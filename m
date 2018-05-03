@@ -2,86 +2,237 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 714A92023F
-	for <e@80x24.org>; Thu,  3 May 2018 22:46:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89C41200B9
+	for <e@80x24.org>; Thu,  3 May 2018 23:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751126AbeECWp7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 18:45:59 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:41860 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751108AbeECWp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 18:45:58 -0400
-Received: by mail-yb0-f193.google.com with SMTP id l9-v6so7074358ybm.8
-        for <git@vger.kernel.org>; Thu, 03 May 2018 15:45:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=R1qiw8qQdiRNNq1ccVtCGd0HoEKZn/BCadGhm+JZBDg=;
-        b=r66u3Aebt75OPNqPD5ZMVB4avPQDelUMdRT1s9BNhhTnMXzfhVItUEduBYe2Bxc6nj
-         AEdW4XFhh+F4lgUCgf6z8ggZ7SgB7AyLV4kttq0l7Bxgc8VQ0I+lz3CMibpXEUOb/6tT
-         mtprNdXdNeXlxga8SoIge5pf0KUuSDOMPq4aqedYWWK29qZb7ow6lSQOahRuHd7y3wcz
-         Tc1QA4HZfiA3E6bL3aKw2OIdCl0SFejJtqCJctBzzuy8HSOBidw1OnR1D8aQ7k6UJY49
-         nP3mM3oR7GeC7eq3kiSqRGI2URogpKUmYP9yydJLCeiqDsESf/TdWVgtPeaB4wUA4GaE
-         3LbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=R1qiw8qQdiRNNq1ccVtCGd0HoEKZn/BCadGhm+JZBDg=;
-        b=hJQ+pAYjhGTELVZJtovLa9KXGxuixTYAJmJTxjLafeH5DfHWT6b23/oYv0XY2l9PG8
-         pRuiMflJs+Kc90fdEF9DchYR9CYa8vo4RKGLwEKM+7tt3s1Irq0THCakpQ/p4och/H46
-         dUsYUWx65S15vpep9MYyBsAiSebE9stTJfqMHcMODuJbpOGN0c25yRGUh8UTfsZFKQ0f
-         yWLdp0U9OI7b9gKRCBlXLYgtq95bOoRZfI5BkZImFVsdesmedCeNQSm+3V1ZZOb1cXXB
-         k+QxFAy/gAb5Qo1SZ/9OIRrmNNCbfGFaymMGIcUpAtEpTvIcXGVZie6c9IaBAV+VyzmW
-         Keqw==
-X-Gm-Message-State: ALQs6tD3rCrwxWK4Pk26xGgY3Ak+JYae7Z0uou01U2MPtDwJ/CKCYjWc
-        o4rVtg9wkzHqB7DVeoR1jMFatYO8UV1RZKeukzzENQ==
-X-Google-Smtp-Source: AB8JxZodsHkkDMMBg5SsSb3S3g8d6KRRZMCc6tGS4/jeYYOzStWXXnCoR2ytarP0ON/sexIaZnHtRrNFjnC6St9vHPc=
-X-Received: by 2002:a25:500e:: with SMTP id e14-v6mr15943490ybb.334.1525387557740;
- Thu, 03 May 2018 15:45:57 -0700 (PDT)
+        id S1751399AbeECXBW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 19:01:22 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56893 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751111AbeECXBV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 19:01:21 -0400
+Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
+ (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0LtZcC-1eFq2g2Vtc-010xa3; Fri, 04 May 2018 01:01:14 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Wink Saville <wink@saville.com>
+Subject: [PATCH v2 0/6] Let the sequencer handle `git rebase -i --root`
+Date:   Fri,  4 May 2018 01:01:13 +0200
+Message-Id: <cover.1525388472.git.johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.17.0.windows.1.38.g05ca542f78d
+In-Reply-To: <cover.1524868165.git.johannes.schindelin@gmx.de>
+References: <cover.1524868165.git.johannes.schindelin@gmx.de>
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Thu, 3 May 2018 15:45:57 -0700 (PDT)
-In-Reply-To: <CACsJy8CR1RYYdsc5=8hz2Sx9_bOY9eb_-vwEqDo62Hex1FxBmw@mail.gmail.com>
-References: <20180501213403.14643-1-sbeller@google.com> <CACsJy8DKnBRDZC=oBd8nTOAVzQf3UtoLCeoGKjcMHgUmXf-KqQ@mail.gmail.com>
- <BL0PR2101MB1106C07DEE184F8DA2C7CA62CE800@BL0PR2101MB1106.namprd21.prod.outlook.com>
- <CACsJy8CR1RYYdsc5=8hz2Sx9_bOY9eb_-vwEqDo62Hex1FxBmw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 3 May 2018 15:45:57 -0700
-Message-ID: <CAGZ79kYUdQ8G8jZYi=iYuzSwfsZua2TbCFX_1B_MBU-sENNmKw@mail.gmail.com>
-Subject: Re: [PATCH 00/13] object store: alloc
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jameson Miller <jamill@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:/BB0wovTJq08T837uDWiFDJ2PsXzjSFGv+hw+nBqGYfW3nsm0Dy
+ 2K79LcjAH5CkNX5MzBuyqGU30gHSlcwdxe25dz0yNkXvhBbmqIdo5+sMw5WSh+3VMYePUNe
+ z/VAHGBcZEkGWE09fI/xFVGMpNgcvaIzp5Hvd2MfXco22TDje8xFdo5iS+fjm2xucw+D/k+
+ fPVVc0MYI/mjGLKw9QQdw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ik1UdlU5uT8=:sTHSUAsYHkKQYmscSKuS+R
+ k24+fIFogysKf7+7RZFkAa9X+Gf++NV7SL63t016PFZAxCBT5CLt79q5cswO6pGO7L4r4hRWk
+ ALHlBtuo6p6Ndtk/0w6dhFgwnw7Gh7rwPXhFrYkO5kTSpUXPvirrDIZHgMJLSi0IqVxkOu1It
+ tzq93+wjUonBTMPjhiXJHpDOovM+F75XVjYeg//xeCfOq2zOo5WoHl4IIqW929iWjgHcX86ts
+ BAKrF2Exlg24wyLI9EvK2TRa6NyLW9pTNTmtuZeEnG6tWiVR2E0nYtzSzi60sTqKOfd8wnT9o
+ f3zMYolwaSI074IP3s8g1H47DCgRFzWuHojUd7wq8zcO6LefhcJ3e57SAGzvEYhQ/gJx/nzub
+ pT/BxlheAUdPu28WAPgagxPpMDNgj9akMh44hnMw+DGvgi02o601uWtesDwt2VfqY1HusM57T
+ VLrkHAjhjRoI03mF3oG7vzTI+E5R0oU/uRwI/52baAfPd+E2X3UvTsKT2phTd8vZiOgNb6CDL
+ 75CzhGFQ3X5225/GOKUmkGf8t+GEeOODnawbQaALEqF5G8odsoz925xG6tWD2hzqOzR9pYnLN
+ 7tlTjJFMruLECRHS5wkGqOb/ijsr83Ud946wyTE0boJoiPIFwGUyP2AoJoVq3uPaHA8iW/HVx
+ KDAOLNPCXqJFqyFaZ1gCB3XPmF0k3cIglaXaUqQvMqE8Ul4gxV5PZswziTtHy7OLAD/CuaGlD
+ WTxCnECkh+FkOSXeul7HagWWufqZN4m8i7xiraRu/Bpkkr58X6wcmzk+a9F1zDgl75x5f7Rt5
+ 0UMS7x0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 2, 2018 at 11:22 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+When I reimplemented the most performance-critical bits of the
+interactive rebase in the sequencer, to speed up `git rebase -i`
+particularly on Windows (even if the benefits are still quite notable on
+Linux or macOS), I punted on the --root part.
 
-> I think the two have quite different characteristics. alloc.c code is
-> driven by overhead. struct blob is only 24 bytes each and about 1/3
-> the repo is blobs, and each malloc has 16 bytes overhead or so if I
-> remember correctly. struct cache_entry at minimum in 88 bytes so
-> relative overhead is not that a big deal (but sure reducing it is
-> still very nice).
->
-> mem-pool is about allocation speed,
+I had always hoped that some other contributor (or I myself) would come
+back later to address the --root part in the sequencer, too, with the
+idea that this would move the last remaining complicated code from
+git-rebase--interactive.sh into sequencer.c, to facilitate converting
+the rest of git-rebase--interactive.sh.
 
-I don't think so, given that we do a linear search in each block allocation.
+When I say "the last remaining complicated code", of course I neglect
+the --preserve-merges code, but as I worked hard on the --rebase-merges
+patch series with the intention to eventually deprecate and maybe even
+remove the --preserve-merges mode, I always implicitly assume that the
+--preserve-merges code will be moved into its own shell script
+(git-rebase--preserve-merges.sh, maybe?) and never be converted.
 
-> but I think that's not a concern
-> for alloc.c because when we do full rev walk, I think I/O is always
-> the bottleneck (maybe object lookup as well). I don't see a good way
-> to have the one memory allocator that satisfyies both to be honest.
+So here goes: the patches to move the handling of --root into the
+sequencer. After two preparatory patches, the real conversion takes
+place in the third patch. After that, we take care of the --root related
+concerns that arise in conjunction with the --rebase-merges mode.
 
-By changing the allocation size of a block to be larger than 1024 entries
-in alloc. we should lessen the impact of management overhead, and then
-the mem pool can be more than feasible.
+As the --rebase-merges/--root patches overlap quite a bit (not so much
+in the code itself as in philosophical considerations such as "what
+should happen if you try to merge a branch into a new root", or the
+fact that the label/reset/merge commands make it desirable to be able to
+create a new root commit in the middle of a todo list), I had to
+consider in which order to contribute them. In the end, I decided to go
+with --rebase-merges first, so the --root patches are based on the
+--rebase-merges patch series.
+
+I consider this patch series a critical prerequisite for Alban's Google
+Summer of Code project to convert rebase -i into a builtin.
+
+Changes since v1:
+
+- Expanded is_pick_or_similar() to use a clear and verbose switch()
+  statement, replacing the magic "command <= TODO_SQUASH".
+
+- Completely revamped read_author_ident(), using sq_dequote(); Sadly,
+  trying to reuse builtin/am.c's read_author_script() would result in
+  substantialy more lines of code, and I also failed to find an easy way
+  to allow for arbitrary order of the environment variables in
+  author-script.
+
+
+Johannes Schindelin (6):
+  sequencer: extract helper to update active_cache_tree
+  sequencer: learn about the special "fake root commit" handling
+  rebase -i --root: let the sequencer handle even the initial part
+  sequencer: allow introducing new root commits
+  rebase --rebase-merges: a "merge" into a new root is a fast-forward
+  rebase --rebase-merges: root commits can be cousins, too
+
+ git-rebase--interactive.sh        |   4 +-
+ sequencer.c                       | 206 ++++++++++++++++++++++++++----
+ sequencer.h                       |   4 +
+ t/t3404-rebase-interactive.sh     |  19 ++-
+ t/t3421-rebase-topology-linear.sh |   6 +-
+ t/t3430-rebase-merges.sh          |  72 +++++++++++
+ 6 files changed, 276 insertions(+), 35 deletions(-)
+
+
+base-commit: 673fb9cb8b5c7d57cb560b6ade45e419c8dd09fc
+Based-On: recreate-merges at https://github.com/dscho/git
+Fetch-Base-Via: git fetch https://github.com/dscho/git recreate-merges
+Published-As: https://github.com/dscho/git/releases/tag/sequencer-and-root-commits-v2
+Fetch-It-Via: git fetch https://github.com/dscho/git sequencer-and-root-commits-v2
+
+Branch-diff vs v1:
+ 1: 42db734a980 ! 1: 73398da7119 sequencer: learn about the special "fake root commit" handling
+     @@ -54,40 +54,50 @@
+       	return NULL;
+       }
+       
+     ++/* Read author-script and return an ident line (author <email> timestamp) */
+      +static const char *read_author_ident(struct strbuf *buf)
+      +{
+     -+	char *p, *p2;
+     ++	const char *keys[] = {
+     ++		"GIT_AUTHOR_NAME=", "GIT_AUTHOR_EMAIL=", "GIT_AUTHOR_DATE="
+     ++	};
+     ++	char *in, *out, *eol;
+     ++	int i = 0, len;
+      +
+      +	if (strbuf_read_file(buf, rebase_path_author_script(), 256) <= 0)
+      +		return NULL;
+      +
+     -+	for (p = buf->buf; *p; p++)
+     -+		if (skip_prefix(p, "'\\\\''", (const char **)&p2))
+     -+			strbuf_splice(buf, p - buf->buf, p2 - p, "'", 1);
+     -+		else if (*p == '\'')
+     -+			strbuf_splice(buf, p-- - buf->buf, 1, "", 0);
+     -+
+     -+	if (skip_prefix(buf->buf, "GIT_AUTHOR_NAME=", (const char **)&p)) {
+     -+		strbuf_splice(buf, 0, p - buf->buf, "", 0);
+     -+		p = strchr(buf->buf, '\n');
+     -+		if (skip_prefix(p, "\nGIT_AUTHOR_EMAIL=", (const char **)&p2)) {
+     -+			strbuf_splice(buf, p - buf->buf, p2 - p, " <", 2);
+     -+			p = strchr(p, '\n');
+     -+			if (skip_prefix(p, "\nGIT_AUTHOR_DATE=@",
+     -+					(const char **)&p2)) {
+     -+				strbuf_splice(buf, p - buf->buf, p2 - p,
+     -+					      "> ", 2);
+     -+				p = strchr(p, '\n');
+     -+				if (p) {
+     -+					strbuf_setlen(buf, p - buf->buf);
+     -+					return buf->buf;
+     -+				}
+     -+			}
+     ++	/* dequote values and construct ident line in-place */
+     ++	for (in = out = buf->buf; i < 3 && in - buf->buf < buf->len; i++) {
+     ++		if (!skip_prefix(in, keys[i], (const char **)&in)) {
+     ++			warning("could not parse '%s' (looking for '%s'",
+     ++				rebase_path_author_script(), keys[i]);
+     ++			return NULL;
+      +		}
+     -+	}
+     -+
+     -+	warning(_("could not parse '%s'"), rebase_path_author_script());
+     -+	return NULL;
+     ++
+     ++		eol = strchrnul(in, '\n');
+     ++		*eol = '\0';
+     ++		sq_dequote(in);
+     ++		len = strlen(in);
+     ++
+     ++		if (i > 0) /* separate values by spaces */
+     ++			*(out++) = ' ';
+     ++		if (i == 1) /* email needs to be surrounded by <...> */
+     ++			*(out++) = '<';
+     ++		memmove(out, in, len);
+     ++		out += len;
+     ++		if (i == 1) /* email needs to be surrounded by <...> */
+     ++			*(out++) = '>';
+     ++		in = eol + 1;
+     ++	}
+     ++
+     ++	if (i < 3) {
+     ++		warning("could not parse '%s' (looking for '%s')",
+     ++			rebase_path_author_script(), keys[i]);
+     ++		return NULL;
+     ++	}
+     ++
+     ++	buf->len = out - buf->buf;
+     ++	return buf->buf;
+      +}
+      +
+       static const char staged_changes_advice[] =
+     @@ -159,7 +169,17 @@
+      +/* Does this command create a (non-merge) commit? */
+      +static int is_pick_or_similar(enum todo_command command)
+      +{
+     -+	return command <= TODO_SQUASH;
+     ++	switch (command) {
+     ++	case TODO_PICK:
+     ++	case TODO_REVERT:
+     ++	case TODO_EDIT:
+     ++	case TODO_REWORD:
+     ++	case TODO_FIXUP:
+     ++	case TODO_SQUASH:
+     ++		return 1;
+     ++	default:
+     ++		return 0;
+     ++	}
+      +}
+      +
+       static int update_squash_messages(enum todo_command command,
+ 2: 1c8740eaa91 = 2: 2dfe8315993 rebase -i --root: let the sequencer handle even the initial part
+ 3: 8a7f5751412 = 3: 0ee765bbb36 sequencer: allow introducing new root commits
+ 4: 0b7379b576b = 4: 29d7a9265e3 rebase --rebase-merges: a "merge" into a new root is a fast-forward
+ 5: 270b8fdf477 = 5: f7ee1b3de12 rebase --rebase-merges: root commits can be cousins, too
+-- 
+2.17.0.windows.1.38.g05ca542f78d
+
