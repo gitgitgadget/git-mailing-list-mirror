@@ -2,114 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5F502023F
-	for <e@80x24.org>; Thu,  3 May 2018 16:43:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C013200B9
+	for <e@80x24.org>; Thu,  3 May 2018 16:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751141AbeECQnq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 12:43:46 -0400
-Received: from mail-yb0-f179.google.com ([209.85.213.179]:42770 "EHLO
-        mail-yb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751095AbeECQno (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 12:43:44 -0400
-Received: by mail-yb0-f179.google.com with SMTP id 140-v6so6723922ybc.9
-        for <git@vger.kernel.org>; Thu, 03 May 2018 09:43:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qvnuwg1tp3SEEuiVPsXI0RlU6GIzPfX0JBLFrtj7rBQ=;
-        b=Ow6vwxSr6xaZwNlcvyKvF4rCeIPnNL2hM49sGegW016Q735DVpHpURiS15VCIGK0yw
-         nGq7qUSWQ/ZJQdtuyscgNSil8zKhY1S9UfOgOGjqO0GEDw1GlIuHqcbulAKJEcaR32Zk
-         diDheuL413jYXrbiItDoBnQFnTsSxs0ggE4D8PQOrpp7RcIixpw3W8PRptt8OUl/RhXf
-         vMSv887LYHdPSuvGeAGbPuNhdjXMj07WFOzzTM4zAjpxGrbPvkha+WLeu7WLqJW0qjeR
-         uJUoUKC6+1AJ05yqbw7zHrL2q7UohKU7+E6HJe2ej8WfFF1X/u0C05Ymg6AywvfLHTLe
-         kVxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qvnuwg1tp3SEEuiVPsXI0RlU6GIzPfX0JBLFrtj7rBQ=;
-        b=WLpqXcllxJM7PI8+rdjyMq3RM8deUGjFEvadcE7GJrHdVU2yVx68uN9FFVE3Dq0z3n
-         2JT2kyfEttMr1Xk0JoVFII5ihMCm+glSj5wcNNQHi0zrLeFXecHzsUBJj1JrORt6X511
-         ZMod7SzPUnvhBR7ZQX/xCLyeymcIZzTQXepuJcrQaCWx46dUqgpZb9sTrJS6gLCsdxj/
-         9CQWuVq7gn/P13yoPZz/yRnO7/FZSVi5onB3IbfSlWiZJc6e90HX4JBoxHkf8xyuvKKc
-         kor8Os9ksUUPXD8TRTvBkyBcvtGdn+a2qcb2S5wB6Zz24ml6MNDrOfZOoc8tUa9HmrAv
-         1gZg==
-X-Gm-Message-State: ALQs6tB8oKZtVIYvl8mqnVsuoG6aXWDWqjSoDPqXxzfrR6rJoPwtty4s
-        bH1qz8Nu+QDl4wc+aOi2MDeAQMPRKwmBxpMIK+4ouA==
-X-Google-Smtp-Source: AB8JxZrA9AR3kxEF10eIdslsifiG10LdIgAH8vlDL2rlUZt0F5bIMbzlZibisVktFi+UzmGO8uEl5gGsHjWqSaEPVK4=
-X-Received: by 2002:a25:6cc2:: with SMTP id h185-v6mr15822189ybc.307.1525365822989;
- Thu, 03 May 2018 09:43:42 -0700 (PDT)
+        id S1751234AbeECQuO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 12:50:14 -0400
+Received: from smtprelay07.ispgateway.de ([134.119.228.97]:13861 "EHLO
+        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751115AbeECQuL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 12:50:11 -0400
+X-Greylist: delayed 456 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 May 2018 12:50:08 EDT
+Received: from [84.46.92.130] (helo=book.hvoigt.net)
+        by smtprelay07.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1fEHJM-0000rV-3K; Thu, 03 May 2018 18:42:28 +0200
+Date:   Thu, 3 May 2018 18:42:26 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     "Middelschulte, Leif" <Leif.Middelschulte@klsmartin.com>
+Cc:     "sbeller@google.com" <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "jacob.keller@gmail.com" <jacob.keller@gmail.com>
+Subject: Re: git merge banch w/ different submodule revision
+Message-ID: <20180503164226.GB23564@book.hvoigt.net>
+References: <1524739599.20251.17.camel@klsmartin.com>
+ <CAGZ79kZA_R-5bA6mPdoHkVW-C21pNn_0x6FayhuuXqnOTrmjWw@mail.gmail.com>
+ <CA+P7+xrUwq0G2YySC3SLKqyihhPnFPCiQnQpoVVa89+=W9O9+w@mail.gmail.com>
+ <CAGZ79kaub2k-q-Mcj3H5o6ekyZ8ZZzG7+r5sHt5Ne25Nc3_nPQ@mail.gmail.com>
+ <20180430170229.GA775@book.hvoigt.net>
+ <1525246025.2176.12.camel@klsmartin.com>
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Thu, 3 May 2018 09:43:42 -0700 (PDT)
-In-Reply-To: <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 3 May 2018 09:43:42 -0700
-Message-ID: <CAGZ79kZAidPafdfu1NGwwpVo1Vy=vKOV+EREE2=-ct_sbo7Gkg@mail.gmail.com>
-Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1525246025.2176.12.camel@klsmartin.com>
+User-Agent: Mutt/1.9.0 (2017-09-02)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Hi,
 
-On Thu, May 3, 2018 at 8:30 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> This builtin does not do a whole lot so far, apart from showing a usage
-> that is oddly similar to that of `git tbdiff`. And for a good reason:
-> the next commits will turn `branch-diff` into a full-blown replacement
-> for `tbdiff`.
+On Wed, May 02, 2018 at 07:30:25AM +0000, Middelschulte, Leif wrote:
+> Am Montag, den 30.04.2018, 19:02 +0200 schrieb Heiko Voigt:
+> > On Thu, Apr 26, 2018 at 03:19:36PM -0700, Stefan Beller wrote:
+> > > Stefan wrote:
+> > > > See https://github.com/git/git/commit/68d03e4a6e448aa557f52adef92595ac4d6cd4bd
+> > > > (68d03e4a6e (Implement automatic fast-forward merge for submodules, 2010-07-07)
+> > > > to explain the situation you encounter. (specifically merge_submodule
+> > > > at the end of the diff)
+> > > 
+> > > +cc Heiko, author of that commit.
+> > 
+> > In that commit we tried to be very careful about. I do not understand
+> > the situation in which the current strategy would be wrong by default.
+> > 
+> > We only merge if the following applies:
+> > 
+> >  * The changes in the superproject on both sides point forward in the
+> >    submodule.
+> > 
+> >  * One side is contained in the other. Contained from the submodule
+> >    perspective. Sides from the superproject merge perspective.
+> > 
+> > So in case of the mentioned rewind of a submodule: Only one side of the
+> > 3-way merge would point forward and the merge would fail.
+> > 
+> > I can imagine, that in case of a temporary revert of a commit in the
+> > submodule that you would not want that merged into some other branch.
+> > But that would be the same without submodules. If you merge a temporary
+> > revert from another branch you will not get any conflict.
+> > 
+> > So maybe someone can explain the use case in which one would get the
+> > results that seem wrong?
+> In an ideal world, where there are no regressions between revisions, a
+> fast-forward is appropriate. However, we might have regressions within
+> submodules.
+> 
+> So the usecase is the following:
+> 
+> Environment:
+> - We have a base library L that is developed by some team (Team B).
+> - Another team (Team A) developes a product P based on those libraries using git-flow.
+> 
+> Case:
+> The problem occurs, when a developer (D) of Team A tries to have a feature
+> that he developed on a branch accepted by a core developer of P:
+> If a core developer of P advanced the reference of L within P (linear history), he might
+> deem the work D insufficient. Not because of the actual work by D, but regressions
+> that snuck into L. The core developer will not be informed about the missmatching
+> revisions of L.
+> 
+> So it would be nice if there was some kind of switch or at least some trigger.
 
-While I appreciate the 1:1 re-implementation, I'll comment as if this
-was a newly invented tool, questioning design choices. They are probably
-chosen pretty well, and fudge facotrs as below are at tweaked to a reasonable
-factor, but I'll try to look with fresh eyes.
+I still do not understand how the current behaviour is mismatching with
+users expectations. Let's assume that you directly tracked the files of
+L in your product repository P, without any submodule boundary. How
+would the behavior be different? Would it be? If D started on an older
+revision and gets merged into a newer revision, there can always be
+regressions even without submodules.
 
->
-> At this point, we ignore tbdiff's color options, as they will all be
-> implemented later and require some patches to the diff machinery.
+Why would the core developer need to be informed about mismatching
+revisions if he himself advanced the submodule?
 
-Speaking of colors, for origin/sb/blame-color Junio hinted at re-using
-cyan for "uninteresting" parts to deliver a consistent color scheme for
-Git. Eventually he dreams of having 2 layers of indirection IIUC, with
-    "uninteresting" -> cyan
-    "repeated lines in blame" -> uninteresting
+It seems to me that you do not want to mix integration testing and
+testing of the feature itself. How about just testing/reviewing on the
+branch then? You would still get the submodule revision D was working on
+and then in a later stage check if integration with everything else
+works.
 
-Maybe we can fit the coloring of this tool in this scheme, too?
-
-> +       double creation_weight = 0.6;
-
-I wondered if we use doubles in Gits code base at all,
-and I found
-
-khash.h:59:static const double __ac_HASH_UPPER = 0.77;
-pack-bitmap-write.c:248:        static const double
-REUSE_BITMAP_THRESHOLD = 0.2;
-pack-bitmap.c:751:      static const double REUSE_PERCENT = 0.9;
-
-all other occurrences of `git grep double` are mentioning it in other
-contexts (e.g. "double linked list" or comments).
-
-When implementing diff heuristics in 433860f3d0b (diff: improve
-positioning of add/delete blocks in diffs, 2016-09-05), Michael broke
-it down to fixed integers instead of floating point.
-
-Do we need to dynamic of a floating point, or would a rather small range
-suffice here? (Also see rename detection settings, that take percents as
-integers)
-
-Thanks,
-Stefan
+Cheers Heiko
