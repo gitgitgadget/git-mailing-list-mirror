@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81E19200B9
-	for <e@80x24.org>; Thu,  3 May 2018 18:49:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54564200B9
+	for <e@80x24.org>; Thu,  3 May 2018 18:49:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751324AbeECStI (ORCPT <rfc822;e@80x24.org>);
+        id S1751346AbeECStM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 14:49:12 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:43892 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751101AbeECStI (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 3 May 2018 14:49:08 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35956 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750969AbeECStG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 14:49:06 -0400
-Received: by mail-wm0-f68.google.com with SMTP id n10-v6so643853wmc.1
-        for <git@vger.kernel.org>; Thu, 03 May 2018 11:49:05 -0700 (PDT)
+Received: by mail-wr0-f194.google.com with SMTP id v15-v6so18635999wrm.10
+        for <git@vger.kernel.org>; Thu, 03 May 2018 11:49:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=L3pmWgOODhAsEd5i1sBWaHsJ7gbGsqaeoSZa4KdlsBk=;
-        b=SwBfhckqZC6yFnaIoihl80F453wIRzTDQPK0XC3lLF4ZDo6MEQ4x5NBha/9HfrEaF0
-         JWDnvs3u709Y3WRjWt6sto8M+uqqeK+eQZPeN5Zw3L1S6Qtlby9DBeZYjBbtzil2XpPO
-         qW9SDnAZC1nN/wQqgAAUoTHyzIoub1WT0wuCmdjyDW2S0EU34+CsNMhElR9nisrK0Tbp
-         QrCr/E4L/Ahad+IFLhCHSfQXIrdkz9CxwBuJfVNdrC6G/0Y5A7jqhFI0K9ud58S2432d
-         amqMc1uNZfJWDjcPf5vNNSvjj0wAoirHDw6lrL4gl7NbvAhI+dm0bd1VgaK8DwzpqE+J
-         wW8A==
+        bh=Tckeed6VAEadcQI43MPlEB9zQMA97Fr9UYCurr1ob5Y=;
+        b=ImzTzhxO6aknEOXel/Sr+bsObmOo37cGwbzrViimR92ta7ePS+yL1nVlJoPmJZgdN4
+         VzQ+Hcs3RH+h1Qx+c+/ABxbGukpe4tFOJiv4ykTOuG+L/1PwqWYODxbnR/pi9xb+yw4b
+         6yGdjmToM+Wpviyg115bDcEdkDdip6/Z8viBp+uZNGjZMO2/e/jv9I35G7V9p243j5Co
+         J+v1RFaE+EUNjbBRK/oD2uhDAgt0yZxdtJyEp1apdNFI5uUeF/T5MbmPOzwYXezGutuv
+         CoLSxjhyGpp7qXg7vloh4guBTacLq3DOziuFRCX6JdL0o+QX7VA7Tzdycyt2ORBOiVmA
+         o7zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=L3pmWgOODhAsEd5i1sBWaHsJ7gbGsqaeoSZa4KdlsBk=;
-        b=ltlJfLS0TaKAIdsF8XEpAt/ecGvGYafEPo3WIf6lzZjGFNxUAILRNf7pGV1OD62kMW
-         MHkpu+7lRBJxKizhdNvfPDbkEC0q+4XFxHc5lePAmVOINOqfErIp29SNUKG5gyaYqVbe
-         jttO3DW95XwKwDT+gWmFpukDs1mLrd8VW6JotdwkcXii5XwBn56yiGrT6VjCdrqxnQEe
-         SwU9Wi/sT8dkT8LDCWqwps55+2J+LilT1RI2AfuVQs3uAoLhHHc2MKfh1u7Gg2F3dOU6
-         k6yrtWEtigU+9lzC0al04Yaj+GNGXT+clh21OWSpUf5D/zxuS84U14xO/E1xJJU6NQ2R
-         /XGg==
-X-Gm-Message-State: ALQs6tB74Uz5y0gyzb5F7l3h8N4Vf3fMHF3nINdhVVJI7fjytMMiZDxn
-        7pjMml63FJpzbVh1QUAyEI949Zpt
-X-Google-Smtp-Source: AB8JxZoZuBDairvF++oh+76UjclwfVsswbzCNRkCbFEjGjeeuyKlv+LyUpb1fNb4nkAJa+u0MujOTA==
-X-Received: by 10.28.216.13 with SMTP id p13mr14940337wmg.32.1525373344691;
-        Thu, 03 May 2018 11:49:04 -0700 (PDT)
+        bh=Tckeed6VAEadcQI43MPlEB9zQMA97Fr9UYCurr1ob5Y=;
+        b=XUy8MXysHiqrtJY8Y3932XrcZpU9q95o3hdmlIFEzbIzwSNbZhPSvnVbMiamnNXHwT
+         sFrpcFV8JH78y1i9P9Ohds7Z3IyBF0BJsTG7pehfNiqQPnUM/go2KcYWVS24050ECr5A
+         Y7eTa5EAsbFL8wvtUmrIW0wObJmHYt2bpP58y63VCJbWqKI5bqxQ8yiuUknrZ6pnldQ8
+         DJAtxznByGMfLRs8TjC1NacOmsK8wN2EVFn6Z81kj4sy+pr+QcFPbnC1TtznPG+T4sYb
+         bSC5Lh0bLaS1NMbSwePnE3vpcKGbDc2sckUabx5a8sfB836MEhSrLvmlw1IWYgOoftwL
+         YYWg==
+X-Gm-Message-State: ALQs6tAt/V5IAS9unLdU/5ynCMfGGebU7SR32M9npGu3DElcmDd+ttbZ
+        BryTfkerRCnvAgektwOlU1dXIzu2
+X-Google-Smtp-Source: AB8JxZqRA7EszfzNYVBVj4UuOG+wuW4c4FblmRWfOyhp0aqYt3o15/uuB9l75wquTFIJFYXHSYt1aA==
+X-Received: by 2002:adf:d1cc:: with SMTP id m12-v6mr10253706wri.214.1525373346819;
+        Thu, 03 May 2018 11:49:06 -0700 (PDT)
 Received: from arrakeen.fritz.box ([2001:a62:81d:ab01:a521:6b31:5c87:9e4b])
-        by smtp.gmail.com with ESMTPSA id f83-v6sm198322wmh.32.2018.05.03.11.49.03
+        by smtp.gmail.com with ESMTPSA id f83-v6sm198322wmh.32.2018.05.03.11.49.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 May 2018 11:49:04 -0700 (PDT)
+        Thu, 03 May 2018 11:49:06 -0700 (PDT)
 From:   Andreas Heiduk <asheiduk@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Andreas Heiduk <asheiduk@gmail.com>,
         Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v3 5/7] git-svn: remove ''--add-author-from' for 'commit-diff'
-Date:   Thu,  3 May 2018 20:48:28 +0200
-Message-Id: <20180503184830.11889-6-asheiduk@gmail.com>
+Subject: [PATCH v3 6/7] doc: add note about shell quoting to revision.txt
+Date:   Thu,  3 May 2018 20:48:29 +0200
+Message-Id: <20180503184830.11889-7-asheiduk@gmail.com>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <20180503184830.11889-1-asheiduk@gmail.com>
 References: <20180427170440.30418-1-asheiduk@gmail.com>
@@ -65,28 +65,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The subcommand 'commit-diff' does not support the option
-'--add-author-from'.
-
 Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
-Signed-off-by: Eric Wong <e@80x24.org>
+Reviewed-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-svn.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/revisions.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index d59379ee23..e9615951d2 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -707,7 +707,7 @@ creating the branch or tag.
- config key: svn.useLogAuthor
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index dfcc49c72c..e760416d07 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -7,6 +7,10 @@ syntax.  Here are various ways to spell object names.  The
+ ones listed near the end of this list name trees and
+ blobs contained in a commit.
  
- --add-author-from::
--	When committing to svn from Git (as part of 'commit-diff', 'set-tree' or 'dcommit'
-+	When committing to svn from Git (as part of 'set-tree' or 'dcommit'
- 	operations), if the existing log message doesn't already have a
- 	`From:` or `Signed-off-by:` line, append a `From:` line based on the
- 	Git commit's author string.  If you use this, then `--use-log-author`
++NOTE: This document shows the "raw" syntax as seen by git. The shell
++and other UIs might require additional quoting to protect special
++characters and to avoid word splitting.
++
+ '<sha1>', e.g. 'dae86e1950b1277e545cee180551750029cfe735', 'dae86e'::
+   The full SHA-1 object name (40-byte hexadecimal string), or
+   a leading substring that is unique within the repository.
+@@ -186,6 +190,8 @@ existing tag object.
+   is matched. ':/!-foo' performs a negative match, while ':/!!foo' matches a
+   literal '!' character, followed by 'foo'. Any other sequence beginning with
+   ':/!' is reserved for now.
++  Depending on the given text, the shell's word splitting rules might
++  require additional quoting.
+ 
+ '<rev>:<path>', e.g. 'HEAD:README', ':README', 'master:./README'::
+   A suffix ':' followed by a path names the blob or tree
 -- 
 2.16.2
 
