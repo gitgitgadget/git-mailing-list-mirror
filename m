@@ -7,84 +7,135 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE267200B9
-	for <e@80x24.org>; Thu,  3 May 2018 20:32:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E404200B9
+	for <e@80x24.org>; Thu,  3 May 2018 20:42:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751229AbeECUcn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 16:32:43 -0400
-Received: from mout.gmx.net ([212.227.17.22]:59385 "EHLO mout.gmx.net"
+        id S1750962AbeECUmd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 16:42:33 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59207 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750911AbeECUcm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 16:32:42 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSY2q-1eowFd0xQi-00RXj1; Thu, 03
- May 2018 22:32:37 +0200
-Date:   Thu, 3 May 2018 22:32:38 +0200 (DST)
+        id S1751074AbeECUmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 16:42:32 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCggg-1f4xO71PeM-009MvI; Thu, 03
+ May 2018 22:42:25 +0200
+Date:   Thu, 3 May 2018 22:42:25 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+To:     Stefan Beller <sbeller@google.com>
+cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
 Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
-In-Reply-To: <nycvar.QRO.7.76.6.1805032229050.77@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1805032232080.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de> <CACsJy8DF8twvST0tcHfFqYWaV_0dVRCfJj-QuuCK=0h+gjJ0wQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.1805032229050.77@tvgsbejvaqbjf.bet>
+In-Reply-To: <CAGZ79kZAidPafdfu1NGwwpVo1Vy=vKOV+EREE2=-ct_sbo7Gkg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1805032227520.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de> <CAGZ79kZAidPafdfu1NGwwpVo1Vy=vKOV+EREE2=-ct_sbo7Gkg@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:jPMwXIOvxzLrRhZKEDdpw4niWqmAV+fVqGk1v4eyg7gH9iVAKln
- m855XU59rUAYbR2hP5elgSLTuPRq3Tz0HV2mb8Cek2Awd9pdn1H2AYVcHbVm0/YVtPmXXve
- bAgu9/p9IzzNSub3+RrEXiuHjwM+CbWYAAqMHHB3q6+ZmILeq5WanhEnTCvXtTN4vrLbzFm
- 8uJFN0pm6NyFMuI7HKtFw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:W3M1rGVhmm8=:gMWEpjRW58FdHU3gLtpB2x
- qGnluqanlQd8ZptMXqaj0BwGQJQ4nVeJJ9t22PREZQVDyy2yc+wah7Lw6+eaaQ1y7zBY50dx+
- 9kcf5JZPtais51eHAbcRTTx5aMQ1j0fhiF4rivkAWxxe/TaWuUe4vcMS5Yx81JsBODlACkhGk
- M807U/6ksuKtE9YmEIbW8I+bCcfGJbUtKcxpmvxWVmQQ6BO8Xe83fL25oj2BeIld9XUl+mB20
- 9FldkxhkxgL8RKaDUMyfa8xO0B4dVX3eGbX+MTKDof2bEFFkDNX59LFsa7x96SI/1ZxW2BiRE
- 2ZFgpcOvYbYSCQA8Y1UtiSQ5itLGEcI1I6c+jM15+EQ5pYG2WXStAJcW4yt0lFLsXWhi2GhP8
- 2Mumiqmf3bouiz2M0QV6tmJiWJBJJv6HMiQcDzSTg56CQobRLnRJIDMszXhw/I0ds1nF94FaJ
- jUFoCU7QOybAv/r/QL4gBVZTaEM7GIVFwRC9CCGdy8lcSj9UWNkvoouAT0DeykcOeMbsZUePK
- aPJBsXUMmsApCGidnVovEaTDp5CUP0z+MvoEI0Kx9LfVnZ4eAa3vt1BGRkU7kWVFl0qkCn9t0
- ouGS0y2DSR6uaRcFCISe69D5H7d5X1MlrlPOGwVrDW3XkbGbdlQibwUX4wZPNW4Oe15KLJBHf
- 9f5hdKKd6uvM7D9vZlQHBRv6gO7x6fcUFCbZE12BN0jjD3HvJHA4OGCaDDveai7hASFKisM5j
- aCqb7gt5Gz0QPkjhAS3e7trXWKs1FcFpnQm+D/DQM44CmvbLnzCUx+Vqp6WDgoaLxhC6j66sp
- swUsToV
+X-Provags-ID: V03:K1:eZMydl1t9ssrm8ZgOxPnA4occC83do5GF05cQX4v3ZsghUkLUlX
+ czC8PIFjrj6W36N0qlRMuQseIDJpY1ZzdvydwIJzyynZQSibNpJLcwYTRbysK63moqg0yHS
+ PHpAJTGyjtUac+5fG4U4zsl4woheWa/2lTxWKMNHOCXbSRCklc1iqdRNWffGiVUxnMo8mTz
+ //oz0O4V0bqv9sKLmgA9g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZafsVfXFlXQ=:txsBxtFYXorPIR+5N6szdu
+ UxsUSmGnZlGqBwdTC4GMznAUF1t1tBoNXsMau4Pcu3D8nIdDzu3ozNM84jeoDjehQGr5Kw57n
+ dMFtAfP6KVclxvpyx25+Cu36iWWmvJuaUKyJvOKwH/aT89km9RmddS4KObTxupHlu81ySX/Ry
+ nTBOiKbXx1HAyNstjuib8tRKZKFkaHRjNbgvddrxRfjcsdn/QiIHXHRO+2NYU3EEnuZkZzZTt
+ ALkcRejteBA2CBunmjPnAUfj228loGlc7Wcf5kl4Xf0RQuKhy3ewsv7KUSh8dSuz6rk9JpCwv
+ EjiwpVgSGcNIrPyyyMPIHlytip4F4D4DTJiVhS8wVf5G4Ww/A6SvUajRlPBkqkWIls7tzuKet
+ 14nkCv56mD9YNwWezoeZtR8/Eu+ZnwId81gV69ogzDFnbJxJq6iYv8NmC3s1UbXYeiqqmrE4V
+ Tu0Ts0SQ/C2keeXEr96ZAyNaYwIMIJ9jeJ7ylwF4e+wTSOOgOdAIDSFV7uFXtjXmHY/UbM783
+ ZaCFmdXlybtZbRdR/q8USIfMhvUOLRdmWlDTG730TOoVuH6xIOEB0ahYpDg76uOSL+Pqf40up
+ Lk8XNoXaFJCcvInhS4UpCvWo2DUMKt6vqOK/k7cm7zAhZUU2EHo7bOuYVVWzLjgFV3hZrShgC
+ EeezRgk1p2yeX0UvAcxwxGBc95bbp4UaLdVKdtMKQYZ33Y10xaAVEake6MZEOL3Bhu1AA9qMs
+ Y9+yVYSiRZWMvGFZ/t3T7YUSQmEoyTaR4CNoXIk3fe5YWrR/QdQelTkuEzbem4YDk1OUvGOK2
+ teJ6pFK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
+Hi Stefan,
 
-On Thu, 3 May 2018, Johannes Schindelin wrote:
+On Thu, 3 May 2018, Stefan Beller wrote:
 
-> On Thu, 3 May 2018, Duy Nguyen wrote:
+> On Thu, May 3, 2018 at 8:30 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > This builtin does not do a whole lot so far, apart from showing a
+> > usage that is oddly similar to that of `git tbdiff`. And for a good
+> > reason: the next commits will turn `branch-diff` into a full-blown
+> > replacement for `tbdiff`.
 > 
-> > On Thu, May 3, 2018 at 5:30 PM, Johannes Schindelin
-> > <johannes.schindelin@gmx.de> wrote:
-> > > diff --git a/command-list.txt b/command-list.txt
-> > > index a1fad28fd82..c89ac8f417f 100644
-> > > --- a/command-list.txt
-> > > +++ b/command-list.txt
-> > > @@ -19,6 +19,7 @@ git-archive                             mainporcelain
-> > >  git-bisect                              mainporcelain           info
-> > >  git-blame                               ancillaryinterrogators
-> > >  git-branch                              mainporcelain           history
-> > > +git-branch-diff                         mainporcelain           info
-> > 
-> > Making it part of "git help" with the info keywords at this stage may
-> > be premature. "git help" is about _common_ commands and we don't know
-> > (yet) how popular this will be.
-> 
-> Makes sense. I removed the `mainporcelain` keyword locally.
+> While I appreciate the 1:1 re-implementation, I'll comment as if this
+> was a newly invented tool, questioning design choices. They are probably
+> chosen pretty well, and fudge facotrs as below are at tweaked to a
+> reasonable factor, but I'll try to look with fresh eyes.
 
-On second thought, I *think* you meant to imply that I should remove that
-line altogether. Will do that now.
+Absolutely. While tbdiff got some testing over time, it has definitely not
+gotten as much exposure as branch-diff hopefully will.
+
+BTW I chose a different command name on purpose, so that we are free to
+change the design and not harm existing tbdiff users.
+
+> > At this point, we ignore tbdiff's color options, as they will all be
+> > implemented later and require some patches to the diff machinery.
+> 
+> Speaking of colors, for origin/sb/blame-color Junio hinted at re-using
+> cyan for "uninteresting" parts to deliver a consistent color scheme for
+> Git. Eventually he dreams of having 2 layers of indirection IIUC, with
+>     "uninteresting" -> cyan
+>     "repeated lines in blame" -> uninteresting
+> 
+> Maybe we can fit the coloring of this tool in this scheme, too?
+
+Sure. So you mean I should use cyan for... what part of the colored
+output? ;-)
+
+> > +       double creation_weight = 0.6;
+> 
+> I wondered if we use doubles in Gits code base at all,
+> and I found
+> 
+> khash.h:59:static const double __ac_HASH_UPPER = 0.77;
+> pack-bitmap-write.c:248:        static const double
+> REUSE_BITMAP_THRESHOLD = 0.2;
+> pack-bitmap.c:751:      static const double REUSE_PERCENT = 0.9;
+> 
+> all other occurrences of `git grep double` are mentioning it in other
+> contexts (e.g. "double linked list" or comments).
+> 
+> When implementing diff heuristics in 433860f3d0b (diff: improve
+> positioning of add/delete blocks in diffs, 2016-09-05), Michael broke
+> it down to fixed integers instead of floating point.
+> 
+> Do we need to dynamic of a floating point, or would a rather small range
+> suffice here? (Also see rename detection settings, that take percents as
+> integers)
+
+I guess you are right, and we do not need floats. It was just very, very
+convenient to do that instead of using integers because
+
+- I already had the Jonker-Volgenant implementation "lying around" from my
+  previous life as an image processing expert, using doubles (but it was
+  in Java, not in C, so I quickly converted it for branch-diff).
+
+- I was actually not paying attention whether divisions are a thing in the
+  algorithm. From a cursory glance, it would appear that we are never
+  dividing in hungarian.c, so theoretically integers should be fine.
+
+- using doubles neatly side-steps the overflow problem. If I use integers
+  instead, I always will have to worry what to do if, say, adding
+  `INT_MAX` to `INT_MAX`.
+
+I am particularly worried about that last thing: it could easily lead to
+incorrect results if we blindly, say, pretend that `INT_MAX + INT_MAX ==
+INT_MAX` for the purpose of avoiding overflows.
+
+If, however, I misunderstood and you are only concerned about using
+*double-precision* floating point numbers, and would suggest using `float`
+typed variables instead, that would be totally cool with me.
 
 Ciao,
 Dscho
