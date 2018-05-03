@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5458200B9
-	for <e@80x24.org>; Thu,  3 May 2018 16:18:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4797C200B9
+	for <e@80x24.org>; Thu,  3 May 2018 16:29:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751257AbeECQSs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 12:18:48 -0400
-Received: from mail-ot0-f194.google.com ([74.125.82.194]:34462 "EHLO
-        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751121AbeECQSr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 12:18:47 -0400
-Received: by mail-ot0-f194.google.com with SMTP id i5-v6so9602974otf.1
-        for <git@vger.kernel.org>; Thu, 03 May 2018 09:18:47 -0700 (PDT)
+        id S1751517AbeECQ3S (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 12:29:18 -0400
+Received: from mail-ot0-f174.google.com ([74.125.82.174]:40610 "EHLO
+        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751445AbeECQ3N (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 12:29:13 -0400
+Received: by mail-ot0-f174.google.com with SMTP id n1-v6so21329035otf.7
+        for <git@vger.kernel.org>; Thu, 03 May 2018 09:29:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=uoL6C5yUgEu+hbr3sk6CeMJD2iu+yI/E+3AOAg9nP60=;
-        b=rGEOTtHvVjx4jW69sZ+qgHw6P5hVQxXQwc6b0aCRcd/uBxzBeT25/4iZq4IFPvPHvR
-         j36zhMWkHfK4K/kB0ItWNk4WPiAwhqL+ezY/5325RByiM0HFMCtbcGeP5TGhjvBG8v0Z
-         6FGhHkUE7pqY+LOQ/VuJVgKP+Lb5nOrkQAenSuAWTleRE/VvEzpGB5kjq04aiRjlJdrC
-         OC88LAP8cywvXEP20twzsl+0VdKCgXq83eYsTp8sH473M2MBXEo2HFWHpfHF75hJ2TaB
-         7+NaGRsn12FeCDLPPE6MVmX75xrhQNn5U+LZWxdXk86UEDy+SDDdIfEjD/9+rZiB7Gh4
-         2UjA==
+        bh=beEDd4DdI3/fFO4DjxdRyNeeFCTgm4sJxWadYgY1ZFU=;
+        b=mq978wELS46I1ajIJm+Uw5PHHaoW6Kxn/k5pV/nOWOQXP0vBeaiFk0sMyJakJhtDdn
+         BPdqmHo7dkfs8SFXl5I4Ci/k23qOpVB+PBtmWmUtS4ytJYsGUYYclC6Sr3FmtdXZ8BUw
+         yoZ+OW8+TTJr8uehZBNHdL+3/hRWLQ6b11RaCgRASleSVGV8tSAEbuQ3duhvihNFueQ/
+         QTmLVVM2Bv+M1TYJEXFl1+S36DnrwVhfMKlfRId0Evgu+gpqL8VCXHipYB/QAd+OvWxP
+         H2qsVbvbNTmggf5SWQkC8dO0LUzYthGoeC/upNTsXLd8RiusZSIpnoKXAZVKu5IUufSI
+         0+2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=uoL6C5yUgEu+hbr3sk6CeMJD2iu+yI/E+3AOAg9nP60=;
-        b=WSnIuOuoM1IPBgqmB/FBxqoYnbZcCAKuBblp88zPzUxqwoDfLYDIM42csfDsLqY6YX
-         u91RKaRr34Cmw9ScP+Lb++OQ35SFUSEHDQHcAyCeqC9zx0qdntl3oqyDITM5Nev4XV4K
-         YJ4FgbWekyCDz6z7sRXNLd6p0qjxXUtGqkhIJ4Omhl/SCtveUXDOTG1w7/td/CBZmIGj
-         k02hthqFphm9n/yhx5CPMR7SN3kPqXx8HPkoS6uh3bNAT/xrtXH7EaCg90quOkEsZVOD
-         x3pQOYu4Vq3c0+vBBd3dQ0SjuGzZbO7vh2kWN15Clql8lJ+hvHrLWmlIZ8RE1CvcXDoL
-         sLZA==
-X-Gm-Message-State: ALQs6tCnp1Oatvh3+TkCDRFXcBtaEINzNo7Wt/91B1g+mMYF8VyX5/Nq
-        kRR3tc8YlYtAwWogp2ejjUYYR9kbvmBr4MLyDIA=
-X-Google-Smtp-Source: AB8JxZq7jYM/+FNnMSJ0/vCK4z8mHUKAWLpbn3Xms61EUCfCrXW8G2RFpoCXy8aQCz3Ti4QvQYykLD3tZxd9tfCYxEw=
-X-Received: by 2002:a9d:2fa6:: with SMTP id r35-v6mr18318634otb.356.1525364326735;
- Thu, 03 May 2018 09:18:46 -0700 (PDT)
+        bh=beEDd4DdI3/fFO4DjxdRyNeeFCTgm4sJxWadYgY1ZFU=;
+        b=EuPAmG3E7HWiueBRuWvMSf+MqwUxDQ3hWStsQLM7kKIwfOftHbJrvKAdTivVpfelJP
+         hjJzzKlBmOnpb0n+ZWGyiNbc/F/bwLCMHyaQQWFg+kwBJXOSLqgmHGFhTaonPpaGtIcA
+         R6afufQm46Gte0zUCDinlvZU0eyOzHwJ5uNPNVC86Sc9kVrPgaMW2bXRhHRdhxSmyzm5
+         I8RLtaWFbozJkwRmmyUciRFmdbqjdGJxj9QMavmc2XvaVvZ6X4R7p2OfesWwlbMDirpi
+         hx2Xk/a/GMz4QtcMLK7jHFpn1ALuJNQM2Y8TxeWW9ze6up3o0R+GCxjSTS//q3/DMyKj
+         29dw==
+X-Gm-Message-State: ALQs6tA++40vEQJ9o2o13hD1lNblCLbX6+2qJy8GENna7BaHatO2usy6
+        eRunuQIy1y/jQAc5fuLgCG7oqp58YOLw6qLlN4k=
+X-Google-Smtp-Source: AB8JxZpcOMPtZodYWIiCR0kd3MfPLyQjC4ae/kofKXVtQ6U+QDnzzvCDbEce7UMVKFVqOmeGJ7F3VNy93OTRj+YqHIQ=
+X-Received: by 2002:a9d:4197:: with SMTP id p23-v6mr17907802ote.75.1525364952251;
+ Thu, 03 May 2018 09:29:12 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Thu, 3 May 2018 09:18:16 -0700 (PDT)
-In-Reply-To: <20180430153122.243976-4-jamill@microsoft.com>
+Received: by 10.74.178.133 with HTTP; Thu, 3 May 2018 09:28:41 -0700 (PDT)
+In-Reply-To: <20180430153122.243976-6-jamill@microsoft.com>
 References: <20180417163400.3875-1-jamill@microsoft.com> <20180430153122.243976-1-jamill@microsoft.com>
- <20180430153122.243976-4-jamill@microsoft.com>
+ <20180430153122.243976-6-jamill@microsoft.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 3 May 2018 18:18:16 +0200
-Message-ID: <CACsJy8DR4wNoucfL0++-k73EPnJL1YSsoB5prjG6YtDPzu9qRQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] mem-pool: fill out functionality
+Date:   Thu, 3 May 2018 18:28:41 +0200
+Message-ID: <CACsJy8Dxz8dph=Ouy2C9PXQaJUJw86FHdobvJxcR-Dx+w5iO0Q@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] block alloc: add validations around cache_entry lifecyle
 To:     Jameson Miller <jamill@microsoft.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         "gitster@pobox.com" <gitster@pobox.com>,
@@ -65,268 +65,231 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Another I noticed in the jm/mem-pool series is this loop in mem_pool_alloc()
-
-for (p = mem_pool->mp_block; p; p = p->next_block)
-        if (p->end - p->next_free >= len)
-                break;
-
-You always go from the start (mp_block) but at some point those first
-blocks are filled up and we don't really need to walk from the start
-anymore. If we allow the mem-pool user to set a "minimum alloc" limit,
-then we can determine if the remaining space in a block is not useful
-for any future allocation, we can just skip it and start looking for
-an available from a new pointer, avail_block or something.
-
-I'm writing this with alloc.c in mind because we have a lot more
-blocks to allocate there. Unlike read-cache, you can't really estimate
-how many mp_blocks you're going to need. This linked list could become
-long. And because alloc.c does fixed size allocation, we use up one
-block after another and will never find free space in previous blocks.
-
 On Mon, Apr 30, 2018 at 5:31 PM, Jameson Miller <jamill@microsoft.com> wrote:
+> Add an option (controlled by an environment variable) perform extra
+> validations on mem_pool allocated cache entries. When set:
+>
+>   1) Invalidate cache_entry memory when discarding cache_entry.
+>
+>   2) When discarding index_state struct, verify that all cache_entries
+>      were allocated from expected mem_pool.
+>
+>   3) When discarding mem_pools, invalidate mem_pool memory.
+
+On linux step 3 could be better achieved by allocating blocks with
+mmap() and freeing them with munmap(). Access to already munmap()'d
+blocks will result in segmentation fault regardless of values.  I
+guess Windows also has something similar (I vaguely remember something
+about "locking memory" and stuff, but my win32 knowledge is decade old
+at this point)
+
+(Actually with glibc on linux, i'm pretty sure mmap is already used
+for large allocation so step 3 is achieved without doing anything; not
+sure about other libc implementations)
+
+> This should provide extra checks that mem_pools and their allocated
+> cache_entries are being used as expected.
+>
+> Signed-off-by: Jameson Miller <jamill@microsoft.com>
+> ---
+>  cache.h      |  7 +++++++
+>  git.c        |  3 +++
+>  mem-pool.c   | 24 +++++++++++++++++++++++-
+>  mem-pool.h   |  2 ++
+>  read-cache.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+>  5 files changed, 82 insertions(+), 1 deletion(-)
+>
+> diff --git a/cache.h b/cache.h
+> index 7ed68f28e0..8f10f0649b 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -369,6 +369,13 @@ void discard_index_cache_entry(struct cache_entry *ce);
+>   */
+>  void discard_transient_cache_entry(struct cache_entry *ce);
+>
+> +/*
+> + * Validate the cache entries in the index.  This is an internal
+> + * consistency check that the cache_entry structs are allocated from
+> + * the expected memory pool.
+> + */
+> +void validate_cache_entries(const struct index_state *istate);
+> +
+>  #ifndef NO_THE_INDEX_COMPATIBILITY_MACROS
+>  #define active_cache (the_index.cache)
+>  #define active_nr (the_index.cache_nr)
+> diff --git a/git.c b/git.c
+> index f598fae7b7..28ec7a6c4f 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -347,7 +347,10 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+>
+>         trace_argv_printf(argv, "trace: built-in: git");
+>
+> +       validate_cache_entries(&the_index);
+>         status = p->fn(argc, argv, prefix);
+> +       validate_cache_entries(&the_index);
+> +
+>         if (status)
+>                 return status;
+>
 > diff --git a/mem-pool.c b/mem-pool.c
-> index 389d7af447..a495885c4b 100644
+> index a495885c4b..77adb5d5b9 100644
 > --- a/mem-pool.c
 > +++ b/mem-pool.c
-> @@ -5,6 +5,8 @@
->  #include "cache.h"
->  #include "mem-pool.h"
->
-> +#define BLOCK_GROWTH_SIZE 1024*1024 - sizeof(struct mp_block);
+> @@ -60,21 +60,43 @@ void mem_pool_discard(struct mem_pool *mem_pool)
+>  {
+>         int i;
+>         struct mp_block *block, *block_to_free;
+> +       int invalidate_memory = should_validate_cache_entries();
 
-#define BLOCK_GROWTH_SIZE (1024*1024 - sizeof(struct mp_block))
-
-(wrapped in brackets and no trailing semicolon)
+Heh.. cache-entries logic should not enter mem-pool.c.
 
 > +
->  static struct mp_block *mem_pool_alloc_block(struct mem_pool *mem_pool, size_t block_alloc)
->  {
->         struct mp_block *p;
-> @@ -19,6 +21,60 @@ static struct mp_block *mem_pool_alloc_block(struct mem_pool *mem_pool, size_t b
->         return p;
+>         for (block = mem_pool->mp_block; block;)
+>         {
+>                 block_to_free = block;
+>                 block = block->next_block;
+> +
+> +               if (invalidate_memory)
+> +                       memset(block_to_free->space, 0xDD, ((char *)block_to_free->end) - ((char *)block_to_free->space));
+> +
+>                 free(block_to_free);
+>         }
+>
+> -       for (i = 0; i < mem_pool->nr; i++)
+> +       for (i = 0; i < mem_pool->nr; i++) {
+> +               memset(mem_pool->custom[i], 0xDD, ((char *)mem_pool->custom_end[i]) - ((char *)mem_pool->custom[i]));
+
+"if (invalidate_memory)" missing
+
+>                 free(mem_pool->custom[i]);
+> +       }
+>
+>         free(mem_pool->custom);
+>         free(mem_pool->custom_end);
+>         free(mem_pool);
 >  }
 >
-> +static void *mem_pool_alloc_custom(struct mem_pool *mem_pool, size_t block_alloc)
+> +int should_validate_cache_entries(void)
 > +{
-> +       char *p;
-
-An empty line between variable declaration and function body would be nice.
-
-> +       ALLOC_GROW(mem_pool->custom, mem_pool->nr + 1, mem_pool->alloc);
-> +       ALLOC_GROW(mem_pool->custom_end, mem_pool->nr_end + 1, mem_pool->alloc_end);
+> +       static int validate_index_cache_entries = -1;
 > +
+> +       if (validate_index_cache_entries < 0) {
+> +               if (getenv("GIT_TEST_VALIDATE_INDEX_CACHE_ENTRIES"))
 
-If you put both custom and custom_end in a struct, then you can grow
-just one array (of the new struct) and have fewer support variables
-like nr_end and alloc_end
+There's a safer version that you can use, get_env_bool()
 
-The only downside that I can see is the potential padding between
-struct increasing memory consumption here. but since you don't care
-about reallocation cost (i.e. large memory allocations should be
-rare), it probably  does not matter either.
-
-But wait, can we just reuse struct mp_block for this? You allocate a
-new mp_block (for just one allocation) as usual, then you can can
-maintain a linked list of custom alloc in "struct mp_block
-*mp_custom_block" or something. This way we can walk both bulk and
-custom allocation the same way.
-
-> +       p = xmalloc(block_alloc);
-> +       mem_pool->custom[mem_pool->nr++] = p;
-> +       mem_pool->custom_end[mem_pool->nr_end++] = p + block_alloc;
-> +
-> +       mem_pool->pool_alloc += block_alloc;
-> +
-> +       return mem_pool->custom[mem_pool->nr];
-> +}
-> +
-> +void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size)
-> +{
-> +       if (!(*mem_pool))
-
-I think (!*mem_pool) should be enough, although you could avoid the
-operator precedence headache by doing
-
-if (*mem_pool)
-        return;
-
-> +       {
-> +               *mem_pool = xmalloc(sizeof(struct mem_pool));
-
-I think we tend to do *mem_pool = xmalloc(sizeof(**mem_pool));
-
-> +               (*mem_pool)->pool_alloc = 0;
-
-Eghh.. perhaps just declare
-
-struct mem_pool *pool;
-
-then allocate a new memory to this, initialize everything and only do
-
-*mem_pool = pool;
-
-at the end? It's much less of this (*mem_pool)->
-
-> +               (*mem_pool)->mp_block = NULL;
-
-Just memset() it once (or use xcallo) and only initialize
-non-zero/null fields afterwards.
-
-> +               (*mem_pool)->block_alloc = BLOCK_GROWTH_SIZE;
-> +               (*mem_pool)->custom = NULL;
-> +               (*mem_pool)->nr = 0;
-> +               (*mem_pool)->alloc = 0;
-> +               (*mem_pool)->custom_end = NULL;
-> +               (*mem_pool)->nr_end = 0;
-> +               (*mem_pool)->alloc_end = 0;
-> +
-> +               if (initial_size > 0)
-> +                       mem_pool_alloc_block(*mem_pool, initial_size);
-> +       }
-> +}
-> +
-> +void mem_pool_discard(struct mem_pool *mem_pool)
-> +{
-> +       int i;
-> +       struct mp_block *block, *block_to_free;
-> +       for (block = mem_pool->mp_block; block;)
-> +       {
-> +               block_to_free = block;
-> +               block = block->next_block;
-> +               free(block_to_free);
+> +                       validate_index_cache_entries = 1;
+> +               else
+> +                       validate_index_cache_entries = 0;
 > +       }
 > +
-> +       for (i = 0; i < mem_pool->nr; i++)
-> +               free(mem_pool->custom[i]);
-> +
-> +       free(mem_pool->custom);
-> +       free(mem_pool->custom_end);
-> +       free(mem_pool);
+> +       return validate_index_cache_entries;
 > +}
 > +
 >  void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
 >  {
 >         struct mp_block *p;
-> @@ -33,10 +89,8 @@ void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
->                         break;
->
->         if (!p) {
-> -               if (len >= (mem_pool->block_alloc / 2)) {
-> -                       mem_pool->pool_alloc += len;
-> -                       return xmalloc(len);
-> -               }
-> +               if (len >= (mem_pool->block_alloc / 2))
-> +                       return mem_pool_alloc_custom(mem_pool, len);
->
->                 p = mem_pool_alloc_block(mem_pool, mem_pool->block_alloc);
->         }
-> @@ -53,3 +107,55 @@ void *mem_pool_calloc(struct mem_pool *mem_pool, size_t count, size_t size)
->         memset(r, 0, len);
->         return r;
->  }
-> +
-> +int mem_pool_contains(struct mem_pool *mem_pool, void *mem)
-> +{
-> +       int i;
-> +       struct mp_block *p;
-> +
-> +       /* Check if memory is allocated in a block */
-> +       for (p = mem_pool->mp_block; p; p = p->next_block)
-> +               if ((mem >= ((void *)p->space)) &&
-> +                   (mem < ((void *)p->end)))
-> +                       return 1;
-> +
-> +       /* Check if memory is allocated in custom block */
-> +       for (i = 0; i < mem_pool->nr; i++)
-> +               if ((mem >= mem_pool->custom[i]) &&
-> +                   (mem < mem_pool->custom_end[i]))
-> +                       return 1;
-> +
-> +       return 0;
-> +}
-> +
-> +void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src)
-> +{
-> +       int i;
-> +       struct mp_block **tail = &dst->mp_block;
-> +
-> +       /* Find pointer of dst's last block (if any) */
-> +       while (*tail)
-> +               tail = &(*tail)->next_block;
-> +
-> +       /* Append the blocks from src to dst */
-> +       *tail = src->mp_block;
-> +
-> +       /* Combine custom allocations */
-> +       ALLOC_GROW(dst->custom, dst->nr + src->nr, dst->alloc);
-> +       ALLOC_GROW(dst->custom_end, dst->nr_end + src->nr_end, dst->alloc_end);
-> +
-> +       for (i = 0; i < src->nr; i++) {
-> +               dst->custom[dst->nr++] = src->custom[i];
-> +               dst->custom_end[dst->nr_end++] = src->custom_end[i];
-> +       }
-> +
-> +       dst->pool_alloc += src->pool_alloc;
-> +       src->pool_alloc = 0;
-> +       src->mp_block = NULL;
-> +       src->custom = NULL;
-> +       src->nr = 0;
-> +       src->alloc = 0;
-> +       src->custom_end = NULL;
-> +       src->nr_end = 0;
-> +       src->alloc_end = 0;
-> +}
 > diff --git a/mem-pool.h b/mem-pool.h
-> index 829ad58ecf..34df4fa709 100644
+> index 34df4fa709..b1f9a920ba 100644
 > --- a/mem-pool.h
 > +++ b/mem-pool.h
-> @@ -19,8 +19,27 @@ struct mem_pool {
->
->         /* The total amount of memory allocated by the pool. */
->         size_t pool_alloc;
-> +
-> +       /*
-> +        * Array of pointers to "custom size" memory allocations.
-> +        * This is used for "large" memory allocations.
-> +        * The *_end variables are used to track the range of memory
-> +        * allocated.
-> +        */
-> +       void **custom, **custom_end;
-> +       int nr, nr_end, alloc, alloc_end;
->  };
->
-> +/*
-> + * Initialize mem_pool specified initial.
-> + */
-> +void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size);
-> +
-> +/*
-> + * Discard a memory pool and free all the memory it is responsible for.
-> + */
-> +void mem_pool_discard(struct mem_pool *mem_pool);
-> +
->  /*
->   * Alloc memory from the mem_pool.
+> @@ -63,4 +63,6 @@ void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src);
 >   */
-> @@ -31,4 +50,17 @@ void *mem_pool_alloc(struct mem_pool *pool, size_t len);
->   */
->  void *mem_pool_calloc(struct mem_pool *pool, size_t count, size_t size);
+>  int mem_pool_contains(struct mem_pool *mem_pool, void *mem);
 >
-> +/*
-> + * Move the memory associated with the 'src' pool to the 'dst' pool. The 'src'
-> + * pool will be empty and not contain any memory. It still needs to be free'd
-> + * with a call to `mem_pool_discard`.
-> + */
-> +void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src);
-> +
-> +/*
-> + * Check if a memory pointed at by 'mem' is part of the range of
-> + * memory managed by the specified mem_pool.
-> + */
-> +int mem_pool_contains(struct mem_pool *mem_pool, void *mem);
+> +int should_validate_cache_entries(void);
 > +
 >  #endif
+> diff --git a/read-cache.c b/read-cache.c
+> index 01cd7fea41..e1dc9f7f33 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1270,6 +1270,8 @@ int add_index_entry(struct index_state *istate, struct cache_entry *ce, int opti
+>  {
+>         int pos;
+>
+> +       validate_cache_entries(istate);
+
+Validating _all_ entries every time an entry is added sounds way too expensive.
+
+> +
+>         if (option & ADD_CACHE_JUST_APPEND)
+>                 pos = istate->cache_nr;
+>         else {
+> @@ -1290,6 +1292,8 @@ int add_index_entry(struct index_state *istate, struct cache_entry *ce, int opti
+>                            istate->cache_nr - pos - 1);
+>         set_index_entry(istate, pos, ce);
+>         istate->cache_changed |= CE_ENTRY_ADDED;
+> +
+> +       validate_cache_entries(istate);
+>         return 0;
+>  }
+>
+> @@ -2013,6 +2017,8 @@ int is_index_unborn(struct index_state *istate)
+>
+>  int discard_index(struct index_state *istate)
+>  {
+> +       validate_cache_entries(istate);
+> +
+>         resolve_undo_clear_index(istate);
+>         istate->cache_nr = 0;
+>         istate->cache_changed = 0;
+> @@ -2035,6 +2041,43 @@ int discard_index(struct index_state *istate)
+>         return 0;
+>  }
+>
+> +
+> +/*
+> + * Validate the cache entries of this index.
+> + * All cache entries associated with this index
+> + * should have been allocated by the memory pool
+> + * associated with this index, or by a referenced
+> + * split index.
+> + */
+> +void validate_cache_entries(const struct index_state *istate)
+> +{
+> +       int i;
+> +       int validate_index_cache_entries = should_validate_cache_entries();
+> +
+> +       if (!validate_index_cache_entries)
+> +               return;
+> +
+> +       if (!istate || !istate->initialized)
+> +               return;
+> +
+> +       for (i = 0; i < istate->cache_nr; i++) {
+> +               if (!istate) {
+> +                       die("internal error: cache entry is not allocated from expected memory pool");
+> +               } else if (!istate->ce_mem_pool ||
+> +                       !mem_pool_contains(istate->ce_mem_pool, istate->cache[i])) {
+> +                       if (!istate->split_index ||
+> +                               !istate->split_index->base ||
+> +                               !istate->split_index->base->ce_mem_pool ||
+> +                               !mem_pool_contains(istate->split_index->base->ce_mem_pool, istate->cache[i])) {
+> +                               die("internal error: cache entry is not allocated from expected memory pool");
+> +                       }
+> +               }
+> +       }
+> +
+> +       if (istate->split_index)
+> +               validate_cache_entries(istate->split_index->base);
+> +}
+> +
+>  int unmerged_index(const struct index_state *istate)
+>  {
+>         int i;
+> @@ -2828,6 +2871,10 @@ void move_index_extensions(struct index_state *dst, struct index_state *src)
+>   */
+>  void discard_index_cache_entry(struct cache_entry *ce)
+>  {
+> +       int invalidate_cache_entry = should_validate_cache_entries();
+> +
+> +       if (ce && invalidate_cache_entry)
+> +               memset(ce, 0xCD, cache_entry_size(ce->ce_namelen));
+>  }
+>
+>  void discard_transient_cache_entry(struct cache_entry *ce)
 > --
 > 2.14.3
 >
