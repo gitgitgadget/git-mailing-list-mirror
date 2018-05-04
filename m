@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65B98200B9
-	for <e@80x24.org>; Fri,  4 May 2018 16:21:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9D5F200B9
+	for <e@80x24.org>; Fri,  4 May 2018 16:25:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751563AbeEDQVH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 12:21:07 -0400
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:43567 "EHLO
-        mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751507AbeEDQVG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 12:21:06 -0400
-Received: by mail-vk0-f67.google.com with SMTP id x191-v6so1198334vke.10
-        for <git@vger.kernel.org>; Fri, 04 May 2018 09:21:06 -0700 (PDT)
+        id S1751454AbeEDQZh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 12:25:37 -0400
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:46892 "EHLO
+        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751423AbeEDQZg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 12:25:36 -0400
+Received: by mail-vk0-f68.google.com with SMTP id i190-v6so13697865vkd.13
+        for <git@vger.kernel.org>; Fri, 04 May 2018 09:25:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Vmx14DPReLgK/GGkk9sTbK2YdaSUweOEHB5mkf9Q89s=;
-        b=PKPLPx+0Ekr797k0/RP5Mo5UFLKOYZF4mgPztJY0OMOb0L/O2Tp3CByR+PxRFijGW+
-         4QtE0DFGTvGHisWLxr5SfM1TrkE/HQbohEwBuYy1xw2WcTzCEv5tjZ+q0OsH9XEKANzu
-         BkfjLSGCP5kRaTRm24hBAqa4cpDphquN4EqgdbbzKi8MS0XJ2jvwLVwl/x9MhrAiRKQ6
-         Ay12jWiB19JAFSfYAK51muoUgpxaPQGGQBH0zRLJrW1M5+92TVjhcyDZp5utwPGzmuWx
-         mFJdd0i5JA8D1P6zmoeORavjFCVQe7f/1qdWYCaycD+O9oMRLFb0E9sAcUu+acYLbO+/
-         skOQ==
+        bh=1S0qwG1CZwdRjUvpq+QneYbNVU09hTpIKE00TijdlnI=;
+        b=F2nR1wlkTm1BExjPdG1lQ6T2mQBpsEQwjz6+j1AtchhKKdCmiIGKKgmgnequ9Kw/IZ
+         2oTZmRiIj4UAzFelF7Xr8ZBfDThXvh9k16AHBZVkzoKhNvz6lNWnycqGue2q+yzm7UQJ
+         GIGgrkpB5NGnNkjLYPIXjELX9s8zRkzBnSJ4wiCI0ASgWq6HcVjlTL7AkDXFikrWfiR3
+         k4m3rwXf3/36v1w0dTAXEna6t3RwjB7qkSHZYuuhA3FwLh/KOI/Y4/tbaH8hKFmDCgSS
+         kHZZs9qwKfSF/d7x3amLXWVaxILtlt/5zyRiuE52r0iI3E7sEMwZnau3a+4F5yq5SMS0
+         IjYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Vmx14DPReLgK/GGkk9sTbK2YdaSUweOEHB5mkf9Q89s=;
-        b=nRxDfL4RCjTXgwlnnNhdLmNCfDPwEAehKBeKowsxAeIoUIuH4RAinAckJ0ZzbsM27A
-         FVEYXV7UeA9p9DMlrGo89owWHLFTK49CUEn62JPauf+YAomS3YNJidOT+UYOF9YWzMCu
-         cvym7VKik319CDwN7VF7lfuuH7sNE/r2apz2TN/OMCOMLNpgHlRvjHRfJwcESqGK/I2j
-         Xka7Fv7GspfdPpk7JL9bNGecFpQ1pLhuhStWjI96kShRSbN2Eef3CpoQoEPrlj7L1yhx
-         /VEqoW3KqlG60KMEn64pIFWwIEDpdXPz9th/jmgmao9GGggfCNowDnMZAcq0O/6l/dzp
-         c1Lw==
-X-Gm-Message-State: ALQs6tB44B+Llv5l/EecbEQIpKJqlecK/IsaRxYZJohnmCkE4reYOEwL
-        b9x7sRLzv26z5/Ou8e8EP05IYVTiD/Y767nbEqg=
-X-Google-Smtp-Source: AB8JxZqZp/srFMl1Rq00H3jH2je55CUbk4HhfIvuKxe6nrIeZaZlmtgcdTSRUWnmchQG4wve928nwb2R1PtPk7HTN1w=
-X-Received: by 2002:a1f:370a:: with SMTP id e10-v6mr24520682vka.106.1525450865786;
- Fri, 04 May 2018 09:21:05 -0700 (PDT)
+        bh=1S0qwG1CZwdRjUvpq+QneYbNVU09hTpIKE00TijdlnI=;
+        b=PtrgpbPrYJEZ2rrfFuhsyUKGCzVvaLhzrhZe2Yae4sSz1roWelFXa+881WYEYp9e64
+         Hg3eifRYto7A8WksnqTSZ1pC8MaoQmpoczAdlDW287S4E6aE7KVLKXNl0x80peS7peA5
+         83P/uRX8C8lrgHzlv/JzIkJUm0kb6Lla31HW8zxpqlZ8jbYKsEn90lnrVNAH11eYTg1M
+         TCAurRyVxu6KG45vHWh1RezOK7sIzBYaXfIrXDYA8KDx5D21xxt1UsizKJZ/Ei6wBaQ7
+         jV6Rx9b1UjhOWE0ZwMxL2dZPv6nESS92lTB7Tx8sUdDLM6ikhqPgJPO2rhR9X3wwVA/z
+         HVYw==
+X-Gm-Message-State: ALQs6tDER8FeM2kzROOpf/vJ7+qC3pltt3NbIQbwx4ePJnjR+yLPUcdV
+        p42/3X+OfYqAydtWHjDqqcjKRGRJfEzV4GWLry4=
+X-Google-Smtp-Source: AB8JxZpchP0g7E24UcltyQkh5gjXCHno5TucuMHtGf9K+saloIClGuUavO2lok4wII9/+F/LJqEpRP6j1f4gPv9khZ4=
+X-Received: by 2002:a1f:a54:: with SMTP id 81-v6mr22576257vkk.184.1525451135368;
+ Fri, 04 May 2018 09:25:35 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Fri, 4 May 2018 09:21:05 -0700 (PDT)
-In-Reply-To: <cover.1525448066.git.johannes.schindelin@gmx.de>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de>
+Received: by 10.176.95.4 with HTTP; Fri, 4 May 2018 09:25:34 -0700 (PDT)
+In-Reply-To: <0e4c8279e467e2e75864bcce8ec90cf4f81c2c34.1525448066.git.johannes.schindelin@gmx.de>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+ <cover.1525448066.git.johannes.schindelin@gmx.de> <0e4c8279e467e2e75864bcce8ec90cf4f81c2c34.1525448066.git.johannes.schindelin@gmx.de>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 4 May 2018 09:21:05 -0700
-Message-ID: <CABPp-BEEgeo=5hkaTe8LrOMONSv3VdPi_cP4ADMC69oG3htC1g@mail.gmail.com>
-Subject: Re: [PATCH v2 00/18] Add `branch-diff`, a `tbdiff` lookalike
+Date:   Fri, 4 May 2018 09:25:34 -0700
+Message-ID: <CABPp-BHbVTmNrZ32ZYQuoH0-XtFL+v7k-J7+t4_JWxds4K1U2Q@mail.gmail.com>
+Subject: Re: [PATCH v2 09/18] branch-diff: adjust the output of the commit pairs
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -69,36 +70,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Dscho,
+
 On Fri, May 4, 2018 at 8:34 AM, Johannes Schindelin
 <johannes.schindelin@gmx.de> wrote:
-> The incredibly useful `git-tbdiff` tool to compare patch series (say, to see
-> what changed between two iterations sent to the Git mailing list) is slightly
-> less useful for this developer due to the fact that it requires the `hungarian`
-> and `numpy` Python packages which are for some reason really hard to build in
-> MSYS2. So hard that I even had to give up, because it was simply easier to
-> reimplement the whole shebang as a builtin command.
+> This change brings branch-diff yet another step closer to feature parity
+> with tbdiff: it now shows the oneline, too, and indicates with `=` when
+> the commits have identical diffs.
+>
+<snip>
+> @@ -270,9 +272,57 @@ static int get_correspondences(struct string_list *a, struct string_list *b,
+>         return res;
+>  }
+>
+> -static const char *short_oid(struct patch_util *util)
+> +static void output_pair_header(struct strbuf *buf,
+> +                              int i, struct patch_util *a_util,
+> +                              int j, struct patch_util *b_util)
+>  {
+> -       return find_unique_abbrev(&util->oid, DEFAULT_ABBREV);
+> +       static char *dashes;
+> +       struct object_id *oid = a_util ? &a_util->oid : &b_util->oid;
+> +       struct commit *commit;
+> +
+> +       if (!dashes) {
+> +               char *p;
+> +
+> +               dashes = xstrdup(find_unique_abbrev(oid, DEFAULT_ABBREV));
+> +               for (p = dashes; *p; p++)
+> +                       *p = '-';
+> +       }
+> +
+> +       strbuf_reset(buf);
+> +       if (i < 0)
+> +               strbuf_addf(buf, "-:  %s ", dashes);
+> +       else
+> +               strbuf_addf(buf, "%d:  %s ", i + 1,
 
-tbdiff is awesome; thanks for bringing it in as a builtin to git.
 
-I've run through a few cases, comparing output of tbdiff and
-branch-diff.  So far, what I've noted is that they produce largely the
-same output except that:
+One nice thing tbdiff did was to right align patch numbers (which also
+helped align other columns in the output).  So, for example when there
+are more than 9 patches I would see output like:
 
-- tbdiff seems to shorten shas to 7 characters, branch-diff is using
-10, in git.git at least.  (Probably a good change)
-- tbdiff aligned output columns better when there were more than 9
-patches (I'll comment more on patch 09/18)
-- As noted elsewhere in the review of round 1, tbdiff uses difflib
-while branch-diff uses xdiff.  I found some cases where that mattered,
-and in all of them, I either felt like the difference was irrelevant
-or that difflib was suboptimal, so this is definitely an improvement
-for me.
-- branch-diff produces it's output faster, and it is automatically
-paged.  This is really cool.
+...
+ 8: a980de43fd =  8: 362ab315ac directory rename detection: testcases
+exploring possibly suboptimal merges
+ 9: 3633e79ed9 =  9: 792e1371d9 directory rename detection:
+miscellaneous testcases to complete coverage
+10: e10d07ef40 = 10: a0b0a15103 directory rename detection: tests for
+handling overwriting untracked files
+11: f6d84b503e = 11: a7a436042a directory rename detection: tests for
+handling overwriting dirty files
+...
 
-Also, I don't have bash-completion for either tbdiff or branch-diff.
-:-(  But I saw some discussion on the v1 patches about how this gets
-handled...  :-)
+whereas branch-diff here is instead giving output of the form
+
+...
+8:  a980de43fd = 8:  362ab315ac directory rename detection: testcases
+exploring possibly suboptimal merges
+9:  3633e79ed9 = 9:  792e1371d9 directory rename detection:
+miscellaneous testcases to complete coverage
+10:  e10d07ef40 = 10:  a0b0a15103 directory rename detection: tests
+for handling overwriting untracked files
+11:  f6d84b503e = 11:  a7a436042a directory rename detection: tests
+for handling overwriting dirty files
+...
+
+
+Not a critical difference, but it'd be nice to match tbdiff here all the same.
+
+> +                           find_unique_abbrev(&a_util->oid, DEFAULT_ABBREV));
+> +
+> +       if (i < 0)
+> +               strbuf_addch(buf, '>');
+> +       else if (j < 0)
+> +               strbuf_addch(buf, '<');
+> +       else if (strcmp(a_util->patch, b_util->patch))
+> +               strbuf_addch(buf, '!');
+> +       else
+> +               strbuf_addch(buf, '=');
+> +
+> +       if (j < 0)
+> +               strbuf_addf(buf, " -:  %s", dashes);
+> +       else
+> +               strbuf_addf(buf, " %d:  %s", j + 1,
+
+Same comment on these last two strbuf_addf's about alignment.
+
 
 
 Elijah
