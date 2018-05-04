@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDE9F200B9
-	for <e@80x24.org>; Fri,  4 May 2018 15:34:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7439C200B9
+	for <e@80x24.org>; Fri,  4 May 2018 15:35:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751416AbeEDPey (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 11:34:54 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60917 "EHLO mout.gmx.net"
+        id S1751432AbeEDPe6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 11:34:58 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52161 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751294AbeEDPev (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 11:34:51 -0400
+        id S1751294AbeEDPez (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 11:34:55 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
- (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MLvGW-1fFh3g2VmG-007iFx; Fri, 04 May 2018 17:34:44 +0200
+ (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0LngNT-1ehSVD2VHL-00htVe; Fri, 04 May 2018 17:34:48 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -30,9 +30,9 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 06/18] branch-diff: right-trim commit messages
-Date:   Fri,  4 May 2018 17:34:43 +0200
-Message-Id: <53ee6ba3873013956c6d6067c5a911688014cef7.1525448066.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 08/18] branch-diff: suppress the diff headers
+Date:   Fri,  4 May 2018 17:34:47 +0200
+Message-Id: <35a9681a192e63d1b5dd1a60571f5c5991e90457.1525448066.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.409.g71698f11835
 In-Reply-To: <cover.1525448066.git.johannes.schindelin@gmx.de>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de>
@@ -40,54 +40,87 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:/HitRuDY2hnTizw9OhBvdZ1v/CewXZmWmH4wMN1hiOJ6ZnVfqmB
- h9p7lLiSEnVs/4YLOT//mJqGY6oKpqHiYr+vtneJfZVAa/8glF5CP/aSHTlUNR28IA+tq2V
- qVPIZSRmSKSuV6+PdYtdib+peNkx15YpYfs6QIopqyvMX7R8kCO/tv0xnjteg47ca/Bab7c
- yQ//J6Db9pcpqFHNtQdCA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qQNWFOhoLj8=:PlKq2/6Gp8cglqAXEjlsTi
- l0bTZFbFQbuVNdJWfbaadUgIYuFIHUyWZUYbc+5oz1POXCa7xCtHvi1J77Mo4GeqgHl9JqvER
- S99+0HcWn0r5g9LPJcgXBdwrttnTu/j7nk4MX4tU/O7iwyXlvsX6PnV9yaPA17LGkdBDRF2Lr
- BWrxmV+8jjp3Hb9Jr0yud6SCel0Wfw2EAbsVuIfQXnl+X0iosxmsQfnu2bgATMgJgBig3Ow8U
- 05QfYEpnorh7PooEZNDp+kzNoxi+NPrkuZvV49mRWHR1k1dbBgCuaEkq4e/Xe9lUmWZtahjNq
- ytTdHv56jVREqiSH4vvL4VZaTKzKtpLQlSPmYNqNcEZjKseVvwpRZtqc9d9j9H8/T4RQAI4f3
- +mRZGrGrwhLFlTEOHXltvHFIyXH2rm2dx2t+sp8b188IlyDpASOFyVM0kKV/a8ZAIvWVp5fWF
- CdcL3m36fgjwX8dU0LY0WniWGRzFYlQpl1Bti5hhLqXt1kSQFN2QfgvNDcuaCGw9j4UQzNtot
- 7FmhNYWfDLHb+iNudkvjdal6tfDSq7cBptFXX2nv1a8bOKqnPJ+olW56N7tttWkflZwsWxh8m
- 4BL1esTNtf2AGCm1oNaSY4IlbjDBb8zMCE7D6qBEimUJNwV9gcfe41GSD2xjhvZm/w4VC0YtC
- PIpIHXNWM40gHmauguDEuaoCEP2J7dDCgWq8ArsnT45rfBY3ZOuKapgqvSbpNqcNEnYubHDBc
- WfiCWoajzjxgEeT3vhU62Bei6/vCQZYIQql7QIkE4R4NfyrUR792Es5n82ikdnpbfgzzQW8k8
- rPUSOr4
+X-Provags-ID: V03:K1:efNhHP/OnqTl8EBdd72+T2mVaur4GrvsLHNt69lI+5ObRk0GbbA
+ MsocJlMivnGyuxD+hDNN/vWiYVkcfwGAcsi4twB6Zk+avbYy+fOJAxLP6kWxlFJvoLw/CWy
+ 65ZANgRsyzaUw5iFQr4BVBjcQ0qMkFmORHzjvak8B4wXPywFBVimveOrI3AwpIA+7RRCxBk
+ BX6HbobuAbysw3KXEp9vQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oDS7kJNaqiA=:9nrVSvEvHqrR/CDPuo+f2k
+ YBlZaOCF0BuH5c9sECJtZalQlCSXQWi97O4GFZeetPD4AC4okLdMgKMyhelwRCD/SQuNbreyD
+ bAACEtO7BY7o7FxzpwBAgcJ+6SqLZM5aR/JbZIPTZn/h0+seNlQTf38HTqOKydQtP92sLim9f
+ VP/VjHnE0AEn3V7GUss8f8WAB8UcNrdElXi1Bmzn8e+ySOCZFFHG6PZJfOLhfnpaAK0UkS2Px
+ 9Tm57A1eaFO8Olh7133d83tD0UdSFDc2+BXUk6C7NtEO/zaJNF8tZYF7Hi1DUKSPQZSn30849
+ Q/DRU9wjn3qBFBlTd+ISryXc2nACvu7do8Z5m3jQwLWS4dptxNCqTuiA5X8EgwRif/cM34k0z
+ cKw56RluqupY72U6PnQ12qK36jtgVWMOLnfpM8n0HsF5kXKQceY8EABzQFG8BsLgA8PRFbod4
+ MfRoYS5h0/4JAL2WAj8Iwogbbm/FPqj4HQVixW4NbejI+OpLJ9gTMjjvmwgvzEXvUSc0G3rHB
+ 209mnWoLBZ7itJbaaWK/9ZhdlVQv0oinw92awjTCNq4OZGTb0YxUiSpLbLujSczIJabTjX9rh
+ l/AYva1t2jHU4I5SwmMaGSD9mlGYiCZUwMBXoz3RHHTZKnwpNuEgBVHFvYvR74NJB9bHta37p
+ d4fI8Fy7TTOmAntPjWDXIhhKoNb2LCkdxN69qVOoZkiXJL4JtLS41Kj4+ciOQlbymrQixReIk
+ z16NxDfTZqLkYRuvC74jSK8Bjjm2c4GaFimUL95xLkwFSEjKLyu1UbuOeNvCyKT+r8roH4oCb
+ os3J1OA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When comparing commit messages, we need to keep in mind that they are
-indented by four spaces. That is, empty lines are no longer empty, but
-have "trailing whitespace". When displaying them in color, that results
-in those nagging red lines.
+When showing the diff between corresponding patches of the two branch
+versions, we have to make up a fake filename to run the diff machinery.
 
-Let's just right-trim the lines in the commit message, it's not like
-trailing white-space in the commit messages are important enough to care
-about in branch-diff.
+That filename does not carry any meaningful information, hence tbdiff
+suppresses it. So we should, too.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
  builtin/branch-diff.c | 1 +
- 1 file changed, 1 insertion(+)
+ diff.c                | 5 ++++-
+ diff.h                | 1 +
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-index b23d66a3b1c..e2337b905b1 100644
+index 4fc9fd74531..ed520d6229d 100644
 --- a/builtin/branch-diff.c
 +++ b/builtin/branch-diff.c
-@@ -105,6 +105,7 @@ static int read_patches(const char *range, struct string_list *list)
- 				strbuf_addbuf(&buf, &line);
- 				strbuf_addstr(&buf, "\n\n");
- 			} else if (starts_with(line.buf, "    ")) {
-+				strbuf_rtrim(&line);
- 				strbuf_addbuf(&buf, &line);
- 				strbuf_addch(&buf, '\n');
- 			}
+@@ -377,6 +377,7 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+ 
+ 	diff_setup(&diffopt);
+ 	diffopt.output_format = DIFF_FORMAT_PATCH;
++	diffopt.flags.suppress_diff_headers = 1;
+ 	diffopt.output_prefix = output_prefix_cb;
+ 	strbuf_addstr(&four_spaces, "    ");
+ 	diffopt.output_prefix_data = &four_spaces;
+diff --git a/diff.c b/diff.c
+index 1289df4b1f9..f1bda0db3f5 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3197,13 +3197,16 @@ static void builtin_diff(const char *name_a,
+ 		memset(&xpp, 0, sizeof(xpp));
+ 		memset(&xecfg, 0, sizeof(xecfg));
+ 		memset(&ecbdata, 0, sizeof(ecbdata));
++		if (o->flags.suppress_diff_headers)
++			lbl[0] = NULL;
+ 		ecbdata.label_path = lbl;
+ 		ecbdata.color_diff = want_color(o->use_color);
+ 		ecbdata.ws_rule = whitespace_rule(name_b);
+ 		if (ecbdata.ws_rule & WS_BLANK_AT_EOF)
+ 			check_blank_at_eof(&mf1, &mf2, &ecbdata);
+ 		ecbdata.opt = o;
+-		ecbdata.header = header.len ? &header : NULL;
++		if (header.len && !o->flags.suppress_diff_headers)
++			ecbdata.header = &header;
+ 		xpp.flags = o->xdl_opts;
+ 		xpp.anchors = o->anchors;
+ 		xpp.anchors_nr = o->anchors_nr;
+diff --git a/diff.h b/diff.h
+index d29560f822c..0dd6a71af60 100644
+--- a/diff.h
++++ b/diff.h
+@@ -94,6 +94,7 @@ struct diff_flags {
+ 	unsigned funccontext:1;
+ 	unsigned default_follow_renames:1;
+ 	unsigned stat_with_summary:1;
++	unsigned suppress_diff_headers:1;
+ };
+ 
+ static inline void diff_flags_or(struct diff_flags *a,
 -- 
 2.17.0.409.g71698f11835
 
