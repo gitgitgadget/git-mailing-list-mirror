@@ -6,59 +6,62 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99954200B9
-	for <e@80x24.org>; Fri,  4 May 2018 05:24:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC76F200B9
+	for <e@80x24.org>; Fri,  4 May 2018 05:43:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750820AbeEDFYZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 01:24:25 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:52011 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750753AbeEDFYY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 01:24:24 -0400
-Received: by mail-wm0-f68.google.com with SMTP id j4so2118072wme.1
-        for <git@vger.kernel.org>; Thu, 03 May 2018 22:24:24 -0700 (PDT)
+        id S1750946AbeEDFnV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 01:43:21 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:33392 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750709AbeEDFnU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 01:43:20 -0400
+Received: by mail-wm0-f49.google.com with SMTP id x12-v6so5546619wmc.0
+        for <git@vger.kernel.org>; Thu, 03 May 2018 22:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=6YmI/NakQ7tgK+0FPhlHT5QYuoucTIzfqiWljjiWPA0=;
-        b=HSblwycTEfrCyg2W9h5q9JcYmv3cUYl5C4/1ofKVDSp8U2ooUXFyV1eZfQP/l54BR0
-         zhyr3ypNe9mseXBa1rwtIa8/cI1V4HWFYrwHJHeJUwCmBBtvC1fwf2arHSkSyUdokVEl
-         nK4ryf4iiBNS8iEtFAU1pmP2UYgowLkpzakZs++I9J9pJhcs2N3IxckVOFs90e+6grGS
-         4BzboJhatsFtDkMYAovfjiescnQlNn9Uc5O0Q3XyA4Fpr+7axOGuAJNM//T18zhve2b9
-         2kF0eZz0dbKBXN0EPb328SMEV1N7FEaYJcZXB2E+RWAR1NYlAe2ultbIjctO7WLLw5J7
-         7olw==
+        bh=rL8UYqwQw7ACZKqfrGMRhaC0PGii23MXBZRMeYAfWUI=;
+        b=aKwgBBwHWzW8J5OnKKA0Uz1j3jqvmshop57EgVuvJmO7OS0V0DmqBiWKHpUCGMV64H
+         2YQgZdyO+P37lfqLiqGISpSnuNjmDYasyd48lr+HaKK44QRpIswSwDgijwh8axP9vaPS
+         AZEGFJdAAFt31D9bWeOkD4CRKGes9wpHcRB8mKQMszfIULDt8MZ8EUALE1wlGNJMcAVB
+         CfHkEpO9olOhu11W1w9y4bBKYJFhlSZNBUT6ompbQYmLGQQFfMgRK4LiRDsJu0a4HAQB
+         5ljPwlQrGdIj+v6ZLTz5Gn0Z+BF0gtuyf6pP2G+yacYLQIdFCR33ULwAsHdMp+7chwnC
+         jQRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=6YmI/NakQ7tgK+0FPhlHT5QYuoucTIzfqiWljjiWPA0=;
-        b=IQirVx5bwIHrJNx3t1uA3e/uYPym4bTyQfzR9BURPTkK1Jc0wWFQSLcsFDYG5C5xxn
-         mvstwSDvmBut/2RmbjusFgVgO0e5Rfa4L0TfcJAzkzSwJUDsFRo/ZZnom/9D3MQeU9qx
-         yeGS/OrET0H8gejp2Ugp7u4P/uctzYxWMrcbN6XQk91tCPFpH1+JJaxRALwbmpgZcJN4
-         hLTUm6Akw21LqH5rUC7tVaHdRNEGfSsFbXjRtxTZb5cTTC1Gde2bqFU7N81tJDTeqakI
-         chGuCbfyj9LClKgX4/w/WxRy8L8A9NrLnR5QANjjfUEi1DnzxUSDCJ8PYzRrvVtTocyF
-         dwHw==
-X-Gm-Message-State: ALQs6tDS0Is/8cVd80O9rRZ+63GfoQvXBtnNVx1F5QrbkIJH2SbyELq9
-        XCYQzguN8rLdfBvDUQNXH+Y=
-X-Google-Smtp-Source: AB8JxZqV0wDnBYeN1S6NuNbrNjLOjrfDnQ666XjO7zjrXKoruP7EWVplEaZ11+3MCJSWEPx0WQOzAw==
-X-Received: by 10.28.227.132 with SMTP id a126mr18525925wmh.93.1525411463308;
-        Thu, 03 May 2018 22:24:23 -0700 (PDT)
+        bh=rL8UYqwQw7ACZKqfrGMRhaC0PGii23MXBZRMeYAfWUI=;
+        b=rypPUJaCVuOe5OCJuVTCZ+M5n/ef/x9QJzi4wIYALRLsIcQfPx4ZfQBNwMSB8XlsXa
+         t1DDdBSGq39zAhYmTePt6c9nvnVR1Bl2gSmtyDTUmLLAIKY21DqTZvtvrVumsLu1GWTH
+         l1ZFkEkrjvp7C4coREsCkTU73uISJUn9nCFPTvmi88HriYZsQdk3jbf3tWdzlMNV6RQX
+         fagDXu0229bcJ/Yzb10FjScbkXsQsixXW3+zdKat52kDIErpdhYGKekmayWQlLbWh/y8
+         GcOt1dEykf0zM6EJnQQDBpIPTLnRa63LRKm5NuqGVuoG7rJDFzSRgGfk6bo3+gq+9euK
+         BE2Q==
+X-Gm-Message-State: ALQs6tDKKiWusMC9TVCzHwPTpbxc9b/3UsQlnpQe33Un0XAs+be/10JP
+        YcKh1Vu8rNg22cnJi5dnY/frFVtT
+X-Google-Smtp-Source: AB8JxZoMjV1I9JFLaK8Y5NqaBsE0/Pl7Kt/9wY9V9UwnF/1IwoRG44QBy+4B8Yt/flP2rZIVFrhTPw==
+X-Received: by 10.28.170.84 with SMTP id t81mr16965527wme.130.1525412598830;
+        Thu, 03 May 2018 22:43:18 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 194-v6sm1695771wml.20.2018.05.03.22.24.22
+        by smtp.gmail.com with ESMTPSA id 77-v6sm1408223wmt.11.2018.05.03.22.43.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 03 May 2018 22:24:22 -0700 (PDT)
+        Thu, 03 May 2018 22:43:18 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 00/18] Add `branch-diff`, a `tbdiff` lookalike
-References: <cover.1525361419.git.johannes.schindelin@gmx.de>
-Date:   Fri, 04 May 2018 14:24:22 +0900
-In-Reply-To: <cover.1525361419.git.johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Thu, 3 May 2018 17:30:20 +0200")
-Message-ID: <xmqq1sest2m1.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] git: add -P as a short option for --no-pager
+References: <d91e98a8-7801-a3de-3865-f0480e18ba0e@kdbg.org>
+        <23493ba1-1704-1e8c-f448-95540a36f886@kdbg.org>
+        <CAPig+cR8M3NPrJdsinakLoiFWS=adv1B7QH7Bwp-9ePr_44N_g@mail.gmail.com>
+Date:   Fri, 04 May 2018 14:43:17 +0900
+In-Reply-To: <CAPig+cR8M3NPrJdsinakLoiFWS=adv1B7QH7Bwp-9ePr_44N_g@mail.gmail.com>
+        (Eric Sunshine's message of "Thu, 3 May 2018 16:06:06 -0400")
+Message-ID: <xmqqwowkrn62.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,36 +70,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Johannes Schindelin (17):
->   Add a function to solve least-cost assignment problems
->   Add a new builtin: branch-diff
->   branch-diff: first rudimentary implementation
->   branch-diff: improve the order of the shown commits
->   branch-diff: also show the diff between patches
->   branch-diff: right-trim commit messages
->   branch-diff: indent the diffs just like tbdiff
->   branch-diff: suppress the diff headers
->   branch-diff: adjust the output of the commit pairs
->   branch-diff: do not show "function names" in hunk headers
->   branch-diff: use color for the commit pairs
->   color: provide inverted colors, too
->   diff: add an internal option to dual-color diffs of diffs
->   branch-diff: offer to dual-color the diffs
->   branch-diff --dual-color: work around bogus white-space warning
->   branch-diff: add a man page
->   completion: support branch-diff
+>> available. Provide a short option, -P, to make the option easier
+>> accessible.
 >
-> Thomas Rast (1):
->   branch-diff: add tests
+> s/easier accessible/easier to access/
+> --- or ---
+> s/easier accessible/more easily accessible/
+> --- or ---
+> s/easier accessible/more accessible/
+>
+> The patch itself looks fine.
 
-Lovely.  
-
-I often have to criticize a series whose later half consists of many
-follow-up patches with "don't do 'oops, the previous was wrong'",
-but the follow-up patches in this series are not such corrections.
-The organization of the series to outline the basic and core idea
-first in the minimum form and then to build on it to improve an
-aspect of the command one step at a time is very helpful to guide
-the readers where the author of the series wants them to go.
+Thanks.  More easily accessible, it is.
