@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64571200B9
-	for <e@80x24.org>; Fri,  4 May 2018 15:35:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13556200B9
+	for <e@80x24.org>; Fri,  4 May 2018 15:35:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751533AbeEDPfe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 11:35:34 -0400
-Received: from mout.gmx.net ([212.227.15.15]:40231 "EHLO mout.gmx.net"
+        id S1751527AbeEDPfd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 11:35:33 -0400
+Received: from mout.gmx.net ([212.227.15.15]:53929 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751394AbeEDPet (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 11:34:49 -0400
+        id S1751441AbeEDPfC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 11:35:02 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
- (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MGSDw-1fAAkr2Oem-00DJrU; Fri, 04 May 2018 17:34:41 +0200
+ (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MEGIi-1f7xpe21Ps-00FRUK; Fri, 04 May 2018 17:34:54 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -30,9 +30,9 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 04/18] branch-diff: improve the order of the shown commits
-Date:   Fri,  4 May 2018 17:34:39 +0200
-Message-Id: <3032e2709b858c1c08e7ef47a0fd6deee7f0d010.1525448066.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 12/18] branch-diff: use color for the commit pairs
+Date:   Fri,  4 May 2018 17:34:53 +0200
+Message-Id: <ba4791918c78770005d552856d8669648d7004f1.1525448066.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.409.g71698f11835
 In-Reply-To: <cover.1525448066.git.johannes.schindelin@gmx.de>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de>
@@ -40,126 +40,161 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:sXRplXjC9ABliuhbI4Unt7Bp02mVyg1PjQhoX15iuZO7fM0BkV/
- zLHsyh2nRcfqZ9KSv2AAOcDv/7wo2WK9/OHJOU5YhsDMGoPWSqROgcdQiu9bDESwgB8LcdX
- TSTuo5Yhe6oIfUde676UQXjTGqZA0tsUL5b8xsVybbK23zoTPnB9nF8nmTbw7y3uZD4Xmzs
- Qxd7goVa1H2hv0aUry/yQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:c8zqoiSOhHU=:MTm6pmcdXPhu9kcLaePWp5
- 10bBuh6zIPhwCT4zCZaJ/pb/+kSAvD25+7XH0LUgE/zVZbDOOzexDfSfll8PN0bDyloo+UwIx
- vSVHI2lMou/HpQlwChzidjITcxspVZNJOJortPdltSikPzVxNunJ2ytA65nwDY+GSE8mLo4DG
- OLSb7IhQ8DNxNPKJUAh+TurXM8xHJjCer7uYu5Y5YCroOsD9jwJRBmaO4cuepVg+rEYWDoyeQ
- oFYDsZiGZ2I8KlMmYjDo56ukNQWV7smLmtvHB5l8fWJeVf08ypQdybQhDgDLf/y9GzKCiojst
- 2OESkBJyMQvG1wp4EmRPLiPLRrWTB2kYm7LoqEvsm2gAAQHkpRUk7L5/UGHoItLabjK4vP915
- xJ8nm577pA9cEpg28PG9FaxcxTY/TFOFuOEUDtwia5FfCSt3hTjCKFFhWppic2GATxQb8n7J8
- lDOx0izNib8dkO33QR0arqEGV+swEibugwOt8jiZNqN0tBz5lS+d0UxQNEBfGsOazLOAMi/jR
- psiUQSsGUKodPglkTPb4w61ao2Mh6GhgItut8X95/PIoQ3bT2Ldy31gyGwRqChFv7stWA4C1N
- ZKOtMTc5M2APRo/HDLiNdm5J0xBty43TC4oHhHhdSCIFPhrwEXoyq1PtC5SH3ftQztJ/716ge
- PbXKRmbKW5iIB4cXJIwnsSv7N+NsGQzG4VF4xU+DFujAJdFXeXbl6OopAzsjSBQwDTFJhJfuQ
- frLJesoZkhcqADQM6NXz3M6euUisFZK+xRRKSAdAksq2qR5zsCBNErQnjnNWGRRPUlnmUQphh
- y/tZhfp
+X-Provags-ID: V03:K1:WHgFnB8/+HY1SB8S6LjuFfIP2Xc0A+zD/L6ILL+XsUW3GjJ4y5l
+ dqKwh8qfJnK2tLRYQGN2jfvk0+SIIV+kTj6b1uhWHTOl5N1umQOjKHcpeCcOQ5FDmCDseoT
+ LAdFom/UM+j+NDTGLlOig5Q9iWLhnssYawmkxz9KOKkEIPbGlTUDFCDm5KjAtdfmZhfISGD
+ gTsvz7J3Nkanr+ABd4/cw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dTNMOFzhxvI=:g5ZrCNfY04SalVqimX3dAa
+ aqhfqLJ/TK2MssnK4QkT/hT/Y/AGUXkMuQ+8FvV1tspN3YFRErUY2cucQWBGlc5YAAeZMxnQd
+ Qp929x/t7AN4ptV5Sb0LuXbDTrLGFycMGmEzMK0DSJ9DP56WGERpPrq7neDnK3vZnohBbXqBI
+ r8SE9XsWKp/7MsNCjNOcR4Fgkb7n0hWHT/FXU5l9IXT2FoezgO3LxCxQyzySW0Moe81ubX4Lw
+ FPgINMno1cit7NuHDwlIFwtVClBEIUd2FH+Wxs+BUU7jkYwuwUIyKxichAfyw+YVrbppEJGHP
+ 4dpR73ia9FYnLilIrXNcOIkMfjvmuIoaa/n64HTP2e1tC5MRcHGj6TTjbexsup1a1x2AE5vG4
+ kG3rjauT1wVqVbsc1rBRW6HMihXrF2rMNCwQdiw+puPCLwovKpIDm1GS2q1loRMOOoq9hKZrH
+ ttm4Tq4msP8pkfpPeDvIVS8RDvHmccHAvkA8mVccTNOocufM4NTDGzc5vYK77eKk51b4RVcGv
+ tM4jEUituPzxI5Ox1qVGbCf1DVtihnaPfPTdPYXfyutpEXnMAFUwOS4n9Hw4H0jtUIQgZB+7D
+ OJDcJRjuC2VewL86v4ZjUnRZKU3+PFvxFTS4oT8nin9GS2I66gnxv6bgvrFYAXbbkTKczpTHo
+ 5WsbeflLuMshjydzmBS8ojVvw9AYXsMUZrVhhT/CR2PwBWERa34WRZX0bnj6WWrOA8/qyI02N
+ qNIx11ueGG3tiRiq14uw7PYRAzE4xBuKQ49ZAzGRTiJXSMjzYKxfwtaOu9LtfEObl52ofwAtn
+ i/eeOMU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch lets branch-diff use the same order as tbdiff.
+Arguably the most important part of branch-diff's output is the list of
+commits in the two branches, together with their relationships.
 
-The idea is simple: for left-to-right readers, it is natural to assume
-that the branch-diff is performed between an older vs a newer version of
-the branch. As such, the user is probably more interested in the
-question "where did this come from?" rather than "where did that one
-go?".
+For that reason, tbdiff introduced color-coding that is pretty
+intuitive, especially for unchanged patches (all dim yellow, like the
+first line in `git show`'s output) vs modified patches (old commit is
+red, new commit is green). Let's imitate that color scheme.
 
-To that end, we list the commits in the order of the second commit range
-("the newer version"), inserting the unmatched commits of the first
-commit range as soon as all their predecessors have been shown.
+While at it, also copy tbdiff's change of the fragment color to magenta.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/branch-diff.c | 59 +++++++++++++++++++++++++++++--------------
- 1 file changed, 40 insertions(+), 19 deletions(-)
+ builtin/branch-diff.c | 49 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 36 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-index c462681067c..92302b1c339 100644
+index 89d75c93115..04efd30f0f6 100644
 --- a/builtin/branch-diff.c
 +++ b/builtin/branch-diff.c
-@@ -31,7 +31,7 @@ struct patch_util {
- 	struct hashmap_entry e;
- 	const char *diff, *patch;
- 
--	int i;
-+	int i, shown;
- 	int diffsize;
- 	size_t diff_offset;
- 	/* the index of the matching item in the other branch, or -1 */
-@@ -274,28 +274,49 @@ static const char *short_oid(struct patch_util *util)
- 
- static void output(struct string_list *a, struct string_list *b)
- {
--	int i;
--
--	for (i = 0; i < b->nr; i++) {
--		struct patch_util *util = b->items[i].util, *prev;
-+	int i = 0, j = 0;
-+
-+	/*
-+	 * We assume the user is really more interested in the second argument
-+	 * ("newer" version). To that end, we print the output in the order of
-+	 * the RHS (the `b` parameter). To put the LHS (the `a` parameter)
-+	 * commits that are no longer in the RHS into a good place, we place
-+	 * them once we have shown all of their predecessors in the LHS.
-+	 */
-+
-+	while (i < a->nr || j < b->nr) {
-+		struct patch_util *a_util, *b_util;
-+		a_util = i < a->nr ? a->items[i].util : NULL;
-+		b_util = j < b->nr ? b->items[j].util : NULL;
-+
-+		/* Skip all the already-shown commits from the LHS. */
-+		while (i < a->nr && a_util->shown)
-+			a_util = ++i < a->nr ? a->items[i].util : NULL;
-+
-+		/* Show unmatched LHS commit whose predecessors were shown. */
-+		if (i < a->nr && a_util->matching < 0) {
-+			printf("%d: %s < -: --------\n",
-+			       i + 1, short_oid(a_util));
-+			i++;
-+			continue;
-+		}
- 
--		if (util->matching < 0)
-+		/* Show unmatched RHS commits. */
-+		while (j < b->nr && b_util->matching < 0) {
- 			printf("-: -------- > %d: %s\n",
--					i + 1, short_oid(util));
--		else {
--			prev = a->items[util->matching].util;
--			printf("%d: %s ! %d: %s\n",
--			       util->matching + 1, short_oid(prev),
--			       i + 1, short_oid(util));
-+			       j + 1, short_oid(b_util));
-+			b_util = ++j < b->nr ? b->items[j].util : NULL;
- 		}
--	}
--
--	for (i = 0; i < a->nr; i++) {
--		struct patch_util *util = a->items[i].util;
- 
--		if (util->matching < 0)
--			printf("%d: %s < -: --------\n",
--			       i + 1, short_oid(util));
-+		/* Show matching LHS/RHS pair. */
-+		if (j < b->nr) {
-+			a_util = a->items[b_util->matching].util;
-+			printf("%d: %s ! %d: %s\n",
-+			       b_util->matching + 1, short_oid(a_util),
-+			       j + 1, short_oid(b_util));
-+			a_util->shown = 1;
-+			j++;
-+		}
- 	}
+@@ -273,13 +273,19 @@ static int get_correspondences(struct string_list *a, struct string_list *b,
+ 	return res;
  }
  
+-static void output_pair_header(struct strbuf *buf,
++static void output_pair_header(struct diff_options *diffopt, struct strbuf *buf,
+ 			       int i, struct patch_util *a_util,
+ 			       int j, struct patch_util *b_util)
+ {
+ 	static char *dashes;
+ 	struct object_id *oid = a_util ? &a_util->oid : &b_util->oid;
+ 	struct commit *commit;
++	char status;
++	const char *color_reset = diff_get_color_opt(diffopt, DIFF_RESET);
++	const char *color_old = diff_get_color_opt(diffopt, DIFF_FILE_OLD);
++	const char *color_new = diff_get_color_opt(diffopt, DIFF_FILE_NEW);
++	const char *color_commit = diff_get_color_opt(diffopt, DIFF_COMMIT);
++	const char *color;
+ 
+ 	if (!dashes) {
+ 		char *p;
+@@ -289,21 +295,33 @@ static void output_pair_header(struct strbuf *buf,
+ 			*p = '-';
+ 	}
+ 
++	if (j < 0) {
++		color = color_old;
++		status = '<';
++	} else if (i < 0) {
++		color = color_new;
++		status = '>';
++	} else if (strcmp(a_util->patch, b_util->patch)) {
++		color = color_commit;
++		status = '!';
++	} else {
++		color = color_commit;
++		status = '=';
++	}
++
+ 	strbuf_reset(buf);
++	strbuf_addstr(buf, status == '!' ? color_old : color);
+ 	if (i < 0)
+ 		strbuf_addf(buf, "-:  %s ", dashes);
+ 	else
+ 		strbuf_addf(buf, "%d:  %s ", i + 1,
+ 			    find_unique_abbrev(&a_util->oid, DEFAULT_ABBREV));
+ 
+-	if (i < 0)
+-		strbuf_addch(buf, '>');
+-	else if (j < 0)
+-		strbuf_addch(buf, '<');
+-	else if (strcmp(a_util->patch, b_util->patch))
+-		strbuf_addch(buf, '!');
+-	else
+-		strbuf_addch(buf, '=');
++	if (status == '!')
++		strbuf_addf(buf, "%s%s", color_reset, color);
++	strbuf_addch(buf, status);
++	if (status == '!')
++		strbuf_addf(buf, "%s%s", color_reset, color_new);
+ 
+ 	if (j < 0)
+ 		strbuf_addf(buf, " -:  %s", dashes);
+@@ -316,12 +334,15 @@ static void output_pair_header(struct strbuf *buf,
+ 		const char *commit_buffer = get_commit_buffer(commit, NULL);
+ 		const char *subject;
+ 
++		if (status == '!')
++			strbuf_addf(buf, "%s%s", color_reset, color);
++
+ 		find_commit_subject(commit_buffer, &subject);
+ 		strbuf_addch(buf, ' ');
+ 		format_subject(buf, subject, " ");
+ 		unuse_commit_buffer(commit, commit_buffer);
+ 	}
+-	strbuf_addch(buf, '\n');
++	strbuf_addf(buf, "%s\n", color_reset);
+ 
+ 	fwrite(buf->buf, buf->len, 1, stdout);
+ }
+@@ -384,21 +405,21 @@ static void output(struct string_list *a, struct string_list *b,
+ 
+ 		/* Show unmatched LHS commit whose predecessors were shown. */
+ 		if (i < a->nr && a_util->matching < 0) {
+-			output_pair_header(&buf, i, a_util, -1, NULL);
++			output_pair_header(diffopt, &buf, i, a_util, -1, NULL);
+ 			i++;
+ 			continue;
+ 		}
+ 
+ 		/* Show unmatched RHS commits. */
+ 		while (j < b->nr && b_util->matching < 0) {
+-			output_pair_header(&buf, -1, NULL, j, b_util);
++			output_pair_header(diffopt, &buf, -1, NULL, j, b_util);
+ 			b_util = ++j < b->nr ? b->items[j].util : NULL;
+ 		}
+ 
+ 		/* Show matching LHS/RHS pair. */
+ 		if (j < b->nr) {
+ 			a_util = a->items[b_util->matching].util;
+-			output_pair_header(&buf,
++			output_pair_header(diffopt, &buf,
+ 					   b_util->matching, a_util, j, b_util);
+ 			if (!(diffopt->output_format & DIFF_FORMAT_NO_OUTPUT))
+ 				patch_diff(a->items[b_util->matching].string,
+@@ -430,6 +451,8 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+ 	struct string_list branch1 = STRING_LIST_INIT_DUP;
+ 	struct string_list branch2 = STRING_LIST_INIT_DUP;
+ 
++	git_diff_basic_config("diff.color.frag", "magenta", NULL);
++
+ 	diff_setup(&diffopt);
+ 	diffopt.output_format = DIFF_FORMAT_PATCH;
+ 	diffopt.flags.suppress_diff_headers = 1;
 -- 
 2.17.0.409.g71698f11835
 
