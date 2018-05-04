@@ -7,32 +7,32 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97D7B200B9
-	for <e@80x24.org>; Fri,  4 May 2018 15:35:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F691200B9
+	for <e@80x24.org>; Fri,  4 May 2018 15:35:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751401AbeEDPeu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 11:34:50 -0400
-Received: from mout.gmx.net ([212.227.17.22]:54807 "EHLO mout.gmx.net"
+        id S1751417AbeEDPfE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 11:35:04 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60515 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751294AbeEDPer (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 11:34:47 -0400
+        id S1751294AbeEDPe7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 11:34:59 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
- (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MEKZg-1f7xpu2ce0-00FPJ3; Fri, 04 May 2018 17:34:38 +0200
+ (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0Lm6IP-1efpwj40RN-00Zgmc; Fri, 04 May 2018 17:34:53 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
         Thomas Rast <tr@thomasrast.ch>,
+        Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 03/18] branch-diff: first rudimentary implementation
-Date:   Fri,  4 May 2018 17:34:36 +0200
-Message-Id: <e530e450ebd307b72a64c81e4192bbb0df57cf65.1525448066.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 11/18] branch-diff: add tests
+Date:   Fri,  4 May 2018 17:34:52 +0200
+Message-Id: <313beeed3d100a3b5198bd0ce3084744288b05c2.1525448066.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.409.g71698f11835
 In-Reply-To: <cover.1525448066.git.johannes.schindelin@gmx.de>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de>
@@ -40,412 +40,823 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:LNg4fkJC2i2uxsFGK5TLFu4vE2xW+dPp9cGo7UlXyLXlJEIAXB9
- eT83RNHnFDD+YXdK1YWjOhgnveJ47lQPQNQtnJanTM/tg9iuvGfsD4opOQUBbCJycxMeG1A
- qfLv9rIM5wfXnsAmniqpwzdhe13wJOdHHfMfvpI5dMMt5NFbrMESVF9s1D9MYEVim3EBjMK
- EOzORigiUnIFArIcghGYQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jMFAusAQG+8=:Ao9+b/ttIMI9Go5hMlzz28
- nbq8aRtavumRKPmoPECO7LRvjz2vQjWOXFKfErTgZ4WnxPxmTU5YVh9zDUQVvv0q3IuYqcyOc
- 9Ikwc+fg1FFv2alzezSPE6kmoLWsRkPgMhMP9lXjIviG64nHRVXwsiF1tUzhrOc1CiZfHo9hV
- oV4SkAINgUqeSQzUnWziCt5XRcF4IGxHztr6mrt9f11+pjsiHSSGOvUcZBbKdTpoOlvVJL6Wf
- htbn0gjO9OQeB67j37NHjjO451ltd5v2kuFiS9OULZbmzWhom43Juhe/n9ZGTZGVeih12zDXS
- xKyOpNdwq19L2a+j0+desXrVVKfQhYW5KDgI93uazTvCejjzf6Gm5OaTUPyvW/5m2Fv3vBkIY
- ec9qFT0zXxpjdh5NCz2EyxMWWTzzpRx9a79I35Xzbl16OEsELOigGpw8dPkJOH/jAivQQR7GY
- 9AhYpNx0DJvQ5RwqFZipyuSP7lu/SmzfUG1hj8Lmqy060w0JAL35HQFp38Jh64iwvHt9HPJwF
- 6bn6QBZOkYBxQW32/OGSwHc0k6Lw74k3ITTzc0HH8TWAOmrDhmq7UgfGB8VQ6o4uoZRDlLji2
- 8Ev+EAiRwcYUT6x6fiacmwlCV16y6Hqq7eG5gzMVzkF4CxFD9khzyCRV1uGMrjTf8gwdnD8Uu
- vzqzFoy2ApOmjO4UTeN9xt0y+AUMWEKHUc0Q+iheAf7Gt1mCL1TVi61PEOj/dKAKZrgmJY17J
- hvTQAAFvm4fSJwIrqPhjn7ZlixEWeiKlT6jDUAjaJKOEZdezgxMBP4VAG5ZNLqYMURQmVMaRP
- zyG8KWe
+X-Provags-ID: V03:K1:Ep2uZQAL7ZAZYgz21mVHcBUXpya5M8VOuAluGbSVgTurHx+G11w
+ buSFO2PdNFZCZLsyk+sVEburRc9GyopNsH8ySdQ1ZMMQIZ/KD6ryrZjV3RgDkU5m4K0qmKQ
+ jbhoRc7DlgIa2in+NFOh5uRuZ8wxFVV49x5atR3/sTa2R2sJ/5G7lbJskIViKL2HWR2jYjJ
+ XsXRMRYD4a5UFpr4xQNCg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iYnPFmOLjzI=:yknGBbO+7sLuaRzAr5WhpL
+ Va4kIzZOYiBK69z4epX6b09iIUSKAojfsI8CkntPEmLLr1bkVNzldbsoZkQHWZ63lJ8svTPr5
+ nLND7AuYBQEIxPsbkk/IU7TiqWSUm3ADxJFq2n4gwvGfopBoRt9FHAIt3sZUR7X4tDpue+xA5
+ LIOPORVIE5Rlrhxnu4St08xuYf5MmXiU97xZ1E6Wupp/JyILV3hMpfKPdnlWmIY0YDxTODDyu
+ BITZiRD+NQilUUPcerCMErCiusXoiuT/msgx6YWqQLKWuR1S/kYM3gY2Z1iPi7K0J5T8IdQ96
+ faLoV7DfMKWGDJw2Vy/YfbPZ4Hw+v/Xeg0MHdRdOyh9pnzPpxXFv4+gfnHNt+i5DLDAyRUte8
+ hKmhPNBwBWceLPtRMeW04w5CxGmRvhfqLcT1QVbpFMCU6V2uZbmgcw4HGnyqLDDAtvn0H5j2v
+ hQFThVPzM6mgWYI6+q1PfldZYC+Cqqs9DwHRMFTL30KI3RoabeHyJwonWViGfKXOUQ5vQs+DM
+ K13BNOotU2kC2/oYvxefAhV7ZDp74VjPeapJjermrqtHUofx9enPt5HqYFXro5B4mba9NVwLj
+ vY8IcLTnXGQV46hIcgUnDYmLOw48iJ/HEO3btUvEQeOt0aOokZLcXeO+PHGu0DR3DhMNrardT
+ xpBYtggP6aPKg3ux0DLN552A/dt33P/x+vPi/a1P7QFmwarGfujvr5tPLHVTBHaDpvZ2o/tLe
+ h5Xdjc19v9yp0IXWau4bkVf4H/pkqkAWLDTGfL/ADrEHNqy7vzrIow2vugPi1EGceh0FgFz5s
+ +4GxUtg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-At this stage, `git branch-diff` can determine corresponding commits of
-two related commit ranges. This makes use of the recently introduced
-implementation of the Hungarian algorithm.
+From: Thomas Rast <tr@thomasrast.ch>
 
-The core of this patch is a straight port of the ideas of tbdiff, the
-seemingly dormant project at https://github.com/trast/tbdiff.
+These are essentially lifted from https://github.com/trast/tbdiff, with
+light touch-ups to account for the new command name.
 
-The output does not at all match `tbdiff`'s output yet, as this patch
-really concentrates on getting the patch matching part right.
+Apart from renaming `tbdiff` to `branch-diff`, only one test case needed
+to be adjusted: 11 - 'changed message'.
 
-Note: due to differences in the diff algorithm (`tbdiff` uses the
-Python module `difflib`, Git uses its xdiff fork), the cost matrix
-calculated by `branch-diff` is different (but very similar) to the one
-calculated by `tbdiff`. Therefore, it is possible that they find
-different matching commits in corner cases (e.g. when a patch was split
-into two patches of roughly equal length).
+The underlying reason it had to be adjusted is that diff generation is
+sometimes ambiguous. In this case, a comment line and an empty line are
+added, but it is ambiguous whether they were added after the existing
+empty line, or whether an empty line and the comment line are added
+*before* the existing empty line. And apparently xdiff picks a different
+option here than Python's difflib.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/branch-diff.c | 335 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 334 insertions(+), 1 deletion(-)
+ t/.gitattributes       |   1 +
+ t/t7910-branch-diff.sh | 144 ++++++++++
+ t/t7910/history.export | 604 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 749 insertions(+)
+ create mode 100755 t/t7910-branch-diff.sh
+ create mode 100644 t/t7910/history.export
 
-diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-index 60a4b4fbe30..c462681067c 100644
---- a/builtin/branch-diff.c
-+++ b/builtin/branch-diff.c
-@@ -1,6 +1,12 @@
- #include "cache.h"
- #include "builtin.h"
- #include "parse-options.h"
-+#include "string-list.h"
-+#include "run-command.h"
-+#include "argv-array.h"
-+#include "hashmap.h"
-+#include "xdiff-interface.h"
-+#include "hungarian.h"
- 
- static const char * const builtin_branch_diff_usage[] = {
- N_("git branch-diff [<options>] <old-base>..<old-tip> <new-base>..<new-tip>"),
-@@ -20,6 +26,279 @@ static int parse_creation_weight(const struct option *opt, const char *arg,
- 	return 0;
- }
- 
-+struct patch_util {
-+	/* For the search for an exact match */
-+	struct hashmap_entry e;
-+	const char *diff, *patch;
+diff --git a/t/.gitattributes b/t/.gitattributes
+index 3bd959ae523..af15d5aeedd 100644
+--- a/t/.gitattributes
++++ b/t/.gitattributes
+@@ -18,5 +18,6 @@ t[0-9][0-9][0-9][0-9]/* -whitespace
+ /t5515/* eol=lf
+ /t556x_common eol=lf
+ /t7500/* eol=lf
++/t7910/* eol=lf
+ /t8005/*.txt eol=lf
+ /t9*/*.dump eol=lf
+diff --git a/t/t7910-branch-diff.sh b/t/t7910-branch-diff.sh
+new file mode 100755
+index 00000000000..a7fece88045
+--- /dev/null
++++ b/t/t7910-branch-diff.sh
+@@ -0,0 +1,144 @@
++#!/bin/sh
 +
-+	int i;
-+	int diffsize;
-+	size_t diff_offset;
-+	/* the index of the matching item in the other branch, or -1 */
-+	int matching;
-+	struct object_id oid;
-+};
++test_description='branch-diff tests'
 +
-+/*
-+ * Reads the patches into a string list, with the `util` field being populated
-+ * as struct object_id (will need to be free()d).
-+ */
-+static int read_patches(const char *range, struct string_list *list)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	FILE *in;
-+	struct strbuf buf = STRBUF_INIT, line = STRBUF_INIT;
-+	struct patch_util *util = NULL;
-+	int in_header = 1;
++. ./test-lib.sh
 +
-+	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
-+			"--reverse", "--date-order", "--decorate=no",
-+			"--no-abbrev-commit", range,
-+			NULL);
-+	cp.out = -1;
-+	cp.no_stdin = 1;
-+	cp.git_cmd = 1;
++# Note that because of git-branch-diff's heuristics, test_commit does more
++# harm than good.  We need some real history.
 +
-+	if (start_command(&cp))
-+		return error_errno(_("could not start `log`"));
-+	in = fdopen(cp.out, "r");
-+	if (!in) {
-+		error_errno(_("could not read `log` output"));
-+		finish_command(&cp);
-+		return -1;
-+	}
++test_expect_success 'setup' '
++	git fast-import < "$TEST_DIRECTORY"/t7910/history.export
++'
 +
-+	while (strbuf_getline(&line, in) != EOF) {
-+		const char *p;
++test_expect_success 'simple A..B A..C (unmodified)' '
++	git branch-diff --no-color master..topic master..unmodified >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  35b9b25 s/5/A/
++	2:  fccce22 = 2:  de345ab s/4/A/
++	3:  147e64e = 3:  9af6654 s/11/B/
++	4:  a63e992 = 4:  2901f77 s/12/B/
++	EOF
++	test_cmp expected actual
++'
 +
-+		if (skip_prefix(line.buf, "commit ", &p)) {
-+			if (util) {
-+				string_list_append(list, buf.buf)->util = util;
-+				strbuf_reset(&buf);
-+			}
-+			util = xcalloc(sizeof(*util), 1);
-+			if (get_oid(p, &util->oid)) {
-+				error(_("could not parse commit '%s'"), p);
-+				free(util);
-+				string_list_clear(list, 1);
-+				strbuf_release(&buf);
-+				strbuf_release(&line);
-+				fclose(in);
-+				finish_command(&cp);
-+				return -1;
-+			}
-+			util->matching = -1;
-+			in_header = 1;
-+			continue;
-+		}
++test_expect_success 'simple B...C (unmodified)' '
++	git branch-diff --no-color topic...unmodified >actual &&
++	# same "expected" as above
++	test_cmp expected actual
++'
 +
-+		if (starts_with(line.buf, "diff --git")) {
-+			in_header = 0;
-+			strbuf_addch(&buf, '\n');
-+			if (!util->diff_offset)
-+				util->diff_offset = buf.len;
-+			strbuf_addbuf(&buf, &line);
-+		} else if (in_header) {
-+			if (starts_with(line.buf, "Author: ")) {
-+				strbuf_addbuf(&buf, &line);
-+				strbuf_addstr(&buf, "\n\n");
-+			} else if (starts_with(line.buf, "    ")) {
-+				strbuf_addbuf(&buf, &line);
-+				strbuf_addch(&buf, '\n');
-+			}
-+			continue;
-+		} else if (starts_with(line.buf, "@@ "))
-+			strbuf_addstr(&buf, "@@");
-+		else if (line.buf[0] && !starts_with(line.buf, "index "))
-+			/*
-+			 * A completely blank (not ' \n', which is context)
-+			 * line is not valid in a diff.  We skip it
-+			 * silently, because this neatly handles the blank
-+			 * separator line between commits in git-log
-+			 * output.
-+			 */
-+			strbuf_addbuf(&buf, &line);
-+		else
-+			continue;
++test_expect_success 'simple A B C (unmodified)' '
++	git branch-diff --no-color master topic unmodified >actual &&
++	# same "expected" as above
++	test_cmp expected actual
++'
 +
-+		strbuf_addch(&buf, '\n');
-+		util->diffsize++;
-+	}
-+	fclose(in);
-+	strbuf_release(&line);
++test_expect_success 'trivial reordering' '
++	git branch-diff --no-color master topic reordered >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  aca177a s/5/A/
++	3:  147e64e = 2:  14ad629 s/11/B/
++	4:  a63e992 = 3:  ee58208 s/12/B/
++	2:  fccce22 = 4:  307b27a s/4/A/
++	EOF
++	test_cmp expected actual
++'
 +
-+	if (util)
-+		string_list_append(list, buf.buf)->util = util;
-+	strbuf_release(&buf);
++test_expect_success 'removed a commit' '
++	git branch-diff --no-color master topic removed >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  7657159 s/5/A/
++	2:  fccce22 < -:  ------- s/4/A/
++	3:  147e64e = 2:  43d84d3 s/11/B/
++	4:  a63e992 = 3:  a740396 s/12/B/
++	EOF
++	test_cmp expected actual
++'
 +
-+	if (finish_command(&cp))
-+		return -1;
++test_expect_success 'added a commit' '
++	git branch-diff --no-color master topic added >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  2716022 s/5/A/
++	2:  fccce22 = 2:  b62accd s/4/A/
++	-:  ------- > 3:  df46cfa s/6/A/
++	3:  147e64e = 4:  3e64548 s/11/B/
++	4:  a63e992 = 5:  12b4063 s/12/B/
++	EOF
++	test_cmp expected actual
++'
 +
-+	return 0;
-+}
++test_expect_success 'new base, A B C' '
++	git branch-diff --no-color master topic rebased >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  cc9c443 s/5/A/
++	2:  fccce22 = 2:  c5d9641 s/4/A/
++	3:  147e64e = 3:  28cc2b6 s/11/B/
++	4:  a63e992 = 4:  5628ab7 s/12/B/
++	EOF
++	test_cmp expected actual
++'
 +
-+static int patch_util_cmp(const void *dummy, const struct patch_util *a,
-+		     const struct patch_util *b, const char *keydata)
-+{
-+	return strcmp(a->diff, keydata ? keydata : b->diff);
-+}
++test_expect_success 'new base, B...C' '
++	# this syntax includes the commits from master!
++	git branch-diff --no-color topic...rebased >actual &&
++	cat >expected <<-EOF &&
++	-:  ------- > 1:  a31b12e unrelated
++	1:  4de457d = 2:  cc9c443 s/5/A/
++	2:  fccce22 = 3:  c5d9641 s/4/A/
++	3:  147e64e = 4:  28cc2b6 s/11/B/
++	4:  a63e992 = 5:  5628ab7 s/12/B/
++	EOF
++	test_cmp expected actual
++'
 +
-+static void find_exact_matches(struct string_list *a, struct string_list *b)
-+{
-+	struct hashmap map;
-+	int i;
++test_expect_success 'changed commit' '
++	git branch-diff --no-color topic...changed >actual &&
++	cat >expected <<-EOF &&
++	1:  4de457d = 1:  a4b3333 s/5/A/
++	2:  fccce22 = 2:  f51d370 s/4/A/
++	3:  147e64e ! 3:  0559556 s/11/B/
++	    @@ -10,7 +10,7 @@
++	      9
++	      10
++	     -11
++	    -+B
++	    ++BB
++	      12
++	      13
++	      14
++	4:  a63e992 ! 4:  d966c5c s/12/B/
++	    @@ -8,7 +8,7 @@
++	     @@
++	      9
++	      10
++	    - B
++	    + BB
++	     -12
++	     +B
++	      13
++	EOF
++	test_cmp expected actual
++'
 +
-+	hashmap_init(&map, (hashmap_cmp_fn)patch_util_cmp, NULL, 0);
++test_expect_success 'changed message' '
++	git branch-diff --no-color topic...changed-message >actual &&
++	sed s/Z/\ /g >expected <<-EOF &&
++	1:  4de457d = 1:  f686024 s/5/A/
++	2:  fccce22 ! 2:  4ab067d s/4/A/
++	    @@ -2,6 +2,8 @@
++	    Z
++	    Z    s/4/A/
++	    Z
++	    +    Also a silly comment here!
++	    +
++	    Zdiff --git a/file b/file
++	    Z--- a/file
++	    Z+++ b/file
++	3:  147e64e = 3:  b9cb956 s/11/B/
++	4:  a63e992 = 4:  8add5f1 s/12/B/
++	EOF
++	test_cmp expected actual
++'
 +
-+	/* First, add the patches of a to a hash map */
-+	for (i = 0; i < a->nr; i++) {
-+		struct patch_util *util = a->items[i].util;
++test_done
+diff --git a/t/t7910/history.export b/t/t7910/history.export
+new file mode 100644
+index 00000000000..b8ffff0940d
+--- /dev/null
++++ b/t/t7910/history.export
+@@ -0,0 +1,604 @@
++blob
++mark :1
++data 51
++1
++2
++3
++4
++5
++6
++7
++8
++9
++10
++11
++12
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+		util->i = i;
-+		util->patch = a->items[i].string;
-+		util->diff = util->patch + util->diff_offset;
-+		hashmap_entry_init(util, strhash(util->diff));
-+		hashmap_add(&map, util);
-+	}
++reset refs/heads/removed
++commit refs/heads/removed
++mark :2
++author Thomas Rast <trast@inf.ethz.ch> 1374424921 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374484724 +0200
++data 8
++initial
++M 100644 :1 file
 +
-+	/* Now try to find exact matches in b */
-+	for (i = 0; i < b->nr; i++) {
-+		struct patch_util *util = b->items[i].util, *other;
++blob
++mark :3
++data 51
++1
++2
++3
++4
++A
++6
++7
++8
++9
++10
++11
++12
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+		util->i = i;
-+		util->patch = b->items[i].string;
-+		util->diff = util->patch + util->diff_offset;
-+		hashmap_entry_init(util, strhash(util->diff));
-+		other = hashmap_remove(&map, util, NULL);
-+		if (other) {
-+			if (other->matching >= 0)
-+				BUG("already assigned!");
++commit refs/heads/topic
++mark :4
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
 +
-+			other->matching = i;
-+			util->matching = other->i;
-+		}
-+	}
++blob
++mark :5
++data 51
++1
++2
++3
++A
++A
++6
++7
++8
++9
++10
++11
++12
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+	hashmap_free(&map, 0);
-+}
++commit refs/heads/topic
++mark :6
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++data 7
++s/4/A/
++from :4
++M 100644 :5 file
 +
-+static void diffsize_consume(void *data, char *line, unsigned long len)
-+{
-+	(*(int *)data)++;
-+}
++blob
++mark :7
++data 50
++1
++2
++3
++A
++A
++6
++7
++8
++9
++10
++B
++12
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+static int diffsize(const char *a, const char *b)
-+{
-+	xpparam_t pp = { 0 };
-+	xdemitconf_t cfg = { 0 };
-+	mmfile_t mf1, mf2;
-+	int count = 0;
++commit refs/heads/topic
++mark :8
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++data 8
++s/11/B/
++from :6
++M 100644 :7 file
 +
-+	mf1.ptr = (char *)a;
-+	mf1.size = strlen(a);
-+	mf2.ptr = (char *)b;
-+	mf2.size = strlen(b);
++blob
++mark :9
++data 49
++1
++2
++3
++A
++A
++6
++7
++8
++9
++10
++B
++B
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+	cfg.ctxlen = 3;
-+	if (!xdi_diff_outf(&mf1, &mf2, diffsize_consume, &count, &pp, &cfg))
-+		return count;
++commit refs/heads/topic
++mark :10
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++data 8
++s/12/B/
++from :8
++M 100644 :9 file
 +
-+	error(_("failed to generate diff"));
-+	return INT_MAX;
-+}
++blob
++mark :11
++data 10
++unrelated
 +
-+static int get_correspondences(struct string_list *a, struct string_list *b,
-+			       double creation_weight)
-+{
-+	int n = a->nr + b->nr;
-+	double *cost = xmalloc(sizeof(double) * n * n), c;
-+	int *a2b = xmalloc(sizeof(int) * n), *b2a = xmalloc(sizeof(int) * n);
-+	int i, j, res;
++commit refs/heads/master
++mark :12
++author Thomas Rast <trast@inf.ethz.ch> 1374485127 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485127 +0200
++data 10
++unrelated
++from :2
++M 100644 :11 otherfile
 +
-+	for (i = 0; i < a->nr; i++) {
-+		struct patch_util *a_util = a->items[i].util;
++commit refs/heads/rebased
++mark :13
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485137 +0200
++data 7
++s/5/A/
++from :12
++M 100644 :3 file
 +
-+		for (j = 0; j < b->nr; j++) {
-+			struct patch_util *b_util = b->items[j].util;
++commit refs/heads/rebased
++mark :14
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485138 +0200
++data 7
++s/4/A/
++from :13
++M 100644 :5 file
 +
-+			if (a_util->matching == j)
-+				c = 0;
-+			else if (a_util->matching < 0 && b_util->matching < 0)
-+				c = diffsize(a_util->diff, b_util->diff);
-+			else
-+				c = INT_MAX;
-+			cost[i + n * j] = c;
-+		}
++commit refs/heads/rebased
++mark :15
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485138 +0200
++data 8
++s/11/B/
++from :14
++M 100644 :7 file
 +
-+		c = a_util->matching < 0 ?
-+			a_util->diffsize * creation_weight : INT_MAX;
-+		for (j = b->nr; j < n; j++)
-+			cost[i + n * j] = c;
-+	}
++commit refs/heads/rebased
++mark :16
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485138 +0200
++data 8
++s/12/B/
++from :15
++M 100644 :9 file
 +
-+	for (j = 0; j < b->nr; j++) {
-+		struct patch_util *util = b->items[j].util;
++commit refs/heads/added
++mark :17
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
 +
-+		c = util->matching < 0 ?
-+			util->diffsize * creation_weight : INT_MAX;
-+		for (i = a->nr; i < n; i++)
-+			cost[i + n * j] = c;
-+	}
++commit refs/heads/added
++mark :18
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
++data 7
++s/4/A/
++from :17
++M 100644 :5 file
 +
-+	for (i = a->nr; i < n; i++)
-+		for (j = b->nr; j < n; j++)
-+			cost[i + n * j] = 0;
++blob
++mark :19
++data 51
++1
++2
++3
++A
++A
++A
++7
++8
++9
++10
++11
++12
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+	res = compute_assignment(n, n, cost, a2b, b2a);
++commit refs/heads/added
++mark :20
++author Thomas Rast <trast@inf.ethz.ch> 1374485186 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
++data 7
++s/6/A/
++from :18
++M 100644 :19 file
 +
-+	for (i = 0; i < a->nr; i++)
-+		if (a2b[i] >= 0 && a2b[i] < b->nr) {
-+			struct patch_util *a_util = a->items[i].util;
-+			struct patch_util *b_util = b->items[a2b[i]].util;
++blob
++mark :21
++data 50
++1
++2
++3
++A
++A
++A
++7
++8
++9
++10
++B
++12
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+			a_util->matching = a2b[i];
-+			b_util->matching = i;
-+		}
++commit refs/heads/added
++mark :22
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
++data 8
++s/11/B/
++from :20
++M 100644 :21 file
 +
-+	free(cost);
-+	free(a2b);
-+	free(b2a);
++blob
++mark :23
++data 49
++1
++2
++3
++A
++A
++A
++7
++8
++9
++10
++B
++B
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+	return res;
-+}
++commit refs/heads/added
++mark :24
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
++data 8
++s/12/B/
++from :22
++M 100644 :23 file
 +
-+static const char *short_oid(struct patch_util *util)
-+{
-+	return find_unique_abbrev(&util->oid, DEFAULT_ABBREV);
-+}
++commit refs/heads/reordered
++mark :25
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
 +
-+static void output(struct string_list *a, struct string_list *b)
-+{
-+	int i;
++blob
++mark :26
++data 50
++1
++2
++3
++4
++A
++6
++7
++8
++9
++10
++B
++12
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+	for (i = 0; i < b->nr; i++) {
-+		struct patch_util *util = b->items[i].util, *prev;
++commit refs/heads/reordered
++mark :27
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
++data 8
++s/11/B/
++from :25
++M 100644 :26 file
 +
-+		if (util->matching < 0)
-+			printf("-: -------- > %d: %s\n",
-+					i + 1, short_oid(util));
-+		else {
-+			prev = a->items[util->matching].util;
-+			printf("%d: %s ! %d: %s\n",
-+			       util->matching + 1, short_oid(prev),
-+			       i + 1, short_oid(util));
-+		}
-+	}
++blob
++mark :28
++data 49
++1
++2
++3
++4
++A
++6
++7
++8
++9
++10
++B
++B
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+	for (i = 0; i < a->nr; i++) {
-+		struct patch_util *util = a->items[i].util;
++commit refs/heads/reordered
++mark :29
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
++data 8
++s/12/B/
++from :27
++M 100644 :28 file
 +
-+		if (util->matching < 0)
-+			printf("%d: %s < -: --------\n",
-+			       i + 1, short_oid(util));
-+	}
-+}
++commit refs/heads/reordered
++mark :30
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
++data 7
++s/4/A/
++from :29
++M 100644 :9 file
 +
- int cmd_branch_diff(int argc, const char **argv, const char *prefix)
- {
- 	double creation_weight = 0.6;
-@@ -30,9 +309,63 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
- 			0, parse_creation_weight },
- 		OPT_END()
- 	};
-+	int res = 0;
-+	struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
-+	struct string_list branch1 = STRING_LIST_INIT_DUP;
-+	struct string_list branch2 = STRING_LIST_INIT_DUP;
- 
- 	argc = parse_options(argc, argv, NULL, options,
- 			builtin_branch_diff_usage, 0);
- 
--	return 0;
-+	if (argc == 2) {
-+		if (!strstr(argv[0], ".."))
-+			warning(_("no .. in range: '%s'"), argv[0]);
-+		strbuf_addstr(&range1, argv[0]);
++commit refs/heads/changed
++mark :31
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
 +
-+		if (!strstr(argv[1], ".."))
-+			warning(_("no .. in range: '%s'"), argv[1]);
-+		strbuf_addstr(&range2, argv[1]);
-+	} else if (argc == 3) {
-+		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
-+		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
-+	} else if (argc == 1) {
-+		const char *b = strstr(argv[0], "..."), *a = argv[0];
-+		int a_len;
++commit refs/heads/changed
++mark :32
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
++data 7
++s/4/A/
++from :31
++M 100644 :5 file
 +
-+		if (!b)
-+			die(_("single arg format requires a symmetric range"));
++blob
++mark :33
++data 51
++1
++2
++3
++A
++A
++6
++7
++8
++9
++10
++BB
++12
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+		a_len = (int)(b - a);
-+		if (!a_len) {
-+			a = "HEAD";
-+			a_len = strlen(a);
-+		}
-+		b += 3;
-+		if (!*b)
-+			b = "HEAD";
-+		strbuf_addf(&range1, "%s..%.*s", b, a_len, a);
-+		strbuf_addf(&range2, "%.*s..%s", a_len, a, b);
-+	} else {
-+		error(_("need two commit ranges"));
-+		usage_with_options(builtin_branch_diff_usage, options);
-+	}
++commit refs/heads/changed
++mark :34
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
++data 8
++s/11/B/
++from :32
++M 100644 :33 file
 +
-+	if (read_patches(range1.buf, &branch1))
-+		res = error(_("could not parse log for '%s'"), range1.buf);
-+	if (!res && read_patches(range2.buf, &branch2))
-+		res = error(_("could not parse log for '%s'"), range2.buf);
++blob
++mark :35
++data 50
++1
++2
++3
++A
++A
++6
++7
++8
++9
++10
++BB
++B
++13
++14
++15
++16
++17
++18
++19
++20
 +
-+	if (!res) {
-+		find_exact_matches(&branch1, &branch2);
-+		res = get_correspondences(&branch1, &branch2, creation_weight);
-+		if (!res)
-+			output(&branch1, &branch2);
-+	}
++commit refs/heads/changed
++mark :36
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
++data 8
++s/12/B/
++from :34
++M 100644 :35 file
 +
-+	strbuf_release(&range1);
-+	strbuf_release(&range2);
-+	string_list_clear(&branch1, 1);
-+	string_list_clear(&branch2, 1);
++commit refs/heads/changed-message
++mark :37
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485530 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
 +
-+	return !!res;
- }
++commit refs/heads/changed-message
++mark :38
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485530 +0200
++data 35
++s/4/A/
++
++Also a silly comment here!
++from :37
++M 100644 :5 file
++
++commit refs/heads/changed-message
++mark :39
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485536 +0200
++data 8
++s/11/B/
++from :38
++M 100644 :7 file
++
++commit refs/heads/changed-message
++mark :40
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485536 +0200
++data 8
++s/12/B/
++from :39
++M 100644 :9 file
++
++commit refs/heads/unmodified
++mark :41
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485631 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
++
++commit refs/heads/unmodified
++mark :42
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485631 +0200
++data 7
++s/4/A/
++from :41
++M 100644 :5 file
++
++commit refs/heads/unmodified
++mark :43
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485632 +0200
++data 8
++s/11/B/
++from :42
++M 100644 :7 file
++
++commit refs/heads/unmodified
++mark :44
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374485632 +0200
++data 8
++s/12/B/
++from :43
++M 100644 :9 file
++
++commit refs/heads/removed
++mark :45
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374486061 +0200
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
++
++commit refs/heads/removed
++mark :46
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374486061 +0200
++data 8
++s/11/B/
++from :45
++M 100644 :26 file
++
++commit refs/heads/removed
++mark :47
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Rast <trast@inf.ethz.ch> 1374486061 +0200
++data 8
++s/12/B/
++from :46
++M 100644 :28 file
++
++reset refs/heads/removed
++from :47
++
 -- 
 2.17.0.409.g71698f11835
 
