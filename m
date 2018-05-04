@@ -2,220 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 910632023D
-	for <e@80x24.org>; Fri,  4 May 2018 08:42:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ADFE1F42E
+	for <e@80x24.org>; Fri,  4 May 2018 09:58:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751465AbeEDImO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 04:42:14 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:38564 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751316AbeEDImN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 04:42:13 -0400
-Received: by mail-wm0-f49.google.com with SMTP id m198-v6so2523221wmg.3
-        for <git@vger.kernel.org>; Fri, 04 May 2018 01:42:12 -0700 (PDT)
+        id S1751901AbeEDJ6W (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 05:58:22 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:37719 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751519AbeEDJ6U (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 05:58:20 -0400
+Received: by mail-qk0-f194.google.com with SMTP id d74so16130508qkg.4
+        for <git@vger.kernel.org>; Fri, 04 May 2018 02:58:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=4DZxEUpzsqCb+gJ4XRzFvJKQntCkamdf7jqnxXQ5e+k=;
-        b=jWqbmpTYELUr7FT/dS/O9XG662ohbKku6r9/APGIACIRYTAPYWPCQySNnu5DdE0uB3
-         K3nhZTqI7NcHSTh80dzCHphSS96K9YeK3mJcYgxVTLp8244pLnQrkOazPWXprVZlgQEU
-         8+JndlyhrPnC6Gp022aXBUfvD+eXdwRB1CtssGrpeG8wO5O2I/4zoS53m52Iuo2exIZE
-         IfJPiUGqfhS71jzm5jZ/hbAz0rMrvfdGcZJX1TSATcMqVIV9OZChmEUwINj5nwYwKWvA
-         eHaL1ewJLz3kJGbZFjPtkIbiV9dwb1P2GOlbVnHdd7BByu9lzKOIhmF7LSJlx25Iqryo
-         NycA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=veqeM8iNGhh5Xf/wRK9LCAT6j7V67CYzlCpuHMYxJXQ=;
+        b=MfdsZliFm6IPnB2FJor9Rxol9s5NbbEj89WB4ooTeMUxSDpN5VO3t45DSEdHhKv8g1
+         w8GMKz0Zt8TGTd5J63j20DN+mn3ZdlboCV+J1W44h/4buvBcbTFbONaboTG9lDiV37F+
+         ZEkFKl5M9ChUqo2++duljlnuFTiGrfSf0Fff431t14a9eU9NCN7MpqAG8ANmcJhqOhQH
+         6FjDxNyyr1cz2VkIze/BnPJNQLb47bJcr0do1jc9avkgXYy97MIIgcu9xjJ1AUCAeHRR
+         QwRKazxOuOfm36kC/NgguSW5hUQJrrP8RlrmRaubToUX7DI3Ei/VOwqLwUdk7aj+dJPj
+         p+TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=4DZxEUpzsqCb+gJ4XRzFvJKQntCkamdf7jqnxXQ5e+k=;
-        b=mIuZ5veZGyuy2V09oNdBHja8n+G2mj5s1Ec/FjrNTdkcZux3m+77eTQ2gwOiGMqOlW
-         PXMSspdFakaBTONygGJn/pS+cOgLizENF9qHedqQ1046UNX3tJU/skiPMWe+QiR4R6V3
-         fESi2dBVNgLg4DPiB7q51Udo3zhUxkUJsZ819P1K9KoDKnUEDcWEU+x54tf7/ubuzun/
-         Xk+WgWh83FCOUMsEIPG5wZqaGY0kqPl9FdFhKcClGAPbnQIHcQ2OfMeOYbPwWYnbCGt/
-         osK5cptcyzF8ZcMHzCbXC19ZyCoIxLcbcVLhQufnpM0qbbfd1YLP5T6Is81Q0HmrkWyy
-         2EWw==
-X-Gm-Message-State: ALQs6tD/rWlB9j4/8uyPm5iymsW+uX169Lj+jR7bGKErcJmasAQyvPqD
-        I2Y1I5Aj2fYrMSPNqKUu6Ao=
-X-Google-Smtp-Source: AB8JxZqNe+jeq7BFmcQkhSoIg3Iljxgqu470AHueHRsMQEHny2KYCm6VNqzX2ylDzI9r8BCmoz1UxA==
-X-Received: by 2002:a50:8fa5:: with SMTP id y34-v6mr35335536edy.290.1525423331717;
-        Fri, 04 May 2018 01:42:11 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id p1-v6sm8934615edm.0.2018.05.04.01.42.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 04 May 2018 01:42:10 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 09/12] get_short_oid / peel_onion: ^{tree} should be tree, not treeish
-References: <20180501184016.15061-1-avarab@gmail.com>
-        <20180501120651.15886-1-avarab@gmail.com>
-        <20180501184016.15061-10-avarab@gmail.com>
-        <xmqqzi1htij7.fsf@gitster-ct.c.googlers.com>
-        <87wowlxko8.fsf@evledraar.gmail.com>
-        <xmqqvac4tb64.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqvac4tb64.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 04 May 2018 10:42:09 +0200
-Message-ID: <87lgczyfq6.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=veqeM8iNGhh5Xf/wRK9LCAT6j7V67CYzlCpuHMYxJXQ=;
+        b=IV0izWzns9W0uxhgo7tODvVpDA6MHRz6dH9GvKFZz+vRi8uVwaKvlkzX0WHPIxnoUh
+         OH22Az36Yymuhf0uxE1jItYcZ/Sibuo/djyfO2PeEYbK9vqpdaAu1/lSgCl3TRXltKJL
+         8dqg+NavfVpbgLXcX8DRvtOiBYBKcoEHBw/KSN5S9DWaQdv9fqi8IFCGjvfqIPXfB5Jd
+         QlHSzphCvxnZkt+H86mZSFciDs9NuYdXTabPpK7ohc6WE3OuXzwDV0sUSL2hqIT0cbGW
+         3doYkluIge2hRgnjXS4o8e0RSkBILgYAcOII4LKCLQsoiVc3WgxJGF1AJcwAmwmvy9nv
+         otQw==
+X-Gm-Message-State: ALQs6tAMb85ZjGlE/KRUv8iHFhxJ4VRx2CLJZbKbnH21en8Ykw1bSEbf
+        KhNIRKjvNPWbKGWSpDuDtktYQS/BV6L+FB+y0HM=
+X-Google-Smtp-Source: AB8JxZoi2TtQh1dVEDw1yO/8qyb0J3KBQNEdJntDyIcGTrTCbfRJnheMx/DM3aa6cdhnH7LypHg8qr7K1Fd57bCKP+g=
+X-Received: by 10.233.220.1 with SMTP id q1mr19865936qkf.361.1525427900051;
+ Fri, 04 May 2018 02:58:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.12.170.75 with HTTP; Fri, 4 May 2018 02:58:19 -0700 (PDT)
+In-Reply-To: <20180503131840.27956-1-avarab@gmail.com>
+References: <87y3h1ykwn.fsf@evledraar.gmail.com> <20180503131840.27956-1-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 4 May 2018 05:58:19 -0400
+X-Google-Sender-Auth: HgYsXp0o7E9bM6st8PlbKBOKAhc
+Message-ID: <CAPig+cR59-OEDL7GDNZF2v7a-NOrUH2zC9EwDvuog8QLRtvKTA@mail.gmail.com>
+Subject: Re: [PATCH v2] checkout & worktree: introduce checkout.implicitRemote
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, May 04 2018, Junio C Hamano wrote:
-
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On Thu, May 3, 2018 at 9:18 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Introduce a checkout.implicitRemote setting which can be used to
+> designate a remote to prefer (via checkout.implicitRemote=3Dorigin) when
+> running e.g. "git checkout master" to mean origin/master, even though
+> there's other remotes that have the "master" branch.
+> [...]
+> The new checkout.implicitRemote config allows me to say that whenever
+> that ambiguity comes up I'd like to prefer "origin", and it'll still
+> work as though the only remote I had was "origin".
+> [...]
 >
->> The reason I'm doing this is because I found it confusing that I can't
->> do:
->>
->>     for t in tag commit tree blob; do ./git --exec-path=$PWD rev-parse 7452^{$t}; done
->>
->> And get, respectively, only the SHAs that match the respective type, but
->> currently (with released git) you can do:
->>
->>     for t in tag commit committish treeish tree blob; do git -c core.disambiguate=$t rev-parse 7452; done
->
-> Exactly.  The former asks "I (think I) know 7452 can be used to name
-> an object of type $t, with peeling if necessary--give me the underlying
-> object of type $t".
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> @@ -1084,6 +1084,23 @@ browser.<tool>.path::
+> +checkout.implicitRemote::
+> +       When you run 'git checkout <something>' and only have one
+> +       remote, it may implicitly fall back on checking out and
+> +       tracking e.g. 'origin/<something>'. This stops working as soon
+> +       as you have more than one remote with a '<something>'
+> +       reference. This setting allows for setting the name of a
+> +       special remote that should always win when it comes to
 
-Right, and I'm with you so far, this makes sense to me for all existing
-uses of the peel syntax, otherwise v2.17.0^{tree} wouldn't be the same
-as rev-parse v2.17.0^{tree}^{tree}...
+"special" is overly broad. "preferred" may better convey the intended
+meaning. Simply dropping "special" also works.
 
-> In short, the fact that you can write "$X^{$t}"
-> says that $X is a $t-ish (otherwise $X cannot be used as a stand-in
-> for an object of type $t) and that you fully expect that $X can merely
-> be of type $t-ish and not exactly $t (otherwise you wouldn't be
-> making sure to coerce $X into $t with ^{$t} notation).
->
-> In *THAT* context, disambiguation help that lists objects whose name
-> begins with "7452" you gave, hoping that it is a unique enough
-> prefix when it wasn't in reality, *MUST* give $t-ish; restricting it
-> to $t makes the help mostly useless.
->
->> 1) Am I missing some subtlety or am I correct that there was no way to
->> get git to return more than one SHA-1 for ^{commit} or ^{tree} before
->> this disambiguation feature was added?
->
-> There is no such feature either before or after the disambiguation
-> help.  I am not saying there shouldn't exist such a feature.  I am
-> saying that breaking the existing feature and making it useless is
-> not the way to add such a feature.
+Subjective; not worth a re-roll.
 
-I still don't get how what you're proposing is going to be consistent,
-but let's fully enumerate the output of 7452 with my patch to take that
-case-by-case[1]:
+> +       disambiguation. The typical use-case is to set this to
+> +       `origin`.
+> ++
+> +Currently this is used by linkgit:git-checkout[1] when 'git checkout
+> +<something>' will checkout the '<something>' branch on another remote,
+> +and by linkgit:git-worktree[1] when 'git worktree add' when referring
 
-    ^{tag}:
-    7452b4b5786778d5d87f5c90a94fab8936502e20
-    ^{commit}:
-    hint:   74521eee4c commit 2007-12-01 - git-gui: install-sh from automake does not like -m755
-    hint:   745224e04a commit 2014-06-18 - refs.c: SSE2 optimizations for check_refname_component
-    ^{tree}:
-    hint:   7452336aa3 tree
-    hint:   74524f384d tree
-    hint:   7452813bcd tree
-    hint:   7452b1a701 tree
-    hint:   7452b73c42 tree
-    hint:   7452ca1557 tree
-    ^{blob}:
-    hint:   7452001351 blob
-    hint:   745254665d blob
-    hint:   7452a572c1 blob
-    hint:   7452b9fd21 blob
-    hint:   7452db13c8 blob
-    hint:   7452fce0da blob
+"when ... when"?
 
-And[2]:
+> +to a remote branch.  This setting might be used for other
+> +checkout-like commands or functionality in the future when
+> +appropriate.
 
-    core.disambiguate=tag:
-    [same as ^{tag]
-    core.disambiguate=commit:
-    [same as ^{commit}]
-    core.disambiguate=committish:
-    hint:   7452b4b578 tag v2.1.0
-    hint:   74521eee4c commit 2007-12-01 - git-gui: install-sh from automake does not like -m755
-    hint:   745224e04a commit 2014-06-18 - refs.c: SSE2 optimizations for check_refname_component
-    core.disambiguate=tree:
-    [same as ^{tree}]
-    core.disambiguate=treeish (same as $sha1:)
-    hint:   7452b4b578 tag v2.1.0
-    hint:   74521eee4c commit 2007-12-01 - git-gui: install-sh from automake does not like -m755
-    hint:   745224e04a commit 2014-06-18 - refs.c: SSE2 optimizations for check_refname_component
-    hint:   7452336aa3 tree
-    hint:   74524f384d tree
-    hint:   7452813bcd tree
-    hint:   7452b1a701 tree
-    hint:   7452b73c42 tree
-    hint:   7452ca1557 tree
-    core.disambiguate=blob:
-    [same as ^{blob}]
+Not sure the final sentence adds value as user-facing documentation
+(versus the commit message in which it may).
 
-So from my understanding of what you're saying you'd like to list tag,
-commits and trees given $sha1^{tree}, because they're all types that can
-be used to reach a tree.
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.=
+txt
+> @@ -60,6 +60,11 @@ with a matching name, treat as equivalent to:
+>  $ git worktree add --track -b <branch> <path> <remote>/<branch>
+> +It's also possible to use the `checkout.implicitRemote` setting to
+> +designate a special remote this rule should be applied to, even if the
 
-I don't think that's very useful, yes it would "break" existing
-disambiguations, but this is such an obscure (and purely manual)
-use-case than I think that's fine.
+Again, you could drop "special".
 
-Because I think to the extent anyone's going to use this it's because
-they know they have e.g. a short blob, commit etc. SHA-1 they're not
-going to use it because they have some short $SHA they know is a tree,
-and then want all SHA-1s of that *and* random tag & commit objects that
-happen to have the same object prefix just because tags and commits can
-also point to trees.
+> +branch isn't unique across all remotes. See `checkout.implicitRemote`
+> +in linkgit:git-config[1].
 
-How does that make any sense? The entire reason for using the normal
-peel syntax is because you e.g. have v2.17.0 and want to get to the
-^{tree} or the ^{commit} tht v2.17.0 directly points to. That's entirely
-orthogonal to what the disambiguation is doing. There with your proposed
-semantics you're peeling 7452 as 7452^{tree} because (IMO) you're
-looking for trees, just to get some entirely unrelated commits and tags.
+I have a hard time digesting this paragraph. Perhaps it wants to say:
 
-But *leaving that aside*, i.e. I don't see why the use-case would make
-sense. What I *don't* get is why, if you think that, you only want to
-apply that rule to ^{tree}. I.e. wouldn't it then be consistent to say:
+    Option `checkout.implicitRemote` can be configured to designate a
+    <remote> to use when <branch> isn't unique across all remotes.
+    See ...
 
-    # a)
-    ^{tag}    = tag
-    ^{commit} = tag, commit
-    ^{tree}   = tag, commit, tree
-    ^{blob}   = tag, blob (blobish)
+> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+> @@ -450,6 +450,24 @@ test_expect_success 'git worktree --no-guess-remote =
+option overrides config' '
+> +test_expect_success '"add" <path> <branch> dwims with checkout.implicitR=
+emote' '
+> +       test_when_finished rm -rf repo_upstream repo_dwim foo &&
+> +       setup_remote_repo repo_upstream repo_dwim &&
+> +       git init repo_dwim &&
 
-Whereas my patch now does:
+Maybe replace "dwim" here and in the test title with something else
+since checkout.implicitRemote is no longer about DWIM'ing?
 
-    # b)
-    ^{tag}    = tag
-    ^{commit} = commit
-    ^{tree}   = tree
-    ^{blob}   = blob
-
-But from what you seem to be proposing (or maybe you just didn't have a
-chance to critique the ^{blob} and ^{commit} patches):
-
-    # c)
-    ^{tag}    = tag
-    ^{commit} = commit
-    ^{tree}   = tag, tree, commit
-    ^{blob}   = blob
-
-1. for type in tag commit tree blob; do echo "^{$type}:" && ./git --exec-path=$PWD rev-parse 7452^{$type} 2>&1|grep -E -e ^hint -e '^[0-9a-f]{40}$' |grep -v are:; done
-2. for cfg in tag commit committish tree treeish blob; do echo "core.disambiguate=$cfg:" && ./git --exec-path=$PWD -c core.disambiguate=$cfg rev-parse 7452 2>&1|grep -E -e ^hint -e '^[0-9a-f]{40}$' |grep -v are:; done
+> +       (
+> +               cd repo_dwim &&
+> +               git remote add repo_upstream2 ../repo_upstream &&
+> +               git fetch repo_upstream2 &&
+> +               test_must_fail git worktree add ../foo foo &&
+> +               git -c checkout.implicitRemote=3Drepo_upstream worktree a=
+dd ../foo foo
+> +       ) &&
+> +       (
+> +               cd foo &&
+> +               test_branch_upstream foo repo_upstream foo &&
+> +               test_cmp_rev refs/remotes/repo_upstream/foo refs/heads/fo=
+o
+> +       )
+> +'
