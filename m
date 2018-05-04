@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6146200B9
-	for <e@80x24.org>; Fri,  4 May 2018 02:35:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96E4B200B9
+	for <e@80x24.org>; Fri,  4 May 2018 02:35:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751268AbeEDCfk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 22:35:40 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:39126 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751214AbeEDCfj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 22:35:39 -0400
-Received: by mail-qt0-f195.google.com with SMTP id f1-v6so25640569qtj.6
-        for <git@vger.kernel.org>; Thu, 03 May 2018 19:35:39 -0700 (PDT)
+        id S1751411AbeEDCfv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 22:35:51 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:46579 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751214AbeEDCfu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 22:35:50 -0400
+Received: by mail-qt0-f196.google.com with SMTP id m16-v6so25594823qtg.13
+        for <git@vger.kernel.org>; Thu, 03 May 2018 19:35:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=Zg8H9I3fVYj0+/IRxKnvUC5aRF/Z2dFrYU6QDxjo/24=;
-        b=fdxU/VrY63r0sF8iGZCWiEjA1WDJYe2Y6xLvT/31j1z/PbVyqOWok4u1dJEw1t031f
-         JoNG8r61LuhG511JLvnWMjz3C2P7/d2vn/pH6MhweHyQoRL2IDHyJBdHwkqV94X301Ke
-         0f1j6tq4NzJQxXXEfHD9hcqQBEuRSxzs3y3m016FbLDEC7CiJHOhq6vzP017m4TShAZ0
-         OV66TV8LOMl0M/QL7a5A1ZETBAZu7J2kRGCzR47oiYO3QCUBDN9CjRk7NX/XvPgtfgFv
-         TVAa3PIFzTjnZic+VIGLGXxOu3Nq3+FcW0XzxRE+Ai23dj6OASx3T1KA5gr7DqUvUvvY
-         6Ozg==
+        bh=qCYwGyugU92Jqtx4IPxCQzpTsqhLU4U7Ik/okcGFl9A=;
+        b=dsxvT5LKEakbGFD6Dg9/pk9lGziYB37WZyijuxc8vw18G+CycjHfb8YcXE/kbOg31i
+         poJxrwQiBPYidclBuJu9WCSuuZL/DAi6oCZUUtmNURwEHAgIC8o+Ww7vhRlCrPYMAzcZ
+         CsznlsY90Eh5oOf8+Zhr1e5HvoD7hvL6bZBZ6JHpleviJhfS9buZzh5YvDOfn5RKToWt
+         iVFvFh80/0uxyRb6x6eFKnVrhuvA8SAP1bnHCTeshXX8WyfDpMxDVoeIG6c1P7lBil1T
+         341iFThLI/RtjVGcBr26cUP2hbeIgapwyioL1/MxDN1ijF3Fzvd3laNFfr5v4dGrIt+C
+         5aXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=Zg8H9I3fVYj0+/IRxKnvUC5aRF/Z2dFrYU6QDxjo/24=;
-        b=lJeN0rKn2/c2EKSDPyzoUoagA6qydWnF580OaaM5pl6gJBMvJpV+lFj85pz/PM++qA
-         d+PPM0+xNPdh26RvF3DE+iSloZUTLVzz57JLZUnDeYQRyyFsSVXikYwfMcONZVw16mDi
-         70l/InndXzddXSyJG5qZhUKokAqjOyjv4ZSmjCp0LlmwwE0UVVmhiRDGiP7aa5825s+V
-         G4rLEkkQRnz9gqhYF5kHYSOlmvirKwEP01Iqj4FRCtyhPALWWEIXA3KseFU5v2sberZ/
-         bYrCVG+KwzaV54FALylbhToxYMZn8NA5OqEHuHr5qPyV8oHgmf9so8cUUBjAVGWEorra
-         v+sA==
-X-Gm-Message-State: ALQs6tDwAvnTbo68Hr7OtJt48QxQbInEfm8CU6tLyDNRGRhZbuYzTCw0
-        BtNczqn4A0VmJegRCG+PUJdaE4fbQFudNYiBBPM=
-X-Google-Smtp-Source: AB8JxZpK8mAqtRQ+0W0UO96rmwqigOIfM2QMyC6YSdFFpOGQky6cENGjTxtezssVMbVwQ/OJz7tve8X2L3yDCrYZLBs=
-X-Received: by 2002:aed:26a4:: with SMTP id q33-v6mr21296323qtd.165.1525401339105;
- Thu, 03 May 2018 19:35:39 -0700 (PDT)
+        bh=qCYwGyugU92Jqtx4IPxCQzpTsqhLU4U7Ik/okcGFl9A=;
+        b=KqCg6zYLhX18gL/nH0DzKIkyda7z+1U4fSloKN6K5MiXvp6jL4Eb5ZPEdAuV68jLPN
+         u5z4a4cDyIpaUBufr5vECtdSIZ3biYkgJ7ojpqztJS8z52cgmvSBafwUPEiuJxOUnuYa
+         8qRYwkSYA+HOS6nmKSTW98XUEx6PXlWrnOIduTMi+i3sYGcLes3Bqp1YCXn6OuVmpEJw
+         bysQsdH87Jl3ma2m8t6IyDM9S5q5pqjtjvf/PQZAtw0HMWg2LaLJ2KLleASRKWNiJ4of
+         t+CzLOFFLsE4jhb9N3Xt+BnG/zyqHjGGZx/FF8OjZ2GhOUwCCdvJCTLpV6fMJ8/vDYkS
+         cWfA==
+X-Gm-Message-State: ALQs6tAMRPpPKcuO9FHDqMfYeMVzz29kRy0ema4D3pdmjieh5SdB5ZK0
+        4EpEs6TnjyIjJD31d1FEEP85jaGLIj8EE8LjwUQ=
+X-Google-Smtp-Source: AB8JxZpoKNrEX2If+BXyZc1PDrayQAG5Jb/YVXcP8lNgr+Mbhyu+TuPg+lOWyh/72NTH027SMgSMMYxqPDHuoFaAQRs=
+X-Received: by 2002:ac8:3267:: with SMTP id y36-v6mr22314200qta.25.1525401350197;
+ Thu, 03 May 2018 19:35:50 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Thu, 3 May 2018 19:35:38 -0700 (PDT)
-In-Reply-To: <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
+Received: by 10.12.170.75 with HTTP; Thu, 3 May 2018 19:35:49 -0700 (PDT)
+In-Reply-To: <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 3 May 2018 22:35:38 -0400
-X-Google-Sender-Auth: 2GpjCWRk8HggPnNhw2I87pit6Ys
-Message-ID: <CAPig+cQv7tNCNhDdThhhDYEE=XmB0xO35Qjvpw+-MgCg0W3ovQ@mail.gmail.com>
-Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
+Date:   Thu, 3 May 2018 22:35:49 -0400
+X-Google-Sender-Auth: HRuXu7XFfDi3oyz_nw7M7dBAMco
+Message-ID: <CAPig+cSvHWvb0dsGkjL69yzbBvgaT7oJm6nFuGWeA6Jw0NpYUw@mail.gmail.com>
+Subject: Re: [PATCH 03/18] branch-diff: first rudimentary implementation
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Thomas Rast <tr@thomasrast.ch>,
@@ -66,24 +66,83 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, May 3, 2018 at 11:30 AM, Johannes Schindelin
 <johannes.schindelin@gmx.de> wrote:
-> This builtin does not do a whole lot so far, apart from showing a usage
-> that is oddly similar to that of `git tbdiff`. And for a good reason:
-> the next commits will turn `branch-diff` into a full-blown replacement
-> for `tbdiff`.
+> At this stage, `git branch-diff` can determine corresponding commits of
+> two related commit ranges. This makes use of the recently introduced
+> implementation of the Hungarian algorithm.
 >
-> At this point, we ignore tbdiff's color options, as they will all be
-> implemented later and require some patches to the diff machinery.
+> The core of this patch is a straight port of the ideas of tbdiff, the
+> seemingly dormant project at https://github.com/trast/tbdiff.
+>
+> The output does not at all match `tbdiff`'s output yet, as this patch
+> really concentrates on getting the patch matching part right.
+>
+> Note: due to differences in the diff algorithm (`tbdiff` uses the
+> Pythong module `difflib`, Git uses its xdiff fork), the cost matrix
+
+s/Pythong/Python/
+
+> calculated by `branch-diff` is different (but very similar) to the one
+> calculated by `tbdiff`. Therefore, it is possible that they find
+> different matching commits in corner cases (e.g. when a patch was split
+> into two patches of roughly equal length).
 >
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
 > diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-> @@ -0,0 +1,40 @@
-> +static const char * const builtin_branch_diff_usage[] = {
-> +       N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
-> +       NULL
-> +};
+> @@ -19,6 +23,279 @@ static int parse_creation_weight(const struct option *opt, const char *arg,
+> +static int read_patches(const char *range, struct string_list *list)
+> +{
+> +       [...]
+> +       struct strbuf buf = STRBUF_INIT, line = STRBUF_INIT;
+> +       [...]
+> +                       } else if (starts_with(line.buf, "    ")) {
+> +                               strbuf_addbuf(&buf, &line);
+> +                               strbuf_addch(&buf, '\n');
+> +                       }
+> +
+> +                       continue;
 
-The formatting of "<options>" vs. "base" confused me into thinking
-that the latter was a literal keyword, but I see from reading patch
-3/18 that it is not a literal at all, thus probably ought to be
-specified as "<base>".
+Unnecessary blank line above 'continue'?
+
+> +               } else if (starts_with(line.buf, "@@ "))
+> +                       strbuf_addstr(&buf, "@@");
+> +               [...]
+> +       }
+> +       fclose(in);
+> +
+> +       if (util)
+> +               string_list_append(list, buf.buf)->util = util;
+> +       strbuf_release(&buf);
+
+strbuf_release(&line);
+
+> +       if (finish_command(&cp))
+> +               return -1;
+> +
+> +       return 0;
+> +}
+> @@ -32,9 +309,63 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+> +       if (argc == 2) {
+> +               if (!strstr(argv[0], ".."))
+> +                       warning(_("no .. in range: '%s'"), argv[0]);
+> +               strbuf_addstr(&range1, argv[0]);
+> +
+> +               if (!strstr(argv[1], ".."))
+> +                       warning(_("no .. in range: '%s'"), argv[1]);
+> +               strbuf_addstr(&range2, argv[1]);
+> +       } else if (argc == 1) {
+> +               if (!b)
+> +                       die(_("single arg format requires a symmetric range"));
+> +       } else {
+> +               error("Need two commit ranges");
+
+Other warning/error messages emitted by this function are not
+capitalized: s/Need/need/
+
+> +               usage_with_options(builtin_branch_diff_usage, options);
+> +       }
+> +
+> +       if (read_patches(range1.buf, &branch1))
+> +               res = error(_("could not parse log for '%s'"), range1.buf);
+> +       if (!res && read_patches(range2.buf, &branch2))
+> +               res = error(_("could not parse log for '%s'"), range2.buf);
