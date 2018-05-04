@@ -6,122 +6,103 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18CE2200B9
-	for <e@80x24.org>; Fri,  4 May 2018 02:51:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EAE4200B9
+	for <e@80x24.org>; Fri,  4 May 2018 03:07:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751240AbeEDCvK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 22:51:10 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:34904 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751214AbeEDCvJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 22:51:09 -0400
-Received: by mail-qt0-f195.google.com with SMTP id f5-v6so12321280qth.2
-        for <git@vger.kernel.org>; Thu, 03 May 2018 19:51:08 -0700 (PDT)
+        id S1751271AbeEDDHr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 23:07:47 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:32862 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751236AbeEDDHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 23:07:46 -0400
+Received: by mail-wr0-f193.google.com with SMTP id o4-v6so19508816wrm.0
+        for <git@vger.kernel.org>; Thu, 03 May 2018 20:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=kmOtW6V95Z12sj8xBq//dZSwsGeuIy5+eTUDOAHb7z8=;
-        b=bN5GLCL6NQRx+sDKcmgummmuhqwVkDaCppOjEBt/5nuEIzAs6/804DsuOhZlTatuhs
-         IPPdOw+B/aF2VqpInAwZ9P8RdgXYRvY8c4XTbVF/dEtuVWRW0w9hjak9eO24LQLTmkZm
-         z27ObjTFV4hacYtnrCsOl5+UVFH+H6AFM4mUhLtE/pPdUhjblFVGDuKLnAqilAN5VyMi
-         RWwyONFpuWrF9Pqqd+nGWTKEHhcsBm9BgABMJQETsOpQaVcOBwSLTB/92fLqrayo8ITm
-         pquJZsYAJXKYE/LumYz5uFeVWilTcLy2EL3J1vmOYivE3caH3DTO70tyuE8w8mQeZIJo
-         pQng==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=9GavA0QzaqbQWyqRf+1UPV67HPHWzj6xE6t02BW8ozU=;
+        b=A9uQ5Inm9brW2wLSqSGyuwqHlSlBWCD4qMxuIwccYdpBL9SpEUpmFhMcDm0KiAUyth
+         8fUzJWhY+AUTqwkBV09N6mhqoayFqua/vEgFDGKKPLCUDJcMJ5S0opdu4g+GS0qLPkSR
+         PARAkidXrAp3wZtvisXLlI1EQ6Vu1V5L6QxOakZGm5pmzkZbIbhhTIU67giLFgaxFLp9
+         NTTLYuTDN+sDjO3DsmTIMSnaDwlNxIpziPBNQxCVyOG4ybJzjilyt0Is/9euAbytsNOB
+         VqdCLQY00zM2M76gqIQcgsYPCeR2DqfY7CKta/LU7SXhDpa2wBQ9BOFLQaPDGZiC0c+C
+         3fwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=kmOtW6V95Z12sj8xBq//dZSwsGeuIy5+eTUDOAHb7z8=;
-        b=KrKpyjYmCnSiuG+VO64O9DjiUmyrdANAuIg41zyxhUyzVqhqLSIxxPSqDM0qQlPve4
-         PyZGuPCudsKlGdOqRb8DgtzIznGWx6tZyTKPVbUUbI8Xdhi26j/dg6rOOOvvZCnmff0O
-         RKNrW19NYZhcP1vNjaNntiO+67fNcvs2DD6FYCA6Nt9Ndq2KRvfEyWVc/1hsTgPfb6Ky
-         tQYFsD/4sw+nlzlVVCSddBRNFj9/AzYF2uy8m3WDSHAHtHZkDnXVi64nXXUgERKyApmU
-         fbzPL9S8UgSmAY/nO6hZb/2/PHEb/RncTEGDSsE1uiVTZPg9VY7su8zUV1/DTZ39pWDr
-         Ks5g==
-X-Gm-Message-State: ALQs6tANubux6ctyttg0u6XFpBLVal6A4EU0uox8RGvL8LFDU/POdY9R
-        EV/O5JH5sCV0mMgIcg3UtVUxAPx62jCZcPB0ayg=
-X-Google-Smtp-Source: AB8JxZrrdOSOyw9doAViL+uocOoX18aUaOpA04eifk5h0GBzv9SJaSmCirRf1uhJmyB8a/c8mC53JfZhrqpV/k8HPkM=
-X-Received: by 2002:ac8:1204:: with SMTP id x4-v6mr23071246qti.35.1525402268411;
- Thu, 03 May 2018 19:51:08 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=9GavA0QzaqbQWyqRf+1UPV67HPHWzj6xE6t02BW8ozU=;
+        b=SDz8m2WIeP2wDcHyXKFx1OLjKQ2XsxwvCp1KSfpDoBE320VoNrEHd5+3lFFkQG/7sc
+         qPE1FblIKHSlnOetnNYuz7ZIwdyv3AFlhkZN5AtTMfpMCkJ3tH+CVkjwa7M1V5prUd/Z
+         nGQh8xh2GRIvH0nBp92+L2Y3x7G4G00VncPoH99jVpiGouECFJnt5qwbaWNfn4t0rqg3
+         digKnrYZdrMynFA0fbHuV/rUOTHIYAkgrxciKT1C+NB5H/n3DIFqFYJDEjMO13HnOcg4
+         KuOfrfqm194M5Qq77mBIfXh0KCFBy/5dX11vKgBMKqPwmpODtJ2ZcrZfQn3rj24nqZyL
+         AzTA==
+X-Gm-Message-State: ALQs6tCQwjbyZxTql4YcwO+VPKbzRHOGQN0D5CX2Dh+tWgh4XZShX34C
+        2Gx1oM1WPdATsumD6SbOVTs=
+X-Google-Smtp-Source: AB8JxZodK4Tkv852fmlQ/w0hm5yoB0dYrcR6QvePQWhjQoCNltt3jEHj1Haun45TVXFL/GWXKz07yA==
+X-Received: by 2002:adf:aac5:: with SMTP id i5-v6mr18249587wrc.16.1525403265501;
+        Thu, 03 May 2018 20:07:45 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id c21-v6sm14828642wre.43.2018.05.03.20.07.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 03 May 2018 20:07:44 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "newren\@gmail.com" <newren@gmail.com>,
+        "peff\@peff.net" <peff@peff.net>,
+        "pclouds\@gmail.com" <pclouds@gmail.com>,
+        "vmiklos\@frugalware.org" <vmiklos@frugalware.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "Johannes.Schindelin\@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "eckhard.s.maass\@googlemail.com" <eckhard.s.maass@googlemail.com>
+Subject: Re: [PATCH v4 2/3] merge: Add merge.renames config setting
+References: <20180420133632.17580-1-benpeart@microsoft.com>
+        <20180502160056.5836-1-benpeart@microsoft.com>
+        <20180502160056.5836-3-benpeart@microsoft.com>
+Date:   Fri, 04 May 2018 12:07:44 +0900
+In-Reply-To: <20180502160056.5836-3-benpeart@microsoft.com> (Ben Peart's
+        message of "Wed, 2 May 2018 16:01:14 +0000")
+Message-ID: <xmqqefist8xr.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Thu, 3 May 2018 19:51:07 -0700 (PDT)
-In-Reply-To: <141e5b63e4511c13380216fad9b8601d2bc6051e.1525361419.git.johannes.schindelin@gmx.de>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <141e5b63e4511c13380216fad9b8601d2bc6051e.1525361419.git.johannes.schindelin@gmx.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 3 May 2018 22:51:07 -0400
-X-Google-Sender-Auth: _jx1LfZVbQjfO6V2KiaZkr2pcyc
-Message-ID: <CAPig+cQc-FXyZv=61GO7-6apu_avA-DhPkqJLC_1a5hKmq=bZg@mail.gmail.com>
-Subject: Re: [PATCH 05/18] branch-diff: also show the diff between patches
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 3, 2018 at 11:30 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Just like tbdiff, we now show the diff between matching patches. This is
-> a "diff of two diffs", so it can be a bit daunting to read for the
-> beginnger.
+Ben Peart <Ben.Peart@microsoft.com> writes:
 
-s/beginnger/beginner/
+I'd downcase the verb on the subject.
 
-> This brings branch-diff closer to be feature-complete with regard to
-
-s/be feature-complete/feature parity/
-
-> tbdiff.
+> Add the ability to control rename detection for merge via a config setting.
+> This setting behaves the same and defaults to the value of diff.renames but only
+> applies to merge.
 >
-> An alternative would be to display an interdiff, i.e. the hypothetical
-> diff which is the result of first reverting the old diff and then
-> applying the new diff.
->
-> Especially when rebasing often, an interdiff is often not feasible,
-> though: if the old diff cannot be applied in reverse (due to a moving
-> upstream), an interdiff can simply not be inferred.
->
-> Note: while we now parse diff options such as --color, the effect is not
-> yet the same as in tbdiff, where also the commit pairs would be colored.
+> Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Helped-by: Elijah Newren <newren@gmail.com>
+> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+> ...
+> diff --git a/merge-recursive.h b/merge-recursive.h
+> index d863cf8867..c1d9b5b3d9 100644
+> --- a/merge-recursive.h
+> +++ b/merge-recursive.h
+> @@ -55,6 +56,11 @@ struct collision_entry {
+>  	struct string_list source_files;
+>  	unsigned reported_already:1;
+>  };
+> +inline int merge_detect_rename(struct merge_options *o)
+> +{
+> +	return o->merge_detect_rename >= 0 ? o->merge_detect_rename :
+> +		o->diff_detect_rename >= 0 ? o->diff_detect_rename : 1;
+> +}
 
-"... tbdiff, in which the commit pairs would also be colored."
+I'll tweak the above to leave a blank before the function, and make
+it "static inline", to ensure that the output from
 
-However, I don't see the --color option being parsed by this patch, so
-perhaps this "Note" can be dropped?
+    $ git grep -e '\<inline\>' --and --not -e 'static inline' -- \*.h
 
-> This is left for a later commit.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-> @@ -319,24 +348,37 @@ static void output(struct string_list *a, struct string_list *b)
->  int cmd_branch_diff(int argc, const char **argv, const char *prefix)
->  {
-> -       int no_patches = 0;
-> +       struct diff_options diffopt = { 0 };
->         double creation_weight = 0.6;
->         struct option options[] = {
-> -               OPT_BOOL(0, "no-patches", &no_patches,
-> -                        N_("short format (no diffs)")),
-
-This was added in 2/18 but never used...
-
-> +               OPT_SET_INT(0, "no-patches", &diffopt.output_format,
-> +                           N_("short format (no diffs)"),
-> +                           DIFF_FORMAT_NO_OUTPUT),
-
-... and is then replaced in its entirety by this. Perhaps just drop
-the original --no-patches from 2/18 and let it be introduced for the
-first time here?
-
->                 { OPTION_CALLBACK,
->                         0, "creation-weight", &creation_weight, N_("factor"),
->                         N_("Fudge factor by which creation is weighted [0.6]"),
->                         0, parse_creation_weight },
->                 OPT_END()
->         };
+is empty.
