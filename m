@@ -2,136 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 360CB200B9
-	for <e@80x24.org>; Fri,  4 May 2018 13:08:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C872C200B9
+	for <e@80x24.org>; Fri,  4 May 2018 13:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751314AbeEDNIZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 09:08:25 -0400
-Received: from mail.cmpwn.com ([45.56.77.53]:32908 "EHLO mail.cmpwn.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751199AbeEDNIY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 09:08:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cmpwn.com; s=cmpwn;
-        t=1525439643; bh=mPIRis/0gn3G0HXg0r/6j1W8cv4sVgUlDqp1duDsdkw=;
-        h=From:To:Cc:Subject:Date;
-        b=J/opP6vBwEUqRAzfyaD2qEcyEJLt1UqMbeFv0y+PSsp2NfOef0heA8oFvxUPJWjXh
-         tLolYVvaBhwAg4c4/GxNb0/RvfKKMPZ1p3UYJHZJJJ23oX+S+zfAB7UqAw7ljN/9V/
-         O5+cfj/sfp/nIKLjxn7Z7XU5Al+ZUwOK55+z5guY=
-From:   Drew DeVault <sir@cmpwn.com>
-To:     git@vger.kernel.org
-Cc:     Drew DeVault <sir@cmpwn.com>, Simon Ser <contact@emersion.fr>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Eric Wong <e@80x24.org>
-Subject: [PATCHv2] git-send-email: allow re-editing of message
-Date:   Fri,  4 May 2018 09:08:11 -0400
-Message-Id: <20180504130811.3398-1-sir@cmpwn.com>
-X-Mailer: git-send-email 2.17.0
+        id S1751114AbeEDN1J (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 09:27:09 -0400
+Received: from mx3-rdu2.redhat.com ([66.187.233.73]:59046 "EHLO mx1.redhat.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1750820AbeEDN1J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 09:27:09 -0400
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com [10.11.54.3])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id 8977E406C745;
+        Fri,  4 May 2018 13:27:08 +0000 (UTC)
+Received: from gondolin (dhcp-192-222.str.redhat.com [10.33.192.222])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 0F603111DCFD;
+        Fri,  4 May 2018 13:27:00 +0000 (UTC)
+Date:   Fri, 4 May 2018 15:26:58 +0200
+From:   Cornelia Huck <cohuck@redhat.com>
+To:     Eric Blake <eblake@redhat.com>
+Cc:     "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+        berrange@redhat.com, kwolf@redhat.com, peter.maydell@linaro.org,
+        Christian Borntraeger <borntraeger@de.ibm.com>,
+        Alexander Graf <agraf@suse.de>, qemu-s390x@nongnu.org,
+        git@vger.kernel.org
+Subject: Re: cover letter cc's [was: [PATCH 60/67] hw/s390x: add include
+ directory headers]
+Message-ID: <20180504152658.3537707a.cohuck@redhat.com>
+In-Reply-To: <be79d6dd-beaa-ba6f-2990-b5e91139411b@redhat.com>
+References: <1525376963-79623-1-git-send-email-mst@redhat.com>
+        <1525376963-79623-61-git-send-email-mst@redhat.com>
+        <20180504091007.55405a6a.cohuck@redhat.com>
+        <be79d6dd-beaa-ba6f-2990-b5e91139411b@redhat.com>
+Organization: Red Hat GmbH
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.78 on 10.11.54.3
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.5]); Fri, 04 May 2018 13:27:08 +0000 (UTC)
+X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.5]); Fri, 04 May 2018 13:27:08 +0000 (UTC) for IP:'10.11.54.3' DOMAIN:'int-mx03.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'cohuck@redhat.com' RCPT:''
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When shown the email summary, an opportunity is presented for the user
-to edit the email as if they had specified --annotate. This also permits
-them to edit it multiple times.
+On Fri, 4 May 2018 08:07:53 -0500
+Eric Blake <eblake@redhat.com> wrote:
 
-Signed-off-by: Drew DeVault <sir@cmpwn.com>
-Reviewed-by: Simon Ser <contact@emersion.fr>
+> [adding a cross-post to the git mailing list]
+> 
+> On 05/04/2018 02:10 AM, Cornelia Huck wrote:
+> > On Thu, 3 May 2018 22:51:40 +0300
+> > "Michael S. Tsirkin" <mst@redhat.com> wrote:
+> >   
+> >> This way they are easier to find using standard rules.
+> >>
+> >> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> >> ---  
+> ...
+> 
+> > [Goes to find cover letter to figure out what this is all about.
+> > *Please*, cc: people on the cover letter so they can see immediately
+> > what this is trying to do!]  
+> 
+> Is there an EASY way to make 'git format-patch --cover-letter $commitid' 
+> (and git send-email, by extension) automatically search for all cc's any 
+> any of the N/M patches, and auto-cc ALL of those recipients on the 0/N 
+> cover letter?  And if that is not something easily built into git 
+> format-patch directly, is it something that can easily be added to 
+> sendemail.cccmd?  This is not the first time that someone has complained 
+> that automatic cc's are not sending the cover letter context to a 
+> particular maintainer interested (and auto-cc'd) in only a subset of an 
+> overall series.
 
----
-Thanks for the review Eric, updated to address your feedback.
+I think for most cases where I've been cc:ed on the cover letter and
+only some of the patches, people actually added cc: lines to the cover
+letter manually.
 
- git-send-email.perl | 38 +++++++++++++++++++++++++++++++-------
- 1 file changed, 31 insertions(+), 7 deletions(-)
+> 
+> On the other hand, cc'ing all recipients for a largely mechanical patch 
+> series that was split into 67 parts, in part because it touches so many 
+> different maintainers' areas, may make the cover letter have so many 
+> recipients that various mail gateways start rejecting it as potential spam.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 2fa7818ca..b45953733 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1330,9 +1330,14 @@ sub file_name_is_absolute {
- 	return File::Spec::Functions::file_name_is_absolute($path);
- }
- 
--# Returns 1 if the message was sent, and 0 otherwise.
--# In actuality, the whole program dies when there
--# is an error sending a message.
-+# Prepares the email, then asks the user what to do.
-+#
-+# If the user chooses to send the email, it's sent and 1 is returned.
-+# If the user chooses not to send the email, 0 is returned.
-+# If the user decides they want to make further edits, -1 is returned and the
-+# caller is expected to call send_message again after the edits are performed.
-+#
-+# If an error occurs sending the email, this just dies.
- 
- sub send_message {
- 	my @recipients = unique_email_list(@to);
-@@ -1404,15 +1409,17 @@ Message-Id: $message_id
- 
- EOF
- 		}
--		# TRANSLATORS: Make sure to include [y] [n] [q] [a] in your
-+		# TRANSLATORS: Make sure to include [y] [n] [e] [q] [a] in your
- 		# translation. The program will only accept English input
- 		# at this point.
--		$_ = ask(__("Send this email? ([y]es|[n]o|[q]uit|[a]ll): "),
--		         valid_re => qr/^(?:yes|y|no|n|quit|q|all|a)/i,
-+		$_ = ask(__("Send this email? ([y]es|[n]o|[e]dit|[q]uit|[a]ll): "),
-+		         valid_re => qr/^(?:yes|y|no|n|edit|e|quit|q|all|a)/i,
- 		         default => $ask_default);
- 		die __("Send this email reply required") unless defined $_;
- 		if (/^n/i) {
- 			return 0;
-+		} elsif (/^e/i) {
-+			return -1;
- 		} elsif (/^q/i) {
- 			cleanup_compose_files();
- 			exit(0);
-@@ -1552,7 +1559,12 @@ $references = $initial_in_reply_to || '';
- $subject = $initial_subject;
- $message_num = 0;
- 
--foreach my $t (@files) {
-+# Prepares the email, prompts the user, sends it out
-+# Returns 0 if an edit was done and the function should be called again, or 1
-+# otherwise.
-+sub process_file {
-+	my ($t) = @_;
-+
- 	open my $fh, "<", $t or die sprintf(__("can't open file %s"), $t);
- 
- 	my $author = undef;
-@@ -1755,6 +1767,10 @@ foreach my $t (@files) {
- 	}
- 
- 	my $message_was_sent = send_message();
-+	if ($message_was_sent == -1) {
-+		do_edit($t);
-+		return 0;
-+	}
- 
- 	# set up for the next message
- 	if ($thread && $message_was_sent &&
-@@ -1776,6 +1792,14 @@ foreach my $t (@files) {
- 		undef $auth;
- 		sleep($relogin_delay) if defined $relogin_delay;
- 	}
-+
-+	return 1;
-+}
-+
-+foreach my $t (@files) {
-+	while (!process_file($t)) {
-+		# user edited the file
-+	}
- }
- 
- # Execute a command (e.g. $to_cmd) to get a list of email addresses
--- 
-2.17.0
+Yes, large cross-subsystem patch series make this painful.
 
+If I get some patches like "subsystem: frobnicate foo" and it's clear
+that it's simply frobnicating foo for various subsystems, I can see
+what this is about without reading the cover letter, no need to cc: me.
+In this case, however, the patch did not make any sense at all without
+looking at the explanation in the cover letter.
+
+So I think we don't want to do this automatically, although some way to
+collect potential candidates for cc:ing on the cover letter might be
+helpful.
