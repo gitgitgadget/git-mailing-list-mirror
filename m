@@ -2,86 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46910200B9
-	for <e@80x24.org>; Fri,  4 May 2018 16:28:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 924F1200B9
+	for <e@80x24.org>; Fri,  4 May 2018 16:30:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751484AbeEDQ2R (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 12:28:17 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:39589 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751425AbeEDQ2Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 12:28:16 -0400
-Received: by mail-wm0-f68.google.com with SMTP id f8-v6so5858506wmc.4
-        for <git@vger.kernel.org>; Fri, 04 May 2018 09:28:15 -0700 (PDT)
+        id S1751527AbeEDQak (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 12:30:40 -0400
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:36131 "EHLO
+        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751459AbeEDQaj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 12:30:39 -0400
+Received: by mail-vk0-f68.google.com with SMTP id i185-v6so8556699vkg.3
+        for <git@vger.kernel.org>; Fri, 04 May 2018 09:30:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:cc:to:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=eLVNa/0v0lUsl1Dbuda64ajsSt0RAxnBWYNITI2mW5s=;
-        b=SMpxAicasZQiskIXxplP2ixafmjoEFrnlFQO5SnlB9y0xurRel4yk2pUlq7JLnYXXU
-         EU/8N5S0aW8qfPy5QD4Y56iv8hbmHm5J3aGvzImIWtLuKiEIdmGWAC9NjevrwKvUsqEb
-         hjXMJxHvaLE9gG5ZUmr5FNIBlVp8brceOkED13/VB+6BHeA+wyjKHpi/HLJahqeKPVja
-         Jgy6VmXeu19WeDGsmYqvnA98D0sCh8ATiZHoDzNT9k6f6l8FyE9/so8wNQl7AgOI9ytv
-         0wUCEmMzpjIG5mrgwORuSdOeV2Fum4zREllvL9DW5Veh3MhC0K2K81AeNg1IFD4c6HVQ
-         jwzg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=xXlYRmphn87uE0X8rMmjtkOmeuaLYdyLjS+bmdceAUM=;
+        b=B40+ACa/z5fJ9FaJ3cT3l263EX/ZSpeMUDwLRzjAejFyOxaeehEN8RRlMGafU1kPnj
+         bP4SxQE0FY60Ghxjcx5MkhICv/L4vPGaEsu4h+vLMRzx/WuddvYy95sNrZx9kC2kxaqL
+         oIUkhcfp0Wh+NqhXoUuVXJK7YzGZF4lx8MLBMjgATnaRMd1PRy1kziOweeBbtr8aRjqJ
+         070aXkaYtyg7WarapKUBm5xkABr+4DomrI+xg6x9eaysivPDVPl9dgTIROk0irGe/puA
+         nI7TrIwCaKjvG69y06q3kKmwEHpKis/wfAVyrABVzJufecxSSxzulci0X/IHZuJ9W2BT
+         13XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:cc:to:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=eLVNa/0v0lUsl1Dbuda64ajsSt0RAxnBWYNITI2mW5s=;
-        b=N74haBJ6LqQdnBnZnHEihY68+TH3QBTjrHtDqo2dHGMhPT7TSAyNv186g5QL1K+rWt
-         PerKQd7FJGz0uhgmaXdszxYBmK84d2itchY3GtE1ReSdmWWkrQv3f1oLCISC9mAm35eH
-         xJ3OlvJi2sBQtv6jI34baHfb0WuJ0aaZsGaoN/gCtQ7iBBpuwsyjLz3r/Ao5sqPKzVM7
-         8xPRZhFApOxfjzfBg+iPkF6z8IdO9U6xlyFokdaFpyshqAIGSatDGCRIKH8Pxp9fz6qK
-         wxjdzaax9biQOemOofAlM2xUNB7hGOWeYV/s4Xj6chj/hAk2AN/zHh7UoNORKSVrtNNE
-         d8eg==
-X-Gm-Message-State: ALQs6tB1QAHf3ClFkx0+zEnQO0DnHJlMDl3NRuh8QftDalcf8OSemXbg
-        hcO4CyyQTLrMN9N95+80sXc=
-X-Google-Smtp-Source: AB8JxZqyLngp852paexNi7bKBPTa/gFblD4E+H/1lXPhOwEzqykc3K5qbYVU5EhkQtXMTFIH8rndYg==
-X-Received: by 10.28.195.85 with SMTP id t82mr17825366wmf.129.1525451295018;
-        Fri, 04 May 2018 09:28:15 -0700 (PDT)
-Received: from [192.168.1.28] (17.252.114.89.rev.vodafone.pt. [89.114.252.17])
-        by smtp.gmail.com with ESMTPSA id 131-v6sm3041563wms.34.2018.05.04.09.28.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 May 2018 09:28:14 -0700 (PDT)
-From:   =?UTF-8?Q?Rafael_Ascens=c3=a3o?= <rafa.almas@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        David Turner <dturner@twopensource.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Subject: git update-ref fails to create reference. (bug)
-Message-ID: <cced9e2c-7d02-47fd-109a-1185eed13e63@gmail.com>
-Date:   Fri, 4 May 2018 17:28:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=xXlYRmphn87uE0X8rMmjtkOmeuaLYdyLjS+bmdceAUM=;
+        b=W6RlDTrOrq8iLV/HBO1uIANVWMesGCvX0S3EJkDhH9WQReGv8GlbrE/t2aNLoWnXAQ
+         pKApLYk04WqqQ6ZbHk80TwjrVEFYusvhjJAIrxPPtXTVdynfhSSFKDwFKpghwFy+OkdL
+         nnn6vytq0lCR7EJ0/MtTnrypIA7ogoFsWsx2THhs71cHVutPat3eY4sy2Eax1tIFxbuf
+         1PQLBfyFtfZtC4RQduERbnpfYkxLLAFH0Nx8X+BiLEVJDrtk68yxZsex4TpFc67mQtQq
+         ZUZF8oamLSItOUjmoTUhKCFmCSzt0SB1NwJ0dHSDppl7zedauTlWujKpAGD2wWxgtxZG
+         Nc5Q==
+X-Gm-Message-State: ALQs6tDFPQIFmY+TlURV4VzlNvRrdn/uMB+0gsIeaBSP8XhXf4BFfGXt
+        OBRR6Gbmx5x7FSKYN5m2bmf+2Z43KeAqVHEka2M=
+X-Google-Smtp-Source: AB8JxZrOzfiwO0q/6WorjJNQtf7fjphscvPBQQEtGonDRSpf27kibEgcQJL2Y1ANptr9ZjGxLmYkJat+1I7GyJ9L5Kc=
+X-Received: by 2002:a1f:824a:: with SMTP id e71-v6mr24050507vkd.7.1525451438525;
+ Fri, 04 May 2018 09:30:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Received: by 10.176.95.4 with HTTP; Fri, 4 May 2018 09:30:37 -0700 (PDT)
+In-Reply-To: <CABPp-BEEgeo=5hkaTe8LrOMONSv3VdPi_cP4ADMC69oG3htC1g@mail.gmail.com>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+ <cover.1525448066.git.johannes.schindelin@gmx.de> <CABPp-BEEgeo=5hkaTe8LrOMONSv3VdPi_cP4ADMC69oG3htC1g@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 4 May 2018 09:30:37 -0700
+Message-ID: <CABPp-BF_F2rzmyP+1C7=ucM25DGP6w-u2Qd7QNMUcdtGjwZs2Q@mail.gmail.com>
+Subject: Re: [PATCH v2 00/18] Add `branch-diff`, a `tbdiff` lookalike
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While trying to create a pseudo reference named REF pointing to the
-empty tree iff it doesn't exist, I stumbled on the following:
+Hi,
 
-I assume both are valid ways to create such reference:
- 	a) $ echo -e option no-deref\\nupdate REF $(git hash-object -t tree /dev/null) 0000000000000000000000000000000000000000 | git update-ref --stdin
- 	b) $ git update-ref --no-deref REF $(git hash-object -t tree /dev/null) 0000000000000000000000000000000000000000
+On Fri, May 4, 2018 at 9:21 AM, Elijah Newren <newren@gmail.com> wrote:
+> On Fri, May 4, 2018 at 8:34 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+>> The incredibly useful `git-tbdiff` tool to compare patch series (say, to see
+>> what changed between two iterations sent to the Git mailing list) is slightly
+>> less useful for this developer due to the fact that it requires the `hungarian`
+>> and `numpy` Python packages which are for some reason really hard to build in
+>> MSYS2. So hard that I even had to give up, because it was simply easier to
+>> reimplement the whole shebang as a builtin command.
+>
+> tbdiff is awesome; thanks for bringing it in as a builtin to git.
+>
+> I've run through a few cases, comparing output of tbdiff and
+> branch-diff.  So far, what I've noted is that they produce largely the
+> same output except that:
+>
+> - tbdiff seems to shorten shas to 7 characters, branch-diff is using
+> 10, in git.git at least.  (Probably a good change)
 
-While a) works, b) will throw:
-	fatal: could not read ref 'REF'
+Sorry, a quick self-correction here:
 
-Bisect seems to point to:
-2c3aed138 (pseudoref: check return values from read_ref(), 2015-07-15)
+tbdiff, when using an actual shortened sha, uses 10 characters.  But
+when a patch doesn't have a match, tbdiff seems to use seven dashes on
+one side in lieu of a shortened sha, whereas branch-diff will use 10
+characters whether it has an actual shortened sha or is just putting a
+bunch of dashes there.  So, this is definitely a good change.
 
-Thanks,
-Rafael Ascensão
+> - tbdiff aligned output columns better when there were more than 9
+> patches (I'll comment more on patch 09/18)
+> - As noted elsewhere in the review of round 1, tbdiff uses difflib
+> while branch-diff uses xdiff.  I found some cases where that mattered,
+> and in all of them, I either felt like the difference was irrelevant
+> or that difflib was suboptimal, so this is definitely an improvement
+> for me.
+> - branch-diff produces it's output faster, and it is automatically
+> paged.  This is really cool.
+>
+> Also, I don't have bash-completion for either tbdiff or branch-diff.
+> :-(  But I saw some discussion on the v1 patches about how this gets
+> handled...  :-)
