@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6112F200B9
-	for <e@80x24.org>; Fri,  4 May 2018 15:35:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64571200B9
+	for <e@80x24.org>; Fri,  4 May 2018 15:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751507AbeEDPfY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 11:35:24 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53939 "EHLO mout.gmx.net"
+        id S1751533AbeEDPfe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 11:35:34 -0400
+Received: from mout.gmx.net ([212.227.15.15]:40231 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751447AbeEDPfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 11:35:21 -0400
+        id S1751394AbeEDPet (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 11:34:49 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
- (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0LbMmA-1eV4Zf437C-00kwdY; Fri, 04 May 2018 17:35:14 +0200
+ (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MGSDw-1fAAkr2Oem-00DJrU; Fri, 04 May 2018 17:34:41 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -30,9 +30,9 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 18/18] completion: support branch-diff
-Date:   Fri,  4 May 2018 17:35:11 +0200
-Message-Id: <71698f11835311c103aae565a2a761d10f4676b9.1525448066.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 04/18] branch-diff: improve the order of the shown commits
+Date:   Fri,  4 May 2018 17:34:39 +0200
+Message-Id: <3032e2709b858c1c08e7ef47a0fd6deee7f0d010.1525448066.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.409.g71698f11835
 In-Reply-To: <cover.1525448066.git.johannes.schindelin@gmx.de>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de>
@@ -40,74 +40,127 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:EFKu//UYx7BU5VE4flyD4u3nB1Bs2n9SYW1Db1Q1b6h41vpB9gJ
- qrqGQCtO8nOXEzM6Cvesu90W3KaakFVl0Sr/Pxr5HStOENde+kLPQH5bqiFygBrSo0HGNZM
- IQdiFoIMZlDr4A9Cdj2Mdci00t84Wj70Psy0t5/UQcLKSR/Dw3+qPmAD9mmWNIcGivmZPr0
- 41L652lkxgl0HQ52TmiiQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:TQUT3ZEa3u0=:aXEjqoY5hHFFoEz4NZ5zDi
- u8SOAhe9y0mngkiU63mb++XDa8Hq6RfsPFPkyZV3G98XO6PdgzajI4M+J0fRJBftTDiaeqyfw
- ztw/V5gvhZ5d7DO57CvdieHcWa66mxKQGEVB/C4AogZkXPlfs7tMAAvrLWHq3LChAJbyp0840
- nvxnHAno13hTLvvBFpU9XeFWODsCYIJNIGcpXOmZBiMMaLqMy+Ds2bTqzPJpkRm/2khN82pGD
- 16WYmjHUgjKyljc1C6M8V4oosQNhixxSIsGnhTL0f2S/p995aeIrRYZpkl8ydybV6MareBUhd
- LWKBu8f4LDLb6cqQ/lXa/V8qbASt8ZcBJwTZ12GEi1s5E1mn+VyexpqNJ8ROhje1PcfVU59bG
- WNZZYWtEMX/350H1mOOuAr1MlCxAQfQM9YRLmtP3wbzZuFkiBwa3Bik+2/b6X8PPDxwVVXa8u
- I2FYC7/+apRHioxpkDB59Ga4JD8GPrfDHcrSfD6iGh1XOqctNmWwjte0vpKD29sCfhZQ1GpKM
- h9SJ2/mM2ioWi7Jff1Qju1v/lwESR+HeU/hhJiI1s2+AHTu2As/fPLDW6yYLalp3hzfSiXIzz
- n2wj3BX1Y/SxmS3FZ4v4LlMiIPzQDaPoOpi047a6bs+NVptT8D2Y2bI8QyAYDK8EXubVjXOG4
- BmzFKEY5ja1L0zks218Ew+eiuTKKbyNPzkL1Bx8XBj80qxETQVxAvJj6L9YII8yOwpG99PtHc
- EFoGPhzp1yc19ZjqsRPzoBGe8D+0QbVHiA5sjpL6flwJq3VD7osGeRpUyK3wPRNZ2F02bcYJi
- POsASAd
+X-Provags-ID: V03:K1:sXRplXjC9ABliuhbI4Unt7Bp02mVyg1PjQhoX15iuZO7fM0BkV/
+ zLHsyh2nRcfqZ9KSv2AAOcDv/7wo2WK9/OHJOU5YhsDMGoPWSqROgcdQiu9bDESwgB8LcdX
+ TSTuo5Yhe6oIfUde676UQXjTGqZA0tsUL5b8xsVybbK23zoTPnB9nF8nmTbw7y3uZD4Xmzs
+ Qxd7goVa1H2hv0aUry/yQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:c8zqoiSOhHU=:MTm6pmcdXPhu9kcLaePWp5
+ 10bBuh6zIPhwCT4zCZaJ/pb/+kSAvD25+7XH0LUgE/zVZbDOOzexDfSfll8PN0bDyloo+UwIx
+ vSVHI2lMou/HpQlwChzidjITcxspVZNJOJortPdltSikPzVxNunJ2ytA65nwDY+GSE8mLo4DG
+ OLSb7IhQ8DNxNPKJUAh+TurXM8xHJjCer7uYu5Y5YCroOsD9jwJRBmaO4cuepVg+rEYWDoyeQ
+ oFYDsZiGZ2I8KlMmYjDo56ukNQWV7smLmtvHB5l8fWJeVf08ypQdybQhDgDLf/y9GzKCiojst
+ 2OESkBJyMQvG1wp4EmRPLiPLRrWTB2kYm7LoqEvsm2gAAQHkpRUk7L5/UGHoItLabjK4vP915
+ xJ8nm577pA9cEpg28PG9FaxcxTY/TFOFuOEUDtwia5FfCSt3hTjCKFFhWppic2GATxQb8n7J8
+ lDOx0izNib8dkO33QR0arqEGV+swEibugwOt8jiZNqN0tBz5lS+d0UxQNEBfGsOazLOAMi/jR
+ psiUQSsGUKodPglkTPb4w61ao2Mh6GhgItut8X95/PIoQ3bT2Ldy31gyGwRqChFv7stWA4C1N
+ ZKOtMTc5M2APRo/HDLiNdm5J0xBty43TC4oHhHhdSCIFPhrwEXoyq1PtC5SH3ftQztJ/716ge
+ PbXKRmbKW5iIB4cXJIwnsSv7N+NsGQzG4VF4xU+DFujAJdFXeXbl6OopAzsjSBQwDTFJhJfuQ
+ frLJesoZkhcqADQM6NXz3M6euUisFZK+xRRKSAdAksq2qR5zsCBNErQnjnNWGRRPUlnmUQphh
+ y/tZhfp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tab completion of `branch-diff` is very convenient, especially given
-that the revision arguments that need to be passed to `git branch-diff`
-are typically more complex than, say, your grandfather's `git log`
-arguments.
+This patch lets branch-diff use the same order as tbdiff.
 
-Without this patch, we would only complete the `branch-diff` part but
-not the options and other arguments.
+The idea is simple: for left-to-right readers, it is natural to assume
+that the branch-diff is performed between an older vs a newer version of
+the branch. As such, the user is probably more interested in the
+question "where did this come from?" rather than "where did that one
+go?".
 
-This of itself may already be slightly disruptive for well-trained
-fingers that assume that `git bra<TAB>ori<TAB>mas<TAB>` would expand to
-`git branch origin/master`, as we now no longer automatically append a
-space after completing `git branch`: this is now ambiguous.
+To that end, we list the commits in the order of the second commit range
+("the newer version"), inserting the unmatched commits of the first
+commit range as soon as all their predecessors have been shown.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/completion/git-completion.bash | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ builtin/branch-diff.c | 59 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 40 insertions(+), 19 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 01dd9ff07a2..45addd525ac 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1496,6 +1496,24 @@ _git_format_patch ()
- 	__git_complete_revlist
+diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
+index c462681067c..92302b1c339 100644
+--- a/builtin/branch-diff.c
++++ b/builtin/branch-diff.c
+@@ -31,7 +31,7 @@ struct patch_util {
+ 	struct hashmap_entry e;
+ 	const char *diff, *patch;
+ 
+-	int i;
++	int i, shown;
+ 	int diffsize;
+ 	size_t diff_offset;
+ 	/* the index of the matching item in the other branch, or -1 */
+@@ -274,28 +274,49 @@ static const char *short_oid(struct patch_util *util)
+ 
+ static void output(struct string_list *a, struct string_list *b)
+ {
+-	int i;
+-
+-	for (i = 0; i < b->nr; i++) {
+-		struct patch_util *util = b->items[i].util, *prev;
++	int i = 0, j = 0;
++
++	/*
++	 * We assume the user is really more interested in the second argument
++	 * ("newer" version). To that end, we print the output in the order of
++	 * the RHS (the `b` parameter). To put the LHS (the `a` parameter)
++	 * commits that are no longer in the RHS into a good place, we place
++	 * them once we have shown all of their predecessors in the LHS.
++	 */
++
++	while (i < a->nr || j < b->nr) {
++		struct patch_util *a_util, *b_util;
++		a_util = i < a->nr ? a->items[i].util : NULL;
++		b_util = j < b->nr ? b->items[j].util : NULL;
++
++		/* Skip all the already-shown commits from the LHS. */
++		while (i < a->nr && a_util->shown)
++			a_util = ++i < a->nr ? a->items[i].util : NULL;
++
++		/* Show unmatched LHS commit whose predecessors were shown. */
++		if (i < a->nr && a_util->matching < 0) {
++			printf("%d: %s < -: --------\n",
++			       i + 1, short_oid(a_util));
++			i++;
++			continue;
++		}
+ 
+-		if (util->matching < 0)
++		/* Show unmatched RHS commits. */
++		while (j < b->nr && b_util->matching < 0) {
+ 			printf("-: -------- > %d: %s\n",
+-					i + 1, short_oid(util));
+-		else {
+-			prev = a->items[util->matching].util;
+-			printf("%d: %s ! %d: %s\n",
+-			       util->matching + 1, short_oid(prev),
+-			       i + 1, short_oid(util));
++			       j + 1, short_oid(b_util));
++			b_util = ++j < b->nr ? b->items[j].util : NULL;
+ 		}
+-	}
+-
+-	for (i = 0; i < a->nr; i++) {
+-		struct patch_util *util = a->items[i].util;
+ 
+-		if (util->matching < 0)
+-			printf("%d: %s < -: --------\n",
+-			       i + 1, short_oid(util));
++		/* Show matching LHS/RHS pair. */
++		if (j < b->nr) {
++			a_util = a->items[b_util->matching].util;
++			printf("%d: %s ! %d: %s\n",
++			       b_util->matching + 1, short_oid(a_util),
++			       j + 1, short_oid(b_util));
++			a_util->shown = 1;
++			j++;
++		}
+ 	}
  }
  
-+__git_branch_diff_options="
-+	--no-patches --creation-weight= --dual-color
-+"
-+
-+_git_branch_diff ()
-+{
-+	case "$cur" in
-+	--*)
-+		__gitcomp "
-+			$__git_branch_diff_options
-+			$__git_diff_common_options
-+			"
-+		return
-+		;;
-+	esac
-+	__git_complete_revlist
-+}
-+
- _git_fsck ()
- {
- 	case "$cur" in
 -- 
 2.17.0.409.g71698f11835
+
+
