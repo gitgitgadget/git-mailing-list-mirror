@@ -2,99 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DADA1F42E
-	for <e@80x24.org>; Fri,  4 May 2018 07:24:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 549F91F42E
+	for <e@80x24.org>; Fri,  4 May 2018 07:27:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751512AbeEDHYR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 03:24:17 -0400
-Received: from mout.gmx.net ([212.227.17.20]:41199 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751189AbeEDHYP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 03:24:15 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MYfJW-1etAbY29tC-00VRKW; Fri, 04
- May 2018 09:24:10 +0200
-Date:   Fri, 4 May 2018 09:24:11 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH 00/18] Add `branch-diff`, a `tbdiff` lookalike
-In-Reply-To: <xmqq1sest2m1.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1805040923570.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <xmqq1sest2m1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751528AbeEDH1d (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 03:27:33 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:42246 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751189AbeEDH1c (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 03:27:32 -0400
+Received: by mail-qk0-f195.google.com with SMTP id j10so15910676qke.9
+        for <git@vger.kernel.org>; Fri, 04 May 2018 00:27:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=Euhgk37ueUytHa6F5gcBDGQ8Wb/YPfJa2+PMWBbIbvg=;
+        b=rzk+nRbliLoVWFakwF8V07iz4u9g0UP0AKZ0T8uqrlfXiFTOPlTcpDWu7LPZ07hPfd
+         21BcVsqi1UU5vzcxrb0nbxBVX+Yqs8kmbBk05NGK3x5ahX7h2xCsje9G3gX9GEJfUKXB
+         BLV4XW3WjJ8JzlZFUqnu4240z64mFYb6Hha9ZCGGfP4X1mLbHgJOqzKSvDdKkD6A7eJx
+         cSo7TDRfJV6dTokxfxguafMLp2QpdXScIn92NZ2RK6aapEme+9KJBQ+zwT3KlhVWtlxn
+         9FCSQK0dbMZ8mIOgtiajQaR8tpiTCbHJRyjv3z8qf6M+JXIQnjpRmUVLqz/SC/TQXGLh
+         BWVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=Euhgk37ueUytHa6F5gcBDGQ8Wb/YPfJa2+PMWBbIbvg=;
+        b=f1GKN2VvvXF/dqd1t81+gd024o/N4DB8DiFfusygvcx9HiIODLJqNhcwCZpOCICKas
+         quVWJQUI/h0Ag85yYe4ewIDb2WLOyTvKbkDk2299E3sE7VNvIf+FUHU2FkQAsr4pjH9K
+         dLimhELEC9DOL6hLRN8N9wpsVaOxs/OXmwmQKK2QZZ9Stmw3BrYSywbfUQsCPWaS34gK
+         Ak07bew8GH5E/EU+yczAuQSo/5JNhMp3nKdth4X5fLGzeANLAQeMnR/6xPMjo/wyYOS5
+         xYm3wrJ+JR1iiQDVDOWe4RV2oMKf86r4wWM4mAsyg1oDjYbKQSP2bVkbC40k0z7CL7cv
+         I4hA==
+X-Gm-Message-State: ALKqPweVYFVuKOBllyRzhl2l1jsvsyA8JHMkvlIshhBAiR7l9D8mK4yq
+        ZWX4TsZxofkUo6qf0AT8D+/Qip74RSvBpXPJ+/w=
+X-Google-Smtp-Source: AB8JxZoXS0lqXEZXsXqAIO7tpHXTdSsKvbeKWNY/r0Rh6xzVlfn8NRm6daQSS9TtQjr5JfwkVtJOvkZUncybbsjyoPw=
+X-Received: by 10.55.190.134 with SMTP id o128mr5359711qkf.141.1525418851823;
+ Fri, 04 May 2018 00:27:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:VWP8kDOibpiVLm+kcM7fKv0ZsMckAMJexmOKHLRFm/7+M3pZg2H
- Sb+vRUYOAM1bu8KuMlwrzRzEKIUjMhpA9KXveUAxtPh2w/lQx872Ha81gbzsqcjMGIcLoXC
- U1cD4CyKXeM08w8yPJW8wx/i5OM1RIfKUwumwu+5sr9zZz7MbgXRZ5a+zZPn8XIv/UfcE56
- Vwspsi8H2eKcdCYcpN5cQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sEJFZRqw29E=:QdumpcibuetX9H0m/KvoaE
- P4nLcaDpEwQb4EciRji954bOIthAU4oQgr0Nf8AG9hKiVG+g2x51NkRVfNehKfVryOU9D8EuK
- Ja0IwKogmqfXOoN41w9UM2nPIHiz8hi9ovqGWoeeWCsZHFgbA5BfEtblMXdXEi+hZXhIy9UiU
- PJlQUeAno9bN/69/UtRqZWCtWNy6mTuhIQyNY2hXaYWsU20ai0u3dgf2k2K5tuN0KRMg5YSXh
- bSOONJ+fDUqJtxXB+Kq7doqYokB4eXT79V0/EBRYLXXz95qGnsgHWBqjHnqlbaWNHCKgINf85
- 0TmmsDFYRijbd/YBL5MwWLzwv/BWBhE06Ga5Xx1jBWwoc7UzrWFSHdHp44jcWQ7ePImAIg/wM
- 68qq+fjbME4N/gaS0bnm++2EM0rQVac50jTCZlBFTiVEAZvgBF4MrCWBI68aGAvQFbUVeFv1B
- QM7L59PuKxuuK7u2/k4MYS/JteWWqUQSiPb36AvSvaYlgF0otH6Q5m/O/49fQbh6Mz1BWcr4s
- RfyPwgH7l0SJg35Uv4l0o4nIA96u1k9ubclaBcGoUdWWHHpMKLulSDiovzOF4zTzYbjPdDkiX
- /MUby0HElNd5DFGeAQn8sNbuJM8BbDEokrLfBLOCt+qitqFbvG3RL1Pg9mLjE/VoqMSmhjNGR
- 1oB3FWyXIqLZrzCswCMOmZWFyTQCRc5P+llmRzFeMLzniqWYluolyxvRc4AurLge/sV1eWoC+
- s5aSf6mLdYxkX6sKZjMRH0uAs6ceeP3o7X/SVkbwlTK7Ex05KAR4LGtt4zijz+k5LfRkk8Y8E
- 5zEv6vD
+Received: by 10.12.170.75 with HTTP; Fri, 4 May 2018 00:27:31 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1805040843050.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+ <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
+ <CAPig+cQv7tNCNhDdThhhDYEE=XmB0xO35Qjvpw+-MgCg0W3ovQ@mail.gmail.com> <nycvar.QRO.7.76.6.1805040843050.77@tvgsbejvaqbjf.bet>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 4 May 2018 03:27:31 -0400
+X-Google-Sender-Auth: xSQlnAoHHJIf535S4IxfM8H4MAk
+Message-ID: <CAPig+cSVve5vK6F6CgOoTahKZtzU5Pvv8c6DJzFSMeeqcB1fug@mail.gmail.com>
+Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Fri, May 4, 2018 at 2:52 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 3 May 2018, Eric Sunshine wrote:
+>> On Thu, May 3, 2018 at 11:30 AM, Johannes Schindelin
+>> <johannes.schindelin@gmx.de> wrote:
+>> > +static const char * const builtin_branch_diff_usage[] = {
+>> > +       N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
+>>
+>> The formatting of "<options>" vs. "base" confused me into thinking
+>> that the latter was a literal keyword, but I see from reading patch
+>> 3/18 that it is not a literal at all, thus probably ought to be
+>> specified as "<base>".
+>
+> Good point. Or maybe BASE?
 
-On Fri, 4 May 2018, Junio C Hamano wrote:
+Indeed, that's probably more consistent with 'A', 'B', etc. than <base>.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > Johannes Schindelin (17):
-> >   Add a function to solve least-cost assignment problems
-> >   Add a new builtin: branch-diff
-> >   branch-diff: first rudimentary implementation
-> >   branch-diff: improve the order of the shown commits
-> >   branch-diff: also show the diff between patches
-> >   branch-diff: right-trim commit messages
-> >   branch-diff: indent the diffs just like tbdiff
-> >   branch-diff: suppress the diff headers
-> >   branch-diff: adjust the output of the commit pairs
-> >   branch-diff: do not show "function names" in hunk headers
-> >   branch-diff: use color for the commit pairs
-> >   color: provide inverted colors, too
-> >   diff: add an internal option to dual-color diffs of diffs
-> >   branch-diff: offer to dual-color the diffs
-> >   branch-diff --dual-color: work around bogus white-space warning
-> >   branch-diff: add a man page
-> >   completion: support branch-diff
-> >
-> > Thomas Rast (1):
-> >   branch-diff: add tests
-> 
-> Lovely.  
-> 
-> I often have to criticize a series whose later half consists of many
-> follow-up patches with "don't do 'oops, the previous was wrong'",
-> but the follow-up patches in this series are not such corrections.
-> The organization of the series to outline the basic and core idea
-> first in the minimum form and then to build on it to improve an
-> aspect of the command one step at a time is very helpful to guide
-> the readers where the author of the series wants them to go.
+> Or I should just use the same convention as in the man page. Or not, as
+> the usage should be conciser.
+>
+> This is what I have currently:
+>
+> static const char * const builtin_branch_diff_usage[] = {
+> N_("git branch-diff [<options>] <old-base>..<old-tip> <new-base>..<new-tip>"),
+> N_("git branch-diff [<options>] <old-tip>...<new-tip>"),
+> N_("git branch-diff [<options>] <base> <old-tip> <new-tip>"),
+> NULL
+> };
 
-Thanks! *beams*
-
-Ciao,
-Dscho
+I can live with this. It's more verbose but more self-explanatory,
+thus likely a good choice.
