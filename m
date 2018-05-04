@@ -2,139 +2,220 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEF491F42E
-	for <e@80x24.org>; Fri,  4 May 2018 08:29:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 910632023D
+	for <e@80x24.org>; Fri,  4 May 2018 08:42:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751339AbeEDI3p (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 04:29:45 -0400
-Received: from ironport.klsmartin.com ([212.211.191.11]:50792 "EHLO
-        ironport.klsmartin.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751239AbeEDI3o (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 04:29:44 -0400
-X-IronPort-AV: E=Sophos;i="5.49,361,1520895600"; 
-   d="scan'208";a="16216763"
-Received: from unknown (HELO ares.klsmartin.com) ([172.30.5.65])
-  by ironport.klsmartin.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 04 May 2018 10:29:38 +0200
-Received: from SUMMAIL01.UMK.KLS.zentral ([172.25.1.63])
-        by ares.klsmartin.com (8.14.3/8.13.1/SuSE Linux 0.7) with ESMTP id w448TXPD004326;
-        Fri, 4 May 2018 10:29:37 +0200
-Received: from SUMMBX01.UMK.KLS.zentral ([172.25.1.64]) by
- SUMMAIL01.UMK.KLS.zentral ([172.25.1.63]) with mapi id 14.03.0351.000; Fri, 4
- May 2018 10:29:33 +0200
-From:   "Middelschulte, Leif" <Leif.Middelschulte@klsmartin.com>
-To:     "hvoigt@hvoigt.net" <hvoigt@hvoigt.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "sbeller@google.com" <sbeller@google.com>,
-        "jacob.keller@gmail.com" <jacob.keller@gmail.com>
-Subject: Re: git merge banch w/ different submodule revision
-Thread-Topic: git merge banch w/ different submodule revision
-Thread-Index: AQHT3UxIUeHy1QVy7UGFBG3KFIVVC6QTM84AgABAJgCAAAk9AIAF8LqAgAKD5oCAAi1+AIABCJ2A
-Date:   Fri, 4 May 2018 08:29:32 +0000
-Message-ID: <1525422571.2175.52.camel@klsmartin.com>
-References: <1524739599.20251.17.camel@klsmartin.com>
-         <CAGZ79kZA_R-5bA6mPdoHkVW-C21pNn_0x6FayhuuXqnOTrmjWw@mail.gmail.com>
-         <CA+P7+xrUwq0G2YySC3SLKqyihhPnFPCiQnQpoVVa89+=W9O9+w@mail.gmail.com>
-         <CAGZ79kaub2k-q-Mcj3H5o6ekyZ8ZZzG7+r5sHt5Ne25Nc3_nPQ@mail.gmail.com>
-         <20180430170229.GA775@book.hvoigt.net>
-         <1525246025.2176.12.camel@klsmartin.com>
-         <20180503164226.GB23564@book.hvoigt.net>
-In-Reply-To: <20180503164226.GB23564@book.hvoigt.net>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.25.2.97]
-x-kse-serverinfo: SUMMAIL01.UMK.KLS.zentral, 9
-x-kse-attachmentfiltering-interceptor-info: protection disabled
-x-kse-antivirus-interceptor-info: scan successful
-x-kse-antivirus-info: Clean, bases: 04.05.2018 05:11:00
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <9DBC47240499B94B9197E6DD6DCD3E18@klsmartin.de>
-Content-Transfer-Encoding: base64
+        id S1751465AbeEDImO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 04:42:14 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:38564 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751316AbeEDImN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 04:42:13 -0400
+Received: by mail-wm0-f49.google.com with SMTP id m198-v6so2523221wmg.3
+        for <git@vger.kernel.org>; Fri, 04 May 2018 01:42:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=4DZxEUpzsqCb+gJ4XRzFvJKQntCkamdf7jqnxXQ5e+k=;
+        b=jWqbmpTYELUr7FT/dS/O9XG662ohbKku6r9/APGIACIRYTAPYWPCQySNnu5DdE0uB3
+         K3nhZTqI7NcHSTh80dzCHphSS96K9YeK3mJcYgxVTLp8244pLnQrkOazPWXprVZlgQEU
+         8+JndlyhrPnC6Gp022aXBUfvD+eXdwRB1CtssGrpeG8wO5O2I/4zoS53m52Iuo2exIZE
+         IfJPiUGqfhS71jzm5jZ/hbAz0rMrvfdGcZJX1TSATcMqVIV9OZChmEUwINj5nwYwKWvA
+         eHaL1ewJLz3kJGbZFjPtkIbiV9dwb1P2GOlbVnHdd7BByu9lzKOIhmF7LSJlx25Iqryo
+         NycA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=4DZxEUpzsqCb+gJ4XRzFvJKQntCkamdf7jqnxXQ5e+k=;
+        b=mIuZ5veZGyuy2V09oNdBHja8n+G2mj5s1Ec/FjrNTdkcZux3m+77eTQ2gwOiGMqOlW
+         PXMSspdFakaBTONygGJn/pS+cOgLizENF9qHedqQ1046UNX3tJU/skiPMWe+QiR4R6V3
+         fESi2dBVNgLg4DPiB7q51Udo3zhUxkUJsZ819P1K9KoDKnUEDcWEU+x54tf7/ubuzun/
+         Xk+WgWh83FCOUMsEIPG5wZqaGY0kqPl9FdFhKcClGAPbnQIHcQ2OfMeOYbPwWYnbCGt/
+         osK5cptcyzF8ZcMHzCbXC19ZyCoIxLcbcVLhQufnpM0qbbfd1YLP5T6Is81Q0HmrkWyy
+         2EWw==
+X-Gm-Message-State: ALQs6tD/rWlB9j4/8uyPm5iymsW+uX169Lj+jR7bGKErcJmasAQyvPqD
+        I2Y1I5Aj2fYrMSPNqKUu6Ao=
+X-Google-Smtp-Source: AB8JxZqNe+jeq7BFmcQkhSoIg3Iljxgqu470AHueHRsMQEHny2KYCm6VNqzX2ylDzI9r8BCmoz1UxA==
+X-Received: by 2002:a50:8fa5:: with SMTP id y34-v6mr35335536edy.290.1525423331717;
+        Fri, 04 May 2018 01:42:11 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id p1-v6sm8934615edm.0.2018.05.04.01.42.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 04 May 2018 01:42:10 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 09/12] get_short_oid / peel_onion: ^{tree} should be tree, not treeish
+References: <20180501184016.15061-1-avarab@gmail.com>
+        <20180501120651.15886-1-avarab@gmail.com>
+        <20180501184016.15061-10-avarab@gmail.com>
+        <xmqqzi1htij7.fsf@gitster-ct.c.googlers.com>
+        <87wowlxko8.fsf@evledraar.gmail.com>
+        <xmqqvac4tb64.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqvac4tb64.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 04 May 2018 10:42:09 +0200
+Message-ID: <87lgczyfq6.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGksDQpBbSBEb25uZXJzdGFnLCBkZW4gMDMuMDUuMjAxOCwgMTg6NDIgKzAyMDAgc2NocmllYiBI
-ZWlrbyBWb2lndDoNCj4gSGksDQo+IA0KPiBPbiBXZWQsIE1heSAwMiwgMjAxOCBhdCAwNzozMDoy
-NUFNICswMDAwLCBNaWRkZWxzY2h1bHRlLCBMZWlmIHdyb3RlOg0KPiA+IEFtIE1vbnRhZywgZGVu
-IDMwLjA0LjIwMTgsIDE5OjAyICswMjAwIHNjaHJpZWIgSGVpa28gVm9pZ3Q6DQo+ID4gPiBPbiBU
-aHUsIEFwciAyNiwgMjAxOCBhdCAwMzoxOTozNlBNIC0wNzAwLCBTdGVmYW4gQmVsbGVyIHdyb3Rl
-Og0KPiA+ID4gPiBTdGVmYW4gd3JvdGU6DQo+ID4gPiA+ID4gU2VlIGh0dHBzOi8vZ2l0aHViLmNv
-bS9naXQvZ2l0L2NvbW1pdC82OGQwM2U0YTZlNDQ4YWE1NTdmNTJhZGVmOTI1OTVhYzRkNmNkNGJk
-DQo+ID4gPiA+ID4gKDY4ZDAzZTRhNmUgKEltcGxlbWVudCBhdXRvbWF0aWMgZmFzdC1mb3J3YXJk
-IG1lcmdlIGZvciBzdWJtb2R1bGVzLCAyMDEwLTA3LTA3KQ0KPiA+ID4gPiA+IHRvIGV4cGxhaW4g
-dGhlIHNpdHVhdGlvbiB5b3UgZW5jb3VudGVyLiAoc3BlY2lmaWNhbGx5IG1lcmdlX3N1Ym1vZHVs
-ZQ0KPiA+ID4gPiA+IGF0IHRoZSBlbmQgb2YgdGhlIGRpZmYpDQo+ID4gPiA+IA0KPiA+ID4gPiAr
-Y2MgSGVpa28sIGF1dGhvciBvZiB0aGF0IGNvbW1pdC4NCj4gPiA+IA0KPiA+ID4gSW4gdGhhdCBj
-b21taXQgd2UgdHJpZWQgdG8gYmUgdmVyeSBjYXJlZnVsIGFib3V0LiBJIGRvIG5vdCB1bmRlcnN0
-YW5kDQo+ID4gPiB0aGUgc2l0dWF0aW9uIGluIHdoaWNoIHRoZSBjdXJyZW50IHN0cmF0ZWd5IHdv
-dWxkIGJlIHdyb25nIGJ5IGRlZmF1bHQuDQo+ID4gPiANCj4gPiA+IFdlIG9ubHkgbWVyZ2UgaWYg
-dGhlIGZvbGxvd2luZyBhcHBsaWVzOg0KPiA+ID4gDQo+ID4gPiAgKiBUaGUgY2hhbmdlcyBpbiB0
-aGUgc3VwZXJwcm9qZWN0IG9uIGJvdGggc2lkZXMgcG9pbnQgZm9yd2FyZCBpbiB0aGUNCj4gPiA+
-ICAgIHN1Ym1vZHVsZS4NCj4gPiA+IA0KPiA+ID4gICogT25lIHNpZGUgaXMgY29udGFpbmVkIGlu
-IHRoZSBvdGhlci4gQ29udGFpbmVkIGZyb20gdGhlIHN1Ym1vZHVsZQ0KPiA+ID4gICAgcGVyc3Bl
-Y3RpdmUuIFNpZGVzIGZyb20gdGhlIHN1cGVycHJvamVjdCBtZXJnZSBwZXJzcGVjdGl2ZS4NCj4g
-PiA+IA0KPiA+ID4gU28gaW4gY2FzZSBvZiB0aGUgbWVudGlvbmVkIHJld2luZCBvZiBhIHN1Ym1v
-ZHVsZTogT25seSBvbmUgc2lkZSBvZiB0aGUNCj4gPiA+IDMtd2F5IG1lcmdlIHdvdWxkIHBvaW50
-IGZvcndhcmQgYW5kIHRoZSBtZXJnZSB3b3VsZCBmYWlsLg0KPiA+ID4gDQo+ID4gPiBJIGNhbiBp
-bWFnaW5lLCB0aGF0IGluIGNhc2Ugb2YgYSB0ZW1wb3JhcnkgcmV2ZXJ0IG9mIGEgY29tbWl0IGlu
-IHRoZQ0KPiA+ID4gc3VibW9kdWxlIHRoYXQgeW91IHdvdWxkIG5vdCB3YW50IHRoYXQgbWVyZ2Vk
-IGludG8gc29tZSBvdGhlciBicmFuY2guDQo+ID4gPiBCdXQgdGhhdCB3b3VsZCBiZSB0aGUgc2Ft
-ZSB3aXRob3V0IHN1Ym1vZHVsZXMuIElmIHlvdSBtZXJnZSBhIHRlbXBvcmFyeQ0KPiA+ID4gcmV2
-ZXJ0IGZyb20gYW5vdGhlciBicmFuY2ggeW91IHdpbGwgbm90IGdldCBhbnkgY29uZmxpY3QuDQo+
-ID4gPiANCj4gPiA+IFNvIG1heWJlIHNvbWVvbmUgY2FuIGV4cGxhaW4gdGhlIHVzZSBjYXNlIGlu
-IHdoaWNoIG9uZSB3b3VsZCBnZXQgdGhlDQo+ID4gPiByZXN1bHRzIHRoYXQgc2VlbSB3cm9uZz8N
-Cj4gPiANCj4gPiBJbiBhbiBpZGVhbCB3b3JsZCwgd2hlcmUgdGhlcmUgYXJlIG5vIHJlZ3Jlc3Np
-b25zIGJldHdlZW4gcmV2aXNpb25zLCBhDQo+ID4gZmFzdC1mb3J3YXJkIGlzIGFwcHJvcHJpYXRl
-LiBIb3dldmVyLCB3ZSBtaWdodCBoYXZlIHJlZ3Jlc3Npb25zIHdpdGhpbg0KPiA+IHN1Ym1vZHVs
-ZXMuDQo+ID4gDQo+ID4gU28gdGhlIHVzZWNhc2UgaXMgdGhlIGZvbGxvd2luZzoNCj4gPiANCj4g
-PiBFbnZpcm9ubWVudDoNCj4gPiAtIFdlIGhhdmUgYSBiYXNlIGxpYnJhcnkgTCB0aGF0IGlzIGRl
-dmVsb3BlZCBieSBzb21lIHRlYW0gKFRlYW0gQikuDQo+ID4gLSBBbm90aGVyIHRlYW0gKFRlYW0g
-QSkgZGV2ZWxvcGVzIGEgcHJvZHVjdCBQIGJhc2VkIG9uIHRob3NlIGxpYnJhcmllcyB1c2luZyBn
-aXQtZmxvdy4NCj4gPiANCj4gPiBDYXNlOg0KPiA+IFRoZSBwcm9ibGVtIG9jY3Vycywgd2hlbiBh
-IGRldmVsb3BlciAoRCkgb2YgVGVhbSBBIHRyaWVzIHRvIGhhdmUgYSBmZWF0dXJlDQo+ID4gdGhh
-dCBoZSBkZXZlbG9wZWQgb24gYSBicmFuY2ggYWNjZXB0ZWQgYnkgYSBjb3JlIGRldmVsb3BlciBv
-ZiBQOg0KPiA+IElmIGEgY29yZSBkZXZlbG9wZXIgb2YgUCBhZHZhbmNlZCB0aGUgcmVmZXJlbmNl
-IG9mIEwgd2l0aGluIFAgKGxpbmVhciBoaXN0b3J5KSwgaGUgbWlnaHQNCj4gPiBkZWVtIHRoZSB3
-b3JrIEQgaW5zdWZmaWNpZW50LiBOb3QgYmVjYXVzZSBvZiB0aGUgYWN0dWFsIHdvcmsgYnkgRCwg
-YnV0IHJlZ3Jlc3Npb25zDQo+ID4gdGhhdCBzbnVjayBpbnRvIEwuIFRoZSBjb3JlIGRldmVsb3Bl
-ciB3aWxsIG5vdCBiZSBpbmZvcm1lZCBhYm91dCB0aGUgbWlzc21hdGNoaW5nDQo+ID4gcmV2aXNp
-b25zIG9mIEwuDQo+ID4gDQo+ID4gU28gaXQgd291bGQgYmUgbmljZSBpZiB0aGVyZSB3YXMgc29t
-ZSBraW5kIG9mIHN3aXRjaCBvciBhdCBsZWFzdCBzb21lIHRyaWdnZXIuDQo+IA0KPiBJIHN0aWxs
-IGRvIG5vdCB1bmRlcnN0YW5kIGhvdyB0aGUgY3VycmVudCBiZWhhdmlvdXIgaXMgbWlzbWF0Y2hp
-bmcgd2l0aA0KPiB1c2VycyBleHBlY3RhdGlvbnMuIExldCdzIGFzc3VtZSB0aGF0IHlvdSBkaXJl
-Y3RseSB0cmFja2VkIHRoZSBmaWxlcyBvZg0KPiBMIGluIHlvdXIgcHJvZHVjdCByZXBvc2l0b3J5
-IFAsIHdpdGhvdXQgYW55IHN1Ym1vZHVsZSBib3VuZGFyeS4gSG93DQo+IHdvdWxkIHRoZSBiZWhh
-dmlvciBiZSBkaWZmZXJlbnQ/IFdvdWxkIGl0IGJlPyBJZiBEIHN0YXJ0ZWQgb24gYW4gb2xkZXIN
-Cj4gcmV2aXNpb24gYW5kIGdldHMgbWVyZ2VkIGludG8gYSBuZXdlciByZXZpc2lvbiwgdGhlcmUg
-Y2FuIGFsd2F5cyBiZQ0KPiByZWdyZXNzaW9ucyBldmVuIHdpdGhvdXQgc3VibW9kdWxlcy4NCj4g
-DQo+IFdoeSB3b3VsZCB0aGUgY29yZSBkZXZlbG9wZXIgbmVlZCB0byBiZSBpbmZvcm1lZCBhYm91
-dCBtaXNtYXRjaGluZw0KPiByZXZpc2lvbnMgaWYgaGUgaGltc2VsZiBhZHZhbmNlZCB0aGUgc3Vi
-bW9kdWxlPw0KSW4gdGhhdCBjYXNlIHlvdSdkIGJlIHJpZ2h0LiBJIHNob3VsZCBoYXZlIHBpY2tl
-ZCBteSBleGFtcGxlIG1vcmUgd2lzZWx5Lg0KQXNzdW1lIHJpZ2h0IGhlcmUgdGhhdCBub3QgYSBj
-b3JlIGRldmVsb3BlciwgYnV0IGFub3RoZXIgZGV2ZWxvcGVyIGFkdmFuY2VkDQp0aGUgc3VibW9k
-dWxlIChhbHNvIHZpYSBmZWF0dXJlIGJyYW5jaCArIG1lcmdlKS4NCj4gDQo+IEl0IHNlZW1zIHRv
-IG1lIHRoYXQgeW91IGRvIG5vdCB3YW50IHRvIG1peCBpbnRlZ3JhdGlvbiB0ZXN0aW5nIGFuZA0K
-PiB0ZXN0aW5nIG9mIHRoZSBmZWF0dXJlIGl0c2VsZi4gDQpUaGF0J3Mgb24gcG9pbnQuIFRoYXQn
-cyB3aHkgaXQgd291bGQgYmUgbmljZSBpZiBnaXQgKmF0IGxlYXN0KiB3YXJuZWQgYWJvdXQgdGhl
-IGRpZmZlcmVudCByZXZpc2lvbnMgd3J0IHN1Ym1vZHVsZXMuDQoNCkJ1dCwgSSBndWVzcywgSSBs
-ZWFybmVkIHNvbWV0aGluZyBhYm91dCBzdWJtb2R1bGVzOg0KSSB1c2VkIHRvIHRoaW5rIG9mIHN1
-Ym1vZHVsZXMgYXMgbWVhbnMgdG8gcGluIGRvd24gYSBzcGVjaWZpYyByZXZpc2lvbiBsaWtlOiBg
-dmVyID09IHhgLg0KTm93IEknbSBsZWFybmluZyB0aGF0IHN1Ym1vZHVsZXMgYXJlIHRyZWF0ZWQg
-YXMgYHZlciA+PSB4YCBkdXJpbmcgYSBtZXJnZS4NCg0KPiBIb3cgYWJvdXQganVzdCB0ZXN0aW5n
-L3Jldmlld2luZyBvbiB0aGUNCj4gYnJhbmNoIHRoZW4/IFlvdSB3b3VsZCBzdGlsbCBnZXQgdGhl
-IHN1Ym1vZHVsZSByZXZpc2lvbiBEIHdhcyB3b3JraW5nIG9uDQo+IGFuZCB0aGVuIGluIGEgbGF0
-ZXIgc3RhZ2UgY2hlY2sgaWYgaW50ZWdyYXRpb24gd2l0aCBldmVyeXRoaW5nIGVsc2UNCj4gd29y
-a3MuDQpTdXJlLiBCdXQgaWYgdGhlIGJlaGF2aW9yIGRldmlhdGVzIGFmdGVyIGEgbWVyZ2UgdGhl
-IG1lcmdpbmcgZGV2ZWxvcGVyIGlzIGN1cnJlbnRseSBub3QNCmF3YXJlIHRoYXQgaXQgKm1pZ2h0
-KiBoYXZlIHRvIGRvIHdpdGggZGlmZmVyZW50IHN1Ym1vZHVsZSByZXZpc2lvbnMgdXNlZCwgbm90
-IHRoZSAiYWN0dWFsIiBjb2RlIG1lcmdlZC4NCg0KTGlrZSBub3QgZXZlbiAiYmV3YXJlOiB0aGUg
-KGZlYXR1cmUpIGJyYW5jaCB5b3UndmUgbWVyZ2VkIHVzZWQgYW4gJ29sZGVyJyByZXZpc2lvbiBv
-ZiBYIg0KDQo+IA0KPiBDaGVlcnMgSGVpa28NCg0KQ2hlZXJzLA0KDQpMZWlm
+
+On Fri, May 04 2018, Junio C Hamano wrote:
+
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>
+>> The reason I'm doing this is because I found it confusing that I can't
+>> do:
+>>
+>>     for t in tag commit tree blob; do ./git --exec-path=$PWD rev-parse 7452^{$t}; done
+>>
+>> And get, respectively, only the SHAs that match the respective type, but
+>> currently (with released git) you can do:
+>>
+>>     for t in tag commit committish treeish tree blob; do git -c core.disambiguate=$t rev-parse 7452; done
+>
+> Exactly.  The former asks "I (think I) know 7452 can be used to name
+> an object of type $t, with peeling if necessary--give me the underlying
+> object of type $t".
+
+Right, and I'm with you so far, this makes sense to me for all existing
+uses of the peel syntax, otherwise v2.17.0^{tree} wouldn't be the same
+as rev-parse v2.17.0^{tree}^{tree}...
+
+> In short, the fact that you can write "$X^{$t}"
+> says that $X is a $t-ish (otherwise $X cannot be used as a stand-in
+> for an object of type $t) and that you fully expect that $X can merely
+> be of type $t-ish and not exactly $t (otherwise you wouldn't be
+> making sure to coerce $X into $t with ^{$t} notation).
+>
+> In *THAT* context, disambiguation help that lists objects whose name
+> begins with "7452" you gave, hoping that it is a unique enough
+> prefix when it wasn't in reality, *MUST* give $t-ish; restricting it
+> to $t makes the help mostly useless.
+>
+>> 1) Am I missing some subtlety or am I correct that there was no way to
+>> get git to return more than one SHA-1 for ^{commit} or ^{tree} before
+>> this disambiguation feature was added?
+>
+> There is no such feature either before or after the disambiguation
+> help.  I am not saying there shouldn't exist such a feature.  I am
+> saying that breaking the existing feature and making it useless is
+> not the way to add such a feature.
+
+I still don't get how what you're proposing is going to be consistent,
+but let's fully enumerate the output of 7452 with my patch to take that
+case-by-case[1]:
+
+    ^{tag}:
+    7452b4b5786778d5d87f5c90a94fab8936502e20
+    ^{commit}:
+    hint:   74521eee4c commit 2007-12-01 - git-gui: install-sh from automake does not like -m755
+    hint:   745224e04a commit 2014-06-18 - refs.c: SSE2 optimizations for check_refname_component
+    ^{tree}:
+    hint:   7452336aa3 tree
+    hint:   74524f384d tree
+    hint:   7452813bcd tree
+    hint:   7452b1a701 tree
+    hint:   7452b73c42 tree
+    hint:   7452ca1557 tree
+    ^{blob}:
+    hint:   7452001351 blob
+    hint:   745254665d blob
+    hint:   7452a572c1 blob
+    hint:   7452b9fd21 blob
+    hint:   7452db13c8 blob
+    hint:   7452fce0da blob
+
+And[2]:
+
+    core.disambiguate=tag:
+    [same as ^{tag]
+    core.disambiguate=commit:
+    [same as ^{commit}]
+    core.disambiguate=committish:
+    hint:   7452b4b578 tag v2.1.0
+    hint:   74521eee4c commit 2007-12-01 - git-gui: install-sh from automake does not like -m755
+    hint:   745224e04a commit 2014-06-18 - refs.c: SSE2 optimizations for check_refname_component
+    core.disambiguate=tree:
+    [same as ^{tree}]
+    core.disambiguate=treeish (same as $sha1:)
+    hint:   7452b4b578 tag v2.1.0
+    hint:   74521eee4c commit 2007-12-01 - git-gui: install-sh from automake does not like -m755
+    hint:   745224e04a commit 2014-06-18 - refs.c: SSE2 optimizations for check_refname_component
+    hint:   7452336aa3 tree
+    hint:   74524f384d tree
+    hint:   7452813bcd tree
+    hint:   7452b1a701 tree
+    hint:   7452b73c42 tree
+    hint:   7452ca1557 tree
+    core.disambiguate=blob:
+    [same as ^{blob}]
+
+So from my understanding of what you're saying you'd like to list tag,
+commits and trees given $sha1^{tree}, because they're all types that can
+be used to reach a tree.
+
+I don't think that's very useful, yes it would "break" existing
+disambiguations, but this is such an obscure (and purely manual)
+use-case than I think that's fine.
+
+Because I think to the extent anyone's going to use this it's because
+they know they have e.g. a short blob, commit etc. SHA-1 they're not
+going to use it because they have some short $SHA they know is a tree,
+and then want all SHA-1s of that *and* random tag & commit objects that
+happen to have the same object prefix just because tags and commits can
+also point to trees.
+
+How does that make any sense? The entire reason for using the normal
+peel syntax is because you e.g. have v2.17.0 and want to get to the
+^{tree} or the ^{commit} tht v2.17.0 directly points to. That's entirely
+orthogonal to what the disambiguation is doing. There with your proposed
+semantics you're peeling 7452 as 7452^{tree} because (IMO) you're
+looking for trees, just to get some entirely unrelated commits and tags.
+
+But *leaving that aside*, i.e. I don't see why the use-case would make
+sense. What I *don't* get is why, if you think that, you only want to
+apply that rule to ^{tree}. I.e. wouldn't it then be consistent to say:
+
+    # a)
+    ^{tag}    = tag
+    ^{commit} = tag, commit
+    ^{tree}   = tag, commit, tree
+    ^{blob}   = tag, blob (blobish)
+
+Whereas my patch now does:
+
+    # b)
+    ^{tag}    = tag
+    ^{commit} = commit
+    ^{tree}   = tree
+    ^{blob}   = blob
+
+But from what you seem to be proposing (or maybe you just didn't have a
+chance to critique the ^{blob} and ^{commit} patches):
+
+    # c)
+    ^{tag}    = tag
+    ^{commit} = commit
+    ^{tree}   = tag, tree, commit
+    ^{blob}   = blob
+
+1. for type in tag commit tree blob; do echo "^{$type}:" && ./git --exec-path=$PWD rev-parse 7452^{$type} 2>&1|grep -E -e ^hint -e '^[0-9a-f]{40}$' |grep -v are:; done
+2. for cfg in tag commit committish tree treeish blob; do echo "core.disambiguate=$cfg:" && ./git --exec-path=$PWD -c core.disambiguate=$cfg rev-parse 7452 2>&1|grep -E -e ^hint -e '^[0-9a-f]{40}$' |grep -v are:; done
