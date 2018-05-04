@@ -2,85 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC76F200B9
-	for <e@80x24.org>; Fri,  4 May 2018 05:43:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6874D1F42E
+	for <e@80x24.org>; Fri,  4 May 2018 06:41:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750946AbeEDFnV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 01:43:21 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:33392 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750709AbeEDFnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 01:43:20 -0400
-Received: by mail-wm0-f49.google.com with SMTP id x12-v6so5546619wmc.0
-        for <git@vger.kernel.org>; Thu, 03 May 2018 22:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=rL8UYqwQw7ACZKqfrGMRhaC0PGii23MXBZRMeYAfWUI=;
-        b=aKwgBBwHWzW8J5OnKKA0Uz1j3jqvmshop57EgVuvJmO7OS0V0DmqBiWKHpUCGMV64H
-         2YQgZdyO+P37lfqLiqGISpSnuNjmDYasyd48lr+HaKK44QRpIswSwDgijwh8axP9vaPS
-         AZEGFJdAAFt31D9bWeOkD4CRKGes9wpHcRB8mKQMszfIULDt8MZ8EUALE1wlGNJMcAVB
-         CfHkEpO9olOhu11W1w9y4bBKYJFhlSZNBUT6ompbQYmLGQQFfMgRK4LiRDsJu0a4HAQB
-         5ljPwlQrGdIj+v6ZLTz5Gn0Z+BF0gtuyf6pP2G+yacYLQIdFCR33ULwAsHdMp+7chwnC
-         jQRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=rL8UYqwQw7ACZKqfrGMRhaC0PGii23MXBZRMeYAfWUI=;
-        b=rypPUJaCVuOe5OCJuVTCZ+M5n/ef/x9QJzi4wIYALRLsIcQfPx4ZfQBNwMSB8XlsXa
-         t1DDdBSGq39zAhYmTePt6c9nvnVR1Bl2gSmtyDTUmLLAIKY21DqTZvtvrVumsLu1GWTH
-         l1ZFkEkrjvp7C4coREsCkTU73uISJUn9nCFPTvmi88HriYZsQdk3jbf3tWdzlMNV6RQX
-         fagDXu0229bcJ/Yzb10FjScbkXsQsixXW3+zdKat52kDIErpdhYGKekmayWQlLbWh/y8
-         GcOt1dEykf0zM6EJnQQDBpIPTLnRa63LRKm5NuqGVuoG7rJDFzSRgGfk6bo3+gq+9euK
-         BE2Q==
-X-Gm-Message-State: ALQs6tDKKiWusMC9TVCzHwPTpbxc9b/3UsQlnpQe33Un0XAs+be/10JP
-        YcKh1Vu8rNg22cnJi5dnY/frFVtT
-X-Google-Smtp-Source: AB8JxZoMjV1I9JFLaK8Y5NqaBsE0/Pl7Kt/9wY9V9UwnF/1IwoRG44QBy+4B8Yt/flP2rZIVFrhTPw==
-X-Received: by 10.28.170.84 with SMTP id t81mr16965527wme.130.1525412598830;
-        Thu, 03 May 2018 22:43:18 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 77-v6sm1408223wmt.11.2018.05.03.22.43.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 03 May 2018 22:43:18 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] git: add -P as a short option for --no-pager
-References: <d91e98a8-7801-a3de-3865-f0480e18ba0e@kdbg.org>
-        <23493ba1-1704-1e8c-f448-95540a36f886@kdbg.org>
-        <CAPig+cR8M3NPrJdsinakLoiFWS=adv1B7QH7Bwp-9ePr_44N_g@mail.gmail.com>
-Date:   Fri, 04 May 2018 14:43:17 +0900
-In-Reply-To: <CAPig+cR8M3NPrJdsinakLoiFWS=adv1B7QH7Bwp-9ePr_44N_g@mail.gmail.com>
-        (Eric Sunshine's message of "Thu, 3 May 2018 16:06:06 -0400")
-Message-ID: <xmqqwowkrn62.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751268AbeEDGlD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 02:41:03 -0400
+Received: from mout.gmx.net ([212.227.17.22]:54045 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751106AbeEDGlC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 02:41:02 -0400
+Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7ojs-1eSJee3bou-00vSJe; Fri, 04
+ May 2018 08:40:52 +0200
+Date:   Fri, 4 May 2018 08:40:53 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
+In-Reply-To: <850f1ad6-752d-85ae-ebad-feae09a76c54@ramsayjones.plus.com>
+Message-ID: <nycvar.QRO.7.76.6.1805040829390.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de> <71b00bbf-07e7-11e1-046b-f0241b82ebd3@ramsayjones.plus.com> <nycvar.QRO.7.76.6.1805032224150.77@tvgsbejvaqbjf.bet>
+ <850f1ad6-752d-85ae-ebad-feae09a76c54@ramsayjones.plus.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:pD+1ZcliPkCrSWPdZj5NDaUZDP31khGk9hdxCBxEKkyShyAJdaf
+ EBV7vUt2DdIKGFCl8jYJ59D1TFSiLFZppQmtY21H5POQbmcBOfu6z/o2fT7KvXzNnaawHVB
+ z0Mp3ZP/LI4u4cTZEwhinjMGAR82WQo7XX1deU7PQ4Wxyl6fR2lREW+3Nw2vcTJxftDTTF3
+ knlOiV/E5tabHj5B2Nxlg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SNUVWe8lICw=:Cu+mvbMo6mQnzfTeDI/1EW
+ so/ojSZodz+hP/c7u25Lap4jlMddOnMgL9tnvq6JPi5QQr4+kGmuxQn3FE0SHEiNU684vKjWJ
+ jUkpARzWEGUT9onsgfkaE/UzVYbfKPF4SkgIc5g//iQMOqpjON5sG8ixSKQKnP/WyH5MQiNTq
+ wj6a2qMgt9jw+8DleBftPxTo0CpYJb9xCs18ExWrqpDtWD5BGCcuIbCI/OAVLUTRDbYoC62S9
+ S3sO0rxZTBrfwIJdYyyCe21ROVDKGHdn26rfGaglToPuARi8vh4ToTGrAcSezf+EccGq/42ua
+ uLqAgxBc9Nza3r9xb1uVSQIiyOXP6wn7OUpmjrinkuS1bEclImge5PBaJ1AEZHrIw6eebUw6A
+ qwWBk+Ve/0vxJlrNHL7PWxiCqQRlV0tfyukk6SXk7VpRn8Lg/tTvByhOF6N4a4jG2YS+Svd3z
+ o1VDSS9+ILbydhhJWFS3X0gyXewlJU7EuSB8rzoOQbIZwwfG05vmOKz8OXS0w5SqidXykbml9
+ 6wuilZugUPTKpA4gvX8pGtbg5yTDgI+ZK+FXSAZWEwgm2cq3ZslwPFKwcJTgMPDCNwBzcsBon
+ B+tEi/+exKhCpI95dSJAwni5SoGJoWnyg3ODxf+6uf21dil2Yj7GUl7rqtBdRfxfbiSFFxOMk
+ tFBf8+AvyVitJUVSBeeTShY1LCOlWX/WOgJPF0c0XG8xuis7TWtt7mjhfa7n0Z02tBLryzMBl
+ K39e0cWdS/IheUVJvQgwlKJ+v6PbhJmYCcbcpOOfMJHwlQpl5gFjMihPEgppPgPjWv1yw0rlm
+ ZalO3qP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi Ramsay,
 
->> available. Provide a short option, -P, to make the option easier
->> accessible.
->
-> s/easier accessible/easier to access/
-> --- or ---
-> s/easier accessible/more easily accessible/
-> --- or ---
-> s/easier accessible/more accessible/
->
-> The patch itself looks fine.
+On Fri, 4 May 2018, Ramsay Jones wrote:
 
-Thanks.  More easily accessible, it is.
+> On 03/05/18 21:25, Johannes Schindelin wrote:
+> 
+> > On Thu, 3 May 2018, Ramsay Jones wrote:
+> 
+> >> On 03/05/18 16:30, Johannes Schindelin wrote:
+> [snip]
+> 
+> >>> diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
+> >>> new file mode 100644
+> >>> index 00000000000..97266cd326d
+> >>> --- /dev/null
+> >>> +++ b/builtin/branch-diff.c
+> >>> @@ -0,0 +1,40 @@
+> >>> +#include "cache.h"
+> >>> +#include "parse-options.h"
+> >>> +
+> >>> +static const char * const builtin_branch_diff_usage[] = {
+> >>> +	N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
+> >>
+> >> s/rebase--helper/branch-diff/
+> > 
+> > Whoops!
+> > 
+> > BTW funny side note: when I saw that you replied, I instinctively thought
+> > "oh no, I forgot to mark a function as `static`!" ;-)
+> 
+> Heh, but I hadn't got around to applying the patches and building
+> git yet! ;-)
+
+;-)
+
+> Sparse has two complaints:
+> 
+>   >     SP builtin/branch-diff.c
+>   > builtin/branch-diff.c:433:41: warning: Using plain integer as NULL pointer
+>   > builtin/branch-diff.c:431:5: warning: symbol 'cmd_branch_diff' was not declared. Should it be static?
+> 
+> I suppressed those warnings with the following patch (on top
+> of these patches):
+> 
+>   $ git diff
+>   diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
+>   index edf80ecb7..1373c22f4 100644
+>   --- a/builtin/branch-diff.c
+>   +++ b/builtin/branch-diff.c
+>   @@ -1,4 +1,5 @@
+>    #include "cache.h"
+>   +#include "builtin.h"
+>    #include "parse-options.h"
+>    #include "string-list.h"
+>    #include "run-command.h"
+>   @@ -430,7 +431,7 @@ static void output(struct string_list *a, struct string_list *b,
+>  
+>    int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+>    {
+>   -       struct diff_options diffopt = { 0 };
+>   +       struct diff_options diffopt = { NULL };
+>           struct strbuf four_spaces = STRBUF_INIT;
+>           int dual_color = 0;
+>           double creation_weight = 0.6;
+>   $ 
+
+Thanks!
+
+> The first hunk applies to patch 02/18 (ie this very patch) and
+> the second hunk should be applied to patch 05/18 (ie, "branch-diff:
+> also show the diff between patches").
+
+I actually have a hacky script to fixup commits in a patch series. It lets
+me stage part of the current changes, then figures out which of the
+commits' changes overlap with the staged changed. If there is only one
+commit, it automatically commits with --fixup, otherwise it lets me choose
+which one I want to fixup (giving me the list of candidates).
+
+BTW I ran `make sparse` for the first time, and it spits out tons of
+stuff. And I notice that they are all non-fatal warnings, but so were the
+ones you pointed out above. This is a bit sad, as I would *love* to
+install a VSTS build job to run `make sparse` automatically. Examples of
+warnings *after* applying your patch:
+
+connect.c:481:40: warning: incorrect type in argument 2 (invalid types)
+connect.c:481:40:    expected union __CONST_SOCKADDR_ARG [usertype] __addr
+connect.c:481:40:    got struct sockaddr *ai_addr
+
+or
+
+pack-revindex.c:65:23: warning: memset with byte count of 262144
+
+What gives?
+
+Ciao,
+Dscho
