@@ -2,87 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C402200B9
-	for <e@80x24.org>; Fri,  4 May 2018 16:10:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65B98200B9
+	for <e@80x24.org>; Fri,  4 May 2018 16:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751470AbeEDQKl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 12:10:41 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:41703 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751326AbeEDQKk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 12:10:40 -0400
-Received: by mail-pf0-f179.google.com with SMTP id v63so17781515pfk.8
-        for <git@vger.kernel.org>; Fri, 04 May 2018 09:10:40 -0700 (PDT)
+        id S1751563AbeEDQVH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 12:21:07 -0400
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:43567 "EHLO
+        mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751507AbeEDQVG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 12:21:06 -0400
+Received: by mail-vk0-f67.google.com with SMTP id x191-v6so1198334vke.10
+        for <git@vger.kernel.org>; Fri, 04 May 2018 09:21:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=oPEv+/5ezal58dbP0LNT9EIrHIFRswrSY+tSWDa50r0=;
-        b=pXCEgKuZ2SU76TnHU5AJyJvNX3GHAQz9OiMZryxVjUg4QzKpUgeI4f00YqaHeay8P0
-         5W0jAY96tDJMcTNkRSEcYg5g3z9fi0Wv6XBaPcMPBrRvbRjYXwwC5rQJiqIGvzAD8sa5
-         zprBMAwLSKm8zGi0GETFoiqRzcCwp1QjL7S6n+jbLphkxnC7rtrloPUyfo6mi0+MqiWA
-         6IITbA+NAR0vmmdzPVwhgISiN8vWqHxN22GV3mVTRzgCHcfORmPnPpv3XdZjDT9Ii+6i
-         PM5R/lH5BMus8wwMbA2XqBIqxNho6wuCo2gJJp5huYYKBdJw+XBSIcjWwLiwFy7TFfpv
-         PtLg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Vmx14DPReLgK/GGkk9sTbK2YdaSUweOEHB5mkf9Q89s=;
+        b=PKPLPx+0Ekr797k0/RP5Mo5UFLKOYZF4mgPztJY0OMOb0L/O2Tp3CByR+PxRFijGW+
+         4QtE0DFGTvGHisWLxr5SfM1TrkE/HQbohEwBuYy1xw2WcTzCEv5tjZ+q0OsH9XEKANzu
+         BkfjLSGCP5kRaTRm24hBAqa4cpDphquN4EqgdbbzKi8MS0XJ2jvwLVwl/x9MhrAiRKQ6
+         Ay12jWiB19JAFSfYAK51muoUgpxaPQGGQBH0zRLJrW1M5+92TVjhcyDZp5utwPGzmuWx
+         mFJdd0i5JA8D1P6zmoeORavjFCVQe7f/1qdWYCaycD+O9oMRLFb0E9sAcUu+acYLbO+/
+         skOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=oPEv+/5ezal58dbP0LNT9EIrHIFRswrSY+tSWDa50r0=;
-        b=DtWYOd1h5n2WBojws5xLwOK9xxWhsb6DcC6Uau8GJ/nwS3CvwhQJif/zmXg7xuxhAz
-         caLQBoH94z19LPugZ5Vb1h85NIJ/SBe5Zxo8v3riXOYyn04ONAq26aw2202HRG31DeK7
-         /24/gHSc8H708wKGJ3Onmh+q+ehA7YV/GFxnetwtMxumGK646P6M1AAsfsIInEsOZf8Q
-         +1RpB6GkauX0s4u8YhDH5h/W9WPX+xtQTnjDQrtNu/kPKkRA+A7o1qLuUivMby1vhLsa
-         xIDv8YpB9mIqpNiVp55YbQ+yMdRk4CCHJ+mhxxlGwLsaRjW5EGgsKqxXMBXBejsfFFVT
-         uj4Q==
-X-Gm-Message-State: ALQs6tBK45M38dVaJo/9Unzd/8gew0wGRhq9sZmSxylbE+Dt4Ns8wBmO
-        9v61e/j1moFr4fJXQ6888y6AoA==
-X-Google-Smtp-Source: AB8JxZp8XarY/lUQterL+z8EJjqbr9J/E1NtPZLsw0WQjso57znTrhznGxCl5oxPDDIy2zbe3RhTdA==
-X-Received: by 10.167.128.198 with SMTP id a6mr6144976pfn.120.1525450240128;
-        Fri, 04 May 2018 09:10:40 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id 184sm9940987pfg.89.2018.05.04.09.10.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 04 May 2018 09:10:38 -0700 (PDT)
-Date:   Fri, 4 May 2018 09:10:37 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH v2 1/3] upload-pack: fix error message typo
-Message-Id: <20180504091037.ff633aaa412e925d4493ab3f@google.com>
-In-Reply-To: <xmqqr2mstaxk.fsf@gitster-ct.c.googlers.com>
-References: <cover.1525213052.git.jonathantanmy@google.com>
-        <cover.1525220786.git.jonathantanmy@google.com>
-        <177c6eb7058adc1996f0595ddc3cc848c91b578f.1525220786.git.jonathantanmy@google.com>
-        <CAGZ79kbTwqzKgZjN7GSXn-NpKX0kkDVYbXmdz6CC6TrDWbqyQg@mail.gmail.com>
-        <20180503164155.6112764a927d50e23600dc49@google.com>
-        <xmqqr2mstaxk.fsf@gitster-ct.c.googlers.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Vmx14DPReLgK/GGkk9sTbK2YdaSUweOEHB5mkf9Q89s=;
+        b=nRxDfL4RCjTXgwlnnNhdLmNCfDPwEAehKBeKowsxAeIoUIuH4RAinAckJ0ZzbsM27A
+         FVEYXV7UeA9p9DMlrGo89owWHLFTK49CUEn62JPauf+YAomS3YNJidOT+UYOF9YWzMCu
+         cvym7VKik319CDwN7VF7lfuuH7sNE/r2apz2TN/OMCOMLNpgHlRvjHRfJwcESqGK/I2j
+         Xka7Fv7GspfdPpk7JL9bNGecFpQ1pLhuhStWjI96kShRSbN2Eef3CpoQoEPrlj7L1yhx
+         /VEqoW3KqlG60KMEn64pIFWwIEDpdXPz9th/jmgmao9GGggfCNowDnMZAcq0O/6l/dzp
+         c1Lw==
+X-Gm-Message-State: ALQs6tB44B+Llv5l/EecbEQIpKJqlecK/IsaRxYZJohnmCkE4reYOEwL
+        b9x7sRLzv26z5/Ou8e8EP05IYVTiD/Y767nbEqg=
+X-Google-Smtp-Source: AB8JxZqZp/srFMl1Rq00H3jH2je55CUbk4HhfIvuKxe6nrIeZaZlmtgcdTSRUWnmchQG4wve928nwb2R1PtPk7HTN1w=
+X-Received: by 2002:a1f:370a:: with SMTP id e10-v6mr24520682vka.106.1525450865786;
+ Fri, 04 May 2018 09:21:05 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.176.95.4 with HTTP; Fri, 4 May 2018 09:21:05 -0700 (PDT)
+In-Reply-To: <cover.1525448066.git.johannes.schindelin@gmx.de>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 4 May 2018 09:21:05 -0700
+Message-ID: <CABPp-BEEgeo=5hkaTe8LrOMONSv3VdPi_cP4ADMC69oG3htC1g@mail.gmail.com>
+Subject: Re: [PATCH v2 00/18] Add `branch-diff`, a `tbdiff` lookalike
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 04 May 2018 11:24:39 +0900
-Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, May 4, 2018 at 8:34 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> The incredibly useful `git-tbdiff` tool to compare patch series (say, to see
+> what changed between two iterations sent to the Git mailing list) is slightly
+> less useful for this developer due to the fact that it requires the `hungarian`
+> and `numpy` Python packages which are for some reason really hard to build in
+> MSYS2. So hard that I even had to give up, because it was simply easier to
+> reimplement the whole shebang as a builtin command.
 
-> Hmm, when somebody breaks "git server serve", we probably would not
-> want to see the binary spewed to the output while debugging it.  So
-> I'd probably keep the redirection---it may be an improvement to use
-> ">out" and then checking it is empty after the expected failure.
+tbdiff is awesome; thanks for bringing it in as a builtin to git.
 
-That's a good point - I've readded the redirection in my local copy.
-I'll send out the new version if needed.
+I've run through a few cases, comparing output of tbdiff and
+branch-diff.  So far, what I've noted is that they produce largely the
+same output except that:
 
-I checked the other patches and patch 3 has a similar situation but
-still has the >/dev/null because I forgot to remove it when I removed it
-in patch 1, so nothing needs to be changed in patch 3.
+- tbdiff seems to shorten shas to 7 characters, branch-diff is using
+10, in git.git at least.  (Probably a good change)
+- tbdiff aligned output columns better when there were more than 9
+patches (I'll comment more on patch 09/18)
+- As noted elsewhere in the review of round 1, tbdiff uses difflib
+while branch-diff uses xdiff.  I found some cases where that mattered,
+and in all of them, I either felt like the difference was irrelevant
+or that difflib was suboptimal, so this is definitely an improvement
+for me.
+- branch-diff produces it's output faster, and it is automatically
+paged.  This is really cool.
+
+Also, I don't have bash-completion for either tbdiff or branch-diff.
+:-(  But I saw some discussion on the v1 patches about how this gets
+handled...  :-)
+
+
+Elijah
