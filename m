@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37AF31F42E
-	for <e@80x24.org>; Fri,  4 May 2018 06:52:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9224B1F42E
+	for <e@80x24.org>; Fri,  4 May 2018 07:03:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750866AbeEDGwn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 02:52:43 -0400
-Received: from mout.gmx.net ([212.227.17.22]:60467 "EHLO mout.gmx.net"
+        id S1750880AbeEDHDK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 03:03:10 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59625 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750707AbeEDGwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 02:52:42 -0400
+        id S1750733AbeEDHDJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 03:03:09 -0400
 Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M1WHV-1eLz9Y0go5-00tWUq; Fri, 04
- May 2018 08:52:37 +0200
-Date:   Fri, 4 May 2018 08:52:37 +0200 (DST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJjUO-1fDOHc0iQ8-0018eq; Fri, 04
+ May 2018 09:03:04 +0200
+Date:   Fri, 4 May 2018 09:03:04 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Eric Sunshine <sunshine@sunshineco.com>
@@ -28,30 +28,30 @@ cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
-In-Reply-To: <CAPig+cQv7tNCNhDdThhhDYEE=XmB0xO35Qjvpw+-MgCg0W3ovQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1805040843050.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de> <CAPig+cQv7tNCNhDdThhhDYEE=XmB0xO35Qjvpw+-MgCg0W3ovQ@mail.gmail.com>
+Subject: Re: [PATCH 03/18] branch-diff: first rudimentary implementation
+In-Reply-To: <CAPig+cSvHWvb0dsGkjL69yzbBvgaT7oJm6nFuGWeA6Jw0NpYUw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1805040900570.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de> <CAPig+cSvHWvb0dsGkjL69yzbBvgaT7oJm6nFuGWeA6Jw0NpYUw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:6go4kctTvaXTX3Hj4NakKuLZB4OFEUraRZ/X19p/VTKo/SkRSEj
- e9fVQAeKT7BGRbZ32KlAn+C/B6LTm6xkYEfNuU09yjgcJmz9KFiVdByXZ6cx4ESbW3vpTg3
- ByuvzY/xjwPpb/TrVPjecVjjRJp1iLA2Bp5li/rT5ZfglStn053v0CriEhbW24cSugcpTj+
- gK2R/PLOvXjAiDWx8tDtA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZG/6UBbEGHo=:rEcx0Q/90DX/71bmsYP0RL
- NyR0BVuxKwt7Z0ozL1SYVJXR5Aw1NWgE9gq9u+OzRsB5eX8wXYVVD2DFUMWGEOnaiunxsYBkD
- lrbCflDARX6eOZCA0vBPH9JRAq3eSLM+5iE38I2C+qt/cLrkS9xipreSFKnS8fHrc50aX77yr
- OwjIzKP0xP3ZtjOQigbGDwBHkqmFbQlypMAxQJfdeoolvC+SbVBYHk0kgQPf82+jRqYHvSYJj
- L0TKE5TrQkUhn2clVU07J9tMLMRx4CCB6N/3ChtkGlL8sUKN+Px/udMchq8Z+GrEeKaj5//5u
- Be4wUlp06L8qY935K/1rybnKdtX4Gs18W17I70PaDNk3eG9R/iCY6D3S99wYtUgeF7qtpNycD
- 8zkJ/Ojvea+ZCTh8mf4u7leXnHzpNS2CD7UKIMExEBcEY5K6JSdk312ozdSfgeuo1o+wDJJfc
- fd5hHx/zkPJDx/IAZ6OgvRVmR1qXyic9sQnlpEB3qb68Nlh3xURlL9EvpkAozSmCutEyHB/Ue
- PBbj+4hLoPXxqXi6cGITD0/RsG8h8ZVgb5pLU02UNUoU+nIkXyx6RMfJJvZCnZnuRxe3gICxT
- 8BBEa6GrvePiYuQYW+FX2YhgVoIwKmC5cUVWTtUlr1bYFcwDR+RvKzgU4rF/GAYCtJkaZMqZS
- TYGpoyRbjEME5oiQxY5wsXwPkQtF85S5PjSgKTT7dy/V9IL5O8kjSFEae4yxTBjPGyzl1PtKd
- QqVWR8675XTmFtOYU2B+FXoApUCcbuq19cQfDWE8mRyRahrjLxd7iSWl8WTNoZYiFhVAyMm+L
- azprRpU
+X-Provags-ID: V03:K1:ZQbEN4+j4MNKjfVZpFA6s0fANdIPkGAlIdHD58imhEhwuqq9toQ
+ XL6mmOhjaz0Yg1nENu629YrWb7twCfohOGXD1BESNqTbyUvGesWLcHifQtZFpJXATyB3C3X
+ iqMsKUJAL8WDXVmZ2w5lu2Zy70IX/Uov627KChi8I5s9EeW5UQrtBY7QC9EBUXi0emlnhV8
+ B356mksBW4M8T0pepBeDQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YWtw60JNoIA=:wixWm8Ih5EobhyOQS3t99L
+ 8QhlQcGkmxCXRymgDMSS6ATei3wiFJZplbsQeLc707WQUHd9YpXbK7LtlK7PM+cgJbSVmpJmd
+ Th+jIw7j/PBsgQO5CyysLce/n11cPsWQRKT4FFFhXQtIYvO0czicpgDxB5OwT46lcwP9NNUHA
+ G8UybIPXqma8Z12MPrTXqFOB/PUO6Q428SPFErGSOUfZFkN7FgBgu/5a7felTjm7aMTUe4o0T
+ me0ZkYcdoplSJvoz0Lq5ZJoZvPRjCll66SLjHIcYekETn5PzFb3FAbtM4646kLYaPlcgJIezp
+ 2ra+TGWwxIjHHFs3wdJlrrKD9vcl1Kkha8w5JJElZ1jGf4yvPngjxNN9jtb/kphhN6GBunYBS
+ WLilIfWcVvVAIhO5gWRYx9A2oTk7Yel6iV1I3/H7v3jLK7HcFzM3nzHWY831h1oSX+f9KtQCK
+ c0Zr/R5qF1deOVv9SVIvBfwtHHkjhoOGOBaJ3sKsayh+OrXzYtsQEz9wfkSVklyixIMJkQUpk
+ IW5i8vB7rp4JGLydJb5lFch/S/9xRqvUQ82MPw3i9O57zWYzwlPTs++XB3YEX26tDk8bOI+6l
+ 7jDzHlTnApq8Irgjg2vivZWSJQTK1fE5ke96J850uf+TaZP7TPVoauVZwWlt10ivdSLyFMASC
+ R305HEx8ENjfk5j1zG031utRPfgKeoC4Tpxaa7ylW7z8DF45EAOszfz4o6BH3lTvj+2asxONe
+ v/Z8j4E3ckC2+gp9jeCbhgw8+hFBob1VVCRN49U8ZsaHCcph7MBTCZCyxD/BdYn/wzHJipLJv
+ XdWEpkE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,41 +63,88 @@ On Thu, 3 May 2018, Eric Sunshine wrote:
 
 > On Thu, May 3, 2018 at 11:30 AM, Johannes Schindelin
 > <johannes.schindelin@gmx.de> wrote:
-> > This builtin does not do a whole lot so far, apart from showing a usage
-> > that is oddly similar to that of `git tbdiff`. And for a good reason:
-> > the next commits will turn `branch-diff` into a full-blown replacement
-> > for `tbdiff`.
+> > At this stage, `git branch-diff` can determine corresponding commits of
+> > two related commit ranges. This makes use of the recently introduced
+> > implementation of the Hungarian algorithm.
 > >
-> > At this point, we ignore tbdiff's color options, as they will all be
-> > implemented later and require some patches to the diff machinery.
+> > The core of this patch is a straight port of the ideas of tbdiff, the
+> > seemingly dormant project at https://github.com/trast/tbdiff.
+> >
+> > The output does not at all match `tbdiff`'s output yet, as this patch
+> > really concentrates on getting the patch matching part right.
+> >
+> > Note: due to differences in the diff algorithm (`tbdiff` uses the
+> > Pythong module `difflib`, Git uses its xdiff fork), the cost matrix
+> 
+> s/Pythong/Python/
+
+Yep!
+
+> > calculated by `branch-diff` is different (but very similar) to the one
+> > calculated by `tbdiff`. Therefore, it is possible that they find
+> > different matching commits in corner cases (e.g. when a patch was split
+> > into two patches of roughly equal length).
 > >
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
 > > diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-> > @@ -0,0 +1,40 @@
-> > +static const char * const builtin_branch_diff_usage[] = {
-> > +       N_("git rebase--helper [<options>] ( A..B C..D | A...B | base A B )"),
-> > +       NULL
-> > +};
+> > @@ -19,6 +23,279 @@ static int parse_creation_weight(const struct option *opt, const char *arg,
+> > +static int read_patches(const char *range, struct string_list *list)
+> > +{
+> > +       [...]
+> > +       struct strbuf buf = STRBUF_INIT, line = STRBUF_INIT;
+> > +       [...]
+> > +                       } else if (starts_with(line.buf, "    ")) {
+> > +                               strbuf_addbuf(&buf, &line);
+> > +                               strbuf_addch(&buf, '\n');
+> > +                       }
+> > +
+> > +                       continue;
 > 
-> The formatting of "<options>" vs. "base" confused me into thinking
-> that the latter was a literal keyword, but I see from reading patch
-> 3/18 that it is not a literal at all, thus probably ought to be
-> specified as "<base>".
+> Unnecessary blank line above 'continue'?
 
-Good point. Or maybe BASE?
+Sure.
 
-Or I should just use the same convention as in the man page. Or not, as
-the usage should be conciser.
+> > +               } else if (starts_with(line.buf, "@@ "))
+> > +                       strbuf_addstr(&buf, "@@");
+> > +               [...]
+> > +       }
+> > +       fclose(in);
+> > +
+> > +       if (util)
+> > +               string_list_append(list, buf.buf)->util = util;
+> > +       strbuf_release(&buf);
+> 
+> strbuf_release(&line);
 
-This is what I have currently:
+Yes!
 
-static const char * const builtin_branch_diff_usage[] = {
-N_("git branch-diff [<options>] <old-base>..<old-tip> <new-base>..<new-tip>"),
-N_("git branch-diff [<options>] <old-tip>...<new-tip>"),
-N_("git branch-diff [<options>] <base> <old-tip> <new-tip>"),
-NULL
-};
+> > +       if (finish_command(&cp))
+> > +               return -1;
+> > +
+> > +       return 0;
+> > +}
+> > @@ -32,9 +309,63 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+> > +       if (argc == 2) {
+> > +               if (!strstr(argv[0], ".."))
+> > +                       warning(_("no .. in range: '%s'"), argv[0]);
+> > +               strbuf_addstr(&range1, argv[0]);
+> > +
+> > +               if (!strstr(argv[1], ".."))
+> > +                       warning(_("no .. in range: '%s'"), argv[1]);
+> > +               strbuf_addstr(&range2, argv[1]);
+> > +       } else if (argc == 1) {
+> > +               if (!b)
+> > +                       die(_("single arg format requires a symmetric range"));
+> > +       } else {
+> > +               error("Need two commit ranges");
+> 
+> Other warning/error messages emitted by this function are not
+> capitalized: s/Need/need/
 
-Thanks,
+Right. And it is also not translated. Fixed both.
+
+Thank you for helping me make this patch series better!
+
+Ciao,
 Dscho
