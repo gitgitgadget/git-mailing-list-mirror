@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 688BD200B9
-	for <e@80x24.org>; Fri,  4 May 2018 15:35:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD6D6200B9
+	for <e@80x24.org>; Fri,  4 May 2018 15:35:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751492AbeEDPfT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 11:35:19 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50905 "EHLO mout.gmx.net"
+        id S1751443AbeEDPfQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 11:35:16 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49181 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751447AbeEDPfR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 11:35:17 -0400
+        id S1751465AbeEDPfO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 11:35:14 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
- (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MQ6oB-1fJpfg0JNr-005Hys; Fri, 04 May 2018 17:35:11 +0200
+ (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0LcSWg-1eWB272YwY-00jmq3; Fri, 04 May 2018 17:35:05 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -30,9 +30,9 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 17/18] branch-diff: add a man page
-Date:   Fri,  4 May 2018 17:35:09 +0200
-Message-Id: <950c753770101699424c580d51c2a92b421ca18b.1525448066.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 14/18] diff: add an internal option to dual-color diffs of diffs
+Date:   Fri,  4 May 2018 17:34:59 +0200
+Message-Id: <ae0ea5dfca59a825fb775dc916850c6c2299c5f7.1525448066.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.409.g71698f11835
 In-Reply-To: <cover.1525448066.git.johannes.schindelin@gmx.de>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de>
@@ -40,282 +40,215 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:/K6Cr+QNqLWqVHSoGSVioleHCF9dEeRSDdzu6Is68HEbdTha1HV
- 9rpufydvwI0f7xo7Fq/wnxQUC1MnxwBiaw6NseYJj1moGkam1Q5/OeboqjJwVmHu/qN19sm
- D7IglN6UDnpmLxpgmSIz121dC4vQiwT0KGPs1bthO+1y0RDnFTYhQQlo0BeZoKHRN4BO1b4
- cuhUissBg7nRHkndErbnA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:k/YFJcKTf6A=:Sn2M7j/gZFvzlsWUlcTMj3
- 3JiyZ9Xj+AIEe441gNRKe4Na1bhxyLWfCB78M/+4NSAnS6nHJOi/mHCDrrA3j/tOTj9dXoKco
- 6/9gc5pnTwKoxcdRCM0uFj784OK3HoEDm3kNJC7a0joD4QnpkQLxtvQrs5T97eHtvCzSQNY84
- ZSHRLi4wCymBD7wVZxjmyzcOFxHAt+vnLbMKNHWNi67ZVpje9i5ikRN2KepOH79XO8yJWbkXq
- rmVXq+4wSy/coia8AXXKrIYd4FYvYRaprATazPKYgCWBvUwH0uheqbgrq3vJjRPOal0a2tGwG
- sc2joT1z6RRK56JUVwLtAJ9sZQxZxsF7AZtAJqpx0CB6Rkek1ooLNSdv3964l8jQ38gXKiVme
- olcXkCyBHtSLVPqeBAXp1VnCSHuee7CSWoGjRyFoXj8iM/LhqljdMIxlrj7EIhsXz+M3emVeT
- MKJUk+upVvDAb1oJMBMih9IVIr2A08Y6gTDrVJY1Gpc68xwL4z7mG+9GhtIi6qd1Bxhbg3Iri
- PZO2HcC9a73bM2XOhMmNMV3vZM0iMuPyzpkDNwrU5RsnAlGOk08LX1ovBx9qyxPzZ7wGkYKV6
- rA2+Hk5YRRExlKV7/zQTJNu8DGAlZc79GiVV5th1YxiS0NjzS5ItL8dWnGeFRKix0Eh4ZZtv9
- TgV/UZo6nMwTNohTCR2eKFaLtF2Am9UpmVv2T49Q9Ib6D3A5RY1zeH76Qs4h/lF2sWdKwONLS
- mBVimHEl2iZ62kc1jwCKE2QUcgVscvE88qV7DWYpCxcWSZE1JtByeMsoEUQ65UAVr/ofjJUt/
- ZZxQArK
+X-Provags-ID: V03:K1:uozZUSPSDYb3N1W0YY3+JLkbqN4w6Aw2xYmCyB2cs4+NjnCOIKQ
+ 9c6T+GcyHjBxF2TcaN6ghtnraTCjzbIPPwAfK4olfevyKRzB2hOAyhy3XsXTPiFCdWrIBpK
+ MpN/np1MVtWYEK9UeCe7fjB1BqC0ye0ukGFrWT5r1LF+CN9XsmMhB+z4IEB2GnsQgD/9xWH
+ ewH4h+Mlmhk2iRhnTxAMw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jUoofC996b4=:TX06i1ibwS3Qi4OVAEZMg7
+ 475MXQP0MeZc+XurQg+Ihqx3ZJ+iSN7VuXszPTWX3Pn8n2OsY5AVg8CXo8efNPCyFAYoKBwz6
+ zSnZWBIPfWgLpsmgbsKtWIb6COsPtOvIdJWyTwZ7Vjo1h814EJBHK6QsBd5+ARdzgdU2SEAZg
+ MN1Xg+rC7fgFahHOPlAKOGhBFKjtwauQUr1kAmmrCTsW2zq2I6VCHvwlWq1URwB+b5oXqeuMM
+ Sx8ZGJVkNC63+liJrDW0IUgh3sy3r+eGt6ZP795q+4H5jcZ62ySgOcw+WWtKoGM4pzzWQlHlw
+ kzr5ic9oCpT+1LHQKrW4REhYPEW/OuWrrkgMbpUwJ6haZcuR7UFDi80LGkvo4kB1pRvLN/GT+
+ 1xFiSkcYnpXVBEnkIsSLKrGBnKIVBT3suCU06/WSTQmldmtUzBYYZkaQ9EVYBfZHRpbZm3lkk
+ STv7vBReZU7/WfxQzOPCMwYpcTcAOL0jGEkXGRbpdcEEbFegJtaPvP03m7rfCDlFtoPTz4XTi
+ x3DiBN0dWDEOKUhL6cdGK/FK05Jt+1hMaclB0SLvLNeg3AzLe8ZerNlXiMNxNLl3rR+ypLknG
+ z13gWIjhv4s/H8+CcaLMnK4VF9uKGPGKqklBiwironwI/e2pUyZakV0BmCc40CY93uExWzvkW
+ Pt7jQy3xO993iSLPoCzdhUAcBB++zvdze3SbsI+wix3oDx38pscFTlFfKJfNz14m9lLjyPPP/
+ KAbCKv84rIPnBvhyW+IJsJr5AzrnNULlLR4Oup1Wckev5cV1KHoEXefcuFcyRatZSVB+uIh7Z
+ FTt+fRx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a heavily butchered version of the README written by Thomas
-Rast and Thomas Gummerer, lifted from https://github.com/trast/tbdiff.
+When diffing diffs, it can be quite daunting to figure out what the heck
+is going on, as there are nested +/- signs.
+
+Let's make this easier by adding a flag in diff_options that allows
+color-coding the outer diff sign with inverted colors, so that the
+preimage and postimage is colored like the diff it is.
+
+Of course, this really only makes sense when the preimage and postimage
+*are* diffs. So let's not expose this flag via a command-line option for
+now.
+
+This is a feature that was invented by git-tbdiff, and it will be used
+in `branch-diff` in the next commit.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-branch-diff.txt | 239 ++++++++++++++++++++++++++++++
- 1 file changed, 239 insertions(+)
- create mode 100644 Documentation/git-branch-diff.txt
+ diff.c | 65 +++++++++++++++++++++++++++++++++++++++++++++++++---------
+ diff.h |  5 ++++-
+ 2 files changed, 59 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-branch-diff.txt b/Documentation/git-branch-diff.txt
-new file mode 100644
-index 00000000000..f9e23eaf721
---- /dev/null
-+++ b/Documentation/git-branch-diff.txt
-@@ -0,0 +1,239 @@
-+git-branch-diff(1)
-+==================
+diff --git a/diff.c b/diff.c
+index f1bda0db3f5..98a41e88620 100644
+--- a/diff.c
++++ b/diff.c
+@@ -67,6 +67,8 @@ static char diff_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_BOLD_YELLOW,	/* NEW_MOVED ALTERNATIVE */
+ 	GIT_COLOR_FAINT,	/* NEW_MOVED_DIM */
+ 	GIT_COLOR_FAINT_ITALIC,	/* NEW_MOVED_ALTERNATIVE_DIM */
++	GIT_COLOR_INV_RED,	/* OLD_INV */
++	GIT_COLOR_INV_GREEN,	/* NEW_INV */
+ };
+ 
+ static NORETURN void die_want_option(const char *option_name)
+@@ -108,6 +110,10 @@ static int parse_diff_color_slot(const char *var)
+ 		return DIFF_FILE_NEW_MOVED_DIM;
+ 	if (!strcasecmp(var, "newmovedalternativedimmed"))
+ 		return DIFF_FILE_NEW_MOVED_ALT_DIM;
++	if (!strcasecmp(var, "oldinv"))
++		return DIFF_FILE_OLD_INV;
++	if (!strcasecmp(var, "newinv"))
++		return DIFF_FILE_NEW_INV;
+ 	return -1;
+ }
+ 
+@@ -577,7 +583,10 @@ static void emit_line_0(struct diff_options *o, const char *set, const char *res
+ 	int nofirst;
+ 	FILE *file = o->file;
+ 
+-	fputs(diff_line_prefix(o), file);
++	if (first)
++		fputs(diff_line_prefix(o), file);
++	else if (!len)
++		return;
+ 
+ 	if (len == 0) {
+ 		has_trailing_newline = (first == '\n');
+@@ -596,7 +605,7 @@ static void emit_line_0(struct diff_options *o, const char *set, const char *res
+ 
+ 	if (len || !nofirst) {
+ 		fputs(set, file);
+-		if (!nofirst)
++		if (first && !nofirst)
+ 			fputc(first, file);
+ 		fwrite(line, len, 1, file);
+ 		fputs(reset, file);
+@@ -970,7 +979,8 @@ static void dim_moved_lines(struct diff_options *o)
+ 
+ static void emit_line_ws_markup(struct diff_options *o,
+ 				const char *set, const char *reset,
+-				const char *line, int len, char sign,
++				const char *line, int len,
++				const char *set_sign, char sign,
+ 				unsigned ws_rule, int blank_at_eof)
+ {
+ 	const char *ws = NULL;
+@@ -981,14 +991,18 @@ static void emit_line_ws_markup(struct diff_options *o,
+ 			ws = NULL;
+ 	}
+ 
+-	if (!ws)
++	if (!ws && set_sign == set)
+ 		emit_line_0(o, set, reset, sign, line, len);
+-	else if (blank_at_eof)
++	else if (!ws) {
++		/* Emit just the prefix, then the rest. */
++		emit_line_0(o, set_sign, reset, sign, "", 0);
++		emit_line_0(o, set, reset, 0, line, len);
++	} else if (blank_at_eof)
+ 		/* Blank line at EOF - paint '+' as well */
+ 		emit_line_0(o, ws, reset, sign, line, len);
+ 	else {
+ 		/* Emit just the prefix, then the rest. */
+-		emit_line_0(o, set, reset, sign, "", 0);
++		emit_line_0(o, set_sign, reset, sign, "", 0);
+ 		ws_check_emit(line, len, ws_rule,
+ 			      o->file, set, reset, ws);
+ 	}
+@@ -998,7 +1012,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 					 struct emitted_diff_symbol *eds)
+ {
+ 	static const char *nneof = " No newline at end of file\n";
+-	const char *context, *reset, *set, *meta, *fraginfo;
++	const char *context, *reset, *set, *set_sign, *meta, *fraginfo;
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+ 	enum diff_symbol s = eds->s;
+@@ -1038,7 +1052,16 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 	case DIFF_SYMBOL_CONTEXT:
+ 		set = diff_get_color_opt(o, DIFF_CONTEXT);
+ 		reset = diff_get_color_opt(o, DIFF_RESET);
+-		emit_line_ws_markup(o, set, reset, line, len, ' ',
++		set_sign = set;
++		if (o->flags.dual_color_diffed_diffs) {
++			char c = !len ? 0 : line[0];
 +
-+NAME
-+----
-+git-branch-diff - Compare two versions of a branch
++			if (c == '+')
++				set = diff_get_color_opt(o, DIFF_FILE_NEW);
++			else if (c == '-')
++				set = diff_get_color_opt(o, DIFF_FILE_OLD);
++		}
++		emit_line_ws_markup(o, set, reset, line, len, set_sign, ' ',
+ 				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
+ 		break;
+ 	case DIFF_SYMBOL_PLUS:
+@@ -1065,7 +1088,18 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 			set = diff_get_color_opt(o, DIFF_FILE_NEW);
+ 		}
+ 		reset = diff_get_color_opt(o, DIFF_RESET);
+-		emit_line_ws_markup(o, set, reset, line, len, '+',
++		if (!o->flags.dual_color_diffed_diffs)
++			set_sign = set;
++		else {
++			char c = !len ? 0 : line[0];
 +
-+SYNOPSIS
-+--------
-+[verse]
-+'git branch-diff' [--color=[<when>]] [--no-color] [<diff-options>]
-+	[--dual-color] [--no-patches] [--creation-weight=<weight>]
-+	( <range1> <range2> | <rev1>...<rev2> | <base> <rev1> <rev2> )
++			set_sign = diff_get_color_opt(o, DIFF_FILE_NEW_INV);
++			if (c == '-')
++				set = diff_get_color_opt(o, DIFF_FILE_OLD);
++			else if (c != '+')
++				set = diff_get_color_opt(o, DIFF_CONTEXT);
++		}
++		emit_line_ws_markup(o, set, reset, line, len, set_sign, '+',
+ 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
+ 				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
+ 		break;
+@@ -1093,7 +1127,18 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 			set = diff_get_color_opt(o, DIFF_FILE_OLD);
+ 		}
+ 		reset = diff_get_color_opt(o, DIFF_RESET);
+-		emit_line_ws_markup(o, set, reset, line, len, '-',
++		if (!o->flags.dual_color_diffed_diffs)
++			set_sign = set;
++		else {
++			char c = !len ? 0 : line[0];
 +
-+DESCRIPTION
-+-----------
-+
-+This command shows the differences between two versions of a patch
-+series, or more generally, two commit ranges (ignoring merges).
-+
-+To that end, it first finds pairs of commits from both commit ranges
-+that correspond with each other. Two commits are said to correspond when
-+the diff between their patches (i.e. the author information, the commit
-+message and the commit diff) is reasonably small compared to the
-+patches' size. See ``Algorithm` below for details.
-+
-+Finally, the list of matching commits is shown in the order of the
-+second commit range, with unmatched commits being inserted just after
-+all of their ancestors have been shown.
-+
-+
-+OPTIONS
-+-------
-+--no-patches::
-+	Suppress the diffs between commit pairs that were deemed to
-+	correspond; only show the pairings.
-+
-+--dual-color::
-+	When the commit diffs differ, recreate the original diffs'
-+	coloring, and add outer -/+ diff markers with the *background*
-+	being red/green to make it easier to see e.g. when there was a
-+	change in what exact lines were added.
-+
-+--creation-weight=<factor>::
-+	Set the creation/deletion cost fudge factor to `<factor>`.
-+	Defaults to 0.6. Try a larger value if `git branch-diff`
-+	erroneously considers a large change a total rewrite (deletion
-+	of one commit and addition of another), and a smaller one in
-+	the reverse case. See the ``Algorithm`` section below for an
-+	explanation why this is needed.
-+
-+<range1> <range2>::
-+	Compare the commits specified by the two ranges, where
-+	`<range1>` is considered an older version of `<range2>`.
-+
-+<rev1>...<rev2>::
-+	Equivalent to passing `<rev2>..<rev1>` and `<rev1>..<rev2>`.
-+
-+<base> <rev1> <rev2>::
-+	Equivalent to passing `<base>..<rev1>` and `<base>..<rev2>`.
-+	Note that `<base>` does not need to be the exact branch point
-+	of the branches. Example: after rebasing a branch `my-topic`,
-+	`git branch-diff my-topic@{u} my-topic@{1} my-topic` would
-+	show the differences introduced by the rebase.
-+
-+`git branch-diff` also accepts the regular diff options (see
-+linkgit:git-diff[1]), most notably the `--color=[<when>]` and
-+`--no-color` options. These options are used when generating the "diff
-+between patches", i.e. to compare the author, commit message and diff of
-+corresponding old/new commits. There is currently no means to tweak the
-+diff options passed to `git log` when generating those patches.
-+
-+
-+CONFIGURATION
-+-------------
-+This command uses the `diff.color.*` and `pager.branch-diff` settings
-+(the latter is on by default).
-+See linkgit:git-config[1].
-+
-+
-+Examples
-+--------
-+
-+When a rebase required merge conflicts to be resolved, compare the changes
-+introduced by the rebase directly afterwards using:
-+
-+------------
-+$ git branch-diff @{u} @{1} @
-+------------
-+
-+
-+A typical output of `git branch-diff` would look like this:
-+
-+------------
-+-:  ------- > 1:  0ddba11 Prepare for the inevitable!
-+1:  c0debee = 2:  cab005e Add a helpful message at the start
-+2:  f00dbal ! 3:  decafe1 Describe a bug
-+    @@ -1,3 +1,3 @@
-+     Author: A U Thor <author@example.com>
-+
-+    -TODO: Describe a bug
-+    +Describe a bug
-+    @@ -324,5 +324,6
-+      This is expected.
-+
-+    -+What is unexpected is that it will also crash.
-+    ++Unexpectedly, it also crashes. This is a bug, and the jury is
-+    ++still out there how to fix it best. See ticket #314 for details.
-+
-+      Contact
-+3:  bedead < -:  ------- TO-UNDO
-+------------
-+
-+In this example, there are 3 old and 3 new commits, where the developer
-+removed the 3rd, added a new one before the first two, and modified the
-+commit message of the 2nd commit as well its diff.
-+
-+When the output goes to a terminal, it is color-coded by default, just
-+like regular `git diff`'s output. In addition, the first line (adding a
-+commit) is green, the last line (deleting a commit) is red, the second
-+line (with a perfect match) is yellow like the commit header of `git
-+show`'s output, and the third line colors the old commit red, the new
-+one green and the rest like `git show`'s commit header.
-+
-+The color-coded diff is actually a bit hard to read, though, as it
-+colors the entire lines red or green. The line that added "What is
-+unexpected" in the old commit, for example, is completely red, even if
-+the intent of the old commit was to add something.
-+
-+To help with that, use the `--dual-color` mode. In this mode, the diff
-+of diffs will retain the original diff colors, and prefix the lines with
-+-/+ markers that have their *background* red or green, to make it more
-+obvious that they describe how the diff itself changed.
-+
-+
-+Algorithm
-+---------
-+
-+The general idea is this: we generate a cost matrix between the commits
-+in both commit ranges, then solve the least-cost assignment.
-+
-+To avoid false positives (e.g. when a patch has been removed, and an
-+unrelated patch has been added between two iterations of the same patch
-+series), the cost matrix is extended to allow for that, by adding
-+fixed-cost entries for wholesale deletes/adds.
-+
-+Example: Let commits `1--2` be the first iteration of a patch series and
-+`A--C` the second iteration. Let's assume that `A` is a cherry-pick of
-+`2,` and `C` is a cherry-pick of `1` but with a small modification (say,
-+a fixed typo). Visualize the commits as a bipartite graph:
-+
-+------------
-+    1            A
-+
-+    2            B
-+
-+		 C
-+------------
-+
-+We are looking for a "best" explanation of the new series in terms of
-+the old one. We can represent an "explanation" as an edge in the graph:
-+
-+
-+------------
-+    1            A
-+	       /
-+    2 --------'  B
-+
-+		 C
-+------------
-+
-+This explanation comes for "free" because there was no change. Similarly
-+`C` could be explained using `1`, but that comes at some cost c>0
-+because of the modification:
-+
-+------------
-+    1 ----.      A
-+	  |    /
-+    2 ----+---'  B
-+	  |
-+	  `----- C
-+	  c>0
-+------------
-+
-+In mathematical terms, what we are looking for is some sort of a minimum
-+cost bipartite matching; `1` is matched to `C` at some cost, etc. The
-+underlying graph is in fact a complete bipartite graph; the cost we
-+associate with every edge is the size of the diff between the two
-+commits' patches. To explain also new commits, we introduce dummy nodes
-+on both sides:
-+
-+------------
-+    1 ----.      A
-+	  |    /
-+    2 ----+---'  B
-+	  |
-+    o     `----- C
-+	  c>0
-+    o            o
-+
-+    o            o
-+------------
-+
-+The cost of an edge `o--C` is the size of `C`'s diff, modified by a
-+fudge factor that should be smaller than 1.0. The cost of an edge `o--o`
-+is free. The fudge factor is necessary because even if `1` and `C` have
-+nothing in common, they may still share a few empty lines and such,
-+possibly making the assignment `1--C`, `o--o` slightly cheaper than
-+`1--o`, `o--C` even if `1` and `C` have nothing in common. With the
-+fudge factor we require a much larger common part to consider patches as
-+corresponding.
-+
-+The overall time needed to compute this algorithm is the time needed to
-+compute n+m commit diffs and then n*m diffs of patches, plus the time
-+needed to compute the least-cost assigment between n and m diffs. Git
-+uses an implementation of the Jonker-Volgenant algorithm to solve the
-+assignment problem, which has cubic runtime complexity. The matching
-+found in this case will look like this:
-+
-+------------
-+    1 ----.      A
-+	  |    /
-+    2 ----+---'  B
-+       .--+-----'
-+    o -'  `----- C
-+	  c>0
-+    o ---------- o
-+
-+    o ---------- o
-+------------
-+
-+
-+SEE ALSO
-+--------
-+linkgit:git-log[1]
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
++			set_sign = diff_get_color_opt(o, DIFF_FILE_OLD_INV);
++			if (c == '+')
++				set = diff_get_color_opt(o, DIFF_FILE_NEW);
++			else if (c != '-')
++				set = diff_get_color_opt(o, DIFF_CONTEXT);
++		}
++		emit_line_ws_markup(o, set, reset, line, len, set_sign, '-',
+ 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
+ 		break;
+ 	case DIFF_SYMBOL_WORDS_PORCELAIN:
+diff --git a/diff.h b/diff.h
+index 0dd6a71af60..c3e5d27967c 100644
+--- a/diff.h
++++ b/diff.h
+@@ -95,6 +95,7 @@ struct diff_flags {
+ 	unsigned default_follow_renames:1;
+ 	unsigned stat_with_summary:1;
+ 	unsigned suppress_diff_headers:1;
++	unsigned dual_color_diffed_diffs:1;
+ };
+ 
+ static inline void diff_flags_or(struct diff_flags *a,
+@@ -242,7 +243,9 @@ enum color_diff {
+ 	DIFF_FILE_NEW_MOVED = 13,
+ 	DIFF_FILE_NEW_MOVED_ALT = 14,
+ 	DIFF_FILE_NEW_MOVED_DIM = 15,
+-	DIFF_FILE_NEW_MOVED_ALT_DIM = 16
++	DIFF_FILE_NEW_MOVED_ALT_DIM = 16,
++	DIFF_FILE_OLD_INV = 17,
++	DIFF_FILE_NEW_INV = 18
+ };
+ const char *diff_get_color(int diff_use_color, enum color_diff ix);
+ #define diff_get_color_opt(o, ix) \
 -- 
 2.17.0.409.g71698f11835
 
