@@ -6,88 +6,76 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CDF1200B9
-	for <e@80x24.org>; Fri,  4 May 2018 03:28:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59F77200B9
+	for <e@80x24.org>; Fri,  4 May 2018 04:56:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751308AbeEDD2A (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 23:28:00 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:38679 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751214AbeEDD17 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 23:27:59 -0400
-Received: by mail-qk0-f196.google.com with SMTP id b39so15637811qkb.5
-        for <git@vger.kernel.org>; Thu, 03 May 2018 20:27:59 -0700 (PDT)
+        id S1750940AbeEDE4I (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 00:56:08 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:33522 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750820AbeEDE4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 00:56:07 -0400
+Received: by mail-wr0-f194.google.com with SMTP id o4-v6so19645873wrm.0
+        for <git@vger.kernel.org>; Thu, 03 May 2018 21:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=iNJGGR9R+4MTl/Tl7V2j4Fs+wLgH4ufZLp+XLEfxB0w=;
-        b=R8i32ZNne+qFmRLqBhNIOYMFUPPDCmj0bzsXEqanIlmjZr6sF1Roq7qi7hO9fSpCTE
-         e0oZrjKf9N9vAvysPmqtMaHiWzt0g3cqZhT//t8x8kYUPMXDBg0kGordbE52ljdflGuR
-         uWF/LyxhddJLZWhktfreMb4spcVxM7cw+8msITuBjjPobmLJXSthGiMHjCDZKgxncbwJ
-         fJwkVDNDtaGT31Jl4nErqI0W56GL5iJ+5okABoe5M8qalZsctTboRhLb+il/3zlH5+5y
-         gy1xDLn4gLrqMniC+9Ov1jyfONjCIUyCTuJe13D1jWrkVUpzYsMmySg97jeZq0QwpVn3
-         9xBg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=X55v2DvB2nr+U1ITWf6Qjf2KiuGHoAEmIGCy1xgdILw=;
+        b=Tz6n7JvbRqKITxT4lobu2wFTk18jyIGUrc64FIuYcygdTjZ+0/SGLzeXrTbKDv5vk9
+         4HNXxArahjyVR45vngkvbIOa4bkxb0+j4cd2SbhaOE/rqDz3r5Wy1e4SMh2ktzEZcvLQ
+         KqtClCeeaLFrYu3+kHBxcrIkCC68/f3Hc/LlV1T+07NVXm7nCmS8kwBVo+MHn2OsMo7E
+         vY/yB0/PoQQkCrjwbMmpXyRNNJaK2xDvXQ0+yJLbGVuxxcaHcxLoxSspAc7UO082PVEk
+         iwi5axBKebsDQTXzH/P9CkruCxwaNhxCAejc0hgX0YCmD96VpxFyYZYM8gPKLUe4B1dD
+         SdOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=iNJGGR9R+4MTl/Tl7V2j4Fs+wLgH4ufZLp+XLEfxB0w=;
-        b=Z2Af3ewx2UFWY5D5Vh8nWwyA4SUmHL96vn3z9cZmKx54C+yBNqlzjVBUI1CXpIdk2r
-         DihuuRHF1EtBfXsMq8E39pYe9pbiX+f7fXxUERC7/6V5C3AhsoQezWyG5ul8Hl8lfC5w
-         mzbvwFOJqPFXHd8GS54pTK2UQ6nTiHyvuFV6ovaUnbT67oWu7FUx2Gz/fS0pax2oD1nZ
-         qjTH6r7zi95SM0GSwLeTA/ZP6jSVbLb8Ym0PnAshm/mOM7qkWyLgqsajNi/nO6QNxK/l
-         gJx8guSzCHGuXwBjk7biGjITf4SwpHWZmghMt8fYKMtShGRHfyxwnLUfwixQKZSUN32C
-         iqrw==
-X-Gm-Message-State: ALQs6tDVNSwJirZHR9N35PHj0QeolbZL7qWSxW4wkTIhsuRgrL9EoaUd
-        MNvwvqm6+m2n9aowM0+A80XDsXurxGD3YQEAHuE=
-X-Google-Smtp-Source: AB8JxZqTBbdeyHXyFlAg3ZC4Bw/6eGD2OJ+guGWSsVF9s5wxvo3kLcUXFbTYaMn/7kmpSq5BrwHkpmvP8baft4+CQpc=
-X-Received: by 10.55.108.198 with SMTP id h189mr11145384qkc.2.1525404478419;
- Thu, 03 May 2018 20:27:58 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Thu, 3 May 2018 20:27:58 -0700 (PDT)
-In-Reply-To: <edb34bd4f8da7437efb20e442780f17e9f84fc73.1525361419.git.johannes.schindelin@gmx.de>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <edb34bd4f8da7437efb20e442780f17e9f84fc73.1525361419.git.johannes.schindelin@gmx.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 3 May 2018 23:27:58 -0400
-X-Google-Sender-Auth: w9C2emf9rIezh865nVyb-G9ua4M
-Message-ID: <CAPig+cR0V-UgKg0iDfAXLPiSANLv2b3CbwGNKk=VBvrZjX5FdA@mail.gmail.com>
-Subject: Re: [PATCH 17/18] branch-diff: add a man page
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=X55v2DvB2nr+U1ITWf6Qjf2KiuGHoAEmIGCy1xgdILw=;
+        b=TzOZBTrLHKcIn7DAsgMYpn+iCpN4JqA5rPfC2VvxpThEWkOVB4N7V5d7m8lup0VT91
+         LSrtCx628SsT3RmuIEmZP8koR+GaoE6PbiUh8T/gfnK+7IaUYBRCz+EJ1KynhdPEqwb2
+         2daUda+x37iF3YyiNkn3a1UF6XMlxZBD2ke0xlLjxDoJoMKyvv78Hrcdxt2P7iS1cq6E
+         WIkKi6UoJCZ7fjyxJ7qdQVJyiLnNyW9jqikrfCV0lNFAc5ZX6TLCusPQ+6n8quqmWclZ
+         /L0+hy1ZqI4FoeeUdjoKH0Li0oX1/NQzaYTV2jDIp9y9zi5gUzk/Rx0VaGQoRHAlGeJL
+         /4Kw==
+X-Gm-Message-State: ALQs6tBhcc5zPgDXEzOiQGbBwIuzAssaKZX3TyyKlmn5knMuvw/Pv1Pv
+        4qEyLXj8eJuZC4q3CeGqC60=
+X-Google-Smtp-Source: AB8JxZroIHMWu4iWUB1n9BDvga7UfkURGWbtOzpzQjWGI88lHpK9yNSreXB5ntWox9VYPfadtRYH5g==
+X-Received: by 2002:adf:a558:: with SMTP id j24-v6mr20643705wrb.261.1525409765689;
+        Thu, 03 May 2018 21:56:05 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id u20-v6sm24006779wru.33.2018.05.03.21.56.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 03 May 2018 21:56:04 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
+Cc:     git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 03/18] branch-diff: first rudimentary implementation
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+        <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de>
+Date:   Fri, 04 May 2018 13:56:03 +0900
+In-Reply-To: <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Thu, 3 May 2018 17:30:31 +0200")
+Message-ID: <xmqq6044t3x8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 3, 2018 at 11:31 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> This is a heavily butchered version of the README written by Thomas
-> Rast and Thomas Gummerer, lifted from https://github.com/trast/tbdiff.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/Documentation/git-branch-diff.txt b/Documentation/git-branch-diff.txt
-> @@ -0,0 +1,239 @@
-> +Algorithm
-> +---------
-> +
-> +The general idea is this: we generate a cost matrix between the commits
-> +in both commit ranges, then solve the least-cost assignment.
-> +
-> +To avoid false positives (e.g. when a patch has been removed, and an
-> +unrelated patch has been added between two iterations of the same patch
-> +series), the cost matrix is extended to allow for that, by adding
-> +fixed-cost entries for wholesale deletes/adds.
-> +
-> +Example: let commits `1--2` be the first iteration of a patch series and
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-s/let/Let/
+> Note: due to differences in the diff algorithm (`tbdiff` uses the
+> Pythong module `difflib`, Git uses its xdiff fork), the cost matrix
 
-> +`A--C` the second iteration. Let's assume that `A` is a cherry-pick of
-> +`2,` and `C` is a cherry-pick of `1` but with a small modification (say,
-> +a fixed typo). Visualize the commits as a bipartite graph:
+Pythong???
+
+> calculated by `branch-diff` is different (but very similar) to the one
+> calculated by `tbdiff`. Therefore, it is possible that they find
+> different matching commits in corner cases (e.g. when a patch was split
+> into two patches of roughly equal length).
