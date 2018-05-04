@@ -2,158 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ADFE1F42E
-	for <e@80x24.org>; Fri,  4 May 2018 09:58:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AB401F42E
+	for <e@80x24.org>; Fri,  4 May 2018 10:26:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751901AbeEDJ6W (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 05:58:22 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:37719 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751519AbeEDJ6U (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 05:58:20 -0400
-Received: by mail-qk0-f194.google.com with SMTP id d74so16130508qkg.4
-        for <git@vger.kernel.org>; Fri, 04 May 2018 02:58:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=veqeM8iNGhh5Xf/wRK9LCAT6j7V67CYzlCpuHMYxJXQ=;
-        b=MfdsZliFm6IPnB2FJor9Rxol9s5NbbEj89WB4ooTeMUxSDpN5VO3t45DSEdHhKv8g1
-         w8GMKz0Zt8TGTd5J63j20DN+mn3ZdlboCV+J1W44h/4buvBcbTFbONaboTG9lDiV37F+
-         ZEkFKl5M9ChUqo2++duljlnuFTiGrfSf0Fff431t14a9eU9NCN7MpqAG8ANmcJhqOhQH
-         6FjDxNyyr1cz2VkIze/BnPJNQLb47bJcr0do1jc9avkgXYy97MIIgcu9xjJ1AUCAeHRR
-         QwRKazxOuOfm36kC/NgguSW5hUQJrrP8RlrmRaubToUX7DI3Ei/VOwqLwUdk7aj+dJPj
-         p+TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=veqeM8iNGhh5Xf/wRK9LCAT6j7V67CYzlCpuHMYxJXQ=;
-        b=IV0izWzns9W0uxhgo7tODvVpDA6MHRz6dH9GvKFZz+vRi8uVwaKvlkzX0WHPIxnoUh
-         OH22Az36Yymuhf0uxE1jItYcZ/Sibuo/djyfO2PeEYbK9vqpdaAu1/lSgCl3TRXltKJL
-         8dqg+NavfVpbgLXcX8DRvtOiBYBKcoEHBw/KSN5S9DWaQdv9fqi8IFCGjvfqIPXfB5Jd
-         QlHSzphCvxnZkt+H86mZSFciDs9NuYdXTabPpK7ohc6WE3OuXzwDV0sUSL2hqIT0cbGW
-         3doYkluIge2hRgnjXS4o8e0RSkBILgYAcOII4LKCLQsoiVc3WgxJGF1AJcwAmwmvy9nv
-         otQw==
-X-Gm-Message-State: ALQs6tAMb85ZjGlE/KRUv8iHFhxJ4VRx2CLJZbKbnH21en8Ykw1bSEbf
-        KhNIRKjvNPWbKGWSpDuDtktYQS/BV6L+FB+y0HM=
-X-Google-Smtp-Source: AB8JxZoi2TtQh1dVEDw1yO/8qyb0J3KBQNEdJntDyIcGTrTCbfRJnheMx/DM3aa6cdhnH7LypHg8qr7K1Fd57bCKP+g=
-X-Received: by 10.233.220.1 with SMTP id q1mr19865936qkf.361.1525427900051;
- Fri, 04 May 2018 02:58:20 -0700 (PDT)
+        id S1751272AbeEDK0m (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 06:26:42 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.18.14]:16950 "EHLO
+        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750880AbeEDK0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 06:26:41 -0400
+X-Greylist: delayed 462 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 May 2018 06:26:41 EDT
+Received: from [93.212.106.122] (helo=book.hvoigt.net)
+        by smtprelay02.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1fEXnk-0003kp-HL; Fri, 04 May 2018 12:18:56 +0200
+Date:   Fri, 4 May 2018 12:18:54 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     "Middelschulte, Leif" <Leif.Middelschulte@klsmartin.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "sbeller@google.com" <sbeller@google.com>,
+        "jacob.keller@gmail.com" <jacob.keller@gmail.com>
+Subject: Re: git merge banch w/ different submodule revision
+Message-ID: <20180504101854.GA29828@book.hvoigt.net>
+References: <1524739599.20251.17.camel@klsmartin.com>
+ <CAGZ79kZA_R-5bA6mPdoHkVW-C21pNn_0x6FayhuuXqnOTrmjWw@mail.gmail.com>
+ <CA+P7+xrUwq0G2YySC3SLKqyihhPnFPCiQnQpoVVa89+=W9O9+w@mail.gmail.com>
+ <CAGZ79kaub2k-q-Mcj3H5o6ekyZ8ZZzG7+r5sHt5Ne25Nc3_nPQ@mail.gmail.com>
+ <20180430170229.GA775@book.hvoigt.net>
+ <1525246025.2176.12.camel@klsmartin.com>
+ <20180503164226.GB23564@book.hvoigt.net>
+ <1525422571.2175.52.camel@klsmartin.com>
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Fri, 4 May 2018 02:58:19 -0700 (PDT)
-In-Reply-To: <20180503131840.27956-1-avarab@gmail.com>
-References: <87y3h1ykwn.fsf@evledraar.gmail.com> <20180503131840.27956-1-avarab@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 4 May 2018 05:58:19 -0400
-X-Google-Sender-Auth: HgYsXp0o7E9bM6st8PlbKBOKAhc
-Message-ID: <CAPig+cR59-OEDL7GDNZF2v7a-NOrUH2zC9EwDvuog8QLRtvKTA@mail.gmail.com>
-Subject: Re: [PATCH v2] checkout & worktree: introduce checkout.implicitRemote
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1525422571.2175.52.camel@klsmartin.com>
+User-Agent: Mutt/1.9.0 (2017-09-02)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 3, 2018 at 9:18 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Introduce a checkout.implicitRemote setting which can be used to
-> designate a remote to prefer (via checkout.implicitRemote=3Dorigin) when
-> running e.g. "git checkout master" to mean origin/master, even though
-> there's other remotes that have the "master" branch.
-> [...]
-> The new checkout.implicitRemote config allows me to say that whenever
-> that ambiguity comes up I'd like to prefer "origin", and it'll still
-> work as though the only remote I had was "origin".
-> [...]
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> @@ -1084,6 +1084,23 @@ browser.<tool>.path::
-> +checkout.implicitRemote::
-> +       When you run 'git checkout <something>' and only have one
-> +       remote, it may implicitly fall back on checking out and
-> +       tracking e.g. 'origin/<something>'. This stops working as soon
-> +       as you have more than one remote with a '<something>'
-> +       reference. This setting allows for setting the name of a
-> +       special remote that should always win when it comes to
+Hi,
 
-"special" is overly broad. "preferred" may better convey the intended
-meaning. Simply dropping "special" also works.
+On Fri, May 04, 2018 at 08:29:32AM +0000, Middelschulte, Leif wrote:
+> Am Donnerstag, den 03.05.2018, 18:42 +0200 schrieb Heiko Voigt:
+> > I still do not understand how the current behaviour is mismatching with
+> > users expectations. Let's assume that you directly tracked the files of
+> > L in your product repository P, without any submodule boundary. How
+> > would the behavior be different? Would it be? If D started on an older
+> > revision and gets merged into a newer revision, there can always be
+> > regressions even without submodules.
+> > 
+> > Why would the core developer need to be informed about mismatching
+> > revisions if he himself advanced the submodule?
+> In that case you'd be right. I should have picked my example more wisely.
+> Assume right here that not a core developer, but another developer advanced
+> the submodule (also via feature branch + merge).
+> > 
+> > It seems to me that you do not want to mix integration testing and
+> > testing of the feature itself. 
+> That's on point. That's why it would be nice if git *at least* warned
+> about the different revisions wrt submodules.
+> 
+> But, I guess, I learned something about submodules:
+> I used to think of submodules as means to pin down a specific revision like: `ver == x`.
+> Now I'm learning that submodules are treated as `ver >= x` during a merge.
 
-Subjective; not worth a re-roll.
+Well a submodule version is pinned down as long a you do not change it
+and commit it. The same as files and the goal is to make submodules
+behave as close to normal files as possible. And git "warns" about
+changed submodules by displaying them in the diff.
 
-> +       disambiguation. The typical use-case is to set this to
-> +       `origin`.
-> ++
-> +Currently this is used by linkgit:git-checkout[1] when 'git checkout
-> +<something>' will checkout the '<something>' branch on another remote,
-> +and by linkgit:git-worktree[1] when 'git worktree add' when referring
+Actually the use case you are describing is not even involving a real
+merge for submodules. It is just changing the pointer to another
+revision.
 
-"when ... when"?
+> > How about just testing/reviewing on the
+> > branch then? You would still get the submodule revision D was working on
+> > and then in a later stage check if integration with everything else
+> > works.
+> Sure. But if the behavior deviates after a merge the merging developer is currently not
+> aware that it *might* have to do with different submodule revisions used, not the "actual" code merged.
+> 
+> Like not even "beware: the (feature) branch you've merged used an 'older' revision of X"
 
-> +to a remote branch.  This setting might be used for other
-> +checkout-like commands or functionality in the future when
-> +appropriate.
+The submodule is part of the "actual" code and should be reviewed the
+same. Maybe you want to set the diff.submodule option to 'diff' ? Then
+git shows the actual diff of the changed contents in the submodule and
+it would be more obvious how the code changed.
 
-Not sure the final sentence adds value as user-facing documentation
-(versus the commit message in which it may).
+At the moment it seems to me that you want submodules to behave
+differently than we handle normal files/directories which is the
+opposite direction we have been trying to get git into. My feeling
+though is that this should be covered by the review process instead of a
+failing merge. Another option would be that you could write a hook that
+warns reviewers that they are merging a submodule update.
 
-> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.=
-txt
-> @@ -60,6 +60,11 @@ with a matching name, treat as equivalent to:
->  $ git worktree add --track -b <branch> <path> <remote>/<branch>
-> +It's also possible to use the `checkout.implicitRemote` setting to
-> +designate a special remote this rule should be applied to, even if the
-
-Again, you could drop "special".
-
-> +branch isn't unique across all remotes. See `checkout.implicitRemote`
-> +in linkgit:git-config[1].
-
-I have a hard time digesting this paragraph. Perhaps it wants to say:
-
-    Option `checkout.implicitRemote` can be configured to designate a
-    <remote> to use when <branch> isn't unique across all remotes.
-    See ...
-
-> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-> @@ -450,6 +450,24 @@ test_expect_success 'git worktree --no-guess-remote =
-option overrides config' '
-> +test_expect_success '"add" <path> <branch> dwims with checkout.implicitR=
-emote' '
-> +       test_when_finished rm -rf repo_upstream repo_dwim foo &&
-> +       setup_remote_repo repo_upstream repo_dwim &&
-> +       git init repo_dwim &&
-
-Maybe replace "dwim" here and in the test title with something else
-since checkout.implicitRemote is no longer about DWIM'ing?
-
-> +       (
-> +               cd repo_dwim &&
-> +               git remote add repo_upstream2 ../repo_upstream &&
-> +               git fetch repo_upstream2 &&
-> +               test_must_fail git worktree add ../foo foo &&
-> +               git -c checkout.implicitRemote=3Drepo_upstream worktree a=
-dd ../foo foo
-> +       ) &&
-> +       (
-> +               cd foo &&
-> +               test_branch_upstream foo repo_upstream foo &&
-> +               test_cmp_rev refs/remotes/repo_upstream/foo refs/heads/fo=
-o
-> +       )
-> +'
+Cheers Heiko
