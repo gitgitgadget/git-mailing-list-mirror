@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC3BC200B9
-	for <e@80x24.org>; Fri,  4 May 2018 15:35:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25638200B9
+	for <e@80x24.org>; Fri,  4 May 2018 15:35:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751464AbeEDPfK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 11:35:10 -0400
-Received: from mout.gmx.net ([212.227.15.18]:52847 "EHLO mout.gmx.net"
+        id S1751479AbeEDPfR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 11:35:17 -0400
+Received: from mout.gmx.net ([212.227.15.15]:33259 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751447AbeEDPfF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 11:35:05 -0400
+        id S1751311AbeEDPfO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 11:35:14 -0400
 Received: from virtualbox.mshome.net ([37.201.195.116]) by mail.gmx.com
  (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0M3j17-1eOAZW0F6H-00rJ2T; Fri, 04 May 2018 17:34:59 +0200
+ 0MYP57-1esmMM0WOX-00VBnU; Fri, 04 May 2018 17:35:07 +0200
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -30,9 +30,9 @@ Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 13/18] color: provide inverted colors, too
-Date:   Fri,  4 May 2018 17:34:58 +0200
-Message-Id: <1ebbe359547689d32aa27564929d733a26bb8054.1525448066.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 15/18] branch-diff: offer to dual-color the diffs
+Date:   Fri,  4 May 2018 17:35:06 +0200
+Message-Id: <b9be01705d6cfa1260dff33c1f2466526511dd18.1525448066.git.johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.17.0.409.g71698f11835
 In-Reply-To: <cover.1525448066.git.johannes.schindelin@gmx.de>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de>
@@ -40,56 +40,70 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:6+0Vu4L3ERYvX6yxbnW9kT9iJQ+guMWAWTtzi6Rx6EJ0ZtlneOk
- EB+tq9+SKILl0WhIC9Ry9W4X4Ol6xIt38ljRrjUYG/FXGCSAjDuOHQ792o/T05eTG+Dduw/
- PF5OIjoFREdS6LTlQqgvPGvCOTROlnw3fGSulOyb9Gp3E3oB0Kpq3HW58JmhgU5/Xglp7JA
- e2tSPOJ0k25rJ3HsgVhAA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9aIxqTYS1ow=:p5cSm24yFRl7fVOimkkLhk
- uzKsUN9ArQDcifo8u6mvi3cjScV8n3LzIuE1HAalviifJ+WrbFxeEmwDfefNosHOD10O/v0qx
- seZC7lXIQmHxVKlJtKjMQUy0DqYq4Lwc43ru+XwGfsq6SkEpkHxm0brPxj0b2ZcW4a0f5IbD2
- 3frOVwXhs80GDZ4GrWFqgZqbLUg8dcg7wAC0cF+In7ZuU8ZojP1mEtL40eHJsXYnYKinoHjmZ
- 3Tq9Cvkge4EpSP++XKAiab6cJg4Ew1ooZZy/Y+SlADwThBFff6v91F3PaACjavOpMYu0UAsNN
- Dnq2Ir26UgHMk3c+mz4sbmNw308bV3n8KBfdm4S6MkMNRzTf/KO/G8exixfoZvIZmq7a2mT/v
- /3nuvodgNELRChKukR6ASG9FpFZnc9oickb9klAmJ6Uk9BCbhJmSZe/yiOfDjDTZqQLMOeJy8
- J0cJh6949ZSeh4bsII2xP7NqGtBTsGRNgqgXcnzoQJLcNMQ4bp9b5ax+cOZNN3SG6EewmFkmc
- M+sQcziEZw5e8c9KSY6K6iPUroNTT2469KGDiLZ98wPzFHEAdtlyCvt7EWb5WZ3YPtv8N8cRz
- EKvBWXTbRKZ3F21tXKV33sHYHoTdRZKuZU9cKCpggWbuR5iTt+cyYKUa0Gfks3bHOYa/rdJve
- xOklabHNfpy1Z9KzvLmlWm7W3Vm4sZjsEKDsVt8D1MpQe2MCEbyxucWXZej6E4qtO5+Qm0US7
- 2bwsn4QJrGKEK9xpQmGMB/5BTdnNscidObkmSaqLr90xLjP6XNfY1Fv4FcG05VBRB/V09vdF+
- Sj6Z8Q3
+X-Provags-ID: V03:K1:OwYLHi5N9YXDZPH9JasrUL1FqDgPDsF4wTeTHAQIY5swRwtWPSt
+ 6p0MuptgEOsi4mrd4z8Tu/JQ4h6oURVqBpzZUwz5utFcstfcNgkVWSbzYru208g1D48TfSe
+ Q03j5qEbju3ZG6iwbzdEB5DMl40AGfXGHq/UHzCZK+0s0e6zQvDtsOJuWWRXEDSqzFXi0jQ
+ n3NobdXQBq6jlTC3YtKmg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6Sa/x56u/P0=:js4osyAw9rzzewPETsSqg3
+ stLyNF8DphvTq+RHDXWa1oszJEJF5UreuATkSOKbKARHyR4I76qyy81N6zqEUQEkwV1FYSVml
+ EALhdH3e2TeW8BO2WqSvv7SZZxPtbfHbprODTBEQ0BeD8ORmcw8NdkSpxurDswl3GGN9JOPxB
+ 8kViVsGAfiF+cNFAyqqzade9Uoqtkr20d10fasS1TJQ6ACkxnXQq3bXaoFqJZ/Rh098Fp3kk8
+ uCj3TMdewFUQhrRSnNSq1qBD5AexFUiae0Jn/yaSaNnEijcZmxZbFv6whxf2jVv4xY+FY+h7S
+ hSyaOcRXB6EWyHpvb8wuqhA3QodGKed7oh1bIerrE5u2DdhW9nJOwU7TV7tkPDuQvZ2itVjcu
+ 1Xoo5EYrRMErXIOWIKjz5n/BGNeLPm20X4i2eyDsXMJjKhjoSnXoR7YouJk1TC3X2dOgP648K
+ rSFf9vY7MbB+7CD96hA+kySA/YlZaPm/X0FFeB3q/d2FsFZ4JofIzyuxgpPSbHtHLa17drmgm
+ 5OrkQSAsugEOkvkerNkGRaFeNRVbzlh120/aVURCFlsCV/CLnBjTOWpDg3U2g+0mofv0k/fue
+ U9cM7miaZORh04yAJ2dFuNgcmoWSDvmCzAgvafU6oC410o+8mjGyO0+6uVgWdd07THkiJzhc3
+ 0vHQ4F0ODvE3xFQLywejl9ugDhB3qwtyzYekp6pdG5IPg5zHpzm2/XB4PTtSNVmSlJnzWUBSp
+ 2bbqN9bWgybYz7UsxUZIHHLo0Yr4sZY6xtCoW+9G4fPqp8B0Xe6SeUIXKs5tI3vQ++MW1EIL/
+ +4XvKqo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For every regular color, there exists the inverted equivalent where
-background and foreground colors are exchanged.
+When showing what changed between old and new commits, we show a diff of
+the patches. This diff is a diff between diffs, therefore there are
+nested +/- signs, and it can be relatively hard to understand what is
+going on.
 
-We will use this in the next commit to allow inverting *just* the +/-
-signs in a diff.
+With the --dual-color option, the preimage and the postimage are colored
+like the diffs they are, and the *outer* +/- sign is inverted for
+clarity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- color.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ builtin/branch-diff.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/color.h b/color.h
-index cd0bcedd084..f0984b09583 100644
---- a/color.h
-+++ b/color.h
-@@ -36,6 +36,12 @@ struct strbuf;
- #define GIT_COLOR_BOLD_BLUE	"\033[1;34m"
- #define GIT_COLOR_BOLD_MAGENTA	"\033[1;35m"
- #define GIT_COLOR_BOLD_CYAN	"\033[1;36m"
-+#define GIT_COLOR_INV_RED	"\033[7;31m"
-+#define GIT_COLOR_INV_GREEN	"\033[7;32m"
-+#define GIT_COLOR_INV_YELLOW	"\033[7;33m"
-+#define GIT_COLOR_INV_BLUE	"\033[7;34m"
-+#define GIT_COLOR_INV_MAGENTA	"\033[7;35m"
-+#define GIT_COLOR_INV_CYAN	"\033[7;36m"
- #define GIT_COLOR_BG_RED	"\033[41m"
- #define GIT_COLOR_BG_GREEN	"\033[42m"
- #define GIT_COLOR_BG_YELLOW	"\033[43m"
+diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
+index 04efd30f0f6..8a16352e3a1 100644
+--- a/builtin/branch-diff.c
++++ b/builtin/branch-diff.c
+@@ -435,8 +435,11 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+ {
+ 	struct diff_options diffopt = { NULL };
+ 	struct strbuf four_spaces = STRBUF_INIT;
++	int dual_color = 0;
+ 	double creation_weight = 0.6;
+ 	struct option options[] = {
++		OPT_BOOL(0, "dual-color", &dual_color,
++			    N_("color both diff and diff-between-diffs")),
+ 		OPT_SET_INT(0, "no-patches", &diffopt.output_format,
+ 			    N_("short format (no diffs)"),
+ 			    DIFF_FORMAT_NO_OUTPUT),
+@@ -472,6 +475,11 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+ 	argc = j;
+ 	diff_setup_done(&diffopt);
+ 
++	if (dual_color) {
++		diffopt.use_color = 1;
++		diffopt.flags.dual_color_diffed_diffs = 1;
++	}
++
+ 	if (argc == 2) {
+ 		if (!strstr(argv[0], ".."))
+ 			warning(_("no .. in range: '%s'"), argv[0]);
 -- 
 2.17.0.409.g71698f11835
 
