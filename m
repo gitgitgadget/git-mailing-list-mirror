@@ -2,83 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0E16200B9
-	for <e@80x24.org>; Fri,  4 May 2018 18:04:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 274FC200B9
+	for <e@80x24.org>; Fri,  4 May 2018 18:27:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751501AbeEDSEJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 14:04:09 -0400
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:44221 "EHLO
-        mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751189AbeEDSEJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 14:04:09 -0400
-Received: by mail-vk0-f49.google.com with SMTP id x66-v6so9354939vka.11
-        for <git@vger.kernel.org>; Fri, 04 May 2018 11:04:08 -0700 (PDT)
+        id S1751755AbeEDS1E (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 14:27:04 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34882 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751572AbeEDS1D (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 14:27:03 -0400
+Received: by mail-wm0-f66.google.com with SMTP id o78-v6so6429464wmg.0
+        for <git@vger.kernel.org>; Fri, 04 May 2018 11:27:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=J7qXwKkc6bBmzgiFahSXdcjI2b8BDpKozEqGrwRgb/E=;
-        b=Ldraz6ZMrmgiVzFebG2CnOtfTGeTI27aEKb273rAHPFC30YRF527a/1NhptY3OvFIK
-         TqzztXnQTOFcha/vLpaodQFHUGe2/j5zLDdNB0yhQzsWoNu6PeuDZoRAptsXZM2cWAwN
-         TTrEriOd1Z6/uo9dvUMet9q+7dr2EWfZPYiyFTr5Y/I/bTmBjnU2ZPFQ9cG0yOhMb4o1
-         8bkfUMGgEZCwwariagsi41oLeH1imLKK2FdEZU4pXT8FK/nG/AXkZyQGQl2j4upN/uUp
-         kcRloJVKOa6qxaJjkJPegKpTEbib1mreOx9IJ8pPalsyGZYy5VVxa5p20Rk7L0JhbFfi
-         QubA==
+        h=from:to:cc:subject:date:message-id:mime-version:in-reply-to
+         :references:content-transfer-encoding;
+        bh=X5BB9FP2whEIlh7AasqXZtUU+5UkD8QXqdjUJScArCQ=;
+        b=iLQ9G7DHSHMx+fPSDgcgqyq7Te2w60TR8PYf96eRsYcMjsOADHnK5DLOF5eTkeBW6d
+         tPzs2PFLRJv9j/ml3ulMq9zOajNiVw9nK9w9AFMw18FGvvTrPrB9GVeckTFokk1k5voQ
+         KkBL/n/BNEN6u8440KcyDSXY9RNW9jawZaYLo7AqZaDNVYjG6rTUMu9Is7EEfz2hKvTo
+         y1mCzTTbuZkgOHNUYfpnRHaT2kaoHeP8tf78ulAJpuNSEJubBXF4NsAPHCZI1vr/vRQW
+         IJbTY50kg/FOQbUHw3g87KaYK5dbaqc227jsrMA8hPW+/zDo4fx3MUP55/SgddmTpjdT
+         I22Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=J7qXwKkc6bBmzgiFahSXdcjI2b8BDpKozEqGrwRgb/E=;
-        b=ep8OMBn2qyAqZRFlQUrRnJocrsXZR1trJZN1ro1LsagujbH+t9jJRZMjFn6gIKC+N+
-         pW//lRrFgMeXN3AOa83yuFgttqylTtL5ZbK5OPG97xySdpAen5mghirIG2/krUWQiINv
-         l+Buokv7bA3tOicvqOYZljRDcNvj/zJjIGGpAVP707sG8rqQagIlrqt42ay8yYzOXD7o
-         aXpuk+TAev1vl2+ZqFFc/fZ2GX+ocLxS3DP9sDGF3Acgs2X7cPJfD99ojxepVJ/z8a6a
-         cKWxpURdSXIJEJK0KArNdNQsAYyk1ahNFTqj5qpNpCY8dQ4J0LAz/olpgdgO9q3zDmOf
-         QzyA==
-X-Gm-Message-State: ALQs6tDdvetJTEhCZGfcBG91uUTqzHAtCqBrNYmaWLenB9OPWXdz9ko0
-        xiDJXYA5Ont7RHvLAS2Yd4jN/fVc5if76eiDjvc=
-X-Google-Smtp-Source: AB8JxZqw22hQuk+JKrhLAHkt/ySH7MlvPr6OPol0uujEGlmRCrXpFtLxabO2WRXgXlmrLiu1nb430z/CumOyCHoIlX8=
-X-Received: by 2002:a1f:b752:: with SMTP id h79-v6mr8437889vkf.187.1525457048044;
- Fri, 04 May 2018 11:04:08 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :in-reply-to:references:content-transfer-encoding;
+        bh=X5BB9FP2whEIlh7AasqXZtUU+5UkD8QXqdjUJScArCQ=;
+        b=pfg++1AYWEFpD3h2AZkTYn2p42Tlzkg+gW8c0kqwB1Jgp8yA+TfbTkRsISDu/BN2tc
+         cOjDvpF514zpAD8s76SmKrZxsJBCm2hOFGwlLIdBRl23oYtzyoK69U9y0E1xnGtpJiA1
+         RvrOx1dp/nEHm47wdBiHqzFE3/uk/Bklt5RkJDzLR716sx6t2o4Pywjl2NPSFkDeq9Gh
+         uP9RFfF1f6Y2KM0OaqTArxs1KYK/o3ywQUCOV9lSdUEpSH367AeRp4/aewW4TD8uefMK
+         TpilSQTQsCLcrM8kg79aYbjn+zKOdoa3hbJWvIWU+dVanVMe5LgBQdQ2CP+A2XErkmv0
+         lZrA==
+X-Gm-Message-State: ALQs6tAoQ4B3L2ewvHlTkDNf9bG8NDYFmtT8Waz5PgZpTbSuXa01Dyn2
+        /ewtD+9aPGxf5lOGpgbag5I=
+X-Google-Smtp-Source: AB8JxZpbmE3KunmJiMf/ouhXLU1bzoJowm6tHXxvRX9i6th0d14iNHGCYjc8I7wzoMr7Esk9PmTj0g==
+X-Received: by 10.28.40.6 with SMTP id o6mr11627573wmo.151.1525458422791;
+        Fri, 04 May 2018 11:27:02 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id s14sm2935714wmb.5.2018.05.04.11.27.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 04 May 2018 11:27:01 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        David Turner <dturner@twopensource.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: git update-ref fails to create reference. (bug)
+Date:   Fri,  4 May 2018 20:26:46 +0200
+Message-Id: <20180504182646.7738-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.17.0.392.g7fa371e468
 MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Fri, 4 May 2018 11:04:07 -0700 (PDT)
-In-Reply-To: <xmqq4ljtz87g.fsf@gitster-ct.c.googlers.com>
-References: <xmqq4ljtz87g.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 4 May 2018 11:04:07 -0700
-Message-ID: <CABPp-BEL2xnU11jg838k4LGy-4iSJGPk=uQpJLaip-7rSP2KFw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2018, #04; Mon, 30)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <cced9e2c-7d02-47fd-109a-1185eed13e63@gmail.com>
+References: <cced9e2c-7d02-47fd-109a-1185eed13e63@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Rafael,
 
-On Sun, Apr 29, 2018 at 8:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> * en/rename-directory-detection-reboot (2018-04-25) 36 commits
-<snip>
+On 4 May 2018 at 18:28, Rafael Ascensão <rafa.almas@gmail.com> wrote:
+> While trying to create a pseudo reference named REF pointing to the
+> empty tree iff it doesn't exist, I stumbled on the following:
 >
->  Reboot of an attempt to detect wholesale directory renames and use
->  it while merging.
+> I assume both are valid ways to create such reference:
+>         a) $ echo -e option no-deref\\nupdate REF $(git hash-object -t
+>         tree /dev/null) 0000000000000000000000000000000000000000 | git
+>         update-ref --stdin
+>         b) $ git update-ref --no-deref REF $(git hash-object -t tree
+>         /dev/null) 0000000000000000000000000000000000000000
 >
->  Will merge to 'next'.
+> While a) works, b) will throw:
+>         fatal: could not read ref 'REF'
 
-Usually you have a mini-release-note in your "What's cooking" emails
-next to the series, so I'm assuming from the text here that you might
-just be intending to re-use the release note you used with the
-original series.  For the rebooted series, it is probably worth adding
-something to the release notes about how it also fixes the
-unnecessary-update issue reported by Linus
-(https://public-inbox.org/git/CA+55aFzLZ3UkG5svqZwSnhNk75=fXJRkvU1m_RHBG54NOoaZPA@mail.gmail.com/),
-a bug that's been with us for several years.
 
-Elijah
+I can reproduce this and I agree with your understanding of what should
+happen here. The patch below makes this work according to my and your
+expectations, at least in my command-line testing.
+
+The die("... already exists") could instead be a no-op, trusting that
+the backend discovers the problem. "die" could also be strbuf_addf(...),
+I'm just following 2c3aed138 here.
+
+Anyway, that's not where I'm stuck... Regardless of how I try to write
+tests (in t1400), they just pass beautifully even before this patch. I
+might be able to look into that more on the weekend. If anyone has
+ideas, I am all ears. Or if someone feels like picking this up and
+running with it, feel free.
+
+Martin
+
+diff --git a/refs.c b/refs.c
+index 8b7a77fe5e..cdb0a5ab29 100644
+--- a/refs.c
++++ b/refs.c
+@@ -666,9 +666,12 @@ static int write_pseudoref(const char *pseudoref, const struct object_id *oid,
+ 	if (old_oid) {
+ 		struct object_id actual_old_oid;
+ 
+-		if (read_ref(pseudoref, &actual_old_oid))
+-			die("could not read ref '%s'", pseudoref);
+-		if (oidcmp(&actual_old_oid, old_oid)) {
++		if (read_ref(pseudoref, &actual_old_oid)) {
++			if (!is_null_oid(old_oid))
++				die("could not read ref '%s'", pseudoref);
++		} else if (is_null_oid(old_oid)) {
++			die("reference '%s' already exists", pseudoref);
++		} else if (oidcmp(&actual_old_oid, old_oid)) {
+ 			strbuf_addf(err, "unexpected sha1 when writing '%s'", pseudoref);
+ 			rollback_lock_file(&lock);
+ 			goto done;
+-- 
+2.17.0.392.g7fa371e468
+
