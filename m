@@ -2,125 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A6E9200B9
-	for <e@80x24.org>; Fri,  4 May 2018 16:34:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9030200B9
+	for <e@80x24.org>; Fri,  4 May 2018 16:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751454AbeEDQeY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 12:34:24 -0400
-Received: from mail-ot0-f169.google.com ([74.125.82.169]:42760 "EHLO
-        mail-ot0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751262AbeEDQeX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 12:34:23 -0400
-Received: by mail-ot0-f169.google.com with SMTP id l13-v6so25143902otk.9
-        for <git@vger.kernel.org>; Fri, 04 May 2018 09:34:23 -0700 (PDT)
+        id S1751476AbeEDQfC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 12:35:02 -0400
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:38310 "EHLO
+        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751262AbeEDQfB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 12:35:01 -0400
+Received: by mail-vk0-f66.google.com with SMTP id 10-v6so13719615vkh.5
+        for <git@vger.kernel.org>; Fri, 04 May 2018 09:35:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=1Vww+4jTBiA4sfxK1XYOr8vHpQjl0oVgWpxNhBJumxk=;
-        b=Kv75MOCpDdbPG3adEBCCi4gw4M8KMUaAKgb/gzHUvzXNiCQVNDKMdnGk/dwah0AQBC
-         zEKFl+v5M/vf+qD7YBGk11EZHEXzHSHlaCpO36ffHQVTsr/8YREa0PJNiGldTI3d3Lh2
-         RwoeVmU+hOjIYtB3xyk16VGavAcIc8JUvvDhYoS1vKkk6efCwPw3Rf6i1vvgTLu2IYeM
-         WVrIHP3L5NqG2zpeMg6r0OWSxOzXP7JuvAJW2S7h+InHmEv2Re7Cz50E/qZ2h5NHd79h
-         5dN4TLPTjaqd92O7QNds7BVnx5tjYrKXD2WpBpkF/d5tOhwCrrxGLlN9R4qEtQYonflb
-         Nfqw==
+        bh=6xtA8AQWTWoxqEIsBe5x7SgywZPM6Uap7lJc0QPphnc=;
+        b=mx88cb/53i/snFm74mYqMhHFNsPWp+YjYPjMdcNiGL9bCNkf78rmH2ZXAi4M9eDwZE
+         vXofJXgMPafED1eWGWB8XRPWmC3xDyk03JsUAnyjq4nxF9LFAT0U83ZXYo1QVty5Pekz
+         zAjC9b/M8to39BcESfuBPoGsD5oc6+oUcS3uqcQpmTIu6LJkeK4a4j22KTseocv4UmSM
+         k/v0SYqrCS0vwBu3wN7IU4jr9sMMD6wBiyGTv57pNdIs2fjT/e+PbsU51Vuy9qisXxRB
+         WXv8s10kqPJdl1gPFszKGIs0pjshwwxJT2RNrW5StlhKn7jqHMBzLoDQBNFW6sHg1W3+
+         rZIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=1Vww+4jTBiA4sfxK1XYOr8vHpQjl0oVgWpxNhBJumxk=;
-        b=fbKw0YU4V81zu/BIlPe6fhyFOwG17Ylxr46LP0i6HjojzPnCsy+ibTmZCYlZ00uAOI
-         GqFEUW9H6W1TGbZgDdyZi11kiHPdrcVGh2WVeN+51+GEq0/G25vZ9aFzEhhVIvoTroxq
-         leIzWxSPonVtDIBi8cRlDsc2NVhuHNpS8WVgbe9Zuj2dpTbETa7TmUvFnUPs/mETzui1
-         79jqLFt/x3BvSlnuC8mxrI8ekWRwB7g+SE3FS6ui3eXSs5qp6hCCzB5LxTsL0UbkR0tE
-         5inVu0/WUei7FBaJCwYMDgh6tCpaYvUyqakjCLgCbWC+MCUm3fYyGGZxW5EqviWjOua9
-         Qh9w==
-X-Gm-Message-State: ALQs6tAcSgUZOTCTUU3D8Opr4lAElBXW6hvdVHowt7kD/uqjTPcxmvVX
-        tYav9duvGYJJYIlOvhRoDEYKWBwlLalBJ5Chd30=
-X-Google-Smtp-Source: AB8JxZrEhiVTFW2yWbeBMMgZNsL8hQEkqv0ukTw1zxaTCvXDIKWds/s9g0WGTjslnObWcmRBoAjaMyxv22u/CS6ZzQY=
-X-Received: by 2002:a9d:1d92:: with SMTP id y18-v6mr19051314otd.304.1525451663207;
- Fri, 04 May 2018 09:34:23 -0700 (PDT)
+        bh=6xtA8AQWTWoxqEIsBe5x7SgywZPM6Uap7lJc0QPphnc=;
+        b=IY5NIpLED9XuFJVtgvI8SDPZj0GNlfyYiWalNh5uJMGtFW6JuapkIlgNU57JVyV01Z
+         V8voycZdZvAXRz0py5iPwrP6CeNwEuzBW8LxAFjFpHJfi5dwK2XQ6WkDJieWDApjUjql
+         jcOevgi0deiVK/zJb6KTPR6q9ID3OlI2yjb6KCESwkoFkkggZXh+hcMB9qQ+eCjkieqa
+         x0Bdqrq/UDzYOxKuABV2XOPh4WfrGb/w37dqOCkX4ninzi1+Sx4bNxkZIYDOdERRlAZM
+         lAFmWXZd1UugZWmeaGJPErGvGJLt+M9s3RmuAYVcixiOeVy9oyLHwN53a5PppjD0woTE
+         pVmA==
+X-Gm-Message-State: ALQs6tBqXa550pQVPTYNvkjm/O/FqvpkEICkEynm3gzoURoWa0Gpupp9
+        8kVb0V4b6A5xyETY/zIwW5RzF0Yce04rQqf+WtM=
+X-Google-Smtp-Source: AB8JxZo6vqhZDKn4J1xP4kXvCtKbGFEEUFM48Icfh1jrE8KURgJHzJtptC5UPJD2LyrmUpnh0VM+jg0q2P0COH8iefM=
+X-Received: by 2002:a1f:c155:: with SMTP id r82-v6mr24638504vkf.76.1525451700334;
+ Fri, 04 May 2018 09:35:00 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Fri, 4 May 2018 09:33:52 -0700 (PDT)
-In-Reply-To: <20180503221802.61110-1-sbeller@google.com>
-References: <BL0PR2101MB1106BA184260609DA69988A6CE870@BL0PR2101MB1106.namprd21.prod.outlook.com>
- <20180503221802.61110-1-sbeller@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 4 May 2018 18:33:52 +0200
-Message-ID: <CACsJy8De2SUGj9hgq3h7pODm=9Wn+TkCKfJjrm1c=UxS9BZvTA@mail.gmail.com>
-Subject: Re: [PATCH] alloc.c: replace alloc by mempool
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jameson Miller <jamill@microsoft.com>,
+Received: by 10.176.95.4 with HTTP; Fri, 4 May 2018 09:34:59 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1805040829390.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+ <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
+ <71b00bbf-07e7-11e1-046b-f0241b82ebd3@ramsayjones.plus.com>
+ <nycvar.QRO.7.76.6.1805032224150.77@tvgsbejvaqbjf.bet> <850f1ad6-752d-85ae-ebad-feae09a76c54@ramsayjones.plus.com>
+ <nycvar.QRO.7.76.6.1805040829390.77@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 4 May 2018 09:34:59 -0700
+Message-ID: <CABPp-BERh1FGzEJSu+6Z0aGC3dJxx+P=9xwdCCsPgnG8jWvQMg@mail.gmail.com>
+Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 4, 2018 at 12:18 AM, Stefan Beller <sbeller@google.com> wrote:
-> I just measured on git.git and linux.git (both of which are not *huge* by
-> any standard, but should give a good indication. linux has  6M objects,
-> and when allocating 1024 at a time, we run into the new block allocation
-> ~6000 times).
->
-> I could not measure any meaningful difference.
->
-> linux.git $ git count-objects -v
-> count: 0
-> size: 0
-> in-pack: 6036543
-> packs: 2
-> size-pack: 2492985
-> prune-packable: 0
-> garbage: 0
-> size-garbage: 0
->
-> (with this patch)
->  Performance counter stats for '/u/git/git count-objects -v' (30 runs):
->
->           2.123683      task-clock:u (msec)       #    0.831 CPUs utilized            ( +-  2.32% )
->                  0      context-switches:u        #    0.000 K/sec
->                  0      cpu-migrations:u          #    0.000 K/sec
->                126      page-faults:u             #    0.059 M/sec                    ( +-  0.22% )
->            895,900      cycles:u                  #    0.422 GHz                      ( +-  1.40% )
->            976,596      instructions:u            #    1.09  insn per cycle           ( +-  0.01% )
->            218,256      branches:u                #  102.772 M/sec                    ( +-  0.01% )
->              8,331      branch-misses:u           #    3.82% of all branches          ( +-  0.61% )
->
->        0.002556203 seconds time elapsed                                          ( +-  2.20% )
->
->   Performance counter stats for 'git count-objects -v' (30 runs):
->
->           2.410352      task-clock:u (msec)       #    0.801 CPUs utilized            ( +-  2.79% )
->                  0      context-switches:u        #    0.000 K/sec
->                  0      cpu-migrations:u          #    0.000 K/sec
->                131      page-faults:u             #    0.054 M/sec                    ( +-  0.16% )
->            993,301      cycles:u                  #    0.412 GHz                      ( +-  1.99% )
->          1,087,428      instructions:u            #    1.09  insn per cycle           ( +-  0.02% )
->            244,292      branches:u                #  101.351 M/sec                    ( +-  0.02% )
->              9,264      branch-misses:u           #    3.79% of all branches          ( +-  0.57% )
->
->        0.003010854 seconds time elapsed                                          ( +-  2.54% )
->
-> So I think we could just replace it for now and optimize again later, if it
-> turns out to be a problem. I think the easiest optimisation is to increase
-> the allocation size of having a lot more objects per mp_block.
+On Thu, May 3, 2018 at 11:40 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> I actually have a hacky script to fixup commits in a patch series. It lets
+> me stage part of the current changes, then figures out which of the
+> commits' changes overlap with the staged changed. If there is only one
+> commit, it automatically commits with --fixup, otherwise it lets me choose
+> which one I want to fixup (giving me the list of candidates).
 
-Yeah. I also tested this from a different angle: memory overhead. For
-2M objects with one mp_block containing 1024 objects (same setting as
-alloc.c), the overhead (not counting malloc() internal overhead) is
-46KB and we don't have any extra overhead due to padding between
-objects. This is true for all struct blob, commit, tree and tag. This
-is really good. alloc.c has zero overhead when measured this way but
-46KB is practically zero to me.
--- 
-Duy
+Ooh, interesting.  Are you willing to share said hacky script by chance?
+
+(And as a total aside, I found your apply-from-public-inbox.sh script
+and really like it.  Thanks for making it public.)
