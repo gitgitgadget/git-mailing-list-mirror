@@ -2,111 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C68C3200B9
-	for <e@80x24.org>; Fri,  4 May 2018 19:55:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB890200B9
+	for <e@80x24.org>; Fri,  4 May 2018 20:07:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751632AbeEDTzy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 15:55:54 -0400
-Received: from mail-yb0-f175.google.com ([209.85.213.175]:35787 "EHLO
-        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751558AbeEDTzw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 15:55:52 -0400
-Received: by mail-yb0-f175.google.com with SMTP id b19-v6so3263243ybg.2
-        for <git@vger.kernel.org>; Fri, 04 May 2018 12:55:52 -0700 (PDT)
+        id S1751848AbeEDUHs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 16:07:48 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:53132 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751826AbeEDUHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 16:07:46 -0400
+Received: by mail-wm0-f54.google.com with SMTP id w194so5700519wmf.2
+        for <git@vger.kernel.org>; Fri, 04 May 2018 13:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=SSeDgNLnDoVcbouDdwuH2GXK1HFxPo5PkGrigCLfrks=;
-        b=A8YTcyRnJkKedk9aDG28ABjHuWLsns2uRQh+oPFqI2VaHj7d1HjQzBSGTBvT9YI4wE
-         dGrRoqyG+Fd81/GlUlL9ve3yB1tNuJa93dw71cN1rtvygQEtUfbkaZ3zkHNkF9+bIl+s
-         YEcscfMLw5IhxRXRU1CwYwoqN0L7gBkFqO/Mjxnwdo6uE4/X4587tn3zVMKTuXdOssXF
-         wOcztdYJkG52d5Uk9YpCLj05ob4YYlCFz1l0abQdhxf1uqUWBdl9Nf/byn/ipSJrR9D0
-         TWCTCYtRgzX/LKTkXnHVXQuTvIdnX+5rydgKo5bKQzcvjNZwAIz+Oe4P0LgkAtfjfw+q
-         GObw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=lqKN4FF7DEIJGfvVzIXajWfFxeIvZFzQKgyeDwcO3KU=;
+        b=XECAsbiSZiW3su42VUKwLQj6mnPQqIIdwE2tTPe+sO4cpeEi0S93oyjwIB5ITTmSPC
+         vSTNbuOp7H90LhBY1Rz2IOwm/w2wEzuJ8lQ6i0ky+M2KpYF2axoMPsvwF9YDFw0aV2PC
+         mPwGeQjo/CJ3LbiOPRbDK71o8SdpKkR06C4j7LkRJ4MxkUyDd0f70Hn9QV0rrNkK6UKX
+         ZR++bGBx+hyP1MUHMAqzeONfSBEiCKDpYGohVrp4e6/sVctP/kIzNmFxysB59p88v5XY
+         L+Wx97tizA00duosBaZKELCJQvFdysukRg1wPDxuI1N65oF1qTSyEYI3pAEzS+O1LRVw
+         x+Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=SSeDgNLnDoVcbouDdwuH2GXK1HFxPo5PkGrigCLfrks=;
-        b=ntmP0P9NcOChetkgKYrfPel4ieHKM/cz7emDgd6ySaytWec+vAXwCx/GiY3OqguHSW
-         j9q9+QECHWp77pWOJk58IlOzdG2Zp1TJhGP/DeVe8Ae/2H5OHp4QjuGJDk3oM4q+aHeh
-         ijKIM0BP0p7aFIzqs+uFlN0xluT6lOG6KnT822e21OlGs3bXmBEeBGnoGC1Q439fZ3cd
-         yiRYgtRRjtNONepn9SsXkNJckojeXei5XvYl5/H4tHhjvuLFqVeZFbvCo2nKnW6tZyKa
-         mtqDBkBc9oYpzf+CSHinLrHc9IFOcIvzlYcZ+BQwdTcjWJBeKmoIXBs8rrOpCy5UmVmj
-         sYmA==
-X-Gm-Message-State: ALQs6tAeHfqMUVfHSHhpDbYjTgFaPTXb662YaC7RCM7eI4UUZdY3fqcq
-        zUT46iTxIxv9ZYDL9sodUx4P8UHmzJadQ7fh32Uog2bKB8E=
-X-Google-Smtp-Source: AB8JxZpNlvHnKieQP+XcA9nMnCwO7XLSRQkYo0yfjSETOrsHNiY/QFalZfSB6PrbDD0XqrJYasSWOddQqX43aITDpMU=
-X-Received: by 2002:a25:3bc5:: with SMTP id i188-v6mr15775891yba.352.1525463751567;
- Fri, 04 May 2018 12:55:51 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=lqKN4FF7DEIJGfvVzIXajWfFxeIvZFzQKgyeDwcO3KU=;
+        b=lG7IXgU5jA9BXD57qSjnGwtgug3Bc4RNzclYss0Giin5WxLyorQ5I4vFyVH/PPRk/B
+         u0p7omvF8R9nRDu0cGRJr7WHoXJU8niTvzOTDTSvq35FNjwRk1TEVRmYX1lK1/HCLV5H
+         vE+eRo56ELUBtLRdMNTQSGPk3OToWEnKT+4fMMllOOvYmOLu6dRPReJ4/vshjcefddVj
+         MYlNxrwkWfAqKDvMABK1R7smWOX9S03qaCsTU6EPCE35ecNUO7TpNkduDCwc95CrIu9y
+         YgdeSlYKKeB9mvQgY4T5FoJOsYjXVdAGob99QZJNAmWD7rVrbR5kvj7zkSAGx6ouLZjL
+         l9Sg==
+X-Gm-Message-State: ALQs6tCmYkiLBcy/94UD4dehCjRu6lYR7rsDanuc+fNnarA76QKhq59K
+        WX6RYcQCI2RyNBbimfuxjGwcs7j/
+X-Google-Smtp-Source: AB8JxZrUyTwS2C54FT4uaeel2Gw0t0G5GU3W08JPtcr5fIaTGaZGUr7gwm8JkKgk9M2Ax6jQ+8xrcg==
+X-Received: by 2002:a50:902c:: with SMTP id b41-v6mr38060790eda.279.1525464464340;
+        Fri, 04 May 2018 13:07:44 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id 49-v6sm8995331edz.87.2018.05.04.13.07.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 04 May 2018 13:07:43 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [RFC] Other chunks for commit-graph, part 1 - Bloom filters, topo order, etc.
+References: <86zi1fus3t.fsf@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <86zi1fus3t.fsf@gmail.com>
+Date:   Fri, 04 May 2018 22:07:42 +0200
+Message-ID: <87in83xjzl.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Fri, 4 May 2018 12:55:51 -0700 (PDT)
-In-Reply-To: <cover.1525388472.git.johannes.schindelin@gmx.de>
-References: <cover.1524868165.git.johannes.schindelin@gmx.de> <cover.1525388472.git.johannes.schindelin@gmx.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 4 May 2018 12:55:51 -0700
-Message-ID: <CAGZ79ka2SmfA_ZUA2MjuqSwb=gUphbRxp=NQgj5AcqvMiePZFw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] Let the sequencer handle `git rebase -i --root`
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Wink Saville <wink@saville.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->
-> Branch-diff vs v1:
->  1: 42db734a980 ! 1: 73398da7119 sequencer: learn about the special "fake root commit" handling
->      @@ -54,40 +54,50 @@
->         return NULL;
->        }
->
->      ++/* Read author-script and return an ident line (author <email> timestamp) */
->       +static const char *read_author_ident(struct strbuf *buf)
 
+On Fri, May 04 2018, Jakub Narebski wrote:
 
-I like the new way of read_author_ident. Thanks for writing it!
+> With early parts of commit-graph feature (ds/commit-graph and
+> ds/lazy-load-trees) close to being merged into "master", see
+> https://public-inbox.org/git/xmqq4ljtz87g.fsf@gitster-ct.c.googlers.com/
+> I think it would be good idea to think what other data could be added
+> there to make Git even faster.
 
+Thanks for the write-up.
 
->       +
->        static const char staged_changes_advice[] =
->      @@ -159,7 +169,17 @@
->       +/* Does this command create a (non-merge) commit? */
->       +static int is_pick_or_similar(enum todo_command command)
->       +{
->      -+ return command <= TODO_SQUASH;
->      ++ switch (command) {
->      ++ case TODO_PICK:
->      ++ case TODO_REVERT:
->      ++ case TODO_EDIT:
->      ++ case TODO_REWORD:
->      ++ case TODO_FIXUP:
->      ++ case TODO_SQUASH:
->      ++         return 1;
->      ++ default:
->      ++         return 0;
->      ++ }
+> 3. Third, it needs to be reasonably fast to create, and fast to update.
+> This means time to create the chunk to be proportional to number of
+> commits, or sum of number of commits and edges (which for commit graph
+> and other sparse graphs is proprtional to the number of nodes / commits
+> anyway).  In my opinion time proportional to n*lug(n), where 'n' is the
+> number of commits, is also acceptable.  Times proportional to n^2 or n^3
+> are not acceptable.
 
-The switch case is not as bad as I thought following the discussion on of v1.
+I don't think this requirement makes sense...
 
-This series is
-Reviewed-by: Stefan Beller <sbeller@google.com>
+>   DS> If we add commit-graph file downloads to the protocol, then the
+>   DS> server could do this computation and send the data to all
+>   DS> clients. But that would be "secondary" information that maybe
+>   DS> clients want to verify, which is as difficult as computing it
+>   DS> themselves.
 
-Thanks!
-
-<off topic>
-During a lunch discussion I wondered if the branch diff format could lead to
-another form of machine readable communication, i.e. if we want to add the
-ability to read the branch diff format and apply the changes. Note how applying
-this diff-diff would not create new commits, but rather amend existing commits.
+... when combined with this. If hypothetically there was some data that
+significantly sped up Git and the algorithm to generate it was
+ridiculously expensive, that would be fine when combined with the
+ability to fetch it pre-generated from the server. There could always be
+an option where you trust the server and optionally don't verify the
+data, or where it's much cheaper to verify than compute.
