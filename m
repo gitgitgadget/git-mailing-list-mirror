@@ -2,149 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9224B1F42E
-	for <e@80x24.org>; Fri,  4 May 2018 07:03:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD81D1F42E
+	for <e@80x24.org>; Fri,  4 May 2018 07:14:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750880AbeEDHDK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 03:03:10 -0400
-Received: from mout.gmx.net ([212.227.17.22]:59625 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750733AbeEDHDJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 03:03:09 -0400
-Received: from [192.168.0.129] ([37.201.195.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJjUO-1fDOHc0iQ8-0018eq; Fri, 04
- May 2018 09:03:04 +0200
-Date:   Fri, 4 May 2018 09:03:04 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH 03/18] branch-diff: first rudimentary implementation
-In-Reply-To: <CAPig+cSvHWvb0dsGkjL69yzbBvgaT7oJm6nFuGWeA6Jw0NpYUw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1805040900570.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <ec51c71779a325263c1b705a6b1bfb003fcd528a.1525361419.git.johannes.schindelin@gmx.de> <CAPig+cSvHWvb0dsGkjL69yzbBvgaT7oJm6nFuGWeA6Jw0NpYUw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751199AbeEDHOx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 May 2018 03:14:53 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:42354 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751059AbeEDHOw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 May 2018 03:14:52 -0400
+Received: by mail-qk0-f193.google.com with SMTP id j10so15894192qke.9
+        for <git@vger.kernel.org>; Fri, 04 May 2018 00:14:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=3d5b2cZSzMpkVE06ZRQ9Nober+Cs3mMqVimv4Me86YQ=;
+        b=vFj4eQH45Eu1rt21e6sDDUBk1JojaD+W7L7HWD+uMXqAsD19T20oRxIgW8N6LK8580
+         9xQ0rZlA16yPw17AVCmAbPMd1eZuB1CFF7SYJ5pqScp5jabnmXiXJl3tps0rBkhoHwUj
+         ovPh9HobLU74Wt3wCObsiVWH+HK/+37PLMZES5qwSMhUaLo+LNeA7/e3n3xjIKRrpJD6
+         ZWiJAP2Gr+9nYfTnMqUC/tyC+yrWROjDLxbNWdJsy7oMxQxsA2xNASZEGT7N3cdw0m+k
+         IiOHCyHLOePo7A40/Pb3QHW/oyCRX/JH+ulhoD4MxUPENYcFdUFFLLKpydYjAPd5qrVD
+         vvVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=3d5b2cZSzMpkVE06ZRQ9Nober+Cs3mMqVimv4Me86YQ=;
+        b=JLyftWK5NKEh+LyiJxIhUhA4i7Cq3M8DqaXyZW2P0MKqKozJ2SDaNMYGAMJaC63S8D
+         EymR/PMEitTsO0TngP/yDWhfrQAm753O2/uarz/3jCC0SCxd2m9dMT5ptXpxBqplyY16
+         BQlK7ezLmjlUzqc3Fzo9PYnPqB7QyhyCjXM33e6YO0AuVz6UMKS1r4fIlkiW1uuG4oJD
+         ziBW//yoxQQAVSsHP8ZhyhTlUFuBU7yMRFMEiWA2kEVaKh1x2P0uszDk50CrSuZKxGBB
+         GMquVtjOdTN6jaO5/W4wwgpOvQ+PTmiTe6K5rPSiRTocrT4i5tbna1jJHA/QnyIWjE/7
+         sNjQ==
+X-Gm-Message-State: ALQs6tBVyopdBw+gwreJ+sHjly+yGOFwVBOVoHE4MlTeaI7gK+KF6Gs7
+        8bK1DxuPJ46wc7PdkMfLs5PeH1iorWafGT2bpXc=
+X-Google-Smtp-Source: AB8JxZq/etXnZ5W/GNBkF7tC5IXXU/LP0JkiTX8KZKE7Y9oBP2v5rdXzbUZzNwGEVaqKsPozIbZ8ihsIrBRjOm9POZ8=
+X-Received: by 10.233.220.1 with SMTP id q1mr19555529qkf.361.1525418091118;
+ Fri, 04 May 2018 00:14:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ZQbEN4+j4MNKjfVZpFA6s0fANdIPkGAlIdHD58imhEhwuqq9toQ
- XL6mmOhjaz0Yg1nENu629YrWb7twCfohOGXD1BESNqTbyUvGesWLcHifQtZFpJXATyB3C3X
- iqMsKUJAL8WDXVmZ2w5lu2Zy70IX/Uov627KChi8I5s9EeW5UQrtBY7QC9EBUXi0emlnhV8
- B356mksBW4M8T0pepBeDQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YWtw60JNoIA=:wixWm8Ih5EobhyOQS3t99L
- 8QhlQcGkmxCXRymgDMSS6ATei3wiFJZplbsQeLc707WQUHd9YpXbK7LtlK7PM+cgJbSVmpJmd
- Th+jIw7j/PBsgQO5CyysLce/n11cPsWQRKT4FFFhXQtIYvO0czicpgDxB5OwT46lcwP9NNUHA
- G8UybIPXqma8Z12MPrTXqFOB/PUO6Q428SPFErGSOUfZFkN7FgBgu/5a7felTjm7aMTUe4o0T
- me0ZkYcdoplSJvoz0Lq5ZJoZvPRjCll66SLjHIcYekETn5PzFb3FAbtM4646kLYaPlcgJIezp
- 2ra+TGWwxIjHHFs3wdJlrrKD9vcl1Kkha8w5JJElZ1jGf4yvPngjxNN9jtb/kphhN6GBunYBS
- WLilIfWcVvVAIhO5gWRYx9A2oTk7Yel6iV1I3/H7v3jLK7HcFzM3nzHWY831h1oSX+f9KtQCK
- c0Zr/R5qF1deOVv9SVIvBfwtHHkjhoOGOBaJ3sKsayh+OrXzYtsQEz9wfkSVklyixIMJkQUpk
- IW5i8vB7rp4JGLydJb5lFch/S/9xRqvUQ82MPw3i9O57zWYzwlPTs++XB3YEX26tDk8bOI+6l
- 7jDzHlTnApq8Irgjg2vivZWSJQTK1fE5ke96J850uf+TaZP7TPVoauVZwWlt10ivdSLyFMASC
- R305HEx8ENjfk5j1zG031utRPfgKeoC4Tpxaa7ylW7z8DF45EAOszfz4o6BH3lTvj+2asxONe
- v/Z8j4E3ckC2+gp9jeCbhgw8+hFBob1VVCRN49U8ZsaHCcph7MBTCZCyxD/BdYn/wzHJipLJv
- XdWEpkE
+Received: by 10.12.170.75 with HTTP; Fri, 4 May 2018 00:14:50 -0700 (PDT)
+In-Reply-To: <87y3h1ykwn.fsf@evledraar.gmail.com>
+References: <20180502105452.17583-1-avarab@gmail.com> <CACsJy8Ae9PP8BMbyX5mPJukGpC06jMvvbg0fMFL+fu+EUg1kPw@mail.gmail.com>
+ <CAPig+cTZyYC-1_TxL2PrfOF6HAktUxxM+g5EXcByS5fCDMdCHg@mail.gmail.com> <87y3h1ykwn.fsf@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 4 May 2018 03:14:50 -0400
+X-Google-Sender-Auth: ydjuhmSFcFHPG94iMUvcM35eR3I
+Message-ID: <CAPig+cSRBBzXDWMJd5k=ZGOt_ayATWB6fZQrcMqJkP8ja4Tq+g@mail.gmail.com>
+Subject: Re: [PATCH] checkout & worktree: introduce a core.DWIMRemote setting
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+On Wed, May 2, 2018 at 2:25 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Wed, May 02 2018, Eric Sunshine wrote:
+>> A few observations:
+>>
+>> 1. DWIM has broad meaning; while this certainly falls within DWIM,
+>> it's also just a _default_, so should this instead be named
+>> "defaultRemote"?
+>>
+>> 2. Building on #1: How well is the term "DWIM" understood by non-power
+>> users? A term, such as "default" is more well known.
+>
+> I've got no love for the DWIM term. And I think I should change it in
+> v2, I just want some way to enable this functionality since this
+> behavior has annoyed me for a long time.
+>
+> I wonder though if something like "core.defaultRemote" might not bring
+> up connotations about whether this would e.g. affect "push" in the minds
+> of users (not that my initial suggestion is better).
 
-On Thu, 3 May 2018, Eric Sunshine wrote:
+A reasonable concern.
 
-> On Thu, May 3, 2018 at 11:30 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > At this stage, `git branch-diff` can determine corresponding commits of
-> > two related commit ranges. This makes use of the recently introduced
-> > implementation of the Hungarian algorithm.
-> >
-> > The core of this patch is a straight port of the ideas of tbdiff, the
-> > seemingly dormant project at https://github.com/trast/tbdiff.
-> >
-> > The output does not at all match `tbdiff`'s output yet, as this patch
-> > really concentrates on getting the patch matching part right.
-> >
-> > Note: due to differences in the diff algorithm (`tbdiff` uses the
-> > Pythong module `difflib`, Git uses its xdiff fork), the cost matrix
-> 
-> s/Pythong/Python/
+> So maybe something like checkout.implicitRemote would be better? And we
+> could just break the rule that only git-checkout would use it, since
+> git-worktree could be said to be doing something checkout-like, or just
+> also add a worktree.implicitRemote.
 
-Yep!
+Considering that git-worktree runs the post-checkout hook, it seems
+pretty safe to say that it does something checkout-like.
 
-> > calculated by `branch-diff` is different (but very similar) to the one
-> > calculated by `tbdiff`. Therefore, it is possible that they find
-> > different matching commits in corner cases (e.g. when a patch was split
-> > into two patches of roughly equal length).
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/builtin/branch-diff.c b/builtin/branch-diff.c
-> > @@ -19,6 +23,279 @@ static int parse_creation_weight(const struct option *opt, const char *arg,
-> > +static int read_patches(const char *range, struct string_list *list)
-> > +{
-> > +       [...]
-> > +       struct strbuf buf = STRBUF_INIT, line = STRBUF_INIT;
-> > +       [...]
-> > +                       } else if (starts_with(line.buf, "    ")) {
-> > +                               strbuf_addbuf(&buf, &line);
-> > +                               strbuf_addch(&buf, '\n');
-> > +                       }
-> > +
-> > +                       continue;
-> 
-> Unnecessary blank line above 'continue'?
+Personally, I find "defaultRemote" easier to understand than
+"implicitRemote", but I suppose I can see your reasoning for choosing
+"implicit". Whereas "default" is something to "fall back upon" when
+something is missing, "implicit" suggests what to choose when a
+something has not been specified explicitly.
 
-Sure.
+>> 3. git-worktree learned --guess-remote and worktree.guessRemote in [1]
+>> and [2], which, on the surface, sound confusingly similar to
+>> "DWIMRemote". Even though I was well involved in the discussion and
+>> repeatedly reviewed the patch series which introduced those, it still
+>> took me an embarrassingly long time, and repeated re-reads of all
+>> commit messages involved, to grasp (or re-grasp) how "guess remote"
+>> and "DWIM remote" differ. If it was that difficult for me, as a person
+>> involved in the patch series, to figure out "guess remote" vs. "DWIM
+>> remote", then I worry that it may be too confusing in general. If the
+>> new config option had been named "defaultRemote", I don't think I'd
+>> have been confused at all.
+>
+> I hadn't looked at this at all before today when I wrote the patch, and
+> I've never used git-worktree (but maybe I should...), but my
+> understanding of this --[no-]guess-remote functionality is that it
+> effectively splits up the functionality that the "git checkout" does,
+> and we'll unconditionally check out the branch, but the option controls
+> whether or not we'd set up the equivalent of remote tracking for
+> git-worktree.
+>
+> But maybe I've completely misunderstood it.
 
-> > +               } else if (starts_with(line.buf, "@@ "))
-> > +                       strbuf_addstr(&buf, "@@");
-> > +               [...]
-> > +       }
-> > +       fclose(in);
-> > +
-> > +       if (util)
-> > +               string_list_append(list, buf.buf)->util = util;
-> > +       strbuf_release(&buf);
-> 
-> strbuf_release(&line);
+Yes, you misunderstood it.
 
-Yes!
+The setting up of a remote-tracking branch is DWIM'd as of 4e85333197
+("worktree: make add <path> <branch> dwim", 2017-11-26); it doesn't
+require an explicit option to enable it (though tracking can be
+disabled via --no-track). The "guess-remote" feature does something
+entirely different; it was added to avoid backward compatibility
+problems.
 
-> > +       if (finish_command(&cp))
-> > +               return -1;
-> > +
-> > +       return 0;
-> > +}
-> > @@ -32,9 +309,63 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
-> > +       if (argc == 2) {
-> > +               if (!strstr(argv[0], ".."))
-> > +                       warning(_("no .. in range: '%s'"), argv[0]);
-> > +               strbuf_addstr(&range1, argv[0]);
-> > +
-> > +               if (!strstr(argv[1], ".."))
-> > +                       warning(_("no .. in range: '%s'"), argv[1]);
-> > +               strbuf_addstr(&range2, argv[1]);
-> > +       } else if (argc == 1) {
-> > +               if (!b)
-> > +                       die(_("single arg format requires a symmetric range"));
-> > +       } else {
-> > +               error("Need two commit ranges");
-> 
-> Other warning/error messages emitted by this function are not
-> capitalized: s/Need/need/
+In long-form:
 
-Right. And it is also not translated. Fixed both.
+    git worktree add <path> <branch>
 
-Thank you for helping me make this patch series better!
+adds a new worktree at <path> and checks out <branch>. As originally
+implemented, shortened:
 
-Ciao,
-Dscho
+    git worktree add <path>
+
+does one type of DWIM, as a convenience, and pretends that the user
+actually typed:
+
+    branch=3D$(basename <path>)
+    git branch $branch HEAD
+    git workree add <path> $branch
+
+which creates a new branch and then checks it out in the new worktree
+as usual. The "guess remote" feature which Thomas added augments that
+by adding a DWIM which checks if $(basename <path>) names a
+remote-tracking branch, in which case, it becomes shorthand for
+(something like):
+
+    branch=3D$(basename <path>)
+    if remote-tracking branch named $branch exists:
+        git branch --track $branch $guessedRemote/$branch
+    else:
+        git branch $branch HEAD
+    fi
+    git worktree add <path> $branch
+
+In retrospect, this DWIM-checking for a like-named remote-tracking
+branch should have been implemented from the start in git-worktree
+since it mirrors how "git checkout <branch>" will DWIM remote-tracking
+<remote>/<branch>. However, such DWIM'ing was overlooked and
+git-worktree existed long enough without it that, due to backward
+compatibility concerns, the new DWIM'ing got hidden behind a switch,
+hence --guess-remote ("worktree.guessRemote") to enable it.
+
+Unrelated: Thomas added another DWIM, which we just finalized a few
+days ago, which extends the shorthand "git worktree add <path>" to
+first check if a local branch named $(basename <path>) already exists
+and merely check that out into the new worktree rather than trying to
+create a new branch of that name (which is another obvious DWIM missed
+during initial implementation). In other words:
+
+    branch=3D$(basename <path>)
+    if local branch named $branch does _not_ exist:
+        if remote-tracking branch named $branch exists:
+            git branch --track $branch $guessedRemote/$branch
+        else:
+            git branch $branch HEAD
+        fi
+    fi
+    git worktree add <path> $branch
