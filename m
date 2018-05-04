@@ -6,75 +6,85 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58ECE200B9
-	for <e@80x24.org>; Fri,  4 May 2018 03:15:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 689A0200B9
+	for <e@80x24.org>; Fri,  4 May 2018 03:23:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751278AbeEDDPq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 23:15:46 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:34340 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751229AbeEDDPo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 23:15:44 -0400
-Received: by mail-qt0-f195.google.com with SMTP id m5-v6so25703784qti.1
-        for <git@vger.kernel.org>; Thu, 03 May 2018 20:15:44 -0700 (PDT)
+        id S1751240AbeEDDXR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 23:23:17 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:34238 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751214AbeEDDXQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 23:23:16 -0400
+Received: by mail-wm0-f41.google.com with SMTP id a137-v6so5258726wme.1
+        for <git@vger.kernel.org>; Thu, 03 May 2018 20:23:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=bwKs94udaE7upBVYproHNc/omf4b4oFuEn2RNWeH0+Q=;
-        b=X6TNYzuXT077vB7DGz8Lc5qQZNusyLHgTtUsngBxBZ13AuXUp5oOkoYcz3ZQ0wI9S6
-         sc+qE/cHp8Trl0E33JF4RLo8DhQ339pb6qawia4lj23PP63TLw3RykkY+ouuFNUJC3L3
-         tHccZtl4AN5D/w1qw6ZMaq6Ljv4edfFHMJjojjUCwOXo14HpN/wvWM3NfUlMaEA9HMqW
-         XzkOucQ1oIpTQACScGd+4PN86Vm5EGSk+gyWY7HbE88W1U3kqtk5xoM+KTJvTVuk13PV
-         W9y7IPkUzFiEdJ2VTWNFVlWA1vAEeDuQO9lLYmbDDCooeiAUnhiVeG/CFVriTaQdCvk1
-         swNA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=zo/RC2bGx3E7RmYvqSu/dBAKX58D6usSq8E2r9tIynw=;
+        b=QIQU0CmRXkhkbMp6TylPJalbEymFbExJYoeKFchnvZZHGpDcAsLZWW0KXkD4AC/J41
+         /YnkkaQ6s02HbXfjFkxIlUju9j94oB4u4waaSGyjxeFCPzmU5iQhbtznjRjzTL52Bw/r
+         x6grv51mXyKDyUYT6Kq8EcN7YB5vxmNiaJPIlgkAf0KVwVrafYNK3Eq9adxuS+QytqxX
+         8tWiGV7kjwvf85b2vUGH6aCJ9NnHF690dO5zwk3j7Mn9R3n3UEvEbCptvXJ7k2Zw86vH
+         yMiorc5XxGr+Eb2Dh7jcv6Hju7KnPqA38ayKvU/jlX9IwcRNqfhTkc7+Oxb+nml5T4Dw
+         sXAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=bwKs94udaE7upBVYproHNc/omf4b4oFuEn2RNWeH0+Q=;
-        b=h3IsLi3SPhQn2b0PQOgfVgsnqfZRr8CuV5RY1G4zADXH8qhvxGPRLv1pIGkC1JZIPx
-         Ppd+0k2HGQvs+mpV4y+zPjFmspE/mjcWrndSKC6/o2b/1cwiwpp7Me/kP0c6id46E08r
-         jbx/muzYpaPxb6aVj0AqxxVwO/7HGenhRG2lyiCAdiYKRB/k7/6uD1Qi49o2+e80YaB3
-         lyXB6Ow+YaHzudP1lVzfBm39T3wtUS88joUQKyliJ49BM/PH+NcLcVNZUmDa1HGZgnzW
-         s2CEuriY0x/fdHPZcpzRvbgU0jRcz8h+Rb41yRSVqbSedet9A4gLz/12jFBRMruX6898
-         Q/Tw==
-X-Gm-Message-State: ALQs6tAPO2WFs26me5PMTF1nqm+JXZGpYfJS85rpE9KCxAACtOp8GcXO
-        EPb+6JUX1TVdHkC0mv42OrbTLU6DIHsucST8dec=
-X-Google-Smtp-Source: AB8JxZrB9VKNAUi7KZIg0AGA+adscxQYVcpjSwejyXH6HPt50dlEsmA4Wm0tJAdwoWyORu5ahJLTkQWQXPjRiu7TFrs=
-X-Received: by 2002:a0c:b7af:: with SMTP id l47-v6mr6152973qve.110.1525403744159;
- Thu, 03 May 2018 20:15:44 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Thu, 3 May 2018 20:15:43 -0700 (PDT)
-In-Reply-To: <CAPig+cQc-FXyZv=61GO7-6apu_avA-DhPkqJLC_1a5hKmq=bZg@mail.gmail.com>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de>
- <141e5b63e4511c13380216fad9b8601d2bc6051e.1525361419.git.johannes.schindelin@gmx.de>
- <CAPig+cQc-FXyZv=61GO7-6apu_avA-DhPkqJLC_1a5hKmq=bZg@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 3 May 2018 23:15:43 -0400
-X-Google-Sender-Auth: 7-VWL7b99vs4n9R_E1gsVhWWrFI
-Message-ID: <CAPig+cSzBY4gi_9b8NREeeOb0EA-wyKQusiDw6c3=FMaBoaUNg@mail.gmail.com>
-Subject: Re: [PATCH 05/18] branch-diff: also show the diff between patches
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=zo/RC2bGx3E7RmYvqSu/dBAKX58D6usSq8E2r9tIynw=;
+        b=GS4UwjASHHxXl/4yV+QnlEkigT0iqEpxl7BmnV7go8wjRUhoHMj47bdp7fFnFPxhLD
+         KcjoXu/ogPZfsyj8rRuWPWr6h2+GDpkwoBROEmuQX3c093XHZaiE7pAe3zdT82kB5SI7
+         SDrAhfzb2jPcg7rV8n2PfXxqQ9wsGDF83YEw/BOmLAckD3uTaGKSnR/7ccUdvbJK7a47
+         EM0OkWDKao4hjatN1YhsK22XF0+uPgYhe7r/TPVXnEwtExF5yekxY/bppCT3Cqo18spx
+         Hlcv5HWGUvIoxaCs33VrXXySYS8TQcOESGFYbwt+jtmuUFhqJCk3yxtMENiX5tjQa1nr
+         tGXg==
+X-Gm-Message-State: ALQs6tBmtsvpaHVcBtgdsxOdhgXXrh2T6ZUncCGZa8bJiDlA2gpnIl4b
+        b5ivNTDA3VvvXjDmLoqoqj8=
+X-Google-Smtp-Source: AB8JxZpWqZGOrg83NQgRdVFmofQGKWkO6w5ad3sSmOPZO57Wlr59i/t3Qy115+t814vV+yGeaNRByw==
+X-Received: by 10.28.15.195 with SMTP id 186mr17655137wmp.113.1525404194893;
+        Thu, 03 May 2018 20:23:14 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a139sm573548wma.43.2018.05.03.20.23.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 03 May 2018 20:23:13 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
         Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+        <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
+        <CAGZ79kZAidPafdfu1NGwwpVo1Vy=vKOV+EREE2=-ct_sbo7Gkg@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1805032227520.77@tvgsbejvaqbjf.bet>
+        <CAGZ79ka7RJq=tNnBsLs6wwL7Cf3hSJODM2iLW5tet-csAM20eg@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1805032334180.77@tvgsbejvaqbjf.bet>
+Date:   Fri, 04 May 2018 12:23:13 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1805032334180.77@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 3 May 2018 23:49:31 +0200 (DST)")
+Message-ID: <xmqqa7tgt87y.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 3, 2018 at 10:51 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Thu, May 3, 2018 at 11:30 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
->> Note: while we now parse diff options such as --color, the effect is not
->> yet the same as in tbdiff, where also the commit pairs would be colored.
->
-> "... tbdiff, in which the commit pairs would also be colored."
->
-> However, I don't see the --color option being parsed by this patch, so
-> perhaps this "Note" can be dropped?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Ignore this latter comment; I missed the newly added call to diff_opt_parse().
+> So please: as soon as you have a concrete suggestion where to use cyan
+> (and preferably even a DIFF_* constant to feed to diff_get_color_opt()), I
+> will be more than interested.
+
+I do not think Stefan's comment was that he was keen to use 'cyan'.
+It was a color I suggested in a review of his change where he added
+new colors to the color.[ch] palette, and I found that reusing an
+existing color would have achieved the same distinction between
+lines of output from his code, and it would be beneficial to make
+the outcome consistent to consider why these existing colors are
+used in existing places and trying to align the rationale for new
+uses. "cyan" was cited as an example to illustrate that last point,
+i.e. we use it to dim out relatively uninteresting part.
