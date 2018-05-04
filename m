@@ -6,103 +6,75 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EAE4200B9
-	for <e@80x24.org>; Fri,  4 May 2018 03:07:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58ECE200B9
+	for <e@80x24.org>; Fri,  4 May 2018 03:15:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751271AbeEDDHr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 May 2018 23:07:47 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:32862 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751236AbeEDDHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 May 2018 23:07:46 -0400
-Received: by mail-wr0-f193.google.com with SMTP id o4-v6so19508816wrm.0
-        for <git@vger.kernel.org>; Thu, 03 May 2018 20:07:46 -0700 (PDT)
+        id S1751278AbeEDDPq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 May 2018 23:15:46 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:34340 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751229AbeEDDPo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 May 2018 23:15:44 -0400
+Received: by mail-qt0-f195.google.com with SMTP id m5-v6so25703784qti.1
+        for <git@vger.kernel.org>; Thu, 03 May 2018 20:15:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=9GavA0QzaqbQWyqRf+1UPV67HPHWzj6xE6t02BW8ozU=;
-        b=A9uQ5Inm9brW2wLSqSGyuwqHlSlBWCD4qMxuIwccYdpBL9SpEUpmFhMcDm0KiAUyth
-         8fUzJWhY+AUTqwkBV09N6mhqoayFqua/vEgFDGKKPLCUDJcMJ5S0opdu4g+GS0qLPkSR
-         PARAkidXrAp3wZtvisXLlI1EQ6Vu1V5L6QxOakZGm5pmzkZbIbhhTIU67giLFgaxFLp9
-         NTTLYuTDN+sDjO3DsmTIMSnaDwlNxIpziPBNQxCVyOG4ybJzjilyt0Is/9euAbytsNOB
-         VqdCLQY00zM2M76gqIQcgsYPCeR2DqfY7CKta/LU7SXhDpa2wBQ9BOFLQaPDGZiC0c+C
-         3fwA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=bwKs94udaE7upBVYproHNc/omf4b4oFuEn2RNWeH0+Q=;
+        b=X6TNYzuXT077vB7DGz8Lc5qQZNusyLHgTtUsngBxBZ13AuXUp5oOkoYcz3ZQ0wI9S6
+         sc+qE/cHp8Trl0E33JF4RLo8DhQ339pb6qawia4lj23PP63TLw3RykkY+ouuFNUJC3L3
+         tHccZtl4AN5D/w1qw6ZMaq6Ljv4edfFHMJjojjUCwOXo14HpN/wvWM3NfUlMaEA9HMqW
+         XzkOucQ1oIpTQACScGd+4PN86Vm5EGSk+gyWY7HbE88W1U3kqtk5xoM+KTJvTVuk13PV
+         W9y7IPkUzFiEdJ2VTWNFVlWA1vAEeDuQO9lLYmbDDCooeiAUnhiVeG/CFVriTaQdCvk1
+         swNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=9GavA0QzaqbQWyqRf+1UPV67HPHWzj6xE6t02BW8ozU=;
-        b=SDz8m2WIeP2wDcHyXKFx1OLjKQ2XsxwvCp1KSfpDoBE320VoNrEHd5+3lFFkQG/7sc
-         qPE1FblIKHSlnOetnNYuz7ZIwdyv3AFlhkZN5AtTMfpMCkJ3tH+CVkjwa7M1V5prUd/Z
-         nGQh8xh2GRIvH0nBp92+L2Y3x7G4G00VncPoH99jVpiGouECFJnt5qwbaWNfn4t0rqg3
-         digKnrYZdrMynFA0fbHuV/rUOTHIYAkgrxciKT1C+NB5H/n3DIFqFYJDEjMO13HnOcg4
-         KuOfrfqm194M5Qq77mBIfXh0KCFBy/5dX11vKgBMKqPwmpODtJ2ZcrZfQn3rj24nqZyL
-         AzTA==
-X-Gm-Message-State: ALQs6tCQwjbyZxTql4YcwO+VPKbzRHOGQN0D5CX2Dh+tWgh4XZShX34C
-        2Gx1oM1WPdATsumD6SbOVTs=
-X-Google-Smtp-Source: AB8JxZodK4Tkv852fmlQ/w0hm5yoB0dYrcR6QvePQWhjQoCNltt3jEHj1Haun45TVXFL/GWXKz07yA==
-X-Received: by 2002:adf:aac5:: with SMTP id i5-v6mr18249587wrc.16.1525403265501;
-        Thu, 03 May 2018 20:07:45 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c21-v6sm14828642wre.43.2018.05.03.20.07.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 03 May 2018 20:07:44 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "newren\@gmail.com" <newren@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>,
-        "vmiklos\@frugalware.org" <vmiklos@frugalware.org>,
-        Kevin Willford <kewillf@microsoft.com>,
-        "Johannes.Schindelin\@gmx.de" <Johannes.Schindelin@gmx.de>,
-        "eckhard.s.maass\@googlemail.com" <eckhard.s.maass@googlemail.com>
-Subject: Re: [PATCH v4 2/3] merge: Add merge.renames config setting
-References: <20180420133632.17580-1-benpeart@microsoft.com>
-        <20180502160056.5836-1-benpeart@microsoft.com>
-        <20180502160056.5836-3-benpeart@microsoft.com>
-Date:   Fri, 04 May 2018 12:07:44 +0900
-In-Reply-To: <20180502160056.5836-3-benpeart@microsoft.com> (Ben Peart's
-        message of "Wed, 2 May 2018 16:01:14 +0000")
-Message-ID: <xmqqefist8xr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=bwKs94udaE7upBVYproHNc/omf4b4oFuEn2RNWeH0+Q=;
+        b=h3IsLi3SPhQn2b0PQOgfVgsnqfZRr8CuV5RY1G4zADXH8qhvxGPRLv1pIGkC1JZIPx
+         Ppd+0k2HGQvs+mpV4y+zPjFmspE/mjcWrndSKC6/o2b/1cwiwpp7Me/kP0c6id46E08r
+         jbx/muzYpaPxb6aVj0AqxxVwO/7HGenhRG2lyiCAdiYKRB/k7/6uD1Qi49o2+e80YaB3
+         lyXB6Ow+YaHzudP1lVzfBm39T3wtUS88joUQKyliJ49BM/PH+NcLcVNZUmDa1HGZgnzW
+         s2CEuriY0x/fdHPZcpzRvbgU0jRcz8h+Rb41yRSVqbSedet9A4gLz/12jFBRMruX6898
+         Q/Tw==
+X-Gm-Message-State: ALQs6tAPO2WFs26me5PMTF1nqm+JXZGpYfJS85rpE9KCxAACtOp8GcXO
+        EPb+6JUX1TVdHkC0mv42OrbTLU6DIHsucST8dec=
+X-Google-Smtp-Source: AB8JxZrB9VKNAUi7KZIg0AGA+adscxQYVcpjSwejyXH6HPt50dlEsmA4Wm0tJAdwoWyORu5ahJLTkQWQXPjRiu7TFrs=
+X-Received: by 2002:a0c:b7af:: with SMTP id l47-v6mr6152973qve.110.1525403744159;
+ Thu, 03 May 2018 20:15:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.170.75 with HTTP; Thu, 3 May 2018 20:15:43 -0700 (PDT)
+In-Reply-To: <CAPig+cQc-FXyZv=61GO7-6apu_avA-DhPkqJLC_1a5hKmq=bZg@mail.gmail.com>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+ <141e5b63e4511c13380216fad9b8601d2bc6051e.1525361419.git.johannes.schindelin@gmx.de>
+ <CAPig+cQc-FXyZv=61GO7-6apu_avA-DhPkqJLC_1a5hKmq=bZg@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 3 May 2018 23:15:43 -0400
+X-Google-Sender-Auth: 7-VWL7b99vs4n9R_E1gsVhWWrFI
+Message-ID: <CAPig+cSzBY4gi_9b8NREeeOb0EA-wyKQusiDw6c3=FMaBoaUNg@mail.gmail.com>
+Subject: Re: [PATCH 05/18] branch-diff: also show the diff between patches
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <Ben.Peart@microsoft.com> writes:
-
-I'd downcase the verb on the subject.
-
-> Add the ability to control rename detection for merge via a config setting.
-> This setting behaves the same and defaults to the value of diff.renames but only
-> applies to merge.
+On Thu, May 3, 2018 at 10:51 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Thu, May 3, 2018 at 11:30 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+>> Note: while we now parse diff options such as --color, the effect is not
+>> yet the same as in tbdiff, where also the commit pairs would be colored.
 >
-> Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Helped-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> ...
-> diff --git a/merge-recursive.h b/merge-recursive.h
-> index d863cf8867..c1d9b5b3d9 100644
-> --- a/merge-recursive.h
-> +++ b/merge-recursive.h
-> @@ -55,6 +56,11 @@ struct collision_entry {
->  	struct string_list source_files;
->  	unsigned reported_already:1;
->  };
-> +inline int merge_detect_rename(struct merge_options *o)
-> +{
-> +	return o->merge_detect_rename >= 0 ? o->merge_detect_rename :
-> +		o->diff_detect_rename >= 0 ? o->diff_detect_rename : 1;
-> +}
+> "... tbdiff, in which the commit pairs would also be colored."
+>
+> However, I don't see the --color option being parsed by this patch, so
+> perhaps this "Note" can be dropped?
 
-I'll tweak the above to leave a blank before the function, and make
-it "static inline", to ensure that the output from
-
-    $ git grep -e '\<inline\>' --and --not -e 'static inline' -- \*.h
-
-is empty.
+Ignore this latter comment; I missed the newly added call to diff_opt_parse().
