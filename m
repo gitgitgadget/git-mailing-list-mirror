@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C53A01F42E
-	for <e@80x24.org>; Sat,  5 May 2018 07:30:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 598D21F42E
+	for <e@80x24.org>; Sat,  5 May 2018 07:36:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750831AbeEEHax (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 May 2018 03:30:53 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:44857 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750765AbeEEHaw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 May 2018 03:30:52 -0400
-Received: by mail-qt0-f170.google.com with SMTP id d3-v6so30245112qtp.11
-        for <git@vger.kernel.org>; Sat, 05 May 2018 00:30:52 -0700 (PDT)
+        id S1751769AbeEEHgO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 May 2018 03:36:14 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:35470 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751206AbeEEHgN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 May 2018 03:36:13 -0400
+Received: by mail-qk0-f194.google.com with SMTP id g4so669811qki.2
+        for <git@vger.kernel.org>; Sat, 05 May 2018 00:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=qKfVGqyMJafrAMESBIDep34HrIiYM06aOgl6RKHss9w=;
-        b=tU4J8rHot2QGkbxyJtG27L+ARop+eCtC80k0nAIXks+DWdzB2N+I9mrGWkazU3CBHw
-         MAnUPKBE9BCEnvOjfrl4o7wWYtD8IIrGtDBVXHvKofWtDFvyfZ6LFDjrWpyJ0psCauhT
-         XdVT9o0In7+6Hn73ta6guBijH/GD6pk513UlCNb9kyLGmPLM+tnBnunol46Mj80CWd5q
-         XiO53JCnywQjCZYt1efKJBwnbOmp+9FfvOXJ30piaPpDpXaCShqQOTZkGT7hRZpjOxOd
-         zcwQg3NOMcVi9xAE88g3VSi3ccXnQxM6cMtzECLGR4HEzCmZVoFNtF6Ut+ZLh+ypPPoW
-         /4mQ==
+        bh=PBD5mqkI+XRW5g2jV5zIBET3cSQWyXQZvwTarAsyLmc=;
+        b=bfq0Dxhwgfn97SllezkGMZfZLSspcrXLI7O4ja3uslanEbWOa1Y+37lYyJM2+ItGsk
+         aXUXZJ/iCv1SGQOkOu3ET04mboD7XeBISzOpF8CgON70+GCmlpYUYxOWHcitEi7in/wT
+         KrU5BPdkW3yhp/P97/G6mmpnwlDy5BTZgX4pMCtrIFhD31kZxElFiotjaSxGBDH87f/P
+         K/DZ7ikyuNuUxd1Ws332wzQ1sBx01W0uD8eSSe2vO13eYTcqrRcPlxD3Q9dR8AinLVOy
+         iKuI23UpsVdAF2J2jxSpKYd9Icd/uuK+ssnDAc6IAYzVdvyVnI4wvjOzKByjIxHxQyc8
+         qEjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=qKfVGqyMJafrAMESBIDep34HrIiYM06aOgl6RKHss9w=;
-        b=E1qWTThWsL95LLTNWdJ0DBsnJP7sHxoMxyeU661STV1/mMJEWbzR6d6gbKmGzw5A0d
-         toxw6gr1k+mk0e5Hqftr+RWoVr/Y919H4hoGKBCvlRuwvkqNy423daVeLbxJiJueMQCy
-         VAacyUypkB1RRj5+xwU3rrYvChQv+rxWXeUoDpFWGnT7DWjjRLI/6tWwQjN1F3cHZUQ9
-         Bn8/GIZtAkUopHLaPZXYJ2FfUccRJl0mMYhnbLpnBoQs/Cg0HOxhdqmoCC5GpVQ8KIpZ
-         gYf9koLm/i3zOoBplD+r7dOUi322VPpIC0dFcNz7ErLP7hUnPBXmkA77OfvNWZ9RZqPD
-         Mvrw==
-X-Gm-Message-State: ALQs6tBIyppY18vzqg3/PXd0szNZI/rAb98Ryo7jJ7DaxI64eaTEji5N
-        P3M9BEHTqCaFFiQovBQP5p9f5U9BEttPwZcYy7c=
-X-Google-Smtp-Source: AB8JxZr8AgpbBVwEGJBIJAz0hSGT70xY9ICFXu3pMWah44BDQc4l1WjFIT7fVNfO2kdiMo93g/xuwq/ZuhLBKwb6jOs=
-X-Received: by 2002:a0c:f3d0:: with SMTP id f16-v6mr26418263qvm.113.1525505451892;
- Sat, 05 May 2018 00:30:51 -0700 (PDT)
+        bh=PBD5mqkI+XRW5g2jV5zIBET3cSQWyXQZvwTarAsyLmc=;
+        b=RoJTLOu6svhnBgKbqnIt+Ya6H33F12pItDuisl4xyzqg09UkX2NsfVebjbrQH8jxGU
+         yPIz32RSY2dpqAfWygP6VpC+9cLfzU0vRrFhrMgMqU+zjEu+pq0sUNL/Qsk2oYMV+f83
+         bVweRtmVKcrW14Zd9AnGyJaaXV5FEQfUVEsMPvTB0gLC4Uwtpe0YL58mnCzBlM2HU1ob
+         fuS0Xb3A/umxxE3WWViaZmK30+Qo/0F/D3ztquNqG0oFZOaYQdVG6355o5WSa1RjDgF3
+         8aJ1XKuW0Nqnc7UZ7uuKBLdYCrD3NdofGJuMejzqHiprDkC7iSeZzq8vfUUY8kT0dh5V
+         r7gw==
+X-Gm-Message-State: ALQs6tByRaIhNtj2qYIEOBr1Y0cwI5rULbpzFDMb24Q7PzF+lT/ftBhj
+        NX5RXwPCrvxtp9cpSt0+vy3zl0MIHUQbmzs1XAo=
+X-Google-Smtp-Source: AB8JxZpKHWM8vjjhbMqg6AHg9gD4/JY8p0swxEgaEvEfXy5aaY03VZ6j2yQ/biSzVGagHoifaQsFAu7MZNiwwlgcdkg=
+X-Received: by 10.55.108.198 with SMTP id h189mr15093932qkc.2.1525505772518;
+ Sat, 05 May 2018 00:36:12 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Sat, 5 May 2018 00:30:51 -0700 (PDT)
-In-Reply-To: <9dc758e3517681691e0809d9e9bcca03fbdad1cc.1525492696.git.me@ttaylorr.com>
-References: <cover.1525492696.git.me@ttaylorr.com> <9dc758e3517681691e0809d9e9bcca03fbdad1cc.1525492696.git.me@ttaylorr.com>
+Received: by 10.12.170.75 with HTTP; Sat, 5 May 2018 00:36:12 -0700 (PDT)
+In-Reply-To: <c8b527c5de3b0e5422d2c1afb91d454d1e46fff4.1525492696.git.me@ttaylorr.com>
+References: <cover.1525492696.git.me@ttaylorr.com> <c8b527c5de3b0e5422d2c1afb91d454d1e46fff4.1525492696.git.me@ttaylorr.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 5 May 2018 03:30:51 -0400
-X-Google-Sender-Auth: jM5cQnFa33H8YXlsY6iT0rR8zIE
-Message-ID: <CAPig+cRbBZ+QTqGiW_wQ9E-gROA-Wtevp1vcRqmJ5YQJ8tYEVQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] grep.c: extract show_line_header()
+Date:   Sat, 5 May 2018 03:36:12 -0400
+X-Google-Sender-Auth: UfhX-r9AKaL1uXKdhaH39-hrtfc
+Message-ID: <CAPig+cSRJWW4-7vj6wK8aOfNB20bqUCSOOySjdPci1r5Vb83Uw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] builtin/grep.c: teach '-o', '--only-matching' to 'git-grep'
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     Git List <git@vger.kernel.org>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
@@ -64,22 +64,29 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sat, May 5, 2018 at 12:03 AM, Taylor Blau <me@ttaylorr.com> wrote:
-> Teach 'git-grep(1)' how to print a line header multiple times from
-> show_line() in preparation for it learning '--only-matching'.
+> Teach GNU grep(1)'s '-o' ('--only-matching') to 'git-grep'. This option
+> prints only the matching components of each line. It writes multiple
+> lines if more than one match exists on a given line.
 >
-> show_line_header() comprises of the code in show_line() executed in
-
-s/of//
-
-> order to produce a line header. It is a one-for-one extraction of the
-> existing implementation.
+> For example:
 >
-> For now, show_line_header() provides no benefit over the change before
-> this patch. The following patch will call conditionally call
-
-s/call conditionally call/conditionally call/
-
-> show_line_header() multiple times per invocation to show_line(), which
-> is the desired benefit of this change.
+>   $ git grep -on --column --heading git -- README.md | head -3
+>   README.md
+>   15:56:git
+>   18:20:git
 >
+> By using show_line_header(), 'git grep --only-matching' correctly
+> respects the '--header' option:
+
+What is the '--header' option? I don't see it used in any example.
+
+>   $ git grep -on --column --heading git -- README.md | head -4
+>   README.md
+>   15:56:git
+>   18:20:git
+>   19:16:git
+
+How does this example differ from the earlier example (other than
+showing 4 lines of output rather than 3)?
+
 > Signed-off-by: Taylor Blau <me@ttaylorr.com>
