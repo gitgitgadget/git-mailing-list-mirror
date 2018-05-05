@@ -6,99 +6,145 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4102C200B9
-	for <e@80x24.org>; Sat,  5 May 2018 04:03:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90016200B9
+	for <e@80x24.org>; Sat,  5 May 2018 04:03:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750738AbeEEEDN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 May 2018 00:03:13 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:46201 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750725AbeEEEDM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 May 2018 00:03:12 -0400
-Received: by mail-pg0-f68.google.com with SMTP id z4-v6so16666502pgu.13
-        for <git@vger.kernel.org>; Fri, 04 May 2018 21:03:12 -0700 (PDT)
+        id S1750765AbeEEEDQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 May 2018 00:03:16 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:41360 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750725AbeEEEDP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 May 2018 00:03:15 -0400
+Received: by mail-pf0-f193.google.com with SMTP id v63so18859800pfk.8
+        for <git@vger.kernel.org>; Fri, 04 May 2018 21:03:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :content-transfer-encoding:user-agent;
-        bh=yg1H+90k8Ae+eYHUlsA2fEp0Rw3zET7DV4oMZ2P+Uv8=;
-        b=0lXv9FesrbCQPyLteeI7pLDXX5idaWF2Nbbm2scOVwZtxEb3qf8Zg3m9xCUcJv7fEN
-         tGehjEoMpK4rAbuGZaTdjOTMmvU9yCRRCpHhXYX0RzLHV3K+CKGb1g6H4Waxq6km1Za2
-         EmKmXM3EYycRjaqNluqX5o0uYcDwUGTtJawQXunR2Ran0hmhuw/8p3gSEDzrd1Hhm/eP
-         4iFJzOvQSJCTP+voTJTLPVbqQzBkXBAZf8nGzIMBc0u1bpGBa0qV1yFK10GCZ1zzW06S
-         1T5GwLWdhASol/VnuRqUMG/UcU9a5+vnO12xllmijGVYtJ0DPL5scpJutIb4mKTR5QbL
-         9ftA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=VfiqxJRfylXaasjow5MlH4uPsrzD0Rms8nSUWtkQhmQ=;
+        b=hzLPyI0SFFLi8+EueTXx4E7tUfXz+rE0WHQNPhGlFOJ1Y58yxfTO+TFhoKyZXzRbG4
+         ym/wiM7uRvfHlbrLyK8/Jm5E6oxfJrkeJr6qE5SLN4rCzOjxlHA9K+GwL2L8FQTtQVYx
+         RiVoo5KBUM2NjKH4pwnmBjVNt9wCJv6in3hvERnBum1J2JEhaWuqpm8Rx0EydF9BAQz1
+         ZXwjpi2ULypvP6PyuI1JMdpbUdV3kWGzoJs5B5/eA5f1UM31oKXd2Hhcc9+lALVMT9lE
+         QzFErFkuoeV//k/G/lFdHJuVyDFN6dnx1R14ZTnB1fqe10S0lUlquIpwZiF1yMueyn2M
+         kDoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:content-transfer-encoding:user-agent;
-        bh=yg1H+90k8Ae+eYHUlsA2fEp0Rw3zET7DV4oMZ2P+Uv8=;
-        b=d4CKBI9UfVTyP3mFxaEmZiJp/2G4BGvuNcQKB94z6eV8+o3SD8eICd9VqjKMgcQCVw
-         Hyh2dv/KJMdLHx4/8TK4pBhXLk8kGQt5uhQVdHAtL5yN37d0IZIpGvL2QdZuareMqiUm
-         WKAECl79Eddv3vCDDQDPXT8n3LzzJcBb8/6ZeKrGul0ECT8xhXWzQVqroHmcBXIv0fS2
-         FAChjyg+M7BOwFXgRufv5Ba+L65+mhaNkg1ENaTxmL33+aqW+KeSTgwhiDk8e2wKIjN9
-         lGpYcq2yG1JZckm7Uq3keb+5g4hnDOtnLaml4en6pFZUAK6VRWNktZUJhbwTokiK6J5u
-         CxhA==
-X-Gm-Message-State: ALQs6tDQz/zMcu+CTpV3TA08h+O4dFBeWfEFx0DjxoYboUfQxOPsjLS2
-        Cc0bFkSMOT8tTSLGVmtf0vC/tIAFaEs=
-X-Google-Smtp-Source: AB8JxZqBjIBflYxYg6oEfKlpLbIfVniGQ1+bFmr+Ec5xd3O/Q9XPJEdi/uRyX6D4jaX87NWLG14Pqw==
-X-Received: by 2002:a63:790e:: with SMTP id u14-v6mr24551892pgc.445.1525492991171;
-        Fri, 04 May 2018 21:03:11 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=VfiqxJRfylXaasjow5MlH4uPsrzD0Rms8nSUWtkQhmQ=;
+        b=bGpejC8scYZPaiK18uartJ8aZVN6ahIgV8Jr6raTCJV+8k4dhedMNgTbcWs24m+urV
+         sOPoRzBjMJV/2JYFTMR5uUx8hgeuA6wgrH9AJWxDFOPunvoMjgiP8+mi5jpk6jp/rIhh
+         ZOCEAvaWgaSrbCdv1APXD/P3RGhjXhhNrS6CrMbp+z3hzH8p6eEIXNDVpKLAcLNTm9hr
+         Bwk6ZJKVMtWVCH/0VXyMdKFm3sMxhkhGHFQuZI5ySlom+U6+vA00Nkp7EEDN9j1R/9wx
+         +BJcB8I1Sp19DVc0tYt4hJGibEWkOxehezDRUr0O1Rd9o0CRoiMwLUjWrxKJ2zapPDMz
+         Bmuw==
+X-Gm-Message-State: ALQs6tB6neJ1Qm+p/LpkxzjJP3ZJqWCbrAXyAG+YbUin6H9j/0nrKzyS
+        4nKXJSly56dd8dMMiZJCcpbxG2wkx8g=
+X-Google-Smtp-Source: AB8JxZpTtUIgtk280wScvdBbIoJc2tgqZWqsRUDo9CpcLVp5oqND6uEQXUNBq5UJ2wgRPau5G/JdHg==
+X-Received: by 2002:a63:b203:: with SMTP id x3-v6mr23852986pge.266.1525492993712;
+        Fri, 04 May 2018 21:03:13 -0700 (PDT)
 Received: from localhost ([2601:602:9500:1120:a961:c277:c90f:2435])
-        by smtp.gmail.com with ESMTPSA id s7-v6sm4532109pgv.4.2018.05.04.21.03.09
+        by smtp.gmail.com with ESMTPSA id z83sm2215229pfd.103.2018.05.04.21.03.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 May 2018 21:03:09 -0700 (PDT)
-Date:   Fri, 4 May 2018 21:03:08 -0700
+        Fri, 04 May 2018 21:03:12 -0700 (PDT)
+Date:   Fri, 4 May 2018 21:03:11 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, peff@peff.net, gitster@pobox.com
-Subject: [PATCH 0/2] builtin/grep.c: teach '-o', '--only-matching'
-Message-ID: <cover.1525492696.git.me@ttaylorr.com>
+Subject: [PATCH 1/2] grep.c: extract show_line_header()
+Message-ID: <9dc758e3517681691e0809d9e9bcca03fbdad1cc.1525492696.git.me@ttaylorr.com>
+References: <cover.1525492696.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1525492696.git.me@ttaylorr.com>
 User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Teach 'git-grep(1)' how to print a line header multiple times from
+show_line() in preparation for it learning '--only-matching'.
 
-Attached is a series to teach 'git-grep(1)' how to respond to
-'--only-matching' (a-la GNU grep(1)'s --only-matching, including an '-o'
-synonym) to only print the matching component(s) of a line. It is based
-on v4 of tb/grep-colno, which was sent in [1].
+show_line_header() comprises of the code in show_line() executed in
+order to produce a line header. It is a one-for-one extraction of the
+existing implementation.
 
-This was suggested to me by Ævar in [2].
+For now, show_line_header() provides no benefit over the change before
+this patch. The following patch will call conditionally call
+show_line_header() multiple times per invocation to show_line(), which
+is the desired benefit of this change.
 
-This change was fairly straightforward, as Ævar suggests in [3], with
-the only complication being that we must print a line header multiple
-times when there are >1 matches per-line. This requirement pushes the
-implementation towards the extraction of a show_line_header() function,
-and some minor changes in show_line() to reflect.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ grep.c | 44 +++++++++++++++++++++++++-------------------
+ 1 file changed, 25 insertions(+), 19 deletions(-)
 
-Thank you in advance for your review.
-
-
-Thanks,
-Taylor
-
-[1]: https://public-inbox.org/git/cover.1525488108.git.me@ttaylorr.com
-[2]: https://public-inbox.org/git/874lk2e4he.fsf@evledraar.gmail.com
-[3]: https://public-inbox.org/git/87in9ucsbb.fsf@evledraar.gmail.com
-
-Taylor Blau (2):
-  grep.c: extract show_line_header()
-  builtin/grep.c: teach '-o', '--only-matching' to 'git-grep'
-
- Documentation/git-grep.txt |  6 +++-
- builtin/grep.c             |  1 +
- grep.c                     | 67 +++++++++++++++++++++++++-------------
- grep.h                     |  1 +
- t/t7810-grep.sh            | 33 +++++++++++++++++++
- 5 files changed, 85 insertions(+), 23 deletions(-)
-
---
+diff --git a/grep.c b/grep.c
+index 37bb39a4a8..89dd719e4d 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1369,26 +1369,9 @@ static int next_match(struct grep_opt *opt, char *bol, char *eol,
+ 	return hit;
+ }
+ 
+-static void show_line(struct grep_opt *opt, char *bol, char *eol,
+-		      const char *name, unsigned lno, unsigned cno, char sign)
++static void show_line_header(struct grep_opt *opt, const char *name,
++                             unsigned lno, unsigned cno, char sign)
+ {
+-	int rest = eol - bol;
+-	const char *match_color, *line_color = NULL;
+-
+-	if (opt->file_break && opt->last_shown == 0) {
+-		if (opt->show_hunk_mark)
+-			opt->output(opt, "\n", 1);
+-	} else if (opt->pre_context || opt->post_context || opt->funcbody) {
+-		if (opt->last_shown == 0) {
+-			if (opt->show_hunk_mark) {
+-				output_color(opt, "--", 2, opt->color_sep);
+-				opt->output(opt, "\n", 1);
+-			}
+-		} else if (lno > opt->last_shown + 1) {
+-			output_color(opt, "--", 2, opt->color_sep);
+-			opt->output(opt, "\n", 1);
+-		}
+-	}
+ 	if (opt->heading && opt->last_shown == 0) {
+ 		output_color(opt, name, strlen(name), opt->color_filename);
+ 		opt->output(opt, "\n", 1);
+@@ -1416,6 +1399,29 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 		output_color(opt, buf, strlen(buf), opt->color_columnno);
+ 		output_sep(opt, sign);
+ 	}
++}
++
++static void show_line(struct grep_opt *opt, char *bol, char *eol,
++		      const char *name, unsigned lno, unsigned cno, char sign)
++{
++	int rest = eol - bol;
++	const char *match_color, *line_color = NULL;
++
++	if (opt->file_break && opt->last_shown == 0) {
++		if (opt->show_hunk_mark)
++			opt->output(opt, "\n", 1);
++	} else if (opt->pre_context || opt->post_context || opt->funcbody) {
++		if (opt->last_shown == 0) {
++			if (opt->show_hunk_mark) {
++				output_color(opt, "--", 2, opt->color_sep);
++				opt->output(opt, "\n", 1);
++			}
++		} else if (lno > opt->last_shown + 1) {
++			output_color(opt, "--", 2, opt->color_sep);
++			opt->output(opt, "\n", 1);
++		}
++	}
++	show_line_header(opt, name, lno, cno, sign);
+ 	if (opt->color) {
+ 		regmatch_t match;
+ 		enum grep_context ctx = GREP_CONTEXT_BODY;
+-- 
 2.17.0
+
