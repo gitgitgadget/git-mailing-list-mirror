@@ -2,138 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6546A1F42E
-	for <e@80x24.org>; Sat,  5 May 2018 06:49:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5406B1F42E
+	for <e@80x24.org>; Sat,  5 May 2018 06:51:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750821AbeEEGtr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 May 2018 02:49:47 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:40061 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750741AbeEEGtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 May 2018 02:49:46 -0400
-Received: by mail-wm0-f65.google.com with SMTP id j5-v6so8128873wme.5
-        for <git@vger.kernel.org>; Fri, 04 May 2018 23:49:45 -0700 (PDT)
+        id S1751218AbeEEGv4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 May 2018 02:51:56 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:46936 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750830AbeEEGvy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 May 2018 02:51:54 -0400
+Received: by mail-lf0-f67.google.com with SMTP id v85-v6so33820159lfa.13
+        for <git@vger.kernel.org>; Fri, 04 May 2018 23:51:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=wD/C2quOVyYptuOl4M9tvDIMOBX5OcdocOkf4reoHeg=;
-        b=L3k221DBULgo/I2LrWmQDvvdflpyFpbxcvopQpAovEyTGXYTN8QjMFzVdx5H1h1k5x
-         inMBoAUEctcnUMmEpsannc3M2m8EA6GZ1aUBnSx6WQxvl3Tz5F9b9w2Y1gLOqA6CfCMV
-         m/CNWBBNBIknNeR0H6mXYj958t9At2caMQL69Fp/qsOcSIQlhGjkIq1Siha0MyYDBFEC
-         5SbBYDMzMA5UASpkrT85gcoYfK8b1C8qPq3mIG10Qcr1E/4TSEagCEJWvvlGL9nz0V+m
-         2lapT48gL9HqqhIqWHPjDSn8kpwvvqQsq+FZGp+YNNBQtOpDuTiJjv5LYKBcRwX3mFif
-         QIDQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Y+Kli1AuXfmH7vxyQaOICpKcUAH84g+bKbDHaTUyEhc=;
+        b=bmGvWPdC2Y97JGTO6g62Quzo7CKNsmIb1aRXJuN904uBbAmPVkBbMqMzBJ7L4pAuK8
+         uj7mOLKnFQSLi5wUF1CQDHTtI72sqSde18YChoThNgIwBsafV6f5EhH2IbpMoO5niU/Z
+         PpO2JVKRK4h5OGpPIrNmHoyp8sijw9F3Ll28JtDdRdggYyb/4bdbTPRmWXjjJHXmy++B
+         p7Ibo1168C5PV2kEaDZXKk9bjInRsbgC/7uooRHHxROcpXLGH4jH2gDeQrA13QJeMNjW
+         qhghP6Er31iWPsFAml0En24w68TfxNM+4F/JHOgUUbtxm1ZXsSC0HvMKogA9YvGF0FvD
+         l5uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=wD/C2quOVyYptuOl4M9tvDIMOBX5OcdocOkf4reoHeg=;
-        b=e/5vR2rxsg7vj+LmhCSMpHntALlAVKWmZpkfQcFd/AYkgqsnsiTeHbLHSZjJGG59d3
-         dbH3Kyqg+v4FIzhgYo1HMe84y98ijdvDW+eCWeLjHZzK498HBHNOQ8+ME5RRR6j44Y2F
-         Y2vHlXMq9sFJ7OsujephFrtDR0qfA5sOjUzDmRylzC7CeWRl20N3ijaqMt+MQM1dudfl
-         reB/9QLI0mPhLt8hxAvCbO2P2zfVNbBotVpfjWjWhOTmy8OT1NPcdBWK53xMsnJJ3DtH
-         ooXmPj/yB7WEtp6UkuuoL0nexTPQEnG+FC0hIuLscOp+35oYQQMdhIHp9Dz2ludGEMSp
-         PA1w==
-X-Gm-Message-State: ALQs6tAurbpa1OJKvJNwB4Ftz8cuobxN8gv7QVRH59j2muye/TLsAdF+
-        otJuxn6FLr925reYHMza598=
-X-Google-Smtp-Source: AB8JxZqfjbW68fzUyhYd0LlpEDuQnNGk3pwrz5gIDRFF3LR4szvjD9VrcMH4SSSmfBI9uvua1bALdg==
-X-Received: by 2002:a50:97d8:: with SMTP id f24-v6mr39376606edb.256.1525502985060;
-        Fri, 04 May 2018 23:49:45 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id y63-v6sm247929edy.63.2018.05.04.23.49.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 04 May 2018 23:49:44 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com
-Subject: Re: [PATCH 2/2] builtin/grep.c: teach '-o', '--only-matching' to 'git-grep'
-References: <cover.1525492696.git.me@ttaylorr.com> <c8b527c5de3b0e5422d2c1afb91d454d1e46fff4.1525492696.git.me@ttaylorr.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <c8b527c5de3b0e5422d2c1afb91d454d1e46fff4.1525492696.git.me@ttaylorr.com>
-Date:   Sat, 05 May 2018 08:49:43 +0200
-Message-ID: <87fu36y4u0.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Y+Kli1AuXfmH7vxyQaOICpKcUAH84g+bKbDHaTUyEhc=;
+        b=lsO+cVmhpMMVnbMZia4pT2Z8+EeXnfivdG40EYD9wUuDTPj+1iKOgbvy8BESu0rDui
+         kyHnO/i5gS1yLonnJSwHikgNKj0iQM4aiCCBg4rQq7Emj6vbZwT4fBJA4efuQhzjxbDX
+         qjJ3puSMdC8lIoTipFiXA3aeMAOl78DHtZfVWop2lf8CK69mqGHkDZotC4MPjQkd+/GY
+         9phY10dsjKlOMSURbPTZmdPGpxOKz0vn4i2FhJO0UOw6X5dMN29ndMYqBIB5ut4VH38e
+         mOXsujH7J1iIGHXuLBEeUXkWK5lEx0UpIVDcq6KdpEb/Oy/xCnyCYsHNtCXthC/257wW
+         dsXQ==
+X-Gm-Message-State: ALQs6tBZbyHrmsBJkaXosGA32HqM+XSlnJ47JILXiRoHbE6MJwwqP5Mx
+        6Q8fcnbE/qwdgC0s9hYYVZyLYA==
+X-Google-Smtp-Source: AB8JxZp2NU+tBdwzcPFDvDYWQ5UzIF5awYvvkqltm0yO1Zntktb3XnHXF5tmOE2PjuJF8MS3jmaNWw==
+X-Received: by 2002:a2e:9689:: with SMTP id q9-v6mr19891375lji.35.1525503110899;
+        Fri, 04 May 2018 23:51:50 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id c89-v6sm3643564lfb.57.2018.05.04.23.51.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 04 May 2018 23:51:50 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] completion: fix misspelled config key aliasesfiletype
+Date:   Sat,  5 May 2018 08:51:44 +0200
+Message-Id: <20180505065144.4954-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.705.g3525833791
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The correct name in git-send-email.perl is aliasfiletype [1]. There are
+actually two instances of this misspelling. The other was found and
+fixed in 6068ac8848 (completion: add missing configuration variables -
+2010-12-20)
 
-On Sat, May 05 2018, Taylor Blau wrote:
+[1] 994d6c66d3 (send-email: address expansion for common mailers - 2006-05-14)
 
-> +--o::
-> +--only-matching::
-> +	Show only the matching part of the lines.
-> +
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Makes sense to steal GNU grep's description here:
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 01dd9ff07a..bc8ce24a89 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2172,7 +2172,7 @@ _git_config ()
+ 		__gitcomp "$__git_log_date_formats"
+ 		return
+ 		;;
+-	sendemail.aliasesfiletype)
++	sendemail.aliasfiletype)
+ 		__gitcomp "mutt mailrc pine elm gnus"
+ 		return
+ 		;;
+-- 
+2.17.0.705.g3525833791
 
-    Print only the matched (non-empty) parts of a matching line, with
-    each such part on a separate output line.
-
-> +			if (!opt->only_matching)
-> +				output_color(opt, bol, match.rm_so, line_color);
-
-This should also have braces, see "When there are multiple arms to a
-conditional" in Documentation/CodingGuidelines.
-
-
->  '
->
-> +cat >expected <<EOF
-> +file:1:5:mmap
-> +file:2:5:mmap
-> +file:3:5:mmap
-> +file:3:14:mmap
-> +file:4:5:mmap
-> +file:4:14:mmap
-> +file:5:5:mmap
-> +file:5:14:mmap
-> +EOF
-
-This should be set up as part of the test itself, see e.g. my c8b2cec09e
-("branch: add test for -m renaming multiple config sections",
-2017-06-18) for how to do that.
-
-> +test_expect_success 'grep --only-matching' '
-> +	git grep --only-matching --line-number --column mmap file >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +cat >expected <<EOF
-> +file
-> +1:5:mmap
-> +2:5:mmap
-> +3:5:mmap
-> +3:14:mmap
-> +4:5:mmap
-> +4:14:mmap
-> +5:5:mmap
-> +5:14:mmap
-> +EOF
-> +
-> +test_expect_success 'grep --only-matching --heading' '
-> +	git grep --only-matching --heading --line-number --column mmap file >actual &&
-> +	test_cmp expected actual
-> +'
-> +
->  cat >expected <<EOF
->  <BOLD;GREEN>hello.c<RESET>
->  4:int main(int argc, const <BLACK;BYELLOW>char<RESET> **argv)
-
-We should test this a lot more, I think a good way to do that would be
-to extend this series by first importing GNU grep's -o tests, see
-http://git.savannah.gnu.org/cgit/grep.git/tree/tests/foad1 they are
-license-compatible. Then change the grep_test() function to call git
-grep instead.
-
-It should also be tested with the various grep.patternType options to
-make sure it works with basic, extended, perl, fixed etc.
