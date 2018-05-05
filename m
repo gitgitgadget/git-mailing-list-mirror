@@ -6,124 +6,99 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99DCB200B9
-	for <e@80x24.org>; Sat,  5 May 2018 02:43:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4102C200B9
+	for <e@80x24.org>; Sat,  5 May 2018 04:03:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751883AbeEECnQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 May 2018 22:43:16 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:40102 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751852AbeEECnK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 May 2018 22:43:10 -0400
-Received: by mail-pf0-f195.google.com with SMTP id f189so18774000pfa.7
-        for <git@vger.kernel.org>; Fri, 04 May 2018 19:43:10 -0700 (PDT)
+        id S1750738AbeEEEDN (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 May 2018 00:03:13 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:46201 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750725AbeEEEDM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 May 2018 00:03:12 -0400
+Received: by mail-pg0-f68.google.com with SMTP id z4-v6so16666502pgu.13
+        for <git@vger.kernel.org>; Fri, 04 May 2018 21:03:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JQ8tXx1t/n2FoUtHBIj9WjJN0B9fT0lM/jZaDNdY0Ys=;
-        b=S6mOSxneLPCTVgOKdrWj40nlqvdWaukUdFi5uUdT5ibaUV0i/fvDEvjx/qokjq0BKN
-         F6jSicYkdfM65WvDzq5dixx8cMDQeCx/r2yxsvu8k7PNVvJWHBpZ202RSJdHtLyrsZ4u
-         KSTdzu0IPQRgEurOYgrQadVqWDArSTn/aKbLcqKBCf+BPaNZ26PN5OJ728jUe4xtu9Em
-         hg/xdFvGRu49a9/Ypu8CMdMXTKnALS3WhuMdQ2UGo1oU8ewTpmscG1na9t1kVS66s4rl
-         bbplr8QX2hMal95EzagrDIm0kSx+VMJ5M7nEa+Bij0NVRlqm16SoJfYm3xHwgJNl2upE
-         I5NQ==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=yg1H+90k8Ae+eYHUlsA2fEp0Rw3zET7DV4oMZ2P+Uv8=;
+        b=0lXv9FesrbCQPyLteeI7pLDXX5idaWF2Nbbm2scOVwZtxEb3qf8Zg3m9xCUcJv7fEN
+         tGehjEoMpK4rAbuGZaTdjOTMmvU9yCRRCpHhXYX0RzLHV3K+CKGb1g6H4Waxq6km1Za2
+         EmKmXM3EYycRjaqNluqX5o0uYcDwUGTtJawQXunR2Ran0hmhuw/8p3gSEDzrd1Hhm/eP
+         4iFJzOvQSJCTP+voTJTLPVbqQzBkXBAZf8nGzIMBc0u1bpGBa0qV1yFK10GCZ1zzW06S
+         1T5GwLWdhASol/VnuRqUMG/UcU9a5+vnO12xllmijGVYtJ0DPL5scpJutIb4mKTR5QbL
+         9ftA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JQ8tXx1t/n2FoUtHBIj9WjJN0B9fT0lM/jZaDNdY0Ys=;
-        b=CxXYQxL71giu4jJfmHpwrrQUHEu1A5IobvDN9KNiQTkedxJcuA8RZ1fotBu7i69KCT
-         Z8XEQ9Ate5mDKc19ZBR88kbn5CyeqamDomJgfT30rHDFGUln6zbS7zLRzYXXdUcVLeis
-         Z2yqJlsTW1Dv+oOGNszJeuMBrBdfa2/kxeGd4TBacZCKaV1mp75shQzVf3Oh9j2JRoD9
-         /rQBA4vwiM5yJOhKapVJufUbqYRt9CzwLDYikjr4JMKAXp9u3qTn+AjjJOC+teL80Qkf
-         M6nsiNXMvnBs5IvCp5fO4Fec1j27v59mrl1bRS5gKKhY4UUQYOBtLQVfCSTuIv1IZGHT
-         47jw==
-X-Gm-Message-State: ALQs6tBY0AT0yhb27nLj8bt7HM31PSpSToRunax/Wg+Ah+4w1ACTGlIC
-        axlvcNcvWJTocpBRUj5GUYpmcu0lmGpOeQ==
-X-Google-Smtp-Source: AB8JxZr6gGVbsd+gk57qb+ZIJw16WcXbMh8zloywQ+HA+AYzez8ai1gll+dVG/wX4J0gaPur2G+9jQ==
-X-Received: by 2002:a17:902:b40f:: with SMTP id x15-v6mr29177011plr.167.1525488189016;
-        Fri, 04 May 2018 19:43:09 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=yg1H+90k8Ae+eYHUlsA2fEp0Rw3zET7DV4oMZ2P+Uv8=;
+        b=d4CKBI9UfVTyP3mFxaEmZiJp/2G4BGvuNcQKB94z6eV8+o3SD8eICd9VqjKMgcQCVw
+         Hyh2dv/KJMdLHx4/8TK4pBhXLk8kGQt5uhQVdHAtL5yN37d0IZIpGvL2QdZuareMqiUm
+         WKAECl79Eddv3vCDDQDPXT8n3LzzJcBb8/6ZeKrGul0ECT8xhXWzQVqroHmcBXIv0fS2
+         FAChjyg+M7BOwFXgRufv5Ba+L65+mhaNkg1ENaTxmL33+aqW+KeSTgwhiDk8e2wKIjN9
+         lGpYcq2yG1JZckm7Uq3keb+5g4hnDOtnLaml4en6pFZUAK6VRWNktZUJhbwTokiK6J5u
+         CxhA==
+X-Gm-Message-State: ALQs6tDQz/zMcu+CTpV3TA08h+O4dFBeWfEFx0DjxoYboUfQxOPsjLS2
+        Cc0bFkSMOT8tTSLGVmtf0vC/tIAFaEs=
+X-Google-Smtp-Source: AB8JxZqBjIBflYxYg6oEfKlpLbIfVniGQ1+bFmr+Ec5xd3O/Q9XPJEdi/uRyX6D4jaX87NWLG14Pqw==
+X-Received: by 2002:a63:790e:: with SMTP id u14-v6mr24551892pgc.445.1525492991171;
+        Fri, 04 May 2018 21:03:11 -0700 (PDT)
 Received: from localhost ([2601:602:9500:1120:a961:c277:c90f:2435])
-        by smtp.gmail.com with ESMTPSA id z83sm1995039pfd.103.2018.05.04.19.43.07
+        by smtp.gmail.com with ESMTPSA id s7-v6sm4532109pgv.4.2018.05.04.21.03.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 May 2018 19:43:08 -0700 (PDT)
-Date:   Fri, 4 May 2018 19:43:07 -0700
+        Fri, 04 May 2018 21:03:09 -0700 (PDT)
+Date:   Fri, 4 May 2018 21:03:08 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, gitster@pobox.com, l.s.r@web.de,
-        martin.agren@gmail.com, peff@peff.net, sunshine@sunshineco.com
-Subject: [PATCH v4 7/7] contrib/git-jump/git-jump: jump to match column in
- addition to line
-Message-ID: <326d07b48654ab2a64d09eb17d995a26d06bcdb1.1525488108.git.me@ttaylorr.com>
-References: <20180421034530.GB24606@syl.local>
- <cover.1525488108.git.me@ttaylorr.com>
+Cc:     avarab@gmail.com, peff@peff.net, gitster@pobox.com
+Subject: [PATCH 0/2] builtin/grep.c: teach '-o', '--only-matching'
+Message-ID: <cover.1525492696.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <cover.1525488108.git.me@ttaylorr.com>
+Content-Transfer-Encoding: 8bit
 User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Take advantage of 'git-grep(1)''s new option, '--column' in order to
-teach Peff's 'git-jump' script how to jump to the correct column for any
-given match.
+Hi,
 
-'git-grep(1)''s output is in the correct format for Vim's jump list, so
-no additional cleanup is necessary.
+Attached is a series to teach 'git-grep(1)' how to respond to
+'--only-matching' (a-la GNU grep(1)'s --only-matching, including an '-o'
+synonym) to only print the matching component(s) of a line. It is based
+on v4 of tb/grep-colno, which was sent in [1].
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- contrib/git-jump/README   | 6 +++---
- contrib/git-jump/git-jump | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+This was suggested to me by Ævar in [2].
 
-diff --git a/contrib/git-jump/README b/contrib/git-jump/README
-index 4484bda410..7630e16854 100644
---- a/contrib/git-jump/README
-+++ b/contrib/git-jump/README
-@@ -35,7 +35,7 @@ Git-jump can generate four types of interesting lists:
- 
-   2. The beginning of any merge conflict markers.
- 
--  3. Any grep matches.
-+  3. Any grep matches, including the column of the first match on a line.
- 
-   4. Any whitespace errors detected by `git diff --check`.
- 
-@@ -65,7 +65,7 @@ git jump grep foo_bar
- git jump grep -i foo_bar
- 
- # use the silver searcher for git jump grep
--git config jump.grepCmd "ag --column"
-+git config jump.grepCmd "ag"
- --------------------------------------------------
- 
- 
-@@ -82,7 +82,7 @@ which does something similar to `git jump grep`. However, it is limited
- to positioning the cursor to the correct line in only the first file,
- leaving you to locate subsequent hits in that file or other files using
- the editor or pager. By contrast, git-jump provides the editor with a
--complete list of files and line numbers for each match.
-+complete list of files, lines, and a column number for each match.
- 
- 
- Limitations
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 80ab0590bc..931b0fe3a9 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -52,7 +52,7 @@ mode_merge() {
- # editor shows them to us in the status bar.
- mode_grep() {
- 	cmd=$(git config jump.grepCmd)
--	test -n "$cmd" || cmd="git grep -n"
-+	test -n "$cmd" || cmd="git grep -n --column"
- 	$cmd "$@" |
- 	perl -pe '
- 	s/[ \t]+/ /g;
--- 
+This change was fairly straightforward, as Ævar suggests in [3], with
+the only complication being that we must print a line header multiple
+times when there are >1 matches per-line. This requirement pushes the
+implementation towards the extraction of a show_line_header() function,
+and some minor changes in show_line() to reflect.
+
+Thank you in advance for your review.
+
+
+Thanks,
+Taylor
+
+[1]: https://public-inbox.org/git/cover.1525488108.git.me@ttaylorr.com
+[2]: https://public-inbox.org/git/874lk2e4he.fsf@evledraar.gmail.com
+[3]: https://public-inbox.org/git/87in9ucsbb.fsf@evledraar.gmail.com
+
+Taylor Blau (2):
+  grep.c: extract show_line_header()
+  builtin/grep.c: teach '-o', '--only-matching' to 'git-grep'
+
+ Documentation/git-grep.txt |  6 +++-
+ builtin/grep.c             |  1 +
+ grep.c                     | 67 +++++++++++++++++++++++++-------------
+ grep.h                     |  1 +
+ t/t7810-grep.sh            | 33 +++++++++++++++++++
+ 5 files changed, 85 insertions(+), 23 deletions(-)
+
+--
 2.17.0
