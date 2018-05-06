@@ -3,38 +3,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B9532023D
-	for <e@80x24.org>; Sun,  6 May 2018 23:18:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73E21200B9
+	for <e@80x24.org>; Sun,  6 May 2018 23:18:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752008AbeEFXSw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 19:18:52 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41124 "EHLO
+        id S1752025AbeEFXSz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 19:18:55 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41142 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751913AbeEFXSn (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 19:18:43 -0400
+        by vger.kernel.org with ESMTP id S1751960AbeEFXSq (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 19:18:46 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 69BA460753;
-        Sun,  6 May 2018 23:18:41 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 997496076A;
+        Sun,  6 May 2018 23:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525648721;
-        bh=OKImVgLsuITK2qTIabYzypDTP06l4T0y+9Jxfu7Rz7I=;
+        s=default; t=1525648725;
+        bh=swiDRvMFXAekF35rtfuX+euzFmCyNWdrbdBBo9L9cjQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=ms6ZOXK9OBi8rQ9C3bOwr6cRBhDOLiUbnXXXrlW0a+eSwjByjuJw7gcWCiC1cGF9W
-         dgiXZJ6/+mL048fuuHeMWEXYXykgarb6yjV5NzRqM0RqQvztAw42RrFTb6kffQkiT2
-         K0TmuvN/2DRS68xjXgT1p3eS6jQFoE0KXvJ5tfjfdAW5LIrQDKE24B7e8Nnuc8VbHH
-         L378+iw85zhlP/RBCEQOufQdxZalaX2+uC8F42LyE1s2T2ud+WQDtbY5UurCOohk6W
-         wRX7kRqe+hiqJY0O55MiEhwcXkcasVTbRTWeDltk0afU4+AKnh++kEmIptX93R6ffC
-         KbJUETfyUvn+0eTeSDM7dNfBAJ9XiUVvbNtyDufDr3aqRW3ksU5/Mp/Y3qi7PPnFtK
-         Tlt41fpEVIBa6ulojyxIElEEQPpvCzKXYgWGykmqIHFyAfVqlS80l4yqAkhB2ULqxt
-         f59yI+Y+ifMNhd1AScCc6fPujZeb9aA392REHNy4zeOTlKAEQTE
+        b=gAFWVyuE4kUQO/vQ7FLMoQl5nLs5G2DFMtIAT21IopUiwi5Zm+UBIvXncx5Dk//oc
+         1sFc4FT8X4FZSVJg/yP+ZBObC/vSiFvOYxMegCneUFVN1fG44O5HPZKa0yimEmNgrW
+         m9dy5yYHMeg+HF/i6YXNhEkfBhLxvwevhuqMO3SV1AP6g5g3tox7MnA/SpE+prQOZM
+         4PABL6XckclmvkffmOEb+/OX2Hjj+NbHyWDxLO3yKpoJhhr7+grqdO7h1qdSuoZ8fe
+         8bVDs4Cd1eWFmlOcDW1u4aV9SslbU6RCrRHG+vR4uznKitaadtvszf5QOsUhz90Bij
+         UQALu3mRNNWqrIAHj8O/wMLgvtQ8XrqmKl0MPcT4zIpDsl/C2RrqqnKt6QyWtxG5jV
+         DjJJPc+8LmZZYd34kI8789ASGlprPdj0a7B7wNcZD2XvLkYzlniR7dLGHAwJtXexpU
+         F6nZ+NfQZ1luuH+cc+5l0rSv0FHnBbhG9xeuZKRQBXFR/+KPyDA
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -42,9 +42,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH 11/28] t2203: abstract away SHA-1-specific constants
-Date:   Sun,  6 May 2018 23:17:35 +0000
-Message-Id: <20180506231752.975110-12-sandals@crustytoothpaste.net>
+Subject: [PATCH 14/28] t3905: abstract away SHA-1-specific constants
+Date:   Sun,  6 May 2018 23:17:38 +0000
+Message-Id: <20180506231752.975110-15-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180506231752.975110-1-sandals@crustytoothpaste.net>
 References: <20180506231752.975110-1-sandals@crustytoothpaste.net>
@@ -59,39 +59,54 @@ hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t2203-add-intent.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t3905-stash-include-untracked.sh | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index 1797f946b9..04d840a544 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -27,8 +27,8 @@ test_expect_success 'git status' '
+diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
+index 3ea5b9bb3f..c073514385 100755
+--- a/t/t3905-stash-include-untracked.sh
++++ b/t/t3905-stash-include-untracked.sh
+@@ -34,25 +34,26 @@ test_expect_success 'stash save --include-untracked cleaned the untracked files'
+ 	git status --porcelain >actual &&
+ 	test_cmp expect actual
+ '
+-
++tracked=$(git rev-parse --short $(echo 1 | git hash-object --stdin))
++untracked=$(git rev-parse --short $(echo untracked | git hash-object --stdin))
+ cat > expect.diff <<EOF
+ diff --git a/HEAD b/HEAD
+ new file mode 100644
+-index 0000000..d00491f
++index 0000000..$tracked
+ --- /dev/null
+ +++ b/HEAD
+ @@ -0,0 +1 @@
+ +1
+ diff --git a/file2 b/file2
+ new file mode 100644
+-index 0000000..d00491f
++index 0000000..$tracked
+ --- /dev/null
+ +++ b/file2
+ @@ -0,0 +1 @@
+ +1
+ diff --git a/untracked/untracked b/untracked/untracked
+ new file mode 100644
+-index 0000000..5a72eb2
++index 0000000..$untracked
+ --- /dev/null
+ +++ b/untracked/untracked
+ @@ -0,0 +1 @@
+@@ -109,10 +110,11 @@ test_expect_success 'stash save -u dirty index' '
+ 	git stash -u
+ '
  
- test_expect_success 'git status with porcelain v2' '
- 	git status --porcelain=v2 | grep -v "^?" >actual &&
--	nam1=d00491fd7e5bb6fa28c517a0bb32b8b506539d4d &&
--	nam2=ce013625030ba8dba906f756967f9e9ca394464a &&
-+	nam1=$(echo 1 | git hash-object --stdin) &&
-+	nam2=$(git hash-object elif) &&
- 	cat >expect <<-EOF &&
- 	1 DA N... 100644 000000 100644 $nam1 $ZERO_OID 1.t
- 	1 A. N... 000000 100644 100644 $ZERO_OID $nam2 elif
-@@ -181,7 +181,7 @@ test_expect_success 'rename detection finds the right names' '
- 		EOF
- 		test_cmp expected.2 actual.2 &&
- 
--		hash=12f00e90b6ef79117ce6e650416b8cf517099b78 &&
-+		hash=$(git hash-object third) &&
- 		git status --porcelain=v2 | grep -v "^?" >actual.3 &&
- 		cat >expected.3 <<-EOF &&
- 		2 .R N... 100644 100644 100644 $hash $hash R100 third	first
-@@ -212,7 +212,7 @@ test_expect_success 'double rename detection in status' '
- 		EOF
- 		test_cmp expected.2 actual.2 &&
- 
--		hash=12f00e90b6ef79117ce6e650416b8cf517099b78 &&
-+		hash=$(git hash-object third) &&
- 		git status --porcelain=v2 | grep -v "^?" >actual.3 &&
- 		cat >expected.3 <<-EOF &&
- 		2 R. N... 100644 100644 100644 $hash $hash R100 second	first
++blob=$(git rev-parse --short $(echo 4 | git hash-object --stdin))
+ cat > expect <<EOF
+ diff --git a/file3 b/file3
+ new file mode 100644
+-index 0000000..b8626c4
++index 0000000..$blob
+ --- /dev/null
+ +++ b/file3
+ @@ -0,0 +1 @@
