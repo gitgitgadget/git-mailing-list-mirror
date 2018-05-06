@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B97E6200B9
-	for <e@80x24.org>; Sun,  6 May 2018 23:18:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F3F2200B9
+	for <e@80x24.org>; Sun,  6 May 2018 23:18:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751908AbeEFXSg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 19:18:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41068 "EHLO
+        id S1751925AbeEFXSi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 19:18:38 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41082 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751906AbeEFXSf (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 19:18:35 -0400
+        by vger.kernel.org with ESMTP id S1751903AbeEFXSg (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 19:18:36 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5ACDC60762;
-        Sun,  6 May 2018 23:18:24 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DDC6A60763;
+        Sun,  6 May 2018 23:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525648704;
-        bh=y0pB2AKqfPgme31pYKAAO8jnXNBw1Y0QeH8WQk0Zu1o=;
+        s=default; t=1525648715;
+        bh=xkJiz0C5P03Pg4SnUyMDy7SpCw8ZpxXTxpQKICjKwQg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=sWdAX2/VCpI01vL+OTm8UnLzEAte9DqTIxu3PRYVQemfagPrpfrkQ3agt4F3hVqJT
-         TeZ4b76KU/pqKzKceoQU5ox6wAlJqjnjGjdMHC8hpKQNXVh4YyYNXH6CDW4zXWgSte
-         oA354UK6G7iZLY9ElK0hs6RfUjrvppMLjW5esqQHdiyE34zaT+D4oV9kMUDnXdZ01+
-         RcFA1Z1lgtahBVUAF3CzjmgAHfmYLIVnbi12MBlTTpZAG+4Qs08W4SIBDco6AT6pQL
-         pCSSJMMMazdzxB5aKxHuBZRfsDNNH+Tja35nK5EpOdbg8dq2Hf2OXQw5+KGpEBcVac
-         AHjRxkAz1a+ZOeodM5zsajsFb7XYx8XAjY7hq8yM3h/81bsPRGkjJ3+mR4UURBQj40
-         WiUyTheiZHcEJEvXV9+yw75x/FozjRCVkp0N8VHIrEoutv1KrMst9zsu1mPN0iDP6O
-         AN4vclwM96rJB9z8HiexZ1ab4ajTpyun5FdOlMs6KorptodNUZH
+        b=x0n9NCzaH+LFaVRnTsDWUcBJ5sOcKDCrL5uN0OLQh3INI9w498/fSrdxfobQ9wXgN
+         ciPQspJn+P+yf8PIIGSRQflJDcaA09VnYV6V2/A3wdJ0vuK9c3AEdUVcWa2JixBacP
+         5NTemULDXh5xXVth/OqwJ8Y2AFgPRl11xK5F2aANRidFa+1Ej8ikj/6VEj4dY/RItm
+         ucbJ6UI/oD3PKM4R2yXTLEdH1xzOK1u4kXo486qOOLgDc428Z0eoALjXE1dHFoIdLp
+         4rXmP8Q23nQcl8Fc0k3hC5k2hZs0jBnTWYrdGgZGzQoZkvImTfx6UmR4Lyh9iVvblZ
+         ouVLgmP9RJFIP8hxyNH4cyYNRowZ8/bzCGotREl+RG5EyIybTWLGqyObHz8/oNJJka
+         11pTH3PVWZEPSIUYoZ+W4FxSmbuX5RN38BVbFXxJJTaegDwfotrNyegw08N5ioe0bs
+         ddu1879BhzWJz1EdYSRdI8Ok2mm9y6cJvwujw1DUTsEEfCjPQIp
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -42,9 +42,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH 05/28] t: switch $_x40 to $FULL_HEX
-Date:   Sun,  6 May 2018 23:17:29 +0000
-Message-Id: <20180506231752.975110-6-sandals@crustytoothpaste.net>
+Subject: [PATCH 06/28] t0000: annotate with SHA1 prerequisite
+Date:   Sun,  6 May 2018 23:17:30 +0000
+Message-Id: <20180506231752.975110-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180506231752.975110-1-sandals@crustytoothpaste.net>
 References: <20180506231752.975110-1-sandals@crustytoothpaste.net>
@@ -54,402 +54,122 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Switch all uses of $_x40 to $FULL_HEX so that they work correctly with
-larger hashes.  This commit was created by using the following sed
-command to modify all files in the t directory except t/test-lib.sh:
-
-  sed -i 's/\$_x40/$FULL_HEX/g'
+Since this is a core test that tests basic functionality, annotate the
+assertions that have dependencies on SHA-1 with the appropriate
+prerequisite.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/diff-lib.sh                   |  4 ++--
- t/t0090-cache-tree.sh           |  2 +-
- t/t1000-read-tree-m-3way.sh     |  2 +-
- t/t1001-read-tree-m-2way.sh     |  2 +-
- t/t1002-read-tree-m-u-2way.sh   |  2 +-
- t/t1012-read-tree-df.sh         |  2 +-
- t/t3100-ls-tree-restrict.sh     |  2 +-
- t/t3101-ls-tree-dirname.sh      |  2 +-
- t/t3510-cherry-pick-sequence.sh |  8 ++++----
- t/t4002-diff-basic.sh           |  2 +-
- t/t4006-diff-mode.sh            |  2 +-
- t/t4014-format-patch.sh         |  2 +-
- t/t4201-shortlog.sh             |  2 +-
- t/t5150-request-pull.sh         |  2 +-
- t/t6006-rev-list-format.sh      |  4 ++--
- t/t6012-rev-list-simplify.sh    |  2 +-
- t/t6111-rev-list-treesame.sh    |  2 +-
- t/t7506-status-submodule.sh     |  2 +-
- t/t9010-svn-fe.sh               | 14 +++++++-------
- t/t9300-fast-import.sh          |  6 +++---
- 20 files changed, 33 insertions(+), 33 deletions(-)
+ t/t0000-basic.sh | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/t/diff-lib.sh b/t/diff-lib.sh
-index c211dc40ee..506ef4c289 100644
---- a/t/diff-lib.sh
-+++ b/t/diff-lib.sh
-@@ -1,6 +1,6 @@
- :
- 
--sanitize_diff_raw='/^:/s/ '"\($_x40\)"' '"\($_x40\)"' \([A-Z]\)[0-9]*	/ \1 \2 \3#	/'
-+sanitize_diff_raw='/^:/s/ '"\($FULL_HEX\)"' '"\($FULL_HEX\)"' \([A-Z]\)[0-9]*	/ \1 \2 \3#	/'
- compare_diff_raw () {
-     # When heuristics are improved, the score numbers would change.
-     # Ignore them while comparing.
-@@ -12,7 +12,7 @@ compare_diff_raw () {
-     test_cmp .tmp-1 .tmp-2 && rm -f .tmp-1 .tmp-2
- }
- 
--sanitize_diff_raw_z='/^:/s/ '"$_x40"' '"$_x40"' \([A-Z]\)[0-9]*$/ X X \1#/'
-+sanitize_diff_raw_z='/^:/s/ '"$FULL_HEX"' '"$FULL_HEX"' \([A-Z]\)[0-9]*$/ X X \1#/'
- compare_diff_raw_z () {
-     # When heuristics are improved, the score numbers would change.
-     # Ignore them while comparing.
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index 4ae0995cd9..26f12facf0 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -9,7 +9,7 @@ cache-tree extension.
- 
- cmp_cache_tree () {
- 	test-tool dump-cache-tree | sed -e '/#(ref)/d' >actual &&
--	sed "s/$_x40/SHA/" <actual >filtered &&
-+	sed "s/$FULL_HEX/SHA/" <actual >filtered &&
- 	test_cmp "$1" filtered
- }
- 
-diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
-index 3c4d2d6045..d85056238e 100755
---- a/t/t1000-read-tree-m-3way.sh
-+++ b/t/t1000-read-tree-m-3way.sh
-@@ -128,7 +128,7 @@ cat >expected <<\EOF
- EOF
- 
- check_result () {
--	git ls-files --stage | sed -e 's/ '"$_x40"' / X /' >current &&
-+	git ls-files --stage | sed -e 's/ '"$FULL_HEX"' / X /' >current &&
- 	test_cmp expected current
- }
- 
-diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
-index 5ededd8e40..01378f7bcd 100755
---- a/t/t1001-read-tree-m-2way.sh
-+++ b/t/t1001-read-tree-m-2way.sh
-@@ -30,7 +30,7 @@ read_tree_twoway () {
- compare_change () {
- 	sed -n >current \
- 	    -e '/^--- /d; /^+++ /d; /^@@ /d;' \
--	    -e 's/^\([-+][0-7][0-7][0-7][0-7][0-7][0-7]\) '"$_x40"' /\1 X /p' \
-+	    -e 's/^\([-+][0-7][0-7][0-7][0-7][0-7][0-7]\) '"$FULL_HEX"' /\1 X /p' \
- 	    "$1"
- 	test_cmp expected current
- }
-diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
-index 7ca2e65d10..bafbe49971 100755
---- a/t/t1002-read-tree-m-u-2way.sh
-+++ b/t/t1002-read-tree-m-u-2way.sh
-@@ -16,7 +16,7 @@ compare_change () {
- 	    -e '1{/^diff --git /d;}' \
- 	    -e '2{/^index /d;}' \
- 	    -e '/^--- /d; /^+++ /d; /^@@ /d;' \
--	    -e 's/^\(.[0-7][0-7][0-7][0-7][0-7][0-7]\) '"$_x40"' /\1 X /' "$1"
-+	    -e 's/^\(.[0-7][0-7][0-7][0-7][0-7][0-7]\) '"$FULL_HEX"' /\1 X /' "$1"
- 	test_cmp expected current
- }
- 
-diff --git a/t/t1012-read-tree-df.sh b/t/t1012-read-tree-df.sh
-index a6a04b6b90..26a4089f1e 100755
---- a/t/t1012-read-tree-df.sh
-+++ b/t/t1012-read-tree-df.sh
-@@ -32,7 +32,7 @@ settree () {
- 
- checkindex () {
- 	git ls-files -s |
--	sed "s|^[0-7][0-7]* $_x40 \([0-3]\)	|\1 |" >current &&
-+	sed "s|^[0-7][0-7]* $FULL_HEX \([0-3]\)	|\1 |" >current &&
- 	cat >expect &&
- 	test_cmp expect current
- }
-diff --git a/t/t3100-ls-tree-restrict.sh b/t/t3100-ls-tree-restrict.sh
-index 325114f8fe..f7b0ad774e 100755
---- a/t/t3100-ls-tree-restrict.sh
-+++ b/t/t3100-ls-tree-restrict.sh
-@@ -32,7 +32,7 @@ test_expect_success \
-      echo $tree'
- 
- test_output () {
--    sed -e "s/ $_x40	/ X	/" <current >check
-+    sed -e "s/ $FULL_HEX	/ X	/" <current >check
-     test_cmp expected check
- }
- 
-diff --git a/t/t3101-ls-tree-dirname.sh b/t/t3101-ls-tree-dirname.sh
-index 327ded4000..316efabbae 100755
---- a/t/t3101-ls-tree-dirname.sh
-+++ b/t/t3101-ls-tree-dirname.sh
-@@ -40,7 +40,7 @@ test_expect_success 'setup' '
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 7fd87dd544..af61d083b4 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -839,7 +839,7 @@ test_expect_success 'writing tree out with git write-tree' '
  '
  
- test_output () {
--	sed -e "s/ $_x40	/ X	/" <current >check &&
-+	sed -e "s/ $FULL_HEX	/ X	/" <current >check &&
- 	test_cmp expected check
- }
+ # we know the shape and contents of the tree and know the object ID for it.
+-test_expect_success 'validate object ID of a known tree' '
++test_expect_success SHA1 'validate object ID of a known tree' '
+ 	test "$tree" = 7bb943559a305bdd6bdee2cef6e5df2413c3d30a
+     '
  
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 21b4f194a2..1ff7527fae 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -122,7 +122,7 @@ test_expect_success '--quit keeps HEAD and conflicted index intact' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$FULL_HEX/OBJID/g"
- 	} >actual &&
- 	test_cmp expect actual
- '
-@@ -220,7 +220,7 @@ test_expect_success 'cherry-pick still writes sequencer state when one commit is
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$FULL_HEX/OBJID/g"
- 	} >actual &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-@@ -317,7 +317,7 @@ test_expect_success '--continue after resolving conflicts' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$FULL_HEX/OBJID/g"
- 	} >actual.log &&
- 	test_cmp expect foo &&
- 	test_cmp expect.log actual.log
-@@ -334,7 +334,7 @@ test_expect_success '--continue after resolving conflicts and committing' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$FULL_HEX/OBJID/g"
- 	} >actual &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
-index 5af773d6f7..bcd8f22dd1 100755
---- a/t/t4002-diff-basic.sh
-+++ b/t/t4002-diff-basic.sh
-@@ -131,7 +131,7 @@ cmp_diff_files_output () {
-     # object ID for the changed files because it wants you to look at the
-     # filesystem.
-     sed <"$2" >.test-tmp \
--	-e '/^:000000 /d;s/'$_x40'\( [MCRNDU][0-9]*\)	/'$ZERO_OID'\1	/' &&
-+	-e '/^:000000 /d;s/'$FULL_HEX'\( [MCRNDU][0-9]*\)	/'$ZERO_OID'\1	/' &&
-     test_cmp "$1" .test-tmp
- }
- 
-diff --git a/t/t4006-diff-mode.sh b/t/t4006-diff-mode.sh
-index 76f643b2c2..2612537255 100755
---- a/t/t4006-diff-mode.sh
-+++ b/t/t4006-diff-mode.sh
-@@ -8,7 +8,7 @@ test_description='Test mode change diffs.
- '
- . ./test-lib.sh
- 
--sed_script='s/\(:100644 100755\) \('"$_x40"'\) \2 /\1 X X /'
-+sed_script='s/\(:100644 100755\) \('"$FULL_HEX"'\) \2 /\1 X X /'
- 
- test_expect_success 'setup' '
- 	echo frotz >rezrov &&
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 0dbf7d5b4b..163d64fc32 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1530,7 +1530,7 @@ test_expect_success 'format-patch --zero-commit' '
- test_expect_success 'From line has expected format' '
- 	git format-patch --stdout v2..v1 >patch2 &&
- 	grep "^From " patch2 >from &&
--	grep "^From $_x40 Mon Sep 17 00:00:00 2001$" patch2 >filtered &&
-+	grep "^From $FULL_HEX Mon Sep 17 00:00:00 2001$" patch2 >filtered &&
- 	test_cmp from filtered
+@@ -882,7 +882,7 @@ test_expect_success 'showing stage with git ls-files --stage' '
+ 	git ls-files --stage >current
  '
  
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index ff6649ed9a..0f28ef5c6c 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -59,7 +59,7 @@ test_expect_success 'setup' '
- fuzz() {
- 	file=$1 &&
- 	sed "
--			s/$_x40/OBJECT_NAME/g
-+			s/$FULL_HEX/OBJECT_NAME/g
- 			s/$_x35/OBJID/g
- 			s/^ \{6\}[CTa].*/      SUBJECT/g
- 			s/^ \{8\}[^ ].*/        CONTINUATION/g
-diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
-index 08c210f035..99ed055d00 100755
---- a/t/t5150-request-pull.sh
-+++ b/t/t5150-request-pull.sh
-@@ -81,7 +81,7 @@ test_expect_success 'setup: two scripts for reading pull requests' '
- 	cat <<-EOT >fuzz.sed
- 	#!/bin/sed -nf
- 	s/$downstream_url_for_sed/URL/g
--	s/$_x40/OBJECT_NAME/g
-+	s/$FULL_HEX/OBJECT_NAME/g
- 	s/A U Thor/AUTHOR/g
- 	s/[-0-9]\{10\} [:0-9]\{8\} [-+][0-9]\{4\}/DATE/g
- 	s/        [^ ].*/        SUBJECT/g
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index 98be78b4a2..d3b1bf375b 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -447,8 +447,8 @@ test_expect_success '--abbrev' '
- 	git log -1 --format="%h %h %h" HEAD >actual1 &&
- 	git log -1 --abbrev=5 --format="%h %h %h" HEAD >actual2 &&
- 	git log -1 --abbrev=5 --format="%H %H %H" HEAD >actual3 &&
--	sed -e "s/$_x40/LONG/g" -e "s/$_x05/SHORT/g" <actual2 >fuzzy2 &&
--	sed -e "s/$_x40/LONG/g" -e "s/$_x05/SHORT/g" <actual3 >fuzzy3 &&
-+	sed -e "s/$FULL_HEX/LONG/g" -e "s/$_x05/SHORT/g" <actual2 >fuzzy2 &&
-+	sed -e "s/$FULL_HEX/LONG/g" -e "s/$_x05/SHORT/g" <actual3 >fuzzy3 &&
- 	test_cmp expect2 fuzzy2 &&
- 	test_cmp expect3 fuzzy3 &&
- 	! test_cmp actual1 actual2
-diff --git a/t/t6012-rev-list-simplify.sh b/t/t6012-rev-list-simplify.sh
-index 2a0fbb87b1..8c252d14b0 100755
---- a/t/t6012-rev-list-simplify.sh
-+++ b/t/t6012-rev-list-simplify.sh
-@@ -9,7 +9,7 @@ note () {
- }
- 
- unnote () {
--	git name-rev --tags --stdin | sed -e "s|$_x40 (tags/\([^)]*\)) |\1 |g"
-+	git name-rev --tags --stdin | sed -e "s|$FULL_HEX (tags/\([^)]*\)) |\1 |g"
- }
- 
- test_expect_success setup '
-diff --git a/t/t6111-rev-list-treesame.sh b/t/t6111-rev-list-treesame.sh
-index 32474c23d3..b5082a381d 100755
---- a/t/t6111-rev-list-treesame.sh
-+++ b/t/t6111-rev-list-treesame.sh
-@@ -20,7 +20,7 @@ note () {
- }
- 
- unnote () {
--	git name-rev --tags --stdin | sed -e "s|$_x40 (tags/\([^)]*\))\([ 	]\)|\1\2|g"
-+	git name-rev --tags --stdin | sed -e "s|$FULL_HEX (tags/\([^)]*\))\([ 	]\)|\1\2|g"
- }
- 
- test_expect_success setup '
-diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
-index 9edf6572ed..42e134f5ae 100755
---- a/t/t7506-status-submodule.sh
-+++ b/t/t7506-status-submodule.sh
-@@ -18,7 +18,7 @@ test_create_repo_with_commit () {
- }
- 
- sanitize_output () {
--	sed -e "s/$_x40/HASH/" -e "s/$_x40/HASH/" output >output2 &&
-+	sed -e "s/$FULL_HEX/HASH/" -e "s/$FULL_HEX/HASH/" output >output2 &&
- 	mv output2 output
- }
- 
-diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-index 8eaaca6f99..980da5da59 100755
---- a/t/t9010-svn-fe.sh
-+++ b/t/t9010-svn-fe.sh
-@@ -473,7 +473,7 @@ test_expect_failure 'change file mode but keep old content' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$FULL_HEX/OBJID/g"
- 	} >actual &&
- 	git show HEAD:greeting >actual.blob &&
- 	git show HEAD^:greeting >actual.target &&
-@@ -573,7 +573,7 @@ test_expect_success 'NUL in log message, file content, and property name' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$FULL_HEX/OBJID/g"
- 	} >actual &&
- 	{
- 		git cat-file commit HEAD | nul_to_q &&
-@@ -659,7 +659,7 @@ test_expect_success 'change file mode and reiterate content' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$FULL_HEX/OBJID/g"
- 	} >actual &&
- 	git show HEAD:greeting >actual.blob &&
- 	git show HEAD^:greeting >actual.target &&
-@@ -792,7 +792,7 @@ test_expect_success 'property deltas supported' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$FULL_HEX/OBJID/g"
- 	} >actual &&
- 	test_cmp expect actual
- '
-@@ -846,7 +846,7 @@ test_expect_success 'properties on /' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --always --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$FULL_HEX/OBJID/g"
- 	} >actual &&
- 	test_cmp expect actual
- '
-@@ -931,7 +931,7 @@ test_expect_success 'deltas for typechange' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$FULL_HEX/OBJID/g"
- 	} >actual &&
- 	test_cmp expect actual
- '
-@@ -1030,7 +1030,7 @@ test_expect_success 'deltas need not consume the whole preimage' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$FULL_HEX/OBJID/g"
- 	} >actual &&
- 	test_cmp expect actual &&
- 	git show HEAD:postimage >actual.3 &&
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index dc79df7b04..aac7ae2f6f 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -1185,7 +1185,7 @@ test_expect_success PIPE 'N: empty directory reads as missing' '
- 	test_cmp expect.response response &&
- 	git rev-list read-empty |
- 	git diff-tree -r --root --stdin |
--	sed "s/$_x40/OBJNAME/g" >actual &&
-+	sed "s/$FULL_HEX/OBJNAME/g" >actual &&
- 	test_cmp expect actual
+-test_expect_success 'validate git ls-files output for a known tree' '
++test_expect_success SHA1 'validate git ls-files output for a known tree' '
+ 	cat >expected <<-\EOF &&
+ 	100644 f87290f8eb2cbbea7857214459a0739927eab154 0	path0
+ 	120000 15a98433ae33114b085f3eb3bb03b832b3180a01 0	path0sym
+@@ -900,7 +900,7 @@ test_expect_success 'writing tree out with git write-tree' '
+ 	tree=$(git write-tree)
  '
  
-@@ -1271,7 +1271,7 @@ test_expect_success 'N: delete directory by copying' '
- 	git fast-import <input &&
- 	git rev-list N-delete |
- 		git diff-tree -r --stdin --root --always |
--		sed -e "s/$_x40/OBJID/g" >actual &&
-+		sed -e "s/$FULL_HEX/OBJID/g" >actual &&
- 	test_cmp expect actual
+-test_expect_success 'validate object ID for a known tree' '
++test_expect_success SHA1 'validate object ID for a known tree' '
+ 	test "$tree" = 087704a96baf1c2d1c869a8b084481e121c88b5b
  '
  
-@@ -2602,7 +2602,7 @@ test_expect_success 'R: terminating "done" within commit' '
- 	EOF
- 	git rev-list done-ends |
- 	git diff-tree -r --stdin --root --always |
--	sed -e "s/$_x40/OBJID/g" >actual &&
-+	sed -e "s/$FULL_HEX/OBJID/g" >actual &&
- 	test_cmp expect actual
+@@ -908,7 +908,7 @@ test_expect_success 'showing tree with git ls-tree' '
+     git ls-tree $tree >current
  '
  
+-test_expect_success 'git ls-tree output for a known tree' '
++test_expect_success SHA1 'git ls-tree output for a known tree' '
+ 	cat >expected <<-\EOF &&
+ 	100644 blob f87290f8eb2cbbea7857214459a0739927eab154	path0
+ 	120000 blob 15a98433ae33114b085f3eb3bb03b832b3180a01	path0sym
+@@ -924,7 +924,7 @@ test_expect_success 'showing tree with git ls-tree -r' '
+ 	git ls-tree -r $tree >current
+ '
+ 
+-test_expect_success 'git ls-tree -r output for a known tree' '
++test_expect_success SHA1 'git ls-tree -r output for a known tree' '
+ 	cat >expected <<-\EOF &&
+ 	100644 blob f87290f8eb2cbbea7857214459a0739927eab154	path0
+ 	120000 blob 15a98433ae33114b085f3eb3bb03b832b3180a01	path0sym
+@@ -943,7 +943,7 @@ test_expect_success 'showing tree with git ls-tree -r -t' '
+ 	git ls-tree -r -t $tree >current
+ '
+ 
+-test_expect_success 'git ls-tree -r output for a known tree' '
++test_expect_success SHA1 'git ls-tree -r output for a known tree' '
+ 	cat >expected <<-\EOF &&
+ 	100644 blob f87290f8eb2cbbea7857214459a0739927eab154	path0
+ 	120000 blob 15a98433ae33114b085f3eb3bb03b832b3180a01	path0sym
+@@ -964,7 +964,7 @@ test_expect_success 'writing partial tree out with git write-tree --prefix' '
+ 	ptree=$(git write-tree --prefix=path3)
+ '
+ 
+-test_expect_success 'validate object ID for a known tree' '
++test_expect_success SHA1 'validate object ID for a known tree' '
+ 	test "$ptree" = 21ae8269cacbe57ae09138dcc3a2887f904d02b3
+ '
+ 
+@@ -972,7 +972,7 @@ test_expect_success 'writing partial tree out with git write-tree --prefix' '
+ 	ptree=$(git write-tree --prefix=path3/subp3)
+ '
+ 
+-test_expect_success 'validate object ID for a known tree' '
++test_expect_success SHA1 'validate object ID for a known tree' '
+ 	test "$ptree" = 3c5e5399f3a333eddecce7a9b9465b63f65f51e2
+ '
+ 
+@@ -1006,7 +1006,7 @@ test_expect_success 'git read-tree followed by write-tree should be idempotent'
+ 	test "$newtree" = "$tree"
+ '
+ 
+-test_expect_success 'validate git diff-files output for a know cache/work tree state' '
++test_expect_success SHA1 'validate git diff-files output for a know cache/work tree state' '
+ 	cat >expected <<\EOF &&
+ :100644 100644 f87290f8eb2cbbea7857214459a0739927eab154 0000000000000000000000000000000000000000 M	path0
+ :120000 120000 15a98433ae33114b085f3eb3bb03b832b3180a01 0000000000000000000000000000000000000000 M	path0sym
+@@ -1033,21 +1033,21 @@ test_expect_success 'no diff after checkout and git update-index --refresh' '
+ ################################################################
+ P=087704a96baf1c2d1c869a8b084481e121c88b5b
+ 
+-test_expect_success 'git commit-tree records the correct tree in a commit' '
++test_expect_success SHA1 'git commit-tree records the correct tree in a commit' '
+ 	commit0=$(echo NO | git commit-tree $P) &&
+ 	tree=$(git show --pretty=raw $commit0 |
+ 		 sed -n -e "s/^tree //p" -e "/^author /q") &&
+ 	test "z$tree" = "z$P"
+ '
+ 
+-test_expect_success 'git commit-tree records the correct parent in a commit' '
++test_expect_success SHA1 'git commit-tree records the correct parent in a commit' '
+ 	commit1=$(echo NO | git commit-tree $P -p $commit0) &&
+ 	parent=$(git show --pretty=raw $commit1 |
+ 		sed -n -e "s/^parent //p" -e "/^author /q") &&
+ 	test "z$commit0" = "z$parent"
+ '
+ 
+-test_expect_success 'git commit-tree omits duplicated parent in a commit' '
++test_expect_success SHA1 'git commit-tree omits duplicated parent in a commit' '
+ 	commit2=$(echo NO | git commit-tree $P -p $commit0 -p $commit0) &&
+ 	     parent=$(git show --pretty=raw $commit2 |
+ 		sed -n -e "s/^parent //p" -e "/^author /q" |
