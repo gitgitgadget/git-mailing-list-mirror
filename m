@@ -7,47 +7,41 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D967200B9
-	for <e@80x24.org>; Sun,  6 May 2018 15:37:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2B6E200B9
+	for <e@80x24.org>; Sun,  6 May 2018 15:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751591AbeEFPhf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 11:37:35 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:46601 "EHLO
-        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751407AbeEFPhe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 11:37:34 -0400
-Received: from homiemail-a39.g.dreamhost.com (sub3.mail.dreamhost.com [69.163.253.7])
-        by hapkido.dreamhost.com (Postfix) with ESMTP id 689F98D622
-        for <git@vger.kernel.org>; Sun,  6 May 2018 08:37:34 -0700 (PDT)
+        id S1751810AbeEFPsx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 11:48:53 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:52981 "EHLO
+        homiemail-a39.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751520AbeEFPsx (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 11:48:53 -0400
+X-Greylist: delayed 678 seconds by postgrey-1.27 at vger.kernel.org; Sun, 06 May 2018 11:48:53 EDT
 Received: from homiemail-a39.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a39.g.dreamhost.com (Postfix) with ESMTP id AA211150074;
-        Sun,  6 May 2018 08:37:33 -0700 (PDT)
+        by homiemail-a39.g.dreamhost.com (Postfix) with ESMTP id 7392315006D;
+        Sun,  6 May 2018 08:48:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
-        :subject:from:to:cc:date:in-reply-to:references:content-type
-        :mime-version:content-transfer-encoding; s=novalis.org; bh=F5kto
-        HPwxXaVNHjgzAF9Wu8wOvA=; b=g2pNIfXYzbjrukXa96qqjCbG92XTL7adcYSqt
-        5wxvw8X8xwihdMmsfjGyQCnDRvpuns3lZudN4UgGgaMyXErAK0wPvh8YOQffzWhm
-        v3tPb5f4jS8dTvBtkSfiAi6YpsqgSghfLF7rzPSI2qHscv44GIIJNsCMZTgkCw0q
-        T0C3SY=
+        :subject:from:to:date:in-reply-to:references:content-type
+        :mime-version:content-transfer-encoding; s=novalis.org; bh=L3Cqi
+        EFuqQgIleUSONSW8AKJleM=; b=K30HUpXXesJz38WZ6IEJDHdeTmQHnxGlTAodi
+        A/ht/xn6sOFW3ec8FoO3q8wUlEGmtNncckbYfsOCMGPpKzIfthLBT/ClhksDj+PE
+        kuv5A45lgrYLhAX5peDaSbe57vid6eVsXeOLkMSK2fo3SUoiq1QPb2ipUcYyEjsm
+        8CceWQ=
 Received: from corey (unknown [74.213.195.68])
         (using TLSv1 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: novalis@novalis.org)
-        by homiemail-a39.g.dreamhost.com (Postfix) with ESMTPSA id 566E6150069;
-        Sun,  6 May 2018 08:37:33 -0700 (PDT)
-Message-ID: <1525621052.16035.4.camel@novalis.org>
-Subject: Re: [PATCH] refs: handle null-oid for pseudorefs
+        by homiemail-a39.g.dreamhost.com (Postfix) with ESMTPSA id 4FDB8150069;
+        Sun,  6 May 2018 08:48:52 -0700 (PDT)
+Message-ID: <1525621731.16035.11.camel@novalis.org>
+Subject: Re: [PATCH 2/5] refs.c: do not die if locking fails in
+ `write_pseudoref()`
 From:   David Turner <novalis@novalis.org>
 To:     Martin =?ISO-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        Rafael =?ISO-8859-1?Q?Ascens=E3o?= <rafa.almas@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Date:   Sun, 06 May 2018 11:37:32 -0400
-In-Reply-To: <20180506133549.8536-1-martin.agren@gmail.com>
-References: <CACUQV5-9PagVhE5YY=Z3721YRiBwSZykT3ZjtzmD3o-c6O6ddQ@mail.gmail.com>
-         <20180506133549.8536-1-martin.agren@gmail.com>
+        git@vger.kernel.org
+Date:   Sun, 06 May 2018 11:48:51 -0400
+In-Reply-To: <20180506141031.30204-3-martin.agren@gmail.com>
+References: <20180506141031.30204-3-martin.agren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.26.5-1 
 Mime-Version: 1.0
@@ -57,96 +51,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-LGTM. =20
+Re making the lock static, I wonder about the following case:
+         =20
+      if (read_ref(pseudoref, &actual_old_oid))
+                       =20
+die("could not read ref '%s'", pseudoref);
 
-(This is the current best address to reach me, but do not expect fast
-responses over the next few days as I'm out of town)
+I think this calls exit(), and then atexit tries to clean up the lock
+files.  But since lock is no longer static, the stack may have been
+destroyed (I don't actually know whether this is true, so maybe someone
+else does).
 
-
-
-On Sun, 2018-05-06 at 15:35 +0200, Martin =C3=85gren wrote:
-> According to the documentation on `git update-ref`, it is possible to
-> "specify 40 '0' or an empty string as <oldvalue> to make sure that
-> the
-> ref you are creating does not exist." But in the code for pseudorefs,
-> we
-> do not implement this. If we fail to read the old ref, we immediately
-> die. A failure to read would actually be a good thing if we have been
-> given the null-oid.
+On Sun, 2018-05-06 at 16:10 +0200, Martin =C3=85gren wrote:
+> If we could not take the lock, we add an error to the `strbuf err`
+> and
+> return. However, this code is dead. The reason is that we take the
+> lock
+> using `LOCK_DIE_ON_ERROR`. Drop the flag to allow our more gentle
+> error-handling to actually kick in.
 >=20
-> With the null-oid, allow -- and even require -- the ref-reading to
-> fail.
-> This implements the "make sure that the ref ... does not exist" part
-> of
-> the documentation.
+> We could instead just drop the dead code and die here. But everything
+> is
+> prepared for gently propagating the error, so let's do that instead.
 >=20
-> Since we have a `strbuf err` for collecting errors, let's use it and
-> signal an error to the caller instead of dying hard.
+> There is similar dead code in `delete_pseudoref()`, but let's save
+> that
+> for the next patch.
 >=20
-> Reported-by: Rafael Ascens=C3=A3o <rafa.almas@gmail.com>
-> Helped-by: Rafael Ascens=C3=A3o <rafa.almas@gmail.com>
+> While at it, make the lock non-static.
+>=20
 > Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
 > ---
-> (David's twopensource-address bounced, so I'm trying instead the one
-> he
-> most recently posted from.)
+>  refs.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 >=20
->  t/t1400-update-ref.sh |  7 +++++++
->  refs.c                | 19 +++++++++++++++----
->  2 files changed, 22 insertions(+), 4 deletions(-)
->=20
-> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-> index 664a3a4e4e..bd41f86f22 100755
-> --- a/t/t1400-update-ref.sh
-> +++ b/t/t1400-update-ref.sh
-> @@ -457,6 +457,13 @@ test_expect_success 'git cat-file blob
-> master@{2005-05-26 23:42}:F (expect OTHER
->  	test OTHER =3D $(git cat-file blob "master@{2005-05-26
-> 23:42}:F")
->  '
-> =20
-> +test_expect_success 'create pseudoref with old oid null, but do not
-> overwrite' '
-> +	git update-ref PSEUDOREF $A $Z &&
-> +	test_when_finished "git update-ref -d PSEUDOREF" &&
-> +	test $A =3D $(cat .git/PSEUDOREF) &&
-> +	test_must_fail git update-ref PSEUDOREF $A $Z
-> +'
-> +
->  a=3Drefs/heads/a
->  b=3Drefs/heads/b
->  c=3Drefs/heads/c
 > diff --git a/refs.c b/refs.c
-> index 8b7a77fe5e..3669190499 100644
+> index 8b7a77fe5e..8c50b8b139 100644
 > --- a/refs.c
 > +++ b/refs.c
-> @@ -666,10 +666,21 @@ static int write_pseudoref(const char
-> *pseudoref, const struct object_id *oid,
->  	if (old_oid) {
->  		struct object_id actual_old_oid;
+> @@ -644,7 +644,7 @@ static int write_pseudoref(const char *pseudoref,
+> const struct object_id *oid,
+>  {
+>  	const char *filename;
+>  	int fd;
+> -	static struct lock_file lock;
+> +	struct lock_file lock =3D LOCK_INIT;
+>  	struct strbuf buf =3D STRBUF_INIT;
+>  	int ret =3D -1;
 > =20
-> -		if (read_ref(pseudoref, &actual_old_oid))
-> -			die("could not read ref '%s'", pseudoref);
-> -		if (oidcmp(&actual_old_oid, old_oid)) {
-> -			strbuf_addf(err, "unexpected sha1 when
-> writing '%s'", pseudoref);
-> +		if (read_ref(pseudoref, &actual_old_oid)) {
-> +			if (!is_null_oid(old_oid)) {
-> +				strbuf_addf(err, "could not read ref
-> '%s'",
-> +					    pseudoref);
-> +				rollback_lock_file(&lock);
-> +				goto done;
-> +			}
-> +		} else if (is_null_oid(old_oid)) {
-> +			strbuf_addf(err, "ref '%s' already exists",
-> +				    pseudoref);
-> +			rollback_lock_file(&lock);
-> +			goto done;
-> +		} else if (oidcmp(&actual_old_oid, old_oid)) {
-> +			strbuf_addf(err, "unexpected sha1 when
-> writing '%s'",
-> +				    pseudoref);
->  			rollback_lock_file(&lock);
->  			goto done;
->  		}
+> @@ -654,8 +654,7 @@ static int write_pseudoref(const char *pseudoref,
+> const struct object_id *oid,
+>  	strbuf_addf(&buf, "%s\n", oid_to_hex(oid));
+> =20
+>  	filename =3D git_path("%s", pseudoref);
+> -	fd =3D hold_lock_file_for_update_timeout(&lock, filename,
+> -					       LOCK_DIE_ON_ERROR,
+> +	fd =3D hold_lock_file_for_update_timeout(&lock, filename, 0,
+>  					       get_files_ref_lock_ti
+> meout_ms());
+>  	if (fd < 0) {
+>  		strbuf_addf(err, "could not open '%s' for writing:
+> %s",
