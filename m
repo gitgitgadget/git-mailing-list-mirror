@@ -6,57 +6,59 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 245CA200B9
-	for <e@80x24.org>; Sun,  6 May 2018 02:53:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2AF3200B9
+	for <e@80x24.org>; Sun,  6 May 2018 03:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751889AbeEFCxa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 May 2018 22:53:30 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:32916 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751833AbeEFCx3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 May 2018 22:53:29 -0400
-Received: by mail-wm0-f52.google.com with SMTP id x12-v6so11483398wmc.0
-        for <git@vger.kernel.org>; Sat, 05 May 2018 19:53:28 -0700 (PDT)
+        id S1751906AbeEFDhi (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 May 2018 23:37:38 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:33227 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751881AbeEFDhh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 May 2018 23:37:37 -0400
+Received: by mail-wr0-f194.google.com with SMTP id o4-v6so24604829wrm.0
+        for <git@vger.kernel.org>; Sat, 05 May 2018 20:37:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=Aj8RHVNcrvDxPjTEuZsrpcvj7lhkx+2JPmSdvM0clZo=;
-        b=b2CHvEyBJCgG2q3cygcMs8LiagJWfy8sqIC2EPbQYjLleu/iSh4MWtLZpRofwqrLi6
-         tl1PlD1nY06LgLi2lfD6sPV0vk8dORslZR0YirjMrEQtkhcQ9v82I8HyZJ9H7Nq0CinQ
-         SsMALrjJJpQHUAnePQQ/QDT5QTzw3SgCWhtAcvT90KdCq4w4bTM5l0Km+UK7EzVmTiLu
-         amzCnBaIf73XrDJsDhpHOdKOZ0IyaNjeQHfYZ5FHUvfT5HPadcV5zcauDtwXl+VWC54y
-         bPVjIJUUuXvTb8qCKOLDIsrPLnO3kar45iHNLOsU3KBa6kfEnIyHwmuCBJ9yVxzCCjYY
-         R+2g==
+        bh=iiIOD/PW2cxrOqhOb7wZ19pPO1PON+y6riF3GXSlbQY=;
+        b=P0ncr71WIBkpbXH1bzfqV9YnihtOJ5++Phk7Y2KR8Ksh7Ewou6v//p0qQbLWaJBfpB
+         ubIwqdamEkZvawwWTFn03wIVdRY06RyDFgNw6sSCeeY3p7cOdKbr6hoKm5Yml/ZxD+48
+         qNBbRdrPoVVRs9uDy92D2Uaps18dcDs/o39lcrboXS4sw23iMR61gEskveq7qRkTUfGP
+         m1LhvLz6gZlMc6QgxTWXTYVqJvLzv+c5MNPW9OxKDkRLkMtP2IQl0vx6QKdMuAnjTAY/
+         oUSA2LGyGbINu0XD6OHMf2rPuy0nYlIChHlbcDZgfRVGejn+iPBQdz07Ctfepkla6vfB
+         cQVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=Aj8RHVNcrvDxPjTEuZsrpcvj7lhkx+2JPmSdvM0clZo=;
-        b=P+HXyvjYLJGhkLzOHVBiO7huC02vzArlpVUsJazi24uKtkzibAZAzqwsisA7RLI4sZ
-         W2h5eN0WVJbr6QDOPF9B735mSnP4u5zk3WrbZhhF+Rx3q768ZtTR5l/w0PyKZS+x8y+s
-         ZaWS0yOzyxQjUuA3ntTFsO8bAeCuuGsKXsly4wl+gQY/7SDOVvdBETXkiU0JVzlbdA7W
-         g6uvqDVj2GgChq0biUXhtAF3Y7Wyw7napFawp8B7x1cX6+wblqB6WaYowEENg6vU9+0j
-         K2QUnW7Qb2wF0hKUZBw6eqg13SNwgE/DViYbglgyVKTav25U57wvROtg1yBefXZFP4th
-         HqBA==
-X-Gm-Message-State: ALQs6tCO5Qe5bRhepMJbvLQ30Xc7OJ69Ke/IZH1wEuT89TxbTpfL4XNE
-        xWq4JUuL19kscCpkv+8c+ws=
-X-Google-Smtp-Source: AB8JxZobjKB6WtelQZ62aCvAUy8TnNNipp8+oqvPzz+9KdpPKf9EaO0dvtmzp5NmfbC9MWJWJSWLLg==
-X-Received: by 10.28.26.83 with SMTP id a80mr21274150wma.36.1525575208067;
-        Sat, 05 May 2018 19:53:28 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p7-v6sm19692490wrj.85.2018.05.05.19.53.25
+        bh=iiIOD/PW2cxrOqhOb7wZ19pPO1PON+y6riF3GXSlbQY=;
+        b=FPnWtndA1/bL4v2aHayJft4T/5SoZEDmkI/0MSabMxqlKHAD/T6EvGBnUQg7TDVmEL
+         pHqDCsx0xxi6YBPVniLYMMM12voTMmal1nzvVV0n/TeSXw3R6Dc7FGssEHer4jYTYJS1
+         SPmTuSAsYqiPJ9UCHevtS1QhFdYMvHOjx+sqU+2lhSAsJ7RT8fBTlmniun1SKHRKTKlR
+         7Uo0J16ffRHWHLP9SeJ5cfAvM8jM8wtZe5Pw3rpGwU0FkfVbfgxpLIJPkP6OMcvW6HhJ
+         e1TrqZiehJIvpZoaoUrwUCEXiNicGtV115PCVqYit0q97REtAVKxqFtRbRdXMTxspVVf
+         NZgQ==
+X-Gm-Message-State: ALQs6tAfnCQ9QmO2f43nIMnPGh400rmk9Uw48AZ7z0M7QiewjLVwolan
+        m3x9yq5WinETuKVCjpLROlY=
+X-Google-Smtp-Source: AB8JxZqckpua6L1z03mFH818ibzFCgsGQaGuhLrtlxjFREXyc6cB+9mzpo11yrYLbV9SqafRcxbmWg==
+X-Received: by 2002:adf:8e27:: with SMTP id n36-v6mr24252598wrb.27.1525577856403;
+        Sat, 05 May 2018 20:37:36 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id t203-v6sm5231189wmt.33.2018.05.05.20.37.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 05 May 2018 19:53:26 -0700 (PDT)
+        Sat, 05 May 2018 20:37:34 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ilya Kantor <iliakan@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: cherry-pick --no-commit does not work well with --continue in case of conflicts
-References: <CAFU8umjvEATZguGDmcRMcfAkqn4LW7vf_B9qpLD7uc-E_7qR9g@mail.gmail.com>
-Date:   Sun, 06 May 2018 11:53:25 +0900
-In-Reply-To: <CAFU8umjvEATZguGDmcRMcfAkqn4LW7vf_B9qpLD7uc-E_7qR9g@mail.gmail.com>
-        (Ilya Kantor's message of "Sat, 5 May 2018 23:26:45 +0300")
-Message-ID: <xmqqd0y9sdei.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+        git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
+References: <20180413170129.15310-1-mgorny@gentoo.org>
+        <20180505184426.GA18385@sigill.intra.peff.net>
+Date:   Sun, 06 May 2018 12:37:33 +0900
+In-Reply-To: <20180505184426.GA18385@sigill.intra.peff.net> (Jeff King's
+        message of "Sat, 5 May 2018 14:44:26 -0400")
+Message-ID: <xmqq8t8xsbcy.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,37 +67,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ilya Kantor <iliakan@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Somewhy cherry-pick --no-commit does not work well with --continue.
+> The files in your checkout would all be consistent, but they might be
+> inconsistent with other files _not_ created by Git (e.g., one might be
+> saved in your editor). Now you may have introduced skew that cause
+> "make" to do the wrong thing, because your source and target files are
+> really operating from two different clocks.
 >
-> Let's say I'm copying changes w/o committing and get a conflict:
->
->> git cherry-pick -n master..feature
-> error: could not apply 2c11f12... Run work
->
-> Then I fix the conflict, but cherry-pick refuses to go on:
->
->> git add .
->> git cherry-pick --continue
-> error: your local changes would be overwritten by cherry-pick.
-> fatal: cherry-pick failed
->
-> It could continue *if* I committed, but I'm --no-commit for a reason,
-> so I shouldn't have to commit to go on with cherry-pick.
+> I really don't know how possible or common this is, but I feel like I've
+> been warned about this distinction in the past. I wouldn't be surprised
+> to find that it's an archaic thing found only on ancient versions of
+> NFS, and oral tradition passed down the warnings. But I also would not
+> be surprised if it's still possible and common.
 
-Of course you shouldn't have to, and cherry-pick --continue
-shouldn't commit either.
+It was pretty common back when I still was on NFS ;-)  I do not
+think we care too deeply about a working tree that spans across
+filesystem boundary, so one possible workaround is to read the fs
+timestamp back out of the _first_ file we write in the process, and
+then consistently use that time for the rest of the files that are
+checked out by the same process with utimes().  
 
-Once you resolve the conflicts, there is no more things to do for
-cherry-pick command, so --continue does not make any sense, I would
-think, when using --no-commit.
+I personally still do not think it is worth the complication; these
+projects are "holding it wrong" by placing build artifacts in SCM
+(not in tarball) ;-).
 
-For that matter, "cherry-pick --no-commit A..B", unless you are
-absolutely sure A..B consists of only one commit (in which case you
-should just be saying "cherry-pick --no-commit B" instead), makes no
-sense, either.
-
-So perhaps these are what we should be fixing?  I.e. reject
-range-pick when --no-commit is given, and reject --continue when
-working in --no-commit mode.
