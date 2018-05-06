@@ -7,23 +7,23 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDED9200B9
-	for <e@80x24.org>; Sun,  6 May 2018 12:18:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91CEB200B9
+	for <e@80x24.org>; Sun,  6 May 2018 12:22:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751200AbeEFMS5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 08:18:57 -0400
-Received: from mout.gmx.net ([212.227.17.22]:40311 "EHLO mout.gmx.net"
+        id S1751215AbeEFMWH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 08:22:07 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50237 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751123AbeEFMS4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 08:18:56 -0400
-Received: from MININT-6BKU6QN ([81.92.17.130]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M6fXs-1eRaDp1MlY-00wSyl; Sun, 06
- May 2018 14:18:45 +0200
-Date:   Sun, 6 May 2018 14:18:47 +0200 (DST)
+        id S1751187AbeEFMWF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 08:22:05 -0400
+Received: from MININT-6BKU6QN ([81.92.17.130]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lee2I-1eXfvI1TcU-00qR03; Sun, 06
+ May 2018 14:21:54 +0200
+Date:   Sun, 6 May 2018 14:21:54 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
@@ -31,56 +31,68 @@ cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 05/18] branch-diff: also show the diff between
- patches
-In-Reply-To: <217c9c08-696f-5e96-d42f-d428ad1fe0a0@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1805061411260.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <12d9c7977fdf9cc73c810d2ca31d86a4971cf7f4.1525448066.git.johannes.schindelin@gmx.de> <217c9c08-696f-5e96-d42f-d428ad1fe0a0@gmail.com>
+Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
+In-Reply-To: <xmqqk1shsecd.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1805061419530.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <a1ea0320b64527ee6ce9856dcf359513d13052b7.1525448066.git.johannes.schindelin@gmx.de> <20180505182631.GC17700@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1805052355190.77@tvgsbejvaqbjf.bet> <xmqqk1shsecd.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:5nBceWyth25y4+6Lg1r4GAQhAGBOL5krnkBJfFxU+71GBmtiN61
- 3IqdW6FiFONsxwXXktsDyzfD/uUAWGHHS1x5JqGU5e2+WRBhbR41+h3hGS+tEiV/4e2EjuW
- M9KwWPua40jBNiXC+jYs8e32n5hbo1EbLQv5DrsI/10sS9RvBfFHgB+HPy62roVByW6Bv3g
- kYndL3938Q4xawJ3aI9pw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7S1nqIQfHzs=:D6Ksp+iGy5rvpbckHXTyrO
- KsI3h47CMfr/5WtqwybkPun4OysaCLAPB20g+xKaHJIhV/ucY5ZgoOYSON+J/Xr00rCaVGBzL
- U/CB3b/aBu+DnENEGyfTaDvsdJNTZ+f5Epb29+rVK73cdw5dhFlFTbFX4L1BWjJxgLD1p8N81
- /oHeSyO9EJ7Ghv3cvmH0fu5fIAIE6S2nxL2ZIJXvqu7S7yOPxFrC67Xmt9s4GgY3XhCKvlYcw
- 9BiRmY6rNMpuyUt5RPt3OG2n44aOce9STyNNroDzUbIsO6mVK9J+kQ6mApF046EK1BpxPv7CW
- V1AzM2kChWvcb8vpMijTOLZdeDBWjs9snsmyhO8mx0AcC3kiCQeYdTVErYwTpgEVsd4fKbd4d
- 8fD87WYu6Z/qItt+JwOazyVdL7NIVuodjtK4ULYXgyT/2CdkMHhqBFmeVTyqQwGEo+IhMGKvp
- Nk54TQ00DGDIDEkss35eri0rNNfazINkcVVRVdlrM9pCytUZWHAXn3MSC8VYUyHsBDHNlY/sw
- Kn2VNiyqN0PCT7FVq977Jr8RVrUTqC0Hme5OW0YdAIktNyeScBA0wD/nj4r7C2L6W7Zdi70ih
- wNaiSzxTukreY+bIcnCL+4Ywzhqt3rQzXsmdgZsFol7SUF8bb0216Uv5HoGDFOHFgnl3YPvM6
- UTOWHxICu2Y4V4uzeuwGaKyCLrUgKunm89Ytpfh53ij/iL3fd+m3lb8qyELUy/w+S2C3dmLu5
- zb/+lYMZ4sdFyvxplBIW6N8fbqwZPicj2fgKICJR1Zul5o+kIgkBXf/HVAYTAQvgWPz6Mv9OX
- UTgsAzB
+X-Provags-ID: V03:K1:lxDIRqPUuduTAVxgnVinA+Mlonx+Lo/6uLVuXZdd6HLdfoNekNZ
+ Upkp8c9CXaaD16QZQjSMx/MsECyvzFybIi++fr41C6aZ2LYK7qyfJkeUdXjI4/wkGUJWf7v
+ +kWybriZ78T4HB3R+zhDPDIALa5sE4vqsn6mKHajfBhbFRZXM26L9VC/E8VUY3vcyHKI5HM
+ 7uOoD/lhZwnUaCaFAxpJw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0YrztD3MROM=:nDJ6UgBsnQNfgTdq0DE6T5
+ xc6lS0xhnZKDEWoT/FHv71E/UvcbBryImK8FA75RYkCQwLHiccoKXaIf+Buu1RuoY7T/8FEG+
+ Etnp+Sl+X23cLYQFGISi2Tj2L7gIzvF0DK3ndI4O8zHVbmv8OScAotasxMYtOq1gZzESwVnAk
+ JDGDeaf0afagPPSdTsGNKwYyFjJfMVPDk0D773zcKOVit0M+CzhnuJu1Cf61+wQOiXkDFJtCn
+ ybB4uDcRejDcc5P+bAdwRnylqMng0uQr6Ua2zT3HrIDBM9IryP6H3esEImA8ZjkIGCHgWppvO
+ OBgpjuAZly1sm2aOV6z39ycLHREv9/ruhsEE5whlSZ9+TeGX86mPFP8JnrEFFK1cUALSdUKPF
+ h3avP96dQ1q4cKNHvZAa1xXspHuEv9j6vYPye7PtayQn5NKC1TP1PCp1BRAzFOhaO5Dswq5bw
+ ena6QS1WgjYuTW0Sdk2182tYcFYgdtxcIYUc7ayPRFdrqS27E0shDxTzG7WJ2FVVkTOTmfeET
+ 5/xe9TwuiwixemDDZ01J/HX8SWPVOLLkh2IXHTDPzMqf4d3ivRx1iRCGCyPnjO7gJaZF+vds5
+ PpKFoPU/iuxfTyHB0+Of1e/jiauqqvHc8LlvJUdea6yU9IV8MdL61A32u6vXBo5OfQ/GpElpk
+ yYd/b1jsqjRcOvVxRB/DfVm3Lg08yeNVsnLyGmbU0y6EumX53BD8k4vAg1huUlrksJsvLVp18
+ tPUfLjR795qKDMUM3uLLzM5duV2Drv80jtHSZjXSGxHCoahleokc+outFKXqkxm4w96O6jmTa
+ qEGnpP5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Buga,
+Hi Junio,
 
-On Sun, 6 May 2018, Igor Djordjevic wrote:
+On Sun, 6 May 2018, Junio C Hamano wrote:
 
-> On 04/05/2018 17:34, Johannes Schindelin wrote:
-> > Just like tbdiff, we now show the diff between matching patches. This is
-> > a "diff of two diffs", so it can be a bit daunting to read for the
-> > beginner.
-> > 
-> > And just like tbdiff, we now also accept the `--no-patches` option
-> > (which is actually equivalent to the diff option `-s`).
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> A quick nit - would `--no-patch` (singular form) option name be more 
-> aligned with diff `-s` option it resembles?
+> > On Sat, 5 May 2018, Jeff King wrote:
+> >
+> >> On Fri, May 04, 2018 at 05:34:32PM +0200, Johannes Schindelin wrote:
+> >> 
+> >> > This builtin does not do a whole lot so far, apart from showing a usage
+> >> > that is oddly similar to that of `git tbdiff`. And for a good reason:
+> >> > the next commits will turn `branch-diff` into a full-blown replacement
+> >> > for `tbdiff`.
+> >> 
+> >> One minor point about the name: will it become annoying as a tab
+> >> completion conflict with git-branch?
+> 
+> If tbdiff were "Thomas's branch diff", I would call this jbdiff ;-)
+> but I think the 't' in there stands for "topic", not "Thomas's".
+> 
+> How about "git topic-diff"?
 
-The reason I used `--no-patches` is that tbdiff called it that way.
+Or `git topic-branch-diff`?
 
-But you're right, the functionality is already available via -s, and we
-*do* make this a distinct thing from tbdiff. So I'll simply drop support
-for --no-patches.
+But then, we do not really use the term `topic branch` a lot in Git, *and*
+the operation in question is not really about showing differences between
+topic branches, but between revisions of topic branches.
+
+So far, the solution I like best is to use `git branch --diff <...>`,
+which also neatly side-steps the problem of cluttering the top-level
+command list (because tab completion).
 
 Ciao,
 Dscho
