@@ -7,92 +7,96 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABA99200B9
-	for <e@80x24.org>; Sun,  6 May 2018 14:15:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A2DC200B9
+	for <e@80x24.org>; Sun,  6 May 2018 14:43:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751383AbeEFOPZ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 10:15:25 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:43185 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751327AbeEFOPY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 10:15:24 -0400
-Received: by mail-pf0-f196.google.com with SMTP id j20so6508739pff.10
-        for <git@vger.kernel.org>; Sun, 06 May 2018 07:15:24 -0700 (PDT)
+        id S1751509AbeEFOns (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 10:43:48 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:34919 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751327AbeEFOnr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 10:43:47 -0400
+Received: by mail-pg0-f41.google.com with SMTP id j11-v6so18475245pgf.2
+        for <git@vger.kernel.org>; Sun, 06 May 2018 07:43:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=gOzcY2YcmlhpYrXoeYxSZG5sa7Sf2iS+LiFcne83+84=;
-        b=N8KYmKAK2Nn5zH0rk/LALV5smRgoEHc/ZYgqAlkOuCbQFCC9xq7vmlitOZbk9Mh1t8
-         O2BEC0awCWH7dz5cPuWQKC9lb9vNGZGexbpgkiJGsVeBRejkKGTC4PIe/XzYhNAUcEj/
-         W86q0IUEPB0Tfk27cy5IqeZh2jeh7CN2YsHU5liubFzlqGSoMLoe6UjsA7AZbiQ3tLUQ
-         ImUGI1XH/dSEo+V+IHlMg1Vj6vgBjjbidwdTM3B964mR2sWbleUOWL6mfFbTMehhIFTC
-         5upYCikRlpo9m/6Pr+QVqED7iYoERMV0aF8ckcXa2eX40KLQEGtbqFGn+khoRfgwOFzo
-         2Yug==
+         :cc:content-transfer-encoding;
+        bh=785oiH1jNM59nhnZX3Ov1/9NNNOuVazi4/1JvhLvQ64=;
+        b=BrYdUA80WOQ8ZJWvUgzjk226UoFnkpf49mihr14vkqzv5aKnUK+PX38mVvpBqqxCPG
+         lWG6iaiUz7Gua1l5Fbgb0TBGwqLBT7AbYuMxtZEy5yZph8dX8XiPGsAkuFuPhJrdQol/
+         swTIawpZBZ238twG5grqSY/OJBWy7CU42fOMgjoY6Qh09SE03qCgOQd19MbYLLtLkOZN
+         3loJjVNJXsDP8sXnLqiq6vRVqXILLEsAv+a1NFcq/vqNLduNwysy7/anh3NIWU3/iFAd
+         jAGT3l1V3Svobk78jOrjc4CGz3pc52QMOnfCFQYano9RzaiqP/taa2AqGK3CQTKg/pIU
+         me+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=gOzcY2YcmlhpYrXoeYxSZG5sa7Sf2iS+LiFcne83+84=;
-        b=QWnGVCD8JE1qSf7mXMWGM3ApfQotu93qI379cJtUIv5xFv34NmtJ7Vm3jiAQhCS/xL
-         sGA6ziqb5nECsd/O4KcYzi23Zbx0vL3wlWe5iEI1g76pfPFUk3f8W9XwGahqe/p5jAhf
-         E6K+ZgFBvF4Ic4dxhsk5epcghxmtGizo9HJD5aYP+uBDNLOCohzv/yrAz7vXOZCGz/ty
-         FeUNArUAokOb1l+akWudvKfpmaxONF9ihr/OqhChS5j2mcYEQ13XwfGzptvPOO5FlJPe
-         VThL1Lezlc5k8R1ig47wFbL4uy38+WXy8DVuHSrccaoiqyoDV3JTrK4I64y9H6RaHUCc
-         tzkg==
-X-Gm-Message-State: ALQs6tC2U5yRiKrWEBbpG/d4gCHPYrQV6S67FLgrI1c2Ytr5/SeNlnOb
-        YE7Wt4fd3RO5w4Wmi4Q8vwUtSXoyz5muZm92K9I=
-X-Google-Smtp-Source: AB8JxZon3NaShWK0rcIfz/Lk5uKt+3z7JbW2myx9AYk+QDWvIG2uo/QLcqljoEPpAZMszN1EFHc1GQfadG+6xMc+f0w=
-X-Received: by 10.98.11.3 with SMTP id t3mr33694128pfi.32.1525616123880; Sun,
- 06 May 2018 07:15:23 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=785oiH1jNM59nhnZX3Ov1/9NNNOuVazi4/1JvhLvQ64=;
+        b=hurfkT0wWg/umyxP5f6GOoCKBY4dkENBUlvzXbGmmIzu3hOXrk+ZC/5I6jAjpO2lH7
+         7LiMxFDLE3icvCf5UgM4OflQqm7URHH7UmKkGY5JHwdOPIhz6QOouWOtsfSul3n1TPdO
+         FwQPOYcShvGUi1yRb6K1xwKkrMzbq1U7Cg3pRT8AjtfEIgvkaaz9hQyNWscTPIstWWpW
+         bwf3PlI6Uyned9qTN3txyMgShxITAVy0ofbifa48oulmJL58QU8IvGP+JDNAvoQjyepk
+         /rgn18tQqfj0k2u1NcXlrIkokz8JoN5v30DkOgm26XsNTlqoN3h8Vsm3sRPB4dCmNLao
+         sqOw==
+X-Gm-Message-State: ALQs6tAPdmVjBb6I4WcFgnIsiU6QkL/+B0Pdf9Egg2sH7kjjvW2TpwpD
+        koHQzSuvuoz1jPN0ca1cM4KOYS6TozoynSqPu1M=
+X-Google-Smtp-Source: AB8JxZqq6thds0l3jwHrjvht6zzU2qt0XUs28eqpt6tZEZxF4r37n9ZrF7IFuRss72Sf7jAVVrsS0rnUyEDe1yAl/r0=
+X-Received: by 2002:a63:7b53:: with SMTP id k19-v6mr27831750pgn.146.1525617826852;
+ Sun, 06 May 2018 07:43:46 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Sun, 6 May 2018 07:15:23 -0700 (PDT)
-In-Reply-To: <c856c460a47dbe885bbb82babc6be6848d31ed32.1525448066.git.johannes.schindelin@gmx.de>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de>
- <cover.1525448066.git.johannes.schindelin@gmx.de> <c856c460a47dbe885bbb82babc6be6848d31ed32.1525448066.git.johannes.schindelin@gmx.de>
+Received: by 10.236.187.139 with HTTP; Sun, 6 May 2018 07:43:46 -0700 (PDT)
+In-Reply-To: <326d07b48654ab2a64d09eb17d995a26d06bcdb1.1525488108.git.me@ttaylorr.com>
+References: <20180421034530.GB24606@syl.local> <cover.1525488108.git.me@ttaylorr.com>
+ <326d07b48654ab2a64d09eb17d995a26d06bcdb1.1525488108.git.me@ttaylorr.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 6 May 2018 16:15:23 +0200
-Message-ID: <CAN0heSoLD0O9owCDEU5ZHje3zNDLAS_43atb75Te7KOFoS_dtA@mail.gmail.com>
-Subject: Re: [PATCH v2 07/18] branch-diff: indent the diffs just like tbdiff
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Sun, 6 May 2018 16:43:46 +0200
+Message-ID: <CAN0heSoiOd-oXj_0kJbc2qQCQAortCuXERpxF4Cro8pi4x1eBQ@mail.gmail.com>
+Subject: Re: [PATCH v4 7/7] contrib/git-jump/git-jump: jump to match column in
+ addition to line
+To:     Taylor Blau <me@ttaylorr.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4 May 2018 at 17:34, Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
-> @@ -353,6 +358,7 @@ static void output(struct string_list *a, struct string_list *b,
->  int cmd_branch_diff(int argc, const char **argv, const char *prefix)
->  {
->         struct diff_options diffopt = { NULL };
-> +       struct strbuf four_spaces = STRBUF_INIT;
->         double creation_weight = 0.6;
->         struct option options[] = {
->                 OPT_SET_INT(0, "no-patches", &diffopt.output_format,
-> @@ -371,6 +377,9 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+On 5 May 2018 at 04:43, Taylor Blau <me@ttaylorr.com> wrote:
+> Take advantage of 'git-grep(1)''s new option, '--column' in order to
+> teach Peff's 'git-jump' script how to jump to the correct column for any
+> given match.
 >
->         diff_setup(&diffopt);
->         diffopt.output_format = DIFF_FORMAT_PATCH;
-> +       diffopt.output_prefix = output_prefix_cb;
-> +       strbuf_addstr(&four_spaces, "    ");
-> +       diffopt.output_prefix_data = &four_spaces;
->
->         argc = parse_options(argc, argv, NULL, options,
->                         builtin_branch_diff_usage, PARSE_OPT_KEEP_UNKNOWN);
+> 'git-grep(1)''s output is in the correct format for Vim's jump list, so
+> no additional cleanup is necessary.
 
-You end up leaking the buffer of `four_spaces`. Granted, that's not a
-big memory leak, but still. ;-) This was the only leak that
-LeakSanitizer found in v2 when running the new test-script and playing
-around with this a bit. This looks really good!
+> diff --git a/contrib/git-jump/README b/contrib/git-jump/README
+> index 4484bda410..7630e16854 100644
+
+>  # use the silver searcher for git jump grep
+> -git config jump.grepCmd "ag --column"
+> +git config jump.grepCmd "ag"
+
+I think this change originates from =C3=86var's comment that it "also makes
+sense to update the example added in 007d06aa57 [...] which seems to
+have added jump.grepCmd as a workaround for not having this" [1].
+
+Somehow though, this approach seems a bit backwards to me. I do believe
+that your series reduces the reasons for using `jump.grepCmd`, but
+regressing this example usage of `jump.grepCmd` seems a bit hostile. If
+someone wants to use `ag`, wouldn't we want to hint that they will
+probably want to use `--column`?
+
+Is there some other `ag --column --foo` that we can give, where `--foo`
+is not yet in `git grep`? ;-)
 
 Martin
+
+[1] https://public-inbox.org/git/874lk2e4he.fsf@evledraar.gmail.com/
