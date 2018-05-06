@@ -7,51 +7,65 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D79B9200B9
-	for <e@80x24.org>; Sun,  6 May 2018 21:09:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAB4A200B9
+	for <e@80x24.org>; Sun,  6 May 2018 22:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751880AbeEFVJu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 17:09:50 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40954 "EHLO
+        id S1751901AbeEFW4h (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 18:56:37 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41014 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751833AbeEFVJt (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 17:09:49 -0400
+        by vger.kernel.org with ESMTP id S1751878AbeEFW4f (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 18:56:35 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 635B560444;
-        Sun,  6 May 2018 21:09:48 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E0B4160444;
+        Sun,  6 May 2018 22:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525640988;
-        bh=OhaL38ughvsNtWyOzp6ve4DtYEKtzNlgqAMSHAMQcLo=;
+        s=default; t=1525647394;
+        bh=XprAacQyY/dxweCjkn8BUncno0aF7Zv1uGfD5ez/naI=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=nvBR+Hk1/CmuCtzpJBLfxBnfRsGC4elXkMIk5ACEBi5h/DEuN/nmdiVc9p2jFQWaA
-         tD0ILXiOw8kFsvIRx3ruBjT65tg4KMoe8nYM8iqOYR39FN02ph9wm1BQhP5QvK0KJt
-         jbUbdXzWm91+KxRVx3wA8qZgSHG0DW/DERCZ4z8ynaW9ymMO50sNm7lrg98A/+40Gb
-         MYun/ic2rXPseKdPQfVNp0G09elQS09TThW2AyZ89c7I3/MB/LllQLitDdXCyLas/d
-         yA7DtULQ0gx/zUUEZsqx0uW79ABONecm1li1Y/qVI7uK/hWRo1hqd0jSj87nfFueLR
-         MH1Rni6aEaXV3ZA2E7CSPAqkQkwJVHTT8JbL7MaBp88XXttsm+6gsuvaQl4nxl78s2
-         xyuoxpy1cWv/O7hZVJKyMA9TbuzpIu+VfT3I/dEBv5xLxYmL3QPblTgW9PyVIEFA7m
-         0WDkS3Glxwo7HqAc8GR4uuQczaiyeCgVB0s5HPbD61fZQVbOKVj
-Date:   Sun, 6 May 2018 21:09:43 +0000
+        b=cKPZpvIRx0obU6XjsQZ9zd5OJsdo1chaO8eYxZ3rNWunct720FAuX6Eos4ox1u3bk
+         tCCqPEPlMy/IDbpHPykRVAXbV6+sAWbB0JGG5J/mKMs1tq3TZDG/jhzyutSaGnHzjA
+         COXEHjUT9akvTvuyaNWtDJPzsoZTEJKyK95Wq5fg9CU5ozpsFtqNdru2lhgjEc8zf3
+         2bO1MHfmTtai/OS0lZ/xNEg8Dy4kT5sm4bxhYeM+VhlDwL7DII8JFaJIUzuNGOxUCq
+         Xf+Hx9i9J95+y/UnkimI3ab3VfP6wDpVIVXG2bfD39FGrZO3KYTofSGdZnwaa7TTlQ
+         pwCzSlUy4PyDis0UttZUOyUFqQzCZUHa6Vxb0RpncGSLyGw5nuf+UxOSLi+tzC3Pxj
+         8EHMhOMzg0ygj0DQ3GzbaGNJRmbS5PTbnQ9oD5undNcHwrDAkFyj1/RCRGrAEsJjaw
+         1y1h2uG+UXQt/HRK96aVTsJ+Eb40P41eqm46OPUonYcgw5PFYiN
+Date:   Sun, 6 May 2018 22:56:27 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Shulhan <ms@kilabit.info>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: [bug] Multiline value should error if the next line is section
-Message-ID: <20180506210943.GA953644@genre.crustytoothpaste.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 00/18] Add `branch-diff`, a `tbdiff` lookalike
+Message-ID: <20180506225627.GB953644@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Shulhan <ms@kilabit.info>, Git Mailing List <git@vger.kernel.org>
-References: <20180507020348.31b473b4@kilabit.info>
- <CAN0heSooYuGkxP9u0Uuwu_TCEOd_pj20L05=bwwHynPOapej6g@mail.gmail.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+ <cover.1525448066.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="vtzGhvizbBRQ85DL"
+        protocol="application/pgp-signature"; boundary="EuxKj2iCbKjpUGkD"
 Content-Disposition: inline
-In-Reply-To: <CAN0heSooYuGkxP9u0Uuwu_TCEOd_pj20L05=bwwHynPOapej6g@mail.gmail.com>
+In-Reply-To: <cover.1525448066.git.johannes.schindelin@gmx.de>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.15.0-3-amd64)
 User-Agent: Mutt/1.9.5 (2018-04-13)
@@ -62,58 +76,51 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---vtzGhvizbBRQ85DL
+--EuxKj2iCbKjpUGkD
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 06, 2018 at 10:03:10PM +0200, Martin =C3=85gren wrote:
-> This behavior looks correct to me, though. It seems very hard to me to
-> second-guess what the user meant. For example, what if that third line
-> contained a "=3D"? Like:
->=20
-> [alias]
->         huh =3D !dd \
->               bs=3D1024 ...
->=20
-> Should Git guess that the backslash on the second line was a mistake?
-> Or maybe not, because alias.bs =3D "1024 ..." would be a useless alias?
->=20
-> I think such guessing would be theoretically possible, but especially if
-> Git guesses wrong, that could be very frustrating to fight against.
+On Fri, May 04, 2018 at 05:34:27PM +0200, Johannes Schindelin wrote:
+> The incredibly useful `git-tbdiff` tool to compare patch series (say, to =
+see
+> what changed between two iterations sent to the Git mailing list) is slig=
+htly
+> less useful for this developer due to the fact that it requires the `hung=
+arian`
+> and `numpy` Python packages which are for some reason really hard to buil=
+d in
+> MSYS2. So hard that I even had to give up, because it was simply easier to
+> reimplement the whole shebang as a builtin command.
 
-I agree that trying to guess what the user wanted here is likely
-impossible.
+I just want to say thanks for writing this.  I use tbdiff extensively at
+work and having this built-in and much faster will really help.
 
-Furthermore, Git intentionally ignores unknown options.  For example, I
-have advice and diff options set in my .gitconfig that would not be
-valid on the Git shipped with a base CentOS 6 (which, unfortunately, I
-sometimes have to use).  It's very convenient for users working across a
-variety of systems that unknown options are simply ignored, even if that
-means sometimes mistakes are not caught.
+I did a once-over of v1 and I'll probably take a look at v2 or v3
+(whatever's the latest) later in the week.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---vtzGhvizbBRQ85DL
+--EuxKj2iCbKjpUGkD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.5 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrvbxcACgkQv1NdgR9S
-9otXIhAAg3/0UVaZXxugCs9q6P8PpwRlfHCTbZ2B5NMNZAUgJzXD8sAWAL7F2FdC
-uuHSxWwJPgclfo4NjX6YoU9r+cdn5yCGM15Hz+P/QPXJALshABxh5uAv42MWhzqP
-D6M8bsgBgZcO+fkDgHmI3efK+jXH0FHrYs3C0oF9a9VN5kRap5DwDdMwRdEf74UZ
-1J61Aj5E3Hb5NPVu3tnRMOehT3uISlN44LqT9durrQwkz/5/iHZx6B7sFE9XwiFp
-hIOjI5Jf2+HNKA89xzQH67kfeGsO7+e1lQO5hzy28XIzl65LT3gBX81y6JSauJ9X
-JuTOS8nyoNCgnoWj5m/0eRV07G0Ji4Bg466WiFTAX9yrMMWsgYQ78Gbw9N4gbcGG
-Uhy2EfZpn19fGc4Izl3nU6Doj8oTHf/BQd+CltjLZXNG5uPs2+p7dnUFn7ziFcOq
-aSvkGLXP05obuK1iu9iFlEnmBKNsJJ9SGcGgUSrsXswwNXFu5bpN8iKjtxbpMTwc
-Dh77+3tHM4sXenMQUSLnKf6BYLTaBEiMeHVuedj90vaJwSeJ0QACRNObLa/RWmbl
-yU+EOlZYftvM8jWM1hqcQK45QgNFWFiod54wyWMMmx7g1saNMlcLWmVGwqFCw/Qx
-QcsFGLtLt+Z2n60opP2P0kKGo5SuYTpebioiz4aAUGmEFLjr7s8=
-=WzUo
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrviBsACgkQv1NdgR9S
+9otDbw/+PLGHG4+TwUhWzrsYZu/rBZDQXY/OXCktirnxcn6343sFmHlqGWq3b29H
+2XwUdvLxtrY+dEnlL+akGr6qcgnqsFJ+sxxsYuNlx1aFEM8flAG1ATCB6eGZo3/u
+Dw9Avx6XvUuj1F20/ReHpebWX9GXdA3zgC7I0qcZkunWy4QBkp/gG7/PfKnA9KTm
+hqev9V/d3J6wNDbV4mgNxShAe02qQpjk8VkIR9fLGf6beZOYcCpUWEeSeJ/yDasW
+FtrQMFRoFct6reV/wdah3wsDfLtXdppy1lYim6Xvae932yftPFnVyq6zcFcFkSlB
+5o3/45fpERTH6EEXiRmIeb4B6pfmWjf5ehvo+foTZi1nlgII9sLMufkzShKFjiao
+zSS2BVP6XZ2LcdGRDQ8HDy7vfRkoPyjAa42Y3LVCLBmkGr8wkG2q0KFB1vAR0ExI
+Q3NC0ttn5jBdVccAo0TebIKXgkIsF54X0Yle8XE/hf/0znChye0cBHtIsxMsfge+
+7drwU2YMm5/P2MqYV1rqF+6is3OYMSbRg9IQE4NlEevtergMTKBgLJe3JPsAxqsT
+flmomewolrDIwNSTThnbDAIgPsTlLZwNSW5qjxfYPdZrPPV2N32VojXhluD7/dw+
+WUO9ZlNd468oKXr6d6ltkVt076MNcmj4m935IdFGi/5GkDNUS7k=
+=S6RC
 -----END PGP SIGNATURE-----
 
---vtzGhvizbBRQ85DL--
+--EuxKj2iCbKjpUGkD--
