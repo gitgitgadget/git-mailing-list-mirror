@@ -2,92 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E499F200B9
-	for <e@80x24.org>; Sun,  6 May 2018 05:22:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F9911F42E
+	for <e@80x24.org>; Sun,  6 May 2018 06:35:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750983AbeEFFWJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 01:22:09 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:40564 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750830AbeEFFWI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 01:22:08 -0400
-Received: by mail-wm0-f65.google.com with SMTP id j5-v6so10818857wme.5
-        for <git@vger.kernel.org>; Sat, 05 May 2018 22:22:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=J8L4ajxJ1PZa1J4joOeoynShSUAa7acbBciLnjyP3Ts=;
-        b=u04YunZjp7oFcHWqr4Gdm4gQMo67IRCYHGNfARyis63J5DqP66PRQZ/TI0ZdBV17Lw
-         jjD0HOCTs/OOyqBpfJMH+GcdKHbPMqgdfD8Keg3gD4pSgoSeQdGYwWTZx9JpbfYc8N9p
-         qcEosk9n5Ma1B/yUvqQatHv7lX4YG3fzzhtQTaDzmXzlmZ/CGuoSmJK07lj6XdnMcKD4
-         M5efzQZjIHrecoVBwO+1A7q0jw8ItT7lclx6fae+62/1eiX6xDZyn6nAWHxYjjJ4QDX7
-         cE9tXOxWKryP122tohocKINY140YQpMp4u+u1OimhI44RtnL2cz40mq4idJ5E3sTVKXD
-         mqPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=J8L4ajxJ1PZa1J4joOeoynShSUAa7acbBciLnjyP3Ts=;
-        b=jUdEiq/dFyhVFvV8AlaGhS9klriQxY13HdXCTN6HHunMfgbMZD3ai+oUTZW7GpJIrs
-         tbY3Xg2Bzw+VQ4zYq9rWVqsdxYYgUYnYXtusmEkRi7+oMp0gwa6i6V2aHK0CbcvyS2DY
-         6aNd/INyUOD6t4RM5Za1F2TLkYXCDV5hP0te9TFjU5q3OxaQreyABJk865Acp6j5edAL
-         Snk5YcGmQ41fDRtK0iZBY6d8ZreVmVw89iCt87AmublE0IECcwpkYeoX/4Vbw+aX4GjO
-         AcFySgtsfMK193ucPI4/VPxQnUqerX4l+nAGcL3K9GCg1o7xhWFCYYvkEHJlV0mq1pqa
-         tepQ==
-X-Gm-Message-State: ALQs6tDGTPgfWYaMYZQLxTY7x9qY4s/P3udsUJbnSxNaHWXBAx4FI100
-        13pICGaAaAqxPTDqlhO/LBk=
-X-Google-Smtp-Source: AB8JxZq9LOSwT1eZSsV0K8KRp4sBTFZ+UVYTI8c7kynclBaIYlFMpHajJ+88M50/xKtC1+LWekvDsA==
-X-Received: by 10.28.220.84 with SMTP id t81mr22939868wmg.90.1525584126831;
-        Sat, 05 May 2018 22:22:06 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 194-v6sm7236059wml.20.2018.05.05.22.22.06
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 05 May 2018 22:22:06 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
+        id S1750983AbeEFGfr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 02:35:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57552 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750824AbeEFGfq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 02:35:46 -0400
+Received: (qmail 5868 invoked by uid 109); 6 May 2018 06:35:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 06 May 2018 06:35:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15498 invoked by uid 111); 6 May 2018 06:35:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 06 May 2018 02:35:49 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 06 May 2018 02:35:44 -0400
+Date:   Sun, 6 May 2018 02:35:44 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 00/18] Add `branch-diff`, a `tbdiff` lookalike
+Subject: Re: [PATCH v2 13/18] color: provide inverted colors, too
+Message-ID: <20180506063543.GA3418@sigill.intra.peff.net>
 References: <cover.1525361419.git.johannes.schindelin@gmx.de>
-        <cover.1525448066.git.johannes.schindelin@gmx.de>
-Date:   Sun, 06 May 2018 14:22:05 +0900
-In-Reply-To: <cover.1525448066.git.johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Fri, 4 May 2018 17:34:27 +0200")
-Message-ID: <xmqqzi1dqrya.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+ <cover.1525448066.git.johannes.schindelin@gmx.de>
+ <1ebbe359547689d32aa27564929d733a26bb8054.1525448066.git.johannes.schindelin@gmx.de>
+ <20180505182922.GD17700@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1805060001230.77@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1805060001230.77@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Sun, May 06, 2018 at 12:03:50AM +0200, Johannes Schindelin wrote:
 
-> Johannes Schindelin (17):
->   Add a function to solve least-cost assignment problems
->   Add a new builtin: branch-diff
+> > There's a "reverse" attribute (which we already parse and support) that
+> > can do this without having to repeat the colors. AFAIK it's well
+> > supported everywhere, but I could be wrong.
+> 
+> How would I use that here, though? I need to get the thing via
+> diff_get_color_opt() which takes a parameter of type `enum color_diff`.
+> There is no way I can specify `reverse` here, can I?
 
-Perhaps retitling these to
+My thinking was that the code would know that coloring the initial "+"
+should combine color.diff.new, along with a new tbdiff-specific config
+option. So the C equivalent of something like this:
 
-    hungarian: a function to solve least-cost assignment problems
-    branch-diff: a new builtin to compare iterations of a topic
+  new=$(git config --get-color color.diff.new green)
+  tbdiff=$(git config --get-color color.tbdiff.new reverse)
+  reset=$(git config --get-color color.diff.reset reset)
 
-may serve as good precedents to changes other people may later make
-to these files.  Especially the second one is already consistent
-with the several changes that are listed below ;-)
+  echo "${new}${tbdiff}+${reset}${new}+actual diff content${reset}"
 
->   branch-diff: first rudimentary implementation
->   branch-diff: improve the order of the shown commits
->   branch-diff: also show the diff between patches
->...
+Then if you set color.diff.new to blue, you'll get a reverse-blue "+"
+without having to configure anything else.
+
+You can still override the tbdiff coloring with a totally unrelated
+color, since it comes after ${new} (so you could set it to purple or
+something if you wanted, though obviously a background or attribute from
+${new} can still leak through if you have one set). The only downside in
+such a case is that the color sequence is slightly longer ("green, no
+blue!").
+
+You could also have tbdiff.new and tbdiff.old to allow setting them
+independently (but they'd both default to "reverse").
+
+> > I wonder if that would make configuring this slightly more pleasant,
+> > since it saves the user having to define "oldinv" whenever they change
+> > "old".
+> 
+> I am all for making the configuration more pleasant. So I hope I can make
+> use of the `reverse` thing here, without having to introduce a new enum
+> value.
+
+I think the new enum (and matching config) has some value in case people
+want to override it.  But if you don't want to, diff_get_color() is
+really just checking want_color() as a convenience. You could do that,
+too:
+
+  const char *reverse = want_color(opt->use_color) ? GIT_COLOR_REVERSE : "";
+
+You'd have to introduce GIT_COLOR_REVERSE. I don't think we have a
+constant for it yet, but it's \x[7m.
+
+-Peff
