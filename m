@@ -2,97 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 066C3200B9
-	for <e@80x24.org>; Sun,  6 May 2018 20:03:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91CCB200B9
+	for <e@80x24.org>; Sun,  6 May 2018 20:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751833AbeEFUDM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 16:03:12 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:42947 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751817AbeEFUDM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 16:03:12 -0400
-Received: by mail-pg0-f47.google.com with SMTP id p9-v6so15827996pgc.9
-        for <git@vger.kernel.org>; Sun, 06 May 2018 13:03:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Brm3eEQOvlXhKyptBoI3ldXCSutvwXpbget0NlthKdw=;
-        b=FyZP9bpg+P4/nYc8orMs9kfXEH+4IjxXpOeBHOeWUt5siP7erIgyJEg3Mw8oq1oPgo
-         eQDhqLsdB9ouisN7orBgcBswEvNZNrq3BMnu4Whkwr4MkGF8PQ4g/3OPkvKu1qgOOQD9
-         E4MbUPHzTcS3i6SC7bwsMkliuB9IWCaE6ZBJuxufe/f3sSxNmjKL682/8jxqFv8nTzZM
-         hHvLTWEqzzx7Pw4jGwE4h6GP+4y1w/F2nnS8JyJse92mujSCqqeWjg8YmDsKnZK5dBjB
-         eBlzgLUYU/rdAR3XnaNE8gLcjqHR4v7uOv1DZY6+XKXCaqTlaAVn9MSmiWAiW2QbBts6
-         trlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Brm3eEQOvlXhKyptBoI3ldXCSutvwXpbget0NlthKdw=;
-        b=L435D5ZVe3xfTBCVyxe8qUFIZK5hnaUwVEYoKBeixgnIfj+hI1m9MSrVu1DSQG3Tks
-         oTi/7++/XMZQ0rIyMN3W5nQtvX4MQFdv8c1BgrRuPKJksJ8PjVo+KPVZu2Cg29YN5FWn
-         se6I0pOQNqNh6YPmbAdvvuNQIe76Q5kI+z7LAWLoRlMJW/1PjEQ6SdoZG5f48ycvijv0
-         g8XWCfy5kBSiaNPl4sKKcgo6Na+MJQgRP9sdhJetMNcwv2Dy6cirbnI1JnjeW6nXrBgc
-         Epi71/Pe1vvM3gpeNAce3KPKLeUgwfttnNSOM5gjybVF/zQfDBcE9VClPfp5VD4jA/pH
-         egTQ==
-X-Gm-Message-State: ALQs6tBN5zFwOvwPWcrOqBEaIaGBEPaNziylNH4WhM3xs7a7u167Iyqf
-        Gwyy9jXB0xeVYj4xU9TgENKElab9x+Ro3VcgILo=
-X-Google-Smtp-Source: AB8JxZp9FWRyQqxRgR8/gdc1sFW1rfgilRb8PGnWXgZIW6Gw6BLiNFpYXJeP6a4awrsrNrg0H0jFXZLbijhNiNKBijk=
-X-Received: by 2002:a63:7b53:: with SMTP id k19-v6mr28364962pgn.146.1525636991468;
- Sun, 06 May 2018 13:03:11 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Sun, 6 May 2018 13:03:10 -0700 (PDT)
-In-Reply-To: <20180507020348.31b473b4@kilabit.info>
-References: <20180507020348.31b473b4@kilabit.info>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 6 May 2018 22:03:10 +0200
-Message-ID: <CAN0heSooYuGkxP9u0Uuwu_TCEOd_pj20L05=bwwHynPOapej6g@mail.gmail.com>
-Subject: Re: [bug] Multiline value should error if the next line is section
-To:     Shulhan <ms@kilabit.info>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1751853AbeEFUmf (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 16:42:35 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40930 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751814AbeEFUme (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 16:42:34 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D4B5060444;
+        Sun,  6 May 2018 20:42:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1525639353;
+        bh=HV7rZpC5gOYSgpoytgYYXMfNfFSbjKRQ48abGi0cOZA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=ckyaAHBRZW6g735PW9JrIiM3PvYZDM5LH3PBl8IE/eb5vBjn94wHcPLcITG1L4daa
+         kO+Co+HVEh85N+fD2ZD3KOk4uYYJX6y+wIOMT2HjeVBAGxKqOWZlRovQUs10vEFRnZ
+         ZvnQnkvPMbsURxaefdsyoVXXsCImD296GGVEBeu3/o3lEC7hmkPkViSAt+naqisIB7
+         HfFqnUI2jm7aoAUhUfmL3dMukY1Eqh8AelKWpXBVApGjheOOJVRWicUxzMFORraVwi
+         NwixqAw3TAAB9SIwnxMoBUIVCKOeLE0Hw8jUcM4iywHtGvTKLdYDQzcDFyPGj/7jL0
+         sUQuwYRfqrtXRm42tW4KT+TNApmOVqZ/1RwlIsxz0ECiPsPSpfAKdkk/po+3d4ifUC
+         9Mu7XuGeSFpUEpK0Z1HWNZHcye62uC9/x0Mv4qp4xRODwOLzpESUPKDwQ2hLE670vn
+         /GcMFuR1xEDaI2Y/hbL0UKhagPFHm5Z4Eq4zMRdicz/8I74zKZt
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+Subject: [PATCH 1/2] Documentation: use 8-space tabs with Asciidoctor
+Date:   Sun,  6 May 2018 20:42:25 +0000
+Message-Id: <20180506204226.955739-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
+In-Reply-To: <20180504015202.GP13217@genre.crustytoothpaste.net>
+References: <20180504015202.GP13217@genre.crustytoothpaste.net>
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Shulhan
+Asciidoctor expands tabs at the beginning of a line.  However, it does
+not expand them into 8 spaces by default.  Since we use 8-space tabs,
+tell Asciidoctor that we want 8 spaces by setting the tabsize attribute.
+This ensures that our ASCII art renders properly.
 
-Thank you for your report. I'm abbreviating a bit:
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ Documentation/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On 6 May 2018 at 21:03, Shulhan <ms@kilabit.info> wrote:
-> [alias]
->         tree = --no-pager log --graph \
->                 -n 20 \
-> [user]
->         name = Shulhan
->
-> (2) Run `git config -f git.config -l`
->
-> The command print the following output,
->
-> alias.tree=--no-pager log --graph -n 20 [user]
-> alias.name=Shulhan
-
-Small mistake, big consequences. :-)
-
-This behavior looks correct to me, though. It seems very hard to me to
-second-guess what the user meant. For example, what if that third line
-contained a "="? Like:
-
-[alias]
-        huh = !dd \
-              bs=1024 ...
-
-Should Git guess that the backslash on the second line was a mistake?
-Or maybe not, because alias.bs = "1024 ..." would be a useless alias?
-
-I think such guessing would be theoretically possible, but especially if
-Git guesses wrong, that could be very frustrating to fight against.
-
-Martin
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 6232143cb9..bcd216d96c 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -184,7 +184,7 @@ ASCIIDOC = asciidoctor
+ ASCIIDOC_CONF =
+ ASCIIDOC_HTML = xhtml5
+ ASCIIDOC_DOCBOOK = docbook45
+-ASCIIDOC_EXTRA += -acompat-mode
++ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
+ ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
+ ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
+ DBLATEX_COMMON =
