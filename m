@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61C0E200B9
-	for <e@80x24.org>; Sun,  6 May 2018 23:19:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 178EA200B9
+	for <e@80x24.org>; Sun,  6 May 2018 23:19:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752069AbeEFXTH (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 19:19:07 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41204 "EHLO
+        id S1752081AbeEFXTL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 19:19:11 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41226 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752030AbeEFXS6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 19:18:58 -0400
+        by vger.kernel.org with ESMTP id S1751989AbeEFXTC (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 19:19:02 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F041D60761;
-        Sun,  6 May 2018 23:18:54 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4972B60769;
+        Sun,  6 May 2018 23:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525648735;
-        bh=vqhEDAX66enHXwvH4Dbb71ck/56wkA9xwXomvQggeF4=;
+        s=default; t=1525648740;
+        bh=tNmE6YX8OIp3qF4zgyIdkeJH75tkcyLNAr3nE8efhx4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=qCkCjDU3QNDGrT10JE4EJ3gQO1ZwrX2O765UFFiAOxKtj0DZUMW4xbVmqsAzI8jIq
-         SXj5xrTwMpm1ev57/bblSZaXfUUQAYZ/P4Af3G72M5RADQdiHe/o46kmGBmvoJVFiS
-         puWYHPVncC8sPYoNNzhuwmJe0X8fB9ORCtTAh6cqvGz/twd2syqa7v22AGQQbcmkiN
-         ytCRPYXk21WWIXVtqyZKRA91jXrSshbP8NiuRTrekVYNnqbJEjCvLnP489GNsMe8o2
-         wJwRgBJBtFiEBsH2KCTz0+pard6kKuEj3ZekrH7QWGWvyNbemj2lf40JzaX9r9taQ+
-         TH8ecdDI3LVBnVTsy24seqiYKdHDWwWjKiCMNnyRMK54JxA3inovS/nuhmfYMU4yKp
-         ECeOtKpi6zYWUpro0VBgiURqKQW+2prZrmonMvuYk8ex7DV1TpgjaDXtQUke3NqXqa
-         XNlGCgyCvajEX5Ax+MwjneJoYpx393xEhybtYbSlRE+goiXsapp
+        b=MarMMoVMkeqWlr1URzhPOORwMUq/bxBjZE3yEJB51xqosc5xrAGgdS6ZqIzFkJ9xD
+         yHemCU8cORQVuB9pw3b6YhhylzYIGKwdqXnEYyFj7CLbY9zShncZcowsulLkrws7Tu
+         XxuKB9O8r1zOxrZ8wECoWFfMVO80DExXNAKS3RnsYEu+2sLKl4/APSKIz2AoJ5JlKp
+         /Rc/wioPboU/BKphesf6DgbmIlRc8Z9aV6V/SmhPVmHgiyaqf1DPcSguHx22J2GiFC
+         9LUXTfutOsR3XeLpL5vnHzg1+/6BzDFZ34364aqq8ZgwmPg6djfykgdbD/Qcf9OAnV
+         QNsym0YQkLT1CP2ri5uj+5e5KTq8SechYE5OAQ1bW2o9qG5kbEEFJlCpfoLjjMP4yV
+         eM66Ge+u6gJKRjQwlyE7j7N4RT1nn/1buGSlEUJQ4GUx7SGsbOXQKTgGx7d0c0Ly9Z
+         khS7Ro+8Wb7wTLNIjI1iBmDyqIIfa1DN+iC4Bb9aGYdRuvkf93D
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -42,9 +42,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH 22/28] t4030: abstract away SHA-1-specific constants
-Date:   Sun,  6 May 2018 23:17:46 +0000
-Message-Id: <20180506231752.975110-23-sandals@crustytoothpaste.net>
+Subject: [PATCH 24/28] t4205: sort log output in a hash-independent way
+Date:   Sun,  6 May 2018 23:17:48 +0000
+Message-Id: <20180506231752.975110-25-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180506231752.975110-1-sandals@crustytoothpaste.net>
 References: <20180506231752.975110-1-sandals@crustytoothpaste.net>
@@ -54,34 +54,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for blobs instead of using
-hard-coded hashes.
+This test enumerates log entries and then sorts them.  For SHA-1, this
+produces results that happen to sort in the order specified in the test,
+but for other hash algorithms they sort differently.  Ensure we sort the
+log entries in a hash-independent way by sorting on the ref name instead
+of the object ID.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4030-diff-textconv.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ t/t4205-log-pretty-formats.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
-index aad6c7f78d..4cb9f0e523 100755
---- a/t/t4030-diff-textconv.sh
-+++ b/t/t4030-diff-textconv.sh
-@@ -148,7 +148,8 @@ test_expect_success 'diffstat does not run textconv' '
- # restore working setup
- echo file diff=foo >.gitattributes
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 591f35daaf..2052cadb11 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -516,22 +516,22 @@ test_expect_success 'log decoration properly follows tag chain' '
+ 	git commit --amend -m shorter &&
+ 	git log --no-walk --tags --pretty="%H %d" --decorate=full >actual &&
+ 	cat <<-EOF >expected &&
+-	$head1  (tag: refs/tags/tag2)
+ 	$head2  (tag: refs/tags/message-one)
+ 	$old_head1  (tag: refs/tags/message-two)
++	$head1  (tag: refs/tags/tag2)
+ 	EOF
+-	sort actual >actual1 &&
++	sort -k3 actual >actual1 &&
+ 	test_cmp expected actual1
+ '
  
--cat >expect.typechange <<'EOF'
-+symlink=$(git rev-parse --short $(printf frotz | git hash-object --stdin))
-+cat >expect.typechange <<EOF
- --- a/file
- +++ /dev/null
- @@ -1,2 +0,0 @@
-@@ -156,7 +157,7 @@ cat >expect.typechange <<'EOF'
- -1
- diff --git a/file b/file
- new file mode 120000
--index 0000000..67be421
-+index 0000000..$symlink
- --- /dev/null
- +++ b/file
- @@ -0,0 +1 @@
+ test_expect_success 'clean log decoration' '
+ 	git log --no-walk --tags --pretty="%H %D" --decorate=full >actual &&
+ 	cat >expected <<-EOF &&
+-	$head1 tag: refs/tags/tag2
+ 	$head2 tag: refs/tags/message-one
+ 	$old_head1 tag: refs/tags/message-two
++	$head1 tag: refs/tags/tag2
+ 	EOF
+-	sort actual >actual1 &&
++	sort -k3 actual >actual1 &&
+ 	test_cmp expected actual1
+ '
+ 
