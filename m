@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 857C6200B9
-	for <e@80x24.org>; Sun,  6 May 2018 23:19:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52FA4200B9
+	for <e@80x24.org>; Sun,  6 May 2018 23:19:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752038AbeEFXTA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 19:19:00 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41162 "EHLO
+        id S1752066AbeEFXTD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 19:19:03 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41188 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751989AbeEFXSt (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 19:18:49 -0400
+        by vger.kernel.org with ESMTP id S1752007AbeEFXSx (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 19:18:53 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BD7866076B;
-        Sun,  6 May 2018 23:18:47 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 458886076C;
+        Sun,  6 May 2018 23:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525648728;
-        bh=Fhu1Oin9SuVpDzNg7rIriw5oIkgsGwiho1rufSikRQY=;
+        s=default; t=1525648731;
+        bh=JKitOMEA2DJPCoKPis5FmlXHEw44cp0tLh+bvAWfwKY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Yn2Wv6d5nNPQSd68a2Pu7nIcPJ7GDryb6RSDLXQYEHqvuV8dD5p8LhQAdLryoYt4Z
-         RDSI1+RBjERZsQtRgyy7RMpY/V3sw4xMhsm7a7L7gbXah6poLIzFkZ+SQvgR3xDWyi
-         Rr7d2dR/auu/XnGqQmTBqyadri1VrurDFOZOmPTFme6rxDteXAKEhSN75UG0Jh718G
-         YTttGp1sXHhxoZkBXmegqKsoyB1YuPbzfmKwBmXXRpxGupz3kcRsp5M6ayJzetSAIX
-         +jhSF+bxrnGQ2Nf5TKhNuzWDO2uqHykHUFxB6NguPkUUov5Nw2B9yBpLejfdM7HSPv
-         4v9EEfRrLUG3PiKFzEqG6pQp0PGXysBMcgsokH3g+Mf6n0tKWfLGThge7c0mxCMNH2
-         rVhqfvX6Yt3/hlNt7Y2DX37eG+XZ27qHqQUKG7NCcWXPZuz9/Z3mq8/Ow9jVVOhVLe
-         ZC8JiEeQ21IYa1/JsZIR+lY55LobGIy1o20yMN/6mvxZv25Iz4e
+        b=ysXxZQ0llTtj0ybEs31BUoQ3tjP8K0rFXWPmOfLAmPtOkhc6ncn5nXbhrKvpJUKih
+         sGjdjvUgqazhD/fYjnU0bSyuD8EktWhjY6Zj7tl5y6Emx0nTJY/gjWQr/6LQMLesh2
+         a+PhYI6x/DSM3X0f/ofJk9hok8XJu6p6B+2vzqQr9dCb1K9xyAR+LLNMDFowApnygj
+         j2Aorb69SzeYUpcB9tdHZok+mz+uwQCZRBJh8XvQCFxWbZ2EgR73YzrLNPJ96ZgnIv
+         YMbh9drZNUVATFZGh8ZPAOEKdE4pcwrnm6M46XuHeMwXCBmi45QvVkSs2RG4YutMIU
+         HPjXyMnZkIS7T5KV0QfNxT4JaPXy2vv+66G6YNGMuI17qz2e6KcG9DWu+pLisYuhDu
+         qruhqE+H2bivzvxS1Ue1XRzGpxyyJawCPsLtBRDMv6emy0lgyu5GweJciXA2Yc1AZR
+         lTCwXJGdjwAoC1IBUDaBJ20mv9+mMGX0jfrrgrJZ6U7tpLZAof8
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -42,9 +42,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH 17/28] t4014: abstract away SHA-1-specific constants
-Date:   Sun,  6 May 2018 23:17:41 +0000
-Message-Id: <20180506231752.975110-18-sandals@crustytoothpaste.net>
+Subject: [PATCH 20/28] t4029: fix test indentation
+Date:   Sun,  6 May 2018 23:17:44 +0000
+Message-Id: <20180506231752.975110-21-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180506231752.975110-1-sandals@crustytoothpaste.net>
 References: <20180506231752.975110-1-sandals@crustytoothpaste.net>
@@ -54,51 +54,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes values for blobs instead of using
-hard-coded hashes.
+We typically indent our tests with a single tab, partially so that we
+can take advantage of indented heredocs.  Make this change and move the
+quote marks to be in the typical position for our tests.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4014-format-patch.sh | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ t/t4029-diff-trailing-space.sh | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 163d64fc32..eb34d0faab 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -578,7 +578,9 @@ test_expect_success 'excessive subject' '
+diff --git a/t/t4029-diff-trailing-space.sh b/t/t4029-diff-trailing-space.sh
+index 3ccc237a8d..f4e18cb8d3 100755
+--- a/t/t4029-diff-trailing-space.sh
++++ b/t/t4029-diff-trailing-space.sh
+@@ -18,22 +18,21 @@ index 5f6a263..8cb8bae 100644
+ EOF
+ exit 1
  
- 	rm -rf patches/ &&
- 	git checkout side &&
-+	before=$(git rev-parse --short $(git hash-object file)) &&
- 	for i in 5 6 1 2 3 A 4 B C 7 8 9 10 D E F; do echo "$i"; done >>file &&
-+	after=$(git rev-parse --short $(git hash-object file)) &&
- 	git update-index file &&
- 	git commit -m "This is an excessively long subject line for a message due to the habit some projects have of not having a short, one-line subject at the start of the commit message, but rather sticking a whole paragraph right at the start as the only thing in the commit message. It had better not become the filename for the patch." &&
- 	git format-patch -o patches/ master..side &&
-@@ -586,7 +588,6 @@ test_expect_success 'excessive subject' '
- '
+-test_expect_success \
+-    "$test_description" \
+-    'printf "\nx\n" > f &&
+-     git add f &&
+-     git commit -q -m. f &&
+-     printf "\ny\n" > f &&
+-     git config --bool diff.suppressBlankEmpty true &&
+-     git diff f > actual &&
+-     test_cmp exp actual &&
+-     perl -i.bak -p -e "s/^\$/ /" exp &&
+-     git config --bool diff.suppressBlankEmpty false &&
+-     git diff f > actual &&
+-     test_cmp exp actual &&
+-     git config --bool --unset diff.suppressBlankEmpty &&
+-     git diff f > actual &&
+-     test_cmp exp actual
+-     '
++test_expect_success "$test_description" '
++	printf "\nx\n" > f &&
++	git add f &&
++	git commit -q -m. f &&
++	printf "\ny\n" > f &&
++	git config --bool diff.suppressBlankEmpty true &&
++	git diff f > actual &&
++	test_cmp exp actual &&
++	perl -i.bak -p -e "s/^\$/ /" exp &&
++	git config --bool diff.suppressBlankEmpty false &&
++	git diff f > actual &&
++	test_cmp exp actual &&
++	git config --bool --unset diff.suppressBlankEmpty &&
++	git diff f > actual &&
++	test_cmp exp actual
++'
  
- test_expect_success 'cover-letter inherits diff options' '
--
- 	git mv file foo &&
- 	git commit -m foo &&
- 	git format-patch --no-renames --cover-letter -1 &&
-@@ -616,7 +617,7 @@ test_expect_success 'shortlog of cover-letter wraps overly-long onelines' '
- '
- 
- cat > expect << EOF
--index 40f36c6..2dc5c23 100644
-+index $before..$after 100644
- --- a/file
- +++ b/file
- @@ -13,4 +13,20 @@ C
-@@ -640,7 +641,7 @@ test_expect_success 'format-patch respects -U' '
- cat > expect << EOF
- 
- diff --git a/file b/file
--index 40f36c6..2dc5c23 100644
-+index $before..$after 100644
- --- a/file
- +++ b/file
- @@ -14,3 +14,19 @@ C
+ test_done
