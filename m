@@ -2,138 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B4D8200B9
-	for <e@80x24.org>; Sun,  6 May 2018 18:03:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56221200B9
+	for <e@80x24.org>; Sun,  6 May 2018 18:10:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751864AbeEFSDF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 14:03:05 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:38042 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751751AbeEFSDE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 14:03:04 -0400
-Received: by mail-wm0-f65.google.com with SMTP id m198-v6so11667285wmg.3
-        for <git@vger.kernel.org>; Sun, 06 May 2018 11:03:03 -0700 (PDT)
+        id S1751812AbeEFSKx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 14:10:53 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:35175 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751771AbeEFSKw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 14:10:52 -0400
+Received: by mail-pf0-f170.google.com with SMTP id x9so1888308pfm.2
+        for <git@vger.kernel.org>; Sun, 06 May 2018 11:10:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=tVglMSOOgVVOYhPGbgoQHmJtAgK9KA1e1yiaM68fffk=;
-        b=CeLlL4dx7AHxw+LNEzw2skwZcgXr6urCgZRnvjLdItmhpnCCAZOqauApSfjg9r6J74
-         PdaRSM7InzcN3QXtp3AVYW81doCyV9gLQ/IbvhLeFivt5qb4R0hJj6xs7jbgJlKgDSHL
-         USnyNavR1wlQeNXEq4taoYqxD1S0SwhAJwSPBGKzcdxfRxRGG1qea5GzC/U/GZFoql/V
-         iaeNdDqBNW+DYu86z5tMGTM0IRn3Z4cqqNCpOU2sFT3r29HHa/m4Jtv/NxT7mudZNMQU
-         A8I88aj10V0AGnWMywbDm2xi7m+o1vwzISi7+Mss4C9raqjPGV6c+3QSAaXxO934JLgD
-         aTYg==
+        h=message-id:subject:from:to:cc:date:mime-version
+         :content-transfer-encoding;
+        bh=OsqXbFMA/Rawwm6Lzt1jpNpgh58swsZo3ADPzT7YVI0=;
+        b=ZkFRpn65flVGsN0uo557PnuYGW2W2jj7lsdsXFznJwOhjddeuOPGhRtRBQi/R9sQxT
+         ds8u9ekSR8Iq3s4++uzEoffUB/AhoRW7FAmYGeWwg3Fgpmn+eBTnmA9gxq8LzeIRhd0M
+         Nn/iNts5aQ3yC1Vnlwb26aMkhyp86VQbqzjKdKy6vwNLJ4tOOrvlmpMC2wXKs+tDdMkT
+         mWsY2PSoAxf8P+VtGN2MLXfvSTBoi2Xeja9tj9XsLMISqCBoUhExhW/FI4oNxmpxkzOc
+         94sY/jtpp4rUc7zIr7nd1/c1QWA7CLnIaOqlJxlkvLfYMXCF7Z+zp/1PokmT4Fgvboq9
+         DwLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=tVglMSOOgVVOYhPGbgoQHmJtAgK9KA1e1yiaM68fffk=;
-        b=SWM3W7W4xCkF+DRiaV6cBPQ4+QQtyG1OF0qiYlqHbhnDHRLOxokWXNhslTWClLY/NB
-         Irg8zjS7InaZ8no1wBVCpu47ShFnFrbFbSSzWLX3uxdnrALm+Ukb7rXwwLEdWKfB7QyU
-         chD0niy4ki88/83szNTOQNC8F/EPP1VKnd8kwh4k0rTIZ7jzQIjTjLAQmfadEd5RivkH
-         DqavBYteZlpnrn3PwXVjPnqfgkk4OALcsRsdjsSxiG+BNPGUTHx+7Sbyy6t1E8VJ0oeK
-         /IWqU7Kd588KTMY+DmNC721PMiZby5syCaKdNHnOatLNYkFA/7NkDL5+4YrOSIvpDiM/
-         a1rQ==
-X-Gm-Message-State: ALQs6tAybpHG2X9I1+HemZqWTN8Ig1UNpyB9HAasML+o6eGF4A4AulLX
-        5R0oIC/NoOJcVdd4mCK6WPB4AVgl
-X-Google-Smtp-Source: AB8JxZr2AXc4Yqjg/iP2s6IK3azY1mTdlrSQ7PPJ6GYl1t4RQG0dDAolS86b+CunL/C7kF1hLNJPFA==
-X-Received: by 2002:a50:bc02:: with SMTP id j2-v6mr40201750edh.172.1525629782966;
-        Sun, 06 May 2018 11:03:02 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id m20-v6sm11202092edq.46.2018.05.06.11.03.01
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:mime-version
+         :content-transfer-encoding;
+        bh=OsqXbFMA/Rawwm6Lzt1jpNpgh58swsZo3ADPzT7YVI0=;
+        b=b+QTNdFPBMdlTQe+t5kc+nk6nEmP0GBOW8s66obQ/pkv7TiNlv7KyWPNsktfutYyD+
+         7OsAy4KDV1QtRiOhS4rC4nfzfA/zP9pRf5BPY9wdYenPx01qCHbIN89YQPtc0kIhnH0O
+         hPfEE1eQj84FbonNkJhs4+pdHSR09aS1rAEy3Hzx0Y8KFfBNbs8FHuOPOTVxxsmls7RO
+         zFT/5wDBdqNDAUvf/ZVZHxT4RGL6d3dad1hHWGGak4YpdqrTlC4I1/PFCZF88VxbkMpS
+         siP7rU2OGkUxoLuRxjc2PXQRuu02CaRVGBFjXuyFsrCA6mdTbUmLwvB46y1zVTfS2efD
+         5EJA==
+X-Gm-Message-State: ALQs6tDifLGvIh9t0GFuglxEnTo4b07OytK3GG23EoC81GFrauqdVNVH
+        h0HsVf0Qzp6BSWnbLVRRQNMWeweS
+X-Google-Smtp-Source: AB8JxZqWA0ez/XxiCW6mlSzvLDelSSClV2dFyO3HqUQQkvEBsOSMAHlPU5dSGJRuWPEF5Z9YwTdU1Q==
+X-Received: by 10.98.218.23 with SMTP id c23mr26401948pfh.128.1525630251448;
+        Sun, 06 May 2018 11:10:51 -0700 (PDT)
+Received: from unique-pc ([117.202.251.178])
+        by smtp.gmail.com with ESMTPSA id l12-v6sm3737236pgr.82.2018.05.06.11.10.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 06 May 2018 11:03:02 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 7/7] contrib/git-jump/git-jump: jump to match column in addition to line
-References: <20180421034530.GB24606@syl.local>
-        <cover.1525488108.git.me@ttaylorr.com>
-        <326d07b48654ab2a64d09eb17d995a26d06bcdb1.1525488108.git.me@ttaylorr.com>
-        <CAN0heSoiOd-oXj_0kJbc2qQCQAortCuXERpxF4Cro8pi4x1eBQ@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CAN0heSoiOd-oXj_0kJbc2qQCQAortCuXERpxF4Cro8pi4x1eBQ@mail.gmail.com>
-Date:   Sun, 06 May 2018 20:03:01 +0200
-Message-ID: <87d0y8y84q.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        Sun, 06 May 2018 11:10:50 -0700 (PDT)
+Message-ID: <1525630243.15782.4.camel@gmail.com>
+Subject: Weak option parsing in `git submodule`
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Git Mailing list <git@vger.kernel.org>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset="UTF-8"
+Date:   Sun, 06 May 2018 23:40:43 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1+deb9u1 
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I recently faced the consequence of the weak option parsing done by in
+`git submodule`. Initially tried to add a new submodule using the `git
+submodule add` sub-command in the following way,
 
-On Sun, May 06 2018, Martin Ågren wrote:
+    $ git submodule add ./foo/bar
 
-> On 5 May 2018 at 04:43, Taylor Blau <me@ttaylorr.com> wrote:
->> Take advantage of 'git-grep(1)''s new option, '--column' in order to
->> teach Peff's 'git-jump' script how to jump to the correct column for any
->> given match.
->>
->> 'git-grep(1)''s output is in the correct format for Vim's jump list, so
->> no additional cleanup is necessary.
->
->> diff --git a/contrib/git-jump/README b/contrib/git-jump/README
->> index 4484bda410..7630e16854 100644
->
->>  # use the silver searcher for git jump grep
->> -git config jump.grepCmd "ag --column"
->> +git config jump.grepCmd "ag"
->
-> I think this change originates from Ævar's comment that it "also makes
-> sense to update the example added in 007d06aa57 [...] which seems to
-> have added jump.grepCmd as a workaround for not having this" [1].
->
-> Somehow though, this approach seems a bit backwards to me. I do believe
-> that your series reduces the reasons for using `jump.grepCmd`, but
-> regressing this example usage of `jump.grepCmd` seems a bit hostile. If
-> someone wants to use `ag`, wouldn't we want to hint that they will
-> probably want to use `--column`?
->
-> Is there some other `ag --column --foo` that we can give, where `--foo`
-> is not yet in `git grep`? ;-)
->
-> Martin
->
-> [1] https://public-inbox.org/git/874lk2e4he.fsf@evledraar.gmail.com/
+This cloned the submodule into a new directory named 'bar' in the
+present directory. This was initially confusing as I expected `git
+submodule` to use the actual directory itself as it resides inside a
+sub-directory the main project and thus avoiding the creation of a new
+clone. Then I came to know that `git submodule` wasn't smart enough yet
+to identify this, by reading the documentation. Then, after realizing
+that I would have to specify the path in the command to avoid the
+redundant clone, I corrected the command without consulting the
+documentation (thoroughly) to,
 
-Yeah it doesn't make sense to drop --column here, FWIW what I had in
-mind was something closer to:
+    $ git submodule add ./foo/bar --path ./foo/bar
 
-diff --git a/contrib/git-jump/README b/contrib/git-jump/README
-index 4484bda410..357f79371a 100644
---- a/contrib/git-jump/README
-+++ b/contrib/git-jump/README
-@@ -25,6 +25,13 @@ git-jump will feed this to the editor:
- foo.c:2: printf("hello word!\n");
- -----------------------------------
+expecting that the path needs to be specified after an argument. This
+is what triggered the weird consequence of weak option parsing. The
+output I got for the above command was:
 
-+Or, when running 'git jump grep' column numbers will also be emitted,
-+e.g. `git jump grep "hello"' would return:
-+
-+-----------------------------------
-+foo.c:2:10: printf("hello word!\n");
-+-----------------------------------
-+
- Obviously this trivial case isn't that interesting; you could just open
- `foo.c` yourself. But when you have many changes scattered across a
- project, you can use the editor's support to "jump" from point to point.
+    The following path is ignored by one of your .gitignore files:
+    --path
+    Use -f if you really want to add it.
 
-I.e. let's note what the output format is now like for 'grep', and no
-need to change the jump.grepCmd.
+That really confused me pretty much (being a person who doesn't know
+much about how `git submodule` works). Instead of complaining about an
+inexistent option '--path', it considers '--path' to be the <path>
+argument which seems to be bad. It doesn't even complain about the
+extra argument. I also dug to find the reason behind this totally weird
+message. It seems to be a consequence of the following lousy check
+($sm_path is the normalized <path> argument):
 
-The above patch may be incorrect when it comes to the line numbe /
-column number / format, I just wrote that by hand.
+    if test -z "$force" &&
+            ! git add --dry-run --ignore-missing --no-warn-embedded-repo "$sm_path" > /dev/null 2>&1
+    then
+            eval_gettextln "The following path is ignored by one of your .gitignore files:
+    \$sm_path
+    Use -f if you really want to add it." >&2
+            exit 1
+    fi
+
+    The lack of checking for the reason behind why `git add` fails seems to
+    be the reason behind that weird message.
+
+    Ways to fix this:
+
+    1. Fix this particular issue by adding a '--' after the '--no-warn-
+    embedded-repo' option in the above check. But that would also
+    require that we allow other parts of the script to accept weird
+    paths such as '--path'. Not so useful/helpful.
+
+    2. Check for the actual return value of `git add` in the check and
+    act accordingly. Also, check if there are unnecessary arguments for
+    `submodule add`.
+
+    3. Tighten option parsing in the `git-submodule` script to ensure
+    this doesn't happen in the long term and helps users to get more
+    relevant error messages.
+
+    I find 3 to be a long term solution but not sure if it's worth trying
+    as there are efforts towards porting `git submodule` to C. So, I guess
+    we should at least do 2 as a short-term solution.
+
+    Thoughts??
+
+    -- 
+    Sivaraam
+
+    QUOTE:
+
+    “The most valuable person on any team is the person who makes everyone
+    else on the team more valuable, not the person who knows the most.”
+
+          - Joel Spolsky
+
+
+    Sivaraam?
+
+    You possibly might have noticed that my signature recently changed from
+    'Kaartic' to 'Sivaraam' both of which are parts of my name. I find the
+    new signature to be better for several reasons one of which is that the
+    former signature has a lot of ambiguities as it is a common name (NOTE:
+    it's not a common spelling, just a common name). So, I switched
+    signatures before it's too late.
+
+    That said, I won't mind you calling me 'Kaartic' if you like it [of
+    course ;-)]. You can always call me using either of the names.
+
+
+    KIND NOTE TO THE NATIVE ENGLISH SPEAKER:
+
+    As I'm not a native English speaker myself, there might be mistaeks in
+    my usage of English. I apologise for any mistakes that I make.
+
+    It would be "helpful" if you take the time to point out the mistakes.
+
+    It would be "super helpful" if you could provide suggestions about how
+    to correct those mistakes.
+
+    Thanks in advance!
