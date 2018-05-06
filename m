@@ -2,182 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93D442023D
-	for <e@80x24.org>; Sun,  6 May 2018 03:56:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 210A2200B9
+	for <e@80x24.org>; Sun,  6 May 2018 04:53:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751884AbeEFD42 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 May 2018 23:56:28 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:40297 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751833AbeEFD41 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 May 2018 23:56:27 -0400
-Received: by mail-wr0-f193.google.com with SMTP id v60-v6so24632636wrc.7
-        for <git@vger.kernel.org>; Sat, 05 May 2018 20:56:26 -0700 (PDT)
+        id S1751383AbeEFExi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 00:53:38 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:40161 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750885AbeEFExh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 00:53:37 -0400
+Received: by mail-wm0-f48.google.com with SMTP id j5-v6so10778596wme.5
+        for <git@vger.kernel.org>; Sat, 05 May 2018 21:53:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XxC+iPuSjDLEaXkBxlzaHOleIc6NA8D3pfYUeMzP2Z8=;
-        b=Mk+jlKFOo1XUXbEni9Vl+8KWotcRIRznL8NkFcehEnVH/uwpIUwKdZZX7FQT497Uc2
-         iKAGKOwKxvGmSTEb9xqE3WBtYVOY4I+cBJpsCW4Zet508F62pYBR5XnWRA8Dy8Z/R+Ev
-         NgHIi5ch2Dx984t99Cc5bZRq1o/3PXq7Q5xcM0yrlmH9yltnbYtHcrtVjYdewo3tfnGV
-         EmBbQPgltHKC4QlNiskb0ZV4leUnALMq7MPU65Y4OoJPldTy+fhVf4AcXGnG/yybHtTY
-         beJJ3a4pmxdCLevIu1A7wGaGcvnUjWhMQgJjWO+FXVWxJIXFSVs+AuPIMNUFWJ8loAux
-         cMvQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=xNw6ZCP9vZglbuNI+5xLpYL3eRdOSVCJIbNdpc/JFLs=;
+        b=bmg8NIRDTvtdJkQ4sTzvPJGskKoKfbqxVyrILQaglYrssd1edZyZ659HLbt4b+Oq70
+         BEMXTTRtD1rm4mec4ixyqY94oSVk4yS8ic/EhkdASqYepDjtk1B39ZdQR4nVH6QG42h3
+         mZ2f6K1g7zTOpZ4deHrNQv7kEKt4YMF9ITqfLXa7b1OlVbntQg07SCND+plb+TKAPEFh
+         T5EJvWPcLrXbUisocCqN6jowRowLTAg97chi86H0WliU3kJGMtA+iYR3KGabnw+UGemD
+         4HDUKhjlxRO0voTWntRoYM0NqehMci5mmSnQTA/cnW7Hi+Wmfr9HmJbJgTJblqhYOOm2
+         E5oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XxC+iPuSjDLEaXkBxlzaHOleIc6NA8D3pfYUeMzP2Z8=;
-        b=blr+ZHOS9n1DS9iuiQNGQGJcCIDAQ4R7n+f9rg/nGpg9/g3WhOaZHo9M/dhDXJz+tT
-         v/WCK91YLed6PlAIC3omkrnAq6cReme2UuFDT6akXp6HcwXIC5HtHAmYD5v3Pnzh9T8f
-         WZ3jgVcmkfOchfSL96vCedPqiE3SMncM8fFl2KRnJyFw3nwSjxasOlJQZWzewaUPXrL8
-         /i+L4iticexCgjzBxk76bD563AxGP1+IUaFWQ2XPOy2fjp7Fvyz9+d+66UzTnhcCTWX5
-         F6QEvd9+1oZpOQAvLsxEi4dongMkp9nd0HXlNyeackzadwbNETf4mfId/PGpnnEdJizI
-         iyDw==
-X-Gm-Message-State: ALQs6tBqfVnLHSiUW1Mcpl8tgx/2R7KMIB4d1SXmceAnZEY4x2zJf71f
-        +N7XN6CG3/Vv3tT9nGqMEZ0=
-X-Google-Smtp-Source: AB8JxZrtiGGO+0oa4OCjsOQAn1oF5+9GgNTIS0zkZjaRaTIXsa6QMHZluPC/dwkXBPoFpm6H9mzv/g==
-X-Received: by 2002:adf:c5cb:: with SMTP id v11-v6mr24830132wrg.151.1525578985934;
-        Sat, 05 May 2018 20:56:25 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id c50-v6sm27471224wrc.11.2018.05.05.20.56.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 05 May 2018 20:56:25 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Drew DeVault <sir@cmpwn.com>
-Cc:     git@vger.kernel.org, Simon Ser <contact@emersion.fr>,
-        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, Eric Wong <e@80x24.org>
-Subject: Re: [PATCHv2] git-send-email: allow re-editing of message
-References: <20180504130811.3398-1-sir@cmpwn.com>
-Date:   Sun, 06 May 2018 12:56:24 +0900
-In-Reply-To: <20180504130811.3398-1-sir@cmpwn.com> (Drew DeVault's message of
-        "Fri, 4 May 2018 09:08:11 -0400")
-Message-ID: <xmqq4ljlsahj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=xNw6ZCP9vZglbuNI+5xLpYL3eRdOSVCJIbNdpc/JFLs=;
+        b=UlgTQelSFxql77bxvW2/JiO5QpWOUyf1rywNrpGhp2dLpgyEwYV6dWsGMQCjzCwrzM
+         rRaKJ4nSDa9uM+mBEIsXS1FhSKFfGN7c1/ndWPdubOD7nx9N9UP+ISRBAwwyCXHCA3w4
+         d1e70kvc2t4aoHSqslpw7SVhji77Rcb7siBaXQCI6gCzDQWpXysDszxb35Y2sqhjGa+N
+         2rpvubqHGx1jHJMuJpB9WW+3P/8WA6xmBHuPcX0tACfdnFEDuBO/wWSkoDNZiJ1u9XJM
+         LQ31Wc9X6x/G7IuudgzCVAxmZ+IBIDI5vVYAXrwN+3QNHi2CznPBH6wmdBYcu8DYA96w
+         ncrg==
+X-Gm-Message-State: ALQs6tDj7VQKos1MOB3zwzVT/dRaIxRJuxYR8eeH8MrpC5N0/nMdQvte
+        YZraK9eAz8ukkqdSjq9c+STc+rcdHvL+z74ZTSc=
+X-Google-Smtp-Source: AB8JxZrLF27Dj8bAs490Pttww4xt5SMGat6GAqLm1mTFpaMrtjbeEbb98/Y+qiTUIVvrV0A0LDTCEKX4VAdCJci92rU=
+X-Received: by 2002:a50:ab42:: with SMTP id t2-v6mr34911358edc.133.1525582416409;
+ Sat, 05 May 2018 21:53:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.80.234.135 with HTTP; Sat, 5 May 2018 21:53:15 -0700 (PDT)
+In-Reply-To: <39282590-576f-1ac1-6a16-80ad317ec7ed@gmail.com>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+ <cover.1525448066.git.johannes.schindelin@gmx.de> <a1ea0320b64527ee6ce9856dcf359513d13052b7.1525448066.git.johannes.schindelin@gmx.de>
+ <20180505182631.GC17700@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1805052355190.77@tvgsbejvaqbjf.bet>
+ <39282590-576f-1ac1-6a16-80ad317ec7ed@gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sat, 5 May 2018 21:53:15 -0700
+Message-ID: <CA+P7+xphRqZhwQAutph9RHAYxq=v0Zv9omdaPD3m8oV3KPdRhQ@mail.gmail.com>
+Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Drew DeVault <sir@cmpwn.com> writes:
-
-> When shown the email summary, an opportunity is presented for the user
-> to edit the email as if they had specified --annotate. This also permits
-> them to edit it multiple times.
+On Sat, May 5, 2018 at 6:05 PM, Igor Djordjevic
+<igor.d.djordjevic@gmail.com> wrote:
+> Hi Dscho,
 >
-> Signed-off-by: Drew DeVault <sir@cmpwn.com>
-> Reviewed-by: Simon Ser <contact@emersion.fr>
+> On 05/05/2018 23:57, Johannes Schindelin wrote:
+>>
+>> > > This builtin does not do a whole lot so far, apart from showing a
+>> > > usage that is oddly similar to that of `git tbdiff`. And for a
+>> > > good reason: the next commits will turn `branch-diff` into a
+>> > > full-blown replacement for `tbdiff`.
+>> >
+>> > One minor point about the name: will it become annoying as a tab
+>> > completion conflict with git-branch?
+>>
+>> I did mention this in the commit message of 18/18:
+>>
+>>     Without this patch, we would only complete the `branch-diff` part but
+>>     not the options and other arguments.
+>>
+>>     This of itself may already be slightly disruptive for well-trained
+>>     fingers that assume that `git bra<TAB>ori<TAB>mas<TAB>` would expand to
+>>     `git branch origin/master`, as we now no longer automatically append a
+>>     space after completing `git branch`: this is now ambiguous.
+>>
+>> > It feels really petty complaining about the name, but I just want
+>> > to raise the point, since it will never be easier to change than
+>> > right now.
+>>
+>> I do hear you. Especially since I hate `git cherry` every single
+>> time that I try to tab-complete `git cherry-pick`.
+>>
+>> > (And no, I don't really have another name in mind; I'm just
+>> > wondering if "subset" names like this might be a mild annoyance in
+>> > the long run).
+>>
+>> They totally are, and if you can come up with a better name, I am
+>> really interested in changing it before this hits `next`, even.
 >
-> ---
-> Thanks for the review Eric, updated to address your feedback.
-
-Instead you could credit him with Helped-by:, perhaps in place of
-Reviewed-by: somebody who does not have any commit in our history,
-which does not help others decide how good this patch is because
-they do not know how much trust they should place in the ability to
-review of somebody they never have heard of---Simon may be a super
-human programmer whose name alone should assure us that a patch
-endorsed is good, but the thing is, that won't happen until we know
-that.
-
-The patch looks good.  Eric may say "This round looks good to me"
-before I have a chance to queue it, in which case I'll add his
-Reviewed-by: and queue.  In either case, unless there is something
-else comes up, there is no need to resend this patch.
-
-Thanks.
-
->  git-send-email.perl | 38 +++++++++++++++++++++++++++++++-------
->  1 file changed, 31 insertions(+), 7 deletions(-)
+> I gave this just a quick glance so might be I`m missing something
+> obvious or otherwise well-known here, bur why not `diff-branch` instead?
 >
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 2fa7818ca..b45953733 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -1330,9 +1330,14 @@ sub file_name_is_absolute {
->  	return File::Spec::Functions::file_name_is_absolute($path);
->  }
->  
-> -# Returns 1 if the message was sent, and 0 otherwise.
-> -# In actuality, the whole program dies when there
-> -# is an error sending a message.
-> +# Prepares the email, then asks the user what to do.
-> +#
-> +# If the user chooses to send the email, it's sent and 1 is returned.
-> +# If the user chooses not to send the email, 0 is returned.
-> +# If the user decides they want to make further edits, -1 is returned and the
-> +# caller is expected to call send_message again after the edits are performed.
-> +#
-> +# If an error occurs sending the email, this just dies.
->  
->  sub send_message {
->  	my @recipients = unique_email_list(@to);
-> @@ -1404,15 +1409,17 @@ Message-Id: $message_id
->  
->  EOF
->  		}
-> -		# TRANSLATORS: Make sure to include [y] [n] [q] [a] in your
-> +		# TRANSLATORS: Make sure to include [y] [n] [e] [q] [a] in your
->  		# translation. The program will only accept English input
->  		# at this point.
-> -		$_ = ask(__("Send this email? ([y]es|[n]o|[q]uit|[a]ll): "),
-> -		         valid_re => qr/^(?:yes|y|no|n|quit|q|all|a)/i,
-> +		$_ = ask(__("Send this email? ([y]es|[n]o|[e]dit|[q]uit|[a]ll): "),
-> +		         valid_re => qr/^(?:yes|y|no|n|edit|e|quit|q|all|a)/i,
->  		         default => $ask_default);
->  		die __("Send this email reply required") unless defined $_;
->  		if (/^n/i) {
->  			return 0;
-> +		} elsif (/^e/i) {
-> +			return -1;
->  		} elsif (/^q/i) {
->  			cleanup_compose_files();
->  			exit(0);
-> @@ -1552,7 +1559,12 @@ $references = $initial_in_reply_to || '';
->  $subject = $initial_subject;
->  $message_num = 0;
->  
-> -foreach my $t (@files) {
-> +# Prepares the email, prompts the user, sends it out
-> +# Returns 0 if an edit was done and the function should be called again, or 1
-> +# otherwise.
-> +sub process_file {
-> +	my ($t) = @_;
-> +
->  	open my $fh, "<", $t or die sprintf(__("can't open file %s"), $t);
->  
->  	my $author = undef;
-> @@ -1755,6 +1767,10 @@ foreach my $t (@files) {
->  	}
->  
->  	my $message_was_sent = send_message();
-> +	if ($message_was_sent == -1) {
-> +		do_edit($t);
-> +		return 0;
-> +	}
->  
->  	# set up for the next message
->  	if ($thread && $message_was_sent &&
-> @@ -1776,6 +1792,14 @@ foreach my $t (@files) {
->  		undef $auth;
->  		sleep($relogin_delay) if defined $relogin_delay;
->  	}
-> +
-> +	return 1;
-> +}
-> +
-> +foreach my $t (@files) {
-> +	while (!process_file($t)) {
-> +		# user edited the file
-> +	}
->  }
->  
->  # Execute a command (e.g. $to_cmd) to get a list of email addresses
+> From user interface perspective, I would (personally) rather expect a
+> command that does "diff of branches" to belong to "diff family" of
+> commands (just operating on branches, instead of "branch" command
+> knowing to "diff itself"), and I see we already have `diff-files`,
+> `diff-index` and `diff-tree`, for what that`s worth.
+>
+> Heck, I might even expect something like `git diff --branch ...` to work,
+> but I guess that is yet a different matter :)
+>
+> Thanks, Buga
+
+I like diff-branch, though I suppose that also conflicts with diff too.
+
+Thanks,
+Jake
