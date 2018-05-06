@@ -6,59 +6,59 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2AF3200B9
-	for <e@80x24.org>; Sun,  6 May 2018 03:37:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93D442023D
+	for <e@80x24.org>; Sun,  6 May 2018 03:56:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751906AbeEFDhi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 May 2018 23:37:38 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33227 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751881AbeEFDhh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 May 2018 23:37:37 -0400
-Received: by mail-wr0-f194.google.com with SMTP id o4-v6so24604829wrm.0
-        for <git@vger.kernel.org>; Sat, 05 May 2018 20:37:37 -0700 (PDT)
+        id S1751884AbeEFD42 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 May 2018 23:56:28 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:40297 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751833AbeEFD41 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 May 2018 23:56:27 -0400
+Received: by mail-wr0-f193.google.com with SMTP id v60-v6so24632636wrc.7
+        for <git@vger.kernel.org>; Sat, 05 May 2018 20:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=iiIOD/PW2cxrOqhOb7wZ19pPO1PON+y6riF3GXSlbQY=;
-        b=P0ncr71WIBkpbXH1bzfqV9YnihtOJ5++Phk7Y2KR8Ksh7Ewou6v//p0qQbLWaJBfpB
-         ubIwqdamEkZvawwWTFn03wIVdRY06RyDFgNw6sSCeeY3p7cOdKbr6hoKm5Yml/ZxD+48
-         qNBbRdrPoVVRs9uDy92D2Uaps18dcDs/o39lcrboXS4sw23iMR61gEskveq7qRkTUfGP
-         m1LhvLz6gZlMc6QgxTWXTYVqJvLzv+c5MNPW9OxKDkRLkMtP2IQl0vx6QKdMuAnjTAY/
-         oUSA2LGyGbINu0XD6OHMf2rPuy0nYlIChHlbcDZgfRVGejn+iPBQdz07Ctfepkla6vfB
-         cQVQ==
+        bh=XxC+iPuSjDLEaXkBxlzaHOleIc6NA8D3pfYUeMzP2Z8=;
+        b=Mk+jlKFOo1XUXbEni9Vl+8KWotcRIRznL8NkFcehEnVH/uwpIUwKdZZX7FQT497Uc2
+         iKAGKOwKxvGmSTEb9xqE3WBtYVOY4I+cBJpsCW4Zet508F62pYBR5XnWRA8Dy8Z/R+Ev
+         NgHIi5ch2Dx984t99Cc5bZRq1o/3PXq7Q5xcM0yrlmH9yltnbYtHcrtVjYdewo3tfnGV
+         EmBbQPgltHKC4QlNiskb0ZV4leUnALMq7MPU65Y4OoJPldTy+fhVf4AcXGnG/yybHtTY
+         beJJ3a4pmxdCLevIu1A7wGaGcvnUjWhMQgJjWO+FXVWxJIXFSVs+AuPIMNUFWJ8loAux
+         cMvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=iiIOD/PW2cxrOqhOb7wZ19pPO1PON+y6riF3GXSlbQY=;
-        b=FPnWtndA1/bL4v2aHayJft4T/5SoZEDmkI/0MSabMxqlKHAD/T6EvGBnUQg7TDVmEL
-         pHqDCsx0xxi6YBPVniLYMMM12voTMmal1nzvVV0n/TeSXw3R6Dc7FGssEHer4jYTYJS1
-         SPmTuSAsYqiPJ9UCHevtS1QhFdYMvHOjx+sqU+2lhSAsJ7RT8fBTlmniun1SKHRKTKlR
-         7Uo0J16ffRHWHLP9SeJ5cfAvM8jM8wtZe5Pw3rpGwU0FkfVbfgxpLIJPkP6OMcvW6HhJ
-         e1TrqZiehJIvpZoaoUrwUCEXiNicGtV115PCVqYit0q97REtAVKxqFtRbRdXMTxspVVf
-         NZgQ==
-X-Gm-Message-State: ALQs6tAfnCQ9QmO2f43nIMnPGh400rmk9Uw48AZ7z0M7QiewjLVwolan
-        m3x9yq5WinETuKVCjpLROlY=
-X-Google-Smtp-Source: AB8JxZqckpua6L1z03mFH818ibzFCgsGQaGuhLrtlxjFREXyc6cB+9mzpo11yrYLbV9SqafRcxbmWg==
-X-Received: by 2002:adf:8e27:: with SMTP id n36-v6mr24252598wrb.27.1525577856403;
-        Sat, 05 May 2018 20:37:36 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t203-v6sm5231189wmt.33.2018.05.05.20.37.34
+        bh=XxC+iPuSjDLEaXkBxlzaHOleIc6NA8D3pfYUeMzP2Z8=;
+        b=blr+ZHOS9n1DS9iuiQNGQGJcCIDAQ4R7n+f9rg/nGpg9/g3WhOaZHo9M/dhDXJz+tT
+         v/WCK91YLed6PlAIC3omkrnAq6cReme2UuFDT6akXp6HcwXIC5HtHAmYD5v3Pnzh9T8f
+         WZ3jgVcmkfOchfSL96vCedPqiE3SMncM8fFl2KRnJyFw3nwSjxasOlJQZWzewaUPXrL8
+         /i+L4iticexCgjzBxk76bD563AxGP1+IUaFWQ2XPOy2fjp7Fvyz9+d+66UzTnhcCTWX5
+         F6QEvd9+1oZpOQAvLsxEi4dongMkp9nd0HXlNyeackzadwbNETf4mfId/PGpnnEdJizI
+         iyDw==
+X-Gm-Message-State: ALQs6tBqfVnLHSiUW1Mcpl8tgx/2R7KMIB4d1SXmceAnZEY4x2zJf71f
+        +N7XN6CG3/Vv3tT9nGqMEZ0=
+X-Google-Smtp-Source: AB8JxZrtiGGO+0oa4OCjsOQAn1oF5+9GgNTIS0zkZjaRaTIXsa6QMHZluPC/dwkXBPoFpm6H9mzv/g==
+X-Received: by 2002:adf:c5cb:: with SMTP id v11-v6mr24830132wrg.151.1525578985934;
+        Sat, 05 May 2018 20:56:25 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id c50-v6sm27471224wrc.11.2018.05.05.20.56.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 05 May 2018 20:37:34 -0700 (PDT)
+        Sat, 05 May 2018 20:56:25 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
-        git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [RFC PATCH] checkout: Force matching mtime between files
-References: <20180413170129.15310-1-mgorny@gentoo.org>
-        <20180505184426.GA18385@sigill.intra.peff.net>
-Date:   Sun, 06 May 2018 12:37:33 +0900
-In-Reply-To: <20180505184426.GA18385@sigill.intra.peff.net> (Jeff King's
-        message of "Sat, 5 May 2018 14:44:26 -0400")
-Message-ID: <xmqq8t8xsbcy.fsf@gitster-ct.c.googlers.com>
+To:     Drew DeVault <sir@cmpwn.com>
+Cc:     git@vger.kernel.org, Simon Ser <contact@emersion.fr>,
+        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Eric Wong <e@80x24.org>
+Subject: Re: [PATCHv2] git-send-email: allow re-editing of message
+References: <20180504130811.3398-1-sir@cmpwn.com>
+Date:   Sun, 06 May 2018 12:56:24 +0900
+In-Reply-To: <20180504130811.3398-1-sir@cmpwn.com> (Drew DeVault's message of
+        "Fri, 4 May 2018 09:08:11 -0400")
+Message-ID: <xmqq4ljlsahj.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,28 +67,117 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Drew DeVault <sir@cmpwn.com> writes:
 
-> The files in your checkout would all be consistent, but they might be
-> inconsistent with other files _not_ created by Git (e.g., one might be
-> saved in your editor). Now you may have introduced skew that cause
-> "make" to do the wrong thing, because your source and target files are
-> really operating from two different clocks.
+> When shown the email summary, an opportunity is presented for the user
+> to edit the email as if they had specified --annotate. This also permits
+> them to edit it multiple times.
 >
-> I really don't know how possible or common this is, but I feel like I've
-> been warned about this distinction in the past. I wouldn't be surprised
-> to find that it's an archaic thing found only on ancient versions of
-> NFS, and oral tradition passed down the warnings. But I also would not
-> be surprised if it's still possible and common.
+> Signed-off-by: Drew DeVault <sir@cmpwn.com>
+> Reviewed-by: Simon Ser <contact@emersion.fr>
+>
+> ---
+> Thanks for the review Eric, updated to address your feedback.
 
-It was pretty common back when I still was on NFS ;-)  I do not
-think we care too deeply about a working tree that spans across
-filesystem boundary, so one possible workaround is to read the fs
-timestamp back out of the _first_ file we write in the process, and
-then consistently use that time for the rest of the files that are
-checked out by the same process with utimes().  
+Instead you could credit him with Helped-by:, perhaps in place of
+Reviewed-by: somebody who does not have any commit in our history,
+which does not help others decide how good this patch is because
+they do not know how much trust they should place in the ability to
+review of somebody they never have heard of---Simon may be a super
+human programmer whose name alone should assure us that a patch
+endorsed is good, but the thing is, that won't happen until we know
+that.
 
-I personally still do not think it is worth the complication; these
-projects are "holding it wrong" by placing build artifacts in SCM
-(not in tarball) ;-).
+The patch looks good.  Eric may say "This round looks good to me"
+before I have a chance to queue it, in which case I'll add his
+Reviewed-by: and queue.  In either case, unless there is something
+else comes up, there is no need to resend this patch.
 
+Thanks.
+
+>  git-send-email.perl | 38 +++++++++++++++++++++++++++++++-------
+>  1 file changed, 31 insertions(+), 7 deletions(-)
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 2fa7818ca..b45953733 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1330,9 +1330,14 @@ sub file_name_is_absolute {
+>  	return File::Spec::Functions::file_name_is_absolute($path);
+>  }
+>  
+> -# Returns 1 if the message was sent, and 0 otherwise.
+> -# In actuality, the whole program dies when there
+> -# is an error sending a message.
+> +# Prepares the email, then asks the user what to do.
+> +#
+> +# If the user chooses to send the email, it's sent and 1 is returned.
+> +# If the user chooses not to send the email, 0 is returned.
+> +# If the user decides they want to make further edits, -1 is returned and the
+> +# caller is expected to call send_message again after the edits are performed.
+> +#
+> +# If an error occurs sending the email, this just dies.
+>  
+>  sub send_message {
+>  	my @recipients = unique_email_list(@to);
+> @@ -1404,15 +1409,17 @@ Message-Id: $message_id
+>  
+>  EOF
+>  		}
+> -		# TRANSLATORS: Make sure to include [y] [n] [q] [a] in your
+> +		# TRANSLATORS: Make sure to include [y] [n] [e] [q] [a] in your
+>  		# translation. The program will only accept English input
+>  		# at this point.
+> -		$_ = ask(__("Send this email? ([y]es|[n]o|[q]uit|[a]ll): "),
+> -		         valid_re => qr/^(?:yes|y|no|n|quit|q|all|a)/i,
+> +		$_ = ask(__("Send this email? ([y]es|[n]o|[e]dit|[q]uit|[a]ll): "),
+> +		         valid_re => qr/^(?:yes|y|no|n|edit|e|quit|q|all|a)/i,
+>  		         default => $ask_default);
+>  		die __("Send this email reply required") unless defined $_;
+>  		if (/^n/i) {
+>  			return 0;
+> +		} elsif (/^e/i) {
+> +			return -1;
+>  		} elsif (/^q/i) {
+>  			cleanup_compose_files();
+>  			exit(0);
+> @@ -1552,7 +1559,12 @@ $references = $initial_in_reply_to || '';
+>  $subject = $initial_subject;
+>  $message_num = 0;
+>  
+> -foreach my $t (@files) {
+> +# Prepares the email, prompts the user, sends it out
+> +# Returns 0 if an edit was done and the function should be called again, or 1
+> +# otherwise.
+> +sub process_file {
+> +	my ($t) = @_;
+> +
+>  	open my $fh, "<", $t or die sprintf(__("can't open file %s"), $t);
+>  
+>  	my $author = undef;
+> @@ -1755,6 +1767,10 @@ foreach my $t (@files) {
+>  	}
+>  
+>  	my $message_was_sent = send_message();
+> +	if ($message_was_sent == -1) {
+> +		do_edit($t);
+> +		return 0;
+> +	}
+>  
+>  	# set up for the next message
+>  	if ($thread && $message_was_sent &&
+> @@ -1776,6 +1792,14 @@ foreach my $t (@files) {
+>  		undef $auth;
+>  		sleep($relogin_delay) if defined $relogin_delay;
+>  	}
+> +
+> +	return 1;
+> +}
+> +
+> +foreach my $t (@files) {
+> +	while (!process_file($t)) {
+> +		# user edited the file
+> +	}
+>  }
+>  
+>  # Execute a command (e.g. $to_cmd) to get a list of email addresses
