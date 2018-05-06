@@ -2,126 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83349200B9
-	for <e@80x24.org>; Sun,  6 May 2018 23:41:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A979200B9
+	for <e@80x24.org>; Sun,  6 May 2018 23:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751916AbeEFXlt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 19:41:49 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:44078 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751625AbeEFXls (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 19:41:48 -0400
-Received: by mail-wr0-f173.google.com with SMTP id y15-v6so14789810wrg.11
-        for <git@vger.kernel.org>; Sun, 06 May 2018 16:41:47 -0700 (PDT)
+        id S1751894AbeEFXxo (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 19:53:44 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:43903 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751625AbeEFXxn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 19:53:43 -0400
+Received: by mail-qt0-f194.google.com with SMTP id f13-v6so24368899qtp.10
+        for <git@vger.kernel.org>; Sun, 06 May 2018 16:53:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Kz1g0a1YX8UHRGGsT5HzStCgOMtxXooJ4/YCySB+OzA=;
-        b=nu4DOcgSiNYZDnDGeweKcKErKLyHruWctcpiOn1CaztpUxWaeg03XCEZHCx2/0evD0
-         6R5gXNrYAGTnBtfYoKDN9urdJRS7JajhbR0J/77viip3e9lC9Lq6WPazcRM20NW5oXbK
-         6u9p1hUdkO8sKyJ9knCF4qZSu6YXrmzGqit+sX23YDmc3DeVknwt8miFDIEMZrddukSn
-         gGe2ToJXeJc2bFLbVGMTLQqxxPRAmzQCAgcMxArLlGrNVSxJq/+DQJzz1YUSC1+hHeBQ
-         ghUNewLRwjuzdv1mi19xVJWosqYXSLPAnLNmG8/LLnRO21taVM5bjw5IIDrYiAkePE+5
-         gCPw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=lbBJ0skH4qkeIlMb+ZcjMEyTR5RjpnV0xrreDVtd0yQ=;
+        b=Z6hv39E+Z1Rkrw/uB0eARZAV1Qlgt4ALTuSfEc0ucq8WGA6gNVc+CF71MMcWAENEUt
+         eyJ9XuKdvETnKgwUtJMVbJiCyVVkvhcsFrs3qaclE3XSHSBwbiBiXN42rqtsSEyWWx67
+         I+9aKRghTfhlHBdmx7/JOnIqY07iwn1a94LEB4DoT5tLIIgHGuGUDHio+EDFakH/2nC8
+         3gY//tJnJeNsnon9rpuhKjvuTyJ5bhxcqkN+3a5a1dYxHCJgvH9LZjTWUidyGTAMwwde
+         Q/aXWJd2fYpRqju7jdJcvRzF0oeIPrMbRkXyCrcqNLa0IWCn3im8hEFGLV1KTHQVCd2A
+         OShA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Kz1g0a1YX8UHRGGsT5HzStCgOMtxXooJ4/YCySB+OzA=;
-        b=K5Md7vb0QJWFlNSAsOhMiQUgIgeOxForH0Lf4obqiL8EQ6dvA9tbCHW3j3Q3MeCU9e
-         yQS7Y0/H/1XUYddOiGE0Oi7MfLZymlCA1dTdzY/L9xkfNjmF5uuUpI+U4/Z76o0GvwPi
-         WFwsA5TNP5JOigs/cUxotVSuopuQxTYrwI4WSFyMFilD6mhWZ0WdirNYRbKeSYc961Bm
-         XJ/YL3AaNzsXZCYErTtir/lWy77KS9pMK2vg/GXj5/STbpIEV0Hme15Zur9FSFW0pn38
-         d3epCPeEoEqlw9k/djl8QBVrbnK5J/ZL7RAWAyrh8pqJAdldRFa3+vz3Fj00p7N6eHdb
-         yiOw==
-X-Gm-Message-State: ALQs6tA48bHjpz5xpRseVqI81wNCRSC/fyWAYjO/819pDqCVwr2tBc0B
-        ho8yecgHc3N7ZQctO4YnnIg=
-X-Google-Smtp-Source: AB8JxZpAyxxIo/j9A+uNPgKv9z9aaEfX06kPbZBRCp/TAoCBmFNBGbgDJxTW/GB8vLXx3RSM5ae35A==
-X-Received: by 2002:adf:b685:: with SMTP id j5-v6mr29029726wre.10.1525650107160;
-        Sun, 06 May 2018 16:41:47 -0700 (PDT)
-Received: from localhost.localdomain (x4db290cc.dyn.telefonica.de. [77.178.144.204])
-        by smtp.gmail.com with ESMTPSA id m134-v6sm9357985wmg.13.2018.05.06.16.41.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 06 May 2018 16:41:46 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        torvalds@linux-foundation.org
-Subject: Re: [PATCH v10 18/36] merge-recursive: add get_directory_renames()
-Date:   Mon,  7 May 2018 01:41:37 +0200
-Message-Id: <20180506234137.3414-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.17.0.563.g5f538d38fa
-In-Reply-To: <20180419175823.7946-19-newren@gmail.com>
-References: <20180419175823.7946-1-newren@gmail.com> <20180419175823.7946-19-newren@gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=lbBJ0skH4qkeIlMb+ZcjMEyTR5RjpnV0xrreDVtd0yQ=;
+        b=nOJ9fZyyf0pgqAZ+ZdsNSKBnfYpON7fCETe5p54nV/YnRk3gZ7EIVjeC8iJhmzuDir
+         qvIQ7muqxCVgT9iLbc41Q/sog+jzOhojnXE1PPXIwt80HJdSoA3k6zmXF102ANRZ3m+O
+         1if3JLwtRDrbG+PVghAA9ESR184prpUhEdOMLEny0QfPLmPWbkVFSOJ5pZ+OX4ZOW2bi
+         FDuS7+rWNn+xKC/3D4rGNcK8guT33msj7jUVP1x2VsAlH7viS9CytrbO+C3FofdVPL0W
+         qhtpvNNEIXUaeqz0lmon1Ybj+liM+bdI5iN9xKp1WdbSnTv9VwUKmwiDgUxBYMPTOcFC
+         xwGQ==
+X-Gm-Message-State: ALQs6tBsfCqfpH3Z3aONXQE4FV7bJdWENxwdmkCwLGGoLGdeq67Zix+U
+        pXKyMkmVqfx8zVj71es/wpUYeULgNnqDxTlNwhI=
+X-Google-Smtp-Source: AB8JxZq497OSDZAjEaWUQbra/kxsryiAyxzhYJoagBBT4YBnqZyv+yAOYygYlyOk4ujFcAzujnE/6sM/q2TCBPo9r2g=
+X-Received: by 2002:ac8:1204:: with SMTP id x4-v6mr32577775qti.35.1525650822641;
+ Sun, 06 May 2018 16:53:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.12.170.75 with HTTP; Sun, 6 May 2018 16:53:42 -0700 (PDT)
+In-Reply-To: <20180506231752.975110-5-sandals@crustytoothpaste.net>
+References: <20180506231752.975110-1-sandals@crustytoothpaste.net> <20180506231752.975110-5-sandals@crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 6 May 2018 19:53:42 -0400
+X-Google-Sender-Auth: K2w7_t5BkZB3Wpz0JIxTdailOPI
+Message-ID: <CAPig+cTrLseKxznrMb63rQ4NK1JYvPraV=Bz6vbnO0sY6qkK=Q@mail.gmail.com>
+Subject: Re: [PATCH 04/28] t/test-lib: introduce FULL_HEX
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 30894c1cc7..22c5e8e5c9 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
+On Sun, May 6, 2018 at 7:17 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> Currently we have a variable, $_x40, which contains a regex that matches
+> a full 40-character hex constant.  However, with NewHash, we'll have
+> object IDs that are longer than 40 characters.  In such a case, $_x40
+> will be a confusing name.  Create a $FULL_HEX variable which will always
+> reflect a regex matching the appropriate object ID, regardless of the
+> length of the current hash.
 
-> +static struct hashmap *get_directory_renames(struct diff_queue_struct *pairs,
-> +					     struct tree *tree)
-> +{
-> +	struct hashmap *dir_renames;
-> +	struct hashmap_iter iter;
-> +	struct dir_rename_entry *entry;
-> +	int i;
-> +
-> +	/*
-> +	 * Typically, we think of a directory rename as all files from a
-> +	 * certain directory being moved to a target directory.  However,
-> +	 * what if someone first moved two files from the original
-> +	 * directory in one commit, and then renamed the directory
-> +	 * somewhere else in a later commit?  At merge time, we just know
-> +	 * that files from the original directory went to two different
-> +	 * places, and that the bulk of them ended up in the same place.
-> +	 * We want each directory rename to represent where the bulk of the
-> +	 * files from that directory end up; this function exists to find
-> +	 * where the bulk of the files went.
-> +	 *
-> +	 * The first loop below simply iterates through the list of file
-> +	 * renames, finding out how often each directory rename pair
-> +	 * possibility occurs.
-> +	 */
-> +	dir_renames = xmalloc(sizeof(struct hashmap));
+Bikeshedding: $FULL_HEX doesn't convey much. Perhaps $OID_REGEX? (And
+$_x05 and $_x35 can be named $OID_REGEX_SHORT and
+$OID_REGEX_{something}, respectively? Or perhaps they don't need
+renaming?)
 
-Please use xmalloc(sizeof(*dir_renames)) instead, to avoid repeating the
-data type.
-
-> +	dir_rename_init(dir_renames);
-> +	for (i = 0; i < pairs->nr; ++i) {
-> +		struct string_list_item *item;
-> +		int *count;
-> +		struct diff_filepair *pair = pairs->queue[i];
-> +		char *old_dir, *new_dir;
-> +
-> +		/* File not part of directory rename if it wasn't renamed */
-> +		if (pair->status != 'R')
-> +			continue;
-> +
-> +		get_renamed_dir_portion(pair->one->path, pair->two->path,
-> +					&old_dir,        &new_dir);
-> +		if (!old_dir)
-> +			/* Directory didn't change at all; ignore this one. */
-> +			continue;
-> +
-> +		entry = dir_rename_find_entry(dir_renames, old_dir);
-> +		if (!entry) {
-> +			entry = xmalloc(sizeof(struct dir_rename_entry));
-
-Similarly: xmalloc(sizeof(*entry))
-
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
