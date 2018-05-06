@@ -2,111 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BEC8200B9
-	for <e@80x24.org>; Sun,  6 May 2018 20:51:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D79B9200B9
+	for <e@80x24.org>; Sun,  6 May 2018 21:09:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751849AbeEFUvV (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 16:51:21 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:33759 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751820AbeEFUvU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 16:51:20 -0400
-Received: by mail-qt0-f195.google.com with SMTP id e8-v6so28963716qth.0
-        for <git@vger.kernel.org>; Sun, 06 May 2018 13:51:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=TUUYvktwXvKq/AD+HjIcQtMvByzCjUxQ9xsANQbKODE=;
-        b=E3nYJOOIpWUNOma7kmHhy0JHUDXo2T6ZhdsbUmlU01xJNel0FlVMR4Qrox7f6mLDne
-         apYjvlEcl0kzN3HW0ADBem3SyLO7Frr2HwJJ8y4Jq4mtbNfaCdKhZB/C65Ptwno5SDV4
-         PKUbHi819i6nL/RTSnwhgIODllIiqaS/UzixohT85gO3daa3fSSnupvH5yk4bRzY9iDi
-         jEl/WfxsO41RxUbOqZ4f8th3uErdn3qVTQi3lTNrN3y1NEeWzPcfbEh2VM2+Bu5unO4C
-         0ZBMg3MNpIF0Iji7yHrpz/XbNGY91gisVZp8n6g4GczIRf2/x4K93m/L8IU50QDx2WYw
-         eoTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=TUUYvktwXvKq/AD+HjIcQtMvByzCjUxQ9xsANQbKODE=;
-        b=k7SfnXRgzxDBDCgY92anMADytk3+g4o5jIO48aMCFIh8T45Oampq9WIsmG1Yh0xcIL
-         aHTI3wRL4f+mL0+DqUPoNzaZQpfNlfF5qMv7m7W0h1DeUnF5i7TmCpxXMINFs/U/I4qs
-         IoE62KA8EUFzLY8P0nOjdKRl+BtDQu6usL2O1wAUWVwMX1TJzCjhweDWN9p4dSbxARA5
-         0WtMp5arA6sgHM+PvbPYdlCWI958zxKIO/GsiYgww2U5LVIF7l7iQeOeD043qoHc6NEr
-         WD+sliIImbOnhoR3JCPA94nBViiZQI/7yl/RmlMSqRvSySXeX8PeZP/XKwox2egXTItF
-         pGmA==
-X-Gm-Message-State: ALQs6tCI/wE17K0vijmq0olJrjA1cHpQBrjVb/Hvy08a1zFZlDzvFUBy
-        EBMrYwyP7GIQh0yF3ohbIqGCl5O6QglCwekHHHE=
-X-Google-Smtp-Source: AB8JxZovG8nirjVK0gZXAOfEizRL1PJ+e/AmLSu3A+7kic3wXmb/lH7Z0P3eU0++k0BieDU37T6TVB9YOqsq6kJdMmE=
-X-Received: by 2002:a0c:f3d0:: with SMTP id f16-v6mr31494143qvm.113.1525639879669;
- Sun, 06 May 2018 13:51:19 -0700 (PDT)
+        id S1751880AbeEFVJu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 17:09:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40954 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751833AbeEFVJt (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 17:09:49 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 635B560444;
+        Sun,  6 May 2018 21:09:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1525640988;
+        bh=OhaL38ughvsNtWyOzp6ve4DtYEKtzNlgqAMSHAMQcLo=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=nvBR+Hk1/CmuCtzpJBLfxBnfRsGC4elXkMIk5ACEBi5h/DEuN/nmdiVc9p2jFQWaA
+         tD0ILXiOw8kFsvIRx3ruBjT65tg4KMoe8nYM8iqOYR39FN02ph9wm1BQhP5QvK0KJt
+         jbUbdXzWm91+KxRVx3wA8qZgSHG0DW/DERCZ4z8ynaW9ymMO50sNm7lrg98A/+40Gb
+         MYun/ic2rXPseKdPQfVNp0G09elQS09TThW2AyZ89c7I3/MB/LllQLitDdXCyLas/d
+         yA7DtULQ0gx/zUUEZsqx0uW79ABONecm1li1Y/qVI7uK/hWRo1hqd0jSj87nfFueLR
+         MH1Rni6aEaXV3ZA2E7CSPAqkQkwJVHTT8JbL7MaBp88XXttsm+6gsuvaQl4nxl78s2
+         xyuoxpy1cWv/O7hZVJKyMA9TbuzpIu+VfT3I/dEBv5xLxYmL3QPblTgW9PyVIEFA7m
+         0WDkS3Glxwo7HqAc8GR4uuQczaiyeCgVB0s5HPbD61fZQVbOKVj
+Date:   Sun, 6 May 2018 21:09:43 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Shulhan <ms@kilabit.info>, Git Mailing List <git@vger.kernel.org>
+Subject: Re: [bug] Multiline value should error if the next line is section
+Message-ID: <20180506210943.GA953644@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Shulhan <ms@kilabit.info>, Git Mailing List <git@vger.kernel.org>
+References: <20180507020348.31b473b4@kilabit.info>
+ <CAN0heSooYuGkxP9u0Uuwu_TCEOd_pj20L05=bwwHynPOapej6g@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Sun, 6 May 2018 13:51:19 -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.76.6.1805061419530.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de>
- <cover.1525448066.git.johannes.schindelin@gmx.de> <a1ea0320b64527ee6ce9856dcf359513d13052b7.1525448066.git.johannes.schindelin@gmx.de>
- <20180505182631.GC17700@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1805052355190.77@tvgsbejvaqbjf.bet>
- <xmqqk1shsecd.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1805061419530.77@tvgsbejvaqbjf.bet>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 6 May 2018 16:51:19 -0400
-X-Google-Sender-Auth: gzYPW26bMezuwd0CpQsxPfZipSk
-Message-ID: <CAPig+cS0pvdg78fGUu8m2xspDDMHxi=uAMCkbLuthy7R4p3fQw@mail.gmail.com>
-Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="vtzGhvizbBRQ85DL"
+Content-Disposition: inline
+In-Reply-To: <CAN0heSooYuGkxP9u0Uuwu_TCEOd_pj20L05=bwwHynPOapej6g@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-3-amd64)
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 6, 2018 at 8:21 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Sun, 6 May 2018, Junio C Hamano wrote:
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> > On Sat, 5 May 2018, Jeff King wrote:
->> >> One minor point about the name: will it become annoying as a tab
->> >> completion conflict with git-branch?
->>
->> If tbdiff were "Thomas's branch diff", I would call this jbdiff ;-)
->> but I think the 't' in there stands for "topic", not "Thomas's".
->> How about "git topic-diff"?
->
-> Or `git topic-branch-diff`?
->
-> But then, we do not really use the term `topic branch` a lot in Git, *and*
-> the operation in question is not really about showing differences between
-> topic branches, but between revisions of topic branches.
->
-> So far, the solution I like best is to use `git branch --diff <...>`,
-> which also neatly side-steps the problem of cluttering the top-level
-> command list (because tab completion).
 
-Let's, please, not fall into the trap of polluting git-branch with
-utterly unrelated functionality, as has happened a few times with
-other Git commands. Let's especially not do so merely for the sake of
-tab-completion. git-branch is for branch management; it's not for
-diff'ing.
+--vtzGhvizbBRQ85DL
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Of the suggestions thus far, Junio's git-topic-diff seems the least
-worse, and doesn't suffer from tab-completion problems.
+On Sun, May 06, 2018 at 10:03:10PM +0200, Martin =C3=85gren wrote:
+> This behavior looks correct to me, though. It seems very hard to me to
+> second-guess what the user meant. For example, what if that third line
+> contained a "=3D"? Like:
+>=20
+> [alias]
+>         huh =3D !dd \
+>               bs=3D1024 ...
+>=20
+> Should Git guess that the backslash on the second line was a mistake?
+> Or maybe not, because alias.bs =3D "1024 ..." would be a useless alias?
+>=20
+> I think such guessing would be theoretically possible, but especially if
+> Git guesses wrong, that could be very frustrating to fight against.
 
-Building on Duy's suggestion: git-interdiff could be a superset of the
-current git-branch-diff:
+I agree that trying to guess what the user wanted here is likely
+impossible.
 
-    # standard interdiff
-    git interdiff womp-v1 womp-v2
-    # 'tbdiff'-like output
-    git interdiff --topic womp-v1 womp-v2
+Furthermore, Git intentionally ignores unknown options.  For example, I
+have advice and diff options set in my .gitconfig that would not be
+valid on the Git shipped with a base CentOS 6 (which, unfortunately, I
+sometimes have to use).  It's very convenient for users working across a
+variety of systems that unknown options are simply ignored, even if that
+means sometimes mistakes are not caught.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-(Substitute "--topic" by any other better name.)
+--vtzGhvizbBRQ85DL
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrvbxcACgkQv1NdgR9S
+9otXIhAAg3/0UVaZXxugCs9q6P8PpwRlfHCTbZ2B5NMNZAUgJzXD8sAWAL7F2FdC
+uuHSxWwJPgclfo4NjX6YoU9r+cdn5yCGM15Hz+P/QPXJALshABxh5uAv42MWhzqP
+D6M8bsgBgZcO+fkDgHmI3efK+jXH0FHrYs3C0oF9a9VN5kRap5DwDdMwRdEf74UZ
+1J61Aj5E3Hb5NPVu3tnRMOehT3uISlN44LqT9durrQwkz/5/iHZx6B7sFE9XwiFp
+hIOjI5Jf2+HNKA89xzQH67kfeGsO7+e1lQO5hzy28XIzl65LT3gBX81y6JSauJ9X
+JuTOS8nyoNCgnoWj5m/0eRV07G0Ji4Bg466WiFTAX9yrMMWsgYQ78Gbw9N4gbcGG
+Uhy2EfZpn19fGc4Izl3nU6Doj8oTHf/BQd+CltjLZXNG5uPs2+p7dnUFn7ziFcOq
+aSvkGLXP05obuK1iu9iFlEnmBKNsJJ9SGcGgUSrsXswwNXFu5bpN8iKjtxbpMTwc
+Dh77+3tHM4sXenMQUSLnKf6BYLTaBEiMeHVuedj90vaJwSeJ0QACRNObLa/RWmbl
+yU+EOlZYftvM8jWM1hqcQK45QgNFWFiod54wyWMMmx7g1saNMlcLWmVGwqFCw/Qx
+QcsFGLtLt+Z2n60opP2P0kKGo5SuYTpebioiz4aAUGmEFLjr7s8=
+=WzUo
+-----END PGP SIGNATURE-----
+
+--vtzGhvizbBRQ85DL--
