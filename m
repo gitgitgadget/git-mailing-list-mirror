@@ -2,89 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9A97200B9
-	for <e@80x24.org>; Sun,  6 May 2018 05:19:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E499F200B9
+	for <e@80x24.org>; Sun,  6 May 2018 05:22:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750961AbeEFFR0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 01:17:26 -0400
-Received: from mail-wr0-f181.google.com ([209.85.128.181]:41637 "EHLO
-        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750824AbeEFFRZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 01:17:25 -0400
-Received: by mail-wr0-f181.google.com with SMTP id g21-v6so24680133wrb.8
-        for <git@vger.kernel.org>; Sat, 05 May 2018 22:17:24 -0700 (PDT)
+        id S1750983AbeEFFWJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 01:22:09 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:40564 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750830AbeEFFWI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 01:22:08 -0400
+Received: by mail-wm0-f65.google.com with SMTP id j5-v6so10818857wme.5
+        for <git@vger.kernel.org>; Sat, 05 May 2018 22:22:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xWLWyP8yPwGtYFlE0zTVKmQoT5yt7TYTA7NL8nP+O6Q=;
-        b=PE2Ys/gkBb6qSQaKke37OESqugsANYyD2kuZHu71wuHVQUdBVGQskAR9UNZVbwX4PC
-         ec8vD4+iuUtXIHK6azMZ4kNgi1/3OHvxQ18Ak/uRfoLcxMb2U66Z68/7hr6FXjIBy9oZ
-         IyS3oLoz9MWo027DG1lBxmYQkIfskW+vzzPoSlpP3nb6vUBemjZEDNWWrjXusiAjQRfi
-         HSfy+vedDOXh3CQG4tmuLPvm78cT2zLITxNWXoqlSYYc+FBpgHng+fvsPZuki4Q8Hg5Y
-         1AtVjaCWlgj/ghvNPGbKIZbza/dJsQ23S1oHhwv6rh0wzQTkysQpGgMV6hSmW7r1z5EG
-         CxgQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=J8L4ajxJ1PZa1J4joOeoynShSUAa7acbBciLnjyP3Ts=;
+        b=u04YunZjp7oFcHWqr4Gdm4gQMo67IRCYHGNfARyis63J5DqP66PRQZ/TI0ZdBV17Lw
+         jjD0HOCTs/OOyqBpfJMH+GcdKHbPMqgdfD8Keg3gD4pSgoSeQdGYwWTZx9JpbfYc8N9p
+         qcEosk9n5Ma1B/yUvqQatHv7lX4YG3fzzhtQTaDzmXzlmZ/CGuoSmJK07lj6XdnMcKD4
+         M5efzQZjIHrecoVBwO+1A7q0jw8ItT7lclx6fae+62/1eiX6xDZyn6nAWHxYjjJ4QDX7
+         cE9tXOxWKryP122tohocKINY140YQpMp4u+u1OimhI44RtnL2cz40mq4idJ5E3sTVKXD
+         mqPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xWLWyP8yPwGtYFlE0zTVKmQoT5yt7TYTA7NL8nP+O6Q=;
-        b=nb4JqfshAfoR44Se507X1CH9tGAV3qLJx7CO08/xe4hezq6P8zC42N6/Aa7ELvFIH1
-         tZKLmLhJlmZkXS+n2kkUvgHaTMlodCzDum+2dZfZOywbxGnMRwVRrahcj0sRPjFb3iW+
-         OAdenXyVMzcWwhF0mK2UI4wKVIDewWMgIB8lc6+4IxmHh5uVUEFPZwDLvxU9c/oKAr/j
-         a5jv3b4Tw8yZVvnsdkGkfO//L3ZS7oEfbKESazI6yNEAvbnkQzJTYAGLAJiIAgaBSfPm
-         /H7l7+zDQ43KjN6OTMTB1+ROHTz59kdT+hZl+Dbz3L+sQLDI+DJ3jirGQqiYNbHP8idj
-         ISZQ==
-X-Gm-Message-State: ALQs6tDb9PPKqVg0SoHvcAoPean+SwTnnnEsc+/RjkqxqO5dn/xqHKZk
-        ADf0a7GXeXXQkJ/n8AzEftxvkPtNnq47MuLL63FaeA==
-X-Google-Smtp-Source: AB8JxZqBzsWKqRw7cM6CBVcH7wuLZua6YXkmxm2aVy4++RUkmKJxgWR+MsgXrI8BhVJ8S5d4t6Y/U3IoDKB4q43+nrk=
-X-Received: by 2002:adf:b0c1:: with SMTP id j1-v6mr23966733wra.3.1525583844139;
- Sat, 05 May 2018 22:17:24 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=J8L4ajxJ1PZa1J4joOeoynShSUAa7acbBciLnjyP3Ts=;
+        b=jUdEiq/dFyhVFvV8AlaGhS9klriQxY13HdXCTN6HHunMfgbMZD3ai+oUTZW7GpJIrs
+         tbY3Xg2Bzw+VQ4zYq9rWVqsdxYYgUYnYXtusmEkRi7+oMp0gwa6i6V2aHK0CbcvyS2DY
+         6aNd/INyUOD6t4RM5Za1F2TLkYXCDV5hP0te9TFjU5q3OxaQreyABJk865Acp6j5edAL
+         Snk5YcGmQ41fDRtK0iZBY6d8ZreVmVw89iCt87AmublE0IECcwpkYeoX/4Vbw+aX4GjO
+         AcFySgtsfMK193ucPI4/VPxQnUqerX4l+nAGcL3K9GCg1o7xhWFCYYvkEHJlV0mq1pqa
+         tepQ==
+X-Gm-Message-State: ALQs6tDGTPgfWYaMYZQLxTY7x9qY4s/P3udsUJbnSxNaHWXBAx4FI100
+        13pICGaAaAqxPTDqlhO/LBk=
+X-Google-Smtp-Source: AB8JxZq9LOSwT1eZSsV0K8KRp4sBTFZ+UVYTI8c7kynclBaIYlFMpHajJ+88M50/xKtC1+LWekvDsA==
+X-Received: by 10.28.220.84 with SMTP id t81mr22939868wmg.90.1525584126831;
+        Sat, 05 May 2018 22:22:06 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 194-v6sm7236059wml.20.2018.05.05.22.22.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 05 May 2018 22:22:06 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 00/18] Add `branch-diff`, a `tbdiff` lookalike
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+        <cover.1525448066.git.johannes.schindelin@gmx.de>
+Date:   Sun, 06 May 2018 14:22:05 +0900
+In-Reply-To: <cover.1525448066.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Fri, 4 May 2018 17:34:27 +0200")
+Message-ID: <xmqqzi1dqrya.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.223.152.138 with HTTP; Sat, 5 May 2018 22:17:03 -0700 (PDT)
-In-Reply-To: <xmqqd0y9sdei.fsf@gitster-ct.c.googlers.com>
-References: <CAFU8umjvEATZguGDmcRMcfAkqn4LW7vf_B9qpLD7uc-E_7qR9g@mail.gmail.com>
- <xmqqd0y9sdei.fsf@gitster-ct.c.googlers.com>
-From:   Ilya Kantor <iliakan@gmail.com>
-Date:   Sun, 6 May 2018 08:17:03 +0300
-Message-ID: <CAFU8umjw-gz1UGHwiopHRJ-+v+KS2USqXV-9Qs0ieW8GaLpUsA@mail.gmail.com>
-Subject: Re: cherry-pick --no-commit does not work well with --continue in
- case of conflicts
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's say master..feature has 2 commits: A and B.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Then `git cherry-pick -n master..feature` should pick-up A and then B
-into the working directory and the index.
+> Johannes Schindelin (17):
+>   Add a function to solve least-cost assignment problems
+>   Add a new builtin: branch-diff
 
-If applying A leads to a conflict, then it stops on A, like here:
->>> git cherry-pick -n master..feature
->> error: could not apply 2c11f12... Run work
+Perhaps retitling these to
 
-Then I add the fix to the index, and should be able to continue on (B
-is yet unpicked):
+    hungarian: a function to solve least-cost assignment problems
+    branch-diff: a new builtin to compare iterations of a topic
 
->>> git add .
->>> git cherry-pick --continue
->> error: your local changes would be overwritten by cherry-pick.
->> fatal: cherry-pick failed
+may serve as good precedents to changes other people may later make
+to these files.  Especially the second one is already consistent
+with the several changes that are listed below ;-)
 
-Now it fails.
-Expected behavior: should continue with picking B.
-
-P.S. I assume, `cherry-pick -n <commits>` is meant to merge given
-commits' changes into the current working directory and the index,
-without making new commits, for any given set of commits, hope that's right?
-
-Then we should be able to --continue in case of a conflict without committing.
+>   branch-diff: first rudimentary implementation
+>   branch-diff: improve the order of the shown commits
+>   branch-diff: also show the diff between patches
+>...
