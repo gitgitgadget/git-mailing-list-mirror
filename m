@@ -2,102 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D062200B9
-	for <e@80x24.org>; Mon,  7 May 2018 18:15:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D42E3200B9
+	for <e@80x24.org>; Mon,  7 May 2018 18:32:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752688AbeEGSPt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 14:15:49 -0400
-Received: from mail-yb0-f181.google.com ([209.85.213.181]:46930 "EHLO
-        mail-yb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752272AbeEGSPs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 14:15:48 -0400
-Received: by mail-yb0-f181.google.com with SMTP id f3-v6so1844307ybg.13
-        for <git@vger.kernel.org>; Mon, 07 May 2018 11:15:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LRr+vz/bQGeg4iQtZ6fZMMRyxlheb/NIlBryRbLkqZw=;
-        b=XcKELbEy40qugxUD5Dz49vsLn1GxXSu96y7rRi1CXZScIHN2RuULj6Y+BldM1aBFJR
-         AWIZd6I6dHSRoi3GC4H7D3gKIY6y2O+V21IxGtSIxjB1StDLU9wpcL27/3yEB2Dto49v
-         BVuAma9VT0yxH6YsBuzBTL7xf4f4Q4uxUuFg8teSE6F1CWgkR61r1XrSmbYuNDlMU4cj
-         ooyYZlNMkmxyEfWRxUbc9mRbHYkK0JhJSi7Syf+V84k4zJRAsCvHW5wJnUUX7mdga0HA
-         jO3ntQgS3DuGL0WYcbJ0ZUhe6743+MF+fS55SBTtHpGP6wH7qfWpXqlPPbDEyv4zWq5P
-         HJOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LRr+vz/bQGeg4iQtZ6fZMMRyxlheb/NIlBryRbLkqZw=;
-        b=TqB0aqseg8SkbS3vVD5iWScf7Dc/TcKYvNJGrQbUmWrb5D9NB4PvrHWoCpYz49j7NX
-         jIe2WQcdpykk1H5ajiQ1Z/eHZwXIX+abvoLHZ6LY4e4SAtHeXcLEwu+ykhJZJaxxTqv3
-         H1/NpZbumeVlaCDpRlYKO3RYqbvk1HxMcDzLyrcmp9p/Ii0NBFHevOHN6UFemMz7l44s
-         n3nERpVa+202Hmhr64Zz0iCRs16I7zas1oLqGlTxn/jmBMM8YOLCsOGL/QMj2Jv1HP6P
-         m/YnznBqFeMZHoOt9A5PVU5OTaGC/N6nfs+YMh4YuCgqqmdZTEKRgtxnMYBhYL9TnXiZ
-         p/Ow==
-X-Gm-Message-State: ALQs6tAUAYhTvTJ6vuAu60Fcp3ViD682ARekT8n6GlY0TL5wO9aKHZRD
-        J1IcMVh1BzsQQG0naJsjXwy43cv1lX63JYZN28cioQ==
-X-Google-Smtp-Source: AB8JxZoMtUJGeTQOPSI9siF6bVMbERj6l9BBLEv2ZGTZvdIou7o8gaMA7s2Pgg/WIVpaFHrLWT/yWSyjeGxV3x+vrns=
-X-Received: by 2002:a25:500e:: with SMTP id e14-v6mr23341511ybb.334.1525716947298;
- Mon, 07 May 2018 11:15:47 -0700 (PDT)
+        id S1752653AbeEGScy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 14:32:54 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:37011 "EHLO
+        homiemail-a20.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752652AbeEGScx (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 7 May 2018 14:32:53 -0400
+Received: from homiemail-a20.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a20.g.dreamhost.com (Postfix) with ESMTP id C4A657EC06F;
+        Mon,  7 May 2018 11:32:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=date
+        :in-reply-to:references:mime-version:content-type
+        :content-transfer-encoding:subject:to:cc:from:message-id; s=
+        novalis.org; bh=vPdK8yN2k8RG45DEj/KDEBJCF4U=; b=lGBWv0lqPktbqLDF
+        mItNdyeHEcSIoyoqrwSCu2N7WxYvQlb+5jWlcso5YUktV3xgDuY774OX9EHSyhMs
+        vSkZHVz3A8Uq7xaSvQiB4CT8eUtoWw6bTJkWsZGcP8e7qL0qAv57XGV+vOzXy3MX
+        kwHx+Nuo3tkH9pzamBwk6vJsZK0=
+Received: from [10.41.131.218] (unknown [107.77.244.96])
+        (using TLSv1 with cipher AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a20.g.dreamhost.com (Postfix) with ESMTPSA id C037B7EC060;
+        Mon,  7 May 2018 11:32:51 -0700 (PDT)
+Date:   Mon, 07 May 2018 05:12:27 -0600
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CAN0heSpfu+070fxhjjccXQpfFnr13O4tvSaj44YWkFWVJL_4mA@mail.gmail.com>
+References: <20180506141031.30204-3-martin.agren@gmail.com> <1525621731.16035.11.camel@novalis.org> <CAN0heSpfu+070fxhjjccXQpfFnr13O4tvSaj44YWkFWVJL_4mA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Mon, 7 May 2018 11:15:46 -0700 (PDT)
-In-Reply-To: <20180507063713.GA28961@sigill.intra.peff.net>
-References: <20180507063713.GA28961@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 7 May 2018 11:15:46 -0700
-Message-ID: <CAGZ79kZVdiEOO+b_Ygrfw1D9uV1T5TYBS580zPaZeYoMRfNuUQ@mail.gmail.com>
-Subject: Re: main url for linking to git source?
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 2/5] refs.c: do not die if locking fails in `write_pseudoref()`
+To:     =?ISO-8859-1?Q?Martin_=C5gren?= <martin.agren@gmail.com>
+CC:     Git Mailing List <git@vger.kernel.org>
+From:   David Turner <novalis@novalis.org>
+Message-ID: <01AF002E-C9E2-48FB-97AB-D9D903866310@novalis.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
 
-On Sun, May 6, 2018 at 11:37 PM, Jeff King <peff@peff.net> wrote:
-> The git-scm.com site currently links to https://github.com/git/git for
-> the (non-tarball) source code. Somebody raised the question[1] of
-> whether it should point to kernel.org instead. Do people find one
-> interface more or less pleasing than the other? Do we want to prefer
-> kernel.org as more "official" or less commercial?
+
+On May 6, 2018 9:56:31 AM MDT, "Martin =C3=85gren" <martin=2Eagren@gmail=
+=2Ecom> wrote:
+>On 6 May 2018 at 17:48, David Turner <novalis@novalis=2Eorg> wrote:
+>> On Sun, 2018-05-06 at 16:10 +0200, Martin =C3=85gren wrote:
+>>> While at it, make the lock non-static=2E
 >
-> I could see arguments both ways, so I thought I'd take a straw poll of
-> what people on the list think.
+>> Re making the lock static, I wonder about the following case:
+>>
+>>       if (read_ref(pseudoref, &actual_old_oid))
+>>
+>> die("could not read ref '%s'", pseudoref);
+>>
+>> I think this calls exit(), and then atexit tries to clean up the lock
+>> files=2E  But since lock is no longer static, the stack may have been
+>> destroyed (I don't actually know whether this is true, so maybe
+>someone
+>> else does)=2E
+>
+>Right=2E After commit 076aa2cbda (tempfile: auto-allocate tempfiles on
+>heap, 2017-09-05) this is safe though=2E Quite a few locks have already
+>been moved to the stack, e=2Eg=2E, in 14bca6c63c (sequencer: make lockfil=
+es
+>non-static, 2018-02-27) and 02ae242fdd (checkout-index: simplify
+>locking
+>logic, 2017-10-05)=2E  I could add a note to the commit message to make
+>this clear, like "After 076aa2cbda, locks no longer need to be static=2E"
 
-That PR is changing quite a few places, so in classic Git community
-fashion, I advise to break it up into more patches. ;)
+I am going to reply now to keep the thread moving, but I am on my phone wi=
+th bad connectivity (few cell towers in Bears Ears), so I can't really chec=
+k the code=2E Feel free to disregard if I am still wrong=2E
 
-Junios reply below focuses on the URL passed to git-clone, which
-is only found at https://git-scm.com/downloads (?)
+I saw that patch, but I thought the new logic required that cleanup funtio=
+ns be called before the lock goes out of scope=2E
 
-There I would try to mirror Junios list of "public repositories"
-https://git-blame.blogspot.com/p/git-public-repositories.html
-without officially endorsing one over another.
-
-For those links that link to web pages, I am ok with any of the
-hosting providers, maybe even taking the one with the prettiest
-web page. Maybe we want to reword those sections to rely
-more on indirection, e.g. "get the source[link to the source page],
-checkout the next branch", without the quick web link to a web page
-showing the 'next' tree. Any of the pages with the 'next' tree
-do not really help for the purpose of spotting which development
-is currently happening. Maybe a "log --merges" would be better.
-Something like https://kernel.googlesource.com/pub/scm/git/git/+log/next
-(Not that I am endorsing this link over others. I just happen to know
-that this comes close to what I propose having there)
-
-Kernel.org might feel a bit more official than the others because
-Linus started it there? And given that it is a non profit, I feel
-better to link to them over any other commercial entity.
-
-Hope that helps,
-Stefan
+--=20
+Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
