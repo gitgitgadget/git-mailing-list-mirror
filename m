@@ -7,23 +7,24 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E408200B9
-	for <e@80x24.org>; Mon,  7 May 2018 01:52:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E432200B9
+	for <e@80x24.org>; Mon,  7 May 2018 01:54:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751861AbeEGBwu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 21:52:50 -0400
-Received: from mout.gmx.net ([212.227.15.15]:47953 "EHLO mout.gmx.net"
+        id S1751831AbeEGByu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 21:54:50 -0400
+Received: from mout.gmx.net ([212.227.15.19]:45603 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751444AbeEGBwt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 21:52:49 -0400
-Received: from [10.40.94.26] ([209.226.201.248]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LskfZ-1eDL121swD-012Kbq; Mon, 07
- May 2018 03:52:38 +0200
-Date:   Sun, 6 May 2018 21:52:32 -0400 (DST)
+        id S1751444AbeEGByt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 21:54:49 -0400
+Received: from [10.40.94.26] ([209.226.201.248]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0McmS9-1exhMO22kb-00I0eJ; Mon, 07
+ May 2018 03:54:41 +0200
+Date:   Sun, 6 May 2018 21:54:36 -0400 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Todd Zullinger <tmz@pobox.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
@@ -31,87 +32,77 @@ cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 12/18] branch-diff: use color for the commit pairs
-In-Reply-To: <20180505234852.GR26695@zaya.teonanacatl.net>
-Message-ID: <nycvar.QRO.7.76.6.1805062146070.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <ba4791918c78770005d552856d8669648d7004f1.1525448066.git.johannes.schindelin@gmx.de> <20180505234852.GR26695@zaya.teonanacatl.net>
+Subject: Re: [PATCH v2 07/18] branch-diff: indent the diffs just like
+ tbdiff
+In-Reply-To: <CAN0heSoLD0O9owCDEU5ZHje3zNDLAS_43atb75Te7KOFoS_dtA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1805062154030.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <c856c460a47dbe885bbb82babc6be6848d31ed32.1525448066.git.johannes.schindelin@gmx.de>
+ <CAN0heSoLD0O9owCDEU5ZHje3zNDLAS_43atb75Te7KOFoS_dtA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:m8tIjaCCDiQufU5t6ugK6Tj29LeKbOb69+2VvQdGFLyQJYLRGdy
- bhSH1dVA11FZeblY9RMIKWesh2/EHkvTzDQY2hk+Go0nhK9j0li0V5PuCaYLPsmgrY3MDGq
- gzFF3hTM/6A4XWcHNifeQN7CHDkdsH5NqYr1UFcg+C8uDCkjS60vDE0zCix7DA64mQ+wfEk
- GtbMrt0vGIU42LzMX/RyQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kwAtjvfYW8U=:GZFhccBMi+kuXBwrOAmDQ6
- 6zb5EdCgfJ2Hyucxn1YP9vuQwMlbwiHhHf+2XNVWNgu9SZm45rqR9HsOVSjfVqn668sGUM8gi
- lJ+SUVrFZ5w6HZAX1laU0V3VpmpaFntMNvWcJDqJw3Bje9r6Skygm+CrmtY4ZaNoUzaMpEKnp
- RAILpv/CZNwKLm+qh/FzD/wg7SHhqMP+mrII3teZvLw91SAX6bepg1QoM20vU06HplSq4bqrs
- TRZPegEBTri++08I1fcpOArD+bB683ZSvUHjSsx8KS0R/RwaWNhGxfIS1M/s3vd/HspP+6Qw8
- mRjKoIrrXCw9GJTWBacTymfCKEWPbvQMRlIYDjLCBYh1a65TYst+kNI+1jci1PdkOkWeDTRTO
- RcuvLpDqVikxJECnDEST9AaCM0K0/91BPnO4yBOzY4cYDIv6DWsg947ExLyVOGfYVAJ75smE4
- y57lQJCULLOvyJBqm7EZ5jaGYGw65Iv4um5ncmPGbR83RU6UnYiy9679+1Zju9cFlIl39CrjA
- nwNYmujvIoWSyJj/kTVbZyjyLy9UTjyy+RWSLMp53dGK6bx53ZSz2tFfA/NeJpIFjWBrbdJ7f
- 2sxSI851O9OBHm6yNnsMQOhGpTe4LyAuPObk1aKqTyV0xkym1n2PFrUbdS+rSbYH880hiikd6
- AoZSMEUwRdrjrEhievs/9pMpslmMN69GURkWMMcB2PO9Yf3OwISrayahEQjKlG+cjMOp4jJTH
- I3T7xGQZ1l9s+iXvuc+Jb3i36KXRyQRJYu7hG/aUjTmhVZ3ZYCLNQ0u7PkaCJABhTH5SeGB71
- ppE5sP7
+Content-Type: multipart/mixed; boundary="8323328-1995257847-1525658081=:77"
+X-Provags-ID: V03:K1:vLFcF9QWyNL6+VgTmb5TKhJCbyFRHvMGDdOgQU1s5OLkd28saJb
+ T2OCK0lPJy0m6WZkGBBgw5d5Yl2osWGmdWaZ/ByRYPqtYxIGkcd4eaEfKr/Rdffu+XG27ZN
+ WVsaHoj1PX3z9bENDPa1PHhxeqRk2Z4W5OLpN0svjTDoR+216IpZZmEmoqu2n5umE3s3FCm
+ MPA04AK2/OtV9ovgDzoQQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5BnjlxG0ayY=:E6h+bmwq8IMZj+EJaLYkta
+ ScPf7HxLfI/J5F/oS0U5K51jq9QPajBJ6NRtORRzBuF/34fP9Ww1ZB3xxv2BQzoblqvOvP2DD
+ 1AdLqhEESX6rvcGfCFFYFBC4Pa3TrenlDJ6NSsifdiOoTlbZMQQtyeBXQWFTrZXv7nYkD7VkV
+ zfROzsqjz78aBHv45IxzaLpUhDdjCbLUrU0y/SiFmVMrVKDYi/JHhvhH4xWZ/6vNx8IUpnJcP
+ EQPM0qpojel/Cv6tEMyCJ5qxAG4xYdykajHIuGREJw/OOzswQvSwh9HAmQZLFUN8WuKEoQq8V
+ DV+AtJkeDGMWbjA1a//V5Ygpz9wXiOi1SYd7uIjYGFg7WujYkC+0M5/DJqPZPlVAI72gXzIT1
+ QtIRaPi4v2YLcY2tOEfaHsYxUa61F47CXXPJQwgAthH5lCJ2cdTQ0hxzu8rsFd9S4ZVOio7MU
+ bUzSvX8DXqqkr9ffPR2C64jBuLjHLsx9kRp72gPOsu2Aa3ht9VlKGCaWZUDYb7acIInGi3Q8M
+ YgZOsMGL+Y4uG87u8jLhGkzoTjIIYnuXyXiSuc4WFCRtbXbDIYYE4SqqPLbFdobVMNW6H8Q6j
+ iStGD7yPgf6Rxn0L1m+qzxxQpQswEtv4S6yWYmH5I577piOQnNocqAUUvrRz4fmdii1Mdp4nE
+ 3SeyHv834vL+HyVtLKHtr1Tl/p4HpO1yBPahoKJtKqCB8B+mPtiV/5DHp2R0LE0SEy99gAQsM
+ uyb9VZ0vrVU5briip4Zs7/lns5n60G3qJV9w4Sg54QJXpNIrmTQLKz54lqSkhKYaiPcQ7ldzM
+ 27EHnJe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Todd,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Sat, 5 May 2018, Todd Zullinger wrote:
+--8323328-1995257847-1525658081=:77
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> > @@ -430,6 +451,8 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
-> >  	struct string_list branch1 = STRING_LIST_INIT_DUP;
-> >  	struct string_list branch2 = STRING_LIST_INIT_DUP;
-> >  
-> > +	git_diff_basic_config("diff.color.frag", "magenta", NULL);
-> > +
-> >  	diff_setup(&diffopt);
-> >  	diffopt.output_format = DIFF_FORMAT_PATCH;
-> >  	diffopt.flags.suppress_diff_headers = 1;
-> 
-> Should this also (or only) check color.diff.frag?
+Hi Martin,
 
-This code is not querying diff.color.frag, it is setting it. Without
-any way to override it.
+On Sun, 6 May 2018, Martin =C3=85gren wrote:
 
-Having thought about it longer, and triggered by Peff's suggestion to
-decouple the "reverse" part from the actual color, I fixed this by
+> On 4 May 2018 at 17:34, Johannes Schindelin <johannes.schindelin@gmx.de> =
+wrote:
+> > @@ -353,6 +358,7 @@ static void output(struct string_list *a, struct st=
+ring_list *b,
+> >  int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+> >  {
+> >         struct diff_options diffopt =3D { NULL };
+> > +       struct strbuf four_spaces =3D STRBUF_INIT;
+> >         double creation_weight =3D 0.6;
+> >         struct option options[] =3D {
+> >                 OPT_SET_INT(0, "no-patches", &diffopt.output_format,
+> > @@ -371,6 +377,9 @@ int cmd_branch_diff(int argc, const char **argv, co=
+nst char *prefix)
+> >
+> >         diff_setup(&diffopt);
+> >         diffopt.output_format =3D DIFF_FORMAT_PATCH;
+> > +       diffopt.output_prefix =3D output_prefix_cb;
+> > +       strbuf_addstr(&four_spaces, "    ");
+> > +       diffopt.output_prefix_data =3D &four_spaces;
+> >
+> >         argc =3D parse_options(argc, argv, NULL, options,
+> >                         builtin_branch_diff_usage, PARSE_OPT_KEEP_UNKNO=
+WN);
+>=20
+> You end up leaking the buffer of `four_spaces`. Granted, that's not a
+> big memory leak, but still. ;-) This was the only leak that
+> LeakSanitizer found in v2 when running the new test-script and playing
+> around with this a bit. This looks really good!
 
-- *not* setting .frag to magenta,
-
-- using the reverse method also to mark outer *hunk headers* (not only the
-  outer -/+ markers).
-
-- actually calling git_diff_ui_config()...
-
->  I thought that color.diff.* was preferred over diff.color.*, though
->  that doesn't seem to be entirely true in all parts of the current
->  codebase.
-> 
-> In testing this series it seems that setting color.diff
-> options to change the various colors read earlier in this
-> patch via diff_get_color_opt, as well as the 'frag' slot,
-> are ignored.  Setting them via diff.color.<slot> does work.
-
-In my tests, it did not even work via diff.color.<slot>. But I think I
-fixed this (at least my local testing confirms this) by calling
-git_diff_ui_config().
-
-> The later patch adding a man page documents branch-diff as
-> using `diff.color.*` and points to git-config(1), but the
-> config docs only list color.diff.
-
-In the current form (`git branch --diff`), I refrained from going into
-*so* much detail ;-) But the gist still holds, and now the code should
-support it, too.
-
-The current work in progress can be pulled as `branch-diff` from
-https://github.com/dscho/git, if I could ask you to test?
-
-Ciao,
+Good point. Fixed.
 Dscho
+--8323328-1995257847-1525658081=:77--
