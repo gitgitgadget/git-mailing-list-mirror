@@ -7,106 +7,68 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAE751F42E
-	for <e@80x24.org>; Mon,  7 May 2018 10:30:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1E461F42E
+	for <e@80x24.org>; Mon,  7 May 2018 10:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751901AbeEGKau (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 06:30:50 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:41595 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750795AbeEGKas (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 06:30:48 -0400
-Received: by mail-pg0-f54.google.com with SMTP id m21-v6so19908896pgv.8
-        for <git@vger.kernel.org>; Mon, 07 May 2018 03:30:48 -0700 (PDT)
+        id S1751901AbeEGKjG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 06:39:06 -0400
+Received: from mail-vk0-f42.google.com ([209.85.213.42]:40338 "EHLO
+        mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751147AbeEGKjF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 06:39:05 -0400
+Received: by mail-vk0-f42.google.com with SMTP id v194-v6so674710vkd.7
+        for <git@vger.kernel.org>; Mon, 07 May 2018 03:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=7C86Cn31Pyx7zrjnXQIFKKb/qZlwGfptkc6leQ03xDA=;
-        b=Y4mHXC9szaCm8t/A3RCMf2K5XbVUvq2Lz5MJmdhdaxdgNuMAAjkoloA/TU/zTNEZbg
-         YPBacX6L4/sh10dbNeyESiDi2vZHPNAyuJ7ReNOSAaP6B8psA1BuQnZd9T7amekhE98Q
-         Wk4la8vI8NVqntn34FuY9MaIFr2ctCfgx6Y1sNEWCPIMP3C/r2pQ2tgHrscXVd+Hj1Cr
-         0v3f/qtbQ4m067pIhiHGg3YqopCHDucFV18dr7bwv4EBxtWuNlfGVloK2ZMq+Hzv+GX4
-         LPEJN6jV3gGqM9IA7wXbfDugHKYj85L9vYfCv2dAiBDdBZzSkO3nfdNho+arGat5pczc
-         w02g==
+         :content-transfer-encoding;
+        bh=UdJx5wVkFZjcVRzt0/FCoL6dDLTA8A1uyq9K6nAmzbk=;
+        b=Ge6a9nbSUKgM8xNYESQAISOOdI6jLLrMQlr6H2esTfOTs4J6Te8SWK4KyCpJRrt4aD
+         JxcJc0aN8Vv33dB2Y9EM7lhJfmzh0CR8/FQoZSTc/WXi/2EKAb1HaWIj10v9CAkVx6Pn
+         7KMzJ+Spa8Cmp0EVb6AylqdElrnuHFv9Q4lu1fWmXjsh0jM8tqouIIlZQcf9S5t7s2sX
+         QWgunsA8U6cDlKrjGN4mn/0JUshj4T41iIIZaGtnwY+f1aPwBEDmyk869okSSN8DWVpg
+         L1wjscw6BqNnjw9fR+Ki7BGr7Q0E9fSWu+BswEO5xx1OIYtTaTy4NlP4MnluDCDLLMLR
+         nrgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=7C86Cn31Pyx7zrjnXQIFKKb/qZlwGfptkc6leQ03xDA=;
-        b=LHkCY8dOAd7Ua8cBtNFIPKXN6YgZtfwvT2Iky4x6bd1MNKXHYd1YWTxERrbtq2YNH9
-         +xIpdLnRcZ5C0BoMJZ6zDPqcqe7HlH0x3CvHJEqrdEgaMsfR82UzznhcrYh1UlBwCBQ7
-         NZDDNnLxyqsH//3I0Se8eit6UB7AnphpqcUrrWbZHQtKRAVTIgBI1fdKZB93YzvF9DCN
-         EOxOray7NCwaSaiHJBfZWb95ytNMTHMx8MSdla31BkM2yDOnE4PxjM0IVoWAoumIDRCv
-         +EZigRfrfZMpK4/jkPmWkgKAd3nqUDxRnf2WxxvvnIWpsQeA+hUjvqmw5NgmToYvsntp
-         8bGA==
-X-Gm-Message-State: ALQs6tCbsH0sbMdTigSIHQHbttZzf97heNzjAJhFIGQmoPW5GKAIpzY7
-        s60RXfd6kvoA/woTgHJddEZeE/jAhFY7Gf+HTOu/NBmvSAQ=
-X-Google-Smtp-Source: AB8JxZp8JmHI8euSAkl3GONRoRYPad+EJGRQNME6dLF0LO6Y4uogobxQcoVudkvliZ1vXkde7aldshDyeCu8FCGPOqE=
-X-Received: by 2002:a17:902:9a90:: with SMTP id w16-v6mr37511755plp.390.1525689048281;
- Mon, 07 May 2018 03:30:48 -0700 (PDT)
+         :message-id:subject:to:content-transfer-encoding;
+        bh=UdJx5wVkFZjcVRzt0/FCoL6dDLTA8A1uyq9K6nAmzbk=;
+        b=pn5v71dcWAf8YvWIWUFpR+QIyVcjuUR0B0ZmpAHNV6dv+Xq9Upp2cTZ8IX0vsdaM4O
+         K8wN7f7Mfc86b9Dczdj3T4tU/g7fo87x3qoTH31gBzAKvIYUAuGug2SZDfRla8SsC7J0
+         qncU34b6NfXWjHAZFGQrKD435i8azXOu19Q1o2eAuV4Iu3GO/bC8T1YzRCu4U8vNte1u
+         ZI6+0bHgkz3gfI9smocg3bMT5IXmSxO5qXPzdZHuJEN4tJD1w5LAAypTWsLsla15rzip
+         AYt72DgMAcIAmYAlPKKykI/38f32WYlfObtWSMZiwJO7/4/jt6OvIGj5/kavuQVL/dIz
+         7Mfw==
+X-Gm-Message-State: ALQs6tCP8m6CGjVztd1kdBNXxUmTlrFZyMIDbG+BXi7DSFAOdGeRszVj
+        sHfcUu8v04dqiakxKgL5NoAUZ8eOOwv4mOUp5WlIzw==
+X-Google-Smtp-Source: AB8JxZptUut8aJ+8cjtLgjqb4fIICJ0W3wm00YGme2UvRnFY23i/hUYMfsDyXIcAgkM4oBO/T60zJFUakW821nGZJUo=
+X-Received: by 2002:a1f:c5c5:: with SMTP id v188-v6mr32350123vkf.48.1525689545057;
+ Mon, 07 May 2018 03:39:05 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Mon, 7 May 2018 03:30:47 -0700 (PDT)
-In-Reply-To: <20180506231752.975110-11-sandals@crustytoothpaste.net>
-References: <20180506231752.975110-1-sandals@crustytoothpaste.net> <20180506231752.975110-11-sandals@crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 7 May 2018 12:30:47 +0200
-Message-ID: <CAN0heSrbG+Axs=xq=MdnA=m98Habi_uHS3hj6xweCHqufA7Vag@mail.gmail.com>
-Subject: Re: [PATCH 10/28] t: skip pack tests if not using SHA-1
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+Received: by 10.176.22.212 with HTTP; Mon, 7 May 2018 03:39:04 -0700 (PDT)
+In-Reply-To: <20180429164232.29337-2-mail@floga.de>
+References: <20180429164232.29337-1-mail@floga.de> <20180429164232.29337-2-mail@floga.de>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Mon, 7 May 2018 12:39:04 +0200
+Message-ID: <CAM0VKjkTu+OkLM3gvX73mWugxArCVmqRBmWGHiKuLiLRNkkNow@mail.gmail.com>
+Subject: Re: [PATCH v3 1/1] completion: load completion file for external subcommand
+To:     Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?Q?Szeder_G=C3=A1bor?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7 May 2018 at 01:17, brian m. carlson <sandals@crustytoothpaste.net> wrote:
-> These tests rely on creating packs with specially named objects which
-> are necessarily dependent on the hash used.  Skip these tests if we're
-> not using SHA-1.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  t/t5308-pack-detect-duplicates.sh | 6 ++++++
->  t/t5309-pack-delta-cycles.sh      | 6 ++++++
->  2 files changed, 12 insertions(+)
->
-> diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
-> index 156ae9e9d3..6845c1f3c3 100755
-> --- a/t/t5308-pack-detect-duplicates.sh
-> +++ b/t/t5308-pack-detect-duplicates.sh
-> @@ -4,6 +4,12 @@ test_description='handling of duplicate objects in incoming packfiles'
->  . ./test-lib.sh
->  . "$TEST_DIRECTORY"/lib-pack.sh
->
-> +if ! test_have_prereq SHA1
-> +then
-> +       skip_all='not using SHA-1 for objects'
-> +       test_done
-> +fi
+On Sun, Apr 29, 2018 at 6:42 PM, Florian Gamb=C3=B6ck <mail@floga.de> wrote=
+:
+> This way we can leverage bash-completion's dynamic loading for git
+> subcommands and make it easier for developers to distribute custom
+> completion scripts.
 
-Add something like "FIXME please expand this test", either as a comment
-or inside the skip_all? That probably goes for all patches in this
-series that skip tests.
-
-As it is now, it feels to me like this is simply stuffing tests away
-that are failing. When your primary focus is to run the test suite with
-another hash function, I can see why you need to do this change. But if
-the goal is to eventually have another hash function and test things at
-least as well as before, I think leaving some sort of note here would
-help someone who later wants to resurrect those tests that this series
-suppressed.
-
-I realize this is related to my comment on the previous series formally
-changing the on-disk format [1] and that this comment is along the same
-lines as my comment there.
-
-[1] https://public-inbox.org/git/20180427210823.GB722934@genre.crustytoothpaste.net/
-
-Martin
+The patch and the updated commit message both look good to me.
+Thanks for following through.
