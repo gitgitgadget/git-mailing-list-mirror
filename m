@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 096DD200B9
-	for <e@80x24.org>; Mon,  7 May 2018 02:28:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5EEC0200B9
+	for <e@80x24.org>; Mon,  7 May 2018 02:30:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751871AbeEGC2K (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 22:28:10 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41388 "EHLO
+        id S1751869AbeEGCae (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 22:30:34 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41400 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751831AbeEGC2J (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 22:28:09 -0400
+        by vger.kernel.org with ESMTP id S1751831AbeEGCad (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 22:30:33 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 13EA960444;
-        Mon,  7 May 2018 02:28:08 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BA42760444;
+        Mon,  7 May 2018 02:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525660088;
-        bh=nvH7nW8rR0d+m+2S59i4d4nE77la/V6MS6hik8YfrO0=;
+        s=default; t=1525660232;
+        bh=OXe0/9e9uMKpuH0w9CJahhpfkl+WPydwYkqU4FBr3sg=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=ye7hzF/kPHotiZmcMmDKf10sbjst/1lw3F86htGcjj8BlK+AmqB5sZr36MrnoByqm
-         auuQr45DTewmRcIYdCjUZX5OaVU02PVUENLOApm48rmZre/0Oym6LTUtryyjQ1RtzG
-         27YjvWYa+EDDvRqSB7/76Ung3kpARfO2AtS5+hEA5XiX5pvaxDESXJI0qVSoRrUhyq
-         UdWfbtCHwr1mSN6BJthpx+/7Wp/74zkVazfW3Azv21GpBlv0/dKy557WCPAADxwjBg
-         bx/LybrKDg0gycDCcMkYeJct1kgRbLBiXxBu+rYB3coPd2o6TyKb1wJYz51qzga2r8
-         s0oLiOYEnwO7ASyNnxE1eg5IAiobvkS2irYny3EqjAUK2m/YxIBmUCX0eiXOsPHHs5
-         7AGyGGhTsfzHlq+EH69Qp26e52yiWEViT8J7N/9JUvDEIEBSo5z80uMfyUIPJZJRdb
-         ZGOEc6c837a1ELru+jM82r7klq95bQweAFIN8AcbVLtbTShShq3
-Date:   Mon, 7 May 2018 02:28:01 +0000
+        b=bpVOrB4JCHjZVt/Q9e1GDYK/VUJmfjjUCDcuzMvIayferZ/jRGRwnnbkaGrsjYG6n
+         TrAbU2teOXrPcaHlhQefPE2B+oph0PYJUXOsKNuxxWNLqcpdXtgnRjCaHlCpuy9/tp
+         OVA4AkbyMcvSR84pls3YTZjUA97KV4hTLV0+izdaCJ6krIJnddhujjqaJXzflorQPV
+         n8yD5HrM/vLbiqcv6C90RJEeQ5yeOQ0thOYYNs4ywKDmY7AMHp8qvktpnruZ57izHQ
+         ISyJZroYeEtAPtlZu+dliimZSFf5+K8A1bbB0+7qcC2exnzYoSKpvmXuVE7IE0aIJI
+         bEN6dFGAI6yZdtmYtuH7B8ycckpEeFTZMmPMisapxq/Hf0v5tOOSF6Uy1vihDQsQlW
+         6s6xba7+vRQuySfzZ/atINq+ASmvP8M4WjUWVQ9NnZsE4Ea/Mer/Gpifi8GASkwZrj
+         mgVPj2l8ASVG8+ZuXBSyhvVapUIejBvy5k5445s5SmY3uUbqTW3
+Date:   Mon, 7 May 2018 02:30:27 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH 04/28] t/test-lib: introduce FULL_HEX
-Message-ID: <20180507022801.GC953644@genre.crustytoothpaste.net>
+Subject: Re: [PATCH 14/28] t3905: abstract away SHA-1-specific constants
+Message-ID: <20180507023026.GD953644@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
@@ -52,13 +52,13 @@ Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Lars Schneider <larsxschneider@gmail.com>
 References: <20180506231752.975110-1-sandals@crustytoothpaste.net>
- <20180506231752.975110-5-sandals@crustytoothpaste.net>
- <CAPig+cTrLseKxznrMb63rQ4NK1JYvPraV=Bz6vbnO0sY6qkK=Q@mail.gmail.com>
+ <20180506231752.975110-15-sandals@crustytoothpaste.net>
+ <CAPig+cQ7hn_P_xZW70X4vCztCr_r84+ofh_ApEbZwfQKRRq6Nw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="8NvZYKFJsRX2Djef"
+        protocol="application/pgp-signature"; boundary="cQXOx3fnlpmgJsTP"
 Content-Disposition: inline
-In-Reply-To: <CAPig+cTrLseKxznrMb63rQ4NK1JYvPraV=Bz6vbnO0sY6qkK=Q@mail.gmail.com>
+In-Reply-To: <CAPig+cQ7hn_P_xZW70X4vCztCr_r84+ofh_ApEbZwfQKRRq6Nw@mail.gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.15.0-3-amd64)
 User-Agent: Mutt/1.9.5 (2018-04-13)
@@ -69,55 +69,57 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---8NvZYKFJsRX2Djef
+--cQXOx3fnlpmgJsTP
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 06, 2018 at 07:53:42PM -0400, Eric Sunshine wrote:
+On Sun, May 06, 2018 at 08:03:27PM -0400, Eric Sunshine wrote:
 > On Sun, May 6, 2018 at 7:17 PM, brian m. carlson
 > <sandals@crustytoothpaste.net> wrote:
-> > Currently we have a variable, $_x40, which contains a regex that matches
-> > a full 40-character hex constant.  However, with NewHash, we'll have
-> > object IDs that are longer than 40 characters.  In such a case, $_x40
-> > will be a confusing name.  Create a $FULL_HEX variable which will always
-> > reflect a regex matching the appropriate object ID, regardless of the
-> > length of the current hash.
+> > Adjust the test so that it computes variables for blobs instead of using
+> > hard-coded hashes.
+> >
+> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > ---
+> > diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include=
+-untracked.sh
+> > @@ -34,25 +34,26 @@ test_expect_success 'stash save --include-untracked=
+ cleaned the untracked files'
+> >         git status --porcelain >actual &&
+> >         test_cmp expect actual
+> >  '
+> > -
+> > +tracked=3D$(git rev-parse --short $(echo 1 | git hash-object --stdin))
+> > +untracked=3D$(git rev-parse --short $(echo untracked | git hash-object=
+ --stdin))
 >=20
-> Bikeshedding: $FULL_HEX doesn't convey much. Perhaps $OID_REGEX? (And
-> $_x05 and $_x35 can be named $OID_REGEX_SHORT and
-> $OID_REGEX_{something}, respectively? Or perhaps they don't need
-> renaming?)
+> You lost the blank line following the previous test.
 
-I agree that $OID_REGEX is better.  Thinking about it, I'm wondering if
-$_xoid might be shorter and familiar enough to people who are used to
-$_x40.  I'll wait for other people to chime in, and then reroll.
-
-I don't think the short forms will end up needing renaming, but I'll try
-to pick something sane in line with the others should that be necessary.
+So I did.  Will fix.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---8NvZYKFJsRX2Djef
+--cQXOx3fnlpmgJsTP
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.5 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrvubEACgkQv1NdgR9S
-9osvFBAAjbkqv0RDNBBnU6sGbRRMZ+gbvS0gr1d9j5g0bz8MJ4uUgUMqYuUPOLix
-hcW9meb81cjm7vwZAV83s80As0PV5xnULfGCUH5dkptJdDZ7G5MHYBQ6v2BnLUMq
-whAprE/JnC2qhvWmxtc53u/EgAc7+A8XO180n+TqVx6/l6Pg0+1YEBiYdXr8oexZ
-tzDZ4ExVrtWRax/ZbyxUDixAGBBPp43etHxJXyCGi3xhAQRSrAxUhukslMtAcm1N
-covZ5O0h0YAj1rU3QTdDUp+d/6/P/BBdXTuJeTtPOHDkedLmPhJPT/2l6IIV/7zz
-xS6Nejnt8skSiJywuerK9qvRJy7prrpcaB3yqKUmzm6RqXdEWqarydur+tKYn1om
-7aA6Hk4YpauqSq8+AA2w085CCG3ZZoN24CVy87f7aRClfxQeJjhKMSgLLGbJnLZs
-zboo/+mQdCowwU6x1BWgj67lj80iK/oEh8Pt9ApLbEil6TSbM6kLFcumJ69IUr62
-T/DY3gaBVWmja/eCsl+jc0s57DQJnguCQoWDqvZVitcrpwlBak2kZHepf9al6tEg
-mA0mO5ttKWL/I+CEsJmb3ThmLNVgDliVcUMsDTFS0FQiwNgt5vHqDmAJuYbI+x7h
-17SrkaEh2mV2MwdeS9Z0CgUyyGnAwCX8NTmptxbZFuoUBR0FDwc=
-=i0en
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrvukIACgkQv1NdgR9S
+9osotQ//eCAu/AOpOWlPdZasTYgjrYbm+d8SP56/3U6nC20/+goDbFSXhMMOP1um
+szt7mVBWeZaxpjVIrFy/uMlXxrDIfjB5gHKgNmCnQgySW6Ermf0XUQCW5JUJfyls
+6ONDcuj1YySRvRQ1KloLQZm4bdcooWNyiGN8Expq/GKGGRuDVPDbuEc5c4BtNnzu
+kyqB5JjVf3xJSHCqF2Q0i9an3/B3nqFkNBGe+LLFLoMdHL2h3xWSekufXNDPyAY/
+IKgrrlhRpveYMUHw4B3Wtj3xQ4y8oA3sC58om9iwZnJX2Hbfu8cnQKTu48LWwt5S
+OqUbvKGPf9Emw6aRSictbe4nTEHBUymu80ywCEXOgXp8tFi5UDRBY0JVCUzAiTkx
+p44t/SK9QVtGe0fGHldzuan4AK70dWJvq/UQNg1kehjMeph23xAkpcdvUUYM3TTv
+tuAuO4K591gABn2/07+zNXNCmlaCwqYw26CB2o/LlMLDS5E6nBYptdhg0n+1wOLT
+4KD+ua2CUu6ZmXUv6KCIvJLhiudQJBbF28DF7SIaEg36VfFb/rkWen7UYHka2J6m
+72iGuoinpvr6DclZwjeZ9HirCvrmZLCGP3AwxLTqVz5rlfh1LP6Wwg4lUCVdK/LT
+iLWNaPH026gFG0KXSzIk1l1dcqaqWJWjZnranL0/KHQVc5m9yzc=
+=MDV5
 -----END PGP SIGNATURE-----
 
---8NvZYKFJsRX2Djef--
+--cQXOx3fnlpmgJsTP--
