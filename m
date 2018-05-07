@@ -2,82 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E1D3200B9
-	for <e@80x24.org>; Mon,  7 May 2018 02:05:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 096DD200B9
+	for <e@80x24.org>; Mon,  7 May 2018 02:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751884AbeEGCFi (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 22:05:38 -0400
-Received: from mout.gmx.net ([212.227.15.15]:38221 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751781AbeEGCFh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 22:05:37 -0400
-Received: from [10.40.94.26] ([209.226.201.248]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MfVYB-1ezLYn0xh5-00P5jO; Mon, 07
- May 2018 04:05:22 +0200
-Date:   Sun, 6 May 2018 22:05:16 -0400 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 00/18] Add `branch-diff`, a `tbdiff` lookalike
-In-Reply-To: <20180506225627.GB953644@genre.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.1805062204580.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <20180506225627.GB953644@genre.crustytoothpaste.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751871AbeEGC2K (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 22:28:10 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41388 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751831AbeEGC2J (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 6 May 2018 22:28:09 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 13EA960444;
+        Mon,  7 May 2018 02:28:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1525660088;
+        bh=nvH7nW8rR0d+m+2S59i4d4nE77la/V6MS6hik8YfrO0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=ye7hzF/kPHotiZmcMmDKf10sbjst/1lw3F86htGcjj8BlK+AmqB5sZr36MrnoByqm
+         auuQr45DTewmRcIYdCjUZX5OaVU02PVUENLOApm48rmZre/0Oym6LTUtryyjQ1RtzG
+         27YjvWYa+EDDvRqSB7/76Ung3kpARfO2AtS5+hEA5XiX5pvaxDESXJI0qVSoRrUhyq
+         UdWfbtCHwr1mSN6BJthpx+/7Wp/74zkVazfW3Azv21GpBlv0/dKy557WCPAADxwjBg
+         bx/LybrKDg0gycDCcMkYeJct1kgRbLBiXxBu+rYB3coPd2o6TyKb1wJYz51qzga2r8
+         s0oLiOYEnwO7ASyNnxE1eg5IAiobvkS2irYny3EqjAUK2m/YxIBmUCX0eiXOsPHHs5
+         7AGyGGhTsfzHlq+EH69Qp26e52yiWEViT8J7N/9JUvDEIEBSo5z80uMfyUIPJZJRdb
+         ZGOEc6c837a1ELru+jM82r7klq95bQweAFIN8AcbVLtbTShShq3
+Date:   Mon, 7 May 2018 02:28:01 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH 04/28] t/test-lib: introduce FULL_HEX
+Message-ID: <20180507022801.GC953644@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>
+References: <20180506231752.975110-1-sandals@crustytoothpaste.net>
+ <20180506231752.975110-5-sandals@crustytoothpaste.net>
+ <CAPig+cTrLseKxznrMb63rQ4NK1JYvPraV=Bz6vbnO0sY6qkK=Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:iFz1M7787TNmmXUw4dIP1CoPbXl/PLHQSuVx3xwsNNobwUftprV
- pE1kNeOqMf5R9umGh/ITWg7C33jgMQEtp7yI0/HGIkmw3LfUBkJdscHeJxd8AUkbSDw4rYz
- HELzD1UvjSftxODLDf+twqnGQ2prvkAV5fvc9xB8VaRYK9GCHIBRRwmOnoprc+07X3hU6hZ
- gr8GUbkFV3wWUqb8xwO+g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:TDTc/CKJZfc=:a7i4hCf+fTOl5201JH1H2l
- LHvtA1Io6OeQ4AC5TBgp5NKhwxQRAStGJMXrfR794lL8EYLpLtk4Q84/QVWXGaNLMywe7Guex
- 3kK2o2y0CjjGv9s56bM84u/3pUvFxOXPQjhHlICMu5MOldb22qfqz0HcVbR948SxMyOBMo10/
- r4AkmMNu0fRnWRFbKwKl3KF/XqFSZoL454jTJD2dILcH5ff9osZhDZn2ihAGdTvTa4KpPjhM3
- TxIwvFxaPFe/eZWho8bPbspChJqKZDN63om0p/YSxo6d2QoQTIGSycjR8UmV49lR2DXotYjdf
- N6EJ9alcvUlVOwJIre1eCmGCv9nZOLBba22xxfxw/LTm7BZxr2smZqSgvfB8oc+As0mTWXo44
- tTUhGVRYa/GlYzFOGB6bc2gePr6AzwHVRUZXqrhHlpfdc6w0lpCEuNDooZi/16nvS2NeYhJ1G
- TFI5q5aOEo7EBGxamCnVIpm3xzNgHWfJfJ5sx+F104yYr14c+hBvl8+RO4syM+wwF9HLbaILj
- DSHgbM6W7Szpz8EcPdRuNZifxKtMdA6CuAkyjsqV1f6rqyFF99us6wdjh26VvGpb4DlTFyLvV
- nabPu/irysTPYxeVQNO35uOZCfc0zID2Ag+/+gwsRgxW4tIpV/JENl9hJ6TXZQzWZdJBKNjZy
- nw+yUjJiGgvCzjHi+fVJ5AOHnEtZm6szCMu9q+xxAqW2BoWbyBG26O+YqQVZbN+m5whSaenMJ
- e/XqdVgdjwN++8PXhBMdLOGW5lUHnupGH5iNZJAWTMZwI4oA9BjDG8E3cmLgpElpTQyaFUQB0
- vPXjFHi
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="8NvZYKFJsRX2Djef"
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTrLseKxznrMb63rQ4NK1JYvPraV=Bz6vbnO0sY6qkK=Q@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-3-amd64)
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brian,
 
-On Sun, 6 May 2018, brian m. carlson wrote:
+--8NvZYKFJsRX2Djef
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Fri, May 04, 2018 at 05:34:27PM +0200, Johannes Schindelin wrote:
-> > The incredibly useful `git-tbdiff` tool to compare patch series (say,
-> > to see what changed between two iterations sent to the Git mailing
-> > list) is slightly less useful for this developer due to the fact that
-> > it requires the `hungarian` and `numpy` Python packages which are for
-> > some reason really hard to build in MSYS2. So hard that I even had to
-> > give up, because it was simply easier to reimplement the whole shebang
-> > as a builtin command.
-> 
-> I just want to say thanks for writing this.  I use tbdiff extensively at
-> work and having this built-in and much faster will really help.
-> 
-> I did a once-over of v1 and I'll probably take a look at v2 or v3
-> (whatever's the latest) later in the week.
+On Sun, May 06, 2018 at 07:53:42PM -0400, Eric Sunshine wrote:
+> On Sun, May 6, 2018 at 7:17 PM, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > Currently we have a variable, $_x40, which contains a regex that matches
+> > a full 40-character hex constant.  However, with NewHash, we'll have
+> > object IDs that are longer than 40 characters.  In such a case, $_x40
+> > will be a confusing name.  Create a $FULL_HEX variable which will always
+> > reflect a regex matching the appropriate object ID, regardless of the
+> > length of the current hash.
+>=20
+> Bikeshedding: $FULL_HEX doesn't convey much. Perhaps $OID_REGEX? (And
+> $_x05 and $_x35 can be named $OID_REGEX_SHORT and
+> $OID_REGEX_{something}, respectively? Or perhaps they don't need
+> renaming?)
 
-Thank you so much!
-Dscho
+I agree that $OID_REGEX is better.  Thinking about it, I'm wondering if
+$_xoid might be shorter and familiar enough to people who are used to
+$_x40.  I'll wait for other people to chime in, and then reroll.
+
+I don't think the short forms will end up needing renaming, but I'll try
+to pick something sane in line with the others should that be necessary.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--8NvZYKFJsRX2Djef
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrvubEACgkQv1NdgR9S
+9osvFBAAjbkqv0RDNBBnU6sGbRRMZ+gbvS0gr1d9j5g0bz8MJ4uUgUMqYuUPOLix
+hcW9meb81cjm7vwZAV83s80As0PV5xnULfGCUH5dkptJdDZ7G5MHYBQ6v2BnLUMq
+whAprE/JnC2qhvWmxtc53u/EgAc7+A8XO180n+TqVx6/l6Pg0+1YEBiYdXr8oexZ
+tzDZ4ExVrtWRax/ZbyxUDixAGBBPp43etHxJXyCGi3xhAQRSrAxUhukslMtAcm1N
+covZ5O0h0YAj1rU3QTdDUp+d/6/P/BBdXTuJeTtPOHDkedLmPhJPT/2l6IIV/7zz
+xS6Nejnt8skSiJywuerK9qvRJy7prrpcaB3yqKUmzm6RqXdEWqarydur+tKYn1om
+7aA6Hk4YpauqSq8+AA2w085CCG3ZZoN24CVy87f7aRClfxQeJjhKMSgLLGbJnLZs
+zboo/+mQdCowwU6x1BWgj67lj80iK/oEh8Pt9ApLbEil6TSbM6kLFcumJ69IUr62
+T/DY3gaBVWmja/eCsl+jc0s57DQJnguCQoWDqvZVitcrpwlBak2kZHepf9al6tEg
+mA0mO5ttKWL/I+CEsJmb3ThmLNVgDliVcUMsDTFS0FQiwNgt5vHqDmAJuYbI+x7h
+17SrkaEh2mV2MwdeS9Z0CgUyyGnAwCX8NTmptxbZFuoUBR0FDwc=
+=i0en
+-----END PGP SIGNATURE-----
+
+--8NvZYKFJsRX2Djef--
