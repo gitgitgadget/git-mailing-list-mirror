@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B8CC200B9
-	for <e@80x24.org>; Mon,  7 May 2018 23:00:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2038200B9
+	for <e@80x24.org>; Mon,  7 May 2018 23:00:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753254AbeEGW7k (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 18:59:40 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:33253 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753009AbeEGW7g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 18:59:36 -0400
-Received: by mail-pg0-f66.google.com with SMTP id i194-v6so20298658pgd.0
-        for <git@vger.kernel.org>; Mon, 07 May 2018 15:59:36 -0700 (PDT)
+        id S1753406AbeEGXAT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 19:00:19 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:39364 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753149AbeEGW7j (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 18:59:39 -0400
+Received: by mail-pf0-f195.google.com with SMTP id a22so8897450pfn.6
+        for <git@vger.kernel.org>; Mon, 07 May 2018 15:59:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=y9RZm0a19d6XMRRGAySMBinLN+inJho8lwY5c6JlmK8=;
-        b=SefBgkx5x3CJyWzfWTDstewr1d7grd0e8JcVYzXc3ppQ5ykJyW2+SSl1q/jEtA1r5q
-         g1PxYXEyc7VfIpujv+2cHZbnqgbp8q2JupgmQJeYVRxD7QB9JehmpLIWKkPXUgi8QYf4
-         1TZuZH921ljVzMC2iJvuMHJudWq6OfXiT2ousgo7waQ081zstwgsyb1LTAOQz/M/IIHw
-         xBl6/ajdwTfg9SlQ6W9FlBXk8m6TQQi0QK9d8cPtfNu+h0CFHl67scefRpye3lIEUMBA
-         CyJvCGPetkB9GL4okKTuA7wq8nJILt0DKTervOPmDfYz8SWRI9CSauutiXfBQMT2fpDq
-         J5xQ==
+        bh=ysfPI2H13Ps7vdzmU6c9CMqsUxslBVl2viPJvzaPEmw=;
+        b=JlwYJojpc5MH9Ga2fufz8eWRQiGlG1tm7Vt3MpELfadm6rqn0JyH4s/nZoazZ2vj1n
+         c0YXjELLZTpZjH8j2Ss7h7kUbXAX9yQl8U/N09ZLyIynuoQtPKQ7+1JwEsHOHbvTqxNJ
+         yziKPyST/KmbW6HogaTR/q4doDMFCJSr858M3kaijMevcQqRMmghqEMxazpE6eay3V0J
+         MRW9RW0u2CTWQ1+482ur9gfM2Y6C0jChhNL6Raqh+Indn8CM2CWHSSUYZOTlwwoZngyq
+         50yg8V4md/49mnWfvBfrTO0R2YDP0di8BQWoqpxHjHWiK0dgO8Gj8WMTLZwb4HxcnYdZ
+         rcXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=y9RZm0a19d6XMRRGAySMBinLN+inJho8lwY5c6JlmK8=;
-        b=OW/Ablpd/BR3lUl3pcO5dqv/SBSm0SDSlCWezvqHUC9VGDdmwzVYuvceWjUXIOOVWy
-         qb+B6Yhg4YWCpDyWTV9qqjAbCal/c30eD0sIcRImuE+YuH6rLdezOaUB4LkBNPBJ9621
-         wwMG3ZmvthqrKtDj3KEb663xFqYdTKza8XEYMwEfSxvw91WaPdcpv3lG5VoKdvXk2MrW
-         VkUlKGnpGcnKc9bwnAfDEFzMW0IaQLmGbyQLZOKcO0I9XTAoRVstdh3lmsPegrzPeGRL
-         LnMG/ApzD46KeiznL5YWrgPJq/IkAoJ65BYt2oLJEMm60Wssj8mRikHb4icpkPRTwBK9
-         w7DQ==
-X-Gm-Message-State: ALQs6tCha4Ea4FGHK1uHzkAH41nVHT8lhkOvAVLz4wRYXi6TrvZoxxj9
-        VmA0qPoPRhS+1MgTpltJFbKYOzYIO48=
-X-Google-Smtp-Source: AB8JxZo8xg4m8efnRoWqjjyySfJ+ERz/PCLqPSVS3llqYZ/VmF5LQhvCdyF0grP7qFH0VUFbBiqmdQ==
-X-Received: by 2002:a65:650a:: with SMTP id x10-v6mr26477518pgv.169.1525733975165;
-        Mon, 07 May 2018 15:59:35 -0700 (PDT)
+        bh=ysfPI2H13Ps7vdzmU6c9CMqsUxslBVl2viPJvzaPEmw=;
+        b=NaT5CkDx+H8iGD72iNDXLJRXJf+9Oh5xTtaUTusJM43Eql1vL2b7yOGNkHlV3r2MCt
+         9CwGevJNBwYjYfyDdMVz3B44REWbDjDKCpfbU9la6co10LbCYH6NJdslH7NEf7llLNr5
+         SHDfTtZn+QcMfAYpmrI9Yjl4Yh1L1dAWMqOXIQbY/qaRyCY8LllyQTLEA3e2M32X8sxi
+         vpzkpoi4tFqjbgnukbLK3Sca/RnTrN+I9GOmiA20yCXkUBYl3Lklj9wshygk49RbHMDH
+         7GAy0vFHfUF2IxHrbKLycbH4tcPZ4IoeDo/e1IOgy8G5nKGKYeB1Nd1WPOWfmCmhzvu+
+         16iQ==
+X-Gm-Message-State: ALQs6tA351oirb4dp9wANQ+xeFTrI8Zja03eGTzhgl90GVTu7QLt0YLl
+        haPtm9o7paTn2BRc9iQO6VFUhGvlO0k=
+X-Google-Smtp-Source: AB8JxZqNK9WvmGbMkb00Qq2NPSixK0tBKkgsLQ/RYeYyYnqfNusQtqpQb0crD6fcB1SKRIoYqKRwQA==
+X-Received: by 2002:a63:9314:: with SMTP id b20-v6mr30988855pge.309.1525733978274;
+        Mon, 07 May 2018 15:59:38 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id p71sm52736349pfl.170.2018.05.07.15.59.33
+        by smtp.gmail.com with ESMTPSA id a5sm50695855pff.8.2018.05.07.15.59.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 07 May 2018 15:59:34 -0700 (PDT)
+        Mon, 07 May 2018 15:59:37 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     pclouds@gmail.com, jonathantanmy@google.com, gitster@pobox.com,
         jamill@microsoft.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 07/13] alloc: add repository argument to alloc_tag_node
-Date:   Mon,  7 May 2018 15:59:10 -0700
-Message-Id: <20180507225916.155236-8-sbeller@google.com>
+Subject: [PATCH v2 09/13] alloc: add repository argument to alloc_report
+Date:   Mon,  7 May 2018 15:59:12 -0700
+Message-Id: <20180507225916.155236-10-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
 In-Reply-To: <20180507225916.155236-1-sbeller@google.com>
 References: <20180501213403.14643-1-sbeller@google.com>
@@ -73,49 +73,35 @@ Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
  alloc.c | 2 +-
  cache.h | 3 ++-
- tag.c   | 2 +-
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/alloc.c b/alloc.c
-index 9e2b897ec1d..290250e3595 100644
+index f031ce422d9..28b85b22144 100644
 --- a/alloc.c
 +++ b/alloc.c
-@@ -65,7 +65,7 @@ void *alloc_tree_node_the_repository(void)
- }
+@@ -105,7 +105,7 @@ static void report(const char *name, unsigned int count, size_t size)
+ #define REPORT(name, type)	\
+     report(#name, name##_state.count, name##_state.count * sizeof(type) >> 10)
  
- static struct alloc_state tag_state;
--void *alloc_tag_node(void)
-+void *alloc_tag_node_the_repository(void)
+-void alloc_report(void)
++void alloc_report_the_repository(void)
  {
- 	struct tag *t = alloc_node(&tag_state, sizeof(struct tag));
- 	t->object.type = OBJ_TAG;
+ 	REPORT(blob, struct blob);
+ 	REPORT(tree, struct tree);
 diff --git a/cache.h b/cache.h
-index bf6e8c87d83..32f340cde59 100644
+index 2d60359a964..01cc207d218 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1770,7 +1770,8 @@ extern void *alloc_blob_node_the_repository(void);
- extern void *alloc_tree_node_the_repository(void);
- #define alloc_commit_node(r) alloc_commit_node_##r()
- extern void *alloc_commit_node_the_repository(void);
--extern void *alloc_tag_node(void);
-+#define alloc_tag_node(r) alloc_tag_node_##r()
-+extern void *alloc_tag_node_the_repository(void);
- extern void *alloc_object_node(void);
- extern void alloc_report(void);
+@@ -1774,7 +1774,8 @@ extern void *alloc_commit_node_the_repository(void);
+ extern void *alloc_tag_node_the_repository(void);
+ #define alloc_object_node(r) alloc_object_node_##r()
+ extern void *alloc_object_node_the_repository(void);
+-extern void alloc_report(void);
++#define alloc_report(r) alloc_report_##r()
++extern void alloc_report_the_repository(void);
  extern unsigned int alloc_commit_index(void);
-diff --git a/tag.c b/tag.c
-index 7150b759d66..02ef4eaafc0 100644
---- a/tag.c
-+++ b/tag.c
-@@ -94,7 +94,7 @@ struct tag *lookup_tag(const struct object_id *oid)
- 	struct object *obj = lookup_object(oid->hash);
- 	if (!obj)
- 		return create_object(the_repository, oid->hash,
--				     alloc_tag_node());
-+				     alloc_tag_node(the_repository));
- 	return object_as_type(obj, OBJ_TAG, 0);
- }
  
+ /* pkt-line.c */
 -- 
 2.17.0.255.g8bfb7c0704
 
