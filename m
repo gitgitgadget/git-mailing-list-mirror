@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6828A200B9
-	for <e@80x24.org>; Mon,  7 May 2018 17:53:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E82BF200B9
+	for <e@80x24.org>; Mon,  7 May 2018 17:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752777AbeEGRxb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 13:53:31 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:45699 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752730AbeEGRxL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 13:53:11 -0400
-Received: by mail-lf0-f67.google.com with SMTP id y14-v6so41532400lfy.12
-        for <git@vger.kernel.org>; Mon, 07 May 2018 10:53:10 -0700 (PDT)
+        id S1752773AbeEGRxa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 13:53:30 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:34011 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752737AbeEGRxP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 13:53:15 -0400
+Received: by mail-lf0-f68.google.com with SMTP id h4-v6so41922673lfc.1
+        for <git@vger.kernel.org>; Mon, 07 May 2018 10:53:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dyoAvoyFg4jUJfdz4aKXhqjKtPxM6RS8h0KV2O9Y/lA=;
-        b=Lqtk1tYl9oe02ptWQu2bT6VG75YFWpM6rHsDqA7MRlKUrWa9XPauwqoKV1cNawh6p0
-         5mG9s84g5I95vk4heZ6lQcJmPsBnsZrKAGP4KHBMjW8Smh4vBTxe/SNddq/gz3HoUdrQ
-         D29b0CZVSbxhG1ECvNVcDzQ4oBI7aBN883fkTS94TbTQ5FIF5kW1jRSX1+yCPmZrbDCV
-         FQ3TRwmebvmneNqtmtRLZ9DdUoCA8IL6ysVSa51xgPVagOFDJnXL4jGWfMObO6VXQlGZ
-         uluBbR+7+EW/8+UIzPOqfNEBlETYCNILCCH3poNHQVqtZwfZ8ePsxwlOW7gD6lR2NGrh
-         1cvw==
+        bh=/OK4TzKIJkS91APxDOnMBp+RdQ5CxIV4oiYWAyBWLck=;
+        b=FtcDfzZ7rHyCmHNEMZCZKylRr7wMbF9DJSSZOJC+epE4u0ZqyTnBORhtYkrSojvnUe
+         dFfaIhdEUetBc2246GdsaNVL2AoQOoWwZ1KsViIFzObykqie7wdGGHhDzVCQW7pEz1qZ
+         mkERWgSshnJdtrQPy1aafqg7SrQ0ipIU8JZC7vg4UBVc4YRg1EbW7T1GmyxHUAQpbJkb
+         nasiRejfVYkeIPZkHyXJgEV7hOC17YQPTD5EUMz4hUZgD/hOrIwOecak3Qg6VMSGZ+R2
+         bOkfTE4kLEOt7Yi+e8bqawM0sjAiKmp/Mhfd/Lb67T0ScmI5ok0OF3mLrbdG0jnyu7cH
+         5NeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=dyoAvoyFg4jUJfdz4aKXhqjKtPxM6RS8h0KV2O9Y/lA=;
-        b=MavjV+ri8iu3Y9/97D7AzmnqND16cBk95zOzOzzcn+i6E+FhYF0wsHqXHKq4t6bYfY
-         dK3UO6DbUc1FZCWy2j9BtKtJJQK5ezTCHRLHrQe6RuZOKkvZjYj6E/NbTdGZ7NWkTo96
-         Kzt29OZG/KxYzf6OxYM9iS9STrJjT4tclJhMJKg7OEvolyZ06jzuVG0Zy0QMqic6rUuz
-         mjieFsG3zDKMsaGtJJWtT7l8+VrZ+8oeBAlPDJLbZwnurwbtVsbA+23snPFDXfrktkcn
-         jiJJT+d9HYH+HC7Gm5411ibJ47OeCXF/IF/xwXWzE2sfXFdNi7Zzpsdz0z7EkMrqX5Hl
-         2Qqw==
-X-Gm-Message-State: ALQs6tBk4c+uJNCUxvXMFLrNXIAQOJ3KKlL9uC2tsSksfZrjbsCadxrt
-        b7bx/G0KAWPrayKhLma+4jk=
-X-Google-Smtp-Source: AB8JxZpc1ucS/djozZqZ6gB8Jyn9r0LRcgcNckcOSfC3vX5YhyJg5YGyvtJ85wowU0x83UTXyTBCaA==
-X-Received: by 2002:a2e:5559:: with SMTP id j86-v6mr24511182ljb.147.1525715589824;
-        Mon, 07 May 2018 10:53:09 -0700 (PDT)
+        bh=/OK4TzKIJkS91APxDOnMBp+RdQ5CxIV4oiYWAyBWLck=;
+        b=FIa1FChdKPbvYp0BmdsLZ9cD9XlDGmRZyBJph/mRvbhTzOJ3YBu1E1U83625WMthxb
+         uKFuRIb8O9yyVYVnKWlLr4HhCsmzWMM0f2Ef7168Y6NVHcCLGMc5z2P7/nCttOVbbcYD
+         0yDafB8YEmgPxC51T7BytmA/64N2c4dbqYSsHHLNZJ+xV7Oe/fV9zX4LYdMjujhF4Hq6
+         T6hxiAK2cJIe6wpgZ7GtvFy/UJjnVGgZxsGPF8EySz06WDRa/s5xV92YiAv17e4N4U2K
+         tnBdxWVBYwpcvISybEae7tjusxH6W6K1HBMNsXN38RTbpBurkivnsBVQN+whW1sYC3HF
+         OQWg==
+X-Gm-Message-State: ALQs6tA3i9JklPmG6AKk7zryOLiUuxtKhncdwn6dSUkRK1ED+CPUJICS
+        YzpfOJGd+A8cJcu4jSuhEbo=
+X-Google-Smtp-Source: AB8JxZoq2gjlReIY3LxW5TbB5knXmY/yDuOPeekNDI/nW3zv+3/SA3XJxb+L7wa+4nX4prz54WgS6g==
+X-Received: by 2002:a2e:2283:: with SMTP id i125-v6mr26581082lji.47.1525715593880;
+        Mon, 07 May 2018 10:53:13 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id v6-v6sm4376865ljk.83.2018.05.07.10.53.08
+        by smtp.gmail.com with ESMTPSA id v6-v6sm4376865ljk.83.2018.05.07.10.53.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 May 2018 10:53:09 -0700 (PDT)
+        Mon, 07 May 2018 10:53:13 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         szeder.dev@gmail.com
-Subject: [PATCH v6 08/13] git: support --list-cmds=list-<category>
-Date:   Mon,  7 May 2018 19:52:17 +0200
-Message-Id: <20180507175222.12114-9-pclouds@gmail.com>
+Subject: [PATCH v6 11/13] command-list.txt: documentation and guide line
+Date:   Mon,  7 May 2018 19:52:20 +0200
+Message-Id: <20180507175222.12114-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180507175222.12114-1-pclouds@gmail.com>
 References: <20180429181844.21325-1-pclouds@gmail.com>
@@ -65,118 +65,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This allows us to select any group of commands by a category defined
-in command-list.txt. This is an internal/hidden option so we don't
-have to be picky about the category name or worried about exposing too
-much.
-
-This will be used later by git-completion.bash to retrieve certain
-command groups.
+This is intended to help anybody who needs to update command-list.txt.
+It gives a brief introduction of all attributes a command can take.
 ---
- generate-cmdlist.sh | 17 +++++++++++++++++
- git.c               |  7 +++++++
- help.c              | 23 +++++++++++++++++++++++
- help.h              |  2 ++
- 4 files changed, 49 insertions(+)
+ command-list.txt | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index 015eef2804..bfd8ef0671 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -45,6 +45,21 @@ define_categories() {
- 	test "$bit" -gt 32 && die "Urgh.. too many categories?"
- }
- 
-+define_category_names() {
-+	echo
-+	echo "/* Category names */"
-+	echo "static const char *category_names[] = {"
-+	bit=0
-+	category_list "$1" |
-+	while read cat
-+	do
-+		echo "	\"$cat\", /* (1UL << $bit) */"
-+		bit=$(($bit+1))
-+	done
-+	echo "	NULL"
-+	echo "};"
-+}
-+
- print_command_list() {
- 	echo "static struct cmdname_help command_list[] = {"
- 
-@@ -70,4 +85,6 @@ struct cmdname_help {
- "
- define_categories "$1"
- echo
-+define_category_names "$1"
-+echo
- print_command_list "$1"
-diff --git a/git.c b/git.c
-index 3c032d01fc..67f3e20ae9 100644
---- a/git.c
-+++ b/git.c
-@@ -53,6 +53,13 @@ static int list_cmds(const char *spec)
- 			list_all_main_cmds(&list);
- 		else if (len == 6 && !strncmp(spec, "others", 6))
- 			list_all_other_cmds(&list);
-+		else if (len > 5 && !strncmp(spec, "list-", 5)) {
-+			struct strbuf sb = STRBUF_INIT;
-+
-+			strbuf_add(&sb, spec + 5, len - 5);
-+			list_cmds_by_category(&list, sb.buf);
-+			strbuf_release(&sb);
-+		}
- 		else
- 			die(_("unsupported command listing type '%s'"), spec);
- 		spec += len;
-diff --git a/help.c b/help.c
-index d5ce9dfcbb..1117f7d1d1 100644
---- a/help.c
-+++ b/help.c
-@@ -329,6 +329,29 @@ void list_all_other_cmds(struct string_list *list)
- 	clean_cmdnames(&other_cmds);
- }
- 
-+void list_cmds_by_category(struct string_list *list,
-+			   const char *cat)
-+{
-+	int i, n = ARRAY_SIZE(command_list);
-+	uint32_t cat_id = 0;
-+
-+	for (i = 0; category_names[i]; i++) {
-+		if (!strcmp(cat, category_names[i])) {
-+			cat_id = 1UL << i;
-+			break;
-+		}
-+	}
-+	if (!cat_id)
-+		die(_("unsupported command listing type '%s'"), cat);
-+
-+	for (i = 0; i < n; i++) {
-+		struct cmdname_help *cmd = command_list + i;
-+
-+		if (cmd->category & cat_id)
-+			string_list_append(list, drop_prefix(cmd->name));
-+	}
-+}
-+
- int is_in_cmdlist(struct cmdnames *c, const char *s)
- {
- 	int i;
-diff --git a/help.h b/help.h
-index 97e6c0965e..734bba32d3 100644
---- a/help.h
-+++ b/help.h
-@@ -21,6 +21,8 @@ static inline void mput_char(char c, unsigned int num)
- extern void list_common_cmds_help(void);
- extern void list_all_main_cmds(struct string_list *list);
- extern void list_all_other_cmds(struct string_list *list);
-+extern void list_cmds_by_category(struct string_list *list,
-+				  const char *category);
- extern const char *help_unknown_cmd(const char *cmd);
- extern void load_command_list(const char *prefix,
- 			      struct cmdnames *main_cmds,
+diff --git a/command-list.txt b/command-list.txt
+index 99ddc231c1..9c70c69193 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -1,3 +1,47 @@
++# Command classification list
++# ---------------------------
++# All supported commands, builtin or external, must be described in
++# here. This info is used to list commands in various places. Each
++# command is on one line followed by one or more attributes.
++#
++# The first attribute group is mandatory and indicates the command
++# type. This group includes:
++#
++#   mainporcelain
++#   ancillarymanipulators
++#   ancillaryinterrogators
++#   foreignscminterface
++#   plumbingmanipulators
++#   plumbinginterrogators
++#   synchingrepositories
++#   synchelpers
++#   purehelpers
++#
++# The type names are self explanatory. But if you want to see what
++# command belongs to what group to get a better picture, have a look
++# at "git" man page, "GIT COMMANDS" section.
++#
++# Commands of type mainporcelain can also optionally have one of these
++# attributes:
++#
++#   init
++#   worktree
++#   info
++#   history
++#   remote
++#
++# These commands are considered "common" and will show up in "git
++# help" output in groups. Uncommon porcelain commands must not
++# specify any of these attributes.
++#
++# "complete" attribute is used to mark that the command should be
++# completable by git-completion.bash. Note that by default,
++# mainporcelain commands are completable so you don't need this
++# attribute.
++#
++# While not true commands, guides are also specified here, which can
++# only have "guide" attribute and nothing else.
++#
+ ### command list (do not change this line, also do not change alignment)
+ # command name                          category [category] [category]
+ git-add                                 mainporcelain           worktree
 -- 
 2.17.0.705.g3525833791
 
