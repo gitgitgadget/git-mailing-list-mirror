@@ -2,88 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B67991F42E
-	for <e@80x24.org>; Mon,  7 May 2018 07:37:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7CBF1F42E
+	for <e@80x24.org>; Mon,  7 May 2018 07:39:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751010AbeEGHhj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 03:37:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58416 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750716AbeEGHhj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 03:37:39 -0400
-Received: (qmail 30038 invoked by uid 109); 7 May 2018 07:37:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 07 May 2018 07:37:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24344 invoked by uid 111); 7 May 2018 07:37:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 07 May 2018 03:37:42 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 May 2018 03:37:37 -0400
-Date:   Mon, 7 May 2018 03:37:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1751887AbeEGHjM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 03:39:12 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:49914 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750990AbeEGHjL (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 7 May 2018 03:39:11 -0400
+X-AuditID: 12074411-a9fff70000001186-28-5af0029e43cc
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 97.9D.04486.E9200FA5; Mon,  7 May 2018 03:39:10 -0400 (EDT)
+Received: from [192.168.69.190] (p57BCCCC0.dip0.t-ipconnect.de [87.188.204.192])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w477d7r2023499
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Mon, 7 May 2018 03:39:08 -0400
+Subject: Re: [PATCH] refs: handle null-oid for pseudorefs
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?Q?Rafael_Ascens=c3=a3o?= <rafa.almas@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 13/18] color: provide inverted colors, too
-Message-ID: <20180507073736.GA31170@sigill.intra.peff.net>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de>
- <cover.1525448066.git.johannes.schindelin@gmx.de>
- <1ebbe359547689d32aa27564929d733a26bb8054.1525448066.git.johannes.schindelin@gmx.de>
- <20180505182922.GD17700@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1805060001230.77@tvgsbejvaqbjf.bet>
- <20180506063543.GA3418@sigill.intra.peff.net>
- <20180506064104.GB3418@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1805062119051.77@tvgsbejvaqbjf.bet>
+        David Turner <novalis@novalis.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <CACUQV5-9PagVhE5YY=Z3721YRiBwSZykT3ZjtzmD3o-c6O6ddQ@mail.gmail.com>
+ <20180506133549.8536-1-martin.agren@gmail.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <1291dbc0-31f9-213a-ae30-1a6349ea1626@alum.mit.edu>
+Date:   Mon, 7 May 2018 09:39:06 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
+In-Reply-To: <20180506133549.8536-1-martin.agren@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1805062119051.77@tvgsbejvaqbjf.bet>
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAKsWRmVeSWpSXmKPExsUixO6iqDuP6UOUQeNyG4uuK91MFg29V5gt
+        3t5cwmjx900Xo8WSh6+ZLT4dvMli0TbzB5MDu8fym3+ZPHbOusvu0dV+hM3j4iVlj8+b5AJY
+        o7hsUlJzMstSi/TtErgy/nY2shUc5a3Y2W7SwNjD1cXIySEhYCLR++oMSxcjF4eQwA4mifd9
+        25khnPNMEksONLOBVAkLWEo0zzzODGKLCNRI7Pr5BKyDWeAyo0TXml9MEB2NjBI7Wt+ygFSx
+        CehKLOppZgKxeQXsJeb92AnWzSKgIrHp+XxGEFtUIELi3vlPbBA1ghInZz4B6+UUsJboevuK
+        HcRmFlCX+DPvEjOELS5x68l8JghbXqJ562zmCYwCs5C0z0LSMgtJyywkLQsYWVYxyiXmlObq
+        5iZm5hSnJusWJyfm5aUW6Zrq5WaW6KWmlG5ihESE4A7GGSflDjEKcDAq8fCumPI+Sog1say4
+        MvcQoyQHk5IoL/cDoBBfUn5KZUZicUZ8UWlOavEhRgkOZiURXv6jQDnelMTKqtSifJiUNAeL
+        kjgvs8neKCGB9MSS1OzU1ILUIpisDAeHkgRvH+OHKCHBotT01Iq0zJwShDQTByfIcB6g4dYg
+        NbzFBYm5xZnpEPlTjIpS4ryXQBICIImM0jy4XljCesUoDvSKMG8SSBUPMNnBdb8CGswENFgQ
+        5CPe4pJEhJRUA6P03e2ciw6s2tix6MRrsUnb0xssCll8Prxrj7zIXJfrnLd5YeZNVZ6tjodj
+        bJRv5D5YxpheED5786RFFvfrXsa6Lp3u+XR+5oTF21Ksdk4Ka25ytNfLs+F7FvlaNOxf8ezC
+        xTkq+zvZcz8zhBxpn3LVQvDFfsu071lMby/P5L3zsv+yiWnaRm4lluKMREMt5qLiRAA/+4jB
+        MwMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 06, 2018 at 09:20:46PM -0400, Johannes Schindelin wrote:
-
-> > Heh, of course you knew that already, as I just noticed your patch is
-> > using the reverse attribute internally (I had thought at first glance
-> > you were just specifying the background independently).
-> > 
-> > So really, I guess all I am arguing for is having GIT_COLOR_INV (or
-> > REVERSE) as a constant, and then teaching the code to combine it with
-> > the existing "new" color. It's perfectly OK to have:
-> > 
-> >   \x1b[7m\x1b[36m
-> > 
-> > instead of:
-> > 
-> >   \x1b[7;36m
-> > 
-> > It's two extra bytes, but I doubt anybody cares.
+On 05/06/2018 03:35 PM, Martin Ågren wrote:
+> According to the documentation on `git update-ref`, it is possible to
+> "specify 40 '0' or an empty string as <oldvalue> to make sure that the
+> ref you are creating does not exist." But in the code for pseudorefs, we
+> do not implement this. If we fail to read the old ref, we immediately
+> die. A failure to read would actually be a good thing if we have been
+> given the null-oid.
 > 
-> Yep, I agree that it is a small price to pay for the benefit of simply
-> using the reverse of diff.color.old (and .new).
+> With the null-oid, allow -- and even require -- the ref-reading to fail.
+> This implements the "make sure that the ref ... does not exist" part of
+> the documentation.
 > 
-> While at it, I also changed the hunk header colors: they are *also* simply
-> the same ones, with the outer one having background and foreground
-> reversed.
+> Since we have a `strbuf err` for collecting errors, let's use it and
+> signal an error to the caller instead of dying hard.
+> 
+> Reported-by: Rafael Ascensão <rafa.almas@gmail.com>
+> Helped-by: Rafael Ascensão <rafa.almas@gmail.com>
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 
-That sound sane.
+Thanks for the patch. This looks good to me. But it it seems that the
+test coverage related to pseudorefs is still not great. Ideally, all of
+the following combinations should be tested:
 
-If we ever did want to care about the number of bytes we output, I
-suspect we could "compress" our ANSI terminal outputs by collapsing
-adjacent colors into a single one. But IMHO it's not even worth worrying
-about that optimization at this point.
+Pre-update value   | ref-update old OID   | Expected result
+-------------------|----------------------|----------------
+missing            | missing              | accept *
+missing            | value                | reject
+set                | missing              | reject *
+set                | correct value        | accept
+set                | wrong value          | reject
 
--Peff
+I think your test only covers the lines with asterisks. Are the other
+scenarios already covered by other tests? If not, how about adding them?
+That would give us confidence that the new code works in all circumstances.
+
+Michael
