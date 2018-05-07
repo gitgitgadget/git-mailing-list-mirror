@@ -7,112 +7,81 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B962C200B9
-	for <e@80x24.org>; Mon,  7 May 2018 15:57:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32CDA200B9
+	for <e@80x24.org>; Mon,  7 May 2018 16:34:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752640AbeEGP5X (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 11:57:23 -0400
-Received: from mail-ua0-f174.google.com ([209.85.217.174]:46575 "EHLO
-        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752303AbeEGP5W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 11:57:22 -0400
-Received: by mail-ua0-f174.google.com with SMTP id e8so16446410uam.13
-        for <git@vger.kernel.org>; Mon, 07 May 2018 08:57:22 -0700 (PDT)
+        id S1752081AbeEGQd7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 12:33:59 -0400
+Received: from mail-ua0-f175.google.com ([209.85.217.175]:38096 "EHLO
+        mail-ua0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751923AbeEGQd6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 12:33:58 -0400
+Received: by mail-ua0-f175.google.com with SMTP id y8so18777530ual.5
+        for <git@vger.kernel.org>; Mon, 07 May 2018 09:33:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=/pw9z+FbVtjm4YsjFzgSznicBkPjlPZN1o7vXB7US+0=;
-        b=SO2XqH2fEkFu0P/wgJORTzzEv5BHfsRcadVsz8F8pS94IsYG3EbQjJ+znEFj9WQg0M
-         TR0myIY2rts7iJHgO9PmP8CARB0NnujukhxFQECR4dJjnAYdKRVPmyoxw5oaXG8LttsO
-         ralclFPh0FT4/eSqcMR5YmDCO7BXBnrlwnPQ3Pws+5Tv/XmgcAXius+9p0uhB5P7iUjJ
-         JxQ0Rqu17hdGpPb5hitGzN4I6+LfHW/hatNkcEn/ykcj4M3/ZXlQsFb0AxSFr0ZD1D4S
-         /XUs9bkCHle7PfwYSn7Y6WmOABuWTCmL3f6vL0bjjnoR04iPl60P8HHEfyYeGnBsROFK
-         C+yQ==
+        bh=qKTsn0TuHntmg3SSFGy+kmN7GSpRWertNO667OEr3l8=;
+        b=H8YkZMmDPHYiZ36BwCfVbSJJPXrNAP19njcM4hE5ktufDdG2L2qb+k2ocZ1HB5xFT3
+         viYdXj1dVZQk5IZYpZMrsIgvbrM8OKk3zzOBZRnTTEDu6XNk7tKXa8cKGVnc0qMJAm1a
+         PSz4FFMrN9f7jBbZmk8vTaLuNtcSTCNl1RdkCE7RCE2O0OCvvguq6sXaRevDr9OdCWBk
+         eB8HW8OUD2RT7YifuEIlNTSN9wZ6loXFlB0dBP6WQe8m0A6guzbiZ0UyjMD7dd/0wsh9
+         Ti+hNC+uPmsLFxiGgZkSeiiAh6EvmSBu0Wx/hJ+3VdCFkd9MI3ExWHJY5qeM3c9mK5gk
+         e97Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=/pw9z+FbVtjm4YsjFzgSznicBkPjlPZN1o7vXB7US+0=;
-        b=NEoSrtdsIbzRG92atGQ5TUtKg54A3w9yLfya5JVVzMZbHWNbtjJsQz2UCcN+MGXnIy
-         IbZ6dXgcz8uq4yff99CS05lwYczmlv6Ahuva4CKAllhGtkMwkkcV6QWvm69/pVfltYDG
-         8Q8heLUGWyZv7BXgc21/MQor0AdhAADB18Whty8BUbLNA7bcKEkoZJ3kTtFKggCW9mQt
-         XlXj+9BAkGaUFZ3AZHEGjF5/n+DAtrbz8xQDmcDllXcsoC53G5DQ04ts5iQkw6YYJWym
-         z2Ni8LEk4PL9CXklIWbI4tNu63kDHkek84/1th7Y3yBHfjn9eHzI7qvT/GZ3oMEfGBmb
-         uRKQ==
-X-Gm-Message-State: ALQs6tBHReFbiiDiqYj5xAqVbAy/WtN9orZyQ39vlmRK5LKEpQ6Z3Cmy
-        VBtRdD1FATJD0AaCxUIejPr/cUJLBt8DvJ6zI4M=
-X-Google-Smtp-Source: AB8JxZokR4iINvd03Igt6WU/67gtd256QpAvkT2E2ePS27jVllSOcewieMoZYjnxEhikYAvRzU1J57i7fSSBQ8N7hbU=
-X-Received: by 10.176.10.26 with SMTP id q26mr32810064uah.23.1525708641795;
- Mon, 07 May 2018 08:57:21 -0700 (PDT)
+        bh=qKTsn0TuHntmg3SSFGy+kmN7GSpRWertNO667OEr3l8=;
+        b=OhJ1q09Ac0TqqovnDT9rQIKPP+s2LuJJjbJdIiRNuvuscJJMRGo6/UTrdTBJDlkUKX
+         bhCMYwZZd97PFP09gPFR1/Rps/NTgwx7Th6Ku3oWnbYRlUAclKECuG49+jwpd58Irb/w
+         ckcOa8rRaTQtMgAbNazmVx/Ms78Bz6aIt4oEw6NzgYyHyJ4aFQnU4kLDvrMf5e2xEqSk
+         3xE0TmgUTOL9O40TrvPQFAT/iXo7Miuv7eySrKPfwriY2ImKbqZn+vYseBy+QR8dwQuA
+         eT59BE0wP7YQZjSLIGlm3VmBK6+b/Bkz85hhBxmdAI4PHlS+y3mM1Vp2sq2VonzosvXa
+         Lcgg==
+X-Gm-Message-State: ALQs6tD6PZc12VnipVLyJXgcIbUv1uB2EiffzSBmNC/OsqxFg+94Wz10
+        mHsf5W4iInFjFYl1+Pj1tvNG9I+PpFRIwWNqVn8=
+X-Google-Smtp-Source: AB8JxZrZ8RMjBL6J/VMF9oSSRmz1xDw8Td/+eCUUYHiknZ5TWS2Kd2nEkVYzcZdC6iThLi301Ta0E3CjTveTpiZi1Wk=
+X-Received: by 10.176.10.26 with SMTP id q26mr32928597uah.23.1525710837533;
+ Mon, 07 May 2018 09:33:57 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Mon, 7 May 2018 08:57:20 -0700 (PDT)
-In-Reply-To: <xmqqa7tbpl5q.fsf@gitster-ct.c.googlers.com>
-References: <xmqqa7tbpl5q.fsf@gitster-ct.c.googlers.com>
+Received: by 10.176.95.4 with HTTP; Mon, 7 May 2018 09:33:56 -0700 (PDT)
+In-Reply-To: <1bb666a1-ce44-3eb0-e63c-a6a9e2a675dd@gmail.com>
+References: <xmqqa7tbpl5q.fsf@gitster-ct.c.googlers.com> <1bb666a1-ce44-3eb0-e63c-a6a9e2a675dd@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 7 May 2018 08:57:20 -0700
-Message-ID: <CABPp-BGG8O=T1xQzPokcfCCujY7S05LtuQz-VQV_64hgmOEBJQ@mail.gmail.com>
+Date:   Mon, 7 May 2018 09:33:56 -0700
+Message-ID: <CABPp-BFyj7SCfUbJzfjt==abORdUtfgRRywyjf0V73rDnygHGw@mail.gmail.com>
 Subject: Re: What's cooking in git.git (May 2018, #01; Mon, 7)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jakub Narebski <jnareb@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
 
-On Mon, May 7, 2018 at 7:58 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> * en/rename-directory-detection-reboot (2018-04-25) 36 commits
->  - merge-recursive: fix check for skipability of working tree updates
->  - merge-recursive: make "Auto-merging" comment show for other merges
->  - merge-recursive: fix remainder of was_dirty() to use original index
->  - merge-recursive: fix was_tracked() to quit lying with some renamed paths
->  - t6046: testcases checking whether updates can be skipped in a merge
->  - merge-recursive: avoid triggering add_cacheinfo error with dirty mod
->  - merge-recursive: move more is_dirty handling to merge_content
->  - merge-recursive: improve add_cacheinfo error handling
->  - merge-recursive: avoid spurious rename/rename conflict from dir renames
->  - directory rename detection: new testcases showcasing a pair of bugs
->  - merge-recursive: fix remaining directory rename + dirty overwrite cases
->  - merge-recursive: fix overwriting dirty files involved in renames
->  - merge-recursive: avoid clobbering untracked files with directory renames
->  - merge-recursive: apply necessary modifications for directory renames
->  - merge-recursive: when comparing files, don't include trees
->  - merge-recursive: check for file level conflicts then get new name
->  - merge-recursive: add computation of collisions due to dir rename & merging
->  - merge-recursive: check for directory level conflicts
->  - merge-recursive: add get_directory_renames()
->  - merge-recursive: make a helper function for cleanup for handle_renames
->  - merge-recursive: split out code for determining diff_filepairs
->  - merge-recursive: make !o->detect_rename codepath more obvious
->  - merge-recursive: fix leaks of allocated renames and diff_filepairs
->  - merge-recursive: introduce new functions to handle rename logic
->  - merge-recursive: move the get_renames() function
->  - directory rename detection: tests for handling overwriting dirty files
->  - directory rename detection: tests for handling overwriting untracked files
->  - directory rename detection: miscellaneous testcases to complete coverage
->  - directory rename detection: testcases exploring possibly suboptimal merges
->  - directory rename detection: more involved edge/corner testcases
->  - directory rename detection: testcases checking which side did the rename
->  - directory rename detection: files/directories in the way of some renames
->  - directory rename detection: partially renamed directory testcase/discussion
->  - directory rename detection: testcases to avoid taking detection too far
->  - directory rename detection: directory splitting testcases
->  - directory rename detection: basic testcases
->  (this branch is used by bp/merge-rename-config.)
+On Mon, May 7, 2018 at 8:20 AM, Derrick Stolee <stolee@gmail.com> wrote:
+> On 5/7/2018 10:58 AM, Junio C Hamano wrote:
+
+>>   Will merge to 'master'.
 >
->  Rename detection logic in "diff" family that is used in "merge" has
->  learned to guess when all of x/a, x/b and x/c have moved to z/a,
->  z/b and z/c, it is likely that x/d added in the meantime would also
->  want to move to z/d by taking the hint that the entire directory
->  'x' moved to 'z'.  Incidentally, this avoids updating a file in the
->  working tree after a (non-trivial) merge whose result matches what
->  our side originally had.
+> These have been queued for master for a few weeks. Is anything delaying
+> them?
 
-Thanks for adding a comment about the fix for the unnecessary update.
-However, you've dropped a comment from the original release note about
-the other fix this series also provides, namely, "A bug causing dirty
-files involved in a rename to be overwritten during merge has also
-been fixed as part of this work."  Was this intentional?
+I'm actually curious what the "Will merge to 'master'" and "Will merge
+to 'next'" are intended to mean in general.  I thought it meant that
+the topic would be merged the following week barring further
+discussion, but that hasn't always been the case and a quick look at
+origin/todo suggests it's not at all uncommon for my assumption to be
+wrong -- but that leaves me wondering what the intent actually is.  In
+particular, I'm curious if there is anything I'm unaware of that I
+should be doing that I'm not but which would help make topics
+(particularly the big ones) work more smoothly.
+
+Thanks,
+Elijah
