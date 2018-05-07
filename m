@@ -7,23 +7,24 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 469EA200B9
-	for <e@80x24.org>; Mon,  7 May 2018 01:23:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B082200B9
+	for <e@80x24.org>; Mon,  7 May 2018 01:35:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751906AbeEGBXd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 21:23:33 -0400
-Received: from mout.gmx.net ([212.227.15.18]:57187 "EHLO mout.gmx.net"
+        id S1751854AbeEGBfT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 21:35:19 -0400
+Received: from mout.gmx.net ([212.227.15.15]:35069 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751864AbeEGBXc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 21:23:32 -0400
-Received: from [10.40.94.26] ([209.226.201.248]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MK0ur-1fE7xY2FBl-001PK5; Mon, 07
- May 2018 03:23:25 +0200
-Date:   Sun, 6 May 2018 21:23:20 -0400 (DST)
+        id S1751781AbeEGBfS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 21:35:18 -0400
+Received: from [10.40.94.26] ([209.226.201.248]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2t0Q-1eMyzS2OQg-00sfwT; Mon, 07
+ May 2018 03:35:01 +0200
+Date:   Sun, 6 May 2018 21:34:56 -0400 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
         Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
@@ -31,152 +32,90 @@ cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 18/18] completion: support branch-diff
-In-Reply-To: <20180506082440.GA26958@duynguyen.home>
-Message-ID: <nycvar.QRO.7.76.6.1805062122150.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <71698f11835311c103aae565a2a761d10f4676b9.1525448066.git.johannes.schindelin@gmx.de> <20180506082440.GA26958@duynguyen.home>
+Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
+In-Reply-To: <e0db15c5-e897-5b03-20ff-d83f38496e61@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1805062124470.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <a1ea0320b64527ee6ce9856dcf359513d13052b7.1525448066.git.johannes.schindelin@gmx.de> <20180505182631.GC17700@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1805052355190.77@tvgsbejvaqbjf.bet> <39282590-576f-1ac1-6a16-80ad317ec7ed@gmail.com> <nycvar.QRO.7.76.6.1805061408150.77@tvgsbejvaqbjf.bet> <e0db15c5-e897-5b03-20ff-d83f38496e61@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ElTEpcviRiRSklwGeDMm0nHw1v8e2i8LAc0G5nQRBSiQ3tEqMLX
- wpNUW8iwd6vWfyWAw4ZXjT9/RYCsC9yX5CrKIVPlIyf/jbblH+Q04ncLWILYfAr/wUw8UPq
- bpcK4lDWb77VRkXlyr3ZfJuucu3T/tCUZSCljtuTL0pLbyo/CqNBBCS8eBlLJOeSdItDjAM
- 9TU8w3IEQf9k1LMcPD2nA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:h5LCF2xCVnE=:vYwDBYfVVFNevi2FmzowuR
- YnZq1ND7WsihsWaHNKrLFht01EsastlXxBavf+HbrJCpzAPQkXYVR7P3R0aCAB8op9jVIEp12
- eEBDlqgAJBJBNkqhZrTr/qy1m9EGneRgMDyzQ0ySlErVEF5dWZCi0psc5wrffXEcKU+C2+h82
- NsYLT/YTQeD+n1BXPSLiUQLYHg+yqUQqKXLNO37jwwFoVO+aXb7PSWbwkiC2zt4KGXFx10r70
- wV3+7qsmIF9mv4fcjf79WklXPdmbiLRE7r25WsDmfNXe2/2ThUuVOmS0vaJF0vS6raxc2eWF5
- ISI90kBvpIdpU+7NtamLmIgxine9tQRWE0JWv1geDdmt2vENe9unu4261mqL/7bjkjn8JJSMj
- LB+sO41z9G+HTlFs9xCp4W+QpWMlReftj8BKmdUysvVGBoB0EOzXMbMrArf6Gv/tQQQo+CA4U
- d6FleCZawz+aRoDbg+9aJ0R3X5gJvsoWSaZ6vCdqSiDskFVgbFg07EYJDWc8iipILUtKnaSvR
- kt75FYNDYj2gcHShgXlCNaHEIkG4H+DfYqeSt8B5aUDP7KvoA8QuI5L9CX27vHGt/DtxKKA6r
- Eb3i3KGtDVLtO6g3sp8CUcAJnOdB4LncU9rvTBZkiLdKjESDPaw3IldgQMRtXf6oG1+AvR5Ls
- Mu+HCgLo2sWBQsX74TilY4Oekzkxg2PadqR0DoCZEXcI59d1FXMcIv5HUFNXR8HjtNkQ6qUNz
- MO4x1xCDvF2FXD+QQShAVSOh0S6CKfZqAQ2+JNBiCqIk5OqJ9TqxPS1D0hwQNEUvkuU5g+hmZ
- 1n7bQor
+X-Provags-ID: V03:K1:UsduLCSlLVIi0QpX7tqL+x/ZtI7CWR/ukdBOzCYeGm1cciTP+ie
+ 2ul/+W3VHj4L2G0mwOWchF9m22oHFguMv4hBB3rgop3wLw+H1nGZPjro/k8/ysAUSTqEWQA
+ 1VxqT97gngbojPs2LLnxTeKczInCfjZ35YIJstmHcb37tm6M/E/NwQPytm5VQSzQFbydjnA
+ Mm6f3n2rz68RbYKHbPT/w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OR2dI7tMqQw=:tRyCRysk8P0xrkwQQS2xs9
+ 7iF01whYKnwkQcoM1u7F6QBzMSZXpughw/CPzmgYglnp9PrqRtYZRGIJexfTcb1F2f9LgZyUA
+ u1BWT2KLm5cp0RQiQkTE7T9ULDzSYUh7HvfCjUO67rW9ku/Pliik2u/FtuxVW2/OEcKh3qapu
+ Idj3Dw+5/6VUX/nhtxHaEmbsyjpwXyx0qG0ho5Z2c7p9HLf8HL7AZLFwcLWTZUqRt4tKu66Ta
+ 89aX3JVDCxz5LyjjkIQxwGlk+umNZRqFOUFlkGHd0UJKQaoBmARYY6M9Xd4RyjrrJB6cQIEIA
+ Ig+YIRJf5jhV9s+M25cgDQ5ZHCxNyaEDNphca0igxYtqp2FU8qKDp3rV3yJ5mKHhanUrXSsEz
+ z4exvXy6o1G3AWZ7wwcdkjp7qaum/FtWMC/Afyq/CqgiTcV7+j23TDsUMlm1D+2Iqk3Gbe18t
+ 3XEWCeOY8KehmBQ5tlo2K1NUar4cm0oanYKWwGiMIcW1eijN9a8cLCZDuICV7rV6JPOLCvw7O
+ jn/SvVttyh6UUsBUWGs/4NO4UcEtt/dI5dtQP7Wy7xhcmzuigNkFi92dWmcQMOJd9wEXFLiia
+ IhgjfTu6WudGTlo+BuwLYYooUDl4ZjIXgpCu+PtfTOyTw5sn8Xg76jKRN80Q9+yzWa2jsg014
+ gcCmlES69S9RwGaqNGLEX/FeJWORCTX+OXDfUAZ0ivtgbqhP22sLRAn19njbiA9ne6qgFNOe6
+ BNeZ/ixrRZrmo9seHQDoSg7SYFIlZgO3BMlR7s+iy/WiaNxqjOY5BxkcEiTpYzUGs5wIpWaSG
+ X6NObWv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
+Hi Buga,
 
-On Sun, 6 May 2018, Duy Nguyen wrote:
+On Sun, 6 May 2018, Igor Djordjevic wrote:
 
-> On Fri, May 04, 2018 at 05:35:11PM +0200, Johannes Schindelin wrote:
-> > Tab completion of `branch-diff` is very convenient, especially given
-> > that the revision arguments that need to be passed to `git branch-diff`
-> > are typically more complex than, say, your grandfather's `git log`
-> > arguments.
-> > 
-> > Without this patch, we would only complete the `branch-diff` part but
-> > not the options and other arguments.
-> > 
-> > This of itself may already be slightly disruptive for well-trained
-> > fingers that assume that `git bra<TAB>ori<TAB>mas<TAB>` would expand to
-> > `git branch origin/master`, as we now no longer automatically append a
-> > space after completing `git branch`: this is now ambiguous.
-> > 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  contrib/completion/git-completion.bash | 18 ++++++++++++++++++
-> >  1 file changed, 18 insertions(+)
-> > 
-> > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> > index 01dd9ff07a2..45addd525ac 100644
-> > --- a/contrib/completion/git-completion.bash
-> > +++ b/contrib/completion/git-completion.bash
-> > @@ -1496,6 +1496,24 @@ _git_format_patch ()
-> >  	__git_complete_revlist
-> >  }
-> >  
-> > +__git_branch_diff_options="
-> > +	--no-patches --creation-weight= --dual-color
-> > +"
-> > +
-> > +_git_branch_diff ()
-> > +{
-> > +	case "$cur" in
-> > +	--*)
-> > +		__gitcomp "
+> On 06/05/2018 14:10, Johannes Schindelin wrote:
 > 
-> You should use __gitcomp_builtin so you don't have to maintain
-> $__git_branch_diff_options here. Something like this
+> > I think Todd's idea to shift it from a full-blown builtin to a cmdmode
+> > of `branch` makes tons of sense.
 > 
-> -- 8< --
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 45addd525a..4745631daf 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1496,18 +1496,11 @@ _git_format_patch ()
->  	__git_complete_revlist
->  }
->  
-> -__git_branch_diff_options="
-> -	--no-patches --creation-weight= --dual-color
-> -"
-> -
->  _git_branch_diff ()
->  {
->  	case "$cur" in
->  	--*)
-> -		__gitcomp "
-> -			$__git_branch_diff_options
-> -			$__git_diff_common_options
-> -			"
-> +		__gitcomp_builtin branch-diff "$__git_diff_common_options"
->  		return
->  		;;
->  	esac
-> -- 8< --
+> I don`t know, I still find it a bit strange that in order to "diff
+> something", you go to "something" and tell it to "diff itself" - not
+> because it`s a weird concept (OOP, anyone? :]), but because we already
+> have "diff" command that can accept different things, thus just teaching
+> it to accept additional "something" (branch, in this case), seems more
+> natural (to me) - "branch diff" being just another "diff" mode of
+> operation.
 
-Does this really work? I have this instead, for now, and verified that it
-works:
+You also have to call `git branch` to list branches. And to rename
+branches. And to delete them. So why not also compare them at the same
+time?
 
--- snipsnap --
-diff --git a/contrib/completion/git-completion.bash
-b/contrib/completion/git-completion.bash
-index 01dd9ff07a2..c498c053881 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1205,13 +1205,14 @@ _git_bisect ()
+> What about that side thought you left out from my original message,
+> making it `git diff --branch` instead?
 
- _git_branch ()
- {
--       local i c=1 only_local_ref="n" has_r="n"
-+       local i c=1 only_local_ref="n" has_r="n" diff_mode="n"
+I really did not like this, as all of the `git diff` options really are
+about comparing two revisions, not two *sets* of revisions.
 
-        while [ $c -lt $cword ]; do
-                i="${words[c]}"
-                case "$i" in
-                -d|--delete|-m|--move)  only_local_ref="y" ;;
-                -r|--remotes)           has_r="y" ;;
-+               --diff)                 diff_mode="y" ;;
-                esac
-                ((c++))
-        done
-@@ -1221,11 +1222,22 @@ _git_branch ()
-                __git_complete_refs --cur="${cur##--set-upstream-to=}"
-                ;;
-        --*)
-+               if [ $diff_mode = "y" ]; then
-+                       __gitcomp "
-+                               --creation-factor= --dual-color
-+                               $__git_diff_common_options
-+                               "
-+                       return
-+               fi
-                __gitcomp_builtin branch "--no-color --no-abbrev
-                        --no-track --no-column
-                        "
-                ;;
-        *)
-+               if [ $diff_mode = "y" ]; then
-+                       __git_complete_revlist
-+                       return
-+               fi
-                if [ $only_local_ref = "y" -a $has_r = "n" ]; then
-                        __gitcomp_direct "$(__git_heads "" "$cur" " ")"
-                else
+Further, if I put my unsuspecting user hat on, I would ask myself how you
+can compare branches with one another? That is what I would expect `git
+diff --branch` to do, not to compare two versions of *the same* branch.
 
+So `git diff --branch` does not at all convey the same to me as `git
+branch --diff`, and I find that the latter does match better what this
+patch series tries to achieve.
+
+I briefly considered `git branch --compare` instead, but then rejected it:
+it would again sound more like I try to compare two separate (and likely
+unrelated) branches with one another, and that simply does not make much
+sense, and tbdiff would not help with that, anyway.
+
+> But if "branch diff" is considered to be too special-cased mode of
+> "diff" so that supporting it from `diff` itself would make it feel
+> awkward in both usage and maintenance (in terms of many other regular
+> `diff` specific options being unsupported), I guess I would understand
+> having it outside `diff` altogether (and implemented as proposed `git
+> branch --diff`, or something)... for the time being, at least :)
+
+The branch diff is not even a special-cased mode of diff. It is *way* more
+complicated than that. It tries to find 1:1 correspondences between *sets*
+of commits, and then only outputs a "sort" of a diff between the commits
+that correspond with each other. I say "sort" of a diff because that diff
+does not look like `git diff <commit1> <commit2>` at all!
+
+So I think it would just be confusing to add that mode to `git diff`.
+
+Ciao,
+Dscho
