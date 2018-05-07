@@ -2,62 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35CEB1F42E
-	for <e@80x24.org>; Mon,  7 May 2018 12:00:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED814200B9
+	for <e@80x24.org>; Mon,  7 May 2018 12:04:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751980AbeEGL76 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 07:59:58 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:38299 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750913AbeEGL75 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 07:59:57 -0400
-Received: by mail-wm0-f43.google.com with SMTP id m198-v6so14121582wmg.3
-        for <git@vger.kernel.org>; Mon, 07 May 2018 04:59:56 -0700 (PDT)
+        id S1751860AbeEGMEM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 08:04:12 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:36503 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750913AbeEGMEL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 08:04:11 -0400
+Received: by mail-wr0-f195.google.com with SMTP id f2-v6so16672301wrm.3
+        for <git@vger.kernel.org>; Mon, 07 May 2018 05:04:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=hTwz8E3ixzcBWTqKUj6nq05zlAnpsNhdARF9CZ74VqE=;
-        b=pEZEncsr+4KbNz2lDxQuEOzPHWBtQMtwSVLtlZdWgZcJ3NleVr8pJWa4tt9ZrbaCMs
-         A7HbquqBvQmfDT2c/erNWLecPvcv7K7J8f8/KUy4pOJXB8sKKszv1O8qa+DWH5q7u22E
-         HFOAKB0bWmyzrLMUA6TUXudaH1Y+QirDFwBQ+Gw0AqoPBnZ47P2X4dDVnow87w7eb+uM
-         WFBBDQJz508bkdN3RuTiSiLPEO6hlXZsJno1+Q9DiRIgYDge2UKynXEJLE73s+NZh251
-         E0vDYDa9qgnibEHupoSryctGtqNXoCeTZaHstE/bgqCZZqHE65C2w+FLucL8nZYGfRpZ
-         isHg==
+        bh=l3DtVBYBEdaldxOVXW/uNCiN+8tGppTCMO+iqOnc2tY=;
+        b=qyeqI2szgnJMDi+OUldfav8S/MKE+J+u11teB/RtUj/5iOcjAKtHIA5TPF+wekltyn
+         QuX4DeRcVK0tXsyVC3hwADKkV4VZtvMVTTGxLfkTOX3J/ACX0VWseYbEhLVr0A+CuL6e
+         6vFbF3iywrXbk4NEU4SMUiQ8qhh51Mm2rT3MmBldH0z33plLdWC/x7wMKMpFZf2cP36W
+         A+UW6Df6gMLQdNgQsag8DpJ2fMqlqMZwIVJnxs4Hrh9j/7NpNCdCW3hoyLRBYT0IKjqg
+         jCpnDJcFR0ZkpqieE0XpB9Q/lJfYBRnPpziZlcYjF7JrdWan8BJ1q7z9JgKQX5Srw3Hn
+         mK4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :mime-version:content-transfer-encoding;
-        bh=hTwz8E3ixzcBWTqKUj6nq05zlAnpsNhdARF9CZ74VqE=;
-        b=WtPyW0lkrstAa+WyMo3xCm5zIB7FDouxIpLbVnVagNi2opWXyf1Ku1TqqGDp0z/WRA
-         Ss08B6lYdiOw1/e12mq/THZoYMa7qBbC72237X7NO6ZtNFacnv+fJ7ILkZNORN3PwZKy
-         UhKTeme/lAoMserkftgRge86Yst81hV3pnM6x3kLm4hMEvtAN38deLeNrSJw9aC7iUHj
-         hTHgQoRaC4Ag6Q/ejV9Aw5aN0ReAHl1Pvpmspjxv7jMjc5K1KQJmWeQeuo7Uup8cWDvT
-         FKNz0SMHFwORHsFgZHpaGTBcEvvcWGNPn4CxV6hvSFAqW82v62sg3CXa+vdYOqUHth0Z
-         NtdA==
-X-Gm-Message-State: ALKqPwcVaTRo8x0qxAxH9zXZPqCfRdddOCf6edsYRj4W6aNino0J3TV8
-        zwpKorq0qD3DRoU2NV8QGCkMTg==
-X-Google-Smtp-Source: AB8JxZqDNJkuIPEpQzFD9aNMCJ+jl1RFaaz6glwlthtJ1B5/H7KjMUB7Th4kZCcg2JheqzfdBLGshw==
-X-Received: by 10.28.109.144 with SMTP id b16mr603868wmi.138.1525694395970;
-        Mon, 07 May 2018 04:59:55 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l3DtVBYBEdaldxOVXW/uNCiN+8tGppTCMO+iqOnc2tY=;
+        b=WIKfhHqBiyVM+4Twx8l0CTvVw27kzfVaCV//fWJ8gYFny4XIqTQQdN1IWqrJ9za1u4
+         SMz3YIZd8a9gZYQkAkq4vcQlQDz7ebigVlGRWz1V1Z/1VSCiTP+XJ8FP7g4U/8ufUFTp
+         brt3oMf9J6jTK6gqSb7jPoRNzUG37Bb0gI1kPamyZp1pL/sqsIGi8q2SKZSLwIMd8ckR
+         imK9c3XzgdzCe3mUymhpFxHEO4pNT3LBl6nv6DAq1BJ9khqBa5NtnbwoMkrFAlpNKzen
+         SlHA40Zf0JGVzNm/xE28ZSKsdWCybYv4xq6CfrUK89SxMvcgBXDA2CVCzEJvOZTci2i3
+         mghg==
+X-Gm-Message-State: ALQs6tC95AkZoAu9uPN9d2Rj+0OOkKVGwWi5r944WDGal/0CQUcS87j+
+        Ktw1llfPkSMIhf5E19kF3ZA=
+X-Google-Smtp-Source: AB8JxZrgFa5mtp6C3AP2KX/3CIVFv/PtYGrALte+svks7uUZKZeF7DrI5kA8Q4IJTz8yJfcJHt5A7w==
+X-Received: by 2002:adf:92c4:: with SMTP id 62-v6mr12223115wrn.226.1525694650078;
+        Mon, 07 May 2018 05:04:10 -0700 (PDT)
 Received: from localhost.localdomain (x590c55ee.dyn.telefonica.de. [89.12.85.238])
-        by smtp.gmail.com with ESMTPSA id 47-v6sm20945963wrw.40.2018.05.07.04.59.54
+        by smtp.gmail.com with ESMTPSA id f6-v6sm17049667wrj.66.2018.05.07.05.04.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 07 May 2018 04:59:55 -0700 (PDT)
+        Mon, 07 May 2018 05:04:09 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: introduce test_unset_prereq, for debugging
-Date:   Mon,  7 May 2018 13:59:50 +0200
-Message-Id: <20180507115950.3887-1-szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] t6050-replace: don't disable stdin for the whole test script
+Date:   Mon,  7 May 2018 14:04:07 +0200
+Message-Id: <20180507120407.4323-1-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.17.0.583.gcecc8b8e24
-In-Reply-To: <b94af009c1bc9c9b96d977b1c5775ff73669138f.1524954814.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,90 +65,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> While working on the --convert-graft-file test, I missed that I was
-> relying on the GPG prereq, by using output of test cases that were only
-> run under that prereq.
+The test script 't6050-replace.sh' starts off with redirecting the
+whole test script's stdin from /dev/null.  This redirection has been
+there since the test script was introduced in a3e8267225
+(replace_object: add a test case, 2009-01-23), but the commit message
+doesn't explain why it was deemed necessary.  AFAICT, it has never
+been necessary, and t6050 runs just fine and succeeds even without it,
+not only the current version but past versions as well.
 
-That GPG vs --convert-graft-file thing really does have a bit of a
-fallout, doesn't it?  I'm at five patches and possibly counting...
+Besides being unnecessary, this redirection is also harmful, as it
+prevents the test helper functions 'test_pause' and 'debug' from
+working properly in t6050, because we can't enter any commands to the
+shell and the debugger, respectively.
 
-> For debugging, it was really convenient to force that prereq to be
-> unmet, but there was no easy way to do that.
+So let's remove that redirection.
 
-Well, in case of the GPG prereq there is an easy way: you could have
-just commented out that
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t6050-replace.sh | 2 --
+ 1 file changed, 2 deletions(-)
 
-  . "$TEST_DIRECTORY/lib-gpg.sh"
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index c630aba657..199fbc78a3 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -4,8 +4,6 @@
+ #
+ test_description='Tests replace refs functionality'
+ 
+-exec </dev/null
+-
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-gpg.sh"
+ 
+-- 
+2.17.0.583.gcecc8b8e24
 
-line near the beginning of the test script.  Just a single '#'
-character, it can't get much easier than that :)
-
-But yeah, this doesn't work with every prereq...
-
-> So I came up with a way,
-> and this patch reflects the cleaned-up version of that way.
-> 
-> For convenience, the following two methods are now supported ways to
-> pretend that a prereq is not met:
-> 
-> 	test_set_prereq !GPG
-> 
-> and
-> 
-> 	test_unset_prereq GPG
-
-I'm not sure this is the right way to do this.
-
-I wanted to run the whole test suite with all GPG tests skipped the
-other day.  With this 'test_unset_prereq' I would have to modify all
-test scripts containing tests depending on the GPG prereq and add
-'test_unset_prereq GPG', right?  I rather modified 't/lib-gpg.sh',
-i.e. only a single file, instead of modifying the 13 test scripts that
-match the 'test_expect_[a-z]*[ ,]GPG[ ,]' regexp.
-
-I think we would be better served by an environment variable similar
-to $GIT_SKIP_TESTS, e.g. $GIT_SKIP_PREREQS, to list all the prereqs
-that should be skipped even if they were met.
-
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> Published-As: https://github.com/dscho/git/releases/tag/test-unset-prereq-v1
-> Fetch-It-Via: git fetch https://github.com/dscho/git test-unset-prereq-v1
->  t/test-lib-functions.sh | 14 +++++++++++++-
->  1 file changed, 13 insertions(+), 1 deletion(-)
-
-Anyway, please add a bit of documentation with docstrings and/or in
-'t/README'.
-
-> 
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 7d620bf2a9a..76cd6630f29 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -278,8 +278,20 @@ write_script () {
->  # The single parameter is the prerequisite tag (a simple word, in all
->  # capital letters by convention).
->  
-> +test_unset_prereq () {
-> +	! test_have_prereq "$1" ||
-> +	satisfied_prereq="${satisfied_prereq% $1 *} ${satisfied_prereq#* $1 }"
-> +}
-> +
->  test_set_prereq () {
-> -	satisfied_prereq="$satisfied_prereq$1 "
-> +	case "$1" in
-> +	!*)
-> +		test_unset_prereq "${1#!}"
-> +		;;
-> +	*)
-> +		satisfied_prereq="$satisfied_prereq$1 "
-> +		;;
-> +	esac
->  }
->  satisfied_prereq=" "
->  lazily_testable_prereq= lazily_tested_prereq=
-> 
-> base-commit: 1f1cddd558b54bb0ce19c8ace353fd07b758510d
-> -- 
-> 2.17.0.windows.1.36.gdf4ca5fb72a
-> 
