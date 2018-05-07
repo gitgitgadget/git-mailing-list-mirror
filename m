@@ -7,143 +7,105 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EA67200B9
-	for <e@80x24.org>; Mon,  7 May 2018 19:05:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9615E200B9
+	for <e@80x24.org>; Mon,  7 May 2018 19:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752579AbeEGTFn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 15:05:43 -0400
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:46824 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752352AbeEGTFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 15:05:42 -0400
-Received: by mail-yw0-f170.google.com with SMTP id i17-v6so8927410ywg.13
-        for <git@vger.kernel.org>; Mon, 07 May 2018 12:05:42 -0700 (PDT)
+        id S1752676AbeEGTZM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 15:25:12 -0400
+Received: from mail-yb0-f178.google.com ([209.85.213.178]:46749 "EHLO
+        mail-yb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752272AbeEGTZL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 15:25:11 -0400
+Received: by mail-yb0-f178.google.com with SMTP id f3-v6so1921552ybg.13
+        for <git@vger.kernel.org>; Mon, 07 May 2018 12:25:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=oSVWIahr0APIbeFhRE7xd7DWevC5/rspdswR5qTv+aU=;
-        b=aVk+9JXRk7+WCWfhyNPbiAiQjKMZnX1dF+s3oWMexdGR492hNYYlomR0bc1fMDtoym
-         EegylJfwRS2fhLWjIwObmc1PAxfYn4p7MTPZGvH74xLVjLOLktjaUeYT5bCJRGTwVvFc
-         ebpB0rWUkO1b0L0PRqMsPe4QT6FV/QLRCh3bLcyLGgEwTdVAoaAl6m6JfS2OkxpWvosn
-         8DBSBkPkfp7tBtlfSGhXDZEeL99kqRvzAlXb1Ur229RVdVSwsfsanmHak2eeg86tfsvW
-         LWJlG8f7OPsHLBaPdsDOcci1JhN6ujcbNgKelA/NDZJNF7zLD4AOmP2Je1nSwdxXE5Tz
-         itVw==
+        bh=zVSP51Ingwl2UVlqRpP/I0FJyovmY47JrxzcmpuE23w=;
+        b=Xn9qWw19EeImCY6xmBbpxuIAOrlJVLTaHqExB2VvRs+H3MGMO8676C8gcU4qB0gDI1
+         SkU7nFdfiVOIJs0Yclc4duz6LrepTlhsgN+ppv36LU9VlO7A8RbkBrNDLvbCQHgWbRBx
+         Gc3Oh1xc9tbrUHPQKHayxAq8n0J1L++yRDhR38ucAyMiuibbAKV9StjK/0/XoZLYnUvm
+         PFjNtccLi/MR08Wr6Mi+VI/+XCl7Qi/59ehWR7T9KUjegVuCmDmRP3mRU4Y46pi+g4iI
+         NxqoNCIUxTjcrJ4QIZsF0lFGS0ob7VM/r9vZdEz5/77qmmLsv55b3qZTD7N5faz+J4uc
+         gxGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=oSVWIahr0APIbeFhRE7xd7DWevC5/rspdswR5qTv+aU=;
-        b=X01BF7oOKyO/iepIIqExymg3cWLa4kR5pMKT2eIT0HxuTubrAmn1qxLe5WoGF80MS6
-         r0dXeyLeUc/IuONA64/Dbck7mBxBMsdmp43do9UVL6Zl5/9yF5TrxxiRjXOwi7fFhrrE
-         4tdLVpeulTT4FWXAN9wvmrRNAcXngHNiVkifZg7Vg7ya6uG9NRzJc2DEpW1X8JuW5ppP
-         M4WLHPXwbeUu55mOsoCTiBTg1WTgpBMJCc2sV5q8SiXcaKm3wzHzUXCBEoy5Tpwws2ue
-         2ekuC6PxOEr9mIj3zg1d60GW3Zsf1aJXaHN3NXn/UiuQBz16k1Ru2vWPMvuin7OEndAa
-         I4CQ==
-X-Gm-Message-State: ALQs6tC27WzC/P7gYHeD2XoCRmyc90w1zCuWTCPbt7/wyhkHsfJAPXCP
-        D8o4wo0ea2C8CaGchqoUDigQzEPOkqkt4z82ufe25w==
-X-Google-Smtp-Source: AB8JxZpRgor1UmLVgWh0Y3T0bxwKSatmiBQBbBMogICqX6wY7DYBLb4NIK6WgTFLWt8H+O2cDvP98v6B1K2wT7W0GjE=
-X-Received: by 2002:a81:4ec9:: with SMTP id c192-v6mr21809248ywb.421.1525719941615;
- Mon, 07 May 2018 12:05:41 -0700 (PDT)
+        bh=zVSP51Ingwl2UVlqRpP/I0FJyovmY47JrxzcmpuE23w=;
+        b=mY1ZxlOSDKpWpLQVp3m12G2EVuWQp7aVtDT5oW/+rW+Gjl9P/BPGWg8j2HF2IHGQJ2
+         EUp7eS7cijhneQGlbDTwmGU50YB89Ywq7wXMGr6MdWgnwsZwaDuNm3ts2T7zMGLOVrNo
+         I726uIFP1dfQeYp8l/ABacM69Mmu4hyFiBuQ3BpgRK840BbykClGQR9rFuf+1Iw/s5e7
+         QY3punmZ8v6AM7E08AE9oQ09dxHRVCUkM0fDfSQebrtqxVQN+AQJdt/eatkgYOkn6WUu
+         iW5VsYTxAmssCMFr5wTscb4kHlHXi8VmddYa0U0WA07DutI6QobzjsZ7t16lI3/hbL+W
+         YAkg==
+X-Gm-Message-State: ALQs6tAtfUcLmMXdT4SxsrfIHKQWJPok48N+NUVDO8HbI3obvpuvqVLm
+        TtGdJhzLVlMcDh6sg8v/FP92D+FtYwvp/jEsMhAIKQ==
+X-Google-Smtp-Source: AB8JxZqK1kNkm/n29Q79tUU+j1PsjNvuItCwQ7QrlqHCqpaZUJsyfG7AkAc7XqQv7pSKW9UyKrwRKiAwzU57jKlcpKc=
+X-Received: by 2002:a25:a567:: with SMTP id h94-v6mr20476647ybi.515.1525721110536;
+ Mon, 07 May 2018 12:25:10 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Mon, 7 May 2018 12:05:41 -0700 (PDT)
-In-Reply-To: <1525630243.15782.4.camel@gmail.com>
-References: <1525630243.15782.4.camel@gmail.com>
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Mon, 7 May 2018 12:25:09 -0700 (PDT)
+In-Reply-To: <xmqqa7tcqgpq.fsf@gitster-ct.c.googlers.com>
+References: <20180506232421.975789-1-sandals@crustytoothpaste.net> <xmqqa7tcqgpq.fsf@gitster-ct.c.googlers.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 7 May 2018 12:05:41 -0700
-Message-ID: <CAGZ79kYSanRAchMe+7uJ4spy+GaS7PyU7epPeOSCs_58RsAR8A@mail.gmail.com>
-Subject: Re: Weak option parsing in `git submodule`
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Git Mailing list <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>
+Date:   Mon, 7 May 2018 12:25:09 -0700
+Message-ID: <CAGZ79kZXXiWrGgO-KU+afncfNTZzp=AHHJY5qZqA9qAg5YLuuQ@mail.gmail.com>
+Subject: Re: [PATCH] mailmap: update brian m. carlson's email address
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 6, 2018 at 11:10 AM, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> I recently faced the consequence of the weak option parsing done by in
-> `git submodule`. Initially tried to add a new submodule using the `git
-> submodule add` sub-command in the following way,
+On Sun, May 6, 2018 at 8:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 >
->     $ git submodule add ./foo/bar
+>> The order of addresses in the mailmap file was reversed, leading to git
+>> preferring the crustytoothpaste.ath.cx address, which is obsolete, over
+>> the crustytoothpaste.net address, which is current.  Switch the order of
+>> the addresses so that git log displays the correct address.
+>>
+>> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+>> ---
 >
-> This cloned the submodule into a new directory named 'bar' in the
-> present directory. This was initially confusing as I expected `git
-> submodule` to use the actual directory itself as it resides inside a
-> sub-directory the main project and thus avoiding the creation of a new
-> clone. Then I came to know that `git submodule` wasn't smart enough yet
-> to identify this, by reading the documentation. Then, after realizing
-> that I would have to specify the path in the command to avoid the
-> redundant clone, I corrected the command without consulting the
-> documentation (thoroughly) to,
+> I initially reacted to "was reversed" with "yikes, did we break the
+> mailmap reader and we need to update the file?", but apparently that
+> is not what this patch is about.  I think what is happening here is
+> that cdb6b5ac (".mailmap: Combine more (name, email) to individual
+> persons", 2013-08-12) removed
 >
->     $ git submodule add ./foo/bar --path ./foo/bar
+> -Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
 >
-> expecting that the path needs to be specified after an argument. This
-> is what triggered the weird consequence of weak option parsing. The
-> output I got for the above command was:
+> and then added these two lines
 >
->     The following path is ignored by one of your .gitignore files:
->     --path
->     Use -f if you really want to add it.
+> +brian m. carlson <sandals@crustytoothpaste.ath.cx> Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
+> +brian m. carlson <sandals@crustytoothpaste.ath.cx> <sandals@crustytoothpaste.net>
+>
+> where *.net address did not come from any other entry for you in the
+> file.  I guess the author of the patch saw that you were sending
+> your messages from the .net address and tried to help by unifying
+> the two addresses, without knowing your preference and recorded two
+> reversed entries.
+>
+> Will queue as-is for now, but if you want to update the log message
+> I do not mind taking a reroll.
 
-Yuck, that is bad UX.
+brian,
 
-> That really confused me pretty much (being a person who doesn't know
-> much about how `git submodule` works). Instead of complaining about an
-> inexistent option '--path', it considers '--path' to be the <path>
-> argument which seems to be bad. It doesn't even complain about the
-> extra argument. I also dug to find the reason behind this totally weird
-> message. It seems to be a consequence of the following lousy check
-> ($sm_path is the normalized <path> argument):
->
->     if test -z "$force" &&
->             ! git add --dry-run --ignore-missing --no-warn-embedded-repo "$sm_path" > /dev/null 2>&1
->     then
->             eval_gettextln "The following path is ignored by one of your .gitignore files:
->     \$sm_path
->     Use -f if you really want to add it." >&2
->             exit 1
->     fi
->
->     The lack of checking for the reason behind why `git add` fails seems to
->     be the reason behind that weird message.
+sorry to break you there. I was the author of the patch Junio found, organizing
+the .mailmap file was one of my starter contributions. I recall asking all the
+people if they were ok with it their names combined in different spellings
+94b410bba86 (.mailmap: Map email addresses to names, 2013-07-12)
+f4f49e2258a (.mailmap: Combine more (email, name) to individual
+persons, 2013-07-14)
+and I vaguley recall asking you about capitalization of your name there
+and you preferred the lower case name, but apparently I never asked you
+about the preferred email address.
 
-(from the man page)
-git submodule [--quiet] add [<options>] [--] <repository> [<path>]
-
-When options are given after <repository> or <path> we can count
-the arguments and know something is up. (The number of arguments
-must be 1 or 2. If it is 3 or above, something fishy is going on), which
-I would suggest as a first step.
-
->     Ways to fix this:
->
->     1. Fix this particular issue by adding a '--' after the '--no-warn-
->     embedded-repo' option in the above check. But that would also
->     require that we allow other parts of the script to accept weird
->     paths such as '--path'. Not so useful/helpful.
->
->     2. Check for the actual return value of `git add` in the check and
->     act accordingly. Also, check if there are unnecessary arguments for
->     `submodule add`.
-
-The second part of this suggestion seems to me as the way to go.
-Do you want to write a patch?
-
->     3. Tighten option parsing in the `git-submodule` script to ensure
->     this doesn't happen in the long term and helps users to get more
->     relevant error messages.
->
->     I find 3 to be a long term solution but not sure if it's worth trying
->     as there are efforts towards porting `git submodule` to C. So, I guess
->     we should at least do 2 as a short-term solution.
-
-Yeah, bringing it to C, would be nice as a long term solution instead
-of piling up more and more shell features. :)
-
-Thanks for such a well written bug report with suggested bug fixes. :)
+Sorry and thanks for fixing,
 Stefan
