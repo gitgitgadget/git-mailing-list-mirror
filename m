@@ -7,22 +7,22 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2321A200B9
-	for <e@80x24.org>; Mon,  7 May 2018 01:21:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 469EA200B9
+	for <e@80x24.org>; Mon,  7 May 2018 01:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751901AbeEGBVO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 21:21:14 -0400
-Received: from mout.gmx.net ([212.227.15.18]:36605 "EHLO mout.gmx.net"
+        id S1751906AbeEGBXd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 21:23:33 -0400
+Received: from mout.gmx.net ([212.227.15.18]:57187 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751874AbeEGBVM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 21:21:12 -0400
-Received: from [10.40.94.26] ([209.226.201.248]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ld0fQ-1eXKJK1GUa-00iBYl; Mon, 07
- May 2018 03:20:55 +0200
-Date:   Sun, 6 May 2018 21:20:46 -0400 (DST)
+        id S1751864AbeEGBXc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 21:23:32 -0400
+Received: from [10.40.94.26] ([209.226.201.248]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MK0ur-1fE7xY2FBl-001PK5; Mon, 07
+ May 2018 03:23:25 +0200
+Date:   Sun, 6 May 2018 21:23:20 -0400 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
@@ -31,67 +31,152 @@ cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 13/18] color: provide inverted colors, too
-In-Reply-To: <20180506064104.GB3418@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1805062119051.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <1ebbe359547689d32aa27564929d733a26bb8054.1525448066.git.johannes.schindelin@gmx.de> <20180505182922.GD17700@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1805060001230.77@tvgsbejvaqbjf.bet> <20180506063543.GA3418@sigill.intra.peff.net> <20180506064104.GB3418@sigill.intra.peff.net>
+Subject: Re: [PATCH v2 18/18] completion: support branch-diff
+In-Reply-To: <20180506082440.GA26958@duynguyen.home>
+Message-ID: <nycvar.QRO.7.76.6.1805062122150.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <71698f11835311c103aae565a2a761d10f4676b9.1525448066.git.johannes.schindelin@gmx.de> <20180506082440.GA26958@duynguyen.home>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Tqmsn6pLjNSFaDN2JKEEwppHI7Z1T7pH+nmZZnTKjiLMGTUOIIh
- DqBEs/M6tkp+ILEcuqPw6Wwgke5cQcyrfgFv+vIBgtX3nYCyPMyUIf1pWQdMH+GEKki7VZT
- 5ZVqRUXPq0Z7PZBROWc0uOiA75MIvSVS8zXj/+vo5L9V46ST3+L9dc7kVe43wqW5eSBC0U7
- aK5E2WkTnueUrEJPGpyOQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ytkwGL423EA=:cRurjTaRc5lXOwyQH5XeQz
- P3fjF3gO4LQYJMbapPbecErcoLHkt8+tUOtSyFIO1u1O3DOoXynC44B7V0EvI8BORQWqV763d
- mRONXeNNvtmIHpjoauLzI8tKsoIN1IBaeJZ7oBadCKGcjGZf+LC8WJA2MSqlhPGkk5vIaWcje
- mDjIGW47Ud5lpL0Gi51G/EraQCLbLhEOK4bBbd94TxadPgoZ348P8Uu2CfGHESct7LOuP+RxW
- FQ4gpnEvk3Jg1LNasrZlMZIwEnBL5Wa3tOUyxqYO6AMEOWC9YJzKji5r0eCyvgPovnW90yhac
- 5lREgAecWd1Fqz5afPnzT6Q3xScypBNgy/mSGlJLJZDrDuTepYnOP0zpui/kN1hAU8mzI5e7+
- RYKN+eTUpOaY8+39Z7jayW19JKUtGt+CCDisbOlQu6rIFV6ooLp5titGTOUVkXHJoXX4hM+yj
- AMjWBeraorU+Y6fNLeZ/4Rt3uwMbGdlL2A1KtcXOCb/3cekMApiL+PXj2PscTJdTBKA9jW0vt
- emWF0Gyj6z6YaeKLy2S1VHRRdUroRuSuKXNByjG6E0gSE9WoowCK25adXnX9sqVIh7u0z6+R5
- bEAnHYCmOen1fRZ5ppmb0r4v1mnjAuKZcd8Vj1BbY7DGc/V1N72L6OV2i0SubmVWwu11qd8hi
- RnWhHpE4jMQOfD6EUpI0jrn5JuVTVix5AbRwqwL9XPpqpK2asNo1XdcPqksiY7tZuMYsp1hsa
- WDg0b1Cv8NC9D01cjT0na+MuGwQcB0JJoHIDOlZhFFDCmISewFG5/zn6ZH8SnkX8v96ffrIE2
- uvSy8MQ
+X-Provags-ID: V03:K1:ElTEpcviRiRSklwGeDMm0nHw1v8e2i8LAc0G5nQRBSiQ3tEqMLX
+ wpNUW8iwd6vWfyWAw4ZXjT9/RYCsC9yX5CrKIVPlIyf/jbblH+Q04ncLWILYfAr/wUw8UPq
+ bpcK4lDWb77VRkXlyr3ZfJuucu3T/tCUZSCljtuTL0pLbyo/CqNBBCS8eBlLJOeSdItDjAM
+ 9TU8w3IEQf9k1LMcPD2nA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:h5LCF2xCVnE=:vYwDBYfVVFNevi2FmzowuR
+ YnZq1ND7WsihsWaHNKrLFht01EsastlXxBavf+HbrJCpzAPQkXYVR7P3R0aCAB8op9jVIEp12
+ eEBDlqgAJBJBNkqhZrTr/qy1m9EGneRgMDyzQ0ySlErVEF5dWZCi0psc5wrffXEcKU+C2+h82
+ NsYLT/YTQeD+n1BXPSLiUQLYHg+yqUQqKXLNO37jwwFoVO+aXb7PSWbwkiC2zt4KGXFx10r70
+ wV3+7qsmIF9mv4fcjf79WklXPdmbiLRE7r25WsDmfNXe2/2ThUuVOmS0vaJF0vS6raxc2eWF5
+ ISI90kBvpIdpU+7NtamLmIgxine9tQRWE0JWv1geDdmt2vENe9unu4261mqL/7bjkjn8JJSMj
+ LB+sO41z9G+HTlFs9xCp4W+QpWMlReftj8BKmdUysvVGBoB0EOzXMbMrArf6Gv/tQQQo+CA4U
+ d6FleCZawz+aRoDbg+9aJ0R3X5gJvsoWSaZ6vCdqSiDskFVgbFg07EYJDWc8iipILUtKnaSvR
+ kt75FYNDYj2gcHShgXlCNaHEIkG4H+DfYqeSt8B5aUDP7KvoA8QuI5L9CX27vHGt/DtxKKA6r
+ Eb3i3KGtDVLtO6g3sp8CUcAJnOdB4LncU9rvTBZkiLdKjESDPaw3IldgQMRtXf6oG1+AvR5Ls
+ Mu+HCgLo2sWBQsX74TilY4Oekzkxg2PadqR0DoCZEXcI59d1FXMcIv5HUFNXR8HjtNkQ6qUNz
+ MO4x1xCDvF2FXD+QQShAVSOh0S6CKfZqAQ2+JNBiCqIk5OqJ9TqxPS1D0hwQNEUvkuU5g+hmZ
+ 1n7bQor
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Duy,
 
-On Sun, 6 May 2018, Jeff King wrote:
+On Sun, 6 May 2018, Duy Nguyen wrote:
 
-> On Sun, May 06, 2018 at 02:35:44AM -0400, Jeff King wrote:
+> On Fri, May 04, 2018 at 05:35:11PM +0200, Johannes Schindelin wrote:
+> > Tab completion of `branch-diff` is very convenient, especially given
+> > that the revision arguments that need to be passed to `git branch-diff`
+> > are typically more complex than, say, your grandfather's `git log`
+> > arguments.
+> > 
+> > Without this patch, we would only complete the `branch-diff` part but
+> > not the options and other arguments.
+> > 
+> > This of itself may already be slightly disruptive for well-trained
+> > fingers that assume that `git bra<TAB>ori<TAB>mas<TAB>` would expand to
+> > `git branch origin/master`, as we now no longer automatically append a
+> > space after completing `git branch`: this is now ambiguous.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  contrib/completion/git-completion.bash | 18 ++++++++++++++++++
+> >  1 file changed, 18 insertions(+)
+> > 
+> > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> > index 01dd9ff07a2..45addd525ac 100644
+> > --- a/contrib/completion/git-completion.bash
+> > +++ b/contrib/completion/git-completion.bash
+> > @@ -1496,6 +1496,24 @@ _git_format_patch ()
+> >  	__git_complete_revlist
+> >  }
+> >  
+> > +__git_branch_diff_options="
+> > +	--no-patches --creation-weight= --dual-color
+> > +"
+> > +
+> > +_git_branch_diff ()
+> > +{
+> > +	case "$cur" in
+> > +	--*)
+> > +		__gitcomp "
 > 
-> > You'd have to introduce GIT_COLOR_REVERSE. I don't think we have a
-> > constant for it yet, but it's \x[7m.
+> You should use __gitcomp_builtin so you don't have to maintain
+> $__git_branch_diff_options here. Something like this
 > 
-> Heh, of course you knew that already, as I just noticed your patch is
-> using the reverse attribute internally (I had thought at first glance
-> you were just specifying the background independently).
-> 
-> So really, I guess all I am arguing for is having GIT_COLOR_INV (or
-> REVERSE) as a constant, and then teaching the code to combine it with
-> the existing "new" color. It's perfectly OK to have:
-> 
->   \x1b[7m\x1b[36m
-> 
-> instead of:
-> 
->   \x1b[7;36m
-> 
-> It's two extra bytes, but I doubt anybody cares.
+> -- 8< --
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 45addd525a..4745631daf 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1496,18 +1496,11 @@ _git_format_patch ()
+>  	__git_complete_revlist
+>  }
+>  
+> -__git_branch_diff_options="
+> -	--no-patches --creation-weight= --dual-color
+> -"
+> -
+>  _git_branch_diff ()
+>  {
+>  	case "$cur" in
+>  	--*)
+> -		__gitcomp "
+> -			$__git_branch_diff_options
+> -			$__git_diff_common_options
+> -			"
+> +		__gitcomp_builtin branch-diff "$__git_diff_common_options"
+>  		return
+>  		;;
+>  	esac
+> -- 8< --
 
-Yep, I agree that it is a small price to pay for the benefit of simply
-using the reverse of diff.color.old (and .new).
+Does this really work? I have this instead, for now, and verified that it
+works:
 
-While at it, I also changed the hunk header colors: they are *also* simply
-the same ones, with the outer one having background and foreground
-reversed.
+-- snipsnap --
+diff --git a/contrib/completion/git-completion.bash
+b/contrib/completion/git-completion.bash
+index 01dd9ff07a2..c498c053881 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1205,13 +1205,14 @@ _git_bisect ()
 
-Ciao,
-Dscho
+ _git_branch ()
+ {
+-       local i c=1 only_local_ref="n" has_r="n"
++       local i c=1 only_local_ref="n" has_r="n" diff_mode="n"
+
+        while [ $c -lt $cword ]; do
+                i="${words[c]}"
+                case "$i" in
+                -d|--delete|-m|--move)  only_local_ref="y" ;;
+                -r|--remotes)           has_r="y" ;;
++               --diff)                 diff_mode="y" ;;
+                esac
+                ((c++))
+        done
+@@ -1221,11 +1222,22 @@ _git_branch ()
+                __git_complete_refs --cur="${cur##--set-upstream-to=}"
+                ;;
+        --*)
++               if [ $diff_mode = "y" ]; then
++                       __gitcomp "
++                               --creation-factor= --dual-color
++                               $__git_diff_common_options
++                               "
++                       return
++               fi
+                __gitcomp_builtin branch "--no-color --no-abbrev
+                        --no-track --no-column
+                        "
+                ;;
+        *)
++               if [ $diff_mode = "y" ]; then
++                       __git_complete_revlist
++                       return
++               fi
+                if [ $only_local_ref = "y" -a $has_r = "n" ]; then
+                        __gitcomp_direct "$(__git_heads "" "$cur" " ")"
+                else
+
