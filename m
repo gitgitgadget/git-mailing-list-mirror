@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 173FB200B9
-	for <e@80x24.org>; Mon,  7 May 2018 17:53:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D251A200B9
+	for <e@80x24.org>; Mon,  7 May 2018 17:53:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752710AbeEGRxE (ORCPT <rfc822;e@80x24.org>);
+        id S1752722AbeEGRxG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 13:53:06 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:41038 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752302AbeEGRxE (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 7 May 2018 13:53:04 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:41037 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752596AbeEGRxC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 13:53:02 -0400
-Received: by mail-lf0-f68.google.com with SMTP id o123-v6so41881301lfe.8
-        for <git@vger.kernel.org>; Mon, 07 May 2018 10:53:02 -0700 (PDT)
+Received: by mail-lf0-f65.google.com with SMTP id o123-v6so41881393lfe.8
+        for <git@vger.kernel.org>; Mon, 07 May 2018 10:53:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OsDq/drYjm5RVyIQSrZ4UVAaIu2piVhJigr4Jd/AOnY=;
-        b=IQ7lGCbyJ50py8Wjsv+ds1a4je+SadSQSK+9JwTI8l24Ks1g5d/LKpzL7a0OS3sKa7
-         Z1J68guaTYi2ghvxMDxKl0ixlvZtlXFR6B7OZfyPDbSTsCdwUms/btTR1fOWwyp3Nvla
-         Zl9wKhi9/La9zSwqh9LdvZPWnUcbbWOMzR/O3P/u/TVO5+EEtywkEU2xIDPjHFouOOii
-         V9EHgtqPLi3aRQ7F47BSFeBu61pEOEHPEdgvDgSQsdMW/Usx19cSfvVuLBET0OMmBlg8
-         baSka90SuKxh7Nw66Mp1uJsEfT+5iImPcHiMQK77+zjj/OioVXxinURAqPH88jtyPpTR
-         a81Q==
+        bh=sSQyXHeAmwFVUIMkklabd/uPOnYlTjoZWLkgf7MBLvs=;
+        b=CsRijvEQGSMCPraY9qa7pBQ42lbXQ70ni3d3yHdK0mXvHkmPtN1oQpMVZ2FQKQhjYC
+         Q9CKQey47eqq2iwbXjfgkOwWlLej6F4BhpsR6Z6kKdDH0MmdEN+a6FYBbdEQJMcC5Xcf
+         7QvG+M1GD6nN5Tn0rNE3oejAaZO/8oM9/ylcn8dc4DShDQEPZX+X0FqLsbDmy2reSVEu
+         0OAfIxwzC2EedDl2QCeAidLUL2y4e51KnbxxoJrBQcTsBrcqj6yG+eEsO8BYZr/yM0/X
+         2KnBMUxjLkBCtxbrDWj21GrCbess061kqZfHMFub2S9wb8GDyZ5vOy++CLtGgbq8QpGl
+         PC+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=OsDq/drYjm5RVyIQSrZ4UVAaIu2piVhJigr4Jd/AOnY=;
-        b=jaAwMjKk1sIZWnd435G9HufA5nO/jnGlq0iUg98cN2GGCuRLAlQHgp5MruNNcA8b4x
-         /9UrZcPlSz/DbZW545jmkvBqzlmCViejRkifdw0svZAH0zdJ/ab+fChRiQIfhuHCcJWk
-         V7IlcDK1/ReRpFNJJySPEpgAydOUwYvEmwgFN65m39MEMruxp9WlavUm6vXN/2u6I4y0
-         BIcpF6nI+fMjTwY2uXs1xe6ENQfrtf/0rPMuo+HLjZjwcOditreRsYEdj6H9oZVY+JC4
-         PTdA5UIFe5CtUFEg4gZ0izKe211AgjkSqDLADmvmIo1DHvEIO+xY9Y9EGYh0/bywAP/U
-         oDUA==
-X-Gm-Message-State: ALQs6tARjnF6J6TD0TxjCaGkOPUEyN7k4sP2WJvctGxghpN1CYzXzuFo
-        0kbxbbBYKohGatLhgJsqyCWmPw==
-X-Google-Smtp-Source: AB8JxZpPucwjdG6Rq4JTr84bkCGRU56DwYbin5RHhIB7PfWJoWAkNh6P0oV6XGSqPZ8aOPmzXRNzjg==
-X-Received: by 2002:a19:5209:: with SMTP id m9-v6mr23880098lfb.72.1525715581379;
-        Mon, 07 May 2018 10:53:01 -0700 (PDT)
+        bh=sSQyXHeAmwFVUIMkklabd/uPOnYlTjoZWLkgf7MBLvs=;
+        b=cJLsxAraJxJhHgFlKn60OLljRZ0RP3fcHLwqBBN64aLAz984WdlDOozuqBzPGSZntQ
+         fl0Rg9uGi2sTG3rqXX5Ih/8fmTSCxT3m6GBJJ9CLVliNpDXP1xGiEuDQFFaair956z9i
+         Ku8KzRK8h2EcppMUnWyj9qbrLlzrcSI2MtInKigTqwnitLeZOEyGYSfxTiKSSau1oq6n
+         rzVqqCykPTL7GuJTw/7xdG/VmAFnIV3FLo0VqHDSFoK7CEqBb2VN90x8xB1LxNKR+vWR
+         iUsIqR85yQva5vol4QLVURaQMo5Cd0RRZppf+dF+a+fHd2mEcsYWrmYCcQy0deIoU+vi
+         q4Ew==
+X-Gm-Message-State: ALQs6tCKFJryxhPcM5mWAerb/G+bgLY5gBOtCjDqKVq/aR9McxBgRp58
+        syz52jlHOE2mOlA39072mys=
+X-Google-Smtp-Source: AB8JxZoKpxtcWBKNIrY9qNAozBm/Mquq8GR1E/eeTylqL1kAZutO6FAbZmoQZ78wMGaGcGlytpoI3g==
+X-Received: by 2002:a19:95c2:: with SMTP id x185-v6mr23874172lfd.74.1525715582695;
+        Mon, 07 May 2018 10:53:02 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id v6-v6sm4376865ljk.83.2018.05.07.10.52.59
+        by smtp.gmail.com with ESMTPSA id v6-v6sm4376865ljk.83.2018.05.07.10.53.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 May 2018 10:53:00 -0700 (PDT)
+        Mon, 07 May 2018 10:53:01 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         szeder.dev@gmail.com
-Subject: [PATCH v6 01/13] generate-cmds.sh: factor out synopsis extract code
-Date:   Mon,  7 May 2018 19:52:10 +0200
-Message-Id: <20180507175222.12114-2-pclouds@gmail.com>
+Subject: [PATCH v6 02/13] generate-cmds.sh: export all commands to command-list.h
+Date:   Mon,  7 May 2018 19:52:11 +0200
+Message-Id: <20180507175222.12114-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180507175222.12114-1-pclouds@gmail.com>
 References: <20180429181844.21325-1-pclouds@gmail.com>
@@ -65,46 +65,203 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes it easier to reuse the same code in another place (very
-soon).
----
- generate-cmdlist.sh | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+The current generate-cmds.sh generates just enough to print "git help"
+output. That is, it only extracts help text for common commands.
 
+The script is now updated to extract help text for all commands and
+keep command classification a new file, command-list.h. This will be
+useful later:
+
+- "git help -a" could print a short summary of all commands instead of
+  just the common ones.
+
+- "git" could produce a list of commands of one or more category. One
+  of its use is to reduce another command classification embedded in
+  git-completion.bash.
+
+The new file can be generated but is not used anywhere yet. The plan
+is we migrate away from common-cmds.h. Then we can kill off
+common-cmds.h build rules and generation code (and also delete
+duplicate content in command-list.h which we keep for now to not mess
+generate-cmds.sh up too much).
+
+PS. The new fixed column requirement on command-list.txt is
+technically not needed. But it helps simplify the code a bit at this
+stage. We could lift this restriction later if we want to.
+---
+ .gitignore          |  1 +
+ Makefile            | 13 ++++++---
+ command-list.txt    |  4 +--
+ generate-cmdlist.sh | 67 ++++++++++++++++++++++++++++++++++++++++++---
+ 4 files changed, 75 insertions(+), 10 deletions(-)
+
+diff --git a/.gitignore b/.gitignore
+index 833ef3b0b7..d4c3914167 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -180,6 +180,7 @@
+ /gitweb/static/gitweb.js
+ /gitweb/static/gitweb.min.*
+ /common-cmds.h
++/command-list.h
+ *.tar.gz
+ *.dsc
+ *.deb
+diff --git a/Makefile b/Makefile
+index f181687250..2a8913ea21 100644
+--- a/Makefile
++++ b/Makefile
+@@ -757,7 +757,7 @@ LIB_FILE = libgit.a
+ XDIFF_LIB = xdiff/lib.a
+ VCSSVN_LIB = vcs-svn/lib.a
+ 
+-GENERATED_H += common-cmds.h
++GENERATED_H += common-cmds.h command-list.h
+ 
+ LIB_H = $(shell $(FIND) . \
+ 	-name .git -prune -o \
+@@ -1938,6 +1938,11 @@ $(BUILT_INS): git$X
+ common-cmds.h: generate-cmdlist.sh command-list.txt
+ 
+ common-cmds.h: $(wildcard Documentation/git-*.txt)
++	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh command-list.txt COMMON >$@+ && mv $@+ $@
++
++command-list.h: generate-cmdlist.sh command-list.txt
++
++command-list.h: $(wildcard Documentation/git-*.txt)
+ 	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh command-list.txt >$@+ && mv $@+ $@
+ 
+ SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
+@@ -2148,7 +2153,7 @@ else
+ # Dependencies on header files, for platforms that do not support
+ # the gcc -MMD option.
+ #
+-# Dependencies on automatically generated headers such as common-cmds.h
++# Dependencies on automatically generated headers such as common-cmds.h or command-list.h
+ # should _not_ be included here, since they are necessary even when
+ # building an object for the first time.
+ 
+@@ -2527,7 +2532,7 @@ sparse: $(SP_OBJ)
+ style:
+ 	git clang-format --style file --diff --extensions c,h
+ 
+-check: common-cmds.h
++check: common-cmds.h command-list.h
+ 	@if sparse; \
+ 	then \
+ 		echo >&2 "Use 'make sparse' instead"; \
+@@ -2775,7 +2780,7 @@ clean: profile-clean coverage-clean
+ 	$(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
+ 	$(RM) -r bin-wrappers $(dep_dirs)
+ 	$(RM) -r po/build/
+-	$(RM) *.pyc *.pyo */*.pyc */*.pyo common-cmds.h $(ETAGS_TARGET) tags cscope*
++	$(RM) *.pyc *.pyo */*.pyc */*.pyo common-cmds.h command-list.h $(ETAGS_TARGET) tags cscope*
+ 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
+ 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
+ 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+diff --git a/command-list.txt b/command-list.txt
+index a1fad28fd8..786536aba0 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -8,8 +8,8 @@ info         examine the history and state (see also: git help revisions)
+ history      grow, mark and tweak your common history
+ remote       collaborate (see also: git help workflows)
+ 
+-### command list (do not change this line)
+-# command name                          category [deprecated] [common]
++### command list (do not change this line, also do not change alignment)
++# command name                          category [category] [category]
+ git-add                                 mainporcelain           worktree
+ git-am                                  mainporcelain
+ git-annotate                            ancillaryinterrogators
 diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index eeea4b67ea..31b6d886cb 100755
+index 31b6d886cb..c9fd524760 100755
 --- a/generate-cmdlist.sh
 +++ b/generate-cmdlist.sh
-@@ -1,5 +1,15 @@
+@@ -1,5 +1,27 @@
  #!/bin/sh
  
-+get_synopsis () {
-+	sed -n '
-+		/^NAME/,/'"$1"'/H
-+		${
-+			x
-+			s/.*'"$1"' - \(.*\)/N_("\1")/
-+			p
-+		}' "Documentation/$1.txt"
++die () {
++	echo "$@" >&2
++	exit 1
++}
++
++command_list () {
++	sed '1,/^### command list/d;/^#/d' "$1"
++}
++
++get_categories() {
++	tr ' ' '\n'|
++	grep -v '^$' |
++	sort |
++	uniq
++}
++
++category_list () {
++	command_list "$1" |
++	cut -c 40- |
++	get_categories
++}
++
+ get_synopsis () {
+ 	sed -n '
+ 		/^NAME/,/'"$1"'/H
+@@ -10,14 +32,51 @@ get_synopsis () {
+ 		}' "Documentation/$1.txt"
+ }
+ 
++define_categories() {
++	echo
++	echo "/* Command categories */"
++	bit=0
++	category_list "$1" |
++	while read cat
++	do
++		echo "#define CAT_$cat (1UL << $bit)"
++		bit=$(($bit+1))
++	done
++	test "$bit" -gt 32 && die "Urgh.. too many categories?"
++}
++
++print_command_list() {
++	echo "static struct cmdname_help command_list[] = {"
++
++	command_list "$1" |
++	while read cmd rest
++	do
++		printf "	{ \"$cmd\", $(get_synopsis $cmd), 0"
++		for cat in $(echo "$rest" | get_categories)
++		do
++			printf " | CAT_$cat"
++		done
++		echo " },"
++	done
++	echo "};"
 +}
 +
  echo "/* Automatically generated by generate-cmdlist.sh */
  struct cmdname_help {
- 	char name[16];
-@@ -39,12 +49,6 @@ sort |
- while read cmd tags
- do
- 	tag=$(echo "$tags" | sed "$substnum; s/[^0-9]//g")
--	sed -n '
--		/^NAME/,/git-'"$cmd"'/H
--		${
--			x
--			s/.*git-'"$cmd"' - \(.*\)/	{"'"$cmd"'", N_("\1"), '$tag'},/
--			p
--		}' "Documentation/git-$cmd.txt"
-+	echo "	{\"$cmd\", $(get_synopsis git-$cmd), $tag},"
- done
- echo "};"
+-	char name[16];
+-	char help[80];
+-	unsigned char group;
++	const char *name;
++	const char *help;
++	uint32_t group;
+ };
++"
++if [ -z "$2" ]
++then
++	define_categories "$1"
++	echo
++	print_command_list "$1"
++	exit 0
++fi
+ 
+-static const char *common_cmd_groups[] = {"
++echo "static const char *common_cmd_groups[] = {"
+ 
+ grps=grps$$.tmp
+ match=match$$.tmp
 -- 
 2.17.0.705.g3525833791
 
