@@ -2,120 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B082200B9
-	for <e@80x24.org>; Mon,  7 May 2018 01:35:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65172200B9
+	for <e@80x24.org>; Mon,  7 May 2018 01:35:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751854AbeEGBfT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 21:35:19 -0400
-Received: from mout.gmx.net ([212.227.15.15]:35069 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751781AbeEGBfS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 21:35:18 -0400
-Received: from [10.40.94.26] ([209.226.201.248]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2t0Q-1eMyzS2OQg-00sfwT; Mon, 07
- May 2018 03:35:01 +0200
-Date:   Sun, 6 May 2018 21:34:56 -0400 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
+        id S1751869AbeEGBf5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 21:35:57 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:40017 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751781AbeEGBf4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 21:35:56 -0400
+Received: by mail-wr0-f195.google.com with SMTP id v60-v6so26731112wrc.7
+        for <git@vger.kernel.org>; Sun, 06 May 2018 18:35:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3qE96nzFjPq1edAMzlKQao1ZUHV0QH+WUNSxmuB9eEo=;
+        b=Aqn/gy8n+yoXBxut83iAD/LJghaAfM7crznik4Ab4nvgTgTE8vdXCSHTiQCv5+DH6G
+         CECFN0wOGJjT7vP5XHpQypEuILI2M6j6py3DPvZdTIcdS2tet99e0MJx3XCduTLy/6A3
+         Dp/yBos5J0+jALKjfs/CrIfqEPQ5mu5+xz/hcyBvXYmtGDFbnHnIsuc77Yo9zLd0xF/8
+         t07zY/4Z0i1L0eIxnfNKwzb4jUAIlMdeDqlD5PeFQskb9MV2UPYbm/ze116nR0/0nbdF
+         iTgJWW8YIvpm0K9/WKFKNHu88WfqyylN0Jdv9DfYaJStUaXW8txv1ciO4bD3LNv3wUE2
+         iSJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=3qE96nzFjPq1edAMzlKQao1ZUHV0QH+WUNSxmuB9eEo=;
+        b=lc8DReQHDqFRu0qmDXDG9pQT9MsL+8igrt0uO2Up0jA5YuzLsg3I4zTkibSco4W/hp
+         tJVu9YXd2AUmzvik3daURPJtribdZQY/Rz72Pg0VDHeQ27PpAKj0KVX1GiA6bxvEJpXb
+         WmvPfFtLKNMAGAcIDBws0qMTwUnkLZvk2ZkCqEQ3nel6WxzfG0RbUi8h8qmN98SzgKp2
+         YV4xjv65NiE7qJDXfQvf8O7M/CNtez3jbsBIxySJifMwwsxh0tUVmL1+sjNELFmJ0V1D
+         q6Hkt28WfyhJ1UoFtTCA5vgPoYoPtG0DahF1+B8iOgfJID41uRCy4AGKMQOCn0jU+qx3
+         VInQ==
+X-Gm-Message-State: ALQs6tDR87ExosSfCWYDZRNyLd+xyhpVDaI93XThWhGtMaxCgzP/Ze9x
+        8wgdxTaZnLrBRr/AKwumEiE=
+X-Google-Smtp-Source: AB8JxZrGvfFlJ6d2zrb5Saf624Cnoq8rD/Dmh64AVEqwERhB421TDm4lHM8X29pA5iZnHOAK+/dgQA==
+X-Received: by 2002:adf:86fa:: with SMTP id 55-v6mr31130068wry.232.1525656954870;
+        Sun, 06 May 2018 18:35:54 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l69sm8751414wmb.30.2018.05.06.18.35.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 06 May 2018 18:35:54 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Stefan Beller <sbeller@google.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
-In-Reply-To: <e0db15c5-e897-5b03-20ff-d83f38496e61@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1805062124470.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <a1ea0320b64527ee6ce9856dcf359513d13052b7.1525448066.git.johannes.schindelin@gmx.de> <20180505182631.GC17700@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1805052355190.77@tvgsbejvaqbjf.bet> <39282590-576f-1ac1-6a16-80ad317ec7ed@gmail.com> <nycvar.QRO.7.76.6.1805061408150.77@tvgsbejvaqbjf.bet> <e0db15c5-e897-5b03-20ff-d83f38496e61@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Subject: Re: [PATCH v2 13/18] color: provide inverted colors, too
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+        <cover.1525448066.git.johannes.schindelin@gmx.de>
+        <1ebbe359547689d32aa27564929d733a26bb8054.1525448066.git.johannes.schindelin@gmx.de>
+        <20180505182922.GD17700@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1805060001230.77@tvgsbejvaqbjf.bet>
+        <20180506063543.GA3418@sigill.intra.peff.net>
+        <20180506064104.GB3418@sigill.intra.peff.net>
+Date:   Mon, 07 May 2018 10:35:53 +0900
+In-Reply-To: <20180506064104.GB3418@sigill.intra.peff.net> (Jeff King's
+        message of "Sun, 6 May 2018 02:41:05 -0400")
+Message-ID: <xmqqvac0qmbq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:UsduLCSlLVIi0QpX7tqL+x/ZtI7CWR/ukdBOzCYeGm1cciTP+ie
- 2ul/+W3VHj4L2G0mwOWchF9m22oHFguMv4hBB3rgop3wLw+H1nGZPjro/k8/ysAUSTqEWQA
- 1VxqT97gngbojPs2LLnxTeKczInCfjZ35YIJstmHcb37tm6M/E/NwQPytm5VQSzQFbydjnA
- Mm6f3n2rz68RbYKHbPT/w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OR2dI7tMqQw=:tRyCRysk8P0xrkwQQS2xs9
- 7iF01whYKnwkQcoM1u7F6QBzMSZXpughw/CPzmgYglnp9PrqRtYZRGIJexfTcb1F2f9LgZyUA
- u1BWT2KLm5cp0RQiQkTE7T9ULDzSYUh7HvfCjUO67rW9ku/Pliik2u/FtuxVW2/OEcKh3qapu
- Idj3Dw+5/6VUX/nhtxHaEmbsyjpwXyx0qG0ho5Z2c7p9HLf8HL7AZLFwcLWTZUqRt4tKu66Ta
- 89aX3JVDCxz5LyjjkIQxwGlk+umNZRqFOUFlkGHd0UJKQaoBmARYY6M9Xd4RyjrrJB6cQIEIA
- Ig+YIRJf5jhV9s+M25cgDQ5ZHCxNyaEDNphca0igxYtqp2FU8qKDp3rV3yJ5mKHhanUrXSsEz
- z4exvXy6o1G3AWZ7wwcdkjp7qaum/FtWMC/Afyq/CqgiTcV7+j23TDsUMlm1D+2Iqk3Gbe18t
- 3XEWCeOY8KehmBQ5tlo2K1NUar4cm0oanYKWwGiMIcW1eijN9a8cLCZDuICV7rV6JPOLCvw7O
- jn/SvVttyh6UUsBUWGs/4NO4UcEtt/dI5dtQP7Wy7xhcmzuigNkFi92dWmcQMOJd9wEXFLiia
- IhgjfTu6WudGTlo+BuwLYYooUDl4ZjIXgpCu+PtfTOyTw5sn8Xg76jKRN80Q9+yzWa2jsg014
- gcCmlES69S9RwGaqNGLEX/FeJWORCTX+OXDfUAZ0ivtgbqhP22sLRAn19njbiA9ne6qgFNOe6
- BNeZ/ixrRZrmo9seHQDoSg7SYFIlZgO3BMlR7s+iy/WiaNxqjOY5BxkcEiTpYzUGs5wIpWaSG
- X6NObWv
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Buga,
+Jeff King <peff@peff.net> writes:
 
-On Sun, 6 May 2018, Igor Djordjevic wrote:
+> On Sun, May 06, 2018 at 02:35:44AM -0400, Jeff King wrote:
+>
+>> You'd have to introduce GIT_COLOR_REVERSE. I don't think we have a
+>> constant for it yet, but it's \x[7m.
+>
+> Heh, of course you knew that already, as I just noticed your patch is
+> using the reverse attribute internally (I had thought at first glance
+> you were just specifying the background independently).
 
-> On 06/05/2018 14:10, Johannes Schindelin wrote:
-> 
-> > I think Todd's idea to shift it from a full-blown builtin to a cmdmode
-> > of `branch` makes tons of sense.
-> 
-> I don`t know, I still find it a bit strange that in order to "diff
-> something", you go to "something" and tell it to "diff itself" - not
-> because it`s a weird concept (OOP, anyone? :]), but because we already
-> have "diff" command that can accept different things, thus just teaching
-> it to accept additional "something" (branch, in this case), seems more
-> natural (to me) - "branch diff" being just another "diff" mode of
-> operation.
+I somehow suspected as such, but I also thought so and reacted "what
+about us whose terminal is black-on-white unlike most others?",
+before looking up what 7 meant ;-)
 
-You also have to call `git branch` to list branches. And to rename
-branches. And to delete them. So why not also compare them at the same
-time?
+> So really, I guess all I am arguing for is having GIT_COLOR_INV (or
+> REVERSE) as a constant, and then teaching the code to combine it with
+> the existing "new" color. It's perfectly OK to have:
+>
+>   \x1b[7m\x1b[36m
+>
+> instead of:
+>
+>   \x1b[7;36m
+>
+> It's two extra bytes, but I doubt anybody cares.
 
-> What about that side thought you left out from my original message,
-> making it `git diff --branch` instead?
+I do not think two extra bytes will be missed, but it was not
+immediately obvious to me how much flexibility or simplicity weu are
+gaining by combining values from multiple configuration variables.
+With a "letters on a new line is painted with ${new}, in addition,
+the leading plus is further annotated with ${tbdiffNew}" (similarly
+to "old") scheme, the user can take advantage of the fact that there
+is no ${reset} between ${new} and ${tbdiffNew} and set tbdiffNew and
+tbdiffOld to a same value (that does not change the color but
+changes some other aspect of the appearance, like "reverse" or
+"underline").  Since only pre-designed combination can be used (your
+example works only because you chose to allow combination by
+annotating the leading "+" with ${new}${tbdiffNew}), we'd need to
+(1) establish a convention to paint things with similar meanings in
+the same color, modifyable by individual command (e.g. you could say
+anything new is by default green with "color.new=green", and then
+"color.frotz.new=blink" "color.status.new=" "color.diff.new=blue"
+would make frotz, status and diff subcommands to show new things in
+blinking green, normal green, and blue), and (2) push the codebase
+to adopt such color combination as a preferred design pattern if we
+want the resulting system to be useful.
 
-I really did not like this, as all of the `git diff` options really are
-about comparing two revisions, not two *sets* of revisions.
+I guess you are getting simpler configuration, which is a big plus,
+but to make a truly useful combining convention, we'd need to
+rethink and find a way to transition existing configurations to the
+new world, which may not be feasible.
 
-Further, if I put my unsuspecting user hat on, I would ask myself how you
-can compare branches with one another? That is what I would expect `git
-diff --branch` to do, not to compare two versions of *the same* branch.
-
-So `git diff --branch` does not at all convey the same to me as `git
-branch --diff`, and I find that the latter does match better what this
-patch series tries to achieve.
-
-I briefly considered `git branch --compare` instead, but then rejected it:
-it would again sound more like I try to compare two separate (and likely
-unrelated) branches with one another, and that simply does not make much
-sense, and tbdiff would not help with that, anyway.
-
-> But if "branch diff" is considered to be too special-cased mode of
-> "diff" so that supporting it from `diff` itself would make it feel
-> awkward in both usage and maintenance (in terms of many other regular
-> `diff` specific options being unsupported), I guess I would understand
-> having it outside `diff` altogether (and implemented as proposed `git
-> branch --diff`, or something)... for the time being, at least :)
-
-The branch diff is not even a special-cased mode of diff. It is *way* more
-complicated than that. It tries to find 1:1 correspondences between *sets*
-of commits, and then only outputs a "sort" of a diff between the commits
-that correspond with each other. I say "sort" of a diff because that diff
-does not look like `git diff <commit1> <commit2>` at all!
-
-So I think it would just be confusing to add that mode to `git diff`.
-
-Ciao,
-Dscho
