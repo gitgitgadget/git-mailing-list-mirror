@@ -6,59 +6,57 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9296200B9
-	for <e@80x24.org>; Mon,  7 May 2018 03:04:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8088E200B9
+	for <e@80x24.org>; Mon,  7 May 2018 03:37:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751878AbeEGDEk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 May 2018 23:04:40 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:45963 "EHLO
+        id S1751880AbeEGDhJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 May 2018 23:37:09 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:39967 "EHLO
         mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751854AbeEGDEk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 May 2018 23:04:40 -0400
-Received: by mail-wr0-f194.google.com with SMTP id p5-v6so26884930wre.12
-        for <git@vger.kernel.org>; Sun, 06 May 2018 20:04:39 -0700 (PDT)
+        with ESMTP id S1751800AbeEGDhI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 May 2018 23:37:08 -0400
+Received: by mail-wr0-f194.google.com with SMTP id v60-v6so26975390wrc.7
+        for <git@vger.kernel.org>; Sun, 06 May 2018 20:37:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=HsiFqcCThvONxFKOkePZCW5Vwtm6b83eQIMDPFDlow4=;
-        b=DMNjiqt+LFhiNXyUDeHReDQNNQoEoiCRfjIReA8YG9K3aAp0nD51IrLITVs72/wxnW
-         WqBiRxhejWM9qyTOB4meCqmJ32kGjSFmmsuG7yYC0aWZsKkhRjHvG+hJ66afErUOuEND
-         rRFQPVX/2VlfDWMwuME6LmOTzz0Q/wNS2m/a3cTaAZuKVcLIEtDxrCRZHSKLLsA8W1KU
-         8ZN3OjlsFj4B0QqL9giH8weIUVnIYxZtrqymMP16wj67xLKZp43zsA8ijbAisih0BedT
-         uGnhwAjcpx8/XuSqXrOIphtD9vItDvhRGTE06TqLlEYxczNl52GEufwVIAOeF8YFsXjX
-         g14w==
+        bh=5RMHsshGojm0SYI0Y/Z+1/KjN/HINMY6sCT77qYfcOE=;
+        b=VfgBkXh5EWJpD8hel4MrzJdHidjbh9jBePSVPosr5ZKpQtgTCBiq7iaom1nhDaRwR6
+         Hv9pxkueAD2w6316i5CH6GmR1wYPOIWfL5HQLLOiTEFucfUNCu9Uxe1aapIpAJCjJR8a
+         3LAyQCpvP1lIUWdWhIG0Z0zN+/Zv13qcE+pz5XeGyu9MuN1Z74G/lQa6rnRr1z04gmEj
+         KoNOSB5aSvyJsMiFJssmmquvlkFHozJN91BPQkSibRMYZWGTyUTfoDr+kyzrf4GqxEwQ
+         vHRKsXFWIz3uCziTd4NUmk0oXjFntUmsiusqSNR1f9JYKM3NRXr65yEyHIqKtu158w2z
+         qbKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=HsiFqcCThvONxFKOkePZCW5Vwtm6b83eQIMDPFDlow4=;
-        b=p9hdsWuG3P/gfNdodPng3+RffHDQtO/pPAAnhjTSKmwmW5r3Oid+vaMslvkQIECBjp
-         UMh8k1egYF7s60vGOfkOxsp4yhQmeT6cImuDcuYUcOKmnDmMLMe2CVeBD95kVutrwg0y
-         I5jGzHz7Xzxm6bEySCrgHdW4q8OhyiJmpOcctpbFblvLnF0YUdbd+60beFSPXUB77eMW
-         KOyDUxYtcw+I0wX2Jel4ShLpz2YWsFBRngAbaPEBIf7o190zleSCrIUVS6BBnCV/T8Sc
-         2k2DMaQ/Qf9l+E2Xt2/PXcVr+6VzIa4hXVNdfMTg1m0Miy7imReNYNl9iZd+ofr5txpl
-         Vj5g==
-X-Gm-Message-State: ALQs6tBw08PCIgAi964D8VneDhqgGphbrLaA7YlaO+e6aGOeVdjKDpnP
-        Z9rh2AU6BgYX/semurvllqg=
-X-Google-Smtp-Source: AB8JxZqJH3RiKeYYGlXUav4mbtxLi3/TmuAX9gWQthNZWsdaQzDr3sDLbeFykelaIdwpkkTl+OEEbQ==
-X-Received: by 2002:adf:9bcd:: with SMTP id e13-v6mr30545568wrc.240.1525662278815;
-        Sun, 06 May 2018 20:04:38 -0700 (PDT)
+        bh=5RMHsshGojm0SYI0Y/Z+1/KjN/HINMY6sCT77qYfcOE=;
+        b=rgs/Spvx6qwnT81QRO7hsSKox5cFFw2wkzR+dKJ7q17Pt/NeWOECe8k3ngrNZYjlLg
+         ZZBSRgnluvZeRAMHAuSe1IPPHkmpAQvwB6RhznLF6AVdas9WIm6+GWeGivkMZO1ZwlfV
+         j19x/I4XjDcyE22CnKdADGj+E7/8oDGfvEyX/GkRhx7P4ZyH3QtmO5q+7hOARxqYYHKK
+         szca8YDXrGvhg/+jd17/lLkDR8R7zutiWA6t1inE8eSHo2JNEYXKAvF97Lu/eN0gR+Nl
+         zPJ/QpvssFHHzUFWnbdrUaU4RK4Jley2g720Tu7vE1Y5UPcqlEJq0H8JhjvOZxXwfjEf
+         EGAQ==
+X-Gm-Message-State: ALQs6tBtXHm9mE8uTuO+AdSEwoLA3QNrlW+zGEm+bAellswYNZ35FRcl
+        qRAmoZU87fXFU4DIPqW3TE/qdRkk
+X-Google-Smtp-Source: AB8JxZpRc+0vdX0VSqyEe1chEJuSS4fJdwsuWnkSTh8sjuBwqHS6AcKFrUiez3l2FJgVnPaQ/Tb33g==
+X-Received: by 2002:adf:a970:: with SMTP id u103-v6mr26763433wrc.71.1525664227527;
+        Sun, 06 May 2018 20:37:07 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 123sm8707840wmt.19.2018.05.06.20.04.36
+        by smtp.gmail.com with ESMTPSA id q7-v6sm25183302wrf.49.2018.05.06.20.37.05
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 06 May 2018 20:04:36 -0700 (PDT)
+        Sun, 06 May 2018 20:37:06 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH 1/2] Documentation: use 8-space tabs with Asciidoctor
-References: <20180504015202.GP13217@genre.crustytoothpaste.net>
-        <20180506204226.955739-1-sandals@crustytoothpaste.net>
-Date:   Mon, 07 May 2018 12:04:36 +0900
-In-Reply-To: <20180506204226.955739-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Sun, 6 May 2018 20:42:25 +0000")
-Message-ID: <xmqqefioqi7v.fsf@gitster-ct.c.googlers.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] mailmap: update brian m. carlson's email address
+References: <20180506232421.975789-1-sandals@crustytoothpaste.net>
+Date:   Mon, 07 May 2018 12:37:05 +0900
+In-Reply-To: <20180506232421.975789-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Sun, 6 May 2018 23:24:21 +0000")
+Message-ID: <xmqqa7tcqgpq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,29 +67,54 @@ X-Mailing-List: git@vger.kernel.org
 
 "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> Asciidoctor expands tabs at the beginning of a line.  However, it does
-> not expand them into 8 spaces by default.  Since we use 8-space tabs,
-> tell Asciidoctor that we want 8 spaces by setting the tabsize attribute.
-> This ensures that our ASCII art renders properly.
+> The order of addresses in the mailmap file was reversed, leading to git
+> preferring the crustytoothpaste.ath.cx address, which is obsolete, over
+> the crustytoothpaste.net address, which is current.  Switch the order of
+> the addresses so that git log displays the correct address.
 >
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
->  Documentation/Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Wonderful.  Thanks.
+I initially reacted to "was reversed" with "yikes, did we break the
+mailmap reader and we need to update the file?", but apparently that
+is not what this patch is about.  I think what is happening here is
+that cdb6b5ac (".mailmap: Combine more (name, email) to individual
+persons", 2013-08-12) removed
 
+-Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
+
+and then added these two lines
+
++brian m. carlson <sandals@crustytoothpaste.ath.cx> Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
++brian m. carlson <sandals@crustytoothpaste.ath.cx> <sandals@crustytoothpaste.net>
+
+where *.net address did not come from any other entry for you in the
+file.  I guess the author of the patch saw that you were sending
+your messages from the .net address and tried to help by unifying
+the two addresses, without knowing your preference and recorded two
+reversed entries.
+
+Will queue as-is for now, but if you want to update the log message
+I do not mind taking a reroll.
+
+Thanks.
+
+
+>  .mailmap | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 6232143cb9..bcd216d96c 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -184,7 +184,7 @@ ASCIIDOC = asciidoctor
->  ASCIIDOC_CONF =
->  ASCIIDOC_HTML = xhtml5
->  ASCIIDOC_DOCBOOK = docbook45
-> -ASCIIDOC_EXTRA += -acompat-mode
-> +ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
->  ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
->  ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
->  DBLATEX_COMMON =
+> diff --git a/.mailmap b/.mailmap
+> index 7c71e88ea5..df7cf6313c 100644
+> --- a/.mailmap
+> +++ b/.mailmap
+> @@ -25,8 +25,8 @@ Ben Walton <bdwalton@gmail.com> <bwalton@artsci.utoronto.ca>
+>  Benoit Sigoure <tsunanet@gmail.com> <tsuna@lrde.epita.fr>
+>  Bernt Hansen <bernt@norang.ca> <bernt@alumni.uwaterloo.ca>
+>  Brandon Casey <drafnel@gmail.com> <casey@nrlssc.navy.mil>
+> -brian m. carlson <sandals@crustytoothpaste.ath.cx> Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
+> -brian m. carlson <sandals@crustytoothpaste.ath.cx> <sandals@crustytoothpaste.net>
+> +brian m. carlson <sandals@crustytoothpaste.net> Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
+> +brian m. carlson <sandals@crustytoothpaste.net> <sandals@crustytoothpaste.ath.cx>
+>  Bryan Larsen <bryan@larsen.st> <bryan.larsen@gmail.com>
+>  Bryan Larsen <bryan@larsen.st> <bryanlarsen@yahoo.com>
+>  Cheng Renquan <crquan@gmail.com>
