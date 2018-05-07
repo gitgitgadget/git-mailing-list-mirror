@@ -7,50 +7,52 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76DD0200B9
-	for <e@80x24.org>; Mon,  7 May 2018 23:44:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0FC4200B9
+	for <e@80x24.org>; Mon,  7 May 2018 23:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753504AbeEGXo5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 19:44:57 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41994 "EHLO
+        id S1753593AbeEGXyA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 19:54:00 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:42000 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753271AbeEGXo4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 7 May 2018 19:44:56 -0400
+        by vger.kernel.org with ESMTP id S1753545AbeEGXx6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 7 May 2018 19:53:58 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 79BF760444;
-        Mon,  7 May 2018 23:44:55 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EB0F760444;
+        Mon,  7 May 2018 23:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525736695;
-        bh=SW1rYUZR4DU+e3i58xROqlkogRHanp3pZz7sQB93kAA=;
+        s=default; t=1525737237;
+        bh=qyWeScCVojsXNbQyrolqvgJuxQfRRsjMYget4UDprJ8=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=QIRnFR6AUdftobVaq3r/8BtsgAxgG6A8K4KshUWYoSBThGXAsk+KqyKQ1sX3mq0Z8
-         8R9GBlFsIMlhd1Ga6qgTNFrBkzC+Z2E/ufrdWRsgfADSd7hDoXW6z76ANLQsCp1OQK
-         BsL/S1oMfgeYF0DwXcXSRvEsMrfuZQOxA2JT2HVjdVcUpNSnARJvoBDykMx2LPf1JY
-         vTP7gitguJu28Xtam4WQXQQGjJXz4l1VDa/hRsZLEqFXBtx6xwhSTypvzkmK98xeas
-         Op/1EG5vdaZ/y7TQygC21bpwAxz/BuKlV0V/mGyp40KwcSgeDeDQmfxlZ/rqBc9yWz
-         r7JjoYMTLdugNyCGOZbGVWbSPE3S8OUj+HXQ8lbzbZZMggLmoc5gE4AyW4uw8zYq3p
-         Np0MF6WXVE5Q/5iQ6x86Xpe8vZmCCWcr7yEutn+Shi3eZ+sTPBzAi1uPHvC5egGrZx
-         qesAqgK+HATK6SANfB8MZ8aCVfYbcPT0GYwz1fX0+P7Zk3x+jgI
-Date:   Mon, 7 May 2018 23:44:51 +0000
+        b=uDRauD9FhYax5J6m8s0/VwEJzZFE30lZZJAR5Qe1fhm+F7A4TMKtOaDODPOyJlCkf
+         3BdOxx2diTGhRizF4Am0/vwBnY2yb+3S+MZe+miy6ANyD0eoTkAFiANJOr8wpskMyN
+         7YqCYEoK/ILAM0s8iiyMEMBmFp/1WU4xQWd052Lss4roni50KRfp0Ndkg+7KXYJ+l1
+         0eqSUWEQo+/XaN3eSMvdKwpvADD1q8iFGcHw4SQsfQdiCLk1AWNa/ML26/6Yq58yTI
+         SJtFZ5vveHoEq17IAKglcYapnLN4mtLJY5fTK9MYR/1VXRJZeSsVoN1cuVdws1jKPh
+         f1XbcGM4Tz+5d28Y+jGo3nvaph977B+SRK/0vXA/TzjPzjkSrxtoQMsMg+aDOaC1H8
+         y8qJwWhhL2eEoX29ju90VSeWrDzB6QOzJa4AJ3UYwAS46xawj4+KblI/0mh7r17/xr
+         7TdXfdita9xPBWlEbWMiLdQL8ImjsG0QeuZLhGYQozWWiaulI9i
+Date:   Mon, 7 May 2018 23:53:52 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
 Subject: Re: [PATCH] mailmap: update brian m. carlson's email address
-Message-ID: <20180507234451.GK953644@genre.crustytoothpaste.net>
+Message-ID: <20180507235352.GL953644@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
 References: <20180506232421.975789-1-sandals@crustytoothpaste.net>
  <xmqqa7tcqgpq.fsf@gitster-ct.c.googlers.com>
+ <CAGZ79kZXXiWrGgO-KU+afncfNTZzp=AHHJY5qZqA9qAg5YLuuQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="RD6GsZsdEJvsf78O"
+        protocol="application/pgp-signature"; boundary="gw4vLALk08fVJy3V"
 Content-Disposition: inline
-In-Reply-To: <xmqqa7tcqgpq.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <CAGZ79kZXXiWrGgO-KU+afncfNTZzp=AHHJY5qZqA9qAg5YLuuQ@mail.gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.15.0-3-amd64)
 User-Agent: Mutt/1.9.5 (2018-04-13)
@@ -61,60 +63,59 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---RD6GsZsdEJvsf78O
+--gw4vLALk08fVJy3V
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 07, 2018 at 12:37:05PM +0900, Junio C Hamano wrote:
-> I initially reacted to "was reversed" with "yikes, did we break the
-> mailmap reader and we need to update the file?", but apparently that
-> is not what this patch is about.  I think what is happening here is
-> that cdb6b5ac (".mailmap: Combine more (name, email) to individual
-> persons", 2013-08-12) removed
+On Mon, May 07, 2018 at 12:25:09PM -0700, Stefan Beller wrote:
+> brian,
 >=20
-> -Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
->=20
-> and then added these two lines
->=20
-> +brian m. carlson <sandals@crustytoothpaste.ath.cx> Brian M. Carlson <san=
-dals@crustytoothpaste.ath.cx>
-> +brian m. carlson <sandals@crustytoothpaste.ath.cx> <sandals@crustytoothp=
-aste.net>
->=20
-> where *.net address did not come from any other entry for you in the
-> file.  I guess the author of the patch saw that you were sending
-> your messages from the .net address and tried to help by unifying
-> the two addresses, without knowing your preference and recorded two
-> reversed entries.
->=20
-> Will queue as-is for now, but if you want to update the log message
-> I do not mind taking a reroll.
+> sorry to break you there. I was the author of the patch Junio found, orga=
+nizing
+> the .mailmap file was one of my starter contributions. I recall asking al=
+l the
+> people if they were ok with it their names combined in different spellings
+> 94b410bba86 (.mailmap: Map email addresses to names, 2013-07-12)
+> f4f49e2258a (.mailmap: Combine more (email, name) to individual
+> persons, 2013-07-14)
+> and I vaguley recall asking you about capitalization of your name there
+> and you preferred the lower case name, but apparently I never asked you
+> about the preferred email address.
 
-I can reroll with a less alarming commit message, sure.
+Not a problem.  I hadn't until very recently completely understood the
+format of the .mailmap file (in that the correct items are always to be
+on the left), so I didn't think anything of it when reviewing the
+commit.  Perhaps I should come up with a patch to the documentation to
+make it easier for past me to understand.
+
+I only recently realized that with my transition to a separate mail
+server (in September), the crustytoothpaste.ath.cx address doesn't
+actually work, and when perusing the output of git log, realized that it
+was the wrong way around.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---RD6GsZsdEJvsf78O
+--gw4vLALk08fVJy3V
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.5 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrw5PMACgkQv1NdgR9S
-9ou8iBAAg7ElZqKUluDlK2S1tVbhNf/KqmiTnV3H/PGsJdnDBUdaRD48Z5zonoxi
-xUNHjB4AQJC45T8WcOIzdHBnoOqGjD8GiaHxi/0sLuwlz6Or5aOluy8HbQ+THbLR
-ZVGTz3m596jDRkWov3LIUObB3n2b376LjBwo/3phAqclZCdOfLfN0VfC4LnQJUQx
-9v0KauhkImtGT0aaEWdiVoj2t9l5t6B5edj+xSIX+YvAr3quE/mH3wEjmzsLhYnO
-vMRJDjZhpaKtTxKEv+7IKm9z6hE86TBOdSzR5nPiv1qBnMWHciNT87YPCjNmZ0KP
-waHREu88KurzouyFuZQfjJLIE2BNU6+my0JLdxU7CWM1TXZS4UdBzzyTBJV04z8c
-tsRa3cFoQ4ekqMSfaD0M5ONxrbVg6Xi+I/eMtCLZAPZUws+uXxGs0qdoLGo5YXwy
-juIKWiZqbOysgh1K77kL28nZWNPrgvcsBZao7rePv/4pRuCNO2jbbHlxA6dg+KWa
-E1lhqPgAfdaOEaZO8sK9tJ9FLGE2FqDVyluT6p6YXRDQbHrunBtCZteYxo8/HHir
-TzNng3fFzdQHmQQUGU2rsM+aeRDf3lbZfP4QhpRc5f71XaO2WIvPtA/Qt6QegJHb
-AhchfQl23WKyfoVtWjAgApyFkC9d/C8LOtDedN6NiFLwUmhMEuM=
-=tNIy
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrw5w8ACgkQv1NdgR9S
+9ovu/hAAuiyTTpN9dnlnG7wd+H049WuijnigjAi/BXUtkO40OEsMIrPx3kBBW6cQ
+D641HCp1WXSRTQ+pc+ByFVhSoXLCq2YdMfJPZkjW+VCX6IZwk+dzwGY1n/OH2HNY
+dLweBHMZeuM/FUTcQgiY2r1QF1V7vfE+V8G37X8q9dNmF7KDFyEWFCkrHwdo1udN
+DQDmXVCZ8AeqkaTTU36ABknrk4ZIkXAj5pSgAXG3lRpdYtjrk8ZUW01eRDKDIl58
+aCm+ZXcm5R6bsRl0v7GFiZnW/eMWpAOiupu6iiy9vucBu+/bk0Nlh4f8atoinDiF
+dDsZ+JykXJvytf0wOWVtd+HfG6P5f8IHBZsq3L9UYjXK03iIFm5jUCJLfewJU2H9
+7PIgiliqCPaD6pRrYP8AnS+l0foG6P40Cjd1A0e1a5LjtbbrObaUTM1kfFyCVRkW
+VLlQUBOtNdvBUosgPWSS7IW87zykeDjiNCWXIUjjBdOFMNLySguaYlUw6jswmM9c
+9xp+w132Fh9c/bQg9NkLcp/wCOILPB9GYaMhNbM9dRRM4w6lbFnqIqmFGidHFDX9
+NalbkhV5J5wy7WGdLx8JrTy+Z5A6IWdrh8duwv9vYRSs35zkSheRC6igYL2BJcqV
+O9CGcCumbTLAHsKGIaCT9szbWG6aUtQRTCE0nUlUsgNPzDTC5/Q=
+=wpjP
 -----END PGP SIGNATURE-----
 
---RD6GsZsdEJvsf78O--
+--gw4vLALk08fVJy3V--
