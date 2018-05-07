@@ -2,102 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E47D5200B9
-	for <e@80x24.org>; Mon,  7 May 2018 14:13:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D84F200B9
+	for <e@80x24.org>; Mon,  7 May 2018 14:20:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752495AbeEGONP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 10:13:15 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34862 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752483AbeEGONO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 10:13:14 -0400
-Received: by mail-wm0-f65.google.com with SMTP id o78-v6so15752545wmg.0
-        for <git@vger.kernel.org>; Mon, 07 May 2018 07:13:14 -0700 (PDT)
+        id S1752235AbeEGOU4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 10:20:56 -0400
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:41329 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751884AbeEGOUz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 10:20:55 -0400
+Received: by mail-qt0-f174.google.com with SMTP id g13-v6so36432483qth.8
+        for <git@vger.kernel.org>; Mon, 07 May 2018 07:20:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=uFMk6H82KPVIyVWRIAec9k7Pk0WLDwrFL9UCYG6DF5w=;
-        b=R6//MrYPmpyMF7qgsFwYOu9HuzyaVSj4UgyWJ26kmELMEOCOeeU4ricuBOanMM8p1I
-         9YuTnIuXmguwoMZMZ9mbGAUp7AWY7KO+tt/6aIVzBbAncDi4iQerPlNlAEdHC/ANOs2Q
-         mwNbve9WEX19BdWipchlipUtunNqdjO1PAUGGHnsGjRRjgr6BVK+bRezZg6nytLlzsul
-         /yWGy6Is/VYHFaQXBnRoJih4+b2hn9djyPl71C2x4QftwbkRmcCKuxNU679CvdjcPlJa
-         Hd3qY4gIZ2Oi6otlSuau/qZC7xr6njVQtxhG2wEmRs7eA8IHyoq8MJyNf3efMQxyVrS2
-         4ldQ==
+        d=linuxfoundation.org; s=google;
+        h=subject:to:cc:references:from:organization:message-id:date
+         :user-agent:mime-version:in-reply-to;
+        bh=kTwCTmm+qM3kR6mErAin/0LCic7Kpz9w0+L56tTO+4Q=;
+        b=WdlQx+DKSpkFS96iovFwHR3SgyfHXV+dGS1QIavPxU8U/0lcjqmfJHaZZPCrqpmFUS
+         GGexgcg3Qhjt8M9OifVv2AFSvheBEIwt/9+zmOt6d+XrNEId9N7sDQ/T83bqtInhUalQ
+         EIizZHq+mX8tVMW4VAAE5AhpM91EBb2h7tpSU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=uFMk6H82KPVIyVWRIAec9k7Pk0WLDwrFL9UCYG6DF5w=;
-        b=unEFvqvfuNOzN5Yklcrn1CwvgIG0BqN5QF22Yw53VZgXNSPrK7RppYxWtPwUs8eqYU
-         dzRXPYkCYr8TVQ1FwUAL9y03jVgzgIXL6Y23BtpYcoZS7n7bXfUFVTl8lmNtFUEecpOy
-         CpWn+wiEd8nZfwxJ0R4xdtPdKkaQyzBaJ6R1LAcYYSCKsPshg7YMnF3QtZs/L/MxVfL/
-         tL1jJNAZzyet7CcCl4yOO8Q5GhsYID4WHeOqFsVCugpXniWux8LyLV6NijYpar91+zie
-         QgACxfhnJDRvejbBoo9OJqGgRrlCbsx5+3kGQ3BOpcbgG19WJCYGr9o3wz2HtY/9Aw0H
-         fD4A==
-X-Gm-Message-State: ALKqPweoVzOHXbvJGoMtC6ermsWN9V7dMd/auoPz8CxdyiJ/A1Ioe5w2
-        pls6ji5edEJxdl5Hmy8Icn3ybr8C
-X-Google-Smtp-Source: AB8JxZpcYPFWhsBvZwStYXzJKcE9oEMogu1bAC+li/pNlUf+a0d1XfrIREL9DQO+uQLaoX7OJfa1Sw==
-X-Received: by 10.28.18.71 with SMTP id 68mr879909wms.74.1525702393198;
-        Mon, 07 May 2018 07:13:13 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e7-v6sm26689331wrn.88.2018.05.07.07.13.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 07 May 2018 07:13:12 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, l.s.r@web.de,
-        martin.agren@gmail.com, peff@peff.net, sunshine@sunshineco.com
-Subject: Re: [PATCH v4 5/7] builtin/grep.c: add '--column' option to 'git-grep(1)'
-References: <20180421034530.GB24606@syl.local>
-        <cover.1525488108.git.me@ttaylorr.com>
-        <9a596d53d6b2523bc94e58678aa43e68068859b6.1525488108.git.me@ttaylorr.com>
-Date:   Mon, 07 May 2018 23:13:12 +0900
-In-Reply-To: <9a596d53d6b2523bc94e58678aa43e68068859b6.1525488108.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Fri, 4 May 2018 19:43:02 -0700")
-Message-ID: <xmqqk1sfpn9j.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:organization
+         :message-id:date:user-agent:mime-version:in-reply-to;
+        bh=kTwCTmm+qM3kR6mErAin/0LCic7Kpz9w0+L56tTO+4Q=;
+        b=P2NACZFMOeJf6fNUgsBZXVRBOAa084PbB8BD1LknfE2rObUDzkfQOrRTS5jdfH0u+T
+         GhQ1EXAmNAc4/fbNcDIy+dWf0CvbmIjjkgKMbbRnqiaT+35sgLhRjdPz/Pxuph758VmS
+         DeGSw4bHrQs4IajKuyMcY8wQsQsLRQNHlY5KJAromnDW0yqTskxLthhj0XOWt5LVYk+9
+         g61nMOSpJjLXvXfeATF5qFO/MDu4UckKU3eucHQZaYjN46+54WGw3EjjBHFj5R+b+ZhP
+         UerF+l3ceoQIGUnYKYIqlAO/2onw/LT8ix7iB6yNj8NgvLuFNkmHPIjvmnCvoy3im55u
+         REHw==
+X-Gm-Message-State: ALQs6tDXgjbqMFiVVB9sWNQgIDF//PWmx2Dhp5r3OzOytAwLkLa6Z710
+        r5zMLljOv076zml998Nh4wqfcGCkSNk=
+X-Google-Smtp-Source: AB8JxZoREOfz9ceUh2Z1SD+hLH1gCCDth6xCq7lBIbJ1PL39yM5UNTB09m+cb6b1hhyW6y1x32r+3g==
+X-Received: by 2002:ac8:4293:: with SMTP id o19-v6mr33537786qtl.321.1525702853918;
+        Mon, 07 May 2018 07:20:53 -0700 (PDT)
+Received: from [10.137.0.22] (ca2x.mullvad.net. [162.219.176.251])
+        by smtp.gmail.com with ESMTPSA id b12-v6sm7334936qtb.57.2018.05.07.07.20.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 07 May 2018 07:20:53 -0700 (PDT)
+Subject: Re: main url for linking to git source?
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+References: <20180507063713.GA28961@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1805070731580.77@tvgsbejvaqbjf.bet>
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Organization: The Linux Foundation
+Message-ID: <4d2b13ae-7f13-4f9c-2baa-f3e04fa9526a@linuxfoundation.org>
+Date:   Mon, 7 May 2018 10:20:50 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <nycvar.QRO.7.76.6.1805070731580.77@tvgsbejvaqbjf.bet>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="3SUxB5zA1Z6PpCnWqE3F9oXg8KjCXOT7p"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--3SUxB5zA1Z6PpCnWqE3F9oXg8KjCXOT7p
+Content-Type: multipart/mixed; boundary="KmAi7D2gvcMfdG5YZ08UQDVxmKQjZtpqt";
+ protected-headers="v1"
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Message-ID: <4d2b13ae-7f13-4f9c-2baa-f3e04fa9526a@linuxfoundation.org>
+Subject: Re: main url for linking to git source?
+References: <20180507063713.GA28961@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1805070731580.77@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1805070731580.77@tvgsbejvaqbjf.bet>
 
-> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> index 18b494731f..5409a24399 100644
-> --- a/Documentation/git-grep.txt
-> +++ b/Documentation/git-grep.txt
-> @@ -13,7 +13,7 @@ SYNOPSIS
->  	   [-v | --invert-match] [-h|-H] [--full-name]
->  	   [-E | --extended-regexp] [-G | --basic-regexp]
->  	   [-P | --perl-regexp]
-> -	   [-F | --fixed-strings] [-n | --line-number]
-> +	   [-F | --fixed-strings] [-n | --line-number] [--column]
->  	   [-l | --files-with-matches] [-L | --files-without-match]
->  	   [(-O | --open-files-in-pager) [<pager>]]
->  	   [-z | --null]
-> @@ -169,6 +169,9 @@ providing this option will cause it to die.
->  --line-number::
->  	Prefix the line number to matching lines.
->  
-> +--column::
-> +	Prefix the 1-indexed column number of the first match on non-context lines.
-> +
+--KmAi7D2gvcMfdG5YZ08UQDVxmKQjZtpqt
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-CA
+Content-Transfer-Encoding: quoted-printable
 
-Two questions.
+On 05/07/18 07:38, Johannes Schindelin wrote:
+>> The git-scm.com site currently links to https://github.com/git/git for=
 
- - It is fine that the leftmost column is 1, but what does this
-   number count?  The number of bytes on the same line before the
-   first byte of the hit (plus 1)?  The display width of the initial
-   non-matching part of the line (plus 1) on a fixed-width terminal?
-   The number of "characters"?  Something else?
+>> the (non-tarball) source code. Somebody raised the question[1] of
+>> whether it should point to kernel.org instead.
+>>
+>> Do people find one interface more or less pleasing than the other? Do =
+we
+>> want to prefer kernel.org as more "official" or less commercial?
+>=20
+> I don't really care about "official" vs "commercial", as kernel.org is
+> also run by a business, so it is all "commercial" to me.
 
- - Does --column combined with -v make any sense?  If not, shouldn't
-   the command error out when both are given at the same time?
+Kernel.org is a registered US non-profit organization, managed by a
+non-profit industry consortium (The Linux Foundation). The entire stack
+behind kernel.org is free software, excepting any firmware blobs on the
+physical hardware.
+
+I'm not trying to influence anyone's opinion of where the links should
+be pointing at, but it's important to point out that kernel.org and
+GitHub serve different purposes:
+
+- kernel.org provides free-as-in-liberty archive hosting on a platform
+that is not locked into any vendor.
+
+- github.com provides an integrated development infrastructure that is
+fully closed-source, excepting the protocols.
+
+Best,
+--=20
+Konstantin Ryabitsev
+Director, IT Infrastructure Security
+The Linux Foundation
+
+
+--KmAi7D2gvcMfdG5YZ08UQDVxmKQjZtpqt--
+
+--3SUxB5zA1Z6PpCnWqE3F9oXg8KjCXOT7p
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCWvBgwwAKCRC2xBzjVmSZ
+bOaZAQDZ0Ua5NjTHjMwDVoOtOi8FYgW7YaBQ0Xw/dX3Vx6me7QD8D4Mctih27kgC
+1otZ5ECwnz3G0DZp9t71sSOlKzumvA0=
+=eHxw
+-----END PGP SIGNATURE-----
+
+--3SUxB5zA1Z6PpCnWqE3F9oXg8KjCXOT7p--
