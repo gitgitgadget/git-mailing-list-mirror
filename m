@@ -2,102 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40238200B9
-	for <e@80x24.org>; Mon,  7 May 2018 14:23:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90753200B9
+	for <e@80x24.org>; Mon,  7 May 2018 14:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752376AbeEGOX1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 10:23:27 -0400
-Received: from ironport.klsmartin.com ([212.211.191.11]:57351 "EHLO
-        ironport.klsmartin.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751976AbeEGOX0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 10:23:26 -0400
-X-IronPort-AV: E=Sophos;i="5.49,374,1520895600"; 
-   d="scan'208";a="16251679"
-Received: from unknown (HELO hera.klsmartin.com) ([172.30.5.66])
-  by ironport.klsmartin.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 07 May 2018 16:23:21 +0200
-Received: from SUMMAIL01.UMK.KLS.zentral ([172.25.1.63])
-        by hera.klsmartin.com (8.14.3/8.13.1/SuSE Linux 0.7) with ESMTP id w47ENIH1015865;
-        Mon, 7 May 2018 16:23:20 +0200
-Received: from SUMMBX01.UMK.KLS.zentral ([172.25.1.64]) by
- SUMMAIL01.UMK.KLS.zentral ([172.25.1.63]) with mapi id 14.03.0351.000; Mon, 7
- May 2018 16:23:18 +0200
-From:   "Middelschulte, Leif" <Leif.Middelschulte@klsmartin.com>
-To:     "newren@gmail.com" <newren@gmail.com>,
-        "hvoigt@hvoigt.net" <hvoigt@hvoigt.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "sbeller@google.com" <sbeller@google.com>,
-        "jacob.keller@gmail.com" <jacob.keller@gmail.com>
-Subject: Re: git merge banch w/ different submodule revision
-Thread-Topic: git merge banch w/ different submodule revision
-Thread-Index: AQHT3UxIUeHy1QVy7UGFBG3KFIVVC6QTM84AgABAJgCAAAk9AIAF8LqAgAKD5oCAAi1+AIABCJ2AgAAekACAAEnKAIAEsXYA
-Date:   Mon, 7 May 2018 14:23:16 +0000
-Message-ID: <1525702992.2177.3.camel@klsmartin.com>
-References: <1524739599.20251.17.camel@klsmartin.com>
-         <CAGZ79kZA_R-5bA6mPdoHkVW-C21pNn_0x6FayhuuXqnOTrmjWw@mail.gmail.com>
-         <CA+P7+xrUwq0G2YySC3SLKqyihhPnFPCiQnQpoVVa89+=W9O9+w@mail.gmail.com>
-         <CAGZ79kaub2k-q-Mcj3H5o6ekyZ8ZZzG7+r5sHt5Ne25Nc3_nPQ@mail.gmail.com>
-         <20180430170229.GA775@book.hvoigt.net>
-         <1525246025.2176.12.camel@klsmartin.com>
-         <20180503164226.GB23564@book.hvoigt.net>
-         <1525422571.2175.52.camel@klsmartin.com>
-         <20180504101854.GA29828@book.hvoigt.net>
-         <CABPp-BGaibCPWuCnaX5Af=sv-2zvyhNcupT+-PkxHDfJBg_Vbw@mail.gmail.com>
-In-Reply-To: <CABPp-BGaibCPWuCnaX5Af=sv-2zvyhNcupT+-PkxHDfJBg_Vbw@mail.gmail.com>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.25.2.97]
-x-kse-serverinfo: SUMMAIL01.UMK.KLS.zentral, 9
-x-kse-attachmentfiltering-interceptor-info: protection disabled
-x-kse-antivirus-interceptor-info: scan successful
-x-kse-antivirus-info: Clean, bases: 07.05.2018 12:25:00
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <3702532D68872549A1D7DD8FCFAE1C2A@klsmartin.de>
-Content-Transfer-Encoding: base64
+        id S1752216AbeEGO0Q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 10:26:16 -0400
+Received: from mail-qt0-f171.google.com ([209.85.216.171]:46495 "EHLO
+        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752676AbeEGO0L (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 10:26:11 -0400
+Received: by mail-qt0-f171.google.com with SMTP id m16-v6so36437036qtg.13
+        for <git@vger.kernel.org>; Mon, 07 May 2018 07:26:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=ZZb/l+F2KVWoduM953TOI7PKmzjmMB+XR/hBqEvaWmM=;
+        b=AFAZnmIKLbv/rmYJ1SL/74AWI+Y9CyDeHcqCggrASmZYBw7Cs6sULtbUeHd1prYGxK
+         Ac6FHvCC89qTHTHFUoiQfRmJyt1eTsl0WztcV5zkgG0FE/Of5UPWVySf0KWyCVjmRDmx
+         GP0hcUs3Z15vEasklCA2W+p7cIcpBVuumjDWPSK+P+b+VL6EguxR0RstGMUrqEhG3nHU
+         0kqFrk/4CoM1zb04K0HSjwHvYPNRNldRKbmdvXcqTzxP8WZDlnOpvY1g2jxfcczbDUh8
+         XEXyvZ7yNkdLda8GW7JILbrhRjYV5lvoGAIuMGH4kLI6SK0AjP4xl+f7GDHER5Zt1oAX
+         Hcxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=ZZb/l+F2KVWoduM953TOI7PKmzjmMB+XR/hBqEvaWmM=;
+        b=GsVIwXZWpQ7kYcg0dJjZ1f3KuFBIj2jldBpHpFIqzD4NbGcfzTsNl6dMnmeHD/XJaG
+         oe3mihb3G5Kp01I58LHIponD7I8fDkkmg/TqQYcbQ+L9EKSH4lFmt+uQ/vY2+zbtE/3S
+         WM+8VbJuphVXv7TPSVZFWyuObKWRSYOlu18YLY2Y+1CGTLSxaoOylx8GfnZgpoPito0a
+         Mt8R0+SbwMfjkT7jMFEqH8alFBPl5ZuaAN6YjcUrZ8QzQY4WIp/LFfm/nkBwi2yew07B
+         uo3QApvQ2aTiM+u6Pjmh4WRQD4Py6RW9UHgBuCh0jOWfimAxdDgS4ioss/nrOt3APLlv
+         wASQ==
+X-Gm-Message-State: ALQs6tCC/rLVSbZc4KDaxZzJoeEK6Np+t9Jss3AzqDwh4xi33G2mjg//
+        8CTMT70lH0v5w7tBpeJecpE=
+X-Google-Smtp-Source: AB8JxZosiLjGcKCX7ikVuFm+xdyh4Pcmy97QrWLXi76vwTXJcf753MHTJcoJqbzF6W9sq4TgIGzpcg==
+X-Received: by 2002:ac8:1766:: with SMTP id u35-v6mr33555290qtk.209.1525703170664;
+        Mon, 07 May 2018 07:26:10 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id y41-v6sm20043900qty.84.2018.05.07.07.26.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 07 May 2018 07:26:10 -0700 (PDT)
+Subject: Re: [RFC] Other chunks for commit-graph, part 1 - Bloom filters, topo
+ order, etc.
+To:     Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <86zi1fus3t.fsf@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <07250f7b-e880-26f5-d412-4fbe69affd41@gmail.com>
+Date:   Mon, 7 May 2018 10:26:09 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
+In-Reply-To: <86zi1fus3t.fsf@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGksDQoNCkFtIEZyZWl0YWcsIGRlbiAwNC4wNS4yMDE4LCAwNzo0MyAtMDcwMCBzY2hyaWViIEVs
-aWphaCBOZXdyZW46DQo+IE9uIEZyaSwgTWF5IDQsIDIwMTggYXQgMzoxOCBBTSwgSGVpa28gVm9p
-Z3QgPGh2b2lndEBodm9pZ3QubmV0PiB3cm90ZToNCj4gPiBIaSwNCj4gPiANCj4gPiBPbiBGcmks
-IE1heSAwNCwgMjAxOCBhdCAwODoyOTozMkFNICswMDAwLCBNaWRkZWxzY2h1bHRlLCBMZWlmIHdy
-b3RlOg0KPiA+ID4gQW0gRG9ubmVyc3RhZywgZGVuIDAzLjA1LjIwMTgsIDE4OjQyICswMjAwIHNj
-aHJpZWIgSGVpa28gVm9pZ3Q6DQo+IA0KPiA8c25pcD4NCj4gPiA+ID4gSXQgc2VlbXMgdG8gbWUg
-dGhhdCB5b3UgZG8gbm90IHdhbnQgdG8gbWl4IGludGVncmF0aW9uIHRlc3RpbmcgYW5kDQo+ID4g
-PiA+IHRlc3Rpbmcgb2YgdGhlIGZlYXR1cmUgaXRzZWxmLg0KPiA+ID4gDQo+ID4gPiBUaGF0J3Mg
-b24gcG9pbnQuIFRoYXQncyB3aHkgaXQgd291bGQgYmUgbmljZSBpZiBnaXQgKmF0IGxlYXN0KiB3
-YXJuZWQNCj4gPiA+IGFib3V0IHRoZSBkaWZmZXJlbnQgcmV2aXNpb25zIHdydCBzdWJtb2R1bGVz
-Lg0KPiANCj4gVGhlcmUncyBhIGdvb2QgcG9pbnQgaGVyZS4uLg0KPiANCj4gPiBXZWxsIGEgc3Vi
-bW9kdWxlIHZlcnNpb24gaXMgcGlubmVkIGRvd24gYXMgbG9uZyBhIHlvdSBkbyBub3QgY2hhbmdl
-IGl0DQo+ID4gYW5kIGNvbW1pdCBpdC4gVGhlIHNhbWUgYXMgZmlsZXMgYW5kIHRoZSBnb2FsIGlz
-IHRvIG1ha2Ugc3VibW9kdWxlcw0KPiA+IGJlaGF2ZSBhcyBjbG9zZSB0byBub3JtYWwgZmlsZXMg
-YXMgcG9zc2libGUuIEFuZCBnaXQgIndhcm5zIiBhYm91dA0KPiA+IGNoYW5nZWQgc3VibW9kdWxl
-cyBieSBkaXNwbGF5aW5nIHRoZW0gaW4gdGhlIGRpZmYuDQo+IA0KPiBBY3R1YWxseSwgc3VibW9k
-dWxlcyBkbyBiZWhhdmUgZGlmZmVyZW50bHkgdGhhbiBub3JtYWwgZmlsZXMgaW4gYW4NCj4gaW1w
-b3J0YW50IHdheSwgd2hpY2ggd2UgbWF5IGJlIGFibGUgdG8gZml4IGFuZCBtYXkgaGVscCBMZWlm
-IGhlcmU6DQo+IA0KPiBXaGVuIG1lcmdpbmcgdHdvIHJlZ3VsYXIgZmlsZXMgdGhhdCBoYXZlIGJl
-ZW4gbW9kaWZpZWQgb24gYm90aCBzaWRlcw0KPiBvZiBoaXN0b3J5LCBnaXQgYWx3YXlzIHByaW50
-cyBhIG1lc3NhZ2UsICJBdXRvLW1lcmdpbmcgJEZJTEUiLiAgV2UNCj4gY291bGQgb21pdCB0aGF0
-IGFuZCBkZXBlbmQgb24gdGhlIHVzZXIgdG8gY2hlY2sgdGhlIGRpZmZzdGF0IG9yIHJ1bg0KPiBk
-aWZmIGFmdGVyd2FyZHMgb3Igc29tZXRoaW5nLCBidXQgd2UgZG9uJ3QganVzdCByZWx5IG9uIHRo
-YXQ7IHdlIGFsc28NCj4gd2FybiB0aGVtIHdpdGggYSBzaW1wbGUgbWVzc2FnZSB0aGF0IHdlIGFy
-ZSBkb2luZyBzb21ldGhpbmcgdG8gcmVzb2x2ZQ0KPiB0aGlzIGJvdGgtc2lkZXMtY2hhbmdlZC10
-aGlzLXBhdGggKG5hbWVseSBlbXBsb3lpbmcgdGhlIHdlbGwga25vd24NCj4gdGhyZWUtd2F5LWZp
-bGUtbWVyZ2UgYWxnb3JpdGhtIHRvIGNvbWUgdXAgd2l0aCBzb21ldGhpbmcpLg0KPiANCj4gSW5z
-aWRlIG1lcmdlX3N1Ym1vZHVsZSgpLCB0aGUgZXF1aXZhbGVudCB3b3VsZCBiZSBwcmludGluZyBh
-IG1lc3NhZ2UNCj4gd2hlbmV2ZXIgd2UgZGVjaWRlIHRoYXQgb25lIGJyYW5jaCBpcyBhIGZhc3Qt
-Zm9yd2FyZCBvZiB0aGUgb3RoZXINCj4gKCJDYXNlICMxIiwgYXMgaXQncyBjYWxsZWQgaW4gdGhl
-IGNvZGUpLCB5ZXQgY3VycmVudGx5IGl0IHByaW50cw0KPiBub3RoaW5nLiAgUGVyaGFwcyBpdCBz
-aG91bGQuDQo+IA0KPiANCj4gTGVpZiwgd291bGQgeW91IGxpa2UgdG8gdHJ5IHlvdXIgaGFuZCBh
-dCBjcmVhdGluZyBhIHBhdGNoIGZvciB0aGlzPw0KVGhhbmtzIGZvciB0aGUgZmVlZGJhY2sgYW5k
-IHRoZSBhZHZpY2UvZGlyZWN0aW9uLg0KDQpJJ2xsIHRyeSB0byB3b3JrIG9uIGl0IHRoaXMgd2Vl
-ayBhbmQgc2VuZCBwYXRjaGVzIHRvIHRoZSBNTCBmb3IgcmV2aWV3Lg0KDQpDaGVlcnMsDQoNCkxl
-aWY=
+On 5/4/2018 3:40 PM, Jakub Narebski wrote:
+> Hello,
+>
+> With early parts of commit-graph feature (ds/commit-graph and
+> ds/lazy-load-trees) close to being merged into "master", see
+> https://public-inbox.org/git/xmqq4ljtz87g.fsf@gitster-ct.c.googlers.com/
+> I think it would be good idea to think what other data could be added
+> there to make Git even faster.
+
+Before thinking about adding more data to the commit-graph, I think 
+instead we need to finish taking advantage of the data that is already 
+there. This means landing the generation number patch [1] (I think this 
+is close, so I'll send a v6 this week if there is no new feedback.) and 
+the auto-compute patch [2] (this could use more feedback, but I'll send 
+a v1 based on the RFC feedback if no one chimes in).
+
+[1] 
+https://public-inbox.org/git/20180501124652.155781-1-dstolee@microsoft.com/
+     [PATCH v5 00/11] Compute and consume generation numbers
+
+[2] 
+https://public-inbox.org/git/20180417181028.198397-1-dstolee@microsoft.com/
+     [RFC PATCH 00/12] Integrate commit-graph into 'fsck' and 'gc'
+
+The big wins remaining from this data are `git tag --merged` and `git 
+log --graph`. The `tag` scenario is probably easier: this can be done by 
+replacing the revision-walk underlying the call to use 
+paint_down_to_common() instead. Requires adding an external method to 
+commit.c, but not too much code.
+
+The tougher challenge is `git log --graph`. The revision walk machinery 
+currently uses two precompute phases before iterating results to the 
+pager: limit_list() and sort_in_topological_order(); these correspond to 
+two phases of Kahn's algorithm for topo-sort (compute in-degrees, then 
+walk by peeling commits with in-degree zero). This requires O(N) time, 
+where N is the number of reachable commits. Instead, we could make this 
+be O(W) time to output one page of results, where W is (roughly) the 
+number of reachable commits with generation number above the last 
+reported result.
+
+In order to take advantage of this approach, the two phases of Kahn's 
+algorithm need to be done in-line with reporting results to the pager. 
+This means keeping two queues: one is a priority queue by generation 
+number that computes in-degrees, the other is a priority queue (by 
+commit-date or a visit-order value to do the --topo-order priority) that 
+peels the in-degree-zero commits (and decrements the in-degree of their 
+parents). I have not begun this refactoring effort because appears 
+complicated to me, and it will be hard to tease out the logic without 
+affecting other consumers of the revision-walk machinery.
+
+I would love it if someone picked up the `git log --graph` task, since 
+it will be a few weeks before I have the time to focus on it.
+
+Without completing the benefits we get from generation numbers, these 
+investigations into other reachability indexes will be incomplete as 
+they are comparing benefits without all consumers taking advantage of a 
+reachability index.
+
+[...]
+> Bloom filter for changed paths
+> ------------------------------
+>
+> The goal of this chunk is to speed up checking if the file or directory
+> was changed in given commit, for queries such as "git log -- <file>" or
+> "git blame <file>".  This is something that according to "Git Merge
+> contributor summit notes" [2] is already present in VSTS (Visual Studio
+> Team Services - the server counterpart of GVFS: Git Virtual File System)
+> at Microsoft:
+>
+> AV> - VSTS adds bloom filters to know which paths have changed on the commit
+> AV> - tree-same check in the bloom filter is fast; speeds up file history checks
+> AV> - might be useful in the client as well, since limited-traversal is common
+> AV> - if the file history is _very_ sparse, then bloom filter is useful
+> AV> - but needs pre-compute, so useful to do once
+> AV> - first make the client do it, then think about how to serve it centrally
+>
+> [2]: https://public-inbox.org/git/alpine.DEB.2.20.1803091557510.23109@alexmv-linux/
+>
+> I think it was what Derrick Stolee was talking about at the end of his
+> part of "Making Git for Windows" presentation at Git Merge 2018:
+> https://youtu.be/oOMzi983Qmw?t=1835
+>
+> This was also mentioned in subthread of "Re: [PATCH v2 0/4] Lazy-load
+> trees when reading commit-graph", starting from [3]
+> [3]: https://public-inbox.org/git/86y3hyeu6c.fsf@gmail.com/
+
+Again, the benefits of Bloom filters should only be measured after 
+already taking advantage of a reachability index during `git log`. 
+However, you could get performance benefits from Bloom filters in a 
+normal `git log` (no topo-order).
+
+The tricky part about this feature is that the decisions we made in our 
+C# implementation for the VSTS Git server may be very different than the 
+needs for the C implementation of the Git client. Questions like "how do 
+we handle merge commits?" may have different answers, which can only be 
+discovered by implementing the feature.
+
+(The answer for VSTS is that we only store Bloom filters containing the 
+list of changed paths against the first parent. The second parent 
+frequently has too many different paths, and if we are computing 
+file-history simplification we have already determined the first parent 
+is _not_ TREESAME, which requires verifying the difference by parsing 
+trees against the first parent.)
+
+I'm happy to provide more information on how we built this feature if 
+someone is writing a patch. Otherwise, I plan to implement it after 
+finishing the parts I think are higher priority.
+
+Thanks,
+-Stolee
