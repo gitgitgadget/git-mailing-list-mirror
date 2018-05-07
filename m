@@ -6,57 +6,60 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 213B0200B9
-	for <e@80x24.org>; Mon,  7 May 2018 14:05:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E47D5200B9
+	for <e@80x24.org>; Mon,  7 May 2018 14:13:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752242AbeEGOFH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 10:05:07 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:37592 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751943AbeEGOFF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 10:05:05 -0400
-Received: by mail-wr0-f195.google.com with SMTP id h5-v6so4978959wrm.4
-        for <git@vger.kernel.org>; Mon, 07 May 2018 07:05:04 -0700 (PDT)
+        id S1752495AbeEGONP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 10:13:15 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34862 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752483AbeEGONO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 10:13:14 -0400
+Received: by mail-wm0-f65.google.com with SMTP id o78-v6so15752545wmg.0
+        for <git@vger.kernel.org>; Mon, 07 May 2018 07:13:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=sTl7iFOjLXuuiN/h4X1VZqknzZB3OOY61ZrfeGRW4no=;
-        b=FyfsURuD2flxT1kL+cchw1mQFEvMDb4ou1dumKrXaSTpWY9wbQRo8T00H9u9bttD9k
-         ENlq64vcOZDs+B0++6IVQG4yqoSWTXdozO29QMHknd8mOlF34xcXnZuyHHm+hHNZjC/0
-         K4SshgrdqOX9A604Djpp1NY8+J3Fo+ApQInYpWNeWgbD5a2wwdzqBDKvooIcwKHXqPYi
-         FvWyELGKkqYwvlwMhyI/NllidDtJscdHj4qotlH8noG8yQOcMapPR45m3U4W4hXRCbrS
-         p6FOAgr6Re/6P8n3P3fp97eZbBNBQL/tPAkEKIR80VlDTKNOU5BoPX0Eg1/KfM46xj7w
-         sMEg==
+        bh=uFMk6H82KPVIyVWRIAec9k7Pk0WLDwrFL9UCYG6DF5w=;
+        b=R6//MrYPmpyMF7qgsFwYOu9HuzyaVSj4UgyWJ26kmELMEOCOeeU4ricuBOanMM8p1I
+         9YuTnIuXmguwoMZMZ9mbGAUp7AWY7KO+tt/6aIVzBbAncDi4iQerPlNlAEdHC/ANOs2Q
+         mwNbve9WEX19BdWipchlipUtunNqdjO1PAUGGHnsGjRRjgr6BVK+bRezZg6nytLlzsul
+         /yWGy6Is/VYHFaQXBnRoJih4+b2hn9djyPl71C2x4QftwbkRmcCKuxNU679CvdjcPlJa
+         Hd3qY4gIZ2Oi6otlSuau/qZC7xr6njVQtxhG2wEmRs7eA8IHyoq8MJyNf3efMQxyVrS2
+         4ldQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=sTl7iFOjLXuuiN/h4X1VZqknzZB3OOY61ZrfeGRW4no=;
-        b=B88CWKZhBkUdZAfsXwbtOTyW7aN2CZPrZWF2RuOpH40KtNMpmi3wxMUPw0v6IdmP60
-         Elc8qIIkOeBZn20ayA6Lkef/6anm01UnmpKTKAgc9sGkMg8hiHVfnvO+4MC04yXifruY
-         pNbJezSTLXIAtguT3R9ZefeINqexbtxYC44//JwTjA/44bl2cD6jkCWsREy0KKdpiuID
-         wN0EFH9f7aoFIZjVKPBL4jLhWNUyu3rCtG43Wp4LhAcA14y7V4uQhY9NQjO19i5/NGq5
-         hy34YBfRDMDIG9jqE47A7X8uGvd4y3HeuJ6PDvatzuWApIUSS3qrlnvkZskDmy9rlnnC
-         pFNQ==
-X-Gm-Message-State: ALQs6tAFydVmr8Ouu0BsVcHlikAo2Q2rQvs4ezuBK23DDNJw/HVVua2k
-        f4Mm8l/DssTD9i011cmIp1w=
-X-Google-Smtp-Source: AB8JxZrxu8si71d3fstJeoqNe+6r9gcj9/7jPK6o+e3nqQm10HTScjgGiQdHpKxl+uss9U7+bGs4Uw==
-X-Received: by 2002:adf:d0cb:: with SMTP id z11-v6mr27302644wrh.281.1525701903789;
-        Mon, 07 May 2018 07:05:03 -0700 (PDT)
+        bh=uFMk6H82KPVIyVWRIAec9k7Pk0WLDwrFL9UCYG6DF5w=;
+        b=unEFvqvfuNOzN5Yklcrn1CwvgIG0BqN5QF22Yw53VZgXNSPrK7RppYxWtPwUs8eqYU
+         dzRXPYkCYr8TVQ1FwUAL9y03jVgzgIXL6Y23BtpYcoZS7n7bXfUFVTl8lmNtFUEecpOy
+         CpWn+wiEd8nZfwxJ0R4xdtPdKkaQyzBaJ6R1LAcYYSCKsPshg7YMnF3QtZs/L/MxVfL/
+         tL1jJNAZzyet7CcCl4yOO8Q5GhsYID4WHeOqFsVCugpXniWux8LyLV6NijYpar91+zie
+         QgACxfhnJDRvejbBoo9OJqGgRrlCbsx5+3kGQ3BOpcbgG19WJCYGr9o3wz2HtY/9Aw0H
+         fD4A==
+X-Gm-Message-State: ALKqPweoVzOHXbvJGoMtC6ermsWN9V7dMd/auoPz8CxdyiJ/A1Ioe5w2
+        pls6ji5edEJxdl5Hmy8Icn3ybr8C
+X-Google-Smtp-Source: AB8JxZpcYPFWhsBvZwStYXzJKcE9oEMogu1bAC+li/pNlUf+a0d1XfrIREL9DQO+uQLaoX7OJfa1Sw==
+X-Received: by 10.28.18.71 with SMTP id 68mr879909wms.74.1525702393198;
+        Mon, 07 May 2018 07:13:13 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z192-v6sm1923702wmc.10.2018.05.07.07.05.01
+        by smtp.gmail.com with ESMTPSA id e7-v6sm26689331wrn.88.2018.05.07.07.13.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 07 May 2018 07:05:02 -0700 (PDT)
+        Mon, 07 May 2018 07:13:12 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jamill@microsoft.com
-Subject: Re: [PATCH 00/13] object store: alloc
-References: <20180501213403.14643-1-sbeller@google.com>
-Date:   Mon, 07 May 2018 23:05:01 +0900
-In-Reply-To: <20180501213403.14643-1-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 1 May 2018 14:33:50 -0700")
-Message-ID: <xmqqo9hrpnn6.fsf@gitster-ct.c.googlers.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, l.s.r@web.de,
+        martin.agren@gmail.com, peff@peff.net, sunshine@sunshineco.com
+Subject: Re: [PATCH v4 5/7] builtin/grep.c: add '--column' option to 'git-grep(1)'
+References: <20180421034530.GB24606@syl.local>
+        <cover.1525488108.git.me@ttaylorr.com>
+        <9a596d53d6b2523bc94e58678aa43e68068859b6.1525488108.git.me@ttaylorr.com>
+Date:   Mon, 07 May 2018 23:13:12 +0900
+In-Reply-To: <9a596d53d6b2523bc94e58678aa43e68068859b6.1525488108.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Fri, 4 May 2018 19:43:02 -0700")
+Message-ID: <xmqqk1sfpn9j.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,44 +68,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> This applies on top of sb/oid-object-info and is the logical continuum of
-> the series that it builds on; this brings the object store into more of
-> Gits code, removing global state, such that reasoning about the state of
-> the in-memory representation of the repository is easier.
+> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> index 18b494731f..5409a24399 100644
+> --- a/Documentation/git-grep.txt
+> +++ b/Documentation/git-grep.txt
+> @@ -13,7 +13,7 @@ SYNOPSIS
+>  	   [-v | --invert-match] [-h|-H] [--full-name]
+>  	   [-E | --extended-regexp] [-G | --basic-regexp]
+>  	   [-P | --perl-regexp]
+> -	   [-F | --fixed-strings] [-n | --line-number]
+> +	   [-F | --fixed-strings] [-n | --line-number] [--column]
+>  	   [-l | --files-with-matches] [-L | --files-without-match]
+>  	   [(-O | --open-files-in-pager) [<pager>]]
+>  	   [-z | --null]
+> @@ -169,6 +169,9 @@ providing this option will cause it to die.
+>  --line-number::
+>  	Prefix the line number to matching lines.
+>  
+> +--column::
+> +	Prefix the 1-indexed column number of the first match on non-context lines.
+> +
 
-I am not sure how well this topic is done, but I've queued the
-following patch at the tip of the topic to make it compile after
-getting merged to integration branches (curiously, the topic by
-itself compiled file for whatever reason). I think I haven't send
-that fixup patch out, so here it is.
+Two questions.
 
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Date: Wed, 2 May 2018 19:09:50 +0900
-Subject: [PATCH] alloc.c: include alloc.h
+ - It is fine that the leftmost column is 1, but what does this
+   number count?  The number of bytes on the same line before the
+   first byte of the hit (plus 1)?  The display width of the initial
+   non-matching part of the line (plus 1) on a fixed-width terminal?
+   The number of "characters"?  Something else?
 
-Otherwise the definition in alloc.c would not see the matching decl
-in alloc.h, triggering warning from compiler.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- alloc.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/alloc.c b/alloc.c
-index 66a3d07ba2..f47a67153b 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -16,6 +16,7 @@
- #include "tree.h"
- #include "commit.h"
- #include "tag.h"
-+#include "alloc.h"
- 
- #define BLOCKING 1024
- 
--- 
-2.17.0-391-g1f1cddd558
-
+ - Does --column combined with -v make any sense?  If not, shouldn't
+   the command error out when both are given at the same time?
