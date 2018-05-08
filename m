@@ -2,90 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAA0F1F424
-	for <e@80x24.org>; Tue,  8 May 2018 20:53:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3AFB1F42D
+	for <e@80x24.org>; Tue,  8 May 2018 21:19:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932533AbeEHUxV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 16:53:21 -0400
-Received: from mout.gmx.net ([212.227.17.20]:58915 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932493AbeEHUxN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 16:53:13 -0400
-Received: from [10.92.140.20] ([167.220.148.20]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIPhr-1fJAHV2xoN-004CIW; Tue, 08
- May 2018 22:53:06 +0200
-Date:   Tue, 8 May 2018 16:53:04 -0400 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] t6050-replace: don't disable stdin for the whole test
- script
-In-Reply-To: <20180507120407.4323-1-szeder.dev@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1805081651150.77@tvgsbejvaqbjf.bet>
-References: <20180507120407.4323-1-szeder.dev@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1755823AbeEHVT1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 17:19:27 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:42512 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755699AbeEHVTY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 17:19:24 -0400
+Received: by mail-wr0-f194.google.com with SMTP id v5-v6so33695986wrf.9
+        for <git@vger.kernel.org>; Tue, 08 May 2018 14:19:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=hCqlGcR2X7vztZC2QassKBQcoqCGaeHlh2ZhI+wzS2w=;
+        b=oVDbGSwYAaJK9s80dsKeLU90X+JewfBSNf+Yan4wwMsc9QIwT3qu489xv2NAoWHUqo
+         mmzGIX/qdX4vJoJhFJP68op3ozH7+HTrT8rLIPQ/qCUlya6ARuTupv8XMHp3xGzfYbYF
+         ktiYS0veB1RkmsGsSNfOZKI0nTyEWm3CFm7jYBTJtUkeiQiRUa7Nhj4nhZDklPphFvi5
+         tQU/hUD21/s3jHeYdBqF6AoB9bKhpPKQsCohanA1Nm4qJgm6C1Xez1Tgk6QDc6IfQS7i
+         oblyaXCfu+650o+27VbTJy4Lfi/w2blkIfNGYII+MZGEwWg1/daqVhmLV/CZTA5nvAmb
+         vrHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=hCqlGcR2X7vztZC2QassKBQcoqCGaeHlh2ZhI+wzS2w=;
+        b=UH2s6AzjIQGMmfuy8h/2b7yR6pNfaBuKwQNUR9/AKu2IAt2DWUbDmVTp8HnIerv2hC
+         C9NqfzWRDVJ/MSaEySpwWoTTa6K4MRh9/rZPCtLWjqqU2BQPI0p6f3THdNgac/72GVST
+         q9IFCzDeRJ0tWFNbPgO1zXFX9anMrxI3NN6sOH5VTAWcZAWKpfa5kxV38UZCowBUSo/M
+         RtNDrEkhWybtvk++xflQTeHwwffnm+JJRurYXnhIi27fvFqNM5d3pQNOi9NlkvsrsBKk
+         ZvA7uNjhhcqjBE5YGG8xuKep/HNx/vxF3A6bFmTr5G30fp/LRJnTvy11kl2U+Xm2TAMm
+         MO6A==
+X-Gm-Message-State: ALQs6tDBT/zVzN2O/vzV1MdxO6O9e/XIKKoRncHCzKusGOtKkE9XYoR3
+        9dw5qNVSqA6lntMlhg+gJwhtVCQp
+X-Google-Smtp-Source: AB8JxZpthkwms7Psa8iVESv9uTVLTYViZ/5mDi4TscIi7Z7OOwP6Ls+KY6F8wOswInwzasi+Oxt1Qg==
+X-Received: by 2002:adf:86fa:: with SMTP id 55-v6mr38274485wry.232.1525814363275;
+        Tue, 08 May 2018 14:19:23 -0700 (PDT)
+Received: from [192.168.0.103] ([92.55.154.57])
+        by smtp.gmail.com with ESMTPSA id j8-v6sm42922603wra.58.2018.05.08.14.19.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 May 2018 14:19:22 -0700 (PDT)
+Subject: Re: [GSoC] A blog about 'git stash' project
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <67e6d306-0885-9340-13c8-3e3d4333dc20@gmail.com>
+ <20180508040037.GA2816@syl.local>
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Message-ID: <d4d4c9f7-9b7d-cd41-bddb-85994f227e3b@gmail.com>
+Date:   Wed, 9 May 2018 00:19:21 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-489636863-1525812779=:77"
-Content-ID: <nycvar.QRO.7.76.6.1805081653030.77@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:JHFNKpjQJiGDk+lIsbdWtGW07RG0PNRc9b74U0y0yKTK0g+aPiw
- WARROreEaBBixzhSIGqqOnN60GJ/qwjKUv0SK1ZS4/ShLBFv3YkIMN0CxoM98+Veym2A87V
- gwqMTz8KEWqsucZ26eL+4oDPXLtjgSooGoz3kbByuzd+p4D/Xgu7tjDnj77BloXu7cKAtra
- j8xOis40Zo9EmQNYaswog==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FDq1IBH8cLU=:F5VE4fiEe/Q6KWPnznxbpv
- jlaNqqLqmHUHna8SncT5h7gYpt095oBsl5AecbUqj/iLntl8pDnMdDsEClD49zo9ZSa5iGlSC
- 3v8e4TaQRFbG/bUSDchXmgCSGxxRija6BCbkXaHHxm/Pe96aDhCNPoxFhA70UgGvjBksHO1ZE
- Pui8Uc8LjfgIG8jy5ihEMGgzptjZkZvF9LkgXOurLQGxrmQv8l2n7nhIjtbAOh4WRIuESfA2B
- PnpeWTSKxHGOHCPKK+Seza2XhMHzHaG10oxpqHxs8JYL++/aNyfBAAOsSHIHCwUmHQry0KwIP
- 3BO7JrK3zRraVY8uu2qn993zCUgA4V4da54cW8GTX/J1aJQMXTSMhe1hMT0wY5skdP3VBQ1xa
- E8whPNzE/xwA7mOyzrdm4J1QZLJndkcSaPIhuBfZumDVMlIk0K16ZTzgVYEvSpOUqAeZ8sszk
- OZo19UJ+rlBlSfmiA3onI2vI2/9AlS7aaM5+jB5XSR5bU1Xd5YhjcX52xfo30hiWKcewIwgqQ
- 5nx1BFBuKKM4XwNyodGeTfsHkwyun7ehlhUVFvyK7Zn04wjTraY7xeLn5m71BKpL9TqBQbclS
- jv2LlUoN0xk50rkNYpWA/mtrEed+hyWFgGWav5mnCKmTTEZT9aTKI6RhpOa9/Vk5HOIKeezdG
- YGFVh5kccIPsBQVPpyVRlioqe5+ta0l5IUm0YwtzH8CtwaUq31qZEcXR/L/iNp9zdqNenZDFc
- 8edJIR3UPh643LG4c2rB03k2kmp0rTu6y1NXAI8pC/S5wReWDTTUcfGfdiqpze/SynzwiCbBr
- HAygKfZ
+In-Reply-To: <20180508040037.GA2816@syl.local>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hello,
 
---8323328-489636863-1525812779=:77
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <nycvar.QRO.7.76.6.1805081653031.77@tvgsbejvaqbjf.bet>
+On 08.05.2018 07:00, Taylor Blau wrote:
+> On Fri, May 04, 2018 at 12:48:21AM +0300, Paul-Sebastian Ungureanu wrote:
+>> Hello everybody,
+>>
+>> The community bonding period started. It is well known that for a greater
+>> rate of success, it is recommended to send weekly reports regarding project
+>> status. But, what would be a good form for such a report? I, for one, think
+>> that starting a blog is one of the best options because all the content will
+>> be stored in one place. Without further ado, I would like you to present my
+>> blog [1].
+> 
+> Hi Paul, and welcome to Git! I am looking forward to reading your
+> patches and any additional writing posted on your blog.
 
-Hi G=C3=A1bor,
+It is a pleasure to be here. Thank you!
 
-On Mon, 7 May 2018, SZEDER G=C3=A1bor wrote:
+>> Any feedback is greatly appreciated! Thank you!
+> 
+> Do you have a RSS feed that I can consume in a feed reader?
 
-> The test script 't6050-replace.sh' starts off with redirecting the whole
-> test script's stdin from /dev/null.  This redirection has been there
-> since the test script was introduced in a3e8267225 (replace_object: add
-> a test case, 2009-01-23), but the commit message doesn't explain why it
-> was deemed necessary.  AFAICT, it has never been necessary, and t6050
-> runs just fine and succeeds even without it, not only the current
-> version but past versions as well.
->=20
-> Besides being unnecessary, this redirection is also harmful, as it
-> prevents the test helper functions 'test_pause' and 'debug' from working
-> properly in t6050, because we can't enter any commands to the shell and
-> the debugger, respectively.
+Yes. It can be found here [1].
 
-The redirection might have been necessary before 781f76b1582 (test-lib:
-redirect stdin of tests, 2011-12-15), but it definitely is not necessary
-now.
-
-Thanks,
-Dscho
---8323328-489636863-1525812779=:77--
+[1]
+https://ungps.github.io/atom.xml
+Best,
+Paul
