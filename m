@@ -2,146 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0F14200B9
-	for <e@80x24.org>; Tue,  8 May 2018 15:56:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAB98200B9
+	for <e@80x24.org>; Tue,  8 May 2018 16:39:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755393AbeEHP4o (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 11:56:44 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:46293 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755371AbeEHP4n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 11:56:43 -0400
-Received: by mail-lf0-f66.google.com with SMTP id x7-v6so11611962lff.13
-        for <git@vger.kernel.org>; Tue, 08 May 2018 08:56:42 -0700 (PDT)
+        id S1755464AbeEHQjO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 12:39:14 -0400
+Received: from mail-yb0-f178.google.com ([209.85.213.178]:38595 "EHLO
+        mail-yb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755434AbeEHQjN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 12:39:13 -0400
+Received: by mail-yb0-f178.google.com with SMTP id w14-v6so11362175ybm.5
+        for <git@vger.kernel.org>; Tue, 08 May 2018 09:39:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=KsW7QUoofldaXLZR7mn/naz8kXikcuI4EBCYzCaoPxY=;
-        b=qISQCxgOz+h7KKrY9T2HwU2oSPO2JSdo3bw7k85GTFgoTJu3Un20IWWp8khoZ/7Sbu
-         yFLFFrNVFkLBZJ5KUiShYrxiwbku/H39wsT1yNJnBUJnz3I6wuXuS7LQMVq8zGW7g3W2
-         ePIWFPHA16Wmn2Y2+3LTmMiE/N0RbgTOruMkld5NN1U1a02MPwQKeDF27Z6Q3DqTp3Yb
-         Bt6nYSMBF5UubOJ+379nTSnmCay9mw5UQu1UgD54vNGMi4t4mkoYH60hdS343TfBmqjY
-         0fDe7IioryEDGwfBQiDuszgI2P1le3gmDbLMwu3wgJ73xKHbY12OXHgRcmmtf5bUOH6I
-         arFg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ppdYPdVN1+23KaUSPxVVByQCra0DcuZYM7Lyxvmrr08=;
+        b=pmhiYtz0VhfkGUKNq9YlbKCqYbG1J4JOeIMjU3Z+ulOEGobz7iJMlO0ALbDihjkXH3
+         lP8ZwwC+wpI3UhOzcZEFg3QaLKkmX0l1SLqdrlWzAt1hgLRiQHdZehClNGGsxtDgotPA
+         rEwc2lyf7/SRZEkN8P7aWj9GCquUIzx3Gdgqkca779a5o6/YyRT3HGjmHapkdEPI5ZOi
+         t06s7Mz0sxTjq0h8a+25lfYoSKFQ/gRntZO0Xd+onHYXfEB1+CTquRmlqyzu61mOGy0H
+         BhyA+3xb2LNeHifnj/w11r3Ko/SCOvt6quUK0etOqmDaFWpS8+JJn9Wfk0sZ+ncR97WE
+         /LCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=KsW7QUoofldaXLZR7mn/naz8kXikcuI4EBCYzCaoPxY=;
-        b=XYimarz7sClY2hKecAv+9ZM/lQHshhv0Z7fgCffx2+HM3cNPNQqt+S8CU11UL+lNxN
-         CkdCjCZmCS3Gi26HtsgcymM3+4Rv1KF8fidilQuxmvrJXKhD7+PQGN5vqeoPfuJYDgwS
-         7mbHYIN1iNY7rDLZeeAVb16wR6NdCiOO762SkQ6iWziOKcbyHf9E7LXsJzz7nxeQPL8n
-         DYeSO1UtjHgNQMDN52ifBdpCdQtQuIyWuitSfwzAKMRDHvHCyU4g+IVC/PPTexQdQjPG
-         37NNDtKH3tJqxhrXHvSr2gcYHsgwOz6QWaUvBEfu1mGmMQmX2myfpGbMdKk2lnfYl/0/
-         wNyw==
-X-Gm-Message-State: ALQs6tBvaL3L9bkri4H0NyBFE/4TQpGXHiGhatqTXxTW5wgJ8IkMAVVR
-        s4ewHQuqJbkExyUnfnivevA=
-X-Google-Smtp-Source: AB8JxZo5itsJPTkdiTHGbNq/zLddJJVJ7p3EEnnPR2lXoDN2MW0pDiuomLKY8+7RBQHkzpxS+mlBrg==
-X-Received: by 2002:a19:6b15:: with SMTP id d21-v6mr25286152lfa.123.1525795001568;
-        Tue, 08 May 2018 08:56:41 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id p17-v6sm2636896ljc.72.2018.05.08.08.56.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 May 2018 08:56:40 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        peff@peff.net, sandals@crustytoothpaste.net, sbeller@google.com,
-        stolee@gmail.com, sunshine@sunshineco.com
-Subject: [PATCH] pack-format.txt: more details on pack file format
-Date:   Tue,  8 May 2018 17:56:27 +0200
-Message-Id: <20180508155627.19245-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.17.0.705.g3525833791
-In-Reply-To: <CACsJy8AkfNfupdr1MqZSaxNCbPwBVzxXNMMqPvwif0NtuCxDaA@mail.gmail.com>
-References: <CACsJy8AkfNfupdr1MqZSaxNCbPwBVzxXNMMqPvwif0NtuCxDaA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ppdYPdVN1+23KaUSPxVVByQCra0DcuZYM7Lyxvmrr08=;
+        b=ij8flVZLx82Iv/G3kgn8uz9kxEnpZrD6fjP9jbIdcdPHXB6Q9SnnDGKmXizZ3LgjQZ
+         pAPQcMqCMdkre5Ptj5ELwWomsBdYShKL78b1U5nJkKF3PJPXWlSXnVOCpXeJfxEdF+2s
+         5ya00tg/hGRSdm97IiE4FJ1wTGlP0Zku3VeZ2zT1QT3qy1NhVDKIE0hy1vJiQ34wYXhw
+         fWE5R6e6ofc52oQXXEeqQ634+Zmwb5hygJG/NKzMDyWhS/WCDKcWokX/9DJJhp/YA8rb
+         Po/6sRgnEE7NKfFCqCieuaejFIgVUhrf8zchPnGL1gABpAn/BCaD5ot04/Pk+XXvN7Ou
+         9Ycw==
+X-Gm-Message-State: ALQs6tDsYsCrjtYKQcgOV0pFqcdmE4gL4keZjC8etUx1LPUK+Om+msuy
+        J4LG/1g2F3QezyDvwyqBgwiofo/NAlT8SU+qbH7fIQ==
+X-Google-Smtp-Source: AB8JxZrGAOwx2JgvXDuCaNH8rX6/erKfFoCxVZR3jWZdy1mYgADglY+oVQAu247AcEe34/oFPJWdOnhBitaiyYtmXGo=
+X-Received: by 2002:a25:500e:: with SMTP id e14-v6mr25347318ybb.334.1525797552856;
+ Tue, 08 May 2018 09:39:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Tue, 8 May 2018 09:39:12 -0700 (PDT)
+In-Reply-To: <CACsJy8BGs7EOYFKayL-bgvEbKOJiROF52o3SneLyG9Nm6nUngA@mail.gmail.com>
+References: <20180417181300.23683-1-pclouds@gmail.com> <CAPig+cRkUrdtbyGEsY=DQCDoEWTrC-9n4=vKXHEap2gokB2uQg@mail.gmail.com>
+ <CACsJy8BGs7EOYFKayL-bgvEbKOJiROF52o3SneLyG9Nm6nUngA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 8 May 2018 09:39:12 -0700
+Message-ID: <CAGZ79kb1VEkB4aw9ukx1LsOUX7=HzFcC=2=LwU4ipFEH60ALag@mail.gmail.com>
+Subject: Re: [PATCH/RFC] completion: complete all possible -no-<options>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current document mentions OBJ_* constants without their actual
-values. A git developer would know these are from cache.h but that's
-not very friendly to a person who wants to read this file to implement
-a pack file parser.
+On Tue, May 8, 2018 at 8:24 AM, Duy Nguyen <pclouds@gmail.com> wrote:
 
-Similarly, the deltified representation is not documented at all (the
-"document" is basically patch-delta.c). Translate that C code in
-English.
+> I'm arguing about this because I want to see your reaction, because
+> I'm thinking of doing the very same thing for config completion. Right
+> now "git config <tab>" gives you two pages of all available config
+> variables. I'm thinking that we "git config <tab>" just shows the
+> groups, e.g.
+>
+>> ~/w/git $ git config
+> add.              interactive.
+> advice.           log.
+> alias.            mailmap.
+> am.               man.
+>
+> Only when you do "git config log.<tab>" that it shows you log.*
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- I noticed that these object type values are not documented in
- pack-format.txt so here's my attempt to improve it.
-
- While at there, I also add some text about this obscure delta format.
- We occasionally have questions about this on the mailing list if I
- remember correctly.
-
- Documentation/technical/pack-format.txt | 41 +++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
-
-diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
-index 8e5bf60be3..2c7d5c0e74 100644
---- a/Documentation/technical/pack-format.txt
-+++ b/Documentation/technical/pack-format.txt
-@@ -36,6 +36,47 @@ Git pack format
- 
-   - The trailer records 20-byte SHA-1 checksum of all of the above.
- 
-+Valid object types are:
-+
-+- OBJ_COMMIT (1)
-+- OBJ_TREE (2)
-+- OBJ_BLOB (3)
-+- OBJ_TAG (4)
-+- OBJ_OFS_DELTA (6)
-+- OBJ_REF_DELTA (7)
-+
-+Type 5 is reserved for future expansion.
-+
-+Deltified representation is a sequence of one byte command optionally
-+followed by more data for the command. The following commands are
-+recognized:
-+
-+- If bit 7 is set, the remaining bits in the command byte specifies
-+  how to extract copy offset and size to copy. The following must be
-+  evaluated in this exact order:
-+  - If bit 0 is set, the following byte contains bits 0-7 of the copy
-+    offset (this also resets all other bits in the copy offset to
-+    zero).
-+  - If bit 1 is set, the following byte contains bits 8-15 of the copy
-+    offset.
-+  - If bit 2 is set, the following byte contains bits 16-23 of the
-+    copy offset.
-+  - If bit 3 is set, the following byte contains bits 24-31 of the
-+    copy offset.
-+  - If bit 4 is set, the following byte contains bits 0-7 of the copy
-+    size (this also resets all other bits in the copy size to zero_.
-+  - If bit 5 is set, the following byte contains bits 8-15 of the copy
-+    size.
-+  - If bit 6 is set, the following byte contains bits 16-23 of the
-+    copy size.
-+
-+  Copy size zero means 0x10000 bytes. The data from source object at
-+  the given copy offset is copied back to the destination buffer.
-+
-+- If bit 7 is not set, it is the copy size in bytes. The following
-+  bytes are copied to destination buffer
-+- Command byte zero is reserved for future expansion.
-+
- == Original (version 1) pack-*.idx files have the following format:
- 
-   - The header consists of 256 4-byte network byte order
--- 
-2.17.0.705.g3525833791
-
+How cool is that? I'd love it.
