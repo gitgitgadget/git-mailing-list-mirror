@@ -7,54 +7,61 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 214631F42E
-	for <e@80x24.org>; Tue,  8 May 2018 07:56:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C1811F42E
+	for <e@80x24.org>; Tue,  8 May 2018 09:53:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754537AbeEHH4c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 03:56:32 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:40518 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754263AbeEHH42 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 03:56:28 -0400
-Received: by mail-pg0-f54.google.com with SMTP id l2-v6so20812772pgc.7
-        for <git@vger.kernel.org>; Tue, 08 May 2018 00:56:28 -0700 (PDT)
+        id S932399AbeEHJxI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 05:53:08 -0400
+Received: from mail-pl0-f51.google.com ([209.85.160.51]:38892 "EHLO
+        mail-pl0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932067AbeEHJxD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 05:53:03 -0400
+Received: by mail-pl0-f51.google.com with SMTP id c11-v6so1921029plr.5
+        for <git@vger.kernel.org>; Tue, 08 May 2018 02:53:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :user-agent:mime-version:in-reply-to;
-        bh=BZL/XihJeaUXeUUoey2HYFFgcORYoURiSauhO34ttNI=;
-        b=Fibpb4BSduYgOtEWN/5XL5aX6MLxj+SlR2n2PApEy/t4ACWYX6206ilocEIM2gZQYl
-         twVX+ueCFSiXCMuuU7Y+VgHmnYHPUAWpJ6BXttvsN0WHsLDmW14Hof0Yw/5bhUxIIWWP
-         YerXVRVInBLPk5I7fthPiEqPAS3rdrCK0WxMv5SDo0EUzNyv9ABRwYr2Gh+M/NUoxvRr
-         7j1OlsDsD9VDVm7ib/r62fqTIBI4r/1RsSzo+SeaH1DaqxutR86uEzu/l8bNIwgpshBC
-         mPCNYcWBpZewF+r5fUduyIxfzCB8b68jiVaIplgbRmyY7yWUepndYvoIyX3MpHytf3UV
-         xTjw==
+        bh=qxF7tD5ftWha73B3LlAbl5nkzdLOs3njOrFHCPWc28w=;
+        b=IUU+JCvjYA613BZtoRsJ/mIPk/8qSYoqhBh7xFzPxx2aoZxDju4t9y6l3Z7C9JqcII
+         mVW0pJO4BosD4f8/b8SzuHo+x5ByllDfZvHsQHFWY6SrzDxdSscda9OrymFq5PFGBGjD
+         4OtpTpEoiDOpSFcwkh+bnhl0pTdp01fyEVqi+/1fH2lxaEwyEySHHxhUyaeIqjot3CNd
+         2vqjW2KJfqtwic1qVhBRD/juKKVQsO3XNOSgrtJQCIgz/kzC5habr8XN4Y4VDj8iMhFv
+         PJPr6bC7dK8KMxxCG0nPAwQT++78OHCn5HBm9i1A099k1aTKo1XdBpLay6wYgJzlbaPr
+         qoGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to;
-        bh=BZL/XihJeaUXeUUoey2HYFFgcORYoURiSauhO34ttNI=;
-        b=aJLT0ccrZSIdKoL0/iBtzdNKpFCsGT2V8CgdoIEze9jcZ+kph2UJzu17ClCRLfTz7j
-         9NB5XdCqQKXPeUvWNbHWGPhia0JS84/f0j7cYowaRLkAItim7OffXMX5qQ92FMiys8Ha
-         6RVl3C4qp/CoTpjNVkmHTL5MvtTeogHpyvrrM8cHp4gv5X4NJdsvT0WCOShpqDiELe8q
-         1m2k4JML/lUAGsREBDivHFiojLMFVa6sNMb+16czXpmDO8wBDtawjnkbmEL9BtRTa5Sq
-         guw2wMoRwz6epnPklCtOOUEwPoCuPxAMSQFA8tltC0+WjqdFER4IrjHsC0JE/2TEfKYX
-         0HjA==
-X-Gm-Message-State: ALQs6tAh+ujPIMclSHC632F5bwanh5c/6Hg1MvyhNiXWAlX/exotikBO
-        pp06Vxi0kwW9lK+IGc4QI5goRCj4
-X-Google-Smtp-Source: AB8JxZoNxygh7mlXg2E6cB5ys9rfeVKjHyPyM2u+LprDczJu1miamTuRPFJUiCZEUfJk2710PStZsg==
-X-Received: by 2002:a63:6fc8:: with SMTP id k191-v6mr31965743pgc.330.1525766187703;
-        Tue, 08 May 2018 00:56:27 -0700 (PDT)
+        bh=qxF7tD5ftWha73B3LlAbl5nkzdLOs3njOrFHCPWc28w=;
+        b=JVvL1I/8gfn05vDNRiiVZclXbQDnN7fPA7jOyjhD/eC4CJeeqTr1TE9e5K+tTJMvQD
+         LioIs3XhsVAogn6cXBd4pgVqeiLG3f2fGSwsmPxBMJUuNnUSutfAM/Lv/ZjgUgeZID2v
+         dsRdVKAn9ugNLRKRQOhKC7cFFMFhS6jF6ncnktY1P15mmlW04yhP3I2zSXMIhJC2+eCW
+         SAQojxaFHO0jka+ux67dcr0wWH8QzbHM6VT9KlSMhSSNr2kUNvuG/zHyBBXBEJVldH/l
+         T/GbAF3lSMNM7VvpLnfo01PV83Qbpy3/D88bzN4rJCdlae2ZxbPQixYMF2v/Xvm9juMB
+         L8rg==
+X-Gm-Message-State: ALQs6tDQjZPpEGLJgFXlkXPWm29cvXdPJUvv20f5vqUwkPZsRQm2jLND
+        pexNT/kQC9ZTm8rFylodnYgkAGTm
+X-Google-Smtp-Source: AB8JxZrLFqCC5rgwVFfAxYfWWMyr7XtINR6PDfZED98rN1dh5vD9x4EzBUnILaasORV/cE943FDbtw==
+X-Received: by 2002:a17:902:341:: with SMTP id 59-v6mr19395769pld.324.1525773182648;
+        Tue, 08 May 2018 02:53:02 -0700 (PDT)
 Received: from [192.168.206.100] ([117.209.132.10])
-        by smtp.gmail.com with ESMTPSA id o70sm10104250pfo.49.2018.05.08.00.56.22
+        by smtp.gmail.com with ESMTPSA id a6sm44762122pfo.88.2018.05.08.02.52.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 May 2018 00:56:26 -0700 (PDT)
-Subject: Re: Weak option parsing in `git submodule`
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing list <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>
-References: <1525630243.15782.4.camel@gmail.com>
- <CAGZ79kYSanRAchMe+7uJ4spy+GaS7PyU7epPeOSCs_58RsAR8A@mail.gmail.com>
+        Tue, 08 May 2018 02:53:01 -0700 (PDT)
+Subject: Re: [PATCH 3/8] push tests: add more testing for forced tag pushing
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
+        Jeff King <peff@peff.net>
+References: <20180429202100.32353-1-avarab@gmail.com>
+ <CACBZZX7HFnEMD8PKWj0c7VWqv=yeYCXYJjy-5YPZnF_pJAy0jw@mail.gmail.com>
+ <20180429202100.32353-4-avarab@gmail.com>
+ <xmqq8t8uoovn.fsf@gitster-ct.c.googlers.com>
+ <xmqq4ljiomvv.fsf@gitster-ct.c.googlers.com>
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=kaartic.sivaraam@gmail.com; prefer-encrypt=mutual; keydata=
@@ -101,113 +108,61 @@ Autocrypt: addr=kaartic.sivaraam@gmail.com; prefer-encrypt=mutual; keydata=
  YkZ4Hv7M8LuQGn64pFrm4grbF/wxkmvgeyBTQA/A9WNWndlinlFYiZGmDoiZUAcSKA9oBTPc
  4jXwW/YIfNYwd7SlatiwKjF1QxuL1X0QMMPstR/UoVc3sbiabb4Km5jS2oU9q6KpeikRshMI
  IZ7P/DJ/
-Message-ID: <7b573a6b-0486-f9bd-4499-deb9b1394f78@gmail.com>
-Date:   Tue, 8 May 2018 13:26:15 +0530
+Message-ID: <f3b891c3-381f-de42-51d8-24fdfbca91d2@gmail.com>
+Date:   Tue, 8 May 2018 15:22:52 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kYSanRAchMe+7uJ4spy+GaS7PyU7epPeOSCs_58RsAR8A@mail.gmail.com>
+In-Reply-To: <xmqq4ljiomvv.fsf@gitster-ct.c.googlers.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="TGV18Q678qaWgTovoxBHbHkObboeLWD0H"
+ boundary="OmPzfRtmMgt1vcL70dlvnxM1Oe0e4OxQu"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---TGV18Q678qaWgTovoxBHbHkObboeLWD0H
-Content-Type: multipart/mixed; boundary="QssBCHbu6iAkDjlsORdfg5g2pCSsEruhK";
+--OmPzfRtmMgt1vcL70dlvnxM1Oe0e4OxQu
+Content-Type: multipart/mixed; boundary="H1P9lIDKT1sdVE4XtTDAayckubzh0QcTt";
  protected-headers="v1"
 From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-Cc: Git Mailing list <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
-Message-ID: <7b573a6b-0486-f9bd-4499-deb9b1394f78@gmail.com>
-Subject: Re: Weak option parsing in `git submodule`
-References: <1525630243.15782.4.camel@gmail.com>
- <CAGZ79kYSanRAchMe+7uJ4spy+GaS7PyU7epPeOSCs_58RsAR8A@mail.gmail.com>
-In-Reply-To: <CAGZ79kYSanRAchMe+7uJ4spy+GaS7PyU7epPeOSCs_58RsAR8A@mail.gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc: git@vger.kernel.org, Wink Saville <wink@saville.com>,
+ Jacob Keller <jacob.keller@gmail.com>, Bryan Turner <bturner@atlassian.com>,
+ =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
+ Jeff King <peff@peff.net>
+Message-ID: <f3b891c3-381f-de42-51d8-24fdfbca91d2@gmail.com>
+Subject: Re: [PATCH 3/8] push tests: add more testing for forced tag pushing
+References: <20180429202100.32353-1-avarab@gmail.com>
+ <CACBZZX7HFnEMD8PKWj0c7VWqv=yeYCXYJjy-5YPZnF_pJAy0jw@mail.gmail.com>
+ <20180429202100.32353-4-avarab@gmail.com>
+ <xmqq8t8uoovn.fsf@gitster-ct.c.googlers.com>
+ <xmqq4ljiomvv.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq4ljiomvv.fsf@gitster-ct.c.googlers.com>
 
---QssBCHbu6iAkDjlsORdfg5g2pCSsEruhK
+--H1P9lIDKT1sdVE4XtTDAayckubzh0QcTt
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-On Tuesday 08 May 2018 12:35 AM, Stefan Beller wrote:
->>     The lack of checking for the reason behind why `git add` fails see=
-ms to
->>     be the reason behind that weird message.
+On Tuesday 08 May 2018 08:49 AM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >=20
-> (from the man page)
-> git submodule [--quiet] add [<options>] [--] <repository> [<path>]
->=20
-> When options are given after <repository> or <path> we can count
-> the arguments and know something is up. (The number of arguments
-> must be 1 or 2. If it is 3 or above, something fishy is going on), whic=
-h
-> I would suggest as a first step.
->=20
->>     Ways to fix this:
+>> I couldn't quite get what you meant by "(but not the other way
+>> around)".  Did you mean
 >>
->>     1. Fix this particular issue by adding a '--' after the '--no-warn=
--
->>     embedded-repo' option in the above check. But that would also
->>     require that we allow other parts of the script to accept weird
->>     paths such as '--path'. Not so useful/helpful.
+>> 	$ git push --force ../child2 refs/tags/*:refs/tags/*
 >>
->>     2. Check for the actual return value of `git add` in the check and=
+>> should not become non-forcing version because of the (lack of)
+>> prefix on the refspec does not trump the --force command line
+>> option?
 
->>     act accordingly. Also, check if there are unnecessary arguments fo=
-r
->>     `submodule add`.
->=20
-> The second part of this suggestion seems to me as the way to go.
-> Do you want to write a patch?
->=20
-
-Incidentally, I was writing a patch to check for the return value of
-`git add` to fix the particular issue I noted in my initial message.
-Then I was in a dilemma as to whether this was the right way to do it.
-So, I thought it would be better to ask before continuing with the patch
-and hence started this thread. I wasn't counting the arguments to `git
-submodule add` at that time.
-
-Now that I'm ensured that my initial approach is not the worst way to do
-things and as I'm about to write a patch for this, I'll sum up what I'm
-about to achieve in the short-term fix patch, for the sake of clarity.
-
-	1. Check the return value of `git add ...` and throw an error
-	   appropriately.
-
-	2. Check the no. of arguments to `submodule add` and throw an
-	   error if there are more arguments than there should be.
-
-	   I require a little clarification with this. How should this
-	   be done. Does checking whether the number of arguments after
-	   <repository> is not more than one do the job? Or am I missing
-	   something?
-
-
->>     3. Tighten option parsing in the `git-submodule` script to ensure
->>     this doesn't happen in the long term and helps users to get more
->>     relevant error messages.
->>
->>     I find 3 to be a long term solution but not sure if it's worth try=
-ing
->>     as there are efforts towards porting `git submodule` to C. So, I g=
-uess
->>     we should at least do 2 as a short-term solution.
->=20
-> Yeah, bringing it to C, would be nice as a long term solution instead
-> of piling up more and more shell features. :)
->=20
-
-Hope the day it is brought into C comes soon.
-
-
-> Thanks for such a well written bug report with suggested bug fixes. :)
-
-You're welcome :-)
+When I was reading the commit message, I had the same doubt about what
+"(but not the other way around)" actually meant but I assumed it meant
+that "the `--no-force` in the command line does not override the '+' in
+the refspec". Maybe the commit message could be updated to clarify this?
 
 
 --=20
@@ -249,28 +204,28 @@ to correct those mistakes.
 Thanks in advance!
 
 
---QssBCHbu6iAkDjlsORdfg5g2pCSsEruhK--
+--H1P9lIDKT1sdVE4XtTDAayckubzh0QcTt--
 
---TGV18Q678qaWgTovoxBHbHkObboeLWD0H
+--OmPzfRtmMgt1vcL70dlvnxM1Oe0e4OxQu
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlrxWB8ACgkQveda2sPW
-GWmg3g//bTx1a+jyi4MMAV6saMDgoiG1MUla0o+b18Zb2TIEPVClN6U2vF1HPOco
-uRswafA65Dz44zkkiEUyzGeHM1wZysUU6SdrBohJzMLsQG4z9+OfJPTN+Al8vS3E
-zkhvTql0cSi7iCOTABIpA07WUIrbsKknlI4OJgogWgciB23gH7aOAQa+8pHl5PKg
-dVHWoOoIlXcztperKbykwVBA0nqrcf6lFk4o6UxOvB3Dox27UWTsVwKFKNw4RCs0
-D9qR1w8LUqGm3bAh7yE6R9bikZouFxMOh/eNlxQkj5GjAWbG+Ug9Rom5SwZOUCB5
-oFqDzXhmuEKT4n0Bhg7OO2RpnHEtxEZ6s6b9rvExe31sGPAK6/tNxKUo4eLZbnir
-x6dzXs7SiYj6w8NSn9Kr9NL75ObC6f6odHUgss4ArVB/lI1ry6UmUe3qP7dLb7FY
-I7vLvvOcHiJfbsr6fgn0Po1KGzLlhK36FZUonnm3eLLwOjQh73d/9nqEw3S4f6Id
-BTOXlLjIVqIIi7LP7kn86NSpzlN4Je0pS/1xMVlOdIuK5tSxVLK7NL7jRKn4U+P/
-TC+FGRwhhCUQBsI6LyHmCdJ1stFpLyl2Yp+Clj6WSwiYs/ISeiYVG6dAYsVzAtmL
-aWrPobvhDJs9sCPF4zecxSar/jXDE7yswwqrSWnP4lFN9kpr0i8=
-=amqP
+iQIzBAEBCAAdFiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlrxc3QACgkQveda2sPW
+GWkOhw//ZLewVaKEf9I/k84ABuvi7tFwvQOM3ZXAMtc4K+pOmkfGZIiPfq3EtHBO
+GQbpJP4Ry601GgDmMhBIZPJunU4FrW1KNzL6f2WHc8/5ftnyFJOD8iN/8DFesURq
+l9ys786ffOPvThfdukIWL6eNy3DNO0/3hCfq78MrJn1vlOUmwyTrDMz6XRdDjX94
+ACzKA+mf9JaQfEU9k32QTgnV//izwq9tKqLcnDLGkyBvLiJKuuIEwm/ByysU7jQD
+TorS8US8n5DNE4ocUCijAhH5h8f+diBTcMCm/VDKXRcZ3UKUaoIWngOTKI61+JdJ
+t00i6fUO53Iko06EWqRBWdS1CA+zuNzbCDIfkECElEZ/f4kvlJt4Qpz6Lt/i6cMp
+HO384d2I8u3P2DlNOvcJuhAg/MSkGcODL36e34DGz4wtbHJDtUbi+UfthEdYuRpP
+EgIsP9jflM+ZUUP6IlbGzuOIN7lwrkq3myofG8/9VKsxL4DZ4cs9VCLevI6diXmw
+EbAYHkZiSFl96VGV6pMLSVm/kKbPS3PNXdtPc2AW0f/8ACB9qIYr9oPc1+N3v+Gn
+9v/Jt7EP9uaKT8kzE+q6NvK5DbDStmFxhN3dLnCqEWjx6DW6YoA9YMzVLDaqQqML
+neGgL0lcQjrXeh0eh8Gpyk9qilcqPYH/7l3qRgFiW9cMZmECwWU=
+=1itn
 -----END PGP SIGNATURE-----
 
---TGV18Q678qaWgTovoxBHbHkObboeLWD0H--
+--OmPzfRtmMgt1vcL70dlvnxM1Oe0e4OxQu--
