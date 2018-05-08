@@ -7,113 +7,102 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0065C200B9
-	for <e@80x24.org>; Tue,  8 May 2018 15:01:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2050D200B9
+	for <e@80x24.org>; Tue,  8 May 2018 15:24:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932981AbeEHPBI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 11:01:08 -0400
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:38228 "EHLO
+        id S933020AbeEHPYf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 11:24:35 -0400
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:46294 "EHLO
         mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932828AbeEHPBF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 11:01:05 -0400
-Received: by mail-oi0-f49.google.com with SMTP id k17-v6so28608361oih.5
-        for <git@vger.kernel.org>; Tue, 08 May 2018 08:01:05 -0700 (PDT)
+        with ESMTP id S932663AbeEHPYd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 11:24:33 -0400
+Received: by mail-oi0-f49.google.com with SMTP id y15-v6so28690699oia.13
+        for <git@vger.kernel.org>; Tue, 08 May 2018 08:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=I0+3NAvZ0XgSFO0qqBT7Lmus+IlnYZK/MHe3dsrEiew=;
-        b=dI1iE9CrYUYPftCkqtaIxDTzThoVoYLdwgjycK/yaruItTTWXXOXdoEVEXTZGiSOom
-         ZLX86/tDKzyWINgrxT7RzSma61j+23SJkp/Oio9inbVJxvyc6T44SPrSIzRT/+FBCNTZ
-         y4J72xQsMO3uth92Zx3/FEZ+F+91+jgbKpxRPmFsLEwsS6uhnZBI5tlswYb91rkoxfEB
-         B34+rpgJlAfaec+q/bSL7eVl/b+YKO0cmTdhn/xRa2+zZgpIJN2tQKWZW3QbHTG3hYoX
-         sQl+Psa/8fXCC0LCVD4FOk3grXqk7izcpIazMW5lnbwD6s2rJ0j7XevJZkBN0op13vwF
-         Rt4A==
+        bh=4IYxSb/VxRsGD92X+sIw6e5p59vJE/a4kLdFl9mLIc4=;
+        b=qqN3olWsX1HnBbaj0dat/110URQtiutrRcuE0Y5JywJne53ar+J8e2nmDxB9Ruq8/R
+         +ymLCaPxvzP5+FPZ7p8JRyaMNMHYyQszKdVYuls9BT93Gq0TKkmH/EPmE9C1wUVL2NiW
+         Nn0Mm33z9oa3qM8nkmXSILFpmr12hWNGHoLQ3UUaIn5C9mIAb8czkTTA1zUCb1YnJYEg
+         chZVLR/JLNZKtc/2HJQnQ6yD9dqf+A4d21z5G+EOAFb7UkdXAvlst+9ree+oj9ZReDMH
+         OwAvsRnlentKX2ovzqldEV2KbH4qy7RixTKo3I2q13KWv53xJcjVPAoM1RkysfPgtw5a
+         ClXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=I0+3NAvZ0XgSFO0qqBT7Lmus+IlnYZK/MHe3dsrEiew=;
-        b=jj10obVIr+SEIW6kpsfA6LDSZUHtMu6nsT9C26mAZfhMaLJGYnizC6VBF9VcuQnTrX
-         Xkl11HTu513bqFKFnMEWQVnK/3OjFcyJk1A8TP3Zrh+pPLnxVctESOye6ec4i9ybxH3M
-         nlOazJmB7rszH10o4VyDGHePGt8U4REBl2sGbuPL6xhEPsw1t1XwB0TRrEsTjcGbhscB
-         4dCMlW3/opJvq3F4wgMjyaqvysHNrCCcIch9lyLJn4SwAzuI2gJSZunjevqD03HR1pjt
-         4C5iMbP85fDdErU3zHvOxKyLL9vYSBfybL/asbD2kqUoUjxwuRt7q/icEttKtWaIZE4H
-         KEfw==
-X-Gm-Message-State: ALQs6tAKKU5m1Zq99Er5V00oBOrY+YDRalQFadKYH8OEc4sFjR7MZjCZ
-        IWW8ADR7J0EEcqnpMkfi1sHgU6DS6ksPFBarp8k=
-X-Google-Smtp-Source: AB8JxZp9W2SsQAprTHAwP95vI8VHYUEfyar7PHnc9CpnQIIdbrHsUrIcYul9cnd5xLCIl7fUgCfS+QZWKcyj/kajLEM=
-X-Received: by 2002:aca:51ce:: with SMTP id f197-v6mr27279410oib.32.1525791664513;
- Tue, 08 May 2018 08:01:04 -0700 (PDT)
+        bh=4IYxSb/VxRsGD92X+sIw6e5p59vJE/a4kLdFl9mLIc4=;
+        b=X1uLOrj5vzKm+wx3TfbfRMuevq8trc72CGAAIke4OnIki0Oy6gyto+b/TjpGyA+bxq
+         RRgGFqN3lxsDI/2YXG4TmZ51nY6SKtyIjzHTfqV0P8N42qZVflOjYWqyK6IUCyEHnI+2
+         HzmDM9Nb2fcPHn0AqQPNu06WGlNJ5Am1OU7HKN1V/cAM4hcXNKmUShQSNQiNizpGyyod
+         HiMrdln1JgSYb93WDjmnfBZgHBeLkEjhLwklt7n5Eg2d+vh/auiHl5JO4YSG8qn9/TQ5
+         Hs8oRhvopGYXK0a3GGcgtGqvCe5dFUsimdJfEs8d1FAYAXghKt178um207+sQNvn5IiF
+         Vrag==
+X-Gm-Message-State: ALQs6tBZjax+fIwaBqgcUNaM4CNnr6j37/72eCLQxQCZKeX4SUohWqMz
+        A/KQLacTfSG6+VUEMO57sIYT/GMfrxT35hB7hddpcA==
+X-Google-Smtp-Source: AB8JxZraaCjONYWK2EZ1iZ4nnfxem+oL3aowTG03yLQ1/gdYsyVSXxH4TZbs1gsOSTsD+4vuHx4DAArje5qqPoJMa7E=
+X-Received: by 2002:aca:aad3:: with SMTP id t202-v6mr27380957oie.30.1525793072459;
+ Tue, 08 May 2018 08:24:32 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Tue, 8 May 2018 08:00:33 -0700 (PDT)
-In-Reply-To: <20180507225916.155236-14-sbeller@google.com>
-References: <20180501213403.14643-1-sbeller@google.com> <20180507225916.155236-1-sbeller@google.com>
- <20180507225916.155236-14-sbeller@google.com>
+Received: by 10.74.178.133 with HTTP; Tue, 8 May 2018 08:24:02 -0700 (PDT)
+In-Reply-To: <CAPig+cRkUrdtbyGEsY=DQCDoEWTrC-9n4=vKXHEap2gokB2uQg@mail.gmail.com>
+References: <20180417181300.23683-1-pclouds@gmail.com> <CAPig+cRkUrdtbyGEsY=DQCDoEWTrC-9n4=vKXHEap2gokB2uQg@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 8 May 2018 17:00:33 +0200
-Message-ID: <CACsJy8D-e-bff3S+LQAMfwB-w8OpkjrfFrV9O5S3ku+M5aAjQA@mail.gmail.com>
-Subject: Re: [PATCH v2 13/13] alloc: allow arbitrary repositories for alloc functions
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jameson Miller <jamill@microsoft.com>
+Date:   Tue, 8 May 2018 17:24:02 +0200
+Message-ID: <CACsJy8BGs7EOYFKayL-bgvEbKOJiROF52o3SneLyG9Nm6nUngA@mail.gmail.com>
+Subject: Re: [PATCH/RFC] completion: complete all possible -no-<options>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 8, 2018 at 12:59 AM, Stefan Beller <sbeller@google.com> wrote:
-> @@ -501,9 +509,31 @@ void raw_object_store_clear(struct raw_object_store *o)
->  void parsed_object_pool_clear(struct parsed_object_pool *o)
->  {
->         /*
-> -        * TOOD free objects in o->obj_hash.
-> -        *
->          * As objects are allocated in slabs (see alloc.c), we do
->          * not need to free each object, but each slab instead.
-> +        *
-> +        * Before doing so, we need to free any additional memory
-> +        * the objects may hold.
->          */
-> +       unsigned i;
-> +
-> +       for (i = 0; i < o->obj_hash_size; i++) {
-> +               struct object *obj = o->obj_hash[i];
-> +
-> +               if (!obj)
-> +                       continue;
-> +
-> +               if (obj->type == OBJ_TREE) {
-> +                       free(((struct tree*)obj)->buffer);
+On Mon, Apr 23, 2018 at 7:36 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> I haven't looked at the implementation, so this may be an entirely
+> stupid suggestion, but would it be possible to instead render the
+> completions as?
+>
+>     % git checkout --<tab>
+>     --[no-]conflict=                   --[no-]patch
+>     --[no-]detach                      --[no-]progress
+>     --[no-]ignore-other-worktrees      --[no-]quiet
+>     --[no-]ignore-skip-worktree-bits   --[no-]recurse-submodules
+>     --[no-]merge                       --theirs
+>     --[no-]orphan=                     --[no-]track
+>     --ours
+>
+> This would address the problem of the --no-* options taking double the
+> screen space.
 
-It would be nicer to keep this in separate functions, e.g.
-release_tree_node() and release_commit_node() to go with
-alloc_xxx_node().
+It took me so long to reply partly because I remember seeing some guy
+doing clever trick with tab completion that also shows a short help
+text in addition to the complete words. I could not find that again
+and from my reading (also internet searching) it's probably not
+possible to do this without trickery.
 
-> +               } else if (obj->type == OBJ_COMMIT) {
-> +                       free_commit_list(((struct commit*)obj)->parents);
-> +                       free(&((struct commit*)obj)->util);
-> +               }
-> +       }
+> It's also more intuitive than that lone and somewhat weird-looking
+> "--no-" suggestion.
 
-I still don't see who frees obj_hash[] (or at least clears it if not
-freed). If I'm going to use this to free memory in pack-objects then
-I'd really prefer obj_hash[] freed because it's a big _big_ array.
+It's not that weird if you think about file path completion, where you
+complete one path component at a time not full path, bash just does
+not show you full paths to everything.
 
-Just to be clear, what I mean is
+I'm arguing about this because I want to see your reaction, because
+I'm thinking of doing the very same thing for config completion. Right
+now "git config <tab>" gives you two pages of all available config
+variables. I'm thinking that we "git config <tab>" just shows the
+groups, e.g.
 
-FREE_AND_NULL(o->obj_hash);
-o->obj_hash_size = 0;
+> ~/w/git $ git config
+add.              interactive.
+advice.           log.
+alias.            mailmap.
+am.               man.
 
-> +
-> +       clear_alloc_state(o->blob_state);
-> +       clear_alloc_state(o->tree_state);
-> +       clear_alloc_state(o->commit_state);
-> +       clear_alloc_state(o->tag_state);
-> +       clear_alloc_state(o->object_state);
->  }
+Only when you do "git config log.<tab>" that it shows you log.*
 -- 
 Duy
