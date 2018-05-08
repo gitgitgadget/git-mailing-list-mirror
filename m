@@ -2,120 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0FC4200B9
-	for <e@80x24.org>; Mon,  7 May 2018 23:54:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBD80200B9
+	for <e@80x24.org>; Tue,  8 May 2018 00:09:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753593AbeEGXyA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 19:54:00 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:42000 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753545AbeEGXx6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 7 May 2018 19:53:58 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EB0F760444;
-        Mon,  7 May 2018 23:53:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525737237;
-        bh=qyWeScCVojsXNbQyrolqvgJuxQfRRsjMYget4UDprJ8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=uDRauD9FhYax5J6m8s0/VwEJzZFE30lZZJAR5Qe1fhm+F7A4TMKtOaDODPOyJlCkf
-         3BdOxx2diTGhRizF4Am0/vwBnY2yb+3S+MZe+miy6ANyD0eoTkAFiANJOr8wpskMyN
-         7YqCYEoK/ILAM0s8iiyMEMBmFp/1WU4xQWd052Lss4roni50KRfp0Ndkg+7KXYJ+l1
-         0eqSUWEQo+/XaN3eSMvdKwpvADD1q8iFGcHw4SQsfQdiCLk1AWNa/ML26/6Yq58yTI
-         SJtFZ5vveHoEq17IAKglcYapnLN4mtLJY5fTK9MYR/1VXRJZeSsVoN1cuVdws1jKPh
-         f1XbcGM4Tz+5d28Y+jGo3nvaph977B+SRK/0vXA/TzjPzjkSrxtoQMsMg+aDOaC1H8
-         y8qJwWhhL2eEoX29ju90VSeWrDzB6QOzJa4AJ3UYwAS46xawj4+KblI/0mh7r17/xr
-         7TdXfdita9xPBWlEbWMiLdQL8ImjsG0QeuZLhGYQozWWiaulI9i
-Date:   Mon, 7 May 2018 23:53:52 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH] mailmap: update brian m. carlson's email address
-Message-ID: <20180507235352.GL953644@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-References: <20180506232421.975789-1-sandals@crustytoothpaste.net>
- <xmqqa7tcqgpq.fsf@gitster-ct.c.googlers.com>
- <CAGZ79kZXXiWrGgO-KU+afncfNTZzp=AHHJY5qZqA9qAg5YLuuQ@mail.gmail.com>
+        id S1753338AbeEHAJH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 20:09:07 -0400
+Received: from mail-pl0-f44.google.com ([209.85.160.44]:36251 "EHLO
+        mail-pl0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753416AbeEHAI4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 20:08:56 -0400
+Received: by mail-pl0-f44.google.com with SMTP id v24-v6so1095200plo.3
+        for <git@vger.kernel.org>; Mon, 07 May 2018 17:08:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=OPOqlMMgswfHKUeXvy5TrrU8luFBqOKigk+ZTROdJbo=;
+        b=0LIirL2TpwT8LfJSt94i204B4Q7KWNU2jvaHE/v5jC/lvaz169N9TNK3n8cYL2fiTn
+         hSYOIAybAadWxGEOssYOO0+wrN0wCZLsxMnqZV0msnX2pMX+4sQOqPWwy3oPZQSr6T7P
+         f4ynRAFgoTowVN80CYrgMnnTCH1Si0vtnMjkMQY+x4ynEVfwC9nGuoAkgmph+vRr9i78
+         H1T8Kl43nXnNjl8lqElqYxr24QNUthFYA1hXHXIKUdwOR9cdhY6dLRVGMLKs1XFBJWFD
+         zRiocIm2XX1ErllOlAhVElh0m2BxRX8biQP5OoDZ96ySHSSh3W2OM8M38MNVziT0T50g
+         3E1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=OPOqlMMgswfHKUeXvy5TrrU8luFBqOKigk+ZTROdJbo=;
+        b=tMLybRHG+J+QUG0hQ7rpgxswmQsrKpwWG/WpLWfHA3Fe/DEN6Fy3LfTBCwmb3OEDj0
+         jDhVxG4U5e0ImuqvgYJdOwlyyLYOFwpsfl4Zq4j9ociaoEs1oAjJYmN2VyezkUOEbar/
+         naRo9ce9TXYwwcJ5oAqkYNSsujZTiocgZYBiLObrDoSta1O+mAICbu7mCrZkjeHtV3EM
+         CfoAG82VykoXhBobsyz27uBGpk7Nsudqc6BGzf4HfB5ctXnkFpI/if9/X+5KIxLmqgu3
+         NRx334pFCK7oT222dXcs+RNhDllvi8fBzNeeWFgpU8nrYOPWBKZP41D3tX+/H3sDiZV/
+         U2OA==
+X-Gm-Message-State: ALQs6tCmSwV7YRIfdYf7DzQgHkIhnRv94FY3e5+F2ppIeD6EFsMU3oLM
+        xkJQR9x9+jgSijts190TLFNMmQ==
+X-Google-Smtp-Source: AB8JxZq/rtUVJsRORr+WL2kz4wsSXmWKmZtJjm5wEj6nKQCgOkNyGZheqvqQO/1h/Io+zGK2MYEPAQ==
+X-Received: by 2002:a17:902:44c:: with SMTP id 70-v6mr38768218ple.354.1525738135467;
+        Mon, 07 May 2018 17:08:55 -0700 (PDT)
+Received: from localhost ([2601:602:9500:1120:e0dd:ed95:919f:45e6])
+        by smtp.gmail.com with ESMTPSA id d72sm33789145pfe.150.2018.05.07.17.08.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 07 May 2018 17:08:54 -0700 (PDT)
+Date:   Mon, 7 May 2018 17:08:53 -0700
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, l.s.r@web.de,
+        martin.agren@gmail.com, peff@peff.net, sunshine@sunshineco.com
+Subject: Re: [PATCH v4 5/7] builtin/grep.c: add '--column' option to
+ 'git-grep(1)'
+Message-ID: <20180508000853.GD77370@syl.local>
+References: <20180421034530.GB24606@syl.local>
+ <cover.1525488108.git.me@ttaylorr.com>
+ <9a596d53d6b2523bc94e58678aa43e68068859b6.1525488108.git.me@ttaylorr.com>
+ <xmqqk1sfpn9j.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="gw4vLALk08fVJy3V"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kZXXiWrGgO-KU+afncfNTZzp=AHHJY5qZqA9qAg5YLuuQ@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-3-amd64)
+In-Reply-To: <xmqqk1sfpn9j.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, May 07, 2018 at 11:13:12PM +0900, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> > index 18b494731f..5409a24399 100644
+> > --- a/Documentation/git-grep.txt
+> > +++ b/Documentation/git-grep.txt
+> > @@ -13,7 +13,7 @@ SYNOPSIS
+> >  	   [-v | --invert-match] [-h|-H] [--full-name]
+> >  	   [-E | --extended-regexp] [-G | --basic-regexp]
+> >  	   [-P | --perl-regexp]
+> > -	   [-F | --fixed-strings] [-n | --line-number]
+> > +	   [-F | --fixed-strings] [-n | --line-number] [--column]
+> >  	   [-l | --files-with-matches] [-L | --files-without-match]
+> >  	   [(-O | --open-files-in-pager) [<pager>]]
+> >  	   [-z | --null]
+> > @@ -169,6 +169,9 @@ providing this option will cause it to die.
+> >  --line-number::
+> >  	Prefix the line number to matching lines.
+> >
+> > +--column::
+> > +	Prefix the 1-indexed column number of the first match on non-context lines.
+> > +
+>
+> Two questions.
+>
+>  - It is fine that the leftmost column is 1, but what does this
+>    number count?  The number of bytes on the same line before the
+>    first byte of the hit (plus 1)?  The display width of the initial
+>    non-matching part of the line (plus 1) on a fixed-width terminal?
+>    The number of "characters"?  Something else?
 
---gw4vLALk08fVJy3V
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The count is the byte offset from the 1-index (which is the beginning of
+the line, as you noted).
 
-On Mon, May 07, 2018 at 12:25:09PM -0700, Stefan Beller wrote:
-> brian,
->=20
-> sorry to break you there. I was the author of the patch Junio found, orga=
-nizing
-> the .mailmap file was one of my starter contributions. I recall asking al=
-l the
-> people if they were ok with it their names combined in different spellings
-> 94b410bba86 (.mailmap: Map email addresses to names, 2013-07-12)
-> f4f49e2258a (.mailmap: Combine more (email, name) to individual
-> persons, 2013-07-14)
-> and I vaguley recall asking you about capitalization of your name there
-> and you preferred the lower case name, but apparently I never asked you
-> about the preferred email address.
+Incidentally, Peff and I chatted briefly offline about this, and agree
+that it makes the most sense, since (1) Vim treats it correctly, and (2)
+we can't be sure of options like display width, character count, etc.,
+without knowing the character encoding.
 
-Not a problem.  I hadn't until very recently completely understood the
-format of the .mailmap file (in that the correct items are always to be
-on the left), so I didn't think anything of it when reviewing the
-commit.  Perhaps I should come up with a patch to the documentation to
-make it easier for past me to understand.
+Nonetheless, other folks in this thread seem to be curious about this
+as well. I'll add it to the documentation for --column in
+Documentation/git-grep.txt.
 
-I only recently realized that with my transition to a separate mail
-server (in September), the crustytoothpaste.ath.cx address doesn't
-actually work, and when perusing the output of git log, realized that it
-was the wrong way around.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+>  - Does --column combined with -v make any sense?  If not, shouldn't
+>    the command error out when both are given at the same time?
 
---gw4vLALk08fVJy3V
-Content-Type: application/pgp-signature; name="signature.asc"
+I hadn't thought of this. They do not work together, since 'git grep -v
+--column' would require us to either (1) not output the column number,
+or (2) output '0', or some other non-value.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
+I think that both (1) and (2) require callers to complicate their
+scripts to understand either approach. As such, I think that we should
+die() here, and add a test in t7810 to ensure that that's indeed what
+happens.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrw5w8ACgkQv1NdgR9S
-9ovu/hAAuiyTTpN9dnlnG7wd+H049WuijnigjAi/BXUtkO40OEsMIrPx3kBBW6cQ
-D641HCp1WXSRTQ+pc+ByFVhSoXLCq2YdMfJPZkjW+VCX6IZwk+dzwGY1n/OH2HNY
-dLweBHMZeuM/FUTcQgiY2r1QF1V7vfE+V8G37X8q9dNmF7KDFyEWFCkrHwdo1udN
-DQDmXVCZ8AeqkaTTU36ABknrk4ZIkXAj5pSgAXG3lRpdYtjrk8ZUW01eRDKDIl58
-aCm+ZXcm5R6bsRl0v7GFiZnW/eMWpAOiupu6iiy9vucBu+/bk0Nlh4f8atoinDiF
-dDsZ+JykXJvytf0wOWVtd+HfG6P5f8IHBZsq3L9UYjXK03iIFm5jUCJLfewJU2H9
-7PIgiliqCPaD6pRrYP8AnS+l0foG6P40Cjd1A0e1a5LjtbbrObaUTM1kfFyCVRkW
-VLlQUBOtNdvBUosgPWSS7IW87zykeDjiNCWXIUjjBdOFMNLySguaYlUw6jswmM9c
-9xp+w132Fh9c/bQg9NkLcp/wCOILPB9GYaMhNbM9dRRM4w6lbFnqIqmFGidHFDX9
-NalbkhV5J5wy7WGdLx8JrTy+Z5A6IWdrh8duwv9vYRSs35zkSheRC6igYL2BJcqV
-O9CGcCumbTLAHsKGIaCT9szbWG6aUtQRTCE0nUlUsgNPzDTC5/Q=
-=wpjP
------END PGP SIGNATURE-----
+Does this seem sensible to include in v5?
 
---gw4vLALk08fVJy3V--
+
+Thanks,
+Taylor
