@@ -2,84 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 883ED200B9
-	for <e@80x24.org>; Tue,  8 May 2018 01:59:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA492200B9
+	for <e@80x24.org>; Tue,  8 May 2018 02:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753558AbeEHB66 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 21:58:58 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:42084 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753529AbeEHB65 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 7 May 2018 21:58:57 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1753682AbeEHCKd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 22:10:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61555 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753525AbeEHCKd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 22:10:33 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2663DEE21E;
+        Mon,  7 May 2018 22:10:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=CGi4oz+gEIPrclUrn+xaztBaR6k=; b=JfOxf+F
+        lTCk8yzfNBMn6nQo5Mgxq7wf6LRd2t3midEcbIiUCkejsb8zMocFGZq2YH0Gu6xQ
+        nN5F2gdrf000KOPauenWLlvFh1JnSXtE2/xe/wQX6j+epNqaRberUSX8qVH5xpb3
+        n5zY/UZPceT+mvEyFmj3GSRK1AOO/4HKaSHo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=rKstDsjoAEqSq69QFYOU8U60NFN/JVuui
+        FSRsBd0XJK/CT5tJNcCH4k5wUoIwP8eJ+KAGJATmECk3uYuqgecuMBaH/er+bzSg
+        Wl41FQMTMhUFNErcbOZUBHqL89gcKTsRe2LtUl72nQfur5st41AzdkPqLoWAerkk
+        pTf/5rDp3c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1BBEEEE21D;
+        Mon,  7 May 2018 22:10:32 -0400 (EDT)
+Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F384F60444;
-        Tue,  8 May 2018 01:58:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525744732;
-        bh=jT2oE/ZdbMWuY4eIn+a2GWc+jgBr/wQ7ij9gAN7WvSg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=K7Xk4q1EeQY78z8DVOobHQZgpq2uJP0aAeUqURXHrKzxM7JxJgCxsIiyNsMVQ+VyK
-         5vmC7tWvErdOklXKXZWT2WikpxMYTV4OZC87S0LeLqXZnj98BS+pgCLpn53DtEoR+a
-         wVBEBiSZPgGPRkZDalPk2OwzD4eI0JTLRSzMNyyXg66PoaUlfoSamUcwbeKyC8JMOq
-         2GOD8Z3Ws9M55GFDsfCMTWJyTsUZWZsZAUc8k/fE9UwEfLT5RuyPW8UNDm+9HFTLwk
-         sl1Co6Bsa7jCqNMeU8Dq3cMz/suGC5uIvgfCimTQI9oaXsITAzBlkEpuRSkHSOIpkL
-         M816LUgV4tQbIKs10Lslk1/YnzCTjBBfuK++gdi4fgf1Qf9eRrBSjnNynq/Z2dQID3
-         OEwvf2pn+HVLhALPAzWLCIzp25NHBvIZxcSipPlXv4cz9Lr1aTJD+0hKUM3iCjOZgy
-         hCNq5a2qYKhX6oOlliKrtdP/RysnFkdAwI1UNwal673DxFwy1IP
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: [PATCH v2] mailmap: update brian m. carlson's email address
-Date:   Tue,  8 May 2018 01:58:45 +0000
-Message-Id: <20180508015845.268572-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
-In-Reply-To: <20180506232421.975789-1-sandals@crustytoothpaste.net>
-References: <20180506232421.975789-1-sandals@crustytoothpaste.net>
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 758ABEE219;
+        Mon,  7 May 2018 22:10:31 -0400 (EDT)
+Date:   Mon, 7 May 2018 22:10:29 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 12/18] branch-diff: use color for the commit pairs
+Message-ID: <20180508021029.GC26695@zaya.teonanacatl.net>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+ <cover.1525448066.git.johannes.schindelin@gmx.de>
+ <ba4791918c78770005d552856d8669648d7004f1.1525448066.git.johannes.schindelin@gmx.de>
+ <20180505234852.GR26695@zaya.teonanacatl.net>
+ <nycvar.QRO.7.76.6.1805062146070.77@tvgsbejvaqbjf.bet>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1805062146070.77@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Pobox-Relay-ID: FC3A9CAE-5264-11E8-8B05-67830C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-An earlier change, cdb6b5ac (".mailmap: Combine more (name, email) to
-individual persons", 2013-08-12), noted that there were two name
-spellings and two email addresses and mapped the crustytoothpaste.net
-address to the crustytoothpaste.ath.cx address.  The latter is an older,
-obsolete address, while the former is current, so switch the order of
-the addresses so that git log displays the correct address.
+Hi Johannes,
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
-I intentionally avoided the use of the first person here, because I
-wasn't sure what the preference of the list was on that.  Hopefully it
-reads naturally and isn't awkward.
+Johannes Schindelin wrote:
+> Hi Todd,
+> 
+> On Sat, 5 May 2018, Todd Zullinger wrote:
+> 
+>>> @@ -430,6 +451,8 @@ int cmd_branch_diff(int argc, const char **argv, const char *prefix)
+>>>  	struct string_list branch1 = STRING_LIST_INIT_DUP;
+>>>  	struct string_list branch2 = STRING_LIST_INIT_DUP;
+>>>  
+>>> +	git_diff_basic_config("diff.color.frag", "magenta", NULL);
+>>> +
+>>>  	diff_setup(&diffopt);
+>>>  	diffopt.output_format = DIFF_FORMAT_PATCH;
+>>>  	diffopt.flags.suppress_diff_headers = 1;
+>> 
+>> Should this also (or only) check color.diff.frag?
+> 
+> This code is not querying diff.color.frag, it is setting it. Without
+> any way to override it.
+> 
+> Having thought about it longer, and triggered by Peff's suggestion to
+> decouple the "reverse" part from the actual color, I fixed this by
+> 
+> - *not* setting .frag to magenta,
+> 
+> - using the reverse method also to mark outer *hunk headers* (not only the
+>   outer -/+ markers).
+> 
+> - actually calling git_diff_ui_config()...
 
-If not, I can send a v3.
+Excellent.  That seems to work nicely now, respecting the
+color.diff.<slot> config.
 
- .mailmap | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> The current work in progress can be pulled as `branch-diff` from
+> https://github.com/dscho/git, if I could ask you to test?
 
-diff --git a/.mailmap b/.mailmap
-index 7c71e88ea5..df7cf6313c 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -25,8 +25,8 @@ Ben Walton <bdwalton@gmail.com> <bwalton@artsci.utoronto.ca>
- Benoit Sigoure <tsunanet@gmail.com> <tsuna@lrde.epita.fr>
- Bernt Hansen <bernt@norang.ca> <bernt@alumni.uwaterloo.ca>
- Brandon Casey <drafnel@gmail.com> <casey@nrlssc.navy.mil>
--brian m. carlson <sandals@crustytoothpaste.ath.cx> Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
--brian m. carlson <sandals@crustytoothpaste.ath.cx> <sandals@crustytoothpaste.net>
-+brian m. carlson <sandals@crustytoothpaste.net> Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
-+brian m. carlson <sandals@crustytoothpaste.net> <sandals@crustytoothpaste.ath.cx>
- Bryan Larsen <bryan@larsen.st> <bryan.larsen@gmail.com>
- Bryan Larsen <bryan@larsen.st> <bryanlarsen@yahoo.com>
- Cheng Renquan <crquan@gmail.com>
+While the colors and 'branch --diff' usage seem to work
+nicely, I found that with 4ac3413cc8 ("branch-diff: left-pad
+patch numbers", 2018-05-05), 'git branch' itself is broken.
+
+Running 'git branch' creates a branch named 'branch'.
+Calling 'git branch --list' shows only 'branch' as the only
+branch.
+
+I didn't look too closely, but I'm guessing that the argv
+handling is leaving the 'branch' argument in place where it
+should be stripped?
+
+This unsurprisingly breaks a large number of tests. :)
+
+Thanks,
+
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A common mistake people make when trying to design something
+completely foolproof is to underestimate the ingenuity of complete
+fools.
+    -- Douglas Adams
+
