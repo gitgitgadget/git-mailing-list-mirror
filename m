@@ -2,110 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEC9C200B9
-	for <e@80x24.org>; Tue,  8 May 2018 17:25:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAE97200B9
+	for <e@80x24.org>; Tue,  8 May 2018 17:45:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755575AbeEHRZU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 13:25:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60652 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1755571AbeEHRZT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 13:25:19 -0400
-Received: (qmail 12731 invoked by uid 109); 8 May 2018 17:25:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 08 May 2018 17:25:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7022 invoked by uid 111); 8 May 2018 17:25:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 08 May 2018 13:25:23 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 May 2018 13:25:17 -0400
-Date:   Tue, 8 May 2018 13:25:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [PATCH 2/2] builtin/grep.c: teach '-o', '--only-matching' to
- 'git-grep'
-Message-ID: <20180508172517.GA934@sigill.intra.peff.net>
-References: <cover.1525492696.git.me@ttaylorr.com>
- <c8b527c5de3b0e5422d2c1afb91d454d1e46fff4.1525492696.git.me@ttaylorr.com>
- <87fu36y4u0.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87fu36y4u0.fsf@evledraar.gmail.com>
+        id S1755366AbeEHRpz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 13:45:55 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:40933 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755223AbeEHRpy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 13:45:54 -0400
+Received: by mail-pg0-f68.google.com with SMTP id l2-v6so21474575pgc.7
+        for <git@vger.kernel.org>; Tue, 08 May 2018 10:45:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=bPY3xUKUW5gx1c7OY6gSNVOHwfwaK45sEyniobZo0Ro=;
+        b=KeconiZLjJgCYwW3lwbRzePIkUwO2yFX6yPhgUNapWD2Z0oob7g+80bRPlZGut9D6f
+         viDqbgo6zSGoxoVTqHdlywsfwYcQYyNE4FV5qa8xxXT7MPk2ot7hcG1ue5y9wEpqBQlo
+         j5CYBYtVT/FNGCUTTWuttM2TO47FqsfX6lHMwFH33xjfDCmxH5PNMBWwpmWbPW9NVba/
+         ugcHK67t6p16OpvRGRDNgrrPGD0Ofc67rcE5aZBqYDkbbwyvCkO5s3AEa96yw2wFa/q9
+         TWSkOe6ia+5w1ZXXTvCVGWP3ryiN8UY9UqQwXOwZpMpUMavOKj9sDJKjA0jkyR8sk1kx
+         L1PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=bPY3xUKUW5gx1c7OY6gSNVOHwfwaK45sEyniobZo0Ro=;
+        b=YAHHI1OQnJa7ysbk3BHz5QBm23RdKEJRrT0s2MnOtcj9nompLOAX2bcR7rL4SlpxuC
+         bffvZ2TqNHGPpttlMaoYYVIcU3Z6hx7KkrsRMtg+67UTz7pLyXu7vQpBVKrctD4VPeyu
+         bvxT0Z2Y7BdsgCoOVNr/4rucrLVf755mpBGfrTfF/B4nEgra8VZrAuYB8ZJskDF0mCyl
+         NAQ0XN6MahVTcs49+VRG9YMPwaBGDIlQP53j8INPrUX5tRFq498w8+9mGvZTY8e42jQB
+         ccQ1PvCiMXxPIPnGSpLAgRg6xUIhPVA6gUGOX8xJf83pQS2GUCqxQL4xWSwdSY3qoY7O
+         lb7g==
+X-Gm-Message-State: ALQs6tAl8cAxNGuOc9yDixSSyhXPUIMXbQ7HB5WjuhFH/d0B8db8D5y9
+        vj9Ew1j8I87UkYE7diK9yAUhlg==
+X-Google-Smtp-Source: AB8JxZppBOP+5G+xe8Emu4yMUtHZSu8TLeLGZ1qlbduSSE8Sep4zfMRGzJyAB6j3aP6UNfMqe8KvlQ==
+X-Received: by 2002:a65:6604:: with SMTP id w4-v6mr2982426pgv.102.1525801553908;
+        Tue, 08 May 2018 10:45:53 -0700 (PDT)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id h75sm46833883pfh.148.2018.05.08.10.45.52
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 08 May 2018 10:45:52 -0700 (PDT)
+Date:   Tue, 8 May 2018 10:45:51 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
+        jamill@microsoft.com
+Subject: Re: [PATCH v2 13/13] alloc: allow arbitrary repositories for alloc
+ functions
+Message-Id: <20180508104551.8af4e13823a26680f07611be@google.com>
+In-Reply-To: <20180507225916.155236-14-sbeller@google.com>
+References: <20180501213403.14643-1-sbeller@google.com>
+        <20180507225916.155236-1-sbeller@google.com>
+        <20180507225916.155236-14-sbeller@google.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 05, 2018 at 08:49:43AM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Mon,  7 May 2018 15:59:16 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-> > +test_expect_success 'grep --only-matching --heading' '
-> > +	git grep --only-matching --heading --line-number --column mmap file >actual &&
-> > +	test_cmp expected actual
-> > +'
-> > +
-> >  cat >expected <<EOF
-> >  <BOLD;GREEN>hello.c<RESET>
-> >  4:int main(int argc, const <BLACK;BYELLOW>char<RESET> **argv)
-> 
-> We should test this a lot more, I think a good way to do that would be
-> to extend this series by first importing GNU grep's -o tests, see
-> http://git.savannah.gnu.org/cgit/grep.git/tree/tests/foad1 they are
-> license-compatible. Then change the grep_test() function to call git
-> grep instead.
+> +	for (i = 0; i < o->obj_hash_size; i++) {
+> +		struct object *obj = o->obj_hash[i];
+> +
+> +		if (!obj)
+> +			continue;
+> +
+> +		if (obj->type == OBJ_TREE) {
+> +			free(((struct tree*)obj)->buffer);
+> +		} else if (obj->type == OBJ_COMMIT) {
+> +			free_commit_list(((struct commit*)obj)->parents);
+> +			free(&((struct commit*)obj)->util);
+> +		}
 
-I'm trying to figure out what GNU grep's tests are actually checking
-that we don't have. I see:
+Besides the other comments by Peff and Duy, should the "tag" field of a
+tag object be freed too? It is allocated by xmemdupz in tag.c, and is
+not assigned to by any other code (verified by renaming it and then
+fixing the compile errors one by one).
 
- - they check that "-i" returns the actual found string in its original
-   case. This seems like a subset of finding a non-trivial regex. I.e.,
-   "foo.*" should find "foobar". We probably should have a test like
-   that.
-
- - they test multiple hits on the same line, which seems like an
-   important and easy-to-screw-up case; we do that, too.
-
- - they test everything other thing with and without "-i" because those
-   are apparently separate code paths in GNU grep, but I don't think
-   that applies to us.
-
- - they test each case with "-b", but we don't have that (we do test
-   with "--column", which is good)
-
- - they test with "-n", which we do here (we don't test without, but
-   that seems like an unlikely bug, knowing how it is implemented)
-
- - they test with -H, but that is already the default for git-grep
-
- - they test with context (-C3) for us. It looks like GNU grep omits
-   context lines with "-o", but we show a bunch of blank lines. This is
-   I guess a bug (though it seems kind of an odd combination to specify
-   in the first place)
-
-So I think it probably makes sense to just pick through the list I just
-wrote and write our own tests than to try to import GNU grep's specific
-tests (and there's a ton of other unrelated tests in that file that may
-or may not even run with git-grep).
-
-> It should also be tested with the various grep.patternType options to
-> make sure it works with basic, extended, perl, fixed etc.
-
-Hmm, this code is all external to the actual matching. So unless one of
-those is totally screwing up the regmatch_t return, I'm not sure that's
-accomplishing much (and if one of them is, it's totally broken for
-coloring, "-c", and maybe other features).
-
-We've usually taken a pretty white-box approach to our testing, covering
-things that seem likely to go wrong given the general problem space and
-our implementation. But maybe I'm missing something in particular that
-you think might be tricky.
-
--Peff
+Other than that, and other than my small comment on patch 1, this patch
+set looks good to me.
