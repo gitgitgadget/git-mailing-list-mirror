@@ -2,91 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3190200B9
-	for <e@80x24.org>; Tue,  8 May 2018 18:31:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05BBB200B9
+	for <e@80x24.org>; Tue,  8 May 2018 18:38:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755703AbeEHSbO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 14:31:14 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:39928 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755390AbeEHSbL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 14:31:11 -0400
-Received: by mail-pg0-f46.google.com with SMTP id e1-v6so10176689pga.6
-        for <git@vger.kernel.org>; Tue, 08 May 2018 11:31:11 -0700 (PDT)
+        id S1755691AbeEHSiF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 14:38:05 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:42417 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755402AbeEHSiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 14:38:03 -0400
+Received: by mail-yw0-f194.google.com with SMTP id q7-v6so1631466ywd.9
+        for <git@vger.kernel.org>; Tue, 08 May 2018 11:38:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=5INIa5xILFdAkQxyQBY415VAQSVRDm/8b3ioj/57thA=;
-        b=tC8UiNTRLDhtAlp44SgRxfi2F/LERaIZDqcBSAlCWXGtjk80p13Sbq1YncSHd9DyJf
-         3D7vNXAfH6oXKGR4tClyOqu9Q/mBwgosciag2O3xNMGNmYmZcXUA3/AJcqBVXiEM2sds
-         6L3r9QVLimDVUjSzxKhSnbTNDKzCOWYv0qiBOOoalYwsBdN1TwMYr59vWMN2kRwDtrrB
-         jse1lg0c8mwGQRzK71YhvFdOftdopX1eKHNn721uoqmWkX0X+MJRsa7TL2FKq0camTSs
-         ZDR60PU62EVGxY+kKEHQqb5DfklMIJFXncUjxdTJGyFQgbsBbF4HEzedyVxUWmPBircV
-         J9fg==
+         :cc;
+        bh=XFJfeX7IX/YZVglkLQuAVKh1dwNx2sRc1bRVwVVUfUg=;
+        b=PH8SBEXgXHpPwMajmPRgYbOFWXHsRe5Pj5BCkyfEt20lS2Es5ofHdVkgOmB+3S31Ug
+         EjrTlt7D2poytwMj7DnueZ/ThSveJv1Ke+NQHZknrsO/+T8Edr2rAJ16TnU+VgPjjwQf
+         7ntEDiP9BuYnZ3JieaLH5y27OFvhNYz8i960TpgEP1kHEjMrqHpyoprptPhHZUwO68tz
+         Ai2NvvmlAe3Z6shtZAT991cQgdeSZBYtDYhD+zm96Li2zE8Hn+OLMQ3GS6YYGUIGylOo
+         KGkWqX/KtrCT/xGATX0raBWXU0Z3DyirfgDjMj5jUcbKoQxeUlPHZjtMVB5EmNOdEnBL
+         ybwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=5INIa5xILFdAkQxyQBY415VAQSVRDm/8b3ioj/57thA=;
-        b=EFpE6sGCnu3UMXgP5wSBijZcCA0k6FHUpaF0BNEr2W62m4s4CRMcNnUkhBFXbfto6w
-         iDcI09k4oh2rEyTMssLHSEEKSkpejBKBQlCY1luhz3J99KHbtgX+Jtj9IoVEDUx9Unda
-         Hm/JGNKIwalgFHeZWhNex6yujzTjqzsRLYl4poAkToa17u1wH7orYmmbEPj2N9fFsxl7
-         a3w50cMj+Crg1C+k5vfaI/i62RPuh+yFCbpVL9N3OM0iRsM9Yah8dByhX/mqL1Xmxk6J
-         1nFerpzH5W+Ksg3XxxNt56+oMKdpP66nptgEmthpI70xDFIYoNk/oe0p/4aFjyzWpm7C
-         jRBg==
-X-Gm-Message-State: ALQs6tDIg6mchYXFO+wX1RR/P0FIQgc9CVTX03ccAfHCQA2GkE4Lih4z
-        3FAbFAHnGimtISc4PG6Ch8MJDEcxsUkYGUubG8Q=
-X-Google-Smtp-Source: AB8JxZp1aI1/f+D1Vm+DK2l3lgHJu2ezBnM//94HpX17Ib1eWa1JXh1qAR6pr63dLJSbZDGqeaTUW/INiENToZo66vs=
-X-Received: by 10.98.233.3 with SMTP id j3mr8952748pfh.196.1525804270891; Tue,
- 08 May 2018 11:31:10 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=XFJfeX7IX/YZVglkLQuAVKh1dwNx2sRc1bRVwVVUfUg=;
+        b=LtIHKLKCPwIBFXgX5pseud1xbeN/zyfmhC7ZVrb7GMq9ANo8+6TT0lx5+OKLj+ZOjT
+         RZ2nJov218vl/glSp4xQ+NuVa/Fz1g6OfjmCkfI4PyjXj3igoJ/qI+Td2MMOwiRrDBBY
+         7GddUQzuVXY5wJoVxymDpwOSTz33hVdFWFDwPjUgGWLq39pNnYvQqQgHRxvbErlQJVKS
+         Uku73Ro5rCAP5mbteyRpVG93aIaKNOqtTWGHXAcpf2rAC/rTRp5sfsaHAyGzue92gdhC
+         7euC2zaYwmFzuVHAcJxhADIqFsJQf9iRMhZu0D+3svzK12OCvAMZ+RcPMfoRRVaXuxKI
+         YNIg==
+X-Gm-Message-State: ALQs6tA17Ds4VaL+xlMY/5INf2jyDtrfftVgDdsZd3ExhE6NJNpsOTZv
+        GA8+3HDn2XxNsxaEBYZXpiWktJ78HxgO7mqYYSBEJQ==
+X-Google-Smtp-Source: AB8JxZp09I6rm8i2xJ/vg8CmQ9JcyvbcohzeVEny0/Y80Rtgl34UmiWcq/r1hE4h58TjsI9ozmVB0nrd8Er6pjXqD/s=
+X-Received: by 2002:a81:4ec9:: with SMTP id c192-v6mr23824177ywb.421.1525804682075;
+ Tue, 08 May 2018 11:38:02 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Tue, 8 May 2018 11:31:10 -0700 (PDT)
-In-Reply-To: <20180508011352.GM953644@genre.crustytoothpaste.net>
-References: <20180504015202.GP13217@genre.crustytoothpaste.net>
- <20180506204226.955739-1-sandals@crustytoothpaste.net> <20180506204226.955739-2-sandals@crustytoothpaste.net>
- <CAN0heSrth+ZheEsHuVdyUv9fcnP07O=YvK6y+=rmaGqZf7X3_w@mail.gmail.com> <20180508011352.GM953644@genre.crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 8 May 2018 20:31:10 +0200
-Message-ID: <CAN0heSpaETw_v_a_zL7Cp+cDNHP9je2ZqTHh37FfDHjAbRn18A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] Documentation: render revisions correctly under Asciidoctor
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Tue, 8 May 2018 11:38:01 -0700 (PDT)
+In-Reply-To: <CACsJy8D-e-bff3S+LQAMfwB-w8OpkjrfFrV9O5S3ku+M5aAjQA@mail.gmail.com>
+References: <20180501213403.14643-1-sbeller@google.com> <20180507225916.155236-1-sbeller@google.com>
+ <20180507225916.155236-14-sbeller@google.com> <CACsJy8D-e-bff3S+LQAMfwB-w8OpkjrfFrV9O5S3ku+M5aAjQA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 8 May 2018 11:38:01 -0700
+Message-ID: <CAGZ79kZhAjArSksrWMzJc49BKu1HF-R6kBHEzkus-in4fbTZvQ@mail.gmail.com>
+Subject: Re: [PATCH v2 13/13] alloc: allow arbitrary repositories for alloc functions
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jameson Miller <jamill@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8 May 2018 at 03:13, brian m. carlson <sandals@crustytoothpaste.net> wro=
-te:
-> On Mon, May 07, 2018 at 06:11:43AM +0200, Martin =C3=85gren wrote:
->> Excellent. These two patches fix my original problem and seem like the
->> obviously correct approach (in hindsight ;-) ). I wonder if the diagrams
->> earlier in the file should be tackled also. Right now, one has a huge
->> number of dots instead of the four you added; the other has none. They
->> do render fine though, so that'd only be about consistency in the
->> original .txt-file.
+On Tue, May 8, 2018 at 8:00 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, May 8, 2018 at 12:59 AM, Stefan Beller <sbeller@google.com> wrote:
+>> @@ -501,9 +509,31 @@ void raw_object_store_clear(struct raw_object_store *o)
+>>  void parsed_object_pool_clear(struct parsed_object_pool *o)
+>>  {
+>>         /*
+>> -        * TOOD free objects in o->obj_hash.
+>> -        *
+>>          * As objects are allocated in slabs (see alloc.c), we do
+>>          * not need to free each object, but each slab instead.
+>> +        *
+>> +        * Before doing so, we need to free any additional memory
+>> +        * the objects may hold.
+>>          */
+>> +       unsigned i;
+>> +
+>> +       for (i = 0; i < o->obj_hash_size; i++) {
+>> +               struct object *obj = o->obj_hash[i];
+>> +
+>> +               if (!obj)
+>> +                       continue;
+>> +
+>> +               if (obj->type == OBJ_TREE) {
+>> +                       free(((struct tree*)obj)->buffer);
 >
-> Yeah, the number of dots has to be at least four, but can be any
-> matching number.
+> It would be nicer to keep this in separate functions, e.g.
+> release_tree_node() and release_commit_node() to go with
+> alloc_xxx_node().
+
+ok, I can introduce that, although it seems unnecessary complicated
+for now.
+
+On top of this series I started an experiment (which rewrites alloc
+and object.c a whole lot more; for performance reasons), which gets
+rid of the multiple alloc_states. There will be only one allocation for
+one repository, it can allocate across multiple types without alignment
+overhead. It will reduce memory footprint of obj_hash by half, via
+storing indexes instead of pointers in there.
+That said, the experiment shall not influence the
+direction of this series. Will fix.
+
+>> +               } else if (obj->type == OBJ_COMMIT) {
+>> +                       free_commit_list(((struct commit*)obj)->parents);
+>> +                       free(&((struct commit*)obj)->util);
+>> +               }
+>> +       }
 >
-> Since this patch fixes the present issue, I'd like to leave it as it is
-> and run through a cleanup series a bit later that catches all the
-> literal indented blocks and marks them explicitly to avoid this issue in
-> the future.
+> I still don't see who frees obj_hash[] (or at least clears it if not
+> freed). If I'm going to use this to free memory in pack-objects then
+> I'd really prefer obj_hash[] freed because it's a big _big_ array.
 
-Sounds like a plan. :-) As noted elsewhere, I have no immediate idea how
-to identify which of the 13000 tab-indented lines are really part of
-diagrams and ascii-art. Counting the number of spaces? Anyway, thanks
-for this mini-series.
+gah!
 
-Martin
+> Just to be clear, what I mean is
+>
+> FREE_AND_NULL(o->obj_hash);
+> o->obj_hash_size = 0;
+
+ok, I just put it here, just before the calls
+to clear_alloc_state()s.
