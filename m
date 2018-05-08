@@ -2,101 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 195C1200B9
-	for <e@80x24.org>; Tue,  8 May 2018 02:29:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3FCB200B9
+	for <e@80x24.org>; Tue,  8 May 2018 02:36:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753878AbeEHC3U (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 22:29:20 -0400
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:36459 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753809AbeEHC3T (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 22:29:19 -0400
-Received: by mail-wr0-f182.google.com with SMTP id p4-v6so333656wrh.3
-        for <git@vger.kernel.org>; Mon, 07 May 2018 19:29:18 -0700 (PDT)
+        id S1753964AbeEHCgF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 22:36:05 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:53956 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753526AbeEHCf7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 22:35:59 -0400
+Received: by mail-wm0-f65.google.com with SMTP id a67so16229127wmf.3
+        for <git@vger.kernel.org>; Mon, 07 May 2018 19:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=jw0jcJObK61srj04r+EpbnKx1YpOLwQogdTBjXa9ETw=;
-        b=EKIj7B2CJByTfvfvjd3rQdqaUEVKzF66dn5kTdB833HF2DI/omufj9NLHfnyGU3rkU
-         ZQnOkodfXKJhrPfdVSb+T8+rg0eVyapG6wP1GvcgR1iAxv580t/YjoeYAj64PNZGHTjs
-         DOQa+d8k8y/k8lI83jryuUkjQ8Fb8jemcYA2B4C4b3QgtdQalxV3Jo5/RssEAZ3H0rwE
-         S/YjhPk08XybB1GamYrnMiXto3RHOAoHl9G23tr9UuGsg4SzRTGrvgG6Cddi5a5DLGxo
-         h8zd72SaAeIa1L62yr67XrmpwH4pBoIFHK3XPnbGwqCCvAKbsHKqOi6fRcld6QNlAVeq
-         +ICw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=z2EnrUvSOG51FvGiN30XuBn2UGfnymzQFk4sgGkzpiU=;
+        b=LDEoK3X2zyJrmPrfSMAoOQL2B8/m/50Dm62d52/lFPaQV7SbvXhAIIadJdfUFf8PQ5
+         UVkj0Y6Xv7jq7dXGLNVXZ8LLL9lVRORhSiPtZMGddSL1hD2V4ryGbfTld5GCcl7HDvhh
+         9FiGJ65yrsxrZdnznTtVPKKrWIlGpp+ZcHlEvXHvwKjuRmfVLkq4P2JtTjaE2WSAMwgL
+         67hmqcfcWbsMNexKFhqIBHGSqX8uv7U6zKRjDAha2HGVu1/9j2L/MAXC0KW6Hk69Hrbv
+         3945kx5/9YsvAxRHNJBpxapTvMAN/s4k8NggW6GouS0ZUfuY7z6kBD40MSUD0hPuSGhx
+         1Ydg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=jw0jcJObK61srj04r+EpbnKx1YpOLwQogdTBjXa9ETw=;
-        b=BlCITjLShFdNT4l1xYrAnYVI+AGtgv45EhAccwUYpGzSFFhxKeJPWz0BH5qgMULr6M
-         yi4WKUaqgzMq1TVHmirVJElaETqHxnNZps3LIeqFUg9bN+Z17/fs0Sttv14jYa/fUHs7
-         gmD6hn9GEjJCUPxZpP4s3nw0wENhFzeo3jUKwIPmKjELBmfX9Y0oCjNVJ0AWBmt9DFa3
-         msfDyVzRV4wgjOpa4N7m7TM3akj3IALwI1YYiG1DtqbzV2LJi0FSkZnps37sKjd3bvd0
-         o3X2lQuKYNoQ58P8UGjdW6xDq9YnkO4OeHL/X5CAbZA7jM+LjLbnB9vyJyI9P4JXqFTa
-         P3fw==
-X-Gm-Message-State: ALQs6tAF9GaPIL8SXeOhM/PAUyYygSdFmvqwTF0v9R4BoQQYPEr84Kb1
-        C6vbOriHpyYtBPMzFml5fp2VnrPIcWHv5S00y2c=
-X-Google-Smtp-Source: AB8JxZqtArY3kE59v+u/Y/tPc132AFuR66C2Us5qWwp0Ybzr+TJmYkq+byvN8/URynUoRCntJuwWkwa2m2IQAnhH/po=
-X-Received: by 2002:adf:8df7:: with SMTP id o110-v6mr33303586wrb.251.1525746558213;
- Mon, 07 May 2018 19:29:18 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=z2EnrUvSOG51FvGiN30XuBn2UGfnymzQFk4sgGkzpiU=;
+        b=HfA4lvy7veYr8vrDm3LWlvUGoqT/MUjmH+qvWykr8cU3J7q4EeyRrlogV/JKqfCw+K
+         XigKbnyenPp9aPODRHBCmefkUzN/W2OOSICZr2K9e2ls6cRbfgQkBGoGcizbFV6OFwS7
+         n0rpLZ+s4oPG+sSqwxVk2R5Jr+Pp3hw6p8ipLc/cA2TidOzujmR0Bs5CDIIBOzXY+wib
+         zg8gl7yAoFjCjIyzPdZRmCgOpe61cd/1E1G8nh96rC7aGqhqwbzp0ZllvgD09wuiQQlg
+         joISJ8/dNDRnyGOk0IxsOpnq/KztD1gCb6t0HZBrIYi3aZ+KS6E4OrYHTMkU9Clh8dio
+         jMhA==
+X-Gm-Message-State: ALKqPwe8WXlHtwcINmO44XK4+0ZCF+0BiYJfvz4TKKhUcPB+i/cJho+4
+        egbqLXBrQkoaJkYPOdAcV2U=
+X-Google-Smtp-Source: AB8JxZplqMK7z9lJdXCFE+ZmqCGduzeR0YC/PktgnP+xFq0+sEj0G7Xf5bi60Udi3BS9xmRrNi+npg==
+X-Received: by 2002:a1c:4249:: with SMTP id p70-v6mr2091834wma.17.1525746957781;
+        Mon, 07 May 2018 19:35:57 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 33-v6sm18061255wrs.5.2018.05.07.19.35.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 07 May 2018 19:35:56 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/8] push tests: add more testing for forced tag pushing
+References: <20180429202100.32353-1-avarab@gmail.com>
+        <CACBZZX7HFnEMD8PKWj0c7VWqv=yeYCXYJjy-5YPZnF_pJAy0jw@mail.gmail.com>
+        <20180429202100.32353-4-avarab@gmail.com>
+Date:   Tue, 08 May 2018 11:35:56 +0900
+In-Reply-To: <20180429202100.32353-4-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sun, 29 Apr 2018 20:20:55 +0000")
+Message-ID: <xmqq8t8uoovn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.223.142.82 with HTTP; Mon, 7 May 2018 19:29:17 -0700 (PDT)
-In-Reply-To: <CAGZ79kZU-LsQqYxUeFzxk+6wpmUY0rKpWBa4Us+n9c60JE-frg@mail.gmail.com>
-References: <917621a4-b46a-95aa-dccc-905c0cd32b1d@gmail.com>
- <CAOZc8M9sESwyMQvCq5RpfD=-RYAxQRZ-UxoRBdESriD92xxZwA@mail.gmail.com> <CAGZ79kZU-LsQqYxUeFzxk+6wpmUY0rKpWBa4Us+n9c60JE-frg@mail.gmail.com>
-From:   Pratik Karki <predatoramigo@gmail.com>
-Date:   Tue, 8 May 2018 08:14:17 +0545
-Message-ID: <CAOZc8M934x8HWiPVmv7OkaApjNkQ-t5jw51Fv9Zg7pwCyLt_HA@mail.gmail.com>
-Subject: Re: [GSoC] Yet another blog series about the GSoC
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Alban Gruin <alban.gruin@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 8, 2018 at 12:20 AM, Stefan Beller <sbeller@google.com> wrote:
-> Hi Pratik,
-Hi Stefan,
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> On Sat, May 5, 2018 at 5:24 AM, Pratik Karki <predatoramigo@gmail.com> wrote:
->> On Sat, May 5, 2018 at 5:11 PM, Alban Gruin <alban.gruin@gmail.com> wrote:
->>> Hi everybody,
->>>
->>> as my fellow students, I started a blog series about my GSoC project[1].
->>> First, I wanted to post them directly on the mailing list, but a blog
->>> allows me to edit the content easily if needed.
->>>
->>> Any feedback is welcome!
->>>
->>> [1] https://blog.pa1ch.fr/posts/2018/05/05/en/gsoc2018-week-1.html
->>>
->>> Cheers,
->>> Alban Gruin
->
-> Thanks for blogging about GSoC!
->
->> Nice post. Great job, Alban.
->> Just a little typo I found out there: hazardous -> hasardous.
->
-> I would think hazardous is correct, both in British as well as
-> American English, I cannot speak for more.
+> Improve the tests added in dbfeddb12e ("push: require force for refs
+> under refs/tags/", 2012-11-29) to assert that the same behavior
+> applies various forms other refspecs, and that "+" in a refspec will
+> override the "--no-force" option (but not the other way around).
 
-I believe I kept the notation wrong in the mail I sent earlier.
-Actually, Alban had hasardous typo. I corrected him.
-I guess the notation should have been: hasardous -> hazardous.
-Sorry. :-)
+For some reason this fell out of my radar; sorry about that.
 
-Cheers,
-Pratik Karki
+I like the general idea to ensure non-ff pushes are rejected, unless
+forced, to update a light-weight tag with another.  I am unsure what
+should happen when trying to update a light-weight tag with an
+object with different type (or vice versa), and haven't read in this
+series what your opinion is yet.  Let's read on and see how it goes.
+
+I have a moderately strong preference that
+
+	$ git push --no-force child2
+
+with a configured refspec
+
+	[remote "child2"]
+		url = ../child2
+		push = +refs/tags/*:refs/tags/*
+
+should behave as a non-forced push (regardless of the refs hierarchy
+involved, not limited to tags/).  I have a mild preference against
+
+	$ git push --no-force ../child2 +refs/tags/*:refs/tags/*
+
+that forces, just because command line options look a lot more
+explicit than the prefix '+', and choosing it not to force would
+make it consistent with the desired behaviour for configured forcing
+refspec.
+
+I couldn't quite get what you meant by "(but not the other way
+around)".  Did you mean
+
+	$ git push --force ../child2 refs/tags/*:refs/tags/*
+
+should not become non-forcing version because of the (lack of)
+prefix on the refspec does not trump the --force command line
+option?  If so, making
+
+	$ git push --no-force ../child2 +refs/tags/*:refs/tags/*
+
+not to force would make things more consistent, I suspect, i.e. we
+can simply declare that presence or absense of '+' prefix in the
+refspec determines the forced-ness of the push/fetch when there is
+no command line option to decide it, but an explicit command line
+option will always override it.  
+
+Am I missing something obvious?
+
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  t/t5516-fetch-push.sh | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index 15c8d5a734..c9a2011915 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -981,7 +981,17 @@ test_expect_success 'push requires --force to update lightweight tag' '
+>  		git push --force ../child2 Tag &&
+>  		git tag -f Tag HEAD~ &&
+>  		test_must_fail git push ../child2 Tag &&
+> -		git push --force ../child2 Tag
+> +		git push --force ../child2 Tag &&
+> +		git tag -f Tag &&
+> +		test_must_fail git push ../child2 "refs/tags/*:refs/tags/*" &&
+> +		git push --force ../child2 "refs/tags/*:refs/tags/*" &&
+> +		git tag -f Tag HEAD~ &&
+> +		git push ../child2 "+refs/tags/*:refs/tags/*" &&
+> +		git tag -f Tag &&
+> +		git push --no-force ../child2 "+refs/tags/*:refs/tags/*" &&
+> +		git tag -f Tag HEAD~ &&
+> +		test_must_fail git push ../child2 tag Tag &&
+> +		git push --force ../child2 tag Tag
+>  	)
+>  '
