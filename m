@@ -7,59 +7,53 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38D151F42E
-	for <e@80x24.org>; Tue,  8 May 2018 10:19:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EDA71F42E
+	for <e@80x24.org>; Tue,  8 May 2018 10:26:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754673AbeEHKTu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 06:19:50 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33548 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754424AbeEHKTs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 06:19:48 -0400
-Received: by mail-pg0-f68.google.com with SMTP id i194-v6so20983519pgd.0
-        for <git@vger.kernel.org>; Tue, 08 May 2018 03:19:48 -0700 (PDT)
+        id S932237AbeEHK0T (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 06:26:19 -0400
+Received: from mail-it0-f50.google.com ([209.85.214.50]:50449 "EHLO
+        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932234AbeEHK0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 06:26:17 -0400
+Received: by mail-it0-f50.google.com with SMTP id p3-v6so15583989itc.0
+        for <git@vger.kernel.org>; Tue, 08 May 2018 03:26:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :user-agent:mime-version:in-reply-to;
-        bh=4YSzkJmoekNYwfMo0eHS1uFJWC37azoKEeoe+w0Mf8Y=;
-        b=HVtRKz9vzb51W1RxUdO+6lw4O5rEJcs3kW7NEuAPvlT1lyOfGLjrc5Rza756K9FW3I
-         fZQ6QJl0D71p1lZqGDRVX5EqdM+DAScE7BTqDqj8FzMPYKPKIO/I5Ow7ofNZ3wbT/PrI
-         DRu00ib36ArFtZZkwBjz0xf2nqopO2Cqgz4k58+PrmBixlGxSlNF3EvClg4rJsGGLqOH
-         tbduYYd8L1cY5UKTp2gUzSNCuvQNmGRaui4+5IxPuvebB53g/6VBipOcjwZmKHlPaQXQ
-         vUOqzqvQOPzAxTqJ0OZFNyCJv9Qj90eSwQjK9lA/CWYeYdJb2jRHiijEbnpcYK/DOlIX
-         2m1Q==
+        bh=TKIwr6TPAXZPY/C9dsl3M7hqY7J1+m+lLtXUP3FjpiU=;
+        b=IFliP1r2lCTI7YTcppp4YYIAlKToUQOE3EqGpsl6BXX1tZgavpzEsTxX3OeLsJ+9zy
+         iQnE1e8FmwPobWZ1TqyNeXo/RpjiHiqsGvrcBrhBd5XEONdXzt4JYf/cKujwNjXebx9O
+         DFNvtnNrAz0zTIa8RGLrgqBZAA5YE5ZD4naivgsqxwb5K0s2cGBjM716DJs+37TgHMNi
+         i0talNGqL15QOGhY0b/r4dBBSPXDFYCOEn0MteQDaT2fE7KtninDza+wGmkerjJn4fa4
+         SeN+F+vEPAPww/6bs4u3x2Uj63WYxUZLzEdELs+y5+FS6vXbIwZxwy3IZxNl881gdMOF
+         BHZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to;
-        bh=4YSzkJmoekNYwfMo0eHS1uFJWC37azoKEeoe+w0Mf8Y=;
-        b=C84e/WFT8VG5LBIbAiw4l9oDsxCYXRzeHYkWXcHlkWwAzlWZNukuIC2bYWyv25vVTU
-         FxpioVpxfX7YqYiqSwgMlMBpxsDjUkT/yRksXvog3tj4lgB63rijkBIyNYp/cE3x+c5Y
-         Mnvzr2m85aazq77FraPT94HURM5+5xI7xgeMICeYumuDh59+MTbwPq/onis2wCd6GFWn
-         dZTBiw6tsiMx2qgCBHziavJJisLamBDYV5ScOq6iNgX8N03Ad6Co7f/qlDZcO9pxWCxX
-         2nEeDDcSdU6M1Jxi2wblFHUaFXohIMIsaNIIcnLxGlmw0CXUX0QQVH9lRdliBrjBRnx+
-         wFuQ==
-X-Gm-Message-State: ALQs6tDz3R/aynTMXyrofWvhd4cITSnxCQZQkLeq+G0vqVPSOJYX7DaZ
-        Vmm47GMp00cJ4aqMSZIt8GY=
-X-Google-Smtp-Source: AB8JxZqSp3kUTRJzyZ1sjTsjDe546p9j5wLXGlAFHPkjYQYr33SgKkscLAH/pHMJNPwg7SttbRb9iw==
-X-Received: by 2002:a63:6245:: with SMTP id w66-v6mr32360953pgb.55.1525774787905;
-        Tue, 08 May 2018 03:19:47 -0700 (PDT)
+        bh=TKIwr6TPAXZPY/C9dsl3M7hqY7J1+m+lLtXUP3FjpiU=;
+        b=d4/gQ9khoReYtvOdtgLkzrdrCpEy22do2Hi4FT7363Qh7EAP8iO7FAWclDctZpih6f
+         nSp2TE+OV63TRxOBRi+CgxaiH1y1+KGI7QHphnSnQNXNhuESzxflcTderuKE4h9Gm4el
+         LJ1YjPJ6A0AqLxqGgKL4chitzP8g1486+Sj93ra/ZiJF/wa+fup1hPv89XyhYXsiqVgW
+         CoeIRpzO5Q2ww9Vxnxr5mi5snxktYYD3Aq9QHHHovGGXTnkCO1d2NEYR8DrHFIBwp0RF
+         0lurqZS47Mm43RLU7Pm+JTjN68crIGxzRimvLg6qeRKmIsvMDJei7hGTXrT8zM4ur5c1
+         /vFQ==
+X-Gm-Message-State: ALKqPweUQzTRDy63o5T+xHuRbYDTYfXL+AKd+4Ea5LXiXG3r+v01mlOr
+        CGfWDyP3C8V4MD3h7SpfGsE=
+X-Google-Smtp-Source: AB8JxZrWhX2lzFUuTIUf8LaZTkiR/bioJG9itJu2Rcus4g/R6LDDLG3xbFClJ31IIjLM4gN6gCzOYw==
+X-Received: by 2002:a24:709:: with SMTP id f9-v6mr5324340itf.11.1525775177045;
+        Tue, 08 May 2018 03:26:17 -0700 (PDT)
 Received: from [192.168.206.100] ([117.209.132.10])
-        by smtp.gmail.com with ESMTPSA id z62sm56680567pff.57.2018.05.08.03.19.43
+        by smtp.gmail.com with ESMTPSA id g1-v6sm5561947itg.27.2018.05.08.03.26.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 May 2018 03:19:46 -0700 (PDT)
-Subject: Re: [PATCH 3/8] push tests: add more testing for forced tag pushing
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Wink Saville <wink@saville.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
-        Jeff King <peff@peff.net>
-References: <20180429202100.32353-1-avarab@gmail.com>
- <20180429202100.32353-4-avarab@gmail.com>
+        Tue, 08 May 2018 03:26:16 -0700 (PDT)
+Subject: Re: [RFC PATCH v4 1/3] Teach remote add the --remote-tags option
+To:     Wink Saville <wink@saville.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com
+References: <20180501165931.25515-1-wink@saville.com>
+ <20180501165931.25515-2-wink@saville.com>
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=kaartic.sivaraam@gmail.com; prefer-encrypt=mutual; keydata=
@@ -106,75 +100,47 @@ Autocrypt: addr=kaartic.sivaraam@gmail.com; prefer-encrypt=mutual; keydata=
  YkZ4Hv7M8LuQGn64pFrm4grbF/wxkmvgeyBTQA/A9WNWndlinlFYiZGmDoiZUAcSKA9oBTPc
  4jXwW/YIfNYwd7SlatiwKjF1QxuL1X0QMMPstR/UoVc3sbiabb4Km5jS2oU9q6KpeikRshMI
  IZ7P/DJ/
-Message-ID: <589400fa-be87-ddf4-f974-5bd9ff43b298@gmail.com>
-Date:   Tue, 8 May 2018 15:49:39 +0530
+Message-ID: <5d61da6d-fa90-e25d-2bde-6f7f93f39c2f@gmail.com>
+Date:   Tue, 8 May 2018 15:56:10 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <20180429202100.32353-4-avarab@gmail.com>
+In-Reply-To: <20180501165931.25515-2-wink@saville.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="M9lUH40MM7Nkgo3xT1IZMUIT9O0Beoic7"
+ boundary="kcbOhD7ras7StQcHRM7kRk0BGyzkKMVdg"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---M9lUH40MM7Nkgo3xT1IZMUIT9O0Beoic7
-Content-Type: multipart/mixed; boundary="uEAP0mW1k3koA2Vb7dSLz5VpMWUmrj1UC";
+--kcbOhD7ras7StQcHRM7kRk0BGyzkKMVdg
+Content-Type: multipart/mixed; boundary="8SGVGxbFQTpRhnWmlg1UUcTSIqgotzYn1";
  protected-headers="v1"
 From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
- git@vger.kernel.org
-Cc: Wink Saville <wink@saville.com>, Jacob Keller <jacob.keller@gmail.com>,
- Bryan Turner <bturner@atlassian.com>, Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
- Jeff King <peff@peff.net>
-Message-ID: <589400fa-be87-ddf4-f974-5bd9ff43b298@gmail.com>
-Subject: Re: [PATCH 3/8] push tests: add more testing for forced tag pushing
-References: <20180429202100.32353-1-avarab@gmail.com>
- <20180429202100.32353-4-avarab@gmail.com>
-In-Reply-To: <20180429202100.32353-4-avarab@gmail.com>
+To: Wink Saville <wink@saville.com>, git@vger.kernel.org
+Cc: gitster@pobox.com
+Message-ID: <5d61da6d-fa90-e25d-2bde-6f7f93f39c2f@gmail.com>
+Subject: Re: [RFC PATCH v4 1/3] Teach remote add the --remote-tags option
+References: <20180501165931.25515-1-wink@saville.com>
+ <20180501165931.25515-2-wink@saville.com>
+In-Reply-To: <20180501165931.25515-2-wink@saville.com>
 
---uEAP0mW1k3koA2Vb7dSLz5VpMWUmrj1UC
+--8SGVGxbFQTpRhnWmlg1UUcTSIqgotzYn1
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-On Monday 30 April 2018 01:50 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
-wrote:
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index 15c8d5a734..c9a2011915 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -981,7 +981,17 @@ test_expect_success 'push requires --force to upda=
-te lightweight tag' '
->  		git push --force ../child2 Tag &&
->  		git tag -f Tag HEAD~ &&
->  		test_must_fail git push ../child2 Tag &&
-> -		git push --force ../child2 Tag
-> +		git push --force ../child2 Tag &&
-> +		git tag -f Tag &&
-> +		test_must_fail git push ../child2 "refs/tags/*:refs/tags/*" &&
-> +		git push --force ../child2 "refs/tags/*:refs/tags/*" &&
-> +		git tag -f Tag HEAD~ &&
-> +		git push ../child2 "+refs/tags/*:refs/tags/*" &&
-> +		git tag -f Tag &&
-> +		git push --no-force ../child2 "+refs/tags/*:refs/tags/*" &&
-> +		git tag -f Tag HEAD~ &&
-> +		test_must_fail git push ../child2 tag Tag &&
-> +		git push --force ../child2 tag Tag
+On Tuesday 01 May 2018 10:29 PM, Wink Saville wrote:
+> When --remote-tags is passed to `git remote add` the tagopt is set to
+> --remote-tags and a second fetch line is added so tags are placed in
+> a separate hierarchy per remote.
+>=20
 
-As a person who came to know about the "tag <tag_name>" refspec for the
-first time while seeing this patch, I found it a little hard to parse
-the following two lines of the test:
-
-		test_must_fail git push ../child2 tag Tag &&
-		git push --force ../child2 tag Tag
-
-Maybe some other name than "Tag" for the example would have made it
-easier for the person reading it. Something like "foo"/"bar" etc.
+I find '--remote' in the option name to be redundant given that it is an
+option to `git remote add`. I guess '--namespace-tags' would be a better
+alternative as it seems to convey the meaning more directly to the user.
 
 
 --=20
@@ -216,28 +182,28 @@ to correct those mistakes.
 Thanks in advance!
 
 
---uEAP0mW1k3koA2Vb7dSLz5VpMWUmrj1UC--
+--8SGVGxbFQTpRhnWmlg1UUcTSIqgotzYn1--
 
---M9lUH40MM7Nkgo3xT1IZMUIT9O0Beoic7
+--kcbOhD7ras7StQcHRM7kRk0BGyzkKMVdg
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlrxebsACgkQveda2sPW
-GWn+Fg/+JdQR8sitmLJxlx3qjDZJRPhekRAYSW2ftF9eCvIwsKHIJAsDkmcrWWnR
-ionDHnGVmVzDhLS1pZ8eI5So+EV8QbzoXDe+j0P5alY+magmnCWrJ9tACS0LG9pe
-c1Lvra8hRMMdd/q2e6qbusdTtb92/zAvGqmrNXAZmT5lZgRMn27y3V+VIU2P6U5Y
-r2cz9ByC8ryPQrzFHqR1Qy1V8tFoDP0yT3rH/mPtoU+uNnOYm/nylhZiOgLTIAO9
-OaHFTgCQzY7Lwp625R9gSa595TY8HYTbVNRvNoysTP8xfzze4CbeoWIZSLZlHbRl
-C//POMamR84s8toR416bB0nTVc9WwFkBT38Ta9Q8y7Zn5Xu19aHbW5ChCwJe0R9s
-rK+7U0to1PEB2sQKA7NcxRyuSVtc3HJLcDMXi/DHyW3jNTBw4WURWKhYer8/3SlF
-HkVm8pLwQVgzxvrC2vaPhe9/SV2EBBXVzCtzbgGbUzitbVp9heXR7gp9xGXO6Iw4
-gGqeeahDehrJ0kMmCwDJTFY2LJiy5V0r8qKjKY/86tJygLgc7kpuVjtxIhA/Z0e4
-iMa+9YKDrq4/ZsDYpVSOdu1blQW75etSnM0HoHW7cvMIXBYWe+XNYAzwu0NAbu7k
-3XnCpagv3+aRvS99yYQnZBoWq8Z+b8pYHKRpRZnVNGXaPkRPhFw=
-=ikXu
+iQIzBAEBCAAdFiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlrxe0IACgkQveda2sPW
+GWlJ/Q//QRr4+rXmgCAXAmWMx8PGdpWrSEKONzqeyypeTzlchkoelKeouWriX6o5
+6B/4RurotNCfIteSOCpam8kAiwojOfng8nbBQEiZ89qdKU0YK8ZPxFm5OFGh5oEx
+L+uMWYEZjdQQeWC+ShzGNMZpR4I/NT6a3YYbvIbWxJAUNuYy+bS4H8A+9p5nT7R1
+1TNv8yHHm7wnKSYIoO23HQgsXpeBMezp2GL68t7Rs5qKcyqosVfWzI0Et0E96jtJ
+CnjpOMlBg+M53tDCSllSlnbOFHmrHCqZ6oRh1gQH6QC6Oqlst2+MwlY95H2/W/p9
+0Mf0l/leWt60REBk7tcCxooyijLv3/z9boF3e/H/29vy5Pt8YQ0BVVwejKVk6xCt
+SPrVAzG7P1+g3FiMMSqpKUOuf0xPfpP2hMyJti0KsNzHwklScsWUsxWXU6PxZski
+aK315yCcM9VbL++3GJLqQM/rBik+V+lq2PQlFNFru3gQXrejv8berftLr+itgJp8
+Wi75YXBSvdKUAU6BaIvpAWB4GvYYB8ljVtLBEL6ZKgs6GZhy1A1DkMugjvzSXpvl
+foLRdX9njrwC/3Ol+x2KEQYk/5FI+I/zM3WlX+As2M/fi5g3PoopX3JX3LAnmxzO
+MPkoqdw78HmhWzVBIipCxeRzk8nNJLUITYv+cDwveowYlr41Fs4=
+=6kvV
 -----END PGP SIGNATURE-----
 
---M9lUH40MM7Nkgo3xT1IZMUIT9O0Beoic7--
+--kcbOhD7ras7StQcHRM7kRk0BGyzkKMVdg--
