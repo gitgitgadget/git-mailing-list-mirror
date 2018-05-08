@@ -2,84 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 881C4200B9
-	for <e@80x24.org>; Tue,  8 May 2018 17:05:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42528200B9
+	for <e@80x24.org>; Tue,  8 May 2018 17:07:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755051AbeEHRFj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 13:05:39 -0400
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:38985 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754903AbeEHRFi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 13:05:38 -0400
-Received: by mail-qt0-f169.google.com with SMTP id f1-v6so41966397qtj.6
-        for <git@vger.kernel.org>; Tue, 08 May 2018 10:05:38 -0700 (PDT)
+        id S1751934AbeEHRHc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 13:07:32 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:38855 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751273AbeEHRHb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 13:07:31 -0400
+Received: by mail-yw0-f193.google.com with SMTP id y123-v6so9878284ywa.5
+        for <git@vger.kernel.org>; Tue, 08 May 2018 10:07:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=O8z4X+/NFK0jKl7ljmHaLPkPJOQitw+9/jJKTAUmkDM=;
-        b=We3yteEe3eszigu7/FcS9nHyek7tOtXr7d9YeiXh9WGzxfnc9jZSuveOj+F+M0fsXQ
-         L8WS0+EzWHUUpnsOYiLYTbp6mSsMAFlGU0u8SL5XiMAnkpKZ4fd/sGp0HhMqFaLPVI/K
-         P8Eitdc0eYseVTPUPU8/1cTiidqBnefI392h8PDW6IjLGwY4P7txwWnYynThP9vwPuVd
-         +Yvru0/D9yBRPk1uYsjndUJT+LfFzifm8vzOebvzHp1ZGAM1ePa8yu/dp8P3Ldq+QxoU
-         WlGM9oekvccHXIZkFV/WnZxO0zMa8sg5Shvvdc7yJ4dO1nRzgkwi07a/28UQCPmnv9kd
-         gYmg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=gEsqKHN02CawHPBdhjjxvhT1qYFjVqyxw9mPosMnBYY=;
+        b=Kq9dFkhzKVmCfE7qX/ExF84bppMVjZxySnIFvMdw6W/m7Vf+KMgKVZfAynTHrSD3WQ
+         6xV521YjM9bB86lfT+ajmWhLagjUXwSKHw7fuJmdgMbleleozMQyOKkVejosVN+pat+L
+         7pwDL6MfwsS8sS+iSSSNyxXUrteASST9SjPlEVqjkE9fV4DaMdYNSUAS0e9//AARm1rZ
+         d6+Imq/nVLDBkbldfiD0eJxW2rLqW+j6cyEA4rfXeo6XW4tppB0jTuCxA8nJFZ2BNyCe
+         VrGaVnl7ohSEqCP3HE2X1U9To82ktpz/zFU2fC6lbDBnwuQccZQ/GFPJeb2hI4DAwFVB
+         zwJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=O8z4X+/NFK0jKl7ljmHaLPkPJOQitw+9/jJKTAUmkDM=;
-        b=B/r0H/t+L4Pb4L2lgc3mwPLiL8zZ0UWpk4bfuv3e1FMnf1ZR5RKhulgGUDK4pezGwW
-         TdrCYoytuF4ZOIa8MUxPjUpDc4nmTIyqOqrRCGG2YkFQzOTHicUGD3CzY9ayMei1vk9u
-         QkgE+q72E9kdoBLzBA4t7o2qm03rNHhu9D9tor/z9a3oAhZjht5ArGORoVWOXb1C43ub
-         mqsviEjpEpF85Sqzgmwmnb0kIFTijD9R2mGZRPWYBIxOBwq9F8LTUMb9lUJECtuaaw7w
-         h9QmfrAVHAknUeFdQtiTb8KRobiB3HZHennbZRlqSn8X20YFVUst8y/rGhxA2nhMQZQ/
-         gyGg==
-X-Gm-Message-State: ALQs6tBqsmEi5Eax18u9pZdCTsOW84EYIR8wJi9qKhDPv8VPlkptXj9a
-        N38+HswSYtxdTci4Lk04pn6yuk/s
-X-Google-Smtp-Source: AB8JxZpKmZdRXp2Dx+l4p9B0IdjJPWebqt2tz8vwB6+BqOjBJ+1IhHQVwJ6qcH/hZdDNoQMEPY94LA==
-X-Received: by 2002:ac8:1682:: with SMTP id r2-v6mr39165059qtj.40.1525799137326;
-        Tue, 08 May 2018 10:05:37 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id x40-v6sm21751469qtb.40.2018.05.08.10.05.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 May 2018 10:05:36 -0700 (PDT)
-Subject: Re: What's cooking in git.git (May 2018, #01; Mon, 7)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqa7tbpl5q.fsf@gitster-ct.c.googlers.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <b58358de-3590-64b2-1db8-9cee9de92ed3@gmail.com>
-Date:   Tue, 8 May 2018 13:05:32 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=gEsqKHN02CawHPBdhjjxvhT1qYFjVqyxw9mPosMnBYY=;
+        b=NTsnUZU8pqBnW3feJL/vge0FtKK/uboM5btSyCrK9UW9TXE4IPZ/m43nTV50wu7u8/
+         Qgz2e7mE5nRfVBiyroWq+K3V7+pf91zDOP2/t9xnyb5kUqfApu8wXgMEckQYMwB4n8nW
+         hXRzD4Vpcp5vWebFFB9RIOinMQ6za7HW3xjysCCu8fj9FtZN+qaKIZVmlS/lJD/CcZLH
+         LdCTLVSczvceNKDtTjyOCBg3eYBhHEJf7OOGnwxj8uIh+6SMT3wuVQhn19KePQ8ET2tB
+         nD3RcPgBNTqT82MAdW9PIDZRB5hQ66AYAlIkcUdCVZgyFUNoFYM7Jjc4cly2C/sNrBzT
+         0Fvg==
+X-Gm-Message-State: ALQs6tC8P5NxbF0B39waiUq0WGUtzR9UFTzWJLM80luNj8Bu07aqYWMw
+        MBe2Z6WuCkZtL2BsI5k6OSX/vtkIFAFGIHU71xaJGA==
+X-Google-Smtp-Source: AB8JxZqrQnANISMO1O8ZdMAS0rLJfbXG8+E+WS1FLgpBU7zx1LaP/88l/SxFLXCMCGRoeSmiVAGA1NvrEaCbewXjDIE=
+X-Received: by 2002:a0d:fd84:: with SMTP id n126-v6mr22601069ywf.33.1525799250216;
+ Tue, 08 May 2018 10:07:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqa7tbpl5q.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Tue, 8 May 2018 10:07:29 -0700 (PDT)
+In-Reply-To: <20180508122229.k3n3ccpa5g3g4dxa@pflmari>
+References: <20180508121104.rtsrektxiihvpqtx@pflmari> <20180508122229.k3n3ccpa5g3g4dxa@pflmari>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 8 May 2018 10:07:29 -0700
+Message-ID: <CAGZ79kYxZ43kJwS_odhNwCO2e_n-8JLNynAZj0+Hp3ugzYbqUg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] gitk: show part of submodule log instead of empty
+ pane when listing trees
+To:     Alex Riesen <alexander.riesen@cetitec.com>
+Cc:     Paul Mackerras <paulus@ozlabs.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, May 8, 2018 at 5:22 AM, Alex Riesen
+<alexander.riesen@cetitec.com> wrote:
+> From: Alex Riesen <raa.lkml@gmail.com>
+>
+> Currently, the submodules either are not shown at all (if listing a
+> committed tree) or a Tcl error appears (when clicking on a submodule
+> from the index list).
 
+I do not understand where this appears, yet.
+Where do I have to click to see the effects of this patch?
 
-On 5/7/2018 10:58 AM, Junio C Hamano wrote:
+>
+> This will make it show first arbitrarily chosen number of commits,
+> which might be only marginally better.
+>
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+>  gitk | 42 ++++++++++++++++++++++++++++++++----------
+>  1 file changed, 32 insertions(+), 10 deletions(-)
+>
+> diff --git a/gitk b/gitk
+> index a14d7a1..d34833f 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -7627,9 +7627,10 @@ proc gettreeline {gtf id} {
+>             if {$i < 0} continue
+>             set fname [string range $line [expr {$i+1}] end]
+>             set line [string range $line 0 [expr {$i-1}]]
+> -           if {$diffids ne $nullid2 && [lindex $line 1] ne "blob"} continue
+> +           set objtype [lindex $line 1]
+> +           if {$diffids ne $nullid2 && $objtype ne "blob" && $objtype ne "commit" } { continue }
+>             set sha1 [lindex $line 2]
+> -           lappend treeidlist($id) $sha1
+> +           lappend treeidlist($id) "$sha1 $objtype"
+>         }
+>         if {[string index $fname 0] eq "\""} {
+>             set fname [lindex $fname 0]
+> @@ -7659,21 +7660,42 @@ proc showfile {f} {
+>      global ctext_file_names ctext_file_lines
+>      global ctext commentend
+>
+> +    set submodlog "git\\ log\\ --format='%h\\ %aN:\\ %s'\\ -100"
 
-> * bp/merge-rename-config (2018-05-04) 3 commits
->   - merge: pass aggressive when rename detection is turned off
->   - merge: add merge.renames config setting
->   - merge: update documentation for {merge,diff}.renameLimit
->   (this branch uses en/rename-directory-detection-reboot.)
-> 
+Do we want to respect the config option diff.submodule here?
+The -100 is chosen rather arbitrarily. Ideally we'd only walk to the
+previous entry?
 
-It isn't specifically called out here but is it safe to assume this is 
-also headed to next behind en/rename-directory-detection-reboot?
+> +    set fcmt ""
+>      set i [lsearch -exact $treefilelist($diffids) $f]
+>      if {$i < 0} {
+>         puts "oops, $f not in list for id $diffids"
+>         return
+>      }
+>      if {$diffids eq $nullid} {
+> -       if {[catch {set bf [open $f r]} err]} {
+> -           puts "oops, can't read $f: $err"
+> -           return
+> +       if {[file isdirectory $f]} {
+> +           # a submodule
+> +           if {[catch {set bf [open "| sh -c cd\\ \"$f\"&&$submodlog" r]} err]} {
 
+Can we have $submodlog use the "git -C <path> command"
+option, then we could save the "cd &&" part, which might even
+save us from spawning a shell?
 
+Thanks,
+Stefan
