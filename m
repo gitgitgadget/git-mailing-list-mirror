@@ -2,108 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE281200B9
-	for <e@80x24.org>; Tue,  8 May 2018 00:44:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56611200B9
+	for <e@80x24.org>; Tue,  8 May 2018 00:44:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753786AbeEHAoi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 20:44:38 -0400
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:34221 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751647AbeEHAoh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 20:44:37 -0400
-Received: by mail-yw0-f180.google.com with SMTP id x27-v6so6588886ywj.1
-        for <git@vger.kernel.org>; Mon, 07 May 2018 17:44:37 -0700 (PDT)
+        id S1753814AbeEHAor (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 20:44:47 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:40636 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753801AbeEHAoq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 20:44:46 -0400
+Received: by mail-wm0-f51.google.com with SMTP id j5-v6so18424081wme.5
+        for <git@vger.kernel.org>; Mon, 07 May 2018 17:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=tehrAFkdz1t+FmtRnivwqyg8k8477BBOAalHl1iaq8o=;
-        b=GZDL64k/XjclyKOyLsnh5XwR52YP79ojZdwTo7Ke9nkm/JVWW28eDkzrGiXfGWeaJO
-         efFjgQHwrQE+1Yjj+B0lXU8Caaz576jsqzI6d17P9bh057WZAOoX2OAal8ngogZrGSxt
-         +/PymEWjQK3oq9duNaV1Q3hdFqNDKVMbIODtQq0FagTPn3S8Xha9/Dn9G79GdCUmuiB5
-         DhnO7W051LYOj3OQaCocg5+szRN1rYbrXz1dbFhPWpuRd1cDSe/5k+gdDRct2Fg0mmek
-         TwJ7o+FlEbqnGH2x+EAqfBjwrv9uAuwFWdvaNFdDGI1GAt+9Ux1QhLcw3/2BEx6R2vvN
-         RYHg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=9HU7yqbuvW44f0om/EwhMlKfp7Wzsyw7vWgs23rcvR4=;
+        b=kvD3ZNyU/T/2bxObsfMkIiitokz4ql6IF+06WsU5ThmMzczruW7BvICg/XCVcEsV6e
+         515dU89Qa4LPlKgqVbTOLcVvZcnQHgG+mMbaKQx+tR6XDPgnvxKZ+R0ymSdpuZTJIoIQ
+         UnaydCbMhL9WKe14SXXYtRwqCEP8nSZz73uzYpSgx+UAQiBJGY2tVFSZRAQ5fcTTYixk
+         bClunWOzpirUeuzt42i3CTAjbdIodqkH6kOLpq40yBnPXOxh9hYzHkOpc18n4m8kNvC4
+         +QySo35++8L0zZeRm7Jc0HSXEs1iYs/afge/QpLBVUUzCFqXUVFlmcXnxT0Y4SgVy4+6
+         mvpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=tehrAFkdz1t+FmtRnivwqyg8k8477BBOAalHl1iaq8o=;
-        b=B1wy7uedGn0yde/m17Oa+JsTusymM0eW5ds2HrOSjB8OI8M8KPQ+E3F7bRpMMUM827
-         qo8Lqw60XiDLh152XBwtz649UHXgkiGviJnBwnzLXauexizStn2Qfj7HgFYPOUZwzYYL
-         YIDCZFhS1gk3c7aubVPiEgThCNX0UivAzliVpou2LaqzD4kPHbTIgrU41LijZEbYelQL
-         CJdFV6x3+OFaZp9bK43BLmHAec3QVmOCfgjuDB7eHgTWdHR5mifi/0w9PWd+BDNlFrzq
-         YAiWy2TeQWTatjhQhHmdVK4JChKT3Me2rOwZQyAN/5D/ZeYDylqC5Xd+Ra2uaFn2c0vC
-         RZYA==
-X-Gm-Message-State: ALQs6tDv/g2oisURIIDOEJlbhFzsv6gmpgBHPrTKXic32UhYGkF+MmYM
-        40bcQRXNzPbyDJ1K6GzmwrAxCOECsZP7PbjMhEZMGg==
-X-Google-Smtp-Source: AB8JxZpanOMOkvVn6G/ON/Z+KjHTMkEeJYtYE4CUAIVvNhMhqMUFDjreIq7zwV4p5GtS/HgC5SWA0oWfJHgiFiDHy+s=
-X-Received: by 2002:a81:4ec9:: with SMTP id c192-v6mr22243826ywb.421.1525740276620;
- Mon, 07 May 2018 17:44:36 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Mon, 7 May 2018 17:44:36 -0700 (PDT)
-In-Reply-To: <xmqqsh73nfta.fsf@gitster-ct.c.googlers.com>
-References: <BL0PR2101MB1106BA184260609DA69988A6CE870@BL0PR2101MB1106.namprd21.prod.outlook.com>
- <20180503221802.61110-1-sbeller@google.com> <CACsJy8De2SUGj9hgq3h7pODm=9Wn+TkCKfJjrm1c=UxS9BZvTA@mail.gmail.com>
- <xmqqsh73nfta.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 7 May 2018 17:44:36 -0700
-Message-ID: <CAGZ79kbC1f856Pbf-Uucdr-FnNemjTTb07RiECBMDW2ZTA2xDA@mail.gmail.com>
-Subject: Re: [PATCH] alloc.c: replace alloc by mempool
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Jameson Miller <jamill@microsoft.com>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=9HU7yqbuvW44f0om/EwhMlKfp7Wzsyw7vWgs23rcvR4=;
+        b=C7OWm5GYJMn01l2XR9+NAnoB0SjTGJ+SlwH3kuyK/ZNaYTv3OC6ZD6PGXvHc8oUttP
+         n4Pgald8+y3FxzHGv6hnPXjqHiS5WsNZplRoXSN4D7OP9nX0zShwQu8bTliil4lIsAsS
+         zjpZpjEJetUzXC2lcqzLyf/FCwP5/2eMGJWjAo3/arIx3M5McC0FE8A+oTHVeSb6O8O/
+         4h4f23QJNHC2ErDt+9ptFEFrl1+AhtgU5C7DTkP2SEwTtXvfLFSOiWWQNdWofF36Zzlc
+         p6CU1UmDzfemaCE+HQOShb+H1SNfIBBtLlaYke6ASOEaIKxRcaz+enuSE6ewk5ZbYL01
+         AsPA==
+X-Gm-Message-State: ALKqPwdiss67cF5or4KsxtO5SsH46jwjnBId8OmbKZxiqKbEimdCI36g
+        W7O6OPIZ4n/bp6Sku1YULZc=
+X-Google-Smtp-Source: AB8JxZqR9I3xNA61CRoIPwle+7AhTHs8FMNQhReZW18h+vS4BwQncmgVPo68UeUsXHPWKIO4otkeiQ==
+X-Received: by 10.28.197.136 with SMTP id v130mr1808835wmf.135.1525740285195;
+        Mon, 07 May 2018 17:44:45 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m35-v6sm25302477wrm.51.2018.05.07.17.44.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 07 May 2018 17:44:44 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+        Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (May 2018, #01; Mon, 7)
+References: <xmqqa7tbpl5q.fsf@gitster-ct.c.googlers.com>
+        <1bb666a1-ce44-3eb0-e63c-a6a9e2a675dd@gmail.com>
+        <CABPp-BFyj7SCfUbJzfjt==abORdUtfgRRywyjf0V73rDnygHGw@mail.gmail.com>
+Date:   Tue, 08 May 2018 09:44:44 +0900
+In-Reply-To: <CABPp-BFyj7SCfUbJzfjt==abORdUtfgRRywyjf0V73rDnygHGw@mail.gmail.com>
+        (Elijah Newren's message of "Mon, 7 May 2018 09:33:56 -0700")
+Message-ID: <xmqqo9hrnfgj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 7, 2018 at 5:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->>> So I think we could just replace it for now and optimize again later, if it
->>> turns out to be a problem. I think the easiest optimisation is to increase
->>> the allocation size of having a lot more objects per mp_block.
->>
->> Yeah. I also tested this from a different angle: memory overhead. For
->> 2M objects with one mp_block containing 1024 objects (same setting as
->> alloc.c), the overhead (not counting malloc() internal overhead) is
->> 46KB and we don't have any extra overhead due to padding between
->> objects. This is true for all struct blob, commit, tree and tag. This
->> is really good. alloc.c has zero overhead when measured this way but
->> 46KB is practically zero to me.
->
-> Thanks.
->
-> The above in short sounds like arguing "replacing alloc.c internal
-> with mempool incurs negligible memory overhead and performance
-> degradation, but that can be optimized later".  It was unclear to me
-> why such a replacement needs to happen in the first place, though.
+Elijah Newren <newren@gmail.com> writes:
 
-The replacement with mem-pool might be easier than making sure
-that alloc.c has no globals and handles allocations per repository
-correctly. It would make the sb/object-store-alloc series shorter than
-it currently is, and maybe easier to review the code.
+> I'm actually curious what the "Will merge to 'master'" and "Will merge
+> to 'next'" are intended to mean in general.  I thought it meant that
+> the topic would be merged the following week barring further
+> discussion, but that hasn't always been the case ...
 
-However now that sb/object-store-alloc is rerolled with keeping
-the logic of alloc.c and not replacing it with mem-pool, the only
-reason would be ease of maintainability by less code
-On the other hand we have different implementations of
-lists, vectors and hashmaps, so having different memory
-allocators doesn't hurt.
+These have always been "eventually in some future", not "next
+week".
 
-> Without such a code churn, there won't be extra overhead or need to
-> fix it up later, no?
+A topic with potentially high impact tends to cook in 'next' longer
+than a trivial typo fix, so that it has better chance of getting
+stopped by the community dogfooding of 'next' before getting merged
+to 'master' and bite the general public.
 
-The original motivation is to get the object store on a per-repository
-basis. It might be cheaper to use an existing 'objectified' code instead
-of doing that again.
+And the commit-graph thing certainly is a bigger beast I'd feel
+safer if people tested heavily while it is in 'next' before it hits
+'master'.
+
