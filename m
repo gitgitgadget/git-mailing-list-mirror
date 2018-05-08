@@ -2,99 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B5061F424
-	for <e@80x24.org>; Tue,  8 May 2018 20:37:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAA0F1F424
+	for <e@80x24.org>; Tue,  8 May 2018 20:53:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755771AbeEHUhf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 16:37:35 -0400
-Received: from mail-yb0-f171.google.com ([209.85.213.171]:35545 "EHLO
-        mail-yb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755753AbeEHUhe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 16:37:34 -0400
-Received: by mail-yb0-f171.google.com with SMTP id j143-v6so2508195ybg.2
-        for <git@vger.kernel.org>; Tue, 08 May 2018 13:37:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=S3EtvzHZQnVnmXs3izqBC/5MViK41DOtYAOSsJKvZ3w=;
-        b=pixv8zuiC40swJLDMPOTT3zxZmaBE93wpDTjM5Lsgp32J96yYYcx1ILwh4JDAquSjB
-         KavZCqzvWHKQA/MfEgHPvOtIEcglaI9FE/AqW+JDJpd4AO88ly/nXtAo7F2lChXCR9b6
-         1E8FPNxSJnk5dMILVGLmDnBCjWwu08LKQ+MN6cowQG9KeUz22eKZDkXu1Kblzgr4I0op
-         wrsKVsQcP3ZzEtY/7y8TRxZF2TXu8EZj4iekYo/N35LJx1oOxcG87lBtMJZoqukQNXTm
-         N/MtDjfFi5eHRdNxD5qYPeHIOnA6ijQgJR4I4hRW4IEx9pjRmGlrpieD8k9FgjY5USVl
-         XuLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=S3EtvzHZQnVnmXs3izqBC/5MViK41DOtYAOSsJKvZ3w=;
-        b=ChB1J7Wrc6cid2KAwAYG3x2yP/mT978l1iI1PhlPytlhvbvz3iHc7EEQN0oAxMicXV
-         /Q/64LxyUA4xkDW/Xc71+lgxluER+tmzutF9j3Sfu/X6gvguxVzON3M3mCXUGNk0NXT+
-         z8qlKVznJTbxItWcZ/bou+K4bEDYNjT47DV8YUfoBfmKho/RvqnHwOKvk/LomJpZjbUd
-         DTG0ODNJ0/3oZy5XOcd2L3uLCkeGYIL3/TtcfbpANSUFGJD+OpoZ2E1n7mwxqcwBnxG7
-         O8m7MxtqioFCxSp5XmRY2hVXLsbR1Qlj0HAWk/Ox+udrwhp0bvS71bh/3Uu+t6Eew+TL
-         e5Mg==
-X-Gm-Message-State: ALQs6tB98JAGuLPbn840pdusPrmtTlSa6sJRBKmV1m8c03Elx3tIKyhO
-        GZndBWE04Kt4ylBFvLY5OHwAPv10jcWON5wVlXoLEg==
-X-Google-Smtp-Source: AB8JxZpLcbUP+XO7IjynrGIcqfh/eebGN9/LFiPToB04ifzPxCK0jTzec+eVbRQ3On6HXt9OA+yazbgS/yzPoTqma3w=
-X-Received: by 2002:a25:3bc5:: with SMTP id i188-v6mr23627198yba.352.1525811853646;
- Tue, 08 May 2018 13:37:33 -0700 (PDT)
+        id S932533AbeEHUxV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 16:53:21 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58915 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932493AbeEHUxN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 16:53:13 -0400
+Received: from [10.92.140.20] ([167.220.148.20]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIPhr-1fJAHV2xoN-004CIW; Tue, 08
+ May 2018 22:53:06 +0200
+Date:   Tue, 8 May 2018 16:53:04 -0400 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] t6050-replace: don't disable stdin for the whole test
+ script
+In-Reply-To: <20180507120407.4323-1-szeder.dev@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1805081651150.77@tvgsbejvaqbjf.bet>
+References: <20180507120407.4323-1-szeder.dev@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Tue, 8 May 2018 13:37:33 -0700 (PDT)
-In-Reply-To: <20180508130431.287a9f273a847c375b3b1e2b@google.com>
-References: <20180507225916.155236-1-sbeller@google.com> <20180508193736.14883-1-sbeller@google.com>
- <20180508193736.14883-14-sbeller@google.com> <20180508130431.287a9f273a847c375b3b1e2b@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 8 May 2018 13:37:33 -0700
-Message-ID: <CAGZ79kbgxFJ-+t=50r9gVMTm4xomh+pgm81r2QLnDvTqxpxV6g@mail.gmail.com>
-Subject: Re: [PATCH v3 13/13] alloc: allow arbitrary repositories for alloc functions
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jameson Miller <jamill@microsoft.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; BOUNDARY="8323328-489636863-1525812779=:77"
+Content-ID: <nycvar.QRO.7.76.6.1805081653030.77@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:JHFNKpjQJiGDk+lIsbdWtGW07RG0PNRc9b74U0y0yKTK0g+aPiw
+ WARROreEaBBixzhSIGqqOnN60GJ/qwjKUv0SK1ZS4/ShLBFv3YkIMN0CxoM98+Veym2A87V
+ gwqMTz8KEWqsucZ26eL+4oDPXLtjgSooGoz3kbByuzd+p4D/Xgu7tjDnj77BloXu7cKAtra
+ j8xOis40Zo9EmQNYaswog==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FDq1IBH8cLU=:F5VE4fiEe/Q6KWPnznxbpv
+ jlaNqqLqmHUHna8SncT5h7gYpt095oBsl5AecbUqj/iLntl8pDnMdDsEClD49zo9ZSa5iGlSC
+ 3v8e4TaQRFbG/bUSDchXmgCSGxxRija6BCbkXaHHxm/Pe96aDhCNPoxFhA70UgGvjBksHO1ZE
+ Pui8Uc8LjfgIG8jy5ihEMGgzptjZkZvF9LkgXOurLQGxrmQv8l2n7nhIjtbAOh4WRIuESfA2B
+ PnpeWTSKxHGOHCPKK+Seza2XhMHzHaG10oxpqHxs8JYL++/aNyfBAAOsSHIHCwUmHQry0KwIP
+ 3BO7JrK3zRraVY8uu2qn993zCUgA4V4da54cW8GTX/J1aJQMXTSMhe1hMT0wY5skdP3VBQ1xa
+ E8whPNzE/xwA7mOyzrdm4J1QZLJndkcSaPIhuBfZumDVMlIk0K16ZTzgVYEvSpOUqAeZ8sszk
+ OZo19UJ+rlBlSfmiA3onI2vI2/9AlS7aaM5+jB5XSR5bU1Xd5YhjcX52xfo30hiWKcewIwgqQ
+ 5nx1BFBuKKM4XwNyodGeTfsHkwyun7ehlhUVFvyK7Zn04wjTraY7xeLn5m71BKpL9TqBQbclS
+ jv2LlUoN0xk50rkNYpWA/mtrEed+hyWFgGWav5mnCKmTTEZT9aTKI6RhpOa9/Vk5HOIKeezdG
+ YGFVh5kccIPsBQVPpyVRlioqe5+ta0l5IUm0YwtzH8CtwaUq31qZEcXR/L/iNp9zdqNenZDFc
+ 8edJIR3UPh643LG4c2rB03k2kmp0rTu6y1NXAI8pC/S5wReWDTTUcfGfdiqpze/SynzwiCbBr
+ HAygKfZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 8, 2018 at 1:04 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> On Tue,  8 May 2018 12:37:36 -0700
-> Stefan Beller <sbeller@google.com> wrote:
->
->> +void clear_alloc_state(struct alloc_state *s)
->> +{
->> +     while (s->slab_nr > 0) {
->> +             s->slab_nr--;
->> +             free(s->slabs[s->slab_nr]);
->> +     }
->
-> I should have caught this earlier, but you need to free s->slabs itself
-> too.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-ok.
+--8323328-489636863-1525812779=:77
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <nycvar.QRO.7.76.6.1805081653031.77@tvgsbejvaqbjf.bet>
 
->
->> +void release_tree_node(struct tree *t);
->> +void release_commit_node(struct commit *c);
->> +void release_tag_node(struct tag *t);
->
-> Do these really need to be defined in alloc.c? I would think that it
-> would be sufficient to define them as static in object.c.
->
-> Having said that, opinions differ (e.g. Duy said he thinks that release_
-> goes with alloc_ [1]) so I'm OK either way.
+Hi G=C3=A1bor,
 
-I would have preferred static as well, but went with Duys suggestion of
-having it in alloc.c.
+On Mon, 7 May 2018, SZEDER G=C3=A1bor wrote:
 
-I can change that.
+> The test script 't6050-replace.sh' starts off with redirecting the whole
+> test script's stdin from /dev/null.  This redirection has been there
+> since the test script was introduced in a3e8267225 (replace_object: add
+> a test case, 2009-01-23), but the commit message doesn't explain why it
+> was deemed necessary.  AFAICT, it has never been necessary, and t6050
+> runs just fine and succeeds even without it, not only the current
+> version but past versions as well.
+>=20
+> Besides being unnecessary, this redirection is also harmful, as it
+> prevents the test helper functions 'test_pause' and 'debug' from working
+> properly in t6050, because we can't enter any commands to the shell and
+> the debugger, respectively.
+
+The redirection might have been necessary before 781f76b1582 (test-lib:
+redirect stdin of tests, 2011-12-15), but it definitely is not necessary
+now.
 
 Thanks,
-Stefan
+Dscho
+--8323328-489636863-1525812779=:77--
