@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DA3F200B9
-	for <e@80x24.org>; Tue,  8 May 2018 19:37:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51D30200B9
+	for <e@80x24.org>; Tue,  8 May 2018 19:37:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755525AbeEHThx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 15:37:53 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:46050 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932105AbeEHThv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 15:37:51 -0400
-Received: by mail-pf0-f196.google.com with SMTP id c10so24422949pfi.12
-        for <git@vger.kernel.org>; Tue, 08 May 2018 12:37:51 -0700 (PDT)
+        id S1755543AbeEHTh4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 15:37:56 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:43807 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755519AbeEHThy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 15:37:54 -0400
+Received: by mail-pf0-f193.google.com with SMTP id j20so10122114pff.10
+        for <git@vger.kernel.org>; Tue, 08 May 2018 12:37:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YM7G6Z3HwNhnwoCpQ06RPZi6MtHJQRwAUDaoS/o4eM8=;
-        b=mVCZv+zYsZ7OlpZZ9ztOZ+z/uCkDSfRnWp9p3806TLAe2XM+M6bJNDcvCJiAlglgmt
-         5VkrjgHou07t4zDNkscJs8QXT072G+0pAU3zAAGSRQiYa4Pv5HCzBkl3ONfChW9/SO3l
-         4JzamyL2S4Hf3zrD9ptrW6fhdys5KY6+0ul4iH4QLZcZx6YG1HBa6TVb62WY48/ailnU
-         gng+LQRYjC1wG5tbxD6iX2/rmtKIGFgt8HbtzgDfdts4ZXg4ckLOUgEdN7iIAtQ5FmFm
-         adILh4DKG50m38z8ymiP+P+M57Iq0Oea+xzfMdVES3Pw0arSRaYNkiwqiGSkYqHIkTCe
-         Y4XQ==
+        bh=hTqhfTtmV3pMirYUYgWlXw/kCqlEQoXZJCMU2+NSS4k=;
+        b=B8iCqIJ4HKZMmUW4ykxUHa5NySUgEdXCdjk494Nqh+5rEyFaRFW/boSPyyQQRtd1qu
+         7nnab5MdBUY67K5jwRvV6EvwRORUZO1LQ68JbcRM+dzlpe1ToSE1U6ArxhxIKf5Lqc46
+         JplX31rNNwbo+gerPXEAyZps5oI7jHG4VSl6fj/1X33zfxwUxOt9PYs0Pd95ArCImoWa
+         7FPBMy56SOrMhoVVnBrSKondPLBn58J6uSHhS/uw4n5hbI4BzEK8gadgq8/Zam7VXq6w
+         4CRi8gOU1wsikGtWhXuh3L4HO63Qo53jFz0P/PAwzk5EjamLjYvCyL/RSr0yDT0DW8x5
+         UeaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=YM7G6Z3HwNhnwoCpQ06RPZi6MtHJQRwAUDaoS/o4eM8=;
-        b=DBre/UIKbzj4aJeoVsPkzi/SxD/3ysNeUgfFBajnBE6gujFx6gFBax7wEcdoUPtIez
-         s9SdeoFAEwKF/3BA7PzCBBEFK3ywAKX1pedqCC+HRHDW+KG+5DC7Jiw4pocDzp2BAAJx
-         ou0Xi2zC1QiTY39ycx9bROK2ugklXOI9HIXcgJtFGXAmPr8sKaAWTPqoqGWLoa+TlwlC
-         Mq/q7O6/HcqDIXK3omzSnyAD+Jmtr/N91WhEbqTBZ4TwvSz65lrBkjN2nLuvfMwS2O5v
-         hhnpEkbS09np71kN8gCLMsecRbYXWls+F7HBwMOqz1bYEFw/NsAPeoNp3eAVMNI88hZ+
-         vLMA==
-X-Gm-Message-State: ALQs6tArjl/NJ1KP3mFi/nTjDVLILtTMZ8B528ceZoCLQ3Z3/2oVz3/M
-        nrRBGIdp94x0LivQYNoMRdAVLTZU0uA=
-X-Google-Smtp-Source: AB8JxZpTe8tuHJgQsaZks2LrbB5TlH5WvMnPOVZvdVOdYW23sQ/f0F3cxe2B7nqyqqsmO551W8y0GQ==
-X-Received: by 2002:a63:b54b:: with SMTP id u11-v6mr33690010pgo.365.1525808270522;
-        Tue, 08 May 2018 12:37:50 -0700 (PDT)
+        bh=hTqhfTtmV3pMirYUYgWlXw/kCqlEQoXZJCMU2+NSS4k=;
+        b=KUr0PYUhVYJ1M0FyGbq3H6qKO+VPI9D4z9zYTSBP7TzcaxSWqCNeqKQcCoN0GHs9iQ
+         ytyKwNS5VwKnclNWn4WG+3rx8/nQLefvsb+q9YHlHs/A3kNj4sTlltMJn52HMXwd0LQU
+         3ahNXaVbDXc29BovkhOjb88DSZnzNvenH47qyhPbT3qx2N5HMhi770LhdvlbAt5qmTOV
+         gdvcO3TtpxYFUkyCTkBcFn8ogDGY3mblxbhMnrSYbjx5SUNw4qFRnZVSlt+JIJLZjU5O
+         YbiXrgAxX0VZ5wniKyumWvA/euW+wA+NkbVyrEKyujVKRTowYLSAunHuVbUPgjT5YqNs
+         smHQ==
+X-Gm-Message-State: ALQs6tD1yyqSrn5XWyDzFt7/oGxFn9ElByHjKc2N7+uYaGj7c8ZTXQor
+        g/XOXaYitF4/z6AM0MkzG5BisQ==
+X-Google-Smtp-Source: AB8JxZq+1u1eDrGOb78MgLYoikEIFpGnLFgfPLNT2ojc8Ye/sB+Xh440UViA1tTXTGwQVf0M7Q18yg==
+X-Received: by 2002:a63:a34d:: with SMTP id v13-v6mr34073896pgn.224.1525808273389;
+        Tue, 08 May 2018 12:37:53 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id 65sm53541627pft.74.2018.05.08.12.37.49
+        by smtp.gmail.com with ESMTPSA id q64sm46336171pfg.180.2018.05.08.12.37.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 May 2018 12:37:49 -0700 (PDT)
+        Tue, 08 May 2018 12:37:52 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jamill@microsoft.com,
         jonathantanmy@google.com, pclouds@gmail.com
-Subject: [PATCH v3 05/13] alloc: add repository argument to alloc_tree_node
-Date:   Tue,  8 May 2018 12:37:28 -0700
-Message-Id: <20180508193736.14883-6-sbeller@google.com>
+Subject: [PATCH v3 07/13] alloc: add repository argument to alloc_tag_node
+Date:   Tue,  8 May 2018 12:37:30 -0700
+Message-Id: <20180508193736.14883-8-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
 In-Reply-To: <20180508193736.14883-1-sbeller@google.com>
 References: <20180507225916.155236-1-sbeller@google.com>
@@ -74,47 +74,47 @@ Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
  alloc.c | 2 +-
  cache.h | 3 ++-
- tree.c  | 2 +-
+ tag.c   | 2 +-
  3 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/alloc.c b/alloc.c
-index 6c5c376a25a..2c8d1430758 100644
+index 9e2b897ec1d..290250e3595 100644
 --- a/alloc.c
 +++ b/alloc.c
-@@ -57,7 +57,7 @@ void *alloc_blob_node_the_repository(void)
+@@ -65,7 +65,7 @@ void *alloc_tree_node_the_repository(void)
  }
  
- static struct alloc_state tree_state;
--void *alloc_tree_node(void)
-+void *alloc_tree_node_the_repository(void)
+ static struct alloc_state tag_state;
+-void *alloc_tag_node(void)
++void *alloc_tag_node_the_repository(void)
  {
- 	struct tree *t = alloc_node(&tree_state, sizeof(struct tree));
- 	t->object.type = OBJ_TREE;
+ 	struct tag *t = alloc_node(&tag_state, sizeof(struct tag));
+ 	t->object.type = OBJ_TAG;
 diff --git a/cache.h b/cache.h
-index 2258e611275..1717d07a2c5 100644
+index bf6e8c87d83..32f340cde59 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1766,7 +1766,8 @@ void encode_85(char *buf, const unsigned char *data, int bytes);
- /* alloc.c */
- #define alloc_blob_node(r) alloc_blob_node_##r()
- extern void *alloc_blob_node_the_repository(void);
--extern void *alloc_tree_node(void);
-+#define alloc_tree_node(r) alloc_tree_node_##r()
-+extern void *alloc_tree_node_the_repository(void);
- extern void *alloc_commit_node(void);
- extern void *alloc_tag_node(void);
+@@ -1770,7 +1770,8 @@ extern void *alloc_blob_node_the_repository(void);
+ extern void *alloc_tree_node_the_repository(void);
+ #define alloc_commit_node(r) alloc_commit_node_##r()
+ extern void *alloc_commit_node_the_repository(void);
+-extern void *alloc_tag_node(void);
++#define alloc_tag_node(r) alloc_tag_node_##r()
++extern void *alloc_tag_node_the_repository(void);
  extern void *alloc_object_node(void);
-diff --git a/tree.c b/tree.c
-index 63730e3fb46..58cf19b4fa8 100644
---- a/tree.c
-+++ b/tree.c
-@@ -197,7 +197,7 @@ struct tree *lookup_tree(const struct object_id *oid)
+ extern void alloc_report(void);
+ extern unsigned int alloc_commit_index(void);
+diff --git a/tag.c b/tag.c
+index 7150b759d66..02ef4eaafc0 100644
+--- a/tag.c
++++ b/tag.c
+@@ -94,7 +94,7 @@ struct tag *lookup_tag(const struct object_id *oid)
  	struct object *obj = lookup_object(oid->hash);
  	if (!obj)
  		return create_object(the_repository, oid->hash,
--				     alloc_tree_node());
-+				     alloc_tree_node(the_repository));
- 	return object_as_type(obj, OBJ_TREE, 0);
+-				     alloc_tag_node());
++				     alloc_tag_node(the_repository));
+ 	return object_as_type(obj, OBJ_TAG, 0);
  }
  
 -- 
