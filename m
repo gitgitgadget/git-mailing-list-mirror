@@ -2,189 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00A6D200B9
-	for <e@80x24.org>; Tue,  8 May 2018 18:53:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B797E200B9
+	for <e@80x24.org>; Tue,  8 May 2018 18:58:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755387AbeEHSxO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 14:53:14 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:38001 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754386AbeEHSxN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 14:53:13 -0400
-Received: by mail-wm0-f54.google.com with SMTP id y189-v6so5147164wmc.3
-        for <git@vger.kernel.org>; Tue, 08 May 2018 11:53:13 -0700 (PDT)
+        id S1755402AbeEHS6W (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 14:58:22 -0400
+Received: from mail-yb0-f180.google.com ([209.85.213.180]:35772 "EHLO
+        mail-yb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752098AbeEHS6V (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 14:58:21 -0400
+Received: by mail-yb0-f180.google.com with SMTP id j143-v6so2403149ybg.2
+        for <git@vger.kernel.org>; Tue, 08 May 2018 11:58:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=W6BhfSYafbD8gG4jtcUmbZz/ONulmXTpbtfqbJV9t7I=;
-        b=LDK837gUD9wiBxuKr+QcpdaSGhtJIK1XU6FRFZJ9ABB7MUvBca09j4H6Pu+r0ZAyUL
-         GEHZmy6MqFHHtQch2E4sbBkEsxxhSJpkspUH/UPxW/h47j1U0ZQUOPe2gmDzHeAFm+Y+
-         h1dn+QGSGmSJ0026O48bKArCFTRIzY1eY1JA/5fQk5AgkWxlbAyRNUF07smRJQKaBGdj
-         Z+I8bOs6+1GNsMQIKX6V4h+jnk7xAfp2ahMsK1Sy9kioO7JJHsKgXIwKeukbcHgpk3dD
-         JGSUkD9UWbhBjGw7Mmt0F5yJyxDbsRDAsRRla1lYaryE8bgbO2tndDzYjmc1TGRuGacY
-         72Hw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=rQvLm4wVYWgWrOoM45iWBoomjiRe4nH8U3g3AbxX0sk=;
+        b=tFlw7GV1tF+PnJ3UHmB40OPOkiYJBVBGZ+kX8kv7z38Oq7Q+7rBbg7pfNp6p2cZRmB
+         4JgGdejGGgGlAqd+erXI20OTV+9OFPYk4TK3f9/HZrLEGZEXgyueqnRVr0tqo8E/6kBh
+         1yCkeQTjvChfZMXKckgA0x/x20OZLamtGKcSr5po4EhfJ5heWp4Dcc3REb6jPB1ZDSIZ
+         yRgfarIYSmY1NseWUJ0D0ay5PVDQ3AN9yRMbJdjYgtNYdeDB7UWQ2JzB17v//YF+B/45
+         x3gEQZ/5Ipm1L9+DQXVPgkE/I7Bu0gUkmZjzgWE+isEuHpukWjomlF/elWJuga4NrAUP
+         lfjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=W6BhfSYafbD8gG4jtcUmbZz/ONulmXTpbtfqbJV9t7I=;
-        b=XdTDwy/CuUz75yd9VKIloN6sEM7ukQJRlHdAnOgFi7XzHmukRBk2sJrCfvQEIGQISQ
-         DCDMsFVAJ12vkzxV36DYYiCEuJdO39W8F6Sa6MILRABr8CEzxGWrNA1LFVOSfinERfMk
-         mHN7km7rSmOyRd+aiTg/vh/Q7mJ2zXnLEayQcFO+/ueWLnjmMdbTLPmgdjzcHtAe05iB
-         1AbYaSE620p4pQtkLcBhGDWGoohdI/cRke1JCNxk/n8CN1RIAL05K0tTdNcBhMkH31fL
-         4X7YWwEForKBUh2W9MGga0ciXMKkdGmHiZ2ncrY/VpDaJfyFY6U6ROo5AhDdmr51sOZr
-         PBaA==
-X-Gm-Message-State: ALQs6tDB7dF2Qu/XGR4yrdtiKeJQ8X7D+BGhbDhLbG7OREL8g6XqNzHD
-        QjqUtVUinR8kVv2UXH9CMWo=
-X-Google-Smtp-Source: AB8JxZrFmu/bbPL3yKsAPi1qIOenU2t6Xzw/nPO8L4MTgT13nVLkFIie088p4LZw8pf0zXJnCIFC2g==
-X-Received: by 2002:a50:98e2:: with SMTP id j89-v6mr55931929edb.8.1525805592449;
-        Tue, 08 May 2018 11:53:12 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id w26-v6sm14035075edq.77.2018.05.08.11.53.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 May 2018 11:53:11 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 09/12] get_short_oid / peel_onion: ^{tree} should be tree, not treeish
-References: <20180501184016.15061-1-avarab@gmail.com>
-        <20180501120651.15886-1-avarab@gmail.com>
-        <20180501184016.15061-10-avarab@gmail.com>
-        <xmqqzi1htij7.fsf@gitster-ct.c.googlers.com>
-        <87wowlxko8.fsf@evledraar.gmail.com>
-        <xmqqvac4tb64.fsf@gitster-ct.c.googlers.com>
-        <87lgczyfq6.fsf@evledraar.gmail.com>
-        <xmqq6040qf8x.fsf@gitster-ct.c.googlers.com>
-        <20180508143408.GA30183@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180508143408.GA30183@sigill.intra.peff.net>
-Date:   Tue, 08 May 2018 20:53:10 +0200
-Message-ID: <87a7tax9m1.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=rQvLm4wVYWgWrOoM45iWBoomjiRe4nH8U3g3AbxX0sk=;
+        b=L5qSQG0I/7DI1FC2grRKJfXQMMMehNypFyfcbibGYVwxRr6ARwDCm5hGlbAByPHBrr
+         YS9SOo/96+oLunY79KuzCqjDyIXIFLkN2POt58BouZjSxQ6kR+8TieMIlrDcdCrN7g3W
+         Ge8kPoordY2uRwT05lwioKND1LakrMb4NQ1qdJT7kwJouEERc3nPuTBCYo1tW2dDqRFW
+         wyDxUx6JuX/cxVXQLg1KJIszxAgpV4lbAnhVx4PP8VEQRDdIcbZXu6VUnVDZoHy6XFFr
+         k6OQCaDKefZSSyyk/iI8NZHOQcfQnamydVzaS59uEMFQ5YC4hsBXfQxkE7LRp3Urc8MF
+         IBlA==
+X-Gm-Message-State: ALQs6tBhWMtq8bJx544i1V1vJdb0q1EiVvG6mpi0qdEs8pdcTQT746bi
+        SdtvdP+AqDT635LyZhoqViG4v1IFsZe4/KewuIvTfifp
+X-Google-Smtp-Source: AB8JxZq31KsM3od4ZFvEEyp/GzlA5lgMPufdP3YbX9wMd4cpXWUpOoJu577mVD8hDnHBQFrxk0HXldIiSycvPDM8t9I=
+X-Received: by 2002:a25:3bc5:: with SMTP id i188-v6mr23436319yba.352.1525805900752;
+ Tue, 08 May 2018 11:58:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Tue, 8 May 2018 11:58:20 -0700 (PDT)
+In-Reply-To: <CACsJy8A10qixJ7YtJKJejp1t49aBZFDn7CjSTiaq8GeVHuxiOQ@mail.gmail.com>
+References: <CACsJy8AkfNfupdr1MqZSaxNCbPwBVzxXNMMqPvwif0NtuCxDaA@mail.gmail.com>
+ <20180508155627.19245-1-pclouds@gmail.com> <CAGZ79kZiwX-QFnkTfRHby38GYBDwj-0Dyv3_PWPXtnWr+112CA@mail.gmail.com>
+ <CACsJy8A10qixJ7YtJKJejp1t49aBZFDn7CjSTiaq8GeVHuxiOQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 8 May 2018 11:58:20 -0700
+Message-ID: <CAGZ79ka2rEptsZKS+U-3ZNf4+R8b98f0E+ECdpndhb=JXLNLdQ@mail.gmail.com>
+Subject: Re: [PATCH] pack-format.txt: more details on pack file format
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, May 08 2018, Jeff King wrote:
-
-> On Mon, May 07, 2018 at 01:08:46PM +0900, Junio C Hamano wrote:
+>>> +Deltified representation
+>>
+>> Does this refer to OFS delta as well as REF deltas?
 >
->> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->>
->> > Right, and I'm with you so far, this makes sense to me for all existing
->> > uses of the peel syntax, otherwise v2.17.0^{tree} wouldn't be the same
->> > as rev-parse v2.17.0^{tree}^{tree}...
->>
->> More importantly, you could spell v2.17.0 part of the above with a
->> short hexadecimal string.  And that string should be naming some
->> tree-ish, the most important thing being that it is *NOT* required
->> to be a tree (and practically, it is likely that the user has a
->> tree-ish that is *NOT* a tree).
->>
->> I guess I have a reaction to the title
->>
->>     "get_short_oid/peel_onion: ^{tree} should be tree"
->>
->> "X^{tree}" should *RESULT* in a tree, but it should *REQUIRE* X to
->> be a tree-ish.  It is unclear "should be tree" is about the former
->> and I read (perhaps mis-read) it as saying "it should require X to
->> be a tree"---that statement is utterly incorrect as we agreed above.
+> Yes. Both OFS and REF deltas have the same "body" which is what this
+> part is about. The differences between OFS and REF deltas are not
+> described (in fact I don't think we describe what OFS and REF deltas
+> are at all).
+
+Maybe we should?
+
 >
-> FWIW, I had the same feeling as you when reading this, that this commit
-> (and the one after) are doing the wrong thing. And these paragraphs sum
-> it up. The "^{tree}" is about asking us to peel to a tree, not about
-> resolving X in the first place. We can use it as a _hint_ when resolving
-> X, but the correct hint is "something that can be peeled to a tree", not
-> "is definitely a tree".
+>>> is a sequence of one byte command optionally
+>>> +followed by more data for the command. The following commands are
+>>> +recognized:
+>>
+>> So a Deltified representation of an object is a 6 or 7 in the 3 bit type
+>> and then the length. Then a command is shown how to construct
+>> the object based on other objects. Can there be more commands?
+>>
+>>> +- If bit 7 is set, the remaining bits in the command byte specifies
+>>> +  how to extract copy offset and size to copy. The following must be
+>>> +  evaluated in this exact order:
+>>
+>> So there are 2 modes, and the high bit indicates which mode is used.
+>> You start describing the more complicated mode first,
+>> maybe give names to both of them? "direct copy" (below) and
+>> "compressed copy with offset" ?
+>
+> I started to update this more because even this text is hard to get
+> even to me. So let's get the background first.
+>
+> We have a source object somewhere (the object name comes from ofs/ref
+> delta's header), basically we have the whole content. This delta
+> thingy tells us how to use that source object to create a new (target)
+> object.
+>
+> The delta is actually a sequence of instructions (of variable length).
 
-Maybe I'm just being dense, but I still don't get from this & Junio's
-E-Mails what the general rule should be.
+The previous paragraph and this sentence are great for my understanding.
+thanks! (Maybe keep it in a similar form around?)
 
-I think a response to the part after "leaving that aside" of my upthread
-E-Mail
-(https://public-inbox.org/git/87lgczyfq6.fsf@evledraar.gmail.com/) would
-help me out.
+> One is for copying from the source object.
 
-Not to belabor the point, but here's a patch I came up with to
-revisions.txt that's a WIP version of something that would describe the
-worldview after this v3:
+ok that makes sense. I can think of it as a "HTTP range request", just
+optimized for packfiles and the source is inside the same pack.
+So it would say "Goto object <sha1> and copy bytes 13-168 here"
 
-    diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-    index dfcc49c72c..0bf68f4ad2 100644
-    --- a/Documentation/revisions.txt
-    +++ b/Documentation/revisions.txt
-    @@ -143,29 +143,52 @@ thing no matter the case.
-       '<rev>{caret}1{caret}1{caret}1'.  See below for an illustration of
-       the usage of this form.
+> The other copies from the
+> delta itself
 
-     '<rev>{caret}{<type>}', e.g. 'v0.99.8{caret}\{commit\}'::
-       A suffix '{caret}' followed by an object type name enclosed in
-       brace pair means dereference the object at '<rev>' recursively until
-       an object of type '<type>' is found or the object cannot be
-    -  dereferenced anymore (in which case, barf).
-    +  dereferenced anymore (in which case either return that object type, or barf).
-       For example, if '<rev>' is a commit-ish, '<rev>{caret}\{commit\}'
-       describes the corresponding commit object.
-       Similarly, if '<rev>' is a tree-ish, '<rev>{caret}\{tree\}'
-       describes the corresponding tree object.
-       '<rev>{caret}0'
-       is a short-hand for '<rev>{caret}\{commit\}'.
-     +
-     'rev{caret}\{object\}' can be used to make sure 'rev' names an
-     object that exists, without requiring 'rev' to be a tag, and
-     without dereferencing 'rev'; because a tag is already an object,
-     it does not have to be dereferenced even once to get to an object.
-     +
-     'rev{caret}\{tag\}' can be used to ensure that 'rev' identifies an
-     existing tag object.
-    ++
-    +Object types that don't have a 1=1 mapping to other object types
-    +cannot be dereferenced with the peel syntax, and will return an
-    +error. E.g. '<treeid>{caret}{commit}' or '<treeid>{caret}{tree}' is
-    +allowed because a tag can only point to one commit, and a commit can
-    +only point to one tree. But '<treeid>{caret}{blob}' will always
-    +produce an error since trees in general don't 1=1 map to blobs, even
-    +though the specific '<treeid>' in question might only contain one
-    +blob. Note that '<tagid>{caret}{blob}' is not an error if '<tagid>' is
-    +a tag that points directly to a blob, since that again becomes
-    +unambiguous.
-    ++
-    +'<rev>{caret}{<type>}' takes on a different meaning when '<rev>' is a
-    +SHA-1 that's ambiguous within the object store. In that case we don't
-    +have a 1=1 mapping anymore. E.g. e8f2 in git.git can refer to multiple
-    +objects of all the different object types. In that case
-    +{caret}{<type>} should always be an error to be consistent with the
-    +logic above, but that wouldn't be useful to anybody. Instead it'll
-    +fall back to being selector syntax for the given object types,
-    +e.g. e8f2{caret}{tag} will (as of writing this) return the v2.17.0
-    +tag, and {caret}{commit}, {caret}{tree} and {caret}{blob} will return
-    +commit, tree and blob objects, respectively.
-    +
-    [...]
+itself means the same object here, that we are describing here?
+or does it mean other deltas?
 
-My understanding of what you two are saying is that somehow the peel
-semantics should be preserved when we take this beyond the 1=1 mapping
-case, but I don't see how if we run with that how we wouldn't need to
-introduce the concept of blobish for consistency as I noted upthread.
+> (e.g. this is new data in the target which is not
+> available anywhere in the source object to copy from).
 
-So it would be very useful to me if you or someone who understands the
-behavior you & Junio seem to want could write a version of the patch I
-have above where the last paragraph is different, and describes the
-desired semantics, because I still don't get it. Why would we 1=many
-peel commits to trees as a special case, but not 1=many do the same for
-trees & blobs?
+
+
+
+>
+> The instruction looks like this
+>
+>         bit      0        1        2        3       4      5      6
+>   +----------+--------+--------+--------+--------+------+------+------+
+>   | 1xxxxxxx | offset | offset | offset | offset | size | size | size |
+>   +----------+--------+--------+--------+--------+------+------+------+
+>
+> Here you can see it in its full form, each box represents a byte. The
+> first byte has bit 7 set as mentioned. We can see here that offsets
+> (where to copy from in the source object) takes 4 bytes and size (how
+> many bytes to copy) takes 3. Offset size size is in LSB order.
+>
+> The "xxxxxxx" part lets us shrink this down.
+
+.. by indicating how much prefix we can skip and assume it be all zero(?)
+
+> If the offset can fit in
+> 16 bits, there's no reason to waste the last two bytes describing
+> zero. Each 'x' marks whether the corresponding byte is present.
+
+So for a full instruction (as above), we'd have to
+
+1 1111 111 <4 bytes offset> <3 bytes size>
+
+for smaller instructions we have
+
+1 1100 100 <2 bytes offset> <1 byte size>
+and here the offset is in range 0..64k and
+the size is 1-255 or 0x10000 ?
+
+
+Modes to skip bytes in between are not allowed, e.g.
+1 1101 101 < 3 bytes of offsets> <2 bytes of size>
+and the missing bytes would be assumed to be 0?
+
+> The
+> bit number is in the first row. So if you have offset 255 and size 1,
+> the instruction is three bytes 10010001b, 255,
+
+Oh it is the other way round, the size will be just one byte,
+indicating we can have a range of 1-255 or 0x10000 and an
+offset of 0..255.
+
+>
+> I think this is a corner case in this format. I think Nico meant to
+> specify consecutive bytes: if size is 2 bytes then you have to specify
+> _both_ of them even if the first byte could be zero and omitted.
+
+So it is not a mutually exclusive group, but a sequence (similar as in
+git-bisect), where we start with 0 and end with exactly one edge
+in between (sort of, we can also start with 1, then we have to have
+all 1s)
+
+> The implementation detail is, if bit 6 is set but bit 4 is not, then
+> the size value is pretty much random. It's only when bit 4 is set that
+> we first clear out "size" and start adding bits to it.
+
+That sounds similar to what I spelled out above.
+
+Thanks for taking on the documentation here.
+The box with numbers really helped me!
+
+Stefan
