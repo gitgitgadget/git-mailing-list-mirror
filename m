@@ -2,58 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 196B71F42E
-	for <e@80x24.org>; Tue,  8 May 2018 06:43:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 214631F42E
+	for <e@80x24.org>; Tue,  8 May 2018 07:56:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754317AbeEHGn3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 02:43:29 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:42701 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754132AbeEHGn2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 02:43:28 -0400
-Received: by mail-pg0-f44.google.com with SMTP id p9-v6so17829591pgc.9
-        for <git@vger.kernel.org>; Mon, 07 May 2018 23:43:28 -0700 (PDT)
+        id S1754537AbeEHH4c (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 03:56:32 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:40518 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754263AbeEHH42 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 03:56:28 -0400
+Received: by mail-pg0-f54.google.com with SMTP id l2-v6so20812772pgc.7
+        for <git@vger.kernel.org>; Tue, 08 May 2018 00:56:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :user-agent:mime-version:in-reply-to;
-        bh=t6DH907d1Rz+ux89qZCsI3kEbwb1VXsi26g3EypsufE=;
-        b=uzjjh1mu26CzmFyUaVsmPyJhDBLeuuf1Cc/XxmIakK2O/2DhSBYQWxZs3+/VGpMrbD
-         3+Tu38uZn8ETakn8NXfPTnUnppFnqEvlUh6x6ZiyrxJJqljxn35s5MezHBTLf0X9CnJq
-         uthzawtnaqH3Ljhvdwmlh8M63z+p2d0KVl8hYH7ztO8K642/hH+kU5/OZYLhtDPgu9ow
-         IlMpSt3z3gy4QyONUKxQW4Px45u4C51BKolvN3Zz/4+QC7F+cIB+yhMkd0HkHfRLViT/
-         QbJRMHSbYPhxg39uuHitH7qTHBO1aiogW3DPBd/LrtP9whoIw0U8ApEA7UqFhT/GeRuf
-         LuuQ==
+        bh=BZL/XihJeaUXeUUoey2HYFFgcORYoURiSauhO34ttNI=;
+        b=Fibpb4BSduYgOtEWN/5XL5aX6MLxj+SlR2n2PApEy/t4ACWYX6206ilocEIM2gZQYl
+         twVX+ueCFSiXCMuuU7Y+VgHmnYHPUAWpJ6BXttvsN0WHsLDmW14Hof0Yw/5bhUxIIWWP
+         YerXVRVInBLPk5I7fthPiEqPAS3rdrCK0WxMv5SDo0EUzNyv9ABRwYr2Gh+M/NUoxvRr
+         7j1OlsDsD9VDVm7ib/r62fqTIBI4r/1RsSzo+SeaH1DaqxutR86uEzu/l8bNIwgpshBC
+         mPCNYcWBpZewF+r5fUduyIxfzCB8b68jiVaIplgbRmyY7yWUepndYvoIyX3MpHytf3UV
+         xTjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to;
-        bh=t6DH907d1Rz+ux89qZCsI3kEbwb1VXsi26g3EypsufE=;
-        b=tPzQfDX3lFniFnskyn+Bzly1vk7govOXslKZ1twkONIW/KdGPHgVCUPYA5AhbHTxW4
-         aY+3LUjvqsgVOw/qGxgwUUDwJ8ESj7By/a0B6tCwLWjNSVomQQ1RsBmIQRCdkMatTbHj
-         5g5tGWPm333+zMZ78G8c/K1lqDZDlqj6a3XP8BS3pwMZpxU3bqCzoXGynpw/iiJGLu05
-         Kdi8Oc01rZ3PrHJGTVDh/CNeX4cezxs55GeWFZ1ETL5J2xck6lhN+xmv7qEA158sdT/L
-         7NYI6H7cDUEGTAgluWJVvV8+c0U7eOEdSMhY6wSaBXuurWa9yylQeIU5/4e57u5lDpNA
-         Z6lQ==
-X-Gm-Message-State: ALQs6tCpb3jS4qafnSi7zFYc4kiToXiQw7dTHREafJiynPmkX8gjtcpf
-        5QCEFt5PJiVGh3douYZqY9PSJxzN
-X-Google-Smtp-Source: AB8JxZq5XlGvY0nkSt0uzifz8JS/JSAZQlmfA20t+1OYUJMYUvT8YPDTlr4XckogaHtrXhE8Ihvb1Q==
-X-Received: by 10.98.66.143 with SMTP id h15mr38869764pfd.156.1525761807374;
-        Mon, 07 May 2018 23:43:27 -0700 (PDT)
+        bh=BZL/XihJeaUXeUUoey2HYFFgcORYoURiSauhO34ttNI=;
+        b=aJLT0ccrZSIdKoL0/iBtzdNKpFCsGT2V8CgdoIEze9jcZ+kph2UJzu17ClCRLfTz7j
+         9NB5XdCqQKXPeUvWNbHWGPhia0JS84/f0j7cYowaRLkAItim7OffXMX5qQ92FMiys8Ha
+         6RVl3C4qp/CoTpjNVkmHTL5MvtTeogHpyvrrM8cHp4gv5X4NJdsvT0WCOShpqDiELe8q
+         1m2k4JML/lUAGsREBDivHFiojLMFVa6sNMb+16czXpmDO8wBDtawjnkbmEL9BtRTa5Sq
+         guw2wMoRwz6epnPklCtOOUEwPoCuPxAMSQFA8tltC0+WjqdFER4IrjHsC0JE/2TEfKYX
+         0HjA==
+X-Gm-Message-State: ALQs6tAh+ujPIMclSHC632F5bwanh5c/6Hg1MvyhNiXWAlX/exotikBO
+        pp06Vxi0kwW9lK+IGc4QI5goRCj4
+X-Google-Smtp-Source: AB8JxZoNxygh7mlXg2E6cB5ys9rfeVKjHyPyM2u+LprDczJu1miamTuRPFJUiCZEUfJk2710PStZsg==
+X-Received: by 2002:a63:6fc8:: with SMTP id k191-v6mr31965743pgc.330.1525766187703;
+        Tue, 08 May 2018 00:56:27 -0700 (PDT)
 Received: from [192.168.206.100] ([117.209.132.10])
-        by smtp.gmail.com with ESMTPSA id k63sm66520697pfk.90.2018.05.07.23.43.23
+        by smtp.gmail.com with ESMTPSA id o70sm10104250pfo.49.2018.05.08.00.56.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 May 2018 23:43:26 -0700 (PDT)
-Subject: Re: main url for linking to git source?
-To:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
-References: <20180507063713.GA28961@sigill.intra.peff.net>
- <CAGZ79kZVdiEOO+b_Ygrfw1D9uV1T5TYBS580zPaZeYoMRfNuUQ@mail.gmail.com>
+        Tue, 08 May 2018 00:56:26 -0700 (PDT)
+Subject: Re: Weak option parsing in `git submodule`
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing list <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+References: <1525630243.15782.4.camel@gmail.com>
+ <CAGZ79kYSanRAchMe+7uJ4spy+GaS7PyU7epPeOSCs_58RsAR8A@mail.gmail.com>
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=kaartic.sivaraam@gmail.com; prefer-encrypt=mutual; keydata=
@@ -100,66 +101,113 @@ Autocrypt: addr=kaartic.sivaraam@gmail.com; prefer-encrypt=mutual; keydata=
  YkZ4Hv7M8LuQGn64pFrm4grbF/wxkmvgeyBTQA/A9WNWndlinlFYiZGmDoiZUAcSKA9oBTPc
  4jXwW/YIfNYwd7SlatiwKjF1QxuL1X0QMMPstR/UoVc3sbiabb4Km5jS2oU9q6KpeikRshMI
  IZ7P/DJ/
-Message-ID: <03bd84bd-dda9-882f-ad3c-861792b54ce9@gmail.com>
-Date:   Tue, 8 May 2018 12:13:19 +0530
+Message-ID: <7b573a6b-0486-f9bd-4499-deb9b1394f78@gmail.com>
+Date:   Tue, 8 May 2018 13:26:15 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZVdiEOO+b_Ygrfw1D9uV1T5TYBS580zPaZeYoMRfNuUQ@mail.gmail.com>
+In-Reply-To: <CAGZ79kYSanRAchMe+7uJ4spy+GaS7PyU7epPeOSCs_58RsAR8A@mail.gmail.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="PsFXFm4UtxHGvYc7FDMvO7Q0PbqMs2ZWK"
+ boundary="TGV18Q678qaWgTovoxBHbHkObboeLWD0H"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---PsFXFm4UtxHGvYc7FDMvO7Q0PbqMs2ZWK
-Content-Type: multipart/mixed; boundary="59ZJ75Dyxa8fErWXggfce6a0gRA6bxDy8";
+--TGV18Q678qaWgTovoxBHbHkObboeLWD0H
+Content-Type: multipart/mixed; boundary="QssBCHbu6iAkDjlsORdfg5g2pCSsEruhK";
  protected-headers="v1"
 From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-Cc: git <git@vger.kernel.org>
-Message-ID: <03bd84bd-dda9-882f-ad3c-861792b54ce9@gmail.com>
-Subject: Re: main url for linking to git source?
-References: <20180507063713.GA28961@sigill.intra.peff.net>
- <CAGZ79kZVdiEOO+b_Ygrfw1D9uV1T5TYBS580zPaZeYoMRfNuUQ@mail.gmail.com>
-In-Reply-To: <CAGZ79kZVdiEOO+b_Ygrfw1D9uV1T5TYBS580zPaZeYoMRfNuUQ@mail.gmail.com>
+To: Stefan Beller <sbeller@google.com>
+Cc: Git Mailing list <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
+Message-ID: <7b573a6b-0486-f9bd-4499-deb9b1394f78@gmail.com>
+Subject: Re: Weak option parsing in `git submodule`
+References: <1525630243.15782.4.camel@gmail.com>
+ <CAGZ79kYSanRAchMe+7uJ4spy+GaS7PyU7epPeOSCs_58RsAR8A@mail.gmail.com>
+In-Reply-To: <CAGZ79kYSanRAchMe+7uJ4spy+GaS7PyU7epPeOSCs_58RsAR8A@mail.gmail.com>
 
---59ZJ75Dyxa8fErWXggfce6a0gRA6bxDy8
+--QssBCHbu6iAkDjlsORdfg5g2pCSsEruhK
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-On Monday 07 May 2018 11:45 PM, Stefan Beller wrote:
->> I could see arguments both ways, so I thought I'd take a straw poll of=
-
->> what people on the list think.
-> =20
-> Junios reply below focuses on the URL passed to git-clone, which
-> is only found at https://git-scm.com/downloads (?)
+On Tuesday 08 May 2018 12:35 AM, Stefan Beller wrote:
+>>     The lack of checking for the reason behind why `git add` fails see=
+ms to
+>>     be the reason behind that weird message.
 >=20
-> There I would try to mirror Junios list of "public repositories"
-> https://git-blame.blogspot.com/p/git-public-repositories.html
-> without officially endorsing one over another.
->
-FWIW, I also seem to support this suggestion as it's not opinionated.
+> (from the man page)
+> git submodule [--quiet] add [<options>] [--] <repository> [<path>]
+>=20
+> When options are given after <repository> or <path> we can count
+> the arguments and know something is up. (The number of arguments
+> must be 1 or 2. If it is 3 or above, something fishy is going on), whic=
+h
+> I would suggest as a first step.
+>=20
+>>     Ways to fix this:
+>>
+>>     1. Fix this particular issue by adding a '--' after the '--no-warn=
+-
+>>     embedded-repo' option in the above check. But that would also
+>>     require that we allow other parts of the script to accept weird
+>>     paths such as '--path'. Not so useful/helpful.
+>>
+>>     2. Check for the actual return value of `git add` in the check and=
+
+>>     act accordingly. Also, check if there are unnecessary arguments fo=
+r
+>>     `submodule add`.
+>=20
+> The second part of this suggestion seems to me as the way to go.
+> Do you want to write a patch?
+>=20
+
+Incidentally, I was writing a patch to check for the return value of
+`git add` to fix the particular issue I noted in my initial message.
+Then I was in a dilemma as to whether this was the right way to do it.
+So, I thought it would be better to ask before continuing with the patch
+and hence started this thread. I wasn't counting the arguments to `git
+submodule add` at that time.
+
+Now that I'm ensured that my initial approach is not the worst way to do
+things and as I'm about to write a patch for this, I'll sum up what I'm
+about to achieve in the short-term fix patch, for the sake of clarity.
+
+	1. Check the return value of `git add ...` and throw an error
+	   appropriately.
+
+	2. Check the no. of arguments to `submodule add` and throw an
+	   error if there are more arguments than there should be.
+
+	   I require a little clarification with this. How should this
+	   be done. Does checking whether the number of arguments after
+	   <repository> is not more than one do the job? Or am I missing
+	   something?
 
 
-> For those links that link to web pages, I am ok with any of the
-> hosting providers, maybe even taking the one with the prettiest
-> web page. Maybe we want to reword those sections to rely
-> more on indirection, e.g. "get the source[link to the source page],
-> checkout the next branch", without the quick web link to a web page
-> showing the 'next' tree.
+>>     3. Tighten option parsing in the `git-submodule` script to ensure
+>>     this doesn't happen in the long term and helps users to get more
+>>     relevant error messages.
+>>
+>>     I find 3 to be a long term solution but not sure if it's worth try=
+ing
+>>     as there are efforts towards porting `git submodule` to C. So, I g=
+uess
+>>     we should at least do 2 as a short-term solution.
+>=20
+> Yeah, bringing it to C, would be nice as a long term solution instead
+> of piling up more and more shell features. :)
+>=20
 
-Seems to be a nice suggestion to avoid the "main/official" url issue.
+Hope the day it is brought into C comes soon.
 
-To add a little more, it might be better replace the "Source code" link
-with a link to Junio's list of public repositories stated above. Also,
-it might be better to rename the link to "Public repositories containing
-the source".
+
+> Thanks for such a well written bug report with suggested bug fixes. :)
+
+You're welcome :-)
 
 
 --=20
@@ -201,28 +249,28 @@ to correct those mistakes.
 Thanks in advance!
 
 
---59ZJ75Dyxa8fErWXggfce6a0gRA6bxDy8--
+--QssBCHbu6iAkDjlsORdfg5g2pCSsEruhK--
 
---PsFXFm4UtxHGvYc7FDMvO7Q0PbqMs2ZWK
+--TGV18Q678qaWgTovoxBHbHkObboeLWD0H
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlrxRwcACgkQveda2sPW
-GWkhXBAAiB3Rv5yGqOu7i7zlsJcCoSFojbE5AVi/NHolcH5S1gLEZTe3to5AOoQt
-qqJ5qYIEZbekblGbH5/szlAeXNu6eZVL/eWLucu4i8DimAhcFzsYnnL3t8EVGt5g
-TGbRWaNqkHGe9oWGcLDFjgWFOSk5wDC/A/65O1mHeTx/RLMc7sH3fAAhIugA91bM
-lFJN8Em5JSQbRkEtM2tYM4VdNjY+2lgDvisQ5G6C7tQ3CLSab5RRq1vvN4qxSQqs
-I2oJ71JWGLoj0jUWEyCw4jypFByhDklYHM2ZMTwM9mkooK0EBQGkub3Nb84qqmt0
-/4/1kL/YHVnzK4Znt9flDmEMs5y9Y0aRx9Rqp1bNSZKtxjGHPFycQIhJ5UPyJdqP
-agpvtl6l7EnoHLG+e2MsSJdcOMh7II5Btq6+4gm4rWg9sMTKSbHnQmr57BB7BYZi
-FxaTsEyPZoCtOJPLAz4FrzDaLDaBcYKZhEXDFUDn0w2XZr3/BveUtowQXfuzxJPV
-KLk71YjtVIg9TJ7Mi0ZrOrN13GGLgV8VfKpAyXOS3LfhQuN5JqF5Dxe2gwlG3jh6
-8pirOnG+/xjeuBw4/qW4f0GrmoNY/kM0qNuEQlprzc6CIqxkEfiBHcIfKThn68GD
-fs3r0vUSdaF/n39LuYWqQPZztMWxm3KDD3eDl1DewLYxDtv4mv0=
-=noon
+iQIzBAEBCAAdFiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlrxWB8ACgkQveda2sPW
+GWmg3g//bTx1a+jyi4MMAV6saMDgoiG1MUla0o+b18Zb2TIEPVClN6U2vF1HPOco
+uRswafA65Dz44zkkiEUyzGeHM1wZysUU6SdrBohJzMLsQG4z9+OfJPTN+Al8vS3E
+zkhvTql0cSi7iCOTABIpA07WUIrbsKknlI4OJgogWgciB23gH7aOAQa+8pHl5PKg
+dVHWoOoIlXcztperKbykwVBA0nqrcf6lFk4o6UxOvB3Dox27UWTsVwKFKNw4RCs0
+D9qR1w8LUqGm3bAh7yE6R9bikZouFxMOh/eNlxQkj5GjAWbG+Ug9Rom5SwZOUCB5
+oFqDzXhmuEKT4n0Bhg7OO2RpnHEtxEZ6s6b9rvExe31sGPAK6/tNxKUo4eLZbnir
+x6dzXs7SiYj6w8NSn9Kr9NL75ObC6f6odHUgss4ArVB/lI1ry6UmUe3qP7dLb7FY
+I7vLvvOcHiJfbsr6fgn0Po1KGzLlhK36FZUonnm3eLLwOjQh73d/9nqEw3S4f6Id
+BTOXlLjIVqIIi7LP7kn86NSpzlN4Je0pS/1xMVlOdIuK5tSxVLK7NL7jRKn4U+P/
+TC+FGRwhhCUQBsI6LyHmCdJ1stFpLyl2Yp+Clj6WSwiYs/ISeiYVG6dAYsVzAtmL
+aWrPobvhDJs9sCPF4zecxSar/jXDE7yswwqrSWnP4lFN9kpr0i8=
+=amqP
 -----END PGP SIGNATURE-----
 
---PsFXFm4UtxHGvYc7FDMvO7Q0PbqMs2ZWK--
+--TGV18Q678qaWgTovoxBHbHkObboeLWD0H--
