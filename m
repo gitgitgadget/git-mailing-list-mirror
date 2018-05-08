@@ -2,106 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0727B200B9
-	for <e@80x24.org>; Tue,  8 May 2018 05:53:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D79C6200B9
+	for <e@80x24.org>; Tue,  8 May 2018 06:08:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753597AbeEHFxu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 01:53:50 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:37941 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751964AbeEHFxu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 01:53:50 -0400
-Received: by mail-wm0-f66.google.com with SMTP id y189-v6so987154wmc.3
-        for <git@vger.kernel.org>; Mon, 07 May 2018 22:53:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=A8NP5MZWiDCm7CY+sEnJIZGGrE2hi6INDe9gU9KjpOA=;
-        b=Tx/iOn9WRWaPCbbAC7bfFJE58ZzCdShfG/6WsP4bulw0165k1g4XTsCCtZW1VeOCQe
-         5CE66/sRTSpMVi/OKjIfNKm8BwbBI4AP4RcPuAurbm8Jjgo7I1AzSfNtrpvx0NUFdtDf
-         QP7d2mDWhScnBIoUOk5e6bKopwarkbFXpRZMJiretY/KoekVqsdO+SCMZv2mjIkpmtPp
-         PQhd4kGhojh8VurlJC7Uy1eFwdEQbzMFChPy4IWeGC1EO4jek1QyhuVYoocdkQFb+LD6
-         REWGhFbzWcoPsTkvbSgXANtNKN8aFc8l2UAy7U1J8BvWpthHYJdo4LPbnEdA4Udxh9dY
-         jwMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=A8NP5MZWiDCm7CY+sEnJIZGGrE2hi6INDe9gU9KjpOA=;
-        b=LZV6sxwNczw4+PXh9cWb09KvV6k0By3pW8eK6TdSEEYkfkk+EqgY9+X26ut61C6DCV
-         QXvxpSvMhO5jFwhN3imNQzELCnWRZJAdtKngjEXD7Tn2KaGb6tY8A9zASft6D9wmJcMo
-         ErsOqkR2nfy1IIo6XGiTv3GjfvaoefC/0Vqe21FDrSQd6l8EaRdUpAXOkDligSOzd2UC
-         A1ceCoVdHFl8XGtY2YIe6Ejab7VI8aENqOjLHjBhErULOog1LO08/ZbL76SbCG+fQsw4
-         Q7JrHreKEyOZYHgJ1a7n8sUcx3A7RNIPKMnY7d9ivGt7mUBGf5zefxouJNsA4krAmD2O
-         a2SQ==
-X-Gm-Message-State: ALQs6tAHNDqU3zwZe5Vo4Jnn8JHXuU4rWiBChS3DfsEeWH0fV1ZxP47r
-        5Xe4QZjcc2Rt7L1JkgLsoqs=
-X-Google-Smtp-Source: AB8JxZp9q+qn3dp27puIssNwWQNM0xaoin0THhg6MN0c+KeAtQgpNwNGYNHC3sjPahSttqOErCJqXQ==
-X-Received: by 2002:a1c:8645:: with SMTP id i66-v6mr2523665wmd.40.1525758828720;
-        Mon, 07 May 2018 22:53:48 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x81-v6sm30575631wrb.23.2018.05.07.22.53.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 07 May 2018 22:53:48 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ilya Kantor <iliakan@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: cherry-pick --no-commit does not work well with --continue in case of conflicts
-References: <CAFU8umjvEATZguGDmcRMcfAkqn4LW7vf_B9qpLD7uc-E_7qR9g@mail.gmail.com>
-        <xmqqd0y9sdei.fsf@gitster-ct.c.googlers.com>
-        <CAFU8umjw-gz1UGHwiopHRJ-+v+KS2USqXV-9Qs0ieW8GaLpUsA@mail.gmail.com>
-Date:   Tue, 08 May 2018 14:53:47 +0900
-In-Reply-To: <CAFU8umjw-gz1UGHwiopHRJ-+v+KS2USqXV-9Qs0ieW8GaLpUsA@mail.gmail.com>
-        (Ilya Kantor's message of "Sun, 6 May 2018 08:17:03 +0300")
-Message-ID: <xmqqr2mmlml0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753796AbeEHGIv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 02:08:51 -0400
+Received: from mout.web.de ([212.227.17.11]:38325 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752497AbeEHGIu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 02:08:50 -0400
+Received: from [192.168.178.36] ([91.20.55.213]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MI5ze-1fJlYR0oLm-003tHf; Tue, 08
+ May 2018 08:08:37 +0200
+Subject: Re: [PATCH v4 2/7] grep.c: expose matched column in match_line()
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     avarab@gmail.com, gitster@pobox.com, martin.agren@gmail.com,
+        peff@peff.net, sunshine@sunshineco.com
+References: <20180421034530.GB24606@syl.local>
+ <cover.1525488108.git.me@ttaylorr.com>
+ <5281d6bdc1f6614b9330315cd9931ec9b2232445.1525488108.git.me@ttaylorr.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <d030b4ee-5a92-4863-a29c-de2642bfae8d@web.de>
+Date:   Tue, 8 May 2018 08:08:47 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <5281d6bdc1f6614b9330315cd9931ec9b2232445.1525488108.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:nnytVRLPJtx7ddz5iJlBJqYYiDvpurgjfcbxKsBfXjZEv1GkySJ
+ evTF74jBE+9XuYaexqqs6Jevy0bo/x5biYPYUF2zrB/sXX7Dixot9fwtG/4SVhn3ghankV0
+ 1QtrTbGpd4yF4RhugZWKKx8gf7vl12ggncomnBR3ByGWbjKp7p7InZuen8DEWH2xqnRdHrf
+ 7++ZV7nfiJKgDaMgEdu9A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jqm0TGqNHpw=:gF7M4RRNy8xqzY+YnTqwg3
+ u9Wz/MvSOHG/fdeygDj8PB1LKA2+amccjjCoi76wJhpIJyQDVzs/v1EEC2BZBOEPo/jlAOpR1
+ 6y7lclhblMGx2Gw/yYyecJbgCJMl04ZmI7vqLwkFMIvRzQrSo/xLyHwfjidquGbQ/tmhYce+c
+ RZbU/vO3iywa8iB8X103EJg/sa89fFQ64Q4BoZRmCrRKlQnbgHeMLlEiCAuA2GfQpNJvU7pNf
+ HCn6z9Om+pXE5H9Vl98yySQMuIa3nt/FHae6JQS3kZ+4aDMrIel/Bb624KEOmV5r44ypemdjj
+ R38fHBwrZ/lDNr7LCYRC4c+KszUmkzv1aujtpOFqgnabRY5Vn2YJ78VNURm+lQ0g+/VyfCnNu
+ QG2jtYalUCgbpFyrxbrp53NIwulUoZvpqtUeQSPlR40WNdce1RqhEdU400dHIgWL0IHANkXaX
+ ZjGXOE9DVDjLImtnZLBHgLJT7S+3CUisCoPVMIOduDxJkfrZUB84cJmA+AFb3BXDdso+rnMd4
+ bfj3cubfGpeSwQP+FtWZQgP+LuCufPCXusIIwfIS35wg9bg4sKmIUB/zRZMuXTo54gK6G3WwB
+ IAos1U7NfnaNlgSdHLg+3LmBkhTD0s/9SXIGBUdvzH/Tja7s7lKjCG0rDMISpPD2jObLAauvj
+ vZ2/E+doxZc1c+a+n9lJHl4mVzpcavfBOK0JP5A8I9d5b0/5487O4CY77DTdPenSXzSif1VK7
+ +CH8sHVqSiiirLOGH95lI/ISjYyJYI6ZHZi8Bg+qjhk0ROzTwLtQ5E2rEADK0F8O7C95qKxqK
+ o/aqsxE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ilya Kantor <iliakan@gmail.com> writes:
+Am 05.05.2018 um 04:42 schrieb Taylor Blau:
+> When calling match_line(), callers presently cannot determine the
+> relative offset of the match because match_line() discards the
+> 'regmatch_t' that contains this information.
+> 
+> Instead, teach match_line() to take in a 'regmatch_t *' so that callers
+> can inspect the match's starting and ending offset from the beginning of
+> the line. This additional argument has no effect when opt->extended is
+> non-zero.
+> 
+> We will later pass the starting offset from 'regmatch_t *' to
+> show_line() in order to display the column number of the first match.
+> 
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>   grep.c | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/grep.c b/grep.c
+> index 65b90c10a3..1c25782355 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -1299,17 +1299,17 @@ static int match_expr(struct grep_opt *opt, char *bol, char *eol,
+>   }
+>   
+>   static int match_line(struct grep_opt *opt, char *bol, char *eol,
+> -		      enum grep_context ctx, int collect_hits)
+> +		      regmatch_t *match, enum grep_context ctx,
+> +		      int collect_hits)
+>   {
+>   	struct grep_pat *p;
+> -	regmatch_t match;
+>   
+>   	if (opt->extended)
+>   		return match_expr(opt, bol, eol, ctx, collect_hits);
 
-> P.S. I assume, `cherry-pick -n <commits>` is meant to merge given
-> commits' changes into the current working directory and the index,
-> without making new commits, for any given set of commits, hope that's right?
+If ->extended is set then match won't be touched...
 
-Hmph.
+>   
+>   	/* we do not call with collect_hits without being extended */
+>   	for (p = opt->pattern_list; p; p = p->next) {
+> -		if (match_one_pattern(p, bol, eol, ctx, &match, 0))
+> +		if (match_one_pattern(p, bol, eol, ctx, match, 0))
+>   			return 1;
+>   	}
+>   	return 0;
+> @@ -1699,6 +1699,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+>   	int try_lookahead = 0;
+>   	int show_function = 0;
+>   	struct userdiff_driver *textconv = NULL;
+> +	regmatch_t match;
+>   	enum grep_context ctx = GREP_CONTEXT_HEAD;
+>   	xdemitconf_t xecfg;
+>   
+> @@ -1788,7 +1789,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+>   		if ((ctx == GREP_CONTEXT_HEAD) && (eol == bol))
+>   			ctx = GREP_CONTEXT_BODY;
+>   
+> -		hit = match_line(opt, bol, eol, ctx, collect_hits);
+> +		hit = match_line(opt, bol, eol, &match, ctx, collect_hits);
+>   		*eol = ch;
+>   
+>   		if (collect_hits)
+> 
 
-One step in cherry-pick should refuse to start when HEAD and the index
-does not match, even though it is perfectly OK if the working tree
-files do not match the index, as long as such local changes do not
-interfere with the change the cherry-pick tries to bring in.
+... which leaves it uninitialized.
 
-The requirement for the index to be clean wrt the HEAD is
-fundamental.  When any merge-y operation like cherry-pick, apply -3,
-checkout -m, etc., happens, we would want to
+So at least the combination of extended matches and --column should error
+out.  Supporting it would be better, of course.  That could get tricky for
+negations, though (e.g. git grep --not -e foo).
 
- * store the cleanly automerged contents to the index
-
- * store common-ancestor, ours and theirs for conflicted merge to
-   the stages in the index.
-
-and being able to safely say "git reset" (not "reset --hard") to
-bring the index back to the state before the merge-y operation has
-started.  Not noticing a dirty index and starting a step in cherry-pick
-means you cannot tell cleanly automerged paths from paths you had
-modified in the index _before_ the step started.
-
-And if you have a range that consists of two commits and
-successfully did "cherry-pick -n" on the first one, because the
-command is not committing, these cleanly merged paths will be
-modified in the index.  Then the next step to pick the second commit
-may conflict---after that, you lose the result of the first pick
-from the index as some changes from the second step is already
-intermixed with the result from the first step in the index.
-
-So, no.  I do not think it makes sense to feed multiple commits to
-"cherry-pick -n".
+René
