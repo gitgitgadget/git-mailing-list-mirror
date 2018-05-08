@@ -2,86 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 336F4200B9
-	for <e@80x24.org>; Tue,  8 May 2018 03:48:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D341200B9
+	for <e@80x24.org>; Tue,  8 May 2018 03:50:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754321AbeEHDsS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 May 2018 23:48:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59860 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753971AbeEHDsR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 May 2018 23:48:17 -0400
-Received: (qmail 10399 invoked by uid 109); 8 May 2018 03:48:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 08 May 2018 03:48:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1245 invoked by uid 111); 8 May 2018 03:48:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 07 May 2018 23:48:20 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 May 2018 23:48:15 -0400
-Date:   Mon, 7 May 2018 23:48:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
-Message-ID: <20180508034815.GB7242@sigill.intra.peff.net>
-References: <a1ea0320b64527ee6ce9856dcf359513d13052b7.1525448066.git.johannes.schindelin@gmx.de>
- <20180505182631.GC17700@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1805052355190.77@tvgsbejvaqbjf.bet>
- <39282590-576f-1ac1-6a16-80ad317ec7ed@gmail.com>
- <nycvar.QRO.7.76.6.1805061408150.77@tvgsbejvaqbjf.bet>
- <e0db15c5-e897-5b03-20ff-d83f38496e61@gmail.com>
- <nycvar.QRO.7.76.6.1805062124470.77@tvgsbejvaqbjf.bet>
- <3b4591cd-6dde-31ee-f0b1-42b5353086e5@gmail.com>
- <CAGZ79kZbRCH2OiTW1Ge31R9JN+vWD6tcjNWVGSzkSBcYZvwDjw@mail.gmail.com>
- <20180508034429.GA7242@sigill.intra.peff.net>
+        id S1754206AbeEHDul (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 May 2018 23:50:41 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:54687 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753971AbeEHDui (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 May 2018 23:50:38 -0400
+Received: by mail-wm0-f66.google.com with SMTP id f6so16444137wmc.4
+        for <git@vger.kernel.org>; Mon, 07 May 2018 20:50:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=VDys++9nPAXJ/IeTA0qkibvdlA55VU7W2NnVaB4XA3A=;
+        b=fUXKYIAtygHCvLghDu/70yw9iO5IWHtzaqSkUhOCeqn6UGw4E5/fVlDMvoFRCS+osA
+         +8hsTuI90LFe1M3pVMiZOA8LfZLVgltssAbUD5h2LgsUZ00RV4vC1u/AByZlVg+lwuwK
+         V3S8m3cBJxoLGXtzWUGrx9jCy4no4jrI79wyBnkNOnoeVhfwNU2EenO2HuXZETSD5mZx
+         yYA5mrQC3uCRXWZ7XLBfWhSQTeYJ5QzLi4eKssLmWRONCYCTejN7+ub1OWXzxkKBnGqA
+         qsB162v87yn6cptjR9mhm+ySKfeTFPoShR5z6vjUhXjiW+T1QZ5F8Q/Kr+s/79/ufE7/
+         coCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=VDys++9nPAXJ/IeTA0qkibvdlA55VU7W2NnVaB4XA3A=;
+        b=SvyAAHA5A/bbYKk//mtl30Ptoe5pqqMzHYeJzW6moi1mono5B/gPUVwY8m5u6eXxhz
+         n9czZ8jo+34v6keQ4orvugpr/x0pN4QQew13ap84G8fGYEu4S/ni89rUU2/83Td7UKNg
+         A278Eu1g8fEVODUqR2HV88jd3VoZHgsvgjp9SKiSV2WyemxLP+8UZIetywIQfNfvzGKc
+         9Ui/bjR8pSIoBV9KnUI/wPplNMF4OMSTvMtZtX73kR5ZMEtLCs2Xw5SgdFYGmG90Kz+p
+         XZElJi3queyrcb72ydn4PoPV75q01fYDSTRIT5ZO240L01nsRuXQE1Z0HAfLj6Z1Y7tk
+         WpbA==
+X-Gm-Message-State: ALKqPweaeCwR+1P5Unr8aWzRh9H8qAtwKCPa4X8c4qsp7qbEjAIp1w/C
+        dCi/WpxAJHa8NDSxpgY8OJ0=
+X-Google-Smtp-Source: AB8JxZoM7W00l4XjEkrvXaLNBzVJJBqd9HfOeX9AUOY2dEG5qw2uu4YnE/7nCyRvyIcm4U5cLdWjKQ==
+X-Received: by 10.28.11.78 with SMTP id 75mr2058067wml.32.1525751436936;
+        Mon, 07 May 2018 20:50:36 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m64sm13190023wmb.12.2018.05.07.20.50.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 07 May 2018 20:50:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com, szeder.dev@gmail.com
+Subject: Re: [PATCH v6 05/13] git.c: convert --list-* to --list-cmds=*
+References: <20180429181844.21325-1-pclouds@gmail.com>
+        <20180507175222.12114-1-pclouds@gmail.com>
+        <20180507175222.12114-6-pclouds@gmail.com>
+Date:   Tue, 08 May 2018 12:50:35 +0900
+In-Reply-To: <20180507175222.12114-6-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Mon, 7 May 2018 19:52:14 +0200")
+Message-ID: <xmqqin7yn6us.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180508034429.GA7242@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 07, 2018 at 11:44:29PM -0400, Jeff King wrote:
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> On Mon, May 07, 2018 at 03:24:59PM -0700, Stefan Beller wrote:
-> 
-> > Hence I propose "git range-diff", similar to topic-diff, that
-> > was proposed earlier.
-> > 
-> > * it "diffs ranges" of commits.
-> > * it can also deal with out-of-git things like patch series,
-> >   but that is a mere by product and may not be desired.
-> >   Just like git-diff can also compare two files outside a git
-> >   repo, that would not be a good use case.
-> >   Keep the name Git-centric!
-> > * it autocompletes well.
-> 
-> FWIW, I like this by far of all of the suggested names.
+> Even if these are hidden options, let's make them a bit more generic
+> since we're introducing more listing types shortly. The code is
+> structured to allow combining multiple listing types together because
+> we will soon add more types the 'builtins'.
+>
+> 'parseopt' remains separate because it has separate (SPC) to match
+> git-completion.bash needs and will not combine with others.
+> ---
 
-I hit "send" before I had a chance to expound. ;)
+Missing sign-off.
 
-The thing that I really like about it is that it names the _concept_.
-If I were writing a manual page describing what this output is, I would
-call it a "range diff". And naturally, the command to generate range
-diffs is "git range-diff".
+> +static int list_cmds(const char *spec)
+> +{
+> +	while (*spec) {
+> +		const char *sep = strchrnul(spec, ',');
+> +		int len = sep - spec;
+> +
+> +		if (len == 8 && !strncmp(spec, "builtins", 8))
+> +			list_builtins(0, '\n');
 
-I think "git diff --range" would also be OK, but IMHO it's useful to
-keep the "git diff" family as always comparing end-points.
+This is the origin of ugliness we see in later steps that follow the
+same
 
--Peff
+	if (len == strlen(constS) && !strncmp(spec, constS, strlen(constS))
+
+pattern added here.  Could we have a small helper that takes len,
+spec, and constS to abstract "8" away?
