@@ -2,215 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2806200B9
-	for <e@80x24.org>; Tue,  8 May 2018 05:05:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35660200B9
+	for <e@80x24.org>; Tue,  8 May 2018 05:14:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753939AbeEHFFM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 01:05:12 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:40820 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753848AbeEHFFG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 01:05:06 -0400
-Received: by mail-pg0-f67.google.com with SMTP id l2-v6so20629609pgc.7
-        for <git@vger.kernel.org>; Mon, 07 May 2018 22:05:06 -0700 (PDT)
+        id S1753460AbeEHFOw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 01:14:52 -0400
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:44748 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751964AbeEHFOv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 01:14:51 -0400
+Received: by mail-wr0-f180.google.com with SMTP id y15-v6so19134332wrg.11
+        for <git@vger.kernel.org>; Mon, 07 May 2018 22:14:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=n/1ZBJROTuZ/FmLF/+f6GGpEtkPx8HPKDBxVyPOV2W0=;
-        b=sAqRe/DD6XtFh7AtkQ+AENOz9HfZhgf7gP/g7ucQHnALIp/Q1Lssr+kwsdeJLP90z1
-         0pY8bY7dcUS26e2068zqNaUsGcmXObo24s56eLylfkA1iqJF8swFumwLZmpko5btlEtY
-         rYCxPCgvEDkv2dLI5VTQvfGxb4buZ2xhw93YsHopo25m+QKDK6470oLe69fM/I60yjZk
-         QzkMtBtjvGFs164r09unJw7hnKCpif0odSzInKH9zJFW2uJ09ixhujWeHLuKSAxUccyG
-         GYKoLVu0QOVdrpLaQxDYhvZx++KSANXdRodTwbTmYMWxt54I12bRfTpADOJrZoCSlUcW
-         QTcQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=WUFyVGIdnxj8nPNiPaZlWBb06AMjRTMO5c52pOsJ1Jw=;
+        b=j7i+cgvl3UTVIF0Ue0vAZ4KTV7u1mBVNlm2z2BTeMuJYQXM3xZNIqt/Dc9CWkspto7
+         8TjDKhJy4Ce68a2qvvnsrK9t8BI/PWSrl1efyU5EvNWhAgys/woPhwPwT01iWYvCMgNw
+         vQLmioSO5pwk4ruiT7vEGPrcUCByTfzQxsXu7LRRIuIEsSIvycJBadwHmyiV4WUhoGRz
+         2RIt7RQi4LGdVy2Qcwo8/LaqqZ2ASo60+UFCz9Bg7fth5YhDk5mLHW1Bu9d+Mwxzk1U6
+         +/Op15y4m8bNSdJv1a6aEZHvj2wnFmlgij6ufVsSGsi4VzbljxgJtLMEcxN4h+wD478u
+         WnXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to;
-        bh=n/1ZBJROTuZ/FmLF/+f6GGpEtkPx8HPKDBxVyPOV2W0=;
-        b=eL7KVVARvj5hZLnb04g185cAhQV1RK129An4Fj8FmR1JY+vCxh2ASobDMBy5F2ogdb
-         nZXIjWihbcodlEKhEQ5AatQbq54ydO9kvss2BK8N9SiSbjdBBCeO1hvrY3lRby+Fff1v
-         Dzpk5/KNTiLE3WZumSzgyeHvYKE7PercnGtHMgR0SgRT6TSVSnt14FHElGYirrYdEqu+
-         /hKZpLEyYOh2JdjX5obeAc6resKrhPG3oVf/lV9ye3LiabEJk7YDcgScWCng6pbMIEqI
-         y+iD9jbv6kZAFFvk4PH7/yRK8MxGT6lfXKZW+rVhy4JVuF0uVrgy6Uz/21qmjl5DBafd
-         quqg==
-X-Gm-Message-State: ALQs6tBE1FdnhFVnLYSyxVr87mAOEPotPL83GfsIY+Z4hpHHDeQ0TONm
-        oXcSV/HkzN+AE4p+CUK4ja27Vysv
-X-Google-Smtp-Source: AB8JxZrfE9hmMVps6xtsoYxMCW9yOmA0GbOj6ipXSC1g/+b854/Jw5D83lkNOhTDzxmBqybZQdx3TQ==
-X-Received: by 2002:a63:790e:: with SMTP id u14-v6mr32029772pgc.445.1525755905839;
-        Mon, 07 May 2018 22:05:05 -0700 (PDT)
-Received: from [192.168.206.100] ([117.243.25.220])
-        by smtp.gmail.com with ESMTPSA id c28sm63063875pfe.27.2018.05.07.22.05.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 May 2018 22:05:03 -0700 (PDT)
-Subject: Re: [PATCH v2] mailmap: update brian m. carlson's email address
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <20180506232421.975789-1-sandals@crustytoothpaste.net>
- <20180508015845.268572-1-sandals@crustytoothpaste.net>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=kaartic.sivaraam@gmail.com; prefer-encrypt=mutual; keydata=
- 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
- IZ7P/DJ/
-Message-ID: <184451b4-1b34-c1f7-f9b1-0dfa63ab9506@gmail.com>
-Date:   Tue, 8 May 2018 10:34:58 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=WUFyVGIdnxj8nPNiPaZlWBb06AMjRTMO5c52pOsJ1Jw=;
+        b=m8gtmMJYNUu8JX+w4diWBJeTnOH/XhkMuOca9q1W45wk13S9MlhtPgE1isnDrfF8Bb
+         ONjNWAleBRMpfwCJrI8lA5yZcK1OEHR9Gerb+vSPfNOwLxs5gHkNzK8hyyX4AnOkN2tT
+         xX7QdyhIUm9EnGnu9jSja1LZIH9z1KNwSIwpvFbNVqQLsZx7pBtAXOuqm6p02IKiNGDk
+         Nqd5efn+dlwqyVdkU8Lhbbs/bQwblFJG2uonE/BDCsDDu2GkNXFMW8pwfn9q3NtqJATK
+         wpF+b1JyacqWMJMwNy9Xxf5bBDwlaLf4TTnwpA7tmEZYxqrorScbJL1N1H3NFdLtV4Ax
+         xQTg==
+X-Gm-Message-State: ALQs6tBz+W1EQtFte6tXgU18i89p/gksZisjGndwy7WIf/yT+qpM3gvV
+        d2GnC6wq06mqkqIv/wTCBCA=
+X-Google-Smtp-Source: AB8JxZoyRwe9+vuSnNXgKySHggSrRaqbM4ALiin6aKZVHXtaQ9IOeJPq9IevE/UkrcWRSBISkfQiLA==
+X-Received: by 2002:adf:ac81:: with SMTP id o1-v6mr30445174wrc.220.1525756489608;
+        Mon, 07 May 2018 22:14:49 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id d83sm14607522wmh.16.2018.05.07.22.14.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 07 May 2018 22:14:48 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 5/8] push doc: correct lies about how push refspecs work
+References: <20180429202100.32353-1-avarab@gmail.com>
+        <CACBZZX7HFnEMD8PKWj0c7VWqv=yeYCXYJjy-5YPZnF_pJAy0jw@mail.gmail.com>
+        <20180429202100.32353-6-avarab@gmail.com>
+Date:   Tue, 08 May 2018 14:14:48 +0900
+In-Reply-To: <20180429202100.32353-6-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sun, 29 Apr 2018 20:20:57 +0000")
+Message-ID: <xmqqzi1alodz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180508015845.268572-1-sandals@crustytoothpaste.net>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="wZ2qVbTa332xpn4sDOcayF8nOGrXoeHv1"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---wZ2qVbTa332xpn4sDOcayF8nOGrXoeHv1
-Content-Type: multipart/mixed; boundary="ipeSsosZ9zliCNQQ6cqBZhvwo8sfgymTI";
- protected-headers="v1"
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-ID: <184451b4-1b34-c1f7-f9b1-0dfa63ab9506@gmail.com>
-Subject: Re: [PATCH v2] mailmap: update brian m. carlson's email address
-References: <20180506232421.975789-1-sandals@crustytoothpaste.net>
- <20180508015845.268572-1-sandals@crustytoothpaste.net>
-In-Reply-To: <20180508015845.268572-1-sandals@crustytoothpaste.net>
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
---ipeSsosZ9zliCNQQ6cqBZhvwo8sfgymTI
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+>  +
+>  The <src> is often the name of the branch you would want to push, but
+> -it can be any arbitrary "SHA-1 expression", such as `master~4` or
+> -`HEAD` (see linkgit:gitrevisions[7]).
+> +it can be any arbitrary "SHA-1 expression" referring to a branch, such
+> +as `master~4` or `HEAD` (see linkgit:gitrevisions[7]). It can also
+> +refer to tag objects, trees or blobs if the <dst> is outside of
+> +`refs/heads/*`.
 
-On Tuesday 08 May 2018 07:28 AM, brian m. carlson wrote:
-> An earlier change, cdb6b5ac (".mailmap: Combine more (name, email) to
-> individual persons", 2013-08-12), noted that there were two name
-> spellings and two email addresses and mapped the crustytoothpaste.net
-> address to the crustytoothpaste.ath.cx address.  The latter is an older=
-,
-> obsolete address, while the former is current, so switch the order of
-> the addresses so that git log displays the correct address.
->=20
-Just to be sure, you're meaning the use of `git log --use-mailmap` when
-you mean `git log` in the log message. Am I right? Or did you mean `git
-shortlog` ?
+I think the addition of "referring to a branch" here is an opposite
+of an improvement.  The fact <src> can name any object (if outside
+the refs/heads/) or any commit (otherwise) is stressed with the
+added "It can also ...", which is great, but neither "master~4" nor
+"HEAD" refer to a branch (they refer to a commit in terms relative
+to a branch and a (psuedo)ref, respectively).  And a "SHA-1 expression"
+that uses branch tips as a starting point (e.g. master~4 is "start
+at the tip of master and go backwards by 4 steps) is *not* special
+here.  You can spell your <src> side as "v2.17.0^0" for example, and
+it does not refer to any branch.
 
-I'm asking this because I think the `git log` output doesn't consider
-the mailmap file by default.
+> @@ -74,12 +76,24 @@ without any `<refspec>` on the command line.  Otherwise, missing
+>  `:<dst>` means to update the same ref as the `<src>`.
+>  +
+>  The object referenced by <src> is used to update the <dst> reference
+> -on the remote side.  By default this is only allowed if <dst> is not
+> -a tag (annotated or lightweight), and then only if it can fast-forward
+> -<dst>.  By having the optional leading `+`, you can tell Git to update
+> -the <dst> ref even if it is not allowed by default (e.g., it is not a
+> -fast-forward.)  This does *not* attempt to merge <src> into <dst>.  See
+> -EXAMPLES below for details.
+> +on the remote side. Whether this is allowed depends on what where in
 
---=20
-Sivaraam
+s/what where/where/, I think.
 
-QUOTE:
+> +`refs/*` the <dst> reference lives. The `refs/heads/*` namespace will
+> +only accept commit objects, and then only they can be
+> +fast-forwarded. ...
 
-=E2=80=9CThe most valuable person on any team is the person who makes eve=
-ryone
-else on the team more valuable, not the person who knows the most.=E2=80=9D=
+Nicely clarified.  Excellent.
 
+> +.... The `refs/tags/*` namespace will accept any kind of
+> +object, but there commit objects are known as lightweight tags, and
+> +any changes to them and others types of objects will be
+> +rejected. ...
 
-      - Joel Spolsky
+with s/, but there commit objects are known as lightweght tags/ the
+sentence does not change any meaning?  An early part of the paragraph
+made readers anticipate that they hear rules for what can go where,
+and "refs/tags/ ref that point at a commit is called lightweight tag",
+while it is not an incorrect statement per-se, does not belong to
+these "rules".  Unless the discussing of the rules immediately
+follows involves (or becomes easier to read if we use the term)
+"lightweight tags", it probably is better to drop it.
 
+> +... Finally and most confusingly, it's possible to push any type
+> +of object to any namespace outside of `refs/{tags,heads}/*`, but these
+> +will be treated as branches, even in the case where a tag object is
+> +pushed.
 
-Sivaraam?
+I sense a confused writer, not a confusing behaviour being described
+here.  If refs/poo/* is "treated as branches", because of what you
+earlier said, you shouldn't be able to push a tag object in the
+first place.
 
-You possibly might have noticed that my signature recently changed from
-'Kaartic' to 'Sivaraam' both of which are parts of my name. I find the
-new signature to be better for several reasons one of which is that the
-former signature has a lot of ambiguities in the place I live as it is a
-common name (NOTE: it's not a common spelling, just a common name). So,
-I switched signatures before it's too late.
+If refs/poo/* is meant to be lawless land where anything goes, then
+saying "will be treated as branches" does not help readers.
 
-That said, I won't mind you calling me 'Kaartic' if you like it [of
-course ;-)]. You can always call me using either of the names.
+> +... That tag object will be overwritten by another tag object (or
+> +commit!) without `--force` if the new tag happens to point to a commit
+> +that's a fast-forward of the commit it replaces.
 
+If I pretend that I didn't see the "treated as branches", I fully
+agree with the above description and refs/poo/* being a world
+governed by random rules, and I do not think I'd be too opposed to
+change it to "anything goes".  I do not think I'd be too opposed to
+change it to "nothing is allowed unless forced", either, though.
 
-KIND NOTE TO THE NATIVE ENGLISH SPEAKER:
+> +By having the optional leading `+`, you can tell Git to update the
+> +<dst> ref even if it is not allowed by its respective namespace
+> +clobbering rules (e.g., it is not a fast-forward. in the case of
+> +`refs/heads/*` updates) This does *not* attempt to merge <src> into
+> +<dst>.  See EXAMPLES below for details.
 
-As I'm not a native English speaker myself, there might be mistaeks in
-my usage of English. I apologise for any mistakes that I make.
+Excellent.  
 
-It would be "helpful" if you take the time to point out the mistakes.
+s/leading `+`/& to a refspec (or using "--force" command line option)/
 
-It would be "super helpful" if you could provide suggestions about how
-to correct those mistakes.
+Thanks.
 
-Thanks in advance!
-
-
---ipeSsosZ9zliCNQQ6cqBZhvwo8sfgymTI--
-
---wZ2qVbTa332xpn4sDOcayF8nOGrXoeHv1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlrxL/oACgkQveda2sPW
-GWkC7BAAjMKl8SPz5gqFpDOAiEEO72lt3k7mszTLGAQbc33oW3WE2+6h+kz8uT02
-haE9Dfau0z6FRo0q1dRKGQkRlju5W1mD/1sXcluvKan4Bn/raSmbDGxAFxlQ85C9
-/ZD7FWnLNLw3Yv61HaIoqeYWQk96akpZhrVk18tQ9ds2wDrPvx78U6fLHl4nU6Vh
-m0J6RLyUNmccED5LfcTsYKdQRYhwzZuzVzi62YEXDw9SKut7UbqH16clbkYgAm9j
-E83Ex2iXa0rgbjQI5Vur5O2hSVsTCAmVRkoMfGs1TkD+CGqBe/ww+HENLstH1icn
-GAkI0NLlOS1EPdZdvvQCltqY+lib9HWURmxtO8fjlneWEtcQKGoUgsEtoyxQv24G
-oXgKqmZlziYj8tGNZCQDRqj5zJ6fCPlDXkeJ6xG9xCr1h9XGC5YYpgkKnn+u2Ajn
-VKfE6PaS4cggTxeM+hgLVcjn32d99paaJXNhD+ISAbW1d8PNXxgo21PoypwIokaD
-U1+IDdItK7vpwJxFb4cV1wKNqVbD3mDfgGRWS9XYgPoAuGS7lRL+py/tOWNxq9WK
-LNR/bR9FpDYEmyZ00eHSpY+jVRFfsq0c21HOH7VP3r/BAgvIXP7YwpXxNOXL60BF
-5928fuzMNSGSVPwnpwNxTQxJTQJfbJr39xChf4YxHv5KaWKPzyc=
-=AKPE
------END PGP SIGNATURE-----
-
---wZ2qVbTa332xpn4sDOcayF8nOGrXoeHv1--
