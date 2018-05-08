@@ -7,55 +7,54 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27C68200B9
-	for <e@80x24.org>; Tue,  8 May 2018 19:38:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83ED9200B9
+	for <e@80x24.org>; Tue,  8 May 2018 19:38:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755666AbeEHTiV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 15:38:21 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:40544 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751664AbeEHThs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 15:37:48 -0400
-Received: by mail-pg0-f67.google.com with SMTP id l2-v6so21590670pgc.7
-        for <git@vger.kernel.org>; Tue, 08 May 2018 12:37:48 -0700 (PDT)
+        id S1755662AbeEHTiU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 15:38:20 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33664 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754659AbeEHThu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 15:37:50 -0400
+Received: by mail-pf0-f193.google.com with SMTP id f20so15642787pfn.0
+        for <git@vger.kernel.org>; Tue, 08 May 2018 12:37:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BJmIUCUbHoDCj2ebjvHQxvKwm7uUHvz9ibOMSfE4JZg=;
-        b=WuqyNJs0PMvLdkVgCMRj5wiG+P3m1ObwkIyzmdDjIoe0zI1xvXwHQ44m7EHyxJZNpC
-         YsoPBMVrYCcumPFCbvdDRBX6KbKATHLBfHJDRrk6c8OYRRXgQGh3ISjVDcKam3ld3Ina
-         BoK+JmE8sLq7SOgmjRIdPyU1o+HPA7WVH4ON5UPZTzyid47kOvlYAbhYp41x6Z6TR2dt
-         sBN/5PvHfQOx35AoGNPYkAC9QAtJ9+ERlhYxt7FF8I4zDmTSv+ELtIRa6FzWSRfO1LLc
-         8t3GgRHz0u+4iHY8exjjOeWWrf6pgfh5v0eGeFdARAb+5jQknb4O+0I+7MiHqVbjc02t
-         fX1Q==
+        bh=X0M49anvLElxs1frAEBYUbXYyy/a9bLY76JJa6hARs8=;
+        b=MLRJ2NGvvEa7NH79fysytGV9VIYBrjr26FBus7bpMWoOFbywJHxi1ezaGK4KWC4t/J
+         luBIYuQnWI4vS3RWRmFX6hg6R6wscQRLlTMUIZqHhJxSLjm/+Mo1k8/Jaw9/FslCQAS9
+         vXzGLoKIYcP792JBROuYUfnM0DWWxq/j4Zb/PTncB0nCd9aiy3Sjo6WgmPBaIvplqALD
+         7hsjW8pnRa8FKgR5AQLf03BQDhnN4ARtFSBxEUi0AKOlo58W4dMoILXPEi83AioDbS44
+         wHjug8x8s2PfgEHAASHZAxnjJ8OQT8O5kXsumLv1nTTa69KrGhRBXEOh0xpTFVuW8cPN
+         xWqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=BJmIUCUbHoDCj2ebjvHQxvKwm7uUHvz9ibOMSfE4JZg=;
-        b=D6qOlYrDFL9Hli9+MM+lbfSPNPaEG9UHsYJQj7fPZ6+v0ePIMCKOqxBgpAbacjlT10
-         Qq6po4SQ3SrS2SCZpcMXTJqDHED2u5gOL/dPu788nbNrHvSYg/TgvXg38SvxzEvs7bUj
-         w0aBk4k1ZSnMuF9d3IJgSW2CUaPAFMkHLR9wibnDWNDRW1/KJPoUi+s7KejgIRtWxOfs
-         G65xGS/NzQmq4fy+CygdJvYCwjTk0TfK5XUYVCW3xM9GC2v8m7Cx4pmg7mByjegbtOGh
-         EZajesBtLoVU0qwWPfKPKZChHCf7aUHHG6effKImF4nYHnSy6qHHhpl8ehYI6WgifWIW
-         HEPw==
-X-Gm-Message-State: ALQs6tArwB4jdanYnHCF3v1LMSP+1wu1FAmpN8dImmsYpF/a37tlutIg
-        2U+vKQI+ZxlA2E1uJgmpdo/Idg==
-X-Google-Smtp-Source: AB8JxZprhaZp2+0jDJxPNIH0HrZ5L1ByDF+MNgmkR5ptk619uiFwmqPbWc6YY7EuEoGD0K9J0pIQog==
-X-Received: by 10.98.233.3 with SMTP id j3mr9128124pfh.196.1525808267426;
-        Tue, 08 May 2018 12:37:47 -0700 (PDT)
+        bh=X0M49anvLElxs1frAEBYUbXYyy/a9bLY76JJa6hARs8=;
+        b=glvYnyh28WYrj08sisZ1yaqhDruXRE+L7Ya/paahOSsDOZ76IhUg9ANBiw39+TeKrn
+         wUqNteoohHr876NIFRHJLTRwJJx6Kenk0eKtzyQSmSuNfeMzX2HCbHJFLvVa8F9w2nU5
+         abXyfp+EWVHo82wG13A4ddwgmp29UE4qS7XQofcJWTI0guKZZx7BFQYw5rdotEkw1336
+         +8RMli/D0TA3WKkkFyRzyaoWwz5k0vE1dwufz9v4Wx4z7AvzFH+v5+myINb0nClCBhoH
+         JznyoMwqbOUKalNLaLtnZCiiGuQEZxLmCd37nxNkkQSRMXUyV1/XgrVutLvMwJK7Jz+h
+         rggw==
+X-Gm-Message-State: ALKqPwcUT22sF2HUIMXi4+R3u5ywUCYxXvEj+NgNyfPcxyQt+I/1STOU
+        7OrFoot1AnuBmkmC1KklP6gwHg==
+X-Google-Smtp-Source: AB8JxZrvXRF6UDoPFeEdL6pekKIHxJcRSXnkY/ZZfNQ7+9fWFGU7zhx+PlQsRzum2t9MF/y85Lb4UQ==
+X-Received: by 2002:a63:af17:: with SMTP id w23-v6mr255693pge.247.1525808268870;
+        Tue, 08 May 2018 12:37:48 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id w1-v6sm9690084pgp.3.2018.05.08.12.37.46
+        by smtp.gmail.com with ESMTPSA id u70sm51731066pfk.121.2018.05.08.12.37.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 May 2018 12:37:46 -0700 (PDT)
+        Tue, 08 May 2018 12:37:48 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jamill@microsoft.com,
-        jonathantanmy@google.com, pclouds@gmail.com,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v3 03/13] object: add repository argument to grow_object_hash
-Date:   Tue,  8 May 2018 12:37:26 -0700
-Message-Id: <20180508193736.14883-4-sbeller@google.com>
+        jonathantanmy@google.com, pclouds@gmail.com
+Subject: [PATCH v3 04/13] alloc: add repository argument to alloc_blob_node
+Date:   Tue,  8 May 2018 12:37:27 -0700
+Message-Id: <20180508193736.14883-5-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
 In-Reply-To: <20180508193736.14883-1-sbeller@google.com>
 References: <20180507225916.155236-1-sbeller@google.com>
@@ -65,43 +64,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Nieder <jrnieder@gmail.com>
+This is a small mechanical change; it doesn't change the
+implementation to handle repositories other than the_repository yet.
+Use a macro to catch callers passing a repository other than
+the_repository at compile time.
 
-Add a repository argument to allow the caller of grow_object_hash to
-be more specific about which repository to handle. This is a small
-mechanical change; it doesn't change the implementation to handle
-repositories other than the_repository yet.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- object.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ alloc.c | 2 +-
+ blob.c  | 2 +-
+ cache.h | 3 ++-
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/object.c b/object.c
-index 2de029275bc..91edc30770c 100644
---- a/object.c
-+++ b/object.c
-@@ -116,7 +116,8 @@ struct object *lookup_object(const unsigned char *sha1)
-  * power of 2 (but at least 32).  Copy the existing values to the new
-  * hash map.
-  */
--static void grow_object_hash(void)
-+#define grow_object_hash(r) grow_object_hash_##r()
-+static void grow_object_hash_the_repository(void)
+diff --git a/alloc.c b/alloc.c
+index 12afadfacdd..6c5c376a25a 100644
+--- a/alloc.c
++++ b/alloc.c
+@@ -49,7 +49,7 @@ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
+ }
+ 
+ static struct alloc_state blob_state;
+-void *alloc_blob_node(void)
++void *alloc_blob_node_the_repository(void)
  {
- 	int i;
- 	/*
-@@ -147,7 +148,7 @@ void *create_object_the_repository(const unsigned char *sha1, void *o)
- 	hashcpy(obj->oid.hash, sha1);
+ 	struct blob *b = alloc_node(&blob_state, sizeof(struct blob));
+ 	b->object.type = OBJ_BLOB;
+diff --git a/blob.c b/blob.c
+index 85c2143f299..9e64f301895 100644
+--- a/blob.c
++++ b/blob.c
+@@ -9,7 +9,7 @@ struct blob *lookup_blob(const struct object_id *oid)
+ 	struct object *obj = lookup_object(oid->hash);
+ 	if (!obj)
+ 		return create_object(the_repository, oid->hash,
+-				     alloc_blob_node());
++				     alloc_blob_node(the_repository));
+ 	return object_as_type(obj, OBJ_BLOB, 0);
+ }
  
- 	if (the_repository->parsed_objects->obj_hash_size - 1 <= the_repository->parsed_objects->nr_objs * 2)
--		grow_object_hash();
-+		grow_object_hash(the_repository);
+diff --git a/cache.h b/cache.h
+index 3a4d80e92bf..2258e611275 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1764,7 +1764,8 @@ int decode_85(char *dst, const char *line, int linelen);
+ void encode_85(char *buf, const unsigned char *data, int bytes);
  
- 	insert_obj_hash(obj, the_repository->parsed_objects->obj_hash,
- 			the_repository->parsed_objects->obj_hash_size);
+ /* alloc.c */
+-extern void *alloc_blob_node(void);
++#define alloc_blob_node(r) alloc_blob_node_##r()
++extern void *alloc_blob_node_the_repository(void);
+ extern void *alloc_tree_node(void);
+ extern void *alloc_commit_node(void);
+ extern void *alloc_tag_node(void);
 -- 
 2.17.0.255.g8bfb7c0704
 
