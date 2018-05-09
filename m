@@ -2,122 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46D3F1F424
-	for <e@80x24.org>; Wed,  9 May 2018 12:11:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C8B51F424
+	for <e@80x24.org>; Wed,  9 May 2018 12:15:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934565AbeEIMLs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 08:11:48 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:55986 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756236AbeEIMLq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 08:11:46 -0400
-Received: by mail-wm0-f65.google.com with SMTP id a8so24279671wmg.5
-        for <git@vger.kernel.org>; Wed, 09 May 2018 05:11:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=9gYS6YZyC8UCO86yPoNMnG1Z+KJfSLqfjFldBdIruWQ=;
-        b=T8RadoGeCiFC2K9AcZKmtXehxHcQ4c8VjR0dZDv/cIloMNnh7Sxpa23jp5vO/D+qvZ
-         mY/kIwUIRQZN1jrEl32fJFlCcPusjWX1Le/8QD9pN3asCoMYcjy1/v5Se2KlOP5EwL5y
-         ZxIXLkcx3c1FqVc/QG/XTbwVYFhg9d6bfT0+houfBM5RiTAtprpxt0UJj/9QeH4w2E5O
-         AmDw4M0UdFPXz9oOUfLQK3rqZ7W0I4mo/7IW9a212pT9j3OAsRBgriDray6YiM3wLe7n
-         vLogWNIIC3L7iAXyWPVsVO48LC4+L1abQojjnB0f4pqQdW/Qk5I8qtjZ9Zf38dl5ntNM
-         WcPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=9gYS6YZyC8UCO86yPoNMnG1Z+KJfSLqfjFldBdIruWQ=;
-        b=i5BdK7Tbh0UiDfxWf7CnbrkxcO8mgI1JQZrNNdu0K/tbZ7T/ltbUoibxuDz3/lvabK
-         FkIu6N2Mgg3vIKUXVKHoIB6rTs0114GY7o8FmygWLz/+QBLRQZ+0u+yO4WNw3SQbUW6i
-         5erUuR7BUgBCS2iMin+XLP/7I7yO5NWDlTu3p0hEyh3rUvMetuE96dgDq1BkLYdZynWL
-         o0WKioF0RGaexRwlNq9S4ag+QgIjppQGRB4ZJlZuLBYlY5UeHjqt3ArtXY20X3g0bYjd
-         w412kbbuX6vdGTDMtLoc+LT2PKSNxmnsRJAaG6/XHnHm6MYiA5QCtf4IEwo9dkBzNnss
-         7nfA==
-X-Gm-Message-State: ALQs6tAwg/yt5JdQgCIw0sGt8ypf+etbaRkhM0ShuNazYmoFCoRP0Nov
-        1w00bgAAve6w9RyZyKJYJqy+FBXn
-X-Google-Smtp-Source: AB8JxZrDts1j5wNiIPrKfo0HDzQ94JOrZ7azhyHWwgcLAzmmtQVuiFqkOXWjdZp8A3tenc0yeSsAeQ==
-X-Received: by 2002:a50:93c4:: with SMTP id o62-v6mr59561221eda.169.1525867905631;
-        Wed, 09 May 2018 05:11:45 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id f11-v6sm16552018edf.68.2018.05.09.05.11.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 05:11:44 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     jens persson <jens@persson.cx>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH] sha1dc: fix for compiling on AIX using IBM XLC compiler
-References: <CAEoyyNJPZXUKi3W=Gs=3v8i4YnTL47G9oaHDoV5pvCLx78jUVQ@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CAEoyyNJPZXUKi3W=Gs=3v8i4YnTL47G9oaHDoV5pvCLx78jUVQ@mail.gmail.com>
-Date:   Wed, 09 May 2018 14:11:43 +0200
-Message-ID: <87603xxc3k.fsf@evledraar.gmail.com>
+        id S934731AbeEIMPU convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 9 May 2018 08:15:20 -0400
+Received: from mout.kundenserver.de ([217.72.192.75]:35135 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751052AbeEIMPT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 08:15:19 -0400
+Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
+ mrelayeu.kundenserver.de (mreue102 [212.227.15.183]) with ESMTPSA (Nemesis)
+ id 0Lk8eg-1eihwZ20lu-00c7Uo; Wed, 09 May 2018 14:15:13 +0200
+Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
+        by mail.cetitecgmbh.com (Postfix) with ESMTP id 3678A64A3C0;
+        Wed,  9 May 2018 12:15:12 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at cetitec.com
+Received: from mail.cetitecgmbh.com ([127.0.0.1])
+        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id N_IrG6WKf5WV; Wed,  9 May 2018 14:14:54 +0200 (CEST)
+Received: from pfwsexchange.corp.cetitec.com (unknown [10.10.1.99])
+        by mail.cetitecgmbh.com (Postfix) with ESMTPS id 73B60647B9B;
+        Wed,  9 May 2018 14:14:54 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (10.10.2.141) by
+ PFWSEXCHANGE.corp.cetitec.com (10.10.1.99) with Microsoft SMTP Server (TLS)
+ id 15.0.1320.4; Wed, 9 May 2018 14:14:54 +0200
+Received: by pflmari.corp.cetitec.com (Postfix, from userid 1000)
+        id 1E6BE804D2; Wed,  9 May 2018 14:14:54 +0200 (CEST)
+Date:   Wed, 9 May 2018 14:14:54 +0200
+From:   Alex Riesen <alexander.riesen@cetitec.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+CC:     Paul Mackerras <paulus@ozlabs.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitk: do not limit tree mode listing in the file list
+ panel to current sub-directory
+Message-ID: <20180509121454.v4y4av3sk7nh4hnn@pflmari>
+References: <20180508121104.rtsrektxiihvpqtx@pflmari>
+ <20180508122256.nyv6ddcoifygfpk4@pflmari>
+ <CAKPyHN3YMU3oZaW-wR2ZMV6aMwoeFGMmiJBQXtvipVvkWPLZVQ@mail.gmail.com>
+ <20180508133905.6jhhhp6l7avjkctl@pflmari>
+ <CAKPyHN1bGtCBZUh7cDAN-t+5DTutvyL6FLwynALTGZA5ijqwrA@mail.gmail.com>
+ <56ccabf699cdc6e15c5dcb73db5692180c79906d.1525863290.git.raa.lkml@gmail.com>
+ <CAKPyHN0iQh=UJOX-8u4PO1ON9SW+G1gBCGh25FJ_RyoGk906QQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
+Content-Disposition: inline
+In-Reply-To: <CAKPyHN0iQh=UJOX-8u4PO1ON9SW+G1gBCGh25FJ_RyoGk906QQ@mail.gmail.com>
+X-Originating-IP: [10.10.2.141]
+X-ClientProxiedBy: PFWSEXCHANGE.corp.cetitec.com (10.10.1.99) To
+ PFWSEXCHANGE.corp.cetitec.com (10.10.1.99)
+Content-Transfer-Encoding: 8BIT
+X-Antivirus: Avast (VPS 180509-0, 09.05.2018), Outbound message
+X-Antivirus-Status: Clean
+X-Provags-ID: V03:K1:RIz9rNAesidfUbjLHxaxrxIYcZp9RCKUWQlEQD59Z0Ak/uZ80Mf
+ 2L5Gm1Xo/vvq/GZGkCPpgcfu1huWd1xVq8skuYT5S5g5bIn/RngR1zxf7Eq+iZSIYrza2BO
+ 62Izn9DdxW4gTxm+geR7Quvj/2kAvNf/BklplEtk5+Nj93KiF38kmJC/JhPbuWhXOd7PilL
+ PjY/lLFM03iMFqjcLOkZw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Z01XEolLBmQ=:kC4InKdWkS96U6c9A5pO/M
+ WTS/n8LeEOpb2SJxG+9reaPOADig3pBSCD3IWw8VKupiGNWvvF+x0bO7tG/hqF6O+SIbA61s0
+ sscFcKHZgzrOF4gJXlfHENZDsEZDvbq3zctBI+3X9AH1A80GINvVDIk9RS2YxGC72KqmMAi5y
+ hiqhGX+vJPz5Ujg2RisHLb6UDZo4h2x1Ulcx6VdrSYmKuQK4tVdJsPgOv2+1J5TMoes1S5Iix
+ WrFKthYlrlDlRtUCsEPUad5yZ53WqahnaiiAg2puUTZiIjRBtvi3+d5HMRpFCylSUeRoWar0u
+ BT37XWmOHWbgv8+gvRerI4ozSu3Zs9cOZjOJYU2KW1FkP8xJw5w590/PrY+Bt4UDSKppM5GpA
+ CzUmyOBFUJkqPKZRlAGUtOITq+m7ohnxsUSHRQQYb99AmexorgS/LqZQCi9cXM9tp0LpmyM02
+ QdUY7fzAVi/CrEfsokmjiOGmTwudh9k42QiqEjaKlX6odul5rPM8v8Dyv1tyD6H4GNO+rbq1E
+ 59nafAyEoF7FYcmz0q3QP+/FKeEuKj4zuJJpe5CrRCdWZsB1PQ3O9BEf7fUqWRIz0v71MTvtx
+ MilKQgQi+QZvPNdMTQxDXvYqtnPRUHKWJ+8vz/Zqxnif86wxlmRzB5R2z/dZr6pD8F6RWDaQy
+ 1mzh01ZQmsMokjTHGyUtFxSsIlJiENyJyHbFCalo6JYZi2chGt46C9bj5nzoFjdEhx4Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Bert Wesarg, Wed, May 09, 2018 14:08:51 +0200:
+> >> I noticed that too, while testing your patch and I'm also confused.
+> >> But was not able to send a request to Paul yet. ls-tree --full-tree
+> >> seems to be one that should be used here, I think.
+> >
+> > Well, I just tried your suggestion. 'ls-files' doesn't have --full-tree, so
+> > for those it is just cd-up.
+> >
+> > It is on top of the re-sent series.
+> 
+> I would consider the current behavior as a bug, therefor I would put
+> this patch first, and than your other fixes/enhancements.
 
-On Wed, May 09 2018, jens persson wrote:
+I might do, just want to hear more opinions on the matter: someone might have
+good reasons for the current behaviour and consider a bug the fact that Patch
+mode behaves differently, for instance.
 
-> Hello, first patch. I'm having trouble compiling on AIX using IBMs
-> compiler, leading to
-> unusable binaries. The following patch solved the problem for 2.17.0.
-> The patch below is cut&pasted via gmail to allow for firewalls, but
-> exists in an unmolested form on github:
-> https://github.com/MrShark/git/commit/44bfcaca6637e24548ec06f46fb6035a846b14af
->
-> Best regards
-> /jp
->
-> Building on AIX using XLC every checkout gives an error:
-> fatal: pack is corrupted (SHA1 mismatch)
-> fatal: index-pack failed
->
-> Back tracking it was introduced in 2.13.2, most likely in [1]
->
-> Add a #ifdef guard based on macros defined at [2] and [3].
->
-> Should perhaps __xlc__ should should be changed to or combined with _AIX
-> based on the behavour of GCC on AIX or XL C on Linux.
->
-> 1. https://github.com/git/git/commit/6b851e536b05e0c8c61f77b9e4c3e7cedea39ff8
-> 2. https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.3/com.ibm.xlc1313.aix.doc/compiler_ref/macros_platform.html
-> 3. https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.3/com.ibm.xlc1313.aix.doc/compiler_ref/xlmacros.html
->
-> Signed-off-by: jens persson <jens@persson.cx>
-> ---
->  sha1dc/sha1.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-> index 25eded139..68a8a0180 100644
-> --- a/sha1dc/sha1.c
-> +++ b/sha1dc/sha1.c
-> @@ -84,7 +84,7 @@
->  /* Not under GCC-alike or glibc or *BSD or newlib */
->  #elif (defined(__ARMEB__) || defined(__THUMBEB__) ||
-> defined(__AARCH64EB__) || \
->         defined(__MIPSEB__) || defined(__MIPSEB) || defined(_MIPSEB) || \
-> -       defined(__sparc))
-> +       defined(__sparc) || (defined(__powerpc) && defined(__xlc__)))
->  /*
->   * Should define Big Endian for a whitelist of known processors. See
->   * https://sourceforge.net/p/predef/wiki/Endianness/ and
+And as I completely screwed up the resend of the series, there will definitely
+be a re-resend.
 
-This patch looks sane to me, but we don't manage this software but
-instead try to pull it as-is from upstream at
-https://github.com/cr-marcstevens/sha1collisiondetection
+Regards,
+Alex
 
-Which we could apply this, it would be much better if you could submit a
-pull request with this to upstream, and then we can update our copy as I
-did in e.g. 9936c1b52a ("sha1dc: update from upstream", 2017-07-01).
+---
+Diese E-Mail wurde von Avast Antivirus-Software auf Viren geprüft.
+https://www.avast.com/antivirus
+
