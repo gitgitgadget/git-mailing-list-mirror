@@ -7,65 +7,63 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 411301F424
-	for <e@80x24.org>; Wed,  9 May 2018 14:52:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F57D1F424
+	for <e@80x24.org>; Wed,  9 May 2018 14:54:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935190AbeEIOwh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 10:52:37 -0400
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:45781 "EHLO
+        id S935173AbeEIOyB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 10:54:01 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:36720 "EHLO
         mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934517AbeEIOwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 10:52:36 -0400
-Received: by mail-qt0-f173.google.com with SMTP id j42-v6so45949726qtj.12
-        for <git@vger.kernel.org>; Wed, 09 May 2018 07:52:35 -0700 (PDT)
+        with ESMTP id S934517AbeEIOyA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 10:54:00 -0400
+Received: by mail-qt0-f173.google.com with SMTP id q6-v6so45977447qtn.3
+        for <git@vger.kernel.org>; Wed, 09 May 2018 07:54:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=n3/zV87yPyUxdIX5DF+epgjXFtDnZp2/cl9Z9VoUD/Y=;
-        b=cSwQENyvCu4AEQNsQldNBAT0lTwo8Ev2FwcBdw6M2pP2WHOJyCA97BgRxdh0VFiMLl
-         fDXwCSC59UJ189fcskcpcZKdpBx2FKHny+K1CmiM7GbqJ1Zok93pRk8naiDR/OwzlKlZ
-         735xWTuC+3Dq0il22A48ZZJ/Jypw3An4PBz1sTi3F2U+ztkJbJklk+i2wl3LKnWwYoDM
-         /XeknJQY9AkNBrRiMwnoeN2FDyPh7v4Ofxq2EXXtfdr0tQSPqE6+SDrZ6rr0wZuLHbS4
-         BuXKy9l2qTusWdROlgM5RxPNfZ5L0zJuraWWz/o/m2EIyYYlw87eVI6dFb8zcIlG2lHC
-         SUqw==
+        bh=OwfpqHw3GiUIGC+SpWc0cf1VFY2lvfhTLE8Gk9aU2PI=;
+        b=mTnm5ppUMn+q59S1Jv+V4mY7ueqPT7SbDmYMf9tq/XBf2lxfCcjloqMBORgRfft6M6
+         jm1pGxNFnOqTFQ4r5CvEw6781p24Yv2s+ny9GJSlQWvQcp84lISOdPaAJ7BrilV7GXVY
+         B6c2z/dzbavAU397Vn6UNzmDaMlSTxYe0y8bPhK2IHpnmybuN/1pMRhqrdznYo9p7qVc
+         W6LtMNb0+4ZLx1FKGHbid3bExpSUxkyRkF1g1JlN1BoslQD4aTni0cev6cicA7r2wRH8
+         BZC1jaBC7cWBRAX5CQCTd8I3BK3n3+tgwwCFWLeqiV5RQxAK+xNwnVakdjklcubIkITW
+         rcSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=n3/zV87yPyUxdIX5DF+epgjXFtDnZp2/cl9Z9VoUD/Y=;
-        b=AUhHnY2sRzWN8Uyqxo/vZPTctgKIfntquz8JetbbkXjBAMXvD+FdxRmDIHU1wuI0iV
-         erhlJHr+P2dEZpaQOKAOKHkqcy0TuPpgBt27j47gTt6mEYAUJN4lZcQXtWMVD+BR2DLB
-         w7QnwmNzyfw1eR49J8bv0uC+K6kh/1NfMEtWluKywAgCESbUwiWvwM9/b+8p5YIYeA/g
-         zDGq+WHQ6MnXuC61RJr2lXgusCzA8tSdyq/PJd58L8gxLx4B7F8OUjz6P4nr/MODhMcX
-         TlEFRREdV+KqnKV5O9mvOv6UP+hQ6he0zkDTPHW6i/I5kFzXsaKnJJXwjU2xdx1iVGUM
-         3V/Q==
-X-Gm-Message-State: ALQs6tDvSZcGRaUtQ3IeosFmT7mSR1tHs+Thf0+qeQNmjLmn9SiTqdVZ
-        1S3Y/ZXsKUuH0gQV2dD5m3U=
-X-Google-Smtp-Source: AB8JxZqk6t1nNJJyvk3IidQE/2PrIRgXYTGzBy33pw1GU70bVm5Xna3rc33+S2vis9WRM/x/2wK9jg==
-X-Received: by 2002:a0c:e44f:: with SMTP id d15-v6mr30789969qvm.143.1525877555169;
-        Wed, 09 May 2018 07:52:35 -0700 (PDT)
+        bh=OwfpqHw3GiUIGC+SpWc0cf1VFY2lvfhTLE8Gk9aU2PI=;
+        b=tFiqL/LuuZF5qL+xLAsUDlX5IiShMdmBIQO8MksX0e6bpkqG9gG+gSrBRoidu6zocW
+         OMOUZx1TFSGWpUHBVg2dRbSrpqIyyJhZQ0sqWvk7sOH2M2N6VesgFXu8MQqcKGCfMZId
+         J6iQ+cTP9nx+Vbi1sUFwjhllE8PUx7B89tQb4iGHCrt9dH8j6ohJiQ3dXpQ+oDtJIzTR
+         xi0Z7UvOTjmeDGHxkzoYkKrTD0CkOMbniyZfSqzVwOv8uhwv8WPsPApj1d2XLmw2wr22
+         b6SUuw//Ys59g7WcJ39kyjKAohGrjojWVUAdIDW4TJkNjEHRJLJrKW82R3zxXDIagBwx
+         K6bA==
+X-Gm-Message-State: ALQs6tD0tGzCZJnHA7rYtNmq4BigX9p0iqip+gv32v5NQ8WggGP5uLqE
+        TK4g4WgaMVWWHSTzoBXHXDAXZpB1
+X-Google-Smtp-Source: AB8JxZry4NyKE5YoHr7D8pUv7LBg4QlvWoQg5lU8Ruf2BLL2kx21mDXlxI++Pk5elBTaIPTEjaH+8g==
+X-Received: by 2002:aed:3e67:: with SMTP id m36-v6mr42856772qtf.279.1525877640083;
+        Wed, 09 May 2018 07:54:00 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id h3sm12610241qkf.86.2018.05.09.07.52.34
+        by smtp.gmail.com with ESMTPSA id s127sm9419442qkf.21.2018.05.09.07.53.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 May 2018 07:52:34 -0700 (PDT)
-Subject: Re: Implementing reftable in Git
-To:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com>
+        Wed, 09 May 2018 07:53:59 -0700 (PDT)
+Subject: Re: [PATCH 1/1] commit-graph: fix UX issue when .lock file exists
+To:     Jeff King <peff@peff.net>, Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>
+References: <20180509141523.89896-1-dstolee@microsoft.com>
+ <20180509141523.89896-2-dstolee@microsoft.com>
+ <20180509144221.GA14714@sigill.intra.peff.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <059b8daf-c990-aad5-90a4-5ec38c42b7b3@gmail.com>
-Date:   Wed, 9 May 2018 10:52:33 -0400
+Message-ID: <926ef4a5-83c1-3d5f-6dfc-0b74fc7090bd@gmail.com>
+Date:   Wed, 9 May 2018 10:53:56 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com>
+In-Reply-To: <20180509144221.GA14714@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -74,45 +72,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/9/2018 10:33 AM, Christian Couder wrote:
-> Hi,
+On 5/9/2018 10:42 AM, Jeff King wrote:
+> On Wed, May 09, 2018 at 02:15:38PM +0000, Derrick Stolee wrote:
 >
-> I might start working on implementing reftable in Git soon.
+>> The commit-graph file lives in the .git/objects/info directory.
+>> Previously, a failure to acquire the commit-graph.lock file was
+>> assumed to be due to the lack of the info directory, so a mkdir()
+>> was called. This gave incorrect messaging if instead the lockfile
+>> was open by another process:
+>>
+>>    "fatal: cannot mkdir .git/objects/info: File exists"
+>>
+>> Rearrange the expectations of this directory existing to avoid
+>> this error, and instead show the typical message when a lockfile
+>> already exists.
+> Sounds like a reasonable bug fix.
 >
-> During the last Git Merge conference last March Stefan talked about
-> reftable. In Alex Vandiver's notes [1] it is asked that people
-> announce it on the list when they start working on it, and it appears
-> that there is a reference implementation in JGit.
+> Your cover letter is way longer than this description. Should some of
+> that background perhaps go in the commit message?
 
-Thanks for starting on this! In addition to the performance gains, this 
-will help a lot of users with case-insensitive file systems from getting 
-case-errors on refnames.
+I did want a place to include the full die() message in the new 
+behavior, but that seemed like overkill for the commit message.
 
-> Looking it up, there is indeed some documentation [2], code [3], tests
-> [4] and other related stuff [5] in the JGit repo. It looks like the
-> JGit repo and the reftable code there are licensed under the Eclipse
-> Distribution License - v 1.0 [7] which is very similar to the 3-Clause
-> BSD License also called Modified BSD License which is GPL compatible
-> according to gnu.org [9]. So from a quick look it appears that I
-> should be able to port the JGit to Git if I just keep the copyright
-> and license header comments in all the related files.
+> (I would go so far as to say that sending a cover letter for a single
+> patch is an anti-pattern, because the commit message should be able to
+> stand on its own).
 >
-> So I think the most straightforward and compatible way to do it would
-> be to port the JGit implementation.
+>> @@ -754,23 +755,14 @@ void write_commit_graph(const char *obj_dir,
+>>   	compute_generation_numbers(&commits);
+>>   
+>>   	graph_name = get_commit_graph_filename(obj_dir);
+>> -	fd = hold_lock_file_for_update(&lk, graph_name, 0);
+>>   
+>> -	if (fd < 0) {
+>> -		struct strbuf folder = STRBUF_INIT;
+>> -		strbuf_addstr(&folder, graph_name);
+>> -		strbuf_setlen(&folder, strrchr(folder.buf, '/') - folder.buf);
+>> -
+>> -		if (mkdir(folder.buf, 0777) < 0)
+>> -			die_errno(_("cannot mkdir %s"), folder.buf);
+>> -		strbuf_release(&folder);
+>> -
+>> -		fd = hold_lock_file_for_update(&lk, graph_name, LOCK_DIE_ON_ERROR);
+>> -
+>> -		if (fd < 0)
+>> -			die_errno("unable to create '%s'", graph_name);
+>> -	}
+>> +	strbuf_addstr(&folder, graph_name);
+>> +	strbuf_setlen(&folder, strrchr(folder.buf, '/') - folder.buf);
+>> +	if (!file_exists(folder.buf) && mkdir(folder.buf, 0777) < 0)
+>> +		die_errno(_("cannot mkdir %s"), folder.buf);
+>> +	strbuf_release(&folder);
+> The result is racy if somebody else is trying to create the directory at
+> the same time. For that you'd want to notice EEXIST coming from mkdir
+> and consider that a success.
 >
-> Thanks in advance for any suggestion or comment about this.
+> I think you probably ought to be calling adjust_shared_perm() on the
+> result, too, in case core.sharedrepository is configured.
 >
-> Reftable was first described by Shawn and then discussed last July on
-> the list [6].
+> If you use safe_create_leading_directories(), it should handle both.
+> Something like:
+>
+>    if (safe_create_leading_directories(graph_name))
+> 	die_errno(_("unable to create leading directories of %s"),
+> 		  graph_name));
+>
+> I think I'm holding it right; that function is a little short on
+> documentation, but it's the standard way to do this in Git's codebase,
+> and you can find lots of example callers.
 
-The hope is that such a direct port should be possible, but someone else 
-should comment on the porting process.
-
-This is also something that could be created independently based on the 
-documentation you mention. I was planning to attempt that during a 
-hackathon in July, but I'm happy you are able to start earlier (and that 
-you are announcing your intentions). I would be happy to review your 
-patch series, so please keep me posted.
+Thanks for this method. I was unfamiliar with it. Saves the effort of 
+creating the strbuf, too.
 
 Thanks,
 -Stolee
