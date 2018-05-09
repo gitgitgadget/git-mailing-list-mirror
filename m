@@ -2,104 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B7781F42E
-	for <e@80x24.org>; Wed,  9 May 2018 16:48:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87F7C1F42E
+	for <e@80x24.org>; Wed,  9 May 2018 16:48:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965588AbeEIQsL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 12:48:11 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:41603 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935343AbeEIQsK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 12:48:10 -0400
-Received: by mail-pf0-f196.google.com with SMTP id v63so25906351pfk.8
-        for <git@vger.kernel.org>; Wed, 09 May 2018 09:48:10 -0700 (PDT)
+        id S965624AbeEIQsQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 12:48:16 -0400
+Received: from mail-ot0-f180.google.com ([74.125.82.180]:42001 "EHLO
+        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965609AbeEIQsN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 12:48:13 -0400
+Received: by mail-ot0-f180.google.com with SMTP id l13-v6so40920119otk.9
+        for <git@vger.kernel.org>; Wed, 09 May 2018 09:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2MFLqrxflkSVzggtWELT3fHbR1PJP9kpLMMPrZav8a8=;
-        b=oIM8DaNY9PNnhoNL9NS9YJGMIjTAx9HkSfnDSYWvc5rzK9chmiP3XyQHEOZr+Lx0+f
-         zTxIS17YYyB94a9wdlvKZpvF2xS/D/aXLZ8TqTImhaIUkdc/mdLhRmlefzUI5eK7t4z4
-         cAsLoqsreclNlt+9kDFWWvVDNFO3R/WxQbm1aWMmKlMAnkAyU2cPDp3DpH4ccoY8bLRh
-         GcvxE5M8T5B0AyCtag0Ms0tdyGsjoK4RG4wShteEhLjZ5eLBP4gdPQFRmQ5j/WhB49Kb
-         ZE05yDQuW+NuuA5p6EYTySyg5WN9Zmq9JzSJrSHxv9C7u6RY4g9kRc84jCqE2WRod/Kq
-         nDaQ==
+        d=pensando.io; s=google;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QysWGkS5V7au9mgKiF5SQPIokzrTzbRe+0ptx8ygRiY=;
+        b=o2VbsPm0a81sHhC8BTDkMrnP+J9+ltbRuSmkpHBPY78HXpb29W76ojYPWjpuVZlTrc
+         ZUm3OHUBNtVXcGqMhZFSFRsFDIUaZqGOAKylFurIxpKDMJHP7WMbypHKwuFKDaVTvBKm
+         UZcQ8dMBGm6G4KGVhLeazy5y2+frZuEZ/L240WP7TcBI+3LfzkuEMriVHNVh5p8toPS7
+         XryYvwEZEYZQTXqKZfaGR7kN/39dpbpw7XMOvJpRjEhG034SqimP4KbtZAthNxILbV3C
+         Y4T3SVR5OTLLWjF72Le7GxQl+mwYQMYpy2rKaJo6gmDFTuNFWsVn06rpnZParCJiRv04
+         0LJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2MFLqrxflkSVzggtWELT3fHbR1PJP9kpLMMPrZav8a8=;
-        b=DG76Ljd6j1mkAlwUBCIOhr39ewu/Fu+mMEmMBY4VvtbI+/5h2UGJDhQXMvIKWZ+Xxk
-         ePLWcMgTByu94nUOepkQH/cElbGPE+6Rj1h7M8ebNmbVkTguoMtQEeLYXWaPvs8kvsqm
-         7B2n46XLaqRa6/jhDGjaETv6HHM0lPeE4LhyDABmV744dO9KhY9sNkB6CtYRdyLV7KkC
-         eDwUc6D4DX/LBPMBEux4tMkpbhuCyJFbRi5eyZqStLmTsXDFgLYxbk8QWzOG8mN3lWpW
-         Vm5P8CoKgdS6nUlSceaLir7U/bMLC5nvv0Krnxa7PTltMyeze5c7CDqCp9RTNwaYxHbm
-         aXxA==
-X-Gm-Message-State: ALQs6tD+WXBKNNvhwDYDRIDgq4cXVkXPfeEBXFIy9LnPBJVKZiz4upxn
-        c8W38hcG4f+Q5SdREKqlVyOoCdqQ
-X-Google-Smtp-Source: AB8JxZqB0xkFgoTPQd7ISyTcaAFwwKSDnm5LzdGUcb/WHtntn0fJASD51V+E6YtSqg/UvynIuGNgZw==
-X-Received: by 10.98.11.210 with SMTP id 79mr44456254pfl.4.1525884489515;
-        Wed, 09 May 2018 09:48:09 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id 5sm48531215pfx.140.2018.05.09.09.48.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 09:48:08 -0700 (PDT)
-Date:   Wed, 9 May 2018 09:48:07 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: Implementing reftable in Git
-Message-ID: <20180509164807.GI10348@aiede.svl.corp.google.com>
-References: <CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QysWGkS5V7au9mgKiF5SQPIokzrTzbRe+0ptx8ygRiY=;
+        b=KDVjGV3NPT1W0Wi9H/RBcAg4V7ou8zGHGHXVToiAf3cI03pyAvJVes29N3t5gwpN5d
+         s6PuuOVo/3jaDm9Izabj7HjLFYftvQWuwVFQe57VTF22BHuX0Nfy6dIJPVLOwxP5pk/S
+         CjqGpVJK1uRFjLw3Badh4ydcKYXGivrwYQMvsgVz/Yw9dPC+nT7vI0/GHTSeC3umQkCR
+         5nMj/u6FLxEAfYEuZCUdjQI9PXWlTFWb5lCHVwr9YOR5/uXy5VQtAg/YSZoHNmSZxNC8
+         uUPphS9z1ae1Xukhh6YI0SQgW3n+sbdnsRdR2/CrnNiC255DBMEj8QlaHFanpgSgpbyE
+         KKLw==
+X-Gm-Message-State: ALQs6tCe7lLWemuHwfRi0hYt3Ey20/wK3Xpn/ErbaGcSyuzFqwBQH8G2
+        tshcOSW6QWB4fpsLvjPVxIZ8
+X-Google-Smtp-Source: AB8JxZp+y4dEpZWTWNO+jKjOyQSuPp6Ocanqso+k2zS3zqC2Bq80tZSolDRllCdNeAKBF38nBPWBWA==
+X-Received: by 2002:a9d:2a68:: with SMTP id t95-v6mr34440003ota.320.1525884492971;
+        Wed, 09 May 2018 09:48:12 -0700 (PDT)
+Received: from qis-macbook-pro.pensando.io ([12.1.37.26])
+        by smtp.gmail.com with ESMTPSA id q12-v6sm16401251otg.56.2018.05.09.09.48.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 09 May 2018 09:48:12 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 11.2 \(3445.5.20\))
+Subject: Re: regarding fix on "git clone $there $here"
+From:   Leslie Wang <qiwa@pensando.io>
+In-Reply-To: <xmqqin7xl446.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 9 May 2018 09:47:58 -0700
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <F55100F9-134B-41DF-8707-AA9F354E68C4@pensando.io>
+References: <2F384E33-2101-4D90-986B-FAE2FC2AD7C5@pensando.io>
+ <xmqqin7xl446.fsf@gitster-ct.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3445.5.20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Thanks for the confirmation. It is very helpful!
 
-Christian Couder wrote:
+Best Regards
+Leslie Wang
 
-> I might start working on implementing reftable in Git soon.
 
-Yay!
 
-[...]
-> So I think the most straightforward and compatible way to do it would
-> be to port the JGit implementation.
+> On May 8, 2018, at 11:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Leslie Wang <qiwa@pensando.io> writes:
+> 
+>> At 2.14.1 or 2.15.1, if I run command like 
+>> - mkdir /tmp/111
+>> - git clone git@github.com:111/111 /tmp/111
+>> 
+>> because it will failure, then /tmp/111 will be removed automatically.
+> 
+> Yes, this was a (longstanding) bug that nobody bothered to fix for a
+> long time.  As "git clone" did not create /tmp/111 but it was given
+> to it by the external world, it shouldn't remove it upon failure.
+> Of course, if you omit the "mkdir" in the above sequence and let
+> "git clone" create /tmp/111, tne Git will remove it upon failure as
+> part of the clean-up.
+> 
 
-I suspect following the spec[1] would be even more compatible, since it
-would force us to tighten the spec where it is unclear.
-
->                                        It looks like the
-> JGit repo and the reftable code there are licensed under the Eclipse
-> Distribution License - v 1.0 [7] which is very similar to the 3-Clause
-> BSD License also called Modified BSD License
-
-If you would like the patches at https://git.eclipse.org/r/q/topic:reftable
-relicensed for Git's use so that you don't need to include that
-license header, let me know.  Separate from any legal concerns, if
-you're doing a straight port, a one-line comment crediting the JGit
-project would still be appreciated, of course.
-
-That said, I would not be surprised if going straight from the spec is
-easier than porting the code.
-
-Thanks,
-Jonathan
-
-[1] https://eclipse.googlesource.com/jgit/jgit/+/master/Documentation/technical/reftable.md
