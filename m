@@ -2,179 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 345FB1F424
-	for <e@80x24.org>; Wed,  9 May 2018 12:08:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46D3F1F424
+	for <e@80x24.org>; Wed,  9 May 2018 12:11:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934753AbeEIMIz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 08:08:55 -0400
-Received: from mail-ua0-f196.google.com ([209.85.217.196]:40135 "EHLO
-        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934641AbeEIMIx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 08:08:53 -0400
-Received: by mail-ua0-f196.google.com with SMTP id g9so22797883uak.7
-        for <git@vger.kernel.org>; Wed, 09 May 2018 05:08:53 -0700 (PDT)
+        id S934565AbeEIMLs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 08:11:48 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:55986 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756236AbeEIMLq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 08:11:46 -0400
+Received: by mail-wm0-f65.google.com with SMTP id a8so24279671wmg.5
+        for <git@vger.kernel.org>; Wed, 09 May 2018 05:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=QrL+JYw/faAKK8HkE8R/lr4133oJYhbgGNYXDR5AI8E=;
-        b=TGvtUmHYZ9uS2KmV8uzZc3fI4x2qi/dwXYJXR9o+4KSswt9GKxZf8axvF9N7n3lW00
-         lmnT4vobP5H1ywRB0V5hxDpVD4SewgDQBCUZ9pw+RY87lQQJz9JcJ1gGSd4YY/kawvX5
-         jWsF9zx1N32Y/DsNeWO1QBuWXlNFlTUxFRJajCN2iHBussOClwFn80HketlpPgouN5em
-         DmA6tfrWQxXlu1Dh4n9MPk424j1WSvEE0DRwzO+jFeNqhQMC8KkPQAq4fa5POvkFwg7x
-         GuBBY+X40RPvnl18AwG5RN7muo5Cr+O1LPmPvAbc5ZNEN3fdYIcJKFfSM+wUBgwT8fcs
-         ahTg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=9gYS6YZyC8UCO86yPoNMnG1Z+KJfSLqfjFldBdIruWQ=;
+        b=T8RadoGeCiFC2K9AcZKmtXehxHcQ4c8VjR0dZDv/cIloMNnh7Sxpa23jp5vO/D+qvZ
+         mY/kIwUIRQZN1jrEl32fJFlCcPusjWX1Le/8QD9pN3asCoMYcjy1/v5Se2KlOP5EwL5y
+         ZxIXLkcx3c1FqVc/QG/XTbwVYFhg9d6bfT0+houfBM5RiTAtprpxt0UJj/9QeH4w2E5O
+         AmDw4M0UdFPXz9oOUfLQK3rqZ7W0I4mo/7IW9a212pT9j3OAsRBgriDray6YiM3wLe7n
+         vLogWNIIC3L7iAXyWPVsVO48LC4+L1abQojjnB0f4pqQdW/Qk5I8qtjZ9Zf38dl5ntNM
+         WcPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=QrL+JYw/faAKK8HkE8R/lr4133oJYhbgGNYXDR5AI8E=;
-        b=OIiFayhR0WjEWyMrmNrD9YR7GTMaTlfHSch+ehs5qfJwPpiwjPwjav/ExU+nfuWxvj
-         35zgTB9D4P3AozFB4k1zXerI2jJfCWlAon9Ag4/aDf2xIiKKQevIybnoEf9bCQQozF4F
-         Tsv/XmHYWsnMvqAb/qKdky8+WtAbQ7Za6GPOTRawbgZjPGe4AqvQ1d8g8KV5u7y4BYCa
-         7/lp7qKt4bWw/+ilA13wD+kWreA1LOLV5+LMWAampY0mANa/jv9cIzL+u8oh06rR9RAx
-         HxCpPOlWV8V7nAutcr7uOFXb7b69JlXpUANDDFpZmXuEapZzZsQCQjbb4hhj0eJ67n4h
-         ouvQ==
-X-Gm-Message-State: ALQs6tAnTq22XudwB9qLHYYzuDoP2g/7sjrSH8wZ1IIQNP3/sperfddr
-        cmgowWtfi1OnBYo9FBnpk/TEDPwOp2WNwG1EbFs=
-X-Google-Smtp-Source: AB8JxZqpYGJd3o7H1Y05NVaGH28CENL4v7Kf1BMsEzTPkYa4uBbm4Rn6ftzaAKs8i38YW0d3htgXJNujSdQOk49QMEI=
-X-Received: by 10.176.27.108 with SMTP id n44mr37797313uai.194.1525867732512;
- Wed, 09 May 2018 05:08:52 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=9gYS6YZyC8UCO86yPoNMnG1Z+KJfSLqfjFldBdIruWQ=;
+        b=i5BdK7Tbh0UiDfxWf7CnbrkxcO8mgI1JQZrNNdu0K/tbZ7T/ltbUoibxuDz3/lvabK
+         FkIu6N2Mgg3vIKUXVKHoIB6rTs0114GY7o8FmygWLz/+QBLRQZ+0u+yO4WNw3SQbUW6i
+         5erUuR7BUgBCS2iMin+XLP/7I7yO5NWDlTu3p0hEyh3rUvMetuE96dgDq1BkLYdZynWL
+         o0WKioF0RGaexRwlNq9S4ag+QgIjppQGRB4ZJlZuLBYlY5UeHjqt3ArtXY20X3g0bYjd
+         w412kbbuX6vdGTDMtLoc+LT2PKSNxmnsRJAaG6/XHnHm6MYiA5QCtf4IEwo9dkBzNnss
+         7nfA==
+X-Gm-Message-State: ALQs6tAwg/yt5JdQgCIw0sGt8ypf+etbaRkhM0ShuNazYmoFCoRP0Nov
+        1w00bgAAve6w9RyZyKJYJqy+FBXn
+X-Google-Smtp-Source: AB8JxZrDts1j5wNiIPrKfo0HDzQ94JOrZ7azhyHWwgcLAzmmtQVuiFqkOXWjdZp8A3tenc0yeSsAeQ==
+X-Received: by 2002:a50:93c4:: with SMTP id o62-v6mr59561221eda.169.1525867905631;
+        Wed, 09 May 2018 05:11:45 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id f11-v6sm16552018edf.68.2018.05.09.05.11.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 09 May 2018 05:11:44 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     jens persson <jens@persson.cx>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: [PATCH] sha1dc: fix for compiling on AIX using IBM XLC compiler
+References: <CAEoyyNJPZXUKi3W=Gs=3v8i4YnTL47G9oaHDoV5pvCLx78jUVQ@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAEoyyNJPZXUKi3W=Gs=3v8i4YnTL47G9oaHDoV5pvCLx78jUVQ@mail.gmail.com>
+Date:   Wed, 09 May 2018 14:11:43 +0200
+Message-ID: <87603xxc3k.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.103.100.7 with HTTP; Wed, 9 May 2018 05:08:51 -0700 (PDT)
-In-Reply-To: <56ccabf699cdc6e15c5dcb73db5692180c79906d.1525863290.git.raa.lkml@gmail.com>
-References: <20180508121104.rtsrektxiihvpqtx@pflmari> <20180508122256.nyv6ddcoifygfpk4@pflmari>
- <CAKPyHN3YMU3oZaW-wR2ZMV6aMwoeFGMmiJBQXtvipVvkWPLZVQ@mail.gmail.com>
- <20180508133905.6jhhhp6l7avjkctl@pflmari> <CAKPyHN1bGtCBZUh7cDAN-t+5DTutvyL6FLwynALTGZA5ijqwrA@mail.gmail.com>
- <56ccabf699cdc6e15c5dcb73db5692180c79906d.1525863290.git.raa.lkml@gmail.com>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Wed, 9 May 2018 14:08:51 +0200
-Message-ID: <CAKPyHN0iQh=UJOX-8u4PO1ON9SW+G1gBCGh25FJ_RyoGk906QQ@mail.gmail.com>
-Subject: Re: [PATCH] gitk: do not limit tree mode listing in the file list
- panel to current sub-directory
-To:     Alex Riesen <alexander.riesen@cetitec.com>
-Cc:     Paul Mackerras <paulus@ozlabs.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks.
 
-On Wed, May 9, 2018 at 12:59 PM, Alex Riesen
-<alexander.riesen@cetitec.com> wrote:
-> From: Alex Riesen <raa.lkml@gmail.com>
+On Wed, May 09 2018, jens persson wrote:
+
+> Hello, first patch. I'm having trouble compiling on AIX using IBMs
+> compiler, leading to
+> unusable binaries. The following patch solved the problem for 2.17.0.
+> The patch below is cut&pasted via gmail to allow for firewalls, but
+> exists in an unmolested form on github:
+> https://github.com/MrShark/git/commit/44bfcaca6637e24548ec06f46fb6035a846b14af
 >
-> The previous behavior conflicts with the "Patch" mode of the panel,
-> which always shows the changes from the top-level of the repository.
-> It is also impossible to get back to the full listing without restarting
-> gitk.
+> Best regards
+> /jp
+>
+> Building on AIX using XLC every checkout gives an error:
+> fatal: pack is corrupted (SHA1 mismatch)
+> fatal: index-pack failed
+>
+> Back tracking it was introduced in 2.13.2, most likely in [1]
+>
+> Add a #ifdef guard based on macros defined at [2] and [3].
+>
+> Should perhaps __xlc__ should should be changed to or combined with _AIX
+> based on the behavour of GCC on AIX or XL C on Linux.
+>
+> 1. https://github.com/git/git/commit/6b851e536b05e0c8c61f77b9e4c3e7cedea39ff8
+> 2. https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.3/com.ibm.xlc1313.aix.doc/compiler_ref/macros_platform.html
+> 3. https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.3/com.ibm.xlc1313.aix.doc/compiler_ref/xlmacros.html
+>
+> Signed-off-by: jens persson <jens@persson.cx>
 > ---
+>  sha1dc/sha1.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> Bert Wesarg, Wed, May 09, 2018 09:19:55 +0200:
->> > Frankly, this listing limited to just a sub-directory confuses me a bi=
-t. Is
->> > there anyway to get to display full repository without changing to the=
- top
->> > level?
->>
->> I noticed that too, while testing your patch and I'm also confused.
->> But was not able to send a request to Paul yet. ls-tree --full-tree
->> seems to be one that should be used here, I think.
->
-> Well, I just tried your suggestion. 'ls-files' doesn't have --full-tree, =
-so
-> for those it is just cd-up.
->
-> It is on top of the re-sent series.
+> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+> index 25eded139..68a8a0180 100644
+> --- a/sha1dc/sha1.c
+> +++ b/sha1dc/sha1.c
+> @@ -84,7 +84,7 @@
+>  /* Not under GCC-alike or glibc or *BSD or newlib */
+>  #elif (defined(__ARMEB__) || defined(__THUMBEB__) ||
+> defined(__AARCH64EB__) || \
+>         defined(__MIPSEB__) || defined(__MIPSEB) || defined(_MIPSEB) || \
+> -       defined(__sparc))
+> +       defined(__sparc) || (defined(__powerpc) && defined(__xlc__)))
+>  /*
+>   * Should define Big Endian for a whitelist of known processors. See
+>   * https://sourceforge.net/p/predef/wiki/Endianness/ and
 
-I would consider the current behavior as a bug, therefor I would put
-this patch first, and than your other fixes/enhancements.
+This patch looks sane to me, but we don't manage this software but
+instead try to pull it as-is from upstream at
+https://github.com/cr-marcstevens/sha1collisiondetection
 
->
->  gitk | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
->
-> diff --git a/gitk b/gitk
-> index c430dfe..03ead98 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -7600,18 +7600,18 @@ proc go_to_parent {i} {
->
->  proc gettree {id} {
->      global treefilelist treeidlist diffids diffmergeid treepending
-> -    global nullid nullid2
-> +    global nullid nullid2 cdup
->
->      set diffids $id
->      unset -nocomplain diffmergeid
->      if {![info exists treefilelist($id)]} {
->         if {![info exists treepending]} {
->             if {$id eq $nullid} {
-> -               set cmd [list | git ls-files]
-> +               set cmd [list | git -C $cdup ls-files]
->             } elseif {$id eq $nullid2} {
-> -               set cmd [list | git ls-files --stage -t]
-> +               set cmd [list | git -C $cdup ls-files --stage -t]
->             } else {
-> -               set cmd [list | git ls-tree -r $id]
-> +               set cmd [list | git ls-tree --full-tree -r $id]
->             }
->             if {[catch {set gtf [open $cmd r]}]} {
->                 return
-> @@ -7670,7 +7670,7 @@ proc gettreeline {gtf id} {
->  proc showfile {f} {
->      global treefilelist treeidlist diffids nullid nullid2
->      global ctext_file_names ctext_file_lines
-> -    global ctext commentend
-> +    global ctext commentend cdup
->
->      set submodlog "log --format=3D%h\\ %aN:\\ %s -100"
->      set fcmt ""
-> @@ -7680,15 +7680,15 @@ proc showfile {f} {
->         return
->      }
->      if {$diffids eq $nullid} {
-> -       if {[file isdirectory $f]} {
-> +       if {[file isdirectory "$cdup$f"]} {
->             # a submodule
-> -           set qf [shellquote $f]
-> +           set qf [shellquote "$cdup$f"]
->             if {[catch {set bf [open "| git -C $qf $submodlog" r]} err]} =
-{
->                 puts "oops, can't read submodule $f: $err"
->                 return
->             }
->          } else {
-> -           if {[catch {set bf [open $f r]} err]} {
-> +           if {[catch {set bf [open "$cdup$f" r]} err]} {
->                 puts "oops, can't read $f: $err"
->                 return
->             }
-> @@ -7704,7 +7704,7 @@ proc showfile {f} {
->             }
->         } else {
->             # also a submodule
-> -           set qf [shellquote $f]
-> +           set qf [shellquote "$cdup$f"]
->             if {[catch {set bf [open "| git -C $qf $submodlog $blob" r]} =
-err]} {
->                 puts "oops, error reading submodule commit: $err"
->                 return
-> --
-> 2.17.0.593.g2029711e64
->
->
-> ---
-> Diese E-Mail wurde von Avast Antivirus-Software auf Viren gepr=C3=BCft.
-> https://www.avast.com/antivirus
->
+Which we could apply this, it would be much better if you could submit a
+pull request with this to upstream, and then we can update our copy as I
+did in e.g. 9936c1b52a ("sha1dc: update from upstream", 2017-07-01).
