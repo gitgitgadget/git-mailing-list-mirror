@@ -2,253 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67C2A1F424
-	for <e@80x24.org>; Wed,  9 May 2018 19:54:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3A671F424
+	for <e@80x24.org>; Wed,  9 May 2018 20:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965576AbeEITyz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 15:54:55 -0400
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:45330 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965524AbeEITyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 15:54:53 -0400
-Received: by mail-qt0-f173.google.com with SMTP id j42-v6so47273612qtj.12
-        for <git@vger.kernel.org>; Wed, 09 May 2018 12:54:53 -0700 (PDT)
+        id S964796AbeEIUkO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 16:40:14 -0400
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:45496 "EHLO
+        mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935279AbeEIUkO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 16:40:14 -0400
+Received: by mail-vk0-f44.google.com with SMTP id 203-v6so22666701vka.12
+        for <git@vger.kernel.org>; Wed, 09 May 2018 13:40:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ayE+SbMX0WUu30F56nxtZQ0kR+g5d5pP3yW6jucUtwo=;
-        b=XS3drGYFP8cswCxSL9IKQAAhzQET2JtTPyrWAKlW8BbbbrVjaYCgl9B30/dB4UQ+js
-         /oBw5KV5Q2tFSdFX1YVhhkG/cuk7TDfw/9/KwL16YXpF/KOCM3mc7DRyuMm7oxUMGibi
-         AvNU5mjEXeMSJYokoY1jeTT7gj6JUNl7moO+xVgKqkNKFs/VghYhkXQYgo62cf8I5lyl
-         TiM2jAynXOPDQimxUdku/c5SIah2WudSJ/XN0JFdZiaES61+h2fEp7TtEQ9JPKg4eatM
-         856c6y0qUwOvqAxomRffEoTZ6CeXpizZnSpafrYt3p/LZi+pyVlibrNbkSWwtaMbHMZt
-         n9fQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=dwiyEhRPQbKvArFhAsLvQn1PrtkxxlEURn86n46xbt8=;
+        b=EpxOWOeSAUwLErdVlRiVObHxL5BtpNq9IcEQMzhvRDspW+qVmYBw7BPiUE/e5GQIxV
+         dsaShVo4yEa5mdOoCyisDpJLhJwM+xm2TL/faOj1rYTfjphzP2DUcV/cl0AxtCGITI/3
+         0CuGoG5KB7+TbRGHwqUr/w0aS2pMdhxhPIePZOG6GqryXpEKQ5LKl+fC5btOtr3e+T2q
+         0SH2DIQyY9sRg1pwN3kgyifmvSZfz2EjhYcwxn76Yj7IIMfPVd10x1v9EAvHDcJd6ry0
+         pDJ+wjooX4Zeq+V5OorE2+mzXDCn3iayYuSxu7vhqiqIsMt9UrhsRoi/2huifFXgpTTe
+         WGrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ayE+SbMX0WUu30F56nxtZQ0kR+g5d5pP3yW6jucUtwo=;
-        b=qw39zaTBo3b6JSDOmRhgFNjMV1LtOo6ctbDrv/AZB3enViJ29XdPu1RMvpABiI2fJ4
-         7ZUXFMpAJW9MLZME2P+oEw75R2Twtb8zNdk/07iqgYZoOABW9+qoqjdKpti/CIl5tlC8
-         DXpCj+hkd1luYfM+3CAqZx/ZwXwnJkg/VQED52A3XEccZ6TurKrZXE2gy6ft9z8GT9/i
-         HhQL00vdKu5TWlk7WlAa4a99vAXO3RRh9OlkNi5+nXL9ZNktZrbmIl5zemC0iVQI54Cd
-         Q7yejYf6Ph0UiA007KSTBnUZe9cuE8fYgpy3KdAS4zSDS0NgN+AWZ3CJ2C/Jptupetsl
-         XswA==
-X-Gm-Message-State: ALQs6tCK6b4h6cR4jSpn9xbcRudirTyrCyIpCKuMggDpzVXyYkAEbKZl
-        e/5qzwGa5MI5pKD57XHhUm8=
-X-Google-Smtp-Source: AB8JxZpxmWQ8tpqueHy3Ea0S1fnP2d1EVuZH3XUpSKLB6YyCqtoZWbyMFrPTwt/tl9Kes2+GLY5Aeg==
-X-Received: by 2002:a0c:9655:: with SMTP id 21-v6mr42940566qvy.226.1525895692660;
-        Wed, 09 May 2018 12:54:52 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id 42-v6sm2783891qte.41.2018.05.09.12.54.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 May 2018 12:54:51 -0700 (PDT)
-Subject: Re: [PATCH v1] add status config and command line options for rename
- detection
-To:     Elijah Newren <newren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
-        Alejandro Pauly <alpauly@microsoft.com>,
-        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
-        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
-References: <20180509144213.18032-1-benpeart@microsoft.com>
- <CABPp-BEkQN55diiovv+33P=Ouk+FcK8N4p85EZZqVmw-mxuL1A@mail.gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <c386ec5c-4e82-2b52-10ef-885a335a14dc@gmail.com>
-Date:   Wed, 9 May 2018 15:54:47 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=dwiyEhRPQbKvArFhAsLvQn1PrtkxxlEURn86n46xbt8=;
+        b=acz8yOdhFFqfT/WTXqzeanGIDRyenVvJ2b32Q4MusAB8iIho4qjtkBFYlOX0nXuPhc
+         2myGuRUlvqM5rOG12OEKDyxIReWAU1PkhfinjaxLVbtENU8kslaL7MMoanbj1RIkj/k6
+         KOp+c0KSBTnPxBFEOCrzsFRVC7NnSLQYO5lmI6pe9AgZUDr6Xi4SUuSzUYtCcZtpXkH9
+         iu/E3KspDWUY5DF1d5WEiKEeyziNadulwtDb8FQa3tZpUfxfQl9kCKTvdtCZ7mcbn1Mu
+         6YA/l6ChsJIiBB+9Hhbidpp73jJOeZIB2Fa7f2KMdK5RGiWS1LQY0L0boVbHNfwBi3ql
+         B8hg==
+X-Gm-Message-State: ALQs6tBtyWrgE8VV5x/eW2e/C41iYhWq1bW2XZzEuw4wS/FzNXsdWpuP
+        iCZ/LY/LcSZDB59b4j9E6hq3/sYim0WaY91E+Q0=
+X-Google-Smtp-Source: AB8JxZpE0GP8hP7LdQ4RvgxHOpuf5NTz3+55IpujqkGoux3LQKZnWl3/FK2jx+dXkeB/HdJa5y1uxMK/GHIPjJm+zbQ=
+X-Received: by 2002:a1f:a50e:: with SMTP id o14-v6mr38089879vke.89.1525898413424;
+ Wed, 09 May 2018 13:40:13 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BEkQN55diiovv+33P=Ouk+FcK8N4p85EZZqVmw-mxuL1A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.176.22.212 with HTTP; Wed, 9 May 2018 13:40:13 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1805081651150.77@tvgsbejvaqbjf.bet>
+References: <20180507120407.4323-1-szeder.dev@gmail.com> <nycvar.QRO.7.76.6.1805081651150.77@tvgsbejvaqbjf.bet>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Wed, 9 May 2018 22:40:13 +0200
+Message-ID: <CAM0VKjmOfCNBoUh89Pr9UOSqNfuWayA3T8Fa-HySkH-icE1zYQ@mail.gmail.com>
+Subject: Re: [PATCH] t6050-replace: don't disable stdin for the whole test script
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 5/9/2018 12:56 PM, Elijah Newren wrote:
-> Hi Ben,
-> 
-> Overall I think this is good, but I have lots of nit-picky things to
-> bring up.  :-)
-> 
-> 
-
-Thank you for the review.  I appreciate the extra set of eyes on these 
-changes.  Especially when dealing with the merge logic and settings 
-which I am unfamiliar with.
-
-> 
-> I suspect that status.renames should mention "copy", just as
-> diff.renames does.  (We didn't mention it in merge.renames, because
-> merge isn't an operation for which copy detection can be useful -- at
-> least not until the diffstat at the end of the merge is controlled by
-> merge.renames as well...)
-> 
-
-I wasn't supporting copy (as you noticed later in the patch) but will 
-update the patch to do so and update the documentation appropriately.
-
-> Also, do these two config settings only affect 'git status', or does
-> it also affect the status shown when composing a commit message
-> (assuming the user hasn't turned commit.status off)?  Does it affect
-> `git commit --dry-run` too?
-> 
-
-The config settings only affect 'git status'
-
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -109,6 +109,10 @@ static int have_option_m;
->>   static struct strbuf message = STRBUF_INIT;
+On Tue, May 8, 2018 at 10:53 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Mon, 7 May 2018, SZEDER G=C3=A1bor wrote:
+>
+>> The test script 't6050-replace.sh' starts off with redirecting the whole
+>> test script's stdin from /dev/null.  This redirection has been there
+>> since the test script was introduced in a3e8267225 (replace_object: add
+>> a test case, 2009-01-23), but the commit message doesn't explain why it
+>> was deemed necessary.  AFAICT, it has never been necessary, and t6050
+>> runs just fine and succeeds even without it, not only the current
+>> version but past versions as well.
 >>
->>   static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
->> +static int diff_detect_rename = -1;
->> +static int status_detect_rename = -1;
->> +static int diff_rename_limit = -1;
->> +static int status_rename_limit = -1;
-> 
-> Could we replace these four variables with just two: detect_rename and
-> rename_limit?  Keeping these separate invites people to write code
-> using only one of the settings rather than the appropriate inherited
-> mixture of them, resulting in a weird bug.  More on this below...
-> 
+>> Besides being unnecessary, this redirection is also harmful, as it
+>> prevents the test helper functions 'test_pause' and 'debug' from working
+>> properly in t6050, because we can't enter any commands to the shell and
+>> the debugger, respectively.
+>
+> The redirection might have been necessary before 781f76b1582 (test-lib:
+> redirect stdin of tests, 2011-12-15), but it definitely is not necessary
+> now.
 
-This model was inherited from the diff code and replicated to the merge 
-code.  However, it would be nice to get rid of these 4 static variables. 
-  See below for a proposal on how to do that...
+That doesn't seem to be an issue in a3e8267225 (or in any other
+commits touching t6050 since):
 
->> @@ -1259,11 +1273,29 @@ static int git_status_config(const char *k, const char *v, void *cb)
->>                          return error(_("Invalid untracked files mode '%s'"), v);
->>                  return 0;
->>          }
->> +       if (!strcmp(k, "diff.renamelimit")) {
->> +               diff_rename_limit = git_config_int(k, v);
->> +               return 0;
->> +       }
->> +       if (!strcmp(k, "status.renamelimit")) {
->> +               status_rename_limit = git_config_int(k, v);
->> +               return 0;
->> +       }
-> 
-> Here, since you're already checking diff.renamelimit first, you can
-> just set rename_limit in both blocks and not need both
-> diff_rename_limit and status_rename_limit.  (Similar can be said for
-> diff.renames/status.renames.)
-
-It really doesn't work that way - the call back is called for every 
-config setting and there is no specific order they are called with. 
-Typically, you just test for and save off any that you care about like 
-I"m doing here.
-
-I can update the logic here so that as I save off the settings that it 
-will also enforce the priority model (ie the diff setting can't override 
-the status setting) and then compute the final value once I have the 
-command line arguments as they override either config setting (if present).
-
-On the plus side, this change passes the red/green test but it now 
-splits the priority logic into two places and doesn't match with how 
-diff and merge handle this same issue.
-
-> 
-> <snip>
-> 
->> @@ -1297,6 +1329,10 @@ int cmd_status(int argc, const char **argv, const char *prefix)
->>                    N_("ignore changes to submodules, optional when: all, dirty, untracked. (Default: all)"),
->>                    PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
->>                  OPT_COLUMN(0, "column", &s.colopts, N_("list untracked files in columns")),
->> +               OPT_BOOL(0, "no-renames", &no_renames, N_("do not detect renames")),
->> +               { OPTION_CALLBACK, 'M', "find-renames", &rename_score_arg,
->> +                 N_("n"), N_("detect renames, optionally set similarity index"),
->> +                 PARSE_OPT_OPTARG, opt_parse_rename_score },
-> 
-> Should probably also document these options in
-> Documentation/git-status.txt (and maybe Documentation/git-commit.txt
-> as well).
-
-Good point, will do.
-
-> 
-> Not sure if we want to add a flag for copy detection (similar to
-> git-diff's -C/--find-copies and --find-copies-harder), or just leave
-> that for when someone finds a need.  If left out, might want to just
-> mention that it was considered and intentionally omitted for now in
-> the commit message.
-> 
-
-I tend to only implement the features I know are actually needed so 
-intentionally omitted this (along with many other potential diff options).
-
->> +       if ((intptr_t)rename_score_arg != -1) {
-> 
-> I don't understand why rename_score_arg is a (char*) and then you need
-> to cast to intptr_t, but that may just be because I haven't done much
-> of anything with option parsing.  A quick look at the docs isn't
-> making it clear to me, though; could you enlighten me?
-> 
-
-Yes, it is related to making parse_options() do what we need.  -1 means 
-the command line option wasn't passed so use the default.  NULL means 
-the command line argument was passed but without the optional score.  A 
-non NULL, non -1 value means the optional score was passed and needs to 
-be parsed.  The (intptr_t_) cast is to enable comparing a pointer to an 
-integer (-1) without generating a compiler warning.
-
->> +               s.detect_rename = DIFF_DETECT_RENAME;
-> 
-> What if status.renames is 'copy' but someone wants to override the
-> score for detecting renames and pass --find-renames=40?  Does the
-> --find-renames override and degrade the 'copy'?  I think it'd make
-> more sense to increase s.detect_rename to at least DIFF_DETECT_RENAME,
-> rather than just outright setting it here.
-> 
-
-I understand your argument and agree that it makes some sense.  I am 
-matching the same logic in merge-recursive.c which just sets 
-detect_rename to 1 in this case.  I believe more strongly that they 
-should be consistent than in one option over the other.
-
-If I'm reading the merge logic for this case incorrectly or if you're 
-willing to patch the merge logic to match :), I'm happy to change this to:
-
-		if (s.detect_rename < DIFF_DETECT_RENAME)
-			s.detect_rename = DIFF_DETECT_RENAME;
-
->> +                                        s.rename_limit;
->> +
->> +       /*
->> +        * We do not have logic to handle the detection of copies.  In
->> +        * fact, it may not even make sense to add such logic: would we
->> +        * really want a change to a base file to be propagated through
->> +        * multiple other files by a merge?
->> +        */
->> +       if (s.detect_rename > DIFF_DETECT_RENAME)
->> +               s.detect_rename = DIFF_DETECT_RENAME;
-> 
-> This comment and code made sense in merge-recursive.c (which doesn't
-> show detected diffs/renames/copies but just uses them for internal
-> processing logic).  It does not make sense here; git status could show
-> detected copies much like `git diff -C --name-status` shows it.  In
-> fact, a quick grep for DIFF_STATUS_COPIED shows multiple hits in
-> wt-status.c, so I suspect it already has the necessary logic for
-> displaying copies.
-> 
-
-Clearly I was following my similar patch series for merge too closely 
-without thinking through how they should be different.  Thanks for 
-catching this.  Gone. :)
-
+  $ echo foobar | ( ./t6050-replace.sh ; read input ; echo $input )
+  *   ok 1: set up buggy branch
+  *   ok 2: replace the author
+  * passed all 2 test(s)
+  foobar
