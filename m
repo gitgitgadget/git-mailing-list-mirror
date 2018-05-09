@@ -2,296 +2,265 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7370A1F424
-	for <e@80x24.org>; Wed,  9 May 2018 00:30:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E01EB1F424
+	for <e@80x24.org>; Wed,  9 May 2018 02:13:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933279AbeEIAaL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 20:30:11 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:41391 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933134AbeEIAaH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 20:30:07 -0400
-Received: by mail-pl0-f66.google.com with SMTP id az12-v6so3204842plb.8
-        for <git@vger.kernel.org>; Tue, 08 May 2018 17:30:07 -0700 (PDT)
+        id S933544AbeEICNc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 22:13:32 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:42369 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933480AbeEICNa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 22:13:30 -0400
+Received: by mail-pl0-f67.google.com with SMTP id u6-v6so3339382pls.9
+        for <git@vger.kernel.org>; Tue, 08 May 2018 19:13:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=H2Kfpyy0VBimTurVC359rhsCKapo9gsbIhhntmQoHy8=;
-        b=HsRqDxeHqooywt1SopHI8tfpfR0K5wUTlEu2FbO80cwzN03n1F92ubd0cGgVDlhzUr
-         RYjo0dBLI7PbRzF7hAGXlNc0Rx00uQcRSe6lKcm5rmW7jhwD5f8E35oefTT7PB72i1vu
-         noBoqK9yvvFA9OjikwVR87hnzyf/OkAvKksNusZtOf5jZwzM/xrvUEUNYA0ShI81g22K
-         3cZLeCla0CSS7P1WYpEamWR/orhsvZ0gR5BQTlquDwVnLtkK4a/yhSep7WrVJeg0hGVQ
-         p66fwIIU+wDKHrKP61fiBasetznOyae5PBQW5kgRsI7mSOcBBvKFRd3Q6ZcFchDCb4l8
-         D8Tg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=BKtkWYLgHT1DNjYBtb2qll7Pt1+XwIckGQ2CV2TjG4U=;
+        b=pvMGlDCr+EmeNlZnewBTooDlViZwBwyj/kh7vm9kv1VmWzcLThw2W6OutR2GIGDOaS
+         v+83BQmvZRIPa+x1eKtWV5RmM7ecq3TKNVh8m26GuQrgn+pUYAtdFerAdi5dhJSlkSQG
+         X15Z79LlJhhCtWavriuPkArLwM5o53XAWwYgz0A/lmeZB2j9W1HW2eHeIIp3giU2Z4If
+         YbxZmM1GpyMibJqH/kPVghSzOzeo6sdiIOvr/ahYe72VJ9o6y+Ab3Baz1qGSvpThMx3b
+         0vLXOpDaR6N+YD9ei+A1WZGN0afv0u2UVVPx8mfNPvDMWrbaFjlaMEtWLrcvVAvSepiE
+         gsbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=H2Kfpyy0VBimTurVC359rhsCKapo9gsbIhhntmQoHy8=;
-        b=igeOt4F2OlZli5iMbuFbPFs9hTF5Qa9BdPU9InPitAggufifrys8DzMHArY7pEEoJn
-         zfIDm0jc/+6HYLDXfAdKBY4FUqAuBRYv+sVXolSFDtToU7fBv/No8YL0n/5QbjOd5ynG
-         2LJ9GGhdc/qN3Ld/NaZ7EFlgtelt3CKRi7cPft5/fV+60KZ2wTMvwl6WdupMHVSwOTyB
-         12L92uV4XiwI9PUVZXzVB5GGN5H1wm+ZiDnLtqRyDTHCouD0E2cVB+o/OGSHAJVGTpr7
-         YplDrnBVyz6uh6AuL+9+AiXSpoOOy67VCKFZ26tT/Zh00inK5MnGmQikDoJ9NNWM8B0L
-         x6rQ==
-X-Gm-Message-State: ALQs6tC3bBF/ob7C6pEcWVxjEW8c8Ee9F/yAwiz0bw6ijNWLXQkMC9yv
-        qC2E+bi/ekNrXOnyZ79YweWJiA==
-X-Google-Smtp-Source: AB8JxZpJTOLT6ibswWGpXiNZ5JrH7VbnyFF/0TNJbNocYYAJMOVuhdRmY05yNeeOuGTZ94a0EKX0NQ==
-X-Received: by 2002:a17:902:624:: with SMTP id 33-v6mr43573499plg.361.1525825806221;
-        Tue, 08 May 2018 17:30:06 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id y24sm39643755pfn.23.2018.05.08.17.30.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 May 2018 17:30:05 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        jonathantanmy@google.com, pc44800@gmail.com
-Subject: [PATCH 4/4] submodule: port submodule subcommand 'foreach' from shell to C
-Date:   Tue,  8 May 2018 17:29:52 -0700
-Message-Id: <20180509002952.172347-5-sbeller@google.com>
-X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
-In-Reply-To: <20180509002952.172347-1-sbeller@google.com>
-References: <20180503005358.89082-1-sbeller@google.com>
- <20180509002952.172347-1-sbeller@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=BKtkWYLgHT1DNjYBtb2qll7Pt1+XwIckGQ2CV2TjG4U=;
+        b=TkuiBxRc4G2VetKpcf2qTuJ3F7TqVhBosZ5uZIAlMvFdU9SvH17nU6ZvfCPyPm/KHL
+         ncI/fnrRN/oioZGBb3FRTNmscFz+8jD8OtpTzjW/HCtu/tvxTwY1zhhRiBylEqxFnVAW
+         5nNM3j0IAa/70INUJisrnDQnbPoN5cflWt16T8GThzm9/gYava50XReCy2vzt8q316EC
+         GVZ5Xfe9imLgON2/n4PUDVrLvYny9AKmH5+KcoX8XL6pK7h80DEnlfg8gyDMg6eMsGke
+         lAu9uuhsqDK7JS8tIGYMMBLMrtgm6JASeykQJLjEer0DNxUXq1P301QUunDCMLUn2r6Z
+         6MVg==
+X-Gm-Message-State: ALQs6tCW/rcEFIY5LMuOxrgeJDSNxif0GOi7yPTiEFtI5Fu0KuZv1r3J
+        jrHMccaMAkADKd1L/yS0NJ6M291ytPA0wA==
+X-Google-Smtp-Source: AB8JxZpr0zSSd/39rrsfOkhPK+x5qDdLdmf4weG7Czd6892Gk3fDxf4ZVxVcGT+HBkMQU/hyjZl6xQ==
+X-Received: by 2002:a17:902:aa98:: with SMTP id d24-v6mr18226523plr.185.1525832008754;
+        Tue, 08 May 2018 19:13:28 -0700 (PDT)
+Received: from localhost ([2601:602:9500:1120:d537:72d4:95b0:7812])
+        by smtp.gmail.com with ESMTPSA id r84sm50632523pfa.125.2018.05.08.19.13.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 May 2018 19:13:27 -0700 (PDT)
+Date:   Tue, 8 May 2018 19:13:26 -0700
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, gitster@pobox.com, l.s.r@web.de,
+        martin.agren@gmail.com, pclouds@gmail.com, peff@peff.net,
+        phillip.wood@talktalk.net, sunshine@sunshineco.com
+Subject: [PATCH v5 0/7] Teach '--column' to 'git-grep(1)'
+Message-ID: <cover.1525831201.git.me@ttaylorr.com>
+References: <20180421034530.GB24606@syl.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180421034530.GB24606@syl.local>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Prathamesh Chavan <pc44800@gmail.com>
+Hi,
 
-This aims to make git-submodule foreach a builtin. 'foreach' is ported to
-the submodule--helper, and submodule--helper is called from
-git-submodule.sh.
+Attached is my fifth re-roll of the series to add '--column' to
+'git-grep(1)'.
 
-Helped-by: Brandon Williams <bmwill@google.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/submodule--helper.c | 144 ++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  39 +---------
- 2 files changed, 145 insertions(+), 38 deletions(-)
+The main changes are from a René's concerns in [1]. He points out that
+'--column' with certain extended expressions can produce nonsense
+(particularly because we leave the regmatch_t uninitialized).
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c2403a915ff..4b0b773c06b 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -439,6 +439,149 @@ static void for_each_listed_submodule(const struct module_list *list,
- 		fn(list->entries[i], cb_data);
- }
- 
-+struct cb_foreach {
-+	int argc;
-+	const char **argv;
-+	const char *prefix;
-+	int quiet;
-+	int recursive;
-+};
-+#define CB_FOREACH_INIT { 0 }
-+
-+static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
-+				       void *cb_data)
-+{
-+	struct cb_foreach *info = cb_data;
-+	const char *path = list_item->name;
-+	const struct object_id *ce_oid = &list_item->oid;
-+
-+	const struct submodule *sub;
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	char *displaypath;
-+
-+	displaypath = get_submodule_displaypath(path, info->prefix);
-+
-+	sub = submodule_from_path(the_repository, &null_oid, path);
-+
-+	if (!sub)
-+		die(_("No url found for submodule path '%s' in .gitmodules"),
-+			displaypath);
-+
-+	if (!is_submodule_populated_gently(path, NULL))
-+		goto cleanup;
-+
-+	prepare_submodule_repo_env(&cp.env_array);
-+
-+	/*
-+	* For the purpose of executing <command> in the submodule,
-+	* separate shell is used for the purpose of running the
-+	* child process.
-+	*/
-+	cp.use_shell = 1;
-+	cp.dir = path;
-+
-+	/*
-+	* NEEDSWORK: the command currently has access to the variables $name,
-+	* $sm_path, $displaypath, $sha1 and $toplevel only when the command
-+	* contains a single argument. This is done for maintaining a faithful
-+	* translation from shell script.
-+	*/
-+	if (info->argc == 1) {
-+		char *toplevel = xgetcwd();
-+		struct strbuf sb = STRBUF_INIT;
-+
-+		argv_array_pushf(&cp.env_array, "name=%s", sub->name);
-+		argv_array_pushf(&cp.env_array, "sm_path=%s", path);
-+		argv_array_pushf(&cp.env_array, "displaypath=%s", displaypath);
-+		argv_array_pushf(&cp.env_array, "sha1=%s",
-+				oid_to_hex(ce_oid));
-+		argv_array_pushf(&cp.env_array, "toplevel=%s", toplevel);
-+
-+		/*
-+		* Since the path variable was accessible from the script
-+		* before porting, it is also made available after porting.
-+		* The environment variable "PATH" has a very special purpose
-+		* on windows. And since environment variables are
-+		* case-insensitive in windows, it interferes with the
-+		* existing PATH variable. Hence, to avoid that, we expose
-+		* path via the args argv_array and not via env_array.
-+		*/
-+		sq_quote_buf(&sb, path);
-+		argv_array_pushf(&cp.args, "path=%s; %s",
-+				 sb.buf, info->argv[0]);
-+		strbuf_release(&sb);
-+		free(toplevel);
-+	} else {
-+		argv_array_pushv(&cp.args, info->argv);
-+	}
-+
-+	if (!info->quiet)
-+		printf(_("Entering '%s'\n"), displaypath);
-+
-+	if (info->argv[0] && run_command(&cp))
-+		die(_("run_command returned non-zero status for %s\n."),
-+			displaypath);
-+
-+	if (info->recursive) {
-+		struct child_process cpr = CHILD_PROCESS_INIT;
-+
-+		cpr.git_cmd = 1;
-+		cpr.dir = path;
-+		prepare_submodule_repo_env(&cpr.env_array);
-+
-+		argv_array_pushl(&cpr.args, "--super-prefix", NULL);
-+		argv_array_pushf(&cpr.args, "%s/", displaypath);
-+		argv_array_pushl(&cpr.args, "submodule--helper", "foreach", "--recursive",
-+				NULL);
-+
-+		if (info->quiet)
-+			argv_array_push(&cpr.args, "--quiet");
-+
-+		argv_array_pushv(&cpr.args, info->argv);
-+
-+		if (run_command(&cpr))
-+			die(_("run_command returned non-zero status while"
-+				"recursing in the nested submodules of %s\n."),
-+				displaypath);
-+	}
-+
-+cleanup:
-+	free(displaypath);
-+}
-+
-+static int module_foreach(int argc, const char **argv, const char *prefix)
-+{
-+	struct cb_foreach info = CB_FOREACH_INIT;
-+	struct pathspec pathspec;
-+	struct module_list list = MODULE_LIST_INIT;
-+
-+	struct option module_foreach_options[] = {
-+		OPT__QUIET(&info.quiet, N_("Suppress output of entering each submodule command")),
-+		OPT_BOOL(0, "recursive", &info.recursive,
-+			 N_("Recurse into nested submodules")),
-+		OPT_END()
-+	};
-+
-+	const char *const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper foreach [--quiet] [--recursive] <command>"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, module_foreach_options,
-+			     git_submodule_helper_usage, PARSE_OPT_KEEP_UNKNOWN);
-+
-+	if (module_list_compute(0, NULL, prefix, &pathspec, &list) < 0)
-+		return 1;
-+
-+	info.argc = argc;
-+	info.argv = argv;
-+	info.prefix = prefix;
-+
-+	for_each_listed_submodule(&list, runcommand_in_submodule_cb, &info);
-+
-+	return 0;
-+}
-+
- struct init_cb {
- 	const char *prefix;
- 	unsigned int flags;
-@@ -1841,6 +1984,7 @@ static struct cmd_struct commands[] = {
- 	{"relative-path", resolve_relative_path, 0},
- 	{"resolve-relative-url", resolve_relative_url, 0},
- 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
-+	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
- 	{"init", module_init, SUPPORT_SUPER_PREFIX},
- 	{"status", module_status, SUPPORT_SUPER_PREFIX},
- 	{"print-default-remote", print_default_remote, 0},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 331d71c908b..cba585f0754 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -323,44 +323,7 @@ cmd_foreach()
- 		shift
- 	done
- 
--	toplevel=$(pwd)
--
--	# dup stdin so that it can be restored when running the external
--	# command in the subshell (and a recursive call to this function)
--	exec 3<&0
--
--	{
--		git submodule--helper list --prefix "$wt_prefix" ||
--		echo "#unmatched" $?
--	} |
--	while read -r mode sha1 stage sm_path
--	do
--		die_if_unmatched "$mode" "$sha1"
--		if test -e "$sm_path"/.git
--		then
--			displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
--			say "$(eval_gettext "Entering '\$displaypath'")"
--			name=$(git submodule--helper name "$sm_path")
--			(
--				prefix="$prefix$sm_path/"
--				sanitize_submodule_env
--				cd "$sm_path" &&
--				# we make $path available to scripts ...
--				path=$sm_path &&
--				if test $# -eq 1
--				then
--					eval "$1"
--				else
--					"$@"
--				fi &&
--				if test -n "$recursive"
--				then
--					cmd_foreach "--recursive" "$@"
--				fi
--			) <&3 3<&- ||
--			die "$(eval_gettext "Stopping at '\$displaypath'; script returned non-zero status.")"
--		fi
--	done
-+	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper foreach ${GIT_QUIET:+--quiet} ${recursive:+--recursive} "$@"
- }
- 
- #
--- 
-2.17.0.255.g8bfb7c0704
+> So at least the combination of extended matches and --column should error
+> out.  Supporting it would be better, of course.  That could get tricky for
+> negations, though (e.g. git grep --not -e foo).
 
+I have opted for the die() option, instead of supporting extended
+matches with --column. The problem with extended matches in this case is
+that _sometimes_ --column can produce sensible results, and other times
+it cannot.
+
+For instance, an extended expression containing a single atom
+has a known answer for --column, but one containing a negative atom does
+only sometimes. Specifically: if an NOT atom is at the top-level, we
+_never_ have a sensible answer for --column, but only sometimes do when
+it is not at the top-level.
+
+So, this leaves us two choices: (1) don't support --column and extended
+expressions, or (2) support --column with extended expressions by not
+printing columnar information when we don't have an answer. Option (2)
+requires callers to perform deep inspection of their extended
+expressions, and determine whether or not there is a answer that Git
+could produce. This is too much to ask a caller to reasonably consider
+when scripting. On the other hand, option (1) does not allow the caller
+to do as much under certain circumstances, but simplifies their lives
+when scripting, etc. For those reasons, let's pick (1).
+
+Beyond that, here is a summary of what has changed since last time:
+
+  * die() when given --extended, or compiling to an extended grammar,
+    like in the case of 'git grep --column --not -e foo' [1].
+
+  * Clarify patch 5/7 and indicate the intended purpose of supporting
+    '--column' [2].
+
+  * Clarify that '--column' gives a 1-indexed _byte_ offset, nothing
+    else [3,5].
+
+  * Remove a dangling reference to '--column-number' [4].
+
+  * Clean up contrib/git-jump/README to Ævar's suggestion [6].
+
+
+Thanks as always for your kind review.
+
+
+Thanks,
+Taylor
+
+[1]: https://public-inbox.org/git/d030b4ee-5a92-4863-a29c-de2642bfae8d@web.de
+[2]: https://public-inbox.org/git/CACsJy8BdJ0=gWZQVfSqy-vjtZVT4uZNzRaPYxRYxx2WNzaLodw@mail.gmail.com
+[3]: https://public-inbox.org/git/20bc9baf-a85e-f00e-859e-e796ab4324f6@talktalk.net
+[4]: https://public-inbox.org/git/87efioy8f9.fsf@evledraar.gmail.com
+[5]: https://public-inbox.org/git/xmqqk1sfpn9j.fsf@gitster-ct.c.googlers.com
+[6]: https://public-inbox.org/git/87d0y8y84q.fsf@evledraar.gmail.com/
+
+Taylor Blau (7):
+  Documentation/config.txt: camel-case lineNumber for consistency
+  grep.c: expose matched column in match_line()
+  grep.[ch]: extend grep_opt to allow showing matched column
+  grep.c: display column number of first match
+  builtin/grep.c: add '--column' option to 'git-grep(1)'
+  grep.c: add configuration variables to show matched option
+  contrib/git-jump/git-jump: jump to match column in addition to line
+
+ Documentation/config.txt   |  7 ++++++-
+ Documentation/git-grep.txt |  9 +++++++-
+ builtin/grep.c             |  4 ++++
+ contrib/git-jump/README    | 12 +++++++++--
+ contrib/git-jump/git-jump  |  2 +-
+ grep.c                     | 42 ++++++++++++++++++++++++++++++--------
+ grep.h                     |  2 ++
+ t/t7810-grep.sh            | 32 +++++++++++++++++++++++++++++
+ 8 files changed, 96 insertions(+), 14 deletions(-)
+
+Inter-diff (since v5):
+
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index d451cd8883..dc8f76ce99 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -173,7 +173,8 @@ providing this option will cause it to die.
+ 	Prefix the line number to matching lines.
+
+ --column::
+-	Prefix the 1-indexed column number of the first match on non-context lines.
++	Prefix the 1-indexed byte-offset of the first match on non-context lines. This
++	option is incompatible with '--invert-match', and extended expressions.
+
+ -l::
+ --files-with-matches::
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 5c83f17759..f9f516dfc4 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1112,6 +1112,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		hit = grep_objects(&opt, &pathspec, the_repository, &list);
+ 	}
+
++	if (opt.columnnum && opt.invert)
++		die(_("--column and --invert-match cannot be combined"));
++
+ 	if (num_threads)
+ 		hit |= wait_all();
+ 	if (hit && show_in_pager)
+diff --git a/contrib/git-jump/README b/contrib/git-jump/README
+index 7630e16854..2f618a7f97 100644
+--- a/contrib/git-jump/README
++++ b/contrib/git-jump/README
+@@ -25,6 +25,13 @@ git-jump will feed this to the editor:
+ foo.c:2: printf("hello word!\n");
+ -----------------------------------
+
++Or, when running 'git jump grep', column numbers will also be emitted,
++e.g. `git jump grep "hello"` would return:
++
++-----------------------------------
++foo.c:2:9: printf("hello word!\n");
++-----------------------------------
++
+ Obviously this trivial case isn't that interesting; you could just open
+ `foo.c` yourself. But when you have many changes scattered across a
+ project, you can use the editor's support to "jump" from point to point.
+@@ -35,7 +42,8 @@ Git-jump can generate four types of interesting lists:
+
+   2. The beginning of any merge conflict markers.
+
+-  3. Any grep matches, including the column of the first match on a line.
++  3. Any grep matches, including the column of the first match on a
++     line.
+
+   4. Any whitespace errors detected by `git diff --check`.
+
+@@ -65,7 +73,7 @@ git jump grep foo_bar
+ git jump grep -i foo_bar
+
+ # use the silver searcher for git jump grep
+-git config jump.grepCmd "ag"
++git config jump.grepCmd "ag --column"
+ --------------------------------------------------
+
+
+diff --git a/grep.c b/grep.c
+index 37bb39a4a8..5d904810ad 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1001,6 +1001,9 @@ static void compile_grep_patterns_real(struct grep_opt *opt)
+ 	else if (!opt->extended && !opt->debug)
+ 		return;
+
++	if (opt->columnnum && opt->extended)
++		die(_("--column and extended expressions cannot be combined"));
++
+ 	p = opt->pattern_list;
+ 	if (p)
+ 		opt->pattern_expression = compile_pattern_expr(&p);
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index a03c3416e7..aa56b21ed9 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -110,7 +110,7 @@ do
+ 		test_cmp expected actual
+ 	'
+
+-	test_expect_success "grep -w $L (with --{line,column}-number)" '
++	test_expect_success "grep -w $L (with --line-number, --column)" '
+ 		{
+ 			echo ${HC}file:1:5:foo mmap bar
+ 			echo ${HC}file:3:14:foo_mmap bar mmap
+@@ -1612,4 +1612,14 @@ test_expect_success 'grep does not report i-t-a and assume unchanged with -L' '
+ 	test_cmp expected actual
+ '
+
++test_expect_success 'grep does not allow --column, --invert-match' '
++	test_must_fail git grep --column --invert-match pat 2>err &&
++	test_i18ngrep "\-\-column and \-\-invert-match cannot be combined" err
++'
++
++test_expect_success 'grep does not allow --column, extended' '
++	test_must_fail git grep --column --not -e pat 2>err &&
++	test_i18ngrep "\-\-column and extended expressions cannot be combined" err
++'
++
+ test_done
+
+--
+2.17.0
