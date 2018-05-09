@@ -2,117 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C59491F424
-	for <e@80x24.org>; Wed,  9 May 2018 15:56:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2CB91F424
+	for <e@80x24.org>; Wed,  9 May 2018 15:59:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965305AbeEIP4v (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 11:56:51 -0400
-Received: from ao2.it ([92.243.12.208]:37522 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S964984AbeEIP4t (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 11:56:49 -0400
-Received: from localhost ([::1] helo=jcn.localdomain)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1fGRSN-0007b6-3I; Wed, 09 May 2018 17:56:43 +0200
-Date:   Wed, 9 May 2018 17:56:47 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] wrap-for-bin.sh: facilitate running Git executables
- under valgrind
-Message-Id: <20180509175647.0961d469e01367783090e764@ao2.it>
-In-Reply-To: <CABPp-BEvNOBkq0-v_Uq0CHkvRixCKmUhYPMeH-MHHZGb0x9NkA@mail.gmail.com>
-References: <20180509132858.21936-1-ao2@ao2.it>
-        <CABPp-BEvNOBkq0-v_Uq0CHkvRixCKmUhYPMeH-MHHZGb0x9NkA@mail.gmail.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
- ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S965293AbeEIP7v (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 11:59:51 -0400
+Received: from mail-ot0-f196.google.com ([74.125.82.196]:38085 "EHLO
+        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965206AbeEIP7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 11:59:50 -0400
+Received: by mail-ot0-f196.google.com with SMTP id n3-v6so4431806ota.5
+        for <git@vger.kernel.org>; Wed, 09 May 2018 08:59:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=zMhagM2w2H5Ux9DUDiYogZiYTtpwe3Q/r8+qF+4pCjI=;
+        b=fc8KkKuXv5PslogWIFOjrKcM8Fyu88IsuRhUvlDv+eQq8AP/qeO7fNWbp60vyvHTGH
+         /m4K7Df+ShaxmhHrdV8f2osExXISCcxqYbUKd6SoD9pTbfr7tqpep0fMnpx0qmzaSm32
+         3ntOyYdtY2qteKc1yFmtLDfxgDoqXIBCD76PF8atwPXut/EHc/Ka0hlJoBS3S85nBA5Q
+         +a1hiAq99lSU/p1/XSVdjTDpr0PYgPHCBfPUS0ZtndDzILRuKmc2OTY3jJ61tZnEdi6A
+         VeUa0ZnladsbJSWk1AiY5erhNmrXSo1qU8/P+EE5FeKQC7ea7Ok6rUvh8yzE3frlTKyH
+         S+GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=zMhagM2w2H5Ux9DUDiYogZiYTtpwe3Q/r8+qF+4pCjI=;
+        b=dNNQnwwKrl6fyqtT5usUjKEgqG2GhhklnlB3bh5Qh979ba/A8fcDzAFIzTxqut0R2y
+         BvBfILEBWRMAiJpM8hEkC1MteuaLkO/yHGXVV4pOdthFd+m35u5CHjiR6dYlsWTSD3qi
+         Y3qgNHT/+9iQTOx6ON2XcrMCfxkqqNkLe9NkjDuefSim2SaQsc6llgLU+FP950Qy/S2b
+         FNJ6F+L5ttOIZHzVO1bQAWvMFt9Dhda+03JjTc3UnGnmwanEXQZoNOqoWsOvsA1kaODZ
+         7V9OISry24SCpEH7M4fCzwsPo1gKSgFAA07gISqd8iW3kn/lpIm5sLhWmXqjsNBg7cxo
+         AYJw==
+X-Gm-Message-State: ALKqPwfBpL+YFGT0I0bhrsweQWAiO+9afH5JW1lbltZPQwXlUQNymYDB
+        8r/N4JJMPBR9H3GJvR08r597xNzMC4ycgKga3Pk=
+X-Google-Smtp-Source: AB8JxZqzj69ZKydvVNL+vmLGptJRdUsIk8UCynFiY8JR7x0nm3WvCuz+CRG3kqQgpYKyN1Amm2ev/sjIiSiX+wFXogk=
+X-Received: by 2002:a9d:c61:: with SMTP id 88-v6mr5936633otr.173.1525881590432;
+ Wed, 09 May 2018 08:59:50 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.74.178.133 with HTTP; Wed, 9 May 2018 08:59:19 -0700 (PDT)
+In-Reply-To: <20180509144213.18032-1-benpeart@microsoft.com>
+References: <20180509144213.18032-1-benpeart@microsoft.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 9 May 2018 17:59:19 +0200
+Message-ID: <CACsJy8CdvKO3aityyP3Ax0ZqaS6JzwH_i2Gn_8NmCUDKHMMQrw@mail.gmail.com>
+Subject: Re: [PATCH v1] add status config and command line options for rename detection
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "newren@gmail.com" <newren@gmail.com>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Alejandro Pauly <alpauly@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 9 May 2018 08:25:21 -0700
-Elijah Newren <newren@gmail.com> wrote:
+On Wed, May 9, 2018 at 4:42 PM, Ben Peart <Ben.Peart@microsoft.com> wrote:
+> Add a new config status.renames setting to enable turning off rename detection
+> during status.  This setting will default to the value of diff.renames.
 
-> Hi Antonio,
-> 
+Please add the reason you need this config key in the commit message.
+My guess (probably correct) is on super large repo (how large?),
+rename detection is just too slow (how long?) that it practically
+makes git-status unusable.
 
-Hi Elijah,
+This information could be helpful when we optimize rename detection to
+be more efficient.
 
-> On Wed, May 9, 2018 at 6:28 AM, Antonio Ospite <ao2@ao2.it> wrote:
-> > Testing locally built git executables under valgrind is not immediate.
-> >
-> > Something like the following does not work:
-> >
-> >   $ valgrind ./bin-wrappers/git
-> >
-> > because the wrapper script forks and execs the command and valgrind does
-> > not track children processes by default.
-> >
-> > Something like the following may work:
-> >
-> >   $ valgrind --trace-children=yes ./bin-wrappers/git
-> >
-> > However it's counterintuitive and not ideal anyways because valgrind is
-> > supposed to be called on the actual executable, not on wrapper scripts.
-> >
-> > So, following the idea from commit 6a94088cc ("test: facilitate
-> > debugging Git executables in tests with gdb", 2015-10-30) provide
-> > a mechanism in the wrapper script to call valgrind directly on the
-> > actual executable.
-> >
-> > This mechanism could even be used by the test infrastructure in the
-> > future, but it is already useful by its own on the command line:
-> >
-> >   $ GIT_TEST_VALGRIND=1 \
-> >     GIT_VALGRIND_OPTIONS="--leak-check=full" \
-> >     ./bin-wrappers/git
-> >
-> 
-> Wow, timing; nice to see someone else finds this kind of thing useful.
-> 
-> I submitted something very similar recently; see commit 842436466aa5
-> ("Make running git under other debugger-like programs easy",
-> 2018-04-24) from next, or the discussion at
-> https://public-inbox.org/git/20180424234645.8735-1-newren@gmail.com/.
-> That other patch has the advantage of enabling the user to run git
-> under other debugger-like programs besides just gdb and valgrind.
-> 
-
-Thanks Elijah, I am not subscribed to the list so I didn't see your
-change and I usually only track the master branch.
-
-Obviously your changes work for me, so I am dropping my patch.
-
-As the changes in 842436466aa5 ("Make running git under other
-debugger-like programs easy", 2018-04-24) are not specific to valgrind
-they should also address Jeff's concerns in the sense that it's up to
-the particular GIT_DEBUGGER how it handles sub-processes.
-
-In valgrind case one may still want to pass "--trace-children=yes" in
-GIT_DEBUGGER after all for better coverage. Thank you Jeff for the
-remark.
-
-Ciao,
-   Antonio
-
+>
+> Add a new config status.renamelimit setting to to enable bounding the time spent
+> finding out inexact renames during status.  This setting will default to the
+> value of diff.renamelimit.
+>
+> Add status --no-renames command line option that enables overriding the config
+> setting from the command line. Add --find-renames[=<n>] to enable detecting
+> renames and optionaly setting the similarity index from the command line.
+>
+> Origional-Patch-by: Alejandro Pauly <alpauly@microsoft.com>
+> Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
 -- 
-Antonio Ospite
-https://ao2.it
-https://twitter.com/ao2it
-
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
+Duy
