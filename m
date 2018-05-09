@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1FC31F424
-	for <e@80x24.org>; Wed,  9 May 2018 20:56:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1439B1F424
+	for <e@80x24.org>; Wed,  9 May 2018 20:56:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965367AbeEIU4Z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 16:56:25 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:52073 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935200AbeEIU4W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 16:56:22 -0400
-Received: by mail-wm0-f67.google.com with SMTP id j4-v6so690568wme.1
-        for <git@vger.kernel.org>; Wed, 09 May 2018 13:56:22 -0700 (PDT)
+        id S965387AbeEIU4a (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 16:56:30 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:43910 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935200AbeEIU42 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 16:56:28 -0400
+Received: by mail-wr0-f195.google.com with SMTP id v15-v6so36812844wrm.10
+        for <git@vger.kernel.org>; Wed, 09 May 2018 13:56:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yZu/jm03aE65GyX3GXAM+Kxl3hCFbsl7ClxeLGiJkNY=;
-        b=BPmISkRM263CGzet29ybcOz7lU1Y2AZvOuQABvfkDEPi41kgQ+BoJqOAIxf2dmzS2T
-         UV62MVgh0kdHcIThPAgEve9A99Mgrg4V9lsQOmpnZ3Mvip+RgBNnFRvNuY6VzXXRh0Zo
-         Mtvg0mRWyBMj6EtcG2Vv00emT7Drb9mCP/6zsq+q0smG5ftrMCxLsq/vCgcojS6KH/pT
-         hquB1hy8hCQ17VR+V83dYij/F8ths7LqTLyc1nT6+5FDUsAopjRIa54Us2BOMa4AGvwV
-         esR5GucSvQIdkNi0JvNrVNY2k6XVhuD2V9fARfSmmCCFC2fIlEp+0jeSlzp9iimqqhBz
-         kRkw==
+        bh=PAtDpnOCyWLL0Q0m22Qpl+i+N3fLvhPdVN1YtU/BHq8=;
+        b=SnlHQ/7OYj9g/FdlAyXblcEWEuA2iiZMziqpA37gCEGYxCkrAsuu3kvrCce8wDS2Hs
+         xT7b1d9D9ft2UhoEuJFNJCnjc9C6LzeuC0MU1Zeb8f5+SU8yrxxYW7zrZGZWpifetbGD
+         8WfaPH+BaI9iBqneIO/TCfGVEl/rUfwXwjzyKsBZiMv31gI7Ik78EcNAOO2FjCDlJVx0
+         1XcVtyIjGGxvfVpKs/ABw0znjvfx++MyYUIAQ5t/qw4aP6RHH+XxiuWYt1MF5c4f9Ure
+         EI4KOQZo8nMNPGP3C252U/SykGrbDtOBZl913YRpt9AMVyrgoDRBtgb7eukG42ir2+b6
+         L/Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yZu/jm03aE65GyX3GXAM+Kxl3hCFbsl7ClxeLGiJkNY=;
-        b=j/37d+IfXd/zXYbnGMfol66WcsNaW9ep9sA5jO9cerwaIF5dv6AWRLJGXlMeyIGhWB
-         ZlsDewtoGUNrBRAoDmKYAmVpOZeHQogOTe8wS5EX5F6WM0LkcXn03+Yu5//rxZeXPVsF
-         H+nttreULucjWyigzB3eTh9PdsyR8bOJmTMqxj40NgPi6TqGE/ivMu0u2QAaHhn5WeXh
-         4JKmNePg6mpOyeELX4oI6TCOXDh/xkNKX8rs6uFMVLUXuMqaQ0g1V5VakEHbkTwlIzl2
-         g0ZzpGMc+JY/Od5P06u5etAXn+TL5ILCqWUnBsZdLG16SMecPH3JallrWQqOgch3U7mJ
-         vNwQ==
-X-Gm-Message-State: ALKqPwfkXy+TNl8h3V6bjCjQnFUNp2OsoLMZWk14nnpe7IeR44KUA0F8
-        hGRkBAkQKqJOaBVHqwJzx1M=
-X-Google-Smtp-Source: AB8JxZqhfVvXOpzxCHOCY+RBIbS8YyrvOHjNCGf7gI5EZuAfThdNnDYyiEVXqIdnQKsnab6G4jxOnw==
-X-Received: by 10.28.136.149 with SMTP id k143mr7433673wmd.17.1525899381416;
-        Wed, 09 May 2018 13:56:21 -0700 (PDT)
+        bh=PAtDpnOCyWLL0Q0m22Qpl+i+N3fLvhPdVN1YtU/BHq8=;
+        b=XsNmE0PGmaGcGJuDx/Qxn3WlX+PVfPzCEYsSQ9UOA5vASp0j3qVlpsPeHjxdwUUfDT
+         ZQaW9KmUEBqHUmfASTm1E7ITV7qasRDPG8QxLAOJFjzn8EEZgLj5eie46u8+fkXbWNb8
+         4yv4ollnPpz+Oqgf7UMS5S5GvzwGoFyUvGbz53klRBVfk4uXNxibUuk/jpfjwuPJin4N
+         Q85749GwD7WtThV+zQav2FiovWOm+Zc8yTb6l+yIJVPHM5t86k4ugR4+V2LqHTirQG3Q
+         UhFlCmiXqTeviumfZxNfEzO51bDcAgRa02zht1qEeUsskmcNUrNw/FmpZtWFZPoXsR6I
+         QgzQ==
+X-Gm-Message-State: ALQs6tAbrCaytsEBlXtL8GgatQLZMW3eMWxawDsoKAx2s6JpDvQh57co
+        SW9nfALJVw1RDGQ4Jshq7GA=
+X-Google-Smtp-Source: AB8JxZo8zI7WlixnrWDYttb8tMerahPu2Say2YeybjcY21ty0V7y1UvM0KcKfYrwQQVhmpOIKEptVw==
+X-Received: by 2002:adf:d1cc:: with SMTP id m12-v6mr29767563wri.214.1525899387463;
+        Wed, 09 May 2018 13:56:27 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id r14-v6sm40073008wra.41.2018.05.09.13.56.20
+        by smtp.gmail.com with ESMTPSA id r14-v6sm40073008wra.41.2018.05.09.13.56.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 09 May 2018 13:56:20 -0700 (PDT)
+        Wed, 09 May 2018 13:56:26 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
         David Turner <novalis@novalis.org>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 1/5] t/helper/test-write-cache: clean up lock-handling
-Date:   Wed,  9 May 2018 22:55:35 +0200
-Message-Id: <2832937c476ed4c53d934274caee3ec6c8c384dc.1525898125.git.martin.agren@gmail.com>
+Subject: [PATCH v2 2/5] refs.c: do not die if locking fails in `write_pseudoref()`
+Date:   Wed,  9 May 2018 22:55:36 +0200
+Message-Id: <c1240491bc9029e2a72b0330a85820c1c272f537.1525898125.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.17.0.411.g9fd64c8e46
 In-Reply-To: <cover.1525898125.git.martin.agren@gmail.com>
 References: <20180508182548.GD7210@sigill.intra.peff.net> <cover.1525898125.git.martin.agren@gmail.com>
@@ -68,54 +68,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Die in case writing the index fails, so that the caller can notice
-(instead of, say, being impressed by how performant the writing is).
+If we could not take the lock, we add an error to the `strbuf err` and
+return. However, this code is dead. The reason is that we take the lock
+using `LOCK_DIE_ON_ERROR`. Drop the flag to allow our more gentle
+error-handling to actually kick in.
 
-While at it, note that after opening a lock with `LOCK_DIE_ON_ERROR`, we
-do not need to worry about whether we succeeded. Also, we can move the
-`struct lock_file` into the function and drop the staticness. (Placing
-`struct lock_file`s on the stack used to be a bad idea, because the
-temp- and lockfile-machinery would keep a pointer into the struct. But
-after 076aa2cbd (tempfile: auto-allocate tempfiles on heap, 2017-09-05),
-we can safely have lockfiles on the stack.)
+We could instead just drop the dead code and die here. But everything is
+prepared for gently propagating the error, so let's do that instead.
 
+There is similar dead code in `delete_pseudoref()`, but let's save that
+for the next patch.
+
+While at it, make the lock non-static. (Placing `struct lock_file`s on
+the stack used to be a bad idea, because the temp- and
+lockfile-machinery would keep a pointer into the struct. But after
+076aa2cbd (tempfile: auto-allocate tempfiles on heap, 2017-09-05), we
+can safely have lockfiles on the stack.)
+
+Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- t/helper/test-write-cache.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ refs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/t/helper/test-write-cache.c b/t/helper/test-write-cache.c
-index 017dc30380..8837717d36 100644
---- a/t/helper/test-write-cache.c
-+++ b/t/helper/test-write-cache.c
-@@ -2,22 +2,18 @@
- #include "cache.h"
- #include "lockfile.h"
- 
--static struct lock_file index_lock;
--
- int cmd__write_cache(int argc, const char **argv)
+diff --git a/refs.c b/refs.c
+index 8b7a77fe5e..8c50b8b139 100644
+--- a/refs.c
++++ b/refs.c
+@@ -644,7 +644,7 @@ static int write_pseudoref(const char *pseudoref, const struct object_id *oid,
  {
--	int i, cnt = 1, lockfd;
-+	struct lock_file index_lock = LOCK_INIT;
-+	int i, cnt = 1;
- 	if (argc == 2)
- 		cnt = strtol(argv[1], NULL, 0);
- 	setup_git_directory();
- 	read_cache();
- 	for (i = 0; i < cnt; i++) {
--		lockfd = hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
--		if (0 <= lockfd) {
--			write_locked_index(&the_index, &index_lock, COMMIT_LOCK);
--		} else {
--			rollback_lock_file(&index_lock);
--		}
-+		hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
-+		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
-+			die("unable to write index file");
- 	}
+ 	const char *filename;
+ 	int fd;
+-	static struct lock_file lock;
++	struct lock_file lock = LOCK_INIT;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int ret = -1;
  
- 	return 0;
+@@ -654,8 +654,7 @@ static int write_pseudoref(const char *pseudoref, const struct object_id *oid,
+ 	strbuf_addf(&buf, "%s\n", oid_to_hex(oid));
+ 
+ 	filename = git_path("%s", pseudoref);
+-	fd = hold_lock_file_for_update_timeout(&lock, filename,
+-					       LOCK_DIE_ON_ERROR,
++	fd = hold_lock_file_for_update_timeout(&lock, filename, 0,
+ 					       get_files_ref_lock_timeout_ms());
+ 	if (fd < 0) {
+ 		strbuf_addf(err, "could not open '%s' for writing: %s",
 -- 
 2.17.0.411.g9fd64c8e46
 
