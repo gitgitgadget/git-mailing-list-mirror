@@ -2,215 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62F321F42D
-	for <e@80x24.org>; Wed,  9 May 2018 10:41:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA501F42D
+	for <e@80x24.org>; Wed,  9 May 2018 10:48:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934113AbeEIKlM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 06:41:12 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:21415 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932570AbeEIKlL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 06:41:11 -0400
-Received: from [192.168.2.240] ([92.22.23.119])
-        by smtp.talktalk.net with SMTP
-        id GMWwf1srQ3fRRGMWwfUZI2; Wed, 09 May 2018 11:41:09 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1525862469;
-        bh=p3/jlOpvOZ4c9a8XLb3zCoHZQch67gYDxHWumQmeV8o=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=lXQqsqf1UuqEPhDAmwgv8DmxF5pWn2MJqWwuF4A9BX5LaceqSRHdhRFbZUI5FMj/H
-         6g4LvledcKVUdSYoFtwVeY8nPxFhCfcUQDdEMqI0yYhPtkbeF1bXeOBxtAPtcRX9HX
-         1UvrSdaF6IDP1E9SmgyHvJ4UCnpj7i8JzLTqCPo8=
-X-Originating-IP: [92.22.23.119]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=YZWTGTZf c=1 sm=1 tr=0 a=oWXjcmuSLv9+fGSLdn2kqg==:117
- a=oWXjcmuSLv9+fGSLdn2kqg==:17 a=IkcTkHD0fZMA:10 a=3nsOOYR-AAAA:8
- a=fOT1JBd-rTNTm-NYrHIA:9 a=RnOvEgpLuGr8u_Dn:21 a=XZZcGjo2TuABbk_B:21
- a=QEXdDO2ut3YA:10 a=X8_4EP2Luv2hi8NvPz5g:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 5/7] builtin/grep.c: add '--column' option to
- 'git-grep(1)'
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     avarab@gmail.com, gitster@pobox.com, l.s.r@web.de,
-        martin.agren@gmail.com, pclouds@gmail.com, peff@peff.net,
-        sunshine@sunshineco.com
-References: <20180421034530.GB24606@syl.local>
- <cover.1525831201.git.me@ttaylorr.com>
- <9222f0ee470884a984c1174cf218dece43f77f87.1525831201.git.me@ttaylorr.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <882bdfe8-6caa-dd9c-7752-ee4884f135f9@talktalk.net>
-Date:   Wed, 9 May 2018 11:41:02 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S934677AbeEIKsa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 06:48:30 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:53122 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934458AbeEIKs2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 06:48:28 -0400
+Received: by mail-wm0-f45.google.com with SMTP id w194so23723346wmf.2
+        for <git@vger.kernel.org>; Wed, 09 May 2018 03:48:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=1B7OlIt8Lpd5Ps/BXvKp52V8cV8qSJtapdCKhJgSkvs=;
+        b=uZVAps5KFGr2drntHs1HrhMZ6unv4Y+jDVS4wfVa72MBWrEt8yGlsH7zOYsa9feDIP
+         hikpIsvTlPwEzlGRPnHe9zy3JetOszZ+06ii+r15FEGPaQfYr8mxCr20Evo2tj/kyes1
+         F9r5n3x/HrVYioC/uppGoziBIetrChHBRwSUzoYqLg0IoHe8Ek6smhxCnVCSsqUIoqSG
+         ECSm6ZaXqvSi4j4BVxK1vI+9NVidPBdCI+TMoOFcbRBWr+8T/MVmg0cAHU59YUx/1F9X
+         D3VG17ZpCsBXiOglEV+OftkJZQt2VL1YsZHacNAe4m1UrabiFt0kfCjJPxw/i7+mPzsP
+         lH3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=1B7OlIt8Lpd5Ps/BXvKp52V8cV8qSJtapdCKhJgSkvs=;
+        b=JS9UzUp+zMITcZFXbQBhIXB4GZN2/Rnd77q4VRhtGEVy6U/4Va36/JQ93uZVcZa20v
+         Jhv9ljwqB6kK7s1WncggMVb7fuNuFr0aUHlCZxrn6IB5uLHlCaLARV88brIGvjise3os
+         7NNs+JjNTiajH9iGwhGLJBsAd+V3uSayI+xSHOz+TAQf2m+UIp8b7OPzQCkfDsSou4IY
+         Ub0xsPOSWTpYw3jKYFSakPL5gO/xiszalWy8M36ZsEZiPrCfXK4moHjj99xkTkwwd/hp
+         H0pAEYqeGuk/voUZtu2J5lXSDbloevnYybaN3OxscHyM3N7UvJ+Bpj1jl9R0N1Tg8ZhI
+         2Jmg==
+X-Gm-Message-State: ALQs6tBD9/DjFgI/2arODH5hzV+K3TgsIT3uIjcqP5EHGWt/A3g2WWdC
+        Z5+3clCRwGsoiCqCdA3vR6I=
+X-Google-Smtp-Source: AB8JxZqIyfPtCJ2xPpFYp7Drf/hEl8xwiyeMT6wD6vXYL4ijGg8UzdT7An9vKnUK2z3pTTiJU3CXQg==
+X-Received: by 2002:a50:b946:: with SMTP id m64-v6mr42000666ede.32.1525862906895;
+        Wed, 09 May 2018 03:48:26 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id a2-v6sm11886604edn.25.2018.05.09.03.48.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 09 May 2018 03:48:25 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 09/12] get_short_oid / peel_onion: ^{tree} should be tree, not treeish
+References: <20180501184016.15061-1-avarab@gmail.com>
+        <20180501120651.15886-1-avarab@gmail.com>
+        <20180501184016.15061-10-avarab@gmail.com>
+        <xmqqzi1htij7.fsf@gitster-ct.c.googlers.com>
+        <87wowlxko8.fsf@evledraar.gmail.com>
+        <xmqqvac4tb64.fsf@gitster-ct.c.googlers.com>
+        <87lgczyfq6.fsf@evledraar.gmail.com>
+        <xmqq6040qf8x.fsf@gitster-ct.c.googlers.com>
+        <20180508143408.GA30183@sigill.intra.peff.net>
+        <87a7tax9m1.fsf@evledraar.gmail.com>
+        <20180509075632.GA3327@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180509075632.GA3327@sigill.intra.peff.net>
+Date:   Wed, 09 May 2018 12:48:24 +0200
+Message-ID: <878t8txfyf.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <9222f0ee470884a984c1174cf218dece43f77f87.1525831201.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfLhRAR1tSv4mTl19T1DXmwBD3LM157kv6MmYLM7DaECH21MK0aM9WXEOtpaujdkHotOVbPV05tPxEBF384p+7FF1xM21qInNgSgoCjaTZvYK5CiuvWm8
- laaHi5pyYP0OJ1fqbQprN+03gVn+buwhQbxGplmI7i7ehc65EM4xuGsybccr5XkcQ8NFGWiVG0xWIMagwjPpE++6vj0K/ulFi8NcBGdebZpd2qSLvL5pBaTk
- q7BOXyJB9jFvBzTS/J8Qn1vIoZ9GWScXRDCkl/YDs+sJM2C/OWDyRiKpqNzsPPq79Xa7Agsx8ypdDabnDg6sRAV5qqY62T6jkfIZbgZMjXyGyL6qdyUnEODv
- lIZhaeD+di8EdWIKiZmgAR1VWJlWLwxK0816k66CAzQvaOqxl0U=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor
 
-On 09/05/18 03:13, Taylor Blau wrote:
-> Teach 'git-grep(1)' a new option, '--column', to show the column
-> number of the first match on a non-context line. This makes it possible
-> to teach 'contrib/git-jump/git-jump' how to seek to the first matching
-> position of a grep match in your editor, and allows similar additional
-> scripting capabilities.
-> 
-> For example:
-> 
->    $ git grep -n --column foo | head -n3
->    .clang-format:51:14:# myFunction(foo, bar, baz);
->    .clang-format:64:7:# int foo();
->    .clang-format:75:8:# void foo()
-> 
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->   Documentation/git-grep.txt |  6 +++++-
->   builtin/grep.c             |  4 ++++
->   grep.c                     |  3 +++
->   t/t7810-grep.sh            | 32 ++++++++++++++++++++++++++++++++
->   4 files changed, 44 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> index 18b494731f..75f1561112 100644
-> --- a/Documentation/git-grep.txt
-> +++ b/Documentation/git-grep.txt
-> @@ -13,7 +13,7 @@ SYNOPSIS
->   	   [-v | --invert-match] [-h|-H] [--full-name]
->   	   [-E | --extended-regexp] [-G | --basic-regexp]
->   	   [-P | --perl-regexp]
-> -	   [-F | --fixed-strings] [-n | --line-number]
-> +	   [-F | --fixed-strings] [-n | --line-number] [--column]
->   	   [-l | --files-with-matches] [-L | --files-without-match]
->   	   [(-O | --open-files-in-pager) [<pager>]]
->   	   [-z | --null]
-> @@ -169,6 +169,10 @@ providing this option will cause it to die.
->   --line-number::
->   	Prefix the line number to matching lines.
->   
-> +--column::
-> +	Prefix the 1-indexed byte-offset of the first match on non-context lines. This
-> +	option is incompatible with '--invert-match', and extended expressions.
-> +
+On Wed, May 09 2018, Jeff King wrote:
 
-Sorry to be fussy, but while this is clearer I think to could be 
-improved to make it clear that it is the offset from the start of the 
-matching line. Also the mention of 'extended expressions' made me think 
-of 'grep -E' but I think (correct me if I'm wrong) you mean the boolean 
-options '--and', '--not' and '--or'. The man page only uses the word 
-extended when talking about extended regexes. I think something like
+> On Tue, May 08, 2018 at 08:53:10PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>
+>> >> "X^{tree}" should *RESULT* in a tree, but it should *REQUIRE* X to
+>> >> be a tree-ish.  It is unclear "should be tree" is about the former
+>> >> and I read (perhaps mis-read) it as saying "it should require X to
+>> >> be a tree"---that statement is utterly incorrect as we agreed above.
+>> >
+>> > FWIW, I had the same feeling as you when reading this, that this commit
+>> > (and the one after) are doing the wrong thing. And these paragraphs sum
+>> > it up. The "^{tree}" is about asking us to peel to a tree, not about
+>> > resolving X in the first place. We can use it as a _hint_ when resolving
+>> > X, but the correct hint is "something that can be peeled to a tree", not
+>> > "is definitely a tree".
+>>
+>> Maybe I'm just being dense, but I still don't get from this & Junio's
+>> E-Mails what the general rule should be.
+>
+> Let me try to lay out my thinking a bit more clearly, and then I'll try
+> to respond to the points you laid out below.
+>
+> Before we had any disambiguation code, resolving X^{tree} really was two
+> independent steps: resolve X, and then peel it to a tree. When we added
+> the disambiguation code, the goal was to provide a hint to the first
+> step in such a way that we could never eliminate any resolutions that
+> the user _might_ have meant. But it's OK to take a situation where every
+> case but one would result in an error, and assume the user meant that
+> case. Sort of a "do no harm" rule.
+>
+> By disambiguating with just a tree and not a tree-ish, that hint is now
+> eliminating possibilities that would have worked in the second step,
+> which violates the rule.
+>
+> Does thinking about it that way make more sense?
 
-Print the 1-indexed byte-offset of the first match from the start of the 
-matching line. This option is incompatible with '--invert-match', 
-'--and', '--not' and '--or'.
+Okey, so to rephrase that to make sure I understand it. It would be
+documented as something like this:
 
-would be clearer
+    When the short SHA-1 X is ambiguous X^{<type>} doesn't mean do the
+    peel itself in X any way, rather it means list all those objects
+    matching X where a subsequent X^{<type>} wouldn't be an error.
 
-Best Wishes
+    I.e. X^{commit} will list tags and commits, since both can be peeled
+    to reveal a commit, X^{tree} will similarly list tags, commits and
+    trees, and X^{blob} will list tags and blobs[1], and X^{tag} will
+    only list tags.
 
-Phillip
+    But core.disambiguate=[tag|commit|tree|blob] is not at all like
+    ^{[tag|commit|tree|blob]} and is unlike the peel syntax only going
+    to list the objects of the respective type. The config synonym for
+    the peel syntax is committish, treeish, and the nonexistent blobish.
 
+>> I think a response to the part after "leaving that aside" of my upthread
+>> E-Mail
+>> (https://public-inbox.org/git/87lgczyfq6.fsf@evledraar.gmail.com/) would
+>> help me out.
+>
+> I'll quote that bit here:
+>
+>> But *leaving that aside*, i.e. I don't see why the use-case would make
+>> sense. What I *don't* get is why, if you think that, you only want to
+>> apply that rule to ^{tree}. I.e. wouldn't it then be consistent to say:
+>>
+>>     # a)
+>>     ^{tag}    = tag
+>>     ^{commit} = tag, commit
+>>     ^{tree}   = tag, commit, tree
+>>     ^{blob}   = tag, blob (blobish)
+>
+> Yes, that makes sense to me conceptually, and would follow the rule I
+> gave above. And I think that's what we do now, with the exception that
+> there is no blobish disambiguation. Presumably nobody ever bothered
+> because probably because tagged blobs are pretty rare (and obviously
+> though trees point to blobs, you cannot disambiguate that way since
+> there's no one-to-one correspondence).
+>
+> So I doubt anybody really cares in practice, but I agree that it would
+> improve consistency to write a patch to introduce GET_OID_BLOBISH and
+> have "^{blob}" parsing use it.  And possibly add "blobish" to
+> core.disambiguate (or is it "blobbish"?), though that's almost certainly
+> something nobody would ever use.
 
->   -l::
->   --files-with-matches::
->   --name-only::
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 5f32d2ce84..f9f516dfc4 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -829,6 +829,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->   			    GREP_PATTERN_TYPE_PCRE),
->   		OPT_GROUP(""),
->   		OPT_BOOL('n', "line-number", &opt.linenum, N_("show line numbers")),
-> +		OPT_BOOL(0, "column", &opt.columnnum, N_("show column number of first match")),
->   		OPT_NEGBIT('h', NULL, &opt.pathname, N_("don't show filenames"), 1),
->   		OPT_BIT('H', NULL, &opt.pathname, N_("show filenames"), 1),
->   		OPT_NEGBIT(0, "full-name", &opt.relative,
-> @@ -1111,6 +1112,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->   		hit = grep_objects(&opt, &pathspec, the_repository, &list);
->   	}
->   
-> +	if (opt.columnnum && opt.invert)
-> +		die(_("--column and --invert-match cannot be combined"));
-> +
->   	if (num_threads)
->   		hit |= wait_all();
->   	if (hit && show_in_pager)
-> diff --git a/grep.c b/grep.c
-> index f3fe416791..f4228c23ac 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -995,6 +995,9 @@ static void compile_grep_patterns_real(struct grep_opt *opt)
->   	else if (!opt->extended && !opt->debug)
->   		return;
->   
-> +	if (opt->columnnum && opt->extended)
-> +		die(_("--column and extended expressions cannot be combined"));
-> +
->   	p = opt->pattern_list;
->   	if (p)
->   		opt->pattern_expression = compile_pattern_expr(&p);
-> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-> index 1797f632a3..aa56b21ed9 100755
-> --- a/t/t7810-grep.sh
-> +++ b/t/t7810-grep.sh
-> @@ -99,6 +99,28 @@ do
->   		test_cmp expected actual
->   	'
->   
-> +	test_expect_success "grep -w $L (with --column)" '
-> +		{
-> +			echo ${HC}file:5:foo mmap bar
-> +			echo ${HC}file:14:foo_mmap bar mmap
-> +			echo ${HC}file:5:foo mmap bar_mmap
-> +			echo ${HC}file:14:foo_mmap bar mmap baz
-> +		} >expected &&
-> +		git grep --column -w -e mmap $H >actual &&
-> +		test_cmp expected actual
-> +	'
-> +
-> +	test_expect_success "grep -w $L (with --line-number, --column)" '
-> +		{
-> +			echo ${HC}file:1:5:foo mmap bar
-> +			echo ${HC}file:3:14:foo_mmap bar mmap
-> +			echo ${HC}file:4:5:foo mmap bar_mmap
-> +			echo ${HC}file:5:14:foo_mmap bar mmap baz
-> +		} >expected &&
-> +		git grep -n --column -w -e mmap $H >actual &&
-> +		test_cmp expected actual
-> +	'
-> +
->   	test_expect_success "grep -w $L" '
->   		{
->   			echo ${HC}file:1:foo mmap bar
-> @@ -1590,4 +1612,14 @@ test_expect_success 'grep does not report i-t-a and assume unchanged with -L' '
->   	test_cmp expected actual
->   '
->   
-> +test_expect_success 'grep does not allow --column, --invert-match' '
-> +	test_must_fail git grep --column --invert-match pat 2>err &&
-> +	test_i18ngrep "\-\-column and \-\-invert-match cannot be combined" err
-> +'
-> +
-> +test_expect_success 'grep does not allow --column, extended' '
-> +	test_must_fail git grep --column --not -e pat 2>err &&
-> +	test_i18ngrep "\-\-column and extended expressions cannot be combined" err
-> +'
-> +
->   test_done
-> 
+Yeah, I'll introduce it for consistency. To clarify I wasn't trying to
+make some argument on the basis that we didn't have it, but I was
+confused because I couldn't see how the general rule would apply to
+^{tree} and not ^{blob}.
 
+>> My understanding of what you two are saying is that somehow the peel
+>> semantics should be preserved when we take this beyond the 1=1 mapping
+>> case, but I don't see how if we run with that how we wouldn't need to
+>> introduce the concept of blobish for consistency as I noted upthread.
+>
+> Yeah, I think the lack of blobish is a bug, just one that nobody has
+> ever really cared about.
+>
+>> So it would be very useful to me if you or someone who understands the
+>> behavior you & Junio seem to want could write a version of the patch I
+>> have above where the last paragraph is different, and describes the
+>> desired semantics, because I still don't get it. Why would we 1=many
+>> peel commits to trees as a special case, but not 1=many do the same for
+>> trees & blobs?
+>
+> I'm not sure I understand the mention of trees in the final sentence.
+> AFAICT tree disambiguation is consistent with the peeling rules.
+
+Yeah nevermind that, I was imagining some semantics where because we
+dropped the 1=1 mapping ^{tree} would list blobs, but in the worldview
+you describe above (if I got it right) that doesn't make sense.
+
+1. Not currently, but I should amend my ^{blob} patch to work like that.
