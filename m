@@ -2,131 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E77FD1F424
-	for <e@80x24.org>; Wed,  9 May 2018 02:14:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AC4F1F424
+	for <e@80x24.org>; Wed,  9 May 2018 03:28:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933579AbeEICOE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 22:14:04 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:42380 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933480AbeEICNf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 May 2018 22:13:35 -0400
-Received: by mail-pf0-f193.google.com with SMTP id p14so13464464pfh.9
-        for <git@vger.kernel.org>; Tue, 08 May 2018 19:13:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ID+bGwKFWjEulgY/rLodtVv378O83+RJMv5qhq/h6wQ=;
-        b=cEiNN9Iz5Xq5bOiK9pTrzvnbE5O5KtpcW9vXd+XAKS0HT4OTvWzWlfnsYOBMhKnY/d
-         PZwGV5yw2sUlh1oNyoaZGgbOi1jOqoMG1Qe3oVESz08MUIo13peP0ZoV2+sQgxg5dcVf
-         cgCku4iqYladxbiKUjx43RCugcGnD3UMh8sYtKO5rLJW0yF1tlYXzLzoqdHMyWYra4Iy
-         iizfltmUmrnPqmfEQlA8NkPJVzvfTNMDag3UXkF8O1oP9STZ9VzihzkD2i+wo2Ml9qbt
-         efmF7oZbkIwgORhUsoC1GcCe14QTLrVXGImzjuItV0FatfDIEnEPRGtJQZ435zIQoal5
-         k2WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ID+bGwKFWjEulgY/rLodtVv378O83+RJMv5qhq/h6wQ=;
-        b=G9Da/DQ70rIstWsRUwyrnC1CCcQm2aFRxNNr6jhWe3rxml0k8YKX/XwdIPWcZktIFm
-         /vJkVDdWKm2Xd006IpPP17gySuTtzkQDsjPdS6MuZb9niDnvxwMp7Htfq1hwz4JiC6p2
-         RiekgCpMQovPzJ8LcW2WIQhR9tcWdEW7eQ8BS667/FKkpeNZ3lKG30e1ccmoNnWZnFMM
-         m0MWGnuduiOfjmuInvAQ4vKax20JV9EE0ytuUOrMLcgU0rPgUYORen49kgn7iNuh6WgU
-         ULLUpZFoFEA1VdM6+1t1CIXhWzp81C1x2k39skm/jCr3J5Vov/t39VKADZ8vHl2FG360
-         LFLg==
-X-Gm-Message-State: ALQs6tAGzGM0wGnK8C/0MEt4tHHGGyaBMvNLgniItaUaq1Avnez+5nhA
-        IFB9kuZoeXqveOVMbyI11p8Z+NBWkNjftg==
-X-Google-Smtp-Source: AB8JxZqPqFc5zBpMlW1CGpZgTlPFoFlo1I4AYY2wb/PXPKod8cdrXj3/tWlnZt0L66TPTuFYDEqcdQ==
-X-Received: by 10.98.144.153 with SMTP id q25mr38165359pfk.66.1525832013709;
-        Tue, 08 May 2018 19:13:33 -0700 (PDT)
-Received: from localhost ([2601:602:9500:1120:d537:72d4:95b0:7812])
-        by smtp.gmail.com with ESMTPSA id b5-v6sm5032913pgc.16.2018.05.08.19.13.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 May 2018 19:13:32 -0700 (PDT)
-Date:   Tue, 8 May 2018 19:13:31 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, gitster@pobox.com, l.s.r@web.de,
-        martin.agren@gmail.com, pclouds@gmail.com, peff@peff.net,
-        phillip.wood@talktalk.net, sunshine@sunshineco.com
-Subject: [PATCH v5 2/7] grep.c: expose matched column in match_line()
-Message-ID: <5281d6bdc1f6614b9330315cd9931ec9b2232445.1525831201.git.me@ttaylorr.com>
-References: <20180421034530.GB24606@syl.local>
- <cover.1525831201.git.me@ttaylorr.com>
+        id S933629AbeEID2Q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 23:28:16 -0400
+Received: from pug.qqx.org ([50.116.43.67]:60432 "EHLO pug.qqx.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932579AbeEID2P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 May 2018 23:28:15 -0400
+X-Greylist: delayed 444 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 May 2018 23:28:15 EDT
+Received: by pug.qqx.org (Postfix, from userid 1000)
+        id 63CAE1DC86; Tue,  8 May 2018 23:20:50 -0400 (EDT)
+Date:   Tue, 8 May 2018 23:20:50 -0400
+From:   Aaron Schrab <aaron@schrab.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH/RFC] completion: complete all possible -no-<options>
+Message-ID: <20180509032050.GA23510@pug.qqx.org>
+Mail-Followup-To: Duy Nguyen <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+References: <20180417181300.23683-1-pclouds@gmail.com>
+ <CAPig+cRkUrdtbyGEsY=DQCDoEWTrC-9n4=vKXHEap2gokB2uQg@mail.gmail.com>
+ <CACsJy8BGs7EOYFKayL-bgvEbKOJiROF52o3SneLyG9Nm6nUngA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <cover.1525831201.git.me@ttaylorr.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+In-Reply-To: <CACsJy8BGs7EOYFKayL-bgvEbKOJiROF52o3SneLyG9Nm6nUngA@mail.gmail.com>
+User-Agent: Mutt/1.9.5+145 (bd7674cd9) (2018-04-24)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When calling match_line(), callers presently cannot determine the
-relative offset of the match because match_line() discards the
-'regmatch_t' that contains this information.
+At 17:24 +0200 08 May 2018, Duy Nguyen <pclouds@gmail.com> wrote:
+>It took me so long to reply partly because I remember seeing some guy
+>doing clever trick with tab completion that also shows a short help
+>text in addition to the complete words. I could not find that again
+>and from my reading (also internet searching) it's probably not
+>possible to do this without trickery.
 
-Instead, teach match_line() to take in a 'regmatch_t *' so that callers
-can inspect the match's starting and ending offset from the beginning of
-the line. This additional argument has no effect when opt->extended is
-non-zero.
+Was that perhaps using zsh rather than bash? Below is some of the 
+display from its git completion (this is likely affected somewhat by my 
+configuration).  The group descriptions (lines that begin with 
+"Completing") appear in a different color, and are not available for 
+selection.
 
-We will later pass the starting offset from 'regmatch_t *' to
-show_line() in order to display the column number of the first match.
+1113$ git c<tab>
+Completing alias
+ci               -- alias for 'commit -v'
+cia              -- alias for 'commit -v -a'
+co               -- alias for 'checkout'
+conf             -- alias for 'config'
+Completing main porcelain command
+checkout         -- checkout branch or paths to working tree
+cherry-pick      -- apply changes introduced by some existing commits
+citool           -- graphical alternative to git commit
+clean            -- remove untracked files from working tree
+clone            -- clone repository into new directory
+commit           -- record changes to repository
+Completing ancillary manipulator command
+config           -- get and set repository or global options
+Completing ancillary interrogator command
+cherry           -- find commits not merged upstream
+count-objects    -- count unpacked objects and display their disk consumption
+Completing plumbing manipulator command
+checkout-index   -- copy files from index to working directory
+commit-tree      -- create new commit object
+Completing plumbing interrogator command
+cat-file         -- provide content or type information for repository objects
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- grep.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/grep.c b/grep.c
-index 65b90c10a3..1c25782355 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1299,17 +1299,17 @@ static int match_expr(struct grep_opt *opt, char *bol, char *eol,
- }
- 
- static int match_line(struct grep_opt *opt, char *bol, char *eol,
--		      enum grep_context ctx, int collect_hits)
-+		      regmatch_t *match, enum grep_context ctx,
-+		      int collect_hits)
- {
- 	struct grep_pat *p;
--	regmatch_t match;
- 
- 	if (opt->extended)
- 		return match_expr(opt, bol, eol, ctx, collect_hits);
- 
- 	/* we do not call with collect_hits without being extended */
- 	for (p = opt->pattern_list; p; p = p->next) {
--		if (match_one_pattern(p, bol, eol, ctx, &match, 0))
-+		if (match_one_pattern(p, bol, eol, ctx, match, 0))
- 			return 1;
- 	}
- 	return 0;
-@@ -1699,6 +1699,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 	int try_lookahead = 0;
- 	int show_function = 0;
- 	struct userdiff_driver *textconv = NULL;
-+	regmatch_t match;
- 	enum grep_context ctx = GREP_CONTEXT_HEAD;
- 	xdemitconf_t xecfg;
- 
-@@ -1788,7 +1789,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 		if ((ctx == GREP_CONTEXT_HEAD) && (eol == bol))
- 			ctx = GREP_CONTEXT_BODY;
- 
--		hit = match_line(opt, bol, eol, ctx, collect_hits);
-+		hit = match_line(opt, bol, eol, &match, ctx, collect_hits);
- 		*eol = ch;
- 
- 		if (collect_hits)
--- 
-2.17.0
-
+1114$ git commit -<tab>
+Completing option
+--all                  -a       -- stage all modified and deleted paths
+--allow-empty                   -- allow recording an empty commit
+--allow-empty-message           -- allow recording a commit with an empty message
+--amend                         -- amend the tip of the current branch
+--author                        -- override the author name used in the commit
