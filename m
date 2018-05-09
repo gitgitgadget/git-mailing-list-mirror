@@ -6,134 +6,137 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1B071F424
-	for <e@80x24.org>; Wed,  9 May 2018 23:49:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C7E51F424
+	for <e@80x24.org>; Wed,  9 May 2018 23:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966011AbeEIXti (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 19:49:38 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:40884 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965990AbeEIXti (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 19:49:38 -0400
-Received: by mail-pl0-f65.google.com with SMTP id t12-v6so175565plo.7
-        for <git@vger.kernel.org>; Wed, 09 May 2018 16:49:37 -0700 (PDT)
+        id S965984AbeEIXw4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 19:52:56 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:37823 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965309AbeEIXwz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 19:52:55 -0400
+Received: by mail-pg0-f65.google.com with SMTP id a13-v6so130799pgu.4
+        for <git@vger.kernel.org>; Wed, 09 May 2018 16:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5Y/JGu1gwH6oeD0Qx/HISTHDUoB8DmfYBudJ/jEPWKg=;
-        b=EmBYK7c32pjBrd3dyAo1PIAhEV9lx1rLdlrWiHvm769DGr2ZFvUp6KmiR8doVF/l+S
-         jHUo3TXBPn/k2oiR9HiD+ZIkLQY3P7ceYx5dd5Ea/bqizdKKgmSCHWnXlBmLymdOpHuG
-         AFuyyOG+EieOV6PMtgqZ0ubvm7G3JSlq6sdA87dmFw4Zr59GQWuc66Lle5/Ms0d6/s0r
-         22w+BUWDxWqDTwUX5ilzwoB3QDclnlAYN36JsuKPSR5FobGKDjGAnukvLW2DI12ikNjH
-         XFOMQEydNR0MRkfUol3TZUKnRJGoptUomcof4AowzTZmKCZFKZvQe0Ea4h4KmnNBqGKO
-         5NZg==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=LKtz83GaE+fbMv53UiJrMFvmgS8O4ox0xXcIbfaUABg=;
+        b=neNpuD7vyKS2+7d3l+EJU3ZOW4tYrGDfbfQ7j0TbKwURJCYkdt6vtYOeog7x7/KY+R
+         /rstmJRGsDvowbXC3YLnncS7ICrkQpn2zKraf9hZ/3f1re+S71avAdPZzbCAL2rFJ70x
+         W4r3VlNncXNTv0OnB140IDyJ3gEJZS85LELo28I0VH5XYaXg+d1CgvalfNAJrHRv8O+Q
+         3f4+ehQl25bjLFYziFOccqKLcqWQxWkdsHuoM42/LWg2+DDD9raD5atfa/YQp/UFOZdB
+         I1ZtuGLULs5kmu95TChbWPuDuevwtExrh16cso0etwaK+ZSC0BaP488ktBajRbugSwgj
+         7AyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5Y/JGu1gwH6oeD0Qx/HISTHDUoB8DmfYBudJ/jEPWKg=;
-        b=ijbMYp9+PHIn5pSIzvVXEkk2sE2zxy7k4dyL2Yn5Cn+TpS+O0EalrGaG986ANJilZf
-         nhQ2K640V0py28YiAk3iXzpBk03uOnSZAzw/LX76Al0l6BhcWrJGIoE7vPjUYIIKlqgA
-         IzsHt3mrcTxkVIswNsv6MEzRAvpIZ4OLwwm0CvkBJYQPZMMjq8deZ9bfqUnTP1olWF8S
-         /kbKAJpZd0YwBYo4FeE9yZK6jCpABdNvgfcXkf7/eakivNX1NCtrXWf50kPkR5TDiHfu
-         Lizp9rXucFgRndKkfaUw+iS4M45hyPE3vUYOIrp76sTwaPjiE0TJmjioQ2hDhcryJ3vz
-         3Enw==
-X-Gm-Message-State: ALQs6tBoSmix1qceSTcNFBCT6WV4nVUBgvVVxVntlpBvZBMRHNQQk779
-        jevWg32b3ii+7y+hzig+KHb2pg==
-X-Google-Smtp-Source: AB8JxZrJj1ljSfs23KCadvR4njD8XhaCM5RBR8ZnQAod2zE3qHIboqA2DKTlyrmZ1belrZp/l+AEHg==
-X-Received: by 2002:a17:902:bcc9:: with SMTP id o9-v6mr15513019pls.56.1525909777428;
-        Wed, 09 May 2018 16:49:37 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=LKtz83GaE+fbMv53UiJrMFvmgS8O4ox0xXcIbfaUABg=;
+        b=Ms3K3RPgBVri1ASlZ/7nR4vTEYbO1X0Rwsy1dhSciW8BTNxlEGQ/c3VXaIK06OWfh/
+         w1bXsUOQR+XujK2Jq9gW1LzYhlaFpYDYqsNgkDrxQRQtyWDEtY/o7AM/TYK6jZUKwkPf
+         9IAmR1CvRIN5eKkZBplN4nGDbsj0kaHifufRn66ELT3wL6m9CIx7804tEQ7J562CwwZ/
+         SuzODnOjhBxG/qseXtjwMG1USWktOBbmcIeV7RLoEvbq7Nr+l+N6m0aQcaBr/UN8LdQl
+         APrImASeSdHERSr6b3MWE6nLW9zM2CAj0efW3y9OfXbMqf9GNgkrKESBwmbuXMVgWKkO
+         b/0A==
+X-Gm-Message-State: ALKqPweouFyX4nTXSi37qcd6DaTAlJWAOHkDhfKyoZryppOC2gVIKMwM
+        3YxQF6ecDDrp/uBn/Jv3MwJZ1mjCenHN2w==
+X-Google-Smtp-Source: AB8JxZpGOU/x2Y7nCjslWUMMGmZMhPgW6Q0jNzst0+pAWaFQPSycIeFBuWd2izpFlCQb+Rn6zyFiQA==
+X-Received: by 2002:a63:715a:: with SMTP id b26-v6mr3109187pgn.440.1525909974660;
+        Wed, 09 May 2018 16:52:54 -0700 (PDT)
 Received: from localhost ([2601:602:9500:1120:eccb:c00:cd8f:fd73])
-        by smtp.gmail.com with ESMTPSA id h1sm54875586pfg.135.2018.05.09.16.49.36
+        by smtp.gmail.com with ESMTPSA id v16sm96786345pfj.123.2018.05.09.16.52.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 May 2018 16:49:36 -0700 (PDT)
-Date:   Wed, 9 May 2018 16:49:35 -0700
+        Wed, 09 May 2018 16:52:53 -0700 (PDT)
+Date:   Wed, 9 May 2018 16:52:51 -0700
 From:   Taylor Blau <me@ttaylorr.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        avarab@gmail.com, gitster@pobox.com, l.s.r@web.de,
-        martin.agren@gmail.com, pclouds@gmail.com, peff@peff.net,
-        sunshine@sunshineco.com
+To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Taylor Blau <me@ttaylorr.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH v5 5/7] builtin/grep.c: add '--column' option to
  'git-grep(1)'
-Message-ID: <20180509234935.GB68889@syl.local>
+Message-ID: <20180509235251.GC68889@syl.local>
 References: <20180421034530.GB24606@syl.local>
  <cover.1525831201.git.me@ttaylorr.com>
  <9222f0ee470884a984c1174cf218dece43f77f87.1525831201.git.me@ttaylorr.com>
  <882bdfe8-6caa-dd9c-7752-ee4884f135f9@talktalk.net>
+ <CAN0heSpXCajyDKwOrXuQHWRODsVnFewUWTMitOoRQueFV4eSiw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <882bdfe8-6caa-dd9c-7752-ee4884f135f9@talktalk.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSpXCajyDKwOrXuQHWRODsVnFewUWTMitOoRQueFV4eSiw@mail.gmail.com>
 User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 09, 2018 at 11:41:02AM +0100, Phillip Wood wrote:
-> Hi Taylor
->
-> On 09/05/18 03:13, Taylor Blau wrote:
-> > Teach 'git-grep(1)' a new option, '--column', to show the column
-> > number of the first match on a non-context line. This makes it possible
-> > to teach 'contrib/git-jump/git-jump' how to seek to the first matching
-> > position of a grep match in your editor, and allows similar additional
-> > scripting capabilities.
+On Wed, May 09, 2018 at 07:26:57PM +0200, Martin Ågren wrote:
+> On 9 May 2018 at 12:41, Phillip Wood <phillip.wood@talktalk.net> wrote:
+> > On 09/05/18 03:13, Taylor Blau wrote:
+> >>
+> >>   +--column::
+> >> +       Prefix the 1-indexed byte-offset of the first match on non-context
+> >> lines. This
+> >> +       option is incompatible with '--invert-match', and extended
+> >> expressions.
+> >> +
 > >
-> > For example:
 > >
-> >    $ git grep -n --column foo | head -n3
-> >    .clang-format:51:14:# myFunction(foo, bar, baz);
-> >    .clang-format:64:7:# int foo();
-> >    .clang-format:75:8:# void foo()
+> > Sorry to be fussy, but while this is clearer I think to could be improved to
+> > make it clear that it is the offset from the start of the matching line.
+> > Also the mention of 'extended expressions' made me think of 'grep -E' but I
+> > think (correct me if I'm wrong) you mean the boolean options '--and',
+> > '--not' and '--or'. The man page only uses the word extended when talking
+> > about extended regexes. I think something like
 > >
-> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> > ---
-> >   Documentation/git-grep.txt |  6 +++++-
-> >   builtin/grep.c             |  4 ++++
-> >   grep.c                     |  3 +++
-> >   t/t7810-grep.sh            | 32 ++++++++++++++++++++++++++++++++
-> >   4 files changed, 44 insertions(+), 1 deletion(-)
+> > Print the 1-indexed byte-offset of the first match from the start of the
+> > matching line. This option is incompatible with '--invert-match', '--and',
+> > '--not' and '--or'.
 > >
-> > diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> > index 18b494731f..75f1561112 100644
-> > --- a/Documentation/git-grep.txt
-> > +++ b/Documentation/git-grep.txt
-> > @@ -13,7 +13,7 @@ SYNOPSIS
-> >   	   [-v | --invert-match] [-h|-H] [--full-name]
-> >   	   [-E | --extended-regexp] [-G | --basic-regexp]
-> >   	   [-P | --perl-regexp]
-> > -	   [-F | --fixed-strings] [-n | --line-number]
-> > +	   [-F | --fixed-strings] [-n | --line-number] [--column]
-> >   	   [-l | --files-with-matches] [-L | --files-without-match]
-> >   	   [(-O | --open-files-in-pager) [<pager>]]
-> >   	   [-z | --null]
-> > @@ -169,6 +169,10 @@ providing this option will cause it to die.
-> >   --line-number::
-> >   	Prefix the line number to matching lines.
-> > +--column::
-> > +	Prefix the 1-indexed byte-offset of the first match on non-context lines. This
-> > +	option is incompatible with '--invert-match', and extended expressions.
-> > +
+> > would be clearer
 >
-> Sorry to be fussy, but while this is clearer I think to could be improved to
-> make it clear that it is the offset from the start of the matching line.
-> Also the mention of 'extended expressions' made me think of 'grep -E' but I
-> think (correct me if I'm wrong) you mean the boolean options '--and',
-> '--not' and '--or'. The man page only uses the word extended when talking
-> about extended regexes. I think something like
+> >> +       if (opt->columnnum && opt->extended)
+> >> +               die(_("--column and extended expressions cannot be combined"));
+> >> +
 >
-> Print the 1-indexed byte-offset of the first match from the start of the
-> matching line. This option is incompatible with '--invert-match', '--and',
-> '--not' and '--or'.
->
-> would be clearer
+> Just so it doesn't get missed: Phillip's comment (which I agree with)
+> about "extended" would apply here as well. This would work fine, no?
 
-I agree, and would be happy to change it as-such. I think that there is
-some pending discussion about regressing 'git-jump' no longer supporting
-'--not', so I'll wait for that to resolve before resending this patch.
+This check we should retain and change the wording to mention '--and',
+'--or', and '--not' specifically.
+
+> One thing to notice is that dying for `--column --not` in combination
+> with patch 7/7 makes git-jump unable to handle `--not` (and friends).
+> That would be a regression? I suppose git-jump could use a special
+> `--maybe-column` which would be "please use --column, unless I give you
+> something that won't play well with it". Or --column could do that kind
+> of falling back on its own. Or, git-jump could scan the arguments to
+> decide whether to use `--column` or not. Hmm... Tricky. :-/
+
+Agree that this is tricky. I don't think that --maybe-column is a
+direction that we should take for the reasons I outlined in the cover
+letter. Like I said, there are cases under an extended grammar where we
+can and cannot display meaningful column offsets.
+
+With regards to regressing 'git-jump', I feel as if 'git-jump --not' is
+an uncommon-enough case that I would be comfortable with the tradeoff.
+If a caller _is_ using '--not' in 'git-jump', they can reconfigure
+'jump.grepCmd' to work around this issue.
+
+Perhaps this is worth warning about in 'git-jump'? Peff, what do you
+think?
+
 
 Thanks,
 Taylor
