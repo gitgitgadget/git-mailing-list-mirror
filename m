@@ -2,83 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53B111F424
-	for <e@80x24.org>; Wed,  9 May 2018 17:54:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF3C31F42E
+	for <e@80x24.org>; Wed,  9 May 2018 17:55:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935153AbeEIRyy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 13:54:54 -0400
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:35848 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934331AbeEIRyv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 13:54:51 -0400
-Received: by mail-ot0-f196.google.com with SMTP id m11-v6so34958427otf.3
-        for <git@vger.kernel.org>; Wed, 09 May 2018 10:54:51 -0700 (PDT)
+        id S935167AbeEIRzN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 13:55:13 -0400
+Received: from mail-yw0-f173.google.com ([209.85.161.173]:43668 "EHLO
+        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934331AbeEIRzM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 13:55:12 -0400
+Received: by mail-yw0-f173.google.com with SMTP id r202-v6so10960551ywg.10
+        for <git@vger.kernel.org>; Wed, 09 May 2018 10:55:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=kWP6sMUkjZ9EjG2XBbgea2bASXKKcr1uA3YTT9rTjyc=;
-        b=as+1hQUazSpfs4szk1doRNccny0Mor/pMIrgbtWXfEQFuLkn/StimhTc4e8L+/29i7
-         QrHFMG6kjlFoMXy1tV8IIFu1dMKFO12cBoyJz7SLJwckz0N3ytojbXNB98zVcLWEm17+
-         MXNat/ylPzVomtKAlOcIsuw/Jcnoql5ynPYcP5d4G7PGyBvbkb+6VgY2vp1i8ccyVbSu
-         bHQNrNUWLDQHSGcer1Xw8XzQEZf/NvvmXp8RfSQJSganjfVFoSwjKvgyneVkB4y2xTcD
-         unFiENVS+/n8l8AG9Z7QYWqRn2e70is9mdduAfbyF0xlmVhIXY/IWmTwFUGzXNYocAnW
-         gssQ==
+         :cc;
+        bh=EoUvbYW/i8iMmGX0MKSCLNIlkY8d/Px+B40nWiwbYnQ=;
+        b=sHGj7KzQt1Zg0T+vDXeQ61/Y5iufiIwC1Nm4w3MgrTrZ32QxGmlrpxWCIao3HUV3JK
+         2Uzjq1GB8KUGdFSvQYLlcDIwpv8rOmbYDTPZy9K4t7u6r+no2El/Zm8Onhcw+q2mGKEG
+         CndAAn0zBaBA1FBplwONOSGTqSFL8Mt6ZI/nH7pppYiZPjzorFx/4QWGzG8zj/b6Vt9u
+         IDtHB0ILq4nc2AV8tAch7lHZ4SgQsgg58QEPclF/3/ZrbPo1FRLYVDu/CWxLlm5DkwNM
+         +DK1R8GTajF1tL3Q1k3pq0D1eVXlI9fNbBegHToG9suC+RgI67pv7NvwR9xVlofMq/H0
+         7iVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=kWP6sMUkjZ9EjG2XBbgea2bASXKKcr1uA3YTT9rTjyc=;
-        b=FjgbVKcu/TDGxEicYPeLIh6WYssTU7trN/G/sp2igF/vWW1C8u2LKZhgmY86JCdBby
-         uUnFEa2KgenaseyjVzo0oDIfZoBthjJzPBSy5bQymeB89M7M2y9qtAbuy/v44oOktg5r
-         CCRmEtCrwN573wmU1gXLXiieH79wO7XdluH2mWFmwtI4U2/mY3zT02HHjnaXnP/bTLTL
-         UsimYITmZt9VBS3D5JLtspV03Xiz87cS1cuFtSZjOj1YmOBeCv8dX7Uo+uP1+zWhnZuW
-         pLwStc0GZ7kIC5MjNTtF7T0Glu5JpZyM4sqOSZYgqJSjSvtNvhDkwh7Q9xG8o0BJ6Rz4
-         TZdw==
-X-Gm-Message-State: ALQs6tDSzufbbN2RPsYtjb1+39htpHgC9w5p8xLEOjgwmqjN7HTuXmUf
-        IRREXAwP5F/QQsVOqV8YyG8y9Z7jVzYysOCXDPY=
-X-Google-Smtp-Source: AB8JxZrVpx9Ehcmvty5WNNx6TL6n/vhYGs/qBh0w0Kp7hCMjmq25mB+dT1Kp/S5C72CyqtGxHVOglMfilwQnOnJRBl0=
-X-Received: by 2002:a9d:2995:: with SMTP id n21-v6mr35130406otb.152.1525888491227;
- Wed, 09 May 2018 10:54:51 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=EoUvbYW/i8iMmGX0MKSCLNIlkY8d/Px+B40nWiwbYnQ=;
+        b=loSDK0OrTlqZSuk3S4t4yfcNuciDdPKGh6+D47NScNue/34/YgG/vO7nvNIoL3C9dz
+         RxXqkxtYMRvOlZio0j957krh+wBlY/zgsoiUdCf2FtiD5vWogRfnU2TNknEQKxiTq/K8
+         OsPrTT/54eiCfFxoAuLvRMRVzI9MebjD/FfTIs12Oe37MudOriL/MfcjPeJRTJR4AZcc
+         KRmfmmcGjThXFmIVfMfu2FrGIE5pMcnk0XULhY7/jsQysxX3vx0MI6O5eqHibyy1R7Wx
+         /frsyLM6mgOK+33FEOj9W7vNlV15mvfbYUsT5SG2J+JXZHkC8yV/c4cbSvpsXxRrL8xD
+         OZJQ==
+X-Gm-Message-State: ALQs6tD8XUF2n7+a62+rbIc1VRQqFQAfA9Q5n6z9fuQAkbiJgWD0mnO6
+        QzHi8u4Wibbk8y6l4oZBTkNcQXo2YoRHRQeSbIJYSw==
+X-Google-Smtp-Source: AB8JxZqGMoQwEFhjMOPNBo/rnWGtolxD9iyIjSvUNNS9jsEr9ZbImIQZEYeROisDDt/eu87L28n5lz3BxPPW8M9IRsI=
+X-Received: by 2002:a81:b205:: with SMTP id q5-v6mr5130265ywh.414.1525888511828;
+ Wed, 09 May 2018 10:55:11 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Wed, 9 May 2018 10:54:20 -0700 (PDT)
-In-Reply-To: <CABPp-BHGLkEnYaR2rQqLRSraMgxW7E=fmS1=bGTVeSi2VrPKcw@mail.gmail.com>
-References: <20180509170409.13666-1-pclouds@gmail.com> <CABPp-BHGLkEnYaR2rQqLRSraMgxW7E=fmS1=bGTVeSi2VrPKcw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 9 May 2018 19:54:20 +0200
-Message-ID: <CACsJy8DFnWreLW_9xTsxJejvgXcT9EGsZ91cx7h39QpP4_p4Bw@mail.gmail.com>
-Subject: Re: [PATCH] repository: fix free problem with repo_clear(the_repository)
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Wed, 9 May 2018 10:55:11 -0700 (PDT)
+In-Reply-To: <20180509174830.GJ10348@aiede.svl.corp.google.com>
+References: <CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com>
+ <CAGZ79kZx=wHKc=2WLz-8pQWv1VhRq+pKVV9=Shq3gEMdkX-Q=A@mail.gmail.com> <20180509174830.GJ10348@aiede.svl.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 9 May 2018 10:55:11 -0700
+Message-ID: <CAGZ79kYwdTriaoev5EYvoSVA+ZummdKm3rjY261KucptjhytUQ@mail.gmail.com>
+Subject: Re: Implementing reftable in Git
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 9, 2018 at 7:42 PM, Elijah Newren <newren@gmail.com> wrote:
-> On Wed, May 9, 2018 at 10:04 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y <pclouds@gmail.com> wrote:
->> the_repository is special. One of the special things about it is that
->> it does not allocate a new index_state object like submodules but
->> points to the global the_index variable instead. As a global variable,
->> the_index cannot be free()'d.
->>
->> Add an exception for this in repo_clear(). In the future perhaps we
->> would be able to allocate the_repository's index on heap too. Then we
->> can remove revert this.
+On Wed, May 9, 2018 at 10:48 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Stefan Beller wrote:
 >
-> "remove revert"?
+>> * We *might* be able to use reftables in negotiation later
+>>   ("client: Last I fetched, you said your latest transaction
+>>   number was '5' with the hash over all refs to be <sha1>;
+>>   server: ok, here are the refs and the pack, you're welcome").
+>
+> Do you mean that reftable's reflog layout makes this easier?
+>
+> It's not clear to me why this wouldn't work with the current
+> reflogs.
 
-It's obvious that double negatives are below me. I'm going to the next
-level with double positives! "remove" should be removed.
---=20
-Duy
+Because of D/F conflicts we may not know all remote refs
+(and their ref logs), such that "the hash over all refs" on the remote
+is error prone to compute. Without transaction numbers it is also
+cumbersome for the server to remember the state.
+We could try it based on the current refs, but I'd think
+it is not easy to do, whereas reftables bring some subtle
+advantages that allow for such easier negotiation.
+
+>
+> [...]
+>> On Wed, May 9, 2018 at 7:33 AM, Christian Couder
+>> <christian.couder@gmail.com> wrote:
+>
+>>> During the last Git Merge conference last March Stefan talked about
+>>> reftable. In Alex Vandiver's notes [1] it is asked that people
+>>> announce it on the list when they start working on it,
+>>
+>> Mostly because many parties want to see it implemnented
+>> and were not sure when they could start implementing it.
+>
+> And to coordinate / help each other!
+
+Yes. Usually open source contributions are so sparse, that
+just doing it and then sending it to the mailing list does not
+produce contention or conflict (double work), but this seemed
+like a race condition waiting to happen. ;)
+
+>> With that said, please implement it in a way that it can not just be used as
+>> a refs backend, but can easily be re-used to write ref advertisements
+>> onto the wire?
+>
+> Can you spell this out a little more for me?  At first glance it's not
+> obvious to me how knowing about this potential use would affect the
+> initial code.
+
+Yeah me neither. I just want to make Christian aware of the potential
+use cases, that come afterwards, so it can influence his design decisions
+for the implementation.
