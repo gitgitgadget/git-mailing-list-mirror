@@ -2,94 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8760E1F424
-	for <e@80x24.org>; Wed,  9 May 2018 18:21:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B335B1F42E
+	for <e@80x24.org>; Wed,  9 May 2018 18:30:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935291AbeEISV4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 14:21:56 -0400
-Received: from mail-yb0-f170.google.com ([209.85.213.170]:33882 "EHLO
-        mail-yb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933577AbeEISVz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 14:21:55 -0400
-Received: by mail-yb0-f170.google.com with SMTP id b14-v6so12669331ybk.1
-        for <git@vger.kernel.org>; Wed, 09 May 2018 11:21:55 -0700 (PDT)
+        id S935374AbeEISaN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 14:30:13 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:35700 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935263AbeEISaM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 14:30:12 -0400
+Received: by mail-pf0-f179.google.com with SMTP id x9so6890923pfm.2
+        for <git@vger.kernel.org>; Wed, 09 May 2018 11:30:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=1JlSjK1+mbrBltybAzGXFnfVY1awiD9stvoCWEqCu/Y=;
-        b=SYOtHTzGBP3pqRTPmpN5w1Wiph/FAITI1wgOLBrdRSJ74Ti+h5RjwzjqlDxYcZ0/V5
-         3vmCGDTbF7GF9JMm0u53bxTtAViLHZR94UvgHB2/7xBOQr5CqJyO0scZS6T4nfAtd2tT
-         vY68fUGyQAoAJ2DgVPdx+itXlJcirEWO7Y9SrLgfyzdZqwyRiEAY2feicKZtU0wvNA+m
-         tsJ0W8hu4D4vV/0ag0tt4j2N1iWWmV6c4o2CAcm2S1uqdYnEmy7Bq1p9tvn300kjeWne
-         bQVKOHxePrKlLKQufsrtqQFRkXStTsTMuzhT31vJDs7IG6QFPd1LX5pGa9JWs23KpYsL
-         QWFQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=zXQ+6bz3+0NJE/9Wxm2NULt6GTHJztftanJKFYOjMsg=;
+        b=Uk/bVoNfChkjLWN4Z7SHLu+LVgmmBsft/obTvS1pGqynutncBAlJhEux0pXjkUbrST
+         YX9B3VORmBaT6d6iYN/RgoSpN+uNnGXVlY6YYU/8l4dyJGbxlBNPEbZvobEy/SSeHv6O
+         m8GJ1BRHME6t04lcOTaG4XTID0TXjs/QPLjHM0YVrqpOxfTQVT8CLvuEiiv08J1GRS/D
+         yt6s9SECxuN/rEgtPT4Y03O2BKRB8PXpu5bP2v2hLT2jBbuRhOgvfLbFWEjguNUY1ejp
+         pPAktaJULWhQypeVGNgRMMkcMEcxDoLEkChT4HCBYcJw1yOrnPnftF+OqjK0s8A+LkJG
+         J93A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=1JlSjK1+mbrBltybAzGXFnfVY1awiD9stvoCWEqCu/Y=;
-        b=FicHPgQT+/CAlSagKPnQmIlRl8preK0uSRApfLCiThHnBnmK9VWJqmncOYAQVVYRBp
-         M3OVNRm9FR+EYvF6HfR/9q6+M6mg1rvJ85vsrb7EzCcMJCC5d0MVvCb3fBAGeDMofUyB
-         qxclmHbS+rqYY8hRKdehqO/ObG/exXGAmiP2+OyKqqWndyqjYfGuZnhR6vdZyhs0EvP0
-         JyBCjshKPVx3/HLrhnZHaXgHklRjzk74sITvz5Xm2ItqVVDGutQVsR728y8Yo0qZgm+w
-         xJcG/tLXerdw1VoPkgaWY/cHz9RvhPutzkcdB+MX4b7x9P+HggQTczw3BnVngl67ngyK
-         4kAw==
-X-Gm-Message-State: ALKqPweEEd2K6WIYxBSHsk7tpPCbBRpGhQvSa975iKJ3Hqk8zHtdnxDh
-        PBawRjYEOoxOc0fGnbQKKAOCNtVF+BFNETIZTdVJFQ==
-X-Google-Smtp-Source: AB8JxZrQxO1S3ihSexrZ9tfbldWVXPIC3562PMk7Y8rr8y47QPkKPYkUqXLaIeMMA26o8fkr8axuopJ6fzXe7u9htvI=
-X-Received: by 2002:a25:1907:: with SMTP id 7-v6mr3500856ybz.292.1525890114453;
- Wed, 09 May 2018 11:21:54 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=zXQ+6bz3+0NJE/9Wxm2NULt6GTHJztftanJKFYOjMsg=;
+        b=LFxCKoLtQGiW+hds6aSwyACqZCb6hiWIfcXuc9i8Exz8j21gJ1z3jauckEHS/nXOuA
+         E9Iqv9hRn7BFj/qimUG9HfnmEZv0gVOFJw9R3vI01316anV92gSayTQG9A2kEQQKe0ir
+         +wlhJD5tZA+x/a5j2hHMRgJhAnGY+vOjKNILfP1cG2j5tvfDBPBxvsOtJ5FdiN3YPYFr
+         QjuLvoI4cOwbKCkEq1RDkvINhysPC7xC1HEGijMJiJoa2PxYEHmOBPc7QrXIomDYbwsh
+         b8duEsHypWaoe7zBC8jJeiGHf1tE/C8D8WD808Mx23Y1lxyXhgjEs8u2Oq/XkCC7CqUH
+         mTPg==
+X-Gm-Message-State: ALQs6tAuOpYmh/01CzTtvu2jFgte2K0pmqpQ0svNwDbvMv3DgBsrSqJN
+        MBE0nScWOiZmXexBkla3Wmyxgmid
+X-Google-Smtp-Source: AB8JxZoBrHFjfR0w8w2gkVT3jGhaFf3gcIaesaURQCy59g8GqHL/GDAZXn56vjEDuAclCU6WvVA3/w==
+X-Received: by 2002:a65:4907:: with SMTP id p7-v6mr36661001pgs.139.1525890611032;
+        Wed, 09 May 2018 11:30:11 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id j1sm49665667pfh.95.2018.05.09.11.30.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 09 May 2018 11:30:10 -0700 (PDT)
+Date:   Wed, 9 May 2018 11:30:08 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     jens persson <jens@persson.cx>, git <git@vger.kernel.org>
+Subject: Re: [PATCH] sha1dc: fix for compiling on AIX using IBM XLC compiler
+Message-ID: <20180509183008.GL10348@aiede.svl.corp.google.com>
+References: <CAEoyyNJPZXUKi3W=Gs=3v8i4YnTL47G9oaHDoV5pvCLx78jUVQ@mail.gmail.com>
+ <87603xxc3k.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Wed, 9 May 2018 11:21:53 -0700 (PDT)
-In-Reply-To: <CAFU8umjyrJc1m65hu6QMQUiNmsJtbV65tovcWjvmzFpsCr668A@mail.gmail.com>
-References: <CAFU8umjyrJc1m65hu6QMQUiNmsJtbV65tovcWjvmzFpsCr668A@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 9 May 2018 11:21:53 -0700
-Message-ID: <CAGZ79kb05U91_Ku7DKuwQVCrtouYwGWTCPdJFQ=bgWo91inRGA@mail.gmail.com>
-Subject: Re: Is rebase --force-rebase any different from rebase --no-ff?
-To:     Ilya Kantor <iliakan@gmail.com>,
-        Marc Branchaud <marcnarc@xiplink.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87603xxc3k.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+cc Marc and Johannes who know more about rebase.
+(+cc: Marc Stevens)
+Ævar Arnfjörð Bjarmason wrote:
+> On Wed, May 09 2018, jens persson wrote:
 
-On Wed, May 9, 2018 at 9:01 AM, Ilya Kantor <iliakan@gmail.com> wrote:
-> Right now in "git help rebase" for --no-ff:
-> "Without --interactive, this is a synonym for --force-rebase."
+>> Hello, first patch. I'm having trouble compiling on AIX using IBMs
+>> compiler, leading to
+>> unusable binaries. The following patch solved the problem for 2.17.0.
+>> The patch below is cut&pasted via gmail to allow for firewalls, but
+>> exists in an unmolested form on github:
+>> https://github.com/MrShark/git/commit/44bfcaca6637e24548ec06f46fb6035a846b14af
+>>
+>> Best regards
+>> /jp
+
+Thanks for the patch.
+
+>> Building on AIX using XLC every checkout gives an error:
+>> fatal: pack is corrupted (SHA1 mismatch)
+>> fatal: index-pack failed
+>>
+>> Back tracking it was introduced in 2.13.2, most likely in [1]
+>>
+>> Add a #ifdef guard based on macros defined at [2] and [3].
+>>
+>> Should perhaps __xlc__ should should be changed to or combined with _AIX
+>> based on the behavour of GCC on AIX or XL C on Linux.
+>>
+>> 1. https://github.com/git/git/commit/6b851e536b05e0c8c61f77b9e4c3e7cedea39ff8
+>> 2. https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.3/com.ibm.xlc1313.aix.doc/compiler_ref/macros_platform.html
+>> 3. https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.3/com.ibm.xlc1313.aix.doc/compiler_ref/xlmacros.html
+>>
+>> Signed-off-by: jens persson <jens@persson.cx>
+>> ---
+>>  sha1dc/sha1.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+>> index 25eded139..68a8a0180 100644
+>> --- a/sha1dc/sha1.c
+>> +++ b/sha1dc/sha1.c
+>> @@ -84,7 +84,7 @@
+>>  /* Not under GCC-alike or glibc or *BSD or newlib */
+>>  #elif (defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || \
+>>         defined(__MIPSEB__) || defined(__MIPSEB) || defined(_MIPSEB) || \
+>> -       defined(__sparc))
+>> +       defined(__sparc) || (defined(__powerpc) && defined(__xlc__)))
+
+I wonder if there's a simpler way to detect this.
+
+__powerpc seems orthogonal to the goal, since there are little-endian
+powerpc machines.
+
+It appears that XLC defines _BIG_ENDIAN on big-endian machines.  I
+wonder if we should do
+
+ #elif defined(_BYTE_ORDER) && defined(_BIG_ENDIAN) && defined(_LITTLE_ENDIAN)
+  ... as today ...
+ #elif !defined(_BYTE_ORDER) && defined(_BIG_ENDIAN) && !defined(_LITTLE_ENDIAN)
+ # define SHA1DC_BIGENDIAN
+ #elif !defined(_BYTE_ORDER) && !defined(_BIG_ENDIAN) && defined(_LITTLE_ENDIAN)
+  /* little endian. */
+ #else
+  ...
+
+It also seems to me that Git should enable the #error in the
+fallthrough case.  The test suite would catch this kind of problem but
+it does not seem that everyone runs the test suite, so a compiler
+error is more robust.  Is there a #define we can set to enable that?
+
+>>  /*
+>>   * Should define Big Endian for a whitelist of known processors. See
+>>   * https://sourceforge.net/p/predef/wiki/Endianness/ and
 >
-> But *with* --interactive, is there any difference?
+> This patch looks sane to me, but we don't manage this software but
+> instead try to pull it as-is from upstream at
+> https://github.com/cr-marcstevens/sha1collisiondetection
+>
+> Which we could apply this, it would be much better if you could submit a
+> pull request with this to upstream, and then we can update our copy as I
+> did in e.g. 9936c1b52a ("sha1dc: update from upstream", 2017-07-01).
 
-I found
-https://code.googlesource.com/git/+/b499549401cb2b1f6c30d09681380fd519938eb0
-from 2010-03-24
-
-    Teach rebase the --no-ff option.
-
-    For git-rebase.sh, --no-ff is a synonym for --force-rebase.
-
-    For git-rebase--interactive.sh, --no-ff cherry-picks all the commits in
-    the rebased branch, instead of fast-forwarding over any unchanged commits.
-
-    --no-ff offers an alternative way to deal with reverted merges.  Instead of
-    "reverting the revert" you can use "rebase --no-ff" to recreate the branch
-    with entirely new commits (they're new because at the very least the
-    committer time is different).  This obviates the need to revert the
-    reversion, as you can re-merge the new topic branch directly.  Added an
-    addendum to revert-a-faulty-merge.txt describing the situation and how to
-    use --no-ff to handle it.
-
-which sounds as if there is?
-
-Stefan
+Thanks,
+Jonathan
