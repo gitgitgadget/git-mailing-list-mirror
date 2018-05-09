@@ -2,155 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C1071F424
-	for <e@80x24.org>; Wed,  9 May 2018 17:04:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D46DE1F424
+	for <e@80x24.org>; Wed,  9 May 2018 17:04:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965829AbeEIREd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 13:04:33 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:44495 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965673AbeEIREb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 13:04:31 -0400
-Received: by mail-qt0-f196.google.com with SMTP id d3-v6so46525809qtp.11
-        for <git@vger.kernel.org>; Wed, 09 May 2018 10:04:30 -0700 (PDT)
+        id S965673AbeEIREn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 13:04:43 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:43565 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965651AbeEIREX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 13:04:23 -0400
+Received: by mail-lf0-f65.google.com with SMTP id g12-v6so51988887lfb.10
+        for <git@vger.kernel.org>; Wed, 09 May 2018 10:04:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=sZrTjdCqqMqOQ75Kt1z6z6TWQiaJ04RpFyTcKv5f0iI=;
-        b=VVpn0MkYZqJIX6PSIdGDSgJFIfWvrIizi3LGTaGWCWonyEOSdVMleLLgwsVPslO+WZ
-         j7PvzoP9E6AHdyaWOHc7T8+uoYl5iGggaVEheOUQuDcupwRPDUkgPbqkhxg1VzAkF3o5
-         Tnc3J3luvHn9Ae1X5+mqqKFwoiav58vKTDAqcSRuLW+zebaIvQsYeTM6JsbpO2Ph8Ed9
-         8gg52kJgIfKNdxH/GpYzr8rYIhQ0WNmBUI/lZxjzt3tGmjjma8uM+X/p6uKwAZddrPwF
-         fokU8pdKvR6L6wCqIu0rSve/BLTUZndIOt1Ed0l2tLj4JS/wBoQLFWb4b5xjxrY+JTcB
-         81RQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ARDCP5UfzsMcPQClOCwY1n8WsMST09e2O4pB/sn/ds4=;
+        b=gzzOubU4rfh0q4p/0rIxbHlix6RrZwypcHqZynM/IJ+a4E++ApTU/KfX4coQFG51jH
+         EmYPACj9iCamsN5x4TwxEeI+0p+oacoBy2aHGi9r2E2b8fb1FfeGItxmBkgsgJ205Zjq
+         tYNxi3iUTL+DYd7GDowqb+iZ8jxMjtygU33T6Zw5JaaeFhdVlcjFJobstvJtfe2iXr1k
+         8MJ6YV5hHXRMIsUJnTdCZJ00HmZ6eumHLemBi+xedTOJGkYeORtTneS1IqdGVc3mg5Tr
+         c0vdmaF/HBBPFnOh2FtlCwO47SNcp3oxN0VRZvwEutNhCrCGasLBbgekIr4GVEMrkqAu
+         VLlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=sZrTjdCqqMqOQ75Kt1z6z6TWQiaJ04RpFyTcKv5f0iI=;
-        b=dSguLJkTUg3WFHTzP+4lgVm4KRF7BrJUrEgRFLp1URbLTMXHzcG+iiX03csgwJBzvX
-         KXL4H9FS/rKNnMypTGubIV3afIWmi/Rh3vo6nBohBtQodvja0XzP/i5hVsLLAlj3G3tL
-         +94L0yA06CSUojmE4MG3QALyvaM4LfPUadmkwgg3gWS8aos0Vhl3OVA8UKGZDwbxUXt9
-         LsZam0a4V7zTJkh/yvmR32QH44zrbZg0i1FSzw6bmCREA4iC41SLH6Pka88y4ki+l+qr
-         rjNqc+PQYqf5OHFcMbqpxvlzww+Yych1Ie6XAA9kkZy3QNVLGH0M0Q1qR4RC8XVc+Lw0
-         txtg==
-X-Gm-Message-State: ALQs6tD4j5elnX0QXtRWVQW38l7xorJ8C5fkV2b+QOb70naAKu+aePwD
-        UKArvLv+VkHefbYdqUvkUOKVWL+y
-X-Google-Smtp-Source: AB8JxZoWR6sFP3ptcYZGW+IyyFGodamQFCd2PmSlZCiJpSfX7lNkp75RtcbM/Sc3z8H3D9sBeqrOBA==
-X-Received: by 2002:ac8:710b:: with SMTP id z11-v6mr44054506qto.112.1525885470342;
-        Wed, 09 May 2018 10:04:30 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id b3sm10973070qkd.5.2018.05.09.10.04.29
+        bh=ARDCP5UfzsMcPQClOCwY1n8WsMST09e2O4pB/sn/ds4=;
+        b=BlXaTSM8preCj2E3yNsqT9IXTPRDYJ4FKY7PQU86AAy9GXADfYPPp3QUtpBjF0Hw9z
+         mxUkQ4ffmKOlNLklQX143JuvXteoQK6/hE0peX1aAt9SBxZvWXKH045ZJicxdozJrGWW
+         MrpmDGDaZodDE8n/Lb+aomnXtt85YpX6DQNFvZ/ODPxOkC4BT1jnF8MIRWbkS5JvWNdy
+         76p9S7WErq2LmlNb6Nzo2FyqMR+pvUwxjo20m9GEOwi0vQeeuw2J2hdXiz9H2ywUI3T3
+         M7o+v5nMUmkuc12Bm97+MzyvaAJQoeCISsoUTcgMYSNkAJBgnL6hwJLCjfYl6KP0fQxe
+         J2dw==
+X-Gm-Message-State: ALQs6tBQO9F8lFsGCpvFDQnAVx/NDXfyB/vak+pY9V4xMSt5NxBI7Wbc
+        QPHaikEbdb5Pez9jG6U2hipFfA==
+X-Google-Smtp-Source: AB8JxZreDk/uPCuAJHP/HQX7Cn4mdWkZgUceFxWRujFdqI6A8oFkEJRuDMHQd6FVyz+scOkY6vBllQ==
+X-Received: by 2002:a2e:9d95:: with SMTP id c21-v6mr32935556ljj.89.1525885461520;
+        Wed, 09 May 2018 10:04:21 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id r189-v6sm924418lfe.81.2018.05.09.10.04.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 May 2018 10:04:29 -0700 (PDT)
-Subject: Re: [PATCH v1] add status config and command line options for rename
- detection
-To:     Duy Nguyen <pclouds@gmail.com>, Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "newren@gmail.com" <newren@gmail.com>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
-        Alejandro Pauly <alpauly@microsoft.com>,
-        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
-        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
-References: <20180509144213.18032-1-benpeart@microsoft.com>
- <CACsJy8CdvKO3aityyP3Ax0ZqaS6JzwH_i2Gn_8NmCUDKHMMQrw@mail.gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <80ddf6cf-0a38-9cd0-18b1-83114c2d1f5d@gmail.com>
-Date:   Wed, 9 May 2018 13:04:25 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        Wed, 09 May 2018 10:04:20 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] repository: fix free problem with repo_clear(the_repository)
+Date:   Wed,  9 May 2018 19:04:09 +0200
+Message-Id: <20180509170409.13666-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.705.g3525833791
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8CdvKO3aityyP3Ax0ZqaS6JzwH_i2Gn_8NmCUDKHMMQrw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+the_repository is special. One of the special things about it is that
+it does not allocate a new index_state object like submodules but
+points to the global the_index variable instead. As a global variable,
+the_index cannot be free()'d.
 
+Add an exception for this in repo_clear(). In the future perhaps we
+would be able to allocate the_repository's index on heap too. Then we
+can remove revert this.
 
-On 5/9/2018 11:59 AM, Duy Nguyen wrote:
-> On Wed, May 9, 2018 at 4:42 PM, Ben Peart <Ben.Peart@microsoft.com> wrote:
->> Add a new config status.renames setting to enable turning off rename detection
->> during status.  This setting will default to the value of diff.renames.
-> 
-> Please add the reason you need this config key in the commit message.
-> My guess (probably correct) is on super large repo (how large?),
-> rename detection is just too slow (how long?) that it practically
-> makes git-status unusable.
-> 
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ I was trying to test the new parsed_object_pool_clear() and found this.
 
-Yes, the reasons for this change are the same as for the patch that 
-added these same flags for merge and have to do with the poor 
-performance of rename detection with large repos.  I'll update the 
-commit message to be more descriptive (see below) and correct some 
-spelling errors.
+ repository.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
+diff --git a/repository.c b/repository.c
+index a4848c1bd0..f44733524a 100644
+--- a/repository.c
++++ b/repository.c
+@@ -238,7 +238,9 @@ void repo_clear(struct repository *repo)
+ 
+ 	if (repo->index) {
+ 		discard_index(repo->index);
+-		FREE_AND_NULL(repo->index);
++		if (repo->index != &the_index)
++			free(repo->index);
++		repo->index = NULL;
+ 	}
+ }
+ 
+-- 
+2.17.0.705.g3525833791
 
-add status config and command line options for rename detection
-
-After performing a merge that has conflicts, git status will by default 
-attempt to detect renames which causes many objects to be examined.  In 
-a virtualized repo, those objects do not exist locally so the rename 
-logic triggers them to be fetched from the server. This results in the 
-status call taking hours to complete on very large repos.  Even in a 
-small repo (the GVFS repo) turning off break and rename detection has a 
-significant impact:
-
-git status --no-renames:
-31 secs., 105 loose object downloads
-
-git status --no-breaks
-7 secs., 17 loose object downloads
-
-git status --no-breaks --no-renames
-1 sec., 1 loose object download
-
-Add a new config status.renames setting to enable turning off rename 
-detection during status.  This setting will default to the value of 
-diff.renames.
-
-Add a new config status.renamelimit setting to to enable bounding the 
-time spent finding out inexact renames during status.  This setting will 
-default to the value of diff.renamelimit.
-
-Add status --no-renames command line option that enables overriding the 
-config setting from the command line. Add --find-renames[=<n>] to enable 
-detecting renames and optionally setting the similarity index from the 
-command line.
-
-Note: I removed the --no-breaks command line option from the original 
-patch as it will no longer be needed once the default has been changed 
-[1] to turn it off.
-
-[1] 
-https://public-inbox.org/git/20180430093421.27551-2-eckhard.s.maass@gmail.com/
-
-Original-Patch-by: Alejandro Pauly <alpauly@microsoft.com>
-Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
-
-
-> This information could be helpful when we optimize rename detection to
-> be more efficient.
-> 
->>
->> Add a new config status.renamelimit setting to to enable bounding the time spent
->> finding out inexact renames during status.  This setting will default to the
->> value of diff.renamelimit.
->>
->> Add status --no-renames command line option that enables overriding the config
->> setting from the command line. Add --find-renames[=<n>] to enable detecting
->> renames and optionaly setting the similarity index from the command line.
->>
->> Origional-Patch-by: Alejandro Pauly <alpauly@microsoft.com>
->> Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
