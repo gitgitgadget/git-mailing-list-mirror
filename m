@@ -2,126 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEE691F42E
-	for <e@80x24.org>; Wed,  9 May 2018 17:50:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AB461F424
+	for <e@80x24.org>; Wed,  9 May 2018 17:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935519AbeEIRuI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 13:50:08 -0400
-Received: from mail-yb0-f182.google.com ([209.85.213.182]:43241 "EHLO
-        mail-yb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935274AbeEIRuC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 13:50:02 -0400
-Received: by mail-yb0-f182.google.com with SMTP id v12-v6so3657979ybl.10
-        for <git@vger.kernel.org>; Wed, 09 May 2018 10:50:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=MSpPDjW6cZRL071CP3rrlsmaenP6nL0/0sbqQ0cwabo=;
-        b=VFuPPwSSxWc9E3KurXROIZT7YKtNyPtuOaJ4cbtTBSfPRVnh9ecH4dGVba9mngIzvT
-         RYUpYlAmJMShPNQkd/sx516Fm/RDKQjEgoJq/Nm+VIbR9AmvajA7kTrHOmBZ1J7BfSAl
-         2BpGINEM/yV7/dFwTvMLdkp6+QT6QWTpKXbuzAcDrcHa4YnqmreL86WQ7mckBx9htbd8
-         Qfl8Vt9vWtYcXtEAcMsI+YNFx8jeXyHc/wddtLKxMgt/pjAQSFN4H9nzQPaUDmyCMVhx
-         S2gENBZJoMDGSvG4EbT93KuFn3Laq1OZHtwUc8OVa+I3iPhNnA2RgaTTfbu3l8le6jFN
-         Qsrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MSpPDjW6cZRL071CP3rrlsmaenP6nL0/0sbqQ0cwabo=;
-        b=pdoK1IQs/WDT760veeVn4rt+Sxz9tAat2nQjNXMwPVxpAAkVpnwj5Udj7+7BepllOa
-         6UrGBSt0kWAeu4US5xLd3l9Smp/Q2dGAR5bhAZ5wS7OVEulTzsqy6bI0lj/i5c7kDGYK
-         xDnl9kdBfqejNpUMLOpYsn2LtHTokMWl5+fhYZOD+ptuWyEbCpBlNuI9BGkKEUVa8sVu
-         jrakMiCBBbObLnp67ELYCxs2Zck/CWFzcq8/k+7NSBYygI26SD7bEqP7j5pdNW0M5nHq
-         ZEt+MAuozCA8aJARjw/nhXbPBgcBEAO6/mER0yeQFEgld1gXJWJTyrlghGLIHgRujhg1
-         7J5A==
-X-Gm-Message-State: ALQs6tAkh9iBCJgctEW4coOBqL019em++q0xB2S7sW1JOBhCm4XyBO8L
-        gsXou2nYX8nVCJYNPvw76zesVkHzgp0zE6CpXPkqYA==
-X-Google-Smtp-Source: AB8JxZpo/9AsPblTDp30uUjXktwDEpyfMm+gO5LBytfvJ2ZN77YFLS1bV8PEwHoCahAEl8AOxiVsXr/leZuGlJrxygQ=
-X-Received: by 2002:a25:500e:: with SMTP id e14-v6mr27723895ybb.334.1525888201280;
- Wed, 09 May 2018 10:50:01 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Wed, 9 May 2018 10:50:00 -0700 (PDT)
-In-Reply-To: <20180509170409.13666-1-pclouds@gmail.com>
-References: <20180509170409.13666-1-pclouds@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 9 May 2018 10:50:00 -0700
-Message-ID: <CAGZ79kbFiULj1NJARm6ObYrqv_Fu+U2sb8h_sNJwdWur+JqrvQ@mail.gmail.com>
-Subject: Re: [PATCH] repository: fix free problem with repo_clear(the_repository)
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+        id S935274AbeEIRvJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 13:51:09 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44289 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S935189AbeEIRvH (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 9 May 2018 13:51:07 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 0E7D022B55;
+        Wed,  9 May 2018 13:51:05 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Wed, 09 May 2018 13:51:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dwim.me; h=cc
+        :content-transfer-encoding:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-sender
+        :x-me-sender:x-sasl-enc; s=mesmtp; bh=UILXmEHxqOJlAnz5JnQRjgKZkI
+        GlEII30KQ6AOrfOLg=; b=lfDzyz8LLzuvNgJIeTx9J1SDPLMjlALMN7yP5pJLBx
+        dM61jFkb6ePUixYFdxLxrtC7eo9kEVllSbyyYJ302T1DCw2u7v0y79Cmal+kbpPu
+        r8J5tVTXBtxi6H1Et+vG5wZqb1anuI66CbG0oB8L3JX1JYgfJuSkob5HoLlke4N8
+        k=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=UILXmE
+        HxqOJlAnz5JnQRjgKZkIGlEII30KQ6AOrfOLg=; b=GlpHtjKTTu5t78z/1/gHj9
+        MipBfoIM23yZ70syGkYBZ6BvmvlrZZZTKLgMJfa1zBaVmM/+6zfEhmL9fPYRngoK
+        8n5pFdMVPRiYGI0xVlTC69bPU+xnerRcSKSjbNhmkoqNlU6rbmZRPgxWL6kIGw/V
+        ncX5DBChBur2jbVfRKu257zyia1reHzWYQmGz5+U41dxKsg/QrXPJ66rnhu7CDAX
+        wRvrAr0D3dm2+F/E5j8yXJzXC7ZitHmQsdooE1x0YsV3QwziAC6/CoeJtXb2BOlC
+        FWT7z8mJKn1gtfDP/SvcJY0byQi3b4ilIk7AXFCKB3gDCI2yT0ePW3SCtcp72TIA
+        ==
+X-ME-Sender: <xms:CDXzWtlE189RC9DhTFbHBu15EjGUzS60ZpXsrPbOZC8HViusYgHmsg>
+Received: from centaur.local (ip5f5bf44d.dynamic.kabel-deutschland.de [95.91.244.77])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 38828E463E;
+        Wed,  9 May 2018 13:51:03 -0400 (EDT)
+Message-ID: <67fd1816c4da0e54fb88dc29a44b897d41a36602.camel@dwim.me>
+Subject: Re: Implementing reftable in Git
+From:   Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@dwim.me>
+To:     Jonathan Nieder <jrnieder@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        ethomson@edwardthomson.com, ps@pks.im
+Date:   Wed, 09 May 2018 19:51:01 +0200
+In-Reply-To: <20180509164807.GI10348@aiede.svl.corp.google.com>
+References: <CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com>
+         <20180509164807.GI10348@aiede.svl.corp.google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Mailer: Evolution 3.28.1-2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 9, 2018 at 10:04 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> the_repository is special. One of the special things about it is that
-> it does not allocate a new index_state object like submodules but
-> points to the global the_index variable instead. As a global variable,
-> the_index cannot be free()'d.
+Hi all,
 
-ok. That is the situation we're in.
+On Wed, 2018-05-09 at 09:48 -0700, Jonathan Nieder wrote:
+> Hi,
+> 
+> Christian Couder wrote:
+> 
+> > I might start working on implementing reftable in Git soon.
+> 
+> Yay!
+> 
+> [...]
+> > So I think the most straightforward and compatible way to do it would
+> > be to port the JGit implementation.
+> 
+> I suspect following the spec[1] would be even more compatible, since it
+> would force us to tighten the spec where it is unclear.
+> 
+> >                                        It looks like the
+> > JGit repo and the reftable code there are licensed under the Eclipse
+> > Distribution License - v 1.0 [7] which is very similar to the 3-Clause
+> > BSD License also called Modified BSD License
+> 
+> If you would like the patches at https://git.eclipse.org/r/q/topic:reftable
+> relicensed for Git's use so that you don't need to include that
+> license header, let me know.  Separate from any legal concerns, if
+> you're doing a straight port, a one-line comment crediting the JGit
+> project would still be appreciated, of course.
+> 
+> That said, I would not be surprised if going straight from the spec is
+> easier than porting the code.
 
->
-> Add an exception for this in repo_clear(). In the future perhaps we
-> would be able to allocate the_repository's index on heap too. Then we
-> can remove revert this.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  I was trying to test the new parsed_object_pool_clear() and found this.
+Would you expect that this port would keep the Eclipse Distribution
+License or would it get relicensed to GPLv2?
 
-So this would go with the latest sb/object-store-alloc ?
+We would also want to have reftable functionality in the libgit2
+project, but it has a slightly different license from git (GPLv2 with
+linking exception) which requires explicit consent from the authors for
+us to port over the code from git with its GPLv2 license.
 
-My impression was that we never call repo_clear() on
-the_repository, which would allow us to special case
-the_repository further just as I did in v2 of that series[1] by
-having static allocations for certain objects in case of \
-the_repository.
+The libgit2 project does have permission from Shawn to relicense his
+git code, but this would presumably not cover this kind of porting. I
+don't believe we would have issues if the code remained this BSD-like
+license.
 
-[1] https://public-inbox.org/git/20180501213403.14643-14-sbeller@google.com=
-/
+Sorry for being difficult, but fewer distinct reimplementations is
+probably a good thing overall.
 
-We could just deal with all the exceptions, but that makes repo_clear
-ugly IMHO.
+cc the core libgit2 team
 
-I would rather special case the_repository even more instead
-of having it allocate all its things on the heap. (However we rather
-want to profile it and argue with data....)
+Cheers,
+   cmn
 
->  repository.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/repository.c b/repository.c
-> index a4848c1bd0..f44733524a 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -238,7 +238,9 @@ void repo_clear(struct repository *repo)
->
->         if (repo->index) {
->                 discard_index(repo->index);
-> -               FREE_AND_NULL(repo->index);
-> +               if (repo->index !=3D &the_index)
-> +                       free(repo->index);
-> +               repo->index =3D NULL;
-
-So after this we have a "dangling" the_index.
-It is not really dangling, but it is not part of the_repository any more
-and many places still use the_index, it might make up for interesting
-bugs?
-
-What is your use case of repo_clear(the_repository)?
-
-Thanks,
-Stefan
