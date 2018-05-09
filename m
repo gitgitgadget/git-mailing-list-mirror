@@ -2,112 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2D301F424
-	for <e@80x24.org>; Wed,  9 May 2018 16:20:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D11131F424
+	for <e@80x24.org>; Wed,  9 May 2018 16:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965273AbeEIQU2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 12:20:28 -0400
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:37046 "EHLO
-        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965034AbeEIQU1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 12:20:27 -0400
-Received: by mail-oi0-f54.google.com with SMTP id w123-v6so23034833oia.4
-        for <git@vger.kernel.org>; Wed, 09 May 2018 09:20:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=rVKAhkrM6oXYAE9QdTh4KO360+M/xH+ti9xhIRc544E=;
-        b=McIfEbwN+K0l9cui3r07gMg3L7ZaboxGNMHWApfnJ4uxn2WEJeKC2ACq8J/JIOU4mh
-         vPmvVv/HQWg3+CBvVrQ0zy8n7Z/eN5G+U/rD1vgYolRiWwWMRIFFpru88sH9LpRRuMi8
-         iknI1oIE4HK/76tyg0ioE0/1GSuzYJ9seIRZl0C/MmTEQmNJmCwIEBaPWsEwwz1iDh0z
-         xWweGtaQc8MkvOXsSTC+c+oVrOqiqvBKLmnFvCKqKHyjgv2J4eB7zOkz6BQ35qQjCMSb
-         qiRKhKYNsA08PV2BsIBN1CMm4R3YEkhdWPi26eczsYho4tSsSQyXxOwiYqDx0QRyelIb
-         dQ9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=rVKAhkrM6oXYAE9QdTh4KO360+M/xH+ti9xhIRc544E=;
-        b=OZ1fk4PGFKMxtuMJSrZlpQSj3jeUlMJjZYvOeeYpjhjEBtBZvXcotPHKn3TmhIeBiS
-         cXjK0vV5nN+Yl2blhbzfi8Xw+wPjc0CPxudcUw0AYNMdiI7Tc/qeDu+o9E3QIFEzjXOH
-         V1QqE/+eAs+iUXZJ9cn7akyxjIbZigAz0HrBEF1W0oTZi1h9qQVVnLK6NgeHNLuqVx0X
-         pbt0NzEp5VvTY+1K7RWy6nXa00gfBXzTeptNwIjrInCttrFCzvCoFRWQ7xISs2RuIdSZ
-         iO+vDnfctbzFzShHtwj4w6nH7ffPpivIDxCBYdDR4B+QAfiKXlHaweaPlbO3RbRGpZ2i
-         MUZQ==
-X-Gm-Message-State: ALQs6tAquE8yj0eyPH4PxY1rM8f3PSk5r/2GBonGFl746bLmkRU/Rw7T
-        U9SmBl8pxgEUJX5jseNbd5kPLUJZN1aNrkgERg8=
-X-Google-Smtp-Source: AB8JxZqL1Sjv3ruJQOLTTBNvAT7cm9C0w3IQIMaL9XM+9O6qi6eYMy9g0zTsrEH6xi/KUQCa+FTx0EzwobHI2NFyh6k=
-X-Received: by 2002:aca:ce42:: with SMTP id e63-v6mr30597682oig.34.1525882827189;
- Wed, 09 May 2018 09:20:27 -0700 (PDT)
+        id S965448AbeEIQYk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 12:24:40 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:50459 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965034AbeEIQYk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 12:24:40 -0400
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id GRtMf5BwSQrTpGRtOfvpoH; Wed, 09 May 2018 17:24:38 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=ZIX5Z0zb c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8 a=3L1EsLzu84tvToWsA4MA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 02/18] Add a new builtin: branch-diff
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+ <8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de>
+ <71b00bbf-07e7-11e1-046b-f0241b82ebd3@ramsayjones.plus.com>
+ <nycvar.QRO.7.76.6.1805032224150.77@tvgsbejvaqbjf.bet>
+ <850f1ad6-752d-85ae-ebad-feae09a76c54@ramsayjones.plus.com>
+ <nycvar.QRO.7.76.6.1805040829390.77@tvgsbejvaqbjf.bet>
+ <019cce70-c109-496e-e043-c471dcb21e00@ramsayjones.plus.com>
+ <nycvar.QRO.7.76.6.1805052130360.77@tvgsbejvaqbjf.bet>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <8876f376-db86-c3e1-b97d-9e33506f2df2@ramsayjones.plus.com>
+Date:   Wed, 9 May 2018 17:24:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Wed, 9 May 2018 09:19:56 -0700 (PDT)
-In-Reply-To: <20180508181839.GC7210@sigill.intra.peff.net>
-References: <20180506141031.30204-5-martin.agren@gmail.com>
- <CACsJy8DyRhQ0DKy8UyK+r7Kmw=0hHD=W6aXXKutk4e-wtGTdNg@mail.gmail.com>
- <CACsJy8Btuc2J4aCTymkvLYyMV5zJrdMUdtV5NDnPqXOjsTVw4w@mail.gmail.com>
- <CAN0heSpA5H7Gwwx0TEY9=iFJrgKb0SPXqKOwHK=4NxPYoGjZ7A@mail.gmail.com>
- <CACsJy8DDyrUinwXx1b66DCHB+2DLt1KBmFt_83R1+HWjbzGH2A@mail.gmail.com> <20180508181839.GC7210@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 9 May 2018 18:19:56 +0200
-Message-ID: <CACsJy8BDaHUs+DMOM7h6Lgbn8qB8yE4-O4iG=t85nG6sQ77zOw@mail.gmail.com>
-Subject: Re: [PATCH 4/5] lock_file: make function-local locks non-static
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <nycvar.QRO.7.76.6.1805052130360.77@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfD3kBFno7aU2Ku/pygRlauavQpYrCLyYHKQD9jWWTaoZ206fCppJJtUxW5t4Fkb0VUPQEBVvWr4sLGEFXqMbD3cbJwxWnvM6yF/8K/9VpV9P4nR7kl3t
+ DhdO9Um3SLCTIARe7jZR/szlAbLl3xMNQ9hWnec1pFl/Idv7A4ik9854
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 8, 2018 at 8:18 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, May 07, 2018 at 05:24:05PM +0200, Duy Nguyen wrote:
->
->> >>>> -       static struct lock_file lock;
->> >>>> +       struct lock_file lock = LOCK_INIT;
->> >>>
->> >>> Is it really safe to do this? I vaguely remember something about
->> >>> (global) linked list and signal handling which could trigger any time
->> >>> and probably at atexit() time too (i.e. die()). You don't want to
->> >>> depend on stack-based variables in that case.
->> >>
->> >> So I dug in a bit more about this. The original implementation does
->> >> not allow stack-based lock files at all in 415e96c8b7 ([PATCH]
->> >> Implement git-checkout-cache -u to update stat information in the
->> >> cache. - 2005-05-15). The situation has changed since 422a21c6a0
->> >> (tempfile: remove deactivated list entries - 2017-09-05). At the end
->> >> of that second commit, Jeff mentioned "We can clean them up
->> >> individually" which I guess is what these patches do. Though I do not
->> >> know if we need to make sure to call "release" function or something/
->> >> Either way you need more explanation and assurance than just "we can
->> >> drop their staticness" in the commit mesage.
->> >
->> > Thank you Duy for your comments. How about I write the commit message
->> > like so:
->>
->> +Jeff. Since he made it possible to remove lock file from the global
->> linked list, he probably knows well what to check when switching from
->> a static lock file to a stack-local one.
->
-> It should be totally safe. If you look at "struct lock_file", it is now
-> simply a pointer to a tempfile allocated on the heap (in fact, I thought
-> about getting rid of lock_file entirely, but the diff is noisy and it
-> actually has some value as an abstraction over a pure tempfile).
->
-> If you fail to call a release function, it will just hang around until
-> program exit, which is more or less what the static version would do.
-> The big difference is that if we re-enter the function while still
-> holding the lock, then the static version would BUG() on trying to use
-> the already-active lockfile. Whereas after this series, we'd try to
-> create a new lockfile and say "woah, somebody else is holding the lock".
 
-Ah.. I did miss that "everything on heap" thing. Sorry for the noise
-Martin and thanks for clarification Jeff :)
--- 
-Duy
+
+On 05/05/18 20:41, Johannes Schindelin wrote:
+[snip]
+
+[Sorry for the late reply - still catching up after (long weekend)
+UK public holiday]
+
+> Well, what I would want to do is let the cloud work for me. By adding an
+> automated build to my Visual Studio Team Services (VSTS) account, of
+> course, as I have "cloud privilege" (i.e. I work in the organization
+> providing the service, so I get to play with all of it for free).
+> 
+> So I really don't want to build sparse every time a new revision needs to
+> be tested (whether that be from one of my branches, an internal PR for
+> pre-review of patches to be sent to the mailing list, or maybe even `pu`
+> or the personalized branches on https://github.com/gitster/git).
+> 
+> I really would need a ready-to-install sparse, preferably as light-weight
+> as possible (by not requiring any dependencies outside what is available
+> in VSTS' hosted Linux build agents.
+> 
+> Maybe there is a specific apt source for sparse?
+
+Not that I'm aware of, sorry! :(
+
+[release _source_ tar-balls are available, but that's not
+what you are after, right?]
+
+I don't know what is involved in setting up a 'ppa repo' for
+Ubuntu, which I suspect is the kind of thing you want, but it
+would have helped me several times in the past (so that I could
+have something to point people to) ... ;-)
+
+ATB,
+Ramsay Jones
+
