@@ -2,113 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB7221F424
-	for <e@80x24.org>; Wed,  9 May 2018 17:48:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEE691F42E
+	for <e@80x24.org>; Wed,  9 May 2018 17:50:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935413AbeEIRsf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 13:48:35 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:46055 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933555AbeEIRsd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 13:48:33 -0400
-Received: by mail-pf0-f195.google.com with SMTP id c10so25980959pfi.12
-        for <git@vger.kernel.org>; Wed, 09 May 2018 10:48:33 -0700 (PDT)
+        id S935519AbeEIRuI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 13:50:08 -0400
+Received: from mail-yb0-f182.google.com ([209.85.213.182]:43241 "EHLO
+        mail-yb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935274AbeEIRuC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 13:50:02 -0400
+Received: by mail-yb0-f182.google.com with SMTP id v12-v6so3657979ybl.10
+        for <git@vger.kernel.org>; Wed, 09 May 2018 10:50:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=if52SRi1P+w7wz5k0ehJXHCP2qxjpKkPOo6oJSniME8=;
-        b=qr64JWALW0+xCmGkRHrN8F57yd881NIAq0bjCRbxC1QLGaEwE+tWBtD52h90vQXqj+
-         X3jv6usOjSyiudwlwWcTY5ox2eDAPOCfPCcidnYAFh/80H9VZbg0O/coIIkz5ZDvSdwF
-         Ae7z9vOpwM9kN5T5n0sjCZL+MMznSJX1xmIHLaYkL0OePV1EMJ+WgnZvhUCzf73aNrVm
-         HpOvYWoJz/233KG0HNARTw+TLshH9RsVFdVF6JqimPy4DFEETfnKhL9CGpClLUuYaxiV
-         bbTLpq1Uv5pek7QF2wNN+N1rqvZaGD4ys8cxolq0C7dlx4JG7+SRprszp1pQ5CuLvJvV
-         UOuw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=MSpPDjW6cZRL071CP3rrlsmaenP6nL0/0sbqQ0cwabo=;
+        b=VFuPPwSSxWc9E3KurXROIZT7YKtNyPtuOaJ4cbtTBSfPRVnh9ecH4dGVba9mngIzvT
+         RYUpYlAmJMShPNQkd/sx516Fm/RDKQjEgoJq/Nm+VIbR9AmvajA7kTrHOmBZ1J7BfSAl
+         2BpGINEM/yV7/dFwTvMLdkp6+QT6QWTpKXbuzAcDrcHa4YnqmreL86WQ7mckBx9htbd8
+         Qfl8Vt9vWtYcXtEAcMsI+YNFx8jeXyHc/wddtLKxMgt/pjAQSFN4H9nzQPaUDmyCMVhx
+         S2gENBZJoMDGSvG4EbT93KuFn3Laq1OZHtwUc8OVa+I3iPhNnA2RgaTTfbu3l8le6jFN
+         Qsrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=if52SRi1P+w7wz5k0ehJXHCP2qxjpKkPOo6oJSniME8=;
-        b=ZKhmFd6ZX74gPquVU/W73YmjbIKlFXigE+9Mm9I3M9LhSH14ME1uPpPETnXu4x2ohh
-         PH0AoDPmvLrdD+WRjtjP5zo8u7i0j0MLY1OlBOtcVREvKtehhMAJz0rt/AxG5L96W8Uj
-         SjV28BFH1blfLo7QsSc68ylRJQsGRL9/gg5tcD8IY0+/mXYUgcw1wndE2JmCHb3WrUxl
-         OQOiaiu/RQrVrno5n8nAJcEQqaBTcjzKcbEya/vP9UgBQ5GsTROQqhrgLK4abkBxtozK
-         9B/Q9rIAlFvhMIgcki2FGEZM8FXwglR/phnQTMe14ZnOQP5vTR+bJFje81KT43kPLWN9
-         TrAQ==
-X-Gm-Message-State: ALQs6tBRCBWEyh2vlCOqN5QWsFByD62daR+ELbz6XJIgE/s9cX8moFFi
-        x5CigH2QZe+mpQQ0vKuCWO8=
-X-Google-Smtp-Source: AB8JxZoSsS3Oej3M1sYyL0GQuhoskC/xL8AODzXYEwWi4aC7dFMLlpKE4W+H+HbIvQ4SByNhYniIMw==
-X-Received: by 2002:a63:7341:: with SMTP id d1-v6mr35934340pgn.404.1525888112551;
-        Wed, 09 May 2018 10:48:32 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id q62sm51832410pfd.172.2018.05.09.10.48.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 10:48:31 -0700 (PDT)
-Date:   Wed, 9 May 2018 10:48:30 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: Implementing reftable in Git
-Message-ID: <20180509174830.GJ10348@aiede.svl.corp.google.com>
-References: <CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com>
- <CAGZ79kZx=wHKc=2WLz-8pQWv1VhRq+pKVV9=Shq3gEMdkX-Q=A@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MSpPDjW6cZRL071CP3rrlsmaenP6nL0/0sbqQ0cwabo=;
+        b=pdoK1IQs/WDT760veeVn4rt+Sxz9tAat2nQjNXMwPVxpAAkVpnwj5Udj7+7BepllOa
+         6UrGBSt0kWAeu4US5xLd3l9Smp/Q2dGAR5bhAZ5wS7OVEulTzsqy6bI0lj/i5c7kDGYK
+         xDnl9kdBfqejNpUMLOpYsn2LtHTokMWl5+fhYZOD+ptuWyEbCpBlNuI9BGkKEUVa8sVu
+         jrakMiCBBbObLnp67ELYCxs2Zck/CWFzcq8/k+7NSBYygI26SD7bEqP7j5pdNW0M5nHq
+         ZEt+MAuozCA8aJARjw/nhXbPBgcBEAO6/mER0yeQFEgld1gXJWJTyrlghGLIHgRujhg1
+         7J5A==
+X-Gm-Message-State: ALQs6tAkh9iBCJgctEW4coOBqL019em++q0xB2S7sW1JOBhCm4XyBO8L
+        gsXou2nYX8nVCJYNPvw76zesVkHzgp0zE6CpXPkqYA==
+X-Google-Smtp-Source: AB8JxZpo/9AsPblTDp30uUjXktwDEpyfMm+gO5LBytfvJ2ZN77YFLS1bV8PEwHoCahAEl8AOxiVsXr/leZuGlJrxygQ=
+X-Received: by 2002:a25:500e:: with SMTP id e14-v6mr27723895ybb.334.1525888201280;
+ Wed, 09 May 2018 10:50:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZx=wHKc=2WLz-8pQWv1VhRq+pKVV9=Shq3gEMdkX-Q=A@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 2002:a25:cf90:0:0:0:0:0 with HTTP; Wed, 9 May 2018 10:50:00 -0700 (PDT)
+In-Reply-To: <20180509170409.13666-1-pclouds@gmail.com>
+References: <20180509170409.13666-1-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 9 May 2018 10:50:00 -0700
+Message-ID: <CAGZ79kbFiULj1NJARm6ObYrqv_Fu+U2sb8h_sNJwdWur+JqrvQ@mail.gmail.com>
+Subject: Re: [PATCH] repository: fix free problem with repo_clear(the_repository)
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
+On Wed, May 9, 2018 at 10:04 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> the_repository is special. One of the special things about it is that
+> it does not allocate a new index_state object like submodules but
+> points to the global the_index variable instead. As a global variable,
+> the_index cannot be free()'d.
 
-> * We *might* be able to use reftables in negotiation later
->   ("client: Last I fetched, you said your latest transaction
->   number was '5' with the hash over all refs to be <sha1>;
->   server: ok, here are the refs and the pack, you're welcome").
+ok. That is the situation we're in.
 
-Do you mean that reftable's reflog layout makes this easier?
-
-It's not clear to me why this wouldn't work with the current
-reflogs.
-
-[...]
-> On Wed, May 9, 2018 at 7:33 AM, Christian Couder
-> <christian.couder@gmail.com> wrote:
-
->> During the last Git Merge conference last March Stefan talked about
->> reftable. In Alex Vandiver's notes [1] it is asked that people
->> announce it on the list when they start working on it,
 >
-> Mostly because many parties want to see it implemnented
-> and were not sure when they could start implementing it.
+> Add an exception for this in repo_clear(). In the future perhaps we
+> would be able to allocate the_repository's index on heap too. Then we
+> can remove revert this.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+>  I was trying to test the new parsed_object_pool_clear() and found this.
 
-And to coordinate / help each other!
+So this would go with the latest sb/object-store-alloc ?
 
-[...]
-> I volunteer for reviewing.
+My impression was that we never call repo_clear() on
+the_repository, which would allow us to special case
+the_repository further just as I did in v2 of that series[1] by
+having static allocations for certain objects in case of \
+the_repository.
 
-\o/
+[1] https://public-inbox.org/git/20180501213403.14643-14-sbeller@google.com=
+/
 
-[...]
-> With that said, please implement it in a way that it can not just be used as
-> a refs backend, but can easily be re-used to write ref advertisements
-> onto the wire?
+We could just deal with all the exceptions, but that makes repo_clear
+ugly IMHO.
 
-Can you spell this out a little more for me?  At first glance it's not
-obvious to me how knowing about this potential use would affect the
-initial code.
+I would rather special case the_repository even more instead
+of having it allocate all its things on the heap. (However we rather
+want to profile it and argue with data....)
+
+>  repository.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/repository.c b/repository.c
+> index a4848c1bd0..f44733524a 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -238,7 +238,9 @@ void repo_clear(struct repository *repo)
+>
+>         if (repo->index) {
+>                 discard_index(repo->index);
+> -               FREE_AND_NULL(repo->index);
+> +               if (repo->index !=3D &the_index)
+> +                       free(repo->index);
+> +               repo->index =3D NULL;
+
+So after this we have a "dangling" the_index.
+It is not really dangling, but it is not part of the_repository any more
+and many places still use the_index, it might make up for interesting
+bugs?
+
+What is your use case of repo_clear(the_repository)?
 
 Thanks,
-Jonathan
+Stefan
