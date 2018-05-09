@@ -2,92 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD6711F424
-	for <e@80x24.org>; Wed,  9 May 2018 23:41:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFEE51F424
+	for <e@80x24.org>; Wed,  9 May 2018 23:48:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965975AbeEIXlN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 19:41:13 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:40953 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965244AbeEIXlM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 19:41:12 -0400
-Received: by mail-pf0-f196.google.com with SMTP id f189-v6so135140pfa.7
-        for <git@vger.kernel.org>; Wed, 09 May 2018 16:41:11 -0700 (PDT)
+        id S965964AbeEIXse (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 19:48:34 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:42110 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966011AbeEIXsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 19:48:19 -0400
+Received: by mail-pf0-f177.google.com with SMTP id p14-v6so138849pfh.9
+        for <git@vger.kernel.org>; Wed, 09 May 2018 16:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4mNvGtTAmkgPnKgKUBUUGBqZbuslgVuJJfTswSiDFt8=;
-        b=B60SZq422GTO8Ggrq5Dkbs/iSdk0ot9e7OXRRNp7UkccbjxpIokr9rIc+qiec1YOPk
-         aYimDcnkeGFlwP/8El74gYjyq7boEG76eh3v5W60HYQkpnoieRIdN9V3AvGJj2L4m44F
-         ASzeGwutokWeqUiKPtegyzbs0oOGNWGeJ09hTRDIZAe17AaL5tuitZtPpXonD8qkIRAw
-         FvqaMHOhW6KOyvRUGzd0ym6Wk5wOZsECvkNOq3lveHC9x+Ei2EhBFiXg36HrI8kUJZ2G
-         +byzPbh4rpJYsQZ4IavV3wvsOjuH8YWHE1YgZTecc+TMKRz83FFBNWA8+J17AxRG1luZ
-         7K0Q==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=9dguN/N7ERTgVI1noJj5LCPf74CuzREPYjEIHodwlf0=;
+        b=TT1mmaYtFqOmjJTa/oF3P9GVzMRD7ks3Ytqa26rw782D6WYIRT4WkF+2HkX+ByOnDK
+         gVCpnmaTatM9RL0eliidrt/j06dIiitNTVeY96BeNQujAMD/BAQjjaarhyFilS03xhXg
+         gPI5gmhWGVZJa8Jq8Nrc3ewGHdpwHpoKzw9Aonh8Q/WlXNKWsgI4ubKmkSP0MtQkRdjH
+         zdQWm+/j7kYbl1aapyU//uhsXDtiVBtWBrDw+tFAliU2NFNVD6DVM9LHMhBTYc/vFqYW
+         SPLCTLUXvbvOTkG+Lf3r9W6qO5dBfJMXAOE2At6xHZp3viL0uEPGiQjpMgvgRlAcXJzc
+         aqcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=4mNvGtTAmkgPnKgKUBUUGBqZbuslgVuJJfTswSiDFt8=;
-        b=dy6d7EfztBodu4BTO6ADkQ+YOWojXTd7ypNNKue4Jgps7qa9sp+SLiuiIHSbK2Mz6o
-         e7uxY2ALxYgbvDIId6BtYWqPAqnvDsDbiCpfX+5X7grne/BOCP3SF7lYrVbxlLGHR12v
-         qDNq2ffKyiPOv/CZG5VNA4Gr5pC1RmRqqXHbyoiY7OryRmeTXb45wCDLqeRU9LosdbO9
-         LZzuXfNPLb+PcXoAvG/hpOROYVZ2GMgWsvAICp17te+IAvWEcaKzkSW1gAiOrqiZPeU4
-         IIViHbbSAPirYCRvrps3USlOojNmrOIvO6F6FrY4L1HBhg7obacumq1+TxNZzfZBYmo/
-         +kww==
-X-Gm-Message-State: ALQs6tDn1ywistCu7Oojn3bj88tMzUD9u7WCjBE68FVzSwdMvMoT6NTw
-        UmHz+5by8zYeqLLWlMWaor127wT/8BE=
-X-Google-Smtp-Source: AB8JxZrrBpWCpNKjT1u+6ufjVUqp2uM1u0+UU3b87h5cL5dpzZ5TcYTuygFvJfaNJ6xRna+FhvIzsQ==
-X-Received: by 2002:a65:5b4d:: with SMTP id y13-v6mr37209565pgr.152.1525909271304;
-        Wed, 09 May 2018 16:41:11 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id r20sm62713526pff.152.2018.05.09.16.41.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 16:41:10 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/2] replace-object.c: remove the_repository from prepare_replace_object
-Date:   Wed,  9 May 2018 16:40:59 -0700
-Message-Id: <20180509234059.52156-2-sbeller@google.com>
-X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
-In-Reply-To: <20180509234059.52156-1-sbeller@google.com>
-References: <20180509234059.52156-1-sbeller@google.com>
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=9dguN/N7ERTgVI1noJj5LCPf74CuzREPYjEIHodwlf0=;
+        b=h4e77mfnaYR5nyehGnArDP3DidFViRqNa6Jtno16KXGNDK2m/H6/a6nD0m5qgwclDm
+         iJf4HWH52GdyZxypj33/dysl+aGuyqPPFWJNlnJxlgtowJFRQt7Ae/ghB1JoGhEfRVAD
+         DkSU8gxkH5FrhecbbyTSqwnhSZmKoV6P9DmRUq4Q95L/N1OJRzc5jsf/ejTemNYZe1iA
+         HWGQqtMEh1uBRWYx8LwE/BOlPINVmx/ZTEHOKYBps6CVhMGykl/sT+KXc+5735jN+Crx
+         FKkLKFIl24EOtyOwdBPLck80OFdtHQu0RtARQu7tGP+ttZpwWLY3LJU5Ph+e2vZASN+C
+         vppw==
+X-Gm-Message-State: ALQs6tAsxkY+eLw+6ZelVja3aGmAqEshzLQSp2Jlr7B6dHuaJtBQTs/4
+        UPiuOHgQScSYHzdjPBRVfsFP5wYPZSKGCw==
+X-Google-Smtp-Source: AB8JxZr0zfq4dG4PUqb6NLvkYQa5R8JiHf3AOmNAG38rqA+B755ip0HhS/ojeYj6OuX5BN5dzANZQQ==
+X-Received: by 2002:a63:6197:: with SMTP id v145-v6mr37964887pgb.35.1525909698119;
+        Wed, 09 May 2018 16:48:18 -0700 (PDT)
+Received: from localhost ([2601:602:9500:1120:eccb:c00:cd8f:fd73])
+        by smtp.gmail.com with ESMTPSA id c21sm31372746pfb.116.2018.05.09.16.48.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 09 May 2018 16:48:16 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Wed, 9 May 2018 16:48:15 -0700
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>, phillip.wood@talktalk.net,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 5/7] builtin/grep.c: add '--column' option to
+ 'git-grep(1)'
+Message-ID: <20180509234815.GA68889@syl.local>
+References: <20180421034530.GB24606@syl.local>
+ <cover.1525831201.git.me@ttaylorr.com>
+ <9222f0ee470884a984c1174cf218dece43f77f87.1525831201.git.me@ttaylorr.com>
+ <CACsJy8DLthWhxH6a7zwCvdirkuntanHasXZwfdADeo7iV8X79w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8DLthWhxH6a7zwCvdirkuntanHasXZwfdADeo7iV8X79w@mail.gmail.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This was missed in 5982da9d2ce (replace-object: allow
-prepare_replace_object to handle arbitrary repositories, 2018-04-11)
+On Wed, May 09, 2018 at 06:17:20PM +0200, Duy Nguyen wrote:
+> On Wed, May 9, 2018 at 4:13 AM, Taylor Blau <me@ttaylorr.com> wrote:
+> > diff --git a/builtin/grep.c b/builtin/grep.c
+> > index 5f32d2ce84..f9f516dfc4 100644
+> > --- a/builtin/grep.c
+> > +++ b/builtin/grep.c
+> > @@ -829,6 +829,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+> >                             GREP_PATTERN_TYPE_PCRE),
+> >                 OPT_GROUP(""),
+> >                 OPT_BOOL('n', "line-number", &opt.linenum, N_("show line numbers")),
+> > +               OPT_BOOL(0, "column", &opt.columnnum, N_("show column number of first match")),
+>
+> Two things to consider:
+>
+> - do we ever want columnar output in git-grep? Something like "git
+> grep --column -l" could make sense (if you don't have very large
+> worktree). --column is currently used for column output in git-branch,
+> git-tag and git-status, which makes me think maybe we should reserve
+> "--column" for that purpose and use another name here, even if we
+> don't ever want column output in git-grep, for consistency.
 
-Technically the code works correctly as the replace_map is the same
-size in different repositories, however it is hard to read. So convert
-the code to the familiar pattern of dereferencing the pointer that we
-assign in the sizeof itself.
+I think that this is a valid concern. I had a similar thought when
+adding 'git config --color' (as a new type specifier) that we might be
+squatting on '--color' and instead opted for '[--type=<type>]'.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- replace_object.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I don't feel that the tradeoff between '--column' as a good name and the
+concern that we _might_ want to output in a columnar format in 'git
+grep' someday warrants the change.
 
-diff --git a/replace_object.c b/replace_object.c
-index 246b98cd4f1..801b5c16789 100644
---- a/replace_object.c
-+++ b/replace_object.c
-@@ -37,7 +37,7 @@ static void prepare_replace_object(struct repository *r)
- 		return;
- 
- 	r->objects->replace_map =
--		xmalloc(sizeof(*the_repository->objects->replace_map));
-+		xmalloc(sizeof(*r->objects->replace_map));
- 	oidmap_init(r->objects->replace_map, 0);
- 
- 	for_each_replace_ref(r, register_replace_ref, NULL);
--- 
-2.17.0.255.g8bfb7c0704
+> - If this is to help git-jump only and rarely manually specified on
+> command line, you could add the flag PARSE_OPT_NOCOMPLETE to hide it
+> from "git grep --<tab>" completion. You would need to use OPT_BOOL_F()
+> instead of OPT_BOOL() in order to add extra flags.
 
+I believe that this option is worth auto-completing. Its primarily
+motivated for use within 'git-jump', but I feel as if it would be
+useful for other callers, as well.
+
+Thanks,
+Taylor
