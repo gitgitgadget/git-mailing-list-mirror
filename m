@@ -2,113 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 639CD1F42D
-	for <e@80x24.org>; Wed,  9 May 2018 07:19:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC3DA1F42D
+	for <e@80x24.org>; Wed,  9 May 2018 07:56:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933733AbeEIHT5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 03:19:57 -0400
-Received: from mail-ua0-f196.google.com ([209.85.217.196]:39259 "EHLO
-        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933715AbeEIHT4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 03:19:56 -0400
-Received: by mail-ua0-f196.google.com with SMTP id v17so13052474uak.6
-        for <git@vger.kernel.org>; Wed, 09 May 2018 00:19:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DPxjH1l7BXyE79SMXQw2hkmCr37mux0LwpREnNjVmmI=;
-        b=YKipRL3Vi+nh4Tf2SI+CddnyjJVFQPeRrY1WC1Czd2io2iGB5nhA0xVxggh46b70Lm
-         IGSbTjvjGaLezcAzQfla1HL1r5qOdKqIv3Z36inyTX2CChOgtc5sqWF68QENn/XnvWEL
-         VPj5n6Q9U9gLMPTjKPBJzELEwefBCnwYyKokiMCAE5wAJCTv/t4jE9blJ8nBykZ9D8cn
-         X1e41MCxUhYNPcn4MeLpyxfdj64G9c3A4h8B6eKdb+EPcyjD3l7fHezQQdgKcK1NA/GT
-         LXHCUYn2ZBotu8ArsFlyEe/RhyNKa2WTct9js38LqjqM2NNy9nc8X5GRJ3R1U4vqRyk3
-         CO2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DPxjH1l7BXyE79SMXQw2hkmCr37mux0LwpREnNjVmmI=;
-        b=PaKt9XsPK8zyvD+LVhf4Y/9Lxp8O537Xuj8PdE0ow70KiitRZLTvFrhID+OEDd6hNP
-         qBGFm0RF0iQ9Bniv8PN5/Kq4nxEqLK0az+1i+T8vKe4ZzBCrjhHZfsdkiiwm3qt48Gzl
-         c3g5AKF7uY1rn8Xqbht76VZ1WAmTqqZXw5tjhTSVw8v2dIeXVqkuoVYAEVRYn+9VW8gM
-         2a8J+hlidDURAkenOl6ReBeBESBCnh2IfWJnu0KTFzWi4UI4gZH68Ggq6d6dgP714GSx
-         YKxkmG4qqG/cOihcT4od/kT1vnYBHbm+wpLCrYBvnhoJxFhkk7neDXO8Dr/cLEdPnYdS
-         bqIQ==
-X-Gm-Message-State: ALQs6tBCzTxu1+32Md8wdT6rJkO6QTtJscvb4Kgsb7NDMkvwVNYLit0M
-        mH5oOPr3CRvVwjZp9AXNZRIJtGpR9WuFg3i703c2Mg==
-X-Google-Smtp-Source: AB8JxZqWQW0VaB4GInCQ5BSJ6yssFVmDy5s2aAQBfUmg/gw7gUF20OFc8Hs/y9mcXPRSf80A2Cq4DkgCVSfIQ09QNVs=
-X-Received: by 10.176.78.199 with SMTP id x7mr37300577uah.110.1525850395901;
- Wed, 09 May 2018 00:19:55 -0700 (PDT)
+        id S933901AbeEIH4f (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 03:56:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33104 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S933715AbeEIH4e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 03:56:34 -0400
+Received: (qmail 17855 invoked by uid 109); 9 May 2018 07:56:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 09 May 2018 07:56:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12201 invoked by uid 111); 9 May 2018 07:56:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 09 May 2018 03:56:38 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 May 2018 03:56:32 -0400
+Date:   Wed, 9 May 2018 03:56:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 09/12] get_short_oid / peel_onion: ^{tree} should be
+ tree, not treeish
+Message-ID: <20180509075632.GA3327@sigill.intra.peff.net>
+References: <20180501184016.15061-1-avarab@gmail.com>
+ <20180501120651.15886-1-avarab@gmail.com>
+ <20180501184016.15061-10-avarab@gmail.com>
+ <xmqqzi1htij7.fsf@gitster-ct.c.googlers.com>
+ <87wowlxko8.fsf@evledraar.gmail.com>
+ <xmqqvac4tb64.fsf@gitster-ct.c.googlers.com>
+ <87lgczyfq6.fsf@evledraar.gmail.com>
+ <xmqq6040qf8x.fsf@gitster-ct.c.googlers.com>
+ <20180508143408.GA30183@sigill.intra.peff.net>
+ <87a7tax9m1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.103.100.7 with HTTP; Wed, 9 May 2018 00:19:55 -0700 (PDT)
-In-Reply-To: <20180508133905.6jhhhp6l7avjkctl@pflmari>
-References: <20180508121104.rtsrektxiihvpqtx@pflmari> <20180508122256.nyv6ddcoifygfpk4@pflmari>
- <CAKPyHN3YMU3oZaW-wR2ZMV6aMwoeFGMmiJBQXtvipVvkWPLZVQ@mail.gmail.com> <20180508133905.6jhhhp6l7avjkctl@pflmari>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Wed, 9 May 2018 09:19:55 +0200
-Message-ID: <CAKPyHN1bGtCBZUh7cDAN-t+5DTutvyL6FLwynALTGZA5ijqwrA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] gitk: add an option to run gitk on an item in the
- file list
-To:     Alex Riesen <alexander.riesen@cetitec.com>
-Cc:     Paul Mackerras <paulus@ozlabs.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87a7tax9m1.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 8, 2018 at 3:39 PM, Alex Riesen
-<alexander.riesen@cetitec.com> wrote:
-> Bert Wesarg, Tue, May 08, 2018 15:17:03 +0200:
->> On Tue, May 8, 2018 at 2:22 PM, Alex Riesen <alexander.riesen@cetitec.com> wrote:
->> > +proc flist_gitk {} {
->> > +    global flist_menu_file findstring gdttype
->> > +
->> > +    set x [shellquote $flist_menu_file]
->>
->> this needs to handle cdup, i.e., if gitk is run from a subdirectory,
->> all paths needs to be prefixed with $cdup, like: [file join $cdup
->> $flist_menu_file]
->
-> That, indeed, is easily done:
->
->     set x [shellquote [file join $cdup $flist_menu_file]]
->     if {[file isdirectory $flist_menu_file]} {
->         exec sh -c "cd $x&&gitk" &
->     } else {
->         exec gitk -- $x &
->     }
->
->
-> It just doesn't seem to work: gitk does not find any commits!
-> Maybe that's because the file panel lists only files for the current
-> subdirectory (without the path from the repo top-level)? E.g.
->
->     mkdir tst
->     cd tst
->     git init
->     mkdir a
->     touch top-file a/sub-file
->     git add -A ; git commit -m.
->     cd a
->     gitk
->
-> Gitk lists only sub-file.
->
-> Frankly, this listing limited to just a sub-directory confuses me a bit. Is
-> there anyway to get to display full repository without changing to the top
-> level?
+On Tue, May 08, 2018 at 08:53:10PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-I noticed that too, while testing your patch and I'm also confused.
-But was not able to send a request to Paul yet. ls-tree --full-tree
-seems to be one that should be used here, I think.
+> >> "X^{tree}" should *RESULT* in a tree, but it should *REQUIRE* X to
+> >> be a tree-ish.  It is unclear "should be tree" is about the former
+> >> and I read (perhaps mis-read) it as saying "it should require X to
+> >> be a tree"---that statement is utterly incorrect as we agreed above.
+> >
+> > FWIW, I had the same feeling as you when reading this, that this commit
+> > (and the one after) are doing the wrong thing. And these paragraphs sum
+> > it up. The "^{tree}" is about asking us to peel to a tree, not about
+> > resolving X in the first place. We can use it as a _hint_ when resolving
+> > X, but the correct hint is "something that can be peeled to a tree", not
+> > "is definitely a tree".
+> 
+> Maybe I'm just being dense, but I still don't get from this & Junio's
+> E-Mails what the general rule should be.
 
-Bert
+Let me try to lay out my thinking a bit more clearly, and then I'll try
+to respond to the points you laid out below.
+
+Before we had any disambiguation code, resolving X^{tree} really was two
+independent steps: resolve X, and then peel it to a tree. When we added
+the disambiguation code, the goal was to provide a hint to the first
+step in such a way that we could never eliminate any resolutions that
+the user _might_ have meant. But it's OK to take a situation where every
+case but one would result in an error, and assume the user meant that
+case. Sort of a "do no harm" rule.
+
+By disambiguating with just a tree and not a tree-ish, that hint is now
+eliminating possibilities that would have worked in the second step,
+which violates the rule.
+
+Does thinking about it that way make more sense?
+
+> I think a response to the part after "leaving that aside" of my upthread
+> E-Mail
+> (https://public-inbox.org/git/87lgczyfq6.fsf@evledraar.gmail.com/) would
+> help me out.
+
+I'll quote that bit here:
+
+> But *leaving that aside*, i.e. I don't see why the use-case would make
+> sense. What I *don't* get is why, if you think that, you only want to
+> apply that rule to ^{tree}. I.e. wouldn't it then be consistent to say:
+> 
+>     # a)
+>     ^{tag}    = tag
+>     ^{commit} = tag, commit
+>     ^{tree}   = tag, commit, tree
+>     ^{blob}   = tag, blob (blobish)
+
+Yes, that makes sense to me conceptually, and would follow the rule I
+gave above. And I think that's what we do now, with the exception that
+there is no blobish disambiguation. Presumably nobody ever bothered
+because probably because tagged blobs are pretty rare (and obviously
+though trees point to blobs, you cannot disambiguate that way since
+there's no one-to-one correspondence).
+
+So I doubt anybody really cares in practice, but I agree that it would
+improve consistency to write a patch to introduce GET_OID_BLOBISH and
+have "^{blob}" parsing use it.  And possibly add "blobish" to
+core.disambiguate (or is it "blobbish"?), though that's almost certainly
+something nobody would ever use.
+
+> My understanding of what you two are saying is that somehow the peel
+> semantics should be preserved when we take this beyond the 1=1 mapping
+> case, but I don't see how if we run with that how we wouldn't need to
+> introduce the concept of blobish for consistency as I noted upthread.
+
+Yeah, I think the lack of blobish is a bug, just one that nobody has
+ever really cared about.
+
+> So it would be very useful to me if you or someone who understands the
+> behavior you & Junio seem to want could write a version of the patch I
+> have above where the last paragraph is different, and describes the
+> desired semantics, because I still don't get it. Why would we 1=many
+> peel commits to trees as a special case, but not 1=many do the same for
+> trees & blobs?
+
+I'm not sure I understand the mention of trees in the final sentence.
+AFAICT tree disambiguation is consistent with the peeling rules.
+
+-Peff
