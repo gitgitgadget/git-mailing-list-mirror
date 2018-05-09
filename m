@@ -2,96 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61CD71F424
-	for <e@80x24.org>; Wed,  9 May 2018 16:34:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B7781F42E
+	for <e@80x24.org>; Wed,  9 May 2018 16:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935387AbeEIQev (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 12:34:51 -0400
-Received: from mout.web.de ([212.227.15.14]:38117 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934806AbeEIQeu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 12:34:50 -0400
-Received: from [192.168.209.20] ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lr2I7-1ecBHw3mOR-00edlc; Wed, 09
- May 2018 18:34:47 +0200
-Subject: Re: Can not save changes into stash
-To:     KES <kes-kes@yandex.ru>, git <git@vger.kernel.org>
-References: <6015131525872315@web37g.yandex.ru>
- <5718771525872436@web47o.yandex.ru>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <7105a838-6c1f-97df-55c1-ea8312ddc9ab@web.de>
-Date:   Wed, 9 May 2018 18:34:44 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.7.0
+        id S965588AbeEIQsL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 12:48:11 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:41603 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935343AbeEIQsK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 12:48:10 -0400
+Received: by mail-pf0-f196.google.com with SMTP id v63so25906351pfk.8
+        for <git@vger.kernel.org>; Wed, 09 May 2018 09:48:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2MFLqrxflkSVzggtWELT3fHbR1PJP9kpLMMPrZav8a8=;
+        b=oIM8DaNY9PNnhoNL9NS9YJGMIjTAx9HkSfnDSYWvc5rzK9chmiP3XyQHEOZr+Lx0+f
+         zTxIS17YYyB94a9wdlvKZpvF2xS/D/aXLZ8TqTImhaIUkdc/mdLhRmlefzUI5eK7t4z4
+         cAsLoqsreclNlt+9kDFWWvVDNFO3R/WxQbm1aWMmKlMAnkAyU2cPDp3DpH4ccoY8bLRh
+         GcvxE5M8T5B0AyCtag0Ms0tdyGsjoK4RG4wShteEhLjZ5eLBP4gdPQFRmQ5j/WhB49Kb
+         ZE05yDQuW+NuuA5p6EYTySyg5WN9Zmq9JzSJrSHxv9C7u6RY4g9kRc84jCqE2WRod/Kq
+         nDaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2MFLqrxflkSVzggtWELT3fHbR1PJP9kpLMMPrZav8a8=;
+        b=DG76Ljd6j1mkAlwUBCIOhr39ewu/Fu+mMEmMBY4VvtbI+/5h2UGJDhQXMvIKWZ+Xxk
+         ePLWcMgTByu94nUOepkQH/cElbGPE+6Rj1h7M8ebNmbVkTguoMtQEeLYXWaPvs8kvsqm
+         7B2n46XLaqRa6/jhDGjaETv6HHM0lPeE4LhyDABmV744dO9KhY9sNkB6CtYRdyLV7KkC
+         eDwUc6D4DX/LBPMBEux4tMkpbhuCyJFbRi5eyZqStLmTsXDFgLYxbk8QWzOG8mN3lWpW
+         Vm5P8CoKgdS6nUlSceaLir7U/bMLC5nvv0Krnxa7PTltMyeze5c7CDqCp9RTNwaYxHbm
+         aXxA==
+X-Gm-Message-State: ALQs6tD+WXBKNNvhwDYDRIDgq4cXVkXPfeEBXFIy9LnPBJVKZiz4upxn
+        c8W38hcG4f+Q5SdREKqlVyOoCdqQ
+X-Google-Smtp-Source: AB8JxZqB0xkFgoTPQd7ISyTcaAFwwKSDnm5LzdGUcb/WHtntn0fJASD51V+E6YtSqg/UvynIuGNgZw==
+X-Received: by 10.98.11.210 with SMTP id 79mr44456254pfl.4.1525884489515;
+        Wed, 09 May 2018 09:48:09 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 5sm48531215pfx.140.2018.05.09.09.48.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 09 May 2018 09:48:08 -0700 (PDT)
+Date:   Wed, 9 May 2018 09:48:07 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: Implementing reftable in Git
+Message-ID: <20180509164807.GI10348@aiede.svl.corp.google.com>
+References: <CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <5718771525872436@web47o.yandex.ru>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:CTa7A2eHwqVdcAmkqOXfsw9MEEF/irqNRa1aJJuvnP9SPDX83lw
- tq9Xrm+pQOQ/fX0nMR57+SZ9HOagYcuTlHwGbXz0HwoCH52efeAs+CV0I9YXvUmUrxSP0nO
- bgX9Dg6Kx9D5pYeZioXKvwAGnV+LSHDKlFdr0zkLsw1YBfjf8cyXUNFPqfcZO7UNKtH0nM+
- FlFFCs4ovAMSyMEh45UFQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HDssaXA3baU=:k0wm0v3bZBPJDet6Q39vHB
- 7wACldT03zWR8Rb+TKDhJnm/0mW240cu4cLAZl/1S3PJeCU/y4lXn267LZ16FoQdY9f1PAyKv
- iAbp64k77V+JmEdkVASl7O0sv+fHdGEiEfZ/UAjxz7pw0suAVggjmoAW4z7PxTIAoHj5cFmBH
- GEi0fHD3LYhd0emd0S+NTymUu2ytGk5thGtmlWgf3MtHDq4JfGa+qYFh6mIfqgfYFcrlNl0zu
- VtcAwArZZ2l1cqCskZCz7XBVHmoeBns+1dhAnYTZvdTilu5h9+pbVKXFPE46qcCJqz5HrzWn2
- QF1TwrsURUmcPsJturbwKJgblvn/Ijk3rj3y1TpIcYgcH/4K7Mp0qXNe89yVS9lQ3tNT6gpGO
- 2NXPHjPgyfAiTTun8M8Rm71bhcLMheygZATHxTsLeh9YD7Sa/k13s7l/yBT2I+8g53CqBVLJF
- YsfF67ZOhdHg+mt8VeUTB9J83RidhJ0MyH0kfEzyCiEAUL1gtcELggd0e463/6OiRXe5+Bnv6
- f0AfontXzxtI13vJf6bMszU1KD/lh5XZNRGCrAOjHpa4QkuUn86gt9CqyCLy5Cp2u9uHE31v3
- s9+ZdA+Fn6UeX5CUdoNOWZr4A3B3Q9Y2qEEhXwZ0GywXk+VVZ9KA/Chw+31w7eI73zDRCn2h/
- /3gngUjm+dEt/FotcS+M5wQ2Yp5JcbNfMVgcTo80XTy2oBKtl8RCk3uBLBPenoy20sWTEcRB1
- kKfgcGuFcmcTVsFqxFm5arLwvq0JQm0cvk70tFXlQqMg5Z54SPrt2XamyT4eaEqBkGnXGFdfP
- XGISVkG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Please no top posting here]
-On 09.05.18 15:27, KES wrote:
-> I even can not drop local changes:
-> 
-> $ git checkout local.conf 
-> error: pathspec 'local.conf' did not match any file(s) known to git.
-> 
-> $ git log local.conf
-> commit 6df8bab88fd703c6859954adc51b2abaad8f59ec
-> Author: Eugen Konkov <kes-kes@yandex.ru>
-> Date:   Wed May 9 15:31:02 2018 +0300
-> 
->     Implement module which allow override target option
->     
->     Most usefull to configure application on developer host
-> 
-> 
-It may be help, if we have some more information,
-either to re-produce your issue or to help with debugging.
+Hi,
 
-Is this a public repo ?
-Which Git version do you use ?
-Which OS (Linux, Mac OS, Windows anything else ?)
-What does "git status" say ?
-What does "git diff" say ?
+Christian Couder wrote:
 
-> 
-> 09.05.2018, 16:25, "KES" <kes-kes@yandex.ru>:
->> How to reproduce:
->>
->> $ git update-index --skip-worktree conf/local.conf
->> $ git pull
->> Updating 0cd50c7..bde58f8
->> error: Your local changes to the following files would be overwritten by merge:
->>         conf/local.conf
->> Please commit your changes or stash them before you merge.
->> Aborting
->> $ git stash save
->> No local changes to save
+> I might start working on implementing reftable in Git soon.
 
+Yay!
+
+[...]
+> So I think the most straightforward and compatible way to do it would
+> be to port the JGit implementation.
+
+I suspect following the spec[1] would be even more compatible, since it
+would force us to tighten the spec where it is unclear.
+
+>                                        It looks like the
+> JGit repo and the reftable code there are licensed under the Eclipse
+> Distribution License - v 1.0 [7] which is very similar to the 3-Clause
+> BSD License also called Modified BSD License
+
+If you would like the patches at https://git.eclipse.org/r/q/topic:reftable
+relicensed for Git's use so that you don't need to include that
+license header, let me know.  Separate from any legal concerns, if
+you're doing a straight port, a one-line comment crediting the JGit
+project would still be appreciated, of course.
+
+That said, I would not be surprised if going straight from the spec is
+easier than porting the code.
+
+Thanks,
+Jonathan
+
+[1] https://eclipse.googlesource.com/jgit/jgit/+/master/Documentation/technical/reftable.md
