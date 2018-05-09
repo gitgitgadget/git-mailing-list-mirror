@@ -2,84 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA4751F424
-	for <e@80x24.org>; Wed,  9 May 2018 04:23:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4CF81F424
+	for <e@80x24.org>; Wed,  9 May 2018 05:26:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933675AbeEIEXU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 00:23:20 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:37778 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932801AbeEIEXT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 00:23:19 -0400
-Received: by mail-pg0-f49.google.com with SMTP id a13-v6so22092674pgu.4
-        for <git@vger.kernel.org>; Tue, 08 May 2018 21:23:19 -0700 (PDT)
+        id S933702AbeEIF0B (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 01:26:01 -0400
+Received: from mail-ot0-f181.google.com ([74.125.82.181]:36090 "EHLO
+        mail-ot0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933383AbeEIF0A (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 01:26:00 -0400
+Received: by mail-ot0-f181.google.com with SMTP id m11-v6so32610026otf.3
+        for <git@vger.kernel.org>; Tue, 08 May 2018 22:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=EiuIskVIiayxrEBVP8AGf6hPRJQIDWrJrm6Fz1yQqn8=;
-        b=OtdMjKTuoGamD2vaDUQeevmmfx3FPCYSJl02CfDRMayQGewYZAfDyW2h/iBPpDuJVO
-         6OLa6M8r0L+4j9wIvxwn3TSemPwR7JMCKdmAF2KLraNW95RkVLHokFg/fb4FbGNSu6dK
-         vEZ44Psfdq5BzxnXWOfONE3QGp7cpxzR689mUROU+IsLaPYUfSj2OwaFwh9a8PgqmR1D
-         JYYbLT3QRbjXCQ3vfq/YKRWGrUt9V8mIYDitDogmgB68ht9PrLd8jhWtbvuoYbpNMzzt
-         q6LgTZEGV5wmgIveZv/hqF5uD8bry8XufRruQowwk7spLGexRvwFkGYh9cHrYMooci+9
-         4vwg==
+        d=pensando.io; s=google;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=22fnNfRAYi/9r1uAZhTo3/04wn2PMXaJv5motg4OMy0=;
+        b=NRP7Ub9SuaHAVfIl2RtMjPemQssQHPeKQS2REpapUPRkZmqLlDcq+0qacCSlcs/u6Y
+         OHX3JEdWTca5kuQKuG1VwHFnMGO6rQuK5ztAWv71rzE79/SklNDPt8p1r+iT9jqie6EZ
+         54cTVjXqxdxlKQBQ0Q/A4guv3Qx0CUKzvmcEvRrwGsnjzG/JZ2gLXUNn04xmDOFhNr9J
+         XzTYfbJ6ELBRgCjjYDZWgxuw32xlG6PJ2EGGRmMsOxC2apw1BQxRDFzcfxeFJ2FxathK
+         5yXrpUKeFMidAq6Kar3KnJzXOwHY2bFQB7ChOAeu2YQ9wwvTIDMO8IhQOsYR9O2yMcC2
+         a1eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=EiuIskVIiayxrEBVP8AGf6hPRJQIDWrJrm6Fz1yQqn8=;
-        b=hSQexLpY6TOjCxACEs1cUAwLS5E4tGfnjSaZA5RKFTNLTU/gXimGg3rU2r+oDI5CC6
-         quD2Br9p5NKB5JxsU4oM8fAcZK4S6iyJZHsEcxYtnFYr/lpKnYjxDNmj/rlaT+coy9Mf
-         xRma0WKZp4zGGXVPFssCLAEbn4O2LNjYtiyaBqYat9kFT/+9Siu8sRMJ7IJ85jTeuaYh
-         tE6MvN2lhzeLe07yX2gDjWkvI32l9yqTIIEzIoteydq+Oaf2ohPYSqEdqZM+eJyi8Ov/
-         nm9v2krtyHW6Qt9O8JlQr4fCBass/73kOAelAdS7bJyREhDkllGVvJIzarSSRwSkkGdk
-         eijA==
-X-Gm-Message-State: ALQs6tCtudHpwHMvEexcHXehANXyp9NXoDgQuSatzIvutSf2UFO9BChQ
-        LA4Whln5ZN43Z5bRQBu+ZJN3Xlodra14iDRS0l0=
-X-Google-Smtp-Source: AB8JxZpnv9n+f8ffm6Zzglt/wMkSPK830WvIiystKkXW26ZLx1HnWCanNpldumGks6i3QO9b9v56TvUpLV2gXdO5NE0=
-X-Received: by 2002:a63:7e08:: with SMTP id z8-v6mr27253229pgc.383.1525839799011;
- Tue, 08 May 2018 21:23:19 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Tue, 8 May 2018 21:23:18 -0700 (PDT)
-In-Reply-To: <20180508181034.GB7210@sigill.intra.peff.net>
-References: <20180506141031.30204-4-martin.agren@gmail.com> <20180508181034.GB7210@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 9 May 2018 06:23:18 +0200
-Message-ID: <CAN0heSps9reV82=Sy0J7g3Ewr2fqiPcCT2XBVPNk2yPi+4+mrQ@mail.gmail.com>
-Subject: Re: [PATCH 3/5] refs.c: drop dead code checking lock status in `delete_pseudoref()`
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        David Turner <novalis@novalis.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=22fnNfRAYi/9r1uAZhTo3/04wn2PMXaJv5motg4OMy0=;
+        b=m0Bc0VPHQCAHSnBVPr12popQUM0lWEKMSzYLP5o34UVWQgs7CU8K6gAIGqrU14TjND
+         tqe+ZVQ6hzcxXeLNWu70fFw2RCuDB8W4CYPtegO7lirjeqMt8XUbS3TPkqLUeDSJ/WU8
+         InnQhry7B3C7i4GhiwpVPAEe9sjF1/rLXYh6A9dmhiM1eFzcKCv69HXnUu2mWb3kaDvD
+         z+GCErh8+YQtJg3kK26A/TbZKNP65zBr4dgHeycDyRm5PYCMi9pAYH1q+er2zPZz+Pzt
+         GtuO+SaxNepTOFHYE/tuk6WStSYlpAoB6gqAtvpFOKrjHJRrzE2xqXjumCS+PAUs66Eq
+         /wCg==
+X-Gm-Message-State: ALQs6tCYyb/9wB17XRCzDre+WsxpwdYzEQ+OGO+7JLumAD43DU1vG9I7
+        0k8AWCodnU6j48ooxp2xLrwbhtnCig==
+X-Google-Smtp-Source: AB8JxZqpaAYScH6DWPEyXM73chPT9soxOBj34eV495sRG0k4gSqR0pg3HxCXF4Hmwg0LnI/WAH4Hng==
+X-Received: by 2002:a9d:422a:: with SMTP id q42-v6mr17014212ote.42.1525843559793;
+        Tue, 08 May 2018 22:25:59 -0700 (PDT)
+Received: from ?IPv6:2601:646:8882:d798:99bf:25bb:ed44:e5b3? ([2601:646:8882:d798:99bf:25bb:ed44:e5b3])
+        by smtp.gmail.com with ESMTPSA id l67-v6sm7538525oia.56.2018.05.08.22.25.59
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 May 2018 22:25:59 -0700 (PDT)
+From:   Leslie Wang <qiwa@pensando.io>
+Content-Type: text/plain;
+        charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.2 \(3445.5.20\))
+Subject: regarding fix on "git clone $there $here"
+Message-Id: <2F384E33-2101-4D90-986B-FAE2FC2AD7C5@pensando.io>
+Date:   Tue, 8 May 2018 22:25:58 -0700
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.5.20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8 May 2018 at 20:10, Jeff King <peff@peff.net> wrote:
-> On Sun, May 06, 2018 at 04:10:29PM +0200, Martin =C3=85gren wrote:
->> Unlike in the previous patch, this function is not prepared for
->> indicating errors via a `strbuf err`, so let's just drop the dead code.
->> Any improved error-handling can be added later.
->
-> I suspect this ought to eventually be converted to return an error, to
-> match the rest of the refs code. And in that sense, this is a step
-> backwards versus leaving the current die_errno in place and dropping the
-> LOCK_DIE_ON_ERROR flag. But it probably doesn't matter much either way,
-> and whoever does the conversion later can deal with it.
+Dear git experts,
 
-Thank you for your comments on this series. It's much appreciated. I
-will be rerolling this series with extended commit messages about the
-lock-handling. Looking over this code again, I notice that a larger
-cleanup of the error-handling might be warranted. It would indeed feel
-better to do a minor part of that, instead of taking a small step in the
-wrong direction...
+Recently we try to upgrade ubuntu from 17.10 to 18.04, then we found one =
+inconsistent behavior on git clone.
 
-Martin
+At 2.14.1 or 2.15.1, if I run command like=20
+ - mkdir /tmp/111
+ - git clone git@github.com:111/111 /tmp/111
+
+because it will failure, then /tmp/111 will be removed automatically.
+
+However, at latest 2.17.0 which is part of ubuntu 18.04, seems like git =
+clone failure will not auto remove this folder. I notice 2.16.2 and =
+2.17.0 release note includes this fix. So just wonder to know if prior =
+behavior was think of bug, and this fix has change the behavior.=20
+
+ * "git clone $there $here" is allowed even when here directory exists
+   as long as it is an empty directory, but the command incorrectly
+   removed it upon a failure of the operation.
+
+Thanks & Regards
+Leslie Wang=
