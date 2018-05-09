@@ -2,171 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF9CD1F42E
-	for <e@80x24.org>; Wed,  9 May 2018 21:42:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CDA21F424
+	for <e@80x24.org>; Wed,  9 May 2018 21:43:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965563AbeEIVmW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 17:42:22 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:36618 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965530AbeEIVmR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 17:42:17 -0400
-Received: by mail-it0-f67.google.com with SMTP id e20-v6so761908itc.1
-        for <git@vger.kernel.org>; Wed, 09 May 2018 14:42:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=LdV7bcxyHEXpUuKb31NSce+V90jNMykF1q6m4HpqoZM=;
-        b=qBoF+V9n1ieklgEsa74BjplxymOdsOp+H47FqRCRpgJL2ijs1bKe7jxgpluulAvgSs
-         fIr4/wcjnY73Ty+fxznj3zv6uLYHnywXoC/dXzEGPAjJkS3lZo7ImOR/uXqq1Gs/bcKZ
-         rHeyfTGUEuHpslBVKDrVnd3dVDqp16gCKaf74Zu99MbFVnaG8ZdBagCiQL3HmWVp8qAD
-         C0hpdzUeqZrz3th/h0cirxK4+bOQUBzNmMPIwPWqtaIQ2paQN5EgwfnXzcpGKLZBuqMh
-         bsb36G0vKO1785pKgiSNwjIPAHApXrpN16TwDFG/F1m/pS0RRIU4piWPwJ50RBqelVDh
-         Yv6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=LdV7bcxyHEXpUuKb31NSce+V90jNMykF1q6m4HpqoZM=;
-        b=KpkAZVz4L2oodcqk8nKr/8mewqaKOINihnaqNgFoGr+x5eFZcoEtgAa9XdDYCRobuq
-         ApeJhtBtUcP+B1TDGigho/oiw0EkChOoHDR4UJ+MeN9fM6xUWeSg7eY+2vtUcu1KfaOm
-         +MncGb4RmNZ66cloHxLQ4RT3EUYBJCjRmFOWVhsAU/xp/KIFiyd/rMczbKddkKpQO0fi
-         ecpmm0hUg5Xhw2R1GQ5hV+lHsUFyOLUqscoW1Ikx2Lcxpg1q/zJjn8hdTDTz8lXFo0yj
-         NvUJdagkRHKaTubbQcCZ9o/leMHjoH4UlcrXbszlJmK0ltI1ERQA0rC4tr++WcpnHxHe
-         GO6Q==
-X-Gm-Message-State: ALKqPwdJj6Ebu/qfBIntgKl3xxxf4rBm1N9spmu+D/9/U9Ele6bn1q1J
-        0XxCi+/Vt//xJ5oAFyLuSQAsbr2f
-X-Google-Smtp-Source: AB8JxZrua7B8ZKl7ndI1bMslzJ9cRobAa3V+L1D+K9hlkmuwMumUhFJAL4LQHb/Y9VDP58Et1CUPBA==
-X-Received: by 2002:a24:4151:: with SMTP id x78-v6mr11978329ita.0.1525902136480;
-        Wed, 09 May 2018 14:42:16 -0700 (PDT)
-Received: from lmm-notebook.localdomain (cpe-74-139-249-65.kya.res.rr.com. [74.139.249.65])
-        by smtp.gmail.com with ESMTPSA id h202-v6sm7364389itb.39.2018.05.09.14.42.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 14:42:14 -0700 (PDT)
-Received: by lmm-notebook.localdomain (Postfix, from userid 1000)
-        id 5AE1A300000000133E3; Wed,  9 May 2018 17:39:09 -0400 (DST)
-From:   Luis Marsano <luis.marsano@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Luis Marsano <luis.marsano@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ted Zlatanov <tzz@lifelogs.com>
-Subject: [PATCH 0/2] Configurable GnuPG command for git-credential-netrc
-Date:   Wed,  9 May 2018 17:36:32 -0400
-Message-Id: <20180509213634.5198-1-luis.marsano@gmail.com>
-X-Mailer: git-send-email 2.17.0.584.g3d5ba9c85
+        id S965214AbeEIVnk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 17:43:40 -0400
+Received: from mout.gmx.net ([212.227.17.20]:38105 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S935325AbeEIVnj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 17:43:39 -0400
+Received: from [10.92.140.17] ([167.220.148.17]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOjMY-1fChO64A8U-0066tI; Wed, 09
+ May 2018 23:43:33 +0200
+Date:   Wed, 9 May 2018 17:43:30 -0400 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast-export: avoid NULL pointer arithmetic
+In-Reply-To: <d50a4d5d-3b99-453e-1b52-4e733453fb78@web.de>
+Message-ID: <nycvar.QRO.7.76.6.1805091743080.77@tvgsbejvaqbjf.bet>
+References: <d50a4d5d-3b99-453e-1b52-4e733453fb78@web.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-159547254-1525902213=:77"
+X-Provags-ID: V03:K1:7RDmjw8lIeVVfl1w+4jANJ5G9qrxpAzAJW+KUOr5NjfXTcGe5vu
+ 6Lu6TxWn9+OWutnzt7IOeI2qsHknKjdR1XI2uErqiFJwUCVhinAi6fglZS/ZT8ZCjZUEMt0
+ mgiTEV4O5g2jVdNNCljkJDpkI08Ww5S3/GN6vxqZ34A9lOOEbyQq/j5uOqNQuZLbJJL4Rj3
+ SfXVZS1JDcU+H07BE8x0Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9vU5BnMQr7c=:m3U+MAafSADwqg+4GAxM2P
+ FSfqP0APJBxTdTmLP1216rvVz2KoM1YKo+hFw4t3/U/2tkolvszH88OcgKh4ZZPqBLWsSthab
+ 8HrF0WuZS3ZD2F4xVMtYCn7TjaPbGYN+00hAOorBlrDiyfawl4+82b/tn39SNpFj0yBtWivbv
+ OgU5bsOjOEddTbXPI3UY1uTGLmLjKrvVzJyVj72vN+H3d+ZEQ7xIYkl3CEs9tD9HVB3le+l0f
+ vntYKeqJq8M/JS4ey3gVmMn3LxMNOnXqskm0di7PocAJTavT+JqXXHlwD+GGs6mVUibuArWZM
+ qQEWGFOBLX5XEjk/CvVhAiuEsP9RfkDzr7GGt5iLLLY3B+d/Em7WQFfpMurOwlpOhL1oU1M1f
+ uiZnUxILz/mo6MJYDfF15LG4dfy6eBZnNM4ozw+R3dLnurJKV7E/iPZqp3G0uRPzEp4nMVZPI
+ pU5l+FmItILReSVWHOjtQ+pv3voETzES3ImOLJSuYGJeaSqqkihoEWvi5oV30I/4aLxXxQMGc
+ BH9WS9J7zuwY2ZI6cOE+1wUnw59PT6wzgIbTjOOns50i3jyCbTI9Y2hcWJSv3BzSKQY8RB0LH
+ rYVX5AFWnp3IB159N3gtK5o1WIPEKKS5I98jJWq+Rleh+7zf1+rbB/yH9/NKPqyNmuT8rqmZf
+ w9dT79UB5TTkBnAdY/V3OveRAKhQe0I9FMzravv66sB8NaYwcXgHjQEonjlwe2jKltx5jh+ly
+ ZSha0ofuFdKuhWV/cp/xl6dPcwixXxX4wLmLs4lJEwgJUuHMEK2uZVmw5dGFRoBXRfS1/iP2/
+ FE+iUXp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Should `contrib/` area patches go here, too? Contributed Software
-page
-https://git.kernel.org/pub/scm/git/git.git/tree/contrib/README
-says to forward them to "jc" (I'm guessing that's Junio), but I
-think they're getting missed. Though the component author approves
-(acknowledgement below), am I missing anything for submission?
-Thanks.
+--8323328-159547254-1525902213=:77
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> git-credential-netrc was hardcoded to call 'gpg' for decryption.
-> This is a problem on distributions like Debian that call modern
-> GnuPG something else, like 'gpg2'. This proposed update reuses
-> git's gpg.program configuration to customize GnuPG's name. It
-> introduces the -g|--gpg option on the git-credential-netrc
-> command to allow alternatively setting it in git's
-> credential.helper configuration. Since testing a git
-> configuration involves a temporary repository as provided by
-> git's main testing framework, a patch updating tests to reuse
-> the main framework is included, too.
+Hi Ren=C3=A9,
 
-------- Forwarded message
-Delivered-To: luis.marsano@gmail.com
-Received: by 10.103.152.29 with SMTP id a29csp214132vse; Fri, 20 Apr 2018
- 16:18:34 -0700 (PDT)
-Return-Path: <ted@lifelogs.com>
-In-Reply-To: <1524160133-8877-1-git-send-email-luis.marsano@gmail.com>
-References: <1524160133-8877-1-git-send-email-luis.marsano@gmail.com>
-From: Ted Zlatanov <tzz@lifelogs.com>
-Date: Fri, 20 Apr 2018 19:18:32 -0400
-Message-ID: <CAMdP0d=sNtgwDnfZz88_cmAt6VYMGOozOC5q4o32R+yw+UcrAQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/2] Configurable GnuPG command for
- git-credential-netrc
-To: Luis Marsano <luis.marsano@gmail.com>
-Status: OR
+On Wed, 9 May 2018, Ren=C3=A9 Scharfe wrote:
 
-That looks terrific, Luis. It's a good change so I'd just go ahead
-and propose those patches. I don't see anything incorrect and
-tests are always good.
+> Clang 6 reports the following warning, which is turned into an error in a
+> DEVELOPER build:
+>=20
+> =09builtin/fast-export.c:162:28: error: performing pointer arithmetic on =
+a null pointer has undefined behavior [-Werror,-Wnull-pointer-arithmetic]
+> =09=09return ((uint32_t *)NULL) + mark;
+> =09=09       ~~~~~~~~~~~~~~~~~~ ^
+> =091 error generated.
+>=20
+> The compiler is correct, and the error message speaks for itself.  There
+> is no need for any undefined operation -- just cast mark to void * or
+> uint32_t after an intermediate cast to uintptr_t.  That encodes the
+> integer value into a pointer and later decodes it as intended.
+>=20
+> While at it remove an outdated comment -- intptr_t has been used since
+> ffe659f94d (parse-options: make some arguments optional, add callbacks),
+> committed in October 2007.
 
-Ted
+ACK.
 
-On Thu, Apr 19, 2018 at 1:48 PM, Luis Marsano luis.marsano@gmail.com
-wrote:
-
-> Hello Ted Zlatanov,
-
-> Thank you for git-credential-netrc. Will you please look over
-> these patches and decide if they need more work? They're also
-> available as the netrc-option branch at
-> https://github.com/lmmarsano/git This is a first contribution
-> for me, and I welcome input, suggestions, criticisms,
-> corrections. Thanks.
-
-> git-credential-netrc was hardcoded to call 'gpg' for decryption.
-> This is a problem on distributions like Debian that call modern
-> GnuPG something else, like 'gpg2'. This proposed update reuses
-> git's gpg.program configuration to customize GnuPG's name. It
-> introduces the -g|--gpg option on the git-credential-netrc
-> command to allow alternatively setting it in git's
-> credential.helper configuration. Since testing a git
-> configuration involves a temporary repository as provided by
-> git's main testing framework, a patch updating tests to reuse
-> the main framework is included, too.
-
-> Luis Marsano (2):
-> git-credential-netrc: adapt to test framework for git
-> git-credential-netrc: accept gpg option
-
-> contrib/credential/netrc/Makefile | 4 +-
-> contrib/credential/netrc/git-credential-netrc | 69 +++++++++++------
-> contrib/credential/netrc/t-git-credential-netrc.sh | 31 ++++++++
-> contrib/credential/netrc/test.command-option-gpg | 2 +
-> contrib/credential/netrc/test.git-config-gpg | 2 +
-> contrib/credential/netrc/test.netrc.gpg | 0
-> contrib/credential/netrc/test.pl | 86
-> +++++++++++++++-------
-> 7 files changed, 142 insertions(+), 52 deletions(-)
-> create mode 100755 contrib/credential/netrc/t-git-credential-netrc.sh
-> create mode 100755 contrib/credential/netrc/test.command-option-gpg
-> create mode 100755 contrib/credential/netrc/test.git-config-gpg
-> create mode 100644 contrib/credential/netrc/test.netrc.gpg
-
-> --
-> 2.7.4
-
-------- End of Forwarded message
-
-Luis Marsano (2):
-  git-credential-netrc: adapt to test framework for git
-  git-credential-netrc: accept gpg option
-
- contrib/credential/netrc/Makefile             |  4 +-
- contrib/credential/netrc/git-credential-netrc | 69 ++++++++++-----
- .../netrc/t-git-credential-netrc.sh           | 31 +++++++
- .../credential/netrc/test.command-option-gpg  |  2 +
- contrib/credential/netrc/test.git-config-gpg  |  2 +
- contrib/credential/netrc/test.netrc.gpg       |  0
- contrib/credential/netrc/test.pl              | 86 +++++++++++++------
- 7 files changed, 142 insertions(+), 52 deletions(-)
- create mode 100755 contrib/credential/netrc/t-git-credential-netrc.sh
- create mode 100755 contrib/credential/netrc/test.command-option-gpg
- create mode 100755 contrib/credential/netrc/test.git-config-gpg
- create mode 100644 contrib/credential/netrc/test.netrc.gpg
-
--- 
-2.17.0
+Thanks,
+Dscho
+--8323328-159547254-1525902213=:77--
