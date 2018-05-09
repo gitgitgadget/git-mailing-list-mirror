@@ -2,92 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 371D01F424
-	for <e@80x24.org>; Wed,  9 May 2018 15:55:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C59491F424
+	for <e@80x24.org>; Wed,  9 May 2018 15:56:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964950AbeEIPz0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 11:55:26 -0400
-Received: from mail-ot0-f170.google.com ([74.125.82.170]:32849 "EHLO
-        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935151AbeEIPzZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 11:55:25 -0400
-Received: by mail-ot0-f170.google.com with SMTP id l22-v6so40724979otj.0
-        for <git@vger.kernel.org>; Wed, 09 May 2018 08:55:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Ea6kCIJ0fdz1yQUP4xxJH6KbvXZiOygnnhAb9djgW+U=;
-        b=WJPBJhqHWw3d8dSReoFUmuicriGek664wiO1OgbcM9GlOA8H4FE+ravh9yChDBQBJ2
-         +Yh4sUvHMUOhz03SmIvZzYPMTtJ3FX+jgQqah2fbNmSAmfqUPgNJQF44r60WqxVeM6jb
-         h3tUQ3WUiNJboJ/pefJnSzdoueUa/M1FyzNwCkiEFbAf4dQV6d1vN4cs5byKGXaYa5eT
-         pS1V02Iz4L04eIdW3q1UaHv3wl3ZrnmjHggNgaFkZDOMx9tkhKBcO/o6SbT7r7wlAdEs
-         Ak60s4ATdXJ5ec44AykwKuJIK0VEVoTLw601ZjfKYBVpi9JWwwX7CeDC/jPSJwepClB8
-         +SjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Ea6kCIJ0fdz1yQUP4xxJH6KbvXZiOygnnhAb9djgW+U=;
-        b=RRyc4OiEA7aMfVAWtvZ4VxdJbYWbSljLIGQ6jxgMu2tdnd1y/3exmc3pEdhcFUbCAt
-         de0+vg+wVUyLUp+qAAjR36RZIXpSftddc4P4u8Xmtuk8DwybK/C4ZuHSlBWRFSNKGCSJ
-         nu9pCUl7QkBbcAsrMht4gCb9PiwG2Go2obGL3lVQuNPgF54PSy65sKidweYijR2UvIK3
-         dXIdUJXhC78DZNVQ20S4l0t8WC4ugCiM4Awie0mxqQ0IGi6wXbICN6LtgQ5pEtYLhxvq
-         oE+1g7vipjEGKwN9VT/GDYLpFRoEtsoID+TkTvUmYYIyiEMlAekks+02H6fXTVUTyM9z
-         mbTg==
-X-Gm-Message-State: ALKqPwdJbQhH8T0MRd3M3xitOBHyGX4rxYrJiUkhlBZEZoQlGx5ZyP96
-        rdjO5oeO8bxKWx4UJQGifCw0jV2yp3sQj1K004E=
-X-Google-Smtp-Source: AB8JxZrjtmzIQT4PKEkc6NRyO0qYnI+rrR+M6pNlzjjUDCwH98DENRsqaGXuLi906b5APHNnenaa4u1oYqhnHvd5DQQ=
-X-Received: by 2002:a9d:c61:: with SMTP id 88-v6mr5925585otr.173.1525881325231;
- Wed, 09 May 2018 08:55:25 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Wed, 9 May 2018 08:54:54 -0700 (PDT)
-In-Reply-To: <CAGZ79kbgxFJ-+t=50r9gVMTm4xomh+pgm81r2QLnDvTqxpxV6g@mail.gmail.com>
-References: <20180507225916.155236-1-sbeller@google.com> <20180508193736.14883-1-sbeller@google.com>
- <20180508193736.14883-14-sbeller@google.com> <20180508130431.287a9f273a847c375b3b1e2b@google.com>
- <CAGZ79kbgxFJ-+t=50r9gVMTm4xomh+pgm81r2QLnDvTqxpxV6g@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 9 May 2018 17:54:54 +0200
-Message-ID: <CACsJy8A3xBz8_MEN-dUcSh317AQn03EP7=TOQ99vzo5zyyd_jg@mail.gmail.com>
-Subject: Re: [PATCH v3 13/13] alloc: allow arbitrary repositories for alloc functions
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jameson Miller <jamill@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S965305AbeEIP4v (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 11:56:51 -0400
+Received: from ao2.it ([92.243.12.208]:37522 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S964984AbeEIP4t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 11:56:49 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1fGRSN-0007b6-3I; Wed, 09 May 2018 17:56:43 +0200
+Date:   Wed, 9 May 2018 17:56:47 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] wrap-for-bin.sh: facilitate running Git executables
+ under valgrind
+Message-Id: <20180509175647.0961d469e01367783090e764@ao2.it>
+In-Reply-To: <CABPp-BEvNOBkq0-v_Uq0CHkvRixCKmUhYPMeH-MHHZGb0x9NkA@mail.gmail.com>
+References: <20180509132858.21936-1-ao2@ao2.it>
+        <CABPp-BEvNOBkq0-v_Uq0CHkvRixCKmUhYPMeH-MHHZGb0x9NkA@mail.gmail.com>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 8, 2018 at 10:37 PM, Stefan Beller <sbeller@google.com> wrote:
->>> +void release_tree_node(struct tree *t);
->>> +void release_commit_node(struct commit *c);
->>> +void release_tag_node(struct tag *t);
->>
->> Do these really need to be defined in alloc.c? I would think that it
->> would be sufficient to define them as static in object.c.
->>
->> Having said that, opinions differ (e.g. Duy said he thinks that release_
->> goes with alloc_ [1]) so I'm OK either way.
->
-> I would have preferred static as well, but went with Duys suggestion of
-> having it in alloc.c.
->
-> I can change that.
+On Wed, 9 May 2018 08:25:21 -0700
+Elijah Newren <newren@gmail.com> wrote:
 
-Heh I thought you would make them static ;-) I just wanted to keep
-release logic outside that object pool, which is clearer and also
-makes it easier to replace it with mem-pool.c later. I'm ok with
-making it static. Or if you do export these, please move them close to
-the parse_* functions where memory is actually allocated. E.g.
-release_commit_node() is moved to commit.c, close to
-parse_commit_gently(), release_tree_node() close to
-parse_tree_gently().
+> Hi Antonio,
+> 
+
+Hi Elijah,
+
+> On Wed, May 9, 2018 at 6:28 AM, Antonio Ospite <ao2@ao2.it> wrote:
+> > Testing locally built git executables under valgrind is not immediate.
+> >
+> > Something like the following does not work:
+> >
+> >   $ valgrind ./bin-wrappers/git
+> >
+> > because the wrapper script forks and execs the command and valgrind does
+> > not track children processes by default.
+> >
+> > Something like the following may work:
+> >
+> >   $ valgrind --trace-children=yes ./bin-wrappers/git
+> >
+> > However it's counterintuitive and not ideal anyways because valgrind is
+> > supposed to be called on the actual executable, not on wrapper scripts.
+> >
+> > So, following the idea from commit 6a94088cc ("test: facilitate
+> > debugging Git executables in tests with gdb", 2015-10-30) provide
+> > a mechanism in the wrapper script to call valgrind directly on the
+> > actual executable.
+> >
+> > This mechanism could even be used by the test infrastructure in the
+> > future, but it is already useful by its own on the command line:
+> >
+> >   $ GIT_TEST_VALGRIND=1 \
+> >     GIT_VALGRIND_OPTIONS="--leak-check=full" \
+> >     ./bin-wrappers/git
+> >
+> 
+> Wow, timing; nice to see someone else finds this kind of thing useful.
+> 
+> I submitted something very similar recently; see commit 842436466aa5
+> ("Make running git under other debugger-like programs easy",
+> 2018-04-24) from next, or the discussion at
+> https://public-inbox.org/git/20180424234645.8735-1-newren@gmail.com/.
+> That other patch has the advantage of enabling the user to run git
+> under other debugger-like programs besides just gdb and valgrind.
+> 
+
+Thanks Elijah, I am not subscribed to the list so I didn't see your
+change and I usually only track the master branch.
+
+Obviously your changes work for me, so I am dropping my patch.
+
+As the changes in 842436466aa5 ("Make running git under other
+debugger-like programs easy", 2018-04-24) are not specific to valgrind
+they should also address Jeff's concerns in the sense that it's up to
+the particular GIT_DEBUGGER how it handles sub-processes.
+
+In valgrind case one may still want to pass "--trace-children=yes" in
+GIT_DEBUGGER after all for better coverage. Thank you Jeff for the
+remark.
+
+Ciao,
+   Antonio
+
 -- 
-Duy
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
+
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
