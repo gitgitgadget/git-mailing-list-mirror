@@ -7,52 +7,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 657DA1F424
-	for <e@80x24.org>; Wed,  9 May 2018 00:20:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 951621F424
+	for <e@80x24.org>; Wed,  9 May 2018 00:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932605AbeEIAUE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 May 2018 20:20:04 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:42688 "EHLO
+        id S932654AbeEIAYI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 May 2018 20:24:08 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:42694 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932368AbeEIAUD (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 8 May 2018 20:20:03 -0400
+        by vger.kernel.org with ESMTP id S932475AbeEIAYH (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 8 May 2018 20:24:07 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0259C6046C;
-        Wed,  9 May 2018 00:20:01 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9049F6046C;
+        Wed,  9 May 2018 00:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525825202;
-        bh=Qn/f0hvGj0xZC+s0u8W4DkB7qVCGG5LijSzISaiojoc=;
+        s=default; t=1525825446;
+        bh=dgToJk8POolw+TbY+n7ISVB3Zubre5ORV1bd99j0xFs=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=cfXsRUZJsrBJHwIapIlHmDKxf5nSGtv7SW+gmW+dXebyzrHz6INU8BXpbYq91853f
-         0kDbpAaSkI7uXTN6gNRy8aOQckoM/AjucNivEVPSDTZPl0lzVS3jdxC89Tm0Ex+XIe
-         vFN+JUaGi6JZcQWuHK+d39l4LrZI601+Jvac1kyTR+xuCpdNdS9VojHmT5a6Lke0TS
-         PwZjNSF+357mpcIC5W3XLn3Nl1tWyUtUM9qTwlpRNVydnhYxzOZFlwFD+w+0w1gBwx
-         Q7m037DDfJhmD7drpdmFGm2c6gwdgG3ntnBasVhWhWoi1euLHUfydO5IrOt/OFJeVL
-         gCZ9m6PnHNI7qoI7qbJ3nZVAUH3vhX9dKfY51HE+nGzkBUKJ5ql+nvq3pUovn6AyDS
-         l8o2d12XCRmSNRGySq3RJYnf9SKyGiR2gEOtAg/KY273RuB/X5TM+qgbc6mbIIZd36
-         ZkyEgQ3oS9vMyofipIBvPTEu6H5AWct44w7YGrGsPPlm0gqWbWu
-Date:   Wed, 9 May 2018 00:19:57 +0000
+        b=cmjQh5EoiTjby6sq25Y4lEYMD9CNvlphYMarckgCtHG49YmsEy8TddLCunBzODukP
+         n9GbLhjl29LuaI3BdoIsEbQ6+3GYm74cKABAn+AC0mMyLwCTff/WmtiWZR3AgfPoZ7
+         RYE2UOYWVseCWBb4T2LNO/d8Pc3cVst3DjOjGzZTxIWo2fhdiOF+8jtoe4+VxGaB59
+         f2WLJogxD4womjg0AKfns99gi8hCYi/IrHAUU6++1kJz5M/geUdGhjI+prlDE6FRkS
+         rxbWZ4daPetYNv21ihLxVMto5hc0h8uE6BIoBleFhVnY7Y7eN+l4HhZB2PVhL3pIf6
+         2Z0UWsdNtgKlIbOcCHvPxA5L/3J4BcXUqnjS6jacoc/TMrRQtbJLnQXg+Hx7qUnLty
+         2L9fNvY8eQcXpFb18XO2mJWWH0SVo6XXilQeF/ZfIwi1BXeyQN2qaGX5aEXhPOCizr
+         TUvlvU0Zo6xzlHeDXvp1O/UtZJ4crIX3raxnKDx7d6A5x/9GqYg
+Date:   Wed, 9 May 2018 00:24:02 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2] mailmap: update brian m. carlson's email address
-Message-ID: <20180509001957.GE275488@genre.crustytoothpaste.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Documentation: render revisions correctly under
+ Asciidoctor
+Message-ID: <20180509002401.GF275488@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20180506232421.975789-1-sandals@crustytoothpaste.net>
- <20180508015845.268572-1-sandals@crustytoothpaste.net>
- <184451b4-1b34-c1f7-f9b1-0dfa63ab9506@gmail.com>
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20180504015202.GP13217@genre.crustytoothpaste.net>
+ <20180506204226.955739-1-sandals@crustytoothpaste.net>
+ <20180506204226.955739-2-sandals@crustytoothpaste.net>
+ <CAN0heSrth+ZheEsHuVdyUv9fcnP07O=YvK6y+=rmaGqZf7X3_w@mail.gmail.com>
+ <20180508011352.GM953644@genre.crustytoothpaste.net>
+ <CAN0heSpaETw_v_a_zL7Cp+cDNHP9je2ZqTHh37FfDHjAbRn18A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="a+b56+3nqLzpiR9O"
+        protocol="application/pgp-signature"; boundary="dWYAkE0V1FpFQHQ3"
 Content-Disposition: inline
-In-Reply-To: <184451b4-1b34-c1f7-f9b1-0dfa63ab9506@gmail.com>
+In-Reply-To: <CAN0heSpaETw_v_a_zL7Cp+cDNHP9je2ZqTHh37FfDHjAbRn18A@mail.gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.15.0-3-amd64)
 User-Agent: Mutt/1.9.5 (2018-04-13)
@@ -63,44 +69,50 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---a+b56+3nqLzpiR9O
+--dWYAkE0V1FpFQHQ3
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 08, 2018 at 10:34:58AM +0530, Kaartic Sivaraam wrote:
-> Just to be sure, you're meaning the use of `git log --use-mailmap` when
-> you mean `git log` in the log message. Am I right? Or did you mean `git
-> shortlog` ?
+On Tue, May 08, 2018 at 08:31:10PM +0200, Martin =C3=85gren wrote:
+> On 8 May 2018 at 03:13, brian m. carlson <sandals@crustytoothpaste.net> w=
+rote:
+> > Since this patch fixes the present issue, I'd like to leave it as it is
+> > and run through a cleanup series a bit later that catches all the
+> > literal indented blocks and marks them explicitly to avoid this issue in
+> > the future.
 >=20
-> I'm asking this because I think the `git log` output doesn't consider
-> the mailmap file by default.
+> Sounds like a plan. :-) As noted elsewhere, I have no immediate idea how
+> to identify which of the 13000 tab-indented lines are really part of
+> diagrams and ascii-art. Counting the number of spaces? Anyway, thanks
+> for this mini-series.
 
-Correct, it doesn't.  In my case, I was using --pretty=3D'%aN <%aE>',
-which is how I noticed it in the first place.
+I have an utterly terrible Ruby one-liner which I wrote in a few
+minutes.  It has some false positives, but not enough that I'd mind
+sorting through them.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---a+b56+3nqLzpiR9O
+--dWYAkE0V1FpFQHQ3
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.5 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlryPq0ACgkQv1NdgR9S
-9ouvdxAAktvn2CJa6LWxNu8YQuu3hUDqMBd7MR3dhTi2zB0k4Ga3Fw8Jf63CG++q
-jQbYFXslf8AlRjVC+r/waePXSyfViuN24nqIZDeMi/EhFAwJlxMQskmiBZ4DZMOP
-X0/7Ggag6Y8E9uw9WTIG2gXvas9v3buAglTFSsUjYRLn/hHZ8P7pfalaTuN036Ff
-5XdH8dlFt09ABTvb/BlNhuCXiuogS7fPN8R5B5CQiF7fSy7hEQVydPYHQ93I6/aG
-2mWhtMVlS/wtbaTuZn8x//OchGaVjYT7hbgtnrti05yaaOAwdr+GYURzKM5FwoPr
-oKHkuaXQRk3RB8dOio6HSsJewDxMdQVW52hKZAtyDFEda8ecyk2ZHK0MCpoTvI+P
-mpFrYEJudFQsaxcofNYzpNd4lWFnV/li/QPwjbncLk/rhJ9gVp1TYKbRufBtyLmO
-TDle35LDSpSj2OYh96vGEOvDPCr5qfx22OAIO+XZNqLq+1ASiciBZj4VRlZ8XqX1
-Zx3eoZJ9jf16/x0OdbflyaZMTEd2/m7ZYodW88qTlCYEhz+3ld4b6aR9ClE6JqIr
-XwQD7zG6rwoL8/YFbdUEUyEwqgU4YfCPVRN7y3vbcrOH2fbG/nZURHutUXNqyS7V
-mgSlChTbOWYi+EG+wRjZCqC9OM9hoKnJBRO28997ImAMdrTUDdw=
-=B6Wx
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlryP6EACgkQv1NdgR9S
+9osGPQ//Sr2zCAURFSHi9wzGoC+qXdWVapK+ckPLuguGO/sHo7nTrM71RmL/4evO
+sHXsUyQgvKvv85JLlkbEuFE+FpHlURlwNpjcWjMXRAMhnOJdB7/8aQ1l8ittQ9y7
+sjXIm4Qqn1hg2CWTK5XYEW1uZUI8XNmtRGzXQyiJTXerObyAWBiCWJTMr2oJbonp
+lTDxnGouCKd0DDwwcqpVjFcqSZOjJM8ajCuYgrq8mZPvRP2VVNELEMwBgskuppzu
+2cKe+0n9v50fzKIWUOCwJ6ZIpZX3j9YiWjhS1+6EtZGLmohtG1ksDsjk4H6x4wos
+eD9+I3O5go4o5ASp2b803V0nw/8EAu9y4sSslzodCv2FPO4WHO979+QArC7zFOFO
+xIsXy3vWmY1rrOQRdici5i8dfKCF3thh5yua2V/eXQggyyWXoAR8P4UOY1av5Dw0
++hxxvUqxPayNxN8nj9Iuni6Qnb+yemA05+ltqVtGHafv6bZOhu+YR0QgSS4L92by
+TGkR10yqvQGPKDSwqyVbW6kmEbQVWM7bRdYdkFB8whPukZWZieDkWXOkaApjEcjS
+ES8XS0Issvq/gfTv8z4R79yrPKWBHRuLTuBmN+4m4BonYsg8ozSFzjXEiP7svAog
+k6gfeDYhYWmkfj9QUfZolTAIKpPOTrT4W872JFGoM/IS5ABGTOs=
+=JV20
 -----END PGP SIGNATURE-----
 
---a+b56+3nqLzpiR9O--
+--dWYAkE0V1FpFQHQ3--
