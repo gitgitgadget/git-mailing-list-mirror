@@ -2,84 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 093DC1F424
-	for <e@80x24.org>; Wed,  9 May 2018 17:13:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35DA21F424
+	for <e@80x24.org>; Wed,  9 May 2018 17:17:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935521AbeEIRNd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 13:13:33 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:34674 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934980AbeEIRNc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 13:13:32 -0400
-Received: by mail-pl0-f65.google.com with SMTP id ay10-v6so4675874plb.1
-        for <git@vger.kernel.org>; Wed, 09 May 2018 10:13:32 -0700 (PDT)
+        id S965742AbeEIRRS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 13:17:18 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:38096 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965617AbeEIRRQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 13:17:16 -0400
+Received: by mail-pf0-f193.google.com with SMTP id o76so25959992pfi.5
+        for <git@vger.kernel.org>; Wed, 09 May 2018 10:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Xrd5L4oULlaHdEzjM3I3lTTsGYdFlzgiahbUh7thx5Y=;
-        b=uafcoifU352l3Z82c12c5w9zJkoCn0TOaNUMYj3zl8hd4F0UbN1lKkaJgkicGWndEm
-         0672yGm1RokbwiSVpackgwXHFIIlO3pnND556gaSCapow0AjMJ+ogX445jeT0s66vetx
-         9wIC3XmoC6qkgBKCYPpeZ1zqGFvG8d0O+p6smvKkvKk2pv8LwMKN0Cmv6S3KTuBGv7aP
-         E8rgAT6JGBdt4mZGiFLcXZH44KLqbJ+2Yoi+7+AgIo1AWipCGIVf5yz2OrF0x/CiW9Jd
-         hHhots/slIJ4uc65TpogjQEY1pHlUyald/nA2Wx5OcGfLxcPDkkuyQ4lHkWaWi0sGHEH
-         HPww==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=ozl8FhfEgDt6M6qk+72sk/4n0Q6KJ1WlsCT5FjWfkpY=;
+        b=YqCNTiV/PeVaah/iLmEluRFQc4AKvw/VmEE4AkISYdsHktR+ODSETCFVPumLcDbCYk
+         E4zu7cNaa6VGi3viSs1vXmXe8SE5KWeJKUeBk9qgpDIRoACXpIBjL/NuPafzH2jht2vE
+         9pzrCKRb1Cyy/4g+xuF9sl1HOjzooX6ISRMQUbk6fdUhbX+HfmWnz83qkgCmfNXNbH35
+         jKw1OgQpJ+1hFXeJyFvCVAKHgT+kACBI0Ayq5gK3mbdMX/RO6xAnxfeVetjZSLW7NvxI
+         UrVcYmRwsfdiR2MISeGLurOt/bk6HDzn+Fv35BZQWPlpkQSXfA9dZGmC2m6bVvPd2oCZ
+         RlHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Xrd5L4oULlaHdEzjM3I3lTTsGYdFlzgiahbUh7thx5Y=;
-        b=Q/BqWTCs+iZMhEjdIkrRrnxREfX7rG9qmwDZ0n4WOoktYJsMn7wWNdlmkDLRQfPXPs
-         0E/CqqVicIQGJ9qnBS7rPpbq4TjQBLKc8IoFS2JaYk1vBMkiv0z9OnytdUoF1xPvxMbt
-         L+64HWUHR0YPMjvinfKsH1KDYr7orJc7AmBZbHum8gYRsPzIz4d5MQykg9EZ2TC0+t0b
-         XeTXAl0CGVqIo8eElUopXim+lE6MA97y0r1mNZT6hrL2uDCrkEIu5vr1jpmTT2jQLeo+
-         LarJ1mZUwijY3tOgV0PAOiUfQxq8472Y4ljzZ/srGZYUWZXX7MSFEdHbTkrLjpUuDjHE
-         wfag==
-X-Gm-Message-State: ALQs6tC1JYwitswcn0ZxRp0m8aWOj9BHNOmKlldyv5aTUszZT5c51JIN
-        Jb6ORgpGYnEy9SX5GKwQP1n/ww==
-X-Google-Smtp-Source: AB8JxZqoPbw9mKMmNTKTBeL5svvPvByVW9GigHw9cTndgs6mZ1bcSV0hXVXI7YvezL3Lf2kHwl79Bw==
-X-Received: by 2002:a17:902:2f84:: with SMTP id t4-v6mr47479926plb.24.1525886012386;
-        Wed, 09 May 2018 10:13:32 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id c20sm44584560pfk.63.2018.05.09.10.13.30
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ozl8FhfEgDt6M6qk+72sk/4n0Q6KJ1WlsCT5FjWfkpY=;
+        b=mGv6ub0jkf/DZZwmv7TqFn/UQl2zplqNDKD9yiNmRoMtFWjPh25tfPSTMJorouPz0A
+         0Uc/+CqlLBaIAhpZVBaCJPJJajvQMmvQFRPGA7oGHy4YKyU41DRrbSC3UebE0WSuUnD6
+         Cy9EgBnDWxilo6VF+97orm5NjKfqP2XS5Mx0U3vMQdSwgLuZfwPHeUNwL/MUXFoB2l6u
+         ymOTYF+IpshJNflyBMVXR6Wti7o2xcoVdqHJUS5NhrB0R2mDk3kxeCzBC28bFdskJjk2
+         0JkubaEGOSAqUpC6i5a79j6mLVg+K3JfMcM5oPY5qkTqOukM/zjz9Gmg1IOGRbh1oh9Y
+         h3aw==
+X-Gm-Message-State: ALQs6tATakKWDzn3M80hCKG5YCIdsXapbtj4AWezVySBApjDLVyRwmah
+        0nbZgi2YLHmrbcF3SRYo/NUe5SoLMdo=
+X-Google-Smtp-Source: AB8JxZr204TJkMUVUfVMaKiX6BcOaffRNDBzo8ua+jWzRDOvXnCHJql9tWHg0wLnarjN+uH7KbXY1A==
+X-Received: by 2002:a63:6fc9:: with SMTP id k192-v6mr36892902pgc.143.1525886236204;
+        Wed, 09 May 2018 10:17:16 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id q75sm57604867pfj.94.2018.05.09.10.17.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 10:13:31 -0700 (PDT)
-Date:   Wed, 9 May 2018 10:13:30 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        pc44800@gmail.com
-Subject: Re: [PATCHv2 0/4] Rebooting pc/submodule-helper-foreach
-Message-Id: <20180509101330.f41a1d9c03f6af759398137b@google.com>
-In-Reply-To: <20180509002952.172347-1-sbeller@google.com>
-References: <20180503005358.89082-1-sbeller@google.com>
-        <20180509002952.172347-1-sbeller@google.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        Wed, 09 May 2018 10:17:15 -0700 (PDT)
+Date:   Wed, 9 May 2018 10:17:14 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] repository: fix free problem with
+ repo_clear(the_repository)
+Message-ID: <20180509171714.GA63423@google.com>
+References: <20180509170409.13666-1-pclouds@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180509170409.13666-1-pclouds@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  8 May 2018 17:29:48 -0700
-Stefan Beller <sbeller@google.com> wrote:
+On 05/09, Nguyễn Thái Ngọc Duy wrote:
+> the_repository is special. One of the special things about it is that
+> it does not allocate a new index_state object like submodules but
+> points to the global the_index variable instead. As a global variable,
+> the_index cannot be free()'d.
+> 
+> Add an exception for this in repo_clear(). In the future perhaps we
+> would be able to allocate the_repository's index on heap too. Then we
+> can remove revert this.
+> 
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  I was trying to test the new parsed_object_pool_clear() and found this.
 
-> v2:
-> * rebased onto origin/master
-> * dropped leftover "toplevel" variable from experimentation
-> * reworded the commit message for the first patch extensively
-> * dropped the third patch
-> * see "branch-diff" below.
+This looks good and I do hope we can get to a state soon where we can
+not have to special case the_repository.
 
-Patches 1-3 look good to me.
+> 
+>  repository.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/repository.c b/repository.c
+> index a4848c1bd0..f44733524a 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -238,7 +238,9 @@ void repo_clear(struct repository *repo)
+>  
+>  	if (repo->index) {
+>  		discard_index(repo->index);
+> -		FREE_AND_NULL(repo->index);
+> +		if (repo->index != &the_index)
+> +			free(repo->index);
+> +		repo->index = NULL;
+>  	}
+>  }
+>  
+> -- 
+> 2.17.0.705.g3525833791
+> 
 
-I also can't see anything wrong with patch 4, but I am not an expert at
-shell and how we call it from C, so a review from another reviewer would
-be appreciated.
+-- 
+Brandon Williams
