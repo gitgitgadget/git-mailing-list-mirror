@@ -7,54 +7,55 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE6711F424
-	for <e@80x24.org>; Thu, 10 May 2018 00:41:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E54A41F424
+	for <e@80x24.org>; Thu, 10 May 2018 00:41:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965884AbeEJAlF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 20:41:05 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:41570 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935639AbeEJAkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 20:40:41 -0400
-Received: by mail-pf0-f194.google.com with SMTP id v63-v6so191859pfk.8
-        for <git@vger.kernel.org>; Wed, 09 May 2018 17:40:41 -0700 (PDT)
+        id S935633AbeEJAkh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 20:40:37 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:37580 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935621AbeEJAkd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 20:40:33 -0400
+Received: by mail-pg0-f68.google.com with SMTP id a13-v6so173939pgu.4
+        for <git@vger.kernel.org>; Wed, 09 May 2018 17:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hTqhfTtmV3pMirYUYgWlXw/kCqlEQoXZJCMU2+NSS4k=;
-        b=LSULfLLJ5skA2NblH/XtanuB4FpwOUID5gOY3UDiF6uPtaNyzCHxEn/nQqOVegcitV
-         j1NLbX1y6tcxLPqLeCx8czuMXUL9ZWQNF6GQYI0sBlpzPdYr0gTZrZhe+1JGh5AIfrVK
-         SxdYJ+lcASO16XZvrFvEmEeVe7sDPQRVWG6rF9NsBMlaVa5RHGM6lgZtTK6ptNQhtQZj
-         nkZaL2LVLRkxNneucOHv0qGL6ejM7IzzdapSD2iLzvfCIi35hNcwqRI29z3EqYre0bc/
-         tnJ44a3+hwB2MBfMjbGuft8ZILWV0tK+8P+pBzFHWnMNdGD/h79ufRF9FIH4pVr4hUHC
-         eCxA==
+        bh=V7FVrsqMnzAItxNNnJosIsysFz5457IgbmFv9AwoGso=;
+        b=lAmH52Dv13rC23/bDAygP0/+VBEkt2hplcXHJPBYJvIYH7BNUEiUrOsaqJaR2bgpPl
+         kRY7m2/puCTPMH9UZ72wNBePzrKeAjmLK2yJwhnmH6kIMhEZkaq3Ihj3tK6pWfQc5Db7
+         4hAlClXV91h2Fln9V9B96hzRwtWuHIp3kPN087p1qKj2xIzL8nB54OleoKpacjaNW42u
+         CGlbv7+9ROKc3advp1WEVy5loaKr9rEfcWjV+Mdd7iIcockWZhtJ4SWHM5+pIz4ET/tp
+         psWkmi+LfeLgC4catXKeOefrKGRV+3Ot5Vxqe/rFRx9GVPjWeaNKPVnepg2H/RVKDYyR
+         TgnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=hTqhfTtmV3pMirYUYgWlXw/kCqlEQoXZJCMU2+NSS4k=;
-        b=Wv+iIZMVdZOiFUCsI4XEWo7Vj4JNhmFWS7Jo+YnLqIstCMcQ1EniTdnpTfW44r/fkB
-         4YTgi6NTY/lF8NxJ20ilW+3n5r/8bESdeqoHBzTV98H4fL3WqYblWWdZqqy3ZIbqwehM
-         K/Gm4Qa1obgX+mH73YoQj465UMBrYNmll5vk82Ud3b+HbImBqineSzHlK5qNHbKW2ApS
-         N9wgFNF8atMYB6YF11MPag0omgHq7jRCKK9BKDuvv9G2zDCGI5ZiaeTJZonwzgzAA4PC
-         0WDtOf8XkiiEfp4dwwT0Y+WzV2uOoxzxPOfXPKdu0+Q4ARhb8+J+bDdB6LUDof+KwoJh
-         AESw==
-X-Gm-Message-State: ALQs6tBNsajN2i0qsOyanFsMS7wY3iIYlOlHFyMGoyMqyk8Pl265vLF9
-        51L4NjMRhGa9JpsKf0EprQHr7Ab8JoU=
-X-Google-Smtp-Source: AB8JxZppL0qQwFGyjMhRjI2QfaBa6W9oXlmaeyqJgfKcluoaoza2GNURcOs0MBxd6c1wkYyWplQwbg==
-X-Received: by 2002:a65:4805:: with SMTP id h5-v6mr23014880pgs.96.1525912840612;
-        Wed, 09 May 2018 17:40:40 -0700 (PDT)
+        bh=V7FVrsqMnzAItxNNnJosIsysFz5457IgbmFv9AwoGso=;
+        b=M3Tcal1PK+3ds0LyGbTUGLZuTiBkcw7FnhreEpQyzlUsdzqv+5e+UxvsViUzWX8H0H
+         1xWqz6A2zBUl/80ZszHUQcYV6rqMnFP7qXti9sKdkzdvPUUVSMhZAqGQ//TxMh9NRyPV
+         8J3kVpUWdojiNwXaOQqLXa+JhBKwDiOm43dJd0fqrGycTww2CZwppOqLfS6BZTQo6lJW
+         ax6XcGoL/g7miqjtNA+ZMBCiePaNsIeS7orwTOoVtc+B0hsXQsSzscjsc7si4JcB6g+j
+         Khe2EW3PI9CYqBE28DzjbABcOrubkj0JEfN/SIq6vvIVla+tcn14CKULIUyQL8QLvazZ
+         A8cA==
+X-Gm-Message-State: ALQs6tCYHYzxxIzM8PNN3dfZvQeL1KYYcJu9VoWxIsEg1agDKJoLUFFX
+        2O6cRfb2L8BUVDLpGP8JRCgNdC0clJQ=
+X-Google-Smtp-Source: AB8JxZrsdAZTBV4WobLKlDJmpIgJZ+wgIBakAm/F7lHGueONC0viX8Aws5e8yHXIr3asWAnaCOOhmA==
+X-Received: by 10.167.132.146 with SMTP id u18mr18764117pfn.225.1525912832708;
+        Wed, 09 May 2018 17:40:32 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id n73sm22478158pfb.167.2018.05.09.17.40.39
+        by smtp.gmail.com with ESMTPSA id p84sm31823654pfi.66.2018.05.09.17.40.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 17:40:39 -0700 (PDT)
+        Wed, 09 May 2018 17:40:31 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jamill@microsoft.com,
-        jonathantanmy@google.com, pclouds@gmail.com
-Subject: [PATCH v4 07/13] alloc: add repository argument to alloc_tag_node
-Date:   Wed,  9 May 2018 17:40:18 -0700
-Message-Id: <20180510004024.93974-8-sbeller@google.com>
+        jonathantanmy@google.com, pclouds@gmail.com,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v4 02/13] object: add repository argument to create_object
+Date:   Wed,  9 May 2018 17:40:13 -0700
+Message-Id: <20180510004024.93974-3-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
 In-Reply-To: <20180510004024.93974-1-sbeller@google.com>
 References: <20180508193736.14883-1-sbeller@google.com>
@@ -64,57 +65,121 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a small mechanical change; it doesn't change the
-implementation to handle repositories other than the_repository yet.
-Use a macro to catch callers passing a repository other than
-the_repository at compile time.
+Add a repository argument to allow the callers of create_object
+to be more specific about which repository to act on. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
 
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- alloc.c | 2 +-
- cache.h | 3 ++-
- tag.c   | 2 +-
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ blob.c   | 4 +++-
+ commit.c | 3 ++-
+ object.c | 5 +++--
+ object.h | 3 ++-
+ tag.c    | 3 ++-
+ tree.c   | 3 ++-
+ 6 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/alloc.c b/alloc.c
-index 9e2b897ec1d..290250e3595 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -65,7 +65,7 @@ void *alloc_tree_node_the_repository(void)
- }
+diff --git a/blob.c b/blob.c
+index fa2ab4f7a74..85c2143f299 100644
+--- a/blob.c
++++ b/blob.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "blob.h"
++#include "repository.h"
  
- static struct alloc_state tag_state;
--void *alloc_tag_node(void)
-+void *alloc_tag_node_the_repository(void)
+ const char *blob_type = "blob";
+ 
+@@ -7,7 +8,8 @@ struct blob *lookup_blob(const struct object_id *oid)
  {
- 	struct tag *t = alloc_node(&tag_state, sizeof(struct tag));
- 	t->object.type = OBJ_TAG;
-diff --git a/cache.h b/cache.h
-index bf6e8c87d83..32f340cde59 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1770,7 +1770,8 @@ extern void *alloc_blob_node_the_repository(void);
- extern void *alloc_tree_node_the_repository(void);
- #define alloc_commit_node(r) alloc_commit_node_##r()
- extern void *alloc_commit_node_the_repository(void);
--extern void *alloc_tag_node(void);
-+#define alloc_tag_node(r) alloc_tag_node_##r()
-+extern void *alloc_tag_node_the_repository(void);
- extern void *alloc_object_node(void);
- extern void alloc_report(void);
- extern unsigned int alloc_commit_index(void);
-diff --git a/tag.c b/tag.c
-index 7150b759d66..02ef4eaafc0 100644
---- a/tag.c
-+++ b/tag.c
-@@ -94,7 +94,7 @@ struct tag *lookup_tag(const struct object_id *oid)
  	struct object *obj = lookup_object(oid->hash);
  	if (!obj)
- 		return create_object(the_repository, oid->hash,
--				     alloc_tag_node());
-+				     alloc_tag_node(the_repository));
+-		return create_object(oid->hash, alloc_blob_node());
++		return create_object(the_repository, oid->hash,
++				     alloc_blob_node());
+ 	return object_as_type(obj, OBJ_BLOB, 0);
+ }
+ 
+diff --git a/commit.c b/commit.c
+index ca474a7c112..9106acf0aad 100644
+--- a/commit.c
++++ b/commit.c
+@@ -50,7 +50,8 @@ struct commit *lookup_commit(const struct object_id *oid)
+ {
+ 	struct object *obj = lookup_object(oid->hash);
+ 	if (!obj)
+-		return create_object(oid->hash, alloc_commit_node());
++		return create_object(the_repository, oid->hash,
++				     alloc_commit_node());
+ 	return object_as_type(obj, OBJ_COMMIT, 0);
+ }
+ 
+diff --git a/object.c b/object.c
+index f7c624a7ba6..2de029275bc 100644
+--- a/object.c
++++ b/object.c
+@@ -138,7 +138,7 @@ static void grow_object_hash(void)
+ 	the_repository->parsed_objects->obj_hash_size = new_hash_size;
+ }
+ 
+-void *create_object(const unsigned char *sha1, void *o)
++void *create_object_the_repository(const unsigned char *sha1, void *o)
+ {
+ 	struct object *obj = o;
+ 
+@@ -178,7 +178,8 @@ struct object *lookup_unknown_object(const unsigned char *sha1)
+ {
+ 	struct object *obj = lookup_object(sha1);
+ 	if (!obj)
+-		obj = create_object(sha1, alloc_object_node());
++		obj = create_object(the_repository, sha1,
++				    alloc_object_node());
+ 	return obj;
+ }
+ 
+diff --git a/object.h b/object.h
+index cecda7da370..2cb0b241083 100644
+--- a/object.h
++++ b/object.h
+@@ -93,7 +93,8 @@ extern struct object *get_indexed_object(unsigned int);
+  */
+ struct object *lookup_object(const unsigned char *sha1);
+ 
+-extern void *create_object(const unsigned char *sha1, void *obj);
++#define create_object(r, s, o) create_object_##r(s, o)
++extern void *create_object_the_repository(const unsigned char *sha1, void *obj);
+ 
+ void *object_as_type(struct object *obj, enum object_type type, int quiet);
+ 
+diff --git a/tag.c b/tag.c
+index 3d37c1bd251..7150b759d66 100644
+--- a/tag.c
++++ b/tag.c
+@@ -93,7 +93,8 @@ struct tag *lookup_tag(const struct object_id *oid)
+ {
+ 	struct object *obj = lookup_object(oid->hash);
+ 	if (!obj)
+-		return create_object(oid->hash, alloc_tag_node());
++		return create_object(the_repository, oid->hash,
++				     alloc_tag_node());
  	return object_as_type(obj, OBJ_TAG, 0);
+ }
+ 
+diff --git a/tree.c b/tree.c
+index 1c68ea586bd..63730e3fb46 100644
+--- a/tree.c
++++ b/tree.c
+@@ -196,7 +196,8 @@ struct tree *lookup_tree(const struct object_id *oid)
+ {
+ 	struct object *obj = lookup_object(oid->hash);
+ 	if (!obj)
+-		return create_object(oid->hash, alloc_tree_node());
++		return create_object(the_repository, oid->hash,
++				     alloc_tree_node());
+ 	return object_as_type(obj, OBJ_TREE, 0);
  }
  
 -- 
