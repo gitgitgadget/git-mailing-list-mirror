@@ -6,94 +6,70 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2F571F406
-	for <e@80x24.org>; Thu, 10 May 2018 14:29:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B013C1F406
+	for <e@80x24.org>; Thu, 10 May 2018 14:34:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965845AbeEJO31 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 10:29:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34864 "HELO cloud.peff.net"
+        id S965939AbeEJOef (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 10:34:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34872 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S965503AbeEJO30 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 10:29:26 -0400
-Received: (qmail 5676 invoked by uid 109); 10 May 2018 14:29:26 -0000
+        id S965266AbeEJOef (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 10:34:35 -0400
+Received: (qmail 5854 invoked by uid 109); 10 May 2018 14:34:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 May 2018 14:29:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 May 2018 14:34:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24867 invoked by uid 111); 10 May 2018 14:29:30 -0000
+Received: (qmail 24894 invoked by uid 111); 10 May 2018 14:34:39 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 10 May 2018 10:29:30 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 10 May 2018 10:34:39 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2018 10:29:24 -0400
-Date:   Thu, 10 May 2018 10:29:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2018 10:34:33 -0400
+Date:   Thu, 10 May 2018 10:34:33 -0400
 From:   Jeff King <peff@peff.net>
-To:     kelly elton <its.the.doc@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: [PATCH] apply: clarify "-p" documentation
-Message-ID: <20180510142924.GB25617@sigill.intra.peff.net>
-References: <CALVfKe_em046aO9QUqJ0TXcLh6Oe7ydYQKr9Zwvheq8RV4=43g@mail.gmail.com>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] t5310-pack-bitmaps: make JGit tests work with
+ GIT_TEST_SPLIT_INDEX
+Message-ID: <20180510143432.GC25617@sigill.intra.peff.net>
+References: <20180510135852.25232-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CALVfKe_em046aO9QUqJ0TXcLh6Oe7ydYQKr9Zwvheq8RV4=43g@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180510135852.25232-1-szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 27, 2018 at 12:40:05PM -0500, kelly elton wrote:
+On Thu, May 10, 2018 at 03:58:52PM +0200, SZEDER Gábor wrote:
 
-> >  -p<n>
-> > Remove <n> leading slashes from traditional diff paths. The default is 1.
+> The two JGit tests 'we can read jgit bitmaps' and 'jgit can read our
+> bitmaps' in 't5310-pack-bitmaps.sh' fail when run with
+> GIT_TEST_SPLIT_INDEX=YesPlease.  Both tests create a clone of the test
+> repository to check bitmap interoperability with JGit.  With split
+> indexes enabled the index in the clone repositories contains the
+> 'link' extension, which JGit doesn't support and, consequently, an
+> exception aborts it:
 > 
-> This suggests to me the following outcomes:
-> 1) home/user/repos/myrepo with -p1 becomes home/user/repos/myrepo
-> 2) home/user/repos/myrepo with -p2 becomes home/user/repos/myrepo
-> 3) /home/user/repos/myrepo with -p1 becomes home/user/repos/myrepo
-> 4) /home/user/repos/myrepo with -p2 becomes home/user/repos/myrepo
-> 5) //home/user/repos/myrepo with -p1 becomes /home/user/repos/myrepo
-> 6) //home/user/repos/myrepo with -p2 becomes home/user/repos/myrepo
+>   <...>
+>   org.eclipse.jgit.api.errors.JGitInternalException: DIRC extension 'link' not supported by this version.
+>           at org.eclipse.jgit.dircache.DirCache.readFrom(DirCache.java:562)
+>   <...>
 > 
-> `Remove <n> leading slashes`...That's not really what's happening.
-> 
-> What seems to actually happen is that it is removing directories from the path:
-> 1) home/user/repos/myrepo with -p1 becomes home/user/repos/myrepo
-> 2) home/user/repos/myrepo with -p2 becomes user/repos/myrepo
-> 
-> This argument seems to be removing folders from the path, not slashes.
+> Since testing bitmaps doesn't need a worktree in the first place,
+> let's just create bare clones for the two JGit tests, so the cloned
+> won't have an index, and these two tests can be executed even with
+> split index enabled.
 
-Yes. I agree the current documentation is quite misleading.
+Nice, this seems like a clever workaround.
 
-How about this?
+Reviewed-by: Jeff King <peff@peff.net>
 
--- >8 --
-Subject: [PATCH] apply: clarify "-p" documentation
+The more heavy-handed approach would be to just disable the JGIT prereq
+when GIT_TEST_SPLIT_INDEX is in use, which would cover this and
+potentially any other cases. This is nicer because it lets us continue
+using the test. And it's not like we have a ton of jgit dependencies,
+such that dealing with each individually would be a burden.
 
-We're not really removing slashes, but slash-separated path
-components. Let's make that more clear.
-
-Reported-by: kelly elton <its.the.doc@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-apply.txt | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index 4ebc3d3271..c993fbf714 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -113,8 +113,10 @@ explained for the configuration variable `core.quotePath` (see
- linkgit:git-config[1]).
- 
- -p<n>::
--	Remove <n> leading slashes from traditional diff paths. The
--	default is 1.
-+	Remove <n> leading path components (separated by slashes) from
-+	traditional diff paths. E.g., with `-p2`, a patch against
-+	`a/dir/file` will be applied directly to `file`. The default is
-+	1.
- 
- -C<n>::
- 	Ensure at least <n> lines of surrounding context match before
--- 
-2.17.0.984.g9b00a423a4
-
+-Peff
