@@ -2,85 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88CC71F406
-	for <e@80x24.org>; Thu, 10 May 2018 17:50:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5EAE51F406
+	for <e@80x24.org>; Thu, 10 May 2018 17:58:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966542AbeEJRu0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 13:50:26 -0400
-Received: from mail-yb0-f179.google.com ([209.85.213.179]:33916 "EHLO
-        mail-yb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965017AbeEJRuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 13:50:25 -0400
-Received: by mail-yb0-f179.google.com with SMTP id b14-v6so942740ybk.1
-        for <git@vger.kernel.org>; Thu, 10 May 2018 10:50:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Z8MPWBuzhgTUq7B1KdQCMgaXA4cxwBbUNfUdAmoBmg4=;
-        b=btn7dTbkw4IKXHjL9riaZxwGsESL42zq2HHoVM+UwrLnrammXi3C/jMIH9Q52woqcY
-         x7EXtUtnPK0Wc4Inykw1Eq4Uni6El/ihCX3zhXhq7k90I+60RnsEoDOx8kjBFnIlpYZ+
-         fM/QyRgr/1sKXMecaz1MsLNlAPsFhx08HGMHWMFHlSSGFc+KvXVoZkhVJRtCmBA5mV7P
-         LjDIHAvTECeDj9cJK/mZLZLzjkSGidudxPeP/S/7cr/93Mjfsb5S5Ct83VnmC2sE7n/4
-         +pKkwQGv5EEcYYbacrpcKPG3g3N6GXkGt/xhtnlfrChod3jlVSF2tfAwvvcdnqu3vo0c
-         9vJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Z8MPWBuzhgTUq7B1KdQCMgaXA4cxwBbUNfUdAmoBmg4=;
-        b=oPC2D/EB4FJHF0Q9zpsjK4uxNDEW4Q2++5hHR27AudPdvj6IwcEnobjXv3+H/FBbon
-         nM4QR8mV1ImT7gt1MlIvA7ZDGxU+KB1XncQyOwaNIaT+spiEqlCjUut2oG+j3+iSOqc/
-         I5492wV36+VnOdQ9it/4ABfpKaw3i7TnByC10FGvwmrCfVPM7mbL9qGtmxDufvVyY2Kc
-         LV2cX9pDLc6SU33kfSi3bT519trlj/Q0QmcabQq8UKt5yyhXUayNapjCqHg4LobYHq6g
-         I+nHGhULjN9h+v/bKW42XyK1asFZWONei1gOsBXkI690vAXRB0rI/sNOAL12BjYmeoRs
-         ypuA==
-X-Gm-Message-State: ALKqPwdoZWnfMz65/iZhaOV86zHuK1ZLhj7BrKkaYzpwlWkUAdm777Le
-        PubFLy6sVo0IXActqj4Gmhn2Ewbz8zGNSTLtgPbVBg==
-X-Google-Smtp-Source: AB8JxZr82UgXg4EDrbPMQiOEBsGGEV/z25Jb1d+T/MGGAWxyBukudiQWB4WhVQH5O0yXlIsB/0p2ZE885wCUo7ZCb5Y=
-X-Received: by 2002:a25:2704:: with SMTP id n4-v6mr1297479ybn.167.1525974624353;
- Thu, 10 May 2018 10:50:24 -0700 (PDT)
+        id S966686AbeEJR6P (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 13:58:15 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:64678 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965017AbeEJR6O (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 13:58:14 -0400
+Received: from [192.168.2.201] ([92.22.23.119])
+        by smtp.talktalk.net with SMTP
+        id GppTf8tHjIEJtGppTfMWKq; Thu, 10 May 2018 18:58:12 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1525975092;
+        bh=ymQY1moj6hM4pN+1vz8hbW1R5IJozHXWU6mLkeIPr5Q=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=O5xsGG4KxUixFnlobeNOghG6TlU9mYq6Gup5wFnCJRo56qtKWzHkulzCuO+F+6kmS
+         83VLsoEEmBGo2fqU90UQ+lRtxYBy1MN0bqsMoP34ttna2vF211yii30vFfRboa3w0H
+         VJ/EQQmumMW3c1LdD/d+oWQwpqCUgWS1TKMQDSWI=
+X-Originating-IP: [92.22.23.119]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=SuG+FsG0 c=1 sm=1 tr=0 a=oWXjcmuSLv9+fGSLdn2kqg==:117
+ a=oWXjcmuSLv9+fGSLdn2kqg==:17 a=IkcTkHD0fZMA:10 a=9jxfW5SSk6lpWmgnK4MA:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Regression in patch add?
+To:     Oliver Joseph Ash <oliverjash@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, martin.agren@gmail.com,
+        mqudsi@neosmart.net, phillip.wood@dunelm.org.uk
+References: <be321106-2f10-e678-8237-449d2dd30fee@talktalk.net>
+ <20180510141125.21677-1-oliverjash@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <e8aedc6b-5b3e-cfb2-be9d-971bfd9adde8@talktalk.net>
+Date:   Thu, 10 May 2018 18:58:11 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Thu, 10 May 2018 10:50:23
- -0700 (PDT)
-In-Reply-To: <20180510030723.32586-1-predatoramigo@gmail.com>
-References: <20180510030723.32586-1-predatoramigo@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 10 May 2018 10:50:23 -0700
-Message-ID: <CAGZ79kYddyMjRTQ6Vqi-rvpy8NL6Ypti70uBRGs=DBjtK6Pk6A@mail.gmail.com>
-Subject: Re: [GSoC] Info: Week 02 Blog Post
-To:     Pratik Karki <predatoramigo@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Andrew Ardill <andrew.ardill@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20180510141125.21677-1-oliverjash@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfLCga2ma5P6wc8WjWbty9zyV/KpnnLNr8RZej63xa0Apg8IT/GlpCKItRDmOtG7S2bR2pxDEnnr+j3PD9PXAKWJRwMwscN6ekqL3aIZ7EWZOxM9X4wa9
+ VhKTqkA9yo0OiplEO1e3RzoqNm9vdwnbdMTRUy54pxbGFBmYXG6u3tV5xl4E5qE0yvfy3fwY5ncAvyO//8Ah+Etwu/25v2kGwmr3gWe1KjhhDSAWW9gQGHBL
+ KGZGmP2W2FO0+Kt1m4+kOD3saF18OC+igv8qvErFwLrdW8gFxVMvHJtC0r/wkCkabg3lAkTBiPNsr9cRmftTFziyIHG5kcgoixZs7054hso=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratik,
+On 10/05/18 15:11, Oliver Joseph Ash wrote:
+> You found the problem Phillip! My editor was trimming trailing white space, which breaks the context line.
 
-On Wed, May 9, 2018 at 8:07 PM, Pratik Karki <predatoramigo@gmail.com> wrot=
-e:
-> Hi,
->
-> The week 02 blog post[1] is live. This post is part I out of II and this
-> time it will be biweekly. The part II of will come in 2-3 days which
-> will describe the current `git-rebase.sh`.
+I'm glad we found the source of the problem (and that it wasn't some
+obscure bug)
 
-Cool post!
+> I had tried to use an alternative editor to account for any editor specific behaviour, but it turns out both the editors I tested in were doing this!
+> 
+> I suspect this change in behaviour will effect a lot of users? If so, it would be good if `git add -p` allowed for this behaviour, in the same way `git apply` does.
 
-> Do give me feedback.
+Yes, I think it probably makes sense to do that. Originally I didn't
+count empty lines as context lines in case the user accidentally added
+some empty lines at the end of the hunk but if 'git apply' does then I
+think 'git add -p' should as well
 
-In "and you=E2=80=99re choice of DVCS is Git.", s/you're/your/
+> Meanwhile, I can easily configure my editor not to do this for `*.diff` files.
+> 
+> Thanks for your help, Phillip and Martin!
+
+Thanks for posting an example so we could test it, it makes it much
+easier to track the problem down
+
+Best Wishes
+
+Phillip
+
+> Mahmoud, does this also explain your problem as per your original post?
+> 
+
