@@ -2,92 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 429071F406
-	for <e@80x24.org>; Thu, 10 May 2018 19:59:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC0241F406
+	for <e@80x24.org>; Thu, 10 May 2018 19:59:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752070AbeEJT7H (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 15:59:07 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:37636 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752046AbeEJT7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 15:59:01 -0400
-Received: by mail-pf0-f194.google.com with SMTP id e9-v6so1577086pfi.4
-        for <git@vger.kernel.org>; Thu, 10 May 2018 12:59:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LfGX/KEY0AfHzI7lPRM7neHstopDADuGJFRzJUEjyZQ=;
-        b=HNDn8HNd5ZLnP89WgtfCJSrqJXC3p4JtKGNOYkwpX1JRDUw5HAl3L9iB00xX8WXWkv
-         fBwuo/ka32o+rLlOOEEXM0TwwfbrV+bsujeojBnTrx1zNVyPkbGmSSLHsHr/xjdKP2et
-         96x6wcWRDLKWOeiN+INW5PojgDGQ5f4tUnmw0LocjXqk6kAQSfxoov5wgruKF1vwiU4L
-         u0OcPilItCeLgUsXe8eAbZSKrgFMpDRGvSaFaY8gAmmtQYsNO81B5qGXnsuW2vWnrJHB
-         20ADsFIDynysH/01K/0mOsuCVFua72YM21JD/Aonx6eel/736YrxCMkDj7Z6/bLFSVol
-         R6Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=LfGX/KEY0AfHzI7lPRM7neHstopDADuGJFRzJUEjyZQ=;
-        b=FRPF0H+LzqiXi62/463mMM1+Dogtj5i1IgOdNLmeaIyqPDMHJ/Kmq6Frf0ADnHXFk3
-         MjnPL8SnnoDh7PvCZ8+JbV9+9D/fbC2nK0Iy21XBLGK4CH4bp3iD9UOJWYj5sJEZUvFI
-         tIjhHq4QL5Y4g5X+d//H1M+o2IEJr+CmsyHLjph6JkB+FOhSc7AqkomoR72bmYmfHCcv
-         /sY+eF0Tj6+otbOXLBtGq+hgbQzla88CVOKSmX3momkoGi2ctYPE1bWHHJBZhe3q/yfV
-         aX3fANJiZWjaQTy1yQrrXf+4ZjFQhde0hd5Vs9C3i/Y+51k6BXVj1DgMBzJFmCXXVH0S
-         RU5A==
-X-Gm-Message-State: ALKqPwdF0r9ThtfiHc8p11UVNdYwqghgrluur3MdsSclTwypbACUlenf
-        tZtTOUkrbY1UVsAtnh7n/xudXw==
-X-Google-Smtp-Source: AB8JxZqR3dGV9krCI2z2/C6WdpZohE44YEYre4PtXbkR+ganGni6DjjDv1YI5yR8m9B7QyUoTKNryQ==
-X-Received: by 2002:a65:4944:: with SMTP id q4-v6mr2183923pgs.424.1525982340849;
-        Thu, 10 May 2018 12:59:00 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id l9-v6sm4585345pfg.146.2018.05.10.12.58.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 May 2018 12:59:00 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com, peff@peff.net
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 4/4] replace-object.c: remove the_repository from prepare_replace_object
-Date:   Thu, 10 May 2018 12:58:49 -0700
-Message-Id: <20180510195849.28023-5-sbeller@google.com>
-X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
-In-Reply-To: <20180510195849.28023-1-sbeller@google.com>
-References: <20180510195849.28023-1-sbeller@google.com>
+        id S1752080AbeEJT7V (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 15:59:21 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:40463 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751438AbeEJT7U (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 15:59:20 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w4AJxHIX037501
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 10 May 2018 15:59:17 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Bryan Turner'" <bturner@atlassian.com>
+Cc:     "'Git Users'" <git@vger.kernel.org>
+References: <004d01d3e7e2$517f78d0$f47e6a70$@nexbridge.com> <CAGyf7-GJgpCZ=wEorLxYOm_ABaDamWKkTnOtaAwti35DJ_zS7g@mail.gmail.com>
+In-Reply-To: <CAGyf7-GJgpCZ=wEorLxYOm_ABaDamWKkTnOtaAwti35DJ_zS7g@mail.gmail.com>
+Subject: RE: [Best Practices Request] clean/smudge configuration
+Date:   Thu, 10 May 2018 15:59:12 -0400
+Message-ID: <001401d3e899$60cf3930$226dab90$@nexbridge.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+        charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQFnnQJFkppPCcoZJFTxZlMkMoJajAGXzmEUpPU2t9A=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This was missed in 5982da9d2ce (replace-object: allow
-prepare_replace_object to handle arbitrary repositories, 2018-04-11)
 
-Technically the code works correctly as the replace_map is the same
-size in different repositories, however it is hard to read. So convert
-the code to the familiar pattern of dereferencing the pointer that we
-assign in the sizeof itself.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- replace-object.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On May 9, 2018 6:39 PM, Bryan Turner wrote:
+> On Wed, May 9, 2018 at 3:09 PM Randall S. Becker
+> <rsbecker@nexbridge.com>
+> wrote:
+> 
+> > The question: what is the best practice for versioning the parts of
+> > clean/smudge filters that are in .git/config given that only some
+> > users in my environment will be cloning the repository in question and
+> > that I
+> really
+> > can't put the entries in /etc/gitconfig or ~/.gitconfig because of
+> potential
+> > conflicts with other repositories that might also have clean/smudge
+> > definitions.
+> 
+> Depending on level of trust, one approach might be to use an [include] in
+> .git/config to include a file that's in the repository. Something like:
+> 
+> [include]
+>      path = ../path/to/config
+> 
 
-diff --git a/replace-object.c b/replace-object.c
-index 246b98cd4f1..801b5c16789 100644
---- a/replace-object.c
-+++ b/replace-object.c
-@@ -37,7 +37,7 @@ static void prepare_replace_object(struct repository *r)
- 		return;
- 
- 	r->objects->replace_map =
--		xmalloc(sizeof(*the_repository->objects->replace_map));
-+		xmalloc(sizeof(*r->objects->replace_map));
- 	oidmap_init(r->objects->replace_map, 0);
- 
- 	for_each_replace_ref(r, register_replace_ref, NULL);
--- 
-2.17.0.255.g8bfb7c0704
+What if we create a ../.gitconfig like ../.gitattributes, that is loaded
+before .git/config? With loads of warnings in the documentation about what
+*NOT* to put in here, any platform specifics and your own risk. The code in
+config.c would look like the following, with obvious updates to
+documentation and the test suite, so it's not fully baked yet. So far, I
+don't have a solution to the chicken-and-egg problem, other than this.
+However, if I'm barking up the wrong ballpark...
+
+diff --git a/config.c b/config.c
+index b0c20e6cb..75d5288ff 100644
+--- a/config.c
++++ b/config.c
+@@ -1555,11 +1555,15 @@ static int do_git_config_sequence(const struct
+config_options *opts,
+        char *xdg_config = xdg_config_home("config");
+        char *user_config = expand_user_path("~/.gitconfig", 0);
+        char *repo_config;
++       char *repo_config_versioned;
+
+-       if (opts->commondir)
++       if (opts->commondir) {
+                repo_config = mkpathdup("%s/config", opts->commondir);
+-       else
++               repo_config_versioned = mkpathdup("%s/../.gitconfig",
+opts->commondir);
++       } else {
+                repo_config = NULL;
++               repo_config_versioned = NULL;
++       }
+
+        current_parsing_scope = CONFIG_SCOPE_SYSTEM;
+        if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK,
+0))
+@@ -1574,6 +1578,8 @@ static int do_git_config_sequence(const struct
+config_options *opts,
+                ret += git_config_from_file(fn, user_config, data);
+
+        current_parsing_scope = CONFIG_SCOPE_REPO;
++       if (repo_config_versioned && !access_or_die(repo_config_versioned,
+R_OK, 0))
++               ret += git_config_from_file(fn, repo_config_versioned,
+data);
+        if (repo_config && !access_or_die(repo_config, R_OK, 0))
+                ret += git_config_from_file(fn, repo_config, data);
+
+@@ -1585,6 +1591,7 @@ static int do_git_config_sequence(const struct
+config_options *opts,
+        free(xdg_config);
+        free(user_config);
+        free(repo_config);
++       free(repo_config_versioned);
+        return ret;
+ }
+
 
