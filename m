@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6E9B1F406
-	for <e@80x24.org>; Thu, 10 May 2018 19:59:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 429071F406
+	for <e@80x24.org>; Thu, 10 May 2018 19:59:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752056AbeEJT7C (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 15:59:02 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:43512 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752039AbeEJT7A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 15:59:00 -0400
-Received: by mail-pg0-f66.google.com with SMTP id k11-v6so1406672pgo.10
-        for <git@vger.kernel.org>; Thu, 10 May 2018 12:59:00 -0700 (PDT)
+        id S1752070AbeEJT7H (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 15:59:07 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:37636 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752046AbeEJT7B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 15:59:01 -0400
+Received: by mail-pf0-f194.google.com with SMTP id e9-v6so1577086pfi.4
+        for <git@vger.kernel.org>; Thu, 10 May 2018 12:59:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5PSeLNprxEb3z4AWcomo3UBT0ZXjdahQSQNLsm7EU2Y=;
-        b=k1V62hwUGXPe27mVhMDM+cRa1/0sGf011AcsFOPpImWuiji9LH5IxAIUhCu/kta2Id
-         t3U3b6GBfeM1searhjbWjCioOpzGYx0lXBZyrUMGOlLy9wXnNxz8ieibfmYdLmDfkcfh
-         rtrbfIFexzvgOPlckR2fjw7g6BI5RGwEdgKB/nYEZrcKGKuHD8rvGamRP8Uh3uasISmK
-         QqPKT7OspJ/d9PRr4Qr5l7r4Q7Z1WEikb++4tt2igLNMWG7zmRjeNZnkcf0PdyiWAX0B
-         sgDyajrOzbP5walj6/3GDarmjWe4/fkq8d+PiuM+3LG3YY4Iuu4ROboWtDIZIQ7zbiXV
-         FpDw==
+        bh=LfGX/KEY0AfHzI7lPRM7neHstopDADuGJFRzJUEjyZQ=;
+        b=HNDn8HNd5ZLnP89WgtfCJSrqJXC3p4JtKGNOYkwpX1JRDUw5HAl3L9iB00xX8WXWkv
+         fBwuo/ka32o+rLlOOEEXM0TwwfbrV+bsujeojBnTrx1zNVyPkbGmSSLHsHr/xjdKP2et
+         96x6wcWRDLKWOeiN+INW5PojgDGQ5f4tUnmw0LocjXqk6kAQSfxoov5wgruKF1vwiU4L
+         u0OcPilItCeLgUsXe8eAbZSKrgFMpDRGvSaFaY8gAmmtQYsNO81B5qGXnsuW2vWnrJHB
+         20ADsFIDynysH/01K/0mOsuCVFua72YM21JD/Aonx6eel/736YrxCMkDj7Z6/bLFSVol
+         R6Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=5PSeLNprxEb3z4AWcomo3UBT0ZXjdahQSQNLsm7EU2Y=;
-        b=sVJ97Tm6JtyUMIMvDk3A00cTIXEv3/D3bzIu8MXuBQP0t+zutS+Bup0xsI2f7vQc5Z
-         TrX4e9X/wfRscCfAHvQ1m31Fjqp0yhzXhEC2//GPGbCwquXlrhdgCKiRSaY2aU7In7Hu
-         Kyxht9MmUSK4ZsDYUNVbQQNjtJKd61a2EN+J8h1+zQDAIb3hTO3616FCIFYexBf5bqWJ
-         aoTqDy/uA9LFUI4L4VgiWm5cxXBB8bL0XorJGqh1GVxTqYckcLIki2cXM/ltbEHcMbco
-         sMgE9zLIAvaBGB7qvYwJu31M4PS8TAeHU7wa05Qhza5MDpD9FE/scrxQEW/Uy1XysSB2
-         Faqg==
-X-Gm-Message-State: ALKqPweYTiQYA2hcH4VBFbZC6MNF47Bub2k5+xYa+ctJJ7ysxz4ZevEp
-        EP35LtmPH4Vd2FRFvOUZZcyNDg==
-X-Google-Smtp-Source: AB8JxZqX1TOTRHmw1ZW2UjXHf7xemsyI06RqLbA/pPu9h7e/jKBABRfVMSiJHP4nCJm/5Nmh5uDMqg==
-X-Received: by 2002:a63:9a02:: with SMTP id o2-v6mr2112773pge.439.1525982339450;
-        Thu, 10 May 2018 12:58:59 -0700 (PDT)
+        bh=LfGX/KEY0AfHzI7lPRM7neHstopDADuGJFRzJUEjyZQ=;
+        b=FRPF0H+LzqiXi62/463mMM1+Dogtj5i1IgOdNLmeaIyqPDMHJ/Kmq6Frf0ADnHXFk3
+         MjnPL8SnnoDh7PvCZ8+JbV9+9D/fbC2nK0Iy21XBLGK4CH4bp3iD9UOJWYj5sJEZUvFI
+         tIjhHq4QL5Y4g5X+d//H1M+o2IEJr+CmsyHLjph6JkB+FOhSc7AqkomoR72bmYmfHCcv
+         /sY+eF0Tj6+otbOXLBtGq+hgbQzla88CVOKSmX3momkoGi2ctYPE1bWHHJBZhe3q/yfV
+         aX3fANJiZWjaQTy1yQrrXf+4ZjFQhde0hd5Vs9C3i/Y+51k6BXVj1DgMBzJFmCXXVH0S
+         RU5A==
+X-Gm-Message-State: ALKqPwdF0r9ThtfiHc8p11UVNdYwqghgrluur3MdsSclTwypbACUlenf
+        tZtTOUkrbY1UVsAtnh7n/xudXw==
+X-Google-Smtp-Source: AB8JxZqR3dGV9krCI2z2/C6WdpZohE44YEYre4PtXbkR+ganGni6DjjDv1YI5yR8m9B7QyUoTKNryQ==
+X-Received: by 2002:a65:4944:: with SMTP id q4-v6mr2183923pgs.424.1525982340849;
+        Thu, 10 May 2018 12:59:00 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id e15-v6sm2974421pgt.50.2018.05.10.12.58.58
+        by smtp.gmail.com with ESMTPSA id l9-v6sm4585345pfg.146.2018.05.10.12.58.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 May 2018 12:58:58 -0700 (PDT)
+        Thu, 10 May 2018 12:59:00 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, peff@peff.net
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 3/4] object.c: free replace map in raw_object_store_clear
-Date:   Thu, 10 May 2018 12:58:48 -0700
-Message-Id: <20180510195849.28023-4-sbeller@google.com>
+Subject: [PATCH v2 4/4] replace-object.c: remove the_repository from prepare_replace_object
+Date:   Thu, 10 May 2018 12:58:49 -0700
+Message-Id: <20180510195849.28023-5-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
 In-Reply-To: <20180510195849.28023-1-sbeller@google.com>
 References: <20180510195849.28023-1-sbeller@google.com>
@@ -62,30 +62,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The replace map for objects was missed to free in the object store in
-the conversion of c1274495 ("replace-object: eliminate replace objects
-prepared flag", 2018-04-11). We also missed to free the replaced objects
-that are put into the replace map in that whole series.
+This was missed in 5982da9d2ce (replace-object: allow
+prepare_replace_object to handle arbitrary repositories, 2018-04-11)
+
+Technically the code works correctly as the replace_map is the same
+size in different repositories, however it is hard to read. So convert
+the code to the familiar pattern of dereferencing the pointer that we
+assign in the sizeof itself.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- object.c | 3 +++
- 1 file changed, 3 insertions(+)
+ replace-object.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/object.c b/object.c
-index 242d922d953..80d1cae53c0 100644
---- a/object.c
-+++ b/object.c
-@@ -481,6 +481,9 @@ void raw_object_store_clear(struct raw_object_store *o)
- 	FREE_AND_NULL(o->objectdir);
- 	FREE_AND_NULL(o->alternate_db);
+diff --git a/replace-object.c b/replace-object.c
+index 246b98cd4f1..801b5c16789 100644
+--- a/replace-object.c
++++ b/replace-object.c
+@@ -37,7 +37,7 @@ static void prepare_replace_object(struct repository *r)
+ 		return;
  
-+	oidmap_free(o->replace_map, 1);
-+	FREE_AND_NULL(o->replace_map);
-+
- 	free_alt_odbs(o);
- 	o->alt_odb_tail = NULL;
+ 	r->objects->replace_map =
+-		xmalloc(sizeof(*the_repository->objects->replace_map));
++		xmalloc(sizeof(*r->objects->replace_map));
+ 	oidmap_init(r->objects->replace_map, 0);
  
+ 	for_each_replace_ref(r, register_replace_ref, NULL);
 -- 
 2.17.0.255.g8bfb7c0704
 
