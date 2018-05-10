@@ -7,252 +7,292 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F1AB1F424
-	for <e@80x24.org>; Thu, 10 May 2018 00:12:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E149C1F424
+	for <e@80x24.org>; Thu, 10 May 2018 00:40:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935619AbeEJAMV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 20:12:21 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33905 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935617AbeEJAMU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 20:12:20 -0400
-Received: by mail-pf0-f195.google.com with SMTP id a14-v6so172733pfi.1
-        for <git@vger.kernel.org>; Wed, 09 May 2018 17:12:19 -0700 (PDT)
+        id S935591AbeEJAkb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 20:40:31 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:35003 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934395AbeEJAka (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 20:40:30 -0400
+Received: by mail-pl0-f68.google.com with SMTP id i5-v6so245664plt.2
+        for <git@vger.kernel.org>; Wed, 09 May 2018 17:40:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LIzb+E5pyq3i0P+Rcbj8fTAhYOWCXsbUpar+qXWWGL0=;
-        b=E7TL68hz4V02ltmoGtGoZfrjmfC9D/NupUzQqoav098LOd1S16q9Zm1KUxC2eQ9x7d
-         l0o/dLS3sSzr4LGFzQ/0QeXkW+yZUc7dYCQpkRLTY6ouprb0y8g0nKwfwwEpKkywX9R5
-         IpSNhHsNoWnc7mKHRZ2FJlsxjcNG0mWCTAu5fiKCqU7v680+NRF8sDI2qTmepkQTWBc+
-         LqhR9BrtZMlYbUnvlC4os3clfF7j1hczrOD32Fz12owgjH3VbbeBggezwKoNJoM9k1xt
-         9NKy5HhaBQyBPl3kubW0CPy0R9ylSZwaGZBJlpoP8trRLIgT6CHN8tYSonkLuqgQ9r4X
-         SQig==
+        bh=IuOacrM6ZbQNNAvG7UzMGzUDLohL6VtYJaiv1mDaKMk=;
+        b=FuSkgp0YERMvUogQX3mPyadJt1OiWU+9G0/+qLjDhW7qlKJtyZHWmgT2am/ROtXgp5
+         DPItzxYL8nx4uJRM0sn56FV356obeGhKcQ6FE6ahaUBlRZdZ0ZieIj2vnjqb5HIcbRpP
+         7rlkEbxEkxcOBwxLAGY6DCLKGJqZzPBQZtesKUC2CKyxlgvwRBc6wgPzgG5zNOd8mHGA
+         agF3x1rbFZDvdlQGv5e/b4k6/qVJrAcqtB+BK0uSTX45jNCyZb9VBut0efnIG9FS+56q
+         Wh2oHtnhnDvyDiY9seMNBBaZp0Ql0yxHRwRtMKDY2BmHjktoC91nDkcOMhjKhg7Ek+wT
+         r17g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=LIzb+E5pyq3i0P+Rcbj8fTAhYOWCXsbUpar+qXWWGL0=;
-        b=jsYdcKcKAhqaLcbjRh3qJW3rZq1Nx2Xcxrfke5UBBOlzISzRVnjS/dH7jzLtmw076Y
-         imkcH/ikRGbsyhspZDEZ43OrnU3ZE5aXiSbtcrfSFUVUSG1gKOieywdPUh+WM5G3eQO8
-         aywRGhlWlzYsFl/R3YcAJLEKV/7FWqDSjAH/LELndsf/rw3fLLZ1fX77yyEYg7GBwxAc
-         L1XAgHP7bqvHgodwm9OXkaCY2iFiBqohnJPGf3jiIRCiHODkdL6YcSsJaQ8hSqjc7G0c
-         3R+ZhemrtZii1ePX8Rp3QpWJdhr5fosd7lKXgtvpFJmKo/zBAvsWVY4yctkEYFQoaez/
-         BX4g==
-X-Gm-Message-State: ALQs6tAqx7KN5Ii4w7JzATp+MAbC92izCqVmyR6hIULTNKeMk4a7HnwU
-        Ew405B3xW+U1yk0Mtk/S9dWyHQ==
-X-Google-Smtp-Source: AB8JxZqyRMeTOuBPTjrTBNh5So39agOIjXx7omgwm03tm3JejCezcoWB7WktSpiUOSIo8ellu2a/Uw==
-X-Received: by 2002:a65:5c88:: with SMTP id a8-v6mr36568214pgt.373.1525911139138;
-        Wed, 09 May 2018 17:12:19 -0700 (PDT)
+        bh=IuOacrM6ZbQNNAvG7UzMGzUDLohL6VtYJaiv1mDaKMk=;
+        b=rw4pLDJM+jJMHczqdcui9xfY51yDWCeBGQp0MS8nqhaCXBcRPLK+e5zhTo6NHSesIF
+         gOIOaNVsIG9bs9j7nwelaJKYqVeJKe9oCLw/VfuYxcnaHzzY47b3RW/4cFf7x/rr1jnA
+         vGIItgLFSZnPepH3fyN3yVd4VTSB1MZim4gsXfh2gG61qJJRNLHJYwH4X4v0qBY5GaJA
+         87I62Nkima9KFPjiWdUzeR/ISqNzziL6TCMrMAvFwzks40qlHOKH513H/gBT7uolhtTl
+         YIHje0OdYuMpupg8lgjiaOQZrR0p4KmkbViN0JKL+psmVRPraOmcc7WeDo7EKk42R8Vz
+         Zmbw==
+X-Gm-Message-State: ALQs6tCD8wtsdHkZUMSzOig2Cwo5rGd5xe9bWeDjrkYafGRI8pPsEYWI
+        mrmZrn1x/4Wn8qrMpkd9B0VNb7WfsXY=
+X-Google-Smtp-Source: AB8JxZrEdl1iU5C3+RwTn2Q5WyuWdq8oyMCUJ9dJ+DV7ZJENMmYSBoAHqrsCLuggsdwUx3Ure+XpgA==
+X-Received: by 2002:a17:902:9686:: with SMTP id n6-v6mr46047468plp.136.1525912829471;
+        Wed, 09 May 2018 17:40:29 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id x71sm70838706pfe.47.2018.05.09.17.12.18
+        by smtp.gmail.com with ESMTPSA id e25sm3475065pfn.88.2018.05.09.17.40.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 17:12:18 -0700 (PDT)
+        Wed, 09 May 2018 17:40:28 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/2] packfile.h: remove all extern keywords
-Date:   Wed,  9 May 2018 17:12:11 -0700
-Message-Id: <20180510001211.163692-2-sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, jamill@microsoft.com,
+        jonathantanmy@google.com, pclouds@gmail.com
+Subject: [PATCH v4 00/13] object store: alloc
+Date:   Wed,  9 May 2018 17:40:11 -0700
+Message-Id: <20180510004024.93974-1-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
-In-Reply-To: <20180510001211.163692-1-sbeller@google.com>
-References: <20180510001211.163692-1-sbeller@google.com>
+In-Reply-To: <20180508193736.14883-1-sbeller@google.com>
+References: <20180508193736.14883-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Per our coding guidelines we prefer to only use the extern keyword
-when needed.
+v4:
+* address the memory issues, an interdiff is below.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- packfile.h | 80 +++++++++++++++++++++++++++---------------------------
- 1 file changed, 40 insertions(+), 40 deletions(-)
+v3:
 
-diff --git a/packfile.h b/packfile.h
-index cdab0557979..eb3b1154501 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -10,32 +10,32 @@
-  *
-  * Example: odb_pack_name(out, sha1, "idx") => ".git/objects/pack/pack-1234..idx"
-  */
--extern char *odb_pack_name(struct strbuf *buf, const unsigned char *sha1, const char *ext);
-+char *odb_pack_name(struct strbuf *buf, const unsigned char *sha1, const char *ext);
- 
- /*
-  * Return the name of the (local) packfile with the specified sha1 in
-  * its name.  The return value is a pointer to memory that is
-  * overwritten each time this function is called.
-  */
--extern char *sha1_pack_name(const unsigned char *sha1);
-+char *sha1_pack_name(const unsigned char *sha1);
- 
- /*
-  * Return the name of the (local) pack index file with the specified
-  * sha1 in its name.  The return value is a pointer to memory that is
-  * overwritten each time this function is called.
-  */
--extern char *sha1_pack_index_name(const unsigned char *sha1);
-+char *sha1_pack_index_name(const unsigned char *sha1);
- 
--extern struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
-+struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
- 
- /* A hook to report invalid files in pack directory */
- #define PACKDIR_FILE_PACK 1
- #define PACKDIR_FILE_IDX 2
- #define PACKDIR_FILE_GARBAGE 4
--extern void (*report_garbage)(unsigned seen_bits, const char *path);
-+void (*report_garbage)(unsigned seen_bits, const char *path);
- 
--extern void reprepare_packed_git(struct repository *r);
--extern void install_packed_git(struct repository *r, struct packed_git *pack);
-+void reprepare_packed_git(struct repository *r);
-+void install_packed_git(struct repository *r, struct packed_git *pack);
- 
- struct packed_git *get_packed_git(struct repository *r);
- struct list_head *get_packed_git_mru(struct repository *r);
-@@ -46,31 +46,31 @@ struct list_head *get_packed_git_mru(struct repository *r);
-  */
- unsigned long approximate_object_count(void);
- 
--extern struct packed_git *find_sha1_pack(const unsigned char *sha1,
-+struct packed_git *find_sha1_pack(const unsigned char *sha1,
- 					 struct packed_git *packs);
- 
--extern void pack_report(void);
-+void pack_report(void);
- 
- /*
-  * mmap the index file for the specified packfile (if it is not
-  * already mmapped).  Return 0 on success.
-  */
--extern int open_pack_index(struct packed_git *);
-+int open_pack_index(struct packed_git *);
- 
- /*
-  * munmap the index file for the specified packfile (if it is
-  * currently mmapped).
-  */
--extern void close_pack_index(struct packed_git *);
-+void close_pack_index(struct packed_git *);
- 
--extern unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
--extern void close_pack_windows(struct packed_git *);
--extern void close_pack(struct packed_git *);
--extern void close_all_packs(struct raw_object_store *o);
--extern void close_and_free_packs(struct raw_object_store *o);
--extern void unuse_pack(struct pack_window **);
--extern void clear_delta_base_cache(void);
--extern struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
-+unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
-+void close_pack_windows(struct packed_git *);
-+void close_pack(struct packed_git *);
-+void close_all_packs(struct raw_object_store *o);
-+void close_and_free_packs(struct raw_object_store *o);
-+void unuse_pack(struct pack_window **);
-+void clear_delta_base_cache(void);
-+struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
- 
- /*
-  * Make sure that a pointer access into an mmap'd index file is within bounds,
-@@ -80,7 +80,7 @@ extern struct packed_git *add_packed_git(const char *path, size_t path_len, int
-  * (like the 64-bit extended offset table), as we compare the size to the
-  * fixed-length parts when we open the file.
-  */
--extern void check_pack_index_ptr(const struct packed_git *p, const void *ptr);
-+void check_pack_index_ptr(const struct packed_git *p, const void *ptr);
- 
- /*
-  * Perform binary search on a pack-index for a given oid. Packfile is expected to
-@@ -96,51 +96,51 @@ int bsearch_pack(const struct object_id *oid, const struct packed_git *p, uint32
-  * at the SHA-1 within the mmapped index.  Return NULL if there is an
-  * error.
-  */
--extern const unsigned char *nth_packed_object_sha1(struct packed_git *, uint32_t n);
-+const unsigned char *nth_packed_object_sha1(struct packed_git *, uint32_t n);
- /*
-  * Like nth_packed_object_sha1, but write the data into the object specified by
-  * the the first argument.  Returns the first argument on success, and NULL on
-  * error.
-  */
--extern const struct object_id *nth_packed_object_oid(struct object_id *, struct packed_git *, uint32_t n);
-+const struct object_id *nth_packed_object_oid(struct object_id *, struct packed_git *, uint32_t n);
- 
- /*
-  * Return the offset of the nth object within the specified packfile.
-  * The index must already be opened.
-  */
--extern off_t nth_packed_object_offset(const struct packed_git *, uint32_t n);
-+off_t nth_packed_object_offset(const struct packed_git *, uint32_t n);
- 
- /*
-  * If the object named sha1 is present in the specified packfile,
-  * return its offset within the packfile; otherwise, return 0.
-  */
--extern off_t find_pack_entry_one(const unsigned char *sha1, struct packed_git *);
-+off_t find_pack_entry_one(const unsigned char *sha1, struct packed_git *);
- 
--extern int is_pack_valid(struct packed_git *);
--extern void *unpack_entry(struct packed_git *, off_t, enum object_type *, unsigned long *);
--extern unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
--extern unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
--extern int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, unsigned long *);
-+int is_pack_valid(struct packed_git *);
-+void *unpack_entry(struct packed_git *, off_t, enum object_type *, unsigned long *);
-+unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
-+unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
-+int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, unsigned long *);
- 
--extern void release_pack_memory(size_t);
-+void release_pack_memory(size_t);
- 
- /* global flag to enable extra checks when accessing packed objects */
--extern int do_check_packed_object_crc;
-+int do_check_packed_object_crc;
- 
--extern int packed_object_info(struct packed_git *pack, off_t offset, struct object_info *);
-+int packed_object_info(struct packed_git *pack, off_t offset, struct object_info *);
- 
--extern void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
--extern const struct packed_git *has_packed_and_bad(const unsigned char *sha1);
-+void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
-+const struct packed_git *has_packed_and_bad(const unsigned char *sha1);
- 
- /*
-  * Iff a pack file in the given repository contains the object named by sha1,
-  * return true and store its location to e.
-  */
--extern int find_pack_entry(struct repository *r, const unsigned char *sha1, struct pack_entry *e);
-+int find_pack_entry(struct repository *r, const unsigned char *sha1, struct pack_entry *e);
- 
--extern int has_sha1_pack(const unsigned char *sha1);
-+int has_sha1_pack(const unsigned char *sha1);
- 
--extern int has_pack_index(const unsigned char *sha1);
-+int has_pack_index(const unsigned char *sha1);
- 
- /*
-  * Only iterate over packs obtained from the promisor remote.
-@@ -156,13 +156,13 @@ typedef int each_packed_object_fn(const struct object_id *oid,
- 				  struct packed_git *pack,
- 				  uint32_t pos,
- 				  void *data);
--extern int for_each_object_in_pack(struct packed_git *p, each_packed_object_fn, void *data);
--extern int for_each_packed_object(each_packed_object_fn, void *, unsigned flags);
-+int for_each_object_in_pack(struct packed_git *p, each_packed_object_fn, void *data);
-+int for_each_packed_object(each_packed_object_fn, void *, unsigned flags);
- 
- /*
-  * Return 1 if an object in a promisor packfile is or refers to the given
-  * object, 0 otherwise.
-  */
--extern int is_promisor_object(const struct object_id *oid);
-+int is_promisor_object(const struct object_id *oid);
- 
- #endif
+* I used the (soon to be renamed?) branch-diff tool to attach a diff below
+  between v2 and v3 
+  
+* fixed comment in patch 1
+* correctly free objects and its hashmap in the last patch.
+* drop free'ing the commit->util pointer as we do not know where
+  it points to.
+
+v2:
+* I decided to stick with alloc.c and not migrate it to the mem-pool for now.
+  The reasoning for that is that mem-pool.h would introduce some alignment
+  waste, which I really did not want to.
+* renamed to struct parsed_object_pool;
+* free'd the additional memory of trees and commits.
+* do not special case the_repository for allocation purposes
+* corrected&polished commit messages
+* I used the (soon to be renamed?) branch-diff tool to attach a diff below.
+  (I still need to get used to that format, I find an interdiff of the
+   branches easier to read, but that would not yield the commit messages)
+
+
+
+v1:
+This applies on top of sb/oid-object-info and is the logical continuum of
+the series that it builds on; this brings the object store into more of
+Gits code, removing global state, such that reasoning about the state of
+the in-memory representation of the repository is easier.
+
+My original plan was to convert lookup_commit_graft as the next series,
+which would be similar to lookup_replace_object, as in sb/object-store-replace.
+The grafts and shallow mechanism are very close to each other, such that
+they need to be converted at the same time, both depending on the
+"parsed object store" that is introduced in this commit.
+
+The next series will then convert code in {object/blob/tree/commit/tag}.c
+hopefully finishing the lookup_* functions.
+
+I also debated if it is worth converting alloc.c via this patch series
+or if it might make more sense to use the new mem-pool by Jameson[1].
+
+I vaguely wonder about the performance impact, as the object allocation
+code seemed to be relevant in the past.
+
+[1] https://public-inbox.org/git/20180430153122.243976-1-jamill@microsoft.com/
+
+Any comments welcome,
+Thanks,
+Stefan
+
+Jonathan Nieder (1):
+  object: add repository argument to grow_object_hash
+
+Stefan Beller (12):
+  repository: introduce parsed objects field
+  object: add repository argument to create_object
+  alloc: add repository argument to alloc_blob_node
+  alloc: add repository argument to alloc_tree_node
+  alloc: add repository argument to alloc_commit_node
+  alloc: add repository argument to alloc_tag_node
+  alloc: add repository argument to alloc_object_node
+  alloc: add repository argument to alloc_report
+  alloc: add repository argument to alloc_commit_index
+  object: allow grow_object_hash to handle arbitrary repositories
+  object: allow create_object to handle arbitrary repositories
+  alloc: allow arbitrary repositories for alloc functions
+
+ alloc.c           |  65 ++++++++++++++++----------
+ alloc.h           |  19 ++++++++
+ blame.c           |   3 +-
+ blob.c            |   5 +-
+ cache.h           |   9 ----
+ commit.c          |  11 ++++-
+ commit.h          |   6 +++
+ merge-recursive.c |   3 +-
+ object.c          | 113 ++++++++++++++++++++++++++++++++++------------
+ object.h          |  18 +++++++-
+ repository.c      |   7 +++
+ repository.h      |   9 ++++
+ tag.c             |   9 +++-
+ tag.h             |   1 +
+ tree.c            |   4 +-
+ 15 files changed, 214 insertions(+), 68 deletions(-)
+ create mode 100644 alloc.h
+
 -- 
 2.17.0.255.g8bfb7c0704
 
+diff --git c/alloc.c w/alloc.c
+index 4ecf0f160f4..714df633169 100644
+--- c/alloc.c
++++ w/alloc.c
+@@ -47,6 +47,8 @@ void clear_alloc_state(struct alloc_state *s)
+ 		s->slab_nr--;
+ 		free(s->slabs[s->slab_nr]);
+ 	}
++
++	FREE_AND_NULL(s->slabs);
+ }
+ 
+ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
+@@ -110,22 +112,6 @@ void *alloc_commit_node(struct repository *r)
+ 	return c;
+ }
+ 
+-void release_tree_node(struct tree *t)
+-{
+-	free(t->buffer);
+-}
+-
+-void release_commit_node(struct commit *c)
+-{
+-	free_commit_list(c->parents);
+-	/* TODO: what about commit->util? */
+-}
+-
+-void release_tag_node(struct tag *t)
+-{
+-	free(t->tag);
+-}
+-
+ static void report(const char *name, unsigned int count, size_t size)
+ {
+ 	fprintf(stderr, "%10s: %8u (%"PRIuMAX" kB)\n",
+diff --git c/alloc.h w/alloc.h
+index 941d71960fb..3e4e828db48 100644
+--- c/alloc.h
++++ w/alloc.h
+@@ -16,8 +16,4 @@ unsigned int alloc_commit_index(struct repository *r);
+ void *allocate_alloc_state(void);
+ void clear_alloc_state(struct alloc_state *s);
+ 
+-void release_tree_node(struct tree *t);
+-void release_commit_node(struct commit *c);
+-void release_tag_node(struct tag *t);
+-
+ #endif
+diff --git c/commit.c w/commit.c
+index c3b400d5930..612ccf7b053 100644
+--- c/commit.c
++++ w/commit.c
+@@ -297,6 +297,13 @@ void free_commit_buffer(struct commit *commit)
+ 	}
+ }
+ 
++void release_commit_memory(struct commit *c)
++{
++	free_commit_buffer(c);
++	free_commit_list(c->parents);
++	/* TODO: what about commit->util? */
++}
++
+ const void *detach_commit_buffer(struct commit *commit, unsigned long *sizep)
+ {
+ 	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
+diff --git c/commit.h w/commit.h
+index 0fb8271665c..2d764ab7d8e 100644
+--- c/commit.h
++++ w/commit.h
+@@ -99,6 +99,12 @@ void unuse_commit_buffer(const struct commit *, const void *buffer);
+  */
+ void free_commit_buffer(struct commit *);
+ 
++/*
++ * Release memory related to a commit, including the parent list and
++ * any cached object buffer.
++ */
++void release_commit_memory(struct commit *c);
++
+ /*
+  * Disassociate any cached object buffer from the commit, but do not free it.
+  * The buffer (or NULL, if none) is returned.
+diff --git c/object.c w/object.c
+index 803d34ae189..9d5b10d5a20 100644
+--- c/object.c
++++ w/object.c
+@@ -524,11 +524,11 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
+ 			continue;
+ 
+ 		if (obj->type == OBJ_TREE)
+-			release_tree_node((struct tree*)obj);
++			free_tree_buffer((struct tree*)obj);
+ 		else if (obj->type == OBJ_COMMIT)
+-			release_commit_node((struct commit*)obj);
++			release_commit_memory((struct commit*)obj);
+ 		else if (obj->type == OBJ_TAG)
+-			release_tag_node((struct tag*)obj);
++			free_tag_buffer((struct tag*)obj);
+ 	}
+ 
+ 	FREE_AND_NULL(o->obj_hash);
+@@ -539,4 +539,9 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
+ 	clear_alloc_state(o->commit_state);
+ 	clear_alloc_state(o->tag_state);
+ 	clear_alloc_state(o->object_state);
++	FREE_AND_NULL(o->blob_state);
++	FREE_AND_NULL(o->tree_state);
++	FREE_AND_NULL(o->commit_state);
++	FREE_AND_NULL(o->tag_state);
++	FREE_AND_NULL(o->object_state);
+ }
+diff --git c/tag.c w/tag.c
+index af6a0725b6a..254352c30c6 100644
+--- c/tag.c
++++ w/tag.c
+@@ -116,6 +116,11 @@ static timestamp_t parse_tag_date(const char *buf, const char *tail)
+ 	return parse_timestamp(dateptr, NULL, 10);
+ }
+ 
++void free_tag_buffer(struct tag *t)
++{
++	free(t->tag);
++}
++
+ int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
+ {
+ 	struct object_id oid;
+diff --git c/tag.h w/tag.h
+index d469534e82a..b241fe67bc5 100644
+--- c/tag.h
++++ w/tag.h
+@@ -15,6 +15,7 @@ struct tag {
+ extern struct tag *lookup_tag(const struct object_id *oid);
+ extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long size);
+ extern int parse_tag(struct tag *item);
++extern void free_tag_buffer(struct tag *t);
+ extern struct object *deref_tag(struct object *, const char *, int);
+ extern struct object *deref_tag_noverify(struct object *);
+ extern int gpg_verify_tag(const struct object_id *oid,
