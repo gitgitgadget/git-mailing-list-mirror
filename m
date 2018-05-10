@@ -2,106 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B2D91F406
-	for <e@80x24.org>; Thu, 10 May 2018 13:15:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F01691F406
+	for <e@80x24.org>; Thu, 10 May 2018 13:15:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934478AbeEJNPG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 09:15:06 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:43793 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756948AbeEJNPF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 09:15:05 -0400
-Received: by mail-pg0-f46.google.com with SMTP id k11-v6so957021pgo.10
-        for <git@vger.kernel.org>; Thu, 10 May 2018 06:15:05 -0700 (PDT)
+        id S1757082AbeEJNP1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 09:15:27 -0400
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:45253 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935041AbeEJNPZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 09:15:25 -0400
+Received: by mail-wr0-f173.google.com with SMTP id p5-v6so1971006wre.12
+        for <git@vger.kernel.org>; Thu, 10 May 2018 06:15:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8cfmHwsc9aPqoExKX4EMS8/qTqh3z2mZx3qmK7hQPPE=;
-        b=rIYJSXubIjXtXw/r4O86j2ND5/o5M2bivGOmlkC+YsKuPeo22h6ms3JDkB+2LsiQha
-         uGw5xX95LLnVksG9UUJPhtbUL6hj+VRFDJgbIzHHrAQtuAMH4IGKV2UcHsXCgE1gIv/1
-         9S/VfBb9FVXuWjf8FHACDgB9bB1CWBlfiq8NJMTlGarsGGA/jQ6URIt7xxT9XQ2WtPQk
-         FC594Z9C5Kg73MoSxlzJhGig+gq1zZK07GB7b7ljo8cbXz3We2QSIeT3G6LdkscJhFLB
-         0ZEMo+haR5vf5x9d6s7SkRDwbvi2LWEAHYAaipLH7nF8ySHT+9XYGzm0nI5Af/sY5a7m
-         UOvw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=knFZBjcCbJNJBP48RsBaPI2hv64Zr6PVZhbjQeZHDUk=;
+        b=RyeMN++86VRxlqWsce+mK+Tgum+0RuQF/jjmbAuczXUhAay7oOWrlNDhEk9Du5niGa
+         1406GHcAPszvyfwPtAoCdBTojxFwxhuhd3zJNZKPA4g1iwkycjfA5d+YYQrUXbiK0+R6
+         N7IrkE4Uy3WFnauBQhJTNXmCbpcUmfpZyhUilV67gQMGhhEVOa4KIjNikO2GZiKUUXjV
+         3FMoUy3nLLj5XhUYHr53VxIJZOVQ1hpi/51ZjxFiOvlS5ga4v0GlHG1n3tmD1Eu1oc7B
+         uu6CDNs4s6m6qjCfdsvZRxqajN2NCr3aPfaplJ1zZqJpc4MhR0yKEEolmzmSlFyqmiHY
+         gjJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8cfmHwsc9aPqoExKX4EMS8/qTqh3z2mZx3qmK7hQPPE=;
-        b=c6tMr1cwCPx6zBWaZtOPlMQMCQmMTbNCn0raHwD9FUbS+yaUdQBwEi+SlTGYm8yr+f
-         nJiAOtYLAqkWHI9Pki0Bv0w/wo7nC5LSqEomn81AFsv9Czt/opRIvg54d0KmV9Re0J+t
-         MrXCtib2q2l/UmU7PYD+JpxPLqgVh/hiWGigJI07Bb52Ou8W+WHy2zA8TkOhGxesYWPO
-         EdwvsDzroR9ycFdxrj1MaGT0ED723lDvJLAapRidtn3QfzSC7YRz1084GsArVc368fC1
-         u2Gs4F8unMHylrlpGXqXJ4hc4ql98aP4m38wfpm2x1it5cQdlz5RXA/Xt4bMh4j3jKqG
-         yUJw==
-X-Gm-Message-State: ALKqPwfXE2Pred7NRL9ZJ/vZckkDqcLNZJVSFT+3N5tOtRH2g8icJPGl
-        vSYlkXY5S6xebNkPBh4K16nyjwJUIdY4Y5psWqY=
-X-Google-Smtp-Source: AB8JxZq2xjukPXspd/9A4K+5d8hx44OmCvpAX4q/sssMTWiyiD2dUSpXu+JsY5TnrgQe4egGTTbhZICxFQifnCWjKgc=
-X-Received: by 2002:a62:d8c7:: with SMTP id e190-v6mr1363348pfg.161.1525958104647;
- Thu, 10 May 2018 06:15:04 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Thu, 10 May 2018 06:15:03 -0700 (PDT)
-In-Reply-To: <20180510124303.6020-7-avarab@gmail.com>
-References: <20180501184016.15061-10-avarab@gmail.com> <20180510124303.6020-1-avarab@gmail.com>
- <20180510124303.6020-7-avarab@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 10 May 2018 15:15:03 +0200
-Message-ID: <CAN0heSoykVHTxD6s_QVUW_hMfTHG05yP-hVxnV6qsAO-eKJJ0A@mail.gmail.com>
-Subject: Re: [PATCH v4 6/6] get_short_oid: document & warn if we ignore the
- type selector
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=knFZBjcCbJNJBP48RsBaPI2hv64Zr6PVZhbjQeZHDUk=;
+        b=XZnRgFgmslubPwBq6Y6R9oTdNVmj8IviF8pxBSjzKOI/xjwhUdHuktmt/kbYzplLz2
+         2Y/fBMWcI88cz5gfnx10aD+IAMl4BZebVxB1AnvzR88nKXG1y7+LtLf1ImLKtrbpIhNj
+         a3oXMJyRlCEkFk0N0jVgw0RHiFDjpsL0rsHHbpGqvynNLCeVNH1LO+4emAw9CJrtVoJF
+         qAi3na77oj+STrA+IB0cbZGX3zy5BCeXb9KT0En+cjo3+70L1LiEw1junxGzyvEf/YtK
+         iWMc/3STiNZlCuIX+o0gqllqmqUqR5UQCRtz0eKkxnM5FsZd1afufFQG2TSrlSzEHTna
+         RJZA==
+X-Gm-Message-State: ALKqPwf4EYxc/5mwel7w4V0y5wDpHKz6UAFj41VoimpfR5LzEt2uK4hi
+        aoGago7Yjs9N4/QxH7RnXtfRO5/K
+X-Google-Smtp-Source: AB8JxZoRSNUxKM1L2ygJou/D2Ot65LvGL0s3gcaxbYugmTbI/gTi3Pv+vF6QuWYIL8zY2Bd4s6kH6Q==
+X-Received: by 2002:adf:cd08:: with SMTP id w8-v6mr1337300wrm.187.1525958123980;
+        Thu, 10 May 2018 06:15:23 -0700 (PDT)
+Received: from localhost.localdomain ([94.10.164.188])
+        by smtp.gmail.com with ESMTPSA id d17-v6sm1078557wrc.0.2018.05.10.06.15.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 10 May 2018 06:15:22 -0700 (PDT)
+From:   Oliver Joseph Ash <oliverjash@gmail.com>
+To:     mqudsi@neosmart.net
+Cc:     git@vger.kernel.org
+Subject: Re: Regression in patch add?
+Date:   Thu, 10 May 2018 14:15:02 +0100
+Message-Id: <20180510131502.17739-1-oliverjash@gmail.com>
+X-Mailer: git-send-email 2.17.0
+In-Reply-To: <01010162c940b8bb-d8139971-3ee2-4cd6-bb19-35126d46753b-000000@us-west-2.amazonses.com>
+References: <01010162c940b8bb-d8139971-3ee2-4cd6-bb19-35126d46753b-000000@us-west-2.amazonses.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10 May 2018 at 14:43, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gma=
-il.com> wrote:
-> The SHA1 prefix 06fa currently matches no blobs in git.git. When
-> disambiguating short SHA1s we've been quietly ignoring the user's type
-> selector as a fallback mechanism, this was intentionally added in
-> 1ffa26c461 ("get_short_sha1: list ambiguous objects on error",
-> 2016-09-26).
->
-> I think that behavior makes sense, it's not very useful to just show
-> nothing because a preference has been expressed via core.disambiguate,
-> but it's bad that we're quietly doing this. The user might thing that
-> we just didn't understand what e.g 06fa^{blob} meant.
->
-> Now we'll instead print a warning if no objects of the requested type
-> were found:
->
->     $ git rev-parse 06fa^{blob}
->     error: short SHA1 06fa is ambiguous
->     hint: The candidates are:
->     [... no blobs listed ...]
->     warning: Your hint (via core.disambiguate or peel syntax) was ignored=
-, we fell
->     back to showing all object types since no object of the requested typ=
-e
->     matched the provide short SHA1 06fa
+> does your test involve unusual file systems, funny characters in filenames, ..? You are on some sort of Linux, right?
 
-s/ignored, we/ignored. We/? IMHO, it would read easier.
+I'm running macOS 10.13.4. I don't have any unusual file system setup, as far as I'm aware. The filename in my test case is simply `foo`.
 
-s/provide short/provided short/
+I tried the steps you suggested: on git 2.17.0, saving the patch, editing it, and applying it, and it succeeded.
 
-Also: s/SHA1/object id/? That said, you add the warning. The error
-message is already there and you are simply following its "SHA1".
+> should now show bar2 in the first hunk and bar1 in the second hunk, just like your edited test.patch.
 
-Martin
+That was the case, although I had to remove the `--check` flag from `git apply`.
+
+> How comfortable are you with building Git from the sources?
+
+I've never done it before, but I assume it's well documented, so I'm willing to give it a shot!
+
+Happy to try any steps to debug this! Although I'm a bit surprised no-one else can reproduce it with the same version of Git, which makes it seem less likely this could be a bug, and more likely it's something in my setup.
