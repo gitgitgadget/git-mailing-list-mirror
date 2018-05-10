@@ -2,115 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E78A21F42D
-	for <e@80x24.org>; Thu, 10 May 2018 06:43:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46F511F42D
+	for <e@80x24.org>; Thu, 10 May 2018 06:50:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756505AbeEJGnd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 02:43:33 -0400
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:45041 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753497AbeEJGnc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 02:43:32 -0400
-Received: by mail-wr0-f169.google.com with SMTP id y15-v6so823664wrg.11
-        for <git@vger.kernel.org>; Wed, 09 May 2018 23:43:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=EAJaZAcAz87SDCHJ4Vt5430+LFk1OqME589mclReBT4=;
-        b=Uvm1DqQgas54LrYyamFOmGMk19ROZTH3D2qls5+FDWpNj7HCxInoZy7/UX7hFzlp84
-         EstONw8Tmkb1ZNB0rnm26CrF2M06xwd/K3glaYtmDhhXMOoemUeJdgy5RciAZ0vqfRp5
-         iDxjtab8KKHT+jzBp8mbl1F2828KkHCI87087/kLvVcoRYiNRhdAb57IhWYBZgX6Ek5S
-         h6wcxHgx553egLX8khYDdixEB85vkatXjNULl/b0eJ82sALbgUFWIQ5nDfE6ziMyL3i6
-         n3cii8yhpwf8ytPheaMbCTIGZA1K774oRbQ6oFIeL97nzafBVZAKiE3wuowDkxTqK0E1
-         dwbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=EAJaZAcAz87SDCHJ4Vt5430+LFk1OqME589mclReBT4=;
-        b=TMS/AlezfqKOU9tbGaLu7B9NznSDO6oJ5jWS4qdAbBDUPZwpRZNLYWUPDTpQo0kFZu
-         z1zQiRkWtA4fkZsYaaDA977clzCoB3YAmjD4g+pCrdks/ZrWAGPEW4t93klwUVeT/3zG
-         M921oAxca47ENsqbOakqerQfBWKcUmVxW2oDKgCtUiZ9HykqJPUgk6cQo2mjmGNk8voE
-         AbffVSD7LSX+FSsB+8ht1sr5j1IgZeQGP9zx/kb3WMA2aGLxHg4lQ551/e7JZLmwkYRY
-         O+SQzlIFlcGuVs2gW9Wjsno6EohJVl/XEpu3uv8qEXHitPFIAWxnHmwmvp3olpDmv1zn
-         OyAQ==
-X-Gm-Message-State: ALKqPwdUMTdn0Cmp3m0Po4wPiWicSoox+df4R6ZA6sAqhu8K4kEwv3qt
-        mbnG1ehXDIbBBJgNVTd6HVk=
-X-Google-Smtp-Source: AB8JxZrQk+9hycxI8ld8QtlryHX73e2nG4enmK7KHWb9B9t4cDhePzg47GY9sJuV/oNRPkMd+7baYg==
-X-Received: by 2002:adf:98f4:: with SMTP id w107-v6mr178536wrb.209.1525934611520;
-        Wed, 09 May 2018 23:43:31 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id q7-v6sm197759wrf.49.2018.05.09.23.43.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 23:43:30 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>,
+        id S1756572AbeEJGuM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 02:50:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34414 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753497AbeEJGuL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 02:50:11 -0400
+Received: (qmail 21626 invoked by uid 109); 10 May 2018 06:50:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 May 2018 06:50:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21053 invoked by uid 111); 10 May 2018 06:50:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 10 May 2018 02:50:15 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2018 02:50:09 -0400
+Date:   Thu, 10 May 2018 02:50:09 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 5/7] builtin/grep.c: add '--column' option to 'git-grep(1)'
-References: <20180421034530.GB24606@syl.local>
-        <cover.1525831201.git.me@ttaylorr.com>
-        <9222f0ee470884a984c1174cf218dece43f77f87.1525831201.git.me@ttaylorr.com>
-        <882bdfe8-6caa-dd9c-7752-ee4884f135f9@talktalk.net>
-        <CAN0heSpXCajyDKwOrXuQHWRODsVnFewUWTMitOoRQueFV4eSiw@mail.gmail.com>
-        <20180509235251.GC68889@syl.local>
-        <xmqqefikl6jx.fsf@gitster-ct.c.googlers.com>
-        <4640b041-f66c-3c1f-1329-baa4580df5cc@web.de>
-Date:   Thu, 10 May 2018 15:43:30 +0900
-In-Reply-To: <4640b041-f66c-3c1f-1329-baa4580df5cc@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 10 May 2018 07:58:47 +0200")
-Message-ID: <xmqqk1scj9il.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+Subject: Re: [PATCH v3 09/12] get_short_oid / peel_onion: ^{tree} should be
+ tree, not treeish
+Message-ID: <20180510065009.GB31779@sigill.intra.peff.net>
+References: <xmqqzi1htij7.fsf@gitster-ct.c.googlers.com>
+ <87wowlxko8.fsf@evledraar.gmail.com>
+ <xmqqvac4tb64.fsf@gitster-ct.c.googlers.com>
+ <87lgczyfq6.fsf@evledraar.gmail.com>
+ <xmqq6040qf8x.fsf@gitster-ct.c.googlers.com>
+ <20180508143408.GA30183@sigill.intra.peff.net>
+ <87a7tax9m1.fsf@evledraar.gmail.com>
+ <20180509075632.GA3327@sigill.intra.peff.net>
+ <878t8txfyf.fsf@evledraar.gmail.com>
+ <xmqqa7t8kuo0.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqqa7t8kuo0.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+On Thu, May 10, 2018 at 01:21:19PM +0900, Junio C Hamano wrote:
 
-> Am 10.05.2018 um 02:04 schrieb Junio C Hamano:
-> ...
->>      $ git grep -v second
->>      $ git grep --not -e second
->> 
->> may hit all lines in this message (except for the obvious two
->> lines), but we cannot say which column we found a hit.  I am
->> wondering if it is too grave a sin to report "the whole line is what
->> satisfied the criteria given" and say the match lies at column #1.
+> When diagnosing such an error, we would give hints.  The hint would
+> show possible objects that the user could have meant with X.  The
+> ^{<type>} suffix given to it may be used to limit the hints to
+> subset of the objects that the user could have meant with X;
+> e.g. when there is an object of each of type blob, tree, commit, and
+> tag, whose name begins with 7777, the short and ambiguous prefix
+> 7777 could mean any of these four objects, but when given with
+> suffix, e.g. 7777^{tree}, it makes useless for the hint to include
+> the blob object, as it can never peel down to a tree object.
+> 
+> If the tag whose name begins with 7777 in this example points
+> directly to a blob, excluding that tag from the hint would make the
+> hint more useful.  I do not offhand know what the code does right
+> now.  I wouldn't call it a bug if such a tag is included in the
+> hint, but if a change stops such a tag from getting included, I
+> would call such a change an improvement.
 
-And if we are planning to use this to implement '-o', then I'd
-suggest that we'd say the matched part of the line is the whole
-thing (i.e. so is column #1, eo is at the eol).
+I actually wondered this while writing an earlier response, and so I
+happen to know: when we are looking for a treeish, the disambiguator
+will actually peel a candidate tag and only accept one that peels to a
+tree or commit. So we would omit the tag-to-blob entirely from
+consideration (both as a candidate for ambiguity, and in the hint list).
 
->> By doing so, obviously we can sidestep the whole "this mode is
->> sometimes incompatible" and "I need to compute a lot to see if the
->> given expression is compatible or not" issues.
->
-> FWIW, Silver Searcher 2.1.0 does just that:
->
-> 	$ echo a | ag --column -v b
-> 	1:a
->
-> ripgrep 0.8.1 as well:
->
-> 	$ echo a | rg --column -v b
-> 	1:1:a
-
-Thanks for additional datapoints.
-
+-Peff
