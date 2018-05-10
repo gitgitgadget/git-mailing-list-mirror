@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 584E51F424
-	for <e@80x24.org>; Thu, 10 May 2018 00:40:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0DC81F424
+	for <e@80x24.org>; Thu, 10 May 2018 00:40:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935642AbeEJAkm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 20:40:42 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:45579 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935622AbeEJAkk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 20:40:40 -0400
-Received: by mail-pl0-f67.google.com with SMTP id bi12-v6so233157plb.12
-        for <git@vger.kernel.org>; Wed, 09 May 2018 17:40:39 -0700 (PDT)
+        id S965161AbeEJAkp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 20:40:45 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:37009 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935622AbeEJAkn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 20:40:43 -0400
+Received: by mail-pf0-f194.google.com with SMTP id e9-v6so196276pfi.4
+        for <git@vger.kernel.org>; Wed, 09 May 2018 17:40:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YTbMo0eKHm1n72trBEb3LlfxuboPfMfUdsl+tEWGBF4=;
-        b=nxqCE2/aR0UDwhTi8YDZT/2mZVq80EBqQ1Gj+BnWmWpwMCK0Hs3pQGkosxM0nbD/Yp
-         1qqp/vzIgcUw5oHCFgRH25vpDjUgzxD2i/3e0namJTWvtVmWDFEe+ALlWfsbk6x9+cra
-         P+y8nt1rK9F3sM0Fyd/SGgREIjRP7DeXiRHYa7DhaFHSzk1CPpEB7MtUOeED9yzJOuae
-         R/YVfph8k8vAvCpnZVmoRI0eJN4TVcNdKpILZgVEhpK8UwnWyPG1AWv9ajQUUyr0yg2E
-         Ct+nBZ43qSYZrinDOd6hmzFSo6seTExJuIP5x17vQutF8ersDQngKUYCLERKHvXI0kAN
-         ybOA==
+        bh=kuJG+7BR482bR6X+M37w/TU1jfvmm+kifwazfRmPZ7I=;
+        b=b1Q7BULdOuStUusXfTSL4LuWHAmXA1hN1YqvE5u8UJU1Xn4X4XUQcjy3adC+tPhX0R
+         cpE4yYEy26DoYLihrXDAt0EAbLv3fKLoOO07Zv+dMk9XYaViaKKAAuu7g/sCUJbXEBvg
+         WmJWO4bB6VW3f9OwqvYse6dIaZ7v6tPbFnJyI8dD+Z31ntgAz8YLtv3SQjMPJD7P1q7t
+         uASabi2+vFT9+Dy7rFgtDziBgfnqDbHmX2A5CX4AJJxFUGtf/1jmdZwUho2LKvUwW9Du
+         jQjnyiSnMhni9HVnGdEOXTzzePeRxLf2uVPqTtF/RNmZAs2h3P3HBK/ADuXxJO49Gqr0
+         MLZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=YTbMo0eKHm1n72trBEb3LlfxuboPfMfUdsl+tEWGBF4=;
-        b=IHo+kwXVwWWQTXTdrRRc9xjQf3tnpmCIe1N51wKUCd1jZ/7MtbAVQdHi3/ov8i3yXO
-         vC86pVLJ2614ADCYfa0b7iYKbFS19tgQ3b/jLl+5oiKWA4oHURAv23DWZGEVy7bvRP5c
-         Yoh+Z1wTZ5ZS0Psc5e0+4SUJtbTL0KoqGvwPc9SUahTBRF0k6YyYFpYbKQxzyYDsYUKh
-         +gehrYrlFju9G72w2YsZIXUw03+M7m8laSXApYJAdmivmkIi3C2R91KekAAd4BTEz5r3
-         LIJfDu3303cs4DrF3R06JGYdjjLv0jIniVdpECHeOVlH3/v52I96gfJPLLo8sPZ3Mj6Q
-         yH8A==
-X-Gm-Message-State: ALQs6tCsmApglKC5S4qRcO90N3o1oQW1oqVhMWZJP0O+HhZSspCkPbrl
-        9CGczuH6mjLdWXdCTPGpkJQL979voRk=
-X-Google-Smtp-Source: AB8JxZq97lzehwGrVn19HVWggbLiYNAq8T/mk1EjFs0Tpa0jX64mJ8WHd+sZ5/robO5aLxRdG3CMHw==
-X-Received: by 2002:a17:902:22cc:: with SMTP id o12-v6mr48668391plg.38.1525912839269;
-        Wed, 09 May 2018 17:40:39 -0700 (PDT)
+        bh=kuJG+7BR482bR6X+M37w/TU1jfvmm+kifwazfRmPZ7I=;
+        b=ROPH2tf11p/tUdUdRmEJt9/caEq0WAaLEeGgXRLLzJrnT6UKcVuPXMbtz2sotmp8SO
+         xBEffEGht7tlE7mJsfQdCEedtWcQZ0tgsEustes88g7p0+wvXnrPi6K6hiFIrPMK6JMJ
+         pqtnwg8mIkKBaJky0bPGBVadERJpjaRU+4f6LtC7YIwGArXrLtGxq0e135wAkEfpH5GQ
+         UZoTIGhAvWFYUzcDZcbGP7hBXc4aXz72cUFgPe8rjrf/dwb2JCd0+PfYIURdG7sgZMl4
+         TJHO7SO221Ri5olgjbRTIFr39IWpxk4KXI7EET2ZRp91/IpOzDaGehrl9ZRCEYTdHzNP
+         gEgA==
+X-Gm-Message-State: ALQs6tCxUwhsEb623cWPnE20DWDbfDDmsIKCqcyHBjopM7S/WN5rrQsd
+        rrx4IFNjt7I56XdhYzjlaK+VAw==
+X-Google-Smtp-Source: AB8JxZrbMQWb9HnZqnS1893pXUURuCFYk2mtC0r6VRNMbjVwetvGA8Zu02v+i6WyVmWnJEfIbl1YYg==
+X-Received: by 2002:a63:8dc1:: with SMTP id z184-v6mr37314353pgd.114.1525912842286;
+        Wed, 09 May 2018 17:40:42 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id a77sm23812226pfe.70.2018.05.09.17.40.38
+        by smtp.gmail.com with ESMTPSA id f29sm57831745pff.169.2018.05.09.17.40.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 17:40:38 -0700 (PDT)
+        Wed, 09 May 2018 17:40:41 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jamill@microsoft.com,
         jonathantanmy@google.com, pclouds@gmail.com
-Subject: [PATCH v4 06/13] alloc: add repository argument to alloc_commit_node
-Date:   Wed,  9 May 2018 17:40:17 -0700
-Message-Id: <20180510004024.93974-7-sbeller@google.com>
+Subject: [PATCH v4 08/13] alloc: add repository argument to alloc_object_node
+Date:   Wed,  9 May 2018 17:40:19 -0700
+Message-Id: <20180510004024.93974-9-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
 In-Reply-To: <20180510004024.93974-1-sbeller@google.com>
 References: <20180508193736.14883-1-sbeller@google.com>
@@ -72,79 +72,51 @@ the_repository at compile time.
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- alloc.c           | 2 +-
- blame.c           | 2 +-
- cache.h           | 3 ++-
- commit.c          | 2 +-
- merge-recursive.c | 2 +-
- 5 files changed, 6 insertions(+), 5 deletions(-)
+ alloc.c  | 2 +-
+ cache.h  | 3 ++-
+ object.c | 2 +-
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/alloc.c b/alloc.c
-index 2c8d1430758..9e2b897ec1d 100644
+index 290250e3595..f031ce422d9 100644
 --- a/alloc.c
 +++ b/alloc.c
-@@ -88,7 +88,7 @@ unsigned int alloc_commit_index(void)
- 	return count++;
+@@ -73,7 +73,7 @@ void *alloc_tag_node_the_repository(void)
  }
  
--void *alloc_commit_node(void)
-+void *alloc_commit_node_the_repository(void)
+ static struct alloc_state object_state;
+-void *alloc_object_node(void)
++void *alloc_object_node_the_repository(void)
  {
- 	struct commit *c = alloc_node(&commit_state, sizeof(struct commit));
- 	c->object.type = OBJ_COMMIT;
-diff --git a/blame.c b/blame.c
-index dfa24473dc6..ba9b18e7542 100644
---- a/blame.c
-+++ b/blame.c
-@@ -161,7 +161,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 
- 	read_cache();
- 	time(&now);
--	commit = alloc_commit_node();
-+	commit = alloc_commit_node(the_repository);
- 	commit->object.parsed = 1;
- 	commit->date = now;
- 	parent_tail = &commit->parents;
+ 	struct object *obj = alloc_node(&object_state, sizeof(union any_object));
+ 	obj->type = OBJ_NONE;
 diff --git a/cache.h b/cache.h
-index 1717d07a2c5..bf6e8c87d83 100644
+index 32f340cde59..2d60359a964 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1768,7 +1768,8 @@ void encode_85(char *buf, const unsigned char *data, int bytes);
- extern void *alloc_blob_node_the_repository(void);
- #define alloc_tree_node(r) alloc_tree_node_##r()
- extern void *alloc_tree_node_the_repository(void);
--extern void *alloc_commit_node(void);
-+#define alloc_commit_node(r) alloc_commit_node_##r()
-+extern void *alloc_commit_node_the_repository(void);
- extern void *alloc_tag_node(void);
- extern void *alloc_object_node(void);
+@@ -1772,7 +1772,8 @@ extern void *alloc_tree_node_the_repository(void);
+ extern void *alloc_commit_node_the_repository(void);
+ #define alloc_tag_node(r) alloc_tag_node_##r()
+ extern void *alloc_tag_node_the_repository(void);
+-extern void *alloc_object_node(void);
++#define alloc_object_node(r) alloc_object_node_##r()
++extern void *alloc_object_node_the_repository(void);
  extern void alloc_report(void);
-diff --git a/commit.c b/commit.c
-index 9106acf0aad..a9a43e79bae 100644
---- a/commit.c
-+++ b/commit.c
-@@ -51,7 +51,7 @@ struct commit *lookup_commit(const struct object_id *oid)
- 	struct object *obj = lookup_object(oid->hash);
+ extern unsigned int alloc_commit_index(void);
+ 
+diff --git a/object.c b/object.c
+index 91edc30770c..b8c3f923c51 100644
+--- a/object.c
++++ b/object.c
+@@ -180,7 +180,7 @@ struct object *lookup_unknown_object(const unsigned char *sha1)
+ 	struct object *obj = lookup_object(sha1);
  	if (!obj)
- 		return create_object(the_repository, oid->hash,
--				     alloc_commit_node());
-+				     alloc_commit_node(the_repository));
- 	return object_as_type(obj, OBJ_COMMIT, 0);
+ 		obj = create_object(the_repository, sha1,
+-				    alloc_object_node());
++				    alloc_object_node(the_repository));
+ 	return obj;
  }
  
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 0c0d48624da..6dac8908648 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -98,7 +98,7 @@ static struct tree *shift_tree_object(struct tree *one, struct tree *two,
- 
- static struct commit *make_virtual_commit(struct tree *tree, const char *comment)
- {
--	struct commit *commit = alloc_commit_node();
-+	struct commit *commit = alloc_commit_node(the_repository);
- 
- 	set_merge_remote_desc(commit, comment, (struct object *)commit);
- 	commit->tree = tree;
 -- 
 2.17.0.255.g8bfb7c0704
 
