@@ -2,91 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18C4E1F42D
-	for <e@80x24.org>; Thu, 10 May 2018 09:43:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D04301F42E
+	for <e@80x24.org>; Thu, 10 May 2018 09:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934786AbeEJJnX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 05:43:23 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:40120 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934366AbeEJJnW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 05:43:22 -0400
-Received: by mail-wm0-f65.google.com with SMTP id j5-v6so3203615wme.5
-        for <git@vger.kernel.org>; Thu, 10 May 2018 02:43:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=VEJouQz7n50N/afAnZ3dynlZit0DcMUGxDXjlbVfndQ=;
-        b=rUPunJgDr1qZuIoFF195OMriKiDhyNnPvdGhfB0fJUfx3gLYH0UwmsRyGdPvf7a7Ke
-         ygHZLb0VaMRx1lKS9d/M9jOXgJ7j4KTGtSHAE52p2oufvnZK9JWQ/zlsCjUopN84AkmC
-         hRgsO9HSHul+Ph09BwoXgKB5w4SCenj8zBzsdM7OeHvgRyEH3UAy8YfzAYbUWSNJE0GH
-         nuRB9iHWMq4z1xbrLAUnaieb6UwgjYaJWMlX0AmDzB9pvDTX/1Mtji+H36Oi3lP9PENh
-         8bU5dtIIDees2a5cZdFHyevi69etTSmhc4TZPVL2FNLGpqVS5qln5kCsMhUoLY5fneo/
-         lFvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=VEJouQz7n50N/afAnZ3dynlZit0DcMUGxDXjlbVfndQ=;
-        b=IfWeUI7BHn85a41tbF289vOHoNSEAZAxWR2VlPeDyZcqToHXzaZGOVPGJtk9GKvjrg
-         +1apfdPZ0L68UHhjIPuzYEKtG4GqJthiSqdnplKtl5Hg9iwUicANe09lT/XsJG4yxM2k
-         Gdkl5kdM3AxDIXv8dpnUsfkkLyYVrCHYgx4zHSx/TqNW/N1BSaTkOKP+VK+wvcTBMLU5
-         trzaj7Y6nKXo6drCli5Lc7DmQKBE7GDURaU2BKP//AzaM+/3x7O+A0KMoV+KfCn1GQih
-         DdAMOTaA4qac5in8ucwd2SleAGOnqYA6rtGKpx5Vyj6nbmA5ajnV7B92l3BCk/QRjT2v
-         7m4w==
-X-Gm-Message-State: ALKqPwfMz8Li+573C6XHkVG1TjXhdvBtGSl4xZ4Y0kSuZ0gR+wD4KLnY
-        xbKMbsNPG2F085jkejF4E80=
-X-Google-Smtp-Source: AB8JxZr9DYKtTM0qh+cWXHedJTSybOfevf1TnfP4OmN+Vw063VRQrsRmiUrMgR/DMDCwNlWhl5KG6w==
-X-Received: by 2002:a1c:e006:: with SMTP id x6-v6mr725480wmg.80.1525945401372;
-        Thu, 10 May 2018 02:43:21 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t189-v6sm704754wmf.22.2018.05.10.02.43.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 May 2018 02:43:20 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luis Marsano <luis.marsano@gmail.com>
-Cc:     git@vger.kernel.org, Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: [PATCH 1/2] git-credential-netrc: adapt to test framework for git
-References: <20180509213634.5198-1-luis.marsano@gmail.com>
-        <20180509213634.5198-2-luis.marsano@gmail.com>
-Date:   Thu, 10 May 2018 18:43:19 +0900
-In-Reply-To: <20180509213634.5198-2-luis.marsano@gmail.com> (Luis Marsano's
-        message of "Wed, 9 May 2018 17:36:33 -0400")
-Message-ID: <xmqq7eobkfrc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S934089AbeEJJwX convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 10 May 2018 05:52:23 -0400
+Received: from plockton.cent.gla.ac.uk ([130.209.16.75]:59761 "EHLO
+        plockton.cent.gla.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756984AbeEJJwU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 05:52:20 -0400
+X-Greylist: delayed 2744 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 May 2018 05:52:19 EDT
+Received: from cas08.campus.gla.ac.uk ([130.209.14.165])
+        by plockton.cent.gla.ac.uk with esmtp (Exim 4.72)
+        (envelope-from <John.W.Marshall@glasgow.ac.uk>)
+        id 1fGhX0-0003M5-7q
+        for git@vger.kernel.org; Thu, 10 May 2018 10:06:34 +0100
+Received: from pc228-127.tcrc.gla.ac.uk (130.209.228.127) by
+ cas08.campus.gla.ac.uk (130.209.14.165) with Microsoft SMTP Server (TLS) id
+ 15.0.1367.3; Thu, 10 May 2018 10:06:33 +0100
+Date:   Thu, 10 May 2018 10:06:25 +0100
+From:   John Marshall <John.W.Marshall@glasgow.ac.uk>
+To:     <git@vger.kernel.org>
+CC:     John Marshall <John.W.Marshall@glasgow.ac.uk>
+Subject: [PATCH] completion: add diff --color-moved and config diff.colorMoved
+Message-ID: <20180510090625.GA60244@pc228-127.tcrc.gla.ac.uk>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Originating-IP: [130.209.228.127]
+X-ClientProxiedBy: cas07.campus.gla.ac.uk (130.209.14.164) To
+ cas08.campus.gla.ac.uk (130.209.14.165)
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luis Marsano <luis.marsano@gmail.com> writes:
+Complete the --color-moved option wherever we complete --diff-algorithm.
 
-> until this change, git-credential-netrc did not test in a repository
-> this change reuses the main test framework, which provides such tests
-> specific changes
+Signed-off-by: John Marshall <John.W.Marshall@glasgow.ac.uk>
+---
+Complete this recently-added option in a slightly over-the-top number of
+places. Patch based on the maint branch.
 
-Sorry, but I cannot quite parse what the above is trying to say.
+Cheers,
 
-> - switch to Test::More module
-> - use File::Basename & File::Spec::Functions
->
-> Signed-off-by: Luis Marsano <luis.marsano@gmail.com>
-> Acked-by: Ted Zlatanov <tzz@lifelogs.com>
-> ---
->  contrib/credential/netrc/Makefile             |  4 +-
->  .../netrc/t-git-credential-netrc.sh           | 31 ++++++++
->  contrib/credential/netrc/test.pl              | 73 ++++++++++++-------
->  3 files changed, 78 insertions(+), 30 deletions(-)
->  create mode 100755 contrib/credential/netrc/t-git-credential-netrc.sh
+    John
 
-Will queue, but may need to make the log message
-readable/understandable.
+ contrib/completion/git-completion.bash | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-Thanks.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index b09c8a236..4e09aebd0 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1383,9 +1383,12 @@ __git_diff_algorithms="myers minimal patience histogram"
+
+ __git_diff_submodule_formats="diff log short"
+
++__git_diff_colormoveds="no default plain zebra dimmed_zebra"
++
+ __git_diff_common_options="--stat --numstat --shortstat --summary
+-                       --patch-with-stat --name-only --name-status --color
+-                       --no-color --color-words --no-renames --check
++                       --patch-with-stat --name-only --name-status
++                       --color --no-color --color-moved --no-color-moved
++                       --color-words --no-renames --check
+                        --full-index --binary --abbrev --diff-filter=
+                        --find-copies-harder --ignore-cr-at-eol
+                        --text --ignore-space-at-eol --ignore-space-change
+@@ -1406,6 +1409,10 @@ _git_diff ()
+        __git_has_doubledash && return
+
+        case "$cur" in
++       --color-moved=*)
++               __gitcomp "$__git_diff_colormoveds" "" "${cur##--color-moved=}"
++               return
++               ;;
+        --diff-algorithm=*)
+                __gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
+                return
+@@ -1702,6 +1709,10 @@ _git_log ()
+                __gitcomp "full short no" "" "${cur##--decorate=}"
+                return
+                ;;
++       --color-moved=*)
++               __gitcomp "$__git_diff_colormoveds" "" "${cur##--color-moved=}"
++               return
++               ;;
+        --diff-algorithm=*)
+                __gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
+                return
+@@ -2165,6 +2176,10 @@ _git_config ()
+                        "
+                return
+                ;;
++       diff.color[Mm]oved)
++               __gitcomp "false true $__git_diff_colormoveds"
++               return
++               ;;
+        diff.submodule)
+                __gitcomp "log short"
+                return
+@@ -2393,6 +2408,7 @@ _git_config ()
+                credential.username
+                credentialCache.ignoreSIGHUP
+                diff.autorefreshindex
++               diff.colorMoved
+                diff.external
+                diff.ignoreSubmodules
+                diff.mnemonicprefix
+@@ -2741,6 +2757,10 @@ _git_show ()
+                        " "" "${cur#*=}"
+                return
+                ;;
++       --color-moved=*)
++               __gitcomp "$__git_diff_colormoveds" "" "${cur##--color-moved=}"
++               return
++               ;;
+        --diff-algorithm=*)
+                __gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
+                return
+--
+2.17.0
+
+
+[University of Glasgow: The Times Scottish University of the Year 2018]
