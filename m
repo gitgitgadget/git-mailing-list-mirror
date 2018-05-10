@@ -2,98 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB0021F406
-	for <e@80x24.org>; Thu, 10 May 2018 17:16:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 217061F406
+	for <e@80x24.org>; Thu, 10 May 2018 17:17:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966683AbeEJRQV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 13:16:21 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:46953 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965017AbeEJRQS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 13:16:18 -0400
-Received: by mail-pg0-f53.google.com with SMTP id z4-v6so1232617pgu.13
-        for <git@vger.kernel.org>; Thu, 10 May 2018 10:16:18 -0700 (PDT)
+        id S966596AbeEJRRB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 13:17:01 -0400
+Received: from mail-yb0-f180.google.com ([209.85.213.180]:37084 "EHLO
+        mail-yb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965017AbeEJRRA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 13:17:00 -0400
+Received: by mail-yb0-f180.google.com with SMTP id i13-v6so903469ybl.4
+        for <git@vger.kernel.org>; Thu, 10 May 2018 10:17:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Nvr/7wzKRyu2nr4S+kuWO3xa1G/8sPQwKrRtrSgQP9k=;
-        b=cpi8a4F88ecV+xZ+pcpmk7MO5iU0mkt1aM72L+9m8FZ440ud9m6PBBJDqAUL5c+MFR
-         8BWXKA2LIZrzk99WpZNjBQKiPnEyStUhwfozArSwCzagg/OJ32TjlVA4oMmN0aIwsJoM
-         1sqlIf1jz4OKSWYbd4cX056DJX7jRa20WzsqFJRUir+38gJ86xz3u0Y0oqgeXHwMt5kQ
-         QAHK6SSfrbtAfiDVNCAZ0s2PkgmHXnQlx2hmvrP6anJOO6xql8YDdZ+tAEzV/FrznjN8
-         j3RfWdTNCy8B9UicriSlYdyCJrSj/ASL1AlXjiOo1wNHt/ZWrfTKA64ZDDU2F6vsYsn4
-         kJkw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=xWTGpfuqalJtaMCiY1Ifd8/RP4PbGrCM1tETsnDvPLs=;
+        b=iAalrKKqo7ji/OXYgo1yeIMn3FV2LlG9NHkclvSf11pFEvra/HhjyvZ5RJB/7oDJ+r
+         rxNLKoK24Aol5Toy+8O8i5+Do8BuFcB2mObOEeYs7wWyD4djyv4e17ntyyRY4H4lxm0L
+         MLgww/C+u6I/0eZs+x1dBNw672zWbmt1bV98KmOSRUoM4Aw0iOtcDSqPrevQHiMWd9tH
+         oXKvL5QoL03yApO8qlzx3mWpAALw+wrJGX18mNDys0YHMOY5RhRTru2UYvjh4GLXTbor
+         sUgvXRI2fTUCZHNDBeKA/doHSm4MOJvHFEOXcqxNkqvVhVCm0D0teZNoQVYYPY72U22v
+         +2Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Nvr/7wzKRyu2nr4S+kuWO3xa1G/8sPQwKrRtrSgQP9k=;
-        b=so4+gDd6LKjkWMGNlta6RKOoodN887Bkpeek7QD9BvdsJaS6wwwXFFllkAqzvv0xJn
-         QcL92ZQbnBiAZ3RVKZKTPjkmgxlOLhrCRJVwE1uFtQSHr5+d+NdOy3OwSUKcRSBN4kvW
-         YCGUEXBa0+Wawn94yYhdS8rG/+1b8DzTKvgqjazx2fLeiBBVLJfKtpGCHWy1vgGs0Fhi
-         cfobu6RfEpycZyMHsAGilA3t8TMJlyAgISAMemKm8GlZZxLCATsI0dnGxG8lhNF5Ys+t
-         DPIVEPlt98OVyvGQl3Z+de3Kvh0x6xd6s1mHLuhteYM0+14OWYkFWF+/5B+iTG9PhjGH
-         94kw==
-X-Gm-Message-State: ALKqPwdWqK6em5xBtfpBYlbmbuHEXoHsvg59l6iKnHlSHjubH5kEld62
-        q7w2aN30PhoRFPWnQ8wsXEgnIEoUXZQ=
-X-Google-Smtp-Source: AB8JxZpdKzdn/LSD4h668myO9LAOImHUtJXyGZKSWYTAQRPT0n5hfYqRgVIYQvKwGEOxPtzvaVxH5A==
-X-Received: by 2002:a63:a41a:: with SMTP id c26-v6mr1798724pgf.311.1525972578234;
-        Thu, 10 May 2018 10:16:18 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id r30-v6sm5744369pgu.89.2018.05.10.10.16.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 May 2018 10:16:16 -0700 (PDT)
-Date:   Thu, 10 May 2018 10:16:15 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, jamill@microsoft.com,
-        pclouds@gmail.com
-Subject: Re: [PATCH v4 00/13] object store: alloc
-Message-Id: <20180510101615.931eb0d219eac4c84cf8140d@google.com>
-In-Reply-To: <20180510004024.93974-1-sbeller@google.com>
-References: <20180508193736.14883-1-sbeller@google.com>
-        <20180510004024.93974-1-sbeller@google.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xWTGpfuqalJtaMCiY1Ifd8/RP4PbGrCM1tETsnDvPLs=;
+        b=o+NL5pSgi/tdjH/6XqbekiMVug2onzGxPA4mMMU+BI6qrLS58yDoTnrOgglkvnzf9s
+         4OjLt1IXOZd87Nuz2Nid43XQ2z/iO0gX0fCSRPiY3LTQ+LfMzskiR99p0E+O/ExJcf+c
+         xJwsfyE14qRutcDIkx/TTLKl6zGsTZruVzpRkJdpZYydTWDOxTStbyFuKkIOj7YkbSEP
+         Ny7k+lT3wqVI+5EG+MuMClKjlqd7GJMoEVuTNClSEJ/4M6yYzHX0S/tiuLIU9XGDXKmX
+         N/SR4RJlDxe9dJWt/S55iCkPmcsz/PoaWUwr3sKju+Mt8wdVBuhL7hY+M9VsKMMMLAbz
+         EQXQ==
+X-Gm-Message-State: ALKqPwddR4VF6zVF/pvoZy43pqtOVbkkN5MnzS0Es1poITzkNCzdA9EY
+        FA08/sY0HhexB5Q/VAAv8jAYBKwBVlBtbhsosMvNww==
+X-Google-Smtp-Source: AB8JxZqjAU0xKdWTPBXjGF8ZcEhIEtxjISArZQtP65zJbgXRNBI+OUFi9nldDTA21cIw64OeD/+O8BgpzqwO3v1fbBA=
+X-Received: by 2002:a25:dc4d:: with SMTP id y74-v6mr3731ybe.247.1525972619223;
+ Thu, 10 May 2018 10:16:59 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Thu, 10 May 2018 10:16:58
+ -0700 (PDT)
+In-Reply-To: <20180510141927.23590-2-pclouds@gmail.com>
+References: <20180510141927.23590-1-pclouds@gmail.com> <20180510141927.23590-2-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 10 May 2018 10:16:58 -0700
+Message-ID: <CAGZ79kYnzQM-mcAm7Q3C=q+uhvt8MYvWrhkUrsyu1FbM2=1Z8g@mail.gmail.com>
+Subject: Re: [PATCH 1/9] Add and use generic name->id mapping code for color
+ slot parsing
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed,  9 May 2018 17:40:11 -0700
-Stefan Beller <sbeller@google.com> wrote:
+On Thu, May 10, 2018 at 7:19 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
 
->  		if (obj->type == OBJ_TREE)
-> -			release_tree_node((struct tree*)obj);
-> +			free_tree_buffer((struct tree*)obj);
->  		else if (obj->type == OBJ_COMMIT)
-> -			release_commit_node((struct commit*)obj);
-> +			release_commit_memory((struct commit*)obj);
->  		else if (obj->type == OBJ_TAG)
-> -			release_tag_node((struct tag*)obj);
-> +			free_tag_buffer((struct tag*)obj);
+>  7 files changed, 82 insertions(+), 112 deletions(-)
 
-This might seem a bit bikesheddy, but I wouldn't call it
-free_tag_buffer(), since what's being freed is not the buffer of the
-object itself, but just a string. If you want such a function, I would
-just call it release_tag_memory() to match release_commit_memory().
+Nice!
 
-Other than that, all the patches look fine to me.
 
-Some optional comments (this is almost certainly bikeshedding):
+>
+> +static const char *color_branch_slots[] =3D {
+> +       [BRANCH_COLOR_RESET]    =3D "reset",
 
- - I would call them release_commit() and release_tag(), to match
-   strbuf_release().
- - It might be better to just inline the handling of releasing commit
-   and tag memory. This code already knows that, for a tree, it needs to
-   free its buffer and only its buffer, so it is not much of a stretch
-   to think that it similarly knows the details of commit and tag
-   objects too.
+In 512f41cfac5 (clean.c: use designated initializer, 2017-07-14)
+we thought we'll do it once and see if anyone complains
+(and it shipped v2.15.0, 2017-10-29), and so far
+nobody complained half a year later. So designated initializers
+are all good now? Do we want to mention this decision in the
+commit message?
+
+If so, the patch looks good!
+Thanks,
+Stefan
