@@ -2,80 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6BD91F406
-	for <e@80x24.org>; Thu, 10 May 2018 13:16:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8135B1F406
+	for <e@80x24.org>; Thu, 10 May 2018 13:49:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757185AbeEJNQa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 09:16:30 -0400
-Received: from mail-wr0-f170.google.com ([209.85.128.170]:41210 "EHLO
-        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757063AbeEJNQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 09:16:29 -0400
-Received: by mail-wr0-f170.google.com with SMTP id g21-v6so1979267wrb.8
-        for <git@vger.kernel.org>; Thu, 10 May 2018 06:16:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NyQR4q25C8uJRHp9fZUy7kXCv3mMwKcB8SGctq4O2Xo=;
-        b=CilGPPLcXLmm9ZGVx8bj/YceyLd2/7Ha/83sDdR2TcRpqOiP+q910/hv/zvU7qumBl
-         vjNxTSnNqUyVJvkn9NvZfyH3wrmnjYaLXXHwhtk+JHa0jzhFpOf2tfErzCXWLhIHCQTX
-         GzRWbEH/19a8O3nuBDPHSWu0hrdt6tRnddHDT7sT2+10Oe2qfnAM3Xu3LrgfwxCkI0th
-         AetN0LC4WLfvqbOSk0G52Go25LewECEuArAFbjFNJ6bVPuHt+NY3/jqZtazfTVynbErA
-         5WZ5i1rPp5UiTKbghwAyCsOkisohDIqEcs4irM+BiyeJhvftF4Yxiurx96s4SRut0scN
-         HpkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=NyQR4q25C8uJRHp9fZUy7kXCv3mMwKcB8SGctq4O2Xo=;
-        b=GI4qsEoGn2vAhYf7T1G5Ma94/6VZHKNTNqQRANRKLTptzOq0SQ6XyWLXSvF5GIydFH
-         OvVHSnNe+spcj0GBJgALfNkFSDUBJhD2/zqd90bVYFVk3xgJW9/nsnCr4z2PjJKZP0AP
-         5Nwh2AFhPFsaH9mpH2bWHwl/h1JqS74ryjJG0tl/UQ6got9lfvXMRgW2ERqDXRkps+ar
-         R2AjmloiY+vE+YffTHe8hpkA9qw7bwaigJZSNWrHJ1KhTwmF/Qg9UIYziGq9MrTaCn3S
-         rxkimyfYjRSquOba/MJli2rSbUiQhwEN/+dnhqPVlJeHx/f85lR3dbOgv30HRthakBG1
-         pTRQ==
-X-Gm-Message-State: ALKqPweBSd7r0VJNdb+3jtY4NzkaEdZJ6kgMZzhLMwQVRpH7/DFjM73T
-        iYMmF8xKyOKRzuLazZ2PmIk=
-X-Google-Smtp-Source: AB8JxZqSnxZmi2Nq/WrGQsDimbdvqQzM65puVSNZWQ0xUWJ4lKaJ9TTv+7fzZKUueeCaZpMgXHMU6Q==
-X-Received: by 2002:adf:86ed:: with SMTP id 42-v6mr1412468wry.158.1525958188711;
-        Thu, 10 May 2018 06:16:28 -0700 (PDT)
-Received: from localhost.localdomain ([94.10.164.188])
-        by smtp.gmail.com with ESMTPSA id o15-v6sm823185wrj.13.2018.05.10.06.16.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 10 May 2018 06:16:27 -0700 (PDT)
-From:   Oliver Joseph Ash <oliverjash@gmail.com>
-To:     martin.agren@gmail.com
-Cc:     git@vger.kernel.org, mqudsi@neosmart.net, oliverjash@gmail.com
+        id S935207AbeEJNtg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 09:49:36 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:7930 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757097AbeEJNtf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 09:49:35 -0400
+Received: from [192.168.2.201] ([92.22.23.119])
+        by smtp.talktalk.net with SMTP
+        id Glwqfohav51uyGlwqf98ZD; Thu, 10 May 2018 14:49:33 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1525960173;
+        bh=PHLPdzO3OKprMfel0NMU9Fr9fZfjQ916gmPY47GeuTI=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=ZOuueMgvyapZjYEEex4YXeEfOVl9mkAPhGdwlB3f9MCx1VdSw4kggkI39NQm20pDC
+         h78dzDzW7Yg6/H1Wov3/XhjBMerJttX0P07rhqMW1JmEEfDyTRd8Tt1fM9hr5JjxVF
+         PhLBR07D57Gkr1kBFYCI1jGCpYotrYCPw/cw1sxw=
+X-Originating-IP: [92.22.23.119]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=d9PbNyrE c=1 sm=1 tr=0 a=oWXjcmuSLv9+fGSLdn2kqg==:117
+ a=oWXjcmuSLv9+fGSLdn2kqg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=uPZiAMpXAAAA:8 a=y5wdKUOQASCxUkfgMGkA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: Regression in patch add?
-Date:   Thu, 10 May 2018 14:16:26 +0100
-Message-Id: <20180510131626.17859-1-oliverjash@gmail.com>
-X-Mailer: git-send-email 2.17.0
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Oliver Joseph Ash <oliverjash@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     mqudsi@neosmart.net, Git Mailing List <git@vger.kernel.org>
+References: <01010162c940b8bb-d8139971-3ee2-4cd6-bb19-35126d46753b-000000@us-west-2.amazonses.com>
+ <20180510104136.8653-1-oliverjash@gmail.com>
+ <CAN0heSq5SyPgoEURRVHupcabVu3jX+tmX+0U-6azrJDDgfZ5Gw@mail.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <be321106-2f10-e678-8237-449d2dd30fee@talktalk.net>
+Date:   Thu, 10 May 2018 14:49:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
+MIME-Version: 1.0
 In-Reply-To: <CAN0heSq5SyPgoEURRVHupcabVu3jX+tmX+0U-6azrJDDgfZ5Gw@mail.gmail.com>
-References: <CAN0heSq5SyPgoEURRVHupcabVu3jX+tmX+0U-6azrJDDgfZ5Gw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfPUPJvS0izwSA3ai9keuUqsTn3VFnIV7s+Kzn5Kk+CGaArQu4mwlSvMsedx7Bo5K023tiyCmpJRX38W7gfuyeZb7ucPRRM+6jsHXCeIxzfbnU9DbQ8Ry
+ FQNXa2FuuDcx5EmY8pLeGZFz7mmCJIP/yP8+FX5UnkjcecOwfCMqj1x55r1NCEYDH87HkHXclOnDEUsF1bO7pUdiTfTbT+5+VKL/NU4VyDXWBQbXrektkUOI
+ wkgUbZqV7t98m4QMlcB6PHQYwuP2vlTY9HDwnWeuhlcKCqNtL+TFXCRdrkQG//SP4I6OV9fiHDMjLvzsunOgSA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(Apologies, I accidentally sent this as a reply to the original post, instead of your email. I'm new to this!)
+On 10/05/18 13:17, Martin Ågren wrote:
+> 
+> On 10 May 2018 at 12:41, Oliver Joseph Ash <oliverjash@gmail.com> wrote:
+>> I just ran into a similar problem: https://stackoverflow.com/questions/50258565/git-editing-hunks-fails-when-file-has-other-hunks
+>>
+>> I can reproduce on 2.17.0. The issue doesn't occur on 2.16.2, however.
+>>
+>> Is this a bug?
+> 
+> I would think so. Thanks for finding this thread. To keep history
+> around, it would be nice to have your reproduction recipe on the list,
+> not just on stackoverflow. That said, I cannot reproduce on v2.17.0
+> using your recipe. I suspect there is something quite interesting going
+> on here, considering how trivial your edit is.
 
-> does your test involve unusual file systems, funny characters in filenames, ..? You are on some sort of Linux, right?
+Thanks Oliver for posting an example that we can test, that said I can't
+reproduce it on Linux if the hunk is edited correctly. However if I
+remove the leading space from the empty line between 'baz' and 'foo'
+then I get the same error as you. Perhaps your editor is stripping
+trailing white space? If so that will lead to problems when editing
+diffs as the leading space is needed for apply to know that it's an
+empty context line.
 
-I'm running macOS 10.13.4. I don't have any unusual file system setup, as far as I'm aware. The filename in my test case is simply `foo`.
+For the mailing list the hunk in question looks like
+@@ -1,5 +1,5 @@
+ foo
+-bar
++bar1
+ baz
 
-I tried the steps you suggested: on git 2.17.0, saving the patch, editing it, and applying it, and it succeeded.
+ foo
 
-> should now show bar2 in the first hunk and bar1 in the second hunk, just like your edited test.patch.
+I've tried using 'git apply --recount --cached' directly and was
+surprised to see that it accepts the patch with the broken context line.
+In 2.17.0 'add -p' no longer uses the --recount option, instead it
+counts the patch it's self but stops counting when it runs out of lines
+starting with [- +], this explains the difference from earlier versions.
+It seems it's not uncommon for editors to strip the space from empty
+context lines so maybe 'add -p' should take that into account when
+recounting patches. I'm about to go off line for a couple of weeks so it
+will probably be next month before I'm able to put a patch together
+(assuming Junio agrees we should support broken hunks)
 
-That was the case, although I had to remove the `--check` flag from `git apply`.
+Best Wishes
 
-> How comfortable are you with building Git from the sources?
+Phillip
 
-I've never done it before, but I assume it's well documented, so I'm willing to give it a shot!
 
-Happy to try any steps to debug this! Although I'm a bit surprised no-one else can reproduce it with the same version of Git, which makes it seem less likely this could be a bug, and more likely it's something in my setup.
+> As a shot in the dark, does your test involve unusual file systems,
+> funny characters in filenames, ..? You are on some sort of Linux, right?
+> 
+> The first thing to try out might be something like
+> 
+> $ # create the initial file as before, with "bar"
+> $ # git add, git commit ...
+> $ # do the "change bar to bar1" everywhere
+> $ git diff >test-patch
+> $ git reset --hard
+> $ # edit the *FIRST* hunk in test.patch like before (bar1 -> bar2)
+> $ git apply --check test.patch && echo "ok..."
+> $ git apply test.patch
+> 
+> Does that succeed at all?
+> 
+> $ git diff
+> 
+> should now show bar2 in the first hunk and bar1 in the second hunk,
+> just like your edited test.patch.
+> 
+> If that works, it would seem that the problem is with `git add -p`, and
+> how it is generating the patches for `git apply`. I have some ideas
+> about how to debug from there, but ... How comfortable are you with
+> building Git from the sources? Or with temporarily fiddling around with
+> your Git installation? (git-add--interactive is a Perl script, so it
+> would be possible to edit it in place to emit various debug
+> information. That has potential for messing up royally, though.)
+> 
+> Martin
+> 
+
