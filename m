@@ -2,141 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C7E51F424
-	for <e@80x24.org>; Wed,  9 May 2018 23:52:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E56721F424
+	for <e@80x24.org>; Thu, 10 May 2018 00:04:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965984AbeEIXw4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 19:52:56 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:37823 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965309AbeEIXwz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 19:52:55 -0400
-Received: by mail-pg0-f65.google.com with SMTP id a13-v6so130799pgu.4
-        for <git@vger.kernel.org>; Wed, 09 May 2018 16:52:55 -0700 (PDT)
+        id S965671AbeEJAEj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 20:04:39 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:39350 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964863AbeEJAEh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 20:04:37 -0400
+Received: by mail-wm0-f51.google.com with SMTP id f8-v6so1278041wmc.4
+        for <git@vger.kernel.org>; Wed, 09 May 2018 17:04:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=LKtz83GaE+fbMv53UiJrMFvmgS8O4ox0xXcIbfaUABg=;
-        b=neNpuD7vyKS2+7d3l+EJU3ZOW4tYrGDfbfQ7j0TbKwURJCYkdt6vtYOeog7x7/KY+R
-         /rstmJRGsDvowbXC3YLnncS7ICrkQpn2zKraf9hZ/3f1re+S71avAdPZzbCAL2rFJ70x
-         W4r3VlNncXNTv0OnB140IDyJ3gEJZS85LELo28I0VH5XYaXg+d1CgvalfNAJrHRv8O+Q
-         3f4+ehQl25bjLFYziFOccqKLcqWQxWkdsHuoM42/LWg2+DDD9raD5atfa/YQp/UFOZdB
-         I1ZtuGLULs5kmu95TChbWPuDuevwtExrh16cso0etwaK+ZSC0BaP488ktBajRbugSwgj
-         7AyA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=He0web4WBSgpYUCYSdNKjNlLCn4KoDQAM2HTA15vfJs=;
+        b=CFJf/ye0sZyzivrYGFMEZ+saFyQ2nRx62KjsHrnoTPRUmU9M2nYZSlWJCdQb3DifF2
+         j1YgPc+hfPIc9iByH4ki/heQilMaBhpCe4Jt3r/T9Pmrs+7ynAfdDZW5g/y+GotL3NoE
+         FUh+ktRSYjpRpHiyBdCM2xB4pwU8qtJH+iNMHo18b4Vcrsx4ttkzG/+/Z6kxMU1VVncT
+         9iEPi+wd/bPUeKOl5HLooJQAZeqoyfg4U0kRtgtaMI0h9VPMac2DKovn2WiUmmNGAlf8
+         iJKjuaISYqRZNieCSVXNv6rzsD2VxkwToRqeM8JBT4bXVUx72cRbOFU9kkRghPM273QK
+         DJEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=LKtz83GaE+fbMv53UiJrMFvmgS8O4ox0xXcIbfaUABg=;
-        b=Ms3K3RPgBVri1ASlZ/7nR4vTEYbO1X0Rwsy1dhSciW8BTNxlEGQ/c3VXaIK06OWfh/
-         w1bXsUOQR+XujK2Jq9gW1LzYhlaFpYDYqsNgkDrxQRQtyWDEtY/o7AM/TYK6jZUKwkPf
-         9IAmR1CvRIN5eKkZBplN4nGDbsj0kaHifufRn66ELT3wL6m9CIx7804tEQ7J562CwwZ/
-         SuzODnOjhBxG/qseXtjwMG1USWktOBbmcIeV7RLoEvbq7Nr+l+N6m0aQcaBr/UN8LdQl
-         APrImASeSdHERSr6b3MWE6nLW9zM2CAj0efW3y9OfXbMqf9GNgkrKESBwmbuXMVgWKkO
-         b/0A==
-X-Gm-Message-State: ALKqPweouFyX4nTXSi37qcd6DaTAlJWAOHkDhfKyoZryppOC2gVIKMwM
-        3YxQF6ecDDrp/uBn/Jv3MwJZ1mjCenHN2w==
-X-Google-Smtp-Source: AB8JxZpGOU/x2Y7nCjslWUMMGmZMhPgW6Q0jNzst0+pAWaFQPSycIeFBuWd2izpFlCQb+Rn6zyFiQA==
-X-Received: by 2002:a63:715a:: with SMTP id b26-v6mr3109187pgn.440.1525909974660;
-        Wed, 09 May 2018 16:52:54 -0700 (PDT)
-Received: from localhost ([2601:602:9500:1120:eccb:c00:cd8f:fd73])
-        by smtp.gmail.com with ESMTPSA id v16sm96786345pfj.123.2018.05.09.16.52.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 May 2018 16:52:53 -0700 (PDT)
-Date:   Wed, 9 May 2018 16:52:51 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Taylor Blau <me@ttaylorr.com>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=He0web4WBSgpYUCYSdNKjNlLCn4KoDQAM2HTA15vfJs=;
+        b=lxAjatOpupKQF1vfGaGmmZbU7/I1w+XFK7QtjSyagG2GFvB5R0QO/nZB5j3avAhrhv
+         6SPmOgkBf1Rij+Dl7JrzVL/9hCC6nD3sii3OokMCUwaNBjbGPOrsN1UsoUsxGmkvfsIq
+         O3nl5CRVFhPvFy8YnfvFa50fRJYnxQ907MiGxxhTFw1f1NEsrCHt2ZDqU8F+O45GS7/4
+         g04KuuPQ5k+sgbQdDQhXOBHe5pabvDupHCp+zatoMuQFC5hJb7l/ELuHwivYIgUT+d1j
+         Loe2HDnzH8VbAHUkI1sSVOdDHdBYxBtvOcpFxoBJYtXM2kI34P07YvLc34RGgrnkqHjH
+         HmFg==
+X-Gm-Message-State: ALKqPwcTThDL0ERIUmmssyA6xD9+u2Q2DradrYjKvvpHa2JBdmxf8hvi
+        sj71ggRzrgitYRwZHuwkbf8=
+X-Google-Smtp-Source: AB8JxZrTPZzLzXQhu27fHAq1gAo4faYeNZ8IFwBjuSuwuPkNZlZEt/CTxpFX21iN4rRrvDYsI9or/w==
+X-Received: by 10.28.130.75 with SMTP id e72mr6834731wmd.64.1525910675981;
+        Wed, 09 May 2018 17:04:35 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a69-v6sm10918528wma.7.2018.05.09.17.04.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 09 May 2018 17:04:35 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
         Git Mailing List <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?Tmd1eeG7hW4g?= =?utf-8?B?VGjDoWkgTmfhu41j?= Duy 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 5/7] builtin/grep.c: add '--column' option to
- 'git-grep(1)'
-Message-ID: <20180509235251.GC68889@syl.local>
+Subject: Re: [PATCH v5 5/7] builtin/grep.c: add '--column' option to 'git-grep(1)'
 References: <20180421034530.GB24606@syl.local>
- <cover.1525831201.git.me@ttaylorr.com>
- <9222f0ee470884a984c1174cf218dece43f77f87.1525831201.git.me@ttaylorr.com>
- <882bdfe8-6caa-dd9c-7752-ee4884f135f9@talktalk.net>
- <CAN0heSpXCajyDKwOrXuQHWRODsVnFewUWTMitOoRQueFV4eSiw@mail.gmail.com>
+        <cover.1525831201.git.me@ttaylorr.com>
+        <9222f0ee470884a984c1174cf218dece43f77f87.1525831201.git.me@ttaylorr.com>
+        <882bdfe8-6caa-dd9c-7752-ee4884f135f9@talktalk.net>
+        <CAN0heSpXCajyDKwOrXuQHWRODsVnFewUWTMitOoRQueFV4eSiw@mail.gmail.com>
+        <20180509235251.GC68889@syl.local>
+Date:   Thu, 10 May 2018 09:04:34 +0900
+In-Reply-To: <20180509235251.GC68889@syl.local> (Taylor Blau's message of
+        "Wed, 9 May 2018 16:52:51 -0700")
+Message-ID: <xmqqefikl6jx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSpXCajyDKwOrXuQHWRODsVnFewUWTMitOoRQueFV4eSiw@mail.gmail.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 09, 2018 at 07:26:57PM +0200, Martin Ågren wrote:
-> On 9 May 2018 at 12:41, Phillip Wood <phillip.wood@talktalk.net> wrote:
-> > On 09/05/18 03:13, Taylor Blau wrote:
-> >>
-> >>   +--column::
-> >> +       Prefix the 1-indexed byte-offset of the first match on non-context
-> >> lines. This
-> >> +       option is incompatible with '--invert-match', and extended
-> >> expressions.
-> >> +
-> >
-> >
-> > Sorry to be fussy, but while this is clearer I think to could be improved to
-> > make it clear that it is the offset from the start of the matching line.
-> > Also the mention of 'extended expressions' made me think of 'grep -E' but I
-> > think (correct me if I'm wrong) you mean the boolean options '--and',
-> > '--not' and '--or'. The man page only uses the word extended when talking
-> > about extended regexes. I think something like
-> >
-> > Print the 1-indexed byte-offset of the first match from the start of the
-> > matching line. This option is incompatible with '--invert-match', '--and',
-> > '--not' and '--or'.
-> >
-> > would be clearer
->
-> >> +       if (opt->columnnum && opt->extended)
-> >> +               die(_("--column and extended expressions cannot be combined"));
-> >> +
->
-> Just so it doesn't get missed: Phillip's comment (which I agree with)
-> about "extended" would apply here as well. This would work fine, no?
+Taylor Blau <me@ttaylorr.com> writes:
 
-This check we should retain and change the wording to mention '--and',
-'--or', and '--not' specifically.
+> This check we should retain and change the wording to mention '--and',
+> '--or', and '--not' specifically.
 
-> One thing to notice is that dying for `--column --not` in combination
-> with patch 7/7 makes git-jump unable to handle `--not` (and friends).
-> That would be a regression? I suppose git-jump could use a special
-> `--maybe-column` which would be "please use --column, unless I give you
-> something that won't play well with it". Or --column could do that kind
-> of falling back on its own. Or, git-jump could scan the arguments to
-> decide whether to use `--column` or not. Hmm... Tricky. :-/
+Why are these problematic in the first place?  If I said
 
-Agree that this is tricky. I don't think that --maybe-column is a
-direction that we should take for the reasons I outlined in the cover
-letter. Like I said, there are cases under an extended grammar where we
-can and cannot display meaningful column offsets.
+    $ git grep -e first --and -e these
+    $ git grep -e first --and --not -e those
+    $ git grep -e first --or -e those
 
-With regards to regressing 'git-jump', I feel as if 'git-jump --not' is
-an uncommon-enough case that I would be comfortable with the tradeoff.
-If a caller _is_ using '--not' in 'git-jump', they can reconfigure
-'jump.grepCmd' to work around this issue.
+I'd expect that the first line of this paragraph will hit, and the
+first hit for these three are "these", "first" and "first",
+respectively.  Most importantly, in the last one, "--or" can be
+omitted and the whole thing stops being "extended", so rejecting
+extended as a whole does not make much sense.
 
-Perhaps this is worth warning about in 'git-jump'? Peff, what do you
-think?
+    $ git grep -v second
+    $ git grep --not -e second
 
+may hit all lines in this message (except for the obvious two
+lines), but we cannot say which column we found a hit.  I am
+wondering if it is too grave a sin to report "the whole line is what
+satisfied the criteria given" and say the match lies at column #1.
 
-Thanks,
-Taylor
+By doing so, obviously we can sidestep the whole "this mode is
+sometimes incompatible" and "I need to compute a lot to see if the
+given expression is compatible or not" issues.
