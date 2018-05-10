@@ -2,108 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11EBE1F406
-	for <e@80x24.org>; Thu, 10 May 2018 23:13:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF7361F406
+	for <e@80x24.org>; Thu, 10 May 2018 23:32:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751282AbeEJXNO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 19:13:14 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:43890 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750798AbeEJXNN (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 May 2018 19:13:13 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4A6FE6046C;
-        Thu, 10 May 2018 23:13:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1525993990;
-        bh=ESgfpYSiK5t82rDg1Sr0ilnVYiCg2D5y6XciPSnJ3tc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=M612sTjCmvFRDQfVf614gjvwxIiu7pVMbK1EAWEOclciCLTkzmQcOShGDv+GaD/kw
-         t+ig0YUW5GXU/nyOl3DvHJI7S4CgTBwAffICQ7FssgfjBIgwK0IP87HTpWpQTUKzg1
-         c3Rp73lR/7Wfo2x6AP6WVb9x1w9L++6z7277AEwNtiwEoPqwAexArfd5ItzOXVhJ9i
-         Div4wnZA9d9xrwTdyjqyx6V3zvXHhAyh0L5F1ocMm0KOJvCHDZ7dNWRUoWH+tKx3Nn
-         A6lgtLjhZnVKYmOkApmaUkqV4W9fvxmg2+j5F4XCz/bHl62avS3q1apxjPnCG98eDV
-         PrRaI8d3Fbz3JpXsNm23EuynrFJaXKf4eYW8+283Zs8g7/ha3gYGx0FGqU5lk2KaJV
-         sDdrVz+iEaFIxHKnedww/d4SCddAg7Pb/rwHn2qcGVaVUs/slNgksZf1MaQ19Mf5L5
-         5Ua9tNByoI9Dg5z4cdRWn4LmYZvxLF1xl+Zk2PrbqvIp8Zfoik6
-Date:   Thu, 10 May 2018 23:13:04 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2] mailmap: update brian m. carlson's email address
-Message-ID: <20180510231304.GG275488@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20180506232421.975789-1-sandals@crustytoothpaste.net>
- <20180508015845.268572-1-sandals@crustytoothpaste.net>
- <184451b4-1b34-c1f7-f9b1-0dfa63ab9506@gmail.com>
- <20180509001957.GE275488@genre.crustytoothpaste.net>
- <4587b2e7-6cc8-c8fe-0b2b-7ce4202197d1@gmail.com>
+        id S1751366AbeEJXck (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 19:32:40 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:43637 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750746AbeEJXci (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 19:32:38 -0400
+Received: by mail-pf0-f172.google.com with SMTP id j20-v6so1791081pff.10
+        for <git@vger.kernel.org>; Thu, 10 May 2018 16:32:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=PQwGpZehaO4BfOEmFWOmpEmfHortrquPOZpScN+txB4=;
+        b=MWa149TLEfRNjWqcoDCGOmsMLsQ1pceDCOu7hwYGdyPi0HlzXiTeMkNVDZPFGIDrDQ
+         BPWnPMyBW0L9ZReNqJ3RWpbxHetAwgytB5PMYTf/0xh1skvSv/EqwzuJboNdpUO7Zgbk
+         06zBzvBj/bOTci1zhFFEMYDaWFF5Ovqg5gsJoMWujaZSjbSZ926WkbKeTWFCC7cS+XLM
+         uB9f4WsJWmkQKO/R8tkx8YMnZEwpTwEPpeYKAocQxrxHOmpLfJjPfkkOo/0txBnEKOYa
+         mH4JN/T/YnCUb4MXdY1xXFV6VPJOY2jXzJEDeanZc3iZHpH73z5p/v68iS3OtaNfvZvX
+         irDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=PQwGpZehaO4BfOEmFWOmpEmfHortrquPOZpScN+txB4=;
+        b=sC6DjBbP2fUw38EZs1Vt9vZ70+fYs0zT67+o9VJ6OvdHxnSTV2hBPGNZUcNwliErb2
+         9RDMY6rNP87PpNI3TyGpDCKC+qmHeiXtFpycIBwCNAaL/eYKEKDScojSzz79Qb+v+2qI
+         QVz5s1KoiXxojwRHXAyHLaBswg241I2ueE7Kc6Rb2gYbllRKEo1sbSg2wvxEG0gvf1N+
+         qYyz0RP0Lb1N3fZyUpb/rXGJMkYxI+Z92WTIqqsEyXfYG6OVq5d21TdRfVCFMA/1rNiu
+         FiYr1iiXUAC8+fJdYbGndXs+LDCUj73qTjzsziauGo08mMZbLD04qawe4B3vitNyFJRl
+         h/Gg==
+X-Gm-Message-State: ALKqPwePE9mRY2+QPSOJE+4DloS5ZbguZsoam10U9kzpMOQonRCSDd4o
+        IJ053jmbQCeWstlkVk/cb+o=
+X-Google-Smtp-Source: AB8JxZquo80PwsInpEN6zXbUd7esGHKG8ETt/bbtoa6yuy5KIsX3U2Jw4ZCwL9I/EIlLqV26BjiHDg==
+X-Received: by 2002:a62:ac14:: with SMTP id v20-v6mr3192911pfe.101.1525995157236;
+        Thu, 10 May 2018 16:32:37 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id a10-v6sm3140139pfo.55.2018.05.10.16.32.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 10 May 2018 16:32:36 -0700 (PDT)
+Date:   Thu, 10 May 2018 16:32:26 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     jens persson <jens@persson.cx>, git <git@vger.kernel.org>,
+        Marc Stevens <marc@marc-stevens.nl>,
+        Ken Cunningham <ken.cunningham.webuse@gmail.com>
+Subject: Re: [PATCH] sha1dc: fix for compiling on AIX using IBM XLC compiler
+Message-ID: <20180510233226.GA125677@aiede.svl.corp.google.com>
+References: <CAEoyyNJPZXUKi3W=Gs=3v8i4YnTL47G9oaHDoV5pvCLx78jUVQ@mail.gmail.com>
+ <87603xxc3k.fsf@evledraar.gmail.com>
+ <20180509183008.GL10348@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="df+09Je9rNq3P+GE"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <4587b2e7-6cc8-c8fe-0b2b-7ce4202197d1@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-3-amd64)
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180509183008.GL10348@aiede.svl.corp.google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+(cc-ing Marc Stevens for real this time. Sorry for the noise)
+Ævar Arnfjörð Bjarmason wrote:
+> On Wed, May 09 2018, jens persson wrote:
 
---df+09Je9rNq3P+GE
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> Hello, first patch. I'm having trouble compiling on AIX using IBMs
+>> compiler, leading to
+>> unusable binaries. The following patch solved the problem for 2.17.0.
+>> The patch below is cut&pasted via gmail to allow for firewalls, but
+>> exists in an unmolested form on github:
+>> https://github.com/MrShark/git/commit/44bfcaca6637e24548ec06f46fb6035a846b14af
+>>
+>> Best regards
+>> /jp
 
-On Wed, May 09, 2018 at 12:33:59PM +0530, Kaartic Sivaraam wrote:
-> On Wednesday 09 May 2018 05:49 AM, brian m. carlson wrote:
-> > Correct, it doesn't.  In my case, I was using --pretty=3D'%aN <%aE>',
-> > which is how I noticed it in the first place.
->=20
-> So, how about updating the commit message to avoid confusions to the
-> incidental future reader? (Or is it just not worth it? ;-])
+Thanks for the patch.
 
-I don't think it's worth it.  It does apply to git log, just not unless
-you enable the mailmap, which I supposed was implicit.  I can do a v3 if
-someone feels strongly, but otherwise I think it's fine as it is.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+>> Building on AIX using XLC every checkout gives an error:
+>> fatal: pack is corrupted (SHA1 mismatch)
+>> fatal: index-pack failed
+>>
+>> Back tracking it was introduced in 2.13.2, most likely in [1]
+>>
+>> Add a #ifdef guard based on macros defined at [2] and [3].
+>>
+>> Should perhaps __xlc__ should should be changed to or combined with _AIX
+>> based on the behavour of GCC on AIX or XL C on Linux.
+>>
+>> 1. https://github.com/git/git/commit/6b851e536b05e0c8c61f77b9e4c3e7cedea39ff8
+>> 2. https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.3/com.ibm.xlc1313.aix.doc/compiler_ref/macros_platform.html
+>> 3. https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.3/com.ibm.xlc1313.aix.doc/compiler_ref/xlmacros.html
+>>
+>> Signed-off-by: jens persson <jens@persson.cx>
+>> ---
+>>  sha1dc/sha1.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+>> index 25eded139..68a8a0180 100644
+>> --- a/sha1dc/sha1.c
+>> +++ b/sha1dc/sha1.c
+>> @@ -84,7 +84,7 @@
+>>  /* Not under GCC-alike or glibc or *BSD or newlib */
+>>  #elif (defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || \
+>>         defined(__MIPSEB__) || defined(__MIPSEB) || defined(_MIPSEB) || \
+>> -       defined(__sparc))
+>> +       defined(__sparc) || (defined(__powerpc) && defined(__xlc__)))
 
---df+09Je9rNq3P+GE
-Content-Type: application/pgp-signature; name="signature.asc"
+I wonder if there's a simpler way to detect this.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
+__powerpc seems orthogonal to the goal, since there are little-endian
+powerpc machines.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlr00gAACgkQv1NdgR9S
-9osSoxAAlGs9JoTmjn/1oH25LaHxTGx4V3BiRHivdyVoEvpAIAMsN4S770lpfxta
-b6INr98CAUgiYuqOayB4kSjmwTOPWLv00bNvl6WHncZJaCYYbkKrfLNCm4LUGDaO
-1jcx6mO/jqYo55ynEjK6cv5eYSteLT0SXotKAOfxMoQbgb6IlyFN9jWjbwqCmiCY
-pwAtUljNkM7SJHb2ubeDTeGmSvB7JKBHKMhQxfnPe/B7KC8dvnt6yeODfQGVyGwL
-LK7RFPPGPsVxqFLfzq+wBoZnhG7i3pjeDn4im9xkpOAOfRBeGUVgFjsitVvA1GfQ
-DmFCQQ0YrvgX0FGClzdkTIiWc7MQl0ON2o01qwunieAO3lFTOH8vCrKft0J19oWA
-PE7f8+1dr78uD6q4P1lWx5r1L38G3261bjacrOweTlQ8uEpISrwOit+Z4HqDNiM0
-l6Nm8ANlhDjjTL59jQhE102hWOn9Kn6Dqdltah3xpkR1Zpd2uhjwqn8pQruvK7R+
-tMlYyn5lcq2y7umTpqRTKbPBmPvyDB6+wYVPepV8J9q5JHDCISp9Ivhi7ssmtM8i
-uQhc0qsLQ8Fg73qnDFl8Zg30k8N3oG1zG59hJ1fhaWe3drcwTix2TPzM0B2nYlNS
-lGi+deIn8k7dyde3UesFjblIxQhvqx3xq+GJRGuCFjb8mtZkIps=
-=3Z3j
------END PGP SIGNATURE-----
+It appears that XLC defines _BIG_ENDIAN on big-endian machines.  I
+wonder if we should do
 
---df+09Je9rNq3P+GE--
+ #elif defined(_BYTE_ORDER) && defined(_BIG_ENDIAN) && defined(_LITTLE_ENDIAN)
+  ... as today ...
+ #elif !defined(_BYTE_ORDER) && defined(_BIG_ENDIAN) && !defined(_LITTLE_ENDIAN)
+ # define SHA1DC_BIGENDIAN
+ #elif !defined(_BYTE_ORDER) && !defined(_BIG_ENDIAN) && defined(_LITTLE_ENDIAN)
+  /* little endian. */
+ #else
+  ...
+
+It also seems to me that Git should enable the #error in the
+fallthrough case.  The test suite would catch this kind of problem but
+it does not seem that everyone runs the test suite, so a compiler
+error is more robust.  Is there a #define we can set to enable that?
+
+>>  /*
+>>   * Should define Big Endian for a whitelist of known processors. See
+>>   * https://sourceforge.net/p/predef/wiki/Endianness/ and
+>
+> This patch looks sane to me, but we don't manage this software but
+> instead try to pull it as-is from upstream at
+> https://github.com/cr-marcstevens/sha1collisiondetection
+>
+> Which we could apply this, it would be much better if you could submit a
+> pull request with this to upstream, and then we can update our copy as I
+> did in e.g. 9936c1b52a ("sha1dc: update from upstream", 2017-07-01).
+
+Thanks,
+Jonathan
