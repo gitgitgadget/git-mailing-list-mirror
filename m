@@ -2,117 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAEB91F42D
-	for <e@80x24.org>; Thu, 10 May 2018 09:24:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E6101F42D
+	for <e@80x24.org>; Thu, 10 May 2018 09:27:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756774AbeEJJYK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 05:24:10 -0400
-Received: from mout.web.de ([212.227.17.12]:33697 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756627AbeEJJYI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 05:24:08 -0400
-Received: from [192.168.178.36] ([91.20.55.213]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LgpJ4-1eTwNI3CNC-00oDCF; Thu, 10
- May 2018 11:24:02 +0200
-Subject: Re: [PATCH] fast-export: avoid NULL pointer arithmetic
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <d50a4d5d-3b99-453e-1b52-4e733453fb78@web.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <99d443cd-e817-7db5-f758-bf4cf47f7c06@web.de>
-Date:   Thu, 10 May 2018 11:24:01 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1756773AbeEJJ1z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 05:27:55 -0400
+Received: from mail-wr0-f169.google.com ([209.85.128.169]:44922 "EHLO
+        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756627AbeEJJ1y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 05:27:54 -0400
+Received: by mail-wr0-f169.google.com with SMTP id y15-v6so1276556wrg.11
+        for <git@vger.kernel.org>; Thu, 10 May 2018 02:27:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=h/l/jWkZt3rfd4A0422w0Fn0vexmUIPZBwWgNGBX+1g=;
+        b=f/smTY4bcutDCiGeZ2KoTkZSvEfVctCw7HsWTHYOdcRu8qz1AalKNhZ2K2jjYjgJL/
+         O7pR1qwNjKdINw82yxR57Ns55WEhs4nmGvdylXqzhTiwp6I599O/GTo7gQLMulALw/DL
+         cX04fz5g0uTZgB3tpRPc945w6nnoEFaSNvxZOIcu7MHGNqM8hGOXek8QM9m+9aOK6Vmm
+         OLEgelVgKy+16X8zF6dFMHw4UZgSytGFLsHsDtEpNNbCC2DNOJD4jmz2+JEGz3CLZXWj
+         Ke/2SWv3pd2DG0P+3+NEBIUoEoY1UiEbNS1uckc0BAjGYPdgUqKj3AN+fqQ4aoZjwaaB
+         UvGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=h/l/jWkZt3rfd4A0422w0Fn0vexmUIPZBwWgNGBX+1g=;
+        b=BUmEiCiI1balny7uBxNa0YQIgEm1z1tQVnFekNCjmAV+wL8KWCa+BQhNYqWUb+1+IR
+         rkn8Q8Ml4qowdsqZFMrrhyccnvncGm24Y0aShZ8zRu4gZUwoGKuwv2GCq1Ai6E6l88vv
+         RVTD1zbHnKdoaB096+dkptLqEml92GnEjfrDI5WYxAl4H5CAVcr4FSTrDNfylwyeRsaA
+         /AQ7YfmRDEiKEZM3+oyWjHSLXAev10u0Cm9J/wfPYTT+Ak/Vf7wrtxowD7CJwEIV2CtO
+         tiWOZO3iICPrs0FuiVr9bLqQgLhCYckt7bb2h3GhM7OO0fDzt56WSVu+SnoNeDuV/jLJ
+         0JuA==
+X-Gm-Message-State: ALKqPwdtm7H30KakJ/S3ruDjWG1Ork+hwG6l5kcF+I6iLaBhim9tMpu0
+        jPDdEhYvwzRhbTHRLCwME/s=
+X-Google-Smtp-Source: AB8JxZpJk9K7Tzv58feB0iDu/7+RE40bZVvAhNK8PxA4FlB+5LYSX2RmDCL8M+meQZo9XXVWN60+1Q==
+X-Received: by 2002:adf:a9e6:: with SMTP id b93-v6mr698324wrd.234.1525944472739;
+        Thu, 10 May 2018 02:27:52 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id d17-v6sm483491wrc.0.2018.05.10.02.27.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 10 May 2018 02:27:52 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH] repository: fix free problem with repo_clear(the_repository)
+References: <20180509170409.13666-1-pclouds@gmail.com>
+        <CAGZ79kbFiULj1NJARm6ObYrqv_Fu+U2sb8h_sNJwdWur+JqrvQ@mail.gmail.com>
+Date:   Thu, 10 May 2018 18:27:51 +0900
+In-Reply-To: <CAGZ79kbFiULj1NJARm6ObYrqv_Fu+U2sb8h_sNJwdWur+JqrvQ@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 9 May 2018 10:50:00 -0700")
+Message-ID: <xmqqbmdnkgh4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <d50a4d5d-3b99-453e-1b52-4e733453fb78@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:7sBrEaVYXcnOWAApk/sn9IKf2Tnt/w/TsI9K5q0M1+LV6EZQjJd
- 0Zj9SD0AqYWeDu8F1ye2cV2o1q7idhFuNGr4EgvStMKpGWSfSnXzNeqCyENH6JDPGdF1egp
- nR7hRveNxu3T6RJqE85pgoyHPo4Zj5qQ256MDJNjgq1cnUPHz1AueIGA1psbNIz8wyuuZxt
- YQ2gYGuGNqKqBEiuS2guQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:djS4kVlIH9I=:UNvJ5ROWRQzpXfe8XohUD2
- SwlVJoQRV1DnblotPAstEprrZr9+FRZUFi2Dbalo7upde3sJ7QYlQNbeoeWoVkq+RGKlppW3+
- cnmymf8d+q5cUc1wUggfGzW79RoI7Vx7geTAnX2SD59dNG/wdVfHXad/F0ktP6g7AiS0iH3ex
- arg81wUOiWcvGnTfH9Q2GQNRhdUKmWZ5Cz5NfVio4HHnLWvH4rX6A2LN0EADH9u3DHMCNhGTK
- M3ScHncQTmU3S8Ov0ShwYwz5/+TVgOwv5fYvEyaB6E5VBy/FqoyWa5rJiShFyQUuKUlgPyQPV
- EXawkVzGh/oWcl2OBIpzS+ccBIYuOMhcJ6r2kRmhvrio6aj47VABxYcWVE+Dt+iwLGZsAscjY
- 2rkMJNo2brfaEUPOUo1Bg7H2ppYuoqezXnk0j4qceG3fDzhS7mCQruBL/RRGXPTa21FaqrUT1
- 4VQb/Z/CECRJB62cj8sNYYctEN2M3d7Wx96HiL/o2UApGJ4ZliDuZbrzTJrCWrOTrQmlbaX7l
- ndMTcshXpoFAVhqQ+8s3u90zLniNukSh0LXvHTlC7GT3iS18cJf1vI8bn/pnv/2yQBr35h+JU
- lkkxbAzhWoRhu4Usn4y8PAqp08UakIY/v/jrvp0NJwTBRyJSBGxU26XjrI4pdrw6fqZ3gD0n4
- pZs8juyICpMMBFgrTUOS5k08VRQ4WNlepBk77vAzHqTrgFiGlye1+ZUb7szruf4+lDcFnOf6S
- W6iietY4BMwC+BxIfYyKsiFHdlKXg4pjN0sK3ew5Jki6b1Pii8HBQ3pCeCuluWESddQ7KuZAv
- dvNX37+
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.05.2018 um 23:06 schrieb René Scharfe:
-> Clang 6 reports the following warning, which is turned into an error in a
-> DEVELOPER build:
-> 
-> 	builtin/fast-export.c:162:28: error: performing pointer arithmetic on a null pointer has undefined behavior [-Werror,-Wnull-pointer-arithmetic]
-> 		return ((uint32_t *)NULL) + mark;
-> 		       ~~~~~~~~~~~~~~~~~~ ^
-> 	1 error generated.
-> 
-> The compiler is correct, and the error message speaks for itself.  There
-> is no need for any undefined operation -- just cast mark to void * or
-> uint32_t after an intermediate cast to uintptr_t.  That encodes the
-> integer value into a pointer and later decodes it as intended.
+Stefan Beller <sbeller@google.com> writes:
 
-Having thought about it a bit more I have to say: That seems to work,
-but it's not portable.  
+> So this would go with the latest sb/object-store-alloc ?
+>
+> My impression was that we never call repo_clear() on
+> the_repository, which would allow us to special case
+> the_repository further just as I did in v2 of that series[1] by
+> having static allocations for certain objects in case of \
+> the_repository.
+>
+> [1] https://public-inbox.org/git/20180501213403.14643-14-sbeller@google.com/
+>
+> We could just deal with all the exceptions, but that makes repo_clear
+> ugly IMHO.
 
-The standard says about uintptr_t that "any valid pointer to void can
-be converted to this type, then converted back to pointer to void, and
-the result will compare equal to the original pointer".  So void * ->
-uintptr_t -> void * is a proper roundtrip, but that doesn't imply that
-casting arbitrary uintptr_t values to void * would be lossless.
+So perhaps
 
-I don't know an architecture where this would bite us, but I wonder if
-there is a cleaner way.  Perhaps changing the type of the decoration
-member of struct decoration_entry in decorate.h to uintptr_t?
+         void repo_clear(...)
+         {
+        +       if (repo == the_repository)
+        +               BUG("repo_clear() called on the repository");
+                ...
 
-> While at it remove an outdated comment -- intptr_t has been used since
-> ffe659f94d (parse-options: make some arguments optional, add callbacks),
-> committed in October 2007.
-> 
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->   builtin/fast-export.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index 530df12f05..fa556a3c93 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -156,15 +156,14 @@ static void anonymize_path(struct strbuf *out, const char *path,
->   	}
->   }
->   
-> -/* Since intptr_t is C99, we do not use it here */
-> -static inline uint32_t *mark_to_ptr(uint32_t mark)
-> +static inline void *mark_to_ptr(uint32_t mark)
->   {
-> -	return ((uint32_t *)NULL) + mark;
-> +	return (void *)(uintptr_t)mark;
->   }
->   
->   static inline uint32_t ptr_to_mark(void * mark)
->   {
-> -	return (uint32_t *)mark - (uint32_t *)NULL;
-> +	return (uint32_t)(uintptr_t)mark;
->   }
->   
->   static inline void mark_object(struct object *object, uint32_t mark)
-> 
+or something?
