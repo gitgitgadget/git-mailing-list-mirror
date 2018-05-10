@@ -7,55 +7,54 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 351D11F424
-	for <e@80x24.org>; Thu, 10 May 2018 00:40:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD56A1F424
+	for <e@80x24.org>; Thu, 10 May 2018 00:40:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965766AbeEJAku (ORCPT <rfc822;e@80x24.org>);
+        id S965813AbeEJAkz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 20:40:55 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:45587 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965469AbeEJAku (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 9 May 2018 20:40:50 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:32978 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965469AbeEJAkr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 20:40:47 -0400
-Received: by mail-pl0-f68.google.com with SMTP id n10-v6so247540plp.0
-        for <git@vger.kernel.org>; Wed, 09 May 2018 17:40:47 -0700 (PDT)
+Received: by mail-pf0-f193.google.com with SMTP id c10-v6so188041pfi.12
+        for <git@vger.kernel.org>; Wed, 09 May 2018 17:40:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Xt2RiNt7NNp/+rxj7QjlgFmdXlTi6jL8c+2/wvuifXY=;
-        b=EsgMoB9hPyg4UMYCps722g/SW1e6r3RyW7dHXq6YxUaBA13+w6A/ZpxtBPMh+7UaP7
-         HrAw1RA3kwaZj+vfZE/+dysPbnVyf2YvehucwtGYIGGQxh1kfp1hTXVE3ofvXzJMKmof
-         XQnEL50J3LcxWY/buG07UoTaWLPnxt8U+ywOcF/JQ54oEQPz1AUpplouKNALgr4cbD9O
-         k2Ie6kj23wN2W5HfVA1w8mrhIFeubIHB3Qn+ebDUvnG+/vwdFecX4bvizHkeeLklb0BT
-         9j/dES3/4tQtrtOA7aPbryKX4mvbRbdjaA7m7rAQDueEx/LDsd2X4KB5ofkFlvEvZyMU
-         Ds8Q==
+        bh=akTYh5s3Pgga2sJXecuVMqk06bnmkaP9cJwi9N6S55M=;
+        b=J5ah0NFkGBgqzJoEOiH/kYHE6bxH8LOXbDdpRCbI3hJag1fp4uI8L+8cavF7nRGsOM
+         WUBPt1EYQjKzZAmuI8PpYFo7QV5PdQSOlzF4le+KjjsA0yE1NRxgDSzsidjDiqzG3Dbl
+         p0zCPMJUjYF2YBMcLYTECYaCns3BXhV9T1Dyh8Jx0lKVVY8Y7mTevDa9LBvh4elW4dk/
+         1NsPjLagLcIc4fm9+jTV8q7pwuzHCoufgYv7hfrxsHpoj+jPnaKih5aiunBhLBckhoAC
+         PIssap5ck8wig0Wz9g7ONlGz+XmiCCuaE1pSz1xTzS1Fwz03i2zhH1HlqNexlyjF7Sx4
+         IeiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Xt2RiNt7NNp/+rxj7QjlgFmdXlTi6jL8c+2/wvuifXY=;
-        b=BVasC8As88NIpdjwDxITf4+EzxnV8q2a22xiIfIdhsMsx/2wWRTeYO2IAJn1abe9a/
-         ieUMUOxMWpuadx3TUzdRKGiYwZC2a3rJn4JueiJh4tIW9LiF8PjpiM+CBJdYd0p+0x3F
-         Q5rM5G4aX5xTuWAyUFH62AOAMb0LaD3xOo3KUk43j6SJpKnNXWpI3ome3iWdEiRtNL1Z
-         KReBhLJk9BoZZQkXYG6dw0A6KlzQHZymfAzW45tEWcGTfcmT87/kk0LK9E83KA7l3HmJ
-         xwwpLm3bf9J6XxPpjhOHxrm99mJl09r4Y7mOSha/3YPmEs2npOXlpN4Rtjr2kx9q8WGc
-         L37w==
-X-Gm-Message-State: ALQs6tAh6fSPPlaWTLyL2nHL0NkYLFiVkgr6IGQiHrdVMv4h+abGiXi9
-        U8pHYjm8olxwEWO+SCFLjy94jQ==
-X-Google-Smtp-Source: AB8JxZrLm699qed7rBHnG4Wka9nJ5obPNUeZBjiHeMb0JlqdJpg2KxjmlK8bH4cpsVFddRQqyvcx1A==
-X-Received: by 2002:a17:902:76c1:: with SMTP id j1-v6mr46950526plt.284.1525912846798;
-        Wed, 09 May 2018 17:40:46 -0700 (PDT)
+        bh=akTYh5s3Pgga2sJXecuVMqk06bnmkaP9cJwi9N6S55M=;
+        b=HhTQ1cjD2b3Q7vyP4404dlyDRViGrdrttMetK+O9BcivC78BA7KFZYXe8kRi0gScxM
+         jyOfEdtnO0r/DevFrGIoLbWbkHHqQ4RfrEEdhTxv8Nb1FcQhrgnTmoVqSOlE4zPnT7co
+         8RSvdcc5THg9QEbyUXVk0aJX/Q2/wEqAZCieOf0JEhS96MCtraj5pXLjWcZuBf6ffsTJ
+         4Bxo5NjAsVUgqnw5FcujAMLjksMKjOO/bokSrsBghep6aCI4pDM+bdjkQZa4pIlH02lp
+         sw4nLRJpCMcM3H7sMZFbjbKgDtQERzXtELpjmKOHAWRVJr3Sm2OwDV7irBv4hfMsr9HP
+         rA2Q==
+X-Gm-Message-State: ALQs6tDUUB72lSsnLeU26cf6lP11J7U0WdC4Y3QQZbsTiRYHPUXZ7fn0
+        58CpNl+cpLAsntCJPxhp/o3H3w==
+X-Google-Smtp-Source: AB8JxZo3LUjmUjwX8KH55u/rHYr9/sAaQa09ciyJWZbfYpanm5/njq+GqM3X0/4lZ+oeKSIHEVgtFw==
+X-Received: by 10.98.222.2 with SMTP id h2mr43830599pfg.205.1525912849727;
+        Wed, 09 May 2018 17:40:49 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id x84sm77269924pfi.160.2018.05.09.17.40.45
+        by smtp.gmail.com with ESMTPSA id w12-v6sm5845378pge.69.2018.05.09.17.40.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 17:40:45 -0700 (PDT)
+        Wed, 09 May 2018 17:40:48 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jamill@microsoft.com,
-        jonathantanmy@google.com, pclouds@gmail.com,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v4 11/13] object: allow grow_object_hash to handle arbitrary repositories
-Date:   Wed,  9 May 2018 17:40:22 -0700
-Message-Id: <20180510004024.93974-12-sbeller@google.com>
+        jonathantanmy@google.com, pclouds@gmail.com
+Subject: [PATCH v4 13/13] alloc: allow arbitrary repositories for alloc functions
+Date:   Wed,  9 May 2018 17:40:24 -0700
+Message-Id: <20180510004024.93974-14-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
 In-Reply-To: <20180510004024.93974-1-sbeller@google.com>
 References: <20180508193736.14883-1-sbeller@google.com>
@@ -65,54 +64,441 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+We have to convert all of the alloc functions at once, because alloc_report
+uses a funky macro for reporting. It is better for the sake of mechanical
+conversion to convert multiple functions at once rather than changing the
+structure of the reporting function.
+
+We record all memory allocation in alloc.c, and free them in
+clear_alloc_state, which is called for all repositories except
+the_repository.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- object.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ alloc.c           | 65 ++++++++++++++++++++++++++++++-----------------
+ alloc.h           | 19 ++++++++++++++
+ blame.c           |  1 +
+ blob.c            |  1 +
+ cache.h           | 16 ------------
+ commit.c          |  8 ++++++
+ commit.h          |  6 +++++
+ merge-recursive.c |  1 +
+ object.c          | 42 ++++++++++++++++++++++++++++--
+ object.h          |  8 ++++++
+ tag.c             |  6 +++++
+ tag.h             |  1 +
+ tree.c            |  1 +
+ 13 files changed, 133 insertions(+), 42 deletions(-)
+ create mode 100644 alloc.h
 
-diff --git a/object.c b/object.c
-index a365a910859..0fcd6f6df42 100644
---- a/object.c
-+++ b/object.c
-@@ -116,27 +116,27 @@ struct object *lookup_object(const unsigned char *sha1)
-  * power of 2 (but at least 32).  Copy the existing values to the new
-  * hash map.
+diff --git a/alloc.c b/alloc.c
+index 277dadd221b..714df633169 100644
+--- a/alloc.c
++++ b/alloc.c
+@@ -4,8 +4,7 @@
+  * Copyright (C) 2006 Linus Torvalds
+  *
+  * The standard malloc/free wastes too much space for objects, partly because
+- * it maintains all the allocation infrastructure (which isn't needed, since
+- * we never free an object descriptor anyway), but even more because it ends
++ * it maintains all the allocation infrastructure, but even more because it ends
+  * up with maximal alignment because it doesn't know what the object alignment
+  * for the new allocation is.
   */
--#define grow_object_hash(r) grow_object_hash_##r()
--static void grow_object_hash_the_repository(void)
-+static void grow_object_hash(struct repository *r)
- {
- 	int i;
- 	/*
- 	 * Note that this size must always be power-of-2 to match hash_obj
- 	 * above.
- 	 */
--	int new_hash_size = the_repository->parsed_objects->obj_hash_size < 32 ? 32 : 2 * the_repository->parsed_objects->obj_hash_size;
-+	int new_hash_size = r->parsed_objects->obj_hash_size < 32 ? 32 : 2 * r->parsed_objects->obj_hash_size;
- 	struct object **new_hash;
+@@ -15,6 +14,7 @@
+ #include "tree.h"
+ #include "commit.h"
+ #include "tag.h"
++#include "alloc.h"
  
- 	new_hash = xcalloc(new_hash_size, sizeof(struct object *));
--	for (i = 0; i < the_repository->parsed_objects->obj_hash_size; i++) {
--		struct object *obj = the_repository->parsed_objects->obj_hash[i];
-+	for (i = 0; i < r->parsed_objects->obj_hash_size; i++) {
-+		struct object *obj = r->parsed_objects->obj_hash[i];
+ #define BLOCKING 1024
+ 
+@@ -30,8 +30,27 @@ struct alloc_state {
+ 	int count; /* total number of nodes allocated */
+ 	int nr;    /* number of nodes left in current allocation */
+ 	void *p;   /* first free node in current allocation */
 +
- 		if (!obj)
- 			continue;
- 		insert_obj_hash(obj, new_hash, new_hash_size);
++	/* bookkeeping of allocations */
++	void **slabs;
++	int slab_nr, slab_alloc;
+ };
+ 
++void *allocate_alloc_state(void)
++{
++	return xcalloc(1, sizeof(struct alloc_state));
++}
++
++void clear_alloc_state(struct alloc_state *s)
++{
++	while (s->slab_nr > 0) {
++		s->slab_nr--;
++		free(s->slabs[s->slab_nr]);
++	}
++
++	FREE_AND_NULL(s->slabs);
++}
++
+ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
+ {
+ 	void *ret;
+@@ -39,60 +58,57 @@ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
+ 	if (!s->nr) {
+ 		s->nr = BLOCKING;
+ 		s->p = xmalloc(BLOCKING * node_size);
++
++		ALLOC_GROW(s->slabs, s->slab_nr + 1, s->slab_alloc);
++		s->slabs[s->slab_nr++] = s->p;
  	}
--	free(the_repository->parsed_objects->obj_hash);
--	the_repository->parsed_objects->obj_hash = new_hash;
--	the_repository->parsed_objects->obj_hash_size = new_hash_size;
-+	free(r->parsed_objects->obj_hash);
-+	r->parsed_objects->obj_hash = new_hash;
-+	r->parsed_objects->obj_hash_size = new_hash_size;
+ 	s->nr--;
+ 	s->count++;
+ 	ret = s->p;
+ 	s->p = (char *)s->p + node_size;
+ 	memset(ret, 0, node_size);
++
+ 	return ret;
  }
  
- void *create_object_the_repository(const unsigned char *sha1, void *o)
+-static struct alloc_state blob_state;
+-void *alloc_blob_node_the_repository(void)
++void *alloc_blob_node(struct repository *r)
+ {
+-	struct blob *b = alloc_node(&blob_state, sizeof(struct blob));
++	struct blob *b = alloc_node(r->parsed_objects->blob_state, sizeof(struct blob));
+ 	b->object.type = OBJ_BLOB;
+ 	return b;
+ }
+ 
+-static struct alloc_state tree_state;
+-void *alloc_tree_node_the_repository(void)
++void *alloc_tree_node(struct repository *r)
+ {
+-	struct tree *t = alloc_node(&tree_state, sizeof(struct tree));
++	struct tree *t = alloc_node(r->parsed_objects->tree_state, sizeof(struct tree));
+ 	t->object.type = OBJ_TREE;
+ 	return t;
+ }
+ 
+-static struct alloc_state tag_state;
+-void *alloc_tag_node_the_repository(void)
++void *alloc_tag_node(struct repository *r)
+ {
+-	struct tag *t = alloc_node(&tag_state, sizeof(struct tag));
++	struct tag *t = alloc_node(r->parsed_objects->tag_state, sizeof(struct tag));
+ 	t->object.type = OBJ_TAG;
+ 	return t;
+ }
+ 
+-static struct alloc_state object_state;
+-void *alloc_object_node_the_repository(void)
++void *alloc_object_node(struct repository *r)
+ {
+-	struct object *obj = alloc_node(&object_state, sizeof(union any_object));
++	struct object *obj = alloc_node(r->parsed_objects->object_state, sizeof(union any_object));
+ 	obj->type = OBJ_NONE;
+ 	return obj;
+ }
+ 
+-static struct alloc_state commit_state;
+-
+-unsigned int alloc_commit_index_the_repository(void)
++unsigned int alloc_commit_index(struct repository *r)
+ {
+-	static unsigned int count;
+-	return count++;
++	return r->parsed_objects->commit_count++;
+ }
+ 
+-void *alloc_commit_node_the_repository(void)
++void *alloc_commit_node(struct repository *r)
+ {
+-	struct commit *c = alloc_node(&commit_state, sizeof(struct commit));
++	struct commit *c = alloc_node(r->parsed_objects->commit_state, sizeof(struct commit));
+ 	c->object.type = OBJ_COMMIT;
+-	c->index = alloc_commit_index(the_repository);
++	c->index = alloc_commit_index(r);
+ 	return c;
+ }
+ 
+@@ -103,9 +119,10 @@ static void report(const char *name, unsigned int count, size_t size)
+ }
+ 
+ #define REPORT(name, type)	\
+-    report(#name, name##_state.count, name##_state.count * sizeof(type) >> 10)
++    report(#name, r->parsed_objects->name##_state->count, \
++		  r->parsed_objects->name##_state->count * sizeof(type) >> 10)
+ 
+-void alloc_report_the_repository(void)
++void alloc_report(struct repository *r)
+ {
+ 	REPORT(blob, struct blob);
+ 	REPORT(tree, struct tree);
+diff --git a/alloc.h b/alloc.h
+new file mode 100644
+index 00000000000..3e4e828db48
+--- /dev/null
++++ b/alloc.h
+@@ -0,0 +1,19 @@
++#ifndef ALLOC_H
++#define ALLOC_H
++
++struct tree;
++struct commit;
++struct tag;
++
++void *alloc_blob_node(struct repository *r);
++void *alloc_tree_node(struct repository *r);
++void *alloc_commit_node(struct repository *r);
++void *alloc_tag_node(struct repository *r);
++void *alloc_object_node(struct repository *r);
++void alloc_report(struct repository *r);
++unsigned int alloc_commit_index(struct repository *r);
++
++void *allocate_alloc_state(void);
++void clear_alloc_state(struct alloc_state *s);
++
++#endif
+diff --git a/blame.c b/blame.c
+index ba9b18e7542..3a11f1ce52b 100644
+--- a/blame.c
++++ b/blame.c
+@@ -6,6 +6,7 @@
+ #include "diffcore.h"
+ #include "tag.h"
+ #include "blame.h"
++#include "alloc.h"
+ 
+ void blame_origin_decref(struct blame_origin *o)
+ {
+diff --git a/blob.c b/blob.c
+index 9e64f301895..458dafa811e 100644
+--- a/blob.c
++++ b/blob.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "blob.h"
+ #include "repository.h"
++#include "alloc.h"
+ 
+ const char *blob_type = "blob";
+ 
+diff --git a/cache.h b/cache.h
+index 0e6c5dd5639..c75559b7d38 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1763,22 +1763,6 @@ extern const char *excludes_file;
+ int decode_85(char *dst, const char *line, int linelen);
+ void encode_85(char *buf, const unsigned char *data, int bytes);
+ 
+-/* alloc.c */
+-#define alloc_blob_node(r) alloc_blob_node_##r()
+-extern void *alloc_blob_node_the_repository(void);
+-#define alloc_tree_node(r) alloc_tree_node_##r()
+-extern void *alloc_tree_node_the_repository(void);
+-#define alloc_commit_node(r) alloc_commit_node_##r()
+-extern void *alloc_commit_node_the_repository(void);
+-#define alloc_tag_node(r) alloc_tag_node_##r()
+-extern void *alloc_tag_node_the_repository(void);
+-#define alloc_object_node(r) alloc_object_node_##r()
+-extern void *alloc_object_node_the_repository(void);
+-#define alloc_report(r) alloc_report_##r()
+-extern void alloc_report_the_repository(void);
+-#define alloc_commit_index(r) alloc_commit_index_##r()
+-extern unsigned int alloc_commit_index_the_repository(void);
+-
+ /* pkt-line.c */
+ void packet_trace_identity(const char *prog);
+ 
+diff --git a/commit.c b/commit.c
+index a9a43e79bae..612ccf7b053 100644
+--- a/commit.c
++++ b/commit.c
+@@ -6,6 +6,7 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "notes.h"
++#include "alloc.h"
+ #include "gpg-interface.h"
+ #include "mergesort.h"
+ #include "commit-slab.h"
+@@ -296,6 +297,13 @@ void free_commit_buffer(struct commit *commit)
+ 	}
+ }
+ 
++void release_commit_memory(struct commit *c)
++{
++	free_commit_buffer(c);
++	free_commit_list(c->parents);
++	/* TODO: what about commit->util? */
++}
++
+ const void *detach_commit_buffer(struct commit *commit, unsigned long *sizep)
+ {
+ 	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
+diff --git a/commit.h b/commit.h
+index 0fb8271665c..2d764ab7d8e 100644
+--- a/commit.h
++++ b/commit.h
+@@ -99,6 +99,12 @@ void unuse_commit_buffer(const struct commit *, const void *buffer);
+  */
+ void free_commit_buffer(struct commit *);
+ 
++/*
++ * Release memory related to a commit, including the parent list and
++ * any cached object buffer.
++ */
++void release_commit_memory(struct commit *c);
++
+ /*
+  * Disassociate any cached object buffer from the commit, but do not free it.
+  * The buffer (or NULL, if none) is returned.
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 6dac8908648..cbded673c28 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -15,6 +15,7 @@
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "tag.h"
++#include "alloc.h"
+ #include "unpack-trees.h"
+ #include "string-list.h"
+ #include "xdiff-interface.h"
+diff --git a/object.c b/object.c
+index 49b952e9299..9d5b10d5a20 100644
+--- a/object.c
++++ b/object.c
+@@ -5,6 +5,7 @@
+ #include "tree.h"
+ #include "commit.h"
+ #include "tag.h"
++#include "alloc.h"
+ #include "object-store.h"
+ #include "packfile.h"
+ 
+@@ -455,6 +456,13 @@ struct parsed_object_pool *parsed_object_pool_new(void)
+ {
+ 	struct parsed_object_pool *o = xmalloc(sizeof(*o));
+ 	memset(o, 0, sizeof(*o));
++
++	o->blob_state = allocate_alloc_state();
++	o->tree_state = allocate_alloc_state();
++	o->commit_state = allocate_alloc_state();
++	o->tag_state = allocate_alloc_state();
++	o->object_state = allocate_alloc_state();
++
+ 	return o;
+ }
+ 
+@@ -501,9 +509,39 @@ void raw_object_store_clear(struct raw_object_store *o)
+ void parsed_object_pool_clear(struct parsed_object_pool *o)
+ {
+ 	/*
+-	 * TOOD free objects in o->obj_hash.
+-	 *
+ 	 * As objects are allocated in slabs (see alloc.c), we do
+ 	 * not need to free each object, but each slab instead.
++	 *
++	 * Before doing so, we need to free any additional memory
++	 * the objects may hold.
+ 	 */
++	unsigned i;
++
++	for (i = 0; i < o->obj_hash_size; i++) {
++		struct object *obj = o->obj_hash[i];
++
++		if (!obj)
++			continue;
++
++		if (obj->type == OBJ_TREE)
++			free_tree_buffer((struct tree*)obj);
++		else if (obj->type == OBJ_COMMIT)
++			release_commit_memory((struct commit*)obj);
++		else if (obj->type == OBJ_TAG)
++			free_tag_buffer((struct tag*)obj);
++	}
++
++	FREE_AND_NULL(o->obj_hash);
++	o->obj_hash_size = 0;
++
++	clear_alloc_state(o->blob_state);
++	clear_alloc_state(o->tree_state);
++	clear_alloc_state(o->commit_state);
++	clear_alloc_state(o->tag_state);
++	clear_alloc_state(o->object_state);
++	FREE_AND_NULL(o->blob_state);
++	FREE_AND_NULL(o->tree_state);
++	FREE_AND_NULL(o->commit_state);
++	FREE_AND_NULL(o->tag_state);
++	FREE_AND_NULL(o->object_state);
+ }
+diff --git a/object.h b/object.h
+index b41d7a3accb..7916edb4edf 100644
+--- a/object.h
++++ b/object.h
+@@ -4,6 +4,14 @@
+ struct parsed_object_pool {
+ 	struct object **obj_hash;
+ 	int nr_objs, obj_hash_size;
++
++	/* TODO: migrate alloc_states to mem-pool? */
++	struct alloc_state *blob_state;
++	struct alloc_state *tree_state;
++	struct alloc_state *commit_state;
++	struct alloc_state *tag_state;
++	struct alloc_state *object_state;
++	unsigned commit_count;
+ };
+ 
+ struct parsed_object_pool *parsed_object_pool_new(void);
+diff --git a/tag.c b/tag.c
+index 02ef4eaafc0..254352c30c6 100644
+--- a/tag.c
++++ b/tag.c
+@@ -3,6 +3,7 @@
+ #include "commit.h"
+ #include "tree.h"
+ #include "blob.h"
++#include "alloc.h"
+ #include "gpg-interface.h"
+ 
+ const char *tag_type = "tag";
+@@ -115,6 +116,11 @@ static timestamp_t parse_tag_date(const char *buf, const char *tail)
+ 	return parse_timestamp(dateptr, NULL, 10);
+ }
+ 
++void free_tag_buffer(struct tag *t)
++{
++	free(t->tag);
++}
++
+ int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
+ {
+ 	struct object_id oid;
+diff --git a/tag.h b/tag.h
+index d469534e82a..b241fe67bc5 100644
+--- a/tag.h
++++ b/tag.h
+@@ -15,6 +15,7 @@ struct tag {
+ extern struct tag *lookup_tag(const struct object_id *oid);
+ extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long size);
+ extern int parse_tag(struct tag *item);
++extern void free_tag_buffer(struct tag *t);
+ extern struct object *deref_tag(struct object *, const char *, int);
+ extern struct object *deref_tag_noverify(struct object *);
+ extern int gpg_verify_tag(const struct object_id *oid,
+diff --git a/tree.c b/tree.c
+index 58cf19b4fa8..8f8ef3189af 100644
+--- a/tree.c
++++ b/tree.c
+@@ -5,6 +5,7 @@
+ #include "blob.h"
+ #include "commit.h"
+ #include "tag.h"
++#include "alloc.h"
+ #include "tree-walk.h"
+ 
+ const char *tree_type = "tree";
 -- 
 2.17.0.255.g8bfb7c0704
 
