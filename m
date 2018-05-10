@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 616781F406
-	for <e@80x24.org>; Thu, 10 May 2018 14:19:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64D0C1F406
+	for <e@80x24.org>; Thu, 10 May 2018 14:19:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965619AbeEJOTt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 10:19:49 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:45501 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965530AbeEJOTj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 10:19:39 -0400
-Received: by mail-lf0-f65.google.com with SMTP id q2-v6so3199725lfc.12
-        for <git@vger.kernel.org>; Thu, 10 May 2018 07:19:38 -0700 (PDT)
+        id S965611AbeEJOTs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 10:19:48 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:46867 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965584AbeEJOTn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 10:19:43 -0400
+Received: by mail-lf0-f68.google.com with SMTP id x7-v6so3199251lff.13
+        for <git@vger.kernel.org>; Thu, 10 May 2018 07:19:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=31EiQMTmkp16mkvIDIWtkaN972ZZ3JxSTYOcLzjJrT8=;
-        b=YCmDgxuWI0q+51Jj62cZOREJKMPSWPhlpH3Ka6IOv/i90xyxD3j7VrbA6rf7fsxWrw
-         CtlYmKo3JPX2FTFai7lkOdJ357b1aoKkLxPhWxlt13RiwmBErPDiehYK/c74uaGYnBci
-         S/OvIbGLpxHrtFKfcp7qGPwXRYGJh+wvU+XsfLCdLW4iKhletTbY2GpiOqpV9KauKxS3
-         jvVkUYAk4s9XbSMnO788886dLfQnaHWIdEMsy7GlFTLKI1n1bESaLni5IMNmOHf3Pcly
-         +MwydIQugUH8i+puOxzidogCISOsX/QgazujOf28nlIlRVSuJJeB31Jp9pUCeM2/l7Yv
-         TGBg==
+        bh=wCkBWoizZPyI+/b64HNFvLbzsVbmormsSBsef1wE75k=;
+        b=SFxMI0xu+8s1Bnrb27PHyyXcBk4aCJ+SeWMX69ilu6E3kSlomDC15Y0B2YYwh/9G6F
+         IpsK3iapkf25Grfj/UkLiamjIVvjLf3SLvQYzv+IB4Lh5w62xEMZpQ8D3FuOjGfQpGus
+         bH445GNxrSCQk5C6TRbCvHLbIAD3asReHOOAwdNnb03WQD9nK/MLaZg3U3KyYw1hgAY7
+         JLydv/M97EW2K2GqIaN4mO10eysq2sVfy4sQ95XaumW1p5ATR0loO25hFUK+L5nAsguQ
+         i24zxUDr26USzR3pUXAl5YaydTaJYyUDTzLaW1LSbXl0g2kePv6AAiqxrXW040q0RYVv
+         19MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=31EiQMTmkp16mkvIDIWtkaN972ZZ3JxSTYOcLzjJrT8=;
-        b=G+mDmbq5/f8PDJJAyVKMOYZ6Bo0pCSdBN0pMCarqts4S7D/Y2sqDv90GjDM5zwXLRZ
-         +kG3UE0JMI9MySl5fShdUfIyIXBoOX1wcCXBh3xoHlFyGMHyvvU++Dp9A6YBu0EwnS2o
-         jaq3Cx9SjmdZ379Jgd1Xj3WXDdIQwKefvkwAxMnMrGQiDRX4n/o3XQP16rV6usXWc7q/
-         bVpq7oB+Av6eKOLeED2im6XjLOU6Sya8puM1jWcnN3Xle9xaE5a4zsoHM6V1DY5u8KdY
-         0Wj4jKvV+QtA2m8kcNQR3kqB2Zr2ZFbYpXePK6b2J57zv9vaC7E/zjxwfUrkuf1DqOVd
-         ftdg==
-X-Gm-Message-State: ALKqPwdatS4BIH9EIfe+0GjuDqKjx3EevouaJXmosL+5GTsbBjqbj76y
-        v3ptU0whoymgZgoJ1MxZHW3FZg==
-X-Google-Smtp-Source: AB8JxZpIY+r3jLiRhZc89AL2mfGWj9LKFqbkYy7mLpi6MYIvrvNvvX/JP/NUJ1ndEbQNAeVEVJgQYA==
-X-Received: by 2002:a2e:4185:: with SMTP id d5-v6mr1311139ljf.114.1525961977966;
-        Thu, 10 May 2018 07:19:37 -0700 (PDT)
+        bh=wCkBWoizZPyI+/b64HNFvLbzsVbmormsSBsef1wE75k=;
+        b=LmLghf8ooQ9rI5RbElSeq/ATHC66GgblQ/TmesNXALS3te9eE/Xen9mlPSGRbNxJIB
+         JpXuJ52zvPcqyzBlr4Ead2wDCyXZa3SRVyT4aMhW7ryzd6bAHRa0wVc9+14b1/v3UfYc
+         H6pW2r60AzdVFspx20w2c11MpxofHRXVSwCyoE4e/ut2WJK2/fr1eXpwrCRHTtEDaIiI
+         j8jeubnQxRFk6+3RKW8s0c/JO+5sN7HAUX5raHPjEm2YlSHwil34BlnaVMmIfB6RDPSf
+         mtI/MNx8GDTyYiAjJ8uHLnw7MNz+zWDYhOHOJcizErwIDY2B61Ah2EKUnbiuyFSiXasJ
+         60vw==
+X-Gm-Message-State: ALKqPwc2ZJ/4q6D3SSw3DJW5Bw22pfF2YYgRW+3DdmlignXw3jHRJoTG
+        NpHUwhpZa/B/D+6QkqOLKzUbrw==
+X-Google-Smtp-Source: AB8JxZr12jfWSstfqTQ576oFpPBzJ2OXJourN7xXe9Lm12knS8TGOZ7nkzexgPcfN+lwl5zdi3WUUA==
+X-Received: by 2002:a19:c350:: with SMTP id t77-v6mr1092800lff.127.1525961982012;
+        Thu, 10 May 2018 07:19:42 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g2-v6sm194296ljj.82.2018.05.10.07.19.36
+        by smtp.gmail.com with ESMTPSA id g2-v6sm194296ljj.82.2018.05.10.07.19.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 May 2018 07:19:37 -0700 (PDT)
+        Thu, 10 May 2018 07:19:41 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 6/9] am: move advice.amWorkDir parsing back to advice.c
-Date:   Thu, 10 May 2018 16:19:24 +0200
-Message-Id: <20180510141927.23590-7-pclouds@gmail.com>
+Subject: [PATCH 9/9] log-tree: allow to customize 'grafted' color
+Date:   Thu, 10 May 2018 16:19:27 +0200
+Message-Id: <20180510141927.23590-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180510141927.23590-1-pclouds@gmail.com>
 References: <20180510141927.23590-1-pclouds@gmail.com>
@@ -68,90 +68,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The only benefit from this move (apart from cleaner code) is that
-advice.amWorkDir should now show up in `git help --config`. There
-should be no regression since advice config is always read by the
-git_default_config().
-
-While at there, use advise() like other code. We now get "hint: "
-prefix and the output is stderr instead of stdout (which is also the
-reason for the test update because stderr is checked in a following
-test and the extra advice can fail it).
+Commit 76f5df305b (log: decorate grafted commits with "grafted" -
+2011-08-18) lets us decorate grafted commits but I forgot about the
+color.decorate.* config.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- advice.c              | 2 ++
- advice.h              | 1 +
- builtin/am.c          | 5 +----
- t/t4254-am-corrupt.sh | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ Documentation/config.txt | 3 ++-
+ log-tree.c               | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/advice.c b/advice.c
-index d8ea93637a..d300491a6f 100644
---- a/advice.c
-+++ b/advice.c
-@@ -16,6 +16,7 @@ int advice_implicit_identity = 1;
- int advice_detached_head = 1;
- int advice_set_upstream_failure = 1;
- int advice_object_name_warning = 1;
-+int advice_amworkdir = 1;
- int advice_rm_hints = 1;
- int advice_add_embedded_repo = 1;
- int advice_ignored_hook = 1;
-@@ -39,6 +40,7 @@ static struct {
- 	{ "detachedHead", &advice_detached_head },
- 	{ "setupStreamFailure", &advice_set_upstream_failure },
- 	{ "objectNameWarning", &advice_object_name_warning },
-+	{ "amWorkDir", &advice_amworkdir },
- 	{ "rmHints", &advice_rm_hints },
- 	{ "addEmbeddedRepo", &advice_add_embedded_repo },
- 	{ "ignoredHook", &advice_ignored_hook },
-diff --git a/advice.h b/advice.h
-index 70568fa792..7555385aa5 100644
---- a/advice.h
-+++ b/advice.h
-@@ -17,6 +17,7 @@ extern int advice_implicit_identity;
- extern int advice_detached_head;
- extern int advice_set_upstream_failure;
- extern int advice_object_name_warning;
-+extern int advice_amworkdir;
- extern int advice_rm_hints;
- extern int advice_add_embedded_repo;
- extern int advice_ignored_hook;
-diff --git a/builtin/am.c b/builtin/am.c
-index 9c82603f70..03e5870c62 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1827,15 +1827,12 @@ static void am_run(struct am_state *state, int resume)
- 		}
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 91f7eaed7b..c63d66906d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1138,7 +1138,8 @@ color.diff.<slot>::
+ color.decorate.<slot>::
+ 	Use customized color for 'git log --decorate' output.  `<slot>` is one
+ 	of `branch`, `remoteBranch`, `tag`, `stash` or `HEAD` for local
+-	branches, remote-tracking branches, tags, stash and HEAD, respectively.
++	branches, remote-tracking branches, tags, stash and HEAD, respectively
++	and `grafted` for grafted commits.
  
- 		if (apply_status) {
--			int advice_amworkdir = 1;
+ color.grep::
+ 	When set to `always`, always highlight matches.  When `false` (or
+diff --git a/log-tree.c b/log-tree.c
+index 19cfebd231..414dbce0dd 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -34,6 +34,7 @@ static const char *color_decorate_slots[] = {
+ 	[DECORATION_REF_TAG]	= "tag",
+ 	[DECORATION_REF_STASH]	= "stash",
+ 	[DECORATION_REF_HEAD]	= "HEAD",
++	[DECORATION_GRAFTED]	= "grafted",
+ };
  
- 			printf_ln(_("Patch failed at %s %.*s"), msgnum(state),
- 				linelen(state->msg), state->msg);
- 
--			git_config_get_bool("advice.amworkdir", &advice_amworkdir);
--
- 			if (advice_amworkdir)
--				printf_ln(_("Use 'git am --show-current-patch' to see the failed patch"));
-+				advise(_("Use 'git am --show-current-patch' to see the failed patch"));
- 
- 			die_user_resolve(state);
- 		}
-diff --git a/t/t4254-am-corrupt.sh b/t/t4254-am-corrupt.sh
-index 168739c721..fd3bdbfe2c 100755
---- a/t/t4254-am-corrupt.sh
-+++ b/t/t4254-am-corrupt.sh
-@@ -25,7 +25,7 @@ test_expect_success setup '
- #   fatal: unable to write file '(null)' mode 100644: Bad address
- # Also, it had the unwanted side-effect of deleting f.
- test_expect_success 'try to apply corrupted patch' '
--	test_must_fail git am bad-patch.diff 2>actual
-+	test_must_fail git -c advice.amWorkDir=false am bad-patch.diff 2>actual
- '
- 
- test_expect_success 'compare diagnostic; ensure file is still here' '
+ static const char *decorate_get_color(int decorate_use_color, enum decoration_type ix)
 -- 
 2.17.0.705.g3525833791
 
