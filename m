@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C29E01F42D
-	for <e@80x24.org>; Thu, 10 May 2018 08:47:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EBBF1F42D
+	for <e@80x24.org>; Thu, 10 May 2018 08:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756918AbeEJIr2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 04:47:28 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:39442 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756897AbeEJIrN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 04:47:13 -0400
-Received: by mail-lf0-f65.google.com with SMTP id j193-v6so1824126lfg.6
-        for <git@vger.kernel.org>; Thu, 10 May 2018 01:47:12 -0700 (PDT)
+        id S1756916AbeEJIr1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 04:47:27 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:35791 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756774AbeEJIrO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 04:47:14 -0400
+Received: by mail-lf0-f66.google.com with SMTP id y72-v6so1835173lfd.2
+        for <git@vger.kernel.org>; Thu, 10 May 2018 01:47:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IR41N97CZn4hTYf62LpPsAfRc8iPgr8n1/lt47aElBM=;
-        b=WCMmiKaWjpDpTNw+92g1ZlDDtzQw1X+3ymIe88HzwSNynTdOrPGlc4gsSP6P5cl+TT
-         Ni8ot+5YswLtoLGtxPHuIyiWt4L0QjG8w3n/HeHFx1roxFHTHAaWp/QnqjdTRTApHTs8
-         28evGq+0juSVPG5hsmFCUoM8QUP7qyN1Y+eHxqOh4SpJB5nUsTg84Ot4QkwD8KPiWuAl
-         R0CfTVjJ2isam0Acjk53hbzV/ZkMgxeoHQYXdiqyCTaIvAOKnc/kERVTv3akqIGU2WJn
-         +Is9vWmJvF5W2qmCsGGMpF1BZAdIG8jIBjoCKPIVzir0bNgMFNKk1e2GXsS3fFVRFExM
-         zhzw==
+        bh=Q9pYSUKkKI1VmOy0TozOlCRKHLqsYtl5iwlf2ImhMxc=;
+        b=EAKf80WQV5EJY0N8RT9guzHfUJU814voUIyFtmN1/t4ZvmnWxnRsUWkMBvqiVlkosS
+         07pyB9Ep8YExuj/fM9Mld5/2y7sc9c+kAjRJUAJISw7FXMJNoZHrZ2ntIDKJSNPtQZl7
+         uCksHQEjpQmZIPXG3m9yBLl4DDI10ZnE4NV9QaJqNHzHsuIoUSWe01BGmcs9VF/e8uU/
+         f8SkXBcteQT9sg1ZRvZWXSJDpsfF1UWtTbEQ75q5xKrOE0nFFdz+uuGXKfszYrQkajrI
+         ZvD0s/S1VCnxraz8771/tI1WwvxOTqTMP7lscz8OaosYEon6bCKmzbB8VowtNm3NUxSA
+         M8dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IR41N97CZn4hTYf62LpPsAfRc8iPgr8n1/lt47aElBM=;
-        b=fWK8K1xU/tD/3GaJXwzdmllM2/+MmClHW9GlOi6kMvWUm3SmuenPvetFRX5SK1unti
-         98FzRKq1F8n6sqRGMG3rQpC9U1G8PuF8TFu+Diq9RK9bTQX7h+VxxTf15/5OkUszcFFD
-         aAftI6E40hALQEUn4lLO6v/Qy40LqxXXKOi+K4KhmvhSwWIdBCb2YEsHUKTxGO1lnHfS
-         BT4hr88tpW5xiCbeohkge90XA1m5msqairTorwwCDx69Fd5x1U3B1yh/NFLtKspfu5iK
-         VjU+LchhT1h5ZXcjeoQEQYcviFSSvghvvCKCtusnRlE/7R3vqz6dNI9tahsTATEZIE1l
-         U5gA==
-X-Gm-Message-State: ALKqPwdMRNJxSBTGBcF7vGs1i/dp7zPDFFqbr6T9in4/Sbo3OQ0xdaN+
-        n3z8y2Lf03Iofr6lh0lEyT8=
-X-Google-Smtp-Source: AB8JxZom/zuOjU3jGaJAKFaM/ZWwLzHFOTkZGmMxvXS5vEvI8cfogpnMAgMKCItTh9qzpdKXhgbehA==
-X-Received: by 2002:a2e:8993:: with SMTP id c19-v6mr492647lji.123.1525942032102;
-        Thu, 10 May 2018 01:47:12 -0700 (PDT)
+        bh=Q9pYSUKkKI1VmOy0TozOlCRKHLqsYtl5iwlf2ImhMxc=;
+        b=pxs7PGJOH1BITuArGb2OV0DTJP5JHpr1HhYtubs8Ar4hzzDy59EaOCQH6ubfblg1ye
+         KcUrJTMKFwzbbsS+EwBNX48jcJZEmZNeUIkrwDMoZTEdR4BaeX1nRkzZvuSUgRSBnylc
+         hedLbSr1tC+dGsXwnz8CWLxvj4OQE4sFpe+YirIBySxHlA4xwhqaPK029lssi7smAaZ0
+         l9ej/92QqiHcA9J+DcpVqeAIAvmrp5oJhbTAKwBu59ML0FqI76c7NsYE/Hngm0URO1Wi
+         MrXqIZGmZhQvfYuLEoJG3KcFnWtNqskaxaCYYrQYyWII8ZPDei3un/wIv61UrrBYqekN
+         mGoQ==
+X-Gm-Message-State: ALKqPwecjV1sp+o4HCE3vQ6RD8TwZR436Wr6AN6zPSbo92cFBq94yqNB
+        dd2/CxPtlMWue/Ma3GNcgPQjuQ==
+X-Google-Smtp-Source: AB8JxZoTutduA7y4r9asHi4UzTIeiTJUIpHyj9AZ1lUvEMzv6FqAq3qJFYYXAGOKKt7V7lq4+H+icA==
+X-Received: by 2002:a2e:944d:: with SMTP id o13-v6mr504278ljh.65.1525942033155;
+        Thu, 10 May 2018 01:47:13 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id l24-v6sm68024lje.42.2018.05.10.01.47.11
+        by smtp.gmail.com with ESMTPSA id l24-v6sm68024lje.42.2018.05.10.01.47.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 May 2018 01:47:11 -0700 (PDT)
+        Thu, 10 May 2018 01:47:12 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         szeder.dev@gmail.com
-Subject: [PATCH v7 12/13] completion: let git provide the completable command list
-Date:   Thu, 10 May 2018 10:46:51 +0200
-Message-Id: <20180510084652.25880-13-pclouds@gmail.com>
+Subject: [PATCH v7 13/13] completion: allow to customize the completable command list
+Date:   Thu, 10 May 2018 10:46:52 +0200
+Message-Id: <20180510084652.25880-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180510084652.25880-1-pclouds@gmail.com>
 References: <20180507175222.12114-1-pclouds@gmail.com>
@@ -69,351 +69,160 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of maintaining a separate list of command classification,
-which often could go out of date, let's centralize the information
-back in git.
+By default we show porcelain, external commands and a couple others
+that are also popular. If you are not happy with this list, you can
+now customize it. See the big comment block for details.
 
-While the function in git-completion.bash implies "list porcelain
-commands", that's not exactly what it does. It gets all commands (aka
---list-cmds=main,others) then exclude certain non-porcelain ones. We
-could almost recreate this list two lists list-mainporcelain and
-others. The non-porcelain-but-included-anyway is added by the third
-category list-complete.
-
-list-complete does not recreate exactly the command list before this
-patch though. The following commands are not part of neither
-list-mainporcelain nor list-complete and as a result no longer
-completes:
-
-- annotate             obsolete, discouraged to use
-- difftool-helper      not an end user command
-- filter-branch        not often used
-- get-tar-commit-id    not often used
-- imap-send            not often used
-- interpreter-trailers not for interactive use
-- lost-found           obsolete
-- p4                   too short and probably not often used (*)
-- peek-remote          deprecated
-- svn                  same category as p4 (*)
-- tar-tree             obsolete
-- verify-commit        not often used
-
-Note that the current completion script incorrectly classifies
-filter-branch as porcelain and t9902 tests this behavior. We keep it
-this way in t9902 because this test does not really care which
-particular command is porcelain or plubmbing, they're just names.
-
-(*) to be fair, send-email command which is in the same
-foreignscminterface group as svn and p4 does get completion, just
-because it's used by git and kernel development. So maybe should
-include them.
+PS. perhaps I should make aliases a group too, which makes it possible
+to _not_ complete aliases by omitting this special group in
+$GIT_COMPLETION_CMD_GROUPS
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- command-list.txt                       |  37 ++++----
- contrib/completion/git-completion.bash | 117 ++++++-------------------
- t/t9902-completion.sh                  |   5 +-
- 3 files changed, 48 insertions(+), 111 deletions(-)
+ Documentation/config.txt               | 10 ++++++++
+ contrib/completion/git-completion.bash | 28 +++++++++++++++++++++-
+ git.c                                  |  2 ++
+ help.c                                 | 33 ++++++++++++++++++++++++++
+ help.h                                 |  1 +
+ 5 files changed, 73 insertions(+), 1 deletion(-)
 
-diff --git a/command-list.txt b/command-list.txt
-index 9c70c69193..3e21ddfcfb 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -47,11 +47,11 @@
- git-add                                 mainporcelain           worktree
- git-am                                  mainporcelain
- git-annotate                            ancillaryinterrogators
--git-apply                               plumbingmanipulators
-+git-apply                               plumbingmanipulators            complete
- git-archimport                          foreignscminterface
- git-archive                             mainporcelain
- git-bisect                              mainporcelain           info
--git-blame                               ancillaryinterrogators
-+git-blame                               ancillaryinterrogators          complete
- git-branch                              mainporcelain           history
- git-bundle                              mainporcelain
- git-cat-file                            plumbinginterrogators
-@@ -61,7 +61,7 @@ git-check-mailmap                       purehelpers
- git-checkout                            mainporcelain           history
- git-checkout-index                      plumbingmanipulators
- git-check-ref-format                    purehelpers
--git-cherry                              ancillaryinterrogators
-+git-cherry                              ancillaryinterrogators          complete
- git-cherry-pick                         mainporcelain
- git-citool                              mainporcelain
- git-clean                               mainporcelain
-@@ -69,7 +69,7 @@ git-clone                               mainporcelain           init
- git-column                              purehelpers
- git-commit                              mainporcelain           history
- git-commit-tree                         plumbingmanipulators
--git-config                              ancillarymanipulators
-+git-config                              ancillarymanipulators           complete
- git-count-objects                       ancillaryinterrogators
- git-credential                          purehelpers
- git-credential-cache                    purehelpers
-@@ -83,7 +83,7 @@ git-diff                                mainporcelain           history
- git-diff-files                          plumbinginterrogators
- git-diff-index                          plumbinginterrogators
- git-diff-tree                           plumbinginterrogators
--git-difftool                            ancillaryinterrogators
-+git-difftool                            ancillaryinterrogators          complete
- git-fast-export                         ancillarymanipulators
- git-fast-import                         ancillarymanipulators
- git-fetch                               mainporcelain           remote
-@@ -92,20 +92,20 @@ git-filter-branch                       ancillarymanipulators
- git-fmt-merge-msg                       purehelpers
- git-for-each-ref                        plumbinginterrogators
- git-format-patch                        mainporcelain
--git-fsck                                ancillaryinterrogators
-+git-fsck                                ancillaryinterrogators          complete
- git-gc                                  mainporcelain
- git-get-tar-commit-id                   ancillaryinterrogators
- git-grep                                mainporcelain           info
- git-gui                                 mainporcelain
- git-hash-object                         plumbingmanipulators
--git-help                                ancillaryinterrogators
-+git-help                                ancillaryinterrogators          complete
- git-http-backend                        synchingrepositories
- git-http-fetch                          synchelpers
- git-http-push                           synchelpers
- git-imap-send                           foreignscminterface
- git-index-pack                          plumbingmanipulators
- git-init                                mainporcelain           init
--git-instaweb                            ancillaryinterrogators
-+git-instaweb                            ancillaryinterrogators          complete
- git-interpret-trailers                  purehelpers
- gitk                                    mainporcelain
- git-log                                 mainporcelain           info
-@@ -119,12 +119,12 @@ git-merge-base                          plumbinginterrogators
- git-merge-file                          plumbingmanipulators
- git-merge-index                         plumbingmanipulators
- git-merge-one-file                      purehelpers
--git-mergetool                           ancillarymanipulators
-+git-mergetool                           ancillarymanipulators           complete
- git-merge-tree                          ancillaryinterrogators
- git-mktag                               plumbingmanipulators
- git-mktree                              plumbingmanipulators
- git-mv                                  mainporcelain           worktree
--git-name-rev                            plumbinginterrogators
-+git-name-rev                            plumbinginterrogators           complete
- git-notes                               mainporcelain
- git-p4                                  foreignscminterface
- git-pack-objects                        plumbingmanipulators
-@@ -140,28 +140,29 @@ git-quiltimport                         foreignscminterface
- git-read-tree                           plumbingmanipulators
- git-rebase                              mainporcelain           history
- git-receive-pack                        synchelpers
--git-reflog                              ancillarymanipulators
--git-remote                              ancillarymanipulators
--git-repack                              ancillarymanipulators
--git-replace                             ancillarymanipulators
--git-request-pull                        foreignscminterface
-+git-reflog                              ancillarymanipulators           complete
-+git-remote                              ancillarymanipulators           complete
-+git-repack                              ancillarymanipulators           complete
-+git-replace                             ancillarymanipulators           complete
-+git-request-pull                        foreignscminterface             complete
- git-rerere                              ancillaryinterrogators
- git-reset                               mainporcelain           worktree
- git-revert                              mainporcelain
- git-rev-list                            plumbinginterrogators
- git-rev-parse                           ancillaryinterrogators
- git-rm                                  mainporcelain           worktree
--git-send-email                          foreignscminterface
-+git-send-email                          foreignscminterface             complete
- git-send-pack                           synchingrepositories
- git-shell                               synchelpers
- git-shortlog                            mainporcelain
- git-show                                mainporcelain           info
--git-show-branch                         ancillaryinterrogators
-+git-show-branch                         ancillaryinterrogators          complete
- git-show-index                          plumbinginterrogators
- git-show-ref                            plumbinginterrogators
- git-sh-i18n                             purehelpers
- git-sh-setup                            purehelpers
- git-stash                               mainporcelain
-+git-stage                                                               complete
- git-status                              mainporcelain           info
- git-stripspace                          purehelpers
- git-submodule                           mainporcelain
-@@ -180,7 +181,7 @@ git-verify-commit                       ancillaryinterrogators
- git-verify-pack                         plumbinginterrogators
- git-verify-tag                          ancillaryinterrogators
- gitweb                                  ancillaryinterrogators
--git-whatchanged                         ancillaryinterrogators
-+git-whatchanged                         ancillaryinterrogators          complete
- git-worktree                            mainporcelain
- git-write-tree                          plumbingmanipulators
- gitattributes                           guide
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2659153cb3..91f7eaed7b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1343,6 +1343,16 @@ credential.<url>.*::
+ credentialCache.ignoreSIGHUP::
+ 	Tell git-credential-cache--daemon to ignore SIGHUP, instead of quitting.
+ 
++completion.commands::
++	This is only used by git-completion.bash to add or remove
++	commands from the complete list. Normally only porcelain
++	commands and a few select others are in the complete list. You
++	can add more commands, separated by space, in this
++	variable. Prefixing the command with '-' will remove it from
++	the existing list.
+++
++This variable should not be per-repository.
++
+ include::diff-config.txt[]
+ 
+ difftool.<tool>.path::
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 4e724a5b76..908692ea52 100644
+index 908692ea52..f7ca9a4d4f 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -835,18 +835,30 @@ __git_complete_strategy ()
- }
+@@ -38,6 +38,29 @@
+ #
+ #     When set to "1", do not include "DWIM" suggestions in git-checkout
+ #     completion (e.g., completing "foo" when "origin/foo" exists).
++#
++#   GIT_COMPLETION_CMD_GROUPS
++#
++#     When set, "git --list-cmds=$GIT_COMPLETION_CMD_GROUPS" will be
++#     used to get the list of completable commands. The default is
++#     "mainporcelain,others,list-complete" (in English: all porcelain
++#     commands and external ones are included. Certain non-porcelain
++#     commands are also marked for completion in command-list.txt).
++#     You could for example complete all commands with
++#
++#         GIT_COMPLETION_CMD_GROUPS=main,others
++#
++#     Or you could go with main porcelain only and extra commands in
++#     the configuration variable completion.commands with
++#
++#         GIT_COMPLETION_CMD_GROUPS=mainporcelain,config
++#
++#     Or go completely custom group with
++#
++#         GIT_COMPLETION_CMD_GROUPS=config
++#
++#     Or you could even play with other command categories found in
++#     command-list.txt.
  
- __git_commands () {
--	if test -n "${GIT_TESTING_COMMAND_COMPLETION:-}"
--	then
--		printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
--	else
--		git --list-cmds=main,others
--	fi
-+	case "$1" in
-+	porcelain)
-+		if test -n "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
+ case "$COMP_WORDBREAKS" in
+ *:*) : great ;;
+@@ -840,8 +863,11 @@ __git_commands () {
+ 		if test -n "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
+ 		then
+ 			printf "%s" "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
++		elif test -n "$GIT_COMPLETION_CMD_GROUPS"
 +		then
-+			printf "%s" "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
-+		else
-+			git --list-cmds=list-mainporcelain,others,list-complete
-+		fi
-+		;;
-+	all)
-+		if test -n "$GIT_TESTING_ALL_COMMAND_LIST"
-+		then
-+			printf "%s" "$GIT_TESTING_ALL_COMMAND_LIST"
-+		else
-+			git --list-cmds=main,others
-+		fi
-+		;;
-+	esac
++			git --list-cmds="$GIT_COMPLETION_CMD_GROUPS"
+ 		else
+-			git --list-cmds=list-mainporcelain,others,list-complete
++			git --list-cmds=list-mainporcelain,others,list-complete,config
+ 		fi
+ 		;;
+ 	all)
+diff --git a/git.c b/git.c
+index 4d5b8a9931..ea4feedd0b 100644
+--- a/git.c
++++ b/git.c
+@@ -60,6 +60,8 @@ static int list_cmds(const char *spec)
+ 			list_all_main_cmds(&list);
+ 		else if (match_token(spec, len, "others"))
+ 			list_all_other_cmds(&list);
++		else if (match_token(spec, len, "config"))
++			list_cmds_by_config(&list);
+ 		else if (len > 5 && !strncmp(spec, "list-", 5)) {
+ 			struct strbuf sb = STRBUF_INIT;
+ 
+diff --git a/help.c b/help.c
+index 23924dd300..abf87205b2 100644
+--- a/help.c
++++ b/help.c
+@@ -366,6 +366,39 @@ void list_cmds_by_category(struct string_list *list,
+ 	}
  }
  
--__git_list_all_commands ()
-+__git_list_commands ()
- {
- 	local i IFS=" "$'\n'
--	for i in $(__git_commands)
-+	for i in $(__git_commands $1)
- 	do
- 		case $i in
- 		*--*)             : helper pattern;;
-@@ -855,6 +867,11 @@ __git_list_all_commands ()
- 	done
- }
- 
-+__git_list_all_commands ()
++void list_cmds_by_config(struct string_list *list)
 +{
-+	__git_list_commands all
++	const char *cmd_list;
++
++	/*
++	 * There's no actual repository setup at this point (and even
++	 * if there is, we don't really care; only global config
++	 * matters). If we accidentally set up a repository, it's ok
++	 * too since the caller (git --list-cmds=) should exit shortly
++	 * anyway.
++	 */
++	if (git_config_get_string_const("completion.commands", &cmd_list))
++		return;
++
++	string_list_sort(list);
++	string_list_remove_duplicates(list, 0);
++
++	while (*cmd_list) {
++		struct strbuf sb = STRBUF_INIT;
++		const char *p = strchrnul(cmd_list, ' ');
++
++		strbuf_add(&sb, cmd_list, p - cmd_list);
++		if (*cmd_list == '-')
++			string_list_remove(list, cmd_list + 1, 0);
++		else
++			string_list_insert(list, sb.buf);
++		strbuf_release(&sb);
++		while (*p == ' ')
++			p++;
++		cmd_list = p;
++	}
 +}
 +
- __git_all_commands=
- __git_compute_all_commands ()
+ void list_common_guides_help(void)
  {
-@@ -864,89 +881,7 @@ __git_compute_all_commands ()
- 
- __git_list_porcelain_commands ()
- {
--	local i IFS=" "$'\n'
--	__git_compute_all_commands
--	for i in $__git_all_commands
--	do
--		case $i in
--		*--*)             : helper pattern;;
--		applymbox)        : ask gittus;;
--		applypatch)       : ask gittus;;
--		archimport)       : import;;
--		cat-file)         : plumbing;;
--		check-attr)       : plumbing;;
--		check-ignore)     : plumbing;;
--		check-mailmap)    : plumbing;;
--		check-ref-format) : plumbing;;
--		checkout-index)   : plumbing;;
--		column)           : internal helper;;
--		commit-tree)      : plumbing;;
--		count-objects)    : infrequent;;
--		credential)       : credentials;;
--		credential-*)     : credentials helper;;
--		cvsexportcommit)  : export;;
--		cvsimport)        : import;;
--		cvsserver)        : daemon;;
--		daemon)           : daemon;;
--		diff-files)       : plumbing;;
--		diff-index)       : plumbing;;
--		diff-tree)        : plumbing;;
--		fast-import)      : import;;
--		fast-export)      : export;;
--		fsck-objects)     : plumbing;;
--		fetch-pack)       : plumbing;;
--		fmt-merge-msg)    : plumbing;;
--		for-each-ref)     : plumbing;;
--		hash-object)      : plumbing;;
--		http-*)           : transport;;
--		index-pack)       : plumbing;;
--		init-db)          : deprecated;;
--		local-fetch)      : plumbing;;
--		ls-files)         : plumbing;;
--		ls-remote)        : plumbing;;
--		ls-tree)          : plumbing;;
--		mailinfo)         : plumbing;;
--		mailsplit)        : plumbing;;
--		merge-*)          : plumbing;;
--		mktree)           : plumbing;;
--		mktag)            : plumbing;;
--		pack-objects)     : plumbing;;
--		pack-redundant)   : plumbing;;
--		pack-refs)        : plumbing;;
--		parse-remote)     : plumbing;;
--		patch-id)         : plumbing;;
--		prune)            : plumbing;;
--		prune-packed)     : plumbing;;
--		quiltimport)      : import;;
--		read-tree)        : plumbing;;
--		receive-pack)     : plumbing;;
--		remote-*)         : transport;;
--		rerere)           : plumbing;;
--		rev-list)         : plumbing;;
--		rev-parse)        : plumbing;;
--		runstatus)        : plumbing;;
--		sh-setup)         : internal;;
--		shell)            : daemon;;
--		show-ref)         : plumbing;;
--		send-pack)        : plumbing;;
--		show-index)       : plumbing;;
--		ssh-*)            : transport;;
--		stripspace)       : plumbing;;
--		symbolic-ref)     : plumbing;;
--		unpack-file)      : plumbing;;
--		unpack-objects)   : plumbing;;
--		update-index)     : plumbing;;
--		update-ref)       : plumbing;;
--		update-server-info) : daemon;;
--		upload-archive)   : plumbing;;
--		upload-pack)      : plumbing;;
--		write-tree)       : plumbing;;
--		var)              : infrequent;;
--		verify-pack)      : infrequent;;
--		verify-tag)       : plumbing;;
--		*) echo $i;;
--		esac
--	done
-+	__git_list_commands porcelain
- }
- 
- __git_porcelain_commands=
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 1b34caa1e1..2f16679380 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -13,7 +13,7 @@ complete ()
- 	return 0
- }
- 
--# Be careful when updating this list:
-+# Be careful when updating these lists:
- #
- # (1) The build tree may have build artifact from different branch, or
- #     the user's $PATH may have a random executable that may begin
-@@ -30,7 +30,8 @@ complete ()
- #     completion for "git <TAB>", and a plumbing is excluded.  "add",
- #     "filter-branch" and "ls-files" are listed for this.
- 
--GIT_TESTING_COMMAND_COMPLETION='add checkout check-attr filter-branch ls-files'
-+GIT_TESTING_ALL_COMMAND_LIST='add checkout check-attr filter-branch ls-files'
-+GIT_TESTING_PORCELAIN_COMMAND_LIST='add checkout filter-branch'
- 
- . "$GIT_BUILD_DIR/contrib/completion/git-completion.bash"
- 
+ 	struct category_description catdesc[] = {
+diff --git a/help.h b/help.h
+index b2293e99be..3b38292a1b 100644
+--- a/help.h
++++ b/help.h
+@@ -26,6 +26,7 @@ extern void list_all_main_cmds(struct string_list *list);
+ extern void list_all_other_cmds(struct string_list *list);
+ extern void list_cmds_by_category(struct string_list *list,
+ 				  const char *category);
++extern void list_cmds_by_config(struct string_list *list);
+ extern const char *help_unknown_cmd(const char *cmd);
+ extern void load_command_list(const char *prefix,
+ 			      struct cmdnames *main_cmds,
 -- 
 2.17.0.705.g3525833791
 
