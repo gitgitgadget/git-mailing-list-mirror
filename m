@@ -2,121 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C82E71F424
-	for <e@80x24.org>; Thu, 10 May 2018 00:41:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04E591F424
+	for <e@80x24.org>; Thu, 10 May 2018 02:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965908AbeEJAlL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 May 2018 20:41:11 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:45798 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935632AbeEJAkh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 May 2018 20:40:37 -0400
-Received: by mail-pg0-f67.google.com with SMTP id w3-v6so164750pgv.12
-        for <git@vger.kernel.org>; Wed, 09 May 2018 17:40:36 -0700 (PDT)
+        id S932857AbeEJCAP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 May 2018 22:00:15 -0400
+Received: from mail-pl0-f53.google.com ([209.85.160.53]:38048 "EHLO
+        mail-pl0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932195AbeEJCAN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 May 2018 22:00:13 -0400
+Received: by mail-pl0-f53.google.com with SMTP id c11-v6so345805plr.5
+        for <git@vger.kernel.org>; Wed, 09 May 2018 19:00:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=X0M49anvLElxs1frAEBYUbXYyy/a9bLY76JJa6hARs8=;
-        b=OOtPmsjuimz01fb7N2JcERpoBTNbpnpORg5ZtxDcVfMk2NEMNttmQlVj2bbyTTEMg5
-         A9e4qOOyKRLXkNa5I10ANiF0Q6su4Poa85oKO3jumMdpK1BAR6QhrB8Mh1i4ulF3xgdz
-         ZnErGT6YHiMeGUWKYNoRQTkR9cJcwR06cn/ftr/1oCaAnxCdJC2UQHqCd1SKu3u5Ls7F
-         e+u/v2bU7QD7JwEHBPZXnN+Rev/51ALnG9ksLA+4YFnW6B3LDfCxURHY/d7zxCwqEAuH
-         GFsItbVpdE2xUMqo/12hD0V/G/Ki303LVc1Ll53ZJEZjOeBTw3CmimCmS5q2z8fhGe9y
-         rzAA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=yTcThFniYl0bpYRLKWcw+/oaRFfn5TE4p805pFurS8c=;
+        b=FdyIKHvpXu5fudrJJkb5/Uvs1auXkqRzovaQu+nl5TBDwe4PtzbFs65I2PIN/2DamM
+         WQPXrXCwv5V0Awz9i5CkC6zuBnZOJTMQ53ykRRJ+ETXBe0f7hNg7qTNZxNjgdCnhspVU
+         kHAEdO0CBXxOv/XIbXsukrbn3O7vqIHm5Z9hIsiNv3yX0Wkw8MnKCdNgmUQZ3nQEP56D
+         /k1mQq3Hjt41H6qeNo4LuSWN4IGtadYpPAsgKGRpLatll+pYkA+FzpYRwAM2+YfzTR0A
+         IMTSCWeMGboF9CtAh5Fx1GVQ658WhMzeNEyWctmRCwb4Ig+KmgMV1uC5P00YcnW7LNA0
+         +ErA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=X0M49anvLElxs1frAEBYUbXYyy/a9bLY76JJa6hARs8=;
-        b=MyoUpc3250k1NC9LWcIAwyeRQWd0tPw3w2pdSXB2ryLyfb4nT+uiR6Ziw72X0A44WN
-         8naN6gS4dj0I6DHJdxFSB3HnCjj3Xh7rwAk5zSxBpyXsubvduudYn1ex3gM4T4EQ6VIC
-         sXyJ1co4WEEBbpCKvsJ5CL5SWFPcEpHkRxTHnoUbeNq2F98k3h/z0+qUw4tB2WSoc7tA
-         VZ57whwBK0UtYibG6Mq9vTicD1Z+FkvYPPA9nXxkDjIiOj9Iy3n7enwL4apCny4RyNk+
-         QXXoMs/mf7KD+4o124Xsa44Xuu2GXY8jbd7liJnycyjHpdvO3SEhFPMugUrniJnVn8JU
-         1mHQ==
-X-Gm-Message-State: ALQs6tBD3YrWtfkD9aOq2+v46O+MvXtsj+g8Fe3HmgcCDEiLV1b3ZzdF
-        zNv3sMuwrXT8c7vR0jmQXOwjbrEXP/w=
-X-Google-Smtp-Source: AB8JxZooxLjCu8N0x/lvptrWMujsjse/fWusabm/Ru/dstAFzbp8P8PfBG5+lb/Y1Tot3v4gWrQhbg==
-X-Received: by 2002:a63:6703:: with SMTP id b3-v6mr22483992pgc.176.1525912836006;
-        Wed, 09 May 2018 17:40:36 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id v5sm23062042pff.130.2018.05.09.17.40.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 17:40:35 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, jamill@microsoft.com,
-        jonathantanmy@google.com, pclouds@gmail.com
-Subject: [PATCH v4 04/13] alloc: add repository argument to alloc_blob_node
-Date:   Wed,  9 May 2018 17:40:15 -0700
-Message-Id: <20180510004024.93974-5-sbeller@google.com>
-X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
-In-Reply-To: <20180510004024.93974-1-sbeller@google.com>
-References: <20180508193736.14883-1-sbeller@google.com>
- <20180510004024.93974-1-sbeller@google.com>
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=yTcThFniYl0bpYRLKWcw+/oaRFfn5TE4p805pFurS8c=;
+        b=ZXlcwjTfqNp5Q0dTTIwa9kdhZj5QzHJlp01xnugi7lDFPa9UH14xklUJDEa8piObQt
+         DJ85nfvi0yDLtnGRuk3X5rH0hb30TY5JNkiUddIENAMIVOL83NgXNQ05DLFcwdh1dG+r
+         PzqlX7i9Lz3yYWvuVB2T6PJIjAng9HUvEKsJ6dkpnD0eJ9vHUU19p/OCqatXMPx8v0iy
+         DPdJDcZZrAAgPc/XFBqtLcbkikW2W/9+6gen06erxVbWg7E7CANEwJFj7wulH2fex2Oh
+         7qSQwDXJfR+x4HkWxiekoytGuIMH/KB9oFiLQ+/8cHZWCdRHPtL4NzP4RQcMz57WUPqt
+         3Tfg==
+X-Gm-Message-State: ALQs6tBI+pxB8xe+U/E7iFL0WNlBEJqeFXDGT62cgt+ZS37Pf60FXFq8
+        msx6j5cpCcajmtcL6hrtn5XTAA==
+X-Google-Smtp-Source: AB8JxZpyVWnpponefKT6qd0r5QQ9crJ8Zt3xwOUQC5RChBuYwzcfnjtl+HlUMx+OuT8nQZt3stg0eA==
+X-Received: by 2002:a17:902:8f84:: with SMTP id z4-v6mr29012575plo.194.1525917612967;
+        Wed, 09 May 2018 19:00:12 -0700 (PDT)
+Received: from localhost ([2601:602:9500:1120:eccb:c00:cd8f:fd73])
+        by smtp.gmail.com with ESMTPSA id u4-v6sm5997423pgn.10.2018.05.09.19.00.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 09 May 2018 19:00:11 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Wed, 9 May 2018 19:00:10 -0700
+To:     Jeff King <peff@peff.net>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH 2/2] builtin/grep.c: teach '-o', '--only-matching' to
+ 'git-grep'
+Message-ID: <20180510020010.GA5375@syl.local>
+References: <cover.1525492696.git.me@ttaylorr.com>
+ <c8b527c5de3b0e5422d2c1afb91d454d1e46fff4.1525492696.git.me@ttaylorr.com>
+ <87fu36y4u0.fsf@evledraar.gmail.com>
+ <20180508172517.GA934@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180508172517.GA934@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a small mechanical change; it doesn't change the
-implementation to handle repositories other than the_repository yet.
-Use a macro to catch callers passing a repository other than
-the_repository at compile time.
+On Tue, May 08, 2018 at 01:25:17PM -0400, Jeff King wrote:
+> On Sat, May 05, 2018 at 08:49:43AM +0200, Ævar Arnfjörð Bjarmason wrote:
+>
+> > > +test_expect_success 'grep --only-matching --heading' '
+> > > +	git grep --only-matching --heading --line-number --column mmap file >actual &&
+> > > +	test_cmp expected actual
+> > > +'
+> > > +
+> > >  cat >expected <<EOF
+> > >  <BOLD;GREEN>hello.c<RESET>
+> > >  4:int main(int argc, const <BLACK;BYELLOW>char<RESET> **argv)
+> >
+> > We should test this a lot more, I think a good way to do that would be
+> > to extend this series by first importing GNU grep's -o tests, see
+> > http://git.savannah.gnu.org/cgit/grep.git/tree/tests/foad1 they are
+> > license-compatible. Then change the grep_test() function to call git
+> > grep instead.
+>
+> I'm trying to figure out what GNU grep's tests are actually checking
+> that we don't have. I see:
+>
+>  - they check that "-i" returns the actual found string in its original
+>    case. This seems like a subset of finding a non-trivial regex. I.e.,
+>    "foo.*" should find "foobar". We probably should have a test like
+>    that.
+>
+>  - they test multiple hits on the same line, which seems like an
+>    important and easy-to-screw-up case; we do that, too.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- alloc.c | 2 +-
- blob.c  | 2 +-
- cache.h | 3 ++-
- 3 files changed, 4 insertions(+), 3 deletions(-)
+Agree.
 
-diff --git a/alloc.c b/alloc.c
-index 12afadfacdd..6c5c376a25a 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -49,7 +49,7 @@ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
- }
- 
- static struct alloc_state blob_state;
--void *alloc_blob_node(void)
-+void *alloc_blob_node_the_repository(void)
- {
- 	struct blob *b = alloc_node(&blob_state, sizeof(struct blob));
- 	b->object.type = OBJ_BLOB;
-diff --git a/blob.c b/blob.c
-index 85c2143f299..9e64f301895 100644
---- a/blob.c
-+++ b/blob.c
-@@ -9,7 +9,7 @@ struct blob *lookup_blob(const struct object_id *oid)
- 	struct object *obj = lookup_object(oid->hash);
- 	if (!obj)
- 		return create_object(the_repository, oid->hash,
--				     alloc_blob_node());
-+				     alloc_blob_node(the_repository));
- 	return object_as_type(obj, OBJ_BLOB, 0);
- }
- 
-diff --git a/cache.h b/cache.h
-index 3a4d80e92bf..2258e611275 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1764,7 +1764,8 @@ int decode_85(char *dst, const char *line, int linelen);
- void encode_85(char *buf, const unsigned char *data, int bytes);
- 
- /* alloc.c */
--extern void *alloc_blob_node(void);
-+#define alloc_blob_node(r) alloc_blob_node_##r()
-+extern void *alloc_blob_node_the_repository(void);
- extern void *alloc_tree_node(void);
- extern void *alloc_commit_node(void);
- extern void *alloc_tag_node(void);
--- 
-2.17.0.255.g8bfb7c0704
+>  - they test everything other thing with and without "-i" because those
+>    are apparently separate code paths in GNU grep, but I don't think
+>    that applies to us.
+>
+>  - they test each case with "-b", but we don't have that (we do test
+>    with "--column", which is good)
 
+Right, I think that we can ignore these groups.
+
+>  - they test with "-n", which we do here (we don't test without, but
+>    that seems like an unlikely bug, knowing how it is implemented)
+
+Fair, let's leave that as is.
+
+>  - they test with -H, but that is already the default for git-grep
+
+Good, we can ignore this one.
+
+>  - they test with context (-C3) for us. It looks like GNU grep omits
+>    context lines with "-o", but we show a bunch of blank lines. This is
+>    I guess a bug (though it seems kind of an odd combination to specify
+>    in the first place)
+
+I'm torn on what to do here. Currently, with -C3, I get a bunch of lines
+like:
+
+  <file>-
+
+Which I think is technically _right_, but I agree that it is certainly
+an odd combination of things to give to 'git grep'. I think that we
+could either:
+
+  1. Continue outputting blank lines,
+  2. Ignore '-C<n>' with '-o', or
+  3. die() when given this combination.
+
+I think that (1) is the most "correct" (for some definition), so I'm
+inclined to adopt that approach. I suppose that (2) is closer to what
+GNU grep offers, and that is the point of this series, so perhaps it
+makes sense to pick that instead.
+
+I'll go with (2) for now, but I would appreciate others' thoughts before
+sending a subsequent re-roll of this series.
+
+> So I think it probably makes sense to just pick through the list I just
+> wrote and write our own tests than to try to import GNU grep's specific
+> tests (and there's a ton of other unrelated tests in that file that may
+> or may not even run with git-grep).
+
+I agree. Since some of these cases are already covered, and some don't
+have analogues, I think that it is most sensible to go through the above
+and add _those_, instead of porting the whole test suite over from GNU.
+
+> > It should also be tested with the various grep.patternType options to
+> > make sure it works with basic, extended, perl, fixed etc.
+>
+> Hmm, this code is all external to the actual matching. So unless one of
+> those is totally screwing up the regmatch_t return, I'm not sure that's
+> accomplishing much (and if one of them is, it's totally broken for
+> coloring, "-c", and maybe other features).
+>
+> We've usually taken a pretty white-box approach to our testing, covering
+> things that seem likely to go wrong given the general problem space and
+> our implementation. But maybe I'm missing something in particular that
+> you think might be tricky.
+>
+> -Peff
+
+Thanks,
+Taylor
