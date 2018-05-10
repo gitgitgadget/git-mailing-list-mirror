@@ -2,73 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DBC01F406
-	for <e@80x24.org>; Thu, 10 May 2018 14:23:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2F571F406
+	for <e@80x24.org>; Thu, 10 May 2018 14:29:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965967AbeEJOXP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 10:23:15 -0400
-Received: from mail-ot0-f170.google.com ([74.125.82.170]:41455 "EHLO
-        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965340AbeEJOXO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 10:23:14 -0400
-Received: by mail-ot0-f170.google.com with SMTP id t1-v6so2483255oth.8
-        for <git@vger.kernel.org>; Thu, 10 May 2018 07:23:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2RHeLVFHeSQ4yOPnjPenDw9t7mj70rYYaEcpKynn0R0=;
-        b=rCpbl9AZdHU9Uv4pXokBxxFQVp/4Y2kpkGizDyWJe5GhXP7WJUxbFu0suAYdqvpnbg
-         aWw1dyCMv+O6fpYYhMsauJ/0tLO8t66UlRW1VLVJqcMe34o5x6w29+nF9lctZ0agVYIB
-         jIfaj1VWTFEaScfb8Q4Aoekk67lossF6v+qxs0gvyWtAsmGWb0IWH6gb9fRBGnuDStOd
-         PSdSOXvSs8UxbrEQHc8FoOEWkB1qyzhWmeZBfE+Q8bqp8SxEQHmxolMkHFX0uW3Dw7SW
-         d0Vy/xned1JhtaKf3sQlICOZRL2X3037NNb6bvc8aIk0qQbYbQy49n188vQiR1Fy8uUp
-         +RBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2RHeLVFHeSQ4yOPnjPenDw9t7mj70rYYaEcpKynn0R0=;
-        b=JU4t3+EjSD24dlRKmm9ga92tpDba0nkKFm21agsVYtWCvhZ1URXUBEu6y5g0hlQOQB
-         vJOesEyQke0cQR9o/Q17geh3FMiy8mR3Bh3ERILpSESWG6UVzWSWoRIjGLwb6iWX4mGf
-         2dh6p+JaPXb5J/EYtIfzfRJ9hHIWXOJp2wE2NND2DenbTUWHvLVyA/QwVU2w0p+XRHZ9
-         HMwMEA9h4mZBhEcmBOIV7dT29MkiyNAsrBNVWoBPEHq7TgSoOYyLp6HedISPRq5YBc1m
-         P4rcp6Ioui1wGuua7yjgZA/tmv3Yb3j1VILJSsU5YnArRgsBrLbTKR8WdjJB0ccTYWP5
-         4MCw==
-X-Gm-Message-State: ALKqPwdFNFMJQb83qu5+SznGU4Brzbc7NrRGYn9v8UTFkNby0brAuwpY
-        9CjjyhlhcHe0CaD7hYcTerkSnXFlpSE4SCyLVMo=
-X-Google-Smtp-Source: AB8JxZpKTL8qskWLwuCBt/5DdT8lbDQigOKMgGHMsEy0ZdCf05B1YCz9uc0WKIORL09v7TV+z9DFteYh2Aa6kv6Zw00=
-X-Received: by 2002:a9d:e8f:: with SMTP id 15-v6mr1166831otj.14.1525962193607;
- Thu, 10 May 2018 07:23:13 -0700 (PDT)
+        id S965845AbeEJO31 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 10:29:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34864 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S965503AbeEJO30 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 10:29:26 -0400
+Received: (qmail 5676 invoked by uid 109); 10 May 2018 14:29:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 May 2018 14:29:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24867 invoked by uid 111); 10 May 2018 14:29:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 10 May 2018 10:29:30 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2018 10:29:24 -0400
+Date:   Thu, 10 May 2018 10:29:24 -0400
+From:   Jeff King <peff@peff.net>
+To:     kelly elton <its.the.doc@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: [PATCH] apply: clarify "-p" documentation
+Message-ID: <20180510142924.GB25617@sigill.intra.peff.net>
+References: <CALVfKe_em046aO9QUqJ0TXcLh6Oe7ydYQKr9Zwvheq8RV4=43g@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Thu, 10 May 2018 07:22:43 -0700 (PDT)
-In-Reply-To: <20180510141927.23590-1-pclouds@gmail.com>
-References: <20180510141927.23590-1-pclouds@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 10 May 2018 16:22:43 +0200
-Message-ID: <CACsJy8CvbZfVK6TdQAGMGfBWiHuRcVgxQ-MEPNQ_Rcmf1EnFtw@mail.gmail.com>
-Subject: Re: [PATCH 0/9] completion: avoid hard coding config var list
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CALVfKe_em046aO9QUqJ0TXcLh6Oe7ydYQKr9Zwvheq8RV4=43g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 10, 2018 at 4:19 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> (on top of nd/command-list)
+On Fri, Apr 27, 2018 at 12:40:05PM -0500, kelly elton wrote:
 
-Oh.. and it does make use of C99 designated initializer feature. I
-could go with out it, but since git-clean has used it for some time
-without anybody complaining, I figure I should take advantage of it.
---=20
-Duy
+> >  -p<n>
+> > Remove <n> leading slashes from traditional diff paths. The default is 1.
+> 
+> This suggests to me the following outcomes:
+> 1) home/user/repos/myrepo with -p1 becomes home/user/repos/myrepo
+> 2) home/user/repos/myrepo with -p2 becomes home/user/repos/myrepo
+> 3) /home/user/repos/myrepo with -p1 becomes home/user/repos/myrepo
+> 4) /home/user/repos/myrepo with -p2 becomes home/user/repos/myrepo
+> 5) //home/user/repos/myrepo with -p1 becomes /home/user/repos/myrepo
+> 6) //home/user/repos/myrepo with -p2 becomes home/user/repos/myrepo
+> 
+> `Remove <n> leading slashes`...That's not really what's happening.
+> 
+> What seems to actually happen is that it is removing directories from the path:
+> 1) home/user/repos/myrepo with -p1 becomes home/user/repos/myrepo
+> 2) home/user/repos/myrepo with -p2 becomes user/repos/myrepo
+> 
+> This argument seems to be removing folders from the path, not slashes.
+
+Yes. I agree the current documentation is quite misleading.
+
+How about this?
+
+-- >8 --
+Subject: [PATCH] apply: clarify "-p" documentation
+
+We're not really removing slashes, but slash-separated path
+components. Let's make that more clear.
+
+Reported-by: kelly elton <its.the.doc@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-apply.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index 4ebc3d3271..c993fbf714 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -113,8 +113,10 @@ explained for the configuration variable `core.quotePath` (see
+ linkgit:git-config[1]).
+ 
+ -p<n>::
+-	Remove <n> leading slashes from traditional diff paths. The
+-	default is 1.
++	Remove <n> leading path components (separated by slashes) from
++	traditional diff paths. E.g., with `-p2`, a patch against
++	`a/dir/file` will be applied directly to `file`. The default is
++	1.
+ 
+ -C<n>::
+ 	Ensure at least <n> lines of surrounding context match before
+-- 
+2.17.0.984.g9b00a423a4
+
