@@ -2,144 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DDE71F406
-	for <e@80x24.org>; Thu, 10 May 2018 20:30:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA3081F406
+	for <e@80x24.org>; Thu, 10 May 2018 20:46:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752047AbeEJUag (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 16:30:36 -0400
-Received: from mail-yb0-f175.google.com ([209.85.213.175]:33463 "EHLO
-        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751924AbeEJUaf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 16:30:35 -0400
-Received: by mail-yb0-f175.google.com with SMTP id y5-v6so1109364ybg.0
-        for <git@vger.kernel.org>; Thu, 10 May 2018 13:30:35 -0700 (PDT)
+        id S1752025AbeEJUqR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 16:46:17 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:52470 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751878AbeEJUqQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 16:46:16 -0400
+Received: by mail-wm0-f66.google.com with SMTP id w194-v6so5859911wmf.2
+        for <git@vger.kernel.org>; Thu, 10 May 2018 13:46:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:in-reply-to:references:mime-version:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=LqhLdejbdawz66TXQyjGI8kKYAZiaIs0ZSG2lebOtEc=;
-        b=AnWsdI+TgsJOFYklGzXhInhPmJnm4SQ+8a7Wy2zt6jm0SmStWVsPsnKsYlHR6PIoBL
-         yc3XoN252WpH+1/i/GK9Gc/IZ8aI2prkkh30q9WtWNbh9ePpRIr7wHVC6i41e/S+hNHK
-         Z7fAF+SjetdLPqtF7DpkcYSVV4Q7o0UYdQPyzY6OJ7BMdHsVnm6MdTbZP2vaOfybUrL/
-         iAZHiw/dinj01a/J0DwoSnFA/tBVANCqgM1Idz7X1qTRgofYdqODYkPCU34bgygJcAY6
-         OF4E+LPEXZSvM4fd5fCvV1A+cudP0Ax9Qosh+sG1X0HCP4m5YESLUCVZ0f54rqIGqnmu
-         7ubQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GyT7BIMvfDWQUrt7pnYPyqVKQqTJf4Oevmyi50ETyrY=;
+        b=DVqQOwuVeF7+t2J2RRsX3yMcddcJYalG6/drNNNzKd9EgOqEfgGkVKV63kvZYyzLyF
+         mhpyPrANW/GOch1lqQZDQQcoeupBydkIE+RpB/8aHMj/CrbVUwyp6vdQafHaezyO6LBa
+         cOA1xUqhzgcrkHS4VUcbKG18IjUdAfO6jwnZpAiIC4IBciqsvVzJvxpwEGE5+R9pjNxR
+         p2paxUjnIrEQjDfmaViRJpenl17+GVjIdObfSMi2IzZIOO9ChQHJAZEg20hkH65WE0/0
+         oa0DKnkfWJ0ctyLQvEjsrtGxnUFkV27/ZpVoVT0FUgueyjrM6eGct8wr12nQPWw8du0c
+         Xd7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:in-reply-to:references:mime-version:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=LqhLdejbdawz66TXQyjGI8kKYAZiaIs0ZSG2lebOtEc=;
-        b=FNVqMWKOEE5ll6S5LXxRs19EYx2YDjGU9xNtxAkCavDg5TC3GCemyaVUAwjCU6sLsy
-         SaTSz9Y8Ohjp5qMhZYvkT7QrZbTxqWPld1cWjS4A6Dddc4/d+GWy5HcqMulaMmip0lde
-         z80F1NuLmz93RcFxWcOq1yeZ/+5k16vepYTY+aqd3Gs+Q+DsPSpLX0o5l2dzZF1rhRTb
-         TV/nsY7y2l16xOwqNqy31DMFCMe84Ox/u/VvvUg06OAwViSognx4YoWwLLhmgG8gqQm5
-         QjGlKRAU+F3xQtx8s/QTWFaHx37ALJ51t/KJqUo5vLFzERp10HKxmfI/KSXrbRXOXMrv
-         I1nw==
-X-Gm-Message-State: ALKqPweQA980KlwEjuH4MqIyvHy56tdGhjrvpz2XQJb+z0c862c1J6Mk
-        xWpHhbFbxgJXfbFRD7fvDaK+gm5SSCGIyYdr3ao=
-X-Google-Smtp-Source: AB8JxZq1nFxLb7mEJ8lZ4ubHInIsBWc6Vct7Uf+pVrkPqrOPaZw7FiXVwz8RlIxekJ8y3mPGNOUTB5M0F9scfnLcj7o=
-X-Received: by 2002:a5b:808:: with SMTP id x8-v6mr1620046ybp.104.1525984234730;
- Thu, 10 May 2018 13:30:34 -0700 (PDT)
-Received: from 1058052472880 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 10 May 2018 13:30:34 -0700
-From:   Leif Middelschulte <leif.middelschulte@gmail.com>
-In-Reply-To: <CAGZ79ka3kVHSZ9oG=NOvr0=KCHODngxJQLbKApDsFY=xNPhU=A@mail.gmail.com>
-References: <20180510182657.65095-1-leif.middelschulte@gmail.com>
- <20180510182657.65095-2-leif.middelschulte@gmail.com> <CAGZ79ka3kVHSZ9oG=NOvr0=KCHODngxJQLbKApDsFY=xNPhU=A@mail.gmail.com>
-X-Mailer: Airmail (481)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GyT7BIMvfDWQUrt7pnYPyqVKQqTJf4Oevmyi50ETyrY=;
+        b=lckm0/NOdH26miaKcVSlu6CKVyddynsflp+H6cwmTNH1I9u79U85LOj2cfVJPB9MmE
+         pYf1xeEMIIN8BC0kVMK+EaJANSviSr/Gp02O1jRbhZ2jEnIkTAUTuQMkBttmFhJhGhCs
+         M7hiihjptyCC+gox9UOmfeE/XWBd8HkKVn7UsFp40Eup5xwrDmkCL8rb7cx/Wx2jM2Q8
+         nmmJisOYIhEBVsnLGbvxB1Gras7ENpNHG3pq7IU9U8GYNDIGP6+Vf9PLJszmpS9OnEbn
+         2XY86LVnATXxGQqwTi6ALgEZosd3QQVU1wU12heIkpebmf9rhe4XsTRy6Oz9xOwzaWob
+         FVbg==
+X-Gm-Message-State: ALKqPwcFjXCMiw3JFLwth6LMFXUvB9zEq5EDXnW2VaJXH9LMO2xrCRSh
+        MSNNAhZx/J8pCoGLeg1maaw=
+X-Google-Smtp-Source: AB8JxZpVBdDX6JhwmpYQn5vl+0NvBKF5IgdHBi7BfJ6Bk0scfAnCaOAuin+fEHq9mJaZEsXhJC4hAQ==
+X-Received: by 2002:a1c:455d:: with SMTP id s90-v6mr249854wma.156.1525985175143;
+        Thu, 10 May 2018 13:46:15 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id q15-v6sm1489063wmf.11.2018.05.10.13.46.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 10 May 2018 13:46:14 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 00/12] Integrate commit-graph into fsck, gc, and fetch
+Date:   Thu, 10 May 2018 22:45:57 +0200
+Message-Id: <20180510204557.16361-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.17.0
 MIME-Version: 1.0
-Date:   Thu, 10 May 2018 13:30:34 -0700
-Message-ID: <CANw0+A_T5zDUUWznYBe0m9fkSODPnfQaK1yJKPPawHTxi9+9BQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] Warn about fast-forwarding of submodules during merge
-To:     Stefan Beller <sbeller@google.com>
-Cc:     sandals@crustytoothpaste.ath.cx,
-        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+On 10 May 2018 at 21:22, Stefan Beller <sbeller@google.com> wrote:
+> On Thu, May 10, 2018 at 12:05 PM, Martin Ågren <martin.agren@gmail.com> wrote:
 
+>> I hope to find time to do some more hands-on testing of this to see that
+>> errors actually do get caught.
 
-Am 10. Mai 2018 um 20:49:39, Stefan Beller
-(sbeller@google.com(mailto:sbeller@google.com)) schrieb:
+> Packfiles and loose objects are primary data, which means that those
+> need a more advanced way to diagnose and repair them, so I would imagine
+> the commit graph fsck is closer to bitmaps fsck, which I would have suspected
+> to be found in t5310, but a quick read doesn't reveal many tests that are
+> checking for integrity. So I guess the test coverage here is ok, (although we
+> should always ask for more)
 
-> On Thu, May 10, 2018 at 11:26 AM, Leif Middelschulte
-> wrote:
-> > From: Leif Middelschulte
->
-> Hi Leif!
->
-> thanks for following up with a patch!
-sure, thanks for the quick review.
->
-> > Warn the user about an automatically fast-forwarded submodule. The sile=
-nt merge
-> > behavior was introduced by commit 68d03e4a6e44 ("Implement automatic fa=
-st-forward
-> > merge for submodules", 2010-07-07)).
-> >
-> > Signed-off-by: Leif Middelschulte
-> > ---
-> > submodule.c | 2 ++
-> > 1 file changed, 2 insertions(+)
-> >
-> > diff --git a/submodule.c b/submodule.c
-> > index 74d35b257..0198a72e6 100644
-> > --- a/submodule.c
-> > +++ b/submodule.c
-> > @@ -1817,10 +1817,12 @@ int merge_submodule(struct object_id *result, c=
-onst char *path,
-> > /* Case #1: a is contained in b or vice versa */
-> > if (in_merge_bases(commit_a, commit_b)) {
-> > oidcpy(result, b);
-> > + warning("Fast-forwarding submodule %s", path);
-> > return 1;
-> > }
-> > if (in_merge_bases(commit_b, commit_a)) {
-> > oidcpy(result, a);
-> > + warning("Fast-forwarding submodule %s", path);
-> > return 1;
-> > }
->
-> The code looks correct, however I think we can improve it.
-> (Originally I was just wondering if stderr is the right output,
-> which lead me to the thoughts below:)
-I=E2=80=99ve had the same thoughts about stderr. However, I thought that us=
-ing a
-log function named `warning` to warn the user=C2=A0would be the right choic=
-e.
-If anything, I thought, the warning function might need refactoring.
+Since I'm wrapping up for today, I'm posting some simple tests that I
+assembled. The last of these showcases one or two problems with the
+current error-reporting. Depending on the error, there can be *lots* of
+errors reported and there are no new-lines, so the result on stdout can
+be a wall of not-very-legible text.
 
-> Looking through the code of merge-recursive.c,
-> all the other merge outputs are done via 'output()'
-> that is able to buffer up the output as well as handles
-> the output for different verbosity settings.
->
-> So I would think we should make the output() function available
-> outside of merge-recursive.c. (and rename it to a be more concise
-> and descriptive in the global namespace) and make use of it.
-Sure, let me know what to use instead and I=E2=80=99ll update and resubmit =
-the patch.
+Some of these might not make sense. I just started going through the
+documentation on the format, causing some sort of corruption in each
+field. Maybe this can be helpful somehow.
 
->
-> Funnily we already have MERGE_WARNING in submodule.c
-> which outputs information for all the other cases. I would think
-> we ought to convert those to the output(), too.
-Sure, but `MERGE_WARNING` prefixes all the messages with "Failed to
-merge submodule=E2=80=9C.
->
-> Thanks,
-> Stefan
+Martin
 
-Thank you,
-Leif
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 82f95eb11f..a7e48db2de 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -255,4 +255,49 @@ test_expect_success 'git fsck (checks commit-graph)' '
+ 	git fsck
+ '
+ 
++# usage: corrupt_data <file> <pos> [<data>]
++corrupt_data() {
++	file=$1
++	pos=$2
++	data="${3:-\0}"
++	printf "$data" | dd of="$file" bs=1 seek="$pos" conv=notrunc
++}
++
++test_expect_success 'detect bad signature' '
++	cd "$TRASH_DIRECTORY/full" &&
++	cp $objdir/info/commit-graph commit-graph-backup &&
++	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
++	corrupt_data $objdir/info/commit-graph 0 "\0" &&
++	test_must_fail git commit-graph verify 2>err &&
++	grep "graph signature" err
++'
++
++test_expect_success 'detect bad version number' '
++	cd "$TRASH_DIRECTORY/full" &&
++	cp $objdir/info/commit-graph commit-graph-backup &&
++	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
++	corrupt_data $objdir/info/commit-graph 4 "\02" &&
++	test_must_fail git commit-graph verify 2>err &&
++	grep "graph version" err
++'
++
++test_expect_success 'detect bad hash version' '
++	cd "$TRASH_DIRECTORY/full" &&
++	cp $objdir/info/commit-graph commit-graph-backup &&
++	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
++	corrupt_data $objdir/info/commit-graph 5 "\02" &&
++	test_must_fail git commit-graph verify 2>err &&
++	grep "hash version" err
++'
++
++test_expect_success 'detect too small chunk-count' '
++	cd "$TRASH_DIRECTORY/full" &&
++	cp $objdir/info/commit-graph commit-graph-backup &&
++	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
++	corrupt_data $objdir/info/commit-graph 6 "\01" &&
++	test_must_fail git commit-graph verify 2>err &&
++	cat err
++'
++
++
+ test_done
+-- 
+2.17.0
+
