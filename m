@@ -2,82 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1ADC31F42D
-	for <e@80x24.org>; Thu, 10 May 2018 07:11:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB5DF1F42D
+	for <e@80x24.org>; Thu, 10 May 2018 07:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756653AbeEJHLG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 03:11:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34440 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1756582AbeEJHLF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 03:11:05 -0400
-Received: (qmail 22385 invoked by uid 109); 10 May 2018 07:11:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 May 2018 07:11:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21139 invoked by uid 111); 10 May 2018 07:11:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 10 May 2018 03:11:09 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2018 03:11:03 -0400
-Date:   Thu, 10 May 2018 03:11:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/4] doc: cleaning up instances of \--
-Message-ID: <20180510071103.GC31779@sigill.intra.peff.net>
-References: <CAN0heSru4-VoCTxZ6OHU_jdTs0__xvRmd45Dd0H3L8apMKkW6w@mail.gmail.com>
- <cover.1523991648.git.martin.agren@gmail.com>
- <xmqq1sfdjg4o.fsf@gitster-ct.c.googlers.com>
+        id S934214AbeEJHr0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 03:47:26 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:46270 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753944AbeEJHrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 03:47:25 -0400
+Received: by mail-pf0-f178.google.com with SMTP id p12-v6so660556pff.13
+        for <git@vger.kernel.org>; Thu, 10 May 2018 00:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=wIc2HsTU6BJyYkcpi44GfkLPVYkz4o9HASxvUYNQDnA=;
+        b=u4MSvElobObwUMyIffeCnENk9u6CLfj+gucdCm+ikSTRgWNRqNLCOEb2CQO1/10qgb
+         /T+XKbofsryih2zLG4k2MgukNAa9aQdo2euE8Yxzh2+rjIyaHwcRS0nSpp/xWQ5uBTKD
+         0/gd86W5AP3ldzPF3RvtxliWpP1xWaa2XLeS6f0aCwl+nlN5VdqLemomc+tOnKasf+rq
+         FM2cNehTiVRBAaUmImDMJAk5wClZkZ4tlkhn8iUBAlmWTFNjZHM7dxzvd9hLDpTPhSTf
+         bQZEtChO0B9EH1FBcszTBL6d4oe0ez8wSTM7BZzCdamth/h+R/hZJ7FY2nw+xLsqjkO4
+         6Ocw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=wIc2HsTU6BJyYkcpi44GfkLPVYkz4o9HASxvUYNQDnA=;
+        b=JpgHs1jWhRAOi4vNmTWA8/7C7FVKAK3mYz6UH7ci0QkRM+KJ8+dACDeB93M79JrtZH
+         HeJxP8NPgQkqlWuKZ/HRLWNAY0S0sSy4E6StfVxaUPn6burCpvQ9+SqK1naDu7V14OyV
+         KUXZyRX+LP21qDQhGzUGtJt6lXuPkaC7BLD9BXneKRZLoxQWRBpMwH/psDbDZtWhaWEl
+         +URGHn+wCFfxdu6qED895QyfTQkMsLevMJRH4aDsoJxZK/bzzr9E/aqsXxsZRf44IPZt
+         1EPvvC06jYuV4poQpdDpygx9b+0gfiC/o+BWhzj1y9jtb8TZ7UlVzUBRlpoYXDgWuyAQ
+         Ap9g==
+X-Gm-Message-State: ALKqPwdizwRX71bVPl9mLkoO44DYBCia/vBNPGfk3hVbq2+BtWkZ0VKL
+        PWth3/jGukQrmpPUyWe+EX24ZsMLfM0vIuPb+dQ=
+X-Google-Smtp-Source: AB8JxZqaUvf6Mxips6qkN2Vah417jeMvByEnXFIm+6Q8L1OX54gWp3ZoGsrt63apEfjqDNpzeCVKRUvyJ1WkF9hlERI=
+X-Received: by 2002:a65:5c06:: with SMTP id u6-v6mr296770pgr.316.1525938445488;
+ Thu, 10 May 2018 00:47:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq1sfdjg4o.fsf@gitster-ct.c.googlers.com>
+Received: by 10.236.187.139 with HTTP; Thu, 10 May 2018 00:47:24 -0700 (PDT)
+In-Reply-To: <xmqqwowcjbh6.fsf@gitster-ct.c.googlers.com>
+References: <20180508182548.GD7210@sigill.intra.peff.net> <cover.1525898125.git.martin.agren@gmail.com>
+ <20180510052137.GC27259@sigill.intra.peff.net> <xmqqwowcjbh6.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 10 May 2018 09:47:24 +0200
+Message-ID: <CAN0heSoM0Vd73o9FmuLcDK+ojEcOwhfZRK24JypBQFz+_18uGA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] getting rid of most "static struct lock_file"s
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        David Turner <novalis@novalis.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 18, 2018 at 01:24:55PM +0900, Junio C Hamano wrote:
+On 10 May 2018 at 08:01, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> I don't think it's worth re-rolling, but one thing to think about for
+>> future cleanups: you split the patches by touched area, not by
+>> functionality. So the first three patches have a "while we're here..."
+>> that has to explain why dropping the "static" is the right thing over
+>> and over. If you instead did the error-handling fixes independently
+>> first, then you could lump the "static" cleanups together with one
+>> explanation (possibly even just as part of the 4th patch).
+>
+> Thanks Peff for a good pice of advice.  I agree with the assessment
+> after reading the series through (includng "not worth rerolling"
+> part).
 
-> Martin Ågren <martin.agren@gmail.com> writes:
-> 
-> > This is a patch series to convert \-- to -- in our documentation. The
-> > first patch is a reiteration of 1c262bb7b2 (doc: convert \--option to
-> > --option, 2015-05-13) to fix some instances that have appeared since.
-> > The other three patches deal with standalone "\--" which we can't
-> > always turn into "--" since it can be rendered as an em dash.
-> 
-> All looked sensible.  As you mentioned in [2/4], "\--::" that is
-> part of an enumulation appear in documentation for about a dozen
-> commands after the series, but I do not think we can avoid it.
-> 
-> One thing that makes me wonder related to these patches is if a
-> newer AsciiDoc we assume lets us do without {litdd} macro.  This
-> series and our earlier effort like 1c262bb7 ("doc: convert \--option
-> to --option", 2015-05-13) mentions that "\--word" is less pleasant
-> on the eyes than "--word", but the ugliness "two{litdd}words" has
-> over "two--words" is far worse than that, so...
+Right. In the first version, the while-at-its were really while-at-its
+-- and it turned out it needed some motivation. So, in the reroll, I
+focused on expanding the commit messages. Any benefit from making
+patches four and five somewhat smaller definitely got lost in the blown
+up first three commit messages. Thanks for pointing it out.
 
-I think many cases that use {litdd} would be better off using literal
-backticks anyway (e.g., git-add.txt mentions the filename
-`git-add--interactive.perl`).
-
-There are certainly a few that can't, though (e.g., config.txt uses
-linkgit:git-web{litdd}browse[1]).  I agree that "\--" is less ugly there
-(and seems to work on my modern asciidoc). There's some history on the
-litdd versus "\--" choice in 565e135a1e (Documentation: quote
-double-dash for AsciiDoc, 2011-06-29). That in turn references the
-2839478774 (Work around em-dash handling in newer AsciiDoc, 2010-08-23),
-but I wouldn't be surprised if all of that is now obsolete with our
-AsciiDoc 8+ requirement.
-
--Peff
-
-PS Late review, I know, but the patches look good to me. :)
+Martin
