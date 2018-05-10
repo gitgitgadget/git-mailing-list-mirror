@@ -2,126 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 211F91F51A
-	for <e@80x24.org>; Thu, 10 May 2018 19:48:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B90C31F406
+	for <e@80x24.org>; Thu, 10 May 2018 19:58:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751932AbeEJTsF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 15:48:05 -0400
-Received: from mout.web.de ([212.227.17.11]:42165 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750747AbeEJTsD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 15:48:03 -0400
-Received: from [192.168.178.36] ([91.20.55.213]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M6V1T-1eOeGL1EyZ-00yTok; Thu, 10
- May 2018 21:47:58 +0200
-Subject: Re: [PATCH] fast-export: avoid NULL pointer arithmetic
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <d50a4d5d-3b99-453e-1b52-4e733453fb78@web.de>
- <99d443cd-e817-7db5-f758-bf4cf47f7c06@web.de>
- <xmqqo9hniy1v.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <654fac2a-8dca-7bee-2bab-a3986aa7e52d@web.de>
-Date:   Thu, 10 May 2018 21:47:56 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqo9hniy1v.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:epVrg9O/Yb5KUqB/s4b7qLuSe1dRsWJdzeBxEedTjqbJF7f8cPn
- SmNsoqo72wOjXxLGdPc/AK1yZJDV7e3tdlfbg1KlrvEm8kbzGWgpwZhCArYp0t6bZ/xmhU9
- 6C7GmTQP2nrXSO4IOp2Kqn9zY+RrdWKs5smpJ8icPjq26TbRfYWL1AA52q67mOhN+raYyQs
- T9HRgX2LErpc8WxyPvQ7A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xWJzcrYVprU=://8xFafl7rkHAmAYp1PhB/
- 63e+qiIptDusrrZjptj7fBKMP+R6PBHvLA8VGUukPXPkK7kC+QSLgwry7gQ43C+bhOjI+wOS5
- 48+7PkM/qIVPDtJBd0oykqq1iiCMz15iFzPyG3zsNJ83ir0TyrMHL+oKOUsZiktEYOx8kJET8
- VWTX2AqpbbSXI6u56Kvn82JQ5a7TrF3HslUHKDoUx5ANLyiCGAbBXKUlhUfUAj3D5qDRVeAY7
- SHkFhSTIZvX2SGzt0E3lSgktt1AHhIguStk+oXpVKdYGhs1eAP8t+yZqRQ222RLNXkFjH7izJ
- +dV4NGHrX1/LIjRRVIiys5/++Hh9M0JB5hKV0JbBrnUysolSgQkkp9TItq4aPKjKmRTdCdnC/
- gttycAWaMoErHPcVInu5MGfD5WGDD6Ys5jfAc6of8pd2oAWUFjiLua1Smnib6vf1NeDI+Ue1l
- E5qQmMRWcrkOWJdBh7fTAILOf1YvIdySO/BaLCvq5Kr6GG3esAdtdoectYjmb0OEMXYUTGZBt
- gkWS2gXuv+WcXkHMe5VGIqWADEsBqR0aLDG9NjNi4/s2RF/GHSy38z2N4nWunnAiJF2HWmIXN
- eYBxhXUUGjM/+CD8HOTJhzNBTu9iargw2nFhh9KMS/zns3yPf3H1AzUN8edy4dBo74zRGt6IE
- wAwzr/v0YsU7b3Je8YX/qRDs8bc9sPU/1bkgZLDje+OdK3HvxNFjil5chxp+HPj5M6n7VRtfM
- ao1crue1Z1nj23BAbQlwk29+n0j7frbFVflH5guThni2Kpa3PjCsUxuRH15Dz/ubcoWsfS9EC
- M2fSNm0
+        id S1751010AbeEJT64 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 15:58:56 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36421 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750762AbeEJT6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 15:58:55 -0400
+Received: by mail-pg0-f68.google.com with SMTP id z70-v6so1415115pgz.3
+        for <git@vger.kernel.org>; Thu, 10 May 2018 12:58:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=D5qRzL3JrhviS9My5hEMbvAEekEqriwt4iWMH/z8MGc=;
+        b=A7nZ6hzGzYdoA/6Cf669btf424/r3ik9IlUNdgpoF4hhxI7ce8bBNl7baa2J3DOIIq
+         QVXXrWs6qP1AxqYvr6udINUmt8szdt9PRUICFKzoRmleQIzP++UsRz3H0rLDm4KWlUxN
+         jOiatqgubAmgo/vzDbqhwZWDg8zYT6z9UFY/LKHre5Py9odRMaR7hfvr222jx5Ld1xJW
+         ktK6cin9SmjCONX2k9hdZiHxKUmOVUqP4pxHzYPTD46hgXm5BzQ4TwyCMp4bg4rQlqYI
+         Rj2mpUm4hhlu7R1O5UjSDPWohdEd8sUrAwax4frku6dhX2J0ntPZ17PAC7I1B87NRYNC
+         sKVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=D5qRzL3JrhviS9My5hEMbvAEekEqriwt4iWMH/z8MGc=;
+        b=sKrzZ9M4Z1p3DPIvU2lYVXjFiynl1ZrxFH2AY9EVetaMBR/0KJxphTn/HirDhotrUC
+         H/qgmwb63ZgQtaoBZ0sdhGC7VxrEcuoslYq/ZXVaDsJDExiOsxDNRp3EJOVztKkd+348
+         XnBXPmSRuQgajVmZbJun+DJlpggzyipjqhcF6/50oMCxqM1IiF6DRu+lakMFNK3mV5eA
+         M5NixkYAiK6ka50WMGyZKHvr3n0jAOMHgAPDH5+nDUzVpRw+aP87OTdE8g3YfNCkFXfj
+         Jpat6yW08w7sCm7wLw+y0PODiXbS/N26axewzNS8kSnxy7RPHrDc5IIhU2u5wR87Xzbr
+         X09A==
+X-Gm-Message-State: ALKqPwekylv2LvZIuZyh86HEXWoMSg7QunDpKvc1/AsOOxidJnO4JIMv
+        tBJex/LO0MXoilefce2CDtV4YQ==
+X-Google-Smtp-Source: AB8JxZq48EqhsN9Ud3Ha6c0USu5YP1CTm1D5Xg/UUBMBxSa67x0SFwgCd2WVmMxMc8L/orxW5ba+9w==
+X-Received: by 2002:a63:2b46:: with SMTP id r67-v6mr2108784pgr.89.1525982334658;
+        Thu, 10 May 2018 12:58:54 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id o5-v6sm2397382pgv.47.2018.05.10.12.58.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 10 May 2018 12:58:53 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com, peff@peff.net
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH v2 0/4] Fix mem leaks of recent object store conversions.
+Date:   Thu, 10 May 2018 12:58:45 -0700
+Message-Id: <20180510195849.28023-1-sbeller@google.com>
+X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.05.2018 um 12:51 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> The standard says about uintptr_t that "any valid pointer to void can
->> be converted to this type, then converted back to pointer to void, and
->> the result will compare equal to the original pointer".  So void * ->
->> uintptr_t -> void * is a proper roundtrip, but that doesn't imply that
->> casting arbitrary uintptr_t values to void * would be lossless.
->>
->> I don't know an architecture where this would bite us, but I wonder if
->> there is a cleaner way.  Perhaps changing the type of the decoration
->> member of struct decoration_entry in decorate.h to uintptr_t?
-> 
-> In order to ensure "void * -> uintptr_t -> void *" roundtrip holds,
-> the implementation would guarantee that uintptr_t is wider than
-> void*, so what you suggest technically makes sense.  We should be
-> able to store any pointer in the field.  And we should be able to
-> store any value of an unsigned integral type that is narrower than
-> uintptr_t.
-> 
-> But it somehow feels backwards in spirit to me, as the reason why we
-> use "void *" there in the decoration field is because we expect that
-> we'd have a pointer to some struture most of the time, and we have
-> to occasionally store a small integer there.
+This series replaces the two commits that were queued on sb/object-store-replace,
+fixing memory leaks that were recently introduced.
 
-Yes, fast-export seems to be the only place that stores an integer as
-a decoration.
+Compared to v1, I merged the two independent series from yesterday,
+rewrote the commit message to clear up Junios confusion and addresses Peffs
+comments for the packfiles as well.
+Also added another free to free the oidmap for the replaces themselves.
 
->  So I'd naively expect
-> that
-> 
-> 	uint32_t mark = 23;
-> 	de->decoration = (void *)mark;
-> 
-> would be a good way to store mark #23 in the field and
-> 
-> 	uint32_t mark;
-> 	mark = (typeof(mark))de->decoration;
-> 
-> would be a good way to read it off of the "void *" field.  Of
-> course, this assume that (void *) is at least as wide as 32-bit and
-> it also ignores the standard ;-)
+Thanks,
+Stefan
 
-Right, it looks deceptively good and works fine if memory is flat and
-valid values for pointers are in a contiguous range starting at zero.
-The standard allows for other models as well, though.
+Stefan Beller (4):
+  packfile: close and free packs upon releasing an object store
+  packfile.h: remove all extern keywords
+  object.c: free replace map in raw_object_store_clear
+  replace-object.c: remove the_repository from prepare_replace_object
 
-> This is an unrelated tangent but the mark-to-ptr() and ptr-to-mark()
-> implementations feel wasteful, especially when we worry about 32-bit
-> archs.  A naive platform implementation of
-> 
-> 	(uint32_t *)mark - (uint32_t *)NULL;
-> 
-> would be ((uintptr_t)mark) / 4, i.e. the de->decoration field will
-> always have two LSB clear and only utilize top 30-bit to represent
-> the value of mark.
+ object.c         |  7 +++--
+ packfile.c       | 13 ++++++++
+ packfile.h       | 79 ++++++++++++++++++++++++------------------------
+ replace-object.c |  2 +-
+ 4 files changed, 58 insertions(+), 43 deletions(-)
 
-That's right, but I don't see what's naive about it, or how a 32-bit
-architecture could avoid wasting those two bits.
+-- 
+2.17.0.255.g8bfb7c0704
 
-
-Using struct decorate in fast-export has the benefit of not
-requiring separate allocations for individual entries.  Switching to
-struct hashmap would require individual allocations.  Adding a
-custom clone of decorate with a uint32_t payload would be an option.
-
-René
