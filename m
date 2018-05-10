@@ -2,60 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A31671F406
-	for <e@80x24.org>; Thu, 10 May 2018 14:55:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FB971F406
+	for <e@80x24.org>; Thu, 10 May 2018 15:00:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965112AbeEJOzF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 10:55:05 -0400
-Received: from mail-ua0-f172.google.com ([209.85.217.172]:41432 "EHLO
-        mail-ua0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935624AbeEJOzE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 10:55:04 -0400
-Received: by mail-ua0-f172.google.com with SMTP id a3-v6so1492673uad.8
-        for <git@vger.kernel.org>; Thu, 10 May 2018 07:55:04 -0700 (PDT)
+        id S966035AbeEJPAQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 11:00:16 -0400
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:38366 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965215AbeEJPAP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 11:00:15 -0400
+Received: by mail-ot0-f193.google.com with SMTP id n3-v6so2639383ota.5
+        for <git@vger.kernel.org>; Thu, 10 May 2018 08:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=diamand.org; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=HVsTXa3OFBAryWG/a4rP/68ntH8i19rXQHGQHHZutfk=;
-        b=cI3jvGxUd6QjDJHm3zxnQyU2xopCvYs8znHYiRsbMBqe0ZClJeG3ciaN4TnDJNVaJ3
-         d2Ybi3E6mH0FEd9jGConM0IIn6IB3/nJzdUhJIyHUUKvExPFAOS2cqAUOWVc+x5HMfC5
-         lXR/e7GQrI+1ndT+2uUBSnN8iNLPKH+OlLqrcF93pNMDwW/7xMGZEOoCeYt/btHcnOcG
-         KgQ+6Lj5FjyUh9O36JrYr39B9aUS8ymu1HSrrnaApJbckt80o8iXkUwkg4QfKBeuLYRp
-         WUrliOFhzsJdHtZ5x8zyBFPXBoHYTSO/0WU61TPff1P2ghSsuFdotHhfijzb7/E0lgvt
-         KtVA==
+        bh=hatpAC/Xrh1Kamy5JT/POGCTzH2YZ/UiRP1TQWgeRqw=;
+        b=ZC6VXwIKKCjEqOHJOedtMT8OIh9A0oBau5tmcp9mnPxjOHn2m89W3HXFNHHfioam0d
+         X1cYt5FMRuMAeCZNTjJ4IHE13+yZFmuOTWmjRDwg2K/4j+bqKLTP6RzHvrO7PQskzjNg
+         DaCrjKkgqcpb3oBTGU2zz/ie+bH/w2TIS2HF4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HVsTXa3OFBAryWG/a4rP/68ntH8i19rXQHGQHHZutfk=;
-        b=V9br5j4LbhMcmDW4+K/syIRE/ZVvjp8ljwsrnZEOOQpS7JT2Y7Pv6Hd2zo3a4KeuSJ
-         pq1TmMADrzAieoPbOmWSpF1O1a+WOT/UHw4v8/ooIyjqnAwUckagOWKZL6uwDbjPLaR+
-         gGRgZvcXriO2iZfbrU5h8Zwuc+JLJi3q5hHqfc6vOk8eSAzpDu74ei1Mguif15H6eJx4
-         dHyGQqp6V6XBKW9AZaMQOs6WVAU1fvm5BQX2HqjG40eynLk4Ta5B74EBO9H6C+Sfd0IW
-         KaL9U/0ieu6f9+11/bzSg/OxGngYPL/JuAi3Cu5aPbiI5t84J0Aogml68Iktw/J8svBo
-         bjLw==
-X-Gm-Message-State: ALKqPwe/K8GF/IyNWCejzj8o7RGdlbv9pQOQOItVjQczQEYYgzJFXT8t
-        7g1TXBYSpGueqdEoZ4xPTpPyGnkDwJTOoa+X/VBN7A==
-X-Google-Smtp-Source: AB8JxZpvn744XveL+yEP+Shu3TQ3TJMXpw6UvbqoaHs8o2aLv/d2B77DY+NIYejUwulj/0KTYgmIN+Nyi+EtJuh/Yhw=
-X-Received: by 2002:ab0:5bd6:: with SMTP id z22-v6mr1271837uae.48.1525964104128;
- Thu, 10 May 2018 07:55:04 -0700 (PDT)
+        bh=hatpAC/Xrh1Kamy5JT/POGCTzH2YZ/UiRP1TQWgeRqw=;
+        b=dLykXYu7YpqMV4FFde2RlOlOxKy3flRCKx++gf5B+oHm/3u2mB+iYjqjhqJKlHykF/
+         GpUlocGaQbtcBbWSn+J70QXbNulUS+iybtARvo//yxGz0d/sn5Xp1tTn2ZF8oM6BIoz1
+         aQIP5P/4+mZTqdurNiWwAFPCekWXbJ+qu1VSq+LQIkg1iunWv9pZCdVCpCF5sQb0UNlO
+         n4tYHGY6QCTlf0dBWbohZoohd+LjqhT6+eKK8yaJcRTVzIbn9EoZzqNw3y+L8jWshYMu
+         09pFee7mDR1Rr0NrI0mDervf/A3Te9UElX6FD+je07tHyfQQNSvZ/7Z7wy/aMh8vNsgu
+         g2uw==
+X-Gm-Message-State: ALKqPwcI0XtccOoMv0EfdVo4wj92vZo4zsR+AFwILmcBySg1cL4nV5e8
+        iP1z/w+dGLMIpFgM201ht/EI7OLzYZxQ7NC3ImIqow==
+X-Google-Smtp-Source: AB8JxZoGWKTOapyiwtO3ReWkEVQ4kQ+NQ087ppMdSh//KOXY8AM51HMG6PWas9J4PmnR+yhmMo58hF0ARXAB7AzyQs0=
+X-Received: by 2002:a9d:5774:: with SMTP id x49-v6mr1272226oti.314.1525964414570;
+ Thu, 10 May 2018 08:00:14 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.22.212 with HTTP; Thu, 10 May 2018 07:55:03 -0700 (PDT)
-In-Reply-To: <20180510143432.GC25617@sigill.intra.peff.net>
-References: <20180510135852.25232-1-szeder.dev@gmail.com> <20180510143432.GC25617@sigill.intra.peff.net>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Thu, 10 May 2018 16:55:03 +0200
-Message-ID: <CAM0VKjnVAWdxL152MGQWFmJdHC99F=PjKpj9GdU62NV40XJi=A@mail.gmail.com>
-Subject: Re: [PATCH] t5310-pack-bitmaps: make JGit tests work with GIT_TEST_SPLIT_INDEX
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
+Received: by 2002:a9d:3c57:0:0:0:0:0 with HTTP; Thu, 10 May 2018 08:00:14
+ -0700 (PDT)
+In-Reply-To: <20180510124303.6020-4-avarab@gmail.com>
+References: <20180501184016.15061-10-avarab@gmail.com> <20180510124303.6020-1-avarab@gmail.com>
+ <20180510124303.6020-4-avarab@gmail.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Thu, 10 May 2018 16:00:14 +0100
+Message-ID: <CAE5ih7-MKQoB27MKd0jJ91O+uKm8e2X5h8OcEaaGJAoYdWL5XQ@mail.gmail.com>
+Subject: Re: [PATCH v4 3/6] git-p4: change "commitish" typo to "committish"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Duy Nguyen <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,23 +68,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 10, 2018 at 4:34 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, May 10, 2018 at 03:58:52PM +0200, SZEDER G=C3=A1bor wrote:
->> Since testing bitmaps doesn't need a worktree in the first place,
->> let's just create bare clones for the two JGit tests, so the cloned
->> won't have an index, and these two tests can be executed even with
->> split index enabled.
+On 10 May 2018 at 13:43, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gma=
+il.com> wrote:
+> This was the only occurrence of "commitish" in the tree, but as the
+> log will reveal we've had others in the past. Fixes up code added in
+> 00ad6e3182 ("git-p4: work with a detached head", 2015-11-21).
 >
-> Nice, this seems like a clever workaround.
->
-> Reviewed-by: Jeff King <peff@peff.net>
->
-> The more heavy-handed approach would be to just disable the JGIT prereq
-> when GIT_TEST_SPLIT_INDEX is in use, which would cover this and
-> potentially any other cases. This is nicer because it lets us continue
-> using the test. And it's not like we have a ton of jgit dependencies,
-> such that dealing with each individually would be a burden.
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 
-We could also 'sane_unset GIT_TEST_SPLIT_INDEX' in these two tests,
-but I think that we should do that only in tests that specifically
-check split index behavior (i.e. t1700).
+Looks good to me!
+
+Thanks,
+Luke
+
+
+> ---
+>  git-p4.py | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index 7bb9cadc69..1afa87cd9d 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -2099,11 +2099,11 @@ class P4Submit(Command, P4UserMap):
+>
+>          commits =3D []
+>          if self.master:
+> -            commitish =3D self.master
+> +            committish =3D self.master
+>          else:
+> -            commitish =3D 'HEAD'
+> +            committish =3D 'HEAD'
+>
+> -        for line in read_pipe_lines(["git", "rev-list", "--no-merges", "=
+%s..%s" % (self.origin, commitish)]):
+> +        for line in read_pipe_lines(["git", "rev-list", "--no-merges", "=
+%s..%s" % (self.origin, committish)]):
+>              commits.append(line.strip())
+>          commits.reverse()
+>
+> --
+> 2.17.0.410.g4ac3413cc8
+>
