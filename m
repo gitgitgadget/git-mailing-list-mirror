@@ -2,86 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A90941F424
-	for <e@80x24.org>; Thu, 10 May 2018 06:01:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E5AA1F424
+	for <e@80x24.org>; Thu, 10 May 2018 06:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750950AbeEJGBM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 02:01:12 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:46298 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750746AbeEJGBM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 02:01:12 -0400
-Received: by mail-wr0-f173.google.com with SMTP id a12-v6so735770wrn.13
-        for <git@vger.kernel.org>; Wed, 09 May 2018 23:01:11 -0700 (PDT)
+        id S1756569AbeEJGNQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 02:13:16 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:44225 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756350AbeEJGNP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 02:13:15 -0400
+Received: by mail-lf0-f68.google.com with SMTP id h197-v6so1262837lfg.11
+        for <git@vger.kernel.org>; Wed, 09 May 2018 23:13:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=itaMubZ+go5rSwqYTLCvSPSyGRRM2M9Xnxu+FfWN4TQ=;
-        b=NPcJ1E7uz2EUa6x0t8Lm5zOwNWECU6AG3l0aD9sCVlYcHOX4vDIbepHg24jkT7Y7PH
-         tw3UopZpV1cykov4X32+4S3Bu/JgA2vm1i3FzgMiquyE6VHuJnbJYQ3ZT/hhB0j1wuCo
-         BgY18DGwhSONz4JBgzVoU4paJhFfe3BljvLl0XE82WoqQz2/RYjd2YI4gGcz9bfJ7c06
-         SU8yeOAusovWFZ+FOHPT8S/rLz020o7q0fXO30Zi/jWBO1OC228LAfY6LL1Fot2GW7v6
-         LL1xww6y93PZKgdzJO6Cc8XhfgTuqy2NAujgnnn5kGCj5aUiCVWjZ4eNhFwexO+spMoF
-         olqw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=435x9cExZ/31VRvYJCjpOqhuhvqrBB9j+MkQzHbnyqs=;
+        b=atLklbSIYhFLk56LSELxnqrQuMrcXZaFPVIUiTgpLsWQTyrrQ8K9Qnk2hzkLLaqrwP
+         nEQhM5bt+31sm7iXPmZMbph7ruPGlZBOTSvvESMLROyaaWnHUWx2HNHlKpoQRDTyqOwl
+         S5vT1UZeTrGZt5aHueMnABexvc0y15UBrCnXRMXLIsGOp0fgjKEnjSedC9Pl9xO3BsVQ
+         desFujyX5dctYvH9Ktr5ru9sET5v+8xpGCu9m+xluNRIhBqqkt7/aAGYjam1zVRZFKqB
+         Q73TOwjkuuQCVo4S2RA/edV8Noz6SSrRAJV3OMCfCnFGrK2r+swEK3aQ75fUs9XaYQPx
+         nK/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=itaMubZ+go5rSwqYTLCvSPSyGRRM2M9Xnxu+FfWN4TQ=;
-        b=HBJQX2+2EVzm+GbCiqSm+cJ+iK1wYRZI1fBt+M1wQSyIo+SsEYgxZWbJGE3NINC7Hr
-         Y1LMN82GewHg/ZZnHu8kJURa71mNZ2o3YAahy1pYMnDFrmJ463011jd4vAtfHLxuZr42
-         EA2v/Chvtfso4bmSHoiVBHfIx8fVZDQqCcwic72i+52P0LYUFDOXIo5MR8922qrlxuXa
-         MfmUPQMsBQwSF5FDZPQoCurf34WKCZIdstpSwqpEWCXQgZCdjzMobBxe063mbNj4V5I8
-         Uw2KUTaBYlAXi5YU3G9tpzeuyfWJwT5CR8GsbHZX4WcH3kmGoz0L3ul57arBzPC/vg+b
-         BQFw==
-X-Gm-Message-State: ALKqPwem9NEpbSXat5d2qTPdkD64I/iWLr66j7kRUMoIdt10IktMKvTE
-        5Kybyo/9DJVFNxTHekdSJDU=
-X-Google-Smtp-Source: AB8JxZqnriAzY4uZYXVZ2PNdNr4FqQzW1hFepwr/WWYQfvAyQLDzP5zB1B/peFYMJxOM8slnJkMFEQ==
-X-Received: by 2002:adf:93e5:: with SMTP id 92-v6mr72428wrp.230.1525932070633;
-        Wed, 09 May 2018 23:01:10 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l69-v6sm247560wmb.6.2018.05.09.23.01.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 May 2018 23:01:09 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, David Turner <novalis@novalis.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 0/5] getting rid of most "static struct lock_file"s
-References: <20180508182548.GD7210@sigill.intra.peff.net>
-        <cover.1525898125.git.martin.agren@gmail.com>
-        <20180510052137.GC27259@sigill.intra.peff.net>
-Date:   Thu, 10 May 2018 15:01:09 +0900
-In-Reply-To: <20180510052137.GC27259@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 10 May 2018 01:21:37 -0400")
-Message-ID: <xmqqwowcjbh6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=435x9cExZ/31VRvYJCjpOqhuhvqrBB9j+MkQzHbnyqs=;
+        b=uZBHXw1ZTL5SKkOIbMpFtZeO+99gPY3/vcnh45sfz8qvbXTt9ycIv8fgH/fHdV1WuO
+         O8lAr0DS9rYFC0VJH2geFX9iYCSBC+eU55lnvxHvbP67vuJ4apf3P0/71gDV7kmJ0Ljm
+         G9j9UAHNuo+m6AIWEoboLo/zc0mnwdb1rceeupaaUF4JvZWe9HTSPpub8olJs8BFx0t/
+         jDlI8mqohrmJFWzqiiUcLsoMCBHcmUHzwG2qeWmghQmKXssDJ/U1+epV7tcHC4uWkHmc
+         PrI9zAn8sfLiOF7S4SKJGAAk0D6yC60CWwodW6854n4IO6CfZYQj1hwoXbdNGQnm1cpZ
+         Ik/g==
+X-Gm-Message-State: ALKqPwdZWKXUpK6AAFPwbQxNUxlAKIO85+jmRVNfNrenb6cYdzl9Nfb4
+        aUZCAZXvRa7uwlszlupY7KU9OA==
+X-Google-Smtp-Source: AB8JxZodqEfgZ6bRCT1Mep8q6PBn0+EZIw8WJDQLGL2C+BvFLUr0wHObCK/lPGBzcW8K7O6zhD7PRQ==
+X-Received: by 2002:a19:e5c4:: with SMTP id i65-v6mr100950lfk.112.1525932793865;
+        Wed, 09 May 2018 23:13:13 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id t20-v6sm14602ljb.28.2018.05.09.23.13.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 09 May 2018 23:13:13 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v2] repository: fix free problem with repo_clear(the_repository)
+Date:   Thu, 10 May 2018 08:13:10 +0200
+Message-Id: <20180510061310.28265-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.705.g3525833791
+In-Reply-To: <20180509170409.13666-1-pclouds@gmail.com>
+References: <20180509170409.13666-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+the_repository is special. One of the special things about it is that
+it does not allocate a new index_state object like submodules but
+points to the global the_index variable instead. As a global variable,
+the_index cannot be free()'d.
 
-> I don't think it's worth re-rolling, but one thing to think about for
-> future cleanups: you split the patches by touched area, not by
-> functionality. So the first three patches have a "while we're here..."
-> that has to explain why dropping the "static" is the right thing over
-> and over. If you instead did the error-handling fixes independently
-> first, then you could lump the "static" cleanups together with one
-> explanation (possibly even just as part of the 4th patch).
+Add an exception for this in repo_clear(). In the future perhaps we
+would be able to allocate the_repository's index on heap too. Then we
+can revert this.
 
-Thanks Peff for a good pice of advice.  I agree with the assessment
-after reading the series through (includng "not worth rerolling"
-part).
+the_repository->index remains pointed to a clean the_index even after
+repo_clear() so that it could still be used next time (e.g. in a crazy
+use case where a dev switches repo in the same process).
 
-Thanks, Martin.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ v2 keeps the_repository->index pointed to the_index even after cleared
+
+ repository.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/repository.c b/repository.c
+index a4848c1bd0..4143073f89 100644
+--- a/repository.c
++++ b/repository.c
+@@ -238,7 +238,8 @@ void repo_clear(struct repository *repo)
+ 
+ 	if (repo->index) {
+ 		discard_index(repo->index);
+-		FREE_AND_NULL(repo->index);
++		if (repo->index != &the_index)
++			FREE_AND_NULL(repo->index);
+ 	}
+ }
+ 
+-- 
+2.17.0.705.g3525833791
+
