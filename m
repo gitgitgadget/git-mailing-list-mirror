@@ -2,143 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B5C21F406
-	for <e@80x24.org>; Thu, 10 May 2018 18:29:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DB861F406
+	for <e@80x24.org>; Thu, 10 May 2018 18:31:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757454AbeEJS3U (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 14:29:20 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:33084 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757401AbeEJS3O (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 14:29:14 -0400
-Received: by mail-pl0-f66.google.com with SMTP id n10-v6so1780191plp.0
-        for <git@vger.kernel.org>; Thu, 10 May 2018 11:29:14 -0700 (PDT)
+        id S1757401AbeEJSbO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 14:31:14 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:43279 "EHLO
+        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757311AbeEJSbN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 14:31:13 -0400
+Received: by mail-io0-f177.google.com with SMTP id t23-v6so4116522ioc.10
+        for <git@vger.kernel.org>; Thu, 10 May 2018 11:31:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=d4JZLub/V4+d3q1cWlTx+Pmc5Cu94ixg6uz5czUzrbM=;
-        b=vJgVkUtIF4dBptTHqRvpCZ//jZ4AjwylYjEoFemC4TIxMmH0j2KyBvgCEiPOCDxQmT
-         8PIDm2G0iBCB+Mccj1T03gdgiJgjisbVsecgrTGMzCr7ukTia6uOT69O0KBHGQKBid4P
-         +16GpKHQnHE+DZDkcwvBJjKyu5PEZP9n4NMC7g2SEIFzhrM+4nuF1oOuaVfxrNoMiGog
-         QbMWFjNzd2DeHL3GPidLAZg8HguoAPqPwpxFA4llgsDTVz3eJSUm0xA1eBfXi6EeEeuB
-         jrDa75xWi91YkIMh+TgZKkWTDTUmwRBBA0wLuNLp/wou+vTZEziXxu2ZitNmx3fSLI1t
-         AyIw==
+         :cc:content-transfer-encoding;
+        bh=hnDt0AlTc10O7vucZ1uzDEFBD0KTpAlNopyldAKM0/w=;
+        b=HYAGvjiITo85MHQYCi/RluqNFKUIVV1FrrQOrEHCqe2BEnnvTBdDy0aPRuYD0wu+yj
+         qtf0oZVUxMdcQpAdenlB8yEoy23HuPjZEFPPI+aGFRrP5B0wwbvI5h7VMhiyzp1XNvVm
+         xF8XNUdh7JCj9cL/J68H0t16XRY+VaZwOW4JCCGu97M6xuExMCOFHwooayDlmJsQqI/y
+         CcK7VSC+aLkKbFaIatWSslVF7gT+3OJtTflULXpEA5z5vV8sdJNNNqIQ/+L4jEudMaih
+         mwVyoTXdZBUbAWWSfVm9jzxtEFx27ll37wLwmoW/6HglR4dYsvqt9L9j60NLm6qBskXs
+         Pkuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=d4JZLub/V4+d3q1cWlTx+Pmc5Cu94ixg6uz5czUzrbM=;
-        b=d7wz+atnBLBD6ISHEC9UiuAFk/sQ40VPDf3lCceMEnSnsZoRJ/k9EeIe44npWHQuKX
-         nxwMBfOb7oBrCDAZ3qg3hUbHgoL9w+u1mc2ciBvQJRx05/sguCKNJO9ZIfZh3+Bl9qPD
-         jd0HFDQL+D/xhZlyJaXyF5CrsJbRj9/N9OJlFpYp1pIcCI6gVUS81myhS5fKvEKkS/y/
-         M9YYBYAgWeFubvBejkuDpa9A5vl4ND2s+GjO3Zla6L1vPBUT2kZwqGNNwyoSz9KPGPST
-         QiSj1I7eUX5NRCvcwjgiVq6EHYzLsAZkd2tU0bpIo4OYtByJ+3fDILmk6Uiae0chBUhn
-         bTvg==
-X-Gm-Message-State: ALKqPwd+LG6hU/o98eVkc5VdtHWwTWwdXlx5jK4zjqkU3YsdkXo+Klh2
-        wWRVITpjxzmvOIpQhOaVQOptlWoQWi4Q16mtYgM=
-X-Google-Smtp-Source: AB8JxZqs8UNPljpZSLtQh7ZLVjvYj2AqAWxHWI0Ea88nOj21j+ag0V4/C7ed45o5LLveFxO82EbG5VAn3FPBv8u+mO8=
-X-Received: by 2002:a17:902:b94a:: with SMTP id h10-v6mr2390346pls.321.1525976953938;
- Thu, 10 May 2018 11:29:13 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=hnDt0AlTc10O7vucZ1uzDEFBD0KTpAlNopyldAKM0/w=;
+        b=Gv9Qx6jS92kEDAZyH3hvcJezvFAPLspImcQsdp3C8ki0SX8CzozEK50l8u4mBVe8a/
+         8FBZaNlZJiOJLCm3avdbCOxnyu727J241eaZRkaAQmjKKrcogpxPS4xrG21VM1VjT6PA
+         Vm9fwi2tHXZ7wyBSu2tclBH1IWVX/aYRMb+m1BcpYUbY5piHYy7xIOQvFjO6OjsB1QJG
+         oPPuTdGpT2nLQ25crpf7qgG8XKlRqwE6sYKmxr+cxyYYeboaxrPFSFDooyDWuiruejw7
+         qCo5VB33EhWOod0wlqk8gkmi4TGXNW/LYRFgLFfuWXr3otup99ew9ZxLRX9y0q+QX6U5
+         4POQ==
+X-Gm-Message-State: ALKqPweyIsGnsBqZMtHNxCk2HLOquF5EZP59UZYQV/CFR9FwuCtZ05T5
+        z/ikwhi4evJBlPpyWdfc5iUJ/P7I6MCuAp69spq6OVQH
+X-Google-Smtp-Source: AB8JxZpLVoKkpHt7GDnQjV4XbrhUZhzRSgFY2kg44pJ4eW6DIjn4zHsfjP5hQ08XiF5nA74OTSxEDu13iJPlu42gEgU=
+X-Received: by 2002:a6b:9dc1:: with SMTP id g184-v6mr2516487ioe.41.1525977073058;
+ Thu, 10 May 2018 11:31:13 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Thu, 10 May 2018 11:29:13 -0700 (PDT)
-In-Reply-To: <20180510173345.40577-5-dstolee@microsoft.com>
-References: <20180417181028.198397-1-dstolee@microsoft.com>
- <20180510173345.40577-1-dstolee@microsoft.com> <20180510173345.40577-5-dstolee@microsoft.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 10 May 2018 20:29:13 +0200
-Message-ID: <CAN0heSoaTdkb5xcrEE4dY7aUpcTGCROyUbZ-HUUKFBHJ9zTGew@mail.gmail.com>
-Subject: Re: [PATCH 04/12] commit-graph: verify fanout and lookup table
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        "sbeller@google.com" <sbeller@google.com>,
-        "jnareb@gmail.com" <jnareb@gmail.com>,
-        "stolee@gmail.com" <stolee@gmail.com>
+Received: by 10.107.114.23 with HTTP; Thu, 10 May 2018 11:30:52 -0700 (PDT)
+In-Reply-To: <418E3D80-FE0F-436B-B9D1-475E49C4D75D@gmail.com>
+References: <418E3D80-FE0F-436B-B9D1-475E49C4D75D@gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Thu, 10 May 2018 20:30:52 +0200
+Message-ID: <CACBZZX7Mgsd8cSzZc0YTPgziB6FiFhPiHZ_mG5C_PCshrp4=vg@mail.gmail.com>
+Subject: Re: bug: SHA1 calculation on PPC machines when built with gcc older
+ than 4.6
+To:     Ken Cunningham <ken.cunningham.webuse@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10 May 2018 at 19:34, Derrick Stolee <dstolee@microsoft.com> wrote:
-> While running 'git commit-graph verify', verify that the object IDs
-> are listed in lexicographic order and that the fanout table correctly
-> navigates into that list of object IDs.
+On Thu, May 10, 2018 at 8:11 PM, Ken Cunningham
+<ken.cunningham.webuse@gmail.com> wrote:
+> Some vintage Apple PPC machines build a non-funtional version of git as o=
+f git 13.1 when using the stock gcc compilers that are installed with the O=
+S; the SHA1 calculations are faulty. This can be repaired with a simple pat=
+ch (attached).
 >
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  commit-graph.c | 33 +++++++++++++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
 >
-> diff --git a/commit-graph.c b/commit-graph.c
-> index ce11af1d20..b4c146c423 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -839,6 +839,9 @@ static int verify_commit_graph_error;
+> Stock vintage Apple PPC machines come with gcc-4.0 or gcc-4.2. On MacOS 1=
+0.4 and earlier, or when not using Apple Common Crypto on 10.5, git uses th=
+e SHA1 calculation code from here <https://github.com/cr-marcstevens/sha1co=
+llisiondetection>. The code in <https://github.com/cr-marcstevens/sha1colli=
+siondetection/blob/master/lib/sha1.c> tries to detect all systems that are =
+BIG_ENDIAN, but the above noted systems fall through because they fail the =
+tests.
 >
->  int verify_commit_graph(struct commit_graph *g)
->  {
-> +       uint32_t i, cur_fanout_pos = 0;
-> +       struct object_id prev_oid, cur_oid;
-> +
->         if (!g) {
->                 graph_report(_("no commit-graph file loaded"));
->                 return 1;
-> @@ -853,5 +856,35 @@ int verify_commit_graph(struct commit_graph *g)
->         if (!g->chunk_commit_data)
->                 graph_report(_("commit-graph is missing the Commit Data chunk"));
+> It appears that the primary test:
 >
-> +       for (i = 0; i < g->num_commits; i++) {
-> +               hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
+> #if defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__)
+>
+> only works as of gcc-4.6 and newer, so the code is built as LITTLE_ENDIAN=
+ on PPC with older gcc versions.
+>
+>
+> Issue report:
+>
+> <https://github.com/cr-marcstevens/sha1collisiondetection/issues/40>
+>
+>
+> MacPorts bug report:
+>
+> <https://trac.macports.org/ticket/54602>
+>
+>
+> The included patch to git fixes the issue on our testing.
+>
+> Thanks for git!
+>
+> Ken Cunningham
+>
+>
+>
+>
+> =3D=3D=3D=3D=3D
+>
+> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+> index 25eded1..5faf5a5 100644
+> --- a/sha1dc/sha1.c
+> +++ b/sha1dc/sha1.c
+> @@ -92,6 +92,10 @@
+>   */
+>  #define SHA1DC_BIGENDIAN
+>
+> +#elif (defined(__APPLE__) && defined(__BIG_ENDIAN__) && !defined(SHA1DC_=
+BIGENDIAN))
+> +/* older gcc compilers which are the default  on Apple PPC do not define=
+ __BYTE_ORDER__ */
+> +#define SHA1DC_BIGENDIAN
 > +
-> +               if (i > 0 && oidcmp(&prev_oid, &cur_oid) >= 0)
-> +                       graph_report(_("commit-graph has incorrect oid order: %s then %s"),
+>  /* Not under GCC-alike or glibc or *BSD or newlib or <processor whitelis=
+t> */
+>  #elif defined(SHA1DC_ON_INTEL_LIKE_PROCESSOR)
+>  /*
 
-Minor: I think our style would prefer s/i > 0/i/.
-
-I suppose the second check should be s/>=/>/, but it's not like it
-should matter. ;-)
-
-I wonder if this is a message that would virtually never make sense to a
-user, but more to a developer. Leave it untranslated to make sure any
-bug reports to the list are readable to us?
-
-> +
-> +               oid_to_hex(&prev_oid),
-> +               oid_to_hex(&cur_oid));
-
-Hmm, these two lines do not actually achieve anything?
-
-> +               oidcpy(&prev_oid, &cur_oid);
-> +
-> +               while (cur_oid.hash[0] > cur_fanout_pos) {
-> +                       uint32_t fanout_value = get_be32(g->chunk_oid_fanout + cur_fanout_pos);
-> +                       if (i != fanout_value)
-> +                               graph_report(_("commit-graph has incorrect fanout value: fanout[%d] = %u != %u"),
-> +                                            cur_fanout_pos, fanout_value, i);
-
-Same though re `_()`, even more so because of the more technical
-notation.
-
-> +
-> +                       cur_fanout_pos++;
-> +               }
-> +       }
-> +
-> +       while (cur_fanout_pos < 256) {
-> +               uint32_t fanout_value = get_be32(g->chunk_oid_fanout + cur_fanout_pos);
-> +
-> +               if (g->num_commits != fanout_value)
-> +                       graph_report(_("commit-graph has incorrect fanout value: fanout[%d] = %u != %u"),
-> +                                    cur_fanout_pos, fanout_value, i);
-
-Same here. Or maybe these should just give a translated user-readable
-basic idea of what is wrong and skip the details?
-
-Martin
+Thanks. As noted in
+https://public-inbox.org/git/87603xxc3k.fsf@evledraar.gmail.com/
+patches like this should be sent to the upstream, it appears you just
+opened an issue there, but sent the patch here. Could you open a PR
+with upstream with this patch?
