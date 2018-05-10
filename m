@@ -2,111 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 060CE1F406
-	for <e@80x24.org>; Thu, 10 May 2018 19:19:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 579CE1F406
+	for <e@80x24.org>; Thu, 10 May 2018 19:22:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750860AbeEJTTm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 15:19:42 -0400
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:42197 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750747AbeEJTTl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 15:19:41 -0400
-Received: by mail-wr0-f169.google.com with SMTP id v5-v6so3049281wrf.9
-        for <git@vger.kernel.org>; Thu, 10 May 2018 12:19:40 -0700 (PDT)
+        id S1750855AbeEJTWO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 15:22:14 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:37466 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750747AbeEJTWN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 15:22:13 -0400
+Received: by mail-yw0-f193.google.com with SMTP id u83-v6so879327ywc.4
+        for <git@vger.kernel.org>; Thu, 10 May 2018 12:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version
-         :content-transfer-encoding;
-        bh=yyABwkEGRqoecYQtVzTIExyBsJpObTLAIkrmkC5PNxY=;
-        b=DVElOwx9JYv1xYzSGUdb2l0Z4bgGqHxg8bV+nMNsl+XnoF01dqa/OroBzmerMuFJcS
-         dn2cvZSTGZV3Vwxd5/T46trUOSlDHkVBaAA1N7kMtIZ4/LlZ4jrMwHrBP5uOQ61qkjB+
-         hnRgYVj/MeC9Pj56dXQ97r42/pngF1g0t0eHy6bY+A5iM6wy36U2TYPjfLcQK6hGANXX
-         OiUNb7mrZAnsbidZ/JYnNQpGxK8bPX6pbRxD8ve6TOkzzFfTUN8fznXahWPWdOOXH8oA
-         GfWgoloQScvmhIOhn0KL5vW3EtOU6B5wxp+DZlJuGHs/YYzntbslXzVSwo0+Uvk16nLQ
-         6OqA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=rgaDkTHw0I5LZPxrHWYqPCcL9j6C8K86tafqqO9AsFc=;
+        b=vact3G9NFGinjLRHdxCO3CsXfhegKjFV/b4YgISOcdgoyv2ICgzIYpFLP6+WQGz6xb
+         WToYOI/J7XbVh/I99/fV/ZyCwHQDYd0BYcUYvaIUqcvxgN1FjXkXTD1HRk/aaQRjAlPs
+         uPjLNACXoWgiw9tn4BuOmy5urLGJ3fu6s1f1LzNcV5K8b0Utjteu7dC3k0mBQXl8HOWX
+         3ETnkxCIQTM+PEr3IoAS/Ov2wi73/dkQ82n+PUcltYhtCFr3Rld08YAMWf6Rm3R5coFq
+         hBKRy3uA/NeNQcc4Bpn0OEyJxIt+8LEkMCjc0ZZ2QV7PoZVpaW75lBjuonoNvE5Ovw9f
+         YEcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-transfer-encoding;
-        bh=yyABwkEGRqoecYQtVzTIExyBsJpObTLAIkrmkC5PNxY=;
-        b=Ck0gs0PqTnd1yJ/n0xWT9A4M4ud+t5p6Xwf4saYvP+rajiqG94wVkZvKgsZN4IxVp4
-         fWtTLXlaDX0zHATl76/z3aNnNya0CvYzzAC4eNIUaaUtMtoEESKwuWq7GNQdTReARnGF
-         jd6OFIP4K0STEy2PhfrK/JYtx/K7bJOJ3cHN6X8/AuRHKeu14ROkvSeTCBhhC3Ebc2LE
-         rfK0XsfrFI4CxQrwtcJ5T7/FVKezd9QMGWEOGGk8wXYCYJ9Lg2gCDQqAeUWMcCD42A8F
-         wmiIHK46Q3tNY8HZsFJX+emVi9MxZ4SnC3s3IspEnDA9dFAQm53i9cHs/tDyuq/rclHH
-         a4Vw==
-X-Gm-Message-State: ALKqPwfX4ciaxcJP1MSNoKu97FBFlozhk8Wq21ObkFSnBX77bp6lwql7
-        Msfu80kdcw03R4apD8FiTZJXWA==
-X-Google-Smtp-Source: AB8JxZqgIU+nrvz8svc3laepasTtMfOfFs74ATLpaPDbwtLcqnQWhJ3OKna7KWrtyGk/Qjo7eMRVUA==
-X-Received: by 2002:adf:8567:: with SMTP id 94-v6mr2114856wrh.156.1525979979801;
-        Thu, 10 May 2018 12:19:39 -0700 (PDT)
-Received: from martofr (187.186.24.109.rev.sfr.net. [109.24.186.187])
-        by smtp.gmail.com with ESMTPSA id x65-v6sm2209911wme.31.2018.05.10.12.19.38
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 May 2018 12:19:38 -0700 (PDT)
-Date:   Thu, 10 May 2018 21:21:52 +0200
-From:   Martin Kunev <martinkunev@gmail.com>
-To:     git@vger.kernel.org
-Subject: Bug: Untracked file deleted by git-stash
-Message-ID: <20180510212152.08d2b9a7@martofr>
-X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=rgaDkTHw0I5LZPxrHWYqPCcL9j6C8K86tafqqO9AsFc=;
+        b=O0zbG66MQ67mSd+yfbKpWLSR+qmSzNBbBbtcF6xMp2dpd3s8g+DXQzqdd/Vcp2o20s
+         K79PkYSqKIc4W4RklBgOq8U9Bc/vBgqRCguo45svnGYwQNtU4Po8iKjnoinDMVlh2y4/
+         dX/ZtoUGK2OSsMrqwBf89kfhBFGO7U8IYtWnmO8m0Asij10jiD4sHUiSwj301999jvI9
+         2VORMY6qKw1nvzZMkb24/QYpslg+U/U0jLfSISDvuMcjUPfwbS1Q7g7rDu31Hgh8ZTaA
+         SjbeQInLv+b2C+iP13DHRTeN1z4OutkvkogfAkP04EuVnPjcWF1MdNe+EMpuvl/6oDU4
+         en5w==
+X-Gm-Message-State: ALKqPwd7fg2U4z6pdC15dWj8Wijy0xIfVEfo5EE31GlZXsioFT6jwfVe
+        ibaIu49NtcxrjyYBXzIx1C4wyM/nhENfBWA2ynvunZ0f
+X-Google-Smtp-Source: AB8JxZrDYG7xinshdyoi64v5SYijGLTFky3yBjT69vaJsp1lqL9fSXncIclRdhqASN3shmVoqLRpxecqPtlhAQAqR1s=
+X-Received: by 2002:a81:9447:: with SMTP id l68-v6mr1283242ywg.345.1525980132629;
+ Thu, 10 May 2018 12:22:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Thu, 10 May 2018 12:22:12
+ -0700 (PDT)
+In-Reply-To: <CAN0heSo-1+BvE0SiZMKT1zHZ4o+-mK0W9S+xxDA4Pyw3iTvpDQ@mail.gmail.com>
+References: <20180417181028.198397-1-dstolee@microsoft.com>
+ <20180510173345.40577-1-dstolee@microsoft.com> <CAN0heSo-1+BvE0SiZMKT1zHZ4o+-mK0W9S+xxDA4Pyw3iTvpDQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 10 May 2018 12:22:12 -0700
+Message-ID: <CAGZ79kY1m_6AdUoRx1L2=HzX7hG_uUUcYnLsb=VNdxPcvnpOEg@mail.gmail.com>
+Subject: Re: [PATCH 00/12] Integrate commit-graph into fsck, gc, and fetch
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "jnareb@gmail.com" <jnareb@gmail.com>,
+        "stolee@gmail.com" <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I stumbled upon the following issue with git 2.11.0 on Debian 9.
+On Thu, May 10, 2018 at 12:05 PM, Martin =C3=85gren <martin.agren@gmail.com=
+> wrote:
+> On 10 May 2018 at 19:34, Derrick Stolee <dstolee@microsoft.com> wrote:
+>
+>> Commits 01-07 focus on the 'git commit-graph verify' subcommand. These
+>> are ready for full, rigorous review.
+>
+> I don't know about "full" and "rigorous", but I tried to offer my thought=
+s.
+>
+> A lingering feeling I have is that users could possibly benefit from
+> seeing "the commit-graph has a bad foo" a bit more than just "the
+> commit-graph is bad". But adding "the bar is baz, should have been
+> frotz" might not bring that much. Maybe you could keep the translatable
+> string somewhat simple, then, if the more technical data could be useful
+> to Git developers, dump it in a non-translated format. (I guess it could
+> be hidden behind a debug switch, but let's take one step at a time..)
+> This is nothing I feel strongly about.
+>
+>>  t/t5318-commit-graph.sh                  |  25 +++++
+>
+> I wonder about tests. Some tests seem to use `dd` to corrupt files and
+> check that it gets caught. Doing this in a a hash-agnostic way could be
+> tricky, but maybe not impossible. I guess we could do something
+> probabilistic, like "set the first two bytes of the very last OID to
+> zero -- surely all OIDs can't start with 16 zero bits". Hmm, that might
+> still require knowing the size of the OIDs...
+>
+> I hope to find time to do some more hands-on testing of this to see that
+> errors actually do get caught.
 
-When a tracked file is removed and a directory with the same name is created, git-stash would delete the directory with all its contents. No warning is displayed and git stores no information about the deleted content (as far as I can tell). The following steps can be used to reproduce:
+Given that the commit graph is secondary data, the users work around
+to quickly get back to a well working repository is most likely to remove
+the file and regenerate it.
+As a developer who wants to fix the bug, a stacktrace/datadump and the
+history of git commands might be most valuable, but I agree we should
+hide that behind a debug flag.
 
-$ mkdir /tmp/bug; cd /tmp/bug
-$ git init
-Initialized empty Git repository in /tmp/bug/.git/
-$ echo 'original file' > entry
-$ git add entry
-$ git commit -m 'entry added'
-[master (root-commit) 483319e] entry added
- 1 file changed, 1 insertion(+)
- create mode 100644 entry
-$ rm entry
-removed 'entry'
-$ mkdir entry
-$ echo 'data that will be destroyed' > entry/content
-$ git status
-On branch master
-Changes not staged for commit:
-    deleted:    entry
+Packfiles and loose objects are primary data, which means that those
+need a more advanced way to diagnose and repair them, so I would imagine
+the commit graph fsck is closer to bitmaps fsck, which I would have suspect=
+ed
+to be found in t5310, but a quick read doesn't reveal many tests that are
+checking for integrity. So I guess the test coverage here is ok, (although =
+we
+should always ask for more)
 
-no changes added to commit
-$ ls -l
-total 4
-drwxr-xr-x 2 martin root 4096 May 10 21:16 entry
-$ git stash
-Saved working directory and index state WIP on master: 483319e entry added
-HEAD is now at 483319e entry added
-
-After the stash, the working tree contains only the regular file entry and the stash contains no information about the directory or its contents:
-
-$ ls -l
-total 4
--rw-r--r-- 1 martin root 5 May 10 21:16 entry
-$ git status
-On branch master
-nothing to commit, working tree clean
-$ git stash show -p
-diff --git a/entry b/entry
-deleted file mode 100644
-index 1269488..0000000
---- a/entry
-+++ /dev/null
-@@ -1 +0,0 @@
--original file
+Thanks,
+Stefan
