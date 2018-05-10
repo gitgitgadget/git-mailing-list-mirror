@@ -2,71 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2FFE1F42D
-	for <e@80x24.org>; Thu, 10 May 2018 11:04:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DFEA1F42D
+	for <e@80x24.org>; Thu, 10 May 2018 11:56:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756940AbeEJLEf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 07:04:35 -0400
-Received: from mail2.luminati.io ([54.243.100.238]:38387 "EHLO
-        mail2.luminati.io" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756777AbeEJLEe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 07:04:34 -0400
-Received: (Haraka outbound); Thu, 10 May 2018 11:04:36 +0000
-Authentication-Results: mail2.luminati.io; auth=pass (cram-md5)
-Received: from [10.71.1.143] (wall-ext.hola.org [212.235.66.73])
-        by mail2.luminati.io (Haraka/2.8.18) with ESMTPSA id 2155F67A-B7B5-4F2A-AEB8-3D47FF106E8A.1
-        envelope-from <michals@luminati.io> (authenticated bits=0)
-        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 verify=FAIL);
-        Thu, 10 May 2018 11:04:36 +0000
-Subject: Re: Generate more revenue from Git
-From:   Michal Sapozhnikov <michals@luminati.io>
-To:     git@vger.kernel.org
-References: <c3a424c5-bc14-00e1-af7f-a74200951edf@luminati.io>
- <1524395775112-86a2bc81-14696dc9-89400ff8@luminati.io>
- <68d50093-ad42-4c37-182a-14c22a47f6b4@luminati.io>
- <1525935691167-07938f49-061f4138-3ce36d79@luminati.io>
-Message-ID: <44bf86cc-81b2-d15c-9ea3-794f15ac637e@luminati.io>
-Date:   Thu, 10 May 2018 14:04:31 +0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1757225AbeEJL42 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 07:56:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34628 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1757141AbeEJL40 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 07:56:26 -0400
+Received: (qmail 32656 invoked by uid 109); 10 May 2018 11:56:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 May 2018 11:56:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23004 invoked by uid 111); 10 May 2018 11:56:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 10 May 2018 07:56:30 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2018 07:56:23 -0400
+Date:   Thu, 10 May 2018 07:56:23 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] replace-object.c: remove the_repository from
+ prepare_replace_object
+Message-ID: <20180510115623.GA20632@sigill.intra.peff.net>
+References: <20180509234059.52156-1-sbeller@google.com>
+ <20180509234059.52156-2-sbeller@google.com>
+ <xmqqtvrfizce.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <1525935691167-07938f49-061f4138-3ce36d79@luminati.io>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Feedback-ID: regeneratemorerevenuefromgit:michals:smtp:luminati
-DKIM-Signature: v=1;a=rsa-sha256;bh=s5lSu+zTAyQNoloCU1zDFuRlxH81MM1KfeqORZdK038=;c=relaxed/simple;d=luminati.io;h=from;s=dkim;b=xjAumVPUWyvwS4JRHrtD1q5VlBgLX29NkP6NON4MqSqwbX6GQJxr75BzpnhcSUknbwywZs+XLHS+aSbHQM0ugKUjeXbxncHzt7JOJKu0cEBLjBZn15r7+9FH7vqSvzGq8ZkbOrH6DX5xEdWAAi+evsWG2dX7UxkOV3c8N7WuZTc=
+Content-Disposition: inline
+In-Reply-To: <xmqqtvrfizce.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, May 10, 2018 at 07:23:13PM +0900, Junio C Hamano wrote:
 
-I am writing with the hope of talking to the appropriate person who handles the
-app's monetization.
-If it makes sense to have a call, let me know how your schedule looks.
+> This one was doing
+> 
+> 	ptr = xmalloc(sizeof(*another_ptr))
+> 
+> and it was OK because ptr and another_ptr happened to be of the same
+> type.  I wonder if we are making it safer, or making it more obscure
+> to seasoned C programmers, if we introduced a pair of helper macros,
+> perhaps like these:
+> 
+> 	#define ALLOCATE(ptr) (ptr) = xmalloc(sizeof(*(ptr)))
+> 	#define CALLOCATE(ptr,cnt) (ptr) = xcalloc((cnt), sizeof(*(ptr)))
 
-Best Regards,
--- 
-Michal Sapozhnikov | Business Manager, Luminati SDK | +972-50-2826778 | Skype:
-live:michals_43
-http://luminati.io/sdk
+I've often wondered that, too. It's the natural endgame of the
+ALLOC_ARRAY() road we've been going down.
 
-On 03-May-18 09:58, 7d (by eremind) wrote:
-> 
-> Hello,
-> 
-> Following up on my last email,
-> 
-> It would be great to setup a call this week.
-> 
-> Looking forward to your response.
-> 
-> Best Regards,
-> 
+-Peff
