@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA8511F406
-	for <e@80x24.org>; Thu, 10 May 2018 21:19:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55E991F406
+	for <e@80x24.org>; Thu, 10 May 2018 21:19:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752579AbeEJVT0 (ORCPT <rfc822;e@80x24.org>);
+        id S1752536AbeEJVT2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 17:19:28 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:35825 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752577AbeEJVT0 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 10 May 2018 17:19:26 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:46075 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752419AbeEJVTY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 17:19:24 -0400
-Received: by mail-pf0-f195.google.com with SMTP id c10-v6so1657915pfi.12
-        for <git@vger.kernel.org>; Thu, 10 May 2018 14:19:23 -0700 (PDT)
+Received: by mail-pl0-f67.google.com with SMTP id i5-v6so2011249plt.2
+        for <git@vger.kernel.org>; Thu, 10 May 2018 14:19:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dllNC9txE10aflhyqRIg8/2q9fRjZERySoPc0lLCayA=;
-        b=U0wkAmeWMzYJ/9z03jjF86Ko5waEeNOmPyANR0qCa7xn3xdoBu3ph1wZg+VMXGiywy
-         JP/uhkzybr0ddkaQTxT2vXqKISCxFexKX71goBl9+JsdZiZsKx8pYgZuGuCVSeZd/E2i
-         wz2ukz2xxLQXZy8J9zWOk/j3dy8ZcEg+okmrkWMXC2KrVfp+y1+sFH60orpsjeJmefdV
-         i80Hq31MQkDvc9OV7KD13Nj8olYje4DSB2pZ13zME9UEPqQ8HqTv7ssZMQHNxtEITybx
-         NMW6UAxH4JEZx6YTP9nWrKL2/BHXkGRkQ/aP2FjnfOKYCnxaIIxErImz3HlwErso3ECG
-         LReA==
+        bh=9I9Zn4XAzuHMqOS30bUqwTufoOdwXL1kXkoDdv2nExU=;
+        b=ss+Wrp6PYeXeVVmSxLmKTbUANgARLl2pAv1FID+A3SB/+6fxCcy4BkY6nojSveaGCF
+         6/E/GQqFGp1TVeMKDjvvlZjgYrS1CJcRrIfpDodMbyVJXvXJcBW94d6kAkSj6RgGjWXG
+         nvxDQPgR2IzJ4Uf1NH15d2S0248E3FAPQFRyYSjGmF6cG8cJMToV0VDPF7kuAU4CertX
+         Mczs2c6mtXfNjdeh5bypUni74ZSchbCzS4SidLvzpiUVYvoga5LQhh/poinMDMXgpwft
+         XKx3HtwxpHiRM9uHwHudyssnzWywYVJjfjgW8KoemA4HLdyF7Xv4czcG3NI8pW7YrijA
+         qJOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=dllNC9txE10aflhyqRIg8/2q9fRjZERySoPc0lLCayA=;
-        b=hTxLyjZdt3cEu2sotxMiqROAD9TlXxdh7Jl8nRF4eV2OUPN3jaoi9r+qt1yYNVuaxG
-         sB7rEaVRknbmPG2UsHNRNH/jw5Yeg9/6VkX109tFpCUq/BHs/m0o64OIJK+LdZmVwpG4
-         3y9caxTfVel2qe+6js/miLpZIvPkIfUDdt6qN46aRo0WTN1IcwvKOO2kFFAS2Vxxrf9w
-         nJO3fgjJuEa47aW/ai01e6Bb4mOROOPsc7K2XktMti1bCAEFUmXe7g1U7VTOvi8BfXJ+
-         h4MWQK5OKCbZyi+J0pPTQdluAhEfa3PY/UId6AzF5y2WPmC0x41teTZVxTaMvw+yGk/D
-         yHyQ==
-X-Gm-Message-State: ALKqPwfGTOrhvIx44vFurb6RjEI+00duXUy0T4kVXjZv+5MyJWHn8xgh
-        KR/2qzOMT+9fIQXlwPhWVhXW3hO984U=
-X-Google-Smtp-Source: AB8JxZo9QfpnXwPviI9Jqd4EqsF430rVOWTY/wme9yiuKg3ZEyix5QSIL6gNb2P126xM9ofuSW5D4A==
-X-Received: by 2002:a62:d97:: with SMTP id 23-v6mr2844468pfn.231.1525987163070;
-        Thu, 10 May 2018 14:19:23 -0700 (PDT)
+        bh=9I9Zn4XAzuHMqOS30bUqwTufoOdwXL1kXkoDdv2nExU=;
+        b=XE8olJ/w6mtYw1OwPHVugy61qKWj9q3eiBRGBan2pwHMibhiavtwGAhZInV6Iu24Af
+         bifKeYNOgmqY6uPX4Ssq8tt35WInaUQxay4lCVJmU5y6hzkPMfrf0r40tHOhfeZwaqPY
+         yMDcPQqsBYIKS1J66g8w+08JIYG493Hyu39/p08E39xmz/dDbnZIw2x2KiIiOPWbGtnt
+         VLDs7T1HEU5RuGyjl9Omf+bLZ4Jtul2FO+cd/+ieMSIKx+/CQYlMjMRbdUyKp35+NAWv
+         7oj24vPszRKd9azo6hwter5EfywDQwx5cCaoklBAngvf52PgEEwVaEl9E+PEP1paWHci
+         TIFg==
+X-Gm-Message-State: ALKqPwe/8PYACGBB8EFHYVmE/jT2mFvCNNTdEtyqjD9lANjTZtfwjmox
+        wyqD2L7OfNFg92aB7/Wf3YJ4jw==
+X-Google-Smtp-Source: AB8JxZqXtqERGv0JB6PQFezNPqraXve0qkq8YEnCEF8ASHS9cM0i7IiHdjuoPlvElgo9+mE5LVrDSw==
+X-Received: by 2002:a17:902:7008:: with SMTP id y8-v6mr2808556plk.141.1525987164577;
+        Thu, 10 May 2018 14:19:24 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id 185-v6sm3498070pfu.13.2018.05.10.14.19.21
+        by smtp.gmail.com with ESMTPSA id z13-v6sm3014735pfe.77.2018.05.10.14.19.23
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 May 2018 14:19:21 -0700 (PDT)
+        Thu, 10 May 2018 14:19:24 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     leif.middelschulte@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com,
         sandals@crustytoothpaste.ath.cx, sbeller@google.com
-Subject: [PATCH 1/2] submodule.c: move submodule merging to merge-recursive.c
-Date:   Thu, 10 May 2018 14:19:16 -0700
-Message-Id: <20180510211917.138518-2-sbeller@google.com>
+Subject: [PATCH 2/2] merge-recursive: i18n submodule merge output and respect verbosity
+Date:   Thu, 10 May 2018 14:19:17 -0700
+Message-Id: <20180510211917.138518-3-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.255.g8bfb7c0704
 In-Reply-To: <20180510211917.138518-1-sbeller@google.com>
 References: <CANw0+A_T5zDUUWznYBe0m9fkSODPnfQaK1yJKPPawHTxi9+9BQ@mail.gmail.com>
@@ -64,417 +64,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later patch we want to improve submodule merging by using the output()
-function in merge-recursive.c for submodule merges to deliver a consistent
-UI to users.
-
-To do so we could either make the output() function globally available
-so we can use it in submodule.c#merge_submodule(), or we could integrate
-the submodule merging into the merging code. Choose the later as we
-generally want to move submodules closer into the core.
-
-Therefore we move any function related to merging submodules
-(merge_submodule(), find_first_merges() and print_commit) to
-merge-recursive.c.  We'll keep add_submodule_odb() in submodule.c as it
-is used by other submodule functions. While at it, add a TODO note that
-we do not really like the function add_submodule_odb().
-
-This commit is best viewed with --color-moved.
+The submodule merge code now uses the output() function that is used by
+all the rest of the merge-recursive-code. This allows for respecting
+internationalisation as well as the verbosity setting.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- merge-recursive.c | 166 +++++++++++++++++++++++++++++++++++++++++++++
- submodule.c       | 168 +---------------------------------------------
- submodule.h       |   6 +-
- 3 files changed, 170 insertions(+), 170 deletions(-)
+ merge-recursive.c | 33 +++++++++++++++------------------
+ 1 file changed, 15 insertions(+), 18 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 0c0d48624da..700ba15bf88 100644
+index 700ba15bf88..a4b91d17f87 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -23,6 +23,7 @@
- #include "merge-recursive.h"
- #include "dir.h"
- #include "submodule.h"
-+#include "revision.h"
- 
- struct path_hashmap_entry {
- 	struct hashmap_entry e;
-@@ -977,6 +978,171 @@ static int merge_3way(struct merge_options *o,
- 	return merge_status;
+@@ -1048,18 +1048,17 @@ static void print_commit(struct commit *commit)
+ 	strbuf_release(&sb);
  }
  
-+static int find_first_merges(struct object_array *result, const char *path,
-+		struct commit *a, struct commit *b)
-+{
-+	int i, j;
-+	struct object_array merges = OBJECT_ARRAY_INIT;
-+	struct commit *commit;
-+	int contains_another;
-+
-+	char merged_revision[42];
-+	const char *rev_args[] = { "rev-list", "--merges", "--ancestry-path",
-+				   "--all", merged_revision, NULL };
-+	struct rev_info revs;
-+	struct setup_revision_opt rev_opts;
-+
-+	memset(result, 0, sizeof(struct object_array));
-+	memset(&rev_opts, 0, sizeof(rev_opts));
-+
-+	/* get all revisions that merge commit a */
-+	xsnprintf(merged_revision, sizeof(merged_revision), "^%s",
-+			oid_to_hex(&a->object.oid));
-+	init_revisions(&revs, NULL);
-+	rev_opts.submodule = path;
-+	/* FIXME: can't handle linked worktrees in submodules yet */
-+	revs.single_worktree = path != NULL;
-+	setup_revisions(ARRAY_SIZE(rev_args)-1, rev_args, &revs, &rev_opts);
-+
-+	/* save all revisions from the above list that contain b */
-+	if (prepare_revision_walk(&revs))
-+		die("revision walk setup failed");
-+	while ((commit = get_revision(&revs)) != NULL) {
-+		struct object *o = &(commit->object);
-+		if (in_merge_bases(b, commit))
-+			add_object_array(o, NULL, &merges);
-+	}
-+	reset_revision_walk();
-+
-+	/* Now we've got all merges that contain a and b. Prune all
-+	 * merges that contain another found merge and save them in
-+	 * result.
-+	 */
-+	for (i = 0; i < merges.nr; i++) {
-+		struct commit *m1 = (struct commit *) merges.objects[i].item;
-+
-+		contains_another = 0;
-+		for (j = 0; j < merges.nr; j++) {
-+			struct commit *m2 = (struct commit *) merges.objects[j].item;
-+			if (i != j && in_merge_bases(m2, m1)) {
-+				contains_another = 1;
-+				break;
-+			}
-+		}
-+
-+		if (!contains_another)
-+			add_object_array(merges.objects[i].item, NULL, result);
-+	}
-+
-+	object_array_clear(&merges);
-+	return result->nr;
-+}
-+
-+static void print_commit(struct commit *commit)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	struct pretty_print_context ctx = {0};
-+	ctx.date_mode.type = DATE_NORMAL;
-+	format_commit_message(commit, " %h: %m %s", &sb, &ctx);
-+	fprintf(stderr, "%s\n", sb.buf);
-+	strbuf_release(&sb);
-+}
-+
-+#define MERGE_WARNING(path, msg) \
-+	warning("Failed to merge submodule %s (%s)", path, msg);
-+
-+static int merge_submodule(struct object_id *result, const char *path,
-+			   const struct object_id *base, const struct object_id *a,
-+			   const struct object_id *b, int search)
-+{
-+	struct commit *commit_base, *commit_a, *commit_b;
-+	int parent_count;
-+	struct object_array merges;
-+
-+	int i;
-+
-+	/* store a in result in case we fail */
-+	oidcpy(result, a);
-+
-+	/* we can not handle deletion conflicts */
-+	if (is_null_oid(base))
-+		return 0;
-+	if (is_null_oid(a))
-+		return 0;
-+	if (is_null_oid(b))
-+		return 0;
-+
-+	if (add_submodule_odb(path)) {
-+		MERGE_WARNING(path, "not checked out");
-+		return 0;
-+	}
-+
-+	if (!(commit_base = lookup_commit_reference(base)) ||
-+	    !(commit_a = lookup_commit_reference(a)) ||
-+	    !(commit_b = lookup_commit_reference(b))) {
-+		MERGE_WARNING(path, "commits not present");
-+		return 0;
-+	}
-+
-+	/* check whether both changes are forward */
-+	if (!in_merge_bases(commit_base, commit_a) ||
-+	    !in_merge_bases(commit_base, commit_b)) {
-+		MERGE_WARNING(path, "commits don't follow merge-base");
-+		return 0;
-+	}
-+
-+	/* Case #1: a is contained in b or vice versa */
-+	if (in_merge_bases(commit_a, commit_b)) {
-+		oidcpy(result, b);
-+		return 1;
-+	}
-+	if (in_merge_bases(commit_b, commit_a)) {
-+		oidcpy(result, a);
-+		return 1;
-+	}
-+
-+	/*
-+	 * Case #2: There are one or more merges that contain a and b in
-+	 * the submodule. If there is only one, then present it as a
-+	 * suggestion to the user, but leave it marked unmerged so the
-+	 * user needs to confirm the resolution.
-+	 */
-+
-+	/* Skip the search if makes no sense to the calling context.  */
-+	if (!search)
-+		return 0;
-+
-+	/* find commit which merges them */
-+	parent_count = find_first_merges(&merges, path, commit_a, commit_b);
-+	switch (parent_count) {
-+	case 0:
-+		MERGE_WARNING(path, "merge following commits not found");
-+		break;
-+
-+	case 1:
-+		MERGE_WARNING(path, "not fast-forward");
-+		fprintf(stderr, "Found a possible merge resolution "
-+				"for the submodule:\n");
-+		print_commit((struct commit *) merges.objects[0].item);
-+		fprintf(stderr,
-+			"If this is correct simply add it to the index "
-+			"for example\n"
-+			"by using:\n\n"
-+			"  git update-index --cacheinfo 160000 %s \"%s\"\n\n"
-+			"which will accept this suggestion.\n",
-+			oid_to_hex(&merges.objects[0].item->oid), path);
-+		break;
-+
-+	default:
-+		MERGE_WARNING(path, "multiple merges found");
-+		for (i = 0; i < merges.nr; i++)
-+			print_commit((struct commit *) merges.objects[i].item);
-+	}
-+
-+	object_array_clear(&merges);
-+	return 0;
-+}
-+
- static int merge_file_1(struct merge_options *o,
- 					   const struct diff_filespec *one,
- 					   const struct diff_filespec *a,
-diff --git a/submodule.c b/submodule.c
-index 74d35b25779..654089b3647 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -153,7 +153,8 @@ void stage_updated_gitmodules(struct index_state *istate)
- 		die(_("staging updated .gitmodules failed"));
- }
- 
--static int add_submodule_odb(const char *path)
-+/* TODO: remove this function, use repo_submodule_init instead. */
-+int add_submodule_odb(const char *path)
- {
- 	struct strbuf objects_directory = STRBUF_INIT;
- 	int ret = 0;
-@@ -1701,171 +1702,6 @@ int submodule_move_head(const char *path,
- 	return ret;
- }
- 
--static int find_first_merges(struct object_array *result, const char *path,
--		struct commit *a, struct commit *b)
--{
--	int i, j;
--	struct object_array merges = OBJECT_ARRAY_INIT;
--	struct commit *commit;
--	int contains_another;
--
--	char merged_revision[42];
--	const char *rev_args[] = { "rev-list", "--merges", "--ancestry-path",
--				   "--all", merged_revision, NULL };
--	struct rev_info revs;
--	struct setup_revision_opt rev_opts;
--
--	memset(result, 0, sizeof(struct object_array));
--	memset(&rev_opts, 0, sizeof(rev_opts));
--
--	/* get all revisions that merge commit a */
--	xsnprintf(merged_revision, sizeof(merged_revision), "^%s",
--			oid_to_hex(&a->object.oid));
--	init_revisions(&revs, NULL);
--	rev_opts.submodule = path;
--	/* FIXME: can't handle linked worktrees in submodules yet */
--	revs.single_worktree = path != NULL;
--	setup_revisions(ARRAY_SIZE(rev_args)-1, rev_args, &revs, &rev_opts);
--
--	/* save all revisions from the above list that contain b */
--	if (prepare_revision_walk(&revs))
--		die("revision walk setup failed");
--	while ((commit = get_revision(&revs)) != NULL) {
--		struct object *o = &(commit->object);
--		if (in_merge_bases(b, commit))
--			add_object_array(o, NULL, &merges);
--	}
--	reset_revision_walk();
--
--	/* Now we've got all merges that contain a and b. Prune all
--	 * merges that contain another found merge and save them in
--	 * result.
--	 */
--	for (i = 0; i < merges.nr; i++) {
--		struct commit *m1 = (struct commit *) merges.objects[i].item;
--
--		contains_another = 0;
--		for (j = 0; j < merges.nr; j++) {
--			struct commit *m2 = (struct commit *) merges.objects[j].item;
--			if (i != j && in_merge_bases(m2, m1)) {
--				contains_another = 1;
--				break;
--			}
--		}
--
--		if (!contains_another)
--			add_object_array(merges.objects[i].item, NULL, result);
--	}
--
--	object_array_clear(&merges);
--	return result->nr;
--}
--
--static void print_commit(struct commit *commit)
--{
--	struct strbuf sb = STRBUF_INIT;
--	struct pretty_print_context ctx = {0};
--	ctx.date_mode.type = DATE_NORMAL;
--	format_commit_message(commit, " %h: %m %s", &sb, &ctx);
--	fprintf(stderr, "%s\n", sb.buf);
--	strbuf_release(&sb);
--}
--
 -#define MERGE_WARNING(path, msg) \
 -	warning("Failed to merge submodule %s (%s)", path, msg);
 -
--int merge_submodule(struct object_id *result, const char *path,
--		    const struct object_id *base, const struct object_id *a,
--		    const struct object_id *b, int search)
--{
--	struct commit *commit_base, *commit_a, *commit_b;
--	int parent_count;
--	struct object_array merges;
--
--	int i;
--
--	/* store a in result in case we fail */
--	oidcpy(result, a);
--
--	/* we can not handle deletion conflicts */
--	if (is_null_oid(base))
--		return 0;
--	if (is_null_oid(a))
--		return 0;
--	if (is_null_oid(b))
--		return 0;
--
--	if (add_submodule_odb(path)) {
+-static int merge_submodule(struct object_id *result, const char *path,
++static int merge_submodule(struct merge_options *o,
++			   struct object_id *result, const char *path,
+ 			   const struct object_id *base, const struct object_id *a,
+-			   const struct object_id *b, int search)
++			   const struct object_id *b)
+ {
+ 	struct commit *commit_base, *commit_a, *commit_b;
+ 	int parent_count;
+ 	struct object_array merges;
+ 
+ 	int i;
++	int search = !o->call_depth;
+ 
+ 	/* store a in result in case we fail */
+ 	oidcpy(result, a);
+@@ -1073,21 +1072,21 @@ static int merge_submodule(struct object_id *result, const char *path,
+ 		return 0;
+ 
+ 	if (add_submodule_odb(path)) {
 -		MERGE_WARNING(path, "not checked out");
--		return 0;
--	}
--
--	if (!(commit_base = lookup_commit_reference(base)) ||
--	    !(commit_a = lookup_commit_reference(a)) ||
--	    !(commit_b = lookup_commit_reference(b))) {
++		output(o, 1, _("Failed to merge submodule %s (not checked out)"), path);
+ 		return 0;
+ 	}
+ 
+ 	if (!(commit_base = lookup_commit_reference(base)) ||
+ 	    !(commit_a = lookup_commit_reference(a)) ||
+ 	    !(commit_b = lookup_commit_reference(b))) {
 -		MERGE_WARNING(path, "commits not present");
--		return 0;
--	}
--
--	/* check whether both changes are forward */
--	if (!in_merge_bases(commit_base, commit_a) ||
--	    !in_merge_bases(commit_base, commit_b)) {
++		output(o, 1, _("Failed to merge submodule %s (commits not present)"), path);
+ 		return 0;
+ 	}
+ 
+ 	/* check whether both changes are forward */
+ 	if (!in_merge_bases(commit_base, commit_a) ||
+ 	    !in_merge_bases(commit_base, commit_b)) {
 -		MERGE_WARNING(path, "commits don't follow merge-base");
--		return 0;
--	}
--
--	/* Case #1: a is contained in b or vice versa */
--	if (in_merge_bases(commit_a, commit_b)) {
--		oidcpy(result, b);
--		return 1;
--	}
--	if (in_merge_bases(commit_b, commit_a)) {
--		oidcpy(result, a);
--		return 1;
--	}
--
--	/*
--	 * Case #2: There are one or more merges that contain a and b in
--	 * the submodule. If there is only one, then present it as a
--	 * suggestion to the user, but leave it marked unmerged so the
--	 * user needs to confirm the resolution.
--	 */
--
--	/* Skip the search if makes no sense to the calling context.  */
--	if (!search)
--		return 0;
--
--	/* find commit which merges them */
--	parent_count = find_first_merges(&merges, path, commit_a, commit_b);
--	switch (parent_count) {
--	case 0:
++		output(o, 1, _("Failed to merge submodule %s (commits don't follow merge-base)"), path);
+ 		return 0;
+ 	}
+ 
+@@ -1116,25 +1115,24 @@ static int merge_submodule(struct object_id *result, const char *path,
+ 	parent_count = find_first_merges(&merges, path, commit_a, commit_b);
+ 	switch (parent_count) {
+ 	case 0:
 -		MERGE_WARNING(path, "merge following commits not found");
--		break;
--
--	case 1:
++		output(o, 1, _("Failed to merge submodule %s (merge following commits not found)"), path);
+ 		break;
+ 
+ 	case 1:
 -		MERGE_WARNING(path, "not fast-forward");
 -		fprintf(stderr, "Found a possible merge resolution "
 -				"for the submodule:\n");
--		print_commit((struct commit *) merges.objects[0].item);
++		output(o, 1, _("Failed to merge submodule %s (not fast-forward)"), path);
++		output(o, 1, _("Found a possible merge resolution for the submodule:\n"));
+ 		print_commit((struct commit *) merges.objects[0].item);
 -		fprintf(stderr,
--			"If this is correct simply add it to the index "
--			"for example\n"
--			"by using:\n\n"
--			"  git update-index --cacheinfo 160000 %s \"%s\"\n\n"
++		output(o, 1, _(
+ 			"If this is correct simply add it to the index "
+ 			"for example\n"
+ 			"by using:\n\n"
+ 			"  git update-index --cacheinfo 160000 %s \"%s\"\n\n"
 -			"which will accept this suggestion.\n",
--			oid_to_hex(&merges.objects[0].item->oid), path);
--		break;
--
--	default:
--		MERGE_WARNING(path, "multiple merges found");
--		for (i = 0; i < merges.nr; i++)
--			print_commit((struct commit *) merges.objects[i].item);
--	}
--
--	object_array_clear(&merges);
--	return 0;
--}
--
- /*
-  * Embeds a single submodules git directory into the superprojects git dir,
-  * non recursively.
-diff --git a/submodule.h b/submodule.h
-index e5526f6aaab..b96689ac0db 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -89,10 +89,8 @@ extern int submodule_uses_gitfile(const char *path);
- #define SUBMODULE_REMOVAL_IGNORE_UNTRACKED (1<<1)
- #define SUBMODULE_REMOVAL_IGNORE_IGNORED_UNTRACKED (1<<2)
- extern int bad_to_remove_submodule(const char *path, unsigned flags);
--extern int merge_submodule(struct object_id *result, const char *path,
--			   const struct object_id *base,
--			   const struct object_id *a,
--			   const struct object_id *b, int search);
-+
-+int add_submodule_odb(const char *path);
++			"which will accept this suggestion.\n"),
+ 			oid_to_hex(&merges.objects[0].item->oid), path);
+ 		break;
  
- /* Checks if there are submodule changes in a..b. */
- extern int submodule_touches_in_range(struct object_id *a,
+ 	default:
+-		MERGE_WARNING(path, "multiple merges found");
++		output(o, 1, _("Failed to merge submodule %s (multiple merges found)"), path);
+ 		for (i = 0; i < merges.nr; i++)
+ 			print_commit((struct commit *) merges.objects[i].item);
+ 	}
+@@ -1205,12 +1203,11 @@ static int merge_file_1(struct merge_options *o,
+ 				return ret;
+ 			result->clean = (merge_status == 0);
+ 		} else if (S_ISGITLINK(a->mode)) {
+-			result->clean = merge_submodule(&result->oid,
++			result->clean = merge_submodule(o, &result->oid,
+ 						       one->path,
+ 						       &one->oid,
+ 						       &a->oid,
+-						       &b->oid,
+-						       !o->call_depth);
++						       &b->oid);
+ 		} else if (S_ISLNK(a->mode)) {
+ 			switch (o->recursive_variant) {
+ 			case MERGE_RECURSIVE_NORMAL:
 -- 
 2.17.0.255.g8bfb7c0704
 
