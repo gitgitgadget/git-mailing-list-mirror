@@ -7,48 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F4411F406
-	for <e@80x24.org>; Thu, 10 May 2018 12:43:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AABB41F406
+	for <e@80x24.org>; Thu, 10 May 2018 12:43:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935346AbeEJMnT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 08:43:19 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:56255 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935042AbeEJMnS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 08:43:18 -0400
-Received: by mail-wm0-f45.google.com with SMTP id a8-v6so3683145wmg.5
-        for <git@vger.kernel.org>; Thu, 10 May 2018 05:43:17 -0700 (PDT)
+        id S935481AbeEJMnX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 08:43:23 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:40186 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935042AbeEJMnV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 08:43:21 -0400
+Received: by mail-wr0-f194.google.com with SMTP id v60-v6so1883960wrc.7
+        for <git@vger.kernel.org>; Thu, 10 May 2018 05:43:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aLJpTup3MilgKfxSWZYjqt58/xc8ehTE4/UJafbg31Q=;
-        b=koY/8jbFQLdcCqQtLOYrGYgsouISifQCwHL1J+zJ+d9Fbc/SmVBuz8u6zTzYyTNuPX
-         sbiCjfQZpKyqw6xrs7AAIg812R70EHpaVyMDwT6TRxdfMgBuqaNWUiKX8VWB5amV4ZqI
-         O0cdubnGxzozeb49kUT1VMFcyqBVjW+6gsAGitEji1p7FUuKIiGTJc6t9ZBqDUXaV6me
-         abSIVWPuqrlvR0z/qxSONm/UoODZ0Ix2TiMaYWQtv0RRiG1E6wbU0rdoRMjO+qRThOkL
-         PkG25wrVXcJicX4rvhk0ybEZyeeGW4T4NwTCa/rxkCrL9E5kB45YvOIVrbla08OoETmU
-         xabQ==
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=7EJyZks7UpvTuUeVcMVGTbkrFu1IVRwoznayoXBCZrA=;
+        b=Gs3yVe9OzDIGgYi7vdKbrWyJB+xidb1NoBU/JGU8VALA85wxigCGTQ1NYiKUewiZto
+         7CTc9HQO+/Ar93/eDQ09e8trHjRUhLuOIdAOs/kXc87c+6qdroMVy9etNhRk+k3mQ4V3
+         ZB5VXtkuVB7CFA38LVEfNHhaJ4Q9YQJ705imd4WaxwIjDMEScpn9FrjbxJVBOqG7EBE5
+         hMXB0YiPJR7hZIzw8VSxNaqKeBRc2J2mjc+51q/B6+5WrV8c5iDUYRpJzg0z+FIyRaI5
+         MHNBbuFf0TPb9ReR1yDI0YBaJAIDsFYPAqR+fzmPoMOvnf4taQhGSppwezmcp/ycAAUz
+         GBEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aLJpTup3MilgKfxSWZYjqt58/xc8ehTE4/UJafbg31Q=;
-        b=CyADUQPu0wb8kGzaumo7QPkrpmqvMIkE47fDCdbh2RK9cl9mHAu8P5e3hczcXdTtbZ
-         xR8piaylSVH4ERq5cXr6Bxzyc0EeTmfeI6pzUU62KpKDuAPgyj84iRE0FfVHnijIXyXi
-         3BcO6L1P2N/ik6zooUAguf8rtjgZBjU2SxFq4A2p+7YyyISHjzVT0ug9rL7CbpmtMDjr
-         YnhtxusmpQDPnG1mXmm/aQi8FBdMzc1iQ1ap2ico2Gkn+RK8Wpq50/xwZZBdjYHK/qmy
-         mBRuL5O9bhGo0vvpIvO9nI1YoTbCYQjKPaiTgQsuyhHMI4846/P6MBu3DDp61sGASKHk
-         Kusw==
-X-Gm-Message-State: ALKqPwdj4008S/z8NaCf+awGHnRB4Br6NAFdg8UjMhUDivS/CQBODgXq
-        D1qkI8j3KtgZys6rM13Cmz5RGLBG
-X-Google-Smtp-Source: AB8JxZp88L9hKVV183dYbaSCgy8QoYn9cDBT0AfPld6VWtxS8dpcNqpEnMXOTjFtq/W9SvIUwi7yHQ==
-X-Received: by 2002:a1c:b109:: with SMTP id a9-v6mr1108350wmf.18.1525956196541;
-        Thu, 10 May 2018 05:43:16 -0700 (PDT)
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=7EJyZks7UpvTuUeVcMVGTbkrFu1IVRwoznayoXBCZrA=;
+        b=SNMycUHWHmoeG9Oaj2IX5teVqsU8q0PJldqBt3JDzDbj3oGu8u+RkmCEWf9gNfjRp+
+         FprYYVTty6Pv+jwFVlEHGDPBzOp1yrZSbYAx8HYvDTq0Jbv6I0b040XyeLNrGFKkZWXg
+         Zyavugzq3zyLWeTe2kvkqK//GaHT7XInvHVSyQJ6jhimhVkEnpvSkIjJcxF+rtcsLuPc
+         riaxgGPoVvb/pqsWKy7n7p4SBDDeYrW3LhvsaihswyVPDNFK94rWz22TK23EBzMdU/Xu
+         Q5IO+TPfxKjWSJeVjsvXRoZzYAUxr2lQ2lIyGPZojAE22yifRanXBnDc6T5dTbrESsIc
+         89gw==
+X-Gm-Message-State: ALKqPwcXJNTyeLptCa83r5KowR37vNXXQ0LuBC1hDooGt7ANRXW0qMpp
+        MqJD8WKOpjXe2qQHSoPzQQeql3jB
+X-Google-Smtp-Source: AB8JxZr9BwHbvbSqIFmegFxe1uGAbbpZqJ/UFZyIV7rsosSaFl7b5ai2F1Qr6ju83ubDx0LjBwwqTQ==
+X-Received: by 2002:adf:e550:: with SMTP id z16-v6mr1213881wrm.194.1525956199900;
+        Thu, 10 May 2018 05:43:19 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q7-v6sm1203303wrf.49.2018.05.10.05.43.15
+        by smtp.gmail.com with ESMTPSA id q7-v6sm1203303wrf.49.2018.05.10.05.43.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 May 2018 05:43:15 -0700 (PDT)
+        Thu, 10 May 2018 05:43:19 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,10 +61,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 0/6] get_short_oid UI improvements
-Date:   Thu, 10 May 2018 12:42:57 +0000
-Message-Id: <20180510124303.6020-1-avarab@gmail.com>
+Subject: [PATCH v4 1/6] sha1-name.c: remove stray newline
+Date:   Thu, 10 May 2018 12:42:58 +0000
+Message-Id: <20180510124303.6020-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.410.g4ac3413cc8
+In-Reply-To: <20180510124303.6020-1-avarab@gmail.com>
+References: <20180510124303.6020-1-avarab@gmail.com>
 In-Reply-To: <20180501184016.15061-10-avarab@gmail.com>
 References: <20180501184016.15061-10-avarab@gmail.com>
 MIME-Version: 1.0
@@ -74,29 +77,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is like v3 except all the patches to the peel syntax & docs have
-been dropped, which were controversial.
+This stray newline was accidentally introduced in
+d2b7d9c7ed ("sha1_name: convert disambiguate_hint_fn to take
+object_id", 2017-03-26).
 
-I think it's worthwhile to re-work that, but I don't have time for
-that now, so I'm submitting this. Maybe I'll have time in the future
-to re-work the rest, but then I can base it on top of this.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ sha1-name.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Ævar Arnfjörð Bjarmason (6):
-  sha1-name.c: remove stray newline
-  sha1-array.h: align function arguments
-  git-p4: change "commitish" typo to "committish"
-  sha1-name.c: move around the collect_ambiguous() function
-  get_short_oid: sort ambiguous objects by type, then SHA-1
-  get_short_oid: document & warn if we ignore the type selector
-
- Documentation/technical/api-oid-array.txt | 17 ++++---
- git-p4.py                                 |  6 +--
- sha1-array.c                              | 21 +++++++-
- sha1-array.h                              |  7 ++-
- sha1-name.c                               | 61 +++++++++++++++++++----
- t/t1512-rev-parse-disambiguation.sh       | 26 +++++++++-
- 6 files changed, 115 insertions(+), 23 deletions(-)
-
+diff --git a/sha1-name.c b/sha1-name.c
+index 5b93bf8da3..cd3b133aae 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -346,7 +346,6 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
+ 	struct strbuf desc = STRBUF_INIT;
+ 	int type;
+ 
+-
+ 	if (ds->fn && !ds->fn(oid, ds->cb_data))
+ 		return 0;
+ 
 -- 
 2.17.0.410.g4ac3413cc8
 
