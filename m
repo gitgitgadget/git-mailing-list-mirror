@@ -6,154 +6,110 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBD6D1F42D
-	for <e@80x24.org>; Thu, 10 May 2018 09:57:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CA5F1F42D
+	for <e@80x24.org>; Thu, 10 May 2018 10:16:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756756AbeEJJ52 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 05:57:28 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:44982 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934433AbeEJJ51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 05:57:27 -0400
-Received: by mail-wr0-f196.google.com with SMTP id y15-v6so1365933wrg.11
-        for <git@vger.kernel.org>; Thu, 10 May 2018 02:57:26 -0700 (PDT)
+        id S934798AbeEJKQM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 06:16:12 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:37467 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934275AbeEJKQL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 06:16:11 -0400
+Received: by mail-wm0-f68.google.com with SMTP id l1-v6so3401970wmb.2
+        for <git@vger.kernel.org>; Thu, 10 May 2018 03:16:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Ik9t7JfCHdnEf8EhSrGwhJQvImx/QXvMaSwMOSOPfY0=;
-        b=A161wmxQwsoaCzCHE/2PMtxeoNqET9qkeAxToH43IJmEQOr8QK+M4Ie6iuMPJlYSJD
-         MCS0Ej8vtdTRMqFYgvyfJuf4I9l88QhtcYbUEoBpMM7UWJy3t8WXQAdNPsiC6D4MFOOC
-         ZkxjzXhAzVhM96+KyvrFH7ubKUHDXN/+9jaX1Rszafxh0j0LAxlphs64/fTOmSvOJBAZ
-         wa8z4qGqslAUcJv5FJnW/I8vDssaRHmah1qoSNLNrdA2XoLfcvbncr2cyHOytAR1zTqI
-         uvrFkx0dBBIRs63/vb38f4elWONoAV1vH5E72yGmmtjajFyveEE0BfmARKUHBSxseNXy
-         eddw==
+         :user-agent:mime-version;
+        bh=Y+4fYGQxvTkKlfiwQ6cPT7uyLm5rnYndPbZXH9cwtvQ=;
+        b=jVNbTjTS46EQUEKD8StmPezuGY7nhFLiOGM2TTG9ktBnQPA6zj1T9TY6fI5NyAg37e
+         Yogmz2naE9eIMRX5pTe5GciE6x3GD+tijQHED/PB/kWLQjt/oerhQ4Q5spxy8bniRyJ3
+         0WOh81rZp2nB0gOuaqgglOTrTTJQ0fX44XcH3vfsqbIWKyFoJhvOqoVP4EhdYwkLAj8B
+         xgu/bEMdChjeyeVuN7LstvkINkTJ9TDwfraTnvAv0mGKAKim3Qo/nqB+pE69ZMqPA9+v
+         w8Q60+YdAr+SQ5wVberNWeg16n23wNni3+tpdszv27HOLQqYI2oA7lj0XL6OiGLpPXa7
+         pUhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Ik9t7JfCHdnEf8EhSrGwhJQvImx/QXvMaSwMOSOPfY0=;
-        b=NpnRLJMHUYeMHRd75gnccZt88nbuKoinUhd3PYuqtHH0kn5AZuEnLTbta1KaOGz8Au
-         mfx8nvCM5FilygQooQG3wpDHH/A1L8CKDs50bt3z8MX5yRcZH2VnfWgVYcsZ+mqgMeo3
-         BpOMY72dxOP0OlGb0vQP48AMcesyEmt8fNV6ZaOXJ9RxJkTrQuu0EEBLFXbAlf6fmH2z
-         EZZ3+1vBuHvmUMuF/EoxDyPzkclW8Pi0WqLZK5JVgfJB2lxAQI+/0aIOrudtm3Lx0koF
-         Sk8UCE/EUpMqZ11XD+tOTckCuEjFeD0yjb/1JCUukc8+5xH/iP4xv7DLX3vCKdTxQmOg
-         4J2A==
-X-Gm-Message-State: ALKqPwfTK8Go67/Kbhfx4I0IwS+KN0hOf9xKe8ArsI46+579kkrcLR1D
-        doZZxlIxs9ugedK7DQwbyWg=
-X-Google-Smtp-Source: AB8JxZpYUli5Xk2zIZmlSGX4KkUI/ammrLoXvMSozJSx03odKvuVY47Sj1JSL6PghE4nNcK1yjPkew==
-X-Received: by 2002:adf:ca12:: with SMTP id o18-v6mr761534wrh.272.1525946245767;
-        Thu, 10 May 2018 02:57:25 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Y+4fYGQxvTkKlfiwQ6cPT7uyLm5rnYndPbZXH9cwtvQ=;
+        b=bIvvTUAiwYktigGJVCQUqcJRUBwxPElLDae1Y4U13oCC5nipKhYQIquLU5lJ90hWYS
+         9CnaZOE+a2CobisBF9CB9BBhAjd1aHzq3A23lgo29aEu6RUtLDw8FE0t+VDWR2c++hrY
+         jfSOGp31kThNdMnYqXIaaD50BLi4dpWlTaoR6cKOlezbhqvSEepWwOy31t9OgsWfIpX7
+         1sTI0j93l8jqr0wvmTePS1+TASCZgcRtRRNlZuOkTe4rYM76AL30UGEzpdiVcilJhsnB
+         5val2h9/TPVekBv1RbuDasZRo/flH5GaezFYg/wB7Qk2bstn8YYAE7xSewl2iFdcQPsQ
+         4R2Q==
+X-Gm-Message-State: ALKqPwekpSo0Kj2lIcoBhuI+J+jhs5HC7iCSS7QbDdYPRGw19B2eyq3t
+        B79OfiWo6+t6p59jQ5xgsf0=
+X-Google-Smtp-Source: AB8JxZrxOa2vUAUqn4dKOEOAroTJTYEalNGOX8PPTbGATC4iwMYO8+kX+3EoRlm2Y1TI72L388Q6vg==
+X-Received: by 2002:a1c:3b87:: with SMTP id i129-v6mr884942wma.51.1525947369678;
+        Thu, 10 May 2018 03:16:09 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 69-v6sm1049154wmi.29.2018.05.10.02.57.24
+        by smtp.gmail.com with ESMTPSA id a10-v6sm959381wri.10.2018.05.10.03.16.08
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 May 2018 02:57:24 -0700 (PDT)
+        Thu, 10 May 2018 03:16:09 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Luis Marsano <luis.marsano@gmail.com>
-Cc:     git@vger.kernel.org, Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: [PATCH 2/2] git-credential-netrc: accept gpg option
-References: <20180509213634.5198-1-luis.marsano@gmail.com>
-        <20180509213634.5198-3-luis.marsano@gmail.com>
-Date:   Thu, 10 May 2018 18:57:24 +0900
-In-Reply-To: <20180509213634.5198-3-luis.marsano@gmail.com> (Luis Marsano's
-        message of "Wed, 9 May 2018 17:36:34 -0400")
-Message-ID: <xmqq36yzkf3v.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] object.c: free replace map in raw_object_store_clear
+References: <20180509234059.52156-1-sbeller@google.com>
+Date:   Thu, 10 May 2018 19:16:08 +0900
+In-Reply-To: <20180509234059.52156-1-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 9 May 2018 16:40:58 -0700")
+Message-ID: <xmqqy3grizo7.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luis Marsano <luis.marsano@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> git-credential-netrc was hardcoded to decrypt with 'gpg' regardless of the gpg.program option
-> this now uses the gpg command option if set, else, the gpg.program option set in the git repository or global configuration, else defaults to 'gpg'
-> for git-credential-netrc
+> The replace map for objects was missed to free in the object store in
+> the conversion of 174774cd519 (Merge branch 'sb/object-store-replace',
+> 2018-05-08)
 
-These lines are way overlong.  Wrap at around 72-78 cols, perhaps.
-Complete each sentence with a full-stop.
+I need a bit of clarification wrt the above.  The above makes it
+sound like the merge needed a semantic conflict resolution (e.g. one
+side turned replace_map into a pointer while the other side added a
+place where the containing structure is freed and now the merge
+result needs to free the pointer in the new place that frees the
+containing structure, but the merge forgot to do so).  Is that what
+is going on?
 
-> - use Git.pm for repository and global option queries
-> - add -g|--gpg command option & document it in command usage
-> - test repository & command options
-> - support unicode
+Or is this just a simple "the topic that ends at 174774cd519^2 had
+this leak that needs to be fixed by this patch; instead of rerolling
+this is an incremental, because the topic has already been merged to
+'master' and it is too late now"?
 
-There are other changes that are not explained/justified here, I
-think.
+Looking at this patch in the context of the side branch (instead of
+in the merged result) already makes sense to me, so I am guessing it
+is the latter (i.e. not a botched merge that missed semantic
+conflicts), in which case the proposed log message is a bit too
+alarming and points readers in a wrong direction.  Shouldn't it
+point at, say, c1274495 ("replace-object: eliminate replace objects
+prepared flag", 2018-04-11) that turned the oidmap instance into a
+pointer in raw_object_store?
 
- - Instead of ALLCAPS as a placeholder for a command line argument in
-   the help text, use <placeholder>, because doing so is better due
-   to such and such reasons.
+Thanks.
 
-I think it is good to consistently do so, but it is unclear why
-ALLCAPS is bad and <placeholder> is better.  That needs to be
-explained.
-
- - Replace three-dots in the help text with U+2026 to punish those
-   who are still using unicode-inapable terminal in this century.
-
-I do not think this part of the patch is a good idea at all, but
-perhaps I misunderstood the reason behind this change you had in
-mind (as you did not explain it in the proposed log message).
-
-> @@ -62,27 +69,31 @@ if ($options{help}) {
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  object.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/object.c b/object.c
+> index 9d5b10d5a20..ff28f90c5ef 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -497,6 +497,7 @@ void raw_object_store_clear(struct raw_object_store *o)
+>  {
+>  	FREE_AND_NULL(o->objectdir);
+>  	FREE_AND_NULL(o->alternate_db);
+> +	FREE_AND_NULL(o->replace_map);
 >  
->  	print <<EOHIPPUS;
->  
-> -$0 [-f AUTHFILE1] [-f AUTHFILEN] [-d] [-v] [-k] get
-> +$0 [(-f <authfile>)…] [-g <program>] [-d] [-v] [-k] get
-
-Is this a desired change, or unwanted change left in the patch by
-accident?
-
-
-> -...and if you want lots of debugging info:
-> +…and if you want lots of debugging info:
-
-Is this a desired change, or unwanted change left in the patch by
-accident?
-
->  
->    git config credential.helper '$shortname -f AUTHFILE -d'
->  
-> -...or to see the files opened and data found:
-> +…or to see the files opened and data found:
->  
-
-Ditto.
-
->    git config credential.helper '$shortname -f AUTHFILE -v'
->  
-> -Only "get" mode is supported by this credential helper.  It opens every AUTHFILE
-> +Only "get" mode is supported by this credential helper.  It opens every <authfile>
->  and looks for the first entry that matches the requested search criteria:
->  
->   'port|protocol':
-> @@ -120,7 +131,7 @@ host=github.com
->  protocol=https
->  username=tzz
->  
-> -this credential helper will look for the first entry in every AUTHFILE that
-> +this credential helper will look for the first entry in every <authfile> that
->  matches
->  
->  machine github.com port https login tzz
-> @@ -129,7 +140,7 @@ OR
->  
->  machine github.com protocol https login tzz
->  
-> -OR... etc. acceptable tokens as listed above.  Any unknown tokens are
-> +OR… etc. acceptable tokens as listed above.  Any unknown tokens are
-
-Ditto.
-
->  # Credentials must get a parameter, so die if it's missing.
-> -die "Syntax: $0 [-f AUTHFILE1] [-f AUTHFILEN] [-d] get" unless defined $mode;
-> +die "Syntax: $0 [(-f <authfile>)…] [-d] get" unless defined $mode;
-
-Ditto.
-
+>  	free_alt_odbs(o);
+>  	o->alt_odb_tail = NULL;
