@@ -2,116 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A00861F406
-	for <e@80x24.org>; Thu, 10 May 2018 19:17:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 060CE1F406
+	for <e@80x24.org>; Thu, 10 May 2018 19:19:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752142AbeEJTRM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 15:17:12 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:39819 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751207AbeEJTRG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 15:17:06 -0400
-Received: by mail-wm0-f68.google.com with SMTP id f8-v6so6195378wmc.4
-        for <git@vger.kernel.org>; Thu, 10 May 2018 12:17:06 -0700 (PDT)
+        id S1750860AbeEJTTm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 15:19:42 -0400
+Received: from mail-wr0-f169.google.com ([209.85.128.169]:42197 "EHLO
+        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750747AbeEJTTl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 15:19:41 -0400
+Received: by mail-wr0-f169.google.com with SMTP id v5-v6so3049281wrf.9
+        for <git@vger.kernel.org>; Thu, 10 May 2018 12:19:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=2LH7nnwztZWbYqSPpEZ5H7XHPbeeI8kvy/7xeE/CU4A=;
-        b=OJbGWChaF3Kph8k8gSUUjNA5PsYrweiekgWptR4XrT0S4Edir/2EyYsjx5f/ozwzh/
-         jkkJR9mCL6i0FNNOyJ4tcAv4ziDZP2U8e0id2yNVKIxGVhR1pALKYSUALqCeYe3MCXW6
-         3DI6Bx515Vn0tyq9zDLHqE82nFrYU/eFK4ybrYKwPBkSQZxFq3ZGnq+n3aarmmLaiTLY
-         2zQWaEWzTpzZjkuCc1QROv2OuIqVIa2jNCUocg9ZvNHqF7ZX9kiUh0Xsody7H0DiZxpt
-         UV23JRDj72BDTkIPgkfI4OFfFJ/RsLnEXCScs4y5nBZeMUldJs36X87oucb9Rh8JgCSN
-         rWKA==
+        h=date:from:to:subject:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yyABwkEGRqoecYQtVzTIExyBsJpObTLAIkrmkC5PNxY=;
+        b=DVElOwx9JYv1xYzSGUdb2l0Z4bgGqHxg8bV+nMNsl+XnoF01dqa/OroBzmerMuFJcS
+         dn2cvZSTGZV3Vwxd5/T46trUOSlDHkVBaAA1N7kMtIZ4/LlZ4jrMwHrBP5uOQ61qkjB+
+         hnRgYVj/MeC9Pj56dXQ97r42/pngF1g0t0eHy6bY+A5iM6wy36U2TYPjfLcQK6hGANXX
+         OiUNb7mrZAnsbidZ/JYnNQpGxK8bPX6pbRxD8ve6TOkzzFfTUN8fznXahWPWdOOXH8oA
+         GfWgoloQScvmhIOhn0KL5vW3EtOU6B5wxp+DZlJuGHs/YYzntbslXzVSwo0+Uvk16nLQ
+         6OqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=2LH7nnwztZWbYqSPpEZ5H7XHPbeeI8kvy/7xeE/CU4A=;
-        b=FturMiva0LMdnKD0g8naqNczVdkJUdmWrun6bZh6omn7hOeypay7cNnMhFQJ6egwWy
-         Vwi0DBjUHxzozmUSoo9IqYUuqBxBIwQis5ld4Y9+nlX2pG7MI90N4yToH4BOG+gk+5xb
-         oFifPqxklZWnhAq5+aQxOoxLwgPk5nfg9fNiMwCqa2kVnC1nCWtkhDP0Sk8vfJCm2YCu
-         6lCEaqf7uVIslMJwDXaKxen8PCqBa23ut8jwIuZa2F8SHHHArYaWGG5d8z+SX9c2816Z
-         MynJ+0/KllrthZ8hANuRYTYSPzKMI7jKCkdkFA5aYTwfNZ5MLsFqfQ2yQhItxRpc+G59
-         lnxQ==
-X-Gm-Message-State: ALKqPwc9jODPYBLxYbZVUidxnmQ+OO5ddIOWx7EkeuHZKaMQjKdu6c0g
-        ynWp9sSnjSeaA9LiYGmd51A=
-X-Google-Smtp-Source: AB8JxZrdFnR8GGrwrMwP/pS+FPp/r8Ej+724mHIpyoW+e1gWGEQjmbCp57B5jW6DLpRGmkoC+/muCQ==
-X-Received: by 2002:a50:d70d:: with SMTP id t13-v6mr3861236edi.260.1525979825789;
-        Thu, 10 May 2018 12:17:05 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id w26-v6sm833649edq.77.2018.05.10.12.17.04
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yyABwkEGRqoecYQtVzTIExyBsJpObTLAIkrmkC5PNxY=;
+        b=Ck0gs0PqTnd1yJ/n0xWT9A4M4ud+t5p6Xwf4saYvP+rajiqG94wVkZvKgsZN4IxVp4
+         fWtTLXlaDX0zHATl76/z3aNnNya0CvYzzAC4eNIUaaUtMtoEESKwuWq7GNQdTReARnGF
+         jd6OFIP4K0STEy2PhfrK/JYtx/K7bJOJ3cHN6X8/AuRHKeu14ROkvSeTCBhhC3Ebc2LE
+         rfK0XsfrFI4CxQrwtcJ5T7/FVKezd9QMGWEOGGk8wXYCYJ9Lg2gCDQqAeUWMcCD42A8F
+         wmiIHK46Q3tNY8HZsFJX+emVi9MxZ4SnC3s3IspEnDA9dFAQm53i9cHs/tDyuq/rclHH
+         a4Vw==
+X-Gm-Message-State: ALKqPwfX4ciaxcJP1MSNoKu97FBFlozhk8Wq21ObkFSnBX77bp6lwql7
+        Msfu80kdcw03R4apD8FiTZJXWA==
+X-Google-Smtp-Source: AB8JxZqgIU+nrvz8svc3laepasTtMfOfFs74ATLpaPDbwtLcqnQWhJ3OKna7KWrtyGk/Qjo7eMRVUA==
+X-Received: by 2002:adf:8567:: with SMTP id 94-v6mr2114856wrh.156.1525979979801;
+        Thu, 10 May 2018 12:19:39 -0700 (PDT)
+Received: from martofr (187.186.24.109.rev.sfr.net. [109.24.186.187])
+        by smtp.gmail.com with ESMTPSA id x65-v6sm2209911wme.31.2018.05.10.12.19.38
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 May 2018 12:17:04 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "peff\@peff.net" <peff@peff.net>,
-        "sbeller\@google.com" <sbeller@google.com>,
-        "jnareb\@gmail.com" <jnareb@gmail.com>,
-        "stolee\@gmail.com" <stolee@gmail.com>
-Subject: Re: [PATCH 00/12] Integrate commit-graph into fsck, gc, and fetch
-References: <20180417181028.198397-1-dstolee@microsoft.com>
-        <20180510173345.40577-1-dstolee@microsoft.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180510173345.40577-1-dstolee@microsoft.com>
-Date:   Thu, 10 May 2018 21:17:03 +0200
-Message-ID: <87mux72uds.fsf@evledraar.gmail.com>
+        Thu, 10 May 2018 12:19:38 -0700 (PDT)
+Date:   Thu, 10 May 2018 21:21:52 +0200
+From:   Martin Kunev <martinkunev@gmail.com>
+To:     git@vger.kernel.org
+Subject: Bug: Untracked file deleted by git-stash
+Message-ID: <20180510212152.08d2b9a7@martofr>
+X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I stumbled upon the following issue with git 2.11.0 on Debian 9.
 
-On Thu, May 10 2018, Derrick Stolee wrote:
+When a tracked file is removed and a directory with the same name is created, git-stash would delete the directory with all its contents. No warning is displayed and git stores no information about the deleted content (as far as I can tell). The following steps can be used to reproduce:
 
-> The behavior in this patch series does the following:
->
-> 1. Near the end of 'git gc', run 'git commit-graph write'. The location
->    of this code assumes that a 'git gc --auto' has not terminated early
->    due to not meeting the auto threshold.
->
-> 2. At the end of 'git fetch', run 'git commit-graph write'. This means
->    that every reachable commit will be in the commit-graph after a
->    a successful fetch, which seems a reasonable frequency. Then, the
->    only times we would be missing a reachable commit is after creating
->    one locally. There is a problem with the current patch, though: every
->    'git fetch' call runs 'git commit-graph write', even if there were no
->    ref updates or objects downloaded. Is there a simple way to detect if
->    the fetch was non-trivial?
->
-> One obvious problem with this approach: if we compute this during 'gc'
-> AND 'fetch', there will be times where a 'fetch' calls 'gc' and triggers
-> two commit-graph writes. If I were to abandon one of these patches, it
-> would be the 'fetch' integration. A 'git gc' really wants to delete all
-> references to unreachable commits, and without updating the commit-graph
-> we may still have commit data in the commit-graph file that is not in
-> the object database. In fact, deleting commits from the object database
-> but not from the commit-graph will cause 'git commit-graph verify' to
-> fail!
->
-> I welcome discussion on these ideas, as we are venturing out of the
-> "pure data structure" world and into the "user experience" world. I am
-> less confident in my skills in this world, but the feature is worthless
-> if it does not improve the user experience.
+$ mkdir /tmp/bug; cd /tmp/bug
+$ git init
+Initialized empty Git repository in /tmp/bug/.git/
+$ echo 'original file' > entry
+$ git add entry
+$ git commit -m 'entry added'
+[master (root-commit) 483319e] entry added
+ 1 file changed, 1 insertion(+)
+ create mode 100644 entry
+$ rm entry
+removed 'entry'
+$ mkdir entry
+$ echo 'data that will be destroyed' > entry/content
+$ git status
+On branch master
+Changes not staged for commit:
+    deleted:    entry
 
-I really like #1 here, but I wonder why #2 is necessary.
+no changes added to commit
+$ ls -l
+total 4
+drwxr-xr-x 2 martin root 4096 May 10 21:16 entry
+$ git stash
+Saved working directory and index state WIP on master: 483319e entry added
+HEAD is now at 483319e entry added
 
-I.e. is it critical for the performance of the commit graph feature that
-it be kept really up-to-date, moreso than other things that rely on gc
---auto (e.g. the optional bitmap index)?
+After the stash, the working tree contains only the regular file entry and the stash contains no information about the directory or its contents:
 
-Even if that's the case, I think something that does this via gc --auto
-is a much better option. I.e. now we have gc.auto & gc.autoPackLimit, if
-the answer to my question above is "yes" this could also be accomplished
-by introducing a new graph-specific gc.* setting, and --auto would just
-update the graph more often, but leave the rest.
+$ ls -l
+total 4
+-rw-r--r-- 1 martin root 5 May 10 21:16 entry
+$ git status
+On branch master
+nothing to commit, working tree clean
+$ git stash show -p
+diff --git a/entry b/entry
+deleted file mode 100644
+index 1269488..0000000
+--- a/entry
++++ /dev/null
+@@ -1 +0,0 @@
+-original file
