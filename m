@@ -2,140 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DC5D1F406
-	for <e@80x24.org>; Thu, 10 May 2018 15:22:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F0341F406
+	for <e@80x24.org>; Thu, 10 May 2018 15:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966231AbeEJPWY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 11:22:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34978 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S964827AbeEJPWX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 11:22:23 -0400
-Received: (qmail 7601 invoked by uid 109); 10 May 2018 15:22:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 May 2018 15:22:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25311 invoked by uid 111); 10 May 2018 15:22:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 10 May 2018 11:22:27 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2018 11:22:21 -0400
-Date:   Thu, 10 May 2018 11:22:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v4 5/6] get_short_oid: sort ambiguous objects by type,
- then SHA-1
-Message-ID: <20180510152221.GB6462@sigill.intra.peff.net>
-References: <20180501184016.15061-10-avarab@gmail.com>
- <20180510124303.6020-6-avarab@gmail.com>
+        id S966279AbeEJPoL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 11:44:11 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:42057 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966135AbeEJPoL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 11:44:11 -0400
+Received: by mail-oi0-f68.google.com with SMTP id t27-v6so2144356oij.9
+        for <git@vger.kernel.org>; Thu, 10 May 2018 08:44:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ra+MIW8HshawynnjjmArY8vGATrZFN2JB/5jYU9RMmk=;
+        b=fTbLR+9mkyYgJUegtWSaPjsiRgoputK+WWPU/cs7REuilrQX7OqVqFfcQ0dNBP8OKN
+         N6Xf5hNZ9FLLRV/HTU7T/XDeJofgqXPKTML3KLnQeRhM+5JaDHxQwHV/DzKY6RNSJbLk
+         vXPvIg4+kxQO72GFUPKF1sLUan6CqM6qD9UiDcZfGeo7y10NXeW7Aa1OVJ0JxBR6pKZk
+         sgXZ6RpUp3F2Eb+6361LCjNFZD1Nbaat2H6ZfEYPRLGZOb6Ba7UpQGEMBBlYpaxFD2Ve
+         gXZpNSUatTqAZ+ndITvGdF9UeXj6QbiXXpsgTNKRvH+JHwOWYqvcCThIWCYXrfl3xvZc
+         lIiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ra+MIW8HshawynnjjmArY8vGATrZFN2JB/5jYU9RMmk=;
+        b=t/YjfAqkCSHgrHCnoYp8o0heRt3Oz27b0PxFoiUvtCvtQPLujxGvDoqulLDAC0Y3qO
+         TDIj3Ugll5GpTk4LlG7mqs5UMfDlZ0sa4V13XnRdDmJxhWNt1DLJGxWyp+dFzWlR9Mn2
+         k9yu313DCXp/Ppmfe78x7KLaYb+3DIXW6cxqzwAf7v3mDsZEBTE7RZbcaZJVZE7afhiS
+         8PfZKmwX+7L2GLaIWz+mByl963NlotAzeRqgI28O2bO1sta7E4yr8nRpHhI8/Wz0RTQP
+         Dq3+eYN6aHw45jlSQ6U9i8mR9HX9nqGq2rApcNRy9dwmCHLOzfntKawk5POw/sZ4mkX1
+         GyVQ==
+X-Gm-Message-State: ALKqPweNP9zJQ6LRq1o0zI8bHfTX5Mm4sqvMwZP72bfikxT0liDHKQmd
+        ZaEIBqYZYp5jGxfE5ljKO1HtkTt+0l/DOdvcIK0=
+X-Google-Smtp-Source: AB8JxZqsvAwVgN4UXz2g+ybx5VnMMGKurF2m1JOGJaQiYREs6fnEU9cohOxOFyyaBJzX3+3FfEcHltS0azFb8dnVp+U=
+X-Received: by 2002:aca:2e09:: with SMTP id u9-v6mr1144878oiu.228.1525967050524;
+ Thu, 10 May 2018 08:44:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180510124303.6020-6-avarab@gmail.com>
+Received: by 10.74.178.133 with HTTP; Thu, 10 May 2018 08:43:39 -0700 (PDT)
+In-Reply-To: <CAGZ79kbYuodP12Y2WSwmF+EmStv0pHONwfVbqjDS7Kyhvx103Q@mail.gmail.com>
+References: <20180507225916.155236-1-sbeller@google.com> <20180508193736.14883-1-sbeller@google.com>
+ <20180508193736.14883-14-sbeller@google.com> <20180508130431.287a9f273a847c375b3b1e2b@google.com>
+ <CACsJy8C7N2W821H8YR8VaKdCSOSCDtQi_YT7z8hHNDO-VxJmEA@mail.gmail.com> <CAGZ79kbYuodP12Y2WSwmF+EmStv0pHONwfVbqjDS7Kyhvx103Q@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 10 May 2018 17:43:39 +0200
+Message-ID: <CACsJy8CJu-Og1Mn4Sn+eCyv+KkbJ__21oTYRaMyTdOsjAVxpqw@mail.gmail.com>
+Subject: Re: [PATCH v3 13/13] alloc: allow arbitrary repositories for alloc functions
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jameson Miller <jamill@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 10, 2018 at 12:43:02PM +0000, Ævar Arnfjörð Bjarmason wrote:
+On Wed, May 9, 2018 at 9:20 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Wed, May 9, 2018 at 10:18 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>
+>> If you want to reproduce, this is what I used to test this with.
+>>
+>> https://gist.github.com/pclouds/86a2df6c28043f1b6fa3d4e72e7a1276
+>
+> This only applied cleanly after I created an empty file at
+> t/helper/test-abc.c, using git-apply.
 
-> Now we'll instead show:
-> 
->     hint:   e8f2650052 tag v2.17.0
->     hint:   e8f21caf94 commit 2013-06-24 - bash prompt: print unique detached HEAD abbreviated object name
->     hint:   e8f26250fa commit 2017-02-03 - Merge pull request #996 from jeffhostetler/jeffhostetler/register_rename_src
->     hint:   e8f2bc0c06 commit 2015-05-10 - Documentation: note behavior for multiple remote.url entries
->     hint:   e8f2093055 tree
->     hint:   e8f25a3a50 tree
->     hint:   e8f28d537c tree
->     hint:   e8f2cf6ec0 tree
->     hint:   e8f21d02f7 blob
->     hint:   e8f21d577c blob
->     hint:   e8f2867228 blob
->     hint:   e8f2a35526 blob
-
-I said already that I like the output, but this time I'll actually read
-the code. ;)
-
-It all looks good to me, with the exception of a few documentation nits
-I'll mention below.
-
-> A note on the implementation: Derrick rightly pointed out[1] that
-> we're bending over backwards here in get_short_oid() to first
-> de-duplicate the list, and then emit it, but could simply do it in one
-> step.
-> 
-> The reason for that is that oid_array_for_each_unique() doesn't
-> actually require that the array be sorted by oid_array_sort(), it just
-> needs to be sorted in some order that guarantees that all objects with
-> the same ID are adjacent to one another, which (barring a hash
-> collision, which'll be someone else's problem) the sort_ambiguous()
-> function does.
-
-If we were to go this route, I think it would make sense to add a
-sorting function pointer to "struct oid_array". I'm OK with punting on
-it for now, though.
-
-> diff --git a/Documentation/technical/api-oid-array.txt b/Documentation/technical/api-oid-array.txt
-> index b0c11f868d..94b529722c 100644
-> --- a/Documentation/technical/api-oid-array.txt
-> +++ b/Documentation/technical/api-oid-array.txt
-> @@ -35,13 +35,18 @@ Functions
->  	Free all memory associated with the array and return it to the
->  	initial, empty state.
->  
-> +`oid_array_for_each`::
-> +	Iterate over each element of the list, executing the callback
-> +	function for each one. Does not sort the list, so any custom
-> +	hash order is retained. If the callback returns a non-zero
-> +	value, the iteration ends immediately and the callback's
-> +	return is propagated; otherwise, 0 is returned.
-> +
->  `oid_array_for_each_unique`::
-> -	Efficiently iterate over each unique element of the list,
-> -	executing the callback function for each one. If the array is
-> -	not sorted, this function has the side effect of sorting it. If
-> -	the callback returns a non-zero value, the iteration ends
-> -	immediately and the callback's return is propagated; otherwise,
-> -	0 is returned.
-> +	Iterate over each unique element of the list in sort order ,
-> +	but otherwise behaves like `oid_array_for_each`. If the array
-> +	is not sorted, this function has the side effect of sorting
-> +	it.
-
-Extra space in "sort order ,".
-
-I'd probably say "sorted order", but that might be a matter of
-preference.
-
-Also, your parallel verb tenses don't agree. ;) It should be "Iterate
-... but otherwise behave", not "behaves".
-
-> +	/*
-> +	 * Between object types show tags, then commits, and finally
-> +	 * trees and blobs.
-> +	 *
-> +	 * The object_type enum is commit, tree, blob, tag, but we
-> +	 * want tag, commit, tree blob. Cleverly (perhaps too
-> +	 * cleverly) do that with modulus, since the enum assigns 1 to
-> +	 * commit, so tag becomes 0.
-> +	 */
-> +	a_type_sort = a_type % 4;
-> +	b_type_sort = b_type % 4;
-> +	return a_type_sort > b_type_sort ? 1 : -1;
-
-This is amusingly clever, and should be very efficient. I'm glad there's
-a comment at least, though.
-
--Peff
+Right. I created the patch with "git add -N". I know exactly what the
+bug is but I'll need to be careful with renaming a bit before trying
+to fix this. Thanks for reminding me.
+-- 
+Duy
