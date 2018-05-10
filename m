@@ -2,195 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76C481F406
-	for <e@80x24.org>; Thu, 10 May 2018 15:09:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DC5D1F406
+	for <e@80x24.org>; Thu, 10 May 2018 15:22:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966092AbeEJPJq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 11:09:46 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:41676 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965834AbeEJPJp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 11:09:45 -0400
-Received: by mail-lf0-f65.google.com with SMTP id o123-v6so3449954lfe.8
-        for <git@vger.kernel.org>; Thu, 10 May 2018 08:09:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Q88z8t9D29EEPxYsRPQzbtieeGFg5mNPbOw4IwbXM2w=;
-        b=YbOn/zU4UhFaoBFu1b/IRxCZduf40fXsMbJvHRf95CjEJnlLFUJyFRpVpO/OBiRlJn
-         rkOckd2ST7vUJHFblnt+TKa0DN+8tGxrS4MwjIO0q5Qg8E3Oko2/uTpC4MGKlnOr3aOs
-         RdxdacWvHL2ZnPHaMp9BLfkC5HozZtv0XhMMFOSDkTRaCqQJDRmQJPt8xSWpDg2N3+KG
-         XD6NlUcdRgludUb59mIDmgGTxBMIxx75ANvUkTSmzdk3WZQYHZ2uUKum47plWdYIZq0G
-         chGWw2LpNqg7/nRGsk/GJCR7hpbL5Duy0lxbSMkGsiR03z3ZS17l7NowS2+mXh4V4ASp
-         3EHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Q88z8t9D29EEPxYsRPQzbtieeGFg5mNPbOw4IwbXM2w=;
-        b=E34m8thKqRzanSNtZct4WhKssU44aThO1ymBZnkjAJGQG/v2H02GCsw8CbuCFs/cBc
-         c2Egkss5n29BzjxzoYZApoh3PlPpR3JILZDEIQOuyrYZbWVzGZaKcJIT2Cm8jLvyXSQR
-         uihgc/pSaDv0HvLJJnj1ZnJ8Sferu6G8I/VSKFpbuX7hm1fajStk2xctfHTkc0fZkOqe
-         SfSOVkMuRGuRX+SmSSnlHy4QYPz4F9lmBMRjXnhklJ7XXamUhEzXoyy3gEdzYft8TMU0
-         mLJdwcnxW6Ug7n+jzg6QTtK3vmC0ybG9MgdBGyk5ZSG+RSj4o8JsyDZbmcyqka3/pbtd
-         UYuw==
-X-Gm-Message-State: ALKqPwf2sLof+vhwxmRQQQBIFcRgLsQ74t7KN8L5g0l2v+mld9OSJZ5+
-        2Y02L/fuPm/vaE3jroEeO3Y=
-X-Google-Smtp-Source: AB8JxZq7AyfpJEVmufQ9+Ck3hZfuXbjEYLhTdSY1SkRsjBLXcv5UyAxByuRfOuI2HJh/i/tdra1kkQ==
-X-Received: by 2002:a19:f4d:: with SMTP id e74-v6mr1209258lfi.39.1525964983853;
-        Thu, 10 May 2018 08:09:43 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n3-v6sm218045ljg.16.2018.05.10.08.09.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 May 2018 08:09:42 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        peff@peff.net, sandals@crustytoothpaste.net, sbeller@google.com,
-        stolee@gmail.com, sunshine@sunshineco.com
-Subject: [PATCH v2] pack-format.txt: more details on pack file format
-Date:   Thu, 10 May 2018 17:09:39 +0200
-Message-Id: <20180510150939.25399-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.17.0.705.g3525833791
-In-Reply-To: <20180508155627.19245-1-pclouds@gmail.com>
-References: <20180508155627.19245-1-pclouds@gmail.com>
+        id S966231AbeEJPWY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 11:22:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34978 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S964827AbeEJPWX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 11:22:23 -0400
+Received: (qmail 7601 invoked by uid 109); 10 May 2018 15:22:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 May 2018 15:22:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25311 invoked by uid 111); 10 May 2018 15:22:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 10 May 2018 11:22:27 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2018 11:22:21 -0400
+Date:   Thu, 10 May 2018 11:22:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v4 5/6] get_short_oid: sort ambiguous objects by type,
+ then SHA-1
+Message-ID: <20180510152221.GB6462@sigill.intra.peff.net>
+References: <20180501184016.15061-10-avarab@gmail.com>
+ <20180510124303.6020-6-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180510124303.6020-6-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current document mentions OBJ_* constants without their actual
-values. A git developer would know these are from cache.h but that's
-not very friendly to a person who wants to read this file to implement
-a pack file parser.
+On Thu, May 10, 2018 at 12:43:02PM +0000, Ævar Arnfjörð Bjarmason wrote:
 
-Similarly, the deltified representation is not documented at all (the
-"document" is basically patch-delta.c). Translate that C code to
-English with a bit more about what ofs-delta and ref-delta mean.
+> Now we'll instead show:
+> 
+>     hint:   e8f2650052 tag v2.17.0
+>     hint:   e8f21caf94 commit 2013-06-24 - bash prompt: print unique detached HEAD abbreviated object name
+>     hint:   e8f26250fa commit 2017-02-03 - Merge pull request #996 from jeffhostetler/jeffhostetler/register_rename_src
+>     hint:   e8f2bc0c06 commit 2015-05-10 - Documentation: note behavior for multiple remote.url entries
+>     hint:   e8f2093055 tree
+>     hint:   e8f25a3a50 tree
+>     hint:   e8f28d537c tree
+>     hint:   e8f2cf6ec0 tree
+>     hint:   e8f21d02f7 blob
+>     hint:   e8f21d577c blob
+>     hint:   e8f2867228 blob
+>     hint:   e8f2a35526 blob
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- This is a much better description than v1. I hope.
+I said already that I like the output, but this time I'll actually read
+the code. ;)
 
- Documentation/technical/pack-format.txt | 78 +++++++++++++++++++++++++
- cache.h                                 |  5 ++
- 2 files changed, 83 insertions(+)
+It all looks good to me, with the exception of a few documentation nits
+I'll mention below.
 
-diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
-index 8e5bf60be3..d20bf592aa 100644
---- a/Documentation/technical/pack-format.txt
-+++ b/Documentation/technical/pack-format.txt
-@@ -36,6 +36,84 @@ Git pack format
- 
-   - The trailer records 20-byte SHA-1 checksum of all of the above.
- 
-+=== Object types
-+
-+Valid object types are:
-+
-+- OBJ_COMMIT (1)
-+- OBJ_TREE (2)
-+- OBJ_BLOB (3)
-+- OBJ_TAG (4)
-+- OBJ_OFS_DELTA (6)
-+- OBJ_REF_DELTA (7)
-+
-+Type 5 is reserved for future expansion. Type 0 is invalid.
-+
-+=== Deltified representation
-+
-+Conceptually there are only four object types: commit, tree, tag and
-+blob. However to save space, an object could be stored as a "delta" of
-+another "base" object. These representations are assigned new types
-+ofs-delta and ref-delta, which is only valid in a pack file.
-+
-+Both ofs-delta and ref-delta store the "delta" against another
-+object. The difference between them is, ref-delta directly encodes
-+20-byte base object name. If the base object is in the same pack,
-+ofs-delta encodes the offset of the base object in the pack instead.
-+
-+The delta data is a sequence of instructions to reconstruct an object
-+from the base object. Each instruction appends more and more data to
-+the target object until it's complete. There are two supported
-+instructions so far: one for copy a byte range from the source object
-+and one for inserting new data embedded in the instruction itself.
-+
-+Each instruction has variable length. Instruction type is determined
-+by the seventh bit of the first octet. The following diagrams follow
-+the convention in RFC 1951 (Deflate compressed data format).
-+
-+  +----------+---------+---------+---------+---------+-------+-------+-------+
-+  | 1xxxxxxx | offset1 | offset2 | offset3 | offset4 | size1 | size2 | size3 |
-+  +----------+---------+---------+---------+---------+-------+-------+-------+
-+
-+This is the instruction format to copy a byte range from the source
-+object. It encodes the offset to copy from any the number of bytes to
-+copy. Offset and size are in little-endian order.
-+
-+All offset and size bytes are optional. This is to reduce the
-+instruction size when encoding small offsets or sizes. The first seven
-+bits in the first octet determines which of the next seven octets is
-+present. If bit zero is set, offset1 is present. If bit one is set
-+offset2 is present and so on.
-+
-+Note that a more compact instruction does not change offset and size
-+encoding. For example, if only offset2 is omitted like below, offset3
-+still contains bits 16-23. It does not become offset2 and contains
-+bits 8-15 even if it's right next to offset1.
-+
-+  +----------+---------+---------+
-+  | 10000101 | offset1 | offset3 |
-+  +----------+---------+---------+
-+
-+In its most compact form, this instruction only takes up one byte
-+(0x80) with both offset and size omitted, which will have default
-+values zero. There is another exception: size zero is automatically
-+converted to 0x10000.
-+
-+  +----------+============+
-+  | 0xxxxxxx |    data    |
-+  +----------+============+
-+
-+This is the instruction to construct target object without the base
-+object. The following data is appended to the target object. The first
-+seven bits of the first octet determines the size of data in
-+bytes. The size must be non-zero.
-+
-+  +----------+============
-+  | 00000000 |
-+  +----------+============
-+
-+This is the instruction reserved for future expansion.
-+
- == Original (version 1) pack-*.idx files have the following format:
- 
-   - The header consists of 256 4-byte network byte order
-diff --git a/cache.h b/cache.h
-index 77b7acebb6..ad549e258e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -373,6 +373,11 @@ extern void free_name_hash(struct index_state *istate);
- #define read_blob_data_from_cache(path, sz) read_blob_data_from_index(&the_index, (path), (sz))
- #endif
- 
-+/*
-+ * Values in this enum (except those outside the 3 bit range) are part
-+ * of pack file format. See Documentation/technical/pack-format.txt
-+ * for more information.
-+ */
- enum object_type {
- 	OBJ_BAD = -1,
- 	OBJ_NONE = 0,
--- 
-2.17.0.705.g3525833791
+> A note on the implementation: Derrick rightly pointed out[1] that
+> we're bending over backwards here in get_short_oid() to first
+> de-duplicate the list, and then emit it, but could simply do it in one
+> step.
+> 
+> The reason for that is that oid_array_for_each_unique() doesn't
+> actually require that the array be sorted by oid_array_sort(), it just
+> needs to be sorted in some order that guarantees that all objects with
+> the same ID are adjacent to one another, which (barring a hash
+> collision, which'll be someone else's problem) the sort_ambiguous()
+> function does.
 
+If we were to go this route, I think it would make sense to add a
+sorting function pointer to "struct oid_array". I'm OK with punting on
+it for now, though.
+
+> diff --git a/Documentation/technical/api-oid-array.txt b/Documentation/technical/api-oid-array.txt
+> index b0c11f868d..94b529722c 100644
+> --- a/Documentation/technical/api-oid-array.txt
+> +++ b/Documentation/technical/api-oid-array.txt
+> @@ -35,13 +35,18 @@ Functions
+>  	Free all memory associated with the array and return it to the
+>  	initial, empty state.
+>  
+> +`oid_array_for_each`::
+> +	Iterate over each element of the list, executing the callback
+> +	function for each one. Does not sort the list, so any custom
+> +	hash order is retained. If the callback returns a non-zero
+> +	value, the iteration ends immediately and the callback's
+> +	return is propagated; otherwise, 0 is returned.
+> +
+>  `oid_array_for_each_unique`::
+> -	Efficiently iterate over each unique element of the list,
+> -	executing the callback function for each one. If the array is
+> -	not sorted, this function has the side effect of sorting it. If
+> -	the callback returns a non-zero value, the iteration ends
+> -	immediately and the callback's return is propagated; otherwise,
+> -	0 is returned.
+> +	Iterate over each unique element of the list in sort order ,
+> +	but otherwise behaves like `oid_array_for_each`. If the array
+> +	is not sorted, this function has the side effect of sorting
+> +	it.
+
+Extra space in "sort order ,".
+
+I'd probably say "sorted order", but that might be a matter of
+preference.
+
+Also, your parallel verb tenses don't agree. ;) It should be "Iterate
+... but otherwise behave", not "behaves".
+
+> +	/*
+> +	 * Between object types show tags, then commits, and finally
+> +	 * trees and blobs.
+> +	 *
+> +	 * The object_type enum is commit, tree, blob, tag, but we
+> +	 * want tag, commit, tree blob. Cleverly (perhaps too
+> +	 * cleverly) do that with modulus, since the enum assigns 1 to
+> +	 * commit, so tag becomes 0.
+> +	 */
+> +	a_type_sort = a_type % 4;
+> +	b_type_sort = b_type % 4;
+> +	return a_type_sort > b_type_sort ? 1 : -1;
+
+This is amusingly clever, and should be very efficient. I'm glad there's
+a comment at least, though.
+
+-Peff
