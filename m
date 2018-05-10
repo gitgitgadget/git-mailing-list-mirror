@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EBFD1F406
-	for <e@80x24.org>; Thu, 10 May 2018 19:30:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 263D71F406
+	for <e@80x24.org>; Thu, 10 May 2018 19:30:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751223AbeEJTaK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 15:30:10 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35472 "EHLO
+        id S1751828AbeEJTaS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 15:30:18 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:56314 "EHLO
         mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750762AbeEJTaJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 15:30:09 -0400
-Received: by mail-wm0-f68.google.com with SMTP id o78-v6so6289373wmg.0
-        for <git@vger.kernel.org>; Thu, 10 May 2018 12:30:08 -0700 (PDT)
+        with ESMTP id S1751457AbeEJTaR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 15:30:17 -0400
+Received: by mail-wm0-f68.google.com with SMTP id a8-v6so5576847wmg.5
+        for <git@vger.kernel.org>; Thu, 10 May 2018 12:30:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sogjedUGvCsaHVNjhhiNAZ2AvfbZqnkNxosLGJsIMQE=;
-        b=E+d9uDbWB7Ny8DIfIO3QmfIzBbsOZJIsxW4HF7er+gIFHhZIZh4kXbyB22M2u3rbpc
-         SfH67Tq5GUeGojMrd/OKijGQUdzI45sZ3F+HtGxo/JLhm4q8EMoVk5U1L8lvmUVvwDm6
-         zoB2FAPIJxrtjytPp0W+ctgkaVewih5ttZWyk+bNQv7QQLK7sYGLcrHoAbH8TnOZf162
-         KktlJ0x7LZUQZnHooLYJwBgflodFhlTEaIFc7uXYpKCefjHS9sH0cjF8NrJzUkc9twC3
-         pbhbWxw4XYIN8+Ks2Yk2MYaYOvx880brBd2yMjJ8ROIAgWTHfs/EuELWKy7pA5lTjn4e
-         iJxw==
+        bh=6agvAGMV+1crZYRGvejrES7lwq8SnEL2J9eQP7sWgdM=;
+        b=BOEZN+E0G5cVkTaomLDABBSD3TEGN9eDqXcig9teJVskniFieQ1zUIx/DIICEuO0t4
+         i95N/qu54ZaEYifosuodC3OC072HD9A9y8rKKtdhBP5jexqjCtx3CWYH/b6e1YG3ZcUs
+         7qnBHQ0gtfWaljgDihK76TmZxca2m/vSWfo1BTAAcTdj9nFufZNfypmnRGBuhfWUdhIt
+         UCLPFYUBxFwjGBcxl4Baus3ujb2pGeO67JjkgwceIU8wEs4gkPK65BAGrf8X4uT9LAA1
+         Rynqg43EPyn+91hyNOpaT4/kMagUN8pmgOinCkFDi5xxanyrqAasgY8R4Vo3RMJZnscf
+         o8gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sogjedUGvCsaHVNjhhiNAZ2AvfbZqnkNxosLGJsIMQE=;
-        b=KeiAHIqA6VO+ABYk2dJiouM2VYhae33TjHEWCiiOb+ZS7kJEjx6ei0UxTz0jcAqoZX
-         ysXc9MnKw280YC4wIIkZ7jAq0f/65GoYYcvKoYnbVid4Gyizx7TcOiSWZf7nLVRsEvDx
-         D2xByPoA0dkEJaMlegLfVddmh4cHniwAc2E+qcT0zFjM9TZdyF3l5WNB/pFs+My8CU0k
-         xX+7eeVRDtdWsQRy2PaokzFeDiYCon9kf64/FbGQV7neIKj6rjSFjuJ7gbgxac2nfrg8
-         LvHeGfR5DvwFTVl1JEUTX1qljG2kSQUhriNKqopmYUHLHYTrXVEm9TgZahLg/9q6UIxA
-         58BQ==
-X-Gm-Message-State: ALKqPwfMSQqSlFT7QxVncPWktfh36URhOTeKiyMKlmSBsS45UMfA5wcc
-        TqRpEGpg9kfgpzFO29NBg3bnj7rpCoY=
-X-Google-Smtp-Source: AB8JxZpk06/dvwDbMy/yNHbmjDtbW+5vgRRM6TkkxYhNb3JTIjFZV38KUIuPACKqR0JC6tuEGiJN2w==
-X-Received: by 2002:a50:fc0c:: with SMTP id i12-v6mr3838077edr.74.1525980607567;
-        Thu, 10 May 2018 12:30:07 -0700 (PDT)
+        bh=6agvAGMV+1crZYRGvejrES7lwq8SnEL2J9eQP7sWgdM=;
+        b=Jcw5Ek9dKTpte4iO2c1+PttQMCN/sEECHY8iL/oOZ/Nl1BQ9AmHHtzegIQtGEFGHo5
+         FBTEd8aQ+0ohkYt7epE47E+E4CyW8mFIgkrVGs4ZstHArSGb4kQt/sORZrzFWb9JfZiO
+         4KPOxKc0moBzJ/oMpYPkiyd3btmT4yUz840eS2yQpYuZ04JEFaG5qA41Es17JTE3CRBQ
+         qUYE9c8UnhcvDk8R0zEVXHzS98wkweaBRrPInT7DNxgjKpfNprAkTkLUZ5pecmAHr7FX
+         bSZExBGZ/sFNTyGU6XYd8BvadAr+DYWqWm2mamE0JdwtAo2rL1iTdKR+5ypRk/hXsM8j
+         3QiQ==
+X-Gm-Message-State: ALKqPwdIjBffdrAPgV3ThIpWBixLxIuR8CAaGV9NwkYc9UM0yDOi4sev
+        Go7xt6qb7q8bSs3a3IT9Xh+9hYeRga0=
+X-Google-Smtp-Source: AB8JxZocOsC/ZO/ykdbzfgj7e1UvHKBZtlksF0eCTrcPzw3G7gPjPc+QeJ8N4JeLnyfcXetxWTGKzw==
+X-Received: by 2002:a50:9dc8:: with SMTP id l8-v6mr3934430edk.234.1525980615954;
+        Thu, 10 May 2018 12:30:15 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id z11-v6sm870817edh.60.2018.05.10.12.30.06
+        by smtp.gmail.com with ESMTPSA id z11-v6sm870817edh.60.2018.05.10.12.30.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 10 May 2018 12:30:06 -0700 (PDT)
+        Thu, 10 May 2018 12:30:15 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
@@ -57,12 +57,12 @@ Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         David Turner <novalis@novalis.org>,
         Jonathan Nieder <jrnieder@gmail.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 0/3] refs: handle zero oid for pseudorefs
-Date:   Thu, 10 May 2018 21:29:53 +0200
-Message-Id: <cover.1525979881.git.martin.agren@gmail.com>
+Subject: [PATCH v2 1/3] refs.c: refer to "object ID", not "sha1", in error messages
+Date:   Thu, 10 May 2018 21:29:54 +0200
+Message-Id: <076c6847d4f533103a8be5d9b6dd4dc3dfb8c83a.1525979881.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.17.0
-In-Reply-To: <CAN0heSp-rxqAVJ3Q1KMD=eYqPUkcDP8xBTVTDtGfom6v5WpBLQ@mail.gmail.com>
-References: <CAN0heSp-rxqAVJ3Q1KMD=eYqPUkcDP8xBTVTDtGfom6v5WpBLQ@mail.gmail.com>
+In-Reply-To: <cover.1525979881.git.martin.agren@gmail.com>
+References: <CAN0heSp-rxqAVJ3Q1KMD=eYqPUkcDP8xBTVTDtGfom6v5WpBLQ@mail.gmail.com> <cover.1525979881.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,32 +71,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7 May 2018 at 12:05, Martin Ågren <martin.agren@gmail.com> wrote:
-> On 7 May 2018 at 09:39, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> Thanks for the patch. This looks good to me. But it it seems that the
->> test coverage related to pseudorefs is still not great. Ideally, all of
->> the following combinations should be tested:
->
-> Thank you for your comments. I was not able to find much
-> pseudoref-testing. I think what I should do is a patch 1/2 adding the
-> tests you outlined (some will be expected failures), then turn this
-> patch into a patch 2/2.
+We have two error messages that complain about the "sha1". Because we
+are about to touch one of these sites and add some tests, let's first
+modernize the messages to say "object ID" instead.
 
-Well, it turned into three patches. One to move away from "sha1" in some
-error messages before spreading them to the test suite, then one to add
-the tests, then one for the actual fix.
+While at it, make the second one use `error()` instead of `warning()`.
+After printing the message, we do not continue, but actually drop the
+lock and return -1 without deleting the pseudoref.
 
-Martin
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+We could make error-reporting more consistent in general in this file,
+but I'd rather not lose track of the original goal of this series.
 
-Martin Ågren (3):
-  refs.c: refer to "object ID", not "sha1", in error messages
-  t1400: add tests around adding/deleting pseudorefs
-  refs: handle zero oid for pseudorefs
+ refs.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
- t/t1400-update-ref.sh | 60 +++++++++++++++++++++++++++++++++++++++++++
- refs.c                | 22 ++++++++++++----
- 2 files changed, 77 insertions(+), 5 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index 64aadd14c9..7820a52c4f 100644
+--- a/refs.c
++++ b/refs.c
+@@ -684,7 +684,8 @@ static int write_pseudoref(const char *pseudoref, const struct object_id *oid,
+ 		if (read_ref(pseudoref, &actual_old_oid))
+ 			die("could not read ref '%s'", pseudoref);
+ 		if (oidcmp(&actual_old_oid, old_oid)) {
+-			strbuf_addf(err, "unexpected sha1 when writing '%s'", pseudoref);
++			strbuf_addf(err, "unexpected object ID when writing '%s'",
++				    pseudoref);
+ 			rollback_lock_file(&lock);
+ 			goto done;
+ 		}
+@@ -722,7 +723,8 @@ static int delete_pseudoref(const char *pseudoref, const struct object_id *old_o
+ 		if (read_ref(pseudoref, &actual_old_oid))
+ 			die("could not read ref '%s'", pseudoref);
+ 		if (oidcmp(&actual_old_oid, old_oid)) {
+-			warning("Unexpected sha1 when deleting %s", pseudoref);
++			error("unexpected object ID when deleting '%s'",
++			      pseudoref);
+ 			rollback_lock_file(&lock);
+ 			return -1;
+ 		}
 -- 
 2.17.0
 
