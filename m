@@ -2,82 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F0341F406
-	for <e@80x24.org>; Thu, 10 May 2018 15:44:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B9EE1F406
+	for <e@80x24.org>; Thu, 10 May 2018 16:03:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966279AbeEJPoL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 11:44:11 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:42057 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966135AbeEJPoL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 11:44:11 -0400
-Received: by mail-oi0-f68.google.com with SMTP id t27-v6so2144356oij.9
-        for <git@vger.kernel.org>; Thu, 10 May 2018 08:44:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ra+MIW8HshawynnjjmArY8vGATrZFN2JB/5jYU9RMmk=;
-        b=fTbLR+9mkyYgJUegtWSaPjsiRgoputK+WWPU/cs7REuilrQX7OqVqFfcQ0dNBP8OKN
-         N6Xf5hNZ9FLLRV/HTU7T/XDeJofgqXPKTML3KLnQeRhM+5JaDHxQwHV/DzKY6RNSJbLk
-         vXPvIg4+kxQO72GFUPKF1sLUan6CqM6qD9UiDcZfGeo7y10NXeW7Aa1OVJ0JxBR6pKZk
-         sgXZ6RpUp3F2Eb+6361LCjNFZD1Nbaat2H6ZfEYPRLGZOb6Ba7UpQGEMBBlYpaxFD2Ve
-         gXZpNSUatTqAZ+ndITvGdF9UeXj6QbiXXpsgTNKRvH+JHwOWYqvcCThIWCYXrfl3xvZc
-         lIiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ra+MIW8HshawynnjjmArY8vGATrZFN2JB/5jYU9RMmk=;
-        b=t/YjfAqkCSHgrHCnoYp8o0heRt3Oz27b0PxFoiUvtCvtQPLujxGvDoqulLDAC0Y3qO
-         TDIj3Ugll5GpTk4LlG7mqs5UMfDlZ0sa4V13XnRdDmJxhWNt1DLJGxWyp+dFzWlR9Mn2
-         k9yu313DCXp/Ppmfe78x7KLaYb+3DIXW6cxqzwAf7v3mDsZEBTE7RZbcaZJVZE7afhiS
-         8PfZKmwX+7L2GLaIWz+mByl963NlotAzeRqgI28O2bO1sta7E4yr8nRpHhI8/Wz0RTQP
-         Dq3+eYN6aHw45jlSQ6U9i8mR9HX9nqGq2rApcNRy9dwmCHLOzfntKawk5POw/sZ4mkX1
-         GyVQ==
-X-Gm-Message-State: ALKqPweNP9zJQ6LRq1o0zI8bHfTX5Mm4sqvMwZP72bfikxT0liDHKQmd
-        ZaEIBqYZYp5jGxfE5ljKO1HtkTt+0l/DOdvcIK0=
-X-Google-Smtp-Source: AB8JxZqsvAwVgN4UXz2g+ybx5VnMMGKurF2m1JOGJaQiYREs6fnEU9cohOxOFyyaBJzX3+3FfEcHltS0azFb8dnVp+U=
-X-Received: by 2002:aca:2e09:: with SMTP id u9-v6mr1144878oiu.228.1525967050524;
- Thu, 10 May 2018 08:44:10 -0700 (PDT)
+        id S966462AbeEJQDd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 12:03:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35014 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S966422AbeEJQDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 12:03:24 -0400
+Received: (qmail 9028 invoked by uid 109); 10 May 2018 16:03:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 May 2018 16:03:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25923 invoked by uid 111); 10 May 2018 16:03:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 10 May 2018 12:03:29 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2018 12:03:22 -0400
+Date:   Thu, 10 May 2018 12:03:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v4 6/6] get_short_oid: document & warn if we ignore the
+ type selector
+Message-ID: <20180510160322.GC6462@sigill.intra.peff.net>
+References: <20180501184016.15061-10-avarab@gmail.com>
+ <20180510124303.6020-7-avarab@gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Thu, 10 May 2018 08:43:39 -0700 (PDT)
-In-Reply-To: <CAGZ79kbYuodP12Y2WSwmF+EmStv0pHONwfVbqjDS7Kyhvx103Q@mail.gmail.com>
-References: <20180507225916.155236-1-sbeller@google.com> <20180508193736.14883-1-sbeller@google.com>
- <20180508193736.14883-14-sbeller@google.com> <20180508130431.287a9f273a847c375b3b1e2b@google.com>
- <CACsJy8C7N2W821H8YR8VaKdCSOSCDtQi_YT7z8hHNDO-VxJmEA@mail.gmail.com> <CAGZ79kbYuodP12Y2WSwmF+EmStv0pHONwfVbqjDS7Kyhvx103Q@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 10 May 2018 17:43:39 +0200
-Message-ID: <CACsJy8CJu-Og1Mn4Sn+eCyv+KkbJ__21oTYRaMyTdOsjAVxpqw@mail.gmail.com>
-Subject: Re: [PATCH v3 13/13] alloc: allow arbitrary repositories for alloc functions
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jameson Miller <jamill@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180510124303.6020-7-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 9, 2018 at 9:20 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, May 9, 2018 at 10:18 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->>
->> If you want to reproduce, this is what I used to test this with.
->>
->> https://gist.github.com/pclouds/86a2df6c28043f1b6fa3d4e72e7a1276
->
-> This only applied cleanly after I created an empty file at
-> t/helper/test-abc.c, using git-apply.
+On Thu, May 10, 2018 at 12:43:03PM +0000, Ævar Arnfjörð Bjarmason wrote:
 
-Right. I created the patch with "git add -N". I know exactly what the
-bug is but I'll need to be careful with renaming a bit before trying
-to fix this. Thanks for reminding me.
--- 
-Duy
+> The SHA1 prefix 06fa currently matches no blobs in git.git. When
+> disambiguating short SHA1s we've been quietly ignoring the user's type
+> selector as a fallback mechanism, this was intentionally added in
+> 1ffa26c461 ("get_short_sha1: list ambiguous objects on error",
+> 2016-09-26).
+> 
+> I think that behavior makes sense, it's not very useful to just show
+> nothing because a preference has been expressed via core.disambiguate,
+> but it's bad that we're quietly doing this. The user might thing that
+> we just didn't understand what e.g 06fa^{blob} meant.
+
+I had to read this through a few times to figure out what problem you
+were solving. Possibly because you lead with 06fa, which is really just
+an example (and also, I have an 06fa blob in my clone ;) ).
+
+Maybe:
+
+  If the short-sha1 disambiguation code is told to use a particular hint
+  (e.g., treeish or blob) but no objects with that short-sha1 match that
+  hint, we end up ignoring the hint. This can result in either:
+
+    1. We choose the non-matching object if there is only one. This will
+       typically result in an error later up the stack (since whatever
+       gave us the hint is expecting a particular type).
+
+    2. We list all objects with that short-sha1, including those with
+       non-matching types.
+
+  This second case can be confusing to the user, who might think that we
+  didn't apply the hint properly (especially if the hint came from
+  them). For example, in git.git there is no blob with the prefix 06fa.
+  So the user may see:
+
+    $ git rev-parse 06fa^{blob}
+    hint: The candidates are:
+    hint:   06fa2b7c2b tag v2.1.4
+    hint:   06faf6ba64 tree
+    06fa^{blob}
+    fatal: ambiguous argument '06fa^{blob}': unknown revision or path not in the working tree.
+
+  Let's help them out by issuing a warning whenever the hint is ignored.
+
+So that at least explains it in a way that makes sense to me. But now
+that I've propped up my strawman, let me take a few swings...
+
+Your patch just covers case 2, I think. And for the error case, that's
+probably OK:
+
+  $ git rev-parse 06faf^{blob}
+  error: 06faf^{blob}: expected blob type, but the object dereferences to tree type
+  06faf^{blob}
+  error: 06faf^{blob}: expected blob type, but the object dereferences to tree type
+  fatal: ambiguous argument '06faf^{blob}': unknown revision or path not in the working tree.
+
+(though there is a separate bug in showing the error twice).
+
+But some cases _don't_ issue an error. For example, try this:
+
+  $ git log ..06faf
+
+which returns an empty output! We return the single matching tree, even
+though the ".." triggers the commit hint. The revision machinery just
+queues the tree, and then later when we see we're not doing an --objects
+traversal, it just gets ignored. (That's a separate issue, but it shows
+that the hints are just that: hints. The code that runs after does not
+necessarily require a matching type).
+
+And that example shows another issue, which is that the user does not
+necessarily feed us the hint explicitly. We're using a committish hint
+there, but I'm not sure if mentioning that would confuse the user or
+not. Certainly this warning:
+
+>     warning: Your hint (via core.disambiguate or peel syntax) was ignored, we fell
+>     back to showing all object types since no object of the requested type
+>     matched the provide short SHA1 06fa
+
+is not accurate, because the hint came from neither of those places. ;)
+
+So all that said together, I kind of wonder if we should consider
+issuing the warning earlier, doing so for all cases, and being a bit
+less chatty. Like:
+
+  $ git rev-parse 06fa^{blob}
+  warning: short object id 06fa did not match any objects of type 'blob'
+
+If that were followed by any of:
+
+  1. error: short SHA1 06fa is ambiguous, then a bunch of non-blobs
+
+  2. error: expected blob but I got a tree
+
+  3. the command proceeds and silently ignores the matched object
+
+I think it would be helpful. We'd need to add in an extra mapping of
+GET_OID_* back to a human-readable string, but I think that should be
+pretty easy.
+
+And finally, your 06fa example for me shows behavior that's either
+buggy, or I'm just confused. I get:
+
+  $ git rev-parse 06fa^{blob}
+  error: short SHA1 06fa is ambiguous
+  hint: The candidates are:
+  hint:   06fa2b7c2b tag v2.1.4
+  hint:   06faa52353 commit 2005-10-18 - 2005-10-18 midnight
+  hint:   06fac427af blob
+  hint:   06faf6ba64 tree
+
+(That 06fac blob comes Junio's refs/notes/amlog). Shouldn't the blob
+disambiguator show me just that object?
+
+-Peff
