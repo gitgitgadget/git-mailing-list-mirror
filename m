@@ -2,153 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ACD71F406
-	for <e@80x24.org>; Fri, 11 May 2018 12:30:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 421A61F406
+	for <e@80x24.org>; Fri, 11 May 2018 12:50:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751610AbeEKMat (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 08:30:49 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:43275 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750777AbeEKMas (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 May 2018 08:30:48 -0400
-Received: by mail-qk0-f194.google.com with SMTP id h19-v6so4161130qkj.10
-        for <git@vger.kernel.org>; Fri, 11 May 2018 05:30:47 -0700 (PDT)
+        id S1752862AbeEKMub (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 08:50:31 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:40685 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752563AbeEKMua (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 08:50:30 -0400
+Received: by mail-qt0-f196.google.com with SMTP id h2-v6so6859427qtp.7
+        for <git@vger.kernel.org>; Fri, 11 May 2018 05:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=a70G5EU4LPRbehzyvDQQRTbFRuuPkpHL1TvE4puAass=;
-        b=gzQc3EjRdzoWZEizZHkazefTj/hQAgmq+475iXb1AGaMbqQQ+H+tg+qlLII/G9EYkH
-         6GLJj7LlsGsdFIz+cRtfWijhEUMMQ5DGgXVYtHx7i2JUL2jI1Ci3kDKafUNA13yvq5KM
-         2V+HdrNS2gGxIUgu6iYPATUxTgnbFMNTNWQphAOfqRyKBLDSJgoI3CRsVe9xs6rGg8EX
-         2zvYuRu1EXTiTAfQq+jzWvtkHkiq718LRasGVAK8cm3lBagV9nbgan/Q6jguKX23Sfj5
-         ijtHaV7YdWOiXBxfjO5rYdHqv81dIzKpGeEJG7uGm4mq+xMUnS6elTRZ98tVC3T5Qd47
-         Bzkw==
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=yNhKMMbYrnjT4rqtGfb0RcJLZ5hEZfil9ft67G+E9YI=;
+        b=iQlgYhaJUTSm94WJBHVOu7WZjhYHWWxU4kBv77gmC64RE7kRjHMTkezlnGSE2T49TM
+         Eqf4Gx/gxwPMFWJhOBwcf9NpskDLr5hqc4PcDqJ1rTOzqNkMWApgEuX7GYFC32Euelyw
+         EJTGOOvrKV8HAT8dM08yQgzbJi5Ivj2oMtsonEuQ7Nk28Jybo3CqGJUW2++ygeQR7/Ut
+         ZNmYVTg3rZqIist9EmAcBmNJAFdT5FCH5hFJVwOHd2hyS6qMvVP+18//luQIfjB+sCFj
+         qbCmfkfCiFN6Lwozm0xob535D6FN5iZj/6OI1Hvxm/N7a9kuXlP5ZWF4qU3biMungkoM
+         C0wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=a70G5EU4LPRbehzyvDQQRTbFRuuPkpHL1TvE4puAass=;
-        b=bW+fs8mrqJwwJSjtYtyicpQJn6B3J702qxO64zFCw7So9uVSJz3WNdb6JCIsr9ZU//
-         yc83UewMFg39Jh70Q9dRcWoSw582GDR2zbczmR4IIeEwcyJmZzPOjHCElHs4AGkFoNz/
-         vd5Z/m/hO32uddRYqXy82/kH07pToK+eH+5v5AzFO4mqWTIMlXYRdO1uzvrr5C+PERdZ
-         +tMnYAeXnLQPbT4Dh+xP0ULRiQtjXvfkozpM8MCGUU9GVdxE5XMbDOvz4uizJNZa15d0
-         +uAx0W+ic7WBCtKjiligFcQBxZgmGj46OZwLGKG7M9G9ZqS2ME/82r0GI3xfFJHpWFN+
-         meJA==
-X-Gm-Message-State: ALKqPweLYlPgk4nJ6BSBJ6Cb/6PuitwauQ8tn1PTK0u2l+TBAHdkANP+
-        kE6Fr3/X45qdLIFhvOTv7VY=
-X-Google-Smtp-Source: AB8JxZqhRVBvPRLe12HYEJb+fY5jZa91xvvGqx7HdODzu2TbHXXoYdr9bzB1oC+YMNmeGyr6wdOA8Q==
-X-Received: by 2002:ae9:d611:: with SMTP id r17-v6mr4744982qkk.65.1526041847091;
-        Fri, 11 May 2018 05:30:47 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id h73-v6sm1559866qke.88.2018.05.11.05.30.45
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=yNhKMMbYrnjT4rqtGfb0RcJLZ5hEZfil9ft67G+E9YI=;
+        b=RC2Ohtqv25YvfKVrJuBktfhwDle9Qe7PhWeLTgeT0lgNma2HIHPQZfyEqHxRuJdKfr
+         fXUHfYWgvnETHyPSirmZbxSpk2J5sTJLkERJe3wQ/PhlckguO4AqyoUHqyyaOxxsPCOc
+         iDtgVZAhypb8iRuKNO3Yv/J16sU1aKh15FtwbYXe2XlpAFfSsYlHB+HEvB54RZnCT2RV
+         S4ZTdWKXN+6rWL1flcS7cUoro/KLYiUSoJKXbY+xgssd+x3oVMhq2RJnHVA/6C9prXhn
+         ZmQgrXAYwAlTFA9IdfZbOH3tIuo+K76O5cLlqCYdJ9YvV/ETtzp6DefS5+PB5yKOJuwm
+         gN9w==
+X-Gm-Message-State: ALKqPweFgIyQ/Y5UjMRK6ksckY95HlNxsEMCW0HBET/Pq7Xle9QDGtCy
+        Nn3jCpukdwtyGExpBxFq3oU=
+X-Google-Smtp-Source: AB8JxZqZ9jC/gi+kkquHX/XQJ7NjC56j7AWUDlz5vmMtKXHtBcKb2O/unBg/+vYvEyPL7HMGW+0d0A==
+X-Received: by 2002:ac8:8b2:: with SMTP id v47-v6mr5090967qth.350.1526043029516;
+        Fri, 11 May 2018 05:50:29 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id y84-v6sm2351228qkb.23.2018.05.11.05.50.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 May 2018 05:30:46 -0700 (PDT)
-Subject: Re: [PATCH 00/12] Integrate commit-graph into fsck, gc, and fetch
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
-References: <20180510204557.16361-1-martin.agren@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <cf443352-7840-9ff9-77af-cb4c52932fcb@gmail.com>
-Date:   Fri, 11 May 2018 08:30:45 -0400
+        Fri, 11 May 2018 05:50:28 -0700 (PDT)
+Subject: Re: [PATCH v2] add status config and command line options for rename
+ detection
+To:     Elijah Newren <newren@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Alejandro Pauly <alpauly@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
+References: <20180509144213.18032-1-benpeart@microsoft.com>
+ <20180510141621.9668-1-benpeart@microsoft.com>
+ <CABPp-BGE6RXv3ka8wGXruFjk3W=kDEDJ6zpH3t5=_CGSTONCHQ@mail.gmail.com>
+ <bc81823e-7b7d-c516-dfc2-cd47bedb5a5a@gmail.com>
+ <CABPp-BGL2Fcnj0QNu+D3wfOU5q8MuizUGJyzrEc7FXy9Q9aA_A@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <276c981b-3b6b-4034-7aaa-dbfcba4ae3f1@gmail.com>
+Date:   Fri, 11 May 2018 08:50:27 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <20180510204557.16361-1-martin.agren@gmail.com>
+In-Reply-To: <CABPp-BGL2Fcnj0QNu+D3wfOU5q8MuizUGJyzrEc7FXy9Q9aA_A@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/10/2018 4:45 PM, Martin Ågren wrote:
-> On 10 May 2018 at 21:22, Stefan Beller <sbeller@google.com> wrote:
->> On Thu, May 10, 2018 at 12:05 PM, Martin Ågren <martin.agren@gmail.com> wrote:
->>> I hope to find time to do some more hands-on testing of this to see that
->>> errors actually do get caught.
->> Packfiles and loose objects are primary data, which means that those
->> need a more advanced way to diagnose and repair them, so I would imagine
->> the commit graph fsck is closer to bitmaps fsck, which I would have suspected
->> to be found in t5310, but a quick read doesn't reveal many tests that are
->> checking for integrity. So I guess the test coverage here is ok, (although we
->> should always ask for more)
-> Since I'm wrapping up for today, I'm posting some simple tests that I
-> assembled. The last of these showcases one or two problems with the
-> current error-reporting. Depending on the error, there can be *lots* of
-> errors reported and there are no new-lines, so the result on stdout can
-> be a wall of not-very-legible text.
->
-> Some of these might not make sense. I just started going through the
-> documentation on the format, causing some sort of corruption in each
-> field. Maybe this can be helpful somehow.
->
-> Martin
->
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index 82f95eb11f..a7e48db2de 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -255,4 +255,49 @@ test_expect_success 'git fsck (checks commit-graph)' '
->   	git fsck
->   '
->   
-> +# usage: corrupt_data <file> <pos> [<data>]
-> +corrupt_data() {
-> +	file=$1
-> +	pos=$2
-> +	data="${3:-\0}"
-> +	printf "$data" | dd of="$file" bs=1 seek="$pos" conv=notrunc
-> +}
-> +
-> +test_expect_success 'detect bad signature' '
-> +	cd "$TRASH_DIRECTORY/full" &&
-> +	cp $objdir/info/commit-graph commit-graph-backup &&
-> +	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
-> +	corrupt_data $objdir/info/commit-graph 0 "\0" &&
-> +	test_must_fail git commit-graph verify 2>err &&
-> +	grep "graph signature" err
-> +'
-> +
-> +test_expect_success 'detect bad version number' '
-> +	cd "$TRASH_DIRECTORY/full" &&
-> +	cp $objdir/info/commit-graph commit-graph-backup &&
-> +	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
-> +	corrupt_data $objdir/info/commit-graph 4 "\02" &&
-> +	test_must_fail git commit-graph verify 2>err &&
-> +	grep "graph version" err
-> +'
-> +
-> +test_expect_success 'detect bad hash version' '
-> +	cd "$TRASH_DIRECTORY/full" &&
-> +	cp $objdir/info/commit-graph commit-graph-backup &&
-> +	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
-> +	corrupt_data $objdir/info/commit-graph 5 "\02" &&
-> +	test_must_fail git commit-graph verify 2>err &&
-> +	grep "hash version" err
-> +'
-> +
-> +test_expect_success 'detect too small chunk-count' '
-> +	cd "$TRASH_DIRECTORY/full" &&
-> +	cp $objdir/info/commit-graph commit-graph-backup &&
-> +	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
-> +	corrupt_data $objdir/info/commit-graph 6 "\01" &&
-> +	test_must_fail git commit-graph verify 2>err &&
-> +	cat err
-> +'
-> +
-> +
->   test_done
 
 
-Martin: thank you so much for these test examples, and for running them 
-to find out about the newline issue. This is really helpful.
+On 5/10/2018 6:31 PM, Elijah Newren wrote:
+> Hi Ben,
+> 
+> On Thu, May 10, 2018 at 12:09 PM, Ben Peart <peartben@gmail.com> wrote:
+>> On 5/10/2018 12:19 PM, Elijah Newren wrote:
+>>> On Thu, May 10, 2018 at 7:16 AM, Ben Peart <Ben.Peart@microsoft.com>
+>>> wrote:
+> 
+>> Given the example perf impact is arbitrary (the actual example that
+>> triggered this patch took status from 2+ hours to seconds) and can't be
+>> replicated using the current performance tools in git, I'm just going drop
+>> the specific numbers.  I believe the patch is worth while just to give users
+>> the flexibility to control these behaviors.
+> 
+> Your parenthetical statement of timing going from hours to seconds I
+> think would be great; I don't think we need precise numbers.
+> 
+>>>> +       if ((intptr_t)rename_score_arg != -1) {
+>>>> +               s.detect_rename = DIFF_DETECT_RENAME;
+>>>
+>>>
+>>> I'd still prefer this was a
+>>>           if (s.detect_rename < DIFF_DETECT_RENAME)
+>>>                   s.detect_rename = DIFF_DETECT_RENAME;
+>>>
+>>> If a user specifies they are willing to pay for copy detection, but
+>>> then just passes --find-renames=40% because they want to find more
+>>> renames, it seems odd to disable copy detection to me.
+>>>
+>>
+>> I agree and will change it. It is unfortunate this will behave differently
+>> than it does with merge.  Fixing the merge behavior to match is outside the
+>> scope of this patch.
+> 
+> I agree that changing merge is outside the scope of this patch, but
+> I'm curious what change you have in mind for it to "make it match".
+> In particular, merge-recursive.c already has (or will shortly have)
+> +       if (opts.detect_rename > DIFF_DETECT_RENAME)
+> +               opts.detect_rename = DIFF_DETECT_RENAME;
+> from your commit 85b460305ce7 ("merge: add merge.renames config
+> setting", 2018-05-02), 
+
+This is a good point that I missed.  With that recent change to merge, 
+it no longer matters that the settings parsing code caps detect_rename 
+at DIFF_DETECT_RENAME because it will cap it later anyway so there is no 
+need to change the merge option behavior.
+
+> The one place copy detection does make sense inside a merge is for the
+> diffstat shown at the end (from builtin/merge.c), but it currently
+> isn't controlled by any configuration setting at all.  When it is
+> hooked up, it'd probably store the value separately from
+> merge-recursive's internal o->{diff,merge}_detect_rename anyway,
+> because builtin/merge.c's diffstat should be controlled by the
+> relevant confiig settings and flags (merge.renames, diff.renames,
+> -Xfind-renames, etc.) regardless of which merge strategy (recursive,
+> resolve, octopus, ours, ort) is employed.  And when that is hooked up,
+> I agree with you that it should look like what you've done with
+> status.renames here.  In fact, if you'd like to take a crack at it, I
+> think you'd do a great job.  :-)  If not, it's on my list of things to
+> do.
+> 
+
+Thanks but I'll leave that to you. :)  I have a large backlog of patches 
+I would like to see pushed through the mailing list into master.  We've 
+been sitting on this one for over a year.  If the current rate is any 
+indication, it will take man years to get caught up.
+
+>>> Testcases look good.  It'd be nice to also add a few testcases where
+>>> copy detection is turned on -- in particular, I'd like to see one with
+>>> --find-renames=$DIFFERENT_THAN_DEFAULT being passed when
+>>> merge.renames=copies.
+>>>
+>>
+>> OK.  I also added tests to verify the settings correctly impact commit.
+> 
+> Nice!
+> 
