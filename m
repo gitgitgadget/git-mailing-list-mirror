@@ -6,63 +6,66 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83F8F1F406
-	for <e@80x24.org>; Fri, 11 May 2018 04:49:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B1681F406
+	for <e@80x24.org>; Fri, 11 May 2018 05:36:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751000AbeEKEtr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 00:49:47 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:35941 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750758AbeEKEtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 May 2018 00:49:46 -0400
-Received: by mail-wm0-f43.google.com with SMTP id n10-v6so816426wmc.1
-        for <git@vger.kernel.org>; Thu, 10 May 2018 21:49:46 -0700 (PDT)
+        id S1752199AbeEKFgU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 01:36:20 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:50358 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752004AbeEKFgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 01:36:18 -0400
+Received: by mail-wm0-f65.google.com with SMTP id t11-v6so821709wmt.0
+        for <git@vger.kernel.org>; Thu, 10 May 2018 22:36:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=c/kpxQPwuOUJxJIlmM7w2dQvnJEqxCZwKIPvBqM1W6I=;
-        b=KJXHKvgK0v/a4PobuFaR/FQ6EeI3bThHYWrGm6WquggjFOSkuuO8UnLC5aLA2kdGYU
-         ph6Dq79wJHuzcUKyYnr5pwQOshGZMig0Wfg6Bp9292SwE3o/h7oYqhIIVMKx3jeyV8Re
-         bzuwvpoP+H0yi6rZzrO9hnVvAI3301Ej06OadP9D2KJP1UjImBB2TMx1oxL8wcsXmNCn
-         Qbi5RqFYP200vBLkyF4Hthgg+Qf8VpX7mkS99tqtlDkKXyL5CiYWJHdsPiIIcBqlK7N5
-         1fWSjrUycL9EgnCcY5g5UFQYG9EhVyshRRBx3REDiEjWJWVyJAj3HOupSUOvTp+LhIV6
-         8Dkw==
+        bh=rVUBORWM8tzjKzojM3g1IquT9hze9rfH1ko6iAtzmGQ=;
+        b=hqElSkZT28hn1FGASyU9vPjD8sqwJSsy3c1p1aHZtb3B1oeG4y7sNEtl8Xz/wQDch2
+         mRkn24vejQdFjR1xiduSG9bgqG6nxDGIvDcCaXLxCm+Uc2ypnVDiZ6DEMEYDhVato7DM
+         aDf7C3yMeH7e/xoeHu/wPI75oOsR02vwARooE7+nDy/LJwBHldiGS37acwCXzzwDiRzk
+         jDmAFHGMrThkEHibHBUNdKdpqVaXnNLT/Ajc+IZfCJ4EN0tTnZxnXBITvQWhBFTSPq41
+         16cR45ZsduAqqga1MOEuCRL85qtOb9snzyMJSNrE0zSBCJlCPNSR3igr8/BZgIeZDpWW
+         2nSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=c/kpxQPwuOUJxJIlmM7w2dQvnJEqxCZwKIPvBqM1W6I=;
-        b=Nqs8uTJfiLz00PDXyiLUIyouxW6rjlTvtRPa5XMdagCTfuvhTmdPjuxfvbiVd3LD0m
-         AQX/dwT4Z1M+y9x50V3WIVF52Bvjt2ba6h9wsw4/WqJesMm9/RTtcsoPZfd3f+mTtnIG
-         N2ZRov2dnc674MxHtr7e837afpkjKT39c5ho0Py2FO0jPo+Sd1cL9TSoidPvo9A9D3hT
-         nCWf+7LENYjAEyfW5w58c6JbBjVL22nqSD2BbLH1s/XDKnxDK5F+eJoEDlSb9vV7pFJ8
-         9l8iHzAGfB2FLt6k0J3/iyxczr8WhyUz0Dh3c83Aym6Os+4VwHp5yBfD4vHKSi1yRT0t
-         nI6Q==
-X-Gm-Message-State: ALKqPweS9L8ZBiWypLD7bL11NvlJKbIF2zBLEwYUcS0E5PWsztTtyXQM
-        /97FeAwQ3GKgpIIyNWZR8G0=
-X-Google-Smtp-Source: AB8JxZoy87Bemk9E02fDP0W5g7qVZtjYHK6cYsmVFY/S4dhW0w2sOAlW9bCs9P8ooeg5l2KKi5DdaA==
-X-Received: by 2002:a1c:6ce:: with SMTP id 197-v6mr755855wmg.141.1526014185336;
-        Thu, 10 May 2018 21:49:45 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 131-v6sm1216276wms.34.2018.05.10.21.49.42
+        bh=rVUBORWM8tzjKzojM3g1IquT9hze9rfH1ko6iAtzmGQ=;
+        b=PMaTh08yWe5+L0sRBjFGk1fttZbTK4+tZjWrFFWYFuwGM422OkXxMPX9358uMgYQNE
+         nAsKeHCazTLsFL4GAcCTNR8RdKjgjOU0/5HlIx+00CuKw2cojagtjZkcb/HS4bje5aDL
+         GCsG1iN0OyKMLzdxHGRTidUKEwrX+SvHb/RitbsldB9slWam5NqSs2+IZ3U6+R0KbVX1
+         1hCP/Gzz+I/6KIfeeFmXuwNp7Q0cH1ps4TgutVWgNfJNEWD0v2abOfV5XK43b95pVSw3
+         xRlcwI5EGBhI1ao/R7hzNalnFZmvq/s0fbQLVkJVmpeOTGQZRd+PzHLri7QiYwNMrWUu
+         L3vQ==
+X-Gm-Message-State: ALKqPwcJWZXuttZ+ggxzu3ULPyUjINKHgUPIR4TmAW/ynFK+asqRqz0+
+        rM0gHmqjW34vvyL4UikFTCY=
+X-Google-Smtp-Source: AB8JxZpMXnV6V5ID0u2iJnlnVLH5Y3DIDOx7G568tJGZJT4rKIvH9stl3f+7gpCS214idImr5l/KDg==
+X-Received: by 2002:a1c:8983:: with SMTP id l125-v6mr852345wmd.30.1526016977176;
+        Thu, 10 May 2018 22:36:17 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o53-v6sm4922820wrc.96.2018.05.10.22.36.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 May 2018 21:49:43 -0700 (PDT)
+        Thu, 10 May 2018 22:36:15 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] fast-export: avoid NULL pointer arithmetic
-References: <d50a4d5d-3b99-453e-1b52-4e733453fb78@web.de>
-        <99d443cd-e817-7db5-f758-bf4cf47f7c06@web.de>
-        <xmqqo9hniy1v.fsf@gitster-ct.c.googlers.com>
-        <654fac2a-8dca-7bee-2bab-a3986aa7e52d@web.de>
-        <xmqqbmdnhr8b.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 11 May 2018 13:49:42 +0900
-In-Reply-To: <xmqqbmdnhr8b.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 11 May 2018 11:16:04 +0900")
-Message-ID: <xmqq7eoahk49.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v4 5/6] get_short_oid: sort ambiguous objects by type, then SHA-1
+References: <20180510124303.6020-1-avarab@gmail.com>
+        <20180501184016.15061-10-avarab@gmail.com>
+        <20180510124303.6020-6-avarab@gmail.com>
+Date:   Fri, 11 May 2018 14:36:14 +0900
+In-Reply-To: <20180510124303.6020-6-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 10 May 2018 12:43:02 +0000")
+Message-ID: <xmqq36yyhhyp.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -72,25 +75,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> René Scharfe <l.s.r@web.de> writes:
->
->>> But it somehow feels backwards in spirit to me, as the reason why we
->>> use "void *" there in the decoration field is because we expect that
->>> we'd have a pointer to some struture most of the time, and we have
->>> to occasionally store a small integer there.
->>
->> Yes, fast-export seems to be the only place that stores an integer as
->> a decoration.
->
-> With the decoration subsystem that might be the case, but I think
-> we have other codepaths where "void * .util" field in the structure
-> is used to store (void *)1, expecting that a normal allocation will
-> never yield a pointer that is indistinguishable from that value.
+> diff --git a/sha1-name.c b/sha1-name.c
+> index 9d7bbd3e96..46d8b1afa6 100644
+> --- a/sha1-name.c
+> +++ b/sha1-name.c
+> @@ -409,6 +437,8 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
+>  	status = finish_object_disambiguation(&ds, oid);
+>  
+>  	if (!quietly && (status == SHORT_NAME_AMBIGUOUS)) {
+> +		struct oid_array collect = OID_ARRAY_INIT;
+> +
+>  		error(_("short SHA1 %s is ambiguous"), ds.hex_pfx);
+>  
+>  		/*
+> @@ -421,7 +451,12 @@ static int get_short_oid(const char *name, int len, struct object_id *oid,
+>  			ds.fn = NULL;
+>  
+>  		advise(_("The candidates are:"));
+> -		for_each_abbrev(ds.hex_pfx, show_ambiguous_object, &ds);
 
-I was looking at a different topic and noticed that bisect.c uses
-commit->util (which is of type "void *") to always store an int (it
-never stores a pointer and there is no mixing).  This one is equally
-unportable as fast-export after your fix.
+So we used to let for_each_abbrev() to enumerate these object names
+that share the prefix in the object name order and fed
+show_ambiguous_object() to show them, which was the cause of the
+output that is not grouped by type.  Now you collect them into
+another oid_array and sort by type, relying on the fact to that the
+for_each_abbrev() in the "collect" phase already does the de-duping.
 
+Sounds good.
+
+> +		for_each_abbrev(ds.hex_pfx, collect_ambiguous, &collect);
+> +		QSORT(collect.oid, collect.nr, sort_ambiguous);
+> +
+> +		if (oid_array_for_each(&collect, show_ambiguous_object, &ds))
+> +			BUG("show_ambiguous_object shouldn't return non-zero");
+> +		oid_array_clear(&collect);
+>  	}
+
+
+> diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
+> index 711704ba5a..2701462041 100755
+> --- a/t/t1512-rev-parse-disambiguation.sh
+> +++ b/t/t1512-rev-parse-disambiguation.sh
+> @@ -361,4 +361,25 @@ test_expect_success 'core.disambiguate does not override context' '
+>  		git -c core.disambiguate=committish rev-parse $sha1^{tree}
+>  '
+>  
+> +test_expect_success C_LOCALE_OUTPUT 'ambiguous commits are printed by type first, then hash order' '
+> +	test_must_fail git rev-parse 0000 2>stderr &&
+> +	grep ^hint: stderr >hints &&
+> +	grep 0000 hints >objects &&
+> +	cat >expected <<-\EOF &&
+> +	tag
+> +	commit
+> +	tree
+> +	blob
+> +	EOF
+> +	awk "{print \$3}" <objects >objects.types &&
+> +	uniq <objects.types >objects.types.uniq &&
+
+Eww, that is somewhat tricky (but correct) use of "uniq", which
+POSIX not just mandates adjacent duplicates to be removed, but also
+forbids from removing duplicates that are not adjacent from each
+other.  So the objects in the "hints" file are not grouped by type,
+we will fail to see these four lines.
+
+> +	test_cmp expected objects.types.uniq &&
+> +	for type in tag commit tree blob
+> +	do
+> +		grep $type objects >$type.objects &&
+> +		sort $type.objects >$type.objects.sorted &&
+> +		test_cmp $type.objects.sorted $type.objects
+
+We not only want to see objects grouped by type (and types shown in
+a desired order), but within the same type we want them ordered by
+object name.
+
+OK.
+
+> +	done
+> +'
+> +
+>  test_done
