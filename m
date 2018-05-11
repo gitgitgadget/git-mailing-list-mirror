@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 795ED1F406
-	for <e@80x24.org>; Fri, 11 May 2018 18:02:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A36941F406
+	for <e@80x24.org>; Fri, 11 May 2018 18:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751375AbeEKSCB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 14:02:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36374 "HELO cloud.peff.net"
+        id S1751379AbeEKSCa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 14:02:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36384 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751333AbeEKSCB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 May 2018 14:02:01 -0400
-Received: (qmail 16670 invoked by uid 109); 11 May 2018 18:02:01 -0000
+        id S1751169AbeEKSC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 14:02:29 -0400
+Received: (qmail 16688 invoked by uid 109); 11 May 2018 18:02:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 May 2018 18:02:01 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 May 2018 18:02:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7921 invoked by uid 111); 11 May 2018 18:02:05 -0000
+Received: (qmail 7939 invoked by uid 111); 11 May 2018 18:02:33 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 11 May 2018 14:02:05 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 11 May 2018 14:02:33 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 May 2018 14:01:59 -0400
-Date:   Fri, 11 May 2018 14:01:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 May 2018 14:02:27 -0400
+Date:   Fri, 11 May 2018 14:02:27 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/4] mark_parents_uninteresting(): drop missing object check
-Message-ID: <20180511180158.GB12543@sigill.intra.peff.net>
+Subject: [PATCH 3/4] mark_parents_uninteresting(): replace list with stack
+Message-ID: <20180511180227.GC12543@sigill.intra.peff.net>
 References: <20180511180029.GA11290@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,76 +41,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We allow UNINTERESTING objects in a traversal to be
-unavailable. As part of this, mark_parents_uninteresting()
-checks whether we have a particular uninteresting parent; if
-not, we will mark it as "parsed" so that later code skips
-it.
+The mark_parents_uninteresting() function uses two loops:
+an outer one to process our queue of pending parents, and an
+inner one to process first-parent chains. This is a clever
+optimization from 941ba8db57 (Eliminate recursion in
+setting/clearing marks in commit list, 2012-01-14) to limit
+the number of linked-list allocations when following
+single-parent chains.
 
-This code is redundant and even a little bit harmful, so
-let's drop it.
-
-It's redundant because when our parse_object() call in
-add_parents_to_list() fails, we already quietly skip
-UNINTERESTING parents. This redundancy is a historical
-artifact. The mark_parents_uninteresting() protection is
-from 454fbbcde3 (git-rev-list: allow missing objects when
-the parent is marked UNINTERESTING, 2005-07-10). Much later,
-aeeae1b771 (revision traversal: allow UNINTERESTING objects
-to be missing, 2009-01-27) covered more cases by making the
-actual parse more gentle.
-
-  As an aside, even if this weren't redundant, it would be
-  insufficient. The gentle parsing handles both missing and
-  corrupted objects, whereas the has_object_file() check
-  we're getting rid of covers only missing ones.
-
-And the code we're dropping is harmful for two reasons:
-
-  1. We spend extra time on the object lookup, even though
-     we don't actually need the information at this point
-     (and will just repeat that lookup later when we parse
-     for the common case that we _do_ have the object).
-
-  2. It "lies" about the commit by setting the parsed flag,
-     even though we didn't load any useful data into the
-     struct. This shouldn't matter for the UNINTERESTING
-     case, but we may later clear our flags and do another
-     traversal in the same process. While pretty unlikely,
-     it's possible that we could then look at the same
-     commit without the UNINTERESTING flag, in which case
-     we'd produce the wrong result (we'd think it's a commit
-     with no parents, when in fact we should probably die
-     due to the missing object).
+Unfortunately, this makes the result a little hard to read.
+Let's replace the list with a stack. Then we don't have to
+worry about doing this double-loop optimization, as we'll
+just reuse the top element of the stack as we pop/push.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- revision.c | 12 ------------
- 1 file changed, 12 deletions(-)
+The diff makes a lot more sense with "-w".
+
+ revision.c | 67 +++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 43 insertions(+), 24 deletions(-)
 
 diff --git a/revision.c b/revision.c
-index ef70f69f08..cee4f3a4b4 100644
+index cee4f3a4b4..89ff9a99ce 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -103,18 +103,6 @@ void mark_parents_uninteresting(struct commit *commit)
- 		struct commit *commit = pop_commit(&parents);
+@@ -92,38 +92,57 @@ void mark_tree_uninteresting(struct tree *tree)
+ 	mark_tree_contents_uninteresting(tree);
+ }
  
- 		while (commit) {
+-void mark_parents_uninteresting(struct commit *commit)
++struct commit_stack {
++	struct commit **items;
++	size_t nr, alloc;
++};
++#define COMMIT_STACK_INIT { NULL, 0, 0 }
++
++static void commit_stack_push(struct commit_stack *stack, struct commit *commit)
+ {
+-	struct commit_list *parents = NULL, *l;
++	ALLOC_GROW(stack->items, stack->nr + 1, stack->alloc);
++	stack->items[stack->nr++] = commit;
++}
+ 
+-	for (l = commit->parents; l; l = l->next)
+-		commit_list_insert(l->item, &parents);
++static struct commit *commit_stack_pop(struct commit_stack *stack)
++{
++	return stack->nr ? stack->items[--stack->nr] : NULL;
++}
+ 
+-	while (parents) {
+-		struct commit *commit = pop_commit(&parents);
++static void commit_stack_clear(struct commit_stack *stack)
++{
++	FREE_AND_NULL(stack->items);
++	stack->nr = stack->alloc = 0;
++}
+ 
+-		while (commit) {
+-			if (commit->object.flags & UNINTERESTING)
+-				break;
++void mark_parents_uninteresting(struct commit *commit)
++{
++	struct commit_stack pending = COMMIT_STACK_INIT;
++	struct commit_list *l;
+ 
+-			commit->object.flags |= UNINTERESTING;
++	for (l = commit->parents; l; l = l->next)
++		commit_stack_push(&pending, l->item);
+ 
 -			/*
--			 * A missing commit is ok iff its parent is marked
--			 * uninteresting.
--			 *
--			 * We just mark such a thing parsed, so that when
--			 * it is popped next time around, we won't be trying
--			 * to parse it and get an error.
+-			 * Normally we haven't parsed the parent
+-			 * yet, so we won't have a parent of a parent
+-			 * here. However, it may turn out that we've
+-			 * reached this commit some other way (where it
+-			 * wasn't uninteresting), in which case we need
+-			 * to mark its parents recursively too..
 -			 */
--			if (!commit->object.parsed &&
--			    !has_object_file(&commit->object.oid))
--				commit->object.parsed = 1;
--
- 			if (commit->object.flags & UNINTERESTING)
- 				break;
+-			if (!commit->parents)
+-				break;
++	while (pending.nr > 0) {
++		struct commit *commit = commit_stack_pop(&pending);
  
+-			for (l = commit->parents->next; l; l = l->next)
+-				commit_list_insert(l->item, &parents);
+-			commit = commit->parents->item;
+-		}
++		if (commit->object.flags & UNINTERESTING)
++			return;
++		commit->object.flags |= UNINTERESTING;
++
++		/*
++		 * Normally we haven't parsed the parent
++		 * yet, so we won't have a parent of a parent
++		 * here. However, it may turn out that we've
++		 * reached this commit some other way (where it
++		 * wasn't uninteresting), in which case we need
++		 * to mark its parents recursively too..
++		 */
++		for (l = commit->parents; l; l = l->next)
++			commit_stack_push(&pending, l->item);
+ 	}
++
++	commit_stack_clear(&pending);
+ }
+ 
+ static void add_pending_object_with_path(struct rev_info *revs,
 -- 
 2.17.0.988.gec4b43b3e5
 
