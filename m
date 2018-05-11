@@ -7,174 +7,158 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 380231F406
-	for <e@80x24.org>; Fri, 11 May 2018 15:05:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 879CC1F406
+	for <e@80x24.org>; Fri, 11 May 2018 15:17:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753303AbeEKPFo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 11:05:44 -0400
-Received: from mail-ua0-f193.google.com ([209.85.217.193]:33383 "EHLO
-        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753145AbeEKPFn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 May 2018 11:05:43 -0400
-Received: by mail-ua0-f193.google.com with SMTP id i2-v6so3810761uah.0
-        for <git@vger.kernel.org>; Fri, 11 May 2018 08:05:43 -0700 (PDT)
+        id S1750879AbeEKPRT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 11:17:19 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:38149 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750726AbeEKPRS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 11:17:18 -0400
+Received: by mail-qt0-f193.google.com with SMTP id m9-v6so7504402qtb.5
+        for <git@vger.kernel.org>; Fri, 11 May 2018 08:17:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=yBUzTspCTYXqbqaYJDwciQIhoVtxQ5BVVcFGKUQnBcc=;
-        b=gWgTNhoj///bwy279QgybyoVSHRCsson1Pc4K7urccY3yjrSp4KAZpSxFvIN8UmlQd
-         oMq8fL4MgVMU4fKHzFUvJ7U2RmBUKjSeLAvveyPojhcuR2YsqEMJqTq87egH6SCHtV+9
-         6QsSt4qFGoWhjoTAQg/ubPKj9iLI4V9SBL5KEPtW726YkcgA3bU6yYPowRHU5y/DntAg
-         6cwmMhF00U4O8s2CTQ9AO6ph0qRc7FzCA1BHGAVSeagUqvMPDqwLJA+CK5nys4uM+m0Z
-         O65xzHEmSVFhmnxkjRXX1IqyG6OaAcqsI8t7bVEyR2rO4vMZE1cOCdZc/eMz2v/2Rp88
-         jkDg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=Kq0J9J4Ic8IWduNFrEqigTuuwAKbF4A8SGHamU48+Wg=;
+        b=OhlBMhLzDePbkw76EkE4o+B6nSNKPA5ZZ2G6qWqWF9JqDQDodkxQqOCnKnZ8mKIDWy
+         LQDiICfnFTGj83QIKrnQR+LS7c1kFes4FAk/W02IPc4Cg6jbmwh5Wsf1JqbzBK5GNY6K
+         ZpYal+zU+pk7hW7qXibWpd5dzIaNLfF6BV/bk5Lqz6axEvCSHNtGkI7o/PpdXEq3kWwl
+         0Y7v9P6WpvlmmE010+CBH8uegQzRg2D/lyZ94iXWdRhqnPS26UEIwOOZxaPo9BTgkmcz
+         uHhXGUJ65Jrs8SKu37/DFYrT1eZE+/mB4IbDY2XqVCCbMWt5hTRFfynBVqkzzLXSA50p
+         uGag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=yBUzTspCTYXqbqaYJDwciQIhoVtxQ5BVVcFGKUQnBcc=;
-        b=L//uD/mZAd6bJaq7MTbMDKyw2m/ewIialoZozsWeX/unL2bGZnVrB8a49Je5hntO8Y
-         91W975MB55HY8/0cPkDRsYc5Baf5JDeeh6G4hCiYSSbbPyAKGB9wndd+ytpG/AHuLb2k
-         Z/ncETB3gh7MNva3DpAC99h/c926wM4Dpe/DfVNfriOqbQ9qz8dfN+St1X95TENBR3/W
-         TPJ6EdEW+1nJHLEr7dSMyHjTyrTMF8E86xzcFMb0eQbS8VpRT74tz91lCKWvQ177IEuA
-         7/YTGEXUtCHJr+QLfjdEZ11MYdr2cRTerJTQjR3mG9YUowzSpGuwAIHRjAuh9/Gp4spm
-         90DQ==
-X-Gm-Message-State: ALKqPwefgGm5btSJnSHVBOFs5FJLhyutxdqulz5QLaAyHYsENWHme0xt
-        Y10Mzo4f3zwfxnj9It2gPxXowpNXHb9q9WR0/D8=
-X-Google-Smtp-Source: AB8JxZotFH+r9sZfCQcV87q2HLRY3VMTv9X2dA2hcJAIPPcQFE4tFIF4jdf2yqKr6SoMkAEic4ZklL5XfYEdcyAJVY0=
-X-Received: by 2002:ab0:a81:: with SMTP id d1-v6mr1652997uak.39.1526051142972;
- Fri, 11 May 2018 08:05:42 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=Kq0J9J4Ic8IWduNFrEqigTuuwAKbF4A8SGHamU48+Wg=;
+        b=eEDpWutcWuV1uZsgtyx6sHGG7QAElpVxWqdu6c6Cl8nJEeMQhTpAukVRiDjnOWiXxC
+         wpWNxRDmTs3wSILYg7lLmEAV2De/QpThvWkv3vMsvhkQF6hvVCvW8S9dpjxGgkQoG8BX
+         HiH/aAwPwp+/wq4ynVEuHWTyvq18YAdjsXc/vGybjsunnImZ01EjE6xbMkJKj5yOf6do
+         hotYiTfs4OhCBGHLBSH4wYNLDyHFSBd9KMyxPxNYenJ7ytg5f1CIhUJU0vN3umgH0MML
+         Z8fCUXYVKADKHRHoId8/79buac5JvT2UVZo6cUhxSTq/E7djZMtyVNmMZJB9gQTYpBBi
+         3VGw==
+X-Gm-Message-State: ALKqPwelXghf7I4eaSlpVo2VH0rRlSiNuDIAxWbTbBk4uDOA4Bg2b55W
+        TAPjj7Q9bozvRpVsx9TfRqw=
+X-Google-Smtp-Source: AB8JxZpfCPxzUzKnAy6q/MlCZ5nvodEoj4pabG3k0h+Mxj0WksaVFDORnRUlU5R6M/Ou+PUTSE5JLQ==
+X-Received: by 2002:a0c:d49b:: with SMTP id u27-v6mr5550430qvh.204.1526051837387;
+        Fri, 11 May 2018 08:17:17 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id u42-v6sm2671188qtb.54.2018.05.11.08.17.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 11 May 2018 08:17:16 -0700 (PDT)
+Subject: Re: [PATCH 04/12] commit-graph: verify fanout and lookup table
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "sbeller@google.com" <sbeller@google.com>,
+        "jnareb@gmail.com" <jnareb@gmail.com>
+References: <20180417181028.198397-1-dstolee@microsoft.com>
+ <20180510173345.40577-1-dstolee@microsoft.com>
+ <20180510173345.40577-5-dstolee@microsoft.com>
+ <CAN0heSoaTdkb5xcrEE4dY7aUpcTGCROyUbZ-HUUKFBHJ9zTGew@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <62c7d8c3-87e3-f8e3-a83a-fb53f956f89d@gmail.com>
+Date:   Fri, 11 May 2018 11:17:26 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 10.176.22.212 with HTTP; Fri, 11 May 2018 08:05:42 -0700 (PDT)
-In-Reply-To: <20180510084652.25880-13-pclouds@gmail.com>
-References: <20180507175222.12114-1-pclouds@gmail.com> <20180510084652.25880-1-pclouds@gmail.com>
- <20180510084652.25880-13-pclouds@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Fri, 11 May 2018 17:05:42 +0200
-Message-ID: <CAM0VKjmL=OfKcveHRW+eAzvwS2o8TjcOS-uRNzD1JuKY2DYfFw@mail.gmail.com>
-Subject: Re: [PATCH v7 12/13] completion: let git provide the completable
- command list
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAN0heSoaTdkb5xcrEE4dY7aUpcTGCROyUbZ-HUUKFBHJ9zTGew@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 10, 2018 at 10:46 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
-<pclouds@gmail.com> wrote:
-> Instead of maintaining a separate list of command classification,
-> which often could go out of date, let's centralize the information
-> back in git.
+On 5/10/2018 2:29 PM, Martin Ågren wrote:
+> On 10 May 2018 at 19:34, Derrick Stolee <dstolee@microsoft.com> wrote:
+>> While running 'git commit-graph verify', verify that the object IDs
+>> are listed in lexicographic order and that the fanout table correctly
+>> navigates into that list of object IDs.
+>>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> ---
+>>   commit-graph.c | 33 +++++++++++++++++++++++++++++++++
+>>   1 file changed, 33 insertions(+)
+>>
+>> diff --git a/commit-graph.c b/commit-graph.c
+>> index ce11af1d20..b4c146c423 100644
+>> --- a/commit-graph.c
+>> +++ b/commit-graph.c
+>> @@ -839,6 +839,9 @@ static int verify_commit_graph_error;
+>>
+>>   int verify_commit_graph(struct commit_graph *g)
+>>   {
+>> +       uint32_t i, cur_fanout_pos = 0;
+>> +       struct object_id prev_oid, cur_oid;
+>> +
+>>          if (!g) {
+>>                  graph_report(_("no commit-graph file loaded"));
+>>                  return 1;
+>> @@ -853,5 +856,35 @@ int verify_commit_graph(struct commit_graph *g)
+>>          if (!g->chunk_commit_data)
+>>                  graph_report(_("commit-graph is missing the Commit Data chunk"));
+>>
+>> +       for (i = 0; i < g->num_commits; i++) {
+>> +               hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
+>> +
+>> +               if (i > 0 && oidcmp(&prev_oid, &cur_oid) >= 0)
+>> +                       graph_report(_("commit-graph has incorrect oid order: %s then %s"),
+> Minor: I think our style would prefer s/i > 0/i/.
 >
-> While the function in git-completion.bash implies "list porcelain
-> commands", that's not exactly what it does. It gets all commands (aka
-> --list-cmds=3Dmain,others) then exclude certain non-porcelain ones. We
-> could almost recreate this list two lists list-mainporcelain and
-> others. The non-porcelain-but-included-anyway is added by the third
-> category list-complete.
+> I suppose the second check should be s/>=/>/, but it's not like it
+> should matter. ;-)
+
+It shouldn't, but a duplicate commit is still an incorrect oid order.
+
+> I wonder if this is a message that would virtually never make sense to a
+> user, but more to a developer. Leave it untranslated to make sure any
+> bug reports to the list are readable to us?
+
+Yeah, I'll make all of the errors untranslated since they are for 
+developer debugging, not end-user information.
+
+>> +
+>> +               oid_to_hex(&prev_oid),
+>> +               oid_to_hex(&cur_oid));
+> Hmm, these two lines do not actually achieve anything?
+
+It's a formatting bug: They complete the statement starting with 
+'graph_report(' above.
+
 >
-> list-complete does not recreate exactly the command list before this
-> patch though. The following commands are not part of neither
-> list-mainporcelain nor list-complete and as a result no longer
-> completes:
+>> +               oidcpy(&prev_oid, &cur_oid);
+>> +
+>> +               while (cur_oid.hash[0] > cur_fanout_pos) {
+>> +                       uint32_t fanout_value = get_be32(g->chunk_oid_fanout + cur_fanout_pos);
+>> +                       if (i != fanout_value)
+>> +                               graph_report(_("commit-graph has incorrect fanout value: fanout[%d] = %u != %u"),
+>> +                                            cur_fanout_pos, fanout_value, i);
+> Same though re `_()`, even more so because of the more technical
+> notation.
 >
-> - annotate             obsolete, discouraged to use
-> - difftool-helper      not an end user command
-> - filter-branch        not often used
-> - get-tar-commit-id    not often used
-> - imap-send            not often used
-> - interpreter-trailers not for interactive use
-> - lost-found           obsolete
-> - p4                   too short and probably not often used (*)
-> - peek-remote          deprecated
-> - svn                  same category as p4 (*)
-> - tar-tree             obsolete
-> - verify-commit        not often used
+>> +
+>> +                       cur_fanout_pos++;
+>> +               }
+>> +       }
+>> +
+>> +       while (cur_fanout_pos < 256) {
+>> +               uint32_t fanout_value = get_be32(g->chunk_oid_fanout + cur_fanout_pos);
+>> +
+>> +               if (g->num_commits != fanout_value)
+>> +                       graph_report(_("commit-graph has incorrect fanout value: fanout[%d] = %u != %u"),
+>> +                                    cur_fanout_pos, fanout_value, i);
+> Same here. Or maybe these should just give a translated user-readable
+> basic idea of what is wrong and skip the details?
 
-'git name-rev' is plumbing as well.
+As someone who is responsible for probably inserting these problems, I 
+think the details are important.
 
-I think this commit should be split into two:
-
-  - first do the unequivocally beneficial thing and get rid of the
-    long, hard-coded command list in __git_list_porcelain_commands(),
-    while keeping its output unchanged,
-
-  - then do the arguable thing and change the list of commands.
-
-> Note that the current completion script incorrectly classifies
-> filter-branch as porcelain and t9902 tests this behavior. We keep it
-> this way in t9902 because this test does not really care which
-> particular command is porcelain or plubmbing, they're just names.
->
-> (*) to be fair, send-email command which is in the same
-> foreignscminterface group as svn and p4 does get completion, just
-> because it's used by git and kernel development. So maybe should
-> include them.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  command-list.txt                       |  37 ++++----
->  contrib/completion/git-completion.bash | 117 ++++++-------------------
->  t/t9902-completion.sh                  |   5 +-
->  3 files changed, 48 insertions(+), 111 deletions(-)
-
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index 4e724a5b76..908692ea52 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -835,18 +835,30 @@ __git_complete_strategy ()
->  }
->
->  __git_commands () {
-> -       if test -n "${GIT_TESTING_COMMAND_COMPLETION:-}"
-> -       then
-> -               printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
-> -       else
-> -               git --list-cmds=3Dmain,others
-> -       fi
-> +       case "$1" in
-> +       porcelain)
-> +               if test -n "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
-> +               then
-> +                       printf "%s" "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
-> +               else
-> +                       git --list-cmds=3Dlist-mainporcelain,others,list-=
-complete
-> +               fi
-> +               ;;
-> +       all)
-> +               if test -n "$GIT_TESTING_ALL_COMMAND_LIST"
-> +               then
-> +                       printf "%s" "$GIT_TESTING_ALL_COMMAND_LIST"
-> +               else
-> +                       git --list-cmds=3Dmain,others
-> +               fi
-> +               ;;
-> +       esac
->  }
->
-> -__git_list_all_commands ()
-> +__git_list_commands ()
-
-Please add comments before these functions to document their mandatory
-argument.
-
->  {
->         local i IFS=3D" "$'\n'
-> -       for i in $(__git_commands)
-> +       for i in $(__git_commands $1)
->         do
->                 case $i in
->                 *--*)             : helper pattern;;
-
-Is this loop to exclude helper commands with doubledash in their name
-still necessary?
+Thanks,
+-Stolee
