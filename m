@@ -2,152 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D33661F42D
-	for <e@80x24.org>; Fri, 11 May 2018 09:32:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 459FC1F406
+	for <e@80x24.org>; Fri, 11 May 2018 12:13:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752461AbeEKJcD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 05:32:03 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:49635 "EHLO
-        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752165AbeEKJcB (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 11 May 2018 05:32:01 -0400
-X-AuditID: 12074414-a91ff700000073ca-d1-5af563109e34
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id C2.7B.29642.01365FA5; Fri, 11 May 2018 05:32:00 -0400 (EDT)
-Received: from mail-lf0-f51.google.com (mail-lf0-f51.google.com [209.85.215.51])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w4B9Vwha003874
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Fri, 11 May 2018 05:32:00 -0400
-Received: by mail-lf0-f51.google.com with SMTP id b18-v6so6277231lfa.9
-        for <git@vger.kernel.org>; Fri, 11 May 2018 02:31:59 -0700 (PDT)
-X-Gm-Message-State: ALKqPwc0MaBYRcBai3gvHYAI0QF73Etx539ru7dsrI9H8R1iKXNYdxco
-        ofg4f+tK8ttvPMyajRZtmFfIxxiAxBSJM/9FVsM=
-X-Google-Smtp-Source: AB8JxZqDiNBpU9AErXEBGxbJ2gSv4pZFhm8SZOSnk6tCvzjI4ozMzuW6J0zEd/GxTuaJZIDqsqVvgv0qKn5VB/zjPO0=
-X-Received: by 2002:a2e:9b4a:: with SMTP id o10-v6mr3470343ljj.49.1526031118167;
- Fri, 11 May 2018 02:31:58 -0700 (PDT)
+        id S1752829AbeEKMNh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 08:13:37 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:46350 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751000AbeEKMNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 08:13:37 -0400
+Received: by mail-lf0-f68.google.com with SMTP id x7-v6so7563990lff.13
+        for <git@vger.kernel.org>; Fri, 11 May 2018 05:13:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=r8lI0TI6Cvk+V1b9AmN+X/1RF26F/FStzKDfolFjjp0=;
+        b=mWwzq6QiwKrmnucHzFQx8opq+JFfYX8SVcL0LuzZ16fTpHEyzbtItefGCQu27DGicM
+         d6R6GLNxwp9cN9jlDklzOX/t7UZc98C5a0fBrbpey0Bui2phbN/j+ViHyLxAPLiwF/c2
+         AJYLsgik4k2/+hys/SXsF1vyeG+MecqnXNtiYt4Nbkq1P8n/nYquoTY5Wca6n+rVKmz8
+         TPJ+DCbEfwNCE74jeljrw9Gdq80GOweS0EEHYTO7majttkRfOrvhUQ+MEL1bah8k9QXm
+         oxsqdSMK6o4a3hS50tqZZJvnC6W6t1A8Zbt5RLI4QqqQT5ErVUdkiJz0zUvqpNbo3Ulz
+         npqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=r8lI0TI6Cvk+V1b9AmN+X/1RF26F/FStzKDfolFjjp0=;
+        b=RxowKuowMbtTVdrVGtW91YYj8Ttbj2dp740D7ZVI9FbvwycsJtHY2tXuYhl6ZeHD3z
+         Dh6smZYFXKhmNX/PMYNEyp8PVy91iEP4odakQcAmOAToe6kn6b5pg/1YXYgrhS5uSH/G
+         QnmpHcW4baJYxUMsyPap6m9ceREE4T7N+onzGaaQHuj4OtmfKiVyIUMx20SnFndbkHa2
+         AE+MOSS856Z3jzpFWWuiWLJQziPzQev9BY7gW86ocfJs5wCG4YkFfB9kUPX8fveoK6SK
+         CWIKGs1WRfh889P4RmMUFlbrFOQCLt80CyBRywExnvvDfnhRqSaZo/ybX41pRhnJLCFB
+         K0zA==
+X-Gm-Message-State: ALKqPwfQW0kifB29aDAJAwvzZCNKfurbNUnFlXEIqoOYJnU7AmWd+xVW
+        P0ZfYcosH5gghi2xaT6ZAzlfZQ==
+X-Google-Smtp-Source: AB8JxZrWr+RRz704xwxR4CFB7fl5nxNcVU5CfMiFIKsd/0KO5Efje1aELZlQ1AMB1OEZBRIU6BtDYA==
+X-Received: by 2002:a2e:880a:: with SMTP id x10-v6mr3860709ljh.45.1526040815381;
+        Fri, 11 May 2018 05:13:35 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id v6-v6sm630607ljk.83.2018.05.11.05.13.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 11 May 2018 05:13:34 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] column: fix off-by-one default width
+Date:   Fri, 11 May 2018 14:13:29 +0200
+Message-Id: <20180511121329.16142-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.705.g3525833791
+In-Reply-To: <20180511092515.GA9567@sigill.intra.peff.net>
+References: <20180511092515.GA9567@sigill.intra.peff.net>
 MIME-Version: 1.0
-Reply-To: mhagger@alum.mit.edu
-Received: by 10.46.58.26 with HTTP; Fri, 11 May 2018 02:31:57 -0700 (PDT)
-In-Reply-To: <CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com>
-References: <CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Date:   Fri, 11 May 2018 11:31:57 +0200
-X-Gmail-Original-Message-ID: <CAMy9T_H=_+9Z=CpX85Ma4gCyUuvNAPR7fSBHi2J=4nC1XzF2sg@mail.gmail.com>
-Message-ID: <CAMy9T_H=_+9Z=CpX85Ma4gCyUuvNAPR7fSBHi2J=4nC1XzF2sg@mail.gmail.com>
-Subject: Re: Implementing reftable in Git
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        David Turner <novalis@novalis.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqCuQ/DXKYPI2RYuuK91MDowenzfJ
-        BTBGcdmkpOZklqUW6dslcGW038wsuK5Ycf3VReYGxv/SXYycHBICJhITjsxnArGFBHYwScx4
-        W9nFyAVkP2KSWHCwiRXCmcAoMXnSP6AqDqCOconta1wgzCKJd69sIeZUSHR/2gQ2h1dAUOLk
-        zCcsEDPlJF5tuMEIYXtK3Px2lRmklVMgUOLA0VKIcIDEyuk9rCA2m4CuxKKeZrAxLAKqEm/+
-        3WODGJ8osftUDxvE+ACJTbt2g40UFtCU2LL7MjOILSJgKDHn9xJ2kIuZBU4xSZxf0gR2AzNQ
-        Uev23+wTGEVmITlvFpLUAkamVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Fnq5mSV6qSmlmxgh
-        YS2yg/HISblDjAIcjEo8vBVuX6OEWBPLiitzDzFKcjApifJecwAK8SXlp1RmJBZnxBeV5qQW
-        H2KU4GBWEuHdt+JLlBBvSmJlVWpRPkxKmoNFSZyX2WRvlJBAemJJanZqakFqEUxWhoNDSYKX
-        OwloqGBRanpqRVpmTglCmomDE2Q4D9BwdpAa3uKCxNzizHSI/ClGS44lT7t7mDk+tfUAyQVb
-        JvUwC7Hk5eelSonz3ksEahAAacgozYObCUtTrxjFgV4UhhjLA0xxcFNfAS1kAlp48OpnkIUl
-        iQgpqQZGpeOvDuVt2cP2+E1xgoCp6MRN+7gFnivxdC7orMq7zcLUwbF+wc0wmyUx2cvZ1XP0
-        LoVHbLpkLN8ptzVYwGVNw7zVit/2b3s90TFCWaP0ZG+izr+lvyKeik0WDpWN6syz/nqLxWPP
-        jnkunKl9e+b86Ob/vHJWkELP36PqIlvbvMPC9XsXPZJTYinOSDTUYi4qTgQAVQ/68y4DAAA=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 9, 2018 at 4:33 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> I might start working on implementing reftable in Git soon.
-> [...]
+By default we want to fill the whole screen if possible, but we do not
+want to use up _all_ terminal columns because the last character is
+going hit the border, push the cursor over and wrap. Keep it at
+default value zero, which will make print_columns() set the width at
+term_columns() - 1.
 
-Nice. It'll be great to have a reftable implementation in git core
-(and ideally libgit2, as well). It seems to me that it could someday
-become the new default reference storage method. The file format is
-considerably more complicated than the current loose/packed scheme,
-which is definitely a disadvantage (for example, for other Git
-implementations). But implementing it *with good performance and
-without races* might be no more complicated than the current scheme.
+This affects the test in t7004 because effective column width before
+was 40 but now 39 so we need to compensate it by one or the output at
+39 columns has a different layout.
 
-Testing will be important. There are already many tests specifically
-about testing loose/packed reference storage. These will always have
-to run against repositories that are forced to use that reference
-scheme. And there will need to be new tests specifically about the
-reftable scheme. Both classes of tests should be run every time. That
-much is pretty obvious.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/column.c | 1 -
+ t/t7004-tag.sh   | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-But currently, there are a lot of tests that assume the loose/packed
-reference format on disk even though the tests are not really related
-to references at all. ISTM that these should be converted to work at a
-higher level, for example using `for-each-ref`, `rev-parse`, etc. to
-examine references rather than reading reference files directly. That
-way the tests should run correctly regardless of which scheme is in
-use.
+diff --git a/builtin/column.c b/builtin/column.c
+index 0c3223d64b..5228ccf37a 100644
+--- a/builtin/column.c
++++ b/builtin/column.c
+@@ -42,7 +42,6 @@ int cmd_column(int argc, const char **argv, const char *prefix)
+ 		git_config(column_config, NULL);
+ 
+ 	memset(&copts, 0, sizeof(copts));
+-	copts.width = term_columns();
+ 	copts.padding = 1;
+ 	argc = parse_options(argc, argv, "", options, builtin_column_usage, 0);
+ 	if (argc)
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index e3f1e014aa..d7b319e919 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -363,7 +363,7 @@ test_expect_success 'tag -l <pattern> -l <pattern> works, as our buggy documenta
+ '
+ 
+ test_expect_success 'listing tags in column' '
+-	COLUMNS=40 git tag -l --column=row >actual &&
++	COLUMNS=41 git tag -l --column=row >actual &&
+ 	cat >expected <<\EOF &&
+ a1      aa1     cba     t210    t211
+ v0.2.1  v1.0    v1.0.1  v1.1.3
+-- 
+2.17.0.705.g3525833791
 
-And since it's too expensive to run the whole test suite with both
-reference storage schemes, it seems to me that the reference storage
-scheme that is used while running the scheme-neutral tests should be
-easy to choose at runtime.
-
-David Turner did some analogous work for wiring up and testing his
-proposed LMDB ref storage backend that might be useful [1]. I'm CCing
-him, since he might have thoughts on this topic.
-
-Regarding the reftable spec itself:
-
-I recently gave a little internal talk about it, and while preparing
-the talk I noticed a couple of things that should maybe be tweaked:
-
-* The spec proposes to change `$GIT_DIR/refs`, which is currently a
-directory that holds the loose refs, into a file that holds the table
-of contents of reftable files comprising the full set of references.
-This was my suggestion. I was thinking that this would prevent old
-refs code from being used accidentally on a reftable-enabled
-repository, while still enabling old versions of Git recognize this as
-a git directory [2]. I think that the latter is important to make
-things like `git rev-parse --git-dir` work correctly, even if the
-installed version of git can't actually *read* the repository.
-
-  The problem is that `is_git_directory()` checks not only whether
-`$GIT_DIR/refs` exists, but also whether it is executable (i.e., since
-it is normally a directory, that it is searchable). It would be silly
-to make the reftable table of contents executable, so this doesn't
-seem like a good approach after all.
-
-  So probably `$GIT_DIR/refs` should continue to be a directory. If
-it's there, it would probably make sense to place the reftable files
-and maybe the ToC inside of it. We would have to rely on older Git
-versions refusing to work in the directory because its `config` file
-has an unrecognized `core.repositoryFormatVersion`, but that should be
-OK I think.
-
-* The scheme for naming reftable files [3] is, I believe, just a
-suggestion as far as the spec is concerned (except for the use of
-`.ref`/`.log` file extensions). It might be more less unwieldy to use
-`%d` rather than `%08d`, and more convenient to name compacted files
-to `${min_update_index}-${max_update_index}_${n}.{ref,log}` to make it
-clearer to see by inspection what each file contains. That would also
-make it unnecessary, in most cases, to insert a `_${n}` to make the
-filename unique.
-
-Michael
-
-[1] https://github.com/dturner-tw/git/tree/dturner/pluggable-backends
-[2] https://github.com/git/git/blob/ccdcbd54c4475c2238b310f7113ab3075b5abc9c/setup.c#L309-L347
-[3] https://github.com/eclipse/jgit/blob/master/Documentation/technical/reftable.md#layout
-    https://github.com/eclipse/jgit/blob/master/Documentation/technical/reftable.md#compaction
-[4] https://github.com/eclipse/jgit/blob/master/Documentation/technical/reftable.md#footer
