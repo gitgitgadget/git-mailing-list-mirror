@@ -2,125 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76E8D1F406
-	for <e@80x24.org>; Fri, 11 May 2018 18:03:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54E251F406
+	for <e@80x24.org>; Fri, 11 May 2018 18:23:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751388AbeEKSDR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 14:03:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36394 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751052AbeEKSDR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 May 2018 14:03:17 -0400
-Received: (qmail 16733 invoked by uid 109); 11 May 2018 18:03:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 May 2018 18:03:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7957 invoked by uid 111); 11 May 2018 18:03:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 11 May 2018 14:03:21 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 May 2018 14:03:15 -0400
-Date:   Fri, 11 May 2018 14:03:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 4/4] mark_parents_uninteresting(): avoid most allocation
-Message-ID: <20180511180314.GD12543@sigill.intra.peff.net>
-References: <20180511180029.GA11290@sigill.intra.peff.net>
+        id S1751204AbeEKSXq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 14:23:46 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:61638 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750876AbeEKSXp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 14:23:45 -0400
+Received: from [192.168.2.201] ([92.22.23.119])
+        by smtp.talktalk.net with SMTP
+        id HChif64UY3fRRHChifVZcS; Fri, 11 May 2018 19:23:43 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1526063023;
+        bh=y/ZdZqmGh0D1pkYvNi6VtWIDUmM/4ZHyOR6gQQEsmDg=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=GGrjTrvgfDhrbrCpJ6U/Xxp7dFdLRbFscXco8cku/5hgYCax6mCyh/MSEzJz9+0Xq
+         J/Eptpc+s1UX+QR+0ayOuvhEABPboYi8vhoHU4v82eVTGWFA4/4qVW3u2xqm2NkO5b
+         CSZsaMM4y5rgOMn+UrbGRuWaafZ+9CUKUjtXUN5Q=
+X-Originating-IP: [92.22.23.119]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=YZWTGTZf c=1 sm=1 tr=0 a=oWXjcmuSLv9+fGSLdn2kqg==:117
+ a=oWXjcmuSLv9+fGSLdn2kqg==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=uZvujYp8AAAA:8 a=k-0LSMOti-lfaR3_u0EA:9 a=QEXdDO2ut3YA:10 a=YC1BiALGhb4A:10
+ a=SLzB8X_8jTLwj6mN0q5r:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Regression in patch add?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Oliver Joseph Ash <oliverjash@gmail.com>, git@vger.kernel.org,
+        martin.agren@gmail.com, mqudsi@neosmart.net,
+        phillip.wood@dunelm.org.uk
+References: <be321106-2f10-e678-8237-449d2dd30fee@talktalk.net>
+ <20180510141125.21677-1-oliverjash@gmail.com>
+ <e8aedc6b-5b3e-cfb2-be9d-971bfd9adde8@talktalk.net>
+ <xmqqzi16hpr4.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <9a7d35c7-2889-05e4-f6f3-5706c710d327@talktalk.net>
+Date:   Fri, 11 May 2018 19:23:42 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqzi16hpr4.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180511180029.GA11290@sigill.intra.peff.net>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfHlYxPZOXaZqmqndh/RMJVqFuRsi/0jlBktcL/BEo4T3TZKN65PUsTFmDPhoYoJQTWcqI96L/LzxWKRVLhFeXKfqAWLCKZRoSIgrtzorex2o3Xkw+y9e
+ 9EIZEN/pEiG+fdf9HlHR1abb/NZpsIyFZL0dcAis2rH7T88XiUpljsWpPkQX2MT5+tytlDHyqKXrUiJHe50eNtBrJf3sbQmN3XZgQVoqU2mBXcwviEBS0b33
+ ao+niMlGrNQ1jI/bKoEro5zDfd/lt0vfgJ6vLeGaHkFumCa2lY/oKpMRQVPZZO7lzud8CDSjKt6qxYgFsSreD6qj/U4puaWN+CRAGV/tPnU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 941ba8db57 (Eliminate recursion in setting/clearing
-marks in commit list, 2012-01-14) used a clever double-loop
-to avoid allocations for single-parent chains of history.
-However, it did so only when following parents of parents
-(which was an uncommon case), and _always_ incurred at least
-one allocation to populate the list of pending parents in
-the first place.
+On 11/05/18 03:47, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood@talktalk.net> writes:
+> 
+>> Yes, I think it probably makes sense to do that. Originally I didn't
+>> count empty lines as context lines in case the user accidentally added
+>> some empty lines at the end of the hunk but if 'git apply' does then I
+>> think 'git add -p' should as well
+> 
+> I am not sure if "adding to the tail" should be tolerated, but in
+> any case, newer GNU diff can show an empty unaffected line as an
+> empty line (unlike traditional unified context format in which such
+> a line is expressed as a line with a lone SP on it), which is
+> allowed as "implementation defined" by POSIX.1 [*1*]. Modern "git
+> apply" knows about this.
 
-We can turn this into zero-allocation in the common case by
-iterating directly over the initial parent list, and then
-following up on any pending items we might have discovered.
+Thanks for the reference, I hadn't realized the space was optional.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Again, try "-w" for more readability.
+> If "add -p" parses a patch, it should learn to do so, too.
 
- revision.c | 44 +++++++++++++++++++++++++-------------------
- 1 file changed, 25 insertions(+), 19 deletions(-)
+I'm about to go off line for a while, I'll send a fix when I'm back up
+and running at next month (unfortunately the reroll of pw/add-p-select
+will have to wait until then as well)
 
-diff --git a/revision.c b/revision.c
-index 89ff9a99ce..cbe041128e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -115,32 +115,38 @@ static void commit_stack_clear(struct commit_stack *stack)
- 	stack->nr = stack->alloc = 0;
- }
- 
--void mark_parents_uninteresting(struct commit *commit)
-+static void mark_one_parent_uninteresting(struct commit *commit,
-+					  struct commit_stack *pending)
- {
--	struct commit_stack pending = COMMIT_STACK_INIT;
- 	struct commit_list *l;
- 
-+	if (commit->object.flags & UNINTERESTING)
-+		return;
-+	commit->object.flags |= UNINTERESTING;
-+
-+	/*
-+	 * Normally we haven't parsed the parent
-+	 * yet, so we won't have a parent of a parent
-+	 * here. However, it may turn out that we've
-+	 * reached this commit some other way (where it
-+	 * wasn't uninteresting), in which case we need
-+	 * to mark its parents recursively too..
-+	 */
- 	for (l = commit->parents; l; l = l->next)
--		commit_stack_push(&pending, l->item);
-+		commit_stack_push(pending, l->item);
-+}
- 
--	while (pending.nr > 0) {
--		struct commit *commit = commit_stack_pop(&pending);
-+void mark_parents_uninteresting(struct commit *commit)
-+{
-+	struct commit_stack pending = COMMIT_STACK_INIT;
-+	struct commit_list *l;
- 
--		if (commit->object.flags & UNINTERESTING)
--			return;
--		commit->object.flags |= UNINTERESTING;
-+	for (l = commit->parents; l; l = l->next)
-+		mark_one_parent_uninteresting(l->item, &pending);
- 
--		/*
--		 * Normally we haven't parsed the parent
--		 * yet, so we won't have a parent of a parent
--		 * here. However, it may turn out that we've
--		 * reached this commit some other way (where it
--		 * wasn't uninteresting), in which case we need
--		 * to mark its parents recursively too..
--		 */
--		for (l = commit->parents; l; l = l->next)
--			commit_stack_push(&pending, l->item);
--	}
-+	while (pending.nr > 0)
-+		mark_one_parent_uninteresting(commit_stack_pop(&pending),
-+					      &pending);
- 
- 	commit_stack_clear(&pending);
- }
--- 
-2.17.0.988.gec4b43b3e5
+Best Wishes
+
+Phillip
+
+
+> 
+> [Reference]
+> 
+> *1* http://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
+> 
+>>
+>>> Meanwhile, I can easily configure my editor not to do this for `*.diff` files.
+>>>
+>>> Thanks for your help, Phillip and Martin!
+>>
+>> Thanks for posting an example so we could test it, it makes it much
+>> easier to track the problem down
+>>
+>> Best Wishes
+>>
+>> Phillip
+>>
+>>> Mahmoud, does this also explain your problem as per your original post?
+>>>
+
