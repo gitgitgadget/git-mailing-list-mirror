@@ -2,109 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54E251F406
-	for <e@80x24.org>; Fri, 11 May 2018 18:23:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63A791F51A
+	for <e@80x24.org>; Fri, 11 May 2018 18:59:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751204AbeEKSXq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 14:23:46 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:61638 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750876AbeEKSXp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 May 2018 14:23:45 -0400
-Received: from [192.168.2.201] ([92.22.23.119])
-        by smtp.talktalk.net with SMTP
-        id HChif64UY3fRRHChifVZcS; Fri, 11 May 2018 19:23:43 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1526063023;
-        bh=y/ZdZqmGh0D1pkYvNi6VtWIDUmM/4ZHyOR6gQQEsmDg=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=GGrjTrvgfDhrbrCpJ6U/Xxp7dFdLRbFscXco8cku/5hgYCax6mCyh/MSEzJz9+0Xq
-         J/Eptpc+s1UX+QR+0ayOuvhEABPboYi8vhoHU4v82eVTGWFA4/4qVW3u2xqm2NkO5b
-         CSZsaMM4y5rgOMn+UrbGRuWaafZ+9CUKUjtXUN5Q=
-X-Originating-IP: [92.22.23.119]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=YZWTGTZf c=1 sm=1 tr=0 a=oWXjcmuSLv9+fGSLdn2kqg==:117
- a=oWXjcmuSLv9+fGSLdn2kqg==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=uZvujYp8AAAA:8 a=k-0LSMOti-lfaR3_u0EA:9 a=QEXdDO2ut3YA:10 a=YC1BiALGhb4A:10
- a=SLzB8X_8jTLwj6mN0q5r:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Regression in patch add?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Oliver Joseph Ash <oliverjash@gmail.com>, git@vger.kernel.org,
-        martin.agren@gmail.com, mqudsi@neosmart.net,
-        phillip.wood@dunelm.org.uk
-References: <be321106-2f10-e678-8237-449d2dd30fee@talktalk.net>
- <20180510141125.21677-1-oliverjash@gmail.com>
- <e8aedc6b-5b3e-cfb2-be9d-971bfd9adde8@talktalk.net>
- <xmqqzi16hpr4.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <9a7d35c7-2889-05e4-f6f3-5706c710d327@talktalk.net>
-Date:   Fri, 11 May 2018 19:23:42 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1750852AbeEKS7d (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 14:59:33 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:40991 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750722AbeEKS7d (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 14:59:33 -0400
+Received: by mail-yw0-f180.google.com with SMTP id q125-v6so1872855ywc.8
+        for <git@vger.kernel.org>; Fri, 11 May 2018 11:59:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=05iOtVk264Oq8uh9uZNtm+SE3pwcW7qNtJaaH6m4BPA=;
+        b=roRWhSrEG9HHIhHbZBc7vhcC8a8uV7HCW9r12nSO0J19o2UanvTj6wu1/YyrQbAgcZ
+         cB486kQSwEwrDCp3cT7REKWJQpnZIaWTaeaPyX7+if5Wypcwq79rSFrSgXe1zPl9VzGY
+         wMP2DFpoMMsLZhvuuqZsym1SDWtfDzl1d/FkKw/1FieHtkx3DkjTp70/XWHxwL1LFnVR
+         3cu2WW6v5GmTKaZO7k6WMUrc8OJ9QVuqQL+vUTJExyvWpxCj8JJg6sy2TG1bMt3SMcJB
+         21yyCxQ0D1VadboddvQxE8I/kayOudtv+5ZTSeG5LPNoT+6opuLKZ9PDVq2zfLDhaZJM
+         OdwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=05iOtVk264Oq8uh9uZNtm+SE3pwcW7qNtJaaH6m4BPA=;
+        b=dYXp2WJsXmB1vMOYZHeIHOkXNaC/k3yf3YkrM2M9KBqov9KXm9xf28CjTXihADznwD
+         jauN/uHSH42YhxHD1K6NmblA4JhIK6L45CZQaVE/cOUwt9pANprvMuSdGTnmu2G7+Dqh
+         a8wIy2b70E/VNhlrxzgeECN1Qd8iCDfwTxnW8/dT2Zl14p4u9znn0Echg7vCJcMN7ykf
+         JK4lFjErW67rfBQ+IdbiUrDlsISWpf3Qj/eDIYV7X80f5sPc9arc8OnJIjiMoVmwQP77
+         qW65yNtwMP2W94aVr+Ny3eCts75CaMjEQXTlEPZAKrryGjzwfoU1GmF6cMfF/Cco3Nsd
+         Q5pQ==
+X-Gm-Message-State: ALKqPwdoT/oZY5vNlrcIaDdx1SnILnqqg4JWtwEHbY0GHW/vMlZg+xa9
+        nRChY1jJYIRd47C9hjpxD/tM1UrC6sZFNDQXb1zOHE0X
+X-Google-Smtp-Source: AB8JxZp/4NRf5+3SNSkyjg7UG6ZdPJ3VFoZjfz13NDruvAjLcXMlWKR04lwx3F99+tUfDtva95byxtA+FbTt4ePo8w4=
+X-Received: by 2002:a81:4ec9:: with SMTP id c192-v6mr110455ywb.421.1526065171965;
+ Fri, 11 May 2018 11:59:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqzi16hpr4.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfHlYxPZOXaZqmqndh/RMJVqFuRsi/0jlBktcL/BEo4T3TZKN65PUsTFmDPhoYoJQTWcqI96L/LzxWKRVLhFeXKfqAWLCKZRoSIgrtzorex2o3Xkw+y9e
- 9EIZEN/pEiG+fdf9HlHR1abb/NZpsIyFZL0dcAis2rH7T88XiUpljsWpPkQX2MT5+tytlDHyqKXrUiJHe50eNtBrJf3sbQmN3XZgQVoqU2mBXcwviEBS0b33
- ao+niMlGrNQ1jI/bKoEro5zDfd/lt0vfgJ6vLeGaHkFumCa2lY/oKpMRQVPZZO7lzud8CDSjKt6qxYgFsSreD6qj/U4puaWN+CRAGV/tPnU=
+Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Fri, 11 May 2018 11:59:31
+ -0700 (PDT)
+In-Reply-To: <20180511083723.GB22086@sigill.intra.peff.net>
+References: <20180510195849.28023-1-sbeller@google.com> <20180511083723.GB22086@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 11 May 2018 11:59:31 -0700
+Message-ID: <CAGZ79kafGk3YPu1yuagHJRZYxpHpRUoCbSH0JCeLrdzz9ehOvQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] Fix mem leaks of recent object store conversions.
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/05/18 03:47, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood@talktalk.net> writes:
-> 
->> Yes, I think it probably makes sense to do that. Originally I didn't
->> count empty lines as context lines in case the user accidentally added
->> some empty lines at the end of the hunk but if 'git apply' does then I
->> think 'git add -p' should as well
-> 
-> I am not sure if "adding to the tail" should be tolerated, but in
-> any case, newer GNU diff can show an empty unaffected line as an
-> empty line (unlike traditional unified context format in which such
-> a line is expressed as a line with a lone SP on it), which is
-> allowed as "implementation defined" by POSIX.1 [*1*]. Modern "git
-> apply" knows about this.
-
-Thanks for the reference, I hadn't realized the space was optional.
-
-> If "add -p" parses a patch, it should learn to do so, too.
-
-I'm about to go off line for a while, I'll send a fix when I'm back up
-and running at next month (unfortunately the reroll of pw/add-p-select
-will have to wait until then as well)
-
-Best Wishes
-
-Phillip
-
-
-> 
-> [Reference]
-> 
-> *1* http://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
-> 
+On Fri, May 11, 2018 at 1:37 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, May 10, 2018 at 12:58:45PM -0700, Stefan Beller wrote:
+>
+>> This series replaces the two commits that were queued on sb/object-store-replace,
+>> fixing memory leaks that were recently introduced.
 >>
->>> Meanwhile, I can easily configure my editor not to do this for `*.diff` files.
->>>
->>> Thanks for your help, Phillip and Martin!
->>
->> Thanks for posting an example so we could test it, it makes it much
->> easier to track the problem down
->>
->> Best Wishes
->>
->> Phillip
->>
->>> Mahmoud, does this also explain your problem as per your original post?
->>>
+>> Compared to v1, I merged the two independent series from yesterday,
+>> rewrote the commit message to clear up Junios confusion and addresses Peffs
+>> comments for the packfiles as well.
+>
+> Mostly. :)
+>
+> My one remaining complaint is that the bitmap code may hold on to a
+> dangling pointer to a packed_git after this series.
 
+Ok, I'll look into that.
+
+>
+> I think that is part of a larger problem, though, which is that the
+> bitmap code's globals need to be part of the struct raw_object_store.
+> I think this can already cause problems before your series if we were to
+> try to use bitmaps in both a superproject and a submodule in the same
+> process, though I think we'd at least hit the "ignoring extra bitmap
+> file" code path in open_pack_bitmap_1(). So right now it's an annoyance,
+> but after your series it becomes a potential segfault.
+
+Ok, maybe we'll need to convert bitmaps into the object store for that.
+
+Thanks for the pointer,
+Stefan
