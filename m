@@ -2,96 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1511F1F42D
-	for <e@80x24.org>; Fri, 11 May 2018 07:23:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7A6F1F42D
+	for <e@80x24.org>; Fri, 11 May 2018 07:56:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752372AbeEKHX1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 03:23:27 -0400
-Received: from mail-ot0-f175.google.com ([74.125.82.175]:44301 "EHLO
-        mail-ot0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752191AbeEKHX0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 May 2018 03:23:26 -0400
-Received: by mail-ot0-f175.google.com with SMTP id g7-v6so5182007otj.11
-        for <git@vger.kernel.org>; Fri, 11 May 2018 00:23:26 -0700 (PDT)
+        id S1752518AbeEKH4I (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 03:56:08 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:40185 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752337AbeEKH4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 03:56:07 -0400
+Received: by mail-lf0-f65.google.com with SMTP id p85-v6so6604620lfg.7
+        for <git@vger.kernel.org>; Fri, 11 May 2018 00:56:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=j0c5T1RL19HQn5npdX7B3iSh8YeD+UVVWDkablfnEI4=;
-        b=NL6lnO6yA4k9ii7U3mwCDPgIwx0SDn2fqt3VW19woa9XAlqwVuMlOXubEsTeWIIiIU
-         prkJdI6to7tA+BNf1Nq0k4lnchW23LKnW26+T+nLYRx/L5yABzsGb6k5HrPWb44mz+MC
-         7PUy8NiwaT3A4OAEpsfmXYtckDNMnmSO1aEUr8pFOLaxzWo9C/al5fpamddg8iBSiM0G
-         0rHdJlliti3W9j1yqq7y9CNZZBWA75Wam4/74D+bKf3HomkyHNxYSlFYWGRKayGzICBe
-         YFWizf253VH4w8pKGgE2KAhZJDxwnH8BTxZ49WRCO/oGqS7mGmzHXtwjHrAj6aDvma54
-         0CdQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ogX9p7Lb958GWrJf+XLcB4tfRY/rELjE2I4zqBeH/YY=;
+        b=sNN6obzZJzctxh/zTIqoINwK2D0Dd1M14ydd0pTAvDf4hAd0wU2Npy9KLRGPtNmHm6
+         c9xU0qnIgPX4+OEKmjCPdZy+KI0m6YZL2H4jQ8pH1zod3WR6kzRofcDtDhXjhYz7lyIL
+         DNP7J5zgL2RFCEhtMFO2ioI+lkwnIXmjGPB9l5us4QxeoiTKYmCS3HKoGXhxiCQRFrV4
+         /w7NzLSdRidAEW3l69QTZPYq41J7XxHLgXbqfDgqzWiSEB+0mBCtByRc8Viz1VAjhPYX
+         h9r8HVeVJKw2kjrPXcQf7mW2ZqP6gkQP0iCyG7gozsok/BalLCtDJH73M7Vnx/D4CvmE
+         ddFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=j0c5T1RL19HQn5npdX7B3iSh8YeD+UVVWDkablfnEI4=;
-        b=ucO1WXMuaTi9/ckPKq3vySyul3AFErdyB05E6L+yBKVRilS98LLWiyB0D4TdrqVZVc
-         Mr9vF3rw6KONSHPkLXJ7hctwKJv+hTRFCKtU3mgUDAF5PxGFPBMaYXmqGrXNJnW48tV7
-         p7dRPncgK52+Si2Mu+v5hHTGxtk2NjBdN07jsEweUZHVyzVDaALqR9gIYWGeiu7l/3x5
-         WVAb1PTgTFehtfAZKw5dE543FbL6KkGAa0WWiCpNARSMgitEoqGafm4UBjaQzvpwXQPm
-         k+BscZTMixZr6d8GGHFvOeR2pHsd0+lsAAQld10CiAurVokh0as3J2f+CEWl+D36jG/x
-         ZzVQ==
-X-Gm-Message-State: ALKqPwdxUUEubf0oWEeRbQE2GMNvaXvoB+nhpUpflxz4YvV0O7UzsbxH
-        7aTqqjjv7qmILEI2PlpmV8YBIYTK5/Os4MQdRC66WQ==
-X-Google-Smtp-Source: AB8JxZqkzN/lbXax6rtcJGQMQh2G1FluWzS/XU9/t1oenWLSyESHr+xxO69AVoCapPSWNWMn+pAIzfoSw6gxPTQguYQ=
-X-Received: by 2002:a9d:c61:: with SMTP id 88-v6mr3165940otr.173.1526023405469;
- Fri, 11 May 2018 00:23:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ogX9p7Lb958GWrJf+XLcB4tfRY/rELjE2I4zqBeH/YY=;
+        b=fMcEvb62Zn9rw1Hl/jDyeh+cie7s3NFAnMkohrOWc28962oE/ITG8BDE/E5hlqom0L
+         9l4BySDkTBfn13t4hCx05XvKwFwoUdC9LukG5zEfgcTQ4vrQY7lNm2ul06A+rY586Dvi
+         LIXRGmHl8kNE4jb2ALZTvTlk3M+rmiaIAlFOPnhnlQ1v4VvvjvjJ311wIpXHHK842QVL
+         bldcW691B0smGQLI1RkBnPiYMoFT5jPVGZyPs3mtID0T/Nq3koUIE4G5v7TpiE8oaMMZ
+         gshZ/1dT+RlXNZR5MfjLg4DDCcKA/y7d+tANsQoF7Vj1s/fYqw6UEN/ttR3h/sPN8twW
+         lPlw==
+X-Gm-Message-State: ALKqPwcDaUS8BbJUcCzEHIYZjky4PqxwrnrkoJxFs/SsVshJ+0yoa5Yf
+        Jiu8XZcShilkFcQphb92A44v7Q==
+X-Google-Smtp-Source: AB8JxZr+KmBnM7m2Bh0TG4ZCnyXEYltu4jXXkguSkXMBN8Jw9/4has0PGYE0KxJAhzUdNwQnXA0r2Q==
+X-Received: by 2002:a19:a688:: with SMTP id p130-v6mr846639lfe.4.1526025366093;
+        Fri, 11 May 2018 00:56:06 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id r5-v6sm524766ljr.41.2018.05.11.00.56.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 11 May 2018 00:56:04 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] tag: fix column output not using all terminal space
+Date:   Fri, 11 May 2018 09:56:02 +0200
+Message-Id: <20180511075602.9182-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.705.g3525833791
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Fri, 11 May 2018 00:22:55 -0700 (PDT)
-In-Reply-To: <CAGZ79kYnzQM-mcAm7Q3C=q+uhvt8MYvWrhkUrsyu1FbM2=1Z8g@mail.gmail.com>
-References: <20180510141927.23590-1-pclouds@gmail.com> <20180510141927.23590-2-pclouds@gmail.com>
- <CAGZ79kYnzQM-mcAm7Q3C=q+uhvt8MYvWrhkUrsyu1FbM2=1Z8g@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 11 May 2018 09:22:55 +0200
-Message-ID: <CACsJy8AYEbV6niTqaJ4XtVjHpXZ65-=9-vpGtxUHbuXVmc8paw@mail.gmail.com>
-Subject: Re: [PATCH 1/9] Add and use generic name->id mapping code for color
- slot parsing
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 10, 2018 at 7:16 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Thu, May 10, 2018 at 7:19 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y <pclouds@gmail.com> wrote:
->
->>  7 files changed, 82 insertions(+), 112 deletions(-)
->
-> Nice!
->
->
->>
->> +static const char *color_branch_slots[] =3D {
->> +       [BRANCH_COLOR_RESET]    =3D "reset",
->
-> In 512f41cfac5 (clean.c: use designated initializer, 2017-07-14)
-> we thought we'll do it once and see if anyone complains
-> (and it shipped v2.15.0, 2017-10-29), and so far
-> nobody complained half a year later. So designated initializers
-> are all good now?
+git-tag runs a separate git-column command via run_column_filter().
+This makes the new 'git-column' process fail to pick up the terminal
+width for some reason and fall back to default width. Just explicitly
+pass terminal width and avoid this terminal width detection business
+in subprocesses.
 
-I don't know :) but it's worth pushing. I don't think this series
-would land on the next release, which gives people a couple more
-months to complain about C99. It does save me time and if it causes
-problem, removing designated initializers is trivial
+While at there, fix an off-by-one column setting in git-column. We do
+not want to use up _all_ terminal columns because the last character
+is going hit the border and wrap. Keep it at term_columns() - 1 like
+print_columns() does. This affects the test in t7004 because effective
+column width before was 40 but now 39 so we need to adjust it back.
 
-> Do we want to mention this decision in the commit message?
->
-> If so, the patch looks good!
-> Thanks,
-> Stefan
---=20
-Duy
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/column.c | 2 +-
+ column.c         | 2 ++
+ t/t7004-tag.sh   | 2 +-
+ 3 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/column.c b/builtin/column.c
+index 0c3223d64b..182c84f778 100644
+--- a/builtin/column.c
++++ b/builtin/column.c
+@@ -42,7 +42,7 @@ int cmd_column(int argc, const char **argv, const char *prefix)
+ 		git_config(column_config, NULL);
+ 
+ 	memset(&copts, 0, sizeof(copts));
+-	copts.width = term_columns();
++	copts.width = term_columns() - 1;
+ 	copts.padding = 1;
+ 	argc = parse_options(argc, argv, "", options, builtin_column_usage, 0);
+ 	if (argc)
+diff --git a/column.c b/column.c
+index 49ab85b769..382537b324 100644
+--- a/column.c
++++ b/column.c
+@@ -381,6 +381,8 @@ int run_column_filter(int colopts, const struct column_options *opts)
+ 	argv_array_pushf(argv, "--raw-mode=%d", colopts);
+ 	if (opts && opts->width)
+ 		argv_array_pushf(argv, "--width=%d", opts->width);
++	else
++		argv_array_pushf(argv, "--width=%d", term_columns() - 1);
+ 	if (opts && opts->indent)
+ 		argv_array_pushf(argv, "--indent=%s", opts->indent);
+ 	if (opts && opts->padding)
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index e3f1e014aa..d7b319e919 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -363,7 +363,7 @@ test_expect_success 'tag -l <pattern> -l <pattern> works, as our buggy documenta
+ '
+ 
+ test_expect_success 'listing tags in column' '
+-	COLUMNS=40 git tag -l --column=row >actual &&
++	COLUMNS=41 git tag -l --column=row >actual &&
+ 	cat >expected <<\EOF &&
+ a1      aa1     cba     t210    t211
+ v0.2.1  v1.0    v1.0.1  v1.1.3
+-- 
+2.17.0.705.g3525833791
+
