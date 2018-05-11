@@ -2,128 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7A6F1F42D
-	for <e@80x24.org>; Fri, 11 May 2018 07:56:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3A061F42D
+	for <e@80x24.org>; Fri, 11 May 2018 08:28:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752518AbeEKH4I (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 03:56:08 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:40185 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752337AbeEKH4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 May 2018 03:56:07 -0400
-Received: by mail-lf0-f65.google.com with SMTP id p85-v6so6604620lfg.7
-        for <git@vger.kernel.org>; Fri, 11 May 2018 00:56:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ogX9p7Lb958GWrJf+XLcB4tfRY/rELjE2I4zqBeH/YY=;
-        b=sNN6obzZJzctxh/zTIqoINwK2D0Dd1M14ydd0pTAvDf4hAd0wU2Npy9KLRGPtNmHm6
-         c9xU0qnIgPX4+OEKmjCPdZy+KI0m6YZL2H4jQ8pH1zod3WR6kzRofcDtDhXjhYz7lyIL
-         DNP7J5zgL2RFCEhtMFO2ioI+lkwnIXmjGPB9l5us4QxeoiTKYmCS3HKoGXhxiCQRFrV4
-         /w7NzLSdRidAEW3l69QTZPYq41J7XxHLgXbqfDgqzWiSEB+0mBCtByRc8Viz1VAjhPYX
-         h9r8HVeVJKw2kjrPXcQf7mW2ZqP6gkQP0iCyG7gozsok/BalLCtDJH73M7Vnx/D4CvmE
-         ddFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ogX9p7Lb958GWrJf+XLcB4tfRY/rELjE2I4zqBeH/YY=;
-        b=fMcEvb62Zn9rw1Hl/jDyeh+cie7s3NFAnMkohrOWc28962oE/ITG8BDE/E5hlqom0L
-         9l4BySDkTBfn13t4hCx05XvKwFwoUdC9LukG5zEfgcTQ4vrQY7lNm2ul06A+rY586Dvi
-         LIXRGmHl8kNE4jb2ALZTvTlk3M+rmiaIAlFOPnhnlQ1v4VvvjvjJ311wIpXHHK842QVL
-         bldcW691B0smGQLI1RkBnPiYMoFT5jPVGZyPs3mtID0T/Nq3koUIE4G5v7TpiE8oaMMZ
-         gshZ/1dT+RlXNZR5MfjLg4DDCcKA/y7d+tANsQoF7Vj1s/fYqw6UEN/ttR3h/sPN8twW
-         lPlw==
-X-Gm-Message-State: ALKqPwcDaUS8BbJUcCzEHIYZjky4PqxwrnrkoJxFs/SsVshJ+0yoa5Yf
-        Jiu8XZcShilkFcQphb92A44v7Q==
-X-Google-Smtp-Source: AB8JxZr+KmBnM7m2Bh0TG4ZCnyXEYltu4jXXkguSkXMBN8Jw9/4has0PGYE0KxJAhzUdNwQnXA0r2Q==
-X-Received: by 2002:a19:a688:: with SMTP id p130-v6mr846639lfe.4.1526025366093;
-        Fri, 11 May 2018 00:56:06 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id r5-v6sm524766ljr.41.2018.05.11.00.56.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 May 2018 00:56:04 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] tag: fix column output not using all terminal space
-Date:   Fri, 11 May 2018 09:56:02 +0200
-Message-Id: <20180511075602.9182-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.17.0.705.g3525833791
+        id S1752576AbeEKI2n (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 04:28:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35944 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750852AbeEKI2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 04:28:42 -0400
+Received: (qmail 20216 invoked by uid 109); 11 May 2018 08:28:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 May 2018 08:28:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31579 invoked by uid 111); 11 May 2018 08:28:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 11 May 2018 04:28:46 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 May 2018 04:28:40 -0400
+Date:   Fri, 11 May 2018 04:28:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] tag: fix column output not using all terminal space
+Message-ID: <20180511082840.GA22086@sigill.intra.peff.net>
+References: <20180511075602.9182-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180511075602.9182-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-tag runs a separate git-column command via run_column_filter().
-This makes the new 'git-column' process fail to pick up the terminal
-width for some reason and fall back to default width. Just explicitly
-pass terminal width and avoid this terminal width detection business
-in subprocesses.
+On Fri, May 11, 2018 at 09:56:02AM +0200, Nguyễn Thái Ngọc Duy wrote:
 
-While at there, fix an off-by-one column setting in git-column. We do
-not want to use up _all_ terminal columns because the last character
-is going hit the border and wrap. Keep it at term_columns() - 1 like
-print_columns() does. This affects the test in t7004 because effective
-column width before was 40 but now 39 so we need to adjust it back.
+> git-tag runs a separate git-column command via run_column_filter().
+> This makes the new 'git-column' process fail to pick up the terminal
+> width for some reason and fall back to default width. Just explicitly
+> pass terminal width and avoid this terminal width detection business
+> in subprocesses.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/column.c | 2 +-
- column.c         | 2 ++
- t/t7004-tag.sh   | 2 +-
- 3 files changed, 4 insertions(+), 2 deletions(-)
+I think "some reason" is that we start the pager before running "git
+column". Running "git --no-pager tag --column=row" seems to fix it.
 
-diff --git a/builtin/column.c b/builtin/column.c
-index 0c3223d64b..182c84f778 100644
---- a/builtin/column.c
-+++ b/builtin/column.c
-@@ -42,7 +42,7 @@ int cmd_column(int argc, const char **argv, const char *prefix)
- 		git_config(column_config, NULL);
+It doesn't seem to have anything to do with the pager program itself.
+Doing:
+
+  # use sh to avoid optimizing out pager invocation
+  GIT_PAGER='sh -c cat' git tag --column=row
+
+shows the same problem. It looks like we force term_columns() to run
+before invoking the pager in order to cache the value. That makes sense,
+since TIOCGWINSZ on stdout is not going to be valid after we start
+piping it to the pager. But of course our git-column sub-process won't
+see that; the value is cached only in memory.
+
+So I think the approach of communicating the width to the sub-process is
+the right one. But I think we'd probably want to do so through the
+$COLUMNS variable, rather than passing a command-line option. That would
+fix the same bug for other cases where we might have multiple layers of
+sub-processes (e.g., if we pipe to the pager and then run a hook which
+columnizes output).
+
+Something like this seems to make it work for me:
+
+diff --git a/pager.c b/pager.c
+index 92b23e6cd1..c4f3412a84 100644
+--- a/pager.c
++++ b/pager.c
+@@ -162,8 +162,12 @@ int term_columns(void)
+ #ifdef TIOCGWINSZ
+ 	else {
+ 		struct winsize ws;
+-		if (!ioctl(1, TIOCGWINSZ, &ws) && ws.ws_col)
++		if (!ioctl(1, TIOCGWINSZ, &ws) && ws.ws_col) {
++			char buf[64];
+ 			term_columns_at_startup = ws.ws_col;
++			xsnprintf(buf, sizeof(buf), "%d", ws.ws_col);
++			setenv("COLUMNS", buf, 0);
++		}
+ 	}
+ #endif
  
- 	memset(&copts, 0, sizeof(copts));
--	copts.width = term_columns();
-+	copts.width = term_columns() - 1;
- 	copts.padding = 1;
- 	argc = parse_options(argc, argv, "", options, builtin_column_usage, 0);
- 	if (argc)
-diff --git a/column.c b/column.c
-index 49ab85b769..382537b324 100644
---- a/column.c
-+++ b/column.c
-@@ -381,6 +381,8 @@ int run_column_filter(int colopts, const struct column_options *opts)
- 	argv_array_pushf(argv, "--raw-mode=%d", colopts);
- 	if (opts && opts->width)
- 		argv_array_pushf(argv, "--width=%d", opts->width);
-+	else
-+		argv_array_pushf(argv, "--width=%d", term_columns() - 1);
- 	if (opts && opts->indent)
- 		argv_array_pushf(argv, "--indent=%s", opts->indent);
- 	if (opts && opts->padding)
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index e3f1e014aa..d7b319e919 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -363,7 +363,7 @@ test_expect_success 'tag -l <pattern> -l <pattern> works, as our buggy documenta
- '
- 
- test_expect_success 'listing tags in column' '
--	COLUMNS=40 git tag -l --column=row >actual &&
-+	COLUMNS=41 git tag -l --column=row >actual &&
- 	cat >expected <<\EOF &&
- a1      aa1     cba     t210    t211
- v0.2.1  v1.0    v1.0.1  v1.1.3
--- 
-2.17.0.705.g3525833791
 
+though perhaps that should go into setup_pager(), which is what is
+actually making stdout inaccessible.
+
+As an aside, I was confused while looking into this because I _thought_
+I had COLUMNS set:
+
+  $ echo $COLUMNS
+  119
+
+But it turns out that bash sets that by default (if you have the
+checkwinsize option on) but does not export it. ;)
+
+-Peff
