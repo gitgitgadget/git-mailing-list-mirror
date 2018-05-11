@@ -6,67 +6,59 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08AF61F406
-	for <e@80x24.org>; Fri, 11 May 2018 03:09:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF7271F406
+	for <e@80x24.org>; Fri, 11 May 2018 03:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751462AbeEKDJO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 May 2018 23:09:14 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:53984 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750858AbeEKDJN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 May 2018 23:09:13 -0400
-Received: by mail-wm0-f67.google.com with SMTP id a67-v6so492428wmf.3
-        for <git@vger.kernel.org>; Thu, 10 May 2018 20:09:13 -0700 (PDT)
+        id S1751000AbeEKDcn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 May 2018 23:32:43 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:35337 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750751AbeEKDcm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 May 2018 23:32:42 -0400
+Received: by mail-wr0-f195.google.com with SMTP id i14-v6so3872205wre.2
+        for <git@vger.kernel.org>; Thu, 10 May 2018 20:32:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=foA7hgiIAnxvrFQQ+Hsqu2Tswxlhq4ukt1bFPAptI6c=;
-        b=PTQgwnskMwXqT1Y6JNvt8NSZLh1VKU3/v1ykggjO5qfUT/24BAyP+zrke8VZjOREkm
-         aQBq5+mt3T1m0CU9TqrlPs6KYQeLIKqtx8PG9pFvabbO3AqbPBpWXQfk/a2uAhz+fwNG
-         VHYtAGejt4osKsIlFsHwwDt+AfQCAsNwkFePRuYtzyqSt7dpi9PXsBcegdXCA+C0o049
-         WdH0gARk14EAubg7f17e6v4iTczSmPlvB2lMxhoqgRW129DdaryOsb6zd/lUqmTQ4MVv
-         8ohZGKqi3s3BrdLr8b/d0/Mp6+n7foSFvOKC8lwCIXnYwLTrpR4nH5yJ2xnhvb93IerJ
-         Pwlw==
+        bh=qoeR+gbO2EhOObabc+RcQxU9vfyFhuzqR6n+8rHIojg=;
+        b=O/wyQyUeA5M8PHXUwYuCcUKdVrTcsGtbQJ51QaDTLNPOxedGzBg1Nea05RCiGQ09+H
+         wgQlLL+XnDsfG+KJOt0Ct2bWaH12DOLmWr/wyLQVz0qIVODvlzJtS5lxiwRHUcUy/VJD
+         AoXZBV7LxF2xVsz2obko1VaypXsMW7yhY1NAiu3JBGCaTFnSZRalDgnhSmKla8Dd8bAZ
+         qzub8vZOp9m8MM5s4KI0KabK+wLLTso4ECXdPuWJmKt98HJq5bNdoPrZi/SF4PqrbK4i
+         18vMv1hqns32xjBMyl+n8aFBzs8tSJb/Eb2JeU1wS8YE83zMfch0QjBM3vYWKv30qjeM
+         i+QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=foA7hgiIAnxvrFQQ+Hsqu2Tswxlhq4ukt1bFPAptI6c=;
-        b=CzHY9BEAiBwVJt3wmLte/idtJhPnpIE3leATDq8/9hrppKFXq0TkQ5wHI1590euGGo
-         ynstV5MZYPIqQN3j2oR+2USA1YASZuEiDzd3EhmiFlUGDoZuWd5Gskx4twsY/kHvz3NJ
-         pPQ2WWMg+TuQ5B78qeijhNAsVMRMDubWz0P6YXgAca9rFm9yKN/0jBFNDG3cc0BfZ3KJ
-         R8V787bAJ+kgFjV+cBnXYlGV6U/9V1ZW3BPR5Wdcc7ZAo4cxGPYFL8V6xemcRuxxhZaI
-         vGdrv9cqmeGDfPH+IfoIEPGZuH2dBu+z6XmuiebhQGmcczOcaCCiTnmfeCbTX3CQwypv
-         ivqg==
-X-Gm-Message-State: ALKqPwdn0KrhSLenHIzuwLrAK77I1ejVvxRwOla0Sp3obP5WtCsQImjM
-        yCKyydDR5tULD+iGybp+pWg=
-X-Google-Smtp-Source: AB8JxZoiO+4Tn/FOesJIu9CekW2j1RzM7HmA2H6hFlbddtHHtyk4te6R1gOEOdd0iBlsYfBqkPzaWA==
-X-Received: by 2002:a1c:7c05:: with SMTP id x5-v6mr656368wmc.7.1526008152680;
-        Thu, 10 May 2018 20:09:12 -0700 (PDT)
+        bh=qoeR+gbO2EhOObabc+RcQxU9vfyFhuzqR6n+8rHIojg=;
+        b=d6Djf3xoQg9XdQijQyjJojdBLIh7p0Gr5XD21XAsZlBC2oEtflGSCnc2N4H9NB/kyN
+         E716gkmrpyG1N2rk/NOJXkgkoi/M4U+1yJ1lbvGcZu687tm0GlcZcMYaXOuSjb10b3fi
+         zL3KZH8ZYHIpoSUhQI+FIYjldEBOpBsVjPQBQygDpM1kr0t4ceE/gaiAyfNDIcbP/dto
+         jAbY/hMbkk/kCl24zYJqgweKrKcFSdcMlOIpYR4trdV0VA2O3qFfRE0WVDHof73/sHcO
+         z0lFWa8psXtCxFWoADWJ9ys1afROIo87Npjoxefu+ZfH84V/tP4FpGhdo2OY7UJ9wRRu
+         F7JQ==
+X-Gm-Message-State: ALKqPwcrMXc4/sb3GsAZW5T5EoI1shbkDlikmqsMnJDWvhXAyInmlHe7
+        adiUT2GIl2E7HH4OjTJLNkc=
+X-Google-Smtp-Source: AB8JxZplIgOUsD94RnZ2tOVb75va5Hues6DrOzvJ9xIFs6L7VYQJNOohSzYK+IO+T9uksVrB/IdLqw==
+X-Received: by 2002:adf:dd03:: with SMTP id a3-v6mr3324857wrm.0.1526009560867;
+        Thu, 10 May 2018 20:32:40 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 69-v6sm792150wmi.29.2018.05.10.20.09.11
+        by smtp.gmail.com with ESMTPSA id g75-v6sm425301wmd.15.2018.05.10.20.32.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 May 2018 20:09:12 -0700 (PDT)
+        Thu, 10 May 2018 20:32:39 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v4 2/6] sha1-array.h: align function arguments
-References: <20180501184016.15061-10-avarab@gmail.com>
-        <20180510124303.6020-3-avarab@gmail.com>
-        <20180510150615.GA6462@sigill.intra.peff.net>
-        <xmqqvabuhouc.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 11 May 2018 12:09:11 +0900
-In-Reply-To: <xmqqvabuhouc.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 11 May 2018 12:07:39 +0900")
-Message-ID: <xmqqr2mihors.fsf@gitster-ct.c.googlers.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] t5516-fetch-push: fix 'push with dry-run' test
+References: <20180510140154.30381-1-szeder.dev@gmail.com>
+Date:   Fri, 11 May 2018 12:32:38 +0900
+In-Reply-To: <20180510140154.30381-1-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Thu, 10 May 2018 16:01:53 +0200")
+Message-ID: <xmqqmux6hnop.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -76,22 +68,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
+> In a while-at-it cleanup replacing a 'cd dir && <...> && cd ..' with a
+> subshell, commit 28391a80a9 (receive-pack: allow deletion of corrupt
+> refs, 2007-11-29) also moved the assignment of the $old_commit
+> variable to that subshell.  This variable, however, is used outside of
+> that subshell as a parameter of check_push_result(), to check that a
+> ref still points to the commit where it is supposed to.  With the
+> variable remaining unset outside the subshell check_push_result()
+> doesn't perform that check at all.
+
+Sigh/Blush.  Thanks for finding an old screw-up.
+
 >
->> On Thu, May 10, 2018 at 12:42:59PM +0000, Ævar Arnfjörð Bjarmason wrote:
->>
->>> The arguments weren't lined up with the opening parenthesis. Fixes up
->>> code added in aae0caf19e ("sha1-array.h: align function arguments",
->>> 2018-04-30).
-> ...
-> But then "fixes up code added in" is not quite right, either.  It is
-> what the commit should have touched but didn't ;-)
-
-FWIW, I ended up with this description.
-
-    The arguments weren't lined up with the opening parenthesis, after
-    910650d2 ("Rename sha1_array to oid_array", 2017-03-31) renamed the
-    function.
-    
+> Use 'git -C <dir> cmd...', so we don't need to change directory, and
+> thus don't need the subshell either when setting $old_commit.
+>
+> Furthermore, change check_push_result() to require at least three
+> parameters (the repo, the oid, and at least one ref), so it will catch
+> similar issues earlier should they ever arise.
+>
+> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> ---
+>  t/t5516-fetch-push.sh | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index 82239138d5..832b79ad40 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -94,6 +94,9 @@ mk_child() {
+>  }
+>  
+>  check_push_result () {
+> +	test $# -ge 3 ||
+> +	error "bug in the test script: check_push_result requires at least 3 parameters"
+> +
+>  	repo_name="$1"
+>  	shift
+>  
+> @@ -553,10 +556,7 @@ test_expect_success 'branch.*.pushremote config order is irrelevant' '
+>  test_expect_success 'push with dry-run' '
+>  
+>  	mk_test testrepo heads/master &&
+> -	(
+> -		cd testrepo &&
+> -		old_commit=$(git show-ref -s --verify refs/heads/master)
+> -	) &&
+> +	old_commit=$(git -C testrepo show-ref -s --verify refs/heads/master) &&
+>  	git push --dry-run testrepo : &&
+>  	check_push_result testrepo $old_commit heads/master
+>  '
