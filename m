@@ -2,169 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91B881F406
-	for <e@80x24.org>; Fri, 11 May 2018 13:34:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F3AD1F406
+	for <e@80x24.org>; Fri, 11 May 2018 14:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752677AbeEKNeZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 09:34:25 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:43525 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750758AbeEKNeY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 May 2018 09:34:24 -0400
-Received: by mail-lf0-f67.google.com with SMTP id n18-v6so1512073lfh.10
-        for <git@vger.kernel.org>; Fri, 11 May 2018 06:34:23 -0700 (PDT)
+        id S1753035AbeEKOG3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 10:06:29 -0400
+Received: from mail-ua0-f196.google.com ([209.85.217.196]:41097 "EHLO
+        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752592AbeEKOG2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 10:06:28 -0400
+Received: by mail-ua0-f196.google.com with SMTP id a3-v6so3667879uad.8
+        for <git@vger.kernel.org>; Fri, 11 May 2018 07:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=npdpfj8rpGvnQU7WNYlt4LgxzyMMiJbqo/9msvHv85U=;
-        b=WXITT2bKDQmU2VIcJxpl5woLWzIH0QunTbABd9UBr0svgsYdJkIEjAg+i7wJtyHt5S
-         DT3i3/3L2/KT4AHfichQD12tNojS3m77mrfage+tmFCXXlvuTVWuHPwfAlXf6Sstv9hf
-         CeuH9vWeIRCfKjHxCw8MXyeAbl+Is0qIpLTgoVRzwTIUImtXviPF4Bp5lYghYk5YGiYM
-         770QLxVFttxXXEQXI9Q09796l7VO7sb+cepyutGiX9scc0L22k5qwLjJ5tuSqbCO1mhP
-         umVb+k55qbW2fVLWmNcF5zdOtqaCAIDqOtKZEIB1c4ENxEKE8CMmEl7Y0hWNJ4PWYgzg
-         4+3A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mfWPh5NcUMwDGnqQBb2wgZ3UOlvCMiCXfZiwI6B7rXM=;
+        b=hm92NgQXr5SXUw96joDqvPj+MB7rr0oEcGB1lG+Kf8I/VD7ep8bh89iFwPLwfi/dxs
+         7+UZL4c8C3mkTxGX9jQ0jfIkDS+L57Z4uEJs0hvfgTuOCvOtp6Cv230P8W6GXkXvQYaV
+         9el9pAdLjeFfSf2uzqWvpX2bSwv61dtkZnmAPfbtdRpfcRSeLfQDX05o/uV74RVQeLoW
+         WQ623AHPVyGozFQJsDsBH/wZAX+8S3EWnM3J09/rBOyFRzFE2giylxKO8uCN68vHhX7m
+         jDsCfgwNQz8z+SlHoP9RitP0ahnByU0pCCaAcdvWuCDydOVNhpTHjgt73kc0gu3fEGdK
+         QUWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=npdpfj8rpGvnQU7WNYlt4LgxzyMMiJbqo/9msvHv85U=;
-        b=mYMns+SBZRO8WrVplY13f1RGhJO0dqPlDuSOKVJWkRko8eHD6WhLnYYH7w9cY3FiY1
-         0W/SgBGtB6rsjQuRcsiQ71EDvcvOSAEQGRuxdZsSm9rpNLIAXH6Im8rjN9TMMsl8y548
-         7plQpfFphjOA04t2fouyFZ+kBnypSS/klISJ6z6/7zRiYEn7kXoVzwNWLFPeESz6mq8z
-         07EVdCeXfmcCVlGFetsY3UI60XM43WmBcT8BfgHvYZNFrfn1bpEWegu2CSFBerwcBkLL
-         wNNLSMi5/psOhIdAekwSwXTPrLDLiTyMTDgzATuck1jqjsmnrDn8Djj2oxCxjAmfn7HW
-         qMlw==
-X-Gm-Message-State: ALKqPwfmse7k8AUGAxszPrq1whofUdb4zrmGQDPtP2LKY+PDTNYrmKM6
-        miXQw+qQTB+VkzdQs7XspcQ=
-X-Google-Smtp-Source: AB8JxZr5LcRqOfWKFBDhDGAigeyQ160xfnhjpndCQK0bbA1bBvjvkkOndvUJm3hGFTpRCS+79cRcdw==
-X-Received: by 2002:a2e:80c1:: with SMTP id r1-v6mr4363812ljg.85.1526045662746;
-        Fri, 11 May 2018 06:34:22 -0700 (PDT)
-Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o38-v6sm662596lfi.51.2018.05.11.06.34.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 May 2018 06:34:21 -0700 (PDT)
-Date:   Fri, 11 May 2018 15:34:19 +0200
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] fast-export: avoid NULL pointer arithmetic
-Message-ID: <20180511133419.GA2170@duynguyen.home>
-References: <d50a4d5d-3b99-453e-1b52-4e733453fb78@web.de>
- <99d443cd-e817-7db5-f758-bf4cf47f7c06@web.de>
- <xmqqo9hniy1v.fsf@gitster-ct.c.googlers.com>
- <654fac2a-8dca-7bee-2bab-a3986aa7e52d@web.de>
- <xmqqbmdnhr8b.fsf@gitster-ct.c.googlers.com>
- <xmqq7eoahk49.fsf@gitster-ct.c.googlers.com>
- <CACsJy8AN4nssu1+x0x9Kmz1BB1aXO7_UBFCjpyULMeC5K-Fzvw@mail.gmail.com>
- <20180511085634.GC22086@sigill.intra.peff.net>
- <CACsJy8CnJYsgDe11tK4JzH2sDRuLwgoUz=HCso5qOhEfyZNH5Q@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mfWPh5NcUMwDGnqQBb2wgZ3UOlvCMiCXfZiwI6B7rXM=;
+        b=PmGXgfFL0bkwwWRn0VqHPBdAFO8Sw7tfECt+M86G0v0A6OYvaXtNt6UaI3H4Nz9bBU
+         BLAcz8dw3SzsVwratMYNDcLFh3eO7Q11nYhsh4cwTKLEZCyvMQRcOPk39KvCt4O9Fzag
+         Zu8nWSGH2O6ju+XrGPhZrtB8bJeCMO7Sw34LOuON2lsWyZXq8jK4gxY9hIWAK8fro3cg
+         6VxGPujLi0ffJSFilehgtaolS6dZQ06/oTL1BHZ/P6uogGA2FbCM9Af6vJrB6kg6gm4y
+         J5AMKNB7SVGU5rjr8NR5WBY5wxPDkJ8H6Ot0gZFm6XAtIj1qCIAvYD/bbbNAa9HXj1Td
+         ZyEQ==
+X-Gm-Message-State: ALKqPwetCdXeoufRNATsVsJOWa/bTp4DHj8Ti7mQgjdhmHC6rHFX+6Od
+        Xi64KI2sU+cfQME9I8ZBqAnJ5mXjyKWB9Kw84dfA3w==
+X-Google-Smtp-Source: AB8JxZo8jh9B3wG0yoHt8J6wiOAqrVt61SSRmN0ZlBDMC9W62zpZ30nwQDTubkmle+V5t30pD1EqC4BIIvGFSsSSEFw=
+X-Received: by 2002:ab0:5bd6:: with SMTP id z22-v6mr1560112uae.48.1526047587411;
+ Fri, 11 May 2018 07:06:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CnJYsgDe11tK4JzH2sDRuLwgoUz=HCso5qOhEfyZNH5Q@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.176.22.212 with HTTP; Fri, 11 May 2018 07:06:27 -0700 (PDT)
+In-Reply-To: <20180510084652.25880-8-pclouds@gmail.com>
+References: <20180507175222.12114-1-pclouds@gmail.com> <20180510084652.25880-1-pclouds@gmail.com>
+ <20180510084652.25880-8-pclouds@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Fri, 11 May 2018 16:06:27 +0200
+Message-ID: <CAM0VKjk3kqKpVz0ZjX58REwP8rz08kLsiVR4NWDO6-9iPGPe9g@mail.gmail.com>
+Subject: Re: [PATCH v7 07/13] completion: implement and use --list-cmds=main,others
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 11, 2018 at 03:11:46PM +0200, Duy Nguyen wrote:
-> Back to fast-export, can we just allocate a new int on heap and point
-> it there? Allocating small pieces becomes quite cheap and fast with
-> mem-pool.h and we can avoid this storing integer in pointer business.
+On Thu, May 10, 2018 at 10:46 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
+<pclouds@gmail.com> wrote:
+> Instead of parsing "git help -a" output, which is tricky to get right,
+> less elegant and also slow,
 
-Something like this seems to work, but we use 4-ish more bytes per
-object, or 100MB overhead on a repo with 25M objects. I think it's a
-reasonable trade off.
+Is it tricky?  It seems rather straightforward.
+Is it slow?  Well, there is a pipe and an egrep, sure, but thanks to
+caching it's only run once, so basically doesn't matter.
 
--- 8< --
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 530df12f05..de593035b1 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -21,6 +21,7 @@
- #include "quote.h"
- #include "remote.h"
- #include "blob.h"
-+#include "mem-pool.h"
- 
- static const char *fast_export_usage[] = {
- 	N_("git fast-export [rev-list-opts]"),
-@@ -38,6 +39,7 @@ static struct string_list extra_refs = STRING_LIST_INIT_NODUP;
- static struct refspec *refspecs;
- static int refspecs_nr;
- static int anonymize;
-+static struct mem_pool int_pool = MEM_POOL_INIT(2 * 1024 * 1024);
- 
- static int parse_opt_signed_tag_mode(const struct option *opt,
- 				     const char *arg, int unset)
-@@ -156,20 +158,22 @@ static void anonymize_path(struct strbuf *out, const char *path,
- 	}
- }
- 
--/* Since intptr_t is C99, we do not use it here */
--static inline uint32_t *mark_to_ptr(uint32_t mark)
-+static inline uint32_t ptr_to_mark(void *mark)
- {
--	return ((uint32_t *)NULL) + mark;
--}
--
--static inline uint32_t ptr_to_mark(void * mark)
--{
--	return (uint32_t *)mark - (uint32_t *)NULL;
-+	if (!mark)
-+		BUG("not marked!");
-+	return *(uint32_t *)mark;
- }
- 
- static inline void mark_object(struct object *object, uint32_t mark)
- {
--	add_decoration(&idnums, object, mark_to_ptr(mark));
-+	uint32_t *ptr = lookup_decoration(&idnums, object);
-+
-+	if (!ptr)
-+		ptr = mem_pool_alloc(&int_pool, sizeof(uint32_t));
-+
-+	*ptr = mark;
-+	add_decoration(&idnums, object, ptr);
- }
- 
- static inline void mark_next_object(struct object *object)
-diff --git a/fast-import.c b/fast-import.c
-index 34edf3fb8f..ce5ce2081f 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -300,8 +300,7 @@ static int global_argc;
- static const char **global_argv;
- 
- /* Memory pools */
--static struct mem_pool fi_mem_pool =  {NULL, 2*1024*1024 -
--				       sizeof(struct mp_block), 0 };
-+static struct mem_pool fi_mem_pool = MEM_POOL_INIT(2*1024*1024);
- 
- /* Atom management */
- static unsigned int atom_table_sz = 4451;
-diff --git a/mem-pool.h b/mem-pool.h
-index 829ad58ecf..bccbd3f224 100644
---- a/mem-pool.h
-+++ b/mem-pool.h
-@@ -21,6 +21,8 @@ struct mem_pool {
- 	size_t pool_alloc;
- };
- 
-+#define MEM_POOL_INIT(block_size) { NULL, (block_size) - sizeof(struct mp_block), 0 }
-+
- /*
-  * Alloc memory from the mem_pool.
-  */
--- 8< --
+OTOH you don't mention the most important reason, namely that the
+completion script contains a long hard-coded list of the names of all
+known plumbing commands to filter out, which is redundant with the
+categorization in 'command-list.txt', is a maintenance burden, and
+tends to get out-of-sync when new plumbing commands are added.
+
+> make git provide the list in a
+> machine-friendly form. This adds two separate listing types, main and
+> others, instead of just "all" for more flexibility.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+>  contrib/completion/git-completion.bash |  2 +-
+>  git.c                                  |  4 ++++
+>  help.c                                 | 32 ++++++++++++++++++++++++++
+>  help.h                                 |  4 ++++
+>  4 files changed, 41 insertions(+), 1 deletion(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
+git-completion.bash
+> index 3556838759..62ca8641f4 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -839,7 +839,7 @@ __git_commands () {
+>         then
+>                 printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
+>         else
+> -               git help -a|egrep '^  [a-zA-Z0-9]'
+> +               git --list-cmds=3Dmain,others
+>         fi
+>  }
+>
+> diff --git a/git.c b/git.c
+> index 376a59b97f..10907f7266 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -56,6 +56,10 @@ static int list_cmds(const char *spec)
+>
+>                 if (match_token(spec, len, "builtins"))
+>                         list_builtins(&list, 0);
+> +               else if (match_token(spec, len, "main"))
+> +                       list_all_main_cmds(&list);
+> +               else if (match_token(spec, len, "others"))
+> +                       list_all_other_cmds(&list);
+>                 else
+>                         die(_("unsupported command listing type '%s'"), s=
+pec);
+>                 spec +=3D len;
+> diff --git a/help.c b/help.c
+> index 2d6a3157f8..d5ce9dfcbb 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -297,6 +297,38 @@ void list_common_cmds_help(void)
+>         print_cmd_by_category(common_categories);
+>  }
+>
+> +void list_all_main_cmds(struct string_list *list)
+> +{
+> +       struct cmdnames main_cmds, other_cmds;
+> +       int i;
+> +
+> +       memset(&main_cmds, 0, sizeof(main_cmds));
+> +       memset(&other_cmds, 0, sizeof(other_cmds));
+> +       load_command_list("git-", &main_cmds, &other_cmds);
+> +
+> +       for (i =3D 0; i < main_cmds.cnt; i++)
+> +               string_list_append(list, main_cmds.names[i]->name);
+> +
+> +       clean_cmdnames(&main_cmds);
+> +       clean_cmdnames(&other_cmds);
+> +}
+> +
+> +void list_all_other_cmds(struct string_list *list)
+> +{
+> +       struct cmdnames main_cmds, other_cmds;
+> +       int i;
+> +
+> +       memset(&main_cmds, 0, sizeof(main_cmds));
+> +       memset(&other_cmds, 0, sizeof(other_cmds));
+> +       load_command_list("git-", &main_cmds, &other_cmds);
+> +
+> +       for (i =3D 0; i < other_cmds.cnt; i++)
+> +               string_list_append(list, other_cmds.names[i]->name);
+> +
+> +       clean_cmdnames(&main_cmds);
+> +       clean_cmdnames(&other_cmds);
+> +}
+> +
+>  int is_in_cmdlist(struct cmdnames *c, const char *s)
+>  {
+>         int i;
+> diff --git a/help.h b/help.h
+> index b21d7c94e8..97e6c0965e 100644
+> --- a/help.h
+> +++ b/help.h
+> @@ -1,6 +1,8 @@
+>  #ifndef HELP_H
+>  #define HELP_H
+>
+> +struct string_list;
+> +
+>  struct cmdnames {
+>         int alloc;
+>         int cnt;
+> @@ -17,6 +19,8 @@ static inline void mput_char(char c, unsigned int num)
+>  }
+>
+>  extern void list_common_cmds_help(void);
+> +extern void list_all_main_cmds(struct string_list *list);
+> +extern void list_all_other_cmds(struct string_list *list);
+>  extern const char *help_unknown_cmd(const char *cmd);
+>  extern void load_command_list(const char *prefix,
+>                               struct cmdnames *main_cmds,
+> --
+> 2.17.0.705.g3525833791
+>
