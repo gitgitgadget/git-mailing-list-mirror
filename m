@@ -2,177 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D86141F42D
-	for <e@80x24.org>; Sat, 12 May 2018 08:01:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D8811F42D
+	for <e@80x24.org>; Sat, 12 May 2018 08:04:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751227AbeELIBL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 May 2018 04:01:11 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:44940 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750778AbeELIAg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 May 2018 04:00:36 -0400
-Received: by mail-lf0-f66.google.com with SMTP id h197-v6so11032562lfg.11
-        for <git@vger.kernel.org>; Sat, 12 May 2018 01:00:36 -0700 (PDT)
+        id S1751132AbeELIEm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 May 2018 04:04:42 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:50497 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750756AbeELIEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 May 2018 04:04:41 -0400
+Received: by mail-wm0-f67.google.com with SMTP id t11-v6so5832898wmt.0
+        for <git@vger.kernel.org>; Sat, 12 May 2018 01:04:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mTUSlvU06U3gLJdKvfGV5bXnBCMcWW5OyCfSGjwTIx8=;
-        b=tDA80Wfns/9/+fnLLk0oR/wUZck7I71x5k88DfGSDTH3AJfUDSsgSVu7hLa0g8U8WL
-         5JV4RmyAfTmk8TxIWlPdNTW17Js1HYvmCeyg0RsLkuQ/e1PKDWbwvi1h/tupAtehu+Q0
-         hP4VAEEzmEC1wGNbenMr/Hi8Kx7Cq23H98eV263KbPS1A4SpSQVTf9YbVIFV0549sMZ8
-         GaC+1RYNeURcQDETBj6wlfIYE9ewyPOPJQB36FCik5qfIm9aOC/l0gF50OhCDiVM8pkq
-         DTWcSsqo4YNF8yBFadVqXNwUd0qUBEv8tXOcmcvWKf3zD+xd7Kele0i4Xi6mKm5loG3m
-         MpLA==
+        d=googlemail.com; s=20161025;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=iV4zjFw/MZlKdPyqzs2+MVPEeaNiaqSrOPacKroq0Oc=;
+        b=FkeYxSVOE0DpkameWUcWScq1xXgffB1iABxIpQjUZ8KZLxYjXGp7ipXeQq1ow47JVU
+         NEnj+bYi9lbhsEkfca/TjS7GG6aUNjBJpAFQoM/1xBl0Fj1MZ3VY+9rygwXNPIC4I2Ra
+         C066UdCX4QXzptc8KxwWpopRkvhAMR7JniQM3z47SH196zFSf2zet0hwDT8ZOZtPIX+C
+         KbVUZ09hMQ9D/5wb6yYHf0qMZKdsIsTWBYaONxX3ofNFRz+E0VtLcl55AK+wADAqfiIV
+         G8YNKYcuInTZ0BxXNRa3X99nDifOUvS2iCF9wVPJ0vk5NsVeT+X1099YVWOod4pH3ves
+         +Svw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mTUSlvU06U3gLJdKvfGV5bXnBCMcWW5OyCfSGjwTIx8=;
-        b=cJO64PbH3DVNCAH5v6LjzvTVD//276NvGvSRqH5WNX4FDpWtTOfGCimHA+z2iv3UIl
-         Qto/BA15IVRlzuUpZruwhwb72Vh+wy2OWT+emFHGO2mLm7j7xHCp4EFbIa3A88RDcJsK
-         LzllurPY43Lz0pCOV8rtjf1Xei+KFlwQ2nvLwzvniYHlXtveulpnbVjqykBk8w+Shty2
-         jQwuKE1AfL5UhFZfso1dCxl/7Av13vcrRkvnJQ2Qvk47BBmpmBmi1uCKgIgaVvdINI4z
-         s1f6Y1oB8l24OSCUZJ0b4VJlHtcQjnRrbz8ZyLWAmv9a9Yvv+qedh5CYbGkwFk6DM0ZV
-         LmRA==
-X-Gm-Message-State: ALKqPwfSSwuSgvyRWMCZ82P5BJw04y5DoOlqKiF6FSyj3xUZRX3pAtZK
-        skVAZmpvTdLIE6KdlZWeuFM8Hg==
-X-Google-Smtp-Source: AB8JxZqMh+30Ap9NP31/vtejAMrmsMvVWiAMaW/BpnJuuHp16JRwY/OnPOyhw5ocoU2kZuZIejnpXg==
-X-Received: by 2002:a2e:6808:: with SMTP id c8-v6mr489313lja.109.1526112035005;
-        Sat, 12 May 2018 01:00:35 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id i20-v6sm1055369lfe.69.2018.05.12.01.00.34
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=iV4zjFw/MZlKdPyqzs2+MVPEeaNiaqSrOPacKroq0Oc=;
+        b=p5+9lQQH3OmMwSGFtE6Ly12mE07e/ELfj5YcrxwBfJr9XEZ1OT1QPxBmeLUTm3dfV7
+         M8Ie1c6+88vtwB+ACJ6VpZzHGqIuFfheFqV5LEBwe8MNInFGOU4nS7rv7iuh6En/acWq
+         54CFJRjPPRl1lCW5LTKe/uIOHoRb8lWd3awKYgpIIf0rISn4RpK8FIvgwAH7AjQArTkP
+         HHF47Q+5CbQxxxsxUeoLvNVh/QxA3mBLqmsDpkUf16LEUkUt6rNZhB4clfMSo9vi1/BZ
+         4U8Hnhw2ZqINxqGNzY92jpYuhxDpJV7QnLidfMms1rh+vL9apP910UmqkUvt10xPQW2q
+         pvSQ==
+X-Gm-Message-State: ALKqPwdlkC8QkBgsS/EGK5M6pCHqZd8mRj+APmd9GKUfFN8DIIol2R2Z
+        qmVHGhGPhjAZfNOHZaIFItM=
+X-Google-Smtp-Source: AB8JxZoIywh0jDoUQTqgOpUk0cKCo4F+WeAm3ADpuwEytxR64MOpej8hcUgTSZubIzL6D1/CtVGfPA==
+X-Received: by 2002:a50:9164:: with SMTP id f33-v6mr2287949eda.29.1526112279779;
+        Sat, 12 May 2018 01:04:39 -0700 (PDT)
+Received: from esm (ipbcc18eac.dynamic.kabel-deutschland.de. [188.193.142.172])
+        by smtp.gmail.com with ESMTPSA id a11-v6sm2489603edr.89.2018.05.12.01.04.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 May 2018 01:00:34 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 03/12] shallow.c: use commit-slab for commit depth instead of commit->util
-Date:   Sat, 12 May 2018 10:00:19 +0200
-Message-Id: <20180512080028.29611-4-pclouds@gmail.com>
-X-Mailer: git-send-email 2.17.0.705.g3525833791
-In-Reply-To: <20180512080028.29611-1-pclouds@gmail.com>
-References: <20180512080028.29611-1-pclouds@gmail.com>
+        Sat, 12 May 2018 01:04:39 -0700 (PDT)
+From:   "Eckhard =?iso-8859-1?Q?Maa=DF?=" <eckhard.s.maass@googlemail.com>
+X-Google-Original-From: Eckhard =?iso-8859-1?Q?Maa=DF?= <eckhard.s.maass@gmail.com>
+Date:   Sat, 12 May 2018 10:04:37 +0200
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "newren@gmail.com" <newren@gmail.com>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "vmiklos@frugalware.org" <vmiklos@frugalware.org>,
+        Alejandro Pauly <alpauly@microsoft.com>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "eckhard.s.maass@googlemail.com" <eckhard.s.maass@googlemail.com>
+Subject: Re: [PATCH v3] add status config and command line options for rename
+ detection
+Message-ID: <20180512080437.GA16679@esm>
+References: <20180509144213.18032-1-benpeart@microsoft.com>
+ <20180511125623.6068-1-benpeart@microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180511125623.6068-1-benpeart@microsoft.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's done so that commit->util can be removed. See more explanation in
-the commit that removes commit->util.
+On Fri, May 11, 2018 at 12:56:39PM +0000, Ben Peart wrote:
+> After performing a merge that has conflicts git status will, by default,
+> attempt to detect renames which causes many objects to be examined.  In a
+> virtualized repo, those objects do not exist locally so the rename logic
+> triggers them to be fetched from the server. This results in the status call
+> taking hours to complete on very large repos vs seconds with this patch.
 
-While at there, plug a leak for keeping track of depth in this code.
+I see where your need comes from, but as you based this on my little
+patch one can achieve this already with tweaking diff.renames itself. I
+do wonder why there is a special need for the status command here. And
+if there is, I personally would like it more in a style that you could
+take all the options provided by diff.*-configuration and prefix that
+with status, eg status.diff.renames = true. What do you think? If you
+really only need this for merges, maybe a more specialised option is
+called for that only kicks in when there is a merge going on?
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- shallow.c | 37 +++++++++++++++++++++++++------------
- 1 file changed, 25 insertions(+), 12 deletions(-)
+I would like that status behaves as similar as possible to
+diff/show/log. Special options will pull away from that again - passing
+-m to show or log will lead to the same performance issues, correct?
+Could it be feasible to impose an overall time limit on the detection?
 
-diff --git a/shallow.c b/shallow.c
-index df4d44ea7a..6ea411b0d2 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -12,6 +12,7 @@
- #include "commit-slab.h"
- #include "revision.h"
- #include "list-objects.h"
-+#include "commit-slab.h"
- 
- static int is_shallow = -1;
- static struct stat_validity shallow_stat;
-@@ -74,6 +75,7 @@ int is_repository_shallow(void)
- 	return is_shallow;
- }
- 
-+define_commit_slab(commit_depth, int *);
- struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
- 		int shallow_flag, int not_shallow_flag)
- {
-@@ -82,25 +84,29 @@ struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
- 	struct object_array stack = OBJECT_ARRAY_INIT;
- 	struct commit *commit = NULL;
- 	struct commit_graft *graft;
-+	struct commit_depth depths;
- 
-+	init_commit_depth(&depths);
- 	while (commit || i < heads->nr || stack.nr) {
- 		struct commit_list *p;
- 		if (!commit) {
- 			if (i < heads->nr) {
-+				int **depth_slot;
- 				commit = (struct commit *)
- 					deref_tag(heads->objects[i++].item, NULL, 0);
- 				if (!commit || commit->object.type != OBJ_COMMIT) {
- 					commit = NULL;
- 					continue;
- 				}
--				if (!commit->util)
--					commit->util = xmalloc(sizeof(int));
--				*(int *)commit->util = 0;
-+				depth_slot = commit_depth_at(&depths, commit);
-+				if (!*depth_slot)
-+					*depth_slot = xmalloc(sizeof(int));
-+				**depth_slot = 0;
- 				cur_depth = 0;
- 			} else {
- 				commit = (struct commit *)
- 					object_array_pop(&stack);
--				cur_depth = *(int *)commit->util;
-+				cur_depth = **commit_depth_peek(&depths, commit);
- 			}
- 		}
- 		parse_commit_or_die(commit);
-@@ -116,25 +122,32 @@ struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
- 		}
- 		commit->object.flags |= not_shallow_flag;
- 		for (p = commit->parents, commit = NULL; p; p = p->next) {
--			if (!p->item->util) {
--				int *pointer = xmalloc(sizeof(int));
--				p->item->util = pointer;
--				*pointer =  cur_depth;
-+			int **depth_slot = commit_depth_at(&depths, p->item);
-+			if (!*depth_slot) {
-+				*depth_slot = xmalloc(sizeof(int));
-+				**depth_slot = cur_depth;
- 			} else {
--				int *pointer = p->item->util;
--				if (cur_depth >= *pointer)
-+				if (cur_depth >= **depth_slot)
- 					continue;
--				*pointer = cur_depth;
-+				**depth_slot = cur_depth;
- 			}
- 			if (p->next)
- 				add_object_array(&p->item->object,
- 						NULL, &stack);
- 			else {
- 				commit = p->item;
--				cur_depth = *(int *)commit->util;
-+				depth_slot = commit_depth_peek(&depths, commit);
-+				cur_depth = **depth_slot;
- 			}
- 		}
- 	}
-+	for (i = 0; i < depths.slab_count; i++) {
-+		int j;
-+
-+		for (j = 0; j < depths.slab_size; j++)
-+			free(depths.slab[i][j]);
-+	}
-+	clear_commit_depth(&depths);
- 
- 	return result;
- }
--- 
-2.17.0.705.g3525833791
+And after writing this I wonder what were your experience with just
+tweaking renameLimit - setting it very low should have helped the
+fetching from server part already, shouldn't it?
 
+> Add --no-renames command line option to status that enables overriding the
+> config setting from the command line. Add --find-renames[=<n>] command line
+> option to status that enables detecting renames and optionally setting the
+> similarity index.
+
+Would it be reasonable to extend this so that we just use the same
+machinery for parsing command line options for the diffcore options and
+pass this along? It seems to me that git status wants the same init as
+diff/show/log has anyway. But I like the direction towards passing more
+command line options to the git status command. 
+
+>  static void wt_longstatus_print_unmerged_header(struct wt_status *s)
+> @@ -592,6 +595,9 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
+>  	}
+>  	rev.diffopt.format_callback = wt_status_collect_changed_cb;
+>  	rev.diffopt.format_callback_data = s;
+> +	rev.diffopt.detect_rename = s->detect_rename >= 0 ? s->detect_rename : rev.diffopt.detect_rename;
+> +	rev.diffopt.rename_limit = s->rename_limit >= 0 ? s->rename_limit : rev.diffopt.rename_limit;
+> +	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
+>  	copy_pathspec(&rev.prune_data, &s->pathspec);
+>  	run_diff_files(&rev, 0);
+>  }
+> @@ -625,6 +631,9 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+>  	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+>  	rev.diffopt.format_callback = wt_status_collect_updated_cb;
+>  	rev.diffopt.format_callback_data = s;
+> +	rev.diffopt.detect_rename = s->detect_rename >= 0 ? s->detect_rename : rev.diffopt.detect_rename;
+> +	rev.diffopt.rename_limit = s->rename_limit >= 0 ? s->rename_limit : rev.diffopt.rename_limit;
+> +	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
+>  	copy_pathspec(&rev.prune_data, &s->pathspec);
+>  	run_diff_index(&rev, 1);
+>  }
+> @@ -982,6 +991,9 @@ static void wt_longstatus_print_verbose(struct wt_status *s)
+>  	setup_revisions(0, NULL, &rev, &opt);
+>  
+>  	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
+> +	rev.diffopt.detect_rename = s->detect_rename >= 0 ? s->detect_rename : rev.diffopt.detect_rename;
+> +	rev.diffopt.rename_limit = s->rename_limit >= 0 ? s->rename_limit : rev.diffopt.rename_limit;
+> +	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
+>  	rev.diffopt.file = s->fp;
+>  	rev.diffopt.close_file = 0;
+>  	/*
+
+Somehow I am inclined that those should be factored out to a common
+method if the rest of the patch stays as it is.
+
+Greetings,
+Eckhard
