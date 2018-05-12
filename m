@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6636C1F406
-	for <e@80x24.org>; Sat, 12 May 2018 13:35:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49F5F1F406
+	for <e@80x24.org>; Sat, 12 May 2018 13:43:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750852AbeELNfX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 May 2018 09:35:23 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:45414 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750735AbeELNfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 May 2018 09:35:22 -0400
-Received: by mail-pg0-f65.google.com with SMTP id w3-v6so3581181pgv.12
-        for <git@vger.kernel.org>; Sat, 12 May 2018 06:35:22 -0700 (PDT)
+        id S1751386AbeELNni (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 May 2018 09:43:38 -0400
+Received: from mail-pl0-f48.google.com ([209.85.160.48]:45988 "EHLO
+        mail-pl0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751226AbeELNnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 May 2018 09:43:37 -0400
+Received: by mail-pl0-f48.google.com with SMTP id bi12-v6so4822368plb.12
+        for <git@vger.kernel.org>; Sat, 12 May 2018 06:43:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=XBc3ZbLlflDpnoBYiTsPsvEode9jmNSxxI1SpCz8PEo=;
-        b=Cu0NvvdKxeCUGfoJyQFWWPYOdGa4xEgd2gYozu1LVFGJAsXY4XUBpxDAaJoxGLOaz3
-         2ZXxNEI2yjmUpi8UXBfjhnTLDZuJvZLNUk3ljz33BhEReZuR+WBWBnd5xtaPUgmPK0pT
-         kV7kDjvwnvnTy2HqJPNmzqps0eGEtT+iCIXlTP7XwnhbBEiPIaZy9oPxpvPTu9UetYEE
-         K66528RRFfqQrivgZFUfL6ZplqxZrYHXiHhIL9AqNrB7ERWgOAgB1q0xYwkNUsYW9MWA
-         bQ/c0+fhnxC/yggqPDt+w9WeH2Zsg7F4c0LPGZYprj9IfBWsBoOYINGir+3snT/X9YS3
-         Nm6g==
+        bh=m++pjYq7KKrUiBS0nuYOJD7uqAs/tfoG+cXUuBDSlQI=;
+        b=r3QAV5czweG9Dy39SpBnh/fBcKz5FMNlXxqP6fGJezdME/Yihwxc1pah8YYd+2T0ty
+         aiQsBo6aE+oKhkItEZyYLgFzAtEfimsnmZU6xkGaV4nERKxIpepWbxcCz+U2SslthNT6
+         YwyHBQXx42SgudVVMYQ4OAuZCuYqOYD+k28UBWaE1Vi75NDps/2k8C0/kZQG83R0B8QG
+         xKZHEVvU+3P7F+wLKpyCC0CKIBHJC+yDeEfAsTxvVPwl/sowBsBwBubKB4cvI2yOFgIV
+         DU9jk74pkG3VX3qsL8UPxLO8Xv+nFm7hcngH06ADVMFIY1oYUJMcUudWhWBEYz3JDWKQ
+         yRvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=XBc3ZbLlflDpnoBYiTsPsvEode9jmNSxxI1SpCz8PEo=;
-        b=srKTjURrMgf6JdNYOHHgIEbuaJ+NjEBMxXb0CEKmuS/9Nbb88CDQL+fKcCgcWv+Vfk
-         IokO3sqn7Zveoa6Qm4QmbhR5YNFR02Y7pei5+Kc+Ls2fq6+mRrkUTW7uKswVUQOR0FI1
-         pWDeWCOSrZPufYxX4CeKGO69N4HVuMb/oRacUgiBjaZ+m88gBQobB66h2tiFqjeSOb9m
-         zRLugYmnhBu0ivAjQtGZkULTOhkWX1QR0f2TGHtcNmqarjfRmLpdEqCS7Z1NUcRqFA/6
-         tLwDT1rdMQeGdf0bXMekQVb903glodQakhim3hovBiFHFzR7ZxXSjLYM+f4olA/Sg3Ln
-         egng==
-X-Gm-Message-State: ALKqPwe2B0iApyBQsXvs4DvPF1UNXMBZlcDnbccoprVg7aCivFOr6CuL
-        mQ2B0ozeyO0sIJ66+grpfxreBD841NfMzZQj7yE=
-X-Google-Smtp-Source: AB8JxZoB7zJBH7MVDPaiUzI+Qv3mO2lGv7tiaZz1XtWniuB/jPrwjyeEiCktsMvCPJMXDGiGtmSbzC+1ZGKmlOnxlOY=
-X-Received: by 2002:a63:77cd:: with SMTP id s196-v6mr2752923pgc.146.1526132122245;
- Sat, 12 May 2018 06:35:22 -0700 (PDT)
+        bh=m++pjYq7KKrUiBS0nuYOJD7uqAs/tfoG+cXUuBDSlQI=;
+        b=IRrD3Tes4cGgiNOliVbCLnlxPlfIbkDyLJ+LqO/kw8Wasmfh3z2wZjH87NXN2P65Rg
+         cYloyYFbDZYBt5z8+d0vOxt1mNT2iEdoWF3gqetGLGOHnx8SHsG9E73/Juys9BNfEJD6
+         7d8EsLx/QSl1dheT0D2WkEGPtrOiibbQ4kVLuhxfN6S6U57vmUn6UI1rZfAp6560P8OJ
+         PJzt8nlLtISSsgz1pg9PBMJwf/dZotixLdnsmJM4TegLauSsU+TqbEiZRINm1isxtJeq
+         wyPq9mzZ09wg8efbMSPMmtOwNuRnFfBrJWqNPTjz/gNCdLIcu8vRh+DpogBqIyx4axPB
+         ehdw==
+X-Gm-Message-State: ALKqPwfHlRV6zF4IN71r06exA9qrcSnJQMSn5sQqfs77OkZF53XvblO2
+        2ehZdi41x1q8U+lvRoizJlb6L5ieYZ5C4d35iSG6Pw==
+X-Google-Smtp-Source: AB8JxZp+YVYFbxhE8pr2oaSb0bIFkXGFtSiOXc7owRBZ1ER/nCBM1FwvSw+uTZQeTBB67SiDAVrAV4vteV87toHfyKg=
+X-Received: by 2002:a17:902:1c7:: with SMTP id b65-v6mr2528842plb.298.1526132617069;
+ Sat, 12 May 2018 06:43:37 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Sat, 12 May 2018 06:35:21 -0700 (PDT)
-In-Reply-To: <20180511211504.79877-3-dstolee@microsoft.com>
+Received: by 10.236.187.139 with HTTP; Sat, 12 May 2018 06:43:36 -0700 (PDT)
+In-Reply-To: <20180511211504.79877-4-dstolee@microsoft.com>
 References: <20180510173345.40577-1-dstolee@microsoft.com> <20180511211504.79877-1-dstolee@microsoft.com>
- <20180511211504.79877-3-dstolee@microsoft.com>
+ <20180511211504.79877-4-dstolee@microsoft.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 12 May 2018 15:35:21 +0200
-Message-ID: <CAN0heSrKFJbgwXXzUKaJQn24pY43S2bsn9Zx6Yyy6M2X2wDJ7w@mail.gmail.com>
-Subject: Re: [PATCH v2 02/12] commit-graph: verify file header information
+Date:   Sat, 12 May 2018 15:43:36 +0200
+Message-ID: <CAN0heSqYOY4HyinuL7ye0XL3u+rUxWeT9KwsiXWCcsVN_hmc2Q@mail.gmail.com>
+Subject: Re: [PATCH v2 03/12] commit-graph: test that 'verify' finds corruption
 To:     Derrick Stolee <dstolee@microsoft.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         "jnareb@gmail.com" <jnareb@gmail.com>,
@@ -66,56 +66,74 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 11 May 2018 at 23:15, Derrick Stolee <dstolee@microsoft.com> wrote:
-> During a run of 'git commit-graph verify', list the issues with the
-> header information in the commit-graph file. Some of this information
-> is inferred from the loaded 'struct commit_graph'. Some header
-> information is checked as part of load_commit_graph_one().
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  commit-graph.c | 32 +++++++++++++++++++++++++++++++-
->  1 file changed, 31 insertions(+), 1 deletion(-)
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index b25aaed128..d2db20e49a 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -818,7 +818,37 @@ void write_commit_graph(const char *obj_dir,
->         oids.nr = 0;
->  }
->
-> +static int verify_commit_graph_error;
-> +
-> +static void graph_report(const char *fmt, ...)
-> +{
-> +       va_list ap;
-> +       struct strbuf sb = STRBUF_INIT;
-> +       verify_commit_graph_error = 1;
-> +
-> +       va_start(ap, fmt);
-> +       strbuf_vaddf(&sb, fmt, ap);
-> +
-> +       fprintf(stderr, "%s\n", sb.buf);
-> +       strbuf_release(&sb);
-> +       va_end(ap);
-> +}
 
-Right, so this replaces the macro-trickery from v1, and we print a
-newline after each error.
+> +test_expect_success 'detect bad signature' '
+> +       cd "$TRASH_DIRECTORY/full" &&
 
->  int verify_commit_graph(struct commit_graph *g)
->  {
-> -       return !g;
-> +       if (!g) {
-> +               graph_report("no commit-graph file loaded");
-> +               return 1;
-> +       }
+I was a bit surprised at the "cd outside subshell", but then realized
+that this file already does that. It will only be a problem if later
+tests think they're somewhere else. Let's read on.
 
+> +       cp $objdir/info/commit-graph commit-graph-backup &&
+> +       test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
+> +       corrupt_data $objdir/info/commit-graph 0 "\0" &&
+> +       test_must_fail git commit-graph verify 2>err &&
+> +       grep -v "^\+" err > verify-errors &&
+> +       test_line_count = 1 verify-errors &&
+> +       grep "graph signature" verify-errors
+> +'
 > +
-> +       return verify_commit_graph_error;
->  }
+> +test_expect_success 'detect bad version number' '
+> +       cd "$TRASH_DIRECTORY/full" &&
+> +       cp $objdir/info/commit-graph commit-graph-backup &&
+> +       test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
+> +       corrupt_data $objdir/info/commit-graph 4 "\02" &&
+> +       test_must_fail git commit-graph verify 2>err &&
+> +       grep -v "^\+" err > verify-errors &&
+> +       test_line_count = 1 verify-errors &&
+> +       grep "graph version" verify-errors
+> +'
+> +
+> +test_expect_success 'detect bad hash version' '
+> +       cd "$TRASH_DIRECTORY/full" &&
+> +       cp $objdir/info/commit-graph commit-graph-backup &&
+> +       test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
+> +       corrupt_data $objdir/info/commit-graph 5 "\02" &&
+> +       test_must_fail git commit-graph verify 2>err &&
+> +       grep -v "^\+" err > verify-errors &&
+> +       test_line_count = 1 verify-errors &&
+> +       grep "hash version" verify-errors
+> +'
 
-Not sure it matters much: I suppose you could introduce the parts that I
-have quoted here in the previous patch. Or maybe not.
+These look a bit boiler-platey. Maybe not too bad though.
+
+> +test_expect_success 'detect too small chunk-count' '
+
+s/too small/bad/?
+
+To be honest, I wrote this title without thinking too hard about the
+problem. In general, it would be quite hard for `git commit-graph
+verify` to say "*this* is wrong in your file" ("the number of chunks is
+too small") -- it should be much easier to say "*something* is wrong".
+
+> +       cd "$TRASH_DIRECTORY/full" &&
+> +       cp $objdir/info/commit-graph commit-graph-backup &&
+> +       test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
+> +       corrupt_data $objdir/info/commit-graph 6 "\01" &&
+> +       test_must_fail git commit-graph verify 2>err &&
+> +       grep -v "^\+" err > verify-errors &&
+> +       test_line_count = 2 verify-errors &&
+> +       grep "missing the OID Lookup chunk" verify-errors &&
+> +       grep "missing the Commit Data chunk" verify-errors
+
+Maybe these tests could go with the previous patch(es). IMVHO I would
+prefer reading the test with the implementation. A separate commit for
+the tests might make sense if they're really tricky and need some
+explaining, but I don't think that's the case here.
+
+All of these comments are just minor nits, or not even that. I will
+continue with the other patches at another time.
+
+Thank you, I'm really looking forward to Git with commit-graph magic.
 
 Martin
