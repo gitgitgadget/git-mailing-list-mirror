@@ -6,301 +6,135 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B59501F406
-	for <e@80x24.org>; Sat, 12 May 2018 03:21:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A29301F406
+	for <e@80x24.org>; Sat, 12 May 2018 03:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751352AbeELDVP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 23:21:15 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:37941 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751131AbeELDVO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 May 2018 23:21:14 -0400
-Received: by mail-pg0-f66.google.com with SMTP id n9-v6so3181565pgq.5
-        for <git@vger.kernel.org>; Fri, 11 May 2018 20:21:14 -0700 (PDT)
+        id S1751131AbeELD1h (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 23:27:37 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:38335 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750793AbeELD1g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 23:27:36 -0400
+Received: by mail-pf0-f179.google.com with SMTP id o76-v6so3547387pfi.5
+        for <git@vger.kernel.org>; Fri, 11 May 2018 20:27:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=11oOEvMyHKym1uKyVHh/ae0ShdXc05ywgzYFMYiwOG4=;
-        b=kD2lgaVNClsO8CYCCPvVCJr3QTAWeTYvh8VW+M0B8Ye4vu21sf0VYAbZXBhR866Z8x
-         luYLy2qgTpEht65nQ/ZKrj2uLLKTlOM3d6moXUa2wn7gAys8c24tgkHxSM/7r9tHzllx
-         K4oBe5Ev7/cXPLqwYUp+Qtbj8w8gUumx1/9rehnqfl+Zg30tWFPj1cRadGtSQiPt6h57
-         Qk2CX6zWzXnC1hkEbVWtmQ9PbsJbGYGH84MDTrDV1IWVr0kGwl6yDsfyBL3YrcEBD3e4
-         fPzVt3rsrkKgD5ZEYjg5hEvKBNSrw4HSgag1Sx9nUs5WwQ1jcotcmpTsGJQRZ2Ocrqdg
-         LZdQ==
+        bh=xIOfbMjEL2FrzXj0T99/GA755d+v0MwAz9OreAa7s5c=;
+        b=bVnoetV0h5fRcvG/ItXg8IlZvo3PWG2ghCfRaQOkE1QJX6H7P7gdL4JyPrhTLAEia8
+         k4n03SFpg5f/hhbvMmN9xyKD5IR1/CC1rZlkkZIbc/b6UZbfbwKK+v97pt5J8jyot/v/
+         HvqoNcqFIicBKjXuTi9yw/nb/iRumwetZwx+5ySvlAACXh5/7SBcipxhK8yD3rdllEXI
+         NcORXhbvc5QDs13YYgABntoNUjEiLUIft9QmpqfGOp90TcXb81VT6CAEuXctS10GvgVU
+         xLoaGeB003VJhtY6OW8NczBUVrB05bQO2Wrwf6SOjoSfMM3ubFO67H0tPyAXvM5H157R
+         325A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=11oOEvMyHKym1uKyVHh/ae0ShdXc05ywgzYFMYiwOG4=;
-        b=JWNcvmd4bt3YrrgQHxiQMwazvHSw616QKEsBJrh+jDrXJiNtgx8OlI6xhXvmeTrSF8
-         q8O2yb/syzWf9mhaI7IruFIp0uQ5YdZuycOfH+Eqovzc0sb6RzFH8HRGWtbB/Ttk7WrS
-         XMNh7jPOJnVhkCCbucYE4SqxXLtvdkFJUZ0hoSp7OXY3bSYQsyJ5wjdKXv8aFn+r3wSl
-         4GPjDvzDbe6af6Q8KG3Z5sT3tmPz+dSQzEHbYT3/RQpWtnXBgjdDKyzk6y7lxrcC1GEs
-         xlOWggcazhx3WX4fKMxx0JOyv7cuO8ODQ9sllGApsYrj1etbiOpSBzxHrK7m2Ls8W2S3
-         JVWA==
-X-Gm-Message-State: ALKqPweYqX22wpG5/8alV6tpOkdbTSrtH8DF435qi94tUaMG+XKLrHBb
-        OkB3AbVAdwdhSEEptG9ZX5hCArc85kY=
-X-Google-Smtp-Source: AB8JxZrxKWc4COBDVp3qkXuqmhGFlB3CF5R3pGmWUuIXmbTqtPL7kAGXDYZiGBlpbbZgGv3+PH6VVA==
-X-Received: by 2002:a65:608c:: with SMTP id t12-v6mr1328404pgu.182.1526095273306;
-        Fri, 11 May 2018 20:21:13 -0700 (PDT)
+        bh=xIOfbMjEL2FrzXj0T99/GA755d+v0MwAz9OreAa7s5c=;
+        b=cSb2roOCVRSvcb23oaRsUCidXNQ1lGBK4wyxJrP1Za9bt5JqGdo9tYlb+evnRSoCLr
+         uEyRcwSF9kUAlHwVoNPg5gjXlKIY7NCnyBEJiOVlVWNu9uIMaqjWdo5DxE6GdPFMcg0E
+         fVFXmsu63vQRlXsTGdLQb5HTbPPVx8mxkIxxBMU6oz1hRZ64g+54mv8DjtQTtQdj7uqQ
+         AT+3OmKXRhOSeJtCpbXcBqMm/Ca1EZjbPab6D3gXGYxJtp//RxhnNdJ6hQGmzpqOriv4
+         xumninDDYpZ+JFBnhG9eKUsNqaa2PVp5QtKORYE0ZEv6g0KizGaGvwUnsfzZzdz+Cuz6
+         mB+g==
+X-Gm-Message-State: ALKqPwcjHqma6SZIl2tqAAzubBhMIto3gRISUq0dwLBHKeH6Wnl3JvYF
+        G2w4WMHxfgA6a4mqYEfZHLCo7w==
+X-Google-Smtp-Source: AB8JxZofcn4NvwVuhfvvBZpP0jktyQ+mqntOj+kWAqRGFlQm7OdO2OU8i4cjctyBNImmCrmIaiHPlw==
+X-Received: by 2002:a62:8b07:: with SMTP id j7-v6mr1449991pfe.28.1526095655839;
+        Fri, 11 May 2018 20:27:35 -0700 (PDT)
 Received: from localhost ([2601:602:9500:1120:81b:33bd:f4a4:78cd])
-        by smtp.gmail.com with ESMTPSA id v186-v6sm7883835pfb.45.2018.05.11.20.21.11
+        by smtp.gmail.com with ESMTPSA id c21-v6sm9371183pfb.116.2018.05.11.20.27.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 May 2018 20:21:12 -0700 (PDT)
-Date:   Fri, 11 May 2018 20:21:11 -0700
+        Fri, 11 May 2018 20:27:34 -0700 (PDT)
+Date:   Fri, 11 May 2018 20:27:33 -0700
 From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     sunshine@sunshineco.com, avarab@gmail.com, peff@peff.net,
-        gitster@pobox.com
-Subject: [PATCH v2 2/2] builtin/grep.c: teach '-o', '--only-matching' to
- 'git-grep'
-Message-ID: <8258dac743a137196a6c43b2317248c5c079c115.1526094978.git.me@ttaylorr.com>
-References: <cover.1525492696.git.me@ttaylorr.com>
- <cover.1526094978.git.me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 5/7] builtin/grep.c: add '--column' option to
+ 'git-grep(1)'
+Message-ID: <20180512032733.GA65308@syl.local>
+References: <20180421034530.GB24606@syl.local>
+ <cover.1525831201.git.me@ttaylorr.com>
+ <9222f0ee470884a984c1174cf218dece43f77f87.1525831201.git.me@ttaylorr.com>
+ <882bdfe8-6caa-dd9c-7752-ee4884f135f9@talktalk.net>
+ <CAN0heSpXCajyDKwOrXuQHWRODsVnFewUWTMitOoRQueFV4eSiw@mail.gmail.com>
+ <20180509235251.GC68889@syl.local>
+ <xmqqefikl6jx.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1526094978.git.me@ttaylorr.com>
+In-Reply-To: <xmqqefikl6jx.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach GNU grep(1)'s '-o' ('--only-matching') to 'git-grep'. This option
-prints only the matching components of each line. It writes multiple
-lines if more than one match exists on a given line.
+On Thu, May 10, 2018 at 09:04:34AM +0900, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > This check we should retain and change the wording to mention '--and',
+> > '--or', and '--not' specifically.
+>
+> Why are these problematic in the first place?  If I said
+>
+>     $ git grep -e first --and -e these
+>     $ git grep -e first --and --not -e those
+>     $ git grep -e first --or -e those
+>
+> I'd expect that the first line of this paragraph will hit, and the
+> first hit for these three are "these", "first" and "first",
+> respectively.  Most importantly, in the last one, "--or" can be
+> omitted and the whole thing stops being "extended", so rejecting
+> extended as a whole does not make much sense.
 
-For example:
+Agreed that this is what I would expect, too. The trouble is that we
+never do a compilation step from containing --and, --or, --not to a
+POSIX regexp. So, if we're extended, we have to assume that there might
+not be an answer.
 
-  $ /git grep -on --column git -- README.md | head -3
-  README.md:15:56:git
-  README.md:18:20:git
-  README.md:19:16:git
+Given this, I don't think we should categorically die() when we
+encounter this (more below in the next hunk of this mail). I think this
+thread has established that there are certainly cases where we cannot
+provide a meaningful answer, (--not at the top-level, for instance) but
+there are cases where we can (as you indicate above).
 
-By using show_line_header(), 'git grep --only-matching' correctly
-respects the '--heading' option:
+One day, I would like to support --column with --and, --or, or --not in
+cases where there _is_ a definite answer. That said, omitting this
+information for now and at least not die()-ing I think is worth taking
+this patch earlier, and leaving some #leftoverbits.
 
-  $ git grep -on --column --heading git -- README.md | head -4
-  README.md
-  15:56:git
-  18:20:git
-  19:16:git
+>     $ git grep -v second
+>     $ git grep --not -e second
+>
+> may hit all lines in this message (except for the obvious two
+> lines), but we cannot say which column we found a hit.  I am
+> wondering if it is too grave a sin to report "the whole line is what
+> satisfied the criteria given" and say the match lies at column #1.
 
-We mirror GNU grep's behavior when given -A, -B, or -C with
---only-matching, by displaying only the matching portion(s) of a line,
-ignoring contextual line(s), but displaying '--' (context separator)
-line(s).
+I think that is sensible. I previously was opposed to this because I
+thought that it would be too difficult to script around the 'sometimes
+we have columns but other times not' and 'I gave --column' but have to
+check whether or not they are really there.
 
-Notably: when show_line() is called on a line that contains _multiple_
-matches, we keep track of a relative offset from the beginning of the
-line and increment 'cno' in subsequent calls to show_line_header() when
-the expression is not extended. In the extended case, we do not do this,
-because the column of the first match is undefined, thus relative
-offsets are meaningless.
+I no longer believe that my above argument is sound. It simplifies the
+matter greatly to simply not share columns when we don't have a good
+answer, and do when we do.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/git-grep.txt |  6 +++-
- builtin/grep.c             |  1 +
- grep.c                     | 34 +++++++++++++++++--
- grep.h                     |  1 +
- t/t7810-grep.sh            | 69 ++++++++++++++++++++++++++++++++++++++
- 5 files changed, 107 insertions(+), 4 deletions(-)
+In other terms:
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index c48a578cb1..5c09abec4a 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -20,7 +20,7 @@ SYNOPSIS
- 	   [-c | --count] [--all-match] [-q | --quiet]
- 	   [--max-depth <depth>]
- 	   [--color[=<when>] | --no-color]
--	   [--break] [--heading] [-p | --show-function]
-+	   [--break] [--heading] [-o | --only-matching] [-p | --show-function]
- 	   [-A <post-context>] [-B <pre-context>] [-C <context>]
- 	   [-W | --function-context]
- 	   [--threads <num>]
-@@ -223,6 +223,10 @@ providing this option will cause it to die.
- 	Show the filename above the matches in that file instead of
- 	at the start of each shown line.
- 
-+--o::
-+--only-matching::
-+	Prints only the matching part of the lines.
-+
- -p::
- --show-function::
- 	Show the preceding line that contains the function name of
-diff --git a/builtin/grep.c b/builtin/grep.c
-index f9f516dfc4..0507ac335a 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -851,6 +851,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			N_("print empty line between matches from different files")),
- 		OPT_BOOL(0, "heading", &opt.heading,
- 			N_("show filename only once above matches from same file")),
-+		OPT_BOOL('o', "only-matching", &opt.only_matching, N_("show only matches")),
- 		OPT_GROUP(""),
- 		OPT_CALLBACK('C', "context", &opt, N_("n"),
- 			N_("show <n> context lines before and after matches"),
-diff --git a/grep.c b/grep.c
-index 36bf7cf08d..9297fde643 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1422,12 +1422,24 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- 			opt->output(opt, "\n", 1);
- 		}
- 	}
-+	if (opt->only_matching && sign != ':') {
-+		/*
-+		 * If we're given '--only-matching' and the line is a contextual
-+		 * one (i.e., we're given '-A', '-B', or '-C'), mark the line as
-+		 * shown (to advance opt->last_shown), but do not show it (since
-+		 * we are given '--only-matching').
-+		 */
-+		opt->last_shown = lno;
-+		return;
-+	}
- 	show_line_header(opt, name, lno, cno, sign);
--	if (opt->color) {
-+	if (opt->color || opt->only_matching) {
- 		regmatch_t match;
- 		enum grep_context ctx = GREP_CONTEXT_BODY;
- 		int ch = *eol;
- 		int eflags = 0;
-+		int first = 1;
-+		int offset = 1;
- 
- 		if (sign == ':')
- 			match_color = opt->color_match_selected;
-@@ -1444,16 +1456,32 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- 			if (match.rm_so == match.rm_eo)
- 				break;
- 
--			output_color(opt, bol, match.rm_so, line_color);
-+			if (!opt->only_matching) {
-+				output_color(opt, bol, match.rm_so, line_color);
-+			} else if (!first) {
-+				/*
-+				 * We are given --only-matching, and this is not
-+				 * the first match on a line. Reprint the
-+				 * newline and header before showing another
-+				 * match.
-+				 */
-+				opt->output(opt, "\n", 1);
-+				show_line_header(opt, name, lno,
-+					opt->extended ? 0 : offset+match.rm_so,
-+					sign);
-+			}
- 			output_color(opt, bol + match.rm_so,
- 				     match.rm_eo - match.rm_so, match_color);
-+			offset += match.rm_eo;
- 			bol += match.rm_eo;
- 			rest -= match.rm_eo;
- 			eflags = REG_NOTBOL;
-+			first = 0;
- 		}
- 		*eol = ch;
- 	}
--	output_color(opt, bol, rest, line_color);
-+	if (!opt->only_matching)
-+		output_color(opt, bol, rest, line_color);
- 	opt->output(opt, "\n", 1);
- }
- 
-diff --git a/grep.h b/grep.h
-index 08a0b391c5..24c1460100 100644
---- a/grep.h
-+++ b/grep.h
-@@ -126,6 +126,7 @@ struct grep_opt {
- 	const char *prefix;
- 	int prefix_length;
- 	regex_t regexp;
-+	int only_matching;
- 	int linenum;
- 	int columnnum;
- 	int invert;
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 491b2e044a..6251ae678a 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -1432,6 +1432,75 @@ test_expect_success 'grep --heading' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'grep --only-matching' '
-+	cat >expected <<-\EOF &&
-+	file:1:5:mmap
-+	file:2:5:mmap
-+	file:3:5:mmap
-+	file:3:14:mmap
-+	file:4:5:mmap
-+	file:4:14:mmap
-+	file:5:5:mmap
-+	file:5:14:mmap
-+	EOF
-+	git grep --only-matching --line-number --column mmap file >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'grep --only-matching --column (unsupported)' '
-+	cat >expected <<-\EOF &&
-+	file:mmap
-+	file:mmap
-+	file:mmap
-+	file:mmap
-+	file:mmap
-+	file:mmap
-+	file:mmap
-+	file:mmap
-+	EOF
-+	git grep --only-matching --column --not --not -e mmap -- file >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'grep --only-matching -C' '
-+	cat >expected <<-\EOF &&
-+	hello.ps1:function
-+	hello.ps1:function
-+	--
-+	hello.ps1:function
-+	EOF
-+	git grep --only-matching -C1 function hello.ps1 >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'grep --only-matching --heading' '
-+	cat >expected <<-\EOF &&
-+	file
-+	1:5:mmap
-+	2:5:mmap
-+	3:5:mmap
-+	3:14:mmap
-+	4:5:mmap
-+	4:14:mmap
-+	5:5:mmap
-+	5:14:mmap
-+	EOF
-+	git grep --only-matching --heading --line-number --column mmap file >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'grep --only-matching -i' '
-+	cat >expected <<-\EOF &&
-+	hello_world:1:1:Hello
-+	hello_world:2:1:HeLLo
-+	hello_world:3:1:Hello
-+	hello_world:4:1:HeLLo
-+	EOF
-+	git grep --only-matching --line-number --column \
-+		-i hello hello_world >actual &&
-+	test_cmp expected actual
-+'
-+
- cat >expected <<EOF
- <BOLD;GREEN>hello.c<RESET>
- 4:int main(int argc, const <BLACK;BYELLOW>char<RESET> **argv)
--- 
-2.17.0
+  * not giving '--column' will _never_ give a column,
+  * '--column --invert' will _always_ die(), and
+  * '--column --[and | or | not]' will _never_ give a column.
+
+Thanks,
+Taylor
