@@ -7,137 +7,99 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88AC41F406
-	for <e@80x24.org>; Sat, 12 May 2018 12:09:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8BE91F406
+	for <e@80x24.org>; Sat, 12 May 2018 12:13:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750842AbeELMJu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 May 2018 08:09:50 -0400
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:42520 "EHLO
-        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750749AbeELMJt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 May 2018 08:09:49 -0400
-Received: by mail-ot0-f193.google.com with SMTP id l13-v6so9263439otk.9
-        for <git@vger.kernel.org>; Sat, 12 May 2018 05:09:49 -0700 (PDT)
+        id S1750852AbeELMNh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 May 2018 08:13:37 -0400
+Received: from mail-ot0-f170.google.com ([74.125.82.170]:44325 "EHLO
+        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750793AbeELMNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 May 2018 08:13:37 -0400
+Received: by mail-ot0-f170.google.com with SMTP id g7-v6so9272175otj.11
+        for <git@vger.kernel.org>; Sat, 12 May 2018 05:13:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZcV5kv+auilRdCwf4jwN++4rGEHcI940MEuKt945SZg=;
-        b=vVtEXQSY5wUh0symap+5wIBTSfW6o+R1C8lfkmmH3scAZX5STqgZsLcD6XkblsSQE2
-         GOa+AV6HLV8uUtLvO6cwb6f51Ei35iYffeFP1spx+PjBVee3SRXiFlyAaSaO4oWPBk6v
-         uv9iVNd9FYJs7cRHc0sEvtfenIvb/PsRON0i8Y6IOIKADOOl48GQwa5DMInKZ73RXtfY
-         PHiHD3f8XxgUyxmcYSTegE4tAffaOi59Zyv5Rogf/H0oQdBNY3rmhM0PEg93iYcuciYZ
-         MzBfToEvHym1suhomNRD3Tz75BLPWsGWT1GF0zEAwGwhMfH6oQd5sYuJJHdV8/bgbdie
-         xvkQ==
+         :cc:content-transfer-encoding;
+        bh=OtmJ3hlH6onzGm68cfey9I6UG9nHnZXgcwOj5aLEPns=;
+        b=VSqSG/BGs63UFZo3OgIQzXSX4cKRzKBriGqryvdejmuU1vLZK1KaSa9GbxXVzj7Sfo
+         ctBtHr4y6PSrXx87y+0vnQ0zof139hliB57LPUL1/E1RAwSzXaci/YIr7amhPBshk67Z
+         RREO5kOT5+8kqQBaVgT4xNaEphFohg5PWuvy7kLExdhGGcvQzJTC370iEr+R1fuc+pCU
+         DmGAq8G8+7/4WHKxPCpqcHolEXbYj1w8XvDEzQa4siHTJL5CgBmzPnnWKUUlbfNDEhYL
+         CxfiD6hLjqII3lStCoUxI9uWcrtGqX30wW+ZtW9cwINKCAOGi24WwOSNKq17wYpIcTr/
+         P3QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZcV5kv+auilRdCwf4jwN++4rGEHcI940MEuKt945SZg=;
-        b=uL/IVOwXZT3OeEOpTVTsjQDE/AzAv12xJxdtKnnAByIsoJ68ISB4iXjRWKq1Jd6p4H
-         CgH9sA9lBPqUzo5+VPDSuDB0IZK01pJl5408KXy7crVIhH7fmiW4OFB7e8fEm0fMA1Xi
-         h4C8Sz/vy8IYmJ++uGXd/rNmYS3XteFIwjkwXg8kD6ECBJWR1uRcDRGPtphB1ZU83Ris
-         Ikcf+hSqKUA344FGr4nxJoHaW6HXKv15ztZW54+70FA5RAvEPp0zo4u9mATVN57M9WUp
-         uQLT6nZ4sqIIC8JN3GhlbVbThz5YkEJ0DP3Y66WAErBm4fBRJSGoB+WDOTeZ3wQXQDU7
-         Ldkw==
-X-Gm-Message-State: ALKqPwc1uRSKWXKjoIwyG6TxWSAz8eDN6Z3XjTGY1Un1ucl7hIJYtbO5
-        WO+PXtTtfMXoZ4RRcYDg1JurzIOv0p+0NIRw8m4=
-X-Google-Smtp-Source: AB8JxZruSUO2aQwUsfZne4og8fxMQMy4oMZukHoHYAo5B8rSGj4SOh8f3ucAJ4sqw+lRBXgqREBBlrRLC6AAHwuGoVw=
-X-Received: by 2002:a9d:4197:: with SMTP id p23-v6mr1473250ote.75.1526126988849;
- Sat, 12 May 2018 05:09:48 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=OtmJ3hlH6onzGm68cfey9I6UG9nHnZXgcwOj5aLEPns=;
+        b=mSL6cLZUDzOMNYL+NhrF2gnHL+9dZdrKeYYqYHzZzUJrHotphvDliy3PxJTFLznPXh
+         SB6GQDpdF23W3swPEAN6o43XrlaO8kuGbVwIE+U4l4Ew+p9WGgEIdFqKadFeEg4LFA1M
+         gwNpidEra1oHshnSkSjhqkegX3NWiCppiq+3QlKGRuBCj2K1pR7Gd8fkgeZSBfwDsGto
+         5fyo0yB2AcMgaKBHM9VmqMroywJ8jzkr0CqqRrS8AIMstfB+i12wTW7naUO8fllqml08
+         XT5l1UrEj9zFrS3nYs/B0crDGzHXSwDd+RpbOGnphMQ3DppNwhMo8GAkMYkDjhtPwKsV
+         j2jA==
+X-Gm-Message-State: ALKqPwc0SM++dk0gMIpJHKNz7AKMR722vua3jWQGuOJOpGkQdcGgMG0d
+        sxvO6WIkgiG72NPhO7vFF55Vto2/iWLEM8Q2pNQ=
+X-Google-Smtp-Source: AB8JxZoEesGfAVUQXViGgyAoGI1PW258tw7rGI0vpOrQLzb/FGPcZ3pRqhrClDrELecHWCQGYtFdHqkD82bFY6PYtLI=
+X-Received: by 2002:a9d:2fa6:: with SMTP id r35-v6mr1508879otb.356.1526127216680;
+ Sat, 12 May 2018 05:13:36 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Sat, 12 May 2018 05:09:18 -0700 (PDT)
-In-Reply-To: <20180512091809.GC28279@sigill.intra.peff.net>
-References: <20180512080028.29611-1-pclouds@gmail.com> <20180512080028.29611-4-pclouds@gmail.com>
- <20180512090748.GB28279@sigill.intra.peff.net> <20180512091809.GC28279@sigill.intra.peff.net>
+Received: by 10.74.178.133 with HTTP; Sat, 12 May 2018 05:13:06 -0700 (PDT)
+In-Reply-To: <20180512092241.GD28279@sigill.intra.peff.net>
+References: <20180512080028.29611-1-pclouds@gmail.com> <20180512080028.29611-2-pclouds@gmail.com>
+ <20180512092241.GD28279@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 12 May 2018 14:09:18 +0200
-Message-ID: <CACsJy8ByKPSGR=Y+6y+bLBxq97M2EiZERMwZ9BGmJHYj7R0d3Q@mail.gmail.com>
-Subject: Re: [PATCH 03/12] shallow.c: use commit-slab for commit depth instead
+Date:   Sat, 12 May 2018 14:13:06 +0200
+Message-ID: <CACsJy8BaeiH1xcB94sPX511Gc+FrWW==XRuModE3Csz9J_i2Kw@mail.gmail.com>
+Subject: Re: [PATCH 01/12] blame: use commit-slab for blame suspects instead
  of commit->util
 To:     Jeff King <peff@peff.net>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 12, 2018 at 11:18 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, May 12, 2018 at 05:07:48AM -0400, Jeff King wrote:
+On Sat, May 12, 2018 at 11:22 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, May 12, 2018 at 10:00:17AM +0200, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
 >
->> So no, it wouldn't work to directly store depths with the code as
->> written.  I'm not sure if the depth can ever be 0. If not, then it would
->> be a suitable sentinel as:
->>
->>   int *slot = commit_depth_at(&depths, p->item);
->>   if (!*slot || cur_depth < *slot)
->>       *slot = cur_depth;
->>
->> But somebody would have to dig into the possible values of cur_depth
->> there (which would make sense to do as a separate patch anyway, since
->> the point of this is to be a direct conversion).
+>> +define_commit_slab(blame_suspects, struct blame_origin *);
+>> +static struct blame_suspects blame_suspects;
+>> +
+>> +struct blame_origin *get_blame_suspects(struct commit *commit)
+>> +{
+>> +     struct blame_origin **result;
+>> +
+>> +     result =3D blame_suspects_peek(&blame_suspects, commit);
+>> +
+>> +     return result ? *result : NULL;
+>> +}
 >
-> By the way, one other approach if xcalloc() doesn't produce a good
-> sentinel is to use a data type that does. ;) E.g., something like this
-> should work:
+> Hmm. You need this helper because you want to be able to peek and get a
+> NULL. But that's already what _at() would return, with the only
+> difference that we may extend the slab just to return NULL.
 >
->   struct depth {
->         unsigned valid:1;
->         int value;
->   };
->   define_commit_slab(commit_depth, struct depth);
->
->   ...
->
->   struct depth *slot = commit_depth_at(&depths, p->item);
->   if (!slot->valid || cur_depth < slot->value) {
->         slot->value = cur_depth;
->         slot->valid = 1;
->   }
->
-> That wastes an extra 4 bytes per slot over storing an int directly, but
-> it's the same as storing an 8-byte pointer, plus you avoid the storage
-> and runtime overhead of malloc.
+> I wonder how much it matters in practice. We'd generally be extending
+> the slab to hit every commit anyway in this case, I would think.
 
-Or we could have a way to let the user decide initial values. If the
-initial value here is -1 (which can't possibly be used in the current
-code), it could be the sentinel value.
+I don't know much about blame so I stay very conservative ;-) If it's
+safe to just do _at() here, I'll update this patch.
 
-Did you notice the for loop in the end to free "int *"? I don't like
-peeking inside a slab that way and would prefer passing a "free"
-function pointer to clear_commit_depth(), or just assign a "free"
-function to some new field in struct commit_depth and
-clear_commit_depth() will call it. If we have a new field for "free"
-callback in the struct, it makes sense to have an "init" callback to
-do extra initialization on top of xcalloc.
-
-> I actually wonder if we could wrap commit_slab with a variant that
-> stores the sentinel data itself, to make this pattern easier. I.e.,
-> something like:
+> I suppose it doesn't actually simplify the code that much to do it that
+> way, though. We could get rid of this helper, but the caller would still
+> look like:
 >
->   #define define_commit_slab_sentinel(name, type) \
->         struct name##_value { \
->                 unsigned valid:1; \
->                 type value; \
->         }; \
->         define_commit_slab(name, struct name##_value)
+>   for (p =3D *blame_suspects_at(o->commit); p; p =3D p->next)
 >
-> and some matching "peek" and "at" functions to manipulate value
-> directly.
+> which is actually slightly uglier than get_blame_suspects(), because we
+> have to do the pointer-dereference ourselves.
 
-If you keep this valid bit in a separate slab, you can pack these bits
-very tight and not worry about wasting memory. Lookup in commit-slab
-is cheap enough that doing double lookups (one for valid field, one
-for value) is not a problem, I think.
-
-> I think the end result would be nicer, but it's turning into a little
-> bit of a rabbit hole. So I don't mind going with your direct conversion
-> here for now.
-
-Yeah I think I will stick with a faithful conversion for now. The
-conversion shows room for improvement which could be the next
-microproject (I thought of adding this removing 'util' task as a 2019
-microproject but it was too tricky for newcomers to do).
--- 
+And the caller would need to include commit-slab.h too. I added
+get_blame_suspects() because I wanted to avoid that.
+--=20
 Duy
