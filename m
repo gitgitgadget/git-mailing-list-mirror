@@ -6,55 +6,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA1431F406
-	for <e@80x24.org>; Sat, 12 May 2018 03:11:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E53C71F406
+	for <e@80x24.org>; Sat, 12 May 2018 03:11:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751398AbeELDLR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 May 2018 23:11:17 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:38663 "EHLO
+        id S1751467AbeELDLV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 May 2018 23:11:21 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:36592 "EHLO
         mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751092AbeELDLQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 May 2018 23:11:16 -0400
-Received: by mail-pl0-f67.google.com with SMTP id c11-v6so4281719plr.5
-        for <git@vger.kernel.org>; Fri, 11 May 2018 20:11:16 -0700 (PDT)
+        with ESMTP id S1751092AbeELDLT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 May 2018 23:11:19 -0400
+Received: by mail-pl0-f67.google.com with SMTP id v24-v6so4284595plo.3
+        for <git@vger.kernel.org>; Fri, 11 May 2018 20:11:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=CIvsN7yIy+2a/64v3Jce7dOsevT5/8RLMTaKgNr5Rkk=;
-        b=Q4rjON/T5olbxnzZia0LzD/Y4sG7M43S9ZMNhr5h3TdeegF2bzqKuTAVAYYuq+1vZG
-         9cO7j2ElI6V1eTM70M8IMizwmBAWsbwARVZmZulZPRTyKTerSDMKssdUP5vX8dnn0uiV
-         PhQrqBG1zsMahV1QPGzdwDiF/+Dma0l3gjiVAfPC6XohuOa/8agBpdP91mGheJAC/1iz
-         Ubwo4WyJJXgjHaNTArzYEpi5KeNvKs3fE+I9kuE1Tp5f9sTlJRG0M22z0fkKheTHwkDl
-         dJmpjNPV+L77y2/BVaVPFeV/kpsURZ7AesqW36Ox1LlZgJ/9YWY/aNCN8Z+4EmnWq9S/
-         uqzw==
+        bh=zklwoLUjuxGF8v4LXO17T2t+7vzi32OZwUYLO1hyT8Q=;
+        b=rUe4iYNAByywH0ff77ptiI/LTnCSzzAaVbYxCrBWLhE7ygVQqvhTEWIO8VqQuNy/3r
+         qMbM2jvZmLXsJ6q646Xkc87JQJSZEkO07h6ncp9AuP73zxqbo+zbhzj7K/Gu86CngqTk
+         VAEmqud/Latrho+pC9R71WLU057wOtcXsXhCzK45nq2E8ZH8Fe5eJ4w9gF096UfFe2uP
+         y5Kvd2CFfQj/X8jliKj4s4R5JMFT1EG8+5y2JOzFRO1UKV1C4tp0KOuNaKMROeFyqOkY
+         BnNB9kW1reZ2WUQKWkuYMIdG82knH3wAqXWYUuI363BQYqTgKxOj0hjdAiIm+MczZTtW
+         2ogw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=CIvsN7yIy+2a/64v3Jce7dOsevT5/8RLMTaKgNr5Rkk=;
-        b=PJVRHNIorqhz4T2RE7uJjWoTOZU0Bm76N0xMZWkWacsgw9RDrhjSZeBf9dsH3p9yf0
-         6qXR3OJRFy0G3YQx+PKfhjDfhb6PLwmE11War34rh+nv+Foqb8ENrMwZuoZRKZZo+1Zq
-         8LcnxXkm/azTJTeno6QSHVn0O5s+OoToOAIclun5sfJq0pyzTwWpFwZ8E2YIfTzdGaHJ
-         H1thLXU2G5RNO+dBLi6aCJyxCUphEOFFkZrLWg/uU1/L3yn1nCuC7kZ+VPAYUTrYQdz7
-         f6u8PPgtLTZpSk2ppRrqDB7QKVnWb/qOARfEw+4DDfHcLuKmUa+sCk5Ewo/q6Q3730vT
-         AyGg==
-X-Gm-Message-State: ALKqPwf+ZiHk9CZ2qQ3ryxpASHEzyFRp8pOXhS5rwpMhJ8ij9mCoBzeB
-        oRh9gU0V8SZpTg42g+TEaWjqHlJuZkw=
-X-Google-Smtp-Source: AB8JxZqvRPmv0xHNot1VOivhvHTsYH3LHOsZmUmzJVbBw09y4rxCxfNsEj1wIBDUDd4KoDV+SzTyqQ==
-X-Received: by 2002:a17:902:20cb:: with SMTP id v11-v6mr738577plg.82.1526094675100;
-        Fri, 11 May 2018 20:11:15 -0700 (PDT)
+        bh=zklwoLUjuxGF8v4LXO17T2t+7vzi32OZwUYLO1hyT8Q=;
+        b=ADPom9VmRIPcUMRq4NR3ajVH03XeLXJ8zTC0zDjTrAv7LI2ttpGn39+/nn0sEp1lWm
+         Xzzzh0zXf3vbqrKy0UpiII7iBqpdJ/h0x8FEDCK1NkpmPZ4TdsazFWisBv7KE+NQKK20
+         35yM0khtMhcpguhhWHNBZdOFwmbUabd8HtgppA/RngM5jb3OgHahHK96NwRls+PhB/HZ
+         MikbsSQRP05zFZiTx915EUxcizpL85B1s4mcazqvzhvbcdV6gAx6A/PM0hRx7Rsz82k+
+         7BK1DgWlJj3kwzHOVWoW+11ikSnW9YXTgjF2L1NkXyXXy4ZolNI7Wf+ZP180dU7DSon5
+         lmCQ==
+X-Gm-Message-State: ALKqPwelamw8Gs/CHdwbCn0AXCdYDa107nD5MHONlO+QJV6gifYNJw8F
+        heLUq7u3IP87cRCsQpNGwRvihw6/HZw=
+X-Google-Smtp-Source: AB8JxZph1b5K+Uw+UNnP/pOHUQbZXwhVFpxRcwfG7Huv5ag7tCU+ok34UNFjtlOpYohZ2BoRPOJsmg==
+X-Received: by 2002:a17:902:3a5:: with SMTP id d34-v6mr725819pld.103.1526094677921;
+        Fri, 11 May 2018 20:11:17 -0700 (PDT)
 Received: from localhost ([2601:602:9500:1120:81b:33bd:f4a4:78cd])
-        by smtp.gmail.com with ESMTPSA id c3-v6sm7812390pfn.62.2018.05.11.20.11.13
+        by smtp.gmail.com with ESMTPSA id t190-v6sm395331pgb.36.2018.05.11.20.11.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 May 2018 20:11:14 -0700 (PDT)
-Date:   Fri, 11 May 2018 20:11:12 -0700
+        Fri, 11 May 2018 20:11:16 -0700 (PDT)
+Date:   Fri, 11 May 2018 20:11:15 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, l.s.r@web.de, martin.agren@gmail.com,
         peff@peff.net, phillip.wood@talktalk.net
-Subject: [PATCH v6 5/7] builtin/grep.c: add '--column' option to 'git-grep(1)'
-Message-ID: <cb697d32ee6a2e5d45f331a809bd5e7cb1ba7a9c.1526094383.git.me@ttaylorr.com>
+Subject: [PATCH v6 6/7] grep.c: add configuration variables to show matched
+ option
+Message-ID: <dfd8be62befbbe173faa0d4992b08e82964209c2.1526094383.git.me@ttaylorr.com>
 References: <20180421034530.GB24606@syl.local>
  <cover.1526094383.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -67,146 +68,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach 'git-grep(1)' a new option, '--column', to show the column
-number of the first match on a non-context line. This makes it possible
-to teach 'contrib/git-jump/git-jump' how to seek to the first matching
-position of a grep match in your editor, and allows similar additional
-scripting capabilities.
-
-For example:
-
-  $ git grep -n --column foo | head -n3
-  .clang-format:51:14:# myFunction(foo, bar, baz);
-  .clang-format:64:7:# int foo();
-  .clang-format:75:8:# void foo()
+To support git-grep(1)'s new option, '--column', document and teach
+grep.c how to interpret relevant configuration options, similar to those
+associated with '--line-number'.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-grep.txt |  7 ++++++-
- builtin/grep.c             |  4 ++++
- grep.c                     |  5 +++--
- t/t7810-grep.sh            | 39 ++++++++++++++++++++++++++++++++++++++
- 4 files changed, 52 insertions(+), 3 deletions(-)
+ Documentation/config.txt   | 5 +++++
+ Documentation/git-grep.txt | 3 +++
+ grep.c                     | 6 ++++++
+ 3 files changed, 14 insertions(+)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 6e8d969f52..b3c861c5c3 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1159,6 +1159,8 @@ color.grep.<slot>::
+ 	function name lines (when using `-p`)
+ `lineNumber`;;
+ 	line number prefix (when using `-n`)
++`column`;;
++	column number prefix (when using `--column`)
+ `match`;;
+ 	matching text (same as setting `matchContext` and `matchSelected`)
+ `matchContext`;;
+@@ -1708,6 +1710,9 @@ gitweb.snapshot::
+ grep.lineNumber::
+ 	If set to true, enable `-n` option by default.
+ 
++grep.column::
++	If set to true, enable the `--column` option by default.
++
+ grep.patternType::
+ 	Set the default matching behavior. Using a value of 'basic', 'extended',
+ 	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
 diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 18b494731f..cec4665df5 100644
+index cec4665df5..c48a578cb1 100644
 --- a/Documentation/git-grep.txt
 +++ b/Documentation/git-grep.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	   [-v | --invert-match] [-h|-H] [--full-name]
- 	   [-E | --extended-regexp] [-G | --basic-regexp]
- 	   [-P | --perl-regexp]
--	   [-F | --fixed-strings] [-n | --line-number]
-+	   [-F | --fixed-strings] [-n | --line-number] [--column]
- 	   [-l | --files-with-matches] [-L | --files-without-match]
- 	   [(-O | --open-files-in-pager) [<pager>]]
- 	   [-z | --null]
-@@ -169,6 +169,11 @@ providing this option will cause it to die.
- --line-number::
- 	Prefix the line number to matching lines.
+@@ -44,6 +44,9 @@ CONFIGURATION
+ grep.lineNumber::
+ 	If set to true, enable `-n` option by default.
  
-+--column::
-+	Prefix the 1-indexed byte-offset of the first match from the start of the
-+	matching line. This option is incompatible with '--invert-match', and
-+	ignored with expressions using '--and', '--or', '--not'.
++grep.column::
++	If set to true, enable the `--column` option by default.
 +
- -l::
- --files-with-matches::
- --name-only::
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 5f32d2ce84..f9f516dfc4 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -829,6 +829,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			    GREP_PATTERN_TYPE_PCRE),
- 		OPT_GROUP(""),
- 		OPT_BOOL('n', "line-number", &opt.linenum, N_("show line numbers")),
-+		OPT_BOOL(0, "column", &opt.columnnum, N_("show column number of first match")),
- 		OPT_NEGBIT('h', NULL, &opt.pathname, N_("don't show filenames"), 1),
- 		OPT_BIT('H', NULL, &opt.pathname, N_("show filenames"), 1),
- 		OPT_NEGBIT(0, "full-name", &opt.relative,
-@@ -1111,6 +1112,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		hit = grep_objects(&opt, &pathspec, the_repository, &list);
- 	}
- 
-+	if (opt.columnnum && opt.invert)
-+		die(_("--column and --invert-match cannot be combined"));
-+
- 	if (num_threads)
- 		hit |= wait_all();
- 	if (hit && show_in_pager)
+ grep.patternType::
+ 	Set the default matching behavior. Using a value of 'basic', 'extended',
+ 	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
 diff --git a/grep.c b/grep.c
-index f3fe416791..7396b49a2d 100644
+index 7396b49a2d..5ba1b05526 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -1402,9 +1402,10 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- 	/*
- 	 * Treat 'cno' as the 1-indexed offset from the start of a non-context
- 	 * line to its first match. Otherwise, 'cno' is 0 indicating that we are
--	 * being called with a context line.
-+	 * being called with a context line, or we are --extended, and cannot
-+	 * always show an answer.
- 	 */
--	if (opt->columnnum && cno) {
-+	if (opt->columnnum && sign == ':' && !opt->extended) {
- 		char buf[32];
- 		xsnprintf(buf, sizeof(buf), "%d", cno);
- 		output_color(opt, buf, strlen(buf), opt->color_columnno);
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 1797f632a3..491b2e044a 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -99,6 +99,40 @@ do
- 		test_cmp expected actual
- 	'
+@@ -96,6 +96,10 @@ int grep_config(const char *var, const char *value, void *cb)
+ 		opt->linenum = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "grep.column")) {
++		opt->columnnum = git_config_bool(var, value);
++		return 0;
++	}
  
-+	test_expect_success "grep -w $L (with --column)" '
-+		{
-+			echo ${HC}file:5:foo mmap bar
-+			echo ${HC}file:14:foo_mmap bar mmap
-+			echo ${HC}file:5:foo mmap bar_mmap
-+			echo ${HC}file:14:foo_mmap bar mmap baz
-+		} >expected &&
-+		git grep --column -w -e mmap $H >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "grep -w $L (with --column, -C)" '
-+		{
-+			echo ${HC}file:5:foo mmap bar
-+			echo ${HC}file-foo_mmap bar
-+			echo ${HC}file:14:foo_mmap bar mmap
-+			echo ${HC}file:5:foo mmap bar_mmap
-+			echo ${HC}file:14:foo_mmap bar mmap baz
-+		} >expected &&
-+		git grep --column -w -C1 -e mmap $H >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "grep -w $L (with --line-number, --column)" '
-+		{
-+			echo ${HC}file:1:5:foo mmap bar
-+			echo ${HC}file:3:14:foo_mmap bar mmap
-+			echo ${HC}file:4:5:foo mmap bar_mmap
-+			echo ${HC}file:5:14:foo_mmap bar mmap baz
-+		} >expected &&
-+		git grep -n --column -w -e mmap $H >actual &&
-+		test_cmp expected actual
-+	'
-+
- 	test_expect_success "grep -w $L" '
- 		{
- 			echo ${HC}file:1:foo mmap bar
-@@ -1590,4 +1624,9 @@ test_expect_success 'grep does not report i-t-a and assume unchanged with -L' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'grep does not allow --column, --invert-match' '
-+	test_must_fail git grep --column --invert-match pat 2>err &&
-+	test_i18ngrep "\-\-column and \-\-invert-match cannot be combined" err
-+'
-+
- test_done
+ 	if (!strcmp(var, "grep.fullname")) {
+ 		opt->relative = !git_config_bool(var, value);
+@@ -112,6 +116,8 @@ int grep_config(const char *var, const char *value, void *cb)
+ 		color = opt->color_function;
+ 	else if (!strcmp(var, "color.grep.linenumber"))
+ 		color = opt->color_lineno;
++	else if (!strcmp(var, "color.grep.column"))
++		color = opt->color_columnno;
+ 	else if (!strcmp(var, "color.grep.matchcontext"))
+ 		color = opt->color_match_context;
+ 	else if (!strcmp(var, "color.grep.matchselected"))
 -- 
 2.17.0
 
