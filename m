@@ -3,139 +3,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D75D51F406
-	for <e@80x24.org>; Sat, 12 May 2018 06:07:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 224D21F42D
+	for <e@80x24.org>; Sat, 12 May 2018 08:00:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750749AbeELGHJ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 May 2018 02:07:09 -0400
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:35254 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750722AbeELGHI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 May 2018 02:07:08 -0400
-Received: by mail-wr0-f182.google.com with SMTP id i14-v6so7212571wre.2
-        for <git@vger.kernel.org>; Fri, 11 May 2018 23:07:08 -0700 (PDT)
+        id S1750772AbeELIAe (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 May 2018 04:00:34 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:34077 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750722AbeELIAd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 May 2018 04:00:33 -0400
+Received: by mail-lf0-f66.google.com with SMTP id r25-v6so11061836lfd.1
+        for <git@vger.kernel.org>; Sat, 12 May 2018 01:00:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dTigh6+Xw4Gu7rzoDfxb4sKDRvdf72aB9sWhkCrph7I=;
-        b=sCuSuyO3fgxVHo37JZK1ownYRgGrrMbPNbZoxk+n7LGTzyHlmCOwOLhtLCZMd+cDn2
-         N3qtWuMQXwRVCfCy35ICAVlEGtzFfDpEH6v+hnnLJrZSeypqRE/fX/r6aHCASMOCuWu9
-         kzki5+njR9olXDgjUH6P4OiiNTQgnDyYKM0joea0ZcHD/gJeKDIvujDR41i/zdYD9hvy
-         q+H0s448wCWUx5daHc8iBXlBvRQB1sFoBWDt1YhkA/TrvcrIRBInaTjr4FiLrxMXzYRL
-         ylg9kE+FaQbwJ3Ra1JMeSe9SMZcz0Nb4oSAZtmZ9u4j2kQ/RZnrd6O9jvCYvy+6mzTAw
-         7bmQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qgyw38QcAGxOD2Q3lrCRYdsppGYMm1Vf9Y3Bred6xlA=;
+        b=hN9aNqGv9965gAPUc8wcAF66c4hiVZk7Gv9IGLdjj1uMl/tlAOfNHM6xW2qF0VVTQ9
+         PQq/Y+PIMEiZOyq/1aIw1e+Tkj7CAbBL12iVhLCwnCIEaQhKBDIGfZg5g0sPbIJzFU5A
+         CbD51uCypmwnCWjrHlbm6caGHM7l/B5yHjgxgjSXqg6dvyBgK7CpTvhrPtyH2dMI+nhy
+         mj951SHOJL9EAlBZ1RQ/bCofnHyFKNemQV5vLUhsmwaU/JEThdW4ZTf0nYR5Xr+POHhq
+         VA1kqn+CR50vZ1u54h4Tj6MY20GGuEdZRehCmd0pztPPGmgBgdHJxUH7eFxwaiJNjSJ1
+         NzBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=dTigh6+Xw4Gu7rzoDfxb4sKDRvdf72aB9sWhkCrph7I=;
-        b=LORVzPuv4jskb3WufZlN+BEB0B8ihBWIGbLPmkLo23AKRtrU7A1+SF3o8grxIgaN3N
-         W8tG+btBFZ/24d3RY9YaPE2ci3L1Phrh/MyOaKbNg5Tk8J/TNZR0nH7pqHmMkjPGFlTT
-         KrL7B4bltQS2hsQF/XiTA5XNcxMYfaPxxF6qnIjKGLZBZy1V3fLjoanRj5V7tnzKD639
-         Lwyh9ErYkhjqNuphh6f4iS1o/Bil/WpVcxo1gkV5/oyo7rn5i3OySdEJ+VEGlIpSprJv
-         ZAkrUZwi3vnVaLRPEqKKlDJUVvs43kT6YaWICAEjIDov/9AbsQwru+LXzxm4D2OWXijY
-         AHmQ==
-X-Gm-Message-State: ALKqPwf9V4FwxW7U18vEbAdRavw50RxBclm5Yicdj3zZ+HSk2e5Yh7V3
-        uH8vvwfpdtE5vKEuO+0OxTE=
-X-Google-Smtp-Source: AB8JxZol6ehEMcmvyVhyLYcrKVqUs3mFP1rC14lsAg1NP+bNkMK5hpGnBkD8CVBapQopGvNnlw8kKw==
-X-Received: by 2002:adf:c613:: with SMTP id n19-v6mr1121435wrg.177.1526105227107;
-        Fri, 11 May 2018 23:07:07 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b72-v6sm4118159wmf.11.2018.05.11.23.07.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 11 May 2018 23:07:05 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?Tmd1eeG7hW4g?= =?utf-8?B?VGjDoWkgTmfhu41j?= Duy 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 5/7] builtin/grep.c: add '--column' option to 'git-grep(1)'
-References: <20180421034530.GB24606@syl.local>
-        <cover.1525831201.git.me@ttaylorr.com>
-        <9222f0ee470884a984c1174cf218dece43f77f87.1525831201.git.me@ttaylorr.com>
-        <882bdfe8-6caa-dd9c-7752-ee4884f135f9@talktalk.net>
-        <CAN0heSpXCajyDKwOrXuQHWRODsVnFewUWTMitOoRQueFV4eSiw@mail.gmail.com>
-        <20180509235251.GC68889@syl.local>
-        <xmqqefikl6jx.fsf@gitster-ct.c.googlers.com>
-        <20180512032733.GA65308@syl.local>
-        <xmqqbmdlfokf.fsf@gitster-ct.c.googlers.com>
-        <20180512051902.GA70598@syl.local>
-Date:   Sat, 12 May 2018 15:07:04 +0900
-In-Reply-To: <20180512051902.GA70598@syl.local> (Taylor Blau's message of
-        "Fri, 11 May 2018 22:19:02 -0700")
-Message-ID: <xmqq7eo9flvb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qgyw38QcAGxOD2Q3lrCRYdsppGYMm1Vf9Y3Bred6xlA=;
+        b=WS7oiMEljHL7WGqTug4kO30pUo6Y5Rp/J/nr42zBlqVOBJjsGy/AupNbP3HOwgVPgc
+         tz5CjFqQ9ERfZuRZXZirXvAjIw4VfnIqch7OkwsmybwoKAO/2HxsS7wtYxp88Trx1GTO
+         cFPXJUcyeKtt05833CqDwdw7hJWp8Kq4pUXJDIC2IIOgXW05ol7dMbA6/NieLr4ARu7y
+         NM+AN6wH8qM5bGAywPNF1IfafSTQvXpiagBUuvTCNBtHTISll+xMRnUeCuhSM4Wq6MzX
+         9mxnqEUO6+8SEITzGeezGntU7GBf3kFLZgN3aoJlS3NQQhIiDruL+iHIEYiPPiSGrDff
+         pIyA==
+X-Gm-Message-State: ALKqPwd62V9s1NL0bQVegnUd/kddtyx/qAjwpaWHdNDvXmBDtH8wfHNp
+        7l+cZBvKw5sYbE6zjdVMTL9yFQ==
+X-Google-Smtp-Source: AB8JxZpJ1uc1e7yCU8xjN519Y3SLyc5C0SUZxmHrZsNbAgpwj09iSuYIuKcLzWDEUxdjKW862Yw1oA==
+X-Received: by 2002:a19:1256:: with SMTP id h83-v6mr3624170lfi.86.1526112031969;
+        Sat, 12 May 2018 01:00:31 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id i20-v6sm1055369lfe.69.2018.05.12.01.00.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 12 May 2018 01:00:31 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 00/12] Die commit->util, die!
+Date:   Sat, 12 May 2018 10:00:16 +0200
+Message-Id: <20180512080028.29611-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.705.g3525833791
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+There's not much to write here. It's basically a copy from 12/12:
 
-> I re-read your note and understand more clearly now what your suggestion
-> is. To ensure that we're in agreement, do you mean:
->
->   1. '--column -v' will _never_ give a column, but will never die(),
->       either
+This 'util' pointer can be used for many different purposes,
+controlled in different ways. Some are not even contained in a command
+code, but buried deep in common code with no clue who will use it and
+how. For example, if revs.show_source is set, then it's used for
+storing path name, but if you happen to call get_merge_parent() then
+some 'util' may end up storing another thing.
 
-No, I don't.
+The move to using commit-slab gives us a much better picture of how
+some piece of data is associated with a commit and what for. Since
+nobody uses 'util' pointer anymore, we can retire it so that nobody will
+abuse it again. commit-slab will be the way forward for associating
+data to a commit.
 
->   2. '--column --[and | or | not]' will never give a column, but will
->       also never die(), either.
+As a side benefit, this shrinks struct commit by 8 bytes (on 64-bit
+architecture) which should help reduce memory usage for reachability
+test a bit. This is also what commit-slab is invented for [1].
 
-No, I don't.
+[1] 96c4f4a370 (commit: allow associating auxiliary info on-demand -
+2013-04-09)
 
-If a file does not have substring "foo", then
+Nguyễn Thái Ngọc Duy (12):
+  blame: use commit-slab for blame suspects instead of commit->util
+  describe: use commit-slab for commit names instead of commit->util
+  shallow.c: use commit-slab for commit depth instead of commit->util
+  sequencer.c: use commit-slab to mark seen commits
+  sequencer.c: use commit-slab to associate todo items to commits
+  revision.c: use commit-slab for show_source
+  bisect.c: use commit-slab for commit weight instead of commit->util
+  name-rev: use commit-slab for rev-name instead of commit->util
+  show-branch: use commit-slab for commit-name instead of commit->util
+  log: use commit-slab in prepare_bases() instead of commit->util
+  merge: use commit-slab in merge remote desc instead of commit->util
+  commit.h: delete 'util' field in struct commit
 
-	git grep -v -e foo file
-	git grep --not -e foo file
+ bisect.c              | 12 +++++++++---
+ blame.c               | 42 +++++++++++++++++++++++++++++++-----------
+ blame.h               |  2 ++
+ builtin/blame.c       |  2 +-
+ builtin/describe.c    | 16 +++++++++++++---
+ builtin/fast-export.c | 14 +++++++++-----
+ builtin/log.c         | 17 +++++++++++++----
+ builtin/merge.c       | 25 +++++++++++++------------
+ builtin/name-rev.c    | 23 ++++++++++++++++++++---
+ builtin/show-branch.c | 39 +++++++++++++++++++++++++++------------
+ commit.c              | 12 ++++++++++--
+ commit.h              |  8 ++++++--
+ log-tree.c            |  8 ++++++--
+ merge-recursive.c     |  8 +++++---
+ revision.c            | 17 +++++++++++++----
+ revision.h            |  5 ++++-
+ sequencer.c           | 24 ++++++++++++++++++------
+ shallow.c             | 37 +++++++++++++++++++++++++------------
+ 18 files changed, 225 insertions(+), 86 deletions(-)
 
-would hit all lines, just like
-
-	git grep -e '.*' file
-
-does.
-
-I would expect that all of these
-
-	git grep --column/-o -v -e foo file
-	git grep --column/-o --not -e foo file
-	git grep --column/-o -e '.*' file
-
-give the same output, which is what we would get if we consider the
-hit from "choose lines that lack 'foo'" on a line without 'foo' is
-caused by the entire contents on the line.  That is in line with
-"choose lines that has anything (including nothing)" aka ".*" would
-result in the entire line being reported via -o.  The byte offset of
-the first hit on such a line reported by --column is also 1, and
-that is a good and real answer to the question "git grep --column/-o"
-can give.  
-
-In an earlier message, you sounded like you do not think "we did not
-have 'foo' on that line, and that is why we are emitting because we
-are operating under -v" lack a definite answer for --column, but I
-think you are wrong.  "On the entire line, we didn't find 'foo'
-anywhere" is good enough reason for me to make the answer "the
-entire line contributed to this hit" a definite one.
-
-Exactly the same applies for "git grep --not -e foo".
-
-When "git grep -e bar [--or] --not -e foo" shows a line because the
-line has 'bar' on it, we have --column that points at 'b' of the
-first 'bar' on the line.  When it shows a line because the line has
-neither 'bar' or 'foo', then "--not -e foo" part would give a
-definite "the entire line contributed to this decision that it does
-not have 'foo'".
-
+-- 
+2.17.0.705.g3525833791
 
