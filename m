@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 498821F406
-	for <e@80x24.org>; Sun, 13 May 2018 05:52:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B71361F406
+	for <e@80x24.org>; Sun, 13 May 2018 05:52:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751254AbeEMFwa (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 May 2018 01:52:30 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:34598 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751092AbeEMFwX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 May 2018 01:52:23 -0400
-Received: by mail-lf0-f66.google.com with SMTP id r25-v6so13380145lfd.1
-        for <git@vger.kernel.org>; Sat, 12 May 2018 22:52:23 -0700 (PDT)
+        id S1751282AbeEMFwh (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 May 2018 01:52:37 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:46214 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751092AbeEMFwb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 May 2018 01:52:31 -0400
+Received: by mail-lf0-f65.google.com with SMTP id 16-v6so3787824lfs.13
+        for <git@vger.kernel.org>; Sat, 12 May 2018 22:52:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OCI/PCOGrL4yTCnOZYk2uJKr2aPpfDZfeHE/+1dKpLU=;
-        b=jwREmD07CCjF5XGxVbKH4wY7obX+4VwMOE4I03bUt28PSKMBtpEWgcXit5JGSLdVv8
-         zKJa7PH9DYPbSKwBbMnd4gVviHfY8HvgwgOV2ZsETdf8ok+LQxIT24IpN+4DgwNvsAxB
-         lKP4DfU0fwVZY+U3DQD+xRhDWaMEG09MPpOcAtE8F673hGKtlhuiU9h0JOJeJ2vuWqs0
-         rAAMVK1y+btXdumKmNTDN9s+CtHwkgfXTeDa/P9gP0R70OVxtcKz3HaZE87OX5ZD3TXT
-         /NTNRdIavrd76TgyaW7a4q+QfgfKdnMme8q6Drz6+My/tB5uPYe7wSkANGPn2srd4czb
-         VWjw==
+        bh=rab1WhVYyPMAz03helNiPmDp8AhqosrHcVoH2fiNsmQ=;
+        b=c/d3zR5mGMhpKR5L7hkw+RzrwpDRRamw8l6NTaPFlu/FZVtMNzWvNqccDazVCRFEsz
+         pNlHY/kvrEmooE/rYsBL8WvhmH9kitRmU1fbP7PVWgMFpk5xfTfT45nCpiV5g+UR6QlW
+         cjAsGUStxolnYDeoTI6Nf9VXLxV+ODKHiadI47K2boX+IhwSeiKY5rmSLWZwEalmQ5XU
+         IKikGKW5V1UkenO0eAP38bN+vHJxyYPVgi5GM+7Knu6NB1IZfM+m7gMZ9UPTOtfmK43o
+         1mEMlXAXRrbXAaNLC9IlgoG+BJPGWsj3LkKLsS7to1Q9mEXpxdO+09LurA/Jz6WpGPUo
+         LIHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OCI/PCOGrL4yTCnOZYk2uJKr2aPpfDZfeHE/+1dKpLU=;
-        b=GaNvnMT6xT6EUpQvi5tB0rI+4Y2jXNBp/MMlXcM5vC4c4VuLDY26BNge6SncSQeDxq
-         eHO26sxGumVvt0ZTLKzlyHCEe1Vri600d2DlTrTqQXSNtSsbClksi+iBiT78IrRuz7TJ
-         zCKkRD0c1HJOBBDIv1x4X6JkrJVA8O6I0opFKgW9+Pf8YZ25l3Wqhp3SQezjXc73cE5u
-         75ItxcyLt0HSxYZL+K8w0I94Omk/irP+k5jG0JSNPTYmG1iawXnfnnl92kU0kvjHGOKe
-         dr+HMibjrzOX0+AaZj4gdYg17zeWWbPdcOcIlL0z16etGLTUJvZD46yqyT6eY3EThugU
-         TqMw==
-X-Gm-Message-State: ALKqPweubQsgbnjvO07g5FDdwG08kJ+8ZYglNOuEibIQbIMjc54RDuVx
-        AqgNhEb8rA5OzPc3yW0x+i0YVg==
-X-Google-Smtp-Source: AB8JxZqoIhciShJXxCbFBy09+ZPCeAFkDkW8D3JkRiqsScQ6ZT3ykgV4CJ/sy4zVKJdvwII0UKb77Q==
-X-Received: by 2002:a2e:4185:: with SMTP id d5-v6mr1952649ljf.114.1526190741968;
-        Sat, 12 May 2018 22:52:21 -0700 (PDT)
+        bh=rab1WhVYyPMAz03helNiPmDp8AhqosrHcVoH2fiNsmQ=;
+        b=TI+R7Cj5WkpT4Y3PhSfE8XZQAEK5hlc0oSy7c7YEmYPfJ8UgUcEkJbtC58cO2i6Vzz
+         qHoH3DCAGfcIXFDlrHGm7sNANpjh4ZGNivFjjlPSpPNNhSC4LEac9yqrABL7VqSLGnTj
+         Wna/CncvT/xsh4k3cxneq4bJD2Igfj9gx+MeEbslUxlta8HsX4YXxIYOBMYJlDLBeQOf
+         Idu8hw5PAwyKcoga+JQ0kkICc6yrxHXrLpy2td076LfERUB/WFOlL4zdJAzDFVaDBKIy
+         7NmNLEYFTdKo+2oP2n6vEt/dDXOeQK3Q4hiSCyFZ5xo/nRbeYHPxhxQ4bK4TQbLIaXvw
+         JFiw==
+X-Gm-Message-State: ALKqPwcdRz0JnvXAtaBKoclBXgRQdORo6LFY7fVSNUei6zraffHShdcy
+        nkfogaVNg8GoWV+56MpTD4nx/w==
+X-Google-Smtp-Source: AB8JxZp5x4mvj1pxOneHfQLXgZZVok9huHaYdTPNjEOPsuRqSPv6hGF3p7+vmxQ+Ti+NemMJuBDFPA==
+X-Received: by 2002:a2e:9949:: with SMTP id r9-v6mr1870625ljj.53.1526190749499;
+        Sat, 12 May 2018 22:52:29 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id y5-v6sm1257779ljd.12.2018.05.12.22.52.20
+        by smtp.gmail.com with ESMTPSA id y5-v6sm1257779ljd.12.2018.05.12.22.52.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 May 2018 22:52:21 -0700 (PDT)
+        Sat, 12 May 2018 22:52:28 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 07/14] sequencer.c: use commit-slab to associate todo items to commits
-Date:   Sun, 13 May 2018 07:52:01 +0200
-Message-Id: <20180513055208.17952-8-pclouds@gmail.com>
+Subject: [PATCH v2 14/14] commit.h: delete 'util' field in struct commit
+Date:   Sun, 13 May 2018 07:52:08 +0200
+Message-Id: <20180513055208.17952-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180513055208.17952-1-pclouds@gmail.com>
 References: <20180512080028.29611-1-pclouds@gmail.com>
@@ -70,75 +70,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's done so that commit->util can be removed. See more explanation in
-the commit that removes commit->util.
+If you have come this far, you probably have seen that this 'util'
+pointer is used for many different purposes. Some are not even
+contained in a command code, but buried deep in common code with no
+clue who will use it and how.
+
+The move to using commit-slab gives us a much better picture of how
+some piece of data is associated with a commit and what for. Since
+nobody uses 'util' pointer anymore, we can retire so that nobody will
+abuse it again. commit-slab will be the way forward for associating
+data to a commit.
+
+As a side benefit, this shrinks struct commit by 8 bytes (on 64-bit
+architecture) which should help reduce memory usage for reachability
+test a bit. This is also what commit-slab is invented for [1].
+
+[1] 96c4f4a370 (commit: allow associating auxiliary info on-demand -
+2013-04-09)
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- sequencer.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ commit.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 6b785c6c5f..dd4993fd99 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3362,6 +3362,8 @@ static int subject2item_cmp(const void *fndata,
- 	return key ? strcmp(a->subject, key) : strcmp(a->subject, b->subject);
- }
+diff --git a/commit.h b/commit.h
+index 838f6a6b26..70371e111e 100644
+--- a/commit.h
++++ b/commit.h
+@@ -18,12 +18,16 @@ struct commit_list {
  
-+define_commit_slab(commit_todo_item, struct todo_item *);
-+
- /*
-  * Rearrange the todo list that has both "pick commit-id msg" and "pick
-  * commit-id fixup!/squash! msg" in it so that the latter is put immediately
-@@ -3378,6 +3380,7 @@ int rearrange_squash(void)
- 	struct hashmap subject2item;
- 	int res = 0, rearranged = 0, *next, *tail, i;
- 	char **subjects;
-+	struct commit_todo_item commit_todo;
+ struct commit {
+ 	struct object object;
+-	void *util;
+ 	unsigned int index;
+ 	timestamp_t date;
+ 	struct commit_list *parents;
+ 	struct tree *tree;
+ 	uint32_t graph_pos;
++	/*
++	 * Do not add more fields here unless it's _very_ often
++	 * used. Use commit-slab to associate more data with a commit
++	 * instead.
++	 */
+ };
  
- 	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file) < 0)
- 		return -1;
-@@ -3386,6 +3389,7 @@ int rearrange_squash(void)
- 		return -1;
- 	}
- 
-+	init_commit_todo_item(&commit_todo);
- 	/*
- 	 * The hashmap maps onelines to the respective todo list index.
- 	 *
-@@ -3416,10 +3420,11 @@ int rearrange_squash(void)
- 
- 		if (is_fixup(item->command)) {
- 			todo_list_release(&todo_list);
-+			clear_commit_todo_item(&commit_todo);
- 			return error(_("the script was already rearranged."));
- 		}
- 
--		item->commit->util = item;
-+		*commit_todo_item_at(&commit_todo, item->commit) = item;
- 
- 		parse_commit(item->commit);
- 		commit_buffer = get_commit_buffer(item->commit, NULL);
-@@ -3446,9 +3451,9 @@ int rearrange_squash(void)
- 			else if (!strchr(p, ' ') &&
- 				 (commit2 =
- 				  lookup_commit_reference_by_name(p)) &&
--				 commit2->util)
-+				 *commit_todo_item_at(&commit_todo, commit2))
- 				/* found by commit name */
--				i2 = (struct todo_item *)commit2->util
-+				i2 = *commit_todo_item_at(&commit_todo, commit2)
- 					- todo_list.items;
- 			else {
- 				/* copy can be a prefix of the commit subject */
-@@ -3527,5 +3532,6 @@ int rearrange_squash(void)
- 	hashmap_free(&subject2item, 1);
- 	todo_list_release(&todo_list);
- 
-+	clear_commit_todo_item(&commit_todo);
- 	return res;
- }
+ extern int save_commit_buffer;
 -- 
 2.17.0.705.g3525833791
 
