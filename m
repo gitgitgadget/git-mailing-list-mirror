@@ -2,63 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFCF01F406
-	for <e@80x24.org>; Sun, 13 May 2018 18:20:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D6F51F406
+	for <e@80x24.org>; Sun, 13 May 2018 18:40:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751690AbeEMSUP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 May 2018 14:20:15 -0400
-Received: from mail-ot0-f175.google.com ([74.125.82.175]:36186 "EHLO
-        mail-ot0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751457AbeEMSUP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 May 2018 14:20:15 -0400
-Received: by mail-ot0-f175.google.com with SMTP id m11-v6so11848646otf.3
-        for <git@vger.kernel.org>; Sun, 13 May 2018 11:20:14 -0700 (PDT)
+        id S1751830AbeEMSkd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 May 2018 14:40:33 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:46836 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751263AbeEMSkc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 May 2018 14:40:32 -0400
+Received: by mail-pf0-f178.google.com with SMTP id p12-v6so4950388pff.13
+        for <git@vger.kernel.org>; Sun, 13 May 2018 11:40:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=VmbbhTwKcrrcrnCOm0sUAVgcb6YTDSaPFW6e9puPnP4=;
-        b=Z9+cZU6RTslobW1QcFt+1taa+op6/ASDjNVoeCo8wgCE++FdnPVSQCBZ5nxdiyWhLV
-         lLFMx52aSwc/yWc+xBOzo4UghkFM+v0mPaCs5rt+opF5SoTEDNuUnZGh3I0KytN7k0ea
-         MJS8saePXWVANvQges8jC08t3P2JRTlnJSoa7e/J/8mbiM6/lwE/yIE5obGXkWFlGNta
-         7EA60KunvQ7IyDcP6gc2TOQoY63rMDoqq8w3Y1Ps4aDIZLdTJOwAq1JN1uNj2r8PKC24
-         ZaB/e1cramFEKX5ivY92VQqSSHf+sfh5FSPQlCYsr+OwnFVbx3VxUD8mxgOBHpPwAvrR
-         1rLg==
+        bh=WUimx2m12+M/zi6ykHUT0cP+YGT3fuhSCQxBxlfMY/Y=;
+        b=Mi1maRyksTHxfvV14e9GS4vLFpqT5iRv/ph+I8uhVWkHhODE7ZEGNtEPDYlEoBCMal
+         OVMLeeDCDc0DDyX5lDLD+YXXXnMeAIbdFF9z3rnsoGSt8ddvYzQwPIYQloiHinmeGMrU
+         1YflsNgyIrwAHfBccL8xmMiJrC/K7rlj+xBM7U/4MLupky+yAC+aKt5LhXxKM7al45LJ
+         ajLKJfkS9fEX0UxrVt6sejCyOHdoZfXhdR1Dt2yEJLUYMHWS9jhsEbJv1be09yVyfdvo
+         is4wMRHEmuqwCMoHZJg5Z61uJWGpfzg68T2jehIBi+8pwNEXtOExRCdZgkgMPO9lrkem
+         hxpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=VmbbhTwKcrrcrnCOm0sUAVgcb6YTDSaPFW6e9puPnP4=;
-        b=HlypbSbMBDbYCra4DnVRUzkHruKWFXVvdUaQAFfy73LX2OwTzaae0w9uIayWJiWl3y
-         tjD9FNi4tdCD9v3nptBAjBLq+zmAFwEnrq+ezXSxTRAFYPGsiLFIz4xVX3dv4eiGCdG5
-         /8gw4vAKJV3+pNWiaPRR6dy1WMHldpcUZ7IRwhT5YLXXJUefwi+SkdmlHMn8ckXeNUUs
-         8Rkv3n932E9bY954p4hYyiNTb5+lPj8zLQi1eCGG6mmuUtkxVACghwhoxTOUwT7GZo4/
-         kUByntey2IQuKn8sCHZQKcDlSH+qFo7VfbPEHkZa9kquBYjp+X7KINBjA2+FbW8uPzEF
-         Jo8w==
-X-Gm-Message-State: ALKqPwcuSCRlvggjOMrdyywF2tgUrRvDx/9BJinKQS84q6KaZByl05dD
-        H33KCCYzXpb97mxcvTir5leVgKu4yd7+ZJgWlEE=
-X-Google-Smtp-Source: AB8JxZqmSXvILHKiNPUMhHAejFYrYUmghLUB8QKYrG62Gl7Cn/3/zCUaumzWOc6DVWesOOb2lE1J6WtnyQ0uo++vWcI=
-X-Received: by 2002:a9d:2995:: with SMTP id n21-v6mr5131004otb.152.1526235614563;
- Sun, 13 May 2018 11:20:14 -0700 (PDT)
+        bh=WUimx2m12+M/zi6ykHUT0cP+YGT3fuhSCQxBxlfMY/Y=;
+        b=TvNgBRj96x1QrckUnRNlIzVSIqWlIRXJbxDbRHHrrVV08XQ/jdJykDTK8h7pb+cd0l
+         W4tKigYqbEAs/FQIq1u4ygMr3bp2tyMg6lmNsKfOozdaXULdQiDFefCscHrd4nIwYbM+
+         vU2cU2IW9nTpNQ4NlXWhDWAalCrnYU0XcRv12KQWmtvmQjLqy1I1rg6G7Vg2JocnVJW+
+         iU9q20V3qwK/SUi69SBUKpE7f+B1ZqXO3mid4oK+X0tiFhmgQcmw8f8wkgFL8zH8wBrt
+         WPkRDlul2+VxSZ+2D36sbCNV7lZxB2FwaHdcolieY/Dusy6qdoNg/EOWUeJMT9wkvhBc
+         X/Ow==
+X-Gm-Message-State: ALKqPwcyi2K5R1w/fiwOzGDCbVrgTP7iKG//tK3LLJ0BhCxZPmNz9Oow
+        HRCIkBZLtAl7ttH56P7rhQTzh2j7nPUXTOX8r+ENvyzx
+X-Google-Smtp-Source: AB8JxZpRc56n1JXWIaL1BRqYOyJch7YDHLzuOK0CoVbC3lzz/Az4h42fcKIqVOsBiMg6YWIMNVJ4c/986bEy8Vmia0c=
+X-Received: by 2002:a62:5050:: with SMTP id e77-v6mr7482125pfb.16.1526236831800;
+ Sun, 13 May 2018 11:40:31 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Sun, 13 May 2018 11:19:44 -0700 (PDT)
-In-Reply-To: <3f51970cbc44bfe34133c48c0844ed3723e83808.1525361419.git.johannes.schindelin@gmx.de>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <3f51970cbc44bfe34133c48c0844ed3723e83808.1525361419.git.johannes.schindelin@gmx.de>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 13 May 2018 20:19:44 +0200
-Message-ID: <CACsJy8ApDb_KTjoJgMuV_AJ+dQdGC0kgCnMcJXj5pMGdqMQCyA@mail.gmail.com>
-Subject: Re: [PATCH 01/18] Add a function to solve least-cost assignment problems
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Received: by 10.236.187.139 with HTTP; Sun, 13 May 2018 11:40:30 -0700 (PDT)
+In-Reply-To: <20180513082303.19582-1-martin.agren@gmail.com>
+References: <20180513082303.19582-1-martin.agren@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sun, 13 May 2018 20:40:30 +0200
+Message-ID: <CAN0heSrFYyGiVwJYceC--wB88=taSis=KrdGpSfiGk1orC754A@mail.gmail.com>
+Subject: Re: [PATCH] config: free resources of `struct config_store_data`
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -66,30 +62,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 3, 2018 at 5:30 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> +       /* reduction transfer */
-> +       free_row =3D xmalloc(sizeof(int) * row_count);
-> +       for (int i =3D 0; i < row_count; i++) {
+On 13 May 2018 at 10:23, Martin =C3=85gren <martin.agren@gmail.com> wrote:
 
-travis complains about this
+> +void config_store_data_clear(struct config_store_data *store)
 
-
-hungarian.c: In function =E2=80=98compute_assignment=E2=80=99:
-hungarian.c:47:11: error: redeclaration of =E2=80=98i=E2=80=99 with no link=
-age
-  for (int i =3D 0; i < row_count; i++) {
-           ^
-hungarian.c:21:6: note: previous declaration of =E2=80=98i=E2=80=99 was her=
-e
-  int i, j, phase;
-      ^
-hungarian.c:47:2: error: =E2=80=98for=E2=80=99 loop initial declarations ar=
-e only
-allowed in C99 mode
-  for (int i =3D 0; i < row_count; i++) {
-  ^
-hungarian.c:47:2: note: use option -std=3Dc99 or -std=3Dgnu99 to compile yo=
-ur code
---=20
-Duy
+I will do s/void/static void/ here...
