@@ -2,137 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55D591F42D
-	for <e@80x24.org>; Sun, 13 May 2018 09:59:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 486251F42D
+	for <e@80x24.org>; Sun, 13 May 2018 10:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751313AbeEMJ7H (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 May 2018 05:59:07 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:45047 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751260AbeEMJ7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 May 2018 05:59:06 -0400
-Received: by mail-wr0-f194.google.com with SMTP id y15-v6so9255301wrg.11
-        for <git@vger.kernel.org>; Sun, 13 May 2018 02:59:06 -0700 (PDT)
+        id S1751149AbeEMKcz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 May 2018 06:32:55 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:56006 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750941AbeEMKcy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 May 2018 06:32:54 -0400
+Received: by mail-wm0-f51.google.com with SMTP id a8-v6so8842272wmg.5
+        for <git@vger.kernel.org>; Sun, 13 May 2018 03:32:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3R2+IboDDz9Sy0RUlHYQ+UFitHFbBDg3gj4kypNxzJk=;
-        b=cMCuU4pAvTXGX8KYV45F/BF1dw7gb97IA7Cphli+hOBExtEVn1BR3ZGLtC4rTL2K0J
-         zIJb1Fya/A0y0lruIuHJNN91gEXM2NYMB5Ph0Cu7xZcFzyuN+DFor7qQG/rJUgy7UV5p
-         tv0qmhFQZBN0j1cBm9jNmLlR5IUABOGb4xhlRCq1Hy7twRmcW1HGr/zJ6jIZDgdlTeP3
-         KW2tljqnKnhuJvQotAgNh9SKYWC1Js3y68BRvdhllIicmuggKkUv3r6YQELc6ljt3s2y
-         +iIiICAgyrhjRDNwc/LMyL/IkAEAi6sXVZpS/nVVx09rZsrgJxVgPdVsiqO/yN31gpW0
-         maMA==
+        h=from:to:cc:subject:date:message-id;
+        bh=1n4x2dKwB2eLYpv9oGCpi3aildN9EjQ+QN5XPQihKgY=;
+        b=F1bqxIitXYTTv9goP9EPwgY3ILJiWc14TGR9aPahX6fn/nKJ0tW0Urnk6O4CpGv0ev
+         GMnFQP75Z3FzhS5vWBIT9RM/SVPcmaOHtadN+x5ZVaChnKxyckO8VSb27UuI6vM9WYic
+         aS6iSNEj125cEbxsm0JD+ZzxZMErum2zpYhg2gpmlEJW5hDacU7ucJ2gxceG86Bupi0W
+         5YtA3XJwpbmPB1/wvf8DGUmx8o66i2MJb+pVJWRW9c5WXJLn65wodkE8CEqDdrRFyKbc
+         jI+s+GQHK+sLjfPJlARtzF0lVU6dxR7eUTTE0Rleav3snsol+db4ruYYjUdVgha5LwFq
+         32yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3R2+IboDDz9Sy0RUlHYQ+UFitHFbBDg3gj4kypNxzJk=;
-        b=bxRdoPAy07sCqyefc+5kpGmyqTo7ydl1AIWG9+QorX5tGrSK8o2y/EKEKJmkJjMF7I
-         MAynTFi692/s+wmah+z9N5kOcEhIp0fTN1xOd/mIvf1Tow5OgXKa97WNxR5W6/iHmYzP
-         a2lPAucnP3uOakgzdVInWqKRV/QKqeAOdlqWVPjc6rLe6oVtOz4vOAoNVZwtALQqOvNH
-         OEiEfIECQQLK4QlpV2GtlOqZ+5W7VhtOA3nbtv+dRD6jjz/L/HQM2f6Hw/fhNVCgg+qK
-         jNPAmI6ggCkaQqV7o3ydPk9XKkUmfxNHFb0wXJiBJumJMXaBCV8UK+U5O7BGQGOXbTiI
-         +w4g==
-X-Gm-Message-State: ALKqPwdBKPk/Ys6u3QQl5U/yHTQm/t2kJgWYW2oHVEQ1ySrJpNDglEab
-        DcK5or9Nvh7qVWeMG3vVmjc=
-X-Google-Smtp-Source: AB8JxZoQKePT0tSLafpnlC5gS9RC6ik6lfrUOOy6zkxN9Y6TT8Jx50icvLGpX5uHOz3KnzhYNZaX9Q==
-X-Received: by 2002:adf:b067:: with SMTP id g36-v6mr3938493wra.128.1526205545307;
-        Sun, 13 May 2018 02:59:05 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id k28-v6sm9986872wrk.46.2018.05.13.02.59.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 13 May 2018 02:59:04 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 3/1] config: let `config_store_data_clear()` handle `key`
-Date:   Sun, 13 May 2018 11:58:38 +0200
-Message-Id: <8873a578e1dbc0d1c6566e1a68b7b0a7741b6b0d.1526204440.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.17.0.583.g9a75a153ac
-In-Reply-To: <cover.1526204440.git.martin.agren@gmail.com>
-References: <CAPig+cThT3VVw75VF0wuF-yR-xbnfNOxhviYGZLAksF8HFuOGw@mail.gmail.com> <cover.1526204440.git.martin.agren@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=1n4x2dKwB2eLYpv9oGCpi3aildN9EjQ+QN5XPQihKgY=;
+        b=KEjHbZZmbW/uACENTJasg0baZIRSRAw1OvSeFauHeoIWtFleslcK4gFnR6aUzX86pk
+         d8SF6CBqXO9F4PfHbEpAvkUk7bfBWN3KKiemWdScjp5LOH0qlnSL4umju3LPV6JHMCAr
+         kQRGbGPZXMxzjQbDY5h4B0cE3BcCzur3w+pc71F40cvFzadLzgpuxAItzMDmdDkDnLqz
+         vLkV8+47RPBq9d1pwq9Kpl9hCn8K0JmsNxrc9ITSFXeCeMwZxjnvs0l4PiTE2MIGBKLm
+         VWExn/xIur2HyF80RIwb21ngVa9jhxPyeN6iVsIkKOE7dBwcD55/WkHInov2meatB/Vy
+         2//A==
+X-Gm-Message-State: ALKqPwc14HOZjpMnvwsD3Qtcp8qI7qS4xoLNbOdZPiW70hP35IsY/Uhh
+        14I4iOHnts64XUfyOMGPTPnrpLT6
+X-Google-Smtp-Source: AB8JxZoPZW6x03hnzNAxHbt1yhAzsMVzVo1i/+gIhVuhFAvUoUbw+qh6WkPT6I8QUn/qd1JAeE6r5A==
+X-Received: by 2002:a1c:1305:: with SMTP id 5-v6mr3043264wmt.89.1526207573097;
+        Sun, 13 May 2018 03:32:53 -0700 (PDT)
+Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
+        by smtp.gmail.com with ESMTPSA id t203-v6sm6886375wmt.33.2018.05.13.03.32.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 13 May 2018 03:32:52 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v1 0/8] Introducing odb remote
+Date:   Sun, 13 May 2018 12:32:24 +0200
+Message-Id: <20180513103232.17514-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.17.0.590.gbd05bfcafd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of carefully clearing up `key` in each code path, let
-`config_store_data_clear()` handle that.
+This is a follow up from the patch series called "Promisor remotes and
+external ODB support" that I sent earlier this year.
 
-We still need to free it before replacing it, though. Move that freeing
-closer to the replacing to be safe. Note that in that same part of the
-code, we can no longer set `key` to the original pointer, but need to
-`xstrdup()` it.
+Following discussions of these patch series, where Junio said "a
+minimum s/ext/remote/ would clarify what it is", I decided to rename
+"external odb" to "odb remote". I am still open to another name, but I
+think that "odb remote" works well with "odb helper" that was already
+used in the series and is as good or perhaps better than "remote odb",
+as a "remote odb" I think would be easier to confuse with a regular
+"remote".
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- config.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+Another obvious difference with the previous series is that this
+series is only about integrating with the promisor/narrow clone work
+and showing that it makes it possible to use more than one promisor
+remote. Everything that is not necessary for that integration has been
+removed for now (though you can still find it in one of my branches on
+GitHub if you want).
 
-diff --git a/config.c b/config.c
-index 2e3c6c94e9..963edacf10 100644
---- a/config.c
-+++ b/config.c
-@@ -2335,6 +2335,7 @@ struct config_store_data {
- 
- void config_store_data_clear(struct config_store_data *store)
- {
-+	free(store->key);
- 	if (store->value_regex != NULL &&
- 	    store->value_regex != CONFIG_REGEX_NONE) {
- 		regfree(store->value_regex);
-@@ -2679,7 +2680,6 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	fd = hold_lock_file_for_update(&lock, config_filename, 0);
- 	if (fd < 0) {
- 		error_errno("could not lock config file %s", config_filename);
--		free(store.key);
- 		ret = CONFIG_NO_LOCK;
- 		goto out_free;
- 	}
-@@ -2689,8 +2689,6 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	 */
- 	in_fd = open(config_filename, O_RDONLY);
- 	if ( in_fd < 0 ) {
--		free(store.key);
--
- 		if ( ENOENT != errno ) {
- 			error_errno("opening %s", config_filename);
- 			ret = CONFIG_INVALID_FILE; /* same as "invalid config file" */
-@@ -2702,7 +2700,8 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 			goto out_free;
- 		}
- 
--		store.key = (char *)key;
-+		free(store.key);
-+		store.key = xstrdup(key);
- 		if (write_section(fd, key, &store) < 0 ||
- 		    write_pair(fd, key, value, &store) < 0)
- 			goto write_err_out;
-@@ -2751,13 +2750,10 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 						      config_filename,
- 						      &store, &opts)) {
- 			error("invalid config file %s", config_filename);
--			free(store.key);
- 			ret = CONFIG_INVALID_FILE;
- 			goto out_free;
- 		}
- 
--		free(store.key);
--
- 		/* if nothing to unset, or too many matches, error out */
- 		if ((store.seen_nr == 0 && value == NULL) ||
- 		    (store.seen_nr > 1 && multi_replace == 0)) {
+This makes this patch series much shorter than the previous ones and
+already useful. So hopefully this will make it possible to start
+reviewing and merging it.
+
+There is one test in patch 8/8 that shows that more than one promisor
+remote can now be used, but I feel that it could be interesting to add
+other such tests, so I am open to ideas in this area.
+
+High level overview of this patch series
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  - Patch 1/8:
+
+This makes functions in fetch-object.c return an error code, which is
+necessary to later tell that they failed and try another odb remote
+when there is more than one. This could also just be seen as a fix to
+these functions.
+
+  - Patch 2/8:
+
+This introduces the minimum infrastructure for odb remotes.
+
+  - Patches 3/8 and 4/8:
+
+These patches implement odb_remote_get_direct() and
+odb_remote_get_many_direct() using the functions from fetch-object.c.
+These new functions will be used in following patches to replace the
+functions from fetch-object.c.
+
+  - Patch 5/8:
+
+This implement odb_remote_reinit() which will be needed to reparse the
+odb remote configuration.
+
+  - Patches 6/8 and 7/8:
+
+These patches integrate the odb remote mechanism into the
+promisor/narrow clone code. The "extensions.partialclone" config
+option is replaced by "odb.<name>.promisorRemote" and
+"core.partialclonefilter" is replaced by "odb.<name>.partialclonefilter".
+
+  - Patch 8/8:
+
+This adds a test case that shows that now more than one promisor
+remote can be used.
+
+Links
+~~~~~
+
+This patch series on GitHub:
+
+https://github.com/chriscool/git/commits/odb-remote
+
+Version 1 and 2 of the "Promisor remotes and external ODB support" series:
+
+https://public-inbox.org/git/20180103163403.11303-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20180319133147.15413-1-chriscool@tuxfamily.org/
+
+Version 1 and 2 of the "Promisor remotes and external ODB support" series on GitHub:
+
+https://github.com/chriscool/git/commits/gl-small-promisor-external-odb12
+https://github.com/chriscool/git/commits/gl-small-promisor-external-odb71
+
+
+Christian Couder (8):
+  fetch-object: make functions return an error code
+  Add initial odb remote support
+  odb-remote: implement odb_remote_get_direct()
+  odb-remote: implement odb_remote_get_many_direct()
+  odb-remote: add odb_remote_reinit()
+  Use odb_remote_get_direct() and has_external_odb()
+  Use odb.origin.partialclonefilter instead of core.partialclonefilter
+  t0410: test fetching from many promisor remotes
+
+ Makefile                      |   2 +
+ builtin/cat-file.c            |   5 +-
+ builtin/fetch.c               |  13 ++--
+ builtin/gc.c                  |   3 +-
+ builtin/repack.c              |   3 +-
+ cache.h                       |   2 -
+ connected.c                   |   3 +-
+ environment.c                 |   1 -
+ fetch-object.c                |  15 +++--
+ fetch-object.h                |   6 +-
+ list-objects-filter-options.c |  49 ++++++++------
+ list-objects-filter-options.h |   3 +-
+ odb-helper.c                  |  45 +++++++++++++
+ odb-helper.h                  |  18 ++++++
+ odb-remote.c                  | 118 ++++++++++++++++++++++++++++++++++
+ odb-remote.h                  |  10 +++
+ packfile.c                    |   3 +-
+ setup.c                       |   7 +-
+ sha1-file.c                   |   9 +--
+ t/t0410-partial-clone.sh      |  54 +++++++++++-----
+ t/t5500-fetch-pack.sh         |   4 +-
+ t/t5601-clone.sh              |   2 +-
+ t/t5616-partial-clone.sh      |   4 +-
+ unpack-trees.c                |   6 +-
+ 24 files changed, 306 insertions(+), 79 deletions(-)
+ create mode 100644 odb-helper.c
+ create mode 100644 odb-helper.h
+ create mode 100644 odb-remote.c
+ create mode 100644 odb-remote.h
+
 -- 
-2.17.0.583.g9a75a153ac
+2.17.0.590.gbd05bfcafd
 
