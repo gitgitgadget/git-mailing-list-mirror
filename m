@@ -2,68 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D6F51F406
-	for <e@80x24.org>; Sun, 13 May 2018 18:40:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 412C11F406
+	for <e@80x24.org>; Sun, 13 May 2018 19:11:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751830AbeEMSkd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 May 2018 14:40:33 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:46836 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751263AbeEMSkc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 May 2018 14:40:32 -0400
-Received: by mail-pf0-f178.google.com with SMTP id p12-v6so4950388pff.13
-        for <git@vger.kernel.org>; Sun, 13 May 2018 11:40:32 -0700 (PDT)
+        id S1751518AbeEMTLr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 May 2018 15:11:47 -0400
+Received: from mail-ua0-f177.google.com ([209.85.217.177]:39254 "EHLO
+        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751295AbeEMTLq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 May 2018 15:11:46 -0400
+Received: by mail-ua0-f177.google.com with SMTP id v17-v6so6921742uak.6
+        for <git@vger.kernel.org>; Sun, 13 May 2018 12:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=WUimx2m12+M/zi6ykHUT0cP+YGT3fuhSCQxBxlfMY/Y=;
-        b=Mi1maRyksTHxfvV14e9GS4vLFpqT5iRv/ph+I8uhVWkHhODE7ZEGNtEPDYlEoBCMal
-         OVMLeeDCDc0DDyX5lDLD+YXXXnMeAIbdFF9z3rnsoGSt8ddvYzQwPIYQloiHinmeGMrU
-         1YflsNgyIrwAHfBccL8xmMiJrC/K7rlj+xBM7U/4MLupky+yAC+aKt5LhXxKM7al45LJ
-         ajLKJfkS9fEX0UxrVt6sejCyOHdoZfXhdR1Dt2yEJLUYMHWS9jhsEbJv1be09yVyfdvo
-         is4wMRHEmuqwCMoHZJg5Z61uJWGpfzg68T2jehIBi+8pwNEXtOExRCdZgkgMPO9lrkem
-         hxpA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=QS01j9YWxwlKe0fXfYnFLCoU1uRhty6Sz+5oM8bBl4s=;
+        b=ebmHNSIT/HWNbU0LDEgA7xv4P4/Y7na3/6iPFaU+KPdPEytzd+E9NIf8SdqiZDiBeu
+         Qs3kLLU+8KovnLS6I/kMzafvw44yBanjmDDRJ8kN6aa9NiBGXHb/h6yHqaRkRdNGJ839
+         SRwdBPUI3/ds/m5lWeeGCe3AdAen8P2MjCTZzQMUmKnMrIM62VT0rVI/cD4ZvWHXMwph
+         WN14iobPJ7HSAjHFXzN1pRd4VEsMTMHtUFgV5W9/Vew8/JScZ7xcGSOT3UGmEDW8vzgE
+         Su6PlyUsNOImINx8nMVas5HBbbyYnPJ5Yu06TapPV1g51TjsPzRfUVS5pMJPN7w/yKWd
+         +Rrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=WUimx2m12+M/zi6ykHUT0cP+YGT3fuhSCQxBxlfMY/Y=;
-        b=TvNgBRj96x1QrckUnRNlIzVSIqWlIRXJbxDbRHHrrVV08XQ/jdJykDTK8h7pb+cd0l
-         W4tKigYqbEAs/FQIq1u4ygMr3bp2tyMg6lmNsKfOozdaXULdQiDFefCscHrd4nIwYbM+
-         vU2cU2IW9nTpNQ4NlXWhDWAalCrnYU0XcRv12KQWmtvmQjLqy1I1rg6G7Vg2JocnVJW+
-         iU9q20V3qwK/SUi69SBUKpE7f+B1ZqXO3mid4oK+X0tiFhmgQcmw8f8wkgFL8zH8wBrt
-         WPkRDlul2+VxSZ+2D36sbCNV7lZxB2FwaHdcolieY/Dusy6qdoNg/EOWUeJMT9wkvhBc
-         X/Ow==
-X-Gm-Message-State: ALKqPwcyi2K5R1w/fiwOzGDCbVrgTP7iKG//tK3LLJ0BhCxZPmNz9Oow
-        HRCIkBZLtAl7ttH56P7rhQTzh2j7nPUXTOX8r+ENvyzx
-X-Google-Smtp-Source: AB8JxZpRc56n1JXWIaL1BRqYOyJch7YDHLzuOK0CoVbC3lzz/Az4h42fcKIqVOsBiMg6YWIMNVJ4c/986bEy8Vmia0c=
-X-Received: by 2002:a62:5050:: with SMTP id e77-v6mr7482125pfb.16.1526236831800;
- Sun, 13 May 2018 11:40:31 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=QS01j9YWxwlKe0fXfYnFLCoU1uRhty6Sz+5oM8bBl4s=;
+        b=DaNTgm1hu+BPF9x31jbh1NUS33dI2pRYOLDCSeOkufHZnX7RZbP6DjyBRPlO0T/Tam
+         WwaQfNMQPenDMgyXVBeLlTeyVtCFXVZVuPUwjhl6f5n9fAqoc/pffbZhJ7I5NlTy3BLR
+         px5PHmZMj2TrV58yGT7JFhPstI6xNrLTywVutP+63zQVaKHC+3W5LI3tKobUedos/aiX
+         JInoizLO7xbhgW7UXaPPpLXwdDFIAzmKlJab70BwBe2fj4v5AldXbkBBJ00qJJRYFngo
+         2UJm498GOvxc8QCAgQNG03izB7UP0tB/iid9A2zPztePBAPa+rAnB8B9X92k18OvJof/
+         tl0g==
+X-Gm-Message-State: ALKqPwe8UfxfWDwgjpTA8Gv3mHlvSCMHwIaxxuNnpzn35uG6zf113H6/
+        TxuI35PoqVbhZQfFcHyK0Q==
+X-Google-Smtp-Source: AB8JxZoNR91pqr5aEgu6UqZ7n5U+nBHnN92LU1zw7i1Dh7gl4BkHsweDuPqw5IvhzIl5zZdNZXoVFA==
+X-Received: by 2002:ab0:47c6:: with SMTP id w6-v6mr9154890uac.186.1526238704394;
+        Sun, 13 May 2018 12:11:44 -0700 (PDT)
+Received: from [192.168.1.16] (ip177-101-15-186.ct.co.cr. [186.15.101.177])
+        by smtp.gmail.com with ESMTPSA id q74-v6sm1468221vke.49.2018.05.13.12.11.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 13 May 2018 12:11:43 -0700 (PDT)
+Subject: Re: Re: [PATCH 1/3] checkout.c: add strict usage of -- before
+ file_path
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+References: <1526178214-30956-1-git-send-email-danniercl@gmail.com>
+ <CACsJy8DZ1QvjO+JdbB76TOLtB2wp4Ya+CgsTyD1oz2Y+ZdKdYQ@mail.gmail.com>
+From:   Dannier Castro L <danniercl@gmail.com>
+Message-ID: <775fe020-be92-f65c-5a67-e83e6bf4777f@gmail.com>
+Date:   Sun, 13 May 2018 13:11:41 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Sun, 13 May 2018 11:40:30 -0700 (PDT)
-In-Reply-To: <20180513082303.19582-1-martin.agren@gmail.com>
-References: <20180513082303.19582-1-martin.agren@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 13 May 2018 20:40:30 +0200
-Message-ID: <CAN0heSrFYyGiVwJYceC--wB88=taSis=KrdGpSfiGk1orC754A@mail.gmail.com>
-Subject: Re: [PATCH] config: free resources of `struct config_store_data`
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CACsJy8DZ1QvjO+JdbB76TOLtB2wp4Ya+CgsTyD1oz2Y+ZdKdYQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13 May 2018 at 10:23, Martin =C3=85gren <martin.agren@gmail.com> wrote:
+On 13/05/2018 00:03, Duy Nguyen wrote:
 
-> +void config_store_data_clear(struct config_store_data *store)
+> On Sun, May 13, 2018 at 4:23 AM, Dannier Castro L <danniercl@gmail.com> wrote:
+>> For GIT new users, this complicated versatility of <checkout> could
+>> be very confused, also considering that actually the flag '--' is
+>> completely useless (added or not, there is not any difference for
+>> this command), when the same program messages promote the use of
+>> this flag.
+> I would like an option to revert back to current behavior. I'm not a
+> new user. I know what I'm doing. Please don't make me type more.
+>
+> And '--" is not completely useless. If you have <file> and <branch>
+> with the same name, you have to give "--" to to tell git what the
+> first argument means.
 
-I will do s/void/static void/ here...
+Sure Duy, you're right, probably "completely useless" is not the correct
+definition, even according with the code I didn't find another useful
+case that is not file and branch with the same name. The program is able
+to know the type using only the name, turning "--" into an extra flag in
+most of cases.
+
+I think this solution could please you more: By default the configuration
+is the current, but the user has the chance to set this, for example:
+
+git config --global flag.strictdashdash true
+
+Thank you so much for the spent time reviewing the patch, this is my
+first one in this repository.
+
+-Dannier CL
+
