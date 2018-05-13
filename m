@@ -2,137 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CA061F406
-	for <e@80x24.org>; Sun, 13 May 2018 05:52:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 913DE1F406
+	for <e@80x24.org>; Sun, 13 May 2018 06:04:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751150AbeEMFwW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 May 2018 01:52:22 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:32939 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751092AbeEMFwU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 May 2018 01:52:20 -0400
-Received: by mail-lf0-f67.google.com with SMTP id h9-v6so12381131lfi.0
-        for <git@vger.kernel.org>; Sat, 12 May 2018 22:52:19 -0700 (PDT)
+        id S1750910AbeEMGD4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 May 2018 02:03:56 -0400
+Received: from mail-ot0-f170.google.com ([74.125.82.170]:46551 "EHLO
+        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750850AbeEMGDz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 May 2018 02:03:55 -0400
+Received: by mail-ot0-f170.google.com with SMTP id t1-v6so10814922ott.13
+        for <git@vger.kernel.org>; Sat, 12 May 2018 23:03:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aiSGRsz7NqNkbrM2uicsYl/yITIdcJlwsBWN+hKXmlA=;
-        b=Q+iRbwjKrBeXpFpdCSJARslslopTPCnj9xXDEHKaFHKOozFgztkPXy8siend2l8y89
-         3sGRALysl2W9HRsFbAFjurIhBm6EzKVsshNi8s0HLAydy6qbNHJGh+QdtyF5rdhnbAde
-         /kBsNVZn4KuVbr2Fd+RFlhSujEYVzFYKp2s2ImI21BHUVX4nkX/mV9DdffCZcE3/eh7V
-         zCr1lYFymiMR47j3Cz+wfc7ps545NekUxdym4q+Qe3ekrTTM8+Q1Py9/M0rBKktYP+5G
-         YYTHduCESLL1wmVEr0aiuorN7F72wVigSk1rK0NbZ69HeB9jSYn7+k9dlhBN+7UiK+To
-         M7GA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=hZNrsloilvsqbz6iDMFV0RTRyEKgMMu3a/KS/B0EYS4=;
+        b=rZZ9XFOg/9cBaqlseQ8cL8BmcAHW/7bkFyIjR+LTCuRb78M5jjIoJ4SDKaTQ9qxeIS
+         qjNLhteS+SaiuQGNELHj8WYfhg21bPJcTilphK5XvOYyoJWuAns+y2SnQ2Mhu4xVG9MF
+         eFAgB2v+0WaS23stbwxfkNYXYNuBVsE+EJBArrZar8MK9K+574ZAwSb/Hk4IxSGvrTU+
+         fEuDw4j/et2iyMF1Ocm1FnAK/1lLuSYeFGQNJkyxorNux2YYe5QaSxCQyfCt00hwLtKT
+         eaYvwD4KhhvVw90nSAdsnil7Kp73mrFiGF/WalN28uo0RbhhfVEbbDxlHmuD+1SR5+TR
+         /xtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aiSGRsz7NqNkbrM2uicsYl/yITIdcJlwsBWN+hKXmlA=;
-        b=tVWxFjGtf1M5Av+333LVK+rL1qo4HP0nz7UOsb9H6ydvZhfj1OHF2ZebV2Fssv5i6b
-         Oa0hz5dYIVC9g4IjbXXene1wUDatXIUYNVn6tdvAPDIa3TFKRBofNysq/VPSMiAoN/iJ
-         69I1ihxxddLijmYT7Mv0X6ImqepkB+goYagQAgkn/Nkb5ZwrNsdjcmWOlhXrtzdVqpfX
-         z9QO9tnXQCXcnlDgaAbgAHz5IlhS1aUg01frAGtetx2RB6Q803uOmA1buthToqsh3AF0
-         U8GrNXK6WRqSJwxNvPehkt7sN0gf96G8WNEdbxQhBImdItofMCB75okK71ouKSa8OXzd
-         j1Kw==
-X-Gm-Message-State: ALKqPwf6gKKWGCCEzY3lNEGBEwWB/YR+ARxs7q2A/+Z92syGsgVwTD9Y
-        IyJHfS0Ss88k2yf+DU4AXNzjkg==
-X-Google-Smtp-Source: AB8JxZrvCczrzHhMgz8ExEKKi7fhijhz3R8SCOArGGbPWQiWg0T4sf8ggh00A4e+nmKpYGBJjfg0NA==
-X-Received: by 2002:a2e:7c02:: with SMTP id x2-v6mr2058090ljc.96.1526190738732;
-        Sat, 12 May 2018 22:52:18 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id y5-v6sm1257779ljd.12.2018.05.12.22.52.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 May 2018 22:52:18 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v2 04/14] describe: use commit-slab for commit names instead of commit->util
-Date:   Sun, 13 May 2018 07:51:58 +0200
-Message-Id: <20180513055208.17952-5-pclouds@gmail.com>
-X-Mailer: git-send-email 2.17.0.705.g3525833791
-In-Reply-To: <20180513055208.17952-1-pclouds@gmail.com>
-References: <20180512080028.29611-1-pclouds@gmail.com>
- <20180513055208.17952-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=hZNrsloilvsqbz6iDMFV0RTRyEKgMMu3a/KS/B0EYS4=;
+        b=UHxGRq+7/WqkNUoxDmNQY1UYOUCenIIj4Lom/+pwM3O9vR0C+FzcPUO6WxNO35FKvb
+         FKpt1ef9JSsXUS5liTcAuFjPKGP+1afNCn51QKwSdC1SDTf8xgu/VX+dopFSDxrmoFFc
+         VjwOtCzv1cex5oWa/mo5jbqTH6eqx/OMzy1fPRsXhsNmzohWgo0ps4ryHJ9EzbjJlqxx
+         HANMY2gTwhuGaWaBYrQZ1rv1ilkNszkhDxAbs/1fJvAKsHcXfc2hxIZBHtCNxKcNzUlQ
+         t200w9IDhMQLbmTkTyHkkAEn6j1+u1cfmnwMoUVlRmhK9bN2WEcsj7bNkFGtSZQAp2/i
+         HdAg==
+X-Gm-Message-State: ALKqPwdXDRTqVxpP7irzgGZZUyNfMdqjGLVH5msZF6aL9MmrH0mQ4LOY
+        RT80nS0IX1GHMknWPB5mIFGFtoZO30CEhWKLabo=
+X-Google-Smtp-Source: AB8JxZpqzvafIjTlouIURpeRFz/tBGeXKQ8RG2DzdTY300ICQQB2ZXfG0YSTW+WW8KQddhLcGzdf/vYvg4aSNfbuTuo=
+X-Received: by 2002:a9d:1d92:: with SMTP id y18-v6mr3704659otd.304.1526191435059;
+ Sat, 12 May 2018 23:03:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.178.133 with HTTP; Sat, 12 May 2018 23:03:24 -0700 (PDT)
+In-Reply-To: <1526178214-30956-1-git-send-email-danniercl@gmail.com>
+References: <1526178214-30956-1-git-send-email-danniercl@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 13 May 2018 08:03:24 +0200
+Message-ID: <CACsJy8DZ1QvjO+JdbB76TOLtB2wp4Ya+CgsTyD1oz2Y+ZdKdYQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] checkout.c: add strict usage of -- before file_path
+To:     Dannier Castro L <danniercl@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's done so that commit->util can be removed. See more explanation in
-the commit that removes commit->util.
+On Sun, May 13, 2018 at 4:23 AM, Dannier Castro L <danniercl@gmail.com> wrote:
+> Currently, <checkout> is a complex command able to handle both
+> branches and files without any distintion other than their names,
+> taking into account that depending on the type (branch or file),
+> the functionality is completely different, the easier example:
+>
+> $ git checkout <branch>  # Switch from current branch to <branch>.
+> $ git checkout <file>    # Restore <file> from HEAD, discarding
+>                          # changes if it's necessary.
+> $ git checkout -- <file> # The same as the last one, only with an
+>                          # useless '--'.
+>
+> For GIT new users, this complicated versatility of <checkout> could
+> be very confused, also considering that actually the flag '--' is
+> completely useless (added or not, there is not any difference for
+> this command), when the same program messages promote the use of
+> this flag.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/describe.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+I would like an option to revert back to current behavior. I'm not a
+new user. I know what I'm doing. Please don't make me type more.
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index b5afc45846..1b6ca42553 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -15,9 +15,12 @@
- #include "run-command.h"
- #include "revision.h"
- #include "list-objects.h"
-+#include "commit-slab.h"
- 
- #define MAX_TAGS	(FLAG_BITS - 1)
- 
-+define_commit_slab(commit_names, struct commit_name *);
-+
- static const char * const describe_usage[] = {
- 	N_("git describe [<options>] [<commit-ish>...]"),
- 	N_("git describe [<options>] --dirty"),
-@@ -37,6 +40,7 @@ static struct string_list patterns = STRING_LIST_INIT_NODUP;
- static struct string_list exclude_patterns = STRING_LIST_INIT_NODUP;
- static int always;
- static const char *suffix, *dirty, *broken;
-+static struct commit_names commit_names;
- 
- /* diff-index command arguments to check if working tree is dirty. */
- static const char *diff_index_args[] = {
-@@ -321,11 +325,14 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
- 	if (!have_util) {
- 		struct hashmap_iter iter;
- 		struct commit *c;
--		struct commit_name *n = hashmap_iter_first(&names, &iter);
-+		struct commit_name *n;
-+
-+		init_commit_names(&commit_names);
-+		n = hashmap_iter_first(&names, &iter);
- 		for (; n; n = hashmap_iter_next(&iter)) {
- 			c = lookup_commit_reference_gently(&n->peeled, 1);
- 			if (c)
--				c->util = n;
-+				*commit_names_at(&commit_names, c) = n;
- 		}
- 		have_util = 1;
- 	}
-@@ -336,8 +343,11 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
- 	while (list) {
- 		struct commit *c = pop_commit(&list);
- 		struct commit_list *parents = c->parents;
-+		struct commit_name **slot;
-+
- 		seen_commits++;
--		n = c->util;
-+		slot = commit_names_peek(&commit_names, c);
-+		n = slot ? *slot : NULL;
- 		if (n) {
- 			if (!tags && !all && n->prio < 2) {
- 				unannotated_cnt++;
+And '--" is not completely useless. If you have <file> and <branch>
+with the same name, you have to give "--" to to tell git what the
+first argument means.
+
+> Regarding the <checkout>'s power to overwrite any file, discarding
+> changes if they exist without some way of recovering them, the
+> solution propuses that the usage of '--' is strict before to
+> specify the file(s) path(s) for any <checkout> command (including
+> all types of flags), as a "defense barrier" to make sure about
+> user's knowledge and intension running <checkout>.
+>
+> The solution consists in detect '--' into command args, allowing
+> the discard of changes and considering the following names as
+> file paths, otherwise, they are branch names.
 -- 
-2.17.0.705.g3525833791
-
+Duy
