@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A68A1F406
-	for <e@80x24.org>; Sun, 13 May 2018 02:25:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 299861F406
+	for <e@80x24.org>; Sun, 13 May 2018 02:25:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752057AbeEMCZz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 May 2018 22:25:55 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:45358 "EHLO
+        id S1752063AbeEMCZ5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 May 2018 22:25:57 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:45338 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751890AbeEMCZx (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 12 May 2018 22:25:53 -0400
+        by vger.kernel.org with ESMTP id S1752031AbeEMCZv (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 12 May 2018 22:25:51 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CC31660748;
-        Sun, 13 May 2018 02:25:51 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 28DD760744;
+        Sun, 13 May 2018 02:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526178352;
-        bh=jwCbX6p4Anm0nvAMx6ZYoOjow7PN1S/o1Ep0P88PSWg=;
+        s=default; t=1526178350;
+        bh=p2vCB/YVdCBSpcfjhwRNsE00G2jhOUAT6jcGCvp4ga0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=przZj1SogUMg+trVKZSI4OEF7Hcb4UGtyLoRG8+m+17u1At7pgfRzdzz7YQq8RPwi
-         LmjSl8Y5ZH8E6MWmJ8EBvrvyaO3KHpBw7wGjIZbaHnC/CSXINfui+h65FKwSjhluKj
-         HBzRvhCSQ4d7evIEmlWh45h0MnZAHqUnBGu9dQRUpAUNK2ad8dHoEIS+jSFig2e4NU
-         emTKrgKkJbvnM7NH3KSc6bMx8v8BX8pqjoovvoqPYyTq6Uaq1TFI5Vxbbs02n6a4/v
-         r+mZD2M+osZ6TAtNmwdn6k2Fc9OKS/qUTGUYmCJkjHB4h+lMqNUfftt35qE57RYL5U
-         X+OYj19vbshXHFNbVM3QB3eXUG7tChBCiLqIn1I6eWmTO6SSqRknlix2rjj+Z4t93y
-         OZNbrmPJoSvYbEihB1vSUsI6AoCK8FlodNusIVNWb0lH5BiqinMmEi/CMTilYVxrGB
-         En10ShTRj1lZ7+MXOtWUqf2RS3zIZByt0AGxqpLU0K+hpdUvXTL
+        b=uc37S5JJ8tM/DsixJ7KfX5cfQE5nZwaultow5NWWzb8rWWTBQ4XUhqjt3h2HorgZ2
+         /3fbSeRvMzsdP4zHHWPZyJ07Ea/UpDouDRxI1LLa7/Y7wGdp6k+07/b8nqar58oQnk
+         DbsMsHzjUTthVa5rgYw7Ei8OLdjLkMMiUXu5BPm9GfD29WV6bICxx3k9hvSD6NUhj4
+         Tsus4tMrN88wCdV2IyKUhFOzGKunph6/hK2rWLhM18rBQ1HJZgkj3RrdnrSzgrPEHJ
+         0F458X0NXgGOxchbQHl+i9qnmUB2eiGARtsABVzQirL7h96licljtpZafdau24dZ8Y
+         T2M1SYJLtbWXK8PRG15y0KKgLqjWZdsKsMM9v0M9y4X0hq2YSJQedww90GN8yyK0mn
+         ZO1v8YhOPj8aXlTeTmM9IOryQe4wDy0DWfYEekXqaybMjT27CRn9CKEDoJRIvsYrkA
+         kK3D8pwimGGDkrzFK2rTbk03jPbrDxpR3EoSjmGapTSPbFZ8x19
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -42,9 +42,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 21/28] t4029: abstract away SHA-1-specific constants
-Date:   Sun, 13 May 2018 02:24:31 +0000
-Message-Id: <20180513022438.60003-22-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 19/28] t4022: abstract away SHA-1-specific constants
+Date:   Sun, 13 May 2018 02:24:29 +0000
+Message-Id: <20180513022438.60003-20-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180513022438.60003-1-sandals@crustytoothpaste.net>
 References: <20180513022438.60003-1-sandals@crustytoothpaste.net>
@@ -59,32 +59,36 @@ hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4029-diff-trailing-space.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ t/t4022-diff-rewrite.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4029-diff-trailing-space.sh b/t/t4029-diff-trailing-space.sh
-index f4e18cb8d3..eaa56521e8 100755
---- a/t/t4029-diff-trailing-space.sh
-+++ b/t/t4029-diff-trailing-space.sh
-@@ -6,7 +6,7 @@ test_description='diff honors config option, diff.suppressBlankEmpty'
+diff --git a/t/t4022-diff-rewrite.sh b/t/t4022-diff-rewrite.sh
+index cb51d9f9d4..0f1287a8ce 100755
+--- a/t/t4022-diff-rewrite.sh
++++ b/t/t4022-diff-rewrite.sh
+@@ -13,6 +13,7 @@ test_expect_success setup '
+ 	  "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM" \
+ 	  <"$TEST_DIRECTORY"/../COPYING >test &&
+ 	echo "to be deleted" >test2 &&
++	blob=$(git rev-parse --short $(git hash-object test2)) &&
+ 	git add test2
  
- . ./test-lib.sh
+ '
+@@ -27,7 +28,7 @@ test_expect_success 'detect rewrite' '
+ cat >expect <<EOF
+ diff --git a/test2 b/test2
+ deleted file mode 100644
+-index 4202011..0000000
++index $blob..0000000
+ --- a/test2
+ +++ /dev/null
+ @@ -1 +0,0 @@
+@@ -43,7 +44,7 @@ test_expect_success 'show deletion diff without -D' '
+ cat >expect <<EOF
+ diff --git a/test2 b/test2
+ deleted file mode 100644
+-index 4202011..0000000
++index $blob..0000000
+ EOF
+ test_expect_success 'suppress deletion diff with -D' '
  
--cat <<\EOF > exp ||
-+cat <<\EOF >expected ||
- diff --git a/f b/f
- index 5f6a263..8cb8bae 100644
- --- a/f
-@@ -20,9 +20,12 @@ exit 1
- 
- test_expect_success "$test_description" '
- 	printf "\nx\n" > f &&
-+	before=$(git rev-parse --short $(git hash-object f)) &&
- 	git add f &&
- 	git commit -q -m. f &&
- 	printf "\ny\n" > f &&
-+	after=$(git rev-parse --short $(git hash-object f)) &&
-+	sed -e "s/^index .*/index $before..$after 100644/" expected >exp &&
- 	git config --bool diff.suppressBlankEmpty true &&
- 	git diff f > actual &&
- 	test_cmp exp actual &&
