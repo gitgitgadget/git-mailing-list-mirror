@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 949921F406
-	for <e@80x24.org>; Sun, 13 May 2018 05:52:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D75DB1F406
+	for <e@80x24.org>; Sun, 13 May 2018 05:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751313AbeEMFwn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 May 2018 01:52:43 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:32945 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751227AbeEMFwa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 May 2018 01:52:30 -0400
-Received: by mail-lf0-f65.google.com with SMTP id h9-v6so12381315lfi.0
-        for <git@vger.kernel.org>; Sat, 12 May 2018 22:52:29 -0700 (PDT)
+        id S1751321AbeEMFwo (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 May 2018 01:52:44 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:39934 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750941AbeEMFw2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 May 2018 01:52:28 -0400
+Received: by mail-lf0-f66.google.com with SMTP id j193-v6so13376684lfg.6
+        for <git@vger.kernel.org>; Sat, 12 May 2018 22:52:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VZ1UVhHWQ3Ac3ofryy7DaI9VFGyAaYVVRkcgCQnks6U=;
-        b=X/LgpsOX4RSIGdUvo9bnxjpt9s/BzL+ptlroDP/vcAVXytaRTSKZuwU+dsmyxPZRXM
-         rbsOaMFtcbsJ5z+AS1cbR572doW6q2U5T7qoZOM5ehA9aN43BsaCloaygubjN08SebuJ
-         JZ5XqDQXsTaznh7GQANt/lg6xGThzlozZxFsovJUFa8mFhQhQTiYYwaCwXYAkCUY5bgh
-         4I1agkFBHlZIJhteCBwLH8WR+yiE+2EZ9cCsHJurTvCA9X1CimK6kUm5dL6fxadC6BWk
-         DssgKS508QgPHtFyHwbZ2vJR3cHrLYEPqJEd4yRBIAgtwGyZV5tflPQiaANrqv0F5tzg
-         iGaw==
+        bh=ijiPJk1elyL5yuv0Biyo86OqMEXCZDdGl3I1Y3qcdNs=;
+        b=O60WseA/Ufriob/j9C97064ePSmIB+gw1kTYsQC/lmX7YlEnQqLGIcdxfbaK6gUoyh
+         4StXEF8/lgqmrWQg+N+muLHfPuOLuclAM05zEFrbbPUW8U9mUgRxSOg6fHA1STnHlFMt
+         Gepklvf4/t15/hOZTJHUro+ypMM5y4VTTsLZn4FtzjLkJdpmWK7jbfT0Q/2YgN2+Os5i
+         Iw6Wl+osBecLGY8z+l80Uy8Vk/lryULI2wb7bR3BCVMJiykY8hIkuO7VVFoSxxbyfJS6
+         UAcIzeu5F32/OSj//gukl+z/kFBMlqbbZWAmQta8BMwTFrvChAR1WskSa/Ha+7VZvK8c
+         SO1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VZ1UVhHWQ3Ac3ofryy7DaI9VFGyAaYVVRkcgCQnks6U=;
-        b=tAjBUyjZfi5mhHUQ2M35TSu7+yBW3lBS+mpPJ5hNtxGI9KRBzMnh2LBq7cmfmXCAvW
-         tbj9DfKeuBNEf9cB4YoTNO7Hl7Mq39YukLQqqWtAchPmpxG+HA5W+X3DbkJe8dqYP3St
-         isrGZOB8+iNHrrxLfqvW7+QsFEmtZN94591fmPtfCNedvnU9eZZ4vCThaNP/9Arc3RVX
-         hL0UJfzFacEP5QmlkgMy1kDnLOZG9XGwIMApt7FCcbDue/QUk2baZEZsCewzzYtoGprC
-         /6mep9+yjZKOa/Y8NzVKnGDZKT47B1jlhgl6D5BHxcK7BUHn2D476z/+98WxNx52WL26
-         B7fA==
-X-Gm-Message-State: ALKqPweLRybNk3Lm/rz/+Ku6nsPUAF+/XsaemQB6LK/gsWqV/x0rof3X
-        DUKovpbCtDxf3epVC74itFegGQ==
-X-Google-Smtp-Source: AB8JxZq/nb/I9qMXx3mbdhB4tWXpQb1jtgoj98E4j3RXVgYmu7kz5lP+yfUZ+sEf0uPYIAKG37Hw5g==
-X-Received: by 2002:a2e:9e10:: with SMTP id e16-v6mr1914367ljk.108.1526190748298;
-        Sat, 12 May 2018 22:52:28 -0700 (PDT)
+        bh=ijiPJk1elyL5yuv0Biyo86OqMEXCZDdGl3I1Y3qcdNs=;
+        b=IzB42RC13kQ5wH3tuxKYFEn3lNqA5U65JXZ2vPosash2IULhiUb/zbab7s7C1U4UZ1
+         QaFueTUo9zWcQOK6Ae3HFbWvdXKrtMbBiC7VkZkZSeGPPJECFCEUEMUE8xTYVZbwr9Sd
+         ry0oxSpjUl2T9TUPAjGKvDgawMSXQ8iibBgW4x1J+RboYmFBuz2DYjH3se2QkU05wkSm
+         my6JlOEyRu6UgVAx1mt2ZzNQ4wf2jNR4j0Lj1Yj4+1mfqLZmUY3UyT/EJGqS99/M6KvM
+         04AsEmAMAuUrLM6V7QHmWv+GjkUDkVK2yVIP0oERKmMDWH0DQoIpYQitIKsrhtyLvYEo
+         IkQw==
+X-Gm-Message-State: ALKqPwcm5Xb+xdAagq8wxRkeJ9zNpcfMx+pDGiaTH8PwGpCiNVvB/Ok8
+        C1GUENCFDlgR1Aedozxz1zo9cA==
+X-Google-Smtp-Source: AB8JxZqlxPUsxiBg5OzfY0XAOX41rbVop/LAbVZZYg8TqBCGFp1T63cfh6HHxcYazNXhFOecg9vQSA==
+X-Received: by 2002:a2e:634e:: with SMTP id x75-v6mr2062777ljb.140.1526190746326;
+        Sat, 12 May 2018 22:52:26 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id y5-v6sm1257779ljd.12.2018.05.12.22.52.27
+        by smtp.gmail.com with ESMTPSA id y5-v6sm1257779ljd.12.2018.05.12.22.52.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 May 2018 22:52:27 -0700 (PDT)
+        Sat, 12 May 2018 22:52:25 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 13/14] merge: use commit-slab in merge remote desc instead of commit->util
-Date:   Sun, 13 May 2018 07:52:07 +0200
-Message-Id: <20180513055208.17952-14-pclouds@gmail.com>
+Subject: [PATCH v2 11/14] show-branch: use commit-slab for commit-name instead of commit->util
+Date:   Sun, 13 May 2018 07:52:05 +0200
+Message-Id: <20180513055208.17952-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180513055208.17952-1-pclouds@gmail.com>
 References: <20180512080028.29611-1-pclouds@gmail.com>
@@ -75,131 +75,126 @@ the commit that removes commit->util.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/merge.c   | 25 +++++++++++++------------
- commit.c          | 12 ++++++++++--
- commit.h          |  2 +-
- merge-recursive.c |  8 +++++---
- 4 files changed, 29 insertions(+), 18 deletions(-)
+ builtin/show-branch.c | 39 +++++++++++++++++++++++++++------------
+ 1 file changed, 27 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 9db5a2cf16..fc55bc264b 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -443,6 +443,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 	struct object_id branch_head;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf bname = STRBUF_INIT;
-+	struct merge_remote_desc *desc;
- 	const char *ptr;
- 	char *found_ref;
- 	int len, early;
-@@ -515,16 +516,13 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 		strbuf_release(&truname);
- 	}
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 6c2148b71d..29d15d16d2 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -7,6 +7,7 @@
+ #include "argv-array.h"
+ #include "parse-options.h"
+ #include "dir.h"
++#include "commit-slab.h"
  
--	if (remote_head->util) {
--		struct merge_remote_desc *desc;
--		desc = merge_remote_util(remote_head);
--		if (desc && desc->obj && desc->obj->type == OBJ_TAG) {
--			strbuf_addf(msg, "%s\t\t%s '%s'\n",
--				    oid_to_hex(&desc->obj->oid),
--				    type_name(desc->obj->type),
--				    remote);
--			goto cleanup;
--		}
-+	desc = merge_remote_util(remote_head);
-+	if (desc && desc->obj && desc->obj->type == OBJ_TAG) {
-+		strbuf_addf(msg, "%s\t\t%s '%s'\n",
-+			    oid_to_hex(&desc->obj->oid),
-+			    type_name(desc->obj->type),
-+			    remote);
-+		goto cleanup;
- 	}
+ static const char* show_branch_usage[] = {
+     N_("git show-branch [-a | --all] [-r | --remotes] [--topo-order | --date-order]\n"
+@@ -59,15 +60,27 @@ struct commit_name {
+ 	int generation; /* how many parents away from head_name */
+ };
  
- 	strbuf_addf(msg, "%s\t\tcommit '%s'\n",
-@@ -932,8 +930,11 @@ static void write_merge_heads(struct commit_list *remoteheads)
- 	for (j = remoteheads; j; j = j->next) {
- 		struct object_id *oid;
- 		struct commit *c = j->item;
--		if (c->util && merge_remote_util(c)->obj) {
--			oid = &merge_remote_util(c)->obj->oid;
-+		struct merge_remote_desc *desc;
++define_commit_slab(commit_name_slab, struct commit_name *);
++static struct commit_name_slab name_slab;
 +
-+		desc = merge_remote_util(c);
-+		if (desc && desc->obj) {
-+			oid = &desc->obj->oid;
- 		} else {
- 			oid = &c->object.oid;
- 		}
-diff --git a/commit.c b/commit.c
-index 57049118a5..8202067cd5 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1574,13 +1574,21 @@ int commit_tree_extended(const char *msg, size_t msg_len,
- 	return result;
- }
- 
-+define_commit_slab(merge_desc_slab, struct merge_remote_desc *);
-+struct merge_desc_slab merge_desc_slab = COMMIT_SLAB_INIT(1, merge_desc_slab);
-+
-+struct merge_remote_desc *merge_remote_util(struct commit *commit)
++static struct commit_name *commit_to_name(struct commit *commit)
 +{
-+	return *merge_desc_slab_at(&merge_desc_slab, commit);
++	return *commit_name_slab_at(&name_slab, commit);
 +}
 +
- void set_merge_remote_desc(struct commit *commit,
- 			   const char *name, struct object *obj)
- {
- 	struct merge_remote_desc *desc;
- 	FLEX_ALLOC_STR(desc, name, name);
- 	desc->obj = obj;
--	commit->util = desc;
-+	*merge_desc_slab_at(&merge_desc_slab, commit) = desc;
- }
- 
- struct commit *get_merge_parent(const char *name)
-@@ -1592,7 +1600,7 @@ struct commit *get_merge_parent(const char *name)
- 		return NULL;
- 	obj = parse_object(&oid);
- 	commit = (struct commit *)peel_to_type(name, 0, obj, OBJ_COMMIT);
--	if (commit && !commit->util)
-+	if (commit && !merge_remote_util(commit))
- 		set_merge_remote_desc(commit, name, obj);
- 	return commit;
- }
-diff --git a/commit.h b/commit.h
-index e57ae4b583..838f6a6b26 100644
---- a/commit.h
-+++ b/commit.h
-@@ -303,7 +303,7 @@ struct merge_remote_desc {
- 	struct object *obj; /* the named object, could be a tag */
- 	char name[FLEX_ARRAY];
- };
--#define merge_remote_util(commit) ((struct merge_remote_desc *)((commit)->util))
-+extern struct merge_remote_desc *merge_remote_util(struct commit *);
- extern void set_merge_remote_desc(struct commit *commit,
- 				  const char *name, struct object *obj);
- 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 0c0d48624d..5537f01f8e 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -223,10 +223,12 @@ static void output(struct merge_options *o, int v, const char *fmt, ...)
- 
- static void output_commit_title(struct merge_options *o, struct commit *commit)
- {
-+	struct merge_remote_desc *desc;
 +
- 	strbuf_addchars(&o->obuf, ' ', o->call_depth * 2);
--	if (commit->util)
--		strbuf_addf(&o->obuf, "virtual %s\n",
--			merge_remote_util(commit)->name);
-+	desc = merge_remote_util(commit);
-+	if (desc)
-+		strbuf_addf(&o->obuf, "virtual %s\n", desc->name);
- 	else {
- 		strbuf_add_unique_abbrev(&o->obuf, &commit->object.oid,
- 					 DEFAULT_ABBREV);
+ /* Name the commit as nth generation ancestor of head_name;
+  * we count only the first-parent relationship for naming purposes.
+  */
+ static void name_commit(struct commit *commit, const char *head_name, int nth)
+ {
+ 	struct commit_name *name;
+-	if (!commit->util)
+-		commit->util = xmalloc(sizeof(struct commit_name));
+-	name = commit->util;
++
++	name = *commit_name_slab_at(&name_slab, commit);
++	if (!name) {
++		name = xmalloc(sizeof(*name));
++		*commit_name_slab_at(&name_slab, commit) = name;
++	}
+ 	name->head_name = head_name;
+ 	name->generation = nth;
+ }
+@@ -79,8 +92,8 @@ static void name_commit(struct commit *commit, const char *head_name, int nth)
+  */
+ static void name_parent(struct commit *commit, struct commit *parent)
+ {
+-	struct commit_name *commit_name = commit->util;
+-	struct commit_name *parent_name = parent->util;
++	struct commit_name *commit_name = commit_to_name(commit);
++	struct commit_name *parent_name = commit_to_name(parent);
+ 	if (!commit_name)
+ 		return;
+ 	if (!parent_name ||
+@@ -94,12 +107,12 @@ static int name_first_parent_chain(struct commit *c)
+ 	int i = 0;
+ 	while (c) {
+ 		struct commit *p;
+-		if (!c->util)
++		if (!commit_to_name(c))
+ 			break;
+ 		if (!c->parents)
+ 			break;
+ 		p = c->parents->item;
+-		if (!p->util) {
++		if (!commit_to_name(p)) {
+ 			name_parent(c, p);
+ 			i++;
+ 		}
+@@ -122,7 +135,7 @@ static void name_commits(struct commit_list *list,
+ 	/* First give names to the given heads */
+ 	for (cl = list; cl; cl = cl->next) {
+ 		c = cl->item;
+-		if (c->util)
++		if (commit_to_name(c))
+ 			continue;
+ 		for (i = 0; i < num_rev; i++) {
+ 			if (rev[i] == c) {
+@@ -148,9 +161,9 @@ static void name_commits(struct commit_list *list,
+ 			struct commit_name *n;
+ 			int nth;
+ 			c = cl->item;
+-			if (!c->util)
++			if (!commit_to_name(c))
+ 				continue;
+-			n = c->util;
++			n = commit_to_name(c);
+ 			parents = c->parents;
+ 			nth = 0;
+ 			while (parents) {
+@@ -158,7 +171,7 @@ static void name_commits(struct commit_list *list,
+ 				struct strbuf newname = STRBUF_INIT;
+ 				parents = parents->next;
+ 				nth++;
+-				if (p->util)
++				if (commit_to_name(p))
+ 					continue;
+ 				switch (n->generation) {
+ 				case 0:
+@@ -271,7 +284,7 @@ static void show_one_commit(struct commit *commit, int no_name)
+ {
+ 	struct strbuf pretty = STRBUF_INIT;
+ 	const char *pretty_str = "(unavailable)";
+-	struct commit_name *name = commit->util;
++	struct commit_name *name = commit_to_name(commit);
+ 
+ 	if (commit->object.parsed) {
+ 		pp_commit_easy(CMIT_FMT_ONELINE, commit, &pretty);
+@@ -660,6 +673,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
++	init_commit_name_slab(&name_slab);
++
+ 	git_config(git_show_branch_config, NULL);
+ 
+ 	/* If nothing is specified, try the default first */
 -- 
 2.17.0.705.g3525833791
 
