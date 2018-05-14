@@ -6,61 +6,61 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1ECEE1F42D
-	for <e@80x24.org>; Mon, 14 May 2018 06:45:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C0F21F42D
+	for <e@80x24.org>; Mon, 14 May 2018 07:52:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751953AbeENGpf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 02:45:35 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:42363 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751533AbeENGpe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 02:45:34 -0400
-Received: by mail-wr0-f193.google.com with SMTP id v5-v6so10985088wrf.9
-        for <git@vger.kernel.org>; Sun, 13 May 2018 23:45:33 -0700 (PDT)
+        id S1752343AbeENHwf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 03:52:35 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:54316 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751855AbeENHwd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 03:52:33 -0400
+Received: by mail-wm0-f66.google.com with SMTP id f6-v6so11694890wmc.4
+        for <git@vger.kernel.org>; Mon, 14 May 2018 00:52:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=etmqoCzmeF6H3U3b4JfztltZ1HgGl6hL+mnyy/xLvCI=;
-        b=Wd0Oi4NnkKCIyh9vfWZoQkQ+M+AQ22q2uQAvq8HqgfJRshy/Vh9hnGLfzwsjxfNw9e
-         ndWmAGcmI0crpPlD3fEOvGtlsTlErg74QS3WiC5UVkmZz2lkF+gMG/mLRBItDIrh2O4+
-         N63YC0fVfBOKt/qX3Wx7mKqCjcsqi4a0eu9u08522CDaCQ7cQKLmBQR2mkdNvmBeDgp0
-         ljxuIrYx7mme9E69xFYzsIlFqmF4ua5jCWGUTusk0vl7ahJYMMlhxYXQthdcjNIw5JJK
-         YBcGy/bPkFiDM7COszMR4q9jE9FtbFS/NfQhUhTJhYXViunGfi1kpKo33RpKnkMuKj6j
-         YorQ==
+        bh=Hz656L8ca3z2h8Oipk+BTlFFHOrUPnYapfrA5PMVglw=;
+        b=mJRzTl39SqKdaxmrDH7CzkqcH4Z82PldDHbSKK7G3mWR8YHe79XMmSWo3jpMcNDlk3
+         5JIBNappE30GqBGeWbOhSlhuU4HIXd+IIoNHrk/Kkc6oA0O6lrjDpqjn3OxQD9O9cQ2P
+         NbRDIOBn+5184JFIOVtc533cxVQV+au9PVpya+dXj0+5GlOBhH8IeN52IcInTgBH56gj
+         SyCyKS+vy8a7QoipYf+ZghMsa/LhnyXN18Pyec0kg1c9N1M1rjmkKtJq7enQF8X1UHmY
+         qE2XO6xU03o/hWzakyZsSYtyoClFp9/NgAN1rdQkliI49UfMhFRUPWLkX5a21nsrkhhD
+         kGmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=etmqoCzmeF6H3U3b4JfztltZ1HgGl6hL+mnyy/xLvCI=;
-        b=BU978wOCzm3QjemVcGWkGvYEAyfcW58tuvcRJnXOBEvV4vNur8076gSyy3uV6WKLe5
-         h9asGsr+fQV/L2XAC6yWQoEJfbP1CQfeyG4IVU1gZVfoHgthW61M6DgiuDH1M5bT1xOP
-         RXoOGdbloJCv1x4iDBuHqkhwbAYCfA4sLSC991j3Y3mLZPKHsQwzYuTeFiK/1LU+q3J3
-         MNaiuAFAX2QnRpYkHBpbNO+ySzLb9pJoI+Ft55JJxwhTJmbAdwRsm84sXg2cX1hGXV5n
-         z4uN1Gl3idi5iB56cRczUwEmr0a6SKLbz6XgHI1fv0GtwkPPVgePN3WQthYdAB2j3rYk
-         dQvw==
-X-Gm-Message-State: ALKqPwelFPQP3xpE+qNIATqy1mbYm2R1yJ50kT+Pa5YUK82zJgSTOUU4
-        B9xkuqz04IAGWNm1XvpCcSQ=
-X-Google-Smtp-Source: AB8JxZqbNPqGk0ywfgN5eWm9e+33wXiKOA3fwsfyaNUQmysKXY/01l7FF8VI3bWQfeLhZNRuhmqI4g==
-X-Received: by 2002:adf:b71a:: with SMTP id l26-v6mr6158656wre.115.1526280332759;
-        Sun, 13 May 2018 23:45:32 -0700 (PDT)
+        bh=Hz656L8ca3z2h8Oipk+BTlFFHOrUPnYapfrA5PMVglw=;
+        b=c8kK45J/zGPe46d8/L2wyYEZW9Dz18zcfHHR2g87crV4HQAeV/8IwdbqnPdjYu3lun
+         +jgFay6wkTBPXabLWX6S0soKd9WIOXb0LOt9H4DeMWhrpOBQGRF7/b4fiG9cDFeG/dOK
+         hkrNs8gTs96NTtZ8zP1aOm9kgDtNDSYTAleZOVt0bM1rF/3J8ACIlyrqNiC/mWY4rPmT
+         kWbSE0urc34GWZmgH/3GMlhUuYKtaS1/MdWim8k6StJjMEc7kXc5/loJm6jN+zIzWzKA
+         FNiHYpMENr6Vm50lYVrYQOgjWAsCyxBG0yG/9QfeqiE1HtCQmXgRyiQtoLsP3rF7iK3Q
+         ZZ2Q==
+X-Gm-Message-State: ALKqPwel1kXsELrHS7tcg9SKZ7lYmAoKDuO9pexdaBVPkDs/xH9PVecH
+        2OgIYli+wxKblcsLNQGt3QY=
+X-Google-Smtp-Source: AB8JxZrrF1KVNOIyVBCklpfBcoRf11RMs6qdCN+8eT6SYBnPu1jZ20CPilr6JjE3PFAYLWVDmAVoDg==
+X-Received: by 2002:a1c:374f:: with SMTP id e76-v6mr4116232wma.141.1526284351944;
+        Mon, 14 May 2018 00:52:31 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a10-v6sm11979401wri.10.2018.05.13.23.45.30
+        by smtp.gmail.com with ESMTPSA id c27-v6sm11500313wrg.75.2018.05.14.00.52.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 13 May 2018 23:45:31 -0700 (PDT)
+        Mon, 14 May 2018 00:52:30 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 11/14] show-branch: use commit-slab for commit-name instead of commit->util
+Subject: Re: [PATCH v2 14/14] commit.h: delete 'util' field in struct commit
 References: <20180512080028.29611-1-pclouds@gmail.com>
         <20180513055208.17952-1-pclouds@gmail.com>
-        <20180513055208.17952-12-pclouds@gmail.com>
-Date:   Mon, 14 May 2018 15:45:30 +0900
-In-Reply-To: <20180513055208.17952-12-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+        <20180513055208.17952-15-pclouds@gmail.com>
+Date:   Mon, 14 May 2018 16:52:29 +0900
+In-Reply-To: <20180513055208.17952-15-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
  =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Sun, 13 May 2018 07:52:05 +0200")
-Message-ID: <xmqq36yud9bp.fsf@gitster-ct.c.googlers.com>
+        Duy"'s message of "Sun, 13 May 2018 07:52:08 +0200")
+Message-ID: <xmqqy3gmbrnm.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -72,19 +72,35 @@ X-Mailing-List: git@vger.kernel.org
 
 Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> It's done so that commit->util can be removed. See more explanation in
-> the commit that removes commit->util.
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  builtin/show-branch.c | 39 +++++++++++++++++++++++++++------------
->  1 file changed, 27 insertions(+), 12 deletions(-)
+> diff --git a/commit.h b/commit.h
+> index 838f6a6b26..70371e111e 100644
+> --- a/commit.h
+> +++ b/commit.h
+> @@ -18,12 +18,16 @@ struct commit_list {
+>  
+>  struct commit {
+>  	struct object object;
+> -	void *util;
+>  	unsigned int index;
+>  	timestamp_t date;
+>  	struct commit_list *parents;
+>  	struct tree *tree;
+>  	uint32_t graph_pos;
+> +	/*
+> +	 * Do not add more fields here unless it's _very_ often
+> +	 * used. Use commit-slab to associate more data with a commit
+> +	 * instead.
+> +	 */
+>  };
 
-Looks obviously correct.  
+That's a logical consequence and a natural endgame of this
+pleasent-to-read series.  THanks.
 
-Another place we could use commit-slab in this program, which I
-think is a more interesting application, is to use it to store a
-bitmask with runtime-computed width to replace those object->flags
-bits, which will allow us to lift the MAX_REVS limitation.
+Unfortunately we are gaining more and more stuff in "struct commit"
+with recent topics, and we may want to see if we can evict some of
+them out to shrink it again.
 
-Thanks.
+To make it clear that everything that is less often used is keyed
+off of the "index" field, I think it makes sense to move that field
+to either end of the struct (I think in today's integration I
+resolved a few merges to leave the "index" field at the end).
