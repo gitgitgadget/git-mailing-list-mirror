@@ -6,116 +6,102 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 846651F406
-	for <e@80x24.org>; Mon, 14 May 2018 03:33:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCACC1F406
+	for <e@80x24.org>; Mon, 14 May 2018 04:17:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752102AbeENDdJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 May 2018 23:33:09 -0400
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:41888 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752028AbeENDdI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 May 2018 23:33:08 -0400
-Received: by mail-qt0-f171.google.com with SMTP id g13-v6so14379958qth.8
-        for <git@vger.kernel.org>; Sun, 13 May 2018 20:33:08 -0700 (PDT)
+        id S1750991AbeENERN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 00:17:13 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:39756 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750748AbeENERM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 00:17:12 -0400
+Received: by mail-wm0-f65.google.com with SMTP id f8-v6so12443523wmc.4
+        for <git@vger.kernel.org>; Sun, 13 May 2018 21:17:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=YO2Y3bJi6UsQwnBgSZOP31bjgGYwvyH4/SzM4Rv70zA=;
-        b=bEkYr7cU4iefSvY4g0vW1s1a6Oeru7b9Ce0iyvoKwA2taq+eMp/3W1shYiwSem+Koo
-         2MLB92mDepkM9DkFU/lClB6K3jRR2VLYdCbsnl9wOQkl5/FwnLNeDXXOeaL8vJsz2POd
-         Jq1QZcLhcLqG1RkHNPct1i+zkdKxkZAncLmjEO6fpsCnorLV5QB0p1JAaHPamnS8SJ09
-         KW16iPK5sahetHTO8NScSJqco4pTMW6OSBRhN2WrW02EaeUb7DhDd4jKImNnacF5DFQl
-         TMPJRCH1wdzARWLwIsC48v4KbAicqMNT19o2s+N3PBGoVdIWTJGMwl84EawNlxLbZqmR
-         l7bg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=juwCejhIYdtjUcG26TtkeoupPTYNrjh0W0RNqiLuryQ=;
+        b=KYujNle+5QO4Rx6qS00eSXPyoYce1XAMfkOAcM07DXp/IZon2Qn2WV9KStqnr40hu0
+         8EWYDpmU27buhkyjk/03c+SUZO9hrLvzRN6h/CuPG0e6bjKG+WRc84joZv/IafHPS4tB
+         ahbuzWAEQvz3P3YzkfO9Mgv3EaPARpq6rlD8iS/DrctBO97+BdxvmnR2/s6wEpb5mb3G
+         54k4o6j5YPoQVVHvlYhBOUIbv9qbwnXA0PGe3WjpkHjxuYrW2ZBm0HTJhHrHLJJg/xlC
+         Tc0oIhcCtFNeMR/yJP8ntNsGqb8YU8cj1C+Kfg3vKyF5ACqBVUrF7y6PPkadvRSkA7IU
+         6tnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=YO2Y3bJi6UsQwnBgSZOP31bjgGYwvyH4/SzM4Rv70zA=;
-        b=uDBJQ82VJt6u4ooRSL7YD3jcsOkV5K6yuWPNFwXAA3+vBktN0kUmul6ae3802ZmlOn
-         nY1e8tU2rwoaTfycVWfiRAmAWU0LtHplDQmWD8qLc4WYcnGg/YUbnU9YhSWgZzLp7m3p
-         bZix4ER+O4xar4GT3+2eIUoFvjCeXTRM1XsuVusmVtBLE/6IXNdcsgMZ902Pf17HrXb1
-         ZO2NjusNYY3rMv/i3RMiwnZckxxDrPZGdWNPld6mp9WIpmJkG1WjD1gfXGAppZVKWOB+
-         k/s4WzdL/OgqP+EfwLitzl/unXz98dI5+6xj/uo2hdiywXTTuyLPDtcVSwwZPpcEEd39
-         8nTQ==
-X-Gm-Message-State: ALKqPweEawcurkEYV9FEQN0+g3r7dSMR5M0vpoPg7bFYUhoGSoiwKS2Z
-        YLiij/mJOLpQPdYUfD1n4w258emQONh1pcGntmA=
-X-Google-Smtp-Source: AB8JxZqSsUFZEy5KfKwd2ufcqoeCLtWbKwJTtQxoUAoXsE8PcneD/7nArNTM6p1qyWKaYy2wmTBU9zCEFDU207w5RHI=
-X-Received: by 2002:a0c:b7af:: with SMTP id l47-v6mr7431108qve.110.1526268787583;
- Sun, 13 May 2018 20:33:07 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=juwCejhIYdtjUcG26TtkeoupPTYNrjh0W0RNqiLuryQ=;
+        b=HIyG95xhyT9ffousJ+kdSjDfZo1j1WVzv+trKRr+u1Ik6AO+dn+D/t/n5UYfHFtqqu
+         xCL2tLwSKCYSvUNqxB0fltI83Y1BXgJyl8bNwd4Ou6ocdwQsxhngVMF3bpcf8J6Y0Fuf
+         0SM9aBq+o3nM0oRFp0kiG+6OoSuOV6nt9RNyTBmqjGYdGb5rZCvdfNKORJksUxAjeQS2
+         oeDlBFCWmFu0tl0MtopoVRGq1p48u68YKkKGoQXNYEpiBppjOgaHFhmUEaXWtsGmNxap
+         0yH8ajO+YYGXwfcJPYLsQByK0fqZSjYkfs5WnSHOMsZT0HSF8tvGZrfz6cihllze4u1U
+         PJ2Q==
+X-Gm-Message-State: ALKqPwfSbcVD1yzLAGAwbubtHxaSKthM4Cv+xG7K4kG8su7Hoa6I4YKP
+        w5xqC2WE7YDIh4epvKElrXI=
+X-Google-Smtp-Source: AB8JxZpgU2uAGAmsq6dl07pxsTjFxuXmE9kW8GoCaTHLJLNITiLNiXVpgyGoElWCcJ2F+/FhZ0BXuQ==
+X-Received: by 2002:a1c:d212:: with SMTP id j18-v6mr4069891wmg.29.1526271430717;
+        Sun, 13 May 2018 21:17:10 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id p7-v6sm9655385wrj.85.2018.05.13.21.17.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 13 May 2018 21:17:10 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 06/14] sequencer.c: use commit-slab to mark seen commits
+References: <20180512080028.29611-1-pclouds@gmail.com>
+        <20180513055208.17952-1-pclouds@gmail.com>
+        <20180513055208.17952-7-pclouds@gmail.com>
+Date:   Mon, 14 May 2018 13:17:09 +0900
+In-Reply-To: <20180513055208.17952-7-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Sun, 13 May 2018 07:52:00 +0200")
+Message-ID: <xmqqk1s6dg6y.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Sun, 13 May 2018 20:33:07 -0700 (PDT)
-In-Reply-To: <CACsJy8BGs7EOYFKayL-bgvEbKOJiROF52o3SneLyG9Nm6nUngA@mail.gmail.com>
-References: <20180417181300.23683-1-pclouds@gmail.com> <CAPig+cRkUrdtbyGEsY=DQCDoEWTrC-9n4=vKXHEap2gokB2uQg@mail.gmail.com>
- <CACsJy8BGs7EOYFKayL-bgvEbKOJiROF52o3SneLyG9Nm6nUngA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 13 May 2018 23:33:07 -0400
-X-Google-Sender-Auth: vs6dyy2-WBCXrBJ9HX8hL55k7gM
-Message-ID: <CAPig+cRUD7FnJqSZ=hkz0GAgOROiY+gvHKRjKVfkKtqDZyt5mA@mail.gmail.com>
-Subject: Re: [PATCH/RFC] completion: complete all possible -no-<options>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 8, 2018 at 11:24 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Mon, Apr 23, 2018 at 7:36 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> I haven't looked at the implementation, so this may be an entirely
->> stupid suggestion, but would it be possible to instead render the
->> completions as?
->>
->>     % git checkout --<tab>
->>     --[no-]conflict=                   --[no-]patch
->>     --[no-]detach                      --[no-]progress
->>
->> This would address the problem of the --no-* options taking double the
->> screen space.
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+
+> It's done so that commit->util can be removed. See more explanation in
+> the commit that removes commit->util.
 >
-> It took me so long to reply partly because I remember seeing some guy
-> doing clever trick with tab completion that also shows a short help
-> text in addition to the complete words. I could not find that again
-> and from my reading (also internet searching) it's probably not
-> possible to do this without trickery.
-
-Okay.
-
->> It's also more intuitive than that lone and somewhat weird-looking
->> "--no-" suggestion.
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  sequencer.c | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
 >
-> It's not that weird if you think about file path completion, where you
-> complete one path component at a time not full path, bash just does
-> not show you full paths to everything.
+> diff --git a/sequencer.c b/sequencer.c
+> index 4ce5120e77..6b785c6c5f 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -23,6 +23,7 @@
+>  #include "hashmap.h"
+>  #include "notes-utils.h"
+>  #include "sigchain.h"
+> +#include "commit-slab.h"
+>  
+>  #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+>  
+> @@ -3160,6 +3161,7 @@ static enum check_level get_missing_commit_check_level(void)
+>  	return CHECK_IGNORE;
+>  }
+>  
+> +define_commit_slab(commit_seen, uint8_t);
 
-The "path completion" analogy and the dotted configuration variable
-analogy (below) don't really help me find "--no-" less weird. We're
-used to "/" as a separator in paths, and "." a separator in
-configuration variables, so they are easier to digest than "-" somehow
-being a separator for --no-<option>.
+Because it makes no difference on any real platform that matters, it
+is purely academic preference, but the user of this code does not
+care about ensuring that commit-seen data is at lesat 8-bit wide,
+which is where we should use uint8_t.  We know this is a simple
+yes/no field, so use of "uint8_t" here is quite misleading to the
+readers.  "unsigned char" or "char" would be a lot better.
 
-It _might_ feel as bit less weird if it was presented as --no-<option>
-or --no-{...} or --no-<...> or --no-... or something, but those seem
-pretty weird too, so perhaps not. Anyhow, it's not a major issue; the
---[no-]foo idea seems pretty intuitive, but if it can't be easily
-implemented, then falling back to your --no- idea makes sense.
-
-> I'm arguing about this because I want to see your reaction, because
-> I'm thinking of doing the very same thing for config completion. Right
-> now "git config <tab>" gives you two pages of all available config
-> variables. I'm thinking that we "git config <tab>" just shows the
-> groups, e.g.
->
->> ~/w/git $ git config
-> add.              interactive.
-> advice.           log.
-> alias.            mailmap.
-> am.               man.
->
-> Only when you do "git config log.<tab>" that it shows you log.*
-
-Just wondering out loud (again): add.<var> | add.{...} | add.<...> |
-add...; those aren't very attractive either, so plain "add." may
-indeed be best.
