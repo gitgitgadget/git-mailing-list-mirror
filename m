@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFFD91F406
-	for <e@80x24.org>; Mon, 14 May 2018 21:58:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 518181F406
+	for <e@80x24.org>; Mon, 14 May 2018 21:58:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752587AbeENV5w (ORCPT <rfc822;e@80x24.org>);
+        id S1752410AbeENV6t (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 17:58:49 -0400
+Received: from mail-ua0-f201.google.com ([209.85.217.201]:43254 "EHLO
+        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752567AbeENV5w (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 14 May 2018 17:57:52 -0400
-Received: from mail-ua0-f202.google.com ([209.85.217.202]:49094 "EHLO
-        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752567AbeENV5r (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 17:57:47 -0400
-Received: by mail-ua0-f202.google.com with SMTP id l31-v6so18282680uae.15
-        for <git@vger.kernel.org>; Mon, 14 May 2018 14:57:47 -0700 (PDT)
+Received: by mail-ua0-f201.google.com with SMTP id i14-v6so17887584uan.10
+        for <git@vger.kernel.org>; Mon, 14 May 2018 14:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=mrq2ZshMpNr9Ko361GlwmOmrFbJMciRXKWjR9dQHDmY=;
-        b=jrD/T7Ka1ZBhM6bqe4Q6JPHNvmp20dc0w2ULKUciiVu14kWi4+q6BYeTzYs9h2rc2O
-         GBo80VC8AlaXLZB33IyYfEAP6Gtb7/hI/cafWv7u4eMFAJCPih/xl1TddZ0qoMGtZ72J
-         wgWCnB6mkLV28vkdko46/TWJPS/1IhyccaAprWoCn4H9kKrezCgknjwohdcT2pz5TiuA
-         ON3FGsQMlSVBlkTDQ/cnVvTWXsrKf+GmbYPMCjpOozHCslaSbVwJDw9RfmQxahIU6/ZR
-         5PR4NtazfHCEHnK6YZ6XZqVK2jYX1Y3hxr2DPSSBquNaD1RKNCpxz27Z4HHZen+kkD+n
-         Za6Q==
+        bh=aI4FONbBG1MR1inMetWSYORy2rhOpwe9yT6KqdjMR1Y=;
+        b=mP8bCJ6UwxVIZ9gwWOZsLW4O4UhB1UgMq7nUChvAWhRaAr8RogoBrGl0lwuwUMeK8M
+         8eJILeLjDjxJjFkYXM5/fIbFBlJQmuWTvu0kGXQCDGfN9SfRKfY1bnjTIY0+7tFVcyll
+         Nx35qy1CqZcqs9a4Gn7ikR6Wt+JyCN4X65m1SytVBwXdhDPqw1RW+XnAKp1EtutlIFoy
+         x0l5NxB7AsFrwpD5PZDj9XtAwdYsxWL/YjPDxOagnl/6Y4ax/MwT6xnSwRlbVv/USm1Z
+         i6TA7OPldFGm4r1TfBQFT2MyDmm5RmFCHgInofP84hT17VMOkWzX99cfyvYBSc1w9lMe
+         HvFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=mrq2ZshMpNr9Ko361GlwmOmrFbJMciRXKWjR9dQHDmY=;
-        b=HBE0Dc/tOdYNoi9rvNBh2rvtGO/TI8NRTU9L1nKvKfjkDYspc1Dqd+n7gqOD4qVweT
-         wJYB8NzSJXDc9jq0AoMvVAQDdsTl7OJkMK8uyPpv3jkVZKFYvR76vJhfdWVkMofsu2mv
-         KftYBMKTwnOq/p4z3LaYB8E9CtsBveH6QiVizHakl7Z50F1bsodHVD2oq6vhiDp8m6pd
-         +AH8Lduu5DwksP3AQNmN9g9U9MtKBxsCE1VCyn2B0Icg8YIw1RsDTAIg7G7T/MwU+GmN
-         uxiBQCY3Wg2ibUvUCPaQtJidc2KxfqKgfVcN7PpY+mBOdy+sHCObM4qExqnt+GKHPKXV
-         tKnA==
-X-Gm-Message-State: ALKqPwflu5S7QMqkk3qt5jhg2VM+PjDc2TSLq2ZELwNMQL+X+X0qLrvp
-        Qke9/uZJQWknz2Cl+vT9/+4AxoP8jgV7dA8Qcm/IhAerd2k+vdmZFkiRlOGZe0U8/77mqhsgqK5
-        f9zfPLXcYpS5GWJy/RN/dSPdGJs5NvUbhVrN7RTCzTxUyaKhWwy4yPv7LWQ==
-X-Google-Smtp-Source: AB8JxZrnw+2O/Pyc/sYWOm1RbhhfHzXht78l62sHBi+McSeSXC8GhkiOGQwmV2RqL7b0lT7wiD+NfMYxMC8=
+        bh=aI4FONbBG1MR1inMetWSYORy2rhOpwe9yT6KqdjMR1Y=;
+        b=aypgTth6guMxGwcXrKN44tnlhMulLuw+Iy6jI5CIVQP4dzxpxWrSIKUrVdXzq/HHFU
+         ojXPGVWiXFgHkDxoZ3OisTDq33HIcTDId7hL8X90M3Ce3pKtFzWPxJnRM5VKAQi8AB9I
+         h6pwpRGSNcj49Ca8Vu3eF/GpoO+I2ZkwgdoohVBcbIE5u5RmnbqipXKwTvGHXV0RtRkz
+         2OnBomFP274+/pHx82CrnE557O0zFP0jN6tMUOFWp+a7VMZ+CubyGQ1ul7k7cVopfCth
+         zTEKSrd0mWbg7JCW67FWgqZfi1YQVqmqhSTT+1uLxJ9J0l1/dmtfz1fz4RlfklEiACaW
+         QbHg==
+X-Gm-Message-State: ALKqPwc6ovtrE6Nn539gNtexQO0JAIqUfdtUDHuRWFobT3B6aFYIrCBK
+        O8844mjBj9/vecPdBkY10T5I6fVSMsH3+gjOUO92b4bvNFXKmQbLXNW/BSWcmeAoIx6V11fLWRK
+        m4rNmPsxwfRrzfwPFLNVZHSeCxh1L/nPKFrRW0CnUXWxnUYiiI6MgfKmWUQ==
+X-Google-Smtp-Source: AB8JxZqFZhhcTXg6mkgh4ZTNOI/A5SNaKBRtFQiGRSMahQE5BU8pgg1e4OrDB64uI/tZ97qn8ydyP28NbpM=
 MIME-Version: 1.0
-X-Received: by 2002:a9f:3ed8:: with SMTP id n24-v6mr12468172uaj.78.1526335067098;
- Mon, 14 May 2018 14:57:47 -0700 (PDT)
-Date:   Mon, 14 May 2018 14:56:19 -0700
+X-Received: by 2002:ab0:53c8:: with SMTP id l8-v6mr13078340uaa.55.1526335072324;
+ Mon, 14 May 2018 14:57:52 -0700 (PDT)
+Date:   Mon, 14 May 2018 14:56:21 -0700
 In-Reply-To: <20180514215626.164960-1-bmwill@google.com>
-Message-Id: <20180514215626.164960-29-bmwill@google.com>
+Message-Id: <20180514215626.164960-31-bmwill@google.com>
 References: <20180514215626.164960-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH 28/35] push: convert to use struct refspec
+Subject: [PATCH 30/35] send-pack: store refspecs in a struct refspec
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, bmwill@google.com
 Cc:     Brandon Williams <bmwill@google.com>
@@ -62,143 +62,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the refspecs in builtin/push.c to be stored in a 'struct
-refspec' instead of being stored in a list of 'struct refspec_item's.
+Convert send-pack.c to store refspecs in a 'struct refspec' instead of
+as an array of 'const char *'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/push.c | 38 +++++++++++++++-----------------------
- 1 file changed, 15 insertions(+), 23 deletions(-)
+ builtin/send-pack.c | 24 +++++++-----------------
+ 1 file changed, 7 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/push.c b/builtin/push.c
-index df5df6c0d..ef42979d1 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -57,19 +57,10 @@ static enum transport_family family;
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index b5427f75e..ef512616f 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -126,8 +126,7 @@ static int send_pack_config(const char *k, const char *v, void *cb)
  
- static struct push_cas_option cas;
- 
--static const char **refspec;
--static int refspec_nr;
--static int refspec_alloc;
-+static struct refspec rs = REFSPEC_INIT_PUSH;
- 
- static struct string_list push_options_config = STRING_LIST_INIT_DUP;
- 
--static void add_refspec(const char *ref)
--{
--	refspec_nr++;
--	ALLOC_GROW(refspec, refspec_nr, refspec_alloc);
--	refspec[refspec_nr-1] = ref;
--}
--
- static const char *map_refspec(const char *ref,
- 			       struct remote *remote, struct ref *local_refs)
+ int cmd_send_pack(int argc, const char **argv, const char *prefix)
  {
-@@ -138,7 +129,7 @@ static void set_refspecs(const char **refs, int nr, const char *repo)
- 			}
- 			ref = map_refspec(ref, remote, local_refs);
- 		}
--		add_refspec(ref);
-+		refspec_append(&rs, ref);
- 	}
- }
- 
-@@ -226,7 +217,7 @@ static void setup_push_upstream(struct remote *remote, struct branch *branch,
- 	}
- 
- 	strbuf_addf(&refspec, "%s:%s", branch->refname, branch->merge[0]->src);
--	add_refspec(refspec.buf);
-+	refspec_append(&rs, refspec.buf);
- }
- 
- static void setup_push_current(struct remote *remote, struct branch *branch)
-@@ -236,7 +227,7 @@ static void setup_push_current(struct remote *remote, struct branch *branch)
- 	if (!branch)
- 		die(_(message_detached_head_die), remote->name);
- 	strbuf_addf(&refspec, "%s:%s", branch->refname, branch->refname);
--	add_refspec(refspec.buf);
-+	refspec_append(&rs, refspec.buf);
- }
- 
- static int is_workflow_triangular(struct remote *remote)
-@@ -253,7 +244,7 @@ static void setup_default_push_refspecs(struct remote *remote)
- 	switch (push_default) {
- 	default:
- 	case PUSH_DEFAULT_MATCHING:
--		add_refspec(":");
-+		refspec_append(&rs, ":");
- 		break;
- 
- 	case PUSH_DEFAULT_UNSPECIFIED:
-@@ -341,7 +332,8 @@ static void advise_ref_needs_force(void)
- 	advise(_(message_advice_ref_needs_force));
- }
- 
--static int push_with_options(struct transport *transport, int flags)
-+static int push_with_options(struct transport *transport, struct refspec *rs,
-+			     int flags)
- {
- 	int err;
- 	unsigned int reject_reasons;
-@@ -363,7 +355,7 @@ static int push_with_options(struct transport *transport, int flags)
- 
- 	if (verbosity > 0)
- 		fprintf(stderr, _("Pushing to %s\n"), transport->url);
--	err = transport_push(transport, refspec_nr, refspec, flags,
-+	err = transport_push(transport, rs->raw_nr, rs->raw, flags,
- 			     &reject_reasons);
- 	if (err != 0) {
- 		fprintf(stderr, "%s", push_get_color(PUSH_COLOR_ERROR));
-@@ -397,6 +389,7 @@ static int do_push(const char *repo, int flags,
- 	struct remote *remote = pushremote_get(repo);
- 	const char **url;
- 	int url_nr;
-+	struct refspec *push_refspec = &rs;
- 
- 	if (!remote) {
- 		if (repo)
-@@ -417,10 +410,9 @@ static int do_push(const char *repo, int flags,
- 	if (push_options->nr)
- 		flags |= TRANSPORT_PUSH_OPTIONS;
- 
--	if (!refspec && !(flags & TRANSPORT_PUSH_ALL)) {
--		if (remote->push.raw_nr) {
--			refspec = remote->push.raw;
--			refspec_nr = remote->push.raw_nr;
-+	if (!push_refspec->nr && !(flags & TRANSPORT_PUSH_ALL)) {
-+		if (remote->push.nr) {
-+			push_refspec = &remote->push;
- 		} else if (!(flags & TRANSPORT_PUSH_MIRROR))
- 			setup_default_push_refspecs(remote);
- 	}
-@@ -432,7 +424,7 @@ static int do_push(const char *repo, int flags,
- 				transport_get(remote, url[i]);
- 			if (flags & TRANSPORT_PUSH_OPTIONS)
- 				transport->push_options = push_options;
--			if (push_with_options(transport, flags))
-+			if (push_with_options(transport, push_refspec, flags))
- 				errs++;
- 		}
- 	} else {
-@@ -440,7 +432,7 @@ static int do_push(const char *repo, int flags,
- 			transport_get(remote, NULL);
- 		if (flags & TRANSPORT_PUSH_OPTIONS)
- 			transport->push_options = push_options;
--		if (push_with_options(transport, flags))
-+		if (push_with_options(transport, push_refspec, flags))
- 			errs++;
- 	}
- 	return !!errs;
-@@ -631,7 +623,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		flags |= TRANSPORT_RECURSE_SUBMODULES_ONLY;
- 
- 	if (tags)
--		add_refspec("refs/tags/*");
-+		refspec_append(&rs, "refs/tags/*");
- 
+-	int i, nr_refspecs = 0;
+-	const char **refspecs = NULL;
++	struct refspec rs = REFSPEC_INIT_PUSH;
+ 	const char *remote_name = NULL;
+ 	struct remote *remote = NULL;
+ 	const char *dest = NULL;
+@@ -189,8 +188,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, options, send_pack_usage, 0);
  	if (argc > 0) {
- 		repo = argv[0];
+ 		dest = argv[0];
+-		refspecs = (const char **)(argv + 1);
+-		nr_refspecs = argc - 1;
++		refspec_appendn(&rs, argv + 1, argc - 1);
+ 	}
+ 
+ 	if (!dest)
+@@ -209,31 +207,23 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 	args.push_options = push_options.nr ? &push_options : NULL;
+ 
+ 	if (from_stdin) {
+-		struct argv_array all_refspecs = ARGV_ARRAY_INIT;
+-
+-		for (i = 0; i < nr_refspecs; i++)
+-			argv_array_push(&all_refspecs, refspecs[i]);
+-
+ 		if (args.stateless_rpc) {
+ 			const char *buf;
+ 			while ((buf = packet_read_line(0, NULL)))
+-				argv_array_push(&all_refspecs, buf);
++				refspec_append(&rs, buf);
+ 		} else {
+ 			struct strbuf line = STRBUF_INIT;
+ 			while (strbuf_getline(&line, stdin) != EOF)
+-				argv_array_push(&all_refspecs, line.buf);
++				refspec_append(&rs, line.buf);
+ 			strbuf_release(&line);
+ 		}
+-
+-		refspecs = all_refspecs.argv;
+-		nr_refspecs = all_refspecs.argc;
+ 	}
+ 
+ 	/*
+ 	 * --all and --mirror are incompatible; neither makes sense
+ 	 * with any refspecs.
+ 	 */
+-	if ((nr_refspecs > 0 && (send_all || args.send_mirror)) ||
++	if ((rs.nr > 0 && (send_all || args.send_mirror)) ||
+ 	    (send_all && args.send_mirror))
+ 		usage_with_options(send_pack_usage, options);
+ 
+@@ -275,7 +265,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 		BUG("unknown protocol version");
+ 	}
+ 
+-	transport_verify_remote_names(nr_refspecs, refspecs);
++	transport_verify_remote_names(rs.raw_nr, rs.raw);
+ 
+ 	local_refs = get_local_heads();
+ 
+@@ -287,7 +277,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 		flags |= MATCH_REFS_MIRROR;
+ 
+ 	/* match them up */
+-	if (match_push_refs(local_refs, &remote_refs, nr_refspecs, refspecs, flags))
++	if (match_push_refs(local_refs, &remote_refs, rs.raw_nr, rs.raw, flags))
+ 		return -1;
+ 
+ 	if (!is_empty_cas(&cas))
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
