@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21EEE1F406
-	for <e@80x24.org>; Mon, 14 May 2018 21:56:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F2871F406
+	for <e@80x24.org>; Mon, 14 May 2018 21:57:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752250AbeENV4y (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 17:56:54 -0400
-Received: from mail-yw0-f202.google.com ([209.85.161.202]:48663 "EHLO
-        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752116AbeENV4w (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 17:56:52 -0400
-Received: by mail-yw0-f202.google.com with SMTP id i22-v6so5803129ywe.15
-        for <git@vger.kernel.org>; Mon, 14 May 2018 14:56:52 -0700 (PDT)
+        id S1752326AbeENV46 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 17:56:58 -0400
+Received: from mail-vk0-f73.google.com ([209.85.213.73]:43818 "EHLO
+        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752257AbeENV4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 17:56:55 -0400
+Received: by mail-vk0-f73.google.com with SMTP id o24-v6so16842649vki.10
+        for <git@vger.kernel.org>; Mon, 14 May 2018 14:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=+A/ZUoMD4mcuqeqQk3akjirRmp1jVsMHzxopLFJYfy4=;
-        b=rnoRQkb6tH+jJ271xdLPwVRPgN/aCM90gZ3bSi3TlnSh9Zya8sJlXL7TBm58d/w63i
-         Yh2z1B52WpkqOtMeoSz8ZkpRjdT5Kl+KG6Aauq/g8muBAU5VAx5uFayvGttAZ2vFG/mK
-         0KoKvJMRNR40CIKki3S3lUkt98P48AZCNoIdEyp4Z/UvwYKfu2zkJ42BIs4MWF9ldiwX
-         8oyMuY3zgLZ3WExa9RiYN3nuOIjwCKvfcTITn/EzUZZp1psX71Lc/U8lSIIxoxKJt4ue
-         E1Xou3HWMLHUcOS3NZTPfXd2R4SCJ1998fo/X9Yg8xTi3spONo9JVoZPVwuMDHlgWe4k
-         J5iQ==
+        bh=hnjlgJYFOVI6C4rmJrZ5vp2zCuJsXIleMCgg2nwJ11Y=;
+        b=QScv79vQylqfng+fIowGxypLTF7wSSRKtxqfAmvp0AYDiGRL3NFveq3w+FBVDHLQzx
+         v1WfkmQE0w1KCi1rRK4mQSDgAkpJbuwCGF++Tb25ydN/YkUodwwGJlocloScT825W2Zf
+         6xfprerGHgjJ7IOQ/RlhFhVm0O2lEu6tahwW1RmhoYQXAPPahO9m40Up5KOZwakQ1ZxC
+         2KHWsrQlSu5/QtpJ9RQmJoKxV6SVP/ig+E3kvwHyDW+n/C/Vyjr8eeVJgO8/XWtywiov
+         M39ZE/uDHb++kBItnev7PPhe2P4StCcfOuKfDsv5gMGr3YoO3pN9rakIC6HWlqUAsT4u
+         Bhzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=+A/ZUoMD4mcuqeqQk3akjirRmp1jVsMHzxopLFJYfy4=;
-        b=AjLpp430+OAmIU3wRfRaGkdG196urOu4GNmOxR2KYEyFI1jLo/g7qfwtu+NRkeRTv0
-         w55KruA/3EJQQ/k5VXazAdS6gaNJ7BxmwZ0+y2V+ifXt2l80Xwj8w0eAfaqROslwh0PI
-         d1YlHoflmhdexx6vzyFzf5s5TCQVwIZ9We3I7h0O2lYpwHAVbHsE/R1aAzgPTei/fXSF
-         q3v6qK7HS8NOI/rEASfenud2bJpYsWvqHPJoX1n9vntvkziDNfhis3q4XIOZAa61jrgl
-         NgZzda+Pw1p39AMl8Aufgt+8jdKOtvUXmhYu2Lw90K2mfoFQLhxIglA4wMEOCFUaJYgv
-         rbEQ==
-X-Gm-Message-State: ALKqPwfXAtd6Ca86xE4MoWJsIhsZXYw/QiHNUeO2HVKwCaM6YSOBWWht
-        SDGFnPHfBKY119xeg5DdTkkQ3cyk5EkyBgfI5BmvcrOd3cHp0VSztiIUypah01mQj/jhoLSyZK/
-        Ou7Pw+ApjXNnQl0AetF1Dgd3N4gx3q/z3AGEdvFc9V0OXYCvyi74UMMAUog==
-X-Google-Smtp-Source: AB8JxZoYRJ/gWdBTnKQ57H0ts84rBS1Ld9zK7yfZpD/i5lmstNdytvNU+bNdlA5V7luLoQoArSWTNuDxTqg=
+        bh=hnjlgJYFOVI6C4rmJrZ5vp2zCuJsXIleMCgg2nwJ11Y=;
+        b=ij7qlGsUq6OTiSAek0gm6lNB/90wGGQDujjbgLYrVV9lbi5WDd304973KtX2wkUVv4
+         v50mgkklUvYZMw4jzELNtJm3n8Hkd1ycvImpUrb6oYo0WTlDGb2u6JfXSr+PNwEB6RXJ
+         v2Qc0vS1G3SheQl76VBejiTMinaK1JEQPtOZt9WIdqJqytRlWxBVXJaIIQEHM220gBey
+         Fsm55NG6Y5FWyP+blxxH5Ypt3WC7arrKABVaBACy8/FfNkF+NX55iXKFfsB7vqjp+t5q
+         B3g1Kq8lOBHUE/E2bephE+8BUG9o+OtsKqoThILO3w+ae46bth6IKig1BIE+gcyiLh9y
+         S3OA==
+X-Gm-Message-State: ALKqPweNd01kMxzYYVJ1Drxj/MbGfoJHwWf3hEW83Lm5N7SsQBp1/+Hu
+        MHiBSb1rR7ImF2Bgw49WJ7Z6ldJGqeVrT5t5KSwi6z0musGi8trmESXVOA7jjKCZ+yOtbHiA3Li
+        ewVba9DV1nX0g0ihKebBIsJiDsORoZ36myuvxrrwMi/HnPCBEngFgTkzZeQ==
+X-Google-Smtp-Source: AB8JxZr5/f7cJtnFxcSjN0ZfU2/3drVTHzxgv89EvjLqWEP+2nCksmy82PdoLKC+YupWRWgQESXwL5S+1Ko=
 MIME-Version: 1.0
-X-Received: by 2002:a0d:dbc9:: with SMTP id d192-v6mr3355814ywe.64.1526335011986;
- Mon, 14 May 2018 14:56:51 -0700 (PDT)
-Date:   Mon, 14 May 2018 14:55:57 -0700
+X-Received: by 2002:a9f:3fce:: with SMTP id m14-v6mr13107850uaj.72.1526335014517;
+ Mon, 14 May 2018 14:56:54 -0700 (PDT)
+Date:   Mon, 14 May 2018 14:55:58 -0700
 In-Reply-To: <20180514215626.164960-1-bmwill@google.com>
-Message-Id: <20180514215626.164960-7-bmwill@google.com>
+Message-Id: <20180514215626.164960-8-bmwill@google.com>
 References: <20180514215626.164960-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH 06/35] submodule--helper: convert push_check to use struct refspec
+Subject: [PATCH 07/35] pull: convert get_tracking_branch to use refspec_item_init
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, bmwill@google.com
 Cc:     Brandon Williams <bmwill@google.com>
@@ -62,45 +62,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert 'push_check()' to use 'struct refspec'.
+Convert 'get_tracking_branch()' to use 'refspec_item_init()' instead of
+the old 'parse_fetch_refspec()' function.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/submodule--helper.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ builtin/pull.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c0c4db007..88a149a2c 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1744,13 +1744,14 @@ static int push_check(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 5a79deae5..09575fd23 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -676,12 +676,12 @@ static const char *get_upstream_branch(const char *remote)
+  */
+ static const char *get_tracking_branch(const char *remote, const char *refspec)
+ {
+-	struct refspec_item *spec;
++	struct refspec_item spec;
+ 	const char *spec_src;
+ 	const char *merge_branch;
  
- 	/* Check the refspec */
- 	if (argc > 2) {
--		int i, refspec_nr = argc - 2;
-+		int i;
- 		struct ref *local_refs = get_local_heads();
--		struct refspec_item *refspec = parse_push_refspec(refspec_nr,
--							     argv + 2);
-+		struct refspec refspec = REFSPEC_INIT_PUSH;
+-	spec = parse_fetch_refspec(1, &refspec);
+-	spec_src = spec->src;
++	refspec_item_init(&spec, refspec, REFSPEC_FETCH);
++	spec_src = spec.src;
+ 	if (!*spec_src || !strcmp(spec_src, "HEAD"))
+ 		spec_src = "HEAD";
+ 	else if (skip_prefix(spec_src, "heads/", &spec_src))
+@@ -701,7 +701,7 @@ static const char *get_tracking_branch(const char *remote, const char *refspec)
+ 	} else
+ 		merge_branch = NULL;
  
--		for (i = 0; i < refspec_nr; i++) {
--			struct refspec_item *rs = refspec + i;
-+		refspec_appendn(&refspec, argv + 2, argc - 2);
-+
-+		for (i = 0; i < refspec.nr; i++) {
-+			const struct refspec_item *rs = &refspec.items[i];
- 
- 			if (rs->pattern || rs->matching)
- 				continue;
-@@ -1777,7 +1778,7 @@ static int push_check(int argc, const char **argv, const char *prefix)
- 				    rs->src);
- 			}
- 		}
--		free_refspec(refspec_nr, refspec);
-+		refspec_clear(&refspec);
- 	}
- 	free(head);
+-	free_refspec(1, spec);
++	refspec_item_clear(&spec);
+ 	return merge_branch;
+ }
  
 -- 
 2.17.0.441.gb46fe60e1d-goog
