@@ -6,80 +6,116 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 100871F406
-	for <e@80x24.org>; Mon, 14 May 2018 03:05:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 846651F406
+	for <e@80x24.org>; Mon, 14 May 2018 03:33:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752117AbeENDF4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 May 2018 23:05:56 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:38159 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751984AbeENDFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 May 2018 23:05:55 -0400
-Received: by mail-qk0-f179.google.com with SMTP id b39-v6so8861086qkb.5
-        for <git@vger.kernel.org>; Sun, 13 May 2018 20:05:55 -0700 (PDT)
+        id S1752102AbeENDdJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 May 2018 23:33:09 -0400
+Received: from mail-qt0-f171.google.com ([209.85.216.171]:41888 "EHLO
+        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752028AbeENDdI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 May 2018 23:33:08 -0400
+Received: by mail-qt0-f171.google.com with SMTP id g13-v6so14379958qth.8
+        for <git@vger.kernel.org>; Sun, 13 May 2018 20:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=EphNXghWcYZMrSCn88lGvhfM5PZPeK8II0unBfiSnWU=;
-        b=Q6G+LH2wHPL18VbuBjSkeGTT0fCrsEabM23ifUhq/h6xdf3ZuGDho0K4JKePIQMOld
-         bWCCkIzpuVKMPlalmJ5zxLM+c6FdDjYRVHyNVzrUgrs7aygny21PXbO4GNIWj00fl+iv
-         mu0Tac2apyehi+DQU7hrmFP56aSUNNsxfRGgkoj1n2FDiFSdvsCeOaB7sTmO+36gtgcb
-         sJhbSHhF8eGtcBqFlw4rxF2mihAXzUzLKjYWJs+nxm8dCIWeZcq1fC4Yrx62S4wBvJtE
-         Pqe2KsPhv46MkbHwNwMs+y2vjwxnApZ5brc0qJp7nuF/8tZdhy6aL18h/7876Y0J6M+P
-         oTBQ==
+         :subject:to:cc;
+        bh=YO2Y3bJi6UsQwnBgSZOP31bjgGYwvyH4/SzM4Rv70zA=;
+        b=bEkYr7cU4iefSvY4g0vW1s1a6Oeru7b9Ce0iyvoKwA2taq+eMp/3W1shYiwSem+Koo
+         2MLB92mDepkM9DkFU/lClB6K3jRR2VLYdCbsnl9wOQkl5/FwnLNeDXXOeaL8vJsz2POd
+         Jq1QZcLhcLqG1RkHNPct1i+zkdKxkZAncLmjEO6fpsCnorLV5QB0p1JAaHPamnS8SJ09
+         KW16iPK5sahetHTO8NScSJqco4pTMW6OSBRhN2WrW02EaeUb7DhDd4jKImNnacF5DFQl
+         TMPJRCH1wdzARWLwIsC48v4KbAicqMNT19o2s+N3PBGoVdIWTJGMwl84EawNlxLbZqmR
+         l7bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=EphNXghWcYZMrSCn88lGvhfM5PZPeK8II0unBfiSnWU=;
-        b=XSxM+lAqj6YaFiPyA4IctU/Wg4oZlW4Jx/SVeVrksYtYOzG/LS6IJA5Vcq9x5QbUgs
-         mx8rwqGOevtzULQtKvhtWxMc8rljoQzzPvAcZf5/7kI8VGUpysSxrUEi1VryEw/tl9GD
-         Rjx24xFwmFRoPaksGKvGUcmAeb8VgUpyVQ6hHsq/QCkxYjNpX7OCur1dx0GUF1ojgozu
-         xneJAZLraUY7u8T8xcx+BcqHK8isfStLmVOM5CWXykZJExgreLyIeytceoYvzZtMPt8z
-         Ps2pSKYAXo2tbj06n/JmdrZlfLwiyh1OM5Ighybp5tI6HvbO7b49ztmERSZn21HQ6FDp
-         8kEw==
-X-Gm-Message-State: ALKqPwcFzTilPU/TFFQNtmHtdPO4scbYB92Em1cgbcil6q4AQqLTaUKL
-        PNr3A+Zx8pmmJB++pZ+qBu4qnErwvL2MXFHYihU=
-X-Google-Smtp-Source: AB8JxZocYw/+GHfgRzyrmJIYvmIk1KYu6yYCOfmtl/8nYx8AWd6fnzdQAFWU+ziDsp2zBbNBu9oQ6dUkytJqi2I4Yto=
-X-Received: by 2002:a37:be86:: with SMTP id o128-v6mr6413396qkf.141.1526267154645;
- Sun, 13 May 2018 20:05:54 -0700 (PDT)
+         :date:message-id:subject:to:cc;
+        bh=YO2Y3bJi6UsQwnBgSZOP31bjgGYwvyH4/SzM4Rv70zA=;
+        b=uDBJQ82VJt6u4ooRSL7YD3jcsOkV5K6yuWPNFwXAA3+vBktN0kUmul6ae3802ZmlOn
+         nY1e8tU2rwoaTfycVWfiRAmAWU0LtHplDQmWD8qLc4WYcnGg/YUbnU9YhSWgZzLp7m3p
+         bZix4ER+O4xar4GT3+2eIUoFvjCeXTRM1XsuVusmVtBLE/6IXNdcsgMZ902Pf17HrXb1
+         ZO2NjusNYY3rMv/i3RMiwnZckxxDrPZGdWNPld6mp9WIpmJkG1WjD1gfXGAppZVKWOB+
+         k/s4WzdL/OgqP+EfwLitzl/unXz98dI5+6xj/uo2hdiywXTTuyLPDtcVSwwZPpcEEd39
+         8nTQ==
+X-Gm-Message-State: ALKqPweEawcurkEYV9FEQN0+g3r7dSMR5M0vpoPg7bFYUhoGSoiwKS2Z
+        YLiij/mJOLpQPdYUfD1n4w258emQONh1pcGntmA=
+X-Google-Smtp-Source: AB8JxZqSsUFZEy5KfKwd2ufcqoeCLtWbKwJTtQxoUAoXsE8PcneD/7nArNTM6p1qyWKaYy2wmTBU9zCEFDU207w5RHI=
+X-Received: by 2002:a0c:b7af:: with SMTP id l47-v6mr7431108qve.110.1526268787583;
+ Sun, 13 May 2018 20:33:07 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Sun, 13 May 2018 20:05:54 -0700 (PDT)
-In-Reply-To: <3f64a4e24a83a9041c79c8b302207af7687dbb21.1526204440.git.martin.agren@gmail.com>
-References: <CAPig+cThT3VVw75VF0wuF-yR-xbnfNOxhviYGZLAksF8HFuOGw@mail.gmail.com>
- <cover.1526204440.git.martin.agren@gmail.com> <3f64a4e24a83a9041c79c8b302207af7687dbb21.1526204440.git.martin.agren@gmail.com>
+Received: by 10.12.170.75 with HTTP; Sun, 13 May 2018 20:33:07 -0700 (PDT)
+In-Reply-To: <CACsJy8BGs7EOYFKayL-bgvEbKOJiROF52o3SneLyG9Nm6nUngA@mail.gmail.com>
+References: <20180417181300.23683-1-pclouds@gmail.com> <CAPig+cRkUrdtbyGEsY=DQCDoEWTrC-9n4=vKXHEap2gokB2uQg@mail.gmail.com>
+ <CACsJy8BGs7EOYFKayL-bgvEbKOJiROF52o3SneLyG9Nm6nUngA@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 13 May 2018 23:05:54 -0400
-X-Google-Sender-Auth: Paid9FzDcC_OJQ0pJaXVG3h9hD4
-Message-ID: <CAPig+cQaJmsJe=E6HdBw0s6eN-qW0OCezBacRcQ+UnJYMbODsw@mail.gmail.com>
-Subject: Re: [PATCH 2/1] config: let `config_store_data_clear()` handle `value_regex`
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Sun, 13 May 2018 23:33:07 -0400
+X-Google-Sender-Auth: vs6dyy2-WBCXrBJ9HX8hL55k7gM
+Message-ID: <CAPig+cRUD7FnJqSZ=hkz0GAgOROiY+gvHKRjKVfkKtqDZyt5mA@mail.gmail.com>
+Subject: Re: [PATCH/RFC] completion: complete all possible -no-<options>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 13, 2018 at 5:58 AM, Martin =C3=85gren <martin.agren@gmail.com>=
- wrote:
-> Instead of carefully clearing up `value_regex` in each code path, let
-> `config_store_data_clear()` handle that.
+On Tue, May 8, 2018 at 11:24 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Mon, Apr 23, 2018 at 7:36 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> I haven't looked at the implementation, so this may be an entirely
+>> stupid suggestion, but would it be possible to instead render the
+>> completions as?
+>>
+>>     % git checkout --<tab>
+>>     --[no-]conflict=                   --[no-]patch
+>>     --[no-]detach                      --[no-]progress
+>>
+>> This would address the problem of the --no-* options taking double the
+>> screen space.
 >
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-> ---
-> I *think* that it should be ok to `regfree()` after `regcomp()` failed,
-> but I'll need to look into that some more (and say something about it in
-> the commit message).
+> It took me so long to reply partly because I remember seeing some guy
+> doing clever trick with tab completion that also shows a short help
+> text in addition to the complete words. I could not find that again
+> and from my reading (also internet searching) it's probably not
+> possible to do this without trickery.
 
-My research (for instance [1,2]) seems to indicate that it would be
-better to avoid regfree() upon failed regcomp(), even though such a
-situation is handled sanely in some implementations.
+Okay.
 
-[1]: https://www.redhat.com/archives/libvir-list/2013-September/msg00276.ht=
-ml
-[2]: https://www.redhat.com/archives/libvir-list/2013-September/msg00273.ht=
-ml
+>> It's also more intuitive than that lone and somewhat weird-looking
+>> "--no-" suggestion.
+>
+> It's not that weird if you think about file path completion, where you
+> complete one path component at a time not full path, bash just does
+> not show you full paths to everything.
+
+The "path completion" analogy and the dotted configuration variable
+analogy (below) don't really help me find "--no-" less weird. We're
+used to "/" as a separator in paths, and "." a separator in
+configuration variables, so they are easier to digest than "-" somehow
+being a separator for --no-<option>.
+
+It _might_ feel as bit less weird if it was presented as --no-<option>
+or --no-{...} or --no-<...> or --no-... or something, but those seem
+pretty weird too, so perhaps not. Anyhow, it's not a major issue; the
+--[no-]foo idea seems pretty intuitive, but if it can't be easily
+implemented, then falling back to your --no- idea makes sense.
+
+> I'm arguing about this because I want to see your reaction, because
+> I'm thinking of doing the very same thing for config completion. Right
+> now "git config <tab>" gives you two pages of all available config
+> variables. I'm thinking that we "git config <tab>" just shows the
+> groups, e.g.
+>
+>> ~/w/git $ git config
+> add.              interactive.
+> advice.           log.
+> alias.            mailmap.
+> am.               man.
+>
+> Only when you do "git config log.<tab>" that it shows you log.*
+
+Just wondering out loud (again): add.<var> | add.{...} | add.<...> |
+add...; those aren't very attractive either, so plain "add." may
+indeed be best.
