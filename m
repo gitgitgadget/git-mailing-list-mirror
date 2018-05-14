@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D62E51F406
-	for <e@80x24.org>; Mon, 14 May 2018 21:57:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FA3A1F406
+	for <e@80x24.org>; Mon, 14 May 2018 21:57:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752572AbeENV5o (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 17:57:44 -0400
-Received: from mail-vk0-f74.google.com ([209.85.213.74]:42902 "EHLO
-        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752567AbeENV5m (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 17:57:42 -0400
-Received: by mail-vk0-f74.google.com with SMTP id g76-v6so17199414vki.9
-        for <git@vger.kernel.org>; Mon, 14 May 2018 14:57:42 -0700 (PDT)
+        id S1752580AbeENV5r (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 17:57:47 -0400
+Received: from mail-it0-f74.google.com ([209.85.214.74]:37756 "EHLO
+        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752567AbeENV5p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 17:57:45 -0400
+Received: by mail-it0-f74.google.com with SMTP id o8-v6so11834888itf.2
+        for <git@vger.kernel.org>; Mon, 14 May 2018 14:57:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=6l9G/9wB1m7upzLpFD76k6RQR6dH99b5t8/as6WZ7D8=;
-        b=p+hv/Y8mKgXxX8VaOE3flRk5VSRh25mR8rZ17QNSszxIGA9ESIs6O5KiAbv7ct2rib
-         sCSxW44pJLbzeMFa9DmSTWZgHUk4cpfuDlYRXr48gFDyqX/mUz+3mog+FVCrv9nsrScN
-         cMMI7IdmcW48sAfDszDfgsMqb9N66x//lwRCN3wH6RF4gEkFpO/eQH0U5ICI+pBfj9AO
-         Azn+rw+J7IFWmmJASouvNlzFQuPxPX+kgG9Xuriz64S90ej1JYPu46G+H50zc/hZPaw9
-         ahlMLLHZIUFKwT6r+070NmKXosRLm3T8mmBkrXa57MFEjlgSq21BuZ2hXutwgCg5Q0io
-         G95g==
+        bh=QK9b45t5xm7KCkPeHV3qaGT2BIgPkplVTgDj0g6olIM=;
+        b=lvuQcoeMX5jYsKtF7r+r4Y0yzObPW1LGf9UYlnrsZJMEoF8FunSgeU+NKkSh2dpELj
+         8LV98RHy/dlZBKt0Aa2b2B1m3nktBRUDFKlJsvJf1ye8HwyKKUFY9DD56/bI6H/m7+AC
+         2Syh7CeuJGqPwb5hxWkZZQNZop2DTNznxPCLb0i17EwqRZM5otj6OJuf+4zHiM82sK2K
+         4KXR4K8/4XDAqKXqZWjh9jPT+2dU3X9H+RVkK04V4/rs73NF8sbohpX/iZrpZKsKig7K
+         8nmge9xFHSyWFJ0pKjidED5zwHHaELCKhExLV2svAwJZR95LYqaKr7TwrpwiAaktn+Ks
+         bd7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=6l9G/9wB1m7upzLpFD76k6RQR6dH99b5t8/as6WZ7D8=;
-        b=p06YBnNQKUkYQT5wlCtkXPQFfxVfLLtwyTlxbZddxDYDKu4ZweQqUkjHzsxPbUpg1j
-         Qn53ekX6GQocDvWhGCQkpdjvYkx7yxBMrVoFysTsqA6seO9KGptx70zB8GpiOD1YED3E
-         ZguH+/58H3xByk4YilZm32569aUAujVTslKEAe5Xkb+C7/qvWkMs+zuXKCwv5fLu8b2L
-         hleGK8AOzcSeEBO1KT+LTBMUYuGLQnpbbtN4cTVYSLjQmwdgW9F0j/aDlKO0qjj3YrET
-         4BkPY+0HbkZOL5ATyzuXRbYSwB/ZqA7ziFfD+WPLdmY5M/YgIysVGekOSPSjA/Jfl9a4
-         J6DQ==
-X-Gm-Message-State: ALKqPwdek3Zsv64Z2un5XLOKyhPmkp25oauCUShtK6+JAIJNwNBNeIXi
-        Gn7Baj7ywYHA8Fc//qHL4joWmLVNifBK3g5Y1naJIwSh9qHak2GOCJ+GYR2tdKqjqjmKtY3Y251
-        erI3dpEAhyJvl/25sWKII4B2op+9Izu9ORYQ+z71cfGRzY9I8GZRAIXngbg==
-X-Google-Smtp-Source: AB8JxZpjCSlRpPLmDZD3vLOCtKjlKYk6YWgsJp10vqSHT0Ie6yT4ovqi3LMMy5l7gs0gnmfVN4SU2+US8m4=
+        bh=QK9b45t5xm7KCkPeHV3qaGT2BIgPkplVTgDj0g6olIM=;
+        b=r56uLyomraW8ip3RdY5OZ3nCx1ubJmDIGnloFFj1btiUUPkarQG5tTeEpWz+KvhyHD
+         SfuGi/oI5JGmLw2Vhfs0AS2LJ9MvAj7rbnGPq3IUhApGotlW/VVzEReoYmq1zRxW6bZ6
+         AsZRfRylDPRIHv/HQCF8yeqeSKOXN6tEh2Jo+S6HEjrcIeWGhs/OO7dZhhugP53wOAd7
+         zy+r/xEfzi63/KqCHvakXSVmeoNMIyDb3hAaUArcAi0LD5nTaNnW0P7WrkNejKwUHitY
+         YrEPzomsRS1mqWUvyFCqL5svHL0A6/wyJ5doHL4+HFsIXNKrpvDKiDVPCrlncrL5RbfC
+         twLA==
+X-Gm-Message-State: ALKqPwc4i9/HWB0Y2PAFtB93zuKVpCt5LaFGkjwYZaxpts6FBN2uDQcx
+        VmCi7EX2Jw4q6OaVpd7oKcw6KW12KxcV1S/Zf1cBBp6S0BQrxEBL4LWi5ZEN0M3oo5lhV0LvPP/
+        /b2TUr4EXs3edhnOEkXGcZF4jxMSPu0gLVCcun9ROkm4/v0d9+pBFosWs1A==
+X-Google-Smtp-Source: AB8JxZpWjVkP3GBv3F7qIYDHTTwBMP5A3mFfaIDOdti5y2n2bdr50REoIqd8WMaY72I5wvM+9+KB6iVw5Ik=
 MIME-Version: 1.0
-X-Received: by 2002:ab0:5303:: with SMTP id x3-v6mr13516099uax.9.1526335062190;
- Mon, 14 May 2018 14:57:42 -0700 (PDT)
-Date:   Mon, 14 May 2018 14:56:17 -0700
+X-Received: by 2002:a24:f90b:: with SMTP id l11-v6mr13818531ith.53.1526335064555;
+ Mon, 14 May 2018 14:57:44 -0700 (PDT)
+Date:   Mon, 14 May 2018 14:56:18 -0700
 In-Reply-To: <20180514215626.164960-1-bmwill@google.com>
-Message-Id: <20180514215626.164960-27-bmwill@google.com>
+Message-Id: <20180514215626.164960-28-bmwill@google.com>
 References: <20180514215626.164960-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH 26/35] remote: convert match_explicit_refs to take a struct refspec
+Subject: [PATCH 27/35] push: check for errors earlier
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, bmwill@google.com
 Cc:     Brandon Williams <bmwill@google.com>
@@ -62,43 +62,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert 'match_explicit_refs()' to take a 'struct refspec' as a
-parameter instead of a list of 'struct refspec_item'.
+Move the error checking for using the "--mirror", "--all", and "--tags"
+options earlier and explicitly check for the presence of the flags
+instead of checking for a side-effect of the flag.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- remote.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ builtin/push.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 0879ee587..73d462f24 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1082,12 +1082,11 @@ static int match_explicit(struct ref *src, struct ref *dst,
- }
+diff --git a/builtin/push.c b/builtin/push.c
+index 6b7e45890..df5df6c0d 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -417,23 +417,6 @@ static int do_push(const char *repo, int flags,
+ 	if (push_options->nr)
+ 		flags |= TRANSPORT_PUSH_OPTIONS;
  
- static int match_explicit_refs(struct ref *src, struct ref *dst,
--			       struct ref ***dst_tail, struct refspec_item *rs,
--			       int rs_nr)
-+			       struct ref ***dst_tail, struct refspec *rs)
- {
- 	int i, errs;
--	for (i = errs = 0; i < rs_nr; i++)
--		errs += match_explicit(src, dst, dst_tail, &rs[i]);
-+	for (i = errs = 0; i < rs->nr; i++)
-+		errs += match_explicit(src, dst, dst_tail, &rs->items[i]);
- 	return errs;
- }
+-	if ((flags & TRANSPORT_PUSH_ALL) && refspec) {
+-		if (!strcmp(*refspec, "refs/tags/*"))
+-			return error(_("--all and --tags are incompatible"));
+-		return error(_("--all can't be combined with refspecs"));
+-	}
+-
+-	if ((flags & TRANSPORT_PUSH_MIRROR) && refspec) {
+-		if (!strcmp(*refspec, "refs/tags/*"))
+-			return error(_("--mirror and --tags are incompatible"));
+-		return error(_("--mirror can't be combined with refspecs"));
+-	}
+-
+-	if ((flags & (TRANSPORT_PUSH_ALL|TRANSPORT_PUSH_MIRROR)) ==
+-				(TRANSPORT_PUSH_ALL|TRANSPORT_PUSH_MIRROR)) {
+-		return error(_("--all and --mirror are incompatible"));
+-	}
+-
+ 	if (!refspec && !(flags & TRANSPORT_PUSH_ALL)) {
+ 		if (remote->push.raw_nr) {
+ 			refspec = remote->push.raw;
+@@ -625,6 +608,20 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		die(_("--delete is incompatible with --all, --mirror and --tags"));
+ 	if (deleterefs && argc < 2)
+ 		die(_("--delete doesn't make sense without any refs"));
++	if (flags & TRANSPORT_PUSH_ALL) {
++		if (tags)
++			die(_("--all and --tags are incompatible"));
++		if (argc >= 2)
++			die(_("--all can't be combined with refspecs"));
++	}
++	if (flags & TRANSPORT_PUSH_MIRROR) {
++		if (tags)
++			die(_("--mirror and --tags are incompatible"));
++		if (argc >= 2)
++			die(_("--mirror can't be combined with refspecs"));
++	}
++	if ((flags & TRANSPORT_PUSH_ALL) && (flags & TRANSPORT_PUSH_MIRROR))
++		die(_("--all and --mirror are incompatible"));
  
-@@ -1311,7 +1310,7 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 		refspec = default_refspec;
- 	}
- 	refspec_appendn(&rs, refspec, nr_refspec);
--	errs = match_explicit_refs(src, *dst, &dst_tail, rs.items, rs.nr);
-+	errs = match_explicit_refs(src, *dst, &dst_tail, &rs);
- 
- 	/* pick the remainder */
- 	for (ref = src; ref; ref = ref->next) {
+ 	if (recurse_submodules == RECURSE_SUBMODULES_CHECK)
+ 		flags |= TRANSPORT_RECURSE_SUBMODULES_CHECK;
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
