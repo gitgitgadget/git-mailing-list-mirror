@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BC391F406
-	for <e@80x24.org>; Mon, 14 May 2018 21:58:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFFD91F406
+	for <e@80x24.org>; Mon, 14 May 2018 21:58:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752616AbeENV56 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 17:57:58 -0400
-Received: from mail-it0-f73.google.com ([209.85.214.73]:52931 "EHLO
-        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752577AbeENV5z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 17:57:55 -0400
-Received: by mail-it0-f73.google.com with SMTP id n83-v6so16052929itg.2
-        for <git@vger.kernel.org>; Mon, 14 May 2018 14:57:55 -0700 (PDT)
+        id S1752587AbeENV5w (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 17:57:52 -0400
+Received: from mail-ua0-f202.google.com ([209.85.217.202]:49094 "EHLO
+        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752567AbeENV5r (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 17:57:47 -0400
+Received: by mail-ua0-f202.google.com with SMTP id l31-v6so18282680uae.15
+        for <git@vger.kernel.org>; Mon, 14 May 2018 14:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=lL0TWvITpNxFztoA4JlUlurYh2XA1UNXEvnoI/LK3LQ=;
-        b=dSBWgIq7cTxIB9Y8FDoufwWFIqFsWRp3DJSV2MgaKhJUDX5gvvT9YJnTRvg/nMbntE
-         vTY3z4T6q1eX0WYfvfknlgZFwBXv5bW/496tESMUphMcgkvyfLrOV0MehS0yoCAHbd4k
-         ZGBUyU0ZqjKyWa3iOB8e93dwUcL9V8BHL1pxTorIy4+5mQrP1CJbrRKpW1i9NsY/p0iu
-         h7Ai9nxXQG9d1qN8AqgRipJpYiUO94qYhEHMuxjZwdAJu9yAXiWmEmmxcJ/LGOhQjmEP
-         4SfbXrFAbqK7BUu2udghPqI1XVHOM5sDofwovHrsPPhWy8qcy6RfiCXct6yWjg6nic6L
-         95fw==
+        bh=mrq2ZshMpNr9Ko361GlwmOmrFbJMciRXKWjR9dQHDmY=;
+        b=jrD/T7Ka1ZBhM6bqe4Q6JPHNvmp20dc0w2ULKUciiVu14kWi4+q6BYeTzYs9h2rc2O
+         GBo80VC8AlaXLZB33IyYfEAP6Gtb7/hI/cafWv7u4eMFAJCPih/xl1TddZ0qoMGtZ72J
+         wgWCnB6mkLV28vkdko46/TWJPS/1IhyccaAprWoCn4H9kKrezCgknjwohdcT2pz5TiuA
+         ON3FGsQMlSVBlkTDQ/cnVvTWXsrKf+GmbYPMCjpOozHCslaSbVwJDw9RfmQxahIU6/ZR
+         5PR4NtazfHCEHnK6YZ6XZqVK2jYX1Y3hxr2DPSSBquNaD1RKNCpxz27Z4HHZen+kkD+n
+         Za6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=lL0TWvITpNxFztoA4JlUlurYh2XA1UNXEvnoI/LK3LQ=;
-        b=f6rHr0DjMx65+NbwNiP8OE9KYWd52ATd2Eqi8iATCFzOzHyRJD+mbbI8QOXK4K27nA
-         wBoqfEbZcd+FRHIkSfuxHoX0syVooV5jYlgxCIuyQz5LbuEdN8PjRXtm6j6iMy3cB9LC
-         UAeMkrhAe4wiRlie1H4s460idgXUFJAjs+oVP8maHIu88TlK0qTHjN7gyPR4Dyr9oNyX
-         L+6CTb4nyhbuFmmmsdHm3aANpqAEBgbvdBuo9xKNLO5fbun+s1cvNJwbCH7F+JykFQiT
-         e9wmnbAv06RjC/zs1Z7glf1LpIlTT3C/GrR7jPUmPPUJ3m44qKXJEN9zF9aySRu+Qa5h
-         t1pQ==
-X-Gm-Message-State: ALKqPweTDeJUOGbe+gSGAr+Eo4FosQPxTW1T9z/fH0O0g3qrMNcuXolr
-        BjIdO05nau4oAcRc48VTJ7KWrFhJLXTwAZldmzJmgVdy1deYQVLCtxMXxicwcOJKvYZihuzLBLJ
-        MnKP/qGZKQa6ZCFaqAw17UkbugmFJLeOaT6ruNz9cOo6EPcAYtDtlQjdWwg==
-X-Google-Smtp-Source: AB8JxZqvcKRksV3Dg9ryXY/mySfRhIjqXIBwEXzX2trLsXIlBQCVHQzOoIfDb4bUmabvXbiHK3c0gltnIqo=
+        bh=mrq2ZshMpNr9Ko361GlwmOmrFbJMciRXKWjR9dQHDmY=;
+        b=HBE0Dc/tOdYNoi9rvNBh2rvtGO/TI8NRTU9L1nKvKfjkDYspc1Dqd+n7gqOD4qVweT
+         wJYB8NzSJXDc9jq0AoMvVAQDdsTl7OJkMK8uyPpv3jkVZKFYvR76vJhfdWVkMofsu2mv
+         KftYBMKTwnOq/p4z3LaYB8E9CtsBveH6QiVizHakl7Z50F1bsodHVD2oq6vhiDp8m6pd
+         +AH8Lduu5DwksP3AQNmN9g9U9MtKBxsCE1VCyn2B0Icg8YIw1RsDTAIg7G7T/MwU+GmN
+         uxiBQCY3Wg2ibUvUCPaQtJidc2KxfqKgfVcN7PpY+mBOdy+sHCObM4qExqnt+GKHPKXV
+         tKnA==
+X-Gm-Message-State: ALKqPwflu5S7QMqkk3qt5jhg2VM+PjDc2TSLq2ZELwNMQL+X+X0qLrvp
+        Qke9/uZJQWknz2Cl+vT9/+4AxoP8jgV7dA8Qcm/IhAerd2k+vdmZFkiRlOGZe0U8/77mqhsgqK5
+        f9zfPLXcYpS5GWJy/RN/dSPdGJs5NvUbhVrN7RTCzTxUyaKhWwy4yPv7LWQ==
+X-Google-Smtp-Source: AB8JxZrnw+2O/Pyc/sYWOm1RbhhfHzXht78l62sHBi+McSeSXC8GhkiOGQwmV2RqL7b0lT7wiD+NfMYxMC8=
 MIME-Version: 1.0
-X-Received: by 2002:a24:7a83:: with SMTP id a125-v6mr13707089itc.54.1526335074633;
- Mon, 14 May 2018 14:57:54 -0700 (PDT)
-Date:   Mon, 14 May 2018 14:56:22 -0700
+X-Received: by 2002:a9f:3ed8:: with SMTP id n24-v6mr12468172uaj.78.1526335067098;
+ Mon, 14 May 2018 14:57:47 -0700 (PDT)
+Date:   Mon, 14 May 2018 14:56:19 -0700
 In-Reply-To: <20180514215626.164960-1-bmwill@google.com>
-Message-Id: <20180514215626.164960-32-bmwill@google.com>
+Message-Id: <20180514215626.164960-29-bmwill@google.com>
 References: <20180514215626.164960-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH 31/35] transport: remove transport_verify_remote_names
+Subject: [PATCH 28/35] push: convert to use struct refspec
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, bmwill@google.com
 Cc:     Brandon Williams <bmwill@google.com>
@@ -62,85 +62,143 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove 'transprot_verify_remote_names()' because all callers have
-migrated to using 'struct refspec' which performs the same checks in
-'parse_refspec()'.
+Convert the refspecs in builtin/push.c to be stored in a 'struct
+refspec' instead of being stored in a list of 'struct refspec_item's.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/send-pack.c |  2 --
- transport.c         | 24 ------------------------
- transport.h         |  2 --
- 3 files changed, 28 deletions(-)
+ builtin/push.c | 38 +++++++++++++++-----------------------
+ 1 file changed, 15 insertions(+), 23 deletions(-)
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index ef512616f..7c34bf467 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -265,8 +265,6 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 		BUG("unknown protocol version");
- 	}
+diff --git a/builtin/push.c b/builtin/push.c
+index df5df6c0d..ef42979d1 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -57,19 +57,10 @@ static enum transport_family family;
  
--	transport_verify_remote_names(rs.raw_nr, rs.raw);
--
- 	local_refs = get_local_heads();
+ static struct push_cas_option cas;
  
- 	flags = MATCH_REFS_NONE;
-diff --git a/transport.c b/transport.c
-index a89f17744..fe96c0b80 100644
---- a/transport.c
-+++ b/transport.c
-@@ -619,29 +619,6 @@ void transport_print_push_status(const char *dest, struct ref *refs,
- 	free(head);
- }
+-static const char **refspec;
+-static int refspec_nr;
+-static int refspec_alloc;
++static struct refspec rs = REFSPEC_INIT_PUSH;
  
--void transport_verify_remote_names(int nr_heads, const char **heads)
+ static struct string_list push_options_config = STRING_LIST_INIT_DUP;
+ 
+-static void add_refspec(const char *ref)
 -{
--	int i;
--
--	for (i = 0; i < nr_heads; i++) {
--		const char *local = heads[i];
--		const char *remote = strrchr(heads[i], ':');
--
--		if (*local == '+')
--			local++;
--
--		/* A matching refspec is okay.  */
--		if (remote == local && remote[1] == '\0')
--			continue;
--
--		remote = remote ? (remote + 1) : local;
--		if (check_refname_format(remote,
--				REFNAME_ALLOW_ONELEVEL|REFNAME_REFSPEC_PATTERN))
--			die("remote part of refspec is not a valid name in %s",
--				heads[i]);
--	}
+-	refspec_nr++;
+-	ALLOC_GROW(refspec, refspec_nr, refspec_alloc);
+-	refspec[refspec_nr-1] = ref;
 -}
 -
- static int git_transport_push(struct transport *transport, struct ref *remote_refs, int flags)
+ static const char *map_refspec(const char *ref,
+ 			       struct remote *remote, struct ref *local_refs)
  {
- 	struct git_transport_data *data = transport->data;
-@@ -1097,7 +1074,6 @@ int transport_push(struct transport *transport,
- 		   unsigned int *reject_reasons)
+@@ -138,7 +129,7 @@ static void set_refspecs(const char **refs, int nr, const char *repo)
+ 			}
+ 			ref = map_refspec(ref, remote, local_refs);
+ 		}
+-		add_refspec(ref);
++		refspec_append(&rs, ref);
+ 	}
+ }
+ 
+@@ -226,7 +217,7 @@ static void setup_push_upstream(struct remote *remote, struct branch *branch,
+ 	}
+ 
+ 	strbuf_addf(&refspec, "%s:%s", branch->refname, branch->merge[0]->src);
+-	add_refspec(refspec.buf);
++	refspec_append(&rs, refspec.buf);
+ }
+ 
+ static void setup_push_current(struct remote *remote, struct branch *branch)
+@@ -236,7 +227,7 @@ static void setup_push_current(struct remote *remote, struct branch *branch)
+ 	if (!branch)
+ 		die(_(message_detached_head_die), remote->name);
+ 	strbuf_addf(&refspec, "%s:%s", branch->refname, branch->refname);
+-	add_refspec(refspec.buf);
++	refspec_append(&rs, refspec.buf);
+ }
+ 
+ static int is_workflow_triangular(struct remote *remote)
+@@ -253,7 +244,7 @@ static void setup_default_push_refspecs(struct remote *remote)
+ 	switch (push_default) {
+ 	default:
+ 	case PUSH_DEFAULT_MATCHING:
+-		add_refspec(":");
++		refspec_append(&rs, ":");
+ 		break;
+ 
+ 	case PUSH_DEFAULT_UNSPECIFIED:
+@@ -341,7 +332,8 @@ static void advise_ref_needs_force(void)
+ 	advise(_(message_advice_ref_needs_force));
+ }
+ 
+-static int push_with_options(struct transport *transport, int flags)
++static int push_with_options(struct transport *transport, struct refspec *rs,
++			     int flags)
  {
- 	*reject_reasons = 0;
--	transport_verify_remote_names(rs->raw_nr, rs->raw);
+ 	int err;
+ 	unsigned int reject_reasons;
+@@ -363,7 +355,7 @@ static int push_with_options(struct transport *transport, int flags)
  
- 	if (transport_color_config() < 0)
- 		return -1;
-diff --git a/transport.h b/transport.h
-index e2c809af4..bac085ce0 100644
---- a/transport.h
-+++ b/transport.h
-@@ -227,8 +227,6 @@ int transport_helper_init(struct transport *transport, const char *name);
- int bidirectional_transfer_loop(int input, int output);
+ 	if (verbosity > 0)
+ 		fprintf(stderr, _("Pushing to %s\n"), transport->url);
+-	err = transport_push(transport, refspec_nr, refspec, flags,
++	err = transport_push(transport, rs->raw_nr, rs->raw, flags,
+ 			     &reject_reasons);
+ 	if (err != 0) {
+ 		fprintf(stderr, "%s", push_get_color(PUSH_COLOR_ERROR));
+@@ -397,6 +389,7 @@ static int do_push(const char *repo, int flags,
+ 	struct remote *remote = pushremote_get(repo);
+ 	const char **url;
+ 	int url_nr;
++	struct refspec *push_refspec = &rs;
  
- /* common methods used by transport.c and builtin/send-pack.c */
--void transport_verify_remote_names(int nr_heads, const char **heads);
--
- void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int verbose);
+ 	if (!remote) {
+ 		if (repo)
+@@ -417,10 +410,9 @@ static int do_push(const char *repo, int flags,
+ 	if (push_options->nr)
+ 		flags |= TRANSPORT_PUSH_OPTIONS;
  
- int transport_refs_pushed(struct ref *ref);
+-	if (!refspec && !(flags & TRANSPORT_PUSH_ALL)) {
+-		if (remote->push.raw_nr) {
+-			refspec = remote->push.raw;
+-			refspec_nr = remote->push.raw_nr;
++	if (!push_refspec->nr && !(flags & TRANSPORT_PUSH_ALL)) {
++		if (remote->push.nr) {
++			push_refspec = &remote->push;
+ 		} else if (!(flags & TRANSPORT_PUSH_MIRROR))
+ 			setup_default_push_refspecs(remote);
+ 	}
+@@ -432,7 +424,7 @@ static int do_push(const char *repo, int flags,
+ 				transport_get(remote, url[i]);
+ 			if (flags & TRANSPORT_PUSH_OPTIONS)
+ 				transport->push_options = push_options;
+-			if (push_with_options(transport, flags))
++			if (push_with_options(transport, push_refspec, flags))
+ 				errs++;
+ 		}
+ 	} else {
+@@ -440,7 +432,7 @@ static int do_push(const char *repo, int flags,
+ 			transport_get(remote, NULL);
+ 		if (flags & TRANSPORT_PUSH_OPTIONS)
+ 			transport->push_options = push_options;
+-		if (push_with_options(transport, flags))
++		if (push_with_options(transport, push_refspec, flags))
+ 			errs++;
+ 	}
+ 	return !!errs;
+@@ -631,7 +623,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		flags |= TRANSPORT_RECURSE_SUBMODULES_ONLY;
+ 
+ 	if (tags)
+-		add_refspec("refs/tags/*");
++		refspec_append(&rs, "refs/tags/*");
+ 
+ 	if (argc > 0) {
+ 		repo = argv[0];
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
