@@ -2,27 +2,27 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,URI_HEX
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18DEE1F42D
-	for <e@80x24.org>; Mon, 14 May 2018 10:59:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D5961F42D
+	for <e@80x24.org>; Mon, 14 May 2018 10:59:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752577AbeENK7Q (ORCPT <rfc822;e@80x24.org>);
+        id S1752575AbeENK7Q (ORCPT <rfc822;e@80x24.org>);
         Mon, 14 May 2018 06:59:16 -0400
-Received: from ao2.it ([92.243.12.208]:53773 "EHLO ao2.it"
+Received: from ao2.it ([92.243.12.208]:53778 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752547AbeENK7D (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752544AbeENK7D (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 14 May 2018 06:59:03 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1fIBBp-000750-Be; Mon, 14 May 2018 12:58:49 +0200
+        id 1fIBBp-000751-GV; Mon, 14 May 2018 12:58:49 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1fIBC0-0002C1-9A; Mon, 14 May 2018 12:59:00 +0200
+        id 1fIBC0-0002C3-Dv; Mon, 14 May 2018 12:59:00 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
@@ -30,112 +30,140 @@ Cc:     Brandon Williams <bmwill@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Richard Hartmann <richih.mailinglist@gmail.com>,
         Stefan Beller <sbeller@google.com>, Antonio Ospite <ao2@ao2.it>
-Subject: [RFC PATCH 00/10] Make submodules work if .gitmodules is not checked out
-Date:   Mon, 14 May 2018 12:58:13 +0200
-Message-Id: <20180514105823.8378-1-ao2@ao2.it>
+Subject: [RFC PATCH 01/10] config: make config_from_gitmodules generally useful
+Date:   Mon, 14 May 2018 12:58:14 +0200
+Message-Id: <20180514105823.8378-2-ao2@ao2.it>
 X-Mailer: git-send-email 2.17.0
+In-Reply-To: <20180514105823.8378-1-ao2@ao2.it>
+References: <20180514105823.8378-1-ao2@ao2.it>
 X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+The config_from_gitmodules() function is a good candidate for
+a centralized point where to read the gitmodules configuration file.
 
-vcsh[1] uses bare git repositories and detached work-trees to manage
-*distinct* sets of configuration files directly into $HOME.
+Add a repo argument to it to make the function more general, and adjust
+the current callers in cmd_fetch and update-clone.
 
-In this setup multiple repositories share the same directory (namely
-$HOME) as their work dir, so the sets of checked out files would also
-need to be *disjoint* to avoid collisions (examples of collisions can be
-README or LICENSE files, or even .gitignore and .gitattributes).
+As a proof of the utility of the change, start using the function also
+in repo_read_gitmodules which was basically doing the same operations.
 
-Amongst vcsh users, a popular solution to this problem is to use sparse
-checkouts, representing the *intersection* of all the repositories in
-a common sparse-checkout file[2].
+Signed-off-by: Antonio Ospite <ao2@ao2.it>
+---
+ builtin/fetch.c             |  2 +-
+ builtin/submodule--helper.c |  2 +-
+ config.c                    | 13 +++++++------
+ config.h                    | 10 +---------
+ submodule-config.c          | 16 ++++------------
+ 5 files changed, 14 insertions(+), 29 deletions(-)
 
-This works well but there are still limitations about the ability to use
-submodules because git expects the .gitmodules file to be checked out.
-
-The user (or vcsh itself) might learn to fully populate one repository
-at a time when working with submodules but this is unhandy and would
-introduce serialization even when it's not strictly needed like in the
-case of _reading_ .gitmodules.
-
-As a side note, git submodules have worked perfectly fine with detached
-work-trees for some time[3,4,5] so extending them to also play nice with
-sparse checkouts seems the next logical step to cover the vcsh use case.
-
-This series teaches git to try and read the .gitmodules file from the
-index (HEAD:.gitmodules) when it's not available in the work dir.
-
-It does so by first providing an opaque way to access the submodules
-configuration, and then extends the access mechanism behind the scenes.
-
-Writing to .gitmodules still requires it to be checked out.
-
-This series should be in line with what Stefan and Jonathan proposed;
-although it's not perfect yet:
-
-  - naming of functions can be improved,
-  - code can be moved around to better places,
-  - maybe some notes should be added to Documentation/git-submodule.txt,
-  - my git terminology may still be a little off: do "work tree" and
-    "work directory" mean the same thing?
-
-the functionality is there and we should have a decent baseline to work
-on.
-
-The patchset is based on the current master (ccdcbd54c447), the
-test-suite passes after each commit and there are some per-patch
-annotations.
-
-If anyone wanted to pick up and finish the work feel free to do so,
-otherwise please comment and I'll try to address issues as time permits.
-
-Thanks,
-   Antonio
-
-[1] https://github.com/RichiH/vcsh
-[2] https://github.com/RichiH/vcsh/issues/120#issuecomment-387335765
-[3] http://git.661346.n2.nabble.com/git-submodule-vs-GIT-WORK-TREE-td7562165.html
-[4] http://git.661346.n2.nabble.com/PATCH-Solve-git-submodule-issues-with-detached-work-trees-td7563377.html
-[5] https://github.com/git/git/commit/be8779f7ac9a3be9aa783df008d59082f4054f67
-
-Antonio Ospite (10):
-  config: make config_from_gitmodules generally useful
-  submodule: factor out a config_gitmodules_set function
-  t7411: be nicer to other tests and really clean things up
-  submodule--helper: add a new 'config' subcommand
-  submodule: use the 'submodule--helper config' command
-  submodule--helper: add a '--stage' option to the 'config' sub command
-  submodule: use 'submodule--helper config --stage' to stage .gitmodules
-  t7506: cleanup .gitmodules properly before setting up new scenario
-  submodule: support reading .gitmodules even when it's not checked out
-  t7415: add new test about using HEAD:.gitmodules from the index
-
- builtin/fetch.c                        |   2 +-
- builtin/mv.c                           |   2 +
- builtin/rm.c                           |   7 +-
- builtin/submodule--helper.c            | 100 +++++++++++++++++++-
- cache.h                                |   1 +
- config.c                               |  26 ++++--
- config.h                               |  10 +-
- git-submodule.sh                       |  10 +-
- submodule-config.c                     |  16 +---
- submodule.c                            |  37 ++++++--
- submodule.h                            |   2 +
- t/t7411-submodule-config.sh            |  63 ++++++++++++-
- t/t7415-submodule-sparse-gitmodules.sh | 124 +++++++++++++++++++++++++
- t/t7506-status-submodule.sh            |   3 +-
- 14 files changed, 357 insertions(+), 46 deletions(-)
- create mode 100755 t/t7415-submodule-sparse-gitmodules.sh
-
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 7ee83ac0f..a67ee7c39 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1445,7 +1445,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	for (i = 1; i < argc; i++)
+ 		strbuf_addf(&default_rla, " %s", argv[i]);
+ 
+-	config_from_gitmodules(gitmodules_fetch_config, NULL);
++	config_from_gitmodules(gitmodules_fetch_config, the_repository, NULL);
+ 	git_config(git_fetch_config, NULL);
+ 
+ 	argc = parse_options(argc, argv, prefix,
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index c2403a915..9e8f2acd5 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1602,7 +1602,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 	};
+ 	suc.prefix = prefix;
+ 
+-	config_from_gitmodules(gitmodules_update_clone_config, &max_jobs);
++	config_from_gitmodules(gitmodules_update_clone_config, the_repository, &max_jobs);
+ 	git_config(gitmodules_update_clone_config, &max_jobs);
+ 
+ 	argc = parse_options(argc, argv, prefix, module_update_clone_options,
+diff --git a/config.c b/config.c
+index 6f8f1d8c1..8ffe29330 100644
+--- a/config.c
++++ b/config.c
+@@ -2173,17 +2173,18 @@ int git_config_get_pathname(const char *key, const char **dest)
+ }
+ 
+ /*
+- * Note: This function exists solely to maintain backward compatibility with
+- * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
+- * NOT be used anywhere else.
++ * Note: Initially this function existed solely to maintain backward
++ * compatibility with 'fetch' and 'update_clone' storing configuration in
++ * '.gitmodules' but it turns out it can be useful as a centralized point to
++ * read the gitmodules config file.
+  *
+  * Runs the provided config function on the '.gitmodules' file found in the
+  * working directory.
+  */
+-void config_from_gitmodules(config_fn_t fn, void *data)
++void config_from_gitmodules(config_fn_t fn, struct repository *repo, void *data)
+ {
+-	if (the_repository->worktree) {
+-		char *file = repo_worktree_path(the_repository, GITMODULES_FILE);
++	if (repo->worktree) {
++		char *file = repo_worktree_path(repo, GITMODULES_FILE);
+ 		git_config_from_file(fn, file, data);
+ 		free(file);
+ 	}
+diff --git a/config.h b/config.h
+index cdac2fc73..43ce76c0f 100644
+--- a/config.h
++++ b/config.h
+@@ -215,15 +215,7 @@ extern int repo_config_get_maybe_bool(struct repository *repo,
+ extern int repo_config_get_pathname(struct repository *repo,
+ 				    const char *key, const char **dest);
+ 
+-/*
+- * Note: This function exists solely to maintain backward compatibility with
+- * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
+- * NOT be used anywhere else.
+- *
+- * Runs the provided config function on the '.gitmodules' file found in the
+- * working directory.
+- */
+-extern void config_from_gitmodules(config_fn_t fn, void *data);
++extern void config_from_gitmodules(config_fn_t fn, struct repository *repo, void *data);
+ 
+ extern int git_config_get_value(const char *key, const char **value);
+ extern const struct string_list *git_config_get_value_multi(const char *key);
+diff --git a/submodule-config.c b/submodule-config.c
+index d87c3ff63..f39c71dfb 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -577,19 +577,11 @@ void repo_read_gitmodules(struct repository *repo)
+ {
+ 	submodule_cache_check_init(repo);
+ 
+-	if (repo->worktree) {
+-		char *gitmodules;
+-
+-		if (repo_read_index(repo) < 0)
+-			return;
+-
+-		gitmodules = repo_worktree_path(repo, GITMODULES_FILE);
+-
+-		if (!is_gitmodules_unmerged(repo->index))
+-			git_config_from_file(gitmodules_cb, gitmodules, repo);
++	if (repo_read_index(repo) < 0)
++		return;
+ 
+-		free(gitmodules);
+-	}
++	if (!is_gitmodules_unmerged(repo->index))
++		config_from_gitmodules(gitmodules_cb, repo, repo);
+ 
+ 	repo->submodule_cache->gitmodules_read = 1;
+ }
 -- 
-Antonio Ospite
-https://ao2.it
-https://twitter.com/ao2it
+2.17.0
 
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
