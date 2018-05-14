@@ -2,110 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 111E31F406
-	for <e@80x24.org>; Mon, 14 May 2018 22:08:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F89D1F406
+	for <e@80x24.org>; Mon, 14 May 2018 22:58:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752148AbeENWIE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 18:08:04 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:50596 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752054AbeENWIC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 18:08:02 -0400
-Received: by mail-it0-f52.google.com with SMTP id p3-v6so14278322itc.0
-        for <git@vger.kernel.org>; Mon, 14 May 2018 15:08:01 -0700 (PDT)
+        id S1752192AbeENW6i (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 18:58:38 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:53229 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752077AbeENW6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 18:58:37 -0400
+Received: by mail-wm0-f45.google.com with SMTP id w194-v6so16146725wmf.2
+        for <git@vger.kernel.org>; Mon, 14 May 2018 15:58:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Goj3g0sCNvd+7qe6cDkBOdPVaI+cqmhurmWznjrfr/o=;
-        b=LxUkqrkDM96lTADsLmeNmIyWA6lKo5aIGdgirB7lS7lHXPp79CFi2B8jt7gSU8Fm0c
-         jxc4psDRM/lQOOW+dymfCFAMslrw4VCn/Horl7LGjWFEZeDPWWk3wshFmCckkfNpRW+G
-         fzZ+TfVAuhfmuwiyXIcNPHwTpmEl8uRzASrLTZrCAy02pkUmrsUSW8Ht3wdzJX0PbGul
-         r4/ReM99oNfssrnSF0hCzjSoq9PpFhwifJK/toGl0NMmFVR6F/HEKCKMkksx7fXmafxT
-         huAzBaSUwWZeA4C8Ky8XCeyaiI0jQWP0Qz6PfIDOSVUZO/xB49q/7ijMOVdqhf2vv1Yc
-         0LJg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=K8iJdo/L8t2FZhSkXtSlNjIj1/14OP6+vZI/nhjAzyA=;
+        b=SdteAJo319pdUrA9yo19UUjl7b9qt2k0HPnhB2q/QqdwnDl8d28RmU7l1mgV2BPj8E
+         EzvjutK08ogUgUKAthF2t34po+mJ+j9M+/iYkIeOTX7gjvr2O7iRFtuuxar3HY0AZ+GL
+         L0k1q0GS2Lzyowt9MMnt+UTJ4U2ladbBaizVx4zRyL6p1fuEh6G9+3/sguyZvC0MNpsU
+         aCF7gRUhCWgRssBQZMBAqLYx/lcyjU+RcSN2Bv238DiUaqaiYkYzPo9QxMpd3ztKbCgx
+         Hwyb7G8t6V5l2BGL9AbRNadghZpex2b7wfvO8MtCEowEq1dtR2sBc6eBghLm1YGeQd9P
+         eSUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Goj3g0sCNvd+7qe6cDkBOdPVaI+cqmhurmWznjrfr/o=;
-        b=bDZP1mUQ3C7cr8kgf6GiYlPya6DrrCQo+1EQZ1BK6o/pJgr1BNjPCl7URjkv1qLIff
-         O4yh+cLguQqud8PaMfWUBbBiXenk4Cp6FCAKod4Zt2OtO2CXGOEk3qvc7nSTRunRxG/g
-         ZB5bHi7n14S/TmUpzbyq2b7Ib/bjsBGpyDDlKl/EeI/nvh7JOTUFssevQgN9Kv49cmhI
-         TMYH8HVpSmXZjdpmHX/04YFyck/Id7cvcU4NAvr9z8l9lytpgiPIZ/mppUgnA9EA1wva
-         gXdqCXlahrDbssXlVx+TOqqGxKYx0/TTp3VxdDsfd9L8e2wZI52g3/xG9yt8Lbt/tnBT
-         /JuQ==
-X-Gm-Message-State: ALKqPwdZ+OSEgnKQ1J3ZFxfQJe1WZeuA3JxyRjyQ++yfGg/iqoZWDvgY
-        JafZIJvk3Spudf+J4no89ETArMPc0EM+H4L4C/KoP43C
-X-Google-Smtp-Source: AB8JxZphcXtodNKeqkbkC6mjfTXLBzOtkBhhiGskWbWDVw0aAGC+h6yRzf7MomeGT+Dj+QdkDgVSw3Js3U6HfmL7UxE=
-X-Received: by 2002:a6b:ab82:: with SMTP id u124-v6mr11820671ioe.234.1526335680992;
- Mon, 14 May 2018 15:08:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=K8iJdo/L8t2FZhSkXtSlNjIj1/14OP6+vZI/nhjAzyA=;
+        b=USJ7NypVGpaneY9sLhtY6Ym07Y39EUCk+6ZdSZbP+CMyuM8fqGdE7AVp2G6J/pOpmr
+         R36q0evULENfO05DV11yidsgxYptLeTyIkjUeNtGX6bZhrrph5HS6ZI9D2hcLtCyulmc
+         njoa2jBVjGjzzk7URPUhPU+dLY7igCW00wFbstfmfDZ4TXAusQbODndHECj8ivoEBLcK
+         hPmj1nboQS4bYdDS1XP8sckq/yTRnTy3d/2Nz1l/AaRZ7CpEu+eGukNDqLHypVks7vcm
+         Ajv8aq/SX7eqDg8E8wp+rBUPoN6mO+7FOy1/qUplHfxrndsTk8MvlOQxi/ALJjBomj/5
+         sREQ==
+X-Gm-Message-State: ALKqPwdDM5UYtaU0NgbZ6kG1EAKEqo9AEuSWulSLfeDAxh/0R3Rf0qkv
+        ppZpeAGXLNLLj/KXQ12TIpX7qVXG
+X-Google-Smtp-Source: AB8JxZqPPYVE6/mtuElrDtglT+QrrtyK1Lu9+VJQSlHq+bVC8f0ht9B1Q2CyJpVgNWKZuu0LdTyXhQ==
+X-Received: by 2002:a50:921c:: with SMTP id i28-v6mr14672501eda.27.1526338715960;
+        Mon, 14 May 2018 15:58:35 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id b43-v6sm5604117edc.34.2018.05.14.15.58.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 14 May 2018 15:58:34 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     demerphq <demerphq@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: could `git merge --no-ff origin/master` be made more useful?
+References: <CANgJU+VFCY0LNRLMSGtD7ScpcLaPFMzUOyw6Bjgk6q=Kx9DvCg@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CANgJU+VFCY0LNRLMSGtD7ScpcLaPFMzUOyw6Bjgk6q=Kx9DvCg@mail.gmail.com>
+Date:   Tue, 15 May 2018 00:58:34 +0200
+Message-ID: <87lgcl3kv9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.107.139.88 with HTTP; Mon, 14 May 2018 15:08:00 -0700 (PDT)
-From:   demerphq <demerphq@gmail.com>
-Date:   Tue, 15 May 2018 00:08:00 +0200
-Message-ID: <CANgJU+VFCY0LNRLMSGtD7ScpcLaPFMzUOyw6Bjgk6q=Kx9DvCg@mail.gmail.com>
-Subject: could `git merge --no-ff origin/master` be made more useful?
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The first time I tried to use --no-ff I tried to do something like this:
 
-  git checkout master
-  git commit -a -m'whatever'
-  git commit -a -m'whatever2'
-  git merge --no-ff origin/master
+On Mon, May 14 2018, demerphq wrote:
 
-and was disappointed when "it didn't work" and git told me there was
-nothing to do as the branch was up to date. (Which I found a bit
-confusing.)
+> The first time I tried to use --no-ff I tried to do something like this:
+>
+>   git checkout master
+>   git commit -a -m'whatever'
+>   git commit -a -m'whatever2'
+>   git merge --no-ff origin/master
+>
+> and was disappointed when "it didn't work" and git told me there was
+> nothing to do as the branch was up to date. (Which I found a bit
+> confusing.)
+>
+> I realize now my expectations were incorrect, and that the argument to
+> merge needs to resolve to a commit that is ahead of the current
+> commit, and in the above sequence it is the other way around. So to do
+> what I want I can do:
+>
+>   git checkout master
+>   git checkout -b topic
+>   git commit -a -m'whatever'
+>   git commit -a -m'whatever2'
+>   git checkout master
+>   git merge --no-ff topic
+>
+> and iiuir this works because 'master' would be behind 'topic' in this case.
+>
+> But I have a few questions, 1) is there is an argument to feed to git
+> merge to make the first recipe work like the second? And 2) is this
+> asymmetry necessary with --no-ff?
 
-I realize now my expectations were incorrect, and that the argument to
-merge needs to resolve to a commit that is ahead of the current
-commit, and in the above sequence it is the other way around. So to do
-what I want I can do:
+I've been bitten my this myself, but found that it's documented as the
+very first thing in git-merge:
 
-  git checkout master
-  git checkout -b topic
-  git commit -a -m'whatever'
-  git commit -a -m'whatever2'
-  git checkout master
-  git merge --no-ff topic
+    Incorporates changes from the named commits (since the time their
+    histories diverged from the current branch) into the current
+    branch[...].
 
-and iiuir this works because 'master' would be behind 'topic' in this case.
+Since origin/master hasn't diverged from your current branch (unlike the
+other way around), the merge with --no-ff is a noop.
 
-But I have a few questions, 1) is there is an argument to feed to git
-merge to make the first recipe work like the second? And 2) is this
-asymmetry necessary with --no-ff?
+> More specifically would something horrible break if --no-ff
+> origin/trunk detected that the current branch was ahead of the named
+> branch and "swapped"  the implicit order of the two so that the first
+> recipe could behave like the second
 
-More specifically would something horrible break if --no-ff
-origin/trunk detected that the current branch was ahead of the named
-branch and "swapped"  the implicit order of the two so that the first
-recipe could behave like the second?
+If it worked like that then the user who sets merge.ff=false in his
+config and issues a "git pull" after making a commit on his local master
+would create a merge commit.
 
-Anyway, even if the above makes no sense, would it be hard to make the
-message provided by git merge in the first recipe a bit more
-suggestive of what is going on? For instance if it had said "Cannot
---no-ff merge, origin/master is behind master" it would have been much
-more clear what was going on.
+This old E-Mail of Junio's discusses that edge case & others in detail:
+https://public-inbox.org/git/7vty1zfwmd.fsf@alter.siamese.dyndns.org/
 
-Yves
+> Anyway, even if the above makes no sense, would it be hard to make the
+> message provided by git merge in the first recipe a bit more
+> suggestive of what is going on? For instance if it had said "Cannot
+> --no-ff merge, origin/master is behind master" it would have been much
+> more clear what was going on.
 
+I can't spot any reason for why we couldn't have something like this POC
+(would be properly done through advice.c):
 
+    diff --git a/builtin/merge.c b/builtin/merge.c
+    index 9db5a2cf16..920f67d9f8 100644
+    --- a/builtin/merge.c
+    +++ b/builtin/merge.c
+    @@ -1407,6 +1407,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+                     * but first the most common case of merging one remote.
+                     */
+                    finish_up_to_date(_("Already up to date."));
+    +               if (fast_forward == FF_NO)
+    +                       fprintf(stderr, "did you mean this the other way around?\n");
+                    goto done;
+            } else if (fast_forward != FF_NO && !remoteheads->next &&
+                            !common->next &&
 
-
-
-
-
-
-
-
--- 
-perl -Mre=debug -e "/just|another|perl|hacker/"
+But that should probably be reworked to be smart about whether --no-ff
+or merge.ff=false was specified, i.e. do we want to yell this at the
+user who's just set that at his config default, or the user who's
+specified --no-ff explicitly, or both? I don't know.
