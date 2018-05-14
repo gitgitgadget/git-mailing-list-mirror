@@ -2,49 +2,48 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,HK_NAME_MR_MRS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FB201F406
-	for <e@80x24.org>; Mon, 14 May 2018 13:29:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FE751F42D
+	for <e@80x24.org>; Mon, 14 May 2018 10:24:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753453AbeENN3a convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 14 May 2018 09:29:30 -0400
-Received: from no-rdns.free.clues.ro ([185.216.33.147]:59766 "EHLO
-        WIN-3Q9P1I8JN6A" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752333AbeENN33 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 09:29:29 -0400
-X-Greylist: delayed 1022 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 May 2018 09:29:29 EDT
-Received: from [185.216.33.147] ([127.0.0.1]) by WIN-3Q9P1I8JN6A with Microsoft SMTPSVC(7.5.7601.17514);
-         Mon, 14 May 2018 06:10:05 -0700
-Content-Type: text/plain; charset="iso-8859-1"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: =?utf-8?q?Isten_=C3=A1ldjon?=
+        id S1752376AbeENKYL convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 14 May 2018 06:24:11 -0400
+Received: from [191.101.23.222] ([191.101.23.222]:63097 "EHLO ismarine.com.tr"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752366AbeENKYJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 06:24:09 -0400
+Reply-To: patricia.william198@hotmail.com
+From:   "Mrs Patricia Williams" <EXPRESS_ADG@ismarine.com.tr>
 To:     git@vger.kernel.org
-From:   "Johanna Tuuk " <Tuuk@tuuk.com>
-Date:   Mon, 14 May 2018 06:10:05 -0700
-Reply-To: johnnatuuk@gmail.com
-Message-ID: <WIN-3Q9P1I8JN6Ao3wO00008206@WIN-3Q9P1I8JN6A>
-X-OriginalArrivalTime: 14 May 2018 13:10:05.0810 (UTC) FILETIME=[E078CD20:01D3EB84]
+Subject: Re: FROM: "MRS PATRICIA WILLIAMS"  git@vger.kernel.org
+Date:   14 May 2018 03:24:03 -0700
+Message-ID: <20180514032403.C631C7CDFF387252@ismarine.com.tr>
+MIME-Version: 1.0
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Isten áldjon
+FYI: About My Previous Message 
 
-Én vagyok Mrs.Johanna Tuuk, özvegy vagyok hosszú ideig tartó rákban. Az állapotom minden jelzoje valóban romlik, és teljesen nyilvánvaló, hogy két hónapot nem fogok élni orvosaim szerint, és minden jelzésben az orvosi elemzést illetoen. Ez azért van, mert a rák nagyon rossz stádiumba került, hogy nincs remény.
+Hello, 
 
-A kései férjem autóbalesetben halt meg, házasságunk idején nem tudtunk gyermeket produkálni. Az édesapám nagyon gazdag volt, és halála után örököltem minden üzletét és gazdagságát. Az orvosok azt tanácsolták nekem, hogy nem élhetek több mint két hónapig, ezért most úgy döntöttem, hogy megosztom e gazdagság egy részét, hogy hozzájáruljak a kevésbé kiváltságos Európában, Amerikában, Afrikában és Ázsiában kialakult fejlodéshez, különösen a probléma megoldásához a kevésbé privilegizált és az árvaház otthona.
+Am Mrs Patricia William, i just want to know if you receive my 
+two previous email i sent to you last week. 
 
-Az interneten végzett keresésem után választottam, négy hétig imádkoztam és böjtöltem rajta, hajlandó vagyok kilenc millió ötszázezer eurót adományozni a kevésbé kiváltságosnak. Kérem, vegye figyelembe, hogy ez az alap bankban fekszik és az én utasításom alapján benyújtja a pénz nevében történo átutalását.
+Is your email still Active? If YES; please can you email me back, 
+i have something very important to discuss with you. 
 
-Végül is oszintén imádkozom, hogy ezt az összeget átruházzák, még akkor is, ha késo vagyok, mert meg kell tudnom, hogy Krisztus nélkül a vagyon megszerzése hiábavaló, és Istennek ígéretet tettem, hogy az alap lesz használja a kevésbé privilegizált segítséget. Kérjük, vegye figyelembe, hogy lefordítottam ezt a levelet, hogy megértsétek, vissza tudsz írni engem
+Awaits your reply soon.. 
 
-Várom a sürgos választ.
 
-Isten áldjon.
+Best Regard 
+Mrs. Patricia Williams
+
