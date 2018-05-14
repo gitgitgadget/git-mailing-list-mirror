@@ -2,131 +2,236 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DFF51F406
-	for <e@80x24.org>; Mon, 14 May 2018 18:14:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EC441F406
+	for <e@80x24.org>; Mon, 14 May 2018 18:19:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752070AbeENSOm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 14:14:42 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:39034 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751626AbeENSOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 14:14:40 -0400
-Received: by mail-qt0-f194.google.com with SMTP id f1-v6so17389070qtj.6
-        for <git@vger.kernel.org>; Mon, 14 May 2018 11:14:40 -0700 (PDT)
+        id S1751515AbeENSTc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 14:19:32 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:39756 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750750AbeENSTa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 14:19:30 -0400
+Received: by mail-pg0-f68.google.com with SMTP id e1-v6so5830017pga.6
+        for <git@vger.kernel.org>; Mon, 14 May 2018 11:19:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=ZYkSV26FqpEuUCZKOS99AQv10yvgxp2Pm5GoyvvcbcQ=;
-        b=iifBjR2a72/zTn0iMCGcs5esAplcpb3ah/vG+CFsvINRWMFya9NL/nasKOwa9Sq9Ys
-         jr08vUfMVgbMsVZXrcZJVDVB23RpAdl+gFQqfzgpNyeEAF3pct+o+caUW4wuNXDE7mV0
-         NyOgdJfXPjtWjzEgdYOM9cSVxf4PKDPQoNEUVxq2sKuKecRL7OFE9qcf6ABKIryH5lCx
-         paYjGKPISIBOf2OGINdiU/wY7xT4lhyAHdGbrf6fWjEAc2sI+ZXymhCF2sP7SKB1aPD+
-         CHE00Im2MIQGwUeYWgvEvncTV+OxqvMv+xAirDEO6cwM7VitKXK7rTmKtFyvPufR2G1N
-         Zi7Q==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=WcRCKRZ7cxCJ3V6eQGmLoXred3xI/1Cth8RnuxA90kA=;
+        b=S++yfdKz3+Kuep9mByFygK7O1M/jcUr7Ghpwq4zBxO8wOaZxEuI/MKzbCInXAjlxKn
+         HxfYJwrEsrQiZpa6ocyNPT0mqtAzLlDqEdCgwBwFBCSiLCaT/zAwoqnD36gueAU7nZgh
+         xfn8g3Jew5JcNV9Iu3Ra/CWbNJfYl5aR7b6nS2Noo3TcLjPgcYHPV9iGx3gNHe9rQlZH
+         5P4d+hifFeJXIMEyv6wFNqFDWRUPMg1dZ0blEriHB9WuLreFUTHv9qDNIVO9dOSJL/d5
+         7B09maVX06PP70WuTXjHLwfyg0qbCEgpfYYSS9GhhCDFIihKRP/ZkRg2xVOcJhA7y5rl
+         LU6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=ZYkSV26FqpEuUCZKOS99AQv10yvgxp2Pm5GoyvvcbcQ=;
-        b=Uz9yibq57ki6v7UWRaQNx1UbNlo3kbB0MpFj4ezN4lQIMLkiGNCldj7ryff9VWIlC5
-         iy3iGlX9Bzkg3DPoNtgzlcQ/xlmPdLqqIEopRTZ1EHqVppA99JZfl+Me9+sA5d6O8VI1
-         bcHM3MdnLmGZZqYNYNVD33ZC13wNaCpCBJRh7dfcLdplHHDCjXAceOYE+2/VKG4vKGU+
-         sortvmb5xGrzNQvlhqPNEsOJRYsKgYZ7AJFFclY9/IudivfQxqbKB43VXpY6EblpepDk
-         OLr8qH3fWLcQd9sL4jS1EXOWDREVTJ/89NbgCHSmHkgpz0IOYOh8jB6fjhfnsoXeOeXj
-         NcCA==
-X-Gm-Message-State: ALKqPwf4C/yNipw53JmRk8F/x5xJTF2XskCkTeg1JKFuC+lDqBzmxJyr
-        tnkBLvdb6O6UPT+4g8qXATU=
-X-Google-Smtp-Source: AB8JxZobhsPeyVTJ+xfJvtSp0YElijzTy8Bf73Q/+1YkWPJ2u5i1nnHk0RB4hnVMoOpEtcoNXnWHcw==
-X-Received: by 2002:aed:2aa3:: with SMTP id t32-v6mr10486363qtd.33.1526321679840;
-        Mon, 14 May 2018 11:14:39 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id b27-v6sm8118844qtc.66.2018.05.14.11.14.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 May 2018 11:14:38 -0700 (PDT)
-Subject: Re: [PATCH v2 14/14] commit.h: delete 'util' field in struct commit
-To:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-References: <20180512080028.29611-1-pclouds@gmail.com>
- <20180513055208.17952-1-pclouds@gmail.com>
- <20180513055208.17952-15-pclouds@gmail.com>
- <xmqqy3gmbrnm.fsf@gitster-ct.c.googlers.com>
- <20180514160738.GA19821@duynguyen.home>
- <CACsJy8DhUw6L7j3Pkqji_K0WMjFZxs315emmvdyNQJJN4VTwgw@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <5ee75fc6-562e-d424-0bc3-c9997dba92db@gmail.com>
-Date:   Mon, 14 May 2018 14:14:38 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=WcRCKRZ7cxCJ3V6eQGmLoXred3xI/1Cth8RnuxA90kA=;
+        b=keaVkAtSlsOQW44guopapeDtKWEj5jr2GwMu97qdohlYWJP8NBKsrQuwllLv0IBfit
+         xfJVqiebZVbqHGYXF6FlMkiraC2gvWkX4bvV0A3GjYkICJUlhUqv4Ppue5vZI4oND2DW
+         PP+U0JKXI3PYQ9qDJ3yQihhE9l7xgGj7ew5JgR89pKtbaBe7vpD3BY1SOeeyuz2IY/jX
+         UYckD9nGq8ajy0reGfQAtpwnpOSqyOfJB7vHsoZxT7FVdOLLZyBxT20b7aZFMpkwtQiP
+         vE4DZLLywTGxeLRpc8pxEIIfWR+RQMwCvnaeWe1ali8KGWudsXvkfkKEz/2Q5TeGOlOl
+         Ou2w==
+X-Gm-Message-State: ALKqPwf31mUtjoF1/qX3fLdiRjhw3LW4IUbU1mbDL8umgxaqg73BX05Q
+        YWGoHi/VSYyEWQHIT518ZU6Cng==
+X-Google-Smtp-Source: AB8JxZryUR4/GC4UVW5UHhyiSxtZzUYKvxcmQla1+5uHjo1EUkGyPwRpQQITmRTkrY1K0KWxmsPbqg==
+X-Received: by 2002:a63:6584:: with SMTP id z126-v6mr9381272pgb.168.1526321970007;
+        Mon, 14 May 2018 11:19:30 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id r84-v6sm19423777pfa.125.2018.05.14.11.19.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 14 May 2018 11:19:29 -0700 (PDT)
+Date:   Mon, 14 May 2018 11:19:28 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     git@vger.kernel.org,
+        Daniel =?iso-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH 01/10] config: make config_from_gitmodules generally
+ useful
+Message-ID: <20180514181928.GA235601@google.com>
+References: <20180514105823.8378-1-ao2@ao2.it>
+ <20180514105823.8378-2-ao2@ao2.it>
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8DhUw6L7j3Pkqji_K0WMjFZxs315emmvdyNQJJN4VTwgw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180514105823.8378-2-ao2@ao2.it>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/14/2018 1:30 PM, Duy Nguyen wrote:
-> On Mon, May 14, 2018 at 6:07 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Mon, May 14, 2018 at 04:52:29PM +0900, Junio C Hamano wrote:
->>> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
->>>
->>>> diff --git a/commit.h b/commit.h
->>>> index 838f6a6b26..70371e111e 100644
->>>> --- a/commit.h
->>>> +++ b/commit.h
->>>> @@ -18,12 +18,16 @@ struct commit_list {
->>>>
->>>>   struct commit {
->>>>      struct object object;
->>>> -   void *util;
->>>>      unsigned int index;
->>>>      timestamp_t date;
->>>>      struct commit_list *parents;
->>>>      struct tree *tree;
->>>>      uint32_t graph_pos;
->>>> +   /*
->>>> +    * Do not add more fields here unless it's _very_ often
->>>> +    * used. Use commit-slab to associate more data with a commit
->>>> +    * instead.
->>>> +    */
->>>>   };
->>> That's a logical consequence and a natural endgame of this
->>> pleasent-to-read series.  THanks.
->>>
->>> Unfortunately we are gaining more and more stuff in "struct commit"
->>> with recent topics, and we may want to see if we can evict some of
->>> them out to shrink it again.
->> Sigh.. ds/lazy-load-trees already enters 'next' so a fixup patch is
->> something like this.
-> Sorry I take this patch back. I didn't realize it was a rename and the
-> old field named 'tree' was already there (I vaguely recalled some
-> "tree" in this struct but didn't stop to think about it). Moving
-> graph_pos out is an option, but only 32-bit arch gains from it (64-bit
-> arch will have 4 bytes padding anyway) so probably not worth the
-> effort. "generation" field should probably be moved out though.
+On 05/14, Antonio Ospite wrote:
+> The config_from_gitmodules() function is a good candidate for
+> a centralized point where to read the gitmodules configuration file.
+> 
+> Add a repo argument to it to make the function more general, and adjust
+> the current callers in cmd_fetch and update-clone.
+> 
+> As a proof of the utility of the change, start using the function also
+> in repo_read_gitmodules which was basically doing the same operations.
+> 
+> Signed-off-by: Antonio Ospite <ao2@ao2.it>
+> ---
+>  builtin/fetch.c             |  2 +-
+>  builtin/submodule--helper.c |  2 +-
+>  config.c                    | 13 +++++++------
+>  config.h                    | 10 +---------
+>  submodule-config.c          | 16 ++++------------
+>  5 files changed, 14 insertions(+), 29 deletions(-)
+> 
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 7ee83ac0f..a67ee7c39 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1445,7 +1445,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  	for (i = 1; i < argc; i++)
+>  		strbuf_addf(&default_rla, " %s", argv[i]);
+>  
+> -	config_from_gitmodules(gitmodules_fetch_config, NULL);
+> +	config_from_gitmodules(gitmodules_fetch_config, the_repository, NULL);
+>  	git_config(git_fetch_config, NULL);
+>  
+>  	argc = parse_options(argc, argv, prefix,
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index c2403a915..9e8f2acd5 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1602,7 +1602,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+>  	};
+>  	suc.prefix = prefix;
+>  
+> -	config_from_gitmodules(gitmodules_update_clone_config, &max_jobs);
+> +	config_from_gitmodules(gitmodules_update_clone_config, the_repository, &max_jobs);
+>  	git_config(gitmodules_update_clone_config, &max_jobs);
+>  
+>  	argc = parse_options(argc, argv, prefix, module_update_clone_options,
+> diff --git a/config.c b/config.c
+> index 6f8f1d8c1..8ffe29330 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -2173,17 +2173,18 @@ int git_config_get_pathname(const char *key, const char **dest)
+>  }
+>  
+>  /*
+> - * Note: This function exists solely to maintain backward compatibility with
+> - * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
+> - * NOT be used anywhere else.
+> + * Note: Initially this function existed solely to maintain backward
+> + * compatibility with 'fetch' and 'update_clone' storing configuration in
+> + * '.gitmodules' but it turns out it can be useful as a centralized point to
+> + * read the gitmodules config file.
 
-I'm happy to take a look at this patch and figure out the best way to 
-integrate it with the changes I've been doing.
+I'm all for what you're trying to accomplish in this patch series but I
+think a little more care needs to be taken here.  Maybe about a year ago
+I did some refactoring with how the gitmodules file was loaded and it
+was decided that allowing arbitrary configuration in the .gitmodules
+file was a bad thing, so I tried to make sure that it was very difficult
+to sneak in more of that and limiting it to the places where it was
+already done (fetch and update_clone).  Now this patch is explicitly
+changing the comment on this function to loosen the requirements I made
+when it was introduced, which could be problematic in the future.
 
-I disagree with the removal of "generation". My intention is to make the 
-commit-graph feature a standard feature that most repos (of reasonable 
-size) want to have. In that case, 'graph_pos' and 'generation' will be 
-set during every parse and used by every commit walk. This is just my 
-gut reaction.
+So here's what I suggest doing:
+  1. Move this function from config.{c,h} to submodule-config.{c,h} to
+     make it clear who owns this.
+  2. Move the gitmodules_set function you created to live in submodule-config.
+  3. You can still use this function as the main driver for reading the
+     submodule config BUT the comment above the function in both the .c and
+     .h files should be adapted so that it is clearly spells out that the
+     function is to be used only by the submodule config code (reading it
+     in repo_read_gitmodules and reading/writing it in the
+     submodule-helper config function you've added) and that the only
+     exceptions to this are to maintain backwards compatibility with the
+     existing callers and that new callers shouldn't be added.
 
-As I investigate these changes, I'll try to see what performance hit is 
-caused by converting the graph_pos and/or generation to commit slabs. 
-(Again, I'm assuming the slabs will make this slower. I may be wrong here.)
+This is just a long way to say that if new callers to this function are
+added in the future that it is made very clear in the code that the
+.gitmodules file exists for a specific purpose and that it shouldn't be
+exploited to ship config with a repository. (If we end up allowing
+config to be shipped with a repository at a later date that will need to
+be handled with great care due to security concerns).
 
-Thanks,
--Stolee
+Thanks for working on this, the end result is definitely a step in the
+direction I've wanted the submodule config to head to.
+
+>   *
+>   * Runs the provided config function on the '.gitmodules' file found in the
+>   * working directory.
+>   */
+> -void config_from_gitmodules(config_fn_t fn, void *data)
+> +void config_from_gitmodules(config_fn_t fn, struct repository *repo, void *data)
+>  {
+> -	if (the_repository->worktree) {
+> -		char *file = repo_worktree_path(the_repository, GITMODULES_FILE);
+> +	if (repo->worktree) {
+> +		char *file = repo_worktree_path(repo, GITMODULES_FILE);
+>  		git_config_from_file(fn, file, data);
+>  		free(file);
+>  	}
+> diff --git a/config.h b/config.h
+> index cdac2fc73..43ce76c0f 100644
+> --- a/config.h
+> +++ b/config.h
+> @@ -215,15 +215,7 @@ extern int repo_config_get_maybe_bool(struct repository *repo,
+>  extern int repo_config_get_pathname(struct repository *repo,
+>  				    const char *key, const char **dest);
+>  
+> -/*
+> - * Note: This function exists solely to maintain backward compatibility with
+> - * 'fetch' and 'update_clone' storing configuration in '.gitmodules' and should
+> - * NOT be used anywhere else.
+> - *
+> - * Runs the provided config function on the '.gitmodules' file found in the
+> - * working directory.
+> - */
+> -extern void config_from_gitmodules(config_fn_t fn, void *data);
+> +extern void config_from_gitmodules(config_fn_t fn, struct repository *repo, void *data);
+>  
+>  extern int git_config_get_value(const char *key, const char **value);
+>  extern const struct string_list *git_config_get_value_multi(const char *key);
+> diff --git a/submodule-config.c b/submodule-config.c
+> index d87c3ff63..f39c71dfb 100644
+> --- a/submodule-config.c
+> +++ b/submodule-config.c
+> @@ -577,19 +577,11 @@ void repo_read_gitmodules(struct repository *repo)
+>  {
+>  	submodule_cache_check_init(repo);
+>  
+> -	if (repo->worktree) {
+> -		char *gitmodules;
+> -
+> -		if (repo_read_index(repo) < 0)
+> -			return;
+> -
+> -		gitmodules = repo_worktree_path(repo, GITMODULES_FILE);
+> -
+> -		if (!is_gitmodules_unmerged(repo->index))
+> -			git_config_from_file(gitmodules_cb, gitmodules, repo);
+> +	if (repo_read_index(repo) < 0)
+> +		return;
+>  
+> -		free(gitmodules);
+> -	}
+> +	if (!is_gitmodules_unmerged(repo->index))
+> +		config_from_gitmodules(gitmodules_cb, repo, repo);
+>  
+>  	repo->submodule_cache->gitmodules_read = 1;
+>  }
+> -- 
+> 2.17.0
+> 
+
+-- 
+Brandon Williams
