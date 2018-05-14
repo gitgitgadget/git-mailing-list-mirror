@@ -2,49 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FB201F406
-	for <e@80x24.org>; Mon, 14 May 2018 13:29:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18E841F406
+	for <e@80x24.org>; Mon, 14 May 2018 13:31:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753453AbeENN3a convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 14 May 2018 09:29:30 -0400
-Received: from no-rdns.free.clues.ro ([185.216.33.147]:59766 "EHLO
-        WIN-3Q9P1I8JN6A" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752333AbeENN33 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 09:29:29 -0400
-X-Greylist: delayed 1022 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 May 2018 09:29:29 EDT
-Received: from [185.216.33.147] ([127.0.0.1]) by WIN-3Q9P1I8JN6A with Microsoft SMTPSVC(7.5.7601.17514);
-         Mon, 14 May 2018 06:10:05 -0700
-Content-Type: text/plain; charset="iso-8859-1"
+        id S932207AbeENNbd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 09:31:33 -0400
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:37133 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752463AbeENNbb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 09:31:31 -0400
+Received: by mail-qt0-f174.google.com with SMTP id q13-v6so16052409qtp.4
+        for <git@vger.kernel.org>; Mon, 14 May 2018 06:31:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=JfYQWJYGTpYiXEH9W8wGVlUlyJV2u3LIwbhLE1NisVI=;
+        b=J99Hh9yK+6Nab4Qk7Me4ybCTTI1OpE+FmNprTKnBw2L8vW8+jy93CSBvFoi9MhfEDb
+         G3wzXEhiKCbpXDGP7P65l9RrPEW53NlfEEah2/Sc1ztucutHOHpCjZpSrEnZKxSpNQjU
+         W2b7TpGipwt1tS0EJzvZ72fn5TSs0DpDCz5p8UO4f+sLcOQDBKS2YJZ6/kd5LK+PyFBE
+         VP6bNVY0qFJPovvrs21pczp1DlmytG80Ve0ww0XRiEZmDUZ4QIo/Ifm3XxLyhun/knCJ
+         iqHzHg98neKNkfWT+YQ7mK15pBJOjwyHnbwYNeHRBu+b5YXoo/xVxZxF+W7xwOqi67Y0
+         fDvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=JfYQWJYGTpYiXEH9W8wGVlUlyJV2u3LIwbhLE1NisVI=;
+        b=BjNzf7i3h6d52iHTEBtqJNF6ocvk8E4gRCoTKbuLxR+4t6DidiCQHfGg+fFv/wEpDo
+         7i9Geag2a3uniuyzbFRn//ls91ygAJx2Qldhfce10Q5AiJjkLWqheDXSsC8TINdDtZPJ
+         HV82Zx3C3ErMjHuMcxH+4lnAcOBjm8yBihXlLDH2unvXasbfaYdhyiffhIHzRvEwg1G9
+         N4oTa5Qymxjc2fcnvHko6bK2Iqw8hFKxMVEpMTBI38tDqKQfZ25uC6MOdhoeikuxFMcl
+         8eTjZYAAJORgs8+wzC+C7XP9Jk8fMKRDhVhFHlAY0ZDGPmTb3Q8ulLNdHZA0Zbwbm61P
+         vWPA==
+X-Gm-Message-State: ALKqPwcM9+F/fHUNraGKmW0OGn9PsE0Ewf3MQQakT4ESTpd81fnhbMsA
+        kg3+Nqyf82uTsXOakVBtft8=
+X-Google-Smtp-Source: AB8JxZqmo1w3h1g399ABLX8uhIbcxB9xM567KM/8hTre6JcKuiOuI7YcfsC/ov2d/mLs5SMiedIuiA==
+X-Received: by 2002:a0c:9375:: with SMTP id e50-v6mr8554420qve.166.1526304690734;
+        Mon, 14 May 2018 06:31:30 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id w70-v6sm8090406qkg.13.2018.05.14.06.31.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 14 May 2018 06:31:29 -0700 (PDT)
+Subject: Re: [PATCH v2 02/12] commit-graph: verify file header information
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "jnareb@gmail.com" <jnareb@gmail.com>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        "peff@peff.net" <peff@peff.net>
+References: <20180510173345.40577-1-dstolee@microsoft.com>
+ <20180511211504.79877-1-dstolee@microsoft.com>
+ <20180511211504.79877-3-dstolee@microsoft.com>
+ <CAN0heSrKFJbgwXXzUKaJQn24pY43S2bsn9Zx6Yyy6M2X2wDJ7w@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0964380e-1ec9-46c4-ea59-f8890d9ed711@gmail.com>
+Date:   Mon, 14 May 2018 09:31:28 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: =?utf-8?q?Isten_=C3=A1ldjon?=
-To:     git@vger.kernel.org
-From:   "Johanna Tuuk " <Tuuk@tuuk.com>
-Date:   Mon, 14 May 2018 06:10:05 -0700
-Reply-To: johnnatuuk@gmail.com
-Message-ID: <WIN-3Q9P1I8JN6Ao3wO00008206@WIN-3Q9P1I8JN6A>
-X-OriginalArrivalTime: 14 May 2018 13:10:05.0810 (UTC) FILETIME=[E078CD20:01D3EB84]
+In-Reply-To: <CAN0heSrKFJbgwXXzUKaJQn24pY43S2bsn9Zx6Yyy6M2X2wDJ7w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Isten áldjon
+On 5/12/2018 9:35 AM, Martin Ã…gren wrote:
+> +static int verify_commit_graph_error;
+> +
+> +static void graph_report(const char *fmt, ...)
+> +{
+> +       va_list ap;
+> +       struct strbuf sb = STRBUF_INIT;
+> +       verify_commit_graph_error = 1;
+> +
+> +       va_start(ap, fmt);
+> +       strbuf_vaddf(&sb, fmt, ap);
+> +
+> +       fprintf(stderr, "%s\n", sb.buf);
+> +       strbuf_release(&sb);
+> +       va_end(ap);
+> +}
 
-Én vagyok Mrs.Johanna Tuuk, özvegy vagyok hosszú ideig tartó rákban. Az állapotom minden jelzoje valóban romlik, és teljesen nyilvánvaló, hogy két hónapot nem fogok élni orvosaim szerint, és minden jelzésben az orvosi elemzést illetoen. Ez azért van, mert a rák nagyon rossz stádiumba került, hogy nincs remény.
-
-A kései férjem autóbalesetben halt meg, házasságunk idején nem tudtunk gyermeket produkálni. Az édesapám nagyon gazdag volt, és halála után örököltem minden üzletét és gazdagságát. Az orvosok azt tanácsolták nekem, hogy nem élhetek több mint két hónapig, ezért most úgy döntöttem, hogy megosztom e gazdagság egy részét, hogy hozzájáruljak a kevésbé kiváltságos Európában, Amerikában, Afrikában és Ázsiában kialakult fejlodéshez, különösen a probléma megoldásához a kevésbé privilegizált és az árvaház otthona.
-
-Az interneten végzett keresésem után választottam, négy hétig imádkoztam és böjtöltem rajta, hajlandó vagyok kilenc millió ötszázezer eurót adományozni a kevésbé kiváltságosnak. Kérem, vegye figyelembe, hogy ez az alap bankban fekszik és az én utasításom alapján benyújtja a pénz nevében történo átutalását.
-
-Végül is oszintén imádkozom, hogy ezt az összeget átruházzák, még akkor is, ha késo vagyok, mert meg kell tudnom, hogy Krisztus nélkül a vagyon megszerzése hiábavaló, és Istennek ígéretet tettem, hogy az alap lesz használja a kevésbé privilegizált segítséget. Kérjük, vegye figyelembe, hogy lefordítottam ezt a levelet, hogy megértsétek, vissza tudsz írni engem
-
-Várom a sürgos választ.
-
-Isten áldjon.
+That's a good idea. Makes that patch a bit less trivial and this one a 
+bit less difficult.
