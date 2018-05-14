@@ -2,128 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 865251F51A
-	for <e@80x24.org>; Mon, 14 May 2018 17:27:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EF4B1F51A
+	for <e@80x24.org>; Mon, 14 May 2018 17:31:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752627AbeENR1N (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 13:27:13 -0400
-Received: from mail-oi0-f41.google.com ([209.85.218.41]:38390 "EHLO
-        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752605AbeENR1M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 13:27:12 -0400
-Received: by mail-oi0-f41.google.com with SMTP id k17-v6so11435367oih.5
-        for <git@vger.kernel.org>; Mon, 14 May 2018 10:27:12 -0700 (PDT)
+        id S1753067AbeENRb2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 13:31:28 -0400
+Received: from mail-ot0-f196.google.com ([74.125.82.196]:35929 "EHLO
+        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753045AbeENRb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 13:31:27 -0400
+Received: by mail-ot0-f196.google.com with SMTP id m11-v6so15230175otf.3
+        for <git@vger.kernel.org>; Mon, 14 May 2018 10:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9J97fndogPM2i2rRTwh/4h8IJssesJiITtF/w1iJcpw=;
-        b=Of5ZmvxYfPfA1T2ACdSsP4flJzT+Oi2oGreR9PGyYeao/0m9FVomcxb3822ILrlqWk
-         U6uBG4LLa3cewIHDymXmooJ/bSBJ95UdjTxQug9Gp5+ep3f+h1x/P4le7LVFpFZJt1Ce
-         YpwxRURJS69tV/WeWuFRL4udB10a6KGh+Hj6hNw4/apqmmCEClcSiVjLZ4b8UyvyQb2d
-         HN6g6Akwv1cDNqcdGEc5P+OxEvIYzrXd6tHgx229hQPgTA9yBgHLC6wVAFNs5zUjbJsV
-         0HpDfa+BA+5Rz7MABSgK6EOH0Juxw7mDNcLmt4gGocnGzV2+VODwH4gRVCMG5vQJx3wZ
-         zV3w==
+         :cc:content-transfer-encoding;
+        bh=okx8q+tEA4Bg/gI/OtYFmQAqt+FNrn4cNNfO7XyMIpU=;
+        b=pEQo3QAqV556+VW/X/UB9C6oMB62N9TtZB/Jh4bMQ7KPf2jeE3LxTN2/9emR2b/1ji
+         Adi68IjgaD2+cmC2pex1xv2skPoSrOQPwJHYc+IFEYhCI1lk50r24XtA7qN8JerMJGF3
+         GlyZu7Pgg3soc4crA1lrdpdVb051S/yMPZ/86Vjr9rs910pTKZk4eVxMMG8iVzuvN+G6
+         Sn/9H0FBvefDaGM2aTkJu2QjYMQf+g6j78sTMytG/SaADRPB7z6HkaJB2Q4K95wY2diH
+         /BxUtGBReSy/R5hNk25Dhq+Pkn58LqWzTvK7h1OgTZ4/jJuyWWRm0H29edtjSrZ3Depj
+         6PWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9J97fndogPM2i2rRTwh/4h8IJssesJiITtF/w1iJcpw=;
-        b=X1pwFKhre7XHa0OAY2qfgZx5WT8dUxpZjddVBQEAkDAbsn+QGCsv+nS0t3fDPc96GR
-         0fKApGh6luoscsEzfRK3ofa4mVH8QT7VH2D1BKY1Us5YOKdu8XxMz0Qm/XFY2AnI48hm
-         5SXjnLJcmBRo9CiScXv+tdTJE1EN9t/3gZ25gFhEHyI7VK7YMzfH6uUAOzpzaSZmDKG+
-         zbuTGAxpR/jOyDa1zWNQ6gpafBlRRz3gpE0jEROMcpV8YwVG4lnecMVWZBsm4oZvgc+M
-         npNGEW3cyONAepnxk0EQeOn9CvdTn3e1U/WoOO8gUEixV40taQmN4FBqG293w0YIts4w
-         0Xlw==
-X-Gm-Message-State: ALKqPwfdX5asySjeaontm34KM0kv5WTDPT5Tj8gOL5+R+yrZLf/zFHzh
-        KGtuBzw9Pm69qkV0UmLehgNYEh0IJqwTwXvGqIE=
-X-Google-Smtp-Source: AB8JxZrZdDM2gPW48bUwnZNdXfcXXkfsvhfeQ15dgf4Ie45z5NE9PJtasq+JyNTBsHb03rAbreVsSRrDmArUQn0oawQ=
-X-Received: by 2002:aca:ce42:: with SMTP id e63-v6mr7623778oig.34.1526318829675;
- Mon, 14 May 2018 10:27:09 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=okx8q+tEA4Bg/gI/OtYFmQAqt+FNrn4cNNfO7XyMIpU=;
+        b=WRIITxbh7+0d8Q8zdenoiLtWuCRZEMcNzQt+LV77wWjUVTQJpBiHTW7/wmzTvOtPVB
+         k+8NWgY8mnf2kmPcuSyZbGELiphxH3MfsBUMwQwDpR3FDYGe1KPy3yDH5UdkmiOVJ0jZ
+         GmjfVEASCV0llSssQumwAS/6+faYrr2N8rF6Oosi3GLg8KnMbtVPUzy+aZrQjv5Qapwg
+         0Yuwygh08WJTbSPqb7Rc24gM5jf1zB2xi7Uv1hBYsgOBDy6Cndj49+Hi955SiQQeUKXl
+         O2C1zInYnty2c+6ZMwnLs2sz95Y8Q2/czVbo7KxdyavcoNc58n6lAehY4aUuO3+U+q6n
+         VNMA==
+X-Gm-Message-State: ALKqPwcZ6fdc1M2McxeKX2OqJF3Efo1hMe0yjFn+g4xBOgJVq0f0nM+N
+        2VFXQr0ukwlz6A6BcCac9J9zDzpoZ3p9e7hasEU=
+X-Google-Smtp-Source: AB8JxZpYMQDjR+9q7P8m68mMhcFIX+jGiMpswY5wFpcqBV4gmdyaWsbXbvisez2cqVK5j8/YDaflpOYoH+C0aM5QcR0=
+X-Received: by 2002:a9d:2fa6:: with SMTP id r35-v6mr8386178otb.356.1526319086913;
+ Mon, 14 May 2018 10:31:26 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Mon, 14 May 2018 10:26:39 -0700 (PDT)
-In-Reply-To: <ef3709f1-d9c2-860a-23d3-8d496294e1ac@gmail.com>
-References: <20180417181300.23683-1-pclouds@gmail.com> <CAPig+cRkUrdtbyGEsY=DQCDoEWTrC-9n4=vKXHEap2gokB2uQg@mail.gmail.com>
- <CACsJy8BGs7EOYFKayL-bgvEbKOJiROF52o3SneLyG9Nm6nUngA@mail.gmail.com> <ef3709f1-d9c2-860a-23d3-8d496294e1ac@gmail.com>
+Received: by 10.74.178.133 with HTTP; Mon, 14 May 2018 10:30:56 -0700 (PDT)
+In-Reply-To: <20180514160738.GA19821@duynguyen.home>
+References: <20180512080028.29611-1-pclouds@gmail.com> <20180513055208.17952-1-pclouds@gmail.com>
+ <20180513055208.17952-15-pclouds@gmail.com> <xmqqy3gmbrnm.fsf@gitster-ct.c.googlers.com>
+ <20180514160738.GA19821@duynguyen.home>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 14 May 2018 19:26:39 +0200
-Message-ID: <CACsJy8CwwseqL9M=-ML6hwgHG_GSK6pfeQU+MGWsx6=WCCZtmQ@mail.gmail.com>
-Subject: Re: [PATCH/RFC] completion: complete all possible -no-<options>
-To:     Andreas Heiduk <asheiduk@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
+Date:   Mon, 14 May 2018 19:30:56 +0200
+Message-ID: <CACsJy8DhUw6L7j3Pkqji_K0WMjFZxs315emmvdyNQJJN4VTwgw@mail.gmail.com>
+Subject: Re: [PATCH v2 14/14] commit.h: delete 'util' field in struct commit
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 14, 2018 at 7:03 PM, Andreas Heiduk <asheiduk@gmail.com> wrote:
-> Am 08.05.2018 um 17:24 schrieb Duy Nguyen:
->> On Mon, Apr 23, 2018 at 7:36 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> I haven't looked at the implementation, so this may be an entirely
->>> stupid suggestion, but would it be possible to instead render the
->>> completions as?
->>>
->>>     % git checkout --<tab>
->>>     --[no-]conflict=                   --[no-]patch
->>>     --[no-]detach                      --[no-]progress
->>>     --[no-]ignore-other-worktrees      --[no-]quiet
->>>     --[no-]ignore-skip-worktree-bits   --[no-]recurse-submodules
->>>     --[no-]merge                       --theirs
->>>     --[no-]orphan=                     --[no-]track
->>>     --ours
->>>
->>> This would address the problem of the --no-* options taking double the
->>> screen space.
+On Mon, May 14, 2018 at 6:07 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Mon, May 14, 2018 at 04:52:29PM +0900, Junio C Hamano wrote:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >>
->> It took me so long to reply partly because I remember seeing some guy
->> doing clever trick with tab completion that also shows a short help
->> text in addition to the complete words. I could not find that again
->> and from my reading (also internet searching) it's probably not
->> possible to do this without trickery.
+>> > diff --git a/commit.h b/commit.h
+>> > index 838f6a6b26..70371e111e 100644
+>> > --- a/commit.h
+>> > +++ b/commit.h
+>> > @@ -18,12 +18,16 @@ struct commit_list {
+>> >
+>> >  struct commit {
+>> >     struct object object;
+>> > -   void *util;
+>> >     unsigned int index;
+>> >     timestamp_t date;
+>> >     struct commit_list *parents;
+>> >     struct tree *tree;
+>> >     uint32_t graph_pos;
+>> > +   /*
+>> > +    * Do not add more fields here unless it's _very_ often
+>> > +    * used. Use commit-slab to associate more data with a commit
+>> > +    * instead.
+>> > +    */
+>> >  };
+>>
+>> That's a logical consequence and a natural endgame of this
+>> pleasent-to-read series.  THanks.
+>>
+>> Unfortunately we are gaining more and more stuff in "struct commit"
+>> with recent topics, and we may want to see if we can evict some of
+>> them out to shrink it again.
 >
-> The fish-shell does something like that.
->
->     > git status --<tab here>
->     --branch  (Show the branch and tracking info even in short-format)
->     --help                       (Display the manual of a git command)
->     --ignore-submodules                 (Ignore changes to submodules)
->     --porcelain    (Give the output in a stable, easy-to-parse format)
->     --short                      (Give the output in the short-format)
->     --untracked-files              (The untracked files handling mode)
->
-> Another tab will put a selection-cursor on the displayed list - you can
-> navigate that list with Cursor-Up/Cursor-Down, select an entry and that
-> entry will be inserted into the commandline. That selection process
-> would be useless if the options are presented as "--[no-]x" because THAT
-> cannot be inserted into the commandline without manual editing. And
-> that's the point of the fast option selection process.
+> Sigh.. ds/lazy-load-trees already enters 'next' so a fixup patch is
+> something like this.
 
-Good to know.
-
-BTW I looked at the git.fish completion script [1] and see that recent
-effort to help automate more in git-completion.bash might help there
-too. I notice a lot of options and help text hard coded there, if
-someone can explain to me how git.fish uses those, maybe I can change
-git to export something suitable for git.fish to use too [2].
-
-For example with latest git (in 'master') doing this
-
-    ./git add --git-completion-helper
-
-gives you the list of all options of "git add". Giving the help text
-for each option is definitely possible (I just didn't see any use for
-it until I looked at zsh/fish completion scripts) and maybe more in
-the future.
-
-[1] https://github.com/fish-shell/fish-shell/blob/master/share/completions/git.fish
-[2] But then if your script has to work with old git versions too then
-this is a moot point.
--- 
+Sorry I take this patch back. I didn't realize it was a rename and the
+old field named 'tree' was already there (I vaguely recalled some
+"tree" in this struct but didn't stop to think about it). Moving
+graph_pos out is an option, but only 32-bit arch gains from it (64-bit
+arch will have 4 bytes padding anyway) so probably not worth the
+effort. "generation" field should probably be moved out though.
+--=20
 Duy
