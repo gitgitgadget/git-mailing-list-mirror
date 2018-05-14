@@ -6,101 +6,112 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C0F21F42D
-	for <e@80x24.org>; Mon, 14 May 2018 07:52:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2362F1F42D
+	for <e@80x24.org>; Mon, 14 May 2018 08:13:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752343AbeENHwf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 03:52:35 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:54316 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751855AbeENHwd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 03:52:33 -0400
-Received: by mail-wm0-f66.google.com with SMTP id f6-v6so11694890wmc.4
-        for <git@vger.kernel.org>; Mon, 14 May 2018 00:52:32 -0700 (PDT)
+        id S1752529AbeENINH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 04:13:07 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:55479 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752534AbeENINC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 04:13:02 -0400
+Received: by mail-wm0-f68.google.com with SMTP id a8-v6so11782317wmg.5
+        for <git@vger.kernel.org>; Mon, 14 May 2018 01:13:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Hz656L8ca3z2h8Oipk+BTlFFHOrUPnYapfrA5PMVglw=;
-        b=mJRzTl39SqKdaxmrDH7CzkqcH4Z82PldDHbSKK7G3mWR8YHe79XMmSWo3jpMcNDlk3
-         5JIBNappE30GqBGeWbOhSlhuU4HIXd+IIoNHrk/Kkc6oA0O6lrjDpqjn3OxQD9O9cQ2P
-         NbRDIOBn+5184JFIOVtc533cxVQV+au9PVpya+dXj0+5GlOBhH8IeN52IcInTgBH56gj
-         SyCyKS+vy8a7QoipYf+ZghMsa/LhnyXN18Pyec0kg1c9N1M1rjmkKtJq7enQF8X1UHmY
-         qE2XO6xU03o/hWzakyZsSYtyoClFp9/NgAN1rdQkliI49UfMhFRUPWLkX5a21nsrkhhD
-         kGmw==
+         :user-agent:mime-version;
+        bh=NH7qMYfLeWeszXlPt0fFR/ABP9yrZSKSRoMqBJ9pv6w=;
+        b=N8eHMvoZXyhmnUbUupxzo/ZG2i4u8d350IhfRn2Q1TOk2FQ6DvyS/r8lG7FnPggQQO
+         9q4BdApFQIXvnasEjSojVutIGTGRU3pjjG5wEJae3jsqGHSGaRQkXX7xwMzj+cDOV8f4
+         zBs49z0iIVkhjFPYnV1AWv1PHLu5OwtGJIC93JBfs3Szp333ZoR40zsrlZbmemB/dea9
+         eMF0lVJAC1wA+Z9MW8AgDu8g5VesH7n5yydh5shmFWFrfxVSY3GogAx628v7ootdIo/Q
+         9ce6kVw5kmHbTxSCK79ybUH3iBr7o29NlKMNEDXBBqJKopthQawOEGw6YxPXTPGYX2Fw
+         VhMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Hz656L8ca3z2h8Oipk+BTlFFHOrUPnYapfrA5PMVglw=;
-        b=c8kK45J/zGPe46d8/L2wyYEZW9Dz18zcfHHR2g87crV4HQAeV/8IwdbqnPdjYu3lun
-         +jgFay6wkTBPXabLWX6S0soKd9WIOXb0LOt9H4DeMWhrpOBQGRF7/b4fiG9cDFeG/dOK
-         hkrNs8gTs96NTtZ8zP1aOm9kgDtNDSYTAleZOVt0bM1rF/3J8ACIlyrqNiC/mWY4rPmT
-         kWbSE0urc34GWZmgH/3GMlhUuYKtaS1/MdWim8k6StJjMEc7kXc5/loJm6jN+zIzWzKA
-         FNiHYpMENr6Vm50lYVrYQOgjWAsCyxBG0yG/9QfeqiE1HtCQmXgRyiQtoLsP3rF7iK3Q
-         ZZ2Q==
-X-Gm-Message-State: ALKqPwel1kXsELrHS7tcg9SKZ7lYmAoKDuO9pexdaBVPkDs/xH9PVecH
-        2OgIYli+wxKblcsLNQGt3QY=
-X-Google-Smtp-Source: AB8JxZrrF1KVNOIyVBCklpfBcoRf11RMs6qdCN+8eT6SYBnPu1jZ20CPilr6JjE3PFAYLWVDmAVoDg==
-X-Received: by 2002:a1c:374f:: with SMTP id e76-v6mr4116232wma.141.1526284351944;
-        Mon, 14 May 2018 00:52:31 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=NH7qMYfLeWeszXlPt0fFR/ABP9yrZSKSRoMqBJ9pv6w=;
+        b=btoAgDx47rmLxO9uJi18zOQ3rSn2pRyFn1qrBx7XDMG4wqYNsmyIxfGY4PnRMtGNCy
+         qYzWKnu2vlf4EOby+HBl11zdIEkj5R4bet4vOu5zdU32jz1I4J2GEkPGjmQF3Je+AGBB
+         SJxtg4UY+A6SKKmUkeaDwGojw8TjUJlF6vJ8gCb6N4f7F0KjE+Hb+j3WF2Xiy9H3LrSG
+         xSoyDTA5/v0ktCv3dZtuoE5j3ZQQdT6dWXNghfxzh3dbP5X4NNViQg9DAWI9l1xCNYrN
+         aVp7rmRSFntSHs66Zhu+caRGKHSyBnp/oPDKb9a3j+tHpMRF79qeBof4wt8nc5PVTVNY
+         vNtw==
+X-Gm-Message-State: ALKqPwdMUP3Y81tibZ8qocU6kR7Y3lOXrvslTEh/9+7RLr5c7uGseZpf
+        7wzQo3UrfrYlduYE/AYzwQc=
+X-Google-Smtp-Source: AB8JxZr2Ou/g4FDAGw5VSKrO3tW5xW8OhrMgFI52ZQop+j5wEpuBw9o4thGFxOb8RYJCj5xfYk5o7w==
+X-Received: by 2002:a1c:be0f:: with SMTP id o15-v6mr4682952wmf.104.1526285580978;
+        Mon, 14 May 2018 01:13:00 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c27-v6sm11500313wrg.75.2018.05.14.00.52.29
+        by smtp.gmail.com with ESMTPSA id y81-v6sm8313570wmd.31.2018.05.14.01.12.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 14 May 2018 00:52:30 -0700 (PDT)
+        Mon, 14 May 2018 01:12:59 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 14/14] commit.h: delete 'util' field in struct commit
-References: <20180512080028.29611-1-pclouds@gmail.com>
-        <20180513055208.17952-1-pclouds@gmail.com>
-        <20180513055208.17952-15-pclouds@gmail.com>
-Date:   Mon, 14 May 2018 16:52:29 +0900
-In-Reply-To: <20180513055208.17952-15-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Sun, 13 May 2018 07:52:08 +0200")
-Message-ID: <xmqqy3gmbrnm.fsf@gitster-ct.c.googlers.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v1 0/8] Introducing odb remote
+References: <20180513103232.17514-1-chriscool@tuxfamily.org>
+Date:   Mon, 14 May 2018 17:12:58 +0900
+In-Reply-To: <20180513103232.17514-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Sun, 13 May 2018 12:32:24 +0200")
+Message-ID: <xmqqr2mebqph.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> diff --git a/commit.h b/commit.h
-> index 838f6a6b26..70371e111e 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -18,12 +18,16 @@ struct commit_list {
->  
->  struct commit {
->  	struct object object;
-> -	void *util;
->  	unsigned int index;
->  	timestamp_t date;
->  	struct commit_list *parents;
->  	struct tree *tree;
->  	uint32_t graph_pos;
-> +	/*
-> +	 * Do not add more fields here unless it's _very_ often
-> +	 * used. Use commit-slab to associate more data with a commit
-> +	 * instead.
-> +	 */
->  };
+> This is a follow up from the patch series called "Promisor remotes and
+> external ODB support" that I sent earlier this year.
+>
+> Following discussions of these patch series, where Junio said "a
+> minimum s/ext/remote/ would clarify what it is", I decided to rename
+> "external odb" to "odb remote".
 
-That's a logical consequence and a natural endgame of this
-pleasent-to-read series.  THanks.
+In "external odb", "odb" is a noun, decorated by adjective
+"external".  I would expect the same would apply to "remote" and
+"odb".
 
-Unfortunately we are gaining more and more stuff in "struct commit"
-with recent topics, and we may want to see if we can evict some of
-them out to shrink it again.
+> I am still open to another name, but I
+> think that "odb remote" works well with "odb helper" that was already
+> used in the series and is as good or perhaps better than "remote odb",
+> as a "remote odb" I think would be easier to confuse with a regular
+> "remote".
 
-To make it clear that everything that is less often used is keyed
-off of the "index" field, I think it makes sense to move that field
-to either end of the struct (I think in today's integration I
-resolved a few merges to leave the "index" field at the end).
+As long as our use of "remote" as a noun is understood as omitting
+(an obvious) "repository" from a noun phrase "remote repository", I
+do not think there is any confusion.
+
+
+"odb remote" sounds like the phrase is about a noun "remote" (we do
+use "remote" as a noun when talking about fetching and pushing, as a
+short hand for "remote repository") that uses "odb" as an adjective
+somehow (e.g. "this is one of those remotes defined but not for the
+usual fetching and pushing, but for accessing its odb", or something
+ilke that), which somehow does not sit well on my tongue nor in ears.
+Perhaps that is because I am not well versed in languages whose natural
+word order in a noun phrase is noun followed by adjective, but I dunno.
+
+> Another obvious difference with the previous series is that this
+> series is only about integrating with the promisor/narrow clone work
+> and showing that it makes it possible to use more than one promisor
+> remote.
+
+Sounds like a sensible "incremental" approach.
+
+Will read the patches and commet on them in another sitting.
+Thanks.
