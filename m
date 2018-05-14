@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7BAA1F42D
-	for <e@80x24.org>; Mon, 14 May 2018 10:59:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E42B1F42D
+	for <e@80x24.org>; Mon, 14 May 2018 10:59:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752560AbeENK7F (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 06:59:05 -0400
-Received: from ao2.it ([92.243.12.208]:53783 "EHLO ao2.it"
+        id S1752558AbeENK7E (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 06:59:04 -0400
+Received: from ao2.it ([92.243.12.208]:53780 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752548AbeENK7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 06:59:03 -0400
+        id S1752484AbeENK7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 06:59:02 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1fIBBp-000753-Oh; Mon, 14 May 2018 12:58:49 +0200
+        id 1fIBBp-000752-Jk; Mon, 14 May 2018 12:58:49 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1fIBC0-0002C7-LZ; Mon, 14 May 2018 12:59:00 +0200
+        id 1fIBC0-0002C5-Hw; Mon, 14 May 2018 12:59:00 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
@@ -30,9 +30,9 @@ Cc:     Brandon Williams <bmwill@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Richard Hartmann <richih.mailinglist@gmail.com>,
         Stefan Beller <sbeller@google.com>, Antonio Ospite <ao2@ao2.it>
-Subject: [RFC PATCH 03/10] t7411: be nicer to other tests and really clean things up
-Date:   Mon, 14 May 2018 12:58:16 +0200
-Message-Id: <20180514105823.8378-4-ao2@ao2.it>
+Subject: [RFC PATCH 02/10] submodule: factor out a config_gitmodules_set function
+Date:   Mon, 14 May 2018 12:58:15 +0200
+Message-Id: <20180514105823.8378-3-ao2@ao2.it>
 X-Mailer: git-send-email 2.17.0
 In-Reply-To: <20180514105823.8378-1-ao2@ao2.it>
 References: <20180514105823.8378-1-ao2@ao2.it>
@@ -42,36 +42,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tests 5 and 8 in t/t7411-submodule-config.sh add two commits with
-invalid lines in .gitmodules but then only the second commit is removed.
+Introduce a new config_gitmodules_set function to write config values to the
+.gitmodules file.
 
-This may affect subsequent tests if they assume that the .gitmodules
-file has no errors.
-
-Since those commits are not needed anymore remove both of them.
+This is in preparation for a future change which will use the function
+to write to the .gitmodules file in a more controlled way instead of
+using "git config -f .gitmodules".
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
 
-I am putting these fixups to the test-suite before the patch that actually
-needs them so that the test-suite passes after each commit.
+Not sure about the name, and maybe it can go in config.c for symmetry with
+config_from_gitmodules?
 
- t/t7411-submodule-config.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ submodule.c | 22 +++++++++++++++-------
+ submodule.h |  1 +
+ 2 files changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index 0bde5850a..a648de6a9 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -135,7 +135,7 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
- 			HEAD submodule \
- 				>actual &&
- 		test_cmp expect_error actual  &&
--		git reset --hard HEAD^
-+		git reset --hard HEAD~2
- 	)
- '
+diff --git a/submodule.c b/submodule.c
+index 74d35b257..7cfae89b6 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -80,6 +80,18 @@ static int for_each_remote_ref_submodule(const char *submodule,
+ 					fn, cb_data);
+ }
  
++int config_gitmodules_set(const char *key, const char *value)
++{
++	int ret;
++
++	ret = git_config_set_in_file_gently(GITMODULES_FILE, key, value);
++	if (ret < 0)
++		/* Maybe the user already did that, don't error out here */
++		warning(_("Could not update .gitmodules entry %s"), key);
++
++	return ret;
++}
++
+ /*
+  * Try to update the "path" entry in the "submodule.<name>" section of the
+  * .gitmodules file. Return 0 only if a .gitmodules file was found, a section
+@@ -89,6 +101,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
+ {
+ 	struct strbuf entry = STRBUF_INIT;
+ 	const struct submodule *submodule;
++	int ret;
+ 
+ 	if (!file_exists(GITMODULES_FILE)) /* Do nothing without .gitmodules */
+ 		return -1;
+@@ -104,14 +117,9 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
+ 	strbuf_addstr(&entry, "submodule.");
+ 	strbuf_addstr(&entry, submodule->name);
+ 	strbuf_addstr(&entry, ".path");
+-	if (git_config_set_in_file_gently(GITMODULES_FILE, entry.buf, newpath) < 0) {
+-		/* Maybe the user already did that, don't error out here */
+-		warning(_("Could not update .gitmodules entry %s"), entry.buf);
+-		strbuf_release(&entry);
+-		return -1;
+-	}
++	ret = config_gitmodules_set(entry.buf, newpath);
+ 	strbuf_release(&entry);
+-	return 0;
++	return ret;
+ }
+ 
+ /*
+diff --git a/submodule.h b/submodule.h
+index e5526f6aa..8a252e514 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -35,6 +35,7 @@ struct submodule_update_strategy {
+ 
+ extern int is_gitmodules_unmerged(const struct index_state *istate);
+ extern int is_staging_gitmodules_ok(struct index_state *istate);
++extern int config_gitmodules_set(const char *key, const char *value);
+ extern int update_path_in_gitmodules(const char *oldpath, const char *newpath);
+ extern int remove_path_from_gitmodules(const char *path);
+ extern void stage_updated_gitmodules(struct index_state *istate);
 -- 
 2.17.0
 
