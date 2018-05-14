@@ -7,64 +7,67 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6214E1F406
-	for <e@80x24.org>; Mon, 14 May 2018 13:25:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE5961F406
+	for <e@80x24.org>; Mon, 14 May 2018 13:27:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753684AbeENNZu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 09:25:50 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:35086 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752463AbeENNZt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 09:25:49 -0400
-Received: by mail-qt0-f178.google.com with SMTP id f5-v6so16036647qth.2
-        for <git@vger.kernel.org>; Mon, 14 May 2018 06:25:48 -0700 (PDT)
+        id S1753237AbeENN1Y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 09:27:24 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:42628 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752333AbeENN1X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 09:27:23 -0400
+Received: by mail-qk0-f196.google.com with SMTP id b22-v6so4061560qkj.9
+        for <git@vger.kernel.org>; Mon, 14 May 2018 06:27:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=Vpm7i/qrsv2FJMteT6gc4ebKXLT8LddGW57e/sxSJBY=;
-        b=eguS0/2AwqXApIyU5SJXvafOeh6s3I5kzzvdDm6tEMxjt/hp4UTw/2i8kXu9hHnrwD
-         NZmGBIpiQI+EEy9aXEe63ydUQBs3x+EtyQBNt5Pv64HewIHU5GMQ4ciQLcXeiRW7kiL4
-         XnV1kDnGYQJzyo79raU0EqE8crgxLmBO5okKsi9Rszv243izazn9g4N4/94jdqm3XqTe
-         tMDACsWiyRK1f1fLwYoD3WK8E41Z0kGFhmAtq7u4B512pvt6qFOWijG1rhEaX2K3HDFO
-         DYeGcEhWVAy3XEcCVaTabCY3/pxwMCgrxzTme1Pylv5+QEswCt+OMsCyMdRAMqU9KMCB
-         fCcA==
+        bh=nfCPcWTqyse5kImaLYcjzA6VSHLNJgU2AIcL4M9raE0=;
+        b=rf71nPaGe8ZRGShBRkgoCplrk4UoR+68Os1mGhrFXISdCsGp9vrvIQH7GK+llGfVkL
+         pV0Q5Th+reaSRpVUDLs8ypqdl2OX199Fd1oUyLl7pBC65xM+TGto6Nns6nkncS9dze/B
+         lYXDBHPfkMRfl/CWvBAKgG/KlwCJlyk+44f9Eq9egxpkdkSKl5CAJ4K7iXvN8oZ1E9Z/
+         X5BIkBcTcnpqPKOHP+6crmZXjMF2myzWEELTXYC9hEy3Zs2wx8tKgONsCUkU7D+hRmNS
+         pmaQSjlEjit4A8wHme8827i+GXLTZRK8pVfadBzqazd+rKXoR8KOaJ6GnBS6qxVfAV+6
+         p+6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=Vpm7i/qrsv2FJMteT6gc4ebKXLT8LddGW57e/sxSJBY=;
-        b=ozxincvibshixLMA/5gbL1yjb6pU09obtbIOsSwieTL+VdNolvggv6/pkEuKdVElwQ
-         +MR9YZhr4zi4vr3L1Za5GHHUxqZpL9bdK7BzwFtA/ehddtjks8mPVQ+ijlDGNAV5jA9Y
-         cNHgXGYVsyltpLkFOenZXT1GwoWR65URjVcWjIJt+lW/N74tP71O+iG87O7ak2oOAa1S
-         r1bTmoDA+SXyn+3MYctmomoG92nRSboRHGXSND0KTVxOXe0u7pPqpZftfIDuCeDjSIn9
-         wn4zhMMyACx3Hag63lakeMtW8Ry67TZJihSk5jibtgN+hKqk2GHwGjcnKvwqx2E5flkK
-         2GLQ==
-X-Gm-Message-State: ALKqPwfK+Jo7bi9qw4wZ1FlAFfkaAxgqIchV+Rp+BSB+u36l4a+Enjd/
-        Tlsv7K2WEXa67ldP5Iz0A8iB7ZPP
-X-Google-Smtp-Source: AB8JxZoXEzjpgS5KgP3NasCYxv+z/wH98G+DviUTf+QF6/8kh/ymcl7r5QirIg9M2X+XfmMf7sDxlw==
-X-Received: by 2002:aed:3704:: with SMTP id i4-v6mr8613011qtb.234.1526304348341;
-        Mon, 14 May 2018 06:25:48 -0700 (PDT)
+        bh=nfCPcWTqyse5kImaLYcjzA6VSHLNJgU2AIcL4M9raE0=;
+        b=dlrm1itHZYaSLNBou3ZjVzNghGoXpyBiF3aSEHhoDlC2K0c49aTTncTjesYo6tHq+M
+         RHiHMBmdClcx95Qd98/meuHxbwmYKf9rJtKCS45xAsQ52qEV9Zn/g4vBKA5vUvxb7wZD
+         trT2GQonFwwHoTOTAFZmHRekhROQlqQD6eaH/kEMHUl9K2bC6SI9A3RFmCZFwb16ufbN
+         P3HgegABJEXtwNuo+yCs0UAJ8UIBEt602GoxKuamoK/9TtrDUp6b5FcUVSWVeAIcMvxv
+         2jG5r60hNKYt4L49xt5v4D0e6sZhesxqKJdTAa7NPugn8hmzwKNkaY1UGYJ2wEFjLGQ0
+         OrZQ==
+X-Gm-Message-State: ALKqPwccSdftmb4phhLsvEXu8f0UKqTiE3c5dk1AbNs2dNm/4PocyR70
+        MmrZ+dMYProHglTd3BWmQx4=
+X-Google-Smtp-Source: AB8JxZooi2EPcOwhFKm2cbSK8wMDcDdjRRgHj+9oH5mhCq7quadeEy3S1wLFmICeLfg83C54DAK6Ow==
+X-Received: by 2002:a37:2c46:: with SMTP id s67-v6mr8073314qkh.120.1526304443156;
+        Mon, 14 May 2018 06:27:23 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id s124-v6sm1905381qke.96.2018.05.14.06.25.47
+        by smtp.gmail.com with ESMTPSA id n14-v6sm7969633qkh.14.2018.05.14.06.27.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 May 2018 06:25:47 -0700 (PDT)
-Subject: Re: [PATCH 4/4] mark_parents_uninteresting(): avoid most allocation
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20180511180029.GA11290@sigill.intra.peff.net>
- <20180511180314.GD12543@sigill.intra.peff.net>
- <8447da69-d28a-433c-f324-a6380b6ca991@gmail.com>
- <20180514130907.GB9219@sigill.intra.peff.net>
+        Mon, 14 May 2018 06:27:22 -0700 (PDT)
+Subject: Re: [PATCH v2 01/12] commit-graph: add 'verify' subcommand
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "jnareb@gmail.com" <jnareb@gmail.com>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        "peff@peff.net" <peff@peff.net>
+References: <20180510173345.40577-1-dstolee@microsoft.com>
+ <20180511211504.79877-1-dstolee@microsoft.com>
+ <20180511211504.79877-2-dstolee@microsoft.com>
+ <CAN0heSotYYgrwMLT1yyFVk4VEZ4OQKF_Xwm9-wZosJ6_-gAVBg@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <bacb6ac4-637d-43c8-8789-2a345097d42a@gmail.com>
-Date:   Mon, 14 May 2018 09:25:46 -0400
+Message-ID: <3cd99f4e-82cb-43e8-53eb-e8d38d449e57@gmail.com>
+Date:   Mon, 14 May 2018 09:27:21 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <20180514130907.GB9219@sigill.intra.peff.net>
+In-Reply-To: <CAN0heSotYYgrwMLT1yyFVk4VEZ4OQKF_Xwm9-wZosJ6_-gAVBg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
@@ -73,45 +76,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/14/2018 9:09 AM, Jeff King wrote:
-> On Mon, May 14, 2018 at 08:47:33AM -0400, Derrick Stolee wrote:
+On 5/12/2018 9:31 AM, Martin Ågren wrote:
+> On 11 May 2018 at 23:15, Derrick Stolee <dstolee@microsoft.com> wrote:
 >
->> On 5/11/2018 2:03 PM, Jeff King wrote:
->>> Commit 941ba8db57 (Eliminate recursion in setting/clearing
->>> marks in commit list, 2012-01-14) used a clever double-loop
->>> to avoid allocations for single-parent chains of history.
->>> However, it did so only when following parents of parents
->>> (which was an uncommon case), and _always_ incurred at least
->>> one allocation to populate the list of pending parents in
->>> the first place.
->>>
->>> We can turn this into zero-allocation in the common case by
->>> iterating directly over the initial parent list, and then
->>> following up on any pending items we might have discovered.
->> This change appears to improve performance, but I was unable to measure any
->> difference between this commit and the one ahead, even when merging
->> ds/generation-numbers (which significantly reduces the other costs). I was
->> testing 'git status' and 'git rev-list --boundary master...origin/master' in
->> the Linux repo with my copy of master 70,000+ commits behind origin/master.
-> I think you'd want to go the other way: this is marking uninteresting
-> commits, so you'd want origin/master..master, which would make those 70k
-> commits uninteresting.
-
-Thanks for the tip. Running 'git rev-list origin/master..master' 100 
-times gave the following times, on average (with ds/generation-numbers):
-
-PATCH 3/4: 0.19 s
-PATCH 4/4: 0.16 s
-     Rel %: -16%
-
+>>          graph_name = get_commit_graph_filename(opts.obj_dir);
+>>          graph = load_commit_graph_one(graph_name);
+>> +       FREE_AND_NULL(graph_name);
+>>
+>>          if (!graph)
+>>                  die("graph file %s does not exist", graph_name);
+>> -       FREE_AND_NULL(graph_name);
+> This is probably because of something I said, but this does not look
+> correct. The `die()` would typically print "(null)" or segfault. If the
+> `die()` means we don't free `graph_name`, that should be fine.
 >
-> I still doubt it will create that much difference, though. It's
-> more or less saving a single malloc per commit we traverse. Certainly
-> without the .commits file that's a drop in the bucket compared to
-> inflating the object data, but I wouldn't be surprised if we end up with
-> a few mallocs even after your patches.
->
-> Anyway, thanks for poking at it. :)
->
-> -Peff
+> You're still leaking `graph` here (possibly nothing this patch should
+> worry about) and in `graph_verify()`. UNLEAK-ing it immediately before
+> calling `verify_commit_graph()` should be ok. I also think punting on
+> this UNLEAK-business entirely would be ok; I was just a bit surprised to
+> see one variable getting freed and the other one ignored.
 
+Thanks, Martin. I was just blindly searching for FREE_AND_NULL() and 
+shouldn't have been so careless.
+
+-Stolee
