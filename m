@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84C441F406
-	for <e@80x24.org>; Mon, 14 May 2018 21:57:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C01F81F406
+	for <e@80x24.org>; Mon, 14 May 2018 21:57:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752464AbeENV5C (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 17:57:02 -0400
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:44974 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752318AbeENV45 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 17:56:57 -0400
-Received: by mail-qk0-f201.google.com with SMTP id w205-v6so13563828qkb.11
-        for <git@vger.kernel.org>; Mon, 14 May 2018 14:56:57 -0700 (PDT)
+        id S1752405AbeENV5H (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 17:57:07 -0400
+Received: from mail-it0-f73.google.com ([209.85.214.73]:38361 "EHLO
+        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752341AbeENV5A (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 17:57:00 -0400
+Received: by mail-it0-f73.google.com with SMTP id p138-v6so16935893itc.3
+        for <git@vger.kernel.org>; Mon, 14 May 2018 14:57:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=xXvgX2d1jPkzcd9fc94WLoUl+Pnu9jSeEfNAA8vLiWY=;
-        b=E5tHNLa47mwHyKhKRONcVhJNWnJAUu97TDG8Yd7gVNZFcDHkgIAjtfkOR1Uj9PicJQ
-         /blKputUrinXsu3M8+K1ZwDnfK2HmExxCF2rdA97ZRQ36gHKZ1maAOjUFInxA2sC284Y
-         hMfDPfUw69b5UwHkSoxsyYrU2SlY53bv+ox0yQvKjDPrztw1DQwzQW7q04rk6/yIwKAc
-         U+0RIuMIptEBuwpU03TghPRpK4OFd29Lr/P1xSvZIvOS4rtA7JFYkXfF4r+14uxK8sRs
-         wtyEjhmyaZK9Y86B8qOaC6b+TBz6cPGNpNuVM+Iwk8WwbuiGs9C5ybfyjlTJFvPtsnMo
-         Bt5g==
+        bh=PJ4vElEbhu8iwzbaPdG5iDoXC+S2fX4XA7SMpGPzhyg=;
+        b=CYrJZ7XPT7thGBn3X5U6SuhMp16Mqkx8FWdPpxQpowpJFvzH2Tjg7OaqDQG5oS3p4L
+         hiy40+wCwqzykSUnjTya8W68TD2KNx4o+zqtGycIH+wAYGXJYnYJuhROV/HPQy9EVlDK
+         cyiV0wKf6+3TDf95nIoYkASWfe30DuMgn79Jv1CKBgNeiA+1aXLV5tIlji9lsJ4rpGiy
+         rTDH6M07CFJCGWpLcZIslM3yfxVGOL5bQS6U18FBM0ekgYUb4rK8zK+Xu2bzXAXWdjPQ
+         hzFS4azw4FraZmaeH6XKhDBl2NlBq/yfSYCQKWoFkEb85GZbDBHrafF/mELJ+jsPGApG
+         T+3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=xXvgX2d1jPkzcd9fc94WLoUl+Pnu9jSeEfNAA8vLiWY=;
-        b=K1VkIZYLKxmwFC0svhgAUJUAzeTe7DntxUSzhmVS+Q1NcnNTHMMAfxqGdVJsrsuTk2
-         OtprgjtbOHyh9Dl3xlTJCZ+UcGOWmpEmQG2mlS70MFnfKUm+NWojQQkXT1R1xfGiGSi/
-         5+200BlZ1xqJtAgG2QcXbwUVJWVIWU2VSq4yi6oqE8hIACcNSFsgsG2nn6rGFRDeFAP4
-         AV5WNIIQb1dP+Ejc1/37RTM0IajDiwijNWwGlK0K+LhWyKidXCeMQoIYFMvyxVXWghj+
-         MEo2NGjy3iR8TO/Ou1zqg4o2R03MlfuWCT1sO8HYT0ndSFeVeXveY+KiEQeUO8lNurTi
-         RZlw==
-X-Gm-Message-State: ALKqPwfTNeCE6foNZJpFI1jj7TBvFkQZaPhAwEXE1kH8sA52jcrPltCd
-        s5CNvmRjan5nuAPDe9z/szs9msE5juXZjYwm58skTozG0jLZXHYTGU8TqUavbZ8SOYSQmmYHitn
-        aMqewyURcsktzWkE+/0jBMxFPOfnjH0jLVPwaOPGD4nXnS9Z6q9O9xM7QOg==
-X-Google-Smtp-Source: AB8JxZqZfxAdcld+seUnDlHTBud09Du+g0k33x1jt0SVuJM9ILuYmCDEojd1onnOVZWxTPUuL1//9bWkbW4=
+        bh=PJ4vElEbhu8iwzbaPdG5iDoXC+S2fX4XA7SMpGPzhyg=;
+        b=rqvr/WAH9PpEwQUNOe7SK7T/1uSa96KR1BOynZN6TdFKouPye1evExv6x01ZRGdOLe
+         APj/5tt7G/3+KvgIm6ZjYv/Psbd/wQWY0Z/m3W/Cf1kwzTDt4xOHucCZxFLubyYTIbGF
+         2PwCor/Xg4sy/fxsqFayqpKlmqvkcIpinKEbynN6GwL1ABlfPGIFmvXhgrcFb6BndA2w
+         hq1cY3qHellFJ4fYQ3GPCgXOPU4rxCVmsijQDDa6YTwfLuweGaGKYqNI2OCmerGjFpBJ
+         Yo0TfjZhmGY/qzcn2NYqFZpFnhtj/+MDGBXv4zgsVlq+lOrRsLWWepCuPgldw3oLklCu
+         SbUg==
+X-Gm-Message-State: ALKqPwfhRwnVNGJqnQdcUiv83rTc+SMpZ3BUItVcANSj2F3CrnusqA+e
+        nUi7BcNrigaEHcRWPc9bOvkYjWmjwZAKJT9Re5NFVxfPsTI9LFis+vu86w2kBvUdEbtizOmMMz8
+        jmSAkpFV7KXKrHCSpOySu2e9+56+gRmld4qSv6tFlUikFPlK7pTYTPTfvNA==
+X-Google-Smtp-Source: AB8JxZr5lZLTUHKQH0Vem4RfzH1eIQOi4xIkDUvVDxd0cmyG9/0AWWx6cc3OcoyUTf0rqH4shRePaDFm/MU=
 MIME-Version: 1.0
-X-Received: by 2002:a0c:952f:: with SMTP id l44-v6mr18173179qvl.56.1526335017128;
- Mon, 14 May 2018 14:56:57 -0700 (PDT)
-Date:   Mon, 14 May 2018 14:55:59 -0700
+X-Received: by 2002:a24:b607:: with SMTP id g7-v6mr13796778itf.25.1526335019690;
+ Mon, 14 May 2018 14:56:59 -0700 (PDT)
+Date:   Mon, 14 May 2018 14:56:00 -0700
 In-Reply-To: <20180514215626.164960-1-bmwill@google.com>
-Message-Id: <20180514215626.164960-9-bmwill@google.com>
+Message-Id: <20180514215626.164960-10-bmwill@google.com>
 References: <20180514215626.164960-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH 08/35] transport: convert transport_push to use struct refspec
+Subject: [PATCH 09/35] remote: convert check_push_refs to use struct refspec
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, bmwill@google.com
 Cc:     Brandon Williams <bmwill@google.com>
@@ -62,57 +62,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the logic in 'transport_push()' which calculates a list of
-ref-prefixes to use 'struct refspec'.
+Convert 'check_push_refs()' to use 'struct refspec'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- transport.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ remote.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/transport.c b/transport.c
-index 3ad4d37dc..181db4d4d 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1111,21 +1111,22 @@ int transport_push(struct transport *transport,
- 		int porcelain = flags & TRANSPORT_PUSH_PORCELAIN;
- 		int pretend = flags & TRANSPORT_PUSH_DRY_RUN;
- 		int push_ret, ret, err;
--		struct refspec_item *tmp_rs;
-+		struct refspec tmp_rs = REFSPEC_INIT_PUSH;
- 		struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
- 		int i;
+diff --git a/remote.c b/remote.c
+index 89820c476..191855118 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1282,12 +1282,14 @@ static void prepare_ref_index(struct string_list *ref_index, struct ref *ref)
+  */
+ int check_push_refs(struct ref *src, int nr_refspec, const char **refspec_names)
+ {
+-	struct refspec_item *refspec = parse_push_refspec(nr_refspec, refspec_names);
++	struct refspec refspec = REFSPEC_INIT_PUSH;
+ 	int ret = 0;
+ 	int i;
  
- 		if (check_push_refs(local_refs, refspec_nr, refspec) < 0)
- 			return -1;
+-	for (i = 0; i < nr_refspec; i++) {
+-		struct refspec_item *rs = refspec + i;
++	refspec_appendn(&refspec, refspec_names, nr_refspec);
++
++	for (i = 0; i < refspec.nr; i++) {
++		struct refspec_item *rs = &refspec.items[i];
  
--		tmp_rs = parse_push_refspec(refspec_nr, refspec);
--		for (i = 0; i < refspec_nr; i++) {
-+		refspec_appendn(&tmp_rs, refspec, refspec_nr);
-+		for (i = 0; i < tmp_rs.nr; i++) {
-+			const struct refspec_item *item = &tmp_rs.items[i];
- 			const char *prefix = NULL;
+ 		if (rs->pattern || rs->matching)
+ 			continue;
+@@ -1295,7 +1297,7 @@ int check_push_refs(struct ref *src, int nr_refspec, const char **refspec_names)
+ 		ret |= match_explicit_lhs(src, rs, NULL, NULL);
+ 	}
  
--			if (tmp_rs[i].dst)
--				prefix = tmp_rs[i].dst;
--			else if (tmp_rs[i].src && !tmp_rs[i].exact_sha1)
--				prefix = tmp_rs[i].src;
-+			if (item->dst)
-+				prefix = item->dst;
-+			else if (item->src && !item->exact_sha1)
-+				prefix = item->src;
+-	free_refspec(nr_refspec, refspec);
++	refspec_clear(&refspec);
+ 	return ret;
+ }
  
- 			if (prefix) {
- 				const char *glob = strchr(prefix, '*');
-@@ -1142,7 +1143,7 @@ int transport_push(struct transport *transport,
- 							       &ref_prefixes);
- 
- 		argv_array_clear(&ref_prefixes);
--		free_refspec(refspec_nr, tmp_rs);
-+		refspec_clear(&tmp_rs);
- 
- 		if (flags & TRANSPORT_PUSH_ALL)
- 			match_flags |= MATCH_REFS_ALL;
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
