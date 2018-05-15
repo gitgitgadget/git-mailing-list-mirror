@@ -2,140 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49E1B1F406
-	for <e@80x24.org>; Tue, 15 May 2018 20:05:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 404941F406
+	for <e@80x24.org>; Tue, 15 May 2018 20:15:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752176AbeEOUFB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 16:05:01 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35944 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752059AbeEOUFA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 16:05:00 -0400
-Received: by mail-pg0-f68.google.com with SMTP id z70-v6so509385pgz.3
-        for <git@vger.kernel.org>; Tue, 15 May 2018 13:05:00 -0700 (PDT)
+        id S1752150AbeEOUPX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 16:15:23 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:42204 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752059AbeEOUPW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 16:15:22 -0400
+Received: by mail-yw0-f195.google.com with SMTP id q7-v6so471766ywd.9
+        for <git@vger.kernel.org>; Tue, 15 May 2018 13:15:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=rVkUlbmFlQ7uWwuUmI8/vWQvYPt+e5eKyJpHLJj/dGs=;
-        b=lhghpWovRmY4RyWETacy/OqN/Yk1hEmb2K6JM2osih3KB6+4hoGBWbQGSvlieQHDg0
-         WfXoBJROXr6xnZ2nfGPacJ/YV2KF/3C6uCLnCSNZwrMWvQvkJ5uttifjSzepzFFriUvf
-         6yNeJO3OL0JyYUn9OpwTm/hROh6iqIflt5za1wN7idApFXsmsdws7xWVBc+Av+khLXvj
-         vdDvVOe0bdj5ICFHMw6Msx8b2xF6+eQogvZZa7BVxq4fyaXc+HK8pPkBf8trTUPoZNUB
-         LB8PBJJPZN71F0HIVmFZyK1oLRhG6NHN7qgsOu8dqDwIgVfY9z7OWe2NT5tCCn4rhW8S
-         ompg==
+        h=from:in-reply-to:references:mime-version:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=RTdPgDMltl+/y72iaQwUbpDUi8H5BSPYRXzX9fFkYi4=;
+        b=F5fz7gHBDjle+ww7GGk6TLjhuVonF+VtbZ/cGNyhW///yzmqpkwJEnNKpoGL7rfcMD
+         z/rsTi6dNkQQZK94geau10CF8OWgIFrIQm1jgCaawiCYIXIfhCOpF0VVk6n5jzk3L2yh
+         PXku8L91yoVuK89REB9X379uTxa4Wwr89MqE+3Z/mEq6FkBkPBJvX+dPjMYS/o/H/jP4
+         YUGGAkV3XoDIyPKnKuyMN4zO1lrFmj10DVBdWiI/LkSZCkmNn7cZWYOI1CxTr2wirna3
+         SZ7QD/2FqIhjGyHmVOBo8tLEHxDvDyJdm3URo30uQj+Bb875Neh/xfirZHSeWurnjNWy
+         FjMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rVkUlbmFlQ7uWwuUmI8/vWQvYPt+e5eKyJpHLJj/dGs=;
-        b=NgkxZR9KLWvdaYt3nILj2FNjWagQw9EC1/m0C2ufvefpFkZh8vB5cDA2+noPPezKz2
-         f5SpvZoiyh4TUsDmrY7SJw1ni80xXze2TrSwTbTvDHlVbPz+0LQSjyqc5nQ1iI3EXK8r
-         ojIWXi9GDUodh/QlFWYfQPhNfyyYyA/RUFd1Whu8Kp+pAyU4H4xlWIvYTIVgL9ly/ZqX
-         0+U+ybnBjXT3g14QIk66zlRkgaXZvcWa4cKFlT3+f8YMYZJK9yabodSkGGxekJPCO1Id
-         XlFKSeU6BeLlxHjPwSY0Uyu3QD12kYVn1SsWkH+l4IPWZ3kSCUlsHI+m7T1zoUP93OlM
-         8rnw==
-X-Gm-Message-State: ALKqPwc/U5hytelN0QLhXYXHM4UeG2/AM2X7aHKJHe5bjBIJ8HEjwiW+
-        AFnuL0RoAzvqc8UcJyKeOlo=
-X-Google-Smtp-Source: AB8JxZqTRno3fSaUXaAsThsqHgTp5cSfnrVHkKYslMu12na3jNpHeSkre+QXyftw3gQ1PfxmyrkFkw==
-X-Received: by 2002:a62:1d52:: with SMTP id d79-v6mr16519313pfd.230.1526414699858;
-        Tue, 15 May 2018 13:04:59 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id z129-v6sm989920pfb.108.2018.05.15.13.04.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 May 2018 13:04:59 -0700 (PDT)
-Date:   Tue, 15 May 2018 13:04:32 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH] git-submodule.sh: try harder to fetch a submodule
-Message-ID: <20180515200432.GA40044@aiede.svl.corp.google.com>
-References: <20180511231751.162855-1-sbeller@google.com>
- <20180511232840.GB41222@aiede.svl.corp.google.com>
- <xmqqmux5g2pa.fsf@gitster-ct.c.googlers.com>
- <CAGZ79ka_8GmL9j9mTNLkbqN3xNkfCfedzs2st-tH8jMjQ2A4DQ@mail.gmail.com>
+        h=x-gm-message-state:from:in-reply-to:references:mime-version:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=RTdPgDMltl+/y72iaQwUbpDUi8H5BSPYRXzX9fFkYi4=;
+        b=nf8PC96Uj8PLYbpHpi+o0fQYRlgbNWMKtFlM856JyWz87wFOT4zso7WQpW+kdiC+62
+         goJFQv5dUEmPCO4dqABzU1fDnUZ7NCKbDYtT9OFHEFJEGnRfAJkKz/seLybbeqsnuGcw
+         cqTkrz9j5bMsoW4jEmWLvpJJiu0ddCTQ9Jycz3TBBjhJf/6mIA8UOzDlb/OAPLmVAhdC
+         BEnW2+lPxlOHb5LvjKRLBljVemrbtT9Q+ozJpOHEjuCN8sVtqlWaSZxzJBExbvvHT+b5
+         91HyXbS8Iu/rfR/OxjXFlIOMe4GRDLr4Wx6RIT5ICiFq3DwAx5V2YUWuXbdC5EV92Y9d
+         S1RQ==
+X-Gm-Message-State: ALKqPwd1/g7nYhKH3OZyMidmDSYPthVkP3popHFjPJDFkRbjijxa4Iv4
+        eqYyuQBafYNTfys6MBMKiwlsiVmtdqTBczB/uWhN4Q==
+X-Google-Smtp-Source: AB8JxZoNVbjXzahKnhFzogYaDYB2AtpyYkkycZ3EtrD1N9S+NHyxD4QaoUFE5YNw45XHVXnzfvT918parPGwtBPBtYA=
+X-Received: by 2002:a81:4109:: with SMTP id o9-v6mr7202882ywa.411.1526415321840;
+ Tue, 15 May 2018 13:15:21 -0700 (PDT)
+Received: from 1058052472880 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 15 May 2018 13:15:21 -0700
+From:   Leif Middelschulte <leif.middelschulte@gmail.com>
+In-Reply-To: <20180515200030.88731-1-sbeller@google.com>
+References: <20180515200030.88731-1-sbeller@google.com>
+X-Mailer: Airmail (481)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79ka_8GmL9j9mTNLkbqN3xNkfCfedzs2st-tH8jMjQ2A4DQ@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Date:   Tue, 15 May 2018 13:15:21 -0700
+Message-ID: <CANw0+A-FK-zkuhX-jU8q7LfqgaNM6E4Xy92UOs2gkwkBf1TYOA@mail.gmail.com>
+Subject: Re: [PATCHv2 0/3] Reroll of sb/submodule-merge-in-merge-recursive
+To:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Cc:     newren@gmail.com, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
+Hello Stefan,
 
-> I'll resend it with a warning (using say()).
+thank you once again for your effort.
 
-Thanks, makes sense.
+Am 15. Mai 2018 um 22:00:34, Stefan Beller
+(sbeller@google.com(mailto:sbeller@google.com)) schrieb:
 
-> I think we have 2 bugs and this is merely fixing the second bug.
-
-I'm fearing that there are more than two.
-
-[...]
->   $ git init confused-head
->   $ (cd confused-head && git branch test \
->         $(git commit-tree $(git write-tree) -m test))
->   $ git clone --no-checkout  --depth=1 \
->         --separate-git-dir=test.git confused-head/.git test
-> Cloning into 'test'...
-> warning: --depth is ignored in local clones; use file:// instead.
-> done.
+> This rerolls the two commits found at [1] with the feedback of Eliah
+> and puts Leifs patch[2] on top, that I edited according to Eliahs feedbac=
+k,
+> but kept Leifs ownership.
 >
->   $ git -C test.git config remote.origin.fetch
->   $ echo $?
-> 1
+> This has addressed all of Eliahs feedback AFAICT.
+> You'll find a branch-diff below[3], which lacks
+> the new patch of Leif in that series, but is part of the reroll?
 >
-> (A) Despite the warning of --depth having no impact, the
->   omission thereof changes the repository state.
-> (B) There is no remote.origin.fetch configuration, which
->   is weird. See builtin/clone.c:830, that states for this case:
+> Leif, what do you think?
 
-I can reproduce the issue without submodules and without --local,
-as follows:
+Seems great to me. Thank you for picking up and improving my changes :)
+One Question though: Shouldn=E2=80=99t an enum (like
+NOTES_MERGE_VERBOSITY_DEFAULT) be used instead of numbers?
 
-	git init --bare empty.git
-	git init --bare almost-empty.git
-	git -C ~/src/git push $(pwd)/almost-empty HEAD:refs/heads/upstream
 
-	git clone --single-branch file://$(pwd)/empty.git
-	git clone --single-branch file://$(pwd)/almost-empty.git
+Cheers,
 
-	git -C almost-empty.git branch -D upstream
 
-	git -C empty fetch
-	git -C almost-empty fetch
+Leif
 
-Expected result:
-Both fetches succeed.
-
-Actual result:
-First fetch succeeds, second produces
-"fatal: Couldn't find remote ref HEAD".
-
-Note that empty.git and almost-empty.git are basically identical.
-The difference instead lies in the clones' .git/config files:
-
-diff --git 1/empty/.git/config 2/almost-empty/.git/config
-index b51bb0d..ee21198 100644
---- 1/empty/.git/config
-+++ 2/almost-empty/.git/config
-@@ -4,7 +4,4 @@
-        bare = false
-        logallrefupdates = true
- [remote "origin"]
--       url = file:///tmp/t/empty.git
--[branch "master"]
--       remote = origin
--       merge = refs/heads/master
-+       url = file:///tmp/t/almost-empty.git
-
-Thanks,
-Jonathan
+>
+> Thanks,
+> Stefan
+>
+> [1] https://public-inbox.org/git/20180510211917.138518-1-sbeller@google.c=
+om/
+> [2] https://public-inbox.org/git/20180514205737.21313-2-leif.middelschult=
+e@gmail.com/
+> [3] git branch-diff origin/master..origin/sb/submodule-merge-in-merge-rec=
+ursive origin/master..HEAD >>0000-cover-letter.patch
+>
+> Leif Middelschulte (1):
+> Inform about fast-forwarding of submodules during merge
+>
+> Stefan Beller (2):
+> submodule.c: move submodule merging to merge-recursive.c
+> merge-recursive: i18n submodule merge output and respect verbosity
+>
+> merge-recursive.c | 185 +++++++++++++++++++++++++++++++++++++++++++++-
+> submodule.c | 168 +----------------------------------------
+> submodule.h | 6 +-
+> 3 files changed, 186 insertions(+), 173 deletions(-)
+>
+> --
+> 2.17.0.582.gccdcbd54c44.dirty
+>
+>
+>
+> 1: e022c7976ae ! 1: 3b638ccac64 submodule.c: move submodule merging to me=
+rge-recursive.c
+> @@ -20,7 +20,6 @@
+> This commit is best viewed with --color-moved.
+>
+> Signed-off-by: Stefan Beller
+> - Signed-off-by: Junio C Hamano
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> --- a/merge-recursive.c
+> 2: 2c02ece7e01 ! 2: eb43110df9d merge-recursive: i18n submodule merge out=
+put and respect verbosity
+> @@ -7,7 +7,6 @@
+> internationalisation as well as the verbosity setting.
+>
+> Signed-off-by: Stefan Beller
+> - Signed-off-by: Junio C Hamano
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> --- a/merge-recursive.c
+> @@ -73,10 +72,10 @@
+> - fprintf(stderr, "Found a possible merge resolution "
+> - "for the submodule:\n");
+> + output(o, 1, _("Failed to merge submodule %s (not fast-forward)"), path=
+);
+> -+ output(o, 1, _("Found a possible merge resolution for the submodule:\n=
+"));
+> ++ output(o, 2, _("Found a possible merge resolution for the submodule:\n=
+"));
+> print_commit((struct commit *) merges.objects[0].item);
+> - fprintf(stderr,
+> -+ output(o, 1, _(
+> ++ output(o, 2, _(
+> "If this is correct simply add it to the index "
+> "for example\n"
+> "by using:\n\n"
+> -: ----------- > 3: 4a3bc435023 Inform about fast-forwarding of submodule=
+s during merge
