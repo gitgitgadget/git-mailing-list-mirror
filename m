@@ -2,71 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A18301F42D
-	for <e@80x24.org>; Tue, 15 May 2018 08:42:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DB0A1F42D
+	for <e@80x24.org>; Tue, 15 May 2018 09:38:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752488AbeEOImA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 04:42:00 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:55627 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752449AbeEOIl6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 04:41:58 -0400
-Received: by mail-wm0-f53.google.com with SMTP id a8-v6so17857596wmg.5
-        for <git@vger.kernel.org>; Tue, 15 May 2018 01:41:57 -0700 (PDT)
+        id S1752312AbeEOJh7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 05:37:59 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:40358 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752162AbeEOJh6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 05:37:58 -0400
+Received: by mail-wm0-f65.google.com with SMTP id j5-v6so20271846wme.5
+        for <git@vger.kernel.org>; Tue, 15 May 2018 02:37:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=z4KfHvALSXJ6N2R2h4a7T8X0J94kLoSfrnBgm93oh7I=;
-        b=eN1ETLOk/djENWNhgNcrGssyWAvX30OHO2mhhV5WIu79+eAHYBKeiPPNUKCDFgfw4Z
-         SiOlrk7bJGBureqUw/4cnabzKKYtOHCJvx0ZdI4+VxLbVWtLj+JMUCru4MGQI+f/Fscz
-         9m+GqSfd1NCbOc+Dj6yqw9slNF1V6sowVui9aYHqoMZDLGSvWxvrVf258Ozb6CQu+Ng0
-         hIuXqRG2TvAeZ3fazDf5GL/aCOXDURqYF8zXtc+4wb7kFJSa2QXa8neNdN4+yfMdo8+z
-         CtWbllH0aiUWV7IHsLC5TUOIA5fRrGRMH9uNkmOVlTxMNJIvVLVEvmnvNJ5J+vqZJr32
-         BRKw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=YJnaFFYiX/3GfZiALUmf2D10Q39OH46Skmol+XIlnsg=;
+        b=RKMhdxzpIM3IpXKnRnnDzya5I1QHmEBq1ovht/D4ao/AO8Ud0ru9e+8re3tq8iV55N
+         dK5eISWdlNQyPM3wT9wrGFWth+731HeqodfafsIarBsWimne7qVzPXrny5VQj3U4Jrze
+         2H1D7a/wOPF2G69QwXg/uMP+PfHXEbnnfMn9Axg2w2skYFnZQQ1QwzgMeYDPbNeLL+hJ
+         cg1k4B2q4jCtn/UvL8F//tXPhCf++FZ2oi+D6FBbNhx5i5ssS0QttZlDrv1KVlx54vdG
+         Te5HcghkhVQMh9MXBUDY61L/8RCf4fn7KP0gCvmqwZ674lFRY0IcRiBxkAyT+iZjKkJ4
+         ntQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=z4KfHvALSXJ6N2R2h4a7T8X0J94kLoSfrnBgm93oh7I=;
-        b=IK9OWcWrmUldf1cSCCEy9iRxfG2pjGyHMtzeoJzwqmnrOJ4wvUd5fVcsmLj3Xxx9tf
-         SV2SEgmStnGP45+YpluSBGYYf8NhLGe9Sw7RAw8J9GcmVW9VF1h2w+6/h7CAogDPtRmN
-         M+1Tf+JwA7l4AngF+zstEcg33PPIq44t2QbsVwnsbDYcnJnXfpNhbQbciWKKCx7WsN8s
-         F+FXW2tUj6DikpxmMXDwP2NdG7Nd73s6UA5IeftGstj/VrqBhtI+WVAH+Rn+j/WCVty2
-         RjHiEuraFcnJkJ4CqBNZZB6Zj3qe7Z1bnqy0R/V89+BWnbWr4nni58yeWqRpKtFpyYWQ
-         OsnA==
-X-Gm-Message-State: ALKqPwf6GITOI/4CJuLC9EnY5hzDN9YfUABKvzVV8zkLX5NbAy/Al3hj
-        NvkgAQIM0hRfeU99fqwzQSj54/Q7
-X-Google-Smtp-Source: AB8JxZpSfi/sJXtbbZ4O/bJGNucz2Kb0AYtbX2nwVYv2dIxTRX1nxrs7YEJcn7ZHIbFNYZuGAPOIZg==
-X-Received: by 2002:a50:b6e2:: with SMTP id f31-v6mr16790978ede.23.1526373716553;
-        Tue, 15 May 2018 01:41:56 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id i22-v6sm5727651eds.28.2018.05.15.01.41.55
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=YJnaFFYiX/3GfZiALUmf2D10Q39OH46Skmol+XIlnsg=;
+        b=Ii6pyulmtvMk+l7qKA7fIa+8r/rZp68c9uHBd1pg1SQzALdk9rqrceIyvwUq3qhnXT
+         Vj4bQ3+T4IjVOLdrxn9Li3bNAu11XuEbEvW+MjBl0cfxKoolYB5krwPq18s7mC2Q1u5n
+         Vwbq5x+M3nRX7hPjryef2olZ10S7026hRDGT6e5bf7XyKfsSPnTJP3X+ZpInfZIDhvdB
+         mk3em9gMFquxD+8PHtXfRnn2XJdO4UAPa6xsTdcA/RMnO/hnrccSKUfJn18k4EYHPC1B
+         KI9a252LCV/scB17PYDrhT1F2SSh6V/SYn0ZcmxiQVouPFU0TweHdPNdYP0c7oA0gKsd
+         anjw==
+X-Gm-Message-State: ALKqPwfwpUK4aGP+0BxV104JBYGynTn5KZv6EBQxhXHxAkeP7xwYqllz
+        kxxG7FEZ5DZHEqI87nzEA4PFQTS9
+X-Google-Smtp-Source: AB8JxZpDCfaoFvBOGeRRJDFbhf3g1RKH2iE26slkR2W1zqy+vhkJULI+XIzdwrPFiOYFCN2tSwL24w==
+X-Received: by 2002:a1c:7a0b:: with SMTP id v11-v6mr7647299wmc.58.1526377076685;
+        Tue, 15 May 2018 02:37:56 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x65-v6sm18634314wme.31.2018.05.15.02.37.55
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 May 2018 01:41:55 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v1 2/8] Add initial odb remote support
-References: <20180513103232.17514-1-chriscool@tuxfamily.org> <20180513103232.17514-3-chriscool@tuxfamily.org>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180513103232.17514-3-chriscool@tuxfamily.org>
-Date:   Tue, 15 May 2018 10:41:54 +0200
-Message-ID: <87fu2t2tv1.fsf@evledraar.gmail.com>
+        Tue, 15 May 2018 02:37:55 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 04/35] refspec: introduce struct refspec
+References: <20180514215626.164960-1-bmwill@google.com>
+        <20180514215626.164960-5-bmwill@google.com>
+Date:   Tue, 15 May 2018 18:37:55 +0900
+In-Reply-To: <20180514215626.164960-5-bmwill@google.com> (Brandon Williams's
+        message of "Mon, 14 May 2018 14:55:55 -0700")
+Message-ID: <xmqqefid8djg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -74,9 +66,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Brandon Williams <bmwill@google.com> writes:
 
-On Sun, May 13 2018, Christian Couder wrote:
+> diff --git a/refspec.h b/refspec.h
+> index 173cea882..f6fb251f3 100644
+> --- a/refspec.h
+> +++ b/refspec.h
+> @@ -20,4 +20,29 @@ struct refspec_item *parse_push_refspec(int nr_refspec, const char **refspec);
+>  
+>  void free_refspec(int nr_refspec, struct refspec_item *refspec);
+>  
+> +#define REFSPEC_FETCH 1
+> +#define REFSPEC_PUSH 0
 
-> "sha1_file.c"[...]
+The reversed order of these two definitions looks somewhat unusual.
+I guess the reason why you made FETCH true and PUSH false is
+probably because quite a lot of places in the existing code we do
 
-sha1-file.c these days :)
+	if (fetch)
+		do the fetch thing;
+ 	else
+		do the push thing;
+
+i.e. "fetch" variable is used as "is this a fetch: yes/no?"
+boolean, and a caller that mysteriously passes "1" (or "0")
+is harder to read than necessary.  Being able to pass REFSPEC_PUSH
+instead of "0" would certainly make the caller easier to read.  But
+as long as the variable is understood as "is_fetch? Yes/no", the
+caller can pass Yes or No and be still descriptive enough.
+
+I think the way to make such a code more readable would not be to
+rewrite the above to
+
+	if (fetch_or_push)
+		do the fetch thing;
+ 	else
+		do the push thing;
+
+Rather it would be 
+
+	if (fetch_or_push == REFSPEC_FETCH)
+		do the fetch thing;
+ 	else
+		do the push thing;
+
+And once you have gone that far, the actual "enum" value assignment
+no longer makes difference.
+
+> +#define REFSPEC_INIT_FETCH { .fetch = REFSPEC_FETCH }
+> +#define REFSPEC_INIT_PUSH { .fetch = REFSPEC_PUSH }
+> +
+> +struct refspec {
+> +	struct refspec_item *items;
+> +	int alloc;
+> +	int nr;
+> +
+> +	const char **raw;
+> +	int raw_alloc;
+> +	int raw_nr;
+> +
+> +	int fetch;
+> +};
+> +
+> +void refspec_item_init(struct refspec_item *item, const char *refspec, int fetch);
+> +void refspec_item_clear(struct refspec_item *item);
+> +void refspec_init(struct refspec *rs, int fetch);
+> +void refspec_append(struct refspec *rs, const char *refspec);
+> +void refspec_appendn(struct refspec *rs, const char **refspecs, int nr);
+> +void refspec_clear(struct refspec *rs);
+> +
+>  #endif /* REFSPEC_H */
