@@ -2,138 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 554FE1F406
-	for <e@80x24.org>; Tue, 15 May 2018 19:07:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E98B1F406
+	for <e@80x24.org>; Tue, 15 May 2018 19:36:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752513AbeEOTHG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 15:07:06 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:39975 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752495AbeEOTHE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 15:07:04 -0400
-Received: by mail-yb0-f196.google.com with SMTP id o80-v6so427415ybc.7
-        for <git@vger.kernel.org>; Tue, 15 May 2018 12:07:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fPBkQfJw41We8Y0YGLWt8enrMYIvqR1W2MgwDSEwVuA=;
-        b=bFJO+InPvugZcVybOf+QhC9VL+vqVDuhHVNzmD/zZvXU0ZmvzGlDNcYf7gBpr4LLZi
-         w+dbGfzZ3q9xw+BK/HdFzPEq49n47oteP1hQYi9eUcmYKOKx2EZerncXTvIVHpm8KTZP
-         fUssFfQ6Kzil9isyEjE3bgSkZkkrDe9CN6p2VLVptd4AEyc1rjMRX82tbYupwsQXHCfJ
-         20MGYumfkXx7nQWV3nBFniqtzrglaN9SW/sBRnaVgn1rrVR3sBoLZ3hs3f2IWt64TSsz
-         IJrmNchG64gU2BCPETrI3Sg8KHOGGaA4D8ADZZ7e7SyU/Pn+c1bY+NeV3Fm8MqRccEpI
-         lZhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fPBkQfJw41We8Y0YGLWt8enrMYIvqR1W2MgwDSEwVuA=;
-        b=lc/anucM0ZKpq65lm9K4pHlOYuGXq9YkryMEG4HzokxIO3kJPMwvXtfQTKG7XPWxp1
-         X7Wh21Z94q+TfeHSh2y1jE7RxP+C0M1Yo2GUV6H5RafiMKxRXpQISZAL9n6EGXfEBgux
-         8EFKlh4AmVMBmhkIs8nDuMG9kYeeIkxV3csJyb/s/dS98G22RdtXP/i/ELzomA3z45FN
-         Cl0byOeQ1XM8PfHckFvRWFT+DlsoFkOhaxloKnDmtbQNQM8OyOiYjkBPqFVQgiC+mVhq
-         l94+3B0Fx93i0RqZ/6aR8wfsNy+xA+FozCxUgl4NRn0tR175nkwnxvSUPa6gHQ9P/I8t
-         g4Vw==
-X-Gm-Message-State: ALKqPweJL+DnP/VnlhSyXkZ0QUJ0NdtLD+vE/nN2Ofy9rW/Z4+9Ay6RA
-        XSVkQF476PzYh6qXEJRyON0w8KVoEk4oyEuDfNkh8Q==
-X-Google-Smtp-Source: AB8JxZqYetdeOmZtRfN1skPkuxomfXRqAaKJET2BL4ffPCK02O3HANTajtAXNrUjhzMNl011aSazDZCCM+TKMr5AByE=
-X-Received: by 2002:a25:3bc5:: with SMTP id i188-v6mr9638491yba.352.1526411223304;
- Tue, 15 May 2018 12:07:03 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Tue, 15 May 2018 12:07:02
- -0700 (PDT)
-In-Reply-To: <xmqqmux5g2pa.fsf@gitster-ct.c.googlers.com>
-References: <20180511231751.162855-1-sbeller@google.com> <20180511232840.GB41222@aiede.svl.corp.google.com>
- <xmqqmux5g2pa.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 15 May 2018 12:07:02 -0700
-Message-ID: <CAGZ79ka_8GmL9j9mTNLkbqN3xNkfCfedzs2st-tH8jMjQ2A4DQ@mail.gmail.com>
-Subject: Re: [PATCH] git-submodule.sh: try harder to fetch a submodule
+        id S1752030AbeEOTgp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 15:36:45 -0400
+Received: from mout.web.de ([217.72.192.78]:38529 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751884AbeEOTgo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 15:36:44 -0400
+Received: from [192.168.178.36] ([79.237.255.222]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LpO4v-1eg14S3sFp-00fE9v; Tue, 15
+ May 2018 21:36:30 +0200
+Subject: Re: [PATCH] fast-export: avoid NULL pointer arithmetic
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <d50a4d5d-3b99-453e-1b52-4e733453fb78@web.de>
+ <99d443cd-e817-7db5-f758-bf4cf47f7c06@web.de>
+ <xmqqo9hniy1v.fsf@gitster-ct.c.googlers.com>
+ <654fac2a-8dca-7bee-2bab-a3986aa7e52d@web.de>
+ <xmqqbmdnhr8b.fsf@gitster-ct.c.googlers.com>
+ <xmqq7eoahk49.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8AN4nssu1+x0x9Kmz1BB1aXO7_UBFCjpyULMeC5K-Fzvw@mail.gmail.com>
+ <20180511085634.GC22086@sigill.intra.peff.net>
+ <CACsJy8CnJYsgDe11tK4JzH2sDRuLwgoUz=HCso5qOhEfyZNH5Q@mail.gmail.com>
+ <20180511133419.GA2170@duynguyen.home>
+ <20180511174237.GA19670@sigill.intra.peff.net>
+ <80397e16-8667-e0cd-4049-aad453d35e6f@web.de>
+ <xmqqwow7c90d.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <bcb24c9e-e10e-7f1b-6cbd-9cdd2508e795@web.de>
+Date:   Tue, 15 May 2018 21:36:26 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqwow7c90d.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:b2QxsBDsFd41mHU8DCKFjIFj0slACOCxAkLdd6v5Bgbi555ogb7
+ O110FNt1XZUksYenLLx/+xEZKZJWESBxWdSbqMTqJexPOk/YR7QZRywXifDEVJOCnqaHLxH
+ 1U0Axo/pHoMNhgBPVTObJb1kPgFdIZxWSpAUM5mH55PHjJHlK7zqstzhftIUn5PX3Em8JSG
+ Tl9HwC3uuol3Fc4K3oP8w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zeOcJPKsZrk=:ssT8yQdg2QT5KppcqRVTQ5
+ DB8xJbJt1EVO7KmxOdHcgmp0ZVz21iJXsYsE5nqZjDPVt2NN62sIxJJQZp24dJ6bUwmtrQEMu
+ lleLdD3YonDsEuV+SQNuQsFe16BOQ4tnUD7JurBYfxiAEmq3phV9zXiU+6TYCGzdlqeZcDqvT
+ gc6jFtknH3jIyXj2ykbBuSbx6wlnH2CiIcf9fqHllHR0rG2PqLQyjf7QZpl/G8hFwyv4X0ca5
+ WAjDvPxG8u7G73fo392nI9c6grFGgsYHrCXHfg/YPGZB4Le8gewrJ2lLIzwjKq1/19e3Ibnkl
+ 4metAWW3DCMF8CCEV9+IUbB37Hm7ik6UNR8APHhk4Ve0r+N1DO6/xy77vyRcvXQR/k9N/ceUM
+ yPcTz9LUaD4tcWSGG/0gKliN4aj/eLWz+emgm74L1kK6jA/Jdz0ilHze7vf4Tzw8ofcakE2f+
+ rIprlgH2HFY3WMbcY5AT5DAZzXxmzdVWQn9YCObsZyPRvfOMU/gLWdyqzF0nEMMrTP5ArjMf0
+ qMfXeV03wzP7e2zlzODd/lETK9RhVdWyWiHnA+0SswGkdgcCMujlSAAIYEAVUrZ8t2SoFV5Rg
+ faM3Gjd2YUppRDzmnuS4CvaVCsZkLTdRbScrk4Z5dNtsOBgy3q05kh6ac7FkP0yduChu5Cytd
+ CDn1wW4uUYnXW5vjQFyikA0eT/XJ71+30LT7OxHw1CWvOcw+ZO0UphHuvVrT5WVRA9AMwwp76
+ fMhCSOY2NaJHYanUZbG/ZFq3ONRbrWlSmuqLxG+F9+c9aybEd510y4OF2gIYIFQJ5x7RG/Vav
+ PbC30w/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 11, 2018 at 5:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> A more typical example would be if the ref simply doesn't exist (i.e.,
->> is a branch yet to be born).
->
-> Indeed this is interesting.  At first glance I thought this was
-> about underlying "git clone" failing to grab things from a
-> repository with unborn HEAD, but that part works perfectly OK.
+Am 14.05.2018 um 03:37 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
+> 
+>> Storing integer values in pointers is a trick that seems to have worked
+>> so far for fast-export.  A portable way to avoid that trick without
+>> requiring more memory would be to use a union.
+>>
+>> Or we could roll our own custom hash map, as I mused in an earlier post.
+>> That would duplicate quite a bit of code; are there reusable pieces
+>> hidden within that could be extracted into common functions?
+> 
+> Hmm, this together with your follow-up does not look too bad, but it
+> does introduce quite a lot of code that could be refactored, so I am
+> not sure if I really like it or not.
 
-ok.
+Putting keys and values into separate arrays probably causes stores and
+lookups to hit (at least) two cache lines instead of just one.  Not sure
+how much of an impact that has on the overall performance (probably not
+much), but we'd need at least a perf test for that.
 
-> So it probably should be more like
->
->         guard1 || action1 || warn
->         guard2 || action2 || die
->
-> so that no matter what the outcome of the action1 is, the second set
-> gets executed.
->
+And we have enough hash map implementations already.
 
-I'll resend it with a warning (using say()).
+Casting should be good enough for now, to avoid the compiler warning.
 
-I think we have 2 bugs and this is merely fixing the second bug.
-
-The first bug:
-We had a call chain as
-  git clone --recurse-submodules=<path spec>
-    -> git submodule update --init --recursive $(pathspec)
-      -> git submodule--helper update-clone # will clone
-        -> git submodule helper clone
-          -> git clone --no-checkout --separate-git-dir ...
-
-The call to the "git clone" produces an interesting
-submodule state:
-
-  $ git init confused-head
-  $ (cd confused-head && git branch test \
-        $(git commit-tree $(git write-tree) -m test))
-  $ git clone --no-checkout  --depth=1 \
-        --separate-git-dir=test.git confused-head/.git test
-Cloning into 'test'...
-warning: --depth is ignored in local clones; use file:// instead.
-done.
-
-  $ git -C test.git config remote.origin.fetch
-  $ echo $?
-1
-
-(A) Despite the warning of --depth having no impact, the
-  omission thereof changes the repository state.
-(B) There is no remote.origin.fetch configuration, which
-  is weird. See builtin/clone.c:830, that states for this case:
-
-    /*
-     * otherwise, the next "git fetch" will
-     * simply fetch from HEAD without updating
-     * any remote-tracking branch, which is what
-     * we want.
-     */
-
-I disagree as the next fetch will be confused
-(HEAD is not advertised on the next ls-remote)
-
-The patch that is under discussion here is merely
-papering over the effect of having no fetch spec,
-by allowing the second fetch (fetching the sha1 directly)
-to run, which ignores the configuration as a refspec is
-given.
-
-However it is still a bug, as such repositories are out there,
-which is why I said there are 2 bugs initially. It's just that
-the first bug enables the second bug.
-
-Thanks,
-Stefan
+René
