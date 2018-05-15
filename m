@@ -2,63 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0ED81F42D
-	for <e@80x24.org>; Tue, 15 May 2018 08:11:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4229B1F42D
+	for <e@80x24.org>; Tue, 15 May 2018 08:17:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752611AbeEOILW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 04:11:22 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35948 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752226AbeEOILS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 04:11:18 -0400
-Received: by mail-wm0-f65.google.com with SMTP id n10-v6so19675708wmc.1
-        for <git@vger.kernel.org>; Tue, 15 May 2018 01:11:18 -0700 (PDT)
+        id S1752454AbeEOIRt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 04:17:49 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:38964 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752044AbeEOIRr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 04:17:47 -0400
+Received: by mail-wr0-f196.google.com with SMTP id q3-v6so14973283wrj.6
+        for <git@vger.kernel.org>; Tue, 15 May 2018 01:17:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=zosDjjQDvzpBgeC9LeVXx2NpVpOL4gRCtpxhYQpYgJ4=;
-        b=h3qYv2fn4XTmk8M6PV/N3ckS43XKnIbnNh27UOFgB8HVfC/lgFlPVvBYtp5rdfQoez
-         1oh7ebmJaSXWyWsjalhRMmb7765cm62GhcdHK7y8QfzkWlimg1tIPWDlIjQyOHLRTbvH
-         gzQ9tbD00TUZ6gX/xo5SCmhTDgqIjTzTfy0+h8crYPfgRZoNsQWExpfusMJIQTZwadfM
-         0wcz7lpIyKMBZKyuncLxB7LqpPtydYEsrY+6iQtI+6+TmKZU039GVyezl5Ah/e6fUDRT
-         NBMwO5aUqiAfDAVGBNZnr1WUrLOh7x2VQwsm2p/t4D21Cy8kS8dyVREv7DRTy7i8XUQa
-         C63A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=+t5TEG3Cv28zBzy25xc/yBRyX7YuLMyQmCK6/nlX2pg=;
+        b=CAp+HIH32Ik2yTdTA1nEaSsviAYK1Rkkm1rLJ6JNJcXS8xNm4GQWRGfYkedfH69R9W
+         g5WlyU+/KLRVEMfUs5IZcv/2RQnDPi82zpmyzQn2SqsyTKwfNC7BsJ4oZLJl9/j56npb
+         oG8v/cqK7o06VPXUWU7GD8k3Ci/yEpBKORrPRSha4PA70ue/GTWg3TS1HZT32dLxCj3G
+         Bvw3RgUK4BdWvZgfIH+sbtNTwsZUTM2VEDQyXzAR23ejStuxsJ07bFAnfXO92lvXRFJM
+         67lC7Rkvv2rU0dAaajhkjiXL+37eESJdynvpTCXED4HOyuXYl9/Szp8KhO25VkQnpOVj
+         MhyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=zosDjjQDvzpBgeC9LeVXx2NpVpOL4gRCtpxhYQpYgJ4=;
-        b=F5fvI01ux559NtpvIimIo3m4OWF5nCPrL1huqg2MHcI9+z6tNPmIN2xfBQ8UY2QsbD
-         RAnLI/Ftvx2/0oD7E4TuyIAsye2TkJ7dA7IzHLK06D37SuKjjUp2cPW3SYK5eJlLvu5Y
-         SFt2Z39hNrKX0htYvaVutRRs8yHjaldfZTk1IdkxzG+lY6vcfXJqhXMIHkn6Oox5fhjD
-         Uu/Wv6Oep/ItPSLKQvE/2MHtrW+m6zZ4hiyxHAKcOFKgQwwMNLzRBaKcq04MEyKiVgZI
-         CU2jPfdOCHCuOEjbo0C654bczjFdov4ZK3y38pW01qSSl29cTulRRFhjBcJfzDSPPSwr
-         Zd2w==
-X-Gm-Message-State: ALKqPwdX3cYfuhtPGHXnqzTOJzU7QJohqQMFZsBYHz8CmrQIe30HRSCc
-        vusAwmVuAuaq5IgXbpAjqDThlrhq
-X-Google-Smtp-Source: AB8JxZrHqGkWWL/bOCOrCdbcLwNW2D2feTWLaVvlWSqGc16nu+mXX3f/tKORFZoSqP7wRXLFz7eQdg==
-X-Received: by 2002:a50:d311:: with SMTP id g17-v6mr16418092edh.160.1526371877640;
-        Tue, 15 May 2018 01:11:17 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id y63-v6sm6065555edy.63.2018.05.15.01.11.16
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=+t5TEG3Cv28zBzy25xc/yBRyX7YuLMyQmCK6/nlX2pg=;
+        b=a3TXUItoUCkLNeOQgmnHykXJERB+SNY6Qkw63WoxP4wklTdF/TwKpSyBzJ9+iLQ5+s
+         vfurwTnemO8xU9JdPRSV8CI5CBQ4ExoCgEz/vqCMLKdC6tH08MR2VghDpS10wkDB+Pxb
+         yV7lZPYLjtcoh0M6TByzBQNUlCRVK/S8x1baMKL4HMxom9Y1U3Y818gNfokc26tZwn9s
+         8jtzdGl+sYwpgzyApOm8p2eNn8ypUcvf0qbgrUDeitChys7ICe8jQWiGEUHTOb2MgthW
+         PHJr/8s2A1c6W0K9b6Kzp2kPCtYzSr6dZSQk6283JT/OaBwl/U+N9VBDx0uxZxfSEH2v
+         rK/A==
+X-Gm-Message-State: ALKqPwdYHIoES8ZEADszYXV4PVtx03V1zujscpgUKyMyYzFypzFWwgsm
+        giDeOeyha3tkWH3hT8bNxBC/rY6R
+X-Google-Smtp-Source: AB8JxZq7z+I59RUpGHv9t01HWQwupsRqWs1m6yutMuBWQMh7ZZIdQ1+ouISHmDxWYS2e7Z8osI99Zw==
+X-Received: by 2002:adf:a075:: with SMTP id l50-v6mr10394385wrl.227.1526372266410;
+        Tue, 15 May 2018 01:17:46 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f10-v6sm9988905wmc.0.2018.05.15.01.17.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 May 2018 01:11:16 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        Tue, 15 May 2018 01:17:45 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Brandon Williams <bmwill@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 35/35] submodule: convert push_unpushed_submodules to take a struct refspec
-References: <20180514215626.164960-1-bmwill@google.com> <20180514215626.164960-36-bmwill@google.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180514215626.164960-36-bmwill@google.com>
-Date:   Tue, 15 May 2018 10:11:16 +0200
-Message-ID: <87k1s52va3.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH 03/35] refspec: rename struct refspec to struct refspec_item
+References: <20180514215626.164960-1-bmwill@google.com>
+        <20180514215626.164960-4-bmwill@google.com>
+Date:   Tue, 15 May 2018 17:17:45 +0900
+In-Reply-To: <20180514215626.164960-4-bmwill@google.com> (Brandon Williams's
+        message of "Mon, 14 May 2018 14:55:54 -0700")
+Message-ID: <xmqqlgcl8h92.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -66,47 +66,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Brandon Williams <bmwill@google.com> writes:
 
-On Mon, May 14 2018, Brandon Williams wrote:
+> In preperation for introducing an abstraction around a collection of
+> refspecs (much like how a 'struct pathspec' is a collection of 'struct
+> pathspec_item's) rename the existing 'struct refspec' to 'struct
+> refspec_item'.
 
-> Convert 'push_unpushed_submodules()' to take a 'struct refspec' as a
-> parameter instead of an array of 'const char *'.
-> [...]
-> diff --git a/submodule.h b/submodule.h
-> index e5526f6aa..aae0c9c8f 100644
-> --- a/submodule.h
-> +++ b/submodule.h
-> @@ -100,9 +100,10 @@ extern int submodule_touches_in_range(struct object_id *a,
->  extern int find_unpushed_submodules(struct oid_array *commits,
->  				    const char *remotes_name,
->  				    struct string_list *needs_pushing);
-> +struct refspec;
->  extern int push_unpushed_submodules(struct oid_array *commits,
->  				    const struct remote *remote,
-> -				    const char **refspec, int refspec_nr,
-> +				    const struct refspec *rs,
->  				    const struct string_list *push_options,
->  				    int dry_run);
+Makes sense.
+
+>  /* See TAG_REFSPEC for the string version */
+> -const struct refspec *tag_refspec = &s_tag_refspec;
+> +const struct refspec_item *tag_refspec = &s_tag_refspec;
+>  
 >  /*
+>   * Parses 'refspec' and populates 'rs'.  returns 1 if successful and 0 if the
+>   * refspec is invalid.
+>   */
+> -static int parse_refspec(struct refspec *rs, const char *refspec, int fetch)
+> +static int parse_refspec(struct refspec_item *rs, const char *refspec, int fetch)
 
-Why do you prefer doing this to having this on top?:
-    
-    diff --git a/submodule.h b/submodule.h
-    index aae0c9c8ff..c3f206ce17 100644
-    --- a/submodule.h
-    +++ b/submodule.h
-    @@ -1,5 +1,6 @@
-     #ifndef SUBMODULE_H
-     #define SUBMODULE_H
-    +#include "refspec.h"
-     
-     struct repository;
-     struct diff_options;
-    @@ -100,7 +101,6 @@ extern int submodule_touches_in_range(struct object_id *a,
-     extern int find_unpushed_submodules(struct oid_array *commits,
-                                        const char *remotes_name,
-                                        struct string_list *needs_pushing);
-    -struct refspec;
-     extern int push_unpushed_submodules(struct oid_array *commits,
-                                        const struct remote *remote,
-                                        const struct refspec *rs,
+The new comment given to the function in the previous step talks
+in terms of the variable name and not type, so technically it is
+still valid after this change without updating.
+
+I however wonder if it makes more sense to go one step further and
+rename the "const char *" variable that is a string form of a single
+refspec item to something other than "refspec".  Which would
+invalidate the commit you gave to the function and make it necessary
+to be updated in this step.
+
+I wonder if the early part of the series becomes easier to read if
+patches 2 and 3 are swapped.  That may result in less code/comment
+churn.
