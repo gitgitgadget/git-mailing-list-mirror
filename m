@@ -7,120 +7,98 @@ X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C02C91F406
-	for <e@80x24.org>; Tue, 15 May 2018 17:00:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87B921F406
+	for <e@80x24.org>; Tue, 15 May 2018 17:01:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754187AbeEORAF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 13:00:05 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:34342 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754174AbeEORAC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 13:00:02 -0400
-Received: by mail-pl0-f66.google.com with SMTP id ay10-v6so409960plb.1
-        for <git@vger.kernel.org>; Tue, 15 May 2018 10:00:01 -0700 (PDT)
+        id S1753923AbeEORBn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 13:01:43 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:41187 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752750AbeEORBn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 13:01:43 -0400
+Received: by mail-pf0-f194.google.com with SMTP id v63-v6so347163pfk.8
+        for <git@vger.kernel.org>; Tue, 15 May 2018 10:01:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=+FD7Cecr+yIKoi9kwJMgPEpODFpqalEgCjkd7JA4fnw=;
-        b=Rz97UmBBbdKb1WrRLGayhWpXCV43IiXIE+xsIaaaLZGrSpGu6iyZaFB/YeUh4ycaji
-         yIDr4VRp+CchotyOhxPS0EbTpIw/018oUHSJLJYfqPWez6VNuuPEdKkrDQSHhSMhHDz8
-         0nF2jg6ZYFDHgnmRGqxYZkZ7PKE8gIIC7tchH5MNbEhyjMA7tnhwHjN0nDzB8Z8C40mo
-         0Ixuusx1tfA446WOXjK+Ijjee8eSuVp862LdK441OE63bkNDH77zRYaeGxUI+myxTGq5
-         4C5gikmxzjfY66fPAfupdynT6d7PBZgR1FNo60gDFaLaDrT5MYgIUyNcfWelD3aadOt7
-         c+cQ==
+         :content-disposition:in-reply-to:user-agent;
+        bh=HYgz8u8w0ZW9kTMP/elC+TX6zUTYT46dcS0OxSNAHq4=;
+        b=KLK9FzD8e+hd6EQ5KXkn15o7yS9pfNUdDkmnhEfAYwuFti4YyiYi1eMy8S+FxLSLXn
+         UNjqybj6HFFCAyRGvQlYgtnATN/Wa/3z5T4yM8+MVRQtItbDLhFU5mVF0gRoU+pryJDZ
+         5XPg2/znwlDNswxmU78x5yxDQfPikGbyyf5S14d36sj6ZQXtY3LPrvnNLYZALt+NNirt
+         6q3PZmwXpkFsBfIXcnA5/3lO/VFVn+jrgTy1a5YIaGwc2VTNmrw0Jw50OGPoR5VFlBE+
+         1SjAFFBnKFDR+Qv8bk70RQxb94hMhSwc6FQ/Ef9DNyqrJNie474hCZA9JguZEFnbMS6a
+         Sg8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=+FD7Cecr+yIKoi9kwJMgPEpODFpqalEgCjkd7JA4fnw=;
-        b=Vbr/P1h8HUla+Tek8rxWSrEBG6tZaHEbX6QuVS3j8pE6O6IgHRNgV/pxdtT6i1W6Jp
-         WJsiKGy0UCq43f/QpSkzpJY95+iSPnDhRyFzlmvxb7zuO5exd9xfG0lYdb7k6ujAD5I+
-         wX160MBBqxviL0G3E/wnAb9RROnMkRLCJG7EAvtdncP2YQ4teVwgZ28s45twvYu0YnNr
-         /wJa3mTsgI/N71oJG5QJU49moSWgJcgmwzY9OXNQaICwlH1yjcVwxCpCrqatSAl+CMvH
-         GCAN7OFoYUU9RMFnrVJn48KzwEMAdzbx2PnyFZ/TxcM1+SBo/D82I6ij6j5ADAclL0aZ
-         ebsg==
-X-Gm-Message-State: ALKqPwe6b96qJr09gtdc56KhiKwa+vDLl80lpQNdgQf2yPuFfMsJK/LL
-        ZJrc0RDFaLebafDbpIxA4XW/mQCtsuc=
-X-Google-Smtp-Source: AB8JxZpfFWwiR0h6hW5G9JDaXmEdETwqLZeAUYrJE382pw4mXgyKvMiqIW6O9z7hujcWMA113JJslg==
-X-Received: by 2002:a17:902:622:: with SMTP id 31-v6mr13508060plg.135.1526403601162;
-        Tue, 15 May 2018 10:00:01 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HYgz8u8w0ZW9kTMP/elC+TX6zUTYT46dcS0OxSNAHq4=;
+        b=cvzcNIGJjWbN3K/dAOhQ0E2LA530+32nNaD7z5M8hogH93dpzzRdvdzlzvfpHNzvJa
+         H91S2yPzONy/FDhcf7hQPe7FwLtWKNKD2Quy+GacziQvrIrqUTQ/oLS5phkbvU+VIEq4
+         xmAewUeyX6PjINfYX7Eb7PsD3oZ0gqXf5/jGm0UGGuSZHPe/p4tpK9RWQv7dNAXbQW7e
+         a2+krL8EJHAGXN/Qjeg4xZO2TpMnL0jZgBidYpkPtj/XZYE6Rt0truY9wsQQX0cPtcMR
+         5XGsXLf3e2Q3YmCZppyzZfHbWy/cDgUJ6EKX6W8pVvUtOg/FTvWjILg7TsU+T34LSLYa
+         IylQ==
+X-Gm-Message-State: ALKqPwdhSBWXWK8GIznx+mDFQO0UxRhyVjK5ajlpFvu7Rj3RiK67XCeH
+        mOz2EAdJvgATVcNAwK2IhranYw==
+X-Google-Smtp-Source: AB8JxZoQP2hj3A5u9C1COBqVhLMcYK9aFhpTFlZyhg53DeIi+tr2bBN2edm8R9AuhS4AwF6ViutK6A==
+X-Received: by 2002:a63:79c4:: with SMTP id u187-v6mr5313870pgc.301.1526403702210;
+        Tue, 15 May 2018 10:01:42 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id n18-v6sm931307pfg.36.2018.05.15.09.59.59
+        by smtp.gmail.com with ESMTPSA id o10-v6sm517090pgp.30.2018.05.15.10.01.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 May 2018 10:00:00 -0700 (PDT)
-Date:   Tue, 15 May 2018 09:59:59 -0700
+        Tue, 15 May 2018 10:01:39 -0700 (PDT)
+Date:   Tue, 15 May 2018 10:01:37 -0700
 From:   Brandon Williams <bmwill@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 35/35] submodule: convert push_unpushed_submodules to
- take a struct refspec
-Message-ID: <20180515165959.GB72551@google.com>
-References: <20180514215626.164960-1-bmwill@google.com>
- <20180514215626.164960-36-bmwill@google.com>
- <87k1s52va3.fsf@evledraar.gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, ao2@ao2.it
+Subject: Re: [PATCH] grep: handle corrupt index files early
+Message-ID: <20180515170137.GC72551@google.com>
+References: <20180515010425.149200-1-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87k1s52va3.fsf@evledraar.gmail.com>
+In-Reply-To: <20180515010425.149200-1-sbeller@google.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/15, Ævar Arnfjörð Bjarmason wrote:
+On 05/14, Stefan Beller wrote:
+> Any other caller of 'repo_read_index' dies upon a negative return of
+> it, so grep should, too.
 > 
-> On Mon, May 14 2018, Brandon Williams wrote:
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 > 
-> > Convert 'push_unpushed_submodules()' to take a 'struct refspec' as a
-> > parameter instead of an array of 'const char *'.
-> > [...]
-> > diff --git a/submodule.h b/submodule.h
-> > index e5526f6aa..aae0c9c8f 100644
-> > --- a/submodule.h
-> > +++ b/submodule.h
-> > @@ -100,9 +100,10 @@ extern int submodule_touches_in_range(struct object_id *a,
-> >  extern int find_unpushed_submodules(struct oid_array *commits,
-> >  				    const char *remotes_name,
-> >  				    struct string_list *needs_pushing);
-> > +struct refspec;
-> >  extern int push_unpushed_submodules(struct oid_array *commits,
-> >  				    const struct remote *remote,
-> > -				    const char **refspec, int refspec_nr,
-> > +				    const struct refspec *rs,
-> >  				    const struct string_list *push_options,
-> >  				    int dry_run);
-> >  /*
+> Found while reviewing the series
+> https://public-inbox.org/git/20180514105823.8378-1-ao2@ao2.it/
 > 
-> Why do you prefer doing this to having this on top?:
->     
->     diff --git a/submodule.h b/submodule.h
->     index aae0c9c8ff..c3f206ce17 100644
->     --- a/submodule.h
->     +++ b/submodule.h
->     @@ -1,5 +1,6 @@
->      #ifndef SUBMODULE_H
->      #define SUBMODULE_H
->     +#include "refspec.h"
->      
->      struct repository;
->      struct diff_options;
->     @@ -100,7 +101,6 @@ extern int submodule_touches_in_range(struct object_id *a,
->      extern int find_unpushed_submodules(struct oid_array *commits,
->                                         const char *remotes_name,
->                                         struct string_list *needs_pushing);
->     -struct refspec;
->      extern int push_unpushed_submodules(struct oid_array *commits,
->                                         const struct remote *remote,
->                                         const struct refspec *rs,
+>  builtin/grep.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 6e7bc76785a..69f0743619f 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -488,7 +488,8 @@ static int grep_cache(struct grep_opt *opt, struct repository *repo,
+>  		strbuf_addstr(&name, repo->submodule_prefix);
+>  	}
+>  
+> -	repo_read_index(repo);
+> +	if (repo_read_index(repo) < 0)
+> +		die("index file corrupt");
 
-Basically for the reason that stefan pointed out, though in practice I
-don't know how much that would actually impact compile times given we
-already are including cache.h and a bunch of others everywhere.
+Looks good to me!
+
+>  
+>  	for (nr = 0; nr < repo->index->cache_nr; nr++) {
+>  		const struct cache_entry *ce = repo->index->cache[nr];
+> -- 
+> 2.17.0.582.gccdcbd54c44.dirty
+> 
 
 -- 
 Brandon Williams
