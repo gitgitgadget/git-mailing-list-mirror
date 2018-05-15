@@ -2,95 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E98B1F406
-	for <e@80x24.org>; Tue, 15 May 2018 19:36:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34F121F406
+	for <e@80x24.org>; Tue, 15 May 2018 19:41:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752030AbeEOTgp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 15:36:45 -0400
-Received: from mout.web.de ([217.72.192.78]:38529 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751884AbeEOTgo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 15:36:44 -0400
-Received: from [192.168.178.36] ([79.237.255.222]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LpO4v-1eg14S3sFp-00fE9v; Tue, 15
- May 2018 21:36:30 +0200
-Subject: Re: [PATCH] fast-export: avoid NULL pointer arithmetic
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <d50a4d5d-3b99-453e-1b52-4e733453fb78@web.de>
- <99d443cd-e817-7db5-f758-bf4cf47f7c06@web.de>
- <xmqqo9hniy1v.fsf@gitster-ct.c.googlers.com>
- <654fac2a-8dca-7bee-2bab-a3986aa7e52d@web.de>
- <xmqqbmdnhr8b.fsf@gitster-ct.c.googlers.com>
- <xmqq7eoahk49.fsf@gitster-ct.c.googlers.com>
- <CACsJy8AN4nssu1+x0x9Kmz1BB1aXO7_UBFCjpyULMeC5K-Fzvw@mail.gmail.com>
- <20180511085634.GC22086@sigill.intra.peff.net>
- <CACsJy8CnJYsgDe11tK4JzH2sDRuLwgoUz=HCso5qOhEfyZNH5Q@mail.gmail.com>
- <20180511133419.GA2170@duynguyen.home>
- <20180511174237.GA19670@sigill.intra.peff.net>
- <80397e16-8667-e0cd-4049-aad453d35e6f@web.de>
- <xmqqwow7c90d.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <bcb24c9e-e10e-7f1b-6cbd-9cdd2508e795@web.de>
-Date:   Tue, 15 May 2018 21:36:26 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqwow7c90d.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:b2QxsBDsFd41mHU8DCKFjIFj0slACOCxAkLdd6v5Bgbi555ogb7
- O110FNt1XZUksYenLLx/+xEZKZJWESBxWdSbqMTqJexPOk/YR7QZRywXifDEVJOCnqaHLxH
- 1U0Axo/pHoMNhgBPVTObJb1kPgFdIZxWSpAUM5mH55PHjJHlK7zqstzhftIUn5PX3Em8JSG
- Tl9HwC3uuol3Fc4K3oP8w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zeOcJPKsZrk=:ssT8yQdg2QT5KppcqRVTQ5
- DB8xJbJt1EVO7KmxOdHcgmp0ZVz21iJXsYsE5nqZjDPVt2NN62sIxJJQZp24dJ6bUwmtrQEMu
- lleLdD3YonDsEuV+SQNuQsFe16BOQ4tnUD7JurBYfxiAEmq3phV9zXiU+6TYCGzdlqeZcDqvT
- gc6jFtknH3jIyXj2ykbBuSbx6wlnH2CiIcf9fqHllHR0rG2PqLQyjf7QZpl/G8hFwyv4X0ca5
- WAjDvPxG8u7G73fo392nI9c6grFGgsYHrCXHfg/YPGZB4Le8gewrJ2lLIzwjKq1/19e3Ibnkl
- 4metAWW3DCMF8CCEV9+IUbB37Hm7ik6UNR8APHhk4Ve0r+N1DO6/xy77vyRcvXQR/k9N/ceUM
- yPcTz9LUaD4tcWSGG/0gKliN4aj/eLWz+emgm74L1kK6jA/Jdz0ilHze7vf4Tzw8ofcakE2f+
- rIprlgH2HFY3WMbcY5AT5DAZzXxmzdVWQn9YCObsZyPRvfOMU/gLWdyqzF0nEMMrTP5ArjMf0
- qMfXeV03wzP7e2zlzODd/lETK9RhVdWyWiHnA+0SswGkdgcCMujlSAAIYEAVUrZ8t2SoFV5Rg
- faM3Gjd2YUppRDzmnuS4CvaVCsZkLTdRbScrk4Z5dNtsOBgy3q05kh6ac7FkP0yduChu5Cytd
- CDn1wW4uUYnXW5vjQFyikA0eT/XJ71+30LT7OxHw1CWvOcw+ZO0UphHuvVrT5WVRA9AMwwp76
- fMhCSOY2NaJHYanUZbG/ZFq3ONRbrWlSmuqLxG+F9+c9aybEd510y4OF2gIYIFQJ5x7RG/Vav
- PbC30w/
+        id S1752215AbeEOTlA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 15:41:00 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:40133 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751309AbeEOTk7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 15:40:59 -0400
+Received: by mail-pf0-f196.google.com with SMTP id f189-v6so546731pfa.7
+        for <git@vger.kernel.org>; Tue, 15 May 2018 12:40:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=e+wbKnKGeaQISNjdeiE+cstnfACP1HNrxK4doXBebbw=;
+        b=KRvfQj0eiggp7EQOEr/CZW8hXUs8GWnnXF8yJjwF6cGNqKgTUGEpEQzcE7+Zsq4RW4
+         JuNGNYuM20T3wC9zu1k4gzw8j78k1Sd4qPRx17lLkRewS+DT4in45YqxyNWSNqg9mT1X
+         JcuiG8wdyifjx+eH+fuBPGsIyBOsHdlOxr2QKovnB2wkLKhxeSfkNyBpwRRgp277mQZa
+         Uh1ho2+BBxfWwSVSdlB7D6f8nCeAnQV+dGPVY6LbA9NW1jTwi0TPZd21FmhyKf9npyYJ
+         EigbtpqcZGkdm7R50c3cAYy8PapUiOsZeFx07X3Bk7pubAL4jxUQPhh82BQ5ZBga/RwJ
+         bbWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=e+wbKnKGeaQISNjdeiE+cstnfACP1HNrxK4doXBebbw=;
+        b=nsrH92NsDeVa4fD8BRuZ0hBGp9G8vvQzlgJ6T3AbJ4lrxMxiZSUNt61yObEnIRd63g
+         Ld/huqk4E/uj+OlqpudTMOQb5wV5RF4p6QAyvY62hLsn/5yAWdQZy3QfI4BRx2/GLQXm
+         EphY7YtB9HA0WElG3Le1dXsHw/iGRDdaU2iGjNo6F+daPM6gR0I3nAxB6OGNXIe9MAvs
+         B10z+WvrZyCyI2NsnMxfNd1VfXMaCXeu3yP9+BIcfWHl0795QzZQz2PpCuNLJ0YUKkGn
+         KJ17O4qJp1GwxScyZ/I7lRGLv/WeDTr3r+HVC6GTtM/V6MDsBmdmNYS+69S6KTMSVz4R
+         T/TA==
+X-Gm-Message-State: ALKqPwccxl8V92Csw0ThipMeEIW+ffdpsgq+DbTjAT1Jj8YXZA+i8y48
+        KoFXvnn/y9CKsGjC6bME4aNZaw==
+X-Google-Smtp-Source: AB8JxZpkhhSZya5GY+uzwaW/USeGGvhlmN7nzwzUjwYJf/v/cX2zBEh4Dve5ItThKKvNWVMpHLMMfw==
+X-Received: by 2002:a63:494:: with SMTP id 142-v6mr9212226pge.179.1526413258022;
+        Tue, 15 May 2018 12:40:58 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id e87-v6sm1240171pfl.65.2018.05.15.12.40.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 15 May 2018 12:40:57 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com
+Subject: [PATCH] git-submodule.sh: try harder to fetch a submodule
+Date:   Tue, 15 May 2018 12:40:54 -0700
+Message-Id: <20180515194054.84388-1-sbeller@google.com>
+X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
+In-Reply-To: <CAGZ79ka_8GmL9j9mTNLkbqN3xNkfCfedzs2st-tH8jMjQ2A4DQ@mail.gmail.com>
+References: <CAGZ79ka_8GmL9j9mTNLkbqN3xNkfCfedzs2st-tH8jMjQ2A4DQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 14.05.2018 um 03:37 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> Storing integer values in pointers is a trick that seems to have worked
->> so far for fast-export.  A portable way to avoid that trick without
->> requiring more memory would be to use a union.
->>
->> Or we could roll our own custom hash map, as I mused in an earlier post.
->> That would duplicate quite a bit of code; are there reusable pieces
->> hidden within that could be extracted into common functions?
-> 
-> Hmm, this together with your follow-up does not look too bad, but it
-> does introduce quite a lot of code that could be refactored, so I am
-> not sure if I really like it or not.
+This is the logical continuum of fb43e31f2b4 (submodule: try harder to
+fetch needed sha1 by direct fetching sha1, 2016-02-23) and fixes it as
+some assumptions were not correct.
 
-Putting keys and values into separate arrays probably causes stores and
-lookups to hit (at least) two cache lines instead of just one.  Not sure
-how much of an impact that has on the overall performance (probably not
-much), but we'd need at least a perf test for that.
+The commit states:
+> If $sha1 was not part of the default fetch ... fail ourselves here
+> assumes that the fetch_in_submodule only fails when the serverside does
+> not support fetching by sha1.
 
-And we have enough hash map implementations already.
+There are other failures, why such a fetch may fail, such as
+    fatal: Couldn't find remote ref HEAD
+which can happen if the remote side doesn't advertise HEAD and we do not
+have a local fetch refspec.
 
-Casting should be good enough for now, to avoid the compiler warning.
+Not advertising HEAD is allowed by the protocol spec and would happen,
+if HEAD points at an unborn branch for example.
 
-René
+Not having a local fetch refspec can happen when submodules are fetched
+shallowly, as then git-clone doesn't setup a fetch refspec.
+
+So do try even harder for a submodule by ignoring the exit code of the
+first fetch and rather relying on the following is_tip_reachable to
+see if we try fetching again.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ git-submodule.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 24914963ca2..00fcd69138f 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -614,7 +614,7 @@ cmd_update()
+ 				# is not reachable from a ref.
+ 				is_tip_reachable "$sm_path" "$sha1" ||
+ 				fetch_in_submodule "$sm_path" $depth ||
+-				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
++				say "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
+ 
+ 				# Now we tried the usual fetch, but $sha1 may
+ 				# not be reachable from any of the refs
+-- 
+2.17.0.582.gccdcbd54c44.dirty
+
