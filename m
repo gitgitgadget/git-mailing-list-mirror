@@ -7,98 +7,154 @@ X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87B921F406
-	for <e@80x24.org>; Tue, 15 May 2018 17:01:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AAAF1F406
+	for <e@80x24.org>; Tue, 15 May 2018 17:57:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753923AbeEORBn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 13:01:43 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:41187 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752750AbeEORBn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 13:01:43 -0400
-Received: by mail-pf0-f194.google.com with SMTP id v63-v6so347163pfk.8
-        for <git@vger.kernel.org>; Tue, 15 May 2018 10:01:42 -0700 (PDT)
+        id S1752485AbeEOR5v (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 13:57:51 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:40223 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750810AbeEOR5u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 13:57:50 -0400
+Received: by mail-pf0-f196.google.com with SMTP id f189-v6so419924pfa.7
+        for <git@vger.kernel.org>; Tue, 15 May 2018 10:57:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HYgz8u8w0ZW9kTMP/elC+TX6zUTYT46dcS0OxSNAHq4=;
-        b=KLK9FzD8e+hd6EQ5KXkn15o7yS9pfNUdDkmnhEfAYwuFti4YyiYi1eMy8S+FxLSLXn
-         UNjqybj6HFFCAyRGvQlYgtnATN/Wa/3z5T4yM8+MVRQtItbDLhFU5mVF0gRoU+pryJDZ
-         5XPg2/znwlDNswxmU78x5yxDQfPikGbyyf5S14d36sj6ZQXtY3LPrvnNLYZALt+NNirt
-         6q3PZmwXpkFsBfIXcnA5/3lO/VFVn+jrgTy1a5YIaGwc2VTNmrw0Jw50OGPoR5VFlBE+
-         1SjAFFBnKFDR+Qv8bk70RQxb94hMhSwc6FQ/Ef9DNyqrJNie474hCZA9JguZEFnbMS6a
-         Sg8g==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=jmnjybmBVCneKf+EN2KAVfBMcyUFh/K687fijYvdGD0=;
+        b=Y1hNQYQT93arc5AkKqDuGCO2xbSPUsrWqJisGNzThIiQaTXmpq4J3mPW1PuvYSN0Gr
+         dAbKrMysAwqbF462RGBn4//L19DyzYFsoU9lEFdBQdc43aqPhR+aYRX88R84ipeuEfB5
+         HkbhjvKul3D9NRV8k8QwDPLngjGZNyMR4XWYkOA4VNLTYbjaILCxrbkAohKCwK7F6Rsi
+         PPjevv9/css2bltX1W7SOsm/03lrMmfVLStJwbBFWqBRf8+I4ggnO7eIqNE0l4Ppl7Ox
+         cwDMBXShg5YhLIbke18/HoWYJUllRNjkveMx5dabnsYyXCmhp2SFO1utTuhR8oIw6U0l
+         cHOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HYgz8u8w0ZW9kTMP/elC+TX6zUTYT46dcS0OxSNAHq4=;
-        b=cvzcNIGJjWbN3K/dAOhQ0E2LA530+32nNaD7z5M8hogH93dpzzRdvdzlzvfpHNzvJa
-         H91S2yPzONy/FDhcf7hQPe7FwLtWKNKD2Quy+GacziQvrIrqUTQ/oLS5phkbvU+VIEq4
-         xmAewUeyX6PjINfYX7Eb7PsD3oZ0gqXf5/jGm0UGGuSZHPe/p4tpK9RWQv7dNAXbQW7e
-         a2+krL8EJHAGXN/Qjeg4xZO2TpMnL0jZgBidYpkPtj/XZYE6Rt0truY9wsQQX0cPtcMR
-         5XGsXLf3e2Q3YmCZppyzZfHbWy/cDgUJ6EKX6W8pVvUtOg/FTvWjILg7TsU+T34LSLYa
-         IylQ==
-X-Gm-Message-State: ALKqPwdhSBWXWK8GIznx+mDFQO0UxRhyVjK5ajlpFvu7Rj3RiK67XCeH
-        mOz2EAdJvgATVcNAwK2IhranYw==
-X-Google-Smtp-Source: AB8JxZoQP2hj3A5u9C1COBqVhLMcYK9aFhpTFlZyhg53DeIi+tr2bBN2edm8R9AuhS4AwF6ViutK6A==
-X-Received: by 2002:a63:79c4:: with SMTP id u187-v6mr5313870pgc.301.1526403702210;
-        Tue, 15 May 2018 10:01:42 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=jmnjybmBVCneKf+EN2KAVfBMcyUFh/K687fijYvdGD0=;
+        b=R/ogR8oZlfHttvpkfBqOTfJMiHPtiWU+v2OEzFZFiDQX45ZXPsFX0s3reVskWtpH1N
+         3Yejk7gDE6oRi6xKG9tD3+Y3icZksBrgxgULXwyLueqMKQpuhdz9brRlsc/HIv0VSh82
+         MuyfvQYkw4WzhTbSOIwu8ZBCm+9TpFLiz4uCt3gXtU/rG2JB8ZMRQBn5gVIBM9iYqAnK
+         3GFNODE65r+r1ZJbHQTQLv/FlTRrhI9XP+2n5PX2jS4TKDecyFanNL7BMCWCGYm9ex6W
+         BKXEu6pJyP4kUgx1B9oGrOEI2fcU3WorFNjmnvgM4riirC475gHwUD9tQ1rsIkBS+ev6
+         3LGQ==
+X-Gm-Message-State: ALKqPwfkrk0TABmadgPUp+dZXBUN2jOTdsQa/M+QK/cq809qn85I04EK
+        RwUkrYWRsmsMeJSL6gtBrQZ+VA==
+X-Google-Smtp-Source: AB8JxZp9mbPJCY8iIMXn4DEXm236Eo2n3shAVjbU8YUXJs6ScQB6Z6eH1P8GY+NRwSVcMtl6qT6QgQ==
+X-Received: by 2002:a62:4916:: with SMTP id w22-v6mr16136423pfa.63.1526407069354;
+        Tue, 15 May 2018 10:57:49 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id o10-v6sm517090pgp.30.2018.05.15.10.01.38
+        by smtp.gmail.com with ESMTPSA id n83-v6sm792260pfi.183.2018.05.15.10.57.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 May 2018 10:01:39 -0700 (PDT)
-Date:   Tue, 15 May 2018 10:01:37 -0700
+        Tue, 15 May 2018 10:57:48 -0700 (PDT)
+Date:   Tue, 15 May 2018 10:57:47 -0700
 From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, ao2@ao2.it
-Subject: Re: [PATCH] grep: handle corrupt index files early
-Message-ID: <20180515170137.GC72551@google.com>
-References: <20180515010425.149200-1-sbeller@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 14/35] remote: convert fetch refspecs to struct refspec
+Message-ID: <20180515175747.GD72551@google.com>
+References: <20180514215626.164960-1-bmwill@google.com>
+ <20180514215626.164960-15-bmwill@google.com>
+ <87in7p2ucb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20180515010425.149200-1-sbeller@google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87in7p2ucb.fsf@evledraar.gmail.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/14, Stefan Beller wrote:
-> Any other caller of 'repo_read_index' dies upon a negative return of
-> it, so grep should, too.
+On 05/15, Ævar Arnfjörð Bjarmason wrote:
 > 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+> On Mon, May 14 2018, Brandon Williams wrote:
 > 
-> Found while reviewing the series
-> https://public-inbox.org/git/20180514105823.8378-1-ao2@ao2.it/
+> >  void add_prune_tags_to_fetch_refspec(struct remote *remote)
+> >  {
+> > -	int nr = remote->fetch_refspec_nr;
+> > -	int bufsize = nr  + 1;
+> > -	int size = sizeof(struct refspec_item);
+> > -
+> > -	remote->fetch = xrealloc(remote->fetch, size  * bufsize);
+> > -	memcpy(&remote->fetch[nr], tag_refspec, size);
+> > -	add_fetch_refspec(remote, xstrdup(TAG_REFSPEC));
+> > +	refspec_append(&remote->fetch, TAG_REFSPEC);
+> >  }
 > 
->  builtin/grep.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> Thanks for fixing the hack I needed to put in place in 97716d217c
+> ("fetch: add a --prune-tags option and fetch.pruneTags config",
+> 2018-02-09).
 > 
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 6e7bc76785a..69f0743619f 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -488,7 +488,8 @@ static int grep_cache(struct grep_opt *opt, struct repository *repo,
->  		strbuf_addstr(&name, repo->submodule_prefix);
->  	}
->  
-> -	repo_read_index(repo);
-> +	if (repo_read_index(repo) < 0)
-> +		die("index file corrupt");
+> I'm not sure where it belongs in this series, but I think this makes
+> sense on top of the whole thing:
 
-Looks good to me!
+This actually would work well immediately after this patch, so I'll add
+it here :)
 
->  
->  	for (nr = 0; nr < repo->index->cache_nr; nr++) {
->  		const struct cache_entry *ce = repo->index->cache[nr];
-> -- 
-> 2.17.0.582.gccdcbd54c44.dirty
+Thanks!
+
 > 
+>     diff --git a/builtin/fetch.c b/builtin/fetch.c
+>     index af7064dce3..9a523249f5 100644
+>     --- a/builtin/fetch.c
+>     +++ b/builtin/fetch.c
+>     @@ -1383,7 +1383,8 @@ static int fetch_one(struct remote *remote, int argc, const char **argv, int pru
+> 
+>             maybe_prune_tags = prune_tags_ok && prune_tags;
+>             if (maybe_prune_tags && remote_via_config)
+>     -               add_prune_tags_to_fetch_refspec(remote);
+>     +               refspec_append(&remote->fetch, TAG_REFSPEC);
+>     +
+> 
+>             if (maybe_prune_tags && (argc || !remote_via_config))
+>                     refspec_append(&rs, TAG_REFSPEC);
+>     diff --git a/remote.c b/remote.c
+>     index 8e6522f4d0..946b95d18d 100644
+>     --- a/remote.c
+>     +++ b/remote.c
+>     @@ -87,11 +87,6 @@ static void add_fetch_refspec(struct remote *remote, const char *ref)
+>             refspec_append(&remote->fetch, ref);
+>      }
+> 
+>     -void add_prune_tags_to_fetch_refspec(struct remote *remote)
+>     -{
+>     -       refspec_append(&remote->fetch, TAG_REFSPEC);
+>     -}
+>     -
+>      static void add_url(struct remote *remote, const char *url)
+>      {
+>             ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
+>     diff --git a/remote.h b/remote.h
+>     index 9014f707f0..62a6566594 100644
+>     --- a/remote.h
+>     +++ b/remote.h
+>     @@ -289,6 +289,4 @@ extern int parseopt_push_cas_option(const struct option *, const char *arg, int
+>      extern int is_empty_cas(const struct push_cas_option *);
+>      void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
+> 
+>     -void add_prune_tags_to_fetch_refspec(struct remote *remote);
+>     -
+>      #endif
+> 
+> I.e. the whole reason we have this function is because of my above
+> commit where I had to very carefully hack around the fact that we didn't
+> have something which could ALLOW_GROW() the structure after it had been
+> created.
+> 
+> So I added the add_prune_tags_to_fetch_refspec() function to very
+> carefully do *only* that so others wouldn't be tempted to use this hack
+> more generally.
+> 
+> But now we have a nice API for it, so we can just throw away the
+> wrapper, and use the same API everywhere. You already did the other half
+> of that in your e69b54f53a ("fetch: convert fetch_one to use struct
+> refspec", 2018-05-11).
 
 -- 
 Brandon Williams
