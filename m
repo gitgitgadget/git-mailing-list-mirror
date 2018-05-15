@@ -2,129 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F366B1F406
-	for <e@80x24.org>; Tue, 15 May 2018 16:44:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 168481F406
+	for <e@80x24.org>; Tue, 15 May 2018 16:51:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753095AbeEOQoo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 12:44:44 -0400
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:36606 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752750AbeEOQon (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 12:44:43 -0400
-Received: by mail-yb0-f195.google.com with SMTP id o14-v6so281501ybq.3
-        for <git@vger.kernel.org>; Tue, 15 May 2018 09:44:43 -0700 (PDT)
+        id S1754324AbeEOQvK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 12:51:10 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:40076 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752750AbeEOQvK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 12:51:10 -0400
+Received: by mail-pf0-f169.google.com with SMTP id f189-v6so333972pfa.7
+        for <git@vger.kernel.org>; Tue, 15 May 2018 09:51:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9oC5pna7qlFY5VFGEJm3awEDpirlWtlwop2PxRm8SlA=;
-        b=ZVD7TY5uE358wZLHkkHG1SGjak3EmcM/Y92yg3AVCi/HYPyYCCKUp4yXw59+WGiA91
-         K2BUF7GKpFLSmXwsrjrVQ6wxeNfjRmD0lH/qoLWeOuMTipDD0mAPu91nyaLDBnuB2qBw
-         dIOBbVb8lHbUMB1tsJNPXRtuZBjLPIsLADXX6YPNDS2emdk0TwolIq/8gpDm0vH+80VN
-         F3b2EjgoQ8pGHQ1TPuBq+oWg0PVNH9SqR91gFXxvEXqs2C4JOC+g2VnPIxTUFJ1V0waM
-         4uA9PxoHWMeufbVKWTSfH2nxKHMgMPxxnMMCSOk7cUbEhxFjmvty1VWgY+IfNms0Gn1u
-         PG7Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=p25tQGrmgTK+GcY8fzUCZmTPBQv6CPftS79zAj05W4s=;
+        b=rrZejJZMGdwlTtoHQ4QOMPfdEYT/6gSaulcFvV3vtHiVFhYKlS33PThgJZ0bq/Vzl2
+         WRTYcCw6TRIl/3+jl6UuOPEF39GtDztnUZuoqfmPupayrwGOr2whrg1lBMSy5m2jrtDL
+         mcAYXbzPPvkhR6AqYgoob9lzNio0aNb5zvyn3HIvkZaYumC0l033JuA8+vOJFHlYhYl3
+         3GAh0p9MSLXz3IYcgYSiV04nPnlzxswYuoFrR+F/anuHweJiVF4YqGP3p5fu+rQtdEYq
+         8Q4T+rwQvSd1FL2m6S/vLvbA2dFz/rDDCLPyoIpc0FMApFu1HMKYPuG+3wElEeeXz8dY
+         H7UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9oC5pna7qlFY5VFGEJm3awEDpirlWtlwop2PxRm8SlA=;
-        b=FIq3LeYCtR3zEqIyTahvF9floyCvxl4pF48WWT9LCFMSojOO3OIpiHvqaavjpWcxEg
-         mEhefCTaM/VWIyrYlB1P0udNdmCbh2rwnwSBjRi/0CinPku0uTwPnT/36QMC2uzv7m8T
-         kG0skMhtR3jJhF75gWCFW9rv0k02Ehoo8ZOd6ituw25iY6k2y+ciS6y/Cow+qReZT5d3
-         BWp0PC/UjXhqKJekhvRVhOU7eAkJgBzJsoqF/ti0+NAj6tmG9YqQsN1MIaumM0OKlVtJ
-         y5aC0Sy643NE3fLC6bh7caxJsWvGFhNwjB4WgMKjyoLd8K8ZV2e1SQitJBNauWyyQ9pA
-         YYtg==
-X-Gm-Message-State: ALKqPwcyUl1wclEb0OOft9UZJa5hB06hUz37nu6bR7ueQ2MHdBW8r8v+
-        PD81c3PqE7tWIoTglViHyU5JFenhoEsCMo6pZmH1RA==
-X-Google-Smtp-Source: AB8JxZpM4tH141ILjVsms6Ys3FcVE0OPQCVeNAiCmmnDC2i9fZe5AozqWU/pD+KSC7Aude3mbwBEq3mvr6jsnruVeu4=
-X-Received: by 2002:a25:3bc5:: with SMTP id i188-v6mr9347266yba.352.1526402682600;
- Tue, 15 May 2018 09:44:42 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=p25tQGrmgTK+GcY8fzUCZmTPBQv6CPftS79zAj05W4s=;
+        b=e/Dup9AJc77jmqRaat2FDDYQftIqj6hPpTZbsxr2wWrJIP6XwleytkktyreIR8aLnf
+         59wX2O6PhegSAKW9HMDX36kkqAlHzA8aq590AJRJ7sxsz1dmOExgGxRtlXy/kPATJOsi
+         SOT6IHDNjz86cZUTiuX3uKovjJcjvNIG2lEv1jX+97WqiKWUXZfhtdnqieZCSXs448PQ
+         TSslZ2UDef06EeQ2g0hkFlDWKJCCjZs8tXOHJi5M3zWGU0DlGQqJv7ixX73aURSuvRHw
+         SFxIefoxdpaM/FzGbbNTIFrGEuW1MWGavix6bntZDt7PRbE4e6M9iI3Aq3tUVBV5nzlM
+         wHMA==
+X-Gm-Message-State: ALKqPwduklIeHsORYUDiwlZmDjKMEvAaT7t+/XgqrPgzqe8yVnEn5jpT
+        aAyrGKaO+hK+E8WiiaCE/cgwiaFOg5o=
+X-Google-Smtp-Source: AB8JxZoTnOhtrGa0dfhEfQ1tHM+RYZMcd+hc2vpEBaSbKcX0cf+2mhW4ezXMaenvOvKJB1R+4UTZGg==
+X-Received: by 2002:a63:a312:: with SMTP id s18-v6mr12652923pge.187.1526403069019;
+        Tue, 15 May 2018 09:51:09 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id r30-v6sm473101pgu.89.2018.05.15.09.51.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 15 May 2018 09:51:07 -0700 (PDT)
+Date:   Tue, 15 May 2018 09:51:06 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 01/35] refspec: move refspec parsing logic into its own
+ file
+Message-ID: <20180515165106.GA72551@google.com>
+References: <20180514215626.164960-1-bmwill@google.com>
+ <20180514215626.164960-2-bmwill@google.com>
+ <xmqqr2md8hrz.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Tue, 15 May 2018 09:44:42
- -0700 (PDT)
-In-Reply-To: <CACsJy8AcG6zGa9vLCwm2B4ishyJVWdFQ2YV0FOZTor_0x8Q64g@mail.gmail.com>
-References: <20180515010425.149200-1-sbeller@google.com> <CACsJy8AcG6zGa9vLCwm2B4ishyJVWdFQ2YV0FOZTor_0x8Q64g@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 15 May 2018 09:44:42 -0700
-Message-ID: <CAGZ79kYYy-r+Zs_6yg1ZVRNsBcTUdPWE=FeHrp_=0cV0Uf_GfQ@mail.gmail.com>
-Subject: Re: [PATCH] grep: handle corrupt index files early
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Antonio Ospite <ao2@ao2.it>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqr2md8hrz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 15, 2018 at 6:13 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Tue, May 15, 2018 at 3:04 AM, Stefan Beller <sbeller@google.com> wrote:
->> Any other caller of 'repo_read_index' dies upon a negative return of
->> it, so grep should, too.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>
->> Found while reviewing the series
->> https://public-inbox.org/git/20180514105823.8378-1-ao2@ao2.it/
->>
->>  builtin/grep.c | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/builtin/grep.c b/builtin/grep.c
->> index 6e7bc76785a..69f0743619f 100644
->> --- a/builtin/grep.c
->> +++ b/builtin/grep.c
->> @@ -488,7 +488,8 @@ static int grep_cache(struct grep_opt *opt, struct repository *repo,
->>                 strbuf_addstr(&name, repo->submodule_prefix);
->>         }
->>
->> -       repo_read_index(repo);
->> +       if (repo_read_index(repo) < 0)
->> +               die("index file corrupt");
->
-> _() the string (and maybe reuse an existing phrase if found to reduce
-> workload on translators)
+On 05/15, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> > In preperation for performing a refactor on refspec related code, move
+> 
+> Preparation?
 
-sbeller@sbeller:/u/git$ git grep -A 1 repo_read_index
-builtin/grep.c:491:     if (repo_read_index(repo) < 0)
-builtin/grep.c-492-             die("index file corrupt");
---
-builtin/ls-files.c:213: if (repo_read_index(&submodule) < 0)
-builtin/ls-files.c-214-         die("index file corrupt");
---
-builtin/ls-files.c:582: if (repo_read_index(the_repository) < 0)
-builtin/ls-files.c-583-         die("index file corrupt");
---
-dir.c:3028:     if (repo_read_index(&subrepo) < 0)
-dir.c-3029-             die("index file corrupt in repo %s", subrepo.gitdir);
---
-repository.c:245:int repo_read_index(struct repository *repo)
-repository.c-246-{
---
-repository.h:70:         * 'repo_read_index()' can be used to populate 'index'.
-repository.h-71-         */
---
-repository.h:119:extern int repo_read_index(struct repository *repo);
-repository.h-120-
---
-submodule-config.c:583:         if (repo_read_index(repo) < 0)
-submodule-config.c-584-                 return;
---
-submodule.c:1336:       if (repo_read_index(r) < 0)
-submodule.c-1337-               die("index file corrupt");
+Oops, I'll fix that.
 
-I think this is as good as it gets for using an existing phrase.
-None of them are translated, which I would defer to a follow up patch
-that translates all(?) of them or just the porcelains.
 
-Thanks,
-Stefan
+-- 
+Brandon Williams
