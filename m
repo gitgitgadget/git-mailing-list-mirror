@@ -6,61 +6,61 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A7C11F406
-	for <e@80x24.org>; Tue, 15 May 2018 04:09:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5CFD1F42D
+	for <e@80x24.org>; Tue, 15 May 2018 07:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752192AbeEOEJn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 00:09:43 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:37504 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752139AbeEOEJl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 00:09:41 -0400
-Received: by mail-wm0-f65.google.com with SMTP id l1-v6so18823147wmb.2
-        for <git@vger.kernel.org>; Mon, 14 May 2018 21:09:41 -0700 (PDT)
+        id S1752155AbeEOHec (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 03:34:32 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:38404 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751626AbeEOHeb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 03:34:31 -0400
+Received: by mail-wm0-f66.google.com with SMTP id m129-v6so19475617wmb.3
+        for <git@vger.kernel.org>; Tue, 15 May 2018 00:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=JYn1YpCDb1I+u9oBXwKhg2nUAm3qMz2z3IbexBs8LE0=;
-        b=ZCVW98RwPfQ2tbL/Shqt6FXRHjJ5A6BRpU4Gea2IsdfUx9Jtc7XQND+DBX33XSDFcw
-         5YzF33TunOUK+tLZeyjKlSbGGUV9ERM7rXoDCKVglLlcgeouEL9sRJA4PO2Jc2HaLRI9
-         /XsHoM2it/jPI9a+e/mGqUIdCLl6dMRPH+5QponlobwqH705oOOy5/5jDtRskpsVwzp3
-         EEuFzxmzRqRKuwsrbmfzLA3AdwD84KTsxl3LicHxc81OjnXcx+Fl0UV2PxXjCzzq3rYI
-         1pp3sekVTuptgOm+YueA+iQSmS67yWnCMkmGgoGHZ4gQ5EDWsW4r7yj5NuHdeaBHsyie
-         aj/w==
+        bh=9+fFMElKxDgcgF3AOQ7D7cRF6Yr+HQMT8NyysnWToe0=;
+        b=fqytndvF6i404Pc1wEHIZxigPDk/DtXyg88tW/q9CaLOnsHsBpwgdWUb5lZVM682rS
+         KzVHSciX3N2M5as3jc4ft9uK580Vwa2v+NckFjgYJ2Trq5QxMnncYnceao+ZPbFsRPhD
+         3A1R7O5rvacUqwTSx7tfQEbGe1iFrQzF6jQHFaX6XAt0KF2HySWVoQy/nW0LXPWKZn3W
+         ksTzDVWj72cr4QwWw/onARj23UYPmQuoBDBtLyu/PQTb1rzc50se/TBmAeiHMoKc0A9x
+         4y/ipmPDsumYXrw9GAUCQPqORDAqKsJVHd1ztEqclM6AQmVf92FNCqzFFDxU32Dzj0R8
+         bHrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=JYn1YpCDb1I+u9oBXwKhg2nUAm3qMz2z3IbexBs8LE0=;
-        b=ZmF3uvCeHAAjHw60TsM/+oRikqofniWCsg+HL7Y3zrIeU0HSTMfoj9/ITWEsPOvrp9
-         hIUJEpC4tuzv8D4AwF7qlnIfLzs1v+e6kzb04EaU62YQ7fHZ8LRwxlysFMM/RJoAfwpD
-         95qyD0veTMILpmORYeOs+9Zp51CXGNgkzm2Jk+XnS8lY+9D+TPprNdmTlfK9+o7xVq9d
-         SGua+GayqY4S0BIM7sQwPM9VIEsdFkbihP1WH18c9RcN5fWlYV1QupkgHa0DkLR7PNsR
-         5sl8DlNxPfKc5q7kjO4TfxgM2hQEiv2tjq0X3qZB0onPt22ALKkjIirgdYUVCA78drHk
-         A3LQ==
-X-Gm-Message-State: ALKqPwe+UT2joLweJ64w9odv0BcFTaB/VBJEIvt2eIBHvIVLtYlNn5q6
-        7h8/AbbAzIOdhnl1A/EVSA3viBZu
-X-Google-Smtp-Source: AB8JxZqVs193oqIuM6kgjijfla+En0TFF0gQ0bjtQfBpDSPfcSqXJWLxRZyg3HBkfaJYsRSpM7LGIA==
-X-Received: by 2002:a1c:2348:: with SMTP id j69-v6mr6546424wmj.45.1526357380207;
-        Mon, 14 May 2018 21:09:40 -0700 (PDT)
+        bh=9+fFMElKxDgcgF3AOQ7D7cRF6Yr+HQMT8NyysnWToe0=;
+        b=rVwYqSvzP/mKdbFL/aoJW98uCyi7UIWb3QNLHOb2REitsVL0POQnzTiZlhPEpxcEei
+         1UX37YxyEbnTsGsg+Q5ssvdECwhD9d5rw4Qai4vR1gux+EB0dAzQt1zbiTPtuy1ZUcPG
+         GfqoWysICj96C6E8dJpHswYYbxocVC9gWrity3I5t1vrzfnx6FUF+M0HKHF5ANAvY4FR
+         20mXmDOg6gnlH+Q3MF+dIb7WLtOkB+DrL+GH3amurX4x3kRY/TA00aG8b4VNAWH3rVmc
+         RtpxFqLZo/C6Lwi9xuOc5yQR1a8VMUphfOcrT4GydgYqjHFRcU3cPdr50svVSG4vcPzp
+         bQZQ==
+X-Gm-Message-State: ALKqPwdbt/3e+EMTw5PAeAsDV5H7q2xrzgF+Xx+342RevhvdOsSfmimF
+        qgSQy/BzvoJiQQjFqBUt3hg=
+X-Google-Smtp-Source: AB8JxZryKSu3UR3TdD2cV8Y197RPhYeQcOjorcoHKIQ6bQigDFPTgJMZ5cyhCrCLOjFAvpXFgVTG9A==
+X-Received: by 2002:a1c:c6ca:: with SMTP id w193-v6mr7078349wmf.68.1526369670135;
+        Tue, 15 May 2018 00:34:30 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b185-v6sm11373526wmb.25.2018.05.14.21.09.39
+        by smtp.gmail.com with ESMTPSA id m134-v6sm10671027wmg.4.2018.05.15.00.34.27
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 14 May 2018 21:09:39 -0700 (PDT)
+        Tue, 15 May 2018 00:34:28 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Antonio Ospite <ao2@ao2.it>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Daniel =?utf-8?Q?Gra=C3=B1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 00/10] Make submodules work if .gitmodules is not checked out
-References: <20180514105823.8378-1-ao2@ao2.it>
-Date:   Tue, 15 May 2018 13:09:39 +0900
-In-Reply-To: <20180514105823.8378-1-ao2@ao2.it> (Antonio Ospite's message of
-        "Mon, 14 May 2018 12:58:13 +0200")
-Message-ID: <xmqq4lj9a7b0.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Leif Middelschulte <leif.middelschulte@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/1] Inform about fast-forwarding of submodules during merge
+References: <CAGZ79kaiFkq20Com7gOLin371D2KhTPG7cqn1mQ6OaFU12kKPQ@mail.gmail.com>
+        <20180514205737.21313-1-leif.middelschulte@gmail.com>
+        <20180514205737.21313-2-leif.middelschulte@gmail.com>
+        <CABPp-BGp_zP8Z2S8FskiNvhNeQH3f=HdnQ39vX6xQz=oSyVfMQ@mail.gmail.com>
+Date:   Tue, 15 May 2018 16:34:27 +0900
+In-Reply-To: <CABPp-BGp_zP8Z2S8FskiNvhNeQH3f=HdnQ39vX6xQz=oSyVfMQ@mail.gmail.com>
+        (Elijah Newren's message of "Mon, 14 May 2018 18:17:09 -0700")
+Message-ID: <xmqqzi118j98.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,46 +69,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Antonio Ospite <ao2@ao2.it> writes:
+Elijah Newren <newren@gmail.com> writes:
 
->   - my git terminology may still be a little off: do "work tree" and
->     "work directory" mean the same thing?
+> Hi Leif,
+>
+> On Mon, May 14, 2018 at 1:57 PM, Leif Middelschulte
+> <leif.middelschulte@gmail.com> wrote:
+>
+> Thanks for updating the patch on top of Stefan's series.  :-)
+>
+>>         /* Case #1: a is contained in b or vice versa */
+>>         if (in_merge_bases(commit_a, commit_b)) {
+>>                 oidcpy(result, b);
+>> +               output(o, 1, _("Note: Fast-forwarding submodule %s to the following commit"), path);
+>> +               output_commit_title(o, commit_b);
+>
+> Level 1 is for conflicts; I don't think this message should have
+> higher priority than "Auto-merging $PATH" for normal files, so it
+> needs to be 2 (or maybe 3, see below) rather than 1.  (The default
+> output level is 2, so it'd still be shown, but we do allow people to
+> remove informational message and just get conflicts by setting
+> GIT_MERGE_VERBOSITY to 1, or request extra information by setting it
+> higher)
+>
+> Also, this two-line message seems somewhat verbose compared to the
+> other messages in merge_submdoule(), and when compared to the simple
+> "Auto-merging $PATH" we do for normal files.  The multi-line nature of
+> it particularly strikes me; the merge-recursive code has generally
+> avoided multi-line messages even for conflicts.
+>
+> In comparison, your original patch just had ("Fast-forwarding
+> submodule %s", path).
 
-Just on this tangent.  
+FWIW, I share both of your surprises.  Between level 2 and 3, after
+skimming merge-recursive.c for existing use of output levels, I
+think the situation for non-submodule merges that is closest to
+these two cases the patch covers for submodules is probably the
+message given when content merge happened to end up with what we
+already had.  It is part of a normal merge operation that is not a
+singificant event in the larger picture, yet it is rather rare and
+interesting when you are curious on events that occur infrequently.
 
-When we talk about the current working directory of a process
-returned by getcwd((3) call, we typically spell that word fully (or
-say $cwd).
+So a one-liner message as everybody else emitted at level 3 or more
+verbose would probably be a good balance with the remainder of the
+system, I would think.
 
-We lived without the modern "git worktree" layout for a long time,
-but there was a hack in contrib/ called "git-new-workdir".  This
-creates something similar (in spirit, not in implementation) to
-"worktree" in modern Git lingo, but because not many people use the
-contrib feature (at least there is only few who get confused by it
-and ask questions publicly, anyway), we do not hear "workdir" very
-often.
-
-Since very early days of Git, we had "working tree" that is the
-directory hierarchy that corresponds to what you place in the index,
-and "Git repository" which is the ".git" directory that has that
-index.  Even though most everybody else was calling it the "working
-tree", primarily because I was young(er) and (more) stupid, I often
-called the same thing "work tree", and made things worse by
-introducing GIT_WORK_TREE environment variable etc.  But "working
-tree" is the official terminology to denote a directory hierarchy
-that corresponds to (and controlled by) a single index file as
-opposed to what is in ".git/" directory..
-
-The official term "worktree" came much later, with "git worktree"
-command.  This allow multiple working trees to be associated with a
-single ".git/" directory.  Most of the time "worktree" and "working
-tree" can be used interchangeably, but we tend to say "working tree"
-when we have more emphasis on the non-bareness of the repository and
-talking about checked-out files, and say "worktree" when we are
-mostly interested in the layout that have more than one working trees
-associated to a single Git repository.  What you get by "git clone",
-for example, is just a single repository with a single working tree,
-and nobody sane (other than young(er) and (more) stupid version of
-me 10 years ago) would call the latter a "worktree" these days, as
-there is not yet a secondary worktree to contrast it with.
-
+Thanks for a review.
