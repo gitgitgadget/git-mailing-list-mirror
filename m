@@ -2,89 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ECF31F406
-	for <e@80x24.org>; Tue, 15 May 2018 01:04:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08EC31F406
+	for <e@80x24.org>; Tue, 15 May 2018 01:05:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752095AbeEOBE3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 21:04:29 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:34816 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752013AbeEOBE2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 21:04:28 -0400
-Received: by mail-pl0-f67.google.com with SMTP id i5-v6so8360601plt.2
-        for <git@vger.kernel.org>; Mon, 14 May 2018 18:04:28 -0700 (PDT)
+        id S1752176AbeEOBFW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 21:05:22 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:43016 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752013AbeEOBFV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 21:05:21 -0400
+Received: by mail-yw0-f194.google.com with SMTP id r202-v6so4170997ywg.10
+        for <git@vger.kernel.org>; Mon, 14 May 2018 18:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=PtWYvl4qmf73jdoZBLSXEIwkvkz7fm4U5YW9ujEsnHM=;
-        b=q4Zxuq5vEfx7x0rv7mFFaVrNzrZ3905Fxu65XIsVNkhf//YVFe3kD1bpLDKy8FXep5
-         Vk2vY16SdDgIMdhHuTTs6Gb/vbll3GGCJwZ5Xu7oLOR4F6jdB5PYoopAYtBkm5rNgaQF
-         7vMeN7f7XEvpVTAdfO2HyAdhW3DIege5UgU+SrgqR8jxKe4AJCeCshHkBwXlqFuwWXjG
-         toTGHEYNkMmMrf/oK9JYQ2VVfkwUrXE7DO2PwAkIsrRPUjmnKFjC/tjYCXVbpBf0EwYH
-         CQQ/aNU6xbdVUB/NTnG8yrNFUQ2zxy8n8v3YRsPAgvQL318otZFEBfZJ+eB41Siiti45
-         5seA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=PqvrEE+0qtUj2UMz2ZSznN+FaCPV6hm22FKyhTKks/Q=;
+        b=ZIILOfrgOiJ2oj3wOs2Rc148rL6t8UFph6eXRXuDjjBIB7hv7K1V+CxSnraBN/pOdR
+         j3acC5iFI/X8NRY3MMecVzY+52wEWsrBM6VJEOk+q2mrdU/IO64j93/sVyu7il0tJK/q
+         HDnp/Et5YIJqu6Js0+++xbQBy2rjWRPUP4YQ8xXG8vKzCiQOLKIVYgbnwsZpR3qzVlVe
+         MFPrSkSeQgKVSpx4G5CZ3O01W7zr869AsVDWgFPixC9hxoXRtLwtMBPe2jrlC8pZ4uIS
+         qTa8NLge+TN0WobKgTKGRRuQDH5wDmw6eBb/ps6EZBYmJDq0aKVOXbTMXXodNNd0UKuN
+         2Q8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=PtWYvl4qmf73jdoZBLSXEIwkvkz7fm4U5YW9ujEsnHM=;
-        b=nbFLCV6XUscWY8HeYGL7w6qpriPjZ6ws0mEejoePPX4641GNVvC75vM3s58xaSEb9x
-         NhFZdEjCMVsmg7X0wFaqwDXJ5Na5Qo0SCuaeXWjYDw+BdD6EgQsPISxlp8756Y2cLyX2
-         Aia0dwlUSFDx8V/BXBMT/vaNeE0hoVZrxQiXdYtA5EG30QNjDe+hz2zmnFtSDmemM7kK
-         klDcU91QFL6KWpLOir7Z+PLl3yl3jnoI8rFFNidBVNn4AWUTkR8UFi7Xvq+KVlr9X63e
-         dWnAl+CV5zOSa/QiF/SuHYabdLb9JdqCx3X3gaLrWZ9nRh6YJWePENHVkwfCTIPr/u4P
-         q7sw==
-X-Gm-Message-State: ALKqPwd1lwDnwxzEouNHAoogs0oew1vEeZkeh0AT5O/DN1sQV0jYRCRo
-        /dloQfzupbPdEjAVJRrR+ImV6qySFSo=
-X-Google-Smtp-Source: AB8JxZr45V7MCtDcYAzd3NvuaCR3NXXquVSxp8fXqORngUUK0jFtWQABYYE/IuyGrUjqLMlXJJQO5w==
-X-Received: by 2002:a17:902:82c3:: with SMTP id u3-v6mr11919683plz.83.1526346267759;
-        Mon, 14 May 2018 18:04:27 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id s17-v6sm24626872pfi.165.2018.05.14.18.04.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 14 May 2018 18:04:27 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=PqvrEE+0qtUj2UMz2ZSznN+FaCPV6hm22FKyhTKks/Q=;
+        b=VeY2DfqwOuqHbdvpKGNbwCg6DiCitWClAfCbotF8YQkPz597bYPitPRxrBMjeq1WaG
+         naLx1+6r/8LYhhF6uZNPUmgYpP4URzf0OpVeaatV6KlQZGC6Eq+V4vosbcnFJ5m3lo64
+         xu1vWb81tJerLoX8ornLVRSSkfzs9nhR37tZig77BzhD+HUvBQT0Jrbxd0ViGtkXpX8u
+         LGQ0WgjUZhYsqA/Lcs49+CSLBFroKzZ0FXKHfr3DRmWBbsxRTp/X9wZDdtmmlotSgqbF
+         Jt6cnW9JgOatRm1Z6Xv/TkJZGCv3yCSOG6X6u3HnVW4F1Zs8QpvmUx2gqvow0o1hC/Cs
+         j48w==
+X-Gm-Message-State: ALKqPwfL5cOXbPFR1xA2tUgNDaXQhEo27CwpFRAdY1w30ITw7EGLd2vz
+        QZ0ctI7LPpKVKWf/zP2QzRF5RNE9xTpviNbiVhpdIL15wjI=
+X-Google-Smtp-Source: AB8JxZrf+vasqFQ5PPgrWVO91HhAQCnoLBAHxnnKB0P0ZVu585C2G2u9B9WkmSFkGC9pe5V0+aBx2t9OQc4mHG/3i9c=
+X-Received: by 2002:a81:8801:: with SMTP id y1-v6mr5515644ywf.238.1526346320332;
+ Mon, 14 May 2018 18:05:20 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Mon, 14 May 2018 18:05:19
+ -0700 (PDT)
+In-Reply-To: <20180514105823.8378-2-ao2@ao2.it>
+References: <20180514105823.8378-1-ao2@ao2.it> <20180514105823.8378-2-ao2@ao2.it>
 From:   Stefan Beller <sbeller@google.com>
-To:     bmwill@google.com, gitster@pobox.com
-Cc:     git@vger.kernel.org, ao2@ao2.it, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] grep: handle corrupt index files early
-Date:   Mon, 14 May 2018 18:04:25 -0700
-Message-Id: <20180515010425.149200-1-sbeller@google.com>
-X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
+Date:   Mon, 14 May 2018 18:05:19 -0700
+Message-ID: <CAGZ79kag=1h506FGg72_F9Rmz4nqPN19kaywfTtD3WnNWnxD9w@mail.gmail.com>
+Subject: Re: [RFC PATCH 01/10] config: make config_from_gitmodules generally useful
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
+        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Any other caller of 'repo_read_index' dies upon a negative return of
-it, so grep should, too.
+On Mon, May 14, 2018 at 3:58 AM, Antonio Ospite <ao2@ao2.it> wrote:
+> The config_from_gitmodules() function is a good candidate for
+> a centralized point where to read the gitmodules configuration file.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+It is very tempting to use that function. However it was introduced
+specifically to not do that. ;)
 
-Found while reviewing the series
-https://public-inbox.org/git/20180514105823.8378-1-ao2@ao2.it/
+See the series that was merged at 5aa0b6c506c (Merge branch
+'bw/grep-recurse-submodules', 2017-08-22), specifically
+f20e7c1ea24 (submodule: remove submodule.fetchjobs from
+submodule-config parsing, 2017-08-02), where both
+builtin/fetch as well as the submodule helper use the pattern to
+read from the .gitmodules file va this function and then overlay it
+with the read from config.
 
- builtin/grep.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> Add a repo argument to it to make the function more general, and adjust
+> the current callers in cmd_fetch and update-clone.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 6e7bc76785a..69f0743619f 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -488,7 +488,8 @@ static int grep_cache(struct grep_opt *opt, struct repository *repo,
- 		strbuf_addstr(&name, repo->submodule_prefix);
- 	}
- 
--	repo_read_index(repo);
-+	if (repo_read_index(repo) < 0)
-+		die("index file corrupt");
- 
- 	for (nr = 0; nr < repo->index->cache_nr; nr++) {
- 		const struct cache_entry *ce = repo->index->cache[nr];
--- 
-2.17.0.582.gccdcbd54c44.dirty
+This could be a preparatory patch, but including it here is fine, too.
 
+> As a proof of the utility of the change, start using the function also
+> in repo_read_gitmodules which was basically doing the same operations.
+
+I think they were separated for the reason outlined above, or what Brandon
+said in his reply.
+
+I think extending 'repo_read_gitmodules' makes sense, as that is
+used everywhere for the loading of submodule configuration.
