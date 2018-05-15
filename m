@@ -2,176 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6F651F42D
-	for <e@80x24.org>; Tue, 15 May 2018 08:27:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86FED1F42D
+	for <e@80x24.org>; Tue, 15 May 2018 08:31:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752331AbeEOI13 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 04:27:29 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:34383 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752139AbeEOI11 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 04:27:27 -0400
-Received: by mail-it0-f67.google.com with SMTP id c5-v6so11553947itj.1
-        for <git@vger.kernel.org>; Tue, 15 May 2018 01:27:26 -0700 (PDT)
+        id S1752538AbeEOIbg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 04:31:36 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:38844 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752489AbeEOIbf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 04:31:35 -0400
+Received: by mail-wm0-f54.google.com with SMTP id m129-v6so19799557wmb.3
+        for <git@vger.kernel.org>; Tue, 15 May 2018 01:31:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=l7gogZOE+2/cg0tO7d7cfpV5mMCzP4/kNS8F9PIEhho=;
-        b=Cn3VopVAlIeV6dyyHYDF664GmMBGRGx97+7ayIOI5uMggsICdtgWB3EI4ZslMmGHuJ
-         LjB9+5AtYJiFz2tX9Z8XgEo8e4WPmWJniYSlC4aBO1cLgHpnhYYDpUbo6PqvAWY6T3Yz
-         flAPYYWL3ZoCWi+oEgrwrBGiKQlKqbz/MOXv9FePvn65Ub2yOT0U+Xx9RXni2vmpmZP/
-         HG+I590Othp14MdnQi4p6V4b80bJBsQKGhRd1lk0y8/ETZuF2RDrjkGRRQfLZ+rXNF49
-         k3cc2YqvAerbLi4+m1WYQGnVRYkd7Yz2ivCKgQ4NjH1Hhm9/dAW5kSF9CLNdJxJA7v3G
-         925g==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=FHJDJ8Fe/YEVCgqC7GbRLry91xwpeCNrR2x0UvEVW1Y=;
+        b=D8N25AZC5vALGVu9bAg87jJdDMNf4Ps3rhP8ReWiSI2q45UTHbGueH/i5uY60fY91p
+         T6m6WHM5+clTeHM2Zr4rKx4r8yHFHagDO2g6JjsIfKmeS2HjOeEG6mZwvLimy/H7mdur
+         ZHu9u3KXFhPfko3BHEYSxtgyqbEZ5Fd/K8HhHYxQU+wUCSQNYwPAjvW4EoSoX+Gq5+O1
+         axTHlPnrmLmCis3zmuxt+8/PE+gwI4T5WxwI+vAiOsojwYh4Y9U9S1TSzzzYL9pcQt7R
+         oFS7dodu47nsVLNWl28uTl/ij2bMAUUoFyXcA9A84XNMtEDe5Wu4h3o9GPr/d6L5cIIo
+         B73g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=l7gogZOE+2/cg0tO7d7cfpV5mMCzP4/kNS8F9PIEhho=;
-        b=Gs0gsowWgav8W2D8adD1yQD3qDZ9Oo5sfjpGBWMjRC7t83kkvhlwB9Fp3vEUNNgq/f
-         1+k3FG5MSArtLv2830PGZTCuImWeEB2AtSkbPn/XlxjE4D3L9fOw0sq6TGLPIaSO+C3k
-         ATZIKfEsOnh9AIaS2oJ6cUwOC0FV9QCPLnXtt9wkKgR78PxMX1bMO/iCOSR3A43BoBzk
-         21ci2glvwXNiBhwtxs+ehlDdDScDtEq8y6p7sDVotux9cXhp1WjsN0w8c0FcAK8J0vDJ
-         U+b9UYg3rFH6B4YpXkzkHUK3IbZ2IKnMymoUKZYztqxS6c5uke17kFfsp3VpoRqjbX22
-         Mjhg==
-X-Gm-Message-State: ALKqPwfSHEXBLBr9fIXWBqIANZ+mcEEMEgufNBiD4EjP/MY8wHbkUwhw
-        4Q3W7gFBWrKVvXirTsom50I97TqQu8voF6S2EXQ=
-X-Google-Smtp-Source: AB8JxZp5LZ/MyXBU1bu7LdEVz2ONsEfdVsc9yAXhoVqtXd5cEHQ7FLlWvz4K0GG8r3kJRbqSXYl16I6Y3AQ2v4VbvDo=
-X-Received: by 2002:a24:c887:: with SMTP id w129-v6mr12020655itf.122.1526372846365;
- Tue, 15 May 2018 01:27:26 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=FHJDJ8Fe/YEVCgqC7GbRLry91xwpeCNrR2x0UvEVW1Y=;
+        b=WWGC4rhIC6vrrZSkFeL8xcatlzL9MkbqO5nLwj7O6xDhUtkNWioe7E9pYkcbxcx90y
+         hDeX8y9nf+7jYjRVRimKFvIrDyMqzxkc+hvkIq28rhQmKuJvrNuZgdLzDgt0+ubiWAjp
+         CcbFJ9RbiuR1epiiAJyXdNwfgllGoW1DY3ztIRCKz+TQF2bi66TMPDdkZm7lpDTRoIdu
+         1efcdwuk6uloT3qq2Hp+9kwLvcDZnJZ9NcaU3ZCQOCzEMQambmbN10vMyIyiA5bLh4SX
+         GXC+nRBHRBgCzELoWM5ofvuKPKYA67iN1NnfJnAWcxkeM+uzhIw3/ii8zNKztea/DqGl
+         sERg==
+X-Gm-Message-State: ALKqPweRD/My99fv3GpcrDKbWvj2YWO2dr+MojOJqkrFigTrQRLebug0
+        2VuL0VUjkvYSuCTQr1RShtQ=
+X-Google-Smtp-Source: AB8JxZoYm0qrxId77t5lNXcfY0gbefqMQrqH2MUSY+G2QIusxhBbqg3+H+lh2ShcvhfCfUN0J+vO0A==
+X-Received: by 2002:a50:f4b5:: with SMTP id s50-v6mr16564232edm.262.1526373093894;
+        Tue, 15 May 2018 01:31:33 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id k7-v6sm5850856edn.74.2018.05.15.01.31.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 15 May 2018 01:31:32 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 14/35] remote: convert fetch refspecs to struct refspec
+References: <20180514215626.164960-1-bmwill@google.com> <20180514215626.164960-15-bmwill@google.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180514215626.164960-15-bmwill@google.com>
+Date:   Tue, 15 May 2018 10:31:32 +0200
+Message-ID: <87in7p2ucb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.107.139.88 with HTTP; Tue, 15 May 2018 01:27:25 -0700 (PDT)
-In-Reply-To: <87lgcl3kv9.fsf@evledraar.gmail.com>
-References: <CANgJU+VFCY0LNRLMSGtD7ScpcLaPFMzUOyw6Bjgk6q=Kx9DvCg@mail.gmail.com>
- <87lgcl3kv9.fsf@evledraar.gmail.com>
-From:   demerphq <demerphq@gmail.com>
-Date:   Tue, 15 May 2018 10:27:25 +0200
-Message-ID: <CANgJU+W7JcA=W4dNn5uVj_=iiGCCfE6uD4cR=v5qPyCTRr3ARw@mail.gmail.com>
-Subject: Re: could `git merge --no-ff origin/master` be made more useful?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15 May 2018 at 00:58, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gma=
-il.com> wrote:
->
-> On Mon, May 14 2018, demerphq wrote:
->
->> The first time I tried to use --no-ff I tried to do something like this:
->>
->>   git checkout master
->>   git commit -a -m'whatever'
->>   git commit -a -m'whatever2'
->>   git merge --no-ff origin/master
->>
->> and was disappointed when "it didn't work" and git told me there was
->> nothing to do as the branch was up to date. (Which I found a bit
->> confusing.)
->>
->> I realize now my expectations were incorrect, and that the argument to
->> merge needs to resolve to a commit that is ahead of the current
->> commit, and in the above sequence it is the other way around. So to do
->> what I want I can do:
->>
->>   git checkout master
->>   git checkout -b topic
->>   git commit -a -m'whatever'
->>   git commit -a -m'whatever2'
->>   git checkout master
->>   git merge --no-ff topic
->>
->> and iiuir this works because 'master' would be behind 'topic' in this ca=
-se.
->>
->> But I have a few questions, 1) is there is an argument to feed to git
->> merge to make the first recipe work like the second? And 2) is this
->> asymmetry necessary with --no-ff?
->
-> I've been bitten my this myself, but found that it's documented as the
-> very first thing in git-merge:
->
->     Incorporates changes from the named commits (since the time their
->     histories diverged from the current branch) into the current
->     branch[...].
->
-> Since origin/master hasn't diverged from your current branch (unlike the
-> other way around), the merge with --no-ff is a noop.
 
-Yeah, I got it, but only after rereading a lot of times.
+On Mon, May 14 2018, Brandon Williams wrote:
 
->
->> More specifically would something horrible break if --no-ff
->> origin/trunk detected that the current branch was ahead of the named
->> branch and "swapped"  the implicit order of the two so that the first
->> recipe could behave like the second
->
-> If it worked like that then the user who sets merge.ff=3Dfalse in his
-> config and issues a "git pull" after making a commit on his local master
-> would create a merge commit.
->
-> This old E-Mail of Junio's discusses that edge case & others in detail:
-> https://public-inbox.org/git/7vty1zfwmd.fsf@alter.siamese.dyndns.org/
+>  void add_prune_tags_to_fetch_refspec(struct remote *remote)
+>  {
+> -	int nr = remote->fetch_refspec_nr;
+> -	int bufsize = nr  + 1;
+> -	int size = sizeof(struct refspec_item);
+> -
+> -	remote->fetch = xrealloc(remote->fetch, size  * bufsize);
+> -	memcpy(&remote->fetch[nr], tag_refspec, size);
+> -	add_fetch_refspec(remote, xstrdup(TAG_REFSPEC));
+> +	refspec_append(&remote->fetch, TAG_REFSPEC);
+>  }
 
-Thanks I skimmed, but it is long so I will review later.
+Thanks for fixing the hack I needed to put in place in 97716d217c
+("fetch: add a --prune-tags option and fetch.pruneTags config",
+2018-02-09).
 
-I see the point about the config option for no-ff.
+I'm not sure where it belongs in this series, but I think this makes
+sense on top of the whole thing:
 
-But what about an option like --reverse? Assuming we are on a local
-branch master then
+    diff --git a/builtin/fetch.c b/builtin/fetch.c
+    index af7064dce3..9a523249f5 100644
+    --- a/builtin/fetch.c
+    +++ b/builtin/fetch.c
+    @@ -1383,7 +1383,8 @@ static int fetch_one(struct remote *remote, int argc, const char **argv, int pru
 
-  git merge --no-ff --reverse origin/master
+            maybe_prune_tags = prune_tags_ok && prune_tags;
+            if (maybe_prune_tags && remote_via_config)
+    -               add_prune_tags_to_fetch_refspec(remote);
+    +               refspec_append(&remote->fetch, TAG_REFSPEC);
+    +
 
-would treat origin/master as the "current" branch, and "master" as the
-merged in branch, and create the appropriate merge commit. Which as
-far as I can tell is tree-wise identical to creating a topic branch
-instead of hacking on the local master.
+            if (maybe_prune_tags && (argc || !remote_via_config))
+                    refspec_append(&rs, TAG_REFSPEC);
+    diff --git a/remote.c b/remote.c
+    index 8e6522f4d0..946b95d18d 100644
+    --- a/remote.c
+    +++ b/remote.c
+    @@ -87,11 +87,6 @@ static void add_fetch_refspec(struct remote *remote, const char *ref)
+            refspec_append(&remote->fetch, ref);
+     }
 
->> Anyway, even if the above makes no sense, would it be hard to make the
->> message provided by git merge in the first recipe a bit more
->> suggestive of what is going on? For instance if it had said "Cannot
->> --no-ff merge, origin/master is behind master" it would have been much
->> more clear what was going on.
->
-> I can't spot any reason for why we couldn't have something like this POC
-> (would be properly done through advice.c):
->
->     diff --git a/builtin/merge.c b/builtin/merge.c
->     index 9db5a2cf16..920f67d9f8 100644
->     --- a/builtin/merge.c
->     +++ b/builtin/merge.c
->     @@ -1407,6 +1407,8 @@ int cmd_merge(int argc, const char **argv, cons=
-t char *prefix)
->                      * but first the most common case of merging one remo=
-te.
->                      */
->                     finish_up_to_date(_("Already up to date."));
->     +               if (fast_forward =3D=3D FF_NO)
->     +                       fprintf(stderr, "did you mean this the other =
-way around?\n");
->                     goto done;
->             } else if (fast_forward !=3D FF_NO && !remoteheads->next &&
->                             !common->next &&
->
-> But that should probably be reworked to be smart about whether --no-ff
-> or merge.ff=3Dfalse was specified, i.e. do we want to yell this at the
-> user who's just set that at his config default, or the user who's
-> specified --no-ff explicitly, or both? I don't know.
+    -void add_prune_tags_to_fetch_refspec(struct remote *remote)
+    -{
+    -       refspec_append(&remote->fetch, TAG_REFSPEC);
+    -}
+    -
+     static void add_url(struct remote *remote, const char *url)
+     {
+            ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
+    diff --git a/remote.h b/remote.h
+    index 9014f707f0..62a6566594 100644
+    --- a/remote.h
+    +++ b/remote.h
+    @@ -289,6 +289,4 @@ extern int parseopt_push_cas_option(const struct option *, const char *arg, int
+     extern int is_empty_cas(const struct push_cas_option *);
+     void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
 
-Yes, all those points make sense.
+    -void add_prune_tags_to_fetch_refspec(struct remote *remote);
+    -
+     #endif
 
-Yves
+I.e. the whole reason we have this function is because of my above
+commit where I had to very carefully hack around the fact that we didn't
+have something which could ALLOW_GROW() the structure after it had been
+created.
 
+So I added the add_prune_tags_to_fetch_refspec() function to very
+carefully do *only* that so others wouldn't be tempted to use this hack
+more generally.
 
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+But now we have a nice API for it, so we can just throw away the
+wrapper, and use the same API everywhere. You already did the other half
+of that in your e69b54f53a ("fetch: convert fetch_one to use struct
+refspec", 2018-05-11).
