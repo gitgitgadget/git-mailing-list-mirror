@@ -2,109 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B8971F406
-	for <e@80x24.org>; Tue, 15 May 2018 01:23:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5191F406
+	for <e@80x24.org>; Tue, 15 May 2018 01:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752139AbeEOBXY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 21:23:24 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:46958 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752031AbeEOBXX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 21:23:23 -0400
-Received: by mail-yw0-f195.google.com with SMTP id i17-v6so4180334ywg.13
-        for <git@vger.kernel.org>; Mon, 14 May 2018 18:23:23 -0700 (PDT)
+        id S1752094AbeEOBZf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 21:25:35 -0400
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:33665 "EHLO
+        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752031AbeEOBZe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 21:25:34 -0400
+Received: by mail-vk0-f68.google.com with SMTP id q189-v6so8725992vkb.0
+        for <git@vger.kernel.org>; Mon, 14 May 2018 18:25:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=rO+yLd+Rqe4XlX4HAsRiTCPV38sA1ErOsYHYMoK28NU=;
-        b=gqwBdALzwt2NkS0Om/LiM+5BULnQBJ/2xyN36NZNt5TqldIcN6V5KXmfTQ7R6xrmmv
-         sL9dkL8L4QbY4eZIuzC/oaFe7Luv8szMVIx0OBu4TLepCAcCMDAzpuYkvqnd9uYPmUXh
-         226+P/8Cs25H7ybgCbYvFQONJXozdpSRmJmcL4p0kSuTrOymmsTEdAUksZ/rt16EeSBi
-         FZDQFeVbDvKn6uKGGKutYATzbliqFkCfyODac5D5XMYMVJeJMKftJZNXoF9uLNrej+ZH
-         LEWpbjMAKDuSCif0SOa27PxeKcHZsMkOWIZNM3cnGHuREFa+K8oIRyIsLiRFmJ/l0jDB
-         RiZw==
+        bh=0Yo6wjuj5omMyVGQgmS5zuz39ZZ0mfiJdw8J9ms/tm4=;
+        b=Q44BIr9Vr9CoZrh5ukw7lotUre9RzV/H5J3WH3Yp8ypit1O9vgvBhSQFfwk3UlrYLC
+         wpc40g5bqKEI8pYWOGzEQ004lAdfsTdxJ/1NVXTjV8BKeIasJGCbEBtEtrSmaw6YxfZ/
+         CuDyLFQlu/8GzL83j0+qDhIb3ICQfTm3m3zCg4W/91VPeTfY/QyKyZtaUFeAjbu+ObOB
+         Hhvol1Ep4U9p2Xxg6393shjXG1ACQHsToPWP5BqwxmyEs4zffC75//hi1HjGDf7P6u6z
+         KBodw6TV2P3C5DDm9Qf3geUHSpV0AJk9iHiPJaUMXfHVm5GLp0dqEsFTA+OsZwTs6Tlk
+         NSMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=rO+yLd+Rqe4XlX4HAsRiTCPV38sA1ErOsYHYMoK28NU=;
-        b=Bkt/P3hWxEi/rGbZQsmmsNUbGbul86cwEJcZ8RZ9C1a0Xb4XxTtu6ZPmanVUiV+XIN
-         l1JPQPZfCpyyBjX+e6yGLRsj3pUA7kjzRnF11mX6AkmKA22Qcpoo9g1r+7mH9bkhIKL9
-         yR2+eVe/NvVmB0OBaFTVw1afxpqJ27yALEWDHVIoV8/+VO5OgL9CdPnfdmhh0QZyupRh
-         k94R5br3b87tNyb/WBO/Q+qjV0tqc0VWjFXTqjxx/YsSz8vNKe1KPfPgW9B2jBPJ11hM
-         JKcorBG0UStOCkq16ndf0rudUWDzr/GtlqpevOhHborcVDblO8AGV5PSo6gO6kLRSx8/
-         VmNg==
-X-Gm-Message-State: ALKqPweIv5i3NVPXDu2pPtXInXSBaA6oG2JTVoAHK46dG527UADZxATF
-        maGj4j3732Ff1LESoEZRQ0wSveMOP8D5GpJbjMAspg==
-X-Google-Smtp-Source: AB8JxZqvGvBDkqd5hjW4zlQF+ZSPJExd6Jq5xStWvlVvSmruHmOQwZNtC3reW24caso71FjAzDG7CK4HCe8aGp4Erh8=
-X-Received: by 2002:a81:9447:: with SMTP id l68-v6mr5441238ywg.345.1526347402863;
- Mon, 14 May 2018 18:23:22 -0700 (PDT)
+        bh=0Yo6wjuj5omMyVGQgmS5zuz39ZZ0mfiJdw8J9ms/tm4=;
+        b=cHA1lXoA3wzu9tzQhlTmHSI5qsKCA78C55lLFMS3xT0uzs2u0+pPSMaEymr5Bvs2Yh
+         2+RcsXIwzeYvmEThOnye3C+oKmgFtZaj+9j3eudtuxlFHPDysrAnB5/C1aPFA9+RXUiB
+         Ur2LrtM9lCh5/KBapgQv4VMmYYbU9EuJt6zcBRAw3+9fFQ75i5QzEvmJiSNC+G69Y1t6
+         MgcPQXxUFKzSCXVy941wFW/7hvghgIdxrdEPr5e3wicSYr6U4en2Cn6M4CGvqA++NFeN
+         2bVVRBGZGy6ixtDNcVAZSOAYqn2YqiTqat7jTh+t4g/Q5G2Pyvpj8DrZjsr12xxkffsI
+         uY/A==
+X-Gm-Message-State: ALKqPwdawH4vWyuiBShJglBKYJ/BSVQS0s2Ne9P785uHwmA3gRxrbJ8O
+        LgZXKJQH66on3Qs5w03BoPKDR+FAD4glozsN1Y4=
+X-Google-Smtp-Source: AB8JxZol6Togb5ma/rqxNTesqRJqm449wDTvMUxc0TnjwUlGlLfjSLvnuSwzmxI0PEyXoT4h6DdoKP/7x9XEe00OIwQ=
+X-Received: by 2002:a1f:c155:: with SMTP id r82-v6mr12866102vkf.76.1526347533635;
+ Mon, 14 May 2018 18:25:33 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Mon, 14 May 2018 18:23:22
- -0700 (PDT)
-In-Reply-To: <20180514105823.8378-4-ao2@ao2.it>
-References: <20180514105823.8378-1-ao2@ao2.it> <20180514105823.8378-4-ao2@ao2.it>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 14 May 2018 18:23:22 -0700
-Message-ID: <CAGZ79kYJUrT8kZWWKVbJXdtHA_3gHtseS3zMhWZwYF3=3bf4_Q@mail.gmail.com>
-Subject: Re: [RFC PATCH 03/10] t7411: be nicer to other tests and really clean
- things up
-To:     Antonio Ospite <ao2@ao2.it>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>
+Received: by 10.176.95.4 with HTTP; Mon, 14 May 2018 18:25:33 -0700 (PDT)
+In-Reply-To: <20180510211917.138518-3-sbeller@google.com>
+References: <CANw0+A_T5zDUUWznYBe0m9fkSODPnfQaK1yJKPPawHTxi9+9BQ@mail.gmail.com>
+ <20180510211917.138518-1-sbeller@google.com> <20180510211917.138518-3-sbeller@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 14 May 2018 18:25:33 -0700
+Message-ID: <CABPp-BFw0g=3i8AoiCDgZR82ScOmiozDQqTggZ4U5kmiurFMdg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] merge-recursive: i18n submodule merge output and
+ respect verbosity
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Leif Middelschulte <leif.middelschulte@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 14, 2018 at 3:58 AM, Antonio Ospite <ao2@ao2.it> wrote:
-> Tests 5 and 8 in t/t7411-submodule-config.sh add two commits with
-> invalid lines in .gitmodules but then only the second commit is removed.
->
-> This may affect subsequent tests if they assume that the .gitmodules
-> file has no errors.
->
-> Since those commits are not needed anymore remove both of them.
->
-> Signed-off-by: Antonio Ospite <ao2@ao2.it>
-> ---
->
-> I am putting these fixups to the test-suite before the patch that actually
-> needs them so that the test-suite passes after each commit.
->
->  t/t7411-submodule-config.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-> index 0bde5850a..a648de6a9 100755
-> --- a/t/t7411-submodule-config.sh
-> +++ b/t/t7411-submodule-config.sh
-> @@ -135,7 +135,7 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
->                         HEAD submodule \
->                                 >actual &&
->                 test_cmp expect_error actual  &&
-> -               git reset --hard HEAD^
-> +               git reset --hard HEAD~2
->         )
->  '
+I know I said the patches looked okay earlier, but I just noticed something...
 
-As this is the last test in this file, we do not change any subsequent
-tests in a subtle way.
-Good!
+On Thu, May 10, 2018 at 2:19 PM, Stefan Beller <sbeller@google.com> wrote:
 
-This is
-Reviewed-by: Stefan Beller <sbeller@google.com>
+>         case 1:
+> -               MERGE_WARNING(path, "not fast-forward");
+> -               fprintf(stderr, "Found a possible merge resolution "
+> -                               "for the submodule:\n");
+> +               output(o, 1, _("Failed to merge submodule %s (not fast-forward)"), path);
 
-FYI:
-This test -- of course -- doesn't quite follow the latest coding guidelines,
-as usually we'd prefer a test_when_finished "<cmd to restore>"
-at the beginning of a test.
+We allow folks to set GIT_MERGE_VERBOSITY to change how much output
+they get.  A setting of 1 should only show conflicts or major
+warnings.  2 is the default and adds a few more messages (e.g.
+"Auto-merging $PATH", "Adding $PATH" for one-sided adds, etc.), higher
+levels show even more.
+
+Anyway this output message is correct to use level 1 since this is a
+conflict, but...
+
+> +               output(o, 1, _("Found a possible merge resolution for the submodule:\n"));
+
+I think this should use level 2.
+
+>                 print_commit((struct commit *) merges.objects[0].item);
+> -               fprintf(stderr,
+> +               output(o, 1, _(
+>                        "If this is correct simply add it to the index "
+>                        "for example\n"
+>                        "by using:\n\n"
+>                        "  git update-index --cacheinfo 160000 %s \"%s\"\n\n"
+>-                       "which will accept this suggestion.\n",
+>+                       "which will accept this suggestion.\n"),
+>                        oid_to_hex(&merges.objects[0].item->oid), path);
+
+and so should this one (in fact, I'm tempted to say these last two
+should use level 3, but since it looks like a command users may have
+difficulty finding on their own, I'm okay with going with 2).
