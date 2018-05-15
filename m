@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86FED1F42D
-	for <e@80x24.org>; Tue, 15 May 2018 08:31:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C9F11F42D
+	for <e@80x24.org>; Tue, 15 May 2018 08:39:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752538AbeEOIbg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 04:31:36 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:38844 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752489AbeEOIbf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 04:31:35 -0400
-Received: by mail-wm0-f54.google.com with SMTP id m129-v6so19799557wmb.3
-        for <git@vger.kernel.org>; Tue, 15 May 2018 01:31:34 -0700 (PDT)
+        id S1752379AbeEOIjZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 04:39:25 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:40126 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752226AbeEOIjX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 04:39:23 -0400
+Received: by mail-wm0-f52.google.com with SMTP id j5-v6so19920228wme.5
+        for <git@vger.kernel.org>; Tue, 15 May 2018 01:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=FHJDJ8Fe/YEVCgqC7GbRLry91xwpeCNrR2x0UvEVW1Y=;
-        b=D8N25AZC5vALGVu9bAg87jJdDMNf4Ps3rhP8ReWiSI2q45UTHbGueH/i5uY60fY91p
-         T6m6WHM5+clTeHM2Zr4rKx4r8yHFHagDO2g6JjsIfKmeS2HjOeEG6mZwvLimy/H7mdur
-         ZHu9u3KXFhPfko3BHEYSxtgyqbEZ5Fd/K8HhHYxQU+wUCSQNYwPAjvW4EoSoX+Gq5+O1
-         axTHlPnrmLmCis3zmuxt+8/PE+gwI4T5WxwI+vAiOsojwYh4Y9U9S1TSzzzYL9pcQt7R
-         oFS7dodu47nsVLNWl28uTl/ij2bMAUUoFyXcA9A84XNMtEDe5Wu4h3o9GPr/d6L5cIIo
-         B73g==
+        bh=+HuA7TXP4pgrOuC/dk/c3EcfTAvHZPaLFvkWrc7Lw0M=;
+        b=KqPI/91n2aHMg19ndxLNnlL5Qd3K63vIv+Imc88ip1GK9ge71sex/cJRrsJM6mBmSN
+         DjcxXlJ4Nl1U2nr0ApVKAhsQ8t4nQ2HaIKr8RkjhB5Y1OFL5jc69dtn8AsUp0u2IbWvG
+         472bF05+iRJKLE+xkTw5uIo13HNpz7+PEn0KyRyhzJUHYVwsDB7AKKsopUzRImXnaVBi
+         g20I/6XtQDy/S9QjnM0TEFFh6oBtI7JRrFSnryS2fUIxQJulBgNAtNtezoAwSf4T4Ljr
+         A4Ix984UaXNPoddEGvvWS4CFzr768KwjmNbpt+lesAyDyM9I6tuzCBcpqDX7NAd51J0o
+         iFqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=FHJDJ8Fe/YEVCgqC7GbRLry91xwpeCNrR2x0UvEVW1Y=;
-        b=WWGC4rhIC6vrrZSkFeL8xcatlzL9MkbqO5nLwj7O6xDhUtkNWioe7E9pYkcbxcx90y
-         hDeX8y9nf+7jYjRVRimKFvIrDyMqzxkc+hvkIq28rhQmKuJvrNuZgdLzDgt0+ubiWAjp
-         CcbFJ9RbiuR1epiiAJyXdNwfgllGoW1DY3ztIRCKz+TQF2bi66TMPDdkZm7lpDTRoIdu
-         1efcdwuk6uloT3qq2Hp+9kwLvcDZnJZ9NcaU3ZCQOCzEMQambmbN10vMyIyiA5bLh4SX
-         GXC+nRBHRBgCzELoWM5ofvuKPKYA67iN1NnfJnAWcxkeM+uzhIw3/ii8zNKztea/DqGl
-         sERg==
-X-Gm-Message-State: ALKqPweRD/My99fv3GpcrDKbWvj2YWO2dr+MojOJqkrFigTrQRLebug0
-        2VuL0VUjkvYSuCTQr1RShtQ=
-X-Google-Smtp-Source: AB8JxZoYm0qrxId77t5lNXcfY0gbefqMQrqH2MUSY+G2QIusxhBbqg3+H+lh2ShcvhfCfUN0J+vO0A==
-X-Received: by 2002:a50:f4b5:: with SMTP id s50-v6mr16564232edm.262.1526373093894;
-        Tue, 15 May 2018 01:31:33 -0700 (PDT)
+        bh=+HuA7TXP4pgrOuC/dk/c3EcfTAvHZPaLFvkWrc7Lw0M=;
+        b=A0IOTywTKa5RcMbf8UfgoSTfEZXYaxx8RILR+mznPVqJF1Ks+MsQgOvshqHP7Ru/jM
+         2kCWv4+t8QYiQypPvJI7Z5tViVkc6Cv7V259V1mPaRD+ObW7dFnrrufzAvK+w32HQTBF
+         Pw+bQagI2DQmChxC4XGz+xY3Yb1g7++kvHb7cuQId+bHfmoP8aFJwKWt0WC/yw/QYBph
+         h6zxRZRiGlvuYGhYdHFbRAvgJ1dWzso1q6fX/Vc4oguIZEdx0H3sGI0pOQPrztTnG7sh
+         +C/W+I+zX/BKwiH2vklXWtB1RjzftLWNS5V6FRLhNe0K8PwBHMm1MdyuVQwy9xDXZI/C
+         5IaA==
+X-Gm-Message-State: ALKqPwe14ipFEEah+rpb09LCMNjNOQhs3eG4zONY5z2g1/S4PrNyCGXj
+        ifRmyFFfz0DnOxCf1yb/MdzShNf3
+X-Google-Smtp-Source: AB8JxZoDwfPBI7A/NJwknCT0ceIVHQAltx+eh3ijHhnX7+OtVCHdqjoxsV7mZpCde2uSzh/uM7K0DQ==
+X-Received: by 2002:a50:c252:: with SMTP id t18-v6mr16659655edf.135.1526373562024;
+        Tue, 15 May 2018 01:39:22 -0700 (PDT)
 Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id k7-v6sm5850856edn.74.2018.05.15.01.31.32
+        by smtp.gmail.com with ESMTPSA id c15-v6sm5760207edr.78.2018.05.15.01.39.20
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 May 2018 01:31:32 -0700 (PDT)
+        Tue, 15 May 2018 01:39:21 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Brandon Williams <bmwill@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 14/35] remote: convert fetch refspecs to struct refspec
-References: <20180514215626.164960-1-bmwill@google.com> <20180514215626.164960-15-bmwill@google.com>
+Subject: Re: [PATCH 00/35] refactoring refspecs
+References: <20180514215626.164960-1-bmwill@google.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180514215626.164960-15-bmwill@google.com>
-Date:   Tue, 15 May 2018 10:31:32 +0200
-Message-ID: <87in7p2ucb.fsf@evledraar.gmail.com>
+In-reply-to: <20180514215626.164960-1-bmwill@google.com>
+Date:   Tue, 15 May 2018 10:39:20 +0200
+Message-ID: <87h8n92tzb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -69,77 +69,106 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, May 14 2018, Brandon Williams wrote:
 
->  void add_prune_tags_to_fetch_refspec(struct remote *remote)
->  {
-> -	int nr = remote->fetch_refspec_nr;
-> -	int bufsize = nr  + 1;
-> -	int size = sizeof(struct refspec_item);
-> -
-> -	remote->fetch = xrealloc(remote->fetch, size  * bufsize);
-> -	memcpy(&remote->fetch[nr], tag_refspec, size);
-> -	add_fetch_refspec(remote, xstrdup(TAG_REFSPEC));
-> +	refspec_append(&remote->fetch, TAG_REFSPEC);
->  }
+> When working on protocol v2 I noticed that working with refspecs was a
+> little difficult because of the various api's that existed.  Some
+> functions expected an array of "const char *" while others expected an
+> array of "struct refspec".  In all cases a length parameter needed to be
+> passed as a parameter as well.  This makes working with refspecs a
+> little challenging because of the different expectations different parts
+> of the code base have.
+>
+> This series refactors how refspecs are handled through out the code base
+> by renaming the existing struct refspec to refspec_item and introducing
+> a new 'struct refspec' which is a container of refspec_items, much like
+> how a pathspec contains pathspec_items.  This simplifies many callers
+> and makes handling pathspecs a bit easier.
 
-Thanks for fixing the hack I needed to put in place in 97716d217c
-("fetch: add a --prune-tags option and fetch.pruneTags config",
-2018-02-09).
+This looks really good to me. The API you're replacing is one of the
+worst I've had a chance to encounter in git.git (as noted in my
+https://public-inbox.org/git/87in7p2ucb.fsf@evledraar.gmail.com/ but
+maybe I haven't looked widely enough), and now it's really nice.
 
-I'm not sure where it belongs in this series, but I think this makes
-sense on top of the whole thing:
+> I have some follow on work which I'll build on top of this series, but
+> since this was already getting a bit lengthy at 35 patches I'll save
+> that for another time.
 
-    diff --git a/builtin/fetch.c b/builtin/fetch.c
-    index af7064dce3..9a523249f5 100644
-    --- a/builtin/fetch.c
-    +++ b/builtin/fetch.c
-    @@ -1383,7 +1383,8 @@ static int fetch_one(struct remote *remote, int argc, const char **argv, int pru
+In addition to my other suggestions for stuff to put on top, which I see
+now you may have just had in your local tree but didn't submit, I think
+this makes sense:
 
-            maybe_prune_tags = prune_tags_ok && prune_tags;
-            if (maybe_prune_tags && remote_via_config)
-    -               add_prune_tags_to_fetch_refspec(remote);
-    +               refspec_append(&remote->fetch, TAG_REFSPEC);
-    +
-
-            if (maybe_prune_tags && (argc || !remote_via_config))
-                    refspec_append(&rs, TAG_REFSPEC);
     diff --git a/remote.c b/remote.c
-    index 8e6522f4d0..946b95d18d 100644
+    index 946b95d18d..cb97e662e8 100644
     --- a/remote.c
     +++ b/remote.c
-    @@ -87,11 +87,6 @@ static void add_fetch_refspec(struct remote *remote, const char *ref)
-            refspec_append(&remote->fetch, ref);
+    @@ -77,16 +77,6 @@ static const char *alias_url(const char *url, struct rewrites *r)
+     	return xstrfmt("%s%s", r->rewrite[longest_i]->base, url + longest->len);
      }
 
-    -void add_prune_tags_to_fetch_refspec(struct remote *remote)
+    -static void add_push_refspec(struct remote *remote, const char *ref)
     -{
-    -       refspec_append(&remote->fetch, TAG_REFSPEC);
+    -	refspec_append(&remote->push, ref);
+    -}
+    -
+    -static void add_fetch_refspec(struct remote *remote, const char *ref)
+    -{
+    -	refspec_append(&remote->fetch, ref);
     -}
     -
      static void add_url(struct remote *remote, const char *url)
      {
-            ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
-    diff --git a/remote.h b/remote.h
-    index 9014f707f0..62a6566594 100644
-    --- a/remote.h
-    +++ b/remote.h
-    @@ -289,6 +289,4 @@ extern int parseopt_push_cas_option(const struct option *, const char *arg, int
-     extern int is_empty_cas(const struct push_cas_option *);
-     void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
+     	ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
+    @@ -261,9 +251,9 @@ static void read_remotes_file(struct remote *remote)
+     		if (skip_prefix(buf.buf, "URL:", &v))
+     			add_url_alias(remote, xstrdup(skip_spaces(v)));
+     		else if (skip_prefix(buf.buf, "Push:", &v))
+    -			add_push_refspec(remote, xstrdup(skip_spaces(v)));
+    +			refspec_append(&remote->push, xstrdup(skip_spaces(v)));
+     		else if (skip_prefix(buf.buf, "Pull:", &v))
+    -			add_fetch_refspec(remote, xstrdup(skip_spaces(v)));
+    +			refspec_append(&remote->fetch, xstrdup(skip_spaces(v)));
+     	}
+     	strbuf_release(&buf);
+     	fclose(f);
+    @@ -302,14 +292,14 @@ static void read_branches_file(struct remote *remote)
+     		frag = "master";
 
-    -void add_prune_tags_to_fetch_refspec(struct remote *remote);
-    -
-     #endif
+     	add_url_alias(remote, strbuf_detach(&buf, NULL));
+    -	add_fetch_refspec(remote, xstrfmt("refs/heads/%s:refs/heads/%s",
+    -					  frag, remote->name));
+    +	refspec_append(&remote->fetch, xstrfmt("refs/heads/%s:refs/heads/%s",
+    +					       frag, remote->name));
 
-I.e. the whole reason we have this function is because of my above
-commit where I had to very carefully hack around the fact that we didn't
-have something which could ALLOW_GROW() the structure after it had been
-created.
+     	/*
+     	 * Cogito compatible push: push current HEAD to remote #branch
+     	 * (master if missing)
+     	 */
+    -	add_push_refspec(remote, xstrfmt("HEAD:refs/heads/%s", frag));
+    +	refspec_append(&remote->push, xstrfmt("HEAD:refs/heads/%s", frag));
+     	remote->fetch_tags = 1; /* always auto-follow */
+     }
 
-So I added the add_prune_tags_to_fetch_refspec() function to very
-carefully do *only* that so others wouldn't be tempted to use this hack
-more generally.
+    @@ -395,12 +385,12 @@ static int handle_config(const char *key, const char *value, void *cb)
+     		const char *v;
+     		if (git_config_string(&v, key, value))
+     			return -1;
+    -		add_push_refspec(remote, v);
+    +		refspec_append(&remote->push, v);
+     	} else if (!strcmp(subkey, "fetch")) {
+     		const char *v;
+     		if (git_config_string(&v, key, value))
+     			return -1;
+    -		add_fetch_refspec(remote, v);
+    +		refspec_append(&remote->fetch, v);
+     	} else if (!strcmp(subkey, "receivepack")) {
+     		const char *v;
+     		if (git_config_string(&v, key, value))
 
-But now we have a nice API for it, so we can just throw away the
-wrapper, and use the same API everywhere. You already did the other half
-of that in your e69b54f53a ("fetch: convert fetch_one to use struct
-refspec", 2018-05-11).
+I.e. the reason we have add_{push,fetch}_refspec() in the first place is
+because without your series it's tricky to add new ones, but now it's
+trivial, so let's not leave behind wrapper static functions whose sole
+purpose is to just call another exported API as-is.
+
+I've pushed all the patches I quoted inline in this review at
+avar-bwill/refspec in github.com/avar/git, consider them all signed-off,
+and depending on whether you agree/disagree etc. please squash
+them/adapt them/drop them however you see fit.
