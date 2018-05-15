@@ -2,103 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5191F406
-	for <e@80x24.org>; Tue, 15 May 2018 01:25:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6765E1F51A
+	for <e@80x24.org>; Tue, 15 May 2018 01:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752094AbeEOBZf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 21:25:35 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:33665 "EHLO
-        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752031AbeEOBZe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 21:25:34 -0400
-Received: by mail-vk0-f68.google.com with SMTP id q189-v6so8725992vkb.0
-        for <git@vger.kernel.org>; Mon, 14 May 2018 18:25:34 -0700 (PDT)
+        id S1752121AbeEOB2M (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 21:28:12 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:51270 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752031AbeEOB2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 21:28:11 -0400
+Received: by mail-wm0-f65.google.com with SMTP id j4-v6so16579559wme.1
+        for <git@vger.kernel.org>; Mon, 14 May 2018 18:28:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0Yo6wjuj5omMyVGQgmS5zuz39ZZ0mfiJdw8J9ms/tm4=;
-        b=Q44BIr9Vr9CoZrh5ukw7lotUre9RzV/H5J3WH3Yp8ypit1O9vgvBhSQFfwk3UlrYLC
-         wpc40g5bqKEI8pYWOGzEQ004lAdfsTdxJ/1NVXTjV8BKeIasJGCbEBtEtrSmaw6YxfZ/
-         CuDyLFQlu/8GzL83j0+qDhIb3ICQfTm3m3zCg4W/91VPeTfY/QyKyZtaUFeAjbu+ObOB
-         Hhvol1Ep4U9p2Xxg6393shjXG1ACQHsToPWP5BqwxmyEs4zffC75//hi1HjGDf7P6u6z
-         KBodw6TV2P3C5DDm9Qf3geUHSpV0AJk9iHiPJaUMXfHVm5GLp0dqEsFTA+OsZwTs6Tlk
-         NSMQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=d9ok+lYWHyQIQ9tn2sacBuJWRUOBToUS2MYe+opERFg=;
+        b=lwFRpWv1wYYWMuTfWvZVHb5IlVADDiv+tqGzzrNDGcrszgb9IlJxHtHBBLSAhUamSq
+         7/YloDga99XmjOcMNugTjlRKk2YhqHwi8LjEym4S5XnJV0OuDqOte4V21K9oZ5+YO61c
+         HGY6iNGLGCfMdZ/0Wi+fd0VQ3fxmVIccrc9hk0P/FfIRU+eZ0pxBbWjI+jvCvldjL9QM
+         BlMiiUIAcpd9DLNlqTNnKO7qsiEU5X1WO2cTw/9HUS9FIR9Su/empoRhB+QzEF6WYaLB
+         nbEqllLPw5EMGH6NmO/WarAKw3U2+2siu3gkVJFAI8GYga8zUtzVPeuwdP9EWdPsVfns
+         spXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0Yo6wjuj5omMyVGQgmS5zuz39ZZ0mfiJdw8J9ms/tm4=;
-        b=cHA1lXoA3wzu9tzQhlTmHSI5qsKCA78C55lLFMS3xT0uzs2u0+pPSMaEymr5Bvs2Yh
-         2+RcsXIwzeYvmEThOnye3C+oKmgFtZaj+9j3eudtuxlFHPDysrAnB5/C1aPFA9+RXUiB
-         Ur2LrtM9lCh5/KBapgQv4VMmYYbU9EuJt6zcBRAw3+9fFQ75i5QzEvmJiSNC+G69Y1t6
-         MgcPQXxUFKzSCXVy941wFW/7hvghgIdxrdEPr5e3wicSYr6U4en2Cn6M4CGvqA++NFeN
-         2bVVRBGZGy6ixtDNcVAZSOAYqn2YqiTqat7jTh+t4g/Q5G2Pyvpj8DrZjsr12xxkffsI
-         uY/A==
-X-Gm-Message-State: ALKqPwdawH4vWyuiBShJglBKYJ/BSVQS0s2Ne9P785uHwmA3gRxrbJ8O
-        LgZXKJQH66on3Qs5w03BoPKDR+FAD4glozsN1Y4=
-X-Google-Smtp-Source: AB8JxZol6Togb5ma/rqxNTesqRJqm449wDTvMUxc0TnjwUlGlLfjSLvnuSwzmxI0PEyXoT4h6DdoKP/7x9XEe00OIwQ=
-X-Received: by 2002:a1f:c155:: with SMTP id r82-v6mr12866102vkf.76.1526347533635;
- Mon, 14 May 2018 18:25:33 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=d9ok+lYWHyQIQ9tn2sacBuJWRUOBToUS2MYe+opERFg=;
+        b=ZOvV4O2pYECk3y12cjyywaSfMcePK7mbSkJ5wxgfQ0tqzpFCwaZuMU8DLgd7ETgSTl
+         woVkM8uhwKviXw701ACoGJUiKUSL45Y9aTyLeWGPrvWLelmvjzYdysOS+mn9bWhhLry5
+         babQbkPJ34gcrEBRkqzMyUSylYdcoXVa6P1s0PavCvAT5SagcPmTPXtNDZgFP0YSoiWW
+         DR/+OiGZffHKEgErpI5FVJigtawyac70lrPFwatl4tIyyjg9rmLFfNpy4oLP2uSn5BYP
+         lmcLEbnpGrO+PlszJEJ0JlOZetbBQG0pHVFBwpmkMNgg72dlsRavD/Ws1LnPfT2bCkHW
+         4anw==
+X-Gm-Message-State: ALKqPwfDP5URxUFCrnNikj5q3yRfZszLsI8K50f6vZraeWX1F0JLEiHx
+        6Y7TGUXFQ0UAEfs9TpWTCFk=
+X-Google-Smtp-Source: AB8JxZpfHo8hctbNWtDRD6k41c1kAEu5RgW+gdOBGj5wkLWdvRBsNG0YjzbOJRamOPiisxwfTa5VDQ==
+X-Received: by 2002:a1c:92c4:: with SMTP id u187-v6mr6459612wmd.78.1526347689526;
+        Mon, 14 May 2018 18:28:09 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b133-v6sm12671859wmh.12.2018.05.14.18.28.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 14 May 2018 18:28:08 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v1 1/8] fetch-object: make functions return an error code
+References: <20180513103232.17514-1-chriscool@tuxfamily.org>
+        <20180513103232.17514-2-chriscool@tuxfamily.org>
+Date:   Tue, 15 May 2018 10:28:08 +0900
+In-Reply-To: <20180513103232.17514-2-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Sun, 13 May 2018 12:32:25 +0200")
+Message-ID: <xmqqmux1aes7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Mon, 14 May 2018 18:25:33 -0700 (PDT)
-In-Reply-To: <20180510211917.138518-3-sbeller@google.com>
-References: <CANw0+A_T5zDUUWznYBe0m9fkSODPnfQaK1yJKPPawHTxi9+9BQ@mail.gmail.com>
- <20180510211917.138518-1-sbeller@google.com> <20180510211917.138518-3-sbeller@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 14 May 2018 18:25:33 -0700
-Message-ID: <CABPp-BFw0g=3i8AoiCDgZR82ScOmiozDQqTggZ4U5kmiurFMdg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] merge-recursive: i18n submodule merge output and
- respect verbosity
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Leif Middelschulte <leif.middelschulte@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I know I said the patches looked okay earlier, but I just noticed something...
+Christian Couder <christian.couder@gmail.com> writes:
 
-On Thu, May 10, 2018 at 2:19 PM, Stefan Beller <sbeller@google.com> wrote:
+> The callers of the fetch_object() and fetch_objects() might
+> be interested in knowing if these functions succeeded or not.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  fetch-object.c | 15 +++++++++------
+>  fetch-object.h |  6 +++---
+>  sha1-file.c    |  4 ++--
+>  3 files changed, 14 insertions(+), 11 deletions(-)
 
->         case 1:
-> -               MERGE_WARNING(path, "not fast-forward");
-> -               fprintf(stderr, "Found a possible merge resolution "
-> -                               "for the submodule:\n");
-> +               output(o, 1, _("Failed to merge submodule %s (not fast-forward)"), path);
+"might", but nobody pays attention to the return value, as the
+local availablity of the object at the end is the only thing that
+matters, so at this step, it is not all that impactful a change.
 
-We allow folks to set GIT_MERGE_VERBOSITY to change how much output
-they get.  A setting of 1 should only show conflicts or major
-warnings.  2 is the default and adds a few more messages (e.g.
-"Auto-merging $PATH", "Adding $PATH" for one-sided adds, etc.), higher
-levels show even more.
+Let's see how it plays out.
 
-Anyway this output message is correct to use level 1 since this is a
-conflict, but...
-
-> +               output(o, 1, _("Found a possible merge resolution for the submodule:\n"));
-
-I think this should use level 2.
-
->                 print_commit((struct commit *) merges.objects[0].item);
-> -               fprintf(stderr,
-> +               output(o, 1, _(
->                        "If this is correct simply add it to the index "
->                        "for example\n"
->                        "by using:\n\n"
->                        "  git update-index --cacheinfo 160000 %s \"%s\"\n\n"
->-                       "which will accept this suggestion.\n",
->+                       "which will accept this suggestion.\n"),
->                        oid_to_hex(&merges.objects[0].item->oid), path);
-
-and so should this one (in fact, I'm tempted to say these last two
-should use level 3, but since it looks like a command users may have
-difficulty finding on their own, I'm okay with going with 2).
+>  			/*
+> -			 * TODO Investigate haveing fetch_object() return
+> -			 * TODO error/success and stopping the music here.
+> +			 * TODO Investigate checking fetch_object() return
+> +			 * TODO value and stopping on error here.
+>  			 */
+>  			fetch_object(repository_format_partial_clone, real->hash);
+>  			already_retried = 1;
