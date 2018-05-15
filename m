@@ -2,165 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 646BE1F406
-	for <e@80x24.org>; Tue, 15 May 2018 01:33:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BED811F406
+	for <e@80x24.org>; Tue, 15 May 2018 01:44:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752208AbeEOBdq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 21:33:46 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:39138 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752024AbeEOBdp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 21:33:45 -0400
-Received: by mail-yw0-f196.google.com with SMTP id v132-v6so4190976ywc.6
-        for <git@vger.kernel.org>; Mon, 14 May 2018 18:33:45 -0700 (PDT)
+        id S1752155AbeEOBoY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 21:44:24 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36935 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752089AbeEOBoX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 21:44:23 -0400
+Received: by mail-wm0-f66.google.com with SMTP id l1-v6so18476493wmb.2
+        for <git@vger.kernel.org>; Mon, 14 May 2018 18:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Yq9lZ5oaMbcGst5D4IF5s04HLzK44tP+cJYRTG2Q2OQ=;
-        b=aiLHYCZup9f/XD5b9BMJyHMz5njsWYUElqCJ5nEyP+jvWFIw9ZQMWxDf0DJG9QzQoe
-         LnWW96FweIw838182iLyPC2tU6A3IKUw3ajjgXUj1pQYo4zWmBvWFLPfZmoo3cdG5PwF
-         /ONTYTVubK4PK3R1y4MInpAjGq+ZLrO4TXvr/j+tIoDqC8m3JUYY19kaltgki7JFUrvM
-         T1JfOAuaTI0wacYe2A3HMZEl11sm4x0gzQ9SUihW0dd+PQawyKAUN40GvKvJxLfZcaPw
-         ilFoe36Uf7rIfDoNRgi6Kovg4ZoZQdtlTFXOTj2J49zP1H84f6eKYz/pnwSQsztZx8GN
-         mMuA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=8XBWLxOLD87TZPBguV3+qgSS5267c0+4Cjw6sUlpf4s=;
+        b=T/UW6N1/vQVlgjKkr6NpgKl78xHd71HaoE79lGOsq4+nA8/cwj0SjtvEeaXLQQogCk
+         VIl+7+Dim8NYOySHv9AjxF/NK3JFbtDDAyM45yHche7BXpW5fQObhaCguOhLOzMlg6Dl
+         AUwj2FvKUtMt3PCPxc7OlKW6E4zRq2M8qZqMU5GSh7x8MYGHnZdKjLXcG81KxB8DOd5u
+         +wnxHV2HXjj2GImnm9kaUwxI7eIiuv2gpA5WLwpLZjD9I83kKlgG8s0I75s/OfEy8LRk
+         VuWAtm3GLxx/Qpb44fDiR4kGXvtEieuiy/Gi4wf/Ltzy10T3wZFERDf1JmegFlyvcMnY
+         6rlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Yq9lZ5oaMbcGst5D4IF5s04HLzK44tP+cJYRTG2Q2OQ=;
-        b=fPJGSKH5JP8sYuZ7+SG/Kk60o6ljIeo0P1790j8SYG5LNrbci45/8Fd7p4x4euZoOD
-         dWI3rH9sf1cJCetvjNQxqrDyDGacT7Z/IV3t6uwGBGBP57UrAlPO2wPaxFwB++zFzLvC
-         DKMitKSHSbP/k5s8VhAmMnJ8dnphAdk2YZDp0Nibaun93crYQVfnFE28fhrKbMqVwwce
-         aIY60FVtS0nZycRT0xZTtR2svWLlr+OU0N+6mqvTLdO0PTimoBKkuwZsJN8UWUnFMYNH
-         fCNNOCmCyWf8lyfu8+VeLd8AO0SBL38M5UZUoxuxZgk8ey7TqWHIB93SW5YOq5ZRCtZw
-         IenQ==
-X-Gm-Message-State: ALKqPwfczMxZavkGJZ3anH6pIuYWwLCU7KQrk3efZaE6t2G+7bccQ9QH
-        GLThtHFt7LspAEj34/3f3pee5nED9mrBiiu8Kh7TeAdHC28=
-X-Google-Smtp-Source: AB8JxZoY+5YIl3UPWhDWpao47FE3nPFCXEPjvKeXTH0tD5Wa7rJxhNcwkTi1qnl3K8dZW73MotuKzgvinKMEhRKtEvg=
-X-Received: by 2002:a0d:fd84:: with SMTP id n126-v6mr5535176ywf.33.1526348024656;
- Mon, 14 May 2018 18:33:44 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=8XBWLxOLD87TZPBguV3+qgSS5267c0+4Cjw6sUlpf4s=;
+        b=oINEXE66DCoBOp+B2Sb9ylDitJQcF/JSUAxPMsSeB2BEz5cUTyNfxtu991cNFQef8j
+         zKisby0VVSNKdQoRBrcUmviUAIZqBh+nMJDOeXfK4fTDEttqbjFW0cYhtMUMHPsIvlLE
+         iVAZmFOPsGMfgd1+5CLOR54XfFrK+JhG1qg7JAgw/eVxYfpDIFbUMSMyRhvBf2J9ykk8
+         0wz3+XbmSwFwwnkj6l6WqInKIGqxN/Juaf+3KGocT3mOXtARSJSAyow7uAwxLC8545qe
+         LUjEK+lDhdB9QibfSh3KUl4rK1/sJXE2cQissR7qj6EySD2bJZSaOx6ZOcGegUnmNIOa
+         XTVA==
+X-Gm-Message-State: ALKqPwdaJlrfR1YFdD5CYHnSGKf8/sPIe7jIj38N8lQnbawT7Gg//kIm
+        mMQ9n7HsZML1s3UkdoMMWNE=
+X-Google-Smtp-Source: AB8JxZoqK/piVCX1tpRdJq7hO+MEjSGTeUhzoAkVAAwcAgSi5eI85yYXqcfcXHaAs3gcL9NO6I8s2Q==
+X-Received: by 2002:a1c:c1c9:: with SMTP id r192-v6mr6269700wmf.120.1526348661432;
+        Mon, 14 May 2018 18:44:21 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id k30-v6sm16683753wrf.17.2018.05.14.18.44.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 14 May 2018 18:44:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v1 2/8] Add initial odb remote support
+References: <20180513103232.17514-1-chriscool@tuxfamily.org>
+        <20180513103232.17514-3-chriscool@tuxfamily.org>
+Date:   Tue, 15 May 2018 10:44:20 +0900
+In-Reply-To: <20180513103232.17514-3-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Sun, 13 May 2018 12:32:26 +0200")
+Message-ID: <xmqqh8n9ae17.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Mon, 14 May 2018 18:33:44
- -0700 (PDT)
-In-Reply-To: <20180514105823.8378-5-ao2@ao2.it>
-References: <20180514105823.8378-1-ao2@ao2.it> <20180514105823.8378-5-ao2@ao2.it>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 14 May 2018 18:33:44 -0700
-Message-ID: <CAGZ79kbkDO8KEm6ps75xTykU2JCVwHVVpOr+Eq_RQy_bn-jRCw@mail.gmail.com>
-Subject: Re: [RFC PATCH 04/10] submodule--helper: add a new 'config' subcommand
-To:     Antonio Ospite <ao2@ao2.it>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 14, 2018 at 3:58 AM, Antonio Ospite <ao2@ao2.it> wrote:
-> Add a new 'config' subcommand to 'submodule--helper', this extra level
-> of indirection makes it possible to add some flexibility to how the
-> submodules configuration is handled.
->
-> Signed-off-by: Antonio Ospite <ao2@ao2.it>
-> ---
->  builtin/submodule--helper.c | 39 +++++++++++++++++++++++++++++++++++++
->  t/t7411-submodule-config.sh | 26 +++++++++++++++++++++++++
->  2 files changed, 65 insertions(+)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 9e8f2acd5..b32110e3b 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1825,6 +1825,44 @@ static int is_active(int argc, const char **argv, const char *prefix)
->         return !is_submodule_active(the_repository, argv[1]);
->  }
->
-> +static int config_print_callback(const char *key_, const char *value_, void *cb_data)
+Christian Couder <christian.couder@gmail.com> writes:
+
+> diff --git a/odb-helper.h b/odb-helper.h
+> new file mode 100644
+> index 0000000000..61d2ad082b
+> --- /dev/null
+> +++ b/odb-helper.h
+> @@ -0,0 +1,13 @@
+> +#ifndef ODB_HELPER_H
+> +#define ODB_HELPER_H
+> +
+
+Here is a good space to write a comment on what this structure and
+its fields are about.  Who are the dealers of helpers anyway?
+
+> +struct odb_helper {
+> +	const char *name;
+> +	const char *dealer;
+> +
+> +	struct odb_helper *next;
+> +};
+> +
+> +extern struct odb_helper *odb_helper_new(const char *name, int namelen);
+> +
+> +#endif /* ODB_HELPER_H */
+> diff --git a/odb-remote.c b/odb-remote.c
+> new file mode 100644
+> index 0000000000..e03b953ec6
+> --- /dev/null
+> +++ b/odb-remote.c
+> @@ -0,0 +1,72 @@
+> +#include "cache.h"
+> +#include "odb-remote.h"
+> +#include "odb-helper.h"
+> +#include "config.h"
+> +
+> +static struct odb_helper *helpers;
+> +static struct odb_helper **helpers_tail = &helpers;
+> +
+> +static struct odb_helper *find_or_create_helper(const char *name, int len)
 > +{
-> +       char *key = cb_data;
+> +	struct odb_helper *o;
 > +
-> +       if (!strcmp(key, key_))
-> +               printf("%s\n", value_);
+> +	for (o = helpers; o; o = o->next)
+> +		if (!strncmp(o->name, name, len) && !o->name[len])
+> +			return o;
 > +
-> +       return 0;
+> +	o = odb_helper_new(name, len);
+> +	*helpers_tail = o;
+> +	helpers_tail = &o->next;
+> +
+> +	return o;
 > +}
-> +
-> +static int module_config(int argc, const char **argv, const char *prefix)
+
+This is a tangent, but I wonder if we can do better than
+hand-rolling these singly-linked list of custom structure types
+every time we add new code.  I am just guessing (because it is not
+described in the log message) that the expectation is to have only
+just a handful of helpers so looking for a helper by name is OK at
+O(n), as long as we very infrequently look up a helper by name.
+
+> +static int odb_remote_config(const char *var, const char *value, void *data)
 > +{
-> +       int ret;
+> +	struct odb_helper *o;
+> +	const char *name;
+> +	int namelen;
+> +	const char *subkey;
 > +
-> +       if (argc < 2 || argc > 3)
-> +               die("submodule--helper config takes 1 or 2 arguments: name [value]");
+> +	if (parse_config_key(var, "odb", &name, &namelen, &subkey) < 0)
+> +		return 0;
 > +
-> +       /* Equivalent to ACTION_GET in builtin/config.c */
-> +       if (argc == 2) {
-> +               char *key;
+> +	o = find_or_create_helper(name, namelen);
 > +
-> +               ret = git_config_parse_key(argv[1], &key, NULL);
-> +               if (ret < 0)
-> +                       return CONFIG_INVALID_KEY;
-> +
-> +               config_from_gitmodules(config_print_callback, the_repository, key);
-> +
-> +               free(key);
-> +               return 0;
-> +       }
-> +
-> +       /* Equivalent to ACTION_SET in builtin/config.c */
-> +       if (argc == 3)
-> +               return config_gitmodules_set(argv[1], argv[2]);
+> +	if (!strcmp(subkey, "promisorremote"))
+> +		return git_config_string(&o->dealer, var, value);
 
-Ah, here we definitely want to set it in the .gitmodules file?
-(Or does that change later in this series?)
+If the field is meant to record the name of the promisor remote,
+then it is better to name it as such, no?
 
+> +struct odb_helper *find_odb_helper(const char *dealer)
+
+Ditto.
+
+> +{
+> +	struct odb_helper *o;
 > +
-> +       return 0;
-> +}
+> +	odb_remote_init();
 > +
->  #define SUPPORT_SUPER_PREFIX (1<<0)
->
->  struct cmd_struct {
-> @@ -1850,6 +1888,7 @@ static struct cmd_struct commands[] = {
->         {"push-check", push_check, 0},
->         {"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
->         {"is-active", is_active, 0},
-> +       {"config", module_config, 0},
->  };
->
->  int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-> diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-> index a648de6a9..dfe019f05 100755
-> --- a/t/t7411-submodule-config.sh
-> +++ b/t/t7411-submodule-config.sh
-> @@ -139,4 +139,30 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
->         )
->  '
->
-> +test_expect_success 'reading submodules config with "submodule--helper config"' '
-> +       (cd super &&
+> +	if (!dealer)
+> +		return helpers;
+> +
+> +	for (o = helpers; o; o = o->next)
+> +		if (!strcmp(o->dealer, dealer))
+> +			return o;
 
-I think the project prefers a style
-of the cd at the same level of the echo and the following commands.
+The code to create a new helper tried to avoid creating a helper
+with duplicated name, but nobody tries to create more than one
+helpers that point at the same promisor remote.  Yet here we try to
+grab the first one that happens to point at the given promisor.
 
-However we might not need the (cd super && ...) via
+That somehow smells wrong.
 
-  echo "../submodule"  >expected
-  git -C super ubmodule--helper config submodule.submodule.url >../actual
-  test_cmp expected actual
-
-Our friends developing git on Windows will thank us for saving
-to spawn a shell as spawning processes is expensive on Windows. :)
-Also we have fewer lines of code.
-
-The patch looks good to me,
-Thanks,
-Stefan
