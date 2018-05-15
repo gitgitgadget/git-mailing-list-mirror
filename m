@@ -6,58 +6,61 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21DCA1F406
-	for <e@80x24.org>; Tue, 15 May 2018 03:54:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A7C11F406
+	for <e@80x24.org>; Tue, 15 May 2018 04:09:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752231AbeEODx7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 23:53:59 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:50460 "EHLO
+        id S1752192AbeEOEJn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 00:09:43 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:37504 "EHLO
         mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752159AbeEODx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 23:53:59 -0400
-Received: by mail-wm0-f65.google.com with SMTP id t11-v6so16874308wmt.0
-        for <git@vger.kernel.org>; Mon, 14 May 2018 20:53:58 -0700 (PDT)
+        with ESMTP id S1752139AbeEOEJl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 00:09:41 -0400
+Received: by mail-wm0-f65.google.com with SMTP id l1-v6so18823147wmb.2
+        for <git@vger.kernel.org>; Mon, 14 May 2018 21:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=EeiF3VixXO1B+MMi3hs29dRTJuYXiBjyo+P1kQ2UNZc=;
-        b=Ur/2ygcywdKGmBDC+sWzMp01L0VsCRBSvJq64ODEhYsjNwuTnMinDjp/4GqFoLdSVt
-         ClRI2J0L73oRV3bOvQuYUR2BoXpSpwHcYFXzlrIAps1y8x4Mv2uAY2kB9WyFUWKSogIy
-         Rpny73+qLzQghhftdJzIXFAwLcUPs9xPJs/7/c661VZt0GHtNV+O1EZmTxtybFAl11DN
-         xqpFQsBOJ9ALvXXKv50logfpEHy8WasRLP8ydhe/DlR5fIpcbe9c25diyMYlhFDCR8pF
-         B0tIoe6df9fS1Kc9n+tTc7YbfXwaHL28A97W5RAQSlXv9Q8AQMpe+n0phpJa58VPlhlI
-         A5oQ==
+        bh=JYn1YpCDb1I+u9oBXwKhg2nUAm3qMz2z3IbexBs8LE0=;
+        b=ZCVW98RwPfQ2tbL/Shqt6FXRHjJ5A6BRpU4Gea2IsdfUx9Jtc7XQND+DBX33XSDFcw
+         5YzF33TunOUK+tLZeyjKlSbGGUV9ERM7rXoDCKVglLlcgeouEL9sRJA4PO2Jc2HaLRI9
+         /XsHoM2it/jPI9a+e/mGqUIdCLl6dMRPH+5QponlobwqH705oOOy5/5jDtRskpsVwzp3
+         EEuFzxmzRqRKuwsrbmfzLA3AdwD84KTsxl3LicHxc81OjnXcx+Fl0UV2PxXjCzzq3rYI
+         1pp3sekVTuptgOm+YueA+iQSmS67yWnCMkmGgoGHZ4gQ5EDWsW4r7yj5NuHdeaBHsyie
+         aj/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=EeiF3VixXO1B+MMi3hs29dRTJuYXiBjyo+P1kQ2UNZc=;
-        b=kJTthDXoSwpiS2nyhxyx2QUQGi75Jw6fLx2+q8ZELIpk81SmL96AGJzsbwwnJNlCCh
-         SMU/gdrreVPCM51t4c/MDdlKJGRQxI1Tq4giKjxZyDjjZQ7xKlrTmpQEBJgWHFBrz7E+
-         pKX/DoAzx/DiwlGVEtJgYecaRiIEWCMIWHPA9Ze59OUbGU+pFTHJgDTOjRewugX/uAKx
-         /8Rypwm7Mk2WRFDhiq3moPcD0vkXQYkof1GoCUR6ZqaLGIYy1JSt7sLn7QBfsPMQ2EXa
-         5FFX0PwaWK3/8/8CIlJDUXECqF6XxoRtoRRbb0rkXabzQcRvuJU78vIlNiYf2pD9Eo04
-         opAg==
-X-Gm-Message-State: ALKqPwdpR6LuirLzuLJ45vwAqiHsGxlT/7BT1X4bzQ2CWjwUEL/i0AZw
-        2ibReqVg+Ev39HBtW3zOnFI=
-X-Google-Smtp-Source: AB8JxZpI66q4h5RxZgrMzDNYQLkjkPujR+icZkvA7ZfXEr/u7oPdnkVJZ7t3OdyDIw9Bg7Z5mKK4Hw==
-X-Received: by 2002:a1c:4406:: with SMTP id r6-v6mr6111848wma.99.1526356437445;
-        Mon, 14 May 2018 20:53:57 -0700 (PDT)
+        bh=JYn1YpCDb1I+u9oBXwKhg2nUAm3qMz2z3IbexBs8LE0=;
+        b=ZmF3uvCeHAAjHw60TsM/+oRikqofniWCsg+HL7Y3zrIeU0HSTMfoj9/ITWEsPOvrp9
+         hIUJEpC4tuzv8D4AwF7qlnIfLzs1v+e6kzb04EaU62YQ7fHZ8LRwxlysFMM/RJoAfwpD
+         95qyD0veTMILpmORYeOs+9Zp51CXGNgkzm2Jk+XnS8lY+9D+TPprNdmTlfK9+o7xVq9d
+         SGua+GayqY4S0BIM7sQwPM9VIEsdFkbihP1WH18c9RcN5fWlYV1QupkgHa0DkLR7PNsR
+         5sl8DlNxPfKc5q7kjO4TfxgM2hQEiv2tjq0X3qZB0onPt22ALKkjIirgdYUVCA78drHk
+         A3LQ==
+X-Gm-Message-State: ALKqPwe+UT2joLweJ64w9odv0BcFTaB/VBJEIvt2eIBHvIVLtYlNn5q6
+        7h8/AbbAzIOdhnl1A/EVSA3viBZu
+X-Google-Smtp-Source: AB8JxZqVs193oqIuM6kgjijfla+En0TFF0gQ0bjtQfBpDSPfcSqXJWLxRZyg3HBkfaJYsRSpM7LGIA==
+X-Received: by 2002:a1c:2348:: with SMTP id j69-v6mr6546424wmj.45.1526357380207;
+        Mon, 14 May 2018 21:09:40 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id m134-v6sm15587666wmg.13.2018.05.14.20.53.54
+        by smtp.gmail.com with ESMTPSA id b185-v6sm11373526wmb.25.2018.05.14.21.09.39
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 14 May 2018 20:53:54 -0700 (PDT)
+        Mon, 14 May 2018 21:09:39 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH RFC] ref-filter: start using oid_object_info
-References: <010201635e16d282-89bdd0cd-df10-4509-bad7-fd49fd80ff2b-000000@eu-west-1.amazonses.com>
-        <xmqqd0xxa9dp.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 15 May 2018 12:53:53 +0900
-In-Reply-To: <xmqqd0xxa9dp.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 15 May 2018 12:24:50 +0900")
-Message-ID: <xmqq8t8la81a.fsf@gitster-ct.c.googlers.com>
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Daniel =?utf-8?Q?Gra=C3=B1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH 00/10] Make submodules work if .gitmodules is not checked out
+References: <20180514105823.8378-1-ao2@ao2.it>
+Date:   Tue, 15 May 2018 13:09:39 +0900
+In-Reply-To: <20180514105823.8378-1-ao2@ao2.it> (Antonio Ospite's message of
+        "Mon, 14 May 2018 12:58:13 +0200")
+Message-ID: <xmqq4lj9a7b0.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,123 +69,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Antonio Ospite <ao2@ao2.it> writes:
 
-> Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
->
->> Start using oid_object_info_extended(). So, if info from this function
->> is enough, we do not need to get and parse whole object (as it was before).
->> It's good for 3 reasons:
->> 1. Some Git commands potentially will work faster.
->> 2. It's much easier to add support for objectsize:disk and deltabase.
->>    (I have plans to add this support further)
->> 3. It's easier to move formatting from cat-file command to this logic
->>    (It pretends to be unified formatting logic in the end)
->>
->> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
->> ---
->>  ref-filter.c | 34 +++++++++++++++++++++++++++++++---
->>  ref-filter.h | 21 +++++++++++++++++++++
->>  2 files changed, 52 insertions(+), 3 deletions(-)
->>...
->> @@ -383,9 +400,9 @@ static struct {
->>  	int (*parser)(const struct ref_format *format, struct used_atom *atom,
->>  		      const char *arg, struct strbuf *err);
->>  } valid_atom[] = {
->> -	{ "refname" , FIELD_STR, refname_atom_parser },
->> -	{ "objecttype" },
->> -	{ "objectsize", FIELD_ULONG },
->> +	{ "refname", FIELD_STR, refname_atom_parser },
->> +	{ "objecttype", FIELD_STR, objecttype_atom_parser },
->> +	{ "objectsize", FIELD_ULONG, objectsize_atom_parser },
->>  	{ "objectname", FIELD_STR, objectname_atom_parser },
->>  	{ "tree" },
->>  	{ "parent" },
->
-> Hmph, so this patch does not teach us to interpolate any new %(field-type)
-> but changes the way %(objecttype) and %(objectsize) are computed.
->
->> @@ -1536,6 +1553,13 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
->>  			continue;
->>  		} else if (!deref && grab_objectname(name, &ref->objectname, v, atom)) {
->>  			continue;
->> +		} else if (!deref && !strcmp(name, "objecttype")) {
->> +			v->s = type_name(format_data.type);
->> +			continue;
->> +		} else if (!deref && !strcmp(name, "objectsize")) {
->> +			v->value = format_data.size;
->> +			v->s = xstrfmt("%lu", format_data.size);
->> +			continue;
->>  		} else if (!strcmp(name, "HEAD")) {
->>  			if (atom->u.head && !strcmp(ref->refname, atom->u.head))
->>  				v->s = "*";
->
-> Because this addition is made to the early "Fill in specials first"
-> loop of the populate_value() function, we may be able to satisfy
-> some requests early without calling get_object() which then calls
-> parse_object().
->
->> @@ -2226,6 +2250,10 @@ int format_ref_array_item(struct ref_array_item *info,
->>  {
->>  	const char *cp, *sp, *ep;
->>  	struct ref_formatting_state state = REF_FORMATTING_STATE_INIT;
->> +	format_data.oid = info->objectname;
->> +	if (format_data.use_data && oid_object_info_extended(&format_data.oid, &format_data.info,
->
-> Style: fold the line after " &&".
->
-> And this checks the .use_data field to see if these fields whose
-> value could be computed by a call to oid_object_info_extended()
-> without calling parse_object().  If there is one, we call it;
-> otherwise we don't.
->
-> So there are three possible cases:
->
->  - The request does not ask for these fields that can be filled from
->    "format_data" (by the way, that is a horrible name---all the data
->    in this codepath is for formatting, and in that sense the
->    variable is not named after its most significant trait, which is
->    that it is to grab data needed for formatting via a call to
->    a function in the object_info() family.  Perhaps object_info_data
->    or oi_data for brevity).  We do not call object_info() and the
->    performance characteristic of the code stays as before.
->
->  - The request asks for these fields that are helped by
->    "object-info" and no other fields.  We make a call to
->    "object-info", instead of parse_object(), which hopefully is more
->    efficient (we need to measure, if we are selling this as an
->    optimization).
->
->  - The request asks for both.  We end up calling object-info and
->    also parse_object(), so presumably there is degradation of
->    performance.
->
-> In the third case, after v->s and v->value are filled by the new
-> code that copies from format_data, grab_values() will again fill
-> objecttype/objectsize by overwriting v->s field.  Doesn't this cause
-> memory leaks?  type_name() returns a constant string that does not
-> leak, but your objectsize seems to use xstrfmt(), so...
->
-> I think it was OK before this patch as grab_common_values() was the
-> only place that did v->s = xstrfmt() for the field, but now the code
-> with this patch can do the same assignment from two places, we would
-> need to be a bit more careful about memory ownership?
+>   - my git terminology may still be a little off: do "work tree" and
+>     "work directory" mean the same thing?
 
-Another thing that came to my mind while reading the patch aloud in
-my previous message was if we can easily tell the latter two cases
-apart, before actually going into the populate_value() codepath.
+Just on this tangent.  
 
-We can easily tell that fields that can benefit from object-info
-were requested with your .use_data field technique.  If we can also
-easily tell that fields that do need full get_object() and call to
-parse_object(), then we can avoid calling object_info() and grab
-values for objectsize etc. in the old way.
+When we talk about the current working directory of a process
+returned by getcwd((3) call, we typically spell that word fully (or
+say $cwd).
 
-Of course, if you plan to extend the set of fields further so that
-some traits about an object that can only be learned by calling
-object_info(), then we may have to make calls to both object_info()
-and parse_object().  And when that happens we'd restructure the code
-again, but until then, the above sounds like an optimization worth
-considering.
+We lived without the modern "git worktree" layout for a long time,
+but there was a hack in contrib/ called "git-new-workdir".  This
+creates something similar (in spirit, not in implementation) to
+"worktree" in modern Git lingo, but because not many people use the
+contrib feature (at least there is only few who get confused by it
+and ask questions publicly, anyway), we do not hear "workdir" very
+often.
 
-Thanks.
+Since very early days of Git, we had "working tree" that is the
+directory hierarchy that corresponds to what you place in the index,
+and "Git repository" which is the ".git" directory that has that
+index.  Even though most everybody else was calling it the "working
+tree", primarily because I was young(er) and (more) stupid, I often
+called the same thing "work tree", and made things worse by
+introducing GIT_WORK_TREE environment variable etc.  But "working
+tree" is the official terminology to denote a directory hierarchy
+that corresponds to (and controlled by) a single index file as
+opposed to what is in ".git/" directory..
+
+The official term "worktree" came much later, with "git worktree"
+command.  This allow multiple working trees to be associated with a
+single ".git/" directory.  Most of the time "worktree" and "working
+tree" can be used interchangeably, but we tend to say "working tree"
+when we have more emphasis on the non-bareness of the repository and
+talking about checked-out files, and say "worktree" when we are
+mostly interested in the layout that have more than one working trees
+associated to a single Git repository.  What you get by "git clone",
+for example, is just a single repository with a single working tree,
+and nobody sane (other than young(er) and (more) stupid version of
+me 10 years ago) would call the latter a "worktree" these days, as
+there is not yet a secondary worktree to contrast it with.
+
