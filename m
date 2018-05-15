@@ -2,106 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A0A61F406
-	for <e@80x24.org>; Tue, 15 May 2018 00:41:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ECF31F406
+	for <e@80x24.org>; Tue, 15 May 2018 01:04:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752363AbeEOAlj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 May 2018 20:41:39 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:45914 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752293AbeEOAli (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 May 2018 20:41:38 -0400
-Received: by mail-yw0-f193.google.com with SMTP id g9-v6so4159529ywb.12
-        for <git@vger.kernel.org>; Mon, 14 May 2018 17:41:38 -0700 (PDT)
+        id S1752095AbeEOBE3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 May 2018 21:04:29 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:34816 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752013AbeEOBE2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 May 2018 21:04:28 -0400
+Received: by mail-pl0-f67.google.com with SMTP id i5-v6so8360601plt.2
+        for <git@vger.kernel.org>; Mon, 14 May 2018 18:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Qc0bGE8+KWWEbWSWeSxaQBzzqNxppK25DbL0CWIEiX0=;
-        b=lGAAk752bcB+fSs8FaQ1m6T0wcf91mwjavwB2P7CVDU7tQlm0ZAqaKnHqDxPhWXFcq
-         l3H+7ErNHlo2c4OZv0tV9xERvMSiZ2bNBDiX0Jm42lp5O99Uv8bBiITUJlo4oaPb0YA8
-         x3vKVqYhrNxla9vjQK65Az6a21YoZWn3LD1ksH97ycn3ekHDPBpWb2aVcDJcsmkEHA1r
-         VCBFtVRxCWe2z3dGQZCa/b2HoNee99QbSXiKq8EC3Gki9yEl5Tw9Coc6+YiOp6yAjKKx
-         /Y+a2TKiF9R+YJ0+XfvHhq8+pRE/Be4SElwHzXTnEgBI/MGMAvpOYrY7+rU0Ro91i5xC
-         So6A==
+        h=from:to:cc:subject:date:message-id;
+        bh=PtWYvl4qmf73jdoZBLSXEIwkvkz7fm4U5YW9ujEsnHM=;
+        b=q4Zxuq5vEfx7x0rv7mFFaVrNzrZ3905Fxu65XIsVNkhf//YVFe3kD1bpLDKy8FXep5
+         Vk2vY16SdDgIMdhHuTTs6Gb/vbll3GGCJwZ5Xu7oLOR4F6jdB5PYoopAYtBkm5rNgaQF
+         7vMeN7f7XEvpVTAdfO2HyAdhW3DIege5UgU+SrgqR8jxKe4AJCeCshHkBwXlqFuwWXjG
+         toTGHEYNkMmMrf/oK9JYQ2VVfkwUrXE7DO2PwAkIsrRPUjmnKFjC/tjYCXVbpBf0EwYH
+         CQQ/aNU6xbdVUB/NTnG8yrNFUQ2zxy8n8v3YRsPAgvQL318otZFEBfZJ+eB41Siiti45
+         5seA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Qc0bGE8+KWWEbWSWeSxaQBzzqNxppK25DbL0CWIEiX0=;
-        b=gvEjBDCM7IUklf+ljHhguqzEo7TNa69Uor2Chv2LT/2pw1+HDj01QzsN3Aw2pE9hLi
-         2HJQBFf0MIereB4zxUUchlVsFBXK+Ln3OvxtlESZXtmPjUMKlY6NNYD9ML0s1i491eRv
-         LIaecFu0OUTOfgwmjBktLY412sqB0VW1OyIfiSzP99VggaAjs2UgQzSje3vVjkts3bm0
-         KkjnCnB9C3hizIae00JHmOtK1tHN/C6cAWBw/OWrwiwH3fsf4phUQL/uqdBH1HV420BR
-         Zmw9QNFj8DdoZupCQeMAd9CRSTYzmy6apUT0mWfq7O6e3qYeZP4BgfUCwbKaFuVIY+sZ
-         qo+Q==
-X-Gm-Message-State: ALKqPwcuE2oEt6/jfYWvhS/6yFXysTtESsZ0DELR2Oaj/Dz9zQTLAC+J
-        pnadsOktgN+aeXRjC3hb22eqTcf/7PdgO6hgJgNC6w==
-X-Google-Smtp-Source: AB8JxZpUXAC0zo1pr/JJfy+HNoOX6r47siZ+Y7I8gEwCEZkckX08LjHnXJmVwqtpxM8Xnrz7cxpahMIZUxTT/Bh/AZk=
-X-Received: by 2002:a81:8801:: with SMTP id y1-v6mr5492246ywf.238.1526344897932;
- Mon, 14 May 2018 17:41:37 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Mon, 14 May 2018 17:41:37
- -0700 (PDT)
-In-Reply-To: <20180514205737.21313-2-leif.middelschulte@gmail.com>
-References: <CAGZ79kaiFkq20Com7gOLin371D2KhTPG7cqn1mQ6OaFU12kKPQ@mail.gmail.com>
- <20180514205737.21313-1-leif.middelschulte@gmail.com> <20180514205737.21313-2-leif.middelschulte@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=PtWYvl4qmf73jdoZBLSXEIwkvkz7fm4U5YW9ujEsnHM=;
+        b=nbFLCV6XUscWY8HeYGL7w6qpriPjZ6ws0mEejoePPX4641GNVvC75vM3s58xaSEb9x
+         NhFZdEjCMVsmg7X0wFaqwDXJ5Na5Qo0SCuaeXWjYDw+BdD6EgQsPISxlp8756Y2cLyX2
+         Aia0dwlUSFDx8V/BXBMT/vaNeE0hoVZrxQiXdYtA5EG30QNjDe+hz2zmnFtSDmemM7kK
+         klDcU91QFL6KWpLOir7Z+PLl3yl3jnoI8rFFNidBVNn4AWUTkR8UFi7Xvq+KVlr9X63e
+         dWnAl+CV5zOSa/QiF/SuHYabdLb9JdqCx3X3gaLrWZ9nRh6YJWePENHVkwfCTIPr/u4P
+         q7sw==
+X-Gm-Message-State: ALKqPwd1lwDnwxzEouNHAoogs0oew1vEeZkeh0AT5O/DN1sQV0jYRCRo
+        /dloQfzupbPdEjAVJRrR+ImV6qySFSo=
+X-Google-Smtp-Source: AB8JxZr45V7MCtDcYAzd3NvuaCR3NXXquVSxp8fXqORngUUK0jFtWQABYYE/IuyGrUjqLMlXJJQO5w==
+X-Received: by 2002:a17:902:82c3:: with SMTP id u3-v6mr11919683plz.83.1526346267759;
+        Mon, 14 May 2018 18:04:27 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id s17-v6sm24626872pfi.165.2018.05.14.18.04.26
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 14 May 2018 18:04:27 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 14 May 2018 17:41:37 -0700
-Message-ID: <CAGZ79kaKzahJ2oJ7qwerCS6m1c0MBiYiysf+HOU=3uRwfPqOkg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] Inform about fast-forwarding of submodules during merge
-To:     Leif Middelschulte <leif.middelschulte@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     bmwill@google.com, gitster@pobox.com
+Cc:     git@vger.kernel.org, ao2@ao2.it, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] grep: handle corrupt index files early
+Date:   Mon, 14 May 2018 18:04:25 -0700
+Message-Id: <20180515010425.149200-1-sbeller@google.com>
+X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 14, 2018 at 1:57 PM, Leif Middelschulte
-<leif.middelschulte@gmail.com> wrote:
-> From: Leif Middelschulte <Leif.Middelschulte@gmail.com>
->
-> Inform the user about an automatically fast-forwarded submodule. The silent merge
-> behavior was introduced by commit 68d03e4a6e44 ("Implement automatic fast-forward
-> merge for submodules", 2010-07-07)).
->
-> Signed-off-by: Leif Middelschulte <Leif.Middelschulte@gmail.com>
+Any other caller of 'repo_read_index' dies upon a negative return of
+it, so grep should, too.
 
-Thanks for following up with a patch.
-This looks good to me!
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-Thanks,
-Stefan
+Found while reviewing the series
+https://public-inbox.org/git/20180514105823.8378-1-ao2@ao2.it/
 
-> ---
->  merge-recursive.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index a4b91d17f..4a03044d1 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -1093,10 +1093,14 @@ static int merge_submodule(struct merge_options *o,
->         /* Case #1: a is contained in b or vice versa */
->         if (in_merge_bases(commit_a, commit_b)) {
->                 oidcpy(result, b);
-> +               output(o, 1, _("Note: Fast-forwarding submodule %s to the following commit"), path);
-> +               output_commit_title(o, commit_b);
->                 return 1;
->         }
->         if (in_merge_bases(commit_b, commit_a)) {
->                 oidcpy(result, a);
-> +               output(o, 1, _("Note: Fast-forwarding submodule %s to the following commit:"), path);
-> +               output_commit_title(o, commit_a);
->                 return 1;
->         }
->
-> --
-> 2.15.1 (Apple Git-101)
->
+ builtin/grep.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 6e7bc76785a..69f0743619f 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -488,7 +488,8 @@ static int grep_cache(struct grep_opt *opt, struct repository *repo,
+ 		strbuf_addstr(&name, repo->submodule_prefix);
+ 	}
+ 
+-	repo_read_index(repo);
++	if (repo_read_index(repo) < 0)
++		die("index file corrupt");
+ 
+ 	for (nr = 0; nr < repo->index->cache_nr; nr++) {
+ 		const struct cache_entry *ce = repo->index->cache[nr];
+-- 
+2.17.0.582.gccdcbd54c44.dirty
+
