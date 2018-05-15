@@ -7,53 +7,54 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9DCF1F406
-	for <e@80x24.org>; Tue, 15 May 2018 23:43:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43D471F406
+	for <e@80x24.org>; Tue, 15 May 2018 23:43:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752378AbeEOXnJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 19:43:09 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:43560 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752331AbeEOXnD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 19:43:03 -0400
-Received: by mail-pf0-f174.google.com with SMTP id j20-v6so815163pff.10
-        for <git@vger.kernel.org>; Tue, 15 May 2018 16:43:03 -0700 (PDT)
+        id S1752425AbeEOXnQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 19:43:16 -0400
+Received: from mail-pl0-f46.google.com ([209.85.160.46]:42061 "EHLO
+        mail-pl0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752241AbeEOXmy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 19:42:54 -0400
+Received: by mail-pl0-f46.google.com with SMTP id u6-v6so958222pls.9
+        for <git@vger.kernel.org>; Tue, 15 May 2018 16:42:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=q9wBbRoHfA/XrEqCWOM/GPay24EZUAy3MMSy5zUxySY=;
-        b=JJay+AIOnSgQ3gNdxt0zFkVT6RlZwdxZZ7z9TYL7ZnCSc75JxigVNJr78cf+8aVLYG
-         ymBdHtDbmEHDdHGV9TfSgLyOKlvtGSB+CIH+QwNEhAwGYfNBc9SNzQ9h8ie8ukxZ7GzP
-         gbvBH6UdykisSZpcUzh51C4Vxw+DYiWR45VcwLUVJ3vwHQ4OVH3RcTGvB85CabIVWGN4
-         d0l3+sD7lhhz3epD2J6b1cgfml/XFZJ8+OWQuwo70YwlvA5BWqdxSjzZbNMsgHZoB4rl
-         cMsmsmXJTSFmSkiRESlLVgm6oevjjlciLSxDNGH786vZgfCFz4qRBWwkvosUR64f79A9
-         nMYw==
+        bh=AIhWTeimfg/UXdVGamZ51Gb4pzoFc7conKzULF4Vw6U=;
+        b=fkj6PIiaLRMJHO8sYclHF9K4mE/OR4idboQE803PuT/dFhmsVA0ldxwQ552jhzajta
+         eExeh0Ayunt/q5+gk0mnEuzfhZpzkTyja2121p5A6Dq27od7JZz/jUDJ4TlWPAXh7TyE
+         +atjegmu+OxmsXGfeBFN31hSPD+Jijo37PfCZYcRNdNEVNel3KG4/m302gR+SPUd5vOc
+         n8gByMWUIehYfXtCz7YY2FUEYjSix3ZKQmkvM6W7KzkpP6Qrm4+LPk9w/YIkpSaqt9tW
+         g5x94YOlW0D/J2nUx2tOwFtWkeklz1WukIzHi0yXmT0E0FTjGiSS+4unjWa0+52vKR+U
+         zkDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=q9wBbRoHfA/XrEqCWOM/GPay24EZUAy3MMSy5zUxySY=;
-        b=HxJyfN/WrvdPETTueEi0HLHTlw+myKVAnA4Cb/mSgZiBj/ZYmayY5uNsH98OlrP1Qy
-         +/1UNjqo+q/7ND6jhcKF1DrlHn9OxFpQyYLI+dun8K7V/zTwZbxGvcL9ICg8vnRVvfsl
-         IVxaMhXHvPwA13DCLofi5eRqlBVTjhK0IHahVxwmAKbZAnIk6uKKm2oji8gBNkaBoee8
-         5PCzgyu0NhzexfLNQlDk/woqfuGwts1R8PDRc25EwmogOt0W0wRnKstPB1CERoY8GSZF
-         rM7gE9wAVzc69rFJwm+DGK8jHt6I/BU1rahoe0SrGVc6hS4riiRNbUtLm/ja4u+Hpk4x
-         NZQA==
-X-Gm-Message-State: ALKqPwcba4UEeyIthd1oVShhprIPzZ9e5efd1Qd+elkqBOuPBjJRZAAX
-        YRT/D42AKwrZOUU0IG+9GcePtjlNPf8=
-X-Google-Smtp-Source: AB8JxZoKEnl1nYfLZqW3HfMSb1oWU5UcFPMkWhIM8arRIlSc2Safu311HUxKDOvM/qRs/62NAMGCpA==
-X-Received: by 2002:a62:d044:: with SMTP id p65-v6mr17396944pfg.64.1526427782324;
-        Tue, 15 May 2018 16:43:02 -0700 (PDT)
+        bh=AIhWTeimfg/UXdVGamZ51Gb4pzoFc7conKzULF4Vw6U=;
+        b=VGaiJynU95U8KoCpkDlL00RQOL0bmSZthk6/khdDgDQuSb5gnfHBcYAEq9Q4jZiaS5
+         +xIkxAAepcnbg1PLOwPJooLnVtRkr83PPmy4MbdKIQQKoVuJXUeNPxUBL6Xl+Z3/PMiq
+         47ro7ZBb7Msp58VRgtKLDMloxsqsIc0FrL/AG7Igrue9T/VKsf+VqHOYXIZaEIsZ9ndF
+         biLyArG646Ie5xrJZsFcUkaar20crIptsnb9Shs/u323KPRTDUcRJy16I3uA1Y4mLjHO
+         5xwU1uFlSz+JEDJpSRozVTewoySvm3KB0kQbdrjggzdlZp7KCTfbeHTs4qcFONtgS1yQ
+         2hHA==
+X-Gm-Message-State: ALKqPwfaIhKvwxyPxghOCkyKUNgQUOzLYV6MlDzbY/FVlNrthIajRvZr
+        G0IAauPLxYGqmLHmstejnpgSKJpKXL0=
+X-Google-Smtp-Source: AB8JxZo1oEjmIgLaF7UoxDJGCE3wko7Ad1+EcIS+0jWHoejNr1/xyuVaglpZKDgqJM0NBLc0yI1+Aw==
+X-Received: by 2002:a17:902:6181:: with SMTP id u1-v6mr16244098plj.272.1526427773513;
+        Tue, 15 May 2018 16:42:53 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id x88-v6sm1612001pfj.126.2018.05.15.16.43.01
+        by smtp.gmail.com with ESMTPSA id z129-v6sm1325470pfb.108.2018.05.15.16.42.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 May 2018 16:43:01 -0700 (PDT)
+        Tue, 15 May 2018 16:42:52 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 18/19] commit: allow prepare_commit_graft to handle arbitrary repositories
-Date:   Tue, 15 May 2018 16:42:32 -0700
-Message-Id: <20180515234233.143708-19-sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH 12/19] commit: convert commit_graft_pos() to handle arbitrary repositories
+Date:   Tue, 15 May 2018 16:42:26 -0700
+Message-Id: <20180515234233.143708-13-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
 In-Reply-To: <20180515234233.143708-1-sbeller@google.com>
 References: <20180515234233.143708-1-sbeller@google.com>
@@ -62,55 +63,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Brandon Williams <bmwill@google.com>
+
+Signed-off-by: Brandon Williams <bmwill@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- commit.c | 14 ++++++--------
- object.h |  2 ++
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ commit.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/commit.c b/commit.c
-index 24028fd257a..eef1675d692 100644
+index 684eeaa2ccd..0ec3d22813a 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -196,19 +196,17 @@ static int read_graft_file(struct repository *r, const char *graft_file)
- 	return 0;
+@@ -104,11 +104,10 @@ static const unsigned char *commit_graft_sha1_access(size_t index, void *table)
+ 	return commit_graft_table[index]->oid.hash;
  }
  
--#define prepare_commit_graft(r) prepare_commit_graft_##r()
--static void prepare_commit_graft_the_repository(void)
-+static void prepare_commit_graft(struct repository *r)
+-#define commit_graft_pos(r, s) commit_graft_pos_##r(s)
+-static int commit_graft_pos_the_repository(const unsigned char *sha1)
++static int commit_graft_pos(struct repository *r, const unsigned char *sha1)
  {
--	static int commit_graft_prepared;
- 	char *graft_file;
- 
--	if (commit_graft_prepared)
-+	if (r->parsed_objects->commit_graft_prepared)
- 		return;
--	graft_file = get_graft_file(the_repository);
--	read_graft_file(the_repository, graft_file);
-+	graft_file = get_graft_file(r);
-+	read_graft_file(r, graft_file);
- 	/* make sure shallows are read */
--	is_repository_shallow(the_repository);
--	commit_graft_prepared = 1;
-+	is_repository_shallow(r);
-+	r->parsed_objects->commit_graft_prepared = 1;
+-	return sha1_pos(sha1, the_repository->parsed_objects->grafts,
+-			the_repository->parsed_objects->grafts_nr,
++	return sha1_pos(sha1, r->parsed_objects->grafts,
++			r->parsed_objects->grafts_nr,
+ 			commit_graft_sha1_access);
  }
  
- struct commit_graft *lookup_commit_graft_the_repository(const struct object_id *oid)
-diff --git a/object.h b/object.h
-index a314331acaf..4af499ab03e 100644
---- a/object.h
-+++ b/object.h
-@@ -20,6 +20,8 @@ struct parsed_object_pool {
- 	int is_shallow;
- 	struct stat_validity *shallow_stat;
- 	char *alternate_shallow_file;
-+
-+	int commit_graft_prepared;
- };
- 
- struct parsed_object_pool *parsed_object_pool_new(void);
 -- 
 2.17.0.582.gccdcbd54c44.dirty
 
