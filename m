@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA321F406
-	for <e@80x24.org>; Wed, 16 May 2018 22:21:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D58FC1F406
+	for <e@80x24.org>; Wed, 16 May 2018 22:21:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752020AbeEPWVr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 18:21:47 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:36736 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751850AbeEPWVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 18:21:44 -0400
-Received: by mail-pf0-f173.google.com with SMTP id w129-v6so1047029pfd.3
-        for <git@vger.kernel.org>; Wed, 16 May 2018 15:21:44 -0700 (PDT)
+        id S1752059AbeEPWVt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 18:21:49 -0400
+Received: from mail-pl0-f41.google.com ([209.85.160.41]:45467 "EHLO
+        mail-pl0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751474AbeEPWVj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 18:21:39 -0400
+Received: by mail-pl0-f41.google.com with SMTP id bi12-v6so1224519plb.12
+        for <git@vger.kernel.org>; Wed, 16 May 2018 15:21:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rLQi2TkVaCeacRv9V9RnVe0Mk/CDWCAgeJB5fs+94PQ=;
-        b=VTj81T9epvvVlCqbwVXXNpiNeaGJfYoJKSYM/McNxt6c6HP/Y5hlMqvveTGI/RXMp0
-         jYe4vaQn/tco0PD65uSqOt6yRX7r1PAq5UKxIk0FJxbLHklSr63rCqUX2PBTKBatKfSl
-         4rogfZDHS3c+P7NmBVAxVZN3PGRab/cGNvRhNO53C8IxzyM+1a1QMwlTvcZA1xzeLZAG
-         gjjANBlfU44h+NC4u+3UmNRwo71yElmv1MEiq8HUwMx6EtFq4EviR5czJhxwQE/fq8A9
-         KXStEkZiw7dvgiEEh9qXmNv6AQfnav93ImM7vqi+QSqJS0jaAEvL6bVUvYSYMa1hRUva
-         2Jlg==
+        bh=p0wJY60iTObA6LNYp378UUuPlK7p7IZOaLo+0KEp5ak=;
+        b=B5TXiA5M6PT4soygH3em54XWJhknB+fueruttwBs8OdDpVpUTbn6ULx+voz8A5ijbL
+         WnXj3C05Dr9mgq988ZT/Im05FW0z2I6JnBcNlvzAYNksMt+B3W9TaBu58OPEpGuYNVVM
+         vepghhGR0tlIhERCgQtgWhn+O1En+EFp5G7vbO53gmHTuFixycNZWAljbYDKCCnzjvbR
+         6vLvRHdRAlB/+zimE8/wtcYZILIWhAnN+MiXjSrY1/rwSfJJey1Fr0AtymEW8Xt6xkOn
+         RjXe8y6MJN1dsxdZ7u7damjOO302yNhaPIuboClXLBfqcVzA5HF0+Oacu+6zYYkIPZnk
+         y+8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=rLQi2TkVaCeacRv9V9RnVe0Mk/CDWCAgeJB5fs+94PQ=;
-        b=HeqNxYitmTnyELD4djbYQqqH+ZtdFvtjZ/oBKJEv23ffHfXbap8O3Bj95YPUHjd5MN
-         0PXL4yYelqJFiomSEV0fQdnnvDDhWThNmBM43Q5JquI9U0PCUPy2UM/r90EDQt7gwsY4
-         FglT0+PnkdjZVIb3gOb6ofBRwjph/qFbM/nWYvyYviwd1O2f5qMovSxhErMWkcBY1MzS
-         jD0ZeAdpWJaZX1RkxkdzrCM3ig2Axn/rWQ3h3zFQnvQIRAB1xdSo54EivFI+YusyLWiR
-         KQ2m0HY+C82wFKu21/NyxWk8HclY01nCfInmIVMXvM6UR+woqczDnG7hf46okD6+I/uF
-         0mpA==
-X-Gm-Message-State: ALKqPwf0IDF+CyaGlAO5W3PvG2Ul5WWoSvl3aQc/1S/MRjqZciXhmifH
-        CePyQhyUBP/9AdKytusj15bClQ==
-X-Google-Smtp-Source: AB8JxZo1yGopJLgWUjP5IxSQXePJBkiQ9mIN4VmzmUuIKa+WsZsIS+89ENd5vqWljAwcNnVX0mM5MA==
-X-Received: by 2002:a63:7c04:: with SMTP id x4-v6mr2103977pgc.67.1526509303728;
-        Wed, 16 May 2018 15:21:43 -0700 (PDT)
+        bh=p0wJY60iTObA6LNYp378UUuPlK7p7IZOaLo+0KEp5ak=;
+        b=YC1T2eoIXReuJhxpp4NrXAx4RJYDoWRcqx45Ua0cNa8MzZUsk48dlzRSmfAA2gfz7B
+         AP8L0Wdpj9pKonYFElFoY2wtwPJPJihkFJDdHw2ZASWgzb4XFvKo+WdSXF+BUJ0n184f
+         UpaGAVTSC1SRANXkY6nGJoTyzD2MeZh4KDs88sxlsIAcAJWmkCPkrTTeTrU8GHorqHwb
+         dZg6OXr39y4mYS4FJt/HO6Vae8IXJtwAegPEGgONOB/KBpd/TyDdECdVEFsTpUvyM3wY
+         vrXnpeRSPqrdcXRJotEwmGyNhPq05kMMpXEY8yQ7X9lE5wfTGwYU4D0rNLE1HQudVwyz
+         Itdg==
+X-Gm-Message-State: ALKqPwe5bM2dW64YADhH3LIGC+4UAxzSR8Vdyf3S0o5eulrf+dIGYTNj
+        vxG6r/dn/cMvoEMfQ9lDsP28Bg==
+X-Google-Smtp-Source: AB8JxZpU/aIMo71P/leDGJWeZaRKCHFaB05R6OfesFlSNyyKEVeWYTQ8p6JYanwbZi0gtyVD2MqpMQ==
+X-Received: by 2002:a17:902:bf4a:: with SMTP id u10-v6mr2734056pls.322.1526509298478;
+        Wed, 16 May 2018 15:21:38 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id m22-v6sm5798625pfg.20.2018.05.16.15.21.42
+        by smtp.gmail.com with ESMTPSA id z129-v6sm5237977pfb.108.2018.05.16.15.21.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 16 May 2018 15:21:43 -0700 (PDT)
+        Wed, 16 May 2018 15:21:37 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     pclouds@gmail.com
 Cc:     ao2@ao2.it, bmwill@google.com, git@vger.kernel.org,
         gitster@pobox.com, sbeller@google.com
-Subject: [PATCH 09/11] checkout-index: switch to repo_read_index
-Date:   Wed, 16 May 2018 15:21:16 -0700
-Message-Id: <20180516222118.233868-10-sbeller@google.com>
+Subject: [PATCH 05/11] builtin/ls-files: use repo_read_index_or_die
+Date:   Wed, 16 May 2018 15:21:12 -0700
+Message-Id: <20180516222118.233868-6-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
 In-Reply-To: <20180516222118.233868-1-sbeller@google.com>
 References: <CACsJy8A8WZ-Gqe2Y-whJmbADrt+gZjLZ7MTwCtdnK7JDnEdtog@mail.gmail.com>
@@ -64,34 +64,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Despite ls-files being a plumbing command, which promises to not change its
+output ever, and to be easy on machines (e.g. non-localized output),
+it may make sense to localize the error message for a corrupt index
+nevertheless:
+
+1. that is more consistent with the rest of Git.
+2. Searching for "ls-tree corrupt index file" on the web doesn't yield
+   any hits, that suggest the exact string is parsed for.
+   Probably the script authors rely on the exit code of ls-tree anyways.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/checkout-index.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ builtin/ls-files.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index a730f6a1aa4..aaba99d36c0 100644
---- a/builtin/checkout-index.c
-+++ b/builtin/checkout-index.c
-@@ -10,6 +10,7 @@
- #include "quote.h"
- #include "cache-tree.h"
- #include "parse-options.h"
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index a71f6bd088a..502f2f6db04 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -20,6 +20,7 @@
+ #include "run-command.h"
+ #include "submodule.h"
+ #include "submodule-config.h"
 +#include "repository.h"
  
- #define CHECKOUT_ALL 4
- static int nul_term_line;
-@@ -184,9 +185,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 	git_config(git_default_config, NULL);
- 	prefix_length = prefix ? strlen(prefix) : 0;
+ static int abbrev;
+ static int show_deleted;
+@@ -210,8 +211,7 @@ static void show_submodule(struct repository *superproject,
+ 	if (repo_submodule_init(&submodule, superproject, path))
+ 		return;
  
--	if (read_cache() < 0) {
--		die("invalid cache");
--	}
+-	if (repo_read_index(&submodule) < 0)
+-		die("index file corrupt");
++	repo_read_index_or_die(&submodule);
+ 
+ 	show_files(&submodule, dir);
+ 
+@@ -579,8 +579,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		prefix_len = strlen(prefix);
+ 	git_config(git_default_config, NULL);
+ 
+-	if (repo_read_index(the_repository) < 0)
+-		die("index file corrupt");
 +	repo_read_index_or_die(the_repository);
  
- 	argc = parse_options(argc, argv, prefix, builtin_checkout_index_options,
- 			builtin_checkout_index_usage, 0);
+ 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
+ 			ls_files_usage, 0);
 -- 
 2.17.0.582.gccdcbd54c44.dirty
 
