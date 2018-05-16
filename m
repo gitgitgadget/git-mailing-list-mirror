@@ -2,163 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A53A51F406
-	for <e@80x24.org>; Wed, 16 May 2018 20:03:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 535BF1F406
+	for <e@80x24.org>; Wed, 16 May 2018 20:07:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751038AbeEPUC7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 16:02:59 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:38404 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750847AbeEPUC5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 16:02:57 -0400
-Received: by mail-qt0-f178.google.com with SMTP id m9-v6so2792550qtb.5
-        for <git@vger.kernel.org>; Wed, 16 May 2018 13:02:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=subject:to:cc:references:from:organization:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=zisRqfBdDkOruFrUFDLjyRbWAImP5Ym5RU3G7i8MTIc=;
-        b=KV9LWutiNV1Df5RfiSGlYbMBlhHvNAvjLRYj/SlGNzO1sBEIGJ8Xj0CkLDd/6YnI9K
-         DeI2lKAc8WZmelgL5rk3pHdhskWQCkChJQ1EqtkcYu29bdBMDPlaHDYyGxW91b2Rt8ZV
-         4Mh6XYWmNwXc3uKQVSbMCSOyfoFbBDlHtwX+A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:organization
-         :message-id:date:user-agent:mime-version:in-reply-to;
-        bh=zisRqfBdDkOruFrUFDLjyRbWAImP5Ym5RU3G7i8MTIc=;
-        b=p18qt8k70vx9MAVwgy3OrRvOwuCPpkdisbVf+nZdCKI3N8cV097KbBjcRvX0HtMvbw
-         YI0HKaoGVWoW6r6VnnEdFttapqUToNU3QyDPp9SCX8zMz78f0XA8CvX6lNnKDj4JIO1T
-         /N/Yh5yJ+EgyOATBJShcD2OnOBHudpYKw9Ut7wWp5YIEwW3fuDsNNSPSLny7/aXXFyd5
-         di4bwoI9OiHW738OZ3vzC6yqAzklqugXdG7EEiIEAPNCjSu330bqeIdpAf9e2faLnYH4
-         cI0uokOd0sRH78AdityfFSIIAxEjLEcv5rxAtYSvnyZ9zmWR6odcb9A/KjqzkdS3xyaz
-         4Dag==
-X-Gm-Message-State: ALKqPwfpWkhGr2RvEL0UPUX6jHWU3WWXcdFNFAtUAod+1bNUQUfx05v1
-        tLxdZLFSAGEg/YmuYfFdM+F98w==
-X-Google-Smtp-Source: AB8JxZqV6bMn1BCfz+mi9gaq27UItvA8L2PPujOBg15TvjaOxSxKh9t1gC1huKrUvL8VUWDDjk0l+Q==
-X-Received: by 2002:ac8:3633:: with SMTP id m48-v6mr2559134qtb.255.1526500977054;
-        Wed, 16 May 2018 13:02:57 -0700 (PDT)
-Received: from [10.137.0.22] (ca2x.mullvad.net. [162.219.176.251])
-        by smtp.gmail.com with ESMTPSA id y9-v6sm2692613qth.76.2018.05.16.13.02.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 May 2018 13:02:56 -0700 (PDT)
-Subject: Re: worktrees vs. alternates
-To:     Jeff King <peff@peff.net>
-Cc:     Martin Fick <mfick@codeaurora.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        id S1751315AbeEPUHF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 16:07:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43440 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751155AbeEPUHE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 16:07:04 -0400
+Received: (qmail 17117 invoked by uid 109); 16 May 2018 20:07:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 16 May 2018 20:07:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26605 invoked by uid 111); 16 May 2018 20:07:10 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 16 May 2018 16:07:10 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 May 2018 13:06:59 -0700
+Date:   Wed, 16 May 2018 13:06:59 -0700
+From:   Jeff King <peff@peff.net>
+To:     Martin Fick <mfick@codeaurora.org>
+Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+Subject: Re: worktrees vs. alternates
+Message-ID: <20180516200658.GC4036@sigill.intra.peff.net>
 References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com>
- <87h8n7bhro.fsf@evledraar.gmail.com>
- <a933cb3a-6c04-d963-aeda-b5850ca8994c@linuxfoundation.org>
- <1950199.Z2x8tXoTfI@mfick-lnx>
- <e8776c83-ea57-456d-5bc8-ca2fc990bed0@linuxfoundation.org>
- <20180516192343.GB3417@sigill.intra.peff.net>
  <3289a942-3f0d-ff63-7eab-95fe06c4c0f6@linuxfoundation.org>
  <20180516193744.GA4036@sigill.intra.peff.net>
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Organization: The Linux Foundation
-Message-ID: <5156717b-6fc9-b792-dfa4-1ba48ac50333@linuxfoundation.org>
-Date:   Wed, 16 May 2018 16:02:53 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+ <42435260.5sd4EuToWN@mfick-lnx>
 MIME-Version: 1.0
-In-Reply-To: <20180516193744.GA4036@sigill.intra.peff.net>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="69nc1hmW3aEHoZ9Ad546FlAMzJMq6y57n"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <42435260.5sd4EuToWN@mfick-lnx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---69nc1hmW3aEHoZ9Ad546FlAMzJMq6y57n
-Content-Type: multipart/mixed; boundary="bkciST5I4qD3QALHYl2cyhlrQ8Rr0cK5M";
- protected-headers="v1"
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Jeff King <peff@peff.net>
-Cc: Martin Fick <mfick@codeaurora.org>,
- =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
- Derrick Stolee <stolee@gmail.com>, Lars Schneider
- <larsxschneider@gmail.com>, git <git@vger.kernel.org>,
- Duy Nguyen <pclouds@gmail.com>
-Message-ID: <5156717b-6fc9-b792-dfa4-1ba48ac50333@linuxfoundation.org>
-Subject: Re: worktrees vs. alternates
-References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com>
- <87h8n7bhro.fsf@evledraar.gmail.com>
- <a933cb3a-6c04-d963-aeda-b5850ca8994c@linuxfoundation.org>
- <1950199.Z2x8tXoTfI@mfick-lnx>
- <e8776c83-ea57-456d-5bc8-ca2fc990bed0@linuxfoundation.org>
- <20180516192343.GB3417@sigill.intra.peff.net>
- <3289a942-3f0d-ff63-7eab-95fe06c4c0f6@linuxfoundation.org>
- <20180516193744.GA4036@sigill.intra.peff.net>
-In-Reply-To: <20180516193744.GA4036@sigill.intra.peff.net>
+On Wed, May 16, 2018 at 01:40:56PM -0600, Martin Fick wrote:
 
---bkciST5I4qD3QALHYl2cyhlrQ8Rr0cK5M
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: quoted-printable
+> > In theory the fetch means that it's safe to actually prune
+> > in the mother repo, but in practice there are still
+> > races. They don't come up often, but if you have enough
+> > repositories, they do eventually. :)
+> 
+> Peff,
+> 
+> I would be very curious to hear what you think of this 
+> approach to mitigating the effect of those races?
+> 
+> https://git.eclipse.org/r/c/122288/2
 
-On 05/16/18 15:37, Jeff King wrote:
-> Yes, that's pretty close to what we do at GitHub. Before doing any
-> repacking in the mother repo, we actually do the equivalent of:
->=20
->   git fetch --prune ../$id.git +refs/*:refs/remotes/$id/*
->   git repack -Adl
->=20
-> from each child to pick up any new objects to de-duplicate (our "mother=
-"
-> repos are not real repos at all, but just big shared-object stores).
+The crux of the problem is that we have no way to atomically mark an
+object as "I am using this -- do not delete" with respect to the actual
+deletion. 
 
-Yes, I keep thinking of doing the same, too -- instead of using
-torvalds/linux.git for alternates, have an internal repo where objects
-from all forks are stored. This conversation may finally give me the
-shove I've been needing to poke at this. :)
+So if I'm reading your approach correctly, you put objects into a
+purgatory rather than delete them, and let some operations rescue them
+from purgatory if we had a race.  That's certainly a direction we've
+considered, but I think there are some open questions, like:
 
-Is your delta-islands patch heading into upstream, or is that something
-that's going to remain external?
+  1. When do you rescue from purgatory? Any time the object is
+     referenced? Do you then pull in all of its reachable objects too?
 
-> I say "equivalent" because those commands can actually be a bit slow. S=
-o
-> we do some hacky tricks like directly moving objects in the filesystem.=
+  2. How do you decide when to drop an object from purgatory? And
+     specifically, how do you avoid racing with somebody using the
+     object as you're pruning purgatory?
 
->=20
-> In theory the fetch means that it's safe to actually prune in the mothe=
-r
-> repo, but in practice there are still races. They don't come up often,
-> but if you have enough repositories, they do eventually. :)
+  3. How do you know that an operation has been run that will actually
+     rescue the object, as opposed to silently having a corrupted state
+     on disk?
 
-I feel like a whitepaper on "how we deal with bajillions of forks at
-GitHub" would be nice. :) I was previously told that it's unlikely such
-paper could be written due to so many custom-built things at GH, but I
-would be very happy if that turned out not to be the case.
+     E.g., imagine this sequence:
 
-Best,
---=20
-Konstantin Ryabitsev
-Director, IT Infrastructure Security
-The Linux Foundation
+       a. git-prune computes reachability and finds that commit X is
+          ready to be pruned
 
+       b. another process sees that commit X exists and builds a commit
+          that references it as a parent
 
---bkciST5I4qD3QALHYl2cyhlrQ8Rr0cK5M--
+       c. git-prune drops the object into purgatory
 
---69nc1hmW3aEHoZ9Ad546FlAMzJMq6y57n
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+     Now we have a corrupt state created by the process in (b), since we
+     have a reachable object in purgatory. But what if nobody goes back
+     and tries to read those commits in the meantime?
 
------BEGIN PGP SIGNATURE-----
+I think this might be solvable by using the purgatory as a kind of
+"lock", where prune does something like:
 
-iHUEARYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCWvyObQAKCRC2xBzjVmSZ
-bLgTAQDJwV2d8mcbGFDhoNoxht+dpQmXRNgUx/koL7FZ31qsVQD+Ox0FL6BVvNzM
-h2h6POfcl1lbdD52qZT9tJVp/idbjAU=
-=uExR
------END PGP SIGNATURE-----
+  1. compute reachability
 
---69nc1hmW3aEHoZ9Ad546FlAMzJMq6y57n--
+  2. move candidate objects into purgatory; nobody can look into
+     purgatory except us
+
+  3. compute reachability _again_, making sure that no purgatory objects
+     are used (if so, rollback the deletion and try again)
+
+But even that's not quite there, because you need to have some
+consistent atomic view of what's "used". Just checking refs isn't
+enough, because some other process may be planning to reference a
+purgatory object but not yet have updated the ref. So you need some
+atomic way of saying "I am interested in using this object".
+
+-Peff
