@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 083E21F406
-	for <e@80x24.org>; Wed, 16 May 2018 01:58:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBBF51F406
+	for <e@80x24.org>; Wed, 16 May 2018 01:58:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752382AbeEPB6T (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 21:58:19 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47318 "EHLO
+        id S1752506AbeEPB6a (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 21:58:30 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47334 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752112AbeEPB6R (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:17 -0400
+        by vger.kernel.org with ESMTP id S1752239AbeEPB62 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:28 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 258E360743;
-        Wed, 16 May 2018 01:58:16 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 691E060743;
+        Wed, 16 May 2018 01:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526435896;
-        bh=IHQ1mhtKA9lPZdP8AMJUizBUZJoCkJ5360LQLFN1asQ=;
+        s=default; t=1526435907;
+        bh=t576ojGFsRiMEkPGa4Hn9wThwswnOWW6bCcV3zcUgJA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=UKgMeRNn9hJJgdcCCAzzDNxmg3XRBz+TkM00bWUs3utjlbppimxSjka9l5400mLu6
-         2RBsiy8emMPb0+lUYnIWTJnkizt2RjbvXiCRck1i/sic7lSYPw8gmp9iNMv21bxlyk
-         KjhBCQsjwnH++URNWVWkPgEvf9W8kivsYf+wgZd9bCrFrVs4nWjGWtetaYX0KPTPgH
-         xlCGdWBX2hOde7VkLLsSNpEoCRovyDQorGHY8ZcEQIUl9uI5DLj3Pe90sVP58EY5fF
-         kEaIWud4Dqvom9X6xhdRc5mupKhXAmrDY1Rzh92mam5Vo5HScnKjGvYXAVmCwXv27g
-         JEYEmbHshrtGCIVv7i18ARHoWVHoYj890kILfwRo6Vxo7hkAvuGTKeZmSo/AH1GGir
-         m3y25KgGj3aDcqWVDxThw7Zlam8W3CX041MrpMRWVU/7lr+N/zvREO/9oQcUK7q9e5
-         mjBDZy+xbYXaRg/E8VjzTixvYPUVy6qyTeSUfeVMMfTBKgjr5H9
+        b=Y/irsYp9G6nLYlCPvMJWvBFb2mbj0AWzaQwfGOj+BnqOlUaf7Twq4Bu8GXv7TwWll
+         EFGGDaJHjjzp1tqwg/yyiIdGJ9YcKZdnHWO3ZYv2j1FbeSzys1X38pTZPWbHtUr2ZT
+         6uXfygXpaOn6o8SA7sX46clAY4ukZ5FO8Admrvg+08YddVH1N1HXlHgHf2H4jNln28
+         6t4wL8fvorf1m1KgbQ0bPd4In3tLcTjcR7wJTnRE8o49veBVj/T2J+crezgtILYBs7
+         c/5Gl5kSBYynX9UZPgNgtYKUJki1U3mjDbntA0+xZYlwiYOM2ysxY6gp94Ll77/SwB
+         pzXj67IgDJsOOCSxbY4tNdaZZIoIz2SitGHya8mKKkiXVTSTgZdvgm/L0gjBjkCDlq
+         QtSKfGCDYazbi7oseIrWKrCittCqXsfibggvtNvjdggZq2qDdCkJZB3IzDuFci0CEV
+         VTd57U+QP758uUpgeFbV5IyoSfWbtv14tJDl21oaRUZFH6DPNKG
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -43,9 +43,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 02/28] t/test-lib: introduce ZERO_OID
-Date:   Wed, 16 May 2018 01:56:04 +0000
-Message-Id: <20180516015630.661349-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 04/28] t/test-lib: introduce OID_REGEX
+Date:   Wed, 16 May 2018 01:56:06 +0000
+Message-Id: <20180516015630.661349-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180516015630.661349-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -55,11 +55,12 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently we have a variable, $_z40, which contains the all-zero object
-ID.  However, with NewHash, we'll have an all-zero object ID which is
-longer than 40 hex characters.  In such a case, $_z40 will be a
-confusing name.  Create a $ZERO_OID variable which will always reflect
-the all-zeros object ID, regardless of the length of the current hash.
+Currently we have a variable, $_x40, which contains a regex that matches
+a full 40-character hex constant.  However, with NewHash, we'll have
+object IDs that are longer than 40 characters.  In such a case, $_x40
+will be a confusing name.  Create a $OID_REGEX variable which will
+always reflect a regex matching the appropriate object ID, regardless of
+the length of the current hash.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
@@ -67,23 +68,23 @@ Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index fce728d2ea..58c2ea52c6 100644
+index 58c2ea52c6..fed21c3dfc 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
 @@ -184,6 +184,7 @@ _x40="$_x35$_x05"
  # Zero SHA-1
  _z40=0000000000000000000000000000000000000000
  
-+ZERO_OID=$_z40
++OID_REGEX="$_x40"
+ ZERO_OID=$_z40
  EMPTY_TREE=4b825dc642cb6eb9a060e54bf8d69288fbee4904
  EMPTY_BLOB=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
- 
-@@ -195,7 +196,7 @@ LF='
+@@ -196,7 +197,7 @@ LF='
  # when case-folding filenames
  u200c=$(printf '\342\200\214')
  
--export _x05 _x35 _x40 _z40 LF u200c EMPTY_TREE EMPTY_BLOB
-+export _x05 _x35 _x40 _z40 LF u200c EMPTY_TREE EMPTY_BLOB ZERO_OID
+-export _x05 _x35 _x40 _z40 LF u200c EMPTY_TREE EMPTY_BLOB ZERO_OID
++export _x05 _x35 _x40 _z40 LF u200c EMPTY_TREE EMPTY_BLOB ZERO_OID OID_REGEX
  
  # Each test should start with something like this, after copyright notices:
  #
