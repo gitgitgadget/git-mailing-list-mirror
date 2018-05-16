@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD4D21F406
-	for <e@80x24.org>; Wed, 16 May 2018 23:48:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97B491F406
+	for <e@80x24.org>; Wed, 16 May 2018 23:48:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751610AbeEPXs1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 19:48:27 -0400
-Received: from mail-yb0-f201.google.com ([209.85.213.201]:52918 "EHLO
-        mail-yb0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751379AbeEPXs0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 19:48:26 -0400
-Received: by mail-yb0-f201.google.com with SMTP id x74-v6so1309785ybg.19
-        for <git@vger.kernel.org>; Wed, 16 May 2018 16:48:26 -0700 (PDT)
+        id S1751879AbeEPXsa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 19:48:30 -0400
+Received: from mail-ot0-f202.google.com ([74.125.82.202]:34530 "EHLO
+        mail-ot0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751830AbeEPXs3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 19:48:29 -0400
+Received: by mail-ot0-f202.google.com with SMTP id a14-v6so2152933otf.1
+        for <git@vger.kernel.org>; Wed, 16 May 2018 16:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=FRCs4bWyKlI35Hkz0BcDZlRZt+ocV/Wcs9XM5WJRzBQ=;
-        b=ItUfmRPbKCsHgeavBnBASGFituc7S9ZmLHmTtQ6XFf0/JStjFjZJa4Y4c5E6y+u7+l
-         4pUrjtTYt5+dmefaL7k/IwNbqkh5MxBgmwbYyzx899xSDscpI5GcyUWUll5rW2kcQEwu
-         hkTbBVO1bWnwKtjMqoATPkXtlYJox+wKOzU+Qw3Xb7vQRYZ1y6Fw43R4cRwcjyd2IdwB
-         A1K8lKyeRFGFXKx0uRz1Oz0FAl0Y+pPOiV7HNnSAKORVntg2h3mbORu0LaG2GB80+SSk
-         d2cdytfMcinPaBCblvHddD+1/O+omeroxH7HEaMJCPkALvgqMRJfxBVwmp5hMYq77p81
-         n6aw==
+        bh=cXhlFKLgARqphrTuOHrZNXScTL5h6BCs4+Qqy9NgMyI=;
+        b=Lgg15ncE7cqG5g64HF2OHbRqAQJlhdDUkFJ8lmlF/9RJeBnBUEOaATx/yu3gUldFuc
+         XpU+bJwrFeEPrwJS5oaQY5Tjnlpie+/SofMUjGQequ39/qgiXQVCdVAXkK7pAR+vcRU9
+         NHnYIvHAyZI4yl8MkRsyjiD/Jb3f3qfF1gS1kNWs9Wlrvz6TV0yNAl3xnrtS2Wc0tU43
+         Hu67Y5F4KetVapvG6bLvCzLj1DyMoUnvrUOlyZ1WUbFSy7icv1k4MMysaSX21SMX+tlO
+         dEAXvhJC39Bt6DbcqmjWab+bbj8EXPNjvn+VfIZMM31lSOUDJ2zllK9+DxCotNy/VuNG
+         gqmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=FRCs4bWyKlI35Hkz0BcDZlRZt+ocV/Wcs9XM5WJRzBQ=;
-        b=krGjPSGPU8y52xfZ1W+fc2g7RPmuliJdu0bP5UtNchRn6lkft51b3sX8flX2FvR7UB
-         eOmi65s/ySo1v/TgwebsyfHMR6DIt6RRpS9orvaW5cXHTIrOhyBM6BJKEcUWEaarr0hl
-         Ao5rQHWaazB4gyGMMgUgfIZiDxNY7wUdo/gIPKBzOiFXa9Qz/fX7x97brn15PBXBdS5K
-         SsDrGrTxV3aw0ESPxim0A0+MKG8DoPEEgCrKv2iWv+xttFjnobyBYvuCkzuk1Fj5H1xY
-         bqyB56E2j7tdi8CXGMlzzpHmQPSgMCNTnVO0YiAAjXUhFXsS/ABQn+IioQZB9XbHTZ4z
-         iuFQ==
-X-Gm-Message-State: ALKqPwc6jHJQhuGNPnPEQzD3RWUu1T7mKtr7u/i9wlAgAHUbtNFJw9Wq
-        AZ/qJpT7WNNYyjnYz11TaO1SW8HE5CyUsjKn5t9haTzzNNiqVO6x2bsDuKjWBDX4cMs+sLpQ/qc
-        aEYZhePSEv9fTUQj7P5Zs3GyDX6ouXEbRUJR9j0AdnLdwDQFOnKReUO5b3w==
-X-Google-Smtp-Source: AB8JxZpHj1LsfYcbKgH6Nd5d9eSaDX6JK76gDtpFnESaJkwu4Xp04xZSMwyeiRUBr8OgmdL5oXtIw1iZaV0=
+        bh=cXhlFKLgARqphrTuOHrZNXScTL5h6BCs4+Qqy9NgMyI=;
+        b=LxXPJxvcpohh7Gkm+P2t0abJ2LTyglwDK7/rnRaRr+lOyLaOM7PowIBYkfVLroDnQ2
+         d5HPH7/8g2/8wpsoiQWYUd2bh2d620AJE/Uj8n9dNDG2GxgvngjMqv13Mekg5PSqRYc0
+         MfXX6sjPWuo4sb5zkcMTSeV5fOX0fuw1Dxz7wXaqPGYiQq5Sl0/5iNP6YsJQhRtr/aia
+         VfrIHF/h8DWTslr4ir6wKoynl7oX/HyRvPgY/9bZVdBpGHcr8WLhFKIV0x2lK9TpgOhU
+         xxby+KuQk5bCC4HciDHXOeSoxRfuSXJpvP0mcX0x75WsGQVXOHA2rABk/c+6TkOAk06f
+         TS8w==
+X-Gm-Message-State: ALKqPweOnwzIdh00B0G4d47CsBdwlydPK3y3oGOpcBGUZPjkMKsRvs6Y
+        URW7IZP3mIsVgUr3MZX7gcMldGkNnXzowXeuUNVZfx0U6Yj/1IhCI2QGp7irmhJONJHu8eDfJDz
+        ahzVNGRdvJ9JkrTuSNWYIBELFg4gEj/I87IIs7pXuw58IJiJKJSOTxzDCrA==
+X-Google-Smtp-Source: AB8JxZrzBM9gyxn1ZtRqZipTspl5hktNlFvFMuKuLLQkMEWiO63jXdk6vmgVcXu16PvEXiOpEDnbTymst0g=
 MIME-Version: 1.0
-X-Received: by 2002:a5b:b8f:: with SMTP id l15-v6mr982955ybq.57.1526514506265;
- Wed, 16 May 2018 16:48:26 -0700 (PDT)
-Date:   Wed, 16 May 2018 16:48:20 -0700
-In-Reply-To: <20180516225823.235426-1-bmwill@google.com>
-Message-Id: <20180516234822.182663-1-bmwill@google.com>
-References: <20180516225823.235426-1-bmwill@google.com>
+X-Received: by 2002:aca:ba08:: with SMTP id k8-v6mr2406154oif.73.1526514508651;
+ Wed, 16 May 2018 16:48:28 -0700 (PDT)
+Date:   Wed, 16 May 2018 16:48:21 -0700
+In-Reply-To: <20180516234822.182663-1-bmwill@google.com>
+Message-Id: <20180516234822.182663-2-bmwill@google.com>
+References: <20180516225823.235426-1-bmwill@google.com> <20180516234822.182663-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH 0/2] generating ref-prefixes for configured refspecs
+Subject: [PATCH 1/2] refspec: consolidate ref-prefix generation logic
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, bmwill@google.com
 Cc:     Brandon Williams <bmwill@google.com>
@@ -62,27 +62,136 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here's my short follow on series to the refspec refactoring.
+When using protocol v2 a client constructs a list of ref-prefixes which
+are sent across the wire so that the server can do server-side filtering
+of the ref-advertisement.  The logic that does this exists for both
+fetch and push (even though no push support for v2 currently exists yet)
+and is roughly the same so lets consolidate this logic and make it
+general enough that it can be used for both the push and fetch cases.
 
-When v2 was introduced ref-prefixes were only generated for user
-provided refspecs (given via the command line).  This means that you can
-only benefit from server-side ref filtering if you explicitly provide a
-refspec, so this short series extends this to generate the ref-prefixes
-even for the refspecs which are configured in 'remote.<name>.fetch'.
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ builtin/fetch.c | 13 +------------
+ refspec.c       | 29 +++++++++++++++++++++++++++++
+ refspec.h       |  4 ++++
+ transport.c     | 21 +--------------------
+ 4 files changed, 35 insertions(+), 32 deletions(-)
 
-This series is based on the v2 of the refspec refactoring series.
-
-Brandon Williams (2):
-  refspec: consolidate ref-prefix generation logic
-  fetch: generate ref-prefixes when using a configured refspec
-
- builtin/fetch.c        | 19 ++++++++-----------
- refspec.c              | 29 +++++++++++++++++++++++++++++
- refspec.h              |  4 ++++
- t/t5702-protocol-v2.sh | 14 ++++++++++++++
- transport.c            | 21 +--------------------
- 5 files changed, 56 insertions(+), 31 deletions(-)
-
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 3fad1f0db..80bb14370 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -351,18 +351,7 @@ static struct ref *get_ref_map(struct transport *transport,
+ 
+ 	const struct ref *remote_refs;
+ 
+-	for (i = 0; i < rs->nr; i++) {
+-		const struct refspec_item *item = &rs->items[i];
+-		if (!item->exact_sha1) {
+-			const char *glob = strchr(item->src, '*');
+-			if (glob)
+-				argv_array_pushf(&ref_prefixes, "%.*s",
+-						 (int)(glob - item->src),
+-						 item->src);
+-			else
+-				expand_ref_prefix(&ref_prefixes, item->src);
+-		}
+-	}
++	refspec_ref_prefixes(rs, &ref_prefixes);
+ 
+ 	remote_refs = transport_get_remote_refs(transport, &ref_prefixes);
+ 
+diff --git a/refspec.c b/refspec.c
+index 97e76e8b1..c59a4ccf1 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "argv-array.h"
+ #include "refs.h"
+ #include "refspec.h"
+ 
+@@ -192,3 +193,31 @@ int valid_fetch_refspec(const char *fetch_refspec_str)
+ 	refspec_item_clear(&refspec);
+ 	return ret;
+ }
++
++void refspec_ref_prefixes(const struct refspec *rs,
++			  struct argv_array *ref_prefixes)
++{
++	int i;
++	for (i = 0; i < rs->nr; i++) {
++		const struct refspec_item *item = &rs->items[i];
++		const char *prefix = NULL;
++
++		if (rs->fetch == REFSPEC_FETCH)
++			prefix = item->src;
++		else if (item->dst)
++			prefix = item->dst;
++		else if (item->src && !item->exact_sha1)
++			prefix = item->src;
++
++		if (prefix) {
++			if (item->pattern) {
++				const char *glob = strchr(prefix, '*');
++				argv_array_pushf(ref_prefixes, "%.*s",
++						 (int)(glob - prefix),
++						 prefix);
++			} else {
++				expand_ref_prefix(ref_prefixes, prefix);
++			}
++		}
++	}
++}
+diff --git a/refspec.h b/refspec.h
+index 7e1ff94ac..01b700e09 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -41,4 +41,8 @@ void refspec_clear(struct refspec *rs);
+ 
+ int valid_fetch_refspec(const char *refspec);
+ 
++struct argv_array;
++void refspec_ref_prefixes(const struct refspec *rs,
++			  struct argv_array *ref_prefixes);
++
+ #endif /* REFSPEC_H */
+diff --git a/transport.c b/transport.c
+index 7e0b9abba..cbf0044c3 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1088,30 +1088,11 @@ int transport_push(struct transport *transport,
+ 		int pretend = flags & TRANSPORT_PUSH_DRY_RUN;
+ 		int push_ret, ret, err;
+ 		struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
+-		int i;
+ 
+ 		if (check_push_refs(local_refs, rs) < 0)
+ 			return -1;
+ 
+-		for (i = 0; i < rs->nr; i++) {
+-			const struct refspec_item *item = &rs->items[i];
+-			const char *prefix = NULL;
+-
+-			if (item->dst)
+-				prefix = item->dst;
+-			else if (item->src && !item->exact_sha1)
+-				prefix = item->src;
+-
+-			if (prefix) {
+-				const char *glob = strchr(prefix, '*');
+-				if (glob)
+-					argv_array_pushf(&ref_prefixes, "%.*s",
+-							 (int)(glob - prefix),
+-							 prefix);
+-				else
+-					expand_ref_prefix(&ref_prefixes, prefix);
+-			}
+-		}
++		refspec_ref_prefixes(rs, &ref_prefixes);
+ 
+ 		remote_refs = transport->vtable->get_refs_list(transport, 1,
+ 							       &ref_prefixes);
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
