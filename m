@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3E8D1F406
-	for <e@80x24.org>; Wed, 16 May 2018 23:00:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2165C1F406
+	for <e@80x24.org>; Wed, 16 May 2018 23:00:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752416AbeEPXAJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 19:00:09 -0400
-Received: from mail-ua0-f202.google.com ([209.85.217.202]:47960 "EHLO
-        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752395AbeEPXAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 19:00:04 -0400
-Received: by mail-ua0-f202.google.com with SMTP id 100-v6so2241789uac.14
-        for <git@vger.kernel.org>; Wed, 16 May 2018 16:00:03 -0700 (PDT)
+        id S1752371AbeEPW7y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 18:59:54 -0400
+Received: from mail-yb0-f201.google.com ([209.85.213.201]:50924 "EHLO
+        mail-yb0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752352AbeEPW7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 18:59:50 -0400
+Received: by mail-yb0-f201.google.com with SMTP id g12-v6so1242968ybd.17
+        for <git@vger.kernel.org>; Wed, 16 May 2018 15:59:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=hYI7p7LLkl2KsjsIehXPK3qJYp22ToeYMOMSwpIrdJY=;
-        b=rthRv6+fCdGRf6nYwm19xoqNGbb56lC2g+wuT9dJPuBo0/0+vOr/wVdvOhm/kOsBcN
-         VWJ5rqxGbPr7yeeOvyki+tRdajOHtv0AtLYVkOaDsWxP7NxMQUo8D9iuArb9ty48rjZB
-         4RM58i5FKTmJuTI+hwPnImTyuGkSaafTNGRVw9EoTHy1cmeNvpe5yfQOXmlXZ8WM/ZTe
-         HMBi7SEAOM/Z/V2wqj0+Vr1DwZjzyGL1wROM0hUQOYOc7rlB3I39gLu5OeEmjzrNp0hi
-         TcYOCpXwbpw+c+SPTADCOHHWINeEYrBklTpewbKkm3Ym4aLhiht2fvfVMLX6MzNAd6zz
-         UfoA==
+        bh=oBvI7lBt/6A7GHGTnoV6oBVH8aJzea19xSVVlD1fa7Q=;
+        b=Qdh+uHKLQyihBBpOAVYobBp5C5+4s+mFgMPBiyoF2xNCAkCn0HpMcKIqn/WiRy1Pu8
+         aLQbN4P/xkOev1N0IDoxR41I7cNWfQHGTbsSTW4kvUr4uWy4ef9rs6Jaqtk/o+BzRJUr
+         SzaFUGyjwjhJRLdROjhzJko44xA00OlNqW8BUFLIffBJYVVtCb/7e/9tyEkJoaigzE5u
+         +xE6IATGK9Hn6eGvO3DtT1QgJMHRZwfnk0cFZB1nAPg4QEeGW8Q1Oqy3QnL2ByM/KMtC
+         Hvg2VYvILj7Rk2GBxk5HRCrZNo2PvEumpcxVbXVH8mz4PIThWp/+cLOcn7pTesT+Nu6Y
+         4pcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=hYI7p7LLkl2KsjsIehXPK3qJYp22ToeYMOMSwpIrdJY=;
-        b=t2ChGnF2KsR39hYFMCn9WDJBGGecf/3mSQq35sxOYiAuBrwp0XaX7pI1d9IIpDm/XZ
-         ANb60c3HpiLVy16iocsTGSesRxAb7Q9i0uaqRkHZaN63ZV7//4HdSC6jCJ9no5NQMIv5
-         OI88EQkIRQQZvzlFKDi2BM2YVxlQKda8RhzKBVXIAAyIzZS4kjxaCXRBCtpw+ZHMk2CK
-         8NTQNZUOFHkPic/VmYk7Nn+lmHaZVT//Nz9gh13ZmiNASc/0CZlaeGY7MhOV3zdTK1b5
-         HODN+XAoO5iEJ7XvNo7kcp1Eh8SHY90w4kslLwgj4ql56DDv0MXLFscbfNAM7HuW92pP
-         +3Yw==
-X-Gm-Message-State: ALKqPwfT7iwUQGQ1o+ucVYkg2tmbXObp69FdRDzDsya5o7CvsV6V7azK
-        Ddbi8i5/7PTnSPPPuYa0Dvj1l4Fki05tBRXIjldRMzKJijWg+iA+BOjM3q8vBCg9GvfjH8+WCHw
-        tiNy6NSlV5mNik4gWIGQS9MYuhgWjFQ7Zfje10XJJLETnluwP1ZFFrFzyiw==
-X-Google-Smtp-Source: AB8JxZptXWhLp7gqRCKuIpag2HJ1cuYpZY1lBIdnL2JQDgwsSwNvm0icQXd1OjIZ9XejD+LsR5u8tVUEejk=
+        bh=oBvI7lBt/6A7GHGTnoV6oBVH8aJzea19xSVVlD1fa7Q=;
+        b=uZyXT7siGwd3kXPZtWtEzDfPJr2bPMsvJsbPr/RftQViCqX6jMD7Qpcb0bLADRvDvw
+         9ZrKdPQOP5j8mHmuotmJLSBi8PIrplM7hClcWDmI1NCYH66RlZkXTo4sypPDY8eeAuWO
+         TQ1EYfqo7e5qFkVKFl90dgksY7AYVD2QB3e/enOAS3wVimpzSVoOA6W8egN2Qa9hg901
+         LIcuEFfHKUqeCYbwjHUx10ittGsTlX2bROtBnM0j2py0DVLerCgG9VhBL/ppyU0M2cay
+         3SfGem0SkggUmnnrqYRWjutAR1iZZAteBmGoPgmgjwWxRp/s3ewcbAlk1bdrp2ovQOmZ
+         wioA==
+X-Gm-Message-State: ALKqPwdceFsFRaqMGZZS/Gz7hXRhsD+PjqNtqGZeDWeLwJs3x1umwJGd
+        WaQz+xXuFGoKR4Z8nMn6DTJ7wS3F5sQT8gAtmIbGDGI98KsQ4OusN4LHc4cQwahzr4/9Kkfh2jm
+        U1QjJ7iXLE8q2D4kCV1wNPYgl5fBLFNduTA6jQjw/BwQkXEtySSAog8vvnQ==
+X-Google-Smtp-Source: AB8JxZqM8vP9r0HuDRXC9ioSzZAFErMrmDIr17KSUGLTh/Y1OZLsI2SitxAGfAqTh+dFOs+eYt5lTSRFz+U=
 MIME-Version: 1.0
-X-Received: by 2002:a1f:9d03:: with SMTP id g3-v6mr2471036vke.0.1526511603290;
- Wed, 16 May 2018 16:00:03 -0700 (PDT)
-Date:   Wed, 16 May 2018 15:58:23 -0700
+X-Received: by 2002:a5b:2c6:: with SMTP id h6-v6mr956921ybp.16.1526511589299;
+ Wed, 16 May 2018 15:59:49 -0700 (PDT)
+Date:   Wed, 16 May 2018 15:58:17 -0700
 In-Reply-To: <20180516225823.235426-1-bmwill@google.com>
-Message-Id: <20180516225823.235426-37-bmwill@google.com>
+Message-Id: <20180516225823.235426-31-bmwill@google.com>
 References: <20180514215626.164960-1-bmwill@google.com> <20180516225823.235426-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH v2 36/36] submodule: convert push_unpushed_submodules to take
- a struct refspec
+Subject: [PATCH v2 30/36] transport: convert transport_push to take a struct refspec
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
         sbeller@google.com, bmwill@google.com
@@ -65,117 +64,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert 'push_unpushed_submodules()' to take a 'struct refspec' as a
-parameter instead of an array of 'const char *'.
+Convert 'transport_push()' to take a 'struct refspec' as a
+parameter instead of an array of strings which represent
+refspecs.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- submodule.c | 19 +++++++++----------
- submodule.h |  3 ++-
- transport.c |  2 +-
- 3 files changed, 12 insertions(+), 12 deletions(-)
+ builtin/push.c |  3 +--
+ transport.c    | 17 +++++++----------
+ transport.h    |  2 +-
+ 3 files changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index 74d35b257..cdeadd80e 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -968,7 +968,7 @@ int find_unpushed_submodules(struct oid_array *commits,
+diff --git a/builtin/push.c b/builtin/push.c
+index ef42979d1..9cd8e8cd5 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -355,8 +355,7 @@ static int push_with_options(struct transport *transport, struct refspec *rs,
  
- static int push_submodule(const char *path,
- 			  const struct remote *remote,
--			  const char **refspec, int refspec_nr,
-+			  const struct refspec *rs,
- 			  const struct string_list *push_options,
- 			  int dry_run)
- {
-@@ -991,8 +991,8 @@ static int push_submodule(const char *path,
- 		if (remote->origin != REMOTE_UNCONFIGURED) {
- 			int i;
- 			argv_array_push(&cp.args, remote->name);
--			for (i = 0; i < refspec_nr; i++)
--				argv_array_push(&cp.args, refspec[i]);
-+			for (i = 0; i < rs->raw_nr; i++)
-+				argv_array_push(&cp.args, rs->raw[i]);
- 		}
- 
- 		prepare_submodule_repo_env(&cp.env_array);
-@@ -1013,7 +1013,7 @@ static int push_submodule(const char *path,
-  */
- static void submodule_push_check(const char *path, const char *head,
- 				 const struct remote *remote,
--				 const char **refspec, int refspec_nr)
-+				 const struct refspec *rs)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	int i;
-@@ -1023,8 +1023,8 @@ static void submodule_push_check(const char *path, const char *head,
- 	argv_array_push(&cp.args, head);
- 	argv_array_push(&cp.args, remote->name);
- 
--	for (i = 0; i < refspec_nr; i++)
--		argv_array_push(&cp.args, refspec[i]);
-+	for (i = 0; i < rs->raw_nr; i++)
-+		argv_array_push(&cp.args, rs->raw[i]);
- 
- 	prepare_submodule_repo_env(&cp.env_array);
- 	cp.git_cmd = 1;
-@@ -1043,7 +1043,7 @@ static void submodule_push_check(const char *path, const char *head,
- 
- int push_unpushed_submodules(struct oid_array *commits,
- 			     const struct remote *remote,
--			     const char **refspec, int refspec_nr,
-+			     const struct refspec *rs,
- 			     const struct string_list *push_options,
- 			     int dry_run)
- {
-@@ -1069,8 +1069,7 @@ int push_unpushed_submodules(struct oid_array *commits,
- 
- 		for (i = 0; i < needs_pushing.nr; i++)
- 			submodule_push_check(needs_pushing.items[i].string,
--					     head, remote,
--					     refspec, refspec_nr);
-+					     head, remote, rs);
- 		free(head);
- 	}
- 
-@@ -1078,7 +1077,7 @@ int push_unpushed_submodules(struct oid_array *commits,
- 	for (i = 0; i < needs_pushing.nr; i++) {
- 		const char *path = needs_pushing.items[i].string;
- 		fprintf(stderr, "Pushing submodule '%s'\n", path);
--		if (!push_submodule(path, remote, refspec, refspec_nr,
-+		if (!push_submodule(path, remote, rs,
- 				    push_options, dry_run)) {
- 			fprintf(stderr, "Unable to push submodule '%s'\n", path);
- 			ret = 0;
-diff --git a/submodule.h b/submodule.h
-index e5526f6aa..aae0c9c8f 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -100,9 +100,10 @@ extern int submodule_touches_in_range(struct object_id *a,
- extern int find_unpushed_submodules(struct oid_array *commits,
- 				    const char *remotes_name,
- 				    struct string_list *needs_pushing);
-+struct refspec;
- extern int push_unpushed_submodules(struct oid_array *commits,
- 				    const struct remote *remote,
--				    const char **refspec, int refspec_nr,
-+				    const struct refspec *rs,
- 				    const struct string_list *push_options,
- 				    int dry_run);
- /*
+ 	if (verbosity > 0)
+ 		fprintf(stderr, _("Pushing to %s\n"), transport->url);
+-	err = transport_push(transport, rs->raw_nr, rs->raw, flags,
+-			     &reject_reasons);
++	err = transport_push(transport, rs, flags, &reject_reasons);
+ 	if (err != 0) {
+ 		fprintf(stderr, "%s", push_get_color(PUSH_COLOR_ERROR));
+ 		error(_("failed to push some refs to '%s'"), transport->url);
 diff --git a/transport.c b/transport.c
-index e32bc320c..7e0b9abba 100644
+index 181db4d4d..a89f17744 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -1157,7 +1157,7 @@ int transport_push(struct transport *transport,
+@@ -1093,11 +1093,11 @@ static int run_pre_push_hook(struct transport *transport,
+ }
+ 
+ int transport_push(struct transport *transport,
+-		   int refspec_nr, const char **refspec, int flags,
++		   struct refspec *rs, int flags,
+ 		   unsigned int *reject_reasons)
+ {
+ 	*reject_reasons = 0;
+-	transport_verify_remote_names(refspec_nr, refspec);
++	transport_verify_remote_names(rs->raw_nr, rs->raw);
+ 
+ 	if (transport_color_config() < 0)
+ 		return -1;
+@@ -1111,16 +1111,14 @@ int transport_push(struct transport *transport,
+ 		int porcelain = flags & TRANSPORT_PUSH_PORCELAIN;
+ 		int pretend = flags & TRANSPORT_PUSH_DRY_RUN;
+ 		int push_ret, ret, err;
+-		struct refspec tmp_rs = REFSPEC_INIT_PUSH;
+ 		struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
+ 		int i;
+ 
+-		if (check_push_refs(local_refs, refspec_nr, refspec) < 0)
++		if (check_push_refs(local_refs, rs->raw_nr, rs->raw) < 0)
+ 			return -1;
+ 
+-		refspec_appendn(&tmp_rs, refspec, refspec_nr);
+-		for (i = 0; i < tmp_rs.nr; i++) {
+-			const struct refspec_item *item = &tmp_rs.items[i];
++		for (i = 0; i < rs->nr; i++) {
++			const struct refspec_item *item = &rs->items[i];
+ 			const char *prefix = NULL;
+ 
+ 			if (item->dst)
+@@ -1143,7 +1141,6 @@ int transport_push(struct transport *transport,
+ 							       &ref_prefixes);
+ 
+ 		argv_array_clear(&ref_prefixes);
+-		refspec_clear(&tmp_rs);
+ 
+ 		if (flags & TRANSPORT_PUSH_ALL)
+ 			match_flags |= MATCH_REFS_ALL;
+@@ -1155,7 +1152,7 @@ int transport_push(struct transport *transport,
+ 			match_flags |= MATCH_REFS_FOLLOW_TAGS;
+ 
+ 		if (match_push_refs(local_refs, &remote_refs,
+-				    refspec_nr, refspec, match_flags)) {
++				    rs->raw_nr, rs->raw, match_flags)) {
+ 			return -1;
+ 		}
+ 
+@@ -1186,7 +1183,7 @@ int transport_push(struct transport *transport,
  
  			if (!push_unpushed_submodules(&commits,
  						      transport->remote,
--						      rs->raw, rs->raw_nr,
-+						      rs,
+-						      refspec, refspec_nr,
++						      rs->raw, rs->raw_nr,
  						      transport->push_options,
  						      pretend)) {
  				oid_array_clear(&commits);
+diff --git a/transport.h b/transport.h
+index e783cfa07..e2c809af4 100644
+--- a/transport.h
++++ b/transport.h
+@@ -197,7 +197,7 @@ void transport_set_verbosity(struct transport *transport, int verbosity,
+ #define REJECT_NEEDS_FORCE     0x10
+ 
+ int transport_push(struct transport *connection,
+-		   int refspec_nr, const char **refspec, int flags,
++		   struct refspec *rs, int flags,
+ 		   unsigned int * reject_reasons);
+ 
+ /*
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
