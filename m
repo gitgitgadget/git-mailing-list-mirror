@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00AEB1F406
-	for <e@80x24.org>; Wed, 16 May 2018 01:58:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92A5D1F406
+	for <e@80x24.org>; Wed, 16 May 2018 01:59:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752574AbeEPB6z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 21:58:55 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47432 "EHLO
+        id S1752591AbeEPB66 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 21:58:58 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47442 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752289AbeEPB6w (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:52 -0400
+        by vger.kernel.org with ESMTP id S1752535AbeEPB6y (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:54 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D8A0C6074A;
-        Wed, 16 May 2018 01:58:49 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 647A86074A;
+        Wed, 16 May 2018 01:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526435930;
-        bh=00NHiwA3V9AXjQzL1ROJt/TPi54L+pcIN8x/QSEaIH8=;
+        s=default; t=1526435933;
+        bh=b8Cmj3rpDBGYASOmH0kWFYygqK8O5kIz3q+5PI1NQZc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=JyKY4ynh+CUQ7XVA3kJ0dy5VIyVYCCI+lA1/05LtNfPgfxEpe3rTqWA0Xaov3hJdq
-         mb7/mKZQDuuePlDPAG+4Na4+w9PE9CJIDPBWhOwx6NfTXAuk8CbLVnQtOWj5nP9AG0
-         wvHMwNnANlzTiJvD6b7APKXvm3w5KslLz11nKsguQjZVByrG1vdxzZo0rpVtd7GQY1
-         avJvuL5+/e41OTqR1wH4BzFwgjebBdRXkwGBybHxbvDePin9hobpHKee/OhBhV2q+p
-         ayGAmJ6NY9MoWZni2PhbwAFtv8RWH9AzHLawPxlNqeJIAptHwKZa9uSl+8EMuVVBAK
-         u57epRQcMTBlWuMB3rTuzUHVsXpp/3e61i2mAtynYTGHAgg6QwbJoc4ojZCom4P/bF
-         zeVHq5iMPchRCZDzDsv+tWVIPC1v5rNWEG6zRflDzkwxpyKOmLzKC+HDs+/pfYbHxR
-         gzaE+9tDbsX50915iesgm/0+1zJsPiHv5f5M8himNUzM9IJNkda
+        b=sYEsEfAXdlmVpRG8DKGCDUDDKVaojifA8mwyEBwojLxRPPYPukrcVXlsgyMEI5ANa
+         GbBX87qxeiQto+x4oGuf+gFQ43mVuG0MoSoGj7QlwZrcldsjk4I3pnAGBGkCCMKH/y
+         bVEJhwkIgvee4Oj3yqsx/8kcqsLWtvQr6j478u1x7wdwSKJwf1ujYfZoEX8jlouhOy
+         vFHEiD7L/f5CuB80xPJe/skBvlBHtznAnYSkOPImIC/Fm0qNAK9g5oR0hRMlV3dva5
+         SRSLI3DnZELKpjhRiEK2FUNr6PJZonANyNwoOHkV+cdJCK6Ud7x/YgQNtm2Iv+7Nrg
+         ORhgnQXlF0Pz6Qs38FxMwDyL5Gt0OcjX6dW6kZpZ4Pe3Df0fm3VYbMIA3UdgfBgwXk
+         Hk7pAy/4uhIUKokZNN5a9sRMQH25lyB1sCni2cchg9zqVx6gkzsXefbwG/fKlaethh
+         CSAPtTzHDb8T4t2fsFdApaqSXaED2XwRhOsBeeirNtDgzDixqfN
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -43,9 +43,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 14/28] t3905: abstract away SHA-1-specific constants
-Date:   Wed, 16 May 2018 01:56:16 +0000
-Message-Id: <20180516015630.661349-15-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 17/28] t4014: abstract away SHA-1-specific constants
+Date:   Wed, 16 May 2018 01:56:19 +0000
+Message-Id: <20180516015630.661349-18-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180516015630.661349-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -55,58 +55,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for blobs instead of using
+Adjust the test so that it computes values for blobs instead of using
 hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t3905-stash-include-untracked.sh | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ t/t4014-format-patch.sh | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
-index 3ea5b9bb3f..597b0637d1 100755
---- a/t/t3905-stash-include-untracked.sh
-+++ b/t/t3905-stash-include-untracked.sh
-@@ -35,24 +35,26 @@ test_expect_success 'stash save --include-untracked cleaned the untracked files'
- 	test_cmp expect actual
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index dac3f349a3..349029f43b 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -578,7 +578,11 @@ test_expect_success 'excessive subject' '
+ 
+ 	rm -rf patches/ &&
+ 	git checkout side &&
++	before=$(git hash-object file) &&
++	before=$(git rev-parse --short $before) &&
+ 	for i in 5 6 1 2 3 A 4 B C 7 8 9 10 D E F; do echo "$i"; done >>file &&
++	after=$(git hash-object file) &&
++	after=$(git rev-parse --short $after) &&
+ 	git update-index file &&
+ 	git commit -m "This is an excessively long subject line for a message due to the habit some projects have of not having a short, one-line subject at the start of the commit message, but rather sticking a whole paragraph right at the start as the only thing in the commit message. It had better not become the filename for the patch." &&
+ 	git format-patch -o patches/ master..side &&
+@@ -586,7 +590,6 @@ test_expect_success 'excessive subject' '
  '
  
-+tracked=$(git rev-parse --short $(echo 1 | git hash-object --stdin))
-+untracked=$(git rev-parse --short $(echo untracked | git hash-object --stdin))
- cat > expect.diff <<EOF
- diff --git a/HEAD b/HEAD
- new file mode 100644
--index 0000000..d00491f
-+index 0000000..$tracked
- --- /dev/null
- +++ b/HEAD
- @@ -0,0 +1 @@
- +1
- diff --git a/file2 b/file2
- new file mode 100644
--index 0000000..d00491f
-+index 0000000..$tracked
- --- /dev/null
- +++ b/file2
- @@ -0,0 +1 @@
- +1
- diff --git a/untracked/untracked b/untracked/untracked
- new file mode 100644
--index 0000000..5a72eb2
-+index 0000000..$untracked
- --- /dev/null
- +++ b/untracked/untracked
- @@ -0,0 +1 @@
-@@ -109,10 +111,11 @@ test_expect_success 'stash save -u dirty index' '
- 	git stash -u
+ test_expect_success 'cover-letter inherits diff options' '
+-
+ 	git mv file foo &&
+ 	git commit -m foo &&
+ 	git format-patch --no-renames --cover-letter -1 &&
+@@ -616,7 +619,7 @@ test_expect_success 'shortlog of cover-letter wraps overly-long onelines' '
  '
  
-+blob=$(git rev-parse --short $(echo 4 | git hash-object --stdin))
- cat > expect <<EOF
- diff --git a/file3 b/file3
- new file mode 100644
--index 0000000..b8626c4
-+index 0000000..$blob
- --- /dev/null
- +++ b/file3
- @@ -0,0 +1 @@
+ cat > expect << EOF
+-index 40f36c6..2dc5c23 100644
++index $before..$after 100644
+ --- a/file
+ +++ b/file
+ @@ -13,4 +13,20 @@ C
+@@ -640,7 +643,7 @@ test_expect_success 'format-patch respects -U' '
+ cat > expect << EOF
+ 
+ diff --git a/file b/file
+-index 40f36c6..2dc5c23 100644
++index $before..$after 100644
+ --- a/file
+ +++ b/file
+ @@ -14,3 +14,19 @@ C
