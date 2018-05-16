@@ -2,137 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56FB41F406
-	for <e@80x24.org>; Wed, 16 May 2018 17:18:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55F6B1F406
+	for <e@80x24.org>; Wed, 16 May 2018 17:42:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751110AbeEPRSf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 13:18:35 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:40648 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750772AbeEPRSe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 13:18:34 -0400
-Received: by mail-yw0-f193.google.com with SMTP id p144-v6so464323ywg.7
-        for <git@vger.kernel.org>; Wed, 16 May 2018 10:18:34 -0700 (PDT)
+        id S1751098AbeEPRmB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 13:42:01 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:45650 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750778AbeEPRmA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 13:42:00 -0400
+Received: by mail-qk0-f195.google.com with SMTP id a8-v6so1337405qkj.12
+        for <git@vger.kernel.org>; Wed, 16 May 2018 10:41:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qZmziWWoHoaEGV7FBTtyGfniy7oMt1G2HAXbgL8Ilxc=;
-        b=mzD4fxk5x1kTOclER4HELVIdTOXxDHCfe408YeoNf2xaqUJX3kk9geyfL+y4mJ4fV6
-         TBlKX5zz2C888ZMPrUreOvNAup5HNfi/U55T/6Wt/BMWp2sSLdp0UAMYHlrbiMNxCEuy
-         MnG3xmj+1bsl5zjXZVrkOGjePBv7zo6u3WEIcgwvCFRAczGSX71Xn1c1viuICwx9J0XP
-         SYz2DTUwvVgCf3mOqDBFtVgD0xDmKds5NdM4CG+Srd9Z2DceX04+VGEAkvru7D2mgP2V
-         q3WsJ6e43iTZDMmC7//bTqTBxZJfZi4mXDoxcERugdVWkx4ICSG6+Q47whPr0BXmyPVy
-         DOmA==
+        d=linuxfoundation.org; s=google;
+        h=subject:to:cc:references:from:organization:message-id:date
+         :user-agent:mime-version:in-reply-to;
+        bh=aiHj3ldshb/pHcqws+2hiVyG8B/6Sivxbj/ubiweFoA=;
+        b=gH6MH5g87aVbGva7ttkdkhppBWL8T2VfW1gaK9b/4wkNVA/m4VN+GdsmXmEhiJU3RE
+         5cDSjgNW+GDLUgl4t4wm9aQoJC4283NnPSg6mJP/N2mGafYiT9sL2Flg4EigWNncGYzv
+         lvu3KuvLI76s8Hs1M+1nK7shD9/v15LgTEqn8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qZmziWWoHoaEGV7FBTtyGfniy7oMt1G2HAXbgL8Ilxc=;
-        b=Lu/+cFCCUyWIKf4HYA+xGOfQiOU9er4pc7ZEweN6dNq4lo5b3zXHC8uqsoxVyfI894
-         N9xRdBaT0Js+LSYy0eKElajQYTvO0uiblb9b5uj0UGcbsjqVlZejvnsE/gWE9WRXzBGi
-         XyFexlGGeAPuq0WEE8QeXEet8N10SfQICr9WL2JVhtsu4CdCD+iTFbHKWcFqxb8lKWDk
-         8vzXsJWsKtj/ZhoM6QVfu/yQ31RON/SufUjtGYB0rw32Hexy3zTJa6s3WAKaI42TWDnF
-         MotaqrbBi/PO/RWmVljkRd3HeyJrp7jucPZ2QEYhI8Mvy3rMWV002FZgBNNKFi1BCOXi
-         kMsw==
-X-Gm-Message-State: ALKqPwcwD2F23jx/UOjK6u7ODwq6vpSKvVQlT8Dc6F7EP7LdErD6eDr6
-        Hos1bDr/hpkVdedvheCX1shR6nAYv7fGjE/pj00f5w==
-X-Google-Smtp-Source: AB8JxZpV4AFurkjrN2pTb1hCzFeho7F1R0Tbm4Ns1+8BdOlAyU9frco6CqqUhbdiEx5A7nPuVPrddl4UEBNA4GX7WBo=
-X-Received: by 2002:a81:37ce:: with SMTP id e197-v6mr958569ywa.340.1526491113614;
- Wed, 16 May 2018 10:18:33 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:organization
+         :message-id:date:user-agent:mime-version:in-reply-to;
+        bh=aiHj3ldshb/pHcqws+2hiVyG8B/6Sivxbj/ubiweFoA=;
+        b=LkCPqEmd/FoDphHgOcOIUy/nauEJlLBPP4vX/o9Tjp2wYaZbdddAcceH22DnZplTB6
+         jywCtIU7GrZKHfozT10dp7xu6RJrlNDj4TiclIdULqME/RR6yjumyXkaFufnZr1NIPTV
+         a3iqyfntV2NvQdt3jAl1TLBBXORb4hTgKLH6OJeSyMqy0k3oqHJqKCjig8GLnqWmDneb
+         r8j2DEkQ1d5guqqK3F/kfZ0WDcE/HTUJqgpv82Pmvl9z2SpSQEFjIs7Aumk42UMJwrFe
+         6qlYyA4m4jxAAqAhEK7iJ9wPFRdKvCINfSDsy74FRzpOOIOJbF3UXiLqTNWVEQd5BD+2
+         ZOEg==
+X-Gm-Message-State: ALKqPwe+BVlU4otmeap4Qy8RQqfmkiuHS2d7DOR/f87PyV8KVwNgplEL
+        3FR1e7Coys4lPVNdWK3DYOC7IQ==
+X-Google-Smtp-Source: AB8JxZqPjLh5zpUKQR4XVMuekYDW9c0e/LBEdQATJoD7pYB2XgqCX35nfsPIvOzlvkB0tBkucCZb1g==
+X-Received: by 2002:a37:14e8:: with SMTP id 101-v6mr1835201qku.243.1526492519156;
+        Wed, 16 May 2018 10:41:59 -0700 (PDT)
+Received: from [10.137.0.22] (ca2x.mullvad.net. [162.219.176.251])
+        by smtp.gmail.com with ESMTPSA id o14-v6sm2576341qta.23.2018.05.16.10.41.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 16 May 2018 10:41:58 -0700 (PDT)
+Subject: Re: worktrees vs. alternates
+To:     Martin Fick <mfick@codeaurora.org>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>
+References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com>
+ <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com>
+ <0f19f9f8-d215-622e-5090-1341c013babc@linuxfoundation.org>
+ <5972145.OdP4kjFpBj@mfick-lnx>
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Organization: The Linux Foundation
+Message-ID: <099ff2bf-c0f8-60fc-7833-9b129dd4dffe@linuxfoundation.org>
+Date:   Wed, 16 May 2018 13:41:55 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Wed, 16 May 2018 10:18:33
- -0700 (PDT)
-In-Reply-To: <20180516015630.661349-14-sandals@crustytoothpaste.net>
-References: <20180516015630.661349-1-sandals@crustytoothpaste.net> <20180516015630.661349-14-sandals@crustytoothpaste.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 16 May 2018 10:18:33 -0700
-Message-ID: <CAGZ79kYrDDGtSSViUwqOaJCTUUcUaiJe1DQHGSqS+3SCYnEv8g@mail.gmail.com>
-Subject: Re: [PATCH v3 13/28] t3702: abstract away SHA-1-specific constants
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <5972145.OdP4kjFpBj@mfick-lnx>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="d4XntEVUqLxFaiTVdpiwHBU2VdRY86zqp"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 15, 2018 at 6:56 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> Strip out the index lines in the diff before comparing them, as these
-> will differ between hash algorithms.  This leads to a smaller, simpler
-> change than editing the index line.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  t/t3702-add-edit.sh | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
->
-> diff --git a/t/t3702-add-edit.sh b/t/t3702-add-edit.sh
-> index 3cb74ca296..1be5cd5756 100755
-> --- a/t/t3702-add-edit.sh
-> +++ b/t/t3702-add-edit.sh
-> @@ -40,7 +40,6 @@ test_expect_success 'setup' '
->
->  cat > expected-patch << EOF
->  diff --git a/file b/file
-> -index b9834b5..9020acb 100644
->  --- a/file
->  +++ b/file
->  @@ -1,11 +1,6 @@
-> @@ -80,7 +79,6 @@ EOF
->
->  cat > expected << EOF
->  diff --git a/file b/file
-> -index b9834b5..ef6e94c 100644
->  --- a/file
->  +++ b/file
->  @@ -1,10 +1,12 @@
-> @@ -100,7 +98,7 @@ EOF
->
->  echo "#!$SHELL_PATH" >fake-editor.sh
->  cat >> fake-editor.sh <<\EOF
-> -mv -f "$1" orig-patch &&
-> +egrep -v '^index' "$1" >orig-patch &&
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--d4XntEVUqLxFaiTVdpiwHBU2VdRY86zqp
+Content-Type: multipart/mixed; boundary="1PHPHRxHHcH9oPm1FlEGm8auosDzjaWnb";
+ protected-headers="v1"
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Martin Fick <mfick@codeaurora.org>
+Cc: Derrick Stolee <stolee@gmail.com>,
+ =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+ Lars Schneider <larsxschneider@gmail.com>, git <git@vger.kernel.org>,
+ Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+Message-ID: <099ff2bf-c0f8-60fc-7833-9b129dd4dffe@linuxfoundation.org>
+Subject: Re: worktrees vs. alternates
+References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com>
+ <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com>
+ <0f19f9f8-d215-622e-5090-1341c013babc@linuxfoundation.org>
+ <5972145.OdP4kjFpBj@mfick-lnx>
+In-Reply-To: <5972145.OdP4kjFpBj@mfick-lnx>
 
-This reminds me of the way we test alot of the patch format already.
-But there we use standard grep as opposed to egrep.
+--1PHPHRxHHcH9oPm1FlEGm8auosDzjaWnb
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-CA
+Content-Transfer-Encoding: quoted-printable
 
-git grep egrep doesn't show a lot of hits, but all commits
-that mention egrep found via 'git log --grep egrep' mention
-that there is some sort of portability issue for using egrep
-specifically.
+On 05/16/18 13:14, Martin Fick wrote:
+> On Wednesday, May 16, 2018 10:58:19 AM Konstantin Ryabitsev=20
+> wrote:
+>>
+>> 1. Find every repo mentioning the parent repository in
+>> their alternates 2. Repack them without the -l switch
+>> (which copies all the borrowed objects into those repos)
+>> 3. Once all child repos have been repacked this way, prune
+>> the parent repo (it's safe now)
+>=20
+> This is probably only true if the repos are in read-only=20
+> mode?  I suspect this is still racy on a busy server with no=20
+> downtime.
 
-Is the ^index a problem for standard grep, i.e. do we need to fix
-other places?
+We don't actually do this anywhere. :) It's a feature I keep hoping to
+add one day to grokmirror, but keep putting off because of various
+considerations. As you can imagine, if we have 300 forks of linux.git
+all using torvalds/linux.git as their alternates, then repacking them
+all without -l would balloon our disk usage 300-fold. At this time it's
+just cheaper to keep a bunch of loose objects around forever at the cost
+of decreased performance.
 
-$ git grep -- "-v index"
-t4061-diff-indent.sh:318:       grep -v index out-diff-files-raw
->out-diff-files-compacted &&
-t4061-diff-indent.sh:327:       grep -v index out-diff-files-raw2
->out-diff-files-compacted2 &&
-t4061-diff-indent.sh:336:       grep -v index out-diff-files-raw
->out-diff-files &&
-t4061-diff-indent.sh:345:       grep -v index out-diff-files-raw2
->out-diff-files &&
-t4061-diff-indent.sh:354:       grep -v index out-diff-files-raw3
->out-diff-files-compacted &&
-t4061-diff-indent.sh:363:       grep -v index out-diff-files-raw4
->out-diff-files &&
+Maybe git-repack can be told to only borrow parent objects if they are
+in packs. Anything not in packs should be hardlinked into the child
+repo. That's my wishful think for the day. :)
 
-The commit message seems to be the same at most of the patches
-in this series, which makes sense, but a mention regarding the choice of
-grep would be appreciated!
+Best,
+--=20
+Konstantin Ryabitsev
+Director, IT Infrastructure Security
+The Linux Foundation
 
-Thanks,
-Stefan
+
+--1PHPHRxHHcH9oPm1FlEGm8auosDzjaWnb--
+
+--d4XntEVUqLxFaiTVdpiwHBU2VdRY86zqp
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCWvxtYwAKCRC2xBzjVmSZ
+bK6HAQCJLiHwq/Kxfc0bn84hF5OnSWl6vmQFa4MHK0gwnAor5AD9G7X8zeE/7Rcp
+sWgXfO30BPsqQCMKVMtbFTNzsetkaQc=
+=m/Rc
+-----END PGP SIGNATURE-----
+
+--d4XntEVUqLxFaiTVdpiwHBU2VdRY86zqp--
