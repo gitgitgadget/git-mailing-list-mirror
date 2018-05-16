@@ -2,107 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03A1C1F406
-	for <e@80x24.org>; Wed, 16 May 2018 17:14:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56FB41F406
+	for <e@80x24.org>; Wed, 16 May 2018 17:18:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750950AbeEPROt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 13:14:49 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:42270 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750846AbeEPROs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 13:14:48 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id AE58B60A00; Wed, 16 May 2018 17:14:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1526490887;
-        bh=4D6v8FdHe82UrYzvfwoskP5UgdRC614X4/imgeewunY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SFrcQJESsQwKMwmiYK6QcBXZAoonzWFafJ+GFPyTvIEtWv8AsGBSxcHEmQmOUcTPY
-         nyoNVR9Hq3kVv4SxK9GHTPOqrkV/kNivZzin+4z9asACnpm96tfd3r4h69ISEHE0qy
-         X966zGRSJF79kHbZC6Bwc0vNU56nb7Rgj7LUZTN8=
-Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mfick@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 17BF960209;
-        Wed, 16 May 2018 17:14:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1526490887;
-        bh=4D6v8FdHe82UrYzvfwoskP5UgdRC614X4/imgeewunY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SFrcQJESsQwKMwmiYK6QcBXZAoonzWFafJ+GFPyTvIEtWv8AsGBSxcHEmQmOUcTPY
-         nyoNVR9Hq3kVv4SxK9GHTPOqrkV/kNivZzin+4z9asACnpm96tfd3r4h69ISEHE0qy
-         X966zGRSJF79kHbZC6Bwc0vNU56nb7Rgj7LUZTN8=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 17BF960209
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: worktrees vs. alternates
-Date:   Wed, 16 May 2018 11:14:44 -0600
-Message-ID: <5972145.OdP4kjFpBj@mfick-lnx>
-User-Agent: KMail/4.13.3 (Linux/3.13.0-144-generic; KDE/4.13.3; x86_64; ; )
-In-Reply-To: <0f19f9f8-d215-622e-5090-1341c013babc@linuxfoundation.org>
-References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com> <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com> <0f19f9f8-d215-622e-5090-1341c013babc@linuxfoundation.org>
+        id S1751110AbeEPRSf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 13:18:35 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:40648 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750772AbeEPRSe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 13:18:34 -0400
+Received: by mail-yw0-f193.google.com with SMTP id p144-v6so464323ywg.7
+        for <git@vger.kernel.org>; Wed, 16 May 2018 10:18:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=qZmziWWoHoaEGV7FBTtyGfniy7oMt1G2HAXbgL8Ilxc=;
+        b=mzD4fxk5x1kTOclER4HELVIdTOXxDHCfe408YeoNf2xaqUJX3kk9geyfL+y4mJ4fV6
+         TBlKX5zz2C888ZMPrUreOvNAup5HNfi/U55T/6Wt/BMWp2sSLdp0UAMYHlrbiMNxCEuy
+         MnG3xmj+1bsl5zjXZVrkOGjePBv7zo6u3WEIcgwvCFRAczGSX71Xn1c1viuICwx9J0XP
+         SYz2DTUwvVgCf3mOqDBFtVgD0xDmKds5NdM4CG+Srd9Z2DceX04+VGEAkvru7D2mgP2V
+         q3WsJ6e43iTZDMmC7//bTqTBxZJfZi4mXDoxcERugdVWkx4ICSG6+Q47whPr0BXmyPVy
+         DOmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=qZmziWWoHoaEGV7FBTtyGfniy7oMt1G2HAXbgL8Ilxc=;
+        b=Lu/+cFCCUyWIKf4HYA+xGOfQiOU9er4pc7ZEweN6dNq4lo5b3zXHC8uqsoxVyfI894
+         N9xRdBaT0Js+LSYy0eKElajQYTvO0uiblb9b5uj0UGcbsjqVlZejvnsE/gWE9WRXzBGi
+         XyFexlGGeAPuq0WEE8QeXEet8N10SfQICr9WL2JVhtsu4CdCD+iTFbHKWcFqxb8lKWDk
+         8vzXsJWsKtj/ZhoM6QVfu/yQ31RON/SufUjtGYB0rw32Hexy3zTJa6s3WAKaI42TWDnF
+         MotaqrbBi/PO/RWmVljkRd3HeyJrp7jucPZ2QEYhI8Mvy3rMWV002FZgBNNKFi1BCOXi
+         kMsw==
+X-Gm-Message-State: ALKqPwcwD2F23jx/UOjK6u7ODwq6vpSKvVQlT8Dc6F7EP7LdErD6eDr6
+        Hos1bDr/hpkVdedvheCX1shR6nAYv7fGjE/pj00f5w==
+X-Google-Smtp-Source: AB8JxZpV4AFurkjrN2pTb1hCzFeho7F1R0Tbm4Ns1+8BdOlAyU9frco6CqqUhbdiEx5A7nPuVPrddl4UEBNA4GX7WBo=
+X-Received: by 2002:a81:37ce:: with SMTP id e197-v6mr958569ywa.340.1526491113614;
+ Wed, 16 May 2018 10:18:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Wed, 16 May 2018 10:18:33
+ -0700 (PDT)
+In-Reply-To: <20180516015630.661349-14-sandals@crustytoothpaste.net>
+References: <20180516015630.661349-1-sandals@crustytoothpaste.net> <20180516015630.661349-14-sandals@crustytoothpaste.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 16 May 2018 10:18:33 -0700
+Message-ID: <CAGZ79kYrDDGtSSViUwqOaJCTUUcUaiJe1DQHGSqS+3SCYnEv8g@mail.gmail.com>
+Subject: Re: [PATCH v3 13/28] t3702: abstract away SHA-1-specific constants
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday, May 16, 2018 10:58:19 AM Konstantin Ryabitsev 
-wrote:
-> 
-> 1. Find every repo mentioning the parent repository in
-> their alternates 2. Repack them without the -l switch
-> (which copies all the borrowed objects into those repos)
-> 3. Once all child repos have been repacked this way, prune
-> the parent repo (it's safe now)
+On Tue, May 15, 2018 at 6:56 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> Strip out the index lines in the diff before comparing them, as these
+> will differ between hash algorithms.  This leads to a smaller, simpler
+> change than editing the index line.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  t/t3702-add-edit.sh | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t3702-add-edit.sh b/t/t3702-add-edit.sh
+> index 3cb74ca296..1be5cd5756 100755
+> --- a/t/t3702-add-edit.sh
+> +++ b/t/t3702-add-edit.sh
+> @@ -40,7 +40,6 @@ test_expect_success 'setup' '
+>
+>  cat > expected-patch << EOF
+>  diff --git a/file b/file
+> -index b9834b5..9020acb 100644
+>  --- a/file
+>  +++ b/file
+>  @@ -1,11 +1,6 @@
+> @@ -80,7 +79,6 @@ EOF
+>
+>  cat > expected << EOF
+>  diff --git a/file b/file
+> -index b9834b5..ef6e94c 100644
+>  --- a/file
+>  +++ b/file
+>  @@ -1,10 +1,12 @@
+> @@ -100,7 +98,7 @@ EOF
+>
+>  echo "#!$SHELL_PATH" >fake-editor.sh
+>  cat >> fake-editor.sh <<\EOF
+> -mv -f "$1" orig-patch &&
+> +egrep -v '^index' "$1" >orig-patch &&
 
-This is probably only true if the repos are in read-only 
-mode?  I suspect this is still racy on a busy server with no 
-downtime.
+This reminds me of the way we test alot of the patch format already.
+But there we use standard grep as opposed to egrep.
 
-> 4. Repack child repos again, this time with the -l flag,
-> to get your savings back.
- 
-> I would heartily love a way to teach git-repack to
-> recognize when an object it's borrowing from the parent
-> repo is in danger of being pruned. The cheapest way of
-> doing this would probably be to hardlink loose objects
-> into its own objects directory and only consider "safe"
-> objects those that are part of the parent repository's
-> pack. This should make alternates a lot safer, just in
-> case git-prune happens to run by accident.
+git grep egrep doesn't show a lot of hits, but all commits
+that mention egrep found via 'git log --grep egrep' mention
+that there is some sort of portability issue for using egrep
+specifically.
 
-I think that hard linking is generally a good approach to 
-solving many of the "pruning" races left in git.
+Is the ^index a problem for standard grep, i.e. do we need to fix
+other places?
 
-I have uploaded a "hard linking" proposal to jgit that could 
-potentially solve a similar situation that is not alternate 
-specific, and only for packfiles, with the intent of 
-eventually also doing something similar for loose 
-objects.  You can see this here: 
+$ git grep -- "-v index"
+t4061-diff-indent.sh:318:       grep -v index out-diff-files-raw
+>out-diff-files-compacted &&
+t4061-diff-indent.sh:327:       grep -v index out-diff-files-raw2
+>out-diff-files-compacted2 &&
+t4061-diff-indent.sh:336:       grep -v index out-diff-files-raw
+>out-diff-files &&
+t4061-diff-indent.sh:345:       grep -v index out-diff-files-raw2
+>out-diff-files &&
+t4061-diff-indent.sh:354:       grep -v index out-diff-files-raw3
+>out-diff-files-compacted &&
+t4061-diff-indent.sh:363:       grep -v index out-diff-files-raw4
+>out-diff-files &&
 
-https://git.eclipse.org/r/c/122288/2
+The commit message seems to be the same at most of the patches
+in this series, which makes sense, but a mention regarding the choice of
+grep would be appreciated!
 
-I think it would be good to fill in more of these pruning 
-gaps!
-
--Martin
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
+Thanks,
+Stefan
