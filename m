@@ -2,118 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	URIBL_BLACK shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCEA81F406
-	for <e@80x24.org>; Wed, 16 May 2018 03:41:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C49AF1F42D
+	for <e@80x24.org>; Wed, 16 May 2018 08:14:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752015AbeEPDln (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 23:41:43 -0400
-Received: from bmmpf2704.jpx1.emsaqua.jp ([106.185.82.118]:39971 "EHLO
-        bmmpf2704.jpx1.emsaqua.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751182AbeEPDlm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 23:41:42 -0400
-X-Greylist: delayed 1201 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 May 2018 23:41:42 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1526442102;
-        s=mpse.201103; d=rxjp006.dkim.mpse.jp;
-        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=CoSs60Z3YSUe5iN3MR2F2YBRHGPJY5Upk980rsSD9zE=;
-        b=QIBjc9bnqi9rfW3n3TWMatK6KHywshMqQA0/jN4ot00Ui4dgHFGl49Hb4L/prOf3
-        NotTLSzKxkp3cOOXgM/SR/C0ewgkZXMxebGbFdak4EriAd0GNueZ7hu5rmjENyDNfr9
-        MWP2Kx0XjMIvGUYAR4TZlm8vDa8IrMGKvMkGRz2A=
-Date:   Wed, 16 May 2018 12:21:16 +0900 (JST)
-From:   Eiichi Hasegawa LIFESTYLE EXPO TOKYO Show Management 
-        <lifestyle-eng@lifestyle-expo.jp>
-Reply-To: lifestyle-eng@reedexpo.co.jp
-To:     git@vger.kernel.org
-Message-Id: <1526440876313.2018100108.rxjp006.0.14802.00000000@ad145se.mpse.jp>
-Subject: [FINAL CALL] Only a few booths left at LIFESTYLE EXPO TOKYO 2018
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        id S1752400AbeEPIOG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 04:14:06 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38129 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751285AbeEPIOD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 04:14:03 -0400
+Received: by mail-wm0-f52.google.com with SMTP id m129-v6so5765183wmb.3
+        for <git@vger.kernel.org>; Wed, 16 May 2018 01:14:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:subject:date:message-id:cc:to
+         :mime-version;
+        bh=QxKbsEoJRTPQIRNOFQKGcpnA4LZbHtHaMOqL/Rbz6VU=;
+        b=Muo2Xq5+BHVQMVYqbojrliK0NZvEawkHM06EvrKt/13GWTpZDx6GR4UvM4t0LX/TAI
+         Y+ymfu4gz5sx+sv2PKvqyS5Ht9fV+ksKlWnhy50XgzpRqeV0JoqU+x1grBD0LWCULDTu
+         Rw4XhZWOksng2voVOIf1wlBQGQIHNiA5QONvgznNveKyiPTyEOprZNA4h6zhwZNy0WSD
+         SH/LJPpolC1mqgRFgk9UjGKqzskRXQhCuSxlqSIUegiuZB9DMgpLMYbKL6eI9D27fWXJ
+         2yhIUHIGxU8l6fPKpkTDWC6EXeNRF2+pbKI1nWh7dVdGRKXzIGbjLXW4xcPi93588H8u
+         Ziow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:subject:date
+         :message-id:cc:to:mime-version;
+        bh=QxKbsEoJRTPQIRNOFQKGcpnA4LZbHtHaMOqL/Rbz6VU=;
+        b=NO6yTKRFxT6S2f2PGeTZEGB29Lh/HpoMGgSLVzpbeVZlXTcCP1UOVH347l+dAPrmIx
+         G7pVYcHK2nlkqA10poDnOae8k2hCoV7ODicY1/VsUL+luCZOBMJX4luQfGuxnddw7yfL
+         U0BELHsCKX7u/OGAEHsBEV4CBRD6ZBmejx3PTNPJ3SuMwDVUdZxf1R2PmPAi7kwPCGT7
+         ugSQgOb3z++ooD8CMsoZPJUaXflUmFCfpue228DAPO/rOEt+b4v6sXjQVXDAx2A0NocM
+         v04j/ndc7kyvioL1H4gcO7LN7yr66fXxPsp0+0k5CL4lnRqg5V3lAUnP3hw4dY+0rL1Y
+         uohA==
+X-Gm-Message-State: ALKqPwe+WcnHZpDrpNm0Co/Jm6QosINSvurU2Gk2GUL/LQIlak4g1tCD
+        KnVvCIO3p1b917H4AQ0/wP8uVAXF
+X-Google-Smtp-Source: AB8JxZpXdLyq7iNiVkxCOf7prV4L0mGyjoMJuZ25Tb1FMKfxgx4pHMHuOk+boewN3cyEd7LbuhhXlA==
+X-Received: by 2002:a1c:6d5a:: with SMTP id i87-v6mr839417wmc.12.1526458442021;
+        Wed, 16 May 2018 01:14:02 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB4199.dip0.t-ipconnect.de. [93.219.65.153])
+        by smtp.gmail.com with ESMTPSA id u37-v6sm1867144wrb.53.2018.05.16.01.14.00
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 16 May 2018 01:14:01 -0700 (PDT)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Subject: worktrees vs. alternates
+Date:   Wed, 16 May 2018 10:13:59 +0200
+Message-Id: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+To:     git <git@vger.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear International Sales & Marketing Director,
-Zhejiang Wuchuan Industrial Co., Ltd
+Hi,
 
-Hello, this is Eiichi Hasegawa from LIFESTYLE EXPO TOKYO (formerly GIFTEX) Show Management, Reed Exhibitions Japan Ltd.
+I am looking into different options to cache Git repositories on build
+machines. The two most promising ways seem to be git-worktree [1] and
+git-alternates [2].
 
-<<FINAL CALL for Exhibiting>>
-LIFESTYLE EXPO TOKYO 2018 July is coming in 2 months. 
-We have been receiving many exhibiting applications from both repeaters and new comers, and available booth locations are very limited.
-If you are interested in expanding your business, we strongly recommend you to book your booth NOW!
+I wonder if you see an advantage of one over the other?=20
 
-  
-Exhibit Profile:
- - Interior accessories, Furniture
- - Tableware, Kitchenware
- - Baby and Kids products
- - Bath and Beauty products
- - Design products
- - Fashion accessories  etc.
+My impression is that git-worktree supersedes git-alternates. Would
+that be a fair statement? If yes, would it makes sense to deprecate
+alternates for simplification?
 
-For more information, please kindly fill in the following REPLY FORM and reply back.
-========================================================
-REPLY FORM
-========================================================
-[  ] Send more exhibiting information:
-	(  ) Cost Estimate - About (  ) sqm
-	(  ) Available Booth Locations
-	(  ) Information on the Packaged Booths
-	(  ) Price List
-	(  ) Visitors List
-
-Name:
-Company: 
-Title / Div.:
-Country:
-TEL#:
-Company Website:
-------------------------------------------------------------------------
-
-We look forward to hearing from you.
+Thanks,
+Lars
 
 
-Best regards, 
-
-
-Eiichi Hasegawa (Mr.), Chisato Miyawaki (Ms.), Mikako Shimada (Ms.)
-Qu Jun (Mr.), Choi Ilyong (Mr.)
-LIFESTYLE EXPO TOKYO Show Management
-Reed Exhibitions Japan Ltd.
-TEL: +81-3-3349-8505
-WEB: http://www.lifestyle-expo.jp/en/summer/
-mailto:lifestyle-eng@reedexpo.co.jp
-
-========================================================================
-LIFESTYLE EXPO TOKYO 2018
-http://www.lifestyle-expo.jp/en/summer/
-
-Dates: July 4 - 6, 2018
-Venue: Tokyo Big Sight, Japan
-Organised by: Reed Exhibitions Japan Ltd.
-========================================================================
-ID: E36-G1402-0075
-
-
-
-
-
-
-
-
-This message is delivered to you to provide details of exhibitions and conferences organised, co-organised, or managed by Reed Exhibitions Japan Ltd.
-If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
-
-<Update contact information>
-Please click the URL below and follow the directions on the website to update your e-mail and other information.
-https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
-
-<Remove from list>
-Please reply to this mail changing the subject to "Remove from list".
-You will not receive any further information on this exhibition/conference.
+[1] https://git-scm.com/docs/git-worktree
+[2] =
+https://git-scm.com/docs/gitrepository-layout#gitrepository-layout-objects=
+infoalternates=
