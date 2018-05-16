@@ -2,146 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55F6B1F406
-	for <e@80x24.org>; Wed, 16 May 2018 17:42:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39DDC1F406
+	for <e@80x24.org>; Wed, 16 May 2018 17:54:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751098AbeEPRmB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 13:42:01 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:45650 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750778AbeEPRmA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 13:42:00 -0400
-Received: by mail-qk0-f195.google.com with SMTP id a8-v6so1337405qkj.12
-        for <git@vger.kernel.org>; Wed, 16 May 2018 10:41:59 -0700 (PDT)
+        id S1751642AbeEPRyo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 13:54:44 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:39784 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751468AbeEPRyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 13:54:43 -0400
+Received: by mail-wm0-f68.google.com with SMTP id f8-v6so3837404wmc.4
+        for <git@vger.kernel.org>; Wed, 16 May 2018 10:54:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=subject:to:cc:references:from:organization:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=aiHj3ldshb/pHcqws+2hiVyG8B/6Sivxbj/ubiweFoA=;
-        b=gH6MH5g87aVbGva7ttkdkhppBWL8T2VfW1gaK9b/4wkNVA/m4VN+GdsmXmEhiJU3RE
-         5cDSjgNW+GDLUgl4t4wm9aQoJC4283NnPSg6mJP/N2mGafYiT9sL2Flg4EigWNncGYzv
-         lvu3KuvLI76s8Hs1M+1nK7shD9/v15LgTEqn8=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=VvioFjetXeDFs/aZWmFfLXCIXgfKWvMKnFw5Xvfj13I=;
+        b=UgkdZMPjL0hPlna+JWbJe0zC983639qYrMSs8hPyNTKp0GvuFIdeljCac5vYBmIM+X
+         9YJkFkuc8LhYdKOKCnrmtrK0gosf89moGbcicHfavHyoPV4Zoq/o/vzP702SLry+xEpS
+         coU6QcllHI2Wd2AnJRpAhu9iDHwWZw1S8E4URhJyJB2rDpr53whftDGtJDF2FR3mSgrU
+         UzYcEkeCg43xYVwIaBKTqhnx96/A+kxZ8KCmxYh7AQ9yH8PhjZwz5zNjCfrFU71697EX
+         +xpEDhbiUEoegPzmr4t4T/SJPbu4Uf6P9i14kQTz5xU24ubAYROnzNWc7mzLmZNgoY2L
+         ipwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:organization
-         :message-id:date:user-agent:mime-version:in-reply-to;
-        bh=aiHj3ldshb/pHcqws+2hiVyG8B/6Sivxbj/ubiweFoA=;
-        b=LkCPqEmd/FoDphHgOcOIUy/nauEJlLBPP4vX/o9Tjp2wYaZbdddAcceH22DnZplTB6
-         jywCtIU7GrZKHfozT10dp7xu6RJrlNDj4TiclIdULqME/RR6yjumyXkaFufnZr1NIPTV
-         a3iqyfntV2NvQdt3jAl1TLBBXORb4hTgKLH6OJeSyMqy0k3oqHJqKCjig8GLnqWmDneb
-         r8j2DEkQ1d5guqqK3F/kfZ0WDcE/HTUJqgpv82Pmvl9z2SpSQEFjIs7Aumk42UMJwrFe
-         6qlYyA4m4jxAAqAhEK7iJ9wPFRdKvCINfSDsy74FRzpOOIOJbF3UXiLqTNWVEQd5BD+2
-         ZOEg==
-X-Gm-Message-State: ALKqPwe+BVlU4otmeap4Qy8RQqfmkiuHS2d7DOR/f87PyV8KVwNgplEL
-        3FR1e7Coys4lPVNdWK3DYOC7IQ==
-X-Google-Smtp-Source: AB8JxZqPjLh5zpUKQR4XVMuekYDW9c0e/LBEdQATJoD7pYB2XgqCX35nfsPIvOzlvkB0tBkucCZb1g==
-X-Received: by 2002:a37:14e8:: with SMTP id 101-v6mr1835201qku.243.1526492519156;
-        Wed, 16 May 2018 10:41:59 -0700 (PDT)
-Received: from [10.137.0.22] (ca2x.mullvad.net. [162.219.176.251])
-        by smtp.gmail.com with ESMTPSA id o14-v6sm2576341qta.23.2018.05.16.10.41.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 May 2018 10:41:58 -0700 (PDT)
-Subject: Re: worktrees vs. alternates
-To:     Martin Fick <mfick@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=VvioFjetXeDFs/aZWmFfLXCIXgfKWvMKnFw5Xvfj13I=;
+        b=ZGwFMoc48lFPNFvre4ZoFNvVdFAmhoD/yMhCE9LALOH3lgvkskYSPi1zWj3Xh5frn1
+         635z7c6oj6Dk1w4uq64gkLdfVoe7yzg+E8KC4K6QVqHiwtRVib++zRQqGqB6Yhbsc7p9
+         4xFtcS1G72LK327aUNwABuq+cvkhkQYxKphNX6A5/0EK7RPGxNENLUQ/+HAjz7E9n5ue
+         bM9o0V1ORGUj0leIxCw09eo2D+3OmypsYk7IU3Cl8RovhWlP/rFqTUJQy/yx55i43xmW
+         OeuhipbLc9nvW3ej/oFySw3FplBsDV4TLJqDm2Fe8Exrr4gB4UfsFoBJX+VNJFpgfyrx
+         To6w==
+X-Gm-Message-State: ALKqPwecjSzVX7U9Bm+IZAt0ZvOteBhRqxp+0OWIVlD/Kc14Fmq4DOc9
+        fv3g5Ewu4lL26QXcuYOWPjM=
+X-Google-Smtp-Source: AB8JxZrRYt8ereg+7fZedxGGmU/Sf+5cXQIbXQ2nfpCXbx9N9xjlB6EyGvbRbSPxlH9C3hYvZuP8lw==
+X-Received: by 2002:aa7:c6d0:: with SMTP id b16-v6mr2402126eds.302.1526493282115;
+        Wed, 16 May 2018 10:54:42 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id e6-v6sm1528942edr.23.2018.05.16.10.54.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 16 May 2018 10:54:41 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc:     Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>
+Subject: Re: worktrees vs. alternates
 References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com>
- <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com>
- <0f19f9f8-d215-622e-5090-1341c013babc@linuxfoundation.org>
- <5972145.OdP4kjFpBj@mfick-lnx>
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Organization: The Linux Foundation
-Message-ID: <099ff2bf-c0f8-60fc-7833-9b129dd4dffe@linuxfoundation.org>
-Date:   Wed, 16 May 2018 13:41:55 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        <87po1waqyc.fsf@evledraar.gmail.com>
+        <81B00B00-00F4-487A-9D3E-6B7514098B29@gmail.com>
+        <87muwzc2kv.fsf@evledraar.gmail.com>
+        <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com>
+        <0f19f9f8-d215-622e-5090-1341c013babc@linuxfoundation.org>
+        <87k1s3bomt.fsf@evledraar.gmail.com> <20180516154935.GA9712@chatter>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180516154935.GA9712@chatter>
+Date:   Wed, 16 May 2018 19:54:40 +0200
+Message-ID: <87in7nbi5b.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <5972145.OdP4kjFpBj@mfick-lnx>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="d4XntEVUqLxFaiTVdpiwHBU2VdRY86zqp"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---d4XntEVUqLxFaiTVdpiwHBU2VdRY86zqp
-Content-Type: multipart/mixed; boundary="1PHPHRxHHcH9oPm1FlEGm8auosDzjaWnb";
- protected-headers="v1"
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Martin Fick <mfick@codeaurora.org>
-Cc: Derrick Stolee <stolee@gmail.com>,
- =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
- Lars Schneider <larsxschneider@gmail.com>, git <git@vger.kernel.org>,
- Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-Message-ID: <099ff2bf-c0f8-60fc-7833-9b129dd4dffe@linuxfoundation.org>
-Subject: Re: worktrees vs. alternates
-References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com>
- <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com>
- <0f19f9f8-d215-622e-5090-1341c013babc@linuxfoundation.org>
- <5972145.OdP4kjFpBj@mfick-lnx>
-In-Reply-To: <5972145.OdP4kjFpBj@mfick-lnx>
 
---1PHPHRxHHcH9oPm1FlEGm8auosDzjaWnb
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: quoted-printable
+On Wed, May 16 2018, Konstantin Ryabitsev wrote:
 
-On 05/16/18 13:14, Martin Fick wrote:
-> On Wednesday, May 16, 2018 10:58:19 AM Konstantin Ryabitsev=20
-> wrote:
->>
->> 1. Find every repo mentioning the parent repository in
->> their alternates 2. Repack them without the -l switch
->> (which copies all the borrowed objects into those repos)
->> 3. Once all child repos have been repacked this way, prune
->> the parent repo (it's safe now)
->=20
-> This is probably only true if the repos are in read-only=20
-> mode?  I suspect this is still racy on a busy server with no=20
-> downtime.
+> On Wed, May 16, 2018 at 05:34:34PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>>I may have missed some edge case, but I believe this entire workaround
+>>isn't needed if you guarantee that the parent repo doesn't contain any
+>>objects that will get un-referenced.
+>
+> You can't guarantee that, because the parent repo can have its history
+> rewritten either via a forced push, or via a rebase. Obviously, this
+> won't happen in something like torvalds/linux.git, which is why it's
+> pretty safe to alternate off of that repo for us, but codeaurora.org
+> repos aren't always strictly-ff (e.g. because they may rebase themselves
+> based on what is in upstream AOSP repos) -- so objects in them may
+> become unreferenced and pruned away, corrupting any repos using them for
+> alternates.
 
-We don't actually do this anywhere. :) It's a feature I keep hoping to
-add one day to grokmirror, but keep putting off because of various
-considerations. As you can imagine, if we have 300 forks of linux.git
-all using torvalds/linux.git as their alternates, then repacking them
-all without -l would balloon our disk usage 300-fold. At this time it's
-just cheaper to keep a bunch of loose objects around forever at the cost
-of decreased performance.
+Right, it wouldn't work in the general case. I was thinking of the
+use-case for doing this (say with known big monorepos) where you know a
+given branch won't be unwound.
 
-Maybe git-repack can be told to only borrow parent objects if they are
-in packs. Anything not in packs should be hardlinked into the child
-repo. That's my wishful think for the day. :)
+Still, there's a tiny variation on this that should work with arbitrary
+repos whose master may be rewound, you just setup a refspec to fetch
+their upstream HEAD into master-1 without having "+" in the
+refspec. Then if they never rewind you keep fetching to master-1
+forever.
 
-Best,
---=20
-Konstantin Ryabitsev
-Director, IT Infrastructure Security
-The Linux Foundation
+If they do rewind you fetch that to master-2 and so forth, so you can
+follow an upstream rewinding branch while still guaranteeing that no
+objects ever disappear from your parent repo. This is still a lot
+simpler than the juggling approach you noted, since it's just a tiny
+shellscript around the "fetch".
 
+This assumes that:
 
---1PHPHRxHHcH9oPm1FlEGm8auosDzjaWnb--
+  1. Whenever this happens the history is still similar enough that the
+     parent won't balloon in size like this, or at least it won't be
+     worse than not using alternates at all.
 
---d4XntEVUqLxFaiTVdpiwHBU2VdRY86zqp
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCWvxtYwAKCRC2xBzjVmSZ
-bK6HAQCJLiHwq/Kxfc0bn84hF5OnSWl6vmQFa4MHK0gwnAor5AD9G7X8zeE/7Rcp
-sWgXfO30BPsqQCMKVMtbFTNzsetkaQc=
-=m/Rc
------END PGP SIGNATURE-----
-
---d4XntEVUqLxFaiTVdpiwHBU2VdRY86zqp--
+ 2. You're getting most of the gains of the object sharing by just
+    grabbing the upstream HEAD branch, i.e. you don't have some repo
+    with huge and N unrelated histories.
