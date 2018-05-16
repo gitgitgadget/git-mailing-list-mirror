@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92A5D1F406
-	for <e@80x24.org>; Wed, 16 May 2018 01:59:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7786A1F406
+	for <e@80x24.org>; Wed, 16 May 2018 01:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752591AbeEPB66 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 21:58:58 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47442 "EHLO
+        id S1752604AbeEPB7B (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 21:59:01 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47504 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752535AbeEPB6y (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:54 -0400
+        by vger.kernel.org with ESMTP id S1752535AbeEPB67 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:59 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 647A86074A;
-        Wed, 16 May 2018 01:58:53 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7CCAE60443;
+        Wed, 16 May 2018 01:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526435933;
-        bh=b8Cmj3rpDBGYASOmH0kWFYygqK8O5kIz3q+5PI1NQZc=;
+        s=default; t=1526435938;
+        bh=BORmHYPFuqumfjsX2p/cFhBXuKfD/RDRI40/vp9kBN0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=sYEsEfAXdlmVpRG8DKGCDUDDKVaojifA8mwyEBwojLxRPPYPukrcVXlsgyMEI5ANa
-         GbBX87qxeiQto+x4oGuf+gFQ43mVuG0MoSoGj7QlwZrcldsjk4I3pnAGBGkCCMKH/y
-         bVEJhwkIgvee4Oj3yqsx/8kcqsLWtvQr6j478u1x7wdwSKJwf1ujYfZoEX8jlouhOy
-         vFHEiD7L/f5CuB80xPJe/skBvlBHtznAnYSkOPImIC/Fm0qNAK9g5oR0hRMlV3dva5
-         SRSLI3DnZELKpjhRiEK2FUNr6PJZonANyNwoOHkV+cdJCK6Ud7x/YgQNtm2Iv+7Nrg
-         ORhgnQXlF0Pz6Qs38FxMwDyL5Gt0OcjX6dW6kZpZ4Pe3Df0fm3VYbMIA3UdgfBgwXk
-         Hk7pAy/4uhIUKokZNN5a9sRMQH25lyB1sCni2cchg9zqVx6gkzsXefbwG/fKlaethh
-         CSAPtTzHDb8T4t2fsFdApaqSXaED2XwRhOsBeeirNtDgzDixqfN
+        b=TOTHPkwIZ+O44yrGNw2J3Vl4W8vegpWifDf8RKZDjMuazW2Dwq6oRoyQZEUDhsgcV
+         tWvK4Vrh3GnLwYXiREzSNM0V5DCfF1IaBlkkJXSicp574gYwMSDXOTwj+M24lBuon5
+         lued5uXRPbk/tZmJvPcII69MKV1LU9ll480CmPHLBQNFbJcvHKla8gA0SMX86Yvy/r
+         y6V1uR1OJDy4dRs5+qDNZ+9oRfIeVmG1eSR6cKCLbxS/ZF/E4fewtFlTiSL/JL63OE
+         sH3jfVDgtOrBUt0ZCZwjFAsabGsxKIkjn/Jr22y5J+susTifXewyil4Z9SAxj9u8Io
+         whgYk46YtUFjeF+nPYpsvXD5Uyc76wfgLZIbdnC8NxERSElexP1IW9g+Vj5IwoJfzA
+         NFUwn1RmokHJKSXc5+BEvnnbr6H8dsbivNM29j+evpfX+ngglDhjpVUp2o5KMuMJpy
+         cloaUWI9mR4vmtQLLElxPRCUMyWspI/fsNe2yq4Uc4vQE15gTo4
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -43,9 +43,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 17/28] t4014: abstract away SHA-1-specific constants
-Date:   Wed, 16 May 2018 01:56:19 +0000
-Message-Id: <20180516015630.661349-18-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 21/28] t4029: abstract away SHA-1-specific constants
+Date:   Wed, 16 May 2018 01:56:23 +0000
+Message-Id: <20180516015630.661349-22-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180516015630.661349-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -55,53 +55,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes values for blobs instead of using
+Adjust the test so that it computes variables for blobs instead of using
 hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4014-format-patch.sh | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ t/t4029-diff-trailing-space.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index dac3f349a3..349029f43b 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -578,7 +578,11 @@ test_expect_success 'excessive subject' '
+diff --git a/t/t4029-diff-trailing-space.sh b/t/t4029-diff-trailing-space.sh
+index f4e18cb8d3..32b6e9a4e7 100755
+--- a/t/t4029-diff-trailing-space.sh
++++ b/t/t4029-diff-trailing-space.sh
+@@ -6,7 +6,7 @@ test_description='diff honors config option, diff.suppressBlankEmpty'
  
- 	rm -rf patches/ &&
- 	git checkout side &&
-+	before=$(git hash-object file) &&
+ . ./test-lib.sh
+ 
+-cat <<\EOF > exp ||
++cat <<\EOF >expected ||
+ diff --git a/f b/f
+ index 5f6a263..8cb8bae 100644
+ --- a/f
+@@ -20,9 +20,14 @@ exit 1
+ 
+ test_expect_success "$test_description" '
+ 	printf "\nx\n" > f &&
++	before=$(git hash-object f) &&
 +	before=$(git rev-parse --short $before) &&
- 	for i in 5 6 1 2 3 A 4 B C 7 8 9 10 D E F; do echo "$i"; done >>file &&
-+	after=$(git hash-object file) &&
+ 	git add f &&
+ 	git commit -q -m. f &&
+ 	printf "\ny\n" > f &&
++	after=$(git hash-object f) &&
 +	after=$(git rev-parse --short $after) &&
- 	git update-index file &&
- 	git commit -m "This is an excessively long subject line for a message due to the habit some projects have of not having a short, one-line subject at the start of the commit message, but rather sticking a whole paragraph right at the start as the only thing in the commit message. It had better not become the filename for the patch." &&
- 	git format-patch -o patches/ master..side &&
-@@ -586,7 +590,6 @@ test_expect_success 'excessive subject' '
- '
- 
- test_expect_success 'cover-letter inherits diff options' '
--
- 	git mv file foo &&
- 	git commit -m foo &&
- 	git format-patch --no-renames --cover-letter -1 &&
-@@ -616,7 +619,7 @@ test_expect_success 'shortlog of cover-letter wraps overly-long onelines' '
- '
- 
- cat > expect << EOF
--index 40f36c6..2dc5c23 100644
-+index $before..$after 100644
- --- a/file
- +++ b/file
- @@ -13,4 +13,20 @@ C
-@@ -640,7 +643,7 @@ test_expect_success 'format-patch respects -U' '
- cat > expect << EOF
- 
- diff --git a/file b/file
--index 40f36c6..2dc5c23 100644
-+index $before..$after 100644
- --- a/file
- +++ b/file
- @@ -14,3 +14,19 @@ C
++	sed -e "s/^index .*/index $before..$after 100644/" expected >exp &&
+ 	git config --bool diff.suppressBlankEmpty true &&
+ 	git diff f > actual &&
+ 	test_cmp exp actual &&
