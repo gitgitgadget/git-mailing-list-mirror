@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3CE61F406
-	for <e@80x24.org>; Wed, 16 May 2018 22:59:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9B791F406
+	for <e@80x24.org>; Wed, 16 May 2018 22:59:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752263AbeEPW7A (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 18:59:00 -0400
-Received: from mail-vk0-f73.google.com ([209.85.213.73]:52055 "EHLO
-        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752224AbeEPW6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 18:58:55 -0400
-Received: by mail-vk0-f73.google.com with SMTP id d199-v6so2138574vke.18
-        for <git@vger.kernel.org>; Wed, 16 May 2018 15:58:55 -0700 (PDT)
+        id S1752273AbeEPW7F (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 18:59:05 -0400
+Received: from mail-qk0-f201.google.com ([209.85.220.201]:54715 "EHLO
+        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752267AbeEPW7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 18:59:02 -0400
+Received: by mail-qk0-f201.google.com with SMTP id c8-v6so2263367qkb.21
+        for <git@vger.kernel.org>; Wed, 16 May 2018 15:59:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=hnjlgJYFOVI6C4rmJrZ5vp2zCuJsXIleMCgg2nwJ11Y=;
-        b=KDGBNC3zFst1RYO8rtPHk6boip8O9bbkiMir5yTlTXxjJTx8hFeFk19GJE9qHPlQ0Q
-         19oamA/hZb67qAfn1LJgHggleyh4YG+AOM4jHXxgYA4FoszL6PxyuKQ6+351Qal6AS85
-         ce3YzS3ehg4QSyzZF9XKWXopWlZdrSxnnWklrIT55p9JgJ6PgV4CGs13w3RLlosmlzO+
-         nwt8oYaN28NwpQviQ3LzCrNf8ixozVP06MNYr0lu7UkC8VwTgNLyUy2OrBM27pzkL9nq
-         DS2P2Dg3f3KRTgqQnl4CstO9AP1oUVm/qpK8uw9+DFqt+nPBpK8rRCy077nUsbXpLwN7
-         tXUg==
+        bh=sjTzO6dLyFs9xOE8UdF869oPr3e1GAtbcZVGuMWc1s4=;
+        b=gyqgdHVOufpCUIfUQuDkr3RiFq3npcoQ9IUTY+DqbnJexpHqVd8bcDdxAQ3xZe0GxB
+         mY2IALWjAT5xyoY8P5YrgXHNEVhhTlgx3CqA2bSvXfcDYeptj451NqW64QMA+fGfFJId
+         f33VFweCCP7uJFSTmF6cx/stvAWRKrQGf/q6bZsu4CQIijr3dTsh78CpzMKmOzsZ9QnF
+         oVJIU9Ons0YmpnF7yALnMzgegM5XQ43SJjLFXtB+a7po0wOwRCnsQVH2jinuOZVhqwuo
+         PAgMGRxPEbwTQ6iAp8s7RBTOcqOQP49Gd43jcO67lmSodwZQn5s3AS7IDau9qsLoXYdY
+         d7rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=hnjlgJYFOVI6C4rmJrZ5vp2zCuJsXIleMCgg2nwJ11Y=;
-        b=ef4ftf2Gz2xTlp535k4PPk6/wP3LDSYPfcDCrsisFEAN8gVLWEbcooEdkupWvNN0dq
-         etYCY4xgB4cAKeGM1JL9WqV7ADjj8I60izhWuT5QKgkCzZGsL7COdml5UvnWoU6VmQ9j
-         ohhClOCcMj9MyOz41DfY04zEXI/B1smsWnHZovIcbGoYi3eD3oVExI9GUX9ZVb7SqXM2
-         ch6qNGhNMbFVGyVRld1Tfy92ctxVyI2GjLQTRBiAufbOPtDlO9sMwlwpP3kgmq7fR+OR
-         8WIaZPMLHRhcnUWNd1qPpI+gfb3RnyzJCgJky7pNQlxqBsznIKJ/+K8IIOUrKfrzJTMw
-         FmSQ==
-X-Gm-Message-State: ALKqPwfPVMAm24omu5vnq4ui6XS4q4bYPLs5Y/KKLNTs1Cd7zgmw3fUc
-        gnM/8QZxgH+HqXAsgq4NTAyNTb+v2EY39820ywv20yWhxTCRfrOOoOU7QKAdG9EqJdxzeT/H9+P
-        0DpXzQ8Nm3QanRIrw37/I7FQDiOL0CNn22Wr7E8ZAuqG/WVMGn/bkI07YhQ==
-X-Google-Smtp-Source: AB8JxZq/59gklBkbQiHAzfgmqWgyMkppNSBlNZd1zsfv2NAddjui5VFliOIkdFqzo6+izUCbS/0V6/agHSM=
+        bh=sjTzO6dLyFs9xOE8UdF869oPr3e1GAtbcZVGuMWc1s4=;
+        b=YB1QPSegIQl8abIFPuCd5iBVQbVlu7brxNQEl4W/hr5ToMZ6vcqGpLHJxSSyhr1ggm
+         B1amfx6Z9i1Bh9S4guAFpWsixy2w8FmpbviywGLQWI5Aa1q+LcKU1RNcy8q+An70O+FS
+         BPRXAs1N7+MZk16REFmFzGJ7r3U+m4qMrU/lc0zdCyYEpOZ8WHHSUxs9aGSriqKbg+qx
+         uYyLlDmFjbHHFug0IqRe3atS3q9lF4U5FmHWqUiwbaz49Iiwt1BAyR3kTnDoBUGu7JDm
+         eCdFvqBfZxTbfc+F64iglIBtl1V95HRCO9YPvThC1QYHTd3ULTZg38DgtwP/0yfy/iKg
+         HIVw==
+X-Gm-Message-State: ALKqPwdXSBH4vTl7L4W+9g1Xg6YZT3DeCD48Aa0WKUTjVl5lxvUtj5k+
+        vBBb441OT3H57VWS9uRjKeKgoxtJRcEyB/jo0lkLUK1r9I2WQTu49+tpZXwh2D3t/eDr06g+NCY
+        yXVsyc0U8+6yEf2OS0FbIaGw5GcIq8i1vU7D2JAQTMgkhSL+1McRxKx19bA==
+X-Google-Smtp-Source: AB8JxZqgoreCBMoKjxpjejKynZaEJAzfNs1soBYFXsKQYjSx8TSCVF0Vk8WkyzZsnaAGMLs/loHa7LTCWhc=
 MIME-Version: 1.0
-X-Received: by 2002:ab0:49e1:: with SMTP id f30-v6mr2445985uad.11.1526511535135;
- Wed, 16 May 2018 15:58:55 -0700 (PDT)
-Date:   Wed, 16 May 2018 15:57:54 -0700
+X-Received: by 2002:a0c:88c1:: with SMTP id 1-v6mr2921173qvo.29.1526511542153;
+ Wed, 16 May 2018 15:59:02 -0700 (PDT)
+Date:   Wed, 16 May 2018 15:57:57 -0700
 In-Reply-To: <20180516225823.235426-1-bmwill@google.com>
-Message-Id: <20180516225823.235426-8-bmwill@google.com>
+Message-Id: <20180516225823.235426-11-bmwill@google.com>
 References: <20180514215626.164960-1-bmwill@google.com> <20180516225823.235426-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH v2 07/36] pull: convert get_tracking_branch to use refspec_item_init
+Subject: [PATCH v2 10/36] remote: convert match_push_refs to use struct refspec
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
         sbeller@google.com, bmwill@google.com
@@ -64,43 +64,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert 'get_tracking_branch()' to use 'refspec_item_init()' instead of
-the old 'parse_fetch_refspec()' function.
+Convert 'match_push_refs()' to use struct refspec.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/pull.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ remote.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 5a79deae5..09575fd23 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -676,12 +676,12 @@ static const char *get_upstream_branch(const char *remote)
-  */
- static const char *get_tracking_branch(const char *remote, const char *refspec)
+diff --git a/remote.c b/remote.c
+index 191855118..bce6e7ce4 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1312,7 +1312,7 @@ int check_push_refs(struct ref *src, int nr_refspec, const char **refspec_names)
+ int match_push_refs(struct ref *src, struct ref **dst,
+ 		    int nr_refspec, const char **refspec, int flags)
  {
--	struct refspec_item *spec;
-+	struct refspec_item spec;
- 	const char *spec_src;
- 	const char *merge_branch;
+-	struct refspec_item *rs;
++	struct refspec rs = REFSPEC_INIT_PUSH;
+ 	int send_all = flags & MATCH_REFS_ALL;
+ 	int send_mirror = flags & MATCH_REFS_MIRROR;
+ 	int send_prune = flags & MATCH_REFS_PRUNE;
+@@ -1325,8 +1325,8 @@ int match_push_refs(struct ref *src, struct ref **dst,
+ 		nr_refspec = 1;
+ 		refspec = default_refspec;
+ 	}
+-	rs = parse_push_refspec(nr_refspec, (const char **) refspec);
+-	errs = match_explicit_refs(src, *dst, &dst_tail, rs, nr_refspec);
++	refspec_appendn(&rs, refspec, nr_refspec);
++	errs = match_explicit_refs(src, *dst, &dst_tail, rs.items, rs.nr);
  
--	spec = parse_fetch_refspec(1, &refspec);
--	spec_src = spec->src;
-+	refspec_item_init(&spec, refspec, REFSPEC_FETCH);
-+	spec_src = spec.src;
- 	if (!*spec_src || !strcmp(spec_src, "HEAD"))
- 		spec_src = "HEAD";
- 	else if (skip_prefix(spec_src, "heads/", &spec_src))
-@@ -701,7 +701,7 @@ static const char *get_tracking_branch(const char *remote, const char *refspec)
- 	} else
- 		merge_branch = NULL;
+ 	/* pick the remainder */
+ 	for (ref = src; ref; ref = ref->next) {
+@@ -1335,7 +1335,7 @@ int match_push_refs(struct ref *src, struct ref **dst,
+ 		const struct refspec_item *pat = NULL;
+ 		char *dst_name;
  
--	free_refspec(1, spec);
-+	refspec_item_clear(&spec);
- 	return merge_branch;
- }
+-		dst_name = get_ref_match(rs, nr_refspec, ref, send_mirror, FROM_SRC, &pat);
++		dst_name = get_ref_match(rs.items, rs.nr, ref, send_mirror, FROM_SRC, &pat);
+ 		if (!dst_name)
+ 			continue;
  
+@@ -1384,7 +1384,7 @@ int match_push_refs(struct ref *src, struct ref **dst,
+ 				/* We're already sending something to this ref. */
+ 				continue;
+ 
+-			src_name = get_ref_match(rs, nr_refspec, ref, send_mirror, FROM_DST, NULL);
++			src_name = get_ref_match(rs.items, rs.nr, ref, send_mirror, FROM_DST, NULL);
+ 			if (src_name) {
+ 				if (!src_ref_index.nr)
+ 					prepare_ref_index(&src_ref_index, src);
+@@ -1396,6 +1396,9 @@ int match_push_refs(struct ref *src, struct ref **dst,
+ 		}
+ 		string_list_clear(&src_ref_index, 0);
+ 	}
++
++	refspec_clear(&rs);
++
+ 	if (errs)
+ 		return -1;
+ 	return 0;
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
