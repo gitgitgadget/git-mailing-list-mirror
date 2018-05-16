@@ -3,38 +3,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 664631F406
-	for <e@80x24.org>; Wed, 16 May 2018 01:58:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDDE01F406
+	for <e@80x24.org>; Wed, 16 May 2018 01:58:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752547AbeEPB6s (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 21:58:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47396 "EHLO
+        id S1752431AbeEPB6w (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 21:58:52 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47404 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752289AbeEPB6r (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:47 -0400
+        by vger.kernel.org with ESMTP id S1752537AbeEPB6s (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:48 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4AA1460443;
-        Wed, 16 May 2018 01:58:44 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BA1FE60747;
+        Wed, 16 May 2018 01:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526435924;
-        bh=a54fx2QFDcZFx3mHVRa5yJD9t+U/NnWPWc8H+sSctOk=;
+        s=default; t=1526435927;
+        bh=OKImVgLsuITK2qTIabYzypDTP06l4T0y+9Jxfu7Rz7I=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=ovjet+ieb0uLQyFxxi9XxpwMSQtw/NrtDUqKaDj1AT2vvAi4DRSD418m8k9tNF7Wb
-         Oeauy8qh3hrXmsJXK/lItQ4dzHp5yEX+NK7jh7/W0gkZGYT408yYefe8l0EJumsM9w
-         l7DdQFFe9qh8QAKT90bHFxKeqAQTkFUo0eKNZJ/fHCo/jGB5pVYCnpbZd7+gsZzLJT
-         meNcaMAkm45wMc8a6tqk+U9TQ94KjlFUzGZzxrnJQsyaK1OjWs0XXg+eIlMnX8TUAp
-         T0LgGM1JSaHz29EeoHwWs9imGcu9hgtY/hXsNg00HdSicGk3KNuMMCWStFp5BiG/Y9
-         NKX/A21ussOWvs+E9dQq77ccqj3/ae6vFh6hgTmNLiCD+xjOIOi+M8m+YX4DotFJel
-         OqSIAW+tLW4o0QG8NwmTy1bghRfs8Jxe5/n8UoEz24Ya2VunjojOxTZsY94gDrC8pp
-         HpR71dwM9h4T3aIQ8CD3aPujbjxIas0otFNT/e8IbwbfumE45E+
+        b=D1t1Sg5zP4d0BFXq+A0W+I30LGCfgv+ztt3hRwfwfqe8+YPaOwcU47Q4057gj14eq
+         BQh8pFw4/uCTmpAFeatBI1wQIEamdMu7ddJMpvYlZG2pNTEV7Ehl44uPE4IYG38HdG
+         QhOMtTeeyvl5F+kVKa2dB9LjY9zDoJNhBR6/ph4d+UIqYM6JAKdMsY4xWnClG4lz8l
+         9T+hS5PsBD41ts8Gj7PEBEUSZj+Y7z9estffz1b1x9rcM79jeEKTYBCbhhF7TKg5Pr
+         i7d70O5/W0IsyIPu1+2oVyCZsFKC7lwbM1HZFGUM1nYD4f3x5UsQW8MiYEAtqWo3We
+         ryjCT0mqF1mcNwa9VVJbP+vAw018lB8biqRiz4DKjC4F7CojbqLlWb0ZxvwC036kI6
+         va8N1xx0G/ozfC1bG6UZfGo9zvQoY9nt5eHwyN+ps4nL/5+uJENskzwVtnkg8IOsUg
+         gcUBaD/5XNMSBm7D8jQZf8+EEFPVyStBEnXOo9MzcmJwEhytHaP
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -43,9 +43,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 10/28] t: skip pack tests if not using SHA-1
-Date:   Wed, 16 May 2018 01:56:12 +0000
-Message-Id: <20180516015630.661349-11-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 11/28] t2203: abstract away SHA-1-specific constants
+Date:   Wed, 16 May 2018 01:56:13 +0000
+Message-Id: <20180516015630.661349-12-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180516015630.661349-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -55,47 +55,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These tests rely on creating packs with specially named objects which
-are necessarily dependent on the hash used.  Skip these tests if we're
-not using SHA-1.
+Adjust the test so that it computes variables for blobs instead of using
+hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t5308-pack-detect-duplicates.sh | 6 ++++++
- t/t5309-pack-delta-cycles.sh      | 6 ++++++
- 2 files changed, 12 insertions(+)
+ t/t2203-add-intent.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
-index 156ae9e9d3..6845c1f3c3 100755
---- a/t/t5308-pack-detect-duplicates.sh
-+++ b/t/t5308-pack-detect-duplicates.sh
-@@ -4,6 +4,12 @@ test_description='handling of duplicate objects in incoming packfiles'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-pack.sh
+diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
+index 1797f946b9..04d840a544 100755
+--- a/t/t2203-add-intent.sh
++++ b/t/t2203-add-intent.sh
+@@ -27,8 +27,8 @@ test_expect_success 'git status' '
  
-+if ! test_have_prereq SHA1
-+then
-+       skip_all='not using SHA-1 for objects'
-+       test_done
-+fi
-+
- # The sha1s we have in our pack. It's important that these have the same
- # starting byte, so that they end up in the same fanout section of the index.
- # That lets us make sure we are exercising the binary search with both sets.
-diff --git a/t/t5309-pack-delta-cycles.sh b/t/t5309-pack-delta-cycles.sh
-index 3e7861b075..491556dad9 100755
---- a/t/t5309-pack-delta-cycles.sh
-+++ b/t/t5309-pack-delta-cycles.sh
-@@ -4,6 +4,12 @@ test_description='test index-pack handling of delta cycles in packfiles'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-pack.sh
+ test_expect_success 'git status with porcelain v2' '
+ 	git status --porcelain=v2 | grep -v "^?" >actual &&
+-	nam1=d00491fd7e5bb6fa28c517a0bb32b8b506539d4d &&
+-	nam2=ce013625030ba8dba906f756967f9e9ca394464a &&
++	nam1=$(echo 1 | git hash-object --stdin) &&
++	nam2=$(git hash-object elif) &&
+ 	cat >expect <<-EOF &&
+ 	1 DA N... 100644 000000 100644 $nam1 $ZERO_OID 1.t
+ 	1 A. N... 000000 100644 100644 $ZERO_OID $nam2 elif
+@@ -181,7 +181,7 @@ test_expect_success 'rename detection finds the right names' '
+ 		EOF
+ 		test_cmp expected.2 actual.2 &&
  
-+if ! test_have_prereq SHA1
-+then
-+       skip_all='not using SHA-1 for objects'
-+       test_done
-+fi
-+
- # Two similar-ish objects that we have computed deltas between.
- A=01d7713666f4de822776c7622c10f1b07de280dc
- B=e68fe8129b546b101aee9510c5328e7f21ca1d18
+-		hash=12f00e90b6ef79117ce6e650416b8cf517099b78 &&
++		hash=$(git hash-object third) &&
+ 		git status --porcelain=v2 | grep -v "^?" >actual.3 &&
+ 		cat >expected.3 <<-EOF &&
+ 		2 .R N... 100644 100644 100644 $hash $hash R100 third	first
+@@ -212,7 +212,7 @@ test_expect_success 'double rename detection in status' '
+ 		EOF
+ 		test_cmp expected.2 actual.2 &&
+ 
+-		hash=12f00e90b6ef79117ce6e650416b8cf517099b78 &&
++		hash=$(git hash-object third) &&
+ 		git status --porcelain=v2 | grep -v "^?" >actual.3 &&
+ 		cat >expected.3 <<-EOF &&
+ 		2 R. N... 100644 100644 100644 $hash $hash R100 second	first
