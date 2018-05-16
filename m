@@ -8,69 +8,67 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39DDC1F406
-	for <e@80x24.org>; Wed, 16 May 2018 17:54:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFC191F406
+	for <e@80x24.org>; Wed, 16 May 2018 18:02:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751642AbeEPRyo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 13:54:44 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:39784 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751468AbeEPRyn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 13:54:43 -0400
-Received: by mail-wm0-f68.google.com with SMTP id f8-v6so3837404wmc.4
-        for <git@vger.kernel.org>; Wed, 16 May 2018 10:54:42 -0700 (PDT)
+        id S1751307AbeEPSC4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 14:02:56 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:52121 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751110AbeEPSCy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 14:02:54 -0400
+Received: by mail-wm0-f49.google.com with SMTP id j4-v6so3626322wme.1
+        for <git@vger.kernel.org>; Wed, 16 May 2018 11:02:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=VvioFjetXeDFs/aZWmFfLXCIXgfKWvMKnFw5Xvfj13I=;
-        b=UgkdZMPjL0hPlna+JWbJe0zC983639qYrMSs8hPyNTKp0GvuFIdeljCac5vYBmIM+X
-         9YJkFkuc8LhYdKOKCnrmtrK0gosf89moGbcicHfavHyoPV4Zoq/o/vzP702SLry+xEpS
-         coU6QcllHI2Wd2AnJRpAhu9iDHwWZw1S8E4URhJyJB2rDpr53whftDGtJDF2FR3mSgrU
-         UzYcEkeCg43xYVwIaBKTqhnx96/A+kxZ8KCmxYh7AQ9yH8PhjZwz5zNjCfrFU71697EX
-         +xpEDhbiUEoegPzmr4t4T/SJPbu4Uf6P9i14kQTz5xU24ubAYROnzNWc7mzLmZNgoY2L
-         ipwA==
+         :message-id:mime-version;
+        bh=Mo4ABGXABvfx/LGQov46mr1lbS8H9mxFKgXFn4Wt4HQ=;
+        b=OZ8aGEt1DtcDNhabdtalTNrsYiagwld29dNaPl+W7cW5T8hcFl9caAqssYTuHyyL8K
+         vN6dT54Y0Icd33RWg6N9EYTGGMTmsavG57YprG7UnO+xHNRABA1oifxUVesfCVLJD109
+         elpcFmcWm9fLYfd9pHJGbNZD7bLQHYC15ps9+JAnjqbxvbaJjT5bJg+/ZDUh5n8esYRp
+         8UpD9QzK0gSOaGGxQjtsHhPnkxgxlu9zh+7tzhoI2EHLPM8vphEbnhM/fkbffZYbSwPd
+         E2nLZocaiDjlSFEv76s99ZT6clR95KIeyVgD0QL7NnnKvZV3fVmvuYzEkbf2spN4JEI0
+         R7aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=VvioFjetXeDFs/aZWmFfLXCIXgfKWvMKnFw5Xvfj13I=;
-        b=ZGwFMoc48lFPNFvre4ZoFNvVdFAmhoD/yMhCE9LALOH3lgvkskYSPi1zWj3Xh5frn1
-         635z7c6oj6Dk1w4uq64gkLdfVoe7yzg+E8KC4K6QVqHiwtRVib++zRQqGqB6Yhbsc7p9
-         4xFtcS1G72LK327aUNwABuq+cvkhkQYxKphNX6A5/0EK7RPGxNENLUQ/+HAjz7E9n5ue
-         bM9o0V1ORGUj0leIxCw09eo2D+3OmypsYk7IU3Cl8RovhWlP/rFqTUJQy/yx55i43xmW
-         OeuhipbLc9nvW3ej/oFySw3FplBsDV4TLJqDm2Fe8Exrr4gB4UfsFoBJX+VNJFpgfyrx
-         To6w==
-X-Gm-Message-State: ALKqPwecjSzVX7U9Bm+IZAt0ZvOteBhRqxp+0OWIVlD/Kc14Fmq4DOc9
-        fv3g5Ewu4lL26QXcuYOWPjM=
-X-Google-Smtp-Source: AB8JxZrRYt8ereg+7fZedxGGmU/Sf+5cXQIbXQ2nfpCXbx9N9xjlB6EyGvbRbSPxlH9C3hYvZuP8lw==
-X-Received: by 2002:aa7:c6d0:: with SMTP id b16-v6mr2402126eds.302.1526493282115;
-        Wed, 16 May 2018 10:54:42 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version;
+        bh=Mo4ABGXABvfx/LGQov46mr1lbS8H9mxFKgXFn4Wt4HQ=;
+        b=YJbesuaeP6sqx7hD6A8SWDLZmmNIWb4QYB9fbqwuzzhMAEMj5sdvQ5Tp3nkSlGR9R+
+         CzDilADyCNqfYBB/IyR25/o4LUhenw48nJbZ650Lgv4pKFWc853uNtrr4e+BT828ybqD
+         Dnhru2aq3r22eHBFJ0IwJRizJvT/1Y3o1bfXOvQvqmHUVWZ/mtJbh7aNW7o3CygbNk7N
+         sZlaAZjXKxyn9Dg2YgPoZv63Jh0HdcOIf79T4orKwXuerh8/lLkiRh6UDXHw3AG+aeaL
+         W+bRgMbY8TmldwMf2kwXVUFhgY+VCw/6jFOgTcplJT6Sde6LRNtbyJCdozSOoEcVHosK
+         gN7A==
+X-Gm-Message-State: ALKqPwcPOO036juCc3GXLE/7SJi/dZLrLIeNt+Z1lztVcjdeQgYPNi7e
+        7XeROcjIsegOEANEubo4sX0=
+X-Google-Smtp-Source: AB8JxZpgoJHQspnYLT8e8KbBX0XbQMum5d8MqLV7wiKAFzdk0VJImDedUJhwyKXMZ2mOBA7J4VgCQA==
+X-Received: by 2002:a50:ee8c:: with SMTP id f12-v6mr2595936edr.10.1526493773804;
+        Wed, 16 May 2018 11:02:53 -0700 (PDT)
 Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id e6-v6sm1528942edr.23.2018.05.16.10.54.40
+        by smtp.gmail.com with ESMTPSA id q35-v6sm1657169edq.41.2018.05.16.11.02.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 16 May 2018 10:54:41 -0700 (PDT)
+        Wed, 16 May 2018 11:02:52 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Derrick Stolee <stolee@gmail.com>,
+Cc:     Martin Fick <mfick@codeaurora.org>,
+        Derrick Stolee <stolee@gmail.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>
 Subject: Re: worktrees vs. alternates
 References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com>
-        <87po1waqyc.fsf@evledraar.gmail.com>
-        <81B00B00-00F4-487A-9D3E-6B7514098B29@gmail.com>
-        <87muwzc2kv.fsf@evledraar.gmail.com>
         <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com>
         <0f19f9f8-d215-622e-5090-1341c013babc@linuxfoundation.org>
-        <87k1s3bomt.fsf@evledraar.gmail.com> <20180516154935.GA9712@chatter>
+        <5972145.OdP4kjFpBj@mfick-lnx>
+        <099ff2bf-c0f8-60fc-7833-9b129dd4dffe@linuxfoundation.org>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180516154935.GA9712@chatter>
-Date:   Wed, 16 May 2018 19:54:40 +0200
-Message-ID: <87in7nbi5b.fsf@evledraar.gmail.com>
+In-reply-to: <099ff2bf-c0f8-60fc-7833-9b129dd4dffe@linuxfoundation.org>
+Date:   Wed, 16 May 2018 20:02:51 +0200
+Message-ID: <87h8n7bhro.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -79,42 +77,15 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, May 16 2018, Konstantin Ryabitsev wrote:
 
-> On Wed, May 16, 2018 at 05:34:34PM +0200, Ævar Arnfjörð Bjarmason wrote:
->>I may have missed some edge case, but I believe this entire workaround
->>isn't needed if you guarantee that the parent repo doesn't contain any
->>objects that will get un-referenced.
->
-> You can't guarantee that, because the parent repo can have its history
-> rewritten either via a forced push, or via a rebase. Obviously, this
-> won't happen in something like torvalds/linux.git, which is why it's
-> pretty safe to alternate off of that repo for us, but codeaurora.org
-> repos aren't always strictly-ff (e.g. because they may rebase themselves
-> based on what is in upstream AOSP repos) -- so objects in them may
-> become unreferenced and pruned away, corrupting any repos using them for
-> alternates.
+> Maybe git-repack can be told to only borrow parent objects if they are
+> in packs. Anything not in packs should be hardlinked into the child
+> repo. That's my wishful think for the day. :)
 
-Right, it wouldn't work in the general case. I was thinking of the
-use-case for doing this (say with known big monorepos) where you know a
-given branch won't be unwound.
+Can you elaborate on how this would help?
 
-Still, there's a tiny variation on this that should work with arbitrary
-repos whose master may be rewound, you just setup a refspec to fetch
-their upstream HEAD into master-1 without having "+" in the
-refspec. Then if they never rewind you keep fetching to master-1
-forever.
+We're just going to create loose objects on interactive "git commit",
+presumably you're not adding someone's working copy as the alternate.
 
-If they do rewind you fetch that to master-2 and so forth, so you can
-follow an upstream rewinding branch while still guaranteeing that no
-objects ever disappear from your parent repo. This is still a lot
-simpler than the juggling approach you noted, since it's just a tiny
-shellscript around the "fetch".
-
-This assumes that:
-
-  1. Whenever this happens the history is still similar enough that the
-     parent won't balloon in size like this, or at least it won't be
-     worse than not using alternates at all.
-
- 2. You're getting most of the gains of the object sharing by just
-    grabbing the upstream HEAD branch, i.e. you don't have some repo
-    with huge and N unrelated histories.
+Otherwise if it's just being pushed to all those pushes are going to be
+in packs, and the packs may contain e.g. pushes for the "pu" branch or
+whatever, which are objects that'll go away.
