@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81AE31F406
-	for <e@80x24.org>; Wed, 16 May 2018 22:59:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AEA11F406
+	for <e@80x24.org>; Wed, 16 May 2018 22:59:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752336AbeEPW7o (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 18:59:44 -0400
-Received: from mail-yb0-f201.google.com ([209.85.213.201]:46449 "EHLO
-        mail-yb0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752318AbeEPW7m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 18:59:42 -0400
-Received: by mail-yb0-f201.google.com with SMTP id h199-v6so1258975ybg.13
-        for <git@vger.kernel.org>; Wed, 16 May 2018 15:59:42 -0700 (PDT)
+        id S1751880AbeEPW7f (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 18:59:35 -0400
+Received: from mail-oi0-f74.google.com ([209.85.218.74]:39163 "EHLO
+        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752061AbeEPW7T (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 18:59:19 -0400
+Received: by mail-oi0-f74.google.com with SMTP id 5-v6so1682884oiq.6
+        for <git@vger.kernel.org>; Wed, 16 May 2018 15:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=pBpXJA0BpA5FzoP7pKkacABLppEWe2bVPMqkHZZWEos=;
-        b=cWGCFkuMCUWOpOd/kNepm2eszDlR99nVmFNPG1S1HQKi187nKUjaoyiY9LCMVIFK00
-         uDdQo2rGmevxVRRBENq3yxAbhD3TcDn+QnTLHWZYfIbVC7J/oA6z7SlHoLIs+K2xf7k4
-         UHp1eQRao2L1kI/Xc+m/29Sp2NXV2SUE5RtVErCdjiCqqQeYg0P8SjDmlBsKReBlkn9c
-         WrKlz4sXch9LM815Wvn5K+5MsZs+Cag1t5nQ52IXwkGEcw3OH0srB2fKm7PH2DTMCqsm
-         MbJoe+LOK8OqyaTkJeAbdD9ilU7LE3uicTFhjfxOL7dGuqmwRFrRb/r/Yb8iGuN+E9f2
-         QCfg==
+        bh=BMqEjA+wWlOKi2mTXvF4m4ovA/rjwBby3zCdMwbrrH8=;
+        b=MNgDEk/YohRaE9R22ewwuDJwxrNnfY837HcLgjgOkVWzzWV0ZlrjWjMFDsYHeyVsNn
+         gO/3/Z3W6OaQjf25/xW2YPjIswEEj4/TIirtZw2DFdq7w3L1uoIOqxSKu6qQrGedkUok
+         TMqC4U1qYAQlTFpsGId1siBnrw62E/HvGLE2XK/G+VreEuc6pPvpMXuR8KUnoQ1yzNhN
+         g0upb75+w7D09phXGvwISlmdQPtQZ+1opAcl57W9jljZky1i4+wOGWG/0HJknPkxwN9h
+         I9QcMA9QeQxwzWec+Dt29KyvPMtwvsfOQEMPxfuwtcGZd8pgzxnpGkMsqCjAyetvcdqS
+         DI4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=pBpXJA0BpA5FzoP7pKkacABLppEWe2bVPMqkHZZWEos=;
-        b=FUNX4/5NiKbXg6a7ytlaSo8vB4cDyIfE7PrjUgtc3RBNQ2AO6a1jcQH2kICdVu7ReL
-         Yt7KspwiTBz6QAkWktAsOdakLC2gqogqLfZG3SSBaIr/tC4qDvzmixXtWxtiQPysof2X
-         Cq0dzxZywLDqcLkhgg03IhRARlCFtzOqNNHIxXvEXR1UfiV/hnZTYCAJLlyqhGTXh/Dk
-         dEY3I1azxEUeY3+wUdJvii5YWKG5wLHNu+bVuiq+GE9/wJpDYcNLMFhngpCUw8xZ3GKN
-         EKamLosJhNQpbwE/H1AqKUFsVzm9cuvBN/DUmGa3hq0LbjYMW/qsLrIvs16hky7t3vnh
-         wdEQ==
-X-Gm-Message-State: ALKqPwc7uXRaklnD9K6eL26UVmUWYi5dwmk2Z6DdPW3kioChnvfqXI86
-        NY9MqXfbL6RQYIC8TrGDESRfZ8CFb7lXcDczXucrPL5W+5vtbb5Vrf2t0/nEjqusL+tAQhbyia3
-        +LwJ4x2lxeN8OTWGO1mrPHBwvCCtPTcBGpceBuuakBHLuZOB+cjhCv3PpPA==
-X-Google-Smtp-Source: AB8JxZpZHTUr5WjWczVEoV0dh1WPzrXUNTVw5Br66LjJPTge+yXnCsC636dGFbBe3vAxiRD029P865orCuc=
+        bh=BMqEjA+wWlOKi2mTXvF4m4ovA/rjwBby3zCdMwbrrH8=;
+        b=sdvyaFR53Mut4fTyUO+X2AXcv6Q6tZJmnHt+rIf36seXUc93zbf+s1hOzQGRFI91Ug
+         XIhYHM5RDreI4Plc5E4rjK+E0OCvywrSi9aMrMPTdVH/jpcoCxL87a/BPGh65L4cGwLm
+         3kR2Zg7WRZXrBsuV+WetF1LrPyOlmn57imP718HBbxyXx4BKIwi5gPXgDgmgaazewYGX
+         C595Cz+Scu0ACUsPjw9mc9lcHgUNY7xHSJsJfslxEY6GPN7qkAk9ia4oArbe3bcBJff+
+         aJUQYTAX7HqpQg7U/9lAfuXQ91nxkv/TZdvNeBM5QlfCYOIPW/Vb1W5gNbrcWYJHQoel
+         PTDw==
+X-Gm-Message-State: ALKqPwdZaD+kTOGGQ3YMRmt9ebnhgQwhs9rIZk+eTNxQPCblSv9vacoK
+        26ZdPICitG83/jFCP9mbayxJ2cUiwBK0gFhFLmrdHp7knveUv/tZcetgqoVV0hW1Jg8Tl+4eXuJ
+        vnto0M76Y+/L73PsigyGdBbJY7jbjsGkcwHVKfw5kGbdaPZslWCq7OkkNlw==
+X-Google-Smtp-Source: AB8JxZrZkHJ9d7OhAxGXiRdC6GSE7gpnJmlj2NsB1r0kPrluzIxsyw/9anw3zVTefRKua1VyWyj+akJ4mhM=
 MIME-Version: 1.0
-X-Received: by 2002:a25:cf07:: with SMTP id f7-v6mr964262ybg.76.1526511582132;
- Wed, 16 May 2018 15:59:42 -0700 (PDT)
-Date:   Wed, 16 May 2018 15:58:14 -0700
+X-Received: by 2002:aca:b28b:: with SMTP id b133-v6mr2273664oif.41.1526511558875;
+ Wed, 16 May 2018 15:59:18 -0700 (PDT)
+Date:   Wed, 16 May 2018 15:58:04 -0700
 In-Reply-To: <20180516225823.235426-1-bmwill@google.com>
-Message-Id: <20180516225823.235426-28-bmwill@google.com>
+Message-Id: <20180516225823.235426-18-bmwill@google.com>
 References: <20180514215626.164960-1-bmwill@google.com> <20180516225823.235426-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH v2 27/36] remote: convert match_explicit_refs to take a struct refspec
+Subject: [PATCH v2 17/36] fetch: convert fetch_one to use struct refspec
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
         sbeller@google.com, bmwill@google.com
@@ -64,43 +64,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert 'match_explicit_refs()' to take a 'struct refspec' as a
-parameter instead of a list of 'struct refspec_item'.
+Convert 'fetch_one()' to use 'struct refspec'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- remote.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ builtin/fetch.c | 46 +++++++++++++++++++---------------------------
+ 1 file changed, 19 insertions(+), 27 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 9eb79ea19..84dda3fd0 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1073,12 +1073,11 @@ static int match_explicit(struct ref *src, struct ref *dst,
- }
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 7a1637d35..18704c6cd 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1356,10 +1356,8 @@ static inline void fetch_one_setup_partial(struct remote *remote)
  
- static int match_explicit_refs(struct ref *src, struct ref *dst,
--			       struct ref ***dst_tail, struct refspec_item *rs,
--			       int rs_nr)
-+			       struct ref ***dst_tail, struct refspec *rs)
+ static int fetch_one(struct remote *remote, int argc, const char **argv, int prune_tags_ok)
  {
- 	int i, errs;
--	for (i = errs = 0; i < rs_nr; i++)
--		errs += match_explicit(src, dst, dst_tail, &rs[i]);
-+	for (i = errs = 0; i < rs->nr; i++)
-+		errs += match_explicit(src, dst, dst_tail, &rs->items[i]);
- 	return errs;
- }
+-	static const char **refs = NULL;
+-	struct refspec_item *refspec;
+-	int ref_nr = 0;
+-	int j = 0;
++	struct refspec rs = REFSPEC_INIT_FETCH;
++	int i;
+ 	int exit_code;
+ 	int maybe_prune_tags;
+ 	int remote_via_config = remote_is_configured(remote, 0);
+@@ -1394,35 +1392,29 @@ static int fetch_one(struct remote *remote, int argc, const char **argv, int pru
+ 	if (maybe_prune_tags && remote_via_config)
+ 		refspec_append(&remote->fetch, TAG_REFSPEC);
  
-@@ -1302,7 +1301,7 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 		refspec = default_refspec;
+-	if (argc > 0 || (maybe_prune_tags && !remote_via_config)) {
+-		size_t nr_alloc = st_add3(argc, maybe_prune_tags, 1);
+-		refs = xcalloc(nr_alloc, sizeof(const char *));
+-		if (maybe_prune_tags) {
+-			refs[j++] = xstrdup("refs/tags/*:refs/tags/*");
+-			ref_nr++;
+-		}
+-	}
++	if (maybe_prune_tags && (argc || !remote_via_config))
++		refspec_append(&rs, TAG_REFSPEC);
+ 
+-	if (argc > 0) {
+-		int i;
+-		for (i = 0; i < argc; i++) {
+-			if (!strcmp(argv[i], "tag")) {
+-				i++;
+-				if (i >= argc)
+-					die(_("You need to specify a tag name."));
+-				refs[j++] = xstrfmt("refs/tags/%s:refs/tags/%s",
+-						    argv[i], argv[i]);
+-			} else
+-				refs[j++] = argv[i];
+-			ref_nr++;
++	for (i = 0; i < argc; i++) {
++		if (!strcmp(argv[i], "tag")) {
++			char *tag;
++			i++;
++			if (i >= argc)
++				die(_("You need to specify a tag name."));
++
++			tag = xstrfmt("refs/tags/%s:refs/tags/%s",
++				      argv[i], argv[i]);
++			refspec_append(&rs, tag);
++			free(tag);
++		} else {
++			refspec_append(&rs, argv[i]);
+ 		}
  	}
- 	refspec_appendn(&rs, refspec, nr_refspec);
--	errs = match_explicit_refs(src, *dst, &dst_tail, rs.items, rs.nr);
-+	errs = match_explicit_refs(src, *dst, &dst_tail, &rs);
  
- 	/* pick the remainder */
- 	for (ref = src; ref; ref = ref->next) {
+ 	sigchain_push_common(unlock_pack_on_signal);
+ 	atexit(unlock_pack);
+-	refspec = parse_fetch_refspec(ref_nr, refs);
+-	exit_code = do_fetch(gtransport, refspec, ref_nr);
+-	free_refspec(ref_nr, refspec);
++	exit_code = do_fetch(gtransport, rs.items, rs.nr);
++	refspec_clear(&rs);
+ 	transport_disconnect(gtransport);
+ 	gtransport = NULL;
+ 	return exit_code;
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
