@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,UNWANTED_LANGUAGE_BODY,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80E681F406
-	for <e@80x24.org>; Wed, 16 May 2018 22:59:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C9491F406
+	for <e@80x24.org>; Wed, 16 May 2018 22:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752062AbeEPW7P (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 18:59:15 -0400
-Received: from mail-yb0-f202.google.com ([209.85.213.202]:38165 "EHLO
-        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751406AbeEPW7M (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 18:59:12 -0400
-Received: by mail-yb0-f202.google.com with SMTP id t12-v6so1254586ybg.5
-        for <git@vger.kernel.org>; Wed, 16 May 2018 15:59:12 -0700 (PDT)
+        id S1752146AbeEPW7Q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 18:59:16 -0400
+Received: from mail-yw0-f201.google.com ([209.85.161.201]:45748 "EHLO
+        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751227AbeEPW7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 18:59:10 -0400
+Received: by mail-yw0-f201.google.com with SMTP id r14-v6so1082780ywc.12
+        for <git@vger.kernel.org>; Wed, 16 May 2018 15:59:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=2j2PtlmB9pR1qfjLnQ555X0I6wBMEopjRwYKUsZ/6ZY=;
-        b=MHo5bNH9POrU55vVp75nS4uLQA2QeCan7UK8CK+AlkXRHqJFW1NaMcR5dLYZTKSQSX
-         HQtCBnEgNySq8Zi5d78YqbAfmz9OQPizi6JD6e3L6BJ5ehfKcAJUeM87fLXCQrbi5n+A
-         xcpoEl7BVVdJvYxNP+ACWAI59O2OCY6X5UUCCbgWiHFb0qkFxgR+6ChyJyHOJOrzkn/F
-         5/q5hI2X9BRQsgtJG9X0H+lv6hG55Pb7pp0YP0mjrfHfVd3AzomyCuO6izyQoWZlkQIt
-         FYLgaYeH/115LypD9Zb9YVAha7yLq/0INYuvV4KpCx5VCnqUlI6ma+cPuJzFc0T1BhFm
-         FOTw==
+        bh=G7dM0MY7GZV2Hlj7YzdkWtyYxOnFmy6XtqiFU2L6QVU=;
+        b=B4gzdj4ja+o+CHHIHYkPl4ha74ZC/yfobuFesPHiRa00Gs504OLz4Gl43eoocT5Jjr
+         2zRdQweyim2WDnLhFIotcejiTzBA7xKQAeUe2gwnfpFjtr4Iy/ZPAduCODgIq1YSFFYd
+         hFcy/nANIQecJ/pHzJREGpzvK4SGl0Ihempp5Ntw8dBdiSrTcr0SfAQToxOIGVoQ0tML
+         a6hR4qsJzu/qYR0Tfqe88yW7Qzdza9Kgc3cr5QvccrBwPVzYxN+NuXxZL/WacnQHvuwb
+         eQ6xrMsFGp6o056eYLoo35wpJY3P480JwO6doY6iD9fblFw8xOUTHWaqFXX0EZnG3Gry
+         K+qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=2j2PtlmB9pR1qfjLnQ555X0I6wBMEopjRwYKUsZ/6ZY=;
-        b=l2q8paO+cb6Btg8REXuMkzs545nFVZkHwjhwYrGeGbXeLuWgkzvMyNIp8ctEkrw82A
-         UPcGzGIizPCY7XKSDNBqT+/ilxVif+nSUYDEWvWEwk1CK870IKeifcsEE9NqZhr6s1/e
-         akh7Dyf99MlFBptzjdsl7fbf2X/WNgpLG0sjA3MaYF/KXf/vxkUfiVGM6hV8GSnl2umN
-         fLDtSuQG006nAwgniB5xSZJx/f9HgS6NXHg5k9Pu7rGJBNBGIUkv0sGfEjHXuPLhKZAo
-         4rAOtkmTi+CpijZ2nxGEnQVMl58gj5RxLLMb1z8mt8OEB9QJ0gKrOzF2rW0vjPLZnVWY
-         ufmQ==
-X-Gm-Message-State: ALKqPweZNMl19LcsUZkbPzk3A4QuXwisSya6kk4gmz/lxyXHhExjt16s
-        Q7hkxGyp9nZKG75B1cEsJ9Iti2GrlZNTsdxUD+kW5O8TBm0Tq6phxlFu9PpFcHml1Rxh5S2NhO4
-        z6B0hk63ZEakiLBC9HzmP0XyhfT6AQbSyp8+igkyUO6zw2AkT175RGdkBCw==
-X-Google-Smtp-Source: AB8JxZohbNxu/OKJc+M6xzayw5s+Ws6EzlYvnbbTup/AdLjc9zN1unJSNo012xdAnfMN6ix9rzIOsPrjhL8=
+        bh=G7dM0MY7GZV2Hlj7YzdkWtyYxOnFmy6XtqiFU2L6QVU=;
+        b=LGjsRrKOZ74Cs2cn44ks2FU+bx2yrP4kjmpBo9o6ezjQBZvdc9p5D4FkHn+YCtGFzT
+         VX9CCRRr0TsPj2DLU+e9rojodYRWnUXJ0DQnnqS2iycGaPC2uxz3w/pEdy3FUKU1g8AO
+         qg507YtnqGjzWoOwh24jGN/Rc9nEIUG7MEEWjwzvSgODj53akjtQdsdfEscwBbNbor13
+         xvtCqSe8rLBrwb+NAMB8Et1U6Dm+a0h07V3Y4soml9ubOWaUPQO0BxXZR3znSvN+BJA/
+         tahFk6df6mTxNrNAHQKyWJsWpgJt+KevZz7x8V1lrY5CraJZAXPo3Ou54Pw2N1EBf6qB
+         yfzA==
+X-Gm-Message-State: ALKqPwc172gJ4M+GwEI7HwuXvJ7MPR0ldhWLD/UEY3LkKinoAaE8TLYH
+        v+c75+kNuj9s8DeKTOPg6DnSlAYfyMS2WgM7AsRrV910+EG9p/jzKMY+sSduK+Ilu/exGEtaB10
+        Fe7cgRTmbU1TQ3337Of4PHpvPiGfU1ongwt1PJttiMR2sTWMdjboApex2FQ==
+X-Google-Smtp-Source: AB8JxZr+yJYBIy/Jk7K4Z/dD4gmu3229Du9EmQzq1RvOlJfWWPWY2M3HyfbsW86KacAqjuPLdb7JAyuBjnk=
 MIME-Version: 1.0
-X-Received: by 2002:a81:48c1:: with SMTP id v184-v6mr993558ywa.221.1526511551982;
- Wed, 16 May 2018 15:59:11 -0700 (PDT)
-Date:   Wed, 16 May 2018 15:58:01 -0700
+X-Received: by 2002:a81:66d4:: with SMTP id a203-v6mr890596ywc.209.1526511549298;
+ Wed, 16 May 2018 15:59:09 -0700 (PDT)
+Date:   Wed, 16 May 2018 15:58:00 -0700
 In-Reply-To: <20180516225823.235426-1-bmwill@google.com>
-Message-Id: <20180516225823.235426-15-bmwill@google.com>
+Message-Id: <20180516225823.235426-14-bmwill@google.com>
 References: <20180514215626.164960-1-bmwill@google.com> <20180516225823.235426-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH v2 14/36] remote: convert fetch refspecs to struct refspec
+Subject: [PATCH v2 13/36] remote: convert push refspecs to struct refspec
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
         sbeller@google.com, bmwill@google.com
@@ -64,255 +64,224 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the set of fetch refspecs stored in 'struct remote' to use
+Convert the set of push refspecs stored in 'struct remote' to use
 'struct refspec'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/fetch.c  | 20 ++++++++++----------
- builtin/remote.c | 18 +++++++++---------
- remote.c         | 38 ++++++++++++--------------------------
- remote.h         |  5 +----
- 4 files changed, 32 insertions(+), 49 deletions(-)
+ builtin/push.c   | 10 +++++-----
+ builtin/remote.c | 14 +++++++-------
+ remote.c         | 35 ++++++++++++++---------------------
+ remote.h         |  6 ++----
+ 4 files changed, 28 insertions(+), 37 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 745020a10..30083d4bc 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -407,8 +407,8 @@ static struct ref *get_ref_map(struct transport *transport,
- 			fetch_refspec = parse_fetch_refspec(refmap_nr, refmap_array);
- 			fetch_refspec_nr = refmap_nr;
- 		} else {
--			fetch_refspec = transport->remote->fetch;
--			fetch_refspec_nr = transport->remote->fetch_refspec_nr;
-+			fetch_refspec = transport->remote->fetch.items;
-+			fetch_refspec_nr = transport->remote->fetch.nr;
- 		}
+diff --git a/builtin/push.c b/builtin/push.c
+index 00d81fb1d..509dc6677 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -79,11 +79,11 @@ static const char *map_refspec(const char *ref,
+ 	if (count_refspec_match(ref, local_refs, &matched) != 1)
+ 		return ref;
  
- 		for (i = 0; i < fetch_refspec_nr; i++)
-@@ -421,16 +421,16 @@ static struct ref *get_ref_map(struct transport *transport,
- 		struct branch *branch = branch_get(NULL);
- 		int has_merge = branch_has_merge_config(branch);
- 		if (remote &&
--		    (remote->fetch_refspec_nr ||
-+		    (remote->fetch.nr ||
- 		     /* Note: has_merge implies non-NULL branch->remote_name */
- 		     (has_merge && !strcmp(branch->remote_name, remote->name)))) {
--			for (i = 0; i < remote->fetch_refspec_nr; i++) {
--				get_fetch_map(remote_refs, &remote->fetch[i], &tail, 0);
--				if (remote->fetch[i].dst &&
--				    remote->fetch[i].dst[0])
-+			for (i = 0; i < remote->fetch.nr; i++) {
-+				get_fetch_map(remote_refs, &remote->fetch.items[i], &tail, 0);
-+				if (remote->fetch.items[i].dst &&
-+				    remote->fetch.items[i].dst[0])
- 					*autotags = 1;
- 				if (!i && !has_merge && ref_map &&
--				    !remote->fetch[0].pattern)
-+				    !remote->fetch.items[0].pattern)
- 					ref_map->fetch_head_status = FETCH_HEAD_MERGE;
- 			}
- 			/*
-@@ -1166,8 +1166,8 @@ static int do_fetch(struct transport *transport,
- 		if (ref_count) {
- 			prune_refs(refs, ref_count, ref_map, transport->url);
- 		} else {
--			prune_refs(transport->remote->fetch,
--				   transport->remote->fetch_refspec_nr,
-+			prune_refs(transport->remote->fetch.items,
-+				   transport->remote->fetch.nr,
- 				   ref_map,
- 				   transport->url);
- 		}
+-	if (remote->push) {
++	if (remote->push.nr) {
+ 		struct refspec_item query;
+ 		memset(&query, 0, sizeof(struct refspec_item));
+ 		query.src = matched->name;
+-		if (!query_refspecs(remote->push, remote->push_refspec_nr, &query) &&
++		if (!query_refspecs(remote->push.items, remote->push.nr, &query) &&
+ 		    query.dst) {
+ 			struct strbuf buf = STRBUF_INIT;
+ 			strbuf_addf(&buf, "%s%s:%s",
+@@ -436,9 +436,9 @@ static int do_push(const char *repo, int flags,
+ 	}
+ 
+ 	if (!refspec && !(flags & TRANSPORT_PUSH_ALL)) {
+-		if (remote->push_refspec_nr) {
+-			refspec = remote->push_refspec;
+-			refspec_nr = remote->push_refspec_nr;
++		if (remote->push.raw_nr) {
++			refspec = remote->push.raw;
++			refspec_nr = remote->push.raw_nr;
+ 		} else if (!(flags & TRANSPORT_PUSH_MIRROR))
+ 			setup_default_push_refspecs(remote);
+ 	}
 diff --git a/builtin/remote.c b/builtin/remote.c
-index fb84729d6..94dfcb78b 100644
+index d9da82dc8..fb84729d6 100644
 --- a/builtin/remote.c
 +++ b/builtin/remote.c
-@@ -333,10 +333,10 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 	struct ref *ref, *stale_refs;
- 	int i;
+@@ -388,8 +388,8 @@ static int get_push_ref_states(const struct ref *remote_refs,
+ 	local_refs = get_local_heads();
+ 	push_map = copy_ref_list(remote_refs);
  
--	for (i = 0; i < states->remote->fetch_refspec_nr; i++)
--		if (get_fetch_map(remote_refs, states->remote->fetch + i, &tail, 1))
-+	for (i = 0; i < states->remote->fetch.nr; i++)
-+		if (get_fetch_map(remote_refs, &states->remote->fetch.items[i], &tail, 1))
- 			die(_("Could not get fetch map for refspec %s"),
--				states->remote->fetch_refspec[i]);
-+				states->remote->fetch.raw[i]);
+-	match_push_refs(local_refs, &push_map, remote->push_refspec_nr,
+-			remote->push_refspec, MATCH_REFS_NONE);
++	match_push_refs(local_refs, &push_map, remote->push.raw_nr,
++			remote->push.raw, MATCH_REFS_NONE);
  
- 	states->new_refs.strdup_strings = 1;
- 	states->tracked.strdup_strings = 1;
-@@ -347,8 +347,8 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 		else
- 			string_list_append(&states->tracked, abbrev_branch(ref->name));
+ 	states->push.strdup_strings = 1;
+ 	for (ref = push_map; ref; ref = ref->next) {
+@@ -435,14 +435,14 @@ static int get_push_ref_states_noquery(struct ref_states *states)
+ 		return 0;
+ 
+ 	states->push.strdup_strings = 1;
+-	if (!remote->push_refspec_nr) {
++	if (!remote->push.nr) {
+ 		item = string_list_append(&states->push, _("(matching)"));
+ 		info = item->util = xcalloc(1, sizeof(struct push_info));
+ 		info->status = PUSH_STATUS_NOTQUERIED;
+ 		info->dest = xstrdup(item->string);
  	}
--	stale_refs = get_stale_heads(states->remote->fetch,
--				     states->remote->fetch_refspec_nr, fetch_map);
-+	stale_refs = get_stale_heads(states->remote->fetch.items,
-+				     states->remote->fetch.nr, fetch_map);
- 	for (ref = stale_refs; ref; ref = ref->next) {
- 		struct string_list_item *item =
- 			string_list_append(&states->stale, abbrev_branch(ref->name));
-@@ -590,8 +590,8 @@ static int migrate_file(struct remote *remote)
- 		git_config_set_multivar(buf.buf, remote->push.raw[i], "^$", 0);
+-	for (i = 0; i < remote->push_refspec_nr; i++) {
+-		struct refspec_item *spec = remote->push + i;
++	for (i = 0; i < remote->push.nr; i++) {
++		const struct refspec_item *spec = &remote->push.items[i];
+ 		if (spec->matching)
+ 			item = string_list_append(&states->push, _("(matching)"));
+ 		else if (strlen(spec->src))
+@@ -586,8 +586,8 @@ static int migrate_file(struct remote *remote)
+ 		git_config_set_multivar(buf.buf, remote->url[i], "^$", 0);
+ 	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "remote.%s.push", remote->name);
+-	for (i = 0; i < remote->push_refspec_nr; i++)
+-		git_config_set_multivar(buf.buf, remote->push_refspec[i], "^$", 0);
++	for (i = 0; i < remote->push.raw_nr; i++)
++		git_config_set_multivar(buf.buf, remote->push.raw[i], "^$", 0);
  	strbuf_reset(&buf);
  	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
--	for (i = 0; i < remote->fetch_refspec_nr; i++)
--		git_config_set_multivar(buf.buf, remote->fetch_refspec[i], "^$", 0);
-+	for (i = 0; i < remote->fetch.raw_nr; i++)
-+		git_config_set_multivar(buf.buf, remote->fetch.raw[i], "^$", 0);
- 	if (remote->origin == REMOTE_REMOTES)
- 		unlink_or_warn(git_path("remotes/%s", remote->name));
- 	else if (remote->origin == REMOTE_BRANCHES)
-@@ -646,11 +646,11 @@ static int mv(int argc, const char **argv)
- 	strbuf_addf(&buf, "remote.%s.fetch", rename.new_name);
- 	git_config_set_multivar(buf.buf, NULL, NULL, 1);
- 	strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old_name);
--	for (i = 0; i < oldremote->fetch_refspec_nr; i++) {
-+	for (i = 0; i < oldremote->fetch.raw_nr; i++) {
- 		char *ptr;
- 
- 		strbuf_reset(&buf2);
--		strbuf_addstr(&buf2, oldremote->fetch_refspec[i]);
-+		strbuf_addstr(&buf2, oldremote->fetch.raw[i]);
- 		ptr = strstr(buf2.buf, old_remote_context.buf);
- 		if (ptr) {
- 			refspec_updated = 1;
+ 	for (i = 0; i < remote->fetch_refspec_nr; i++)
 diff --git a/remote.c b/remote.c
-index 1b7258f77..26842ce37 100644
+index bce6e7ce4..1b7258f77 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -77,23 +77,9 @@ static const char *alias_url(const char *url, struct rewrites *r)
+@@ -77,14 +77,6 @@ static const char *alias_url(const char *url, struct rewrites *r)
  	return xstrfmt("%s%s", r->rewrite[longest_i]->base, url + longest->len);
  }
  
--static void add_fetch_refspec(struct remote *remote, const char *ref)
+-static void add_push_refspec(struct remote *remote, const char *ref)
 -{
--	ALLOC_GROW(remote->fetch_refspec,
--		   remote->fetch_refspec_nr + 1,
--		   remote->fetch_refspec_alloc);
--	remote->fetch_refspec[remote->fetch_refspec_nr++] = ref;
+-	ALLOC_GROW(remote->push_refspec,
+-		   remote->push_refspec_nr + 1,
+-		   remote->push_refspec_alloc);
+-	remote->push_refspec[remote->push_refspec_nr++] = ref;
 -}
 -
- void add_prune_tags_to_fetch_refspec(struct remote *remote)
+ static void add_fetch_refspec(struct remote *remote, const char *ref)
  {
--	int nr = remote->fetch_refspec_nr;
--	int bufsize = nr  + 1;
--	int size = sizeof(struct refspec_item);
--
--	remote->fetch = xrealloc(remote->fetch, size  * bufsize);
--	memcpy(&remote->fetch[nr], tag_refspec, size);
--	add_fetch_refspec(remote, xstrdup(TAG_REFSPEC));
-+	refspec_append(&remote->fetch, TAG_REFSPEC);
- }
- 
- static void add_url(struct remote *remote, const char *url)
-@@ -169,6 +155,7 @@ static struct remote *make_remote(const char *name, int len)
+ 	ALLOC_GROW(remote->fetch_refspec,
+@@ -175,9 +167,11 @@ static struct remote *make_remote(const char *name, int len)
+ 	ret = xcalloc(1, sizeof(struct remote));
+ 	ret->prune = -1;  /* unspecified */
  	ret->prune_tags = -1;  /* unspecified */
- 	ret->name = xstrndup(name, len);
- 	refspec_init(&ret->push, REFSPEC_PUSH);
-+	refspec_init(&ret->fetch, REFSPEC_FETCH);
- 
++	ret->name = xstrndup(name, len);
++	refspec_init(&ret->push, REFSPEC_PUSH);
++
  	ALLOC_GROW(remotes, remotes_nr + 1, remotes_alloc);
  	remotes[remotes_nr++] = ret;
-@@ -271,7 +258,7 @@ static void read_remotes_file(struct remote *remote)
+-	ret->name = xstrndup(name, len);
+ 
+ 	hashmap_entry_init(ret, lookup_entry.hash);
+ 	replaced = hashmap_put(&remotes_hash, ret);
+@@ -275,7 +269,7 @@ static void read_remotes_file(struct remote *remote)
+ 		if (skip_prefix(buf.buf, "URL:", &v))
+ 			add_url_alias(remote, xstrdup(skip_spaces(v)));
  		else if (skip_prefix(buf.buf, "Push:", &v))
- 			refspec_append(&remote->push, skip_spaces(v));
+-			add_push_refspec(remote, xstrdup(skip_spaces(v)));
++			refspec_append(&remote->push, skip_spaces(v));
  		else if (skip_prefix(buf.buf, "Pull:", &v))
--			add_fetch_refspec(remote, xstrdup(skip_spaces(v)));
-+			refspec_append(&remote->fetch, skip_spaces(v));
+ 			add_fetch_refspec(remote, xstrdup(skip_spaces(v)));
  	}
- 	strbuf_release(&buf);
- 	fclose(f);
-@@ -310,13 +297,15 @@ static void read_branches_file(struct remote *remote)
- 		frag = "master";
- 
- 	add_url_alias(remote, strbuf_detach(&buf, NULL));
--	add_fetch_refspec(remote, xstrfmt("refs/heads/%s:refs/heads/%s",
--					  frag, remote->name));
-+	strbuf_addf(&buf, "refs/heads/%s:refs/heads/%s",
-+		    frag, remote->name);
-+	refspec_append(&remote->fetch, buf.buf);
- 
- 	/*
+@@ -323,8 +317,10 @@ static void read_branches_file(struct remote *remote)
  	 * Cogito compatible push: push current HEAD to remote #branch
  	 * (master if missing)
  	 */
-+	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "HEAD:refs/heads/%s", frag);
- 	refspec_append(&remote->push, buf.buf);
+-	add_push_refspec(remote, xstrfmt("HEAD:refs/heads/%s", frag));
++	strbuf_addf(&buf, "HEAD:refs/heads/%s", frag);
++	refspec_append(&remote->push, buf.buf);
  	remote->fetch_tags = 1; /* always auto-follow */
-@@ -411,7 +400,8 @@ static int handle_config(const char *key, const char *value, void *cb)
++	strbuf_release(&buf);
+ }
+ 
+ static int handle_config(const char *key, const char *value, void *cb)
+@@ -409,7 +405,8 @@ static int handle_config(const char *key, const char *value, void *cb)
  		const char *v;
  		if (git_config_string(&v, key, value))
  			return -1;
--		add_fetch_refspec(remote, v);
-+		refspec_append(&remote->fetch, v);
+-		add_push_refspec(remote, v);
++		refspec_append(&remote->push, v);
 +		free((char *)v);
- 	} else if (!strcmp(subkey, "receivepack")) {
+ 	} else if (!strcmp(subkey, "fetch")) {
  		const char *v;
  		if (git_config_string(&v, key, value))
-@@ -578,7 +568,6 @@ static struct remote *remote_get_1(const char *name,
- 		add_url_alias(ret, name);
+@@ -542,9 +539,9 @@ const char *remote_ref_for_branch(struct branch *branch, int for_push,
+ 				pushremote_for_branch(branch, NULL);
+ 			struct remote *remote = remote_get(remote_name);
+ 
+-			if (remote && remote->push_refspec_nr &&
+-			    (dst = apply_refspecs(remote->push,
+-						  remote->push_refspec_nr,
++			if (remote && remote->push.nr &&
++			    (dst = apply_refspecs(remote->push.items,
++						  remote->push.nr,
+ 						  branch->refname))) {
+ 				if (explicit)
+ 					*explicit = 1;
+@@ -582,7 +579,6 @@ static struct remote *remote_get_1(const char *name,
  	if (!valid_remote(ret))
  		return NULL;
--	ret->fetch = parse_fetch_refspec(ret->fetch_refspec_nr, ret->fetch_refspec);
+ 	ret->fetch = parse_fetch_refspec(ret->fetch_refspec_nr, ret->fetch_refspec);
+-	ret->push = parse_push_refspec(ret->push_refspec_nr, ret->push_refspec);
  	return ret;
  }
  
-@@ -609,9 +598,6 @@ int for_each_remote(each_remote_fn fn, void *priv)
- 		struct remote *r = remotes[i];
- 		if (!r)
- 			continue;
--		if (!r->fetch)
--			r->fetch = parse_fetch_refspec(r->fetch_refspec_nr,
--						       r->fetch_refspec);
+@@ -616,9 +612,6 @@ int for_each_remote(each_remote_fn fn, void *priv)
+ 		if (!r->fetch)
+ 			r->fetch = parse_fetch_refspec(r->fetch_refspec_nr,
+ 						       r->fetch_refspec);
+-		if (!r->push)
+-			r->push = parse_push_refspec(r->push_refspec_nr,
+-						     r->push_refspec);
  		result = fn(r, priv);
  	}
  	return result;
-@@ -790,7 +776,7 @@ char *apply_refspecs(struct refspec_item *refspecs, int nr_refspec,
+@@ -1613,11 +1606,11 @@ static const char *branch_get_push_1(struct branch *branch, struct strbuf *err)
+ 				 _("branch '%s' has no remote for pushing"),
+ 				 branch->name);
  
- int remote_find_tracking(struct remote *remote, struct refspec_item *refspec)
- {
--	return query_refspecs(remote->fetch, remote->fetch_refspec_nr, refspec);
-+	return query_refspecs(remote->fetch.items, remote->fetch.nr, refspec);
- }
+-	if (remote->push_refspec_nr) {
++	if (remote->push.nr) {
+ 		char *dst;
+ 		const char *ret;
  
- static struct ref *alloc_ref_with_prefix(const char *prefix, size_t prefixlen,
-@@ -1588,7 +1574,7 @@ static const char *tracking_for_push_dest(struct remote *remote,
- {
- 	char *ret;
- 
--	ret = apply_refspecs(remote->fetch, remote->fetch_refspec_nr, refname);
-+	ret = apply_refspecs(remote->fetch.items, remote->fetch.nr, refname);
- 	if (!ret)
- 		return error_buf(err,
- 				 _("push destination '%s' on remote '%s' has no local tracking branch"),
-@@ -2222,7 +2208,7 @@ static int remote_tracking(struct remote *remote, const char *refname,
- {
- 	char *dst;
- 
--	dst = apply_refspecs(remote->fetch, remote->fetch_refspec_nr, refname);
-+	dst = apply_refspecs(remote->fetch.items, remote->fetch.nr, refname);
- 	if (!dst)
- 		return -1; /* no tracking ref for refname at remote */
- 	if (read_ref(dst, oid))
+-		dst = apply_refspecs(remote->push, remote->push_refspec_nr,
++		dst = apply_refspecs(remote->push.items, remote->push.nr,
+ 				     branch->refname);
+ 		if (!dst)
+ 			return error_buf(err,
 diff --git a/remote.h b/remote.h
-index 637fc5d0c..e7d00fe2a 100644
+index 3657bd43d..637fc5d0c 100644
 --- a/remote.h
 +++ b/remote.h
-@@ -30,10 +30,7 @@ struct remote {
+@@ -3,6 +3,7 @@
  
- 	struct refspec push;
+ #include "parse-options.h"
+ #include "hashmap.h"
++#include "refspec.h"
  
--	const char **fetch_refspec;
--	struct refspec_item *fetch;
--	int fetch_refspec_nr;
--	int fetch_refspec_alloc;
-+	struct refspec fetch;
+ enum {
+ 	REMOTE_UNCONFIGURED = 0,
+@@ -27,10 +28,7 @@ struct remote {
+ 	int pushurl_nr;
+ 	int pushurl_alloc;
  
- 	/*
- 	 * -1 to never fetch tags
+-	const char **push_refspec;
+-	struct refspec_item *push;
+-	int push_refspec_nr;
+-	int push_refspec_alloc;
++	struct refspec push;
+ 
+ 	const char **fetch_refspec;
+ 	struct refspec_item *fetch;
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
