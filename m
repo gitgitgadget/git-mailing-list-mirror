@@ -2,83 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E95AD1F406
-	for <e@80x24.org>; Wed, 16 May 2018 01:17:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C421D1F406
+	for <e@80x24.org>; Wed, 16 May 2018 01:36:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751963AbeEPBRN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 21:17:13 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:46611 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751309AbeEPBRN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 May 2018 21:17:13 -0400
-Received: by mail-wr0-f196.google.com with SMTP id a12-v6so1949232wrn.13
-        for <git@vger.kernel.org>; Tue, 15 May 2018 18:17:12 -0700 (PDT)
+        id S1752237AbeEPBgH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 21:36:07 -0400
+Received: from mail-ua0-f196.google.com ([209.85.217.196]:42319 "EHLO
+        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751859AbeEPBgG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 May 2018 21:36:06 -0400
+Received: by mail-ua0-f196.google.com with SMTP id f3-v6so1489031uan.9
+        for <git@vger.kernel.org>; Tue, 15 May 2018 18:36:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=bC0RbZjp3UdIoeKaLr9OsG5xi5MEUblNz1Yiub8/G/4=;
-        b=ozMrDozeYISKzIywJKEdWJSqsmS3wjfL4s1d0fAcZ5T0Hc7NE4RhCQ5sIcgbmIE1Bp
-         sX7i5AhNGDafdG3s/2rE2OspIvJ+u25QEdfftbsf7w8VNmK6jiEU5Bx4VKzYSfk8+/rQ
-         iabyf7LxGBMDxj7l8dKSO04Cz4yPcrmtZPxTpCLOSp1CM4PJ4qNJl6M4zC4j61BKkl0k
-         W12/VjzwCQ8a1WOq8UrCCz0jCbv1zXQYqsObIPcIwv4VxlOsi1nzo82iGZuBnyF5AeQ+
-         RQXgNRrreBIHKD4hvYLCZh/RkvPBdBcT69jwPPDGrVBBrBfSAVZm6hjhze9kCI6/hjSq
-         qZqw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dY3gPScjoR38jO2/7a5dgVJv/aU95ZK5bABF2g5Aezk=;
+        b=B9V1PS7hD4EqFdbrpSA/RmGutjHXguAMHl/fpyAEk2xlwKQOGIWqnpCXquKxZ2KK9D
+         YZEtPJ4k9G7TJcmSnomAaf7jOg+8behvVHMZuM7BQmNE3LkU9mYMhM5T29QQ9HBi0FgW
+         gfOuVEOG6K6QWGh8gEGJZe/xaGwLxJS54sOcRElhkMVxI/6rddLikYoa8Wf34NIg9ec0
+         tlvOtOx3KgdH6JoNrDWNsMA5z7fime+qSisL7KzqAnLcnNC9Q1sNACpv4e5x9ASlaeTT
+         78h61QWyf9pra3C+ONpU91P8wqDojOqiYo8rro4vTnvCJe9ZWOi9iLsORI/yN0oKVZoF
+         WekQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=bC0RbZjp3UdIoeKaLr9OsG5xi5MEUblNz1Yiub8/G/4=;
-        b=JkU7LGeURLb9eoXqKybHL2SQ5z82OkI22eZAFjLOyjzwdws4bEy81SZeCL3gblyAn8
-         +Whgx3XFKaTyyc6vUE/3WvpIOt8KgFXXdGJ4Jo40dZBx+oUYRhhjBe/+OiVVwvsaQ1yZ
-         KNpR13sUReqYPZbKZdGpNCP8aooHG3ugWzVgWgFhCZQhL4VyeqlOpWEYHShwxfx9K2dP
-         AcG+xLoFd1qm57nFDahhfR5WLes38MqxQcct++UAOGtwVVGiul5Y38m6BrzF1wtNAerc
-         1YuMOBKeHJyXDbr8GxTWsPagTLsmDHlxvGqCb4Me0PwvgisF9HP9YpeXEb+NQyxphIFc
-         h69Q==
-X-Gm-Message-State: ALKqPwcXQlQtWMofl7GM5mo9pVLob03mTFAez426MvTaSNcyHxqJypGz
-        G15MibDD0CfOGP0lWQFDv/A=
-X-Google-Smtp-Source: AB8JxZo5XsoUg3WRbex5Vm8auoSSsARSWIVcNgNZVMBo8eTqEsfyf5+rExx/whB7CIcZim5Qb57+FA==
-X-Received: by 2002:adf:a0ea:: with SMTP id n39-v6mr12232958wrn.87.1526433431616;
-        Tue, 15 May 2018 18:17:11 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a14-v6sm2211122wra.84.2018.05.15.18.17.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 May 2018 18:17:09 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, leif.middelschulte@gmail.com, newren@gmail.com
-Subject: Re: [PATCH 2/3] merge-recursive: i18n submodule merge output and respect verbosity
-References: <20180515200030.88731-1-sbeller@google.com>
-        <20180515200030.88731-5-sbeller@google.com>
-Date:   Wed, 16 May 2018 10:17:09 +0900
-In-Reply-To: <20180515200030.88731-5-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 15 May 2018 13:00:29 -0700")
-Message-ID: <xmqqtvr87622.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dY3gPScjoR38jO2/7a5dgVJv/aU95ZK5bABF2g5Aezk=;
+        b=bK4Glehvolo/2o2qzug/4VO/1xWlAmB49E44dB5pm5PbJPLJOVSB10lCmbnfbciE7w
+         9p0kC42k9ZJqlnV2xpq5rKjvB0yAlC+TIzp0V8Au/joX6vg5eKq2XDrQc0SoJazs6ghe
+         7nKD/RGjhO26MzH9aVq7iFpkEUL1cspOQex9/HtlH86T8yHStrRBibcEUY9bThd6xFhT
+         4T9J+8pg1jpc0yvLF1rXKyeAdZPR+NfLZgems5nF1ksqNn24s6CdJaSJdBqe/2IqG/X4
+         55zhcLlK6u+xGgHe4S/9+TKU+CYC96u0ovMaM2VdSOMfUMKuFK5xK8BPFLkyvtTeTPq9
+         hzbQ==
+X-Gm-Message-State: ALKqPwcfVhueFw9xlR42cr9AoEcFxhjtNn0IEMS/wGPvZl6a6zG7e0l1
+        4OcourFAwNdmdMpTtzhuVd2pK0w8uK/XDv5dj1E=
+X-Google-Smtp-Source: AB8JxZqOKMSQsJ6QfmerSWnJkAtAFsd4GxO+NtHkU6KgjWr7wquaFvf1k1XkggS4FPQd+ruj7yB3c2GVnPm9wUYBYXM=
+X-Received: by 2002:a9f:380f:: with SMTP id p15-v6mr18543794uad.112.1526434566060;
+ Tue, 15 May 2018 18:36:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.176.95.4 with HTTP; Tue, 15 May 2018 18:36:04 -0700 (PDT)
+In-Reply-To: <20180515200030.88731-6-sbeller@google.com>
+References: <20180515200030.88731-1-sbeller@google.com> <20180515200030.88731-6-sbeller@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 15 May 2018 18:36:04 -0700
+Message-ID: <CABPp-BH3mi5L+9QKXQAK0sp8z9zzfpwYY9R-itkfOo3CYTUo6g@mail.gmail.com>
+Subject: Re: [PATCH 3/3] Inform about fast-forwarding of submodules during merge
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Leif Middelschulte <leif.middelschulte@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, May 15, 2018 at 1:00 PM, Stefan Beller <sbeller@google.com> wrote:
+> From: Leif Middelschulte <Leif.Middelschulte@gmail.com>
+>
+> Inform the user about an automatically fast-forwarded submodule. The
+> silent merge behavior was introduced by commit 68d03e4a6e44 ("Implement
+> automatic fast-forward merge for submodules", 2010-07-07)).
+>
+> Signed-off-by: Leif Middelschulte <Leif.Middelschulte@gmail.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  merge-recursive.c | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 0571919ee0a..29a430c418a 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -1093,10 +1093,26 @@ static int merge_submodule(struct merge_options *o,
+>         /* Case #1: a is contained in b or vice versa */
+>         if (in_merge_bases(commit_a, commit_b)) {
+>                 oidcpy(result, b);
+> +               if (show(o, 3)) {
+> +                       output(o, 1, _("Fast-forwarding submodule %s to the following commit:"), path);
 
-> +static int merge_submodule(struct merge_options *o,
-> +			   struct object_id *result, const char *path,
->  			   const struct object_id *base, const struct object_id *a,
-> -			   const struct object_id *b, int search)
-> +			   const struct object_id *b)
->  {
->  	struct commit *commit_base, *commit_a, *commit_b;
->  	int parent_count;
->  	struct object_array merges;
->  
->  	int i;
-> +	int search = !o->call_depth;
+Seems slightly odd to mix 3 and 1 here; although it'll work just fine,
+I would have expected use of 3 in both places (much like you did with
+the 2 and 2 below).
 
-I kind of like this "while at it" change in this patch ;-)
+> +                       output_commit_title(o, commit_b);
+> +               } else if (show(o, 2))
+> +                       output(o, 2, _("Fast-forwarding submodule %s to %s"), path, oid_to_hex(b));
+> +               else
+> +                       ; /* no output */
+> +
+>                 return 1;
+>         }
+>         if (in_merge_bases(commit_b, commit_a)) {
+>                 oidcpy(result, a);
+> +               if (show(o, 3)) {
+> +                       output(o, 1, _("Fast-forwarding submodule %s to the following commit:"), path);
+
+Same.
+
+> +                       output_commit_title(o, commit_a);
+> +               } else if (show(o, 2))
+> +                       output(o, 2, _("Fast-forwarding submodule %s to %s"), path, oid_to_hex(a));
+> +               else
+> +                       ; /* no output */
+> +
+>                 return 1;
+>         }
+>
+> --
+> 2.17.0.582.gccdcbd54c44.dirty
+
+Other than that nit-pick, looks good to me.
