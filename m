@@ -2,73 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC09A1F406
-	for <e@80x24.org>; Wed, 16 May 2018 21:52:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D349D1F406
+	for <e@80x24.org>; Wed, 16 May 2018 21:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751225AbeEPVwW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 17:52:22 -0400
-Received: from mout.gmx.net ([212.227.15.18]:36891 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750953AbeEPVwW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 17:52:22 -0400
-Received: from MININT-HARFK7P.southpacific.corp.microsoft.com
- ([37.201.195.106]) by mail.gmx.com (mrgmx002 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 0LmKOI-1ekHoy3Nsg-00ZxIy; Wed, 16 May 2018 23:52:14 +0200
-Date:   Wed, 16 May 2018 23:52:13 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Stefan Beller <sbeller@google.com>
-cc:     Brandon Williams <bmwill@google.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH] refspec.h: reinstate 'extern' to fix sparse warning
-In-Reply-To: <CAGZ79kbPNJPtcvbgu81y3UYmKsUd6UNNr9kmQ7qjEfB0ZBTJwQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1805162351050.77@tvgsbejvaqbjf.bet>
-References: <29f60a43-9c95-512a-ef85-558906a08ed0@ramsayjones.plus.com> <20180516214251.GA60301@google.com> <CAGZ79kbPNJPtcvbgu81y3UYmKsUd6UNNr9kmQ7qjEfB0ZBTJwQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752096AbeEPVzA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 17:55:00 -0400
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:34805 "EHLO
+        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752062AbeEPVy7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 17:54:59 -0400
+Received: by mail-vk0-f68.google.com with SMTP id t63-v6so1498380vkb.1
+        for <git@vger.kernel.org>; Wed, 16 May 2018 14:54:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=sB2h1T3S6g22Ea+U888L8d6IFsPa5ZFGey9cAPf9t9M=;
+        b=vKr+nWAFJCjHARHcRkbPGsPgp9Ivzr+3BE9N2x3evbFQ1UBMMHfNENr444CJZ3g0ET
+         BRNqtntDeeNGCegM2DoWvMovKFdGt4goYTmnFfDmEu4co0iBSUiqgou0qNUafOh/jmN7
+         Q7LnkKTqNh7boJE9ENRAJ1pomUG4Ybwb5sfwTN9sdVLo4Bg0i6vWivBhu7CM0Z/aF4mw
+         f/dgH2bGuArmuTGthM/Mqn766cxIsyYQg7vlqnvGgqO2hhdQzmLkwkl05LaT1CIN6C2H
+         2uLF79+htr+tywdEDuV/1Nm9gXmvNE6q/E3ye9ZytUw88Px5bWCoq9UeeaT7Pp5mIu9Y
+         UgIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=sB2h1T3S6g22Ea+U888L8d6IFsPa5ZFGey9cAPf9t9M=;
+        b=Y1/ngRGQC4+WpdGDaIXAaGu/rX1ycyNohPhNvpJed6JEPlshNWHsOhZpTIlq/GkZy8
+         fxeoOOkUrOuh2usyACUJqDkSLFxUK8XeZx2gRlX7aX6i5lcCE5gWyNdCq6N37dsk/I75
+         0TBDpxS6+knNYJ6sUk6Y56mYloitohwS5x8MQyxuaD5JmFE6/kwJjMKSGlbQrn42zBx/
+         6s5rU1qfPNJ5NdRI1pTHNnJ00STLqXz6vXT5U5r5e28idcSax5N0TNvXM7Harfp5vcKY
+         zrQ20y1a2H9W52o3hsoaKeBwWh+CmwCuNO/q3S547jc7tdF/9MnGaA8U4DQwWIKzPwPJ
+         comQ==
+X-Gm-Message-State: ALKqPwdDSl3uaWv6ypSzZPDgtPlw3rbryVL4TWb7A9fFcAAeE698tAym
+        +9LZRbXo0Z1i1By4bhhPzsXYZyWNkkbt/emHTGA=
+X-Google-Smtp-Source: AB8JxZoKSoHM8cO6FJeqQMJfRLr7Gpq74N/+Eqgp9eezrUuUETlx1BHFmDDzyAQIBCfU4u6NiHSLfXqE9I7s9Q8Q6Ig=
+X-Received: by 2002:a1f:2cc6:: with SMTP id s189-v6mr2422525vks.106.1526507698340;
+ Wed, 16 May 2018 14:54:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/8RuNPVG4n/OW6Wc37nzDoCgwRbjeYJc2Li6fYS1fTYr2XszmWH
- SnSNrZwIZiFkhZxAO7VFfvSeT7YcIIkEE4lgyBUJCLcgN9aUGVjaNc5Js736ipl6ojw67Y6
- EOu2YJUQ/fAk6ojM0O/fS1eLO+t8f7dj06lNS0+ha3tXfBBQEtE6fGEnuAQF8LVehXEs7/V
- mgqaf5hW1Rscdvc+ojgXA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:85obg4chwQo=:1KUAjhGY4h+oRMZl72wuyZ
- eQV+/VZsfys86zGds0IwQz9OFU0XC6lmwMmAp6b4weSxp+yDbFSTxKj8WdV3mbmKYQoLrSYX7
- e9rs2bj9h63LXbjjh6mwb2vwQa1axnVVWrYwh7GXn3xIdkL5Vgs6gUKWUnyppZcrnsqG1CJUk
- AcIaeFOcS2mfxKy819QjlwfqUgGwBo/a7q6WtdiY7a77Irkfdkj/DkhPcNB3UE4gvpmPy5xS6
- qmvPKfBbUiis6y4odj8RSPvnKHUDFot1PZfr1sulQFTL+DJ4wlio8vs6o8QdLMBlLcdL5Vu7O
- LKsc5vJcwWgrn8kn5iXZh+zpOXdCO7K3H2BUtdO5UnQjDUksg1ZhzxB7T+50eVy+C1OvKN6OG
- JpyjITL+FHJ4wd38MPGMHjTMe38r3cO7ClCa/8RNgzeKW4C2TL1TRf6pthx8Fdx8XpZKNm8FO
- rRTji3tBBEeRiFlDYiw6eiJJDwLDQEfNMbnj0jOjeOuvBIeXPJNPT6qnoMq3FRmQWEIprWMxR
- DMlW5IOPowTqvL8rx+zCpNzhPiSBnMOrwH9kP/D5UNeYLawv356mclDjQp931OXRBC+lumXSa
- MtZYljGQ7i+r8hDRhvXxctLJ4BQbDdalRqr6SHulwMnjC//xGciXYK4+cMXIKYZivdhLhArBt
- WbQvIJo75yGoF8VWUV2mGtp+TmZtMmfK9Uy7HcOtj9zvtxALTh45/foulCb4bg2NQ2PyfMb1u
- gLniFzY7uqLq9TcP/XKXhQsxhAeGKzhfo4hwicr6MIoe3MbOTEsrZzwakyYRxbzpOEb6MSfse
- e1nCzQ5
+Received: by 10.176.95.4 with HTTP; Wed, 16 May 2018 14:54:57 -0700 (PDT)
+In-Reply-To: <cover.1526488122.git.martin.agren@gmail.com>
+References: <CABPp-BHm4B5vXZGHn_i6Aycvc_PDNWSFxLFo9s-ijb511VY9RA@mail.gmail.com>
+ <cover.1526488122.git.martin.agren@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 16 May 2018 14:54:57 -0700
+Message-ID: <CABPp-BFtMQMK_4RAQk=XHoXdFYDxkvwz-Gws9Fz-0DdcfiJKcg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] unpack_trees_options: free messages when done
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 16 May 2018, Stefan Beller wrote:
+Hi Martin,
 
-> On Wed, May 16, 2018 at 2:42 PM, Brandon Williams <bmwill@google.com> wrote:
+On Wed, May 16, 2018 at 9:30 AM, Martin =C3=85gren <martin.agren@gmail.com>=
+ wrote:
+> On 16 May 2018 at 16:32, Elijah Newren <newren@gmail.com> wrote:
+>> On Sat, Apr 28, 2018 at 4:32 AM, Martin =C3=85gren <martin.agren@gmail.c=
+om> wrote:
+>>> As you noted elsewhere [1], Ben is also working in this area. I'd be
+>>> perfectly happy to sit on these patches until both of your contribution=
+s
+>>> come through to master.
+>>>
+>>> [1] https://public-inbox.org/git/CABPp-BFh=3DgL6RnbST2bgtynkij1Z5TMgAr1=
+Via5_VyteF5eBMg@mail.gmail.com/
+>>
+>> Instead of waiting for these to come through to master, could you just
+>> submit based on the top of bp/merge-rename-config?
 >
-> > Though now I'm confused, I thought we were going towards eliminating
-> > using the extern keyword? ...of course I guess it means something
-> > _slightly_ different when using with a variable vs a function :)
-> 
-> We're only eliminating it when it is redundant. :-)
-> 
-> For variables this is not redundant as we need it to tell apart the
-> declaration and definition of it, so we have to keep it.
+> Sure, here goes. This is based on bp/merge-rename-config, gets rid of
+> all leaks of memory allocated in `setup_unpack_trees_porcelain()` and
+> cuts the number of leaks in the test-suite (i.e., the subset of the
+> tests that I run) by around 10%.
 
-Otherwise we will end up with the variable *defined* for every file that
-includes that header. And of course those different versions of the same
-variable would have possibly different values...
+Awesome, thanks.  I've looked over patches 2 & 3; they look good to me.
