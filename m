@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C60FB1F406
-	for <e@80x24.org>; Wed, 16 May 2018 01:59:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9DD81F406
+	for <e@80x24.org>; Wed, 16 May 2018 01:59:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752588AbeEPB65 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 21:58:57 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47470 "EHLO
+        id S1752644AbeEPB7Z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 21:59:25 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47488 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752289AbeEPB6z (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:55 -0400
+        by vger.kernel.org with ESMTP id S1752172AbeEPB65 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:57 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6EE8D6074B;
-        Wed, 16 May 2018 01:58:54 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 78F5F6074B;
+        Wed, 16 May 2018 01:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526435935;
-        bh=Fqb8bmjnxCROGYtWRgjBR57rn9uqbvctuKrGC2JuG60=;
+        s=default; t=1526435937;
+        bh=JKitOMEA2DJPCoKPis5FmlXHEw44cp0tLh+bvAWfwKY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=oqMANobWOwaV/RsSRbue9sAElfRXNI+X65OnDWGRqwCA5OGZF/Kaa1cvOzXvLTQ2l
-         qkQ5T3Fkg3Mfz/JXzKA+gh2e5RqmJF0bL4fl/dELiyOe/dO/j373OyrtL/hfxMGwfX
-         5L9Bdx/ETo/xjzJi5rXiJJZV74yAIDTI0dXlws0J2c9PWEJ+BR5qYRafAihSSMZ/4X
-         yuRDjC4wOND5V2/l+3hxtMG2OmOa91o4yuTR/TKycZk2TVmeBxGCG91yN0vNXUMXNn
-         tNtQEngyU3Aky+F9+NxVST88bhrvlLB01mMXbfmj3my9KvDWf0ofgGGOoRVeer+ZpC
-         OuMH9AoTGCg5K7K7zsXMelVz6tzOlYewgw91Dx4G7wT3hqTLrtYBOfjaPtZ3R69+n+
-         mBJzDJumHTIsC2WA00qjkOjwQRVfW689G7zZJ82nT05Mjt+qJIz1Z/c7wa4CQh69y5
-         0MDLE0RsCFLjHd4SAHKzq67mRxR1XQsWUQfafi9SrJFv2nL82T0
+        b=x84Y4tegkV30KZZOB+bK86RsPu+Pn+JrY5omda29b7CsHvYS9vln2UiCiYEUgYTdw
+         8R89ghODbuRxNScMSttfMfeOyUEPD3NDdJV6txbH15kgM9PtUp3SFFXkI2kYkNf8fl
+         UybZXIdVguHLJvvLtRCeggfHaM12I8pMwcnsw5XLX1q8QEPHfgd5G76yMUJK0rUAck
+         G4NgP3jBK9HfG5S0UeVqLonthRFI3MQFMME9TK9XDQpVV2icxqjAbmFRTdmRwLOlzl
+         cxJHzlcDhH1RUiIS8PLZT37n4GUcmOjJKjULQReNG+dxoXxQ/nTBsdKxXiUwvF2j0Y
+         Y15oS4UVEonE95nKLRg+1SXpdLDWT0ZuqcGuZbQ3pV1buGoa3B/mgga0W+8h+7liCd
+         aZH5CYrl6IKhaTEhC40efQiBBAY+7DmiZwaCNJmM9aArJoaDKUi4EBx/oUBIzPQJIB
+         jsBq+8MMgqDAQAFBtV4Kqy5zWEi28MuaZo9KdbtgQUgaLMzAOOR
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -43,9 +43,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 18/28] t4020: abstract away SHA-1-specific constants
-Date:   Wed, 16 May 2018 01:56:20 +0000
-Message-Id: <20180516015630.661349-19-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 20/28] t4029: fix test indentation
+Date:   Wed, 16 May 2018 01:56:22 +0000
+Message-Id: <20180516015630.661349-21-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180516015630.661349-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -55,48 +55,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for blobs instead of using
-hard-coded hashes.
+We typically indent our tests with a single tab, partially so that we
+can take advantage of indented heredocs.  Make this change and move the
+quote marks to be in the typical position for our tests.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4020-diff-external.sh | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ t/t4029-diff-trailing-space.sh | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
-index 49d3f54b29..e009826fcb 100755
---- a/t/t4020-diff-external.sh
-+++ b/t/t4020-diff-external.sh
-@@ -13,6 +13,8 @@ test_expect_success setup '
+diff --git a/t/t4029-diff-trailing-space.sh b/t/t4029-diff-trailing-space.sh
+index 3ccc237a8d..f4e18cb8d3 100755
+--- a/t/t4029-diff-trailing-space.sh
++++ b/t/t4029-diff-trailing-space.sh
+@@ -18,22 +18,21 @@ index 5f6a263..8cb8bae 100644
+ EOF
+ exit 1
  
- 	test_tick &&
- 	echo second >file &&
-+	before=$(git hash-object file) &&
-+	before=$(git rev-parse --short $before) &&
- 	git add file &&
- 	git commit -m second &&
+-test_expect_success \
+-    "$test_description" \
+-    'printf "\nx\n" > f &&
+-     git add f &&
+-     git commit -q -m. f &&
+-     printf "\ny\n" > f &&
+-     git config --bool diff.suppressBlankEmpty true &&
+-     git diff f > actual &&
+-     test_cmp exp actual &&
+-     perl -i.bak -p -e "s/^\$/ /" exp &&
+-     git config --bool diff.suppressBlankEmpty false &&
+-     git diff f > actual &&
+-     test_cmp exp actual &&
+-     git config --bool --unset diff.suppressBlankEmpty &&
+-     git diff f > actual &&
+-     test_cmp exp actual
+-     '
++test_expect_success "$test_description" '
++	printf "\nx\n" > f &&
++	git add f &&
++	git commit -q -m. f &&
++	printf "\ny\n" > f &&
++	git config --bool diff.suppressBlankEmpty true &&
++	git diff f > actual &&
++	test_cmp exp actual &&
++	perl -i.bak -p -e "s/^\$/ /" exp &&
++	git config --bool diff.suppressBlankEmpty false &&
++	git diff f > actual &&
++	test_cmp exp actual &&
++	git config --bool --unset diff.suppressBlankEmpty &&
++	git diff f > actual &&
++	test_cmp exp actual
++'
  
-@@ -180,9 +182,13 @@ test_expect_success 'no diff with -diff' '
- echo NULZbetweenZwords | perl -pe 'y/Z/\000/' > file
- 
- test_expect_success 'force diff with "diff"' '
-+	after=$(git hash-object file) &&
-+	after=$(git rev-parse --short $after) &&
- 	echo >.gitattributes "file diff" &&
- 	git diff >actual &&
--	test_cmp "$TEST_DIRECTORY"/t4020/diff.NUL actual
-+	sed -e "s/^index .*/index $before..$after 100644/" \
-+		"$TEST_DIRECTORY"/t4020/diff.NUL >expected-diff &&
-+	test_cmp expected-diff actual
- '
- 
- test_expect_success 'GIT_EXTERNAL_DIFF with more than one changed files' '
-@@ -237,7 +243,7 @@ test_expect_success 'diff --cached' '
- 	git update-index --assume-unchanged file &&
- 	echo second >file &&
- 	git diff --cached >actual &&
--	test_cmp "$TEST_DIRECTORY"/t4020/diff.NUL actual
-+	test_cmp expected-diff actual
- '
- 
- test_expect_success 'clean up crlf leftovers' '
+ test_done
