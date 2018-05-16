@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 210F41F406
-	for <e@80x24.org>; Wed, 16 May 2018 01:58:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BF881F406
+	for <e@80x24.org>; Wed, 16 May 2018 01:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752427AbeEPB6l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 May 2018 21:58:41 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47344 "EHLO
+        id S1752516AbeEPB6n (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 May 2018 21:58:43 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47368 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752289AbeEPB6k (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:40 -0400
+        by vger.kernel.org with ESMTP id S1752289AbeEPB6m (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 May 2018 21:58:42 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 83ABA60735;
-        Wed, 16 May 2018 01:58:28 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 36BEA60746;
+        Wed, 16 May 2018 01:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526435909;
-        bh=eEiPhRNRRwB+pAIMAjluQ+nDX1/aZ9o3cPnC3ddUzLk=;
+        s=default; t=1526435921;
+        bh=2CW6DsDUo3CJrhCXrqIW39V/06xwog/BDysVrtZLHL4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=pQ6a6aqL1fIfqCqH4SuuEwL7j7dkxwsXu0sf/iI46q7mH0PLVKMEir3witBmlaq0v
-         sOoY9Nwon8uhkUs2t7pVQZ2yJ3xYVEAQIfc5uZ8yVeecvJg09G7eSVjHtuoj9vLByn
-         OM/Eludopw95vN13kPhsuI7RPckYJ/LnZ8Uiakc0BI1SgaCYapw6eBKS5ewWU2dp5k
-         zXg+0p+imvWuf9IYh8S/dMaf1Xf5dPf21XM175a/aLDiP8K7qcAJdYjJgS3lJQZkTR
-         0NFYhk86XBk/eXve2p9AlzJny0tARr4uDube+GHImIkyu56OZcyfTNfoHMGOT7KFYb
-         pEN6c/Zt9XNNswMPD/PSdX0FnkjA3Z2ZLd/oWmjHz1o312HalndfcPzkYDN60BEP8F
-         9zYwjPQQZl+v4Gi7Et7h5BwgzAROclo5BGvGrGi4blB7F6C0tU5/c5aNmqMNK57Z1a
-         lhX3/PDn1bd9NE+L+Y/ZC0/e/8mqVKXHb2Tzq2xBzHo15wZSTex
+        b=fiRJsC7ka678FODsHHwkqiaD57MVW39WXyle9PyxJddhE3kdcFTN2A5X9Gn5IZC/S
+         2MHTR9PKYrM0J5vF4h1UubzZUyYGgbrJjEqs2x0FltlFjgR5TgYUQ5Nlj+TbhEzdi/
+         ZxTGwwWIEbHg0I6+/oKZpNGgnTIZklBqCR1lHJM+PrkVNZO1w3e8EybEHurpYaz0Iw
+         EQu1MXwrPHhvnLQxT43eO99SXTM7m0ElFLFPK4EZ0jXYskmOyR9HheK5yZHBVpueYS
+         Qbg2wxFW5st3TE4vvqmaFEa5/jf6vqfx2ho+ES0ELxS37x8il1VOyvsizNV6ssQMfD
+         CXUnnqgvKUPASbhQPV7DyfS9K3Cjda4R636Ist+us+9Kp91dtOh2ZP6PWxLwTgTcFK
+         298N9bS6RR6oiw5nhYV/48qDH3D6gpkswopWt5dwWNGMoHhC2o/5YsMQGOnJVPz9WF
+         8gJubDIMof/745gEwpPsmcOXjvGcvxXDlNPkKQc9y2nfFL3TZbw
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -43,9 +43,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 05/28] t: switch $_x40 to $OID_REGEX
-Date:   Wed, 16 May 2018 01:56:07 +0000
-Message-Id: <20180516015630.661349-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 07/28] t1007: annotate with SHA1 prerequisite
+Date:   Wed, 16 May 2018 01:56:09 +0000
+Message-Id: <20180516015630.661349-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180516015630.661349-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -55,402 +55,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Switch all uses of $_x40 to $OID_REGEX so that they work correctly with
-larger hashes.  This commit was created by using the following sed
-command to modify all files in the t directory except t/test-lib.sh:
-
-  sed -i 's/\$_x40/$OID_REGEX/g'
+Since this is a core test that tests basic functionality, annotate the
+assertions that have dependencies on SHA-1 with the appropriate
+prerequisite.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/diff-lib.sh                   |  4 ++--
- t/t0090-cache-tree.sh           |  2 +-
- t/t1000-read-tree-m-3way.sh     |  2 +-
- t/t1001-read-tree-m-2way.sh     |  2 +-
- t/t1002-read-tree-m-u-2way.sh   |  2 +-
- t/t1012-read-tree-df.sh         |  2 +-
- t/t3100-ls-tree-restrict.sh     |  2 +-
- t/t3101-ls-tree-dirname.sh      |  2 +-
- t/t3510-cherry-pick-sequence.sh |  8 ++++----
- t/t4002-diff-basic.sh           |  2 +-
- t/t4006-diff-mode.sh            |  2 +-
- t/t4014-format-patch.sh         |  2 +-
- t/t4201-shortlog.sh             |  2 +-
- t/t5150-request-pull.sh         |  2 +-
- t/t6006-rev-list-format.sh      |  4 ++--
- t/t6012-rev-list-simplify.sh    |  2 +-
- t/t6111-rev-list-treesame.sh    |  2 +-
- t/t7506-status-submodule.sh     |  2 +-
- t/t9010-svn-fe.sh               | 14 +++++++-------
- t/t9300-fast-import.sh          |  6 +++---
- 20 files changed, 33 insertions(+), 33 deletions(-)
+ t/t1007-hash-object.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/diff-lib.sh b/t/diff-lib.sh
-index c211dc40ee..2de880f7a5 100644
---- a/t/diff-lib.sh
-+++ b/t/diff-lib.sh
-@@ -1,6 +1,6 @@
- :
- 
--sanitize_diff_raw='/^:/s/ '"\($_x40\)"' '"\($_x40\)"' \([A-Z]\)[0-9]*	/ \1 \2 \3#	/'
-+sanitize_diff_raw='/^:/s/ '"\($OID_REGEX\)"' '"\($OID_REGEX\)"' \([A-Z]\)[0-9]*	/ \1 \2 \3#	/'
- compare_diff_raw () {
-     # When heuristics are improved, the score numbers would change.
-     # Ignore them while comparing.
-@@ -12,7 +12,7 @@ compare_diff_raw () {
-     test_cmp .tmp-1 .tmp-2 && rm -f .tmp-1 .tmp-2
+diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+index 532682f51c..a37753047e 100755
+--- a/t/t1007-hash-object.sh
++++ b/t/t1007-hash-object.sh
+@@ -9,13 +9,13 @@ echo_without_newline() {
  }
  
--sanitize_diff_raw_z='/^:/s/ '"$_x40"' '"$_x40"' \([A-Z]\)[0-9]*$/ X X \1#/'
-+sanitize_diff_raw_z='/^:/s/ '"$OID_REGEX"' '"$OID_REGEX"' \([A-Z]\)[0-9]*$/ X X \1#/'
- compare_diff_raw_z () {
-     # When heuristics are improved, the score numbers would change.
-     # Ignore them while comparing.
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index 4ae0995cd9..0c61268fd2 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -9,7 +9,7 @@ cache-tree extension.
- 
- cmp_cache_tree () {
- 	test-tool dump-cache-tree | sed -e '/#(ref)/d' >actual &&
--	sed "s/$_x40/SHA/" <actual >filtered &&
-+	sed "s/$OID_REGEX/SHA/" <actual >filtered &&
- 	test_cmp "$1" filtered
+ test_blob_does_not_exist() {
+-	test_expect_success 'blob does not exist in database' "
++	test_expect_success SHA1 'blob does not exist in database' "
+ 		test_must_fail git cat-file blob $1
+ 	"
  }
  
-diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
-index 3c4d2d6045..013c5a7bc3 100755
---- a/t/t1000-read-tree-m-3way.sh
-+++ b/t/t1000-read-tree-m-3way.sh
-@@ -128,7 +128,7 @@ cat >expected <<\EOF
- EOF
- 
- check_result () {
--	git ls-files --stage | sed -e 's/ '"$_x40"' / X /' >current &&
-+	git ls-files --stage | sed -e 's/ '"$OID_REGEX"' / X /' >current &&
- 	test_cmp expected current
+ test_blob_exists() {
+-	test_expect_success 'blob exists in database' "
++	test_expect_success SHA1 'blob exists in database' "
+ 		git cat-file blob $1
+ 	"
  }
+@@ -73,19 +73,19 @@ test_expect_success "Can't use --path with --no-filters" '
  
-diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
-index 5ededd8e40..1057a96b24 100755
---- a/t/t1001-read-tree-m-2way.sh
-+++ b/t/t1001-read-tree-m-2way.sh
-@@ -30,7 +30,7 @@ read_tree_twoway () {
- compare_change () {
- 	sed -n >current \
- 	    -e '/^--- /d; /^+++ /d; /^@@ /d;' \
--	    -e 's/^\([-+][0-7][0-7][0-7][0-7][0-7][0-7]\) '"$_x40"' /\1 X /p' \
-+	    -e 's/^\([-+][0-7][0-7][0-7][0-7][0-7][0-7]\) '"$OID_REGEX"' /\1 X /p' \
- 	    "$1"
- 	test_cmp expected current
- }
-diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
-index 7ca2e65d10..9c05f5e1f5 100755
---- a/t/t1002-read-tree-m-u-2way.sh
-+++ b/t/t1002-read-tree-m-u-2way.sh
-@@ -16,7 +16,7 @@ compare_change () {
- 	    -e '1{/^diff --git /d;}' \
- 	    -e '2{/^index /d;}' \
- 	    -e '/^--- /d; /^+++ /d; /^@@ /d;' \
--	    -e 's/^\(.[0-7][0-7][0-7][0-7][0-7][0-7]\) '"$_x40"' /\1 X /' "$1"
-+	    -e 's/^\(.[0-7][0-7][0-7][0-7][0-7][0-7]\) '"$OID_REGEX"' /\1 X /' "$1"
- 	test_cmp expected current
- }
+ push_repo
  
-diff --git a/t/t1012-read-tree-df.sh b/t/t1012-read-tree-df.sh
-index a6a04b6b90..57f0770df1 100755
---- a/t/t1012-read-tree-df.sh
-+++ b/t/t1012-read-tree-df.sh
-@@ -32,7 +32,7 @@ settree () {
- 
- checkindex () {
- 	git ls-files -s |
--	sed "s|^[0-7][0-7]* $_x40 \([0-3]\)	|\1 |" >current &&
-+	sed "s|^[0-7][0-7]* $OID_REGEX \([0-3]\)	|\1 |" >current &&
- 	cat >expect &&
- 	test_cmp expect current
- }
-diff --git a/t/t3100-ls-tree-restrict.sh b/t/t3100-ls-tree-restrict.sh
-index 325114f8fe..18baf49a49 100755
---- a/t/t3100-ls-tree-restrict.sh
-+++ b/t/t3100-ls-tree-restrict.sh
-@@ -32,7 +32,7 @@ test_expect_success \
-      echo $tree'
- 
- test_output () {
--    sed -e "s/ $_x40	/ X	/" <current >check
-+    sed -e "s/ $OID_REGEX	/ X	/" <current >check
-     test_cmp expected check
- }
- 
-diff --git a/t/t3101-ls-tree-dirname.sh b/t/t3101-ls-tree-dirname.sh
-index 327ded4000..12bf31022a 100755
---- a/t/t3101-ls-tree-dirname.sh
-+++ b/t/t3101-ls-tree-dirname.sh
-@@ -40,7 +40,7 @@ test_expect_success 'setup' '
+-test_expect_success 'hash a file' '
++test_expect_success SHA1 'hash a file' '
+ 	test $hello_sha1 = $(git hash-object hello)
  '
  
- test_output () {
--	sed -e "s/ $_x40	/ X	/" <current >check &&
-+	sed -e "s/ $OID_REGEX	/ X	/" <current >check &&
- 	test_cmp expected check
- }
+ test_blob_does_not_exist $hello_sha1
  
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 21b4f194a2..b42cd66d3a 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -122,7 +122,7 @@ test_expect_success '--quit keeps HEAD and conflicted index intact' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$OID_REGEX/OBJID/g"
- 	} >actual &&
- 	test_cmp expect actual
- '
-@@ -220,7 +220,7 @@ test_expect_success 'cherry-pick still writes sequencer state when one commit is
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$OID_REGEX/OBJID/g"
- 	} >actual &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-@@ -317,7 +317,7 @@ test_expect_success '--continue after resolving conflicts' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$OID_REGEX/OBJID/g"
- 	} >actual.log &&
- 	test_cmp expect foo &&
- 	test_cmp expect.log actual.log
-@@ -334,7 +334,7 @@ test_expect_success '--continue after resolving conflicts and committing' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$OID_REGEX/OBJID/g"
- 	} >actual &&
- 	cat >expect <<-\EOF &&
- 	OBJID
-diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
-index 5af773d6f7..3a6c21e825 100755
---- a/t/t4002-diff-basic.sh
-+++ b/t/t4002-diff-basic.sh
-@@ -131,7 +131,7 @@ cmp_diff_files_output () {
-     # object ID for the changed files because it wants you to look at the
-     # filesystem.
-     sed <"$2" >.test-tmp \
--	-e '/^:000000 /d;s/'$_x40'\( [MCRNDU][0-9]*\)	/'$ZERO_OID'\1	/' &&
-+	-e '/^:000000 /d;s/'$OID_REGEX'\( [MCRNDU][0-9]*\)	/'$ZERO_OID'\1	/' &&
-     test_cmp "$1" .test-tmp
- }
- 
-diff --git a/t/t4006-diff-mode.sh b/t/t4006-diff-mode.sh
-index 76f643b2c2..a8e01eccd1 100755
---- a/t/t4006-diff-mode.sh
-+++ b/t/t4006-diff-mode.sh
-@@ -8,7 +8,7 @@ test_description='Test mode change diffs.
- '
- . ./test-lib.sh
- 
--sed_script='s/\(:100644 100755\) \('"$_x40"'\) \2 /\1 X X /'
-+sed_script='s/\(:100644 100755\) \('"$OID_REGEX"'\) \2 /\1 X X /'
- 
- test_expect_success 'setup' '
- 	echo frotz >rezrov &&
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 0dbf7d5b4b..dac3f349a3 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1530,7 +1530,7 @@ test_expect_success 'format-patch --zero-commit' '
- test_expect_success 'From line has expected format' '
- 	git format-patch --stdout v2..v1 >patch2 &&
- 	grep "^From " patch2 >from &&
--	grep "^From $_x40 Mon Sep 17 00:00:00 2001$" patch2 >filtered &&
-+	grep "^From $OID_REGEX Mon Sep 17 00:00:00 2001$" patch2 >filtered &&
- 	test_cmp from filtered
+-test_expect_success 'hash from stdin' '
++test_expect_success SHA1 'hash from stdin' '
+ 	test $example_sha1 = $(git hash-object --stdin < example)
  '
  
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index ff6649ed9a..58c2773676 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -59,7 +59,7 @@ test_expect_success 'setup' '
- fuzz() {
- 	file=$1 &&
- 	sed "
--			s/$_x40/OBJECT_NAME/g
-+			s/$OID_REGEX/OBJECT_NAME/g
- 			s/$_x35/OBJID/g
- 			s/^ \{6\}[CTa].*/      SUBJECT/g
- 			s/^ \{8\}[^ ].*/        CONTINUATION/g
-diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
-index 08c210f035..fca001eb9b 100755
---- a/t/t5150-request-pull.sh
-+++ b/t/t5150-request-pull.sh
-@@ -81,7 +81,7 @@ test_expect_success 'setup: two scripts for reading pull requests' '
- 	cat <<-EOT >fuzz.sed
- 	#!/bin/sed -nf
- 	s/$downstream_url_for_sed/URL/g
--	s/$_x40/OBJECT_NAME/g
-+	s/$OID_REGEX/OBJECT_NAME/g
- 	s/A U Thor/AUTHOR/g
- 	s/[-0-9]\{10\} [:0-9]\{8\} [-+][0-9]\{4\}/DATE/g
- 	s/        [^ ].*/        SUBJECT/g
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index 98be78b4a2..ec42c2f779 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -447,8 +447,8 @@ test_expect_success '--abbrev' '
- 	git log -1 --format="%h %h %h" HEAD >actual1 &&
- 	git log -1 --abbrev=5 --format="%h %h %h" HEAD >actual2 &&
- 	git log -1 --abbrev=5 --format="%H %H %H" HEAD >actual3 &&
--	sed -e "s/$_x40/LONG/g" -e "s/$_x05/SHORT/g" <actual2 >fuzzy2 &&
--	sed -e "s/$_x40/LONG/g" -e "s/$_x05/SHORT/g" <actual3 >fuzzy3 &&
-+	sed -e "s/$OID_REGEX/LONG/g" -e "s/$_x05/SHORT/g" <actual2 >fuzzy2 &&
-+	sed -e "s/$OID_REGEX/LONG/g" -e "s/$_x05/SHORT/g" <actual3 >fuzzy3 &&
- 	test_cmp expect2 fuzzy2 &&
- 	test_cmp expect3 fuzzy3 &&
- 	! test_cmp actual1 actual2
-diff --git a/t/t6012-rev-list-simplify.sh b/t/t6012-rev-list-simplify.sh
-index 2a0fbb87b1..b5a1190ffe 100755
---- a/t/t6012-rev-list-simplify.sh
-+++ b/t/t6012-rev-list-simplify.sh
-@@ -9,7 +9,7 @@ note () {
- }
+ test_blob_does_not_exist $example_sha1
  
- unnote () {
--	git name-rev --tags --stdin | sed -e "s|$_x40 (tags/\([^)]*\)) |\1 |g"
-+	git name-rev --tags --stdin | sed -e "s|$OID_REGEX (tags/\([^)]*\)) |\1 |g"
- }
- 
- test_expect_success setup '
-diff --git a/t/t6111-rev-list-treesame.sh b/t/t6111-rev-list-treesame.sh
-index 32474c23d3..4244638285 100755
---- a/t/t6111-rev-list-treesame.sh
-+++ b/t/t6111-rev-list-treesame.sh
-@@ -20,7 +20,7 @@ note () {
- }
- 
- unnote () {
--	git name-rev --tags --stdin | sed -e "s|$_x40 (tags/\([^)]*\))\([ 	]\)|\1\2|g"
-+	git name-rev --tags --stdin | sed -e "s|$OID_REGEX (tags/\([^)]*\))\([ 	]\)|\1\2|g"
- }
- 
- test_expect_success setup '
-diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
-index 9edf6572ed..b4b74dbe29 100755
---- a/t/t7506-status-submodule.sh
-+++ b/t/t7506-status-submodule.sh
-@@ -18,7 +18,7 @@ test_create_repo_with_commit () {
- }
- 
- sanitize_output () {
--	sed -e "s/$_x40/HASH/" -e "s/$_x40/HASH/" output >output2 &&
-+	sed -e "s/$OID_REGEX/HASH/" -e "s/$OID_REGEX/HASH/" output >output2 &&
- 	mv output2 output
- }
- 
-diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-index 8eaaca6f99..0b20b07e68 100755
---- a/t/t9010-svn-fe.sh
-+++ b/t/t9010-svn-fe.sh
-@@ -473,7 +473,7 @@ test_expect_failure 'change file mode but keep old content' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$OID_REGEX/OBJID/g"
- 	} >actual &&
- 	git show HEAD:greeting >actual.blob &&
- 	git show HEAD^:greeting >actual.target &&
-@@ -573,7 +573,7 @@ test_expect_success 'NUL in log message, file content, and property name' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$OID_REGEX/OBJID/g"
- 	} >actual &&
- 	{
- 		git cat-file commit HEAD | nul_to_q &&
-@@ -659,7 +659,7 @@ test_expect_success 'change file mode and reiterate content' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$OID_REGEX/OBJID/g"
- 	} >actual &&
- 	git show HEAD:greeting >actual.blob &&
- 	git show HEAD^:greeting >actual.target &&
-@@ -792,7 +792,7 @@ test_expect_success 'property deltas supported' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$OID_REGEX/OBJID/g"
- 	} >actual &&
- 	test_cmp expect actual
- '
-@@ -846,7 +846,7 @@ test_expect_success 'properties on /' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --always --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$OID_REGEX/OBJID/g"
- 	} >actual &&
- 	test_cmp expect actual
- '
-@@ -931,7 +931,7 @@ test_expect_success 'deltas for typechange' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$OID_REGEX/OBJID/g"
- 	} >actual &&
- 	test_cmp expect actual
- '
-@@ -1030,7 +1030,7 @@ test_expect_success 'deltas need not consume the whole preimage' '
- 	{
- 		git rev-list HEAD |
- 		git diff-tree --root --stdin |
--		sed "s/$_x40/OBJID/g"
-+		sed "s/$OID_REGEX/OBJID/g"
- 	} >actual &&
- 	test_cmp expect actual &&
- 	git show HEAD:postimage >actual.3 &&
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index dc79df7b04..9e7f96223d 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -1185,7 +1185,7 @@ test_expect_success PIPE 'N: empty directory reads as missing' '
- 	test_cmp expect.response response &&
- 	git rev-list read-empty |
- 	git diff-tree -r --root --stdin |
--	sed "s/$_x40/OBJNAME/g" >actual &&
-+	sed "s/$OID_REGEX/OBJNAME/g" >actual &&
- 	test_cmp expect actual
+-test_expect_success 'hash a file and write to database' '
++test_expect_success SHA1 'hash a file and write to database' '
+ 	test $hello_sha1 = $(git hash-object -w hello)
  '
  
-@@ -1271,7 +1271,7 @@ test_expect_success 'N: delete directory by copying' '
- 	git fast-import <input &&
- 	git rev-list N-delete |
- 		git diff-tree -r --stdin --root --always |
--		sed -e "s/$_x40/OBJID/g" >actual &&
-+		sed -e "s/$OID_REGEX/OBJID/g" >actual &&
- 	test_cmp expect actual
+@@ -161,7 +161,7 @@ pop_repo
+ for args in "-w --stdin" "--stdin -w"; do
+ 	push_repo
+ 
+-	test_expect_success "hash from stdin and write to database ($args)" '
++	test_expect_success SHA1 "hash from stdin and write to database ($args)" '
+ 		test $example_sha1 = $(git hash-object $args < example)
+ 	'
+ 
+@@ -176,14 +176,14 @@ example"
+ sha1s="$hello_sha1
+ $example_sha1"
+ 
+-test_expect_success "hash two files with names on stdin" '
++test_expect_success SHA1 "hash two files with names on stdin" '
+ 	test "$sha1s" = "$(echo_without_newline "$filenames" | git hash-object --stdin-paths)"
  '
  
-@@ -2602,7 +2602,7 @@ test_expect_success 'R: terminating "done" within commit' '
- 	EOF
- 	git rev-list done-ends |
- 	git diff-tree -r --stdin --root --always |
--	sed -e "s/$_x40/OBJID/g" >actual &&
-+	sed -e "s/$OID_REGEX/OBJID/g" >actual &&
- 	test_cmp expect actual
- '
+ for args in "-w --stdin-paths" "--stdin-paths -w"; do
+ 	push_repo
+ 
+-	test_expect_success "hash two files with names on stdin and write to database ($args)" '
++	test_expect_success SHA1 "hash two files with names on stdin and write to database ($args)" '
+ 		test "$sha1s" = "$(echo_without_newline "$filenames" | git hash-object $args)"
+ 	'
  
