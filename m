@@ -2,172 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61D841F406
-	for <e@80x24.org>; Wed, 16 May 2018 14:58:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 324271F406
+	for <e@80x24.org>; Wed, 16 May 2018 15:24:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750806AbeEPO6Y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 10:58:24 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:39089 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750772AbeEPO6X (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 10:58:23 -0400
-Received: by mail-qk0-f179.google.com with SMTP id z75-v6so875481qkb.6
-        for <git@vger.kernel.org>; Wed, 16 May 2018 07:58:22 -0700 (PDT)
+        id S1752334AbeEPPYq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 11:24:46 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:39313 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752317AbeEPPYm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 11:24:42 -0400
+Received: by mail-oi0-f67.google.com with SMTP id n65-v6so1070230oig.6
+        for <git@vger.kernel.org>; Wed, 16 May 2018 08:24:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=subject:to:cc:references:from:organization:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=mVvO/OyMBTNJ58ZqWwNbFeWY0eGM4iDwRxA8+Xaey4g=;
-        b=DzPSTVvy6QyGOAQX02PLVNBkw2JfDA2vaD2X/ipQZ2j7EpKwC8jhBBkbOc4r1MiuYP
-         TZ8mgolMob8cK3u1fIlOMbD+ExZnM+ypDZdnM57H7JvdSt1nZ4dD+dudCvftvnxMaBl6
-         IpqB68xTiGYvSIEWIECPfOL54HNyphgpxWiCo=
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=J0zP/PZRpuOpP+uO9TH4oU1GCQ3CYz1A/Ncfg4tnTag=;
+        b=Z1CvGDLNb1wm3l4LvHxReXg4brONTPo+4FfrnJrK8TQ31l7cBgVoUFqsbd2SgRVFZe
+         yPqSsovsKVZvb0hQJUEjjqcm41+mAJOQJktVrJvLAN6F1z3iDJcFKf1sEgm6qxQoGmRR
+         CdG+lxXYwcAkmTd0guPUzNJElfzxsZaJUvJsG+gID1EfO0PH/lXN4qAfxonDZvPTkSOV
+         MqZKKfEnuG2bq/UIsK2XPXEBtqZd7MUNwPfEJK2w+80KtdfLXCW0JJ3u/GH1N53bSST2
+         qq0U0F6Csj3Ln2DCexuWoFmABi8kzzJEbapkhQSeSzKqNrZ4RyVhFNLIkHRpD0IHTWuU
+         Hgxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:organization
-         :message-id:date:user-agent:mime-version:in-reply-to;
-        bh=mVvO/OyMBTNJ58ZqWwNbFeWY0eGM4iDwRxA8+Xaey4g=;
-        b=QS5Ogl1njEtldzsGzWrMYnVVsNnqQgzDRhzFjCmYmrQhcDQRm0OLxyiXD20E3KCJoL
-         8qveo2xu/+fCMza/RX/bU8UmDHPejlBTtpt76xGPwVndlTWzk9h37z00X3Tvc4Vz716p
-         8i4kpLdUY3vMQD4HSYiyHbknMDynGs9oAud6uuLjbnF8Bzy5IfOx2lKuLs/NIvO717uT
-         plbIebmj9cUkqTyWhkQFyKVnamhRoyX8kMQ2tXZjFGodRU50Zy+Kv/33nQG+IUg9kk1Z
-         DJYESgEdvyQC+87EozJq9knqQm9XmAtkg8K+HDZfOQp6PzgM9yewItbfI09yrQb3p9iO
-         jq7g==
-X-Gm-Message-State: ALKqPwfV4lTj3z/589Cnh3DsZ9GEgyyj7o4qNXlZrZcjKrcXdG1mnlU+
-        Pmc5MMRF0NK6Oz/vdG1oUmVuFg==
-X-Google-Smtp-Source: AB8JxZp2g7U5va2D1SiMFnckfZV60OeMyCMtfXidblAeGhrTpK+Re7UVjl4I2+5QIdQOJnNPutlLgA==
-X-Received: by 2002:a37:4248:: with SMTP id p69-v6mr1208433qka.131.1526482702216;
-        Wed, 16 May 2018 07:58:22 -0700 (PDT)
-Received: from [10.137.0.22] (ca2x.mullvad.net. [162.219.176.251])
-        by smtp.gmail.com with ESMTPSA id 30-v6sm403929qkv.31.2018.05.16.07.58.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 May 2018 07:58:21 -0700 (PDT)
-Subject: Re: worktrees vs. alternates
-To:     Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>
-References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com>
- <87po1waqyc.fsf@evledraar.gmail.com>
- <81B00B00-00F4-487A-9D3E-6B7514098B29@gmail.com>
- <87muwzc2kv.fsf@evledraar.gmail.com>
- <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com>
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Organization: The Linux Foundation
-Message-ID: <0f19f9f8-d215-622e-5090-1341c013babc@linuxfoundation.org>
-Date:   Wed, 16 May 2018 10:58:19 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=J0zP/PZRpuOpP+uO9TH4oU1GCQ3CYz1A/Ncfg4tnTag=;
+        b=sVn8eyHPyb/GdaaWCzYEZJiCYVvyN11HIS2WxWynufuzdpm7wkawyMITjnh9Q7N7m0
+         grnj+9igUjB4wYs+ZiBdARKT3x7md764kyVwYlCwXlz2ygsH1/CzRIHaGGuRYR8+42E9
+         3Xvjm3kYGf3U6/i8sis4Br46YNeb5XR/b70c6xHv0COEji9J4sebAf38Y3JRnd2YnLe/
+         P+AnUKWdH0hyKoLBce7abmCLNGs5R+JXcrOrbDEYVCym7I1c+MrFS+V3yfdr8an4HGQW
+         3kHfsrPHA0TyuHfVIASCWHMgD/aZAfeBMaNmn29+PMW4zwKn4aIGr7gUFdHue4GRIgm1
+         7DKA==
+X-Gm-Message-State: ALKqPwdfcbxO3czdae3wlrhLXVaGMhOJqcDrOWVZdKkiVmp17oxoIZhG
+        5ohNm01dDRKbOY/Sk2FpXWoGxUEQETKb9U2uyqU=
+X-Google-Smtp-Source: AB8JxZqL448Sra/crvTyYhPclMZny0ZTXCvs8Gt6qMr4aIDT4nhtts0DnfNndWvPRUYZsjoHOknnUQdFWKd9fBoK8/c=
+X-Received: by 2002:aca:ce42:: with SMTP id e63-v6mr927577oig.34.1526484281640;
+ Wed, 16 May 2018 08:24:41 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="X1ysDT4zqJfLnfk57zhj4hQqJ4BaJPniN"
+Received: by 10.74.178.133 with HTTP; Wed, 16 May 2018 08:24:11 -0700 (PDT)
+In-Reply-To: <CAGZ79kYYy-r+Zs_6yg1ZVRNsBcTUdPWE=FeHrp_=0cV0Uf_GfQ@mail.gmail.com>
+References: <20180515010425.149200-1-sbeller@google.com> <CACsJy8AcG6zGa9vLCwm2B4ishyJVWdFQ2YV0FOZTor_0x8Q64g@mail.gmail.com>
+ <CAGZ79kYYy-r+Zs_6yg1ZVRNsBcTUdPWE=FeHrp_=0cV0Uf_GfQ@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 16 May 2018 17:24:11 +0200
+Message-ID: <CACsJy8A8WZ-Gqe2Y-whJmbADrt+gZjLZ7MTwCtdnK7JDnEdtog@mail.gmail.com>
+Subject: Re: [PATCH] grep: handle corrupt index files early
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Antonio Ospite <ao2@ao2.it>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---X1ysDT4zqJfLnfk57zhj4hQqJ4BaJPniN
-Content-Type: multipart/mixed; boundary="274SyPh7zMklgZc5YNzLX64rlR0ZK7jNR";
- protected-headers="v1"
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Derrick Stolee <stolee@gmail.com>,
- =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
- Lars Schneider <larsxschneider@gmail.com>
-Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
- Duy Nguyen <pclouds@gmail.com>
-Message-ID: <0f19f9f8-d215-622e-5090-1341c013babc@linuxfoundation.org>
-Subject: Re: worktrees vs. alternates
-References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com>
- <87po1waqyc.fsf@evledraar.gmail.com>
- <81B00B00-00F4-487A-9D3E-6B7514098B29@gmail.com>
- <87muwzc2kv.fsf@evledraar.gmail.com>
- <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com>
-In-Reply-To: <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com>
+On Tue, May 15, 2018 at 6:44 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, May 15, 2018 at 6:13 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Tue, May 15, 2018 at 3:04 AM, Stefan Beller <sbeller@google.com> wrote:
+>>> Any other caller of 'repo_read_index' dies upon a negative return of
+>>> it, so grep should, too.
+>>>
+>>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>>> ---
+>>>
+>>> Found while reviewing the series
+>>> https://public-inbox.org/git/20180514105823.8378-1-ao2@ao2.it/
+>>>
+>>>  builtin/grep.c | 3 ++-
+>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/builtin/grep.c b/builtin/grep.c
+>>> index 6e7bc76785a..69f0743619f 100644
+>>> --- a/builtin/grep.c
+>>> +++ b/builtin/grep.c
+>>> @@ -488,7 +488,8 @@ static int grep_cache(struct grep_opt *opt, struct repository *repo,
+>>>                 strbuf_addstr(&name, repo->submodule_prefix);
+>>>         }
+>>>
+>>> -       repo_read_index(repo);
+>>> +       if (repo_read_index(repo) < 0)
+>>> +               die("index file corrupt");
+>>
+>> _() the string (and maybe reuse an existing phrase if found to reduce
+>> workload on translators)
+>
+> sbeller@sbeller:/u/git$ git grep -A 1 repo_read_index
+> builtin/grep.c:491:     if (repo_read_index(repo) < 0)
+> builtin/grep.c-492-             die("index file corrupt");
+> --
+> builtin/ls-files.c:213: if (repo_read_index(&submodule) < 0)
+> builtin/ls-files.c-214-         die("index file corrupt");
+> --
+> builtin/ls-files.c:582: if (repo_read_index(the_repository) < 0)
+> builtin/ls-files.c-583-         die("index file corrupt");
+> --
+> dir.c:3028:     if (repo_read_index(&subrepo) < 0)
+> dir.c-3029-             die("index file corrupt in repo %s", subrepo.gitdir);
+> --
+> repository.c:245:int repo_read_index(struct repository *repo)
+> repository.c-246-{
+> --
+> repository.h:70:         * 'repo_read_index()' can be used to populate 'index'.
+> repository.h-71-         */
+> --
+> repository.h:119:extern int repo_read_index(struct repository *repo);
+> repository.h-120-
+> --
+> submodule-config.c:583:         if (repo_read_index(repo) < 0)
+> submodule-config.c-584-                 return;
+> --
+> submodule.c:1336:       if (repo_read_index(r) < 0)
+> submodule.c-1337-               die("index file corrupt");
+>
+> I think this is as good as it gets for using an existing phrase.
+> None of them are translated, which I would defer to a follow up patch
+> that translates all(?) of them or just the porcelains.
 
---274SyPh7zMklgZc5YNzLX64rlR0ZK7jNR
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: quoted-printable
+If you have time, yes translate them all. I don't see how any of these
+strings are meant for script. If not, just _() the new string you
+added is fine.
 
-On 05/16/18 09:02, Derrick Stolee wrote:
-> This is the biggest difference. You cannot have the same ref checked ou=
-t
-> in multiple worktrees, as they both may edit that ref. The alternates
-> allow you to share data in a "read only" fashion. If you have one repo
-> that is the "base" repo that manages that objects dir, then that is
-> probably a good way to reduce the duplication. I'm not familiar with
-> what happens when a "child" repo does 'git gc' or 'git repack', will it=
+With a majority of call sites dying like this though, I wonder if we
+should just add repo_read_index_or_die() with die() inside. Then the
+next person won't likely accidentally forget _()
 
-> delete the local objects that is sees exist in the alternate?
-
-The parent repo is not keeping track of any other repositories that may
-be using it for alternates, which is why you basically:
-
-1. never run auto-gc in the parent repo
-2. repack it manually using -Ad to keep loose objects that other repos
-may be borrowing (but we don't know if they are)
-3. never prune the parent repo, because this may delete objects other
-repos are borrowing
-
-Very infrequently you may consider this extra set of maintenance steps:
-
-1. Find every repo mentioning the parent repository in their alternates
-2. Repack them without the -l switch (which copies all the borrowed
-objects into those repos)
-3. Once all child repos have been repacked this way, prune the parent
-repo (it's safe now)
-4. Repack child repos again, this time with the -l flag, to get your
-savings back.
-
-I would heartily love a way to teach git-repack to recognize when an
-object it's borrowing from the parent repo is in danger of being pruned.
-The cheapest way of doing this would probably be to hardlink loose
-objects into its own objects directory and only consider "safe" objects
-those that are part of the parent repository's pack. This should make
-alternates a lot safer, just in case git-prune happens to run by accident=
-=2E
-
-> GVFS uses alternates in this same way: we create a drive-wide "shared
-> object cache" that GVFS manages. We put our prefetch packs filled with
-> commits and trees in there, and any loose objects that are downloaded
-> via the object virtualization are placed as loose objects in the
-> alternate. We also store the multi-pack-index and commit-graph in that
-> alternate. This means that the only objects in each src dir are those
-> created by the developer doing their normal work.
-
-I'm very interested in GVFS, because it would certainly make my life
-easier maintaining source.codeaurora.org, which is many thousands of
-repos that are mostly forks of the same stuff. However, GVFS appears to
-only exist for Windows (hint-hint, nudge-nudge). :)
-
-Best,
---=20
-Konstantin Ryabitsev
-Director, IT Infrastructure Security
-The Linux Foundation
+>
+> Thanks,
+> Stefan
 
 
---274SyPh7zMklgZc5YNzLX64rlR0ZK7jNR--
 
---X1ysDT4zqJfLnfk57zhj4hQqJ4BaJPniN
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCWvxHCwAKCRC2xBzjVmSZ
-bKwqAQCN63TMF/z1qCrXH83t9xcokXec6bsTvZfjoTLXJVnx5AD/VhH4P8dmYWfd
-EEVm7Anh1n0mehaurC4K7kkwL7hVUgg=
-=s4f1
------END PGP SIGNATURE-----
-
---X1ysDT4zqJfLnfk57zhj4hQqJ4BaJPniN--
+-- 
+Duy
