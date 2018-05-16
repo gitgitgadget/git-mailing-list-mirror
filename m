@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5692E1F406
-	for <e@80x24.org>; Wed, 16 May 2018 22:58:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9926B1F406
+	for <e@80x24.org>; Wed, 16 May 2018 22:58:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752188AbeEPW6n (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 18:58:43 -0400
-Received: from mail-vk0-f73.google.com ([209.85.213.73]:37020 "EHLO
-        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752163AbeEPW6l (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 18:58:41 -0400
-Received: by mail-vk0-f73.google.com with SMTP id q85-v6so2205483vkb.4
-        for <git@vger.kernel.org>; Wed, 16 May 2018 15:58:41 -0700 (PDT)
+        id S1752200AbeEPW6q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 18:58:46 -0400
+Received: from mail-qk0-f202.google.com ([209.85.220.202]:55377 "EHLO
+        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752176AbeEPW6o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 18:58:44 -0400
+Received: by mail-qk0-f202.google.com with SMTP id u188-v6so2264229qkc.22
+        for <git@vger.kernel.org>; Wed, 16 May 2018 15:58:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=0TWwwf9GDdhQnm54Q2thTUVk7NOFg0QRojIVPTbu+sU=;
-        b=UnqpumVTRfITYwaIe6Ch5kpyIFRuoZebGGAtIKZTo8ll3+O94Ji/+HosYYKBxcH9zT
-         2yGRVF/eZwRjZsmgrXv3AN1UZInFzpy4w/zgHNYfm4oLGakrh5zZlr5IO3pAQkXcJQFr
-         9JcP8kWRvy0mXehlO2z0CEboGeIZHzWK+sMeFBb5GgUHW6U+PBVGisanxBSdPeeuPdHA
-         CuBcm7g0PnFXyLqI4gOxhIRurF0XwZ8XA1jjKKYVDzOLRRqQnAgWTt+NQCmRMwjjPJEG
-         vIjzYrV2neAO5+r20t/KKPQXVNYVQSe6Wyp/mltRGbOVUNQ3dKnxmNXWpsoczLGjNO5Q
-         gBNw==
+        bh=s2UwGbuwzTiyRVQV87kJRFYMwNQf+U4N/zFZbRRcDwg=;
+        b=BrJ49hsq/Nody2o7EI0rViCPiuJ4HM6hiDgFxQrwen053KFp0p5O4W+wsgweOB0S36
+         iTOYCtfTXVfqJjk/d9bR3Z0Lc6Ff4PwJex/omdpqf5xU22jO2xLGvLONX/5n1lzhVqvi
+         hGMTromz4nHx9I6xHXxpExRFQxP4eDo5fIItvwvRT4+ATcbnU/ZNKMayCLUYf4IHAqer
+         Ju6RUQq752TKF5ykciGHqUN8SjOOZbFe7490OVu4NqusNznIIFy7JgJ1hnD+5wdx1vv1
+         DW6TnUYID7fUjMD5KP5H2H0Wos69RiNuAApU7vAx8JGdw2c7CliWlH47PZ4x5fwS/RG3
+         ltlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=0TWwwf9GDdhQnm54Q2thTUVk7NOFg0QRojIVPTbu+sU=;
-        b=RR4goIEQLhzErRgIi2MuaKRa9Zw4qj3qzSMFOSwDU+1a7rd5bWDWzWb+HQVM5tCjME
-         tAPuPBh4XXmZlaXvbTQMPaST5Wo1VAsZCrDXbj7vx07l62Wci8IKRKAVjvGnNSKk3k5W
-         fQV4K42y/eiMktGEbe4j4BibEDFCp2sZE0QTjVH5zwyFo1+YI6GNhllWI7yhGyU7A94P
-         utcZwdd5wc2Yp2EDHjspI94QIzi6JcP0NB89lVCOIxmPql+UHqK1lPp5nzrRe8t+IKx2
-         nL3QaWE8y/f7UtYibmKsW1rKmCBUDI2ojKLZJZBPw8I9W1JUXXmkqoSlrM2qGNbR4W0p
-         9S7Q==
-X-Gm-Message-State: ALKqPwczzY7irbVL0R8wx8w3kib1Bk/quPTC0mOGmR3fkPIkixmddpuU
-        BHIIPDHmZxDqFGoWT2IWgPx285YMw4HDdH+SQ1XUedOoz1k9q6ufIFhUlqDeNEPzqed91tmgtbN
-        aFio59s7QUAqwAcyu+SKxyQQOl3CaWskOR7U+PP1hDgdEJVNGNONUojyr4Q==
-X-Google-Smtp-Source: AB8JxZrjjDUiw7jEle/I8lfIPQKtd1o/7gR/9YOvTpkQljEJxPJZo0/UBp3Ej5oFbGIn1n2pLzTPs3B/KVQ=
+        bh=s2UwGbuwzTiyRVQV87kJRFYMwNQf+U4N/zFZbRRcDwg=;
+        b=gGZPzbtJljNu0JBiXDpUxx9jAuYE71fegB7iYZSxSPvOw2u8i78JeHd/9fPYb2NMne
+         rDa+aiJmu34bm98JpDdGGL6ri9xtgsOnx7G7+6wIQTh7gm905wx0XF9NpAzeQycVk8tL
+         FtwJ5bhz1M+CnZnt8xjJsxPU+F6kIsuSSBBO1d+ZZP0vvaXCkuHrAqBUbYx1r09akTIJ
+         SvoLjYMV2pZ25fGVWOCZQR7eUxpiS7IDwLPht2W+SNzZozu7Vbs+IBwG90uA4mC6aR2j
+         /jt0A3fYUq6m4l8x/BvLkY3l5NwJRcZhDmpHn1QkdRXF0BSeX1NOj9RlCgsjQ1UOVRpe
+         E/Ag==
+X-Gm-Message-State: ALKqPwc5edfaalf3DozPevey+XPJTjQmkAIpoJ/aowWQaupusdM6oNIm
+        8b+gJraJrBnfd74ulE66Eib54vUvGjdufZfARiQx4cC9Qmz2EtHtVfaz27sYJpSV/wFv4HJnLd+
+        MekGEJe5g4pLgcn/884WRJ4zjQp13/0DuBD5pKrvhO8oyYtfu0M3SxBPu/g==
+X-Google-Smtp-Source: AB8JxZpHYN41vqFTxZNd2gLBHs8oRBBW8hyTN28vpjHigaOBtsYU7fCzrS+oXTJjC5OPYWtjmFMS3mIXqyg=
 MIME-Version: 1.0
-X-Received: by 2002:a1f:302:: with SMTP id 2-v6mr2374867vkd.90.1526511520505;
- Wed, 16 May 2018 15:58:40 -0700 (PDT)
-Date:   Wed, 16 May 2018 15:57:48 -0700
+X-Received: by 2002:a0c:f912:: with SMTP id v18-v6mr2937765qvn.6.1526511523053;
+ Wed, 16 May 2018 15:58:43 -0700 (PDT)
+Date:   Wed, 16 May 2018 15:57:49 -0700
 In-Reply-To: <20180516225823.235426-1-bmwill@google.com>
-Message-Id: <20180516225823.235426-2-bmwill@google.com>
+Message-Id: <20180516225823.235426-3-bmwill@google.com>
 References: <20180514215626.164960-1-bmwill@google.com> <20180516225823.235426-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH v2 01/36] refspec: move refspec parsing logic into its own file
+Subject: [PATCH v2 02/36] refspec: rename struct refspec to struct refspec_item
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
         sbeller@google.com, bmwill@google.com
@@ -64,625 +64,646 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In preparation for performing a refactor on refspec related code, move
-the refspec parsing logic into its own file.
+In preparation for introducing an abstraction around a collection of
+refspecs (much like how a 'struct pathspec' is a collection of 'struct
+pathspec_item's) rename the existing 'struct refspec' to 'struct
+refspec_item'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Makefile                    |   1 +
- branch.c                    |   1 +
- builtin/clone.c             |   1 +
- builtin/fast-export.c       |   1 +
- builtin/fetch.c             |   1 +
- builtin/merge.c             |   1 +
- builtin/pull.c              |   1 +
- builtin/push.c              |   1 +
- builtin/remote.c            |   1 +
- builtin/submodule--helper.c |   1 +
- checkout.c                  |   1 +
- refspec.c                   | 168 ++++++++++++++++++++++++++++++++++++
- refspec.h                   |  23 +++++
- remote.c                    | 165 +----------------------------------
- remote.h                    |  20 -----
- transport-helper.c          |   1 +
- transport.c                 |   1 +
- 17 files changed, 205 insertions(+), 184 deletions(-)
- create mode 100644 refspec.c
- create mode 100644 refspec.h
+ branch.c                    |  6 ++---
+ builtin/clone.c             |  4 +--
+ builtin/fast-export.c       |  4 +--
+ builtin/fetch.c             | 12 ++++-----
+ builtin/pull.c              |  2 +-
+ builtin/push.c              |  4 +--
+ builtin/remote.c            |  8 +++---
+ builtin/submodule--helper.c |  4 +--
+ checkout.c                  |  4 +--
+ refspec.c                   | 17 ++++++-------
+ refspec.h                   | 10 ++++----
+ remote.c                    | 50 ++++++++++++++++++-------------------
+ remote.h                    | 16 ++++++------
+ transport-helper.c          |  2 +-
+ transport.c                 |  4 +--
+ 15 files changed, 73 insertions(+), 74 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index ad880d1fc..4bca65383 100644
---- a/Makefile
-+++ b/Makefile
-@@ -928,6 +928,7 @@ LIB_OBJS += refs/files-backend.o
- LIB_OBJS += refs/iterator.o
- LIB_OBJS += refs/packed-backend.o
- LIB_OBJS += refs/ref-cache.o
-+LIB_OBJS += refspec.o
- LIB_OBJS += ref-filter.o
- LIB_OBJS += remote.o
- LIB_OBJS += replace-object.o
 diff --git a/branch.c b/branch.c
-index 2672054f0..32ccefc6b 100644
+index 32ccefc6b..f967c98f6 100644
 --- a/branch.c
 +++ b/branch.c
-@@ -3,6 +3,7 @@
- #include "config.h"
- #include "branch.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "remote.h"
- #include "commit.h"
+@@ -9,7 +9,7 @@
  #include "worktree.h"
+ 
+ struct tracking {
+-	struct refspec spec;
++	struct refspec_item spec;
+ 	char *src;
+ 	const char *remote;
+ 	int matches;
+@@ -219,8 +219,8 @@ int validate_new_branchname(const char *name, struct strbuf *ref, int force)
+ static int check_tracking_branch(struct remote *remote, void *cb_data)
+ {
+ 	char *tracking_branch = cb_data;
+-	struct refspec query;
+-	memset(&query, 0, sizeof(struct refspec));
++	struct refspec_item query;
++	memset(&query, 0, sizeof(struct refspec_item));
+ 	query.dst = tracking_branch;
+ 	return !remote_find_tracking(remote, &query);
+ }
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 84f1473d1..6d1614ed3 100644
+index 6d1614ed3..854088a3a 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -14,6 +14,7 @@
- #include "parse-options.h"
- #include "fetch-pack.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "tree.h"
- #include "tree-walk.h"
- #include "unpack-trees.h"
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 530df12f0..a13b7c8ef 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -7,6 +7,7 @@
- #include "cache.h"
- #include "config.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "commit.h"
- #include "object.h"
- #include "tag.h"
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 7ee83ac0f..1fce68e9a 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -5,6 +5,7 @@
- #include "config.h"
- #include "repository.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "commit.h"
- #include "builtin.h"
- #include "string-list.h"
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 9db5a2cf1..c362cfe90 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -14,6 +14,7 @@
- #include "run-command.h"
- #include "diff.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "commit.h"
- #include "diffcore.h"
- #include "revision.h"
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 71aac5005..6247c956d 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -15,6 +15,7 @@
- #include "remote.h"
- #include "dir.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "revision.h"
- #include "submodule.h"
- #include "submodule-config.h"
-diff --git a/builtin/push.c b/builtin/push.c
-index ac3705370..fa65999b2 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -4,6 +4,7 @@
- #include "cache.h"
- #include "config.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "run-command.h"
- #include "builtin.h"
- #include "remote.h"
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 8708e584e..c49513995 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -7,6 +7,7 @@
- #include "strbuf.h"
- #include "run-command.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "argv-array.h"
- 
- static const char * const builtin_remote_usage[] = {
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c2403a915..6ab032acb 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -12,6 +12,7 @@
- #include "run-command.h"
- #include "remote.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "connect.h"
- #include "revision.h"
- #include "diffcore.h"
-diff --git a/checkout.c b/checkout.c
-index ac42630f7..193ba8567 100644
---- a/checkout.c
-+++ b/checkout.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "remote.h"
-+#include "refspec.h"
- #include "checkout.h"
- 
- struct tracking_name_data {
-diff --git a/refspec.c b/refspec.c
-new file mode 100644
-index 000000000..ecb0bdff3
---- /dev/null
-+++ b/refspec.c
-@@ -0,0 +1,168 @@
-+#include "cache.h"
-+#include "refs.h"
-+#include "refspec.h"
-+
-+static struct refspec s_tag_refspec = {
-+	0,
-+	1,
-+	0,
-+	0,
-+	"refs/tags/*",
-+	"refs/tags/*"
-+};
-+
-+/* See TAG_REFSPEC for the string version */
-+const struct refspec *tag_refspec = &s_tag_refspec;
-+
-+static struct refspec *parse_refspec_internal(int nr_refspec, const char **refspec, int fetch, int verify)
-+{
-+	int i;
-+	struct refspec *rs = xcalloc(nr_refspec, sizeof(*rs));
-+
-+	for (i = 0; i < nr_refspec; i++) {
-+		size_t llen;
-+		int is_glob;
-+		const char *lhs, *rhs;
-+		int flags;
-+
-+		is_glob = 0;
-+
-+		lhs = refspec[i];
-+		if (*lhs == '+') {
-+			rs[i].force = 1;
-+			lhs++;
-+		}
-+
-+		rhs = strrchr(lhs, ':');
-+
-+		/*
-+		 * Before going on, special case ":" (or "+:") as a refspec
-+		 * for pushing matching refs.
-+		 */
-+		if (!fetch && rhs == lhs && rhs[1] == '\0') {
-+			rs[i].matching = 1;
-+			continue;
-+		}
-+
-+		if (rhs) {
-+			size_t rlen = strlen(++rhs);
-+			is_glob = (1 <= rlen && strchr(rhs, '*'));
-+			rs[i].dst = xstrndup(rhs, rlen);
-+		}
-+
-+		llen = (rhs ? (rhs - lhs - 1) : strlen(lhs));
-+		if (1 <= llen && memchr(lhs, '*', llen)) {
-+			if ((rhs && !is_glob) || (!rhs && fetch))
-+				goto invalid;
-+			is_glob = 1;
-+		} else if (rhs && is_glob) {
-+			goto invalid;
-+		}
-+
-+		rs[i].pattern = is_glob;
-+		rs[i].src = xstrndup(lhs, llen);
-+		flags = REFNAME_ALLOW_ONELEVEL | (is_glob ? REFNAME_REFSPEC_PATTERN : 0);
-+
-+		if (fetch) {
-+			struct object_id unused;
-+
-+			/* LHS */
-+			if (!*rs[i].src)
-+				; /* empty is ok; it means "HEAD" */
-+			else if (llen == GIT_SHA1_HEXSZ && !get_oid_hex(rs[i].src, &unused))
-+				rs[i].exact_sha1 = 1; /* ok */
-+			else if (!check_refname_format(rs[i].src, flags))
-+				; /* valid looking ref is ok */
-+			else
-+				goto invalid;
-+			/* RHS */
-+			if (!rs[i].dst)
-+				; /* missing is ok; it is the same as empty */
-+			else if (!*rs[i].dst)
-+				; /* empty is ok; it means "do not store" */
-+			else if (!check_refname_format(rs[i].dst, flags))
-+				; /* valid looking ref is ok */
-+			else
-+				goto invalid;
-+		} else {
-+			/*
-+			 * LHS
-+			 * - empty is allowed; it means delete.
-+			 * - when wildcarded, it must be a valid looking ref.
-+			 * - otherwise, it must be an extended SHA-1, but
-+			 *   there is no existing way to validate this.
-+			 */
-+			if (!*rs[i].src)
-+				; /* empty is ok */
-+			else if (is_glob) {
-+				if (check_refname_format(rs[i].src, flags))
-+					goto invalid;
-+			}
-+			else
-+				; /* anything goes, for now */
-+			/*
-+			 * RHS
-+			 * - missing is allowed, but LHS then must be a
-+			 *   valid looking ref.
-+			 * - empty is not allowed.
-+			 * - otherwise it must be a valid looking ref.
-+			 */
-+			if (!rs[i].dst) {
-+				if (check_refname_format(rs[i].src, flags))
-+					goto invalid;
-+			} else if (!*rs[i].dst) {
-+				goto invalid;
-+			} else {
-+				if (check_refname_format(rs[i].dst, flags))
-+					goto invalid;
-+			}
-+		}
-+	}
-+	return rs;
-+
-+ invalid:
-+	if (verify) {
-+		/*
-+		 * nr_refspec must be greater than zero and i must be valid
-+		 * since it is only possible to reach this point from within
-+		 * the for loop above.
-+		 */
-+		free_refspec(i+1, rs);
-+		return NULL;
-+	}
-+	die("Invalid refspec '%s'", refspec[i]);
-+}
-+
-+int valid_fetch_refspec(const char *fetch_refspec_str)
-+{
-+	struct refspec *refspec;
-+
-+	refspec = parse_refspec_internal(1, &fetch_refspec_str, 1, 1);
-+	free_refspec(1, refspec);
-+	return !!refspec;
-+}
-+
-+struct refspec *parse_fetch_refspec(int nr_refspec, const char **refspec)
-+{
-+	return parse_refspec_internal(nr_refspec, refspec, 1, 0);
-+}
-+
-+struct refspec *parse_push_refspec(int nr_refspec, const char **refspec)
-+{
-+	return parse_refspec_internal(nr_refspec, refspec, 0, 0);
-+}
-+
-+void free_refspec(int nr_refspec, struct refspec *refspec)
-+{
-+	int i;
-+
-+	if (!refspec)
-+		return;
-+
-+	for (i = 0; i < nr_refspec; i++) {
-+		free(refspec[i].src);
-+		free(refspec[i].dst);
-+	}
-+	free(refspec);
-+}
-+
-diff --git a/refspec.h b/refspec.h
-new file mode 100644
-index 000000000..62625c23a
---- /dev/null
-+++ b/refspec.h
-@@ -0,0 +1,23 @@
-+#ifndef REFSPEC_H
-+#define REFSPEC_H
-+
-+#define TAG_REFSPEC "refs/tags/*:refs/tags/*"
-+extern const struct refspec *tag_refspec;
-+
-+struct refspec {
-+	unsigned force : 1;
-+	unsigned pattern : 1;
-+	unsigned matching : 1;
-+	unsigned exact_sha1 : 1;
-+
-+	char *src;
-+	char *dst;
-+};
-+
-+int valid_fetch_refspec(const char *refspec);
-+struct refspec *parse_fetch_refspec(int nr_refspec, const char **refspec);
-+struct refspec *parse_push_refspec(int nr_refspec, const char **refspec);
-+
-+void free_refspec(int nr_refspec, struct refspec *refspec);
-+
-+#endif /* REFSPEC_H */
-diff --git a/remote.c b/remote.c
-index 91eb010ca..4d67c061a 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2,6 +2,7 @@
- #include "config.h"
- #include "remote.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "commit.h"
- #include "diff.h"
- #include "revision.h"
-@@ -13,18 +14,6 @@
- 
- enum map_direction { FROM_SRC, FROM_DST };
- 
--static struct refspec s_tag_refspec = {
--	0,
--	1,
--	0,
--	0,
--	"refs/tags/*",
--	"refs/tags/*"
--};
--
--/* See TAG_REFSPEC for the string version */
--const struct refspec *tag_refspec = &s_tag_refspec;
--
- struct counted_string {
- 	size_t len;
- 	const char *s;
-@@ -499,158 +488,6 @@ static void read_config(void)
- 	alias_all_urls();
+@@ -547,7 +547,7 @@ static struct ref *find_remote_branch(const struct ref *refs, const char *branch
  }
  
--static struct refspec *parse_refspec_internal(int nr_refspec, const char **refspec, int fetch, int verify)
--{
--	int i;
--	struct refspec *rs = xcalloc(nr_refspec, sizeof(*rs));
--
--	for (i = 0; i < nr_refspec; i++) {
--		size_t llen;
--		int is_glob;
--		const char *lhs, *rhs;
--		int flags;
--
--		is_glob = 0;
--
--		lhs = refspec[i];
--		if (*lhs == '+') {
--			rs[i].force = 1;
--			lhs++;
--		}
--
--		rhs = strrchr(lhs, ':');
--
--		/*
--		 * Before going on, special case ":" (or "+:") as a refspec
--		 * for pushing matching refs.
--		 */
--		if (!fetch && rhs == lhs && rhs[1] == '\0') {
--			rs[i].matching = 1;
--			continue;
--		}
--
--		if (rhs) {
--			size_t rlen = strlen(++rhs);
--			is_glob = (1 <= rlen && strchr(rhs, '*'));
--			rs[i].dst = xstrndup(rhs, rlen);
--		}
--
--		llen = (rhs ? (rhs - lhs - 1) : strlen(lhs));
--		if (1 <= llen && memchr(lhs, '*', llen)) {
--			if ((rhs && !is_glob) || (!rhs && fetch))
--				goto invalid;
--			is_glob = 1;
--		} else if (rhs && is_glob) {
--			goto invalid;
--		}
--
--		rs[i].pattern = is_glob;
--		rs[i].src = xstrndup(lhs, llen);
--		flags = REFNAME_ALLOW_ONELEVEL | (is_glob ? REFNAME_REFSPEC_PATTERN : 0);
--
--		if (fetch) {
--			struct object_id unused;
--
--			/* LHS */
--			if (!*rs[i].src)
--				; /* empty is ok; it means "HEAD" */
--			else if (llen == GIT_SHA1_HEXSZ && !get_oid_hex(rs[i].src, &unused))
--				rs[i].exact_sha1 = 1; /* ok */
--			else if (!check_refname_format(rs[i].src, flags))
--				; /* valid looking ref is ok */
--			else
--				goto invalid;
--			/* RHS */
--			if (!rs[i].dst)
--				; /* missing is ok; it is the same as empty */
--			else if (!*rs[i].dst)
--				; /* empty is ok; it means "do not store" */
--			else if (!check_refname_format(rs[i].dst, flags))
--				; /* valid looking ref is ok */
--			else
--				goto invalid;
--		} else {
--			/*
--			 * LHS
--			 * - empty is allowed; it means delete.
--			 * - when wildcarded, it must be a valid looking ref.
--			 * - otherwise, it must be an extended SHA-1, but
--			 *   there is no existing way to validate this.
--			 */
--			if (!*rs[i].src)
--				; /* empty is ok */
--			else if (is_glob) {
--				if (check_refname_format(rs[i].src, flags))
--					goto invalid;
--			}
--			else
--				; /* anything goes, for now */
--			/*
--			 * RHS
--			 * - missing is allowed, but LHS then must be a
--			 *   valid looking ref.
--			 * - empty is not allowed.
--			 * - otherwise it must be a valid looking ref.
--			 */
--			if (!rs[i].dst) {
--				if (check_refname_format(rs[i].src, flags))
--					goto invalid;
--			} else if (!*rs[i].dst) {
--				goto invalid;
--			} else {
--				if (check_refname_format(rs[i].dst, flags))
--					goto invalid;
--			}
--		}
--	}
--	return rs;
--
-- invalid:
--	if (verify) {
--		/*
--		 * nr_refspec must be greater than zero and i must be valid
--		 * since it is only possible to reach this point from within
--		 * the for loop above.
--		 */
--		free_refspec(i+1, rs);
--		return NULL;
--	}
--	die("Invalid refspec '%s'", refspec[i]);
--}
--
--int valid_fetch_refspec(const char *fetch_refspec_str)
--{
--	struct refspec *refspec;
--
--	refspec = parse_refspec_internal(1, &fetch_refspec_str, 1, 1);
--	free_refspec(1, refspec);
--	return !!refspec;
--}
--
--struct refspec *parse_fetch_refspec(int nr_refspec, const char **refspec)
--{
--	return parse_refspec_internal(nr_refspec, refspec, 1, 0);
--}
--
--struct refspec *parse_push_refspec(int nr_refspec, const char **refspec)
--{
--	return parse_refspec_internal(nr_refspec, refspec, 0, 0);
--}
--
--void free_refspec(int nr_refspec, struct refspec *refspec)
--{
--	int i;
--
--	if (!refspec)
--		return;
--
--	for (i = 0; i < nr_refspec; i++) {
--		free(refspec[i].src);
--		free(refspec[i].dst);
--	}
--	free(refspec);
--}
--
- static int valid_remote_nick(const char *name)
+ static struct ref *wanted_peer_refs(const struct ref *refs,
+-		struct refspec *refspec)
++		struct refspec_item *refspec)
  {
- 	if (!name[0] || is_dot_or_dotdot(name))
-diff --git a/remote.h b/remote.h
-index 2b3180f94..386ced901 100644
---- a/remote.h
-+++ b/remote.h
-@@ -68,18 +68,6 @@ int for_each_remote(each_remote_fn fn, void *priv);
+ 	struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
+ 	struct ref *local_refs = head;
+@@ -895,7 +895,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	int err = 0, complete_refs_before_fetch = 1;
+ 	int submodule_progress;
  
- int remote_has_url(struct remote *remote, const char *url);
+-	struct refspec *refspec;
++	struct refspec_item *refspec;
+ 	const char *fetch_pattern;
+ 
+ 	fetch_if_missing = 0;
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index a13b7c8ef..6f105dc79 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -36,7 +36,7 @@ static int use_done_feature;
+ static int no_data;
+ static int full_tree;
+ static struct string_list extra_refs = STRING_LIST_INIT_NODUP;
+-static struct refspec *refspecs;
++static struct refspec_item *refspecs;
+ static int refspecs_nr;
+ static int anonymize;
+ 
+@@ -979,7 +979,7 @@ static void handle_deletes(void)
+ {
+ 	int i;
+ 	for (i = 0; i < refspecs_nr; i++) {
+-		struct refspec *refspec = &refspecs[i];
++		struct refspec_item *refspec = &refspecs[i];
+ 		if (*refspec->src)
+ 			continue;
+ 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 1fce68e9a..745020a10 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -203,7 +203,7 @@ static void add_merge_config(struct ref **head,
+ 
+ 	for (i = 0; i < branch->merge_nr; i++) {
+ 		struct ref *rm, **old_tail = *tail;
+-		struct refspec refspec;
++		struct refspec_item refspec;
+ 
+ 		for (rm = *head; rm; rm = rm->next) {
+ 			if (branch_merge_matches(branch, i, rm->name)) {
+@@ -340,7 +340,7 @@ static void find_non_local_tags(struct transport *transport,
+ }
+ 
+ static struct ref *get_ref_map(struct transport *transport,
+-			       struct refspec *refspecs, int refspec_count,
++			       struct refspec_item *refspecs, int refspec_count,
+ 			       int tags, int *autotags)
+ {
+ 	int i;
+@@ -371,7 +371,7 @@ static struct ref *get_ref_map(struct transport *transport,
+ 	argv_array_clear(&ref_prefixes);
+ 
+ 	if (refspec_count) {
+-		struct refspec *fetch_refspec;
++		struct refspec_item *fetch_refspec;
+ 		int fetch_refspec_nr;
+ 
+ 		for (i = 0; i < refspec_count; i++) {
+@@ -965,7 +965,7 @@ static int fetch_refs(struct transport *transport, struct ref *ref_map)
+ 	return ret;
+ }
+ 
+-static int prune_refs(struct refspec *refs, int ref_count, struct ref *ref_map,
++static int prune_refs(struct refspec_item *refs, int ref_count, struct ref *ref_map,
+ 		const char *raw_url)
+ {
+ 	int url_len, i, result = 0;
+@@ -1115,7 +1115,7 @@ static void backfill_tags(struct transport *transport, struct ref *ref_map)
+ }
+ 
+ static int do_fetch(struct transport *transport,
+-		    struct refspec *refs, int ref_count)
++		    struct refspec_item *refs, int ref_count)
+ {
+ 	struct string_list existing_refs = STRING_LIST_INIT_DUP;
+ 	struct ref *ref_map;
+@@ -1357,7 +1357,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
+ static int fetch_one(struct remote *remote, int argc, const char **argv, int prune_tags_ok)
+ {
+ 	static const char **refs = NULL;
+-	struct refspec *refspec;
++	struct refspec_item *refspec;
+ 	int ref_nr = 0;
+ 	int j = 0;
+ 	int exit_code;
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 6247c956d..5a79deae5 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -676,7 +676,7 @@ static const char *get_upstream_branch(const char *remote)
+  */
+ static const char *get_tracking_branch(const char *remote, const char *refspec)
+ {
+-	struct refspec *spec;
++	struct refspec_item *spec;
+ 	const char *spec_src;
+ 	const char *merge_branch;
+ 
+diff --git a/builtin/push.c b/builtin/push.c
+index fa65999b2..00d81fb1d 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -80,8 +80,8 @@ static const char *map_refspec(const char *ref,
+ 		return ref;
+ 
+ 	if (remote->push) {
+-		struct refspec query;
+-		memset(&query, 0, sizeof(struct refspec));
++		struct refspec_item query;
++		memset(&query, 0, sizeof(struct refspec_item));
+ 		query.src = matched->name;
+ 		if (!query_refspecs(remote->push, remote->push_refspec_nr, &query) &&
+ 		    query.dst) {
+diff --git a/builtin/remote.c b/builtin/remote.c
+index c49513995..d9da82dc8 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -442,7 +442,7 @@ static int get_push_ref_states_noquery(struct ref_states *states)
+ 		info->dest = xstrdup(item->string);
+ 	}
+ 	for (i = 0; i < remote->push_refspec_nr; i++) {
+-		struct refspec *spec = remote->push + i;
++		struct refspec_item *spec = remote->push + i;
+ 		if (spec->matching)
+ 			item = string_list_append(&states->push, _("(matching)"));
+ 		else if (strlen(spec->src))
+@@ -462,7 +462,7 @@ static int get_head_names(const struct ref *remote_refs, struct ref_states *stat
+ {
+ 	struct ref *ref, *matches;
+ 	struct ref *fetch_map = NULL, **fetch_map_tail = &fetch_map;
+-	struct refspec refspec;
++	struct refspec_item refspec;
+ 
+ 	refspec.force = 0;
+ 	refspec.pattern = 1;
+@@ -515,7 +515,7 @@ static int add_branch_for_removal(const char *refname,
+ 	const struct object_id *oid, int flags, void *cb_data)
+ {
+ 	struct branches_for_remote *branches = cb_data;
+-	struct refspec refspec;
++	struct refspec_item refspec;
+ 	struct known_remote *kr;
+ 
+ 	memset(&refspec, 0, sizeof(refspec));
+@@ -834,7 +834,7 @@ static int append_ref_to_tracked_list(const char *refname,
+ 	const struct object_id *oid, int flags, void *cb_data)
+ {
+ 	struct ref_states *states = cb_data;
+-	struct refspec refspec;
++	struct refspec_item refspec;
+ 
+ 	if (flags & REF_ISSYMREF)
+ 		return 0;
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6ab032acb..c0c4db007 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1746,11 +1746,11 @@ static int push_check(int argc, const char **argv, const char *prefix)
+ 	if (argc > 2) {
+ 		int i, refspec_nr = argc - 2;
+ 		struct ref *local_refs = get_local_heads();
+-		struct refspec *refspec = parse_push_refspec(refspec_nr,
++		struct refspec_item *refspec = parse_push_refspec(refspec_nr,
+ 							     argv + 2);
+ 
+ 		for (i = 0; i < refspec_nr; i++) {
+-			struct refspec *rs = refspec + i;
++			struct refspec_item *rs = refspec + i;
+ 
+ 			if (rs->pattern || rs->matching)
+ 				continue;
+diff --git a/checkout.c b/checkout.c
+index 193ba8567..bdefc888b 100644
+--- a/checkout.c
++++ b/checkout.c
+@@ -13,8 +13,8 @@ struct tracking_name_data {
+ static int check_tracking_name(struct remote *remote, void *cb_data)
+ {
+ 	struct tracking_name_data *cb = cb_data;
+-	struct refspec query;
+-	memset(&query, 0, sizeof(struct refspec));
++	struct refspec_item query;
++	memset(&query, 0, sizeof(struct refspec_item));
+ 	query.src = cb->src_ref;
+ 	if (remote_find_tracking(remote, &query) ||
+ 	    get_oid(query.dst, cb->dst_oid)) {
+diff --git a/refspec.c b/refspec.c
+index ecb0bdff3..22188f010 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -2,7 +2,7 @@
+ #include "refs.h"
+ #include "refspec.h"
+ 
+-static struct refspec s_tag_refspec = {
++static struct refspec_item s_tag_refspec = {
+ 	0,
+ 	1,
+ 	0,
+@@ -12,12 +12,12 @@ static struct refspec s_tag_refspec = {
+ };
+ 
+ /* See TAG_REFSPEC for the string version */
+-const struct refspec *tag_refspec = &s_tag_refspec;
++const struct refspec_item *tag_refspec = &s_tag_refspec;
+ 
+-static struct refspec *parse_refspec_internal(int nr_refspec, const char **refspec, int fetch, int verify)
++static struct refspec_item *parse_refspec_internal(int nr_refspec, const char **refspec, int fetch, int verify)
+ {
+ 	int i;
+-	struct refspec *rs = xcalloc(nr_refspec, sizeof(*rs));
++	struct refspec_item *rs = xcalloc(nr_refspec, sizeof(*rs));
+ 
+ 	for (i = 0; i < nr_refspec; i++) {
+ 		size_t llen;
+@@ -135,24 +135,24 @@ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refsp
+ 
+ int valid_fetch_refspec(const char *fetch_refspec_str)
+ {
+-	struct refspec *refspec;
++	struct refspec_item *refspec;
+ 
+ 	refspec = parse_refspec_internal(1, &fetch_refspec_str, 1, 1);
+ 	free_refspec(1, refspec);
+ 	return !!refspec;
+ }
+ 
+-struct refspec *parse_fetch_refspec(int nr_refspec, const char **refspec)
++struct refspec_item *parse_fetch_refspec(int nr_refspec, const char **refspec)
+ {
+ 	return parse_refspec_internal(nr_refspec, refspec, 1, 0);
+ }
+ 
+-struct refspec *parse_push_refspec(int nr_refspec, const char **refspec)
++struct refspec_item *parse_push_refspec(int nr_refspec, const char **refspec)
+ {
+ 	return parse_refspec_internal(nr_refspec, refspec, 0, 0);
+ }
+ 
+-void free_refspec(int nr_refspec, struct refspec *refspec)
++void free_refspec(int nr_refspec, struct refspec_item *refspec)
+ {
+ 	int i;
+ 
+@@ -165,4 +165,3 @@ void free_refspec(int nr_refspec, struct refspec *refspec)
+ 	}
+ 	free(refspec);
+ }
+-
+diff --git a/refspec.h b/refspec.h
+index 62625c23a..fc9c1af77 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -2,9 +2,9 @@
+ #define REFSPEC_H
+ 
+ #define TAG_REFSPEC "refs/tags/*:refs/tags/*"
+-extern const struct refspec *tag_refspec;
++extern const struct refspec_item *tag_refspec;
  
 -struct refspec {
--	unsigned force : 1;
--	unsigned pattern : 1;
--	unsigned matching : 1;
--	unsigned exact_sha1 : 1;
--
--	char *src;
--	char *dst;
--};
--
--extern const struct refspec *tag_refspec;
--
- struct ref {
- 	struct ref *next;
- 	struct object_id old_oid;
-@@ -175,12 +163,6 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid);
++struct refspec_item {
+ 	unsigned force : 1;
+ 	unsigned pattern : 1;
+ 	unsigned matching : 1;
+@@ -15,9 +15,9 @@ struct refspec {
+ };
+ 
+ int valid_fetch_refspec(const char *refspec);
+-struct refspec *parse_fetch_refspec(int nr_refspec, const char **refspec);
+-struct refspec *parse_push_refspec(int nr_refspec, const char **refspec);
++struct refspec_item *parse_fetch_refspec(int nr_refspec, const char **refspec);
++struct refspec_item *parse_push_refspec(int nr_refspec, const char **refspec);
+ 
+-void free_refspec(int nr_refspec, struct refspec *refspec);
++void free_refspec(int nr_refspec, struct refspec_item *refspec);
+ 
+ #endif /* REFSPEC_H */
+diff --git a/remote.c b/remote.c
+index 4d67c061a..89820c476 100644
+--- a/remote.c
++++ b/remote.c
+@@ -97,7 +97,7 @@ void add_prune_tags_to_fetch_refspec(struct remote *remote)
+ {
+ 	int nr = remote->fetch_refspec_nr;
+ 	int bufsize = nr  + 1;
+-	int size = sizeof(struct refspec);
++	int size = sizeof(struct refspec_item);
+ 
+ 	remote->fetch = xrealloc(remote->fetch, size  * bufsize);
+ 	memcpy(&remote->fetch[nr], tag_refspec, size);
+@@ -724,7 +724,7 @@ static int match_name_with_pattern(const char *key, const char *name,
+ 	return ret;
+ }
+ 
+-static void query_refspecs_multiple(struct refspec *refs, int ref_count, struct refspec *query, struct string_list *results)
++static void query_refspecs_multiple(struct refspec_item *refs, int ref_count, struct refspec_item *query, struct string_list *results)
+ {
+ 	int i;
+ 	int find_src = !query->src;
+@@ -733,7 +733,7 @@ static void query_refspecs_multiple(struct refspec *refs, int ref_count, struct
+ 		error("query_refspecs_multiple: need either src or dst");
+ 
+ 	for (i = 0; i < ref_count; i++) {
+-		struct refspec *refspec = &refs[i];
++		struct refspec_item *refspec = &refs[i];
+ 		const char *key = find_src ? refspec->dst : refspec->src;
+ 		const char *value = find_src ? refspec->src : refspec->dst;
+ 		const char *needle = find_src ? query->dst : query->src;
+@@ -750,7 +750,7 @@ static void query_refspecs_multiple(struct refspec *refs, int ref_count, struct
+ 	}
+ }
+ 
+-int query_refspecs(struct refspec *refs, int ref_count, struct refspec *query)
++int query_refspecs(struct refspec_item *refs, int ref_count, struct refspec_item *query)
+ {
+ 	int i;
+ 	int find_src = !query->src;
+@@ -761,7 +761,7 @@ int query_refspecs(struct refspec *refs, int ref_count, struct refspec *query)
+ 		return error("query_refspecs: need either src or dst");
+ 
+ 	for (i = 0; i < ref_count; i++) {
+-		struct refspec *refspec = &refs[i];
++		struct refspec_item *refspec = &refs[i];
+ 		const char *key = find_src ? refspec->dst : refspec->src;
+ 		const char *value = find_src ? refspec->src : refspec->dst;
+ 
+@@ -781,12 +781,12 @@ int query_refspecs(struct refspec *refs, int ref_count, struct refspec *query)
+ 	return -1;
+ }
+ 
+-char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
++char *apply_refspecs(struct refspec_item *refspecs, int nr_refspec,
+ 		     const char *name)
+ {
+-	struct refspec query;
++	struct refspec_item query;
+ 
+-	memset(&query, 0, sizeof(struct refspec));
++	memset(&query, 0, sizeof(struct refspec_item));
+ 	query.src = (char *)name;
+ 
+ 	if (query_refspecs(refspecs, nr_refspec, &query))
+@@ -795,7 +795,7 @@ char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
+ 	return query.dst;
+ }
+ 
+-int remote_find_tracking(struct remote *remote, struct refspec *refspec)
++int remote_find_tracking(struct remote *remote, struct refspec_item *refspec)
+ {
+ 	return query_refspecs(remote->fetch, remote->fetch_refspec_nr, refspec);
+ }
+@@ -1004,7 +1004,7 @@ static char *guess_ref(const char *name, struct ref *peer)
+ }
+ 
+ static int match_explicit_lhs(struct ref *src,
+-			      struct refspec *rs,
++			      struct refspec_item *rs,
+ 			      struct ref **match,
+ 			      int *allocated_match)
+ {
+@@ -1030,7 +1030,7 @@ static int match_explicit_lhs(struct ref *src,
+ 
+ static int match_explicit(struct ref *src, struct ref *dst,
+ 			  struct ref ***dst_tail,
+-			  struct refspec *rs)
++			  struct refspec_item *rs)
+ {
+ 	struct ref *matched_src, *matched_dst;
+ 	int allocated_src;
+@@ -1099,7 +1099,7 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ }
+ 
+ static int match_explicit_refs(struct ref *src, struct ref *dst,
+-			       struct ref ***dst_tail, struct refspec *rs,
++			       struct ref ***dst_tail, struct refspec_item *rs,
+ 			       int rs_nr)
+ {
+ 	int i, errs;
+@@ -1108,10 +1108,10 @@ static int match_explicit_refs(struct ref *src, struct ref *dst,
+ 	return errs;
+ }
+ 
+-static char *get_ref_match(const struct refspec *rs, int rs_nr, const struct ref *ref,
+-		int send_mirror, int direction, const struct refspec **ret_pat)
++static char *get_ref_match(const struct refspec_item *rs, int rs_nr, const struct ref *ref,
++		int send_mirror, int direction, const struct refspec_item **ret_pat)
+ {
+-	const struct refspec *pat;
++	const struct refspec_item *pat;
+ 	char *name;
+ 	int i;
+ 	int matching_refs = -1;
+@@ -1282,12 +1282,12 @@ static void prepare_ref_index(struct string_list *ref_index, struct ref *ref)
+  */
+ int check_push_refs(struct ref *src, int nr_refspec, const char **refspec_names)
+ {
+-	struct refspec *refspec = parse_push_refspec(nr_refspec, refspec_names);
++	struct refspec_item *refspec = parse_push_refspec(nr_refspec, refspec_names);
+ 	int ret = 0;
+ 	int i;
+ 
+ 	for (i = 0; i < nr_refspec; i++) {
+-		struct refspec *rs = refspec + i;
++		struct refspec_item *rs = refspec + i;
+ 
+ 		if (rs->pattern || rs->matching)
+ 			continue;
+@@ -1310,7 +1310,7 @@ int check_push_refs(struct ref *src, int nr_refspec, const char **refspec_names)
+ int match_push_refs(struct ref *src, struct ref **dst,
+ 		    int nr_refspec, const char **refspec, int flags)
+ {
+-	struct refspec *rs;
++	struct refspec_item *rs;
+ 	int send_all = flags & MATCH_REFS_ALL;
+ 	int send_mirror = flags & MATCH_REFS_MIRROR;
+ 	int send_prune = flags & MATCH_REFS_PRUNE;
+@@ -1330,7 +1330,7 @@ int match_push_refs(struct ref *src, struct ref **dst,
+ 	for (ref = src; ref; ref = ref->next) {
+ 		struct string_list_item *dst_item;
+ 		struct ref *dst_peer;
+-		const struct refspec *pat = NULL;
++		const struct refspec_item *pat = NULL;
+ 		char *dst_name;
+ 
+ 		dst_name = get_ref_match(rs, nr_refspec, ref, send_mirror, FROM_SRC, &pat);
+@@ -1686,7 +1686,7 @@ static int ignore_symref_update(const char *refname)
+  * local symbolic ref.
+  */
+ static struct ref *get_expanded_map(const struct ref *remote_refs,
+-				    const struct refspec *refspec)
++				    const struct refspec_item *refspec)
+ {
+ 	const struct ref *ref;
+ 	struct ref *ret = NULL;
+@@ -1751,7 +1751,7 @@ static struct ref *get_local_ref(const char *name)
+ }
+ 
+ int get_fetch_map(const struct ref *remote_refs,
+-		  const struct refspec *refspec,
++		  const struct refspec_item *refspec,
+ 		  struct ref ***tail,
+ 		  int missing_ok)
+ {
+@@ -2089,7 +2089,7 @@ struct ref *guess_remote_head(const struct ref *head,
+ struct stale_heads_info {
+ 	struct string_list *ref_names;
+ 	struct ref **stale_refs_tail;
+-	struct refspec *refs;
++	struct refspec_item *refs;
+ 	int ref_count;
+ };
+ 
+@@ -2098,9 +2098,9 @@ static int get_stale_heads_cb(const char *refname, const struct object_id *oid,
+ {
+ 	struct stale_heads_info *info = cb_data;
+ 	struct string_list matches = STRING_LIST_INIT_DUP;
+-	struct refspec query;
++	struct refspec_item query;
+ 	int i, stale = 1;
+-	memset(&query, 0, sizeof(struct refspec));
++	memset(&query, 0, sizeof(struct refspec_item));
+ 	query.dst = (char *)refname;
+ 
+ 	query_refspecs_multiple(info->refs, info->ref_count, &query, &matches);
+@@ -2131,7 +2131,7 @@ static int get_stale_heads_cb(const char *refname, const struct object_id *oid,
+ 	return 0;
+ }
+ 
+-struct ref *get_stale_heads(struct refspec *refs, int ref_count, struct ref *fetch_map)
++struct ref *get_stale_heads(struct refspec_item *refs, int ref_count, struct ref *fetch_map)
+ {
+ 	struct ref *ref, *stale_refs = NULL;
+ 	struct string_list ref_names = STRING_LIST_INIT_NODUP;
+diff --git a/remote.h b/remote.h
+index 386ced901..3657bd43d 100644
+--- a/remote.h
++++ b/remote.h
+@@ -28,12 +28,12 @@ struct remote {
+ 	int pushurl_alloc;
+ 
+ 	const char **push_refspec;
+-	struct refspec *push;
++	struct refspec_item *push;
+ 	int push_refspec_nr;
+ 	int push_refspec_alloc;
+ 
+ 	const char **fetch_refspec;
+-	struct refspec *fetch;
++	struct refspec_item *fetch;
+ 	int fetch_refspec_nr;
+ 	int fetch_refspec_alloc;
+ 
+@@ -163,8 +163,8 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid);
   */
  struct ref *ref_remove_duplicates(struct ref *ref_map);
  
--int valid_fetch_refspec(const char *refspec);
--struct refspec *parse_fetch_refspec(int nr_refspec, const char **refspec);
--extern struct refspec *parse_push_refspec(int nr_refspec, const char **refspec);
--
--void free_refspec(int nr_refspec, struct refspec *refspec);
--
- extern int query_refspecs(struct refspec *specs, int nr, struct refspec *query);
- char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
+-extern int query_refspecs(struct refspec *specs, int nr, struct refspec *query);
+-char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
++extern int query_refspecs(struct refspec_item *specs, int nr, struct refspec_item *query);
++char *apply_refspecs(struct refspec_item *refspecs, int nr_refspec,
  		     const char *name);
-@@ -313,8 +295,6 @@ extern int parseopt_push_cas_option(const struct option *, const char *arg, int
- extern int is_empty_cas(const struct push_cas_option *);
- void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
  
--#define TAG_REFSPEC "refs/tags/*:refs/tags/*"
--
- void add_prune_tags_to_fetch_refspec(struct remote *remote);
+ int check_push_refs(struct ref *src, int nr_refspec, const char **refspec);
+@@ -185,7 +185,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+  * missing_ok is usually false, but when we are adding branch.$name.merge
+  * it is Ok if the branch is not at the remote anymore.
+  */
+-int get_fetch_map(const struct ref *remote_refs, const struct refspec *refspec,
++int get_fetch_map(const struct ref *remote_refs, const struct refspec_item *refspec,
+ 		  struct ref ***tail, int missing_ok);
  
- #endif
+ struct ref *get_remote_ref(const struct ref *remote_refs, const char *name);
+@@ -193,7 +193,7 @@ struct ref *get_remote_ref(const struct ref *remote_refs, const char *name);
+ /*
+  * For the given remote, reads the refspec's src and sets the other fields.
+  */
+-int remote_find_tracking(struct remote *remote, struct refspec *refspec);
++int remote_find_tracking(struct remote *remote, struct refspec_item *refspec);
+ 
+ struct branch {
+ 	const char *name;
+@@ -203,7 +203,7 @@ struct branch {
+ 	const char *pushremote_name;
+ 
+ 	const char **merge_name;
+-	struct refspec **merge;
++	struct refspec_item **merge;
+ 	int merge_nr;
+ 	int merge_alloc;
+ 
+@@ -272,7 +272,7 @@ struct ref *guess_remote_head(const struct ref *head,
+ 			      int all);
+ 
+ /* Return refs which no longer exist on remote */
+-struct ref *get_stale_heads(struct refspec *refs, int ref_count, struct ref *fetch_map);
++struct ref *get_stale_heads(struct refspec_item *refs, int ref_count, struct ref *fetch_map);
+ 
+ /*
+  * Compare-and-swap
 diff --git a/transport-helper.c b/transport-helper.c
-index 11f1055b4..b99e1cce9 100644
+index b99e1cce9..b156a37e7 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -11,6 +11,7 @@
- #include "sigchain.h"
- #include "argv-array.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "transport-internal.h"
- #include "protocol.h"
- 
+@@ -36,7 +36,7 @@ struct helper_data {
+ 	char *export_marks;
+ 	char *import_marks;
+ 	/* These go from remote name (as in "list") to private name */
+-	struct refspec *refspecs;
++	struct refspec_item *refspecs;
+ 	int refspec_nr;
+ 	/* Transport options for fetch-pack/send-pack (should one of
+ 	 * those be invoked).
 diff --git a/transport.c b/transport.c
-index 37410d8aa..2cf63d18b 100644
+index 2cf63d18b..3ad4d37dc 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -11,6 +11,7 @@
- #include "bundle.h"
- #include "dir.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "branch.h"
- #include "url.h"
- #include "submodule.h"
+@@ -390,7 +390,7 @@ int transport_refs_pushed(struct ref *ref)
+ 
+ void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int verbose)
+ {
+-	struct refspec rs;
++	struct refspec_item rs;
+ 
+ 	if (ref->status != REF_STATUS_OK && ref->status != REF_STATUS_UPTODATE)
+ 		return;
+@@ -1111,7 +1111,7 @@ int transport_push(struct transport *transport,
+ 		int porcelain = flags & TRANSPORT_PUSH_PORCELAIN;
+ 		int pretend = flags & TRANSPORT_PUSH_DRY_RUN;
+ 		int push_ret, ret, err;
+-		struct refspec *tmp_rs;
++		struct refspec_item *tmp_rs;
+ 		struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
+ 		int i;
+ 
 -- 
 2.17.0.441.gb46fe60e1d-goog
 
