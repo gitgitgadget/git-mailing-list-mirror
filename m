@@ -2,69 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4B0D1F406
-	for <e@80x24.org>; Wed, 16 May 2018 23:45:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 623561F406
+	for <e@80x24.org>; Wed, 16 May 2018 23:46:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751474AbeEPXpv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 19:45:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43964 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751379AbeEPXpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 19:45:50 -0400
-Received: (qmail 31011 invoked by uid 109); 16 May 2018 23:45:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 16 May 2018 23:45:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30111 invoked by uid 111); 16 May 2018 23:45:57 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 16 May 2018 19:45:57 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 May 2018 16:45:47 -0700
-Date:   Wed, 16 May 2018 16:45:47 -0700
-From:   Jeff King <peff@peff.net>
+        id S1751481AbeEPXqz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 19:46:55 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:48158 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751273AbeEPXqy (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 16 May 2018 19:46:54 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:64f1:3b3f:8f13:59ed])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1616560129;
+        Wed, 16 May 2018 23:46:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1526514413;
+        bh=yGVqzmwXm4bpVCCBp+XzQH7+zJvdI/vOqjRlx6uJydQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=O+aKnYl8ffymNMEXFELkYYhNFiESj2FWQsKEx6lz0oOp/3deHhw2jzfyQXs/lsuTY
+         kb0wqXXziQfDdy3ElkfSzA7yHBBQBLGPCsaZn1HCbeCSHe268hke+7cFH4niN+Qf7p
+         MQDl5HVlZkbNqc4IapYMJuVYuYGFjvVksWE8qAhXmfQ4lPwb1c2v9JHHdYRTuYKfAc
+         TWXYM/DMNYxVCys6UlMdakz0I1ztK8OfX2QVqD0FJV6ShoQyA/cZUVBWslnuTETonu
+         3yn8X1WQ+PCh50x3nsrOQL3sscqXq3s228u/EGVrHQ3z/IjrVYXUs0zuDp1d1UuyxR
+         MkI04ikQo9kCOL1tPJdBbU390/f5X8FOuLphPSpaQU3WfxceqyjLDRPWGdop9sWkPt
+         pQo5a4zLcpsI3OO685UopKzt3FImnJrzuibZtfVTAcc23jDE07+VXqrtBlnJ1Yk/Qx
+         f1myjBFwaO075XHFM88iUuyvybCQUHXXP0JGGuAQiMeWdb+NtrM
+Date:   Wed, 16 May 2018 23:46:48 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-Subject: Re: worktrees vs. alternates
-Message-ID: <20180516234546.GA8521@sigill.intra.peff.net>
-References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com>
- <87po1waqyc.fsf@evledraar.gmail.com>
- <81B00B00-00F4-487A-9D3E-6B7514098B29@gmail.com>
- <87muwzc2kv.fsf@evledraar.gmail.com>
- <fc2f1fdf-222f-aaee-9d58-aae8692920f5@gmail.com>
- <0f19f9f8-d215-622e-5090-1341c013babc@linuxfoundation.org>
- <20180516191410.GA3417@sigill.intra.peff.net>
- <CAGZ79kaVroLhEu+QmTwLCpv1irst5zbnQBzg7xLkfFy8cC9owA@mail.gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 13/28] t3702: abstract away SHA-1-specific constants
+Message-ID: <20180516234648.GC652292@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>
+References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
+ <20180516015630.661349-14-sandals@crustytoothpaste.net>
+ <CAGZ79kYrDDGtSSViUwqOaJCTUUcUaiJe1DQHGSqS+3SCYnEv8g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="KDt/GgjP6HVcx58l"
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kaVroLhEu+QmTwLCpv1irst5zbnQBzg7xLkfFy8cC9owA@mail.gmail.com>
+In-Reply-To: <CAGZ79kYrDDGtSSViUwqOaJCTUUcUaiJe1DQHGSqS+3SCYnEv8g@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-3-amd64)
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 16, 2018 at 02:18:20PM -0700, Stefan Beller wrote:
 
-> >
-> > You can also do periodic maintenance like:
-> >
-> >   1. Copy each ref in the forked repositories into the parent repository
-> >      (e.g., giving each child that borrows from the parent its own
-> >      hierarchy in refs/remotes/<child>/*).
-> 
-> Can you just copy? I assume the mother repo doesn't know about
-> all objects, hence by copying the ref, we have a "spotty" history.
-> 
-> And to improve copying could permanent symlinking be used instead?
+--KDt/GgjP6HVcx58l
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sorry, by copying, I meant "fetching". I.e., migrating objects and refs.
+On Wed, May 16, 2018 at 10:18:33AM -0700, Stefan Beller wrote:
+> This reminds me of the way we test alot of the patch format already.
+> But there we use standard grep as opposed to egrep.
+>=20
+> git grep egrep doesn't show a lot of hits, but all commits
+> that mention egrep found via 'git log --grep egrep' mention
+> that there is some sort of portability issue for using egrep
+> specifically.
+>=20
+> Is the ^index a problem for standard grep, i.e. do we need to fix
+> other places?
 
--Peff
+I think this is just me preferring a more careful match, but if there
+are potential portability problems, I can reroll to use regular grep.  I
+don't think which one we use matters much one way or the other in this
+case, or in general.  We don't tend to produce a lot of potentially
+ambiguous matches in our testsuite.
+
+I think the uses in the commit messages tend to point out quirks in
+command line options over specifically concerns about the use of egrep
+itself.  I suspect the implementations that want egrep over grep -E (the
+latter being POSIX) also lack many of the POSIX options that people want
+to use, although I'm not aware of egrep itself being broken anywhere.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--KDt/GgjP6HVcx58l
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlr8wucACgkQv1NdgR9S
+9ouogRAAy2cg5IKUVeHV92qn3VrwOYM254R8MuIbR9S1IqwaXIrjNKrohcoP9ydn
+QhWjHQHaTa0IMfdiwBEU0S7RUYbev0LHd05dMcoaoNP5hMAJla4oH1TuInlb+IKs
+utdq84iJZWecOL8xGwJsgdzTrty78Po6anwlCDQxzJWvHpJCUhf6pkjdomlRrHoS
+oDH5VcBAPeShU+wIAynjMNlx5ouLwGNRy5/CN10tH7Im3EOmia1237xgwhEiFZqu
+Kj0S/I6pHRLFJYw8eI4AKO289wpCzoAFeUXf63NkQOVN9wjb+CRWnQ0F+nzSDiH5
+pgyhXP0O18ZSmWIIZK6UuFIKYCB+i2HapjGlBQFZp3rB9at4rkoIt7lFMnef8Py2
+LYKcGKScaAoEG0RIImyHyl//bWH0AzePKWHsgAsGw8UAVZejuxsvEr/aSVLaqZZ/
+W6b8D6pPVrbiJ2HvVTrvXXvgruQtU3LZes0uazDoUN5aQBWOeTUyYE3bKvkPGthX
+d6VZcHr7Qv9j8rPHoUuxtCuU3Gyp8F+EtWgeWSSoccFO3VpRLOwO9NUQnhHW7waR
+HTmt7MPy90aF9dlqAUUG3gcTc5yN/wycJqRX+5/QmcG8jD6lu5/rbUiqppMaZGvc
+2aK/I/V7xC4YugDMOch2UDYLhiKmMnrALcg4Ocj0y0VvqWJdvc8=
+=UpeT
+-----END PGP SIGNATURE-----
+
+--KDt/GgjP6HVcx58l--
