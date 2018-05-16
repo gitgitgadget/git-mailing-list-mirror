@@ -7,111 +7,137 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D7D31F406
-	for <e@80x24.org>; Wed, 16 May 2018 22:59:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D9BA1F406
+	for <e@80x24.org>; Wed, 16 May 2018 22:59:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752284AbeEPW7G (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 18:59:06 -0400
-Received: from mail-ua0-f202.google.com ([209.85.217.202]:46514 "EHLO
-        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752243AbeEPW7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 18:59:05 -0400
-Received: by mail-ua0-f202.google.com with SMTP id 69-v6so2251217uag.13
-        for <git@vger.kernel.org>; Wed, 16 May 2018 15:59:05 -0700 (PDT)
+        id S1751907AbeEPW7K (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 18:59:10 -0400
+Received: from mail-yw0-f201.google.com ([209.85.161.201]:35317 "EHLO
+        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751038AbeEPW7H (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 18:59:07 -0400
+Received: by mail-yw0-f201.google.com with SMTP id b85-v6so1090231ywa.2
+        for <git@vger.kernel.org>; Wed, 16 May 2018 15:59:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=316Lcwfo9mWjCEoJF7bWMISM+WwSxWpHeyuv/a6fyQI=;
-        b=qLL5nBG6GMy2YQNfJbSg80zMBwMqapGOGmwRFwf2rJtH/nZSZIjA3ttMuv7rN3gwLe
-         2IEnTPcHPKVAzz2M2h6ydzdFIxpwFMgMIMBr+GFq/f0dUGaCRmau34Pa4eOCbtSaDiBA
-         sa+uxlOR9ryOqy5e02x+j52ELf4et2dBN5mCGIh40bYiBctt1AKX4bvZGfSBYaXXgur5
-         I+bTCCYktDl1pgXiBGv9ZkVHevpTUvrPP0tDn4cozkZRuW5pqMX9BShhfRJ4tFnRK+GU
-         y19w4mkERhirGaoqhWl9bPQNQXQcoEWI+OPzAF2hXx0MUaj1Tz779twFpt1fXS5ba3md
-         Cn7A==
+        bh=3tCE2yiZmv5emjz5+xODrEsYmFN5QtPOIq5C/8MRY/g=;
+        b=Pz1Ew4dspoCh5ynKecFvF6lEYamIu08SwKzQVDsv7iKZjB1uHkSXVxyuOxX0qpJ7Vj
+         EH+5wJEZauT1t7x/kOLbK+ysSQvrkCS3O89b0N5Vx3iioeuZF6J7hvLikC8edfztacRQ
+         X0dzQA++9er/aJ0QU3RVzyZHy0bX/6DLrknFqFueZS/rr9NWv/a02o7CDHicfRXCZX8U
+         wOqFhI+8pYcow5H+0JGtomkK++OA63nuAg9VIpB0kwTJycOtjZtEgbzF13c9EQTB/rTm
+         tlFSX32WTZeIlFOgRAIfaSPchA8L1zYKYppQWKVvcz+IYdsZnhtLpZ2DaUlXXkf9PcfJ
+         6RVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=316Lcwfo9mWjCEoJF7bWMISM+WwSxWpHeyuv/a6fyQI=;
-        b=nznfpyh1/aeAJAjNz1HA9EVAWSWEVYrJNmxB7L7H1HUbyrHUZHnYYy42XhMQaYWIQJ
-         5Lk+QSc50ZzUHFqb+a/2McBrAl8erXiYrhCCh2S8piEY0fFLp6O3FZoAef28SNf2qFVT
-         hAOynlspEbqRsj++Tp5f+Z+1Hv7J+5gDC5zExW1T/wI0S7ObEE8HGuTsYraht1fmOIB4
-         0SQ/0F4L6KKH75vYDv6501IZPNNroE6es0qMbQfUEX6noADqpAljYRvg5gf6Q2LqvvKj
-         7JBX5FL1GITnisC9dU/3epnoYrfUyYrlKXmkPIQaUrvr6KZUmyWX92yBhU2bUXApQ4e5
-         5sxQ==
-X-Gm-Message-State: ALKqPwd2rsvjl751Qx2Ut1jR3HBd+sn6Ylg3dalbsukiYpCzeHPj0zJx
-        3zpxKsi+674jF6Y9Tz8u9+rGDw+J2PSv63EO/v4n6uA89VzcGN1OyUKQftrrBtPxdEHKvoSCZIc
-        jfKvf0bNBprWYixWnW4eWRLE5iVXefK0NMSlYQyfza6IYxf58pSVIaRUVUw==
-X-Google-Smtp-Source: AB8JxZqwut6v+at9mJZqCh3zZ/CLPRhtTul5+/oc1azEpi6SkjFkWM2BxdyUvxgiPRJDG0pJKVlsklamhSI=
+        bh=3tCE2yiZmv5emjz5+xODrEsYmFN5QtPOIq5C/8MRY/g=;
+        b=XzE0picSX8zkz14/mgj9w+hUWA+vwYJvd+QwibqhSf1eCZ4gqTz2RjFM1oqaqlc8Lx
+         bmi0srF+PHygVScgmJwAr/MFzC0qTFJlO1QVV3teVD8sCs1nRyDYPJI5GFp5OvQiOo2B
+         n5skeHQ4bVUIFRRQymV+35Ju8x2FOyTqbgvbqPu4jc7zZ07KQl9B5kaA06doZTWcKBXf
+         /aOeiv6+W2QYfE8cKvDGwoZm8Xj/f2eb/ezy+ZAdbM+vjNTWds+rW2t53qEPLukBiO0I
+         58Zg65uAFI0qgiRQkmpYzjBANXcBR9h8W1is8ulmN76fdG7lV3m9wM1tEtC77awUTr8T
+         McKg==
+X-Gm-Message-State: ALKqPwfZXGEcebZPc+zCx5nzi+YufwXqtZSHqdXWS3NqYAx2lixhKw+j
+        J57XWr/Nd2xPp9VI7IKK7ZXZVN6gv2qnN7EF7nhmydN2lPYN37gHgpsIdBLoBsfG1EWeJGctczR
+        LmginPp9muSHLjNtcX8ddFkpQNm8WYURPw+xsy/ouqhl8CvGdCfHnZWEN3w==
+X-Google-Smtp-Source: AB8JxZpxbNa548NPX4LlhYU5wixYj6dcLL6v4fl4C8ZqORKTk/BtRT/SURR6xT878sFtv1eDr39a5o3KkCY=
 MIME-Version: 1.0
-X-Received: by 2002:ab0:560e:: with SMTP id y14-v6mr2348639uaa.58.1526511544659;
- Wed, 16 May 2018 15:59:04 -0700 (PDT)
-Date:   Wed, 16 May 2018 15:57:58 -0700
+X-Received: by 2002:a25:3623:: with SMTP id d35-v6mr1000316yba.78.1526511546908;
+ Wed, 16 May 2018 15:59:06 -0700 (PDT)
+Date:   Wed, 16 May 2018 15:57:59 -0700
 In-Reply-To: <20180516225823.235426-1-bmwill@google.com>
-Message-Id: <20180516225823.235426-12-bmwill@google.com>
+Message-Id: <20180516225823.235426-13-bmwill@google.com>
 References: <20180514215626.164960-1-bmwill@google.com> <20180516225823.235426-1-bmwill@google.com>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d-goog
-Subject: [PATCH v2 11/36] clone: convert cmd_clone to use refspec_item_init
+Subject: [PATCH v2 12/36] fast-export: convert to use struct refspec
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
         sbeller@google.com, bmwill@google.com
 Cc:     avarab@gmail.com, gitster@pobox.com, sbeller@google.com,
         Brandon Williams <bmwill@google.com>
 Content-Type: text/plain; charset="UTF-8"
+X-ccpol: medium
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert 'cmd_clone()' to use 'refspec_item_init()' instead of relying on
-the old 'parse_fetch_refspec()' to initialize a single refspec item.
+Convert fast-export to use 'struct refspec' instead of using a list of
+refspec_item's.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/clone.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ builtin/fast-export.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 854088a3a..8c5f4d8f0 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -895,8 +895,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	int err = 0, complete_refs_before_fetch = 1;
- 	int submodule_progress;
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 6f105dc79..143999738 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -36,8 +36,7 @@ static int use_done_feature;
+ static int no_data;
+ static int full_tree;
+ static struct string_list extra_refs = STRING_LIST_INIT_NODUP;
+-static struct refspec_item *refspecs;
+-static int refspecs_nr;
++static struct refspec refspecs = REFSPEC_INIT_FETCH;
+ static int anonymize;
  
--	struct refspec_item *refspec;
--	const char *fetch_pattern;
-+	struct refspec_item refspec;
+ static int parse_opt_signed_tag_mode(const struct option *opt,
+@@ -830,9 +829,9 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
+ 		if (dwim_ref(e->name, strlen(e->name), &oid, &full_name) != 1)
+ 			continue;
  
- 	fetch_if_missing = 0;
+-		if (refspecs) {
++		if (refspecs.nr) {
+ 			char *private;
+-			private = apply_refspecs(refspecs, refspecs_nr, full_name);
++			private = apply_refspecs(refspecs.items, refspecs.nr, full_name);
+ 			if (private) {
+ 				free(full_name);
+ 				full_name = private;
+@@ -978,8 +977,8 @@ static void import_marks(char *input_file)
+ static void handle_deletes(void)
+ {
+ 	int i;
+-	for (i = 0; i < refspecs_nr; i++) {
+-		struct refspec_item *refspec = &refspecs[i];
++	for (i = 0; i < refspecs.nr; i++) {
++		struct refspec_item *refspec = &refspecs.items[i];
+ 		if (*refspec->src)
+ 			continue;
  
-@@ -1078,8 +1077,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (option_required_reference.nr || option_optional_reference.nr)
- 		setup_reference();
+@@ -1040,18 +1039,12 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 		usage_with_options (fast_export_usage, options);
  
--	fetch_pattern = value.buf;
--	refspec = parse_fetch_refspec(1, &fetch_pattern);
-+	refspec_item_init(&refspec, value.buf, REFSPEC_FETCH);
+ 	if (refspecs_list.nr) {
+-		const char **refspecs_str;
+ 		int i;
  
- 	strbuf_reset(&value);
+-		ALLOC_ARRAY(refspecs_str, refspecs_list.nr);
+ 		for (i = 0; i < refspecs_list.nr; i++)
+-			refspecs_str[i] = refspecs_list.items[i].string;
+-
+-		refspecs_nr = refspecs_list.nr;
+-		refspecs = parse_fetch_refspec(refspecs_nr, refspecs_str);
++			refspec_append(&refspecs, refspecs_list.items[i].string);
  
-@@ -1139,7 +1137,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	refs = transport_get_remote_refs(transport, NULL);
+ 		string_list_clear(&refspecs_list, 1);
+-		free(refspecs_str);
+ 	}
  
- 	if (refs) {
--		mapped_refs = wanted_peer_refs(refs, refspec);
-+		mapped_refs = wanted_peer_refs(refs, &refspec);
- 		/*
- 		 * transport_get_remote_refs() may return refs with null sha-1
- 		 * in mapped_refs (see struct transport->get_refs_list
-@@ -1233,6 +1231,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	strbuf_release(&value);
- 	junk_mode = JUNK_LEAVE_ALL;
+ 	if (use_done_feature)
+@@ -1090,7 +1083,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 	if (use_done_feature)
+ 		printf("done\n");
  
--	free(refspec);
-+	refspec_item_clear(&refspec);
- 	return err;
+-	free_refspec(refspecs_nr, refspecs);
++	refspec_clear(&refspecs);
+ 
+ 	return 0;
  }
 -- 
 2.17.0.441.gb46fe60e1d-goog
