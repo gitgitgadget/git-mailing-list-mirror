@@ -2,191 +2,256 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C24A01F406
-	for <e@80x24.org>; Wed, 16 May 2018 20:43:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF1B11F406
+	for <e@80x24.org>; Wed, 16 May 2018 20:48:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751474AbeEPUn1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 May 2018 16:43:27 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:39418 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751096AbeEPUn0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 May 2018 16:43:26 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 603DB609D1; Wed, 16 May 2018 20:43:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1526503406;
-        bh=GycvxIeCDNwRVZdy21rZmSQ78OWj388Vtp98QD2Gmj8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YWlR4PpaeHFJL39+EH9B3IDa0VGUGEUDB35LMy4w0UfuTMsIazjzevL17DXsIWjrc
-         RX6Drqu1oRPNn3REHK9my6RMHZiUZAxmZrJQGgXgdP6dsTFWAu0vlNkUFmfLjpzlQo
-         CVpXT1T7B/BPNKpNcPlFBtX0Faab+J/T1pyV2Ovk=
-Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mfick@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 798F160541;
-        Wed, 16 May 2018 20:43:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1526503405;
-        bh=GycvxIeCDNwRVZdy21rZmSQ78OWj388Vtp98QD2Gmj8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Cq3J6qCS8IvyVA3lC4jmMf8YWuBgulWKTCtkQwJfAx17Yb7t8gy1xquZ90DPNEjcr
-         ZJzkrtivaHM+yAQ4Q/46a/WLiaa4JXfDpBipliXlhfEWtt83vk4Q+4zr66bkgZterf
-         ItakUG352f34QSIsJYKUh48dctDplJkJtzrS7lrw=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 798F160541
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     Jeff King <peff@peff.net>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-Subject: Re: worktrees vs. alternates
-Date:   Wed, 16 May 2018 14:43:24 -0600
-Message-ID: <2848918.IL6YjaUS5T@mfick-lnx>
-User-Agent: KMail/4.13.3 (Linux/3.13.0-144-generic; KDE/4.13.3; x86_64; ; )
-In-Reply-To: <20180516200658.GC4036@sigill.intra.peff.net>
-References: <A33442B1-B37D-42E1-9C58-8AB583A43BC9@gmail.com> <42435260.5sd4EuToWN@mfick-lnx> <20180516200658.GC4036@sigill.intra.peff.net>
+        id S1751227AbeEPUsy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 May 2018 16:48:54 -0400
+Received: from mail-ot0-f194.google.com ([74.125.82.194]:41008 "EHLO
+        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751013AbeEPUsx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 May 2018 16:48:53 -0400
+Received: by mail-ot0-f194.google.com with SMTP id t1-v6so2538847oth.8
+        for <git@vger.kernel.org>; Wed, 16 May 2018 13:48:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=xmYnYoBwd9qAr8Jh0j6Y8AoTqb+2743Zu406o2DwmTs=;
+        b=hj4NBLHjjMUZM8MPW9WwkGrEdZ2F1px2EV0wPxEgMa7dNqK2mkoNz/fnQvFcwSXDL6
+         +5VPLmWlzHkBsRuFXnm9sguPHq2jUq2Jpq6arzN2okgyLy4jojzewq6kPzhttALCFdat
+         R+8XbBX8WNIj541QLYNlLMH7KYFU+9bOYicag=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xmYnYoBwd9qAr8Jh0j6Y8AoTqb+2743Zu406o2DwmTs=;
+        b=Ynvdl6AXO5jzASAfzIf4FkJqL6WAiCKD3BrJZ2NlfIG3pfylYGS0WR1U/jBOiHfZ5r
+         UBNigKjEkklsDvfQBBLAiLv4zxL30Tles2XuhzrLB8hX2hOnU+4DeMK35/BLQqU9y8L7
+         bGPssLnOheBOP96g8VyZ+aHR+6a9QaobLAHQu71HgNwTsrNvvHUd6ICsCxv4Kqx4s4xt
+         vV+A5OeP4k7Z+n/SWNj7Qsv7NPWXbg3G6/6XNCJxYkwXwGCMsp6IVfrEyFnD7lMbTX/l
+         LqCaQ+FNZlWf62CdQIpvAkB4yLHe+nltauCOFR6hunE380F61b03tLHuzV/DEDbIw6+A
+         B7Gg==
+X-Gm-Message-State: ALKqPwfhP6dBeh8dIBEOBbe2up7Bs5NCKcpbcxFJ8ozjWd4GMyC1Mjw8
+        /vigr6CAbl6NGF8L1fP4wZ3FYbcDjpQzxWm63iJMtg==
+X-Google-Smtp-Source: AB8JxZqRroxpD47o1AtsZLTxnG48tUjcLtlpe31LXYEm0CZe3D2A3Bih2v8zbKAHqr0jOjUSuOWxq0RPZPrML+UsP3k=
+X-Received: by 2002:a9d:c41:: with SMTP id 59-v6mr1841041otr.255.1526503732409;
+ Wed, 16 May 2018 13:48:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Received: by 2002:a9d:3c57:0:0:0:0:0 with HTTP; Wed, 16 May 2018 13:48:51
+ -0700 (PDT)
+In-Reply-To: <1378098185.1161438.1526219571066@mail.yahoo.com>
+References: <20180512212434.28012-1-luke@diamand.org> <20180512212434.28012-2-luke@diamand.org>
+ <1378098185.1161438.1526219571066@mail.yahoo.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Wed, 16 May 2018 21:48:51 +0100
+Message-ID: <CAE5ih79MTtDKRUYVhB7miuqYxhxZGrVtstG6Tn02LBv2kXrCfA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] git-p4: add unshelve command
+To:     Merland Romain <merlorom@yahoo.fr>
+Cc:     Git Users <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        George Vanburgh <gvanburgh@bloomberg.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Cedric.Borgese@gmail.com" <Cedric.Borgese@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday, May 16, 2018 01:06:59 PM Jeff King wrote:
-> On Wed, May 16, 2018 at 01:40:56PM -0600, Martin Fick 
-wrote:
-> > > In theory the fetch means that it's safe to actually
-> > > prune in the mother repo, but in practice there are
-> > > still races. They don't come up often, but if you
-> > > have enough repositories, they do eventually. :)
-> > 
-> > Peff,
-> > 
-> > I would be very curious to hear what you think of this
-> > approach to mitigating the effect of those races?
-> > 
-> > https://git.eclipse.org/r/c/122288/2
-> 
-> The crux of the problem is that we have no way to
-> atomically mark an object as "I am using this -- do not
-> delete" with respect to the actual deletion.
-> 
-> So if I'm reading your approach correctly, you put objects
-> into a purgatory rather than delete them, and let some
-> operations rescue them from purgatory if we had a race. 
+On 13 May 2018 at 14:52, Merland Romain <merlorom@yahoo.fr> wrote:
+> Hello Luke,
+>
+> Very interseting
+> This is indeed an option we are waiting since the introduction of option =
+--shelve for git p4 submit
+> What I like most in your approach is the preservation of link to p4/maste=
+r inducing small changes of git-p4 existing functions already heavily teste=
+d.
+> Also I like the dedicated branch you create, it is cleaner and then we ca=
+n cherry-pick in other git branches.
 
-Yes.  This has the cost of extra disk space for a while, but 
-once I realized that we are incurring that cost already 
-because for our repos, we already put things into purgatory 
-to avoid getting stale NFS File handle errors during 
-unrecoverable paths (while streaming an object).  So 
-effectively this has no extra space cost then what is needed 
-to run safely on NFS.
+Thanks, I'd be interested to know how you get on with it!
 
->   1. When do you rescue from purgatory? Any time the
-> object is referenced? Do you then pull in all of its
-> reachable objects too?
+> We made some basic tries on our side, just adding an option --unshelve to=
+ P4Submit (for simplicity, but I like much more your P4Unshelve class)
+> and trying to use the diff of p4 to generate a patch when possible, then =
+apply it in the current git branch on top of HEAD.
+> Here it is, hope it can help a bit.
+> Note it also uses p4 print -o for binary files.
 
-For my approach, I decided a) Yes b) No
+I did try something like this earlier this year (if you look in the
+archives you'll find it) but I found that it was getting quite
+complicated trying to construct a sensible looking patch file from the
+output of p4 describe. Better to let git's existing tools do that, as
+they're going to be better than any half-baked attempt I might manage
+in Python!
 
-Because:
-
-a) Rescue on reference is cheap and allows any other policy 
-to be built upon it, just ensure that policy references it 
-at some point before it is prune from the purgatory.
-
-b)  The other referenced objects will likely get pulled in 
-on reference anyway or by virtue of being in the same pack.
-
->   2. How do you decide when to drop an object from
-> purgatory? And specifically, how do you avoid racing with
-> somebody using the object as you're pruning purgatory?
-
-If you clean the purgatory during repacking after creating 
-all the new packs and before deleting the old ones, you will 
-have a significant grace window to handle most longer running 
-operations.  In this way, repacking will have re-referenced 
-any missing objects from the purgatory before it gets pruned 
-causing them to be recovered if necessary.  Those missing 
-objects, believed to be in the exact packs in the purgatory 
-at that time, should only ever have been referenced by write 
-operations that started before those packs were moved to the 
-purgatory, which was before the previous repacking round 
-ended.  This leaves write operations a full repacking cycle 
-to complete in to avoid loosing objects.
-
->   3. How do you know that an operation has been run that
-> will actually rescue the object, as opposed to silently
-> having a corrupted state on disk?
-> 
->      E.g., imagine this sequence:
-> 
->        a. git-prune computes reachability and finds that
-> commit X is ready to be pruned
-> 
->        b. another process sees that commit X exists and
-> builds a commit that references it as a parent
-> 
->        c. git-prune drops the object into purgatory
-> 
->      Now we have a corrupt state created by the process in
-> (b), since we have a reachable object in purgatory. But
-> what if nobody goes back and tries to read those commits
-> in the meantime?
-
-See answer to #2, repacking itself should rescue any objects 
-that need to be rescued before pruning the purgatory.
-
-> I think this might be solvable by using the purgatory as a
-> kind of "lock", where prune does something like:
-> 
->   1. compute reachability
-> 
->   2. move candidate objects into purgatory; nobody can
-> look into purgatory except us
-
-I don't think this is needed.
-
-It should be OK to let others see the objects in the 
-purgatory after 1 and before 3 as long as "seeing" them, 
-causes them to be recovered!
-
->   3. compute reachability _again_, making sure that no
-> purgatory objects are used (if so, rollback the deletion
-> and try again)
-
-Yes, you laid out the formula, but nothing says this 
-recompute can't wait until the next repack (again see my 
-answer to #2)!  i.e. there is no rush to cause a recovery as 
-long as it gets recovered before it gets pruned from the 
-purgatory.
+Thanks!
+Luke
 
 
-> But even that's not quite there, because you need to have
-> some consistent atomic view of what's "used". Just
-> checking refs isn't enough, because some other process
-> may be planning to reference a purgatory object but not
-> yet have updated the ref. So you need some atomic way of
-> saying "I am interested in using this object".
 
-As long as all write paths also read the object first (I 
-assume they do, or we would be in big trouble already), then 
-this should not be an issue.  The idea is to force all reads 
-(and thus all writes also) to recover the object,
-
--Martin
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
-
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index f4a6f3b4c..b466b46e1 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -1353,6 +1353,8 @@ class P4Submit(Command, P4UserMap):
+>                                       metavar=3D"CHANGELIST",
+>                                       help=3D"update an existing shelved =
+changelist, implies --shelve, "
+>                                             "repeat in-order for multiple=
+ shelved changelists"),
+> +                optparse.make_option("--unshelve", dest=3D"unshelve",
+> +                                     help=3D"unshelve speficied ChangeLi=
+st into current BRANCH."),
+>                  optparse.make_option("--commit", dest=3D"commit", metava=
+r=3D"COMMIT",
+>                                       help=3D"submit only the specified c=
+ommit(s), one commit or xxx..xxx"),
+>                  optparse.make_option("--disable-rebase", dest=3D"disable=
+_rebase", action=3D"store_true",
+> @@ -1367,6 +1369,7 @@ class P4Submit(Command, P4UserMap):
+>          self.dry_run =3D False
+>          self.shelve =3D False
+>          self.update_shelve =3D list()
+> +        self.unshelve =3D ""
+>          self.commit =3D ""
+>          self.disable_rebase =3D False
+>          self.prepare_p4_only =3D False
+> @@ -2083,6 +2086,66 @@ class P4Submit(Command, P4UserMap):
+>          if self.clientPath =3D=3D "":
+>              die("Error: Cannot locate perforce checkout of %s in client =
+view" % self.depotPath)
+>
+> +        # special case of unshelving
+> +        # todo: put this code in a class like P4Sync or P4Rebase
+> +        if self.unshelve !=3D "":
+> +            git_dir =3D os.getcwd() + '/'
+> +            print "Importing shelved CL %s into current git branch %s" %=
+ (self.unshelve, self.master)
+> +            description =3D p4_describe(self.unshelve)
+> +
+> +            # get changed files
+> +            files =3D p4CmdList(['files', "@=3D%s" % self.unshelve])
+> +            editedFiles =3D []
+> +            filesToAdd =3D []
+> +            filesToDelete =3D []
+> +            binaryFiles =3D []
+> +            something_to_commit =3D False
+> +            for f in files:
+> +                if not f["depotFile"].startswith(self.depotPath):
+> +                    print "WARNING: file %s not in this p4 depot - skipp=
+ing" % f["depotFile"]
+> +                    continue
+> +
+> +                elif f["action"] =3D=3D 'delete':
+> +                    filesToDelete.append(f)
+> +                    something_to_commit =3D True
+> +                elif f["action"] =3D=3D 'add':
+> +                    filesToAdd.append(f)
+> +                    something_to_commit =3D True
+> +                elif f["type"] =3D=3D 'binary':
+> +                    binaryFiles.append(f)
+> +                    something_to_commit =3D True
+> +                elif f["action"] =3D=3D 'edit':
+> +                    editedFiles.append(f)
+> +                    something_to_commit =3D True
+> +
+> +                f["clientFile"] =3D f["depotFile"].replace(self.depotPat=
+h,self.clientPath)
+> +                f["gitFile"] =3D f["depotFile"].replace(self.depotPath,g=
+it_dir)
+> +
+> +            if not something_to_commit:
+> +                print "Nothing to commit. Exiting"
+> +                return True
+> +
+> +            # get the diff and copy to diff directory
+> +            for f in editedFiles:
+> +                p4diff =3D p4_read_pipe(['diff2', '-du', f["depotFile"]+=
+'#'+f["rev"], f["depotFile"]+'@=3D'+self.unshelve])
+> +                p4diff =3D "\n".join(p4diff.split("\n")[1:])
+> +                p4diff =3D '--- '+f["gitFile"]+'\n' + '+++ '+f["gitFile"=
+]+'\n' + p4diff
+> +                write_pipe(['patch', '-d/', '-p0'], p4diff)
+> +                write_pipe(['git', 'add', '-f', f["gitFile"]], "")
+> +            for f in filesToAdd:
+> +                p4_write_pipe(['print', '-o', f["gitFile"], f["depotFile=
+"]+'@=3D'+self.unshelve], "")
+> +                write_pipe(['git', 'add', '-f', f["gitFile"]], "")
+> +            for f in filesToDelete:
+> +                os.remove(f["gitFile"])
+> +                write_pipe(['git', 'rm', f["gitFile"]], "")
+> +            for f in binaryFiles:
+> +                p4_write_pipe(['print', '-o', f["gitFile"], f["depotFile=
+"]+'@=3D'+self.unshelve], "")
+> +                write_pipe(['git', 'add', '-f', f["gitFile"]], "")
+> +
+> +            # finalize: commit in git
+> +            write_pipe(['git', 'commit', '-m', description["desc"]], "")
+> +            return True
+> +
+>          print "Perforce checkout for depot path %s located at %s" % (sel=
+f.depotPath, self.clientPath)
+>          self.oldWorkingDirectory =3D os.getcwd()
+>
+> Romain
+>
+>
+>
+> Le samedi 12 mai 2018 =C3=A0 23:24:48 UTC+2, Luke Diamand <luke@diamand.o=
+rg> a =C3=A9crit :
+>
+>
+>
+>
+>
+> This can be used to "unshelve" a shelved P4 commit into
+> a git commit.
+>
+> For example:
+>
+>   $ git p4 unshelve 12345
+>
+> The resulting commit ends up in the branch:
+>   refs/remotes/p4/unshelved/12345
+>
+> If that branch already exists, it is renamed - for example
+> the above branch would be saved as p4/unshelved/12345.1.
+>
+> Caveat:
+>
+> The unshelving is done against the current "p4/master" branch;
+> git-p4 uses "p4 print" to get the file contents at the requested
+> revision, and then fast-import creates a commit relative to p4/master.
+>
+> Ideally what you would want is for fast-import to create the
+> commit based on the Perforce "revision" prior to the shelved commit,
+> but Perforce doesn't have such a concept - to do this, git-p4
+> would need to figure out the revisions of the individual files
+> before the shelved changelist, and then construct a temporary
+> git branch which matched this.
+>
+> It's possible to do this, but doing so makes this change a lot more
+> complicated.
+>
+> This limitation means that if you unshelve a change where some
+> of the changed files were not based on p4/master, you will get
+> an amalgam of the change you wanted, and these other changes.
+>
+> The reference branch can be changed manually with the "--origin"
+> option.
+>
+> The change adds a new Unshelve command class. This just runs the
+> existing P4Sync code tweaked to handle a shelved changelist.
+>
+> Signed-off-by: Luke Diamand <luke@diamand.org>
