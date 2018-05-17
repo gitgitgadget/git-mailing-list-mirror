@@ -2,129 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C05721F51C
-	for <e@80x24.org>; Thu, 17 May 2018 22:36:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 946731F51C
+	for <e@80x24.org>; Thu, 17 May 2018 22:39:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751965AbeEQWgR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 18:36:17 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:36794 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751892AbeEQWgQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 18:36:16 -0400
-Received: by mail-wr0-f195.google.com with SMTP id p4-v6so7227416wrh.3
-        for <git@vger.kernel.org>; Thu, 17 May 2018 15:36:16 -0700 (PDT)
+        id S1751564AbeEQWjj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 18:39:39 -0400
+Received: from mail-yb0-f180.google.com ([209.85.213.180]:36531 "EHLO
+        mail-yb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751543AbeEQWji (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 18:39:38 -0400
+Received: by mail-yb0-f180.google.com with SMTP id o14-v6so2041769ybq.3
+        for <git@vger.kernel.org>; Thu, 17 May 2018 15:39:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=A03qzwtJjIHA4Lzw5de7bFRhTakGjIpOI4JwOqfKAXU=;
-        b=b+XovgUyzDOV5udTphdAS3jtbWuRFHdkntlG2DE+B+OTgMmkoyatLtVs9k/vSCPBTa
-         lJlgTu2mGZKyO6ppWoGnW0Rhr82nHeb7ieTUQKyQf8jB/CPbGkhXkSZv5Pt9fGLHAxdE
-         J9ZncRhOMoTZbGe9ddwqtLJ4FQu7We/2aqsVlY+y2wcYz2QUISOkrKSbrMYW7MdpOS0X
-         W/YcsXODhfKQrv33uF/ZT8sJNOkQ3VzxuCRkAkCvISoia/Ng9J1/Nhc2IGuVr8ohSF7N
-         63aQVEbfW8kZ1efDSf/JmBkYDb8vr/koAxa3MDyRy2+G+dOZZvlaaNNt5XlvJp/Ie2pm
-         0qnw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ErAqJgmUmUcJqegH4wScLETQnIikmvKXP1DnFHX2RF8=;
+        b=dc8WB/Zu3dhdPI4lEPz6fkYuCM0nytaMNlK4jjiEsovlsKFe/ZgOLbSkQoCEdgIklY
+         n8rvbYtjhwCWaUvZlySwi7ECwr/eD893mqp/x/WjFNPrC3caUtpX7SyxOKXSh+qqYMXg
+         rhD82supl91NazrmuQbqo8iP2c+WFebs2MsJ3erFx6vdotafy4xlch+4FhagS0jC16rZ
+         OVqH8vPIN0NE0MyDOJa+LCveGodTWZxIuyMpR37NkyEJRBRMW0tagNnfvKURTKAdVYyv
+         H0zvnLKIG95OhiKCb0MADJnmjPcuev7DzHnXrWGygJCuvGFcgl2c6fxbZ56iUjTezh5z
+         X/IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=A03qzwtJjIHA4Lzw5de7bFRhTakGjIpOI4JwOqfKAXU=;
-        b=OdtUWpYj1ptETW/fydABsi8/g9w9xNE3p+iHiNHc000fmMOBazQ0aGvm/9tmBk6cud
-         aMNsECnZKBYBrGwRWPhpinmGxwlBLUGiCIoQopFNwwmLwHBlNghpRHWRaCoh8GFcQYy1
-         bg6afnwrlY1vV+wsdf31AeRcghu/13FaLtSE90xbkn91JaZvSeMKDv8GOM5GY9MOF6kc
-         av8kNpMOpcShMZLIt0lk43grjEjTWqynKHG4xgPSOxL+8sjmssVgEx4VkgP4gpox0Iy1
-         jlELRhSONxn37iQk2IN8oEYXQTDDYylnBB8N+Z+HHtcWYH8e5KzAjQk47tx+6AAAZ5Bn
-         8aYQ==
-X-Gm-Message-State: ALKqPwcFzxI3mE7ZgOoSGwx2XDPqkXTqtLv7zff5mpLHlnRdTHMp2MfP
-        vsLRIwby1wR4tubMOkG4sgMjMTfN
-X-Google-Smtp-Source: AB8JxZqrOdEo7BeQFsahTgN/JMToimG8MQryjqGakNLy0OQ7hPaSPXN3nv1RKbQQyT93qkucI5bfIQ==
-X-Received: by 2002:adf:a0b9:: with SMTP id m54-v6mr5446498wrm.76.1526596575424;
-        Thu, 17 May 2018 15:36:15 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 194-v6sm9220650wml.20.2018.05.17.15.36.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 May 2018 15:36:14 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (May 2018, #02; Thu, 17)
-References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
-Date:   Fri, 18 May 2018 07:36:14 +0900
-In-Reply-To: <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
-        (Stefan Beller's message of "Thu, 17 May 2018 11:20:57 -0700")
-Message-ID: <xmqqbmdd6hb5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ErAqJgmUmUcJqegH4wScLETQnIikmvKXP1DnFHX2RF8=;
+        b=OyBtM9PQqm0NgwKutS6JwE4DYC03C1EsTXxqYlFvxl8Q0V8jkbfj3qaG8c0rdX7O/p
+         KPcrdvHL0FdAkkcpN+hU0D7iEk+jjNsupcyVPFXG4+zStgfo9vvsV6Nlf7q+tryMz4tD
+         3N9gPCdVXIGb3BIYBTPLqditj8E90Uyk2fx6JfeDebAiLkfH6GfVAxxC4vLU3/nZG4Yn
+         6CDy9bmPRD+LRR7mfbcF7K0jtgZdwQvaE7V0KH1KrsHQvFKoyvWtQId/HtJ1AEfx4E8N
+         LFW2qGsfPn2QSzNfPWwHtxHm9E8MTpqkY/frr8JC5NlTgFVB8UhdvM+LYmf8Zjr+av9v
+         LbAA==
+X-Gm-Message-State: ALKqPwekVp/xuWuT2aRys6bB72iirCWvcas7qTU/iszsFkug+gBY+9NJ
+        LuidnKbDh4YNuRZRZbjWpYOFfIKmBSq0bmSi3tnoLEJ1
+X-Google-Smtp-Source: AB8JxZpFk9heC46x/jw5FqvJRYSZBsD8oCO4a3ZjZjfMFt8qBiuBErSSPtHd2e7chKxk9nsD1+rVR8xV5+cI7qsgMXc=
+X-Received: by 2002:a25:6cc2:: with SMTP id h185-v6mr3951139ybc.307.1526596777472;
+ Thu, 17 May 2018 15:39:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Thu, 17 May 2018 15:39:36
+ -0700 (PDT)
+In-Reply-To: <xmqqbmdd6hb5.fsf@gitster-ct.c.googlers.com>
+References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com> <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
+ <xmqqbmdd6hb5.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 17 May 2018 15:39:36 -0700
+Message-ID: <CAGZ79kbUXz5fgvSF20UZQbhByq-UcZHR81d4UFAcvASqQb3A-Q@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2018, #02; Thu, 17)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Thu, May 17, 2018 at 3:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>>> * sb/object-store-replace (2018-05-10) 2 commits
+>>>   (merged to 'next' on 2018-05-16 at 41bbedcc81)
+>>>  + replace-object.c: remove the_repository from prepare_replace_object
+>>>  + object.c: free replace map in raw_object_store_clear
+>>>
+>>>  Hotfix.
+>>>
+>>>  Will merge to 'master'.
+>>
+>> Please do not.
+>> (Or do, but then be prepared for another hotfix.)
+>>
+>> The commit sb/object-store-replace^ needs more free'ing and shall be
+>> replaced with
+>
+> Please do not replace what already hit 'next'.
 
->> * sb/object-store-replace (2018-05-10) 2 commits
->>   (merged to 'next' on 2018-05-16 at 41bbedcc81)
->>  + replace-object.c: remove the_repository from prepare_replace_object
->>  + object.c: free replace map in raw_object_store_clear
->>
->>  Hotfix.
->>
->>  Will merge to 'master'.
->
-> Please do not.
-> (Or do, but then be prepared for another hotfix.)
->
-> The commit sb/object-store-replace^ needs more free'ing and shall be
-> replaced with
-
-Please do not replace what already hit 'next'.
-
-> https://public-inbox.org/git/20180510195849.28023-4-sbeller@google.com/
-> I'll resend shortly.
->
->>
->> * sb/submodule-merge-in-merge-recursive (2018-05-16) 3 commits
->>  - merge-recursive: give notice when submodule commit gets fast-forwarded
->>  - merge-recursive: i18n submodule merge output and respect verbosity
->>  - submodule.c: move submodule merging to merge-recursive.c
->>
->>  By code restructuring of submodule merge in merge-recursive,
->>  informational messages from the codepath are now given using the
->>  same mechanism as other output, and honor the merge.verbosity
->>  configuration.  The code also learned to give a few new messages
->>  when a submodule three-way merge resolves cleanly when one side
->>  records a descendant of the commit chosen by the other side.
->>
->>  Will merge to 'next'.
->
-> Merging would be ok, but I would rather not.
-> A resend will be only for cosmetic effect, as I messed up the last commit
->
-> So, please hold in pu.
->
->> * sb/diff-color-move-more (2018-04-25) 7 commits
->>  - diff.c: add --color-moved-ignore-space-delta option
->>  - diff.c: decouple white space treatment from move detection algorithm
->>  - diff.c: add a blocks mode for moved code detection
->>  - diff.c: adjust hash function signature to match hashmap expectation
->>  - diff.c: do not pass diff options as keydata to hashmap
->>  - xdiff/xdiffi.c: remove unneeded function declarations
->>  - xdiff/xdiff.h: remove unused flags
->>
->>  "git diff --color-moved" feature has further been tweaked.
->>
->>  Will merge to 'next'.
->
-> I did not get around to fix it up, there are still review
-> comments outstanding. (The test is broken in the last commit.)
->
-> Please hold in pu;
->
-> Thanks,
-> Stefan
+I missed that it hit next. Sorry about that. I'll roll a patch on top then.
