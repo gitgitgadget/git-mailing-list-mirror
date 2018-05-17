@@ -7,89 +7,162 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80AB21F51C
-	for <e@80x24.org>; Thu, 17 May 2018 18:30:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF8C01F51C
+	for <e@80x24.org>; Thu, 17 May 2018 18:40:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751921AbeEQSaI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 14:30:08 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:44202 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751649AbeEQSaG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 14:30:06 -0400
-Received: by mail-pg0-f68.google.com with SMTP id c22-v6so1513937pgn.11
-        for <git@vger.kernel.org>; Thu, 17 May 2018 11:30:06 -0700 (PDT)
+        id S1751524AbeEQSkV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 14:40:21 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:45666 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751017AbeEQSkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 14:40:20 -0400
+Received: by mail-pl0-f66.google.com with SMTP id bi12-v6so3037637plb.12
+        for <git@vger.kernel.org>; Thu, 17 May 2018 11:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=49Hhf4G6sraixNM8A3elvhUYuFde0pnz9p4MD88J8co=;
-        b=A2Y8j1jNA7Y4WdMiSmSvWLBRoFJ1IPuD/wrKs6ECG9E6f/HphVCJ/c105trgHtP8AA
-         186CvYGKFiWBDCEc3pUQQ2+p+GHyf8YIVzUp1ow1WijPOTdwjvwe1Sjr47CSv/TjmaUe
-         CehhgiWGtWYpcrWIn1dYAJX7MnwXTLQ2dtsAB4owDAUQr3kyShFolD4wQp9Rqzlpiozh
-         MAj3qJ7QLHrWnhtfWa6G3s7wWSOhJtspSwvl+n9USZY6kFpEL+UtKCF6EEkYKku0MsfW
-         8/UgHdihsIsqO2UPZJP3We7ghlZqMwnKHxWCUkxOacuGB0OE2Or0NRyquRVvb4jA4tK4
-         uUqg==
+        bh=SR1mZXlgMP51z+H43va6nrEyO4zl81q23wo318DgLX8=;
+        b=QeDuKGV8/gdyc00Kw7OJRwgEc/9DccNWuGpYQF1W/v/ldz8nYECFUpyKqNdreNY6Oq
+         9/7zC8lQZu788woO4hmsHc3/ErTda0TGEdnhybHbiH4sBgCWDGLJbcgDvrh1RI1u7xa1
+         PYUXlpY05wvR/TwBzjaS/iRwnDgo1bJOcQKIDdvC8muxFmMrcID1sri80tbewgoJXN9x
+         2Zw+2jQVT+czrLd0TuRlmdwuVZDs5ci0NYs0uVDYTX4GQvc2+nOjYz5zsdIoBMb3xFW7
+         5dfS9pSvTZmURGMHRlogZoQnd95DJqRB3qbQBIp8kT0E3+5Wnv1gbGfMvLkd2Q3C9ClS
+         Rzig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=49Hhf4G6sraixNM8A3elvhUYuFde0pnz9p4MD88J8co=;
-        b=lKJgHM2+rS9EFRfBSxjmRjtcmePRwzlntBky1xmGh2eaIIJ6SdqUPZMd7ZquL+kScp
-         i/d/B2/zeX98ojCCJw2rXAG/ybNpyGwWTwBiK9KGoB7P0fyeLLdF6KCezQytq5mlxRub
-         VjDIm59Bp+4vwDFxiyo8AJewF0A81yATExMMwnwTx3Ed1SfADnvTyylc2XJvaICD0Yrc
-         o2c4qYZffl2jgRw4e1qXJkHhVFKeznxJvdDEn+N/hDmcx6O6cVQhVc1Vs7LChaagCgUa
-         qTKFpv3J0CVJ+mDAObjUX4vCPHbaEONTQJNnG7phG1xYddgTxxfC1Wk4snoJjDa5/1nP
-         bn7w==
-X-Gm-Message-State: ALKqPweLcrBZDw8Wo8JFu9VF5M48w4/JcokhqpgkeNi4a7gkT+p7OUKx
-        V9d3oyu3vWsfyIC5Pc76tkusSA==
-X-Google-Smtp-Source: AB8JxZoS7jxkAezjVa0DK0ApPvZb2nbW9+g90k2JfXm6l/H7zPzyEHbGsHCjZrGqt/+iF7kBews2iw==
-X-Received: by 2002:aa7:810f:: with SMTP id b15-v6mr6066635pfi.79.1526581805942;
-        Thu, 17 May 2018 11:30:05 -0700 (PDT)
+        bh=SR1mZXlgMP51z+H43va6nrEyO4zl81q23wo318DgLX8=;
+        b=YRFW9ZE2YqH2mPEjn0uP6HVqcgYQ+B3gHDovASoWjjCxN8TuIPbFjoE/crKgCj7deK
+         5n9z4X2ErE6+83Rap95cjyECIWVTkeCsgQvjV4d219IXLzxKSeXjsHgHsFIgyPngN1W0
+         SjP1n80aOtO9AOI4EWX2Iy5WymZ9Mw4VfgzcvJyrbpf7VP/yKu46xNIEQmG2qbQCgvLu
+         +OqPTpvcwAHTIH+NLFRVQe/d62SkGSVYjYUz3tG/AX081Gs40QXEVKsT5Nu+WWEgb+PE
+         XRLGhY6de6UYHSUTiOHdk3Zy0yJ0zKBh4kn/7VSKXLGEoMgurzYP3FhY99DRiku9GeMK
+         vSXQ==
+X-Gm-Message-State: ALKqPwcCweEhB0z1ft9z9CWi1UUMqVjqJkmTo47mYcye5xXiopLyUjnS
+        bms+uB5W2cIJyLmS429DWxMr3GTGgqk=
+X-Google-Smtp-Source: AB8JxZo1Qn6eE6GE7mfsbXg22ZgbM1DSs5FSiq/8U/r8Nk2d9L9gcsg08r8hh2cpGkbnQVDYOEnDNw==
+X-Received: by 2002:a17:902:543:: with SMTP id 61-v6mr6269168plf.47.1526582418525;
+        Thu, 17 May 2018 11:40:18 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id j10-v6sm11254385pfj.7.2018.05.17.11.30.04
+        by smtp.gmail.com with ESMTPSA id j5-v6sm14893981pfe.119.2018.05.17.11.40.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 May 2018 11:30:04 -0700 (PDT)
+        Thu, 17 May 2018 11:40:18 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: [PATCH 2/2] replace-object.c: remove the_repository from prepare_replace_object
-Date:   Thu, 17 May 2018 11:29:59 -0700
-Message-Id: <20180517182959.22961-3-sbeller@google.com>
+To:     leif.middelschulte@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        Leif Middelschulte <Leif.Middelschulte@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] merge-recursive: give notice when submodule commit gets fast-forwarded
+Date:   Thu, 17 May 2018 11:40:08 -0700
+Message-Id: <20180517184008.25445-1-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
-In-Reply-To: <20180517182959.22961-1-sbeller@google.com>
+In-Reply-To: <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
 References: <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
- <20180517182959.22961-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This was missed in 5982da9d2ce (replace-object: allow
-prepare_replace_object to handle arbitrary repositories, 2018-04-11)
+From: Leif Middelschulte <Leif.Middelschulte@gmail.com>
 
-Technically the code works correctly as the replace_map is the same
-size in different repositories, however it is hard to read. So convert
-the code to the familiar pattern of dereferencing the pointer that we
-assign in the sizeof itself.
+Inform the user about an automatically fast-forwarded submodule. The
+silent merge behavior was introduced by commit 68d03e4a6e44 ("Implement
+automatic fast-forward merge for submodules", 2010-07-07)).
 
+Signed-off-by: Leif Middelschulte <Leif.Middelschulte@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- replace_object.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ merge-recursive.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/replace_object.c b/replace_object.c
-index 246b98cd4f1..801b5c16789 100644
---- a/replace_object.c
-+++ b/replace_object.c
-@@ -37,7 +37,7 @@ static void prepare_replace_object(struct repository *r)
- 		return;
+>> * sb/submodule-merge-in-merge-recursive (2018-05-16) 3 commits
+>>  - merge-recursive: give notice when submodule commit gets fast-forwarded
+>>  - merge-recursive: i18n submodule merge output and respect verbosity
+>>  - submodule.c: move submodule merging to merge-recursive.c
+>>
+>>  By code restructuring of submodule merge in merge-recursive,
+>>  informational messages from the codepath are now given using the
+>>  same mechanism as other output, and honor the merge.verbosity
+>>  configuration.  The code also learned to give a few new messages
+>>  when a submodule three-way merge resolves cleanly when one side
+>>  records a descendant of the commit chosen by the other side.
+>>
+>>  Will merge to 'next'.
+>
+>Merging would be ok, but I would rather not.
+>A resend will be only for cosmetic effect, as I messed up the last commit
+>
+>So, please hold in pu.
+
+This is the resend, with an interdiff as follows.
+
+Junio wrote in http://public-inbox.org/git/xmqqk1s474vx.fsf@gitster-ct.c.googlers.com:
+
+> Perhaps Leif can elaborate why this change is a good idea in the
+> first place?
+
+which is also outstanding.
+
+Leif can you pick this patch and resend it with a proper commit message?
+
+
+    # diff --git c/merge-recursive.c w/merge-recursive.c
+    # index 29a430c418a..a9aecccb8c3 100644
+    # --- c/merge-recursive.c
+    # +++ w/merge-recursive.c
+    # @@ -1094,7 +1094,7 @@ static int merge_submodule(struct merge_options *o,
+    #  	if (in_merge_bases(commit_a, commit_b)) {
+    #  		oidcpy(result, b);
+    #  		if (show(o, 3)) {
+    # -			output(o, 1, _("Fast-forwarding submodule %s to the following commit:"), path);
+    # +			output(o, 3, _("Fast-forwarding submodule %s to the following commit:"), path);
+    #  			output_commit_title(o, commit_b);
+    #  		} else if (show(o, 2))
+    #  			output(o, 2, _("Fast-forwarding submodule %s to %s"), path, oid_to_hex(b));
+    # @@ -1106,7 +1106,7 @@ static int merge_submodule(struct merge_options *o,
+    #  	if (in_merge_bases(commit_b, commit_a)) {
+    #  		oidcpy(result, a);
+    #  		if (show(o, 3)) {
+    # -			output(o, 1, _("Fast-forwarding submodule %s to the following commit:"), path);
+    # +			output(o, 3, _("Fast-forwarding submodule %s to the following commit:"), path);
+    #  			output_commit_title(o, commit_a);
+    #  		} else if (show(o, 2))
+    #  			output(o, 2, _("Fast-forwarding submodule %s to %s"), path, oid_to_hex(a));
+
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 0571919ee0a..a9aecccb8c3 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1093,10 +1093,26 @@ static int merge_submodule(struct merge_options *o,
+ 	/* Case #1: a is contained in b or vice versa */
+ 	if (in_merge_bases(commit_a, commit_b)) {
+ 		oidcpy(result, b);
++		if (show(o, 3)) {
++			output(o, 3, _("Fast-forwarding submodule %s to the following commit:"), path);
++			output_commit_title(o, commit_b);
++		} else if (show(o, 2))
++			output(o, 2, _("Fast-forwarding submodule %s to %s"), path, oid_to_hex(b));
++		else
++			; /* no output */
++
+ 		return 1;
+ 	}
+ 	if (in_merge_bases(commit_b, commit_a)) {
+ 		oidcpy(result, a);
++		if (show(o, 3)) {
++			output(o, 3, _("Fast-forwarding submodule %s to the following commit:"), path);
++			output_commit_title(o, commit_a);
++		} else if (show(o, 2))
++			output(o, 2, _("Fast-forwarding submodule %s to %s"), path, oid_to_hex(a));
++		else
++			; /* no output */
++
+ 		return 1;
+ 	}
  
- 	r->objects->replace_map =
--		xmalloc(sizeof(*the_repository->objects->replace_map));
-+		xmalloc(sizeof(*r->objects->replace_map));
- 	oidmap_init(r->objects->replace_map, 0);
- 
- 	for_each_replace_ref(r, register_replace_ref, NULL);
 -- 
 2.17.0.582.gccdcbd54c44.dirty
 
