@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3757D1F51C
-	for <e@80x24.org>; Thu, 17 May 2018 19:47:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91F831F51C
+	for <e@80x24.org>; Thu, 17 May 2018 19:47:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752056AbeEQTrJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 15:47:09 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:42020 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750938AbeEQTrG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 15:47:06 -0400
-Received: by mail-pl0-f68.google.com with SMTP id u6-v6so3144743pls.9
-        for <git@vger.kernel.org>; Thu, 17 May 2018 12:47:06 -0700 (PDT)
+        id S1752060AbeEQTrN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 15:47:13 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:42978 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750938AbeEQTrK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 15:47:10 -0400
+Received: by mail-pf0-f179.google.com with SMTP id p14-v6so2579934pfh.9
+        for <git@vger.kernel.org>; Thu, 17 May 2018 12:47:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Fcqq37Kr0JJxLn/StA+zuRxYsrs5RKJmQGH4OKr18W0=;
-        b=Zz5Sjvg9VTAjJYptuHe0j12B64NILlYtmL1tQEF/Vbo8nXI/qoZnWyzSCamYHdwEUd
-         YTC3SgubINr0/6AyGWmjAHrMqpAgfgo2b0oXRDAumooD10SIn6X8Pg2jVWtqnCQ6BTqI
-         JFDnskkIhcVcQIir5pvIn4CdK5GcGiNkGTjxEzsCCnNjGh7Jx8ubN9ydxwzF3zdf4W4V
-         wgmfJHsvkTekYJqbXkBm+RpJ8BAfXAXGH2m64IfknsB9IwILzeQoSs0duaZGtIMoY8Vj
-         mIzKqTtlNk01xE7Wh5BDOWb/GYyJg1SJel1Ibdx6yZw2eSDIv440Htl8e9RNPhiKOjQy
-         Ppcw==
+        bh=sQ50byT9odCxerOSlwHfHjIx4fVwgngSKhyY3hv+InQ=;
+        b=ayIuIUuK0PVYNxrqKLCS5DaxzJdX2ZBbz5jWFVGrv8sSIBMBBFxYvijaRebl1Hpwcr
+         zY+Diwtfwoh8yXszWfXunfb4VUnbW0L8z/o1Pvxvu3wydRXAvjflVuF4l3G6nKQJ9/WQ
+         nootxFEuwxy9gmq7R5xGXH4+GFu5rmWvLU0ABQcW1jAuchcEHZdHmmiUvK5q36QjdepI
+         5aqPj3ACbPxdxewYI0Snhg9wC1TC2D1S/4ElxK66zbJM8A83ayDH9k0449XIwF+NgL1y
+         ZbzyCLD3J9nCuvjqiM8654fU9WKa3uttZKsZQYO44wzPD0jvmYNysMceN8/PddrPsW1q
+         G1nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Fcqq37Kr0JJxLn/StA+zuRxYsrs5RKJmQGH4OKr18W0=;
-        b=Kk1XB7iXkv6nbpMxpGdi/OTDPce2fAp8iqmslRfzWtVqYRjNyjcvhvUSgxXbYkNywI
-         EHtjxoycfPGADaMACkGf0ROJfFE+SJc33JqANgLi0mZ1k9uIYzK5PZmPAmqmGfGcos0Z
-         G6zktbrpj333xc5DPrnQ9wlepFft39T344ahFg9vvUUWZkwLQ5KH3Q9OH+uAj/zAJcUk
-         0Z+q7WgyZQWsNS9Z5MV4ZnehFHcnRBozGeEFIcTlbFTpDAbDzihcmi14ZfCDOlX1UrGX
-         UdkIJdq40wx2K3T3Niu6HH2d8QhOW0xf4JeUtO68rEMnQzndsVE3WluJfN3y+5fNktAt
-         qwbg==
-X-Gm-Message-State: ALKqPwcA9TsiJaFm59OLp42mLhqtvtwRdZjthOCvkKx9XZwx3VCkrNKN
-        HLKZ/FZ5qyPiEspEA/GzINr66A==
-X-Google-Smtp-Source: AB8JxZrY/CQqHT0lgaBW4aSRqD6M7MPdfDG4ja6LG4AMz75TXv2zttfXyCT7s2XSNfJ3ED1ZSUq5Tw==
-X-Received: by 2002:a17:902:26:: with SMTP id 35-v6mr6688697pla.104.1526586426210;
-        Thu, 17 May 2018 12:47:06 -0700 (PDT)
+        bh=sQ50byT9odCxerOSlwHfHjIx4fVwgngSKhyY3hv+InQ=;
+        b=e2lse0cMpPzx811e2Q8YMrBIddt7OSb8Jm/NY1mhPtFvmjnkndxbWtOLmZzO8cIQwD
+         QCS2TUz66WgSnUrfRPDeDYxMV6rKpyTYj782dZQciAYg+yWWFjG/7YcrlqbpF8QPHd0g
+         61bjsqq3OVBX4F0up/SW5a7O/hGaM+k6VyK1CBNZk3iPdF1v0O0YVP4uqf4rT9J45q6/
+         PvTD4KWESgs/NjNfCdfau+qrGUN5nxWO+1OsUgB8K+hS7EHlCGYKZoHZbcGjV7i6buYc
+         9EnE1nozWIXRPP02CTDBTl7ZPu1RgOMtZ/21J0XUp44NWZhKu0kOEJejOVr42FimwCFo
+         7gpg==
+X-Gm-Message-State: ALKqPwfVAfyqV9byepyzjuSAb6hNzLGzMqFeI5fNvRlqlARBmTDS3wZh
+        SiJzwLfWVjv/Tm1aRSFPmjcQMA==
+X-Google-Smtp-Source: AB8JxZrje5JPgeve5DOYUe9CE/aWRig+dnKo2T+GLc+oexEDXyGoJ4ZFW4Xbx/LijkxIjYmdewi8XQ==
+X-Received: by 2002:a63:6703:: with SMTP id b3-v6mr4922288pgc.176.1526586429189;
+        Thu, 17 May 2018 12:47:09 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id n10-v6sm12390373pfk.145.2018.05.17.12.47.05
+        by smtp.gmail.com with ESMTPSA id y7-v6sm11058820pfy.52.2018.05.17.12.47.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 May 2018 12:47:05 -0700 (PDT)
+        Thu, 17 May 2018 12:47:08 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com
-Subject: [PATCH 2/8] xdiff/xdiffi.c: remove unneeded function declarations
-Date:   Thu, 17 May 2018 12:46:47 -0700
-Message-Id: <20180517194653.48928-3-sbeller@google.com>
+Subject: [PATCH 4/8] diff.c: adjust hash function signature to match hashmap expectation
+Date:   Thu, 17 May 2018 12:46:49 -0700
+Message-Id: <20180517194653.48928-5-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
 In-Reply-To: <20180517194653.48928-1-sbeller@google.com>
 References: <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
@@ -63,54 +63,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is no need to forward-declare these functions, as they are used
-after their implementation only.
+This makes the follow up patch easier.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- xdiff/xdiffi.c | 17 -----------------
- 1 file changed, 17 deletions(-)
+ diff.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 0de1ef463bf..3e8aff92bc4 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -22,34 +22,17 @@
+diff --git a/diff.c b/diff.c
+index ce7bedc1b92..d1bae900cdc 100644
+--- a/diff.c
++++ b/diff.c
+@@ -707,11 +707,15 @@ struct moved_entry {
+ 	struct moved_entry *next_line;
+ };
  
- #include "xinclude.h"
+-static int moved_entry_cmp(const struct diff_options *diffopt,
+-			   const struct moved_entry *a,
+-			   const struct moved_entry *b,
++static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
++			   const void *entry,
++			   const void *entry_or_key,
+ 			   const void *keydata)
+ {
++	const struct diff_options *diffopt = hashmap_cmp_fn_data;
++	const struct moved_entry *a = entry;
++	const struct moved_entry *b = entry_or_key;
++
+ 	return !xdiff_compare_lines(a->es->line, a->es->len,
+ 				    b->es->line, b->es->len,
+ 				    diffopt->xdl_opts);
+@@ -5534,10 +5538,8 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
+ 		if (o->color_moved) {
+ 			struct hashmap add_lines, del_lines;
  
--
--
- #define XDL_MAX_COST_MIN 256
- #define XDL_HEUR_MIN_COST 256
- #define XDL_LINE_MAX (long)((1UL << (CHAR_BIT * sizeof(long) - 1)) - 1)
- #define XDL_SNAKE_CNT 20
- #define XDL_K_HEUR 4
+-			hashmap_init(&del_lines,
+-				     (hashmap_cmp_fn)moved_entry_cmp, o, 0);
+-			hashmap_init(&add_lines,
+-				     (hashmap_cmp_fn)moved_entry_cmp, o, 0);
++			hashmap_init(&del_lines, moved_entry_cmp, o, 0);
++			hashmap_init(&add_lines, moved_entry_cmp, o, 0);
  
--
--
- typedef struct s_xdpsplit {
- 	long i1, i2;
- 	int min_lo, min_hi;
- } xdpsplit_t;
- 
--
--
--
--static long xdl_split(unsigned long const *ha1, long off1, long lim1,
--		      unsigned long const *ha2, long off2, long lim2,
--		      long *kvdf, long *kvdb, int need_min, xdpsplit_t *spl,
--		      xdalgoenv_t *xenv);
--static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1, long chg2);
--
--
--
--
--
- /*
-  * See "An O(ND) Difference Algorithm and its Variations", by Eugene Myers.
-  * Basically considers a "box" (off1, off2, lim1, lim2) and scan from both
+ 			add_lines_to_move_detection(o, &add_lines, &del_lines);
+ 			mark_color_as_moved(o, &add_lines, &del_lines);
 -- 
 2.17.0.582.gccdcbd54c44.dirty
 
