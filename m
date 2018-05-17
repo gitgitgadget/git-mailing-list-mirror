@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFC461F51C
-	for <e@80x24.org>; Thu, 17 May 2018 22:52:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73F2E1F51C
+	for <e@80x24.org>; Thu, 17 May 2018 22:52:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751995AbeEQWwQ (ORCPT <rfc822;e@80x24.org>);
+        id S1752060AbeEQWwU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 18:52:20 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:33100 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751610AbeEQWwQ (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 17 May 2018 18:52:16 -0400
-Received: from mail-pl0-f44.google.com ([209.85.160.44]:46753 "EHLO
-        mail-pl0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751898AbeEQWwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 18:52:13 -0400
-Received: by mail-pl0-f44.google.com with SMTP id 30-v6so3380021pld.13
-        for <git@vger.kernel.org>; Thu, 17 May 2018 15:52:13 -0700 (PDT)
+Received: by mail-pf0-f174.google.com with SMTP id a20-v6so2785663pfo.0
+        for <git@vger.kernel.org>; Thu, 17 May 2018 15:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=x+z1SvmPeIit6pHWRN0tv0oXQYNNWeeYH9ACIQOBma0=;
-        b=IE4iv2fUMUuiRPaoBkNQNMkHraUxsiHRFO/F3GRiRJMRYMnx30xaUxHTlHvLMTkBNc
-         Yy7tbVmKLyX5cS98iRyn7cN4tT2A8jpktY++3HaYpna+4Tj6/H34SIFpYd9UXudh+e8m
-         w0lo3m0CFfPVMXXMtLMiDlWN20US7n7xJnZXZo8DlarAnF5zVZTKrWz8YIamRKG2oBHc
-         RXSIwziPdB3g+UfPC+yYfzG5NAl6EW5JPZ6JFo5gBWRa7d/kCYgyu+Gc+H+Ew7c4VEUX
-         +eDx+y3fJvXkwQ1Ld8RVG+0DYsvQ+OnLxgh0CXNkHu43bgglfKK6/G/AyHsN8z1Nx7no
-         /vNQ==
+        bh=Cczt6NAlfIpFqlBDQpRIpp02JoWef8NwcganwS8FyPE=;
+        b=QYkUr2E29jPIHMV95H22Y1S4CLXYuCZpDokEil1CU2S3tfUePNHlt3epUSO9deuexi
+         ukUZPuXv8jGb8dMzesVLpWjSyx1DOU4j1HAelEsqRNjvaiwd9yB4+3/By8akVzdP97Oy
+         b+VU6GrpnM2A+ju8pLCxKyvxPnla9OICXh8R86fhYboEDytrl1wS7MMHtwy6Khr9kKgi
+         TOeHei07kpXTcGkOCa6W14RH4HVTZE/NLBoemtjcwkZ7ejilfAz0aaXoKNbhMrOmTJP8
+         ojlhFRai7cnFBdJog+ON3Df9eMnPjdTrngyH1PTH8sgHCllvij906yrToZICdJXpYW3x
+         AtJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=x+z1SvmPeIit6pHWRN0tv0oXQYNNWeeYH9ACIQOBma0=;
-        b=j/OdLWPb8UFM+4BNccRL5YsAnlDzDis0AV2HIxY4Q0Ov9I84X+CpgPHUa8KsKUm5W4
-         ddndeIxUFIWppt6rn63e2+9SCMertem+gnovlTMzUout1QzT1Dyo7AelirlE2N7Q90if
-         /gFSdsK3glpsC/Syaqpk5izzgkrThONVTNf4Ax9eJiIdk7D2ZapQgStZtg7FXR3wvb0P
-         cx00vM/gewTLAh9cHEa1f8oI2sJfbWOXIHeddVAcxTThsPAgV1r2IdahS7XRFVyJNanS
-         xK4FulEVt5tPKxjSDtR+AlWreVIM9jzRj++9vayXT3EL0atwFbFGTBJd7xuSnDUjYQuL
-         cdCw==
-X-Gm-Message-State: ALKqPwc/C5/JRmNWzbVc7XE/SFC5JFMYWXEe3NFoR4/w/XbcVCFChA9J
-        yvKZdngXziB+AX6fwg83MBk/Kg==
-X-Google-Smtp-Source: AB8JxZpg972xKVAnZaBZaBdUR2L9RQPoo55p6KsYIxb1ZxCjVwR0tYboSLXMCCF2ppX6/PoHQV1EKQ==
-X-Received: by 2002:a17:902:b60a:: with SMTP id b10-v6mr6812246pls.221.1526597532534;
-        Thu, 17 May 2018 15:52:12 -0700 (PDT)
+        bh=Cczt6NAlfIpFqlBDQpRIpp02JoWef8NwcganwS8FyPE=;
+        b=bMZuNVzLjBH6IYGkTb7aXecQNGNOFm2kkMY19wQOjiWrHNJNDY5KD9RV9hCiZK5MvD
+         WJAPgPKtW3NzOWOBobCuBcmPLQMwIMM66hGT+9dQJ+30xV/Prbj3qpjGvZyPb85m01Md
+         oZLRgMGAk6AngPrgNFFlu55tCVOkNqSsx06WflmdzIyFS23SaUeHbCHOn4aVEcgW0kzy
+         58HkrEr8NNJWeO6Wjaxecaf5+uWcnHLstOY5CgePpOt+sLT5NCFgznJNII/oj8+9YfK7
+         yisDtwMhfiz+jG4MqyqIYeSkZjIXLP95q5CuJOF0QvkWQdU8s/L089WRWAarl79dVprK
+         ELUw==
+X-Gm-Message-State: ALKqPwfNVaE8RzQFJHyaztRQ5JgSDMNK6WWvI022omHieVJeynCK3leG
+        jgnBwnyKJITQmSIbTjsx7Rxvyg==
+X-Google-Smtp-Source: AB8JxZr6fJKIYDOdOqC/b56LTHd7EnKitVGrp1jT2TZh1PVdOm39c1d08zz9NwJ0csYJ2iiEVRrKpA==
+X-Received: by 2002:a63:7b1d:: with SMTP id w29-v6mr5447493pgc.417.1526597535228;
+        Thu, 17 May 2018 15:52:15 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id j14-v6sm8990810pfn.151.2018.05.17.15.52.11
+        by smtp.gmail.com with ESMTPSA id j1-v6sm12341347pfc.159.2018.05.17.15.52.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 May 2018 15:52:11 -0700 (PDT)
+        Thu, 17 May 2018 15:52:14 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 02/19] object: move grafts to object parser
-Date:   Thu, 17 May 2018 15:51:37 -0700
-Message-Id: <20180517225154.9200-3-sbeller@google.com>
+Subject: [PATCH 04/19] commit: add repository argument to register_commit_graft
+Date:   Thu, 17 May 2018 15:51:39 -0700
+Message-Id: <20180517225154.9200-5-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
 In-Reply-To: <20180517225154.9200-1-sbeller@google.com>
 References: <20180515234233.143708-1-sbeller@google.com>
@@ -66,129 +66,100 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Nieder <jrnieder@gmail.com>
 
-Grafts are only meaningful in the context of a single repository.
-Therefore they cannot be global.
+Add a repository argument to allow callers of register_commit_graft to
+be more specific about which repository to handle. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
+As with the previous commits, use a macro to catch callers passing a
+repository other than the_repository at compile time.
+
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- commit.c | 42 +++++++++++++++++++++++-------------------
- object.h |  4 ++++
- 2 files changed, 27 insertions(+), 19 deletions(-)
+ builtin/blame.c | 3 ++-
+ commit.c        | 4 ++--
+ commit.h        | 3 ++-
+ shallow.c       | 3 ++-
+ 4 files changed, 8 insertions(+), 5 deletions(-)
 
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 0ffd1d443ea..7a07bff2423 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -8,6 +8,7 @@
+ #include "cache.h"
+ #include "config.h"
+ #include "builtin.h"
++#include "repository.h"
+ #include "commit.h"
+ #include "diff.h"
+ #include "revision.h"
+@@ -491,7 +492,7 @@ static int read_ancestry(const char *graft_file)
+ 		/* The format is just "Commit Parent1 Parent2 ...\n" */
+ 		struct commit_graft *graft = read_graft_line(&buf);
+ 		if (graft)
+-			register_commit_graft(graft, 0);
++			register_commit_graft(the_repository, graft, 0);
+ 	}
+ 	fclose(fp);
+ 	strbuf_release(&buf);
 diff --git a/commit.c b/commit.c
-index b053f07f305..a0c9eb05c82 100644
+index 2cd5b8a0b96..4e8d3488425 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "tag.h"
- #include "commit.h"
-+#include "repository.h"
- #include "object-store.h"
- #include "pkt-line.h"
- #include "utf8.h"
-@@ -97,9 +98,6 @@ static timestamp_t parse_commit_date(const char *buf, const char *tail)
- 	return parse_timestamp(dateptr, NULL, 10);
- }
- 
--static struct commit_graft **commit_graft;
--static int commit_graft_alloc, commit_graft_nr;
--
- static const unsigned char *commit_graft_sha1_access(size_t index, void *table)
- {
- 	struct commit_graft **commit_graft_table = table;
-@@ -108,7 +106,8 @@ static const unsigned char *commit_graft_sha1_access(size_t index, void *table)
- 
- static int commit_graft_pos(const unsigned char *sha1)
- {
--	return sha1_pos(sha1, commit_graft, commit_graft_nr,
-+	return sha1_pos(sha1, the_repository->parsed_objects->grafts,
-+			the_repository->parsed_objects->grafts_nr,
+@@ -112,7 +112,7 @@ static int commit_graft_pos_the_repository(const unsigned char *sha1)
  			commit_graft_sha1_access);
  }
  
-@@ -120,18 +119,22 @@ int register_commit_graft(struct commit_graft *graft, int ignore_dups)
- 		if (ignore_dups)
- 			free(graft);
- 		else {
--			free(commit_graft[pos]);
--			commit_graft[pos] = graft;
-+			free(the_repository->parsed_objects->grafts[pos]);
-+			the_repository->parsed_objects->grafts[pos] = graft;
- 		}
- 		return 1;
- 	}
- 	pos = -pos - 1;
--	ALLOC_GROW(commit_graft, commit_graft_nr + 1, commit_graft_alloc);
--	commit_graft_nr++;
--	if (pos < commit_graft_nr)
--		MOVE_ARRAY(commit_graft + pos + 1, commit_graft + pos,
--			   commit_graft_nr - pos - 1);
--	commit_graft[pos] = graft;
-+	ALLOC_GROW(the_repository->parsed_objects->grafts,
-+		   the_repository->parsed_objects->grafts_nr + 1,
-+		   the_repository->parsed_objects->grafts_alloc);
-+	the_repository->parsed_objects->grafts_nr++;
-+	if (pos < the_repository->parsed_objects->grafts_nr)
-+		memmove(the_repository->parsed_objects->grafts + pos + 1,
-+			the_repository->parsed_objects->grafts + pos,
-+			(the_repository->parsed_objects->grafts_nr - pos - 1) *
-+			sizeof(*the_repository->parsed_objects->grafts));
-+	the_repository->parsed_objects->grafts[pos] = graft;
- 	return 0;
- }
- 
-@@ -213,14 +216,14 @@ struct commit_graft *lookup_commit_graft(const struct object_id *oid)
- 	pos = commit_graft_pos(oid->hash);
- 	if (pos < 0)
- 		return NULL;
--	return commit_graft[pos];
-+	return the_repository->parsed_objects->grafts[pos];
- }
- 
- int for_each_commit_graft(each_commit_graft_fn fn, void *cb_data)
+-int register_commit_graft(struct commit_graft *graft, int ignore_dups)
++int register_commit_graft_the_repository(struct commit_graft *graft, int ignore_dups)
  {
- 	int i, ret;
--	for (i = ret = 0; i < commit_graft_nr && !ret; i++)
--		ret = fn(commit_graft[i], cb_data);
-+	for (i = ret = 0; i < the_repository->parsed_objects->grafts_nr && !ret; i++)
-+		ret = fn(the_repository->parsed_objects->grafts[i], cb_data);
- 	return ret;
+ 	int pos = commit_graft_pos(the_repository, graft->oid.hash);
+ 
+@@ -188,7 +188,7 @@ static int read_graft_file(const char *graft_file)
+ 		struct commit_graft *graft = read_graft_line(&buf);
+ 		if (!graft)
+ 			continue;
+-		if (register_commit_graft(graft, 1))
++		if (register_commit_graft(the_repository, graft, 1))
+ 			error("duplicate graft data: %s", buf.buf);
+ 	}
+ 	fclose(fp);
+diff --git a/commit.h b/commit.h
+index 2d764ab7d8e..40a5b5e2585 100644
+--- a/commit.h
++++ b/commit.h
+@@ -174,7 +174,8 @@ struct commit_graft {
+ typedef int (*each_commit_graft_fn)(const struct commit_graft *, void *);
+ 
+ struct commit_graft *read_graft_line(struct strbuf *line);
+-int register_commit_graft(struct commit_graft *, int);
++#define register_commit_graft(r, g, i) register_commit_graft_##r(g, i)
++int register_commit_graft_the_repository(struct commit_graft *, int);
+ struct commit_graft *lookup_commit_graft(const struct object_id *oid);
+ 
+ extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2);
+diff --git a/shallow.c b/shallow.c
+index c2f81a5a5a8..ef802deed41 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "repository.h"
+ #include "tempfile.h"
+ #include "lockfile.h"
+ #include "object-store.h"
+@@ -38,7 +39,7 @@ int register_shallow(const struct object_id *oid)
+ 	graft->nr_parent = -1;
+ 	if (commit && commit->object.parsed)
+ 		commit->parents = NULL;
+-	return register_commit_graft(graft, 0);
++	return register_commit_graft(the_repository, graft, 0);
  }
  
-@@ -229,10 +232,11 @@ int unregister_shallow(const struct object_id *oid)
- 	int pos = commit_graft_pos(oid->hash);
- 	if (pos < 0)
- 		return -1;
--	if (pos + 1 < commit_graft_nr)
--		MOVE_ARRAY(commit_graft + pos, commit_graft + pos + 1,
--			   commit_graft_nr - pos - 1);
--	commit_graft_nr--;
-+	if (pos + 1 < the_repository->parsed_objects->grafts_nr)
-+		MOVE_ARRAY(the_repository->parsed_objects->grafts + pos,
-+			   the_repository->parsed_objects->grafts + pos + 1,
-+			   the_repository->parsed_objects->grafts_nr - pos - 1);
-+	the_repository->parsed_objects->grafts_nr--;
- 	return 0;
- }
- 
-diff --git a/object.h b/object.h
-index 7916edb4edf..ec908f9bcc1 100644
---- a/object.h
-+++ b/object.h
-@@ -12,6 +12,10 @@ struct parsed_object_pool {
- 	struct alloc_state *tag_state;
- 	struct alloc_state *object_state;
- 	unsigned commit_count;
-+
-+	/* parent substitutions from .git/info/grafts and .git/shallow */
-+	struct commit_graft **grafts;
-+	int grafts_alloc, grafts_nr;
- };
- 
- struct parsed_object_pool *parsed_object_pool_new(void);
+ int is_repository_shallow(void)
 -- 
 2.17.0.582.gccdcbd54c44.dirty
 
