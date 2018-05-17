@@ -2,88 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4AB61F51C
-	for <e@80x24.org>; Thu, 17 May 2018 22:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE6B21F51C
+	for <e@80x24.org>; Thu, 17 May 2018 22:56:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752175AbeEQWxQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 18:53:16 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:40723 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751958AbeEQWxP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 18:53:15 -0400
-Received: by mail-pl0-f68.google.com with SMTP id t12-v6so3397482plo.7
-        for <git@vger.kernel.org>; Thu, 17 May 2018 15:53:15 -0700 (PDT)
+        id S1751762AbeEQW4y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 18:56:54 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:40365 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751061AbeEQW4x (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 18:56:53 -0400
+Received: by mail-wm0-f67.google.com with SMTP id j5-v6so11806900wme.5
+        for <git@vger.kernel.org>; Thu, 17 May 2018 15:56:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=brYUAW4ecTTXlBLqPo5Mk/lTr8hbF20zAsAms62RufE=;
-        b=gBAxFDy//CQ+e6YgPIL6DumtuaiSpau4gH5ejzOMz/K7xJTNs5+agay9EeOC+NZEXk
-         YMem9Eedx/b9Rnci8ZUyeurgSrs/CkVUzEI7KPQbYyv/3hzf9YDOJAXj9Xgh+YoWnFN3
-         05i7zxEEK25xKKyqzYf6nd5oAafqj6y0K+QPwFJTh5HvawhrbKTMr1OoIqgH034LkyDI
-         r52TGOwXHsY7Ro5aajxtNkYACuPNfZpArIsH9a+ZDxV5j0JwCoIqDeaWOZKgDCYsYE7G
-         QBrhD1CILPUay2AKsVQoJO7DWF2ii8LILLuI9U4VgkVHZElt0y3azZkACYRAy37tnjJN
-         sqJQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=CsXxsxyA1O8dGoDXmffhykxGS5ViGhX0DkTHkPKCdgM=;
+        b=HPaNebc8iYX4ZwmSiozSWQP4IyvAXN1Rdv3JKBjUqi71nQp5leBqfEfKgIjNxgQrXD
+         FZzUNzTIWHijt9buF9XGYNpOQx7eP7p49hh4dqzxNk80B4sZ2n7QfbJKPu16OEP5LZF1
+         KUgkbd+Z9zWZIjs2JbePAPoBvsJZWgqjlRxYnuw/GuGcNEwOBc7VQM6ejVuUCVCAul02
+         ZTA/jdelgDGFa3cYeyDXdoaON9k3Kc8bnOprzT8lHQ8MOxjvbf2TyR0NxsqUla00JT1k
+         hcTjpyvHCxvlYsWrdwOjr9j+942Oo0nGxASxSGRksJnraPJF0kJpL2E5Qlmh6A/1CINO
+         FdQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=brYUAW4ecTTXlBLqPo5Mk/lTr8hbF20zAsAms62RufE=;
-        b=WgERdt0uFjMEOgtGgQ/uihxC1Dx47Gv1rgPjqmUUwvC0iFKppZpvQpcElE3l3jLuM7
-         XW5Qng7+1MmVblsmHRdHPf97Zp6OxSRINKoGrbrdT6uVRtXLjkK765MgjH4H4PSSbvKU
-         qiny1GFjitiX/UEgtKNERu1/HPzYh249NZYjFhofBA/YVo0kgD0oZmW6jkCxz2izpkTM
-         3tlVCy4UlmAK2/j+U6FKIIjkCuSfrbB7b27rEip9pzvZp7QM9GzyD9Ce6VePtXPNZCJV
-         3FyD7+SJdZwKH45GDJKmFwU3qr3tScZF1gno4mKJwUc+KGYhVrryjTJmzecE9r7Fjqb2
-         yz5w==
-X-Gm-Message-State: ALKqPwdll36patzVunWBIWZ1AMmtLt3z2bGG2CRghsd4pwkj+qKkmBxB
-        yyo6K1hHO3JCRK/m9OQBk/jB7I3s0ho=
-X-Google-Smtp-Source: AB8JxZrX7R9OSOsF8+DyR13dL6HS+MexjczMjM8V0jYDm4ianpAXU49f/DMp45O4hPJcTDUtUOBmgg==
-X-Received: by 2002:a17:902:7d8a:: with SMTP id a10-v6mr7064938plm.317.1526597595311;
-        Thu, 17 May 2018 15:53:15 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id v16-v6sm21144222pfj.123.2018.05.17.15.53.13
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=CsXxsxyA1O8dGoDXmffhykxGS5ViGhX0DkTHkPKCdgM=;
+        b=dBRCTDmQTIEccecpLWfU+KZpooBwO6Yfj6yFB1lhfJ85KKVzvHkprpaaxMg78ohOzf
+         RTmQ/wXf6zYjDE5oPK9BESE05NCeUutB766N3ckAnAYuuU5lOlg2Br2c6lGa1tkHiVoG
+         884fIwv/s2Pq4Pl4o5jL2OPCnNJR+s3uyL2euv2osI7/dXxJbio/irf3u9kUi5MRWTOd
+         JefpgDSgzajamIRsMM7DgIe/lk+P5G8fr2GmLdVZeL2sY+sXHTSVQNCSoNCLZxS2OFP0
+         nuuFG4KB+7gaRQmXl2Fx3+jd8K4kmeJmElpW5nVijLceFmPO8q8ndMd6ZW0k+dx0MQh/
+         nakQ==
+X-Gm-Message-State: ALKqPwedQHr15g5HPHTA+ybLXJMP5LBzFecVwbxrI2WfqpdzicLPs84j
+        DOh0zIFMpaW50uEYQIiTnzI=
+X-Google-Smtp-Source: AB8JxZqOPEWQxT7FC8nx21tc66TLB1z8BoI9zsgHz3MmWrtfQCcJJfov5Oy3QoGPJxmha5bCliOC0A==
+X-Received: by 2002:a1c:5ec9:: with SMTP id s192-v6mr2789194wmb.54.1526597812319;
+        Thu, 17 May 2018 15:56:52 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j8-v6sm11533954wra.58.2018.05.17.15.56.51
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 May 2018 15:53:14 -0700 (PDT)
-Date:   Thu, 17 May 2018 15:53:13 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
+        Thu, 17 May 2018 15:56:51 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH 0/8] Reroll of sb/diff-color-move-more
-Message-Id: <20180517155313.6a529d76ab1f6e8f2a05e1a8@google.com>
-In-Reply-To: <20180517194653.48928-1-sbeller@google.com>
-References: <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
-        <20180517194653.48928-1-sbeller@google.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Cc:     git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (May 2018, #02; Thu, 17)
+References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
+        <xmqqbmdd6hb5.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 18 May 2018 07:56:50 +0900
+In-Reply-To: <xmqqbmdd6hb5.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 18 May 2018 07:36:14 +0900")
+Message-ID: <xmqq7eo16gct.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 17 May 2018 12:46:45 -0700
-Stefan Beller <sbeller@google.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Stefan Beller (8):
->   xdiff/xdiff.h: remove unused flags
->   xdiff/xdiffi.c: remove unneeded function declarations
->   diff.c: do not pass diff options as keydata to hashmap
->   diff.c: adjust hash function signature to match hashmap expectation
->   diff.c: add a blocks mode for moved code detection
->   diff.c: decouple white space treatment from move detection algorithm
->   diff.c: add --color-moved-ignore-space-delta option
->   diff: color-moved white space handling options imply color-moved
+> Stefan Beller <sbeller@google.com> writes:
+>
+>>> * sb/object-store-replace (2018-05-10) 2 commits
+>>>   (merged to 'next' on 2018-05-16 at 41bbedcc81)
+>>>  + replace-object.c: remove the_repository from prepare_replace_object
+>>>  + object.c: free replace map in raw_object_store_clear
+>>>
+>>>  Hotfix.
+>>>
+>>>  Will merge to 'master'.
+>>
+>> Please do not.
+>> (Or do, but then be prepared for another hotfix.)
+>>
+>> The commit sb/object-store-replace^ needs more free'ing and shall be
+>> replaced with
+>
+> Please do not replace what already hit 'next'.
 
-The test in patch 7 is indeed fixed, and patch 8 looks good to me.
+Here is what I made these two into a relative fix on top.
 
-There are still some review comments of mine outstanding [1] [2] but if
-we decide that this series is good enough for now, that's OK.
+-- >8 --
+From: Stefan Beller <sbeller@google.com>
+Date: Thu, 17 May 2018 11:29:57 -0700
+Subject: [PATCH] object.c: clear replace map before freeing it
 
-[1] https://public-inbox.org/git/20180424153513.dc2404cd111c44ac78bd8ed8@google.com/
-[2] https://public-inbox.org/git/20180424171123.7092788b94498908c25eccf0@google.com/
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ object.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/object.c b/object.c
+index cdf520084d..97245fdea2 100644
+--- a/object.c
++++ b/object.c
+@@ -480,6 +480,8 @@ void raw_object_store_clear(struct raw_object_store *o)
+ {
+ 	FREE_AND_NULL(o->objectdir);
+ 	FREE_AND_NULL(o->alternate_db);
++
++	oidmap_free(o->replace_map, 1);
+ 	FREE_AND_NULL(o->replace_map);
+ 
+ 	free_alt_odbs(o);
+-- 
+2.17.0-582-gccdcbd54c4
+
