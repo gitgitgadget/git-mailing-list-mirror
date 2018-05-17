@@ -6,59 +6,65 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE6B21F51C
-	for <e@80x24.org>; Thu, 17 May 2018 22:56:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7BD41F51C
+	for <e@80x24.org>; Thu, 17 May 2018 22:58:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751762AbeEQW4y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 18:56:54 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:40365 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751061AbeEQW4x (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 18:56:53 -0400
-Received: by mail-wm0-f67.google.com with SMTP id j5-v6so11806900wme.5
-        for <git@vger.kernel.org>; Thu, 17 May 2018 15:56:53 -0700 (PDT)
+        id S1751850AbeEQW6D (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 18:58:03 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:40979 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751543AbeEQW6C (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 18:58:02 -0400
+Received: by mail-wr0-f196.google.com with SMTP id g21-v6so7237076wrb.8
+        for <git@vger.kernel.org>; Thu, 17 May 2018 15:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=CsXxsxyA1O8dGoDXmffhykxGS5ViGhX0DkTHkPKCdgM=;
-        b=HPaNebc8iYX4ZwmSiozSWQP4IyvAXN1Rdv3JKBjUqi71nQp5leBqfEfKgIjNxgQrXD
-         FZzUNzTIWHijt9buF9XGYNpOQx7eP7p49hh4dqzxNk80B4sZ2n7QfbJKPu16OEP5LZF1
-         KUgkbd+Z9zWZIjs2JbePAPoBvsJZWgqjlRxYnuw/GuGcNEwOBc7VQM6ejVuUCVCAul02
-         ZTA/jdelgDGFa3cYeyDXdoaON9k3Kc8bnOprzT8lHQ8MOxjvbf2TyR0NxsqUla00JT1k
-         hcTjpyvHCxvlYsWrdwOjr9j+942Oo0nGxASxSGRksJnraPJF0kJpL2E5Qlmh6A/1CINO
-         FdQg==
+        bh=oMiJp0pWR4phNAjY/YL1p/Yk8zK8+hEy0Ynk8p8EL7w=;
+        b=gRtMf+g3MNRCMO/kM+2dutfMEV4+K99CujKXnCJmruE4RDct5XCXCBMmnGDM3MoFJ8
+         VYbRo1eSdRuRhsjmr5C5aylOVGnfeRs1U4en8w76Hnfnx97dEBvlqRLqIu1Ueo5oB8hR
+         F3eumWP9KCagWaHVcF3QLCIZoMWgGtQt9eKKN9OXdZIu0NWkUrCsjoX2UQJ9mb5h9kBQ
+         yCtIboAj9SNEKvVrTJj1B1eqG9E0i9opoaEj7rHRIE5BbvSjcU/g5yaqlpWFiBUUb4UA
+         BysXpSkd1p9wDCp22KR4MaPmit3fGjPpbM/JrjD+09ECz2dH8OctFwMZrJ9iyLP5mRCh
+         p3Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=CsXxsxyA1O8dGoDXmffhykxGS5ViGhX0DkTHkPKCdgM=;
-        b=dBRCTDmQTIEccecpLWfU+KZpooBwO6Yfj6yFB1lhfJ85KKVzvHkprpaaxMg78ohOzf
-         RTmQ/wXf6zYjDE5oPK9BESE05NCeUutB766N3ckAnAYuuU5lOlg2Br2c6lGa1tkHiVoG
-         884fIwv/s2Pq4Pl4o5jL2OPCnNJR+s3uyL2euv2osI7/dXxJbio/irf3u9kUi5MRWTOd
-         JefpgDSgzajamIRsMM7DgIe/lk+P5G8fr2GmLdVZeL2sY+sXHTSVQNCSoNCLZxS2OFP0
-         nuuFG4KB+7gaRQmXl2Fx3+jd8K4kmeJmElpW5nVijLceFmPO8q8ndMd6ZW0k+dx0MQh/
-         nakQ==
-X-Gm-Message-State: ALKqPwedQHr15g5HPHTA+ybLXJMP5LBzFecVwbxrI2WfqpdzicLPs84j
-        DOh0zIFMpaW50uEYQIiTnzI=
-X-Google-Smtp-Source: AB8JxZqOPEWQxT7FC8nx21tc66TLB1z8BoI9zsgHz3MmWrtfQCcJJfov5Oy3QoGPJxmha5bCliOC0A==
-X-Received: by 2002:a1c:5ec9:: with SMTP id s192-v6mr2789194wmb.54.1526597812319;
-        Thu, 17 May 2018 15:56:52 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j8-v6sm11533954wra.58.2018.05.17.15.56.51
+        bh=oMiJp0pWR4phNAjY/YL1p/Yk8zK8+hEy0Ynk8p8EL7w=;
+        b=fgM9vX9Mqg7/f5yzTA+bD/D5HQtDwImIUE6HP3EqeaeBm2Zb9/DM0/KNPjjLhy/AJB
+         Z2GN6HtNb2WW4oSCO1Ds7qFJ1yJxDdbRHb9DyVwzCHUabI2c0MqRwxVTM0idcH0CK/T1
+         xZMun/SIQJm1P7GbMd3Gx18Sl61EYQjOTBcA5FvmVl2zGK1kczF1otLR36Ba3MabLhY7
+         QQCYvoZocO5t3U22ctx7TNC94B1AGp0B/06n3XJbp+JRsNucnQ0vevYIXB2AWHpJ+t5o
+         tJq5CWpaT9xJxGneBk9LFPCNulzY31xj5Kq54pLFhOEm4hIHQEziS9hhDvq+4LFoTprT
+         JW1w==
+X-Gm-Message-State: ALKqPwcncKef+EHZT+yUuTU0CM/ZfNT6d7arZHZ/Tt+iufEpql5tUwvu
+        uQJXNoTHo+B2Rn+YGpXruDw=
+X-Google-Smtp-Source: AB8JxZqp1BRy5TMLKiCHKzRjpDC+nV9UxHqRDSIArC5q+yyiviF1b0kQCqs/FWTGLj7GUMN2PsJzgw==
+X-Received: by 2002:adf:884c:: with SMTP id e12-v6mr6118958wre.30.1526597880766;
+        Thu, 17 May 2018 15:58:00 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id s5-v6sm7380153wra.48.2018.05.17.15.57.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 May 2018 15:56:51 -0700 (PDT)
+        Thu, 17 May 2018 15:58:00 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (May 2018, #02; Thu, 17)
-References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
-        <xmqqbmdd6hb5.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 18 May 2018 07:56:50 +0900
-In-Reply-To: <xmqqbmdd6hb5.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 18 May 2018 07:36:14 +0900")
-Message-ID: <xmqq7eo16gct.fsf@gitster-ct.c.googlers.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Antonio Ospite <ao2@ao2.it>
+Subject: Re: [PATCH] grep: handle corrupt index files early
+References: <20180515010425.149200-1-sbeller@google.com>
+        <CACsJy8AcG6zGa9vLCwm2B4ishyJVWdFQ2YV0FOZTor_0x8Q64g@mail.gmail.com>
+        <CAGZ79kYYy-r+Zs_6yg1ZVRNsBcTUdPWE=FeHrp_=0cV0Uf_GfQ@mail.gmail.com>
+        <CACsJy8A8WZ-Gqe2Y-whJmbADrt+gZjLZ7MTwCtdnK7JDnEdtog@mail.gmail.com>
+        <xmqqbmdf6p1t.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kbvjoTq5079Ks+h2HNb+D99RELYPcJk2=pvZf9-Y8dToQ@mail.gmail.com>
+Date:   Fri, 18 May 2018 07:57:59 +0900
+In-Reply-To: <CAGZ79kbvjoTq5079Ks+h2HNb+D99RELYPcJk2=pvZf9-Y8dToQ@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 17 May 2018 10:21:23 -0700")
+Message-ID: <xmqq36yp6gaw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,53 +73,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Stefan Beller <sbeller@google.com> writes:
->
->>> * sb/object-store-replace (2018-05-10) 2 commits
->>>   (merged to 'next' on 2018-05-16 at 41bbedcc81)
->>>  + replace-object.c: remove the_repository from prepare_replace_object
->>>  + object.c: free replace map in raw_object_store_clear
->>>
->>>  Hotfix.
->>>
->>>  Will merge to 'master'.
+> On Wed, May 16, 2018 at 6:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Duy Nguyen <pclouds@gmail.com> writes:
 >>
->> Please do not.
->> (Or do, but then be prepared for another hotfix.)
+>>> With a majority of call sites dying like this though, I wonder if we
+>>> should just add repo_read_index_or_die() with die() inside. Then the
+>>> next person won't likely accidentally forget _()
 >>
->> The commit sb/object-store-replace^ needs more free'ing and shall be
->> replaced with
+>> Yuck.
+>>
+>> That sounds like inviting a major code churn.  I tend to agree that
+>> it would be a good clean-up for longer term maintenance, but I am
+>> not sure if I can honestly say I'd look forward to such a clean-up
+>> at this point in the cycle when there are tons of large-ish topics
+>> in flight X-<.
 >
-> Please do not replace what already hit 'next'.
+> ok, consider the series
+> https://public-inbox.org/git/20180516222118.233868-1-sbeller@google.com/
+> retracted for this cycle; I will keep it around and resend it at some future
+> date, hopefully.
 
-Here is what I made these two into a relative fix on top.
-
--- >8 --
-From: Stefan Beller <sbeller@google.com>
-Date: Thu, 17 May 2018 11:29:57 -0700
-Subject: [PATCH] object.c: clear replace map before freeing it
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- object.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/object.c b/object.c
-index cdf520084d..97245fdea2 100644
---- a/object.c
-+++ b/object.c
-@@ -480,6 +480,8 @@ void raw_object_store_clear(struct raw_object_store *o)
- {
- 	FREE_AND_NULL(o->objectdir);
- 	FREE_AND_NULL(o->alternate_db);
-+
-+	oidmap_free(o->replace_map, 1);
- 	FREE_AND_NULL(o->replace_map);
- 
- 	free_alt_odbs(o);
--- 
-2.17.0-582-gccdcbd54c4
-
+Thanks.  I didn't realize you've _already_ done that.
