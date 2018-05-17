@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4354E1F51C
-	for <e@80x24.org>; Thu, 17 May 2018 22:52:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7CF41F51C
+	for <e@80x24.org>; Thu, 17 May 2018 22:52:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751844AbeEQWw0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 18:52:26 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:39261 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750924AbeEQWwY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 18:52:24 -0400
-Received: by mail-pf0-f194.google.com with SMTP id a22-v6so2776823pfn.6
-        for <git@vger.kernel.org>; Thu, 17 May 2018 15:52:24 -0700 (PDT)
+        id S1752002AbeEQWwb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 18:52:31 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:35643 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751907AbeEQWw2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 18:52:28 -0400
+Received: by mail-pg0-f53.google.com with SMTP id 11-v6so805104pge.2
+        for <git@vger.kernel.org>; Thu, 17 May 2018 15:52:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7NBG0ymmpayRbF2jWKQXfQ0KVG6ohfvoIUlHQlqIs/Q=;
-        b=gvNlre5RGYTALzsCDycJepJ4Naqathpteo1S2XRieEhwWF96VIhrvdPw3KlNBAKqob
-         5xfoL/+AdXxJKY9+E844kA/DsmYyuTjX3oq7o1+39P28C+yLLqWNhCaV8bPv4RIHJNZP
-         +GFmm2NSlb9sSe4093DVQoq7ND8w/3pKvh1+uyLWOhZsbyT9dSiUtq0Yevf8ORUlXgc1
-         WUwwyp/0YZv0eXWScZ0bVeEgN39hQD2BQuxhOQ46DMlC47YnTZCKopBY2FDSz9KMFAun
-         lp39zUkqfFAebbXtmN7uEVKVH6QD19niEdH+YPcaWn5g3bs92xu25JpQkBJAz5G+eY8K
-         xtWA==
+        bh=AIhWTeimfg/UXdVGamZ51Gb4pzoFc7conKzULF4Vw6U=;
+        b=QaHIbgU2Oc44pi5js6NRedIdX44YtXc1l196XIQfvbNPvnKhSAykPrK2JrgPIlDos9
+         8zXKda8OZXFbXSlgxFVM697DsnSw59If6hVJXHbHkt45gGwdbdM82GQ4Afi0dWQlYhAD
+         eXm+1Irbnrdj5wOq5vgOccsexrp9nzYZhSmHkJEj71ggwYbuC6N/uIE4iSMVHi+dTUcG
+         mYjhAFgr8ODgSh8KDca/RKZxKllFeVtAmNy25PGrvXGsln22BiB9wh6gRnSc+EM4v80v
+         44y9qbfhJVjxEi6kQS8MmX8h+CGsndDES1pZRt7NEETew12QVmFoqom+ZHT60S+8eHGG
+         0MWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=7NBG0ymmpayRbF2jWKQXfQ0KVG6ohfvoIUlHQlqIs/Q=;
-        b=AUzkhTcNXprcbHddWTRR2pJ8VjstL5FCpZVRwA/ch4RFbbxFxpf6LHbm2bD6WgIhvL
-         Tru+o2qM/X6nYY+gJ1z3/QhhNVCES6zKy3CK/t8u+Lc0gZW54s/uefzH2ihzYTGOBXLC
-         tPrzMDDHKIS94YLZaBwYRt1OOGDCraQ2KFIRaQ+b8tkHkfGeMbM6XW6nGPqc3Tc4CtYq
-         zQLqtj6G0xGbcKC76dJGJjzjiuTZpFxigb0zSINqLzm3U0WVyjhhDWzLE1zNsCkHiXBz
-         bWEd9j/ghFoUIMH5hpmau9IXzFJjWoCi5wQEiWjmDrdbS3fG8VUNXkhRq+3iX2vsnYoc
-         7i0A==
-X-Gm-Message-State: ALKqPwfmrMMr+T4i8OsIr5W85uKarITu4H7LSQknbYmQMWT3/V2EfFUU
-        5umG3JWTHMABpfrKBI0YJVigyA==
-X-Google-Smtp-Source: AB8JxZo7JKHfzQkfb0mZ+1fs13JHeRM5cqjR9gYQG1/zuNiba1tPpVp0PoMIrjGq/6eX8IubsghUBg==
-X-Received: by 2002:a63:a312:: with SMTP id s18-v6mr5360540pge.187.1526597543683;
-        Thu, 17 May 2018 15:52:23 -0700 (PDT)
+        bh=AIhWTeimfg/UXdVGamZ51Gb4pzoFc7conKzULF4Vw6U=;
+        b=T58qM/+SCbGESHqFu3I6ipPvX6upF7uvJDRQnH0r/PbXvnrSJyvkFajtIlDH4ULvgv
+         P+NYhaEHUu70Pxn09TMfqJX5YeoHcmzwfvW4Zv/ZLrTRXyiVGsET17TeTcvGr3Le5VZr
+         cqW3dN8EQ3TeV96lm1lONUkl5NhUm/IjlaaXA0EWxt8xnaY6HoY2ts7z21+d6L+ZPEBh
+         b2+qJ0ByJmoEs2K3uQyDrclzE2synWFaQJ7cC8PyUbpsYtYJm8pFpBoMuSIl944seJs3
+         D8N/Sa+6IC7IMdP4hMoFcISy7BImKqFG1xKOeUvHf9biJnoaqk2uoNdwp0pHF9JASj7K
+         2XLQ==
+X-Gm-Message-State: ALKqPwdyT3cg4GVxyO9MzyTi3VeA8oXD0NDGIllw21Szs5rnrSJAo+9k
+        m7d0wzIklirFmHScywf8DbZUaCLbBu0=
+X-Google-Smtp-Source: AB8JxZrYfMrIcoqgfJ79ElYdyWxH0mQKnNusY9cWjfA3JGnQj2vyhPYiK39F5UcuXPQKzzAjkCMF2A==
+X-Received: by 2002:a62:49d7:: with SMTP id r84-v6mr6844470pfi.146.1526597547774;
+        Thu, 17 May 2018 15:52:27 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id 63-v6sm9695328pgi.4.2018.05.17.15.52.22
+        by smtp.gmail.com with ESMTPSA id 76-v6sm1554987pge.8.2018.05.17.15.52.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 May 2018 15:52:22 -0700 (PDT)
+        Thu, 17 May 2018 15:52:25 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
-Cc:     git@vger.kernel.org
-Subject: [PATCH 10/19] shallow: add repository argument to check_shallow_file_for_update
-Date:   Thu, 17 May 2018 15:51:45 -0700
-Message-Id: <20180517225154.9200-11-sbeller@google.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>
+Subject: [PATCH 12/19] commit: convert commit_graft_pos() to handle arbitrary repositories
+Date:   Thu, 17 May 2018 15:51:47 -0700
+Message-Id: <20180517225154.9200-13-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
 In-Reply-To: <20180517225154.9200-1-sbeller@google.com>
 References: <20180515234233.143708-1-sbeller@google.com>
@@ -63,51 +63,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow callers of check_shallow_file_for_update
-to be more specific about which repository to handle. This is a small
-mechanical change; it doesn't change the implementation to handle
-repositories other than the_repository yet.
+From: Brandon Williams <bmwill@google.com>
 
-As with the previous commits, use a macro to catch callers passing a
-repository other than the_repository at compile time.
-
+Signed-off-by: Brandon Williams <bmwill@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- shallow.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ commit.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/shallow.c b/shallow.c
-index 0fadd5330d2..0028e4ea776 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -217,7 +217,8 @@ struct commit_list *get_shallow_commits_by_rev_list(int ac, const char **av,
- 	return result;
+diff --git a/commit.c b/commit.c
+index 684eeaa2ccd..0ec3d22813a 100644
+--- a/commit.c
++++ b/commit.c
+@@ -104,11 +104,10 @@ static const unsigned char *commit_graft_sha1_access(size_t index, void *table)
+ 	return commit_graft_table[index]->oid.hash;
  }
  
--static void check_shallow_file_for_update(void)
-+#define check_shallow_file_for_update(r) check_shallow_file_for_update_##r()
-+static void check_shallow_file_for_update_the_repository(void)
+-#define commit_graft_pos(r, s) commit_graft_pos_##r(s)
+-static int commit_graft_pos_the_repository(const unsigned char *sha1)
++static int commit_graft_pos(struct repository *r, const unsigned char *sha1)
  {
- 	if (is_shallow == -1)
- 		die("BUG: shallow must be initialized by now");
-@@ -319,7 +320,7 @@ void setup_alternate_shallow(struct lock_file *shallow_lock,
+-	return sha1_pos(sha1, the_repository->parsed_objects->grafts,
+-			the_repository->parsed_objects->grafts_nr,
++	return sha1_pos(sha1, r->parsed_objects->grafts,
++			r->parsed_objects->grafts_nr,
+ 			commit_graft_sha1_access);
+ }
  
- 	fd = hold_lock_file_for_update(shallow_lock, git_path_shallow(),
- 				       LOCK_DIE_ON_ERROR);
--	check_shallow_file_for_update();
-+	check_shallow_file_for_update(the_repository);
- 	if (write_shallow_commits(&sb, 0, extra)) {
- 		if (write_in_full(fd, sb.buf, sb.len) < 0)
- 			die_errno("failed to write to %s",
-@@ -366,7 +367,7 @@ void prune_shallow(int show_only)
- 	}
- 	fd = hold_lock_file_for_update(&shallow_lock, git_path_shallow(),
- 				       LOCK_DIE_ON_ERROR);
--	check_shallow_file_for_update();
-+	check_shallow_file_for_update(the_repository);
- 	if (write_shallow_commits_1(&sb, 0, NULL, SEEN_ONLY)) {
- 		if (write_in_full(fd, sb.buf, sb.len) < 0)
- 			die_errno("failed to write to %s",
 -- 
 2.17.0.582.gccdcbd54c44.dirty
 
