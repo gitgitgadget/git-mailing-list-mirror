@@ -2,97 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7BD41F51C
-	for <e@80x24.org>; Thu, 17 May 2018 22:58:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6B331F51C
+	for <e@80x24.org>; Thu, 17 May 2018 22:58:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751850AbeEQW6D (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 18:58:03 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:40979 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751543AbeEQW6C (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 18:58:02 -0400
-Received: by mail-wr0-f196.google.com with SMTP id g21-v6so7237076wrb.8
-        for <git@vger.kernel.org>; Thu, 17 May 2018 15:58:01 -0700 (PDT)
+        id S1751788AbeEQW6J (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 18:58:09 -0400
+Received: from mail-yb0-f180.google.com ([209.85.213.180]:43050 "EHLO
+        mail-yb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751061AbeEQW6I (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 18:58:08 -0400
+Received: by mail-yb0-f180.google.com with SMTP id v12-v6so2046306ybl.10
+        for <git@vger.kernel.org>; Thu, 17 May 2018 15:58:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=oMiJp0pWR4phNAjY/YL1p/Yk8zK8+hEy0Ynk8p8EL7w=;
-        b=gRtMf+g3MNRCMO/kM+2dutfMEV4+K99CujKXnCJmruE4RDct5XCXCBMmnGDM3MoFJ8
-         VYbRo1eSdRuRhsjmr5C5aylOVGnfeRs1U4en8w76Hnfnx97dEBvlqRLqIu1Ueo5oB8hR
-         F3eumWP9KCagWaHVcF3QLCIZoMWgGtQt9eKKN9OXdZIu0NWkUrCsjoX2UQJ9mb5h9kBQ
-         yCtIboAj9SNEKvVrTJj1B1eqG9E0i9opoaEj7rHRIE5BbvSjcU/g5yaqlpWFiBUUb4UA
-         BysXpSkd1p9wDCp22KR4MaPmit3fGjPpbM/JrjD+09ECz2dH8OctFwMZrJ9iyLP5mRCh
-         p3Rg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Re19mOFe1qOMvE6COYHylGfVpfmgxm+rGq+myc4i5Fk=;
+        b=mBOOB0zNvZYPNvROaiO+Lt9Uf0GEXxJHRWFLjgt9UZenE++GlzSzMrfMbi4Rlf8KAo
+         ESiucguvvGJhE2OFww4qWLS+tUC3s+mgE+n8IjL2zeMVhJq/ONnAUd2JgtP8cs9bqyse
+         aTl8cOUtXOPbyWSIl2K+skpHxZ/xhyI8AGVQoro6BhGH5sZCTAuF/AUwWnajEMOxqjA7
+         fbgtiPffqkEh6GCAJhVb++k8QmCVoJGoTZca2jK51W0ppQQiy/7/00+/neBvW3twAYgz
+         dGpaMW60Fy3Zsge/S3EDV1V9ujiLkIx+LxsXg4womjCTIs9s0t3W09dIJsNyEjGhUuwZ
+         qoMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=oMiJp0pWR4phNAjY/YL1p/Yk8zK8+hEy0Ynk8p8EL7w=;
-        b=fgM9vX9Mqg7/f5yzTA+bD/D5HQtDwImIUE6HP3EqeaeBm2Zb9/DM0/KNPjjLhy/AJB
-         Z2GN6HtNb2WW4oSCO1Ds7qFJ1yJxDdbRHb9DyVwzCHUabI2c0MqRwxVTM0idcH0CK/T1
-         xZMun/SIQJm1P7GbMd3Gx18Sl61EYQjOTBcA5FvmVl2zGK1kczF1otLR36Ba3MabLhY7
-         QQCYvoZocO5t3U22ctx7TNC94B1AGp0B/06n3XJbp+JRsNucnQ0vevYIXB2AWHpJ+t5o
-         tJq5CWpaT9xJxGneBk9LFPCNulzY31xj5Kq54pLFhOEm4hIHQEziS9hhDvq+4LFoTprT
-         JW1w==
-X-Gm-Message-State: ALKqPwcncKef+EHZT+yUuTU0CM/ZfNT6d7arZHZ/Tt+iufEpql5tUwvu
-        uQJXNoTHo+B2Rn+YGpXruDw=
-X-Google-Smtp-Source: AB8JxZqp1BRy5TMLKiCHKzRjpDC+nV9UxHqRDSIArC5q+yyiviF1b0kQCqs/FWTGLj7GUMN2PsJzgw==
-X-Received: by 2002:adf:884c:: with SMTP id e12-v6mr6118958wre.30.1526597880766;
-        Thu, 17 May 2018 15:58:00 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id s5-v6sm7380153wra.48.2018.05.17.15.57.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 May 2018 15:58:00 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Antonio Ospite <ao2@ao2.it>
-Subject: Re: [PATCH] grep: handle corrupt index files early
-References: <20180515010425.149200-1-sbeller@google.com>
-        <CACsJy8AcG6zGa9vLCwm2B4ishyJVWdFQ2YV0FOZTor_0x8Q64g@mail.gmail.com>
-        <CAGZ79kYYy-r+Zs_6yg1ZVRNsBcTUdPWE=FeHrp_=0cV0Uf_GfQ@mail.gmail.com>
-        <CACsJy8A8WZ-Gqe2Y-whJmbADrt+gZjLZ7MTwCtdnK7JDnEdtog@mail.gmail.com>
-        <xmqqbmdf6p1t.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kbvjoTq5079Ks+h2HNb+D99RELYPcJk2=pvZf9-Y8dToQ@mail.gmail.com>
-Date:   Fri, 18 May 2018 07:57:59 +0900
-In-Reply-To: <CAGZ79kbvjoTq5079Ks+h2HNb+D99RELYPcJk2=pvZf9-Y8dToQ@mail.gmail.com>
-        (Stefan Beller's message of "Thu, 17 May 2018 10:21:23 -0700")
-Message-ID: <xmqq36yp6gaw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Re19mOFe1qOMvE6COYHylGfVpfmgxm+rGq+myc4i5Fk=;
+        b=mGM2W2b/6oOy0uFCEmazSjnxCgk+bn0K1StD0COkqVqdj01tr2Cciwxl7hobhSGFQR
+         wxIc0fymsvhG+m7JB+syKuw61igNhYM6CEUq3+Nko1XlO9ur09gVK8u6zgBZZX64GVpc
+         YHYzDtFaY7WcwgPVzVWu1IaYWhMGsvG3rZnfN/+NDNBRow/A/zb6zuQleXzzhg+++VcE
+         mhlFZKwLyb+v9rWCyGoICf7eqssUrNFGAYGHiAtpYLbtKNfJjFug8MnCA40Q0FAfn8DO
+         BXzwz1ofys/xuV8x//XjeFsOGFTg17ycBUtdBIR5eweE73Ko2QOsbOWUw1gxYruge2dn
+         v5WQ==
+X-Gm-Message-State: ALKqPwehcWL7LUuD21ISwT6yg5swRN5+3x9AlqmzbdhduuurqNWDK4S0
+        K9M3BD9xFU2jZPWlnuiM/XaJnFb5Q29gGyDcpw7hpQ==
+X-Google-Smtp-Source: AB8JxZqVsJWsO4XczD4qdxyRF4PK95iYL4joznwPPGIfHDonzBahy5a8gW7TC8sffpRllnZ4wSXJPZgSUwTo8M2E3hk=
+X-Received: by 2002:a25:a567:: with SMTP id h94-v6mr3693553ybi.515.1526597887992;
+ Thu, 17 May 2018 15:58:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Thu, 17 May 2018 15:58:07
+ -0700 (PDT)
+In-Reply-To: <xmqq7eo16gct.fsf@gitster-ct.c.googlers.com>
+References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com> <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
+ <xmqqbmdd6hb5.fsf@gitster-ct.c.googlers.com> <xmqq7eo16gct.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 17 May 2018 15:58:07 -0700
+Message-ID: <CAGZ79kYcA4TbVoPnJOS2Kmr7hfeZs=OnVPkmnepBhNCMysCfBQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2018, #02; Thu, 17)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> On Wed, May 16, 2018 at 6:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Duy Nguyen <pclouds@gmail.com> writes:
->>
->>> With a majority of call sites dying like this though, I wonder if we
->>> should just add repo_read_index_or_die() with die() inside. Then the
->>> next person won't likely accidentally forget _()
->>
->> Yuck.
->>
->> That sounds like inviting a major code churn.  I tend to agree that
->> it would be a good clean-up for longer term maintenance, but I am
->> not sure if I can honestly say I'd look forward to such a clean-up
->> at this point in the cycle when there are tons of large-ish topics
->> in flight X-<.
+>> Please do not replace what already hit 'next'.
 >
-> ok, consider the series
-> https://public-inbox.org/git/20180516222118.233868-1-sbeller@google.com/
-> retracted for this cycle; I will keep it around and resend it at some future
-> date, hopefully.
+> Here is what I made these two into a relative fix on top.
 
-Thanks.  I didn't realize you've _already_ done that.
+Thanks, I was about to prepare the same.
