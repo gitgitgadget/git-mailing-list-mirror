@@ -2,63 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C10491F42D
-	for <e@80x24.org>; Thu, 17 May 2018 10:29:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F6241F42D
+	for <e@80x24.org>; Thu, 17 May 2018 11:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751839AbeEQK3O (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 06:29:14 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:39453 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751274AbeEQK3M (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 06:29:12 -0400
-Received: by mail-pf0-f194.google.com with SMTP id a22-v6so1885103pfn.6
-        for <git@vger.kernel.org>; Thu, 17 May 2018 03:29:12 -0700 (PDT)
+        id S1752228AbeEQLBa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 07:01:30 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:44289 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751879AbeEQLBG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 07:01:06 -0400
+Received: by mail-pl0-f68.google.com with SMTP id e6-v6so2318454plt.11
+        for <git@vger.kernel.org>; Thu, 17 May 2018 04:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :user-agent:mime-version:in-reply-to;
-        bh=nWPOQ82jZO5Flc+/MqWObu/UUm6d7+4NbkuAtcaf9wU=;
-        b=NNM771CyeF+onedH4Ur+Ob4NAtdS/erVak3tjpNc2/lVwL/66iM9k1Wfp8oZ9KHyiR
-         5GnnDRiX2c4n8WTQahea96nzOhVuBBwfJssPZoxNf1jzqBlD+JaS2/G9aeTF7P6bR+ii
-         MahJIRwJFX16O9TwIPcq/b8J6R+8uTRSzLux+MVzrt2AAv1MMESWvQ/L1A5n7sQtT1RD
-         lhWq1LobizR775fGmqJBvrx1aJzgSPRhsHTKNYBGOHekTzDUh6BwKwRhaJbVRFUC2T5C
-         jDADRCcSd5LbIcuyv3BTvevaYbdPGhxJwyE3W0k7vTUL/LSPQL5hVQdFflBSWOpzoO6q
-         EZ1g==
+        bh=wYrxarYu1ZmcL2mw3Oisz0ybzScs3l2hnguvkVe6o68=;
+        b=e0cbHxpUbUbyPnQoxTZPhYbzgSyCce/sz/L4n2EoFQ399pXPLYskijLb0e14GdLGi9
+         NlFdWEyrUosOupLMre3D+CR3Pz5BL1wNzgHuI6XE6LraZ4vc3Z9jOmTOaMlxmkipt6eh
+         CmI3F3gJCWhAMIlWGS/bMHRqml/6YeR4ILlzIpcUN/Hiqz/vCnnn1eKTmUDz8TY8meNl
+         LZDdDb/e/0Wrdmca+vLI/rowXh/LPfMaMpKUV9vLsTb3svetWlqffi68eEl96DgkvqKW
+         ceCKZZQxBzggcwGpx8TOJIJpB/uOdqYAp1+tQItiZN8l6xog3LiRaW37Z7fPUlLbwebj
+         LvQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to;
-        bh=nWPOQ82jZO5Flc+/MqWObu/UUm6d7+4NbkuAtcaf9wU=;
-        b=KrbH+6PUF6VG6XHpAas9hd2dE3po9OG7Dd9D6d4yV3HI3+49r3qyvqKLHYjtfPf9/Z
-         aYn1cijA62PoHVOKurC5oH4zZRZNqWmDAoConHTzj6xlby0OWnrOvKKAMkj7Oi6N4T40
-         mqcN4UsFbKoRRbt7/IFInHr70g+M58V1l+auC05odHK2C9lAX7EE8/Mm9hakv6wnWQE7
-         qMNbbiqe3cXvqH6WdZh+M7me7SNtishObGlf+KdErpOvq7J0O/bejpvgijJ9TC06CQ5L
-         HVaeM32mkEW9Ys1Yt+yB4BK7Lw10Ry0RoHv4T8SKZcmfwrqKPdupq2LUnawvipxJgZoP
-         r22A==
-X-Gm-Message-State: ALKqPwdzJxtS/7AD+gJidEJKZsVpMSf3+8qlui7LWzcUEy9bvBvFMtFx
-        Sf2cHBe6pqyBE4I++SfTvssQw4p5
-X-Google-Smtp-Source: AB8JxZoc5e25saGcTCBnyvWOElSsYuqJjzKj5R1/pNDdN+MnP1G0/05qvA21SJGNdNXyiVRBkTm2Mg==
-X-Received: by 2002:a65:665a:: with SMTP id z26-v6mr1438748pgv.302.1526552951306;
-        Thu, 17 May 2018 03:29:11 -0700 (PDT)
-Received: from [192.168.206.100] ([117.246.69.1])
-        by smtp.gmail.com with ESMTPSA id u14-v6sm10006579pfa.101.2018.05.17.03.29.07
+        bh=wYrxarYu1ZmcL2mw3Oisz0ybzScs3l2hnguvkVe6o68=;
+        b=U8qgzOLwyoJ8cmrkOCyi7VgCHh0AdCvIEonpHrLjmpEkTzl+YIyqGNlciHLSxiW7KJ
+         M9BisX560raXIhSTe/xXc+P8D/kZU5RoaMUafZT3GpUM+zhIFcquRJzeyrccY8+o0V//
+         m+D8LSNrHiMSZmAyyOPbJ4LCj1fgElwGX9pzUbT1uoKHcd/3PHng3/h8V4sZvuMb6Gt5
+         RNNLXY9FTy7YyqX/owGgBlE2pf/cxvZeb5Yu9p9ES+H6opTbFZqHPcaiEqxKz7SogGId
+         tO2RZcrxVfsTvCb6FBZ600ZP3gzAB5KWC5cJN2owtwwsZaTKeLdNHVh8JO2IUnvj3arh
+         UU1Q==
+X-Gm-Message-State: ALKqPwdZWWAhHBvhzgpZyFCmi0cf9K6UOzt+cSNN23Txhld9bH7OHRPu
+        L/g2wTRrkVW1TieNgHozO84HhUyM
+X-Google-Smtp-Source: AB8JxZob5zUfavzB47U5GoK5OOWgDitTLcHHREEvbuiQX06Zr9kNSN/EKUOnu6rSdoiJrQs0M21t+g==
+X-Received: by 2002:a17:902:598d:: with SMTP id p13-v6mr4765865pli.191.1526554865976;
+        Thu, 17 May 2018 04:01:05 -0700 (PDT)
+Received: from [192.168.206.100] ([117.209.184.61])
+        by smtp.gmail.com with ESMTPSA id 65-v6sm10401479pgj.22.2018.05.17.04.01.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 May 2018 03:29:10 -0700 (PDT)
-Subject: Re: [GSoC] A blog about 'git stash' project
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <67e6d306-0885-9340-13c8-3e3d4333dc20@gmail.com>
- <ef15b063-c0e3-a5e9-7418-35d2d6b954f3@gmail.com>
- <e8a81d38-57d7-2974-b5c7-3489e8ceb1fc@gmail.com>
- <68b913de-8f4a-9203-1d63-32104a35628b@gmail.com>
- <be353b0e-1cba-3765-b920-f7307f9b7d40@gmail.com>
- <nycvar.QRO.7.76.6.1805171106370.77@tvgsbejvaqbjf.bet>
+        Thu, 17 May 2018 04:01:04 -0700 (PDT)
+Subject: Re: jk/branch-l-0-deprecation (was Re: What's cooking in git.git (May
+ 2018, #02; Thu, 17))
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
+ <e440f6e0-6d7d-0e72-b875-de290cea6b94@gmail.com>
+ <87fu2qbojy.fsf@evledraar.gmail.com>
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=kaartic.sivaraam@gmail.com; prefer-encrypt=mutual; keydata=
@@ -105,63 +103,68 @@ Autocrypt: addr=kaartic.sivaraam@gmail.com; prefer-encrypt=mutual; keydata=
  YkZ4Hv7M8LuQGn64pFrm4grbF/wxkmvgeyBTQA/A9WNWndlinlFYiZGmDoiZUAcSKA9oBTPc
  4jXwW/YIfNYwd7SlatiwKjF1QxuL1X0QMMPstR/UoVc3sbiabb4Km5jS2oU9q6KpeikRshMI
  IZ7P/DJ/
-Message-ID: <1729567e-3b95-ab37-d845-1980795542b0@gmail.com>
-Date:   Thu, 17 May 2018 15:59:02 +0530
+Message-ID: <57e90df8-9522-0988-f25d-59a132b5afbe@gmail.com>
+Date:   Thu, 17 May 2018 16:30:57 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1805171106370.77@tvgsbejvaqbjf.bet>
+In-Reply-To: <87fu2qbojy.fsf@evledraar.gmail.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="DvjBnpSiSfBt8fYUJeKYiinNW52vcMEkn"
+ boundary="w16aVdq29IZPlm5IHoxRAm6sFZeZgoxN4"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---DvjBnpSiSfBt8fYUJeKYiinNW52vcMEkn
-Content-Type: multipart/mixed; boundary="uXGasJpoSXtozttroCemOA2KLIbRIbgHO";
+--w16aVdq29IZPlm5IHoxRAm6sFZeZgoxN4
+Content-Type: multipart/mixed; boundary="GHepoeteekjbFsu2GLkguZwOXvkRnHolm";
  protected-headers="v1"
 From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
- Git Mailing List <git@vger.kernel.org>
-Message-ID: <1729567e-3b95-ab37-d845-1980795542b0@gmail.com>
-Subject: Re: [GSoC] A blog about 'git stash' project
-References: <67e6d306-0885-9340-13c8-3e3d4333dc20@gmail.com>
- <ef15b063-c0e3-a5e9-7418-35d2d6b954f3@gmail.com>
- <e8a81d38-57d7-2974-b5c7-3489e8ceb1fc@gmail.com>
- <68b913de-8f4a-9203-1d63-32104a35628b@gmail.com>
- <be353b0e-1cba-3765-b920-f7307f9b7d40@gmail.com>
- <nycvar.QRO.7.76.6.1805171106370.77@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1805171106370.77@tvgsbejvaqbjf.bet>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+ Jeff King <peff@peff.net>
+Message-ID: <57e90df8-9522-0988-f25d-59a132b5afbe@gmail.com>
+Subject: Re: jk/branch-l-0-deprecation (was Re: What's cooking in git.git (May
+ 2018, #02; Thu, 17))
+References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
+ <e440f6e0-6d7d-0e72-b875-de290cea6b94@gmail.com>
+ <87fu2qbojy.fsf@evledraar.gmail.com>
+In-Reply-To: <87fu2qbojy.fsf@evledraar.gmail.com>
 
---uXGasJpoSXtozttroCemOA2KLIbRIbgHO
+--GHepoeteekjbFsu2GLkguZwOXvkRnHolm
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-On Thursday 17 May 2018 02:39 PM, Johannes Schindelin wrote:
-> I have great empathy for the desire to see these bugs fixed. The
-> conversion must come first, though, and in the interest of making it
-> easier on me and other reviewers, I must insist on keeping the conversi=
-on
-> free of any changes, much in the way as we try to avoid evil merges (i.=
-e.
-> merge commits that introduce changes that were not present in any of th=
-eir
-> parents).
+Hi =C3=86var,
+
+On Thursday 17 May 2018 03:18 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
+wrote:
+> I've ended up with that $LESS setting via hackery over the years, so
+> maybe I'm doing something retarded, minimal test case:
 >=20
+>     PAGER=3Dless  LESS=3D"--no-init --quit-if-one-screen" git branch -l=
 
-Of course, the conversion should be separate from the bug fixes :-)
+>
+> ...
+>=20
+> So I think this is probably OK for most users, if the have very few
+> branches they'll see it, and then if they use default pager settings
+> they'll see the stderr output once they quit the pager. I don't know ho=
+w
+> common my (mis)configuration is.
+>
+I'm not sure this is ok, because I still see the stderr output with your
+minimal test case even when I have enough branches to not fit in one
+screen. The stderr output is of course above the pager output (after I
+quit the pager) and gets hidden out-of display as I stated before. I
+also get weird 'ESC[m' characters with you minimal test case. I'm not
+sure what I'm missing.
 
-When I mentioned "while porting it to C", I actually meant the "thought
-process of creating a foundation for `git-stash` in C". I thought
-hinting at some of the existing and unsolved `git-stash` bugs would
-allow the person who would be doing the port of `git-stash` to C to
-consider how to avoid this while implementing the basic foundation. I
-should have been more explicit about this in my previous mails.
+What version of 'less' do you use? Is any other configuration that you
+didn't mention affecting what your observation?
 
 
 --=20
@@ -203,28 +206,28 @@ to correct those mistakes.
 Thanks in advance!
 
 
---uXGasJpoSXtozttroCemOA2KLIbRIbgHO--
+--GHepoeteekjbFsu2GLkguZwOXvkRnHolm--
 
---DvjBnpSiSfBt8fYUJeKYiinNW52vcMEkn
+--w16aVdq29IZPlm5IHoxRAm6sFZeZgoxN4
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlr9WW4ACgkQveda2sPW
-GWlHfw//USq4QHov0YUtD/Nkr20NGUA8AX0sbwaIZi8OhIL1N535zyCqA4bxKdIW
-fYX8CBac1kpFBgTqOhnLnKEYCeJD2Eya80iqmJ8LhKlCwPxeWmNjiQHVTVTT4iZU
-fa4HHTyEELdbCgZ1Z/J1JTL/mHLpvr16v30SiSaRibg8sP/fIxtLu5Pjr+kkylrc
-l40v4KmK26kFefeWJ+Zs80D2TvBQCo4aa6FfeIX7iIJ9+mtQVFwjrJ4Ghwvi6aRu
-6gcOBzn/3Ce6uLGmJ0LSq6dsUa0MHsAaJ64285Mz0b1Zr/U9mL3yh65WKLRlbbrc
-xNnGt1VVE1G5paSB7P+5ITMFhaVIdFpant3Og0pHVpj3cQ8tacncqK4zrnzGN7DY
-dmgYs9nXvXxRK60iW9ZNs38Vzz+pScRDkMDAD+6/N0NnvuFC2n0e7I/cOv9Aa5FK
-cNhEu2ti1J6FVCltH6VkH4R66ABYFifVrCqR41NCnrsdx++WgRp0uZuU5ws5acNe
-ebKHECbCWj3H+hXGVf4a+xrK6Ziu0yb9WlPRzZ0pOMD7ARMk8dsrhI1g+7Kel/nW
-iv2Mk/0uxSNmZ/sqhzXlieL367d2acE/Bk9qMAPqPUyATrQ8qPP8aJRFBj80s9YV
-2zsZWPWtK5NoJWi2Cxm2ctMywYnngj/hHawh6Ngtu89VRNILabo=
-=Jwij
+iQIzBAEBCAAdFiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlr9YOkACgkQveda2sPW
+GWmnDxAAjJA9pJABz8BEm0c1/9O1ntcUGV00j4JgBeCHSoGsJjLJUg4n8Yj8xKhG
+9JrTyj08kS7ZLyKqj7peVRNDzqGnaZeqoLXfi5IfAyPBcBE5WiKdG6pIv5eXLKYw
+3bdaCJjEMNxdoBemhRAP/JbRTllr5v99wccu04GNAKc50FyM/EeB5G3y6kWimfC7
+o1YChR4am6md7y1ePnMrahWQaHCcoacPhThA+dcZcXEUMBK8qiO3iqP8qy1o0jXv
+ly4UtuATZ2oHKiiHgHo6ywKoa+8OrA9/Yrqf3w7jTCZA2kdsVTspdnygf7J5iZNE
+iWTr/4qKE+b3/owzOz3Xye/evy3ifrTWWhj+RN4A5y7Gg6yLGmalVfHE0Vl4x2QU
+8aLHoO2zkjYgAPZcHVHlKxO+Dl1yE/tp2CP8c1HEfjrcl1dpEaQuL+WR9pbFgZKv
+DoS71RxOAUSuZt7uEvolhlJuKbojz2if/aJaUUMzCOS35Tn9jlxekJ3V3uwZn9fR
+NO/j/sVZrA/OvFOyTmLNcPdogw8Db0Eq1IaRNdRVOFIw/r+myWWNagO6IsyyApky
+phwi92f9dVenZHz7tspuEUA52B4JEiymgoc6G2UrbtRU8f8YlR6c0bfFi1z+UAkG
+rTWFBiwXZm0rIH652I/GlTxDhZ/BT7ZNBNbTy10eEU2ewXmRKDA=
+=yPBX
 -----END PGP SIGNATURE-----
 
---DvjBnpSiSfBt8fYUJeKYiinNW52vcMEkn--
+--w16aVdq29IZPlm5IHoxRAm6sFZeZgoxN4--
