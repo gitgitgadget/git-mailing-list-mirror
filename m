@@ -2,92 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A633200B9
-	for <e@80x24.org>; Thu, 17 May 2018 22:17:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C05721F51C
+	for <e@80x24.org>; Thu, 17 May 2018 22:36:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752226AbeEQWRH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 18:17:07 -0400
-Received: from mout.gmx.net ([212.227.17.20]:42015 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752213AbeEQWRF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 18:17:05 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M35iN-1eRbQm1HAV-00syHS; Fri, 18
- May 2018 00:17:03 +0200
-Date:   Fri, 18 May 2018 00:17:03 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Bartosz Konikiewicz <izdwuut@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: Troubles with picking an editor during Git update
-In-Reply-To: <CAAdU=LtfkKOKnJJC9yvxG+dZxqUh-Pwa5=ra1DOTfxQSY3e6qg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1805180016210.77@tvgsbejvaqbjf.bet>
-References: <CAAdU=LtfkKOKnJJC9yvxG+dZxqUh-Pwa5=ra1DOTfxQSY3e6qg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751965AbeEQWgR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 18:36:17 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:36794 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751892AbeEQWgQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 18:36:16 -0400
+Received: by mail-wr0-f195.google.com with SMTP id p4-v6so7227416wrh.3
+        for <git@vger.kernel.org>; Thu, 17 May 2018 15:36:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=A03qzwtJjIHA4Lzw5de7bFRhTakGjIpOI4JwOqfKAXU=;
+        b=b+XovgUyzDOV5udTphdAS3jtbWuRFHdkntlG2DE+B+OTgMmkoyatLtVs9k/vSCPBTa
+         lJlgTu2mGZKyO6ppWoGnW0Rhr82nHeb7ieTUQKyQf8jB/CPbGkhXkSZv5Pt9fGLHAxdE
+         J9ZncRhOMoTZbGe9ddwqtLJ4FQu7We/2aqsVlY+y2wcYz2QUISOkrKSbrMYW7MdpOS0X
+         W/YcsXODhfKQrv33uF/ZT8sJNOkQ3VzxuCRkAkCvISoia/Ng9J1/Nhc2IGuVr8ohSF7N
+         63aQVEbfW8kZ1efDSf/JmBkYDb8vr/koAxa3MDyRy2+G+dOZZvlaaNNt5XlvJp/Ie2pm
+         0qnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=A03qzwtJjIHA4Lzw5de7bFRhTakGjIpOI4JwOqfKAXU=;
+        b=OdtUWpYj1ptETW/fydABsi8/g9w9xNE3p+iHiNHc000fmMOBazQ0aGvm/9tmBk6cud
+         aMNsECnZKBYBrGwRWPhpinmGxwlBLUGiCIoQopFNwwmLwHBlNghpRHWRaCoh8GFcQYy1
+         bg6afnwrlY1vV+wsdf31AeRcghu/13FaLtSE90xbkn91JaZvSeMKDv8GOM5GY9MOF6kc
+         av8kNpMOpcShMZLIt0lk43grjEjTWqynKHG4xgPSOxL+8sjmssVgEx4VkgP4gpox0Iy1
+         jlELRhSONxn37iQk2IN8oEYXQTDDYylnBB8N+Z+HHtcWYH8e5KzAjQk47tx+6AAAZ5Bn
+         8aYQ==
+X-Gm-Message-State: ALKqPwcFzxI3mE7ZgOoSGwx2XDPqkXTqtLv7zff5mpLHlnRdTHMp2MfP
+        vsLRIwby1wR4tubMOkG4sgMjMTfN
+X-Google-Smtp-Source: AB8JxZqrOdEo7BeQFsahTgN/JMToimG8MQryjqGakNLy0OQ7hPaSPXN3nv1RKbQQyT93qkucI5bfIQ==
+X-Received: by 2002:adf:a0b9:: with SMTP id m54-v6mr5446498wrm.76.1526596575424;
+        Thu, 17 May 2018 15:36:15 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 194-v6sm9220650wml.20.2018.05.17.15.36.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 May 2018 15:36:14 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (May 2018, #02; Thu, 17)
+References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
+Date:   Fri, 18 May 2018 07:36:14 +0900
+In-Reply-To: <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 17 May 2018 11:20:57 -0700")
+Message-ID: <xmqqbmdd6hb5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:m7umcjxlR+zQvaH1lQx7Pc34owpCxWAMzpj5swjleg30x7U1APz
- xTcsgE9ZCi449qf6nCz7ABBBzs3U2zM6WyTChrwFTdkBDYU55ZEXjArguK9T1PnKV82Pbpo
- SUIwiU5/Xh8k+RkeJNqok3zlRIjrZn0YHDve9zG4mY4Wa5CQlnqmhvxU1Ku/SdgvGR6b9Nw
- uFpclJBMNOnkMPUNOVrqw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lRglvTtWQns=:mVoqoOamKWOWVYcZUjidAd
- CRe2SGhY6soUsuB21Id3KUpe24Jc9uqwUXJPrG3WDm6MdCB3/JM3Kx6l/LCQYld7FgTWv34cw
- 4p6iInpBuLrRZ8y1gml0+Jf4XMD/eBLp0n6doWe2UBIF2xEN8M2hwAChBUUgQtEIoknHLf4cK
- w5x77daOGMOQNoWwtldh9g/zabTe/Dv5F8xvgigvpQA03JIIChpXcKr0ei4P0mSV8mDtN2mYU
- VeLWf7glmlNUjcbQJZIX56/j9p1qNHQ2wuHyxJv5LgjhBv+ZfkPUVHgXvg38BgJU2qH9UH6X/
- OFJFkFZ7gsYSuzRcKE4qb+egUNkjURWb19Y61FE9ASfd2irCGjrcEVwnH2dG3h8TRh3lGwklg
- C0G8MgDMEBPh9oTjR6zu2vXrNaLFLAhcVbCeSJ9S1DZfax9dBwFlbk2tOrBGXEj189ZJP0Uaq
- RpcJKD9XKwWlJUuPY2R0rWOWnekDNS5g7PA91MCVVUVBlgcCN0zQrPypmOhw9ujZMIJgjFHi2
- AJSYgz7TV010jss9zQ72VvJDCHD4tpe3jOTyY0idC9zp/+mINfElubo5OnIhvNUW9uLM+MQC6
- DsQ6YZZLyhAv9Wmx5q1aRvaAJ0QDDoF+ZRt7txmBsXjqoE7xCwXe8CvZSDZDzaNmehroERggg
- i8DlINRUundGVsP+K6aMVUe65U64ZAiO0CBdtgh6nI1yutBDXtwTGGOM0au8bO5mo42/bYQ9Y
- QyLcVyj7UaX4LYNJjSE+ucHcSnwzQNGN0QIhRmvOUaeBoHCCrzP+ffzI0XxwpY7R6S+uCqiZp
- 0OZtJyG
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bartosz,
+Stefan Beller <sbeller@google.com> writes:
 
-On Thu, 17 May 2018, Bartosz Konikiewicz wrote:
+>> * sb/object-store-replace (2018-05-10) 2 commits
+>>   (merged to 'next' on 2018-05-16 at 41bbedcc81)
+>>  + replace-object.c: remove the_repository from prepare_replace_object
+>>  + object.c: free replace map in raw_object_store_clear
+>>
+>>  Hotfix.
+>>
+>>  Will merge to 'master'.
+>
+> Please do not.
+> (Or do, but then be prepared for another hotfix.)
+>
+> The commit sb/object-store-replace^ needs more free'ing and shall be
+> replaced with
 
-> I had an issue with Git installer for Windows while trying to update
-> my instance of the software. My previous version was "git version
-> 2.15.1.windows.2", while my operating system prompted me to upgrade to
-> "2.17.0". The installer asked me to "choose the default editor for
-> Git". One of these options was Notepad++ - my editor of choice. Vim
-> was selected by default and I've picked Notepad++ from a drop-down
-> list. As soon as I did it, a "next" button greyed out. When I moved
-> back to the previous step and then forward to the editor choice, the
-> "Notepad++" option was still highlighted, and the "next" button wasn't
-> greyed out anymore - it was active and I was able to press it and
-> continue installation.
-> 
-> Steps to reproduce:
-> 
-> 1. Have Notepad++ 6.6.9 installed on Windows 10 64-bit 10.0.17134 Build 17134.
-> 2. Use an installer for version 2.17.0 to upgrade from version 2.15.1.
-> 3. On an editor selection screen, choose Notepad++ instead of Vim. You
-> should be unable to continue installation because of the "next" button
-> being disabled.
-> 4. Press "prev".
-> 5. Press "next". Notepad++ should be still highlighted, and the "next"
-> button should be active, allowing to continue installation.
-> 
-> I find it to be a crafty trick to make me use Vim. I have considered
-> it for a good moment.
+Please do not replace what already hit 'next'.
 
-The code to generate that wizard page is here:
-https://github.com/git-for-windows/build-extra/blob/5c6f2997acd694f5375722d8d494fb1337abc1fa/installer/install.iss#L1111-L1196
-
-Can you spot anything obvious that could be responsible for the issue you
-reported? (I can't.)
-
-Ciao,
-Johannes
+> https://public-inbox.org/git/20180510195849.28023-4-sbeller@google.com/
+> I'll resend shortly.
+>
+>>
+>> * sb/submodule-merge-in-merge-recursive (2018-05-16) 3 commits
+>>  - merge-recursive: give notice when submodule commit gets fast-forwarded
+>>  - merge-recursive: i18n submodule merge output and respect verbosity
+>>  - submodule.c: move submodule merging to merge-recursive.c
+>>
+>>  By code restructuring of submodule merge in merge-recursive,
+>>  informational messages from the codepath are now given using the
+>>  same mechanism as other output, and honor the merge.verbosity
+>>  configuration.  The code also learned to give a few new messages
+>>  when a submodule three-way merge resolves cleanly when one side
+>>  records a descendant of the commit chosen by the other side.
+>>
+>>  Will merge to 'next'.
+>
+> Merging would be ok, but I would rather not.
+> A resend will be only for cosmetic effect, as I messed up the last commit
+>
+> So, please hold in pu.
+>
+>> * sb/diff-color-move-more (2018-04-25) 7 commits
+>>  - diff.c: add --color-moved-ignore-space-delta option
+>>  - diff.c: decouple white space treatment from move detection algorithm
+>>  - diff.c: add a blocks mode for moved code detection
+>>  - diff.c: adjust hash function signature to match hashmap expectation
+>>  - diff.c: do not pass diff options as keydata to hashmap
+>>  - xdiff/xdiffi.c: remove unneeded function declarations
+>>  - xdiff/xdiff.h: remove unused flags
+>>
+>>  "git diff --color-moved" feature has further been tweaked.
+>>
+>>  Will merge to 'next'.
+>
+> I did not get around to fix it up, there are still review
+> comments outstanding. (The test is broken in the last commit.)
+>
+> Please hold in pu;
+>
+> Thanks,
+> Stefan
