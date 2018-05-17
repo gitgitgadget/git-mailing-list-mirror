@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EA401F51C
-	for <e@80x24.org>; Thu, 17 May 2018 18:16:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7135F1F51C
+	for <e@80x24.org>; Thu, 17 May 2018 18:21:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751695AbeEQSQY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 14:16:24 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33725 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751233AbeEQSQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 14:16:23 -0400
-Received: by mail-pf0-f195.google.com with SMTP id a20-v6so2487079pfo.0
-        for <git@vger.kernel.org>; Thu, 17 May 2018 11:16:23 -0700 (PDT)
+        id S1751898AbeEQSU6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 14:20:58 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:40760 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751293AbeEQSU5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 14:20:57 -0400
+Received: by mail-pg0-f66.google.com with SMTP id l2-v6so2169375pgc.7
+        for <git@vger.kernel.org>; Thu, 17 May 2018 11:20:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=NMm5qb6sIH+CUEoUUUFG4vdlqwGH8vqSTYrsrkmler0=;
-        b=TgSKPYP/3977fQtFRMTHwgWcHxU0udDkqaOaGmVqdPUs6B8zrSDBwphsnNywF9k7Dc
-         2RVGa0gijip2fxOZAAXwpTSFjAho5+2UjDZdUN3aWPk4LDnAOPMgSjsBQcooZsvdnciN
-         KHrkQl/65iipZfmfvh5kKarIg0Xkqm1hA9+RTUNqC9dC5WTC3wL0oXe2S0vdcech8ROP
-         qpN4ljjJ5KD0sFWqnDZsRK+Afuy5biFEi2Mz1jOmtFgnKKC3SxA5cHc7pY8QKGC0sIcz
-         LJNVJikZGZZgB8YkJXV791f5tzqn3pKRvPSEW/lEW/SXSGVA0YrubGWY/oXE2Zpd7Wzl
-         kNxA==
+        bh=3PtY7j2RylX9kFEHpWXvBuRE46yfGVOOEw1tcrSqaT0=;
+        b=DYkDcreeDxcy3XsBmq0AA9dM1W1uimiwtW+O7UpU3rUd+PXlgX+E1amrbAlnYsT0On
+         w6bFNsJPJWEomwPd794Prz725XfICPpUSBa2zJKGeLZ3P3vuJLs385RqC8WFpn/Uz3LJ
+         TYBX/31YScAN/ybie9xsISRMFfkeYu61duKh8+dEgkiJ7FAoW7fd/gAj0cuNjEhAAtCZ
+         K3y/Uu4gtj5JuAYnOlJjESqaANFcasoyHmxkgwV2GwKwtdXtUODupi9lm3e6pwNQh7Uy
+         cMHUtMkTOZAFS24CDRscP+QyXSHyY+d0VxuUuBwSsUnPlsIoceu0sqNIqNyzZTylJmT1
+         /Y2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=NMm5qb6sIH+CUEoUUUFG4vdlqwGH8vqSTYrsrkmler0=;
-        b=a3rZ0Fv4BzPLQsYIxYWKo8dLRaBob94ZzjzN0bNj3UMbYQ1MZyncYYS02YdSbsJsHP
-         ZaD3+Up7jhd8U3HRG38bqbUD66PARAOIBK2Q8etKybYgWMtM4YIDoy8UID++LTlH1nry
-         YFT8iDta7j3JnikVMeHniMvsgSgLUpGVQX5pU6OJNJGqfbLacDAlkVMCuvXxjqz/0lna
-         Pg/ZIO2nDjh7nshKOhnWLB0He9UC4WjfiRPbSoQMqE8d34K8NHb49+mBKR/7TjtyGk70
-         NSCgfm7k0BxuCWKD3R+XCQ9ZQxSHOO3ivZr12ud9fRt+C14ea/UWrDhakrjUtSVViKoE
-         qbSw==
-X-Gm-Message-State: ALKqPwePEjiIyY9rRB4+mZvNwosD/+cryazKTHyR0bTMUlmQJDFvYADL
-        sZFwKeB0FhqpEkg6cUWfbBYdt3d6v6O/X2j0yj54GA==
-X-Google-Smtp-Source: AB8JxZqS8IHlRfgEkAYVWO17aYUOu1iDSlxAi1+kteaj/W2HxmMyh+Knl4kPe3beKDqnK0FZhtcLRNbT3/ZEhhlRPlA=
-X-Received: by 2002:a62:5050:: with SMTP id e77-v6mr6239264pfb.16.1526580983452;
- Thu, 17 May 2018 11:16:23 -0700 (PDT)
+        bh=3PtY7j2RylX9kFEHpWXvBuRE46yfGVOOEw1tcrSqaT0=;
+        b=oKruHCzME91R2NmDnkOz6n3Ph9Eo86MV2YF7+HyOmUUqauE4UhFLVKpbx+aYpn0zR/
+         4a9RUSNTQlght5XcWl9o3l3hgVTusH9fDx7k93LLPJCYhUqYsFdmQtuYHKmhhkC2QIRO
+         5oop6q1+idvTzxA9cuSgkUxAGHQsTdlga377MdiFW0sEgG/ysMQCX9RONTkGIR5aU3g4
+         sQHFlOs3+F/VrEasCMHKqiq2w7NRtPZdbWxRCdhdm/AmZ8TYXYtdGn9f50v/OLXaY9CC
+         XMyXlU+6Cmm6EBn0T4JOm7kQ2eeX3gIRJPFQ7UR2fXH9FTTVM0oKRxPYyQsrCtwI7eOt
+         VxDw==
+X-Gm-Message-State: ALKqPwfbOLPn3FTLIMoh/69d7u2LYoRez7siSEQHZGvLX4Lq9d7g7Ruk
+        gQhGaZwvYSzJwY1qlW9iSnDpMtg7IoqT5159JTBYOA==
+X-Google-Smtp-Source: AB8JxZoYP5wYOe7UPPzaHPbwVKMsumm2X0VsW3oi2NCfE01Xz2ZajNldPQZUyQemPKF2r0CtEBTWybUyzKjTsrG1G1Y=
+X-Received: by 2002:a62:e903:: with SMTP id j3-v6mr6208847pfh.196.1526581257598;
+ Thu, 17 May 2018 11:20:57 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Thu, 17 May 2018 11:16:22 -0700 (PDT)
-In-Reply-To: <20180511211504.79877-11-dstolee@microsoft.com>
+Received: by 10.236.187.139 with HTTP; Thu, 17 May 2018 11:20:57 -0700 (PDT)
+In-Reply-To: <20180511211504.79877-12-dstolee@microsoft.com>
 References: <20180510173345.40577-1-dstolee@microsoft.com> <20180511211504.79877-1-dstolee@microsoft.com>
- <20180511211504.79877-11-dstolee@microsoft.com>
+ <20180511211504.79877-12-dstolee@microsoft.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 17 May 2018 20:16:22 +0200
-Message-ID: <CAN0heSodgrk-yUaJVgNQ=qjj1nExe0o+55wAEvGoa9rf-9NKmw@mail.gmail.com>
-Subject: Re: [PATCH v2 10/12] commit-graph: add '--reachable' option
+Date:   Thu, 17 May 2018 20:20:57 +0200
+Message-ID: <CAN0heSr+Aeu1By2LXxtmQN=Lq3RYwuHgYv36GjRN2Cfg73LA4Q@mail.gmail.com>
+Subject: Re: [PATCH v2 11/12] gc: automatically write commit-graph files
 To:     Derrick Stolee <dstolee@microsoft.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         "jnareb@gmail.com" <jnareb@gmail.com>,
@@ -66,45 +66,23 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 11 May 2018 at 23:15, Derrick Stolee <dstolee@microsoft.com> wrote:
-> When writing commit-graph files, it can be convenient to ask for all
-> reachable commits (starting at the ref set) in the resulting file. This
-> is particularly helpful when writing to stdin is complicated, such as a
-> future integration with 'git gc' which will call
-> 'git commit-graph write --reachable' after performing cleanup of the
-> object database.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  Documentation/git-commit-graph.txt |  8 ++++++--
->  builtin/commit-graph.c             | 41 ++++++++++++++++++++++++++++++++++----
->  2 files changed, 43 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-> index a222cfab08..cc1715a823 100644
-> --- a/Documentation/git-commit-graph.txt
-> +++ b/Documentation/git-commit-graph.txt
-> @@ -38,12 +38,16 @@ Write a commit graph file based on the commits found in packfiles.
->  +
->  With the `--stdin-packs` option, generate the new commit graph by
->  walking objects only in the specified pack-indexes. (Cannot be combined
-> -with --stdin-commits.)
-> +with --stdin-commits or --reachable.)
+> The commit-graph file is a very helpful feature for speeding up git
+> operations. In order to make it more useful, write the commit-graph file
+> by default during standard garbage collection operations.
 
-You could enclose --reachable in `...` for nicer rendering and fix
---stdin-commits as well while you're here.
+So does it really write by default...
 
->  With the `--stdin-commits` option, generate the new commit graph by
->  walking commits starting at the commits specified in stdin as a list
->  of OIDs in hex, one OID per line. (Cannot be combined with
-> ---stdin-packs.)
-> +--stdin-packs or --reachable.)
+> Add a 'gc.commitGraph' config setting that triggers writing a
+> commit-graph file after any non-trivial 'git gc' command. Defaults to
+> false while the commit-graph feature matures. We specifically do not
 
-Ditto.
+or not...? I guess the first paragraph has simply been there since
+before you changed your mind about the default?
 
-> +With the `--reachable` option, generate the new commit graph by walking
-> +commits starting at all refs. (Cannot be combined with --stdin-commits
-> +or --stind-packs.)
+> want to turn this on by default until the commit-graph feature is fully
+> integrated with history-modifying features like shallow clones.
 
-Ditto. Also, s/stind/stdin/.
+So if someone would turn this on with a shallow clone, ... Do we want
+some note (warning?) around that in the user documentation?
 
 Martin
