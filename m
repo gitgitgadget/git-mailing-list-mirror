@@ -2,99 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B7601F51C
-	for <e@80x24.org>; Thu, 17 May 2018 20:04:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 158851F51C
+	for <e@80x24.org>; Thu, 17 May 2018 21:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751649AbeEQUEA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 16:04:00 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:9469 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750938AbeEQUEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 16:04:00 -0400
-X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 May 2018 16:03:59 EDT
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id JP07f6wkbpXFjJP0AfoykY; Thu, 17 May 2018 20:55:51 +0100
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=zW9DtTB3AAAA:8 a=NEAV23lmAAAA:8 a=zNDc8X-QtL_sdQQ7A6MA:9
- a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19 a=QEXdDO2ut3YA:10 a=BHSfcOUB-Usa-PfFCJ-o:22
-Message-ID: <2DABB84AEA714D88B73ECF6FA3170BF5@PhilipOakley>
-Reply-To: "Philip Oakley, CEng MIET" <philipoakley@theiet.org>
-From:   "Philip Oakley, CEng MIET" <philipoakley@theiet.org>
-To:     "Bartosz Konikiewicz" <izdwuut@gmail.com>, <git@vger.kernel.org>
-References: <CAAdU=LtfkKOKnJJC9yvxG+dZxqUh-Pwa5=ra1DOTfxQSY3e6qg@mail.gmail.com>
-Subject: Re: Troubles with picking an editor during Git update
-Date:   Thu, 17 May 2018 20:55:43 +0100
-Organization: OPDS
+        id S1751626AbeEQVcN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 17:32:13 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:53736 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751061AbeEQVcM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 17:32:12 -0400
+Received: by mail-wm0-f68.google.com with SMTP id a67-v6so10786467wmf.3
+        for <git@vger.kernel.org>; Thu, 17 May 2018 14:32:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=NDxMa6SBqQW9+kD6GshaWF3OnM70fluaf2rqFmwafPw=;
+        b=k6stdlTfcvzfdvC0XLyOdncnB6D0DavNQyJwAOetZhRBzbuz2sGeOXpoQJxQ2ZLN+Q
+         WJjaW0JaR72nOFYtNDwBTw1qMeXqvQLUtydTFZtcT3EPEOG6+UW9CF0HplbAqR9R+4az
+         rpTzrdf0kNN3VqyImtAv59iDHuuhSAFuCGCF1kZRwMLloMe7NghWG1OfDroGypHZKpDE
+         VgHt2W5ymOEHZrQMOvgLQnyjLpjJLZ7iTqXHoB1n05SPCT6OVu66rAF/+V9k3Nf7/0xO
+         3Bx1kmZwcL89ZTZsAYnsVq73YxUwmA9nglkfq9C2/3u1veQoLlXLbVU7T8HOPAerEWGI
+         z8KQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=NDxMa6SBqQW9+kD6GshaWF3OnM70fluaf2rqFmwafPw=;
+        b=PctBv/LHJkjiJovn6BNzTDfkW5CsBJgfyyyBRb09dA8Jt/66QmUB4nwEEcrEzE5l12
+         ChhIrhV0X7ut1QlL9B29te5JK2d7fq1hWS1xcgPYN7v1W4akP5GT9f1Kc/77G5911Q50
+         AeH0YyzqiYX/Z34Oasy+eX1VAmlsNOWPrVoBj9vBS0MFM7E50UFKgIH1nE05H0y0B0n5
+         FDOtJmH4NFt9hWSp39+76EJBzLw0OBN+RvnXD9SaLr4Wf9d/gl+ZrJjat2PIbTJs/DBR
+         FEC1/WPn/8vEDlNaqjDfRnxDTPPFSNyyHOXMPqr/4FBWVEEX+A4AdmbPc3jWm3KDEidu
+         oErg==
+X-Gm-Message-State: ALKqPwcu430BrjfgmVWkOqXPnzEDxh1NF4m/IksJ+NRUlVVmhXsqH/y5
+        /d7WX1Qo7ZcRgjCzel2zgPI=
+X-Google-Smtp-Source: AB8JxZoTTjHKJQDNMe1gsmY0+vLHDkOpxkE2tS6gZ0dI3EOBch0JEw3ceu9tx8bEoE9PDpDF+U8kIg==
+X-Received: by 2002:a1c:512:: with SMTP id 18-v6mr2736865wmf.47.1526592731085;
+        Thu, 17 May 2018 14:32:11 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l69-v6sm8350139wmb.6.2018.05.17.14.32.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 May 2018 14:32:10 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/2] generating ref-prefixes for configured refspecs
+References: <20180516225823.235426-1-bmwill@google.com>
+        <20180516234822.182663-1-bmwill@google.com>
+Date:   Fri, 18 May 2018 06:32:09 +0900
+In-Reply-To: <20180516234822.182663-1-bmwill@google.com> (Brandon Williams's
+        message of "Wed, 16 May 2018 16:48:20 -0700")
+Message-ID: <xmqqr2ma55pi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180517-4, 17/05/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfP08ng3axW/kGoWheuTjCU2KV29sSoEAkI1CjqW7ynKf33akelceU5tWQFqAzRKmCnKHKv8vuvY5YCTja+WkcO3kT4CZ7qu0PKYgtVpP0V/lgnkejNHq
- Ma6qYtNLgsaWU/PdtaseVwSQN4wJaJThqaUmNBijSQL/kkoKare300FnG1+xKNDvwyBjmW4qIcfiRbQgI1uVVB9RVCxTBvnz9N8=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bartosz,
+Brandon Williams <bmwill@google.com> writes:
 
-From: "Bartosz Konikiewicz" <izdwuut@gmail.com>
-> Hi there!
+> Here's my short follow on series to the refspec refactoring.
 >
-> I had an issue with Git installer for Windows while trying to update
-
-The Git for Windows package is managed, via https://gitforwindows.org/, as a 
-separate application, based on Git.
-
-> my instance of the software. My previous version was "git version
-> 2.15.1.windows.2", while my operating system prompted me to upgrade to
-> "2.17.0". The installer asked me to "choose the default editor for
-> Git". One of these options was Notepad++ - my editor of choice. Vim
-> was selected by default and I've picked Notepad++ from a drop-down
-> list. As soon as I did it, a "next" button greyed out. When I moved
-> back to the previous step and then forward to the editor choice, the
-> "Notepad++" option was still highlighted, and the "next" button wasn't
-> greyed out anymore - it was active and I was able to press it and
-> continue installation.
+> When v2 was introduced ref-prefixes were only generated for user
+> provided refspecs (given via the command line).  This means that you can
+> only benefit from server-side ref filtering if you explicitly provide a
+> refspec, so this short series extends this to generate the ref-prefixes
+> even for the refspecs which are configured in 'remote.<name>.fetch'.
 >
-> Steps to reproduce:
->
-> 1. Have Notepad++ 6.6.9 installed on Windows 10 64-bit 10.0.17134 Build 
-> 17134.
-> 2. Use an installer for version 2.17.0 to upgrade from version 2.15.1.
-> 3. On an editor selection screen, choose Notepad++ instead of Vim. You
-> should be unable to continue installation because of the "next" button
-> being disabled.
-> 4. Press "prev".
-> 5. Press "next". Notepad++ should be still highlighted, and the "next"
-> button should be active, allowing to continue installation.
->
-> I find it to be a crafty trick to make me use Vim. I have considered
-> it for a good moment.
->
-The best place to report the issue, and perhaps contribure is via the 'GfW' 
-Issue tracker https://github.com/git-for-windows/git/issues.
+> This series is based on the v2 of the refspec refactoring series.
 
-Building Git for Windows via the SDK has become even easier with recent 
-updates, so it should be relativley easy to spot the offending line in the 
-installer and perhaps even propose a PR (Pull Request) to fix the issue.
+Makes sense.
 
-regards
-Philip
-
+>
+> Brandon Williams (2):
+>   refspec: consolidate ref-prefix generation logic
+>   fetch: generate ref-prefixes when using a configured refspec
+>
+>  builtin/fetch.c        | 19 ++++++++-----------
+>  refspec.c              | 29 +++++++++++++++++++++++++++++
+>  refspec.h              |  4 ++++
+>  t/t5702-protocol-v2.sh | 14 ++++++++++++++
+>  transport.c            | 21 +--------------------
+>  5 files changed, 56 insertions(+), 31 deletions(-)
