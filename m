@@ -2,101 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33FA71F51C
-	for <e@80x24.org>; Fri, 18 May 2018 01:59:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C31C51F51C
+	for <e@80x24.org>; Fri, 18 May 2018 02:16:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752253AbeERB72 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 21:59:28 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:39139 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752238AbeERB70 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 21:59:26 -0400
-Received: by mail-wm0-f68.google.com with SMTP id f8-v6so12277953wmc.4
-        for <git@vger.kernel.org>; Thu, 17 May 2018 18:59:25 -0700 (PDT)
+        id S1751898AbeERCQM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 22:16:12 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:40397 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751762AbeERCQL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 22:16:11 -0400
+Received: by mail-wm0-f65.google.com with SMTP id j5-v6so12272963wme.5
+        for <git@vger.kernel.org>; Thu, 17 May 2018 19:16:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vMVE4Cz10mzwNSvV2HJnfFEJkxWOcXN9q5LFy8mqmMU=;
-        b=ovJ4LkvbcexiZsf2UELrOet2/Nc+TwbIu3aP0QkDmzivPzUqPfYUJLtpLYUofTo9TT
-         6Lxx/CCH+K1xb6waU0ReLZh02wqkqJ7ZafEsMNSQj42D2coKzkb6lBGR0iyWB9LB55lp
-         61FDuFj6FUgI5DkHk76rxy1Oz8lWYzwA4YLWtYBjAV24fzhnTNFfJ4+cP5hD8RM9sWej
-         T72bjX8z1DL93baG8bJR0IsD+OUNXWFcLNCMOQYIk3qVs8qhgWiOeTUJ3fb2EoUpdy2s
-         4Tnx2V5aUUM5yBJ+xZc3vb+af8/GaJPkysczhLSBmKxAeGS/Xw9YMEksLR/U51fj/Ysl
-         X8ig==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=rjeJ0vEdwvhReUVeC8CUSaiqvwq1XM0e95kb4Bfo1Hw=;
+        b=aAzfsXmaL83CPhghn4hkG6aLijkGIzCJFXEBpQaSRrXPQerrrY7BaBv7K2hmTt+DhV
+         W/EyJ9n+tSOTeMv+2/kBvDamK76K3MFRERpY4jA+3TeGD0Sci54kuNbUbcOKEeBK1fxB
+         a4bfeE/rxs5u+gP8sfQl4t3I83OMLpkRSQWWMX/2oiwspF9JHqtkMc48jmSFPicYiLlS
+         ujzEU5O/iAVe0A0JaYABlXo8MzqpmxsaJhEQhpp6S/EBK4jV0DPl0VBF8EoBXwaHploO
+         qgWobo1IoFjutjVFstxaosdSvPv5VEZfhTtt0gGmE+rwNBCHrOwsD/G1goiywwWeF/qC
+         LBWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vMVE4Cz10mzwNSvV2HJnfFEJkxWOcXN9q5LFy8mqmMU=;
-        b=Y5QEnXmvzYZDLIB4cdz5ztxUhBctyzEHadXTbmMs3UthnOv0Me89DywiK/H+IKMviM
-         v6gF7RjfwyRgxaYVERchJbJNOFBGDF7HYwbJS857qeWgV1OYof23XLSABIUWXs4VUpS4
-         9F/0Qx1yJ6hXfe8DqcHnIbifYcQiSyjXWbgXY073dav68Y/rHhTAki7RyUMZuZgf2g3x
-         ihT8Dziabx2jOwMF8er5+YPnLgZ3jAtZZtF+K5z47+i2uQW5NcaGYKEwsHvBQsmNayEt
-         VUTO5WtkZwheq/wt72aoGcAAFB0xrUzrIsxlGKwQhUoitLWOVm2AMc5+OSR3NlcuMyx7
-         WxIA==
-X-Gm-Message-State: ALKqPwcoPFXfWYdZnd0qEdZZRFcIYFRe8DeLcj0saMWT85Aq2amVFhLm
-        rwBr/ck4tsunRNOgKMJ+YgZauOf+VUSAW3e91I8=
-X-Google-Smtp-Source: AB8JxZpICnrTw7WuvkLQhel9UwTbDuHEPqIfs/rZ4plz3TBchLrJcDmCDoR+eEBz7lI3cjf/VFmSjY+mEwaAQfBLpYs=
-X-Received: by 2002:a50:ab42:: with SMTP id t2-v6mr9539769edc.133.1526608764769;
- Thu, 17 May 2018 18:59:24 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=rjeJ0vEdwvhReUVeC8CUSaiqvwq1XM0e95kb4Bfo1Hw=;
+        b=GRcB0vrnbaCtchGDzkLUjtH+83l5nHtHZRB52r+5NyopsceTSSr5z78u96yT4mURNp
+         by2oAg/E2ybHDtwnpvfV6quEsjrE4Yquqj1tpvqF++NqKgN7p9a+tMSiK2++nPVNn5gc
+         yGESxYy/WhUlkCyjDHRPBaxdP+6FZnXLfpSq3uMWBgv04/cTfv9i5bUOKObarRdfG/5q
+         aCDU6cYIeeaVpmPBHYPxjeZQu1wQV2aktZREUBoK8SFeLtR7eYzNs1uM66BDWsmXU8Hm
+         Z+W0UvYQlP+CPhZSC+kEZiktGAHnuAawuGGDgtg0jbvS7jzcgTKy99Y4U4ofy3ffLE8b
+         Zf+g==
+X-Gm-Message-State: ALKqPwcpyo+72sakiHdOvuGWF03NhBXgsb3wkpM9kvoiTKev6AS71C0i
+        5OGczrBvZOBYFimMzLaggZg=
+X-Google-Smtp-Source: AB8JxZrFI64FjrWFpcDgu90c4ehHkqsid5SFNhFknlIOtIY02F4KFOwJExHQRluJ7kHM2mX3F1AZsA==
+X-Received: by 2002:a1c:ee95:: with SMTP id j21-v6mr3218746wmi.16.1526609770593;
+        Thu, 17 May 2018 19:16:10 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 12-v6sm10658926wmn.27.2018.05.17.19.16.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 May 2018 19:16:09 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 13/14] merge: use commit-slab in merge remote desc instead of commit->util
+References: <20180512080028.29611-1-pclouds@gmail.com>
+        <20180513055208.17952-1-pclouds@gmail.com>
+        <20180513055208.17952-14-pclouds@gmail.com>
+Date:   Fri, 18 May 2018 11:16:09 +0900
+In-Reply-To: <20180513055208.17952-14-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Sun, 13 May 2018 07:52:07 +0200")
+Message-ID: <xmqqtvr54sk6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.80.234.135 with HTTP; Thu, 17 May 2018 18:59:04 -0700 (PDT)
-In-Reply-To: <xmqqmuwy54yj.fsf@gitster-ct.c.googlers.com>
-References: <CABPp-BHm4B5vXZGHn_i6Aycvc_PDNWSFxLFo9s-ijb511VY9RA@mail.gmail.com>
- <cover.1526488122.git.martin.agren@gmail.com> <0b7440f21e9ff7a066802fe1e7cb3078cf4ed2b8.1526488122.git.martin.agren@gmail.com>
- <xmqqmuwy54yj.fsf@gitster-ct.c.googlers.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 17 May 2018 18:59:04 -0700
-Message-ID: <CA+P7+xrXRGZe9AOR0+mZZTL9_nsHDMBv=1F6ea-p8aec3dhNuA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] merge: setup `opts` later in `checkout_fast_forward()`
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 17, 2018 at 2:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->
->> After we initialize the various fields in `opts` but before we actually
->> use them, we might return early. Move the initialization further down,
->> to immediately before we use `opts`.
->>
->> This limits the scope of `opts` and will help a later commit fix a
->> memory leak without having to worry about those early returns.
->>
->> This patch is best viewed using something like this (note the tab!):
->> --color-moved --anchored=3D"    trees[nr_trees] =3D parse_tree_indirect"
->
-> This side remark is interesting because it totally depends on how
-> you look at it.  I think "initialize opts late" and "attempt to
-> parse the trees first and fail early" are the sides of the same
-> coin, and the diff shown without the anchor matches the latter,
-> which is also perfectly acceptable interpretation of what this patch
-> does.
->
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-Yes. I like that we have tools available to show diffs in different
-hopefully meaningful ways.
+> diff --git a/commit.c b/commit.c
+> index 57049118a5..8202067cd5 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -1574,13 +1574,21 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+>  	return result;
+>  }
+>  
+> +define_commit_slab(merge_desc_slab, struct merge_remote_desc *);
+> +struct merge_desc_slab merge_desc_slab = COMMIT_SLAB_INIT(1, merge_desc_slab);
 
-I happen to like when the diff matches my mental map of the change
-after reading the commit message, so having the author indicate how
-best to view it is useful, but definitely cool to see that we can get
-different interpretations.
+s/^/static /; otherwise sparse would complain?
 
-Thanks,
-Jake
