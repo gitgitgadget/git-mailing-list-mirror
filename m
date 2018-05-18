@@ -2,130 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A83A1F51C
-	for <e@80x24.org>; Fri, 18 May 2018 19:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42C141F51C
+	for <e@80x24.org>; Fri, 18 May 2018 19:25:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752168AbeERTZS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 May 2018 15:25:18 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:43795 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751569AbeERTZQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 15:25:16 -0400
-Received: by mail-yw0-f195.google.com with SMTP id r202-v6so2742889ywg.10
-        for <git@vger.kernel.org>; Fri, 18 May 2018 12:25:16 -0700 (PDT)
+        id S1752173AbeERTZu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 15:25:50 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:38990 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751569AbeERTZt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 15:25:49 -0400
+Received: by mail-qk0-f195.google.com with SMTP id z75-v6so7326857qkb.6
+        for <git@vger.kernel.org>; Fri, 18 May 2018 12:25:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=cKpAeqq2Jd4KGlFd8vlVMGkp7hpRVdEbgfN6uVWnO+o=;
-        b=C4NaO6YuXDNUhTQvcsYMOZO8WkpiuOxKXKnHw3IwZbCGIFW8jxDk38nUy5CWdkEdeK
-         DtKx/0rKrMWdIDnc9SPwClg7YTbikBJouUXthr82C+px6dDQ2EZmTfrc4Mc7yYsqcK7S
-         x6Q2DEPjE1DE2/w0I5qxCY7FLHTxZQgeKt3ym8SJqlLlX3qC2pCPHmPB388y1YDsxhgK
-         bYNYBl91nzjz/an0qqFZB7J/5DEFmMDRlZGyXJBCZYxDCk+c3YiH9eDw1mF+1IdVkCLo
-         U2pt7DQGv1H9umUr4XYUCzVSFdrwjr8B795pSLf8zZVLhEE4fI0RUoSzOb4N8FD+ve6j
-         dxUQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=expoHl0XRVNSP/nHAIthPEdbBCodHPoEt+oEaUDKofE=;
+        b=iJcefETn6w46gjkuUZWNllzKBpROOIXHVtfQN03NEPrCsLCpHK88PAvVcZk9KJBX1v
+         ZFUr3XD/JA9zxJSdNWgaQ9DvKGbVb56XDK4aCQIWAEPJ+izRVYN7Fsvbek1AZJF/fmh/
+         FnkRBTsIXP7lGRmWqW2WDiW6zRy66QztsAjziqvMpAJFBlGf8MMQnXTXJf5vdzvoioTJ
+         D1bLdRMZTqdvVjW7nDZuppWbDJfIripIYXRJ/cNe6DjWxFsKGYB/Areur00rryqbaf7F
+         Lb7ZV18AKsZrOctQvwtNllyX6/DL7lsDAfEJiD9Fic8lL8wpqSuZvDGdykHlpAnW5326
+         xu3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=cKpAeqq2Jd4KGlFd8vlVMGkp7hpRVdEbgfN6uVWnO+o=;
-        b=RQVZK2YzDp7wwptbkewwZyeofLK3gn0IVOYE2xVFrpgicfS0aRTn69EC/cI4b1uvSq
-         guEFI8JHfUm1l/QXvwpdQUDW5DDCr3qaAL5EsZnKCmM/AxmDekHk4BdCWdC9fWTEsADE
-         /wQ1FUCNixOCIs4oXm+PvA11ygD8zRybFEjtqTtOCOhb/rAKCxT8LtGn/5EiLtMtYJ57
-         WUE4AsoK7gGW549XooijD9JJdPyrTSAUdnXS2RZu+Rc+VvfvPbzotMbCJZ7O6MtMryjn
-         wEQT1UhLpF6llEEvFRAF9xym0FKlWktUVlaHJanCG60MLUrSufsNgr9v6OOn6FyaTubJ
-         TRAA==
-X-Gm-Message-State: ALKqPwfQDO96FqEXJNiafGgPhe91FTTZ8ECy0PIBvuArijYLRYezHaJR
-        x+GZwhaiqN16Q1TTFC7rwDo6JSsGH/wtXT9dd9qDcw==
-X-Google-Smtp-Source: AB8JxZpIhXsTp/IBZLhqN/Zv0n/N3fDGPzwUVo7VLZh2YNh51YBsa0QxBg3vucYTnzgUhgApcjq+7IIZASH5za/B8w8=
-X-Received: by 2002:a0d:e28e:: with SMTP id l136-v6mr5484020ywe.500.1526671515411;
- Fri, 18 May 2018 12:25:15 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=expoHl0XRVNSP/nHAIthPEdbBCodHPoEt+oEaUDKofE=;
+        b=Njgqjkxkedrt14FIQexVPYVwfv2MZ6ZG3OX+k9eKHgWg/u8Be1i6kLkv59ChR5T/qn
+         ITrVfMyaH6iz7w04UTPVc7PBJ7T4zHtS6JIYAaD0I25xRjOt9IOfkSRFD7ObzCXiKP4Z
+         nJTdoF7WuXpTIrYCLG5yr/mWH4I89ROF9d+fFGHmS3dhqK/9xQmjQDFiygCkhecVBu1+
+         j9PLtCul9je+cgun6jWkNfNRX1JNjSl+vOn/+aX+6ODa+ugsdlFD4/9dmU+F/pZ6D21G
+         dtx9ktWVi74bxJt5Ek0csF1m/rQPYJjH1NP5YpnnNK2Fk1PcANbQ3KA/ZeNwrYGkVq5k
+         I6zQ==
+X-Gm-Message-State: ALKqPwflCbIkNDHYpBLdgKal7eOYSu/JDUqjYVt9YPuCDh2R/XIurD2u
+        vYJLHermFJPajox3vEWtFJ4sTWm6kcXGyzF6ftM=
+X-Google-Smtp-Source: AB8JxZrhLxaDP7PrZujfYdaZo1Amn1HvyG64jPS74U/XeHJomjO6HChqXZ/SZLfwBB9ymIqhaU9ebr9E01wA9Wu1Hy4=
+X-Received: by 2002:a37:6c02:: with SMTP id h2-v6mr9422784qkc.145.1526671548769;
+ Fri, 18 May 2018 12:25:48 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Fri, 18 May 2018 12:25:14
- -0700 (PDT)
-In-Reply-To: <20180518040006.GA31451@ruderich.org>
-References: <CAGZ79kY1DOgrbkgUWHb+5KSBjrupHod0n8SU6M+xMnBGjMTmZQ@mail.gmail.com>
- <20180517194653.48928-1-sbeller@google.com> <20180517194653.48928-7-sbeller@google.com>
- <20180518040006.GA31451@ruderich.org>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 18 May 2018 12:25:14 -0700
-Message-ID: <CAGZ79kZ8VCAjxz36LDfKwZ9pvQSQwqkh_gijqxJQ57UG6zYHdQ@mail.gmail.com>
-Subject: Re: [PATCH 6/8] diff.c: decouple white space treatment from move
- detection algorithm
-To:     Simon Ruderich <simon@ruderich.org>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>
+Received: by 10.12.170.75 with HTTP; Fri, 18 May 2018 12:25:48 -0700 (PDT)
+In-Reply-To: <20180518141751.16350-3-szeder.dev@gmail.com>
+References: <xmqq1sf24syg.fsf@gitster-ct.c.googlers.com> <20180518141751.16350-1-szeder.dev@gmail.com>
+ <20180518141751.16350-3-szeder.dev@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 18 May 2018 15:25:48 -0400
+X-Google-Sender-Auth: QNFQ35sUM109BAeL56ZXvsZn3fc
+Message-ID: <CAPig+cR3phOhx79n6Z2bA2O=PrUPPnbcgHgHOYYYmyOiwjVdEA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] t9902-completion: exercise __git_complete_index_file()
+ directly
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Clemens Buchacher <drizzd@gmx.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Manlio Perillo <manlio.perillo@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 17, 2018 at 9:00 PM, Simon Ruderich <simon@ruderich.org> wrote:
-> On Thu, May 17, 2018 at 12:46:51PM -0700, Stefan Beller wrote:
->> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
->> index bb9f1b7cd82..7b2527b9a19 100644
->> --- a/Documentation/diff-options.txt
->> +++ b/Documentation/diff-options.txt
->> @@ -292,6 +292,19 @@ dimmed_zebra::
->>       blocks are considered interesting, the rest is uninteresting.
->>  --
->>
->> +--color-moved-[no-]ignore-space-at-eol::
->> +     Ignore changes in whitespace at EOL when performing the move
->> +     detection for --color-moved.
->> +--color-moved-[no-]ignore-space-change::
->> +     Ignore changes in amount of whitespace when performing the move
->> +     detection for --color-moved.  This ignores whitespace
->> +     at line end, and considers all other sequences of one or
->> +     more whitespace characters to be equivalent.
->> +--color-moved-[no-]ignore-all-space::
->> +     Ignore whitespace when comparing lines when performing the move
->> +     detection for --color-moved.  This ignores differences even if
->> +     one line has whitespace where the other line has none.
->> +
->>  --word-diff[=<mode>]::
->>       Show a word diff, using the <mode> to delimit changed words.
->>       By default, words are delimited by whitespace; see
+On Fri, May 18, 2018 at 10:17 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
+wrote:
+> The tests added in 2f271cd9cf (t9902-completion: add tests
+> demonstrating issues with quoted pathnames, 2018-05-08) and in
+> 2ab6eab4fe (completion: improve handling quoted paths in 'git
+> ls-files's output, 2018-03-28) have a few shortcomings:
 >
-> Hello,
+>   - All these test use the 'test_completion' helper function, thus
+
+s/these test/&s/
+
+>     they are exercising the whole completion machinery, although they
+>     are only interested in how git-aware path completion, specifically
+>     the __git_complete_index_file() function deals with unusual
+>     characters in pathnames and on the command line.
 >
-> I think it would be better to specify the options unabbreviated.
-> Not being able to search the man page for
-> "--color-moved-ignore-space-at-eol" or
-> "--color-moved-no-ignore-space-at-eol" can be a major pain when
-> looking for documentation. So maybe something like this instead:
+>   - These tests can't satisfactorily test the case of pathnames
+>     containing spaces, because 'test_completion' gets the words on the
+>     command line as a single argument and it uses space as word
+>     separator.
 >
->> +--color-moved-ignore-space-at-eol::
->> +--color-moved-no-ignore-space-at-eol::
->> +     Ignore changes in whitespace at EOL when performing the move
->> +     detection for --color-moved.
-
-That makes sense.
-
-Stepping back a bit, looking for similar precedents, we have lots of
-"[no-]" strings in our documentation. But that is ok, as we the prefix
-is at the beginning of the option ("--[no-]foo-bar"), such that searching
-for the whole option without the leading dashes ("foo-bar") will still find
-the option.
-
-So maybe another option would be rename the negative options
-to "--no-color-moved-ignore-space-at-eol", such that the documentation
-could fall back to the old pattern of "--[no-]long-name".
-
-Initially I was tempted on not choosing such names, as I viewed all
-this white space options specific to the color-move feature, such that
-a prefix of "--color-moved" might be desirable. Turning off one sub-feature
-in that feature would naturally be --feature-no-subfeature instead of
-negating the whole feature.
-
-I also cannot find a good existing example for subfeatures in features,
-they would usually come as --feature=<option1, option2>
-
-Undecided,
-Stefan
+>   - Some of the tests are protected by different FUNNYNAMES_* prereqs
+>     depending on whether they put backslashes and double quotes or
+>     separator characters (FS, GS, RS, US) in pathnames, although a
+>     filesystem not allowing one likely doesn't allow the others
+>     either.
+>
+>   - One of the tests operates on paths containing '|' and '&'
+>     characters without being protected by a FUNNYNAMES prereq, but
+>     some filesystems (notably on Windows) don't allow these characters
+>     in pathnames, either.
+>
+> Replace these tests with basically equivalent, more focused tests that
+> call __git_complete_index_file() directly.  Since this function only
+> looks at the current word to be completed, i.e. the $cur variable, we
+> can easily include pathnames containing spaces in the tests, so use
+> such pathnames instead of pathnames containing '|' and '&'.  Finally,
+> use only a single FUNNYNAMES prereq for all kinds of special
+> characters.
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
