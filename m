@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04F3F1F51C
-	for <e@80x24.org>; Fri, 18 May 2018 21:24:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE4671F51C
+	for <e@80x24.org>; Fri, 18 May 2018 21:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751846AbeERVYR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 May 2018 17:24:17 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:44315 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751768AbeERVYQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 17:24:16 -0400
-Received: by mail-wr0-f195.google.com with SMTP id y15-v6so10485482wrg.11
-        for <git@vger.kernel.org>; Fri, 18 May 2018 14:24:15 -0700 (PDT)
+        id S1751936AbeERVYU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 17:24:20 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:52225 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751768AbeERVYU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 17:24:20 -0400
+Received: by mail-wm0-f66.google.com with SMTP id w194-v6so16155884wmf.2
+        for <git@vger.kernel.org>; Fri, 18 May 2018 14:24:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iN+M0WkfQ0dP6GM6J58Hts7FuA2XqRRlayZs69euiW8=;
-        b=VsvCYM9MQnBiBitFB3I5qUNi5B/q6VFFYSeB9puAl6hz3pAR/pEJZsvJwrYu86RLWs
-         X416I8+wlSMnVkpocWJ9ndp7YHH+ec8cK+Ca2Fsw27QVAiVhKrBNt8FwYNmYyiFbQEAc
-         +i2dPc1fqhgPNdN6rJDgOcPdUui1RKQOwtGROzQWW20ec2VYoy2TMT93JNM35eHiTXxL
-         gSSBKno+P1RPMuh31dsoXsjepiUJHLFixnkwNDaIG+6T6HpheQkugAVsptkmG54Kpd3E
-         cOSQDKqiof2ug0daGt8N8mYrQ3Pp2kwvCOvJaOBmMSpSGXEQ7l5gBm4txs33IJ5t5glK
-         hoJg==
+        bh=5JhP/MpHK/qeX3kms8dhe7IGdo5KyJUWIkUSb6iegm4=;
+        b=Z9RoYuBnL0n9vd3nNsT8xc4a4oYWb46cepMo3FN8o1qgbY6FICTRSibwAMT3DD4G9y
+         5IpUn4pWwVaMkgXiTYCXdKWIqdwBc0rYzdsr8V3jkcWrduisg6s8+OHxtkxr7nengKa3
+         F3eLUjh7wKG4TQUkfO2+E7phZtLmuMuHG7on8s4hUNMEF24XYumofuHaogI0IzKtSRSp
+         fiNqfY/qPNt4MOmtY/FSWNk5lPBiwNQe+w4Okjn4EvHacX66MTUXz2tiE6ytAy3VTm8r
+         hzbvTwqfROWIXNtFk0iAYwHwwdFZv0Tj5zA68WqtRGTI5HcYFe0/mYQI5GyoBnmnEeaB
+         ooaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iN+M0WkfQ0dP6GM6J58Hts7FuA2XqRRlayZs69euiW8=;
-        b=gDh2kqHgwWsEdNn18Vo5Zc3y4Na9sfOYc7u6iAr4/Gf93xOM6aHd+5CULd8Kxyypt1
-         Bm6oxDubzlteBDtSyFS5ulD15ZJiiPG8+Z7x6soz+rjSnAsIwvgj3aPy3+rmQ9wRdFOr
-         bfWXPrgMTLHspvS0fxYgK8mVETc1f60crNwWcGhbG3m9y6G3MBF7AzEOMnpJ0P4XZCSb
-         izBOzGUUHw/G2jmWt1EzRiZp1BcXnQZFJrISARQ1tvcfawBusJJOtR1RD6r+inxz9DKy
-         YZYbv46uRd6bOxwWV8RLQN8qplaoIT7Xrlls3fSf4w1KO12i2ltbxECBNQgCVTOSTgps
-         CL4g==
-X-Gm-Message-State: ALKqPwd0cxnCRMZ+ScTBbiOmPkB+TOogZbVnOnpWRvPEPtoUwhwQ6zE+
-        gq90zFHmO8VOfM1L12an6wzkfYGpfWc=
-X-Google-Smtp-Source: AB8JxZofeso3ga5zDudSaa6RHPxcXxflqQaFkssxBPlHWLsJJyRf63SazSgtRGVgGhIlT46KTGl/1A==
-X-Received: by 2002:adf:eb12:: with SMTP id s18-v6mr4490510wrn.174.1526678654830;
-        Fri, 18 May 2018 14:24:14 -0700 (PDT)
+        bh=5JhP/MpHK/qeX3kms8dhe7IGdo5KyJUWIkUSb6iegm4=;
+        b=HFvmUl7Vgm8mWImQtbKRz5rNYS7iCeBCztJPJCKpccnZgIPNOf/cnuGtrjNwGcNsMr
+         2L+heGg5cVN62iXZfCwfqpIIChcKsZOZxoPB+xJHVpMmIQj+ZmoGYLAlwKr30itwPE3g
+         ymedLBIpixiS5PYcUQs5Ko3+KeW0PH3l5Q5AtVOXyNvbLg8BDUKIBN8ha6bQ9jtU1lOq
+         sNslkZBXySwQA8p1onE7IA3e5XZxNV81VXG0NzJGO0A6s0ZIWV6DzGUiRSXqr1EVdRbZ
+         iTWHn50vY85TW9JXErfh91qEJN+F9wdbbibAALOpHQRZ9FHkJULRc4pLEZo6aCGmOtv+
+         zmdQ==
+X-Gm-Message-State: ALKqPweUZjKKEeqpzZqEUXs/KCBBfBuIOFV6FSCDYr26Kt0b3FOpCMk2
+        wSv/NZVq0oXks0vnbIYvvOwblQOUo60=
+X-Google-Smtp-Source: AB8JxZpa0Zm+mSPsQtRJT4h+9LM9pbhb9QulI/9lssYteMBbAP5ONrfVWFFdquLfNWV6xIAMCKxALA==
+X-Received: by 2002:a1c:6741:: with SMTP id b62-v6mr5533776wmc.0.1526678658100;
+        Fri, 18 May 2018 14:24:18 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id u35-v6sm10969192wrc.29.2018.05.18.14.24.13
+        by smtp.gmail.com with ESMTPSA id u35-v6sm10969192wrc.29.2018.05.18.14.24.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 18 May 2018 14:24:13 -0700 (PDT)
+        Fri, 18 May 2018 14:24:17 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
@@ -57,9 +57,9 @@ Cc:     Elijah Newren <newren@gmail.com>,
         Phillip Wood <phillip.wood@talktalk.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 2/3] merge-recursive: provide pair of `unpack_trees_{start,finish}()`
-Date:   Fri, 18 May 2018 23:23:26 +0200
-Message-Id: <2fae1279567cedf3f6672ce5e4b59d794641f7d0.1526677881.git.martin.agren@gmail.com>
+Subject: [PATCH v3 3/3] unpack_trees_options: free messages when done
+Date:   Fri, 18 May 2018 23:23:27 +0200
+Message-Id: <f4e7822ebe8fcab8243ae3931084e10f3b199788.1526677881.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.17.0.840.g5d83f92caf
 In-Reply-To: <cover.1526677881.git.martin.agren@gmail.com>
 References: <CAN0heSo80SjjGtC2x9s-TmNY0=W=YWTYxyjeuAQ3utEAEynXeA@mail.gmail.com> <cover.1526677881.git.martin.agren@gmail.com>
@@ -71,97 +71,162 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+The strings allocated in `setup_unpack_trees_porcelain()` are never
+freed. Provide a function `clear_unpack_trees_porcelain()` to do so and
+call it where we use `setup_unpack_trees_porcelain()`. The only
+non-trivial user is `unpack_trees_start()`, where we should place the
+new call in `unpack_trees_finish()`.
 
-Rename `git_merge_trees()` to `unpack_trees_start()` and extract the
-call to `discard_index()` into a new function `unpack_trees_finish()`.
-As a result, these are called early resp. late in `merge_trees()`,
-making the resource handling clearer. The next commit will expand on
-that, teaching `..._finish()` to free more memory. (So rather than
-moving the FIXME-comment, just drop it, since it will be addressed soon
-enough.)
+We keep the string pointers in an array, mixing pointers to static
+memory and memory that we allocate on the heap. We also keep several
+copies of the individual pointers. So we need to make sure that we do
+not free what we must not free and that we do not double-free. Keep the
+unique, heap-allocated pointers in a separate string list, to make the
+freeing safe and future-proof.
 
-Also call `..._finish()` when `merge_trees()` returns early.
+Zero the whole array of string pointers to make sure that we do not
+leave any dangling pointers.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Note that we only take responsibility for the memory allocated in
+`setup_unpack_trees_porcelain()` and not any other members of the
+`struct unpack_trees_options`.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- merge-recursive.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ unpack-trees.h     |  6 ++++++
+ builtin/checkout.c |  1 +
+ merge-recursive.c  |  1 +
+ merge.c            |  3 +++
+ unpack-trees.c     | 23 +++++++++++++++++++----
+ 5 files changed, 30 insertions(+), 4 deletions(-)
 
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 41178ada94..5a84123a40 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -33,6 +33,11 @@ enum unpack_trees_error_types {
+ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 				  const char *cmd);
+ 
++/*
++ * Frees resources allocated by setup_unpack_trees_porcelain().
++ */
++void clear_unpack_trees_porcelain(struct unpack_trees_options *opts);
++
+ struct unpack_trees_options {
+ 	unsigned int reset,
+ 		     merge,
+@@ -57,6 +62,7 @@ struct unpack_trees_options {
+ 	struct pathspec *pathspec;
+ 	merge_fn_t fn;
+ 	const char *msgs[NB_UNPACK_TREES_ERROR_TYPES];
++	struct string_list msgs_to_free;
+ 	/*
+ 	 * Store error messages in an array, each case
+ 	 * corresponding to a error message type
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index b49b582071..5cebe170fc 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -526,6 +526,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 		init_tree_desc(&trees[1], tree->buffer, tree->size);
+ 
+ 		ret = unpack_trees(2, trees, &topts);
++		clear_unpack_trees_porcelain(&topts);
+ 		if (ret == -1) {
+ 			/*
+ 			 * Unpack couldn't do a trivial merge; either
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 680e01226b..ddb0fa7369 100644
+index ddb0fa7369..338f63a952 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -337,10 +337,10 @@ static void init_tree_desc_from_tree(struct tree_desc *desc, struct tree *tree)
- 	init_tree_desc(desc, tree->buffer, tree->size);
- }
- 
--static int git_merge_trees(struct merge_options *o,
--			   struct tree *common,
--			   struct tree *head,
--			   struct tree *merge)
-+static int unpack_trees_start(struct merge_options *o,
-+			      struct tree *common,
-+			      struct tree *head,
-+			      struct tree *merge)
+@@ -382,6 +382,7 @@ static int unpack_trees_start(struct merge_options *o,
+ static void unpack_trees_finish(struct merge_options *o)
  {
- 	int rc;
- 	struct tree_desc t[3];
-@@ -379,6 +379,11 @@ static int git_merge_trees(struct merge_options *o,
- 	return rc;
+ 	discard_index(&o->orig_index);
++	clear_unpack_trees_porcelain(&o->unpack_opts);
  }
  
-+static void unpack_trees_finish(struct merge_options *o)
+ struct tree *write_tree_from_memory(struct merge_options *o)
+diff --git a/merge.c b/merge.c
+index f123658e58..b433291d0c 100644
+--- a/merge.c
++++ b/merge.c
+@@ -130,8 +130,11 @@ int checkout_fast_forward(const struct object_id *head,
+ 
+ 	if (unpack_trees(nr_trees, t, &opts)) {
+ 		rollback_lock_file(&lock_file);
++		clear_unpack_trees_porcelain(&opts);
+ 		return -1;
+ 	}
++	clear_unpack_trees_porcelain(&opts);
++
+ 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 		return error(_("unable to write new index file"));
+ 	return 0;
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 79fd97074e..60293ff536 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -103,6 +103,8 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 	const char **msgs = opts->msgs;
+ 	const char *msg;
+ 
++	opts->msgs_to_free.strdup_strings = 0;
++
+ 	if (!strcmp(cmd, "checkout"))
+ 		msg = advice_commit_before_merge
+ 		      ? _("Your local changes to the following files would be overwritten by checkout:\n%%s"
+@@ -118,8 +120,9 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 		      ? _("Your local changes to the following files would be overwritten by %s:\n%%s"
+ 			  "Please commit your changes or stash them before you %s.")
+ 		      : _("Your local changes to the following files would be overwritten by %s:\n%%s");
+-	msgs[ERROR_WOULD_OVERWRITE] = msgs[ERROR_NOT_UPTODATE_FILE] =
+-		xstrfmt(msg, cmd, cmd);
++	msg = xstrfmt(msg, cmd, cmd);
++	msgs[ERROR_WOULD_OVERWRITE] = msgs[ERROR_NOT_UPTODATE_FILE] = msg;
++	string_list_append(&opts->msgs_to_free, msg);
+ 
+ 	msgs[ERROR_NOT_UPTODATE_DIR] =
+ 		_("Updating the following directories would lose untracked files in them:\n%s");
+@@ -139,7 +142,9 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 		      ? _("The following untracked working tree files would be removed by %s:\n%%s"
+ 			  "Please move or remove them before you %s.")
+ 		      : _("The following untracked working tree files would be removed by %s:\n%%s");
+-	msgs[ERROR_WOULD_LOSE_UNTRACKED_REMOVED] = xstrfmt(msg, cmd, cmd);
++	msg = xstrfmt(msg, cmd, cmd);
++	msgs[ERROR_WOULD_LOSE_UNTRACKED_REMOVED] = msg;
++	string_list_append(&opts->msgs_to_free, msg);
+ 
+ 	if (!strcmp(cmd, "checkout"))
+ 		msg = advice_commit_before_merge
+@@ -156,7 +161,9 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 		      ? _("The following untracked working tree files would be overwritten by %s:\n%%s"
+ 			  "Please move or remove them before you %s.")
+ 		      : _("The following untracked working tree files would be overwritten by %s:\n%%s");
+-	msgs[ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN] = xstrfmt(msg, cmd, cmd);
++	msg = xstrfmt(msg, cmd, cmd);
++	msgs[ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN] = msg;
++	string_list_append(&opts->msgs_to_free, msg);
+ 
+ 	/*
+ 	 * Special case: ERROR_BIND_OVERLAP refers to a pair of paths, we
+@@ -179,6 +186,14 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 		opts->unpack_rejects[i].strdup_strings = 1;
+ }
+ 
++void clear_unpack_trees_porcelain(struct unpack_trees_options *opts)
 +{
-+	discard_index(&o->orig_index);
++	opts->msgs_to_free.strdup_strings = 1;
++	string_list_clear(&opts->msgs_to_free, 0);
++
++	memset(opts->msgs, 0, sizeof(opts->msgs));
 +}
 +
- struct tree *write_tree_from_memory(struct merge_options *o)
+ static int do_add_entry(struct unpack_trees_options *o, struct cache_entry *ce,
+ 			 unsigned int set, unsigned int clear)
  {
- 	struct tree *result = NULL;
-@@ -3088,13 +3093,14 @@ int merge_trees(struct merge_options *o,
- 		return 1;
- 	}
- 
--	code = git_merge_trees(o, common, head, merge);
-+	code = unpack_trees_start(o, common, head, merge);
- 
- 	if (code != 0) {
- 		if (show(o, 4) || o->call_depth)
- 			err(o, _("merging of trees %s and %s failed"),
- 			    oid_to_hex(&head->object.oid),
- 			    oid_to_hex(&merge->object.oid));
-+		unpack_trees_finish(o);
- 		return -1;
- 	}
- 
-@@ -3147,20 +3153,15 @@ int merge_trees(struct merge_options *o,
- 
- 		hashmap_free(&o->current_file_dir_set, 1);
- 
--		if (clean < 0)
-+		if (clean < 0) {
-+			unpack_trees_finish(o);
- 			return clean;
-+		}
- 	}
- 	else
- 		clean = 1;
- 
--	/* Free the extra index left from git_merge_trees() */
--	/*
--	 * FIXME: Need to also free data allocated by
--	 * setup_unpack_trees_porcelain() tucked away in o->unpack_opts.msgs,
--	 * but the problem is that only half of it refers to dynamically
--	 * allocated data, while the other half points at static strings.
--	 */
--	discard_index(&o->orig_index);
-+	unpack_trees_finish(o);
- 
- 	if (o->call_depth && !(*result = write_tree_from_memory(o)))
- 		return -1;
 -- 
 2.17.0.840.g5d83f92caf
 
