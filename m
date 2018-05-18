@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03BBE1F51C
-	for <e@80x24.org>; Fri, 18 May 2018 19:43:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D02B11F51C
+	for <e@80x24.org>; Fri, 18 May 2018 19:48:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751664AbeERTn1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 May 2018 15:43:27 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:46857 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751320AbeERTn0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 15:43:26 -0400
-Received: by mail-wr0-f173.google.com with SMTP id x9-v6so7425164wrl.13
-        for <git@vger.kernel.org>; Fri, 18 May 2018 12:43:25 -0700 (PDT)
+        id S1751452AbeERTsI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 15:48:08 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:33373 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751156AbeERTsI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 15:48:08 -0400
+Received: by mail-wm0-f44.google.com with SMTP id x12-v6so4622939wmc.0
+        for <git@vger.kernel.org>; Fri, 18 May 2018 12:48:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4/oerecgmCKna6TJ4iMr7zIJ72I012kFVAgbp4kcA4c=;
-        b=ktuj1xhoKsvbgw22eCLNstsTRpLa4fyZrO5KIRpkchsf4pDAkq/xbXchh5c+aUD9gc
-         JXzRsnItTygI3AXmzGs8qPn2iJ+QqYiFswg6tvINWofMUj/UB5vUxaKJuzX80z7OTW6p
-         beSmEdt0tuFUSIbCxql0CbFfWHT5v4AwVXg1NPnZClnyGL2WfgtQ4yASDYEdwkyal3HF
-         9FQQ4iYAsE7qhM+pI6jprvKla4r0llPSjm0MpN0UA+gbM4Egf06iRylWZQRDr8roZgpx
-         SY0eKqzXtk13tjOk28EBi1HJLjgH35nA7VP4BW/jOyksyvJy+QFDnkwXipUy1AFUkki4
-         azkA==
+        bh=ePVD0/U2OdkBGGJsl5XvHLABy8FBfigjNzJFs8YfOC0=;
+        b=PCS6a0Ve9F7XnAKTDX2fiYWLiCzvaWKIYU+CDRQyLYxUWf/Mk9ACj9yx/Mj81UCc67
+         3bWIPoV0yVjP9h8Ez3HxmCwL7FE+Wz9wZMqfBf6BcvDiIN19TeKH1mhecMfn4NtffKoC
+         7LmmhAe3PgKJa1WcDPaCsVwW+/ymBJIjqNVTcMy1HrCav/uwrgdVx1EQXBbeX0sY3Vgr
+         B4rbvBAx2ckRgzseBmPQ8jYsSFlzktrUNHDxr7N7RQ/Pf6AELfgnfxQflUxuJrtFCmID
+         gPsUFD65ajbgdMMySzu3rQT9eqFX12mh4tddZDcD+LGH/Yck9p/nIpc0Yz0u7zYa91C9
+         mzWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4/oerecgmCKna6TJ4iMr7zIJ72I012kFVAgbp4kcA4c=;
-        b=RsVyrboS8KVQaq7GR27qXzNwYw6U+w9PCmX8ZhcG6PESwwqFt6NiuwVM6UvJun8INh
-         PYAG12jjQTh6EHSPbq3e4NpUgN1OKo8hTRiqMob4VyVRAGb6pZgtg/nDI7jp7eJupn0d
-         t9HkEGUEOs32eeE3/wivnCThjDYM6sb2CSPh5u3KGBFBH7PE72MBEaR9JkBnOvhxDEnv
-         65cGyqZakpuDBIGFhG7VQ5agTljf0h5K3dmdG1TVpyfnLKzvWEAR92IAtRBGzG7nLyh0
-         DhM2SGdtnJfx51w1PC7GeKIlSrZZJ3wsqxHm59BzyJKTt739bPbUkwsdrnIDH/RmnPVq
-         MKQQ==
-X-Gm-Message-State: ALKqPwdGrjoLY1latSRgEgaBrNcM9z1C68D9vrbpP4sVBeFMoiLEGcpp
-        AbVJ9tot9g8Be70XRw7nJGs=
-X-Google-Smtp-Source: AB8JxZqL8euZktqNyVILWKJ+zEE0KVs/7YHfdD+i3EvRwwftCPrllkFY2R2kEGWX2YSR5VUgxE5UeA==
-X-Received: by 2002:adf:85f4:: with SMTP id 49-v6mr8618580wru.33.1526672605151;
-        Fri, 18 May 2018 12:43:25 -0700 (PDT)
+        bh=ePVD0/U2OdkBGGJsl5XvHLABy8FBfigjNzJFs8YfOC0=;
+        b=O3jwAj7t+CaOAOaXn3H4g+B3BDh2MY5iXsx3c0fLLs/YimLu0v4/mGFydBPnpI6WLx
+         KFn/oQ1pcEh8xadJNgANeWYtAcEvSmhyN2LMgGrDXMtYKxJm+4+UUtEpmKZGczfnmJGe
+         Tf1eBWO0peEG0V7qh/91J8KjpNYlbD6QHK2xWIvzq7H5GQR4p8d0CZTX5RT+UCabkszk
+         QKvmJZEQ+bI8nFOSkYq0D2Qt67OkQFK+GocfEqn6Ig2xwjkfhMFqfwKjTMYAfLjnFLFS
+         /XTyFfs9brKwtaUunJhD/tQyc5ythffbQ4dXxuzWn+T+8r0+0oqRR3EMT4j5z9LV/ORO
+         4QRQ==
+X-Gm-Message-State: ALKqPwdyVfGzlHEsJUY9mRiHwiGWLYzm6qS0wL0Z9MDXTbYPAIkbm/+Z
+        eGVuIonSxWjvqtNNPfauHd8=
+X-Google-Smtp-Source: AB8JxZr0sCHo4GLaPKaXkZfYvCOZvMiMdaDvVr1YIg+K+7nFp60a6BFmZJ+iZjkzF4bdJvJv8x5wRw==
+X-Received: by 2002:a1c:9015:: with SMTP id s21-v6mr5239704wmd.75.1526672886986;
+        Fri, 18 May 2018 12:48:06 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:8071:b6aa:7d00:445a:d637:6fb:6000])
-        by smtp.gmail.com with ESMTPSA id w18-v6sm4588552wrl.78.2018.05.18.12.43.23
+        by smtp.gmail.com with ESMTPSA id z63-v6sm12585270wrb.34.2018.05.18.12.48.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 May 2018 12:43:24 -0700 (PDT)
+        Fri, 18 May 2018 12:48:06 -0700 (PDT)
 From:   Leif Middelschulte <leif.middelschulte@gmail.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com,
         leif.middelschulte@gmail.com,
         Leif Middelschulte <Leif.Middelschulte@gmail.com>
-Subject: [PATCH v2 0/1] rebased: inform about auto submodule ff
-Date:   Fri, 18 May 2018 21:43:16 +0200
-Message-Id: <20180518194317.28043-1-leif.middelschulte@gmail.com>
+Subject: [PATCH v3 0/1] rebased: inform about auto submodule ff
+Date:   Fri, 18 May 2018 21:48:01 +0200
+Message-Id: <20180518194802.28355-1-leif.middelschulte@gmail.com>
 X-Mailer: git-send-email 2.15.1 (Apple Git-101)
 In-Reply-To: <20180517184008.25445-1-sbeller@google.com>
 References: <20180517184008.25445-1-sbeller@google.com>
@@ -75,8 +75,8 @@ This is a follow-up on Junio C Hamano's comments [0] and Stefan Beller's request
 Leif Middelschulte (1):
   Inform about fast-forwarding of submodules during merge
 
- merge-recursive.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ merge-recursive.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 -- 
 2.15.1 (Apple Git-101)
