@@ -2,109 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EB4C1F51C
-	for <e@80x24.org>; Fri, 18 May 2018 21:25:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A75BF1F51C
+	for <e@80x24.org>; Fri, 18 May 2018 21:33:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751768AbeERVZ3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 May 2018 17:25:29 -0400
-Received: from mail-ua0-f195.google.com ([209.85.217.195]:40599 "EHLO
-        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751531AbeERVZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 17:25:28 -0400
-Received: by mail-ua0-f195.google.com with SMTP id g9-v6so6291263uak.7
-        for <git@vger.kernel.org>; Fri, 18 May 2018 14:25:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Zdv6uE0+6qKx1XTdkOLQGI2wWjog4Bzcb0DYR+gvuSI=;
-        b=Y32GHz/b/yhS5QoSq4v1m4W4x941uhI9F5uYHH25dSlPyCJeX6NCFHaMHy+1QYWmn4
-         GOmw4Rz+V99IKlGFd4SDbxjEKyCT1cwYQg3WzMsF529/Xz0cawpkjJ+TlITPNVLW9usH
-         echaL0BFOgCSAa9Jh74LXTs3BFyI5zwrR5VKCWpM2U1YLi0sCwEb1NXqDq1R9sdZlC+h
-         rXSu3Fj2yUywT3YVuB5++1zlUvcqiHtQI5fsu2bG5pkiBDlnfJvMFYBif0N6oDGMTcqw
-         RIVqh4UKJ3Gt0zqn4aNl/gBXtRTG/GZQvpGJnckLgif4NCMy/VjvNgdyPeTpEGRKHxgH
-         4dOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Zdv6uE0+6qKx1XTdkOLQGI2wWjog4Bzcb0DYR+gvuSI=;
-        b=qvzPlhkQtOEGktVtScFU+YYTld3U8ObpX86z/V/gQ2YrJwFvFtIrgRi+LCIk2kULfk
-         9b3HDd+JEW37un9hjVUsXRrXauGMP/Wwy6/7Olr8GoqEPYiHfWryPbWUBSRcohKoHUfx
-         z0R0WfMA9h3cQnA9tq1VJMDfTxuCVqOivlzASW8DyG27i1CJGDNqTOEGHBeZxYEg7szF
-         muN5a20o0V5rOsnRCz+2PJfucNS11WYqT+D61Hjk0vWCSw7kHJzmSrcZhfWv/KugwFPf
-         yVgO4beNWH3aas/XHUHHQ6qqHF+iuXwTOzX59X9b73akgpRh8G1yPxwdBmORshS3H32J
-         AD+Q==
-X-Gm-Message-State: ALKqPwd3h8/WMeaPpqhYBPI62YiQSJKHZOHmG/Bncg7bMm1/AL5E3TsL
-        9PuzL7i1Di5vBSohADNlGAqrV4qPEqMUFwFHRQEe6g==
-X-Google-Smtp-Source: AB8JxZpLRk21+dIGV2AiLeCp9LDCBGcD0zB+TM8yVFbhsqUc+LGRpOUPxGcf9yW6stsMAmuG3kDR69y+j+QMyaBw2XE=
-X-Received: by 2002:ab0:15c9:: with SMTP id j9-v6mr8518694uae.199.1526678727263;
- Fri, 18 May 2018 14:25:27 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Fri, 18 May 2018 14:25:26 -0700 (PDT)
-In-Reply-To: <20180518194802.28355-2-leif.middelschulte@gmail.com>
-References: <20180517184008.25445-1-sbeller@google.com> <20180518194802.28355-1-leif.middelschulte@gmail.com>
- <20180518194802.28355-2-leif.middelschulte@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 18 May 2018 14:25:26 -0700
-Message-ID: <CABPp-BGGe3r_QiC5264xkj0cp2Vu6WoLQZeDGEJi4eOpUW9z3g@mail.gmail.com>
-Subject: Re: [PATCH 1/1] Inform about fast-forwarding of submodules during merge
-To:     Leif Middelschulte <leif.middelschulte@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
+        id S1752218AbeERVdk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 17:33:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45962 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752193AbeERVdh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 17:33:37 -0400
+Received: (qmail 28510 invoked by uid 109); 18 May 2018 21:33:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 18 May 2018 21:33:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14488 invoked by uid 111); 18 May 2018 21:33:44 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 18 May 2018 17:33:44 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 May 2018 14:33:33 -0700
+Date:   Fri, 18 May 2018 14:33:33 -0700
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v3 3/3] unpack_trees_options: free messages when done
+Message-ID: <20180518213333.GB21797@sigill.intra.peff.net>
+References: <CAN0heSo80SjjGtC2x9s-TmNY0=W=YWTYxyjeuAQ3utEAEynXeA@mail.gmail.com>
+ <cover.1526677881.git.martin.agren@gmail.com>
+ <f4e7822ebe8fcab8243ae3931084e10f3b199788.1526677881.git.martin.agren@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f4e7822ebe8fcab8243ae3931084e10f3b199788.1526677881.git.martin.agren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Leif,
+On Fri, May 18, 2018 at 11:23:27PM +0200, Martin Ågren wrote:
 
-On Fri, May 18, 2018 at 12:48 PM, Leif Middelschulte
-<leif.middelschulte@gmail.com> wrote:
-> From: Leif Middelschulte <Leif.Middelschulte@gmail.com>
->
-> Silent fast-forwarding might lead to inconveniences in cases where
-> submodules are expected to have a certain revision, because 'more recent'
-> (therefore fast-forwardable) versions might break behavior/contain regressions.
->
-> A use-case is the integration (merge) phase as part of the feature-centric
-> 'git-flow' workflow [0]. I.e. a feature might be well-tested with a certain
-> submodule revision, but break because of regressions (or changes in general)
-> within an updated version of the sourced submodule.
->
-> This change tries to support the integrator by telling her about another possible
-> source of unexpected behavior (differing submodule versions) she might see
-> during integration tests.
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 79fd97074e..60293ff536 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -103,6 +103,8 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+>  	const char **msgs = opts->msgs;
+>  	const char *msg;
+>  
+> +	opts->msgs_to_free.strdup_strings = 0;
+> +
+> [...]
+> +void clear_unpack_trees_porcelain(struct unpack_trees_options *opts)
+> +{
+> +	opts->msgs_to_free.strdup_strings = 1;
+> +	string_list_clear(&opts->msgs_to_free, 0);
 
-Thanks for continuing to push on this.  This looks good so far (to
-me), but I was also hoping to see the analogy between these messages
-and "Auto-merging $FILE" for regular files mentioned.  Both Junio[1]
-and I[2] pointed out this similarity, and I think this
-similarity/analogy is useful additional motivation for making this
-change.
+I like this string_list approach much better, but it's too bad we have
+to go through these contortions with the strdup flag to get the memory
+ownership right.
 
-[1] https://public-inbox.org/git/xmqqo9hg7554.fsf@gitster-ct.c.googlers.com/
-[2] https://public-inbox.org/git/CABPp-BGaibCPWuCnaX5Af=sv-2zvyhNcupT+-PkxHDfJBg_Vbw@mail.gmail.com/
+If we had a string_list_appendf(), then we could just leave that flag
+alone and this:
 
+> @@ -118,8 +120,9 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+>  		      ? _("Your local changes to the following files would be overwritten by %s:\n%%s"
+>  			  "Please commit your changes or stash them before you %s.")
+>  		      : _("Your local changes to the following files would be overwritten by %s:\n%%s");
+> -	msgs[ERROR_WOULD_OVERWRITE] = msgs[ERROR_NOT_UPTODATE_FILE] =
+> -		xstrfmt(msg, cmd, cmd);
+> +	msg = xstrfmt(msg, cmd, cmd);
+> +	msgs[ERROR_WOULD_OVERWRITE] = msgs[ERROR_NOT_UPTODATE_FILE] = msg;
+> +	string_list_append(&opts->msgs_to_free, msg);
 
-> +               } else if (show(o, 2))
-> +                       output(o, 2, _("Fast-forwarding submodule %s to %s"), path, oid_to_hex(b));
-...
-> +               } else if (show(o, 2))
-> +                       output(o, 2, _("Fast-forwarding submodule %s to %s"), path, oid_to_hex(a));
+would become:
 
-Also, by analogy to the "Auto-merging $FILE" comparison, the "to %s"
-on these two lines feels out of place.  Users can just look at the
-submodule to see what it was updated to.  In a sea of output from
-merging, this extra detail feels like noise for the standard use-case,
-unless I'm misunderstanding how submodules are special.  Junio also
-commented on this in the same email referenced above (at [1]).  Is
-there a reason this is an important piece of the message for you to be
-shown at the standard merge verbosity?
+  msgs[ERROR_WOULD_OVERWRITE] = msgs[ERROR_NOUPTODATE_FILE] =
+	string_list_appendf(&opts->msgs_to_free, msg, cmd, cmd)->string;
+
+I don't know if that's worth it or not (I suspect that there are other
+places where appendf would be handy, but I didn't poke around).
+
+-Peff
