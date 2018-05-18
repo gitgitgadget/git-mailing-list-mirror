@@ -2,98 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5200A1F51C
-	for <e@80x24.org>; Fri, 18 May 2018 15:38:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 922C8200B9
+	for <e@80x24.org>; Fri, 18 May 2018 15:45:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752129AbeERPiE convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 18 May 2018 11:38:04 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:27631 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751384AbeERPiD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 11:38:03 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w4IFc0QO026012
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 18 May 2018 11:38:00 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Anmol Sethi'" <me@anmol.io>
-Cc:     "'Jacob Keller'" <jacob.keller@gmail.com>,
-        "'Git mailing list'" <git@vger.kernel.org>
-References: <285692D0-1DE8-4CAF-9BCE-F1A04D5C66B5@anmol.io> <CA+P7+xqQZzTrm274rbbP_O85Y+YGZ4PQ8PMFJnJtKR4wR0AObQ@mail.gmail.com> <002a01d3eddb$cdd3d8f0$697b8ad0$@nexbridge.com> <FE668F59-95D7-48AB-AD3B-A37AE404B368@anmol.io>
-In-Reply-To: <FE668F59-95D7-48AB-AD3B-A37AE404B368@anmol.io>
-Subject: RE: Add option to git to ignore binary files unless force added
-Date:   Fri, 18 May 2018 11:37:53 -0400
-Message-ID: <009901d3eebe$32dd09a0$98971ce0$@nexbridge.com>
+        id S1751435AbeERPpT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 11:45:19 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:48618 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751112AbeERPpS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 11:45:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=rFkUbp6NWvOTzs0gDzvasAX7yi659bGvjMAsH2dIRbg=; b=pzCT5sGcyVhG84BCgiQ3gMh/4
+        9Obe0amF+viYE79QQFBhOgjKQF07dNTrChjZm4rXStx8p2Oqt9sBVp7tk0ZSp4It+Zkq6Nj+fW2GI
+        miSyTbUSsvZORKiEBX1jj9+PJ/RhpY1Uc/5KWdz3H0YV8KQqEfjVVxesRIi/7ZoUkDvFvOXlgoyl3
+        J0wCIzdowhaIg5yzdQ+QrwtDQ3qvDQDFAXB3RGGxEslWwf0gqjKiExMcW2Rg+G/VUG3monhe164Yt
+        mWdEt/tbrTS4R9rwTS+PiHN0TAqcC8gIbA5MBI75hQJE0k/+XvGK+I5ijl10z3P+MJfIRwy3rQYUu
+        S3H4ivSJg==;
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:35726 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fJhZE-00FeeU-JL; Fri, 18 May 2018 11:45:17 -0400
+Date:   Fri, 18 May 2018 11:43:48 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Sybille Peters <sypets@gmx.de>
+cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: error(?) in "man git-stash" regarding "--keep-index"
+In-Reply-To: <96486abe-cf13-ef10-7513-2d6c20a9dc1e@gmx.de>
+Message-ID: <alpine.LFD.2.21.1805181141030.10462@localhost.localdomain>
+References: <alpine.LFD.2.21.1805180534170.6786@localhost.localdomain> <CAN0heSrJMFij9xt6RstLD16+2CxJ_HALer4iRL74AZQvH0VWRQ@mail.gmail.com> <alpine.LFD.2.21.1805180648020.10270@localhost.localdomain> <CAN0heSpVKd=-Dpdk09LVtTd0vC2dLUwg0=hbxhKskM3RencsYA@mail.gmail.com>
+ <96486abe-cf13-ef10-7513-2d6c20a9dc1e@gmx.de>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKXlS0WnUPf5I5iLIWLccbtRU0F4AJsQdWKATKpy1gCClaZaKKBBb7w
-Content-Language: en-ca
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 18, 2018 7:31 AM, Anmol Sethi <me@anmol.io>
-> That works but most binaries do not have a file extension. Its just not
-> standard on linux.
-> 
-> > On May 17, 2018, at 8:37 AM, Randall S. Becker <rsbecker@nexbridge.com>
-> wrote:
-> >
-> > On May 16, 2018 11:18 PM, Jacob Keller
-> >> On Wed, May 16, 2018 at 5:45 PM, Anmol Sethi <me@anmol.io> wrote:
-> >>> I think it’d be great to have an option to have git ignore binary
-> >>> files. My
-> >> repositories are always source only, committing a binary is always a
-> mistake.
-> >> At the moment, I have to configure the .gitignore to ignore every
-> >> binary file and that gets tedious. Having git ignore all binary files would be
-> great.
-> >>>
-> >>> This could be achieved via an option in .gitconfig or maybe a
-> >>> special line in
-> >> .gitignore.
-> >>>
-> >>> I just want to never accidentally commit a binary again.
-> >>
-> >> I believe you can do a couple things. There should be a hook which
-> >> you can modify to validate that there are no binary files on
-> >> pre-commit[1], or pre- push[2] to verify that you never push commits
-> with binaries in them.
-> >>
-> >> You could also implement the update hook on the server if you control
-> >> it, to allow it to block pushes which contain binary files.
-> >
-> > What about configuring ${HOME}/.config/git/ignore instead (described at
-> https://git-scm.com/docs/gitignore). Inside, put:
-> >
-> > *.o
-> > *.exe
-> > *.bin
-> > *.dat
-> > Etc....
+On Fri, 18 May 2018, Sybille Peters wrote:
 
-I have a similar problem on my platform, with a different solution. My builds involve GCC binaries, NonStop L-series binaries (x86), and a NonStop J-series binaries (itanium). To keep me sane, I have all build targets going to separate directories, like Build/GCC, Build/Lbin, Build/Jbin away from the sources. This allows me to ignore Build/ regardless of extension and also to build different targets without link collisions. This is similar to how Java works (a.k.a. bin/). Much more workable, IMHO, than trying to manage individual binaries name by name or even by extension. I also have a mix of jpg and UTF-16 HTML that would end up in false-positives on a pure binary match and I do want to manage those.
+> My 2c on this:
+>
+> 1) "If the --keep-index option is used, all changes already added to
+>    the index are left intact" (manpage git stash)
+>
+> That appears to be correct and clear
 
-What helps me is that I do most of my work in ECLIPSE, so derived resources (objects, generated sources) get auto-ignored by EGit, if you can make your compiler arrange that - but that's an ECLIPSE thing not a file system thing.
+  yup, that's not the issue.
 
-Cheers,
-Randall
+> 2) "$ git stash push --keep-index # save *all other* changes to the
+>    stash"  (manpage git stash)
+>
+> That is either not correct or misleading. "All other" implies in my
+> opinion all changes except the ones that were already added. *"All
+> changes including already staged changes"* might be a better choice.
 
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
+  yup, that is *exactly* the point i was trying to make.
 
-
-
+rday
