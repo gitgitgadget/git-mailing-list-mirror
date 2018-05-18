@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35BA51F51C
-	for <e@80x24.org>; Fri, 18 May 2018 21:23:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C26BE1F51C
+	for <e@80x24.org>; Fri, 18 May 2018 21:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751545AbeERVXx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 May 2018 17:23:53 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:50847 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750763AbeERVXw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 17:23:52 -0400
-Received: by mail-wm0-f68.google.com with SMTP id t11-v6so16311034wmt.0
-        for <git@vger.kernel.org>; Fri, 18 May 2018 14:23:52 -0700 (PDT)
+        id S1751705AbeERVYJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 17:24:09 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:43542 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751542AbeERVYI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 17:24:08 -0400
+Received: by mail-wr0-f193.google.com with SMTP id v15-v6so10478324wrm.10
+        for <git@vger.kernel.org>; Fri, 18 May 2018 14:24:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HTX3UiS6kYKuPCNIMpmvxfzzmI2D6UevtdhKosZqSrA=;
-        b=CGgfR5KjWMGErhsdT2o80+yEhUp/1TRzNu6ojqKeaG+h/4QgPELgYQrvpel+1WBnSZ
-         2aUBq4oAMykLDnAaKMkaB1yFO2Aem3IOvDYDdnc2XAQfF56rSygUt7u4EEfhdtLEZfAH
-         uHth1NHn+ZlptW8AOHdBSVZ/87Cb+iIOTJpViQu4IPc4rVebTDXRcjt7jkrqqvd/aHic
-         S1YvYTEe0v+jr/ZwoTqbR5vvTib+9Pg5n6ELS871mM2V+C2esLwx2OwAHnVVjyOYpHup
-         npPXVopINJ6k3NHxT+K+AWwhA0q/h/4B3SxrTaZ+XL4NQn+FejpNl88vU8TNweUpLqhe
-         L2DQ==
+        bh=Qqi8Aq7BlmtnzELuHHU4aif5MEFPYydVE4igRqz+n0s=;
+        b=dEOXNjGZbCYG9VdNU4QfrnLLwb+3xZULL1o/EOmB610B/opyzu71l140KonZU+TNy4
+         cdYZFwCXXx9PiMI+ps+ZTQ3HMrxPIrd4ZnFA/AnXNxF+68abti+G9L5gL2B4HF6VIbXd
+         VcnjZw2gqB/eQ8mQEpu8IRmz/QwpON5stWgAQq/XiWD9nyFZJNWS2MASVPgtSIrDM/UY
+         mzBYxFEpXy+GKbHirI3dzg0bxM3Yew2ojGqKyKzgwy/JASiruzW0C/8ml3KKD9eJ5ln7
+         Tp7n7+65vLYNBbqq6qnrL8iqtJzIMC6xsgJQPiMK3t0fFUMQjjpxKyVDTk2Lm1pk+G1Y
+         nUXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HTX3UiS6kYKuPCNIMpmvxfzzmI2D6UevtdhKosZqSrA=;
-        b=WkmBq96Q/t1NBpip122c8KYXVp1fWC7YPcX7mszragV6A+OteOelhsjKQ4Iar2r9dA
-         PFkpzJzkR+TVTYPNlJjlb2n30kFqib24Yaj+61YoHYsYTS/4wQcsVyQLdDb4SIcOwqG/
-         37D2GfkxhP3sYaMKPoXajphSd8XnZjRvibeNHYl6VgtSMr8hhAu4YSyn1FzdTxm7OhXQ
-         AA5+bBDqzTKCr1ye8E0a2us+JUbBBWlFBXmX3/6XfsO2mOQTrQuAwJgKmH8vhbB3sGBT
-         cHl1HPBGQvDaHuxod33HlfDqywNlt/VV3yaAk+ywmwGOgHk4hVuIECRdjJiYkdnC++HY
-         VO7g==
-X-Gm-Message-State: ALKqPwfBSx4h1pqZqnd0BK0BJE2I/CqzgzXHGntCVto3ptM6R/7zN4YC
-        wxTSt56pVrCNqhMx63OBy1sS+4I/HZs=
-X-Google-Smtp-Source: AB8JxZrxfF/SkHFQXT5zuK7Pm/xJMYG2v8F+5hB+RQtNSAYQvCnWDwUekgLG+YS37Psg0GYzQzlIVg==
-X-Received: by 2002:a1c:17c9:: with SMTP id 192-v6mr5304613wmx.95.1526678631408;
-        Fri, 18 May 2018 14:23:51 -0700 (PDT)
+        bh=Qqi8Aq7BlmtnzELuHHU4aif5MEFPYydVE4igRqz+n0s=;
+        b=agMUnE8Tlkr+5WqXECM2pT38jKzf+zj0j+J7E68iqgTdulPi4BJa9iAKccLoP6dUnD
+         Fb621D8zfv4y2v1sgoFg/J7TZ9Qx+mBLcQOQmCq8pK3hT431mLNJWHMP9sH6fWuQmXr7
+         uL2toFzLobH09jcVlfkwdWNcDZJKTLfSeHz34e2nkDMn8SUIviPGBrgKFIsJ5/ZYefR6
+         YzAxzVfa2N609PJKMg/9VJHY47D+4VZ0Q0zPvEf3kTluvxf4PDXJbx97XHyBn6NKCNK9
+         XBtxW16Uclema5rwA9OFKYIcAFIOsFVRhTO52g/HaboK6uy6Jpn2VVvMsvkATTmmrjKR
+         nmoA==
+X-Gm-Message-State: ALKqPwckAjQz6xEZykYDVu++wi16JVBccBPpWNFP+lfMo/b7EtzWs2wk
+        yVwoU1uWVJSZE7q0ethmrXdR48CDFgo=
+X-Google-Smtp-Source: AB8JxZqTe+7pqWJSwx7bXNEVj/X/VxE9vQWJEBBrkQD4iik7YC99OPyvs9U0NysG1w82896vRqbdYg==
+X-Received: by 2002:adf:9b1a:: with SMTP id b26-v6mr9218213wrc.206.1526678646645;
+        Fri, 18 May 2018 14:24:06 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id u35-v6sm10969192wrc.29.2018.05.18.14.23.49
+        by smtp.gmail.com with ESMTPSA id u35-v6sm10969192wrc.29.2018.05.18.14.24.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 18 May 2018 14:23:50 -0700 (PDT)
+        Fri, 18 May 2018 14:24:05 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
@@ -57,12 +57,12 @@ Cc:     Elijah Newren <newren@gmail.com>,
         Phillip Wood <phillip.wood@talktalk.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 0/3] unpack_trees_options: free messages when done
-Date:   Fri, 18 May 2018 23:23:24 +0200
-Message-Id: <cover.1526677881.git.martin.agren@gmail.com>
+Subject: [PATCH v3 1/3] merge: setup `opts` later in `checkout_fast_forward()`
+Date:   Fri, 18 May 2018 23:23:25 +0200
+Message-Id: <27965d978f203c5b55ce19fa03fb3e183d442c70.1526677881.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.17.0.840.g5d83f92caf
-In-Reply-To: <CAN0heSo80SjjGtC2x9s-TmNY0=W=YWTYxyjeuAQ3utEAEynXeA@mail.gmail.com>
-References: <CAN0heSo80SjjGtC2x9s-TmNY0=W=YWTYxyjeuAQ3utEAEynXeA@mail.gmail.com>
+In-Reply-To: <cover.1526677881.git.martin.agren@gmail.com>
+References: <CAN0heSo80SjjGtC2x9s-TmNY0=W=YWTYxyjeuAQ3utEAEynXeA@mail.gmail.com> <cover.1526677881.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,31 +71,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a reroll of my attempt at freeing the memory allocated by
-`setup_unpack_trees_porcelain()`. The first two patches are identical to
-v2. The third patch no longer relies on rather intimate knowledge of
-which strings are on the heap and which pointers are duplicates.
-Instead, as suggested by Junio, I keep a separate string-list of strings
-to free. That should make things more future-proof.
+After we initialize the various fields in `opts` but before we actually
+use them, we might return early. Move the initialization further down,
+to immediately before we use `opts`.
 
-v2: https://public-inbox.org/git/cover.1526488122.git.martin.agren@gmail.com/
+This limits the scope of `opts` and will help a later commit fix a
+memory leak without having to worry about those early returns.
 
-Martin
+This patch is best viewed using something like this (note the tab!):
+--color-moved --anchored="	trees[nr_trees] = parse_tree_indirect"
 
-Elijah Newren (1):
-  merge-recursive: provide pair of `unpack_trees_{start,finish}()`
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ merge.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-Martin Ågren (2):
-  merge: setup `opts` later in `checkout_fast_forward()`
-  unpack_trees_options: free messages when done
-
- unpack-trees.h     |  6 ++++++
- builtin/checkout.c |  1 +
- merge-recursive.c  | 30 ++++++++++++++++--------------
- merge.c            | 35 ++++++++++++++++++++---------------
- unpack-trees.c     | 23 +++++++++++++++++++----
- 5 files changed, 62 insertions(+), 33 deletions(-)
-
+diff --git a/merge.c b/merge.c
+index f06a4773d4..f123658e58 100644
+--- a/merge.c
++++ b/merge.c
+@@ -94,8 +94,24 @@ int checkout_fast_forward(const struct object_id *head,
+ 		return -1;
+ 
+ 	memset(&trees, 0, sizeof(trees));
+-	memset(&opts, 0, sizeof(opts));
+ 	memset(&t, 0, sizeof(t));
++
++	trees[nr_trees] = parse_tree_indirect(head);
++	if (!trees[nr_trees++]) {
++		rollback_lock_file(&lock_file);
++		return -1;
++	}
++	trees[nr_trees] = parse_tree_indirect(remote);
++	if (!trees[nr_trees++]) {
++		rollback_lock_file(&lock_file);
++		return -1;
++	}
++	for (i = 0; i < nr_trees; i++) {
++		parse_tree(trees[i]);
++		init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
++	}
++
++	memset(&opts, 0, sizeof(opts));
+ 	if (overwrite_ignore) {
+ 		memset(&dir, 0, sizeof(dir));
+ 		dir.flags |= DIR_SHOW_IGNORED;
+@@ -112,20 +128,6 @@ int checkout_fast_forward(const struct object_id *head,
+ 	opts.fn = twoway_merge;
+ 	setup_unpack_trees_porcelain(&opts, "merge");
+ 
+-	trees[nr_trees] = parse_tree_indirect(head);
+-	if (!trees[nr_trees++]) {
+-		rollback_lock_file(&lock_file);
+-		return -1;
+-	}
+-	trees[nr_trees] = parse_tree_indirect(remote);
+-	if (!trees[nr_trees++]) {
+-		rollback_lock_file(&lock_file);
+-		return -1;
+-	}
+-	for (i = 0; i < nr_trees; i++) {
+-		parse_tree(trees[i]);
+-		init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
+-	}
+ 	if (unpack_trees(nr_trees, t, &opts)) {
+ 		rollback_lock_file(&lock_file);
+ 		return -1;
 -- 
 2.17.0.840.g5d83f92caf
 
