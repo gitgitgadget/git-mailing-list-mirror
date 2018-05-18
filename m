@@ -2,83 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 922C8200B9
-	for <e@80x24.org>; Fri, 18 May 2018 15:45:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9AF0200B9
+	for <e@80x24.org>; Fri, 18 May 2018 15:58:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751435AbeERPpT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 May 2018 11:45:19 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:48618 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751112AbeERPpS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 11:45:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=rFkUbp6NWvOTzs0gDzvasAX7yi659bGvjMAsH2dIRbg=; b=pzCT5sGcyVhG84BCgiQ3gMh/4
-        9Obe0amF+viYE79QQFBhOgjKQF07dNTrChjZm4rXStx8p2Oqt9sBVp7tk0ZSp4It+Zkq6Nj+fW2GI
-        miSyTbUSsvZORKiEBX1jj9+PJ/RhpY1Uc/5KWdz3H0YV8KQqEfjVVxesRIi/7ZoUkDvFvOXlgoyl3
-        J0wCIzdowhaIg5yzdQ+QrwtDQ3qvDQDFAXB3RGGxEslWwf0gqjKiExMcW2Rg+G/VUG3monhe164Yt
-        mWdEt/tbrTS4R9rwTS+PiHN0TAqcC8gIbA5MBI75hQJE0k/+XvGK+I5ijl10z3P+MJfIRwy3rQYUu
-        S3H4ivSJg==;
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:35726 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fJhZE-00FeeU-JL; Fri, 18 May 2018 11:45:17 -0400
-Date:   Fri, 18 May 2018 11:43:48 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Sybille Peters <sypets@gmx.de>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: error(?) in "man git-stash" regarding "--keep-index"
-In-Reply-To: <96486abe-cf13-ef10-7513-2d6c20a9dc1e@gmx.de>
-Message-ID: <alpine.LFD.2.21.1805181141030.10462@localhost.localdomain>
-References: <alpine.LFD.2.21.1805180534170.6786@localhost.localdomain> <CAN0heSrJMFij9xt6RstLD16+2CxJ_HALer4iRL74AZQvH0VWRQ@mail.gmail.com> <alpine.LFD.2.21.1805180648020.10270@localhost.localdomain> <CAN0heSpVKd=-Dpdk09LVtTd0vC2dLUwg0=hbxhKskM3RencsYA@mail.gmail.com>
- <96486abe-cf13-ef10-7513-2d6c20a9dc1e@gmx.de>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1751909AbeERP6f (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 11:58:35 -0400
+Received: from mail-lf0-f41.google.com ([209.85.215.41]:43754 "EHLO
+        mail-lf0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751197AbeERP6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 11:58:34 -0400
+Received: by mail-lf0-f41.google.com with SMTP id n18-v6so14657125lfh.10
+        for <git@vger.kernel.org>; Fri, 18 May 2018 08:58:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fBVkQNvYJLgrNRYnnHAKm/qNUvMsfkLocH4m12oXWUA=;
+        b=KQHAmPHyzznFYu/sRK5kmk9U9SXKEYZyreKVaPmqlsujCIlEZoUJynhbObxs98c2Gy
+         WvXXIKF3C69IUk9TUzErxoxDz+GxEKz8MeN8L2fQ/hbnF6za0gu3npjkEQjsIy2O8Nto
+         XKBbE73JIyyqikuuyGUuJqgkkAbd7BNd5MYxT1bArtyvS5xXGOuZdxBh4drh5DtedjhB
+         cM70CmR/AppGGKmHLIvgdUMTubVT8ERPs7TL4cJXK1Cn2uAhZpOone1204HkWivcz79T
+         1huUbpjDSFotivb/+tOacCS34YmEOd2B6IfUrJ96sIyLQ7SoPI4HIWhKxBp52bFsBL3v
+         efzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fBVkQNvYJLgrNRYnnHAKm/qNUvMsfkLocH4m12oXWUA=;
+        b=IdmY48W8FnS9XpHoZJaORa2u6nmRUP5SDmRHjlY3Mf58PQcFgsuZ4JctUWErL24dkB
+         3dokUeGcEKyZESofjnQJv/nS8zkQK8PIQVMP5DipGSb0IphD54pPyvCTd8iaUf0+wa8Y
+         yoSoFhIE9WLiP/Fcat6+PP35+fHVOketKHztpGZHIa1mdjoACo3EUHtG6YNCGp2iq8K/
+         Eqr1T6ZSP1/HvIg2BO9LpFXkymM8543ND0B/fKoBTJB955MBgykdebkiDOo906wEBRgB
+         DA6CVliMBAydvjURl/LSfJf+IqyTWEyq/nvZ7nN1qPl1qfEsukZYb7IRjfGOzWvYRLIs
+         V8+Q==
+X-Gm-Message-State: ALKqPwfnepr6jvTBA/Utdp3qOGpzzhE+V9vzJLB43CBr5ItUXZgJkhya
+        3BdRsk9Dr2/sqkJmUvTrj2pJGn4kC/15pm1VqaCqnQ==
+X-Google-Smtp-Source: AB8JxZoSpvVduNdsGAxOxvH+ZFkDsvbTvon96EFXijg/SJAPE6+ILOdSgyCUotdVmWLJtS8IBBdMel/GMKBr2XQg3hE=
+X-Received: by 2002:a2e:888b:: with SMTP id k11-v6mr6027109lji.54.1526659112907;
+ Fri, 18 May 2018 08:58:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Received: by 2002:a19:63cf:0:0:0:0:0 with HTTP; Fri, 18 May 2018 08:58:32
+ -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1805180016210.77@tvgsbejvaqbjf.bet>
+References: <CAAdU=LtfkKOKnJJC9yvxG+dZxqUh-Pwa5=ra1DOTfxQSY3e6qg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1805180016210.77@tvgsbejvaqbjf.bet>
+From:   Bartosz Konikiewicz <izdwuut@gmail.com>
+Date:   Fri, 18 May 2018 17:58:32 +0200
+Message-ID: <CAAdU=LuzJmR-zXmDB-HvHCiA-S1_HLEWueVAOOLDOCdqLtZbBg@mail.gmail.com>
+Subject: Re: Troubles with picking an editor during Git update
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, philipoakley@theiet.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 18 May 2018, Sybille Peters wrote:
+Git guidelines states that I should leave cc intact. I have altered
+it, as I wanted to reply to both of you. I hope that my approach can
+be considered acceptable.
 
-> My 2c on this:
->
-> 1) "If the --keep-index option is used, all changes already added to
->    the index are left intact" (manpage git stash)
->
-> That appears to be correct and clear
+Johannes, I see the following line in the piece of code you quoted:
+  EditorAvailable[GE_NotepadPlusPlus]:=RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\App
+Paths\notepad++.exe','',NotepadPlusPlusPath);
 
-  yup, that's not the issue.
+It mentions the following registry key, which was missing from my registry:
+  HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App
+Paths\notepad++.exe
 
-> 2) "$ git stash push --keep-index # save *all other* changes to the
->    stash"  (manpage git stash)
->
-> That is either not correct or misleading. "All other" implies in my
-> opinion all changes except the ones that were already added. *"All
-> changes including already staged changes"* might be a better choice.
+I reinstalled Notepad++ 6.6.9, which added the key and made the
+installer acknowledge that Notepad++ is installed on my system.
 
-  yup, that is *exactly* the point i was trying to make.
+Thanks for encouraging me to further investigate the issue. I have dig
+deeper into the file that you linked for me. As far as my
+comprehension goes, an EditorSelectionChanged procedure (line 1084) is
+responsible for toggling the "next" button. I noticed that it gets
+invoked in at least 2 situations:
+  - when an user picks a text editor (an OnChange event, line 1119)
+  - once the custom page for configuring the default Git editor is
+initialized (the InitializeWizard procedure, line 1199)
 
-rday
+My reasoning tells me that it would be applicable in the
+NextButtonClick procedure as well. I'd add the following piece of code
+to it:
+  if (EditorPage<>NIL) and (CurPageID=EditorPage.ID) then begin
+      EditorSelectionChanged(NIL);
+  end;
+
+I'd also remove the line 1199, as I think the change that I proposed
+would render it redundant.
+
+Philip, I feel that composing a pull request is beyond me. I came to a
+conclusion that it would drain me of too much resources. Thanks for
+the suggestion, as it would be my first pull request ever. I didn't
+manage to achieve it, although I believe that I would be capable of
+doing this, which already fills me with utter joy. I am willing to
+post my report to Git for Windows issue tracker. Thanks for the
+suggestion!
