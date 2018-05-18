@@ -2,97 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D2DB1F51C
-	for <e@80x24.org>; Fri, 18 May 2018 15:04:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8AF081F51C
+	for <e@80x24.org>; Fri, 18 May 2018 15:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751429AbeERPEA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 May 2018 11:04:00 -0400
-Received: from mout.web.de ([217.72.192.78]:47501 "EHLO mout.web.de"
+        id S1751516AbeERPhr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 11:37:47 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60213 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750975AbeERPD7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 11:03:59 -0400
-Received: from [192.168.209.20] ([195.198.252.176]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LeLKb-1eU6t60ag1-00qCkc; Fri, 18
- May 2018 17:03:57 +0200
-Subject: Re: git diff: meaning of ^M at line ends ?
-To:     =?UTF-8?Q?Frank_Sch=c3=a4fer?= <fschaefer.oss@googlemail.com>,
-        git@vger.kernel.org
-References: <6c23ed9e-4a14-12e4-20ca-3ac6f80cf9ec@googlemail.com>
- <8d7e4807-9a79-e357-8265-95f22ab716e0@web.de>
- <ec5c536a-708a-1fd2-6ee2-98271b90b0fb@googlemail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <a6b95cc0-0676-930e-9a42-325688d24675@web.de>
-Date:   Fri, 18 May 2018 17:03:50 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.7.0
+        id S1750763AbeERPhq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 11:37:46 -0400
+Received: from [134.106.48.76] ([134.106.48.76]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M5csW-1eM5aK3hDU-00xejz; Fri, 18
+ May 2018 17:37:44 +0200
+Subject: Re: error(?) in "man git-stash" regarding "--keep-index"
+References: <alpine.LFD.2.21.1805180534170.6786@localhost.localdomain>
+ <CAN0heSrJMFij9xt6RstLD16+2CxJ_HALer4iRL74AZQvH0VWRQ@mail.gmail.com>
+ <alpine.LFD.2.21.1805180648020.10270@localhost.localdomain>
+ <CAN0heSpVKd=-Dpdk09LVtTd0vC2dLUwg0=hbxhKskM3RencsYA@mail.gmail.com>
+From:   Sybille Peters <sypets@gmx.de>
+To:     Git Mailing list <git@vger.kernel.org>
+Message-ID: <96486abe-cf13-ef10-7513-2d6c20a9dc1e@gmx.de>
+Date:   Fri, 18 May 2018 17:37:44 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <ec5c536a-708a-1fd2-6ee2-98271b90b0fb@googlemail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <CAN0heSpVKd=-Dpdk09LVtTd0vC2dLUwg0=hbxhKskM3RencsYA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:sZP7IB5QrNMVVLEXgBfqq0tNEfZz5vH3CsV1czl2cRg+O6wV/Mc
- cZhsTX0g4ZIhvl/lQfsvb0/p8q7p46xk0/HkcMd8Tw5EuigF517ty5f6YEiYfXaBRkp5zXo
- DssJLJzVkYitsnwvmsxZdBHLarlKiYk3sgVAtzOchdySMsVUj7CQxa8uLezXWTduhhM0I2y
- 4JCgHHIUwa6M5mT42DcCw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tFXFs36XwvY=:ycSJXtw/du785A/Egg5wfC
- JoC5JA8eBJ/KGFNjYUG3Fs0txjl0zMvYlFB6wzlretw56Qo8R0v7YZmFliuPzdI0iDnAikvlk
- Ohicc1cJbPyFDktAo9P76FwT48ayXqk1JS3ZDyS5KYcbRLB/U7iPW1dWiPEURUCM/7I43ZuFI
- Nj65PWuIX4GPiSe9TXfDsQ4Mx9KZy93D9rtHzc++AR2WUWqfnmA2uga0LErfuRRe3OdrV394V
- Xmerc98I9UoXcIDUZ0qeMJ8dJcxfB6Bz/FLfilbx33PxELdVRvnSbXtEULL91s/PyuUcUUmJR
- xQ35ZGC2Jg9stWSSPDxAYvR0S96OAzTZ8waJ7jODCC8HyySLqX5KbHd74Yk27OyqmpoXR9I2y
- PSFCPJkmlhWPuz4pOJoG3ihaplHe2Rqm5EWMnRYwV/EePcDKyJAeMvtpn8P+wvNkrABCprMwt
- QRJdUvPfpCqvQobPQ1ui6T4Yx0EZQuA4nxefufquK2Fp6LAWaV5ql2eg3NiUXG/G+PMHWZwy5
- sF7Lg+30kbeX3dYeGTCs+ASkTMg82vaaBw9npKpRTXftQA+MWDlA0QROK3wFuFf3IvDnWZzwd
- gDfmEgRv4qdrgaTdNYWoLmNFfMgPTJkFVwKY6LvQkmzAZb9tPMX7IjVYLCOct2+t1ZW7WGK6W
- 2JADuf74BsD40AyQ50QL6eE3Sfm3AcJEbyW5VJ4hR9vIT3yzXBLqfyYKMMET91AnDxdg42wNF
- cIADXsRHunxu7sjgd722riK1C6QBYZ763Y5P6VU5f9BGI/cxH9qiQQK/LkVMythSeATjVH9b3
- INx5q8G
+Content-Language: en-US
+X-Provags-ID: V03:K1:JXB/YA5rPK4v81aEazHL4KEdH4KkTJa/f5OKFCAD5vIjx2hm9hF
+ JUTdKOS7LGqu/FHHuGQdO7G9QuLR+CCsaze53SsFD41QpI25Z8kGR8OZujx+xeb63rYUbb8
+ sbGa8JdKlMcztnE+CoeoVo7PMqtUmzAEzyD3nqqfxAOwGAQR6Nezdw4FX44RgsdObvF/CMp
+ HNGob6nX6AbUsRpvdTEaA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2cVIC7TTXxA=:od+kNy/jDVqcanfgXthc0i
+ 6Ys9XarhIHrxdArqhmp5k0DBWTBnsMoMaHoY1mNXVACX1QuWOumLwXbhWbNUvf0aKjqqudoAS
+ XHnxAjuU44gZcjgudynkAr/BPbtlEktkK4RI7Pt59jc3qXbI/A6F/P9ky6Zqhi1a4MpkHS/2r
+ vxhcdHBn36YKuiOHhCzz4yY8fHuB357fZiCff4NceD8oBikGdT5vYt/9Lkq8yoCIffP1T5RtJ
+ TnKXUwcHj5Zxi1YkzYTDAQYDu8FaZRyo7eKJ2Y6s168HZvZICePUA2h8QSzo/2WwyP1mA/WqW
+ 2TdOVBZlR6gCOt0p8s+CzAgX+yZiG2E9GJS3IyDpwIWMSCE4jThxt20m0gzX4K9S0fzzEsjM9
+ 7fYSaPyZIBW0WkyrKinG74W8CBBZbieOWLiGGIpb9WUxfG96NygZbho6nCVXrtvmRVa140BD3
+ dS+Or5z+a6Px+gD25dFWpkacaAdv4jJGHk3NV7D8l2+wInmAPvKMyuM6SQePjcPw+Y/OPdVfD
+ MbI4naBEwz8ZL3zENp2Pu64embRRo8nDzAf1WVmIyFJ9TBw9PCHngY7lYDCYdWVMeP79BJaXQ
+ oHDcF5qceorcg3vxiiWdpXnqtK2ue3tVQoI6iU1r6Sz5ZgsXwoW8ZCI3manG6sbyikyK3iAj/
+ dJcAyGc3xmCnHnFFyGDACkgOFr2La21geft7tSOKR8TNLjedVT6+12KWy7CaQiod4jyQq5Ru+
+ Q7sGyvZ+uMMMEsicKmF+mFqZ77jqtn2ZlMfLif+2KAPEy+wjddWVISQfXVYovEBCjJ3hBucJ5
+ lh81A7y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15.05.18 20:04, Frank Schäfer wrote:
-> Am 14.05.2018 um 20:13 schrieb Torsten Bögershausen:
->> ^M is the representation of a "Carriage Return" or CR.
->> Under Linux/Unix/Mac OS X a line is terminated with a single
->> "line feed", LF.
->>
->> Windows typically uses CRLF at the end of the line.
->> "git diff" uses the LF to detect the end of line,
->> leaving the CR alone.
->>
->> Nothing to worry about.
-> Thanks, I already suspected something like that.
-> Has this behavior been changed/added recently ?
+My 2c on this:
 
-That is a good question.
-There is, to my knowledge, no intentional change.
+1) "If the --keep-index option is used, all changes already added to the 
+index are left intact" (manpage git stash)
 
-> I didn't observe it before, although the project I'm currently looking
-> into has always been using CR+LF...
+That appears to be correct and clear
 
-Do you mean that older versions did behave differently ?
-Do you have a version number for the "old" handling ?
 
-> 
-> Why does the ^M only show up in '+' lines ?
-> When changing the line end from CR+LF to LF, the diff looks like this:
+2) "$ git stash push --keep-index    # save *all other* changes to the 
+stash" (manpage git stash)
 
-> 
-> -blahblah
-> +blahblah
-> 
-> But I would expect it to be
-> 
-> -blahblah^M
-> +blahblah
+That is either not correct or misleading. "All other" implies in my 
+opinion all changes
 
-May be this helps (I haven't tested it) ?
-git config  core.whitespace cr-at-eol
+except the ones that were already added. *"All changes including already 
+staged changes"*
+
+might be a better choice.
+
+
+Please also see open question on StackOverflow:
+
+https://stackoverflow.com/questions/50242489/how-to-ignore-added-hunks-in-git-stash-p/
+
 
