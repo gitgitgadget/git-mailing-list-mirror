@@ -2,92 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21A941F51C
-	for <e@80x24.org>; Thu, 17 May 2018 23:00:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33FA71F51C
+	for <e@80x24.org>; Fri, 18 May 2018 01:59:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751671AbeEQXAa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 May 2018 19:00:30 -0400
-Received: from mail-wr0-f181.google.com ([209.85.128.181]:40594 "EHLO
-        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750938AbeEQXA3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 May 2018 19:00:29 -0400
-Received: by mail-wr0-f181.google.com with SMTP id v60-v6so7247473wrc.7
-        for <git@vger.kernel.org>; Thu, 17 May 2018 16:00:28 -0700 (PDT)
+        id S1752253AbeERB72 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 May 2018 21:59:28 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:39139 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752238AbeERB70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 May 2018 21:59:26 -0400
+Received: by mail-wm0-f68.google.com with SMTP id f8-v6so12277953wmc.4
+        for <git@vger.kernel.org>; Thu, 17 May 2018 18:59:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=bcv5GInLamDyUg9UUqfoI7TpuELf4cWWMKmkl//U6dY=;
-        b=gUWMsb0Xqq1CVsvqProxUW/9AY4c8FjxgnnbtUnVc5eoDFgNSDNawMSZNr0XDuMqMw
-         g0EEpXxENco9D0yl3oLeO5teEDRTXaSFsZcoWTgoytFgoAVRw+xVKSAXFCACUM/nwC0+
-         mygC68QRhEzEDQQYLqRZpyX4S+qcaG5mN6nFZWpko0CPEwEY7V/KK5atMNq2pjrPIBX/
-         9BYhwHMnorW6pV5L2rB6pzWkKneVkNYoqyJcWt/TwQI+pVeI8xtgU6S0gAcFzCVbxZhy
-         w4rfeK5RkdWXuCf8ZvyMLA3lauzqNyW6rcnENo7AZgar1R31XoCaBgM/Okug2hJjUknz
-         U/BA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=vMVE4Cz10mzwNSvV2HJnfFEJkxWOcXN9q5LFy8mqmMU=;
+        b=ovJ4LkvbcexiZsf2UELrOet2/Nc+TwbIu3aP0QkDmzivPzUqPfYUJLtpLYUofTo9TT
+         6Lxx/CCH+K1xb6waU0ReLZh02wqkqJ7ZafEsMNSQj42D2coKzkb6lBGR0iyWB9LB55lp
+         61FDuFj6FUgI5DkHk76rxy1Oz8lWYzwA4YLWtYBjAV24fzhnTNFfJ4+cP5hD8RM9sWej
+         T72bjX8z1DL93baG8bJR0IsD+OUNXWFcLNCMOQYIk3qVs8qhgWiOeTUJ3fb2EoUpdy2s
+         4Tnx2V5aUUM5yBJ+xZc3vb+af8/GaJPkysczhLSBmKxAeGS/Xw9YMEksLR/U51fj/Ysl
+         X8ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=bcv5GInLamDyUg9UUqfoI7TpuELf4cWWMKmkl//U6dY=;
-        b=nnPf04hN9NDXvSZg3ZmxHhhIqkjZsjgv7oii7IFjyqg1HIIhXiHzyeJ5urG8hnPphB
-         IaaPREQSsKJU5J8Y2baWf0gdJHVNetNRM8W4/lJjyLk3S5nUj9ZaZr3dhBvJLNYadPw9
-         p3RNQ010ax30ckBosMmn/sKbCkW9NWcY4pP1/IjP8E6fMD6YfEBBJvSZicQVnv9JtfpP
-         B+9GzPnlBnvrVCDsIuH1HJ0k/sCgz5am1k1NSC2eiZXRZeT1TpnvdSN2hoifdv+fpLoW
-         ze0yHtvDgPkfUiV0W+NtMpiAYEO08DfiZiEt4LAvet7VzR4nGwsCsz2cKTtHMlzQHFG3
-         I+pQ==
-X-Gm-Message-State: ALKqPwfqAHeiYEpGkE8yAPeMpS9WD7/rK7+Thi4wQ3CvVklPVRxJXmvE
-        55rYpm1D56Sd0UZa5a5/gfg=
-X-Google-Smtp-Source: AB8JxZokbuLxsWkkzgG1mrWrDOjHT1kzEpb3+nHeMKN4ZLj/DxLkG+OqjcynIEYfZxfQZBS+Y0iFRA==
-X-Received: by 2002:adf:992d:: with SMTP id x42-v6mr5998741wrb.145.1526598028023;
-        Thu, 17 May 2018 16:00:28 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z2-v6sm6326907wmg.46.2018.05.17.16.00.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 May 2018 16:00:27 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/1] Hot fix for js/empty-config-section-fix
-References: <cover.1526593623.git.johannes.schindelin@gmx.de>
-Date:   Fri, 18 May 2018 08:00:26 +0900
-In-Reply-To: <cover.1526593623.git.johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Thu, 17 May 2018 23:47:04 +0200")
-Message-ID: <xmqqy3gh51md.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=vMVE4Cz10mzwNSvV2HJnfFEJkxWOcXN9q5LFy8mqmMU=;
+        b=Y5QEnXmvzYZDLIB4cdz5ztxUhBctyzEHadXTbmMs3UthnOv0Me89DywiK/H+IKMviM
+         v6gF7RjfwyRgxaYVERchJbJNOFBGDF7HYwbJS857qeWgV1OYof23XLSABIUWXs4VUpS4
+         9F/0Qx1yJ6hXfe8DqcHnIbifYcQiSyjXWbgXY073dav68Y/rHhTAki7RyUMZuZgf2g3x
+         ihT8Dziabx2jOwMF8er5+YPnLgZ3jAtZZtF+K5z47+i2uQW5NcaGYKEwsHvBQsmNayEt
+         VUTO5WtkZwheq/wt72aoGcAAFB0xrUzrIsxlGKwQhUoitLWOVm2AMc5+OSR3NlcuMyx7
+         WxIA==
+X-Gm-Message-State: ALKqPwcoPFXfWYdZnd0qEdZZRFcIYFRe8DeLcj0saMWT85Aq2amVFhLm
+        rwBr/ck4tsunRNOgKMJ+YgZauOf+VUSAW3e91I8=
+X-Google-Smtp-Source: AB8JxZpICnrTw7WuvkLQhel9UwTbDuHEPqIfs/rZ4plz3TBchLrJcDmCDoR+eEBz7lI3cjf/VFmSjY+mEwaAQfBLpYs=
+X-Received: by 2002:a50:ab42:: with SMTP id t2-v6mr9539769edc.133.1526608764769;
+ Thu, 17 May 2018 18:59:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.80.234.135 with HTTP; Thu, 17 May 2018 18:59:04 -0700 (PDT)
+In-Reply-To: <xmqqmuwy54yj.fsf@gitster-ct.c.googlers.com>
+References: <CABPp-BHm4B5vXZGHn_i6Aycvc_PDNWSFxLFo9s-ijb511VY9RA@mail.gmail.com>
+ <cover.1526488122.git.martin.agren@gmail.com> <0b7440f21e9ff7a066802fe1e7cb3078cf4ed2b8.1526488122.git.martin.agren@gmail.com>
+ <xmqqmuwy54yj.fsf@gitster-ct.c.googlers.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 17 May 2018 18:59:04 -0700
+Message-ID: <CA+P7+xrXRGZe9AOR0+mZZTL9_nsHDMBv=1F6ea-p8aec3dhNuA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] merge: setup `opts` later in `checkout_fast_forward()`
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Thu, May 17, 2018 at 2:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>
+>> After we initialize the various fields in `opts` but before we actually
+>> use them, we might return early. Move the initialization further down,
+>> to immediately before we use `opts`.
+>>
+>> This limits the scope of `opts` and will help a later commit fix a
+>> memory leak without having to worry about those early returns.
+>>
+>> This patch is best viewed using something like this (note the tab!):
+>> --color-moved --anchored=3D"    trees[nr_trees] =3D parse_tree_indirect"
+>
+> This side remark is interesting because it totally depends on how
+> you look at it.  I think "initialize opts late" and "attempt to
+> parse the trees first and fail early" are the sides of the same
+> coin, and the diff shown without the anchor matches the latter,
+> which is also perfectly acceptable interpretation of what this patch
+> does.
+>
 
-> In https://public-inbox.org/git/20180508134248.GA25513@sigill.intra.peff.net/
-> Jeff King pointed out that an invalid config section is not an indicator
-> of a bug, as it is usually provided by the user.
->
-> So we should not throw a fit and tell the user about a bug that they
-> might even report.
->
-> Instead, let's just error out.
+Yes. I like that we have tools available to show diffs in different
+hopefully meaningful ways.
 
-Yeah, makes sense.  Thanks for a prompt fix-up.
+I happen to like when the diff matches my mental map of the change
+after reading the commit message, so having the author indicate how
+best to view it is useful, but definitely cool to see that we can get
+different interpretations.
 
-
->
->
-> Johannes Schindelin (1):
->   config: a user-provided invalid section is not a BUG
->
->  config.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
->
-> base-commit: ccdcbd54c4475c2238b310f7113ab3075b5abc9c
-> Published-As: https://github.com/dscho/git/releases/tag/empty-config-section-fix-v1
-> Fetch-It-Via: git fetch https://github.com/dscho/git empty-config-section-fix-v1
+Thanks,
+Jake
