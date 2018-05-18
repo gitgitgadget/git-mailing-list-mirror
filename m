@@ -2,124 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D53D1F51C
-	for <e@80x24.org>; Fri, 18 May 2018 20:26:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35BA51F51C
+	for <e@80x24.org>; Fri, 18 May 2018 21:23:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751571AbeERU0H (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 May 2018 16:26:07 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:53398 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751446AbeERU0G (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 16:26:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=a2VGSFySQ+YwDs5Gk7ey9V0UoLEAHZUUgdULyVWPqME=; b=QPd+gLG5wu5Pgt1Jl5TbVP+xv
-        kTWVTIk6YSGPjB8nK7ajor+An153qOmbzjYpfxMFaVpE/GmRI+KyANulV5bwuvwmGfrFjah1sHlGX
-        drXE/k/46of34qUMqudBYMd/WlD22TilMnYlgXbIH9HGc6gLWTE8kwp18RRGIqGeDiGvCEgDnCR/3
-        VeokRy2hIzQcGbbrXNfXZghjO56+FACcAiw1QIEFgyZTbGaFoGPUZnBXUSPgAldPpdlosOnD6gK5b
-        WwDpdEecu5ibhIcDrK7iaCs64Lg9eD/dtJytiweBQGc+p4C7EnzueCLWMgxWKjTVlG3gqTt7vJ0gS
-        h3yAinwNA==;
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:39776 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fJlwx-00GwES-GT; Fri, 18 May 2018 16:26:04 -0400
-Date:   Fri, 18 May 2018 16:24:35 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Sybille Peters <sypets@gmx.de>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: error(?) in "man git-stash" regarding "--keep-index"
-In-Reply-To: <96486abe-cf13-ef10-7513-2d6c20a9dc1e@gmx.de>
-Message-ID: <alpine.LFD.2.21.1805181544240.18185@localhost.localdomain>
-References: <alpine.LFD.2.21.1805180534170.6786@localhost.localdomain> <CAN0heSrJMFij9xt6RstLD16+2CxJ_HALer4iRL74AZQvH0VWRQ@mail.gmail.com> <alpine.LFD.2.21.1805180648020.10270@localhost.localdomain> <CAN0heSpVKd=-Dpdk09LVtTd0vC2dLUwg0=hbxhKskM3RencsYA@mail.gmail.com>
- <96486abe-cf13-ef10-7513-2d6c20a9dc1e@gmx.de>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1751545AbeERVXx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 17:23:53 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:50847 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750763AbeERVXw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 17:23:52 -0400
+Received: by mail-wm0-f68.google.com with SMTP id t11-v6so16311034wmt.0
+        for <git@vger.kernel.org>; Fri, 18 May 2018 14:23:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HTX3UiS6kYKuPCNIMpmvxfzzmI2D6UevtdhKosZqSrA=;
+        b=CGgfR5KjWMGErhsdT2o80+yEhUp/1TRzNu6ojqKeaG+h/4QgPELgYQrvpel+1WBnSZ
+         2aUBq4oAMykLDnAaKMkaB1yFO2Aem3IOvDYDdnc2XAQfF56rSygUt7u4EEfhdtLEZfAH
+         uHth1NHn+ZlptW8AOHdBSVZ/87Cb+iIOTJpViQu4IPc4rVebTDXRcjt7jkrqqvd/aHic
+         S1YvYTEe0v+jr/ZwoTqbR5vvTib+9Pg5n6ELS871mM2V+C2esLwx2OwAHnVVjyOYpHup
+         npPXVopINJ6k3NHxT+K+AWwhA0q/h/4B3SxrTaZ+XL4NQn+FejpNl88vU8TNweUpLqhe
+         L2DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HTX3UiS6kYKuPCNIMpmvxfzzmI2D6UevtdhKosZqSrA=;
+        b=WkmBq96Q/t1NBpip122c8KYXVp1fWC7YPcX7mszragV6A+OteOelhsjKQ4Iar2r9dA
+         PFkpzJzkR+TVTYPNlJjlb2n30kFqib24Yaj+61YoHYsYTS/4wQcsVyQLdDb4SIcOwqG/
+         37D2GfkxhP3sYaMKPoXajphSd8XnZjRvibeNHYl6VgtSMr8hhAu4YSyn1FzdTxm7OhXQ
+         AA5+bBDqzTKCr1ye8E0a2us+JUbBBWlFBXmX3/6XfsO2mOQTrQuAwJgKmH8vhbB3sGBT
+         cHl1HPBGQvDaHuxod33HlfDqywNlt/VV3yaAk+ywmwGOgHk4hVuIECRdjJiYkdnC++HY
+         VO7g==
+X-Gm-Message-State: ALKqPwfBSx4h1pqZqnd0BK0BJE2I/CqzgzXHGntCVto3ptM6R/7zN4YC
+        wxTSt56pVrCNqhMx63OBy1sS+4I/HZs=
+X-Google-Smtp-Source: AB8JxZrxfF/SkHFQXT5zuK7Pm/xJMYG2v8F+5hB+RQtNSAYQvCnWDwUekgLG+YS37Psg0GYzQzlIVg==
+X-Received: by 2002:a1c:17c9:: with SMTP id 192-v6mr5304613wmx.95.1526678631408;
+        Fri, 18 May 2018 14:23:51 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id u35-v6sm10969192wrc.29.2018.05.18.14.23.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 18 May 2018 14:23:50 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/3] unpack_trees_options: free messages when done
+Date:   Fri, 18 May 2018 23:23:24 +0200
+Message-Id: <cover.1526677881.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.17.0.840.g5d83f92caf
+In-Reply-To: <CAN0heSo80SjjGtC2x9s-TmNY0=W=YWTYxyjeuAQ3utEAEynXeA@mail.gmail.com>
+References: <CAN0heSo80SjjGtC2x9s-TmNY0=W=YWTYxyjeuAQ3utEAEynXeA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 18 May 2018, Sybille Peters wrote:
+This is a reroll of my attempt at freeing the memory allocated by
+`setup_unpack_trees_porcelain()`. The first two patches are identical to
+v2. The third patch no longer relies on rather intimate knowledge of
+which strings are on the heap and which pointers are duplicates.
+Instead, as suggested by Junio, I keep a separate string-list of strings
+to free. That should make things more future-proof.
 
-> My 2c on this:
->
-> 1) "If the --keep-index option is used, all changes already added to
->    the index are left intact" (manpage git stash)
->
-> That appears to be correct and clear
->
->
-> 2) "$ git stash push --keep-index # save *all other* changes to the
->    stash"  (manpage git stash)
->
-> That is either not correct or misleading. "All other" implies in my
-> opinion all changes except the ones that were already added. *"All
-> changes including already staged changes"* might be a better choice.
->
-> Please also see open question on StackOverflow:
->
-> https://stackoverflow.com/questions/50242489/how-to-ignore-added-hunks-in-git-stash-p/
+v2: https://public-inbox.org/git/cover.1526488122.git.martin.agren@gmail.com/
 
-  hilariously, that SO piece refers to an issue posted to github here:
+Martin
 
-https://github.com/progit/progit2/issues/822
+Elijah Newren (1):
+  merge-recursive: provide pair of `unpack_trees_{start,finish}()`
 
-which was, in fact, posted by me. :-) in any event, let me summarize a
-couple things here.
+Martin Ågren (2):
+  merge: setup `opts` later in `checkout_fast_forward()`
+  unpack_trees_options: free messages when done
 
-  when i first read up on git stash, it was just that section in the
-man page that threw me, and once i figured out how it worked, i
-thought of how *i* would have explained it, and it would have gone
-like this (assuming i do, in fact, now understand it correctly, which
-is by no means guaranteed).
+ unpack-trees.h     |  6 ++++++
+ builtin/checkout.c |  1 +
+ merge-recursive.c  | 30 ++++++++++++++++--------------
+ merge.c            | 35 ++++++++++++++++++++---------------
+ unpack-trees.c     | 23 +++++++++++++++++++----
+ 5 files changed, 62 insertions(+), 33 deletions(-)
 
-  first, when you do "git stash push", what *always* happens is that
-what is stashed is, in two parts, changes in the working directory,
-and what is staged in the index. clearly, the staged changes are a
-subset of the overall working directory changes, but what's important
-is that the stash contains *all* of those changes and, more
-importantly, distinguishes between the two categories. that's the
-crucial part -- what is stashed (regardless of "--keep-index" or not)
-is:
-
-  1) staged changes
-  2) unstaged changes
-
-can we agree on that? the only difference made by "--keep-index" is
-that the staged changes, in addition to being stashed, are left in the
-index. but that makes no difference to what is stashed, do i have that
-right?
-
-  now, when popping (or applying), what is popped are all of the
-changes in the stash, back into the working directory. period. that
-always happens, correct? the only difference introduced by "--index"
-is that the pop/apply *also* tries to restage what was staged before.
-
-  is all of the above correct? if it had been explained that way, i
-wouldn't have spent several confused hours trying to figure out why i
-wasn't getting the results i was expecting.
-
-rday
+-- 
+2.17.0.840.g5d83f92caf
 
