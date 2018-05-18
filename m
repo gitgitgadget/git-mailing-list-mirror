@@ -2,87 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51D1B1F51C
-	for <e@80x24.org>; Fri, 18 May 2018 22:27:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EC9D1F51C
+	for <e@80x24.org>; Fri, 18 May 2018 22:30:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752044AbeERW1I (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 May 2018 18:27:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46052 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751888AbeERW1H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 18:27:07 -0400
-Received: (qmail 31245 invoked by uid 109); 18 May 2018 22:27:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 18 May 2018 22:27:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15016 invoked by uid 111); 18 May 2018 22:27:14 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 18 May 2018 18:27:14 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 May 2018 15:27:04 -0700
-Date:   Fri, 18 May 2018 15:27:04 -0700
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/2] config: die when --blob is used outside a repository
-Message-ID: <20180518222704.GB9623@sigill.intra.peff.net>
-References: <20180518222506.GA9527@sigill.intra.peff.net>
+        id S1752273AbeERWas (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 18:30:48 -0400
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:33762 "EHLO
+        mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752234AbeERWar (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 18:30:47 -0400
+Received: by mail-vk0-f67.google.com with SMTP id q189-v6so5756886vkb.0
+        for <git@vger.kernel.org>; Fri, 18 May 2018 15:30:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=w2bWYYShsxJk96XdgBS4KYlhJC4JsUu9JTT/LXqMX8Y=;
+        b=WI4fe6PIDVkRJGxyNxgE9o5SYf+jlhT7rIFkWcW5Nyee5TtST+WWl4Kj+Mt8KOkO7C
+         ySg7N+R5SZN6vgLNRLLvRm+4VGaAFaZgODM69hX1H3GKdKZcMANEyv8A8Sj4hK7d0i+x
+         qpnJAXJ1dkPNox7wNo+gnOAVndo51XyIMlRzTfish5larN+yfPUtS0kCdcbh0drLBXcj
+         5DfjkTjh7rHnkc4GcIgT6i4gS6XzP2z82wImCtkSS0ZsqOtwAtKxHaa2zsfWZJfSLh3v
+         ECeKgtP875n4EKdLJKI8C6Bl69hGj9EL1Je3YjRAkdsPjOCdq/jMpE3tVxbh0O6WvWfg
+         sMHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=w2bWYYShsxJk96XdgBS4KYlhJC4JsUu9JTT/LXqMX8Y=;
+        b=RlEA+FUhtDvOMKcEb3EDL8d4amOUVuOvMjDmiqjzJAoZXPejMGm25zJl4CCT/5TEFn
+         mDQShS6IgfKHO8gX0nkzAj6c5CA/NmF7h04zV3ORfLZEBqUe1pebXyudZblEAIbSEQ3I
+         tpMC32OA5f5QSaKzxs3EAUwsadXJOg9YDx4gzzN3qwuZFU7/FHH+ha+oQEB84eky3HMg
+         MzWfn/QqGrKh+U+P8nUZoFKPyiaO3GSR8sovmXCTdwiUiL+mILgAUGNymm/crDA5S46J
+         zLT0BsHLFG/cFr05lKjkuthv+Vln+HMSx2AG3IIa4o+gZXbKoQZ8jtH/GAWEThIXd/N0
+         QAcA==
+X-Gm-Message-State: ALKqPwf7hZ0O3XR4yhHGOk3BFXMymXx891owMj8CyAV8MZJ+sZYjlF9t
+        e6PVtU7hID4oMzEkXolCqC/rXqjGy9dPvBfp35c=
+X-Google-Smtp-Source: AB8JxZoNGV5IBg4c8ygIItLfyKa0BNsHNhZ6vO+j49l/+FCIesTgV1LT/d8ZbWmS4/9wpZuy7nmZdRPha6fKudzr0C0=
+X-Received: by 2002:a1f:c155:: with SMTP id r82-v6mr8112711vkf.76.1526682645816;
+ Fri, 18 May 2018 15:30:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180518222506.GA9527@sigill.intra.peff.net>
+Received: by 10.176.95.4 with HTTP; Fri, 18 May 2018 15:30:44 -0700 (PDT)
+In-Reply-To: <20180518213333.GB21797@sigill.intra.peff.net>
+References: <CAN0heSo80SjjGtC2x9s-TmNY0=W=YWTYxyjeuAQ3utEAEynXeA@mail.gmail.com>
+ <cover.1526677881.git.martin.agren@gmail.com> <f4e7822ebe8fcab8243ae3931084e10f3b199788.1526677881.git.martin.agren@gmail.com>
+ <20180518213333.GB21797@sigill.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 18 May 2018 15:30:44 -0700
+Message-ID: <CABPp-BFdKFNLHxqt-rbSVPx_cXVG3iyad42qYFbWvP9_2fW2gQ@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] unpack_trees_options: free messages when done
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If you run "config --blob" outside of a repository, then we
-eventually try to resolve the blob name and hit a BUG().
-Let's catch this earlier and provide a useful message.
+On Fri, May 18, 2018 at 2:33 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, May 18, 2018 at 11:23:27PM +0200, Martin =C3=85gren wrote:
+>
+>> diff --git a/unpack-trees.c b/unpack-trees.c
+>> index 79fd97074e..60293ff536 100644
+>> --- a/unpack-trees.c
+>> +++ b/unpack-trees.c
+>> @@ -103,6 +103,8 @@ void setup_unpack_trees_porcelain(struct unpack_tree=
+s_options *opts,
+>>       const char **msgs =3D opts->msgs;
+>>       const char *msg;
+>>
+>> +     opts->msgs_to_free.strdup_strings =3D 0;
+>> +
+>> [...]
+>> +void clear_unpack_trees_porcelain(struct unpack_trees_options *opts)
+>> +{
+>> +     opts->msgs_to_free.strdup_strings =3D 1;
+>> +     string_list_clear(&opts->msgs_to_free, 0);
+>
+> I like this string_list approach much better, but it's too bad we have
+> to go through these contortions with the strdup flag to get the memory
+> ownership right.
+>
+> If we had a string_list_appendf(), then we could just leave that flag
+> alone and this:
+>
+>> @@ -118,8 +120,9 @@ void setup_unpack_trees_porcelain(struct unpack_tree=
+s_options *opts,
+>>                     ? _("Your local changes to the following files would=
+ be overwritten by %s:\n%%s"
+>>                         "Please commit your changes or stash them before=
+ you %s.")
+>>                     : _("Your local changes to the following files would=
+ be overwritten by %s:\n%%s");
+>> -     msgs[ERROR_WOULD_OVERWRITE] =3D msgs[ERROR_NOT_UPTODATE_FILE] =3D
+>> -             xstrfmt(msg, cmd, cmd);
+>> +     msg =3D xstrfmt(msg, cmd, cmd);
+>> +     msgs[ERROR_WOULD_OVERWRITE] =3D msgs[ERROR_NOT_UPTODATE_FILE] =3D =
+msg;
+>> +     string_list_append(&opts->msgs_to_free, msg);
+>
+> would become:
+>
+>   msgs[ERROR_WOULD_OVERWRITE] =3D msgs[ERROR_NOUPTODATE_FILE] =3D
+>         string_list_appendf(&opts->msgs_to_free, msg, cmd, cmd)->string;
+>
+> I don't know if that's worth it or not (I suspect that there are other
+> places where appendf would be handy, but I didn't poke around).
 
-Note that we could also catch this much lower in the stack,
-in git_config_from_blob_ref(). That might cover other
-callsites, too, but it's unclear whether those ones would
-actually be bugs or not. So let's leave the low-level
-functions to assume the caller knows what it's doing (and
-BUG() if it turns out it doesn't).
+The strdup_strings=3D1 immediately before calling string_list_clear()
+has been used in one other place in merge-recursive.c, and tripped up
+the reviewer requiring a big code comment to explain it. (See the very
+end of https://public-inbox.org/git/CABPp-BGh7QTTfu3kgH4KO5DrrXiQjtrNhx_uaQ=
+sB6fHXT+9hLQ@mail.gmail.com/
+).  So there's already one other place in merge-recursive.c that might
+benefit from such a change.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/config.c       | 3 +++
- t/t1307-config-blob.sh | 4 ++++
- 2 files changed, 7 insertions(+)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 69e7270356..4155734f4a 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -602,6 +602,9 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	if (use_local_config && nongit)
- 		die(_("--local can only be used inside a git repository"));
- 
-+	if (given_config_source.blob && nongit)
-+		die(_("--blob can only be used inside a git repository"));
-+
- 	if (given_config_source.file &&
- 			!strcmp(given_config_source.file, "-")) {
- 		given_config_source.file = NULL;
-diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
-index eed31ffa30..37dc689d8c 100755
---- a/t/t1307-config-blob.sh
-+++ b/t/t1307-config-blob.sh
-@@ -73,4 +73,8 @@ test_expect_success 'can parse blob ending with CR' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'config --blob outside of a repository is an error' '
-+	test_must_fail nongit git config --blob=foo --list
-+'
-+
- test_done
--- 
-2.17.0.1052.g7d69f75dbf
+A quick search shows about half a dozen other sites throughout the
+code that are doing something similar:
+
+$ git grep -3 strdup_strings | grep -B 1 string_list_clear
+bisect.c: refs_for_removal.strdup_strings =3D 1;
+bisect.c- string_list_clear(&refs_for_removal, 0);
+--
+builtin/shortlog.c: onelines->strdup_strings =3D 1;
+builtin/shortlog.c- string_list_clear(onelines, 0);
+--
+builtin/shortlog.c: log->list.strdup_strings =3D 1;
+builtin/shortlog.c- string_list_clear(&log->list, 1);
+--
+mailmap.c: me->namemap.strdup_strings =3D 1;
+mailmap.c- string_list_clear_func(&me->namemap, free_mailmap_info);
+--
+mailmap.c: map->strdup_strings =3D 1;
+mailmap.c- string_list_clear_func(map, free_mailmap_entry);
+--
+merge-recursive.c: entry->possible_new_dirs.strdup_strings =3D 1;
+merge-recursive.c- string_list_clear(&entry->possible_new_dirs, 1);
+--
+revision.c: revs->notes_opt.extra_notes_refs.strdup_strings =3D 1;
+revision.c- string_list_clear(&revs->notes_opt.extra_notes_refs, 0);
+
+
+Maybe someone wants to tackle that as a separate patch series?  (Maybe
+we make it a micro-project for future GSoC'ers?)
