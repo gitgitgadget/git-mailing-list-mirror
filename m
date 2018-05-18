@@ -2,89 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF0E31F51C
-	for <e@80x24.org>; Fri, 18 May 2018 22:31:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B62F1F51C
+	for <e@80x24.org>; Fri, 18 May 2018 22:51:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752389AbeERWbh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 May 2018 18:31:37 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:40373 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752381AbeERWbh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 18:31:37 -0400
-Received: by mail-pf0-f195.google.com with SMTP id f189-v6so4387592pfa.7
-        for <git@vger.kernel.org>; Fri, 18 May 2018 15:31:36 -0700 (PDT)
+        id S1752195AbeERWvU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 18:51:20 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:44757 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752060AbeERWvT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 18:51:19 -0400
+Received: by mail-yb0-f196.google.com with SMTP id s8-v6so2010677ybp.11
+        for <git@vger.kernel.org>; Fri, 18 May 2018 15:51:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=I0gLraXYGmv7VsUbBeSNg+dEBUx8YfLzGvyhIIBCxMc=;
-        b=gohRYasCoolsUt9dJes6/F1f90U6yC+/4sOA9G7/mi1lYVV2esMb0LR5hMBrvK2c3X
-         LuWOp1eNxzN/5WGylImAoK81YGrh7rgvhSgrGXcOj2buj4JjpO6TSfoGu14TcZ20SpFB
-         1sxLNhZKYOd/TIpZglWWYsf0NGVeRC8quRiobAm/fuPxCNzXxceymPHniA+e/rLvEG9L
-         bBZeMsN/X+73LmX9KHogu0RL/Br4DXGJDAGmd8vE/XAWU/mguAA3TAvyP3TuNdDYY6ec
-         wVU/xxFkXGxvaA/luG50wSqXgqPeZWnak4JBRH/TIBNcP/dLg7SubwKJ9YimsZAQwBDi
-         3CmQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=WPgw7MpOC7yZF+dax1/hyC4SA4wArR+z3NFrFbraAJE=;
+        b=ljN4ueE4UZHWpYHHBbvdCEKzD8DAdSU2J+tRZfYm+0Q1ktROsfdm35XKA182nhKCRx
+         11RlUM+edXl6fVI9mtdaxebFF0581wFecUF13ymaWhmLtyK9xqKx+pniQJWBQ6XJ6GI8
+         3ue4bQAO2xl3jLvK024RAuZrjqptQL5d1KYYWCHfKOimIS+KkdpkNj5tLTL4B0hTgGlC
+         UWkAVwB4ysfZ/y4nvbibV/MUsFGn5dqmfM0x9FGW75KvlJnY/uG3rn0mxoQyUTbUgqBM
+         yfh7yZ0n1JJdF0vKD67w8kaSy/iZNOHg5MK9iNSPAftVt+Atbn7cubGotu2wNS48nho1
+         nleA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=I0gLraXYGmv7VsUbBeSNg+dEBUx8YfLzGvyhIIBCxMc=;
-        b=OOwoVaZbUfLpj5gHUPuGh/+09PFUZUnHJXXTIny9uiS+umGjWvFTs/TT3KyaeCRGMx
-         1euNTm0M1x6eeLkTSkBJCnzExHgw3Rv1/tpKOZwa4EUx4PFsn8YwGqjL1M7HbLj10Ert
-         ud7Xi7BRNuGJ7qQY2a+TYS+LtrVCckmvnOxHXDWjg9cvzhlOO4P4Lbc0MrqO6PKJdX1K
-         5OD95AHMz1OrMXVV511uKbIhzNikvXR2syCpPJn3//xIBNiQyugQa47g56gvLaYMIj9a
-         934wv5RpopTSWx/8GFccBWj9e6BwFXHPDfGFUPjAKPtGAB68iOkNQYERbB3HCkDlXLFt
-         2gQA==
-X-Gm-Message-State: ALKqPwceeVanfdRalE4z9tUIIypSMtKOLQjDw200rmmpVTdOfULajsHq
-        3hmVtbd3ifcdB3Vvn+aG1d33Tg==
-X-Google-Smtp-Source: AB8JxZrvqJ004wFgTc3LFLUK+KH21D0Gw6LyTrHYF5TJmEAbl+St7qfZQpDWVgQIhO6lP5kXlqkbJQ==
-X-Received: by 2002:a62:ccdc:: with SMTP id j89-v6mr11272674pfk.182.1526682696378;
-        Fri, 18 May 2018 15:31:36 -0700 (PDT)
-Received: from localhost ([2601:602:9500:1120:75fb:b3b2:8793:31ee])
-        by smtp.gmail.com with ESMTPSA id f2-v6sm6823436pgp.28.2018.05.18.15.31.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 May 2018 15:31:35 -0700 (PDT)
-Date:   Fri, 18 May 2018 15:31:34 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/2] config: die when --blob is used outside a repository
-Message-ID: <20180518223134.GA56823@syl.local>
-References: <20180518222506.GA9527@sigill.intra.peff.net>
- <20180518222704.GB9623@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=WPgw7MpOC7yZF+dax1/hyC4SA4wArR+z3NFrFbraAJE=;
+        b=pL3rXNI3aIGjxP3pBUOQIF+mmQ3zG90xkn/Y22wPgBqwnqLIeVZs+SJhRn8r9Hk1QT
+         59hczuncXd+Y3OEaozb6iy7JVQx6y0U/5J7rzejH1GwfpgGO4s4rRD+V/UyQhHHNGw52
+         /y4B7K7957RZoBxN+gX+TDEZ+Gj9Wys2B8vJZewDVHwuwnrLI6qPH/k2gDbkprp03u2z
+         uMzDo3XUOByOAqZsmkGpF+vMf7SzGP6WvjlQfjkpwZg7iNks53ItC7r76VePVtA5XjNM
+         sK8PfMEWai9DmknLOZnJjr9s/Q09qzBzxqieyEmLOZ8OSzDHK61KOX5ic0cSMwZP5/xt
+         AmMA==
+X-Gm-Message-State: ALKqPwcbMR9WQmbqN0ZP1G8AnaMuuMrf0kvvjRqrgX3VSTc3WhnkGv8p
+        YZZs45Vm7Xbh5KwngOVrBY9Qmeifm1Ekh2xrDYGgLg==
+X-Google-Smtp-Source: AB8JxZpkmof0UODK0I3jgAnRll1yGALHS2TbPK2ZxutnwfiPsptpCXnwnZWbYI10vs5meW0hqHbAjFNqzGEFroxBc6o=
+X-Received: by 2002:a25:6cc2:: with SMTP id h185-v6mr6589016ybc.307.1526683878092;
+ Fri, 18 May 2018 15:51:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180518222704.GB9623@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Received: by 2002:a25:cfd8:0:0:0:0:0 with HTTP; Fri, 18 May 2018 15:51:17
+ -0700 (PDT)
+In-Reply-To: <20180518222552.GA9623@sigill.intra.peff.net>
+References: <20180518222506.GA9527@sigill.intra.peff.net> <20180518222552.GA9623@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 18 May 2018 15:51:17 -0700
+Message-ID: <CAGZ79kbE5bdeFnQw=EiRw2iTw4mAs5=RefAh9oxYn9+yjy7YRw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] get_main_ref_store: BUG() when outside a repository
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 18, 2018 at 03:27:04PM -0700, Jeff King wrote:
-> If you run "config --blob" outside of a repository, then we
-> eventually try to resolve the blob name and hit a BUG().
-> Let's catch this earlier and provide a useful message.
-
-I think that this approach is sensible. Let's (1) fix a SIGSEGV that
-should be a BUG(), and (2) make sure that we never get there in the
-first place.
-
-This looks fine to me.
-
-> Note that we could also catch this much lower in the stack,
-> in git_config_from_blob_ref(). That might cover other
-> callsites, too, but it's unclear whether those ones would
-> actually be bugs or not. So let's leave the low-level
-> functions to assume the caller knows what it's doing (and
-> BUG() if it turns out it doesn't).
+On Fri, May 18, 2018 at 3:25 PM, Jeff King <peff@peff.net> wrote:
+> If we don't have a repository, then we can't initialize the
+> ref store.  Prior to 64a741619d (refs: store the main ref
+> store inside the repository struct, 2018-04-11), we'd try to
+> access get_git_dir(), and outside a repository that would
+> trigger a BUG(). After that commit, though, we directly use
+> the_repository->git_dir; if it's NULL we'll just segfault.
 >
-> Signed-off-by: Jeff King <peff@peff.net>
+> Let's catch this case and restore the BUG() behavior.
+> Obviously we don't ever want to hit this code, but a BUG()
+> is a lot more helpful than a segfault if we do.
 
-Thanks,
-Taylor
+That is true and an immediate bandaid; an alternative would
+be to do:
+
+  if (!r->gitdir)
+    /* not in a git directory ? */
+    return NULL;
+    /* We signal the caller the absence of a git repo by NULL ness
+      of the ref store */
+
+However that we would need to catch at all callers of
+get_main_ref_store and error out accordingly.
+
+Then the trade off would be, how many callers to the main ref
+store do we have compared to options that rely on a ref store
+present? (I assume a patch like the second patch would show
+up in more cases now for all BUGs that we discover via this patch.
+The tradeoff is just if we want to report all these early by checking
+the config and system state, or wait until we get NULL ref store
+and then bail)
+
+I think checking early makes sense; I am not so sure about this
+patch; for the time being it makes sense, though in the long run,
+we rather want to catch this at a higher level:
+
+r->gitdir is supposedly never NULL, so we shall not
+produce this state. Maybe we want to set the_repository to NULL
+if set_git_dir fails (via repo_set_gitdir in setup_git_env, which both
+return void today).
+
+Enough of my rambling, the patches look good!
+Stefan
