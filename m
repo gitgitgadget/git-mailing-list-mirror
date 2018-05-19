@@ -7,111 +7,109 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 055DC1F51C
-	for <e@80x24.org>; Sat, 19 May 2018 06:14:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0EB81F42D
+	for <e@80x24.org>; Sat, 19 May 2018 06:37:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751907AbeESGOB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 May 2018 02:14:01 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:37009 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750769AbeESGN5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 May 2018 02:13:57 -0400
-Received: by mail-pg0-f66.google.com with SMTP id a13-v6so4193802pgu.4
-        for <git@vger.kernel.org>; Fri, 18 May 2018 23:13:57 -0700 (PDT)
+        id S1750783AbeESGhe (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 May 2018 02:37:34 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:36195 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750743AbeESGhe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 May 2018 02:37:34 -0400
+Received: by mail-lf0-f67.google.com with SMTP id e9-v6so90441lfb.3
+        for <git@vger.kernel.org>; Fri, 18 May 2018 23:37:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2eRa+blDgkGxfkBBhnAxAl9O1aqRa45dxbMVvNx2/Q4=;
-        b=OZotl6hXIERqb8K1YMH7kNZAOiJllTRQcDTI0xQtqwuRQv8EAxir2ClR1vkHnF0NkR
-         WcCN8PIXTLcxjXyubISduJ9VkhKwYRPgGh8+Thtuix6PmPG5JrIgzwqBLgdyyX5n3Ibj
-         0zzE+5887HNHOfpiMPUUwBHVnLxHRC0iOUbCiqTqncLrEAPwSnNjHEtRku0SiIkL4zU2
-         Y1y06EUrQl3r2x2uZffvvEvKh9EuhcIfwYNDK0e9qmaxhAWzpD+iAPLeQ2nSkkfFLg6r
-         LteY7j75JUmcj/vz/w11UleAowmvm4HmfAyK7H7gifjgUrPBFfgBZWv3nmwCKqH0akP4
-         acuw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=QupoYHuB1W/mkitT7eRs63qO6E7RMglz+kOwScdZnaI=;
+        b=hOabgGVIzBUjPHLLiBhDlv4veXo9rG+9Jt53ffEo8CGltVNA286pVpzCKdRS1UANRb
+         j5ZMqVCUpqRFH8g/amSsjVPJ1kTA35gk2/Q/VvQhckGPcvkA1n7sQ9rWApPD+qKxjzd9
+         SgOVmkTH5wL1zqe8ccJy7K1Yo0sETK3xjfQf5z41DLTaW6ADfcJvAEidIe43phYgVgTf
+         +hv1rGAeqfnNjSEU/rRAIRmXFW/PKnPSzfrgDglJWymOkPsGWF8WthNj/95fgu8yi1Eu
+         C7eGJNm9YlWIgTooPWxeACNQpEyWxNDE1ZZlpo6ayJc2QQa+ytLlXY/JvMNaea8XxJ93
+         /A+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2eRa+blDgkGxfkBBhnAxAl9O1aqRa45dxbMVvNx2/Q4=;
-        b=BBaNLVMuQarYd1aDIComLNSB5LQc9WGQrrZNLjeFJjfevi0dTEl4El/UKAGQEpbGrc
-         LA1QelmCOgtQeW+/Pw1S9pOgtIPkJHbfU5Db7s1TNneaSsryRMy0rMqByfbvcl3FBTbR
-         GAWOwLL8n7fiw8i6douf4J2GdykJPT3Wol+5r/JqYjXGgAJV4Qg8VUbxnn5fD52xgvs4
-         xMEVoQQNO0GyooKZ98lPoZ4kGhTnxJF3wecHDsMlRqWSanjxdm1K8cxAj5b7Kl1j85c3
-         rgFHBN4cS3OCQAa2zfQ+a6CA2glAkuJwRd07ekOaXV5PW1UhHBd9mAGkU03aKjPx+Xvf
-         OiKw==
-X-Gm-Message-State: ALKqPwd1YhBM/SqAz7Hw5UMUheEDSSokohQ2k3qT2qsIBtPRWUit6lcJ
-        wQdu2MfOqaV4+RH4LYRJbcC6PHVphsF9iMvMli4=
-X-Google-Smtp-Source: AB8JxZqVAvYIZF8HaFqOJ3rlQ7GxsEhQX9Tgoxwgfx6t9u5iAD2l4oHz1h4AiaSePDa6aLw3SudN336lmrjstCnOX0g=
-X-Received: by 2002:a63:66c3:: with SMTP id a186-v6mr9575706pgc.408.1526710437124;
- Fri, 18 May 2018 23:13:57 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QupoYHuB1W/mkitT7eRs63qO6E7RMglz+kOwScdZnaI=;
+        b=PBZiFkSCJqySPhikySLZg08KS2TWxnf0oQQST0e2oejR8+WcrpNoY7HuILdrEkAGDq
+         D/FdzzN1VQKj90vmBS1GxeapyEN//YB9Qzgw0U42lqvOTRpE5qY89DvJ7Vj+0ogeXKpn
+         hFF0SunuiprQxqGtyJiMy/i7vtKEL5PMmMwSHv4oz4yxx04l5qr/ZZxvXi/RZWSIVLb3
+         S44wrwXrOV4HaV6zFdVYX+dongGqE7hlP4SVDgUUZgPqH+415PHDl/EuEJu2nrn1/1+E
+         +uVj4trsbcHcPZZKvDjkd09jibjdhUx2DKBxpLpP5cUkf0WiTjwNojyDJ6tZg8aXdXmj
+         lNNA==
+X-Gm-Message-State: ALKqPwegs0sm7+AdU417hjEpt/tps6EsgduAOK1uExc4lb9vx9NRPNJC
+        /fFo1fAOeWNygrmaNtbUMfc=
+X-Google-Smtp-Source: AB8JxZoZVAaJpNiVMcgWcdscpfTq3utTEUHKQg60RhwvyR45z51FEbTqEF4jtokT9S3ZaXXuXDWk7w==
+X-Received: by 2002:a2e:4dd6:: with SMTP id c83-v6mr7180953ljd.126.1526711852630;
+        Fri, 18 May 2018 23:37:32 -0700 (PDT)
+Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id q18-v6sm2248283lfi.97.2018.05.18.23.37.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 May 2018 23:37:31 -0700 (PDT)
+Date:   Sat, 19 May 2018 08:37:29 +0200
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     ao2@ao2.it, bmwill@google.com, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH 02/11] repository: introduce repo_read_index_or_die
+Message-ID: <20180519063729.GA14755@duynguyen.home>
+References: <CACsJy8A8WZ-Gqe2Y-whJmbADrt+gZjLZ7MTwCtdnK7JDnEdtog@mail.gmail.com>
+ <20180516222118.233868-1-sbeller@google.com>
+ <20180516222118.233868-3-sbeller@google.com>
 MIME-Version: 1.0
-Received: by 10.236.187.139 with HTTP; Fri, 18 May 2018 23:13:56 -0700 (PDT)
-In-Reply-To: <20180519010220.GA16071@sigill.intra.peff.net>
-References: <CAN0heSo80SjjGtC2x9s-TmNY0=W=YWTYxyjeuAQ3utEAEynXeA@mail.gmail.com>
- <cover.1526677881.git.martin.agren@gmail.com> <f4e7822ebe8fcab8243ae3931084e10f3b199788.1526677881.git.martin.agren@gmail.com>
- <20180518213333.GB21797@sigill.intra.peff.net> <CABPp-BFdKFNLHxqt-rbSVPx_cXVG3iyad42qYFbWvP9_2fW2gQ@mail.gmail.com>
- <20180519010220.GA16071@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 19 May 2018 08:13:56 +0200
-Message-ID: <CAN0heSp7DqxOy-UeLgj8t_T_4f-fNthMpGNS8oUbcs7+NvS-zw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] unpack_trees_options: free messages when done
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180516222118.233868-3-sbeller@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19 May 2018 at 03:02, Jeff King <peff@peff.net> wrote:
-> On Fri, May 18, 2018 at 03:30:44PM -0700, Elijah Newren wrote:
->
->> > would become:
->> >
->> >   msgs[ERROR_WOULD_OVERWRITE] = msgs[ERROR_NOUPTODATE_FILE] =
->> >         string_list_appendf(&opts->msgs_to_free, msg, cmd, cmd)->string;
->> >
->> > I don't know if that's worth it or not (I suspect that there are other
->> > places where appendf would be handy, but I didn't poke around).
+On Wed, May 16, 2018 at 03:21:09PM -0700, Stefan Beller wrote:
+> A common pattern with the repo_read_index function is to die if the return
+> of repo_read_index is negative.  Move this pattern into a function.
+> 
+> This patch replaces the calls of repo_read_index with its _or_die version,
+> if the error message is exactly the same.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  builtin/add.c               | 3 +--
+>  builtin/check-ignore.c      | 7 ++++---
+>  builtin/clean.c             | 4 ++--
+>  builtin/mv.c                | 3 +--
+>  builtin/reset.c             | 3 +--
+>  builtin/rm.c                | 3 +--
+>  builtin/submodule--helper.c | 3 +--
 
-This does poke at the `string` member, but there is precedent for doing
-that. That also feels much closer to the purpose of a string list than
-the fiddling with `strdup_strings` that I do in my patch.
+'git grep -w -A3 read_cache' tells me you're missing (*)
 
-I'll look into this over the weekend. Thanks for the suggestion.
+builtin/diff-tree.c:    if (read_cache() < 0)
+builtin/diff-tree.c-            die(_("index file corrupt"));
 
->> The strdup_strings=1 immediately before calling string_list_clear()
->> has been used in one other place in merge-recursive.c, and tripped up
->> the reviewer requiring a big code comment to explain it. (See the very
->> end of https://public-inbox.org/git/CABPp-BGh7QTTfu3kgH4KO5DrrXiQjtrNhx_uaQsB6fHXT+9hLQ@mail.gmail.com/
->> ).  So there's already one other place in merge-recursive.c that might
->> benefit from such a change.
->
-> Thanks. I knew I had seen such hackery before, but it's nice to have a
-> specific site that would benefit.
->
-> IMHO the "nodup" variant of string_list is quite often a sign that
-> things are more complicated than they need to be. Even in cases that are
-> truly pointing to existing strings, is the complication really worth
-> saving a few strdups? Perhaps sometimes, but I have a suspicion it's
-> mostly premature optimization.
->
->> Maybe someone wants to tackle that as a separate patch series?  (Maybe
->> we make it a micro-project for future GSoC'ers?)
->
-> Yeah, I'm fine with these patches if somebody wants to do it separately.
-> It would be a good micro-project, but I'd also be just as happy if
-> somebody did it before next year. :)
+builtin/merge-ours.c:   if (read_cache() < 0)
+builtin/merge-ours.c:           die_errno("read_cache failed");
 
-Obviously, I won't be tackling all of that now. I'll just look into
-making this final patch better and leave any further cleaning up for
-later.
+builtin/update-index.c: entries = read_cache();
+builtin/update-index.c- if (entries < 0)
+builtin/update-index.c-         die("cache corrupted");
 
-Martin
+merge-ours.c is interesting because it uses die_errno() version
+instead. I think that might give inaccurate diagnostics because we do
+not only fail when a libc/system call fails in read_cache(), so it
+should be safe to just use die() here.
+
+update-index.c is also interesting because it actually saves the
+return value. I don't think it's used anywhere, so you can just drop
+that 'entries' variable. But perhaps it's good to make
+repo_read_index_or_die() return the number of entries too.
+
+(*) yes yes you did mention "if the error message is exactly the
+same". But these look like good candicates to convert anyway
+
+--
+Duy
