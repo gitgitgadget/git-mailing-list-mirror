@@ -2,75 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22E601F51C
-	for <e@80x24.org>; Fri, 18 May 2018 23:32:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5834D1F51C
+	for <e@80x24.org>; Sat, 19 May 2018 01:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752026AbeERXcp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 May 2018 19:32:45 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56845 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751722AbeERXco (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 May 2018 19:32:44 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LdHLB-1ebeQF3ebZ-00iPOt; Sat, 19
- May 2018 01:32:34 +0200
-Date:   Sat, 19 May 2018 01:32:35 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/2] fix a segfault in get_main_ref_store()
-In-Reply-To: <20180518222506.GA9527@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1805190132170.77@tvgsbejvaqbjf.bet>
-References: <20180518222506.GA9527@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751914AbeESBC0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 May 2018 21:02:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46138 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751816AbeESBCZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 May 2018 21:02:25 -0400
+Received: (qmail 6614 invoked by uid 109); 19 May 2018 01:02:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 19 May 2018 01:02:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15676 invoked by uid 111); 19 May 2018 01:02:31 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 18 May 2018 21:02:31 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 May 2018 18:02:21 -0700
+Date:   Fri, 18 May 2018 18:02:21 -0700
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 3/3] unpack_trees_options: free messages when done
+Message-ID: <20180519010220.GA16071@sigill.intra.peff.net>
+References: <CAN0heSo80SjjGtC2x9s-TmNY0=W=YWTYxyjeuAQ3utEAEynXeA@mail.gmail.com>
+ <cover.1526677881.git.martin.agren@gmail.com>
+ <f4e7822ebe8fcab8243ae3931084e10f3b199788.1526677881.git.martin.agren@gmail.com>
+ <20180518213333.GB21797@sigill.intra.peff.net>
+ <CABPp-BFdKFNLHxqt-rbSVPx_cXVG3iyad42qYFbWvP9_2fW2gQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/+e1zZHvJzbSPsNkxwgGDFL6PXcR4CRPOPtmt2XPaJJopO64roV
- SSXqtHgywHYKi8fZcmV36o64HWtFEu3j0Vdxm+8fGmBGH7t3AVaDRIr8YMKVQrSbSJIyMct
- WIG89olPJEB62k5Fb676vEVmx8uL3SIJW1kKPRk5EAHG10qHTkFpvFd03kJfSm9MZVkRIhe
- CloPZ21yxKAEHWzBc4QeQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CqdpnNhoaEM=:JViSLjPtNNZs8NngPX3o2p
- WTULxezDYDVjn/u6g0C8SPJliBal6BAdVO3INHZktnS/Qaqs309DkUWgTjShu+iIG/7g/VkFo
- GSqbczvikI70NFGa+doeDsOAquyDSw5cTi/yjvASerydb43JI3xUMFUtGkRDqa4sMXJH9J18s
- iJgTAZiEsOlYH8/VKzdiydIcsb2coUBgAwPEIi0mi4Xm3NRsKlCQncc0eO9iLPIQQHM0nre+j
- dvUHvbuqFwv4ACVsLtVhy4Ow1egSjNXsIyXT0jn7Jpn0GqlZX/Jq9Q88uiGX7IZT+ayHFV4nV
- 5BRqaH3GZf3/6bO0vNI0BWh6igbZswVDWx2EtuxXP5r9QKs4wvWhvH0kPeHLHibdccwl5QjQG
- j1Scq65CeOk9ivJPUDYhVEVvc8IOjRPXettyxJDI7q8bZuTuOesCeScFtzUOj278pyP0jtEmP
- hbMCSReKSIAjMovMEcZ3XPOtjQ/98Q3pixcqvsrUxZ1IRce6wDIywPP7eYF45aUqI8i2ycp0m
- MQb+aEyt750eP/aYGbyCyZ5TzTahbQbypMmXE0vu7heLKcUU4JcxxsTtXU8bKjUm1BGCLs8x7
- 0QcwXyWXtHsG337Y0hEV5ukNs381BqLvOHnJI8YC7w5Shk38IHF5Qvf3MBR9dddf+cyEynqCd
- rmL0DT/9azBY5PKmFVQk1h0pTU5bfev9lP2whsNm+gQamVBjCKYWJWsud6liDvxqY4w4R9VW/
- R+2Cz7BvxH1E3IMp+hJnUdlOtb81S3mt1nFDMYCuzfTIlZl4fHRrYQm2RuhxVtK/39y3Tg6Kp
- g4Tdwch
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BFdKFNLHxqt-rbSVPx_cXVG3iyad42qYFbWvP9_2fW2gQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Fri, May 18, 2018 at 03:30:44PM -0700, Elijah Newren wrote:
 
-On Fri, 18 May 2018, Jeff King wrote:
-
-> I stumbled across a BUG() today. But interestingly, in the current tip
-> of master it actually segfaults instead! This fixes the segfault (back
-> into a BUG(), and then fixes the caller to avoid the BUG() in the first
-> place).
+> > would become:
+> >
+> >   msgs[ERROR_WOULD_OVERWRITE] = msgs[ERROR_NOUPTODATE_FILE] =
+> >         string_list_appendf(&opts->msgs_to_free, msg, cmd, cmd)->string;
+> >
+> > I don't know if that's worth it or not (I suspect that there are other
+> > places where appendf would be handy, but I didn't poke around).
 > 
->   [1/2]: get_main_ref_store: BUG() when outside a repository
->   [2/2]: config: die when --blob is used outside a repository
-> 
->  builtin/config.c       | 3 +++
->  refs.c                 | 3 +++
->  t/t1307-config-blob.sh | 4 ++++
->  3 files changed, 10 insertions(+)
+> The strdup_strings=1 immediately before calling string_list_clear()
+> has been used in one other place in merge-recursive.c, and tripped up
+> the reviewer requiring a big code comment to explain it. (See the very
+> end of https://public-inbox.org/git/CABPp-BGh7QTTfu3kgH4KO5DrrXiQjtrNhx_uaQsB6fHXT+9hLQ@mail.gmail.com/
+> ).  So there's already one other place in merge-recursive.c that might
+> benefit from such a change.
 
-Both patches look obviously correct to me.
+Thanks. I knew I had seen such hackery before, but it's nice to have a
+specific site that would benefit.
 
-Thanks,
-Dscho
+IMHO the "nodup" variant of string_list is quite often a sign that
+things are more complicated than they need to be. Even in cases that are
+truly pointing to existing strings, is the complication really worth
+saving a few strdups? Perhaps sometimes, but I have a suspicion it's
+mostly premature optimization.
+
+> Maybe someone wants to tackle that as a separate patch series?  (Maybe
+> we make it a micro-project for future GSoC'ers?)
+
+Yeah, I'm fine with these patches if somebody wants to do it separately.
+It would be a good micro-project, but I'd also be just as happy if
+somebody did it before next year. :)
+
+-Peff
