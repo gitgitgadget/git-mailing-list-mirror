@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FA401F51C
-	for <e@80x24.org>; Sat, 19 May 2018 04:28:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 234041F51C
+	for <e@80x24.org>; Sat, 19 May 2018 04:28:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751860AbeESE2R (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 May 2018 00:28:17 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:37062 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750743AbeESE2E (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 May 2018 00:28:04 -0400
-Received: by mail-lf0-f67.google.com with SMTP id r2-v6so16787262lff.4
-        for <git@vger.kernel.org>; Fri, 18 May 2018 21:28:03 -0700 (PDT)
+        id S1751899AbeESE20 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 May 2018 00:28:26 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:39296 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751083AbeESE2O (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 May 2018 00:28:14 -0400
+Received: by mail-lf0-f65.google.com with SMTP id j193-v6so16758862lfg.6
+        for <git@vger.kernel.org>; Fri, 18 May 2018 21:28:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZXBMZD8z+AxXdgRgnWOQzhPMKgKVyFwqUnpWdO0hawc=;
-        b=Hmfj1uXDbS+SqdIZA6fj9MWQ50QN652AfiN4/xByV2AYvY3Qlh8VWaOHTAvBvyKvNy
-         ktQVBf46ZSnD3s6UXlBoWnN2tANXdG31qvnCqFja0wexb1RL4TNfoUFqiajDI7AUd7T9
-         6IZDbXXPeARdE9C1Oulzh5DbUNaYpNxw+3xcuaQEPyH7xA7eXPe1aT6+qLCFGuiUozNm
-         O5SSNZnRdiB88BiO40EaxLeBdu08O7zALyiBFlzOBQzQ2NfmyLP9umcjolX0nS5e3S+0
-         EbDnUNRNHcBGNnN4zun4G51hNcOQvkaWHf24Z3dz1vvkH04G2h7zdg2v7cVq0o3Gt+W8
-         jxiQ==
+        bh=JYvA2+NYKKGjugFqiZL2oHD9X1gKtKh6sCIldyqrMWA=;
+        b=e7XJBol67nU4aGSM3jQNbWIP2lnqELfo6pEqK8fz1qeZgHwLIbB+jZRuT5PWOjx4tC
+         5vKISuQpWBwrIZcW2x8dAAEPeQZkxzrWche138Ee38tbzgyGTwSINGmkdOryKWeCFWQL
+         tn6SbRAOc1QflGNVHGDxqFkD5Y8Tas4WG/U1pXdtltBXFB31pAoqwu+B3YVGCRz7iV6z
+         CxH9I05G9hDo7i3TlivxEf92y13CyflIbz3P9LJyR76UMaaKlkdy5DIM13VHarcH3UDC
+         DsFIGnljU4jRB1DYhbHj08ne6Dn2OnXa1b8sp8JpamC+5aOapZfZnPGdWFIj1sufV5jK
+         gCRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZXBMZD8z+AxXdgRgnWOQzhPMKgKVyFwqUnpWdO0hawc=;
-        b=qJ+ZMA1jmqso8QldJHCxmSfujJxedR77EBYG5h5BNrL11f4XkST+14DB3kcvG9XIEo
-         hpQcz/uYo7PsMBQpmm7z2N6+6K7Abn/8+NJHIcB1qB+DptsF4k38liiPGd+NqdLVpznZ
-         YEqWf1NodtcjLPhl2F610rsb95C7vEjH2BbyPwqbrc662XUmMfQ9NHlLxInWo0K1ZmsZ
-         x8KYsgD67n2DagBONYwBZHUahxzvOOgimfHAo92MALoRxOdBPAOgc3rsnOrZ9jSIqXG/
-         G0FN1U+96n5nDJp3mQsGxsESMc0Z+1r5s4iRd8q4cF+NHJ46/l7e2y4MqDaqPNxqoghv
-         IKYQ==
-X-Gm-Message-State: ALKqPwfoWuHpIqnPlM8QG4ITu/RN6rwwbSH4+o2LVdgZ0spI8Znsphl+
-        egZ9BrrztRyEM/1YGQxetcUuEw==
-X-Google-Smtp-Source: AB8JxZqAv432NEoZBUrawGRyZDodzUni3WiXAu7u1xyJEAxczk+XK2sAr/lSpVJFB4fv9/Rqj6zGrw==
-X-Received: by 2002:a19:9a10:: with SMTP id c16-v6mr23635411lfe.60.1526704082665;
-        Fri, 18 May 2018 21:28:02 -0700 (PDT)
+        bh=JYvA2+NYKKGjugFqiZL2oHD9X1gKtKh6sCIldyqrMWA=;
+        b=XQA8JTc4FUGsDDKgvkJ2Ovo/3i4SBjDnG8+ynoIvqJZugn7mMa/AVpdbgEHOubG9Hf
+         gz4HJP9K3uLK0Ti7d1MOJTDC1M77yOUytRyGggKipPRpFxHblB5Aj97xplKqLbNk1Bll
+         CuakDBGa+Rp9uQxV/GK03760FzaD1X2TCWRt3Bon6TNt9lzpKw93hyVlqUA4ot9zuF1y
+         /37SvFrmhsg/B3INU5XHHzQ3acclM2etdsf1/ANq6Aj89vW3ztqanz5+FFCD0Bz4hjY9
+         4hcQty7i2sCwBJ2j7qscpd5o6MqvHctw44y0qWiypsDhwHk8xygYHE+K3A4ue4y2iBtd
+         vhAg==
+X-Gm-Message-State: ALKqPweSJDstr9G5o7aTkU/I2i5XuZY23E/HB7b90yN1J9YHeXBW5wM0
+        LF9sd4nNsj+I2jn/95AvON/yKA==
+X-Google-Smtp-Source: AB8JxZqOBT6QEQDCughk/TzFaFboko1xWCAwUuzwz9KtyVmQqzasFKPIGIC6qJwl13o7nJgJPX1Bwg==
+X-Received: by 2002:a19:1c05:: with SMTP id c5-v6mr23341667lfc.136.1526704092842;
+        Fri, 18 May 2018 21:28:12 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o11-v6sm1960309lfi.14.2018.05.18.21.28.01
+        by smtp.gmail.com with ESMTPSA id o11-v6sm1960309lfi.14.2018.05.18.21.28.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 May 2018 21:28:01 -0700 (PDT)
+        Fri, 18 May 2018 21:28:12 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Philip Oakley <philipoakley@iee.org>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 05/14] git.c: convert --list-* to --list-cmds=*
-Date:   Sat, 19 May 2018 06:27:43 +0200
-Message-Id: <20180519042752.8666-6-pclouds@gmail.com>
+Subject: [PATCH 14/14] completion: allow to customize the completable command list
+Date:   Sat, 19 May 2018 06:27:52 +0200
+Message-Id: <20180519042752.8666-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180519042752.8666-1-pclouds@gmail.com>
 References: <20180519042752.8666-1-pclouds@gmail.com>
@@ -71,102 +71,160 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Even if these are hidden options, let's make them a bit more generic
-since we're introducing more listing types shortly. The code is
-structured to allow combining multiple listing types together because
-we will soon add more types the 'builtins'.
+By default we show porcelain, external commands and a couple others
+that are also popular. If you are not happy with this list, you can
+now customize it. See the big comment block for details.
 
-'parseopt' remains separate because it has separate (SPC) to match
-git-completion.bash needs and will not combine with others.
+PS. perhaps I should make aliases a group too, which makes it possible
+to _not_ complete aliases by omitting this special group in
+$GIT_COMPLETION_CMD_GROUPS
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- contrib/completion/git-completion.bash |  2 +-
- git.c                                  | 37 +++++++++++++++++++++-----
- t/t0012-help.sh                        |  2 +-
- 3 files changed, 33 insertions(+), 8 deletions(-)
+ Documentation/config.txt               | 10 ++++++++
+ contrib/completion/git-completion.bash | 28 +++++++++++++++++++++-
+ git.c                                  |  2 ++
+ help.c                                 | 33 ++++++++++++++++++++++++++
+ help.h                                 |  1 +
+ 5 files changed, 73 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2659153cb3..91f7eaed7b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1343,6 +1343,16 @@ credential.<url>.*::
+ credentialCache.ignoreSIGHUP::
+ 	Tell git-credential-cache--daemon to ignore SIGHUP, instead of quitting.
+ 
++completion.commands::
++	This is only used by git-completion.bash to add or remove
++	commands from the complete list. Normally only porcelain
++	commands and a few select others are in the complete list. You
++	can add more commands, separated by space, in this
++	variable. Prefixing the command with '-' will remove it from
++	the existing list.
+++
++This variable should not be per-repository.
++
+ include::diff-config.txt[]
+ 
+ difftool.<tool>.path::
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index a757073945..3556838759 100644
+index cd1d8e553f..f237eb0ff4 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -3049,7 +3049,7 @@ __git_complete_common () {
- __git_cmds_with_parseopt_helper=
- __git_support_parseopt_helper () {
- 	test -n "$__git_cmds_with_parseopt_helper" ||
--		__git_cmds_with_parseopt_helper="$(__git --list-parseopt-builtins)"
-+		__git_cmds_with_parseopt_helper="$(__git --list-cmds=parseopt)"
+@@ -38,6 +38,29 @@
+ #
+ #     When set to "1", do not include "DWIM" suggestions in git-checkout
+ #     completion (e.g., completing "foo" when "origin/foo" exists).
++#
++#   GIT_COMPLETION_CMD_GROUPS
++#
++#     When set, "git --list-cmds=$GIT_COMPLETION_CMD_GROUPS" will be
++#     used to get the list of completable commands. The default is
++#     "mainporcelain,others,list-complete" (in English: all porcelain
++#     commands and external ones are included. Certain non-porcelain
++#     commands are also marked for completion in command-list.txt).
++#     You could for example complete all commands with
++#
++#         GIT_COMPLETION_CMD_GROUPS=main,others
++#
++#     Or you could go with main porcelain only and extra commands in
++#     the configuration variable completion.commands with
++#
++#         GIT_COMPLETION_CMD_GROUPS=mainporcelain,config
++#
++#     Or go completely custom group with
++#
++#         GIT_COMPLETION_CMD_GROUPS=config
++#
++#     Or you could even play with other command categories found in
++#     command-list.txt.
  
- 	case " $__git_cmds_with_parseopt_helper " in
- 	*" $1 "*)
+ case "$COMP_WORDBREAKS" in
+ *:*) : great ;;
+@@ -842,8 +865,11 @@ __git_commands () {
+ 		if test -n "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
+ 		then
+ 			printf "%s" "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
++		elif test -n "$GIT_COMPLETION_CMD_GROUPS"
++		then
++			git --list-cmds="$GIT_COMPLETION_CMD_GROUPS"
+ 		else
+-			git --list-cmds=list-mainporcelain,others,list-complete
++			git --list-cmds=list-mainporcelain,others,list-complete,config
+ 		fi
+ 		;;
+ 	all)
 diff --git a/git.c b/git.c
-index 3a89893712..cd85355d81 100644
+index 4d5b8a9931..ea4feedd0b 100644
 --- a/git.c
 +++ b/git.c
-@@ -38,6 +38,30 @@ static int use_pager = -1;
+@@ -60,6 +60,8 @@ static int list_cmds(const char *spec)
+ 			list_all_main_cmds(&list);
+ 		else if (match_token(spec, len, "others"))
+ 			list_all_other_cmds(&list);
++		else if (match_token(spec, len, "config"))
++			list_cmds_by_config(&list);
+ 		else if (len > 5 && !strncmp(spec, "list-", 5)) {
+ 			struct strbuf sb = STRBUF_INIT;
  
- static void list_builtins(unsigned int exclude_option, char sep);
+diff --git a/help.c b/help.c
+index 23924dd300..abf87205b2 100644
+--- a/help.c
++++ b/help.c
+@@ -366,6 +366,39 @@ void list_cmds_by_category(struct string_list *list,
+ 	}
+ }
  
-+static int match_token(const char *spec, int len, const char *token)
++void list_cmds_by_config(struct string_list *list)
 +{
-+	int token_len = strlen(token);
++	const char *cmd_list;
 +
-+	return len == token_len && !strncmp(spec, token, token_len);
-+}
++	/*
++	 * There's no actual repository setup at this point (and even
++	 * if there is, we don't really care; only global config
++	 * matters). If we accidentally set up a repository, it's ok
++	 * too since the caller (git --list-cmds=) should exit shortly
++	 * anyway.
++	 */
++	if (git_config_get_string_const("completion.commands", &cmd_list))
++		return;
 +
-+static int list_cmds(const char *spec)
-+{
-+	while (*spec) {
-+		const char *sep = strchrnul(spec, ',');
-+		int len = sep - spec;
++	string_list_sort(list);
++	string_list_remove_duplicates(list, 0);
 +
-+		if (match_token(spec, len, "builtins"))
-+			list_builtins(0, '\n');
++	while (*cmd_list) {
++		struct strbuf sb = STRBUF_INIT;
++		const char *p = strchrnul(cmd_list, ' ');
++
++		strbuf_add(&sb, cmd_list, p - cmd_list);
++		if (*cmd_list == '-')
++			string_list_remove(list, cmd_list + 1, 0);
 +		else
-+			die(_("unsupported command listing type '%s'"), spec);
-+		spec += len;
-+		if (*spec == ',')
-+			spec++;
++			string_list_insert(list, sb.buf);
++		strbuf_release(&sb);
++		while (*p == ' ')
++			p++;
++		cmd_list = p;
 +	}
-+	return 0;
 +}
 +
- static void commit_pager_choice(void) {
- 	switch (use_pager) {
- 	case 0:
-@@ -223,12 +247,13 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			}
- 			(*argv)++;
- 			(*argc)--;
--		} else if (!strcmp(cmd, "--list-builtins")) {
--			list_builtins(0, '\n');
--			exit(0);
--		} else if (!strcmp(cmd, "--list-parseopt-builtins")) {
--			list_builtins(NO_PARSEOPT, ' ');
--			exit(0);
-+		} else if (skip_prefix(cmd, "--list-cmds=", &cmd)) {
-+			if (!strcmp(cmd, "parseopt")) {
-+				list_builtins(NO_PARSEOPT, ' ');
-+				exit(0);
-+			} else {
-+				exit(list_cmds(cmd));
-+			}
- 		} else {
- 			fprintf(stderr, _("unknown option: %s\n"), cmd);
- 			usage(git_usage_string);
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index c096f33505..3c91a9024a 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -59,7 +59,7 @@ test_expect_success 'git help' '
- '
- 
- test_expect_success 'generate builtin list' '
--	git --list-builtins >builtins
-+	git --list-cmds=builtins >builtins
- '
- 
- while read builtin
+ void list_common_guides_help(void)
+ {
+ 	struct category_description catdesc[] = {
+diff --git a/help.h b/help.h
+index b2293e99be..3b38292a1b 100644
+--- a/help.h
++++ b/help.h
+@@ -26,6 +26,7 @@ extern void list_all_main_cmds(struct string_list *list);
+ extern void list_all_other_cmds(struct string_list *list);
+ extern void list_cmds_by_category(struct string_list *list,
+ 				  const char *category);
++extern void list_cmds_by_config(struct string_list *list);
+ extern const char *help_unknown_cmd(const char *cmd);
+ extern void load_command_list(const char *prefix,
+ 			      struct cmdnames *main_cmds,
 -- 
 2.17.0.705.g3525833791
 
