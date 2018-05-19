@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFBDE1F51C
-	for <e@80x24.org>; Sat, 19 May 2018 05:29:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B33F1F51C
+	for <e@80x24.org>; Sat, 19 May 2018 05:29:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752149AbeESF3Q (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 May 2018 01:29:16 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:34198 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751891AbeESF2r (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 May 2018 01:28:47 -0400
-Received: by mail-lf0-f66.google.com with SMTP id x145-v6so4862358lff.1
-        for <git@vger.kernel.org>; Fri, 18 May 2018 22:28:46 -0700 (PDT)
+        id S1752160AbeESF3S (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 May 2018 01:29:18 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:41969 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750713AbeESF2k (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 May 2018 01:28:40 -0400
+Received: by mail-lf0-f68.google.com with SMTP id m17-v6so16869621lfj.8
+        for <git@vger.kernel.org>; Fri, 18 May 2018 22:28:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=k9IZpUizKvwYtOetAF8Uep13g9cfNHiutEfWUvMzaCc=;
-        b=uHteLFD1nncm8wOHIIoPUL4Lh8zlzIxtTDlmqdPUniee6iJRUKqOOPIl4EyCF7Awwm
-         cpWSi8PJQxdl9I+MvoguP8dYjvYr4+eJ7LnrGMDhlW0TuVb+cQPiaUMia1VK11ztk2HU
-         C4XYzUUdUa+oCIsLOTGVEDhFGORPb5YbaYDWbzHEMKmxUxAgrx+WIOHfwMajWpHYC1yy
-         rf/Foo0SDIJYfev82JyKH76My0UeLlqUmjoUe6VKzZjG5iigh6oA4QEtT6hdpWZaMr54
-         hfYkeDssRpgG93J6Zk6JWfzuzZpauKyCb8RcbYeFGgeXpBD86GNUC3Xjj5szJrpxakOY
-         1VtQ==
+        bh=aD2Z562l5ajPrRtTHOXD3ZGbqnD9NK+x/A5YRuEZKeA=;
+        b=kLKzvzDIkxpw/8+Xd1JFYVldRsrT3T0zDoq9m8Be1dA79OjTiHe0mPxdNRBNhMDq5k
+         fj0uNRkMuGYBiXEDhbFV/WNhGcQRtU7mn5v+lwBPayYj95QOfuHZlFdgWKALd2/D2oXy
+         E6beyZCVjjp7SCr/EbWaNm2N1VocNffBYbq0kVtWWcFk9RKBHtee4kc7IgweeOooFicR
+         ReWpzT84VanhNmvBBdZ4Xy+QMb2pQNGCZdMEm4jVyIXOq1iZu5y3oqz1xHQGxngd3/UA
+         FQyR/emW6qXs22gQ1liHXLgDlQyAaq/KsqJhPhxju0e0KoIDAToe031vTX0DWRe9NX/q
+         GbAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=k9IZpUizKvwYtOetAF8Uep13g9cfNHiutEfWUvMzaCc=;
-        b=C1RZVOj0drP0R/U9MI8j1RVCv7Jcgm1q1X32hbhCLkRiE3lSIFQ0EFJofTAmKNMZzV
-         yzLy/b28s324b9C3fbZoS+iZOZ4M7kwulyEa9/hYsjr0Apgy1e6SFXgGDsHs03ehnD/a
-         Yw3Cz7ZxZnBAYfskoDY6wq2CKim7h2yuxRlEqKbgRM1sE49R7d+E+bezFSM8WwcPDVVs
-         dEmcNDcZg+OELEZ12Ikbu3X5cv4AEDE7VfpZJdfX9FSCVOOmPoQkA16pQlVHuoRT3Fj9
-         gTmStkwoGtvAbMEyYcpXangToxJ/NMhXX/xJ5Jox419oy8mfcehM2X6AkG0JQsZ2UEnp
-         NLQQ==
-X-Gm-Message-State: ALKqPwc97VgcR/m6ukJ9gC6ico/UpL5AXB0IEIPQNb2yE337uLxmkdEt
-        pXj5OVfKYGTghXxINBN05Ek=
-X-Google-Smtp-Source: AB8JxZogZaJLQlIqhboaTpa9Z63gzfgpd/juLtrJn8TzbjnEyIRD3j/5X4kIF9h26cU27AemJv6PZA==
-X-Received: by 2002:a2e:9158:: with SMTP id q24-v6mr7217865ljg.73.1526707726239;
-        Fri, 18 May 2018 22:28:46 -0700 (PDT)
+        bh=aD2Z562l5ajPrRtTHOXD3ZGbqnD9NK+x/A5YRuEZKeA=;
+        b=pUZ4GacPZeqtbpxyG1bwahZHxCCnwoRhQrtFHiLVpPaPZP19BJNiKV46vL1ajVTvo5
+         IlwEZbsMFM2o5OZwKQdC+1cLHd78zIUGRB/GOa1TSK6dYUuAw65sSfNxT21a7X5SUmQA
+         hz9LBRkn9+J/YhuMl+Ls+fuxcIRq55skpyicUsy9upXQ6wOHd4AyKWmkWLSu0EmCdo/7
+         fytf62bISHgN3AGZJ2uVwxubLUSKT/dOBSJOO6m1Jz9gkjIFRdKO0mpBAC1l7Vex/vHD
+         W818stYJofx+W7F3Flni3eVAZg0DYwlqjGbB9FvDLWqLm0FhF4bAAIq7HgI3iO7RjrjP
+         BZBg==
+X-Gm-Message-State: ALKqPwcu/ME/VN3kU0RIsKZd1OMUNf8ZVZjoR7iFKFbjP+26vQ9Bocmp
+        vgTNCbbriobBcn9qqyCoYqA=
+X-Google-Smtp-Source: AB8JxZonkG5P5WslXoZyfKEyGMFookivfczwVpnJW1hz9pEq7byPEBlkh1oX6g7udUB5UoDuS/mwrg==
+X-Received: by 2002:a2e:94c8:: with SMTP id r8-v6mr7234611ljh.118.1526707718946;
+        Fri, 18 May 2018 22:28:38 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n5-v6sm1490874ljh.84.2018.05.18.22.28.45
+        by smtp.gmail.com with ESMTPSA id n5-v6sm1490874ljh.84.2018.05.18.22.28.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 May 2018 22:28:45 -0700 (PDT)
+        Fri, 18 May 2018 22:28:37 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-Subject: [PATCH v3 10/15] name-rev: use commit-slab for rev-name instead of commit->util
-Date:   Sat, 19 May 2018 07:28:26 +0200
-Message-Id: <20180519052831.12603-11-pclouds@gmail.com>
+Subject: [PATCH v3 03/15] blame: use commit-slab for blame suspects instead of commit->util
+Date:   Sat, 19 May 2018 07:28:19 +0200
+Message-Id: <20180519052831.12603-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180519052831.12603-1-pclouds@gmail.com>
 References: <20180513055208.17952-1-pclouds@gmail.com>
@@ -67,83 +67,152 @@ X-Mailing-List: git@vger.kernel.org
 It's done so that commit->util can be removed. See more explanation in
 the commit that removes commit->util.
 ---
- builtin/name-rev.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ blame.c         | 42 +++++++++++++++++++++++++++++++-----------
+ blame.h         |  2 ++
+ builtin/blame.c |  2 +-
+ 3 files changed, 34 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 387ddf85d2..0eb440359d 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -6,6 +6,7 @@
- #include "refs.h"
- #include "parse-options.h"
- #include "sha1-lookup.h"
+diff --git a/blame.c b/blame.c
+index 78c9808bd1..18e8bd996a 100644
+--- a/blame.c
++++ b/blame.c
+@@ -6,6 +6,24 @@
+ #include "diffcore.h"
+ #include "tag.h"
+ #include "blame.h"
 +#include "commit-slab.h"
- 
- #define CUTOFF_DATE_SLOP 86400 /* one day */
- 
-@@ -17,11 +18,26 @@ typedef struct rev_name {
- 	int from_tag;
- } rev_name;
- 
-+define_commit_slab(commit_rev_name, struct rev_name *);
 +
- static timestamp_t cutoff = TIME_MAX;
-+static struct commit_rev_name rev_names;
- 
- /* How many generations are maximally preferred over _one_ merge traversal? */
- #define MERGE_TRAVERSAL_WEIGHT 65535
- 
-+static struct rev_name *get_commit_rev_name(struct commit *commit)
++define_commit_slab(blame_suspects, struct blame_origin *);
++static struct blame_suspects blame_suspects;
++
++struct blame_origin *get_blame_suspects(struct commit *commit)
 +{
-+	struct rev_name **slot = commit_rev_name_peek(&rev_names, commit);
++	struct blame_origin **result;
 +
-+	return slot ? *slot : NULL;
++	result = blame_suspects_peek(&blame_suspects, commit);
++
++	return result ? *result : NULL;
 +}
 +
-+static void set_commit_rev_name(struct commit *commit, struct rev_name *name)
++static void set_blame_suspects(struct commit *commit, struct blame_origin *origin)
 +{
-+	*commit_rev_name_at(&rev_names, commit) = name;
++	*blame_suspects_at(&blame_suspects, commit) = origin;
 +}
-+
- static int is_better_name(struct rev_name *name,
- 			  const char *tip_name,
- 			  timestamp_t taggerdate,
-@@ -65,7 +81,7 @@ static void name_rev(struct commit *commit,
- 		int generation, int distance, int from_tag,
- 		int deref)
+ 
+ void blame_origin_decref(struct blame_origin *o)
  {
--	struct rev_name *name = (struct rev_name *)commit->util;
-+	struct rev_name *name = get_commit_rev_name(commit);
- 	struct commit_list *parents;
- 	int parent_number = 1;
- 	char *to_free = NULL;
-@@ -84,7 +100,7 @@ static void name_rev(struct commit *commit,
+@@ -15,12 +33,12 @@ void blame_origin_decref(struct blame_origin *o)
+ 			blame_origin_decref(o->previous);
+ 		free(o->file.ptr);
+ 		/* Should be present exactly once in commit chain */
+-		for (p = o->commit->util; p; l = p, p = p->next) {
++		for (p = get_blame_suspects(o->commit); p; l = p, p = p->next) {
+ 			if (p == o) {
+ 				if (l)
+ 					l->next = p->next;
+ 				else
+-					o->commit->util = p->next;
++					set_blame_suspects(o->commit, p->next);
+ 				free(o);
+ 				return;
+ 			}
+@@ -41,8 +59,8 @@ static struct blame_origin *make_origin(struct commit *commit, const char *path)
+ 	FLEX_ALLOC_STR(o, path, path);
+ 	o->commit = commit;
+ 	o->refcnt = 1;
+-	o->next = commit->util;
+-	commit->util = o;
++	o->next = get_blame_suspects(commit);
++	set_blame_suspects(commit, o);
+ 	return o;
+ }
  
- 	if (name == NULL) {
- 		name = xmalloc(sizeof(rev_name));
--		commit->util = name;
-+		set_commit_rev_name(commit, name);
- 		goto copy_data;
- 	} else if (is_better_name(name, tip_name, taggerdate,
- 				  generation, distance, from_tag)) {
-@@ -296,7 +312,7 @@ static const char *get_rev_name(const struct object *o, struct strbuf *buf)
- 	if (o->type != OBJ_COMMIT)
- 		return get_exact_ref_match(o);
- 	c = (struct commit *) o;
--	n = c->util;
-+	n = get_commit_rev_name(c);
- 	if (!n)
- 		return NULL;
+@@ -54,13 +72,13 @@ static struct blame_origin *get_origin(struct commit *commit, const char *path)
+ {
+ 	struct blame_origin *o, *l;
  
-@@ -413,6 +429,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 		OPT_END(),
- 	};
+-	for (o = commit->util, l = NULL; o; l = o, o = o->next) {
++	for (o = get_blame_suspects(commit), l = NULL; o; l = o, o = o->next) {
+ 		if (!strcmp(o->path, path)) {
+ 			/* bump to front */
+ 			if (l) {
+ 				l->next = o->next;
+-				o->next = commit->util;
+-				commit->util = o;
++				o->next = get_blame_suspects(commit);
++				set_blame_suspects(commit, o);
+ 			}
+ 			return blame_origin_incref(o);
+ 		}
+@@ -478,7 +496,7 @@ static void queue_blames(struct blame_scoreboard *sb, struct blame_origin *porig
+ 		porigin->suspects = blame_merge(porigin->suspects, sorted);
+ 	else {
+ 		struct blame_origin *o;
+-		for (o = porigin->commit->util; o; o = o->next) {
++		for (o = get_blame_suspects(porigin->commit); o; o = o->next) {
+ 			if (o->suspects) {
+ 				porigin->suspects = sorted;
+ 				return;
+@@ -525,7 +543,7 @@ static struct blame_origin *find_origin(struct commit *parent,
+ 	const char *paths[2];
  
-+	init_commit_rev_name(&rev_names);
- 	git_config(git_default_config, NULL);
- 	argc = parse_options(argc, argv, prefix, opts, name_rev_usage, 0);
- 	if (all + transform_stdin + !!argc > 1) {
+ 	/* First check any existing origins */
+-	for (porigin = parent->util; porigin; porigin = porigin->next)
++	for (porigin = get_blame_suspects(parent); porigin; porigin = porigin->next)
+ 		if (!strcmp(porigin->path, origin->path)) {
+ 			/*
+ 			 * The same path between origin and its parent
+@@ -1550,7 +1568,7 @@ void assign_blame(struct blame_scoreboard *sb, int opt)
+ 
+ 	while (commit) {
+ 		struct blame_entry *ent;
+-		struct blame_origin *suspect = commit->util;
++		struct blame_origin *suspect = get_blame_suspects(commit);
+ 
+ 		/* find one suspect to break down */
+ 		while (suspect && !suspect->suspects)
+@@ -1752,6 +1770,8 @@ void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blam
+ 	struct commit *final_commit = NULL;
+ 	enum object_type type;
+ 
++	init_blame_suspects(&blame_suspects);
++
+ 	if (sb->reverse && sb->contents_from)
+ 		die(_("--contents and --reverse do not blend well."));
+ 
+@@ -1815,7 +1835,7 @@ void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blam
+ 	}
+ 
+ 	if (is_null_oid(&sb->final->object.oid)) {
+-		o = sb->final->util;
++		o = get_blame_suspects(sb->final);
+ 		sb->final_buf = xmemdupz(o->file.ptr, o->file.size);
+ 		sb->final_buf_size = o->file.size;
+ 	}
+diff --git a/blame.h b/blame.h
+index a6c915c277..2092f9529c 100644
+--- a/blame.h
++++ b/blame.h
+@@ -172,4 +172,6 @@ extern void setup_scoreboard(struct blame_scoreboard *sb, const char *path, stru
+ 
+ extern struct blame_entry *blame_entry_prepend(struct blame_entry *head, long start, long end, struct blame_origin *o);
+ 
++extern struct blame_origin *get_blame_suspects(struct commit *commit);
++
+ #endif /* BLAME_H */
+diff --git a/builtin/blame.c b/builtin/blame.c
+index db38c0b307..969572810d 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -457,7 +457,7 @@ static void output(struct blame_scoreboard *sb, int option)
+ 			struct commit *commit = ent->suspect->commit;
+ 			if (commit->object.flags & MORE_THAN_ONE_PATH)
+ 				continue;
+-			for (suspect = commit->util; suspect; suspect = suspect->next) {
++			for (suspect = get_blame_suspects(commit); suspect; suspect = suspect->next) {
+ 				if (suspect->guilty && count++) {
+ 					commit->object.flags |= MORE_THAN_ONE_PATH;
+ 					break;
 -- 
 2.17.0.705.g3525833791
 
