@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C2AB1F51C
-	for <e@80x24.org>; Sat, 19 May 2018 05:29:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EF231F51C
+	for <e@80x24.org>; Sat, 19 May 2018 05:29:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751914AbeESF2s (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 May 2018 01:28:48 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:32922 "EHLO
+        id S1752119AbeESF3I (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 May 2018 01:29:08 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:34200 "EHLO
         mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751117AbeESF2n (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 May 2018 01:28:43 -0400
-Received: by mail-lf0-f66.google.com with SMTP id h9-v6so16908163lfi.0
-        for <git@vger.kernel.org>; Fri, 18 May 2018 22:28:42 -0700 (PDT)
+        with ESMTP id S1751924AbeESF2t (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 May 2018 01:28:49 -0400
+Received: by mail-lf0-f66.google.com with SMTP id x145-v6so4862414lff.1
+        for <git@vger.kernel.org>; Fri, 18 May 2018 22:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=y6W8np6lKNmZ0F5MFM0tUNwGA1UO5XWx0XSgTzG0XR4=;
-        b=gt6qPJv9heeRaAL2w+V3OKhSa4eva676Hgs/7INNq682w6LT4EoZrKYKzU+Rd1cZYW
-         ArE1MUdWPZg2hLDj1ebjMehS5e6fBNYXQACNsDdh8mZyE4b5femiyk7wF9p4Mc7CiCcH
-         6NX61Alc5GvjVZ+T7pmR2QtlrLqQsxq04TWC1J0P3ETILjcw+SOEGfMWYHTPjSyD7fyE
-         A/RmuPwlb5p0uHdi64lcXmgp0K8KqVYlhVklYdywyINC341XUyXJMkLdvGdAmhMIcUJw
-         280hwc1xsRDeOEC+fY5za8n30D7Jw2ZHZ1KooXBqBZRs6vWBocvlNi3qUcIgDshADKDM
-         8hRQ==
+        bh=/hSllLrSyw0WIJIo1/Ix0/Tom2whfLQ6BdMb8cSyelM=;
+        b=U1ppcLumaLRD1ET+EjaKKC5HMobdFtIR4Z31hr5LjdhpxtZxG6tncjTuGpwE28aO6T
+         ZhjA7sUAHYwIgvX2U85b7k6tZ71q+ff2JdctC40jH9b18Vlc+kSG154b00GOWGVoRFee
+         oLeJ7PF4HsuxZoifYy8YMEno7iUFzIRTbbfc9oKw6xhb1N1TncB9z7G28GIYHFyWgs7N
+         7b5EVp+iPtI+whP0H5WuO6m9WQ55S/TFLj8eITwhGuA8jos9lufm0R+fmGXroPJcxSq5
+         kK1xSmYFNB/vnJUhrmVpXHCpasyVwZ70zBjU+FAQw1dl2/cjnO3syfuBgYF59oy3mgcR
+         k/fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=y6W8np6lKNmZ0F5MFM0tUNwGA1UO5XWx0XSgTzG0XR4=;
-        b=oXU3nVUUdDcmCje2F0HRdYyLReQIa5hyj0Pvep57xpEsclVtlgAeqn2j73pTcisOlH
-         DKpnU6rdZ548fIYUmRexPJU6GLcEQXwRyxKGnFbB4ooRCHLi9pYMa9b+j6xkwZU+49HG
-         sjLAKgLrsM5azI/9rpte+hrHOUzHAAGVsebLRZpyDY35hjVwWvBtgKMrgMmxdpD15w/P
-         JAJcuHFEP2EkiA+eWSpd9o0CLFcxx+bv/4o4Pf5RpOW+GTOfQuod78ftDugDFicwcAbu
-         wwSOtY/j1UvI9LSMwPhlMG9l51XrtHTMRLuFYTf+TZvIioBPavfUDxvPBtPhTEIqOA1i
-         lZWg==
-X-Gm-Message-State: ALKqPwc/miW9YfGP5ga2+pAqeOpU0Yy5XWnm+MB6w9LZ4ozykR9SB/cA
-        UhDqFcH7hEMzroyukAm1BJA=
-X-Google-Smtp-Source: AB8JxZqnZjMcVaiZ47M6V4u6ZcukJZ0YkRg5f/DUUiZYuF32HmeeH8YATm9geFe1flxNKOHG/K88rQ==
-X-Received: by 2002:a2e:4949:: with SMTP id b9-v6mr7620623ljd.116.1526707722216;
-        Fri, 18 May 2018 22:28:42 -0700 (PDT)
+        bh=/hSllLrSyw0WIJIo1/Ix0/Tom2whfLQ6BdMb8cSyelM=;
+        b=TGHoMJfhTFzemGtytTgHmyf1IPHu+Tk+FH/wfeV0WaifiI16zGOGeveX88TO8bKeVS
+         TRpoPSxvMg68gkIx6ii899YhsyPjMbN2RCbAKEYGVtmfTMskvaK9dDpviH6Mwm9yfpdM
+         xkZzHEuRIevgeNCqtNeNl/MCKsw2Qh7apEXSkXCtouxyXJ9f+hBZOewvU8Dpx5+g2Wp7
+         3FsVncjBvaDz/1uNEZYKymqiqRbPrQGFz+wSmUuQz9wQqgOaqmbH76sqZvf+lCrvp4xz
+         8hoJ9pu1YfDRdL7JAKxyYa22aV2qw1SjBOPn/SlK8QrL12MsIPLWsZUHYiMnuWZ9j4Do
+         Btzg==
+X-Gm-Message-State: ALKqPwdduAzSHjlQtyCC4gyAxObywQGNvozDUJzTv9UH+4kCKIp1tuZR
+        8fJsy3/FJQU9zR2Tje9Lk9w=
+X-Google-Smtp-Source: AB8JxZoVPxrpR5F4TRSifXOksPVmDcw94pxS+H94QYspnHhDsN4nVt0W2ClyabO8DiWQnNpwd8Q/pQ==
+X-Received: by 2002:a2e:8350:: with SMTP id l16-v6mr7244164ljh.28.1526707728671;
+        Fri, 18 May 2018 22:28:48 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n5-v6sm1490874ljh.84.2018.05.18.22.28.41
+        by smtp.gmail.com with ESMTPSA id n5-v6sm1490874ljh.84.2018.05.18.22.28.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 May 2018 22:28:41 -0700 (PDT)
+        Fri, 18 May 2018 22:28:47 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-Subject: [PATCH v3 06/15] sequencer.c: use commit-slab to mark seen commits
-Date:   Sat, 19 May 2018 07:28:22 +0200
-Message-Id: <20180519052831.12603-7-pclouds@gmail.com>
+Subject: [PATCH v3 12/15] show-branch: note about its object flags usage
+Date:   Sat, 19 May 2018 07:28:28 +0200
+Message-Id: <20180519052831.12603-13-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180519052831.12603-1-pclouds@gmail.com>
 References: <20180513055208.17952-1-pclouds@gmail.com>
@@ -64,73 +64,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's done so that commit->util can be removed. See more explanation in
-the commit that removes commit->util.
+This is another candidate for commit-slab. Keep Junio's observation in
+code so we can search it later on when somebody wants to improve the
+code.
 ---
- sequencer.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ builtin/show-branch.c | 5 +++++
+ object.h              | 1 +
+ 2 files changed, 6 insertions(+)
 
-diff --git a/sequencer.c b/sequencer.c
-index 4ce5120e77..3af296db3b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -23,6 +23,7 @@
- #include "hashmap.h"
- #include "notes-utils.h"
- #include "sigchain.h"
-+#include "commit-slab.h"
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 29d15d16d2..f2e985c00a 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -22,6 +22,11 @@ static int showbranch_use_color = -1;
  
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ static struct argv_array default_args = ARGV_ARRAY_INIT;
  
-@@ -3160,6 +3161,7 @@ static enum check_level get_missing_commit_check_level(void)
- 	return CHECK_IGNORE;
- }
++/*
++ * TODO: convert this use of commit->object.flags to commit-slab
++ * instead to store a pointer to ref name directly. Then use the same
++ * UNINTERESTING definition from revision.h here.
++ */
+ #define UNINTERESTING	01
  
-+define_commit_slab(commit_seen, unsigned char);
- /*
-  * Check if the user dropped some commits by mistake
-  * Behaviour determined by rebase.missingCommitsCheck.
-@@ -3173,6 +3175,9 @@ int check_todo_list(void)
- 	struct todo_list todo_list = TODO_LIST_INIT;
- 	struct strbuf missing = STRBUF_INIT;
- 	int advise_to_edit_todo = 0, res = 0, i;
-+	struct commit_seen commit_seen;
-+
-+	init_commit_seen(&commit_seen);
- 
- 	strbuf_addstr(&todo_file, rebase_path_todo());
- 	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file.buf) < 0) {
-@@ -3189,7 +3194,7 @@ int check_todo_list(void)
- 	for (i = 0; i < todo_list.nr; i++) {
- 		struct commit *commit = todo_list.items[i].commit;
- 		if (commit)
--			commit->util = (void *)1;
-+			*commit_seen_at(&commit_seen, commit) = 1;
- 	}
- 
- 	todo_list_release(&todo_list);
-@@ -3205,11 +3210,11 @@ int check_todo_list(void)
- 	for (i = todo_list.nr - 1; i >= 0; i--) {
- 		struct todo_item *item = todo_list.items + i;
- 		struct commit *commit = item->commit;
--		if (commit && !commit->util) {
-+		if (commit && !*commit_seen_at(&commit_seen, commit)) {
- 			strbuf_addf(&missing, " - %s %.*s\n",
- 				    short_commit_name(commit),
- 				    item->arg_len, item->arg);
--			commit->util = (void *)1;
-+			*commit_seen_at(&commit_seen, commit) = 1;
- 		}
- 	}
- 
-@@ -3235,6 +3240,7 @@ int check_todo_list(void)
- 		"The possible behaviours are: ignore, warn, error.\n\n"));
- 
- leave_check:
-+	clear_commit_seen(&commit_seen);
- 	strbuf_release(&todo_file);
- 	todo_list_release(&todo_list);
- 
+ #define REV_SHIFT	 2
+diff --git a/object.h b/object.h
+index b8e70e5519..caf36529f3 100644
+--- a/object.h
++++ b/object.h
+@@ -43,6 +43,7 @@ struct object_array {
+  * builtin/index-pack.c:                                     2021
+  * builtin/pack-objects.c:                                   20
+  * builtin/reflog.c:                   10--12
++ * builtin/show-branch.c:    0-------------------------------------------26
+  * builtin/unpack-objects.c:                                 2021
+  */
+ #define FLAG_BITS  27
 -- 
 2.17.0.705.g3525833791
 
