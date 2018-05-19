@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08ADD1F51C
-	for <e@80x24.org>; Sat, 19 May 2018 04:28:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16F5E1F51C
+	for <e@80x24.org>; Sat, 19 May 2018 04:28:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751909AbeESE21 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 May 2018 00:28:27 -0400
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:38106 "EHLO
-        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750817AbeESE2N (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 May 2018 00:28:13 -0400
-Received: by mail-lf0-f44.google.com with SMTP id z142-v6so16760327lff.5
-        for <git@vger.kernel.org>; Fri, 18 May 2018 21:28:12 -0700 (PDT)
+        id S1752140AbeESE2g (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 May 2018 00:28:36 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:45615 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750863AbeESE2J (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 May 2018 00:28:09 -0400
+Received: by mail-lf0-f67.google.com with SMTP id w202-v6so16731588lff.12
+        for <git@vger.kernel.org>; Fri, 18 May 2018 21:28:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gpH9mzlOBqspqSW5VMPLtVjmUPQmmIKSho7A3m/JWoU=;
-        b=az+U889EA8DlUJt4H1sjqXUTOX/pOJKB8MomTT8DtytXtAjI11Zh5sDKy6vl8BF7g8
-         ZZV7lKtLxKCtJvE+oW3JLqRtv7eynOQkZoN6zcZ1qrJyVrhpFxYyljhte4+G8xXVvJei
-         Pe32LLpmYSzH+r6ReFFMWnrndMw997D6DK5WjfosvN5be45+3RIfLf4MjkHFwkkdRXCu
-         Wz+uNEN2avfEbFPeT0zLFq7zOvDKMPeTKpDv5vYyukx1vK7786fTgkgEX5wPJgZ1Yhmh
-         ZQgcFy4empbEU7UijKq9LaSjyvr2Em61NBbDG5G38TH94dzTEAOnARacninAuQQr3nEL
-         eWsA==
+        bh=O5V1iv0DX/Xl40raU7t8Kq+JjT0oKl3Tb5po6VMLttQ=;
+        b=HOuiAxIhVyZ6hw+GhJpW/ERxSBK3EZsmVrDUDtJ1gXmSyDnUvw+KOm9q8bJaPgdlgl
+         o6y4hbXu+wh0X9y6hK54ODg4KfxhnE3j2jTIVR0l04OHw68lXmVdLxyVbbl33c6bTzdF
+         MNf58FPPpSNonUjSVMIcX/gLxKiNv6xy5AjUo/zB66Ooq5a4emtgPCie1trpG7sOC7Pt
+         5XfwnVRbyrUbU5oKg160Tnkv6ZPqJlwXO5GCYD5h22c5zCUY0hgxcGOGsJLe1qMXdLq/
+         eGtFxb6WT+ILBX2TGbPwyNEXzJa7dxvfIdnoDoUi/+dqZB9Kyee/5i0a3HCAFBNnFxTA
+         aeGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gpH9mzlOBqspqSW5VMPLtVjmUPQmmIKSho7A3m/JWoU=;
-        b=RW68vj11Vh/XJzNjTBOo8X1Jc3AZ1Dt/HSuhS9ProPnknqldBTMk/1is1Eg5lfghAf
-         37tsJY0KEYAcuV/DPWDepy4xhsdLcAOUFx3CZcpXwO18NoYanx/isTKXw3cxHM3FiJjA
-         q4M925nWBo3bHeEwBjcIw0EMdON7BBboIQPK4UZ+GXwtw6fMqPo1tr8FzN4ua5PFi+8w
-         i/6RuNiWQblmlYFx42xd3G8EZb8AwD/etmZ17YdXAhLOuMdZ2ECR3utl7DxKUX6BfB8i
-         5r7apEAGvHfX8xtuDumnFES5QbKePargfvico9Co9+JD19mh3IIKuajeOzrD0XfOMKos
-         XZHA==
-X-Gm-Message-State: ALKqPwfoE5DnTT9hEp7NnA75YkT7c44ZAaR+V+tkfM/2t/5CJowSZN+T
-        jJPBJ3iyikXmm93MaWHQC093sg==
-X-Google-Smtp-Source: AB8JxZp/NkpURh9tXGtGDsZGvK+hujb5Vuk8mpRcviER9V7oOTlVgY+r+XcAtrWUz6tnIyM3KnC6JA==
-X-Received: by 2002:a19:4ed1:: with SMTP id u78-v6mr22051925lfk.40.1526704091624;
-        Fri, 18 May 2018 21:28:11 -0700 (PDT)
+        bh=O5V1iv0DX/Xl40raU7t8Kq+JjT0oKl3Tb5po6VMLttQ=;
+        b=nPZgMhu8nBWFHiymqEn39ZOAmSOF4SnkpPdRkdTuuDhHZmWEtRAipQMjg1YxyWdyqc
+         rzBtVXJ/tS5QeHAg6oL1vPJXgBkkcgQz5hEC2VugRgM7nR9B3yAK0j17Qlednogx47z1
+         Cr9sphRl+ZEyF0jxqFT4xH/QgNMfzx4faMWEWqA7L88Nt+tV0pCqGIBsgLAEEa/U2v73
+         JLdaS6Smr8eSuaRf1MWZNSasEzBiOsLc6fDvVh5lF4a8txQ6OiJJPz6lbziyPZ4IMFGl
+         lZwb9MhOIf4ZUMNMAZcCGk1G4XUyIV8UWIyjuQkcEgbyD44xgvx3FTocZyqHwJ1MnQ6A
+         euuA==
+X-Gm-Message-State: ALKqPwfVDH5Sv9xGkcvnOGQ3I4N9tjd1CvLlDmxFm5QQTTd66YSDgzNN
+        cR2q7+y7z7h8SPToYz0dRlgTkw==
+X-Google-Smtp-Source: AB8JxZqFPQ8N8ZvSFIMb6zjp3SbCrqvSODQUOaf2R9ntQ1Il6kps1bXA+Zv0BRTuObKUk6ItZ7JJLA==
+X-Received: by 2002:a2e:934f:: with SMTP id m15-v6mr6990346ljh.39.1526704087986;
+        Fri, 18 May 2018 21:28:07 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o11-v6sm1960309lfi.14.2018.05.18.21.28.10
+        by smtp.gmail.com with ESMTPSA id o11-v6sm1960309lfi.14.2018.05.18.21.28.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 May 2018 21:28:10 -0700 (PDT)
+        Fri, 18 May 2018 21:28:07 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Philip Oakley <philipoakley@iee.org>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 13/14] completion: reduce completable command list
-Date:   Sat, 19 May 2018 06:27:51 +0200
-Message-Id: <20180519042752.8666-14-pclouds@gmail.com>
+Subject: [PATCH 10/14] help: use command-list.txt for the source of guides
+Date:   Sat, 19 May 2018 06:27:48 +0200
+Message-Id: <20180519042752.8666-11-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180519042752.8666-1-pclouds@gmail.com>
 References: <20180519042752.8666-1-pclouds@gmail.com>
@@ -71,96 +71,261 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The following commands are removed from the complete list:
-
-- annotate             obsolete, discouraged to use
-- filter-branch        not often used
-- get-tar-commit-id    not often used
-- imap-send            not often used
-- interpreter-trailers not for interactive use
-- p4                   too short and probably not often used (*)
-- svn                  same category as p4 (*)
-- verify-commit        not often used
-
-(*) to be fair, send-email command which is in the same foreignscminterface
-group as svn and p4 does get completion, just because it's used by git
-and kernel development. So maybe we should include them.
+The help command currently hard codes the list of guides and their
+summary in C. Let's move this list to command-list.txt. This lets us
+extract summary lines from Documentation/git*.txt. This also
+potentially lets us list guides in git.txt, but I'll leave that for
+now.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- command-list.txt | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ Documentation/gitattributes.txt        |  2 +-
+ Documentation/gitmodules.txt           |  2 +-
+ Documentation/gitrevisions.txt         |  2 +-
+ Makefile                               |  2 +-
+ builtin/help.c                         | 32 --------------------------
+ command-list.txt                       | 16 +++++++++++++
+ contrib/completion/git-completion.bash | 15 ++++++++----
+ help.c                                 | 21 +++++++++++++----
+ help.h                                 |  1 +
+ t/t0012-help.sh                        |  6 +++++
+ 10 files changed, 54 insertions(+), 45 deletions(-)
 
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 1094fe2b5b..083c2f380d 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -3,7 +3,7 @@ gitattributes(5)
+ 
+ NAME
+ ----
+-gitattributes - defining attributes per path
++gitattributes - Defining attributes per path
+ 
+ SYNOPSIS
+ --------
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index db5d47eb19..4d63def206 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -3,7 +3,7 @@ gitmodules(5)
+ 
+ NAME
+ ----
+-gitmodules - defining submodule properties
++gitmodules - Defining submodule properties
+ 
+ SYNOPSIS
+ --------
+diff --git a/Documentation/gitrevisions.txt b/Documentation/gitrevisions.txt
+index 27dec5b91d..1f6cceaefb 100644
+--- a/Documentation/gitrevisions.txt
++++ b/Documentation/gitrevisions.txt
+@@ -3,7 +3,7 @@ gitrevisions(7)
+ 
+ NAME
+ ----
+-gitrevisions - specifying revisions and ranges for Git
++gitrevisions - Specifying revisions and ranges for Git
+ 
+ SYNOPSIS
+ --------
+diff --git a/Makefile b/Makefile
+index a60a78ee67..1efb751e46 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1937,7 +1937,7 @@ $(BUILT_INS): git$X
+ 
+ command-list.h: generate-cmdlist.sh command-list.txt
+ 
+-command-list.h: $(wildcard Documentation/git-*.txt)
++command-list.h: $(wildcard Documentation/git*.txt)
+ 	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh command-list.txt >$@+ && mv $@+ $@
+ 
+ SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
+diff --git a/builtin/help.c b/builtin/help.c
+index 0e0af8426a..5727fb5e51 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -402,38 +402,6 @@ static void show_html_page(const char *git_cmd)
+ 	open_html(page_path.buf);
+ }
+ 
+-static struct {
+-	const char *name;
+-	const char *help;
+-} common_guides[] = {
+-	{ "attributes", N_("Defining attributes per path") },
+-	{ "everyday", N_("Everyday Git With 20 Commands Or So") },
+-	{ "glossary", N_("A Git glossary") },
+-	{ "ignore", N_("Specifies intentionally untracked files to ignore") },
+-	{ "modules", N_("Defining submodule properties") },
+-	{ "revisions", N_("Specifying revisions and ranges for Git") },
+-	{ "tutorial", N_("A tutorial introduction to Git (for version 1.5.1 or newer)") },
+-	{ "workflows", N_("An overview of recommended workflows with Git") },
+-};
+-
+-static void list_common_guides_help(void)
+-{
+-	int i, longest = 0;
+-
+-	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
+-		if (longest < strlen(common_guides[i].name))
+-			longest = strlen(common_guides[i].name);
+-	}
+-
+-	puts(_("The common Git guides are:\n"));
+-	for (i = 0; i < ARRAY_SIZE(common_guides); i++) {
+-		printf("   %s   ", common_guides[i].name);
+-		mput_char(' ', longest - strlen(common_guides[i].name));
+-		puts(_(common_guides[i].help));
+-	}
+-	putchar('\n');
+-}
+-
+ static const char *check_git_cmd(const char* cmd)
+ {
+ 	char *alias;
 diff --git a/command-list.txt b/command-list.txt
-index dcf1907a54..8462ea475f 100644
+index 3bd23201a6..99ddc231c1 100644
 --- a/command-list.txt
 +++ b/command-list.txt
-@@ -47,7 +47,7 @@
- # command name                          category [category] [category]
- git-add                                 mainporcelain           worktree
- git-am                                  mainporcelain
--git-annotate                            ancillaryinterrogators          complete
-+git-annotate                            ancillaryinterrogators
- git-apply                               plumbingmanipulators            complete
- git-archimport                          foreignscminterface
- git-archive                             mainporcelain
-@@ -89,13 +89,13 @@ git-fast-export                         ancillarymanipulators
- git-fast-import                         ancillarymanipulators
- git-fetch                               mainporcelain           remote
- git-fetch-pack                          synchingrepositories
--git-filter-branch                       ancillarymanipulators           complete
-+git-filter-branch                       ancillarymanipulators
- git-fmt-merge-msg                       purehelpers
- git-for-each-ref                        plumbinginterrogators
- git-format-patch                        mainporcelain
- git-fsck                                ancillaryinterrogators          complete
- git-gc                                  mainporcelain
--git-get-tar-commit-id                   ancillaryinterrogators          complete
-+git-get-tar-commit-id                   ancillaryinterrogators
- git-grep                                mainporcelain           info
- git-gui                                 mainporcelain
- git-hash-object                         plumbingmanipulators
-@@ -103,11 +103,11 @@ git-help                                ancillaryinterrogators          complete
- git-http-backend                        synchingrepositories
- git-http-fetch                          synchelpers
- git-http-push                           synchelpers
--git-imap-send                           foreignscminterface             complete
-+git-imap-send                           foreignscminterface
- git-index-pack                          plumbingmanipulators
- git-init                                mainporcelain           init
- git-instaweb                            ancillaryinterrogators          complete
--git-interpret-trailers                  purehelpers                     complete
-+git-interpret-trailers                  purehelpers
- gitk                                    mainporcelain
- git-log                                 mainporcelain           info
- git-ls-files                            plumbinginterrogators
-@@ -127,7 +127,7 @@ git-mktree                              plumbingmanipulators
- git-mv                                  mainporcelain           worktree
- git-name-rev                            plumbinginterrogators           complete
- git-notes                               mainporcelain
--git-p4                                  foreignscminterface             complete
-+git-p4                                  foreignscminterface
- git-pack-objects                        plumbingmanipulators
- git-pack-redundant                      plumbinginterrogators
- git-pack-refs                           ancillarymanipulators
-@@ -167,7 +167,7 @@ git-stage                                                               complete
- git-status                              mainporcelain           info
- git-stripspace                          purehelpers
- git-submodule                           mainporcelain
--git-svn                                 foreignscminterface             complete
-+git-svn                                 foreignscminterface
- git-symbolic-ref                        plumbingmanipulators
- git-tag                                 mainporcelain           history
- git-unpack-file                         plumbinginterrogators
-@@ -178,7 +178,7 @@ git-update-server-info                  synchingrepositories
- git-upload-archive                      synchelpers
- git-upload-pack                         synchelpers
- git-var                                 plumbinginterrogators
--git-verify-commit                       ancillaryinterrogators          complete
-+git-verify-commit                       ancillaryinterrogators
- git-verify-pack                         plumbinginterrogators
- git-verify-tag                          ancillaryinterrogators
- gitweb                                  ancillaryinterrogators
+@@ -139,3 +139,19 @@ gitweb                                  ancillaryinterrogators
+ git-whatchanged                         ancillaryinterrogators
+ git-worktree                            mainporcelain
+ git-write-tree                          plumbingmanipulators
++gitattributes                           guide
++gitcli                                  guide
++gitcore-tutorial                        guide
++gitcvs-migration                        guide
++gitdiffcore                             guide
++giteveryday                             guide
++gitglossary                             guide
++githooks                                guide
++gitignore                               guide
++gitmodules                              guide
++gitnamespaces                           guide
++gitrepository-layout                    guide
++gitrevisions                            guide
++gittutorial-2                           guide
++gittutorial                             guide
++gitworkflows                            guide
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 62ca8641f4..4e724a5b76 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1575,6 +1575,13 @@ _git_grep ()
+ 	__git_complete_refs
+ }
+ 
++__git_all_guides=
++__git_compute_all_guides ()
++{
++	test -n "$__git_all_guides" ||
++	__git_all_guides=$(git --list-cmds=list-guide)
++}
++
+ _git_help ()
+ {
+ 	case "$cur" in
+@@ -1584,11 +1591,9 @@ _git_help ()
+ 		;;
+ 	esac
+ 	__git_compute_all_commands
+-	__gitcomp "$__git_all_commands $(__git_aliases)
+-		attributes cli core-tutorial cvs-migration
+-		diffcore everyday gitk glossary hooks ignore modules
+-		namespaces repository-layout revisions tutorial tutorial-2
+-		workflows
++	__git_compute_all_guides
++	__gitcomp "$__git_all_commands $(__git_aliases) $__git_all_guides
++		gitk
+ 		"
+ }
+ 
+diff --git a/help.c b/help.c
+index c7df1d2338..23924dd300 100644
+--- a/help.c
++++ b/help.c
+@@ -39,12 +39,14 @@ static struct category_description main_categories[] = {
+ 	{ 0, NULL }
+ };
+ 
+-static const char *drop_prefix(const char *name)
++static const char *drop_prefix(const char *name, uint32_t category)
+ {
+ 	const char *new_name;
+ 
+ 	if (skip_prefix(name, "git-", &new_name))
+ 		return new_name;
++	if (category == CAT_guide && skip_prefix(name, "git", &new_name))
++		return new_name;
+ 	return name;
+ 
+ }
+@@ -66,7 +68,7 @@ static void extract_cmds(struct cmdname_help **p_cmds, uint32_t mask)
+ 			continue;
+ 
+ 		cmds[nr] = *cmd;
+-		cmds[nr].name = drop_prefix(cmd->name);
++		cmds[nr].name = drop_prefix(cmd->name, cmd->category);
+ 
+ 		nr++;
+ 	}
+@@ -358,11 +360,22 @@ void list_cmds_by_category(struct string_list *list,
+ 	for (i = 0; i < n; i++) {
+ 		struct cmdname_help *cmd = command_list + i;
+ 
+-		if (cmd->category & cat_id)
+-			string_list_append(list, drop_prefix(cmd->name));
++		if (!(cmd->category & cat_id))
++			continue;
++		string_list_append(list, drop_prefix(cmd->name, cmd->category));
+ 	}
+ }
+ 
++void list_common_guides_help(void)
++{
++	struct category_description catdesc[] = {
++		{ CAT_guide, N_("The common Git guides are:") },
++		{ 0, NULL }
++	};
++	print_cmd_by_category(catdesc);
++	putchar('\n');
++}
++
+ void list_all_cmds_help(void)
+ {
+ 	print_cmd_by_category(main_categories);
+diff --git a/help.h b/help.h
+index 40917fc38c..b2293e99be 100644
+--- a/help.h
++++ b/help.h
+@@ -20,6 +20,7 @@ static inline void mput_char(char c, unsigned int num)
+ 
+ extern void list_common_cmds_help(void);
+ extern void list_all_cmds_help(void);
++extern void list_common_guides_help(void);
+ 
+ extern void list_all_main_cmds(struct string_list *list);
+ extern void list_all_other_cmds(struct string_list *list);
+diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+index 060df24c2d..bc27df7f38 100755
+--- a/t/t0012-help.sh
++++ b/t/t0012-help.sh
+@@ -66,6 +66,12 @@ test_expect_success 'git help' '
+ 	test_i18ngrep "^   commit " help.output &&
+ 	test_i18ngrep "^   fetch  " help.output
+ '
++test_expect_success 'git help -g' '
++	git help -g >help.output &&
++	test_i18ngrep "^   attributes " help.output &&
++	test_i18ngrep "^   everyday   " help.output &&
++	test_i18ngrep "^   tutorial   " help.output
++'
+ 
+ test_expect_success 'generate builtin list' '
+ 	git --list-cmds=builtins >builtins
 -- 
 2.17.0.705.g3525833791
 
