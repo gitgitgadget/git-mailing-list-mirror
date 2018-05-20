@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6BCC1F51C
-	for <e@80x24.org>; Sun, 20 May 2018 21:12:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11DAA1F51C
+	for <e@80x24.org>; Sun, 20 May 2018 21:12:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751451AbeETVMO (ORCPT <rfc822;e@80x24.org>);
+        id S1751688AbeETVMQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 17:12:16 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:38232 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751408AbeETVMO (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 20 May 2018 17:12:14 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:51258 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751523AbeETVMM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 17:12:12 -0400
-Received: by mail-wm0-f66.google.com with SMTP id j4-v6so22157721wme.1
-        for <git@vger.kernel.org>; Sun, 20 May 2018 14:12:12 -0700 (PDT)
+Received: by mail-wr0-f194.google.com with SMTP id 94-v6so14080610wrf.5
+        for <git@vger.kernel.org>; Sun, 20 May 2018 14:12:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=D26R2+A9hZjYECM0bmlDGgoN3GWvNzzgv0e28ELhFjE=;
-        b=gjXRWdvBwkh2ChL3+r0necd9uq2+9b+U1opGbyqyR8m7sOMMMiqClY2rVLTYOw6NMn
-         hbcbMhwNwJK0cVSBK/iCA/weSnUqF2c1EwWuHFu7X3EAt77Obx0EysT1Ct1NcnH5mpl2
-         SYGLJcIvBHR6B5y/6nKgRtwaM2Qhohms7k3e7KcDat4Bc+fSgTN/kMJeD+Ne1AvuVrII
-         trdLtfMZ9SHk7hcv6Myj0BqRxKrnFFO6kjxhhksJM2cUCaoBqjz6gcDlUq4ig5LYkgkh
-         rUiXKN/M8qcXX2nBtNB1yew6VStc/LZmOp70mKKe2oJbz0FugVQCXBT23aY3hQcRxzf5
-         Wn1g==
+        bh=Yvei23vPH4GvUhAk+nVmIJkPJpg3uTgIVnCV9QVFjpw=;
+        b=kkd6e3kzKrOQdUFA6WPMJZYkCvOAuYPno2NiQ3bncwG66eO29gss/ONeZdJr9yQnVO
+         UOXNOk1LQu5t1uiB3B7M0UykvTl4nRDxOtAaUKiRZOgoFJBR5/Uuv5Y00ZcyV6yorKj3
+         wReJT50ojf/E7OclZhXCeVJFrjydhWwM7UAemR72hHoS+LYSSe96jPaAO64yaKuip+qk
+         bssON2IfNf1/ufWGDXO0q1+MDEacdtzZiPdsn1Kfxr/gGHT+s3M0d1fp59m4py/bxDLN
+         9i0Y6zpBGChNp3WzWl/d0tIGYffY8RJicMfXTIQySBso5jE6ADl8RPlgc//SGGXBp07H
+         cS/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=D26R2+A9hZjYECM0bmlDGgoN3GWvNzzgv0e28ELhFjE=;
-        b=BywXRpazC/fKUlKUdopbMTN9No6zWKzU+ml40m1GSgPEVYTPgthMuZHQ08e1g7LmNp
-         qHEUO9xrbkFgKb4b/CT1UZdnKo8ACy/8CDtnhgqZsaIbhDY8gUJWwQZ7HgRcnJP2ny4W
-         r4jd5ibhFhuc9uUDvLrLLw9n8y7UpM7pLvWpMGJweQxfYP3+JIa2l5OhbPFeHKAV4C3X
-         YQzwDlsIUKhzdmu1gqwFqJTpgLbh+n5T+KTRCPIyqoL1VXR7M2kqF5rSjft0Cq/FCrpX
-         BJLXRBH93ewcFhdwuvjTau61nrlzlXT/9dqK5wVvUOMRPh7O6AzEndIz9VZiDCp0e8UM
-         oUlg==
-X-Gm-Message-State: ALKqPwccHUk/TOgqzpq4zkKrHVRKcMXlDKYcGTGF8WwprS0QYqs5L7Ne
-        Omg6twFGuUZfIlPrso28D6NrStdJ
-X-Google-Smtp-Source: AB8JxZqI5JLNCjqb3MZjYmR+cTpRL/MbeniEsaD0Rxd/aXAUjfpxmjhtmgo6tgKUsLi/J9uJn6OOog==
-X-Received: by 2002:a1c:105:: with SMTP id 5-v6mr8749787wmb.145.1526850730975;
-        Sun, 20 May 2018 14:12:10 -0700 (PDT)
+        bh=Yvei23vPH4GvUhAk+nVmIJkPJpg3uTgIVnCV9QVFjpw=;
+        b=oCTGexDzfMwqWC3orJ5f+aWiqzyQ5dKpVx3l5TCvDwQkT3JsmTi8fHjqzAT3XuHRK6
+         po4/FbuOsz7QbJwNnezlsXY/7TEigqBHAHfZ1YAizmp7YYPlN2V4Cu2RFGtPREYd8wnO
+         8uv+6SV8OOP5e+i/z3zwhjYe/cJ5unU4GyxCYV9uWEXVGDZfrpIa0ObcDt2mj/0+m8+v
+         KyQQSPaMxPzRCIditupGTAg7AqCHTtiqfqC2zyLjbtvsXykMLHUke/CfIlAmadcOfsZM
+         c5Ze3FYyM5bJZXnP7ee+5LOTmGr9djfNmtLmLRFpzUHV6SVu7qmiovchslIERx5N1qu9
+         r6Ag==
+X-Gm-Message-State: ALKqPweViJB1SGYVEBg7zSU5sAhoBqYCTTqWNwEmjylOgOfIfuYBmmFN
+        ZffEF+iRV05LQOXagEnKKgsyEzay
+X-Google-Smtp-Source: AB8JxZp2jBoenQJrsn2/Ljd106mA+CzS9pgzWHo1lxXPaATk2W3GpN0KUckLJrtt6q1zVfXZQEmh7w==
+X-Received: by 2002:adf:84e2:: with SMTP id 89-v6mr2182197wrg.167.1526850732425;
+        Sun, 20 May 2018 14:12:12 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id r10-v6sm1930697wrn.6.2018.05.20.14.12.09
+        by smtp.gmail.com with ESMTPSA id w5-v6sm11705830wmd.26.2018.05.20.14.12.11
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 20 May 2018 14:12:10 -0700 (PDT)
+        Sun, 20 May 2018 14:12:11 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [RFC/PATCH 2/7] rerere: mark strings for translation
-Date:   Sun, 20 May 2018 22:12:05 +0100
-Message-Id: <20180520211210.1248-3-t.gummerer@gmail.com>
+Subject: [RFC/PATCH 3/7] rerere: add some documentation
+Date:   Sun, 20 May 2018 22:12:06 +0100
+Message-Id: <20180520211210.1248-4-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.17.0.588.g4d217cdf8e.dirty
 In-Reply-To: <20180520211210.1248-1-t.gummerer@gmail.com>
 References: <20180520211210.1248-1-t.gummerer@gmail.com>
@@ -63,266 +63,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git rerere' is considered a plumbing command and as such its output
-should be translated.  Its functionality is also only enabled through
-a config setting, so scripts really shouldn't rely on its output
-either way.
+Add some documentation for the logic behind the conflict normalization
+in rerere.  Also describe a bug that happens because we just linearly
+scan for conflict markers.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- rerere.c | 68 ++++++++++++++++++++++++++++----------------------------
- 1 file changed, 34 insertions(+), 34 deletions(-)
 
+This documents my understanding of the rerere conflict normalization
+and conflict ID computation logic.  Writing this down helped me
+understand the logic, and I thought it may be useful to have this as
+documentation in Documentation/technical as well.  Junio: as you wrote
+the original NEEDSWORK comment, did you have something more in mind
+here that should be documented?
+
+ Documentation/technical/rerere.txt | 43 ++++++++++++++++++++++++++++++
+ rerere.c                           |  4 ---
+ 2 files changed, 43 insertions(+), 4 deletions(-)
+ create mode 100644 Documentation/technical/rerere.txt
+
+diff --git a/Documentation/technical/rerere.txt b/Documentation/technical/rerere.txt
+new file mode 100644
+index 0000000000..94cc6a7ef0
+--- /dev/null
++++ b/Documentation/technical/rerere.txt
+@@ -0,0 +1,43 @@
++Rerere
++======
++
++This document describes the rerere logic.
++
++Conflict normalization
++----------------------
++
++To try and re-do a conflict resolution, even when different merge
++strategies are used, 'rerere' computes a conflict ID for each
++conflict in the file.
++
++This is done by discarding the common ancestor version in the
++diff3-style, and re-ordering the two sides of the conflict, in
++alphabetic order.
++
++Using this technique a conflict that looks as follows when for example
++'master' was merged into a topic branch:
++
++    <<<<<<< HEAD
++    foo
++    =======
++    bar
++    >>>>>>> master
++
++and the opposite way when the topic branch is merged into 'master':
++
++    <<<<<<< HEAD
++    bar
++    =======
++    foo
++    >>>>>>> topic
++
++can be recognized as the same conflict, and can automatically be
++re-resolved by 'rerere', as the SHA-1 sum of the two conflicts would
++be calculated from 'bar<NUL>foo<NUL>' in both cases.
++
++If there are multiple conflicts in one file, they are all appended to
++one another, both in the 'preimage' file as well as in the conflict
++ID.
++
++This is currently implemented by simply scanning through the file and
++looking for conflict markers.
 diff --git a/rerere.c b/rerere.c
-index 4b4869662d..af5e6179a9 100644
+index af5e6179a9..a02a38e072 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -212,7 +212,7 @@ static void read_rr(struct string_list *rr)
- 
- 		/* There has to be the hash, tab, path and then NUL */
- 		if (buf.len < 42 || get_sha1_hex(buf.buf, sha1))
--			die("corrupt MERGE_RR");
-+			die(_("corrupt MERGE_RR"));
- 
- 		if (buf.buf[40] != '.') {
- 			variant = 0;
-@@ -221,10 +221,10 @@ static void read_rr(struct string_list *rr)
- 			errno = 0;
- 			variant = strtol(buf.buf + 41, &path, 10);
- 			if (errno)
--				die("corrupt MERGE_RR");
-+				die(_("corrupt MERGE_RR"));
- 		}
- 		if (*(path++) != '\t')
--			die("corrupt MERGE_RR");
-+			die(_("corrupt MERGE_RR"));
- 		buf.buf[40] = '\0';
- 		id = new_rerere_id_hex(buf.buf);
- 		id->variant = variant;
-@@ -259,12 +259,12 @@ static int write_rr(struct string_list *rr, int out_fd)
- 				    rr->items[i].string, 0);
- 
- 		if (write_in_full(out_fd, buf.buf, buf.len) < 0)
--			die("unable to write rerere record");
-+			die(_("unable to write rerere record"));
- 
- 		strbuf_release(&buf);
- 	}
- 	if (commit_lock_file(&write_lock) != 0)
--		die("unable to write rerere record");
-+		die(_("unable to write rerere record"));
- 	return 0;
- }
- 
-@@ -484,12 +484,12 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
- 	io.input = fopen(path, "r");
- 	io.io.wrerror = 0;
- 	if (!io.input)
--		return error_errno("Could not open %s", path);
-+		return error_errno(_("Could not open %s"), path);
- 
- 	if (output) {
- 		io.io.output = fopen(output, "w");
- 		if (!io.io.output) {
--			error_errno("Could not write %s", output);
-+			error_errno(_("Could not write %s"), output);
- 			fclose(io.input);
- 			return -1;
- 		}
-@@ -499,15 +499,15 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
- 
- 	fclose(io.input);
- 	if (io.io.wrerror)
--		error("There were errors while writing %s (%s)",
-+		error(_("There were errors while writing %s (%s)"),
- 		      path, strerror(io.io.wrerror));
- 	if (io.io.output && fclose(io.io.output))
--		io.io.wrerror = error_errno("Failed to flush %s", path);
-+		io.io.wrerror = error_errno(_("Failed to flush %s"), path);
- 
- 	if (hunk_no < 0) {
- 		if (output)
- 			unlink_or_warn(output);
--		return error("Could not parse conflict hunks in %s", path);
-+		return error(_("Could not parse conflict hunks in %s"), path);
- 	}
- 	if (io.io.wrerror)
- 		return -1;
-@@ -568,7 +568,7 @@ static int find_conflict(struct string_list *conflict)
+@@ -394,10 +394,6 @@ static int is_cmarker(char *buf, int marker_char, int marker_size)
+  * and NUL concatenated together.
+  *
+  * Return the number of conflict hunks found.
+- *
+- * NEEDSWORK: the logic and theory of operation behind this conflict
+- * normalization may deserve to be documented somewhere, perhaps in
+- * Documentation/technical/rerere.txt.
+  */
+ static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_size)
  {
- 	int i;
- 	if (read_cache() < 0)
--		return error("index file corrupt");
-+		return error(_("index file corrupt"));
- 
- 	for (i = 0; i < active_nr;) {
- 		int conflict_type;
-@@ -601,7 +601,7 @@ int rerere_remaining(struct string_list *merge_rr)
- 	if (setup_rerere(merge_rr, RERERE_READONLY))
- 		return 0;
- 	if (read_cache() < 0)
--		return error("index file corrupt");
-+		return error(_("index file corrupt"));
- 
- 	for (i = 0; i < active_nr;) {
- 		int conflict_type;
-@@ -684,17 +684,17 @@ static int merge(const struct rerere_id *id, const char *path)
- 	 * Mark that "postimage" was used to help gc.
- 	 */
- 	if (utime(rerere_path(id, "postimage"), NULL) < 0)
--		warning_errno("failed utime() on %s",
-+		warning_errno(_("failed utime() on %s"),
- 			      rerere_path(id, "postimage"));
- 
- 	/* Update "path" with the resolution */
- 	f = fopen(path, "w");
- 	if (!f)
--		return error_errno("Could not open %s", path);
-+		return error_errno(_("Could not open %s"), path);
- 	if (fwrite(result.ptr, result.size, 1, f) != 1)
--		error_errno("Could not write %s", path);
-+		error_errno(_("Could not write %s"), path);
- 	if (fclose(f))
--		return error_errno("Writing %s failed", path);
-+		return error_errno(_("Writing %s failed"), path);
- 
- out:
- 	free(cur.ptr);
-@@ -715,13 +715,13 @@ static void update_paths(struct string_list *update)
- 		struct string_list_item *item = &update->items[i];
- 		if (add_file_to_cache(item->string, 0))
- 			exit(128);
--		fprintf(stderr, "Staged '%s' using previous resolution.\n",
-+		fprintf_ln(stderr, _("Staged '%s' using previous resolution."),
- 			item->string);
- 	}
- 
- 	if (write_locked_index(&the_index, &index_lock,
- 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
--		die("Unable to write new index file");
-+		die(_("Unable to write new index file"));
- }
- 
- static void remove_variant(struct rerere_id *id)
-@@ -753,7 +753,7 @@ static void do_rerere_one_path(struct string_list_item *rr_item,
- 		if (!handle_file(path, NULL, NULL)) {
- 			copy_file(rerere_path(id, "postimage"), path, 0666);
- 			id->collection->status[variant] |= RR_HAS_POSTIMAGE;
--			fprintf(stderr, "Recorded resolution for '%s'.\n", path);
-+			fprintf_ln(stderr, _("Recorded resolution for '%s'."), path);
- 			free_rerere_id(rr_item);
- 			rr_item->util = NULL;
- 			return;
-@@ -787,9 +787,9 @@ static void do_rerere_one_path(struct string_list_item *rr_item,
- 		if (rerere_autoupdate)
- 			string_list_insert(update, path);
- 		else
--			fprintf(stderr,
--				"Resolved '%s' using previous resolution.\n",
--				path);
-+			fprintf_ln(stderr,
-+				   _("Resolved '%s' using previous resolution."),
-+				   path);
- 		free_rerere_id(rr_item);
- 		rr_item->util = NULL;
- 		return;
-@@ -803,11 +803,11 @@ static void do_rerere_one_path(struct string_list_item *rr_item,
- 	if (id->collection->status[variant] & RR_HAS_POSTIMAGE) {
- 		const char *path = rerere_path(id, "postimage");
- 		if (unlink(path))
--			die_errno("cannot unlink stray '%s'", path);
-+			die_errno(_("cannot unlink stray '%s'"), path);
- 		id->collection->status[variant] &= ~RR_HAS_POSTIMAGE;
- 	}
- 	id->collection->status[variant] |= RR_HAS_PREIMAGE;
--	fprintf(stderr, "Recorded preimage for '%s'\n", path);
-+	fprintf_ln(stderr, _("Recorded preimage for '%s'"), path);
- }
- 
- static int do_plain_rerere(struct string_list *rr, int fd)
-@@ -879,7 +879,7 @@ static int is_rerere_enabled(void)
- 		return rr_cache_exists;
- 
- 	if (!rr_cache_exists && mkdir_in_gitdir(git_path_rr_cache()))
--		die("Could not create directory %s", git_path_rr_cache());
-+		die(_("Could not create directory %s"), git_path_rr_cache());
- 	return 1;
- }
- 
-@@ -1032,7 +1032,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 	 */
- 	ret = handle_cache(path, sha1, NULL);
- 	if (ret < 1)
--		return error("Could not parse conflict hunks in '%s'", path);
-+		return error(_("Could not parse conflict hunks in '%s'"), path);
- 
- 	/* Nuke the recorded resolution for the conflict */
- 	id = new_rerere_id(sha1);
-@@ -1050,7 +1050,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 		handle_cache(path, sha1, rerere_path(id, "thisimage"));
- 		if (read_mmfile(&cur, rerere_path(id, "thisimage"))) {
- 			free(cur.ptr);
--			error("Failed to update conflicted state in '%s'", path);
-+			error(_("Failed to update conflicted state in '%s'"), path);
- 			goto fail_exit;
- 		}
- 		cleanly_resolved = !try_merge(id, path, &cur, &result);
-@@ -1061,16 +1061,16 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 	}
- 
- 	if (id->collection->status_nr <= id->variant) {
--		error("no remembered resolution for '%s'", path);
-+		error(_("no remembered resolution for '%s'"), path);
- 		goto fail_exit;
- 	}
- 
- 	filename = rerere_path(id, "postimage");
- 	if (unlink(filename)) {
- 		if (errno == ENOENT)
--			error("no remembered resolution for %s", path);
-+			error(_("no remembered resolution for %s"), path);
- 		else
--			error_errno("cannot unlink %s", filename);
-+			error_errno(_("cannot unlink %s"), filename);
- 		goto fail_exit;
- 	}
- 
-@@ -1080,7 +1080,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 	 * the postimage.
- 	 */
- 	handle_cache(path, sha1, rerere_path(id, "preimage"));
--	fprintf(stderr, "Updated preimage for '%s'\n", path);
-+	fprintf_ln(stderr, _("Updated preimage for '%s'"), path);
- 
- 	/*
- 	 * And remember that we can record resolution for this
-@@ -1089,7 +1089,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 	item = string_list_insert(rr, path);
- 	free_rerere_id(item);
- 	item->util = id;
--	fprintf(stderr, "Forgot resolution for %s\n", path);
-+	fprintf_ln(stderr, _("Forgot resolution for %s"), path);
- 	return 0;
- 
- fail_exit:
-@@ -1104,7 +1104,7 @@ int rerere_forget(struct pathspec *pathspec)
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
- 
- 	if (read_cache() < 0)
--		return error("index file corrupt");
-+		return error(_("index file corrupt"));
- 
- 	fd = setup_rerere(&merge_rr, RERERE_NOAUTOUPDATE);
- 	if (fd < 0)
-@@ -1192,7 +1192,7 @@ void rerere_gc(struct string_list *rr)
- 	git_config(git_default_config, NULL);
- 	dir = opendir(git_path("rr-cache"));
- 	if (!dir)
--		die_errno("unable to open rr-cache directory");
-+		die_errno(_("unable to open rr-cache directory"));
- 	/* Collect stale conflict IDs ... */
- 	while ((e = readdir(dir))) {
- 		struct rerere_dir *rr_dir;
 -- 
 2.17.0.588.g4d217cdf8e.dirty
 
