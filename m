@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BB001F51C
-	for <e@80x24.org>; Sun, 20 May 2018 18:40:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CC131F51C
+	for <e@80x24.org>; Sun, 20 May 2018 18:40:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751556AbeETSkg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 14:40:36 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:44340 "EHLO
+        id S1751639AbeETSkm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 14:40:42 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:43092 "EHLO
         mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751084AbeETSkb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 14:40:31 -0400
-Received: by mail-lf0-f66.google.com with SMTP id h197-v6so20753027lfg.11
-        for <git@vger.kernel.org>; Sun, 20 May 2018 11:40:30 -0700 (PDT)
+        with ESMTP id S1751535AbeETSkg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 14:40:36 -0400
+Received: by mail-lf0-f66.google.com with SMTP id n18-v6so20744285lfh.10
+        for <git@vger.kernel.org>; Sun, 20 May 2018 11:40:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BzutEb+qk9kFpsYJ9rnNPvkaKBddOPZHEs4jg+3kZZI=;
-        b=akIaL2kVajzcZDWvmFAJ6jbA0p7NXUGBly+Yk70ZsuRas7WMGS++hcvo5q2Q6MqsK6
-         1w7C08eCWAZCWFbAEgmVzXh6mCfK+adkalRdegG3vUhNKrYUah/SPcM6aAf0nLKQUpW3
-         IyxLzm6XgIdW1EykMC8rQOu/Hgo8DgyCypjgsqO/ChIadNZLzZb3m/de1i3ZXbG8yho3
-         9KT7qL2Yf8OYv02JeGBQfegyBe7ocGiup3tH0aSuuhORfmEuvvldSRnY0VZNPGOA7CW/
-         dYCaY8IYbtAX6IiP2HdKREwGAKoHBbm4vTNY8zXpjZm9TwS7efsbGZT5SckUpe/URHUy
-         /0Yw==
+        bh=ZIqG9rcBpwrLjzcXZzkjOxY3Vxvukvec8Ri+laWTOjw=;
+        b=Lwxa3jvygTHp2BzBGyPZpp8A6iDS8tt3yb0JC5DgQ/DxSw0ZKhzOprHpI2hc+AVF8x
+         bfKRzrLu0gmjk6Ys4tQDXJTAMN4Nf5Y3xahthA0otQ//ZrKnmk7KQoORNDh4RKmDLzPw
+         Vjpv+x+i5nYtmdjJxX3BF9VfP7AgBR7jZrp/AEL+Wh3YZIfg1wj5eMa/MSlFxEFBGrUz
+         QFYZh5tfJtwOAF23SbrG9QLGpCACDspUfEgO+PjrXHf8dcVMrmFDcsYeq5+v2hEBE8Cj
+         3NSMYSHNCVacZUB0oZb/H/YEm1q2ej46qJq9jXLRf3BPIQAGf1APLdYtZJxakWl+kfNW
+         wmXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BzutEb+qk9kFpsYJ9rnNPvkaKBddOPZHEs4jg+3kZZI=;
-        b=N8N8/lThmHoAuUCTmwIBu41+uXPsqHyjOElBq/i1WuInl1+efkv+cQFu/dqZjkRo6R
-         xu8dKS+LrY/JFa0iFqWL5YAPmnAWHPO8SRJGwbY1Hg6A14Jucd+0fFxdjSZ+53AZFm1M
-         DFJ1bDefaBT0+MMrj1JZdIGP3Sinmt+YmoRrB0kZdIzID/p4CSsGfqg1BcAycuBxbDRB
-         uERxgHY7XACBNFKdfeI7qirecfpJj6dmKNd2tGpX+mmDIy+i1QTb5orLWq6dUrY7SdcQ
-         QTprRQp/grHtqi2PoMRyCOYfKkXzA/eKwqD+fCANE9+H+Bssr3E4Pidco9LFtj/u+6LA
-         Hnxw==
-X-Gm-Message-State: ALKqPwcwdGxDmPK0FTrg710aHFPnanwmk9NUnpX59ZmpU/1vdV4dKoRs
-        HJJG2SrPHF8MmBbYV4+J9qJ1+w==
-X-Google-Smtp-Source: AB8JxZryEIXdAY/3lQM5LN4QOZkq3Csc7t6CrcbF2v3DR6yD8cq7lShRY4kt0ds70X6pR/HKT1b/Kg==
-X-Received: by 2002:a19:7515:: with SMTP id y21-v6mr2670282lfe.107.1526841629411;
-        Sun, 20 May 2018 11:40:29 -0700 (PDT)
+        bh=ZIqG9rcBpwrLjzcXZzkjOxY3Vxvukvec8Ri+laWTOjw=;
+        b=iYjUC5gTseDidXqykYTfXVEyjejKjM+FXPPdADzwJMqRnBjvX6/nb9zZyPEGvmNcvc
+         k497UCNsOP6hr8b5g9m5nteVF2LHPfEOmJFgTQJQBOA+zz8HgRHdxaib/hTw24Kaj3Ki
+         B0W3cwiYjSvNm8eXnUAV3HWg9nj+0xyTrARY3jBB1kyWtBOUu+cNBb5FdzTDRFH9dQ3u
+         4+9e9U7utKQtCs3BAKSh0/JoV24lm83a5Y3kZx+l1FlUWPukSvoMd1DMDJCV2Ytl5Lk6
+         Dcfl0jdZpchVTVoVW9EivUH28rVCK/940T+Sj1UM5NP5E4FfJHeHFd3+T8s/ld62jDu9
+         UXdQ==
+X-Gm-Message-State: ALKqPweULtypMQWc6MpiqSv8shyi9pLUqKPMeeo9TrjSKOPMief8gWkY
+        g7s1gc4nMI5p9mN333WWCTuZhw==
+X-Google-Smtp-Source: AB8JxZrkkfZuj9Iov2Sh1RJogBf1pm62x4mbrv/aZC6fh+A/ZIj3yMk/AgH4Fmc6lsZ9QtW1B2+sFg==
+X-Received: by 2002:a19:f00f:: with SMTP id p15-v6mr26420219lfc.77.1526841634716;
+        Sun, 20 May 2018 11:40:34 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id k5-v6sm2176906lji.39.2018.05.20.11.40.28
+        by smtp.gmail.com with ESMTPSA id k5-v6sm2176906lji.39.2018.05.20.11.40.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 20 May 2018 11:40:28 -0700 (PDT)
+        Sun, 20 May 2018 11:40:33 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 08/17] git: support --list-cmds=list-<category>
-Date:   Sun, 20 May 2018 20:40:00 +0200
-Message-Id: <20180520184009.976-9-pclouds@gmail.com>
+Subject: [PATCH v2 13/17] completion: reduce completable command list
+Date:   Sun, 20 May 2018 20:40:05 +0200
+Message-Id: <20180520184009.976-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180520184009.976-1-pclouds@gmail.com>
 References: <20180519042752.8666-1-pclouds@gmail.com>
@@ -72,135 +72,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This allows us to select any group of commands by a category defined
-in command-list.txt. This is an internal/hidden option so we don't
-have to be picky about the category name or worried about exposing too
-much.
+The following commands are removed from the complete list:
 
-This will be used later by git-completion.bash to retrieve certain
-command groups.
+- annotate             obsolete, discouraged to use
+- filter-branch        not often used
+- get-tar-commit-id    not often used
+- imap-send            not often used
+- interpreter-trailers not for interactive use
+- name-rev             plumbing, just use git-describe
+- p4                   too short and probably not often used (*)
+- svn                  same category as p4 (*)
+- verify-commit        not often used
+
+(*) to be fair, send-email command which is in the same foreignscminterface
+group as svn and p4 does get completion, just because it's used by git
+and kernel development. So maybe we should include them.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/git.txt |  3 ++-
- generate-cmdlist.sh   | 17 +++++++++++++++++
- git.c                 |  7 +++++++
- help.c                | 23 +++++++++++++++++++++++
- help.h                |  2 ++
- 5 files changed, 51 insertions(+), 1 deletion(-)
+ command-list.txt | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index c01477ab5e..c423810eac 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -168,7 +168,8 @@ foo.bar= ...`) sets `foo.bar` to the empty string which `git config
- 	option and may change or be removed in the future. Supported
- 	groups are: builtins, parseopt (builtin commands that use
- 	parse-options), main (all commands in libexec directory),
--	others (all other commands in `$PATH` that have git- prefix).
-+	others (all other commands in `$PATH` that have git- prefix),
-+	list-<category> (see categories in command-list.txt)
- 
- GIT COMMANDS
- ------------
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index 3bcc1ee57d..8d6d8b45ce 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -45,6 +45,21 @@ define_categories () {
- 	test "$bit" -gt 32 && die "Urgh.. too many categories?"
- }
- 
-+define_category_names () {
-+	echo
-+	echo "/* Category names */"
-+	echo "static const char *category_names[] = {"
-+	bit=0
-+	category_list "$1" |
-+	while read cat
-+	do
-+		echo "	\"$cat\", /* (1UL << $bit) */"
-+		bit=$(($bit+1))
-+	done
-+	echo "	NULL"
-+	echo "};"
-+}
-+
- print_command_list () {
- 	echo "static struct cmdname_help command_list[] = {"
- 
-@@ -70,4 +85,6 @@ struct cmdname_help {
- "
- define_categories "$1"
- echo
-+define_category_names "$1"
-+echo
- print_command_list "$1"
-diff --git a/git.c b/git.c
-index 10907f7266..4d5b8a9931 100644
---- a/git.c
-+++ b/git.c
-@@ -60,6 +60,13 @@ static int list_cmds(const char *spec)
- 			list_all_main_cmds(&list);
- 		else if (match_token(spec, len, "others"))
- 			list_all_other_cmds(&list);
-+		else if (len > 5 && !strncmp(spec, "list-", 5)) {
-+			struct strbuf sb = STRBUF_INIT;
-+
-+			strbuf_add(&sb, spec + 5, len - 5);
-+			list_cmds_by_category(&list, sb.buf);
-+			strbuf_release(&sb);
-+		}
- 		else
- 			die(_("unsupported command listing type '%s'"), spec);
- 		spec += len;
-diff --git a/help.c b/help.c
-index d5ce9dfcbb..1117f7d1d1 100644
---- a/help.c
-+++ b/help.c
-@@ -329,6 +329,29 @@ void list_all_other_cmds(struct string_list *list)
- 	clean_cmdnames(&other_cmds);
- }
- 
-+void list_cmds_by_category(struct string_list *list,
-+			   const char *cat)
-+{
-+	int i, n = ARRAY_SIZE(command_list);
-+	uint32_t cat_id = 0;
-+
-+	for (i = 0; category_names[i]; i++) {
-+		if (!strcmp(cat, category_names[i])) {
-+			cat_id = 1UL << i;
-+			break;
-+		}
-+	}
-+	if (!cat_id)
-+		die(_("unsupported command listing type '%s'"), cat);
-+
-+	for (i = 0; i < n; i++) {
-+		struct cmdname_help *cmd = command_list + i;
-+
-+		if (cmd->category & cat_id)
-+			string_list_append(list, drop_prefix(cmd->name));
-+	}
-+}
-+
- int is_in_cmdlist(struct cmdnames *c, const char *s)
- {
- 	int i;
-diff --git a/help.h b/help.h
-index 97e6c0965e..734bba32d3 100644
---- a/help.h
-+++ b/help.h
-@@ -21,6 +21,8 @@ static inline void mput_char(char c, unsigned int num)
- extern void list_common_cmds_help(void);
- extern void list_all_main_cmds(struct string_list *list);
- extern void list_all_other_cmds(struct string_list *list);
-+extern void list_cmds_by_category(struct string_list *list,
-+				  const char *category);
- extern const char *help_unknown_cmd(const char *cmd);
- extern void load_command_list(const char *prefix,
- 			      struct cmdnames *main_cmds,
+diff --git a/command-list.txt b/command-list.txt
+index dcf1907a54..e505a1e34c 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -47,7 +47,7 @@
+ # command name                          category [category] [category]
+ git-add                                 mainporcelain           worktree
+ git-am                                  mainporcelain
+-git-annotate                            ancillaryinterrogators          complete
++git-annotate                            ancillaryinterrogators
+ git-apply                               plumbingmanipulators            complete
+ git-archimport                          foreignscminterface
+ git-archive                             mainporcelain
+@@ -89,13 +89,13 @@ git-fast-export                         ancillarymanipulators
+ git-fast-import                         ancillarymanipulators
+ git-fetch                               mainporcelain           remote
+ git-fetch-pack                          synchingrepositories
+-git-filter-branch                       ancillarymanipulators           complete
++git-filter-branch                       ancillarymanipulators
+ git-fmt-merge-msg                       purehelpers
+ git-for-each-ref                        plumbinginterrogators
+ git-format-patch                        mainporcelain
+ git-fsck                                ancillaryinterrogators          complete
+ git-gc                                  mainporcelain
+-git-get-tar-commit-id                   ancillaryinterrogators          complete
++git-get-tar-commit-id                   ancillaryinterrogators
+ git-grep                                mainporcelain           info
+ git-gui                                 mainporcelain
+ git-hash-object                         plumbingmanipulators
+@@ -103,11 +103,11 @@ git-help                                ancillaryinterrogators          complete
+ git-http-backend                        synchingrepositories
+ git-http-fetch                          synchelpers
+ git-http-push                           synchelpers
+-git-imap-send                           foreignscminterface             complete
++git-imap-send                           foreignscminterface
+ git-index-pack                          plumbingmanipulators
+ git-init                                mainporcelain           init
+ git-instaweb                            ancillaryinterrogators          complete
+-git-interpret-trailers                  purehelpers                     complete
++git-interpret-trailers                  purehelpers
+ gitk                                    mainporcelain
+ git-log                                 mainporcelain           info
+ git-ls-files                            plumbinginterrogators
+@@ -125,9 +125,9 @@ git-merge-tree                          ancillaryinterrogators
+ git-mktag                               plumbingmanipulators
+ git-mktree                              plumbingmanipulators
+ git-mv                                  mainporcelain           worktree
+-git-name-rev                            plumbinginterrogators           complete
++git-name-rev                            plumbinginterrogators
+ git-notes                               mainporcelain
+-git-p4                                  foreignscminterface             complete
++git-p4                                  foreignscminterface
+ git-pack-objects                        plumbingmanipulators
+ git-pack-redundant                      plumbinginterrogators
+ git-pack-refs                           ancillarymanipulators
+@@ -167,7 +167,7 @@ git-stage                                                               complete
+ git-status                              mainporcelain           info
+ git-stripspace                          purehelpers
+ git-submodule                           mainporcelain
+-git-svn                                 foreignscminterface             complete
++git-svn                                 foreignscminterface
+ git-symbolic-ref                        plumbingmanipulators
+ git-tag                                 mainporcelain           history
+ git-unpack-file                         plumbinginterrogators
+@@ -178,7 +178,7 @@ git-update-server-info                  synchingrepositories
+ git-upload-archive                      synchelpers
+ git-upload-pack                         synchelpers
+ git-var                                 plumbinginterrogators
+-git-verify-commit                       ancillaryinterrogators          complete
++git-verify-commit                       ancillaryinterrogators
+ git-verify-pack                         plumbinginterrogators
+ git-verify-tag                          ancillaryinterrogators
+ gitweb                                  ancillaryinterrogators
 -- 
 2.17.0.705.g3525833791
 
