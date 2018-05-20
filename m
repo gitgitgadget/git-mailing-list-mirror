@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DB4D1F51C
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E8FB1F51C
 	for <e@80x24.org>; Sun, 20 May 2018 18:40:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751523AbeETSkf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 14:40:35 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:38747 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751045AbeETSka (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 14:40:30 -0400
-Received: by mail-lf0-f66.google.com with SMTP id z142-v6so20767684lff.5
-        for <git@vger.kernel.org>; Sun, 20 May 2018 11:40:29 -0700 (PDT)
+        id S1751500AbeETSkd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 14:40:33 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:46299 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751365AbeETSk2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 14:40:28 -0400
+Received: by mail-lf0-f68.google.com with SMTP id t22-v6so1570416lff.13
+        for <git@vger.kernel.org>; Sun, 20 May 2018 11:40:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HBbFgA+DTR0oCoAY4aT0HeTojxuTjdliHg7eJRCYeP8=;
-        b=F7VoNH79HXkYEV2fPCSbCumHKm/SNVgKZvwfEZAU+bp2cboaqQWs4EBVzEitw/wHre
-         X8y6wHzeoXoqv+QpXk80CC/kW8afIutPtFXdij7s4LS89iU2Tj8MIpyiF4OSNr2yTya7
-         sjfACJ35pN/YF2zXa5p9mRykhWVBY7mafuqJhyLaFm55iUbjTTLAuR2U68gi2TmHUFDF
-         iMJfB6p0HR08NUaD9uBfLXGyaH2R6ZgYUKW1T3QGbMHtm3ezxn6iGGpP6NkZx+/qBgEs
-         Pvj5pJ2wAJqQxXT94P4U14WgT0FHXmEszPCPTfkRlDiEiHYJfgRaPIeQHgyzEXv4NTDO
-         1Iow==
+        bh=KUMa/4s34NbgmqtA5r7pEwSHwn02XFefZ1BxXnUXuWQ=;
+        b=cuMMeSpC+tCNOqDp/aSafjcyYoIuAUqY8/I5AHXmPyOnLfSspQkEJvtoBMP0AElt9I
+         3RJCdMI0RVmy7cbmauGt+xkLzLfXvCyMkHLTI++VMxL3EP+kUZELCC7y3OOfnWBqCAoG
+         Y7YKVDHsDwEvEOs0x1k/EAuvQCVCWxDZ9SQemANl2hbV+utvMKvH+WvaJxGnrhzHO0LG
+         X2B2ZvaVz4Y/j5+EGEuwRj55w1wOvJXtCkE8HiN8rhOU3EemK4eSg6XMn60U+5JQi9y4
+         queOtxwa9Tsks7lFnDskgwWyPwUmMFkFSYk9siG7VlOtSU6NfX3D5JHmb8nLtznkZd1F
+         cxnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HBbFgA+DTR0oCoAY4aT0HeTojxuTjdliHg7eJRCYeP8=;
-        b=Mo+VkbZaFlMSQuBQ1WCrd+shc6hJdYvYdEVstBiSdh+QflzSDXpicI7yFHg3pkgqV5
-         vYgebb5xCV7ECvMl2js8dxciVzkVVr/DpxzmfOoWnjwKXjt0WNu4G6pqeOBZMx3YV1x1
-         /j4k2KFXZdVlLy2aL13lGGIDuDCTMjrQ6kPk5dUp+PhXe1m2mIFlKax+l7XzsLE3PNtz
-         NcBozDIE4O/ujzejSA0Zgv9JOtNceJv4zhSUY3yFFgn5YQWsx/MKlsJzazrJ6zEfR4Lh
-         7p7JwQmq6hvvmQ5HcbMxWhDIzvXZOa6lanCXg2nFqsEL1ZD730NWUsUzIlugmZ/t8tcF
-         N6QA==
-X-Gm-Message-State: ALKqPwdpgPR7fOMwCLZcDd5sDdNaJR5KCGtp13a4oruJIbpCNVw0aiew
-        R9nlSJURe1MJxty4N4IXRfUiiQ==
-X-Google-Smtp-Source: AB8JxZp0+Y6Um15mbJ8zS29vRmW2DNZGr8boy4B/MLeMzJp8pNsNzfMwZRlJKO3E697Dij0mTayEgA==
-X-Received: by 2002:a19:51c9:: with SMTP id g70-v6mr17981552lfl.50.1526841628398;
-        Sun, 20 May 2018 11:40:28 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id k5-v6sm2176906lji.39.2018.05.20.11.40.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=KUMa/4s34NbgmqtA5r7pEwSHwn02XFefZ1BxXnUXuWQ=;
+        b=K1zF85Hyl8PmLxJPTghwZFhItB9boDlfRNaHLVItPT4eK9oFUG+WgjrpQ0j1Q72aHu
+         LPxUxs4xK8yNvR6YxMlObDqevYsggo/cayfjO4wEw7CbGM8/jEBXMhGbVvnjceWIzoqV
+         TmOpHzwYMBynx4DjR1u6EGf6E6qi6htRK6O6Xd4g/rcAtAUcRhkxwjryxOj24jpKaTCt
+         A+O/5bh5L3VfXCv1g6CuPvnrHQN7z6/2EemkBQmm+UISUSo4671OtqOtcP4dOdgbULk+
+         EbddgEQb+NZFhb7QZYR5oF8MLtqx6dakrLgzyuy9YybVWy/b9ON20z5vq3bcQck4SlOk
+         Maeg==
+X-Gm-Message-State: ALKqPwcwsnK/U/UG3flVopxl+eSk25PomxmV/5gEZKH9g22DAt6FXYqk
+        J/p9gOC41HEucLoASdOfcgpN7A==
+X-Google-Smtp-Source: AB8JxZo2fTCo1lbFodinLLd+6rBof0erQDJ/6zO5rk4oI2Kb36skZBZmD27Db3kgHTdyNmimeMZJ5w==
+X-Received: by 2002:a19:1ad5:: with SMTP id a204-v6mr26506125lfa.43.1526841627251;
         Sun, 20 May 2018 11:40:27 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id k5-v6sm2176906lji.39.2018.05.20.11.40.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 20 May 2018 11:40:26 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 07/17] completion: implement and use --list-cmds=main,others
-Date:   Sun, 20 May 2018 20:39:59 +0200
-Message-Id: <20180520184009.976-8-pclouds@gmail.com>
+Subject: [PATCH v2 06/17] git --list-cmds: collect command list in a string_list
+Date:   Sun, 20 May 2018 20:39:58 +0200
+Message-Id: <20180520184009.976-7-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180520184009.976-1-pclouds@gmail.com>
 References: <20180519042752.8666-1-pclouds@gmail.com>
@@ -72,132 +72,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is part of the effort to break down and provide commands by
-category in machine-readable form. This could be helpful later on when
-completion script switches to use --list-cmds for selecting
-completable commands. It would be much easier for the user to choose
-to complete _all_ commands instead of the default selection by passing
-different values to --list-cmds in git-completino.bash.
-
-While at there, replace "git help -a" in git-completion.bash with
---list-cmds since it's better suited for this task.
+Instead of printing the command directly one by one, keep them in a
+list and print at the end. This allows more modification before we
+print out (e.g. sorting, removing duplicates or even excluding some
+items).
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/git.txt                  |  3 ++-
- contrib/completion/git-completion.bash |  2 +-
- git.c                                  |  4 ++++
- help.c                                 | 32 ++++++++++++++++++++++++++
- help.h                                 |  4 ++++
- 5 files changed, 43 insertions(+), 2 deletions(-)
+ git.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 2800e3d188..c01477ab5e 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -167,7 +167,8 @@ foo.bar= ...`) sets `foo.bar` to the empty string which `git config
- 	List commands by group. This is an internal/experimental
- 	option and may change or be removed in the future. Supported
- 	groups are: builtins, parseopt (builtin commands that use
--	parse-options).
-+	parse-options), main (all commands in libexec directory),
-+	others (all other commands in `$PATH` that have git- prefix).
- 
- GIT COMMANDS
- ------------
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 3556838759..62ca8641f4 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -839,7 +839,7 @@ __git_commands () {
- 	then
- 		printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
- 	else
--		git help -a|egrep '^  [a-zA-Z0-9]'
-+		git --list-cmds=main,others
- 	fi
- }
- 
 diff --git a/git.c b/git.c
-index 376a59b97f..10907f7266 100644
+index cd85355d81..376a59b97f 100644
 --- a/git.c
 +++ b/git.c
-@@ -56,6 +56,10 @@ static int list_cmds(const char *spec)
+@@ -36,7 +36,7 @@ const char git_more_info_string[] =
+ 
+ static int use_pager = -1;
+ 
+-static void list_builtins(unsigned int exclude_option, char sep);
++static void list_builtins(struct string_list *list, unsigned int exclude_option);
+ 
+ static int match_token(const char *spec, int len, const char *token)
+ {
+@@ -47,18 +47,24 @@ static int match_token(const char *spec, int len, const char *token)
+ 
+ static int list_cmds(const char *spec)
+ {
++	struct string_list list = STRING_LIST_INIT_DUP;
++	int i;
++
+ 	while (*spec) {
+ 		const char *sep = strchrnul(spec, ',');
+ 		int len = sep - spec;
  
  		if (match_token(spec, len, "builtins"))
- 			list_builtins(&list, 0);
-+		else if (match_token(spec, len, "main"))
-+			list_all_main_cmds(&list);
-+		else if (match_token(spec, len, "others"))
-+			list_all_other_cmds(&list);
+-			list_builtins(0, '\n');
++			list_builtins(&list, 0);
  		else
  			die(_("unsupported command listing type '%s'"), spec);
  		spec += len;
-diff --git a/help.c b/help.c
-index 2d6a3157f8..d5ce9dfcbb 100644
---- a/help.c
-+++ b/help.c
-@@ -297,6 +297,38 @@ void list_common_cmds_help(void)
- 	print_cmd_by_category(common_categories);
+ 		if (*spec == ',')
+ 			spec++;
+ 	}
++	for (i = 0; i < list.nr; i++)
++		puts(list.items[i].string);
++	string_list_clear(&list, 0);
+ 	return 0;
  }
  
-+void list_all_main_cmds(struct string_list *list)
-+{
-+	struct cmdnames main_cmds, other_cmds;
-+	int i;
+@@ -249,7 +255,13 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			(*argc)--;
+ 		} else if (skip_prefix(cmd, "--list-cmds=", &cmd)) {
+ 			if (!strcmp(cmd, "parseopt")) {
+-				list_builtins(NO_PARSEOPT, ' ');
++				struct string_list list = STRING_LIST_INIT_DUP;
++				int i;
 +
-+	memset(&main_cmds, 0, sizeof(main_cmds));
-+	memset(&other_cmds, 0, sizeof(other_cmds));
-+	load_command_list("git-", &main_cmds, &other_cmds);
-+
-+	for (i = 0; i < main_cmds.cnt; i++)
-+		string_list_append(list, main_cmds.names[i]->name);
-+
-+	clean_cmdnames(&main_cmds);
-+	clean_cmdnames(&other_cmds);
-+}
-+
-+void list_all_other_cmds(struct string_list *list)
-+{
-+	struct cmdnames main_cmds, other_cmds;
-+	int i;
-+
-+	memset(&main_cmds, 0, sizeof(main_cmds));
-+	memset(&other_cmds, 0, sizeof(other_cmds));
-+	load_command_list("git-", &main_cmds, &other_cmds);
-+
-+	for (i = 0; i < other_cmds.cnt; i++)
-+		string_list_append(list, other_cmds.names[i]->name);
-+
-+	clean_cmdnames(&main_cmds);
-+	clean_cmdnames(&other_cmds);
-+}
-+
- int is_in_cmdlist(struct cmdnames *c, const char *s)
++				list_builtins(&list, NO_PARSEOPT);
++				for (i = 0; i < list.nr; i++)
++					printf("%s ", list.items[i].string);
++				string_list_clear(&list, 0);
+ 				exit(0);
+ 			} else {
+ 				exit(list_cmds(cmd));
+@@ -533,14 +545,14 @@ int is_builtin(const char *s)
+ 	return !!get_builtin(s);
+ }
+ 
+-static void list_builtins(unsigned int exclude_option, char sep)
++static void list_builtins(struct string_list *out, unsigned int exclude_option)
  {
  	int i;
-diff --git a/help.h b/help.h
-index b21d7c94e8..97e6c0965e 100644
---- a/help.h
-+++ b/help.h
-@@ -1,6 +1,8 @@
- #ifndef HELP_H
- #define HELP_H
- 
-+struct string_list;
-+
- struct cmdnames {
- 	int alloc;
- 	int cnt;
-@@ -17,6 +19,8 @@ static inline void mput_char(char c, unsigned int num)
+ 	for (i = 0; i < ARRAY_SIZE(commands); i++) {
+ 		if (exclude_option &&
+ 		    (commands[i].option & exclude_option))
+ 			continue;
+-		printf("%s%c", commands[i].cmd, sep);
++		string_list_append(out, commands[i].cmd);
+ 	}
  }
  
- extern void list_common_cmds_help(void);
-+extern void list_all_main_cmds(struct string_list *list);
-+extern void list_all_other_cmds(struct string_list *list);
- extern const char *help_unknown_cmd(const char *cmd);
- extern void load_command_list(const char *prefix,
- 			      struct cmdnames *main_cmds,
 -- 
 2.17.0.705.g3525833791
 
