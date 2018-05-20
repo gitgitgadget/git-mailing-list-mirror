@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 325691F51C
-	for <e@80x24.org>; Sun, 20 May 2018 21:12:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E73B31F51C
+	for <e@80x24.org>; Sun, 20 May 2018 21:12:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751929AbeETVM0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 17:12:26 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:53820 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751707AbeETVMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 17:12:19 -0400
-Received: by mail-wm0-f43.google.com with SMTP id a67-v6so21967930wmf.3
-        for <git@vger.kernel.org>; Sun, 20 May 2018 14:12:18 -0700 (PDT)
+        id S1752102AbeETVM3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 17:12:29 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:39126 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751725AbeETVMU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 17:12:20 -0400
+Received: by mail-wm0-f66.google.com with SMTP id f8-v6so23364591wmc.4
+        for <git@vger.kernel.org>; Sun, 20 May 2018 14:12:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QuOdZ7g7ypCs7Db/Mebnass3J6A/+6POp4hbn3GjDf8=;
-        b=uONchKwUsjFnQrJ4DD4+oRLQkV3LFpehjUCoQ+fPlB9BE2c2/jE3KRDvaZt550Vhzy
-         UFZSvBdoLeRzMAItEf+xPaabSS/FIV4H6Zy+W0tXLPkLzpCzz+bvGsCOJ0lmU9dRR+jO
-         3Boh7c7LPcrJ/oT7Ds23H1HoHTWqxgg9F0B+7tp7VDUPBDy48sHpvADObiXCsucrPJ9P
-         96Hah7XASHtCi9LWzlznL7wixBM5AsSz4lKFqHcchGAPgNnDlvtTiyDFGMwhw+9MOIUH
-         65uCC2vlM1NHsLgD2SpTZGdicJM1ebaxkz5axUtlp0u8f4+q0I4pi5Zo9NGgS/u2tX+S
-         NJSg==
+        bh=/2ppHCgf4u2Tr41ksT6NidWdbgBcjDjCHQ9N6dX6xJY=;
+        b=VRUXe0UqDhPwI6inzdOY7uzmRVXcZ9XwQBFXi8wXcDOR+8lbRzFLmtOxDJ+zIn+S4A
+         v9+XgH0bQNFMRLl+atCl5juQ1ihNQEXBFebY4XVCsXdW/xDKdfUN1+qB9ywD/OKo/9HY
+         HI5fzS4U/iiv1LwPlAw5RCSxgSzrHIUjNqWaXvDEwDVluUoYkA2StqCPBZwqGTjjylRy
+         AND516/dZa+PszhNOQAzG0XVy9b+goyn9s4kY+zKKiCuZacYaH3/1a2uOie5pAn8SiqW
+         oSydOuu81ZocZEGJF0rlSMYIRGSspbkoTQGWG/9ykFoxltgIWpXweHtBP3oXvjn4iRw6
+         a/2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=QuOdZ7g7ypCs7Db/Mebnass3J6A/+6POp4hbn3GjDf8=;
-        b=swsmWI3zFBiSOfjNjy5DMF2+WVksYWP+wX3OHZK5lAd7LDeO7VOqRaJaEwyTuC83An
-         Hd40n12gN6Dxi+SwBpECrfNECh7RTi8uOTEUwC6YXgAKbOGGTVWOoJpMpcwUpRa/9S88
-         aCGxg2Y5qkClQwyIogv0kXps0pvvSZVgQUPStTIx7U+PpGJphkJPKGnsMkvT7mrNaFHk
-         RWb0Qxf9g/VZzkBGHrQVvyG2OkNhrj0yKX8VfiKWnWXbR0fvwrI/j78eNWtVzyOZKrxp
-         eevYDSvyt7E1Ja3J+qeM7A3VaTJ3XyUTtB6nEizsUFZWmNWFLwyJ0ohVIjFFOyaFaP7y
-         Th1w==
-X-Gm-Message-State: ALKqPwfO1IzROGYpqTX04l8LycoU1x1TSwu1KTbf7D5nkqhwuVEtIllp
-        yL26opfLleo1Zq3EV9ZrpjinRvEH
-X-Google-Smtp-Source: AB8JxZoVRkHN6xTLKNUzV6BVrZyubSwUbfM/9meusbKFOKkzCwiKkTn5k3C0bkdw43lmQDpv6czVnw==
-X-Received: by 2002:a1c:b78a:: with SMTP id h132-v6mr8364380wmf.21.1526850737143;
-        Sun, 20 May 2018 14:12:17 -0700 (PDT)
+        bh=/2ppHCgf4u2Tr41ksT6NidWdbgBcjDjCHQ9N6dX6xJY=;
+        b=UaQBG4w0Km/03fubo5XtFtADsc6/PerRDONDBQ2YpCEwalmjmlunX4PpyzHgi4+6cw
+         6MfCKb2imOiU66QNfFjrRpFcdlUS9Fe//v4LQURVA+PSaB0bXY4/tMfKhgDrO8AQaUbZ
+         y9TmG/0PRNCXHYE6fKUDcebKusABAqwd9iep+W4d7z0qZXUvUCzaKNPj/z7ZowxSQqLJ
+         K1WIbs7bMgT/p0nr2xsloH+F37ipD5S/5ihZxGKK02NWXp8ERy9N4DyUxRCLMMc4twqy
+         YO3PewDvjmDlaN93xkaGfdYNmlJXm9qx/8KzzWzKHdjO/10Yv8femvBY8biecNwW1CmV
+         sSMg==
+X-Gm-Message-State: ALKqPwdK4wiUvXKFwZm893OseTPxQz87f67nZeuVoeOLkZzm4w4txnI2
+        QuS0DgLCFkjDDAhhNnaDwIiN0rOx
+X-Google-Smtp-Source: AB8JxZoGmtSJM2RPpXMgIAnADb6vosQP4DxWPxeEGEn+WRcyP2DMPtmf7od5X+S+cm/vJ+cNLJ7gvQ==
+X-Received: by 2002:a1c:58ce:: with SMTP id m197-v6mr8561306wmb.110.1526850738628;
+        Sun, 20 May 2018 14:12:18 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id v196-v6sm9811564wmf.36.2018.05.20.14.12.16
+        by smtp.gmail.com with ESMTPSA id t198-v6sm12977096wmt.23.2018.05.20.14.12.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 20 May 2018 14:12:16 -0700 (PDT)
+        Sun, 20 May 2018 14:12:17 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [RFC/PATCH 6/7] rerere: factor out handle_conflict function
-Date:   Sun, 20 May 2018 22:12:09 +0100
-Message-Id: <20180520211210.1248-7-t.gummerer@gmail.com>
+Subject: [RFC/PATCH 7/7] rerere: teach rerere to handle nested conflicts
+Date:   Sun, 20 May 2018 22:12:10 +0100
+Message-Id: <20180520211210.1248-8-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.17.0.588.g4d217cdf8e.dirty
 In-Reply-To: <20180520211210.1248-1-t.gummerer@gmail.com>
 References: <20180520211210.1248-1-t.gummerer@gmail.com>
@@ -63,204 +63,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Factor out the handle_conflict function, which handles a single
-conflict in a path.  This is a preparation for the next step, where
-this function will be re-used.  No functional changes intended.
+Currently rerere can't handle nested conflicts and will error out when
+it encounters such conflicts.  Do that by recursively calling the
+'handle_conflict' function to normalize the conflict.
+
+The conflict ID calculation here deserves some explanation:
+
+As we are using the same handle_conflict function, the nested conflict
+is normalized the same way as for non-nested conflicts, which means
+the ancestor in the diff3 case is stripped out, and the parts of the
+conflict are ordered alphabetically.
+
+The conflict ID is however is only calculated in the top level
+handle_conflict call, so it will include the markers that 'rerere'
+adds to the output.  e.g. say there's the following conflict:
+
+    <<<<<<< HEAD
+    1
+    =======
+    <<<<<<< HEAD
+    3
+    =======
+    2
+    >>>>>>> branch-2
+    >>>>>>> branch-3~
+
+it would be reordered as follows in the preimage:
+
+    <<<<<<<
+    1
+    =======
+    <<<<<<<
+    2
+    =======
+    3
+    >>>>>>>
+    >>>>>>>
+
+and the conflict ID would be calculated as
+
+    sha1(1<NUL><<<<<<<
+    2
+    =======
+    3
+    >>>>>>><NUL>)
+
+Stripping out vs. leaving the conflict markers in place should have no
+practical impact, but it simplifies the implementation.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- rerere.c | 143 +++++++++++++++++++++++++------------------------------
- 1 file changed, 65 insertions(+), 78 deletions(-)
+
+No automated test for this yet.  As mentioned in the cover letter as
+well, I'm not sure if this is common enough for us to actually
+consider this use case.  I don't know how nested conflicts could
+actually be created apart from committing a file with conflict
+markers, but maybe I'm just lacking imagination, so if someone has an
+example for that I would be very grateful :)  If we decide to do this,
+it probably also merits a mention in
+Documentation/technical/rerere.txt.
+
+ rerere.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 diff --git a/rerere.c b/rerere.c
-index f3e658e374..f3cfd1c09b 100644
+index f3cfd1c09b..45e2bd6ff1 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -302,38 +302,6 @@ static void rerere_io_putstr(const char *str, struct rerere_io *io)
- 		ferr_puts(str, io->output, &io->wrerror);
- }
- 
--/*
-- * Write a conflict marker to io->output (if defined).
-- */
--static void rerere_io_putconflict(int ch, int size, struct rerere_io *io)
--{
--	char buf[64];
--
--	while (size) {
--		if (size <= sizeof(buf) - 2) {
--			memset(buf, ch, size);
--			buf[size] = '\n';
--			buf[size + 1] = '\0';
--			size = 0;
--		} else {
--			int sz = sizeof(buf) - 1;
--
--			/*
--			 * Make sure we will not write everything out
--			 * in this round by leaving at least 1 byte
--			 * for the next round, giving the next round
--			 * a chance to add the terminating LF.  Yuck.
--			 */
--			if (size <= sz)
--				sz -= (sz - size) + 1;
--			memset(buf, ch, sz);
--			buf[sz] = '\0';
--			size -= sz;
--		}
--		rerere_io_putstr(buf, io);
--	}
--}
--
- static void rerere_io_putmem(const char *mem, size_t sz, struct rerere_io *io)
- {
- 	if (io->output)
-@@ -384,37 +352,25 @@ static int is_cmarker(char *buf, int marker_char, int marker_size)
- 	return isspace(*buf);
- }
- 
--/*
-- * Read contents a file with conflicts, normalize the conflicts
-- * by (1) discarding the common ancestor version in diff3-style,
-- * (2) reordering our side and their side so that whichever sorts
-- * alphabetically earlier comes before the other one, while
-- * computing the "conflict ID", which is just an SHA-1 hash of
-- * one side of the conflict, NUL, the other side of the conflict,
-- * and NUL concatenated together.
-- *
-- * Return 1 if conflict hunks are found, 0 if there are no conflict
-- * hunks and -1 if an error occured.
-- */
--static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_size)
-+static void rerere_strbuf_putconflict(struct strbuf *buf, int ch, size_t size)
-+{
-+	strbuf_addchars(buf, ch, size);
-+	strbuf_addch(buf, '\n');
-+}
-+
-+static int handle_conflict(struct strbuf *out, struct rerere_io *io,
-+			   int marker_size, git_SHA_CTX *ctx)
- {
--	git_SHA_CTX ctx;
--	int has_conflicts = 0;
- 	enum {
--		RR_CONTEXT = 0, RR_SIDE_1, RR_SIDE_2, RR_ORIGINAL
--	} hunk = RR_CONTEXT;
-+		RR_SIDE_1 = 0, RR_SIDE_2, RR_ORIGINAL
-+	} hunk = RR_SIDE_1;
+@@ -365,12 +365,18 @@ static int handle_conflict(struct strbuf *out, struct rerere_io *io,
+ 		RR_SIDE_1 = 0, RR_SIDE_2, RR_ORIGINAL
+ 	} hunk = RR_SIDE_1;
  	struct strbuf one = STRBUF_INIT, two = STRBUF_INIT;
- 	struct strbuf buf = STRBUF_INIT;
--
--	if (sha1)
--		git_SHA1_Init(&ctx);
--
-+	int has_conflicts = 1;
+-	struct strbuf buf = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT, conflict = STRBUF_INIT;
+ 	int has_conflicts = 1;
  	while (!io->getline(&buf, io)) {
--		if (is_cmarker(buf.buf, '<', marker_size)) {
--			if (hunk != RR_CONTEXT)
--				goto bad;
--			hunk = RR_SIDE_1;
--		} else if (is_cmarker(buf.buf, '|', marker_size)) {
-+		if (is_cmarker(buf.buf, '<', marker_size))
-+			goto bad;
-+		else if (is_cmarker(buf.buf, '|', marker_size)) {
+-		if (is_cmarker(buf.buf, '<', marker_size))
+-			goto bad;
+-		else if (is_cmarker(buf.buf, '|', marker_size)) {
++		if (is_cmarker(buf.buf, '<', marker_size)) {
++			if (handle_conflict(&conflict, io, marker_size, NULL) < 0)
++				goto bad;
++			if (hunk == RR_SIDE_1)
++				strbuf_addbuf(&one, &conflict);
++			else
++				strbuf_addbuf(&two, &conflict);
++			strbuf_release(&conflict);
++		} else if (is_cmarker(buf.buf, '|', marker_size)) {
  			if (hunk != RR_SIDE_1)
  				goto bad;
  			hunk = RR_ORIGINAL;
-@@ -427,42 +383,73 @@ static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_siz
- 				goto bad;
- 			if (strbuf_cmp(&one, &two) > 0)
- 				strbuf_swap(&one, &two);
--			has_conflicts = 1;
--			hunk = RR_CONTEXT;
--			rerere_io_putconflict('<', marker_size, io);
--			rerere_io_putmem(one.buf, one.len, io);
--			rerere_io_putconflict('=', marker_size, io);
--			rerere_io_putmem(two.buf, two.len, io);
--			rerere_io_putconflict('>', marker_size, io);
--			if (sha1) {
--				git_SHA1_Update(&ctx, one.buf ? one.buf : "",
-+			rerere_strbuf_putconflict(out, '<', marker_size);
-+			strbuf_addbuf(out, &one);
-+			rerere_strbuf_putconflict(out, '=', marker_size);
-+			strbuf_addbuf(out, &two);
-+			rerere_strbuf_putconflict(out, '>', marker_size);
-+			if (ctx) {
-+				git_SHA1_Update(ctx, one.buf ? one.buf : "",
- 					    one.len + 1);
--				git_SHA1_Update(&ctx, two.buf ? two.buf : "",
-+				git_SHA1_Update(ctx, two.buf ? two.buf : "",
- 					    two.len + 1);
- 			}
--			strbuf_reset(&one);
--			strbuf_reset(&two);
-+			goto out;
- 		} else if (hunk == RR_SIDE_1)
- 			strbuf_addbuf(&one, &buf);
- 		else if (hunk == RR_ORIGINAL)
- 			; /* discard */
- 		else if (hunk == RR_SIDE_2)
- 			strbuf_addbuf(&two, &buf);
--		else
--			rerere_io_putstr(buf.buf, io);
--		continue;
--	bad:
--		hunk = 99; /* force error exit */
--		break;
- 	}
-+bad:
-+	has_conflicts = -1;
-+out:
- 	strbuf_release(&one);
- 	strbuf_release(&two);
- 	strbuf_release(&buf);
- 
-+	return has_conflicts;
-+}
-+
-+/*
-+ * Read contents a file with conflicts, normalize the conflicts
-+ * by (1) discarding the common ancestor version in diff3-style,
-+ * (2) reordering our side and their side so that whichever sorts
-+ * alphabetically earlier comes before the other one, while
-+ * computing the "conflict ID", which is just an SHA-1 hash of
-+ * one side of the conflict, NUL, the other side of the conflict,
-+ * and NUL concatenated together.
-+ *
-+ * Return 1 if conflict hunks are found, 0 if there are no conflict
-+ * hunks and -1 if an error occured.
-+ */
-+static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_size)
-+{
-+	git_SHA_CTX ctx;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf out = STRBUF_INIT;
-+	int has_conflicts = 0;
-+	if (sha1)
-+		git_SHA1_Init(&ctx);
-+
-+	while (!io->getline(&buf, io)) {
-+		if (is_cmarker(buf.buf, '<', marker_size)) {
-+			has_conflicts = handle_conflict(&out, io, marker_size,
-+							    sha1 ? &ctx : NULL);
-+			if (has_conflicts < 0)
-+				break;
-+			rerere_io_putmem(out.buf, out.len, io);
-+			strbuf_reset(&out);
-+		} else
-+			rerere_io_putstr(buf.buf, io);
-+	}
-+	strbuf_release(&buf);
-+	strbuf_release(&out);
-+
- 	if (sha1)
- 		git_SHA1_Final(sha1, &ctx);
--	if (hunk != RR_CONTEXT)
--		return -1;
-+
- 	return has_conflicts;
- }
- 
 -- 
 2.17.0.588.g4d217cdf8e.dirty
 
