@@ -2,170 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4ECD71F51C
-	for <e@80x24.org>; Sun, 20 May 2018 20:00:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E30571F51C
+	for <e@80x24.org>; Sun, 20 May 2018 21:12:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751451AbeETUA0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 16:00:26 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36853 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751348AbeETUAZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 16:00:25 -0400
-Received: by mail-wr0-f196.google.com with SMTP id k5-v6so1887141wrn.3
-        for <git@vger.kernel.org>; Sun, 20 May 2018 13:00:24 -0700 (PDT)
+        id S1751514AbeETVMK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 17:12:10 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:38229 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751408AbeETVMJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 17:12:09 -0400
+Received: by mail-wr0-f195.google.com with SMTP id 94-v6so14080516wrf.5
+        for <git@vger.kernel.org>; Sun, 20 May 2018 14:12:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=kMt2iw/lbzhMkU0FM7W9Ian8waL02pll/1GVMKgT9sg=;
-        b=GTVjoqt5Tm/v4DR5ipBz1ZCug+EOZTGRumsIJ7M2TILdqV/dXEsvdpyQLRdg1ot2Hm
-         GdrFxbX73miYWnQyU7ZDMTc8AWckqPPgEnPjZT+xhpzqOVCJjKnv485kfbOhf7F2VpWn
-         JaRKA6p1S/WKtPhaoeGwp/V2uP0SRDA96JGZW5PS37F4Ncdgj9zEAgZilhYx2PxrEV2G
-         24s06RetGesSCcbPUVHjbxmWT//Ir0eg0fRnSMTs/32XU5qARRPZkOnooq0Asp5qN5Kn
-         IKJPQwyzbAg+yka7X0RjdXXE7LP9YknwszrVg2vT7eN+HHdDdOoPw14IeOyP5SB++tn3
-         yQOg==
+        h=from:to:cc:subject:date:message-id;
+        bh=H4Rw8W7M3roGOp2HBOor3s5Zf6QQleciDUG5qIJnv0o=;
+        b=Wj+LQwqY1n57pv0n2hAavGmZIaeXA9gi+EdLRxQlpRdp29kB9UdlsYPLRrwIHGVatU
+         inmdt8eevLfjeOYG5e32SPY/o/kzk8wvp/OCwJPZzIwDNwTnK0Bn2V6TUmRWUGewFg3W
+         mWdCIWEZSh4eZ63A6gIqE2a8nWvxMfHoJvbrUpfjncfDJZ2AbHqBhif6SVNxkAdSUJvG
+         GgsRXGW25BwcpMo46+UqH1lrQ6TJwZ/lN60IsakwXy1PCjcuKT70HqsrM7bs9j57o5yt
+         Xa/C76j1YreDv7gveBVnK1cIn/0y0CD8SwfB8s1yW9tRWCVAG+ASbwuuxXiCArd6gOTY
+         VaFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=kMt2iw/lbzhMkU0FM7W9Ian8waL02pll/1GVMKgT9sg=;
-        b=UD3/ZalchggSsLaU4xDKTOUqjAbZnmo3ZTH2pp1X5jFxZQXkZLlTDg/JjD60Y/11pV
-         ucUPH9Udr/ErgaDRZsoL8sw5hOGSe7mPU3/QAL8inXSfvP5a5Jr3LpALuD7smwp09hEx
-         knqiXqIdJIj3VZrFi2X/WxTDI44WDohxZFPjH6TOVuETzAYwV+s4xQdH1983MYiUu4Bg
-         mRCNCdAqTWe6OfC10plsDmvzRHC9lCXzbMLi/K3SWEFEgrT+b/jac2UWnyXg4LDyxk9+
-         gDepe/sFbbEWn4Sviamxe0O1flgCKVw9yY7KoDTNB87/fHL7NQbytc7sqMvCvHYyCtT4
-         BL0A==
-X-Gm-Message-State: ALKqPwcFGgUguevWtNabotyP59Fc+cqH3Ck/5f96pmqnw4urwBB8mXyw
-        kfq0yiRT/hY7/l+n/bJ1c2rFbaAe
-X-Google-Smtp-Source: AB8JxZqGFOIjYA+0G1ypCTFf/0YYeaNW+80Q4bJd7TS8rs0TNg/IfXaK6LHds/PYrVT4rUUkIJFzvg==
-X-Received: by 2002:adf:86fa:: with SMTP id 55-v6mr15188866wry.232.1526846423839;
-        Sun, 20 May 2018 13:00:23 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (abpv179.neoplus.adsl.tpnet.pl. [83.8.63.179])
-        by smtp.gmail.com with ESMTPSA id h81-v6sm21715153wmd.0.2018.05.20.13.00.22
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=H4Rw8W7M3roGOp2HBOor3s5Zf6QQleciDUG5qIJnv0o=;
+        b=VUJYkYyVpi8udTkMg6hNvyCTUhL1jYxG0Dke+BXpO6JDtYA4hDtZYN3Wae+q6ObHk3
+         FPoHRf8hq2mifeKtMc3xJqBLg4K3CT9DsJmJ3Hc2CbYz0TUiLGjclfGL7QT1GWRhqFCS
+         p4vY0+KA7gTrZw84FoXY5xKi8wj4OSCBlR9XHX6rwfwku9xr4LsNnsyI65AmIS7OGOLA
+         kc+c2NG2tRdPHQpdHH++7HugDGQXieJNYOmjRwDe8HGgIL/v/CSaxUrGze5AKHqHn9WN
+         UCGp6vtyHqX5ocD9KshmJSIbTa3wmin5sS0twenqzdnOxQBrPzBjck6OhKNZFI9Jl2p7
+         SWTg==
+X-Gm-Message-State: ALKqPwcuK62VouAGn3LQkYKUFHihyjnmB1R94/LOwG7rhWI7H1R1MIx1
+        crlid3J/qBbB4zkC2UAVPQ8OZZ+l
+X-Google-Smtp-Source: AB8JxZofNcULOriUuu+E585JkBaTg0G7qCuMtpuOI3V2rnNAxVM8oAvNUyeTRzGl6z4WwAin7CnDEA==
+X-Received: by 2002:adf:9b1a:: with SMTP id b26-v6mr14063269wrc.206.1526850727710;
+        Sun, 20 May 2018 14:12:07 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id f8-v6sm6852655wrf.67.2018.05.20.14.12.06
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 20 May 2018 13:00:22 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "martin.agren\@gmail.com" <martin.agren@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>
-Subject: Re: [PATCH v2 02/12] commit-graph: verify file header information
-References: <20180510173345.40577-1-dstolee@microsoft.com>
-        <20180511211504.79877-1-dstolee@microsoft.com>
-        <20180511211504.79877-3-dstolee@microsoft.com>
-Date:   Sun, 20 May 2018 22:00:20 +0200
-In-Reply-To: <20180511211504.79877-3-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Fri, 11 May 2018 21:15:16 +0000")
-Message-ID: <867enydrmz.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        Sun, 20 May 2018 14:12:06 -0700 (PDT)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [RFC/PATCH 0/7] rerere: handle nested conflicts
+Date:   Sun, 20 May 2018 22:12:03 +0100
+Message-Id: <20180520211210.1248-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.17.0.588.g4d217cdf8e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+I started this whole patch series when I did a git rebase, and was too
+lazy to resolve a conflict and just added the file with the conflict
+markers and continued.  Once I got nested conflicts in the file, I
+decided to abort the rebase with 'git rebase --abort' and got a
+segfault in 'git rerere clear'.
 
-> During a run of 'git commit-graph verify', list the issues with the
-> header information in the commit-graph file. Some of this information
-> is inferred from the loaded 'struct commit_graph'. Some header
-> information is checked as part of load_commit_graph_one().
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  commit-graph.c | 32 +++++++++++++++++++++++++++++++-
->  1 file changed, 31 insertions(+), 1 deletion(-)
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index b25aaed128..d2db20e49a 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -818,7 +818,37 @@ void write_commit_graph(const char *obj_dir,
->  	oids.nr =3D 0;
->  }
->=20=20
-> +static int verify_commit_graph_error;
-> +
-> +static void graph_report(const char *fmt, ...)
-> +{
-> +	va_list ap;
-> +	struct strbuf sb =3D STRBUF_INIT;
-> +	verify_commit_graph_error =3D 1;
-> +
-> +	va_start(ap, fmt);
-> +	strbuf_vaddf(&sb, fmt, ap);
-> +
-> +	fprintf(stderr, "%s\n", sb.buf);
-> +	strbuf_release(&sb);
-> +	va_end(ap);
-> +}
-> +
->  int verify_commit_graph(struct commit_graph *g)
->  {
-> -	return !g;
-> +	if (!g) {
-> +		graph_report("no commit-graph file loaded");
-> +		return 1;
-> +	}
+Even if we can't handle the conflict, we shouldn't end with crashing
+'git rerere clear'.  While trying to understand how 'git rerere' works
+internally I noticed some other improvements that could be made, such
+as marking the strings for translation and adding some docs on how
+rerere works, since I had to find out from the code, and reading some
+documentation would definitely have been helpful.
 
-I won't be repeating what Martin said, but I agree with it.  Well, that
-or make it a separate patch.
+The next patches are more related to the actual problem I encountered,
+first fixing the the possible crashing of 'git rerere clear' when we
+can't handle conflicts in a file, and then actually trying to handle
+nested conflicts.
 
-> +
-> +	verify_commit_graph_error =3D 0;
-> +
+I don't know if it's actually worth trying to handle nested conflicts,
+as they are more than likely a very rare use-case, but on the other
+hand resolving such conflicts is especially painful, so only having to
+do it once would be much nicer.
 
-A quick reminder for myself.  The load_commit_graph_one() that is used
-to fill the commit_graph parameter alreaady verifies that:
- - file is not too small, i.e. smaller than GRAPH_MIN_SIZE
- - it has correct signature
- - it has correct graph version
- - it has correct hash version
- - chunks [offsets] all fit within file
- - that OID Fanout, OID Lookup, Commit Data and Large Edges chunks are
-   not repeated, though not that all required chunks are present
+This whole patch series is marked as RFC/PATCH, as this is my first
+time touching the rerere code, so I may well misunderstand some bits
+of the code.
 
-> +	if (!g->chunk_oid_fanout)
-> +		graph_report("commit-graph is missing the OID Fanout chunk");
-> +	if (!g->chunk_oid_lookup)
-> +		graph_report("commit-graph is missing the OID Lookup chunk");
-> +	if (!g->chunk_commit_data)
-> +		graph_report("commit-graph is missing the Commit Data chunk");
+Thomas Gummerer (7):
+  rerere: unify error message when read_cache fails
+  rerere: mark strings for translation
+  rerere: add some documentation
+  rerere: fix crash when conflict goes unresolved
+  rerere: only return whether a path has conflicts or not
+  rerere: factor out handle_conflict function
+  rerere: teach rerere to handle nested conflicts
 
-This one checks that all chunks that needs to be present are present.
-Nice.
+ Documentation/technical/rerere.txt |  43 +++++
+ rerere.c                           | 244 ++++++++++++++---------------
+ t/t4200-rerere.sh                  |  25 +++
+ 3 files changed, 186 insertions(+), 126 deletions(-)
+ create mode 100644 Documentation/technical/rerere.txt
 
-There are a few more things that we can check about CHUNK LOOKUP part.
-For example we would detect if file was truncated because the offset of
-some chunk would be pointing outside the file... unless the truncation
-falls within the last chunk.  We don't check that terminating label
-(chunk "\0\0\0\0" offset) is outside file, I think.
+-- 
+2.17.0.588.g4d217cdf8e.dirty
 
-We also don't check that positions of subsequent chunks are sorted
-(increasing offsets), so that each chunk length is positive.
-
-
-I also wonder if we shouldn't at least _warn_ about unknown chunks.
-
-> +
-> +	return verify_commit_graph_error;
->  }
-
-Nice trick to be able to check as much as possible without segfaulting,
-while still returning correct error result.
-
-
-Testing newly intruduced functionality would be hard, unless relying on
-hand-crafted files, or on some helper to produce invalid commit-graph
-files.
-
---=20
-Jakub Nar=C4=99bski
