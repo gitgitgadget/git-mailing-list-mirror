@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11DAA1F51C
-	for <e@80x24.org>; Sun, 20 May 2018 21:12:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87AE71F51C
+	for <e@80x24.org>; Sun, 20 May 2018 21:12:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751688AbeETVMQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 17:12:16 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:38232 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751408AbeETVMO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 17:12:14 -0400
-Received: by mail-wr0-f194.google.com with SMTP id 94-v6so14080610wrf.5
-        for <git@vger.kernel.org>; Sun, 20 May 2018 14:12:13 -0700 (PDT)
+        id S1751778AbeETVMV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 17:12:21 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33703 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751682AbeETVMP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 17:12:15 -0400
+Received: by mail-wm0-f65.google.com with SMTP id x12-v6so9765351wmc.0
+        for <git@vger.kernel.org>; Sun, 20 May 2018 14:12:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Yvei23vPH4GvUhAk+nVmIJkPJpg3uTgIVnCV9QVFjpw=;
-        b=kkd6e3kzKrOQdUFA6WPMJZYkCvOAuYPno2NiQ3bncwG66eO29gss/ONeZdJr9yQnVO
-         UOXNOk1LQu5t1uiB3B7M0UykvTl4nRDxOtAaUKiRZOgoFJBR5/Uuv5Y00ZcyV6yorKj3
-         wReJT50ojf/E7OclZhXCeVJFrjydhWwM7UAemR72hHoS+LYSSe96jPaAO64yaKuip+qk
-         bssON2IfNf1/ufWGDXO0q1+MDEacdtzZiPdsn1Kfxr/gGHT+s3M0d1fp59m4py/bxDLN
-         9i0Y6zpBGChNp3WzWl/d0tIGYffY8RJicMfXTIQySBso5jE6ADl8RPlgc//SGGXBp07H
-         cS/Q==
+        bh=WB0ni9xqdn1TSoHgyPrWyjEABXozzoCVYnyhlEvPq3A=;
+        b=X69uEuVBd+9AILX/l4vVs0OzzZ3E1ray5kFwq3fAehCdYJWiyEiWjzTNyShYEwFiY2
+         zABSmtu/dA/cWPfmiuku7M3AvjoJQxAnRGQt8sSlvHo1Ee5BmgAU59DteUM0YXoSNmHm
+         OmjBRUF2sTSp9pqmJ9Y+KS/j4gnaednaIAVuvywwm0ipMg5VWAvuBvOrp2taOWQ53rR+
+         0t41tHWl0+Hs+F7KTMgFQEUdj6N+CASycY+g2SaTjDFfev8Vhmqx9kCXCndNphhT5aet
+         wUxVYzmcGzzn/bPAYEMsObERsOm0GL7G5kc5oyg0NtAWjbNsj4FmAzf/F76N980UqT9d
+         ltFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Yvei23vPH4GvUhAk+nVmIJkPJpg3uTgIVnCV9QVFjpw=;
-        b=oCTGexDzfMwqWC3orJ5f+aWiqzyQ5dKpVx3l5TCvDwQkT3JsmTi8fHjqzAT3XuHRK6
-         po4/FbuOsz7QbJwNnezlsXY/7TEigqBHAHfZ1YAizmp7YYPlN2V4Cu2RFGtPREYd8wnO
-         8uv+6SV8OOP5e+i/z3zwhjYe/cJ5unU4GyxCYV9uWEXVGDZfrpIa0ObcDt2mj/0+m8+v
-         KyQQSPaMxPzRCIditupGTAg7AqCHTtiqfqC2zyLjbtvsXykMLHUke/CfIlAmadcOfsZM
-         c5Ze3FYyM5bJZXnP7ee+5LOTmGr9djfNmtLmLRFpzUHV6SVu7qmiovchslIERx5N1qu9
-         r6Ag==
-X-Gm-Message-State: ALKqPweViJB1SGYVEBg7zSU5sAhoBqYCTTqWNwEmjylOgOfIfuYBmmFN
-        ZffEF+iRV05LQOXagEnKKgsyEzay
-X-Google-Smtp-Source: AB8JxZp2jBoenQJrsn2/Ljd106mA+CzS9pgzWHo1lxXPaATk2W3GpN0KUckLJrtt6q1zVfXZQEmh7w==
-X-Received: by 2002:adf:84e2:: with SMTP id 89-v6mr2182197wrg.167.1526850732425;
-        Sun, 20 May 2018 14:12:12 -0700 (PDT)
+        bh=WB0ni9xqdn1TSoHgyPrWyjEABXozzoCVYnyhlEvPq3A=;
+        b=lsa7wRt1g38/iQsw0UKg4Z+87u8P74cLTIeRqd4N0W0U4KayoGdAlMxl5rQ40uSLUx
+         Y/uKwCjDzmQ7FiVqZJFZK+9dSk74PcNUJZRXyzS6iKlMXw074dKww4CzegZ/7coBRO5a
+         MGUrUDpXPPLIW4L2rVfKNijOaAJWBO152mCQ69WISafmxooq/8LNJ7tY2zDOEFi3+4eQ
+         5RMZ/bws4xNzFNdSCZchW8CmAEnVmJ3XoeIygagPjkMgsBnZpRK7xX+91vfSfjAmoRjZ
+         tiGf/xmUQ92hlF7UEfQRuQg4BczOYrlNEZMl1pjqVOtvLnQ9G3PHvqO4Rdd700H2kZbo
+         fsLA==
+X-Gm-Message-State: ALKqPwfMy/gyUo7/XpUfjJoBqjXxiwPTFUwxcHRx5jwvY2RoNebccPKd
+        vUssRtCkwxVdNQ0PnNGpzKZFoGvf
+X-Google-Smtp-Source: AB8JxZr9inNp4F+LmWKJGJBSFNALoH727qqIn0WeU8jmu7/ccTRZWYZURamTIsFDapcYxOd+dxo63g==
+X-Received: by 2002:a1c:87d4:: with SMTP id j203-v6mr8793203wmd.119.1526850733988;
+        Sun, 20 May 2018 14:12:13 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id w5-v6sm11705830wmd.26.2018.05.20.14.12.11
+        by smtp.gmail.com with ESMTPSA id r10-v6sm1930799wrn.6.2018.05.20.14.12.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 20 May 2018 14:12:11 -0700 (PDT)
+        Sun, 20 May 2018 14:12:13 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [RFC/PATCH 3/7] rerere: add some documentation
-Date:   Sun, 20 May 2018 22:12:06 +0100
-Message-Id: <20180520211210.1248-4-t.gummerer@gmail.com>
+Subject: [RFC/PATCH 4/7] rerere: fix crash when conflict goes unresolved
+Date:   Sun, 20 May 2018 22:12:07 +0100
+Message-Id: <20180520211210.1248-5-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.17.0.588.g4d217cdf8e.dirty
 In-Reply-To: <20180520211210.1248-1-t.gummerer@gmail.com>
 References: <20180520211210.1248-1-t.gummerer@gmail.com>
@@ -63,89 +63,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add some documentation for the logic behind the conflict normalization
-in rerere.  Also describe a bug that happens because we just linearly
-scan for conflict markers.
+Currently when a user doesn't resolve a conflict in a file, but
+commits the file with the conflict markers, and later the file ends up
+in a state in which rerere can't handle it, subsequent rerere
+operations that are interested in that path, such as 'rerere clear' or
+'rerere forget <path>' will fail, or even worse in the case of 'rerere
+clear' segfault.
+
+Such states include nested conflicts, or an extra conflict marker that
+doesn't have any match.
+
+This is because the first 'git rerere' when there was only one
+conflict in the file leaves an entry in the MERGE_RR file behind.  The
+next 'git rerere' will then pick the rerere ID for that file up, and
+not assign a new ID as it can't successfully calculate one.  It will
+however still try to do the rerere operation, because of the existing
+ID.  As the handle_file function fails, it will remove the 'preimage'
+for the ID in the process, while leaving the ID in the MERGE_RR file.
+
+Now when 'rerere clear' for example is run, it will segfault in
+'has_rerere_resolution', because status is NULL.
+
+To fix this, remove the rerere ID from the MERGE_RR file in case we
+can't handle it, and remove the folder for the ID.  Removing it
+unconditionally is fine here, because if the user would have resolved
+the conflict and ran rerere, the entry would no longer be in the
+MERGE_RR file, so we wouldn't have this problem in the first place,
+while if the conflict was not resolved, the only thing that's left in
+the folder is the 'preimage', which by itself will be regenerated by
+git if necessary, so the user won't loose any work.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
 
-This documents my understanding of the rerere conflict normalization
-and conflict ID computation logic.  Writing this down helped me
-understand the logic, and I thought it may be useful to have this as
-documentation in Documentation/technical as well.  Junio: as you wrote
-the original NEEDSWORK comment, did you have something more in mind
-here that should be documented?
+I realize the test here may not be as complete as we would want it to
+be.  But I first wanted to get some feedback on the approach, before
+spending too much time on a proper test (I did test it manually, and
+the test does show that the original problem is fixed, but it probably
+deserves some cleanup).
 
- Documentation/technical/rerere.txt | 43 ++++++++++++++++++++++++++++++
- rerere.c                           |  4 ---
- 2 files changed, 43 insertions(+), 4 deletions(-)
- create mode 100644 Documentation/technical/rerere.txt
+ rerere.c          | 12 +++++++-----
+ t/t4200-rerere.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/technical/rerere.txt b/Documentation/technical/rerere.txt
-new file mode 100644
-index 0000000000..94cc6a7ef0
---- /dev/null
-+++ b/Documentation/technical/rerere.txt
-@@ -0,0 +1,43 @@
-+Rerere
-+======
-+
-+This document describes the rerere logic.
-+
-+Conflict normalization
-+----------------------
-+
-+To try and re-do a conflict resolution, even when different merge
-+strategies are used, 'rerere' computes a conflict ID for each
-+conflict in the file.
-+
-+This is done by discarding the common ancestor version in the
-+diff3-style, and re-ordering the two sides of the conflict, in
-+alphabetic order.
-+
-+Using this technique a conflict that looks as follows when for example
-+'master' was merged into a topic branch:
-+
-+    <<<<<<< HEAD
-+    foo
-+    =======
-+    bar
-+    >>>>>>> master
-+
-+and the opposite way when the topic branch is merged into 'master':
-+
-+    <<<<<<< HEAD
-+    bar
-+    =======
-+    foo
-+    >>>>>>> topic
-+
-+can be recognized as the same conflict, and can automatically be
-+re-resolved by 'rerere', as the SHA-1 sum of the two conflicts would
-+be calculated from 'bar<NUL>foo<NUL>' in both cases.
-+
-+If there are multiple conflicts in one file, they are all appended to
-+one another, both in the 'preimage' file as well as in the conflict
-+ID.
-+
-+This is currently implemented by simply scanning through the file and
-+looking for conflict markers.
 diff --git a/rerere.c b/rerere.c
-index af5e6179a9..a02a38e072 100644
+index a02a38e072..49ace8e108 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -394,10 +394,6 @@ static int is_cmarker(char *buf, int marker_char, int marker_size)
-  * and NUL concatenated together.
-  *
-  * Return the number of conflict hunks found.
-- *
-- * NEEDSWORK: the logic and theory of operation behind this conflict
-- * normalization may deserve to be documented somewhere, perhaps in
-- * Documentation/technical/rerere.txt.
-  */
- static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_size)
- {
+@@ -824,10 +824,7 @@ static int do_plain_rerere(struct string_list *rr, int fd)
+ 		struct rerere_id *id;
+ 		unsigned char sha1[20];
+ 		const char *path = conflict.items[i].string;
+-		int ret;
+-
+-		if (string_list_has_string(rr, path))
+-			continue;
++		int ret, has_string;
+ 
+ 		/*
+ 		 * Ask handle_file() to scan and assign a
+@@ -835,7 +832,12 @@ static int do_plain_rerere(struct string_list *rr, int fd)
+ 		 * yet.
+ 		 */
+ 		ret = handle_file(path, sha1, NULL);
+-		if (ret < 1)
++		has_string = string_list_has_string(rr, path);
++		if (ret < 0 && has_string) {
++			remove_variant(string_list_lookup(rr, path)->util);
++			string_list_remove(rr, path, 1);
++		}
++		if (ret < 1 || has_string)
+ 			continue;
+ 
+ 		id = new_rerere_id(sha1);
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index eaf18c81cb..27f8afc0b4 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -580,4 +580,29 @@ test_expect_success 'multiple identical conflicts' '
+ 	count_pre_post 0 0
+ '
+ 
++test_expect_success 'rerere with extra conflict markers keeps working' '
++	git reset --hard &&
++
++	git checkout -b branch-1 master &&
++	echo "bar" >test &&
++	git add test &&
++	git commit -q -m two &&
++	echo "baz" >test &&
++	git add test &&
++	git commit -q -m three &&
++
++	git reset --hard &&
++	git checkout -b branch-2 master &&
++	echo "foo" >test &&
++	git add test &&
++	git commit -q -a -m one &&
++
++	test_must_fail git merge branch-1~ &&
++	git add test &&
++	git commit -q -m "will solve conflicts later" &&
++	test_must_fail git merge branch-1 &&
++
++	git rerere clear
++'
++
+ test_done
 -- 
 2.17.0.588.g4d217cdf8e.dirty
 
