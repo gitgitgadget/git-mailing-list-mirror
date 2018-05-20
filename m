@@ -7,84 +7,100 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B9191F51C
-	for <e@80x24.org>; Sun, 20 May 2018 19:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD8EE200B9
+	for <e@80x24.org>; Sun, 20 May 2018 19:33:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751678AbeETTM4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 15:12:56 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:54396 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751656AbeETTMz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 15:12:55 -0400
-Received: by mail-wm0-f44.google.com with SMTP id f6-v6so21808942wmc.4
-        for <git@vger.kernel.org>; Sun, 20 May 2018 12:12:54 -0700 (PDT)
+        id S1751144AbeETTd0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 15:33:26 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:42602 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751045AbeETTdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 15:33:25 -0400
+Received: by mail-wr0-f193.google.com with SMTP id t16-v6so10764015wrm.9
+        for <git@vger.kernel.org>; Sun, 20 May 2018 12:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=aGskK55Lsxdfx4Fw/g+HZWApqEuwRpKNyqzWJK0jEyk=;
-        b=WUAUOz21DZ3zswgkPwZhJFQq7CEhGSjzp9F53lZMAQvRzIk3jaD5/5vH6AjEGf8W96
-         0uISPoD71KH+kkbArzlKQFagUyvoSnDkkUDPPOMuUYgGAKJq1nvboNpMPqlkXAOK2211
-         jmhcsg9/oOBrPLkbWneuf++GxSYdYvyuRNWoiz43x4RdTsjdFzTHEdMfk2Az6/Sv0xYM
-         /vd9twdHFycfm9+DpGuOXx0UnGyWK8mdg3+7Wu0YdFBuyPma3UH2gfjtu8cs/yG/JQof
-         tp4wuf7bAcDDABuG6NxX6miBtYJyWG0kBJqYo1/riXTMxPpRm5bSYGsL8UUnf9CA77nY
-         UxfQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=pw4oF+qgt0QGj65z5IC2n9EbnFdTER57uMnDDHxLEHQ=;
+        b=jt0/Q8jd6lfxlrQRcaHSePyiA4/KucITcdgRf3KTiZ4VanoTrK82JVP9Pqw9bUbJ3X
+         RuZ1D3jzMTbbY8QeQQPl15qdMjbbhPt7o3YNJGE12I/UpElFqBwMZ5icQ9dJQzGT1S+K
+         h+o/0JxX34eLWRS08AiuIEfe+6TtEEp7JH6eMe2ekRQkOLRaOowVNZlOyxRXdd/LQveJ
+         fVuOuOU3oio6M4iZs0gO6ejB6T5/nj1eHnatD4eP2INcxdhjrtPo7Xo05X/KtCvyGvjc
+         St3IXd3DBmuc1R8ZrS5wkEqNViN1pgQP8fflWtirEYKKJsuvmE4lcWuxV+0gElX9cho1
+         8Y+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=aGskK55Lsxdfx4Fw/g+HZWApqEuwRpKNyqzWJK0jEyk=;
-        b=E/CgATZfIhpN3hv4RZWxWNO4iFXbPrxNlBDeHY1KQuudi/tXoBR6hUJQM+fHY4wiav
-         TvFh7JbZv32ueIwm4Ws1AEibHttw9FisgAH0B8bJofMDjQ5eHx3jUQmFJHGMWpy6Z6hC
-         FIpsRdEAql5IgELw364H3pvgaijUyzsNAQe2zhm1EZsubKsy5iVrrKfUzOjFWt6DJ36l
-         jWGht6EcVaXBaU3TnXbaaqmV/Mq9cj3iSqyJWmiOBgYfVGcpAxAz9qnOINg6aQI8lp59
-         a15XM+KtPhtPS/4CPjVlbXd/bYCnEbMvLNa0FkKaHkjpNMBS+hhDzK75UNIJodN/OUe+
-         2gqA==
-X-Gm-Message-State: ALKqPweKWEMEezN+8OWWwY3GIABo7UltW0X8G8Jck53KXfCnyeXlAvV/
-        MhBw25EfKCgutTXXiRIl/B+QCCf4K+VlfMWQbFw=
-X-Google-Smtp-Source: AB8JxZoTAYx8ClDOrW4ZFubFrJ0QB0augXK7cRAX1K3aGvhbAtj1ySmjrOB4l9OPFsCgG15tFdwcBMdwln77KkhLkOw=
-X-Received: by 2002:a50:ab42:: with SMTP id t2-v6mr20790115edc.133.1526843573913;
- Sun, 20 May 2018 12:12:53 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=pw4oF+qgt0QGj65z5IC2n9EbnFdTER57uMnDDHxLEHQ=;
+        b=rpvSwP/z4MmIWgrNhC6vvWdXd9S0CqJEVlBTKoTWESsLCpzb+L/jHAaSSdm9Z3qc7W
+         sq/x3TM/yHnrwp4IiRGCxq4V1j9RfwtFxL2GFCDqUgoNcgjrTAp0yKuVekQpDsNy78Z6
+         OY3+SaYzE5hMz0ZWnzzSiz0lIb0KP1W4byLkwfPxZAeKUsIzNIFsGbBP2gxddKhtxe4v
+         YWhP2Y+ub24Ew8KSA1GtL5dl+8lF4MCfsGugU6l8kmJqMhz3olbu53hvWuG/NW5jOdTE
+         PePTHT5Z2dzdFMMLCR/l6r9uAn/t9A4Uy7WlbxzV4qJuaLLVNkeiMNdKb08SDdkDHsh9
+         e5tw==
+X-Gm-Message-State: ALKqPwevYN+9zv3yN64M4RVZYqw2OWRrKB36IjuUCR/SvXp4IUkRoJ0M
+        IsWnUUbTeLPRjqz594AQnXx2hioS
+X-Google-Smtp-Source: AB8JxZrLL9zdiuiDThGdCjGJfgXCJRLHWSpfPJw+Ijc775LvGtRcI1bQBFjz+LGevUGKpBEJ0puWdw==
+X-Received: by 2002:adf:85dd:: with SMTP id 29-v6mr13480834wru.120.1526844804499;
+        Sun, 20 May 2018 12:33:24 -0700 (PDT)
+Received: from [192.168.0.103] ([92.55.154.57])
+        by smtp.gmail.com with ESMTPSA id d12-v6sm6184003wre.39.2018.05.20.12.33.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 20 May 2018 12:33:23 -0700 (PDT)
+Subject: Re: [GSoC] A blog about 'git stash' project
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <67e6d306-0885-9340-13c8-3e3d4333dc20@gmail.com>
+ <ef15b063-c0e3-a5e9-7418-35d2d6b954f3@gmail.com>
+ <e8a81d38-57d7-2974-b5c7-3489e8ceb1fc@gmail.com>
+ <68b913de-8f4a-9203-1d63-32104a35628b@gmail.com>
+ <be353b0e-1cba-3765-b920-f7307f9b7d40@gmail.com>
+ <nycvar.QRO.7.76.6.1805171106370.77@tvgsbejvaqbjf.bet>
+ <1729567e-3b95-ab37-d845-1980795542b0@gmail.com>
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Message-ID: <e0029f5e-87eb-7531-c32d-9a58469faaa5@gmail.com>
+Date:   Sun, 20 May 2018 22:33:22 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 10.80.234.135 with HTTP; Sun, 20 May 2018 12:12:33 -0700 (PDT)
-In-Reply-To: <77b025bb47869478e3eef1c3c34d379164f5d91c.1526810549.git.martin.agren@gmail.com>
-References: <CAN0heSp7DqxOy-UeLgj8t_T_4f-fNthMpGNS8oUbcs7+NvS-zw@mail.gmail.com>
- <cover.1526810549.git.martin.agren@gmail.com> <77b025bb47869478e3eef1c3c34d379164f5d91c.1526810549.git.martin.agren@gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 20 May 2018 12:12:33 -0700
-Message-ID: <CA+P7+xqPnuuQpp5e7fduLgaSd+JrTn95w=Da7q=iCXUgo0QHFA@mail.gmail.com>
-Subject: Re: [PATCH v4 3/4] string-list: provide `string_list_appendf()`
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1729567e-3b95-ab37-d845-1980795542b0@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 20, 2018 at 3:17 AM, Martin =C3=85gren <martin.agren@gmail.com>=
- wrote:
-> +/**
-> + * Add formatted string to the end of `list`. This function ignores
-> + * the value of `list->strdup_strings` and always appends a freshly
-> + * allocated string, so you will probably not want to use it with
-> + * `strdup_strings =3D 0`.
-> + */
-> +struct string_list_item *string_list_appendf(struct string_list *list,
-> +                                            const char *fmt, ...);
-> +
+Hi
 
-Would it make sense to verify that strdup_strings =3D=3D 0? I guess we'd
-have to use die or BUG(), but that would mean that the program could
-crash..
+On 17.05.2018 13:29, Kaartic Sivaraam wrote:
+> On Thursday 17 May 2018 02:39 PM, Johannes Schindelin wrote:
+>> I have great empathy for the desire to see these bugs fixed. The
+>> conversion must come first, though, and in the interest of making it
+>> easier on me and other reviewers, I must insist on keeping the conversion
+>> free of any changes, much in the way as we try to avoid evil merges (i.e.
+>> merge commits that introduce changes that were not present in any of their
+>> parents).
+>>
+> 
+> Of course, the conversion should be separate from the bug fixes :-)
+> 
+> When I mentioned "while porting it to C", I actually meant the "thought
+> process of creating a foundation for `git-stash` in C". I thought
+> hinting at some of the existing and unsolved `git-stash` bugs would
+> allow the person who would be doing the port of `git-stash` to C to
+> consider how to avoid this while implementing the basic foundation. I
+> should have been more explicit about this in my previous mails.
+> 
 
-I doubt this could be verified at compilation time....
+Thank you! I will keep in mind to fix those bugs. I actually wrote a 
+short paragraph about one of them (the one regarding -p option) on the 
+blog (the first post).
 
-Thanks,
-Jake
+Best,
+Paul
