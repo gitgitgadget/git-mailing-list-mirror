@@ -7,274 +7,246 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78E7F1F51C
-	for <e@80x24.org>; Sun, 20 May 2018 14:27:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 134421F51C
+	for <e@80x24.org>; Sun, 20 May 2018 14:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751631AbeETO1f (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 10:27:35 -0400
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:45231 "EHLO
-        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751549AbeETO1e (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 10:27:34 -0400
-Received: by mail-ua0-f194.google.com with SMTP id j5-v6so8300154uak.12
-        for <git@vger.kernel.org>; Sun, 20 May 2018 07:27:33 -0700 (PDT)
+        id S1751675AbeETOt2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 10:49:28 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:54391 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751555AbeETOt0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 10:49:26 -0400
+Received: by mail-wm0-f67.google.com with SMTP id f6-v6so21217429wmc.4
+        for <git@vger.kernel.org>; Sun, 20 May 2018 07:49:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=h3Ze2RxcdoYAJtO3WNXVYoQ5j3a6QyDXB8HY7OS6wgo=;
-        b=hTHsXB94WLAmumd7ZoauuJ+2LVdy1sPw2l0FstpvmN+yntdUXSwivK0izvX5Oo1EPI
-         twsIdahxXoxWA2BpPsi/VcnsHrE5/T0iLSaCMDKvX9pgiA+h/cQn1NIxv0dlMg1A8BS+
-         wwdHbag5fnB//CPs6XhbplE25nc6B8D4Om2A9Yn5TboaVe+iX7Xe8nnfqdhfjGCVXpSA
-         zFyD3PiLPAGf5kRTD5dgl6jaoiMxLYWpsZoFl0h0UhMw6IFA/WtTXR/qOnGbCPrSvuqT
-         N6F6cyGIPwmA+41h3nF/wh39TPL5NA1dEep8eK8WIqrZg1BM4dr7cLQYT8M5sThIMTP5
-         Jyew==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=q+nY7tykqZNq6zw3EiBKhDsHoS/gy6SX5XagO8dQrOo=;
+        b=OOn8ug9Vjl3yIOLxb2HNNVbMyr1ZZUxFSWDrm9cZ6X7MRuOUdRfENSChIUIoXqVrk/
+         tNQpbLzm1jKQz8MxQbFrC3cHor8MMHbj4aB8ABDS5HP7IHlUlf1i3meCWMMiFrlIVz+6
+         +pXfZ8jT97QHlg3rN9jvi4UsZJd0tCEmWmZgR4zPBlIYOm0lE+UR6sjc/CqJGwvSdVVB
+         6pwju+se/rWvwcSNyr6KxRM2iWFQ4/Jon1bUC5o9KoZOOKlLtoI/Cq/zcfpwU0Lq6KGx
+         0z9/ORHz8XRsiZN4FAI51u9d+yTP3y3pz1NEh3d/0BRTfIZRPmDmJS6E/jwzdTal4nYs
+         3fpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=h3Ze2RxcdoYAJtO3WNXVYoQ5j3a6QyDXB8HY7OS6wgo=;
-        b=GOYDQ90CS7oQruEQ/Th/IcDb7fBfFDBfsr7qUUuBUSS/wo3B2AE5dD+RnoTTHYSw0F
-         nca8MVJ7+RSVuB+altjASKH0zUwmQcuRewf6F+oXATjHaokjbdGLdF+DXt9U9qvVu8xN
-         rdJcUQ59amjB3S0W3tgP0pVfN4oTnrD46IX8ldHweMhDPzjXsX8pi3q1+7AMeZOP+cbV
-         cYOQ+1uYvcByqYB3FsPuv9acL2vo/omjO4gFIfOWDKSKP0c3BUcFZ6skM/XDJE0gsPCZ
-         t90lnauzYcMCSPn8pl6m0lzjJ/2DaY3JLFrpTS5t5e2qswLn11Y8zzQNczWLxUQZZDUt
-         4e2A==
-X-Gm-Message-State: ALKqPwcA6fKvh4KS3qsTiwzxjoMbNI0GcaLM/2XZTLA+D6sZUReVM/fh
-        +K5RKERBohwVK2ANHBwLGD3PUL6gVUFRZ5jOoHo=
-X-Google-Smtp-Source: AB8JxZrQAidg6GmUH4ieiU30HETZtOE9xHrNr7zkE1dVDWp/y0YnfG3m+ee5JYUBf0kR54D2jD/X+XfvjThG6XWQ0rc=
-X-Received: by 2002:a9f:2d98:: with SMTP id v24-v6mr12314514uaj.5.1526826452896;
- Sun, 20 May 2018 07:27:32 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=q+nY7tykqZNq6zw3EiBKhDsHoS/gy6SX5XagO8dQrOo=;
+        b=W6XP4n6/hRnhn/qYnCbAuE/9RtnvYKUHOAGyFZGyl025Sg9t6SsxKppamR5MbCmimY
+         w6jASjsqeWz/itqXINj4Oj4aTlhf0gTAcTGDw25xwFkHbT/JwQLkznF5v0/T9tYVzuo3
+         Y0QnWUnDyV2ig5d8hrdwWdzdW6OSuS0VD3VFH9IrFeEPOrWvrEVWEf/xdzGvZqY65Xsm
+         Yau0uvbA6zB1ATT3YwBIZeNZfdHVECOImMx8tXCf9abplQy2tnp59ke1vAi/UZJaLVgO
+         VKzxucSfa7J2XwqDbq0wBJLR6iwDUHzl5or6WaULUlYvqwaIXBABqVs5xyOd7ulRZ6e0
+         pKHg==
+X-Gm-Message-State: ALKqPwdBYJAl2vJfou2p6OywNJxF78spzJqU6aKRKlNnctDJOd6+6XPm
+        VlwZzP/zMqfmYHeXKqIZ8II=
+X-Google-Smtp-Source: AB8JxZpeIZ2z4mftOW2QA1QOoRzkC0ZqNerFZT0FmuEOZWvcKsfPcBmMtKjHDhR1VnoY9F4pgoWWyg==
+X-Received: by 2002:a1c:eb0e:: with SMTP id j14-v6mr8094177wmh.87.1526827765623;
+        Sun, 20 May 2018 07:49:25 -0700 (PDT)
+Received: from localhost.localdomain (x4db14276.dyn.telefonica.de. [77.177.66.118])
+        by smtp.gmail.com with ESMTPSA id f8-v6sm5996426wrf.67.2018.05.20.07.49.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 20 May 2018 07:49:24 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Luke Diamand <luke@diamand.org>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Romain Merland <merlorom@yahoo.fr>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        George Vanburgh <gvanburgh@bloomberg.net>
+Subject: Re: [PATCHv4 1/1] git-p4: add unshelve command
+Date:   Sun, 20 May 2018 16:49:16 +0200
+Message-Id: <20180520144916.5064-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.17.0.799.gd371044c7c
+In-Reply-To: <20180519100020.616-2-luke@diamand.org>
+References: 
 MIME-Version: 1.0
-Received: by 10.176.22.212 with HTTP; Sun, 20 May 2018 07:27:32 -0700 (PDT)
-In-Reply-To: <20180519042752.8666-15-pclouds@gmail.com>
-References: <20180519042752.8666-1-pclouds@gmail.com> <20180519042752.8666-15-pclouds@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Sun, 20 May 2018 16:27:32 +0200
-Message-ID: <CAM0VKjn1WyRgGZDidPjr3YatRV65h_sSzQQpg+=OUtiaTxMgpw@mail.gmail.com>
-Subject: Re: [PATCH 14/14] completion: allow to customize the completable
- command list
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 19, 2018 at 6:27 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> By default we show porcelain, external commands and a couple others
-> that are also popular. If you are not happy with this list, you can
-> now customize it. See the big comment block for details.
->
-> PS. perhaps I should make aliases a group too, which makes it possible
-> to _not_ complete aliases by omitting this special group in
-> $GIT_COMPLETION_CMD_GROUPS
-
-Note that the completion script reads the configured aliases each time
-the user attempts to complete commands.  So if the user adds or
-removes an alias, then it will automatically be taken into account the
-next time after 'git <TAB>'.  By turning aliases into a group listed
-by 'git help' they would be cached like all other commands, so this
-would no longer be the case.
-
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  Documentation/config.txt               | 10 ++++++++
->  contrib/completion/git-completion.bash | 28 +++++++++++++++++++++-
->  git.c                                  |  2 ++
->  help.c                                 | 33 ++++++++++++++++++++++++++
->  help.h                                 |  1 +
->  5 files changed, 73 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 2659153cb3..91f7eaed7b 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1343,6 +1343,16 @@ credential.<url>.*::
->  credentialCache.ignoreSIGHUP::
->         Tell git-credential-cache--daemon to ignore SIGHUP, instead of qu=
-itting.
->
-> +completion.commands::
-> +       This is only used by git-completion.bash to add or remove
-> +       commands from the complete list. Normally only porcelain
-
-s/complete list/list of completed commands/ perhaps?
-
-> +       commands and a few select others are in the complete list. You
-
-s/in the complete list/completed/
-
-> +       can add more commands, separated by space, in this
-> +       variable. Prefixing the command with '-' will remove it from
-> +       the existing list.
-> ++
-> +This variable should not be per-repository.
-
-I think this should also mention that changing the value of this
-config variable will not immediately affect the commands listed after
-'git <TAB>', but the user will have to re-dot-source the completion
-script first.
-
-The way I understand the rest of the patch, this config variable
-doesn't have any effect if $GIT_COMPLETION_CMD_GROUPS doesn't contain
-"config".  If that is indeed the case, then that should be mentioned
-here as well.
-
-Having said that, I wonder whether we should really require "config"
-in $GIT_COMPLETION_CMD_GROUPS.  Isn't having 'completion.commands' set
-in the config a clear enough indication in itself that the user wants
-to customize the listed commands?
-
+> diff --git a/t/t9832-unshelve.sh b/t/t9832-unshelve.sh
+> new file mode 100755
+> index 0000000000..cca2dec536
+> --- /dev/null
+> +++ b/t/t9832-unshelve.sh
+> @@ -0,0 +1,153 @@
+> +#!/bin/sh
 > +
->  include::diff-config.txt[]
->
->  difftool.<tool>.path::
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index cd1d8e553f..f237eb0ff4 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -38,6 +38,29 @@
->  #
->  #     When set to "1", do not include "DWIM" suggestions in git-checkout
->  #     completion (e.g., completing "foo" when "origin/foo" exists).
-> +#
-> +#   GIT_COMPLETION_CMD_GROUPS
-> +#
-> +#     When set, "git --list-cmds=3D$GIT_COMPLETION_CMD_GROUPS" will be
-> +#     used to get the list of completable commands. The default is
-> +#     "mainporcelain,others,list-complete" (in English: all porcelain
+> +last_shelved_change() {
 
-Mental note #1: "mainporcelain"
+Style nit: space between function name and ()
 
-> +#     commands and external ones are included. Certain non-porcelain
-> +#     commands are also marked for completion in command-list.txt).
-> +#     You could for example complete all commands with
-> +#
-> +#         GIT_COMPLETION_CMD_GROUPS=3Dmain,others
-
-Mental note #2: "main"
-
-> +#
-> +#     Or you could go with main porcelain only and extra commands in
-> +#     the configuration variable completion.commands with
-> +#
-> +#         GIT_COMPLETION_CMD_GROUPS=3Dmainporcelain,config
-> +#
-> +#     Or go completely custom group with
-> +#
-> +#         GIT_COMPLETION_CMD_GROUPS=3Dconfig
-> +#
-> +#     Or you could even play with other command categories found in
-> +#     command-list.txt.
->
->  case "$COMP_WORDBREAKS" in
->  *:*) : great ;;
-> @@ -842,8 +865,11 @@ __git_commands () {
->                 if test -n "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
->                 then
->                         printf "%s" "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
-> +               elif test -n "$GIT_COMPLETION_CMD_GROUPS"
-> +               then
-> +                       git --list-cmds=3D"$GIT_COMPLETION_CMD_GROUPS"
->                 else
-> -                       git --list-cmds=3Dlist-mainporcelain,others,list-=
-complete
-> +                       git --list-cmds=3Dlist-mainporcelain,others,list-=
-complete,config
-
-So first it was "mainporcelain", then simply "main", then
-"mainporcelain" again, and now "list-mainporcelain"?!
-You've lost me here.
-
-Are the possible values documented anywhere?
-
-Furthermore, the default value mentioned in the comments above didn't
-include "config", either (but then again, I don't think we really need
-"config" in the first place).
-
->                 fi
->                 ;;
->         all)
-> diff --git a/git.c b/git.c
-> index 4d5b8a9931..ea4feedd0b 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -60,6 +60,8 @@ static int list_cmds(const char *spec)
->                         list_all_main_cmds(&list);
->                 else if (match_token(spec, len, "others"))
->                         list_all_other_cmds(&list);
-> +               else if (match_token(spec, len, "config"))
-> +                       list_cmds_by_config(&list);
->                 else if (len > 5 && !strncmp(spec, "list-", 5)) {
->                         struct strbuf sb =3D STRBUF_INIT;
->
-> diff --git a/help.c b/help.c
-> index 23924dd300..abf87205b2 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -366,6 +366,39 @@ void list_cmds_by_category(struct string_list *list,
->         }
->  }
->
-> +void list_cmds_by_config(struct string_list *list)
-> +{
-> +       const char *cmd_list;
-> +
-> +       /*
-> +        * There's no actual repository setup at this point (and even
-> +        * if there is, we don't really care; only global config
-> +        * matters). If we accidentally set up a repository, it's ok
-> +        * too since the caller (git --list-cmds=3D) should exit shortly
-> +        * anyway.
-> +        */
-> +       if (git_config_get_string_const("completion.commands", &cmd_list)=
-)
-> +               return;
-> +
-> +       string_list_sort(list);
-> +       string_list_remove_duplicates(list, 0);
-> +
-> +       while (*cmd_list) {
-> +               struct strbuf sb =3D STRBUF_INIT;
-> +               const char *p =3D strchrnul(cmd_list, ' ');
-> +
-> +               strbuf_add(&sb, cmd_list, p - cmd_list);
-> +               if (*cmd_list =3D=3D '-')
-> +                       string_list_remove(list, cmd_list + 1, 0);
-> +               else
-> +                       string_list_insert(list, sb.buf);
-> +               strbuf_release(&sb);
-> +               while (*p =3D=3D ' ')
-> +                       p++;
-> +               cmd_list =3D p;
-> +       }
+> +	p4 changes -s shelved -m1 | cut -d " " -f 2
 > +}
 > +
->  void list_common_guides_help(void)
->  {
->         struct category_description catdesc[] =3D {
-> diff --git a/help.h b/help.h
-> index b2293e99be..3b38292a1b 100644
-> --- a/help.h
-> +++ b/help.h
-> @@ -26,6 +26,7 @@ extern void list_all_main_cmds(struct string_list *list=
-);
->  extern void list_all_other_cmds(struct string_list *list);
->  extern void list_cmds_by_category(struct string_list *list,
->                                   const char *category);
-> +extern void list_cmds_by_config(struct string_list *list);
->  extern const char *help_unknown_cmd(const char *cmd);
->  extern void load_command_list(const char *prefix,
->                               struct cmdnames *main_cmds,
-> --
-> 2.17.0.705.g3525833791
->
+> +test_description='git p4 unshelve'
+> +
+> +. ./lib-git-p4.sh
+> +
+> +test_expect_success 'start p4d' '
+> +	start_p4d
+> +'
+> +
+> +test_expect_success 'init depot' '
+> +	(
+> +		cd "$cli" &&
+> +		echo file1 >file1 &&
+> +		p4 add file1 &&
+> +		p4 submit -d "change 1"
+
+Broken && chain.
+
+> +		: >file_to_delete &&
+> +		p4 add file_to_delete &&
+> +		p4 submit -d "file to delete"
+> +	)
+> +'
+> +
+> +test_expect_success 'initial clone' '
+> +	git p4 clone --dest="$git" //depot/@all
+> +'
+> +
+> +test_expect_success 'create shelved changelist' '
+> +	(
+> +		cd "$cli" &&
+> +		p4 edit file1 &&
+> +		echo "a change" >>file1 &&
+> +		echo "new file" >file2 &&
+> +		p4 add file2 &&
+> +		p4 delete file_to_delete &&
+> +		p4 opened &&
+> +		p4 shelve -i <<EOF
+> +Change: new
+> +Description:
+> +	Test commit
+> +
+> +	Further description
+> +Files:
+> +	//depot/file1
+> +	//depot/file2
+> +	//depot/file_to_delete
+> +EOF
+> +
+> +	) &&
+> +	(
+> +		cd "$git" &&
+> +		change=$(last_shelved_change) &&
+> +		git p4 unshelve $change &&
+> +		git show refs/remotes/p4/unshelved/$change | grep -q "Further description" &&
+> +		git cherry-pick refs/remotes/p4/unshelved/$change &&
+> +		test_path_is_file file2 &&
+> +		test_cmp file1 "$cli"/file1 &&
+> +		test_cmp file2 "$cli"/file2 &&
+> +		test_path_is_missing file_to_delete
+> +	)
+> +'
+> +
+> +test_expect_success 'update shelved changelist and re-unshelve' '
+> +	test_when_finished cleanup_git &&
+> +	(
+> +		cd "$cli" &&
+> +		change=$(last_shelved_change) &&
+> +		echo "file3" >file3 &&
+> +		p4 add -c $change file3 &&
+> +		p4 shelve -i -r <<EOF &&
+> +Change: $change
+> +Description:
+> +	Test commit
+> +
+> +	Further description
+> +Files:
+> +	//depot/file1
+> +	//depot/file2
+> +	//depot/file3
+> +	//depot/file_to_delete
+> +EOF
+> +		p4 describe $change
+> +	) &&
+> +	(
+> +		cd "$git" &&
+> +		change=$(last_shelved_change) &&
+> +		git p4 unshelve $change &&
+> +		git diff refs/remotes/p4/unshelved/$change.0 refs/remotes/p4/unshelved/$change | grep -q file3
+> +	)
+> +'
+> +
+> +# This is the tricky case where the shelved changelist base revision doesn't
+> +# match git-p4's idea of the base revision
+> +#
+> +# We will attempt to unshelve a change that is based on a change one commit
+> +# ahead of p4/master
+> +
+> +test_expect_success 'create shelved changelist based on p4 change ahead of p4/master' '
+> +	git p4 clone --dest="$git" //depot/@all &&
+> +	(
+> +		cd "$cli" &&
+> +		p4 revert ... &&
+> +		p4 edit file1 &&
+> +		echo "foo" >>file1 &&
+> +		p4 submit -d "change:foo" &&
+> +		p4 edit file1 &&
+> +		echo "bar" >>file1 &&
+> +		p4 shelve -i <<EOF &&
+> +Change: new
+> +Description:
+> +	Change to be unshelved
+> +Files:
+> +	//depot/file1
+> +EOF
+> +		change=$(last_shelved_change) &&
+> +		p4 describe -S $change | grep -q "Change to be unshelved"
+> +	)
+> +'
+> +
+> +diff_adds_line() {
+> +	text="$1" &&
+> +	file="$2" &&
+> +	grep -q "^+$text" $file || (echo "expected \"text\" $text not found in $file" && exit 1)
+> +}
+> +
+> +diff_excludes_line() {
+> +	text="$1" &&
+> +	file="$2" &&
+> +	if grep -q "^+$text" $file; then
+> +		echo "unexpected text \"$text\" found in $file" &&
+> +		exit 1
+> +	fi
+> +}
+
+It appears that these two function aren't used anywhere.
+
+> +
+> +# Now try to unshelve it. git-p4 should refuse to do so.
+> +test_expect_success 'try to unshelve the change' '
+> +	test_when_finished cleanup_git &&
+> +	(
+> +		change=$(last_shelved_change) &&
+> +		cd "$git" &&
+> +		! git p4 unshelve $change >out.txt 2>&1 &&
+> +		grep -q "cannot unshelve" out.txt
+
+Please use 'test_must_fail' instead of '!'; the latter would report
+success even if git were to segfault.
+
+Furthermore, don't combine stdout and stderr, but look for the message
+only in the stream where it is expected to appear.
+
+> +	)
+> +'
+> +
+> +test_expect_success 'kill p4d' '
+> +	kill_p4d
+> +'
+> +
+> +test_done
+> -- 
+> 2.17.0.392.gdeb1a6e9b7
+> 
+> 
