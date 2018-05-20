@@ -2,105 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD8EE200B9
-	for <e@80x24.org>; Sun, 20 May 2018 19:33:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4ECD71F51C
+	for <e@80x24.org>; Sun, 20 May 2018 20:00:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751144AbeETTd0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 15:33:26 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:42602 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751045AbeETTdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 15:33:25 -0400
-Received: by mail-wr0-f193.google.com with SMTP id t16-v6so10764015wrm.9
-        for <git@vger.kernel.org>; Sun, 20 May 2018 12:33:25 -0700 (PDT)
+        id S1751451AbeETUA0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 16:00:26 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36853 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751348AbeETUAZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 16:00:25 -0400
+Received: by mail-wr0-f196.google.com with SMTP id k5-v6so1887141wrn.3
+        for <git@vger.kernel.org>; Sun, 20 May 2018 13:00:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pw4oF+qgt0QGj65z5IC2n9EbnFdTER57uMnDDHxLEHQ=;
-        b=jt0/Q8jd6lfxlrQRcaHSePyiA4/KucITcdgRf3KTiZ4VanoTrK82JVP9Pqw9bUbJ3X
-         RuZ1D3jzMTbbY8QeQQPl15qdMjbbhPt7o3YNJGE12I/UpElFqBwMZ5icQ9dJQzGT1S+K
-         h+o/0JxX34eLWRS08AiuIEfe+6TtEEp7JH6eMe2ekRQkOLRaOowVNZlOyxRXdd/LQveJ
-         fVuOuOU3oio6M4iZs0gO6ejB6T5/nj1eHnatD4eP2INcxdhjrtPo7Xo05X/KtCvyGvjc
-         St3IXd3DBmuc1R8ZrS5wkEqNViN1pgQP8fflWtirEYKKJsuvmE4lcWuxV+0gElX9cho1
-         8Y+g==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=kMt2iw/lbzhMkU0FM7W9Ian8waL02pll/1GVMKgT9sg=;
+        b=GTVjoqt5Tm/v4DR5ipBz1ZCug+EOZTGRumsIJ7M2TILdqV/dXEsvdpyQLRdg1ot2Hm
+         GdrFxbX73miYWnQyU7ZDMTc8AWckqPPgEnPjZT+xhpzqOVCJjKnv485kfbOhf7F2VpWn
+         JaRKA6p1S/WKtPhaoeGwp/V2uP0SRDA96JGZW5PS37F4Ncdgj9zEAgZilhYx2PxrEV2G
+         24s06RetGesSCcbPUVHjbxmWT//Ir0eg0fRnSMTs/32XU5qARRPZkOnooq0Asp5qN5Kn
+         IKJPQwyzbAg+yka7X0RjdXXE7LP9YknwszrVg2vT7eN+HHdDdOoPw14IeOyP5SB++tn3
+         yQOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pw4oF+qgt0QGj65z5IC2n9EbnFdTER57uMnDDHxLEHQ=;
-        b=rpvSwP/z4MmIWgrNhC6vvWdXd9S0CqJEVlBTKoTWESsLCpzb+L/jHAaSSdm9Z3qc7W
-         sq/x3TM/yHnrwp4IiRGCxq4V1j9RfwtFxL2GFCDqUgoNcgjrTAp0yKuVekQpDsNy78Z6
-         OY3+SaYzE5hMz0ZWnzzSiz0lIb0KP1W4byLkwfPxZAeKUsIzNIFsGbBP2gxddKhtxe4v
-         YWhP2Y+ub24Ew8KSA1GtL5dl+8lF4MCfsGugU6l8kmJqMhz3olbu53hvWuG/NW5jOdTE
-         PePTHT5Z2dzdFMMLCR/l6r9uAn/t9A4Uy7WlbxzV4qJuaLLVNkeiMNdKb08SDdkDHsh9
-         e5tw==
-X-Gm-Message-State: ALKqPwevYN+9zv3yN64M4RVZYqw2OWRrKB36IjuUCR/SvXp4IUkRoJ0M
-        IsWnUUbTeLPRjqz594AQnXx2hioS
-X-Google-Smtp-Source: AB8JxZrLL9zdiuiDThGdCjGJfgXCJRLHWSpfPJw+Ijc775LvGtRcI1bQBFjz+LGevUGKpBEJ0puWdw==
-X-Received: by 2002:adf:85dd:: with SMTP id 29-v6mr13480834wru.120.1526844804499;
-        Sun, 20 May 2018 12:33:24 -0700 (PDT)
-Received: from [192.168.0.103] ([92.55.154.57])
-        by smtp.gmail.com with ESMTPSA id d12-v6sm6184003wre.39.2018.05.20.12.33.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 20 May 2018 12:33:23 -0700 (PDT)
-Subject: Re: [GSoC] A blog about 'git stash' project
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <67e6d306-0885-9340-13c8-3e3d4333dc20@gmail.com>
- <ef15b063-c0e3-a5e9-7418-35d2d6b954f3@gmail.com>
- <e8a81d38-57d7-2974-b5c7-3489e8ceb1fc@gmail.com>
- <68b913de-8f4a-9203-1d63-32104a35628b@gmail.com>
- <be353b0e-1cba-3765-b920-f7307f9b7d40@gmail.com>
- <nycvar.QRO.7.76.6.1805171106370.77@tvgsbejvaqbjf.bet>
- <1729567e-3b95-ab37-d845-1980795542b0@gmail.com>
-From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Message-ID: <e0029f5e-87eb-7531-c32d-9a58469faaa5@gmail.com>
-Date:   Sun, 20 May 2018 22:33:22 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=kMt2iw/lbzhMkU0FM7W9Ian8waL02pll/1GVMKgT9sg=;
+        b=UD3/ZalchggSsLaU4xDKTOUqjAbZnmo3ZTH2pp1X5jFxZQXkZLlTDg/JjD60Y/11pV
+         ucUPH9Udr/ErgaDRZsoL8sw5hOGSe7mPU3/QAL8inXSfvP5a5Jr3LpALuD7smwp09hEx
+         knqiXqIdJIj3VZrFi2X/WxTDI44WDohxZFPjH6TOVuETzAYwV+s4xQdH1983MYiUu4Bg
+         mRCNCdAqTWe6OfC10plsDmvzRHC9lCXzbMLi/K3SWEFEgrT+b/jac2UWnyXg4LDyxk9+
+         gDepe/sFbbEWn4Sviamxe0O1flgCKVw9yY7KoDTNB87/fHL7NQbytc7sqMvCvHYyCtT4
+         BL0A==
+X-Gm-Message-State: ALKqPwcFGgUguevWtNabotyP59Fc+cqH3Ck/5f96pmqnw4urwBB8mXyw
+        kfq0yiRT/hY7/l+n/bJ1c2rFbaAe
+X-Google-Smtp-Source: AB8JxZqGFOIjYA+0G1ypCTFf/0YYeaNW+80Q4bJd7TS8rs0TNg/IfXaK6LHds/PYrVT4rUUkIJFzvg==
+X-Received: by 2002:adf:86fa:: with SMTP id 55-v6mr15188866wry.232.1526846423839;
+        Sun, 20 May 2018 13:00:23 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (abpv179.neoplus.adsl.tpnet.pl. [83.8.63.179])
+        by smtp.gmail.com with ESMTPSA id h81-v6sm21715153wmd.0.2018.05.20.13.00.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 20 May 2018 13:00:22 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "avarab\@gmail.com" <avarab@gmail.com>,
+        "martin.agren\@gmail.com" <martin.agren@gmail.com>,
+        "peff\@peff.net" <peff@peff.net>
+Subject: Re: [PATCH v2 02/12] commit-graph: verify file header information
+References: <20180510173345.40577-1-dstolee@microsoft.com>
+        <20180511211504.79877-1-dstolee@microsoft.com>
+        <20180511211504.79877-3-dstolee@microsoft.com>
+Date:   Sun, 20 May 2018 22:00:20 +0200
+In-Reply-To: <20180511211504.79877-3-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Fri, 11 May 2018 21:15:16 +0000")
+Message-ID: <867enydrmz.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-In-Reply-To: <1729567e-3b95-ab37-d845-1980795542b0@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+Derrick Stolee <dstolee@microsoft.com> writes:
 
-On 17.05.2018 13:29, Kaartic Sivaraam wrote:
-> On Thursday 17 May 2018 02:39 PM, Johannes Schindelin wrote:
->> I have great empathy for the desire to see these bugs fixed. The
->> conversion must come first, though, and in the interest of making it
->> easier on me and other reviewers, I must insist on keeping the conversion
->> free of any changes, much in the way as we try to avoid evil merges (i.e.
->> merge commits that introduce changes that were not present in any of their
->> parents).
->>
-> 
-> Of course, the conversion should be separate from the bug fixes :-)
-> 
-> When I mentioned "while porting it to C", I actually meant the "thought
-> process of creating a foundation for `git-stash` in C". I thought
-> hinting at some of the existing and unsolved `git-stash` bugs would
-> allow the person who would be doing the port of `git-stash` to C to
-> consider how to avoid this while implementing the basic foundation. I
-> should have been more explicit about this in my previous mails.
-> 
+> During a run of 'git commit-graph verify', list the issues with the
+> header information in the commit-graph file. Some of this information
+> is inferred from the loaded 'struct commit_graph'. Some header
+> information is checked as part of load_commit_graph_one().
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  commit-graph.c | 32 +++++++++++++++++++++++++++++++-
+>  1 file changed, 31 insertions(+), 1 deletion(-)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index b25aaed128..d2db20e49a 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -818,7 +818,37 @@ void write_commit_graph(const char *obj_dir,
+>  	oids.nr =3D 0;
+>  }
+>=20=20
+> +static int verify_commit_graph_error;
+> +
+> +static void graph_report(const char *fmt, ...)
+> +{
+> +	va_list ap;
+> +	struct strbuf sb =3D STRBUF_INIT;
+> +	verify_commit_graph_error =3D 1;
+> +
+> +	va_start(ap, fmt);
+> +	strbuf_vaddf(&sb, fmt, ap);
+> +
+> +	fprintf(stderr, "%s\n", sb.buf);
+> +	strbuf_release(&sb);
+> +	va_end(ap);
+> +}
+> +
+>  int verify_commit_graph(struct commit_graph *g)
+>  {
+> -	return !g;
+> +	if (!g) {
+> +		graph_report("no commit-graph file loaded");
+> +		return 1;
+> +	}
 
-Thank you! I will keep in mind to fix those bugs. I actually wrote a 
-short paragraph about one of them (the one regarding -p option) on the 
-blog (the first post).
+I won't be repeating what Martin said, but I agree with it.  Well, that
+or make it a separate patch.
 
-Best,
-Paul
+> +
+> +	verify_commit_graph_error =3D 0;
+> +
+
+A quick reminder for myself.  The load_commit_graph_one() that is used
+to fill the commit_graph parameter alreaady verifies that:
+ - file is not too small, i.e. smaller than GRAPH_MIN_SIZE
+ - it has correct signature
+ - it has correct graph version
+ - it has correct hash version
+ - chunks [offsets] all fit within file
+ - that OID Fanout, OID Lookup, Commit Data and Large Edges chunks are
+   not repeated, though not that all required chunks are present
+
+> +	if (!g->chunk_oid_fanout)
+> +		graph_report("commit-graph is missing the OID Fanout chunk");
+> +	if (!g->chunk_oid_lookup)
+> +		graph_report("commit-graph is missing the OID Lookup chunk");
+> +	if (!g->chunk_commit_data)
+> +		graph_report("commit-graph is missing the Commit Data chunk");
+
+This one checks that all chunks that needs to be present are present.
+Nice.
+
+There are a few more things that we can check about CHUNK LOOKUP part.
+For example we would detect if file was truncated because the offset of
+some chunk would be pointing outside the file... unless the truncation
+falls within the last chunk.  We don't check that terminating label
+(chunk "\0\0\0\0" offset) is outside file, I think.
+
+We also don't check that positions of subsequent chunks are sorted
+(increasing offsets), so that each chunk length is positive.
+
+
+I also wonder if we shouldn't at least _warn_ about unknown chunks.
+
+> +
+> +	return verify_commit_graph_error;
+>  }
+
+Nice trick to be able to check as much as possible without segfaulting,
+while still returning correct error result.
+
+
+Testing newly intruduced functionality would be hard, unless relying on
+hand-crafted files, or on some helper to produce invalid commit-graph
+files.
+
+--=20
+Jakub Nar=C4=99bski
