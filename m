@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61FED1F42D
-	for <e@80x24.org>; Sun, 20 May 2018 10:43:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBE041F42D
+	for <e@80x24.org>; Sun, 20 May 2018 10:51:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751167AbeETKnp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 06:43:45 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36448 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750928AbeETKno (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 06:43:44 -0400
-Received: by mail-wm0-f68.google.com with SMTP id n10-v6so21937512wmc.1
-        for <git@vger.kernel.org>; Sun, 20 May 2018 03:43:43 -0700 (PDT)
+        id S1751408AbeETKvF (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 06:51:05 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:34554 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751318AbeETKvC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 06:51:02 -0400
+Received: by mail-wr0-f196.google.com with SMTP id j1-v6so2271161wrm.1
+        for <git@vger.kernel.org>; Sun, 20 May 2018 03:51:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WSbc9I6560NqglvZmLX/N+S8zCzpWj7JgyN8JVgP3qw=;
-        b=JcB/YAoxyU6Ae/DXAlEhL5X6BRNSdMQ8x7vasU5vm4WlpMBOj0sdzARQmG3PVov8Ct
-         drVlT2BP5MdUPF1Hr8CAVF8f/JeDrLSSPHFL05KC284FpNq1ExeI4L3nWFcpCQ89mwoL
-         ufvpCgAavEiy+dAyFtaSKgW3yR/JLZxNsQGGPAifGU6erLd5+V6qEzy6oEolJ27owjcw
-         vniCnKSavWgdJ36OrocqvFGM3keZXK0VdQlb0i3QOTlGQd8jq1TAyOFLrzxZoE0iOYRK
-         0R5bIl7j8L3c3pQHga8C+qMnvtoSdX+wNSvKeUpAJ2m1TAI1xL4QnumVj+Wa8vr/Lfhi
-         MNDg==
+        bh=q6gi05RLicfhhxFQa6ObAp2ouX2siXIbPW1U6MTNaIQ=;
+        b=U009vRQ7FGDm51iVLv8nqh6KnAXQFysJEu65SCYO6ZYbPggM3Opqe7iTnGrE/QYy77
+         1TRodEkqpv+t+E/2g+XOzaOnDUsShYF+g5H6L/7iuQyu0Gi1sHA1cY+XAk0yU9OJ81tq
+         AOAvd3pMnisEyHb+jl2j1gfwvTgVnpXXakeTiV/CxyywXJWCf8RBs9cMVvlFTjumg12Q
+         nOLn9sIHqg1WI4DahhYD0sS+ztsyizs5IOe06yhC+eXNZiNcaefg3+N77rk/wKG1tPr7
+         YuD+ypqLgSZ+6mA/J20fDUGfvm5ntyL1xHLZxqENAjNoOwvzjdFc31jSKW/YyogqY+U9
+         yktw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WSbc9I6560NqglvZmLX/N+S8zCzpWj7JgyN8JVgP3qw=;
-        b=QZQt8W+lgpjIM2a2MCCyuWnwWvpYIeSL/f8kaa79tg/7ad+DeAyi6h33Y66wRU6yCz
-         MQf3T//6WhKMPklsrJfSHtFnsqrbE5ZnwofrzlrhDaKqeUwhRSau58ItJIytE/o7hA4w
-         mqZH+8dXk+qCz0oG8B8qiqmjHSbPb4Px1eBe4xZXLkTfR+YYZqzOV0P5IQcvvCgJJpi+
-         GqEgBE5jcKw9pZdweT3YIajQLT7unCg2X+aF+229iSrgRa7QAVY7/Albhjk6AHi7qLtC
-         ZpFWj2U774XjuS2aCtXctE9GiaZmeb1yUDHRKJfWwIqLjxrMOmqyMJefozjaNcweqA6c
-         8+ZA==
-X-Gm-Message-State: ALKqPwcxSviS2MYodDQDyNIvvMUZYDQAbKEL87X/FQTW4FNNuY8tEQPw
-        vBS4nG8k1Hdhmel9mJjmOxAwQ6jC80g=
-X-Google-Smtp-Source: AB8JxZoGZ7xHHNbuMO6BAxLI2TrFFEZQRqUexJHemDYBY7jRMnuTY14Dit4KfPqeSDGsOSjKYfrFAA==
-X-Received: by 2002:a1c:ee58:: with SMTP id m85-v6mr8932721wmh.44.1526813022902;
-        Sun, 20 May 2018 03:43:42 -0700 (PDT)
+        bh=q6gi05RLicfhhxFQa6ObAp2ouX2siXIbPW1U6MTNaIQ=;
+        b=kWGPYd8o+0O+oRXK0Tx9HYD3JAL0NDfGjEbWFxcBoL+mdhYTvlk0qkMQVy5i7bL2Va
+         EHFytPN7RtfCJwauvRF4t+wE0dfGjUABi7pwD7pvJtuZaSCoGLjlUEmGi0GxsmVDbUqV
+         JAKNATGyvjEjtNY5h5Rbn1KSSN4o2TuZf2vOkpsWChNiOBgDNz5rkabhkNp4fTOVNezV
+         NyDjAu0TC8miaoYxIpGP62kqYcJ5BlqrKHqwk4LDY0fBj/PwePx1zddh9ne0W7/ZFlVg
+         DqEFNENuPOppqHRQJ7uE+xSQ/6SpJmcxOZ/b/4rNh0PlXjxjiD1NC1bjM1ajoZNLf6c5
+         2Adg==
+X-Gm-Message-State: ALKqPwdy0bRGrZLEMp1y39Wd22dls09dOOLqQDlZIrj0WfbYuLHON6K4
+        7YEzljOYoRtHRod39rlkXcQ=
+X-Google-Smtp-Source: AB8JxZqPtzRJeJG5yhD5C6YZEN3KQDBIw5/Kq/9M7tdPa12cZtfpGZnV761pCmzJP7jGXT61WOfz3Q==
+X-Received: by 2002:adf:80d0:: with SMTP id 74-v6mr3526660wrl.273.1526813460787;
+        Sun, 20 May 2018 03:51:00 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id c21-v6sm13595974wre.81.2018.05.20.03.43.41
+        by smtp.gmail.com with ESMTPSA id f10-v6sm8733502wmc.0.2018.05.20.03.50.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 20 May 2018 03:43:42 -0700 (PDT)
+        Sun, 20 May 2018 03:50:59 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 3/3] config: let `config_store_data_clear()` handle `key`
-Date:   Sun, 20 May 2018 12:42:35 +0200
-Message-Id: <e71b2abd7298de0123a6222186a8faa3fadf50c0.1526812503.git.martin.agren@gmail.com>
+Subject: [PATCH] regex: do not call `regfree()` if compilation fails
+Date:   Sun, 20 May 2018 12:50:32 +0200
+Message-Id: <20180520105032.9464-1-martin.agren@gmail.com>
 X-Mailer: git-send-email 2.17.0.840.g5d83f92caf
-In-Reply-To: <cover.1526812503.git.martin.agren@gmail.com>
-References: <CAPig+cT1eejizU26mPE+tN+eZR4Wg0jw1DbmShgqRu69EYQutQ@mail.gmail.com> <cover.1526812503.git.martin.agren@gmail.com>
+In-Reply-To: <CAPig+cQaJmsJe=E6HdBw0s6eN-qW0OCezBacRcQ+UnJYMbODsw@mail.gmail.com>
+References: <CAPig+cQaJmsJe=E6HdBw0s6eN-qW0OCezBacRcQ+UnJYMbODsw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,72 +67,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of remembering to free `key` in each code path, let
-`config_store_data_clear()` handle that.
+It is apparently undefined behavior to call `regfree()` on a regex where
+`regcomp()` failed. The language in [1] is a bit muddy, at least to me,
+but the clearest hint is this (`preg` is the `regex_t *`):
 
-We still need to free it before replacing it, though. Move that freeing
-closer to the replacing to be safe. Note that in that same part of the
-code, we can no longer set `key` to the original pointer, but need to
-`xstrdup()` it.
+    Upon successful completion, the regcomp() function shall return 0.
+    Otherwise, it shall return an integer value indicating an error as
+    described in <regex.h>, and the content of preg is undefined.
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+Funnily enough, there is also the `regerror()` function which should be
+given a pointer to such a "failed" `regex_t` -- the content of which
+would supposedly be undefined -- and which may investigate it to come up
+with a detailed error message.
+
+In any case, the example in that document shows how `regfree()` is not
+called after `regcomp()` fails.
+
+We have quite a few users of this API and most get this right. These
+three users do not.
+
+Several implementations can handle this just fine [2] and these code paths
+supposedly have not wreaked havoc or we'd have heard about it. (These
+are all in code paths where git got bad input and is just about to die
+anyway.) But let's just avoid the issue altogether.
+
+[1] http://pubs.opengroup.org/onlinepubs/9699919799/functions/regcomp.html
+
+[2] https://www.redhat.com/archives/libvir-list/2013-September/msg00262.html
+
+Researched-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-byi Martin Ågren <martin.agren@gmail.com>
 ---
- config.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/config.c b/config.c
-index ac71f3f2e1..339a92235d 100644
---- a/config.c
-+++ b/config.c
-@@ -2335,6 +2335,7 @@ struct config_store_data {
- 
- static void config_store_data_clear(struct config_store_data *store)
- {
-+	free(store->key);
- 	if (store->value_regex != NULL &&
- 	    store->value_regex != CONFIG_REGEX_NONE) {
- 		regfree(store->value_regex);
-@@ -2679,7 +2680,6 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	fd = hold_lock_file_for_update(&lock, config_filename, 0);
- 	if (fd < 0) {
- 		error_errno("could not lock config file %s", config_filename);
--		free(store.key);
- 		ret = CONFIG_NO_LOCK;
- 		goto out_free;
+On 14 May 2018 at 05:05, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> My research (for instance [1,2]) seems to indicate that it would be
+> better to avoid regfree() upon failed regcomp(), even though such a
+> situation is handled sanely in some implementations.
+>
+> [1]: https://www.redhat.com/archives/libvir-list/2013-September/msg00276.html
+> [2]: https://www.redhat.com/archives/libvir-list/2013-September/msg00273.html
+
+Thank you for researching this. I think it would make sense to get rid
+of the few places we have where we get this wrong (if our understanding
+of this being undefined is right).
+
+ diffcore-pickaxe.c | 1 -
+ grep.c             | 2 --
+ 2 files changed, 3 deletions(-)
+
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index 239ce5122b..800a899c86 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -215,7 +215,6 @@ static void regcomp_or_die(regex_t *regex, const char *needle, int cflags)
+ 		/* The POSIX.2 people are surely sick */
+ 		char errbuf[1024];
+ 		regerror(err, regex, errbuf, 1024);
+-		regfree(regex);
+ 		die("invalid regex: %s", errbuf);
  	}
-@@ -2689,8 +2689,6 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	 */
- 	in_fd = open(config_filename, O_RDONLY);
- 	if ( in_fd < 0 ) {
--		free(store.key);
--
- 		if ( ENOENT != errno ) {
- 			error_errno("opening %s", config_filename);
- 			ret = CONFIG_INVALID_FILE; /* same as "invalid config file" */
-@@ -2702,7 +2700,8 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 			goto out_free;
- 		}
- 
--		store.key = (char *)key;
-+		free(store.key);
-+		store.key = xstrdup(key);
- 		if (write_section(fd, key, &store) < 0 ||
- 		    write_pair(fd, key, value, &store) < 0)
- 			goto write_err_out;
-@@ -2752,13 +2751,10 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 						      config_filename,
- 						      &store, &opts)) {
- 			error("invalid config file %s", config_filename);
--			free(store.key);
- 			ret = CONFIG_INVALID_FILE;
- 			goto out_free;
- 		}
- 
--		free(store.key);
--
- 		/* if nothing to unset, or too many matches, error out */
- 		if ((store.seen_nr == 0 && value == NULL) ||
- 		    (store.seen_nr > 1 && multi_replace == 0)) {
+ }
+diff --git a/grep.c b/grep.c
+index 65b90c10a3..5e4f3f9a9d 100644
+--- a/grep.c
++++ b/grep.c
+@@ -636,7 +636,6 @@ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 	if (err) {
+ 		char errbuf[1024];
+ 		regerror(err, &p->regexp, errbuf, sizeof(errbuf));
+-		regfree(&p->regexp);
+ 		compile_regexp_failed(p, errbuf);
+ 	}
+ }
+@@ -701,7 +700,6 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 	if (err) {
+ 		char errbuf[1024];
+ 		regerror(err, &p->regexp, errbuf, 1024);
+-		regfree(&p->regexp);
+ 		compile_regexp_failed(p, errbuf);
+ 	}
+ }
 -- 
 2.17.0.840.g5d83f92caf
 
