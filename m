@@ -2,141 +2,329 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 748871F51C
-	for <e@80x24.org>; Sun, 20 May 2018 15:41:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DC791F51C
+	for <e@80x24.org>; Sun, 20 May 2018 15:43:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751685AbeETPlB (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 11:41:01 -0400
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:47018 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751636AbeETPlA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 11:41:00 -0400
-Received: by mail-ot0-f195.google.com with SMTP id t1-v6so14237055ott.13
-        for <git@vger.kernel.org>; Sun, 20 May 2018 08:41:00 -0700 (PDT)
+        id S1752526AbeETPnU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 11:43:20 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:41761 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752519AbeETPnT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 11:43:19 -0400
+Received: by mail-lf0-f68.google.com with SMTP id m17-v6so20438673lfj.8
+        for <git@vger.kernel.org>; Sun, 20 May 2018 08:43:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8KwrzPbnOso5BTsxJ2PaH/r89RTItjbTXllQldX/Kfc=;
-        b=Wt7TS0KtlH/hkZDSHt06B9gsXKwp02wnb9itNEr1zUYt9MMWBKswGlhvWuFajrv/+x
-         YR97P6YRcLODXIVDTwaa+L8AhxP3IXytmAeUJJI3mF3z8xGMvkojyl6fqlt5tFI5eshJ
-         iYHaUAsupAPNhc5U8gctPNwg6zG6XLCOHtmbV3Z+Run/oOBbjl8qotbRbhRkeReZMQlA
-         ypX37rXRhRMUYwuez1uaNvJo067oD7VYmxATNUn06gQ/3BAn1GGOvtxS46m0DXc5NFTj
-         yn+KUvLOZthbV4C56TyzwbXETV9yUIsVs5cDwf/shNCXcu5XkShKrjCI1AmIlVU9C9LK
-         UXiA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=D61W2EHGBA77eEz8aXbHC3HCwmX5XbUGBX+UxImY1YI=;
+        b=GfOZcc1BIGhUrnj6Mn0srZWLeDKopgq6tFd+LsWMf+R9jRC6wuF9MQwJjfF0bA//+D
+         eIYgRF9xDEOkKUvTM5OUt7zwCyB5MprHp1vbD74zJvl3fw5T/aHsnd5k5QVyP1uaaJjS
+         DOsN58rcFsnKFfSY60dAQpwwsFjHbuQG8ZfKWMer4sPVsPirULkWVxcQuYr7pQD89Chd
+         fDkcdKFhlNpcGee7Zh1TyOpssQLzaTDCFYiXHQnPLfhSxfEuVq4+pbD4w+MYl0AK9GAL
+         ru8ApC5+gH6fNz4papVXP8urYAApt77ZO4IhxAsM55G8QD4FVNdwiop5E3LCDpQJN4hp
+         whDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8KwrzPbnOso5BTsxJ2PaH/r89RTItjbTXllQldX/Kfc=;
-        b=kahmQeXCzowb3a/buYDkZu54P/4V4DNcPYDHtnKTjEHTGLm1818gbRYk5vg/YRnRsG
-         Z5BFggzfkN8G8nKfJG1coBsC4KvdnnLBp1VB4j083vWBQ8je5nO1kL5tZ0GbrJHMerC8
-         eUqU+8/5yfJV3Rfxf5Zpm6ECTJZjvKuEMxlmiy4EiN3cmHHeLJapuBedHqOYFDLtZvwI
-         /QQd6Q+k/Oh9jP+FTWPxxhSkMwf59tu5DI76kgak0Qz6HQSt9CCeSWf65mIfY4vEu0js
-         hu/P3XSE4LyoIY+gyxosOTa7ynNRnI51zHKCK8DxDug45cTwBDvXYB0NqIxySlBpnA+Y
-         INyg==
-X-Gm-Message-State: ALKqPwe4CQvkVGnWu68VcVtNPUe591JcCW2N/WvmT22FReHyISHh+Nn+
-        QozN1VJWOajwMOWSHuae3l+XkDRiF8xY2BeHMug=
-X-Google-Smtp-Source: AB8JxZpaQHJPgfTZMqbHwCYTzRjBljMx9LNVt+zEz7lxJOVp8tmRcNNlu28l9ibEC9TV9v50Ta84EwMMXJ+Df1cSuYc=
-X-Received: by 2002:a9d:2fa6:: with SMTP id r35-v6mr12122172otb.356.1526830859963;
- Sun, 20 May 2018 08:40:59 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=D61W2EHGBA77eEz8aXbHC3HCwmX5XbUGBX+UxImY1YI=;
+        b=YhaiylKHfQw7pR7EV5cAjI+o1bNDQqcGs/VOSv01ZnzZRCn2fIB5Wdx/N5GZSyYZy6
+         amjz2+9dmw7Lr+OgeZe6Cp1v5NjquOmrTdg5X1wnOlJ7u3JEVOSVDj5bbSPQvbxi+8Ko
+         hojkh+JFHPqg88V9xUQmgkjfk5Y6RgcwD+Yih8lmAbcMkCXRCR2TovaVMwIz9vcG/Of+
+         H8pb1ZA3T6Ktou99SBNRwjvYxanJc30TJeNFM7ldUs76XBPC5J1T0LIgLGFjJtzCkjGw
+         uceH1Q7wR/fDpLG3Do95JXX6HnbrPA4UprjuE5QhXE7Z6YbwUNusZLyByc2iSbu1AHcy
+         VZmw==
+X-Gm-Message-State: ALKqPwd4MQzzo0+tQFzP/Ot21mRQAQ88rU8Lus2Qw0+YGlws5c+GuE3V
+        9CjnGubwE1ixSIOe3b1LvcclEw==
+X-Google-Smtp-Source: AB8JxZofFs3b9dSiGS90/llu4Yla1ACgk3PVD55oaseQVCr3UXaAYBieoD0003NPmEU2kJUFQTOKNw==
+X-Received: by 2002:a19:190f:: with SMTP id 15-v6mr6073107lfz.139.1526830997261;
+        Sun, 20 May 2018 08:43:17 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id e28-v6sm2052610ljb.92.2018.05.20.08.43.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 20 May 2018 08:43:16 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v2] Use OPT_SET_INT_F() for cmdline option specification
+Date:   Sun, 20 May 2018 17:42:58 +0200
+Message-Id: <20180520154258.28866-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.705.g3525833791
+In-Reply-To: <20180520081244.14619-1-pclouds@gmail.com>
+References: <20180520081244.14619-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.178.133 with HTTP; Sun, 20 May 2018 08:40:29 -0700 (PDT)
-In-Reply-To: <CAN0heSpdtiUVSYGsT+VnUaSy0BO+p+mnod6Ut4Y3UrNVVQkrbA@mail.gmail.com>
-References: <20180520081244.14619-1-pclouds@gmail.com> <CAN0heSpdtiUVSYGsT+VnUaSy0BO+p+mnod6Ut4Y3UrNVVQkrbA@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 20 May 2018 17:40:29 +0200
-Message-ID: <CACsJy8DxvZXw=J=Hh-TKL-2B+dcj2OV-CzTUuBBBxecDuAQrZQ@mail.gmail.com>
-Subject: Re: [PATCH] Use OPT_SET_INT_F() for cmdline option specification
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 20, 2018 at 11:15 AM, Martin =C3=85gren <martin.agren@gmail.com=
-> wrote:
-> On 20 May 2018 at 10:12, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclou=
-ds@gmail.com> wrote:
->> The only thing these commands need is extra parseopt flags which can be
->> passed in by OPT_SET_INT_F() and it is a bit more compact than full
->> struct initialization.
->
->> diff --git a/archive.c b/archive.c
->> index 93ab175b0b..4fe7bec60c 100644
->> --- a/archive.c
->> +++ b/archive.c
->> @@ -411,11 +411,9 @@ static void parse_treeish_arg(const char **argv,
->>  }
->>
->>  #define OPT__COMPR(s, v, h, p) \
->> -       { OPTION_SET_INT, (s), NULL, (v), NULL, (h), \
->> -         PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, (p) }
->> +       OPT_SET_INT_F(s, NULL, v, h, p, PARSE_OPT_NONEG)
->>  #define OPT__COMPR_HIDDEN(s, v, p) \
->> -       { OPTION_SET_INT, (s), NULL, (v), NULL, "", \
->> -         PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_HIDDEN, NULL, (p=
-) }
->> +       OPT_SET_INT_F(s, NULL, v, "", p, PARSE_OPT_NONEG | PARSE_OPT_HID=
-DEN)
->
-> Right. We have NULLs in the fifth and the second-to-last positions, and
-> we use PARSE_OPT_NOARG.  By switching to OPT_SET_INT_F we get those for
-> free.
->
-> Do we want to keep "(s)" instead of "s", just to be safe? And same for
-> "(v)", "(p)". Macro expansion always makes me paranoid.
+The only thing these commands need is extra parseopt flag which can be
+passed in by OPT_SET_INT_F() and it is a bit more compact than full
+struct initialization.
 
-They are still wrapped in () in the end by OPT_SET_INT_F() so the
-expanded struct initialization  is the same. I think we're fine here.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Changes from v1
 
->> diff --git a/builtin/am.c b/builtin/am.c
->> index d834f9e62b..666287b497 100644
->> --- a/builtin/am.c
->> +++ b/builtin/am.c
->> @@ -2231,12 +2231,12 @@ int cmd_am(int argc, const char **argv, const ch=
-ar *prefix)
->>                         N_("pass -b flag to git-mailinfo"), KEEP_NON_PAT=
-CH),
->>                 OPT_BOOL('m', "message-id", &state.message_id,
->>                         N_("pass -m flag to git-mailinfo")),
->> -               { OPTION_SET_INT, 0, "keep-cr", &keep_cr, NULL,
->> -                 N_("pass --keep-cr flag to git-mailsplit for mbox form=
-at"),
->> -                 PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1},
->> -               { OPTION_SET_INT, 0, "no-keep-cr", &keep_cr, NULL,
->> -                 N_("do not pass --keep-cr flag to git-mailsplit indepe=
-ndent of am.keepcr"),
->> -                 PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 0},
->> +               OPT_SET_INT_F(0, "keep-cr", &keep_cr,
->> +                       N_("pass --keep-cr flag to git-mailsplit for mbo=
-x format"),
->> +                       1, PARSE_OPT_NONEG),
->> +               OPT_SET_INT_F(0, "no-keep-cr", &keep_cr,
->> +                       N_("do not pass --keep-cr flag to git-mailsplit =
-for mbox format"),
->> +                       0, PARSE_OPT_NONEG),
->
-> I found `-w` and `--word-diff` useful. You actually change the N_("...")
-> for `--no-keep-cr` here: [-independent of am.keepcr-]{+for mbox format+}
-> Copy-paste mistake?
+    diff --git a/builtin/am.c b/builtin/am.c
+    index 666287b497..a1ff235fbc 100644
+    --- a/builtin/am.c
+    +++ b/builtin/am.c
+    @@ -2235,7 +2235,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+     			N_("pass --keep-cr flag to git-mailsplit for mbox format"),
+     			1, PARSE_OPT_NONEG),
+     		OPT_SET_INT_F(0, "no-keep-cr", &keep_cr,
+    -			N_("do not pass --keep-cr flag to git-mailsplit for mbox format"),
+    +			N_("do not pass --keep-cr flag to git-mailsplit independent of am.keepcr"),
+     			0, PARSE_OPT_NONEG),
+     		OPT_BOOL('c', "scissors", &state.scissors,
+     			N_("strip everything before a scissors line")),
 
-Oops. You're correct. Fixed in v2.
+ archive.c              |  6 ++----
+ builtin/am.c           | 12 ++++++------
+ builtin/branch.c       |  4 ++--
+ builtin/difftool.c     |  9 ++++-----
+ builtin/fetch.c        |  6 +++---
+ builtin/grep.c         |  6 +++---
+ builtin/log.c          |  6 +++---
+ builtin/ls-files.c     |  6 +++---
+ builtin/merge.c        |  6 +++---
+ builtin/notes.c        | 12 ++++++------
+ builtin/pack-objects.c | 24 ++++++++++++------------
+ 11 files changed, 47 insertions(+), 50 deletions(-)
 
->
-> Other than that, `--word-diff` has a very structured appearance and
-> nothing stood out. The ordering is different (f goes at the end in the
-> post-image), which makes the diff busier than it would have had to be.
-> (That's obviously nothing this patch can do anything about.)
->
-> Martin
---=20
-Duy
+diff --git a/archive.c b/archive.c
+index 93ab175b0b..4fe7bec60c 100644
+--- a/archive.c
++++ b/archive.c
+@@ -411,11 +411,9 @@ static void parse_treeish_arg(const char **argv,
+ }
+ 
+ #define OPT__COMPR(s, v, h, p) \
+-	{ OPTION_SET_INT, (s), NULL, (v), NULL, (h), \
+-	  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, (p) }
++	OPT_SET_INT_F(s, NULL, v, h, p, PARSE_OPT_NONEG)
+ #define OPT__COMPR_HIDDEN(s, v, p) \
+-	{ OPTION_SET_INT, (s), NULL, (v), NULL, "", \
+-	  PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_HIDDEN, NULL, (p) }
++	OPT_SET_INT_F(s, NULL, v, "", p, PARSE_OPT_NONEG | PARSE_OPT_HIDDEN)
+ 
+ static int parse_archive_args(int argc, const char **argv,
+ 		const struct archiver **ar, struct archiver_args *args,
+diff --git a/builtin/am.c b/builtin/am.c
+index d834f9e62b..a1ff235fbc 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -2231,12 +2231,12 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 			N_("pass -b flag to git-mailinfo"), KEEP_NON_PATCH),
+ 		OPT_BOOL('m', "message-id", &state.message_id,
+ 			N_("pass -m flag to git-mailinfo")),
+-		{ OPTION_SET_INT, 0, "keep-cr", &keep_cr, NULL,
+-		  N_("pass --keep-cr flag to git-mailsplit for mbox format"),
+-		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1},
+-		{ OPTION_SET_INT, 0, "no-keep-cr", &keep_cr, NULL,
+-		  N_("do not pass --keep-cr flag to git-mailsplit independent of am.keepcr"),
+-		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 0},
++		OPT_SET_INT_F(0, "keep-cr", &keep_cr,
++			N_("pass --keep-cr flag to git-mailsplit for mbox format"),
++			1, PARSE_OPT_NONEG),
++		OPT_SET_INT_F(0, "no-keep-cr", &keep_cr,
++			N_("do not pass --keep-cr flag to git-mailsplit independent of am.keepcr"),
++			0, PARSE_OPT_NONEG),
+ 		OPT_BOOL('c', "scissors", &state.scissors,
+ 			N_("strip everything before a scissors line")),
+ 		OPT_PASSTHRU_ARGV(0, "whitespace", &state.git_apply_opts, N_("action"),
+diff --git a/builtin/branch.c b/builtin/branch.c
+index efc9ac1922..cc089f9efb 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -592,8 +592,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT__QUIET(&quiet, N_("suppress informational messages")),
+ 		OPT_SET_INT('t', "track",  &track, N_("set up tracking mode (see git-pull(1))"),
+ 			BRANCH_TRACK_EXPLICIT),
+-		{ OPTION_SET_INT, 0, "set-upstream", &track, NULL, N_("do not use"),
+-			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, BRANCH_TRACK_OVERRIDE },
++		OPT_SET_INT_F(0, "set-upstream", &track, N_("do not use"),
++			BRANCH_TRACK_OVERRIDE, PARSE_OPT_HIDDEN),
+ 		OPT_STRING('u', "set-upstream-to", &new_upstream, N_("upstream"), N_("change the upstream info")),
+ 		OPT_BOOL(0, "unset-upstream", &unset_upstream, N_("Unset the upstream info")),
+ 		OPT__COLOR(&branch_use_color, N_("use colored output")),
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index aad0e073ee..c439b64207 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -695,12 +695,11 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
+ 			 N_("use `diff.guitool` instead of `diff.tool`")),
+ 		OPT_BOOL('d', "dir-diff", &dir_diff,
+ 			 N_("perform a full-directory diff")),
+-		{ OPTION_SET_INT, 'y', "no-prompt", &prompt, NULL,
++		OPT_SET_INT_F('y', "no-prompt", &prompt,
+ 			N_("do not prompt before launching a diff tool"),
+-			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 0},
+-		{ OPTION_SET_INT, 0, "prompt", &prompt, NULL, NULL,
+-			PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_HIDDEN,
+-			NULL, 1 },
++			0, PARSE_OPT_NONEG),
++		OPT_SET_INT_F(0, "prompt", &prompt, NULL,
++			1, PARSE_OPT_NONEG | PARSE_OPT_HIDDEN),
+ 		OPT_BOOL(0, "symlinks", &symlinks,
+ 			 N_("use symlinks in dir-diff mode")),
+ 		OPT_STRING('t', "tool", &difftool_cmd, N_("<tool>"),
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 7ee83ac0f8..b6530a5ce0 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -156,9 +156,9 @@ static struct option builtin_fetch_options[] = {
+ 			N_("deepen history of shallow clone, excluding rev")),
+ 	OPT_INTEGER(0, "deepen", &deepen_relative,
+ 		    N_("deepen history of shallow clone")),
+-	{ OPTION_SET_INT, 0, "unshallow", &unshallow, NULL,
+-		   N_("convert to a complete repository"),
+-		   PARSE_OPT_NONEG | PARSE_OPT_NOARG, NULL, 1 },
++	OPT_SET_INT_F(0, "unshallow", &unshallow,
++		      N_("convert to a complete repository"),
++		      1, PARSE_OPT_NONEG),
+ 	{ OPTION_STRING, 0, "submodule-prefix", &submodule_prefix, N_("dir"),
+ 		   N_("prepend this to submodule path output"), PARSE_OPT_HIDDEN },
+ 	{ OPTION_CALLBACK, 0, "recurse-submodules-default",
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 6e7bc76785..850bcffd99 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -885,9 +885,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			   N_("indicate hit with exit status without output")),
+ 		OPT_BOOL(0, "all-match", &opt.all_match,
+ 			N_("show only matches from files that match all patterns")),
+-		{ OPTION_SET_INT, 0, "debug", &opt.debug, NULL,
+-		  N_("show parse tree for grep expression"),
+-		  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 1 },
++		OPT_SET_INT_F(0, "debug", &opt.debug,
++			      N_("show parse tree for grep expression"),
++			      1, PARSE_OPT_HIDDEN),
+ 		OPT_GROUP(""),
+ 		{ OPTION_STRING, 'O', "open-files-in-pager", &show_in_pager,
+ 			N_("pager"), N_("show matching files in the pager"),
+diff --git a/builtin/log.c b/builtin/log.c
+index 71f68a3e4f..8f27921505 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1474,9 +1474,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			 N_("output all-zero hash in From header")),
+ 		OPT_BOOL(0, "ignore-if-in-upstream", &ignore_if_in_upstream,
+ 			 N_("don't include a patch matching a commit upstream")),
+-		{ OPTION_SET_INT, 'p', "no-stat", &use_patch_format, NULL,
+-		  N_("show patch format instead of default (patch + stat)"),
+-		  PARSE_OPT_NONEG | PARSE_OPT_NOARG, NULL, 1},
++		OPT_SET_INT_F('p', "no-stat", &use_patch_format,
++			      N_("show patch format instead of default (patch + stat)"),
++			      1, PARSE_OPT_NONEG),
+ 		OPT_GROUP(N_("Messaging")),
+ 		{ OPTION_CALLBACK, 0, "add-header", NULL, N_("header"),
+ 			    N_("add email header"), 0, header_callback },
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index a71f6bd088..40d9138c46 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -556,9 +556,9 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		{ OPTION_CALLBACK, 0, "exclude-standard", &dir, NULL,
+ 			N_("add the standard git exclusions"),
+ 			PARSE_OPT_NOARG, option_parse_exclude_standard },
+-		{ OPTION_SET_INT, 0, "full-name", &prefix_len, NULL,
+-			N_("make the output relative to the project top directory"),
+-			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL },
++		OPT_SET_INT_F(0, "full-name", &prefix_len,
++			      N_("make the output relative to the project top directory"),
++			      0, PARSE_OPT_NONEG),
+ 		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
+ 			N_("recurse through submodules")),
+ 		OPT_BOOL(0, "error-unmatch", &error_unmatch,
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 9db5a2cf16..4be71dd81b 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -213,9 +213,9 @@ static struct option builtin_merge_options[] = {
+ 	OPT_BOOL('e', "edit", &option_edit,
+ 		N_("edit message before committing")),
+ 	OPT_SET_INT(0, "ff", &fast_forward, N_("allow fast-forward (default)"), FF_ALLOW),
+-	{ OPTION_SET_INT, 0, "ff-only", &fast_forward, NULL,
+-		N_("abort if fast-forward is not possible"),
+-		PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, FF_ONLY },
++	OPT_SET_INT_F(0, "ff-only", &fast_forward,
++		      N_("abort if fast-forward is not possible"),
++		      FF_ONLY, PARSE_OPT_NONEG),
+ 	OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
+ 	OPT_BOOL(0, "verify-signatures", &verify_signatures,
+ 		N_("verify that the named commit has a valid GPG signature")),
+diff --git a/builtin/notes.c b/builtin/notes.c
+index e5bf80eef1..4d34994c34 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -778,13 +778,13 @@ static int merge(int argc, const char **argv, const char *prefix)
+ 			   N_("resolve notes conflicts using the given strategy "
+ 			      "(manual/ours/theirs/union/cat_sort_uniq)")),
+ 		OPT_GROUP(N_("Committing unmerged notes")),
+-		{ OPTION_SET_INT, 0, "commit", &do_commit, NULL,
+-			N_("finalize notes merge by committing unmerged notes"),
+-			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1},
++		OPT_SET_INT_F(0, "commit", &do_commit,
++			      N_("finalize notes merge by committing unmerged notes"),
++			      1, PARSE_OPT_NONEG),
+ 		OPT_GROUP(N_("Aborting notes merge resolution")),
+-		{ OPTION_SET_INT, 0, "abort", &do_abort, NULL,
+-			N_("abort notes merge"),
+-			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1},
++		OPT_SET_INT_F(0, "abort", &do_abort,
++			      N_("abort notes merge"),
++			      1, PARSE_OPT_NONEG),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 24b1c6c5dd..5134c655c7 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2992,18 +2992,18 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 			 N_("do not create an empty pack output")),
+ 		OPT_BOOL(0, "revs", &use_internal_rev_list,
+ 			 N_("read revision arguments from standard input")),
+-		{ OPTION_SET_INT, 0, "unpacked", &rev_list_unpacked, NULL,
+-		  N_("limit the objects to those that are not yet packed"),
+-		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1 },
+-		{ OPTION_SET_INT, 0, "all", &rev_list_all, NULL,
+-		  N_("include objects reachable from any reference"),
+-		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1 },
+-		{ OPTION_SET_INT, 0, "reflog", &rev_list_reflog, NULL,
+-		  N_("include objects referred by reflog entries"),
+-		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1 },
+-		{ OPTION_SET_INT, 0, "indexed-objects", &rev_list_index, NULL,
+-		  N_("include objects referred to by the index"),
+-		  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1 },
++		OPT_SET_INT_F(0, "unpacked", &rev_list_unpacked,
++			      N_("limit the objects to those that are not yet packed"),
++			      1, PARSE_OPT_NONEG),
++		OPT_SET_INT_F(0, "all", &rev_list_all,
++			      N_("include objects reachable from any reference"),
++			      1, PARSE_OPT_NONEG),
++		OPT_SET_INT_F(0, "reflog", &rev_list_reflog,
++			      N_("include objects referred by reflog entries"),
++			      1, PARSE_OPT_NONEG),
++		OPT_SET_INT_F(0, "indexed-objects", &rev_list_index,
++			      N_("include objects referred to by the index"),
++			      1, PARSE_OPT_NONEG),
+ 		OPT_BOOL(0, "stdout", &pack_to_stdout,
+ 			 N_("output pack to stdout")),
+ 		OPT_BOOL(0, "include-tag", &include_tag,
+-- 
+2.17.0.705.g3525833791
+
