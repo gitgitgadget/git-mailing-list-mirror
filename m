@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6624E1F51C
-	for <e@80x24.org>; Mon, 21 May 2018 14:28:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73C3F1F51C
+	for <e@80x24.org>; Mon, 21 May 2018 14:30:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751724AbeEUO2X (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 10:28:23 -0400
-Received: from mout.gmx.net ([212.227.17.22]:44267 "EHLO mout.gmx.net"
+        id S1752522AbeEUOaD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 10:30:03 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56887 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751133AbeEUO2W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 10:28:22 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNMyz-1fRdQT0wg5-006vi8; Mon, 21
- May 2018 16:28:20 +0200
-Date:   Mon, 21 May 2018 16:28:24 +0200 (DST)
+        id S1751021AbeEUOaC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 10:30:02 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8laO-1fWuMW3On6-00C9o6; Mon, 21
+ May 2018 16:30:00 +0200
+Date:   Mon, 21 May 2018 16:30:04 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Elijah Newren <newren@gmail.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/5] merge-recursive: clarify the rename_dir/RENAME_DIR
- meaning
-In-Reply-To: <20180519020700.2241-4-newren@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1805211626240.77@tvgsbejvaqbjf.bet>
-References: <20180519020700.2241-1-newren@gmail.com> <20180519020700.2241-4-newren@gmail.com>
+Subject: Re: [PATCH 4/5] merge-recursive: rename conflict_rename_*() family
+ of functions
+In-Reply-To: <20180519020700.2241-5-newren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1805211629450.77@tvgsbejvaqbjf.bet>
+References: <20180519020700.2241-1-newren@gmail.com> <20180519020700.2241-5-newren@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:MZYIvHBCHnVqhFdVd4osxml2lL3gByGgDv2bLKhz6dxSNP8U3cS
- MgU2dQYE8dRAEDPJtQ5kXSKLHTk0Ch4jiFgdvG1anJL8yWZV80sbOQDECiUXAH7MUfXDObT
- 1eKPje0ofGWu+GwioiqUH23s8nCohTdORUW7xJ5EowuJn+KhtgfpaHhMSP4RMslrzU26E3w
- FTktTQVJ2i4CQlwL1jKsQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RGUm/3Sa8eU=:OCRCi7rX/0ENG9wLvIWRtl
- 017ee+OhBcZwmFcpA9GWmDrGvMB/ZpptCqUOm902RLlzvVp6ZUEFFfkyPt6M0IxDXqDUp+YFH
- NJjW6ZoQEax88GkwCrOn1ueUU1VOZoXVcYSXN47jwD0OWQ5Pdpvk8AvzFaAa3u4GTxegFSpR4
- +qGqHlLYRUoxQQDloLIp14n+pykG0lmucrS5v/5ZM+Tcuj989o+xb2/yb8eoVlGVE69kZR40W
- fVrZjeCUStE9zDNb2CDe2Wxxj0HgcnE1ZU1OBUfswhkPojuh8yAgdvPGDcbWIAg+fdH5435c2
- KOMIgto79lidn1rt9LHhkbA0B3dtIzAnEs9lwxiQn6ZXhLQ6nIObo3XTRsX/YiiF1CaWgWiXB
- dnFsT9EU87iLHGHeWqHbJS1k6DgUna906OeG9DfukvHcvA8fhxaXSGOkxaKh1cKu5rXf3DW72
- 1rgiw4I6OTvdHCPtAtntxiVyGTp4dGXP40GcyIGm08u+EbxvAKlALtm5fmnBmfNIJ4SYHRZJ2
- J0q8s4uBgJSNuIlpn4LpMTNF2Xa8n7koVEXUZTLO9hkAfdi/0WknXJo57lkvsWYDmEVfsEJR0
- FDMAb2hedjqPH8LbXTrdBLnZw8FNu7GOMp5+AJCTq3AT6N+jcoydEBPH+tpmHT+FaXXlK3gg+
- LlbN1TKIlBNKAV7zrKk7Fzt8xWxkW9di31UvMlPt61pWY0fuBMhRISWdz/BDI9tXstrI8tJds
- genFOn73aCQTH21v4zkfloY0wPd2bTZ27E0aVpYFMiWR+ik9HTbOXntvUNi9+yY183X1IP3CZ
- Puk3cIm
+X-Provags-ID: V03:K1:Lfq0ohFejjF5XaXWh2Hs+7iEN1j5X1g1ZZW9h1UlOrP/+WdL14m
+ 7IJkzse+ViMzvIaiRfazzUZeHliszW9O/aosA/1yGSahxmyy9SBTkyYG+t4A+RyFFQUOJWj
+ d9F82SEYHALYKqJ/e98XKarxKDZEforYdKJ0UbwpTRh4ogAt+TIxg6/a6/aV47pMjMz9grz
+ tUfWPnY7WdSQEKjw4I6dg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Fi1FF6uCOG4=:FFnWdmoIY6yYowVaL1Lxwf
+ b0ARG7ZTi436/wqmsPN5y96ySpet1AHWRCm7GQfvNHdf6J4AdaD2gohcilPPfbY65OXYA5exb
+ nQv8yuX3TGnq1gs2K2YjPZnhsmR9LZpv6lQE0x9JC9//7fJLJHyziUz+AgKgCw1/MASPyhxSD
+ lXoXB6cRzzrl6rpJfGyesZRNp3UVZNuipX/tmO8lmtaiJbOXLFRlHugHN5sgaYAcBJUdB6NHT
+ UzIisRlt3hp9gwpji/ZsSA0d31W7wHtMP5I7W32gKnBeC45E7s3cL66YGAu+LUpjRZ56YIIWv
+ f8VqS3/GBkuWTyJj2T8KQGnyRHoErI21jzjaiWjIMctDZ24CU0TuOxVRA+srWS3YW04nqOQHc
+ OQylevcQTAb9edit+212lKh2yz/4ZU8cO1YjcJxEPF05M6KxQQeON3EV4QN76+Kb56g/QxQc9
+ 3j2XJGWc2e6V+givgGFgqEjn+tq4DwC3r9eJjszcQwW0dIlTXyoeYRzz1AIckrd1TVpX2QQw+
+ 0Ki0r8T3UNosx8ER73nBcIywKTcfhfGaE7dKtnyTQEU1blKOSFYY+tk4D24CLh18bErZtjlzj
+ qNFI0xu/lAFB0ylZyL73gKjAbKFdjvsMZE8vfEex+fK4QnwJjPHjuy1Hc/klD1LuFqB/cpik1
+ F14A2Fu7iWZwNAkAxtIFZbehGIMHaoya8pnqZEJD+rk5AnCrt7FrCuvxsRylpnsoSscDpcxzi
+ 6JqcQeH6Y/ajLp+PRQe/bb/gCidOHNFdDqFrfHxAiyF1pL7mYv1zp1URNX0g+OTfA9muUDPIl
+ Z0gwDcX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -56,45 +56,34 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Elijah,
 
+
 On Fri, 18 May 2018, Elijah Newren wrote:
 
-> We had an enum of rename types which included RENAME_DIR; this name felt
-> misleading since it was not about an entire directory but was a status for
-> each individual file add that occurred within a renamed directory.  Since
-> this type is for signifying that the files in question were being renamed
-> due to directory rename detection, rename this enum value to
-> RENAME_VIA_DIR.  Make a similar change to the conflict_rename_dir()
-> function, and add a comment to the top of that function explaining its
-> purpose (it may not be quite as obvious as for the other
-> conflict_rename_*() functions).
+> These functions were added because processing of these conflicts needed
+> to be deferred until process_entry() in order to get D/F conflicts and
+> such right.  The number of these has grown over time, and now include
+> some whose name is misleading:
+>   * conflict_rename_normal() is for handling normal file renames; a
+>     typical rename may need content merging, but we expect conflicts
+>     from that to be more the exception than the rule.
+>   * conflict_rename_via_dir() will not be a conflict; it was just an
+>     add that turned into a move due to directory rename detection.
+>     (If there was a file in the way of the move, that would have been
+>     detected and reported earlier.)
+>   * conflict_rename_rename_2to1 and conflict_rename_add (the latter
+>     of which doesn't exist yet but has been submitted before and I
+>     intend to resend) technically might not be conflicts if the
+>     colliding paths happen to match exactly.
+> Rename this family of functions to handle_rename_*().
+> 
+> Also rename handle_renames() to detect_and_process_renames() both to make
+> it clearer what it does, and to differentiate it as a pre-processing step
+> from all the handle_rename_*() functions which are called from
+> process_entry().
 > 
 > Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
 
-Make sense. I think the reading flow could be improved a little bit by
-splitting this paragraph into three.
-
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 01306c87eb..d30085d9c7 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> -static int conflict_rename_dir(struct merge_options *o,
-> -			       struct diff_filepair *pair,
-> -			       const char *rename_branch,
-> -			       const char *other_branch)
-> +static int conflict_rename_via_dir(struct merge_options *o,
-> +				   struct diff_filepair *pair,
-> +				   const char *rename_branch,
-> +				   const char *other_branch)
->  {
-> +	/*
-> +	 * Handle file adds that need to be renamed due to directory rename
-> +	 * detection.  This differs from handle_rename_normal, because
-> +	 * there is no content merge to do; just move the path into the
-
-Technically, we do not move the path, but the file.
-
-The rest of the diff looks obviously correct to me.
+Makes sense, and the patch looks obviously correct to me.
 
 Thanks,
 Dscho
