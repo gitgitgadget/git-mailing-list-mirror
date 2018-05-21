@@ -3,38 +3,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 914EF1F51C
-	for <e@80x24.org>; Mon, 21 May 2018 02:03:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5F091F51C
+	for <e@80x24.org>; Mon, 21 May 2018 02:03:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752715AbeEUCDS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 22:03:18 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50968 "EHLO
+        id S1752720AbeEUCDV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 22:03:21 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51064 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752643AbeEUCC5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:02:57 -0400
+        by vger.kernel.org with ESMTP id S1752711AbeEUCDP (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:03:15 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:fc4d:8d90:22bd:91d8])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 25B6F60732;
-        Mon, 21 May 2018 02:02:53 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E08976047A;
+        Mon, 21 May 2018 02:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526868175;
-        bh=BXcJLkDCDoZ5ZXnZR0BpQANCQmQYyfRL5ThDS15MBqY=;
+        s=default; t=1526868194;
+        bh=bpafkCnGWOXAkjZtfjwOidjLfuBr/P8kAJMRSTCyA+s=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=fKWFfBsy6fjZQxxovm5W4KD0W8uEPji55TQXu+IpbstdeQkF1622YJfmgzjVkVAEe
-         IrmvbpltaX+Aefk4kWKE1YhHTALElftxT4XAXoP6HfqPEegWSHoPlOATdn5q5inxb+
-         JGp/lc8JR6KdduTFFHeF0lz7597x1KziUCb0Aj4LnUW7qFu7gxJVYV2ff9FN3X8Lv3
-         kKYDcVhVQEGjDkV+ylxGjBgsRNArg+TxCJHJby/cHpfBeoAHTVoIroCehaciBLxqlT
-         +z1ofkCCZAdmkBrfN5qBNCNPLbH+TOIxwei46ewQDEU9zuAxi8tAIehB/2ntorP179
-         zHGTh2IjKGBeTIrXNNWrSWQBfExZoJuvRPnAOrqd0SoMa01KrNYUZQtZezw2Dbtx1L
-         13o4srFT52mza1lJTTJwZppNRYpAWDfOWR5G3qYv0c1gm4rrXb0FG87jRjqTMO9nJN
-         SUuK40sAkIXDH//HbUM+xDlmG1DacRCUAC6N/PzUNkZgfT5WRyg
+        b=RRKfj1LGJ98PdDlYZEu0zJzlb2gKWOQa3mvAVrrTxIFbySEktYZ8Yxsu9C02oYrWj
+         VZDdT8Dgc0x/SyvhNaGLdpocbQd/SpMD5dUQd4wGed7CzXezCCfAuvXGPWEA2vHXuL
+         +/FQPZLhUq+0fi1/8DxYcRxIPEO9iUUNK/ZfZ7t3Bsfv87m9EdrAy+w/nJi/bpGmYj
+         WSRzTj11c9egR2Em7HVHe7jEEhZ0hNvKitAYh/92kxHBdRvkc8gHcTZr9enARHeCcO
+         a2n4wAdysKQ8FUnAn1mHXNbr/w5BQKza93YLoBk8z64WTaPFI7h8skQVolUCAswN4O
+         EbCJbwqZGyw2Q/1XIP2rJWG+uh6hn80KCUEINoMIjIrizN14K63BunhWtUbvdktFrx
+         /Mpxk2921Kz5sCDnS4TpifxgZUTwW5wn5aJALEpe1wVyd8iPNQ+DDDLM+S2fkHfB/d
+         Qoo28lMahypexVHl0709yvHo29B1t54nadps67V28nArxD9n0jF
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -44,9 +44,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v4 16/28] t4008: abstract away SHA-1-specific constants
-Date:   Mon, 21 May 2018 02:01:35 +0000
-Message-Id: <20180521020147.648496-17-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 23/28] t/lib-diff-alternative: abstract away SHA-1-specific constants
+Date:   Mon, 21 May 2018 02:01:42 +0000
+Message-Id: <20180521020147.648496-24-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180521020147.648496-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -57,157 +57,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for blobs instead of using
-hard-coded hashes.
+Adjust the test code so that it computes variables for blobs instead of
+using hard-coded hashes.  This makes t4033 and t4050 (the patience and
+histogram tests) pass.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4008-diff-break-rewrite.sh | 59 +++++++++++++++++++----------------
- 1 file changed, 32 insertions(+), 27 deletions(-)
+ t/lib-diff-alternative.sh | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/t/t4008-diff-break-rewrite.sh b/t/t4008-diff-break-rewrite.sh
-index 9dd1bc5e16..b1ccd4102e 100755
---- a/t/t4008-diff-break-rewrite.sh
-+++ b/t/t4008-diff-break-rewrite.sh
-@@ -27,29 +27,32 @@ Further, with -B and -M together, these should turn into two renames.
- test_expect_success setup '
- 	cat "$TEST_DIRECTORY"/diff-lib/README >file0 &&
- 	cat "$TEST_DIRECTORY"/diff-lib/COPYING >file1 &&
-+	blob0_id=$(git hash-object file0) &&
-+	blob1_id=$(git hash-object file1) &&
- 	git update-index --add file0 file1 &&
- 	git tag reference $(git write-tree)
- '
+diff --git a/t/lib-diff-alternative.sh b/t/lib-diff-alternative.sh
+index 8b4dbf22d2..8d1e408bb5 100644
+--- a/t/lib-diff-alternative.sh
++++ b/t/lib-diff-alternative.sh
+@@ -59,9 +59,11 @@ int main(int argc, char **argv)
+ }
+ EOF
  
- test_expect_success 'change file1 with copy-edit of file0 and remove file0' '
- 	sed -e "s/git/GIT/" file0 >file1 &&
-+	blob2_id=$(git hash-object file1) &&
- 	rm -f file0 &&
- 	git update-index --remove file0 file1
- '
+-	cat >expect <<\EOF
++	file1=$(git rev-parse --short $(git hash-object file1))
++	file2=$(git rev-parse --short $(git hash-object file2))
++	cat >expect <<EOF
+ diff --git a/file1 b/file2
+-index 6faa5a3..e3af329 100644
++index $file1..$file2 100644
+ --- a/file1
+ +++ b/file2
+ @@ -1,26 +1,25 @@
+@@ -136,9 +138,11 @@ e
+ f
+ EOF
  
- test_expect_success 'run diff with -B (#1)' '
- 	git diff-index -B --cached reference >current &&
--	cat >expect <<-\EOF &&
--	:100644 000000 548142c327a6790ff8821d67c2ee1eff7a656b52 0000000000000000000000000000000000000000 D	file0
--	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec M100	file1
-+	cat >expect <<-EOF &&
-+	:100644 000000 $blob0_id $ZERO_OID D	file0
-+	:100644 100644 $blob1_id $blob2_id M100	file1
- 	EOF
- 	compare_diff_raw expect current
- '
- 
- test_expect_success 'run diff with -B and -M (#2)' '
- 	git diff-index -B -M reference >current &&
--	cat >expect <<-\EOF &&
--	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec R100	file0	file1
-+	cat >expect <<-EOF &&
-+	:100644 100644 $blob0_id $blob2_id R100	file0	file1
- 	EOF
- 	compare_diff_raw expect current
- '
-@@ -66,18 +69,18 @@ test_expect_success 'swap file0 and file1' '
- 
- test_expect_success 'run diff with -B (#3)' '
- 	git diff-index -B reference >current &&
--	cat >expect <<-\EOF &&
--	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 6ff87c4664981e4397625791c8ea3bbb5f2279a3 M100	file0
--	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 548142c327a6790ff8821d67c2ee1eff7a656b52 M100	file1
-+	cat >expect <<-EOF &&
-+	:100644 100644 $blob0_id $blob1_id M100	file0
-+	:100644 100644 $blob1_id $blob0_id M100	file1
- 	EOF
- 	compare_diff_raw expect current
- '
- 
- test_expect_success 'run diff with -B and -M (#4)' '
- 	git diff-index -B -M reference >current &&
--	cat >expect <<-\EOF &&
--	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 6ff87c4664981e4397625791c8ea3bbb5f2279a3 R100	file1	file0
--	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 548142c327a6790ff8821d67c2ee1eff7a656b52 R100	file0	file1
-+	cat >expect <<-EOF &&
-+	:100644 100644 $blob1_id $blob1_id R100	file1	file0
-+	:100644 100644 $blob0_id $blob0_id R100	file0	file1
- 	EOF
- 	compare_diff_raw expect current
- '
-@@ -85,14 +88,15 @@ test_expect_success 'run diff with -B and -M (#4)' '
- test_expect_success 'make file0 into something completely different' '
- 	rm -f file0 &&
- 	test_ln_s_add frotz file0 &&
-+	slink_id=$(printf frotz | git hash-object --stdin) &&
- 	git update-index file1
- '
- 
- test_expect_success 'run diff with -B (#5)' '
- 	git diff-index -B reference >current &&
--	cat >expect <<-\EOF &&
--	:100644 120000 548142c327a6790ff8821d67c2ee1eff7a656b52 67be421f88824578857624f7b3dc75e99a8a1481 T	file0
--	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 548142c327a6790ff8821d67c2ee1eff7a656b52 M100	file1
-+	cat >expect <<-EOF &&
-+	:100644 120000 $blob0_id $slink_id T	file0
-+	:100644 100644 $blob1_id $blob0_id M100	file1
- 	EOF
- 	compare_diff_raw expect current
- '
-@@ -103,9 +107,9 @@ test_expect_success 'run diff with -B -M (#6)' '
- 	# file0 changed from regular to symlink.  file1 is the same as the preimage
- 	# of file0.  Because the change does not make file0 disappear, file1 is
- 	# denoted as a copy of file0
--	cat >expect <<-\EOF &&
--	:100644 120000 548142c327a6790ff8821d67c2ee1eff7a656b52 67be421f88824578857624f7b3dc75e99a8a1481 T	file0
--	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 548142c327a6790ff8821d67c2ee1eff7a656b52 C	file0	file1
-+	cat >expect <<-EOF &&
-+	:100644 120000 $blob0_id $slink_id T	file0
-+	:100644 100644 $blob0_id $blob0_id C	file0	file1
- 	EOF
- 	compare_diff_raw expect current
- '
-@@ -115,9 +119,9 @@ test_expect_success 'run diff with -M (#7)' '
- 
- 	# This should not mistake file0 as the copy source of new file1
- 	# due to type differences.
--	cat >expect <<-\EOF &&
--	:100644 120000 548142c327a6790ff8821d67c2ee1eff7a656b52 67be421f88824578857624f7b3dc75e99a8a1481 T	file0
--	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 548142c327a6790ff8821d67c2ee1eff7a656b52 M	file1
-+	cat >expect <<-EOF &&
-+	:100644 120000 $blob0_id $slink_id T	file0
-+	:100644 100644 $blob1_id $blob0_id M	file1
- 	EOF
- 	compare_diff_raw expect current
- '
-@@ -128,25 +132,26 @@ test_expect_success 'file1 edited to look like file0 and file0 rename-edited to
- 	git checkout-index -f -u -a &&
- 	sed -e "s/git/GIT/" file0 >file1 &&
- 	sed -e "s/git/GET/" file0 >file2 &&
-+	blob3_id=$(git hash-object file2) &&
- 	rm -f file0 &&
- 	git update-index --add --remove file0 file1 file2
- '
- 
- test_expect_success 'run diff with -B (#8)' '
- 	git diff-index -B reference >current &&
--	cat >expect <<-\EOF &&
--	:100644 000000 548142c327a6790ff8821d67c2ee1eff7a656b52 0000000000000000000000000000000000000000 D	file0
--	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec M100	file1
--	:000000 100644 0000000000000000000000000000000000000000 69a939f651686f56322566e2fd76715947a24162 A	file2
-+	cat >expect <<-EOF &&
-+	:100644 000000 $blob0_id $ZERO_OID D	file0
-+	:100644 100644 $blob1_id $blob2_id M100	file1
-+	:000000 100644 $ZERO_OID $blob3_id A	file2
- 	EOF
- 	compare_diff_raw expect current
- '
- 
- test_expect_success 'run diff with -B -C (#9)' '
- 	git diff-index -B -C reference >current &&
--	cat >expect <<-\EOF &&
--	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec C095	file0	file1
--	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 69a939f651686f56322566e2fd76715947a24162 R095	file0	file2
-+	cat >expect <<-EOF &&
-+	:100644 100644 $blob0_id $blob2_id C095	file0	file1
-+	:100644 100644 $blob0_id $blob3_id R095	file0	file2
- 	EOF
- 	compare_diff_raw expect current
- '
+-	cat >expect <<\EOF
++	uniq1=$(git rev-parse --short $(git hash-object uniq1))
++	uniq2=$(git rev-parse --short $(git hash-object uniq2))
++	cat >expect <<EOF
+ diff --git a/uniq1 b/uniq2
+-index b414108..0fdf397 100644
++index $uniq1..$uniq2 100644
+ --- a/uniq1
+ +++ b/uniq2
+ @@ -1,6 +1,6 @@
