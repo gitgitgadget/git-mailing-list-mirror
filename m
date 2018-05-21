@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C4181F51C
-	for <e@80x24.org>; Mon, 21 May 2018 02:02:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A9831F51C
+	for <e@80x24.org>; Mon, 21 May 2018 02:02:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752650AbeEUCCl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 22:02:41 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50852 "EHLO
+        id S1752654AbeEUCCn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 22:02:43 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50866 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752643AbeEUCCj (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:02:39 -0400
+        by vger.kernel.org with ESMTP id S1752645AbeEUCCl (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:02:41 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:fc4d:8d90:22bd:91d8])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1266A6047A;
-        Mon, 21 May 2018 02:02:36 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AD8C360746;
+        Mon, 21 May 2018 02:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526868158;
-        bh=2CW6DsDUo3CJrhCXrqIW39V/06xwog/BDysVrtZLHL4=;
+        s=default; t=1526868160;
+        bh=mqBu9whqEeMOR8DofMG/yQNOXY/GMlA/bIFoc06U86k=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=CnvgjGWkcYHKrl7cf0lczwQskDIRKmtvVZh5MWZAXYRZ9HrOtvS4GqUiDyQpLc4rD
-         rjbOUb3rr2fU1CgR0Dwf8p64nEVUTaDmgcFXyugTtPxhUuWiF4JYuKWXX5Xi8Y9T61
-         cSUJkXo5svBH/o3JbPbHzxtGUBMiWj9eC1r4QcprHTeTy+ZWpkAC06ztnBHt9+a21F
-         11jzuf2GTJKz/hmIAatZlH5rTuz4yspVNuAOXl6pBj3+Z6A9hn93HZyVz83sorT5zC
-         c/1h27u6A+Y0sEs7UJGFUEegP3VhkfqOrGd4cbAgAhScAA9GC5NNKUXNlLttER/m+5
-         EDbyZ/HDqdUZ8qPOAL7XodlnNWVDKBDZeteS8jADciIP4pWsGNs3yFmVXcWM0L8ipP
-         fbUc6XrCh0/GxNAKrrqGnR1vonmVGZ0VrTxmIN3geVz0ZZ4+a5AZNCLcdichr6NlDI
-         oyGFYDytZvyKDnB32zDEx0TbKpUSGZMrXEVYaB+IdWGaOcn9q+Q
+        b=lg8smmoikJKfE9k9mwyXdCx0KZd7Ical21ocI0t6HMNneA14oa+gXCSN/YdqIzZt4
+         l2IquX58gh5QVkB0iBrM1YAEdkgHl2UoO3uYnH6rPcY6oUDs86N7ZOVFumN6zRLECu
+         RAHqiEAL2vy8VpL8B7ccAAWbAXkd77BqoGfVZNbWiENuHAvgHI6ibLSOZchjfjGmCv
+         xwtjBeX9eCC43v8JXAOaZlFJjRyA5z6QhZ211lC96g0s9BL6sg0i/mpCsmTgjjd9ra
+         HS5sRJOEjJg5TqJmb4qyvlc4QBQbxdeeeSooKtGDoLaVGU7wcx3YZYb3JS5NfvfJta
+         BmFOHE9Yz1pJserc6jNdyp+Zi3/ycFnOma2pDQRlqJoBrhr5z4WOsyX9+JxmFmAg7I
+         IDWAd0HakKgcOhWRJcQ3GuXmdpvtVbdZggAYb8kvpABfuLUyxvIlfa/e7LCCBcgZ32
+         uQW2a2lZMODcON4EQYBKgsyF0uq4QVCbckftPe2Ir87mN47HIwP
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -44,9 +44,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v4 07/28] t1007: annotate with SHA1 prerequisite
-Date:   Mon, 21 May 2018 02:01:26 +0000
-Message-Id: <20180521020147.648496-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 08/28] t1512: skip test if not using SHA-1
+Date:   Mon, 21 May 2018 02:01:27 +0000
+Message-Id: <20180521020147.648496-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180521020147.648496-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -57,81 +57,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since this is a core test that tests basic functionality, annotate the
-assertions that have dependencies on SHA-1 with the appropriate
-prerequisite.
+This test relies on objects with colliding short names which are
+necessarily dependent on the hash used.  Skip the test if we're not
+using SHA-1.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t1007-hash-object.sh | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ t/t1512-rev-parse-disambiguation.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index 532682f51c..a37753047e 100755
---- a/t/t1007-hash-object.sh
-+++ b/t/t1007-hash-object.sh
-@@ -9,13 +9,13 @@ echo_without_newline() {
- }
+diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
+index 711704ba5a..6537f30c9e 100755
+--- a/t/t1512-rev-parse-disambiguation.sh
++++ b/t/t1512-rev-parse-disambiguation.sh
+@@ -22,6 +22,12 @@ one tagged as v1.0.0.  They all have one regular file each.
  
- test_blob_does_not_exist() {
--	test_expect_success 'blob does not exist in database' "
-+	test_expect_success SHA1 'blob does not exist in database' "
- 		test_must_fail git cat-file blob $1
- 	"
- }
+ . ./test-lib.sh
  
- test_blob_exists() {
--	test_expect_success 'blob exists in database' "
-+	test_expect_success SHA1 'blob exists in database' "
- 		git cat-file blob $1
- 	"
- }
-@@ -73,19 +73,19 @@ test_expect_success "Can't use --path with --no-filters" '
- 
- push_repo
- 
--test_expect_success 'hash a file' '
-+test_expect_success SHA1 'hash a file' '
- 	test $hello_sha1 = $(git hash-object hello)
- '
- 
- test_blob_does_not_exist $hello_sha1
- 
--test_expect_success 'hash from stdin' '
-+test_expect_success SHA1 'hash from stdin' '
- 	test $example_sha1 = $(git hash-object --stdin < example)
- '
- 
- test_blob_does_not_exist $example_sha1
- 
--test_expect_success 'hash a file and write to database' '
-+test_expect_success SHA1 'hash a file and write to database' '
- 	test $hello_sha1 = $(git hash-object -w hello)
- '
- 
-@@ -161,7 +161,7 @@ pop_repo
- for args in "-w --stdin" "--stdin -w"; do
- 	push_repo
- 
--	test_expect_success "hash from stdin and write to database ($args)" '
-+	test_expect_success SHA1 "hash from stdin and write to database ($args)" '
- 		test $example_sha1 = $(git hash-object $args < example)
- 	'
- 
-@@ -176,14 +176,14 @@ example"
- sha1s="$hello_sha1
- $example_sha1"
- 
--test_expect_success "hash two files with names on stdin" '
-+test_expect_success SHA1 "hash two files with names on stdin" '
- 	test "$sha1s" = "$(echo_without_newline "$filenames" | git hash-object --stdin-paths)"
- '
- 
- for args in "-w --stdin-paths" "--stdin-paths -w"; do
- 	push_repo
- 
--	test_expect_success "hash two files with names on stdin and write to database ($args)" '
-+	test_expect_success SHA1 "hash two files with names on stdin and write to database ($args)" '
- 		test "$sha1s" = "$(echo_without_newline "$filenames" | git hash-object $args)"
- 	'
- 
++if ! test_have_prereq SHA1
++then
++	skip_all='not using SHA-1 for objects'
++	test_done
++fi
++
+ test_expect_success 'blob and tree' '
+ 	test_tick &&
+ 	(
