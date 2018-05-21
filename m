@@ -2,92 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD181200B9
-	for <e@80x24.org>; Mon, 21 May 2018 10:41:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D12C1F42D
+	for <e@80x24.org>; Mon, 21 May 2018 11:20:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752859AbeEUKlX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 06:41:23 -0400
-Received: from mout.gmx.net ([212.227.15.15]:44149 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751234AbeEUKlJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 06:41:09 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ma1pn-1ffPvR13gV-00LqU4; Mon, 21
- May 2018 12:40:58 +0200
-Date:   Mon, 21 May 2018 12:41:00 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
-In-Reply-To: <xmqq603zpkih.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1805211238520.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <a1ea0320b64527ee6ce9856dcf359513d13052b7.1525448066.git.johannes.schindelin@gmx.de> <20180505182631.GC17700@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1805052355190.77@tvgsbejvaqbjf.bet> <xmqqk1shsecd.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1805061419530.77@tvgsbejvaqbjf.bet> <xmqqr2moqlw8.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1805062355190.77@tvgsbejvaqbjf.bet>
- <xmqq603zpkih.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751679AbeEULUE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 07:20:04 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:37532 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751173AbeEULUD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 07:20:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=hbVYKpqXulusNyHzBJDHZ8WuL52Jpc8NLUa6elNCxDA=; b=CJG+dM+PbGkXJagl4oXOYJCAt8
+        GKmdNV0TZpatQwQcdbEUTbwFwlYCQxI/5QUVC8BfSlRfGOJ9r4h75CoNx99PP/eU4xscaGAyTrS5F
+        /eiyhH9kbILjdnMj9vLsZrDEUFYmbJuVq8HXi2y+nQIVRMXhHVAeBiK1y0kiQIFsWDfxC07ElVZQD
+        Whu/49cnRuXmtd8Mj0zM5mh7gDFg1vfLYGVksA70me27Pq7ECb+OOHpArlWlHOjAbeVO0rbDXEBSj
+        kHn1OgZsmvaHIjMhAE+K3weBdDDe9BfHVAGccth2wnFIXVSj16VgvuLQegP+HZjj9iiZSDgJPxX2n
+        Wwf+p+hA==;
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:43116 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fKirB-00F3hf-8o
+        for git@vger.kernel.org; Mon, 21 May 2018 07:20:02 -0400
+Date:   Mon, 21 May 2018 07:18:30 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: which files are "known to git"?
+Message-ID: <alpine.LFD.2.21.1805210717040.9926@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:xvpjXEMC8UqRtIvc+MGyLm5KAdyh6wPoEtpixArm+0JvrD07jwt
- kHaKJP94Z562uqcWjHYSZ1MrfUUBx518rLua1TEhAfPJ7WWEXBv+YfnVHBWYNrcMx6iNYo9
- TBYO7hmDl1TAk6LhAkElGoULCUObMp0o1S6EUwkE6o4M2TSHUjmm69kvI8sAAkDP9ZwQhIj
- qzuTPzpmca45b2+wg32iQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1YFKvZJbnLM=:QlNnn1B8dmjleQj9XodQDy
- AR1b2Zcjbvncdo+IrPxxG9u6YK+zFdNbtrnEAzcqXNTjsBvFmYcI63zaYfXBugIFIeCBV1N/x
- Xo0wCrk7zk25XqlkLZzccvHUnjJq+0REyvYt6N+L+cP6HYbuY5XHH+2BF0IyarT2Gk5AXsKSl
- M06hRK+a01vjVijEnnfbXaBunmPChaPVBy84+NKloChgu0o+vNqTDi8R0Ks/plPOlOTWaT4MK
- 42R33g7f4RDUQ1SgTsqHWEF2oeoD9jIISi/C4O1mkePXfcxaPGKKsfFGdoGlBMbn27RSAHV3X
- lYIYXJ1LejNv2sic2yKwrTy7dTK9+w5+Pw62CZZhhkUx9K0OffIkUlEaAlbVRZOjwBoUcPrzL
- yIwZiUcTYP+gXlMsLczIhKE1gBPR9yQkmM5yvy5ExI16qYl+nAuLgHomHPJ7UgbFdnXJ8xvR0
- kF027dVFqOhCwfy3rGBcE0PHWhFh26qDNVZVNZ5Mux7J/ZvLGvX+hiJkPHcayyq7owb0FKXVf
- SmhgTSV1MclTqpv/2mLjOLahCOt/usIiLIxzUdUsCQ0079n55ly5pI1PbFauVbqiTeS9OVMiF
- F8QBYw8RbGXKGXouDAIt/VPPmQNtTGv9er9b95kqzU/nW9Oz5VzpjR/OJl0AzBrM2jHioLWze
- P6iQHGSdlv6FPDycAyVhgULTXcJ6uAYdpSzPfk7tM0FcI1lxFjFw7HbZ8yVdz8OX7LKA5rXsM
- mw6mlQVbVwhRyE5FVUPmn620PzohlWaQZIahVpFVlt1b7QRcXerRpirWzUFJDsKV3Qpi7tcxS
- eRdnkhv
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Tue, 8 May 2018, Junio C Hamano wrote:
+  updating my git courseware and, since some man pages refer to files
+"known to git", i just want to make sure i understand precisely which
+files those are. AIUI, they would include:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > It would be easy to introduce, but I am wary about its usefulness.
-> > Unless you re-generate the branch from patches (which I guess you do a
-> > lot, but I don't), you are likely to compare incomplete patch series: say,
-> > when you call `git rebase -i` to reword 05/18's commit message, your
-> > command will only compare 05--18 of the patch series.
-> 
-> Well that is exactly the point of that "..@{1} @{1}..", which turned
-> out to be very useful in practice at least for me when I am updating
-> a topic with "rebase -i", and then reviewing what I did with tbdiff.
-> 
-> I do not want 01-04 in the above case as I already know I did not
-> touch them.
+  * tracked files
+  * ignored files
+  * new files which have been staged but not yet committed
 
-And you are a seasoned veteran maintainer.
+is that it? are there others?
 
-To the occasional contributor, this information is not obvious, and it is
-not stored in their brain. It needs to be made explicit, which is why this
-here command outputs those `abcdef = 012345` lines: it lists all the
-commits, stating which ones are unchanged. In your 01-04 example, those
-lines would be of the form `abcdef = abcdef`, of course.
-
-Ciao,
-Dscho
+rday
