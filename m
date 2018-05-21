@@ -2,132 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9B401F51C
-	for <e@80x24.org>; Mon, 21 May 2018 18:10:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1550F1F51C
+	for <e@80x24.org>; Mon, 21 May 2018 18:11:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753645AbeEUSK5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 14:10:57 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:39472 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753337AbeEUSK4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 14:10:56 -0400
-Received: by mail-qt0-f178.google.com with SMTP id f1-v6so20067959qtj.6
-        for <git@vger.kernel.org>; Mon, 21 May 2018 11:10:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=1kkvW5RGGaxPfJk7E3BNDPT1BIpO2B77kMNweZqOXPQ=;
-        b=gNBq1NxqGPnh2C1BK07lI4lzO0G80UFV8olcCnUOClU+xh5XN8Kj9TzeoEhGw6/stm
-         btbyGw1MEoF5XpKkRf61U8nqMn9+lwm+UjfAiUaGPNlDg/6lJSrlXT1Xe22MTEpLbVZT
-         2a8YfktA0XlklVhUsfz3/agR5iI017hF5SVbglP4QMFiUKfUz+naVUZDcdqAqoRd2rRB
-         QaiTIxfQ1wR87WGUCduq5ZGGg0/MIuU0DI9Nq7JDacDzFnia81Vi00IkCXmFaUZ15g0E
-         RaKudhpKp26DkBIYfCq+hpRH96DAAt73oFZ7bJwjTx0mUtuoMO8krbCuf/PMA2npH1Cl
-         sl7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=1kkvW5RGGaxPfJk7E3BNDPT1BIpO2B77kMNweZqOXPQ=;
-        b=l1pwLtVY/9dPYuvwgabQwCqW24ehJagMvTvnAOnI0/2At/9B5q39cngKI3i3z51Iwf
-         DdSpHn+Wdv7IkMKZRCwPu/HFQVTIu43R/NXwkr1ymHLEP0vNsyDWbsJ32ZNRbnTB0BQb
-         rA8uDvF1WkkSfxQIZgq6ewOduBTe18bOpD1HmMoNWNta/dOX97ehQIoo7lStmfURuPlR
-         lcgwlE61iS84X/S12EB4F7hTGPPz/zrwqsDbPmQrvR0LCdEevF/wg0BWW0cq/HNjnnaT
-         tZR1x0F3blywCl6Z8T+7zlTOJlx9a77OHTBObuVfJRJnIR7sfjquVOWAlE7npQN4WDLW
-         5O4Q==
-X-Gm-Message-State: ALKqPwfyINjunwuF7fqZtR5Tm/W6URGM9hSzgsQpgiU5cwIHgNWVgqcx
-        CKHRabqoH5EqDjBG1rV3Qbk=
-X-Google-Smtp-Source: AB8JxZrUHA8sOCXgK7MZLC6qt/X4MulbqmtQHCSmcOPRAq7K15xIh8yZT4SGO/1GyaGVvry23wrf+g==
-X-Received: by 2002:a0c:b305:: with SMTP id s5-v6mr18614992qve.96.1526926255989;
-        Mon, 21 May 2018 11:10:55 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id s127-v6sm10305195qkf.21.2018.05.21.11.10.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 May 2018 11:10:55 -0700 (PDT)
-To:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Subject: commit-graph: change in "best" merge-base when ambiguous
-Message-ID: <e78a115a-a5ea-3c0a-5437-51ba0bcc56e1@gmail.com>
-Date:   Mon, 21 May 2018 14:10:54 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1753302AbeEUSLX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 14:11:23 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:50718 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753209AbeEUSLW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 14:11:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=TyYzVmIbCdFv2KyCjGW3zPbrRrRFMCX8FLW46xjxc1w=; b=nWGoA9QNMov7Zf42eUL5r1m72
+        5DMXHM34sT5L8cJirDqBlF7qvuiMMCFiTc2mu5O+KUzN81+m3d7CQFtP1IUCxaJ2TpxnRd2v5cjmU
+        npygPa0e/GynD/LusP/xgd7TlCDIZk0DAbbaJO0o62DPVFvhonpFSd/AS4FesiSzE2D/5jQdvmO0N
+        goAzcjmOeeNq7DPNO7/SD60vqfC3SzQmL4obhYWyIH+0Nn/gAjP3IYU11k4zqR+nMF/DkjVyJGmDx
+        n6RP6m7I9cT9BWi4M2ARY3yXTgIOGVMXyjM3Tl2X1L/xfQ3TWptz78/LbYR8wfohsmnp5fpkkCqPg
+        sz6r6TSdg==;
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:53558 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fKpHD-00GqAc-Bk; Mon, 21 May 2018 14:11:20 -0400
+Date:   Mon, 21 May 2018 14:09:49 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: which files are "known to git"?
+In-Reply-To: <20180521175335.GC10623@aiede.svl.corp.google.com>
+Message-ID: <alpine.LFD.2.21.1805211405410.21888@localhost.localdomain>
+References: <alpine.LFD.2.21.1805210717040.9926@localhost.localdomain> <CABPp-BH0bw3m5Ubz2+-XyFGwoHD96sAaSen9-SHQSBqMS-9u5w@mail.gmail.com> <alpine.LFD.2.21.1805211335250.21160@localhost.localdomain> <20180521175335.GC10623@aiede.svl.corp.google.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+On Mon, 21 May 2018, Jonathan Nieder wrote:
 
-While working on the commit-graph feature, I made a test commit that 
-sets core.commitGraph and gc.commitGraph to true by default AND runs 
-'git commit-graph write --reachable' after each 'git commit' command. 
-This helped me find instances in the test suite where the commit-graph 
-feature changes existing functionality. Most of these were in regards to 
-grafts, replace-objects, and shallow-clones (as expected) or when trying 
-to find a corrupt or hidden commit (the commit-graph hides this 
-corrupt/missing data). However, there was one interesting case that I'd 
-like to mention on-list.
+> Robert P. J. Day wrote:
+> > On Mon, 21 May 2018, Elijah Newren wrote:
+>
+> >> Hi Robert,
+> >>
+> >> I had always assumed prior to your email that 'known to Git'
+> >> meant 'tracked' or 'recorded in the index'...
+> >
+> >   i *know* i've been in this discussion before, but i don't
+> > remember where, i *assume* it was on this list, and i recall
+> > someone (again, don't remember who) who opined that there are two
+> > categories of files that are "known to git":
+>
+> My understanding was the same as Elijah's.
+>
+> I would be in favor of a patch that replaces the phrase "known to
+> Git" in Git's documentation with something less confusing.
 
-In t6024-recursive-merge.sh, we have the following commit structure:
+  first, i want to apologize to everyone for opening this apparent can
+of worms. (it's victoria day here in canada, and i intended to spend
+it just puttering around with git-related minutiae, not encouraging
+thought-provoking questions about the fundamental nature of git.)
 
-     # 1 - A - D - F
-     #   \   X   /
-     #     B   X
-     #       X   \
-     # 2 - C - E - G
+  i did a quick search for that phrase in the current code base and
+came up with:
 
-When merging F to G, there are two "best" merge-bases, A and C. With 
-core.commitGraph=false, 'git merge-base F G' returns A, while it returns 
-C when core.commitGraph=true. This is due to the new walk order when 
-using generation numbers, although I have not dug deep into the code to 
-point out exactly where the choice between A and C is made. Likely it's 
-just whatever order they are inserted into a list.
+builtin/difftool.c:		/* The symlink is unknown to Git so read from the filesystem */
+dir.c:		error("pathspec '%s' did not match any file(s) known to git.",
+Documentation/git-rm.txt:removes only the paths that are known to Git.  Giving the name of
+Documentation/git-commit.txt:   be known to Git);
+Documentation/user-manual.txt:error: pathspec '261dfac35cb99d380eb966e102c1197139f7fa24' did not match any file(s) known to git.
+Documentation/gitattributes.txt:	Notice all types of potential whitespace errors known to Git.
+Documentation/git-clean.txt:Normally, only files unknown to Git are removed, but if the `-x`
+Documentation/RelNotes/1.8.2.1.txt: * The code to keep track of what directory names are known to Git on
+Documentation/RelNotes/1.8.1.6.txt: * The code to keep track of what directory names are known to Git on
+Documentation/RelNotes/2.9.0.txt:   known to Git.  They have been taught to do the normalization.
+Documentation/RelNotes/2.8.4.txt:   known to Git.  They have been taught to do the normalization.
+Documentation/RelNotes/1.8.3.txt: * The code to keep track of what directory names are known to Git on
+t/t3005-ls-files-relative.sh:			echo "error: pathspec $sq$f$sq did not match any file(s) known to git."
+t/t3005-ls-files-relative.sh:			echo "error: pathspec $sq$f$sq did not match any file(s) known to git."
 
-In the Discussion section of the `git merge-base` docs [1], we have the 
-following:
+so it's not like there's a *ton* of that, but still enough to want to
+get it right. should there be a precise definition for the phrase
+"known to git", or should that phrase simply be banned/replaced? i
+have no idea, open to suggestions.
 
-     When the history involves criss-cross merges, there can be more 
-than one best common ancestor for two commits. For example, with this 
-topology:
-
-     ---1---o---A
-         \ /
-          X
-         / \
-     ---2---o---o---B
-
-     both 1 and 2 are merge-bases of A and B. Neither one is better than 
-the other (both are best merge bases). When the --all option is not 
-given,     it is unspecified which best one is output.
-
-This means our official documentation mentions that we do not have a 
-concrete way to differentiate between these choices. This makes me think 
-that this change in behavior is not a bug, but it _is_ a change in 
-behavior. It's worth mentioning, but I don't think there is any value in 
-making sure `git merge-base` returns the same output.
-
-Does anyone disagree? Is this something we should solidify so we always 
-have a "definitive" merge-base?
-
-The biggest reason I think we should avoid sticking to the existing 
-behavior is that the current behavior depends on the walk order. That 
-means we would not be able to concretely define a tie-breaker without 
-changing the existing behavior anyway.
-
-Thanks,
--Stolee
-
-[1] https://git-scm.com/docs/git-merge-base#_discussion
-
+rday
