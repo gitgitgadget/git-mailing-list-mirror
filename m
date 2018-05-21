@@ -2,97 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E21A31F51C
-	for <e@80x24.org>; Mon, 21 May 2018 02:03:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 147461F51C
+	for <e@80x24.org>; Mon, 21 May 2018 02:03:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752697AbeEUCDG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 22:03:06 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51012 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752645AbeEUCDD (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:03:03 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:fc4d:8d90:22bd:91d8])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1DAC960751;
-        Mon, 21 May 2018 02:03:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526868181;
-        bh=HgZxE5D0+6JfaobdOtxElSsK+uXh9myHMFGd0+ulCkE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=NJKTP0tVkof8SbazuF7NKGljVC7mF64IhI6y2F5Ygkoa/CdqaffSdwlVpc7uX8mE9
-         H5bRfbFY+Qyja0LJgbdTJkdDWRAc/g9YZq21D9aFsjHR5VCput63uot3RWBsJnZcHJ
-         3sNLhe2a7UmENdYaNvlFAtXmooNb0Rjzxus5mkwRsGH8MKtKDoixNRrx3u8JNhYcAQ
-         ZsDd+RIJxBuhJnDIMHYkBDOPwQZOX2opVu9FYFrsoWe3Yw05FmGRhOxGhSXesV+fMF
-         yhqjRjOeFVCUPtI4e2MPG9VI0gtDDP/sY7STxaMhQcgXQy/+S7nIoZHEPrqTBoloN7
-         tXur2F6lWEiKFy+BQ/7ZCMdp32CSYOhsY9Pc0DyFwj8zGWhA22Y0pu62diMO0oWzfA
-         dITeiF6ByQr3irgFaSlY0KjfbfAYhBhRp9hgMJN56d2p62XayqsbnqjA9v/0+XyeU8
-         2kB4skd9l9EFCKzOCd3BjyL/g10eWTqk6miEXFXJXyqNT80AxM3
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH v4 19/28] t4022: abstract away SHA-1-specific constants
-Date:   Mon, 21 May 2018 02:01:38 +0000
-Message-Id: <20180521020147.648496-20-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
-In-Reply-To: <20180521020147.648496-1-sandals@crustytoothpaste.net>
-References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
- <20180521020147.648496-1-sandals@crustytoothpaste.net>
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1752702AbeEUCDM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 22:03:12 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:51328 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752645AbeEUCDH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 22:03:07 -0400
+Received: by mail-wm0-f65.google.com with SMTP id j4-v6so22729073wme.1
+        for <git@vger.kernel.org>; Sun, 20 May 2018 19:03:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=PWxjjtCeS2ba1AFJIyDBw8sHCF3hX8+58FztIFUsIeY=;
+        b=Jovzn7rylmKCILekacwigZ/yZ+S5Lt7T5rQadq2iH1mN1t5k2nCpzrpm8dh2LBGfK2
+         7C2+OUmRb3/E2VdHtsDRUKo/cP+mxiGsZiCtTyvZWF2KsMGbpHNxUMOqhxdPtR1DnB+G
+         TecVh0itWemcQk3lhHzV6NIlRIY4BVzIC6wKLpZTs5wRBzRyr8Zsubxz0JsR2kz43gZL
+         fuyU9B7FRwKLYMuTaoexEsgigAK6ZR3unzmhx7KjNQG1J/1+LUe9aGmi/Jlu+9AI5bGI
+         7tvmulpPPBFz6eOAbVazcUzDCAis4Nb2B9A4DYN4lH1B4KYa+2WrHAd/Sdpwxgn9UF+y
+         U5Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=PWxjjtCeS2ba1AFJIyDBw8sHCF3hX8+58FztIFUsIeY=;
+        b=qCiGHBkkOgCcStuoLKGHtArjPGTwJqgLAODgF9rhHoSAECIHdYReXV4sTZNqk7iV0c
+         +NGytU/7AlSSeSytQRbVEX02xWJSE0TPWwKAY4TaQ107a68Sa5EbpEOMk2eTl4DhZZqj
+         VxsoIBoGcIvGqcGwqVUjgNvHccaG42PXavEauNbPVBJlPlQfJtbdtC5RWLG1NUTS/RMV
+         8MOtgEymNYC8u9LX2aNE+4Ifk+qTX+MLO2p05TZVWM3qa03eYhmSARhtc5NNCjpDGEZ0
+         Sup9jcxsoVsxKlLJTNNPwEd4MQgVJl4naDVIVfc1rxOizqqJOMn51XA0kpHwBSNy4i7i
+         t/2w==
+X-Gm-Message-State: ALKqPwehCiU1pnGG/52uC7Jljd2cLm8VuKXes8EGolu8lwukUjHOC0Aq
+        12DiAg+pm2J+QVBbtO9yhLk=
+X-Google-Smtp-Source: AB8JxZoeW7fXfodqoFGL0KNelRRfkgnGJibs58Ec7cdiYv8gzs0P653E5XCe8vEay8gnyEZtDzVzig==
+X-Received: by 2002:a1c:170f:: with SMTP id 15-v6mr9465309wmx.90.1526868186123;
+        Sun, 20 May 2018 19:03:06 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id u89-v6sm17734410wma.4.2018.05.20.19.03.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 20 May 2018 19:03:05 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     hIpPy <hippy2981@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: git apply does not honor diff.noprefix config setting
+References: <CAM_JFCza0Az32RC-ytu_6PxG9JnteySPEDyKEeDzZAv9MdadAQ@mail.gmail.com>
+Date:   Mon, 21 May 2018 11:03:05 +0900
+In-Reply-To: <CAM_JFCza0Az32RC-ytu_6PxG9JnteySPEDyKEeDzZAv9MdadAQ@mail.gmail.com>
+        (hIpPy's message of "Sat, 19 May 2018 16:18:42 -0700")
+Message-ID: <xmqqefi53gva.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for blobs instead of using
-hard-coded hashes.
+hIpPy <hippy2981@gmail.com> writes:
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- t/t4022-diff-rewrite.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+> If I disable mnemonic prefix,
+>
+> $ git config --global diff.noprefix true
+>
+> and do a round-trip of format-patch and apply,
 
-diff --git a/t/t4022-diff-rewrite.sh b/t/t4022-diff-rewrite.sh
-index cb51d9f9d4..6d1c3d949c 100755
---- a/t/t4022-diff-rewrite.sh
-+++ b/t/t4022-diff-rewrite.sh
-@@ -13,6 +13,8 @@ test_expect_success setup '
- 	  "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM" \
- 	  <"$TEST_DIRECTORY"/../COPYING >test &&
- 	echo "to be deleted" >test2 &&
-+	blob=$(git hash-object test2) &&
-+	blob=$(git rev-parse --short $blob) &&
- 	git add test2
- 
- '
-@@ -27,7 +29,7 @@ test_expect_success 'detect rewrite' '
- cat >expect <<EOF
- diff --git a/test2 b/test2
- deleted file mode 100644
--index 4202011..0000000
-+index $blob..0000000
- --- a/test2
- +++ /dev/null
- @@ -1 +0,0 @@
-@@ -43,7 +45,7 @@ test_expect_success 'show deletion diff without -D' '
- cat >expect <<EOF
- diff --git a/test2 b/test2
- deleted file mode 100644
--index 4202011..0000000
-+index $blob..0000000
- EOF
- test_expect_success 'suppress deletion diff with -D' '
- 
+Setting diff.noprefix does not disable "mnemonic prefix".  It asks
+"diff" family of commands to use no prefix, not even the normal,
+non-mnemonic, prefix.
+
+> $ git format-patch -1 @
+> $ git apply <some-file.patch>
+>
+> git apply fails with,
+>
+> error: git diff header lacks filename information when removing 1
+> leading pathname component (line 16)
+
+Totally expected.
+
+> Without 'diff.noprefix' config setting, git apply works. It seems git
+> apply does not honor the diff.noprefix config setting.
+
+Yes, and because "diff" and "format-patch" are for producers of, and
+"apply" and "am" are for consumers of a patch, which are likely to
+be different people, "apply" or "am" should never pay attention to
+"diff.noprefix".
+
+It is a different issue if we should have
+
+ - format-patch.noprefix, which defaults to the same as
+   diff.noprefix, but allows people to configure "format-patch"
+   differently from "diff" and "show"
+
+ - am.pvalue, which defaults to 1, but can be set to e.g. 0 to
+   accept format-patch output from those who set
+   format-patch.noprefix to true
+
+I haven't thought things through, but offhand I do not see why we
+shouldn't.  But I am reasonably firm on that diff.noprefix should
+never affect anything on the "apply/am" side.
+
+
+
+
