@@ -7,164 +7,94 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB6FA1F51C
-	for <e@80x24.org>; Mon, 21 May 2018 18:43:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ADEC1F51C
+	for <e@80x24.org>; Mon, 21 May 2018 18:48:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751100AbeEUSnF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 14:43:05 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:42761 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750923AbeEUSnE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 14:43:04 -0400
-Received: by mail-yw0-f194.google.com with SMTP id q7-v6so4768981ywd.9
-        for <git@vger.kernel.org>; Mon, 21 May 2018 11:43:04 -0700 (PDT)
+        id S1751672AbeEUSsC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 14:48:02 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:33469 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751117AbeEUSq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 14:46:57 -0400
+Received: by mail-yw0-f195.google.com with SMTP id g16-v6so4783466ywk.0
+        for <git@vger.kernel.org>; Mon, 21 May 2018 11:46:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=H1ccxC5pMlrLIdCkoJTwuhdtOGmPeTD/tS77IRy8/B0=;
-        b=tkQse//Tgq2/uykf8/3ZxLTlFlLyEZF2v3hRhFjqw0A67yRk5UakYMJkKlZpATZNBx
-         odvl/6TuWW+1Oj43b7RUZcad7RajGv52t3AJg7/HIFEtMDIWhJzE4j+T90sSiygfYULe
-         cdh9FNhseS5FPd+M01JcVNVlSttrCQDBbWf7Mc25QleSpEC0IWSStguO2lxJkJaADFoO
-         ljkX2RE9de7UZ9hJA/Lzi9mEqJH4Xe7nUehkDrCMAsE2ntpELtNg5Pr8MrpuApxYPs59
-         UDt9Y1tOroHE9uCilWSoJEWEVLPhY5NbXyjg3rtl9D+f2U81WEtHUo13ruqKAUGiqYhM
-         WdJw==
+         :cc;
+        bh=hmEpC995BRcC2oPDjAjQKRZcmQhYmMGzqWI7vsOnzjY=;
+        b=MkQZLcz74qgc8zlG1BBpmqPNh45IJWkLF+y0Z9QsbzLSu7D5fgI7jK9bKeK3crFsJ5
+         V2QX9YZXtNNEA4eNZdVazVxkeKrg4AE2fzKmhbiWBNjYXvFeTxXe6AwA1RiZFZzVFihM
+         O5T2Ge3apuqdvY20z1N8yNcPnXS5YiYEGunVml0yK27XNmTCliqd/WCquwrY+q37yhx/
+         zSJ2+8rVhR0WafTCVxu6fYVS4l+rVLK4BSLiPUbATBvR0qEE6Rx9BkBo12xRou6BOGpF
+         cqjrr73maQBOIgnaSwLc2CZ1SdQXjK/jPZYpZiAoTtvoOsjL/heOQnHLNeKPIWBB0CR8
+         WF/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=H1ccxC5pMlrLIdCkoJTwuhdtOGmPeTD/tS77IRy8/B0=;
-        b=TefOtuBHooNxvKR7XU+Hb2DnmF9lT8KIlfzU9xeo6XkIEaPj3QW8OlEP2Uy5+1vs85
-         py6sQtylnqedzCbJbonKheNgAsuaQBeQC8eYKaiN8llTiMrjuxgQI48PB2S6wfDe9Mrp
-         iGaFCsoUH68lQmnoVbiJrc1Ye9tK462aaO2Hwms1wzesqAzP57cC6GASbLbYivPkQTvF
-         06n6y1hLdDMjMABj9laAlhOMl3PCeH9pQSh2/2TcdP3yMZ5ILobFX2g5kTKF3BzwjSvX
-         TPlvnZ4n4eG5SphWc+/9ZJ5SppfDyHged5uXr9gDT8joFUIFz7HkTkf3E3G7TclZmMDt
-         t3Lw==
-X-Gm-Message-State: ALKqPwfxNWlGhzT9IAS1pF6G9ImTsu0HY5j1AuWwaPNFJxahGe1cCSD2
-        N7FMTOTSENCOnnWzqHu/x6sZul/VK/k5PLaG5i9Q9Q==
-X-Google-Smtp-Source: AB8JxZq4sNouWaDfHcUnkVVjbDr1CbaXfwGCCYwBUBLIeJWkK4BWltHV/dzee6ngSTfky4r8aCKvIxB9h0ou1M265HM=
-X-Received: by 2002:a81:9447:: with SMTP id l68-v6mr10461232ywg.345.1526928183543;
- Mon, 21 May 2018 11:43:03 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=hmEpC995BRcC2oPDjAjQKRZcmQhYmMGzqWI7vsOnzjY=;
+        b=hYoFGBGkynDkJYr0KQKTqMF+DKDnaGc44HZuy93IzFwzd2tmGILe6xj6gLEemTj+Jr
+         zrZNroa/VWszD76pln/EorXz19EdZVCPUh8xCoUJjwQVe9hmXCf/61v5Jcyp/Q59Xa9B
+         U7txlzSN55YZ2U/YoNgPOx8t3QqAOiYAsxRJvNHUQ7XT0s4eAtb8rlyb9AepTkCKTUSJ
+         UCbsYJW+xUPcoRMwAcpKtP9XAd/sDd1HeNv3uaZ9Osx2XW54aIAJKz3RfBhAvRP9CjzQ
+         1799uYUqhH3z3HLsSFwuTwNOORVe0zoKa3Uwro+c0sA2Z9BOPav2bAu7I3zAVRLOjWh+
+         08+w==
+X-Gm-Message-State: ALKqPwcJKJDMnuDtbIXnUBjj7bSIMKmCFytozBTiXY8WMJCWnCFEIVYJ
+        g2WWXn/f2PC6zNnYXYJdrlWvhiNcz835fmBxz7/FuQ==
+X-Google-Smtp-Source: AB8JxZrWZdaeXlpFT5jR5nteb8A2Xk/9nrYwOCwfPdZbRPvbYYHqqgCEYIrRsPaJGBKImrjAdhCzcLUgcvhQ3wUw3lg=
+X-Received: by 2002:a0d:e28e:: with SMTP id l136-v6mr10669783ywe.500.1526928416433;
+ Mon, 21 May 2018 11:46:56 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Mon, 21 May 2018 11:43:03 -0700 (PDT)
-In-Reply-To: <20180520105032.9464-1-martin.agren@gmail.com>
-References: <CAPig+cQaJmsJe=E6HdBw0s6eN-qW0OCezBacRcQ+UnJYMbODsw@mail.gmail.com>
- <20180520105032.9464-1-martin.agren@gmail.com>
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Mon, 21 May 2018 11:46:55 -0700 (PDT)
+In-Reply-To: <20180520174537.GA18193@hank.intra.tgummerer.com>
+References: <CACsJy8A8WZ-Gqe2Y-whJmbADrt+gZjLZ7MTwCtdnK7JDnEdtog@mail.gmail.com>
+ <20180516222118.233868-1-sbeller@google.com> <20180516222118.233868-8-sbeller@google.com>
+ <20180520174537.GA18193@hank.intra.tgummerer.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 21 May 2018 11:43:03 -0700
-Message-ID: <CAGZ79kZotwAFauTkCJ6YZ_C-MuaQpNaaS8LCniL_Or=_ccfC4w@mail.gmail.com>
-Subject: Re: [PATCH] regex: do not call `regfree()` if compilation fails
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Mon, 21 May 2018 11:46:55 -0700
+Message-ID: <CAGZ79kYkon8n9adR8AxUK9DuHGCEzJ136wgj+_q7hYn9wy-Kmg@mail.gmail.com>
+Subject: Re: [PATCH 07/11] rerere: use repo_read_index_or_die
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Antonio Ospite <ao2@ao2.it>,
+        Brandon Williams <bmwill@google.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 20, 2018 at 3:50 AM, Martin =C3=85gren <martin.agren@gmail.com>=
- wrote:
-> It is apparently undefined behavior to call `regfree()` on a regex where
-> `regcomp()` failed. The language in [1] is a bit muddy, at least to me,
-> but the clearest hint is this (`preg` is the `regex_t *`):
->
->     Upon successful completion, the regcomp() function shall return 0.
->     Otherwise, it shall return an integer value indicating an error as
->     described in <regex.h>, and the content of preg is undefined.
->
-> Funnily enough, there is also the `regerror()` function which should be
-> given a pointer to such a "failed" `regex_t` -- the content of which
-> would supposedly be undefined -- and which may investigate it to come up
-> with a detailed error message.
->
-> In any case, the example in that document shows how `regfree()` is not
-> called after `regcomp()` fails.
->
-> We have quite a few users of this API and most get this right. These
-> three users do not.
->
-> Several implementations can handle this just fine [2] and these code path=
-s
-> supposedly have not wreaked havoc or we'd have heard about it. (These
-> are all in code paths where git got bad input and is just about to die
-> anyway.) But let's just avoid the issue altogether.
->
-> [1] http://pubs.opengroup.org/onlinepubs/9699919799/functions/regcomp.htm=
-l
->
-> [2] https://www.redhat.com/archives/libvir-list/2013-September/msg00262.h=
-tml
->
-> Researched-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-byi Martin =C3=85gren <martin.agren@gmail.com>
-> ---
->
-> On 14 May 2018 at 05:05, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> My research (for instance [1,2]) seems to indicate that it would be
->> better to avoid regfree() upon failed regcomp(), even though such a
->> situation is handled sanely in some implementations.
->>
->> [1]: https://www.redhat.com/archives/libvir-list/2013-September/msg00276=
-.html
->> [2]: https://www.redhat.com/archives/libvir-list/2013-September/msg00273=
-.html
->
-> Thank you for researching this. I think it would make sense to get rid
-> of the few places we have where we get this wrong (if our understanding
-> of this being undefined is right).
->
->  diffcore-pickaxe.c | 1 -
->  grep.c             | 2 --
->  2 files changed, 3 deletions(-)
->
-> diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-> index 239ce5122b..800a899c86 100644
-> --- a/diffcore-pickaxe.c
-> +++ b/diffcore-pickaxe.c
-> @@ -215,7 +215,6 @@ static void regcomp_or_die(regex_t *regex, const char=
- *needle, int cflags)
->                 /* The POSIX.2 people are surely sick */
->                 char errbuf[1024];
->                 regerror(err, regex, errbuf, 1024);
-> -               regfree(regex);
+Hi Thomas,
 
-While the commit message is very clear why we supposedly introduce a leak h=
-ere,
-it is hard to be found from the source code (as we only delete code
-there, so digging
-for history is not obvious), so maybe
-
-     /* regfree(regex) is invalid here */
-
-instead?
-
->                 die("invalid regex: %s", errbuf);
->         }
->  }
-> diff --git a/grep.c b/grep.c
-> index 65b90c10a3..5e4f3f9a9d 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -636,7 +636,6 @@ static void compile_fixed_regexp(struct grep_pat *p, =
-struct grep_opt *opt)
->         if (err) {
->                 char errbuf[1024];
->                 regerror(err, &p->regexp, errbuf, sizeof(errbuf));
-> -               regfree(&p->regexp);
->                 compile_regexp_failed(p, errbuf);
->         }
->  }
-> @@ -701,7 +700,6 @@ static void compile_regexp(struct grep_pat *p, struct=
- grep_opt *opt)
->         if (err) {
->                 char errbuf[1024];
->                 regerror(err, &p->regexp, errbuf, 1024);
-> -               regfree(&p->regexp);
->                 compile_regexp_failed(p, errbuf);
->         }
->  }
-> --
-> 2.17.0.840.g5d83f92caf
+On Sun, May 20, 2018 at 10:45 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> On 05/16, Stefan Beller wrote:
+>> By switching to repo_read_index_or_die, we'll get a slightly different
+>> error message ("index file corrupt") as well as localization of it.
 >
+> Apart from the slightly different error message, and the localization
+> (both of which I think are a good thing), I notice that this also
+> turns a "return error(...)" into a "die(...)".  I thought we were
+> going more towards not 'die'ing in libgit.a code, and letting the
+> caller handling the errors?  Either way I think this change should be
+> described in the commit message.
+
+oops, I will to drop or fix this patch from the series as I think the
+not die()ing is a good idea for libgit.
+
+> Also all other messages in 'rerere.c' are currently not translated.
+> I'm currently working on a series that includes a patch to do just
+> that (amongst some other changes to 'rerere'), which I'm hoping to
+> send soon-ish, but the textual conflicts should we still want this
+> patch should be easy to solve.
+
+I did not mark this series well enough, it was a mere attempt to
+"see how it goes", but was retracted as a whole[1] after Junio
+dreaded some merge conflicts.
+
+[1] https://public-inbox.org/git/CAGZ79kbvjoTq5079Ks+h2HNb+D99RELYPcJk2=pvZf9-Y8dToQ@mail.gmail.com/
+
+So do not feel bad about any merge conflicts in rerere, as this
+series will not land any time soon.
+
+Stefan
