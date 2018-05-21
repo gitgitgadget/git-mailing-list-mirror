@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB7CA1F51C
-	for <e@80x24.org>; Mon, 21 May 2018 02:03:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E1941F51C
+	for <e@80x24.org>; Mon, 21 May 2018 02:03:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752537AbeEUCDl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 22:03:41 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51046 "EHLO
+        id S1752716AbeEUCDp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 22:03:45 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50922 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752645AbeEUCDN (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:03:13 -0400
+        by vger.kernel.org with ESMTP id S1752661AbeEUCCt (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:02:49 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:fc4d:8d90:22bd:91d8])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D9A3460749;
-        Mon, 21 May 2018 02:03:10 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 439AD6074D;
+        Mon, 21 May 2018 02:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526868192;
-        bh=vqhEDAX66enHXwvH4Dbb71ck/56wkA9xwXomvQggeF4=;
+        s=default; t=1526868168;
+        bh=FwO6egZ+eCKAvx75GR6uOmwfnom5OWjZ+5PGENnpuBM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Qijp+mamrjED6qeeAMQjjOaMwS+LqHqMvzEeFdfyYMGOviDxjC/bfe8T98LKykmO/
-         D8G1Mitk3Vd5+kB8wchEwwbqdNLjO5Xi7IhrrDJw52dNmSpC43M64VVVoqczDPvv5+
-         i4QjYHq76r8AQyxJcCDqXKg42f+ePg4kSXChilOtF3O9DsBO834zY3D+LYoK4pziCa
-         D0p2ngogUoSWCwQ0W8G1p9DS4To5RDPkE9HQDuxyWzCSsi1gDek6MCLiNPVcap01qN
-         pk9WuWxSU17kggFJxq6RnlvMZbvR/zp6wMu1pHD4S+v/cEO8usjxwGbpz7VdPTXl3O
-         0rEOrxO4Q40NKo7Fj4w+Gh2YjMLAembgFoD5PMAWNM/NSFDs+TBZs0IJWIHNDx4jXB
-         xmizX0ZKgck3KRa9kfobnkPxBvngk/2Mvv54kkxEMO07MCNwROHWOfeDbSUCu4JdXc
-         HHiQryoafpm+f0uUkYqF3HpLqGu5pHYIBZPuNB36RURDIx+UOpy
+        b=jy33l9ejpwHCRAz6FcCo9lJUKZMVaFFX5g7QdoaOFEZJGM0q9hfbw7pvnuzXOY8RB
+         QqM1qpltsWJEadbGM1w10kXShOX8eQOYW3173Jrt5PQjSGi9b4CjjOdNi1aaS4Dre4
+         DVHIKjvXqqJnIRWHtsUnwUTRtkQw0jpiEgeNLWTvqoBfKd134isF5zi/hIVomni0ez
+         GXLHHIrHyDTV5l4UEfr59GcsqvM2XzNe4JcKJIkMMu1IUAWAS6OCvJX7sexp/eIIVN
+         eTDF6D0uATqBy5YZSTsfFcWNGdNX/1PIDo9GwzxiEzP4I2ZFFFhjyM6tS4UnKbpvSE
+         UOhaMNNdGFu2q9SAbBmM6kQzL7+RCw92P/f52uSqdS5ZKwWqFTFlr6D6cSITq9ugva
+         vSZbWcuhkMWELDxar83wM5Xbol69/kAvUzh3esTjpzmrYHwqYgfBHGOJvcsMO2JvU1
+         RW9D9zBfntvUlyNnyeYZkYd1tgbfxceI5HJPOR6wTNwbFjF2ECx
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -44,9 +44,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v4 22/28] t4030: abstract away SHA-1-specific constants
-Date:   Mon, 21 May 2018 02:01:41 +0000
-Message-Id: <20180521020147.648496-23-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 12/28] t3103: abstract away SHA-1-specific constants
+Date:   Mon, 21 May 2018 02:01:31 +0000
+Message-Id: <20180521020147.648496-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180521020147.648496-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -57,34 +57,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for blobs instead of using
-hard-coded hashes.
+Adjust the test so that it uses variables and command substitution for
+trees instead of hard-coded hashes.  This also has the benefit of making
+it more obvious how the test works.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4030-diff-textconv.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ t/t3103-ls-tree-misc.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
-index aad6c7f78d..4cb9f0e523 100755
---- a/t/t4030-diff-textconv.sh
-+++ b/t/t4030-diff-textconv.sh
-@@ -148,7 +148,8 @@ test_expect_success 'diffstat does not run textconv' '
- # restore working setup
- echo file diff=foo >.gitattributes
+diff --git a/t/t3103-ls-tree-misc.sh b/t/t3103-ls-tree-misc.sh
+index 09dcf043fd..14520913af 100755
+--- a/t/t3103-ls-tree-misc.sh
++++ b/t/t3103-ls-tree-misc.sh
+@@ -17,7 +17,8 @@ test_expect_success 'setup' '
+ '
  
--cat >expect.typechange <<'EOF'
-+symlink=$(git rev-parse --short $(printf frotz | git hash-object --stdin))
-+cat >expect.typechange <<EOF
- --- a/file
- +++ /dev/null
- @@ -1,2 +0,0 @@
-@@ -156,7 +157,7 @@ cat >expect.typechange <<'EOF'
- -1
- diff --git a/file b/file
- new file mode 120000
--index 0000000..67be421
-+index 0000000..$symlink
- --- /dev/null
- +++ b/file
- @@ -0,0 +1 @@
+ test_expect_success 'ls-tree fails with non-zero exit code on broken tree' '
+-	rm -f .git/objects/5f/cffbd6e4c5c5b8d81f5e9314b20e338e3ffff5 &&
++	tree=$(git rev-parse HEAD:a) &&
++	rm -f .git/objects/$(echo $tree | sed -e "s,^\(..\),\1/,") &&
+ 	test_must_fail git ls-tree -r HEAD
+ '
+ 
