@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CE861F51C
-	for <e@80x24.org>; Mon, 21 May 2018 02:03:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB7CA1F51C
+	for <e@80x24.org>; Mon, 21 May 2018 02:03:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751109AbeEUCDe (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 22:03:34 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51102 "EHLO
+        id S1752537AbeEUCDl (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 22:03:41 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51046 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752716AbeEUCDT (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:03:19 -0400
+        by vger.kernel.org with ESMTP id S1752645AbeEUCDN (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:03:13 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:fc4d:8d90:22bd:91d8])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E5A6C60749;
-        Mon, 21 May 2018 02:03:16 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D9A3460749;
+        Mon, 21 May 2018 02:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526868198;
-        bh=ErIE0H1kG2jznWXK3yQv/94VWxvzJ0dZX3YsSLqJaNQ=;
+        s=default; t=1526868192;
+        bh=vqhEDAX66enHXwvH4Dbb71ck/56wkA9xwXomvQggeF4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=LoidKwGvjolhDJh0P3vFUtptZWkZy96lUtY1xsIRiYhMO/FwWbgpX0qR/6NbyW+pk
-         oBOOs8LCFpetgQXpBwoKI3I2/3d2HNGD5o6wNB+10dNFunkEBL+zGU2zNmfxCCaZyR
-         /qQuU1Z3WkHMAQmBlHuv4UgtLF/DmBKNBAe9Xd5NZFvKJjE6nnH9lMugJTIubylPo8
-         rHsnpuz6qNp1879oshfneLJ3DM2SqUqBhf3tUUsENh373zgXw8kcubZTovqJ5M2otZ
-         vBp/wUsJAAtiZMnCBjjkUE+FTgqelMoLlvShmzix+xCHSPPvPPrCqxhc/yj+X7tCnZ
-         loBHRfqlhVr26D3Y0xof8j6cEiOGRSVhQ/l3AETrCjW7f2mFzlpU7OXxjBYyV6Sl2V
-         PwjYWRgd3Xy58QC+cmQ5QLyPKPprQSuWtWhjcduoVoX6UR4jhzgs9hKmK4zrU2aAqE
-         WYotS5YVdnzwlSZCO5Xa+f2v70UlWaeAfZBxjiXmhJ6cm/oaQvp
+        b=Qijp+mamrjED6qeeAMQjjOaMwS+LqHqMvzEeFdfyYMGOviDxjC/bfe8T98LKykmO/
+         D8G1Mitk3Vd5+kB8wchEwwbqdNLjO5Xi7IhrrDJw52dNmSpC43M64VVVoqczDPvv5+
+         i4QjYHq76r8AQyxJcCDqXKg42f+ePg4kSXChilOtF3O9DsBO834zY3D+LYoK4pziCa
+         D0p2ngogUoSWCwQ0W8G1p9DS4To5RDPkE9HQDuxyWzCSsi1gDek6MCLiNPVcap01qN
+         pk9WuWxSU17kggFJxq6RnlvMZbvR/zp6wMu1pHD4S+v/cEO8usjxwGbpz7VdPTXl3O
+         0rEOrxO4Q40NKo7Fj4w+Gh2YjMLAembgFoD5PMAWNM/NSFDs+TBZs0IJWIHNDx4jXB
+         xmizX0ZKgck3KRa9kfobnkPxBvngk/2Mvv54kkxEMO07MCNwROHWOfeDbSUCu4JdXc
+         HHiQryoafpm+f0uUkYqF3HpLqGu5pHYIBZPuNB36RURDIx+UOpy
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -44,9 +44,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v4 26/28] t4045: abstract away SHA-1-specific constants
-Date:   Mon, 21 May 2018 02:01:45 +0000
-Message-Id: <20180521020147.648496-27-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 22/28] t4030: abstract away SHA-1-specific constants
+Date:   Mon, 21 May 2018 02:01:41 +0000
+Message-Id: <20180521020147.648496-23-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180521020147.648496-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -62,40 +62,29 @@ hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4045-diff-relative.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ t/t4030-diff-textconv.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
-index 6471a68701..36f8ed8a81 100755
---- a/t/t4045-diff-relative.sh
-+++ b/t/t4045-diff-relative.sh
-@@ -8,6 +8,7 @@ test_expect_success 'setup' '
- 	echo content >file1 &&
- 	mkdir subdir &&
- 	echo other content >subdir/file2 &&
-+	blob=$(git hash-object subdir/file2) &&
- 	git add . &&
- 	git commit -m one
- '
-@@ -17,10 +18,11 @@ check_diff () {
- 	shift
- 	expect=$1
- 	shift
-+	short_blob=$(git rev-parse --short $blob)
- 	cat >expected <<-EOF
- 	diff --git a/$expect b/$expect
- 	new file mode 100644
--	index 0000000..25c05ef
-+	index 0000000..$short_blob
- 	--- /dev/null
- 	+++ b/$expect
- 	@@ -0,0 +1 @@
-@@ -68,7 +70,7 @@ check_raw () {
- 	expect=$1
- 	shift
- 	cat >expected <<-EOF
--	:000000 100644 0000000000000000000000000000000000000000 25c05ef3639d2d270e7fe765a67668f098092bc5 A	$expect
-+	:000000 100644 0000000000000000000000000000000000000000 $blob A	$expect
- 	EOF
- 	test_expect_success "--raw $*" "
- 		git -C '$dir' diff --no-abbrev --raw $* HEAD^ >actual &&
+diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
+index aad6c7f78d..4cb9f0e523 100755
+--- a/t/t4030-diff-textconv.sh
++++ b/t/t4030-diff-textconv.sh
+@@ -148,7 +148,8 @@ test_expect_success 'diffstat does not run textconv' '
+ # restore working setup
+ echo file diff=foo >.gitattributes
+ 
+-cat >expect.typechange <<'EOF'
++symlink=$(git rev-parse --short $(printf frotz | git hash-object --stdin))
++cat >expect.typechange <<EOF
+ --- a/file
+ +++ /dev/null
+ @@ -1,2 +0,0 @@
+@@ -156,7 +157,7 @@ cat >expect.typechange <<'EOF'
+ -1
+ diff --git a/file b/file
+ new file mode 120000
+-index 0000000..67be421
++index 0000000..$symlink
+ --- /dev/null
+ +++ b/file
+ @@ -0,0 +1 @@
