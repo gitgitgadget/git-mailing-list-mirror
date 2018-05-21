@@ -2,95 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 042461F51C
-	for <e@80x24.org>; Mon, 21 May 2018 17:04:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE60E1F51C
+	for <e@80x24.org>; Mon, 21 May 2018 17:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753440AbeEUREC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 13:04:02 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:35845 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753382AbeEUREA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 13:04:00 -0400
-Received: by mail-pg0-f42.google.com with SMTP id 63-v6so4469368pgg.3
-        for <git@vger.kernel.org>; Mon, 21 May 2018 10:03:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wpJ+I0VhjBw6ZafE/ua9DtrUcaY0ryjLgYY7u0vpFP4=;
-        b=q1cesrtvdVMUQobgm7EsZecqW2QgFDMomBhcvlAIVfiLlJVkTOfGNFjxIXodTayDWa
-         DvQNrBNGtG9bIUgXu4F1tpfcvem6kLbByul1WItcUTRFSE6pphB1B1s3+J6XNryibz5R
-         CTEPeskn5yV0SyVbue5AkCokMN5gtiKEQc+i9KG2nQVGokt31VYjvXlSWZfKTwMgZCHt
-         Oe7IR5SqlZzborv36f1j3UgB5uFy8mbhe/KJQaKP7KTD3926epI2D6WyXnMRRLg02SbJ
-         hn0wfu+Ws94tniRSiUKcduwLwZt8HSxFo9icLfzNVYbTfS5zugtt6XNxgJGyxbxYP3Q8
-         EZ0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wpJ+I0VhjBw6ZafE/ua9DtrUcaY0ryjLgYY7u0vpFP4=;
-        b=ENNf3UqVZ0AuM4u2RvZTETIP7gKkE6nsSeqv9YJdPtVhdW1+GTAqWv/0oTnDqrjTNN
-         JWsDe0Bbz6PTXxkVgyFfxtLzQdRTu81ivzU+CYuesGbsrfYJzcamUXwhEQfxOy8Yq7/A
-         WDYf29NtzAHDhDjR5LKluXV46iU5XBr4SlhoeoQL7GId4PCjVr5OSHgc/T6v2iFhh2F/
-         SFLPDGrf4ba8oIbMbA7JxvbzQnXYe9joyW0xP8fVx59sSC6EUishHyL2hNB+++2LYZL0
-         QFlqupZF8GXJVL3HSE4zFKjYa/BE5qDYjpdAHg/yZbR4sDA1C0Fm5tyNJeb5zdUTBAAz
-         ruUg==
-X-Gm-Message-State: ALKqPwckFN7CG1Q6dBhC5xkFl1Jz9bMhmuzidpoAOAWvsj0i3wGSlEt0
-        a2qHpTDyhj3C99tIJT8abjOHVcY0
-X-Google-Smtp-Source: AB8JxZrKA6Ob6FgwxO6fjijB6925MGHbJZANcUGla6+ItXcm+JjGCEc+H2StJq4CbIvcDOIC1PpUmA==
-X-Received: by 2002:a63:384d:: with SMTP id h13-v6mr16291532pgn.209.1526922239218;
-        Mon, 21 May 2018 10:03:59 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id 16-v6sm31429429pfq.115.2018.05.21.10.03.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 21 May 2018 10:03:58 -0700 (PDT)
-Date:   Mon, 21 May 2018 10:03:53 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
+        id S1753223AbeEURG3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 13:06:29 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:40528 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753031AbeEURG2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 13:06:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=9Z9UQSttJ0D7YRqPN+mwoMtfUW91OkBMvh+aBvE6MhY=; b=aMMq2FiF2ZBqjNpsYzzvJcWSd
+        dQ+KAcFhgQhxuWGwoLcMoyGLpJm3ME4rpvJmfdaIys/CA6cldZTmVI9IR9ojzu0b2lpm0Z3Mem8Yr
+        sr7azSflvoOCnyW99QsF6NNigJKyN+BGo81xo6qFBlzg7M3GK8BQLS5rNRO1gv2lshTEp7G18PAIP
+        fRLYV3v/mlssgTuCC/Q3ZC1lGPkWKIdtmYAVwu9DtAlE1aXQRdopyvCk8akgPi332AO8RoM+eLD09
+        vUpKXV5WVS1DjqSqZD/SDOOzcGEFcHRowsulv1eFVolmqxJNpcjL8cE6JOmBrBtUYxATRvFCkgQSB
+        HcNO8lrBA==;
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:52516 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fKoGP-00GZPw-SI; Mon, 21 May 2018 13:06:27 -0400
+Date:   Mon, 21 May 2018 13:04:54 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Git Mailing list <git@vger.kernel.org>
 Subject: Re: issues(?) installing git-lfs via fedora "dnf" command
-Message-ID: <20180521170353.GA10623@aiede.svl.corp.google.com>
-References: <alpine.LFD.2.21.1805210625410.6679@localhost.localdomain>
+In-Reply-To: <20180521170353.GA10623@aiede.svl.corp.google.com>
+Message-ID: <alpine.LFD.2.21.1805211303260.19892@localhost.localdomain>
+References: <alpine.LFD.2.21.1805210625410.6679@localhost.localdomain> <20180521170353.GA10623@aiede.svl.corp.google.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1805210625410.6679@localhost.localdomain>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Robert P. J. Day wrote:
+On Mon, 21 May 2018, Jonathan Nieder wrote:
 
->   $ sudo dnf install git-lfs
-[...]
->   Running transaction
->     Preparing        :
->     Installing       : git-lfs-2.4.0-1.fc28.x86_64
->     Running scriptlet: git-lfs-2.4.0-1.fc28.x86_64
->   Error: Failed to call git rev-parse --git-dir --show-toplevel: "fatal:
->   not a git repository (or any of the parent directories): .git\n"
-[...]
-> is one supposed to be *in* a git repository when installing, because i
-> was in fact at the top level of my linux kernel source repo, so i'm
-> unclear on what that "Error" is trying to tell me. am i just being
-> clueless? is this something that i should submit as a fedora packaging
-> issue?
+> Robert P. J. Day wrote:
+>
+> >   $ sudo dnf install git-lfs
+> [...]
+> >   Running transaction
+> >     Preparing        :
+> >     Installing       : git-lfs-2.4.0-1.fc28.x86_64
+> >     Running scriptlet: git-lfs-2.4.0-1.fc28.x86_64
+> >   Error: Failed to call git rev-parse --git-dir --show-toplevel: "fatal:
+> >   not a git repository (or any of the parent directories): .git\n"
+> [...]
+> > is one supposed to be *in* a git repository when installing, because i
+> > was in fact at the top level of my linux kernel source repo, so i'm
+> > unclear on what that "Error" is trying to tell me. am i just being
+> > clueless? is this something that i should submit as a fedora packaging
+> > issue?
+>
+> Yes, this looks like something that should be reported as a Fedora
+> packaging issue.
+>
+> The packager should be able to find out whether it's an issue in
+> git-lfs upstream and report it to that project if it is.  Git-lfs is
+> not part of git.git; it's a separate project:
+> https://github.com/git-lfs/git-lfs/blob/master/CONTRIBUTING.md
+> I believe they use github's issue tracker to track bugs.
 
-Yes, this looks like something that should be reported as a Fedora
-packaging issue.
+  it would *appear* that this is a combination of both a git issue,
+and a red hat packaging issue:
 
-The packager should be able to find out whether it's an issue in
-git-lfs upstream and report it to that project if it is.  Git-lfs is
-not part of git.git; it's a separate project:
-https://github.com/git-lfs/git-lfs/blob/master/CONTRIBUTING.md
-I believe they use github's issue tracker to track bugs.
+https://bugzilla.redhat.com/show_bug.cgi?id=1580357
+https://github.com/git-lfs/git-lfs/issues/3013
 
-Thanks,
-Jonathan
+rday
