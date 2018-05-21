@@ -2,102 +2,224 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B07231F51C
-	for <e@80x24.org>; Mon, 21 May 2018 12:17:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 929321F51C
+	for <e@80x24.org>; Mon, 21 May 2018 12:30:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751504AbeEUMRv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 08:17:51 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53327 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751188AbeEUMRu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 08:17:50 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LoVja-1fzp4d46dm-00gY2G; Mon, 21
- May 2018 14:17:46 +0200
-Date:   Mon, 21 May 2018 14:17:49 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Clemens Buchacher <drizzd@gmx.net>,
-        Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: [PATCH 0/2] Test improvements for 'sg/complete-paths'
-In-Reply-To: <nycvar.QRO.7.76.6.1805211334220.77@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1805211414200.77@tvgsbejvaqbjf.bet>
-References: <xmqq1sf24syg.fsf@gitster-ct.c.googlers.com> <20180518141751.16350-1-szeder.dev@gmail.com> <nycvar.QRO.7.76.6.1805211334220.77@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751139AbeEUMai (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 08:30:38 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:52759 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751103AbeEUMah (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 08:30:37 -0400
+Received: by mail-it0-f65.google.com with SMTP id y189-v6so20822944itb.2
+        for <git@vger.kernel.org>; Mon, 21 May 2018 05:30:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=rbEEjwkbEKi47/Le9Z6isOi6SGX8lswgKHYNuM1E5PY=;
+        b=qYiLNj/L1XPCI+CJVgxd1B6VAJln06moDXWwt6cmQdqnzK8DYk5bD4IgUjhUZsAbnf
+         HKUC0psXEMfAFpTrEauKg/r1scLdIZzkJrEyZaZ7Ra7+DUpYEZw1lIjEvr7tzjy/6b09
+         1/f60NS6c+SAm8l1FBS/Xt0tMjbpM34rkEjx7+6MtiIJMGGnpVy7Rs8xlEvuQl9s3ScJ
+         5QWrBkKs3y1uYvv/ntaNnkqOEHAfjTr/x4F1Bal8Pa+uIByZBaxpEMRtWoNUTbKALuIW
+         5307aJrm7oRmAlReQI0XCwb9r/1ycSPejaqp5ZkMyguTKXoc0UgQFGWbXv0C4yk5grW+
+         TTHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=rbEEjwkbEKi47/Le9Z6isOi6SGX8lswgKHYNuM1E5PY=;
+        b=g1eWxGepIl4BxYLMhCG7Sn3AfKM82wgJ/YW2HdGrp3XtPQyCoJTrNyiMpsRwb+gq6o
+         e4WzyUPLV19ac+FCUHSjDpW4NPVR8caCqxnsPakLDIl1jg8Fdvvg7WoMePTpwTSRKRcV
+         RypYwHBg7o6Lf7T6e5fuzWrHTUkZrqMUz00zDIrNYaRlJVA9AaNUbg/moG8xqUWuI80t
+         QhP7KXb06w5RnqCYvWjQt/m+CDGs/Jay1f3A2uNUAWKsN/dKiaeuw9jz0P6D9lH4oP2w
+         JkI/vedAMJqR9A58JytdZ+T45AQMfGXp/t11veJ8XC9MibenYpA464mR7dwQg45X5VF7
+         k5TQ==
+X-Gm-Message-State: ALKqPwdcEknEkJmwd73tms3sXWFfK6plewyslpaZRzvmqTSVyou1+3pe
+        MGT5FVpvCh2hulmn+e9k9p+kz1SGjbh0SPoTOUM=
+X-Google-Smtp-Source: AB8JxZqtLV9Gs8y0eGZ/DOog8IFroOK6j3P0R4C3l0m5gWI5s6EZtLsBJ1TrJe6n5GD3BeGIBlxv/T0Xm6Itk0Ajvrc=
+X-Received: by 2002:a24:dd94:: with SMTP id t142-v6mr17071685itf.81.1526905836409;
+ Mon, 21 May 2018 05:30:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1367789117-1526905070=:77"
-X-Provags-ID: V03:K1:U/GES8bY+pQpC33Gzf69unNwdb1ZGvRKTBmnVgS2TUNE/f5URNr
- jruMpgV8U4Zgeb6Y0+n28xSzIQnjNxUA6Z4MCbVfn+qpEJtniH5GTRWwgI+3O6R1KUqcGDG
- 9j2TbX5nemYlPbBoqlEAQPlzEfEE5iMnC0Q11GW4Fmu0aGdfl2marSFe41V12Fd7cGMy9Lo
- 9+MsRL+FeAI9G2sgF4cZg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:n04STbPFqRI=:DpDnE2swwP+6ad+oFWNVXM
- J2a3dD4dgnPqcfco43xCXYoBPXQ8rJVD3TfJ6LMM55uGq4zVn5PtRGaOO12WETy8/Go/pcpH4
- M579V8doWLplzTuWlaCr3bSlIYGxGJ9lTqjDKtY4kJ+7EW+ba4e1YnyO+J0KTWXJKlmbBNRiO
- pV5ah0pX3XIUDU0afUanX+mX6Xou592yUihrsEVwF2+X3KsTIjLzmTCFj831E5u8sDa2RxEOg
- 1yFaFX08Z5qGuHFv8tbmZLaYI6DZ/KE9y3eZluJvymcK9WT+KFkoHdNJWkfP9garduTuIKJDO
- tZJDj9PDGG/JnQrnazVQGxXruCsZVzoqqMQwtpSEnc1xcXcyBMB4+8+Na0zeiD93RbUUjeX78
- 8dn2EvljqYyuNM2XaLoQ+jfxUKM8k2bZ0HJQvmjQWgeL+hRa8JIGFXg6Ar1DR/c1w3vrmcnGZ
- atFugOEnXbKBTfjEh3RxdNtIqS+KNYukRhCC2CTBldg7fzIIBX8WPDIf+g/lkq0FvDuLowMSl
- GaQKfd3gS+FXZECMfutrGafONJF0BWiyhk3jvWrgKzmPRpsnGfBBJCgCjFuKUlYJPzskkZQyL
- TGx+zbTl4NM2ls/Ur74XAgeLV7LxizBsx/BYSZSq+Z7WfPNAl5Z04ExekySRql6LB309IuUqT
- V0TJpOWeY7+fLaSfBBoF31PoWII3SevpN7vkKnW8lGkGDl6+OUkVrm60J70NCTqvmnJ25QWZC
- y6uK1+2Brs1lEQidoOtWUrWZilERMdF+JZkjL8UAPz1jhjEkWY1XEPZb/2hvKW6YTgKOUPZkb
- DcyeQ5j
+Received: by 2002:a4f:22db:0:0:0:0:0 with HTTP; Mon, 21 May 2018 05:30:35
+ -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1805211126140.77@tvgsbejvaqbjf.bet>
+References: <20180521055143.14701-1-chriscool@tuxfamily.org> <nycvar.QRO.7.76.6.1805211126140.77@tvgsbejvaqbjf.bet>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 21 May 2018 14:30:35 +0200
+Message-ID: <CAP8UFD3FZP3UqoSwL4z5haxfzPkONCX7m=o6PhfVDMhrasSAwA@mail.gmail.com>
+Subject: Re: [PATCH] t: make many tests depend less on the refs being files
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        David Turner <novalis@novalis.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        David Turner <dturner@twopensource.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Dscho,
 
---8323328-1367789117-1526905070=:77
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Mon, May 21, 2018 at 11:41 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> On Mon, 21 May 2018, Christian Couder wrote:
+>
+>> From: David Turner <dturner@twopensource.com>
+>
+> I vaguely remember that Dave suggested using a different email address
+> these days...
+>
+> *clicketyclick*
+>
+> ah, yes:
+> https://public-inbox.org/git/1474935093-26757-3-git-send-email-dturner@tw=
+osigma.com/
 
-Hi Junio,
+Yeah, I actually used "David Turner <novalis@novalis.org>" in the --cc
+option I gave to `git send-email`...
 
-On Mon, 21 May 2018, Johannes Schindelin wrote:
+> So maybe update it here, too, to
+>
+>         From: David Turner <novalis@novalis.org>
 
-> On Fri, 18 May 2018, SZEDER G=C3=A1bor wrote:
->=20
-> > > > So, I think for v2 I will rewrite these tests to call
-> > > > __git_complete_index_file() directly instead of using
-> > > > 'test_completion', and will include a test with spaces in path
-> > > > names.
-> > >=20
-> > > Quite well thought-out reasoning.  Thanks.
-> >=20
-> > Unfortunately I couldn't get around to it soon enough, and now the topi=
-c
-> > 'sg/complete-paths' is already in next, so here are those test
-> > improvements on top.
->=20
-> I can verify that the weeks-long breakage of `pu` on Windows has been
-> addressed, probably by this patch series.
+...but I thought it was better to keep the original author and
+Signed-off-by as they are in the original commit:
 
-Please note that as the branch that is fixed by these two patches was
-already merged down to `next`, the Continuous Testing on Windows reports
-that `next` is broken.
+https://github.com/dturner-tw/git/commit/0a3fa7fbd7f99280b5f128be3e1ed04e04=
+5da671
 
-(I saw that breakage for over a week, but was too busy elsewhere to act on
-it.)
+Now I am ok to update them if it is preferred.
 
-It would be really lovely to see it fixed soon, so that other bugs cannot
-be hidden by that breakage.
+>> So that they work under alternate ref storage backends.
+>>
+>> This will be really needed when such alternate ref storage backends are
+>> developed. But this could already help by making clear to readers that
+>> some tests do not depend on which ref backend is used.
+>>
+>> This patch just takes care of many low hanging fruits. It does not try
+>> to completely solves the issue.
+>>
+>> Signed-off-by: David Turner <dturner@twopensource.com>
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>
+> This is great. I am all for making the tests better ;-)
 
-And I would also love to see sg/complete-paths to be merged down to
-`master` *only* in conjunction with these two patches, not on its own
-(because that would break the Continuous Testing on Windows of `master`,
-which is something I really want us to avoid).
+;-)
+
+>> diff --git a/t/lib-t6000.sh b/t/lib-t6000.sh
+>> index 3f2d873fec..b8567cdf94 100644
+>> --- a/t/lib-t6000.sh
+>> +++ b/t/lib-t6000.sh
+>> @@ -4,11 +4,10 @@ mkdir -p .git/refs/tags
+>>
+>>  >sed.script
+>>
+>> -# Answer the sha1 has associated with the tag. The tag must exist in .g=
+it/refs/tags
+>> +# Answer the sha1 has associated with the tag. The tag must exist under=
+ refs/tags
+>>  tag () {
+>>       _tag=3D$1
+>> -     test -f ".git/refs/tags/$_tag" || error "tag: \"$_tag\" does not e=
+xist"
+>> -     cat ".git/refs/tags/$_tag"
+>> +     git rev-parse --verify "refs/tags/$_tag" || error "tag: \"$_tag\" =
+does not exist"
+>
+> Line longer than 80 columns...
+
+Ok, the 'error "..."' will be on another line in the next version.
+
+>> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+>> index 0680dec808..886a9e3b72 100755
+>> --- a/t/t5500-fetch-pack.sh
+>> +++ b/t/t5500-fetch-pack.sh
+>> @@ -30,7 +30,7 @@ add () {
+>>       test_tick &&
+>>       commit=3D$(echo "$text" | git commit-tree $tree $parents) &&
+>>       eval "$name=3D$commit; export $name" &&
+>> -     echo $commit > .git/refs/heads/$branch &&
+>> +     git update-ref refs/heads/$branch $commit &&
+>
+> I think we have to be careful here to quote both "refs/heads/$branch" and
+> "$commit" here, as a bug that introduces spaces into $commit or $branch
+> would have been caught earlier, but not now, unless we quote.
+>
+> This goes for all introduced `update-ref` calls.
+
+Ok, they will all have quoted arguments in the next version.
+
+> Maybe even for some `git rev-parse --verify` calls.
+
+Ok, I will take a look at that.
+
+>> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+>> index 8f5c811dd7..c3b89ae783 100755
+>> --- a/t/t9903-bash-prompt.sh
+>> +++ b/t/t9903-bash-prompt.sh
+>> @@ -148,7 +148,7 @@ test_expect_success 'prompt - inside .git directory'=
+ '
+>>  test_expect_success 'prompt - deep inside .git directory' '
+>>       printf " (GIT_DIR!)" >expected &&
+>>       (
+>> -             cd .git/refs/heads &&
+>> +             cd .git/objects &&
+>>               __git_ps1 >"$actual"
+>>       ) &&
+>>       test_cmp expected "$actual"
+>> --
+>
+> This one looks wrong.
+>
+> Upon cursory review, one might be tempted to assume that the file is now
+> written into .git/objects/ instead of .git/refs/heads/. And the patch
+> context provided in the email is not enough to see (gawd, I hate
+> mail-based patch review, it really takes all my Git tools away from me).
+> The trick is that `actual` points at an absolute path:
+>
+>         #!/bin/sh
+>         #
+>         # Copyright (c) 2012 SZEDER G=C3=A1bor
+>         #
+>
+>         test_description=3D'test git-specific bash prompt functions'
+>
+>         . ./lib-bash.sh
+>
+>         . "$GIT_BUILD_DIR/contrib/completion/git-prompt.sh"
+>
+>         actual=3D"$TRASH_DIRECTORY/actual"
+>         [...]
+>
+> So the remaining question (which probably wants to be added to the commit
+> message together with a hint that `actual` points at an absolute path) is=
+:
+> Why not `cd .git` instead?
+
+I think anywhere inside ".git/" should work, so I guess
+".git/refs/heads" was chosen to make sure that adding anything after
+".git/" does not change the result.
+
+I think I can drop this for now and change it later in its own commit
+with related explanations.
 
 Thanks,
-Dscho
---8323328-1367789117-1526905070=:77--
+Christian.
