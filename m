@@ -2,235 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 419621F51C
-	for <e@80x24.org>; Mon, 21 May 2018 22:57:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADA8F1F51C
+	for <e@80x24.org>; Mon, 21 May 2018 23:08:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751039AbeEUW5U (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 18:57:20 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:43425 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750837AbeEUW5T (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 18:57:19 -0400
-Received: by mail-yw0-f196.google.com with SMTP id r202-v6so4983458ywg.10
-        for <git@vger.kernel.org>; Mon, 21 May 2018 15:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=eZjvHNjoz/T22P5vBSec1PaDHvD4RTfLazdfP5PRZyk=;
-        b=XWBcvr983mLdr+TB9pAFjw5ia7mJsQMKsbK/UpQBNdfyAcgV3P8HPBxe3Df/d7wr90
-         zRmHfiAPKvp6jKe4Wcu0ooE509zwS/cxEDe7rhko2cycIlnDClboiR60MXi0eEWW2uRM
-         G/VadiOzdf9srcu4HPdDK+ieRwRpP782H1HUWgI1xohaadFtyIlchs32SU2jJItiLZTF
-         O1qYG1xRIikfxfUzwV8Ims5lMWfPD1IHcA7k8ks093G4nkQ7jYFhS2nAhPPIpoq+DT3K
-         po+9gptvNtBlgHRM9HKGMEM+ppKwtnFY7UMNeKhib4mZpN2ds0Hs8t1TPmOaw+i3d8Qp
-         yXmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=eZjvHNjoz/T22P5vBSec1PaDHvD4RTfLazdfP5PRZyk=;
-        b=mq8ukoei8OMZMGsVZIKETz/od6siIcKv55iZtBeZWJd6Gy3z6jPjrH8wtmc03zTBvR
-         068V6Dt1rs1BIVVwYzNDghTJPhOKgumNE2IMzChwAzSoEXdSmbFyAGaztHA2drX4Ifs6
-         Hl3xmaV1MiLqp5HgYYdZqn5J7ECZGk056RNqAROoXLT5amcOHpFGV6oyyaobnydYZeRq
-         j7plU95olb+MUHsQvbGe4wKDi4WpM5mOrAEs34IEEF1qqKklUmFjb2tmk6wegQuWIjYk
-         Knv6yY3H7lDFYYV9h3gfdB6zD/8auo05pUaY6+AUPQfGdVHU7ERStY5Iw5nNhpj4ywyN
-         asmw==
-X-Gm-Message-State: ALKqPwf/TO4/2vXzoASxYwdCbNwwG4LU5DpDOY/0Xqrp7ss+Hv7LrFco
-        s/EkscMzYveH/lw0ECWZEkXXIiCiSNQwjGSj8W0F09R84ac=
-X-Google-Smtp-Source: AB8JxZpui84vkT5hUysnPv6EitbWqkXCJIs3di7zxaoUHmdS+MESlFytBPLmeYWBrx4dXBIUP+J3hMIvMmWtJ023L30=
-X-Received: by 2002:a81:b205:: with SMTP id q5-v6mr11100509ywh.414.1526943438878;
- Mon, 21 May 2018 15:57:18 -0700 (PDT)
+        id S1751073AbeEUXIx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 19:08:53 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51734 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750942AbeEUXIw (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 21 May 2018 19:08:52 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:fc4d:8d90:22bd:91d8])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7906460444;
+        Mon, 21 May 2018 23:08:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1526944131;
+        bh=DYGn+c+CMRuItMPXuleXSVGC0srT6JWCQpF6AzzBou4=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Y6VyrjIeGvptR1LrGkQgsJRCdnwSaC5t8e1ZFhgjHC6UKYQYbO2beqMroTACDp3sw
+         5qqXXDiDm+8nxM00EnTLJ8VCHcgeUdgwIXSoR/oSn+rhqhkmDAPV3HQJm2vctRpn0E
+         MKLP7YMhRhVQYh1R43Fvl8NaAuh8vONaU3NoTsYogaZcrpg3T53hxBEneXpS3oEytR
+         L+OBfeUAbKPyga873IjrLan8pdI0V0FTNLCTeRqFmqlZWy4Yn3iSI2ytW/oRRG1HxB
+         yCNfCi7wyh3UhCD+bW3GGlK2J3Q6TM0xDOIoYrJM5zNeOslXntPgQu+YlrAa3JXesU
+         PlNu04PPWPa8j6w78V5BMySF2XiuQoQDFdXhpRQqoXrsnAr4mYbIxoB7y3NEVLk+u9
+         +4KYmB8xn+oq6+JM2urWGweYnctf4K2DJ9YSzlyxhe9SThyx3lmG06rFf/xKq6FnGl
+         xxdlsQas0cWHT0aCnH0GjJDUADBHw+IA0jpGQy50up4oYBRmZmn
+Date:   Mon, 21 May 2018 23:08:45 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v4 00/28] Hash-independent tests
+Message-ID: <20180521230845.GG652292@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>, Stefan Beller <sbeller@google.com>
+References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
+ <20180521020147.648496-1-sandals@crustytoothpaste.net>
+ <63adc6e2-19c6-72c9-1c56-47503e128231@gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Mon, 21 May 2018 15:57:18 -0700 (PDT)
-In-Reply-To: <20180521204340.260572-1-jonathantanmy@google.com>
-References: <20180521204340.260572-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 21 May 2018 15:57:18 -0700
-Message-ID: <CAGZ79kb96Fxf1OBbnqmAtAm_EA5y9+0NKcNqhKjXhavWe6WzWA@mail.gmail.com>
-Subject: Re: [RFC PATCH] fetch-pack: space out sent "haves" in negotiation
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ewQ5hdP4CtoTt3oD"
+Content-Disposition: inline
+In-Reply-To: <63adc6e2-19c6-72c9-1c56-47503e128231@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-3-amd64)
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
 
-On Mon, May 21, 2018 at 1:43 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> I was thinking about fetch negotiation in some non-ideal situations
-> (specifically, when the client repo contains two or more independent
-> branches that meet only somewhere far in the past) and thought about
-> skipping over intermediate commits, using exponentially larger skips as
-> we proceed, when generating "have" lines. This is in the hope of
-> reducing the bandwidth and roundtrips needed when fetching, and does not
-> require a modification to the server.
+--ewQ5hdP4CtoTt3oD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In an ideal world, the server and client would both estimate the potential
-reduction of the packfile to send, and base the decision if to continue
-negotiating on the trade off if the packfile reduction savings are greater
-than the cost of negotiation (in terms of bandwidth or time).
-(e.g. the server could keep track of the "potential largest packfile to
-sent" as well as the "potential smallest packfile to sent" given the
-state of negotiation. And as soon as the difference between those
-two packs is smaller than the size of one round of negotiation,
-it is better to stop and just sent the large file).
+On Mon, May 21, 2018 at 09:17:39AM -0400, Ben Peart wrote:
+> Do you plan to update those tests that hard code the SHA of the index file
+> itself?  For example, t1700-split-index.sh has hard coded values for the =
+SHA
+> and currently only supports different hard coded values for V4 indexes vs
+> others.
 
-You state that you do not want to change the server side, and stick to
-the current protocol, which makes this ideal world scenario moot, but
-shifts the problem to "picking haves more intelligently".
+I have some additional test changes that use the SHA1 prerequisite,
+plus some that fix issues due to the use of a different hash algorithm
+or a longer hash algorithm.
 
-> I'm not sure if this is the best way,
+Ultimately, I plan to discard the SHA1 prerequisite and update those
+tests to use a translation table to look up the correct values depending
+on the hash algorithm in use.  However, we haven't decided on the actual
+algorithm that NewHash will be yet, so I can't write those translation
+tables at this point.
 
-I think it is the best for a short term gain, as the picking algorithm is
-not part of the protocol, so it can be easily extended/reverted/improved
-as we go. So I would continue this way.
+I plan to start a discussion about the choice of algorithm soon, since
+we'll soon need to make a decision in order to progress, but I need to
+do some research and testing in order to have sufficient facts to
+present to the list.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-> (1) The implementation that I have
->
-> This patch contains some drop-in code that passes all existing tests,
-> but the new negotiation algorithm is not tested.
->
-> To mitigate the effect of skipping, I included functionality wherein
-> the client will retry the commits in a skip if the server ACKs the
-> destination of the skip, but this is currently imperfect - in
-> particular, the server might end the negotiation early, and the commits
-> retried in my current implementation are a superset due to the fact that
-> I didn't store the commits in the skip.
+--ewQ5hdP4CtoTt3oD
+Content-Type: application/pgp-signature; name="signature.asc"
 
-So we start with exponential hops, fall back to linear probing and then
-"make off by one errors" in the linear probes?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
 
-> (2) Possible future work for my implementation
->
-> Since each sent commit maintains pointers to sent descendants and sent
-> ancestors (strictly speaking, only the "close" ones - to find all of
-> them, you need the transitive closure), this can be used for some sort
-> of error correction when, during a stateless RPC negotiation, the server
-> (which may be a group of eventually consistent servers behind a load
-> balancer) reports that it no longer has a commit that it said it had.
-> For example, we could in this case mark that commit as "they_have=NO"
-> and for all its closest ancestors, set it to "they_have=YES" unless they
-> in turn have a descendant with "they_have=YES" or
-> "they_have=HAVE_DESCENDANT".
->
-> (3) Other ways of improving negotiation
->
-> If we're prepared to commit-walk a significant part of the entire local
-> repo (as we are, in the situation I described in the first paragraph),
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlsDUX0ACgkQv1NdgR9S
+9oucIRAA0LMf8tledw47YFqFTSqWwYJ/+p1UuRma6p5GdFVcSjW0pcGgaNVhPQ4J
+6W8jlBZ67JgGtAQ73V8OqYpqqInzNEDqfeSrAYrO+bAbWVCNBk6qbmYolFVwe34y
+uYkW8z9tuDjTzuKj71s4aXPtkt9sMTUvZHVLkD2HY1qrD+g2iE0ZB1gJR8qO3cvc
+O9CKB0zmh+9eJpWQFIevMXi3WDbAXCSUkZyKd0+K2RZYEpPBJ7QBjfnrkhmYuF6B
+7uzU/FRs79zb7hQ3dNwLmYU8MfqV7Iv72+lmobhlJl4UE38g9e8n9Ph6JBNj2OeS
+K4H63kmxWL6fx2mvW4yV+NEaotu8uvfsuv8+BUfGHlDg4+JGoA3ELyHWYgB6kdXl
+rqx79M65bMDkhr1D1l6IVPZfUDQv9LXNJ9L7XRisOU3XPP1VapXnPQftx/SeE3Cx
+Cz4Erop1s+vFoVUOfqXZOnqZJxqAW5vUky470E7voghSn5o+LE6sxKhtbIKWMd7i
+U2k/M2lLmPOjycTTijhKd1bcvHhXlORXbIPo5dT2Tah6rsav2L0WJR2qr1tZia2k
+s9Fs3l0CjHv9BgLDlULd0YAOOog3tSoCYxDXFzX5cN0cMpBmWjoKZ/lG+RIuG6c4
+JmakqLNsNcXFIvM3x6lqSdjNedhFEpji65yM3LoohpUyS+32PTk=
+=6Qcq
+-----END PGP SIGNATURE-----
 
-> and if we have access to corresponding remote-tracking information,
-
-This is a dangerous assumption, as not everyone is having a 1:1 relationship
-with their remote server (for e.g. code review), but there are these triangle
-workflows in the kernel community for example, where you push in one
-remote direction and (re-)obtain the history merged into the bigger picture
-from another remote. And these two remotes are not special to each other
-on the client side.
-
->  fetch-negotiator.c | 309 +++++++++++++++++++++++++++++++++++++++++++++
->  fetch-negotiator.h |  40 ++++++
-
-This patch is moving the algorithm driving the selection of new
-commits to pick to
-a new file, but there is no new algorithm, yet?
-As hinted at from (1), this is smarter than what we did before by
-picking commits
-non-linearly but with some sort of exponential back off, how does it end the
-exponential phase?
-
-The way forward out of RFC state, might be to separate the introduction of a new
-improved algorithm and the refactoring. So first move code literally into the
-fetch-negotiator file, and then add improvements in there, or is it
-just not worth
-the refactoring and directly put in the new algorithm?
-
-Another use case we discussed was "open-ended bisection", where you know
-you are in a bad state and "once upon a time it worked", and now you are tasked
-to find the offending commit. To find such a commit, you probably
-would also start
-with such an exponential back off until you run into a "good frontier"
-of commits
-and then use conventional bisect to narrow down the exact commit.
-
-
-> +enum they_have {
-> +       /*
-> +        * We do not know if the server has this commit, or we know that the
-> +        * server does not have this commit.
-> +        */
-> +       NO,
-> +
-> +       /*
-> +        * The server has this commit, and we do not know (or did not keep
-> +        * track of) whether it has any of its descendants.
-> +        */
-> +       YES,
-> +
-> +       /*
-> +        * The server has at least one of this commit's descendants, and that
-> +        * descendant is marked with YES. When resending "have" lines, we do
-> +        * not need to resend this commit, because doing so is redundant.
-> +        */
-> +       HAVE_DESCENDANT
-> +};
-
-Thanks for the docs!
-
-> diff --git a/fetch-negotiator.h b/fetch-negotiator.h
-> new file mode 100644
-> index 0000000000..c51d52a0d2
-> --- /dev/null
-> +++ b/fetch-negotiator.h
-> @@ -0,0 +1,40 @@
-> +#ifndef FETCH_NEGOTIATOR_H
-> +#define FETCH_NEGOTIATOR_H
-> +
-> +#include "prio-queue.h"
-> +
-> +struct sent_commit;
-> +
-> +struct fetch_negotiator {
-> +       struct sent_commit **sent_commits;
-> +       size_t sent_commit_nr, sent_commit_alloc;
-> +       struct prio_queue candidates;
-> +};
-
-Maybe we can just declare the struct fetch_negotiator here and not
-define it, such that nobody outside the actual implementation tries
-to access its internals?
-
-> +
-> +void fetch_negotiator_init(struct fetch_negotiator *n, struct commit **tips,
-> +                          int tip_nr);
-> +
-> +struct commit *fetch_negotiator_next(struct fetch_negotiator *n);
-> +
-> +/*
-> + * Indicate that the server has this commit. The commits passed to this function
-> + * should be in order of their return from fetch_negotiator_next().
-> + *
-> + * Invocations of this function on the same commit after the first time have no
-> + * effect.
-> + */
-> +void fetch_negotiator_ack(struct fetch_negotiator *n,
-> +                         const struct commit *commit);
-> +
-> +/*
-> + * Iterate through the commits invoked with fetch_negotiator_ack. The negotiator
-> + * makes an effort to remove redundant commits from the list.
-> + *
-> + * This is useful for stateless connections, in which information about what the
-> + * client knows needs to be replayed in every request.
-
-So even if we do not use the skip commit logic, this would be a benefit for any
-http(-v0) and v2 users of the protocol?
-
-Thanks,
-Stefan
+--ewQ5hdP4CtoTt3oD--
