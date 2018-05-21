@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A9831F51C
-	for <e@80x24.org>; Mon, 21 May 2018 02:02:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 271671F51C
+	for <e@80x24.org>; Mon, 21 May 2018 02:02:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752654AbeEUCCn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 22:02:43 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50866 "EHLO
+        id S1752658AbeEUCCr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 22:02:47 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50880 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752645AbeEUCCl (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:02:41 -0400
+        by vger.kernel.org with ESMTP id S1752643AbeEUCCn (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:02:43 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:fc4d:8d90:22bd:91d8])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AD8C360746;
-        Mon, 21 May 2018 02:02:38 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BB0A360747;
+        Mon, 21 May 2018 02:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526868160;
-        bh=mqBu9whqEeMOR8DofMG/yQNOXY/GMlA/bIFoc06U86k=;
+        s=default; t=1526868162;
+        bh=XEKVT3yPmx3r4ENn87G2DLpPzpqiCkYlXAwj93wMTso=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=lg8smmoikJKfE9k9mwyXdCx0KZd7Ical21ocI0t6HMNneA14oa+gXCSN/YdqIzZt4
-         l2IquX58gh5QVkB0iBrM1YAEdkgHl2UoO3uYnH6rPcY6oUDs86N7ZOVFumN6zRLECu
-         RAHqiEAL2vy8VpL8B7ccAAWbAXkd77BqoGfVZNbWiENuHAvgHI6ibLSOZchjfjGmCv
-         xwtjBeX9eCC43v8JXAOaZlFJjRyA5z6QhZ211lC96g0s9BL6sg0i/mpCsmTgjjd9ra
-         HS5sRJOEjJg5TqJmb4qyvlc4QBQbxdeeeSooKtGDoLaVGU7wcx3YZYb3JS5NfvfJta
-         BmFOHE9Yz1pJserc6jNdyp+Zi3/ycFnOma2pDQRlqJoBrhr5z4WOsyX9+JxmFmAg7I
-         IDWAd0HakKgcOhWRJcQ3GuXmdpvtVbdZggAYb8kvpABfuLUyxvIlfa/e7LCCBcgZ32
-         uQW2a2lZMODcON4EQYBKgsyF0uq4QVCbckftPe2Ir87mN47HIwP
+        b=KYHkVaCI7uxDQq3jVfegLRb2zM4WIVSx55Ndu/MuWnxL6pwDMkY1YweNfOnCupSwG
+         zNal4SVqeq4caysXadloW7wVm4DJUiBk6QLwqcHHwVkb0JqWRXDUjQbxasF7O+fswl
+         rVLGFTrCpTRcY1UOte1XS3q1F8Wb/TBaSGnvvO/xVImjBk5P/pzoH+jNCyRbDBNUf5
+         c86CGFSndRkB/ra0lwsaZM/X0mB1kWcUMWkitpFtABUtl21vX/1BA1mKUdLl0OE6xP
+         +Zop+S1Km73STm3klCQzMS9/WVxvHFMVCJD4H5pW734ojWHLTGCR1CuNiKEI51hqPS
+         zVW92p75ffd3jquEVTkJCBnRQdlMonVNy/tXRvWux7g/AZXuU3ZvYXC5fPqReeXrqZ
+         RoyAHNxWfdKrsEGZoBE1PmZaqKg3lQ9xqW3JOkpfOy0gKi+tqv5kkZdAKeTGctnmRw
+         dzC36KvmBAs+EbmTbNB4PEf+ZSy+TNnXHjccbm/HKkfYBLJK5UJ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -44,9 +44,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v4 08/28] t1512: skip test if not using SHA-1
-Date:   Mon, 21 May 2018 02:01:27 +0000
-Message-Id: <20180521020147.648496-9-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 09/28] t4044: skip test if not using SHA-1
+Date:   Mon, 21 May 2018 02:01:28 +0000
+Message-Id: <20180521020147.648496-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180521020147.648496-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -63,23 +63,23 @@ using SHA-1.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t1512-rev-parse-disambiguation.sh | 6 ++++++
+ t/t4044-diff-index-unique-abbrev.sh | 6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index 711704ba5a..6537f30c9e 100755
---- a/t/t1512-rev-parse-disambiguation.sh
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -22,6 +22,12 @@ one tagged as v1.0.0.  They all have one regular file each.
- 
+diff --git a/t/t4044-diff-index-unique-abbrev.sh b/t/t4044-diff-index-unique-abbrev.sh
+index d5ce72be63..647905e01f 100755
+--- a/t/t4044-diff-index-unique-abbrev.sh
++++ b/t/t4044-diff-index-unique-abbrev.sh
+@@ -3,6 +3,12 @@
+ test_description='test unique sha1 abbreviation on "index from..to" line'
  . ./test-lib.sh
  
 +if ! test_have_prereq SHA1
 +then
-+	skip_all='not using SHA-1 for objects'
-+	test_done
++       skip_all='not using SHA-1 for objects'
++       test_done
 +fi
 +
- test_expect_success 'blob and tree' '
- 	test_tick &&
- 	(
+ cat >expect_initial <<EOF
+ 100644 blob 51d2738463ea4ca66f8691c91e33ce64b7d41bb1	foo
+ EOF
