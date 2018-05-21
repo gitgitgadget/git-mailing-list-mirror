@@ -6,83 +6,77 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FCA71F51C
-	for <e@80x24.org>; Mon, 21 May 2018 21:52:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30DA81F51C
+	for <e@80x24.org>; Mon, 21 May 2018 21:54:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754357AbeEUVwU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 17:52:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48454 "HELO cloud.peff.net"
+        id S932087AbeEUVyv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 17:54:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48478 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754303AbeEUVwS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 17:52:18 -0400
-Received: (qmail 32714 invoked by uid 109); 21 May 2018 21:52:18 -0000
+        id S1754347AbeEUVyp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 17:54:45 -0400
+Received: (qmail 373 invoked by uid 109); 21 May 2018 21:54:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 21 May 2018 21:52:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 21 May 2018 21:54:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32118 invoked by uid 111); 21 May 2018 21:52:26 -0000
+Received: (qmail 32145 invoked by uid 111); 21 May 2018 21:54:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 21 May 2018 17:52:26 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 21 May 2018 17:54:53 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2018 17:52:16 -0400
-Date:   Mon, 21 May 2018 17:52:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2018 17:54:43 -0400
+Date:   Mon, 21 May 2018 17:54:43 -0400
 From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
-Message-ID: <20180521215216.GB16623@sigill.intra.peff.net>
-References: <xmqqk1shsecd.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1805061419530.77@tvgsbejvaqbjf.bet>
- <CAPig+cS0pvdg78fGUu8m2xspDDMHxi=uAMCkbLuthy7R4p3fQw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1805062155120.77@tvgsbejvaqbjf.bet>
- <20180507074843.GC31170@sigill.intra.peff.net>
- <3cefc6b3-3dbd-9cb1-20d0-193116191726@gmail.com>
- <nycvar.QRO.7.76.6.1805211153370.77@tvgsbejvaqbjf.bet>
- <CAGZ79kYcWuVorfk7eYjUuLi2XeMS8sPrJYE0OQmgiQi2NkuDZA@mail.gmail.com>
- <20180521202414.GA14250@sigill.intra.peff.net>
- <20180521214057.GB125693@google.com>
+        Jakub Narebski <jnareb@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: commit-graph: change in "best" merge-base when ambiguous
+Message-ID: <20180521215443.GC16623@sigill.intra.peff.net>
+References: <e78a115a-a5ea-3c0a-5437-51ba0bcc56e1@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180521214057.GB125693@google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e78a115a-a5ea-3c0a-5437-51ba0bcc56e1@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 21, 2018 at 02:40:57PM -0700, Brandon Williams wrote:
+On Mon, May 21, 2018 at 02:10:54PM -0400, Derrick Stolee wrote:
 
-> > > > Most fellow German software engineers (who seem to have a knack for
-> > > > idiotically long variable/function names) would now probably suggest:
-> > > >
-> > > >         git compare-patch-series-with-revised-patch-series
-> > > 
-> > > or short:
-> > > 
-> > >   revision-compare
-> > >   compare-revs
-> > >   com-revs
-> > > 
-> > >   revised-diff
-> > >   revise-diff
-> > >   revised-compare
-> > > 
-> > >   diff-revise
+> In the Discussion section of the `git merge-base` docs [1], we have the
+> following:
 > 
-> I haven't really been following all of the discussion but from what I
-> can tell the point of this command is to generate a diff based on two
-> different versions of a series, so why not call it 'series-diff'? :)
+>     When the history involves criss-cross merges, there can be more than one
+> best common ancestor for two commits. For example, with this topology:
+> 
+>     ---1---o---A
+>         \ /
+>          X
+>         / \
+>     ---2---o---o---B
+> 
+>     both 1 and 2 are merge-bases of A and B. Neither one is better than the
+> other (both are best merge bases). When the --all option is not given,    
+> it is unspecified which best one is output.
+> 
+> This means our official documentation mentions that we do not have a
+> concrete way to differentiate between these choices. This makes me think
+> that this change in behavior is not a bug, but it _is_ a change in behavior.
+> It's worth mentioning, but I don't think there is any value in making sure
+> `git merge-base` returns the same output.
+> 
+> Does anyone disagree? Is this something we should solidify so we always have
+> a "definitive" merge-base?
 
-That's OK with me, though I prefer "range" as I think we use that term
-elsewhere ("series" is usually part of "patch series", but many people
-do not use a workflow with that term).
+Heh, I should have read your whole original message before responding,
+not just the part that Elijah quoted.
+
+Yes, I think this is clearly a case where all of the single merge-bases
+we could show are equally good. And I don't think we should promise to
+show a particular one, but I _do_ think it's friendly for us to have
+deterministic tie-breakers (we certainly don't now).
 
 -Peff
