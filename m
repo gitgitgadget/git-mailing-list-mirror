@@ -2,113 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 237811F51C
-	for <e@80x24.org>; Mon, 21 May 2018 18:33:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96C9D1F51C
+	for <e@80x24.org>; Mon, 21 May 2018 18:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750977AbeEUSdO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 14:33:14 -0400
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:44649 "EHLO
-        mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750859AbeEUSdN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 14:33:13 -0400
-Received: by mail-vk0-f51.google.com with SMTP id x66-v6so9333767vka.11
-        for <git@vger.kernel.org>; Mon, 21 May 2018 11:33:13 -0700 (PDT)
+        id S1750977AbeEUSi4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 14:38:56 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:44782 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750909AbeEUSiz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 14:38:55 -0400
+Received: by mail-yb0-f194.google.com with SMTP id s8-v6so4173589ybp.11
+        for <git@vger.kernel.org>; Mon, 21 May 2018 11:38:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=z7sF/lPg/VVlaWMwd67BAhq8LU+gkhaqYd5aR5fNLX8=;
-        b=ieYQvUhkqpBLkDbk/cMfon22cSeJa6/xMR32ZXQcT0H3JUSZSkl9VqlpFYaaLBOgWA
-         s4asAo+ogIqgcE/Rqr55ZlsCZKUbBb1V+Bjz6sL5ZM6SBvzUPD7hGI7E3o3T82y0Y5cy
-         EqtNHTj5I02cVSC5nE9Uqd647dh+ciJ9sYkAx5mpwzSYirbaaiGFsmSAoU3vy62aNxJF
-         3zEgqswq6u08cpEZaOV81fTIp05V7CMWmFZq/oHMMmJXgPbqRio2JicAxA5H65sxmZAW
-         I4fEzwsNuHVvGvLH4APah2MR2jjWP9Z36IQcet3k/6rMSmWtuSvaXZLhMPk+l+kAXUY0
-         izQA==
+        bh=F5xx0AozeOXLmdV+WY8MD1kC1JYx3XsAyb5n3xswX3Y=;
+        b=NTW861L56SR1LnknLknJ6jhM9PeMcTh2nlwuVdQ32S0nYTEOEjkSLy5yriktfH09dA
+         QgCqI+npdyKksqeeQFz4YX1T+Z8PGBSvLDdt2wpQFMO9xFbgLQrBnakauVYcUv6ngR+H
+         KOhmwTApMrI7wRDcXHwwhD71lF7lVpXMeIkuZt9uscrN7q37mIwtq7uzCLOs1fU1z4Yj
+         xEeenB3LPGxMP9VI5PXRyFdaZl3zKJwKoueNvFYz3nqACpZF2jZACygv7doV+/5nwK28
+         SxX9FXsAEpUaiA6AQ22CtVdVa3G/NCcMEXi7zjJTyILWnqq9olLnCPubPqegObBE7pA5
+         O9Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=z7sF/lPg/VVlaWMwd67BAhq8LU+gkhaqYd5aR5fNLX8=;
-        b=Aa3OkcGvlehCSa40uqBEaMnKF6DLNph8eE29n0obbqsSsgUETdAav3pJtTkVTIrzim
-         dYFqm5zxqws+UIw4j8+tye+zEKB05qP4w6PM9Q9dhYqlBrZpEVmRptqmuqQGpJRVst01
-         3WRbt0zjIDfifcQCxwTrtMFC/JTVpIvnoq8AZhY7QHB+/8GicnfQwMvn7PWOXPkF8slO
-         Dvxu3yJe+S9r4gElv0cqacRHaCSfXwT4KtxmeGftvJu1pJjk9yejJmNkkA3F/aF7FNvh
-         g/wkiC9thNOZdZ0MiuEgB5HQoHSN3sV6t9ihuNjhudVgU0I+oBG9XTPBG5lH7L1evG2k
-         V+MA==
-X-Gm-Message-State: ALKqPwejNkvWk4e+vwM/5nOb+7pH3B8S1p1W8JIGbssEhB5Vej6x1Yxr
-        JeJk8CxpmQRtxu5pfZ98DL5PleT3C7NRD9/whTY=
-X-Google-Smtp-Source: AB8JxZoII7LPVX8Qlgt9I8Pwoest6E0UdWie6A/+khsYpD/ZRVjKJd0wNVzIfvNk7joEiwKW6UoYGM+/lNhrJPvtSzQ=
-X-Received: by 2002:a1f:c155:: with SMTP id r82-v6mr13974970vkf.76.1526927592450;
- Mon, 21 May 2018 11:33:12 -0700 (PDT)
+        bh=F5xx0AozeOXLmdV+WY8MD1kC1JYx3XsAyb5n3xswX3Y=;
+        b=CbP+8mKYGX4HgOHRbGjgVByUyOw83upo19bFULIrCsEDIiZMjx8JcyWzyCgGDg3xNP
+         1XugxYwr/VNFAGlN7uu+uYHGDHJeX4Xx6rmnIQarqh8+6LRWyM21SG5/VNcUqRi/Gjfe
+         LThSIQNKwhLDmG0NHSg/z7mfvbSPNB5SFqdloDM5vLsCin6UjFlvuhYa8Y+q6/Gd2JQy
+         3+PVySMtDnbbliZdLOV154P5aqCJazDIcoqCNexvyHGysgIqXsIDRdb75dhOZNZSEqnM
+         qWhsHlQdwlN8cx2OihVsHtGVpFlbD5TGJ2pNE03breLGvj/eCof77dK8u/kXXe0t/qRA
+         ywpA==
+X-Gm-Message-State: ALKqPwcu6k5uxzPi6Oyp8MY0+tQVZipo4Or2ps72IHUxe/F+pDbedVoK
+        svb+yhUZ9snkSC1Dq4GgD4eejrou+OsATTnmbn5prATWR4M=
+X-Google-Smtp-Source: AB8JxZqBvWeJyL+KiEkZHIAjK2z1GcdKS6zLt1G8+PCBnIX2OQEFG6xiF4fvmXPudnoZK82SonO0dTfMCSFyB5W2S84=
+X-Received: by 2002:a25:a526:: with SMTP id h35-v6mr1151175ybi.515.1526927934201;
+ Mon, 21 May 2018 11:38:54 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Mon, 21 May 2018 11:33:11 -0700 (PDT)
-In-Reply-To: <e78a115a-a5ea-3c0a-5437-51ba0bcc56e1@gmail.com>
-References: <e78a115a-a5ea-3c0a-5437-51ba0bcc56e1@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 21 May 2018 11:33:11 -0700
-Message-ID: <CABPp-BFEd+fK_i3qoYWudYS5mhWE1jsXR_xcSCZoJ=4Vd61LAQ@mail.gmail.com>
-Subject: Re: commit-graph: change in "best" merge-base when ambiguous
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Mon, 21 May 2018 11:38:53 -0700 (PDT)
+In-Reply-To: <20180519063729.GA14755@duynguyen.home>
+References: <CACsJy8A8WZ-Gqe2Y-whJmbADrt+gZjLZ7MTwCtdnK7JDnEdtog@mail.gmail.com>
+ <20180516222118.233868-1-sbeller@google.com> <20180516222118.233868-3-sbeller@google.com>
+ <20180519063729.GA14755@duynguyen.home>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 21 May 2018 11:38:53 -0700
+Message-ID: <CAGZ79kbxptYvDoTqsVRe3KOA_--ja8UZir=MkMXw8_LxVXG_-Q@mail.gmail.com>
+Subject: Re: [PATCH 02/11] repository: introduce repo_read_index_or_die
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Antonio Ospite <ao2@ao2.it>, Brandon Williams <bmwill@google.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Mon, May 21, 2018 at 11:10 AM, Derrick Stolee <stolee@gmail.com> wrote:
-> Hello all,
+On Fri, May 18, 2018 at 11:37 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, May 16, 2018 at 03:21:09PM -0700, Stefan Beller wrote:
+>> A common pattern with the repo_read_index function is to die if the return
+>> of repo_read_index is negative.  Move this pattern into a function.
+>>
+>> This patch replaces the calls of repo_read_index with its _or_die version,
+>> if the error message is exactly the same.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  builtin/add.c               | 3 +--
+>>  builtin/check-ignore.c      | 7 ++++---
+>>  builtin/clean.c             | 4 ++--
+>>  builtin/mv.c                | 3 +--
+>>  builtin/reset.c             | 3 +--
+>>  builtin/rm.c                | 3 +--
+>>  builtin/submodule--helper.c | 3 +--
 >
-> While working on the commit-graph feature, I made a test commit that sets
-> core.commitGraph and gc.commitGraph to true by default AND runs 'git
-> commit-graph write --reachable' after each 'git commit' command. This helped
-> me find instances in the test suite where the commit-graph feature changes
-> existing functionality. Most of these were in regards to grafts,
-> replace-objects, and shallow-clones (as expected) or when trying to find a
-> corrupt or hidden commit (the commit-graph hides this corrupt/missing data).
-> However, there was one interesting case that I'd like to mention on-list.
+> 'git grep -w -A3 read_cache' tells me you're missing (*)
+
+> (*) yes yes you did mention "if the error message is exactly the
+> same". But these look like good candicates to convert anyway
 >
-> In t6024-recursive-merge.sh, we have the following commit structure:
+> builtin/diff-tree.c:    if (read_cache() < 0)
+> builtin/diff-tree.c-            die(_("index file corrupt"));
 >
->     # 1 - A - D - F
->     #   \   X   /
->     #     B   X
->     #       X   \
->     # 2 - C - E - G
+
+I would expect this to be covered in a follow up patch as I did look
+for (read_cache() < 0) specifically.
+
+> builtin/merge-ours.c:   if (read_cache() < 0)
+> builtin/merge-ours.c:           die_errno("read_cache failed");
 >
-> When merging F to G, there are two "best" merge-bases, A and C. With
-> core.commitGraph=false, 'git merge-base F G' returns A, while it returns C
-> when core.commitGraph=true. This is due to the new walk order when using
-> generation numbers, although I have not dug deep into the code to point out
-> exactly where the choice between A and C is made. Likely it's just whatever
-> order they are inserted into a list.
+> builtin/update-index.c: entries = read_cache();
+> builtin/update-index.c- if (entries < 0)
+> builtin/update-index.c-         die("cache corrupted");
+>
+> merge-ours.c is interesting because it uses die_errno() version
+> instead. I think that might give inaccurate diagnostics because we do
+> not only fail when a libc/system call fails in read_cache(), so it
+> should be safe to just use die() here.
+>
+> update-index.c is also interesting because it actually saves the
+> return value. I don't think it's used anywhere, so you can just drop
+> that 'entries' variable. But perhaps it's good to make
+> repo_read_index_or_die() return the number of entries too.
 
-Ooh, interesting.
+Yeah this series left out all the interesting cases, as I just sent it out
+without much thought.
 
-Just a guess, but could it be related to relative ordering of
-committer timestamps?  Ordering of committer timestamps apparently
-affects order of merge-bases returned to merge-recursive, and although
-that shouldn't have mattered, a few bugs meant that it did and the
-order ended up determining what contents a successful merge would
-have.  See this recent post:
+Returning the number of entries makes sense.
 
-https://public-inbox.org/git/CABPp-BFc1OLYKzS5rauOehvEugPc0oGMJp-NMEAmVMW7QR=4Eg@mail.gmail.com/
+One of the reviewers of the series questioned the overall goal of the
+series as we want to move away from _die() in top level code but this
+series moves more towards it.
 
-The fact that the merge was successful for both orderings of merge
-bases was the real bug, though; it should have detected and reported a
-conflict both ways.
+I don't know.
 
-
-I'm not sure where else we have an accidental and incorrect dependence
-on merge-base tie-breaker or ordering logic, but if it's like this
-one, changing the tie-breaker should be okay.
+Stefan
