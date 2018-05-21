@@ -2,93 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 396331F51C
-	for <e@80x24.org>; Mon, 21 May 2018 16:48:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 042461F51C
+	for <e@80x24.org>; Mon, 21 May 2018 17:04:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753105AbeEUQsU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 12:48:20 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:40867 "EHLO
-        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752876AbeEUQsT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 12:48:19 -0400
-Received: by mail-vk0-f68.google.com with SMTP id e67-v6so9147082vke.7
-        for <git@vger.kernel.org>; Mon, 21 May 2018 09:48:18 -0700 (PDT)
+        id S1753440AbeEUREC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 13:04:02 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:35845 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753382AbeEUREA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 13:04:00 -0400
+Received: by mail-pg0-f42.google.com with SMTP id 63-v6so4469368pgg.3
+        for <git@vger.kernel.org>; Mon, 21 May 2018 10:03:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=pJhOuspwkEgEn9kx2C1VWcm0ID3tcRb8G+Otrp2wxbg=;
-        b=PxfYm/jG/VGox9ftqd02+G2wutPSSO1CxZc9+Qs0ElibUcfAkc7TXtQYJRc9WlMzT1
-         +ON9AoHiEeGJveBH9fNNmQSrku9ELtSMvBuuOeYRDbdX59St+WnumIrkvrIynqfGkrWG
-         yQ1mYKmf7nrjc4yqFvLSUP06H1sa+FGNQJ9VLrpvOwcUFaXuFGQDblHcBnVqgQ6YEabG
-         0L+XoARovmkkFbHNTZbXsvBgq2mwqr5ophY6yZznGv8WdAZByb20BN8kEMfvsm1PGbZR
-         L5eirCzaFKIhznBl8eEUxbr4XlNOfyINkTOcOKojMTY2pn9KmoUnb6sbdXJ9UW5pdzTd
-         rdDQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wpJ+I0VhjBw6ZafE/ua9DtrUcaY0ryjLgYY7u0vpFP4=;
+        b=q1cesrtvdVMUQobgm7EsZecqW2QgFDMomBhcvlAIVfiLlJVkTOfGNFjxIXodTayDWa
+         DvQNrBNGtG9bIUgXu4F1tpfcvem6kLbByul1WItcUTRFSE6pphB1B1s3+J6XNryibz5R
+         CTEPeskn5yV0SyVbue5AkCokMN5gtiKEQc+i9KG2nQVGokt31VYjvXlSWZfKTwMgZCHt
+         Oe7IR5SqlZzborv36f1j3UgB5uFy8mbhe/KJQaKP7KTD3926epI2D6WyXnMRRLg02SbJ
+         hn0wfu+Ws94tniRSiUKcduwLwZt8HSxFo9icLfzNVYbTfS5zugtt6XNxgJGyxbxYP3Q8
+         EZ0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=pJhOuspwkEgEn9kx2C1VWcm0ID3tcRb8G+Otrp2wxbg=;
-        b=WxIHQTfRf3MffoSSIY9UIV23tudRnV6cZ113AeVBba63D0DfVYG56FvSnthBHwD7BH
-         gMSZmfPP8LLfMvQznkHAi8KJDa6hC6xJrswTjohFBHOpqJbBo3a1nkTLR0jkman8JqQX
-         zyzqb7BQoBMmR5egMKiV8g7m4LHZlmahcDiFL8FSLiX06tic24lci42+QI4qATmDlebx
-         3Ml7iOvZubbzDBomcrRASXFpZdICq3sxaR/WbMVzBq/ENPdteQXa0DIOSCw2yZVKsTKo
-         sxITel/g8K7MKRuDzewd3MwZ3dTK4ze4heakw/tL2fq1nzkSA+MneP4F3p8+Msew+elE
-         Q2NA==
-X-Gm-Message-State: ALKqPwfutRUyp93o3i+I+pcnAr1UuF/7dslpzGfWcW8y3AnSuzICUAp1
-        pXnUBsal6X7QeDF4VdK7lYyBZIoCrPSjTmFlCM0=
-X-Google-Smtp-Source: AB8JxZrzDZC83sah+ZgJFSbB7t4u1nhSJPwEKXA/gCR1JrRcLLgFIQzyUsB3xNcR3y4qy+xmN/T0FljrQ1tsZ2n+7no=
-X-Received: by 2002:a1f:aa58:: with SMTP id t85-v6mr14011543vke.118.1526921298087;
- Mon, 21 May 2018 09:48:18 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wpJ+I0VhjBw6ZafE/ua9DtrUcaY0ryjLgYY7u0vpFP4=;
+        b=ENNf3UqVZ0AuM4u2RvZTETIP7gKkE6nsSeqv9YJdPtVhdW1+GTAqWv/0oTnDqrjTNN
+         JWsDe0Bbz6PTXxkVgyFfxtLzQdRTu81ivzU+CYuesGbsrfYJzcamUXwhEQfxOy8Yq7/A
+         WDYf29NtzAHDhDjR5LKluXV46iU5XBr4SlhoeoQL7GId4PCjVr5OSHgc/T6v2iFhh2F/
+         SFLPDGrf4ba8oIbMbA7JxvbzQnXYe9joyW0xP8fVx59sSC6EUishHyL2hNB+++2LYZL0
+         QFlqupZF8GXJVL3HSE4zFKjYa/BE5qDYjpdAHg/yZbR4sDA1C0Fm5tyNJeb5zdUTBAAz
+         ruUg==
+X-Gm-Message-State: ALKqPwckFN7CG1Q6dBhC5xkFl1Jz9bMhmuzidpoAOAWvsj0i3wGSlEt0
+        a2qHpTDyhj3C99tIJT8abjOHVcY0
+X-Google-Smtp-Source: AB8JxZrKA6Ob6FgwxO6fjijB6925MGHbJZANcUGla6+ItXcm+JjGCEc+H2StJq4CbIvcDOIC1PpUmA==
+X-Received: by 2002:a63:384d:: with SMTP id h13-v6mr16291532pgn.209.1526922239218;
+        Mon, 21 May 2018 10:03:59 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 16-v6sm31429429pfq.115.2018.05.21.10.03.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 21 May 2018 10:03:58 -0700 (PDT)
+Date:   Mon, 21 May 2018 10:03:53 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: issues(?) installing git-lfs via fedora "dnf" command
+Message-ID: <20180521170353.GA10623@aiede.svl.corp.google.com>
+References: <alpine.LFD.2.21.1805210625410.6679@localhost.localdomain>
 MIME-Version: 1.0
-Received: by 10.176.95.4 with HTTP; Mon, 21 May 2018 09:48:17 -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.76.6.1805211542160.77@tvgsbejvaqbjf.bet>
-References: <20180519020700.2241-1-newren@gmail.com> <20180519020700.2241-3-newren@gmail.com>
- <nycvar.QRO.7.76.6.1805211542160.77@tvgsbejvaqbjf.bet>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 21 May 2018 09:48:17 -0700
-Message-ID: <CABPp-BGR1jaGzVcqyCO=WYgdX3SKQoj9pzuKCvXoc7+R=OA8PQ@mail.gmail.com>
-Subject: Re: [PATCH 2/5] merge-recursive: fix numerous argument alignment issues
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.21.1805210625410.6679@localhost.localdomain>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Robert P. J. Day wrote:
 
-On Mon, May 21, 2018 at 6:42 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Elijah,
->
-> On Fri, 18 May 2018, Elijah Newren wrote:
->
->> Various refactorings throughout the code have left lots of alignment
->> issues that were driving me crazy; fix them.
->
-> I hope you did not do that manually. What is your code formatting tool of
-> choice?
+>   $ sudo dnf install git-lfs
+[...]
+>   Running transaction
+>     Preparing        :
+>     Installing       : git-lfs-2.4.0-1.fc28.x86_64
+>     Running scriptlet: git-lfs-2.4.0-1.fc28.x86_64
+>   Error: Failed to call git rev-parse --git-dir --show-toplevel: "fatal:
+>   not a git repository (or any of the parent directories): .git\n"
+[...]
+> is one supposed to be *in* a git repository when installing, because i
+> was in fact at the top level of my linux kernel source repo, so i'm
+> unclear on what that "Error" is trying to tell me. am i just being
+> clueless? is this something that i should submit as a fedora packaging
+> issue?
 
-Sorry to disappoint but it was manual.  I noticed and fixed one of
-them many months ago, tossing it into a 'misc' branch.  Then ran
-across another and added it.  When I hit the third, I was annoyed and
-cleaned them all up -- and combined them with other changes into this
-series.
+Yes, this looks like something that should be reported as a Fedora
+packaging issue.
 
-However, it's hard to call this formatting entirely manual.  A quick
-regex found the relevant sites pretty easily, and 'M-x indent-region'
-(emacs) fixes the indentation for a block of lines all at once.  I
-guess if I had taken the time to fix a few other emacs formatting
-rules, I could have highlighted the whole file and ran C-M-\ (a.k.a.
-indent-region), but didn't.
+The packager should be able to find out whether it's an issue in
+git-lfs upstream and report it to that project if it is.  Git-lfs is
+not part of git.git; it's a separate project:
+https://github.com/git-lfs/git-lfs/blob/master/CONTRIBUTING.md
+I believe they use github's issue tracker to track bugs.
 
-> The patch looks obviously good to me.
-
-Thanks for taking a look!
+Thanks,
+Jonathan
