@@ -7,109 +7,98 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AE581F42D
-	for <e@80x24.org>; Mon, 21 May 2018 09:51:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C35981F42D
+	for <e@80x24.org>; Mon, 21 May 2018 09:52:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751103AbeEUJvw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 05:51:52 -0400
-Received: from mout.gmx.net ([212.227.15.19]:51837 "EHLO mout.gmx.net"
+        id S1751246AbeEUJwn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 05:52:43 -0400
+Received: from mout.gmx.net ([212.227.17.20]:41703 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751072AbeEUJvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 05:51:51 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPlsg-1fOWxf38fS-004zva; Mon, 21
- May 2018 11:51:45 +0200
-Date:   Mon, 21 May 2018 11:51:48 +0200 (DST)
+        id S1750923AbeEUJwm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 05:52:42 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFR2O-1fZ0pV1oA8-00EQdc; Mon, 21
+ May 2018 11:52:37 +0200
+Date:   Mon, 21 May 2018 11:52:40 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-Subject: Re: [PATCH 00/18] Add `branch-diff`, a `tbdiff` lookalike
-In-Reply-To: <xmqqvabh1ung.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1805211144340.77@tvgsbejvaqbjf.bet>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <xmqqvabh1ung.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH 01/18] Add a function to solve least-cost assignment
+ problems
+In-Reply-To: <CACsJy8ApDb_KTjoJgMuV_AJ+dQdGC0kgCnMcJXj5pMGdqMQCyA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1805211152140.77@tvgsbejvaqbjf.bet>
+References: <cover.1525361419.git.johannes.schindelin@gmx.de> <3f51970cbc44bfe34133c48c0844ed3723e83808.1525361419.git.johannes.schindelin@gmx.de> <CACsJy8ApDb_KTjoJgMuV_AJ+dQdGC0kgCnMcJXj5pMGdqMQCyA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:L4Q9C3skPoYy1MVhazqtGHIcl3N2uQ0t6EDtwqmGlEG4+gyWKEx
- iZW6qj8B+uYNte6ULVwdwrfP0TAm54Lf+/4DXtaKlQpYA50sVQU//6hPdt8WytEf4zg5jY0
- wsNBuyQBZOmkK3mlb6eueAXphjo3yHlkoz3H3IRv8CceNBzsSi+JDJvF0w+M9dj1/l3HPQP
- 46beIe4bSb1sbzMqkNBVA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yGODWwUbfsk=:FP0tu6Hn9b54BZ0cr7AN/w
- g0BdhmMxTDY+ZBG5mgZ5czTR5vjk5deNzjYytWIU8ZfP+xxLWzyzPISZ6AoFPGgUfJH8RadaV
- SR8P/wzafv8Cam55LXe7fiRciD5mV27MYcxOOzOJtm2NorJ4Cp96Qmx6v05QaOWWqvYfVPSDy
- XLcr1w8V5SzPY2M8JeCEjdPT4mTV5kQbmRVR9NxgW8t+6GEZRjlUj2Yuye88OCXJ2mpkC9pfl
- jeHiqhWmVteQAb9wnggJzgjdCNkDQi4dbLknUWd0VC5mg8Wfv2MumV8obGA2brSIzForEwT2Q
- A9+BlLvVkTAM+NWYrCelBLvM4tsxB2aQHILtsgWS0Fg4rqXTZpqtK08RgMY+1cTnrQRBwRTux
- n40w+jx5UJDuQkOKO9h7V+yJz8cDg+3hFL2E1bd37Dw5Ch6E54dBW7PDGuW/7UzM43xaEBcQ0
- lX+To7hb0bkQO8iU3knq3MHQ58CeGPDRlHPtXem18uAr0A5N1QGsu0hkLynimkWivqbPeDk9a
- uHQv1zW82aL04I2uXgEk7W4f0H4/Mbrp/6p2wFlcRhs55vPxD+7wFinmljKwilb51kH5BbF2O
- ctnHfSIfnTuxnYEEnnRkinxPZrZudaF9hsQEZrLFkiQ0v7djYlkbdC+FuQHTSNNfWx6t9STO6
- jk05qiSYWWcnUFFiiPQg0UrNoOHvxQkCtLeXDdNUziZP6TEv2G29DW/Qc5EEYts2IuXjevWzU
- hti0zINhqDHDsAqU8iL/H9e2CnSL8g4p/Xj4ZGW1i94ZYmssAUvd0JjhO6JMjfaBe66S+7Jy/
- zMHIoxl
+Content-Type: multipart/mixed; boundary="8323328-302835195-1526896361=:77"
+X-Provags-ID: V03:K1:h/IkALU+thCbFnyYLmIUaH1GSf76wp7wLXVsGDLix3+D4gsWVSa
+ 6VTEEzjpHPA6NIKbhzXl8H2O2qsankcUhnkgxTKgDblS2YB/9IpCvTGngTEzngRSE6qWj+v
+ 8hjEJ6tPqhGpNs2YpTqj63ZN0q2UAMvzGcoORMtQxvsqT8MVEhqExjFfnjFfzDeRU1OcFFO
+ whelzlzoS1dLV8Tdmexvg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:VjU08vMtZVU=:5CwSsmj3oL4pnpb6MmTmVM
+ 4srOwisOJh4+jWX6CGVQrrVmDLX0URbb3kxGDNTuVQNjUwkX9kXx6homy+gafCdj2UkLBto/H
+ Gji+nQT5Hf7K3Gg2xox3Hp07KRUWHnYDOAMkTgzpMDGeWIGHUmaYynVcA0tJxxSfTrjLT1yeL
+ hKqOcbfj4MGCZbZVZpsRSLhuDR3MNFPB5ziAiHna7CEj9WVkC/Kph3VXDygh3M8QyKJNjrJOF
+ KYpS/f7Si1joQlp6nsY3q9guQ2F6osnv2T3HmWrxYEilf2FTBg3MaNK3p1AY8hdJM9XEvnizN
+ oI082eMx+L/hzyyKcI3ik6bk3Y4ty44tNzcsOMRZoC0XC1VNGoMiRz+fp8clW0pnQirbhX1BA
+ 3sq0tEQ7i6r1l+WnlBpzlfH7/VabhmWyTUiz4KBKkpOb9A0jxWvnawk7wGmuVFWhE4sEOiBc5
+ lWnLnq3r7DKAtlCssXDwfwvsKsUWpQ9hWJAhHIts5KfoCVDacrOoIKn7dawlqmdR7CkL6Uo28
+ xjAwxEgSHXt8aXMsdOli5PXRQXLjNzrQDK7B2bjSHwF+dw3COROM5Ak3Ka++03ph8L05cIjmh
+ Zhur0hsFP2XDna617JEese1mdMsHRgrQGddXBJ2mk+hBv7SUO5R7MrlPvvwXr5NOJ5sZ5IoyH
+ J+eUy2A2KU0FypHIVQ2BbkPhGSVMhL7DAaWYyh9be4j4DRh5NVJp2WZaue0px9BXusjryP8aK
+ Qyv981VWZO7IVw5zkbunW0LzEtp9mqguONKIvwYbenS3jbPKJvA3uv+KFCnRbGOwlaPVR8Bg/
+ s9sNwmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 21 May 2018, Junio C Hamano wrote:
+--8323328-302835195-1526896361=:77
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> I've been using both branch-diff and tbdiff while comparing rerolled
-> topics before accepting them.  One obvious difference between the two is
-> that the speed to compute pairing is quite different but that is
-> expected ;-)
+Hi Duy,
 
-Yep.
+On Sun, 13 May 2018, Duy Nguyen wrote:
 
-It is also expected that the branch --diff actually works without you
-having to make sure that the Python modules numpy and hungarian are built
-correctly (which you Linux folks couldn't care less about because it is
-done for ya).
+> On Thu, May 3, 2018 at 5:30 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > +       /* reduction transfer */
+> > +       free_row =3D xmalloc(sizeof(int) * row_count);
+> > +       for (int i =3D 0; i < row_count; i++) {
+>=20
+> travis complains about this
+>=20
+>=20
+> hungarian.c: In function =E2=80=98compute_assignment=E2=80=99:
+> hungarian.c:47:11: error: redeclaration of =E2=80=98i=E2=80=99 with no li=
+nkage
+>   for (int i =3D 0; i < row_count; i++) {
+>            ^
+> hungarian.c:21:6: note: previous declaration of =E2=80=98i=E2=80=99 was h=
+ere
+>   int i, j, phase;
+>       ^
+> hungarian.c:47:2: error: =E2=80=98for=E2=80=99 loop initial declarations =
+are only
+> allowed in C99 mode
+>   for (int i =3D 0; i < row_count; i++) {
+>   ^
+> hungarian.c:47:2: note: use option -std=3Dc99 or -std=3Dgnu99 to compile =
+your code
 
-I spent such a lot on time trying to get it to work on Windows that it
-probably only now reaches parity with the time I spent on implementing
-branch --diff.
-
-> Another difference that is somewhat irritating is that a SP that
-> leads a context line in a diff hunk that is introduced in the newer
-> iteration is often painted in reverse, and I do not know what aspect
-> of that single SP on these lines the branch-diff wants to pull my
-> attention to.
-
-Right. This is due to the fact that the diff does not realize that it
-looks at pre/post images being diffs. And hence it does not understand
-that the single space indicates a context line and is therefore not a
-whitespace error before the tab.
-
->     https://pasteboard.co/Hm9ujI7F.png
-> 
-> In the picture, the three pre-context lines that are all indented by
-> a HT are prefixed by a SP, and that is prefixed by a '+' sign of the
-> outer diff.
-
-Yep, that's exactly it.
-
-The way tbdiff did it was to parse the diff and re-roll the coloring on
-its own. I am not really keen on doing that in `branch --diff`, too.
-
-> We can use --dual-color mode to unsee these but it is somewhat
-> frustrating not to know what the branch-diff program wants to tell
-> me by highlighting the single SPs on these lines.
-
-I was wondering from the get-go whether it would make sense to make
---dual-color the default.
-
-But now I wonder whether there is actually *any* use in `--color` without
-`--dual-color`.
-
-What do you think? Should I make the dual color mode the *only* color
-mode?
+Yep, I fixed it locally already before seeing your mail. It is good to
+know that some people pay attention, though!
 
 Ciao,
 Dscho
+--8323328-302835195-1526896361=:77--
