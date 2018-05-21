@@ -6,69 +6,105 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4C181F51C
-	for <e@80x24.org>; Mon, 21 May 2018 19:41:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 394801F51C
+	for <e@80x24.org>; Mon, 21 May 2018 20:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751127AbeEUTlW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 15:41:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48256 "HELO cloud.peff.net"
+        id S1751019AbeEUUYR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 16:24:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48320 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751050AbeEUTlW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 15:41:22 -0400
-Received: (qmail 28053 invoked by uid 109); 21 May 2018 19:41:22 -0000
+        id S1750962AbeEUUYQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 16:24:16 -0400
+Received: (qmail 29602 invoked by uid 109); 21 May 2018 20:24:16 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 21 May 2018 19:41:22 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 21 May 2018 20:24:16 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31223 invoked by uid 111); 21 May 2018 19:41:30 -0000
+Received: (qmail 31504 invoked by uid 111); 21 May 2018 20:24:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 21 May 2018 15:41:30 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 21 May 2018 16:24:24 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2018 15:41:20 -0400
-Date:   Mon, 21 May 2018 15:41:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2018 16:24:14 -0400
+Date:   Mon, 21 May 2018 16:24:14 -0400
 From:   Jeff King <peff@peff.net>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH 1/5] http: use strbufs instead of fixed buffers
-Message-ID: <20180521194120.GA9742@sigill.intra.peff.net>
-References: <20180519015444.GA12080@sigill.intra.peff.net>
- <20180519015636.GA32492@sigill.intra.peff.net>
- <CAGZ79kYZ9HSCC95qCZ4Zix1oEFLscsU1HZe64s--6KuWEz2ojg@mail.gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
+Message-ID: <20180521202414.GA14250@sigill.intra.peff.net>
+References: <20180505182631.GC17700@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1805052355190.77@tvgsbejvaqbjf.bet>
+ <xmqqk1shsecd.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1805061419530.77@tvgsbejvaqbjf.bet>
+ <CAPig+cS0pvdg78fGUu8m2xspDDMHxi=uAMCkbLuthy7R4p3fQw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1805062155120.77@tvgsbejvaqbjf.bet>
+ <20180507074843.GC31170@sigill.intra.peff.net>
+ <3cefc6b3-3dbd-9cb1-20d0-193116191726@gmail.com>
+ <nycvar.QRO.7.76.6.1805211153370.77@tvgsbejvaqbjf.bet>
+ <CAGZ79kYcWuVorfk7eYjUuLi2XeMS8sPrJYE0OQmgiQi2NkuDZA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kYZ9HSCC95qCZ4Zix1oEFLscsU1HZe64s--6KuWEz2ojg@mail.gmail.com>
+In-Reply-To: <CAGZ79kYcWuVorfk7eYjUuLi2XeMS8sPrJYE0OQmgiQi2NkuDZA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 21, 2018 at 11:11:51AM -0700, Stefan Beller wrote:
+On Mon, May 21, 2018 at 10:56:47AM -0700, Stefan Beller wrote:
 
-> Hi Jeff,
+> > It is very much about
+> > comparing two *ranges of* revisions, and not just any ranges, no. Those
+> > ranges need to be so related as to contain mostly identical changes.
 > 
-> On Fri, May 18, 2018 at 6:56 PM, Jeff King <peff@peff.net> wrote:
+> range-diff, eh?
 > 
-> > @@ -2421,4 +2426,5 @@ void release_http_object_request(struct http_object_request *freq)
-> ..
-> > +       strbuf_release(&freq->tmpfile);
+> > Most fellow German software engineers (who seem to have a knack for
+> > idiotically long variable/function names) would now probably suggest:
+> >
+> >         git compare-patch-series-with-revised-patch-series
 > 
-> Do we need an equivalent in release_http_pack_request as well?
+> or short:
+> 
+>   revision-compare
+>   compare-revs
+>   com-revs
+> 
+>   revised-diff
+>   revise-diff
+>   revised-compare
+> 
+>   diff-revise
 
-Yes, but isn't there one?
+I still like "range diff", but I think something around "revise" is a
+good line of thought, too. Because it implies that we expect the two
+ranges to be composed of almost-the-same commits.
 
-From the original patch:
+That leads to another use case where I think focusing on topic branches
+(or even branches at all) would be a misnomer. Imagine I cherry-pick a
+bunch of commits with:
 
---- a/http.c
-+++ b/http.c
-@@ -2082,6 +2082,7 @@ void release_http_pack_request(struct http_pack_request *preq)
-                preq->packfile = NULL;
-        }
-        preq->slot = NULL;
-+       strbuf_release(&preq->tmpfile);
-        free(preq->url);
-        free(preq);
- }
+  git cherry-pick -10 $old_commit
 
-Or am I missing something?
+I might then want to see how the result differs with something like:
+
+  git range-diff $old_commit~10..$old_commit HEAD~10..HEAD
+
+I wouldn't think of this as a topic-branch operation, but just as
+comparing two sequences of commits. I guess "revise" isn't strictly
+accurate here either, as I'm not revising. But I do assume the two
+ranges share some kind of mapping of patches.
 
 -Peff
+
+PS I wish there were a nicer syntax to do that. Perhaps
+   "git range-diff -10 $old_commit HEAD" could work, though occasionally
+   the two ranges are not the same length (e.g., if you ended up
+   skipping one of the cherry-picked commits). Anyway, those kind of
+   niceties can easily come later on top. :)
