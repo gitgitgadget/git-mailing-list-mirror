@@ -2,103 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22DAC1F51C
-	for <e@80x24.org>; Mon, 21 May 2018 12:36:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0392A200B9
+	for <e@80x24.org>; Mon, 21 May 2018 12:37:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751286AbeEUMgJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 08:36:09 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:42991 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751109AbeEUMgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 08:36:08 -0400
-Received: by mail-qk0-f175.google.com with SMTP id b22-v6so11616766qkj.9
-        for <git@vger.kernel.org>; Mon, 21 May 2018 05:36:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WwXFHESXtJ/t0J+KM7dhacRgNkiVlpA0hV5RP1wVoFQ=;
-        b=B6xX6atcCfMPBe8PdkhgBDnTKJl0464bEA/9d6t/rei8CkYt+XVfpY5KA+Ow8WuPNX
-         N1Ml+aOll4wZEFrQKn031twVZ/T+5/6FWl4G/CCKLDH7ssxfLXmOxg8JRP5UEsZeOMyj
-         Sb0Gnd2YHsdSeKDiaywHe3PEMFvmXMEMM3YfApCUUaO3qS05HTad7xWMzKxjovw1RmKa
-         io5caQCMPFhaBY8le/x32nqFJBIOJcHBDAswcfSQXApNLSn+f9AzPrMGRjoK8gTh2CkJ
-         7oUElpnJjzyrBY1fSt1k13Xkd6b1ny/fNuRQhKOydOqvTtl7Xc3zWgWmQOLRqE0+9g6a
-         D3jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=WwXFHESXtJ/t0J+KM7dhacRgNkiVlpA0hV5RP1wVoFQ=;
-        b=taxkLJzZnE7S94OMtc+GSLN8KB/hCjAQnbXjpzaC6XuTTB+EbF8ooDIFFf79ZsRvW/
-         7OhcvzD5hrABms80hQuZg3paZp7W48HeI9pEYIJ9mo2QlYmpjUnjjGW1rDydA6jYGO27
-         8GvvIENX9U7hFT9ox8E0A8TvshYOVg3df7Q7aV6HpHEXZR+p5Qh6jMk8ivrXHUVyzrsZ
-         lasY/QrDLUki4wmz061mDKX7hQ8tymHkm9sBxX/IOeWGyNpxAh3+ejeZvcVsIAis90YW
-         CwQKe/4uNazmDgJTrsdkUX6N4Y/sGFmbMfexiWYFfs/N1ldZLaFH4SDF8ZbSnWb05BaV
-         VrWw==
-X-Gm-Message-State: ALKqPwd3q4axJ+Iyxm+Z+e/u+ChtkTgdzR5y8GVJNNUyKADAzRdxnUbh
-        wfhwYE7K8FEiQu5bOjQ8tGY=
-X-Google-Smtp-Source: AB8JxZq9THiHCCVYTomZb8Saz1VMFP4W+UGiuHIbLDUazqA6wwsJp9ydlKMPxPJydiXEsVbYndA51Q==
-X-Received: by 2002:a37:7183:: with SMTP id m125-v6mr13724969qkc.107.1526906168136;
-        Mon, 21 May 2018 05:36:08 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id g7-v6sm4385421qke.96.2018.05.21.05.36.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 May 2018 05:36:07 -0700 (PDT)
-Subject: Re: [PATCH 3/5] query_fsmonitor: use xsnprintf for formatting
- integers
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Ben Peart <benpeart@microsoft.com>
-References: <20180519015444.GA12080@sigill.intra.peff.net>
- <20180519015758.GC32492@sigill.intra.peff.net>
- <cd6dba3c-19bb-e6c7-0c1f-5cea0c8f9d81@web.de>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <c5d9da23-447d-2878-cf4f-e9e7f12ce35f@gmail.com>
-Date:   Mon, 21 May 2018 08:36:06 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1751109AbeEUMh3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 08:37:29 -0400
+Received: from mout.gmx.net ([212.227.17.22]:58209 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751056AbeEUMh2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 08:37:28 -0400
+Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LcVOE-1g37Dd1JYc-00jtfv; Mon, 21
+ May 2018 14:37:11 +0200
+Date:   Mon, 21 May 2018 14:37:12 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        David Turner <novalis@novalis.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] t: make many tests depend less on the refs being files
+In-Reply-To: <nycvar.QRO.7.76.6.1805211126140.77@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1805211436230.77@tvgsbejvaqbjf.bet>
+References: <20180521055143.14701-1-chriscool@tuxfamily.org> <nycvar.QRO.7.76.6.1805211126140.77@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <cd6dba3c-19bb-e6c7-0c1f-5cea0c8f9d81@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-203493503-1526906235=:77"
+X-Provags-ID: V03:K1:wM1fbi71XVnGoM0zAyzwOxhOV6e0SKSdOi26S3kqDph20iFkrpN
+ +A4Bfltai6NFrswFdHJBUilRZMc1wRU+xS4cICFecjRoWuAaoD75Pyep7crBF6IxhKep2uO
+ 2ZztfGBTyLabRM96zU/S2tVwdJD8V2IamUrzSY4MTaiXr0P2IunEPHNLxhGdNdgkyucCEa4
+ D1Jbk2ggcDe6v3FJs97pw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:z2KqhMLhtW0=:Th6m7QNP2E6YxR0LYY3y4x
+ EWfOBBO7Tpw+TFfwJbw5oBbjPiChGRMTdMQkGTnpWt7KCVPeVMqoxQFp9zzOLel/t1UUt8XoQ
+ EIHDGNrZpoGdYXddWUJDx6ImcWM5dJokJMN2Z69nfL1DRDlQpco9zm/bVByNc21OaE5uhzsMZ
+ chbRSJMqwVzR/29ZGQu4aDJiQiNapnQx5WEq6w3T3T+8ZAb94gjee5NIWHFeuOmLAlJQ+pvSP
+ aoSVxi86j6d3bcSsC7q8EHyfe4ID8Xl5sOac8isi5kkT6aAqYRNNPZqtBKHgcWp5XCz256qOj
+ mfPu3rTV544Hje9iHqWOuoRjHByXGRs1pQo0Z7+Ua7WJn/rWNFPoN5A/dXcGvRqLOXbiyzZgx
+ 2L2nfaeRa8+WOeyBy+2URHsOwbxV5MGQJcCL4slzPR/Hv5ypsjkGOrmfBEjwS7ENSV/Zp1+F6
+ MuG7fRhA3IF9i8Oi6rTyaQGZQ0JFeMgp/gsBHzPBXiooX8YHAeO6YfGuY4QddkzkmrbXWAH7P
+ wUaIu1ZSjGW4mFkWpOZKp7TOJKEbffiFrP739pXUkRDHdHEdSLTAD7yD3nhxRJzltD7JnsD7Z
+ 25Tvsrl+tORnN1re9U8nSe2teVwiegM3B3hNKcLRV5x+uE/H6ByXwTip3HwGC8eWY0mS6n21b
+ acwrogqIJ1zcXObaz/ilAWbzcNREH57VmkUvqb2QytxTDkwH2hM+fE+QBReJNGrV6CZmIkUd4
+ +0WUrbgO0o1W6l5/puWRvKGY8OBHKHi6vgics/9E6r3IMifWOszbC8inJBjkemKfjBKZNZDTw
+ u55V05i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-203493503-1526906235=:77
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Hi,
+
+of course I messed up and did not fix the Cc: list... now fixed ;-)
 
 
-On 5/19/2018 4:27 AM, René Scharfe wrote:
-> Am 19.05.2018 um 03:57 schrieb Jeff King:
->> These formatted integers should always fit into their
->> 64-byte buffers. Let's use xsnprintf() to add an assertion
->> that this is the case, which makes auditing for other
->> unchecked snprintfs() easier.
-> 
-> How about this instead?
-> 
-> -- >8 --
->   
-> -	snprintf(ver, sizeof(ver), "%d", version);
-> -	snprintf(date, sizeof(date), "%" PRIuMAX, (uintmax_t)last_update);
-> -	argv[1] = ver;
-> -	argv[2] = date;
-> -	argv[3] = NULL;
-> -	cp.argv = argv;
-> +	argv_array_push(&cp.args, core_fsmonitor);
-> +	argv_array_pushf(&cp.args, "%d", version);
-> +	argv_array_pushf(&cp.args, "%" PRIuMAX, (uintmax_t)last_update);
+On Mon, 21 May 2018, Johannes Schindelin wrote:
 
-Looks good.  Simpler, cleaner, less error prone.
-
->   	cp.use_shell = 1;
->   	cp.dir = get_git_work_tree();
->   
-> 
+> Hi Chris,
+>=20
+> On Mon, 21 May 2018, Christian Couder wrote:
+>=20
+> > From: David Turner <dturner@twopensource.com>
+>=20
+> I vaguely remember that Dave suggested using a different email address
+> these days...
+>=20
+> *clicketyclick*
+>=20
+> ah, yes:
+> https://public-inbox.org/git/1474935093-26757-3-git-send-email-dturner@tw=
+osigma.com/
+>=20
+> So maybe update it here, too, to=20
+>=20
+> =09From: David Turner <novalis@novalis.org>
+>=20
+> ?
+>=20
+> > So that they work under alternate ref storage backends.
+> >=20
+> > This will be really needed when such alternate ref storage backends are
+> > developed. But this could already help by making clear to readers that
+> > some tests do not depend on which ref backend is used.
+> >=20
+> > This patch just takes care of many low hanging fruits. It does not try
+> > to completely solves the issue.
+> >=20
+> > Signed-off-by: David Turner <dturner@twopensource.com>
+> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> > ---
+>=20
+> This is great. I am all for making the tests better ;-)
+>=20
+> > diff --git a/t/lib-t6000.sh b/t/lib-t6000.sh
+> > index 3f2d873fec..b8567cdf94 100644
+> > --- a/t/lib-t6000.sh
+> > +++ b/t/lib-t6000.sh
+> > @@ -4,11 +4,10 @@ mkdir -p .git/refs/tags
+> > =20
+> >  >sed.script
+> > =20
+> > -# Answer the sha1 has associated with the tag. The tag must exist in .=
+git/refs/tags
+> > +# Answer the sha1 has associated with the tag. The tag must exist unde=
+r refs/tags
+> >  tag () {
+> >  =09_tag=3D$1
+> > -=09test -f ".git/refs/tags/$_tag" || error "tag: \"$_tag\" does not ex=
+ist"
+> > -=09cat ".git/refs/tags/$_tag"
+> > +=09git rev-parse --verify "refs/tags/$_tag" || error "tag: \"$_tag\" d=
+oes not exist"
+>=20
+> Line longer than 80 columns...
+>=20
+> > diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+> > index 0680dec808..886a9e3b72 100755
+> > --- a/t/t5500-fetch-pack.sh
+> > +++ b/t/t5500-fetch-pack.sh
+> > @@ -30,7 +30,7 @@ add () {
+> >  =09test_tick &&
+> >  =09commit=3D$(echo "$text" | git commit-tree $tree $parents) &&
+> >  =09eval "$name=3D$commit; export $name" &&
+> > -=09echo $commit > .git/refs/heads/$branch &&
+> > +=09git update-ref refs/heads/$branch $commit &&
+>=20
+> I think we have to be careful here to quote both "refs/heads/$branch" and
+> "$commit" here, as a bug that introduces spaces into $commit or $branch
+> would have been caught earlier, but not now, unless we quote.
+>=20
+> This goes for all introduced `update-ref` calls.
+>=20
+> Maybe even for some `git rev-parse --verify` calls.
+>=20
+> > diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+> > index 8f5c811dd7..c3b89ae783 100755
+> > --- a/t/t9903-bash-prompt.sh
+> > +++ b/t/t9903-bash-prompt.sh
+> > @@ -148,7 +148,7 @@ test_expect_success 'prompt - inside .git directory=
+' '
+> >  test_expect_success 'prompt - deep inside .git directory' '
+> >  =09printf " (GIT_DIR!)" >expected &&
+> >  =09(
+> > -=09=09cd .git/refs/heads &&
+> > +=09=09cd .git/objects &&
+> >  =09=09__git_ps1 >"$actual"
+> >  =09) &&
+> >  =09test_cmp expected "$actual"
+> > --=20
+>=20
+> This one looks wrong.
+>=20
+> Upon cursory review, one might be tempted to assume that the file is now
+> written into .git/objects/ instead of .git/refs/heads/. And the patch
+> context provided in the email is not enough to see (gawd, I hate
+> mail-based patch review, it really takes all my Git tools away from me).
+> The trick is that `actual` points at an absolute path:
+>=20
+> =09#!/bin/sh
+> =09#
+> =09# Copyright (c) 2012 SZEDER G=C3=A1bor
+> =09#
+>=20
+> =09test_description=3D'test git-specific bash prompt functions'
+>=20
+> =09. ./lib-bash.sh
+>=20
+> =09. "$GIT_BUILD_DIR/contrib/completion/git-prompt.sh"
+>=20
+> =09actual=3D"$TRASH_DIRECTORY/actual"
+> =09[...]
+>=20
+> So the remaining question (which probably wants to be added to the commit
+> message together with a hint that `actual` points at an absolute path) is=
+:
+> Why not `cd .git` instead?
+>=20
+> Ciao,
+> Dscho
+--8323328-203493503-1526906235=:77--
