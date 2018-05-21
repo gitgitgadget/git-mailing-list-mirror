@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 003BE21849
-	for <e@80x24.org>; Mon, 21 May 2018 02:03:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E21A31F51C
+	for <e@80x24.org>; Mon, 21 May 2018 02:03:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752694AbeEUCDD (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 22:03:03 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51000 "EHLO
+        id S1752697AbeEUCDG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 22:03:06 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51012 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752671AbeEUCDC (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:03:02 -0400
+        by vger.kernel.org with ESMTP id S1752645AbeEUCDD (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:03:03 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:fc4d:8d90:22bd:91d8])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D1BEB60732;
-        Mon, 21 May 2018 02:02:58 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1DAC960751;
+        Mon, 21 May 2018 02:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526868180;
-        bh=Fqb8bmjnxCROGYtWRgjBR57rn9uqbvctuKrGC2JuG60=;
+        s=default; t=1526868181;
+        bh=HgZxE5D0+6JfaobdOtxElSsK+uXh9myHMFGd0+ulCkE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=NwL6QJRJL0qPJ9hz/4zSE8I7fCFFqfcGP+cmBy9FYbk69aMjfx0Uwr2S2vcVYyeJs
-         kfC70B6sa6pMm8bd9gdXhP9y7kY53hkHCDzHBdK0D298K8bnoj8wVBrZHwqxvSr+Wv
-         /B6kb/entG3U59ZcPa9vvBysZHFjxAvJCFW5bKy64s5RN7SYJVHCY6uWGYRSr5mipr
-         8wR/0umZB5Idt62+0VZ0gRzxal+N1TfioPMcJWbj97PC0+DEk0vZHxv6xtU0tuNG+U
-         XZWJAcnuSZR7gMHX52UhvDxuiiwrkZb9kaLdUVm8aHcYnFb+Z3mI8+S9HaErN0RXe1
-         mco34q5XH8HOGys2WBEf1AKaLx5mgepBCiH8ZDIHCysPFnO0PDERo++AZYFe+6cJ8k
-         Z+KWVWm0KFQQtanhG/Ua0yOoUR3K3HypcojcUcG1da59KacpWJcs/nQ43h3DVKN//u
-         0hKV4+dD0/LMtRx7yzpq3KYA72o4r2DVTh07zyvwx1nqYeiZtS8
+        b=NJKTP0tVkof8SbazuF7NKGljVC7mF64IhI6y2F5Ygkoa/CdqaffSdwlVpc7uX8mE9
+         H5bRfbFY+Qyja0LJgbdTJkdDWRAc/g9YZq21D9aFsjHR5VCput63uot3RWBsJnZcHJ
+         3sNLhe2a7UmENdYaNvlFAtXmooNb0Rjzxus5mkwRsGH8MKtKDoixNRrx3u8JNhYcAQ
+         ZsDd+RIJxBuhJnDIMHYkBDOPwQZOX2opVu9FYFrsoWe3Yw05FmGRhOxGhSXesV+fMF
+         yhqjRjOeFVCUPtI4e2MPG9VI0gtDDP/sY7STxaMhQcgXQy/+S7nIoZHEPrqTBoloN7
+         tXur2F6lWEiKFy+BQ/7ZCMdp32CSYOhsY9Pc0DyFwj8zGWhA22Y0pu62diMO0oWzfA
+         dITeiF6ByQr3irgFaSlY0KjfbfAYhBhRp9hgMJN56d2p62XayqsbnqjA9v/0+XyeU8
+         2kB4skd9l9EFCKzOCd3BjyL/g10eWTqk6miEXFXJXyqNT80AxM3
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -44,9 +44,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v4 18/28] t4020: abstract away SHA-1-specific constants
-Date:   Mon, 21 May 2018 02:01:37 +0000
-Message-Id: <20180521020147.648496-19-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 19/28] t4022: abstract away SHA-1-specific constants
+Date:   Mon, 21 May 2018 02:01:38 +0000
+Message-Id: <20180521020147.648496-20-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180521020147.648496-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -62,43 +62,37 @@ hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4020-diff-external.sh | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ t/t4022-diff-rewrite.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
-index 49d3f54b29..e009826fcb 100755
---- a/t/t4020-diff-external.sh
-+++ b/t/t4020-diff-external.sh
+diff --git a/t/t4022-diff-rewrite.sh b/t/t4022-diff-rewrite.sh
+index cb51d9f9d4..6d1c3d949c 100755
+--- a/t/t4022-diff-rewrite.sh
++++ b/t/t4022-diff-rewrite.sh
 @@ -13,6 +13,8 @@ test_expect_success setup '
+ 	  "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM" \
+ 	  <"$TEST_DIRECTORY"/../COPYING >test &&
+ 	echo "to be deleted" >test2 &&
++	blob=$(git hash-object test2) &&
++	blob=$(git rev-parse --short $blob) &&
+ 	git add test2
  
- 	test_tick &&
- 	echo second >file &&
-+	before=$(git hash-object file) &&
-+	before=$(git rev-parse --short $before) &&
- 	git add file &&
- 	git commit -m second &&
- 
-@@ -180,9 +182,13 @@ test_expect_success 'no diff with -diff' '
- echo NULZbetweenZwords | perl -pe 'y/Z/\000/' > file
- 
- test_expect_success 'force diff with "diff"' '
-+	after=$(git hash-object file) &&
-+	after=$(git rev-parse --short $after) &&
- 	echo >.gitattributes "file diff" &&
- 	git diff >actual &&
--	test_cmp "$TEST_DIRECTORY"/t4020/diff.NUL actual
-+	sed -e "s/^index .*/index $before..$after 100644/" \
-+		"$TEST_DIRECTORY"/t4020/diff.NUL >expected-diff &&
-+	test_cmp expected-diff actual
  '
+@@ -27,7 +29,7 @@ test_expect_success 'detect rewrite' '
+ cat >expect <<EOF
+ diff --git a/test2 b/test2
+ deleted file mode 100644
+-index 4202011..0000000
++index $blob..0000000
+ --- a/test2
+ +++ /dev/null
+ @@ -1 +0,0 @@
+@@ -43,7 +45,7 @@ test_expect_success 'show deletion diff without -D' '
+ cat >expect <<EOF
+ diff --git a/test2 b/test2
+ deleted file mode 100644
+-index 4202011..0000000
++index $blob..0000000
+ EOF
+ test_expect_success 'suppress deletion diff with -D' '
  
- test_expect_success 'GIT_EXTERNAL_DIFF with more than one changed files' '
-@@ -237,7 +243,7 @@ test_expect_success 'diff --cached' '
- 	git update-index --assume-unchanged file &&
- 	echo second >file &&
- 	git diff --cached >actual &&
--	test_cmp "$TEST_DIRECTORY"/t4020/diff.NUL actual
-+	test_cmp expected-diff actual
- '
- 
- test_expect_success 'clean up crlf leftovers' '
