@@ -6,49 +6,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3621D1F51C
-	for <e@80x24.org>; Mon, 21 May 2018 00:01:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C72E01F51C
+	for <e@80x24.org>; Mon, 21 May 2018 00:29:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752656AbeEUABJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 20:01:09 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:56259 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751100AbeEUABI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 May 2018 20:01:08 -0400
-Received: by mail-wm0-f65.google.com with SMTP id a8-v6so22373066wmg.5
-        for <git@vger.kernel.org>; Sun, 20 May 2018 17:01:07 -0700 (PDT)
+        id S1752569AbeEUAZF (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 20:25:05 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36405 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751837AbeEUAZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 May 2018 20:25:04 -0400
+Received: by mail-wm0-f67.google.com with SMTP id n10-v6so23638534wmc.1
+        for <git@vger.kernel.org>; Sun, 20 May 2018 17:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=jGQkxvITOy3ywBmU+qrhc0kffJb37GML+NWmx4KCGh8=;
-        b=TpvazZefDMR3H2N+bZQuexXX8iYEr/S4/cn8SmDUlncA3CYLgXwb+A56bAOtwKsdpR
-         15BtOwsRkvHs8jnuIfvDGnAbcAERqoBNAGHrULrRP8lK/JjzmYOWofKBP4SXGSX7sUMt
-         puRKAZ3VIVW5rBZWOnk6jAurUQf4OUshm4otX6wmT+hHKkvTt95laS/PRfGv6fKZxHdQ
-         TRqSy6m8zF6LUvVhvd7DTWb9CLYLOsp6JANXHwgIIfcDxitKDEPD1cpN+lMLyAxCpixV
-         8gOSgrZDGDGq3Jgmlap20XzLpiJclCnYdUCOY7VydumfCp+ygjR+nkIWn+fIDy3flga6
-         +xIA==
+         :user-agent:mime-version;
+        bh=1c+X9Lzp/bj2wTDE+Kwd7JYyEcGSoWbq4KI6O6GTRfo=;
+        b=KMiju0GfxguRo2LaHgmRWKIo++CqlZ25r+2pMTwTkiadP3qRevRLA7bcECdoSIgXi6
+         Ua3yoXHA1YK45pFZj7ASSw2myPbREka/ysmLlHzsE0yEI6ZdY8WRzqJPO6bRzDpzE4l9
+         B6aGRkegLHzl1ev4ydaBJ7lIj4eW2r+eZFHrLu+MtLCZBObwjLXe6QTRoVk/1yWvn6Tl
+         2hnzBM+0zqEJScAmPhECj/OTMxdl4vcivvzFUbjIN9WOBLIgFQyAJhFs++MRaVVJcbrC
+         TKZxowNl8pZv94JstWcJ4S4qEcZ0nzIhKALNbyhhgN3JyHLhcZtQdG9Dlfq7LePGwnAn
+         F/pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=jGQkxvITOy3ywBmU+qrhc0kffJb37GML+NWmx4KCGh8=;
-        b=qCxkYpCqjggQUNd+hfkGBDB+GDZySS494qvvNI1HZ0zfe4t8Mq0YEvgCU9Z2sKUnYX
-         v+SfjUE13+5VKs2jeXqUdugLAVJx+f2LrxeK9EKt7U+dbO5bfyWuYLGaVtv7VgQMvu75
-         kXJHpCM27AzJj/IU2zLMrE5iLo8kGJrg5vYZec256Bxm6+NszfBNceeeaNWzS5nvunQp
-         BKMDOKvXP5DBAuqICDZ/zaVdiG1uNmDsohWFCbZmOr0vqX4IphDQj144PTO3GzwsgkPD
-         Hz6Seo6Unru0ZrRhS8R/ByoCrfWO2EzZg/JJd/9nZSNktVCmOT6v521tw5/4NZLGN+ym
-         bReg==
-X-Gm-Message-State: ALKqPwfb5WtUYGXALy/huOl/68jzUxaHOCFpbOk/p62x4DTa+0dS1uT+
-        Qkc6qVwuCP7E1B1FzktcULQ=
-X-Google-Smtp-Source: AB8JxZrfP7oPlTbn7pf13kHKkmAZgsJBNDOnH/RrV418b7yEhb22AoQ5zMh9WdPGOzKIeTWQJ2gPTg==
-X-Received: by 2002:a1c:4a5d:: with SMTP id x90-v6mr8891770wma.101.1526860866414;
-        Sun, 20 May 2018 17:01:06 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k126-v6sm24818099wmd.45.2018.05.20.17.01.05
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=1c+X9Lzp/bj2wTDE+Kwd7JYyEcGSoWbq4KI6O6GTRfo=;
+        b=KtHi4D1gbdaRFNqPaUq1+knb8cE4SakPhYNFOeYG82xrAHZVzuPvjEyK6mVRrlLo/h
+         maOUwMGxLceE/49wa1UZNap7/ymudN7qj5udDS5fZiQAaYZ/raie6r8ogjGs814lxyNp
+         /UCcyoZfImoH4b6XsI6ntnVAMQDvr6xg0Y1CHU+N8/o6CwSDdAbOVgf7z9rldB+Er3Wo
+         xt3wyZNTlve7juwo513ii0lKnUYBJMqmBNQvbi0DgTDIwMyuM2FWWUdUOjNebCJTx1GO
+         DD0Bq65PFtb1QjPm2mLlctU5L2Wxhtzn/O91uzhZecy7ZHZRppMGWrIDMoLEymZAJeXO
+         PdeA==
+X-Gm-Message-State: ALKqPwdaN4sFZGYhN6TowUpFK2OJpE1LnfzHY+9zClvDLNNKprWLwaNX
+        w2U7yUADbiF3PWQ0eSWGqPY=
+X-Google-Smtp-Source: AB8JxZo236e5c6UeBycJL29WK9e8ibyTfZIYJs/OgRD/7FZ8dLwa4L+s52Fa1YFcLx7/K4tln617vw==
+X-Received: by 2002:a1c:1047:: with SMTP id 68-v6mr9181947wmq.132.1526862303033;
+        Sun, 20 May 2018 17:25:03 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h10-v6sm20115773wrf.83.2018.05.20.17.25.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 20 May 2018 17:01:05 -0700 (PDT)
+        Sun, 20 May 2018 17:25:02 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jacob Keller <jacob.keller@gmail.com>
 Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
@@ -57,141 +56,137 @@ Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
         Ben Peart <Ben.Peart@microsoft.com>,
         Phillip Wood <phillip.wood@talktalk.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re*: [PATCH v4 3/4] string-list: provide `string_list_appendf()`
+Subject: Re: Re*: [PATCH v4 3/4] string-list: provide `string_list_appendf()`
 References: <CAN0heSp7DqxOy-UeLgj8t_T_4f-fNthMpGNS8oUbcs7+NvS-zw@mail.gmail.com>
         <cover.1526810549.git.martin.agren@gmail.com>
         <77b025bb47869478e3eef1c3c34d379164f5d91c.1526810549.git.martin.agren@gmail.com>
         <CA+P7+xqPnuuQpp5e7fduLgaSd+JrTn95w=Da7q=iCXUgo0QHFA@mail.gmail.com>
-Date:   Mon, 21 May 2018 09:01:05 +0900
-In-Reply-To: <CA+P7+xqPnuuQpp5e7fduLgaSd+JrTn95w=Da7q=iCXUgo0QHFA@mail.gmail.com>
-        (Jacob Keller's message of "Sun, 20 May 2018 12:12:33 -0700")
-Message-ID: <xmqqvabh3mim.fsf_-_@gitster-ct.c.googlers.com>
+        <xmqqvabh3mim.fsf_-_@gitster-ct.c.googlers.com>
+Date:   Mon, 21 May 2018 09:25:01 +0900
+In-Reply-To: <xmqqvabh3mim.fsf_-_@gitster-ct.c.googlers.com> (Junio
+        C. Hamano's message of "Mon, 21 May 2018 09:01:05 +0900")
+Message-ID: <xmqqr2m53leq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Sun, May 20, 2018 at 3:17 AM, Martin Ågren <martin.agren@gmail.com> wrote:
->> +/**
->> + * Add formatted string to the end of `list`. This function ignores
->> + * the value of `list->strdup_strings` and always appends a freshly
->> + * allocated string, so you will probably not want to use it with
->> + * `strdup_strings = 0`.
->> + */
->> +struct string_list_item *string_list_appendf(struct string_list *list,
->> +                                            const char *fmt, ...);
->> +
+> I have a feeling that argv_array might be a better fit for the
+> purpose of keeping track of to_free[] strings in the context of this
+> series.  Moving away from string_list would allow us to sidestep the
+> storage ownership issues the API has, and we do not need the .util
+> thing string_list gives us (which is one distinct advantage string_list
+> has over argv_array, if the application needs that feature).
 >
-> Would it make sense to verify that strdup_strings == 0? I guess we'd
-> have to use die or BUG(), but that would mean that the program could
-> crash..
+> We would need to make _pushf() and friends return "const char *" if
+> we go that route to make the resulting API more useful, though.
 
-It probably is clear to readers that any reasonable implementation
-of *_appendf() will create a new and unique string, as the point of
-*f() is to give a customized instantiation of fmt string for given
-parameters.  So it would be natural to expect that the storage that
-holds the generated string will belong to the list.  We _could_ make
-it honor strdup_strings and make one extra copy when strdup_strings
-is set to true, but the only effect such a stupid implementation has
-is to unnecessarily leak ;-)
-
-I think it is probably OK to check and BUG() when strdup_strings==0,
-but such a check means that we now declare that a string list must
-either borrow all of its strings from elsewhere or own all of its
-strings itself, and mixture is not allowed.
-
-The (overly) flexible string_list API could be used to mix both
-borrowed and owned strings (an obvious strategy to do this without
-leaking and crashing is to use the .util field to mark which ones
-are owned and which ones are borrowed), so there might already be
-current users of the API that violates that rule.
-
-I have a feeling that argv_array might be a better fit for the
-purpose of keeping track of to_free[] strings in the context of this
-series.  Moving away from string_list would allow us to sidestep the
-storage ownership issues the API has, and we do not need the .util
-thing string_list gives us (which is one distinct advantage string_list
-has over argv_array, if the application needs that feature).
-
-We would need to make _pushf() and friends return "const char *" if
-we go that route to make the resulting API more useful, though.
+... and redoing the 4/4 patch using argv_array_pushf() makes the
+result look like this, which does not look too bad.
 
 -- >8 --
-Subject: argv-array: return the pushed string from argv_push*()
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] unpack_trees_options: keep track of owned messages with argv_array
 
-Such an API change allows us to use an argv_array this way:
-
-	struct argv_array to_free = ARGV_ARRAY_INIT;
-        const char *msg;
-
-        if (some condition) {
-		msg = "constant string message";
-		... other logic ...
-	} else {
-		msg = argv_pushf(&to_free, "format %s", var);
-	}
-	... use "msg" ...
-	... do other things ...
-	argv_clear(&to_free);
-
-Note that argv_array_pushl() and argv_array_pushv() are used to push
-one or more strings with a single call, so we do not return any one
-of these strings from these two functions in order to reduce the
-chance to misuse the API.
+Instead of the string_list API, which is overly flexible and require
+callers to be careful about memory ownership issues, use the
+argv_array API that always takes ownership to redo the earlier
+commit.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- argv-array.c | 6 ++++--
- argv-array.h | 4 ++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ unpack-trees.c | 16 ++++++----------
+ unpack-trees.h |  4 ++--
+ 2 files changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/argv-array.c b/argv-array.c
-index 5d370fa336..449dfc105a 100644
---- a/argv-array.c
-+++ b/argv-array.c
-@@ -21,12 +21,13 @@ static void argv_array_push_nodup(struct argv_array *array, const char *value)
- 	array->argv[array->argc] = NULL;
- }
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 86046b987a..b28f0c6e9d 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1,5 +1,6 @@
+ #define NO_THE_INDEX_COMPATIBILITY_MACROS
+ #include "cache.h"
++#include "argv-array.h"
+ #include "repository.h"
+ #include "config.h"
+ #include "dir.h"
+@@ -103,11 +104,7 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 	const char **msgs = opts->msgs;
+ 	const char *msg;
  
--void argv_array_push(struct argv_array *array, const char *value)
-+const char *argv_array_push(struct argv_array *array, const char *value)
+-	/*
+-	 * As we add strings using `...appendf()`, this does not matter,
+-	 * but when we clear the string list, we want them to be freed.
+-	 */
+-	opts->msgs_to_free.strdup_strings = 1;
++	argv_array_init(&opts->msgs_to_free);
+ 
+ 	if (!strcmp(cmd, "checkout"))
+ 		msg = advice_commit_before_merge
+@@ -125,7 +122,7 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 			  "Please commit your changes or stash them before you %s.")
+ 		      : _("Your local changes to the following files would be overwritten by %s:\n%%s");
+ 	msgs[ERROR_WOULD_OVERWRITE] = msgs[ERROR_NOT_UPTODATE_FILE] =
+-		string_list_appendf(&opts->msgs_to_free, msg, cmd, cmd)->string;
++		argv_array_pushf(&opts->msgs_to_free, msg, cmd, cmd);
+ 
+ 	msgs[ERROR_NOT_UPTODATE_DIR] =
+ 		_("Updating the following directories would lose untracked files in them:\n%s");
+@@ -146,7 +143,7 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 			  "Please move or remove them before you %s.")
+ 		      : _("The following untracked working tree files would be removed by %s:\n%%s");
+ 	msgs[ERROR_WOULD_LOSE_UNTRACKED_REMOVED] =
+-		string_list_appendf(&opts->msgs_to_free, msg, cmd, cmd)->string;
++		argv_array_pushf(&opts->msgs_to_free, msg, cmd, cmd);
+ 
+ 	if (!strcmp(cmd, "checkout"))
+ 		msg = advice_commit_before_merge
+@@ -164,7 +161,7 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 			  "Please move or remove them before you %s.")
+ 		      : _("The following untracked working tree files would be overwritten by %s:\n%%s");
+ 	msgs[ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN] =
+-		string_list_appendf(&opts->msgs_to_free, msg, cmd, cmd)->string;
++		argv_array_pushf(&opts->msgs_to_free, msg, cmd, cmd);
+ 
+ 	/*
+ 	 * Special case: ERROR_BIND_OVERLAP refers to a pair of paths, we
+@@ -189,8 +186,7 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 
+ void clear_unpack_trees_porcelain(struct unpack_trees_options *opts)
  {
- 	argv_array_push_nodup(array, xstrdup(value));
-+	return array->argv[array->argc - 1];
+-	string_list_clear(&opts->msgs_to_free, 0);
+-	memset(opts->msgs, 0, sizeof(opts->msgs));
++	argv_array_clear(&opts->msgs_to_free);
  }
  
--void argv_array_pushf(struct argv_array *array, const char *fmt, ...)
-+const char *argv_array_pushf(struct argv_array *array, const char *fmt, ...)
- {
- 	va_list ap;
- 	struct strbuf v = STRBUF_INIT;
-@@ -36,6 +37,7 @@ void argv_array_pushf(struct argv_array *array, const char *fmt, ...)
- 	va_end(ap);
+ static int do_add_entry(struct unpack_trees_options *o, struct cache_entry *ce,
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 5a84123a40..c2b434c606 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -2,7 +2,7 @@
+ #define UNPACK_TREES_H
  
- 	argv_array_push_nodup(array, strbuf_detach(&v, NULL));
-+	return array->argv[array->argc - 1];
- }
+ #include "tree-walk.h"
+-#include "string-list.h"
++#include "argv-array.h"
  
- void argv_array_pushl(struct argv_array *array, ...)
-diff --git a/argv-array.h b/argv-array.h
-index 29056e49a1..715c93b246 100644
---- a/argv-array.h
-+++ b/argv-array.h
-@@ -12,9 +12,9 @@ struct argv_array {
- #define ARGV_ARRAY_INIT { empty_argv, 0, 0 }
+ #define MAX_UNPACK_TREES 8
  
- void argv_array_init(struct argv_array *);
--void argv_array_push(struct argv_array *, const char *);
-+const char *argv_array_push(struct argv_array *, const char *);
- __attribute__((format (printf,2,3)))
--void argv_array_pushf(struct argv_array *, const char *fmt, ...);
-+const char *argv_array_pushf(struct argv_array *, const char *fmt, ...);
- LAST_ARG_MUST_BE_NULL
- void argv_array_pushl(struct argv_array *, ...);
- void argv_array_pushv(struct argv_array *, const char **);
+@@ -62,7 +62,7 @@ struct unpack_trees_options {
+ 	struct pathspec *pathspec;
+ 	merge_fn_t fn;
+ 	const char *msgs[NB_UNPACK_TREES_ERROR_TYPES];
+-	struct string_list msgs_to_free;
++	struct argv_array msgs_to_free;
+ 	/*
+ 	 * Store error messages in an array, each case
+ 	 * corresponding to a error message type
+-- 
+2.17.0-582-gccdcbd54c4
+
