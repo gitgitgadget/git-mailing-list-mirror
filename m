@@ -7,87 +7,91 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53D6E1F51C
-	for <e@80x24.org>; Mon, 21 May 2018 19:00:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 724751F51C
+	for <e@80x24.org>; Mon, 21 May 2018 19:27:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751184AbeEUTAe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 15:00:34 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:44956 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751019AbeEUTAd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 15:00:33 -0400
-Received: by mail-yb0-f196.google.com with SMTP id s8-v6so4197105ybp.11
-        for <git@vger.kernel.org>; Mon, 21 May 2018 12:00:33 -0700 (PDT)
+        id S1750909AbeEUT1H (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 15:27:07 -0400
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:43847 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750773AbeEUT1G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 15:27:06 -0400
+Received: by mail-yw0-f176.google.com with SMTP id r202-v6so4819017ywg.10
+        for <git@vger.kernel.org>; Mon, 21 May 2018 12:27:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ZWaGELPWjVSyCzAmdTikB6HvWNWEOif9R4w7/mtgX0E=;
-        b=sy6YYMTYtoJD6m2Q0Nc5LLx/UfU4z67Be/l1pu0uwlemgy9d42edr6o1wj9WmtWAOP
-         53XPpBHQCQdQRQGj5/xTZOiX1VVGVFLK8AAXVKFjImCdnQD8z6jl//JiPFXmBxCwK1Jp
-         Pe7HLzU4mQXyj2ab4P99umvMZhFnnlw4sG953waqhfky/aYnq/WVF2PE2X/DA0+0KyCp
-         TLy7nfsRMM5u2HrbPwO8myCBhgT6pgTrrznwNtWBxGZSOxzrBK2YzoPQcP0/ecwvgqHL
-         ZbiP0yhihekbI9tn+STWexg3GRtOzsgZV0migTh/22Xn3EzvNGEloUAkJFk+fXyHkhrN
-         emZg==
+        bh=EtAVEE3yRH/UBmXt6+NEn16aQENCK5T4mVR4kLm1Hb4=;
+        b=sztao+yHNNjeGugQEth6q0kwN5FuAFV6jGwcdViGWaA/EOpqkzplxp/z0qIZ1t8inI
+         sWYJ1BKdKuLV3HUqYC1+67qyX6XakjEYVDV61EN/ypAFRzOW7B2+MEIgXspQa4pd3B5E
+         1Wjo/vhKOCBazLfrFbrp/4RVHSCLK2SqB8BGoOFDzU6DySvrcVCw3qz9FNC/qTTtim+W
+         BXFOscgVLr1rIPhhixs1ZQZKJMxaFpWWNdZwHap+gk4m/5gmwmVIJ9h0EBYgfZkPHxNC
+         pegv2tkcrb3QfMP0/8r6pi56jr/w1ukbE33kSD/FxkOEewQf7J8wf0N2MjreBdxf2i7Y
+         DehA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ZWaGELPWjVSyCzAmdTikB6HvWNWEOif9R4w7/mtgX0E=;
-        b=argHbYO34HUFlq5GgFj0RAnjN182n9yWL7MxhvyamIPzqhFQTHALxPfo9D498P9lTq
-         wtQWeDIJdkhQn+WpDmpTJuhTZ5sce+BBrJvkNFKb0jabjOfXqaxiIv/jas/lvbVJpWs/
-         4hOIHGujpj3WmsgEIEQlSFGWRO2MBv/I65fhie7PsY5Tp6vPEAhyDzEYVhGMADef0ZOV
-         K9znabFl3burPl6FwkBCsIotQ974j/THA+wJ4iMR8CuLxsYLCWRDVPJH1lu7zPrKtfFo
-         M2/00qi7K0eFNoVFeav1nBMPSksOjjUlt9zKAarFleKEyE303MVsrCmMZWdlLtqUXDq4
-         7DBQ==
-X-Gm-Message-State: ALKqPwe22qqWkUkQOoowbUjwxkj8NvGZGleGydbr9y29t7QuxUkQYNGW
-        NChnuy+tb2XvPQ1aM1ygp1L5NfM0ETaKlMCE8ZOen0VQ
-X-Google-Smtp-Source: AB8JxZoQYTnwfSYAX5OZ1alhxvh+EnaOFHuwoYJRbjCjtV5rzlxZYPov7tcs9toOEs4wNpExZ6XJhggrMW1xdWXFFrA=
-X-Received: by 2002:a25:6cc2:: with SMTP id h185-v6mr12264355ybc.307.1526929232583;
- Mon, 21 May 2018 12:00:32 -0700 (PDT)
+        bh=EtAVEE3yRH/UBmXt6+NEn16aQENCK5T4mVR4kLm1Hb4=;
+        b=Z0tt/6FfZU+kfAlRfnK2q+ifTLj1VssmSz5fmpvjntKKB+X0sA49WtZxbYTUqQ4uOg
+         1qc9MxGS7s0Ki1uO7ev8X7kNFaJ6dUdIQS6rBjJjoQxtl3lyczrVxu12HDH0C18E/lI6
+         P+ybtEWeZP7g9+/sYYjkK/VGksRyPwK+oF/qivkPdCdm1lUSPD5R3XWLKuENEUisfkax
+         YlSq7Jtgo43+Gl6MJnMjz8nZTE7seu8ZZAMbrvD9fhm1tzAUTyjRtUU2KIylvsYX2htf
+         xV8wXV5zFwXyY6uScTbPS5/ksYb6veLfgFwwV7Hh8BjqeyfIHXx2wkBu3hni14+wgoo0
+         yCrQ==
+X-Gm-Message-State: ALKqPweyU8Fp4A2MIggWZ+0e+Cgxh0sK6Yba3gorySxvsIgHnX5qJyPu
+        oM1BHDG2TMCVM7q28NTB+8wYoETjk4kthQA6M0fZWFxzQk8=
+X-Google-Smtp-Source: AB8JxZpPoYWnujPCptnr4HP08H51ILYU0ZvLLos4TtOJAyZwEQZhV15MEw5FhY+Ap1Fyo62FJn6goiOJdTQIQwXQV78=
+X-Received: by 2002:a81:37ce:: with SMTP id e197-v6mr10943697ywa.340.1526930825351;
+ Mon, 21 May 2018 12:27:05 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Mon, 21 May 2018 12:00:31 -0700 (PDT)
-In-Reply-To: <20180520211210.1248-2-t.gummerer@gmail.com>
-References: <20180520211210.1248-1-t.gummerer@gmail.com> <20180520211210.1248-2-t.gummerer@gmail.com>
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Mon, 21 May 2018 12:27:04 -0700 (PDT)
+In-Reply-To: <20180521185040.GA125693@google.com>
+References: <CACsJy8A8WZ-Gqe2Y-whJmbADrt+gZjLZ7MTwCtdnK7JDnEdtog@mail.gmail.com>
+ <20180516222118.233868-1-sbeller@google.com> <20180516222118.233868-3-sbeller@google.com>
+ <20180519063729.GA14755@duynguyen.home> <CAGZ79kbxptYvDoTqsVRe3KOA_--ja8UZir=MkMXw8_LxVXG_-Q@mail.gmail.com>
+ <20180521185040.GA125693@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 21 May 2018 12:00:31 -0700
-Message-ID: <CAGZ79kZnMnG_88YC8bfopfw8o9qwTggC01HPSPddL+LU-QVjFQ@mail.gmail.com>
-Subject: Re: [RFC/PATCH 1/7] rerere: unify error message when read_cache fails
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Date:   Mon, 21 May 2018 12:27:04 -0700
+Message-ID: <CAGZ79kZ0TBzDMqpim1Wtr9QtF2OtskE=nRPx2Nj+rwyT8HMqTw@mail.gmail.com>
+Subject: Re: [PATCH 02/11] repository: introduce repo_read_index_or_die
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Antonio Ospite <ao2@ao2.it>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 20, 2018 at 2:12 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> We have multiple different variants of the error message we show to
-> the user if 'read_cache' fails.  The "Could not read index" variant we
-> are using in 'rerere.c' is currently not used anywhere in translated
-> form.
->
-> As a subsequent commit will mark all output that comes from 'rerere.c'
-> for translation, make the life of the translators a little bit easier
-> by using a string that is used elsewhere, and marked for translation
-> there, and thus most likely already translated.
->
-> "index file corrupt" seems to be the most common error message we show
-> when 'read_cache' fails, so use that here as well.
->
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
->
-> "index file corrupt" is also what Stefan chose for his series unifying
-> these error messages (and 'die'ing, which I'm not sure is the right
-> thing to do here as also mentioned in my reply to [1]).  I'm happy to
-> drop this if we decide to go with that series.
+Hi Brandon,
 
-Acked-by: <me>
+>> One of the reviewers of the series questioned the overall goal of the
+>> series as we want to move away from _die() in top level code but this
+>> series moves more towards it.
+>
+> I've heard every once in a while that we want to move toward this but I
+> don't believe there is an actual effort along those lines just yet.  For
+> that to be the case we would need a clearly defined error handling
+> methodology (aside from the existing "die"ing behavior), which we don't
+> currently have.
 
-I'd happily have this patch instead of the one in my series.
+We have the example in the refs code, which I would want to
+imitate. :)
 
-I was about to ask for translation, but the commit message hints
-at a follow up patch marking this for translation, so I'll read on.
+/*
+ * Return 0 if a reference named refname could be created without
+ * conflicting with the name of an existing reference. Otherwise,
+ * return a negative value and write an explanation to err. [...]
+ */
 
+int refs_verify_refname_available(struct ref_store *refs, ...
+    struct strbuf *err);
+
+extern int refs_init_db(struct strbuf *err);
+
+But it is true that there is no active effort currently being pushed.
+
+Thanks,
 Stefan
