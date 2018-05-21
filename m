@@ -2,81 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30DA81F51C
-	for <e@80x24.org>; Mon, 21 May 2018 21:54:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C72071F51C
+	for <e@80x24.org>; Mon, 21 May 2018 22:10:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932087AbeEUVyv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 17:54:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48478 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754347AbeEUVyp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 17:54:45 -0400
-Received: (qmail 373 invoked by uid 109); 21 May 2018 21:54:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 21 May 2018 21:54:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32145 invoked by uid 111); 21 May 2018 21:54:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 21 May 2018 17:54:53 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2018 17:54:43 -0400
-Date:   Mon, 21 May 2018 17:54:43 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
-Subject: Re: commit-graph: change in "best" merge-base when ambiguous
-Message-ID: <20180521215443.GC16623@sigill.intra.peff.net>
-References: <e78a115a-a5ea-3c0a-5437-51ba0bcc56e1@gmail.com>
+        id S1752736AbeEUWK1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 18:10:27 -0400
+Received: from mail-oi0-f50.google.com ([209.85.218.50]:45881 "EHLO
+        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752895AbeEUWJ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 18:09:58 -0400
+Received: by mail-oi0-f50.google.com with SMTP id b130-v6so14388454oif.12
+        for <git@vger.kernel.org>; Mon, 21 May 2018 15:09:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=NdRdhlUIxxE91mJjxMYwgw0qeVhoWqQCI6nKSAOtTLI=;
+        b=KmjZ66uEvZuHehgfPdNSgdVHR9uaFt+kllAFy/3xqK7QQu1gTPsi2Wzqjjw9yiHP2K
+         ARnCw8nwRHP3+fQv2P3b/wOF4m5vlbocZmpguqJDIxTJFniXzfif9rHjxzx2QC1T/9Cp
+         o7NP42OaFX0TrRs1tjjx7XDwUiqnjL5WcEYqM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=NdRdhlUIxxE91mJjxMYwgw0qeVhoWqQCI6nKSAOtTLI=;
+        b=DAK2cBOjJVQXb9KP6ycvfxoG5SfEJNOZDGE15k/kvHaIKQv+lzRlWCRq9RdVRh3k7T
+         bnA/SHzMBaTg98TDCcp/1pZEsdNpdMWlYJErmn4eiOzec3WHnd/Y2BKmTqzV9BLv5hmw
+         JvJHHutsSD240RNqqUHMOXECeLKgUgv+vFEiT3VKa8QaOxVYUM0heXZ6DOQhbdhq4nFv
+         FUacUMbv/XdOvQKGgTuALebEvCwhIhc7atNT8/yamUfSAe9nNU+79wG5X5iXoZeCjxUa
+         f7mghAqV/mgiuPCXqkiXoyZonOOT+rhe0TOnaKc2B8vDGe9cDXYtkyhAgFbv0jxQ79ud
+         Mh7A==
+X-Gm-Message-State: ALKqPwdBley3B9dIbDYpyo0rk3VxfJVHIbN9xgTJXPXWMaa0RvHTlfdd
+        rDQez5JAfFLLyvIImZPUDuJD4QQsBz8eiJfeDI6GoA==
+X-Google-Smtp-Source: AB8JxZqj2fd1VxiyyUSLwIF8V83Q8/lhBW2LzvXtXovohqZI42HGNw8FTjmS5W7TyO/J1QoLfYGcdrrIiyolHeYCA0Q=
+X-Received: by 2002:aca:db44:: with SMTP id s65-v6mr13273374oig.157.1526940597930;
+ Mon, 21 May 2018 15:09:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e78a115a-a5ea-3c0a-5437-51ba0bcc56e1@gmail.com>
+Received: by 2002:a9d:3c57:0:0:0:0:0 with HTTP; Mon, 21 May 2018 15:09:57
+ -0700 (PDT)
+In-Reply-To: <20180521213924.4491-1-szeder.dev@gmail.com>
+References: <20180519100020.616-1-luke@diamand.org> <20180519100020.616-2-luke@diamand.org>
+ <20180521213924.4491-1-szeder.dev@gmail.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Mon, 21 May 2018 23:09:57 +0100
+Message-ID: <CAE5ih7-1LwLxndEdjtGEmoViiZYbspkjymTzWxnnMgVWfNW2_w@mail.gmail.com>
+Subject: Re: [PATCHv4 1/1] git-p4: add unshelve command
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Romain Merland <merlorom@yahoo.fr>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        George Vanburgh <gvanburgh@bloomberg.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 21, 2018 at 02:10:54PM -0400, Derrick Stolee wrote:
+On 21 May 2018 at 22:39, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote:
+>> diff --git a/t/t9832-unshelve.sh b/t/t9832-unshelve.sh
 
-> In the Discussion section of the `git merge-base` docs [1], we have the
-> following:
-> 
->     When the history involves criss-cross merges, there can be more than one
-> best common ancestor for two commits. For example, with this topology:
-> 
->     ---1---o---A
->         \ /
->          X
->         / \
->     ---2---o---o---B
-> 
->     both 1 and 2 are merge-bases of A and B. Neither one is better than the
-> other (both are best merge bases). When the --all option is not given,    
-> it is unspecified which best one is output.
-> 
-> This means our official documentation mentions that we do not have a
-> concrete way to differentiate between these choices. This makes me think
-> that this change in behavior is not a bug, but it _is_ a change in behavior.
-> It's worth mentioning, but I don't think there is any value in making sure
-> `git merge-base` returns the same output.
-> 
-> Does anyone disagree? Is this something we should solidify so we always have
-> a "definitive" merge-base?
+...
+...
 
-Heh, I should have read your whole original message before responding,
-not just the part that Elijah quoted.
+>> +'
+>
+> This test fails on my box and on Travis CI (in all four standard Linux
+> and OSX build jobs) with:
+>
+>   + cd /home/szeder/src/git/t/trash directory.t9832-unshelve/cli
+>   + p4 edit file1
+>   //depot/file1#1 - opened for edit
+>   + echo a change
+>   + echo new file
+>   + p4 add file2
+>   //depot/file2#1 - opened for add
+>   + p4 delete file_to_delete
+>   //depot/file_to_delete#1 - opened for delete
+>   + p4 opened
+>   //depot/file1#1 - edit default change (text)
+>   //depot/file2#1 - add default change (text)
+>   //depot/file_to_delete#1 - delete default change (text)
+>   + p4 shelve -i
+>   Change 3 created with 3 open file(s).
+>   Shelving files for change 3.
+>   edit //depot/file1#1
+>   add //depot/file2#1
+>   delete //depot/file_to_delete#1
+>   Change 3 files shelved.
+>   + cd /home/szeder/src/git/t/trash directory.t9832-unshelve/git
+>   + last_shelved_change
+>   + p4 changes -s shelved -m1
+>   + cut -d   -f 2
+>   + change=3D3
+>   + git p4 unshelve 3
+>   Traceback (most recent call last):
+>     File "/home/szeder/src/git/git-p4", line 3975, in <module>
+>       main()
+>     File "/home/szeder/src/git/git-p4", line 3969, in main
+>       if not cmd.run(args):
+>     File "/home/szeder/src/git/git-p4", line 3851, in run
+>       sync.importChanges(changes, shelved=3DTrue,
+>   origin_revision=3Dorigin_revision)
+>     File "/home/szeder/src/git/git-p4", line 3296, in importChanges
+>       files =3D self.extractFilesFromCommit(description, shelved, change,
+>   origin_revision)
+>     File "/home/szeder/src/git/git-p4", line 2496, in
+>   extractFilesFromCommit
+>       not self.cmp_shelved(path, file["rev"], origin_revision):
+>     File "/home/szeder/src/git/git-p4", line 2467, in cmp_shelved
+>       return ret["status"] =3D=3D "identical"
+>   KeyError: 'status'
+>   error: last command exited with $?=3D1
+>   not ok 4 - create shelved changelist
 
-Yes, I think this is clearly a case where all of the single merge-bases
-we could show are equally good. And I don't think we should promise to
-show a particular one, but I _do_ think it's friendly for us to have
-deterministic tie-breakers (we certainly don't now).
+It works fine for me - but given where it's failing, my first
+suspicion would be p4 client version (or server) differences.
 
--Peff
+I'm using 2015.1 for server and client. Could you check which version
+you are using?
+
+Thanks,
+Luke
