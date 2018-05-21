@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A08F01F51C
-	for <e@80x24.org>; Mon, 21 May 2018 02:02:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E94391F51C
+	for <e@80x24.org>; Mon, 21 May 2018 02:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752572AbeEUCCL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 May 2018 22:02:11 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50780 "EHLO
+        id S1752594AbeEUCCN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 May 2018 22:02:13 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50790 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751637AbeEUCCI (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:02:08 -0400
+        by vger.kernel.org with ESMTP id S1751030AbeEUCCJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 20 May 2018 22:02:09 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:fc4d:8d90:22bd:91d8])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3A3BF60746;
-        Mon, 21 May 2018 02:02:06 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3B9F360732;
+        Mon, 21 May 2018 02:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1526868126;
-        bh=ZwU1rVb4LwHxL0TAHrv9DCTAzxrxHYfm6ek1EujJzu4=;
+        s=default; t=1526868127;
+        bh=IHQ1mhtKA9lPZdP8AMJUizBUZJoCkJ5360LQLFN1asQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=KjY7t/WUD8gyK2/8a5cXhBfRi35avnSGpVv5sL3d154psX3rngHi9nvhg0il0C/pS
-         3OE0Gial9dXUPHeuLYqrhb239XGLKy/8/ajgzmToTliIY9NPlXu0Eud+PJi23e/nlM
-         BSzSDjeaHhPaZe5PaElAXoeHNQQllm3aAQTOUDxSbsW/OK3Pq+G8X352EBOP5/cJP5
-         3/ZBCgSl/ZSIECZ4pzYm4DsrLEeAy41YeS/iOlesoEIdOdyXJ5qyBFYdmBbYhw8dqo
-         5dDf5vnBkXf4vTwoDD4J9eTUok8nes5ORjY5F08ueSU92DL7Iork+6peEE1Ld2J5CQ
-         7th5J/ypl96+QrEVQIL8f2XKr2GJOel+rw7Wa2lFACTLMpKlZRx1lKOhLQfUhuTxVT
-         vzdx6xBByUn0l5A6Pcxp7rSGG3N+KRATmoX6z3g9SV9/tNxzADNKT6m56RJBhnCMwR
-         LywW23JNuVx4X950ZyF3RrJG4EktUNpQktDj4FkrZpcuIdstQvf
+        b=fL8WgG9JQjTWyX1nVHq8KtNGz0SrYL2jJxgactHOv9PlBxf4zHh/0wAMahL6SWwSr
+         jMUHhsqOow/XHVgV58tkCM1OPDOfAVRuiEzPgEwxHOsxF+t5JHnOCqXmCi6vACOG8p
+         zlM25aVWekpOdSyqtnJvhCe3MUoEQqsaqadI5IOza4ldRFP0vH913w2znJZ/t2CV8G
+         UN6bszyZcb2uN/KEjwfy92Xy9Nl7a1I75a6CpWyRkZaLUcfOxGV9BZhoYA2TsG69iV
+         7xEDG42nfs1B58IDwd2Adc/Xw4JrYmk3JOM9Ouq4VWtz9gOU0s4AujYdyNzYgCx2bB
+         9E5Vgv06UTYrC2Bs7MQQeh7lYXVTbWkUbKabRhc187zqzTQzt78jw3UUNa98PYsjxa
+         oisUWshXVBe5I/yjMc6drHNl8CXq9KcGf3dJX15dUA7pX0LtD9xHJ3a/cTDO98sNj9
+         kAafpofSkOYtEh/p19PkHq8VFwH2IVB4uVtSElINHEVv/DcMFEJ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -44,9 +44,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v4 01/28] t/test-lib: add an SHA1 prerequisite
-Date:   Mon, 21 May 2018 02:01:20 +0000
-Message-Id: <20180521020147.648496-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 02/28] t/test-lib: introduce ZERO_OID
+Date:   Mon, 21 May 2018 02:01:21 +0000
+Message-Id: <20180521020147.648496-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.441.gb46fe60e1d
 In-Reply-To: <20180521020147.648496-1-sandals@crustytoothpaste.net>
 References: <20180516015630.661349-1-sandals@crustytoothpaste.net>
@@ -57,36 +57,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are some basic tests in our codebase that test that we get fixed
-SHA-1 values.  These are valuable because they make sure that our SHA-1
-implementation is free of bugs, but obviously these tests will fail with
-a different hash.
-
-There are also tests which intentionally produce objects that have
-collisions when truncated to a certain length to test our handling of
-these cases.  These tests, too, will fail with a different hash.
-
-Add an SHA1 prerequisite to annotate both of these types of tests and
-disable them when we're using a different hash.  In the future, we will
-create versions of these tests which handle both SHA-1 and NewHash.
+Currently we have a variable, $_z40, which contains the all-zero object
+ID.  However, with NewHash, we'll have an all-zero object ID which is
+longer than 40 hex characters.  In such a case, $_z40 will be a
+confusing name.  Create a $ZERO_OID variable which will always reflect
+the all-zeros object ID, regardless of the length of the current hash.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/test-lib.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+ t/test-lib.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ea2bbaaa7a..fce728d2ea 100644
+index fce728d2ea..58c2ea52c6 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -1212,3 +1212,10 @@ test_lazy_prereq TIME_T_IS_64BIT 'test-tool date time_t-is64bit'
- test_lazy_prereq CURL '
- 	curl --version
- '
-+
-+# SHA1 is a test if the hash algorithm in use is SHA-1.  This is both for tests
-+# which will not work with other hash algorithms and tests that work but don't
-+# test anything meaningful (e.g. special values which cause short collisions).
-+test_lazy_prereq SHA1 '
-+	test $(git hash-object /dev/null) = e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-+'
+@@ -184,6 +184,7 @@ _x40="$_x35$_x05"
+ # Zero SHA-1
+ _z40=0000000000000000000000000000000000000000
+ 
++ZERO_OID=$_z40
+ EMPTY_TREE=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+ EMPTY_BLOB=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+ 
+@@ -195,7 +196,7 @@ LF='
+ # when case-folding filenames
+ u200c=$(printf '\342\200\214')
+ 
+-export _x05 _x35 _x40 _z40 LF u200c EMPTY_TREE EMPTY_BLOB
++export _x05 _x35 _x40 _z40 LF u200c EMPTY_TREE EMPTY_BLOB ZERO_OID
+ 
+ # Each test should start with something like this, after copyright notices:
+ #
