@@ -2,86 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBCEE1F51C
-	for <e@80x24.org>; Mon, 21 May 2018 17:18:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 555851F51C
+	for <e@80x24.org>; Mon, 21 May 2018 17:22:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753161AbeEURSP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 13:18:15 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:42424 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752872AbeEURSO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 13:18:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=uvZbLFSaytpf7uGl4KTKScH0OMPNwyTwiuOocKplI6Q=; b=XgiWAijpvwCyL2b6eOqYYuE23
-        hTlNN8GyyDNsJyeI94mmmdRsz669Bi8Xw+GVgz8IqtJqaEfT3wds8re3qcEfasB/8CljcsUvTgBme
-        nfI9Ee53vzF/teGNV/wqLHEuzr1WGSzqbQjREk3jSAK8jtX8V44bWPBRYSZH0pCfiLg5lVAtEJGAl
-        oVPHDYEFdW8gK9RfjlgVgxRzMmb02GzYaRR+r+NbI1n3HTr7YUC0As2SY1SptCP/XQkWdSuCj8Rd5
-        liCBK5TsCH0svsHMrOH2ltME26nLq+5C7vNVDGNRorgrHR9erhtgpYeCykgEzJFPdWhuPzNplL8A/
-        sjZbw2zAg==;
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:52848 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fKoRo-00GcT2-8i; Mon, 21 May 2018 13:18:13 -0400
-Date:   Mon, 21 May 2018 13:16:41 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: issues(?) installing git-lfs via fedora "dnf" command
-In-Reply-To: <20180521171405.GB10623@aiede.svl.corp.google.com>
-Message-ID: <alpine.LFD.2.21.1805211315290.20433@localhost.localdomain>
-References: <alpine.LFD.2.21.1805210625410.6679@localhost.localdomain> <20180521170353.GA10623@aiede.svl.corp.google.com> <alpine.LFD.2.21.1805211303260.19892@localhost.localdomain> <20180521171405.GB10623@aiede.svl.corp.google.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1753091AbeEURWo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 13:22:44 -0400
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:44464 "EHLO
+        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752928AbeEURWm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 13:22:42 -0400
+Received: by mail-vk0-f66.google.com with SMTP id x66-v6so9205434vka.11
+        for <git@vger.kernel.org>; Mon, 21 May 2018 10:22:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=HMDFVov7WYtTkqdDqV5RzNXj0TPpFZJ5DCc/5ClozyI=;
+        b=uE2QuqTavJiSshBUX8zKEFvW6AjB965t3dSCoEZSf0UNCAw6Clp+aCbDh6vucvQ6J9
+         lc7ndL1Soar+s5oq6oZDjgfPkJOubpu08v8g2krsiq1OV9h230dm5+W7vxHEQ4sS8T/r
+         hZ7QGEeM/tIWrnZ0bUeDHWsdqg7qzQvjOJS03HMZJ5FqRahJEX5NsBovDQ4IiDN4Kj+q
+         jN0rB+K6R53o7PuV+TKV3YhKjIWoWYwvt8krPGTkqqv2kFIGJ6UzrA2zik0oYz0WC2zs
+         b3hHicateYPpbz+q81cw7QpM4qOTuWIwVhTaiQRW1/KLghopMc+MHu621aguEvhBUA4z
+         rs7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=HMDFVov7WYtTkqdDqV5RzNXj0TPpFZJ5DCc/5ClozyI=;
+        b=bvyaWAg8bEUF69tkfQZgrdu3X+sszPsc3+AxX223zghD/lo/A20x+AlCMMRCzuJxJ/
+         5rCWH97zBGlVc0a0DyId9FDyZgFDAazN43uEiGVmFM2cVbzQgwbPKPyxdoR90LDvjoVV
+         RcyvSNQSYmSTnQQbZlaLBIvuton7hCFyVNsRd7WabpPSaDicvrDAtFiQy83T5Kb/JESX
+         qRB28MibSPaK+Ez699x35hWBqBLWAD0mMOu3mPwPo8WdCZsCFAqDt9CN3ONYSk/IDZrS
+         B302IF7I2HmrnF7rgMRuM7ObXLn+R9CSXM5r5bvaCZpDxWKYDIm64a/rMCmH9udw7EuJ
+         +NEg==
+X-Gm-Message-State: ALKqPwfylABP3UFqhxsNJUt9Hs8NmQy8rvS9o+TRighvmXMhpLJLd603
+        U45QqAT9wG0BNjWbirr0mFUNF6+MY37YVFuyPVI=
+X-Google-Smtp-Source: AB8JxZon+hC/AdUIaZGbAQ0QEjU0ZM7qRYFu29tn2bauI9Kpv6bcadIxAoMxj5d+1B+lmaKmH1GBbQbTy8UqLGNm/ww=
+X-Received: by 2002:a1f:824a:: with SMTP id e71-v6mr13666526vkd.7.1526923361444;
+ Mon, 21 May 2018 10:22:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Received: by 10.176.95.4 with HTTP; Mon, 21 May 2018 10:22:40 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1805211540120.77@tvgsbejvaqbjf.bet>
+References: <20180519020700.2241-1-newren@gmail.com> <20180519020700.2241-6-newren@gmail.com>
+ <3b05f4b1-e236-989d-afe0-e85b28c2e278@kdbg.org> <CABPp-BFjF7ZAjqi79aRbT+0M+stPnrcEXwYoV75qCHTb2oLiXg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1805211540120.77@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 21 May 2018 10:22:40 -0700
+Message-ID: <CABPp-BFHb+=1tWDH3GsiyYWCcbr83we46stjuU0D_Z_-H=Jx9A@mail.gmail.com>
+Subject: Re: [PATCH 5/5] merge-recursive: simplify handle_change_delete
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 21 May 2018, Jonathan Nieder wrote:
+Hi Dscho,
 
-> Hi,
->
-> Robert P. J. Day wrote:
-> > On Mon, 21 May 2018, Jonathan Nieder wrote:
->
-> >> The packager should be able to find out whether it's an issue in
-> >> git-lfs upstream and report it to that project if it is.  Git-lfs is
-> >> not part of git.git; it's a separate project:
-> >> https://github.com/git-lfs/git-lfs/blob/master/CONTRIBUTING.md
-> >> I believe they use github's issue tracker to track bugs.
-> >
-> >   it would *appear* that this is a combination of both a git issue,
-> > and a red hat packaging issue:
-> >
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1580357
-> > https://github.com/git-lfs/git-lfs/issues/3013
->
-> Can you clarify?  Neither of those bugs points to a git issue if I
-> understand correctly.  They may be a git-lfs issue, though.
+On Mon, May 21, 2018 at 6:41 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Sat, 19 May 2018, Elijah Newren wrote:
+>> On Sat, May 19, 2018 at 12:32 AM, Johannes Sixt <j6t@kdbg.org> wrote:
 
-  sorry, i mistyped, i should have said a "git-lfs issue".
+>> >
+>> > Oh, there is a reason for the repeated message text: translations! Please do
+>> > not play sentence Lego with translated strings. The original code is
+>> > preferable.
+>>
+>> Ah, translations; that makes sense now.  I'm still annoyed by the
+>> code, but I retract patch 5 then.
+>
+> Maybe you can remove the temptation for others, too, my replacing your
+> patch 5 with one that adds the code comment "No sentence Lego! Think of
+> our poor translators and refrain from making their life miserable!" or
+> some more appropriate one?
 
-rday
+That sounds reasonable.  I'll make that change (plus your other
+suggested changes on other patches; thanks for all the reviews) in the
+next round.
+
+I'm also considering adopting a setup_unpack_trees_porcelain() style
+of handling (from unpack-trees.c) for all these messages in
+merge-recursive.c, but that's a bigger change that I'd probably put in
+a separate series if I decide to go with it.
+
+Elijah
