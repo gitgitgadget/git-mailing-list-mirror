@@ -2,73 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DDD11F51C
-	for <e@80x24.org>; Mon, 21 May 2018 18:16:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 237811F51C
+	for <e@80x24.org>; Mon, 21 May 2018 18:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750930AbeEUSQa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 14:16:30 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:51636 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750781AbeEUSQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 14:16:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=J271si+3VSBmJMc2RnHFZPrPihS63i7dO/unhyAwP7w=; b=nhSc8MvN1i0EwGM33FCj5Kn/P
-        YFxY1p+X7uWi8/v+sNoEUbV2wEWBS9PrSb2QF7yBnc3+88ZiCzsl3rG+MHXLO7oESQ0A0w75+miBA
-        VohyZbNf9i+nWoLUOdbQL+I7EE9msoqlyIV06SewmhlffKVZCA/D2py3p6YUBB82JXXSs925o9kFf
-        tBqxHBHVARwP/MUDxj7TeX2NgseS7AmuOqwdj5l9HZAVSzdYsLg97aVW7V3BG6UR9HQd9qC4rrBmU
-        AXDoTBqZ5d4OVzcdHY4OYWFvhU/jjX8/0zY39LaoRVSqJRU0S7bEaqOmAAc7ZdEyPE7D7Mk4oT0UW
-        ffj+4Mozw==;
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:53600 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fKpMB-00GrSX-6D; Mon, 21 May 2018 14:16:28 -0400
-Date:   Mon, 21 May 2018 14:14:56 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Elijah Newren <newren@gmail.com>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: which files are "known to git"?
-In-Reply-To: <CABPp-BGsa+e_4XuK0xaKbcNxg5CS8UuAjYNP9XWpAhXOPs7iaQ@mail.gmail.com>
-Message-ID: <alpine.LFD.2.21.1805211414010.22297@localhost.localdomain>
-References: <alpine.LFD.2.21.1805210717040.9926@localhost.localdomain> <CABPp-BH0bw3m5Ubz2+-XyFGwoHD96sAaSen9-SHQSBqMS-9u5w@mail.gmail.com> <alpine.LFD.2.21.1805211335250.21160@localhost.localdomain>
- <CABPp-BGsa+e_4XuK0xaKbcNxg5CS8UuAjYNP9XWpAhXOPs7iaQ@mail.gmail.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1750977AbeEUSdO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 14:33:14 -0400
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:44649 "EHLO
+        mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750859AbeEUSdN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 14:33:13 -0400
+Received: by mail-vk0-f51.google.com with SMTP id x66-v6so9333767vka.11
+        for <git@vger.kernel.org>; Mon, 21 May 2018 11:33:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=z7sF/lPg/VVlaWMwd67BAhq8LU+gkhaqYd5aR5fNLX8=;
+        b=ieYQvUhkqpBLkDbk/cMfon22cSeJa6/xMR32ZXQcT0H3JUSZSkl9VqlpFYaaLBOgWA
+         s4asAo+ogIqgcE/Rqr55ZlsCZKUbBb1V+Bjz6sL5ZM6SBvzUPD7hGI7E3o3T82y0Y5cy
+         EqtNHTj5I02cVSC5nE9Uqd647dh+ciJ9sYkAx5mpwzSYirbaaiGFsmSAoU3vy62aNxJF
+         3zEgqswq6u08cpEZaOV81fTIp05V7CMWmFZq/oHMMmJXgPbqRio2JicAxA5H65sxmZAW
+         I4fEzwsNuHVvGvLH4APah2MR2jjWP9Z36IQcet3k/6rMSmWtuSvaXZLhMPk+l+kAXUY0
+         izQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=z7sF/lPg/VVlaWMwd67BAhq8LU+gkhaqYd5aR5fNLX8=;
+        b=Aa3OkcGvlehCSa40uqBEaMnKF6DLNph8eE29n0obbqsSsgUETdAav3pJtTkVTIrzim
+         dYFqm5zxqws+UIw4j8+tye+zEKB05qP4w6PM9Q9dhYqlBrZpEVmRptqmuqQGpJRVst01
+         3WRbt0zjIDfifcQCxwTrtMFC/JTVpIvnoq8AZhY7QHB+/8GicnfQwMvn7PWOXPkF8slO
+         Dvxu3yJe+S9r4gElv0cqacRHaCSfXwT4KtxmeGftvJu1pJjk9yejJmNkkA3F/aF7FNvh
+         g/wkiC9thNOZdZ0MiuEgB5HQoHSN3sV6t9ihuNjhudVgU0I+oBG9XTPBG5lH7L1evG2k
+         V+MA==
+X-Gm-Message-State: ALKqPwejNkvWk4e+vwM/5nOb+7pH3B8S1p1W8JIGbssEhB5Vej6x1Yxr
+        JeJk8CxpmQRtxu5pfZ98DL5PleT3C7NRD9/whTY=
+X-Google-Smtp-Source: AB8JxZoII7LPVX8Qlgt9I8Pwoest6E0UdWie6A/+khsYpD/ZRVjKJd0wNVzIfvNk7joEiwKW6UoYGM+/lNhrJPvtSzQ=
+X-Received: by 2002:a1f:c155:: with SMTP id r82-v6mr13974970vkf.76.1526927592450;
+ Mon, 21 May 2018 11:33:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Received: by 10.176.95.4 with HTTP; Mon, 21 May 2018 11:33:11 -0700 (PDT)
+In-Reply-To: <e78a115a-a5ea-3c0a-5437-51ba0bcc56e1@gmail.com>
+References: <e78a115a-a5ea-3c0a-5437-51ba0bcc56e1@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 21 May 2018 11:33:11 -0700
+Message-ID: <CABPp-BFEd+fK_i3qoYWudYS5mhWE1jsXR_xcSCZoJ=4Vd61LAQ@mail.gmail.com>
+Subject: Re: commit-graph: change in "best" merge-base when ambiguous
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 21 May 2018, Elijah Newren wrote:
+Hi,
 
-> > can anyone refresh my memory if that happened here, and whether
-> > that was the consensus after the discussion was over?
+On Mon, May 21, 2018 at 11:10 AM, Derrick Stolee <stolee@gmail.com> wrote:
+> Hello all,
 >
-> Perhaps this: https://public-inbox.org/git/EEC5BA1D5F274F02AE20FC269868FDEF@PhilipOakley/
-> ?
+> While working on the commit-graph feature, I made a test commit that sets
+> core.commitGraph and gc.commitGraph to true by default AND runs 'git
+> commit-graph write --reachable' after each 'git commit' command. This helped
+> me find instances in the test suite where the commit-graph feature changes
+> existing functionality. Most of these were in regards to grafts,
+> replace-objects, and shallow-clones (as expected) or when trying to find a
+> corrupt or hidden commit (the commit-graph hides this corrupt/missing data).
+> However, there was one interesting case that I'd like to mention on-list.
+>
+> In t6024-recursive-merge.sh, we have the following commit structure:
+>
+>     # 1 - A - D - F
+>     #   \   X   /
+>     #     B   X
+>     #       X   \
+>     # 2 - C - E - G
+>
+> When merging F to G, there are two "best" merge-bases, A and C. With
+> core.commitGraph=false, 'git merge-base F G' returns A, while it returns C
+> when core.commitGraph=true. This is due to the new walk order when using
+> generation numbers, although I have not dug deep into the code to point out
+> exactly where the choice between A and C is made. Likely it's just whatever
+> order they are inserted into a list.
 
-  yup, that's it, thanks.
+Ooh, interesting.
 
-rday
+Just a guess, but could it be related to relative ordering of
+committer timestamps?  Ordering of committer timestamps apparently
+affects order of merge-bases returned to merge-recursive, and although
+that shouldn't have mattered, a few bugs meant that it did and the
+order ended up determining what contents a successful merge would
+have.  See this recent post:
+
+https://public-inbox.org/git/CABPp-BFc1OLYKzS5rauOehvEugPc0oGMJp-NMEAmVMW7QR=4Eg@mail.gmail.com/
+
+The fact that the merge was successful for both orderings of merge
+bases was the real bug, though; it should have detected and reported a
+conflict both ways.
+
+
+I'm not sure where else we have an accidental and incorrect dependence
+on merge-base tie-breaker or ordering logic, but if it's like this
+one, changing the tie-breaker should be okay.
