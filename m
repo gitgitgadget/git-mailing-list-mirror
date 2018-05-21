@@ -2,83 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E2751F51C
-	for <e@80x24.org>; Mon, 21 May 2018 17:41:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC43F200B9
+	for <e@80x24.org>; Mon, 21 May 2018 17:42:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753303AbeEURla (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 13:41:30 -0400
-Received: from mail-wr0-f175.google.com ([209.85.128.175]:33997 "EHLO
-        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753393AbeEURjQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 13:39:16 -0400
-Received: by mail-wr0-f175.google.com with SMTP id j1-v6so5845317wrm.1
-        for <git@vger.kernel.org>; Mon, 21 May 2018 10:39:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jetbrains.com; s=googleapps;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :cc:to;
-        bh=26+EVovvouLsd90p+0Oc+gTUN4tFzM33z7MLHumP/wU=;
-        b=D9RTfBEKF179Ri5OnrAB91OWnAmiFp7A2uFAt203inVBEKG7h0HCxIcEvs8beQvMcJ
-         jwxbD8nps8oXFoxAZFuS/fgphaRxbmpKimDeJt28nHm6ALlzxRoi+dM+c+cMJNm4B9zD
-         hiS9afL6wzgNxBbVusDeqlmDIEWFJsD8iE8po=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:cc:to;
-        bh=26+EVovvouLsd90p+0Oc+gTUN4tFzM33z7MLHumP/wU=;
-        b=Yi9Nzl880w6V8JfT/WvC5KCcymWKdaQav2/yzlHKJm9a/uRMvUqzE8/7JNXNk4O1Cm
-         0oyUB052RGHN9guNAhmEpppuM6cJ+7sKB4Wjodeu7sr/KcUwOJGDvfpgZuqffGhZCGj4
-         NnaEcZ2Qw5deQ6ftT1I+zx0lSqHUlcq8/Me9B81/Fh8k04Pn+Mf3h9C5kyjqjBuac2nG
-         HWUXhcrZG6bv8bNRBOp36M1luMS5Q7zHl4vteCs2np0zm/DAXiCgiI54+trp16UJFKBA
-         0wu48IeTrwLnlzW3KEshVN6AdRWRmUljUPIDrTwLk6rtoJwMa/JrwFPPpv3fNd7Nu+58
-         riqA==
-X-Gm-Message-State: ALKqPwcRCiMniZD/4pWprTLpFIHBMhZEk4AT6t0r0qSFa+DFmg5zaIAZ
-        x5TNe+yYAvG6683BsdzDL0FNb5kjamg=
-X-Google-Smtp-Source: AB8JxZqnSb7VLVnRWEn+ImHvYVaWcprbrQKXRzCIPphFCqus/hcxzOnylOFCnd9KTXFCsFxAt1Vk6w==
-X-Received: by 2002:adf:9ed0:: with SMTP id b16-v6mr14678421wrf.170.1526924354408;
-        Mon, 21 May 2018 10:39:14 -0700 (PDT)
-Received: from loki.times.labs.intellij.net (gw1.times.intellij.net. [195.144.231.194])
-        by smtp.gmail.com with ESMTPSA id m15-v6sm15066671wri.8.2018.05.21.10.39.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 May 2018 10:39:13 -0700 (PDT)
-From:   Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.3 \(3445.6.18\))
-Subject: Bug in update-index man page
-Message-Id: <91956FEA-B350-4F51-B882-24783C85D613@jetbrains.com>
-Date:   Mon, 21 May 2018 20:39:12 +0300
-Cc:     Aleksey Pivovarov <Aleksey.Pivovarov@jetbrains.com>
-To:     git <git@vger.kernel.org>
-X-Mailer: Apple Mail (2.3445.6.18)
+        id S1753340AbeEURmo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 13:42:44 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:45960 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753208AbeEURlj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 13:41:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=6aLFEogGlvcG2waB9K87we7ve9TpdbyQQI6W2Pw/zlA=; b=lEZIduHVVyusK3wOW3RdzU7g1
+        B1jbYMMZkAsIuewhDBaMzNTcNU75qbirFdisSKXJguhbl5qp7dHVoi35OySmqlwf1gObUVGDOq97Y
+        e0ixjDjx8wu/GeoPszGlwIF6smQbwT897Rap0H0OhCUypK34Y1c6tuOOkc51BciEpbb74DHqG/78d
+        g7VBpmnscjSGQ+mNubwJ2RLGakm2Csjo+2HSmd7L/q/aSvz3mOdCbPma1M3smdFoX/AjVXZ/mf5+k
+        EquGX2wGige7fHVD3ZQ5ssQEAzc4Ob9cOtwCcC6g0zm4fpektl3HvBIdRFAuaSVW/0qhEprR/Kcpl
+        Hfmf/dzcw==;
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:52922 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fKooS-00GidM-6H; Mon, 21 May 2018 13:41:37 -0400
+Date:   Mon, 21 May 2018 13:40:04 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Elijah Newren <newren@gmail.com>
+cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: which files are "known to git"?
+In-Reply-To: <CABPp-BH0bw3m5Ubz2+-XyFGwoHD96sAaSen9-SHQSBqMS-9u5w@mail.gmail.com>
+Message-ID: <alpine.LFD.2.21.1805211335250.21160@localhost.localdomain>
+References: <alpine.LFD.2.21.1805210717040.9926@localhost.localdomain> <CABPp-BH0bw3m5Ubz2+-XyFGwoHD96sAaSen9-SHQSBqMS-9u5w@mail.gmail.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, 21 May 2018, Elijah Newren wrote:
 
-I've noticed the following text in the documentation pages for the =
-`update-index` command:
+> Hi Robert,
+>
+> I had always assumed prior to your email that 'known to Git' meant
+> 'tracked' or 'recorded in the index'...
 
-       <file>
-           Files to act on. Note that files beginning with .  are =
-discarded. This includes ./file and
-           dir/./file. If you don't want this, then use cleaner names. =
-The same applies to directories
-           ending / and paths with //
+  i *know* i've been in this discussion before, but i don't remember
+where, i *assume* it was on this list, and i recall someone (again,
+don't remember who) who opined that there are two categories of files
+that are "known to git":
 
+  1) files known in a *positive* sense, those being explicitly tracked
+  files, and
 
-It seems that the phrase "files beginning with .  are discarded." is =
-incorrect, because update-index works correctly on files like =
-`.gitignore`. It also seems that even names like `./file` are handled =
-correctly after cfb0af1d50247e66ea1d46014650e60e9cfb87b9. Could you =
-please verify and fix the doc if needed.
+  2) files known in a *negative* sense, as in explicitly ignored files
 
-Thanks!
-Kirill.=
+can anyone refresh my memory if that happened here, and whether that
+was the consensus after the discussion was over? if that's the
+definition that's being used, then this passage makes sense:
+
+  "Normally, only files unknown to Git are removed, but if the -x
+  option is specified, ignored files are also removed."
+
+that pretty clearly implies that ignored files are considered "known"
+to git.
+
+rday
