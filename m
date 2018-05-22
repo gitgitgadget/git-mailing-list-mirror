@@ -6,61 +6,76 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 109CE1F51C
-	for <e@80x24.org>; Tue, 22 May 2018 01:42:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 207631F51C
+	for <e@80x24.org>; Tue, 22 May 2018 02:08:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751601AbeEVBmi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 21:42:38 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34600 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751177AbeEVBmi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 21:42:38 -0400
-Received: by mail-wm0-f68.google.com with SMTP id a137-v6so14079122wme.1
-        for <git@vger.kernel.org>; Mon, 21 May 2018 18:42:37 -0700 (PDT)
+        id S1751719AbeEVCI4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 22:08:56 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:52092 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751271AbeEVCIz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 22:08:55 -0400
+Received: by mail-wm0-f67.google.com with SMTP id j4-v6so28364421wme.1
+        for <git@vger.kernel.org>; Mon, 21 May 2018 19:08:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=N6J3Rm/tKfC/TqOTQ3ywZ7DgVR3a0OKeEqhkOgDc9dE=;
-        b=BNJrOu54Y5uFPYj0Oa+rOz1y7GBhiraDWT7OfqcQOOo1Tg8xZw6qoqJpp7dPg0nQ1y
-         RLq/ji7a30C2IthZUKmSbZEh6YGCd/dEivIpBpD3zpyle2HFafjKWE4oKgNTlrGYYW/o
-         2Mu8i3KI8ZV2TH8miuNpGKDV0le9tWCzMqGhkxX1R8BaYIEGs0zmlEQzsNC7n0NOA9R7
-         dnlWKoIOkqeqEAX9Hc4x81KHkYbv5wAO1LfBp/Wua+6NHUbbZynm5brwi397maqUxyJ+
-         5Tg0C1XgzZeAx5uk51Bxxs1GmjCfUvXTnVjQT1TDm8YMpPUobrHrqBkQaprYY0XSg1Pc
-         3uTA==
+        bh=Zx3No3Jdp8MVD9nZGTluScw3uMCdP5M2A3NiMaGSjcI=;
+        b=iE/UnB1uql3C4TCv2r4aAX/dgEog1zBGzaqpj3zkRnZ5QfXPcdp7s+jIZfUdMid4F5
+         ANgNCiP79XTzQzsjMKERm45ShsyySFI8Rx4miGnE90W+MDLOOYgaGpjvRiD0w9E5fZX+
+         8VHDRGKjoPcvQ1ulo4mqU4KLEKdYrWFhNOkYQpj9xhqvC82SQy1+qhxf+Tw0MAO0XLTg
+         S/UzEpgFOOEFPOqyOXu65Ejb5Z3znxoo+7ncTtzKLJLANxZzaG4KFPZNAy0rVVNg4B85
+         x8pl91Ac94NMHCJyKJWVPsTQ7M0JppmMU69uhChfKrN/IiF+XbT+1+4rgPcWX8Ig09ol
+         fNHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=N6J3Rm/tKfC/TqOTQ3ywZ7DgVR3a0OKeEqhkOgDc9dE=;
-        b=hs8YRicLIl2l9+ptAWGNGfY48OfbjQ0RvWPrrqVRgrsPDWK85/UF2IWNvXz3koDcyz
-         ywf5+uXN8yke1eW5JFESSr/RVt6lSvSYNobi2lR1fQWkCtH4dfC9rVRMxTILe/CndCx8
-         2qd3udp+L2/JYDB5tmaR4W0AxdsXa2Z9T3HCzOl9pQjqibt9zP561dVM8WymCvXNw22J
-         YEAe07SE4PUHomuK6YpwmCtXTvWZaI39URh8id9ZHv1wgP2pVoiKululPcuPhYCF5pFi
-         61wXjP7NZIhpguOTnuGrsVt+97gBjyOHBV4GECQrdNRHeTV+IPHP83Dh9Zgs4i3T+Yb3
-         aHWA==
-X-Gm-Message-State: ALKqPwfuDJNpFXoxhOtFZYIJ4fNT8SM9o6/qynzrqPNMX0FXuLz/GBWW
-        pNMm3kwEYPCLARqw0bYTfcUkiVpZ
-X-Google-Smtp-Source: AB8JxZo/RSyI2SyRsI3uue8/rruVzzgQvImWc+qw2gjP3uxFenJpOIy7e1rVaZfiHNzxYxJ5xrsxCQ==
-X-Received: by 2002:a1c:17c9:: with SMTP id 192-v6mr569015wmx.95.1526953356636;
-        Mon, 21 May 2018 18:42:36 -0700 (PDT)
+        bh=Zx3No3Jdp8MVD9nZGTluScw3uMCdP5M2A3NiMaGSjcI=;
+        b=Q3KO0w2SPtvDLWuOB4Y3qhS2dhJttW6BQy8ffTQp4D3htZEkgtNiAlmNsc56YR/ZxE
+         E9wYIm/NWaGj+hQFKjtzEFoqETQsIdqIr0snfHMNhZaoYebxVEDc5B+Vf8Dmx8YUhvxh
+         jbciLfZN9Xz1s027SzbgwzgM1JDdV7fEKo2YsIlFrosI4ILKpMhKjDaIdz+NkDakBVYl
+         6Al5wrAL5kLAZjb14S7WsEcTqnt1nijR5ICAlxyeQfbTck/8p/jRR0ETHn75qh5+58FX
+         NEH9nfBnO3z0YJ9ENJehvuTMPa2efIyHStqNCMKTtAV/M66hIgGC1P1D45NAM3Z9z6Aq
+         YWiA==
+X-Gm-Message-State: ALKqPwdfoj9mR4hsYpR3nljT0J42EeKxKdD6pbKTS77VJfBJTYgd9SQw
+        6FH9ZI9RF1CICyuP7yiwmxA=
+X-Google-Smtp-Source: AB8JxZozA1RywZBhdH7Wgb+PpIIpNDKU/sq/R3uqNNK660wMWYd73w/2DAYHb8QnGhInT9bs1fY0aA==
+X-Received: by 2002:a1c:618b:: with SMTP id v133-v6mr638658wmb.75.1526954933631;
+        Mon, 21 May 2018 19:08:53 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 136-v6sm1577773wmo.12.2018.05.21.18.42.35
+        by smtp.gmail.com with ESMTPSA id r200-v6sm19304410wmb.39.2018.05.21.19.08.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 21 May 2018 18:42:35 -0700 (PDT)
+        Mon, 21 May 2018 19:08:52 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
+To:     Jeff King <peff@peff.net>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
         Thomas Gummerer <t.gummerer@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 00/18] Add `branch-diff`, a `tbdiff` lookalike
-References: <cover.1525361419.git.johannes.schindelin@gmx.de>
-        <xmqqvabh1ung.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1805211144340.77@tvgsbejvaqbjf.bet>
-Date:   Tue, 22 May 2018 10:42:35 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1805211144340.77@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 21 May 2018 11:51:48 +0200 (DST)")
-Message-ID: <xmqqmuwszcs4.fsf@gitster-ct.c.googlers.com>
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
+References: <xmqqk1shsecd.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1805061419530.77@tvgsbejvaqbjf.bet>
+        <CAPig+cS0pvdg78fGUu8m2xspDDMHxi=uAMCkbLuthy7R4p3fQw@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1805062155120.77@tvgsbejvaqbjf.bet>
+        <20180507074843.GC31170@sigill.intra.peff.net>
+        <3cefc6b3-3dbd-9cb1-20d0-193116191726@gmail.com>
+        <nycvar.QRO.7.76.6.1805211153370.77@tvgsbejvaqbjf.bet>
+        <CAGZ79kYcWuVorfk7eYjUuLi2XeMS8sPrJYE0OQmgiQi2NkuDZA@mail.gmail.com>
+        <20180521202414.GA14250@sigill.intra.peff.net>
+        <20180521214057.GB125693@google.com>
+        <20180521215216.GB16623@sigill.intra.peff.net>
+Date:   Tue, 22 May 2018 11:08:52 +0900
+In-Reply-To: <20180521215216.GB16623@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 21 May 2018 17:52:16 -0400")
+Message-ID: <xmqqin7gzbkb.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,41 +84,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
->> In the picture, the three pre-context lines that are all indented by
->> a HT are prefixed by a SP, and that is prefixed by a '+' sign of the
->> outer diff.
+>> I haven't really been following all of the discussion but from what I
+>> can tell the point of this command is to generate a diff based on two
+>> different versions of a series, so why not call it 'series-diff'? :)
 >
-> Yep, that's exactly it.
->
-> The way tbdiff did it was to parse the diff and re-roll the coloring on
-> its own. I am not really keen on doing that in `branch --diff`, too.
+> That's OK with me, though I prefer "range" as I think we use that term
+> elsewhere ("series" is usually part of "patch series", but many people
+> do not use a workflow with that term).
 
-Are you saying that these are "whitespace errors" getting painted?
-It is somewhat odd because my whitespace errors are configured to be
-painted in "reverse blue".  Perhaps you are forcing the internal
-diff not to pay attention to the end-user configuration---which
-actually does make sense, as reusing of "git diff" to take "diff of
-diff" is a mere implementation detail.
-
-In any case, the "whitespace errors" in "diff of diff" are mostly
-distracting.
-
-> I was wondering from the get-go whether it would make sense to make
-> --dual-color the default.
->
-> But now I wonder whether there is actually *any* use in `--color` without
-> `--dual-color`.
->
-> What do you think? Should I make the dual color mode the *only* color
-> mode?
-
-Sorry but you are asking a good question to a wrong person.
-
-I normally do not seek much useful information in colored output, so
-my reaction would not be very useful.  Non dual-color mode irritates
-me due to the false whitespace errors, and dual-color mode irritates
-me because it looks sufficiently different from tbdiff output that I
-am used to see.
-
+FWIW, I am OK with either, with a bit of preference to "range" over
+"series".  As long as this stays to be an independent command (as
+opposed to be made into a new mode to existing command) and the
+command name is not overly hard to type, I am OK with anything ;-)
