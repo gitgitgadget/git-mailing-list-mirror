@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 877731F51C
-	for <e@80x24.org>; Tue, 22 May 2018 18:26:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6872C1F51C
+	for <e@80x24.org>; Tue, 22 May 2018 18:29:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751401AbeEVS0R (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 14:26:17 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:46030 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751277AbeEVS0Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 14:26:16 -0400
-Received: by mail-yb0-f196.google.com with SMTP id r13-v6so6676861ybm.12
-        for <git@vger.kernel.org>; Tue, 22 May 2018 11:26:16 -0700 (PDT)
+        id S1751434AbeEVS3M (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 14:29:12 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:39929 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751360AbeEVS3L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 14:29:11 -0400
+Received: by mail-yw0-f195.google.com with SMTP id w125-v6so1787ywa.6
+        for <git@vger.kernel.org>; Tue, 22 May 2018 11:29:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=MQuJtmMvC8xM04g6S6vLRpevLjtozOTVi8pDkJv4Fdc=;
-        b=UJiEQrnX2cSEbKTtZShuiLepZiF5hoQ32C7bzZ9Ym6a1up26IImt4f6HclWCoFwzBW
-         nRS1N+aFE7IDgVvRtzmRzPX0fsL+oFbXm6GWvYuO6ICAnm9XMjn+UQ6iHI/xdXxCTp1C
-         Msi+KRmhs06Ml19Q6aNXKxG/HOkeZq36ZfHX/129tM/atDW9lrKdddxKBuU/lTGXLxE0
-         Keo3+QFO6nVruaj9D+pP0QJCK6OGLt4FsqZNiLXFlkLKQPH9e8KN+SAdc/jN3Marky56
-         vgWTKMNoI9wbm/4I8wpydXiWu91JCRv45LfDtRhDIX1CoK5EjvPRRuU3LxJYNCoy4nLW
-         DPXw==
+        bh=I7/Te0dGFFOPn/eyDOq9ssHfzTdMaM2sxhgHwHcQRJM=;
+        b=HT3+cFQsIHpnTGiYHd5OAr6MNc7xvDuP0QQ+lH9ZvjZd13lgf9ngA1m7t/7Ywl59jb
+         5wdbxvr0q4XNb1lGhPQJhgBrtJgVBStSrCqUFlv6hzpuoDX5pNmKaw8nvzfFwoOwQxUo
+         q2BckpzlHfoY1dU45W19TwVGWyqhAyN1mHCB2HCvPl3aFC1/sXLNQ/LBQAbCziRzHHpd
+         ymMT8vR6nOQbOdjvJpwkQuRsALRePoi+v7WgSyJTPgWpwZvGRcdErkgJQTIrjWbyceXJ
+         nSPFsZ3dGsCh6QKl4DRF872WsokFB1q0FeTLdc7QnN+lJHNqKZ6a4qyXaIF34AS7vI2V
+         3m1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=MQuJtmMvC8xM04g6S6vLRpevLjtozOTVi8pDkJv4Fdc=;
-        b=ubQOnaBdEEA6A275FFrRyeiJRiP2c7HDgW+zqURiA6Z/DiCjdi3sM/401sYj0Vqf7s
-         wLmuEOF2mpp6pJr7lfmIgcyAMSwwLDxS0W+P3L5iiMg7so/KF9IssT7wjt0HYihM18lL
-         grMZwCDAT4GygqxhOWnEnjpy5d8iGo6fYWTlwy7ZbXk4mpgeHohpkCRJV+0/wr7o1Jg1
-         yYHFS5iwoSA1actEVpfnHP8K3bizKv4he00SDTm5jhtfVvUFlEJ9DE+B+12ztp3tmiZa
-         Siw55ivgJz6N42RMGkSJnAZHC+5NpuCj3gPqjYSz9r8UyqJc3O0t+MDMHcYw1oZAJthm
-         R7bA==
-X-Gm-Message-State: ALKqPwdLczZV4iCdSbT2njbo3qUfZPyt5Jt8D4upTwotqOHem4HuCjOs
-        9rTwF2wwmpGwNrEgOi+DImo9EuyIDOi8rJ49GJ3bMkssS6Q=
-X-Google-Smtp-Source: AB8JxZrJhlukEdZWYXbVjLb5iyJ7yEMoI+FU0mRFmyjMqwekmil9PQbFym0VnxRfJDQEwgBLOTUViG5OKzU+1oGwwHI=
-X-Received: by 2002:a25:ae45:: with SMTP id g5-v6mr5698175ybe.292.1527013575668;
- Tue, 22 May 2018 11:26:15 -0700 (PDT)
+        bh=I7/Te0dGFFOPn/eyDOq9ssHfzTdMaM2sxhgHwHcQRJM=;
+        b=hgn1lL8c+HrzSBpjmnTCz2e7fTj1wYPKDPB/KfFt/CSNDe4SK018wxvOrfAfqq0/3c
+         WRITC+V7RmVTThmc97XwCwlTOTv3xNCsj4g2tjiCmOuGvLxbqeY2WEltdDamiHoq9r1t
+         CCWlV1hF7DNf43PvXW0YuV+0LQm7U/yktJboeS3kIr4k3xLlC6g0MHCLdUTZx67Osimg
+         Hs81sxKMsQlEtPKGUovlfoBAt+ChlraerfibOi+GpOMGKxQgEmjI7Rq9GfwQb2u7eTfk
+         7DZfjs+BnMvn761M5dwLp0oZPMYe+SWgRNn9b6LWcxK6jNvCTDNnD75gNSzxHMbBwcSY
+         0zKA==
+X-Gm-Message-State: ALKqPwfSNd3Z/jGs23qMdJImNPwuDtu6j4Atw1wJeCvGeuYPCJcCfFfF
+        fIt2SL2XDd0gYa/YPdnm94IlA504n3pjroPQfbDWUw==
+X-Google-Smtp-Source: AB8JxZpjgprCGGIBeKXBOErMUwlCtJmg3y6MBUGXOOBZQ00WL4xlQaYgC+RBnxV9p5k9jXvCRnkK9qVCrUL3qU9BXYI=
+X-Received: by 2002:a81:9447:: with SMTP id l68-v6mr108508ywg.345.1527013750464;
+ Tue, 22 May 2018 11:29:10 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:b189:0:0:0:0:0 with HTTP; Tue, 22 May 2018 11:26:13
+Received: by 2002:a25:b189:0:0:0:0:0 with HTTP; Tue, 22 May 2018 11:29:09
  -0700 (PDT)
-In-Reply-To: <20180522133110.32723-2-alban.gruin@gmail.com>
-References: <20180522133110.32723-1-alban.gruin@gmail.com> <20180522133110.32723-2-alban.gruin@gmail.com>
+In-Reply-To: <20180522133110.32723-1-alban.gruin@gmail.com>
+References: <20180522133110.32723-1-alban.gruin@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 22 May 2018 11:26:13 -0700
-Message-ID: <CAGZ79kaTPu=z_6oJk__meuyhUt-pU_LtOJ90rPTQcC=YvhnOnw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 1/4] rebase: duplicate git-rebase--interactive.sh to git-rebase--preserve-merges.sh
+Date:   Tue, 22 May 2018 11:29:09 -0700
+Message-ID: <CAGZ79kbiCE1CDMYN+aV8s9Ev2joCZJqroN3wBkoRvZZLHqOFww@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 0/4] rebase: split rebase -p from rebase -i
 To:     Alban Gruin <alban.gruin@gmail.com>
 Cc:     git <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>,
@@ -68,87 +68,19 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Tue, May 22, 2018 at 6:31 AM, Alban Gruin <alban.gruin@gmail.com> wrote:
-> This duplicates git-rebase--interactive.sh to
-> git-rebase--preserve-merges.sh. This is done to split -p from -i. No
-> modifications are made to this file here, but any code that is not used by -p
-> will be stripped in the next commit.
->
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> This splits the `rebase --preserve-merges` functionnality from
+> git-rebase--interactive.sh. This is part of the effort to depreciate
+> preserve-merges. The new script, git-rebase--preserve-merges.sh, should be left
+> to bitrot. All the dead code left by the duplication of
+> git-rebase--interactive.sh is also removed.
 
-So how would I best review this?
+... and I thought the original motivation was getting the rest of rebase
+into a shape that rewriting it is easier, the potential bit rot of
+--preserve-merges
+is rather a side effect, but not the main goal.
 
-I applied the patches locally[1], and ran git-ls-tree on this commit
-hoping to find the same blob id for git-rebase--interactive.sh as for
-git-rebase--preserve-merges.sh; however I did not.
-
-So I diffed them and had the diff below[2], which looks like that has parts
-of Johannes recent series?
+I commented on patch 1, as I don't quite understand the changes,
+the other patches look good to me.
 
 Thanks,
 Stefan
-
-[1] After applying I pushed it to
-https://github.com/stefanbeller/git/tree/alban_split_off_-p
-and this patch is commit 9f64342ea1b64d43e4675b5f202174c9e0f77dbf
-
-[2] $ git diff 9f64342ea1b64d43e4675b5f202174c9e0f77dbf:git-rebase--preserve-merges.sh
-\
-    9f64342ea1b64d43e4675b5f202174c9e0f77dbf:git-rebase--interactive.sh
-diff --git a/git-rebase--preserve-merges.sh b/git-rebase--interactive.sh
-index 9947e6265fe..2f4941d0fc9 100644
---- a/git-rebase--preserve-merges.sh
-+++ b/git-rebase--interactive.sh
-@@ -155,13 +155,19 @@ reschedule_last_action () {
- append_todo_help () {
-        gettext "
- Commands:
--p, pick = use commit
--r, reword = use commit, but edit the commit message
--e, edit = use commit, but stop for amending
--s, squash = use commit, but meld into previous commit
--f, fixup = like \"squash\", but discard this commit's log message
--x, exec = run command (the rest of the line) using shell
--d, drop = remove commit
-+p, pick <commit> = use commit
-+r, reword <commit> = use commit, but edit the commit message
-+e, edit <commit> = use commit, but stop for amending
-+s, squash <commit> = use commit, but meld into previous commit
-+f, fixup <commit> = like \"squash\", but discard this commit's log message
-+x, exec <commit> = run command (the rest of the line) using shell
-+d, drop <commit> = remove commit
-+l, label <label> = label current HEAD with a name
-+t, reset <label> = reset HEAD to a label
-+m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
-+.       create a merge commit using the original merge commit's
-+.       message (or the oneline, if no original merge commit was
-+.       specified). Use -c <commit> to reword the commit message.
-
- These lines can be re-ordered; they are executed from top to bottom.
- " | git stripspace --comment-lines >>"$todo"
-@@ -888,6 +894,8 @@ init_revisions_and_shortrevisions () {
-        else
-                revisions=$onto...$orig_head
-                shortrevisions=$shorthead
-+               test -z "$squash_onto" ||
-+               echo "$squash_onto" >"$state_dir"/squash-onto
-        fi
- }
-
-@@ -942,7 +950,7 @@ EOF
-        die "Could not skip unnecessary pick commands"
-
-        checkout_onto
--       if test -z "$rebase_root" && test ! -d "$rewritten"
-+       if test ! -d "$rewritten"
-        then
-                require_clean_work_tree "rebase"
-                exec git rebase--helper ${force_rebase:+--no-ff}
-$allow_empty_message \
-@@ -964,6 +972,8 @@ git_rebase__interactive () {
-        init_revisions_and_shortrevisions
-
-        git rebase--helper --make-script ${keep_empty:+--keep-empty} \
-+               ${rebase_merges:+--rebase-merges} \
-+               ${rebase_cousins:+--rebase-cousins} \
-                $revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
-        die "$(gettext "Could not generate todo list")"
