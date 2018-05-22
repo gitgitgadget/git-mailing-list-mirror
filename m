@@ -6,82 +6,79 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF7361F51C
-	for <e@80x24.org>; Tue, 22 May 2018 02:46:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E62B01F51C
+	for <e@80x24.org>; Tue, 22 May 2018 02:50:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752601AbeEVCqT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 22:46:19 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:42809 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752569AbeEVCqS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 22:46:18 -0400
-Received: by mail-wr0-f193.google.com with SMTP id t16-v6so14661638wrm.9
-        for <git@vger.kernel.org>; Mon, 21 May 2018 19:46:17 -0700 (PDT)
+        id S1752301AbeEVCuF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 22:50:05 -0400
+Received: from mail-wr0-f179.google.com ([209.85.128.179]:40711 "EHLO
+        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751601AbeEVCuE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 22:50:04 -0400
+Received: by mail-wr0-f179.google.com with SMTP id v60-v6so17844528wrc.7
+        for <git@vger.kernel.org>; Mon, 21 May 2018 19:50:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=5VNyJgS+K98StAjQ+JGXkBIUXunf250486upxS5zyE4=;
-        b=DGsenvOdo46IRKa116oqkHQCw5wD8lS3hbq16aNqqJSXJJBhJf9aGmgLTa7UD7f7IA
-         w/1eb1L+BG4ziRKY3T7dVcH49ugsTAB+RzOH/FoyW3Ive2jpLJsBT0itlOnzTpsNHTgK
-         UV5th9q3CKYmH+Mt2Nuq4TFxG5ltaS9f4m1SDthv63geYZ+lTsDKNKzGDU79ltjQjWB4
-         y4oAfKQt9YpCzeq3iKok8x0DBJ0lNxtifEvCcK/sbyqWQk2TwUXdsZNwvVQVSWQX0/p7
-         Rx5lPI9N+MPH4pSVVbPjxpMnzD9SfJk7NDZF1O5SqM4NV83PqJdW47yt8MkDNMFd56au
-         xg2g==
+         :user-agent:mime-version;
+        bh=g/a2AoLtWQu9xmniD+/6TSJdb7xZHSSu8hgRCSk5UME=;
+        b=dmYcmdSaTYpZJE1Qh/9lUEEMeiVzesFpEQWCoetFX0RpJqSr+tkMF1cHyTVkpFQ92c
+         LUVhS5iNQlXYiNOl5Ui9SOnGV0EIa38QCXdRmw3QcCIvR6ShQoHx0fR9EglwxYZTjHBI
+         IFdxtPuEJDCCGo5LTjiMv9gQPi06MN1gZZNGH8qUNWz+Y93IjYytDgxeVbsDxqj4wu/W
+         JwNt80F24RMg68Q4qK8Y6B1uExepn97EweW7qaXUSFokLs1c1APcFm04Ta3PRiGf+87H
+         GV/mUQlQqozvTtij49AmJYhvPXTHLziwCvSJPD45duy3U4IR2i9cRMgXBM7qUKkW9PfH
+         jQ3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=5VNyJgS+K98StAjQ+JGXkBIUXunf250486upxS5zyE4=;
-        b=F4MsqCLmLSQuUWIV4eJKMUCQH6ecv+xau+Qm6MH5DeYH6gjAXSr6d50dClWz/u4Vx6
-         jAI/wZC3H9uiaAIqTJbwPpqCaCFsJFCbLkoBODHR/GbxaJkwl+vBzcVkT4OyBsJnW7Qf
-         FtFmPb50bRs5eU9kC8x4RAfxl2mMmkqIbsr4BLNZsXfMUvKpD+eMyXdetN41XwHiSsDT
-         7yQKRIEDKjDYiQldhc17nWXR51AADOU6D9BsnRBhrnUDuDCy0gXSG706kHu6dgbeHzLh
-         PrsgMZT/nAi/Y0kYhoD/kkU+9S78muINgg8uIH+gvQ8Burk/5gdaHo0cio74osWtVET/
-         dZDw==
-X-Gm-Message-State: ALKqPwfwhYVgRcALCvx3xjp2G72do+gsxUUZ122P6dRP/4q+/i/mWnz1
-        OSxCR327pil1ngxIqq7aCAM=
-X-Google-Smtp-Source: AB8JxZp/CQkzpm+El66GvBRqLwRhqTJVTZIPqlcxYSi1WsXsRMo/4rb2Paq64TM/Kd8aGV5ADRQvRw==
-X-Received: by 2002:adf:af41:: with SMTP id z59-v6mr1040wrc.250.1526957176689;
-        Mon, 21 May 2018 19:46:16 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=g/a2AoLtWQu9xmniD+/6TSJdb7xZHSSu8hgRCSk5UME=;
+        b=U4MfnLwlISNjMB/poHmoTM4gLxxOZ4rn2IwRjcnlmXExlsJ2Mqn2xx76e2RvsNd9Xr
+         fXxOmkzy9wZiSDobXVS3P9xeRozmkbLzBGlts1Eztaw8vWwxDBcV7vOFjUXBlP5M5rst
+         7CO17CDN7i24JQHrM1SxT79D5g9UNnWvendNVoz4jPRH3/o5MF6b+H8QHEMhFnVwuAhk
+         tq1y7fAyN3ef6wiyB4W+S7RmRZZYBaYVhapESKgnVpE8L5JwRXStzG378rQDbVx/ekH3
+         TZ27mzT/4dug8pU3wszZ/YJAhdfMCasThT0l6lKPsNzRaffF2ojDdTmLAd7JZoxvZl0b
+         jSXg==
+X-Gm-Message-State: ALKqPwcFrGpcYKVBnWiLVXwiw8hKfmEGN3weU3G9GsMCtWjMhe6onOez
+        Ia9E5/R8og9mxxqkbBDdKrQ=
+X-Google-Smtp-Source: AB8JxZokasoc5k7bZD4hvMA4DCjj1udPofQEFIEcRIuVqFwBGyQyXZm3yhz8S1s4WSWDQU50SFFitA==
+X-Received: by 2002:adf:ad94:: with SMTP id w20-v6mr18588190wrc.83.1526957402953;
+        Mon, 21 May 2018 19:50:02 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id f8-v6sm10962786wrf.67.2018.05.21.19.46.14
+        by smtp.gmail.com with ESMTPSA id l24-v6sm13699517wrl.60.2018.05.21.19.50.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 21 May 2018 19:46:15 -0700 (PDT)
+        Mon, 21 May 2018 19:50:01 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 0/4] unpack_trees_options: free messages when done
-References: <xmqqr2m53leq.fsf@gitster-ct.c.googlers.com>
-        <cover.1526913784.git.martin.agren@gmail.com>
-Date:   Tue, 22 May 2018 11:46:14 +0900
-In-Reply-To: <cover.1526913784.git.martin.agren@gmail.com> ("Martin
- =?utf-8?Q?=C3=85gren=22's?=
-        message of "Mon, 21 May 2018 16:54:24 +0200")
-Message-ID: <xmqqa7ssz9u1.fsf@gitster-ct.c.googlers.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: why does "man git-clean" not mention files ignored by core.excludesFile?
+References: <alpine.LFD.2.21.1805211221180.18665@localhost.localdomain>
+Date:   Tue, 22 May 2018 11:50:01 +0900
+In-Reply-To: <alpine.LFD.2.21.1805211221180.18665@localhost.localdomain>
+        (Robert P. J. Day's message of "Mon, 21 May 2018 12:24:43 -0400
+        (EDT)")
+Message-ID: <xmqq603gz9nq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren <martin.agren@gmail.com> writes:
+"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
 
-> I've taken the six patches that Junio has queued and rebuilt the series
-> to get rid of the new and possibly bug-prone function that no-one uses
-> once the series is over.
+>   why is there no mention of files ignored via a user's
+> core.excludesFile configuration?
 
-Hmph, this unfortunately depends on 'next', which means we cannot
-merge it down to 'maint' later to fix these leaks.  I guess it is
-not a huge deal, though.  We've lived with these message leaks for
-quite some time now and earth still kept rotating ;-)
+IIUC, core.excludesFile is a much much later invention made long
+after everybody lost interest in updating "git clean", let alone its
+documentation.  The support for the configuration variable was added
+to the internal API used to access exclude mechanism, so "clean",
+together with other users of the same API, got it for free when it
+was added, and nobody bothered to update the documentation of
+"clean".
+
+In other words, a short answer is because you haven't made it to
+mention it ;-).
 
