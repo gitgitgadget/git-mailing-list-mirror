@@ -2,153 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E2F21F42D
-	for <e@80x24.org>; Tue, 22 May 2018 10:06:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AE5D1F42D
+	for <e@80x24.org>; Tue, 22 May 2018 10:15:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751311AbeEVKGQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 06:06:16 -0400
-Received: from imap1.codethink.co.uk ([176.9.8.82]:49773 "EHLO
-        imap1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751002AbeEVKGP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 06:06:15 -0400
-Received: from [141.131.2.3] (helo=ausnb752738.ad.cirrus.com)
-        by imap1.codethink.co.uk with esmtpsa (Exim 4.84_2 #1 (Debian))
-        id 1fL4BI-00049M-W1; Tue, 22 May 2018 11:06:13 +0100
-From:   Pedro Alvarez <pedro.alvarez@codethink.co.uk>
-To:     git@vger.kernel.org
-Cc:     Pedro Alvarez Piedehierro <palvarez89@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
+        id S1751525AbeEVKPi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 06:15:38 -0400
+Received: from mail-ua0-f194.google.com ([209.85.217.194]:43520 "EHLO
+        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751363AbeEVKPe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 06:15:34 -0400
+Received: by mail-ua0-f194.google.com with SMTP id d4-v6so11893854ual.10
+        for <git@vger.kernel.org>; Tue, 22 May 2018 03:15:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=MuvJlQtuE+K7LiFCMVlESa9ZtiYHTPqiwypB/60tjz0=;
+        b=dYQ5o7lvqBvnlhQwG4F8rMvDRytTVCkl43uykLErp2EOFrBrmL6A2JyOMEHMm5ozXR
+         eL+RTvq5bmpHhQCmfgj/4TNYuQg2Vomdj2CYuQ7ObWTVeyxVnTerq09AIvf3O/Xe/f1f
+         vNxdcP0dLvzpQB7MCCronUItGnX+bNaR7bqVCeTwRvd+ijNhsr7SrVueJ3R0Ie40eN4Q
+         /DHG/bDA+689VQOXIZZiUPj193gRQ5uCO0hOxYS54v21CgwvBZchrAW4BKWM6D8yQpaA
+         XnKuD9XF2zG6bPCICyKrHLqWBdEG51Gkw0HJQHAlKKapS8Rit66IZ+9/mfvDWvtcYWfe
+         gr8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MuvJlQtuE+K7LiFCMVlESa9ZtiYHTPqiwypB/60tjz0=;
+        b=tZOJ1OXVhqESYElSE/sX4NJTRbKydqIrFaK9CsVJIw/6F+sK18TGRimM8gvAsyv72K
+         8M+tfSi7vf562ku/QcSrxR0UQNnnPciGlpJP8yLUWllEsPqdnZFnxMtJi4IEoqhlZy9g
+         1STXM2mJEpp1uR8RC3muEenX/2OUaF9sN1+MtEUd80UbsNRLL1L8/1Lf97UTFEuiHWlC
+         LFDsL2waf27IQd5JU+AWR7c7PBIXeZXGqV0JQJmLKY2gk1bx7hIP4sxUYw77xB+RMfPO
+         ipiC9x0ikxElmAnQ4fWZgHPVI5Z3gMej0y8ZpfUiutwx1fOV0kafDkYyht0XE7ptSyAD
+         bG7A==
+X-Gm-Message-State: ALKqPwfDq650nSQxeaeBkuOIQH9R3ODIOA1H78Qj2N0k9ObKCTDC6/yL
+        YQ8D1Foar8tqXehxdofdaQ/Onhd1SzlSfzwL7n0=
+X-Google-Smtp-Source: AB8JxZoBs1ZkBmID8c9lNscXisPJFtyXewDLAe5SAle7PpO7NYQ0vyqPUQry18v2wRaiz9eFkxxqeHwWMzokUunVLRg=
+X-Received: by 2002:ab0:a81:: with SMTP id d1-v6mr17357849uak.39.1526984133415;
+ Tue, 22 May 2018 03:15:33 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.176.22.212 with HTTP; Tue, 22 May 2018 03:15:33 -0700 (PDT)
+In-Reply-To: <20180522084109.29787-2-luke@diamand.org>
+References: <20180522084109.29787-1-luke@diamand.org> <20180522084109.29787-2-luke@diamand.org>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Tue, 22 May 2018 12:15:33 +0200
+Message-ID: <CAM0VKjkdGByfTtj5cunUzqeneu4Bi8Qw4vj428zV1h3ezHXyQg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] git-p4: unshelve: use action==add instead of rev==none
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Git mailing list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Add initial support for pax extended attributes
-Date:   Tue, 22 May 2018 11:05:48 +0100
-Message-Id: <20180522100548.29881-1-pedro.alvarez@codethink.co.uk>
-X-Mailer: git-send-email 2.15.1 (Apple Git-101)
+        Romain Merland <merlorom@yahoo.fr>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        George Vanburgh <gvanburgh@bloomberg.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Pedro Alvarez Piedehierro <palvarez89@gmail.com>
+On Tue, May 22, 2018 at 10:41 AM, Luke Diamand <luke@diamand.org> wrote:
+> SZEDER G=C3=A1bor found that the unshelve tests fail with newer
+> versions of Perforce (2016 vs 2015).
+>
+> The problem arises because when a file is added in a P4
+> shelved changelist, the depot revision is shown as "none"
+> if using the older p4d (which makes sense - the file doesn't
+> yet exist, so can't have a revision), but as "1" in the newer
+> versions of p4d.
+>
+> For example, adding a file called "new" with 2015.1 and then
+> shelving that change gives this from "p4 describe" :
+>
+>     ... //depot/new#none add
+>
+> Using the 2018.1 server gives this:
+>
+>     ... //depot/new#1 add
+>
+> We can detect that a file has been added simply by using the
+> file status ("add") instead, rather than the depot revision,
+> which is what this change does.
+>
+> This also fixes a few verbose prints used for debugging this
+> to be more friendly.
+>
+> Signed-off-by: Luke Diamand <luke@diamand.org>
 
-Sometimes the tar files will contain pax extended attributes to deal
-with cases where the information needed doesn't fit in a standard
-ustar entry.
+For what it's worth, I can confirm that 't9832-unshelve.sh' passes
+with these changes, here and in all Linux and OSX build jobs on Travis
+CI.
 
-One of these cases is when the path is larger than 100 characters. A
-pax entry will appear containing two standard ustart entries. The first
-entry will have an 'x' typeflag, and contain the the extended attributes.
-
-The pax extended attributes contain one or multiple records constructed as
-follows:
-
-    "%d %s=%s\n", <length>, <keyword>, <value>
-
-This commit makes sure that we always read the extended attibutes from
-pax entries, and in the case of finding one, we parse its records
-looking for 'path' information. If this information is found, it's
-stored to be used in the next ustar entry.
-
-Information about the Pax Interchange Format can be found at:
-
-    https://www.freebsd.org/cgi/man.cgi?manpath=FreeBSD+8-current&query=tar&sektion=5.
-
-Before this change, importing gcc tarballs[1] would fail with the
-following error:
-
-    fast-import crash report:
-        fast-import process: 82899
-        parent process     : 82897
-        at 2018-05-21 12:35:27 +0000
-
-    fatal: Unsupported command: 29 atime=1516870168.93527949
-
-    Most Recent Commands Before Crash
-    ---------------------------------
-      M 644 :22495 gcc-7.3.0/libstdc++-v3/testsuite/20_util/duration/PaxHeaders.4467/comparison_operators
-      M 644 :140367 gcc-7.3.0/gcc/ada/s-gloloc-mingw.adb
-      M 644 :75143 gcc-7.3.0/gcc/testsuite/gcc.c-torture/execute/builtins/PaxHeaders.4467/strncat-chk-lib.c
-
-      <snip>
-
-      M 644 :135585 gcc-7.3.0/gcc/testsuite/c-c++-common/attr-warn-unused-result.c
-      M 644 :54956 gcc-7.3.0/gcc/testsuite/go.test/test/fixedbugs/PaxHeaders.4467/bug335.dir
-      M 644 :20632 27 mtime=1483272463.905435
-    * 29 atime=1516870168.93527949
-
-[1]: http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.xz
-
-Signed-off-by: Pedro Alvarez <palvarez89@gmail.com>
----
- contrib/fast-import/import-tars.perl | 32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
-index d60b4315ed..c2e54ec7a3 100755
---- a/contrib/fast-import/import-tars.perl
-+++ b/contrib/fast-import/import-tars.perl
-@@ -63,6 +63,8 @@ foreach my $tar_file (@ARGV)
- 	my $have_top_dir = 1;
- 	my ($top_dir, %files);
- 
-+	my $next_path = '';
-+
- 	while (read(I, $_, 512) == 512) {
- 		my ($name, $mode, $uid, $gid, $size, $mtime,
- 			$chksum, $typeflag, $linkname, $magic,
-@@ -70,6 +72,13 @@ foreach my $tar_file (@ARGV)
- 			$prefix) = unpack 'Z100 Z8 Z8 Z8 Z12 Z12
- 			Z8 Z1 Z100 Z6
- 			Z2 Z32 Z32 Z8 Z8 Z*', $_;
-+
-+		unless ($next_path eq '') {
-+			# Recover name from previous extended header
-+			$name = $next_path;
-+			$next_path = '';
-+		}
-+
- 		last unless length($name);
- 		if ($name eq '././@LongLink') {
- 			# GNU tar extension
-@@ -90,13 +99,32 @@ foreach my $tar_file (@ARGV)
- 			Z8 Z1 Z100 Z6
- 			Z2 Z32 Z32 Z8 Z8 Z*', $_;
- 		}
--		next if $name =~ m{/\z};
- 		$mode = oct $mode;
- 		$size = oct $size;
- 		$mtime = oct $mtime;
- 		next if $typeflag == 5; # directory
- 
--		if ($typeflag != 1) { # handle hard links later
-+		if ($typeflag eq 'x') { # extended header
-+			# If extended header, check for path
-+			my $pax_header = '';
-+			while ($size > 0 && read(I, $_, 512) == 512) {
-+				$pax_header = $pax_header . substr($_, 0, $size);
-+				$size -= 512;
-+			}
-+
-+			my @lines = split /\n/, $pax_header;
-+			foreach my $line (@lines) {
-+				my ($len, $entry) = split / /, $line;
-+				my ($key, $value) = split /=/, $entry;
-+				if ($key eq 'path') {
-+					$next_path = $value;
-+				}
-+			}
-+			next;
-+		} elsif ($name =~ m{/\z}) {
-+			# If it's a folder, ignore
-+			next;
-+		} elsif ($typeflag != 1) { # handle hard links later
- 			print FI "blob\n", "mark :$next_mark\n";
- 			if ($typeflag == 2) { # symbolic link
- 				print FI "data ", length($linkname), "\n",
--- 
-2.11.0
-
+However, instead of a separate patch, wouldn't it be better to squash
+it into the previous one?  So 'make test' would succeed on every
+commit even with a newer p4 version.
