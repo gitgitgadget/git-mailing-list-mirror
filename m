@@ -7,119 +7,148 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7871C1F51C
-	for <e@80x24.org>; Tue, 22 May 2018 18:04:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 877731F51C
+	for <e@80x24.org>; Tue, 22 May 2018 18:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751517AbeEVSEX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 14:04:23 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:42117 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751354AbeEVSEW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 14:04:22 -0400
-Received: by mail-yw0-f196.google.com with SMTP id q7-v6so5828632ywd.9
-        for <git@vger.kernel.org>; Tue, 22 May 2018 11:04:22 -0700 (PDT)
+        id S1751401AbeEVS0R (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 14:26:17 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:46030 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751277AbeEVS0Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 14:26:16 -0400
+Received: by mail-yb0-f196.google.com with SMTP id r13-v6so6676861ybm.12
+        for <git@vger.kernel.org>; Tue, 22 May 2018 11:26:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vOulIJv42PQaYcnVSK3eLsdbfZDcxE7y0py0Rhl8z10=;
-        b=DBjugXuNtz10Ktxqom3+Bss/H/kRphV7ZOr83e8jHo0rqn1XXl1AlidRJOVLVTl79o
-         aEzxs0DwoWmgOXMyRnLWDWb1tJuZco3eyZGRdWE7BSW+K4Rge6gaQz01VCT+Nhbgzitj
-         5BsUEx2vNWwVmVxY4Jv9TzMLX4VMmVc3Pi87Bmc2K+evMo/Igj/tsK4VlrvsI5GyDt+e
-         BtjtG2WCPFwppkPiEOiOKexllpnQMKkZBX4JarvCL+EPKUPelPxyBYcBRoNMyoNH9fPV
-         ZUlsFl6CAJtfuEhzSm+i/c4lcg4lGHZO2AWr0Kw1HUeffeIN4r9QEM/uPGF7B761jp/B
-         TV0w==
+         :cc;
+        bh=MQuJtmMvC8xM04g6S6vLRpevLjtozOTVi8pDkJv4Fdc=;
+        b=UJiEQrnX2cSEbKTtZShuiLepZiF5hoQ32C7bzZ9Ym6a1up26IImt4f6HclWCoFwzBW
+         nRS1N+aFE7IDgVvRtzmRzPX0fsL+oFbXm6GWvYuO6ICAnm9XMjn+UQ6iHI/xdXxCTp1C
+         Msi+KRmhs06Ml19Q6aNXKxG/HOkeZq36ZfHX/129tM/atDW9lrKdddxKBuU/lTGXLxE0
+         Keo3+QFO6nVruaj9D+pP0QJCK6OGLt4FsqZNiLXFlkLKQPH9e8KN+SAdc/jN3Marky56
+         vgWTKMNoI9wbm/4I8wpydXiWu91JCRv45LfDtRhDIX1CoK5EjvPRRuU3LxJYNCoy4nLW
+         DPXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vOulIJv42PQaYcnVSK3eLsdbfZDcxE7y0py0Rhl8z10=;
-        b=HYN7ej7DfFJ01zVz/+ogAwb1GD2L1Gmr6AVdJmc5KjV+ZNTlcMyfqLT1jmslDl+xwD
-         KN74sjSn2pqdGL9d8IXmu+uvOyitRiNySUyydA13dNJII3T+R3qmTJiUmaTOozs9qoyt
-         Nc/ybbl/TSRR10JI8RRjgcnRJKjCnA2gatz8LQeutl7k2/SON7NPhjtnigz/pGwmnkTE
-         KZpxaUkudcYs4+cfFRQjzkw3VuK68XQR0pywNFENRLnTXgUXf1mP8jPnlda1CBPP1iV5
-         I4jwXztIU4XHdepVnLZcyaeWSXzVDwWsVsinsOZDrJAx396zIdSeIDfz4yn9weuba9sX
-         UoEA==
-X-Gm-Message-State: ALKqPwdJ5FRUo7qRfYxPVLDz1vtjzCKQAPLEBi4e7KCMTL8KnCfO2Lig
-        zTx1NYLnWiTTPCiMroSurNRuDpKWtSr/h9JazHPkEw==
-X-Google-Smtp-Source: AB8JxZoiMDyqGiGkXnPTh2/BtU85RSdm9t+EKPLAECie/pYPUr7KsN2DH1+TImyk++m6Jv/hy0NloFdB7aYjRPsQLBo=
-X-Received: by 2002:a0d:e28e:: with SMTP id l136-v6mr12817750ywe.500.1527012261390;
- Tue, 22 May 2018 11:04:21 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=MQuJtmMvC8xM04g6S6vLRpevLjtozOTVi8pDkJv4Fdc=;
+        b=ubQOnaBdEEA6A275FFrRyeiJRiP2c7HDgW+zqURiA6Z/DiCjdi3sM/401sYj0Vqf7s
+         wLmuEOF2mpp6pJr7lfmIgcyAMSwwLDxS0W+P3L5iiMg7so/KF9IssT7wjt0HYihM18lL
+         grMZwCDAT4GygqxhOWnEnjpy5d8iGo6fYWTlwy7ZbXk4mpgeHohpkCRJV+0/wr7o1Jg1
+         yYHFS5iwoSA1actEVpfnHP8K3bizKv4he00SDTm5jhtfVvUFlEJ9DE+B+12ztp3tmiZa
+         Siw55ivgJz6N42RMGkSJnAZHC+5NpuCj3gPqjYSz9r8UyqJc3O0t+MDMHcYw1oZAJthm
+         R7bA==
+X-Gm-Message-State: ALKqPwdLczZV4iCdSbT2njbo3qUfZPyt5Jt8D4upTwotqOHem4HuCjOs
+        9rTwF2wwmpGwNrEgOi+DImo9EuyIDOi8rJ49GJ3bMkssS6Q=
+X-Google-Smtp-Source: AB8JxZrJhlukEdZWYXbVjLb5iyJ7yEMoI+FU0mRFmyjMqwekmil9PQbFym0VnxRfJDQEwgBLOTUViG5OKzU+1oGwwHI=
+X-Received: by 2002:a25:ae45:: with SMTP id g5-v6mr5698175ybe.292.1527013575668;
+ Tue, 22 May 2018 11:26:15 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Tue, 22 May 2018 11:04:20 -0700 (PDT)
-In-Reply-To: <874liz8tsi.fsf@evledraar.gmail.com>
-References: <CACsJy8A8WZ-Gqe2Y-whJmbADrt+gZjLZ7MTwCtdnK7JDnEdtog@mail.gmail.com>
- <20180516222118.233868-1-sbeller@google.com> <20180516222118.233868-3-sbeller@google.com>
- <874liz8tsi.fsf@evledraar.gmail.com>
+Received: by 2002:a25:b189:0:0:0:0:0 with HTTP; Tue, 22 May 2018 11:26:13
+ -0700 (PDT)
+In-Reply-To: <20180522133110.32723-2-alban.gruin@gmail.com>
+References: <20180522133110.32723-1-alban.gruin@gmail.com> <20180522133110.32723-2-alban.gruin@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 22 May 2018 11:04:20 -0700
-Message-ID: <CAGZ79kZs7aNXB2cn8p+m5gUOAv0OqhPW6b23y4cbm9d3Njwn=A@mail.gmail.com>
-Subject: Re: Why do we have both x*() and *_or_die() for "do or die"?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Antonio Ospite <ao2@ao2.it>,
-        Brandon Williams <bmwill@google.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Date:   Tue, 22 May 2018 11:26:13 -0700
+Message-ID: <CAGZ79kaTPu=z_6oJk__meuyhUt-pU_LtOJ90rPTQcC=YvhnOnw@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 1/4] rebase: duplicate git-rebase--interactive.sh to git-rebase--preserve-merges.sh
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Wink Saville <wink@saville.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 22, 2018 at 10:49 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+On Tue, May 22, 2018 at 6:31 AM, Alban Gruin <alban.gruin@gmail.com> wrote:
+> This duplicates git-rebase--interactive.sh to
+> git-rebase--preserve-merges.sh. This is done to split -p from -i. No
+> modifications are made to this file here, but any code that is not used by -p
+> will be stripped in the next commit.
 >
-> On Wed, May 16 2018, Stefan Beller wrote:
->
->> A common pattern with the repo_read_index function is to die if the retu=
-rn
->> of repo_read_index is negative.  Move this pattern into a function.
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 
-This was done organically, i.e. taking the smallest available step that yie=
-lds
-a better code base. There was definitely no stepping back or looking at the
-big picture involved.
+So how would I best review this?
 
-> Just a side-question unrelated to this patch per-se, why do we have both
-> x*() and *_or_die() functions in the codebase?
+I applied the patches locally[1], and ran git-ls-tree on this commit
+hoping to find the same blob id for git-rebase--interactive.sh as for
+git-rebase--preserve-merges.sh; however I did not.
 
-Digging into the history, the x*() emerges from 112db553b0d (Shrink the
-git binary a bit by avoiding unnecessary inline functions, 2008-06-22) and
-is wrapping common patterns to reduce the size of the binary.
-
-The or_die pattern comes from 7230e6d042a (Add write_or_die(),
-a helper function, 2006-08-21). This was motivated as better code
-("making additional error handling unnecessary", "replace two similar ones"=
-)
-
-None of them really hint at the _die() as a problem in the
-libification efforts which came later IIUC.
-
-> I can't find any pattern
-> for one or the other, e.g. we have both xopen() and then write_or_die(),
-
-hah! Up to now I assumed the x* is system calls with write_or_die as an
-exception. There is also a xwrite and write_in_full, so they are slightly
-different in the way that xwrite covers only the system call and copes
-with some common error patterns, whereas write_or_die uses write_in_full
-which itself uses xwrite.
-
-> so it's not a matter of x*() just being for syscalls and *_or_die()
-> being for our own functions (also as e.g. strbuf uses x*(), not
-> *_or_die()).
-
-I would tend to argue that way: x* are strictly to system calls (no die()
-in there), and the _die() functions are "hands off *no* error handling
-needed"
-
-> I'm not trying to litigate the difference and understand it could have
-> just emerged organically. I'm just wondering if that's the full story or
-> if one is preferred, or we prefer one or the other in some
-> circumstances.
-
-I think we'd prefer the x() for lib code and the _or_die code in builtin/
-due to the nature of effort needed to get it right.
+So I diffed them and had the diff below[2], which looks like that has parts
+of Johannes recent series?
 
 Thanks,
 Stefan
+
+[1] After applying I pushed it to
+https://github.com/stefanbeller/git/tree/alban_split_off_-p
+and this patch is commit 9f64342ea1b64d43e4675b5f202174c9e0f77dbf
+
+[2] $ git diff 9f64342ea1b64d43e4675b5f202174c9e0f77dbf:git-rebase--preserve-merges.sh
+\
+    9f64342ea1b64d43e4675b5f202174c9e0f77dbf:git-rebase--interactive.sh
+diff --git a/git-rebase--preserve-merges.sh b/git-rebase--interactive.sh
+index 9947e6265fe..2f4941d0fc9 100644
+--- a/git-rebase--preserve-merges.sh
++++ b/git-rebase--interactive.sh
+@@ -155,13 +155,19 @@ reschedule_last_action () {
+ append_todo_help () {
+        gettext "
+ Commands:
+-p, pick = use commit
+-r, reword = use commit, but edit the commit message
+-e, edit = use commit, but stop for amending
+-s, squash = use commit, but meld into previous commit
+-f, fixup = like \"squash\", but discard this commit's log message
+-x, exec = run command (the rest of the line) using shell
+-d, drop = remove commit
++p, pick <commit> = use commit
++r, reword <commit> = use commit, but edit the commit message
++e, edit <commit> = use commit, but stop for amending
++s, squash <commit> = use commit, but meld into previous commit
++f, fixup <commit> = like \"squash\", but discard this commit's log message
++x, exec <commit> = run command (the rest of the line) using shell
++d, drop <commit> = remove commit
++l, label <label> = label current HEAD with a name
++t, reset <label> = reset HEAD to a label
++m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
++.       create a merge commit using the original merge commit's
++.       message (or the oneline, if no original merge commit was
++.       specified). Use -c <commit> to reword the commit message.
+
+ These lines can be re-ordered; they are executed from top to bottom.
+ " | git stripspace --comment-lines >>"$todo"
+@@ -888,6 +894,8 @@ init_revisions_and_shortrevisions () {
+        else
+                revisions=$onto...$orig_head
+                shortrevisions=$shorthead
++               test -z "$squash_onto" ||
++               echo "$squash_onto" >"$state_dir"/squash-onto
+        fi
+ }
+
+@@ -942,7 +950,7 @@ EOF
+        die "Could not skip unnecessary pick commands"
+
+        checkout_onto
+-       if test -z "$rebase_root" && test ! -d "$rewritten"
++       if test ! -d "$rewritten"
+        then
+                require_clean_work_tree "rebase"
+                exec git rebase--helper ${force_rebase:+--no-ff}
+$allow_empty_message \
+@@ -964,6 +972,8 @@ git_rebase__interactive () {
+        init_revisions_and_shortrevisions
+
+        git rebase--helper --make-script ${keep_empty:+--keep-empty} \
++               ${rebase_merges:+--rebase-merges} \
++               ${rebase_cousins:+--rebase-cousins} \
+                $revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
+        die "$(gettext "Could not generate todo list")"
