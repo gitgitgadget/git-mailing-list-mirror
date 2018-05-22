@@ -2,105 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EE2D1F51C
-	for <e@80x24.org>; Tue, 22 May 2018 18:55:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D0031F51C
+	for <e@80x24.org>; Tue, 22 May 2018 19:02:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751432AbeEVSz2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 14:55:28 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:44863 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751319AbeEVSz1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 14:55:27 -0400
-Received: by mail-pg0-f66.google.com with SMTP id c22-v6so7585525pgn.11
-        for <git@vger.kernel.org>; Tue, 22 May 2018 11:55:27 -0700 (PDT)
+        id S1751412AbeEVTCB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 15:02:01 -0400
+Received: from mail-yb0-f193.google.com ([209.85.213.193]:44041 "EHLO
+        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751346AbeEVTCA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 15:02:00 -0400
+Received: by mail-yb0-f193.google.com with SMTP id s8-v6so5485340ybp.11
+        for <git@vger.kernel.org>; Tue, 22 May 2018 12:02:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FnjwPEm1onSukdr++VNhwL3EORISQbOhfF6d06J0mNw=;
-        b=lco3qTG9YolutNGKlBc9tj4IviPZGVRcu+tUihw1HipHwmgtK6pxXgg2yrUCQHadNh
-         A0qWUNPo01w032GxJboxFK2ZVYKn1P4pSUmge9BtUmpVJ7u5YWW83EMs7s2091rCbuZ+
-         u6ntx5w5/ijZMjckOdhyogW7d9KGeTWQu1iA/FKjKUQknDGxOGVnbXgRzeZ7NGWgRpzW
-         HwDE7EqoW+YYgXPFWIGlWH0BfRE7MWl6UduvX3EM2MlEC8ECRk2GbxUnlHHObB4WatxI
-         wGK7gAPyGak3r7gAvlmNgX/nl9zwL7ppiby+ElECOHVBMLXP//KvkDGsFTHp2+G1T3lM
-         TLqA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=EsMJNEDgddoGSyqXtjWDeqSjZX/DdF//Z3RWi1T6YH8=;
+        b=dMKyNdSQp0rXBscgEUrpSRo/fl/smtCWjF3mEUF8Rllbsw1Rz8a5SJL7p3kewuh0sX
+         ZzdV4nzyOoZs505DFLsGblF3UgQ7MHxVCu84wqowTipI2Hd4LAt6RGUWMT+wn8cJo+2V
+         sahl0qErKz9p/vo/1D2LEzJVLBUA5N90Z99lfKvJws0C5bBoAousyClrg3kkyYYOBig9
+         qtaTf3UIZYF7C7GoGMr31gjsaRgzojAnTZDrEqfFpRUXxRuRHxthQ4L2JhtXx2o7E8kj
+         TTl2kI0hGx1bAG4UAGuThF8cJ17JnlTHfBKuMTUEz/hyP3JL7ivALFg6OIoaDlRrNDil
+         sorQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FnjwPEm1onSukdr++VNhwL3EORISQbOhfF6d06J0mNw=;
-        b=ftAhCp34A5ARSFvid8d/14oOCvFitFKRJK53y60P+wjupay5SR5v8SuJsOmq8ashLh
-         srDq4QEOQueOkrPHK233/52sghQtyGHMSXPskzwBAfIiUfY2wkal3F8UEVJRyNvGJATP
-         4AKhGr0VhxTT66ugxZIQ6yoEAh7s8sHARV1PLSbJu1QWlRqevk+VkiVG0uc3k9ZhX4G3
-         MEc536zCPxHN8U3mWBceaVXzJKaSxp7knZUGKvDcpKh5OZ9Xc8XXmCHvl6YhL33P24Jh
-         gqhJd9ZW+jPLL6HCzj8nrLNpuqDSC5XQ3rFhRuZxwtunbmMFcz86Cw1WXOQEcEOPTgft
-         IRhA==
-X-Gm-Message-State: ALKqPwe8M61FAcDaTM2M1dB7U1l0rSujexELcagb1r8edUlwUtpc9olo
-        x5plJQW6PmFO3H3gUVsG0mwGytjd
-X-Google-Smtp-Source: AB8JxZrq6UjPSYME8iq6I4zLNvwuLNvrG6VE/6YdYHr156dZmW3lI1w1QgOQtyQfwj8jiZLiQI/gQQ==
-X-Received: by 2002:aa7:8084:: with SMTP id v4-v6mr25350706pff.105.1527015326961;
-        Tue, 22 May 2018 11:55:26 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id v5-v6sm27032413pff.130.2018.05.22.11.55.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 May 2018 11:55:26 -0700 (PDT)
-Date:   Tue, 22 May 2018 11:55:24 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH v2 2/2] remote-curl: accept compressed responses with
- protocol v2
-Message-ID: <20180522185524.GM10623@aiede.svl.corp.google.com>
-References: <20180521234004.142548-1-bmwill@google.com>
- <20180522184204.47332-1-bmwill@google.com>
- <20180522184204.47332-2-bmwill@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=EsMJNEDgddoGSyqXtjWDeqSjZX/DdF//Z3RWi1T6YH8=;
+        b=f0pbH7ckCIakXw40EJrqfBmGJDEyaWQsbg9Zx4UJJKJbpaSrOkkv6hV2Hj8TvzOXIf
+         6RYFotR7tdlxtFGKUv8XIX8Ilv4ab6VT6f6up9VpJRA/Caf98dgu1h3LHM97fOF5SOOZ
+         7tqmRs+Ts7jlY3+bscEW0W3hnnxx+Fq2kyatZJxDFlvKFG142Ey/uA9SMXRgCKlIEI9X
+         k6+qFcH8nE/bmtsbu8tU1ZXnRW9DJ5dDlsjQrAGp3qNwaRIhigDqIki9szjvSKnI5A/J
+         Pvr96XxsItXG+ZKlK2J6IsCBSNUy6iAf21OcUONNVqbUQoBQxBxVDl6Vc4MsMNqpwAaw
+         B9uA==
+X-Gm-Message-State: ALKqPwfTPIx1M0pToj38ebmMGqoAAVlaI5rsydmKOhcsRT1Ryp9z5Ma1
+        yjzcU+zujXi758Zh575oS8r9iPj654Ns97TYoR9NPQ==
+X-Google-Smtp-Source: AB8JxZqeKU9cJJOdQEx6yrno82e1AnQknuzjiOFUwVxmvibn5GPDJaongnYstMewaYnSX5TbdNzOl9wu2r0b3dKwbG8=
+X-Received: by 2002:a25:31c3:: with SMTP id x186-v6mr3559039ybx.352.1527015719938;
+ Tue, 22 May 2018 12:01:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180522184204.47332-2-bmwill@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Tue, 22 May 2018 12:01:59 -0700 (PDT)
+In-Reply-To: <20180522114440.0b1aa23a780efe6a68770d9b@google.com>
+References: <20180521204340.260572-1-jonathantanmy@google.com>
+ <CAGZ79kb96Fxf1OBbnqmAtAm_EA5y9+0NKcNqhKjXhavWe6WzWA@mail.gmail.com> <20180522114440.0b1aa23a780efe6a68770d9b@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 22 May 2018 12:01:59 -0700
+Message-ID: <CAGZ79kbe0mAQW-2iGX2Q+WEWJ-MEoBcXtyBOb8a-7iWApp7pqw@mail.gmail.com>
+Subject: Re: [RFC PATCH] fetch-pack: space out sent "haves" in negotiation
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams wrote:
+Hi Jonathan,
+> I wouldn't characterize the errors as "off by one errors".
 
-> Configure curl to accept compressed responses when using protocol v2 by
-> setting `CURLOPT_ENCODING` to "", which indicates that curl should send
-> an "Accept-Encoding" header with all supported compression encodings.
+Yes, I put it in quotes but realized that would not convey it very well.
+
+>  They are
+> more like...let me use a diagram:
 >
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  remote-curl.c | 1 +
->  1 file changed, 1 insertion(+)
+> A
+> |\
+> B D
+> | |
+> C E
+>
+> Suppose we know that the server does not have A, has C, and may or may
+> not have E (we sent "have E" but didn't get a response yet). My method
+> restarts the walk at all the parents of A (that is, B and D), but D is
+> irrelevant to the situation (and should not be walked over - this is the
+> error).
 
-Yay!
+D is irrelevant to the A, C situation, but it is still a useful probing point?
+So I would not call it an error but an inefficiency?
 
-> diff --git a/remote-curl.c b/remote-curl.c
-> index 565bba104..99b0bedc6 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -1259,6 +1259,7 @@ static int proxy_request(struct proxy_state *p)
->  
->  	slot = get_active_slot();
->  
-> +	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
->  	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
->  	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
->  	curl_easy_setopt(slot->curl, CURLOPT_URL, p->service_url);
 
-Can this get a test?
+> In this patch, I wrote the new algorithm and deleted the old one.
+...
+> You're proposing that if I proceed with this, I split the patch into 2 -
+> one to move the negotiation algorithm, and one to update it? If yes,
+> normally I would agree, but the current negotiation algorithm is not
+> very sophisticated (and does not take up much code), so I think it's not
+> worth it.
 
-I'm particularly interested in it since it's easy to accidentally
-apply this patch to the wrong duplicated place (luckily 'p' is a
-different variable name than 'rpc' but it's an easy mistake to make if
-applying the patch manually).
+ok, in that case I'll just dive into the code.
 
-With or without such a test,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+>> > +struct fetch_negotiator {
+>> > +       struct sent_commit **sent_commits;
+>> > +       size_t sent_commit_nr, sent_commit_alloc;
+>> > +       struct prio_queue candidates;
+>> > +};
+>>
+>> Maybe we can just declare the struct fetch_negotiator here and not
+>> define it, such that nobody outside the actual implementation tries
+>> to access its internals?
+>
+> That's possible - I wanted to allow allocation of this on the stack (to
+> save a malloc), but perhaps that's over-optimization.
+
+Ah good call. Please keep it that way then.
+
+
+>> So even if we do not use the skip commit logic, this would be a benefit for any
+>> http(-v0) and v2 users of the protocol?
+>
+> It would conserve bandwidth, yes, but storing all the commits sent with
+> additional metadata for each would require more memory.
+
+I did not see the memory requirements here as a problem until now.
+Are you saying this memory might be too much to keep around?
+
+Stefan
