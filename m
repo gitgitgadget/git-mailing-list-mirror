@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C20B200B9
-	for <e@80x24.org>; Tue, 22 May 2018 07:49:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51E551F42D
+	for <e@80x24.org>; Tue, 22 May 2018 07:59:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751160AbeEVHtt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 03:49:49 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:43754 "EHLO
+        id S1751505AbeEVH71 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 03:59:27 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:44674 "EHLO
         cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751069AbeEVHts (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 03:49:48 -0400
+        with ESMTP id S1752161AbeEVH7T (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 03:59:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
         To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
         Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
         :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
         List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=hp/dnEBpun+oOPMKjvhpa4LmkshFIDzH08O5WKvYg7U=; b=aK2w1jyKEKojv0mBuJNhLdAOfJ
-        h9VnNP38eFFQFUu4jbJtEWj4WIHqnUI7MYxmVKjiU5GOPs6g9SsDkx60miS2TQ4BXp9x/0dc8+Vs8
-        UftAXVT6P7mHaZNKBAOHF4sfaDGyA0suqwOKQAfS9L7kYnbtk2NevZvrpE6vXZBV3QGzzeCWdOmx4
-        Risy89dsPJHtGnsQRV5U/r3HpG5UOqicq7XnXAHE+tJtPb3wiJDeyyGE5JPYTNeVUCm0YocpMWKCq
-        ZV/+UhyEPRHSYkdR4SYoGApOsjhJdZ88FaW4Ov42AKLTzUrW6/dKRIN5xhidDZ6DswX9AKsyadJdK
-        GzqHHVdw==;
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:55300 helo=localhost.localdomain)
+        bh=ZfKMU3KUWdiAx3+I3iWM4clerlKTfXJWeggHMjnO36M=; b=hEnLyyj0D+AAVVuoV+H+4aaXyF
+        z6lqeTObtkiv7mabhAqmJwcoo+PMKgIvysZ7imcKw9vFUGv4tmp0PmIY5v//J3hTj/JPfRNzFUIxv
+        LLQHRcAh9t81P585TMPSvIYYZH6XyRP9hzqfD8Lp04QOeya0cYnBfK3kyraRoT8ez8GHo9WiPrAXP
+        sI/NSRZf7ekKjzlU2KjYJI1JVea9TMoHuKnm682o14Bd759cnRJghC3TBIbHCiW2zb2DLf+I5QGlr
+        i+wE6eszmnjAwDJhlLVNqyw3DHDiPBzx9pP/e92DQbDZExn4qKn+nPjj6LOIDJtJhddfZ516Xlo5e
+        Gbo7lQWA==;
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:55316 helo=localhost.localdomain)
         by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.91)
         (envelope-from <rpjday@crashcourse.ca>)
-        id 1fL23F-002eoz-5p
-        for git@vger.kernel.org; Tue, 22 May 2018 03:49:46 -0400
-Date:   Tue, 22 May 2018 03:48:13 -0400 (EDT)
+        id 1fL2CS-002h5I-V8
+        for git@vger.kernel.org; Tue, 22 May 2018 03:59:17 -0400
+Date:   Tue, 22 May 2018 03:57:45 -0400 (EDT)
 From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
 X-X-Sender: rpjday@localhost.localdomain
 To:     Git Mailing list <git@vger.kernel.org>
-Subject: [PATCH] Doc: Mention core.excludesFile in "man git-clean"
-Message-ID: <alpine.LFD.2.21.1805220345150.749@localhost.localdomain>
+Subject: should config options be treated as case-sensitive?
+Message-ID: <alpine.LFD.2.21.1805220353370.989@localhost.localdomain>
 User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
+X-OutGoing-Spam-Status: No, score=-1.0
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
 X-AntiAbuse: Original Domain - vger.kernel.org
@@ -59,44 +59,39 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Add a reference to the configuration setting "core.excludesFile" to
-the man page for git-clean.
+  in my wanderings, more oddities, such as this:
 
-Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+$ grep -ir blankboundary *
+builtin/blame.c:	if (!strcmp(var, "blame.blankboundary")) {
+Documentation/config.txt:blame.blankBoundary::
+Documentation/blame-options.txt:	be controlled via the `blame.blankboundary` config option.
+Documentation/RelNotes/2.15.1.txt: * Description of blame.{showroot,blankboundary,showemail,date}
+Documentation/RelNotes/2.16.0.txt: * Description of blame.{showroot,blankboundary,showemail,date}
+$
 
----
+where you can see the single instance of "blankBoundary" in
+Doc/config.txt (with the upper case 'B'), while the rest have no such
+thing.
 
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index 03056dad0..449cbc2af 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -55,13 +55,15 @@ OPTIONS
+  for fun, i checked another of blame's config settings, with similar
+results:
 
- -e <pattern>::
- --exclude=<pattern>::
--	In addition to those found in .gitignore (per directory) and
--	$GIT_DIR/info/exclude, also consider these patterns to be in the
--	set of the ignore rules in effect.
-+	In addition to patterns found in any of .gitignore (per directory),
-+	$GIT_DIR/info/exclude and the exclude file specified by the
-+	configuration variable core.excludesFile, also consider these
-+	patterns to be in the set of the ignore rules in effect.
+builtin/blame.c:	if (!strcmp(var, "blame.showemail")) {
+Documentation/config.txt:blame.showEmail::
+Documentation/RelNotes/2.15.1.txt: * Description of blame.{showroot,blankboundary,showemail,date}
+Documentation/RelNotes/2.5.0.txt: * "git blame" learned blame.showEmail configuration variable.
+Documentation/RelNotes/2.16.0.txt: * Description of blame.{showroot,blankboundary,showemail,date}
+Documentation/git-blame.txt:	This can also be controlled via the `blame.showEmail` config
+t/t8002-blame.sh:test_expect_success 'setup showEmail tests' '
+t/t8002-blame.sh:test_expect_success 'blame with showemail options' '
+t/t8002-blame.sh:test_expect_success 'blame with showEmail config false' '
+t/t8002-blame.sh:	git config blame.showEmail false &&
+t/t8002-blame.sh:test_expect_success 'blame with showEmail config true' '
+t/t8002-blame.sh:	git config blame.showEmail true &&
 
- -x::
- 	Don't use the standard ignore rules read from .gitignore (per
--	directory) and $GIT_DIR/info/exclude, but do still use the ignore
-+	directory), $GIT_DIR/info/exclude and the exclude file specified
-+	by core.excludesFile, but do still use the ignore
- 	rules given with `-e` options.  This allows removing all untracked
- 	files, including build products.  This can be used (possibly in
- 	conjunction with 'git reset') to create a pristine
+  thoughts?
 
--- 
+rday
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+p.s. i am not *trying* to be annoyingly pedantic, i am merely
+succeeding.
