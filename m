@@ -2,856 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA8FC200B9
-	for <e@80x24.org>; Tue, 22 May 2018 21:16:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54DE61F51C
+	for <e@80x24.org>; Tue, 22 May 2018 22:08:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752977AbeEVVQt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 17:16:49 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:39982 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753129AbeEVVQm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 17:16:42 -0400
-Received: by mail-wm0-f67.google.com with SMTP id j5-v6so3478379wme.5
-        for <git@vger.kernel.org>; Tue, 22 May 2018 14:16:41 -0700 (PDT)
+        id S1753404AbeEVWId (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 18:08:33 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:44561 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753088AbeEVWI3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 18:08:29 -0400
+Received: by mail-pl0-f66.google.com with SMTP id m24-v6so328815pls.11
+        for <git@vger.kernel.org>; Tue, 22 May 2018 15:08:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0EzFcUDYDD7jHSroltqXK7jnJzoS4xMax8RlaNpli4E=;
-        b=tEvBwj6UO8acxCi79TRkhrcLhDoZayEYNn9Nn1onuHDzeznpElVzcqQXyjUY1gUSq1
-         LorRHa4+fVL2JWkgc8Y6DkoZzXQt6wrOV+dvZdQZxdEkLKEA/iZVIX6J1Z38CjnoO6lL
-         XlnnWk/qXQ9Ahd/LHyMo36SKbS+6b+ZsGc/nZV0DbrdP6oKs73j2ow4p4vqWogDR31rU
-         bQClGp50jIPMgUAgg0+qOxXDYfAXTkJXl6Eg4AvKi+BUsed1bumHs55z8ubvDdrDaxsc
-         sfi6TSODbmv+FNeCnVc6MGJ/dRmDoxOZnDjJpYeL9enUcL0NZSUbXBGyblv48ANJs3Ni
-         XmHw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+ODaEkQeJ5Dmbk41NoRe/fmC9XzW9JC71T41SB1mdEo=;
+        b=LSY3FoZENr7MMjq+QiicXG5D29l2XeA+WnhvApic8vSCdmUKPqPk6VIJiVmwaj8vWb
+         L71BrcXW40+OJnXMxUrUFWOwNSthyjrIYdIUhOxM1cRn90/LegzPtoTc1z76b/AGuU+0
+         AQAh2MJJLtA+ukh/VAgSVQqvAqGhBT3cUhecqSXhVGFY7p9ZnfBVWDbDyG7uiocrBUOf
+         j+5Aw+ysMNwy6KfNIKzbKyViXLTp331+YFVVvvaKk9O+cUadwmkhrVIOS0wfn7ewki1d
+         l10BPlo3SFxssx9G85+L5qolri6NJwx+5y8HJCK3B7MZTxfwKBYt8QEsXu10OTSbFOeL
+         b43g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0EzFcUDYDD7jHSroltqXK7jnJzoS4xMax8RlaNpli4E=;
-        b=amn+avy32L1EdyiY67OKgka6oFbW74mYaoMK99FTnVZErF1uy9HJC8vvZWpoRlaZsc
-         4Xn1u5z/isfjnIQGJBH50hbjWW7/XzPS9d8pcFZcPNm4MA5M06ZC+YI8NviMm8kpqrfA
-         FsjqpwsswcGikQFlgylmCjMSuzA7kS/5tnyd6h0xcqNVqVAdQiupXBGVYMRPifcmHu8c
-         Qs/K+ZjIfvwO3ouyTRCqufr7j9oojy/wa1jVl6VVoJ5Mnm4BNtQJxHluvfonO62vVfux
-         IWJzHuDYdjW0UWScX4hCjIlWbdhvWHYpsb/V6wbf4JnWv9N8+39/snTAzuPJlNb/XDHf
-         lRsw==
-X-Gm-Message-State: ALKqPweCsj70umA39gnxVqWejdnwyKhaXlNDCeCu2jLRERX+dNbDL0fz
-        0n7/KP3+VTzX9E1m4CTGU8GJPZjjKUE=
-X-Google-Smtp-Source: AB8JxZrXWnL/gbNr2SIW+pOKAJTEH1mK6TSk5og0YCuLH5cuQLQ4/b/UmhvGC1K02TeTg+g0wfpoqw==
-X-Received: by 2002:a1c:248b:: with SMTP id k133-v6mr2202526wmk.38.1527023800016;
-        Tue, 22 May 2018 14:16:40 -0700 (PDT)
-Received: from localhost.localdomain (AToulouse-658-1-38-64.w86-221.abo.wanadoo.fr. [86.221.117.64])
-        by smtp.googlemail.com with ESMTPSA id z66-v6sm941983wme.13.2018.05.22.14.16.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 May 2018 14:16:39 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk, Wink Saville <wink@saville.com>,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v2 4/4] rebase: remove -p code from git-rebase--interactive.sh
-Date:   Tue, 22 May 2018 23:16:25 +0200
-Message-Id: <20180522211625.23893-5-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.16.1
-In-Reply-To: <20180522211625.23893-1-alban.gruin@gmail.com>
-References: <20180522133110.32723-1-alban.gruin@gmail.com>
- <20180522211625.23893-1-alban.gruin@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+ODaEkQeJ5Dmbk41NoRe/fmC9XzW9JC71T41SB1mdEo=;
+        b=EskzmMjaBCOEZdSob+J9FP8P1B3BIYUdMXAmA778ANaFVq5b9m/krcw0QcXkXPSeNX
+         1zqoCXcx0ZIcIoLI8uYJKxZ6CpUu0NaXbC6S/TqnXB3zleAddex6Nw/LiJlF5zTQHum6
+         vAMbHr+iiT3u4um+dp6RPh+3cIsQjhHgSBqWbph7OqG9rLoDI3Kvh0x2hfKUaYX0oxdY
+         2K7dFy7+PpZdQPNnpBpAH7KeqWxEeJpbO85ln9m/S0MnY7fEcBiPa5SMKPj+WbsB7kZl
+         dYRKtkJppMRgOfTbp8d4vBCl6zOTONDLCN9R+ka9fFNiBAzULY80tR5QyuN3BXKCDZUm
+         +PGg==
+X-Gm-Message-State: ALKqPwdPPov4+C0jTUyCi8X1sRDQ9vYz1J1/h9XinRmZEQibkVpfltdt
+        l82kaPsykS9VZW74VTpivNZoBp2O
+X-Google-Smtp-Source: AB8JxZpZMR3gGwE7iAapgJUxlo2jCjjefOBEH52fwNQxmxSv8Mf/STsfiXBQbDJEGgeqMLDp5aj9eQ==
+X-Received: by 2002:a17:902:a5c7:: with SMTP id t7-v6mr262427plq.360.1527026908731;
+        Tue, 22 May 2018 15:08:28 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id j1-v6sm28759517pfh.95.2018.05.22.15.08.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 22 May 2018 15:08:27 -0700 (PDT)
+Date:   Tue, 22 May 2018 15:08:26 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] mailmap: update brian m. carlson's email address
+Message-ID: <20180522220826.GP10623@aiede.svl.corp.google.com>
+References: <20180506232421.975789-1-sandals@crustytoothpaste.net>
+ <20180508015845.268572-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180508015845.268572-1-sandals@crustytoothpaste.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All the code specific to preserve-merges was moved to
-git-rebase--preserve-merges.sh, and so it’s useless to keep it here.
+Hi,
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
- git-rebase--interactive.sh | 708 +--------------------------------------------
- 1 file changed, 8 insertions(+), 700 deletions(-)
+brian m. carlson wrote:
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 2f4941d0f..657d32773 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -105,15 +105,6 @@ case "$comment_char" in
- 	;;
- esac
- 
--warn () {
--	printf '%s\n' "$*" >&2
--}
--
--# Output the commit message for the specified commit.
--commit_message () {
--	git cat-file commit "$1" | sed "1,/^$/d"
--}
--
- orig_reflog_action="$GIT_REFLOG_ACTION"
- 
- comment_for_reflog () {
-@@ -142,16 +133,6 @@ mark_action_done () {
- 	fi
- }
- 
--# Put the last action marked done at the beginning of the todo list
--# again. If there has not been an action marked done yet, leave the list of
--# items on the todo list unchanged.
--reschedule_last_action () {
--	tail -n 1 "$done" | cat - "$todo" >"$todo".new
--	sed -e \$d <"$done" >"$done".new
--	mv -f "$todo".new "$todo"
--	mv -f "$done".new "$done"
--}
--
- append_todo_help () {
- 	gettext "
- Commands:
-@@ -184,50 +165,6 @@ If you remove a line here THAT COMMIT WILL BE LOST.
- 	fi
- }
- 
--make_patch () {
--	sha1_and_parents="$(git rev-list --parents -1 "$1")"
--	case "$sha1_and_parents" in
--	?*' '?*' '?*)
--		git diff --cc $sha1_and_parents
--		;;
--	?*' '?*)
--		git diff-tree -p "$1^!"
--		;;
--	*)
--		echo "Root commit"
--		;;
--	esac > "$state_dir"/patch
--	test -f "$msg" ||
--		commit_message "$1" > "$msg"
--	test -f "$author_script" ||
--		get_author_ident_from_commit "$1" > "$author_script"
--}
--
--die_with_patch () {
--	echo "$1" > "$state_dir"/stopped-sha
--	git update-ref REBASE_HEAD "$1"
--	make_patch "$1"
--	die "$2"
--}
--
--exit_with_patch () {
--	echo "$1" > "$state_dir"/stopped-sha
--	git update-ref REBASE_HEAD "$1"
--	make_patch $1
--	git rev-parse --verify HEAD > "$amend"
--	gpg_sign_opt_quoted=${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")}
--	warn "$(eval_gettext "\
--You can amend the commit now, with
--
--	git commit --amend \$gpg_sign_opt_quoted
--
--Once you are satisfied with your changes, run
--
--	git rebase --continue")"
--	warn
--	exit $2
--}
--
- die_abort () {
- 	apply_autostash
- 	rm -rf "$state_dir"
-@@ -238,30 +175,6 @@ has_action () {
- 	test -n "$(git stripspace --strip-comments <"$1")"
- }
- 
--is_empty_commit() {
--	tree=$(git rev-parse -q --verify "$1"^{tree} 2>/dev/null) || {
--		sha1=$1
--		die "$(eval_gettext "\$sha1: not a commit that can be picked")"
--	}
--	ptree=$(git rev-parse -q --verify "$1"^^{tree} 2>/dev/null) ||
--		ptree=4b825dc642cb6eb9a060e54bf8d69288fbee4904
--	test "$tree" = "$ptree"
--}
--
--is_merge_commit()
--{
--	git rev-parse --verify --quiet "$1"^2 >/dev/null 2>&1
--}
--
--# Run command with GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
--# GIT_AUTHOR_DATE exported from the current environment.
--do_with_author () {
--	(
--		export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE
--		"$@"
--	)
--}
--
- git_sequence_editor () {
- 	if test -z "$GIT_SEQUENCE_EDITOR"
- 	then
-@@ -275,455 +188,6 @@ git_sequence_editor () {
- 	eval "$GIT_SEQUENCE_EDITOR" '"$@"'
- }
- 
--pick_one () {
--	ff=--ff
--
--	case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
--	case "$force_rebase" in '') ;; ?*) ff= ;; esac
--	output git rev-parse --verify $sha1 || die "$(eval_gettext "Invalid commit name: \$sha1")"
--
--	if is_empty_commit "$sha1"
--	then
--		empty_args="--allow-empty"
--	fi
--
--	test -d "$rewritten" &&
--		pick_one_preserving_merges "$@" && return
--	output eval git cherry-pick $allow_rerere_autoupdate $allow_empty_message \
--			${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")} \
--			$signoff "$strategy_args" $empty_args $ff "$@"
--
--	# If cherry-pick dies it leaves the to-be-picked commit unrecorded. Reschedule
--	# previous task so this commit is not lost.
--	ret=$?
--	case "$ret" in [01]) ;; *) reschedule_last_action ;; esac
--	return $ret
--}
--
--pick_one_preserving_merges () {
--	fast_forward=t
--	case "$1" in
--	-n)
--		fast_forward=f
--		sha1=$2
--		;;
--	*)
--		sha1=$1
--		;;
--	esac
--	sha1=$(git rev-parse $sha1)
--
--	if test -f "$state_dir"/current-commit && test "$fast_forward" = t
--	then
--		while read current_commit
--		do
--			git rev-parse HEAD > "$rewritten"/$current_commit
--		done <"$state_dir"/current-commit
--		rm "$state_dir"/current-commit ||
--			die "$(gettext "Cannot write current commit's replacement sha1")"
--	fi
--
--	echo $sha1 >> "$state_dir"/current-commit
--
--	# rewrite parents; if none were rewritten, we can fast-forward.
--	new_parents=
--	pend=" $(git rev-list --parents -1 $sha1 | cut -d' ' -s -f2-)"
--	if test "$pend" = " "
--	then
--		pend=" root"
--	fi
--	while [ "$pend" != "" ]
--	do
--		p=$(expr "$pend" : ' \([^ ]*\)')
--		pend="${pend# $p}"
--
--		if test -f "$rewritten"/$p
--		then
--			new_p=$(cat "$rewritten"/$p)
--
--			# If the todo reordered commits, and our parent is marked for
--			# rewriting, but hasn't been gotten to yet, assume the user meant to
--			# drop it on top of the current HEAD
--			if test -z "$new_p"
--			then
--				new_p=$(git rev-parse HEAD)
--			fi
--
--			test $p != $new_p && fast_forward=f
--			case "$new_parents" in
--			*$new_p*)
--				;; # do nothing; that parent is already there
--			*)
--				new_parents="$new_parents $new_p"
--				;;
--			esac
--		else
--			if test -f "$dropped"/$p
--			then
--				fast_forward=f
--				replacement="$(cat "$dropped"/$p)"
--				test -z "$replacement" && replacement=root
--				pend=" $replacement$pend"
--			else
--				new_parents="$new_parents $p"
--			fi
--		fi
--	done
--	case $fast_forward in
--	t)
--		output warn "$(eval_gettext "Fast-forward to \$sha1")"
--		output git reset --hard $sha1 ||
--			die "$(eval_gettext "Cannot fast-forward to \$sha1")"
--		;;
--	f)
--		first_parent=$(expr "$new_parents" : ' \([^ ]*\)')
--
--		if [ "$1" != "-n" ]
--		then
--			# detach HEAD to current parent
--			output git checkout $first_parent 2> /dev/null ||
--				die "$(eval_gettext "Cannot move HEAD to \$first_parent")"
--		fi
--
--		case "$new_parents" in
--		' '*' '*)
--			test "a$1" = a-n && die "$(eval_gettext "Refusing to squash a merge: \$sha1")"
--
--			# redo merge
--			author_script_content=$(get_author_ident_from_commit $sha1)
--			eval "$author_script_content"
--			msg_content="$(commit_message $sha1)"
--			# No point in merging the first parent, that's HEAD
--			new_parents=${new_parents# $first_parent}
--			merge_args="--no-log --no-ff"
--			if ! do_with_author output eval \
--				git merge ${gpg_sign_opt:+$(git rev-parse \
--					--sq-quote "$gpg_sign_opt")} \
--				$allow_rerere_autoupdate "$merge_args" \
--				"$strategy_args" \
--				-m "$(git rev-parse --sq-quote "$msg_content")" \
--				"$new_parents"
--			then
--				printf "%s\n" "$msg_content" > "$GIT_DIR"/MERGE_MSG
--				die_with_patch $sha1 "$(eval_gettext "Error redoing merge \$sha1")"
--			fi
--			echo "$sha1 $(git rev-parse HEAD^0)" >> "$rewritten_list"
--			;;
--		*)
--			output eval git cherry-pick $allow_rerere_autoupdate \
--				$allow_empty_message \
--				${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")} \
--				"$strategy_args" "$@" ||
--				die_with_patch $sha1 "$(eval_gettext "Could not pick \$sha1")"
--			;;
--		esac
--		;;
--	esac
--}
--
--this_nth_commit_message () {
--	n=$1
--	eval_gettext "This is the commit message #\${n}:"
--}
--
--skip_nth_commit_message () {
--	n=$1
--	eval_gettext "The commit message #\${n} will be skipped:"
--}
--
--update_squash_messages () {
--	if test -f "$squash_msg"; then
--		mv "$squash_msg" "$squash_msg".bak || exit
--		count=$(($(sed -n \
--			-e "1s/^$comment_char[^0-9]*\([0-9][0-9]*\).*/\1/p" \
--			-e "q" < "$squash_msg".bak)+1))
--		{
--			printf '%s\n' "$comment_char $(eval_ngettext \
--				"This is a combination of \$count commit." \
--				"This is a combination of \$count commits." \
--				$count)"
--			sed -e 1d -e '2,/^./{
--				/^$/d
--			}' <"$squash_msg".bak
--		} >"$squash_msg"
--	else
--		commit_message HEAD >"$fixup_msg" ||
--		die "$(eval_gettext "Cannot write \$fixup_msg")"
--		count=2
--		{
--			printf '%s\n' "$comment_char $(gettext "This is a combination of 2 commits.")"
--			printf '%s\n' "$comment_char $(gettext "This is the 1st commit message:")"
--			echo
--			cat "$fixup_msg"
--		} >"$squash_msg"
--	fi
--	case $1 in
--	squash)
--		rm -f "$fixup_msg"
--		echo
--		printf '%s\n' "$comment_char $(this_nth_commit_message $count)"
--		echo
--		commit_message $2
--		;;
--	fixup)
--		echo
--		printf '%s\n' "$comment_char $(skip_nth_commit_message $count)"
--		echo
--		# Change the space after the comment character to TAB:
--		commit_message $2 | git stripspace --comment-lines | sed -e 's/ /	/'
--		;;
--	esac >>"$squash_msg"
--}
--
--peek_next_command () {
--	git stripspace --strip-comments <"$todo" | sed -n -e 's/ .*//p' -e q
--}
--
--# A squash/fixup has failed.  Prepare the long version of the squash
--# commit message, then die_with_patch.  This code path requires the
--# user to edit the combined commit message for all commits that have
--# been squashed/fixedup so far.  So also erase the old squash
--# messages, effectively causing the combined commit to be used as the
--# new basis for any further squash/fixups.  Args: sha1 rest
--die_failed_squash() {
--	sha1=$1
--	rest=$2
--	mv "$squash_msg" "$msg" || exit
--	rm -f "$fixup_msg"
--	cp "$msg" "$GIT_DIR"/MERGE_MSG || exit
--	warn
--	warn "$(eval_gettext "Could not apply \$sha1... \$rest")"
--	die_with_patch $sha1 ""
--}
--
--flush_rewritten_pending() {
--	test -s "$rewritten_pending" || return
--	newsha1="$(git rev-parse HEAD^0)"
--	sed "s/$/ $newsha1/" < "$rewritten_pending" >> "$rewritten_list"
--	rm -f "$rewritten_pending"
--}
--
--record_in_rewritten() {
--	oldsha1="$(git rev-parse $1)"
--	echo "$oldsha1" >> "$rewritten_pending"
--
--	case "$(peek_next_command)" in
--	squash|s|fixup|f)
--		;;
--	*)
--		flush_rewritten_pending
--		;;
--	esac
--}
--
--do_pick () {
--	sha1=$1
--	rest=$2
--	if test "$(git rev-parse HEAD)" = "$squash_onto"
--	then
--		# Set the correct commit message and author info on the
--		# sentinel root before cherry-picking the original changes
--		# without committing (-n).  Finally, update the sentinel again
--		# to include these changes.  If the cherry-pick results in a
--		# conflict, this means our behaviour is similar to a standard
--		# failed cherry-pick during rebase, with a dirty index to
--		# resolve before manually running git commit --amend then git
--		# rebase --continue.
--		git commit --allow-empty --allow-empty-message --amend \
--			   --no-post-rewrite -n -q -C $sha1 $signoff &&
--			pick_one -n $sha1 &&
--			git commit --allow-empty --allow-empty-message \
--				   --amend --no-post-rewrite -n -q -C $sha1 $signoff \
--				   ${gpg_sign_opt:+"$gpg_sign_opt"} ||
--				   die_with_patch $sha1 "$(eval_gettext "Could not apply \$sha1... \$rest")"
--	else
--		pick_one $sha1 ||
--			die_with_patch $sha1 "$(eval_gettext "Could not apply \$sha1... \$rest")"
--	fi
--}
--
--do_next () {
--	rm -f "$msg" "$author_script" "$amend" "$state_dir"/stopped-sha || exit
--	read -r command sha1 rest < "$todo"
--	case "$command" in
--	"$comment_char"*|''|noop|drop|d)
--		mark_action_done
--		;;
--	"$cr")
--		# Work around CR left by "read" (e.g. with Git for Windows' Bash).
--		mark_action_done
--		;;
--	pick|p)
--		comment_for_reflog pick
--
--		mark_action_done
--		do_pick $sha1 "$rest"
--		record_in_rewritten $sha1
--		;;
--	reword|r)
--		comment_for_reflog reword
--
--		mark_action_done
--		do_pick $sha1 "$rest"
--		git commit --amend --no-post-rewrite ${gpg_sign_opt:+"$gpg_sign_opt"} \
--			$allow_empty_message || {
--			warn "$(eval_gettext "\
--Could not amend commit after successfully picking \$sha1... \$rest
--This is most likely due to an empty commit message, or the pre-commit hook
--failed. If the pre-commit hook failed, you may need to resolve the issue before
--you are able to reword the commit.")"
--			exit_with_patch $sha1 1
--		}
--		record_in_rewritten $sha1
--		;;
--	edit|e)
--		comment_for_reflog edit
--
--		mark_action_done
--		do_pick $sha1 "$rest"
--		sha1_abbrev=$(git rev-parse --short $sha1)
--		warn "$(eval_gettext "Stopped at \$sha1_abbrev... \$rest")"
--		exit_with_patch $sha1 0
--		;;
--	squash|s|fixup|f)
--		case "$command" in
--		squash|s)
--			squash_style=squash
--			;;
--		fixup|f)
--			squash_style=fixup
--			;;
--		esac
--		comment_for_reflog $squash_style
--
--		test -f "$done" && has_action "$done" ||
--			die "$(eval_gettext "Cannot '\$squash_style' without a previous commit")"
--
--		mark_action_done
--		update_squash_messages $squash_style $sha1
--		author_script_content=$(get_author_ident_from_commit HEAD)
--		echo "$author_script_content" > "$author_script"
--		eval "$author_script_content"
--		if ! pick_one -n $sha1
--		then
--			git rev-parse --verify HEAD >"$amend"
--			die_failed_squash $sha1 "$rest"
--		fi
--		case "$(peek_next_command)" in
--		squash|s|fixup|f)
--			# This is an intermediate commit; its message will only be
--			# used in case of trouble.  So use the long version:
--			do_with_author output git commit --amend --no-verify -F "$squash_msg" \
--				${gpg_sign_opt:+"$gpg_sign_opt"} $allow_empty_message ||
--				die_failed_squash $sha1 "$rest"
--			;;
--		*)
--			# This is the final command of this squash/fixup group
--			if test -f "$fixup_msg"
--			then
--				do_with_author git commit --amend --no-verify -F "$fixup_msg" \
--					${gpg_sign_opt:+"$gpg_sign_opt"} $allow_empty_message ||
--					die_failed_squash $sha1 "$rest"
--			else
--				cp "$squash_msg" "$GIT_DIR"/SQUASH_MSG || exit
--				rm -f "$GIT_DIR"/MERGE_MSG
--				do_with_author git commit --amend --no-verify -F "$GIT_DIR"/SQUASH_MSG -e \
--					${gpg_sign_opt:+"$gpg_sign_opt"} $allow_empty_message ||
--					die_failed_squash $sha1 "$rest"
--			fi
--			rm -f "$squash_msg" "$fixup_msg"
--			;;
--		esac
--		record_in_rewritten $sha1
--		;;
--	x|"exec")
--		read -r command rest < "$todo"
--		mark_action_done
--		eval_gettextln "Executing: \$rest"
--		"${SHELL:-@SHELL_PATH@}" -c "$rest" # Actual execution
--		status=$?
--		# Run in subshell because require_clean_work_tree can die.
--		dirty=f
--		(require_clean_work_tree "rebase" 2>/dev/null) || dirty=t
--		if test "$status" -ne 0
--		then
--			warn "$(eval_gettext "Execution failed: \$rest")"
--			test "$dirty" = f ||
--				warn "$(gettext "and made changes to the index and/or the working tree")"
--
--			warn "$(gettext "\
--You can fix the problem, and then run
--
--	git rebase --continue")"
--			warn
--			if test $status -eq 127		# command not found
--			then
--				status=1
--			fi
--			exit "$status"
--		elif test "$dirty" = t
--		then
--			# TRANSLATORS: after these lines is a command to be issued by the user
--			warn "$(eval_gettext "\
--Execution succeeded: \$rest
--but left changes to the index and/or the working tree
--Commit or stash your changes, and then run
--
--	git rebase --continue")"
--			warn
--			exit 1
--		fi
--		;;
--	*)
--		warn "$(eval_gettext "Unknown command: \$command \$sha1 \$rest")"
--		fixtodo="$(gettext "Please fix this using 'git rebase --edit-todo'.")"
--		if git rev-parse --verify -q "$sha1" >/dev/null
--		then
--			die_with_patch $sha1 "$fixtodo"
--		else
--			die "$fixtodo"
--		fi
--		;;
--	esac
--	test -s "$todo" && return
--
--	comment_for_reflog finish &&
--	newhead=$(git rev-parse HEAD) &&
--	case $head_name in
--	refs/*)
--		message="$GIT_REFLOG_ACTION: $head_name onto $onto" &&
--		git update-ref -m "$message" $head_name $newhead $orig_head &&
--		git symbolic-ref \
--		  -m "$GIT_REFLOG_ACTION: returning to $head_name" \
--		  HEAD $head_name
--		;;
--	esac && {
--		test ! -f "$state_dir"/verbose ||
--			git diff-tree --stat $orig_head..HEAD
--	} &&
--	{
--		test -s "$rewritten_list" &&
--		git notes copy --for-rewrite=rebase < "$rewritten_list" ||
--		true # we don't care if this copying failed
--	} &&
--	hook="$(git rev-parse --git-path hooks/post-rewrite)"
--	if test -x "$hook" && test -s "$rewritten_list"; then
--		"$hook" rebase < "$rewritten_list"
--		true # we don't care if this hook failed
--	fi &&
--		warn "$(eval_gettext "Successfully rebased and updated \$head_name.")"
--
--	return 1 # not failure; just to break the do_rest loop
--}
--
--# can only return 0, when the infinite loop breaks
--do_rest () {
--	while :
--	do
--		do_next || break
--	done
--}
--
- expand_todo_ids() {
- 	git rebase--helper --expand-ids
- }
-@@ -761,77 +225,13 @@ get_missing_commit_check_level () {
- initiate_action () {
- 	case "$1" in
- 	continue)
--		if test ! -d "$rewritten"
--		then
--			exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
--				--continue
--		fi
--		# do we have anything to commit?
--		if git diff-index --cached --quiet HEAD --
--		then
--			# Nothing to commit -- skip this commit
--
--			test ! -f "$GIT_DIR"/CHERRY_PICK_HEAD ||
--			rm "$GIT_DIR"/CHERRY_PICK_HEAD ||
--			die "$(gettext "Could not remove CHERRY_PICK_HEAD")"
--		else
--			if ! test -f "$author_script"
--			then
--				gpg_sign_opt_quoted=${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")}
--				die "$(eval_gettext "\
--You have staged changes in your working tree.
--If these changes are meant to be
--squashed into the previous commit, run:
--
--  git commit --amend \$gpg_sign_opt_quoted
--
--If they are meant to go into a new commit, run:
--
--  git commit \$gpg_sign_opt_quoted
--
--In both cases, once you're done, continue with:
--
--  git rebase --continue
--")"
--			fi
--			. "$author_script" ||
--				die "$(gettext "Error trying to find the author identity to amend commit")"
--			if test -f "$amend"
--			then
--				current_head=$(git rev-parse --verify HEAD)
--				test "$current_head" = $(cat "$amend") ||
--				die "$(gettext "\
--You have uncommitted changes in your working tree. Please commit them
--first and then run 'git rebase --continue' again.")"
--				do_with_author git commit --amend --no-verify -F "$msg" -e \
--					${gpg_sign_opt:+"$gpg_sign_opt"} $allow_empty_message ||
--					die "$(gettext "Could not commit staged changes.")"
--			else
--				do_with_author git commit --no-verify -F "$msg" -e \
--					${gpg_sign_opt:+"$gpg_sign_opt"} $allow_empty_message ||
--					die "$(gettext "Could not commit staged changes.")"
--			fi
--		fi
--
--		if test -r "$state_dir"/stopped-sha
--		then
--			record_in_rewritten "$(cat "$state_dir"/stopped-sha)"
--		fi
--
--		require_clean_work_tree "rebase"
--		do_rest
--		return 0
-+		exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
-+		     --continue
- 		;;
- 	skip)
- 		git rerere clear
--
--		if test ! -d "$rewritten"
--		then
--			exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
--				--continue
--		fi
--		do_rest
--		return 0
-+		exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
-+		     --continue
- 		;;
- 	edit-todo)
- 		git stripspace --strip-comments <"$todo" >"$todo".new
-@@ -945,18 +345,14 @@ EOF
- 
- 	expand_todo_ids
- 
--	test -d "$rewritten" || test -n "$force_rebase" ||
-+	test -n "$force_rebase" ||
- 	onto="$(git rebase--helper --skip-unnecessary-picks)" ||
- 	die "Could not skip unnecessary pick commands"
- 
- 	checkout_onto
--	if test ! -d "$rewritten"
--	then
--		require_clean_work_tree "rebase"
--		exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
--			--continue
--	fi
--	do_rest
-+	require_clean_work_tree "rebase"
-+	exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
-+	     --continue
- }
- 
- git_rebase__interactive () {
-@@ -979,91 +375,3 @@ git_rebase__interactive () {
- 
- 	complete_action
- }
--
--git_rebase__interactive__preserve_merges () {
--	initiate_action "$action"
--	ret=$?
--	if test $ret = 0; then
--		return 0
--	fi
--
--	setup_reflog_action
--	init_basic_state
--
--	if test -z "$rebase_root"
--	then
--		mkdir "$rewritten" &&
--		for c in $(git merge-base --all $orig_head $upstream)
--		do
--			echo $onto > "$rewritten"/$c ||
--				die "$(gettext "Could not init rewritten commits")"
--		done
--	else
--		mkdir "$rewritten" &&
--		echo $onto > "$rewritten"/root ||
--			die "$(gettext "Could not init rewritten commits")"
--	fi
--
--	init_revisions_and_shortrevisions
--
--	format=$(git config --get rebase.instructionFormat)
--	# the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
--	git rev-list --format="%m%H ${format:-%s}" \
--		--reverse --left-right --topo-order \
--		$revisions ${restrict_revision+^$restrict_revision} | \
--		sed -n "s/^>//p" |
--	while read -r sha1 rest
--	do
--		if test -z "$keep_empty" && is_empty_commit $sha1 && ! is_merge_commit $sha1
--		then
--			comment_out="$comment_char "
--		else
--			comment_out=
--		fi
--
--		if test -z "$rebase_root"
--		then
--			preserve=t
--			for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -s -f2-)
--			do
--				if test -f "$rewritten"/$p
--				then
--					preserve=f
--				fi
--			done
--		else
--			preserve=f
--		fi
--		if test f = "$preserve"
--		then
--			touch "$rewritten"/$sha1
--			printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
--		fi
--	done
--
--	# Watch for commits that been dropped by --cherry-pick
--	mkdir "$dropped"
--	# Save all non-cherry-picked changes
--	git rev-list $revisions --left-right --cherry-pick | \
--		sed -n "s/^>//p" > "$state_dir"/not-cherry-picks
--	# Now all commits and note which ones are missing in
--	# not-cherry-picks and hence being dropped
--	git rev-list $revisions |
--	while read rev
--	do
--		if test -f "$rewritten"/$rev &&
--		   ! sane_grep "$rev" "$state_dir"/not-cherry-picks >/dev/null
--		then
--			# Use -f2 because if rev-list is telling us this commit is
--			# not worthwhile, we don't want to track its multiple heads,
--			# just the history of its first-parent for others that will
--			# be rebasing on top of it
--			git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$dropped"/$rev
--			sha1=$(git rev-list -1 $rev)
--			sane_grep -v "^[a-z][a-z]* $sha1" <"$todo" > "${todo}2" ; mv "${todo}2" "$todo"
--			rm "$rewritten"/$rev
--		fi
--	done
--
--	complete_action
--}
--- 
-2.16.1
+> An earlier change, cdb6b5ac (".mailmap: Combine more (name, email) to
+> individual persons", 2013-08-12), noted that there were two name
+> spellings and two email addresses and mapped the crustytoothpaste.net
+> address to the crustytoothpaste.ath.cx address.  The latter is an older,
+> obsolete address, while the former is current, so switch the order of
+> the addresses so that git log displays the correct address.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> I intentionally avoided the use of the first person here, because I
+> wasn't sure what the preference of the list was on that.  Hopefully it
+> reads naturally and isn't awkward.
 
+I have no preference.  First or third person would work equally well
+for me for this kind of thing.
+
+[...]
+> --- a/.mailmap
+> +++ b/.mailmap
+> @@ -25,8 +25,8 @@ Ben Walton <bdwalton@gmail.com> <bwalton@artsci.utoronto.ca>
+>  Benoit Sigoure <tsunanet@gmail.com> <tsuna@lrde.epita.fr>
+>  Bernt Hansen <bernt@norang.ca> <bernt@alumni.uwaterloo.ca>
+>  Brandon Casey <drafnel@gmail.com> <casey@nrlssc.navy.mil>
+> -brian m. carlson <sandals@crustytoothpaste.ath.cx> Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
+> -brian m. carlson <sandals@crustytoothpaste.ath.cx> <sandals@crustytoothpaste.net>
+> +brian m. carlson <sandals@crustytoothpaste.net> Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
+> +brian m. carlson <sandals@crustytoothpaste.net> <sandals@crustytoothpaste.ath.cx>
+
+Today I tried a "git shortlog" run and was surprised to find
+
+  Brian M. Carlson (6):
+      Add missing test file for UTF-16.
+      submodule: fix confusing variable name
+      submodule: don't print status output with ignore=all
+      send-email: don't call methods on undefined values
+      http-backend: provide Allow header for 405
+      remote-curl: fix large pushes with GSSAPI
+
+These commits use author Brian M. Carlson <sandals@crustytoothpaste.net>.
+Previously they matched
+
+	brian m. carlson <sandals@crustytoothpaste.ath.cx> <sandals@crustytoothpaste.net>
+
+but now they don't match any line in the .mailmap file.
+
+Should we add a line
+
+	brian m. carlson <sandals@crustytoothpaste.net>
+
+to handle these commits?
+
+Thanks,
+Jonathan
