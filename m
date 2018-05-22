@@ -2,139 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0683D1F42D
-	for <e@80x24.org>; Tue, 22 May 2018 08:41:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E2F21F42D
+	for <e@80x24.org>; Tue, 22 May 2018 10:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751278AbeEVIlV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 04:41:21 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:39186 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751192AbeEVIlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 04:41:18 -0400
-Received: by mail-wm0-f42.google.com with SMTP id f8-v6so31211787wmc.4
-        for <git@vger.kernel.org>; Tue, 22 May 2018 01:41:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=MpV8QILT0vf1h3kWJgHLs4XMiAC8W8qJUDFH/GsEPsM=;
-        b=BIuDONBzDiJhthg+KQ/b17b6zKL5o/lqn+nZNmgdndYj2uE++RZhJ6p5++X80AYYzL
-         S+J+BMlwWPXNRFvijDrGLjVMzxQoTCUOGt5e2eucRZz/CyryiX6wgK1KnK5zWwzQJ8Xk
-         VpliQ7H/CdmzzSZsRpUk4iM17OcZZ6ODo6eqk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=MpV8QILT0vf1h3kWJgHLs4XMiAC8W8qJUDFH/GsEPsM=;
-        b=toTYhTxU930TQvnxEqUTmbd+SoqaXeCMGZJTEeAefnFwDcuKRso6QlSVEy1n8BW4zF
-         BuAMD5aaSPSKuFVT1fC75xpdRgOu+qsZRv8FDdUqcPshgr/DYev26C3ol/RBFHAJSK0/
-         SeHzexFyGR0Vxy4UhzftOjdoKntYU5biDK1dbupkafMlnbRHck74Kf5o02auMryKbXNJ
-         u7DZCksbib9WD40SafOHSmWN+9C/n6b0SBA17I6HV/0w+EkC/+5WEyiebZK86khlzAwq
-         hzg/MhjVqn+S1tYgabeQzXvDDrKRHkRjKpFY3AsW9yNABQ2WImwoxLY9tbcEwrZhkylF
-         pkUA==
-X-Gm-Message-State: ALKqPwd2gdv8PbEcoUmU5Ir6k2fVGayjtWr67H59CTho/GZLbXXNVWCB
-        DyIn5gR6XSDMkasJrSyJD0kb0DQj
-X-Google-Smtp-Source: AB8JxZp/+WPKdciNxDAl+m5550h0siwi7u2FJ1tz9VAfeKQc28a9Nh+cGogt9kWceej//fmK1jGf4w==
-X-Received: by 2002:a1c:6f57:: with SMTP id k84-v6mr414377wmc.142.1526978477033;
-        Tue, 22 May 2018 01:41:17 -0700 (PDT)
-Received: from ethel.corp.roku (cpc92728-cmbg20-2-0-cust351.5-4.cable.virginm.net. [82.29.15.96])
-        by smtp.gmail.com with ESMTPSA id 135-v6sm19202922wmx.21.2018.05.22.01.41.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 May 2018 01:41:16 -0700 (PDT)
-From:   Luke Diamand <luke@diamand.org>
+        id S1751311AbeEVKGQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 06:06:16 -0400
+Received: from imap1.codethink.co.uk ([176.9.8.82]:49773 "EHLO
+        imap1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751002AbeEVKGP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 06:06:15 -0400
+Received: from [141.131.2.3] (helo=ausnb752738.ad.cirrus.com)
+        by imap1.codethink.co.uk with esmtpsa (Exim 4.84_2 #1 (Debian))
+        id 1fL4BI-00049M-W1; Tue, 22 May 2018 11:06:13 +0100
+From:   Pedro Alvarez <pedro.alvarez@codethink.co.uk>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Romain Merland <merlorom@yahoo.fr>,
-        Miguel Torroja <miguel.torroja@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        George Vanburgh <gvanburgh@bloomberg.net>,
-        Luke Diamand <luke@diamand.org>
-Subject: [PATCH 1/1] git-p4: unshelve: use action==add instead of rev==none
-Date:   Tue, 22 May 2018 09:41:09 +0100
-Message-Id: <20180522084109.29787-2-luke@diamand.org>
-X-Mailer: git-send-email 2.17.0.392.gdeb1a6e9b7
-In-Reply-To: <20180522084109.29787-1-luke@diamand.org>
-References: <20180522084109.29787-1-luke@diamand.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Cc:     Pedro Alvarez Piedehierro <palvarez89@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Add initial support for pax extended attributes
+Date:   Tue, 22 May 2018 11:05:48 +0100
+Message-Id: <20180522100548.29881-1-pedro.alvarez@codethink.co.uk>
+X-Mailer: git-send-email 2.15.1 (Apple Git-101)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor found that the unshelve tests fail with newer
-versions of Perforce (2016 vs 2015).
+From: Pedro Alvarez Piedehierro <palvarez89@gmail.com>
 
-The problem arises because when a file is added in a P4
-shelved changelist, the depot revision is shown as "none"
-if using the older p4d (which makes sense - the file doesn't
-yet exist, so can't have a revision), but as "1" in the newer
-versions of p4d.
+Sometimes the tar files will contain pax extended attributes to deal
+with cases where the information needed doesn't fit in a standard
+ustar entry.
 
-For example, adding a file called "new" with 2015.1 and then
-shelving that change gives this from "p4 describe" :
+One of these cases is when the path is larger than 100 characters. A
+pax entry will appear containing two standard ustart entries. The first
+entry will have an 'x' typeflag, and contain the the extended attributes.
 
-    ... //depot/new#none add
+The pax extended attributes contain one or multiple records constructed as
+follows:
 
-Using the 2018.1 server gives this:
+    "%d %s=%s\n", <length>, <keyword>, <value>
 
-    ... //depot/new#1 add
+This commit makes sure that we always read the extended attibutes from
+pax entries, and in the case of finding one, we parse its records
+looking for 'path' information. If this information is found, it's
+stored to be used in the next ustar entry.
 
-We can detect that a file has been added simply by using the
-file status ("add") instead, rather than the depot revision,
-which is what this change does.
+Information about the Pax Interchange Format can be found at:
 
-This also fixes a few verbose prints used for debugging this
-to be more friendly.
+    https://www.freebsd.org/cgi/man.cgi?manpath=FreeBSD+8-current&query=tar&sektion=5.
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
+Before this change, importing gcc tarballs[1] would fail with the
+following error:
+
+    fast-import crash report:
+        fast-import process: 82899
+        parent process     : 82897
+        at 2018-05-21 12:35:27 +0000
+
+    fatal: Unsupported command: 29 atime=1516870168.93527949
+
+    Most Recent Commands Before Crash
+    ---------------------------------
+      M 644 :22495 gcc-7.3.0/libstdc++-v3/testsuite/20_util/duration/PaxHeaders.4467/comparison_operators
+      M 644 :140367 gcc-7.3.0/gcc/ada/s-gloloc-mingw.adb
+      M 644 :75143 gcc-7.3.0/gcc/testsuite/gcc.c-torture/execute/builtins/PaxHeaders.4467/strncat-chk-lib.c
+
+      <snip>
+
+      M 644 :135585 gcc-7.3.0/gcc/testsuite/c-c++-common/attr-warn-unused-result.c
+      M 644 :54956 gcc-7.3.0/gcc/testsuite/go.test/test/fixedbugs/PaxHeaders.4467/bug335.dir
+      M 644 :20632 27 mtime=1483272463.905435
+    * 29 atime=1516870168.93527949
+
+[1]: http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.xz
+
+Signed-off-by: Pedro Alvarez <palvarez89@gmail.com>
 ---
- git-p4.py | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ contrib/fast-import/import-tars.perl | 32 ++++++++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
-diff --git a/git-p4.py b/git-p4.py
-index 364d86dbcc..c80d85af89 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2463,7 +2463,7 @@ class P4Sync(Command, P4UserMap):
-         """
-         ret = p4Cmd(["diff2", "{0}#{1}".format(path, filerev), "{0}@{1}".format(path, revision)])
-         if verbose:
--            print("p4 diff2 %s %s %s => %s" % (path, filerev, revision, ret))
-+            print("p4 diff2 path %s filerev %s revision %s => %s" % (path, filerev, revision, ret))
-         return ret["status"] == "identical"
+diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
+index d60b4315ed..c2e54ec7a3 100755
+--- a/contrib/fast-import/import-tars.perl
++++ b/contrib/fast-import/import-tars.perl
+@@ -63,6 +63,8 @@ foreach my $tar_file (@ARGV)
+ 	my $have_top_dir = 1;
+ 	my ($top_dir, %files);
  
-     def extractFilesFromCommit(self, commit, shelved=False, shelved_cl = 0, origin_revision = 0):
-@@ -2492,7 +2492,12 @@ class P4Sync(Command, P4UserMap):
-             if shelved:
-                 file["shelved_cl"] = int(shelved_cl)
- 
--                if file["rev"] != "none" and \
-+                # For shelved changelists, check that the revision of each file that the
-+                # shelve was based on matches the revision that we are using for the
-+                # starting point for git-fast-import (self.initialParent). Otherwise
-+                # the resulting diff will contain deltas from multiple commits.
++	my $next_path = '';
 +
-+                if file["action"] != "add" and \
-                     not self.cmp_shelved(path, file["rev"], origin_revision):
-                     sys.exit("change {0} not based on {1} for {2}, cannot unshelve".format(
-                         commit["change"], self.initialParent, path))
-@@ -2610,7 +2615,7 @@ class P4Sync(Command, P4UserMap):
-     def streamOneP4File(self, file, contents):
-         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
-         relPath = self.encodeWithUTF8(relPath)
--        if verbose:
-+        if verbose and 'fileSize' in self.stream_file:
-             size = int(self.stream_file['fileSize'])
-             sys.stdout.write('\r%s --> %s (%i MB)\n' % (file['depotFile'], relPath, size/1024/1024))
-             sys.stdout.flush()
+ 	while (read(I, $_, 512) == 512) {
+ 		my ($name, $mode, $uid, $gid, $size, $mtime,
+ 			$chksum, $typeflag, $linkname, $magic,
+@@ -70,6 +72,13 @@ foreach my $tar_file (@ARGV)
+ 			$prefix) = unpack 'Z100 Z8 Z8 Z8 Z12 Z12
+ 			Z8 Z1 Z100 Z6
+ 			Z2 Z32 Z32 Z8 Z8 Z*', $_;
++
++		unless ($next_path eq '') {
++			# Recover name from previous extended header
++			$name = $next_path;
++			$next_path = '';
++		}
++
+ 		last unless length($name);
+ 		if ($name eq '././@LongLink') {
+ 			# GNU tar extension
+@@ -90,13 +99,32 @@ foreach my $tar_file (@ARGV)
+ 			Z8 Z1 Z100 Z6
+ 			Z2 Z32 Z32 Z8 Z8 Z*', $_;
+ 		}
+-		next if $name =~ m{/\z};
+ 		$mode = oct $mode;
+ 		$size = oct $size;
+ 		$mtime = oct $mtime;
+ 		next if $typeflag == 5; # directory
+ 
+-		if ($typeflag != 1) { # handle hard links later
++		if ($typeflag eq 'x') { # extended header
++			# If extended header, check for path
++			my $pax_header = '';
++			while ($size > 0 && read(I, $_, 512) == 512) {
++				$pax_header = $pax_header . substr($_, 0, $size);
++				$size -= 512;
++			}
++
++			my @lines = split /\n/, $pax_header;
++			foreach my $line (@lines) {
++				my ($len, $entry) = split / /, $line;
++				my ($key, $value) = split /=/, $entry;
++				if ($key eq 'path') {
++					$next_path = $value;
++				}
++			}
++			next;
++		} elsif ($name =~ m{/\z}) {
++			# If it's a folder, ignore
++			next;
++		} elsif ($typeflag != 1) { # handle hard links later
+ 			print FI "blob\n", "mark :$next_mark\n";
+ 			if ($typeflag == 2) { # symbolic link
+ 				print FI "data ", length($linkname), "\n",
 -- 
-2.17.0.392.gdeb1a6e9b7
+2.11.0
 
