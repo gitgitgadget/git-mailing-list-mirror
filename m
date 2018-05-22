@@ -6,98 +6,82 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 081F61F51C
-	for <e@80x24.org>; Tue, 22 May 2018 02:20:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF7361F51C
+	for <e@80x24.org>; Tue, 22 May 2018 02:46:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751601AbeEVCUC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 22:20:02 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:41862 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751177AbeEVCUC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 22:20:02 -0400
-Received: by mail-qk0-f193.google.com with SMTP id d125-v6so13396089qkb.8
-        for <git@vger.kernel.org>; Mon, 21 May 2018 19:20:01 -0700 (PDT)
+        id S1752601AbeEVCqT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 22:46:19 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:42809 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752569AbeEVCqS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 22:46:18 -0400
+Received: by mail-wr0-f193.google.com with SMTP id t16-v6so14661638wrm.9
+        for <git@vger.kernel.org>; Mon, 21 May 2018 19:46:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=jEJTUNTP7GcIFR9TNIFo+aR8OqFPqdp6NhIswc038v8=;
-        b=qMa4J3MFhDbACae0jPj+9TgRF4qH9YAnJXRG8c9CYv4XZJ1xY5qpuvcx0TEv02hf1M
-         4qM6WaUG88WdvVd0zQK7gT0WrVkQ7mQ1FP7sGGDgkZYO0aFL6HHzgTOLif3p8tPlCWY6
-         yqiTw2N4SocMJ+0F/yxhpLNxhM5E50EJ6OzbH2lqoifNkV+KDTXhOiUXs157mF7n2M5s
-         5dodIXb8AVvPWqihdPE3vpGhfIS5ebFvfFxh8MaC7DSOZkP0rxhuWNiidPNMusBePp4O
-         JOLu38VHRTjXgSTrDTknwQ1eBsAgPsdXQo9NqxrsIp7CZFnwNjYIs/Lo3auuYhJshus3
-         UnbQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=5VNyJgS+K98StAjQ+JGXkBIUXunf250486upxS5zyE4=;
+        b=DGsenvOdo46IRKa116oqkHQCw5wD8lS3hbq16aNqqJSXJJBhJf9aGmgLTa7UD7f7IA
+         w/1eb1L+BG4ziRKY3T7dVcH49ugsTAB+RzOH/FoyW3Ive2jpLJsBT0itlOnzTpsNHTgK
+         UV5th9q3CKYmH+Mt2Nuq4TFxG5ltaS9f4m1SDthv63geYZ+lTsDKNKzGDU79ltjQjWB4
+         y4oAfKQt9YpCzeq3iKok8x0DBJ0lNxtifEvCcK/sbyqWQk2TwUXdsZNwvVQVSWQX0/p7
+         Rx5lPI9N+MPH4pSVVbPjxpMnzD9SfJk7NDZF1O5SqM4NV83PqJdW47yt8MkDNMFd56au
+         xg2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=jEJTUNTP7GcIFR9TNIFo+aR8OqFPqdp6NhIswc038v8=;
-        b=ZKhrBf6yNKwQfNEelmCT1mZW6krgElMF7SxlhZ616QmGVKcVcpNhReZS8i3JmeRtTy
-         fw+URzOPyjL9Wb2y8VID2sBvvI7VqNNOLQnZHKDHvrlQg9vGcuCCyIlZV3dAKo/KpCAI
-         tRbLdj+mP5D2tpXMgiSCaJRqwOTUi5P9t8TDB/JYYMXsixAbSAowJ9Qf/CFg3McJshfq
-         c9pCo27bZ99uQ7Wd+hnKLFhAXzjoKDCvf4vOzVs0uPBfKBnGydVxfwnCN2QHXAxCVnCs
-         Epr7M7utH4s8Xlj5pid4/uG3y/9YZnlLgp9toLcPYZ2zdf4qeYvLI8c8prTw+ysExyIe
-         EQOA==
-X-Gm-Message-State: ALKqPwezrelYeEo37AdKX59q7ZlBNNM6ugmul27MtJxda63QWxj5gUrw
-        mnd/PEVOUjHRMxX3dCKlVy70r7GeizGLcZd5kiA=
-X-Google-Smtp-Source: AB8JxZro+Zofgc4pxmwQAI/kaTk4Hd+cEqj4AoS56KN2aimpORDD96ePiQOwEMt8l+SBj8t3E4pAPQdyJhZYPNra/XA=
-X-Received: by 2002:a37:6d04:: with SMTP id i4-v6mr18256064qkc.361.1526955601264;
- Mon, 21 May 2018 19:20:01 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=5VNyJgS+K98StAjQ+JGXkBIUXunf250486upxS5zyE4=;
+        b=F4MsqCLmLSQuUWIV4eJKMUCQH6ecv+xau+Qm6MH5DeYH6gjAXSr6d50dClWz/u4Vx6
+         jAI/wZC3H9uiaAIqTJbwPpqCaCFsJFCbLkoBODHR/GbxaJkwl+vBzcVkT4OyBsJnW7Qf
+         FtFmPb50bRs5eU9kC8x4RAfxl2mMmkqIbsr4BLNZsXfMUvKpD+eMyXdetN41XwHiSsDT
+         7yQKRIEDKjDYiQldhc17nWXR51AADOU6D9BsnRBhrnUDuDCy0gXSG706kHu6dgbeHzLh
+         PrsgMZT/nAi/Y0kYhoD/kkU+9S78muINgg8uIH+gvQ8Burk/5gdaHo0cio74osWtVET/
+         dZDw==
+X-Gm-Message-State: ALKqPwfwhYVgRcALCvx3xjp2G72do+gsxUUZ122P6dRP/4q+/i/mWnz1
+        OSxCR327pil1ngxIqq7aCAM=
+X-Google-Smtp-Source: AB8JxZp/CQkzpm+El66GvBRqLwRhqTJVTZIPqlcxYSi1WsXsRMo/4rb2Paq64TM/Kd8aGV5ADRQvRw==
+X-Received: by 2002:adf:af41:: with SMTP id z59-v6mr1040wrc.250.1526957176689;
+        Mon, 21 May 2018 19:46:16 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f8-v6sm10962786wrf.67.2018.05.21.19.46.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 21 May 2018 19:46:15 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v5 0/4] unpack_trees_options: free messages when done
+References: <xmqqr2m53leq.fsf@gitster-ct.c.googlers.com>
+        <cover.1526913784.git.martin.agren@gmail.com>
+Date:   Tue, 22 May 2018 11:46:14 +0900
+In-Reply-To: <cover.1526913784.git.martin.agren@gmail.com> ("Martin
+ =?utf-8?Q?=C3=85gren=22's?=
+        message of "Mon, 21 May 2018 16:54:24 +0200")
+Message-ID: <xmqqa7ssz9u1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.170.75 with HTTP; Mon, 21 May 2018 19:20:00 -0700 (PDT)
-In-Reply-To: <CAGZ79kZotwAFauTkCJ6YZ_C-MuaQpNaaS8LCniL_Or=_ccfC4w@mail.gmail.com>
-References: <CAPig+cQaJmsJe=E6HdBw0s6eN-qW0OCezBacRcQ+UnJYMbODsw@mail.gmail.com>
- <20180520105032.9464-1-martin.agren@gmail.com> <CAGZ79kZotwAFauTkCJ6YZ_C-MuaQpNaaS8LCniL_Or=_ccfC4w@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 21 May 2018 22:20:00 -0400
-X-Google-Sender-Auth: 4gpqW9pholUNxtRcN6k9TONV1WM
-Message-ID: <CAPig+cQevUoYJOisFt9BDhLP1_SjPqX+2hmFKDPcBvAh2D7ksA@mail.gmail.com>
-Subject: Re: [PATCH] regex: do not call `regfree()` if compilation fails
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 21, 2018 at 2:43 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Sun, May 20, 2018 at 3:50 AM, Martin =C3=85gren <martin.agren@gmail.co=
-m> wrote:
->> It is apparently undefined behavior to call `regfree()` on a regex where
->> `regcomp()` failed. [...]
->>
->> diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
->> @@ -215,7 +215,6 @@ static void regcomp_or_die(regex_t *regex, const cha=
-r *needle, int cflags)
->>                 /* The POSIX.2 people are surely sick */
->>                 char errbuf[1024];
->>                 regerror(err, regex, errbuf, 1024);
->> -               regfree(regex);
->>                 die("invalid regex: %s", errbuf);
->
-> While the commit message is very clear why we supposedly introduce a leak=
- here,
-> it is hard to be found from the source code (as we only delete code
-> there, so digging
-> for history is not obvious), so maybe
->
->      /* regfree(regex) is invalid here */
->
-> instead?
+Martin Ågren <martin.agren@gmail.com> writes:
 
-The commit message doesn't say that we are supposedly introducing a
-leak (and, indeed, no resources should have been allocated to the
-'regex' upon failed compile). It's saying that removing this call
-potentially avoids a crash under some implementations.
+> I've taken the six patches that Junio has queued and rebuilt the series
+> to get rid of the new and possibly bug-prone function that no-one uses
+> once the series is over.
 
-Given that the very next line is die(), and that the function name has
-"_or_die" in it, I'm not sure that an in-code comment about regfree()
-being invalid upon failed compile would be all that helpful; indeed,
-it could be confusing, causing the reader to wonder why that is
-significant if we're just dying anyhow. I find that the patch, as is,
-clarifies rather than muddles the situation.
+Hmph, this unfortunately depends on 'next', which means we cannot
+merge it down to 'maint' later to fix these leaks.  I guess it is
+not a huge deal, though.  We've lived with these message leaks for
+quite some time now and earth still kept rotating ;-)
+
