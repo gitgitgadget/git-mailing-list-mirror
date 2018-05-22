@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D057E1F51C
-	for <e@80x24.org>; Tue, 22 May 2018 13:31:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BEB61F51C
+	for <e@80x24.org>; Tue, 22 May 2018 13:31:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751329AbeEVNbr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 09:31:47 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:37322 "EHLO
+        id S1751350AbeEVNby (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 09:31:54 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:41167 "EHLO
         mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751304AbeEVNbn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 09:31:43 -0400
-Received: by mail-wr0-f196.google.com with SMTP id i12-v6so7053886wrc.4
-        for <git@vger.kernel.org>; Tue, 22 May 2018 06:31:43 -0700 (PDT)
+        with ESMTP id S1751304AbeEVNbs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 09:31:48 -0400
+Received: by mail-wr0-f196.google.com with SMTP id u12-v6so1202477wrn.8
+        for <git@vger.kernel.org>; Tue, 22 May 2018 06:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=C86tcdgzDWGJkDBs3hXndF923bxnqW6v9q/CjNeM1aY=;
-        b=nFIT8SsS9c9GklqHZrKBEOmb3L0Xt+ML6pZRMXhlYqlUQMBmbJOO9ZGGgHPCxijQyV
-         zP3y3Mre30MfilIn0AMpXas0bCZZ9m3eLYUQpKzgNONXyrbi/0UMyHNH9f8eb2ELZBMw
-         VZVnEr5IZY51KlXppfVFlp6XcUJb3OLukaMmK5Sku76BqVSixZxNtMLptQKW6PikkL6U
-         ikAHT7rjdXGbFU7pexbBtEzuHLMWWpOvNCeBAbd/pXswnWSVxwVLkjPe5/GuMAavo8PT
-         aYbT0G7wEXbdiXBnf0sxotFWDgyzGN0eyoEWVhGmLn0ZAU3UaHdqIlI64eumIZj2i9gs
-         NQQA==
+        bh=UgWZwwHf9jHjy4LAeVyEh0E9njw41iEHuTSaKLlVslI=;
+        b=gIKYQWip1ABwRf1EJQml+U2ywf+W1ncpBKDmTP+FFgGfJzZam0ounj9a52UkyPV8KZ
+         bi881Qzs+AyJgoQWAkzE5LOvSwnNVcBAp2rU5yLfIBoCg+BHfFEcJJlly30YtqvwWwgU
+         kF/BjG/WVV8KelqtHehOKBkPJTBkatC+w7r8zxRxALRWwFrYnJfTgFfxfoo51C+15yjU
+         NIyx0S+1K5s7fMRl9I8UC6QGPQtGMI0qZ906/oH5HTGlFwATw1Lp/tTtSKnTfDuhfvpM
+         0+dHFXAgMqjMPlxfUdOmKCiz17tlx5HKEsSHBRNypG66gdeaucgCitlCvnIYA3NNU8/N
+         ph9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=C86tcdgzDWGJkDBs3hXndF923bxnqW6v9q/CjNeM1aY=;
-        b=t3NJ8Pg/Nz/VFc6YWRONKWVPSUh/J/vIX3RGWSms/PQoqxeNY4FSqaQ5ekCIcMSQ3u
-         W2WxfLksK0ZrdR3gvKWp6XBksVbtkQogut2CMuXUAxx25XO2qOuDuq322p3L0iUgKQTi
-         i1nsrH/v68sbx1DF4VFcq+Hg5fi1aGwM/3/ySAElLVtm7B+jPy3k2Bk7zUq2ybLKduo2
-         iFiJ53Byxi5gBByPSY1+ef0W7OFkfvWXHdUZDm23GW+O7DiLPDwnZSapRjsHYTrk3he4
-         NQx9Sn7wNKtB+6N8xkY0qZOTIW9wyXoi/zYc+v+9TQiu7lpzrNWOa4qmrqXC6R7NVBp1
-         tcmA==
-X-Gm-Message-State: ALKqPwdafX3C1iCEjgTYiiDcNDSqmSIXQs6xOYl2SWpbbbs1SmwlAU6n
-        JONTycX+hV/f1qOMFRNWZ4o1vaCA9IQ=
-X-Google-Smtp-Source: AB8JxZpW+JQbYhREElBT96ZPrey4tFrwBTcZ3Fzbx+u2LdJUS4KM4mjN6RECXSvf0UG2WQDHwo+VCQ==
-X-Received: by 2002:adf:8b85:: with SMTP id o5-v6mr2158244wra.169.1526995901821;
-        Tue, 22 May 2018 06:31:41 -0700 (PDT)
+        bh=UgWZwwHf9jHjy4LAeVyEh0E9njw41iEHuTSaKLlVslI=;
+        b=UUQBXLwS+W8MFM9aLmrA+Tqy3IuT5x/uairrM2a7la1dDM9hLpcNB3bgZRr96LgH83
+         QQXlU5g1tuBNCEpl/L+yOSBNpxHk6SGuIj/bxhlfeaiIQeABB9gG2/kaXRCKEbu5anfy
+         j2peqHov/lq1F8pqZHj7tFbhfdWXQcdNsEfhGD4ekQtwmGRiUFXt4W3HaPsJyuSOKu8T
+         FcJ2ksi8U4tc96ipe7+oziGXfN7zNbvo+dS5cPjqMKdTbc4Zg55Jc4WIwL4fUKNhOaiT
+         00DVhYgDi4dxkrspwdOGlDdEeog3NilbW22IAaHCzEd6IbKfL3LiMetyIlGjjX4VdEmK
+         WWag==
+X-Gm-Message-State: ALKqPweT144qroeD4r33tONYmcVY+shv0F2umLPEYYHhRZWNtjVqDBHq
+        IGC+dZNP6wddMvv7EmfvvtHex2sFHUs=
+X-Google-Smtp-Source: AB8JxZoTBaO2kmO/SsGFBvu2mcg9l5f6ZntRrKkuI2HNiyosWPdICOYbwGjkLRBGWpgPBra6IETQTQ==
+X-Received: by 2002:adf:e582:: with SMTP id l2-v6mr12975410wrm.229.1526995906882;
+        Tue, 22 May 2018 06:31:46 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-45-152.w86-221.abo.wanadoo.fr. [86.221.52.152])
-        by smtp.googlemail.com with ESMTPSA id w40-v6sm29109785wrc.69.2018.05.22.06.31.40
+        by smtp.googlemail.com with ESMTPSA id w40-v6sm29109785wrc.69.2018.05.22.06.31.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 May 2018 06:31:40 -0700 (PDT)
+        Tue, 22 May 2018 06:31:46 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -56,9 +56,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, Wink Saville <wink@saville.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH 2/4] rebase: strip unused code in git-rebase--preserve-merges.sh
-Date:   Tue, 22 May 2018 15:31:08 +0200
-Message-Id: <20180522133110.32723-3-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH 3/4] rebase: use the new git-rebase--preserve-merges.sh
+Date:   Tue, 22 May 2018 15:31:09 +0200
+Message-Id: <20180522133110.32723-4-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.16.1
 In-Reply-To: <20180522133110.32723-1-alban.gruin@gmail.com>
 References: <20180522133110.32723-1-alban.gruin@gmail.com>
@@ -67,120 +67,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This removes the code coming from git-rebase--interactive.sh that is not needed
-by preserve-merges.
+Creates a new type of rebase, "preserve-merges", used when rebase is called with
+-p.
+
+Before that, the type for preserve-merges was "interactive", and some places of
+this script compared $type to "interactive". Instead, the code now checks if
+$interactive_rebase is empty or not, as it is set to "explicit" when calling an
+interactive rebase (and, possibly, one of its submodes), and "implied" when
+calling one of its submodes (eg. preserve-merges) *without* interactive rebase.
+
+It also detects the presence of the directory "$merge_dir"/rewritten left by the
+preserve-merges script when calling rebase --continue, --skip, etc., and, if it
+exists, sets the rebase mode to preserve-merges. In this case,
+interactive_rebase is set to "explicit", as "implied" would break some tests.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- git-rebase--preserve-merges.sh | 63 +++---------------------------------------
- 1 file changed, 4 insertions(+), 59 deletions(-)
+ git-rebase.sh | 32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
 
-diff --git a/git-rebase--preserve-merges.sh b/git-rebase--preserve-merges.sh
-index 9947e6265..7bbbb2438 100644
---- a/git-rebase--preserve-merges.sh
-+++ b/git-rebase--preserve-merges.sh
-@@ -1,12 +1,8 @@
--# This shell script fragment is sourced by git-rebase to implement
--# its interactive mode.  "git rebase --interactive" makes it easy
--# to fix up commits in the middle of a series and rearrange commits.
-+# This shell script fragment is sourced by git-rebase to implement its
-+# preserve-merges mode.
- #
- # Copyright (c) 2006 Johannes E. Schindelin
- #
--# The original idea comes from Eric W. Biederman, in
--# https://public-inbox.org/git/m1odwkyuf5.fsf_-_@ebiederm.dsl.xmission.com/
--#
- # The file containing rebase commands, comments, and empty lines.
- # This file is created by "git rebase -i" then edited by the user.  As
- # the lines are processed, they are removed from the front of this
-@@ -281,17 +277,7 @@ pick_one () {
- 		empty_args="--allow-empty"
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 40be59ecc..19bdebb48 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -207,7 +207,14 @@ run_specific_rebase () {
+ 		autosquash=
  	fi
- 
--	test -d "$rewritten" &&
--		pick_one_preserving_merges "$@" && return
--	output eval git cherry-pick $allow_rerere_autoupdate $allow_empty_message \
--			${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")} \
--			$signoff "$strategy_args" $empty_args $ff "$@"
--
--	# If cherry-pick dies it leaves the to-be-picked commit unrecorded. Reschedule
--	# previous task so this commit is not lost.
--	ret=$?
--	case "$ret" in [01]) ;; *) reschedule_last_action ;; esac
--	return $ret
-+	pick_one_preserving_merges "$@"
- }
- 
- pick_one_preserving_merges () {
-@@ -755,11 +741,6 @@ get_missing_commit_check_level () {
- initiate_action () {
- 	case "$1" in
- 	continue)
--		if test ! -d "$rewritten"
--		then
--			exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
--				--continue
--		fi
- 		# do we have anything to commit?
- 		if git diff-index --cached --quiet HEAD --
- 		then
-@@ -818,12 +799,6 @@ first and then run 'git rebase --continue' again.")"
- 		;;
- 	skip)
- 		git rerere clear
--
--		if test ! -d "$rewritten"
--		then
--			exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
--				--continue
--		fi
- 		do_rest
- 		return 0
- 		;;
-@@ -936,41 +911,11 @@ EOF
- 	}
- 
- 	expand_todo_ids
--
--	test -d "$rewritten" || test -n "$force_rebase" ||
--	onto="$(git rebase--helper --skip-unnecessary-picks)" ||
--	die "Could not skip unnecessary pick commands"
--
- 	checkout_onto
--	if test -z "$rebase_root" && test ! -d "$rewritten"
--	then
--		require_clean_work_tree "rebase"
--		exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
--			--continue
--	fi
- 	do_rest
- }
- 
--git_rebase__interactive () {
--	initiate_action "$action"
--	ret=$?
--	if test $ret = 0; then
--		return 0
--	fi
--
--	setup_reflog_action
--	init_basic_state
--
--	init_revisions_and_shortrevisions
--
--	git rebase--helper --make-script ${keep_empty:+--keep-empty} \
--		$revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
--	die "$(gettext "Could not generate todo list")"
--
--	complete_action
--}
--
--git_rebase__interactive__preserve_merges () {
-+git_rebase__preserve_merges () {
- 	initiate_action "$action"
+ 	. git-rebase--$type
+-	git_rebase__$type${preserve_merges:+__preserve_merges}
++
++	if test -z "$preserve_merges"
++	then
++		git_rebase__$type
++	else
++		git_rebase__preserve_merges
++	fi
++
  	ret=$?
- 	if test $ret = 0; then
+ 	if test $ret -eq 0
+ 	then
+@@ -239,7 +246,12 @@ then
+ 	state_dir="$apply_dir"
+ elif test -d "$merge_dir"
+ then
+-	if test -f "$merge_dir"/interactive
++	if test -d "$merge_dir"/rewritten
++	then
++		type=preserve-merges
++		interactive_rebase=explicit
++		preserve_merges=t
++	elif test -f "$merge_dir"/interactive
+ 	then
+ 		type=interactive
+ 		interactive_rebase=explicit
+@@ -402,14 +414,14 @@ if test -n "$action"
+ then
+ 	test -z "$in_progress" && die "$(gettext "No rebase in progress?")"
+ 	# Only interactive rebase uses detailed reflog messages
+-	if test "$type" = interactive && test "$GIT_REFLOG_ACTION" = rebase
++	if test -n "$interactive_rebase" && test "$GIT_REFLOG_ACTION" = rebase
+ 	then
+ 		GIT_REFLOG_ACTION="rebase -i ($action)"
+ 		export GIT_REFLOG_ACTION
+ 	fi
+ fi
+ 
+-if test "$action" = "edit-todo" && test "$type" != "interactive"
++if test "$action" = "edit-todo" && test -z "$interactive_rebase"
+ then
+ 	die "$(gettext "The --edit-todo action can only be used during interactive rebase.")"
+ fi
+@@ -487,7 +499,13 @@ fi
+ 
+ if test -n "$interactive_rebase"
+ then
+-	type=interactive
++	if test -z "$preserve_merges"
++	then
++		type=interactive
++	else
++		type=preserve-merges
++	fi
++
+ 	state_dir="$merge_dir"
+ elif test -n "$do_merge"
+ then
+@@ -647,7 +665,7 @@ require_clean_work_tree "rebase" "$(gettext "Please commit or stash them.")"
+ # but this should be done only when upstream and onto are the same
+ # and if this is not an interactive rebase.
+ mb=$(git merge-base "$onto" "$orig_head")
+-if test "$type" != interactive && test "$upstream" = "$onto" &&
++if test -z "$interactive_rebase" && test "$upstream" = "$onto" &&
+ 	test "$mb" = "$onto" && test -z "$restrict_revision" &&
+ 	# linear history?
+ 	! (git rev-list --parents "$onto".."$orig_head" | sane_grep " .* ") > /dev/null
+@@ -691,7 +709,7 @@ then
+ 	GIT_PAGER='' git diff --stat --summary "$mb" "$onto"
+ fi
+ 
+-test "$type" = interactive && run_specific_rebase
++test -n "$interactive_rebase" && run_specific_rebase
+ 
+ # Detach HEAD and reset the tree
+ say "$(gettext "First, rewinding head to replay your work on top of it...")"
 -- 
 2.16.1
 
