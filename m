@@ -2,146 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 725901F51C
-	for <e@80x24.org>; Tue, 22 May 2018 12:48:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F40BB1F51C
+	for <e@80x24.org>; Tue, 22 May 2018 13:02:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751336AbeEVMsJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 08:48:09 -0400
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:41730 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751036AbeEVMsI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 08:48:08 -0400
-Received: by mail-qt0-f172.google.com with SMTP id g13-v6so23168174qth.8
-        for <git@vger.kernel.org>; Tue, 22 May 2018 05:48:07 -0700 (PDT)
+        id S1751461AbeEVNCd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 09:02:33 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:35481 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751453AbeEVNCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 09:02:33 -0400
+Received: by mail-oi0-f66.google.com with SMTP id a6-v6so16093622oia.2
+        for <git@vger.kernel.org>; Tue, 22 May 2018 06:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=iUmhrmBsaOoosMiGNxhOUXeDwSk1FgI60OiJOMVpQ44=;
-        b=mST185D943XU0QfL8at71N8Kl5c31T8kEDygiFhnabhZ0wndBv2Qys7NzdWy7JU35G
-         OtSOVGUPOCXBTS7iAJ/dzLCl+L/YCkELDvAdJikKbuLHo+zqDkpYmmyPrOHhRBPJr1GG
-         1XB/7rwxwoTPcdN8VtjIFHYDC1vvLcjVlEhduYr65mdTggKollNTzYNpOPWUlGHHSeT8
-         EChkA14KDHQf5mD+TXidg45HuqIINrD1NCw3GnFTY0ztaoLs5UNAphyooX0UX4ydAP9x
-         YHFIg5rZTgv7tYQiMGj37ifb+w2smn99cfQF1KeksDIKUtQyj9jfsighaRdGsUM3MR0W
-         pjbg==
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=L8KyomEWrxFp/YpZs5DhO34SR/7HCiVxDnVV9AFSlA8=;
+        b=b/wenyGjnKV89eo1ZOBvthZL84xMiPXCBkDk6pQ4LxNDhnJhuuGYjycthFTpzLUvF0
+         rleri+HxmHj1+VrwMqtmaCIBj5WoFKOBbTaKiT1P9sM23D6LF5nPhx5YmxuyMV8phYPY
+         e19HD6vSnmk2filyokHCLS4/4Y5cw2t7UrE0w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=iUmhrmBsaOoosMiGNxhOUXeDwSk1FgI60OiJOMVpQ44=;
-        b=A1uuRKI/X1pLCtcd3ZByECXuF00tzTgl8hW85GPN4XdMHavirnsAWR3HdWs1hTtZmF
-         hrsbRHqoocZRM9adPYiq3uqpJc/a7iLB9R2qUUq5XrmidYF7mtJYM1gJXIpMr+0ntcO5
-         6gCyXgYlpMkaYQsS5eBGTHGtYFoH9+Ld0sa2ahGKBicmaS0DplddhdYmvGd9wh7QOOwS
-         lr9t9ErYsCZ8GYJ04lra4Dss5OUdTYpx8EzuIGkbH3OXNZGPkdQ/m+XQO2J6uiVABHy7
-         NKLpVYr1lX0PLys2wLr4SF+ZuIqyMTEuvDki7XPh0Hd0ufoVl7fc1w8Lz71oQTWICWkJ
-         F5DA==
-X-Gm-Message-State: ALKqPwcZLcJIUP8hvKM2Pv3MV1CLxcqBLLe7KSF08nHjPXgQnWMwcNH+
-        TbQTjqs+PXLyhfag05WMeXs=
-X-Google-Smtp-Source: AB8JxZq/jZTPWTEgKhjF0H7t9Zie/VXEXPLaOHTWa3pEmnKL5RQndwYjx5OmM+IDx7kz9sNtpjpwZw==
-X-Received: by 2002:ac8:120c:: with SMTP id x12-v6mr23259692qti.134.1526993287164;
-        Tue, 22 May 2018 05:48:07 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id b3-v6sm10607957qkd.37.2018.05.22.05.48.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 May 2018 05:48:06 -0700 (PDT)
-Subject: Re: commit-graph: change in "best" merge-base when ambiguous
-To:     Michael Haggerty <mhagger@alum.mit.edu>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Elijah Newren <newren@gmail.com>
-References: <e78a115a-a5ea-3c0a-5437-51ba0bcc56e1@gmail.com>
- <3705af00-00b7-b620-cc77-eef8f0a73bc1@alum.mit.edu>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <8b480e9e-1fd3-35ff-2974-653fadd49fa7@gmail.com>
-Date:   Tue, 22 May 2018 08:48:04 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=L8KyomEWrxFp/YpZs5DhO34SR/7HCiVxDnVV9AFSlA8=;
+        b=OUlMiu9vvLvFQygLR7qLq0/hU23XvPVoTOko3QMDIqPwEd0H4pLnIg1JHakzB9HEiF
+         D1xYpcrHSMAVxBF51bUycftoi782JnQ6paCYa1+c3IN01pWeyynp61v8tvvRAmCYD5Ln
+         5/Gvp2BnRdwgpsF4idzxhPIMQKH/1eNV6rlU5N1lfB1DQKK70pM+X1Re+ZJLJIXcX+Fy
+         5/nLKf6+qoRseJjpYVAj3IJH3okGvfSE+pz1ALEigsMa/e8HXTDkcSneEVokB0i5FBti
+         u3YRDWqhZRbAeedJCt36srth1ND2FQ8cgX3UYVnLd3PFR723lj0jeFBG6tk3ps2/fp6q
+         PajQ==
+X-Gm-Message-State: ALKqPwfVFPghOwrkqJkRnm37GWF1FMg4oiYMTREXV1WtyLVNn44Zl+Wg
+        lWQguezLUsn4nsXHnk9mWm/Tns88CdAZiYx3HWfZ5g==
+X-Google-Smtp-Source: AB8JxZrX2XgVhpSX861wQ+0KsCGlgXYbJXiq5Q3OHlWVkzXJ5gnChk+czLDfBO2vnndpu2tDpGtXdJZPni+dZp9UzHo=
+X-Received: by 2002:a54:4406:: with SMTP id k6-v6mr12951075oiw.162.1526994152547;
+ Tue, 22 May 2018 06:02:32 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <3705af00-00b7-b620-cc77-eef8f0a73bc1@alum.mit.edu>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Received: by 2002:a9d:3c57:0:0:0:0:0 with HTTP; Tue, 22 May 2018 06:02:31
+ -0700 (PDT)
+In-Reply-To: <CAM0VKjkdGByfTtj5cunUzqeneu4Bi8Qw4vj428zV1h3ezHXyQg@mail.gmail.com>
+References: <20180522084109.29787-1-luke@diamand.org> <20180522084109.29787-2-luke@diamand.org>
+ <CAM0VKjkdGByfTtj5cunUzqeneu4Bi8Qw4vj428zV1h3ezHXyQg@mail.gmail.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Tue, 22 May 2018 14:02:31 +0100
+Message-ID: <CAE5ih79_Ai8F48zFpJ09e8saGrySoiyVdsgkk8ZpRrQAd15a4g@mail.gmail.com>
+Subject: Re: [PATCH 1/1] git-p4: unshelve: use action==add instead of rev==none
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Romain Merland <merlorom@yahoo.fr>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        George Vanburgh <gvanburgh@bloomberg.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/22/2018 1:39 AM, Michael Haggerty wrote:
-> On 05/21/2018 08:10 PM, Derrick Stolee wrote:
->> [...]
->> In the Discussion section of the `git merge-base` docs [1], we have the
->> following:
+On 22 May 2018 at 11:15, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote:
+> On Tue, May 22, 2018 at 10:41 AM, Luke Diamand <luke@diamand.org> wrote:
+>> SZEDER G=C3=A1bor found that the unshelve tests fail with newer
+>> versions of Perforce (2016 vs 2015).
 >>
->>      When the history involves criss-cross merges, there can be more than
->> one best common ancestor for two commits. For example, with this topology:
+>> The problem arises because when a file is added in a P4
+>> shelved changelist, the depot revision is shown as "none"
+>> if using the older p4d (which makes sense - the file doesn't
+>> yet exist, so can't have a revision), but as "1" in the newer
+>> versions of p4d.
 >>
->>      ---1---o---A
->>          \ /
->>           X
->>          / \
->>      ---2---o---o---B
+>> For example, adding a file called "new" with 2015.1 and then
+>> shelving that change gives this from "p4 describe" :
 >>
->>      both 1 and 2 are merge-bases of A and B. Neither one is better than
->> the other (both are best merge bases). When the --all option is not
->> given,     it is unspecified which best one is output.
+>>     ... //depot/new#none add
 >>
->> This means our official documentation mentions that we do not have a
->> concrete way to differentiate between these choices. This makes me think
->> that this change in behavior is not a bug, but it _is_ a change in
->> behavior. It's worth mentioning, but I don't think there is any value in
->> making sure `git merge-base` returns the same output.
+>> Using the 2018.1 server gives this:
 >>
->> Does anyone disagree? Is this something we should solidify so we always
->> have a "definitive" merge-base?
->> [...]
-> This may be beyond the scope of what you are working on, but there are
-> significant advantages to selecting a "best" merge base from among the
-> candidates. Long ago [1] I proposed that the "best" merge base is the
-> merge base candidate that minimizes the number of non-merge commits that
-> are in
+>>     ... //depot/new#1 add
+>>
+>> We can detect that a file has been added simply by using the
+>> file status ("add") instead, rather than the depot revision,
+>> which is what this change does.
+>>
+>> This also fixes a few verbose prints used for debugging this
+>> to be more friendly.
+>>
+>> Signed-off-by: Luke Diamand <luke@diamand.org>
 >
->      git rev-list $candidate..$branch
->
-> that are already in master:
->
->      git rev-list $master
->
-> (assuming merging branch into master), which is equivalent to choosing
-> the merge base that minimizes
->
->      git rev-list --count $candidate..$branch
->
-> In fact, this criterion is symmetric if you exchange branch ↔ master,
-> which is a nice property, and indeed generalizes pretty simply to
-> computing the merge base of more than two commits.
->
-> In that email I also included some data showing that the "best" merge
-> base almost always results in either the same or a shorter diff than the
-> more or less arbitrary algorithm that we currently use. Sometimes the
-> difference in diff length is dramatic.
->
-> To me it feels like the best *deterministic* merge base would be based
-> on the above criterion, maybe with first-parent reachability, commit
-> times, and SHA-1s used (in that order) to break ties.
+> For what it's worth, I can confirm that 't9832-unshelve.sh' passes
+> with these changes, here and in all Linux and OSX build jobs on Travis
+> CI.
 
-Thanks, everyone, for your perspective on this. I'm walking away with 
-these conclusions:
+Thanks!
 
-1. While this is a change in behavior, it is not a regression. We do not 
-need to act immediately to preserve old behavior in these ambiguous cases.
+>
+> However, instead of a separate patch, wouldn't it be better to squash
+> it into the previous one?  So 'make test' would succeed on every
+> commit even with a newer p4 version.
 
-2. We should (eventually) define tie-breaking conditions. I like 
-Michael's suggestion above.
+Junio?
 
-Thanks,
--Stolee
+I can squash together the original commit and the two fixes if that
+would be better?
+
+Thanks!
+Luke
