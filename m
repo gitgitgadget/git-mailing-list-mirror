@@ -2,106 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54D461F51C
-	for <e@80x24.org>; Tue, 22 May 2018 01:00:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 109CE1F51C
+	for <e@80x24.org>; Tue, 22 May 2018 01:42:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751813AbeEVBAM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 21:00:12 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:44725 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751569AbeEVBAL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 May 2018 21:00:11 -0400
-Received: by mail-pg0-f67.google.com with SMTP id c22-v6so6412650pgn.11
-        for <git@vger.kernel.org>; Mon, 21 May 2018 18:00:11 -0700 (PDT)
+        id S1751601AbeEVBmi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 21:42:38 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34600 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751177AbeEVBmi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 21:42:38 -0400
+Received: by mail-wm0-f68.google.com with SMTP id a137-v6so14079122wme.1
+        for <git@vger.kernel.org>; Mon, 21 May 2018 18:42:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uyj2J6XaYqFQxCS3uM3T9Njmx+RDZWuUXIXbjpRFeN8=;
-        b=EyMwRCpoTWmP/DmKWexgL5oaQ/hRJFlXiSinDK4bkpulRfGDa72m8R4hpMTpxveVxS
-         72f3vvxJEzg4AP5QKRyotxnuWtoD6rTjqtDjyL386gZOqsmw7qZa8UjO9iDCAvCWh4KM
-         Rx9rJoBVSpZJDdxayjaxkFP84HfySGzxbseKW1nTKpGtzk4I6sGyJ3uJ2D+HpaHKXwu5
-         EQfFLlt+v8W8Tl0coJY4Ttpy5fxNOvjjrnxt1pW5jOpDo81UonMSQQ0Zbed6Mhy27b6M
-         eGugjyp74rf24HxlQco1RI9d6mNSUYNS9Xi61gOh6BH5+zNnrw0dL3jp6PyFmB5M0fP+
-         KklQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=N6J3Rm/tKfC/TqOTQ3ywZ7DgVR3a0OKeEqhkOgDc9dE=;
+        b=BNJrOu54Y5uFPYj0Oa+rOz1y7GBhiraDWT7OfqcQOOo1Tg8xZw6qoqJpp7dPg0nQ1y
+         RLq/ji7a30C2IthZUKmSbZEh6YGCd/dEivIpBpD3zpyle2HFafjKWE4oKgNTlrGYYW/o
+         2Mu8i3KI8ZV2TH8miuNpGKDV0le9tWCzMqGhkxX1R8BaYIEGs0zmlEQzsNC7n0NOA9R7
+         dnlWKoIOkqeqEAX9Hc4x81KHkYbv5wAO1LfBp/Wua+6NHUbbZynm5brwi397maqUxyJ+
+         5Tg0C1XgzZeAx5uk51Bxxs1GmjCfUvXTnVjQT1TDm8YMpPUobrHrqBkQaprYY0XSg1Pc
+         3uTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uyj2J6XaYqFQxCS3uM3T9Njmx+RDZWuUXIXbjpRFeN8=;
-        b=VoKCVU4g8rwPAEJ+884g/dzT6xwTQGsHxfeo89HTVJ78SkRxjj0SjiQigoZGIdhgSy
-         eZOLX6Oc7KJYpZpYBUC6thW5xr5vQQW0isUQ8Um1Ai93cnmmI/RiESLRK/6D1ln9GLgW
-         jkkSdDgtY9+xbsJ9RocKBojoPqHbrsyu9u9W8qG8whfpunwwXecXdGDMdkdmBgaVETUv
-         HgycDI+/vvVy/Lv4I8RjpwkLGX04Huw+3zBgdBDRj2/ro43HNS+dy80Kf/cKwVVZAivQ
-         Jk64VJFrHQVzfd91biDgsrEfVaI/qvdDDaKLEPQ08A5XdVKfsJk8lXdSpRfrKy9iwDd0
-         GZDg==
-X-Gm-Message-State: ALKqPwfMkMWJRZSgmLpmu9bt3khgxugBWH8vdiqe8c+94D0zcR7qjD5w
-        4Dj3DHE8UZNSHBfH0cpjnYs=
-X-Google-Smtp-Source: AB8JxZqdr/KhJwdW2Rj9AdG3H3Cbinwr2PP9hwiJbRpjgl+Q0IHnQDeXvMjXw88YD32KzmFE90HUEQ==
-X-Received: by 2002:a62:4387:: with SMTP id l7-v6mr21796925pfi.55.1526950810555;
-        Mon, 21 May 2018 18:00:10 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id e15-v6sm18864712pgt.50.2018.05.21.18.00.09
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=N6J3Rm/tKfC/TqOTQ3ywZ7DgVR3a0OKeEqhkOgDc9dE=;
+        b=hs8YRicLIl2l9+ptAWGNGfY48OfbjQ0RvWPrrqVRgrsPDWK85/UF2IWNvXz3koDcyz
+         ywf5+uXN8yke1eW5JFESSr/RVt6lSvSYNobi2lR1fQWkCtH4dfC9rVRMxTILe/CndCx8
+         2qd3udp+L2/JYDB5tmaR4W0AxdsXa2Z9T3HCzOl9pQjqibt9zP561dVM8WymCvXNw22J
+         YEAe07SE4PUHomuK6YpwmCtXTvWZaI39URh8id9ZHv1wgP2pVoiKululPcuPhYCF5pFi
+         61wXjP7NZIhpguOTnuGrsVt+97gBjyOHBV4GECQrdNRHeTV+IPHP83Dh9Zgs4i3T+Yb3
+         aHWA==
+X-Gm-Message-State: ALKqPwfuDJNpFXoxhOtFZYIJ4fNT8SM9o6/qynzrqPNMX0FXuLz/GBWW
+        pNMm3kwEYPCLARqw0bYTfcUkiVpZ
+X-Google-Smtp-Source: AB8JxZo/RSyI2SyRsI3uue8/rruVzzgQvImWc+qw2gjP3uxFenJpOIy7e1rVaZfiHNzxYxJ5xrsxCQ==
+X-Received: by 2002:a1c:17c9:: with SMTP id 192-v6mr569015wmx.95.1526953356636;
+        Mon, 21 May 2018 18:42:36 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 136-v6sm1577773wmo.12.2018.05.21.18.42.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 21 May 2018 18:00:09 -0700 (PDT)
-Date:   Mon, 21 May 2018 18:00:08 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>, daniel@haxx.se,
-        git <git@vger.kernel.org>,
-        Anton Golubev <anton.golubev@gmail.com>
-Subject: Re: [PATCH 1/2] remote-curl: accept all encoding supported by curl
-Message-ID: <20180522010008.GI10623@aiede.svl.corp.google.com>
-References: <20180521234004.142548-1-bmwill@google.com>
- <CAGZ79kZiyi_1nxvfLttD6HPyV66Wz3pLnuAe=L7FB9ak05dGAQ@mail.gmail.com>
+        Mon, 21 May 2018 18:42:35 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 00/18] Add `branch-diff`, a `tbdiff` lookalike
+References: <cover.1525361419.git.johannes.schindelin@gmx.de>
+        <xmqqvabh1ung.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1805211144340.77@tvgsbejvaqbjf.bet>
+Date:   Tue, 22 May 2018 10:42:35 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1805211144340.77@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 21 May 2018 11:51:48 +0200 (DST)")
+Message-ID: <xmqqmuwszcs4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZiyi_1nxvfLttD6HPyV66Wz3pLnuAe=L7FB9ak05dGAQ@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Stefan Beller wrote:
-> On Mon, May 21, 2018 at 4:40 PM, Brandon Williams <bmwill@google.com> wrote:
-
->> Configure curl to accept all encoding which curl supports instead of
->> only accepting gzip responses.
+>> In the picture, the three pre-context lines that are all indented by
+>> a HT are prefixed by a SP, and that is prefixed by a '+' sign of the
+>> outer diff.
 >
-> This partially reverts aa90b9697f9 (Enable info/refs gzip decompression
-> in HTTP client, 2012-09-19), as that specifically called out deflate not being
-> a good option. Is that worth mentioning in the commit message?
-
-More specifically, it mentions the wasted 9 extra bytes from including
-"deflate, " on the Accept-Encoding line.  I think the extra bandwidth
-usage will be okay. :)
-
-[...]
->> -       curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "gzip");
->> +       curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
+> Yep, that's exactly it.
 >
-> Looking at the code here, this succeeds if enough memory is available.
-> There is no check if the given parameter is part of
-> Curl_all_content_encodings();
-> https://github.com/curl/curl/blob/e66cca046cef20d00fba89260dfa6b4a3997233d/lib/setopt.c#L429
-> https://github.com/curl/curl/blob/c675c40295045d4988eeb6291c54eb48f138822f/lib/content_encoding.c#L686
+> The way tbdiff did it was to parse the diff and re-roll the coloring on
+> its own. I am not really keen on doing that in `branch --diff`, too.
+
+Are you saying that these are "whitespace errors" getting painted?
+It is somewhat odd because my whitespace errors are configured to be
+painted in "reverse blue".  Perhaps you are forcing the internal
+diff not to pay attention to the end-user configuration---which
+actually does make sense, as reusing of "git diff" to take "diff of
+diff" is a mere implementation detail.
+
+In any case, the "whitespace errors" in "diff of diff" are mostly
+distracting.
+
+> I was wondering from the get-go whether it would make sense to make
+> --dual-color the default.
 >
-> which may be worth checking first?
+> But now I wonder whether there is actually *any* use in `--color` without
+> `--dual-color`.
+>
+> What do you think? Should I make the dual color mode the *only* color
+> mode?
 
-By "this" are you referring to the preimage or the postimage?  Are you
-suggesting a change in git or in libcurl?
+Sorry but you are asking a good question to a wrong person.
 
-Curl_all_content_encodings() is an internal function in libcurl, so
-I'm assuming the latter.
+I normally do not seek much useful information in colored output, so
+my reaction would not be very useful.  Non dual-color mode irritates
+me due to the false whitespace errors, and dual-color mode irritates
+me because it looks sufficiently different from tbdiff output that I
+am used to see.
 
-Thanks,
-Jonathan
