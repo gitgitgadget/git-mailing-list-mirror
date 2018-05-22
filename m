@@ -2,124 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D0031F51C
-	for <e@80x24.org>; Tue, 22 May 2018 19:02:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFE521F51C
+	for <e@80x24.org>; Tue, 22 May 2018 19:15:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751412AbeEVTCB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 15:02:01 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:44041 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751346AbeEVTCA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 15:02:00 -0400
-Received: by mail-yb0-f193.google.com with SMTP id s8-v6so5485340ybp.11
-        for <git@vger.kernel.org>; Tue, 22 May 2018 12:02:00 -0700 (PDT)
+        id S1751522AbeEVTPa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 15:15:30 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:50210 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751319AbeEVTP3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 15:15:29 -0400
+Received: by mail-wm0-f66.google.com with SMTP id t11-v6so2669201wmt.0
+        for <git@vger.kernel.org>; Tue, 22 May 2018 12:15:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=EsMJNEDgddoGSyqXtjWDeqSjZX/DdF//Z3RWi1T6YH8=;
-        b=dMKyNdSQp0rXBscgEUrpSRo/fl/smtCWjF3mEUF8Rllbsw1Rz8a5SJL7p3kewuh0sX
-         ZzdV4nzyOoZs505DFLsGblF3UgQ7MHxVCu84wqowTipI2Hd4LAt6RGUWMT+wn8cJo+2V
-         sahl0qErKz9p/vo/1D2LEzJVLBUA5N90Z99lfKvJws0C5bBoAousyClrg3kkyYYOBig9
-         qtaTf3UIZYF7C7GoGMr31gjsaRgzojAnTZDrEqfFpRUXxRuRHxthQ4L2JhtXx2o7E8kj
-         TTl2kI0hGx1bAG4UAGuThF8cJ17JnlTHfBKuMTUEz/hyP3JL7ivALFg6OIoaDlRrNDil
-         sorQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=etseYvJTcq/dPHFSB9G7QjbxmoUVJImKZ4b6IWfuJ/c=;
+        b=AaMvwilw2mLhPUEE99h19ZwRw2tI1fxM590kItsWgJxZ61Mn35pjV9/ttQa0J6m/f9
+         uhPWRJvpvRr80+tvUpCciJTeiTmMY3s5HIPs1GVzkOJQZogxtMQHDHI40uNGeIvnTHK2
+         DrnBaN4vB1X8OUDXJlwsUyjW6M4H12czzd4NSzgac3LbdBRw3XwIJ34eparQp6HeCL2H
+         3CDAVNKf8Rl6QFexZjPBkhaV3PFgA6yntxZIH6HnDfKoW1FkaVoCa9FUHdUA4sF8xN1Q
+         XabwMQpW1nmFJRICocyGTFX9lG5of0Wmv8YKdzI+LtpzS9ImP+rrPoeQRWvyhxjQZ3RV
+         LB8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=EsMJNEDgddoGSyqXtjWDeqSjZX/DdF//Z3RWi1T6YH8=;
-        b=f0pbH7ckCIakXw40EJrqfBmGJDEyaWQsbg9Zx4UJJKJbpaSrOkkv6hV2Hj8TvzOXIf
-         6RYFotR7tdlxtFGKUv8XIX8Ilv4ab6VT6f6up9VpJRA/Caf98dgu1h3LHM97fOF5SOOZ
-         7tqmRs+Ts7jlY3+bscEW0W3hnnxx+Fq2kyatZJxDFlvKFG142Ey/uA9SMXRgCKlIEI9X
-         k6+qFcH8nE/bmtsbu8tU1ZXnRW9DJ5dDlsjQrAGp3qNwaRIhigDqIki9szjvSKnI5A/J
-         Pvr96XxsItXG+ZKlK2J6IsCBSNUy6iAf21OcUONNVqbUQoBQxBxVDl6Vc4MsMNqpwAaw
-         B9uA==
-X-Gm-Message-State: ALKqPwfTPIx1M0pToj38ebmMGqoAAVlaI5rsydmKOhcsRT1Ryp9z5Ma1
-        yjzcU+zujXi758Zh575oS8r9iPj654Ns97TYoR9NPQ==
-X-Google-Smtp-Source: AB8JxZqeKU9cJJOdQEx6yrno82e1AnQknuzjiOFUwVxmvibn5GPDJaongnYstMewaYnSX5TbdNzOl9wu2r0b3dKwbG8=
-X-Received: by 2002:a25:31c3:: with SMTP id x186-v6mr3559039ybx.352.1527015719938;
- Tue, 22 May 2018 12:01:59 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=etseYvJTcq/dPHFSB9G7QjbxmoUVJImKZ4b6IWfuJ/c=;
+        b=k16IBw2IsbT6OLc9+qPFNel60EpqNvNbUiQPN8hncozDzVa/Xz1+MoeE2w8u5viKd9
+         fcZSldEHqo3kFehVAxThE/XKgGExWDp0LZwpNC9q3jgs6hpSqnZQOsqHeyN5zcJ8FyKj
+         WQx1Ndcuzk7NRWzIllth7RpwDJNP+Xw1O+1dBGTDsqJXtby4tnINeFIm67TpvEX9CLMc
+         xm+7gNE2A9ad6mOORgtbsOuMPKQG25WWII6GVP7hVthFf45vihkD05mKzgTjniO7ilNi
+         MnNRdA30MZ10l50k47B9OZ3USH/epWYYbeVaSc71lFhsCy3dDnp9ZytTpIrStoOBhTYw
+         M1Jw==
+X-Gm-Message-State: ALKqPweSkEUZEP2bRKj/GLcmGM+lWmdyS4eTf1rFVUkHHSNIK2m/xdsr
+        H11tXZSYOl59gExukFfyAx0=
+X-Google-Smtp-Source: AB8JxZot8vHKjqP4HYQmiecaSdBKtgnkkel/c0Lx+k3+qHWDF1k/hBqRgPJCs+eYKS+nCcOz879V+w==
+X-Received: by 2002:a1c:c1c9:: with SMTP id r192-v6mr2030046wmf.120.1527016528698;
+        Tue, 22 May 2018 12:15:28 -0700 (PDT)
+Received: from [192.168.0.104] (AToulouse-658-1-38-64.w86-221.abo.wanadoo.fr. [86.221.117.64])
+        by smtp.gmail.com with ESMTPSA id v12-v6sm588642wmc.35.2018.05.22.12.15.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 May 2018 12:15:27 -0700 (PDT)
+Subject: Re: [GSoC][PATCH 1/4] rebase: duplicate git-rebase--interactive.sh to
+ git-rebase--preserve-merges.sh
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Wink Saville <wink@saville.com>
+References: <20180522133110.32723-1-alban.gruin@gmail.com>
+ <20180522133110.32723-2-alban.gruin@gmail.com>
+ <CAGZ79kaTPu=z_6oJk__meuyhUt-pU_LtOJ90rPTQcC=YvhnOnw@mail.gmail.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <a3d0d6f6-c6c8-ad70-4e1a-7804dbfa1b35@gmail.com>
+Date:   Tue, 22 May 2018 21:15:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Tue, 22 May 2018 12:01:59 -0700 (PDT)
-In-Reply-To: <20180522114440.0b1aa23a780efe6a68770d9b@google.com>
-References: <20180521204340.260572-1-jonathantanmy@google.com>
- <CAGZ79kb96Fxf1OBbnqmAtAm_EA5y9+0NKcNqhKjXhavWe6WzWA@mail.gmail.com> <20180522114440.0b1aa23a780efe6a68770d9b@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 22 May 2018 12:01:59 -0700
-Message-ID: <CAGZ79kbe0mAQW-2iGX2Q+WEWJ-MEoBcXtyBOb8a-7iWApp7pqw@mail.gmail.com>
-Subject: Re: [RFC PATCH] fetch-pack: space out sent "haves" in negotiation
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAGZ79kaTPu=z_6oJk__meuyhUt-pU_LtOJ90rPTQcC=YvhnOnw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
-> I wouldn't characterize the errors as "off by one errors".
+Hi Stefan,
 
-Yes, I put it in quotes but realized that would not convey it very well.
-
->  They are
-> more like...let me use a diagram:
->
-> A
-> |\
-> B D
-> | |
-> C E
->
-> Suppose we know that the server does not have A, has C, and may or may
-> not have E (we sent "have E" but didn't get a response yet). My method
-> restarts the walk at all the parents of A (that is, B and D), but D is
-> irrelevant to the situation (and should not be walked over - this is the
-> error).
-
-D is irrelevant to the A, C situation, but it is still a useful probing point?
-So I would not call it an error but an inefficiency?
-
-
-> In this patch, I wrote the new algorithm and deleted the old one.
-...
-> You're proposing that if I proceed with this, I split the patch into 2 -
-> one to move the negotiation algorithm, and one to update it? If yes,
-> normally I would agree, but the current negotiation algorithm is not
-> very sophisticated (and does not take up much code), so I think it's not
-> worth it.
-
-ok, in that case I'll just dive into the code.
-
->
->> > +struct fetch_negotiator {
->> > +       struct sent_commit **sent_commits;
->> > +       size_t sent_commit_nr, sent_commit_alloc;
->> > +       struct prio_queue candidates;
->> > +};
+Le 22/05/2018 à 20:26, Stefan Beller a écrit :
+> On Tue, May 22, 2018 at 6:31 AM, Alban Gruin <alban.gruin@gmail.com> wrote:
+>> This duplicates git-rebase--interactive.sh to
+>> git-rebase--preserve-merges.sh. This is done to split -p from -i. No
+>> modifications are made to this file here, but any code that is not used by -p
+>> will be stripped in the next commit.
 >>
->> Maybe we can just declare the struct fetch_negotiator here and not
->> define it, such that nobody outside the actual implementation tries
->> to access its internals?
->
-> That's possible - I wanted to allow allocation of this on the stack (to
-> save a malloc), but perhaps that's over-optimization.
+>> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> 
+> So how would I best review this?
+> 
+> I applied the patches locally[1], and ran git-ls-tree on this commit
+> hoping to find the same blob id for git-rebase--interactive.sh as for
+> git-rebase--preserve-merges.sh; however I did not.
+> 
+> So I diffed them and had the diff below[2], which looks like that has parts
+> of Johannes recent series?
+> 
 
-Ah good call. Please keep it that way then.
+Thanks for the heads-up.
+
+I started to work on that patch set on the master branch of git.git, and
+I forgot to update git-rebase--preserve-merges.sh after rebasing on
+Johannes’ branch.
+
+So I’ll reroll the patch as soon as possible.
+
+> Thanks,
+> Stefan
+> 
 
 
->> So even if we do not use the skip commit logic, this would be a benefit for any
->> http(-v0) and v2 users of the protocol?
->
-> It would conserve bandwidth, yes, but storing all the commits sent with
-> additional metadata for each would require more memory.
-
-I did not see the memory requirements here as a problem until now.
-Are you saying this memory might be too much to keep around?
-
-Stefan
