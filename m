@@ -2,85 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6872C1F51C
-	for <e@80x24.org>; Tue, 22 May 2018 18:29:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8485F1F51C
+	for <e@80x24.org>; Tue, 22 May 2018 18:38:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751434AbeEVS3M (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 14:29:12 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:39929 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751360AbeEVS3L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 14:29:11 -0400
-Received: by mail-yw0-f195.google.com with SMTP id w125-v6so1787ywa.6
-        for <git@vger.kernel.org>; Tue, 22 May 2018 11:29:11 -0700 (PDT)
+        id S1751439AbeEVSiL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 14:38:11 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:40629 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751319AbeEVSiK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 14:38:10 -0400
+Received: by mail-pl0-f68.google.com with SMTP id t12-v6so11407208plo.7
+        for <git@vger.kernel.org>; Tue, 22 May 2018 11:38:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=I7/Te0dGFFOPn/eyDOq9ssHfzTdMaM2sxhgHwHcQRJM=;
-        b=HT3+cFQsIHpnTGiYHd5OAr6MNc7xvDuP0QQ+lH9ZvjZd13lgf9ngA1m7t/7Ywl59jb
-         5wdbxvr0q4XNb1lGhPQJhgBrtJgVBStSrCqUFlv6hzpuoDX5pNmKaw8nvzfFwoOwQxUo
-         q2BckpzlHfoY1dU45W19TwVGWyqhAyN1mHCB2HCvPl3aFC1/sXLNQ/LBQAbCziRzHHpd
-         ymMT8vR6nOQbOdjvJpwkQuRsALRePoi+v7WgSyJTPgWpwZvGRcdErkgJQTIrjWbyceXJ
-         nSPFsZ3dGsCh6QKl4DRF872WsokFB1q0FeTLdc7QnN+lJHNqKZ6a4qyXaIF34AS7vI2V
-         3m1Q==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=1XA4/dgIhNzhNh6n50ECdAzxXknCorQ3Om6+72TIwc8=;
+        b=WMxRU7127HHAPDaezOrexu9Vpd78EJvy5p+y7ajvbZdgfQ0EFcfIUHKXPECQoZZDBp
+         p08gZTnjBExj5pA97DdiO2rA4rcPaXfOJuMIMlXnjBC1fAzKWSo+cA4gietBiJiyT97p
+         Ded5xZGhtUC8Nld/6fq/bw/jwMKdfS4LoPYhlTD8GOjqAFsNXRCZGKDEpVun2RD3OwhS
+         yZ1+twAHz+e55Wjb8EWpdGXDL8BqYlgs5SneSMO5IK98aua51CyhJPkTCqZnrCogFJl1
+         1zArQKha9+5PJU9xYDJgY7XsjWz/hlsjsA0QSDmqBvmPllEyIHtyHblgUAq2GGKZnoI/
+         f4ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=I7/Te0dGFFOPn/eyDOq9ssHfzTdMaM2sxhgHwHcQRJM=;
-        b=hgn1lL8c+HrzSBpjmnTCz2e7fTj1wYPKDPB/KfFt/CSNDe4SK018wxvOrfAfqq0/3c
-         WRITC+V7RmVTThmc97XwCwlTOTv3xNCsj4g2tjiCmOuGvLxbqeY2WEltdDamiHoq9r1t
-         CCWlV1hF7DNf43PvXW0YuV+0LQm7U/yktJboeS3kIr4k3xLlC6g0MHCLdUTZx67Osimg
-         Hs81sxKMsQlEtPKGUovlfoBAt+ChlraerfibOi+GpOMGKxQgEmjI7Rq9GfwQb2u7eTfk
-         7DZfjs+BnMvn761M5dwLp0oZPMYe+SWgRNn9b6LWcxK6jNvCTDNnD75gNSzxHMbBwcSY
-         0zKA==
-X-Gm-Message-State: ALKqPwfSNd3Z/jGs23qMdJImNPwuDtu6j4Atw1wJeCvGeuYPCJcCfFfF
-        fIt2SL2XDd0gYa/YPdnm94IlA504n3pjroPQfbDWUw==
-X-Google-Smtp-Source: AB8JxZpjgprCGGIBeKXBOErMUwlCtJmg3y6MBUGXOOBZQ00WL4xlQaYgC+RBnxV9p5k9jXvCRnkK9qVCrUL3qU9BXYI=
-X-Received: by 2002:a81:9447:: with SMTP id l68-v6mr108508ywg.345.1527013750464;
- Tue, 22 May 2018 11:29:10 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=1XA4/dgIhNzhNh6n50ECdAzxXknCorQ3Om6+72TIwc8=;
+        b=CIyQMDHs7WS3xK5XlScerUzRTQbcDAyXM3zo+bafi06cicOUTkZ4ki5rLB3NliS53d
+         I0GN6wcUjbY6bqJs8zt5LVv+f2Ob9Xh0whx9YAFbbhcp/dbJdm2wcrL1nVSQ5wSQYJ6g
+         vDKBQn7etJaNx+/T8yWGJ3WxYaZebxNEejzWoAZLznRNl0xwY2Z8a/brjGs4cHFNqZwx
+         V4YnKFpEnLs5U1LNAUmjssfcpoCPlio1thZUr0ULzbHLlfYGsLSSsawTjFo/cG9CzRBn
+         Jv3/zsDKknwaY4Acrzt1gWeGCvNjFiMZk/Wp5VlMnGvNKHsNifHImxf3leq0Jm6/yCvr
+         hrEQ==
+X-Gm-Message-State: ALKqPwekJW22ddOYSI08msUsSs8uhqFqRvBLg24J0UXO3F3El/1/THCp
+        gNXoMHijhDUe97X7gaFWur0=
+X-Google-Smtp-Source: AB8JxZrDDxJJDhQxsBGy9KUYMmd/2l5dczO2A+6qChKs/kFI6/OG4mQmHYdg8vRzAU4AwKw1zl2Hsw==
+X-Received: by 2002:a17:902:4b:: with SMTP id 69-v6mr26527660pla.178.1527014289891;
+        Tue, 22 May 2018 11:38:09 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id e15-v6sm21496677pgt.50.2018.05.22.11.38.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 22 May 2018 11:38:09 -0700 (PDT)
+Date:   Tue, 22 May 2018 11:38:07 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Antonio Ospite <ao2@ao2.it>,
+        Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Why do we have both x*() and *_or_die() for "do or die"?
+Message-ID: <20180522183807.GK10623@aiede.svl.corp.google.com>
+References: <CACsJy8A8WZ-Gqe2Y-whJmbADrt+gZjLZ7MTwCtdnK7JDnEdtog@mail.gmail.com>
+ <20180516222118.233868-1-sbeller@google.com>
+ <20180516222118.233868-3-sbeller@google.com>
+ <874liz8tsi.fsf@evledraar.gmail.com>
+ <CACsJy8BnsbOvz+iSz=9ug99Cs5Dm17Fgk65K2nXusBg0dML4xg@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a25:b189:0:0:0:0:0 with HTTP; Tue, 22 May 2018 11:29:09
- -0700 (PDT)
-In-Reply-To: <20180522133110.32723-1-alban.gruin@gmail.com>
-References: <20180522133110.32723-1-alban.gruin@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 22 May 2018 11:29:09 -0700
-Message-ID: <CAGZ79kbiCE1CDMYN+aV8s9Ev2joCZJqroN3wBkoRvZZLHqOFww@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 0/4] rebase: split rebase -p from rebase -i
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Wink Saville <wink@saville.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8BnsbOvz+iSz=9ug99Cs5Dm17Fgk65K2nXusBg0dML4xg@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 22, 2018 at 6:31 AM, Alban Gruin <alban.gruin@gmail.com> wrote:
-> This splits the `rebase --preserve-merges` functionnality from
-> git-rebase--interactive.sh. This is part of the effort to depreciate
-> preserve-merges. The new script, git-rebase--preserve-merges.sh, should be left
-> to bitrot. All the dead code left by the duplication of
-> git-rebase--interactive.sh is also removed.
+Duy Nguyen wrote:
+> On Tue, May 22, 2018 at 7:49 PM, Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
 
-... and I thought the original motivation was getting the rest of rebase
-into a shape that rewriting it is easier, the potential bit rot of
---preserve-merges
-is rather a side effect, but not the main goal.
+>> Just a side-question unrelated to this patch per-se, why do we have both
+>> x*() and *_or_die() functions in the codebase?
+>
+> I wondered about that myself shortly after suggesting
+> repo_read_index_or_die(). My only guess is xfoo is better version of
+> foo, which sometimes involves dying inside but that's not the only
+> possible improvement. Later I guess people go with _or_die() more
+> because it describes what the function does much better.
 
-I commented on patch 1, as I don't quite understand the changes,
-the other patches look good to me.
+In particular, there are functions like xwrite that don't die on error
+and write_or_die that do.
+
+I'd probably be in favor of a series using cocinelle to rename the
+functions that do die on error to _or_die.  The main case where I
+pause for a moment is xmalloc, since I'm worried about the verboseness
+of malloc_or_die, but I suspect I would get used to it.
 
 Thanks,
-Stefan
+Jonathan
