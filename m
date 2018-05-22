@@ -2,139 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E20CA1F51C
-	for <e@80x24.org>; Tue, 22 May 2018 00:43:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54D461F51C
+	for <e@80x24.org>; Tue, 22 May 2018 01:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752517AbeEVAnw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 May 2018 20:43:52 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:32768 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751127AbeEVAng (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 21 May 2018 20:43:36 -0400
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w4M0dOEn002290;
-        Mon, 21 May 2018 17:43:29 -0700
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2j2hsk2g0m-1;
-        Mon, 21 May 2018 17:43:29 -0700
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 04D732276FA8;
-        Mon, 21 May 2018 17:43:29 -0700 (PDT)
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id F043A2CDEEA;
-        Mon, 21 May 2018 17:43:28 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 3/5] merge-recursive: clarify the rename_dir/RENAME_DIR meaning
-Date:   Mon, 21 May 2018 17:43:25 -0700
-Message-Id: <20180522004327.13085-4-newren@gmail.com>
-X-Mailer: git-send-email 2.17.0.847.g20b8963732
-In-Reply-To: <20180522004327.13085-1-newren@gmail.com>
-References: <20180519020700.2241-1-newren@gmail.com>
- <20180522004327.13085-1-newren@gmail.com>
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-05-21_11:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1711220000 definitions=main-1805220005
+        id S1751813AbeEVBAM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 May 2018 21:00:12 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:44725 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751569AbeEVBAL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 May 2018 21:00:11 -0400
+Received: by mail-pg0-f67.google.com with SMTP id c22-v6so6412650pgn.11
+        for <git@vger.kernel.org>; Mon, 21 May 2018 18:00:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=uyj2J6XaYqFQxCS3uM3T9Njmx+RDZWuUXIXbjpRFeN8=;
+        b=EyMwRCpoTWmP/DmKWexgL5oaQ/hRJFlXiSinDK4bkpulRfGDa72m8R4hpMTpxveVxS
+         72f3vvxJEzg4AP5QKRyotxnuWtoD6rTjqtDjyL386gZOqsmw7qZa8UjO9iDCAvCWh4KM
+         Rx9rJoBVSpZJDdxayjaxkFP84HfySGzxbseKW1nTKpGtzk4I6sGyJ3uJ2D+HpaHKXwu5
+         EQfFLlt+v8W8Tl0coJY4Ttpy5fxNOvjjrnxt1pW5jOpDo81UonMSQQ0Zbed6Mhy27b6M
+         eGugjyp74rf24HxlQco1RI9d6mNSUYNS9Xi61gOh6BH5+zNnrw0dL3jp6PyFmB5M0fP+
+         KklQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=uyj2J6XaYqFQxCS3uM3T9Njmx+RDZWuUXIXbjpRFeN8=;
+        b=VoKCVU4g8rwPAEJ+884g/dzT6xwTQGsHxfeo89HTVJ78SkRxjj0SjiQigoZGIdhgSy
+         eZOLX6Oc7KJYpZpYBUC6thW5xr5vQQW0isUQ8Um1Ai93cnmmI/RiESLRK/6D1ln9GLgW
+         jkkSdDgtY9+xbsJ9RocKBojoPqHbrsyu9u9W8qG8whfpunwwXecXdGDMdkdmBgaVETUv
+         HgycDI+/vvVy/Lv4I8RjpwkLGX04Huw+3zBgdBDRj2/ro43HNS+dy80Kf/cKwVVZAivQ
+         Jk64VJFrHQVzfd91biDgsrEfVaI/qvdDDaKLEPQ08A5XdVKfsJk8lXdSpRfrKy9iwDd0
+         GZDg==
+X-Gm-Message-State: ALKqPwfMkMWJRZSgmLpmu9bt3khgxugBWH8vdiqe8c+94D0zcR7qjD5w
+        4Dj3DHE8UZNSHBfH0cpjnYs=
+X-Google-Smtp-Source: AB8JxZqdr/KhJwdW2Rj9AdG3H3Cbinwr2PP9hwiJbRpjgl+Q0IHnQDeXvMjXw88YD32KzmFE90HUEQ==
+X-Received: by 2002:a62:4387:: with SMTP id l7-v6mr21796925pfi.55.1526950810555;
+        Mon, 21 May 2018 18:00:10 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id e15-v6sm18864712pgt.50.2018.05.21.18.00.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 21 May 2018 18:00:09 -0700 (PDT)
+Date:   Mon, 21 May 2018 18:00:08 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>, daniel@haxx.se,
+        git <git@vger.kernel.org>,
+        Anton Golubev <anton.golubev@gmail.com>
+Subject: Re: [PATCH 1/2] remote-curl: accept all encoding supported by curl
+Message-ID: <20180522010008.GI10623@aiede.svl.corp.google.com>
+References: <20180521234004.142548-1-bmwill@google.com>
+ <CAGZ79kZiyi_1nxvfLttD6HPyV66Wz3pLnuAe=L7FB9ak05dGAQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZiyi_1nxvfLttD6HPyV66Wz3pLnuAe=L7FB9ak05dGAQ@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We had an enum of rename types which included RENAME_DIR; this name felt
-misleading since it was not about an entire directory but was a status for
-each individual file add that occurred within a renamed directory.
+Hi,
 
-Since this type is for signifying that the files in question were being
-renamed due to directory rename detection, rename this enum value to
-RENAME_VIA_DIR.
+Stefan Beller wrote:
+> On Mon, May 21, 2018 at 4:40 PM, Brandon Williams <bmwill@google.com> wrote:
 
-Make a similar change to the conflict_rename_dir() function, and add a
-comment to the top of that function explaining its purpose (it may not be
-quite as obvious as for the other conflict_rename_*() functions).
+>> Configure curl to accept all encoding which curl supports instead of
+>> only accepting gzip responses.
+>
+> This partially reverts aa90b9697f9 (Enable info/refs gzip decompression
+> in HTTP client, 2012-09-19), as that specifically called out deflate not being
+> a good option. Is that worth mentioning in the commit message?
 
-Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-recursive.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+More specifically, it mentions the wasted 9 extra bytes from including
+"deflate, " on the Accept-Encoding line.  I think the extra bandwidth
+usage will be okay. :)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 01306c87eb..e2b0db0645 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -180,7 +180,7 @@ static int oid_eq(const struct object_id *a, const struct object_id *b)
- 
- enum rename_type {
- 	RENAME_NORMAL = 0,
--	RENAME_DIR,
-+	RENAME_VIA_DIR,
- 	RENAME_DELETE,
- 	RENAME_ONE_FILE_TO_ONE,
- 	RENAME_ONE_FILE_TO_TWO,
-@@ -1224,11 +1224,17 @@ static int merge_file_one(struct merge_options *o,
- 	return merge_file_1(o, &one, &a, &b, path, branch1, branch2, mfi);
- }
- 
--static int conflict_rename_dir(struct merge_options *o,
--			       struct diff_filepair *pair,
--			       const char *rename_branch,
--			       const char *other_branch)
-+static int conflict_rename_via_dir(struct merge_options *o,
-+				   struct diff_filepair *pair,
-+				   const char *rename_branch,
-+				   const char *other_branch)
- {
-+	/*
-+	 * Handle file adds that need to be renamed due to directory rename
-+	 * detection.  This differs from handle_rename_normal, because
-+	 * there is no content merge to do; just move the file into the
-+	 * desired final location.
-+	 */
- 	const struct diff_filespec *dest = pair->two;
- 
- 	if (!o->call_depth && would_lose_untracked(dest->path)) {
-@@ -2498,7 +2504,7 @@ static int process_renames(struct merge_options *o,
- 
- 			if (oid_eq(&src_other.oid, &null_oid) &&
- 			    ren1->add_turned_into_rename) {
--				setup_rename_conflict_info(RENAME_DIR,
-+				setup_rename_conflict_info(RENAME_VIA_DIR,
- 							   ren1->pair,
- 							   NULL,
- 							   branch1,
-@@ -2944,12 +2950,12 @@ static int process_entry(struct merge_options *o,
- 							     b_oid, b_mode,
- 							     conflict_info);
- 			break;
--		case RENAME_DIR:
-+		case RENAME_VIA_DIR:
- 			clean_merge = 1;
--			if (conflict_rename_dir(o,
--						conflict_info->pair1,
--						conflict_info->branch1,
--						conflict_info->branch2))
-+			if (conflict_rename_via_dir(o,
-+						    conflict_info->pair1,
-+						    conflict_info->branch1,
-+						    conflict_info->branch2))
- 				clean_merge = -1;
- 			break;
- 		case RENAME_DELETE:
--- 
-2.17.0.847.g20b8963732
+[...]
+>> -       curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "gzip");
+>> +       curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
+>
+> Looking at the code here, this succeeds if enough memory is available.
+> There is no check if the given parameter is part of
+> Curl_all_content_encodings();
+> https://github.com/curl/curl/blob/e66cca046cef20d00fba89260dfa6b4a3997233d/lib/setopt.c#L429
+> https://github.com/curl/curl/blob/c675c40295045d4988eeb6291c54eb48f138822f/lib/content_encoding.c#L686
+>
+> which may be worth checking first?
 
+By "this" are you referring to the preimage or the postimage?  Are you
+suggesting a change in git or in libcurl?
+
+Curl_all_content_encodings() is an internal function in libcurl, so
+I'm assuming the latter.
+
+Thanks,
+Jonathan
