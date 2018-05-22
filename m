@@ -2,95 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 120631F42D
-	for <e@80x24.org>; Tue, 22 May 2018 11:11:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 318F81F42D
+	for <e@80x24.org>; Tue, 22 May 2018 11:39:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751336AbeEVLLV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 07:11:21 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:35126 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751272AbeEVLLV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 07:11:21 -0400
-Received: by mail-pl0-f68.google.com with SMTP id i5-v6so10709771plt.2
-        for <git@vger.kernel.org>; Tue, 22 May 2018 04:11:21 -0700 (PDT)
+        id S1752599AbeEVLjc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 07:39:32 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:51498 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751390AbeEVLip (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 07:38:45 -0400
+Received: by mail-wm0-f65.google.com with SMTP id j4-v6so31072857wme.1
+        for <git@vger.kernel.org>; Tue, 22 May 2018 04:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=cE6anr+hf7f9oNlqCBwMMFXQo6cJWnbZFFRpxem3hKU=;
-        b=nLtbQql7RWxKBmPmq+oMC5dvyHeuWNf3iPCpN2HyDMDXF03/dfZ5Xdly0HeUHE6+vS
-         X0mIj6LJ4Jvwg4mLAN6dXePwJzAs044fWcx0gzPSXIFBQwMKEwsQfRFYLeomU4ylKLg0
-         9k1bMLXB14WmDKiPO21S0Fcnpa7hDtXwQCiN9ESZrvvBiMrVkdbG3Pd714Gbdrr7d20D
-         Ra+vzJ0ezzWibMV1AZI2+882OesIrAAA6mISzHXlZosyI6d6bplzn+81aQUKozgAnsFu
-         i2fN9M1TFdX0+c+a7CBVt+xrCSSB+uOsO+eXLeCwcQddSlIBjA9zBkc0P6efgRRBWSta
-         cMxA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=MVB3m04vYdQa7PY4428kDM85T2zrB5KEg2jQWtRhl8E=;
+        b=tOAA636qvaLEZAXxi6l/L+isSw2rqKhhy3Dp+6aU+DBBM+vFNE5TCcRXXZUwb1DB7r
+         lP3RsIArx5siYas+7/pCVyWsprmOnulS4GoMVZCeqQmhVTm34CmreLyEZrzjVZ74+IsG
+         pGjo2HX0mO7s9rJFjCz0UNhXxjOsCa9e5JMweCBCSht+8S+/hX9uJQ4v/ild2e/t/O3A
+         ub74L5BHgZpPgWMzXZBjoij0Iwcb8alaOt1F4fjQH9RJi4LRJ0o7CmksXenFKaejBUF6
+         U29stsqAfJQOiEFYBmwDMtQjq3fdz5wcceELP8prh244wDh5n13KtrZAzMkby92eLo5g
+         bF6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=cE6anr+hf7f9oNlqCBwMMFXQo6cJWnbZFFRpxem3hKU=;
-        b=po+Vrwr9orFBrDUUQsaNsegwWC/l+od+sP30ZLmzekj2tmLkyptLlh3oJ2plw3DQFh
-         24prjMS6pTaKSRiJ6DvXhEo2s50z1DRd43vtOTDUobXsGzdarAHtPWyXKnVPtV4qgGa5
-         JW4PGCsrn4G8WD5ogGYP/msqIMF53bfcW+0nd0gf6nZ7ydgLMzkP4Btxhiw2E4wzqZlU
-         wDTG4htgmUgYSTUu8+hHBuAKTDIZ+oJ2iUJaaCFtc7UInDMhhRZ1iVKe4iefLFRbWCpY
-         0zHoOwPmc5e5aoYQ3oeWLYLVe7JErQlUpayqntS2LLD2U1Drtt1FO8DfNVPD380SAHCi
-         60ag==
-X-Gm-Message-State: ALKqPwdl1fKO6qb1dknR7ttauhe7e9LMscLgo3L7Od9/O3CtyClcSiRK
-        FPcp9EU3fEzmw2Mkl+xUS1LPTT67ME1Ihs8fAe0=
-X-Google-Smtp-Source: AB8JxZrqKgNhKpS5u4cWcdbxXQA++WD+j+cw6/ckHHe8MxlhlYQyMa12ezv9ksOXYmTJRa5/zy7GfK8JRMUHobmGOWI=
-X-Received: by 2002:a17:902:284b:: with SMTP id e69-v6mr23590484plb.240.1526987480761;
- Tue, 22 May 2018 04:11:20 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a17:90a:bb8b:0:0:0:0 with HTTP; Tue, 22 May 2018 04:11:20
- -0700 (PDT)
-In-Reply-To: <xmqq1se4z9fu.fsf@gitster-ct.c.googlers.com>
-References: <xmqqr2m53leq.fsf@gitster-ct.c.googlers.com> <cover.1526913784.git.martin.agren@gmail.com>
- <xmqqa7ssz9u1.fsf@gitster-ct.c.googlers.com> <xmqq1se4z9fu.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 22 May 2018 13:11:20 +0200
-Message-ID: <CAN0heSr0uZvaRqjNmD5=8RLpcLiWHjG2OoZovYK7TkGkCKu=7g@mail.gmail.com>
-Subject: Re: [PATCH v5 0/4] unpack_trees_options: free messages when done
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=MVB3m04vYdQa7PY4428kDM85T2zrB5KEg2jQWtRhl8E=;
+        b=uh+mwyKdphE+NF3ytKbO8XpguXTkFpYo3JKCuAeJE/VpjjPutwaNNLfUgNq3BdFjRk
+         tkjNoAR0luJ2fLfekPwJVV7QAseVOCD7LMtfktE9jY5VkHIw/mUM1jyerj6EDlNgZY6P
+         S87mYDVHpKitGCMycg697kiBUC2gI04ZUbJG3kfHWYoiRF7Uwg+jD69C5/GU7i0qwb1U
+         wZBI89aKHe5lgSNAXp9FBJHd3ZVMKcYkgDcUSYCeIO3QhTA/gSb3ztp0Gy7Gzu9FapmV
+         4+6UnW5eFVtKmtRpJtvb2qxr46x9pPCuOZxqRK7ve4JiX4HzIc9sfieqibcIDShV73QP
+         3qgg==
+X-Gm-Message-State: ALKqPwfERJIgulBO/jBd00fyJAr9QrRkgta8qy+L1Lc3lqdGUUPwiWdY
+        bOA4Nu4V87Lxh3JaQ2lwWUk=
+X-Google-Smtp-Source: AB8JxZpm6tepZ/JQZ1pgvGkCXFPrPd9fCuvw3994d7C4YAyDNlACtnmicBhv/GucBdRwDpkJnRkEtQ==
+X-Received: by 2002:a1c:8045:: with SMTP id b66-v6mr866201wmd.108.1526989123809;
+        Tue, 22 May 2018 04:38:43 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id z66-v6sm16494519wme.13.2018.05.22.04.38.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 22 May 2018 04:38:42 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jacob Keller <jacob.keller@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 02/18] Add a new builtin: branch-diff
+References: <cover.1525448066.git.johannes.schindelin@gmx.de>
+        <a1ea0320b64527ee6ce9856dcf359513d13052b7.1525448066.git.johannes.schindelin@gmx.de>
+        <20180505182631.GC17700@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1805052355190.77@tvgsbejvaqbjf.bet>
+        <39282590-576f-1ac1-6a16-80ad317ec7ed@gmail.com>
+        <nycvar.QRO.7.76.6.1805061408150.77@tvgsbejvaqbjf.bet>
+        <e0db15c5-e897-5b03-20ff-d83f38496e61@gmail.com>
+        <nycvar.QRO.7.76.6.1805062124470.77@tvgsbejvaqbjf.bet>
+        <3b4591cd-6dde-31ee-f0b1-42b5353086e5@gmail.com>
+        <CAGZ79kZbRCH2OiTW1Ge31R9JN+vWD6tcjNWVGSzkSBcYZvwDjw@mail.gmail.com>
+        <20180508034429.GA7242@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180508034429.GA7242@sigill.intra.peff.net>
+Date:   Tue, 22 May 2018 13:38:41 +0200
+Message-ID: <87in7f9aym.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22 May 2018 at 04:54, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
 
->> Hmph, this unfortunately depends on 'next', which means we cannot
->> merge it down to 'maint' later to fix these leaks.  I guess it is
->> not a huge deal, though.  We've lived with these message leaks for
->> quite some time now and earth still kept rotating ;-)
+On Tue, May 08 2018, Jeff King wrote:
+
+> On Mon, May 07, 2018 at 03:24:59PM -0700, Stefan Beller wrote:
 >
-> Oh, what was I thinking.  This, just like its previous rounds, is on
-> top of bp/merge-rename-config^0 and it is expected *not* to be
-> mergeable to 'maint' (or 'master', for that matter, at least not
-> yet).
+>> Hence I propose "git range-diff", similar to topic-diff, that
+>> was proposed earlier.
+>>
+>> * it "diffs ranges" of commits.
+>> * it can also deal with out-of-git things like patch series,
+>>   but that is a mere by product and may not be desired.
+>>   Just like git-diff can also compare two files outside a git
+>>   repo, that would not be a good use case.
+>>   Keep the name Git-centric!
+>> * it autocompletes well.
+>
+> FWIW, I like this by far of all of the suggested names.
 
-Right. The reason it depends on that topic is the user in
-merge-recursive.c. Other than patch 2 and a small part of patch 4, this
-should be mergeable to 'master' (as I recall) and probably also to
-'maint'. I suppose this series could have been done as three patches to
-fix all users except one, then one or two patches to fix
-merge-recursive.c.
-
-That would have allowed merging the first part of the series to 'maint'.
-(Maybe not to fix the leaking as such, but to keep 'maint' more up to
-date with 'master' for easier merging of other topics?) If you'd prefer
-an ordering like that (now and/or in the future), just let me know.
-
-Martin
+I agree, "range-diff" is the best one mentioned so far.
