@@ -7,59 +7,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FB731F51C
-	for <e@80x24.org>; Wed, 23 May 2018 05:28:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05DDF1F51C
+	for <e@80x24.org>; Wed, 23 May 2018 05:33:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754104AbeEWF2C (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 May 2018 01:28:02 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:33512 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753974AbeEWF16 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 May 2018 01:27:58 -0400
-Received: by mail-it0-f67.google.com with SMTP id e185-v6so13372366ita.0
-        for <git@vger.kernel.org>; Tue, 22 May 2018 22:27:58 -0700 (PDT)
+        id S1753647AbeEWFd1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 May 2018 01:33:27 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:34600 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750744AbeEWFd1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 May 2018 01:33:27 -0400
+Received: by mail-io0-f195.google.com with SMTP id p124-v6so21337136iod.1
+        for <git@vger.kernel.org>; Tue, 22 May 2018 22:33:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+0HuVuWSdq7vxIt/WGvUHPMvIb3OgIbJlQy1BtgAfaU=;
-        b=usYLXVm9HUtanz5qnFhMiM3olIStmDpGbGEW1mV7j8BotjOOX090qyS8/62GCTEPU3
-         JGzy7D8uU9vhRWFK8fiwNa8FpZk8M8D2VHoD6sq62IkYHKlT07TLlMbR3wJLc9Rvt9QY
-         uCUyhuhGAomjwCwNN3zP1aDgmA72O/ILQxBTvT6tQBvBaXBYQf3dHUJ79sAb1ZD2ae6r
-         8xGRscLwbsaNZyeCGK8IarHdemxGn62ZlWKDpXdQdGpMX8gD7cYdNYG+ujc6FQkyumNN
-         bxyjiyTn8Sn6B6bwN5uCOg8lHh2jhXKcNlE/RvfWm61nwcOgyOlOqKyx/k2M27pf/zGp
-         d+2Q==
+         :cc;
+        bh=F0RxkuPq6e9Po1j/wJDqvmmaTB6ODdlVVLKKtrkzqCI=;
+        b=W5gwdrrgd+JBEmgvzSp8xasop+/U79bGrR3CEDhqGO2Xo7rhM7ONFOuDJEM83VYtrP
+         Rt+SjsLkQoNeAOEYIfglcEhGGEvOsVQh0BCHjwi7g530bWVOtx17N3AQodOLI40txaGd
+         iZOQXq7wd9nocvera9ifBLNG8EX/BN+xKJuMapbiOvKM9KvH1UqPUEZq9uVuuQW1FDPh
+         XHbUcRtnPdacNWeGbV+DNZ47NUh2HlHrGm1qG/WNcU7Jh5lHuqOvUG7XUTM026vzxl+4
+         JvZlea+JRoKrvv+gOvU1vwuiZLfEmFtyp7ZZMBc7TN/A4cbKt0TgGMUbzLQA/82DwRRD
+         BLcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+0HuVuWSdq7vxIt/WGvUHPMvIb3OgIbJlQy1BtgAfaU=;
-        b=Oo3oT8gbuMx3f/Bim8nCI8fsT6mXsJjYThqF3a9MpGeT/GJbBPuHF70l88cn26NKxG
-         bfJ7TDuj/ibLm61lqu/4smnsq29E5D8b/cnMwLPjSf90hpcsXOcHsgIeTkMR59Cxg0bh
-         adZIS5nYPzI3Aj/P+tgIMj+U96zKFHo5WNWBsJOKzs3P1QO9NJTUBhCLJL9XaKP7vIgV
-         ur0eoAaZK5BEbBcISLP8vVyYnAk3VAE7SKQavZ4KWLnkjZZJLSa6vrOOHYhDDsef/0Qx
-         dJUZLZ3Cbpf9w480o3c0GSAsrbhhnLd+a997oVylUfGyBN+70mvrg8Vrpx+Eslp3VNFW
-         U3Aw==
-X-Gm-Message-State: ALKqPwffMHox+DjKaXgSloft04zHagxHqQY6/QZyWg1H62eaQRih9f1Z
-        bKgyIgwxjn/0112wEPVq5uRXE4vqE9cHR3lpj9g=
-X-Google-Smtp-Source: AB8JxZowrsUmI4uG6ZANU5v0VcVi3Dnk3h80of3J4LmRsB+P6AwsWhY0nXXSYfq9242dyEy6qAkwScWIQvBkqcn2OJw=
-X-Received: by 2002:a24:3d8c:: with SMTP id n134-v6mr1007315itn.40.1527053277398;
- Tue, 22 May 2018 22:27:57 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=F0RxkuPq6e9Po1j/wJDqvmmaTB6ODdlVVLKKtrkzqCI=;
+        b=cHMch8W4vXtawn42RCIUXE+2cA+6cpKfY2A+QJ60eC3xNMPkvvEw/uBjyjmXHcTNvc
+         3fHTVfbwEetGHNtnSHNR7VvOW2zEnyvtgzPgdnHUt13iqp2LyrbzCDwRyor5DeevvDkD
+         3mHMJNrePcyyOlorA6tNzB/78WGXdgpRKo4PimSKJzqXM5wDY9ZDAfiwN0+PUxgYkJfn
+         yZm8SVLZbQIBijphe3oZe3ZLaguj6Pewz05OqaY+YmELbPAvJ1VTkHviyA5kJnn0tQoy
+         5B/rWCHID3+GKh86/M6eGFjRpLsxPhyRv8CwR5SJUQTnMaNmjGPo3u0vo9aM98roX0wn
+         EYcg==
+X-Gm-Message-State: ALKqPwcjOy3PEyArw857aFHiHtFc3qZH79CLDXoehgsis+nkf9H22s9S
+        ZAHBPj1Q1jroRQSdunVNmaLRCJEXKgGQfPANPow=
+X-Google-Smtp-Source: ADUXVKIB/763RioctLS52lVept6kHbijaIbdibpWG9+AGoR5kv3vtq4OMuIizkR/9snJy3bAos0MauH3pGikOjPtbYk=
+X-Received: by 2002:a6b:5009:: with SMTP id e9-v6mr1157584iob.5.1527053606350;
+ Tue, 22 May 2018 22:33:26 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4f:22db:0:0:0:0:0 with HTTP; Tue, 22 May 2018 22:27:56
+Received: by 2002:a4f:22db:0:0:0:0:0 with HTTP; Tue, 22 May 2018 22:33:25
  -0700 (PDT)
-In-Reply-To: <20180521114940.11288-1-szeder.dev@gmail.com>
-References: <20180521055143.14701-1-chriscool@tuxfamily.org>
- <nycvar.QRO.7.76.6.1805211126140.77@tvgsbejvaqbjf.bet> <20180521114940.11288-1-szeder.dev@gmail.com>
+In-Reply-To: <CAGZ79kbdVm-U16rMjtgnGL+TOVRqkZz+J5W_eqo=dh42xRgKBQ@mail.gmail.com>
+References: <20180521055143.14701-1-chriscool@tuxfamily.org> <CAGZ79kbdVm-U16rMjtgnGL+TOVRqkZz+J5W_eqo=dh42xRgKBQ@mail.gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 23 May 2018 07:27:56 +0200
-Message-ID: <CAP8UFD1-dWLfK4EQMKrabneG+GcscBVZANpfZaOymQ4sWKzRnA@mail.gmail.com>
+Date:   Wed, 23 May 2018 07:33:25 +0200
+Message-ID: <CAP8UFD1c2oWd6SN+bWRmARnJCSmf+UuQpDWURxKYEwJyQ8oprA@mail.gmail.com>
 Subject: Re: [PATCH] t: make many tests depend less on the refs being files
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Duy Nguyen <pclouds@gmail.com>,
@@ -70,47 +67,44 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Christian Couder <chriscool@tuxfamily.org>,
         David Turner <dturner@twopensource.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 21, 2018 at 1:49 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
->> > diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
->> > index 8f5c811dd7..c3b89ae783 100755
->> > --- a/t/t9903-bash-prompt.sh
->> > +++ b/t/t9903-bash-prompt.sh
->> > @@ -148,7 +148,7 @@ test_expect_success 'prompt - inside .git director=
-y' '
->> >  test_expect_success 'prompt - deep inside .git directory' '
->> >     printf " (GIT_DIR!)" >expected &&
->> >     (
->> > -           cd .git/refs/heads &&
->> > +           cd .git/objects &&
->> >             __git_ps1 >"$actual"
->> >     ) &&
->> >     test_cmp expected "$actual"
+On Mon, May 21, 2018 at 9:34 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Sun, May 20, 2018 at 10:51 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> From: David Turner <dturner@twopensource.com>
 >>
->> This one looks wrong.
+>> So that they work under alternate ref storage backends.
 >
-> It's right, though.
+> Sometimes I have a disconnect between the subject and the commit
+> message, (e.g. in an email reader the subject is not displayed accurately on
+> top of the message).
 >
->> Why not `cd .git` instead?
+> So I would prefer if the first part of the body message is an actual
+> sentence, and
+> not a continuum from the subject.
 >
-> That case is covered in the previous test.
+> Maybe elaborate a bit more:
 >
-> Once upon a time it mattered how deep we were in the .git directory
-> when running __git_ps1(), because it executed different branches of a
-> long-ish if-elif chain.  For the prompt it doesn't matter anymore,
-> because those ifs were eliminated, but for the completion script it
-> still does, which brings us to:
+>   The current tests are very focused on the file system representation of
+>   the loose and packed refs code.  As there are plans to implement other
+>   ref storage systems, migrate most tests to a form that test the intent of the
+>   refs storage system instead of it internals. The internals of the loose and
+>   packed refs are tested in <TODO>, whereas the tests in this patch focus
+>   on testing other aspects.
 
-Thanks for the explanations!
+Thanks for this suggestion!
 
-> Christian!  There is a similar test, '__git_find_repo_path - parent is
-> a .git directory' in 't9902-completion.sh', which, too, performs a 'cd
-> .git/refs/heads'.
+>> This will be really needed when such alternate ref storage backends are
+>> developed. But this could already help by making clear to readers that
+>> some tests do not depend on which ref backend is used.
+>
+> Ah, this is what I picked up already in the suggested edit above. :/
 
-Ok, I will take care of both of these tests in another patch.
+I actually mixed parts of your suggested message with parts of the
+existing message in the V2 I just sent:
+
+https://public-inbox.org/git/20180523052517.4443-1-chriscool@tuxfamily.org/
