@@ -6,117 +6,91 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74BE71F51C
-	for <e@80x24.org>; Wed, 23 May 2018 01:48:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85C00200B9
+	for <e@80x24.org>; Wed, 23 May 2018 01:55:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753840AbeEWBsU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 21:48:20 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:52793 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753618AbeEWBsT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 21:48:19 -0400
-Received: by mail-wm0-f68.google.com with SMTP id w194-v6so4523774wmf.2
-        for <git@vger.kernel.org>; Tue, 22 May 2018 18:48:19 -0700 (PDT)
+        id S1753618AbeEWBzh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 21:55:37 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33075 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753545AbeEWBzg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 21:55:36 -0400
+Received: by mail-wr0-f196.google.com with SMTP id a15-v6so16171543wrm.0
+        for <git@vger.kernel.org>; Tue, 22 May 2018 18:55:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=6UF4oLfTV6eP2Jidinqu+DtvxVoq4nGyfJrY/zwerfg=;
-        b=PzIDfjtjyZXpvNLA4wMJuusG/tmYs3EN9JxAliWFf/xh3AiO6Oq1KgRkaEkGhEKCTW
-         iFEKZmgU9Dw9PYGGXWtPIxtVu6bhMMsttymCCWd8QcFhC03P2UC3kEGJYXBk0zCMTt7F
-         7Myn35B6QTwBqy8f1ajD17ArkK0P9uzW9gBYsPcq/mHHpsj73FyqMhyttQVbDLmqvhR+
-         e0J8Y224x1h0k+mXnBWzpge//fIDA00MIG9kxM1VtanzCq1J6sT7iSXttOupmcw3ojAV
-         OActgGVk+3V5uQ4fej0Pcuq5NQyMUXduzcJY+Z5bGg2FjXe+Kt01aysO0uBjhFaG1X2z
-         N1Rg==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=Ege6c3/aOF32tAO2/kPqisXSXxTgJwGl2XGehVQAeNY=;
+        b=IybJ9AAi2uepfo4z0TjQiVRgWRwUavYCPDkL22CRvTt8tKz79cfodUx//eSbKiTUaM
+         IXN+zuEXtPBYZHni8KJAI2PO3exB0/4oaS/dznK41E/Bw8JGlNgoG/VE7xyojR7OCHOT
+         fvN5awWKAcYmubbkK48dtIM75NPQ61IgZD12PxYig9/PIwNwNPasTm8u3JZXOh10eq8R
+         RzyF0KYV2K+btoQw5mCrvkiTwQ75tDKwF0vaMoBUkCuPuRFUiGr7pW0IZd+Ax36dTF6b
+         KLipkjUHfpCp4ofDLzsSlkgRttW/vs86fBDA9YmkE7nzWcYRegiuD1h1PdnPutvhqpV7
+         I35g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=6UF4oLfTV6eP2Jidinqu+DtvxVoq4nGyfJrY/zwerfg=;
-        b=HVj140vE/Zu5l3dh8Db8A8LqVG7HaGewZsOEZVY8+tgbz8KsMo8jrN97oBo3HA3fDA
-         pdGVJ0h5GmQOTfMO0fCL2dYsVC+0wRZgi81RfqqeDjBFXUoh8TIHNM9F/LchSK+zcBXC
-         q4ikZ3QEPe7voY0J89y9/luMkdCkwP/E7E2koy0TY2SOJ1gYAEwTMRSkuHBTeJBKg7n0
-         rDgzuwK/vL3P4M3DVf278gOhfQmob2OAqoCEQAbpB0Vipq+6urdMILz3+z3lEoM9BRyw
-         60AsgoSouuj1On/QWMIa/lml1lEKZV+6sINMLIdhonw4KHCLR8cxyaPa/E9gHd5dn7JN
-         rK4g==
-X-Gm-Message-State: ALKqPwfWRwWFib71h4q3b2SYKC6fFbX0fOBoWFb48TpsOT0GKZVh4dUC
-        pZyU+2vW1sVyU6sP0BHKhjc=
-X-Google-Smtp-Source: AB8JxZofhngtJkoJOALQf2dkh89/UcYFzIM3O+nDuiziPstUtAKIsEyiDYxdBTWPeBkEUwCNVM/0FQ==
-X-Received: by 2002:a1c:c355:: with SMTP id t82-v6mr2676497wmf.129.1527040098130;
-        Tue, 22 May 2018 18:48:18 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 72-v6sm868413wrb.22.2018.05.22.18.48.16
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=Ege6c3/aOF32tAO2/kPqisXSXxTgJwGl2XGehVQAeNY=;
+        b=PfngcGABPlVdnkWaZOdztFE8TQZC3KfV+YiR2m3Y9VblMbXoSPYKaGMZF7P3xG2XY8
+         dWKZZJchk5tpnqx6IAddmPHW3h2TJeeHaxjrVssvYXFQt62L/8sFkbj8xf8X0CUIDL1A
+         p0ww33vI0z1UJyQxIxdPImlJT3RtWavG3TDbKYbJVGz9oK0MrUYAJ8e2odZjG3ZimLu6
+         djERu3OVTxCqgRIk5c1FoRH1mQXNCnDLMz/6ni2DO37Gwf7UZb6jnSrMmdzev2FD26FE
+         E1ahktRFyQYdW3zlJN+3P6QWhzATHsfjuZ6QO0AHi+XJcfAitUpFvY0gPpaeokz/+W1a
+         pHww==
+X-Gm-Message-State: ALKqPwen1KTVRIBQBx6ZpUrzxU7TAME8aSplfXuisi9izt1hCUbC8SEh
+        mDF6c4BE1ZLGZCpig5zwpFg=
+X-Google-Smtp-Source: AB8JxZrQZxbFiCfDjeXeGic2MPeXz7bwafqu5TOUE7ukzH8zVV3cOmoeLUYreryIU/8iIddi0M+rkQ==
+X-Received: by 2002:adf:e70d:: with SMTP id c13-v6mr656637wrm.203.1527040535147;
+        Tue, 22 May 2018 18:55:35 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m64-v6sm1679175wmb.12.2018.05.22.18.55.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 May 2018 18:48:16 -0700 (PDT)
+        Tue, 22 May 2018 18:55:34 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] Doc: Mention core.excludesFile in "man git-clean"
-References: <alpine.LFD.2.21.1805220345150.749@localhost.localdomain>
-Date:   Wed, 23 May 2018 10:48:15 +0900
-In-Reply-To: <alpine.LFD.2.21.1805220345150.749@localhost.localdomain> (Robert
-        P. J. Day's message of "Tue, 22 May 2018 03:48:13 -0400 (EDT)")
-Message-ID: <xmqqsh6jw3a8.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: should config options be treated as case-sensitive?
+References: <alpine.LFD.2.21.1805220353370.989@localhost.localdomain>
+        <87h8mz99d2.fsf@evledraar.gmail.com>
+Date:   Wed, 23 May 2018 10:55:33 +0900
+In-Reply-To: <87h8mz99d2.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 22 May 2018 14:13:13 +0200")
+Message-ID: <xmqqo9h7w2y2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> Add a reference to the configuration setting "core.excludesFile" to
-> the man page for git-clean.
->
-> Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
->
-> ---
+> The issues you note about the docs using foo.barbaz instead of
+> foo.barBaz should be fixed, but as noted in the "Syntax" section of
+> "git-config" we already document that the config keys are all
+> case-insensitive. We just like talking about them as foo.barBaz because
+> it makes for easier reading.
 
-I understand that you are trying to reduce the source of the
-confusion you felt, which comes from mentioning only per-directory
-.gitignore and per-repository info/exclude, but I am not sure if the
-proposed solution is a good one that learned from our past mistakes.
+The first and the last level of configuration variable names are
+case insensitive.
 
-Wouldn't it make more sense to _avoid_ appearing as if we are giving
-a complete list and refer those who want a single authoritative list
-to the source?  For example
+I said "first and last", as there are variables with 2-level and
+3-level names.  "foo.barBaz" is two-level and it is the same
+variable as "Foo.barbaz".  "remote.origin.url" is three-level, and
+it is the same variable as "Remote.origin.URL", but it is not the
+same variable as "remote.ORIGIN.url".
 
-	In addition to those found in standard places for exclude
-	patterns such as `.gitignore` (cf. linkgit:gitignore[5]),
-	also consider these patterns...
+If the documention does not make it clear, then we have
+documentation bug.  As you said, I think we are OK in the sense that
+we do say a section or a variable name is icase and a subsection, if
+exist, is case sensitive, but there might be a better way to convey
+that fact without having the reader read the whole three paragraphs.
 
-After all, having an incomplete list and not hinting that it is
-incomplete is what made you react to the current description.  It is
-unlikely that we stop treating `.gitignore` as one of the standard
-places, so phrasing like above will have a lot smaller chance to go
-stale, even accounting for the possibility that we will grow Git
-over time and the standard parttern sources may be updated in the
-future.
 
->
-> diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-> index 03056dad0..449cbc2af 100644
-> --- a/Documentation/git-clean.txt
-> +++ b/Documentation/git-clean.txt
-> @@ -55,13 +55,15 @@ OPTIONS
->
->  -e <pattern>::
->  --exclude=<pattern>::
-> -	In addition to those found in .gitignore (per directory) and
-> -	$GIT_DIR/info/exclude, also consider these patterns to be in the
-> -	set of the ignore rules in effect.
-> +	In addition to patterns found in any of .gitignore (per directory),
-> +	$GIT_DIR/info/exclude and the exclude file specified by the
-> +	configuration variable core.excludesFile, also consider these
-> +	patterns to be in the set of the ignore rules in effect.
->
->  -x::
->  	Don't use the standard ignore rules read from .gitignore (per
-> -	directory) and $GIT_DIR/info/exclude, but do still use the ignore
-> +	directory), $GIT_DIR/info/exclude and the exclude file specified
-> +	by core.excludesFile, but do still use the ignore
->  	rules given with `-e` options.  This allows removing all untracked
->  	files, including build products.  This can be used (possibly in
->  	conjunction with 'git reset') to create a pristine
