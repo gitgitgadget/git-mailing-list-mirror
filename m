@@ -2,96 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 958FC1F51C
-	for <e@80x24.org>; Wed, 23 May 2018 02:05:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5045C1F51C
+	for <e@80x24.org>; Wed, 23 May 2018 02:17:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753711AbeEWCFO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 22:05:14 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:34577 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753629AbeEWCFN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 22:05:13 -0400
-Received: by mail-wr0-f194.google.com with SMTP id j1-v6so12522515wrm.1
-        for <git@vger.kernel.org>; Tue, 22 May 2018 19:05:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=RvyC5dNPjg5RRKNmAuKLl24dPhSD6kr1kouRKjM6BN4=;
-        b=hwHN/41s1/FTj9z1anlOjGpwvjEyV+s3uK5xNaFVS5pxv+a5IkGiY9RP9a0VPf2qxb
-         g47/JM1BAE1GZH4me1mTc6UUQf3IAe/oJYhSCoYdrDeLBdRFibY5V2jaGGR7Xj8L01C7
-         LUlhYSQ67tPyQP+soW2ZrL1PkveyXFLEMcOsGJcOddBHwDDCWgVXvz0eCzpKW/ITOrqN
-         xDNFUwq3gGnO1uZBPO/JFBGUSJI5DQS1N1+jd2fR5kaqODwWF+CM/AaNS2A2Ksg3DtTT
-         jpsKe9wXpK+Lg9ad4VskeVNuWODjNFdYP28p/vzqg5BHdnuCanu1rkflmebghPw3IG80
-         xnVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=RvyC5dNPjg5RRKNmAuKLl24dPhSD6kr1kouRKjM6BN4=;
-        b=MwPZ1+towfPZW5lh8rTm0dQdNn8eICVIW1TIlrDYPlvCMKCgVds3sHNq9AGu74dTn5
-         sOgh7Z7pj3JiwIEyvt3ucP2d4ibO1U4XzrqIxkLXG3G0RLqLRJ+0DQpDIUIIeyBPooCb
-         mPqQcH42aTyfak2IbcDLOG2JI6i7MLFJuOLsaWEKoPBy91cxA530fwfXkm0ZjouQ855+
-         hQwdk5GFuliaBWp36VN77hzOyzCFbnvtYAjCreP/T2jJXobvRawRom2qOG73AjXkJ/sG
-         Tz0xGZIayaa0qB+ugkW1qcEUoOlONukuuXnXm/hOdUsF3YLnscbmn3+5E+aD3vXdbX75
-         iZdA==
-X-Gm-Message-State: ALKqPwfj8bZeKG49Wt4FsSlCkNyP4NTvC6GEUnkAwrukw0Kx9TgacWPO
-        QLSdK07HaTxRfbLIi1BoUwBf/Xe/
-X-Google-Smtp-Source: AB8JxZr52c45Wv2e+RoCtE4SD3oyHGNvo+xW0bqP0ZkcjJiPvnNOCodULgMcSd6jHX8DDGAcMZ7A8Q==
-X-Received: by 2002:adf:b839:: with SMTP id h54-v6mr562553wrf.141.1527041112112;
-        Tue, 22 May 2018 19:05:12 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 141-v6sm2192528wmf.35.2018.05.22.19.05.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 May 2018 19:05:11 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luke Diamand <luke@diamand.org>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Romain Merland <merlorom@yahoo.fr>,
-        Miguel Torroja <miguel.torroja@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        George Vanburgh <gvanburgh@bloomberg.net>
-Subject: Re: [PATCH 1/1] git-p4: unshelve: use action==add instead of rev==none
-References: <20180522084109.29787-1-luke@diamand.org>
-        <20180522084109.29787-2-luke@diamand.org>
-        <CAM0VKjkdGByfTtj5cunUzqeneu4Bi8Qw4vj428zV1h3ezHXyQg@mail.gmail.com>
-        <CAE5ih79_Ai8F48zFpJ09e8saGrySoiyVdsgkk8ZpRrQAd15a4g@mail.gmail.com>
-Date:   Wed, 23 May 2018 11:05:10 +0900
-In-Reply-To: <CAE5ih79_Ai8F48zFpJ09e8saGrySoiyVdsgkk8ZpRrQAd15a4g@mail.gmail.com>
-        (Luke Diamand's message of "Tue, 22 May 2018 14:02:31 +0100")
-Message-ID: <xmqqk1rvw2i1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753822AbeEWCRg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 22:17:36 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52486 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753792AbeEWCRe (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 22 May 2018 22:17:34 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:fc4d:8d90:22bd:91d8])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DC7596047A;
+        Wed, 23 May 2018 02:17:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1527041852;
+        bh=6RNwmtq7uY5U18Vd0Jn/hULfvoLSR1AXwbRv3faSCfU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=omhP5gq9rvbLH0OBvRjDu/kRetBOuhcCvuF7w3BVNJrPJXtOot0cRlwWE021/pGOY
+         UnoRwMydGpZqpHG3EVQJXkP8gDoqLcjAQhAMQqOkng2I0viYJf0MQ1nlJVNzdk4LOL
+         ElFd1t+LFAKDIb8I/rJfLOcYgwcFt0IW43wz6wWycrtrHpqkArxEZa0OAeI/cMhmyT
+         s35SKennhl8TQVL4UXn+gZweiPq54HgUuP8EfqoMJLwQSrTc9enSk4hJUEYUDc2zFY
+         otxeHKPLdHjs1Mi4kBfFefyfnJcamBRnbA0uIchMiyptMWurv4p3MBT1C6Df+FjGG0
+         05ixTPg1qurhPJQ9BFNs3CbV9WT8si2xPeMc9DisH6ybZyI/h5gDPUXioOy0ozHNab
+         9019326dGA/kVSU8FQGLrejSlMQyzQpZNj+XehXbovkZiC2DYGy8YG/iunPAOLfAmm
+         6ZhX/P2OPaqNZdg97OEV2pAd9zMg1WngEqcC/uBt5c1vrxJJCvc
+Date:   Wed, 23 May 2018 02:17:27 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        jrnieder@gmail.com, sbeller@google.com
+Subject: Re: [PATCH v2 1/2] remote-curl: accept all encodings supported by
+ curl
+Message-ID: <20180523021727.GJ652292@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        jrnieder@gmail.com, sbeller@google.com
+References: <20180521234004.142548-1-bmwill@google.com>
+ <20180522184204.47332-1-bmwill@google.com>
+ <xmqqwovvw4fl.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="f54savKjS/tSNRaU"
+Content-Disposition: inline
+In-Reply-To: <xmqqwovvw4fl.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-3-amd64)
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luke Diamand <luke@diamand.org> writes:
 
->> However, instead of a separate patch, wouldn't it be better to squash
->> it into the previous one?  So 'make test' would succeed on every
->> commit even with a newer p4 version.
->
-> Junio?
->
-> I can squash together the original commit and the two fixes if that
-> would be better?
+--f54savKjS/tSNRaU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Among the three hunks in this fix-up patch, the first two are
-strictly fixing what you had in the previous patch, so it make sense
-to fix them at the source by squashing.
+On Wed, May 23, 2018 at 10:23:26AM +0900, Junio C Hamano wrote:
+> Similarly, how much control do we have to ensure that the test HTTPD
+> server (1) supports gzip and (2) does not support encoding algos
+> with confusing names e.g. "funnygzipalgo" that may accidentally
+> match that pattern?
 
-The last one (i.e. "even if it is verbose, if fileSize is not
-reported, do not write the verbose output") does not look like it is
-limited to the unshelve feature, so it might, even though it is a
-one-liner, deserve to be a separate preparatory patch if you want.
-But I do not feel strongly about either way.
+I feel it's quite likely indeed that pretty much any Apache instance is
+going to have the gzip encoding.  Every distributor I know supports it.
 
-Thanks.
+As for whether there are confusing alternate algorithms, I think it's
+best to just look at the IANA registration[0] to see what people are
+using.  Potential matches include gzip, x-gzip (a deprecated alias that
+versions of Apache we can use are not likely to support), and
+pack200-gzip (a format for Java archives, which we hope the remote side
+will not be sending).
+
+Overall, I think this is not likely to be a problem, but if necessary in
+the future, we can add a prerequisite that looks in the module directory
+for the appropriate module.  We haven't seen an issue with it yet,
+though, TTBOMK.
+
+[0] https://www.iana.org/assignments/http-parameters/http-parameters.xml#co=
+ntent-coding
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--f54savKjS/tSNRaU
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlsEzzYACgkQv1NdgR9S
+9otqGg/+Kkyd7pHcMtmV3jovSLOQAp7nmVggUXQ9vgfFZYB/AE9BeEBpMkZpE5mE
+B9wllWF8Jv0zH7rCHwx2Atf6yQiiKUtJ1UmdAUqQ1C3V/WlYThuJEb5VSglp6kJq
+lSWCe6hp7dIQfHcguEGX6jpq6dxTmRu76UjBqQEPBLwRhCcNg5+SdiGUi8e72COq
+mgQsVe1rTkLd7T9+9DJJkegzWVs5ongyZVZ9itVoQ5nvY4SuJs/2gNePloZ0XsJZ
+AwY3wKbCTaStkUiO/REpN9r2N+rDew1fdZUI+3fk7gzmsRVP1OOP38lCH6KFEuIZ
+JNJdIjif452MlXjfGSLWPklc9vYQ/dJDKK84BHJJ3yIt3KMqixL6A26MGyOMWwPD
+dfReaqevVwTYrdSxtfVoMs61EJ1rdBVKn/LxDGy03UHwDAnGz2iHx7NL9Ez/6ptN
+TcdgImOm/oBFGx/7qhk7mcGUdUEHlPjFaHqiOL1SwC7EAYFrtCPAX2kXGtyXm91/
+FYfrpySE8uI/BMWldfDjVrrHFXpFtJVuF0yGabKxwvf77F0tNlkVJVeJC1FhAaH4
+eTdza+FyHL/kBe09U+kH9HSgIGB5C17v7e/yJFTvbs6BzytQHZEPt2VlpqktQcdd
+wGbDjNY+BfkoC3whWiTrlIZBW4BxAjPiJb7NCSuo7Kc/TbnD/UM=
+=oEDE
+-----END PGP SIGNATURE-----
+
+--f54savKjS/tSNRaU--
