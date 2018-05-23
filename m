@@ -6,58 +6,63 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFBCC1F51C
-	for <e@80x24.org>; Wed, 23 May 2018 03:16:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB18E1F51C
+	for <e@80x24.org>; Wed, 23 May 2018 03:19:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753751AbeEWDQl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 23:16:41 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:44113 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753717AbeEWDQk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 23:16:40 -0400
-Received: by mail-wr0-f196.google.com with SMTP id y15-v6so23644500wrg.11
-        for <git@vger.kernel.org>; Tue, 22 May 2018 20:16:40 -0700 (PDT)
+        id S1753684AbeEWDTH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 23:19:07 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:38134 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753520AbeEWDTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 23:19:06 -0400
+Received: by mail-wm0-f65.google.com with SMTP id m129-v6so4985019wmb.3
+        for <git@vger.kernel.org>; Tue, 22 May 2018 20:19:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=pyzv0Um9iPiLkib3dAEt8hcGS3NXbStw/b0XnZ1QhU0=;
-        b=Ii/ao1Fm1y4jNrKrji6vmQ0dQzETTJ/qa9q6CCzEu+dyoImP/zIR9vDCKqwXgsCFgu
-         IzJW8MfT0aveGoAoeGLsGlxlPKldqVXY5P2Tx8V2y64pN6VgumkcMb/FIvJNF6ms+YXN
-         zcKCD2cUQ0eypPQMvFRzrlvgvrQ8dEEKIUuzdTMO7CwfaA84QQWvMHkxOFoCsezSB6uD
-         an8DH2BMwmpJJEhcZkfJpk7zA207tp3AwX2zpnrqmZuWTxXDtPVbZ7KEXosISnMTYkQL
-         J8eAga3cnYkwc1Vi2GRRHFx9m858upDo3hWxgD+r4YkEyFukDhtZ0/CDWFJadQa1MSkT
-         FLOw==
+        bh=VIN6TJZUhGoqyRNKxcRmKwRyXy2zYqyW1mJD9Fv+6mc=;
+        b=HRnmdeffL0tQcFhuA1lMqLJjOZMonjDfy7KhW4bKYNcoBD35P1p0uZDQ6USm9o3cvJ
+         ZoMP5IhQdU7ntbIzcqq4ap+MzEK/o/tngrdt7mPC9WYfjuZ1A/jwOMTXGtM9fgEVVSHU
+         QSaL87RkuNSOAK9M5SYWbSUKyaZ1heuShf2uvLfnSJp4/nibbDq9kIN14+VvoM4oIhLA
+         qPOGum/chgt1J5flkDKV4fopfN1tTGum3f6kdm8JnArTxKavde2+jsvBuD89h1EijtUo
+         5zZYNjOriBNI2W9zoM19W51iycnK/zaS/bQCmrxESQy+9EgUaiuZYcyb4s5iDuKAzW/K
+         M3HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=pyzv0Um9iPiLkib3dAEt8hcGS3NXbStw/b0XnZ1QhU0=;
-        b=tCXMv323FCXyowm4Y67pD6IgPp15TTBZamGihW2x8YvcbDB7KIk+r8bSG9RnQLLBRb
-         zX5hU+TuDr2NHmIaP9HY8hXVDBRJe0/osJ61EexQjG3VV7wfC+yoGRYKCMAAIkuR5tIa
-         n/LQaBk65Ug1RRfn/IDC6ZXisoZS0ucYxGtQho8nX5aCLbqR07Tb+cTqX+cL9VZ3Op49
-         NxLoGN6/wjP9VCDdM0r4roNQyinAg9f2xFAMNsZeFeforY5GyqsueYGKSKyF/AW3hHxU
-         pO9PnUrvT1flWH+xIv05F8Ba25vQDj+gC/pxNDYvX4l1mM4EXO+3kFjMJFjyfTi8CMcF
-         Wu1A==
-X-Gm-Message-State: ALKqPweMZNfh7L/q52KSSXC68he3bMag1+qp6gehQHMps5ylBi1ktbpV
-        FNv43qKnlEOt2R8g6ndzabGWbrel
-X-Google-Smtp-Source: AB8JxZrooaYzxN68UwnEdQJ1FoueKj948tR67dGXeVC1w27HOt+AcZuLZrlZo4vwPAm3/IyYuilo4A==
-X-Received: by 2002:adf:d0d0:: with SMTP id z16-v6mr777920wrh.152.1527045399572;
-        Tue, 22 May 2018 20:16:39 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x81-v6sm22607988wrb.23.2018.05.22.20.16.38
+        bh=VIN6TJZUhGoqyRNKxcRmKwRyXy2zYqyW1mJD9Fv+6mc=;
+        b=fOB7SkSd+RC+MU/gw89Vw2mr123L5G6JhVqpfSey0VkJbwKCDEj+5Vrmg1bRyoqqmq
+         t3QjlbTbmS+g5TSvfIjJ9C3KYNWusMCVDGCMk1cWt0X19sL980+QRB1TNBAuDhgOnJ6L
+         6JABljjqjUHYXh2ReShoRFDSdK8x8DAICSEmMg8rJQaARzfRIaMz7JDpF2/FfhsslhG0
+         WXmhwI6G/aRgyMNwqNUxV+WiMsmyEeMUlXwJ/IiDFttlaoZz4fSESpbKasm7NuRM9wAo
+         Lf3PfGQhQGwQ5LERb4kBmNgMkjumcV2YDr5hAfU9ZJTiSU6DmbLKs8x8E7avR3+fiJLI
+         97Yw==
+X-Gm-Message-State: ALKqPwf4DnNHEB15xaRnE7ZtmxOYf0DpLzcUJSYSNn+ktaX9PnYw8wxA
+        nduZgM3uKKN/JX+EgsmO2Bo=
+X-Google-Smtp-Source: AB8JxZrYVXw0bWkVVdJEq1G9JQVeTFL9kq1WtDjvlr8Du/6Rx+CfbINhO1daqoufEmQeSCuaZqiqGA==
+X-Received: by 2002:a1c:8b88:: with SMTP id n130-v6mr2701361wmd.8.1527045545517;
+        Tue, 22 May 2018 20:19:05 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j8-v6sm35839729wra.58.2018.05.22.20.19.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 May 2018 20:16:38 -0700 (PDT)
+        Tue, 22 May 2018 20:19:04 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick =?utf-8?Q?L=C3=BChne?= <patrick@luehne.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Officially supported Git versions
-References: <b5856696-bfcf-173a-49ac-6aa6989316d3@luehne.de>
-Date:   Wed, 23 May 2018 12:16:38 +0900
-In-Reply-To: <b5856696-bfcf-173a-49ac-6aa6989316d3@luehne.de> ("Patrick
-        =?utf-8?Q?L=C3=BChne=22's?= message of "Tue, 22 May 2018 19:20:01 +0200")
-Message-ID: <xmqq8t8bvz6x.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, pclouds@gmail.com, ao2@ao2.it,
+        bmwill@google.com, git@vger.kernel.org
+Subject: Re: Why do we have both x*() and *_or_die() for "do or die"?
+References: <CACsJy8A8WZ-Gqe2Y-whJmbADrt+gZjLZ7MTwCtdnK7JDnEdtog@mail.gmail.com>
+        <20180516222118.233868-1-sbeller@google.com>
+        <20180516222118.233868-3-sbeller@google.com>
+        <874liz8tsi.fsf@evledraar.gmail.com>
+Date:   Wed, 23 May 2018 12:19:04 +0900
+In-Reply-To: <874liz8tsi.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 22 May 2018 19:49:33 +0200")
+Message-ID: <xmqq4lizvz2v.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -67,22 +72,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Lühne <patrick@luehne.de> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> Is there an official list of the Git versions that are still actively
-> supported?
+> Just a side-question unrelated to this patch per-se, why do we have both
+> x*() and *_or_die() functions in the codebase? I can't find any pattern
+> for one or the other.
 
-Depends on your definition of "official".  Distro with lts may patch
-older maintenance tracks longer than the upstream releases do, and
-as far as the normal end-users are concerned, Distro packaged
-binaries are as "offcial" as they get, probably more "official" than
-what comes from the upstream and then built from the source.
+My understanding is that x*() were meant for system library
+functions.  read-index-or-die should never be x-read-index.
 
-I however do not think distro folks advertise which maintenance
-tracks they backport the patches here on this mailing list.
-
-As to the "upstream", usually 'maint' track gets all fixes, and
-probably one or two older maintenance tracks tend to get security
-fixes as well.  Beyond that horizon, it's pretty much "as time
-permits" basis.
-
+Quite honestly, read-index should probably have designed to die from
+the beginning, with read-index-gently as a variant to report an
+error instead of dying.
