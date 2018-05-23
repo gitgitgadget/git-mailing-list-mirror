@@ -2,117 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED2AF1F51C
-	for <e@80x24.org>; Wed, 23 May 2018 03:42:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5206E1F51C
+	for <e@80x24.org>; Wed, 23 May 2018 04:57:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753820AbeEWDmO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 23:42:14 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:51720 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753787AbeEWDmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 23:42:13 -0400
-Received: by mail-wm0-f68.google.com with SMTP id j4-v6so4992107wme.1
-        for <git@vger.kernel.org>; Tue, 22 May 2018 20:42:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=rro1e1wH67xJz1xSLwOAm4S3x2RzmyQ+tSs1yCb3wXQ=;
-        b=kMF5Q3VxTMa1aKrzkkRon4VmC6TuciYbv2zOhdOsCYW/cbEMmpeevxfra+WMgogdAM
-         s2JEBBfJLKYIk7oU979mpByb6oNXXFJDeMk30uZyt/L4GY1aVhSU78anmrTtn9CzEWT5
-         TA/YX4qiXLEoawxmyYtXS/A3/ZXbp7v5uvHvgH4vxLoi9vtXqgadSyoBrAScXhCspwB0
-         r6hVOkZ7ILBhPLB07JhC+Yb4ByK440e29CAkAmDX8MPLasYNh2BU7DgQuTylIQ3OgwZo
-         EY8dGC7rOV9+vU380r9Fqv5RYsuYCBmx+7xYMpq/1R0j+++B+tXp6S1QODNnqVnplE0j
-         93yA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=rro1e1wH67xJz1xSLwOAm4S3x2RzmyQ+tSs1yCb3wXQ=;
-        b=hsS0Uqm1DLuh3KMCZojmbuymkePpPL/b91WVFuA8QiP7ma4AqAMzkevo90ZznI4tvl
-         nXbO8vnUiqN58VscQ4rlfss56ktBcCATOmfBVEElRn2Cx17J9zCVg1ur4+wVgvYwhb83
-         vJzfCPrO85WLsJH06QmNB76q4Hb8XZnVFmh77OOjU79bhhSqKnp8Dc130dXssEftM+OW
-         Uv8kkNoSgZ/PrDF+RgwFOhgPZbTRFTSZoDOlVrO27xVv7nX02JSc/9+2rTJvu831MTfR
-         EuNsmWxZn+7g8+yJf453deVHxoVeQatnNBUpVcOPvr4S8Z8qu8qOHwL1icNchqRN2lBp
-         +Nxg==
-X-Gm-Message-State: ALKqPweqHy1bf5a/FsT6nz7H/lPmhr8Ypie0sWnVQr7HYqUqEYOQcSXE
-        fasWf6RF1J49V/Fh59gaDXQ=
-X-Google-Smtp-Source: AB8JxZrBYC7+kvIUAhb3wt/9aw8LxhNjc0rlJy7w1zSj7ZeKxql0o97/5ioTq6cstGto5RPM9XDbIQ==
-X-Received: by 2002:a1c:6a0d:: with SMTP id f13-v6mr2616495wmc.1.1527046932180;
-        Tue, 22 May 2018 20:42:12 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j13-v6sm1596072wre.38.2018.05.22.20.42.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 May 2018 20:42:11 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] fetch-pack: space out sent "haves" in negotiation
-References: <20180521204340.260572-1-jonathantanmy@google.com>
-Date:   Wed, 23 May 2018 12:42:10 +0900
-In-Reply-To: <20180521204340.260572-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Mon, 21 May 2018 13:43:40 -0700")
-Message-ID: <xmqqwovvujfx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751193AbeEWE5S (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 May 2018 00:57:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49912 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750744AbeEWE5R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 May 2018 00:57:17 -0400
+Received: (qmail 15829 invoked by uid 109); 23 May 2018 04:57:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 23 May 2018 04:57:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12201 invoked by uid 111); 23 May 2018 04:57:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 23 May 2018 00:57:25 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 May 2018 00:57:15 -0400
+Date:   Wed, 23 May 2018 00:57:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Pedro Alvarez <pedro.alvarez@codethink.co.uk>, git@vger.kernel.org,
+        Pedro Alvarez Piedehierro <palvarez89@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add initial support for pax extended attributes
+Message-ID: <20180523045714.GA5567@sigill.intra.peff.net>
+References: <20180522100548.29881-1-pedro.alvarez@codethink.co.uk>
+ <xmqqd0xnw14j.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqd0xnw14j.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Wed, May 23, 2018 at 11:34:52AM +0900, Junio C Hamano wrote:
 
->  Makefile           |   1 +
->  fetch-negotiator.c | 309 +++++++++++++++++++++++++++++++++++++++++++++
->  fetch-negotiator.h |  40 ++++++
->  fetch-pack.c       | 174 ++++++-------------------
->  object.h           |   1 +
->  5 files changed, 392 insertions(+), 133 deletions(-)
->  create mode 100644 fetch-negotiator.c
->  create mode 100644 fetch-negotiator.h
+> > @@ -90,13 +99,32 @@ foreach my $tar_file (@ARGV)
+> >  			Z8 Z1 Z100 Z6
+> >  			Z2 Z32 Z32 Z8 Z8 Z*', $_;
+> >  		}
+> > -		next if $name =~ m{/\z};
+> >  		$mode = oct $mode;
+> >  		$size = oct $size;
+> >  		$mtime = oct $mtime;
+> >  		next if $typeflag == 5; # directory
+> >  
+> > -		if ($typeflag != 1) { # handle hard links later
+> > +		if ($typeflag eq 'x') { # extended header
+> > +			# If extended header, check for path
+> > +			my $pax_header = '';
+> > +			while ($size > 0 && read(I, $_, 512) == 512) {
+> 
+> Would we ever get a short-read (i.e. we ask to read 512 bytes,
+> syscall returns after reading only 256 bytes, even though next call
+> to read would give the remaining 256 bytes and later ones)?
 
-Somehow this feels more like a WIP than RFC, primarily for two
-reasons.  It was unclear what "edge" computation is trying to do; it
-seems way under-explained, especially the part that takes min-max
-while. merging two candidates.
+No, because perl's read() is buffered (you need sysread() to get a real
+syscall read). We might read fewer than 512 if we hit EOF, but I think
+that would be a truncated input, then, since ustar does everything in
+512-byte records.
 
-It also was unclear if this should be organized as a "take it or
-leave it" patch like this one, or eventually should be split into
-multiple steps when it gets polished enough to be considered for
-application, the early ones introducing a separate negotiator module
-without changing the common ancestor discovery algorithm at all,
-with later steps refining that negotiator and add more efficient
-common ancestor discovery process.
+I do think we'd fail to notice the truncation, which isn't ideal. But it
+looks like the rest of the script suffers from the same issue.
 
-> diff --git a/Makefile b/Makefile
-> index ad880d1fc5..8bbedfa521 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -859,6 +859,7 @@ LIB_OBJS += ewah/ewah_bitmap.o
->  LIB_OBJS += ewah/ewah_io.o
->  LIB_OBJS += ewah/ewah_rlw.o
->  LIB_OBJS += exec-cmd.o
-> +LIB_OBJS += fetch-negotiator.o
->  LIB_OBJS += fetch-object.o
->  LIB_OBJS += fetch-pack.o
->  LIB_OBJS += fsck.o
-> diff --git a/fetch-negotiator.c b/fetch-negotiator.c
-> new file mode 100644
-> index 0000000000..58975e1c37
-> --- /dev/null
-> +++ b/fetch-negotiator.c
-> @@ -0,0 +1,309 @@
-> +#include "cache.h"
-> +#include "commit.h"
-> +#include "fetch-negotiator.h"
-> +
-> +#define NO_THE_INDEX_COMPATIBILITY_MACROS
+If anybody cares, it might not be too hard to wrap all of the 512-byte
+read calls into a helper that dies on bogus input. I sort of assumed
+this was mostly a proof of concept script and nobody used it, though. :)
 
-A totally unrelated tangent, but will we also benefit from
-NO_THE_REPO_COMPATIBILITY_MACROS eventually?
+It makes me wonder if there is a better-tested tar-reading module in
+CPAN that could be used (though at the expense of requiring an extra
+dependency).
 
+-Peff
