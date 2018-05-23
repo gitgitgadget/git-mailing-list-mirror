@@ -2,636 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4849B1F42D
-	for <e@80x24.org>; Wed, 23 May 2018 07:22:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC16F1F42D
+	for <e@80x24.org>; Wed, 23 May 2018 08:00:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754144AbeEWHWG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 May 2018 03:22:06 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:53359 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753985AbeEWHWD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 May 2018 03:22:03 -0400
-Received: by mail-wm0-f48.google.com with SMTP id a67-v6so6024740wmf.3
-        for <git@vger.kernel.org>; Wed, 23 May 2018 00:22:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7dFcafZj+YVJMpu6OTHd8eUzEJPsuHncW7ELdngtLA0=;
-        b=MW9cHCNluwhmwN8Ewkazqu/st0RgCRbSo0glKDVMaPUQF7E9Owcg4NucquTBaN6g1L
-         xDDzZokuYPJzimvtmOedpN2Sys4PqwovIcERSNURT3FjoWNATM5sPkUMdjF7JreOI73T
-         cu1GCJqXTdAqMHLGpn9RSfmOkYosfh1EIdMsk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=7dFcafZj+YVJMpu6OTHd8eUzEJPsuHncW7ELdngtLA0=;
-        b=c7efvfsxxOdOJa5GObr2f7PrNYUq2jAFsGslfc+okVYfylXNAIHLH7saHcMu8uTGwy
-         zmDaZFJgRAEw8MkwQG9UKscn3g3d14ZhjDZEakPBtq07QF6/G6xKhOJjw17WSEJRKde+
-         NJ77YiBByI8Fx8ojRCY1LyGx+I2sCpf8tjRqnk5+ls3l/4YPhnfRCqmtuBBHZxHWYwUJ
-         eEhDW/JeaCBNLQcrQCXaDzA4D8XAi2oPc1yV2wfTmOXeQanJoMgjYjOUELZfS7oLdMsH
-         1coey9T17cvQMcamReRzw9LYUA1NYphC0hyJqb5EHnPprqpATUs9R+gaTEzCitfuSSuY
-         0z1Q==
-X-Gm-Message-State: ALKqPwffQhpU/1AdYand9b+W9KHrMzjJnPr+npjjn+EhEWeZoKCq7Nwc
-        SPV4MTpaj7UnR4UP9F7zgacNpUj3
-X-Google-Smtp-Source: AB8JxZpjK9zDajYKfySOhmr8bfANPQQT7CRKYJUwde2lRHqnyMtI4XveeICwgkCyAj17bEA3HWfioA==
-X-Received: by 2002:a1c:6d97:: with SMTP id b23-v6mr3541551wmi.86.1527060121653;
-        Wed, 23 May 2018 00:22:01 -0700 (PDT)
-Received: from ethel.corp.roku (cpc92728-cmbg20-2-0-cust351.5-4.cable.virginm.net. [82.29.15.96])
-        by smtp.gmail.com with ESMTPSA id 32-v6sm8996247wrf.33.2018.05.23.00.21.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 May 2018 00:22:00 -0700 (PDT)
-From:   Luke Diamand <luke@diamand.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Romain Merland <merlorom@yahoo.fr>,
-        Miguel Torroja <miguel.torroja@gmail.com>,
-        George Vanburgh <gvanburgh@bloomberg.net>,
-        Luke Diamand <luke@diamand.org>
-Subject: [PATCHv5 1/1] git-p4: add unshelve command
-Date:   Wed, 23 May 2018 08:21:53 +0100
-Message-Id: <20180523072153.24157-2-luke@diamand.org>
-X-Mailer: git-send-email 2.17.0.392.gdeb1a6e9b7
-In-Reply-To: <20180523072153.24157-1-luke@diamand.org>
-References: <xmqqk1rvw2i1.fsf@gitster-ct.c.googlers.com>
- <20180523072153.24157-1-luke@diamand.org>
+        id S1754269AbeEWIAq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 May 2018 04:00:46 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:42318 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754185AbeEWIAq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 May 2018 04:00:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=6OzabgZJaMyarBp3UmqLy3sBmkx4N1c/vLpT+26ttdQ=; b=dFmC/HASmwUZbgQIwYGpQst0h
+        UYUA+ZgsLaNWa056/cRRXM5CrR/77yg7vUy5sXqJcg8XzOLCq8vm93S9un1Kf9OK76lZVkooAn0Db
+        XOWaJ/53QzSKbuLHi7RrRJZmZlUpAGZB8QEUOjtZoO9L3h/Q2GaS/xGzB19ZTzqVwwAEdHc96OajH
+        g7QSZNUxyQ/F1H6ZTbp5qQAACVIpPyGydro+g+NRdVUN5VgerbLkCUpSCXNcj1h+o02LoRNX2TbF9
+        kVO5rUAFvcI0LQYTE49zk0eLPWhPeuE2/62ONYa0ZER4wJUFsx+ZltXZhkXQ2esu8O8vdQ+VODTcw
+        klkceyrKQ==;
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:44326 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fLOhK-0097C2-Ej; Wed, 23 May 2018 04:00:44 -0400
+Date:   Wed, 23 May 2018 03:59:01 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: should config options be treated as case-sensitive?
+In-Reply-To: <xmqqo9h7w2y2.fsf@gitster-ct.c.googlers.com>
+Message-ID: <alpine.LFD.2.21.1805230354270.16358@localhost.localdomain>
+References: <alpine.LFD.2.21.1805220353370.989@localhost.localdomain> <87h8mz99d2.fsf@evledraar.gmail.com> <xmqqo9h7w2y2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-2007282615-1527062344=:16358"
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This can be used to "unshelve" a shelved P4 commit into
-a git commit.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-For example:
+--8323328-2007282615-1527062344=:16358
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-  $ git p4 unshelve 12345
+On Wed, 23 May 2018, Junio C Hamano wrote:
 
-The resulting commit ends up in the branch:
-   refs/remotes/p4/unshelved/12345
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>
+> > The issues you note about the docs using foo.barbaz instead of
+> > foo.barBaz should be fixed, but as noted in the "Syntax" section
+> > of "git-config" we already document that the config keys are all
+> > case-insensitive. We just like talking about them as foo.barBaz
+> > because it makes for easier reading.
+>
+> The first and the last level of configuration variable names are
+> case insensitive.
+>
+> I said "first and last", as there are variables with 2-level and
+> 3-level names.  "foo.barBaz" is two-level and it is the same
+> variable as "Foo.barbaz".  "remote.origin.url" is three-level, and
+> it is the same variable as "Remote.origin.URL", but it is not the
+> same variable as "remote.ORIGIN.url".
+>
+> If the documention does not make it clear, then we have
+> documentation bug ...
 
-If that branch already exists, it is renamed - for example
-the above branch would be saved as p4/unshelved/12345.1.
+  personally, i would add a short, really emphatic note at the top of
+"man git-config" pointing this out -- i wouldn't require people to
+read all the way down to "Syntax" to learn this. an example just like
+the one you provide above would be perfect, with an extra line
+pointing out that the documentation uses "camel case" for nothing more
+than readability.
 
-git-p4 checks that the shelved changelist is based on files
-which are at the same Perforce revision as the origin branch
-being used for the unshelve (HEAD by default). If they are not,
-it will refuse to unshelve. This is to ensure that the unshelved
-change does not contain other changes mixed-in.
+rday
 
-The reference branch can be changed manually with the "--origin"
-option.
-
-The change adds a new Unshelve command class. This just runs the
-existing P4Sync code tweaked to handle a shelved changelist.
-
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- Documentation/git-p4.txt |  32 ++++++
- git-p4.py                | 215 ++++++++++++++++++++++++++++++++-------
- t/t9832-unshelve.sh      | 138 +++++++++++++++++++++++++
- 3 files changed, 348 insertions(+), 37 deletions(-)
- create mode 100755 t/t9832-unshelve.sh
-
-diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-index d8c8f11c9f..d3cb249fc2 100644
---- a/Documentation/git-p4.txt
-+++ b/Documentation/git-p4.txt
-@@ -164,6 +164,31 @@ $ git p4 submit --shelve
- $ git p4 submit --update-shelve 1234 --update-shelve 2345
- ----
- 
-+
-+Unshelve
-+~~~~~~~~
-+Unshelving will take a shelved P4 changelist, and produce the equivalent git commit
-+in the branch refs/remotes/p4/unshelved/<changelist>.
-+
-+The git commit is created relative to the current origin revision (HEAD by default).
-+If the shelved changelist's parent revisions differ, git-p4 will refuse to unshelve;
-+you need to be unshelving onto an equivalent tree.
-+
-+The origin revision can be changed with the "--origin" option.
-+
-+If the target branch in refs/remotes/p4/unshelved already exists, the old one will
-+be renamed.
-+
-+----
-+$ git p4 sync
-+$ git p4 unshelve 12345
-+$ git show refs/remotes/p4/unshelved/12345
-+<submit more changes via p4 to the same files>
-+$ git p4 unshelve 12345
-+<refuses to unshelve until git is in sync with p4 again>
-+
-+----
-+
- OPTIONS
- -------
- 
-@@ -337,6 +362,13 @@ These options can be used to modify 'git p4 rebase' behavior.
- --import-labels::
- 	Import p4 labels.
- 
-+Unshelve options
-+~~~~~~~~~~~~~~~~
-+
-+--origin::
-+    Sets the git refspec against which the shelved P4 changelist is compared.
-+    Defaults to p4/master.
-+
- DEPOT PATH SYNTAX
- -----------------
- The p4 depot path argument to 'git p4 sync' and 'git p4 clone' can
-diff --git a/git-p4.py b/git-p4.py
-index 7bb9cadc69..c80d85af89 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -316,12 +316,17 @@ def p4_last_change():
-     results = p4CmdList(["changes", "-m", "1"], skip_info=True)
-     return int(results[0]['change'])
- 
--def p4_describe(change):
-+def p4_describe(change, shelved=False):
-     """Make sure it returns a valid result by checking for
-        the presence of field "time".  Return a dict of the
-        results."""
- 
--    ds = p4CmdList(["describe", "-s", str(change)], skip_info=True)
-+    cmd = ["describe", "-s"]
-+    if shelved:
-+        cmd += ["-S"]
-+    cmd += [str(change)]
-+
-+    ds = p4CmdList(cmd, skip_info=True)
-     if len(ds) != 1:
-         die("p4 describe -s %d did not return 1 result: %s" % (change, str(ds)))
- 
-@@ -662,6 +667,12 @@ def gitBranchExists(branch):
-                             stderr=subprocess.PIPE, stdout=subprocess.PIPE);
-     return proc.wait() == 0;
- 
-+def gitUpdateRef(ref, newvalue):
-+    subprocess.check_call(["git", "update-ref", ref, newvalue])
-+
-+def gitDeleteRef(ref):
-+    subprocess.check_call(["git", "update-ref", "-d", ref])
-+
- _gitConfig = {}
- 
- def gitConfig(key, typeSpecifier=None):
-@@ -2411,6 +2422,7 @@ class P4Sync(Command, P4UserMap):
-         self.tempBranches = []
-         self.tempBranchLocation = "refs/git-p4-tmp"
-         self.largeFileSystem = None
-+        self.suppress_meta_comment = False
- 
-         if gitConfig('git-p4.largeFileSystem'):
-             largeFileSystemConstructor = globals()[gitConfig('git-p4.largeFileSystem')]
-@@ -2421,6 +2433,18 @@ class P4Sync(Command, P4UserMap):
-         if gitConfig("git-p4.syncFromOrigin") == "false":
-             self.syncWithOrigin = False
- 
-+        self.depotPaths = []
-+        self.changeRange = ""
-+        self.previousDepotPaths = []
-+        self.hasOrigin = False
-+
-+        # map from branch depot path to parent branch
-+        self.knownBranches = {}
-+        self.initialParents = {}
-+
-+        self.tz = "%+03d%02d" % (- time.timezone / 3600, ((- time.timezone % 3600) / 60))
-+        self.labels = {}
-+
-     # Force a checkpoint in fast-import and wait for it to finish
-     def checkpoint(self):
-         self.gitStream.write("checkpoint\n\n")
-@@ -2429,7 +2453,20 @@ class P4Sync(Command, P4UserMap):
-         if self.verbose:
-             print "checkpoint finished: " + out
- 
--    def extractFilesFromCommit(self, commit):
-+    def cmp_shelved(self, path, filerev, revision):
-+        """ Determine if a path at revision #filerev is the same as the file
-+            at revision @revision for a shelved changelist. If they don't match,
-+            unshelving won't be safe (we will get other changes mixed in).
-+
-+            This is comparing the revision that the shelved changelist is *based* on, not
-+            the shelved changelist itself.
-+        """
-+        ret = p4Cmd(["diff2", "{0}#{1}".format(path, filerev), "{0}@{1}".format(path, revision)])
-+        if verbose:
-+            print("p4 diff2 path %s filerev %s revision %s => %s" % (path, filerev, revision, ret))
-+        return ret["status"] == "identical"
-+
-+    def extractFilesFromCommit(self, commit, shelved=False, shelved_cl = 0, origin_revision = 0):
-         self.cloneExclude = [re.sub(r"\.\.\.$", "", path)
-                              for path in self.cloneExclude]
-         files = []
-@@ -2452,6 +2489,19 @@ class P4Sync(Command, P4UserMap):
-             file["rev"] = commit["rev%s" % fnum]
-             file["action"] = commit["action%s" % fnum]
-             file["type"] = commit["type%s" % fnum]
-+            if shelved:
-+                file["shelved_cl"] = int(shelved_cl)
-+
-+                # For shelved changelists, check that the revision of each file that the
-+                # shelve was based on matches the revision that we are using for the
-+                # starting point for git-fast-import (self.initialParent). Otherwise
-+                # the resulting diff will contain deltas from multiple commits.
-+
-+                if file["action"] != "add" and \
-+                    not self.cmp_shelved(path, file["rev"], origin_revision):
-+                    sys.exit("change {0} not based on {1} for {2}, cannot unshelve".format(
-+                        commit["change"], self.initialParent, path))
-+
-             files.append(file)
-             fnum = fnum + 1
-         return files
-@@ -2565,7 +2615,7 @@ class P4Sync(Command, P4UserMap):
-     def streamOneP4File(self, file, contents):
-         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
-         relPath = self.encodeWithUTF8(relPath)
--        if verbose:
-+        if verbose and 'fileSize' in self.stream_file:
-             size = int(self.stream_file['fileSize'])
-             sys.stdout.write('\r%s --> %s (%i MB)\n' % (file['depotFile'], relPath, size/1024/1024))
-             sys.stdout.flush()
-@@ -2743,7 +2793,16 @@ class P4Sync(Command, P4UserMap):
-             def streamP4FilesCbSelf(entry):
-                 self.streamP4FilesCb(entry)
- 
--            fileArgs = ['%s#%s' % (f['path'], f['rev']) for f in filesToRead]
-+            fileArgs = []
-+            for f in filesToRead:
-+                if 'shelved_cl' in f:
-+                    # Handle shelved CLs using the "p4 print file@=N" syntax to print
-+                    # the contents
-+                    fileArg = '%s@=%d' % (f['path'], f['shelved_cl'])
-+                else:
-+                    fileArg = '%s#%s' % (f['path'], f['rev'])
-+
-+                fileArgs.append(fileArg)
- 
-             p4CmdList(["-x", "-", "print"],
-                       stdin=fileArgs,
-@@ -2844,11 +2903,15 @@ class P4Sync(Command, P4UserMap):
-         self.gitStream.write(details["desc"])
-         if len(jobs) > 0:
-             self.gitStream.write("\nJobs: %s" % (' '.join(jobs)))
--        self.gitStream.write("\n[git-p4: depot-paths = \"%s\": change = %s" %
--                             (','.join(self.branchPrefixes), details["change"]))
--        if len(details['options']) > 0:
--            self.gitStream.write(": options = %s" % details['options'])
--        self.gitStream.write("]\nEOT\n\n")
-+
-+        if not self.suppress_meta_comment:
-+            self.gitStream.write("\n[git-p4: depot-paths = \"%s\": change = %s" %
-+                                (','.join(self.branchPrefixes), details["change"]))
-+            if len(details['options']) > 0:
-+                self.gitStream.write(": options = %s" % details['options'])
-+            self.gitStream.write("]\n")
-+
-+        self.gitStream.write("EOT\n\n")
- 
-         if len(parent) > 0:
-             if self.verbose:
-@@ -3162,10 +3225,10 @@ class P4Sync(Command, P4UserMap):
-         else:
-             return None
- 
--    def importChanges(self, changes):
-+    def importChanges(self, changes, shelved=False, origin_revision=0):
-         cnt = 1
-         for change in changes:
--            description = p4_describe(change)
-+            description = p4_describe(change, shelved)
-             self.updateOptionDict(description)
- 
-             if not self.silent:
-@@ -3235,7 +3298,7 @@ class P4Sync(Command, P4UserMap):
-                                 print "Parent of %s not found. Committing into head of %s" % (branch, parent)
-                             self.commit(description, filesForCommit, branch, parent)
-                 else:
--                    files = self.extractFilesFromCommit(description)
-+                    files = self.extractFilesFromCommit(description, shelved, change, origin_revision)
-                     self.commit(description, files, self.branch,
-                                 self.initialParent)
-                     # only needed once, to connect to the previous commit
-@@ -3300,17 +3363,23 @@ class P4Sync(Command, P4UserMap):
-             print "IO error with git fast-import. Is your git version recent enough?"
-             print self.gitError.read()
- 
-+    def openStreams(self):
-+        self.importProcess = subprocess.Popen(["git", "fast-import"],
-+                                              stdin=subprocess.PIPE,
-+                                              stdout=subprocess.PIPE,
-+                                              stderr=subprocess.PIPE);
-+        self.gitOutput = self.importProcess.stdout
-+        self.gitStream = self.importProcess.stdin
-+        self.gitError = self.importProcess.stderr
- 
--    def run(self, args):
--        self.depotPaths = []
--        self.changeRange = ""
--        self.previousDepotPaths = []
--        self.hasOrigin = False
--
--        # map from branch depot path to parent branch
--        self.knownBranches = {}
--        self.initialParents = {}
-+    def closeStreams(self):
-+        self.gitStream.close()
-+        if self.importProcess.wait() != 0:
-+            die("fast-import failed: %s" % self.gitError.read())
-+        self.gitOutput.close()
-+        self.gitError.close()
- 
-+    def run(self, args):
-         if self.importIntoRemotes:
-             self.refPrefix = "refs/remotes/p4/"
-         else:
-@@ -3497,15 +3566,7 @@ class P4Sync(Command, P4UserMap):
-                     b = b[len(self.projectName):]
-                 self.createdBranches.add(b)
- 
--        self.tz = "%+03d%02d" % (- time.timezone / 3600, ((- time.timezone % 3600) / 60))
--
--        self.importProcess = subprocess.Popen(["git", "fast-import"],
--                                              stdin=subprocess.PIPE,
--                                              stdout=subprocess.PIPE,
--                                              stderr=subprocess.PIPE);
--        self.gitOutput = self.importProcess.stdout
--        self.gitStream = self.importProcess.stdin
--        self.gitError = self.importProcess.stderr
-+        self.openStreams()
- 
-         if revision:
-             self.importHeadRevision(revision)
-@@ -3585,11 +3646,7 @@ class P4Sync(Command, P4UserMap):
-             missingP4Labels = p4Labels - gitTags
-             self.importP4Labels(self.gitStream, missingP4Labels)
- 
--        self.gitStream.close()
--        if self.importProcess.wait() != 0:
--            die("fast-import failed: %s" % self.gitError.read())
--        self.gitOutput.close()
--        self.gitError.close()
-+        self.closeStreams()
- 
-         # Cleanup temporary branches created during import
-         if self.tempBranches != []:
-@@ -3721,6 +3778,89 @@ class P4Clone(P4Sync):
- 
-         return True
- 
-+class P4Unshelve(Command):
-+    def __init__(self):
-+        Command.__init__(self)
-+        self.options = []
-+        self.origin = "HEAD"
-+        self.description = "Unshelve a P4 changelist into a git commit"
-+        self.usage = "usage: %prog [options] changelist"
-+        self.options += [
-+                optparse.make_option("--origin", dest="origin",
-+                    help="Use this base revision instead of the default (%s)" % self.origin),
-+        ]
-+        self.verbose = False
-+        self.noCommit = False
-+        self.destbranch = "refs/remotes/p4/unshelved"
-+
-+    def renameBranch(self, branch_name):
-+        """ Rename the existing branch to branch_name.N
-+        """
-+
-+        found = True
-+        for i in range(0,1000):
-+            backup_branch_name = "{0}.{1}".format(branch_name, i)
-+            if not gitBranchExists(backup_branch_name):
-+                gitUpdateRef(backup_branch_name, branch_name) # copy ref to backup
-+                gitDeleteRef(branch_name)
-+                found = True
-+                print("renamed old unshelve branch to {0}".format(backup_branch_name))
-+                break
-+
-+        if not found:
-+            sys.exit("gave up trying to rename existing branch {0}".format(sync.branch))
-+
-+    def findLastP4Revision(self, starting_point):
-+        """ Look back from starting_point for the first commit created by git-p4
-+            to find the P4 commit we are based on, and the depot-paths.
-+        """
-+
-+        for parent in (range(65535)):
-+            log = extractLogMessageFromGitCommit("{0}^{1}".format(starting_point, parent))
-+            settings = extractSettingsGitLog(log)
-+            if settings.has_key('change'):
-+                return settings
-+
-+        sys.exit("could not find git-p4 commits in {0}".format(self.origin))
-+
-+    def run(self, args):
-+        if len(args) != 1:
-+            return False
-+
-+        if not gitBranchExists(self.origin):
-+            sys.exit("origin branch {0} does not exist".format(self.origin))
-+
-+        sync = P4Sync()
-+        changes = args
-+        sync.initialParent = self.origin
-+
-+        # use the first change in the list to construct the branch to unshelve into
-+        change = changes[0]
-+
-+        # if the target branch already exists, rename it
-+        branch_name = "{0}/{1}".format(self.destbranch, change)
-+        if gitBranchExists(branch_name):
-+            self.renameBranch(branch_name)
-+        sync.branch = branch_name
-+
-+        sync.verbose = self.verbose
-+        sync.suppress_meta_comment = True
-+
-+        settings = self.findLastP4Revision(self.origin)
-+        origin_revision = settings['change']
-+        sync.depotPaths = settings['depot-paths']
-+        sync.branchPrefixes = sync.depotPaths
-+
-+        sync.openStreams()
-+        sync.loadUserMapFromCache()
-+        sync.silent = True
-+        sync.importChanges(changes, shelved=True, origin_revision=origin_revision)
-+        sync.closeStreams()
-+
-+        print("unshelved changelist {0} into {1}".format(change, branch_name))
-+
-+        return True
-+
- class P4Branches(Command):
-     def __init__(self):
-         Command.__init__(self)
-@@ -3775,7 +3915,8 @@ commands = {
-     "rebase" : P4Rebase,
-     "clone" : P4Clone,
-     "rollback" : P4RollBack,
--    "branches" : P4Branches
-+    "branches" : P4Branches,
-+    "unshelve" : P4Unshelve,
- }
- 
- 
-diff --git a/t/t9832-unshelve.sh b/t/t9832-unshelve.sh
-new file mode 100755
-index 0000000000..48ec7679b8
---- /dev/null
-+++ b/t/t9832-unshelve.sh
-@@ -0,0 +1,138 @@
-+#!/bin/sh
-+
-+last_shelved_change () {
-+	p4 changes -s shelved -m1 | cut -d " " -f 2
-+}
-+
-+test_description='git p4 unshelve'
-+
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d' '
-+	start_p4d
-+'
-+
-+test_expect_success 'init depot' '
-+	(
-+		cd "$cli" &&
-+		echo file1 >file1 &&
-+		p4 add file1 &&
-+		p4 submit -d "change 1" &&
-+		: >file_to_delete &&
-+		p4 add file_to_delete &&
-+		p4 submit -d "file to delete"
-+	)
-+'
-+
-+test_expect_success 'initial clone' '
-+	git p4 clone --dest="$git" //depot/@all
-+'
-+
-+test_expect_success 'create shelved changelist' '
-+	(
-+		cd "$cli" &&
-+		p4 edit file1 &&
-+		echo "a change" >>file1 &&
-+		echo "new file" >file2 &&
-+		p4 add file2 &&
-+		p4 delete file_to_delete &&
-+		p4 opened &&
-+		p4 shelve -i <<EOF
-+Change: new
-+Description:
-+	Test commit
-+
-+	Further description
-+Files:
-+	//depot/file1
-+	//depot/file2
-+	//depot/file_to_delete
-+EOF
-+
-+	) &&
-+	(
-+		cd "$git" &&
-+		change=$(last_shelved_change) &&
-+		git p4 unshelve $change &&
-+		git show refs/remotes/p4/unshelved/$change | grep -q "Further description" &&
-+		git cherry-pick refs/remotes/p4/unshelved/$change &&
-+		test_path_is_file file2 &&
-+		test_cmp file1 "$cli"/file1 &&
-+		test_cmp file2 "$cli"/file2 &&
-+		test_path_is_missing file_to_delete
-+	)
-+'
-+
-+test_expect_success 'update shelved changelist and re-unshelve' '
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$cli" &&
-+		change=$(last_shelved_change) &&
-+		echo "file3" >file3 &&
-+		p4 add -c $change file3 &&
-+		p4 shelve -i -r <<EOF &&
-+Change: $change
-+Description:
-+	Test commit
-+
-+	Further description
-+Files:
-+	//depot/file1
-+	//depot/file2
-+	//depot/file3
-+	//depot/file_to_delete
-+EOF
-+		p4 describe $change
-+	) &&
-+	(
-+		cd "$git" &&
-+		change=$(last_shelved_change) &&
-+		git p4 unshelve $change &&
-+		git diff refs/remotes/p4/unshelved/$change.0 refs/remotes/p4/unshelved/$change | grep -q file3
-+	)
-+'
-+
-+# This is the tricky case where the shelved changelist base revision doesn't
-+# match git-p4's idea of the base revision
-+#
-+# We will attempt to unshelve a change that is based on a change one commit
-+# ahead of p4/master
-+
-+test_expect_success 'create shelved changelist based on p4 change ahead of p4/master' '
-+	git p4 clone --dest="$git" //depot/@all &&
-+	(
-+		cd "$cli" &&
-+		p4 revert ... &&
-+		p4 edit file1 &&
-+		echo "foo" >>file1 &&
-+		p4 submit -d "change:foo" &&
-+		p4 edit file1 &&
-+		echo "bar" >>file1 &&
-+		p4 shelve -i <<EOF &&
-+Change: new
-+Description:
-+	Change to be unshelved
-+Files:
-+	//depot/file1
-+EOF
-+		change=$(last_shelved_change) &&
-+		p4 describe -S $change | grep -q "Change to be unshelved"
-+	)
-+'
-+
-+# Now try to unshelve it. git-p4 should refuse to do so.
-+test_expect_success 'try to unshelve the change' '
-+	test_when_finished cleanup_git &&
-+	(
-+		change=$(last_shelved_change) &&
-+		cd "$git" &&
-+		test_must_fail git p4 unshelve $change 2>out.txt &&
-+		grep -q "cannot unshelve" out.txt
-+	)
-+'
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
 -- 
-2.17.0.392.gdeb1a6e9b7
 
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
+--8323328-2007282615-1527062344=:16358--
