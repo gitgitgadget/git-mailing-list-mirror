@@ -6,57 +6,58 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A19EB1F51C
-	for <e@80x24.org>; Wed, 23 May 2018 01:08:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 409321F51C
+	for <e@80x24.org>; Wed, 23 May 2018 01:23:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753591AbeEWBI5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 May 2018 21:08:57 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:43090 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753512AbeEWBI4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 May 2018 21:08:56 -0400
-Received: by mail-wr0-f194.google.com with SMTP id r13-v6so10983145wrj.10
-        for <git@vger.kernel.org>; Tue, 22 May 2018 18:08:55 -0700 (PDT)
+        id S1753538AbeEWBXa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 May 2018 21:23:30 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:40171 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753441AbeEWBX3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 May 2018 21:23:29 -0400
+Received: by mail-wm0-f46.google.com with SMTP id j5-v6so4527239wme.5
+        for <git@vger.kernel.org>; Tue, 22 May 2018 18:23:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=aouCvfdY1rpU+J1Q5XvHaqPGI9ZZlGofu2ieWTSfNzU=;
-        b=czodnwcyowCX7EAAFEbhwdbgmWI+x1/R17KLS99gQssZ8gV94OdjvnHen6N6O93bm2
-         d9G8foqGub+doHpsnCUbreAWMIJVJ0ZpY7+woFLKEKHvuNa1LQbsAPdvxtR04VgAEKF4
-         enJ71DwmB2wdd71GDOYQLFlAoovO4VTceKmqoaP/1kEdlGN/y/q2pakh0iAdZrDFATzm
-         SBioT8fT8bLIpNpRHA5/sqilSsuQSdcPGiTQW143ogIV9C/QpdQlNJ5JG4wOzm/DSnuS
-         x6bXHz2NeK/Yq5tv68O2nFwzV92tW/k1f0ikqXpajp3X5iht9ESamhmwFvnIzD2xt/nJ
-         E55w==
+        bh=lyWft9c748WwQcbDshJF33a1FsAZZgSe10A1XicOiSQ=;
+        b=gsrneZRj6KlkxRyLmk7wvx+0yY0RCrmPlpUPDJOzGQJitdaiR934/DNhhHsx+uYXiD
+         hARMJW4eLxvTCeFtjMmIYZXAkw/m8KCSB7Mk/ZVWPvDGrTv4+vp5X1tBMgDSjTlmQbUq
+         TKz8nCFW5hoJM+mCRt/nsyFtEh9gQNl4YKVIhIc1dIvCoQ8HsqQEwM/vuAdZUCaFBHnP
+         D3q08Wc2KqPtsxjO8KmSE8WnNqN7lB+eVuvN9hqlsk102eOZJM8MKh4tUSigk4DiRnmB
+         LFuU1BnT4XGi48lGmI43OIjbHm9/h5eUZlmIfh6wlmw9G1yFMC9aaagVGM6MarQHe2wZ
+         L03w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=aouCvfdY1rpU+J1Q5XvHaqPGI9ZZlGofu2ieWTSfNzU=;
-        b=sFpI5ZqOXaQCWJkMZOYjvjPdDCVQlxk0aJz+oi0eUC/9AaRhQUT+bOyKFzSmTL/Lws
-         voPqi9EGTJbSj8qU/Yg331Y/j7IAjVNfiZvKru3TrLEOKuJmnkHKJo9zezoQtn9DhMFb
-         c/YH+iLH+iTdLS3IDwY+SeQ7IcuAg8YMfAym1U3gCNHUulC238jn4szwI9PGIiSq7lgf
-         SQuh8mciqsBZ3MugPJGJPUaoR8QL+kb3H9ZU8j0YW3EWQvGbhHH4neWR8oAEnRT53JFv
-         kQPx44YS/vkhN2W/O8ocA0CIyDjWkxuIvRMcwnUFCsQWCzLOO/wx/O+pPso+2ppPHVuN
-         oZvA==
-X-Gm-Message-State: ALKqPwfhO4GBw7lb240naN11wrz4eW4QJ3QE/nkrqtwLgo1g7Kqop5fX
-        lqcCsXNuf0B66Qsik+zNmg1TnZDQ
-X-Google-Smtp-Source: AB8JxZpOe/E0m9+KTCdEyF4qDAJuSIpa4WLbVauLXnaFgtCQ91TN5Fj97wfjC+3rBbwI/5acpkmEjQ==
-X-Received: by 2002:adf:8e27:: with SMTP id n36-v6mr467887wrb.27.1527037734950;
-        Tue, 22 May 2018 18:08:54 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o9-v6sm18657481wrn.74.2018.05.22.18.08.53
+        bh=lyWft9c748WwQcbDshJF33a1FsAZZgSe10A1XicOiSQ=;
+        b=kqGsgr055y4v9Ag3HltNPTV4uX8xk23w+u4xgQoOU8DgwQRou+rhJ1OxPYanAyM5ML
+         ndvSWRLrHgPc5Bq8noiId+49xn6NUiTuzCQl7qcwk9OdRxrvotsavet/XZrsRYtbAEmG
+         U7kFzRY1Qi8XMNLYcD4OrAU4jVBjcrEXhxBnUSYhbO7EOmw+6mgktBo06qu7JdtghKLC
+         iqLStk8rWfnnKvy62HyxrhnaFTryk18OqX/k2fW6cMkzQnWiUh2zRfOx07eeV3+GXgAq
+         0m8D7w4E3nbF8fdqKBOD6bTRlzLGzaFwiUC3hRMq5Mc7y3J+h8QrdjJDRnPIn7G8XRPG
+         o+Hw==
+X-Gm-Message-State: ALKqPwel9F4O0k/g987u6yL0hSmqpPLpBoVf+hErb9b+gMt3LBFR5dm2
+        +7nBS/nve9kTcQ6BIpcz6fY=
+X-Google-Smtp-Source: AB8JxZrzJfhK9aQ1lR2plEa1TSPD1Hbs2XO5O1PQXyD5tIcpgyOUHg2lJ8karmaQxWGqME1XDBP08w==
+X-Received: by 2002:a1c:6f57:: with SMTP id k84-v6mr2445050wmc.142.1527038607959;
+        Tue, 22 May 2018 18:23:27 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x73-v6sm863108wmf.21.2018.05.22.18.23.27
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 May 2018 18:08:54 -0700 (PDT)
+        Tue, 22 May 2018 18:23:27 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] fetch-pack: space out sent "haves" in negotiation
-References: <20180521204340.260572-1-jonathantanmy@google.com>
-Date:   Wed, 23 May 2018 10:08:53 +0900
-In-Reply-To: <20180521204340.260572-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Mon, 21 May 2018 13:43:40 -0700")
-Message-ID: <xmqq36yjxjoa.fsf@gitster-ct.c.googlers.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, sbeller@google.com
+Subject: Re: [PATCH v2 1/2] remote-curl: accept all encodings supported by curl
+References: <20180521234004.142548-1-bmwill@google.com>
+        <20180522184204.47332-1-bmwill@google.com>
+Date:   Wed, 23 May 2018 10:23:26 +0900
+In-Reply-To: <20180522184204.47332-1-bmwill@google.com> (Brandon Williams's
+        message of "Tue, 22 May 2018 11:42:03 -0700")
+Message-ID: <xmqqwovvw4fl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,23 +66,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> I was thinking about fetch negotiation in some non-ideal situations
-> (specifically, when the client repo contains two or more independent
-> branches that meet only somewhere far in the past) and thought about
-> skipping over intermediate commits, using exponentially larger skips as
-> we proceed, when generating "have" lines.
+> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+> index f5721b4a5..913089b14 100755
+> --- a/t/t5551-http-fetch-smart.sh
+> +++ b/t/t5551-http-fetch-smart.sh
+> @@ -26,14 +26,14 @@ setup_askpass_helper
+>  cat >exp <<EOF
+>  > GET /smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1
+>  > Accept: */*
+> -> Accept-Encoding: gzip
+> +> Accept-Encoding: ENCODINGS
+>  > Pragma: no-cache
 
-I recall a "wouldn't it be wonderful if we had..." discussion on
-this exact topic much earlier in the project's life to skip
-exponentialy (I think fibonacci was what was suggested in the
-thread) and then backfill after overshooting, but I do not recall
-anybody following through and coming up with a concrete design
-and/or implementation.  Maybe protocol v2 in place we can have
-something this time around.
+Is the ordering of these headers determined by the user of cURL
+library (i.e. Git), or whatever the version of cURL we happened to
+link with happens to produce?
 
-Looking forward to read the remainder of the message and the patch
-;-)
+The point is whether the order is expected to be stable, or we are
+better off sorting the actual log before comparing.
 
-Thanks.
+>  < HTTP/1.1 200 OK
+>  < Pragma: no-cache
+>  < Cache-Control: no-cache, max-age=0, must-revalidate
+>  < Content-Type: application/x-git-upload-pack-advertisement
+
+A similar question for this response.
+
+>  > POST /smart/repo.git/git-upload-pack HTTP/1.1
+> -> Accept-Encoding: gzip
+> +> Accept-Encoding: ENCODINGS
+>  > Content-Type: application/x-git-upload-pack-request
+>  > Accept: application/x-git-upload-pack-result
+>  > Content-Length: xxx
+
+Ditto for this request.
+
+> @@ -79,8 +79,13 @@ test_expect_success 'clone http repository' '
+>  		/^< Date: /d
+>  		/^< Content-Length: /d
+>  		/^< Transfer-Encoding: /d
+> -	" >act &&
+> -	test_cmp exp act
+> +	" >actual &&
+> +	sed -e "s/^> Accept-Encoding: .*/> Accept-Encoding: ENCODINGS/" \
+> +			actual >actual.smudged &&
+> +	test_cmp exp actual.smudged &&
+> +
+> +	grep "Accept-Encoding:.*gzip" actual >actual.gzip &&
+> +	test_line_count = 2 actual.gzip
+>  '
+
+Similarly, how much control do we have to ensure that the test HTTPD
+server (1) supports gzip and (2) does not support encoding algos
+with confusing names e.g. "funnygzipalgo" that may accidentally
+match that pattern?
+
+Thanks.  Not a new issue with this patch, but just being curious if
+you or anybody thought about it as a possible issue.
+
+
