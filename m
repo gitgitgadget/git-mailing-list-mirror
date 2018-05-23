@@ -2,109 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A6E71F42D
-	for <e@80x24.org>; Wed, 23 May 2018 22:19:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF5B51F42D
+	for <e@80x24.org>; Wed, 23 May 2018 22:20:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934832AbeEWWTG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 May 2018 18:19:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62136 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934147AbeEWWTE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 May 2018 18:19:04 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3BCCBDE09B;
-        Wed, 23 May 2018 18:19:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=rubNTym7AqiVWYcdArdkTp0jSig=; b=a7V189Y
-        8vQLSKWAfzqPVZLCYxibB5ocWmVAk+nFzf4VWAYG6mu9IuchZYj6Qql+y5XjPZNC
-        VsEG0vIByEtQnBCPgZWKHeEV/QVCd5AfvCYvhSIUCDfyr/zurbCCdVi2rhXETdkN
-        HzJPxlO89nwHWtebecLYjY9BgWWFuyLIRmfg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=I+ia2tOzc7SZWizFIz4e8OhjCbsy5TYyX
-        Xr6vLHZyEnTT6SFBWHTP7sGri4xPRxNioCY8u8VtR/ND+9kbZ2nKIiSelwYaFAgu
-        C9suRUTYDKRtNUvhiXMcthxO8Dca5gSB1PYxKuvTdMGnqel2t2aZBUq8yM2aBBDY
-        ol5TntFwIg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 33E06DE099;
-        Wed, 23 May 2018 18:19:04 -0400 (EDT)
-Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B0E7DDE098;
-        Wed, 23 May 2018 18:19:03 -0400 (EDT)
-Date:   Wed, 23 May 2018 18:19:02 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, B.Steinbrink@gmx.de
-Subject: Re: [PATCH 2/2] rev-parse: verify that commit looked up is not NULL
-Message-ID: <20180523221901.GV26695@zaya.teonanacatl.net>
-References: <CABPp-BFOwWvDpfLFa2yrUDU_3BU6F68oLTtO5FvQo8nr62_WtQ@mail.gmail.com>
- <20180523204613.11333-1-newren@gmail.com>
- <20180523204613.11333-2-newren@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180523204613.11333-2-newren@gmail.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Pobox-Relay-ID: 4D0166C6-5ED7-11E8-AD07-67830C78B957-09356542!pb-smtp2.pobox.com
+        id S934921AbeEWWUi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 May 2018 18:20:38 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:36321 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934666AbeEWWUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 May 2018 18:20:34 -0400
+Received: by mail-wr0-f174.google.com with SMTP id k5-v6so17137121wrn.3
+        for <git@vger.kernel.org>; Wed, 23 May 2018 15:20:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=EpeLmyjykkVbkVLwcMMc/Y05Ec6iwHp0/lcYSKLsfFw=;
+        b=Nv+VX/88+XefvXfKUzjYYpAm7iavbpaRBQ+B+IGMkFNvxUSWoMy7PdUla7Q1qZmK69
+         84J3eMsedFeyHlZV6wtgIotzJ42CJ4iciTN0PFbpAr5T8jHrsCQ4NYDhFzZt+xRt3IUp
+         kmI2J8Gif02jnIg6tvlXjmn3hKXWVkRRJJwmI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=EpeLmyjykkVbkVLwcMMc/Y05Ec6iwHp0/lcYSKLsfFw=;
+        b=CIMuH7+PqrCuMkB2fUPe9eclRq6YAWaAcKhEam5b/ZXkIh4b1XpXDPtYQDzJeoXQDh
+         oj5eWFoToPdTHIh6Mn5rhSMkuS7T1rhN1rgV+5BZqqasCc2HdP8rfBKKRWIS3wX/jLZV
+         DdEVKNKrh6COwjWEvPWaSZ5gThaA3OALbAawx6cu+3Nt119VxjQcLG156VSYX2r5oBQO
+         Ls7sarfE//9tfiLkVciT2RytzzD3fqluFN3/FmKePrfd+iYbmnxGHLCK/x6jN0JW988N
+         1jXMXop0oWKePRFzLHdFD1n+ve3U6tjfhBS32xzaNvsS1zSIS5wd9wobYxrjh6jmIggQ
+         Xv0A==
+X-Gm-Message-State: ALKqPwdA2gGWMJPomM9RBTi072q3sVrsddlA3OmpZTjLDUgE5oydUkj2
+        FlvNQnEdJOccTUciY1GaMIRzBubDbLY=
+X-Google-Smtp-Source: AB8JxZo0+pOOa9uRrIk3OPk3XAwe6ozZhiLhLPiYqhZZRbRG0UM3nBo6RJHxfqZ3n7cKFQUehGr2Cg==
+X-Received: by 2002:adf:a789:: with SMTP id j9-v6mr3683070wrc.95.1527114033079;
+        Wed, 23 May 2018 15:20:33 -0700 (PDT)
+Received: from ethel.corp.roku (cpc92728-cmbg20-2-0-cust351.5-4.cable.virginm.net. [82.29.15.96])
+        by smtp.gmail.com with ESMTPSA id q2-v6sm20858994wrm.26.2018.05.23.15.20.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 May 2018 15:20:31 -0700 (PDT)
+From:   Luke Diamand <luke@diamand.org>
+To:     git@vger.kernel.org
+Cc:     Andrey Mazo <amazo@checkvideo.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Romain Merland <merlorom@yahoo.fr>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        George Vanburgh <gvanburgh@bloomberg.net>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Luke Diamand <luke@diamand.org>
+Subject: [PATCHv6 0/1] git-p4: unshelve
+Date:   Wed, 23 May 2018 23:20:25 +0100
+Message-Id: <20180523222026.6609-1-luke@diamand.org>
+X-Mailer: git-send-email 2.17.0.392.gdeb1a6e9b7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren wrote:
-> In commit 2122f8b963d4 ("rev-parse: Add support for the ^! and ^@ syntax",
-> 2008-07-26), try_parent_shorthands() was introduced to parse the special
-> ^! and ^@ syntax.  However, it did not check the commit returned from
-> lookup_commit_reference() before proceeding to use it.  If it is NULL,
-> bail early and notify the caller that this cannot be a valid revision
-> range.
+This just removes the verbose print change, which will end up causing
+conflicts later since it's also being fixed in another commit.
 
-Thanks.  This fixes the segfault.  While I was testing this,
-I wondered if the following cases should differ:
+Discussed here:
 
-#          f*40
-$ ./git-rev-parse ffffffffffffffffffffffffffffffffffffffff^@ ; echo $?
-0
+https://public-inbox.org/git/BYAPR08MB38455AFE85AE6B04EB31EF92DA6B0@BYAPR08MB3845.namprd08.prod.outlook.com/
 
-#          f*39
-$ ./git-rev-parse fffffffffffffffffffffffffffffffffffffff^@ ; echo $?
-fffffffffffffffffffffffffffffffffffffff^@
-fatal: ambiguous argument 'fffffffffffffffffffffffffffffffffffffff^@': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-128
+Luke Diamand (1):
+  git-p4: add unshelve command
 
-Looking a little further, this is deeper than the rev-parse
-handling.  The difference in how these invalid refs are
-handled appears in 'git show' as well.  With 'git show' a
-(different) fatal error is returned in both cases.
-
-#          f*40
-$ git show ffffffffffffffffffffffffffffffffffffffff
-fatal: bad object ffffffffffffffffffffffffffffffffffffffff
-
-#          39*f
-$ git show fffffffffffffffffffffffffffffffffffffff
-fatal: ambiguous argument 'fffffffffffffffffffffffffffffffffffffff': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-
-Should rev-parse return an error as well, rather than
-silenty succeeding?
+ Documentation/git-p4.txt |  32 ++++++
+ git-p4.py                | 213 ++++++++++++++++++++++++++++++++-------
+ t/t9832-unshelve.sh      | 138 +++++++++++++++++++++++++
+ 3 files changed, 347 insertions(+), 36 deletions(-)
+ create mode 100755 t/t9832-unshelve.sh
 
 -- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-I refuse to spend my life worrying about what I eat. There is no
-pleasure worth foregoing just for an extra three years in the
-geriatric ward.
-    -- John Mortimer
+2.17.0.392.gdeb1a6e9b7
 
