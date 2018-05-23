@@ -2,92 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59CE91F42D
-	for <e@80x24.org>; Wed, 23 May 2018 17:35:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 369671F51C
+	for <e@80x24.org>; Wed, 23 May 2018 18:51:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933897AbeEWRf0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 May 2018 13:35:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50390 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S932667AbeEWRfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 May 2018 13:35:25 -0400
-Received: (qmail 16749 invoked by uid 109); 23 May 2018 17:35:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 23 May 2018 17:35:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16882 invoked by uid 111); 23 May 2018 17:35:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 23 May 2018 13:35:34 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 May 2018 13:35:23 -0400
-Date:   Wed, 23 May 2018 13:35:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Kevin Bracey <kevin@bracey.fi>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Weird revision walk behaviour
-Message-ID: <20180523173523.GB10299@sigill.intra.peff.net>
-References: <CAM0VKjkr71qLfksxZy59o4DYCM-x=podsCf6Qv+PzZuSe1gXZw@mail.gmail.com>
- <20180523173246.GA10299@sigill.intra.peff.net>
+        id S934141AbeEWSvz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 May 2018 14:51:55 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:35952 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933928AbeEWSvv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 May 2018 14:51:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=9prToPELuo0qz9xoBm4NvAYQhE7gOsen+LC9JZ0H8YQ=; b=lw3wHzwqA+hRz6VARSIbBnUJJ7
+        jGit6oiMpdVOB+Vvxbl23+RLmoEy4t1fwknj+gWyJbRvVtEpGNgZOOzq5Zk/sQPBGl3xEm7NTVxdD
+        l6B8+Unwj24FBnzGy7XvtW2SuyNUnijal4ptfgOFuMSMxMV+cKF0WEmROqPUVdOL/gytl5Gds02/3
+        n1GLrgi9IlxzNicImPMXbvAHBjZxJ0hZAI1FnwKwAoU6cjQEPqrGYnd0kHVY75gZmtF9RP/kQziJY
+        Gq6U6ZFOkIl8gagabVjOSdD52YYcd9P+QBdks8wNwH3G4vauQqypfCgUj0xfyQr8AZ02D91fGixn8
+        L/6EHAEQ==;
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:50928 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fLYrU-00C0ZU-Up
+        for git@vger.kernel.org; Wed, 23 May 2018 14:51:50 -0400
+Date:   Wed, 23 May 2018 14:50:12 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: "git grep" and "working tree" vs "working directory"
+Message-ID: <alpine.LFD.2.21.1805231434010.28811@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180523173246.GA10299@sigill.intra.peff.net>
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 23, 2018 at 01:32:46PM -0400, Jeff King wrote:
 
-> On Wed, May 23, 2018 at 07:10:58PM +0200, SZEDER Gábor wrote:
-> 
-> >   $ git log --oneline master..ba95710a3b -- ci/
-> >   ea44c0a594 Merge branch 'bw/protocol-v2' into jt/partial-clone-proto-v2
-> > 
-> > But as far as I can tell, there are no changes in the 'ci/' directory
-> > on any of the merge's parents:
-> > 
-> >   $ git log --oneline master..ea44c0a594^1 -- ci/
-> >   # Nothing.
-> >   $ git log --oneline master..ea44c0a594^2 -- ci/
-> >   # Nothing!
-> 
-> Hmm. That commit does touch "ci/" with respect to one of its parents.
-> It should get simplified away because it completely matches the other
-> parent, so it does sound like a bug.
-> 
-> > This is not specific to the 'ci/' directory, it seems that any
-> > untouched directory does the trick:
-> > 
-> >   $ git log --oneline master..ea44c0a594 -- contrib/coccinelle/ t/lib-httpd/
-> >   ea44c0a594 Merge branch 'bw/protocol-v2' into jt/partial-clone-proto-v2
-> 
-> Both of those directories also differ between one parent. If you try it
-> with "contrib/remote-helpers", which does not, then the commit does not
-> appear.
-> 
-> So it does seem like a bug where we should be simplifying away the merge
-> but are not (or I'm missing the corner case, too ;) ).
-> 
-> > I get the same behavior with Git built from current master and from
-> > past releases as well (tried it as far back as v2.0.0).
-> 
-> I keep some older builds around, and it does not reproduce with v1.6.6.3
-> (that's my usual goto for "old"). Bisecting turns up d0af663e42
-> (revision.c: Make --full-history consider more merges, 2013-05-16).  It
-> looks like an unintended change (the commit message claims that the
-> non-full-history case shouldn't be affected).
+  more puzzling terminology, this time in the man page for "git grep".
+the SYNOPSIS shows, at the very end, the clearly optional
+"[<pathspec>...]",
 
-There's more discussion in the thread at:
+    git grep ...
+           ... snip ...
+           [--] [<pathspec>...]
 
-  https://public-inbox.org/git/1366658602-12254-1-git-send-email-kevin@bracey.fi/
+but nowhere in the man page is there an explanation as to the default
+value used if there is no pathspec, and here's why that's confusing.
 
-I haven't absorbed it all yet, but I'm adding Junio to the cc.
+  first, what is the proper phrase for the *entire* checked out repo?
+working tree? working directory? either? and is that the proper phrase
+to use *regardless* of where you happen to be located, perhaps in a
+subdirectory?
 
--Peff
+  i did a quick test and, if i don't supply a pathspec, then "git
+grep" (quite reasonably) recursively searches only the *current*
+working directory (example from linux kernel source repo):
+
+  $ cd scripts
+  $ git grep -il torvalds --
+  checkstack.pl
+  get_maintainer.pl
+  package/mkdebian
+  $
+
+however, if you peruse the very first part of the OPTIONS section of
+that man page, you read:
+
+  --cached
+      Instead of searching tracked files in the working tree,
+      search blobs registered in the index file.
+
+  --no-index
+      Search files in the current directory that is not managed by Git.
+
+  --untracked
+      In addition to searching in the tracked files in the
+      working tree, search also in untracked files.
+
+  ... snip ...
+
+note how a couple of those options are described as searching "the
+working tree", when they clearly(?) do no such thing if you happen to
+be located in a subdirectory.
+
+  also, at the bottom of that section, one reads:
+
+  <pathspec>...
+      If given, limit the search to paths matching at least one
+      pattern. Both leading paths match and glob(7) patterns are supported.
+
+      For more details about the <pathspec> syntax, see the pathspec
+      entry in gitglossary(7).
+
+but, again, what if <pathspec> is *not* given? then what?
+
+  finally, the first example has the same problem:
+
+  git grep 'time_t' -- '*.[ch]'
+      Looks for time_t in all tracked .c and .h files in the
+      working directory and its subdirectories.
+
+in "the working directory"?
+
+  what is the proper terminology to be used here?
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
