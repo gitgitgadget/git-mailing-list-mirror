@@ -2,89 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D8821F42D
-	for <e@80x24.org>; Wed, 23 May 2018 19:12:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9E431F42D
+	for <e@80x24.org>; Wed, 23 May 2018 19:38:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934182AbeEWTMr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 May 2018 15:12:47 -0400
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:35738 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934122AbeEWTMr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 May 2018 15:12:47 -0400
-Received: by mail-ot0-f196.google.com with SMTP id h8-v6so26522778otb.2
-        for <git@vger.kernel.org>; Wed, 23 May 2018 12:12:46 -0700 (PDT)
+        id S934242AbeEWTip (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 May 2018 15:38:45 -0400
+Received: from mail-sn1nam01on0125.outbound.protection.outlook.com ([104.47.32.125]:21408
+        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S934223AbeEWTio (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 May 2018 15:38:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=W3Lz+Ezy0+h/KLFjdIr8sYer+NMs5p9GBB/4YMIdi7Y=;
-        b=f0a2hTpta8zRnCS9rI3OlSReCNOCjVU7o6lTjoRRjIioBqSyiknkA0/drRsG7B5dPk
-         NWfajGoBc23sicu/Wdwj2m6lbI79vKZau3WanRoa6hZ7lodpUY1ie9pxGvIC0BdaEGu7
-         LO8vSPVP1OO2kM/FnVZ+JaA89bnojfonwj+Ko=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=W3Lz+Ezy0+h/KLFjdIr8sYer+NMs5p9GBB/4YMIdi7Y=;
-        b=Q6hnwn1dLVrRtXTNIhcU3Q6CPi6nnkZ31Jwu46L617ThbIJ9Ix0lSLhsFmfQ6BRi3k
-         CmWpnETCrfPiO9xtUavZ5fNnfNMQ3mk+O6zIWIF4qtBrnYv/uJ3WRgkzshS2VDK+51/b
-         h0fGKSPtykbxFG5zX0Zw4M3vrZEs0Xd56T2n45x/6aENmQSR65U4AJLcGlD1rNFsygQe
-         2ainikmwgOPemg9qDPWbek2F/CwKD3VkSX2VPG+5uWWUzgwEcOXrI3DB8dwz5+jhuifm
-         ubADSx8cwKwN4FJVb3NyS7FmLxnW3gUSCTgPfD5kRhxAY5BNdU3xScK3oKv9Tlt+HnLS
-         7Wuw==
-X-Gm-Message-State: ALKqPweRRzuogPzrUSUF0GORphw2gZWqR1hS2aU7XsejI25T/0MpShgG
-        bNZhynCuUbq4/BTl9fPBRFGKCWJhe/9CmqZKLcrZZg==
-X-Google-Smtp-Source: AB8JxZqYm3O5XFQXrQ2Q/OPzed+2wEq60BTZ13f5ConfSKUqhcFvbrA6/bhyu5gQi1fZzxfKerP9j+Wz5eq7qtoUk4w=
-X-Received: by 2002:a9d:7259:: with SMTP id a25-v6mr2698190otk.267.1527102766542;
- Wed, 23 May 2018 12:12:46 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a9d:3c57:0:0:0:0:0 with HTTP; Wed, 23 May 2018 12:12:45
- -0700 (PDT)
-In-Reply-To: <BYAPR08MB38451D101964D3B4D10436EBDA6B0@BYAPR08MB3845.namprd08.prod.outlook.com>
-References: <20180522084109.29787-1-luke@diamand.org> <20180522084109.29787-2-luke@diamand.org>
+ d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8oHcW8flYNdO2wk+l4hc93bYcg3liLCCy5hTpQwy2k4=;
+ b=E4agwQsWZ80W4KZKwjtVqElgaYhRsUiOjyELX6rHq+ugK2CERayBfa001eAKEelm1lQ1Jp+llk01G0ykGhvq5h34BWE9qtyxvMffp22zwRZtK61y8gUiWi4dmZQbLIItuQ+n9SBWnX0HmJ4giDeey3eecqzBnEDpBtppWesuzFg=
+Received: from BYAPR08MB3845.namprd08.prod.outlook.com (52.135.193.27) by
+ BYAPR08MB3847.namprd08.prod.outlook.com (52.135.193.29) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.776.11; Wed, 23 May 2018 19:38:41 +0000
+Received: from BYAPR08MB3845.namprd08.prod.outlook.com
+ ([fe80::5d83:1086:8c95:496]) by BYAPR08MB3845.namprd08.prod.outlook.com
+ ([fe80::5d83:1086:8c95:496%13]) with mapi id 15.20.0776.015; Wed, 23 May 2018
+ 19:38:41 +0000
+From:   "Mazo, Andrey" <amazo@checkvideo.com>
+To:     Luke Diamand <luke@diamand.org>
+CC:     Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?SZEDER_G=E1bor?= <szeder.dev@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        "Romain Merland" <merlorom@yahoo.fr>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        "Lars Schneider" <larsxschneider@gmail.com>,
+        George Vanburgh <gvanburgh@bloomberg.net>
+Subject: Re: [PATCH 1/1] git-p4: unshelve: use action==add instead of
+ rev==none
+Thread-Topic: [PATCH 1/1] git-p4: unshelve: use action==add instead of
+ rev==none
+Thread-Index: AQHT8airjeXQ5f01pkuKAZVmKCNFT6Q7iFGAgAAup4CAANq2qIAA78JdgAAvToCAAAPhQQ==
+Date:   Wed, 23 May 2018 19:38:41 +0000
+Message-ID: <BYAPR08MB38455AFE85AE6B04EB31EF92DA6B0@BYAPR08MB3845.namprd08.prod.outlook.com>
+References: <20180522084109.29787-1-luke@diamand.org>
+ <20180522084109.29787-2-luke@diamand.org>
  <CAM0VKjkdGByfTtj5cunUzqeneu4Bi8Qw4vj428zV1h3ezHXyQg@mail.gmail.com>
  <CAE5ih79_Ai8F48zFpJ09e8saGrySoiyVdsgkk8ZpRrQAd15a4g@mail.gmail.com>
- <xmqqk1rvw2i1.fsf@gitster-ct.c.googlers.com> <BYAPR08MB38451D101964D3B4D10436EBDA6B0@BYAPR08MB3845.namprd08.prod.outlook.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Wed, 23 May 2018 20:12:45 +0100
-Message-ID: <CAE5ih79RoyA87gsb8PTOz9n1niTU5tDM_WkzbpFADS1d00h8eQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] git-p4: unshelve: use action==add instead of rev==none
-To:     "Mazo, Andrey" <amazo@checkvideo.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Romain Merland <merlorom@yahoo.fr>,
-        Miguel Torroja <miguel.torroja@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        George Vanburgh <gvanburgh@bloomberg.net>
-Content-Type: text/plain; charset="UTF-8"
+ <xmqqk1rvw2i1.fsf@gitster-ct.c.googlers.com>
+ <BYAPR08MB38451D101964D3B4D10436EBDA6B0@BYAPR08MB3845.namprd08.prod.outlook.com>,<CAE5ih79RoyA87gsb8PTOz9n1niTU5tDM_WkzbpFADS1d00h8eQ@mail.gmail.com>
+In-Reply-To: <CAE5ih79RoyA87gsb8PTOz9n1niTU5tDM_WkzbpFADS1d00h8eQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=amazo@checkvideo.com; 
+x-originating-ip: [70.163.25.109]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;BYAPR08MB3847;7:JZn9mlOfi9gC6VKjVH4myfRcXhgP7qPekL/60eB7iKXsvYHSAV60iM7IQE4jUh9yoN1woP4e5kN2wCPwCsVdFKb3Z4v0J3QDGJg/NzYe3s7XPLZQ+nN+//WIFUtzTb7LWMR1MG8wqGcIlhIxO0vLVHmbFCAQ9GYYwZJQgWQz0HdV46UBmvEuLGNeyC3skVq7a46SKY9wfNTMhtC5M/4OB1QjtiugAJdUULy95ctS7YxkZIRziTo20qMZTIDkYlfy
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:BYAPR08MB3847;
+x-ms-traffictypediagnostic: BYAPR08MB3847:
+x-microsoft-antispam-prvs: <BYAPR08MB3847534BC007BBBDC2B9EC65DA6B0@BYAPR08MB3847.namprd08.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(85827821059158);
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(5005006)(8121501046)(93006095)(93001095)(10201501046)(3002001)(3231254)(944501410)(52105095)(149027)(150027)(6041310)(20161123560045)(20161123562045)(20161123558120)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:BYAPR08MB3847;BCL:0;PCL:0;RULEID:;SRVR:BYAPR08MB3847;
+x-forefront-prvs: 06818431B9
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(396003)(39860400002)(39380400002)(376002)(346002)(55674003)(199004)(189003)(6306002)(186003)(2900100001)(102836004)(478600001)(25786009)(5250100002)(26005)(5660300001)(39060400002)(7696005)(575784001)(99286004)(55016002)(76176011)(6246003)(4326008)(9686003)(53936002)(74316002)(86362001)(966005)(8656006)(229853002)(33656002)(3846002)(6116002)(66066001)(7736002)(97736004)(476003)(6506007)(8936002)(6916009)(81156014)(446003)(2906002)(11346002)(316002)(54906003)(6436002)(68736007)(3660700001)(105586002)(106356001)(3280700002)(14454004)(305945005)(486006)(8676002)(93886005)(81166006);DIR:OUT;SFP:1102;SCL:1;SRVR:BYAPR08MB3847;H:BYAPR08MB3845.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: checkvideo.com does not designate
+ permitted sender hosts)
+x-microsoft-antispam-message-info: 4sJimvuTbbwrCgijNhkUKcuVDoezROeJPUHbmbNe1m2qGKqCNqWr2sZDPN4AU++JRurWIeIfw8IwFpQSNj1yKNbuSMq8s6IZYrgIlbQ97SJNmjdSEEsMhDGr4L83aR2JNv5Vr9gpcXfIpXkyrBaT6l2FrnzWz089mfto4U6kTDDQVzvCG/l+WKUqxd7kRVW+
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Office365-Filtering-Correlation-Id: 67facc99-f59e-4cdf-4632-08d5c0e4c9b9
+X-OriginatorOrg: checkvideo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 67facc99-f59e-4cdf-4632-08d5c0e4c9b9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 May 2018 19:38:41.1138
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR08MB3847
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23 May 2018 at 17:41, Mazo, Andrey <amazo@checkvideo.com> wrote:
->> The last one (i.e. "even if it is verbose, if fileSize is not
->> reported, do not write the verbose output") does not look like it is
->> limited to the unshelve feature, so it might, even though it is a
->> one-liner, deserve to be a separate preparatory patch if you want.
->> But I do not feel strongly about either way.
+>> This was actually discussed in a separate thread [1] some time ago with =
+patches proposed by Thandesha and me.
+>> I haven't yet got time to cook a final patch, which addresses both Thand=
+esha's and mine use-cases though,
+>> so this wasn't submitted to Junio yet.
+>> In the meantime, I guess, one of the patches [2] from that thread can be=
+ taken as is.
+>>
+>> [1] "[BUG] git p4 clone fails when p4 sizes does not return 'fileSize' k=
+ey"
+>>=A0=A0=A0=A0=A0=A0  https://public-inbox.org/git/CAJJpmi-pLb4Qcka5aLKXA8B=
+1VOZFFF+OAQ0fgUq9YviobRpYGg@mail.gmail.com/t/#mee2ec50a40242089741f808f0621=
+4a44278055b3
+>> [2] "[PATCH 1/1] git-p4: fix `sync --verbose` traceback due to 'fileSize=
+'"
+>>=A0=A0=A0=A0=A0=A0  https://public-inbox.org/git/2e2b2add4e4fffa4228b8ab9=
+f6cd47fa9bf25207.1523981210.git.amazo@checkvideo.com/
 >
-> This was actually discussed in a separate thread [1] some time ago with patches proposed by Thandesha and me.
-> I haven't yet got time to cook a final patch, which addresses both Thandesha's and mine use-cases though,
-> so this wasn't submitted to Junio yet.
-> In the meantime, I guess, one of the patches [2] from that thread can be taken as is.
->
-> [1] "[BUG] git p4 clone fails when p4 sizes does not return 'fileSize' key"
->       https://public-inbox.org/git/CAJJpmi-pLb4Qcka5aLKXA8B1VOZFFF+OAQ0fgUq9YviobRpYGg@mail.gmail.com/t/#mee2ec50a40242089741f808f06214a44278055b3
-> [2] "[PATCH 1/1] git-p4: fix `sync --verbose` traceback due to 'fileSize'"
->       https://public-inbox.org/git/2e2b2add4e4fffa4228b8ab9f6cd47fa9bf25207.1523981210.git.amazo@checkvideo.com/
+> Should I re-roll my patch without this change then?
+If it's the question to me, then I'm fine either way -- I can rebase my cha=
+nges easily.
+However, re-rolling your patch would probably make the aforementioned fileS=
+ize patch apply cleanly to both maint and master branches.
 
-Should I re-roll my patch without this change then?
 
-Luke
+Thank you,
+Andrey Mazo=
