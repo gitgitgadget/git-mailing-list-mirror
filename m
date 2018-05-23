@@ -2,71 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D7AE1F42D
-	for <e@80x24.org>; Wed, 23 May 2018 22:12:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A6E71F42D
+	for <e@80x24.org>; Wed, 23 May 2018 22:19:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934516AbeEWWMw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 May 2018 18:12:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50682 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S934491AbeEWWMv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 May 2018 18:12:51 -0400
-Received: (qmail 26532 invoked by uid 109); 23 May 2018 22:12:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 23 May 2018 22:12:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19562 invoked by uid 111); 23 May 2018 22:12:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 23 May 2018 18:12:59 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 May 2018 18:12:49 -0400
-Date:   Wed, 23 May 2018 18:12:49 -0400
-From:   Jeff King <peff@peff.net>
+        id S934832AbeEWWTG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 May 2018 18:19:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62136 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934147AbeEWWTE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 May 2018 18:19:04 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3BCCBDE09B;
+        Wed, 23 May 2018 18:19:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=rubNTym7AqiVWYcdArdkTp0jSig=; b=a7V189Y
+        8vQLSKWAfzqPVZLCYxibB5ocWmVAk+nFzf4VWAYG6mu9IuchZYj6Qql+y5XjPZNC
+        VsEG0vIByEtQnBCPgZWKHeEV/QVCd5AfvCYvhSIUCDfyr/zurbCCdVi2rhXETdkN
+        HzJPxlO89nwHWtebecLYjY9BgWWFuyLIRmfg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=I+ia2tOzc7SZWizFIz4e8OhjCbsy5TYyX
+        Xr6vLHZyEnTT6SFBWHTP7sGri4xPRxNioCY8u8VtR/ND+9kbZ2nKIiSelwYaFAgu
+        C9suRUTYDKRtNUvhiXMcthxO8Dca5gSB1PYxKuvTdMGnqel2t2aZBUq8yM2aBBDY
+        ol5TntFwIg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 33E06DE099;
+        Wed, 23 May 2018 18:19:04 -0400 (EDT)
+Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B0E7DDE098;
+        Wed, 23 May 2018 18:19:03 -0400 (EDT)
+Date:   Wed, 23 May 2018 18:19:02 -0400
+From:   Todd Zullinger <tmz@pobox.com>
 To:     Elijah Newren <newren@gmail.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, B.Steinbrink@gmx.de
-Subject: Re: [PATCH 1/2] t6101: add a test for rev-parse $garbage^@
-Message-ID: <20180523221249.GC32171@sigill.intra.peff.net>
+Subject: Re: [PATCH 2/2] rev-parse: verify that commit looked up is not NULL
+Message-ID: <20180523221901.GV26695@zaya.teonanacatl.net>
 References: <CABPp-BFOwWvDpfLFa2yrUDU_3BU6F68oLTtO5FvQo8nr62_WtQ@mail.gmail.com>
  <20180523204613.11333-1-newren@gmail.com>
+ <20180523204613.11333-2-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180523204613.11333-1-newren@gmail.com>
+In-Reply-To: <20180523204613.11333-2-newren@gmail.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Pobox-Relay-ID: 4D0166C6-5ED7-11E8-AD07-67830C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 23, 2018 at 01:46:12PM -0700, Elijah Newren wrote:
+Elijah Newren wrote:
+> In commit 2122f8b963d4 ("rev-parse: Add support for the ^! and ^@ syntax",
+> 2008-07-26), try_parent_shorthands() was introduced to parse the special
+> ^! and ^@ syntax.  However, it did not check the commit returned from
+> lookup_commit_reference() before proceeding to use it.  If it is NULL,
+> bail early and notify the caller that this cannot be a valid revision
+> range.
 
-> diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
-> index 8c617981a3..7b1b2dbdf2 100755
-> --- a/t/t6101-rev-parse-parents.sh
-> +++ b/t/t6101-rev-parse-parents.sh
-> @@ -214,4 +214,8 @@ test_expect_success 'rev-list merge^-1x (garbage after ^-1)' '
->  	test_must_fail git rev-list merge^-1x
->  '
->  
-> +test_expect_failure 'rev-parse $garbage^@ should not segfault' '
-> +	git rev-parse ffffffffffffffffffffffffffffffffffffffff^@
-> +'
+Thanks.  This fixes the segfault.  While I was testing this,
+I wondered if the following cases should differ:
 
-Two small nits. :)
+#          f*40
+$ ./git-rev-parse ffffffffffffffffffffffffffffffffffffffff^@ ; echo $?
+0
 
-It may just be me, but for a trivial test+fix like this, I'd rather see
-them in the same commit (both for reviewing, and when I'm digging in the
-history later).
+#          f*39
+$ ./git-rev-parse fffffffffffffffffffffffffffffffffffffff^@ ; echo $?
+fffffffffffffffffffffffffffffffffffffff^@
+fatal: ambiguous argument 'fffffffffffffffffffffffffffffffffffffff^@': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+128
 
-The second nit is that we may want to use something a little more
-symbolic and easier to read here. Thirty-nine f's behaves quite
-differently than forty. And eventually we'd like to move away from
-having hard-coded commit ids anyway (this is obviously a fake one, but
-the length may end up changing).
+Looking a little further, this is deeper than the rev-parse
+handling.  The difference in how these invalid refs are
+handled appears in 'git show' as well.  With 'git show' a
+(different) fatal error is returned in both cases.
 
-Perhaps "git rev-parse $EMPTY_TREE^@", which triggers the same bug?
+#          f*40
+$ git show ffffffffffffffffffffffffffffffffffffffff
+fatal: bad object ffffffffffffffffffffffffffffffffffffffff
 
--Peff
+#          39*f
+$ git show fffffffffffffffffffffffffffffffffffffff
+fatal: ambiguous argument 'fffffffffffffffffffffffffffffffffffffff': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+
+Should rev-parse return an error as well, rather than
+silenty succeeding?
+
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+I refuse to spend my life worrying about what I eat. There is no
+pleasure worth foregoing just for an extra three years in the
+geriatric ward.
+    -- John Mortimer
+
