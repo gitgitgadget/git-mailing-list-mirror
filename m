@@ -6,59 +6,63 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41CB81F42D
-	for <e@80x24.org>; Thu, 24 May 2018 04:31:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB36F1F42D
+	for <e@80x24.org>; Thu, 24 May 2018 04:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751800AbeEXEbG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 00:31:06 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:39409 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751187AbeEXEbF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 00:31:05 -0400
-Received: by mail-wr0-f193.google.com with SMTP id w18-v6so462109wrn.6
-        for <git@vger.kernel.org>; Wed, 23 May 2018 21:31:04 -0700 (PDT)
+        id S1751810AbeEXEw1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 00:52:27 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:47047 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751777AbeEXEw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 00:52:26 -0400
+Received: by mail-wr0-f195.google.com with SMTP id x9-v6so505235wrl.13
+        for <git@vger.kernel.org>; Wed, 23 May 2018 21:52:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=NBjTGA+xSCy61jsgU97KwAz0nOmFWwfonAE6evoQ1Fo=;
-        b=tLuAY+Vb0bzzYQE4PHvqz1Fx3tRLeTbaDmTHRBDBOEv88EVUr7o+pkoNqnfYs26hf0
-         9VSoUVTGk8N7mLHXfpRSeNKCzLanC5mjoi8/KCrm+TGnzg7EhBny00nHKQcSf88Y0VTi
-         rm5S0TbWYeSg1GUh6doL4GwkLC6ING3s9a50vHP3M0arr9WD5qDh1h7jL2uQxM2qfmWX
-         VMnvd/t6ZFTPTcHSKLQK4CYmRkAlbq2noVOJFm7cvqj2INib1ovpsut7Q/VYyl+KQkrm
-         n+zKS9g2/yk8cYNHEvXrlZE047LmRnIFl/iUrzYGNyt0GVGIIhdmY/K5uknW9PA0eQDN
-         lfSg==
+        bh=rlXsckfCkrZVoM0Pl8ExjbFUF39CBqObQjyPx/IYvh0=;
+        b=NFTA9/6VaX02/ATi+iOUI73IEv8uITy5taRLDqqIJUvvvwQjY5/Usj666UvqB5ldSK
+         zYpRW4gMrLC3udC0GFsgIxl4s5rJ9elJmiRt1on+huY1mu4rkDbITgZrUaiJFyQXvbxp
+         aK/1pPKMl6OWIh7PJOdSC5I7Xx22AbS9qYdLZKTh37A8ysPK5KS+NcVT/pkAATiyxGcw
+         WLZK2gb03jGDIkxkFMVR21Idn19fuk/6hYwx+gE4C0Hko5TR0f6H0AQd77jkQkH9HTZd
+         BTBBISVb/ipsDMPebK2+JXk8BcgO3nToZwbNnarnpF5td/FlewymVOkLYdxXRRJThH1S
+         8mFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=NBjTGA+xSCy61jsgU97KwAz0nOmFWwfonAE6evoQ1Fo=;
-        b=IcJePcpad/jhJZgLjQuwdFLT5kSU6GGCU2D0qDfkAwu5rNsd/cu/LqOEs+43ES+ojN
-         IstdsQPX+vIbpoH+EEaLEWHXIvVXE3Px5Kj3tbyUOjLoBU7vAJadKChHP9Blm1yqO84y
-         UbzegY9gCRSrVIpaXosHm4edarptg+5ExETWtz9NPUWHxjN8fWebrceSzEYQUiqhNoKe
-         inPDw2F6mCRwrr6kKI3GFdObsSnwBFKUtOGlnH3y0iURlIUwrkNijsZYpisUjVVbW0uJ
-         tuAxYHZ/FQd5Q8GUiTu9iLbZTXwbIhlEujNUSsjZZt3RnTO2y8tjXpOcAX8nrJczf9vo
-         BqaQ==
-X-Gm-Message-State: ALKqPwdmFiVPM4tKGkNVNviwOMSY2/urhvfMv3Zx0rFFOW9FKyayzqaU
-        Ant5dVMklmTVhmOlRKk9d4I=
-X-Google-Smtp-Source: AB8JxZppnhgPpKyGdFrFRsgYi47cELqrN8HCxaToDIn643Tf0MVQZfsZn0JQh84korKkmv/Hrf76Jw==
-X-Received: by 2002:adf:f6c1:: with SMTP id y1-v6mr4597804wrp.197.1527136263606;
-        Wed, 23 May 2018 21:31:03 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g105-v6sm32254584wrd.45.2018.05.23.21.31.01
+        bh=rlXsckfCkrZVoM0Pl8ExjbFUF39CBqObQjyPx/IYvh0=;
+        b=TK16i5Og4/RRTBPjPdAWIIR1aTJe9+btqoHUQ5r1vwm7cJ7uBX8n2tRUCgAtWBmjlQ
+         Gx3tl6Ai6Zq3Gm0JOZDPMnTjoHTQgr9NJ2plE+RfGEJ0FsOhLgN4jkHABLK5am1/48i0
+         VBKZ/esDNBsSQwx0INYLWxFjw2khwXuxMgruw8SJtKZm4YWOPoqtEnxDPafF4W0c/u/C
+         A9qRoYykQCzq/mO46ui0G6vBHu3/sVFRpVVif8zdCj/4NUKhZUiRJBxHyUDkIOJF68hC
+         vLa5jresu9TNEPxZRnZZkCGIZdOY62DmJE9MNyX7O8FWaz1317G48ajJU/bHKcm/NSAf
+         GuQw==
+X-Gm-Message-State: ALKqPweItsSjYW/q+M+7fUV0jyye0FggaWaXxyYb3uAF18CPjU5QeCSX
+        7GXWfav8gNFqtDJx6X1zHDY=
+X-Google-Smtp-Source: AB8JxZqTRcy+ab2prVYP2hxzz/0n3CAKdrwNgjqFTW9ceX4oV260OBz1p4ip8V5BXAShcN9hAqFsdw==
+X-Received: by 2002:adf:9441:: with SMTP id 59-v6mr4582831wrq.194.1527137544518;
+        Wed, 23 May 2018 21:52:24 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 109-v6sm18133951wra.32.2018.05.23.21.52.23
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 May 2018 21:31:01 -0700 (PDT)
+        Wed, 23 May 2018 21:52:23 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Tiago Botelho <tiagonbotelho@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        johannes.schindelin@gmx.de, haraldnordgren@gmail.com,
-        Tiago Botelho <tiagonbotelho@hotmail.com>
-Subject: Re: [RFC PATCH v3 1/2] Implement --first-parent for git rev-list --bisect
-References: <20180523120028.36427-1-tiagonbotelho@hotmail.com>
-Date:   Thu, 24 May 2018 13:31:01 +0900
-In-Reply-To: <20180523120028.36427-1-tiagonbotelho@hotmail.com> (Tiago
-        Botelho's message of "Wed, 23 May 2018 13:00:28 +0100")
-Message-ID: <xmqqtvqxsmii.fsf@gitster-ct.c.googlers.com>
+To:     Jameson Miller <jamill@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "pclouds\@gmail.com" <pclouds@gmail.com>,
+        "jonathantanmy\@google.com" <jonathantanmy@google.com>,
+        "sbeller\@google.com" <sbeller@google.com>,
+        "peartben\@gmail.com" <peartben@gmail.com>
+Subject: Re: [PATCH v3 2/7] block alloc: add lifecycle APIs for cache_entry structs
+References: <20180417163400.3875-1-jamill@microsoft.com>
+        <20180523144637.153551-1-jamill@microsoft.com>
+        <20180523144637.153551-3-jamill@microsoft.com>
+Date:   Thu, 24 May 2018 13:52:23 +0900
+In-Reply-To: <20180523144637.153551-3-jamill@microsoft.com> (Jameson Miller's
+        message of "Wed, 23 May 2018 14:47:36 +0000")
+Message-ID: <xmqqefi1sliw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,108 +71,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tiago Botelho <tiagonbotelho@gmail.com> writes:
+Jameson Miller <jamill@microsoft.com> writes:
 
-> -static int count_interesting_parents(struct commit *commit)
-> +static int count_interesting_parents(struct commit *commit, unsigned bisect_flags)
->  {
->  	struct commit_list *p;
->  	int count;
+> Add an API around managing the lifetime of cache_entry
+> structs. Abstracting memory management details behind an API will
+> allow for alternative memory management strategies without affecting
+> all the call sites.  This commit does not change how memory is
+> allocated / freed. A later commit in this series will allocate cache
+> entries from memory pools as appropriate.
+>
+> Motivation:
+> It has been observed that the time spent loading an index with a large
+> number of entries is partly dominated by malloc() calls. This change
+> is in preparation for using memory pools to reduce the number of
+> malloc() calls made when loading an index.
+>
+> This API makes a distinction between cache entries that are intended
+> for use with a particular index and cache entries that are not. This
+> enables us to use the knowledge about how a cache entry will be used
+> to make informed decisions about how to handle the corresponding
+> memory.
+
+Yuck.  make_index_cache_entry()?
+
+Generally we use "cache" when working on the_index without passing
+istate, and otherwise "index", which means that readers can assume
+that distim_cache_entry(...)" is a shorter and more limited way to
+say "distim_index_entry(&the_index, ...)".  Having both index and
+cache in the same name smells crazy.
+
+If most of the alocations are for permanent kind, give it a shorter
+name call it make_cache_entry(&the_index, ...), and call the other
+non-permanent one with a longer and more cumbersome name, perhaps
+make_transient_cache_entry(...).  Avoid saying "index" in the former
+name, as the design decision this series is making to allocate
+memory for a cache-entry from a pool associated to an index_state is
+already seen by what its first parameter is.
+
+> diff --git a/cache.h b/cache.h
+> index f0a407602c..204f788438 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -339,6 +339,29 @@ extern void remove_name_hash(struct index_state *istate, struct cache_entry *ce)
+>  extern void free_name_hash(struct index_state *istate);
 >  
->  	for (count = 0, p = commit->parents; p; p = p->next) {
-> -		if (p->item->object.flags & UNINTERESTING)
-> -			continue;
-> -		count++;
-> +		if (!(p->item->object.flags & UNINTERESTING))
-> +		    count++;
-> +		if (bisect_flags & BISECT_FIRST_PARENT)
-> +			break;
->  	}
->  	return count;
->  }
+>  
+> +/* Cache entry creation and freeing */
+> +
+> +/*
+> + * Create cache_entry intended for use in the specified index. Caller
+> + * is responsible for discarding the cache_entry with
+> + * `discard_cache_entry`.
+> + */
+> +extern struct cache_entry *make_index_cache_entry(struct index_state *istate, unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
+> +extern struct cache_entry *make_empty_index_cache_entry(struct index_state *istate, size_t name_len);
+> +
+> +/*
+> + * Create a cache_entry that is not intended to be added to an index.
+> + * Caller is responsible for discarding the cache_entry
+> + * with `discard_cache_entry`.
+> + */
+> +extern struct cache_entry *make_transient_cache_entry(unsigned int mode, const unsigned char *sha1, const char *path, int stage);
+> +extern struct cache_entry *make_empty_transient_cache_entry(size_t name_len);
+> +
+> +/*
+> + * Discard cache entry.
+> + */
+> +void discard_cache_entry(struct cache_entry *ce);
 
-Since this change makes the function never return anything more than 1,...
+I am not yet convinced that it is a good idea to require each istate
+to hold a separate pool.  Anything that uses unpack_trees() can do
+"starting from this src_index, perform various mergy operations and
+deposit the result in dst_index".  Sometimes the two logical indices
+point at the same istate, sometimes different.  When src and dst are
+different istates, the code that used to simply add another pointer
+to the same ce to the dst index now needs to duplicate it out of the
+pool associated with dst?
 
-> @@ -310,7 +315,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
->  			continue;
->  		if (weight(p) != -2)
->  			continue;
-> -		weight_set(p, count_distance(p));
-> +		weight_set(p, count_distance(p, bisect_flags));
->  		clear_distance(list);
-
-... this code will not be reached when in the first-parent mode,
-where we count the weight for merge commits the hard way.
-
-Am I reading the code correctly?  Not pointing out a problem; just
-double checking how the code works.
-
-> @@ -329,9 +334,10 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
->  			if (0 <= weight(p))
->  				continue;
->  			for (q = p->item->parents; q; q = q->next) {
-> -				if (q->item->object.flags & UNINTERESTING)
-> -					continue;
-> -				if (0 <= weight(q))
-> +				if (!(q->item->object.flags & UNINTERESTING))
-> +					if (0 <= weight(q))
-> +						break;
-> +				if (bisect_flags & BISECT_FIRST_PARENT)
->  					break;
->  			}
->  			if (!q)
->  				continue;
-
-This loop propagates the known weight of an ancestor through a
-single strand of pearls.
-
-When this loop is entered, any commit that has non-negative weight
-has only one parent of interest, as we counted weight for all merges
-the hard way and also weight for root and boundary commits, in the
-previous loop.  The original goes through p's parents and see if an
-interesting parent has non-negative weight (i.e. weight is known for
-that parent), at which point break out of the loop, with q that is
-non-NULL.  Immediately after the loop, q != NULL means we can now
-compute weight for p based on q's weight.
-
-I think this patch breaks the logic.  When we are looking at a
-commit 'p' whose weight is not known yet, we grab its first parent
-in 'q'.  Imagine that it is not an UNINTERESTING commit (i.e. a
-commit whose weight matters when deciding the bisection) whose
-weight is not yet known.  With the updated code under the
-first-parent mode, we break out of the loop, 'q' pointing at the
-commit whose weight is not yet known.  The computation done by the
-code that immediately follows the above part is now broken, as it
-will call weight(q) to get -1 and propagate it to p (or add 1 and
-set 0 to p), no?
-
-Perhaps something along this line may be closer to what we want:
-
-	if (0 <= weight(p))
-		continue; /* already known */
-	for (q = p->item->parents; q; q = q->next) {
-        	if ((bisect_flags & BISECT_FIRST_PARENT)) {
-			if (weight(q) < 0)
-				q = NULL;
-			break;
-		}
-		if (q->item->object.flags & UNINTERESTING)
-			continue;
-		if (0 <= weight(q))
-			break;
-	}
-	if (!q)
-		continue; /* parent's weight not yet usable */
-
-That is, under the first-parent mode, we would pay attention only to
-the first parent of 'p' and break out of this loop without even
-looking at q->next.  If the weight of that parent is not known yet,
-we mark that fact by clearing q to NULL and break out of the loop.
-If the weight is known, we do not clear q, so we compute weight of p
-based on weight(q).
-
-I am not offhand certain what should happen when p's first parent is
-uninteresting.  The updated count_interesting_parents() would have
-returned 0 for p in such a case, so at this point of the code where
-p's weight is unknown, its first parent can never be UNINTERESTING,
-I would think.
+In any case, perhaps it will become clearer why it is a good idea as
+we read on, so let's do so.
