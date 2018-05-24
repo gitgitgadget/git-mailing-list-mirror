@@ -2,105 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97BC41F42D
-	for <e@80x24.org>; Thu, 24 May 2018 04:55:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D1221F51C
+	for <e@80x24.org>; Thu, 24 May 2018 06:27:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751591AbeEXEzV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 00:55:21 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:42588 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751158AbeEXEzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 00:55:20 -0400
-Received: by mail-wr0-f193.google.com with SMTP id w10-v6so523369wrk.9
-        for <git@vger.kernel.org>; Wed, 23 May 2018 21:55:20 -0700 (PDT)
+        id S1755050AbeEXG1t (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 02:27:49 -0400
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:38732 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754847AbeEXG1s (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 02:27:48 -0400
+Received: by mail-ot0-f193.google.com with SMTP id n3-v6so605653ota.5
+        for <git@vger.kernel.org>; Wed, 23 May 2018 23:27:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=jq05QTnteg8LkF6ytEGYAyAGirssWQ0AJF1fczUxGcI=;
-        b=dKVkSgbBH6SEqxw+iSiC9BOL9gZuXQOq5VPB6HEsCpVAvet3pSueoY9LRX42FeD+Go
-         EjTM6cyfy76r79Vy/xtR7zsr2tELa4moQPnjZkrcIj/diMnOUK0edhAh3NBYIfVCm8vC
-         dpi7TCNCHpuZIzh/zAs2hK1JCv2nB7Tj/rvLm23CKL0562vXuAbBwAB5KPzYnMSsIrz3
-         zA6kzb6RJlYblxS3QKzg0SzpvMRm8PhcPZZwE+7iuDdyKAZSO3/mca+vC/vMZTVRBro6
-         oQ3IL2Ya8u3FdMK7SMFN++N2LiacjyWKw8aJK/U1tkmi18sU5Kc5IEUJ60zFMCR/uO8W
-         lPIg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=igaDHmdSsnbNvzMGAXArQuKgo04PLeho+DlllvZC/fs=;
+        b=LHwTHYwosw/huEn1rbsMDLwivHt33EsXIUzS0fSjn38o7+mSlvZxhx+SYdEqyPV8x5
+         n2oUzlUQGBGiobAei2sIsZMKOuKX71stXBQGkvpTfaz4Fe0sfgBshZdsLfnBIXVL2pAt
+         9pZImpbwdK/bVXqrxiuZweOoUgab7l4d2SYOai+3NymbFORp9xwoPaiOyKbmWlv9BLxP
+         Y2+ShrgsRThiw5elncUDf2vwYWoStWP8FP15JR39tzxdvNL/Qbo8CwaAAeKFeivXmci2
+         cuEphPoRolzAn86G1/h7uSpOP2DDTwZkFyOjSrlt5WmBeV8DpqSbG+/3S0iNwL3MgAUi
+         njSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=jq05QTnteg8LkF6ytEGYAyAGirssWQ0AJF1fczUxGcI=;
-        b=mXdMMXrcheLyTg9MiM6ATPDrqn5ER2Gb5s8wjbhIuS9qvaoqQNFLyBl95qVdDxroW+
-         87JQaqyXrzjgu04NJOeVDiU813vIecYEumdiYvwsXuuI6Guj0BX4oxNy82BOE+16RPte
-         A/wZRpoUcrfFEQ2/GEeebL+6GwpWKsYezJByYSDq6EE5dOg7FLPqeFiCpNEXG9dUKznB
-         rXu/01DU44Wp6vFkpDx/meXTDfOsXOce+yXmNfEGZrkvLUzoh9CZq6wxPrrlb5eL+7cB
-         998UH2ZpAVEFouY5gWVRsXj3bhODAm0/+NWzPEy7w/NUhIPOeS1hJxelKmoY9BR3wys4
-         QHzA==
-X-Gm-Message-State: ALKqPwdiv9X/drQwGmuJoYtjyMTlrtTFtHApyOAmIa7uiOJQ471L9Y9A
-        3kOIvjCu400uR0ynku7Zvdtj04va8lQ=
-X-Google-Smtp-Source: AB8JxZrbwxwl+wxKl88y0HZYV2G49T0HBsJ8WH2lTPqKW/uuUM7BUEQcqo3B3NSneVmND0p/i1geiA==
-X-Received: by 2002:adf:a185:: with SMTP id u5-v6mr4410474wru.262.1527137719499;
-        Wed, 23 May 2018 21:55:19 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 32-v6sm13289562wrf.33.2018.05.23.21.55.18
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=igaDHmdSsnbNvzMGAXArQuKgo04PLeho+DlllvZC/fs=;
+        b=jXYJDn27ViH1jZMlw8KHxfMlPFsjyVX40JKhBjV6OauaIdRLfxjBsF5vG8Aknjwt7S
+         y33IX2DTFENOi/aS2BAKQpiMy95UEprDh/VoAUXs8tLoGKpNX2my/S/abSHjkfSI/cZd
+         +zDpQj6L8FXSGTR0EBAiN+3REPt5oNoaGuEzlEf/Sxwz3oHzoa7uNsd0iqMQHsB1eD/I
+         FL6ltmkhECnB9YoC5BOlsvkF0vZTetl5qkbCE//1lburRrYLOKCIRbU/tMfILFRJfj+U
+         91uFsKNZjyo0Q9leiFoh3ztfjECl3dDG6KWJrqK+MOap6anSdsGb7OioYgIspUGDfbrB
+         TdEw==
+X-Gm-Message-State: ALKqPwdMXmCrpJ3snsZzYhvXm4zqv9yZMzAmmwZhDzchvQtLcIv5yl5q
+        j0c+eA0SqFQ2DcZYeSvkSbMo8g==
+X-Google-Smtp-Source: AB8JxZqe/HKRM2Hh23qLIVTaMFW31GOlyELc0NTjh3QrtaZ8i2RjLiJsAFC/+uOhDqdikw6XI/CX6g==
+X-Received: by 2002:a9d:462:: with SMTP id 89-v6mr3547656otc.54.1527143267809;
+        Wed, 23 May 2018 23:27:47 -0700 (PDT)
+Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
+        by smtp.gmail.com with ESMTPSA id s9-v6sm11109405otb.41.2018.05.23.23.27.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 May 2018 21:55:18 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>,
-        "jonathantanmy\@google.com" <jonathantanmy@google.com>,
-        "sbeller\@google.com" <sbeller@google.com>,
-        "peartben\@gmail.com" <peartben@gmail.com>
-Subject: Re: [PATCH v3 0/7] allocate cache entries from memory pool
-References: <20180417163400.3875-1-jamill@microsoft.com>
-        <20180523144637.153551-1-jamill@microsoft.com>
-Date:   Thu, 24 May 2018 13:55:18 +0900
-In-Reply-To: <20180523144637.153551-1-jamill@microsoft.com> (Jameson Miller's
-        message of "Wed, 23 May 2018 14:47:29 +0000")
-Message-ID: <xmqqa7spsle1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Wed, 23 May 2018 23:27:47 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, gitster@pobox.com, B.Steinbrink@gmx.de,
+        sbejar@gmail.com, Elijah Newren <newren@gmail.com>
+Subject: [PATCH v2] rev-parse: check lookup'ed commit references for NULL
+Date:   Wed, 23 May 2018 23:27:33 -0700
+Message-Id: <20180524062733.5412-1-newren@gmail.com>
+X-Mailer: git-send-email 2.17.0.1.gda85003413
+In-Reply-To: <20180523220915.GB32171@sigill.intra.peff.net>
+References: <20180523220915.GB32171@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jameson Miller <jamill@microsoft.com> writes:
+Commits 2122f8b963d4 ("rev-parse: Add support for the ^! and ^@ syntax",
+2008-07-26) and 3dd4e7320d ("Teach rev-parse the ... syntax.", 2006-07-04)
+taught rev-parse new syntax, and used lookup_commit_reference() as part of
+their logic.  Neither usage checked the returned commit to see if it was
+non-NULL before using it.  Check for NULL and ensure an appropriate error
+is reported to the user.
 
-> Changes from V2:
->
-> 	- Tweak logic of finding available memory block for memory
->           allocation
-> 	
-> 	  - Only search head block
+Reported by Florian Weimer and Todd Zullinger.
 
-Hmph.  Is that because we generally do not free() a lot so once a
-block is filled, there is not much chance that we have reclaimed
-space in the block later?
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
 
-> 	- Tweaked handling of large memory allocations.
-> 	
-> 	  - Large blocks now tracked in same manner as "regular"
->             blocks
-> 	  
-> 	  - Large blocks are placed at end of linked list of memory
->             blocks
+I would have used a Reported-by tag for Florian and Todd, but looking at
+the bugzilla.redhat.com bug report doesn't show me Florian's email
+address.  I grepped through git logs and found two associated with that
+name, but didn't know if they were still accurate, or were a different
+Florian.  So I just went with the sentence instead.
 
-If we are only carving out of the most recently allocated block, it
-seems that there is no point looking for "the end", no?
+ builtin/rev-parse.c          | 8 ++++++--
+ t/t6101-rev-parse-parents.sh | 8 ++++++++
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index a1e680b5e9..a0a0ace38d 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -282,6 +282,10 @@ static int try_difference(const char *arg)
+ 			struct commit *a, *b;
+ 			a = lookup_commit_reference(&start_oid);
+ 			b = lookup_commit_reference(&end_oid);
++			if (!a || !b) {
++				*dotdot = '.';
++				return 0;
++			}
+ 			exclude = get_merge_bases(a, b);
+ 			while (exclude) {
+ 				struct commit *commit = pop_commit(&exclude);
+@@ -328,12 +332,12 @@ static int try_parent_shorthands(const char *arg)
+ 		return 0;
+ 
+ 	*dotdot = 0;
+-	if (get_oid_committish(arg, &oid)) {
++	if (get_oid_committish(arg, &oid) ||
++	    !(commit = lookup_commit_reference(&oid))) {
+ 		*dotdot = '^';
+ 		return 0;
+ 	}
+ 
+-	commit = lookup_commit_reference(&oid);
+ 	if (exclude_parent &&
+ 	    exclude_parent > commit_list_count(commit->parents)) {
+ 		*dotdot = '^';
+diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
+index 8c617981a3..7683e4a114 100755
+--- a/t/t6101-rev-parse-parents.sh
++++ b/t/t6101-rev-parse-parents.sh
+@@ -214,4 +214,12 @@ test_expect_success 'rev-list merge^-1x (garbage after ^-1)' '
+ 	test_must_fail git rev-list merge^-1x
+ '
+ 
++test_expect_success 'rev-parse $garbage^@ does not segfault' '
++	test_must_fail git rev-parse $EMPTY_TREE^@
++'
++
++test_expect_success 'rev-parse $garbage...$garbage does not segfault' '
++	test_must_fail git rev-parse $EMPTY_TREE...$EMPTY_BLOB
++'
++
+ test_done
+-- 
+2.17.0.1.gda85003413
 
-> 	- Cache_entry type gains notion of whether it was allocated
->           from memory pool or not
-> 	
-> 	  - Collapsed cache_entry discard logic into single
->             function. This should make code easier to maintain
-
-That certainly should be safer to have a back-pointer pointing to
-which pool each entry came from, but doesn't it result in memory
-bloat?
