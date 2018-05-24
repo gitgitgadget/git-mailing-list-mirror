@@ -2,104 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41EBE1F42D
-	for <e@80x24.org>; Thu, 24 May 2018 22:50:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4650C1F42D
+	for <e@80x24.org>; Thu, 24 May 2018 22:54:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935907AbeEXWuC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 18:50:02 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:43453 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935803AbeEXWt5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 18:49:57 -0400
-Received: by mail-qk0-f193.google.com with SMTP id h19-v6so2664319qkj.10
-        for <git@vger.kernel.org>; Thu, 24 May 2018 15:49:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=p0eoHkLZ8Y/mokAcADX6VfR3dwteOgj7KbpZzYLV8Nw=;
-        b=CH+BO9qN8C08eNqPRDcWIKTsDYTFQiEfT1ThDvfu5a4TN/ODTtEhoVaX3M08FF00Nq
-         Kyf+TaI4p67XHI4fztzA4DkmZLdEkxa98qql+UPRwQlpG6G4DQTaM/0Ys36wNn1+TC7z
-         YuLZvdl7LOjm/JbsmV9dg33xXxzL7Cp4aav4VX7n9Rsi9UtCQbQ3w4SnquO+Rbktb+Tf
-         rZu7x/9VF1CkuVbJKp7Th76sakfscfKweW2DrqcZOxjR/SPl6Ycf7bikmkaUcgi0p9tR
-         vRScCiA3/1FLSPeg7J/duYsNojI0XJCYLhdcMy4Jzw4M+N6M8oYOQ7dJN/J9Ncx7tE3n
-         3qkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=p0eoHkLZ8Y/mokAcADX6VfR3dwteOgj7KbpZzYLV8Nw=;
-        b=G+qr6gD3azg+5jc3xSTTCER+fpobqtPm+bAm2rvWsmFNZMLaC+2GuBUGYdkpqVEk+t
-         gCWCgSWfVvxu5z/Ak+4w9tB3YCYSZbF80AAbgCx77jGtGu3Yh6G5VW4+u7cSCJvV3pKb
-         H3ItFTQPv/sYeVx/iTCD7Xk0ltXmDYXt3en3D5hB55W+DjOGmeI+JYW49VbDm09h6258
-         AXEzltOYU3sRZwRks4Muft2izH64KlWjEid2oteFg0svENqP3An7RTKsr2HHPIPyxKFu
-         PbJlBN0oMMRwtVVNJLzg1nbAURwAiX3mhOIb0KnT1aI1iILgCQV2YUjZAEUp6rL4h883
-         xZeA==
-X-Gm-Message-State: ALKqPwcFfH8CCex/ucFahRtXtGRvhhAPvYLJTDBblZwWF2/B8lsRsV+Q
-        Bs3xCImxtLDxvjTsr89KT6kpWY+MLAA6kAAkfx0=
-X-Google-Smtp-Source: ADUXVKJi77BDnqQsCq3CPkQI6GlaWL6OlLNNbQqnyZU8WFHlaB3j3HyxLYIiEmPVfptapbNnrfwJ7OA8wrT/xeslyio=
-X-Received: by 2002:a37:71c7:: with SMTP id m190-v6mr8390040qkc.91.1527202196349;
- Thu, 24 May 2018 15:49:56 -0700 (PDT)
+        id S935907AbeEXWyy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 18:54:54 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:51210 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935803AbeEXWyx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 18:54:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=TQpW08ZV5OmNaECTW5lUgQ1OUkcIlQeRMqYHQbpqfzY=; b=i9eGigWiV7jKc9TjXzsFRCDwF
+        fb0YzfdY0+TtK0siwE41myxlSgVQx5FAx6tGixAxZxWxHCLN31Kg6sDIFxo2UTZsfIxH0gnm9NTKb
+        mX0JxCHdecTOn12Z4RiFERS2156Ktf33R19A67G+CnyJg8QH7ax9DbXStuMb7KjQQ9JMaxpfTS+Jp
+        0lrPHDFYZbZ6WFVygc5rUkQ6e9BVcF52zzdJATkcROkKCjjC3MZHDs4oaePFCLXa7kcEaXh4HnMrp
+        Ny2okcLKsxQUGb++kK4TFspYXkSaGJovjzwjGHXVBeAkFAnb9kfsiLqnIkSNfVlF6TQGaVDppjsdO
+        Q0TbQMsvA==;
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:49486 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fLz8E-00262R-7u; Thu, 24 May 2018 18:54:51 -0400
+Date:   Thu, 24 May 2018 18:53:09 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Stefan Beller <sbeller@google.com>
+cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: why do "git log -h" and "git show -h" print the same thing?
+In-Reply-To: <CAGZ79kY8CjLsTqY2YXJ8hPA41XrbYZrtK7yO59vrbA5M_vorVg@mail.gmail.com>
+Message-ID: <alpine.LFD.2.21.1805241852370.11801@localhost.localdomain>
+References: <alpine.LFD.2.21.1805240934010.12018@localhost.localdomain> <CAGZ79kY8CjLsTqY2YXJ8hPA41XrbYZrtK7yO59vrbA5M_vorVg@mail.gmail.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Received: by 2002:a0c:aa4b:0:0:0:0:0 with HTTP; Thu, 24 May 2018 15:49:55
- -0700 (PDT)
-In-Reply-To: <87r2m07qz6.fsf@evledraar.gmail.com>
-References: <20180524190214.GA21354@sigill.intra.peff.net> <20180524193516.28713-1-avarab@gmail.com>
- <20180524193516.28713-3-avarab@gmail.com> <CAPig+cTr2J6yj39NNdV1vT8CQP2qyPxNB1ggaE9bGgXukuq1yQ@mail.gmail.com>
- <87r2m07qz6.fsf@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 24 May 2018 18:49:55 -0400
-X-Google-Sender-Auth: ugJyqN0Nw-95xEX-9U8Pc-V9UL8
-Message-ID: <CAPig+cQeNDfkwJXNVB0xP50KUPFMKTmJhrCSdsAOJTqcNFegAA@mail.gmail.com>
-Subject: Re: [PATCH 2/4] config doc: unify the description of fsck.* and receive.fsck.*
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 24, 2018 at 4:12 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Thu, May 24 2018, Eric Sunshine wrote:
->> On Thu, May 24, 2018 at 3:35 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->> <avarab@gmail.com> wrote:
->>>  fsck.skipList::
->>> +       Like `fsck.<msg-id>` this variable has a corresponding
->>> +       `receive.fsck.skipList` variant.
->>> ++
->>> +The path to a sorted list of object names (i.e. one SHA-1 per line)
->>> +that are known to be broken in a non-fatal way and should be
->>> +ignored. This feature is useful when an established project should be
->>> +accepted despite early commits containing errors that can be safely
->>> +ignored such as invalid committer email addresses. Note: corrupt
->>> +objects cannot be skipped with this setting.
->>
->> Nit: This organization seems backward. Typically, one would describe
->> what the option is for and then add the incidental note ("Like
->> fsck.<...>, this variable...") at the end. It's not clear why this
->> patch demotes the description to a secondary paragraph and considers
->> the incidental note as primary.
+On Thu, 24 May 2018, Stefan Beller wrote:
+
+> On Thu, May 24, 2018 at 6:37 AM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+> >
+> >   maybe this is deliberate, but it's confusing that, with git 2.17.0,
+> > the output of both "git log -h" and "git show -h" is exactly the same:
+> >
+> > $ git log -h
+> > usage: git log [<options>] [<revision-range>] [[--] <path>...]
+> >    or: git show [<options>] <object>...
+> >
+> >     -q, --quiet           suppress diff output
+> >     --source              show source
+> >     --use-mailmap         Use mail map file
+> >     --decorate-refs <pattern>
+> >                           only decorate refs that match <pattern>
+> >     --decorate-refs-exclude <pattern>
+> >                           do not decorate refs that match <pattern>
+> >     --decorate[=...]      decorate options
+> >     -L <n,m:file>         Process line range n,m in file, counting from 1
+> > $
+> >
+> > is that what's *supposed* to happen?
 >
-> I could change it like that. I was thinking that later in the series
-> fetch.fsck.* is going to be first in the file, and then the user is told
-> to look at this variable, so it made sense to note from the outset that
-> we're describing several variables here.
-> What do you think?
+> I would think so, show is just "log -p" with the range clamped
+> down to <object>^..<object>.
+>
+> It's been in the code like that for a couple years by now,
+> e.g. see
+> e66dc0cc4b1a6 log.c: fix translation markings, 2015-01-06
 
-I see where you're coming from, however, I would think that readers
-arriving at this topic (generally) do so as a result of actively
-looking for it (as opposed to happening upon it), in which case they
-probably are directly seeking information about it; the incidental
-information is just a bonus after reading what they came to learn.
+  ah, very well, it just caught me by surprise.
 
-Anyhow, I don't care too strongly about it (it was just a "nit", after all)=
-.
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
