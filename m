@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 340B51F42D
-	for <e@80x24.org>; Thu, 24 May 2018 16:26:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1D191F42D
+	for <e@80x24.org>; Thu, 24 May 2018 16:26:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1033641AbeEXQ0Y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 12:26:24 -0400
-Received: from mail-by2nam01on0132.outbound.protection.outlook.com ([104.47.34.132]:51472
-        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+        id S1033637AbeEXQ0V (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 12:26:21 -0400
+Received: from mail-sn1nam01on0093.outbound.protection.outlook.com ([104.47.32.93]:37267
+        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1033624AbeEXQ0R (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 12:26:17 -0400
+        id S1033605AbeEXQ0O (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 12:26:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IGZWHevWxj5A1Nh/Ru1hUE+Z/NEU2q9TpLm6KKhWUco=;
- b=Lmc3kzCH1/8IKzeGCewNccyTm1jMAVyl9j7U5oLlwD2L3uMwAERNkZLtCCnZBDNWWALCvCYbUfDNQS3M/bCkCyAsp8/kA26YgIgV/FkeU4Kw2M1z/HHdDFEXFxa6XA1LIqOt5Mb+/+SUfBgURV5ll5e6Q4bK0uOBuVTW/y/klYc=
+ bh=ymAw5bmm9t9h/AbXMEsG4Zmo9eJN1KtCiWT9fc7eC2k=;
+ b=D3YrnHtnKyLo2S3V/kc3CkKbIxE9mqKlLZK63BmjfLvuzpfJvZ+gPVP0D4Hd+fnDQf/gqoiezMu8+Bnnl+2mefpC/bRyDpyQkj9BdmbJBa9ap9n6c30lbvsyIyfkrmZ+vz6tQJWuTwdx3KKpNO2tLRQOSAmLGmYeV11yfgn51Z4=
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
- BL0PR2101MB1091.namprd21.prod.outlook.com (52.132.24.25) with Microsoft SMTP
+ BL0PR2101MB1010.namprd21.prod.outlook.com (52.132.23.160) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.820.2; Thu, 24 May 2018 16:26:09 +0000
+ 15.20.820.2; Thu, 24 May 2018 16:26:11 +0000
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::7037:b3ec:4240:9d19]) by BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::7037:b3ec:4240:9d19%5]) with mapi id 15.20.0820.001; Thu, 24 May 2018
- 16:26:09 +0000
+ 16:26:11 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "gitster@pobox.com" <gitster@pobox.com>,
@@ -39,11 +39,11 @@ CC:     "gitster@pobox.com" <gitster@pobox.com>,
         "marten.agren@gmail.com" <marten.agren@gmail.com>,
         "peff@peff.net" <peff@peff.net>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v3 19/20] gc: automatically write commit-graph files
-Thread-Topic: [PATCH v3 19/20] gc: automatically write commit-graph files
-Thread-Index: AQHT83vrd/V24JxD5kC9Vi8yU7aWTg==
-Date:   Thu, 24 May 2018 16:26:09 +0000
-Message-ID: <20180524162504.158394-20-dstolee@microsoft.com>
+Subject: [PATCH v3 20/20] commit-graph: update design document
+Thread-Topic: [PATCH v3 20/20] commit-graph: update design document
+Thread-Index: AQHT83vtzlNGsv4/40ifNWrqgQIF/g==
+Date:   Thu, 24 May 2018 16:26:11 +0000
+Message-ID: <20180524162504.158394-21-dstolee@microsoft.com>
 References: <20180511211504.79877-1-dstolee@microsoft.com>
  <20180524162504.158394-1-dstolee@microsoft.com>
 In-Reply-To: <20180524162504.158394-1-dstolee@microsoft.com>
@@ -57,155 +57,101 @@ x-clientproxiedby: BN6PR16CA0004.namprd16.prod.outlook.com
 x-ms-exchange-messagesentrepresentingtype: 1
 x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1091;7:b15n55uksDwRBE79d9ty9dpmEPq2wTRla5+Midu8RcefccCSHNZNfKBqHBZUdGPJekHBx3tOyWHh8emesXF/xop7YsV4L0nvVHqfL6cC8C1/lmlwjN5S7UGNdrqBJ6t+C9f1qSHpMjgcD9nfmgGFqe3imEtFtagRJI6ZIgalh92laT5vd0F5okAPXbYHo2IWkiJR9h3O1mReh0DzaQY3c+SQsgj6mLjopFwixXab+vEDFR4ufWLNI1mj5NjRaMGw;20:kwuhWBwwKpGqbnVDy+qa7eSMLr+lkbM9c+JohtGuEpOs5pUXAd8GMBWH5W4Uav0vTk0y2LSldQoAe46MgOg+MACbYFxlEDoEN4teoqHqZ0QqsSgqH66tk6eWLT67wWn2KPY967iviJ+rKqqfVAZpbpdA9qxC2ii27NHZLlDkIZ8=
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1010;7:8B1uF7GZd3C3suMfBt4rh26FraSLCsGCNn3yRy4S40chG7X3X2IaFA/5K/yVJTfktU2lq/OF6fvZKJd4yDZt6M+7AGiOjYjnDTduGcVTiBL242K7Hd8Izr+jaAf1O/xk2o9zMr6VUqX1WURznq/MF4wD8wq754W3JGl0pq0FqHoSoBjZ5CsafzRo/WEirK1CP7nk2SAKQNsPAJz0gIxUTl/gKRWgmOnYtx4MW4OHOxxTgbm/4Do85jnhtflkGnsc;20:5NG9Udq3g/juSqsdhTw+gI4FtPoCIWmVkXWf1ff/Gro2z23BFhZKJnPVOkPHeKg1GEfSkXKeLb3xuC/JYrC68jLAfvm7xA3FBtkv5KdpJ6jYT7RNgxGPeqQ5Kf5povQDI8xr+FT7qFQoXBVdnROSRk5JAJZrvTkxfkBNZ023dHw=
 x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB1091;
-x-ms-traffictypediagnostic: BL0PR2101MB1091:
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB1010;
+x-ms-traffictypediagnostic: BL0PR2101MB1010:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB1091874AE0F3EEAEACFB514BA16A0@BL0PR2101MB1091.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
+x-microsoft-antispam-prvs: <BL0PR2101MB1010B0284965A90F14FC54BDA16A0@BL0PR2101MB1010.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(158342451672863)(89211679590171);
 x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(10201501046)(3002001)(3231254)(2018427008)(944501410)(52105095)(93006095)(93001095)(6055026)(149027)(150027)(6041310)(20161123558120)(20161123560045)(20161123562045)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB1091;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1091;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3002001)(10201501046)(3231254)(2018427008)(944501410)(52105095)(6055026)(149027)(150027)(6041310)(20161123558120)(20161123564045)(20161123562045)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB1010;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1010;
 x-forefront-prvs: 0682FC00E8
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(1496009)(396003)(39380400002)(366004)(346002)(376002)(39860400002)(189003)(199004)(1076002)(53936002)(97736004)(6512007)(86612001)(81166006)(59450400001)(6116002)(25786009)(107886003)(10090500001)(4326008)(3660700001)(2616005)(52116002)(11346002)(186003)(2906002)(446003)(76176011)(305945005)(7736002)(8656006)(54906003)(3280700002)(46003)(86362001)(99286004)(102836004)(1730700003)(81156014)(8936002)(386003)(6506007)(476003)(22452003)(8676002)(486006)(316002)(39060400002)(5250100002)(14454004)(5640700003)(5660300001)(106356001)(2501003)(68736007)(478600001)(10290500003)(2351001)(2900100001)(36756003)(6436002)(6486002)(105586002)(6916009)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1091;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(396003)(39860400002)(346002)(376002)(39380400002)(199004)(189003)(305945005)(5640700003)(36756003)(6436002)(7736002)(68736007)(6116002)(6916009)(76176011)(46003)(5250100002)(2501003)(6486002)(5660300001)(446003)(25786009)(81156014)(1076002)(59450400001)(2616005)(476003)(6506007)(102836004)(386003)(14454004)(2900100001)(11346002)(486006)(81166006)(105586002)(1730700003)(4326008)(106356001)(10090500001)(6512007)(3280700002)(22452003)(8656006)(186003)(478600001)(97736004)(10290500003)(99286004)(316002)(54906003)(52116002)(8936002)(8676002)(2351001)(86612001)(39060400002)(53936002)(2906002)(3660700001)(15650500001)(107886003)(86362001)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1010;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: loF1lazHW73knRuon95glZaIeFeN59+rgRE412l9+PMYgy+Rcrd8z5cjFIXoxIh1IOs8xC5FSqHPZ3fTzJI8JASWESPgD9enG6NFhMantF0iCsalmJhrLKIXEadAE+IFjuDSKrNBO+LZhfIQJf+Hl9Khf7S8vFds6DetSuuugg3tccPC3xu9xtJUOp6frThv
+x-microsoft-antispam-message-info: sRuI32JYo3OeP0MHWgZs+FKbz1jya5koUjgElc7AeM9WD22UN5Gt0eGBH6gpI51SdyM4lqrAI2MTmsPcTwQIqs4+dEirBiD7P2xTorZpJxGchAmxEvIa7CZoU9AJfov3+hHoMr5CMMVcI6mrWp5B/aS2Xsn8YMf7xLDb19Jnv+pzpsqyuwHq+uu59UWIuWWH
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 9f53f6b9-916d-483f-3d49-08d5c1930e3d
+X-MS-Office365-Filtering-Correlation-Id: 0b91b1de-1856-4458-e057-08d5c1930fa0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9f53f6b9-916d-483f-3d49-08d5c1930e3d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 May 2018 16:26:09.3256
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0b91b1de-1856-4458-e057-08d5c1930fa0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 May 2018 16:26:11.8754
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1091
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1010
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The commit-graph file is a very helpful feature for speeding up git
-operations. In order to make it more useful, write the commit-graph file
-by default during standard garbage collection operations.
+The commit-graph feature is now integrated with 'fsck' and 'gc',
+so remove those items from the "Future Work" section of the
+commit-graph design document.
 
-Add a 'gc.commitGraph' config setting that triggers writing a
-commit-graph file after any non-trivial 'git gc' command. Defaults to
-false while the commit-graph feature matures. We specifically do not
-want to turn this on by default until the commit-graph feature is fully
-integrated with history-modifying features like shallow clones.
+Also remove the section on lazy-loading trees, as that was completed
+in an earlier patch series.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config.txt |  6 ++++++
- Documentation/git-gc.txt |  4 ++++
- builtin/gc.c             |  6 ++++++
- t/t5318-commit-graph.sh  | 14 ++++++++++++++
- 4 files changed, 30 insertions(+)
+ Documentation/technical/commit-graph.txt | 22 ----------------------
+ 1 file changed, 22 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 11f027194e..9a3abd87e7 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1553,6 +1553,12 @@ gc.autoDetach::
- 	Make `git gc --auto` return immediately and run in background
- 	if the system supports it. Default is true.
+diff --git a/Documentation/technical/commit-graph.txt b/Documentation/techn=
+ical/commit-graph.txt
+index e1a883eb46..c664acbd76 100644
+--- a/Documentation/technical/commit-graph.txt
++++ b/Documentation/technical/commit-graph.txt
+@@ -118,9 +118,6 @@ Future Work
+ - The commit graph feature currently does not honor commit grafts. This ca=
+n
+   be remedied by duplicating or refactoring the current graft logic.
 =20
-+gc.commitGraph::
-+	If true, then gc will rewrite the commit-graph file after any
-+	change to the object database. If '--auto' is used, then the
-+	commit-graph will not be updated unless the threshold is met.
-+	See linkgit:git-commit-graph[1] for details.
-+
- gc.logExpiry::
- 	If the file gc.log exists, then `git gc --auto` won't run
- 	unless that file is more than 'gc.logExpiry' old.  Default is
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index 571b5a7e3c..17dd654a59 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -119,6 +119,10 @@ The optional configuration variable `gc.packRefs` dete=
-rmines if
- it within all non-bare repos or it can be set to a boolean value.
- This defaults to true.
+-- The 'commit-graph' subcommand does not have a "verify" mode that is
+-  necessary for integration with fsck.
+-
+ - After computing and storing generation numbers, we must make graph
+   walks aware of generation numbers to gain the performance benefits they
+   enable. This will mostly be accomplished by swapping a commit-date-order=
+ed
+@@ -130,25 +127,6 @@ Future Work
+     - 'log --topo-order'
+     - 'tag --merged'
 =20
-+The optional configuration variable 'gc.commitGraph' determines if
-+'git gc' runs 'git commit-graph write'. This can be set to a boolean
-+value. This defaults to false.
-+
- The optional configuration variable `gc.aggressiveWindow` controls how
- much time is spent optimizing the delta compression of the objects in
- the repository when the --aggressive option is specified.  The larger
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 77fa720bd0..efd214a59f 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -20,6 +20,7 @@
- #include "argv-array.h"
- #include "commit.h"
- #include "packfile.h"
-+#include "commit-graph.h"
-=20
- #define FAILED_RUN "failed to run %s"
-=20
-@@ -34,6 +35,7 @@ static int aggressive_depth =3D 50;
- static int aggressive_window =3D 250;
- static int gc_auto_threshold =3D 6700;
- static int gc_auto_pack_limit =3D 50;
-+static int gc_commit_graph =3D 0;
- static int detach_auto =3D 1;
- static timestamp_t gc_log_expire_time;
- static const char *gc_log_expire =3D "1.day.ago";
-@@ -121,6 +123,7 @@ static void gc_config(void)
- 	git_config_get_int("gc.aggressivedepth", &aggressive_depth);
- 	git_config_get_int("gc.auto", &gc_auto_threshold);
- 	git_config_get_int("gc.autopacklimit", &gc_auto_pack_limit);
-+	git_config_get_bool("gc.commitgraph", &gc_commit_graph);
- 	git_config_get_bool("gc.autodetach", &detach_auto);
- 	git_config_get_expiry("gc.pruneexpire", &prune_expire);
- 	git_config_get_expiry("gc.worktreepruneexpire", &prune_worktrees_expire);
-@@ -480,6 +483,9 @@ int cmd_gc(int argc, const char **argv, const char *pre=
-fix)
- 	if (pack_garbage.nr > 0)
- 		clean_pack_garbage();
-=20
-+	if (gc_commit_graph)
-+		write_commit_graph_reachable(get_object_directory(), 0);
-+
- 	if (auto_gc && too_many_loose_objects())
- 		warning(_("There are too many unreachable loose objects; "
- 			"run 'git prune' to remove them."));
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index a659620332..d20b17586f 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -245,6 +245,20 @@ test_expect_success 'perform fast-forward merge in ful=
-l repo' '
- 	test_cmp expect output
- '
-=20
-+test_expect_success 'check that gc clears commit-graph' '
-+	cd "$TRASH_DIRECTORY/full" &&
-+	git commit --allow-empty -m "blank" &&
-+	git commit-graph write --reachable &&
-+	cp $objdir/info/commit-graph commit-graph-before-gc &&
-+	git reset --hard HEAD~1 &&
-+	git config gc.commitGraph true &&
-+	git gc &&
-+	cp $objdir/info/commit-graph commit-graph-after-gc &&
-+	! test_cmp commit-graph-before-gc commit-graph-after-gc &&
-+	git commit-graph write --reachable &&
-+	test_cmp commit-graph-after-gc $objdir/info/commit-graph
-+'
-+
- # the verify tests below expect the commit-graph to contain
- # exactly the commits reachable from the commits/8 branch.
- # If the file changes the set of commits in the list, then the
+-- Currently, parse_commit_gently() requires filling in the root tree
+-  object for a commit. This passes through lookup_tree() and consequently
+-  lookup_object(). Also, it calls lookup_commit() when loading the parents=
+.
+-  These method calls check the ODB for object existence, even if the
+-  consumer does not need the content. For example, we do not need the
+-  tree contents when computing merge bases. Now that commit parsing is
+-  removed from the computation time, these lookup operations are the
+-  slowest operations keeping graph walks from being fast. Consider
+-  loading these objects without verifying their existence in the ODB and
+-  only loading them fully when consumers need them. Consider a method
+-  such as "ensure_tree_loaded(commit)" that fully loads a tree before
+-  using commit->tree.
+-
+-- The current design uses the 'commit-graph' subcommand to generate the gr=
+aph.
+-  When this feature stabilizes enough to recommend to most users, we shoul=
+d
+-  add automatic graph writes to common operations that create many commits=
+.
+-  For example, one could compute a graph on 'clone', 'fetch', or 'repack'
+-  commands.
+-
+ - A server could provide a commit graph file as part of the network protoc=
+ol
+   to avoid extra calculations by clients. This feature is only of benefit =
+if
+   the user is willing to trust the file, because verifying the file is cor=
+rect
 --=20
 2.16.2.329.gfb62395de6
 
