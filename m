@@ -2,186 +2,472 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F4571F51C
-	for <e@80x24.org>; Thu, 24 May 2018 09:20:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5E311F51C
+	for <e@80x24.org>; Thu, 24 May 2018 10:11:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965950AbeEXJUq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 05:20:46 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:55535 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965741AbeEXJUo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 05:20:44 -0400
-Received: by mail-wm0-f67.google.com with SMTP id a8-v6so3049724wmg.5
-        for <git@vger.kernel.org>; Thu, 24 May 2018 02:20:44 -0700 (PDT)
+        id S1031825AbeEXKLW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 06:11:22 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:39332 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031578AbeEXKFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 06:05:22 -0400
+Received: by mail-wm0-f52.google.com with SMTP id f8-v6so3534894wmc.4
+        for <git@vger.kernel.org>; Thu, 24 May 2018 03:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=IzWOlJg1bDe8PHxQgjmnMxRSQ0aE4hlqe67EdRtzpqA=;
-        b=AhEKQtbj4NlSG5/E7Ka7pP/rR4IjIY3WlisoRhOVrEbD8YSO/iJe5dJjjT4Na+Sss7
-         BoUVRM0OQvKVx70Tv/vnEAQVWxWMPWk0ZTyP8X1V1MGwVtaufZmNxZr01xleBAh2TyS9
-         JCmQ/2/Sw/OIdCUux1bbRPcEMo+sC4YuW/2fywJBivOZsYasBLnRROvFydc0B8h/1NDr
-         qYf4EHPWm9hpBqancr0CHU/bwg1sEpsCHQGx081X4ozxU8aQn5UXN0xhwyR0PeIJcHXj
-         I+/RG8dybSK6sIy8HHjyf/S1jyAo/sFTWZ6hTVo71bCngU+D5oN4ij9Vq9jsAfXj2ECZ
-         mL1A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Qx6KLTeEwFx1OvPpQZRUerV4DVOUr+3UtWtoiVUTMyw=;
+        b=KYXN7qc9OMVVc3Rrsa7F0hbFlKAt3Evs6v9Idy1sVgRezqaQulVSGOxFzo5h2t9xYO
+         sbr/PUgeKYQxXr9rOKlaOTLq8yTJi8p0JnytpioiBETB8Kbn85ixlPl8FYOXgFBbw0XX
+         QcEVyWbP6bHtGhFcGGeGyDbg9CABrsovp0Z3vn6rRAOMGlDqTnYVKTuo70b57PXZ+Iio
+         gStz9o9D5Zi1TXrcPNEPNTkXKGdQqnGaGz8beMmniN11a/XpWmB+sucnn8wOFfzEYa8f
+         XXJZzf3jHsFQLuAgt/ncRCRX+dOAl4iat6Qcee2jMYngpVzCklXN1NgqbEFPoN/3M9KO
+         k/HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=IzWOlJg1bDe8PHxQgjmnMxRSQ0aE4hlqe67EdRtzpqA=;
-        b=mCg6BLdKkJ54I1bCvIRm+N5sVPAerJBKqvtN10CayKWV2XkurcguelzMFfkFsVpI9v
-         cZzGtKKx9NcPEfNo2u10uFoEut//RfDmseAjg7N5oSQEvs2TCudNs4CoetPsdK3l9vIs
-         lypNx0quvG6wNJtu8FaEAZt2a1X1lgLCtehN6q6hf3rXhKW+XeFiPVhC3fW6bI+tGlLx
-         d/JxCBa3ukYS80j1ypZXDvEGRxPrzimVVZBjNC5BiXk7bXjEjv1DYdXXECym4l4YPg0m
-         NSnJOXuxpPeDqLl3n5DFHvPuLtW8BD19Iu0o5yWo2eMxNiUDhBywr/uXVdvE3d8hts8/
-         qiVw==
-X-Gm-Message-State: ALKqPwehzm+cTQWDPwzXy/jBBb/SBwYavG6m5iHiJ5TZpu/kOKkETiHt
-        mnjVI65ojh7V8CjuU4+gVdnzgk7B
-X-Google-Smtp-Source: AB8JxZovIE39HFp3UDe8HXYwVtH5PC2UwM0VtnISp5pLQHKeY70nub/YMmVooXijTOPK7/QTKj/mPg==
-X-Received: by 2002:a1c:6f9a:: with SMTP id c26-v6mr6622792wmi.139.1527153643058;
-        Thu, 24 May 2018 02:20:43 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o9-v6sm22777067wrn.74.2018.05.24.02.20.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 24 May 2018 02:20:42 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC/PATCH 3/7] rerere: add some documentation
-References: <20180520211210.1248-1-t.gummerer@gmail.com>
-        <20180520211210.1248-4-t.gummerer@gmail.com>
-Date:   Thu, 24 May 2018 18:20:41 +0900
-In-Reply-To: <20180520211210.1248-4-t.gummerer@gmail.com> (Thomas Gummerer's
-        message of "Sun, 20 May 2018 22:12:06 +0100")
-Message-ID: <xmqqr2m1quja.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Qx6KLTeEwFx1OvPpQZRUerV4DVOUr+3UtWtoiVUTMyw=;
+        b=CKrx2SKDKlQqX3hZyQHiszq4c0n9kIZLXI6vcF5PsWNJcf1yWuiQ0ougRtyHVx9Ryj
+         tx7NmWuqb+xKvypYVGhzoYstMuRuCK5WleqAJjIE/mwHCqRMs4xybSp+wmt6UcRxjwi1
+         jSwmTAyZLZaXO5EVWOFAyOcSRl8TasNX7FfPwhOAL33mG8KnA11S7AgqgyreoAwAdTjY
+         naR8ESlZdT7SnHHPWvO59dorXxu+BL2bKYuSpJV/Cpn61Ct/AkXYGO4q0T48zVyeOjaN
+         ewq5I88rE5B3os55PU0FEyXvq79Cw2OnmWKfIVpn3uf6OaBDY8OoCaxKyfq00ilCZbVK
+         aioA==
+X-Gm-Message-State: ALKqPwfIgQ4ZvFoFgggy8YcxAz+4ghqrnmETVkC2/6MzUzgUTv8StWzk
+        7hGhDFPm5J2GGim0dT6LigQ=
+X-Google-Smtp-Source: AB8JxZr5FokucIoiChrzHxu2fJpKLnzt3c8g91QRdLsiveNlgOfVSEWFF8Nu3FZRipPPwY8Jh2WjYQ==
+X-Received: by 2002:a1c:b807:: with SMTP id i7-v6mr6712662wmf.126.1527156320820;
+        Thu, 24 May 2018 03:05:20 -0700 (PDT)
+Received: from localhost.localdomain (x4db0e02e.dyn.telefonica.de. [77.176.224.46])
+        by smtp.gmail.com with ESMTPSA id x16-v6sm5625291wrp.94.2018.05.24.03.05.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 24 May 2018 03:05:19 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 2/5] t6036, t6042: use test_line_count instead of wc -l
+Date:   Thu, 24 May 2018 12:05:07 +0200
+Message-Id: <20180524100507.32305-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.17.0.993.g55a0f0c723
+In-Reply-To: <20180524070439.6367-3-newren@gmail.com>
+References: <20180524070439.6367-1-newren@gmail.com> <20180524070439.6367-3-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> +Conflict normalization
-> +----------------------
-> +
-> +To try and re-do a conflict resolution, even when different merge
-> +strategies are used, 'rerere' computes a conflict ID for each
-> +conflict in the file.
-> +
-> +This is done by discarding the common ancestor version in the
-> +diff3-style, and re-ordering the two sides of the conflict, in
-> +alphabetic order.
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  t/t6036-recursive-corner-cases.sh    | 102 ++++++++++++++++++---------
+>  t/t6042-merge-rename-corner-cases.sh |  99 +++++++++++++++++---------
+>  2 files changed, 134 insertions(+), 67 deletions(-)
+> 
+> diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+> index cfe6a99771..3e659cff28 100755
+> --- a/t/t6036-recursive-corner-cases.sh
+> +++ b/t/t6036-recursive-corner-cases.sh
+> @@ -65,9 +65,12 @@ test_expect_success 'merge simple rename+criss-cross with no modifications' '
+>  
+>  		test_must_fail git merge -s recursive R2^0 &&
+>  
+> -		test 2 = $(git ls-files -s | wc -l) &&
+> -		test 2 = $(git ls-files -u | wc -l) &&
+> -		test 2 = $(git ls-files -o | wc -l) &&
 
-s/discarding.*-style/normalising the conflicted section to 'merge' style/
+Here 'git ls-files -o' should have listed two untracked files ...
 
-The motivation behind the normalization should probably be given
-upfront in the first paragraph.  It is to ensure the recorded
-resolutions can be looked up from the rerere database for
-application, even when branches are merged in different order.  I am
-not sure what you meant by even when different merge stratagies are
-used; I'd drop that if I were writing the paragraph.
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 3 out &&
 
-> +Using this technique a conflict that looks as follows when for example
-> +'master' was merged into a topic branch:
-> +
-> +    <<<<<<< HEAD
-> +    foo
-> +    =======
-> +    bar
-> +    >>>>>>> master
-> +
-> +and the opposite way when the topic branch is merged into 'master':
-> +
-> +    <<<<<<< HEAD
-> +    bar
-> +    =======
-> +    foo
-> +    >>>>>>> topic
-> +
-> +can be recognized as the same conflict, and can automatically be
-> +re-resolved by 'rerere', as the SHA-1 sum of the two conflicts would
-> +be calculated from 'bar<NUL>foo<NUL>' in both cases.
+... but now you expect it to list three.  I was about to point out the
+typo, but then noticed that you expect it to list one more untracked
+file than before in all subsequent tests...  now that can't be just a
+typo, can it?
 
-You earlier talked about normalizing and reordering, but did not
-talk about "concatenate both with NUL in between and hash", so the
-explanation in the last two lines are not quite understandable by
-mere mortals, even though I know which part of the code you are
-referring to.  When you talk about hasing, you may want to make sure
-the readers understand that the branch label on <<< and >>> lines
-are ignored.
+Please mention in the commit message that when using an intermediate
+file to store the output, 'git ls-files -o' will list that file, too,
+that's why the number of expected untracked files had to be adjusted;
+so future readers won't have to figure this out themselves.
 
-> +If there are multiple conflicts in one file, they are all appended to
-> +one another, both in the 'preimage' file as well as in the conflict
-> +ID.
+An alternative to consider would be to add a .gitignore file in the
+initial commit to ignore 'out', then the number of untracked files
+don't have to be adjusted.
 
-In case it was not clear (and I do not think it is to those who only
-read your description and haven't thought things through
-themselves), this concatenation is why the normalization by
-reordering is helpful.  Imagine that a common ancestor had a file
-with a line with string "A" on it (I'll call such a line "line A"
-for brevity in the following) in its early part, and line X in its
-late part.  And then you fork four branches that do these things:
 
-    - AB: changes A to B
-    - AC: changes A to C
-    - XY: changes X to Y
-    - XZ: changes X to Z
+[I have no further comments, but leave the rest of the patch below, so
+anyone can readily check the increased number of untracked files in
+subsequent tests.]
 
-Now, forking a branch ABAC off of branch AB and then merging AC into
-it, and forking a branch ACAB off of branch AC and then merging AB
-into it, would yield the conflict in a different order.  The former
-would say "A became B or C, what now?" while the latter would say "A
-became C or B, what now?"
 
-But the act of merging AC into ABAC and resolving the conflict to
-leave line D means that you declare: 
-
-    After examining what branches AB and AC did, I believe that
-    making line A into line D is the best thing to do that is
-    compatible with what AB and AC wanted to do.
-
-So the conflict we would see when merging AB into ACAB should be
-resolved the same way---it is the resolution that is in line with
-that declaration.
-
-Imagine that similarly you had previously forked branch XYXZ from
-XY, merged XZ into it, and resolved "X became Y or Z" into "X became
-W".
-
-Now, if you forked a branch ABXY from AB and then merged XY, then
-ABXY would have line B in its early part and line Y in its later
-part.  Such a merge would be quite clean.  We can construct
-4 combinations using these four branches ((AB, AC) x (XY, XZ)).
-
-Merging ABXY and ACXZ would make "an early A became B or C, a late X
-became Y or Z" conflict, while merging ACXY and ABXZ would make "an
-early A became C or B, a late X became Y or Z".  We can see there
-are 4 combinations of ("B or C", "C or B") x ("X or Y", "Y or X").
-
-By sorting, we can give the conflict its canonical name, namely, "an
-early part became B or C, a late part becames X or Y", and whenever
-any of these four patterns appear, we can get to the same conflict
-and resolution that we saw earlier.  Without the sorting, we will
-have to somehow find a previous resolution from combinatorial
-explosion ;-)
-
-These days post ec34a8b1 ("Merge branch 'jc/rerere-multi'",
-2016-05-23), the conflict ID can safely collide, i.e. hash
-collisions that drops completely different conflicts and their
-resolutions into the same .git/rr-cache/$id directory will not
-interfere with proper operation of the system, thanks to that
-rerere-multi topic that allows us to store multiple preimage
-conflicts that happens to share the same conflict ID with their
-corresponding postimage resolutions.
-
-In theory, we *should* be able to stub out the SHA-1 computation and
-give every conflict the same ID and rerere should still operate
-correctly, even though I haven't tried it yet myself.
-
+>  		test $(git rev-parse :2:three) = $(git rev-parse L2:three) &&
+>  		test $(git rev-parse :3:three) = $(git rev-parse R2:three) &&
+> @@ -135,9 +138,12 @@ test_expect_success 'merge criss-cross + rename merges with basic modification'
+>  
+>  		test_must_fail git merge -s recursive R2^0 &&
+>  
+> -		test 2 = $(git ls-files -s | wc -l) &&
+> -		test 2 = $(git ls-files -u | wc -l) &&
+> -		test 2 = $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 3 out &&
+>  
+>  		test $(git rev-parse :2:three) = $(git rev-parse L2:three) &&
+>  		test $(git rev-parse :3:three) = $(git rev-parse R2:three) &&
+> @@ -211,9 +217,12 @@ test_expect_success 'git detects differently handled merges conflict' '
+>  
+>  		test_must_fail git merge -s recursive E^0 &&
+>  
+> -		test 3 = $(git ls-files -s | wc -l) &&
+> -		test 3 = $(git ls-files -u | wc -l) &&
+> -		test 0 = $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 3 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 3 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test $(git rev-parse :2:new_a) = $(git rev-parse D:new_a) &&
+>  		test $(git rev-parse :3:new_a) = $(git rev-parse E:new_a) &&
+> @@ -297,8 +306,10 @@ test_expect_success 'git detects conflict merging criss-cross+modify/delete' '
+>  
+>  		test_must_fail git merge -s recursive E^0 &&
+>  
+> -		test 2 -eq $(git ls-files -s | wc -l) &&
+> -		test 2 -eq $(git ls-files -u | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 2 out &&
+>  
+>  		test $(git rev-parse :1:file) = $(git rev-parse master:file) &&
+>  		test $(git rev-parse :2:file) = $(git rev-parse B:file)
+> @@ -314,8 +325,10 @@ test_expect_success 'git detects conflict merging criss-cross+modify/delete, rev
+>  
+>  		test_must_fail git merge -s recursive D^0 &&
+>  
+> -		test 2 -eq $(git ls-files -s | wc -l) &&
+> -		test 2 -eq $(git ls-files -u | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 2 out &&
+>  
+>  		test $(git rev-parse :1:file) = $(git rev-parse master:file) &&
+>  		test $(git rev-parse :3:file) = $(git rev-parse B:file)
+> @@ -423,9 +436,12 @@ test_expect_success 'merge of D & E1 fails but has appropriate contents' '
+>  
+>  		test_must_fail git merge -s recursive E1^0 &&
+>  
+> -		test 2 -eq $(git ls-files -s | wc -l) &&
+> -		test 1 -eq $(git ls-files -u | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 1 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test $(git rev-parse :0:ignore-me) = $(git rev-parse A:ignore-me) &&
+>  		test $(git rev-parse :2:a) = $(git rev-parse B:a)
+> @@ -440,9 +456,12 @@ test_expect_success 'merge of E1 & D fails but has appropriate contents' '
+>  
+>  		test_must_fail git merge -s recursive D^0 &&
+>  
+> -		test 2 -eq $(git ls-files -s | wc -l) &&
+> -		test 1 -eq $(git ls-files -u | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 1 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test $(git rev-parse :0:ignore-me) = $(git rev-parse A:ignore-me) &&
+>  		test $(git rev-parse :3:a) = $(git rev-parse B:a)
+> @@ -457,9 +476,12 @@ test_expect_success 'merge of D & E2 fails but has appropriate contents' '
+>  
+>  		test_must_fail git merge -s recursive E2^0 &&
+>  
+> -		test 4 -eq $(git ls-files -s | wc -l) &&
+> -		test 3 -eq $(git ls-files -u | wc -l) &&
+> -		test 1 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 4 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 3 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 2 out &&
+>  
+>  		test $(git rev-parse :2:a) = $(git rev-parse B:a) &&
+>  		test $(git rev-parse :3:a/file) = $(git rev-parse E2:a/file) &&
+> @@ -478,9 +500,12 @@ test_expect_success 'merge of E2 & D fails but has appropriate contents' '
+>  
+>  		test_must_fail git merge -s recursive D^0 &&
+>  
+> -		test 4 -eq $(git ls-files -s | wc -l) &&
+> -		test 3 -eq $(git ls-files -u | wc -l) &&
+> -		test 1 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 4 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 3 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 2 out &&
+>  
+>  		test $(git rev-parse :3:a) = $(git rev-parse B:a) &&
+>  		test $(git rev-parse :2:a/file) = $(git rev-parse E2:a/file) &&
+> @@ -574,9 +599,12 @@ test_expect_success 'handle rename/rename(1to2)/modify followed by what looks li
+>  
+>  		git merge -s recursive E^0 &&
+>  
+> -		test 1 -eq $(git ls-files -s | wc -l) &&
+> -		test 0 -eq $(git ls-files -u | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 1 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 0 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test $(git rev-parse HEAD:newname) = $(git rev-parse E:newname)
+>  	)
+> @@ -653,9 +681,12 @@ test_expect_failure 'detect rename/rename/add-source for virtual merge-base' '
+>  
+>  		git merge -s recursive E^0 &&
+>  
+> -		test 3 -eq $(git ls-files -s | wc -l) &&
+> -		test 0 -eq $(git ls-files -u | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 3 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 0 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test $(git rev-parse HEAD:b) = $(git rev-parse A:a) &&
+>  		test $(git rev-parse HEAD:c) = $(git rev-parse A:a) &&
+> @@ -727,9 +758,12 @@ test_expect_success 'virtual merge base handles rename/rename(1to2)/add-dest' '
+>  
+>  		git merge -s recursive E^0 &&
+>  
+> -		test 2 -eq $(git ls-files -s | wc -l) &&
+> -		test 0 -eq $(git ls-files -u | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 0 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test $(git rev-parse HEAD:a) = $(git rev-parse A:a) &&
+>  		test $(git rev-parse HEAD:c) = $(git rev-parse E:c)
+> diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+> index bec0192c3b..b76da8fcdf 100755
+> --- a/t/t6042-merge-rename-corner-cases.sh
+> +++ b/t/t6042-merge-rename-corner-cases.sh
+> @@ -116,9 +116,12 @@ test_expect_failure 'conflict caused if rename not detected' '
+>  		git checkout -q C^0 &&
+>  		git merge -s recursive B^0 &&
+>  
+> -		test 3 -eq $(git ls-files -s | wc -l) &&
+> -		test 0 -eq $(git ls-files -u | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 3 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 0 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test_line_count = 6 c &&
+>  		test $(git rev-parse HEAD:a) = $(git rev-parse B:a) &&
+> @@ -203,9 +206,12 @@ test_expect_failure 'detect rename/add-source and preserve all data' '
+>  
+>  		git merge -s recursive C^0 &&
+>  
+> -		test 2 -eq $(git ls-files -s | wc -l) &&
+> -		test 2 -eq $(git ls-files -u | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test -f a &&
+>  		test -f b &&
+> @@ -223,9 +229,12 @@ test_expect_failure 'detect rename/add-source and preserve all data, merge other
+>  
+>  		git merge -s recursive B^0 &&
+>  
+> -		test 2 -eq $(git ls-files -s | wc -l) &&
+> -		test 2 -eq $(git ls-files -u | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test -f a &&
+>  		test -f b &&
+> @@ -279,9 +288,12 @@ test_expect_success 'rename/directory conflict + clean content merge' '
+>  
+>  		test_must_fail git merge -s recursive right^0 &&
+>  
+> -		test 2 -eq $(git ls-files -s | wc -l) &&
+> -		test 1 -eq $(git ls-files -u | wc -l) &&
+> -		test 1 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 1 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 2 out &&
+>  
+>  		echo 0 >expect &&
+>  		git cat-file -p base:file >>expect &&
+> @@ -307,9 +319,12 @@ test_expect_success 'rename/directory conflict + content merge conflict' '
+>  
+>  		test_must_fail git merge -s recursive right^0 &&
+>  
+> -		test 4 -eq $(git ls-files -s | wc -l) &&
+> -		test 3 -eq $(git ls-files -u | wc -l) &&
+> -		test 1 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 4 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 3 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 2 out &&
+>  
+>  		git cat-file -p left-conflict:newfile >left &&
+>  		git cat-file -p base:file    >base &&
+> @@ -367,9 +382,12 @@ test_expect_success 'disappearing dir in rename/directory conflict handled' '
+>  
+>  		git merge -s recursive right^0 &&
+>  
+> -		test 1 -eq $(git ls-files -s | wc -l) &&
+> -		test 0 -eq $(git ls-files -u | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 1 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 0 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		echo 0 >expect &&
+>  		git cat-file -p base:sub/file >>expect &&
+> @@ -426,10 +444,14 @@ test_expect_success 'handle rename/rename (2to1) conflict correctly' '
+>  		test_must_fail git merge -s recursive C^0 >out &&
+>  		test_i18ngrep "CONFLICT (rename/rename)" out &&
+>  
+> -		test 2 -eq $(git ls-files -s | wc -l) &&
+> -		test 2 -eq $(git ls-files -u | wc -l) &&
+> -		test 2 -eq $(git ls-files -u c | wc -l) &&
+> -		test 3 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u c >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 3 out &&
+>  
+>  		test ! -f a &&
+>  		test ! -f b &&
+> @@ -476,9 +498,12 @@ test_expect_success 'merge has correct working tree contents' '
+>  
+>  		test_must_fail git merge -s recursive B^0 &&
+>  
+> -		test 3 -eq $(git ls-files -s | wc -l) &&
+> -		test 3 -eq $(git ls-files -u | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 3 out &&
+> +		git ls-files -u >out &&
+> +		test_line_count = 3 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test $(git rev-parse :1:a) = $(git rev-parse A:a) &&
+>  		test $(git rev-parse :3:b) = $(git rev-parse A:a) &&
+> @@ -527,8 +552,10 @@ test_expect_failure 'detect conflict with rename/rename(1to2)/add-source merge'
+>  
+>  		test_must_fail git merge -s recursive C^0 &&
+>  
+> -		test 4 -eq $(git ls-files -s | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 4 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test $(git rev-parse 3:a) = $(git rev-parse C:a) &&
+>  		test $(git rev-parse 1:a) = $(git rev-parse A:a) &&
+> @@ -573,8 +600,10 @@ test_expect_failure 'rename/rename/add-source still tracks new a file' '
+>  		git checkout C^0 &&
+>  		git merge -s recursive B^0 &&
+>  
+> -		test 2 -eq $(git ls-files -s | wc -l) &&
+> -		test 0 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 1 out &&
+>  
+>  		test $(git rev-parse HEAD:a) = $(git rev-parse C:a) &&
+>  		test $(git rev-parse HEAD:b) = $(git rev-parse A:a)
+> @@ -615,10 +644,14 @@ test_expect_success 'rename/rename/add-dest merge still knows about conflicting
+>  		git checkout C^0 &&
+>  		test_must_fail git merge -s recursive B^0 &&
+>  
+> -		test 5 -eq $(git ls-files -s | wc -l) &&
+> -		test 2 -eq $(git ls-files -u b | wc -l) &&
+> -		test 2 -eq $(git ls-files -u c | wc -l) &&
+> -		test 4 -eq $(git ls-files -o | wc -l) &&
+> +		git ls-files -s >out &&
+> +		test_line_count = 5 out &&
+> +		git ls-files -u b >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -u c >out &&
+> +		test_line_count = 2 out &&
+> +		git ls-files -o >out &&
+> +		test_line_count = 5 out &&
+>  
+>  		test $(git rev-parse :1:a) = $(git rev-parse A:a) &&
+>  		test $(git rev-parse :2:b) = $(git rev-parse C:b) &&
+> -- 
+> 2.17.0.1.gda85003413
+> 
+> 
