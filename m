@@ -2,423 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D50F31F42D
-	for <e@80x24.org>; Thu, 24 May 2018 20:13:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B31E1F42D
+	for <e@80x24.org>; Thu, 24 May 2018 20:15:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S971364AbeEXUNZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 16:13:25 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:43086 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967682AbeEXUNY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 16:13:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=IKgry5yZnG+f7qNjqevRuyyQyUb2qgh9DhdfSrtfkEQ=; b=ATbCwJq6KB59vKmiYe8NszxgJL
-        Wcx2McTqA4uviu3AR6sJvhiyEtQsKBhAszen03X5M8QUsle+K1JBgrc6jfQ60qom9SltWaBg4Ew/z
-        wUytqBFHMkfGWrwJjisrxInSGNX3MqMBy0nXj2Wf2nuXLy4nsCsNauWdY1ON9DVn4pdTReUtWjzY+
-        uadrKC3QXycO94WJseTqjKAZkNlPzFiqHOOw/n3yeeHxhMY+FJvPegWnmhGWPQfZDWw3sviG+LuU9
-        9bj4k4wF+KkqU+ylHEO7bgD7xQJaqHdg0SEFsyFPomwCgn4JPZ8pwQoNtSnhTIQ9H7zpEgXaZD4j7
-        0WRYi1Eg==;
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:46816 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fLwbx-001JYh-Ls
-        for git@vger.kernel.org; Thu, 24 May 2018 16:13:22 -0400
-Date:   Thu, 24 May 2018 16:11:39 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: [PATCH v2] Use proper syntax for replaceables in command docs
-Message-ID: <alpine.LFD.2.21.1805241610030.7254@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S935797AbeEXUPf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 16:15:35 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:43637 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935330AbeEXUPe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 16:15:34 -0400
+Received: by mail-qt0-f194.google.com with SMTP id f13-v6so3749959qtp.10
+        for <git@vger.kernel.org>; Thu, 24 May 2018 13:15:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=DSREyTm4cayaTiHJPkzEik3dx9D3nZKh+LpIxJFUsSM=;
+        b=WgoTCBfWIz1GvwpO2LM+dlMVfWiywRhkTERdas0V9j7yh9+df3gruElj11AP+jRicp
+         KkDmRG7TfUbYZL1exeuAMoq4CS4C5giP5ROPe2ACMfYRZQy2ndr24BO8/VbdnHGZLi9f
+         k2VEzKFhcn89+EVyPtRtZE3u1ouH/PFM9MvbNaCQPOB/AVHdIJ/+lKCRZeCXA5jIVVD+
+         22rSYADT2+a8V4k13vPWc4NSfJ+KyXS+BM3CIcW2h3AWb70Ze23nCHaGCHiDGDSgQQx4
+         XoSD87EttDyvlFBITFrL0U1BvxFu44nu0Dtc4y6sN9ahp1IQdOINTVPGUKPD4w9C/4YU
+         gGPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=DSREyTm4cayaTiHJPkzEik3dx9D3nZKh+LpIxJFUsSM=;
+        b=JuIpgH5CAkM+2lBBVbpSqwHP/dSXeEzy3CjkU0IQ7IGrDAzwcjUfg/QUrD+M6k8B+W
+         QF/bIojfb/+1gy1wzDLSkVVzD/jfBeAaH1TBYI4g5CXjoiuxv1nTYpREpJB16Q/k5v90
+         Ax2yU/xQMBZc4AXwpQ4fxdUSnnSwgCcQ1E1jjsFFdY99GijlrIuwXS4aT7fp/FC24yfC
+         afvLE6qmaKWUXRp3MePiAr9RzlbcY5Oig8p4UV4uZom1FDVXZTvEw24jIaUacUI5r5LQ
+         UXr1QQSjSrcrsvTlwOUinOdY82t5fdYmvHecSyjwCIdsrG3k3zTWUl5+OD9Zxeom1tzj
+         5Gag==
+X-Gm-Message-State: ALKqPwcFKNqVvqO4D7n84bH/YXaBMCcj+vz9+/YOk4yMLOwC3ntRa5UQ
+        3bbmVrbw7UdvYBLu+oaJr0Q6q76SuXQamjPmKhY=
+X-Google-Smtp-Source: ADUXVKIYehsAmxhKWD1xdT3Cb3S4oK5x+wQeT7itKQnBm/T8R3oVn5Py8a3Wb031aGrT3iwuXTA2mqew9k33wF3kGjo=
+X-Received: by 2002:aed:26a4:: with SMTP id q33-v6mr8335511qtd.165.1527192934214;
+ Thu, 24 May 2018 13:15:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Received: by 2002:a0c:aa4b:0:0:0:0:0 with HTTP; Thu, 24 May 2018 13:15:33
+ -0700 (PDT)
+In-Reply-To: <20180524193516.28713-4-avarab@gmail.com>
+References: <20180524190214.GA21354@sigill.intra.peff.net> <20180524193516.28713-1-avarab@gmail.com>
+ <20180524193516.28713-4-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 24 May 2018 16:15:33 -0400
+X-Google-Sender-Auth: qxXJ0RU6Qaop14qrXMqw3vLGqt0
+Message-ID: <CAPig+cSd32O3ELaHxLD0_yRFmjMAo2k-jApopJmuEt7Z6W40-g@mail.gmail.com>
+Subject: Re: [PATCH 3/4] config doc: elaborate on what transfer.fsckObjects does
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The standard for command documentation synopses appears to be:
+On Thu, May 24, 2018 at 3:35 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> The existing documentation led the user to believe that all we were
+> doing were basic readability sanity checks, but that hasn't been true
+> for a very long time. Update the description to match reality, and
+> note the caveat that there's a quarantine for accepting pushes, but
+> not for fetching.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> @@ -3339,9 +3339,19 @@ transfer.fsckObjects::
+> -When set, the fetch or receive will abort in the case of a malformed
+> -object or a broken link. The result of an abort are only dangling
+> -objects.
+> +When set, the fetch receive will abort in the case of a malformed
 
-  [...] means optional
-  <...> means replaceable
-  [<...>] means both optional and replaceable
+"fetch receive"? Did you mean "fetch or receive" (like the original)?
 
-So fix a number of doc pages that use incorrect variations of the
-above.
+> +object or a link to a nonexisting object. In addition, various other
 
-Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+s/nonexisting/nonexistent/
 
----
+> +issues are checked for, including legacy issues (see `fsck.<msg-id>`),
+> +and potential security issues like there being a `.GIT` directory (see
 
-diff --git a/Documentation/git-annotate.txt b/Documentation/git-annotate.txt
-index 05fd482b7..e44a83133 100644
---- a/Documentation/git-annotate.txt
-+++ b/Documentation/git-annotate.txt
-@@ -8,7 +8,7 @@ git-annotate - Annotate file lines with commit information
- SYNOPSIS
- --------
- [verse]
--'git annotate' [options] file [revision]
-+'git annotate' [<options>] <file> [<revision>]
+s/there being/existence of/
 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-index aa3b2bf2f..3c0578217 100644
---- a/Documentation/git-check-attr.txt
-+++ b/Documentation/git-check-attr.txt
-@@ -9,8 +9,8 @@ git-check-attr - Display gitattributes information
- SYNOPSIS
- --------
- [verse]
--'git check-attr' [-a | --all | attr...] [--] pathname...
--'git check-attr' --stdin [-z] [-a | --all | attr...]
-+'git check-attr' [-a | --all | <attr>...] [--] <pathname>...
-+'git check-attr' --stdin [-z] [-a | --all | <attr>...]
+> +the release notes for v2.2.1 for details). Other sanity and security
+> +checks may be added in future releases.
+> ++
+> +On the receiving side failing fsckObjects will make those objects
 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
-index 611754f10..8b42cb3fb 100644
---- a/Documentation/git-check-ignore.txt
-+++ b/Documentation/git-check-ignore.txt
-@@ -9,8 +9,8 @@ git-check-ignore - Debug gitignore / exclude files
- SYNOPSIS
- --------
- [verse]
--'git check-ignore' [options] pathname...
--'git check-ignore' [options] --stdin
-+'git check-ignore' [<options>] <pathname>...
-+'git check-ignore' [<options>] --stdin
+s/side/&,/
 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-check-mailmap.txt b/Documentation/git-check-mailmap.txt
-index 39028ee1a..aa2055dbe 100644
---- a/Documentation/git-check-mailmap.txt
-+++ b/Documentation/git-check-mailmap.txt
-@@ -9,7 +9,7 @@ git-check-mailmap - Show canonical names and email addresses of contacts
- SYNOPSIS
- --------
- [verse]
--'git check-mailmap' [options] <contact>...
-+'git check-mailmap' [<options>] <contact>...
+> +unreachable, see "QUARANTINE ENVIRONMENT" in
+> +linkgit:git-receive-pack[1]. On the fetch side the malformed objects
 
+s/side/&,/
 
- DESCRIPTION
-diff --git a/Documentation/git-credential-cache.txt b/Documentation/git-credential-cache.txt
-index 2b8582639..0216c18ef 100644
---- a/Documentation/git-credential-cache.txt
-+++ b/Documentation/git-credential-cache.txt
-@@ -8,7 +8,7 @@ git-credential-cache - Helper to temporarily store passwords in memory
- SYNOPSIS
- --------
- -----------------------------
--git config credential.helper 'cache [options]'
-+git config credential.helper 'cache [<options>]'
- -----------------------------
+> +will instead be left unreferenced in the repository. That's considered
+> +a bug, and hopefully future git release will implement a quarantine
+> +for the "fetch" side as well.
 
- DESCRIPTION
-diff --git a/Documentation/git-credential-store.txt b/Documentation/git-credential-store.txt
-index 25fb963f4..693dd9d9d 100644
---- a/Documentation/git-credential-store.txt
-+++ b/Documentation/git-credential-store.txt
-@@ -8,7 +8,7 @@ git-credential-store - Helper to store credentials on disk
- SYNOPSIS
- --------
- -------------------
--git config credential.helper 'store [options]'
-+git config credential.helper 'store [<options>]'
- -------------------
+If this was a "BUGS" section in a man-page, the above might be less
+scary. In this context, however, I wonder if it makes sense to tone it
+down a bit:
 
- DESCRIPTION
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index 37b96c545..f98b7c6ed 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -22,7 +22,7 @@ cvspserver stream tcp nowait nobody /usr/bin/git-cvsserver git-cvsserver pserver
- Usage:
-
- [verse]
--'git-cvsserver' [options] [pserver|server] [<directory> ...]
-+'git-cvsserver' [<options>] [pserver|server] [<directory> ...]
-
- OPTIONS
- -------
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index 7c2c44270..b180f1fa5 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -9,11 +9,11 @@ git-diff - Show changes between commits, commit and working tree, etc
- SYNOPSIS
- --------
- [verse]
--'git diff' [options] [<commit>] [--] [<path>...]
--'git diff' [options] --cached [<commit>] [--] [<path>...]
--'git diff' [options] <commit> <commit> [--] [<path>...]
--'git diff' [options] <blob> <blob>
--'git diff' [options] --no-index [--] <path> <path>
-+'git diff' [<options>] [<commit>] [--] [<path>...]
-+'git diff' [<options>] --cached [<commit>] [--] [<path>...]
-+'git diff' [<options>] <commit> <commit> [--] [<path>...]
-+'git diff' [<options>] <blob> <blob>
-+'git diff' [<options>] --no-index [--] <path> <path>
-
- DESCRIPTION
- -----------
-@@ -21,7 +21,7 @@ Show changes between the working tree and the index or a tree, changes
- between the index and a tree, changes between two trees, changes between
- two blob objects, or changes between two files on disk.
-
--'git diff' [options] [--] [<path>...]::
-+'git diff' [<options>] [--] [<path>...]::
-
- 	This form is to view the changes you made relative to
- 	the index (staging area for the next commit).  In other
-@@ -29,7 +29,7 @@ two blob objects, or changes between two files on disk.
- 	further add to the index but you still haven't.  You can
- 	stage these changes by using linkgit:git-add[1].
-
--'git diff' [options] --no-index [--] <path> <path>::
-+'git diff' [<options>] --no-index [--] <path> <path>::
-
- 	This form is to compare the given two paths on the
- 	filesystem.  You can omit the `--no-index` option when
-@@ -38,7 +38,7 @@ two blob objects, or changes between two files on disk.
- 	or when running the command outside a working tree
- 	controlled by Git.
-
--'git diff' [options] --cached [<commit>] [--] [<path>...]::
-+'git diff' [<options>] --cached [<commit>] [--] [<path>...]::
-
- 	This form is to view the changes you staged for the next
- 	commit relative to the named <commit>.  Typically you
-@@ -48,7 +48,7 @@ two blob objects, or changes between two files on disk.
- 	<commit> is not given, it shows all staged changes.
- 	--staged is a synonym of --cached.
-
--'git diff' [options] <commit> [--] [<path>...]::
-+'git diff' [<options>] <commit> [--] [<path>...]::
-
- 	This form is to view the changes you have in your
- 	working tree relative to the named <commit>.  You can
-@@ -56,18 +56,18 @@ two blob objects, or changes between two files on disk.
- 	branch name to compare with the tip of a different
- 	branch.
-
--'git diff' [options] <commit> <commit> [--] [<path>...]::
-+'git diff' [<options>] <commit> <commit> [--] [<path>...]::
-
- 	This is to view the changes between two arbitrary
- 	<commit>.
-
--'git diff' [options] <commit>..<commit> [--] [<path>...]::
-+'git diff' [<options>] <commit>..<commit> [--] [<path>...]::
-
- 	This is synonymous to the previous form.  If <commit> on
- 	one side is omitted, it will have the same effect as
- 	using HEAD instead.
-
--'git diff' [options] <commit>\...<commit> [--] [<path>...]::
-+'git diff' [<options>] <commit>\...<commit> [--] [<path>...]::
-
- 	This form is to view the changes on the branch containing
- 	and up to the second <commit>, starting at a common ancestor
-@@ -87,7 +87,7 @@ and the range notations ("<commit>..<commit>" and
- "<commit>\...<commit>") do not mean a range as defined in the
- "SPECIFYING RANGES" section in linkgit:gitrevisions[7].
-
--'git diff' [options] <blob> <blob>::
-+'git diff' [<options>] <blob> <blob>::
-
- 	This form is to view the differences between the raw
- 	contents of two blob objects.
-diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-index 44098595d..ce954be53 100644
---- a/Documentation/git-fast-export.txt
-+++ b/Documentation/git-fast-export.txt
-@@ -9,7 +9,7 @@ git-fast-export - Git data exporter
- SYNOPSIS
- --------
- [verse]
--'git fast-export [options]' | 'git fast-import'
-+'git fast-export [<options>]' | 'git fast-import'
-
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index cdf696ff7..e81117d27 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -9,7 +9,7 @@ git-fast-import - Backend for fast Git data importers
- SYNOPSIS
- --------
- [verse]
--frontend | 'git fast-import' [options]
-+frontend | 'git fast-import' [<options>]
-
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index ff446f15f..9111c47a1 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -8,8 +8,8 @@ git-interpret-trailers - add or parse structured information in commit messages
- SYNOPSIS
- --------
- [verse]
--'git interpret-trailers' [options] [(--trailer <token>[(=|:)<value>])...] [<file>...]
--'git interpret-trailers' [options] [--parse] [<file>...]
-+'git interpret-trailers' [<options>] [(--trailer <token>[(=|:)<value>])...] [<file>...]
-+'git interpret-trailers' [<options>] [--parse] [<file>...]
-
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 4e0ad6fd8..118d9d86f 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -9,7 +9,7 @@ git-pull - Fetch from and integrate with another repository or a local branch
- SYNOPSIS
- --------
- [verse]
--'git pull' [options] [<repository> [<refspec>...]]
-+'git pull' [<options>] [<repository> [<refspec>...]]
-
-
- DESCRIPTION
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index bd5ecff98..0e20a66e7 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -8,9 +8,9 @@ git-rebase - Reapply commits on top of another base tip
- SYNOPSIS
- --------
- [verse]
--'git rebase' [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
-+'git rebase' [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
- 	[<upstream> [<branch>]]
--'git rebase' [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
-+'git rebase' [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
- 	--root [<branch>]
- 'git rebase' --continue | --skip | --abort | --quit | --edit-todo | --show-current-patch
-
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 95326b85f..e72d332b8 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -9,7 +9,7 @@ git-rev-parse - Pick out and massage parameters
- SYNOPSIS
- --------
- [verse]
--'git rev-parse' [ --option ] <args>...
-+'git rev-parse' [<options>] <args>...
-
- DESCRIPTION
- -----------
-@@ -360,7 +360,7 @@ Example
-
- ------------
- OPTS_SPEC="\
--some-command [options] <args>...
-+some-command [<options>] <args>...
-
- some-command does foo and bar!
- --
-@@ -385,7 +385,7 @@ When `"$@"` is `-h` or `--help` in the above example, the following
- usage text would be shown:
-
- ------------
--usage: some-command [options] <args>...
-+usage: some-command [<options>] <args>...
-
-     some-command does foo and bar!
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 464c15b94..4f3efde80 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -9,7 +9,7 @@ git-send-email - Send a collection of patches as emails
- SYNOPSIS
- --------
- [verse]
--'git send-email' [options] <file|directory|rev-list options>...
-+'git send-email' [<options>] <file|directory|rev-list options>...
- 'git send-email' --dump-aliases
-
-
-diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-index 0e1695df3..fcf528c1b 100644
---- a/Documentation/git-show.txt
-+++ b/Documentation/git-show.txt
-@@ -9,7 +9,7 @@ git-show - Show various types of objects
- SYNOPSIS
- --------
- [verse]
--'git show' [options] [<object>...]
-+'git show' [<options>] [<object>...]
-
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index e9615951d..7ea24fc94 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -8,7 +8,7 @@ git-svn - Bidirectional operation between a Subversion repository and Git
- SYNOPSIS
- --------
- [verse]
--'git svn' <command> [options] [arguments]
-+'git svn' <command> [<options>] [<arguments>]
-
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-web--browse.txt b/Documentation/git-web--browse.txt
-index a4ec25b45..fd952a5ff 100644
---- a/Documentation/git-web--browse.txt
-+++ b/Documentation/git-web--browse.txt
-@@ -8,7 +8,7 @@ git-web--browse - Git helper script to launch a web browser
- SYNOPSIS
- --------
- [verse]
--'git web{litdd}browse' [OPTIONS] URL/FILE ...
-+'git web{litdd}browse' [<options>] <url|file>...
-
- DESCRIPTION
- -----------
-diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-index 9f13266a6..592e06d83 100644
---- a/Documentation/gitcli.txt
-+++ b/Documentation/gitcli.txt
-@@ -110,8 +110,8 @@ couple of magic command-line options:
- +
- ---------------------------------------------
- $ git describe -h
--usage: git describe [options] <commit-ish>*
--   or: git describe [options] --dirty
-+usage: git describe [<options>] <commit-ish>*
-+   or: git describe [<options>] --dirty
-
-     --contains            find the tag that comes after the commit
-     --debug               debug search strategy on stderr
+    On the fetch side, malformed objects will instead be left
+    unreferenced in the repository. (However, in the future, such
+    objects may be quarantined for "fetch", as well.)
