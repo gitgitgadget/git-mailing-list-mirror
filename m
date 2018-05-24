@@ -2,142 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 012141F42D
-	for <e@80x24.org>; Thu, 24 May 2018 19:31:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 078D6200B9
+	for <e@80x24.org>; Thu, 24 May 2018 19:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030334AbeEXTbI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 15:31:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51798 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S967642AbeEXTbH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 15:31:07 -0400
-Received: (qmail 10866 invoked by uid 109); 24 May 2018 19:31:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 24 May 2018 19:31:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28541 invoked by uid 111); 24 May 2018 19:31:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 24 May 2018 15:31:16 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2018 15:31:05 -0400
-Date:   Thu, 24 May 2018 15:31:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: [PATCH] branch: issue "-l" deprecation warning after pager starts
-Message-ID: <20180524193105.GB21535@sigill.intra.peff.net>
-References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
- <e440f6e0-6d7d-0e72-b875-de290cea6b94@gmail.com>
- <87fu2qbojy.fsf@evledraar.gmail.com>
- <20180517133601.GC17548@sigill.intra.peff.net>
- <1527174618.10589.4.camel@gmail.com>
- <20180524192214.GA21535@sigill.intra.peff.net>
+        id S1034564AbeEXTcb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 15:32:31 -0400
+Received: from 7.mo177.mail-out.ovh.net ([46.105.61.149]:36129 "EHLO
+        7.mo177.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1034514AbeEXTca (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 15:32:30 -0400
+X-Greylist: delayed 1200 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 May 2018 15:32:30 EDT
+Received: from player728.ha.ovh.net (unknown [10.109.120.8])
+        by mo177.mail-out.ovh.net (Postfix) with ESMTP id 5D934B18A3
+        for <git@vger.kernel.org>; Thu, 24 May 2018 20:54:48 +0200 (CEST)
+Received: from [192.168.2.66] (62-183-157-47.bb.dnainternet.fi [62.183.157.47])
+        (Authenticated sender: kevin@bracey.fi)
+        by player728.ha.ovh.net (Postfix) with ESMTPSA id 9DC7454009C;
+        Thu, 24 May 2018 20:54:43 +0200 (CEST)
+Subject: Re: Weird revision walk behaviour
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+References: <CAM0VKjkr71qLfksxZy59o4DYCM-x=podsCf6Qv+PzZuSe1gXZw@mail.gmail.com>
+ <20180523173246.GA10299@sigill.intra.peff.net>
+ <20180523173523.GB10299@sigill.intra.peff.net>
+From:   Kevin Bracey <kevin@bracey.fi>
+Message-ID: <88f96a35-6368-de24-60ed-ad015f16f127@bracey.fi>
+Date:   Thu, 24 May 2018 21:54:37 +0300
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180524192214.GA21535@sigill.intra.peff.net>
+In-Reply-To: <20180523173523.GB10299@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-Ovh-Tracer-Id: 754071464854655197
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedthedrgeekgdeijecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 24, 2018 at 03:22:14PM -0400, Jeff King wrote:
+On 23/05/2018 20:35, Jeff King wrote:
+> There's more discussion in the thread at:
+>
+>    https://public-inbox.org/git/1366658602-12254-1-git-send-email-kevin@bracey.fi/
+>
+> I haven't absorbed it all yet, but I'm adding Junio to the cc.
 
-> On Thu, May 24, 2018 at 08:40:18PM +0530, Kaartic Sivaraam wrote:
-> 
-> > > On the other hand, I'm not sure this is that big a deal. The point of
-> > > the deprecation warning is to catch people who are actually trying to
-> > > use "-l" as "--create-reflog", and that case does not page. The people
-> > > doing "git branch -l" are actually getting what they want eventually,
-> > > which is to turn it into "--list". In the interim step where it becomes
-> > > an unknown option, they'll get a hard error. 
-> > 
-> > I just thought we wouldn't want to surprise/confuse users who try to
-> > use "git branch -l" with the warning message about "create reflog"
-> > along-side the list of branches. That would just add to the confusion.
-> > So, I thought we should error out when users do "git branch -l"
-> > instead. Something like the following should help us prevent "git
-> > branch -l" from listing branch names and might also prevent the
-> > confusion.
-> 
-> Yeah, I think that's just a more extreme version of the current plan (it
-> turns it immediately into a hard error instead of warning for a while).
-> If we just make the warning easier to see in the paged case, I think
-> that makes the current plan fine.
-> 
-> I'll wrap up the patch I sent earlier.
+Just to ack that I've seen the discussion, but I can't identify the 
+code's reasoning at the moment. My recollection is that I accepted while 
+coming up with the algorithm that it might err slightly on the side of 
+false positives in the display - there were some merge cases I was 
+unable to fully distinguish whether or not the merge had lost a change 
+it shouldn't have done, and if I was uncertain I'd rather show it than not.
 
-Hmm, actually, I suppose the true value of the warning is to help people
-doing "git branch -l foo", and it would still work there. The "more
-extreme" from your suggested patch would only affect "branch -l".
+The first commit was not originally intended to alter behaviour for 
+anything other than --full-history, but later in the chain there was 
+specific consideration into tracking the path to the specified "bottom" 
+commit. It may be that's part of what's happening here.
 
-Still, I think I prefer the gentler version that we get by keeping it as
-a warning even in the latter case.
+Kevin
 
-Here's the patch. It goes on top of jk/branch-l-0-deprecation (and will
-naturally conflict with the removal branch, but the resolution should be
-obvious).
 
--- >8 --
-Subject: [PATCH] branch: issue "-l" deprecation warning after pager starts
 
-If you run "git branch -l", we issue a deprecation warning
-that "-l" is probably not doing what you expect. But we do
-so while parsing the options, which is _before_ we start the
-pager. Depending on your pager settings, this means that the
-warning may get totally overwritten by the pager.
-
-Instead, let's delay the message until after we would have
-started the pager. If we do page, then it will end up inside
-the pager (since we redirect stderr). And if not (including
-the case when you really did mean for "-l" to work as
-"--create-reflog"), then it will still get shown on stderr.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/branch.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index e50a5a1680..55bfacd843 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -34,6 +34,7 @@ static const char * const builtin_branch_usage[] = {
- 	NULL
- };
- 
-+static int used_deprecated_reflog_option;
- static const char *head;
- static struct object_id head_oid;
- 
-@@ -573,8 +574,7 @@ static int edit_branch_description(const char *branch_name)
- static int deprecated_reflog_option_cb(const struct option *opt,
- 				       const char *arg, int unset)
- {
--	warning("the '-l' alias for '--create-reflog' is deprecated;");
--	warning("it will be removed in a future version of Git");
-+	used_deprecated_reflog_option = 1;
- 	*(int *)opt->value = !unset;
- 	return 0;
- }
-@@ -700,6 +700,11 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (list)
- 		setup_auto_pager("branch", 1);
- 
-+	if (used_deprecated_reflog_option) {
-+		warning("the '-l' alias for '--create-reflog' is deprecated;");
-+		warning("it will be removed in a future version of Git");
-+	}
-+
- 	if (delete) {
- 		if (!argc)
- 			die(_("branch name required"));
--- 
-2.17.0.1391.g6fdbf40724
 
