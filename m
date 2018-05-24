@@ -2,137 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D1221F51C
-	for <e@80x24.org>; Thu, 24 May 2018 06:27:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30EC51F51C
+	for <e@80x24.org>; Thu, 24 May 2018 06:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755050AbeEXG1t (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 02:27:49 -0400
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:38732 "EHLO
-        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754847AbeEXG1s (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 02:27:48 -0400
-Received: by mail-ot0-f193.google.com with SMTP id n3-v6so605653ota.5
-        for <git@vger.kernel.org>; Wed, 23 May 2018 23:27:48 -0700 (PDT)
+        id S935533AbeEXGkA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 02:40:00 -0400
+Received: from mail-vk0-f54.google.com ([209.85.213.54]:43998 "EHLO
+        mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935439AbeEXGj7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 02:39:59 -0400
+Received: by mail-vk0-f54.google.com with SMTP id x191-v6so312012vke.10
+        for <git@vger.kernel.org>; Wed, 23 May 2018 23:39:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=igaDHmdSsnbNvzMGAXArQuKgo04PLeho+DlllvZC/fs=;
-        b=LHwTHYwosw/huEn1rbsMDLwivHt33EsXIUzS0fSjn38o7+mSlvZxhx+SYdEqyPV8x5
-         n2oUzlUQGBGiobAei2sIsZMKOuKX71stXBQGkvpTfaz4Fe0sfgBshZdsLfnBIXVL2pAt
-         9pZImpbwdK/bVXqrxiuZweOoUgab7l4d2SYOai+3NymbFORp9xwoPaiOyKbmWlv9BLxP
-         Y2+ShrgsRThiw5elncUDf2vwYWoStWP8FP15JR39tzxdvNL/Qbo8CwaAAeKFeivXmci2
-         cuEphPoRolzAn86G1/h7uSpOP2DDTwZkFyOjSrlt5WmBeV8DpqSbG+/3S0iNwL3MgAUi
-         njSA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Glk4hPgYAXI9A2hGyEfw+cdfCoz/jGnfVM3RAQzyPlE=;
+        b=j4M3vYuFyQwAissmVzIKGi/otk8AOcIewcEE7SUaztr6l6xNFXqPXX+kpI+GPNUF4q
+         PuK15ozcgTuOR5+lHtZCqpfXQ3+vbgSWXkORl65CSbxQc6sjcMpwf0tZeSdr8F7tL3mq
+         N8MOlZ405AEZAkQh6n/keK5vw5zyWRo2NYnFoHzrDwJUBi8M1ZfWpAbvbla6lZb7cP2Z
+         7Lkf2IdXP2lfjhJPEQh85zly1E/mu0HZzAYeckfM+ebpV5bdXyIR1r/z+xMm0d7JiR9s
+         fYVFi5a+Z0wgwJUueZ+aotEPnoOj+9GADDJJr9wHEqSkJjtUji9GfVJzofEmWNAzAMPM
+         oFJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=igaDHmdSsnbNvzMGAXArQuKgo04PLeho+DlllvZC/fs=;
-        b=jXYJDn27ViH1jZMlw8KHxfMlPFsjyVX40JKhBjV6OauaIdRLfxjBsF5vG8Aknjwt7S
-         y33IX2DTFENOi/aS2BAKQpiMy95UEprDh/VoAUXs8tLoGKpNX2my/S/abSHjkfSI/cZd
-         +zDpQj6L8FXSGTR0EBAiN+3REPt5oNoaGuEzlEf/Sxwz3oHzoa7uNsd0iqMQHsB1eD/I
-         FL6ltmkhECnB9YoC5BOlsvkF0vZTetl5qkbCE//1lburRrYLOKCIRbU/tMfILFRJfj+U
-         91uFsKNZjyo0Q9leiFoh3ztfjECl3dDG6KWJrqK+MOap6anSdsGb7OioYgIspUGDfbrB
-         TdEw==
-X-Gm-Message-State: ALKqPwdMXmCrpJ3snsZzYhvXm4zqv9yZMzAmmwZhDzchvQtLcIv5yl5q
-        j0c+eA0SqFQ2DcZYeSvkSbMo8g==
-X-Google-Smtp-Source: AB8JxZqe/HKRM2Hh23qLIVTaMFW31GOlyELc0NTjh3QrtaZ8i2RjLiJsAFC/+uOhDqdikw6XI/CX6g==
-X-Received: by 2002:a9d:462:: with SMTP id 89-v6mr3547656otc.54.1527143267809;
-        Wed, 23 May 2018 23:27:47 -0700 (PDT)
-Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id s9-v6sm11109405otb.41.2018.05.23.23.27.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 May 2018 23:27:47 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Glk4hPgYAXI9A2hGyEfw+cdfCoz/jGnfVM3RAQzyPlE=;
+        b=lo67M6gZwFQyJz35jDjFFCELfuLFatmitTHi0yfsDh9lEDt9j+uGzoYoIfUoFDenod
+         ir405gJg0z7agUhS3dqPb3lEt6tAcCxJl5HoaiDRn3FCO2YO2e9RXHHyhbhTSm8NfBdO
+         /ZoEgIgciZmBMGspKL7aZn9g9rYn+cLhTlWn0ktsuy8crtM47Yi+z4qDPcup4rLE/QwA
+         seqt285I5jQk/r5BbfV2zOOLPco/BH9Hd8PbjTh3pANEL/lxqiiIenUa0uKzwjTiadpA
+         9aBfaf2C0T7FW6vjsml9wleYrAOVh3OiJUUm08k08k1TQbNxVJd1tNtqsWuOeGYTr8/O
+         hQ4w==
+X-Gm-Message-State: ALKqPwfJkQMwd9XOgdjpXLjGUGXpWeD+zy4ghJV6Du6CkvVmMDxZRCR/
+        xaaGSLIA8p68eys6gMQ5OKMYSL3rWzia+SKoAic=
+X-Google-Smtp-Source: AB8JxZrWy1FOIvl1/WfilCgavs4zUEanotG8L7J4uPuxwbsmfKGlQ8JqWJ1IGeg0/bOxpre4lP9Suf4kbbDt9PDaVoI=
+X-Received: by 2002:a1f:c155:: with SMTP id r82-v6mr3790330vkf.76.1527143998630;
+ Wed, 23 May 2018 23:39:58 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:ab0:5f04:0:0:0:0:0 with HTTP; Wed, 23 May 2018 23:39:58
+ -0700 (PDT)
+In-Reply-To: <xmqqwovtudia.fsf@gitster-ct.c.googlers.com>
+References: <xmqqwovtudia.fsf@gitster-ct.c.googlers.com>
 From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, gitster@pobox.com, B.Steinbrink@gmx.de,
-        sbejar@gmail.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2] rev-parse: check lookup'ed commit references for NULL
-Date:   Wed, 23 May 2018 23:27:33 -0700
-Message-Id: <20180524062733.5412-1-newren@gmail.com>
-X-Mailer: git-send-email 2.17.0.1.gda85003413
-In-Reply-To: <20180523220915.GB32171@sigill.intra.peff.net>
-References: <20180523220915.GB32171@sigill.intra.peff.net>
+Date:   Wed, 23 May 2018 23:39:58 -0700
+Message-ID: <CABPp-BHrzaJ4O0WXJM2YhTMzSx-6nxhHTi4VmL0xXph0ts3Msg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2018, #03; Wed, 23)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commits 2122f8b963d4 ("rev-parse: Add support for the ^! and ^@ syntax",
-2008-07-26) and 3dd4e7320d ("Teach rev-parse the ... syntax.", 2006-07-04)
-taught rev-parse new syntax, and used lookup_commit_reference() as part of
-their logic.  Neither usage checked the returned commit to see if it was
-non-NULL before using it.  Check for NULL and ensure an appropriate error
-is reported to the user.
+Hi Junio,
 
-Reported by Florian Weimer and Todd Zullinger.
+On Wed, May 23, 2018 at 5:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-
-I would have used a Reported-by tag for Florian and Todd, but looking at
-the bugzilla.redhat.com bug report doesn't show me Florian's email
-address.  I grepped through git logs and found two associated with that
-name, but didn't know if they were still accurate, or were a different
-Florian.  So I just went with the sentence instead.
-
- builtin/rev-parse.c          | 8 ++++++--
- t/t6101-rev-parse-parents.sh | 8 ++++++++
- 2 files changed, 14 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index a1e680b5e9..a0a0ace38d 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -282,6 +282,10 @@ static int try_difference(const char *arg)
- 			struct commit *a, *b;
- 			a = lookup_commit_reference(&start_oid);
- 			b = lookup_commit_reference(&end_oid);
-+			if (!a || !b) {
-+				*dotdot = '.';
-+				return 0;
-+			}
- 			exclude = get_merge_bases(a, b);
- 			while (exclude) {
- 				struct commit *commit = pop_commit(&exclude);
-@@ -328,12 +332,12 @@ static int try_parent_shorthands(const char *arg)
- 		return 0;
- 
- 	*dotdot = 0;
--	if (get_oid_committish(arg, &oid)) {
-+	if (get_oid_committish(arg, &oid) ||
-+	    !(commit = lookup_commit_reference(&oid))) {
- 		*dotdot = '^';
- 		return 0;
- 	}
- 
--	commit = lookup_commit_reference(&oid);
- 	if (exclude_parent &&
- 	    exclude_parent > commit_list_count(commit->parents)) {
- 		*dotdot = '^';
-diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
-index 8c617981a3..7683e4a114 100755
---- a/t/t6101-rev-parse-parents.sh
-+++ b/t/t6101-rev-parse-parents.sh
-@@ -214,4 +214,12 @@ test_expect_success 'rev-list merge^-1x (garbage after ^-1)' '
- 	test_must_fail git rev-list merge^-1x
- '
- 
-+test_expect_success 'rev-parse $garbage^@ does not segfault' '
-+	test_must_fail git rev-parse $EMPTY_TREE^@
-+'
-+
-+test_expect_success 'rev-parse $garbage...$garbage does not segfault' '
-+	test_must_fail git rev-parse $EMPTY_TREE...$EMPTY_BLOB
-+'
-+
- test_done
--- 
-2.17.0.1.gda85003413
-
+I don't see the series posted at
+https://public-inbox.org/git/20180522004327.13085-1-newren@gmail.com/
+(various merge-recursive code cleanups) -- or its predecessor --
+showing up anywhere.  Did it slip through the cracks, by chance?
