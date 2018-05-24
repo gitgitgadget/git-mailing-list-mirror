@@ -2,119 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4F4A1F42D
-	for <e@80x24.org>; Thu, 24 May 2018 19:07:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9DCB1F42D
+	for <e@80x24.org>; Thu, 24 May 2018 19:09:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034454AbeEXTG6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 15:06:58 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:37621 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030244AbeEXTG4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 15:06:56 -0400
-Received: by mail-wr0-f195.google.com with SMTP id i12-v6so5041299wrc.4
-        for <git@vger.kernel.org>; Thu, 24 May 2018 12:06:55 -0700 (PDT)
+        id S1034484AbeEXTJX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 15:09:23 -0400
+Received: from mail-yw0-f169.google.com ([209.85.161.169]:36789 "EHLO
+        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1033109AbeEXTJW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 15:09:22 -0400
+Received: by mail-yw0-f169.google.com with SMTP id v68-v6so926709ywd.3
+        for <git@vger.kernel.org>; Thu, 24 May 2018 12:09:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dNxKRvr5Y0FJaU7nnmIqd9ZCflMlbSqUPOZzXJxQCp4=;
-        b=rQ44P426D8/ngt/3QdbX3GP1SKY9gUMQoAI4xKX3PzXOz4ErXpGBNjWVcpvIy6Fbz6
-         1UM9M5VNbWVzEnQAsMUVV3/afJkkOjOKDF2gBLDtb1Piy7yB+spVKTLjqY7RlTn7830P
-         xoVqdINrESf+WaugpntLHfIU2HGs3J+AEC4tA9OJyCA5UsrG1v/UlNfwrqsHXrsoDXWO
-         HMYi58n4f4MTvs5m64MlC091oq1AbLuWjv03O3p/MZlmCnk6ALcTJ5rvqSv+mJOXmx6n
-         nmmSr5+Ccn2E214xkwuvrp0J0TnY5rPWU87o5CNLD5LZ0srbV5lAq9P+6z+vIGPN8m+b
-         Jg0w==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=FpDgcvS2fnU8ZEbZakMRNE9JzYSPlzCwDwAMU9YM+KM=;
+        b=Wrsnlc/ki4+6R2z/H326uiPOt8XMz4W3GcJVQ2no2zoyM5lSlRWJHHmAHzze3w8cW5
+         YcaEHHyMtOz1eHgvggqli7knqEZH9S242MD3XJc+Yh81v+5Qve5c+MzQBXu69oCF74Ck
+         qpr5RE5ADE/xfulWU4kAvbyZiUQJJjwwLxtDQAgeJ+ATR+MIizcrTFrQ00V6Up0WO2ji
+         +6tak7FKVtHLplhBCycyZ9lZQdeFPJ5CmA5uU/CJQQBP3fh0veMnPksHsrsELM8SJ2nI
+         pj0SwpzZIoeiY3bc+MFIp7CuWIOTi/ilBLbUkcUpvHxnIPP3L/5L82rT4IAOo6qzL74Y
+         ko3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dNxKRvr5Y0FJaU7nnmIqd9ZCflMlbSqUPOZzXJxQCp4=;
-        b=Jo4QnLWn9EcdsVj31Lc06/N0S898kFtqmY2GSXrqsMkZecu1pyyqcZVAZCtuzjMhkL
-         V6vy+6wQdlQVqShtdmBu/6E166eZXcHEGU2H8rLEMEt0Wg8zcWKEdfjOu63ZiV27106Q
-         uljPUnebp3LCZOfPxIQDUSc3csIEto7XNvso0g0P5qcEHhmWCL19IPT8hLGJAkLZKRYT
-         /1ThVHloVTlZTc8U9GYNP1t7zTaaVaX5Ect6hVfvWEf7XYsLNJ1FBbyn25fjaj0V8gWO
-         eT6CP0fgFkjwFUvZ+WkcYpa3vfxANINXQ7nBHVu+4GrWLTHRyaNNOKn3WlOlZujXSXiZ
-         +QTw==
-X-Gm-Message-State: ALKqPwf3m8MawM813jAiVblHxTeJyHIFtGnYpCIto/Wf3+uv9D9pshla
-        s6bzaVqi3Tp5Lg9ccrt0An2508VV
-X-Google-Smtp-Source: AB8JxZqrxzoSasgDDgd1Qb3bMcGBOsmDpNOxJaboYCQeS7lqPUCOsvRwVNM0aDJhxGEqgFp5B3qgpw==
-X-Received: by 2002:adf:80d0:: with SMTP id 74-v6mr8415468wrl.273.1527188814864;
-        Thu, 24 May 2018 12:06:54 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id d9-v6sm18302494wrn.71.2018.05.24.12.06.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 24 May 2018 12:06:54 -0700 (PDT)
-Date:   Thu, 24 May 2018 20:07:24 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC/PATCH 7/7] rerere: teach rerere to handle nested conflicts
-Message-ID: <20180524190724.GC18193@hank.intra.tgummerer.com>
-References: <20180520211210.1248-1-t.gummerer@gmail.com>
- <20180520211210.1248-8-t.gummerer@gmail.com>
- <xmqqefi1qrpj.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=FpDgcvS2fnU8ZEbZakMRNE9JzYSPlzCwDwAMU9YM+KM=;
+        b=VL/FtLZvkFT1nwDePwLXdsykhHDUid0phhRjoGS2RDof9J8Xwqjm5pgAcrw1ppCELM
+         2POeY/pWvBzl3rHPv/pxwzxKfWDkdbpODIJk2Hmr+IUU6JLBMpohv0GD05juHwElnHDE
+         PY9VQSyvmMN38BPFF4AlB4NfznHvlm4L+zel6E1qigxjLSdorCQpkEvHxn2TeUmCSF/B
+         NbXr6FqqHK+xXycMJdWMcHZovOQG22RG76oAMl20/1WyBFet5AcTt2ifcuZ5jZEtBPy8
+         VZaA6YDMavo3qMYGpH3zH5s53CDBmbOfkI/05lcEJEU8zghoMWIf6pReUKT3ZiOXd7gX
+         Kqmw==
+X-Gm-Message-State: ALKqPwdFUDAvSRduh9ZTWzvpf44TDsmfEFb51EBZ8eHg57o9LPva3t6V
+        +h1EJxrWJDK8vRzHBZF1rxkjBOrH4xznyBIHEX/wYA==
+X-Google-Smtp-Source: AB8JxZqvHq7uaJbrIG72y1sR0HvzkNfZNnmzUqxRqOxg3W7m3zsqn8cPJsnIK3kCyehLy9+s1n38hXmtzm09r0DCfaM=
+X-Received: by 2002:a81:374e:: with SMTP id e75-v6mr2586139ywa.340.1527188961648;
+ Thu, 24 May 2018 12:09:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqefi1qrpj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Thu, 24 May 2018 12:09:21 -0700 (PDT)
+In-Reply-To: <xmqqwovtudia.fsf@gitster-ct.c.googlers.com>
+References: <xmqqwovtudia.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 24 May 2018 12:09:21 -0700
+Message-ID: <CAGZ79kag9m02xtJKg05aPE4Grq2wBWSmUr3JdwfyHsMawR7m5Q@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2018, #03; Wed, 23)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/24, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> > No automated test for this yet.  As mentioned in the cover letter as
-> > well, I'm not sure if this is common enough for us to actually
-> > consider this use case.  I don't know how nested conflicts could
-> > actually be created apart from committing a file with conflict
-> > markers,
-> 
-> Recursive merge whose inner merge leaves conflict markers?
+> * sb/diff-color-move-more (2018-05-21) 8 commits
+>  - diff: color-moved white space handling options imply color-moved
+>  - diff.c: add --color-moved-ignore-space-delta option
+>  - diff.c: decouple white space treatment from move detection algorithm
+>  - diff.c: add a blocks mode for moved code detection
+>  - diff.c: adjust hash function signature to match hashmap expectation
+>  - diff.c: do not pass diff options as keydata to hashmap
+>  - xdiff/xdiffi.c: remove unneeded function declarations
+>  - xdiff/xdiff.h: remove unused flags
+>
+>  "git diff --color-moved" feature has further been tweaked.
+>
+>  Will merge to 'next'.
 
-Thanks, lots of stuff in Git I still have to learn :)
+This is nowhere near done after reading the feedback from
+Jonathan Tan; I am considering redoing it completely differently.
 
-> One thing that makes me wonder is that the conflict markers may not
-> "nest" so nicely.  For example, if inner merges had two conflicts
-> like these:
-> 
-> <<<
->  <<<<<
->  A
->  =====
->  B
->  >>>>>
-> ===
->  <<<<<
->  A
->  =====
->  C
->  >>>>>
-> >>>
-> 
-> where one side made something to A or B, while the other side made
-> something (or something else) to A or C, I would imagine that the
-> outer conflict could be "optimized" to produce this instead:
-> 
-> 
->  <<<<<
->  A
->  =====
-> <<<
->  B
-> ===
->  C
-> >>>
->  >>>>>
-
-Yeah, I do think that would be a nicer merge conflict to solve.  But I
-think that should be done in a separate patch series if we decide to
-do so.  When this one lands rerere will be able to handle the conflict
-either way :)
+Please eject from next. (at least the last 3 patches, the patches
+up to "add blocks mode" are reasonable.)
