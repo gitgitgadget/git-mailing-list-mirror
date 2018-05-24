@@ -2,99 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39F671F42D
-	for <e@80x24.org>; Thu, 24 May 2018 20:09:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25D6C1F42D
+	for <e@80x24.org>; Thu, 24 May 2018 20:13:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968625AbeEXUJC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 16:09:02 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:42106 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967240AbeEXUJB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 16:09:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=kmnbJEznnvZ+g7bmj7+y645QeC4XbMjn8z8Wd+8oHGo=; b=X/lAwmaTm1ERFU7luejyKibDn
-        BaDDcgb1tSVEzqb0P2BnXSbGr3I5ZejdaY5IyQ7g+hIDTEy1KQdnzinPMmBHSsaUjLeutAr6pdtIs
-        nNH/uTcdQEu6+n7snZR81sf0VHZ2CzXu2ud5FAhnTtGka4NAB09V3sK0l9wbbxjHF7C2+0kb7wOKb
-        J/rqNCr+9D7m6tp4mFYkxKrbhhtHTnPb91yAL1y3M71wtdXXaX4NC3l4RXRtCYF9Vx02Li8QrrM43
-        Notg7T8aZG9IKs4qNYfQt1NTih9NXppy41rg8N+88oWwt+Z2X8kgYhbWxEnSnxncmdbNlUZF4uUpm
-        kVCv8cZhA==;
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:46676 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fLwXj-001I6A-8G; Thu, 24 May 2018 16:08:59 -0400
-Date:   Thu, 24 May 2018 16:07:18 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
+        id S968878AbeEXUMg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 16:12:36 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33166 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S968880AbeEXUMc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 16:12:32 -0400
+Received: by mail-wm0-f65.google.com with SMTP id x12-v6so28945861wmc.0
+        for <git@vger.kernel.org>; Thu, 24 May 2018 13:12:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=21kd1yOrUdraup7at4WudBP8RaLY2rXqjgm6uEIw2SM=;
+        b=ELSWO78C8muXEOaW1mdf5WgWfAl18fZCjx7EqKJYhlYJcFbdXQX2rNSc6OULRyzxx/
+         +OTbIRcnYPzUnjOgT7nZZ5REhXyM4CDOgMUb/ify78LVG4LSwkGFWLMVDL2COul6lh8M
+         /rys+Ytjq9/CQo8u5AOv8IrmX5iy+bMBuHG+CbppsLPUr4ZLY336JvkSP3aD3X2HQwVm
+         6InHQ6BqyKEcaWhHGbN/k6goeIbwQ66LGFDOR5NCLRXVb58jvvK0Sk8kMGwRtdJQRMxo
+         qTqxjUf5aNr3g8tIsn8WYkEteEpx/qMg4KsrdCDDeB2Y+XR/3nvP1KYsWaSMADpUGc8x
+         mZaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=21kd1yOrUdraup7at4WudBP8RaLY2rXqjgm6uEIw2SM=;
+        b=VzZsVxYPQ4ZwabmnWeTCMTQjPfRUBwfuQ+Xw8swF/7k5E5aD9EJmmGcwiobFN5y83O
+         i+3zzyCCaxm5DuzheLe6zGmRjr6hxEbw2ZjmOP68Jep89mR/UauhSnXuxC271DPmg0xG
+         LP5wre6bHxmaZX14ym8O3sAJGgcsYd5cXNtD/raVTpJRIYtpXw7V8G0WN847ECKce6HP
+         z4Ckbq/HGstpxaT1NsqD0y4e6PLSPg5xHRy9rLjJtXTc9Gww5ChdThZ9B1OAfFM6dYj+
+         aRZcGinK5VXcW6/V22DqvNJjXhMrGdzGQvtDI+RskbqKUMWgVSySv2QnyTTYrn9K/kDS
+         y/WQ==
+X-Gm-Message-State: ALKqPwd+7aSy7gF6pdlz7M9uHXYeshr3HsRRnLW5CMaiUw6PgBODgGqq
+        csHGWih1rnPvu7Fo2mtCS7I=
+X-Google-Smtp-Source: AB8JxZpiUkORLm3nE00rk9phTynqnRfnagMn1W0cPfMa4STX1UeJu3nxyP2D7cbbZ5HrzbiV9jK3pg==
+X-Received: by 2002:a50:d2d7:: with SMTP id q23-v6mr14055660edg.12.1527192751435;
+        Thu, 24 May 2018 13:12:31 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id a2-v6sm11813628edn.25.2018.05.24.13.12.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 24 May 2018 13:12:30 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] Use proper syntax for replaceables in command docs
-In-Reply-To: <CAPig+cR91cEj1EdA4JvQQED0HJ2Db-LyrWCB_8VdC6uwT47KbA@mail.gmail.com>
-Message-ID: <alpine.LFD.2.21.1805241606310.7010@localhost.localdomain>
-References: <alpine.LFD.2.21.1805241552080.6217@localhost.localdomain> <CAPig+cR91cEj1EdA4JvQQED0HJ2Db-LyrWCB_8VdC6uwT47KbA@mail.gmail.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/4] config doc: unify the description of fsck.* and receive.fsck.*
+References: <20180524190214.GA21354@sigill.intra.peff.net>
+        <20180524193516.28713-1-avarab@gmail.com>
+        <20180524193516.28713-3-avarab@gmail.com>
+        <CAPig+cTr2J6yj39NNdV1vT8CQP2qyPxNB1ggaE9bGgXukuq1yQ@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAPig+cTr2J6yj39NNdV1vT8CQP2qyPxNB1ggaE9bGgXukuq1yQ@mail.gmail.com>
+Date:   Thu, 24 May 2018 22:12:29 +0200
+Message-ID: <87r2m07qz6.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 24 May 2018, Eric Sunshine wrote:
 
-> On Thu, May 24, 2018 at 3:54 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
-> > The standard for command documentation synopses appears to be:
-> >
-> >   [...] means optional
-> >   <...> means replaceable
-> >   [<...>] means both optional and replaceable
-> >
-> > So fix a number of doc pages that use incorrect variations of the
-> > above.
-> >
-> > Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
-> > ---
-> > diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-> > @@ -9,7 +9,7 @@ git-check-attr - Display gitattributes information
-> > -'git check-attr' [-a | --all | attr...] [--] pathname...
-> > +'git check-attr' [-a | --all | attr...] [--] <pathname>...
-> >  'git check-attr' --stdin [-z] [-a | --all | attr...]
->
-> Don't you also want "<attr>"?
->
-> > diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
-> > @@ -9,8 +9,8 @@ git-check-ignore - Debug gitignore / exclude files
-> > -'git check-ignore' [options] pathname...
-> > +'git check-ignore' [<options>] <paths>...
->
-> Earlier in the patch, you changed "pathname" to "<pathname>", but here
-> you change "pathname" to "<paths>", which is inconsistent.
->
-> It's also inconsistent and odd to say "<paths>..." (with the "...").
-> Seems better just to say "<pathname>..." to match existing practice.
+On Thu, May 24 2018, Eric Sunshine wrote:
 
-  points taken. note that this is not even close to a comprehensive
-fix; i just did the stuff i ran across. there is almost certainly much
-more, but i'll fix the above.
+> On Thu, May 24, 2018 at 3:35 PM, Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
+>> The documentation for the fsck.<msg-id> and receive.fsck.<msg-id>
+>> variables was mostly duplicated in two places, with fsck.<msg-id>
+>> making no mention of the corresponding receive.fsck.<msg-id>, and the
+>> same for fsck.skipList.
+>> [...]
+>> Rectify this situation by describing the feature in general terms
+>> under the fsck.* documentation, and make the receive.fsck.*
+>> documentation refer to those variables instead.
+>> [...]
+>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>> ---
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> @@ -1554,23 +1554,41 @@ filter.<driver>.smudge::
+>>  fsck.skipList::
+>> -       The path to a sorted list of object names (i.e. one SHA-1 per
+>> -       line) that are known to be broken in a non-fatal way and should
+>> -       be ignored. This feature is useful when an established project
+>> -       should be accepted despite early commits containing errors that
+>> -       can be safely ignored such as invalid committer email addresses.
+>> -       Note: corrupt objects cannot be skipped with this setting.
+>> +       Like `fsck.<msg-id>` this variable has a corresponding
+>> +       `receive.fsck.skipList` variant.
+>> ++
+>> +The path to a sorted list of object names (i.e. one SHA-1 per line)
+>> +that are known to be broken in a non-fatal way and should be
+>> +ignored. This feature is useful when an established project should be
+>> +accepted despite early commits containing errors that can be safely
+>> +ignored such as invalid committer email addresses. Note: corrupt
+>> +objects cannot be skipped with this setting.
+>
+> Nit: This organization seems backward. Typically, one would describe
+> what the option is for and then add the incidental note ("Like
+> fsck.<...>, this variable...") at the end. It's not clear why this
+> patch demotes the description to a secondary paragraph and considers
+> the incidental note as primary.
 
-rday
+I could change it like that. I was thinking that later in the series
+fetch.fsck.* is going to be first in the file, and then the user is told
+to look at this variable, so it made sense to note from the outset that
+we're describing several variables here.
+
+What do you think?
