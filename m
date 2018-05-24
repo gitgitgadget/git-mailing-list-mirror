@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1B4A1F42D
-	for <e@80x24.org>; Thu, 24 May 2018 19:35:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9FAF1F42D
+	for <e@80x24.org>; Thu, 24 May 2018 19:35:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161214AbeEXTff (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 15:35:35 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33199 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1034514AbeEXTf3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 15:35:29 -0400
-Received: by mail-wm0-f66.google.com with SMTP id x12-v6so28805977wmc.0
-        for <git@vger.kernel.org>; Thu, 24 May 2018 12:35:29 -0700 (PDT)
+        id S1161221AbeEXTfi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 15:35:38 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:41314 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161213AbeEXTfd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 15:35:33 -0400
+Received: by mail-wr0-f193.google.com with SMTP id u12-v6so5139890wrn.8
+        for <git@vger.kernel.org>; Thu, 24 May 2018 12:35:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=dJ4/3Raramh40AYPGpn9ktI3gete0PE9OmyooF+34mg=;
-        b=YrarB9u9YoOMm+faDNJoW/fK0FViw9Fd6Lkpd/mEGDq3bmg7eCylkaOLIFoBSkrImv
-         cy19H058TkvgVLfvZDTGNzsZ66Or/3LkCLsIhYciXdqCzV5XH1/BDxrjlixzAqVyV0Ww
-         VTSDRTHzwLhDxLgbfm+j7N0xVlEP9LB+5qeo1YK/ve9fSmSjHio4odf6fmK9O1M+4UWa
-         lwi2UeEcH3ci0Htafp2VhinLXUoBUVi3LdPNVzN0sSfV2qOg9cxEKSPMxEzEmia6VBUL
-         jifPLDrrGzB0JAmCRNebRDXaxRQZUo8jPwhSqHAFjXCezyISqIIHrV60m1N+p/4pparp
-         d+hQ==
+        bh=NBlrmzgclq+NpUsjWnJyxe6trwLGceFG3yoh36BC+94=;
+        b=JHhyITx3CdOb51P/QphY+yVq57OEqBtXUK2A06r6h+l3VkoD0LbkNFwXVOMqR6qSPs
+         i5wLVXoZO1d+9cws4Td3ANo0hR2OvT9dj2Lwd0WASVVRZJsAocQ55pyeGsmFlwqdil1B
+         Cc10VbBozV/1bKVBazwyRl2pRXI2M5fJGN/DhSikSZgxXGS+8LCBLQC++ggT11MxEO7g
+         xDJmKxtQEqNrae4JKfO/w0zARo8cRC1miYkBZ6HBxXhI+Sfj/ASj20c2cwhurECGfEK5
+         QkLsi0GgtU0kEdrdN7s7p0825nrAsEhdg7jq+3sieIAMcUOIxgnFB1ZLm/EXY0JunJ/p
+         MUsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=dJ4/3Raramh40AYPGpn9ktI3gete0PE9OmyooF+34mg=;
-        b=Jn8MftmvXSINSf4+clxubhIzZLPept7pNtsjXbw1L8+ajNN0C6vb8850FlqwKtMuuj
-         qT4hsbWULAmBCe7I71ODDMTCFWVYc+A5/gsdH3Ua1eHi4eyVGIr2MqXfcKk4f0keLVCE
-         OVKJ/Dj43Wk75PZbLgzhR0RRZuAsksRbWZec1aimDOyI4JjUDIb30M7wBZRWuVA/ihvg
-         M6lrBbZttvnbW1l03ubN/EL8Jb+SxSteJrsO/fcvlR1vZV+lfvaNVMY1x9RKoWGtcabB
-         eLRJPWxcdzHeBOOGmYJ9hKtdLoQ70uW+9K2miLMa9nGj4cMMYqgNXYk7Keoh9DCWJbof
-         T8ow==
-X-Gm-Message-State: ALKqPwfHdQOcxPoiXV9UqiR+3Q+pUAKwsYkyKCuysQYph+J0exv7d/tu
-        NLDGNAgrwyDdJWaShMK1N72j9E9f
-X-Google-Smtp-Source: AB8JxZq/BHzUkfRRW6yHxxmjJd6k6vbWFh1LPXqtkQrHPwaeDLnTT6NWM/u9ebvsNato9QDD++NSew==
-X-Received: by 2002:a1c:3505:: with SMTP id c5-v6mr9099826wma.35.1527190527985;
-        Thu, 24 May 2018 12:35:27 -0700 (PDT)
+        bh=NBlrmzgclq+NpUsjWnJyxe6trwLGceFG3yoh36BC+94=;
+        b=pp/r4CyPHIZNcZsCU5oKd2FdO3XYTZqQWN6458K2yoy4oICo30h1LYK2kl2AD+NOD9
+         7c1fR8LH256ocmehcOLoSa9tqnCrvTX9UiFnYrG+Fy7uH4qc24kZefDo+KWQOVdTMpvL
+         HiFt07e9r92UbVjaJbm9frCC5Gk4C5UIB+KktmXS9yCASGxXgQObvTZAqyuOEdPiwSf/
+         7dEurLp4JvyPyo+j/2mr4Er3yH3nPJxv0F1Ivs912+mb/gFb7KSjf+1KA4PW6G/fWgWG
+         Z9BtuPnWhWyQtdNvoPxGoZODAm35/VYrggqd61FjbMjZzes5/IaRx+RbrNzw10F9o+sa
+         8BAA==
+X-Gm-Message-State: ALKqPwcTr3fuZBnhRBhzIG/cf3Vsv2C6ULjsr8Bg1tg+QQXolt+b8GdB
+        eNGBmXnG2wCr3zGoXyt6Vg029RUk
+X-Google-Smtp-Source: AB8JxZrBHrBsqYL7/XnrYr7TWZkBvwOwfX36UTzmLOZ51rAusxWtIDaCLiXYF1KI8auk9W8vOeYN9g==
+X-Received: by 2002:adf:b201:: with SMTP id u1-v6mr8269848wra.2.1527190531379;
+        Thu, 24 May 2018 12:35:31 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 136-v6sm7056887wmo.12.2018.05.24.12.35.26
+        by smtp.gmail.com with ESMTPSA id 136-v6sm7056887wmo.12.2018.05.24.12.35.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 May 2018 12:35:27 -0700 (PDT)
+        Thu, 24 May 2018 12:35:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/4] config doc: don't describe *.fetchObjects twice
-Date:   Thu, 24 May 2018 19:35:13 +0000
-Message-Id: <20180524193516.28713-2-avarab@gmail.com>
+Subject: [PATCH 3/4] config doc: elaborate on what transfer.fsckObjects does
+Date:   Thu, 24 May 2018 19:35:15 +0000
+Message-Id: <20180524193516.28713-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180524193516.28713-1-avarab@gmail.com>
 References: <20180524193516.28713-1-avarab@gmail.com>
@@ -73,63 +73,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the copy/pasted description of the fetch.fsckObjects and
-receive.fsckObjects variables to refer to transfer.fsckObjects
-instead.
-
-Let's not duplicate the description of what *.fsckObjects does twice.
-instead let's refer to transfer.fsckObjects from both fetch.* and
-receive.*.
-
-I don't think this description of it makes much sense, but for now I'm
-just moving the existing documentation around. Making it better will
-be done in a later patch.
+The existing documentation led the user to believe that all we were
+doing were basic readability sanity checks, but that hasn't been true
+for a very long time. Update the description to match reality, and
+note the caveat that there's a quarantine for accepting pushes, but
+not for fetching.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config.txt | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ Documentation/config.txt | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 84e2891aed..623dffd198 100644
+index 351c541ab8..124f7a187c 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1422,10 +1422,9 @@ fetch.recurseSubmodules::
- 
- fetch.fsckObjects::
- 	If it is set to true, git-fetch-pack will check all fetched
--	objects. It will abort in the case of a malformed object or a
--	broken link. The result of an abort are only dangling objects.
--	Defaults to false. If not set, the value of `transfer.fsckObjects`
--	is used instead.
-+	objects. See `transfer.fsckObjects` for what's
-+	checked. Defaults to false. If not set, the value of
-+	`transfer.fsckObjects` is used instead.
- 
- fetch.unpackLimit::
- 	If the number of objects fetched over the Git native
-@@ -2845,10 +2844,9 @@ receive.certNonceSlop::
- 
- receive.fsckObjects::
- 	If it is set to true, git-receive-pack will check all received
--	objects. It will abort in the case of a malformed object or a
--	broken link. The result of an abort are only dangling objects.
--	Defaults to false. If not set, the value of `transfer.fsckObjects`
--	is used instead.
-+	objects. See `transfer.fsckObjects` for what's checked.
-+	Defaults to false. If not set, the value of
-+	`transfer.fsckObjects` is used instead.
- 
- receive.fsck.<msg-id>::
- 	When `receive.fsckObjects` is set to true, errors can be switched
-@@ -3332,6 +3330,10 @@ transfer.fsckObjects::
- 	When `fetch.fsckObjects` or `receive.fsckObjects` are
+@@ -3339,9 +3339,19 @@ transfer.fsckObjects::
  	not set, the value of this variable is used instead.
  	Defaults to false.
+ +
+-When set, the fetch or receive will abort in the case of a malformed
+-object or a broken link. The result of an abort are only dangling
+-objects.
++When set, the fetch receive will abort in the case of a malformed
++object or a link to a nonexisting object. In addition, various other
++issues are checked for, including legacy issues (see `fsck.<msg-id>`),
++and potential security issues like there being a `.GIT` directory (see
++the release notes for v2.2.1 for details). Other sanity and security
++checks may be added in future releases.
 ++
-+When set, the fetch or receive will abort in the case of a malformed
-+object or a broken link. The result of an abort are only dangling
-+objects.
++On the receiving side failing fsckObjects will make those objects
++unreachable, see "QUARANTINE ENVIRONMENT" in
++linkgit:git-receive-pack[1]. On the fetch side the malformed objects
++will instead be left unreferenced in the repository. That's considered
++a bug, and hopefully future git release will implement a quarantine
++for the "fetch" side as well.
  
  transfer.hideRefs::
  	String(s) `receive-pack` and `upload-pack` use to decide which
