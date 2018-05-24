@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDD6C1F42D
-	for <e@80x24.org>; Thu, 24 May 2018 16:25:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCB531F42D
+	for <e@80x24.org>; Thu, 24 May 2018 16:25:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031064AbeEXQZs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 12:25:48 -0400
-Received: from mail-cys01nam02on0097.outbound.protection.outlook.com ([104.47.37.97]:28256
-        "EHLO NAM02-CY1-obe.outbound.protection.outlook.com"
+        id S1031080AbeEXQZw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 12:25:52 -0400
+Received: from mail-by2nam03on0090.outbound.protection.outlook.com ([104.47.42.90]:27752
+        "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1030874AbeEXQZk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 12:25:40 -0400
+        id S1030884AbeEXQZm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 12:25:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xvgl0nBrJ+ZjDF9+fk+XfmpO6FS3GnEJVONvqcQNxt0=;
- b=d6HGTKMXQtE5QOT361q2wabeA8PWiW7rw7MI6k/AfzGS2jFOzVp1JDnBB6petDelYX6bLgZ+czKl3XJaarF2jb+anjd7IsXAOcUyUKwiMKqfi4o7cedz2usPC0x7f2fDpDoCpKxESMd7CYyGiuvNUsxZFYrFfyDYHRMDzYZ/Ajo=
+ bh=LYP0J0Akkhq5Tfs6dKvqnQOWmr5/HWKRWQr6Y40YpCI=;
+ b=H3/H/d2rQnfeq/K99b7a8mHMIORBRFs++hm1WdjQ8XXj74p3mDcCTMbT4QC8Zpr08wrYkqesYSXvmtSU0tl4nD5FpbjpfT2xpVAoI3lZUrcYX2wFYKfaSswe/6yXcmKlpy7w34UP2IjpJLxdQICIWyORLrWKU7VewzwdrSHKuXY=
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
- BL0PR2101MB0882.namprd21.prod.outlook.com (52.132.23.143) with Microsoft SMTP
+ BL0PR2101MB1091.namprd21.prod.outlook.com (52.132.24.25) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.820.2; Thu, 24 May 2018 16:25:38 +0000
+ 15.20.820.2; Thu, 24 May 2018 16:25:40 +0000
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::7037:b3ec:4240:9d19]) by BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::7037:b3ec:4240:9d19%5]) with mapi id 15.20.0820.001; Thu, 24 May 2018
- 16:25:38 +0000
+ 16:25:40 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "gitster@pobox.com" <gitster@pobox.com>,
@@ -39,11 +39,11 @@ CC:     "gitster@pobox.com" <gitster@pobox.com>,
         "marten.agren@gmail.com" <marten.agren@gmail.com>,
         "peff@peff.net" <peff@peff.net>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v3 06/20] commit-graph: add 'verify' subcommand
-Thread-Topic: [PATCH v3 06/20] commit-graph: add 'verify' subcommand
-Thread-Index: AQHT83vZXQbXzt7rPUKUS1Iltf6IXg==
-Date:   Thu, 24 May 2018 16:25:37 +0000
-Message-ID: <20180524162504.158394-7-dstolee@microsoft.com>
+Subject: [PATCH v3 07/20] commit-graph: verify catches corrupt signature
+Thread-Topic: [PATCH v3 07/20] commit-graph: verify catches corrupt signature
+Thread-Index: AQHT83vaY2Nx9o62wkWniekPhdhboQ==
+Date:   Thu, 24 May 2018 16:25:40 +0000
+Message-ID: <20180524162504.158394-8-dstolee@microsoft.com>
 References: <20180511211504.79877-1-dstolee@microsoft.com>
  <20180524162504.158394-1-dstolee@microsoft.com>
 In-Reply-To: <20180524162504.158394-1-dstolee@microsoft.com>
@@ -57,226 +57,113 @@ x-clientproxiedby: BN6PR16CA0004.namprd16.prod.outlook.com
 x-ms-exchange-messagesentrepresentingtype: 1
 x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0882;7:H08y9/yxVcib1GrGXhHj2tqj9D+xN15YENhZKjxOOnC7LkboLWriL2Rnn3gFNz/RNlGFWbejji+TdRPc/Sim9AI8Ze44FSza7ahDxn6pAWwtlI9IyiizQwqOki9faenjVO+SQPkch9pF2up11/QdaIjiSRXcTuJ+LdYtR50jTIL79OFDNRbSsXdcgmmgx/E6pej9HIA+701+GC2yirWOrLUdTGo7OKdCFUnHdLAfif6l4OVwRH/bvMcBZf0CdPRv;20:Ot/IVnEQl0O3s/fJVEcH+vGuSLr0GolDJQslY9XuQ2ymHc4jDBgup+WX5Xl2IQlL34irW/JW5WRLLTycuAZfXIGuqOmplQwWPAtTbGCkKIwk2BceTAfz9URhXX4iHKiajLvClnWTzCw6GTxJGnH3fmlAbWSMaUcKMp1fWYdkOIQ=
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1091;7:ICmaMrx0CGDWeye10xUVIrJNnz/JUkv7Pv08Ma8c4NK6ry4rHAEyX92YPVKtHA8mh6TYf1IqXrn9kefAVpCVw7L2UhHip4lm5H+pa9hjP/90rzaOLnmkgQsmatd0YlpYK0diQ2prVqoMr+eGFPA/X61t45uQ3S4VnMQ9sDmZMQOMr7k9Yoj+8QS5f0lDyNzyY8wMPrUD3DIandI1ezrhZ+NmyUgJfjSpRAXaGQDz/KeOntZQqG4/uNsLOTsH8NNr;20:bWUuB1e/e6uW+gSJFsjvvwSTXIikHTfV/mMz4ZyZELRB5OY5evFm3c4hP0vQpurTgZLJzWXiH+P87quQB+pZ0FibI9MX223oF0iBI0GAzyK+yDub1CNi9uWMcaYQ8GdSbM6m4p2mfkL8mUZ7uGrtOgRNUadofSfrqlE5/iTM/uU=
 x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB0882;
-x-ms-traffictypediagnostic: BL0PR2101MB0882:
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB1091;
+x-ms-traffictypediagnostic: BL0PR2101MB1091:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB08827B95A0FBE62BBC43FD38A16A0@BL0PR2101MB0882.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
+x-microsoft-antispam-prvs: <BL0PR2101MB109180ACDE1099A9F1DDEC94A16A0@BL0PR2101MB1091.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(20558992708506)(89211679590171);
 x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3002001)(10201501046)(3231254)(2018427008)(944501410)(52105095)(6055026)(149027)(150027)(6041310)(20161123564045)(20161123558120)(20161123562045)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB0882;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0882;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(10201501046)(3002001)(3231254)(2018427008)(944501410)(52105095)(93006095)(93001095)(6055026)(149027)(150027)(6041310)(20161123558120)(20161123560045)(20161123562045)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:BL0PR2101MB1091;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1091;
 x-forefront-prvs: 0682FC00E8
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39380400002)(366004)(396003)(376002)(39860400002)(346002)(199004)(189003)(36756003)(6116002)(107886003)(1076002)(6486002)(5250100002)(2501003)(6916009)(5660300001)(97736004)(316002)(99286004)(10090500001)(8656006)(6512007)(53936002)(54906003)(39060400002)(22452003)(4326008)(8676002)(2906002)(102836004)(2900100001)(1730700003)(81166006)(81156014)(2351001)(386003)(6506007)(3280700002)(476003)(2616005)(5640700003)(486006)(52116002)(14454004)(46003)(6436002)(25786009)(11346002)(86362001)(86612001)(446003)(305945005)(186003)(10290500003)(105586002)(7736002)(3660700001)(68736007)(76176011)(8936002)(59450400001)(106356001)(478600001)(15650500001)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0882;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(39380400002)(366004)(346002)(376002)(39860400002)(189003)(199004)(1076002)(53936002)(97736004)(6512007)(86612001)(81166006)(59450400001)(6116002)(25786009)(107886003)(10090500001)(4326008)(3660700001)(2616005)(52116002)(11346002)(186003)(2906002)(446003)(76176011)(305945005)(7736002)(8656006)(54906003)(3280700002)(46003)(86362001)(99286004)(102836004)(1730700003)(81156014)(8936002)(386003)(6506007)(476003)(22452003)(8676002)(486006)(316002)(39060400002)(5250100002)(14454004)(5640700003)(5660300001)(106356001)(2501003)(68736007)(478600001)(10290500003)(2351001)(2900100001)(36756003)(15650500001)(6436002)(6486002)(105586002)(6916009)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1091;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: vO3NevLCVO/RupI+u5/lOkyt8u7dDT68BioO6wznWA/SlN4nV0FVzy2/ZOrVvW5r5iUtLdmcqvrG/PLoU5VplmIfLNuyh537I53c1O683ghbbIkzyiKH+emyxGSySKe/wtejqTDa27YnHHQYuUIB08Sn0xp3yQvgWXBm4Mz8pZ+idA4fE41kPHDCZ9VBWCYu
+x-microsoft-antispam-message-info: w5cTCd3J3h6i7JifETYVbNmuYAk/2UMUx0oE4Jzl2Rb4tT8D/QW/O8esunCf6et4gFu/xP5w/0ppkcby4ATeTChI2S1kW0wxvhEN/DLEEvSdSGSDiRLr8Ctww6ntyPjXdCjr8Jmyo/vDTCQS0436yh+oIlgtZjfxM6SuCcXK1HmtLKOEK2rUq0KvON1+X4Zf
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: 1331736f-3c41-4e8d-032b-08d5c192fb82
+X-MS-Office365-Filtering-Correlation-Id: 7b91f20f-e05b-4b13-40c7-08d5c192fcdd
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1331736f-3c41-4e8d-032b-08d5c192fb82
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 May 2018 16:25:37.9636
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7b91f20f-e05b-4b13-40c7-08d5c192fcdd
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 May 2018 16:25:40.3314
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0882
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1091
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the commit-graph file becomes corrupt, we need a way to verify
-that its contents match the object database. In the manner of
-'git fsck' we will implement a 'git commit-graph verify' subcommand
-to report all issues with the file.
+This is the first of several commits that add a test to check that
+'git commit-graph verify' catches corruption in the commit-graph
+file. The first test checks that the command catches an error in
+the file signature. This is a check that exists in the existing
+commit-graph reading code.
 
-Add the 'verify' subcommand to the 'commit-graph' builtin and its
-documentation. The subcommand is currently a no-op except for
-loading the commit-graph into memory, which may trigger run-time
-errors that would be caught by normal use. Add a simple test that
-ensures the command returns a zero error code.
-
-If no commit-graph file exists, this is an acceptable state. Do
-not report any errors.
+Add a helper method 'corrupt_graph_and_verify' to the test script
+t5318-commit-graph.sh. This helper corrupts the commit-graph file
+at a certain location, runs 'git commit-graph verify', and reports
+the output to the 'err' file. This data is filtered to remove the
+lines added by 'test_must_fail' when the test is run verbosely.
+Then, the output is checked to contain a specific error message.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-commit-graph.txt |  6 ++++++
- builtin/commit-graph.c             | 38 ++++++++++++++++++++++++++++++++++=
-++++
- commit-graph.c                     | 26 ++++++++++++++++++++++++++
- commit-graph.h                     |  2 ++
- t/t5318-commit-graph.sh            | 10 ++++++++++
- 5 files changed, 82 insertions(+)
+ t/t5318-commit-graph.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-=
-graph.txt
-index 4c97b555cc..a222cfab08 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git commit-graph read' [--object-dir <dir>]
-+'git commit-graph verify' [--object-dir <dir>]
- 'git commit-graph write' <options> [--object-dir <dir>]
-=20
-=20
-@@ -52,6 +53,11 @@ existing commit-graph file.
- Read a graph file given by the commit-graph file and output basic
- details about the graph file. Used for debugging purposes.
-=20
-+'verify'::
-+
-+Read the commit-graph file and verify its contents against the object
-+database. Used to check for corrupted data.
-+
-=20
- EXAMPLES
- --------
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index f0875b8bf3..0433dd6e20 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -8,10 +8,16 @@
- static char const * const builtin_commit_graph_usage[] =3D {
- 	N_("git commit-graph [--object-dir <objdir>]"),
- 	N_("git commit-graph read [--object-dir <objdir>]"),
-+	N_("git commit-graph verify [--object-dir <objdir>]"),
- 	N_("git commit-graph write [--object-dir <objdir>] [--append] [--stdin-pa=
-cks|--stdin-commits]"),
- 	NULL
- };
-=20
-+static const char * const builtin_commit_graph_verify_usage[] =3D {
-+	N_("git commit-graph verify [--object-dir <objdir>]"),
-+	NULL
-+};
-+
- static const char * const builtin_commit_graph_read_usage[] =3D {
- 	N_("git commit-graph read [--object-dir <objdir>]"),
- 	NULL
-@@ -29,6 +35,36 @@ static struct opts_commit_graph {
- 	int append;
- } opts;
-=20
-+
-+static int graph_verify(int argc, const char **argv)
-+{
-+	struct commit_graph *graph =3D 0;
-+	char *graph_name;
-+
-+	static struct option builtin_commit_graph_verify_options[] =3D {
-+		OPT_STRING(0, "object-dir", &opts.obj_dir,
-+			   N_("dir"),
-+			   N_("The object directory to store the graph")),
-+		OPT_END(),
-+	};
-+
-+	argc =3D parse_options(argc, argv, NULL,
-+			     builtin_commit_graph_verify_options,
-+			     builtin_commit_graph_verify_usage, 0);
-+
-+	if (!opts.obj_dir)
-+		opts.obj_dir =3D get_object_directory();
-+
-+	graph_name =3D get_commit_graph_filename(opts.obj_dir);
-+	graph =3D load_commit_graph_one(graph_name);
-+	FREE_AND_NULL(graph_name);
-+
-+	if (!graph)
-+		return 0;
-+
-+	return verify_commit_graph(graph);
-+}
-+
- static int graph_read(int argc, const char **argv)
- {
- 	struct commit_graph *graph =3D NULL;
-@@ -163,6 +199,8 @@ int cmd_commit_graph(int argc, const char **argv, const=
- char *prefix)
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
-=20
- 	if (argc > 0) {
-+		if (!strcmp(argv[0], "verify"))
-+			return graph_verify(argc, argv);
- 		if (!strcmp(argv[0], "read"))
- 			return graph_read(argc, argv);
- 		if (!strcmp(argv[0], "write"))
-diff --git a/commit-graph.c b/commit-graph.c
-index 25893ec096..55b41664ee 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -836,3 +836,29 @@ void write_commit_graph(const char *obj_dir,
- 	oids.alloc =3D 0;
- 	oids.nr =3D 0;
- }
-+
-+static int verify_commit_graph_error;
-+
-+static void graph_report(const char *fmt, ...)
-+{
-+	va_list ap;
-+	struct strbuf sb =3D STRBUF_INIT;
-+	verify_commit_graph_error =3D 1;
-+
-+	va_start(ap, fmt);
-+	strbuf_vaddf(&sb, fmt, ap);
-+
-+	fprintf(stderr, "%s\n", sb.buf);
-+	strbuf_release(&sb);
-+	va_end(ap);
-+}
-+
-+int verify_commit_graph(struct commit_graph *g)
-+{
-+	if (!g) {
-+		graph_report("no commit-graph file loaded");
-+		return 1;
-+	}
-+
-+	return verify_commit_graph_error;
-+}
-diff --git a/commit-graph.h b/commit-graph.h
-index 96cccb10f3..71a39c5a57 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -53,4 +53,6 @@ void write_commit_graph(const char *obj_dir,
- 			int nr_commits,
- 			int append);
-=20
-+int verify_commit_graph(struct commit_graph *g);
-+
- #endif
 diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 77d85aefe7..6ca451dfd2 100755
+index 6ca451dfd2..bd64481c7a 100755
 --- a/t/t5318-commit-graph.sh
 +++ b/t/t5318-commit-graph.sh
-@@ -11,6 +11,11 @@ test_expect_success 'setup full repo' '
- 	objdir=3D".git/objects"
- '
-=20
-+test_expect_success 'verify graph with no graph file' '
-+	cd "$TRASH_DIRECTORY/full" &&
-+	git commit-graph verify
-+'
-+
- test_expect_success 'write graph with no packs' '
- 	cd "$TRASH_DIRECTORY/full" &&
- 	git commit-graph write --object-dir . &&
-@@ -230,4 +235,9 @@ test_expect_success 'perform fast-forward merge in full=
- repo' '
+@@ -235,9 +235,52 @@ test_expect_success 'perform fast-forward merge in ful=
+l repo' '
  	test_cmp expect output
  '
 =20
-+test_expect_success 'git commit-graph verify' '
++# the verify tests below expect the commit-graph to contain
++# exactly the commits reachable from the commits/8 branch.
++# If the file changes the set of commits in the list, then the
++# offsets into the binary file will result in different edits
++# and the tests will likely break.
++
+ test_expect_success 'git commit-graph verify' '
+ 	cd "$TRASH_DIRECTORY/full" &&
++	git rev-parse commits/8 | git commit-graph write --stdin-commits &&
+ 	git commit-graph verify >output
+ '
+=20
++GRAPH_BYTE_VERSION=3D4
++GRAPH_BYTE_HASH=3D5
++
++# usage: corrupt_graph_and_verify <position> <data> <string>
++# Manipulates the commit-graph file at the position
++# by inserting the data, then runs 'git commit-graph verify'
++# and places the output in the file 'err'. Test 'err' for
++# the given string.
++corrupt_graph_and_verify() {
++	pos=3D$1
++	data=3D"${2:-\0}"
++	grepstr=3D$3
 +	cd "$TRASH_DIRECTORY/full" &&
-+	git commit-graph verify >output
++	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
++	cp $objdir/info/commit-graph commit-graph-backup &&
++	printf "$data" | dd of=3D"$objdir/info/commit-graph" bs=3D1 seek=3D"$pos"=
+ conv=3Dnotrunc &&
++	test_must_fail git commit-graph verify 2>test_err &&
++	grep -v "^+" test_err >err
++	grep "$grepstr" err
++}
++
++test_expect_success 'detect bad signature' '
++	corrupt_graph_and_verify 0 "\0" \
++		"graph signature"
++'
++
++test_expect_success 'detect bad version' '
++	corrupt_graph_and_verify $GRAPH_BYTE_VERSION "\02" \
++		"graph version"
++'
++
++test_expect_success 'detect bad hash version' '
++	corrupt_graph_and_verify $GRAPH_BYTE_HASH "\02" \
++		"hash version"
 +'
 +
  test_done
