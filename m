@@ -2,82 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B64971F42D
-	for <e@80x24.org>; Thu, 24 May 2018 15:25:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74CC61F42D
+	for <e@80x24.org>; Thu, 24 May 2018 15:58:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966383AbeEXPZd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 11:25:33 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:40429 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966171AbeEXPZc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 11:25:32 -0400
-Received: by mail-wm0-f49.google.com with SMTP id j5-v6so6456208wme.5
-        for <git@vger.kernel.org>; Thu, 24 May 2018 08:25:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:user-agent:date:message-id:mime-version;
-        bh=wewKHvTr77RaY9v9KYOucew/FRVpXop62Du/tdxqG8Q=;
-        b=guq7PVeFJ+frkJr1Uh732UWTqwmYI9MXVnJvXB7D8ES1hvw60QA/COIF/4yZGp6Xdb
-         uzvJGhJ+hhfitHSAtl+Qyxm1NU8zRbgrx1KkTTMnK72u6ckPBjvYz67LOIAcv6RuSDP1
-         VXZ0EARFR5i65Bqqf1+B9JtDVCCxY5q/gCXyX/YnJCoPYqrv9sUDGR0wn4FnSfU3Ptwt
-         QdQ6xyksZL6OU8h7EPxNWP0U7Ir8MEEmYDGX+lYHVACbNDe92ZpiY1JK2rQ1UMR0NfPt
-         tIiHsDtmcEtMY2e8gBHdApLiG/y3rAoUak+4KwZ4IrSmTZMgwngsYkPlReXzoZ/Gfu/F
-         ObzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:user-agent:date:message-id
-         :mime-version;
-        bh=wewKHvTr77RaY9v9KYOucew/FRVpXop62Du/tdxqG8Q=;
-        b=rou4tNVKLbiC3K+e5dvp3V3KYpxBQo6D3GAxNx0xKZHhegNpb5uGT5mh70dDT3Satu
-         vq9WwK2OpSt/PTEQfsh8PHPsoaFWYd3HIcE/3Loy5KyQTxQufeV8bRrkNS5BGqoN4ddJ
-         +lZxL/lyDzPME9Qvq4F60eUv68P182Vxg0bvIDU3R0BpYHTGdpeJdq+u0RdEr/u9t8Q9
-         Wp9a6/gn9YgwIM6wwJ3V9xkJLcdywQyhFr42xEs4cuHLJKwrPr/rhvxwL27ZgXESETCw
-         MNCSr6ZzP9O91zVJXhvuMwmQLltlQv84IqsNbAN9pRfii+dHH//EUcYWp1AsTX0gTqMa
-         VMqw==
-X-Gm-Message-State: ALKqPwd2YhzG70duM5U/bvCRqJ523dGk3xfpdmJzS73ydwbEeKYxPEeE
-        Edzcp6tyGPBChpvyehmogkL44I2d
-X-Google-Smtp-Source: AB8JxZo6xh3HDLyFrYoAj3dHoUBVaqgYmUKk/K4+2Gv8wziG4kRtj5ExoB9lxgNslnvxCdrATR7c4Q==
-X-Received: by 2002:a1c:37c2:: with SMTP id e185-v6mr7611410wma.20.1527175530955;
-        Thu, 24 May 2018 08:25:30 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id f6-v6sm16223474wrj.63.2018.05.24.08.25.30
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 24 May 2018 08:25:30 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: BUG: No way to set fsck.<msg-id> when cloning
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-Date:   Thu, 24 May 2018 17:25:29 +0200
-Message-ID: <87vabd6pp2.fsf@evledraar.gmail.com>
+        id S971025AbeEXP6M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 11:58:12 -0400
+Received: from ikke.info ([178.21.113.177]:50216 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S971003AbeEXP6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 11:58:10 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 5609B4400C0; Thu, 24 May 2018 17:58:08 +0200 (CEST)
+Date:   Thu, 24 May 2018 17:58:08 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: BUG: No way to set fsck.<msg-id> when cloning
+Message-ID: <20180524155807.GA11253@alpha>
+References: <87vabd6pp2.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87vabd6pp2.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When I do:
+On Thu, May 24, 2018 at 05:25:29PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> When I do:
+> 
+>     git -c fetch.fsckObjects=true clone git@github.com:robbyrussell/oh-my-zsh.git
+> 
+> I get:
+> 
+>     error: object 2b7227859263b6aabcc28355b0b994995b7148b6: zeroPaddedFilemode: contains zero-padded file modes
+>     fatal: Error in object
+>     fatal: index-pack failed
+> 
+> The docs (https://git-scm.com/docs/git-config#git-config-fsckltmsg-idgt)
+> say you can override this with -c fsck.zeroPaddedFilemode = ignore, but
+> I see in builtin/fsck.c that just fsck_config() knows about this, and
+> indeed this works *after* you clone the repo when you use 'git fsck'.
+> 
+> I don't have time to fix this now, but what's the best approach here?
+> Make all the relevant commands copy what fsck_config() is doing, or
+> should fsck_object() be lazily looking up this config by itself?
 
-    git -c fetch.fsckObjects=true clone git@github.com:robbyrussell/oh-my-zsh.git
+Apparently someone reported this earlier[0]. Johannes replied:
 
-I get:
+>  Well, you can apparently have your cake and eat it too (see
+> https://git-scm.com/docs/git-config#git-config-receivefsckltmsg-idgt):
+> 
+> receive.fsck.<msg-id>::
+>         When `receive.fsckObjects` is set to true, errors can be switched
+>         to warnings and vice versa by configuring the `receive.fsck.<msg-id>`
+>         setting where the `<msg-id>` is the fsck message ID and the value
+>         is one of `error`, `warn` or `ignore`. For convenience, fsck prefixes
+>         the error/warning with the message ID, e.g. "missingEmail: invalid
+>         author/committer line - missing email" means that setting
+>         `receive.fsck.missingEmail = ignore` will hide that issue.
+> 
+> In your case, use receive.fsck.zeroPaddedFilemode=ignore=warn (or
+> =ignore).
 
-    error: object 2b7227859263b6aabcc28355b0b994995b7148b6: zeroPaddedFilemode: contains zero-padded file modes
-    fatal: Error in object
-    fatal: index-pack failed
+[0]https://public-inbox.org/git/alpine.DEB.2.21.1.1801042125430.32@MININT-6BKU6QN.europe.corp.microsoft.com/
 
-The docs (https://git-scm.com/docs/git-config#git-config-fsckltmsg-idgt)
-say you can override this with -c fsck.zeroPaddedFilemode = ignore, but
-I see in builtin/fsck.c that just fsck_config() knows about this, and
-indeed this works *after* you clone the repo when you use 'git fsck'.
-
-I don't have time to fix this now, but what's the best approach here?
-Make all the relevant commands copy what fsck_config() is doing, or
-should fsck_object() be lazily looking up this config by itself?
+Hope this helps, Kevin.
