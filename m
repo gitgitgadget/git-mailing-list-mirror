@@ -2,98 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AFEE1F42D
-	for <e@80x24.org>; Thu, 24 May 2018 21:06:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 004A31F42D
+	for <e@80x24.org>; Thu, 24 May 2018 21:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967242AbeEXVGM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 17:06:12 -0400
-Received: from 18.mo5.mail-out.ovh.net ([178.33.45.10]:50025 "EHLO
-        18.mo5.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967154AbeEXVGL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 17:06:11 -0400
-X-Greylist: delayed 2374 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 May 2018 17:06:10 EDT
-Received: from player728.ha.ovh.net (unknown [10.109.105.61])
-        by mo5.mail-out.ovh.net (Postfix) with ESMTP id 903F71B2F6C
-        for <git@vger.kernel.org>; Thu, 24 May 2018 22:26:35 +0200 (CEST)
-Received: from [192.168.2.66] (62-183-157-47.bb.dnainternet.fi [62.183.157.47])
-        (Authenticated sender: kevin@bracey.fi)
-        by player728.ha.ovh.net (Postfix) with ESMTPSA id E435454009A;
-        Thu, 24 May 2018 22:26:30 +0200 (CEST)
-Subject: Re: Weird revision walk behaviour
-To:     Jeff King <peff@peff.net>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-References: <CAM0VKjkr71qLfksxZy59o4DYCM-x=podsCf6Qv+PzZuSe1gXZw@mail.gmail.com>
- <20180523173246.GA10299@sigill.intra.peff.net>
- <20180523173523.GB10299@sigill.intra.peff.net>
-From:   Kevin Bracey <kevin@bracey.fi>
-Message-ID: <869a4045-0527-3dcf-33b3-90de2a45cd51@bracey.fi>
-Date:   Thu, 24 May 2018 23:26:24 +0300
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S971542AbeEXVLU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 17:11:20 -0400
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:44582 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967133AbeEXVLT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 17:11:19 -0400
+Received: by mail-qt0-f177.google.com with SMTP id d3-v6so3948666qtp.11
+        for <git@vger.kernel.org>; Thu, 24 May 2018 14:11:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=ri2aiHKiS4aFZw77Dfjq7ESFLFRAc/DvtapWM3gRtiI=;
+        b=WGCOxVg411XvcW8YliB1+c4ESs66dzmwTIAlamb8u+gFNP9WbM0eb8h6QyDEdZlJGQ
+         +EmFcy4gdKOiUvv8bGhjeP+nCP2lagWPabAiWvmz37J6tUq0vGa/RUK1eZTl8UEF8Pl5
+         v+FQwPVti5VabQcV98GG5JCchofxgO/ue9j68kB9DTDcqWPVM7sgI4ZVggiTFT3KT0+j
+         R2CLKi/oGYDEBo/hld29cH4qINoGG21+ePx7jSHerrnY3JxOD3qpyBdAN6vOvS0DQ16y
+         v0L/xzkR4CuphejxckjYVyYxhLlbz3RjGPyQfQ6e0NfN6Emn3mh4nt+CbbzZC24zyj3s
+         SYmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=ri2aiHKiS4aFZw77Dfjq7ESFLFRAc/DvtapWM3gRtiI=;
+        b=b+nWzcIxkoh3HZdxzE+BHKq7INh9AdFDwvWfYTIE52wy0Af/2CdIz1eC67OYdnrLiY
+         UO0dZEJab1JtSbjsh4nVD+MOz0mKAHNfuqTHjBMM3Lu540u9BmQQdfu5/dYrKs2BOsoQ
+         ykdRezMzCz5vLG0pb31cnT1I1xLvfancnon9NSZPl4Jv9xswzAE1hLx4YFAMZuFIWge2
+         6UqSDJ8xRpirBgMpW1B15CAxx5twKDt/LKJNDneM8eLutQk9rp0q84quVEwD30DySC+7
+         t3lqcXGZ543Ypve0/7iVTu337Ms2jxT/9Svl8RwqcoKLdUuU9YxmyfAJkcdgf+tSA3ds
+         4w/A==
+X-Gm-Message-State: ALKqPwfWMAf4tuuywWyLk5DjrAG5jo6QEOcwWBOBqIkv3yxBhxxD7FLH
+        vLgSIABhUbt7dmdf/EvI50E6nHasYI1IUdHMU06MKDjb
+X-Google-Smtp-Source: ADUXVKKRRjdfuzG0pPCwgYmgUP6P3SDws05xapRlU9CWFrBDanMZB6wm4wxHva5/oz1j8HoPwtPOsJtai4YRbLLuLJw=
+X-Received: by 2002:ac8:2c01:: with SMTP id d1-v6mr9279887qta.125.1527196278484;
+ Thu, 24 May 2018 14:11:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180523173523.GB10299@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-Ovh-Tracer-Id: 2304435638251983069
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedthedrgeekgdekiecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
+From:   "Etienne d'Hautefeuille" <sagoum.kakoum@gmail.com>
+Date:   Thu, 24 May 2018 23:11:07 +0200
+Message-ID: <CAFazEUP5QJ+WzTkDK6qcgvW5Xwx79KYJWeb1vg41=pS8E8vypQ@mail.gmail.com>
+Subject: git difftool with symlink to readonly jar failed
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/05/2018 20:35, Jeff King wrote:
-> On Wed, May 23, 2018 at 01:32:46PM -0400, Jeff King wrote:
->
->> On Wed, May 23, 2018 at 07:10:58PM +0200, SZEDER Gábor wrote:
->>
->>>    $ git log --oneline master..ba95710a3b -- ci/
->>>    ea44c0a594 Merge branch 'bw/protocol-v2' into jt/partial-clone-proto-v2
->>>
->>>
->>> I keep some older builds around, and it does not reproduce with v1.6.6.3
->>> (that's my usual goto for "old"). Bisecting turns up d0af663e42
->>> (revision.c: Make --full-history consider more merges, 2013-05-16).  It
->>> looks like an unintended change (the commit message claims that the
->>> non-full-history case shouldn't be affected).
-> There's more discussion in the thread at:
->
->    https://public-inbox.org/git/1366658602-12254-1-git-send-email-kevin@bracey.fi/
->
-> I haven't absorbed it all yet, but I'm adding Junio to the cc.
->
+Hi,
 
-In this case, we're hitting a merge commit which is not on master, but 
-it has two parents which both are. Which, IIRC, means the merge commit 
-is INTERESTING with two UNINTERESTING parents; and we are TREESAME to 
-only one of them.
+In my repo, I have some symlink to readonly jar, I can't make difftool
+between 2 commit
 
-The commit changing the logic of TREESAME you identified believes that 
-those TREESAME changes for merges which were intended to improve fuller 
-history modes shouldn't affect the simple history "because partially 
-TREESAME merges are turned into normal commits". Clearly that didn't 
-happen here.
+Steps to reproduce :
 
-I think we need to look at why that isn't happening, and if it can be 
-made to happen. The problem is that this commit is effectively the base 
-of the graph - it's got a double-connection to the UNINTERESTING set, 
-and maybe that prevented the simple history "follow 1 TREESAME" logic 
-from kicking in. Maybe it won't follow 1 TREESAME to UNINTERESTING.
+> git --version
+     git version 2.17.0
 
-I know there were quite a few changes later in the series to try to 
-reconcile the simple and full history, for the cases where the simple 
-history takes a weird path because of its love of TREESAME parents, 
-hiding evil merges. But I believe the simple history behaviour was 
-supposed to remain as-is - take first TREESAME always.
-
-Kevin
+> id
+uid=3D1000(sagoum) gid=3D1000(sagoum)
+groupes=3D1000(sagoum),5(tty),10(wheel),14(uucp),18(audio),20(dialout),27(v=
+ideo),35(games),78(kvm),85(usb),100(users),104(plugdev),992(android),993(do=
+cker),997(vboxusers)
 
 
+
+# readonly jar
+> ls -l /home/tempogit/jenkins_war
+total 510012
+-rwxr----- 1 root users 74585998 24 mai   21:08 jenkins-2.110.war
+-rwxr----- 1 root users 74612387 24 mai   21:08 jenkins-2.114.war
+-rwxr----- 1 root users 74606954 24 mai   21:08 jenkins-2.116.war
+-rwxr----- 1 root users 74737297 24 mai   21:08 jenkins-2.121.war
+-rwxr----- 1 root users 74525235 24 mai   21:08 jenkins-LTS-2.107.1.war
+-rwxr----- 1 root users 74568464 24 mai   21:08 jenkins-LTS-2.107.2.war
+-rwxr----- 1 root users 74576216 24 mai   21:08 jenkins-LTS-2.107.3.war
+
+
+#create a repo with symlink to this jar
+
+mkdir ~/tempo_2.17.0
+cd  ~/tempo_2.17.0
+git init
+ln -s /home/tempogit/jenkins_war/jenkins-2.110.war jenkins.war
+git add jenkins.war
+git commit -a -m " add symlink on jenkins-2.110.war"
+
+rm jenkins.war
+ln -s /home/tempogit/jenkins_war/jenkins-2.114.war jenkins.war
+git add jenkins.war
+git commit -a -m " add symlink on jenkins-2.114.war"
+
+rm jenkins.war
+ln -s /home/tempogit/jenkins_war/jenkins-2.116.war jenkins.war
+git add jenkins.war
+git commit -a -m " add symlink on jenkins-2.116.war"
+
+
+#detail of the repo
+git log
+commit ac1bc44d899ffd5406a7b0c413cf6c2e3497d496 (HEAD -> master)
+Author: kakoum <sagoum.kakoum@gmail.com>
+Date:   Thu May 24 22:47:09 2018 +0200
+
+      add symlink on jenkins-2.116.war
+
+commit 0244799661b993b1f78fa5afb621de3fe4c4a39c
+Author: kakoum <sagoum.kakoum@gmail.com>
+Date:   Thu May 24 22:47:09 2018 +0200
+
+      add symlink on jenkins-2.114.war
+
+commit 4cb98b4a307ce97d9e6b8e4b03211fa5ca8af7e7
+Author: kakoum <sagoum.kakoum@gmail.com>
+Date:   Thu May 24 22:47:09 2018 +0200
+
+      add symlink on jenkins-2.110.war
+
+
+
+#try  a diff
+git difftool --dir-diff 4cb98b4a307ce97d9e6b8e4b03211fa5ca8af7e7
+0244799661b993b1f78fa5afb621de3fe4c4a39c
+fatal: impossible d'ouvrir '/tmp/git-difftool.UQ4mqo/left/jenkins.war' en
+=C3=A9criture: Permission non accord=C3=A9e
+
+#temporary file
+  find /tmp/git-difftool.UQ4mqo/ -ls
+    412444      0 drwx------   4  sagoum sagoum       80 mai 24 22:48
+/tmp/git-difftool.UQ4mqo/
+    412446      0 drwx------   2  sagoum sagoum       40 mai 24 22:48
+/tmp/git-difftool.UQ4mqo/right
+    412445      0 drwx------   2  sagoum sagoum       60 mai 24 22:48
+/tmp/git-difftool.UQ4mqo/left
+    412449      0 lrwxrwxrwx   1  sagoum sagoum       44 mai 24 22:48
+/tmp/git-difftool.UQ4mqo/left/jenkins.war ->
+/home/tempogit/jenkins_war/jenkins-2.110.war
+
+# I have no problem to launch a bcompare between
+/tmp/git-difftool.UQ4mqo/left and /tmp/git-difftool.UQ4mqo/right (which is
+empty)
+
+Thank
