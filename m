@@ -2,75 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30EC51F51C
-	for <e@80x24.org>; Thu, 24 May 2018 06:40:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40C061F51C
+	for <e@80x24.org>; Thu, 24 May 2018 07:04:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935533AbeEXGkA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 02:40:00 -0400
-Received: from mail-vk0-f54.google.com ([209.85.213.54]:43998 "EHLO
-        mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935439AbeEXGj7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 02:39:59 -0400
-Received: by mail-vk0-f54.google.com with SMTP id x191-v6so312012vke.10
-        for <git@vger.kernel.org>; Wed, 23 May 2018 23:39:59 -0700 (PDT)
+        id S1751796AbeEXHEs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 03:04:48 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:35762 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751755AbeEXHEr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 03:04:47 -0400
+Received: by mail-oi0-f68.google.com with SMTP id a6-v6so529613oia.2
+        for <git@vger.kernel.org>; Thu, 24 May 2018 00:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Glk4hPgYAXI9A2hGyEfw+cdfCoz/jGnfVM3RAQzyPlE=;
-        b=j4M3vYuFyQwAissmVzIKGi/otk8AOcIewcEE7SUaztr6l6xNFXqPXX+kpI+GPNUF4q
-         PuK15ozcgTuOR5+lHtZCqpfXQ3+vbgSWXkORl65CSbxQc6sjcMpwf0tZeSdr8F7tL3mq
-         N8MOlZ405AEZAkQh6n/keK5vw5zyWRo2NYnFoHzrDwJUBi8M1ZfWpAbvbla6lZb7cP2Z
-         7Lkf2IdXP2lfjhJPEQh85zly1E/mu0HZzAYeckfM+ebpV5bdXyIR1r/z+xMm0d7JiR9s
-         fYVFi5a+Z0wgwJUueZ+aotEPnoOj+9GADDJJr9wHEqSkJjtUji9GfVJzofEmWNAzAMPM
-         oFJw==
+        h=from:to:cc:subject:date:message-id;
+        bh=rjDLiFhRIpeAbFGTplGnCAiBdbOtouPS+VqR+cIFs5o=;
+        b=jMZyy51CHnkXpou+aXI96A+R+i8rNJfvSVwrluGeKHZ9CcE5fRoEvDRtaYfZXn4eG8
+         KnOrajp1YsGzN1MLokuyvBHr9OkYncnyKPwqsiT1pSLaKuuNFFIZMePuNNM6Xccj/Y0s
+         OyTgZ4Db8IjQ6oSDFQOZN//GvOZcCw1xbjnPHY+XFof2k6ALwJclIu3q66hzHSXeXbVO
+         41JKJIrka76y317SnJ8+JmV0RaT8fz+Qyb37RE/0rL9QOp3OxiSWPJ1tR0+z8o6gPKbu
+         ciOcPvS34mosTZYgbr6Q09JQx4z3e7eD08X4OUiwS94TlVIwJHZ1Fo70pksYHuTDuEVv
+         VAyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Glk4hPgYAXI9A2hGyEfw+cdfCoz/jGnfVM3RAQzyPlE=;
-        b=lo67M6gZwFQyJz35jDjFFCELfuLFatmitTHi0yfsDh9lEDt9j+uGzoYoIfUoFDenod
-         ir405gJg0z7agUhS3dqPb3lEt6tAcCxJl5HoaiDRn3FCO2YO2e9RXHHyhbhTSm8NfBdO
-         /ZoEgIgciZmBMGspKL7aZn9g9rYn+cLhTlWn0ktsuy8crtM47Yi+z4qDPcup4rLE/QwA
-         seqt285I5jQk/r5BbfV2zOOLPco/BH9Hd8PbjTh3pANEL/lxqiiIenUa0uKzwjTiadpA
-         9aBfaf2C0T7FW6vjsml9wleYrAOVh3OiJUUm08k08k1TQbNxVJd1tNtqsWuOeGYTr8/O
-         hQ4w==
-X-Gm-Message-State: ALKqPwfJkQMwd9XOgdjpXLjGUGXpWeD+zy4ghJV6Du6CkvVmMDxZRCR/
-        xaaGSLIA8p68eys6gMQ5OKMYSL3rWzia+SKoAic=
-X-Google-Smtp-Source: AB8JxZrWy1FOIvl1/WfilCgavs4zUEanotG8L7J4uPuxwbsmfKGlQ8JqWJ1IGeg0/bOxpre4lP9Suf4kbbDt9PDaVoI=
-X-Received: by 2002:a1f:c155:: with SMTP id r82-v6mr3790330vkf.76.1527143998630;
- Wed, 23 May 2018 23:39:58 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:ab0:5f04:0:0:0:0:0 with HTTP; Wed, 23 May 2018 23:39:58
- -0700 (PDT)
-In-Reply-To: <xmqqwovtudia.fsf@gitster-ct.c.googlers.com>
-References: <xmqqwovtudia.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=rjDLiFhRIpeAbFGTplGnCAiBdbOtouPS+VqR+cIFs5o=;
+        b=V8AKoCfovaoTdhSn9AZn4xCv7kSGa1tiG0Jy7ryji2PXXBNq7MFiPAfkoQsUqffkT7
+         vQFiq1bZfFKnSZb2eckhI0VKGPB3UsSe6+LHPzcQbyg199et2OF6UfjvfcDeb/0uVPSZ
+         +a/8j6KnZZMhuTqGnNWyWUEnzM5MqhFDqPKLRDWPdcmDWIS7UEgiSOuqOR6fvhnzdsBy
+         RSJTuNZp2EgJoebCeXp4ftXCiOk087R1ualUL2QX2tSRjvVol6dvbLvdH5IOx3KE53se
+         RC3rkVS0xTUl8y6Z0U9ZqJIhZFPQfHkxHXTSM/OZJdUmrnlJIp96HVEj9uLWRNytOnLK
+         PpMw==
+X-Gm-Message-State: ALKqPwcoJEyI6yGhrUg/rSWUauBH6kaCxxN4fNCp6BhmTrQmsWto2b5S
+        /kHmP7Kzeigx6R8/CvKjboCRdw==
+X-Google-Smtp-Source: AB8JxZrpmWBcmNqyalFHxUARokJD6w79cKppCDsa/X4cmjhkACeKSH0FP672oZ7Zg1tRwQYEclqHJQ==
+X-Received: by 2002:aca:e848:: with SMTP id f69-v6mr3441492oih.192.1527145486645;
+        Thu, 24 May 2018 00:04:46 -0700 (PDT)
+Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
+        by smtp.gmail.com with ESMTPSA id q75-v6sm12076244ota.69.2018.05.24.00.04.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 24 May 2018 00:04:45 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 23 May 2018 23:39:58 -0700
-Message-ID: <CABPp-BHrzaJ4O0WXJM2YhTMzSx-6nxhHTi4VmL0xXph0ts3Msg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (May 2018, #03; Wed, 23)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
+Subject: [PATCH 0/5] Modernize some testcases for merge-recursive corner cases
+Date:   Thu, 24 May 2018 00:04:34 -0700
+Message-Id: <20180524070439.6367-1-newren@gmail.com>
+X-Mailer: git-send-email 2.17.0.1.gda85003413
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+I have about a dozen more testcases I want to add to the testsuite, in
+order to document additional situations that merge-recursive handles
+suboptimally.  To avoid sending an excessively long series, I am splitting
+this up.  This series just aims to modernize a pair of testfiles in which
+several of the new tests would most naturally belong.  This modernization
+serves two purposes: (1) it makes the existing tests easier to understand,
+and (2) it simplifies adding more tests to these test files.
 
-On Wed, May 23, 2018 at 5:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
+Elijah Newren (5):
+  t6036, t6042: use test_create_repo to keep tests independent
+  t6036, t6042: use test_line_count instead of wc -l
+  t6036, t6042: prefer test_path_is_file, test_path_is_missing
+  t6036, t6042: prefer test_cmp to sequences of test
+  t6036: prefer test_when_finished to manual cleanup in following test
 
-I don't see the series posted at
-https://public-inbox.org/git/20180522004327.13085-1-newren@gmail.com/
-(various merge-recursive code cleanups) -- or its predecessor --
-showing up anywhere.  Did it slip through the cracks, by chance?
+ t/t6036-recursive-corner-cases.sh    | 991 +++++++++++++++------------
+ t/t6042-merge-rename-corner-cases.sh | 968 ++++++++++++++------------
+ 2 files changed, 1098 insertions(+), 861 deletions(-)
+
+-- 
+2.17.0.1.gda85003413
+
