@@ -2,105 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4650C1F42D
-	for <e@80x24.org>; Thu, 24 May 2018 22:54:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AF821F42D
+	for <e@80x24.org>; Thu, 24 May 2018 23:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935907AbeEXWyy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 18:54:54 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:51210 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935803AbeEXWyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 18:54:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=TQpW08ZV5OmNaECTW5lUgQ1OUkcIlQeRMqYHQbpqfzY=; b=i9eGigWiV7jKc9TjXzsFRCDwF
-        fb0YzfdY0+TtK0siwE41myxlSgVQx5FAx6tGixAxZxWxHCLN31Kg6sDIFxo2UTZsfIxH0gnm9NTKb
-        mX0JxCHdecTOn12Z4RiFERS2156Ktf33R19A67G+CnyJg8QH7ax9DbXStuMb7KjQQ9JMaxpfTS+Jp
-        0lrPHDFYZbZ6WFVygc5rUkQ6e9BVcF52zzdJATkcROkKCjjC3MZHDs4oaePFCLXa7kcEaXh4HnMrp
-        Ny2okcLKsxQUGb++kK4TFspYXkSaGJovjzwjGHXVBeAkFAnb9kfsiLqnIkSNfVlF6TQGaVDppjsdO
-        Q0TbQMsvA==;
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:49486 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fLz8E-00262R-7u; Thu, 24 May 2018 18:54:51 -0400
-Date:   Thu, 24 May 2018 18:53:09 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Stefan Beller <sbeller@google.com>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: why do "git log -h" and "git show -h" print the same thing?
-In-Reply-To: <CAGZ79kY8CjLsTqY2YXJ8hPA41XrbYZrtK7yO59vrbA5M_vorVg@mail.gmail.com>
-Message-ID: <alpine.LFD.2.21.1805241852370.11801@localhost.localdomain>
-References: <alpine.LFD.2.21.1805240934010.12018@localhost.localdomain> <CAGZ79kY8CjLsTqY2YXJ8hPA41XrbYZrtK7yO59vrbA5M_vorVg@mail.gmail.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+        id S964990AbeEXXCg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 19:02:36 -0400
+Received: from mga02.intel.com ([134.134.136.20]:40110 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S935346AbeEXXCf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 19:02:35 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 24 May 2018 16:02:34 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.49,437,1520924400"; 
+   d="scan'208";a="53658204"
+Received: from mwm-dev.jf.intel.com ([10.54.75.6])
+  by orsmga003.jf.intel.com with ESMTP; 24 May 2018 16:02:34 -0700
+From:   Mike Mason <michael.w.mason@intel.com>
+To:     marc.herbert@intel.com
+Cc:     andy.work@nglowry.com, git@vger.kernel.org, gitster@pobox.com,
+        josh@joshtriplett.org, linux-kbuild@vger.kernel.org,
+        linux-kernel@vger.kernel.org, lists@nerdbynature.de,
+        michael.w.mason@intel.com, peff@peff.net,
+        nico-linuxsetlocalversion@schottelius.org
+Subject: Re: Wrong -dirty suffix set by setlocalversion (was: BUG in git diff-index) 
+Date:   Thu, 24 May 2018 16:03:34 -0700
+Message-Id: <20180524230334.12452-1-michael.w.mason@intel.com>
+X-Mailer: git-send-email 2.16.2
+In-Reply-To: <89d82c84-7a3b-9c4c-679e-a7a723669592@intel.com>
+References: <89d82c84-7a3b-9c4c-679e-a7a723669592@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 24 May 2018, Stefan Beller wrote:
+How about something like this? It ignores attributes that should have no
+bearing on whether the kernel is considered dirty. Copied trees with no other
+changes would no longer be marked with -dirty. Plus it works on read-only
+media since no index updating is required.
 
-> On Thu, May 24, 2018 at 6:37 AM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
-> >
-> >   maybe this is deliberate, but it's confusing that, with git 2.17.0,
-> > the output of both "git log -h" and "git show -h" is exactly the same:
-> >
-> > $ git log -h
-> > usage: git log [<options>] [<revision-range>] [[--] <path>...]
-> >    or: git show [<options>] <object>...
-> >
-> >     -q, --quiet           suppress diff output
-> >     --source              show source
-> >     --use-mailmap         Use mail map file
-> >     --decorate-refs <pattern>
-> >                           only decorate refs that match <pattern>
-> >     --decorate-refs-exclude <pattern>
-> >                           do not decorate refs that match <pattern>
-> >     --decorate[=...]      decorate options
-> >     -L <n,m:file>         Process line range n,m in file, counting from 1
-> > $
-> >
-> > is that what's *supposed* to happen?
->
-> I would think so, show is just "log -p" with the range clamped
-> down to <object>^..<object>.
->
-> It's been in the code like that for a couple years by now,
-> e.g. see
-> e66dc0cc4b1a6 log.c: fix translation markings, 2015-01-06
+Would this also be considered kosher, at least for the purposes of
+setlocalversion?
 
-  ah, very well, it just caught me by surprise.
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+diff --git a/scripts/setlocalversion b/scripts/setlocalversion
+index 71f39410691b..9da4c5e83285 100755
+--- a/scripts/setlocalversion
++++ b/scripts/setlocalversion
+@@ -73,8 +73,10 @@ scm_version()
+ 			printf -- '-svn%s' "`git svn find-rev $head`"
+ 		fi
+ 
+-		# Check for uncommitted changes
+-		if git diff-index --name-only HEAD | grep -qv "^scripts/package"; then
++		# Check for uncommitted changes. Only check mtime and size.
++       # Ignore insequential ctime, uid, gid and inode differences.
++		if git -c "core.checkstat=minimal" diff-index --name-only HEAD | \
++				grep -qv "^scripts/package"; then
+ 			printf '%s' -dirty
+ 		fi
+ 
