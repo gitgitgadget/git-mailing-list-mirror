@@ -6,55 +6,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA871FD4F
-	for <e@80x24.org>; Fri, 25 May 2018 21:16:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F7FB1F42D
+	for <e@80x24.org>; Fri, 25 May 2018 21:19:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030258AbeEYVQk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 17:16:40 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:35407 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030216AbeEYVQj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 17:16:39 -0400
-Received: by mail-qk0-f196.google.com with SMTP id h140-v6so5120618qke.2
-        for <git@vger.kernel.org>; Fri, 25 May 2018 14:16:39 -0700 (PDT)
+        id S1030273AbeEYVTR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 17:19:17 -0400
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:35835 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936301AbeEYVTQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 17:19:16 -0400
+Received: by mail-qt0-f181.google.com with SMTP id j1-v6so8269050qtp.2
+        for <git@vger.kernel.org>; Fri, 25 May 2018 14:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=XlyU0iInkyHMgcftRL1Hgke10rAo5YWrfKNeXFlqG9Q=;
-        b=lF0cOuaaMbSVdYmtPMRRA3G45+YZbsKDgnnqy84vMIQ7t5+TopIvXE4kFEK3EGY7CI
-         bL3Z/5r+iwueD3SkW3BnGPwgfzdF8OXMRjzkO6+U9a+nx/ejhC0zslz9p74VlEgxwNpS
-         Tw0aEpPVZidvEcY2Uv4aJA/LwiT8mjCEWTgMl5apbEWXXzeg/7uG7V0fGb2N2nf9XxH7
-         S1aYSnLA+MZP6dLoifOBPhjYcd52oVo+7JKA+SjTZq9uUt9ySK/ny4grmHjKr3pzdJju
-         O50AoDXwsH5Q2ZBeUtol/Gu5pq98OzLuydif/+Z7nZW/V/Ujt5t74idQPW4/Xd3mj9oC
-         W0ew==
+        bh=AEBu7TEmyUPILrGSyPcY8WlzdxUC3eA2zX5iFgSX+pA=;
+        b=BVrIRX/dkO8nNJIFNJrVNW1jHhGI+b2CEUObtDCcw8+rV9D7Yv/fCUmwPIRlxyzK74
+         f4l0UQpwzgBzibkIK4PJ6Zxz66wuSj8FQnvtPNALk3mjabQU1rGJXEit+WtNTqy78FRN
+         KZLr9V/p6kiZMz9zuVKe6wlpoedNh5JBKrY8cJgVT2Zq+m3Q833KbjXQW0ExDSGWKopD
+         /smxxSkcCZYJFeDKsqFewbFoD0yJ2pDtU5uGsiALn02c9aMErDINKydb8ABqwNMUIPmQ
+         HUn8jGYVPDfQEu6lrhFopvBLnYHthIfWxlMQx7qFk+NpzlKsiAdR8cnY0uSIsnFZ3SPI
+         a4Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=XlyU0iInkyHMgcftRL1Hgke10rAo5YWrfKNeXFlqG9Q=;
-        b=STw7DTgZrVOFgaM2IDDlBq6XwE65ZutEvO6L5SIjINZS21YYxmJ1C8dwZuTsPGJjAS
-         0n3S26Dyod3VZLIEpA65Xphz9Xqt5oRyit7mfpJ/UI9keFdA81iVspLPyyJxuk/qOtpD
-         wht3kMkwDMitOu+arF23KXc2q9F9typu/2ob3QL3lBVZhOx5Ld8RwfLnD+5tlCMKS4N1
-         mO2hEcOnWCMVun6THoyFfNZ+hkZ9Y0aj1EU7i4ZB+3YOFWdM3VjralxEi0wH3csXOwIZ
-         ulLuZF0irgH9vCpc/XGndBhfGc6xFv9mvrNNdTjC1hi393b4tVMECwAzPYRJTITqyo9S
-         9dWg==
-X-Gm-Message-State: ALKqPwew1UIt0pYohkRp4hPkI26qJbCP4z2oquegVvqZDrTZv0lWmdtG
-        O+4MEU+3NF6RhDbL/matQjAit4+gaZWko1GGaw0=
-X-Google-Smtp-Source: ADUXVKJR5+TjqypzFgizeyxUNaAJpDyDqKh/kDFni0E7BGVoQP/spd4Mvs0CBWmD5Wq9mSX/w7d8Q4SMRa+WyhRje9E=
-X-Received: by 2002:a37:6d04:: with SMTP id i4-v6mr3451464qkc.361.1527282998911;
- Fri, 25 May 2018 14:16:38 -0700 (PDT)
+        bh=AEBu7TEmyUPILrGSyPcY8WlzdxUC3eA2zX5iFgSX+pA=;
+        b=p1RAirypuAlHt7lHdPxlseq+J9cSKEFTn7irSGKV5yl9OLFvomZB3xzwhfGXTVxbfy
+         LRq/xjFoFKyMR9aqK7XENq1W7S/3avS912FhnuHU3VRC2Qb+rcQBjojYvJW8LKKp+nYB
+         iVHcyirxImQhW0QDVXZiC6V+pSjPpK1yHI/51moP5MZ3A22+28ugvA8TEG89urTppciP
+         WFSIxQ/KQKbvYwQQoUMom1UUqPWT10Qe9IkKjA3KB9X76N9Y4NnUAPKeZLV302eYl4XF
+         9f4814JuC8NeSMKzx7nzH0E4kNaJXMaO+JTVZBebVuxuwk2KsesiuMAytq8swOxPXLXl
+         VUXQ==
+X-Gm-Message-State: ALKqPwcYwzcEL3TthYaHhtXuFzYJZRbqRyIqCiYwYjuSrWQw6eSFCNE4
+        MCEflZT7MWTiUVygRLejutZEnYcikPoLqiLTsHY=
+X-Google-Smtp-Source: ADUXVKJth/0o14OAO+mPPsbryWg/7bHaDWcXhZ71Qwo+juhC001FVxfDAU2+rQJx26G87GCtPIkdMuJOOe43LeqnSr4=
+X-Received: by 2002:a0c:b7af:: with SMTP id l47-v6mr3944458qve.110.1527283155572;
+ Fri, 25 May 2018 14:19:15 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a0c:aa4b:0:0:0:0:0 with HTTP; Fri, 25 May 2018 14:16:38
+Received: by 2002:a0c:aa4b:0:0:0:0:0 with HTTP; Fri, 25 May 2018 14:19:15
  -0700 (PDT)
-In-Reply-To: <20180525192811.25680-3-avarab@gmail.com>
+In-Reply-To: <20180525192811.25680-4-avarab@gmail.com>
 References: <20180524193516.28713-1-avarab@gmail.com> <20180525192811.25680-1-avarab@gmail.com>
- <20180525192811.25680-3-avarab@gmail.com>
+ <20180525192811.25680-4-avarab@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 25 May 2018 17:16:38 -0400
-X-Google-Sender-Auth: gdcMlg4S6k17rF-Y6TkuV1T6p_E
-Message-ID: <CAPig+cT=i0XYOrMymNjsBJqcLfJ38Ft_=MZPZD3N-AMo8raAHQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] config doc: unify the description of fsck.* and receive.fsck.*
+Date:   Fri, 25 May 2018 17:19:15 -0400
+X-Google-Sender-Auth: fQXu26eamL1NPxo8nA1vIqBFEGs
+Message-ID: <CAPig+cRzFwKrSC22Th4hJtQAcyqT96mcXBpBdRv38_LK4nSVSg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] config doc: elaborate on what transfer.fsckObjects does
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
@@ -68,44 +68,26 @@ X-Mailing-List: git@vger.kernel.org
 
 On Fri, May 25, 2018 at 3:28 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
-> The documentation for the fsck.<msg-id> and receive.fsck.<msg-id>
-> variables was mostly duplicated in two places, with fsck.<msg-id>
-> making no mention of the corresponding receive.fsck.<msg-id>, and the
-> same for fsck.skipList.
-> [...]
-> Rectify this situation by describing the feature in general terms
-> under the fsck.* documentation, and make the receive.fsck.*
-> documentation refer to those variables instead.
-> [...]
+> The existing documentation led the user to believe that all we were
+> doing were basic reachability sanity checks, but that hasn't been true
+> for a very long time. Update the description to match reality, and
+> note the caveat that there's a quarantine for accepting pushes, but
+> not for fetching.
+>
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
 > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> @@ -1554,23 +1554,42 @@ filter.<driver>.smudge::
-> +Depending on the circumstances it might be better to use
-> +`fsck.skipList` instead to explicitly whitelist those objects that
-> +have issues, otherwise new occurrences of the same issue will be
-> +hidden going forward, although that's unlikely to happen in practice
-> +unless someone is being deliberately malicious.
+> @@ -3341,8 +3341,16 @@ transfer.fsckObjects::
+>  When set, the fetch or receive will abort in the case of a malformed
+> +object or a link to a nonexistent object. In addition, various other
+> +issues are checked for, including legacy issues (see `fsck.<msg-id>`),
+> +and potential security issues like the existence of a `.GIT` directory
+> +(see the release notes for v2.2.1 for details). Other sanity and
+> +security checks may be added in future releases.
+> ++
+> +On the receiving side, failing fsckObjects will make those objects
+> +unreachable, see "QUARANTINE ENVIRONMENT" in
+> +linkgit:git-receive-pack[1]. On the fetch side, malformed objects will
+> +instead be left unreferenced in the repository.
 
-Is it worth mentioning buggy tools and/or other buggy Git
-implementations as sources?
-
->  fsck.skipList::
->         The path to a sorted list of object names (i.e. one SHA-1 per
-> -       line) that are known to be broken in a non-fatal way and should
-> -       be ignored. This feature is useful when an established project
-> -       should be accepted despite early commits containing errors that
-> -       can be safely ignored such as invalid committer email addresses.
-> -       Note: corrupt objects cannot be skipped with this setting.
-> +       line) that are known to be broken in a non-fatal way and
-> +       should be ignored. This feature is useful when an established
-> +       project should be accepted despite early commits containing
-> +       errors that can be safely ignored such as invalid committer
-> +       email addresses. Note: corrupt objects cannot be skipped with
-> +       this setting.
-
-Not sure why this paragraph got re-wrapped (without, as far as I can
-see, any other changes), thus making the patch unnecessarily noisy.
-
-> +Like `fsck.<msg-id>` this variable has a corresponding
-> +`receive.fsck.skipList` variant.
+This version looks better. Thanks.
