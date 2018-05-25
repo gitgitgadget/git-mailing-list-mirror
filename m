@@ -2,112 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 922F51F51C
-	for <e@80x24.org>; Fri, 25 May 2018 09:06:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D4B21F51C
+	for <e@80x24.org>; Fri, 25 May 2018 09:14:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965287AbeEYJGA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 05:06:00 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:52234 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S965197AbeEYJF6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 25 May 2018 05:05:58 -0400
-X-AuditID: 12074413-b83ff70000006608-41-5b07d1f41ebc
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 81.B9.26120.4F1D70B5; Fri, 25 May 2018 05:05:56 -0400 (EDT)
-Received: from mail-wr0-f172.google.com (mail-wr0-f172.google.com [209.85.128.172])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w4P95tiI021551
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Fri, 25 May 2018 05:05:56 -0400
-Received: by mail-wr0-f172.google.com with SMTP id l41-v6so7914122wre.7
-        for <git@vger.kernel.org>; Fri, 25 May 2018 02:05:56 -0700 (PDT)
-X-Gm-Message-State: ALKqPwe9sHdG3YABb/77eA/boD7NHVZspBwt0uL/LxLCTWBbK0o5vTK1
-        7na6o1jHCsfYtksFXDxxp1JZqsoy0NhdaqdZ00U=
-X-Google-Smtp-Source: ADUXVKJlpq1RanJD45kBPKOWEuG+2mKBCwlKesBidr6G7d7hlEzaJwjHqQbW1TIb6bbEwlL3AMlA7/9QMjFMYAU1TLk=
-X-Received: by 2002:a19:964b:: with SMTP id y72-v6mr933727lfd.96.1527239155201;
- Fri, 25 May 2018 02:05:55 -0700 (PDT)
-MIME-Version: 1.0
-Reply-To: mhagger@alum.mit.edu
-Received: by 2002:a2e:3a1a:0:0:0:0:0 with HTTP; Fri, 25 May 2018 02:05:54
- -0700 (PDT)
-In-Reply-To: <20180525085906.GA2948@sigill.intra.peff.net>
-References: <20180523052517.4443-1-chriscool@tuxfamily.org>
- <615f57ad-7591-128a-0c42-660312d34ca2@alum.mit.edu> <20180525085906.GA2948@sigill.intra.peff.net>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Date:   Fri, 25 May 2018 11:05:54 +0200
-X-Gmail-Original-Message-ID: <CAMy9T_E_wO-XKn-BoVpnoUn8cGsmE4z11AzbqW+7Ppo=P9zcDg@mail.gmail.com>
-Message-ID: <CAMy9T_E_wO-XKn-BoVpnoUn8cGsmE4z11AzbqW+7Ppo=P9zcDg@mail.gmail.com>
-Subject: Re: [PATCH v2] t: make many tests depend less on the refs being files
+        id S965077AbeEYJOU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 05:14:20 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:41814 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964909AbeEYJOT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 05:14:19 -0400
+Received: by mail-wr0-f194.google.com with SMTP id u12-v6so7923999wrn.8
+        for <git@vger.kernel.org>; Fri, 25 May 2018 02:14:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ZiCp8OhibFOhuNuZiJnR93WyNAaBWTgERYawztSHgfQ=;
+        b=L9rh5IE4ltT3bOt5k1zsaFcK3A8UOufb8PiplwlwjclT5gUV5XPy3Bi0CG4qvk8DmW
+         fppZbB4k9KVguxlQBeKr9d+fWtQFiA9HnyotFPDXAg4pQ0KmQv/VtLTXluz9l1yMk3wW
+         wf3GwWQgeOX+A0GY62klF3eSBsIn5ot4ekT/ohR4p0xGwI0uxRzZRgnucNuNhlyly/uv
+         agrAziaxjjJXgclpidhLYg78/y828KxwNU30Nv9/CsUQmuFD0GIn3oJD3j9pJauJraxQ
+         5lJo67tDfxYOtwW53HrjDMTAk0NqgqqCFCrj2jHRh2DVPqbyioxGSet5Ab+h51HzD5bK
+         fsnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ZiCp8OhibFOhuNuZiJnR93WyNAaBWTgERYawztSHgfQ=;
+        b=PJB2+d98YgBHcRTAHo1O22SA46YgS/luFTZMdyArc9SYuOHjkwSjBFje7fyoXtXf7l
+         Qjq7N9SLbCkxyah1wkh0TDQXfOd4OA3qytY7XFza+rTBnBdYgebiBFbGCgyQci2IqI7D
+         5tsHmk6TjN4Igp8AKugaqsFz5vltOyXd5xiqxSGto9XP+1iHhnKH3RxNCoJjkqBOTBFm
+         vT1pEnpuHnUkPYBzQ/Jn04ZWi5SrIKTF03reJtDpDiE37q+jRgw2SOj27vPL2RiU8t1a
+         9InZJbzy+GvEBjk7DF/hTK2CUuCkNmS+bF0fZtt8Am4HfJLy2JrqinmZFYZpPQogM7uZ
+         0wbA==
+X-Gm-Message-State: ALKqPwc7XauwLvreQ1dO2h9Jv6I/ns45RismZc8wA/wnfahf6Ky8jh80
+        59GVODXWcBQl/jbU3fDzJuk=
+X-Google-Smtp-Source: AB8JxZqYdzfNF+plVXhDNPyjadj0EAs7Jlaqsk6fVB2LscmCydKrKahbb8nxlaFNrWr1Ivr4hnJUZQ==
+X-Received: by 2002:adf:8567:: with SMTP id 94-v6mr1289139wrh.24.1527239657509;
+        Fri, 25 May 2018 02:14:17 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b185-v6sm5771804wmb.25.2018.05.25.02.14.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 25 May 2018 02:14:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
-        David Turner <novalis@novalis.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        David Turner <dturner@twopensource.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAKsWRmVeSWpSXmKPExsUixO6iqPv1Inu0wa4lPBZdV7qZHBg9Pm+S
-        C2CM4rJJSc3JLEst0rdL4Mp4vGwrU8EyzoplE26wNjBuYO9i5OSQEDCReLbvCmsXIxeHkMAO
-        JolbT/oZIZynTBIL1t9gg3AmMkqs+XOTDaKlXOLe/idMEHaRxI7Lv1lg4ndvgYzi5OAVEJQ4
-        OfMJWFxIQE7i1YYbjBB2uMSRBRvBejkFrCRubL0HtWA+o8SUNz1gCTYBXYlFPc1gNouAqsTP
-        S1ugliVK9DTdBhrKAbQgQOL/rQSQsLCAn8S+U0eZQWwRAVmJ74c3gn3ALNDEJnFhTxtYgllA
-        U6J1+2/2CYwis5DcNwtJagEj0ypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXXO93MwSvdSU0k2M
-        kAAX3sG466TcIUYBDkYlHl6Ow2zRQqyJZcWVuYcYJTmYlER5Ty5ljxbiS8pPqcxILM6ILyrN
-        SS0+xCjBwawkwjs5GCjHm5JYWZValA+TkuZgURLnZTbZGyUkkJ5YkpqdmlqQWgSTleHgUJLg
-        DQNGspBgUWp6akVaZk4JQpqJgxNkOA/QcC2QGt7igsTc4sx0iPwpRkuOJU+7e5g57rT1AMkF
-        Wyb1MAux5OXnpUqJ87qBNAiANGSU5sHNhCWsV4ziQC8K8xaCVPEAkx3c1FdAC5mAFq5bDbaw
-        JBEhJdXAKHW5X+dXNuer9Qall05f/PT24nLrL/9M/j/0luXJDLcOnHxi/1Wvh8ZfDsTqb7S4
-        9sI1YEILS+iuN0q1Lq2cRZfuddl1ee9xfNJxYffvsO7Ym9NjK34rHNq6WX99zKdN27yU67NM
-        sl7u+5p095RI+YZcR6ubJ/lE9Hry+tewJISe0WZYkGm/TImlOCPRUIu5qDgRABN2UpEzAwAA
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] branch: issue "-l" deprecation warning after pager starts
+References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
+        <e440f6e0-6d7d-0e72-b875-de290cea6b94@gmail.com>
+        <87fu2qbojy.fsf@evledraar.gmail.com>
+        <20180517133601.GC17548@sigill.intra.peff.net>
+        <1527174618.10589.4.camel@gmail.com>
+        <20180524192214.GA21535@sigill.intra.peff.net>
+        <20180524193105.GB21535@sigill.intra.peff.net>
+        <xmqqh8mwpkgu.fsf@gitster-ct.c.googlers.com>
+        <20180525024002.GA1998@sigill.intra.peff.net>
+        <xmqqd0xknmf1.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 25 May 2018 18:14:16 +0900
+In-Reply-To: <xmqqd0xknmf1.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 25 May 2018 17:56:34 +0900")
+Message-ID: <xmqq8t88nllj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 25, 2018 at 10:59 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, May 25, 2018 at 10:48:04AM +0200, Michael Haggerty wrote:
->
->> >  test_expect_success "multi-fetch works off a 'clean' repository" '
->> > -   rm -r "$GIT_DIR/svn" "$GIT_DIR/refs/remotes" "$GIT_DIR/logs" &&
->> > +   rm -rf "$GIT_DIR/svn" "$GIT_DIR/refs/remotes" &&
->> > +   git reflog expire --all --expire=all &&
->> >     mkdir "$GIT_DIR/svn" &&
->> >     git svn multi-fetch
->> >     '
->> >
->>
->> `rm -rf "$GIT_DIR/refs/remotes"` is not kosher. I think it can be written
->>
->>     printf 'option no-deref\ndelete %s\n' $(git for-each-ref
->> --format='%(refname)' refs/remotes) | git update-ref --stdin
->>
->> as long as the number of references doesn't exceed command-line limits.
->> This will also take care of the reflogs. Another alternative would be to
->> write it as a loop.
->
-> Perhaps:
->
->   git for-each-ref --format="option no-deref%0adelete %(refname)" refs/remotes |
->   git update-ref --stdin
+Junio C Hamano <gitster@pobox.com> writes:
 
-Ah yes, that's nicer. I tried with `\n`, but that's not supported
-(wouldn't it be nice if it were?). I didn't think to try `%0a` (let
-alone look in the documentation!)
+>> -		warning("the '-l' alias for '--create-reflog' is deprecated;");
+>> -		warning("it will be removed in a future version of Git");
+>> +		if (list) {
+>> +			warning("the '-l' option is an alias for '--create-reflog' and");
+>> +			warning("has no effect in list mode. This option will soon be");
+>> +			warning("removed and you should omit it (or use '--list' instead).");
+>> +		} else {
+>> +			warning("the '-l' alias for '--create-reflog' is deprecated;");
+>> +			warning("it will be removed in a future version of Git");
+>> +		}
 
-Michael
+By the way, this is one of these times when I feel that we should
+have a better multi-line message support in die/error/warning/info
+functions.  Ideally, I should be able to write
+
+	warning(_("the '-l' option is an alias for '--create-reflog' and\n"
+		  "has no effect in list mode, This option will soon be\n"
+		  "removed and you should omit it (or use '--list' instead)."));
+
+and warning() would:
+
+ - do the sprintf formatting thing as necessary to prepare a long multi-line
+   message;
+
+ - chomp that into lines at '\n' boundary; and
+
+ - give each of these lines with _("warning: ") prefixed.
+
+That way, translators can choose to make the resulting message to
+different number of lines from the original easily.
+
+
