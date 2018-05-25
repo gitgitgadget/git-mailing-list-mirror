@@ -2,70 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2FAC1F42D
-	for <e@80x24.org>; Fri, 25 May 2018 12:31:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF8211F42D
+	for <e@80x24.org>; Fri, 25 May 2018 12:47:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751949AbeEYMbS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 08:31:18 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51081 "EHLO mout.gmx.net"
+        id S1752367AbeEYMrk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 08:47:40 -0400
+Received: from mail.javad.com ([54.86.164.124]:45603 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751235AbeEYMbS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 08:31:18 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MU0U9-1fmy6S05Q1-00QkEm; Fri, 25
- May 2018 14:31:13 +0200
-Date:   Fri, 25 May 2018 14:31:13 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: js/empty-config-section-fix, was Re: What's cooking in git.git (May
- 2018, #03; Wed, 23)
-In-Reply-To: <xmqqwovtudia.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1805251430420.77@tvgsbejvaqbjf.bet>
-References: <xmqqwovtudia.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751949AbeEYMrj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 08:47:39 -0400
+X-Greylist: delayed 332 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 May 2018 08:47:39 EDT
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 3E3FD3E8F7;
+        Fri, 25 May 2018 12:42:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1527252126;
+        bh=tQWPnRNArpdohh+VHuc6/Oj82uprWdh2IskPiDZLxHY=; l=1350;
+        h=Received:From:To:Subject;
+        b=JAYyVcTOHIFY4jwc9PULmWC2wlZy6v+1Yh63dxqCWH7Xifsymh8SCg275X5Cvk+ph
+         geOD0mt1/VmN+6koGAf4VhYvK91FEeimUpLRwLIBkuylfzKr8hvAg8DLLCaiAprR/i
+         4TpqGLjI09F8aNS7nuFJoxd44ILERUzXZHE/LW/0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1527252126;
+        bh=tQWPnRNArpdohh+VHuc6/Oj82uprWdh2IskPiDZLxHY=; l=1350;
+        h=Received:From:To:Subject;
+        b=JAYyVcTOHIFY4jwc9PULmWC2wlZy6v+1Yh63dxqCWH7Xifsymh8SCg275X5Cvk+ph
+         geOD0mt1/VmN+6koGAf4VhYvK91FEeimUpLRwLIBkuylfzKr8hvAg8DLLCaiAprR/i
+         4TpqGLjI09F8aNS7nuFJoxd44ILERUzXZHE/LW/0=
+Authentication-Results: ip-172-31-2-110;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1fMC2l-0002VN-QF; Fri, 25 May 2018 15:42:03 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com
+Subject: [PATCH] cherry-pick: do not error on non-merge commits when '-m 1' is
+ specified
+Date:   Fri, 25 May 2018 15:42:03 +0300
+Message-ID: <87wovrx5yc.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:oC5Xi4LK8JECi2/QHTf85lkgGW7LsGfN+eGZiJj3+xNgFibij2M
- Snau1N6XtwUJII6OvZUiQxWmU10BhEVgSMewimhjM+Xpd+mIr7TUWc5XhvSjQ2LX/70jYJU
- /ch6d4AEqytNMCfobl1Vgjz/0gWok1goZYCPaH+28btn8m4TzOeBQ1padZ6f2Fv40x9sIBK
- Sd/lhD3dg6fq8eec5hNbA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:90CvkBOUdvs=:pH8GcjPVPDHHqHDcGtCeS/
- I7kUkf00zxL/v4QEsgEQrQdm16qtbAl7P+jg1XyakU1sEIAeHbY3auNOHKFej9RSDAE5xi/QV
- tmAh+Ajo17dP8vsdh2mmwtDvPzyTUF4y/myqL83Wn8rcJ5FII7XkCjuqjagDUq4RpmSUhJ/nS
- 3lwObLtub1AyqHUBf5vVAHm9Qtdla3OHlcBuyb3z99adFOMISSmvMGuk4pAdb8hAbhalo4zH5
- Nklw/qo1IW90b3eJCpxTZiGhbXOGfEZPJiHOfA8y/C27ZTgS7c2GZMvQ9lXTa8CYJM8jWcPq3
- jEUwq6XbDSN5ZlYJ6FPBWkYMECvDN+saLLcwOPamrPRfEvMBg40zUcE2EtLYGK1oIj3kSqJeZ
- E11hXocZrMarem6MLsBHvNorhh0Thclec2Jy7F7nXAui9noSzhUf2T1suZMlb/huy9G1uMq39
- fG/Zx2HHjUl1yAA5ypx2/GFScsRoz7GJ3wl9ffLFFUxMk2xJhOVhDmIHiGR1s/pbWcyfA+VVW
- ZjAq3b3JuSJ7VfES8IJzhblrqrB+v2XKU7ClYAy+yw9kf3fcpDAR4mnDdtgtecsnZiYx7nn0y
- docfZfcVKXFT9kkXJfnWGFqsg6Gb65pc8Dz/6x5GHh+GYnJi9jG+ZiWPKW9GjdhVT/3+eAXn1
- KbyIbqcPDCWNzbdDj6EAq1NimDrRBrzbC2jojSMbZR1sOgg6YMTSsB6L625+c6/mrEDoDjG+f
- SHAjmE+bpPYcZQj9WtCLEtNR3WzPKc4jF+cCvaA/GwamZatPMacv8y+J03irx4k6OnOt5BHNB
- fQEB3Wj
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+When cherry-picking multiple commits, it's impossible to have both
+merge- and non-merge commits on the same command-line. Not specifying
+'-m 1' results in cherry-pick refusing to handle merge commits, while
+specifying '-m 1' fails on non-merge commits.
 
-On Thu, 24 May 2018, Junio C Hamano wrote:
+This patch allows '-m 1' for non-merge commits. Besides, as mainline is
+always the only parent for a non-merge commit, it made little sense to
+disable it in the first place.
 
-> * js/empty-config-section-fix (2018-05-18) 1 commit
->  - config: a user-provided invalid section is not a BUG
-> 
->  Error codepath fix.
-> 
->  Will merge to 'next'.
+Signed-off-by: Sergey Organov <sorganov@gmail.com>
+---
+ sequencer.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-As a hotfix, maybe we can fast-track it to master?
+diff --git a/sequencer.c b/sequencer.c
+index 1ce6326..2393bdf 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1543,9 +1543,11 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 			return error(_("commit %s does not have parent %d"),
+ 				oid_to_hex(&commit->object.oid), opts->mainline);
+ 		parent = p->item;
+-	} else if (0 < opts->mainline)
+-		return error(_("mainline was specified but commit %s is not a merge."),
+-			oid_to_hex(&commit->object.oid));
++	} else if (1 < opts->mainline)
++		/* Non-first parent explicitly specified as mainline for
++		 * non-merge commit */
++		return error(_("commit %s does not have parent %d"),
++			     oid_to_hex(&commit->object.oid), opts->mainline);
+ 	else
+ 		parent = commit->parents->item;
+ 
+-- 
+2.10.0.1.g57b01a3
 
-Thanks,
-Dscho
