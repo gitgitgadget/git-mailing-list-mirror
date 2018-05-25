@@ -2,124 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A7021F42D
-	for <e@80x24.org>; Fri, 25 May 2018 21:01:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02B4F1F42D
+	for <e@80x24.org>; Fri, 25 May 2018 21:07:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030296AbeEYVBn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 17:01:43 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:55011 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030292AbeEYVBm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 17:01:42 -0400
-Received: by mail-wm0-f68.google.com with SMTP id f6-v6so17537073wmc.4
-        for <git@vger.kernel.org>; Fri, 25 May 2018 14:01:41 -0700 (PDT)
+        id S1030217AbeEYVH4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 17:07:56 -0400
+Received: from mail-qt0-f171.google.com ([209.85.216.171]:41975 "EHLO
+        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S968376AbeEYVHz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 17:07:55 -0400
+Received: by mail-qt0-f171.google.com with SMTP id g13-v6so8222313qth.8
+        for <git@vger.kernel.org>; Fri, 25 May 2018 14:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7YpNUgrv6SjFf5UBzN3d9vI+2L/cI/nrcS8QrOKsMjk=;
-        b=hmpfwIVIfxu3bcJo+JeIQYNChApVrOc0n4jXTeF+cehZGSSfNdB1O79qj56vsqi4k1
-         Z5SEj5+TKEgUlf1PFXwn9TRk5zUd0vczdrbVwwmCGPJrlXjodnrcLqNfvo6CEf59BdwG
-         nAS2YXTmh1huOUkd9y+Y/fKGt0GrfTXnB3PIYTyAvsEdDDt2EQ9rwfWlxgJDOFkIXDt0
-         Onkkc6ryXeZSXI9u+DaKrEeOGETjTo5Y93ben8hQVJ276lzeWHzOFCQnNO3ECHQXCiRK
-         gF4gQjbGFryFLkcEowfg7JBrYQDXzCHbY3hYymzd2IwAMS2/2GLHeuLvX9SsHTncomsE
-         xuxQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=DMzp84rHQAxyEPd76sb+cW/l9Fc0uYQqyYHQSCaO8aA=;
+        b=P69ez9vQ85K9y5HM360tV9m2atvMuEIX8v0xWbMQztT3/qIhK/8h1ZZAfP+MAU/mAb
+         9vhUpfYql1ge8ADPcXYIOURTjgPZ3LYDZt7mqAS+E+3M0xsz+nmRrERA3bZtCbiDISKg
+         rD9FqVWl7ZjnNcwXEYYa4CAaEyhF+cRRGwD0RKcg7+Z1thC9zKyCJu0iwOtoPLdgqRSP
+         0COBObUeqxBLhi0MgRE9+1EtfA+3fGTvccRvyLuGtCkcce2j/hYi/JX/hielS9zArJdS
+         C8OvKTDfJlllzE5pR+ZJDOrZ2TMPu7/asWBCHdk45d0b1Xaor7iFKLAENxChsXgq1GM+
+         Z0dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7YpNUgrv6SjFf5UBzN3d9vI+2L/cI/nrcS8QrOKsMjk=;
-        b=CPK++GLnJJwQK3/7UTdRvUvi5MbF0opnnaPH3lyr1CXC0hew6rLsjr6GgrxgExiNi3
-         yet/Nei6QXMu8RD/xIVpT8hW08goOjKbkAIPsuXy1VW/hTpn7Clx3coa0TsImnB9Z4y8
-         lTNHr795g+109wM9AigULgoI2I0FC9mTkQZhQpF/RLaoIRjuAjHUeY+2U3LIO+toL6Om
-         o0ICiHtwHLDt6hjpysOwH6/yFniU7WLsB7/vmNyRBzaXzn8teDwgJuIQXT9x9H4Isw57
-         DJsLptxdU8KSOWaVx5GUn+ePe9RdTkTScOvtFbin7fXMn6czhMJNxZDgAUB8ETDtcqjT
-         iZvQ==
-X-Gm-Message-State: ALKqPwcGNWgBlJyziIdVLy7ooUL/W6rl7Sf+N8xeWJLInirv+aY8hfwh
-        v/4r8vXt2f88iNI31wSAODVpDXZ5
-X-Google-Smtp-Source: ADUXVKIATfJ0eecQuBDI9RETUpY1KF1E0Gm90T4i2QQWzsd4H26QT4W0RKegmfNy915hzIIL7w1jbg==
-X-Received: by 2002:a1c:c2d5:: with SMTP id s204-v6mr2711436wmf.40.1527282100811;
-        Fri, 25 May 2018 14:01:40 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id q9-v6sm2520105wmq.45.2018.05.25.14.01.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 25 May 2018 14:01:39 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH 3/3] usage: translate the "error: "-prefix and others
-Date:   Fri, 25 May 2018 23:00:55 +0200
-Message-Id: <0a709ff2b1af85d21e96d9e259f2ec9f69d3a94d.1527279322.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.17.0.1181.g093e983b05
-In-Reply-To: <cover.1527279322.git.martin.agren@gmail.com>
-References: <xmqq8t88nllj.fsf@gitster-ct.c.googlers.com> <cover.1527279322.git.martin.agren@gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=DMzp84rHQAxyEPd76sb+cW/l9Fc0uYQqyYHQSCaO8aA=;
+        b=q9kpFk2uuk6OfoDUgLYCqStqBseLphRM/reN42ysMcGrfojL7XsJX4dWP81hIksn3L
+         hwPGYN5eCO5Yns5JtLSfQkY+CD10nSrV7c2MFWiBtGhUUAMFC8Gdi309LTGxsoTozf+d
+         C8as1LaEKiMNRVuKI3/mODCBhis5iL+U5okXGC4O+MW2dpWFOXYpFXCepW7bxidKTC48
+         LSJq3Wma6k0nOVj+8WF8/MeahsAP4ZkJt8GQe2odH/7S5fQRQjLROrq7Eu0FU0/QnsTe
+         G9FO8dTmsyY37TAo2LeTTt6jgeZer/DF3IHB8D9jLKPR8oNMqWr/dNEelCVgae6kKnba
+         3qfw==
+X-Gm-Message-State: ALKqPwfPLvhaiEmr09KG1jO2rcXRrdkh8qdJIrN83dbGSaPhuOVKau7P
+        zfg4mMUmfnc77fN95lvppk44y3zGtZ+8mRry4yw=
+X-Google-Smtp-Source: ADUXVKJZTHSU+RSldnG5oWXOuL6KA3Xab/U//y/sbq+I3TS3Sah7F3ep6WQ3L4BojVIoSV3ffz8hTgYDD5tGrPOaotg=
+X-Received: by 2002:a0c:9e5a:: with SMTP id z26-v6mr3914114qve.109.1527282475023;
+ Fri, 25 May 2018 14:07:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a0c:aa4b:0:0:0:0:0 with HTTP; Fri, 25 May 2018 14:07:54
+ -0700 (PDT)
+In-Reply-To: <20180525192811.25680-2-avarab@gmail.com>
+References: <20180524193516.28713-1-avarab@gmail.com> <20180525192811.25680-1-avarab@gmail.com>
+ <20180525192811.25680-2-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 25 May 2018 17:07:54 -0400
+X-Google-Sender-Auth: 5aIYlYodoEfeI0jn-_n7M3fmoAM
+Message-ID: <CAPig+cTK1iKiYnxCH5D2RnhZxaNocgx9UuNeakxzf4LgFSnd9Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] config doc: don't describe *.fetchObjects twice
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Translate the "error: ", "fatal: ", "usage: " and "warning: " prefixes
-that we use for reporting that kind of information.
+On Fri, May 25, 2018 at 3:28 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Let's not duplicate the description of what *.fsckObjects does twice.
 
-Do not translate "BUG: ". We tend to prefer the messages themselves to
-be non-translated (and they're not supposed to ever appear anyway) so it
-makes sense to let the prefix be nontranslated, too.
+Nit: "duplicate" and "twice" smell redundant.
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
-This change breaks several tests under GETTEXT_POISON, e.g. t6030 which
-does this:
+> instead let's refer to transfer.fsckObjects from both fetch.* and
+> receive.*.
 
-	git bisect skip > my_bisect_log.txt 2>&1 &&
-	grep "warning" my_bisect_log.txt
+s/instead/Instead/
 
- usage.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Perhaps the above paragraph can be rewritten:
 
-diff --git a/usage.c b/usage.c
-index 6a5669922f..7709cb22e7 100644
---- a/usage.c
-+++ b/usage.c
-@@ -39,24 +39,24 @@ void vreportf(const char *prefix, const char *err, va_list params)
- 
- static NORETURN void usage_builtin(const char *err, va_list params)
- {
--	vreportf("usage: ", err, params);
-+	vreportf(_("usage: "), err, params);
- 	exit(129);
- }
- 
- static NORETURN void die_builtin(const char *err, va_list params)
- {
--	vreportf("fatal: ", err, params);
-+	vreportf(_("fatal: "), err, params);
- 	exit(128);
- }
- 
- static void error_builtin(const char *err, va_list params)
- {
--	vreportf("error: ", err, params);
-+	vreportf(_("error: "), err, params);
- }
- 
- static void warn_builtin(const char *warn, va_list params)
- {
--	vreportf("warning: ", warn, params);
-+	vreportf(_("warning: "), warn, params);
- }
- 
- static int die_is_recursing_builtin(void)
--- 
-2.17.0.1181.g093e983b05
+    Refer readers of fetch.fsckObjects and receive.fsckObjects to
+    transfer.fsckObjects instead of repeating the description at each
+    location.
 
+(Not at all worth a re-roll.)
+
+> I don't think this description of it makes much sense, but for now I'm
+> just moving the existing documentation around. Making it better will
+> be done in a later patch.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
