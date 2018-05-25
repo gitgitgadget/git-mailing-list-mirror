@@ -3,113 +3,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89F881F42D
-	for <e@80x24.org>; Fri, 25 May 2018 00:10:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BD4E1F42D
+	for <e@80x24.org>; Fri, 25 May 2018 00:56:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966247AbeEYAKD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 May 2018 20:10:03 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:36691 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965284AbeEYAIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 May 2018 20:08:21 -0400
-Received: by mail-qt0-f195.google.com with SMTP id q6-v6so4455308qtn.3
-        for <git@vger.kernel.org>; Thu, 24 May 2018 17:08:20 -0700 (PDT)
+        id S972027AbeEYAz6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 May 2018 20:55:58 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:39532 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S972021AbeEYAz5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 May 2018 20:55:57 -0400
+Received: by mail-wm0-f45.google.com with SMTP id f8-v6so10083964wmc.4
+        for <git@vger.kernel.org>; Thu, 24 May 2018 17:55:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=rENLAsf4+h72pN71TgCpCMvp4a6O5qpwEqkBCr9ggww=;
-        b=rtPfK2/XgzSKTDPM0n2+ZW7DdHW1DQoE1tSUU6pAwseoxPAdfUs6yta1+6JaPxL9K5
-         5fPpglvTtRjkLtnipcn+BdSeCo97hDg1lBJcJfFDUqllHHPUqy4czUMYqfoDVIZkM76w
-         l+iuv8VIKMaSASbU15CvFvNYi7K+wPcfiqwjz0Zoc7+glirTgTe3JVHzFPYf7GpW9vHt
-         s9FFnAQ4IUdQUulzBvNGeaw+Vx7p7Oncm8CYfXbQBZiqKzqXv3gFMxSS4f5LFPJU1neC
-         DfFbTGsZ0eiF+UJpV5g6WaXG5vW6N6/4zhS+JwpmXhKyKObESC2oDZcu1+z6L99c8xC7
-         bqRg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=vNSqYdemZXVoot07OqJZrqc73h84XXk5lcP6YTn/CbY=;
+        b=miVIy+bkBhPcjxEOzXsBVYKdtUSv/Fhu/42DyvwMlWDjIq9abQjSJHnuO5Km96pht8
+         KOcdeG5KjfgWaZB7iBwPRWNsCLzzkADIYoJ8hIuEUogVa1kNCdQu2VaicrzdrvYpeum7
+         0wB1b55LWnVJWYtM1ILB3zNdUaHWpqYGZDM4BfJ+N6ERzBu9hEvgQvXF1wvIa2zbmIIR
+         eyuImj1xZvZCg369at6zeCMFZCuH1vcH3fBEhoiGT7YWYFoOCMMefcsC8R0/3YEGBSV6
+         FcCtXZ0/OaB0+MNXzj2xu/057YN9rxu03BPE1qmgMcR3KeIoU+6Ck7oxordUvhMr0wQS
+         LUAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=rENLAsf4+h72pN71TgCpCMvp4a6O5qpwEqkBCr9ggww=;
-        b=al06KNgFOxGsz+c+hWRg8kDU0N1cT2Yem6ziJ48AxcOlNmscvp69vZO7bcKKhmaeRB
-         OTOYKJfETIejLKqxbzOew4eKao636N+kY4Mmo58zz+WeBvsVueaIdpowNCCtIC2X8047
-         2ihf7L9oAhmBTuhK1N9QxWx6OEg5c65MPoAXpdjrLVQcn5PlGDw4JpYJGKgCknC8G5KV
-         yQAWoFeqyH54ge5kk8m5U4S47mNS7Zu9U2LGYh6MgzM5IdROtvBzmB1eeEvIfDSnQ7Tm
-         +XO+/4NyS6Fe43mn4SMbTmgNNUbgmwC84QpAae4dmG6ifh5vkK0J/mbm53hiaDiFOPK8
-         uuhg==
-X-Gm-Message-State: ALKqPwd5ozilbNdYqSSMmCkYVqTXhH9K58EBVBVGKN2zATUvlvIgP6mh
-        JWfM4VxgMVG7C/li2TCx9Es=
-X-Google-Smtp-Source: ADUXVKIcE1EccTukdKhwgu1BvRDZa3MsKf24ABsCcmTZncvJ1XY5uOeESu5B/rdx8B3DpWanhn+Qqg==
-X-Received: by 2002:aed:2864:: with SMTP id r91-v6mr118112qtd.233.1527206900348;
-        Thu, 24 May 2018 17:08:20 -0700 (PDT)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id z50-v6sm17892517qtj.74.2018.05.24.17.08.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 May 2018 17:08:19 -0700 (PDT)
-Subject: Re: [PATCH v3 01/20] commit-graph: UNLEAK before die()
-To:     Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "jnareb@gmail.com" <jnareb@gmail.com>,
-        "avarab@gmail.com" <avarab@gmail.com>,
-        "marten.agren@gmail.com" <marten.agren@gmail.com>,
-        "peff@peff.net" <peff@peff.net>
-References: <20180511211504.79877-1-dstolee@microsoft.com>
- <20180524162504.158394-1-dstolee@microsoft.com>
- <20180524162504.158394-2-dstolee@microsoft.com>
- <CAGZ79kYaC3VsH2kGMvsv0Xn-ghu5t7ENe+yebQCS5nvW5ms1_g@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <67f7c4ef-d82e-fe66-b4cb-d118e6366c54@gmail.com>
-Date:   Thu, 24 May 2018 20:08:17 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=vNSqYdemZXVoot07OqJZrqc73h84XXk5lcP6YTn/CbY=;
+        b=EH89X2qqBsFgGd5/vFPDySUvV9tOk9SLQBtj4LKe/jiHNtCrg8gORaepWUNjShHPDq
+         xWvWMxw9cbM+k6tX3oJxqf4035Xv3ZhyY6PFP01LzBWu9aA8vMGANoI2/lw4shFx8FiM
+         2iimP97UP+Fi2Rmf9zEBiEMBdkoWY3IVZiJlU6BGAE0ppjxJch1SEgLxYdjYc5uSOGcx
+         z41e52tNvRhsSHMr+9vxJrIyxLA6oHrtnJaN1g+MDOBeHWgUIjsDkT25xfWw9DzR33SS
+         OAjqyid6N0iNK9rys3M3HVLkWeIFgGEEVjU+D4lLkns68gicUQSM2njJBlnSwolKMBpk
+         hjmw==
+X-Gm-Message-State: ALKqPweEcERCA84eRcQai5n7vXqslKyWMAsCwT+AV8G0r4I8APvwfNqA
+        JTZV9txDFaNbbpGnXsvJU1A=
+X-Google-Smtp-Source: ADUXVKLJB9UmOLfKzqjuVfNIupVkLcV5QnCE+ELXN9jOYcj2R3Dlf3Kg/winTG9E+Owan4UPz5zX+w==
+X-Received: by 2002:a1c:8fd3:: with SMTP id r202-v6mr109332wmd.103.1527209755952;
+        Thu, 24 May 2018 17:55:55 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v12-v6sm19124601wrm.68.2018.05.24.17.55.52
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 24 May 2018 17:55:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: "git grep" and "working tree" vs "working directory"
+References: <alpine.LFD.2.21.1805231434010.28811@localhost.localdomain>
+        <CAGZ79kavmH5KVS2Byc5+Hg3dOvVwGD11KZ3yzZTLwp8Ok9ZDTg@mail.gmail.com>
+Date:   Fri, 25 May 2018 09:55:52 +0900
+In-Reply-To: <CAGZ79kavmH5KVS2Byc5+Hg3dOvVwGD11KZ3yzZTLwp8Ok9ZDTg@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 24 May 2018 13:50:56 -0700")
+Message-ID: <xmqqa7sor1t3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kYaC3VsH2kGMvsv0Xn-ghu5t7ENe+yebQCS5nvW5ms1_g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/24/2018 6:47 PM, Stefan Beller wrote:
-> On Thu, May 24, 2018 at 9:25 AM, Derrick Stolee <dstolee@microsoft.com> wrote:
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->>   builtin/commit-graph.c | 5 ++++-
->>   1 file changed, 4 insertions(+), 1 deletion(-)
+Stefan Beller <sbeller@google.com> writes:
+
+> There are 2 dimensions to it:
+> * (where you are)
+>   if you run git-grep from a sub directory of the repository, then the
+> "sub-working-tree"
+>   will be searched.
+
+s/the repository/the top level directory of the working tree/, perhaps?
+
+>>   also, at the bottom of that section, one reads:
 >>
->> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
->> index 37420ae0fd..f0875b8bf3 100644
->> --- a/builtin/commit-graph.c
->> +++ b/builtin/commit-graph.c
->> @@ -51,8 +51,11 @@ static int graph_read(int argc, const char **argv)
->>          graph_name = get_commit_graph_filename(opts.obj_dir);
->>          graph = load_commit_graph_one(graph_name);
+>>   <pathspec>...
+>>       If given, limit the search to paths matching at least one
+>>       pattern. Both leading paths match and glob(7) patterns are supported.
 >>
->> -       if (!graph)
->> +       if (!graph) {
->> +               UNLEAK(graph_name);
->>                  die("graph file %s does not exist", graph_name);
-> Unrelated to this patch: Is the command that ends up die()ing here
-> a plumbing or porcelain, or: Do we want to translate the message here?
+>>       For more details about the <pathspec> syntax, see the pathspec
+>>       entry in gitglossary(7).
+>>
+>> but, again, what if <pathspec> is *not* given? then what?
 >
-> In a lot of commands that show paths we single quote them '%s',
-> (speaking from experience with a lot of submodule path code)
+> Assume "$pwd/."
 
-This is for the 'git commit-graph read' command, which is plumbing (and 
-'read' is really only for testing). I don't think this message requires 
-translation.
+This is not technically wrong per-se, but I do not think there is
+any reason to encourage it over just a simple "." dot.
 
-I'll keep the quotes in mind for the future.
+>>   finally, the first example has the same problem:
+>>
+>>   git grep 'time_t' -- '*.[ch]'
+>>       Looks for time_t in all tracked .c and .h files in the
+>>       working directory and its subdirectories.
+>>
+>> in "the working directory"?
+>>
+>>   what is the proper terminology to be used here?
+>
+> the working directory sounds right, not sure which aspect you want to be
+> exposed more clearly.
 
-Thanks,
+"The part of the working tree below and including your current
+working directory", if you really want to be pedantic ;-).
 
--Stolee
+But almost all the examples that show how to work _with_ Git
+inspecting and manipulating tracked contents assume that your
+current working directory _is_ inside a working tree of the
+repository you are working on, so the above is equivalent to "The
+current working directory" should be clear enough for most readers,
+I would think.
 
