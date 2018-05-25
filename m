@@ -2,151 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5CFD1F51C
-	for <e@80x24.org>; Fri, 25 May 2018 10:58:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC2941F51C
+	for <e@80x24.org>; Fri, 25 May 2018 11:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965781AbeEYK64 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 06:58:56 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:45854 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965554AbeEYK6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 06:58:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=pqizUKieUQqqv+RjK+fzBH7E5f0s3w4gtkPYF3TChrU=; b=wNXoo8NIM1WbjqnzF+PAtcxVN
-        Hh5ymHRtBs+/8EQOY69tP6vZjT+MVJdqJ9DgkzhX+IZjQuUpGkVxKQMrEZHHb+fo6D18i25RQ1ceN
-        3Z3MaZuJrIxHcg2jAWLK78mNRG5CWmz3DNsMEbgYu3I/Xj+jzTLoHlnVKKmhJnCjwpjt1dgRUOtbC
-        LMjJuQZfQ9UwefyT3IK4Nf0Ujoz6gTcXgCaG++omQyZIXU8DtZGIq1bBZlhwKgvOIigAlVwdb81k7
-        3MIdBZtomyKO7+9WzINqL2PDackHTbHs+9eOZS2Hd+Ef+sqQkb0NlKdN5Z3tJx2vXYNjTwbQpEo2c
-        4hRjSrSuA==;
-Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:12673 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fMAQu-001MdB-8N; Fri, 25 May 2018 06:58:53 -0400
-Date:   Fri, 25 May 2018 06:56:57 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Stefan Beller <sbeller@google.com>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: "git grep" and "working tree" vs "working directory"
-In-Reply-To: <xmqqa7sor1t3.fsf@gitster-ct.c.googlers.com>
-Message-ID: <alpine.LFD.2.21.1805250649180.11158@localhost.localdomain>
-References: <alpine.LFD.2.21.1805231434010.28811@localhost.localdomain> <CAGZ79kavmH5KVS2Byc5+Hg3dOvVwGD11KZ3yzZTLwp8Ok9ZDTg@mail.gmail.com> <xmqqa7sor1t3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S966351AbeEYLVH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 07:21:07 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:33413 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966302AbeEYLVG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 07:21:06 -0400
+Received: by mail-io0-f194.google.com with SMTP id o185-v6so5996765iod.0
+        for <git@vger.kernel.org>; Fri, 25 May 2018 04:21:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2kMmf4U6BqQmOLLFbwwmQM/lbcyDFDwdllS9r7CdY2A=;
+        b=EF8TDFJC2l8/7jni/guBwooXc6hmpn15WFZDapAMEDx79hZomXpQGAte8BCP3Ntm3e
+         XkdTpzEpCa2Myuw0nZs2JJiw/kurbpIdw9iVz5S/yT0Er9ot2tS/AweMSHw+WsmQDpQM
+         6bhd4IjFijGU3I/ifey22IchobOA27rLmBq9RE3s3nUr7RRYf5WPti9CrNZVwNblsD2Z
+         d/IHOnRuO8zQes0QEjOtFr9Qv9FQdMQHUpT7BosL/LkcYNszMrHfn7gQ99giVmLqaikt
+         Jeuq+9x+tUmVbOcjFqMIYF+380cLq9vmVr+qw9G2bNRbR61qrDuLJu+AaW0WnENCX0ru
+         j2ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2kMmf4U6BqQmOLLFbwwmQM/lbcyDFDwdllS9r7CdY2A=;
+        b=Ii0EnjNoV7j+O5k5B8Vx3xzLPH+4nUy9p2ovKLJLjGVrK4AS9FHuGfiQgPyqaHTABx
+         aODhjOUCiJhnz9uyI6/qv0k/gDydSAueBBS7AzkkwlHStoRzlkS+cALeiC4HsEFbpBoQ
+         B3+obW8CrSgu1Fj80YFGpM4KiWFUslAHQdJNXVJgOuZfNcPHu7/3xo+lUVtaFnL+6jDF
+         1Ut4WuMgslBSPQT4ZYro3HNmQ7SMZjx8xXVD3V8McTVHFLN55BbmiuocermBuC3wnpsg
+         j7ZzpPUTOHqLLF8fQpBALdDZEzOleZsVuwSnkqGLnOSvVStEGf5HOSfUfWcJLR355bK5
+         mP/w==
+X-Gm-Message-State: ALKqPwdAm8a/oK6J3zfVIlWMOIHram7BN/t212anuY27ry8Sr6QGDGE3
+        P3TKls9NpRCzSvileMrAKP3slsJkfeZovoyFbEc=
+X-Google-Smtp-Source: ADUXVKK3MwjsBvAi5VZNw0JmclW0WZw0a+QtagOiFkJUlmfJNNILO1utKBSi3Pmu/JPSs0YaIdU6o3//ts6qlPbVOP0=
+X-Received: by 2002:a6b:1604:: with SMTP id 4-v6mr1748101iow.147.1527247266120;
+ Fri, 25 May 2018 04:21:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Received: by 2002:a4f:22db:0:0:0:0:0 with HTTP; Fri, 25 May 2018 04:21:05
+ -0700 (PDT)
+In-Reply-To: <615f57ad-7591-128a-0c42-660312d34ca2@alum.mit.edu>
+References: <20180523052517.4443-1-chriscool@tuxfamily.org> <615f57ad-7591-128a-0c42-660312d34ca2@alum.mit.edu>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 25 May 2018 13:21:05 +0200
+Message-ID: <CAP8UFD3hqQ_F0yafS6v6GWvN7zYomM-=fsZKotP9r-9Xc4qJ+g@mail.gmail.com>
+Subject: Re: [PATCH v2] t: make many tests depend less on the refs being files
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
+        David Turner <novalis@novalis.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        David Turner <dturner@twopensource.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 25 May 2018, Junio C Hamano wrote:
-
-> Stefan Beller <sbeller@google.com> writes:
+On Fri, May 25, 2018 at 10:48 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 05/23/2018 07:25 AM, Christian Couder wrote:
+>>
+>> diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
+>> index 9e782a8122..a4ebb0b65f 100755
+>> --- a/t/t1401-symbolic-ref.sh
+>> +++ b/t/t1401-symbolic-ref.sh
+>> @@ -65,7 +65,7 @@ reset_to_sane
+>>  test_expect_success 'symbolic-ref fails to delete real ref' '
+>>       echo "fatal: Cannot delete refs/heads/foo, not a symbolic ref" >expect &&
+>>       test_must_fail git symbolic-ref -d refs/heads/foo >actual 2>&1 &&
+>> -     test_path_is_file .git/refs/heads/foo &&
+>> +     git rev-parse --verify refs/heads/foo &&
+>>       test_cmp expect actual
+>>  '
+>>  reset_to_sane
 >
-> > There are 2 dimensions to it:
-> > * (where you are)
-> >   if you run git-grep from a sub directory of the repository, then the
-> > "sub-working-tree"
-> >   will be searched.
->
-> s/the repository/the top level directory of the working tree/, perhaps?
->
-> >>   also, at the bottom of that section, one reads:
-> >>
-> >>   <pathspec>...
-> >>       If given, limit the search to paths matching at least one
-> >>       pattern. Both leading paths match and glob(7) patterns are supported.
-> >>
-> >>       For more details about the <pathspec> syntax, see the pathspec
-> >>       entry in gitglossary(7).
-> >>
-> >> but, again, what if <pathspec> is *not* given? then what?
-> >
-> > Assume "$pwd/."
->
-> This is not technically wrong per-se, but I do not think there is
-> any reason to encourage it over just a simple "." dot.
->
-> >>   finally, the first example has the same problem:
-> >>
-> >>   git grep 'time_t' -- '*.[ch]'
-> >>       Looks for time_t in all tracked .c and .h files in the
-> >>       working directory and its subdirectories.
-> >>
-> >> in "the working directory"?
-> >>
-> >>   what is the proper terminology to be used here?
-> >
-> > the working directory sounds right, not sure which aspect you want to be
-> > exposed more clearly.
->
-> "The part of the working tree below and including your current
-> working directory", if you really want to be pedantic ;-).
->
-> But almost all the examples that show how to work _with_ Git
-> inspecting and manipulating tracked contents assume that your
-> current working directory _is_ inside a working tree of the
-> repository you are working on, so the above is equivalent to "The
-> current working directory" should be clear enough for most readers,
-> I would think.
+> Should t1401 be considered a backend-agnostic test, or is it needed to
+> ensure that symbolic refs are written correctly in the files backend?
 
-  against my better judgment, i'm going to try to summarize this.
-first, it appears everyone agrees that the proper way to refer to the
-*entirety* of the checked out content is "working tree", and that is
-the phrase to use, regardless of your current location in said working
-tree.  so, given that, one might say that the command "git status"
-would normally display all untracked files in the working tree
-(because it does so regardless of your current working directory.)
-
-  related to that, it would seem that the phrase "working tree" is,
-far and away, the preferred way to refer to the checked out content.
-
-  on the other end, the meaning of "current working directory" should
-be self-evident.
-
-  it's the middle ground, "working directory", that is the problem,
-since lots of documentation and comments use that phrase
-interchangeably with "working tree", and i doubt that confusion is
-ever going away. all one needs to do is:
-
-  $ grep -r "working directory" *
-
-in the git code base to see its prevalence. so, what *should* it mean?
-or is there any point in even trying to clarify it?
-
-rday
-
-p.s. i absolutely will not entertain the introduction of the weirdness
-that is "sub-working-tree." it's just a subdirectory, that's all.
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+I don't know. And I am ok to go either way. Another possibility would
+be to split in two parts.
