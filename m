@@ -2,110 +2,373 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2AF61F51C
-	for <e@80x24.org>; Fri, 25 May 2018 11:22:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBA7C1F42D
+	for <e@80x24.org>; Fri, 25 May 2018 12:29:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966184AbeEYLWH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 07:22:07 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:40408 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965781AbeEYLWG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 07:22:06 -0400
-Received: by mail-it0-f65.google.com with SMTP id j186-v6so6372799ita.5
-        for <git@vger.kernel.org>; Fri, 25 May 2018 04:22:06 -0700 (PDT)
+        id S966528AbeEYM3A (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 08:29:00 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:39692 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966497AbeEYM27 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 08:28:59 -0400
+Received: by mail-wm0-f68.google.com with SMTP id f8-v6so14165623wmc.4
+        for <git@vger.kernel.org>; Fri, 25 May 2018 05:28:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ByUUCmRcg4tM7/7B9DrUgSC9Y9i+T2CZO7LACf+nSeg=;
-        b=ENVC4Cj2feOya6ZaelS1At7iW+J1Pau2rgbFS4ZGj22curqqcSPT8SpP/NvnmxrgTw
-         wTjUG7YaKMjZLVKHFgBG8evpc9nvwtUg7PuvaUYaPcOU8xifYITgcT6mxGgclXTxB4st
-         mw40zHVhIPJk2VinCqwpR4CAhcVOJwoRd7tFNbc+jlb6suck+Ehw2cstPE7h7+SeEmL7
-         9p67Lg+XOUg8Xs86fUbYXQHrPsXV7AKGMrC9rK90J3FY+YE/7vL0QuEEJoodkurmi0ve
-         4NXid9x6HajU/bmrNeIN5mpJYX4Gas5Wyx//XJ8f3uD3dz0nNPiyGe3Pw8x00p4pW2QO
-         zZww==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=IZP1pnb0mHgBb1B+V1y7LcV433kyqbDUDUzviIZhviI=;
+        b=RzpfLbuNQTcx6SAmF243wdfJbAapeKULWVDPV050n2ls+DkmeEVjxVNON+vt1nVVDL
+         XB1BvP/imX4aXyxrI2dlh7HxOYksPDoxeZ/EWCokY7fZAaGXkbVQrJRX3PKnVczY/uV2
+         GKA61JQIGAqbwVsyfscxQlyJARj373ThFX3h1TxotgAnr7iJ62PjrN2FDfLTSXeekRAh
+         AzrqsT4d5GtKsSbK2YttzQpv6FiC+NQ2dNxuPUSWWFj5id3Vrg4UcH/ZNg2m/hu8CyOv
+         e4Yrt/t7H2GzacXwcXBinoTYePgtctY1rAqdpDYkU/mo6VWkCYIV3rp4wTN7LPkw9SEG
+         NlNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ByUUCmRcg4tM7/7B9DrUgSC9Y9i+T2CZO7LACf+nSeg=;
-        b=jIEdIp0iXutaSGr8FhfW7EzhI8oXW3WSmQIvhjvqPJohh+lpm1pdwssmuiPbaz84Ib
-         S1gw9WXIGRVxuAnCAX1bamQFfe57o5fwLrZyMXGBX0TSiyy1DSvUR2IcayOrIqhpsaLj
-         i1kghhr/PdIQzpXXx2lcHgPf2fA/JEZyYPUCogg8bKAeNOWjmR61a1RjwyPvRQ4Q70/x
-         SOCLX6IqTa6w+qzvN6b9RpBRm6cfq/87smOilUdCDRs8TToIfX2Bl9/yfrYoExrf+xKa
-         fmgEcau8s4vTmjdUeamTbdhgFX7BPaINnLQ0dksMTPM0ffbA4C716hC3auTvdkv11mCn
-         Yspw==
-X-Gm-Message-State: ALKqPweiMUVVUm6h/2/AYhg7aE6YfRMKo0VUs6NykkAz7LYbV4UJtSvc
-        VD8fDTZDMqGK4iL4qdKxrCTEB7Qu79Q0GH8/kp0=
-X-Google-Smtp-Source: ADUXVKJOZr2tD8rMBGaPmh7W9ysgyG0uLzcAO2DdBlTsiFGclzxVxM5Y2lkzgh9yPz6GBb1GY9iAYkmmhXgRSo2x/BA=
-X-Received: by 2002:a24:2f89:: with SMTP id j131-v6mr1495472itj.96.1527247326111;
- Fri, 25 May 2018 04:22:06 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=IZP1pnb0mHgBb1B+V1y7LcV433kyqbDUDUzviIZhviI=;
+        b=cbTdb0bO/yfTrewLcnyi3Pzsbsnz9r9gBAuaopX8ecaLNMd48QGInKJmqBQcpOqViv
+         vZVZqoEvvKBtGkRLaE99y+meEgKo8fbVzHeHKbCbXZK4Jx5zEdXyhPgbvjw64j0IQgP1
+         qoGebyxrWwzACHI48WEYj6mAGmg0A/VvzMr5jlyt3zTFECUDLLxhU//abO7BpicDqAOG
+         WzT7ftNY+a9bMfMlT6ywFOF+DBKJhM9zcZqt1CFTHYHlSbvkn3tg5xhs9hcdZ9r26+hd
+         QcrR5qNfHFV83/AoBJgHO0bmX02+zU3oroGYz056gYP2Nq2v/F/h5/tZ7CaTbdWw4c/9
+         rMsg==
+X-Gm-Message-State: ALKqPwfdYxzJT1qPaU1PHjrC1w39swqlSXbRMkeKLtSOTqLkMhIlSX6r
+        HoTP8uMSM/IQm5Qjj4xbcfw=
+X-Google-Smtp-Source: AB8JxZqzZ1hMGJb2/RXQEmU0JTwgUyeNfBSeJfp9KyhroHZxf8PnQfp+btNOwGr919MW5zsdNFsAIA==
+X-Received: by 2002:a50:c181:: with SMTP id m1-v6mr2712714edf.207.1527251338091;
+        Fri, 25 May 2018 05:28:58 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id f11-v6sm13747553edf.68.2018.05.25.05.28.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 25 May 2018 05:28:57 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Ben Peart <benpeart@microsoft.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: sb/submodule-move-nested breaks t7411 under GIT_FSMONITOR_TEST
+References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 25 May 2018 14:28:56 +0200
+Message-ID: <87lgc77wc7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a4f:22db:0:0:0:0:0 with HTTP; Fri, 25 May 2018 04:22:05
- -0700 (PDT)
-In-Reply-To: <CAMy9T_E_wO-XKn-BoVpnoUn8cGsmE4z11AzbqW+7Ppo=P9zcDg@mail.gmail.com>
-References: <20180523052517.4443-1-chriscool@tuxfamily.org>
- <615f57ad-7591-128a-0c42-660312d34ca2@alum.mit.edu> <20180525085906.GA2948@sigill.intra.peff.net>
- <CAMy9T_E_wO-XKn-BoVpnoUn8cGsmE4z11AzbqW+7Ppo=P9zcDg@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 25 May 2018 13:22:05 +0200
-Message-ID: <CAP8UFD2gPoOqFbp18c3UFzp9XpGM8qrojzXsN1s4sXBEhCaF6g@mail.gmail.com>
-Subject: Re: [PATCH v2] t: make many tests depend less on the refs being files
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
-        David Turner <novalis@novalis.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        David Turner <dturner@twopensource.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 25, 2018 at 11:05 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On Fri, May 25, 2018 at 10:59 AM, Jeff King <peff@peff.net> wrote:
->> On Fri, May 25, 2018 at 10:48:04AM +0200, Michael Haggerty wrote:
->>
->>> >  test_expect_success "multi-fetch works off a 'clean' repository" '
->>> > -   rm -r "$GIT_DIR/svn" "$GIT_DIR/refs/remotes" "$GIT_DIR/logs" &&
->>> > +   rm -rf "$GIT_DIR/svn" "$GIT_DIR/refs/remotes" &&
->>> > +   git reflog expire --all --expire=all &&
->>> >     mkdir "$GIT_DIR/svn" &&
->>> >     git svn multi-fetch
->>> >     '
->>> >
->>>
->>> `rm -rf "$GIT_DIR/refs/remotes"` is not kosher. I think it can be written
->>>
->>>     printf 'option no-deref\ndelete %s\n' $(git for-each-ref
->>> --format='%(refname)' refs/remotes) | git update-ref --stdin
->>>
->>> as long as the number of references doesn't exceed command-line limits.
->>> This will also take care of the reflogs. Another alternative would be to
->>> write it as a loop.
->>
->> Perhaps:
->>
->>   git for-each-ref --format="option no-deref%0adelete %(refname)" refs/remotes |
->>   git update-ref --stdin
->
-> Ah yes, that's nicer. I tried with `\n`, but that's not supported
-> (wouldn't it be nice if it were?). I didn't think to try `%0a` (let
-> alone look in the documentation!)
 
-Thanks both for this suggestion. I plan to use it in another patch.
+On Thu, May 17 2018, Junio C Hamano wrote:
+
+> * sb/submodule-move-nested (2018-03-29) 6 commits
+>   (merged to 'next' on 2018-04-25 at 86b177433a)
+>  + submodule: fixup nested submodules after moving the submodule
+>  + submodule-config: remove submodule_from_cache
+>  + submodule-config: add repository argument to submodule_from_{name, path}
+>  + submodule-config: allow submodule_free to handle arbitrary repositories
+>  + grep: remove "repo" arg from non-supporting funcs
+>  + submodule.h: drop declaration of connect_work_tree_and_git_dir
+>
+>  Moving a submodule that itself has submodule in it with "git mv"
+>  forgot to make necessary adjustment to the nested sub-submodules;
+>  now the codepath learned to recurse into the submodules.
+
+I didn't spot this earlier because I don't test this a lot, but I've
+bisected the following breakage down to da62f786d2 ("submodule: fixup
+nested submodules after moving the submodule", 2018-03-28) (and manually
+confirmed by reverting). On Linux both Debian & CentOS I get tests 3 and
+4 failing with:
+
+     GIT_FSMONITOR_TEST=$PWD/t7519/fsmonitor-all ./t7411-submodule-config.sh
+
+-v -x output follows:
+
+expecting success: 
+	mkdir submodule &&
+	(cd submodule &&
+		git init &&
+		echo a >a &&
+		git add . &&
+		git commit -ma
+	) &&
+	mkdir super &&
+	(cd super &&
+		git init &&
+		git submodule add ../submodule &&
+		git submodule add ../submodule a &&
+		git commit -m "add as submodule and as a" &&
+		git mv a b &&
+		git commit -m "move a to b"
+	)
+
++ mkdir submodule
++ cd submodule
++ git init
+Initialized empty Git repository in /home/avar/g/git/t/trash directory.t7411-submodule-config/submodule/.git/
++ echo a
++ git add .
++ git commit -ma
+[master (root-commit) 27e9f0e] a
+ Author: A U Thor <author@example.com>
+ 1 file changed, 1 insertion(+)
+ create mode 100644 a
++ mkdir super
++ cd super
++ git init
+Initialized empty Git repository in /home/avar/g/git/t/trash directory.t7411-submodule-config/super/.git/
++ git submodule add ../submodule
+Cloning into '/home/avar/g/git/t/trash directory.t7411-submodule-config/super/submodule'...
+done.
++ git submodule add ../submodule a
+Cloning into '/home/avar/g/git/t/trash directory.t7411-submodule-config/super/a'...
+done.
++ git commit -m add as submodule and as a
+[master (root-commit) 5a1dac1] add as submodule and as a
+ Author: A U Thor <author@example.com>
+ 3 files changed, 8 insertions(+)
+ create mode 100644 .gitmodules
+ create mode 160000 a
+ create mode 160000 submodule
++ git mv a b
++ git commit -m move a to b
+[master ab1e9c7] move a to b
+ Author: A U Thor <author@example.com>
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename a => b (100%)
+ok 1 - submodule config cache setup
+
+expecting success: 
+	test_when_finished "rm -rf repo" &&
+	test_create_repo repo &&
+	cat >repo/.gitmodules <<-\EOF &&
+	[submodule "s"]
+		path
+		ignore
+	EOF
+	(
+		cd repo &&
+		test_must_fail test-submodule-config "" s 2>actual &&
+		test_i18ngrep "bad config" actual
+	)
+
++ test_when_finished rm -rf repo
++ test 0 = 0
++ test_cleanup={ rm -rf repo
+		} && (exit "$eval_ret"); eval_ret=$?; :
++ test_create_repo repo
++ test 1 = 1
++ repo=repo
++ mkdir -p repo
++ cd repo
++ /home/avar/g/git/t/../git-init --template=/home/avar/g/git/t/../templates/blt/
+Initialized empty Git repository in /home/avar/g/git/t/trash directory.t7411-submodule-config/repo/.git/
++ mv .git/hooks .git/hooks-disabled
++ cat
++ cd repo
++ test_must_fail test-submodule-config  s
++ test_i18ngrep bad config actual
++ test -n 
++ test x! = xbad config
++ grep bad config actual
+fatal: bad config line 2 in file /home/avar/g/git/t/trash directory.t7411-submodule-config/repo/.gitmodules
++ rm -rf repo
++ exit 0
++ eval_ret=0
++ :
+ok 2 - configuration parsing with error
+
+expecting success: 
+	(cd super &&
+		test-submodule-config \
+			HEAD^ a \
+			HEAD b \
+			HEAD^ submodule \
+			HEAD submodule \
+				>actual &&
+		test_cmp expect actual
+	)
+
++ cd super
++ test-submodule-config HEAD^ a HEAD b HEAD^ submodule HEAD submodule
+warning: ab1e9c76c1e6a15df51b20e75552ec5ad00708ac:.gitmodules, multiple configurations found for 'submodule.submodule.path'. Skipping second one!
+warning: ab1e9c76c1e6a15df51b20e75552ec5ad00708ac:.gitmodules, multiple configurations found for 'submodule.submodule.url'. Skipping second one!
+warning: ab1e9c76c1e6a15df51b20e75552ec5ad00708ac:.gitmodules, multiple configurations found for 'submodule.a.path'. Skipping second one!
+warning: ab1e9c76c1e6a15df51b20e75552ec5ad00708ac:.gitmodules, multiple configurations found for 'submodule.a.url'. Skipping second one!
+Submodule not found.
+Usage: /home/avar/g/git/t/helper/test-submodule-config [<commit> <submodulepath>] ...
+error: last command exited with $?=1
+not ok 3 - test parsing and lookup of submodule config by path
+#	
+#		(cd super &&
+#			test-submodule-config \
+#				HEAD^ a \
+#				HEAD b \
+#				HEAD^ submodule \
+#				HEAD submodule \
+#					>actual &&
+#			test_cmp expect actual
+#		)
+#	
+
+expecting success: 
+	(cd super &&
+		test-submodule-config --name \
+			HEAD^ a \
+			HEAD a \
+			HEAD^ submodule \
+			HEAD submodule \
+				>actual &&
+		test_cmp expect actual
+	)
+
++ cd super
++ test-submodule-config --name HEAD^ a HEAD a HEAD^ submodule HEAD submodule
++ test_cmp expect actual
++ diff -u expect actual
+--- expect	2018-05-25 12:28:30.000000000 +0000
++++ actual	2018-05-25 12:28:30.000000000 +0000
+@@ -1,4 +1,4 @@
+ Submodule name: 'a' for path 'a'
+-Submodule name: 'a' for path 'b'
++Submodule name: 'a' for path 'a'
+ Submodule name: 'submodule' for path 'submodule'
+ Submodule name: 'submodule' for path 'submodule'
+error: last command exited with $?=1
+not ok 4 - test parsing and lookup of submodule config by name
+#	
+#		(cd super &&
+#			test-submodule-config --name \
+#				HEAD^ a \
+#				HEAD a \
+#				HEAD^ submodule \
+#				HEAD submodule \
+#					>actual &&
+#			test_cmp expect actual
+#		)
+#	
+
+expecting success: 
+	(cd super &&
+		cp .gitmodules .gitmodules.bak &&
+		echo "	value = \"" >>.gitmodules &&
+		git add .gitmodules &&
+		mv .gitmodules.bak .gitmodules &&
+		git commit -m "add error" &&
+		test-submodule-config \
+			HEAD b \
+			HEAD submodule \
+				>actual &&
+		test_cmp expect_error actual
+	)
+
++ cd super
++ cp .gitmodules .gitmodules.bak
++ echo 	value = "
++ git add .gitmodules
++ mv .gitmodules.bak .gitmodules
++ git commit -m add error
+[master 7cb6f0e] add error
+ Author: A U Thor <author@example.com>
+ 1 file changed, 2 insertions(+), 1 deletion(-)
++ test-submodule-config HEAD b HEAD submodule
+error: bad config line 7 in submodule-blob 7cb6f0e38e67568f41da9828cc7d5eb1c753b7b4:.gitmodules
++ test_cmp expect_error actual
++ diff -u expect_error actual
+ok 5 - error in one submodule config lets continue
+
+expecting success: 
+	(cd super &&
+		sha1=$(git rev-parse HEAD) &&
+		test-submodule-config \
+			HEAD b \
+			HEAD submodule \
+				2>actual_err &&
+		test_i18ngrep "submodule-blob $sha1:.gitmodules" actual_err >/dev/null
+	)
+
++ cd super
++ git rev-parse HEAD
++ sha1=7cb6f0e38e67568f41da9828cc7d5eb1c753b7b4
++ test-submodule-config HEAD b HEAD submodule
+Submodule name: 'a' for path 'b'
+Submodule name: 'submodule' for path 'submodule'
++ test_i18ngrep submodule-blob 7cb6f0e38e67568f41da9828cc7d5eb1c753b7b4:.gitmodules actual_err
++ test -n 
++ test x! = xsubmodule-blob 7cb6f0e38e67568f41da9828cc7d5eb1c753b7b4:.gitmodules
++ grep submodule-blob 7cb6f0e38e67568f41da9828cc7d5eb1c753b7b4:.gitmodules actual_err
+ok 6 - error message contains blob reference
+
+expecting success: 
+	(
+		cd super &&
+		git tag new_tag &&
+		tree=$(git rev-parse HEAD^{tree}) &&
+		commit=$(git rev-parse HEAD^{commit}) &&
+		test-submodule-config $commit b >expect &&
+		test-submodule-config $tree b >actual.1 &&
+		test-submodule-config new_tag b >actual.2 &&
+		test_cmp expect actual.1 &&
+		test_cmp expect actual.2
+	)
+
++ cd super
++ git tag new_tag
++ git rev-parse HEAD^{tree}
++ tree=934687743cd5ca685cfa8d3c77aaebb75ee12e1f
++ git rev-parse HEAD^{commit}
++ commit=7cb6f0e38e67568f41da9828cc7d5eb1c753b7b4
++ test-submodule-config 7cb6f0e38e67568f41da9828cc7d5eb1c753b7b4 b
+error: bad config line 7 in submodule-blob 7cb6f0e38e67568f41da9828cc7d5eb1c753b7b4:.gitmodules
++ test-submodule-config 934687743cd5ca685cfa8d3c77aaebb75ee12e1f b
+error: bad config line 7 in submodule-blob 934687743cd5ca685cfa8d3c77aaebb75ee12e1f:.gitmodules
++ test-submodule-config new_tag b
+error: bad config line 7 in submodule-blob 7cb6f0e38e67568f41da9828cc7d5eb1c753b7b4:.gitmodules
++ test_cmp expect actual.1
++ diff -u expect actual.1
++ test_cmp expect actual.2
++ diff -u expect actual.2
+ok 7 - using different treeishs works
+
+expecting success: 
+	(cd super &&
+		git config -f .gitmodules \
+			submodule.submodule.fetchrecursesubmodules blabla &&
+		git add .gitmodules &&
+		git config --unset -f .gitmodules \
+			submodule.submodule.fetchrecursesubmodules &&
+		git commit -m "add error in fetchrecursesubmodules" &&
+		test-submodule-config \
+			HEAD b \
+			HEAD submodule \
+				>actual &&
+		test_cmp expect_error actual  &&
+		git reset --hard HEAD^
+	)
+
++ cd super
++ git config -f .gitmodules submodule.submodule.fetchrecursesubmodules blabla
++ git add .gitmodules
++ git config --unset -f .gitmodules submodule.submodule.fetchrecursesubmodules
++ git commit -m add error in fetchrecursesubmodules
+[master 1fa1547] add error in fetchrecursesubmodules
+ Author: A U Thor <author@example.com>
+ 1 file changed, 1 insertion(+), 1 deletion(-)
++ test-submodule-config HEAD b HEAD submodule
++ test_cmp expect_error actual
++ diff -u expect_error actual
++ git reset --hard HEAD^
+HEAD is now at 7cb6f0e add error
+ok 8 - error in history in fetchrecursesubmodule lets continue
+
+# failed 2 among 8 test(s)
+1..8
