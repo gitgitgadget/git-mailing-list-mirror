@@ -2,107 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3152B1F42D
-	for <e@80x24.org>; Fri, 25 May 2018 06:03:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57F101F42D
+	for <e@80x24.org>; Fri, 25 May 2018 06:23:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751791AbeEYGDu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 02:03:50 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:61386 "EHLO
-        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751266AbeEYGDs (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 25 May 2018 02:03:48 -0400
-X-AuditID: 1207440f-00e0070000000adc-49-5b07a7436a04
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 58.21.02780.347A70B5; Fri, 25 May 2018 02:03:47 -0400 (EDT)
-Received: from [192.168.69.190] (p57BCC483.dip0.t-ipconnect.de [87.188.196.131])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w4P63i35012859
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Fri, 25 May 2018 02:03:45 -0400
-Subject: Re: commit-graph: change in "best" merge-base when ambiguous
-To:     Jakub Narebski <jnareb@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Elijah Newren <newren@gmail.com>
-References: <e78a115a-a5ea-3c0a-5437-51ba0bcc56e1@gmail.com>
- <3705af00-00b7-b620-cc77-eef8f0a73bc1@alum.mit.edu>
- <8b480e9e-1fd3-35ff-2974-653fadd49fa7@gmail.com> <86o9h41zc3.fsf@gmail.com>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <1fb58851-57bc-b787-fd38-474aa6afa8b3@alum.mit.edu>
-Date:   Fri, 25 May 2018 08:03:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S932377AbeEYGX0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 02:23:26 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:33053 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752834AbeEYGXZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 02:23:25 -0400
+Received: by mail-qk0-f176.google.com with SMTP id s12-v6so3276805qke.0
+        for <git@vger.kernel.org>; Thu, 24 May 2018 23:23:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=R7WiDrh4fUYWVw1f5H62KVpe11e3xRwP04lShMxgCY0=;
+        b=k81pR/D0W2oVPBjAywOyH0BSqdvGUwfywVCj3d45df2YbpAyj34PXLMJeaX/jiylPh
+         5c4ltrtfh86MKtE7XESJeL5jZSSAoNc8chlihvdfM9Dj9N8HPJ3daTSDB7N1ln4yjgCN
+         NGyf++Z3JGdoCr3tWsKdzZEVQ6SeHXedRXCsi5ImlQwfUXuTyFtywOO4wAcnHpbzThzU
+         EaE01wzvFdUrR8/JPrhLMXAxy3W3uinN7Nv7Kgr8aoV+FuVcPAE/eYPc3F6PytJ6WPEA
+         vskwIS42Wzh2upk1EbjQkW8vPxvt+ANMIk4UTyYT8OC/5VV6mSQMrESVKFxzRqmN68Uw
+         TedQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=R7WiDrh4fUYWVw1f5H62KVpe11e3xRwP04lShMxgCY0=;
+        b=Ohk9YCzcRmUndmvoynleAWVUKO0UkknuOF1pDJfIJlO1owwU3APLhlyKq/av+9Bh8U
+         5MEnMXyoQsSDWf//IwS7d6zKVKV8mkAK8Wvcm4fQYjCXC+DZF7s2CVZ2NahIMpVdWnP+
+         KCt9kpJXFexELhUVUbiG3dbmU6EwY6+OGZrSI5tk477KH/MpoiFkBO7KqApsA5GeKdVM
+         o9hJ84wonTstqgt5Vtha+CpQgF5/2A43jXRtM43//EeFC6yLNrWZdPJZm82Jed7ixY2/
+         fQfSzJ+Ulg5y/GuS0BKamoAE3ZgoBIFzgWPDdLj0mcX9If2fAWxsevunlmjRtzCQsvUS
+         kbfg==
+X-Gm-Message-State: ALKqPwfFw97M7jqg+D1SQya9qNr4gqeYDXHTuts1CVoe37KKUHXH6ZtD
+        6GEyhlVuiPhdmUFFU5cBrjkYkrdGoAadF6rHEA2h6zYq
+X-Google-Smtp-Source: ADUXVKKmOc3/tnYFGBsYA57g7L06eOnSuKmoLDEWqu8L4fgSXLZ4PO/x45LCi/oPEzBIl53Nqd6un04wybHNFhM2uKg=
+X-Received: by 2002:a37:8942:: with SMTP id l63-v6mr817648qkd.293.1527229404890;
+ Thu, 24 May 2018 23:23:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <86o9h41zc3.fsf@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPKsWRmVeSWpSXmKPExsUixO6iqOu8nD3aYO0HU4sX+y+zWnRd6Way
-        aOi9wmyxe3E/s8WKq3OYLea1fGG2+NHSw2yxeXM7i8XRC2sYHTg9ds66y+6xYFOpx91n2xk9
-        nvXuYfS4eEnZ4/MmuQC2KC6blNSczLLUIn27BK6M6xdeMhdc4654vmM5UwPjTs4uRk4OCQET
-        iadHj7N3MXJxCAnsYJLY37WKBcK5wCSxbNZRVpAqYQFXiYlTvjGD2CICHhJN/yczgxQxC/Qz
-        SUx68gyq4wCjxMNpD8A62AR0JRb1NDOB2LwC9hKf2xYygtgsAqoS3w4sAasRFYiQuHf+ExtE
-        jaDEyZlPWEBsTgF1iRt/t4PVMAPZf+ZdYoawxSVuPZnPBGHLSzRvnc08gVFgFpL2WUhaZiFp
-        mYWkZQEjyypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXRO93MwSvdSU0k2MkHjh38HYtV7mEKMA
-        B6MSD++GA2zRQqyJZcWVuYcYJTmYlER5Ty5ljxbiS8pPqcxILM6ILyrNSS0+xCjBwawkwjs5
-        GCjHm5JYWZValA+TkuZgURLnZTXZGyUkkJ5YkpqdmlqQWgSTleHgUJLgjV0G1ChYlJqeWpGW
-        mVOCkGbi4AQZzgM03Bikhre4IDG3ODMdIn+KUVFKnHcNyEUCIImM0jy4Xlg6e8UoDvSKMG8q
-        SDsPMBXCdb8CGswENPjicmaQwSWJCCmpBkbtbfEn5+jfe9JkfL18cw7TXhfFql3xe+v/371Q
-        qGRzcGbI7Q9SD3XlhL+lmP5aevP9Fua5pvc0uWN/7jq/8cCzh576bttCBTbNLzLisBLYPd/4
-        xmHd2unr1iZPidD/Z+kz97xEu6TFVoatVhKnI0R1xFOWvWN7lXeqU57rQqeK3UaBguW/Mhcp
-        sRRnJBpqMRcVJwIASlT+f0IDAAA=
+References: <CAFazEUP5QJ+WzTkDK6qcgvW5Xwx79KYJWeb1vg41=pS8E8vypQ@mail.gmail.com>
+ <CAP8UFD0ZLsZ97OJYyVTC0fqUJfxJyMzE+PRE4uYVwhDqdkgRTA@mail.gmail.com>
+In-Reply-To: <CAP8UFD0ZLsZ97OJYyVTC0fqUJfxJyMzE+PRE4uYVwhDqdkgRTA@mail.gmail.com>
+From:   "Etienne d'Hautefeuille" <sagoum.kakoum@gmail.com>
+Date:   Fri, 25 May 2018 08:23:13 +0200
+Message-ID: <CAFazEUNX4eabQWpEXa74a0vCCHyJMNcdS0ZCm9Xtm2qHGNMLJw@mail.gmail.com>
+Subject: Re: git difftool with symlink to readonly jar failed
+To:     christian.couder@gmail.com
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/25/2018 12:08 AM, Jakub Narebski wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
->> On 5/22/2018 1:39 AM, Michael Haggerty wrote:
->>> On 05/21/2018 08:10 PM, Derrick Stolee wrote:
->>>> [...]
->>> This may be beyond the scope of what you are working on, but there are
->>> significant advantages to selecting a "best" merge base from among the
->>> candidates. Long ago [1] I proposed that the "best" merge base is the
->>> merge base candidate that minimizes the number of non-merge commits that
->>> are in
->>>
->>>      git rev-list $candidate..$branch
->>>
->>> that are already in master:
->>>
->>>      git rev-list $master
->>>
->>> (assuming merging branch into master), which is equivalent to choosing
->>> the merge base that minimizes
->>>
->>>      git rev-list --count $candidate..$branch
-> 
-> Is the above correct...
-> 
->>> In fact, this criterion is symmetric if you exchange branch ↔ master,
->>> which is a nice property, and indeed generalizes pretty simply to
->>> computing the merge base of more than two commits.
-> 
-> ...as it doesn't seem to have the described symmetry.
+Hi,
 
-The first email that I referenced [1] demonstrates this in the section
-"Symmetry; generalization to more than two branches". The same thing is
-demonstrated in a simpler way using set notation in a later email in
-that thread [2].
+same problem with all program, There is a crash before the launch
 
-Michael
+> git difftool --dir-diff 4cb98b4a307ce97d9e6b8e4b03211fa5ca8af7e7
+0244799661b993b1f78fa5afb621de3fe4c4a39c --
+fatal: could not open '/tmp/git-difftool.g80nLO/left/jenkins.war' for
+writing: Permission denied
 
-[1] https://public-inbox.org/git/539A25BF.4060501@alum.mit.edu/
-[2] https://public-inbox.org/git/53A06264.9080205@alum.mit.edu/
+> git difftool --dir-diff  --dir-diff --tool=3Dkdiff3
+4cb98b4a307ce97d9e6b8e4b03211fa5ca8af7e7
+0244799661b993b1f78fa5afb621de3fe4c4a39c --
+fatal: could not open '/tmp/git-difftool.R1NgMw/left/jenkins.war' for
+writing: Permission denied
+
+> git difftool --dir-diff  --dir-diff --tool=3Dbc3
+4cb98b4a307ce97d9e6b8e4b03211fa5ca8af7e7
+0244799661b993b1f78fa5afb621de3fe4c4a39c --
+fatal: could not open '/tmp/git-difftool.MNyx8b/left/jenkins.war' for
+writing: Permission denied
+
+> git difftool --dir-diff  --dir-diff --tool=3Dkompare
+4cb98b4a307ce97d9e6b8e4b03211fa5ca8af7e7
+0244799661b993b1f78fa5afb621de3fe4c4a39c --
+fatal: could not open '/tmp/git-difftool.lj82wR/left/jenkins.war' for
+writing: Permission denied
+
+Le ven. 25 mai 2018 =C3=A0 07:40, Christian Couder <christian.couder@gmail.=
+com>
+a =C3=A9crit :
+
+> Hi,
+
+> On Thu, May 24, 2018 at 11:11 PM, Etienne d'Hautefeuille
+> <sagoum.kakoum@gmail.com> wrote:
+> >
+> > #try  a diff
+> > git difftool --dir-diff 4cb98b4a307ce97d9e6b8e4b03211fa5ca8af7e7
+> > 0244799661b993b1f78fa5afb621de3fe4c4a39c
+> > fatal: impossible d'ouvrir '/tmp/git-difftool.UQ4mqo/left/jenkins.war'
+en
+> > =C3=A9criture: Permission non accord=C3=A9e
+
+> You should use LANG=3DC so that people can understand the error message.
+
+> Also git difftool launches another program that will actually perform
+> the diff. It looks like it is bcompare on your setup. Did you try with
+> another program?
