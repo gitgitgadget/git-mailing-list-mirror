@@ -7,55 +7,56 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 642ED1F42D
-	for <e@80x24.org>; Fri, 25 May 2018 22:41:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFA101F42D
+	for <e@80x24.org>; Fri, 25 May 2018 22:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030558AbeEYWlt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 18:41:49 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:42467 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030394AbeEYWls (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 18:41:48 -0400
-Received: by mail-yw0-f195.google.com with SMTP id q7-v6so2200425ywd.9
-        for <git@vger.kernel.org>; Fri, 25 May 2018 15:41:48 -0700 (PDT)
+        id S1030651AbeEYWxo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 18:53:44 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:45615 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030538AbeEYWxn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 18:53:43 -0400
+Received: by mail-yb0-f194.google.com with SMTP id r13-v6so2339923ybm.12
+        for <git@vger.kernel.org>; Fri, 25 May 2018 15:53:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=muExcNWSlVTxXjY+jbjOWqo2ykTgCb/rJKrhFKxfRdI=;
-        b=D9PiknDYtySldpshBVNENxP5y3jf6j2bnbRiINAeSHG4DqDdQO7iODnmPwuBP3yYB7
-         OhZTFRDmVbY8F5hQx2n7+XuPhOp4ul9VMqB9Lrf168oh4hOluSeY0d3jud2OPrXdtblW
-         XftEPN7hogWcj66MPuMRkjDXljRC/YNmnO6w1G2t9+xKbgKM+DHnaICzx1ZJ5j+T6eYw
-         /Q8RclYN+pvdirNd7qzLYD52nCLAhrBqBMDpo3zCRiAWkpKz7LbZmOGlm4rYL3YtLMFu
-         krkHFbsx0jvTklZlZ9oT23oCxl5ibT0qso1SkKPYVMF5YtYrtr20rOpC5RPWTRZBzj7B
-         n2Jw==
+        bh=UcP2d3QmyfTvR1fXf3wUELtXWorYbK63kCCQDoPYOHc=;
+        b=FfF6tT5eUNfMNFuV+GPeY4EL0a0rxYwGRIs3xLIYQJYY4kZGnTrmthDgZO6UQduUbW
+         TKUNuYt2srcN6RAV0JbnBngrdHButI7FBL6j2rf8XncfW62YFuKaQ7T9qjoM0QxMn4RW
+         x5Ltc4ldvR44FgMLE6tKh6cExMbzwXpPvEdi/O5cHtGeV/ReomkME3r3HlUb7CDtiUIH
+         A2UlcqCkT6GuYxlD5eRa9xE7zpuZIjU+6hzw6akaPwaZAYTgVQTPac73Zij157YZeCQZ
+         RY+oqSjwmwC7DWAtXeLE3ughpZ6L/9VS8g52SY9EwsjQxRFFffcP0eV3CTyK5hL5npjw
+         t2XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=muExcNWSlVTxXjY+jbjOWqo2ykTgCb/rJKrhFKxfRdI=;
-        b=r+PLvajy9mtsJad5FOAmWy5Cj1a8WHsYYLR9bGj8yX9hDD/HgaffI7rcW3rnuqv8q3
-         L/iMVJVHWdKdBtYbC9Uii3/cCVHg4Fd85Ly1UQFbgqk8lq/Nh1q3vrL68I2mzO2UEjFl
-         XSU6J0zCsJEp226Ua3Q+/eP+ANo7eh7huuaLZa1Vy4/vLJaOHkYMum449fImdAA08oH7
-         t9gjlSlEYkhfZytb9/zZ/WnoGYYrBDNTiM8RloXZGL47ZEuLxeDL23dtrmSJ1oZOoNPx
-         s3UBhEafHsTz6Vx7+/IalnYZ04f1sGTh+0eu5Zl13W8SwEKgTSz6CRIf2bIZSt5MvOl+
-         jfuA==
-X-Gm-Message-State: ALKqPwfEj7tH+KgIECzzmcukHQzwcN6sunhjn92N6L3RNiDRUt2DQGgF
-        bB43NPUlL61aBYAMIKoB4h0hTfDCL9Y3LPMjNUVYVg==
-X-Google-Smtp-Source: AB8JxZrkZUh8yPenPMi1PwDOEVCK85xU3Ssj+LR+v96B7LenJtHkFJWeQDQkEGtr4Aq8U3LHLU38YpBM7yz/AyDYcQU=
-X-Received: by 2002:a81:b205:: with SMTP id q5-v6mr2467378ywh.414.1527288107500;
- Fri, 25 May 2018 15:41:47 -0700 (PDT)
+        bh=UcP2d3QmyfTvR1fXf3wUELtXWorYbK63kCCQDoPYOHc=;
+        b=rr/eDdNzvYc9uFkCKaRYhLTtNuBKVAt1HS3gshnfYQXJJPLzDDQNvcDkl+zSNblnmH
+         KlFMLgl5d6vsNhTvZ7y0bOKmGVS0gbtGgL1qOHs3VHztj2xPbOzesSaBVmLeACvDObMK
+         fejdyM/2NJDJ++LTPkxZ5brdGf4NQ+qWnTROVVHY3obNnbj+EbbjcYE8Tlcpp6J58vP2
+         52hfcN4YXMlwyurnIgvWLP04HWJmIOKdHBErsUdAZ7eZSnkcNIfEhzZCfbKnUEnawAMV
+         Mu9Md6M2IC1zVLErpYFwAJqWP6zyjNhDEAmWURN6P6APhZdEQobRKoohpR/WPnyOjOm0
+         t9zQ==
+X-Gm-Message-State: ALKqPwc0g3DmKceWvlhNL/iuw8xHmCaPkTtMYRol9nDlF13h3R+1WgTP
+        LoZTkbYgKbg2R550qCxRZcVf72Hs6WjyQ2axPT5oNw==
+X-Google-Smtp-Source: ADUXVKIx1O5pCAWRljUsr6gGvIMsfBNxUDSuQCetsIyc6I/wnCBRXTHSy1YCMKog+noqhd4/lOu0+ZIu3kTTTvm55ZY=
+X-Received: by 2002:a25:5f12:: with SMTP id t18-v6mr2461952ybb.167.1527288822832;
+ Fri, 25 May 2018 15:53:42 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Fri, 25 May 2018 15:41:46 -0700 (PDT)
-In-Reply-To: <20180523144637.153551-1-jamill@microsoft.com>
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Fri, 25 May 2018 15:53:42 -0700 (PDT)
+In-Reply-To: <BL0PR2101MB11068051AD589871D4D707CBCE6A0@BL0PR2101MB1106.namprd21.prod.outlook.com>
 References: <20180417163400.3875-1-jamill@microsoft.com> <20180523144637.153551-1-jamill@microsoft.com>
+ <xmqqa7spsle1.fsf@gitster-ct.c.googlers.com> <BL0PR2101MB11068051AD589871D4D707CBCE6A0@BL0PR2101MB1106.namprd21.prod.outlook.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 25 May 2018 15:41:46 -0700
-Message-ID: <CAGZ79kZ6B84Upx2HBzUTPcYnhiV=GkDU53Z6fC2rJGdsZb2-oA@mail.gmail.com>
+Date:   Fri, 25 May 2018 15:53:42 -0700
+Message-ID: <CAGZ79kbZcqzRAqip_CbEmxxhXr_UcAfO-siRgoVjqdd7XsH8sg@mail.gmail.com>
 Subject: Re: [PATCH v3 0/7] allocate cache entries from memory pool
 To:     Jameson Miller <jamill@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
         "pclouds@gmail.com" <pclouds@gmail.com>,
         "jonathantanmy@google.com" <jonathantanmy@google.com>,
         "peartben@gmail.com" <peartben@gmail.com>
@@ -65,33 +66,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 23, 2018 at 7:47 AM, Jameson Miller <jamill@microsoft.com> wrote:
-> Changes from V2:
 >
->         - Tweak logic of finding available memory block for memory
->           allocation
->
->           - Only search head block
->
->         - Tweaked handling of large memory allocations.
->
->           - Large blocks now tracked in same manner as "regular"
->             blocks
->
->           - Large blocks are placed at end of linked list of memory
->             blocks
->
->         - Cache_entry type gains notion of whether it was allocated
->           from memory pool or not
->
->           - Collapsed cache_entry discard logic into single
->             function. This should make code easier to maintain
->
->         - Small tweaks based on V1 feedback
->
-> Base Ref: master
-> Web-Diff: git@github.com:jamill/git.git/commit/d608515f9e
+> The memory pool design makes some tradeoffs. It is not meant to
+> be completely replace malloc / free as a general purpose
+> allocator, but rather used in scenarios where the benefit (faster
+> allocations, lower bookkeeping overhead) is worth the
+> tradeoffs (not able to free individual allocations).
 
-Unrelated to this series, but to the tool you use to generate the cover-letter:
-I think the Web-Diff only works when you give the http[s] address, git@
-won't work here?
+So this is the actual stated design goal of this memory pool?
+Fast&cheap allocation with little overhead for giving up individual frees?
+
+> We debated several approaches for what to do here
+
+it would be awesome if the list could participate in the discussion
+even if only read-only.
