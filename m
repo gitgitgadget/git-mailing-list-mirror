@@ -2,35 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15C161F42D
-	for <e@80x24.org>; Fri, 25 May 2018 23:04:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D41861F42D
+	for <e@80x24.org>; Fri, 25 May 2018 23:17:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030666AbeEYXEU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 19:04:20 -0400
-Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.227]:62886 "EHLO
-        cdptpa-cmomta03.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1030538AbeEYXET (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 25 May 2018 19:04:19 -0400
-X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 May 2018 19:04:19 EDT
+        id S1030682AbeEYXRX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 19:17:23 -0400
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:36915 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030538AbeEYXRX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 19:17:23 -0400
+Received: by mail-ot0-f193.google.com with SMTP id 77-v6so7796231otd.4
+        for <git@vger.kernel.org>; Fri, 25 May 2018 16:17:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=r1pDEE/jIK1okPy9ukSLZyDGIN+vuZ47AN7xg6ADig4=;
+        b=nu3JZZUS62LEpRvQ4L9hducOMry/3opAPMmmm90CRK3358J3cG9WclNs6pkzjCdbRW
+         bLLDAryc1sUQxWuF2QQxfzAPEr2W41teofTGZdXPsTYAaKHPX3Telp0UnkEx2Xs23270
+         9+3jheyleX5idaB1Zfuh+jpCKBTLYXlOPrUCYlzqCjPxXT1/pjJiCdMHhJDRdICA5WWS
+         WwoCqzsh6tNQAzHepS2pgvXS3PgiHblSJgLl7eSmOOX3C3BHpSo+Wrk0Z2CDA4ZH66XX
+         VwTI8U90B4h9wVsm3DsnaBAmXcauzrdepq7g5iIl0w1ryOT+ZhZ/SWelwih40cfFnGl9
+         NpKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=r1pDEE/jIK1okPy9ukSLZyDGIN+vuZ47AN7xg6ADig4=;
+        b=jPRvzEhX1JQbiD/Ji6I/xzQXVRwiXWE+80zUIbPgZh9tKx48CTfUsgrkl8Hy4tJ/WS
+         AcZjnt0Wg5kSGo75jRW2VxSDMca7aRU+OOf/aghan+gR3WK7K7VtNu3g1/bFKR22slai
+         pI8aYsZzQ6QFRKhqKn48PpwjE4DURjN7seTGsL4LSDFQScZX5nGtNAsdSDjxcrhSRsmX
+         TTK9g1ZQcF3QTs1bNYbldj8Ahf0/4shdsW7LNWDHiB52UZ1heFAEgkbzqifwrHSEVJt7
+         cCMCnrAnlHkmyo4KRidoAO955b6fMfwy+ETKesN65bTyynZD832+gtU+TX0VmoKUYSTO
+         JMmA==
+X-Gm-Message-State: ALKqPwcvR47APzlC4XJ7SIaTf41Zqi/PLmJJyDrYZMc2Hvf4D7WS0Blu
+        TpSskMl1/s+kBDvi2OOF1MLtIg==
+X-Google-Smtp-Source: ADUXVKIITtqNa5qINORbZZzs3417acrPn6Nj2lfSPCYR9MysXbJyCaPX1R4nQpqmcA0zbjHh+qfvPQ==
+X-Received: by 2002:a9d:12b6:: with SMTP id g51-v6mr3033480otg.115.1527290242367;
+        Fri, 25 May 2018 16:17:22 -0700 (PDT)
 Received: from dell-suse.jhome.net ([70.123.58.237])
-        by cmsmtp with ESMTP
-        id MLgafsovclWPgMLgdfHB1l; Fri, 25 May 2018 22:59:51 +0000
+        by smtp.gmail.com with ESMTPSA id y51-v6sm14941116oti.48.2018.05.25.16.17.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 25 May 2018 16:17:21 -0700 (PDT)
 From:   Jeremy Linton <lintonrjeremy@gmail.com>
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, gitster@pobox.com,
         Jeremy Linton <lintonrjeremy@gmail.com>
 Subject: [PATCH] packfile: Correct zlib buffer handling
-Date:   Fri, 25 May 2018 17:56:01 -0500
-Message-Id: <20180525225601.22575-1-lintonrjeremy@gmail.com>
+Date:   Fri, 25 May 2018 18:17:13 -0500
+Message-Id: <20180525231713.23047-1-lintonrjeremy@gmail.com>
 X-Mailer: git-send-email 2.13.6
-X-CMAE-Envelope: MS4wfBmm3AXtJxcBvTHTJOV5efURqFiLjtxaqkU4L/m4UA+F9dxTR74uYiNPL/QzhGZA1O74dl3Ljac2gmD4WcPbMpbdST68syczrIY3l0ZI6aly52iY5Yms
- 0mN7N4dRN9OZElOCoXnNs1slFTGy3uJkjSJfo9/7n2TcLF3j9fvm0ieI450EAKvLnr2/Fgg6MQ28Y+YeOuF+X36vLD+x9BHExQUWDWSn/hPrTk5qpE2ptZJa
- QEcSnyEfqx5ZoPnU7rtgmg6apJaxhmYqpxOUelKGJZDm8q4ORdvxRWZAKOYQH+9b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
