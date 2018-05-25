@@ -6,112 +6,98 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C25861F51C
-	for <e@80x24.org>; Fri, 25 May 2018 08:12:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 373071F51C
+	for <e@80x24.org>; Fri, 25 May 2018 08:16:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936009AbeEYIMv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 04:12:51 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:38869 "EHLO
+        id S964791AbeEYIQI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 04:16:08 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:40137 "EHLO
         mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935866AbeEYIMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 04:12:50 -0400
-Received: by mail-wm0-f65.google.com with SMTP id m129-v6so12136757wmb.3
-        for <git@vger.kernel.org>; Fri, 25 May 2018 01:12:50 -0700 (PDT)
+        with ESMTP id S935866AbeEYIQH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 04:16:07 -0400
+Received: by mail-wm0-f65.google.com with SMTP id x2-v6so4846219wmh.5
+        for <git@vger.kernel.org>; Fri, 25 May 2018 01:16:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Nmz6nAJvMfvkv6MIaLrUx5GCCpkhyk9wZ3Wavegk8Xs=;
-        b=JNTyBwRV/i3qvUzGC76s/2OuJRqQfHzB8IcdwKH1C8K5WsJmtTe48CXF3kVmNYdOEb
-         YZJo1tbqOIKXFlVWXHdjf0Ithn4PXaXS6KDfTDwu/yOyTWSObQ7CuYmoazqB06/MgNOT
-         6uAUlN6U1Uq1ZpTV6BDP3rLKV6XKgGBg+b3Pcl+ct7B+GGGQA4hoph/w+F8/OW+nGipn
-         6hvIMrUPq2w/0uE3ycsdy03HoMya8tp9QvrciEFuQzDCJ45jntv7rETwVDAbMIOEuk4Q
-         l9A8zqZ4ThHPQDqJj1xzh4mqlwsRtoS0xgJOzTcblEjuN627kCkav0GofhlowPWymqSR
-         /RVQ==
+         :user-agent:mime-version;
+        bh=/56vA2K6Aut/LqCzhMFqmcPk+Swdjl2GfHnieisc6rE=;
+        b=b1b9PKDlWp5jWMNg3n4g1uoKollXCS2Qxl5DGDPZ1yfsidqzUzcxznr01Q8I/8zd1J
+         ey/BP2mhcjnCdbeec0+9lN+ssdMq4vU5MPF6tRQyAGmwm193IMrA+9gHf7xlngCAHBQE
+         IeCyDUBBtVrVNuih8yGr/m3umHUf5idnNXklh5yeKpCsnhjnG0MogI5UaQGNZA2BeimI
+         3Ox+n+6GnNfNIT/kyHaPiw4QuCBjXKRonKpAEQAF9aJXL0wRzXd8lmlFv1yzqV7sPIgZ
+         +Q2bua0mAYYbR5BtAP94PQLq+KRWvXU4f7a9VkBslo1SCLCy/FqMVggNNATK7wzWE/jI
+         neAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Nmz6nAJvMfvkv6MIaLrUx5GCCpkhyk9wZ3Wavegk8Xs=;
-        b=SCzd6aI5cORKgO/juX61FYJLEmywJu0riNsV2p9Dw4BhQ/2Mm8B17fUowgOxFoQOuu
-         o3x3PZADvw2LzWfG22AVdjgjtyiZpcY1F1BfCTniMtNM9hVLzFr2opjwIoeLMBvEwgqY
-         q6XonBJHhlZJ0k/4w5x8b/1TsOuT+KhPwE298n6vo/CIvfiZavXOLDyf5Li7tObwdjOh
-         sfEiqadTUahf0UugqzCx1e+vWykwqo2GJo/QV1ED3LFZ/Rwc7FReLEbNBmhUpsOsZbGp
-         M9BUoVWTmneliIP10dEAUQbhqzaBfnsIQRcjfhVQC0xh+W9ZlMbZaW9bC/rLtv9uCpIx
-         0eXg==
-X-Gm-Message-State: ALKqPwd/GVHGk6a/WWA6zzZFOqztDdfg0HNlOkykO5XWy/y3Pm5h2wVs
-        SVdmprG78L3HRfY4q0ppWSo=
-X-Google-Smtp-Source: ADUXVKJWaG0exlwcjgh+r/8oAEVjiSN2+vYfdaYCVsbKOsOAffE4QuQB4+D5YAgSR3cUPdP0z/A3zQ==
-X-Received: by 2002:a1c:459a:: with SMTP id l26-v6mr1083930wmi.95.1527235969120;
-        Fri, 25 May 2018 01:12:49 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=/56vA2K6Aut/LqCzhMFqmcPk+Swdjl2GfHnieisc6rE=;
+        b=JUHp5wMqba5AeBCL1CFIgZdBTVBY7PAtvDcMMwismynQBdup345sUrW2MW6Mp2q7Ba
+         j0e78PG73nFfyASCA3CIORXvo/0VQnojPmc+1wa2j7x5RCEPxl1QS++S1NAVeDYSu5d7
+         1MbTCzuPD+BJfdqQKLRkrCc+bXMMo3NqI/pkLf8aiyZQuFrF4uFjZMzKMnhRg+VtgIXY
+         rzcIwHfRF4HZy7NTznj0yZfSmWklAenuav7G2LSABwjImgvQNQLAc8aOEGjC/4vj2Ao6
+         /Pv/R9kUzww29dsegnuHfI2IqNiPE8oDy3/Mu/BaOZFUJr/KqT5VAhILTeZpuRrZ/BRt
+         Ifkg==
+X-Gm-Message-State: ALKqPweIj0VitLkNVNqtbCdnviiHjqEUO9hcocjXHFJxsANoWTVvcrrI
+        5LRCc3dcN0eeFzV8LYxfQnA=
+X-Google-Smtp-Source: ADUXVKLDPyYCFbVLbFVdrYuMe/IFXnpipxD+5lbEKi4omhSvcAhx8jn3PqHca0mATY6vDNeysk8O8A==
+X-Received: by 2002:a1c:eccb:: with SMTP id h72-v6mr863211wmi.157.1527236165758;
+        Fri, 25 May 2018 01:16:05 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id i26-v6sm5309568wmb.19.2018.05.25.01.12.47
+        by smtp.gmail.com with ESMTPSA id g127-v6sm5696562wmf.42.2018.05.25.01.16.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 25 May 2018 01:12:48 -0700 (PDT)
+        Fri, 25 May 2018 01:16:05 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] checkout & worktree: introduce checkout.implicitRemote
-References: <CAPig+cR59-OEDL7GDNZF2v7a-NOrUH2zC9EwDvuog8QLRtvKTA@mail.gmail.com>
-        <20180524194704.936-1-avarab@gmail.com>
-Date:   Fri, 25 May 2018 17:12:47 +0900
-In-Reply-To: <20180524194704.936-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 24 May 2018 19:47:04 +0000")
-Message-ID: <xmqqpo1knog0.fsf@gitster-ct.c.googlers.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v2] Use proper syntax for replaceables in command docs
+References: <alpine.LFD.2.21.1805241610030.7254@localhost.localdomain>
+Date:   Fri, 25 May 2018 17:16:04 +0900
+In-Reply-To: <alpine.LFD.2.21.1805241610030.7254@localhost.localdomain>
+        (Robert P. J. Day's message of "Thu, 24 May 2018 16:11:39 -0400
+        (EDT)")
+Message-ID: <xmqqlgc8noaj.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
 
-> +checkout.implicitRemote::
-> +	When you run 'git checkout <something>' and only have one
-> +	remote, it may implicitly fall back on checking out and
-> +	tracking e.g. 'origin/<something>'.
+> The standard for command documentation synopses appears to be:
+>
+>   [...] means optional
+>   <...> means replaceable
+>   [<...>] means both optional and replaceable
+>
+> So fix a number of doc pages that use incorrect variations of the
+> above.
+>
+> Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+>
+> ---
+>
+> diff --git a/Documentation/git-annotate.txt b/Documentation/git-annotate.txt
+> index 05fd482b7..e44a83133 100644
+> --- a/Documentation/git-annotate.txt
+> +++ b/Documentation/git-annotate.txt
+> @@ -8,7 +8,7 @@ git-annotate - Annotate file lines with commit information
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git annotate' [options] file [revision]
+> +'git annotate' [<options>] <file> [<revision>]
+> ...
+> -'git check-mailmap' [options] <contact>...
+> +'git check-mailmap' [<options>] <contact>...
 
-Yup, that is quite implicit.  It works without configuring anything,
-only as long as you have a single remote.  That is quite implicit.
+A pedant in me screams s/<options>/<option>.../ after seeing this
+line, but <options> appears _very_ _very_ often and extremely handy,
+compared to having to spell "<option>...".  So let's standardise
+the way this patch does.
 
-
-> This stops working as soon
-> +	as you have more than one remote with a '<something>'
-> +	reference. This setting allows for setting the name of a
-> +	preferred remote that should always win when it comes to
-> +	disambiguation. The typical use-case is to set this to
-> +	`origin`.
-
-So this feature and configuration feels more like an explicit one,
-to be used to affect how Git works when the implicit one does not
-work well.  I would have called it checkout.defaultRemote, as it
-would be a nonsense name to call it checkout.explicitRemote ;-).
-
-> +Currently this is used by linkgit:git-checkout[1] when 'git checkout
-> +<something>' will checkout the '<something>' branch on another remote,
-> +and by linkgit:git-worktree[1] when 'git worktree add' refers to a
-> +remote branch. This setting might be used for other checkout-like
-> +commands or functionality in the future.
-
-Hmph, that is an interesting direction.  You foresee that you'll
-have a single repository with multiple remotes to grab and share
-objects from different people working on the same project, and use
-multiple worktrees to work on different branches, yet you are happy
-to declare that each worktree is to work with one particular remote?
-
-We'd need a per-worktree config file to make it work, I guess, or
-a three-level checkout.$worktree_id.defaultRemote configuration
-variable, perhaps?
-
-In any case I can see how this will help those with multiple remotes
-(including me ;-).  Thanks for moving this topic forward.
-
+Thanks.
