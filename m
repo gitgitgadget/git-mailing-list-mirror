@@ -2,112 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57E421F42D
-	for <e@80x24.org>; Fri, 25 May 2018 19:28:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF11A1F42D
+	for <e@80x24.org>; Fri, 25 May 2018 19:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968101AbeEYT2i (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 15:28:38 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:46703 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967998AbeEYT21 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 15:28:27 -0400
-Received: by mail-wr0-f195.google.com with SMTP id x9-v6so10940728wrl.13
-        for <git@vger.kernel.org>; Fri, 25 May 2018 12:28:26 -0700 (PDT)
+        id S968241AbeEYTtt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 15:49:49 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:43955 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967858AbeEYTts (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 15:49:48 -0400
+Received: by mail-yw0-f194.google.com with SMTP id p14-v6so2074633ywe.10
+        for <git@vger.kernel.org>; Fri, 25 May 2018 12:49:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=jp/w/z9uc5U1Lr9pUGanxu5SIavv2MUg61oEZXFzSRg=;
-        b=kGiFJtXncFxW/jOuHNrbDlg/h6RNMZDJJjr2mopQ921qvNRFJOlL1ujSzoytbJMMeS
-         5vgzObVQmJY3pAyeAZWV4CnfovPDpokHrk4v5fGXv/qxDO2Oa+kllTNl7Dh9vTrqba/+
-         wxt2Wmv1BzA4MSF5kttKxpdYgPocjpXOUydTmCBRsCWa3PHqahAczXJryj5y0gi6iU5N
-         WHncCFLellZSsAZ2u7zCdlJdc1mIy2UxUDNpaAPc5OilJQLkn/Y/aH0lvrQE4q5YmXy5
-         V8bu0x7Qbmf2dsjPAB28V07364EvvjgV3TmQRzZlrKPpKPnkvBluPPA02PJUo8lOmCoJ
-         Cm/g==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=poHPlvqSc9UAVFhMflS4UKR9wEIolhnWrwnk7ldLo4Y=;
+        b=ae5GxDBH77m5iaqBJQgVxg8C+tQvmYl4Wz/WxHE+sXkijFcJQi49zTP632uXo29GFq
+         mp1uJH657tdY6/WD3N3G2o0u8y8gNPAqgErwajUoJieQg2T/JAGWEdCS51NqHlHgqdSn
+         XYgGh1uB2p3TvBS+qrEY8WMOBOeQQ96x4fQHXl29lMHnnB2T/eC76Z9uRJU0Qtj5+BAH
+         9CAKPGWgFvy+qJvDUaDx+5vkxR0qo7hOCX8cQZ/k9SNmcZEa8V+adXxQyO4CrQWdA58s
+         Tr8b34KKZ3hUdtFMUnfKV0ASxvzjuxustOQUBhY9wnY0KKW2hmWenz44fWN5KfmQdI8O
+         a8CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=jp/w/z9uc5U1Lr9pUGanxu5SIavv2MUg61oEZXFzSRg=;
-        b=iQauFeEFeituF3yxDghgQ9YEogUbKRn4GMtQ336FcXnTCQowaXtowGwDhgRfZxz48w
-         iBPDuMKjpQtzghq3oi9ZGDiSru+rOOMukEIIxo2gN+f6C4B0i2kDf6PUZn9lwZPPTDuK
-         CM1DkcGkni/FMGUfxsHHRzzx6MkmjLEZZO4ion+/s/5+++LsD6HEixD6bwXxl9K43j46
-         0FDFdPGG9A4CmE9sN44gUty2yoRC1xWcsHiHKOYEcFGXwhuKwwYvFeGcFjHJ5Etkixm3
-         Ku6gMil6hzDS5lsMXatv/QTR5X9b2PzfvwKUcQQvZDdzmCO7FlwL0WeEmsRioscZqicp
-         ltkQ==
-X-Gm-Message-State: ALKqPweUIU8FhXG8HhFeE26/uVf1XfTIyWlsteNDYKEVyngLxRPKbM1u
-        LRmysyvRFVtgn89JZwzFRe9SKjOQ
-X-Google-Smtp-Source: AB8JxZqe+VQPiHrFtD6Skc5Pj5c9OKkVmcTuXfaydWP+mRRO1d+R5h8nZwBQMeUBxOsrfDOH0mrYsQ==
-X-Received: by 2002:adf:9a54:: with SMTP id z78-v6mr3075863wrb.235.1527276505840;
-        Fri, 25 May 2018 12:28:25 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id a69-v6sm7276518wma.7.2018.05.25.12.28.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 25 May 2018 12:28:25 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 3/5] config doc: elaborate on what transfer.fsckObjects does
-Date:   Fri, 25 May 2018 19:28:09 +0000
-Message-Id: <20180525192811.25680-4-avarab@gmail.com>
-X-Mailer: git-send-email 2.17.0.290.gded63e768a
-In-Reply-To: <20180525192811.25680-1-avarab@gmail.com>
-References: <20180525192811.25680-1-avarab@gmail.com>
-In-Reply-To: <20180524193516.28713-1-avarab@gmail.com>
-References: <20180524193516.28713-1-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=poHPlvqSc9UAVFhMflS4UKR9wEIolhnWrwnk7ldLo4Y=;
+        b=eCqmjESfXyFuoAzuPD4NVCTkvGvCeFdtPj69PnaTxWMMs8zqeIAzKcYgqp+kBD/DnQ
+         RYdR8BXFBaiRe3cUoXh/IDMCb9xzGZgIZKe3KCfTtDXTzBeMHb9ZgoJJ/10vwb9mr+OW
+         +FJNEmlEm4KwjMKIuN2i3A5Vo9GZExEL/t8vuGhLLHb3WIaSYf4LcB46QEefsRM4VRQi
+         ywIxWZQ9zwqECqFXzCJ73Mu+yccvKtjQlXAK1YSsHB24ybbPK03IWy1wy2ZRCx4vEs5G
+         areBgWu436JsIaLpjX/AK/YRA/RoP00XpgQPzLRYXhlEike1N/mx4kE06AaSYH+4sGRB
+         uCLQ==
+X-Gm-Message-State: ALKqPwc7bIbuFyznNnmmayXAkmSGJpEc8i0QdjHmO9lI6SE7jhgNhDHE
+        DYJoDVQ1G0mGq++Gk7WZ9unzB0rNK4jbeDYbbBoIuA==
+X-Google-Smtp-Source: ADUXVKLs8e3SqMDctmkVLYY3QV//nsKtrjgYeWjg4ELJNaTXOsAhDsX11DpyH15uPpyEU340MC9Sp/DpcQSDj0bjPvE=
+X-Received: by 2002:a0d:fd84:: with SMTP id n126-v6mr2157361ywf.33.1527277787684;
+ Fri, 25 May 2018 12:49:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Fri, 25 May 2018 12:49:47 -0700 (PDT)
+In-Reply-To: <87lgc77wc7.fsf@evledraar.gmail.com>
+References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com> <87lgc77wc7.fsf@evledraar.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 25 May 2018 12:49:47 -0700
+Message-ID: <CAGZ79kae4k=uLx-oX5emxas4KrqObzQhzgir0coOSBzzpO8APw@mail.gmail.com>
+Subject: Re: sb/submodule-move-nested breaks t7411 under GIT_FSMONITOR_TEST
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Ben Peart <benpeart@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The existing documentation led the user to believe that all we were
-doing were basic reachability sanity checks, but that hasn't been true
-for a very long time. Update the description to match reality, and
-note the caveat that there's a quarantine for accepting pushes, but
-not for fetching.
+On Fri, May 25, 2018 at 5:28 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Thu, May 17 2018, Junio C Hamano wrote:
+>
+>> * sb/submodule-move-nested (2018-03-29) 6 commits
+>>   (merged to 'next' on 2018-04-25 at 86b177433a)
+>>  + submodule: fixup nested submodules after moving the submodule
+>>  + submodule-config: remove submodule_from_cache
+>>  + submodule-config: add repository argument to submodule_from_{name, pa=
+th}
+>>  + submodule-config: allow submodule_free to handle arbitrary repositori=
+es
+>>  + grep: remove "repo" arg from non-supporting funcs
+>>  + submodule.h: drop declaration of connect_work_tree_and_git_dir
+>>
+>>  Moving a submodule that itself has submodule in it with "git mv"
+>>  forgot to make necessary adjustment to the nested sub-submodules;
+>>  now the codepath learned to recurse into the submodules.
+>
+> I didn't spot this earlier because I don't test this a lot, but I've
+> bisected the following breakage down to da62f786d2 ("submodule: fixup
+> nested submodules after moving the submodule", 2018-03-28) (and manually
+> confirmed by reverting). On Linux both Debian & CentOS I get tests 3 and
+> 4 failing with:
+>
+>      GIT_FSMONITOR_TEST=3D$PWD/t7519/fsmonitor-all ./t7411-submodule-conf=
+ig.sh
+>
+> -v -x output follows:
+>
+> expecting success:
+>         mkdir submodule &&
+>         (cd submodule &&
+>                 git init &&
+>                 echo a >a &&
+>                 git add . &&
+>                 git commit -ma
+>         ) &&
+>         mkdir super &&
+>         (cd super &&
+>                 git init &&
+>                 git submodule add ../submodule &&
+>                 git submodule add ../submodule a &&
+>                 git commit -m "add as submodule and as a" &&
+>                 git mv a b &&
+>                 git commit -m "move a to b"
+>         )
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/config.txt | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+when you add a test_pause here and dump the
+state of the setup, then it can be observed that when the fsmonitor is acti=
+ve
+the last commit is different; without fsmonitor the moved gitlink and the c=
+hange
+to the .gitmodules file is part of the commit, i.e.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index af7311e73f..71b3805b4e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -3341,8 +3341,16 @@ transfer.fsckObjects::
- 	Defaults to false.
- +
- When set, the fetch or receive will abort in the case of a malformed
--object or a broken link. The result of an abort are only dangling
--objects.
-+object or a link to a nonexistent object. In addition, various other
-+issues are checked for, including legacy issues (see `fsck.<msg-id>`),
-+and potential security issues like the existence of a `.GIT` directory
-+(see the release notes for v2.2.1 for details). Other sanity and
-+security checks may be added in future releases.
-++
-+On the receiving side, failing fsckObjects will make those objects
-+unreachable, see "QUARANTINE ENVIRONMENT" in
-+linkgit:git-receive-pack[1]. On the fetch side, malformed objects will
-+instead be left unreferenced in the repository.
- 
- transfer.hideRefs::
- 	String(s) `receive-pack` and `upload-pack` use to decide which
--- 
-2.17.0.290.gded63e768a
+$ git -C super show
+        commit d3d90b70a01bd17d026f75a803c8b65f5903a7c0 (HEAD -> master)
+        Author: A U Thor <author@example.com>
+        Date:   Fri May 25 19:21:58 2018 +0000
 
+            move a to b
+
+        diff --git a/.gitmodules b/.gitmodules
+        index 3f4d474..6149210 100644
+        --- a/.gitmodules
+        +++ b/.gitmodules
+        @@ -2,5 +2,5 @@
+          path =3D submodule
+          url =3D ../submodule
+         [submodule "a"]
+        - path =3D a
+        + path =3D b
+          url =3D ../submodule
+        diff --git a/a b/b
+        similarity index 100%
+        rename from a
+        rename to b
+When running with the fsmonitor:
+
+$ git -C super show
+        commit 57022a92acf46f303498c045440ec099cbc35a2d (HEAD -> master)
+        Author: A U Thor <author@example.com>
+        Date:   Fri May 25 19:22:52 2018 +0000
+
+            move a to b
+
+        diff --git a/a b/b
+        similarity index 100%
+        rename from a
+        rename to b
+$ git -C super diff
+        diff --git a/.gitmodules b/.gitmodules
+        index 3f4d474..6149210 100644
+        --- a/.gitmodules
+        +++ b/.gitmodules
+        @@ -2,5 +2,5 @@
+          path =3D submodule
+          url =3D ../submodule
+         [submodule "a"]
+        - path =3D a
+        + path =3D b
+          url =3D ../submodule
+
+This hints at a problem with git commit;
+
+I tried adding test_tick, to unconfuse the fsmonitor, but that doesn't help=
+,
+digging further, the problem is in the git mv command, which fails to
+add the change in
+.gitmodules to the index.
+
+Adding the verbose flag to stage_updated_gitmodules() that is called by
+git-mv very late in the game, such that
+
+void stage_updated_gitmodules(struct index_state *istate)
+{
+    trace_printf("staging .gitmodules files");
+    if (add_file_to_index(istate, GITMODULES_FILE, ADD_CACHE_VERBOSE))
+        die(_("staging updated .gitmodules failed"));
+}
+
+We would get a message if the .gitmodules file is staged correctly, as
+add_file_to_index() that calls add_to_index that would print
+
+    if (verbose && !was_same)
+        printf("add '%s'\n", path);
+
+I could not see that message, so I suspect, that there is something
+racy.
+
+Will debug further.
