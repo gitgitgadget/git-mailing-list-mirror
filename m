@@ -2,75 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19A911F42D
-	for <e@80x24.org>; Fri, 25 May 2018 22:55:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15C161F42D
+	for <e@80x24.org>; Fri, 25 May 2018 23:04:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030665AbeEYWy6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 18:54:58 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:40973 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030538AbeEYWy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 18:54:57 -0400
-Received: by mail-yb0-f193.google.com with SMTP id l2-v6so2344465ybp.8
-        for <git@vger.kernel.org>; Fri, 25 May 2018 15:54:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Yn6u+rfuiEv5os18EluE8yevteEMPmtTVEtSZv+nd30=;
-        b=qKUL0PysXAIyFdqhk8Lb1/fQRJl47k++C/4RsqqLB60zSCowqiYtljSGQykkKsabtI
-         98ZkbIkk/+mtGA6Yb0KLE0ialp39H05Uk8N/JS+wO8mwfM/ft40WTNQFbsG8QrgGEbIY
-         lOgJswVDENluUsvbFvDB4lrwDsXt7xBbehd5KlpnT629xmGQhnajNM7EUBEYyqWMQTAh
-         02r7Dlqi92vWMABziHYvrA1NdP1A9G7rp+3FcmNbWj0XUAEyKYLkLq0q5820CMUO4XRw
-         vCT6f7ruZy6ItCymVqWiNeh1dMaPzJFV3+5I37EL9vmnPDi5/UBokgq/YO+fuhpAd7tI
-         xFIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Yn6u+rfuiEv5os18EluE8yevteEMPmtTVEtSZv+nd30=;
-        b=lHnJjeCmBMFb16njNzQ12awIJS26fDFmv1JAV1ij3MHOs1l4OMn5noUagalgkbLxqa
-         lmYbSFZYQi7bAwvRHLT1Q9hbE0RNFxHEvj3Pdrey7OEPi6dKj8GCliVOVir5c74EauSE
-         IRXD15jokdZlZU1jz5j4chDUzSzM4gSNVTt5BQIzhjs38RlPuZGPZLKIGSGUNO7HwvtO
-         iHeqT6xlIOAnFcpj7uRuQZCRGPLXLHWOcUh4Cxyy86ZP0fQ///QRMUzyeGyyzdHqw/zy
-         INXIEsntYLLnSzrqanPBwmTj8npbifO8eGxoQ4BSJzaJTUJqeU5Oa4JIF2HvPUGzRoj7
-         UbiQ==
-X-Gm-Message-State: ALKqPwc3Jj8OAsifs4qdlH+Avq7/raMOa+mbEehZQDKunbfwoD97CIVe
-        sCzQV1Cwmas019f8Gy5YF+/+OhAhqw0Z0W+RzWahHw==
-X-Google-Smtp-Source: AB8JxZqdiWTw30O+HqPXvPKX9maXtIxSL5VzMlshJ49VrXWMf7NMNvKaFcpmGpK/2K5mbcEY3z+Xov/jVT5skdbuYs0=
-X-Received: by 2002:a25:ae42:: with SMTP id g2-v6mr2336188ybe.292.1527288896516;
- Fri, 25 May 2018 15:54:56 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Fri, 25 May 2018 15:54:56 -0700 (PDT)
-In-Reply-To: <20180523144637.153551-2-jamill@microsoft.com>
-References: <20180417163400.3875-1-jamill@microsoft.com> <20180523144637.153551-1-jamill@microsoft.com>
- <20180523144637.153551-2-jamill@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 25 May 2018 15:54:56 -0700
-Message-ID: <CAGZ79kYxEVWeCqgVjFXAbnK8RkCfZuUvr1z+LJ1DOx=Ai1DTgg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] read-cache: teach refresh_cache_entry() to take istate
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "jonathantanmy@google.com" <jonathantanmy@google.com>,
-        "peartben@gmail.com" <peartben@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1030666AbeEYXEU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 19:04:20 -0400
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.227]:62886 "EHLO
+        cdptpa-cmomta03.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1030538AbeEYXET (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 25 May 2018 19:04:19 -0400
+X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 May 2018 19:04:19 EDT
+Received: from dell-suse.jhome.net ([70.123.58.237])
+        by cmsmtp with ESMTP
+        id MLgafsovclWPgMLgdfHB1l; Fri, 25 May 2018 22:59:51 +0000
+From:   Jeremy Linton <lintonrjeremy@gmail.com>
+To:     git@vger.kernel.org
+Cc:     jonathantanmy@google.com, gitster@pobox.com,
+        Jeremy Linton <lintonrjeremy@gmail.com>
+Subject: [PATCH] packfile: Correct zlib buffer handling
+Date:   Fri, 25 May 2018 17:56:01 -0500
+Message-Id: <20180525225601.22575-1-lintonrjeremy@gmail.com>
+X-Mailer: git-send-email 2.13.6
+X-CMAE-Envelope: MS4wfBmm3AXtJxcBvTHTJOV5efURqFiLjtxaqkU4L/m4UA+F9dxTR74uYiNPL/QzhGZA1O74dl3Ljac2gmD4WcPbMpbdST68syczrIY3l0ZI6aly52iY5Yms
+ 0mN7N4dRN9OZElOCoXnNs1slFTGy3uJkjSJfo9/7n2TcLF3j9fvm0ieI450EAKvLnr2/Fgg6MQ28Y+YeOuF+X36vLD+x9BHExQUWDWSn/hPrTk5qpE2ptZJa
+ QEcSnyEfqx5ZoPnU7rtgmg6apJaxhmYqpxOUelKGJZDm8q4ORdvxRWZAKOYQH+9b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 23, 2018 at 7:47 AM, Jameson Miller <jamill@microsoft.com> wrote:
-> Refactor refresh_cache_entry() to work on a specific index, instead of
-> implicitly using the_index. This is in preparation for making the
-> make_cache_entry function work on a specific index.
->
-> Signed-off-by: Jameson Miller <jamill@microsoft.com>
+The buffer being passed to zlib includes a null terminator that
+git needs to keep in place. unpack_compressed_entry() attempts to
+detect the case that the source buffer hasn't been fully consumed
+by checking to see if the destination buffer has been over consumed.
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
+This yields two problems, first a single byte overrun won't be detected
+properly because the Z_STREAM_END will then be set, but the null
+terminator will have been overwritten. The other problem is that
+more recent zlib patches have been poisoning the unconsumed portions
+of the buffers which also overwrites the null, while correctly
+returning length and status.
+
+Lets rely on the fact that the source buffer will only be fully
+consumed when the when the destination buffer is inflated to the
+correct size. We can do this by passing zlib the correct buffer size
+and properly checking the return status. The latter check actually
+already exists if the buffer size is correct.
+
+Signed-off-by: Jeremy Linton <lintonrjeremy@gmail.com>
+---
+ packfile.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/packfile.c b/packfile.c
+index 7c1a2519f..245eb3204 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1416,7 +1416,7 @@ static void *unpack_compressed_entry(struct packed_git *p,
+ 		return NULL;
+ 	memset(&stream, 0, sizeof(stream));
+ 	stream.next_out = buffer;
+-	stream.avail_out = size + 1;
++	stream.avail_out = size;
+ 
+ 	git_inflate_init(&stream);
+ 	do {
+@@ -1424,7 +1424,7 @@ static void *unpack_compressed_entry(struct packed_git *p,
+ 		stream.next_in = in;
+ 		st = git_inflate(&stream, Z_FINISH);
+ 		if (!stream.avail_out)
+-			break; /* the payload is larger than it should be */
++			break; /* done, st indicates if source fully consumed */
+ 		curpos += stream.next_in - in;
+ 	} while (st == Z_OK || st == Z_BUF_ERROR);
+ 	git_inflate_end(&stream);
+-- 
+2.13.6
+
