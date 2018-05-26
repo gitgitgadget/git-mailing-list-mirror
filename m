@@ -6,60 +6,58 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24A621F42D
-	for <e@80x24.org>; Sat, 26 May 2018 23:57:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0BBEF1F42D
+	for <e@80x24.org>; Sat, 26 May 2018 23:59:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032477AbeEZX52 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 May 2018 19:57:28 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35415 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032434AbeEZX51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 May 2018 19:57:27 -0400
-Received: by mail-wm0-f68.google.com with SMTP id o78-v6so23399220wmg.0
-        for <git@vger.kernel.org>; Sat, 26 May 2018 16:57:26 -0700 (PDT)
+        id S1032478AbeEZX7C (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 May 2018 19:59:02 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:53461 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751103AbeEZX7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 May 2018 19:59:02 -0400
+Received: by mail-wm0-f66.google.com with SMTP id a67-v6so22997193wmf.3
+        for <git@vger.kernel.org>; Sat, 26 May 2018 16:59:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=z1pJZX+HN+vzjtve5CH0gat+yR9pAVrLoKQ3DuHwm5U=;
-        b=DSGMPIAmh7U9IBNtf+2SX8lTrk3cga+0S12GSegwqVPSzMcdhNyVvyoNWBgX/qBQ+h
-         ZldXOdVr3R+8i+xg87U+O1JgjqSdxfU/fyS8B7MknliaeUfV3PI/iMtRd+9zSJ66NwXt
-         UPtVFpOJSrWl7snpYuAjSwap3LemKLuGRa9r//gBuMAU++M9geaGWGb8pjGmjarNrQNL
-         POIk3f+j0VL1hY3G5dL3nIDbGVxrSKT92n8zo3vIURqr7cpBwbKSM4CDghTnprGQa91e
-         02NJ7zTTewtgUnyhWibpDSqmPUJ1gEkYzA7aB2ErQrwLXD2FR3cuFWc+vN0qjzIxOuJX
-         AESg==
+        bh=Gdpx9/jOlJc6qzCpfcgEx9pJ3aL8olPCOaeSCgOOkSI=;
+        b=FUlLCtqlrmrKyYlVenDXyHzxe/z7EuzX3L2yjWz4TH+g9cH17eRzM95/gXPzUacXlS
+         47ALhtglZVMLPBHuC0yTEEMh0Av6D0x9FoKTGJY8W3Q1pxK742AQ/fg1Z0vbX4veWbKw
+         uODItkrNxpYrPYUFYScQPu6PteSbYHBL8tdB0VCPrxBh9+jpXSkwiFrZsa61gVzIW9KZ
+         Tecv5X6OoFqq+lJdwiR49WKVPyBUZXwR9mDP/KU8ND9fxx+UvLBacm+/ilk/tmYgTnrg
+         YYBYTShTB2WwJiDcOWzQTYfIQ/b5T7923ep+OSdHj2+TYq1FNR4swcv8Mgr0HTpONXKB
+         Bs+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=z1pJZX+HN+vzjtve5CH0gat+yR9pAVrLoKQ3DuHwm5U=;
-        b=cSuv/hZXYvhXs9+iu8Ajdav/q/pnO0GCeIqf2FoTbR869CL3E0/+5Km16Jv5fj7ei4
-         Nn/7JDViU2Uh7QPhPnv+CQwiTViyrVuVDx9LjVV6IHNZle/IlLVPCTbAUhCv03ACc6Ih
-         kIcfXHvyNDb4bKGtpdJ5iIImz34IRcHsPreEMFjT1MU4G9rMHdZ8hS9LCPIkaCXDoGo1
-         m9Y6x/00cWQE84eIxbbprHjqBYkyaHV3RlQRek2EiNNMUJ1Vt2LJMwB6xPXVm4oWZS/R
-         ojH72FKnn96O90OjuKYiOrRv9LU5+iTe0+id31lrnOoNoEjxxIjCsKK2ITYprOxRKfnz
-         dDXg==
-X-Gm-Message-State: ALKqPwecRf9AmzuKgPHegiZf0V/ulZgsMqRbRDKq9PReJ1s5yipPqPkr
-        9s7hiAlBHZXVAb1DWYm/4AU=
-X-Google-Smtp-Source: ADUXVKKN6tslBBch56wKETcAhlcvf7vyS41M+frfXSlKBCW2hh68lBvSGvwY5LrQRxXkw/9eWJWQcQ==
-X-Received: by 2002:a1c:d106:: with SMTP id i6-v6mr678858wmg.1.1527379045602;
-        Sat, 26 May 2018 16:57:25 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x130-v6sm14383921wme.24.2018.05.26.16.57.24
+        bh=Gdpx9/jOlJc6qzCpfcgEx9pJ3aL8olPCOaeSCgOOkSI=;
+        b=WR8PxVYrg6MfdteMaiLZIhsF3NN0RlG4ZMiSQSiwBHkHxyc8CbbDNedtVyhTD0WnDK
+         F+tKwv33/V6xvtLsVVPw2gZ6e9ozkomB1LrxfhmW3jb3D/g608ifuTKpswbVI69YDthZ
+         RpoPN+zJTrXA8VfrzoYEuF7R957KDNfR6kV9GK9hTo+u99n9agC4NqO9fbWMItgpNc9v
+         q9CdfiC9/dWcguRqEqYD3qUau9t2OH313BE4vFg8c5p9OzsQK1kqn+bisu8+EzAQa+Ap
+         YhiZTsM7bbRglTkkNxjFWqDDRpe4/+Z4KHlVovs8xv5KSK2zYWefALOi42lvEmMwxJjU
+         JY5g==
+X-Gm-Message-State: ALKqPwdBdkVC77LCddwu4PgnhYiKXX4CrO/RUvp6j3TqYMG0ONVuMlVc
+        UOqXKMKjbVN/aU7xb2Uwxzw=
+X-Google-Smtp-Source: ADUXVKIjmxQ4ElMt0lKMrxAv0vHiMZWaswjDWfYnD/U1WXQM9LiEd0xjRwhEkA6uTxtnuZ05Rc2Z5g==
+X-Received: by 2002:a1c:d287:: with SMTP id j129-v6mr591589wmg.106.1527379140750;
+        Sat, 26 May 2018 16:59:00 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id d83-v6sm15004804wmh.16.2018.05.26.16.59.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 26 May 2018 16:57:24 -0700 (PDT)
+        Sat, 26 May 2018 16:59:00 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jeremy Linton <lintonrjeremy@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] packfile: Correct zlib buffer handling
-References: <20180525225601.22575-1-lintonrjeremy@gmail.com>
-        <CACsJy8C4zNZAe6Vw-mz8r8HueYdQKs4ZhMOQYX0v7ypfHdmShg@mail.gmail.com>
-Date:   Sun, 27 May 2018 08:57:24 +0900
-In-Reply-To: <CACsJy8C4zNZAe6Vw-mz8r8HueYdQKs4ZhMOQYX0v7ypfHdmShg@mail.gmail.com>
-        (Duy Nguyen's message of "Sat, 26 May 2018 07:51:55 +0200")
-Message-ID: <xmqq8t86m0m3.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, szeder.dev@gmail.com
+Subject: Re: [PATCH 2/5] t6036, t6042: use test_line_count instead of wc -l
+References: <CABPp-BEcTKaPPUOVqTRUAW+LBBySCK0dgx1J66hYB30yMasK_Q@mail.gmail.com/>
+        <20180526010944.9975-1-newren@gmail.com>
+Date:   Sun, 27 May 2018 08:58:59 +0900
+In-Reply-To: <20180526010944.9975-1-newren@gmail.com> (Elijah Newren's message
+        of "Fri, 25 May 2018 18:09:44 -0700")
+Message-ID: <xmqq4lium0jg.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,20 +66,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> On Sat, May 26, 2018 at 12:56 AM, Jeremy Linton <lintonrjeremy@gmail.com> wrote:
->> @@ -1416,7 +1416,7 @@ static void *unpack_compressed_entry(struct packed_git *p,
->>                 return NULL;
->>         memset(&stream, 0, sizeof(stream));
->>         stream.next_out = buffer;
->> -       stream.avail_out = size + 1;
->> +       stream.avail_out = size;
+>> I'd expect that a reader of the commit who cares enough to bother to
+>> wonder by looking at the patch and seeing that 2 became 3 would know
+>> why already.  And a reader of the resulting file would not know that
+>> the 3 used to be 2, and won't be helped by "we used to count to 2,
+>> now we have 'out' also counted" that much, especially in the commit
+>> log message.  What would help the latter would be to name which
+>> three paths we expect to see in the comment (or test against the
+>> exact list of paths, instead of using test_line_count).
+>>
+>>> An alternative to consider would be to add a .gitignore file in the
+>>> initial commit to ignore 'out', then the number of untracked files
+>>> don't have to be adjusted.
+>>
+>> I think that is a preferred solution that we've used in ls-files and
+>> status tests successfully.
 >
-> You may want to include in your commit message a reference to
-> 39eea7bdd9 (Fix incorrect error check while reading deflated pack data
-> - 2009-10-21) which adds this plus one with a fascinating story
-> behind.
+> ...except that if we add a .gitignore to each initial commit (we use
+> test_create_repo for nearly every test to keep them separable meaning
+> we'd have to do this many times), then four lines above we have to
+> adjust the number of expected tracked files.  And, for it to work,
+> we'd have to add an --exclude-standard flag to ls-files -o.
 
-A bit puzzled---are you saying that this recent patch breaks the old
-fix and must be done in some other way?
+Yeah, unless the original planned to use the .gitignore mechanism,
+converting it to use it now will become noisy.
