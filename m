@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69B021F42D
-	for <e@80x24.org>; Sat, 26 May 2018 13:56:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6A1E1F42D
+	for <e@80x24.org>; Sat, 26 May 2018 13:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754760AbeEZN4D (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 May 2018 09:56:03 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:54792 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754312AbeEZNzt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 May 2018 09:55:49 -0400
-Received: by mail-wm0-f67.google.com with SMTP id f6-v6so21131233wmc.4
-        for <git@vger.kernel.org>; Sat, 26 May 2018 06:55:49 -0700 (PDT)
+        id S1754512AbeEZNzq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 May 2018 09:55:46 -0400
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:34476 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752598AbeEZNzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 May 2018 09:55:41 -0400
+Received: by mail-wr0-f173.google.com with SMTP id j1-v6so13545740wrm.1
+        for <git@vger.kernel.org>; Sat, 26 May 2018 06:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WHt8DZvC+tHqfTVf1TVfwHJ2qMqjyYMT8m8wjZSIwEU=;
-        b=uoTTLuhWSAhAccbZedbEDGMQ5gT6Xb1VuFKuY7SmXmD0pyUkEUPiVG/SCYF4yKxMZQ
-         /9aZL5zpTG31mJSZBvQ86cg7aCT6xTzf+S7wFtOzopJzSNK5pE5aArGgEweV9yCxHdn/
-         Lp7P2fEg4JTzq+u+Fdepbc4YhHRNFc2gKfTPJjIWgi5KFkiQfr56C3Q31MZ1tj2sOgyZ
-         5nG6k7xtxGDrBYEpH0jehTamBeH/Fpj/L2RBuK2hbu1Q96g7/Y/+EwrDzyhJdFi78Z85
-         TMlmqhWZH4gcH3hriXnxBTO4KFeM6/AoYYzFJ6vxV+v5ffIa8ZOOXUu8U9PWm6syxrVm
-         E5GQ==
+        bh=78B4EFQ4o0DoJb1fOyPZ37XwZP7XvpCy7yQmEnSnwxo=;
+        b=ZeC7l4zbSod67f27yCfGdoB4efTkwEhuuRgGKoGRDKqiJRTj7Z1rkQfNUTC6l11sgE
+         DrZq1fOOUq7fTBaHCMR5Ww14pdF4dY71pa8IzgxnMcfmWNU5j392WDJxwSyeD/bntNu7
+         9IXG8z3KKP9xpTv7XkMS2Hot9EEQj39FatJ+QUNrroMaPbMuuK1VxU8eElrWuRxmF43P
+         SP2h2AZlcaiZTFrKJikdPrr5V8nj2fjWlsKPJQU14upb6sKAEXDgcZlqfN+oIQdq/T72
+         IMJF3Y7xUUir2S6DRiplt9hjZgKoFLRUwZp2Fqfn8nfkQ6UixxW8uIlabAnu5/hEJZ8G
+         Z1XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WHt8DZvC+tHqfTVf1TVfwHJ2qMqjyYMT8m8wjZSIwEU=;
-        b=PXMbZ18VBM9PNG4A2rCa5MM3K/+TOhewVSR2ly3ZDWwQmBI3nPpjZRi+Bdrg05y4pG
-         ZnNVfA/Lqp2ymiMocLTi34vYS64ZWG9bRa8D/zCmZsRMWqMv0ecKmsO7IQ6ThtalKKGT
-         bEyuj6ZraDAChFZlfkWVKbVKPPlqMoldiHuprgPluKrU/r59KMDD41NA8B5HF+CI/Ohu
-         KC+qyRNG8hBzNmrbeFVNwV7N1rOB7iAsJNcgFpe3OlTkmNsaYZLN9Jt6FbovMVidcLRK
-         N9ZHZY017VhJRzueTVPEZ4g3RBqVBkxJgypJh8itJj5svp6FpZBXyslc2wLaQwGFy8pC
-         5rKw==
-X-Gm-Message-State: ALKqPwcnlDMCU3HVIoEHDYbdl6lz42zj4jM9mymNmmZ34XjYl0BnZ1VJ
-        6jFWtiM+/gZuP8+H/7htmMc=
-X-Google-Smtp-Source: AB8JxZrlGmQwZJ09TFey88oEksLID+Ds4sOksSwrTL4pRqjqPSsTprepQc7dHXZPAhZyT11wDQUlnw==
-X-Received: by 2002:a2e:3613:: with SMTP id d19-v6mr4202117lja.100.1527342948286;
-        Sat, 26 May 2018 06:55:48 -0700 (PDT)
+        bh=78B4EFQ4o0DoJb1fOyPZ37XwZP7XvpCy7yQmEnSnwxo=;
+        b=i8/N5sfYl0DFDcogH1nFP+IYblXZY+2y4ueyJpwckFoH346CgwZ4j0moxz3YcYOniN
+         16Up9NZn/YfS1EuopBfZaLBNK7hbBLkygMNSso0RLlYNYdy+H4kmJaDVacWUMLC0WRfW
+         9/b7tCWNSIYy6X3Cx15/4O2Edp2Q2VDUutnKTS8q/k6rzie7bF78jrP3u1KzXrpguDF3
+         3HjDqmD7Sj/nNk/l37F7tycoPVeKqRLBc+Pq/Mbpv6cbUn/HfnxbI6XpllqBiWtMeB3S
+         YTOfzQiq0v6jEiQXnIvKuuBpY8+hc1u4lkhu1RL0xt01eP6X7dHCjaTGyrhaoKRyXFWe
+         fFNQ==
+X-Gm-Message-State: ALKqPwcXiDSXQZXYCYFKk5cFvb8JkhQzlDSE+3CzSkooierS01aHsdyC
+        JaKle3cjrRjjvfONWNTrE7M=
+X-Google-Smtp-Source: ADUXVKL2sv1S1cM3LUuIoCEd7uidF+oUdhCsf5HsWkeJ14RKt/HjRqJuvTd8EO/bO9KIGG3iJ8bC2g==
+X-Received: by 2002:a19:e497:: with SMTP id x23-v6mr3705877lfi.40.1527342940462;
+        Sat, 26 May 2018 06:55:40 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id z4-v6sm4941431lji.14.2018.05.26.06.55.46
+        by smtp.gmail.com with ESMTPSA id z4-v6sm4941431lji.14.2018.05.26.06.55.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 26 May 2018 06:55:47 -0700 (PDT)
+        Sat, 26 May 2018 06:55:39 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
@@ -56,9 +56,9 @@ Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
         Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 08/11] completion: drop the hard coded list of config vars
-Date:   Sat, 26 May 2018 15:55:28 +0200
-Message-Id: <20180526135531.4516-9-pclouds@gmail.com>
+Subject: [PATCH v2 02/11] grep: keep all colors in an array
+Date:   Sat, 26 May 2018 15:55:22 +0200
+Message-Id: <20180526135531.4516-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180526135531.4516-1-pclouds@gmail.com>
 References: <20180510141927.23590-1-pclouds@gmail.com>
@@ -71,465 +71,266 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The new help option --config-for-completion is a machine friendlier
-version of --config where all the placeholders and wildcards are
-dropped, leaving only the good, completable prefixes for
-git-completion.bash to consume.
+This is more inline with how we handle color slots in other code. It
+also allows us to get the list of configurable color slots later.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/help.c                         |   9 +-
- contrib/completion/git-completion.bash | 335 +------------------------
- help.c                                 |  34 ++-
- help.h                                 |   2 +-
- 4 files changed, 49 insertions(+), 331 deletions(-)
+ grep.c | 106 ++++++++++++++++++++++++++-------------------------------
+ grep.h |  21 +++++++-----
+ 2 files changed, 62 insertions(+), 65 deletions(-)
 
-diff --git a/builtin/help.c b/builtin/help.c
-index ccb206e1d4..8d4f6dd301 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -47,6 +47,7 @@ static struct option builtin_help_options[] = {
- 	OPT_HIDDEN_BOOL(0, "exclude-guides", &exclude_guides, N_("exclude guides")),
- 	OPT_BOOL('g', "guides", &show_guides, N_("print list of useful guides")),
- 	OPT_BOOL('c', "config", &show_config, N_("print all configuration variable names")),
-+	OPT_SET_INT_F(0, "config-for-completion", &show_config, "", 2, PARSE_OPT_HIDDEN),
- 	OPT_SET_INT('m', "man", &help_format, N_("show man page"), HELP_FORMAT_MAN),
- 	OPT_SET_INT('w', "web", &help_format, N_("show manual in web browser"),
- 			HELP_FORMAT_WEB),
-@@ -447,8 +448,14 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 	}
+diff --git a/grep.c b/grep.c
+index 45ec7e636c..d94e2c4aeb 100644
+--- a/grep.c
++++ b/grep.c
+@@ -13,6 +13,17 @@ static int grep_source_is_binary(struct grep_source *gs);
  
- 	if (show_config) {
-+		int for_human = show_config == 1;
-+
-+		if (!for_human) {
-+			list_config_help(for_human);
-+			return 0;
-+		}
- 		setup_pager();
--		list_config_help();
-+		list_config_help(for_human);
- 		printf("\n%s\n", _("'git help config' for more information"));
- 		return 0;
- 	}
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 12814e9bbf..1b0c30ed9a 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2142,6 +2142,13 @@ __git_config_get_set_variables ()
- 	__git config $config_file --name-only --list
- }
+ static struct grep_opt grep_defaults;
  
-+__git_config_vars=
-+__git_compute_config_vars ()
-+{
-+	test -n "$__git_config_vars" ||
-+	__git_config_vars="$(git help --config-for-completion | sort | uniq)"
-+}
++static const char *color_grep_slots[] = {
++	[GREP_COLOR_CONTEXT]	    = "context",
++	[GREP_COLOR_FILENAME]	    = "filename",
++	[GREP_COLOR_FUNCTION]	    = "function",
++	[GREP_COLOR_LINENO]	    = "lineNumber",
++	[GREP_COLOR_MATCH_CONTEXT]  = "matchContext",
++	[GREP_COLOR_MATCH_SELECTED] = "matchSelected",
++	[GREP_COLOR_SELECTED]	    = "selected",
++	[GREP_COLOR_SEP]	    = "separator",
++};
 +
- _git_config ()
+ static void std_output(struct grep_opt *opt, const void *buf, size_t size)
  {
- 	case "$prev" in
-@@ -2300,332 +2307,8 @@ _git_config ()
- 		return
- 		;;
- 	esac
--	__gitcomp "
--		add.ignoreErrors
--		advice.amWorkDir
--		advice.commitBeforeMerge
--		advice.detachedHead
--		advice.implicitIdentity
--		advice.pushAlreadyExists
--		advice.pushFetchFirst
--		advice.pushNeedsForce
--		advice.pushNonFFCurrent
--		advice.pushNonFFMatching
--		advice.pushUpdateRejected
--		advice.resolveConflict
--		advice.rmHints
--		advice.statusHints
--		advice.statusUoption
--		advice.ignoredHook
--		alias.
--		am.keepcr
--		am.threeWay
--		apply.ignorewhitespace
--		apply.whitespace
--		branch.autosetupmerge
--		branch.autosetuprebase
--		browser.
--		clean.requireForce
--		color.branch
--		color.branch.current
--		color.branch.local
--		color.branch.plain
--		color.branch.remote
--		color.decorate.HEAD
--		color.decorate.branch
--		color.decorate.remoteBranch
--		color.decorate.stash
--		color.decorate.tag
--		color.diff
--		color.diff.commit
--		color.diff.frag
--		color.diff.func
--		color.diff.meta
--		color.diff.new
--		color.diff.old
--		color.diff.plain
--		color.diff.whitespace
--		color.grep
--		color.grep.context
--		color.grep.filename
--		color.grep.function
--		color.grep.linenumber
--		color.grep.match
--		color.grep.selected
--		color.grep.separator
--		color.interactive
--		color.interactive.error
--		color.interactive.header
--		color.interactive.help
--		color.interactive.prompt
--		color.pager
--		color.showbranch
--		color.status
--		color.status.added
--		color.status.changed
--		color.status.header
--		color.status.localBranch
--		color.status.nobranch
--		color.status.remoteBranch
--		color.status.unmerged
--		color.status.untracked
--		color.status.updated
--		color.ui
--		commit.cleanup
--		commit.gpgSign
--		commit.status
--		commit.template
--		commit.verbose
--		core.abbrev
--		core.askpass
--		core.attributesfile
--		core.autocrlf
--		core.bare
--		core.bigFileThreshold
--		core.checkStat
--		core.commentChar
--		core.commitGraph
--		core.compression
--		core.createObject
--		core.deltaBaseCacheLimit
--		core.editor
--		core.eol
--		core.excludesfile
--		core.fileMode
--		core.fsyncobjectfiles
--		core.gitProxy
--		core.hideDotFiles
--		core.hooksPath
--		core.ignoreStat
--		core.ignorecase
--		core.logAllRefUpdates
--		core.loosecompression
--		core.notesRef
--		core.packedGitLimit
--		core.packedGitWindowSize
--		core.packedRefsTimeout
--		core.pager
--		core.precomposeUnicode
--		core.preferSymlinkRefs
--		core.preloadindex
--		core.protectHFS
--		core.protectNTFS
--		core.quotepath
--		core.repositoryFormatVersion
--		core.safecrlf
--		core.sharedRepository
--		core.sparseCheckout
--		core.splitIndex
--		core.sshCommand
--		core.symlinks
--		core.trustctime
--		core.untrackedCache
--		core.warnAmbiguousRefs
--		core.whitespace
--		core.worktree
--		credential.helper
--		credential.useHttpPath
--		credential.username
--		credentialCache.ignoreSIGHUP
--		diff.autorefreshindex
--		diff.external
--		diff.ignoreSubmodules
--		diff.mnemonicprefix
--		diff.noprefix
--		diff.renameLimit
--		diff.renames
--		diff.statGraphWidth
--		diff.submodule
--		diff.suppressBlankEmpty
--		diff.tool
--		diff.wordRegex
--		diff.algorithm
--		difftool.
--		difftool.prompt
--		fetch.recurseSubmodules
--		fetch.unpackLimit
--		format.attach
--		format.cc
--		format.coverLetter
--		format.from
--		format.headers
--		format.numbered
--		format.pretty
--		format.signature
--		format.signoff
--		format.subjectprefix
--		format.suffix
--		format.thread
--		format.to
--		gc.
--		gc.aggressiveDepth
--		gc.aggressiveWindow
--		gc.auto
--		gc.autoDetach
--		gc.autopacklimit
--		gc.logExpiry
--		gc.packrefs
--		gc.pruneexpire
--		gc.reflogexpire
--		gc.reflogexpireunreachable
--		gc.rerereresolved
--		gc.rerereunresolved
--		gc.worktreePruneExpire
--		gitcvs.allbinary
--		gitcvs.commitmsgannotation
--		gitcvs.dbTableNamePrefix
--		gitcvs.dbdriver
--		gitcvs.dbname
--		gitcvs.dbpass
--		gitcvs.dbuser
--		gitcvs.enabled
--		gitcvs.logfile
--		gitcvs.usecrlfattr
--		guitool.
--		gui.blamehistoryctx
--		gui.commitmsgwidth
--		gui.copyblamethreshold
--		gui.diffcontext
--		gui.encoding
--		gui.fastcopyblame
--		gui.matchtrackingbranch
--		gui.newbranchtemplate
--		gui.pruneduringfetch
--		gui.spellingdictionary
--		gui.trustmtime
--		help.autocorrect
--		help.browser
--		help.format
--		http.lowSpeedLimit
--		http.lowSpeedTime
--		http.maxRequests
--		http.minSessions
--		http.noEPSV
--		http.postBuffer
--		http.proxy
--		http.sslCipherList
--		http.sslVersion
--		http.sslCAInfo
--		http.sslCAPath
--		http.sslCert
--		http.sslCertPasswordProtected
--		http.sslKey
--		http.sslVerify
--		http.useragent
--		i18n.commitEncoding
--		i18n.logOutputEncoding
--		imap.authMethod
--		imap.folder
--		imap.host
--		imap.pass
--		imap.port
--		imap.preformattedHTML
--		imap.sslverify
--		imap.tunnel
--		imap.user
--		init.templatedir
--		instaweb.browser
--		instaweb.httpd
--		instaweb.local
--		instaweb.modulepath
--		instaweb.port
--		interactive.singlekey
--		log.date
--		log.decorate
--		log.showroot
--		mailmap.file
--		man.
--		man.viewer
--		merge.
--		merge.conflictstyle
--		merge.log
--		merge.renameLimit
--		merge.renormalize
--		merge.stat
--		merge.tool
--		merge.verbosity
--		mergetool.
--		mergetool.keepBackup
--		mergetool.keepTemporaries
--		mergetool.prompt
--		notes.displayRef
--		notes.rewrite.
--		notes.rewrite.amend
--		notes.rewrite.rebase
--		notes.rewriteMode
--		notes.rewriteRef
--		pack.compression
--		pack.deltaCacheLimit
--		pack.deltaCacheSize
--		pack.depth
--		pack.indexVersion
--		pack.packSizeLimit
--		pack.threads
--		pack.window
--		pack.windowMemory
--		pager.
--		pretty.
--		pull.octopus
--		pull.twohead
--		push.default
--		push.followTags
--		rebase.autosquash
--		rebase.stat
--		receive.autogc
--		receive.denyCurrentBranch
--		receive.denyDeleteCurrent
--		receive.denyDeletes
--		receive.denyNonFastForwards
--		receive.fsckObjects
--		receive.unpackLimit
--		receive.updateserverinfo
--		remote.pushdefault
--		remotes.
--		repack.usedeltabaseoffset
--		rerere.autoupdate
--		rerere.enabled
--		sendemail.
--		sendemail.aliasesfile
--		sendemail.aliasfiletype
--		sendemail.bcc
--		sendemail.cc
--		sendemail.cccmd
--		sendemail.chainreplyto
--		sendemail.confirm
--		sendemail.envelopesender
--		sendemail.from
--		sendemail.identity
--		sendemail.multiedit
--		sendemail.signedoffbycc
--		sendemail.smtpdomain
--		sendemail.smtpencryption
--		sendemail.smtppass
--		sendemail.smtpserver
--		sendemail.smtpserveroption
--		sendemail.smtpserverport
--		sendemail.smtpuser
--		sendemail.suppresscc
--		sendemail.suppressfrom
--		sendemail.thread
--		sendemail.to
--		sendemail.tocmd
--		sendemail.validate
--		sendemail.smtpbatchsize
--		sendemail.smtprelogindelay
--		showbranch.default
--		status.relativePaths
--		status.showUntrackedFiles
--		status.submodulesummary
--		submodule.
--		tar.umask
--		transfer.unpackLimit
--		url.
--		user.email
--		user.name
--		user.signingkey
--		web.browser
--		branch. remote.
--	"
-+	__git_compute_config_vars
-+	__gitcomp "$__git_config_vars"
+ 	fwrite(buf, size, 1, stdout);
+@@ -42,14 +53,14 @@ void init_grep_defaults(void)
+ 	opt->pathname = 1;
+ 	opt->max_depth = -1;
+ 	opt->pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED;
+-	color_set(opt->color_context, "");
+-	color_set(opt->color_filename, "");
+-	color_set(opt->color_function, "");
+-	color_set(opt->color_lineno, "");
+-	color_set(opt->color_match_context, GIT_COLOR_BOLD_RED);
+-	color_set(opt->color_match_selected, GIT_COLOR_BOLD_RED);
+-	color_set(opt->color_selected, "");
+-	color_set(opt->color_sep, GIT_COLOR_CYAN);
++	color_set(opt->colors[GREP_COLOR_CONTEXT], "");
++	color_set(opt->colors[GREP_COLOR_FILENAME], "");
++	color_set(opt->colors[GREP_COLOR_FUNCTION], "");
++	color_set(opt->colors[GREP_COLOR_LINENO], "");
++	color_set(opt->colors[GREP_COLOR_MATCH_CONTEXT], GIT_COLOR_BOLD_RED);
++	color_set(opt->colors[GREP_COLOR_MATCH_SELECTED], GIT_COLOR_BOLD_RED);
++	color_set(opt->colors[GREP_COLOR_SELECTED], "");
++	color_set(opt->colors[GREP_COLOR_SEP], GIT_COLOR_CYAN);
+ 	opt->color = -1;
+ 	opt->output = std_output;
+ }
+@@ -76,7 +87,7 @@ static int parse_pattern_type_arg(const char *opt, const char *arg)
+ int grep_config(const char *var, const char *value, void *cb)
+ {
+ 	struct grep_opt *opt = &grep_defaults;
+-	char *color = NULL;
++	const char *slot;
+ 
+ 	if (userdiff_config(var, value) < 0)
+ 		return -1;
+@@ -103,32 +114,18 @@ int grep_config(const char *var, const char *value, void *cb)
+ 
+ 	if (!strcmp(var, "color.grep"))
+ 		opt->color = git_config_colorbool(var, value);
+-	else if (!strcmp(var, "color.grep.context"))
+-		color = opt->color_context;
+-	else if (!strcmp(var, "color.grep.filename"))
+-		color = opt->color_filename;
+-	else if (!strcmp(var, "color.grep.function"))
+-		color = opt->color_function;
+-	else if (!strcmp(var, "color.grep.linenumber"))
+-		color = opt->color_lineno;
+-	else if (!strcmp(var, "color.grep.matchcontext"))
+-		color = opt->color_match_context;
+-	else if (!strcmp(var, "color.grep.matchselected"))
+-		color = opt->color_match_selected;
+-	else if (!strcmp(var, "color.grep.selected"))
+-		color = opt->color_selected;
+-	else if (!strcmp(var, "color.grep.separator"))
+-		color = opt->color_sep;
+-	else if (!strcmp(var, "color.grep.match")) {
+-		int rc = 0;
+-		if (!value)
+-			return config_error_nonbool(var);
+-		rc |= color_parse(value, opt->color_match_context);
+-		rc |= color_parse(value, opt->color_match_selected);
+-		return rc;
+-	}
+-
+-	if (color) {
++	if (!strcmp(var, "color.grep.match")) {
++		if (grep_config("color.grep.matchcontext", value, cb) < 0)
++			return -1;
++		if (grep_config("color.grep.matchselected", value, cb) < 0)
++			return -1;
++	} else if (skip_prefix(var, "color.grep.", &slot)) {
++		int i = LOOKUP_CONFIG(color_grep_slots, slot);
++		char *color;
++
++		if (i < 0)
++			return -1;
++		color = opt->colors[i];
+ 		if (!value)
+ 			return config_error_nonbool(var);
+ 		return color_parse(value, color);
+@@ -144,6 +141,7 @@ int grep_config(const char *var, const char *value, void *cb)
+ void grep_init(struct grep_opt *opt, const char *prefix)
+ {
+ 	struct grep_opt *def = &grep_defaults;
++	int i;
+ 
+ 	memset(opt, 0, sizeof(*opt));
+ 	opt->prefix = prefix;
+@@ -160,14 +158,8 @@ void grep_init(struct grep_opt *opt, const char *prefix)
+ 	opt->relative = def->relative;
+ 	opt->output = def->output;
+ 
+-	color_set(opt->color_context, def->color_context);
+-	color_set(opt->color_filename, def->color_filename);
+-	color_set(opt->color_function, def->color_function);
+-	color_set(opt->color_lineno, def->color_lineno);
+-	color_set(opt->color_match_context, def->color_match_context);
+-	color_set(opt->color_match_selected, def->color_match_selected);
+-	color_set(opt->color_selected, def->color_selected);
+-	color_set(opt->color_sep, def->color_sep);
++	for (i = 0; i < NR_GREP_COLORS; i++)
++		color_set(opt->colors[i], def->colors[i]);
  }
  
- _git_remote ()
-diff --git a/help.c b/help.c
-index f078dfebad..3ebf0568db 100644
---- a/help.c
-+++ b/help.c
-@@ -416,7 +416,7 @@ struct slot_expansion {
- 	int found;
+ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, struct grep_opt *opt)
+@@ -1098,12 +1090,12 @@ static void output_sep(struct grep_opt *opt, char sign)
+ 	if (opt->null_following_name)
+ 		opt->output(opt, "\0", 1);
+ 	else
+-		output_color(opt, &sign, 1, opt->color_sep);
++		output_color(opt, &sign, 1, opt->colors[GREP_COLOR_SEP]);
+ }
+ 
+ static void show_name(struct grep_opt *opt, const char *name)
+ {
+-	output_color(opt, name, strlen(name), opt->color_filename);
++	output_color(opt, name, strlen(name), opt->colors[GREP_COLOR_FILENAME]);
+ 	opt->output(opt, opt->null_following_name ? "\0" : "\n", 1);
+ }
+ 
+@@ -1370,28 +1362,28 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 	} else if (opt->pre_context || opt->post_context || opt->funcbody) {
+ 		if (opt->last_shown == 0) {
+ 			if (opt->show_hunk_mark) {
+-				output_color(opt, "--", 2, opt->color_sep);
++				output_color(opt, "--", 2, opt->colors[GREP_COLOR_SEP]);
+ 				opt->output(opt, "\n", 1);
+ 			}
+ 		} else if (lno > opt->last_shown + 1) {
+-			output_color(opt, "--", 2, opt->color_sep);
++			output_color(opt, "--", 2, opt->colors[GREP_COLOR_SEP]);
+ 			opt->output(opt, "\n", 1);
+ 		}
+ 	}
+ 	if (opt->heading && opt->last_shown == 0) {
+-		output_color(opt, name, strlen(name), opt->color_filename);
++		output_color(opt, name, strlen(name), opt->colors[GREP_COLOR_FILENAME]);
+ 		opt->output(opt, "\n", 1);
+ 	}
+ 	opt->last_shown = lno;
+ 
+ 	if (!opt->heading && opt->pathname) {
+-		output_color(opt, name, strlen(name), opt->color_filename);
++		output_color(opt, name, strlen(name), opt->colors[GREP_COLOR_FILENAME]);
+ 		output_sep(opt, sign);
+ 	}
+ 	if (opt->linenum) {
+ 		char buf[32];
+ 		xsnprintf(buf, sizeof(buf), "%d", lno);
+-		output_color(opt, buf, strlen(buf), opt->color_lineno);
++		output_color(opt, buf, strlen(buf), opt->colors[GREP_COLOR_LINENO]);
+ 		output_sep(opt, sign);
+ 	}
+ 	if (opt->color) {
+@@ -1401,15 +1393,15 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 		int eflags = 0;
+ 
+ 		if (sign == ':')
+-			match_color = opt->color_match_selected;
++			match_color = opt->colors[GREP_COLOR_MATCH_SELECTED];
+ 		else
+-			match_color = opt->color_match_context;
++			match_color = opt->colors[GREP_COLOR_MATCH_CONTEXT];
+ 		if (sign == ':')
+-			line_color = opt->color_selected;
++			line_color = opt->colors[GREP_COLOR_SELECTED];
+ 		else if (sign == '-')
+-			line_color = opt->color_context;
++			line_color = opt->colors[GREP_COLOR_CONTEXT];
+ 		else if (sign == '=')
+-			line_color = opt->color_function;
++			line_color = opt->colors[GREP_COLOR_FUNCTION];
+ 		*eol = '\0';
+ 		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
+ 			if (match.rm_so == match.rm_eo)
+@@ -1816,7 +1808,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 			if (binary_match_only) {
+ 				opt->output(opt, "Binary file ", 12);
+ 				output_color(opt, gs->name, strlen(gs->name),
+-					     opt->color_filename);
++					     opt->colors[GREP_COLOR_FILENAME]);
+ 				opt->output(opt, " matches\n", 9);
+ 				return 1;
+ 			}
+@@ -1890,7 +1882,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 		char buf[32];
+ 		if (opt->pathname) {
+ 			output_color(opt, gs->name, strlen(gs->name),
+-				     opt->color_filename);
++				     opt->colors[GREP_COLOR_FILENAME]);
+ 			output_sep(opt, ':');
+ 		}
+ 		xsnprintf(buf, sizeof(buf), "%u\n", count);
+diff --git a/grep.h b/grep.h
+index 399381c908..ed25be271b 100644
+--- a/grep.h
++++ b/grep.h
+@@ -62,6 +62,18 @@ enum grep_header_field {
+ 	GREP_HEADER_FIELD_MAX
  };
  
--void list_config_help(void)
-+void list_config_help(int for_human)
- {
- 	struct slot_expansion slot_expansions[] = {
- 		{ "advice", "*", list_config_advices },
-@@ -460,8 +460,36 @@ void list_config_help(void)
- 			    e->prefix, e->placeholder);
- 
- 	string_list_sort(&keys);
--	for (i = 0; i < keys.nr; i++)
--		puts(keys.items[i].string);
-+	for (i = 0; i < keys.nr; i++) {
-+		const char *var = keys.items[i].string;
-+		const char *wildcard, *tag, *cut;
++enum grep_color {
++	GREP_COLOR_CONTEXT,
++	GREP_COLOR_FILENAME,
++	GREP_COLOR_FUNCTION,
++	GREP_COLOR_LINENO,
++	GREP_COLOR_MATCH_CONTEXT,
++	GREP_COLOR_MATCH_SELECTED,
++	GREP_COLOR_SELECTED,
++	GREP_COLOR_SEP,
++	NR_GREP_COLORS
++};
 +
-+		if (for_human) {
-+			puts(var);
-+			continue;
-+		}
-+
-+		wildcard = strchr(var, '*');
-+		tag = strchr(var, '<');
-+
-+		if (!wildcard && !tag) {
-+			puts(var);
-+			continue;
-+		}
-+
-+		if (wildcard && !tag)
-+			cut = wildcard;
-+		else if (!wildcard && tag)
-+			cut = tag;
-+		else
-+			cut = wildcard < tag ? wildcard : tag;
-+
-+		/*
-+		 * We may produce duplicates, but that's up to
-+		 * git-completion.bash to handle
-+		 */
-+		printf("%.*s\n", (int)(cut - var), var);
-+	}
- 	string_list_clear(&keys, 0);
- }
- 
-diff --git a/help.h b/help.h
-index b46fe6ee73..f8b15323a6 100644
---- a/help.h
-+++ b/help.h
-@@ -22,7 +22,7 @@ static inline void mput_char(char c, unsigned int num)
- extern void list_common_cmds_help(void);
- extern void list_all_cmds_help(void);
- extern void list_common_guides_help(void);
--extern void list_config_help(void);
-+extern void list_config_help(int for_human);
- 
- extern void list_all_main_cmds(struct string_list *list);
- extern void list_all_other_cmds(struct string_list *list);
+ struct grep_pat {
+ 	struct grep_pat *next;
+ 	const char *origin;
+@@ -155,14 +167,7 @@ struct grep_opt {
+ 	int funcbody;
+ 	int extended_regexp_option;
+ 	int pattern_type_option;
+-	char color_context[COLOR_MAXLEN];
+-	char color_filename[COLOR_MAXLEN];
+-	char color_function[COLOR_MAXLEN];
+-	char color_lineno[COLOR_MAXLEN];
+-	char color_match_context[COLOR_MAXLEN];
+-	char color_match_selected[COLOR_MAXLEN];
+-	char color_selected[COLOR_MAXLEN];
+-	char color_sep[COLOR_MAXLEN];
++	char colors[NR_GREP_COLORS][COLOR_MAXLEN];
+ 	unsigned pre_context;
+ 	unsigned post_context;
+ 	unsigned last_shown;
 -- 
 2.17.0.705.g3525833791
 
