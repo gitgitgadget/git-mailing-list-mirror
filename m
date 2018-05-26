@@ -2,85 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3401C1F42D
-	for <e@80x24.org>; Sat, 26 May 2018 21:07:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2868D1F42D
+	for <e@80x24.org>; Sat, 26 May 2018 21:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032408AbeEZVHz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 May 2018 17:07:55 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54563 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032377AbeEZVHz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 May 2018 17:07:55 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8E060EE9C9;
-        Sat, 26 May 2018 17:07:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=spgO/ks6XPx+roUls4iHH6V1TbI=; b=KxowqnN
-        zOSareguFtAWxWyaRjc5OWrv84z5kr/I7ir4U/ceDQSPjy7VyW+u7kyDiYfkJV8S
-        Zmkfb6IjLHvfCs0QchoRmOHR5hk3BY0eWSvxFFyx4PPVCAW3XzmpRC9x1vTGVN6C
-        f/sXqjMgQ+Z7MWmhtVMagbhVtb3I7+JxfSW0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=tEuwkJ4viw+d9Nw2PeMCCKKZkeI78Di2P
-        ShWUMgDuFj3iz6cx7NGb/pMBLbxnU6CKoBSmcvJ6G5JkZBOC3RNlf/07b/Xewm+0
-        gYkmMmHf8Lc0lCBReIdnsVueCaCrkDz4tNtgBhO63q6RpXpN9M33K2ljIfftDU+q
-        as6F/5baWA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 86308EE9C8;
-        Sat, 26 May 2018 17:07:54 -0400 (EDT)
-Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1A97CEE9C7;
-        Sat, 26 May 2018 17:07:54 -0400 (EDT)
-Date:   Sat, 26 May 2018 17:07:52 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jeff Felchner <jfelchner1@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@talktalk.net>
-Subject: Re: 2.17.0 Regression When Adding Patches Without Whitespace In
- Initial Column
-Message-ID: <20180526210752.GA3094@zaya.teonanacatl.net>
-References: <C6CF9BE4-FC46-4B39-A862-AEBB5CD600E2@gmail.com>
+        id S1032424AbeEZVtd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 May 2018 17:49:33 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:40772 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1032388AbeEZVtd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 May 2018 17:49:33 -0400
+Received: by mail-pg0-f68.google.com with SMTP id l2-v6so3702372pgc.7
+        for <git@vger.kernel.org>; Sat, 26 May 2018 14:49:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:user-agent:mime-version;
+        bh=f3MXKOGMfmWWlDclxART2pG99TaWbShRYkAEskTnCDU=;
+        b=alOoBdTIw2O4FboEd7ah3HncUjj6YM191woiuJoeRLpiPmhRy+owf1mw1VXSxg7qqj
+         U5bfmYUiSprdaMHvm3g+hdUexPRAX3ylwekJKOS+a7nOAHPZVY4aMBoACioxJMHUfHyb
+         5z4Yafv/nH/2/gpOTnwumnzSl7ei95EHl/L3ogWlLXmfsDQDzFpHBirFMgqLWa41xmkp
+         TAV2zrRY0eMveh8IbAsqAo5Q1FV0+j/McY1+WU6Irqlz3KobZfv44X+wNbP0GBy+FVK9
+         twqQQ8v9x5Qceu6GNrXsVBxdw52Ddz5NV/KnospS3AkBM7GLsnEs5LEo1tKwDbHZgdRb
+         CGcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :user-agent:mime-version;
+        bh=f3MXKOGMfmWWlDclxART2pG99TaWbShRYkAEskTnCDU=;
+        b=WCg0hniEfAO0EgZPJ05joDfcXqY4laEHRVjWIb8maWlPVLpFizkzi5pxbutgAeSpL/
+         oDRK8eqnxkgNp6r92DMweLG2PJ2HmwehHyXxjanJOAIbjhkn50xjdlGY80bm8AHwD+m8
+         8hrdrW05yfKPrPZyKGZ36nVYuMNwjEWJScYdvsKqacSWEgp33ie9bsoTkvubOK6nFYkv
+         RTM6KaNJdJGHQNKw7UMAygkSRVNLguLIralR8eP1SXgQCAyiZzRbijtX0w3YUA8Y81RB
+         582My0IqVu2Y1/Antq66z02L8UZQDU+4kkcFzzRzU3Bahtgjit4SwM7EdYgrA93oBUTU
+         mg6g==
+X-Gm-Message-State: ALKqPwdfKmx/FcEN/nZN8i1jn+bTUlzN0SFzdAgDSXGl7L6Llsbk7TzF
+        wNuX9O/h21liAi4Ad6SBYKw=
+X-Google-Smtp-Source: AB8JxZpmcAwqeID10ktNoNfiAXyK6inFqXGGh+/fXmdwTvG6G+QG9Zw1mq5zJw6Hhr4UvMpatmTeTQ==
+X-Received: by 2002:a65:5003:: with SMTP id f3-v6mr4542812pgo.425.1527371371916;
+        Sat, 26 May 2018 14:49:31 -0700 (PDT)
+Received: from i7.lan (c-73-11-52-149.hsd1.or.comcast.net. [73.11.52.149])
+        by smtp.gmail.com with ESMTPSA id 185-v6sm48172086pfu.13.2018.05.26.14.49.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 26 May 2018 14:49:31 -0700 (PDT)
+Date:   Sat, 26 May 2018 14:49:25 -0700 (PDT)
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+X-X-Sender: torvalds@i7.lan
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: [RFC] git gc "--prune=now" semantics considered harmful
+Message-ID: <alpine.LFD.2.21.999.1805261449160.6211@i7.lan>
+User-Agent: Alpine 2.21.999 (LFD 260 2018-02-26)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <C6CF9BE4-FC46-4B39-A862-AEBB5CD600E2@gmail.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
-X-Pobox-Relay-ID: DB5A82B0-6128-11E8-9037-67830C78B957-09356542!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
 
-Jeff Felchner wrote:
-> Ever since 2.17.0, when saving a patch (using add --patch
-> but probably other ways as well), if the whitespace is
-> removed from the initial column, the patch doesn't apply.
+So this is a RFC patch, I'm not sure how much people really care, but I 
+find the current behavior of "git gc --prune=now" to be unnecessarily 
+dangerous.
 
-This sounds a bit like the issue discussed in this thread a
-few weeks ago:
+There's two issues with it:
 
-https://public-inbox.org/git/e8aedc6b-5b3e-cfb2-be9d-971bfd9adde8@talktalk.net/
+ (a) parse_expiry_date() considers "now" to be special, and it actually
+     doesn't mean "now" at all, it means "everything".
 
-But I didn't download or watch the video, so I'm not positive.
+ (b) the date parsing isn't actually done "now", it's done *after* gc has 
+     already run, and we run "git prune --expire". So even if (a) wasn't 
+     true, "--prune=now" wouldn't actually mean "now" when the user 
+    expects it to happen, but "after doing repacking".
 
-> Full walkthrough (including comparison with 2.16.3) in the
-> video attached to this link:
-> 
-> https://www.dropbox.com/s/s1ophi4mwmf9ogv/git-add-patch-whitespace-bug.mp4?dl=1
+I actually think that the "parse_expiry_date()" behavior makes sense 
+within the context of "git prune --expire", so I'm not really complaining 
+about (a) per se. I just think that what makes sense within the context of 
+"git prune" does *not* necessarily make sense within the context of "git 
+gc".
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Everybody knows how to raise children, except the people who have
-them.
-    -- P.J. O'Rourke
+Why do I care? I end up doing lots of random things in my local 
+repository, and I also end up wanting to keep my repository fairly clean, 
+so I tend to do "git gc --prune=now" to just make sure everything is 
+packed and I've gotten rid of all the temporary stuff that so often 
+happens when doing lots of git merges (which is what I do). 
 
+You won't see those temporary objects for the usual trivial merges, but 
+whenever you have a real recursive merge with automated conflict 
+resolution, there will be things like those temporary merge-only objects 
+for the 3-way base merge state. 
+
+Soes my use pattern of "git gc --prune=now" make sense? Maybe not. But 
+it's what I've gotten used to, and it's at least not entirely insane.
+
+But at least once now, I've done that "git gc" at the end of the day, and 
+a new pull request comes in, so I do the "git pull" without even thinking 
+about the fact that "git gc" is still running.
+
+And then the "--prune=now" behavior is actually really pretty dangerous. 
+Because it will prune *all* unreachable objects, even if they are only 
+*currently* unreachable because they are in the process of being unpacked 
+by the concurrent "git fetch" (and I didn't check - I might just have been 
+unlocky, bit I think "git prune" ignores FETCH_HEAD).
+
+So I actually would much prefer that foir git gc, "--prune=now" means
+
+ (a) "now"
+
+ (b) now at the _start_ of the "git gc" operation, not the time at
+     the _end_ of the operation when we've already spent a minute or
+     two doing repacking and are now doing the final pruning.
+
+anyway, with that explanation in mind, I'm appending a patch that is 
+pretty small and does that. It's a bit hacky, but I think it still makes 
+sense.
+
+Comments?
+
+Note that this really isn't likely very noticeable on most projects. When 
+I do "git gc" on a fairly well-packed repo of git itself, it takes under 
+4s for me. So the window for that whole "do git pull at the same time" is 
+simply not much of an issue.
+
+For the kernel, "git gc" takes a minute and a half on the same machine 
+(again, this is already a packed repo, it can be worse). So there's a much 
+bigger window there to do something stupid,
+
+             Linus
+
+---
+ builtin/gc.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/gc.c b/builtin/gc.c
+index c4777b244..98368c8b5 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -535,8 +535,12 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	if (argc > 0)
+ 		usage_with_options(builtin_gc_usage, builtin_gc_options);
+ 
+-	if (prune_expire && parse_expiry_date(prune_expire, &dummy))
+-		die(_("failed to parse prune expiry value %s"), prune_expire);
++	if (prune_expire) {
++		if (!strcmp(prune_expire, "now"))
++			prune_expire = show_date(time(NULL), 0, DATE_MODE(ISO8601));
++		if (parse_expiry_date(prune_expire, &dummy))
++			die(_("failed to parse prune expiry value %s"), prune_expire);
++	}
+ 
+ 	if (aggressive) {
+ 		argv_array_push(&repack, "-f");
