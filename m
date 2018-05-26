@@ -2,134 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABCF91F42D
-	for <e@80x24.org>; Sat, 26 May 2018 18:46:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC2271F42D
+	for <e@80x24.org>; Sat, 26 May 2018 19:39:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032300AbeEZSqO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 May 2018 14:46:14 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:39112 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032274AbeEZSqM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 May 2018 14:46:12 -0400
-Received: by mail-wr0-f196.google.com with SMTP id w7-v6so2241960wrn.6
-        for <git@vger.kernel.org>; Sat, 26 May 2018 11:46:12 -0700 (PDT)
+        id S1032331AbeEZTjo (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 May 2018 15:39:44 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:44881 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1032304AbeEZTjn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 May 2018 15:39:43 -0400
+Received: by mail-pg0-f66.google.com with SMTP id p21-v6so3635966pgd.11
+        for <git@vger.kernel.org>; Sat, 26 May 2018 12:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=j9sC3kvHf16mfmBjhn0OuHCpvFqcGx01TI/pkg2mrfM=;
-        b=Xpshid1eAa4ZHBrWbie/cH5WUodCwDzrVIQQ5iCFmjT4ybZr7lOGUr68wsEA/gv2Yq
-         aMHi4l5RLQm6Ekwzsf8Vz3xl66YFObKrTDqt+0m/WfB2eYk+Ni0Kmrywil07SwmnZlbj
-         EQtlHuwYMJVaUhzsYk1/0u/JwHQpCX53Bw4DXnsuVllE4Rb6aaNWTj7aoT/RUBT4hqRM
-         SLbDj6zMzIzNRvJc+9v1asWcSV6pAUQpghv5ZyGj/37Xq1HIZSh8cxmQXmdnGUtqA0zf
-         8rVx++74863B8iqDRqvAL9ir6jg9PpaTBGnQ5s8ylVc87QMJmEvOyGFNBjxMw597fgMc
-         jhAQ==
+        h=message-id:subject:from:to:cc:references:in-reply-to:date
+         :mime-version;
+        bh=O+/vYy6A08pe+ypSofzMdf2zTI5RhdbsJFDIbf/J/+E=;
+        b=qvYHe3Hv8kL5zP6xf/dmD3Erao3FSoUEm/aagtGYU0aLR2Q4USYo76jeU4kSUtiptE
+         G5EDFwV4vJ8TYYgT59SEKBlrFLFLJj10dG2CWzLXwFL1ZqbV6sk9+u7e62/zZdQOsbqy
+         NqBY4wjphjYcNF/dcE7iysTMFYemU9CwD19DDFG7uKq4d66+kq4T/nb6O5kTjUcfpBQe
+         nHEJJz8/PRrZaFuc04DwaqBE74yLD0+Mv0DgFzETXEx+5ek1cYIaRhokiWpdtMjapOpg
+         59rpJiky5HX0QLA2bnawMq7eK/NlhHq7wRNj0TkB67vt/I3ikCLm2lJK7PCRU8RVjhJD
+         EiRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=j9sC3kvHf16mfmBjhn0OuHCpvFqcGx01TI/pkg2mrfM=;
-        b=RM0hfxTzqln5/taOzHQCtxiqADxLE3/jA/4j1d17tIWr5CHQuAiZhcS1ORN0wtK1MF
-         E4smXu9LnOCCnXyXpNMj6iQvDamlEwtT4deCDYvyBl4+wBcuKR9zmSUPhd9kCtPZdv5h
-         auXHeVmV0hnrEffLirhz9oXexB7F93oELs0kzAI4rjbuiAUmExkn9x5QSW/33PB8g4me
-         VvMGVJe0jbfr/tQV2deOXHG+kFnHllVQLCZfrbz4u2q+HPkJHrt8Yw589RVuJgtWJzQ/
-         t47t399YyyKEi0V7awUUH7IbToaZZBrLUA2MsXMkjDWIku9M5k+hRKWIxe+DtW68MEEo
-         eMJA==
-X-Gm-Message-State: ALKqPweZOU8oTIYq+ImOGNDxHz/UPG//6DqWUl6zoXhmnOgamFYKzKGB
-        5fkynwN2oKNb4SXuNamIp2M=
-X-Google-Smtp-Source: AB8JxZon/GC0s+G0/O9j3xkRyXUtDZpZKZg+9MYKlD+c/N/2pUV+ObFGSqR9uOTYSa8MgDS2n6Tb2A==
-X-Received: by 2002:adf:8290:: with SMTP id 16-v6mr5707758wrc.38.1527360371536;
-        Sat, 26 May 2018 11:46:11 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egg40.neoplus.adsl.tpnet.pl. [83.21.70.40])
-        by smtp.gmail.com with ESMTPSA id y42-v6sm49090075wry.21.2018.05.26.11.46.09
+        h=x-gm-message-state:message-id:subject:from:to:cc:references
+         :in-reply-to:date:mime-version;
+        bh=O+/vYy6A08pe+ypSofzMdf2zTI5RhdbsJFDIbf/J/+E=;
+        b=aXZbkhr6f1hlpdCStjMnO/zv95GnXhJXXIPTtZXuKSquo6Ju/bOVKBx8GU6Kc6Ui93
+         Gzl4BF+mozem1W80h95IyjJtUPg7xmlcRL9BAib5vymlBtCHJHV1fB6wM7APFg7jVpFz
+         x9iWcmFy56PLIfqYS/gCgFk0QKf2DluxBBtiKG8cRR9MkBx+28w1QgFU1HehqtYv3fFP
+         zUZbav+lpot2P6/wrmV4hPXNoVRl/nJFRq7YHdCyOol4dRswK1YbQWAvEOxDjIxhG5gC
+         qbE6R4o+BN9cQyBKgwSXLW3h7ldmFuTdHWtGCoQC5gmriT7awArUAvpn6iQUgJqF8aif
+         dIvQ==
+X-Gm-Message-State: ALKqPwe3JQDJhXsnT8PkMkOR0FAV03agDYgH+JiAoJ5+G4ycI5i6ivg3
+        DhNDZuz8xzESU6AZEer4Avk=
+X-Google-Smtp-Source: AB8JxZqGtXE7yVZqP3P5DNWyZdHfVAR99wzhXLmkhWxt6Tkl6jlnNEyAfqXxi1r7Y0g6M+hX1g1bYA==
+X-Received: by 2002:a65:5883:: with SMTP id d3-v6mr5882121pgu.131.1527363582621;
+        Sat, 26 May 2018 12:39:42 -0700 (PDT)
+Received: from unique-pc ([106.203.45.218])
+        by smtp.gmail.com with ESMTPSA id f21-v6sm49427411pfa.106.2018.05.26.12.39.39
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 26 May 2018 11:46:10 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster\@pobox.com" <gitster@pobox.com>,
-        "stolee\@gmail.com" <stolee@gmail.com>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "marten.agren\@gmail.com" <marten.agren@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>
-Subject: Re: [PATCH v3 02/20] commit-graph: fix GRAPH_MIN_SIZE
-References: <20180511211504.79877-1-dstolee@microsoft.com>
-        <20180524162504.158394-1-dstolee@microsoft.com>
-        <20180524162504.158394-3-dstolee@microsoft.com>
-Date:   Sat, 26 May 2018 20:46:09 +0200
-In-Reply-To: <20180524162504.158394-3-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Thu, 24 May 2018 16:25:29 +0000")
-Message-ID: <868t861ci6.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        Sat, 26 May 2018 12:39:41 -0700 (PDT)
+Message-ID: <1527363575.10290.3.camel@gmail.com>
+Subject: Re: [PATCH] branch: issue "-l" deprecation warning after pager
+ starts
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
+         <e440f6e0-6d7d-0e72-b875-de290cea6b94@gmail.com>
+         <87fu2qbojy.fsf@evledraar.gmail.com>
+         <20180517133601.GC17548@sigill.intra.peff.net>
+         <1527174618.10589.4.camel@gmail.com>
+         <20180524192214.GA21535@sigill.intra.peff.net>
+         <20180524193105.GB21535@sigill.intra.peff.net>
+         <xmqqh8mwpkgu.fsf@gitster-ct.c.googlers.com>
+         <20180525024002.GA1998@sigill.intra.peff.net>
+In-Reply-To: <20180525024002.GA1998@sigill.intra.peff.net>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+        protocol="application/pgp-signature"; boundary="=-hj+mi10EAyIut6OSVTun"
+Date:   Sun, 27 May 2018 01:09:35 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1+deb9u1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
 
-> The GRAPH_MIN_SIZE macro should be the smallest size of a parsable
-> commit-graph file. However, the minimum number of chunks was wrong.
-> It is possible to write a commit-graph file with zero commits, and
-> that violates this macro's value.
->
-> Rewrite the macro, and use extra macros to better explain the magic
-> constants.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  commit-graph.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index a8c337dd77..82295f0975 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -33,10 +33,11 @@
->=20=20
->  #define GRAPH_LAST_EDGE 0x80000000
->=20=20
-> +#define GRAPH_HEADER_SIZE 8
+--=-hj+mi10EAyIut6OSVTun
+Content-Type: text/plain; charset="ISO-8859-15"
+Content-Transfer-Encoding: quoted-printable
 
-Nice.
+On Friday 25 May 2018 08:10 AM, Jeff King wrote:
+> Subject: [PATCH] branch: customize "-l" warning in list mode
+>=20
+> People mistakenly use "git branch -l", thinking that it
+> triggers list mode. It doesn't, but the lack of non-option
+> arguments in that command does (and the "-l" becomes a
+> silent noop).
+> > Since afc968e579 (branch: deprecate "-l" option, 2018-03-26)
+>=20
+> we've warned that "-l" is going away. But the warning text
+> is primarily aimed at people who _meant_ to use "-l", as in
+> "git branch -l foo". People who mistakenly said "git branch
+> -l" may be left puzzled.
+>=20
 
->  #define GRAPH_FANOUT_SIZE (4 * 256)
->  #define GRAPH_CHUNKLOOKUP_WIDTH 12
-> -#define GRAPH_MIN_SIZE (5 * GRAPH_CHUNKLOOKUP_WIDTH + GRAPH_FANOUT_SIZE =
-+ \
-> -			GRAPH_OID_LEN + 8)
-> +#define GRAPH_MIN_SIZE (GRAPH_HEADER_SIZE + 4 * GRAPH_CHUNKLOOKUP_WIDTH \
-> +			+ GRAPH_FANOUT_SIZE + GRAPH_OID_LEN)
+So, this patch is to improve the user experience of people who use "git
+branch -l" for listing and not for the people who forget to give a new
+branch name argument for "-l". In that case, this makes sense.
 
-So in this case we have file header (4-byte signature, 1-byte version
-number, 1-byte oid/hash version, 1-byte number of chunks, 1-byte
-reserved: 4+1+1+1+1 =3D 8 bytes), chunk lookup: 3 required chunks plus
-terminating label =3D 4 entries, constant-size fanout chunks, and
-checksum.  Two remaining required chunks (OID Lookup and Commit Data)
-can have length of 0.
+BTW, I hope people don't start wondering why "git branch -d" doesn't
+trigger list mode ;-)
 
 
-One issue: in the future when Git moves to NewHash, it could encounter
-then both commit-graph files using SHA-1 and using NewHash.  What about
-GRPH_OID_LEN then: for one of those it would be incorrect.  Unless it is
-about minimal length of checksum, that is we assume that NewHash would
-be longer than SHA-1, but ten why name it GRAPH_OID_LEN?
+> +			warning("the '-l' option is an alias for '--create-reflog' and");
+> +			warning("has no effect in list mode. This option will soon be");
+> +			warning("removed and you should omit it (or use '--list' instead).");
 
-This may be going too much in the future; there is no need to borrow
-trouble now, where we have only SHA-1 supported as OID.  Still...
+I suppose s/alias/deprecated alias/ makes the point that '-l' will be
+removed more stronger.
 
->=20=20
->  char *get_commit_graph_filename(const char *obj_dir)
->  {
 
-Best,
 --=20
-Jakub Nar=C4=99bski
+Sivaraam
+--=-hj+mi10EAyIut6OSVTun
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAABCAA5FiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlsJt/cbHGthYXJ0aWMu
+c2l2YXJhYW1AZ21haWwuY29tAAoJEL3nWtrD1hlpjQMP/3ufClUXXkAww19cZNwe
+otGeRY1hTD1P745+3NhbfqkxLK0G/52PiQuiBAbePCIefSyceg1t/4WM6FA9hy2k
+REIal4TFGYgEFKV+CLA2ik3TV7DqXFCJfiMgrsOg0o0hUvua1INxaTe38TiLXwxC
+YpSUI9bldlq0pAkVnslEy2Rbwbawc88EDpY1Sy4NUkagsxkgD0XNL3eU8ueSobaF
+y7MC/EPjnhj6EGDb0DnPKmQ/xdyXNnFyFC91qA5mrK8FAIyWnTkPxMjsSLgf97n6
+gnA32GU2KJknvsqUo/sspfw/qvhs06RuhtmUvqBuoPMtpZSjXigTYrq9dXCMy5Pm
+5pms2Yw2u9SB5Wz2xyr+RLNlR6xYvZ3WnR5M3DplwQW5JksCqEkuLi4XyPl1cqdA
+rCPYRDntxMVzd+W5Dq19YHbiiBlPfags4EjCh325Prf0swX1ObNvthOEaMtIFeB1
+63KegiwJB8oAZDWmfv4dJNMK4KgS4tUJJCv2JOj0S7zObBVj+iteIiJLP/1qi5Ay
+e4TeIePl+xoDZ49/2ou53GosfUNe3x0o7ODm2uv9s/vYOLofG1JUtY6D2TaELcFg
+/SlRp0h+9wqKyoBp9oXwlt3rusPy0/HugrjMMGYrbVEEqianNiGPGyuzsyHMoKJN
+Pw4QRO/GQttHJOnglaoDs6Yy
+=HsFV
+-----END PGP SIGNATURE-----
+
+--=-hj+mi10EAyIut6OSVTun--
+
