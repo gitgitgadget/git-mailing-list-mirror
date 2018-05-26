@@ -6,56 +6,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C8481F42D
-	for <e@80x24.org>; Sat, 26 May 2018 02:33:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96CAC1F42D
+	for <e@80x24.org>; Sat, 26 May 2018 02:37:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031030AbeEZCdk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 22:33:40 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:43089 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030648AbeEZCdj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 22:33:39 -0400
-Received: by mail-wr0-f194.google.com with SMTP id r13-v6so12018156wrj.10
-        for <git@vger.kernel.org>; Fri, 25 May 2018 19:33:38 -0700 (PDT)
+        id S1030982AbeEZChq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 22:37:46 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:50549 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030648AbeEZChp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 22:37:45 -0400
+Received: by mail-wm0-f66.google.com with SMTP id t11-v6so18750389wmt.0
+        for <git@vger.kernel.org>; Fri, 25 May 2018 19:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=MPqyIplXKfu5q8oG7tTQlsdwC0RwEeF5UULRyGbrXPc=;
-        b=TAiOt7qFDWpIyJR/jZXOIIw7YedZH+aZD5k3aBA25CFVOiKRWDUmYhp89rmRxKK7ld
-         5g0NuBQu4Ya1qIRwhO3Ysl+11a6z2OQgo2PMVOTwF8FG4GEdDQAfKzS8inkT3+30S8Kf
-         sRLNzBMSqrXuePfzorKRk5o4g+hj8lmtSHZks7glFsi7b6hyIYjQXO4Ju43Ss98rQdhg
-         yNHS/RHiphgrY/F5E2AO/DWi7HDT/9wvtb/GNL5uykFIlOoDAz8Tb+xVzCrIJTOXXmrW
-         DQ7OroqDcoK2R/uWRvUCaIwK6ekmYhSq9XbgYlYKFq31CtRLXptodaLw/gZ08ilukaNQ
-         NaiQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=jmgIrfwXEikSRaisXHbgxMTrmCyxC0zALOS3WeeF24g=;
+        b=eO5X97EV5Ml3xLSIOHMDzLQxba7H+Zrh5E3/WwG8x8AD/ScHYUvXUV/yiLBHFDjy+E
+         Ni2hps402bCOeS4HtPhrul8oy+cam7ImTJ3U7AkdHKXLVCy9n0ltMf5S51W+A7vJUsXe
+         /h3Awcc3swW/18HcvgGEOJQ2SfpF28j7jNPGc1jk7+BQezeAxDzSgd4DUpGOPWA4BH1T
+         QaJqyxjmT8cUmqs4VZ5KLGvFDekiKpW9r0rG25+Rscl3JdBwoPzCjW3Rg6FQWhrh1mAu
+         JJ1qYcE2jPo85OUVsrSnReBNjnP7nmCf2KkW0LcQ9ewShAnFu0nTR9EnkP2nmhtD+Pwc
+         lqSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=MPqyIplXKfu5q8oG7tTQlsdwC0RwEeF5UULRyGbrXPc=;
-        b=qHcu4dWarRN386LLD/7SIzyDR+Ayd8q7siizGGKn2vDD999SeQnFeyCWsWSeG9Iabf
-         KO8PYg2na45a4XHCdIlHzHpVrlCu2l6BMlsZ015WPhkXM5vtMxGLnmKTNpBaWaEyAEnP
-         BeTKWugQiog6A71B2yUV+JH4GP2YipNTDCNLHZSHLLNu+XwJtv+jTTirIe2zrYK5P1Tv
-         HAdetBqUNP7qUMOM6luUHcf+ZMwtyKNBxt/wTFgAQZzjndY6+HYLrxJ3HzkVNcyoKdxQ
-         +KRBPzeHwpEr3BY1EiE/et6P4rov01neg0dXNtS7oHjEtiD3cGNOZO5E67v+lSYCDNG5
-         U3FA==
-X-Gm-Message-State: ALKqPwfTU8gcJ49QAHlkmzKBw3/ji7SnLIVoy+d8m2hZDIUW6WbHDOJ2
-        8cUJChr+/99NEpHyttuqy3T7+QZ/
-X-Google-Smtp-Source: AB8JxZreJBZe2cXNv4uCqVcO2VenloiaSXVSXtkIMK/COjEPngQ29BuTC6h8it9VdfnukcbAQ+ydWw==
-X-Received: by 2002:adf:d250:: with SMTP id o16-v6mr3860668wri.59.1527302017807;
-        Fri, 25 May 2018 19:33:37 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e81-v6sm4598030wmi.28.2018.05.25.19.33.36
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=jmgIrfwXEikSRaisXHbgxMTrmCyxC0zALOS3WeeF24g=;
+        b=jm3ngKLoqPCSAkmZa9tGIcwpB1+F2SrrMDnPLdP30+5UgQWojsvMPpZsJ8wU6nJ4ap
+         wtPxLdj1YWHoCh+2I0S5Nz1OC0GbRM6n02faWvN+4CYulSGcaXV64sbd36Dapwzk/vT8
+         WGhlf5YQ9BBwXBetlQZNFptm7k0F6+4tOdg62uE3wMic75zV4KvZHFxuVekCc5lJW5i9
+         rXs9T5i4bQSSCqHM8dZonyU8rmlbGF7CO/ocz52jCDT5+3bMERQgEsFrG59CykdnKlMn
+         lOFkjwdmO7PX89PGuZX0Ks9wb+OJ05odAoAsay1ThCr4CvvFJgAqJGR9HvV84v1x1lK+
+         m8UA==
+X-Gm-Message-State: ALKqPweoRRd2hBUvguQGADPFyJhRKkkZvAoQngVDKxaroU9433xcmGdd
+        GiS7b7HLHuLRBhAh6t+hkxE=
+X-Google-Smtp-Source: ADUXVKJA+74NlfmTtmGduvMqTOaacF0j/404kr4rIh6azXiuJqutv9okeRwlocBiznEPsDDjtkCtzA==
+X-Received: by 2002:a1c:e906:: with SMTP id q6-v6mr3214193wmc.23.1527302264183;
+        Fri, 25 May 2018 19:37:44 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id y7-v6sm16018916wrh.86.2018.05.25.19.37.43
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 25 May 2018 19:33:36 -0700 (PDT)
+        Fri, 25 May 2018 19:37:43 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
         <avarab@gmail.com>, git@vger.kernel.org
 Subject: Re: [PATCH] branch: issue "-l" deprecation warning after pager starts
-References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
-        <e440f6e0-6d7d-0e72-b875-de290cea6b94@gmail.com>
+References: <e440f6e0-6d7d-0e72-b875-de290cea6b94@gmail.com>
         <87fu2qbojy.fsf@evledraar.gmail.com>
         <20180517133601.GC17548@sigill.intra.peff.net>
         <1527174618.10589.4.camel@gmail.com>
@@ -64,99 +64,54 @@ References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
         <xmqqh8mwpkgu.fsf@gitster-ct.c.googlers.com>
         <20180525024002.GA1998@sigill.intra.peff.net>
         <xmqqd0xknmf1.fsf@gitster-ct.c.googlers.com>
-        <xmqq1sdzno3g.fsf@gitster-ct.c.googlers.com>
-Date:   Sat, 26 May 2018 11:33:36 +0900
-In-Reply-To: <xmqq1sdzno3g.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Sat, 26 May 2018 11:32:35 +0900")
-Message-ID: <xmqqwovrm9hb.fsf@gitster-ct.c.googlers.com>
+        <xmqq8t88nllj.fsf@gitster-ct.c.googlers.com>
+        <20180525171050.GC10461@sigill.intra.peff.net>
+Date:   Sat, 26 May 2018 11:37:43 +0900
+In-Reply-To: <20180525171050.GC10461@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 25 May 2018 13:10:51 -0400")
+Message-ID: <xmqqsh6fm9ag.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> With these two patches queued on top of jk/branch-l-0-deprecation,
-> the follow-up patches jk/branch-l-1-removal that makes 'branch -l'
-> to fail and then jk/branch-l-2-reincarnation that makes 'branch -l'
-> a synonym to 'branch --list' needs rebasing.  Both are trivial and
-> hopefully I did them correctly.
+>> By the way, this is one of these times when I feel that we should
+>> have a better multi-line message support in die/error/warning/info
+>> functions.  Ideally, I should be able to write
+>> 
+>> 	warning(_("the '-l' option is an alias for '--create-reflog' and\n"
+>> 		  "has no effect in list mode, This option will soon be\n"
+>> 		  "removed and you should omit it (or use '--list' instead)."));
+>> 
+>> and warning() would:
+>> 
+>>  - do the sprintf formatting thing as necessary to prepare a long multi-line
+>>    message;
+>> 
+>>  - chomp that into lines at '\n' boundary; and
+>> 
+>>  - give each of these lines with _("warning: ") prefixed.
+>> 
+>> That way, translators can choose to make the resulting message to
+>> different number of lines from the original easily.
 >
-> -- >8 --
-> From: Jeff King <peff@peff.net>
-> Date: Mon, 26 Mar 2018 03:29:22 -0400
-> Subject: [PATCH] branch: drop deprecated "-l" option
+> Yep, I totally agree. In past discussions I was thinking mostly of
+> the pain of writing these multi-line messages. But I imagine it is
+> absolute hell for translators, and we should fix it for that reason.
+>
+> (Also, I guess this message probably ought to be marked for
+> translation).
 
-And this is the final "reincarnation" step.
+Needless to tell you, I worked backwards when noticing that these
+three warning() lines are not marked for translation ;-).
 
--- >8 --
-From: Jeff King <peff@peff.net>
-Date: Mon, 26 Mar 2018 03:29:48 -0400
-Subject: [PATCH] branch: make "-l" a synonym for "--list"
-
-The other "mode" options of git-branch have short-option
-aliases that are easy to type (e.g., "-d" and "-m"). Let's
-give "--list" the same treatment.
-
-This also makes it consistent with the similar "git tag -l"
-option.
-
-We didn't do this originally because "--create-reflog" was
-squatting on the "-l" option. Now that sufficient time has
-passed with that alias removed, we can finally repurpose it.
-
-Signed-off-by: Jeff King <peff@peff.net>
-Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
-Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
-[jc: adjusted the new tests added earlier]
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/branch.c  | 2 +-
- t/t3200-branch.sh | 8 +-------
- 2 files changed, 2 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 01b35b3c3d..1d06f5c547 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -612,7 +612,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('M', NULL, &rename, N_("move/rename a branch, even if target exists"), 2),
- 		OPT_BIT('c', "copy", &copy, N_("copy a branch and its reflog"), 1),
- 		OPT_BIT('C', NULL, &copy, N_("copy a branch, even if target exists"), 2),
--		OPT_BOOL(0, "list", &list, N_("list branch names")),
-+		OPT_BOOL('l', "list", &list, N_("list branch names")),
- 		OPT_BOOL(0, "create-reflog", &reflog, N_("create the branch's reflog")),
- 		OPT_BOOL(0, "edit-description", &edit_description,
- 			 N_("edit the description for the branch")),
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index eca75d3ca1..022d6a41c8 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -45,12 +45,6 @@ test_expect_success 'git branch HEAD should fail' '
- 	test_must_fail git branch HEAD
- '
- 
--test_expect_success 'git branch -l no longer is --create-reflog' '
--	test_when_finished "git branch -D new-branch-with-reflog || :" &&
--	test_must_fail git branch -l new-branch-with-reflog &&
--	test_must_fail git rev-parse --verify refs/heads/new-branch-with-reflog
--'
--
- cat >expect <<EOF
- $_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
- EOF
-@@ -294,7 +288,7 @@ test_expect_success 'git branch --list -v with --abbrev' '
- 
- '
- 
--test_expect_failure 'git branch -l eventually is --list' '
-+test_expect_success 'git branch -l is --list' '
- 	git branch --list >expect &&
- 	git branch -l >actual &&
- 	test_cmp expect actual
--- 
-2.17.0-775-ge144d126d7
-
+But of course, fixing this in a naïve way will involve memory
+allocation during execution of die(), which may well be due to OOM,
+which is why we knew the need but haven't found a good solution to
+it.
