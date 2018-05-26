@@ -6,48 +6,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11BDA1F42D
-	for <e@80x24.org>; Sat, 26 May 2018 02:32:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C8481F42D
+	for <e@80x24.org>; Sat, 26 May 2018 02:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030929AbeEZCcj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 22:32:39 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33698 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030648AbeEZCci (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 22:32:38 -0400
-Received: by mail-wr0-f196.google.com with SMTP id a15-v6so12048202wrm.0
-        for <git@vger.kernel.org>; Fri, 25 May 2018 19:32:37 -0700 (PDT)
+        id S1031030AbeEZCdk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 22:33:40 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:43089 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030648AbeEZCdj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 22:33:39 -0400
+Received: by mail-wr0-f194.google.com with SMTP id r13-v6so12018156wrj.10
+        for <git@vger.kernel.org>; Fri, 25 May 2018 19:33:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=LQYU5DOyBgcRnQL7yzmIGc3nf3A+plbKcOfsjYXd540=;
-        b=lGA1MHYB8oCBpna4jGi6pPNf5OBL+ZwDsl9fQieFhj9v3rCb8fEENgF5AI9VZXxiIg
-         4LcCfsWWdjK5tN8RxzqLQpzMM/6EWfXp8PihDjv0xoanOsSK0GirdGQgPl6sJqGSRbXb
-         Y0917Id/x3/Y5C2vCi9s+rVDtaU+39DCsaLTfvuELHnDgXHszIChdQ+luzTMChjpKM47
-         nfdZD33HtU5F4isSvqokkYLnl+mKAQpy85Cvit/jHK1Tw2Woq2dmyZJtEWvzrLPZs1UC
-         S86/05vbN0IyAAKwuwGbTdvg/Y7EzSsfr+YAmTc1ooJqdVkzcwgsGnv2TKmagTdo1IIS
-         exag==
+        bh=MPqyIplXKfu5q8oG7tTQlsdwC0RwEeF5UULRyGbrXPc=;
+        b=TAiOt7qFDWpIyJR/jZXOIIw7YedZH+aZD5k3aBA25CFVOiKRWDUmYhp89rmRxKK7ld
+         5g0NuBQu4Ya1qIRwhO3Ysl+11a6z2OQgo2PMVOTwF8FG4GEdDQAfKzS8inkT3+30S8Kf
+         sRLNzBMSqrXuePfzorKRk5o4g+hj8lmtSHZks7glFsi7b6hyIYjQXO4Ju43Ss98rQdhg
+         yNHS/RHiphgrY/F5E2AO/DWi7HDT/9wvtb/GNL5uykFIlOoDAz8Tb+xVzCrIJTOXXmrW
+         DQ7OroqDcoK2R/uWRvUCaIwK6ekmYhSq9XbgYlYKFq31CtRLXptodaLw/gZ08ilukaNQ
+         NaiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=LQYU5DOyBgcRnQL7yzmIGc3nf3A+plbKcOfsjYXd540=;
-        b=jVwf4iUuz2r8JkBaKrlgoK3LA5AeYjJBFcpYdp3RliSzHg9NKEfikduR2jT6LSho1x
-         3W5Yg4X6kQdrAMwj8cD+jjpPxrncEVs5oj9xtml844hpugVhnDC4WpVu1fqtPoKDJ/J9
-         hoy1bf3WdiJJiFlUUT1mT3GkAH2TPP4RJbnUtMOMnq80zLWWCbZ9S/LAz0sGMYEc4S6D
-         tIYMzKGhf5YP/PvNwuVUicCxAhhkQf5M1juyRgKqSWhCCkorqTAoL/RJmfklzAOgOOhm
-         OKFeH8+W6/01xPE1nGIduFyhMTrfd8oQR7m/iEuR5IIOWIdUGuXt6VJkaaj8lBGsxnW2
-         qlbw==
-X-Gm-Message-State: ALKqPwe5unZYmnsh5HonJn3g/rHCSrI4DX3YFNR22GxPQ052zypGZYDO
-        hR8/TdWpSeAJr2nMRuXmakk=
-X-Google-Smtp-Source: AB8JxZoig2PEUL5z2P2wJ64LGzSx/lSt+xe1oE9qFl6UTejOPFZpTmYA2X4Zupb4ZeMzK9WLjH9J5w==
-X-Received: by 2002:adf:8f70:: with SMTP id p103-v6mr4349873wrb.181.1527301956814;
-        Fri, 25 May 2018 19:32:36 -0700 (PDT)
+        bh=MPqyIplXKfu5q8oG7tTQlsdwC0RwEeF5UULRyGbrXPc=;
+        b=qHcu4dWarRN386LLD/7SIzyDR+Ayd8q7siizGGKn2vDD999SeQnFeyCWsWSeG9Iabf
+         KO8PYg2na45a4XHCdIlHzHpVrlCu2l6BMlsZ015WPhkXM5vtMxGLnmKTNpBaWaEyAEnP
+         BeTKWugQiog6A71B2yUV+JH4GP2YipNTDCNLHZSHLLNu+XwJtv+jTTirIe2zrYK5P1Tv
+         HAdetBqUNP7qUMOM6luUHcf+ZMwtyKNBxt/wTFgAQZzjndY6+HYLrxJ3HzkVNcyoKdxQ
+         +KRBPzeHwpEr3BY1EiE/et6P4rov01neg0dXNtS7oHjEtiD3cGNOZO5E67v+lSYCDNG5
+         U3FA==
+X-Gm-Message-State: ALKqPwfTU8gcJ49QAHlkmzKBw3/ji7SnLIVoy+d8m2hZDIUW6WbHDOJ2
+        8cUJChr+/99NEpHyttuqy3T7+QZ/
+X-Google-Smtp-Source: AB8JxZreJBZe2cXNv4uCqVcO2VenloiaSXVSXtkIMK/COjEPngQ29BuTC6h8it9VdfnukcbAQ+ydWw==
+X-Received: by 2002:adf:d250:: with SMTP id o16-v6mr3860668wri.59.1527302017807;
+        Fri, 25 May 2018 19:33:37 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id i12-v6sm11426452wrn.55.2018.05.25.19.32.35
+        by smtp.gmail.com with ESMTPSA id e81-v6sm4598030wmi.28.2018.05.25.19.33.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 25 May 2018 19:32:35 -0700 (PDT)
+        Fri, 25 May 2018 19:33:36 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
@@ -64,10 +64,11 @@ References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com>
         <xmqqh8mwpkgu.fsf@gitster-ct.c.googlers.com>
         <20180525024002.GA1998@sigill.intra.peff.net>
         <xmqqd0xknmf1.fsf@gitster-ct.c.googlers.com>
-Date:   Sat, 26 May 2018 11:32:35 +0900
-In-Reply-To: <xmqqd0xknmf1.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 25 May 2018 17:56:34 +0900")
-Message-ID: <xmqq1sdzno3g.fsf@gitster-ct.c.googlers.com>
+        <xmqq1sdzno3g.fsf@gitster-ct.c.googlers.com>
+Date:   Sat, 26 May 2018 11:33:36 +0900
+In-Reply-To: <xmqq1sdzno3g.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Sat, 26 May 2018 11:32:35 +0900")
+Message-ID: <xmqqwovrm9hb.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -78,97 +79,84 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Yup, thanks for being extra explicit.  I do imagine there are quite
-> a few of us who would be puzzled without this update (but with the
-> previous one to unhide it from behind the pager).
+> With these two patches queued on top of jk/branch-l-0-deprecation,
+> the follow-up patches jk/branch-l-1-removal that makes 'branch -l'
+> to fail and then jk/branch-l-2-reincarnation that makes 'branch -l'
+> a synonym to 'branch --list' needs rebasing.  Both are trivial and
+> hopefully I did them correctly.
+>
+> -- >8 --
+> From: Jeff King <peff@peff.net>
+> Date: Mon, 26 Mar 2018 03:29:22 -0400
+> Subject: [PATCH] branch: drop deprecated "-l" option
 
-With these two patches queued on top of jk/branch-l-0-deprecation,
-the follow-up patches jk/branch-l-1-removal that makes 'branch -l'
-to fail and then jk/branch-l-2-reincarnation that makes 'branch -l'
-a synonym to 'branch --list' needs rebasing.  Both are trivial and
-hopefully I did them correctly.
+And this is the final "reincarnation" step.
 
 -- >8 --
 From: Jeff King <peff@peff.net>
-Date: Mon, 26 Mar 2018 03:29:22 -0400
-Subject: [PATCH] branch: drop deprecated "-l" option
+Date: Mon, 26 Mar 2018 03:29:48 -0400
+Subject: [PATCH] branch: make "-l" a synonym for "--list"
 
-We marked the "-l" option as deprecated back in <insert sha1
-here>. Now that sufficient time has passed, let's follow
-through and get rid of it.
+The other "mode" options of git-branch have short-option
+aliases that are easy to type (e.g., "-d" and "-m"). Let's
+give "--list" the same treatment.
+
+This also makes it consistent with the similar "git tag -l"
+option.
+
+We didn't do this originally because "--create-reflog" was
+squatting on the "-l" option. Now that sufficient time has
+passed with that alias removed, we can finally repurpose it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
 Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
-[jc: added a few tests]
+[jc: adjusted the new tests added earlier]
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/branch.c  | 14 --------------
- t/t3200-branch.sh | 12 ++++++++++++
- 2 files changed, 12 insertions(+), 14 deletions(-)
+ builtin/branch.c  | 2 +-
+ t/t3200-branch.sh | 8 +-------
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index b0b33dab94..01b35b3c3d 100644
+index 01b35b3c3d..1d06f5c547 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -571,14 +571,6 @@ static int edit_branch_description(const char *branch_name)
- 	return 0;
- }
- 
--static int deprecated_reflog_option_cb(const struct option *opt,
--				       const char *arg, int unset)
--{
--	used_deprecated_reflog_option = 1;
--	*(int *)opt->value = !unset;
--	return 0;
--}
--
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
- 	int delete = 0, rename = 0, copy = 0, force = 0, list = 0;
-@@ -622,12 +614,6 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+@@ -612,7 +612,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT('M', NULL, &rename, N_("move/rename a branch, even if target exists"), 2),
+ 		OPT_BIT('c', "copy", &copy, N_("copy a branch and its reflog"), 1),
  		OPT_BIT('C', NULL, &copy, N_("copy a branch, even if target exists"), 2),
- 		OPT_BOOL(0, "list", &list, N_("list branch names")),
+-		OPT_BOOL(0, "list", &list, N_("list branch names")),
++		OPT_BOOL('l', "list", &list, N_("list branch names")),
  		OPT_BOOL(0, "create-reflog", &reflog, N_("create the branch's reflog")),
--		{
--			OPTION_CALLBACK, 'l', NULL, &reflog, NULL,
--			N_("deprecated synonym for --create-reflog"),
--			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN,
--			deprecated_reflog_option_cb
--		},
  		OPT_BOOL(0, "edit-description", &edit_description,
  			 N_("edit the description for the branch")),
- 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
 diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index da97b8a62b..eca75d3ca1 100755
+index eca75d3ca1..022d6a41c8 100755
 --- a/t/t3200-branch.sh
 +++ b/t/t3200-branch.sh
-@@ -45,6 +45,12 @@ test_expect_success 'git branch HEAD should fail' '
+@@ -45,12 +45,6 @@ test_expect_success 'git branch HEAD should fail' '
  	test_must_fail git branch HEAD
  '
  
-+test_expect_success 'git branch -l no longer is --create-reflog' '
-+	test_when_finished "git branch -D new-branch-with-reflog || :" &&
-+	test_must_fail git branch -l new-branch-with-reflog &&
-+	test_must_fail git rev-parse --verify refs/heads/new-branch-with-reflog
-+'
-+
+-test_expect_success 'git branch -l no longer is --create-reflog' '
+-	test_when_finished "git branch -D new-branch-with-reflog || :" &&
+-	test_must_fail git branch -l new-branch-with-reflog &&
+-	test_must_fail git rev-parse --verify refs/heads/new-branch-with-reflog
+-'
+-
  cat >expect <<EOF
  $_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
  EOF
-@@ -288,6 +294,12 @@ test_expect_success 'git branch --list -v with --abbrev' '
+@@ -294,7 +288,7 @@ test_expect_success 'git branch --list -v with --abbrev' '
  
  '
  
-+test_expect_failure 'git branch -l eventually is --list' '
-+	git branch --list >expect &&
-+	git branch -l >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'git branch --column' '
- 	COLUMNS=81 git branch --column=column >actual &&
- 	cat >expected <<\EOF &&
+-test_expect_failure 'git branch -l eventually is --list' '
++test_expect_success 'git branch -l is --list' '
+ 	git branch --list >expect &&
+ 	git branch -l >actual &&
+ 	test_cmp expect actual
 -- 
 2.17.0-775-ge144d126d7
 
