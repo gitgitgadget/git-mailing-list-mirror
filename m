@@ -2,287 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4ADD1F51C
-	for <e@80x24.org>; Sat, 26 May 2018 11:08:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CDFA1F51C
+	for <e@80x24.org>; Sat, 26 May 2018 11:35:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031682AbeEZLIf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 May 2018 07:08:35 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34692 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031606AbeEZLId (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 May 2018 07:08:33 -0400
-Received: by mail-wm0-f68.google.com with SMTP id q4-v6so17051823wmq.1
-        for <git@vger.kernel.org>; Sat, 26 May 2018 04:08:32 -0700 (PDT)
+        id S1031782AbeEZLf3 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 May 2018 07:35:29 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:44004 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031606AbeEZLf0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 May 2018 07:35:26 -0400
+Received: by mail-wr0-f193.google.com with SMTP id r13-v6so13183381wrj.10
+        for <git@vger.kernel.org>; Sat, 26 May 2018 04:35:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=CBg+a3OtTCkG3XwUEmcYH8oePEX/HfLPDS40+3tvqXM=;
-        b=RQR3jcPqkANl8pSKKt0QYrBx7c5L+GWIDBoDcqs58qlmYGWRT8M2kmI7SDi+y9CcJ6
-         psu/4zF/7gC9DqFxW7ILHenZLbdjxyXOdAuR6LoBrLFdCsHAcVY62iV1xAQCGBnQcflX
-         Wg2AZwxmPBFUEk3nVHn1GS8zYv1UXpRzgpH5InLPHAvhx2GxZKKCDjSxqH6EEefsTcfU
-         UTDbxSt8M2N4CoqO/D5YJEiQlo6ub6CoZo+aOuJ66uya7dYoB1uvCAjZVhuNb1JDng8L
-         st7rcmC5GyONq15mrq7rdk5NlRl0/CCFTKn4otOylMB1YZw9wxn3WNG/CPzCgDwOySGx
-         X5OQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=gXmfUWzHrR5CWBAYF21BPddzNe4N6DibEOEJO8kfBRs=;
+        b=bl8tRoSS8nB0UNRtN9aZFFqaGHdyn2hwLCh6PWH2dNUyud938Gi+2vY2NGXWW/rxeF
+         yTpXt7JG/zj/YpYkQ1bxfPc2lfrgdXH8QGv/CLUZo+KtyE1I49ONP+kjS5i6ZzQ6e+mR
+         1YdxEfTR9pBmESAQiMVjzhVpQ+650Z0dZ4ZXbanU1fEXR0YiLpVjOT5LVRPA4ib+5Fo/
+         vQpBefCeqbfPNktDQzBJx4Qmonxyk1nRLFw33uG1YnRxvXRqcstoRcRFJ5xIu268jFAV
+         SUSLiXH9EJ4G+8Hrd+j3PJ0lICO5DpJpIAr0UjnB8QeizcEomk0hVBwLOs2r2mZYQPfV
+         hDAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=CBg+a3OtTCkG3XwUEmcYH8oePEX/HfLPDS40+3tvqXM=;
-        b=ovqhIea4XEQJnFUVaThSe0DSkd5d0T1RWXEwHK83lsB4u6NU5Vfg4LupSL6V4FBcmj
-         wN55JePR+y/NQ62nrEJQUEeklhFVAF97VplSDpsiOwXM7xcibG0OQqUM1+xUPe0S8wbF
-         XS5F42+StACRJVTynMtlZbllyd3oTAAbWStt5yiHF9fsqtlrZSeQZaVkVW8xztID9XZL
-         GasZkZm6wZoLFNXpQsTPdhh7I5ruO+asn8yogBj9oZ176cFFdBoOpDQc637qjjiqJKKh
-         nIqBcQuF7POk0QNlFc/HDkkhJUqOYwGK+SVEju76/07YkttH09PJ14lcrj16+hqb0mew
-         5m3Q==
-X-Gm-Message-State: ALKqPwf1AJ7Q5OVmxmeRtpbmNcWZrgIixq4uFZLiud2Dd5znC+DKP4Zf
-        IRsn6zs4GPtNo1Po3Vq9eSk=
-X-Google-Smtp-Source: AB8JxZoT7qTaDYU2epVJxixCGuG6I5HtadsXOJ/OzX7gztpHI6m4xMMWyFEciqiodp4sZNu9jfmWnw==
-X-Received: by 2002:a1c:b943:: with SMTP id j64-v6mr3758702wmf.30.1527332911386;
-        Sat, 26 May 2018 04:08:31 -0700 (PDT)
-Received: from Shuttle (HSI-KBW-078-042-095-098.hsi3.kabel-badenwuerttemberg.de. [78.42.95.98])
-        by smtp.gmail.com with ESMTPSA id z2-v6sm9144478wmg.46.2018.05.26.04.08.29
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=gXmfUWzHrR5CWBAYF21BPddzNe4N6DibEOEJO8kfBRs=;
+        b=haDQ2FVxgBqFLbwQ8zwqw9hOJ8CIisuREIdsJKcgusU8W14ZjLP6OLbBDvxRUrWW3c
+         m6Fj0knyt1s6cbVxyQNe4hhJ9qnn+rXOTGcJjtlGgLo6qQB1hk5MVOdWRvneCzbj3FTT
+         OJRIVUpe4yVsYAuh96KYCJmGjMTRTPte08gUP1oc3Hpnh1grn5B4uFhQqa8jtqJh75A4
+         J3T0O8s1gSGpdK+qBpCUkZuZH0Wz+EJ+Ip+at3khwwujukKYOeSXC7QGafzHhx1C+sQA
+         vZEEB8XgOT7fx0QGdVuUVOa4/JUaOpIomGk6w8INddryhZ5nx0QmkYJ4P/SVuR7BzUK1
+         +igg==
+X-Gm-Message-State: ALKqPwdnNc+g5p0jabK5dg4JWoo9gSpn7UIOgzvIepzhactYJ6K/y1gl
+        pnumdmEMzg0WzD3Cgr2O5ml78A==
+X-Google-Smtp-Source: ADUXVKJtjKsR41GCDlDS1+oknN0+vWLo1QIz1h7pVraM5vY52h0M11gMMgfSKadkTpGtFMHfseRsDQ==
+X-Received: by 2002:a19:6a08:: with SMTP id u8-v6mr3477364lfu.31.1527334525175;
+        Sat, 26 May 2018 04:35:25 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id e28-v6sm4759370ljb.92.2018.05.26.04.35.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 26 May 2018 04:08:30 -0700 (PDT)
-From:   <anton.golubev@gmail.com>
-To:     "'Jonathan Nieder'" <jrnieder@gmail.com>
-Cc:     <git@vger.kernel.org>, "'Brandon Williams'" <bmwill@google.com>
-References: <20180521234004.142548-1-bmwill@google.com> <20180522000129.GG10623@aiede.svl.corp.google.com>
-In-Reply-To: <20180522000129.GG10623@aiede.svl.corp.google.com>
-Subject: RE: [PATCH 1/2] remote-curl: accept all encoding supported by curl
-Date:   Sat, 26 May 2018 13:08:29 +0200
-Message-ID: <015501d3f4e1$e0b47c60$a21d7520$@gmail.com>
+        Sat, 26 May 2018 04:35:24 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     a.krey@gmx.de,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] upload-pack: reject shallow requests that would return nothing
+Date:   Sat, 26 May 2018 13:35:18 +0200
+Message-Id: <20180526113518.22403-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.705.g3525833791
+In-Reply-To: <20180522194854.GA29564@inner.h.apk.li>
+References: <20180522194854.GA29564@inner.h.apk.li>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIqYz3cefDSv3YjkzDKxQzMMC81UQEsK67Po4ubK7A=
-Content-Language: de
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Shallow clones with --shallow-since or --shalow-exclude work by
+running rev-list to get all reachable commits, then draw a boundary
+between reachable and unreachable and send "shallow" requests based on
+that.
 
-I'd like to confirm, that your patch fixes my problem: I can sync with
-google repository now using git and curl version without gzip support. 
-Do you know how this patch is going to be released? Just HEAD now and GA in
-the next planned release?
+The code does miss one corner case: if rev-list returns nothing, we'll
+have no border and we'll send no shallow requests back to the client
+(i.e. no history cuts). This essentially means a full clone (or a full
+branch if the client requests just one branch). One example is the
+oldest commit is older than what is specified by --shallow-since.
 
-Communication looks like follow now:
+To avoid this, if rev-list returns nothing, we abort the clone/fetch.
+The user could adjust their request (e.g. --shallow-since further back
+in the past) and retry.
 
-root@bsb:~# GIT_TRACE_PACKET=1 GIT_CURL_VERBOSE=1 git ls-remote
-https://source.developers.google.co m/p/wired-balm-187912/r/dotfiles 2>&1 |
-sed -e 's/\(git-[^=]*\)=.*/\1=REDACTED/' -e 's/Authorizatio n:
-.*/Authorization: REDACTED/'
-> GET /p/wired-balm-187912/r/dotfiles/info/refs?service=git-upload-pack
-HTTP/1.1
-Host: source.developers.google.com
-User-Agent: git/2.17.0
-Accept: */*
-Accept-Encoding: identity
-Cookie: o=git-anton.golubev.gmail.com=REDACTED
-Pragma: no-cache
+Another possible option for this case is to fall back to a default
+depth (like depth 1). But I don't like too much magic that way because
+we may return something unexpected to the user. If they request
+"history since 2008" and we return a single depth at 2000, that might
+break stuff for them. It is better to tell them that something is
+wrong and let them take the best course of action.
 
-< HTTP/1.1 200 OK
-< Cache-Control: no-cache, max-age=0, must-revalidate
-< Content-Length: 374
-< Content-Type: application/x-git-upload-pack-advertisement
-< Expires: Fri, 01 Jan 1980 00:00:00 GMT
-< Pragma: no-cache
-< X-Content-Type-Options: nosniff
-< X-Frame-Options: SAMEORIGIN
-< X-Xss-Protection: 1; mode=block
-< Date: Sat, 26 May 2018 11:04:41 GMT
-< Alt-Svc: hq=":443"; ma=2592000; quic=51303433; quic=51303432;
-quic=51303431; quic=51303339; quic=51303335,quic=":443"; ma=2592000;
-v="43,42,41,39,35"
-<
-13:04:41.274561 pkt-line.c:80           packet:          git< #
-service=git-upload-pack
-13:04:41.274634 pkt-line.c:80           packet:          git< 0000
-13:04:41.274693 pkt-line.c:80           packet:          git<
-45e2c99dd1790529cc4b7e029b1e9dfcc817d18e HEAD\0 include-tag
-multi_ack_detailed multi_ack ofs-delta side-band side-band-64k thin-pack
-no-progress shallow no-done allow-tip-sha1-in-want
-allow-reachable-sha1-in-want agent=JGit/4-google filter
-symref=HEAD:refs/heads/master
-13:04:41.274739 pkt-line.c:80           packet:          git<
-45e2c99dd1790529cc4b7e029b1e9dfcc817d18e refs/heads/master
-13:04:41.274777 pkt-line.c:80           packet:          git< 0000
-45e2c99dd1790529cc4b7e029b1e9dfcc817d18e        HEAD
-45e2c99dd1790529cc4b7e029b1e9dfcc817d18e        refs/heads/master
+Note that we need to die() in get_shallow_commits_by_rev_list()
+instead of just checking for empty result from its caller
+deepen_by_rev_list() and handling the error there. The reason is,
+empty result could be a valid case: if you have commits in year 2013
+and you request --shallow-since=year.2000 then you should get a full
+clone (i.e. empty result).
 
-Kind regards,
-Anton Golubev
+Reported-by: Andreas Krey <a.krey@gmx.de>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ shallow.c             |  3 +++
+ t/t5500-fetch-pack.sh | 11 +++++++++++
+ 2 files changed, 14 insertions(+)
 
-
-
------Original Message-----
-From: Jonathan Nieder [mailto:jrnieder@gmail.com] 
-Sent: Dienstag, 22. Mai 2018 02:01
-To: Brandon Williams <bmwill@google.com>
-Cc: git@vger.kernel.org; Anton Golubev <anton.golubev@gmail.com>
-Subject: Re: [PATCH 1/2] remote-curl: accept all encoding supported by curl
-
-Hi,
-
-Brandon Williams wrote:
-
-> Subject: remote-curl: accept all encoding supported by curl
-
-nit: s/encoding/encodings
-
-> Configure curl to accept all encoding which curl supports instead of 
-> only accepting gzip responses.
-
-Likewise.
-
-> This is necessary to fix a bug when using an installation of curl 
-> which doesn't support gzip.  Since curl doesn't do any checking to 
-> verify that it supports the encoding set when calling 
-> 'curl_easy_setopt()', curl can end up sending an "Accept-Encoding" 
-> header indicating that it supports a particular encoding when in fact 
-> it doesn't.  Instead when the empty string "" is used when setting 
-> `CURLOPT_ENCODING`, curl will send an "Accept-Encoding" header 
-> containing only the encoding methods curl supports.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-
-Thanks for the analysis and fix.
-
-Reported-by: Anton Golubev <anton.golubev@gmail.com>
-
-Also ccing the reporter so we can hopefully get a tested-by.  Anton, can you
-test this patch and let us know how it goes?  You can apply it as follows:
-
-  curl \
+diff --git a/shallow.c b/shallow.c
+index df4d44ea7a..44fdca1ace 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -175,6 +175,9 @@ struct commit_list *get_shallow_commits_by_rev_list(int ac, const char **av,
+ 		die("revision walk setup failed");
+ 	traverse_commit_list(&revs, show_commit, NULL, &not_shallow_list);
  
-https://public-inbox.org/git/20180521234004.142548-1-bmwill@google.com/raw \
-    >patch.txt
-  git am -3 patch.txt
-
-Brandon, can the commit message also say a little more about the motivating
-context and symptoms?
-
-  $ curl --version
-  curl 7.52.1 (arm-openwrt-linux-gnu) libcurl/7.52.1 mbedTLS/2.6.0
-  Protocols: file ftp ftps http https
-  Features: IPv6 Largefile SSL
-
-The issue is that when curl is built without the "zlib" feature, since
-v1.8.0-rc0~14^2 (Enable info/refs gzip decompression in HTTP client,
-2012-09-19) we end up requesting "gzip" encoding anyway despite libcurl not
-being able to decode it.  Worse, instead of getting a clear error message
-indicating so, we end up falling back to "dumb"
-http, producing a confusing and difficult to debug result.
-
-> ---
->  http.c                      | 2 +-
->  remote-curl.c               | 2 +-
->  t/t5551-http-fetch-smart.sh | 4 ++--
->  3 files changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/http.c b/http.c
-> index fed13b216..709150fc7 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -1788,7 +1788,7 @@ static int http_request(const char *url,
->  
->  	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
->  	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
-> -	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "gzip");
-> +	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
->  
->  	ret = run_one_slot(slot, &results);
->  
-> diff --git a/remote-curl.c b/remote-curl.c index ceb05347b..565bba104 
-> 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -684,7 +684,7 @@ static int post_rpc(struct rpc_state *rpc)
->  	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
->  	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
->  	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
-> -	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "gzip");
-> +	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
->  
->  	if (large_request) {
->  		/* The request body is large and the size cannot be
-predicted.
-
-Makes sense.
-
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh 
-> index f5721b4a5..39c65482c 100755
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -26,14 +26,14 @@ setup_askpass_helper  cat >exp <<EOF  > GET 
-> /smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1  > Accept: 
-> */*
-> -> Accept-Encoding: gzip
-> +> Accept-Encoding: deflate, gzip
->  > Pragma: no-cache
->  < HTTP/1.1 200 OK
->  < Pragma: no-cache
->  < Cache-Control: no-cache, max-age=0, must-revalidate  < 
-> Content-Type: application/x-git-upload-pack-advertisement
->  > POST /smart/repo.git/git-upload-pack HTTP/1.1
-> -> Accept-Encoding: gzip
-> +> Accept-Encoding: deflate, gzip
->  > Content-Type: application/x-git-upload-pack-request
->  > Accept: application/x-git-upload-pack-result
->  > Content-Length: xxx
-
-If libcurl gains support for another encoding in the future, this test would
-start failing.  Can we make the matching less strict?  For example, how
-about something like the following for squashing in?
-
-Thanks,
-Jonathan
-
-diff --git i/t/t5551-http-fetch-smart.sh w/t/t5551-http-fetch-smart.sh index
-39c65482ce..913089b144 100755
---- i/t/t5551-http-fetch-smart.sh
-+++ w/t/t5551-http-fetch-smart.sh
-@@ -26,14 +26,14 @@ setup_askpass_helper  cat >exp <<EOF  > GET
-/smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1  > Accept: */*
--> Accept-Encoding: deflate, gzip
-+> Accept-Encoding: ENCODINGS
- > Pragma: no-cache
- < HTTP/1.1 200 OK
- < Pragma: no-cache
- < Cache-Control: no-cache, max-age=0, must-revalidate  < Content-Type:
-application/x-git-upload-pack-advertisement
- > POST /smart/repo.git/git-upload-pack HTTP/1.1
--> Accept-Encoding: deflate, gzip
-+> Accept-Encoding: ENCODINGS
- > Content-Type: application/x-git-upload-pack-request
- > Accept: application/x-git-upload-pack-result
- > Content-Length: xxx
-@@ -79,8 +79,13 @@ test_expect_success 'clone http repository' '
- 		/^< Date: /d
- 		/^< Content-Length: /d
- 		/^< Transfer-Encoding: /d
--	" >act &&
--	test_cmp exp act
-+	" >actual &&
-+	sed -e "s/^> Accept-Encoding: .*/> Accept-Encoding: ENCODINGS/" \
-+			actual >actual.smudged &&
-+	test_cmp exp actual.smudged &&
++	if (!not_shallow_list)
++		die("no commits selected for shallow requests");
 +
-+	grep "Accept-Encoding:.*gzip" actual >actual.gzip &&
-+	test_line_count = 2 actual.gzip
+ 	/* Mark all reachable commits as NOT_SHALLOW */
+ 	for (p = not_shallow_list; p; p = p->next)
+ 		p->item->object.flags |= not_shallow_flag;
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 0680dec808..c8f2d38a58 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -711,6 +711,17 @@ test_expect_success 'fetch shallow since ...' '
+ 	test_cmp expected actual
  '
  
- test_expect_success 'fetch changes via http' '
++test_expect_success 'clone shallow since selects no commits' '
++	test_create_repo shallow-since-the-future &&
++	(
++	cd shallow-since-the-future &&
++	GIT_COMMITTER_DATE="100000000 +0700" git commit --allow-empty -m one &&
++	GIT_COMMITTER_DATE="200000000 +0700" git commit --allow-empty -m two &&
++	GIT_COMMITTER_DATE="300000000 +0700" git commit --allow-empty -m three &&
++	test_must_fail git clone --shallow-since "900000000 +0700" "file://$(pwd)/." ../shallow111
++	)
++'
++
+ test_expect_success 'shallow clone exclude tag two' '
+ 	test_create_repo shallow-exclude &&
+ 	(
+-- 
+2.17.0.705.g3525833791
 
