@@ -2,116 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FC0F1F42D
-	for <e@80x24.org>; Sat, 26 May 2018 12:50:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 799491F42D
+	for <e@80x24.org>; Sat, 26 May 2018 13:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031672AbeEZMu0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 May 2018 08:50:26 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:37573 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031591AbeEZMuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 May 2018 08:50:24 -0400
-Received: by mail-oi0-f68.google.com with SMTP id w123-v6so6838442oia.4
-        for <git@vger.kernel.org>; Sat, 26 May 2018 05:50:24 -0700 (PDT)
+        id S1753924AbeEZNzk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 May 2018 09:55:40 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:38019 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752598AbeEZNzj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 May 2018 09:55:39 -0400
+Received: by mail-wr0-f196.google.com with SMTP id 94-v6so13535927wrf.5
+        for <git@vger.kernel.org>; Sat, 26 May 2018 06:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Dgj0ON7MzmTjr6htbx11hnZPCGtcuYA09gQrklXBoBw=;
-        b=epSWjb3ih+j8pv4y2N8YY0Z3VyRtJ4cQ3gKqTw0WEN/1Ei6fjSRbe0P6QdOcf8OTPF
-         fWChQW948tuLLgZTLIobrWVoAH79rFA36sFdh2wDcFeNc2nn7KTtWMNZ8GyWV+wYx+sJ
-         B8vbhrx56v93klK9TU/igSUfO2n8WIVEk0nrnqS57hCIXCSPjA7dSNSiNbFaxZ8M/OuL
-         ErSTQ/5conQWg1ZeTVv2+8e3gElCS57zNNhfn1fzeP5EQfwfcjy/3bYR0rxJs6AvxaJB
-         MNsMExnuTUoAad3iNjl64/87GpHU2ezjE1cKTwmrUm48gMX00qLfGKeZNy4LJke4UcvH
-         86bQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0EIDw2KV0q0EG9QSQaEHl+kUJYTlzrBsjcMhbgAXEHc=;
+        b=P9GaDIbEvwuPP/gF3yLmI3gM5eram00QWYnS+ncVAQl6zvcANx52JuHwjycPjO8oDq
+         utJG/cckwXse31Gn/511/fuS5g1OGWHnnCzf+ZmWZx2hrzx3lKTrboSqF075L82FPm2o
+         gGYWEigCHsi3dLd00tMj+EiBJ2x1CI5NhXVR/rHH5czVPXf3CwONsbrj/xVcm6p8nBKL
+         F6T96iM8Zl0PSnJxERiJMWsDo6hs7FmV5mzA5EC58mYXB2C3oHJuF5VMTyV0OMOj4fk5
+         Ww0VHtlPA1NeuR41Pyg3TImfg23f6B0tjHT4Yz2yh/d3o85sCkuy984pe7i+J78ihuL1
+         zhRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Dgj0ON7MzmTjr6htbx11hnZPCGtcuYA09gQrklXBoBw=;
-        b=LR9rvhN8qnfTGaq2DtxP8tv/hO4lWZsvhVOPD9l71eDGI4ECHepzzwVGO5ksX6huc3
-         yd6qUKNWXEJ8G7mN49oKao4bE6h8haBFI82lg73Yf2kHgc3z04iYFn9ga/pRIrZfKXJs
-         9EGC9IgSGqISzWFs0VRvbIqld8UjEPBiBFulvrtRiWIcaeNXmW7UfC9Z1EeGJHqnWLIs
-         khonPRLJlNbU7EQnl0UTF5GRO1ky5RmIBpPGrptr7t/QdbcdtvzVllX4IjbZAjxGRTbp
-         RG3s5ExMtkZ2GVnu+tinBi8a+eMW3l1uRW5uAKKnLc8Wd+e/wzSO3mBVRsruOuNe0m40
-         e0Rg==
-X-Gm-Message-State: ALKqPwf/8s5vtPK5Ew59zHDiZNY0iR7r7TmUDkg8Y6Ef+J0N8bB8SfYF
-        ZE91hmGtjXkuiN6mjn9sGQJuWCPCVKoHt8SIJQU=
-X-Google-Smtp-Source: ADUXVKLvY/d9iBY2DV0+25fg5w2rV+kXWuMBmZXOVl115GxZXUUy5nRtRL6TZX1zoCf3KkhTKgg2hHSilum5A9q9ULU=
-X-Received: by 2002:aca:51ce:: with SMTP id f197-v6mr3619315oib.32.1527339024090;
- Sat, 26 May 2018 05:50:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0EIDw2KV0q0EG9QSQaEHl+kUJYTlzrBsjcMhbgAXEHc=;
+        b=riOj9lG5e/vCoQWk7ZuiaJDf3cecQFgSGc4ij4stnTKjqg2oUxtFjseraitVqXBHXn
+         crxpSq0bXO6cB1JVwvOGvgX5j/XaYMMl6EPKrAW6k1vO4Sx+WitI3NUgESSb1drKkENl
+         FNPGUzuAruelqubOvqMsuZkHxF4QMGS3BfD9mMruD5Gj2XFv3l6N7lt3PyjkdUqPTV7V
+         P3nOOD4yate1hMXbPSi80zcEhPCrR3CkCjh8cckzRopIWa8LJVy66TzBqoDFvyhqr+Nq
+         pCDmZ9QT/3JhXDYb8mxGAtdKI7XYl3cUKpxzzNMeBLS/6/eKIHYB+/7JuAFQvT+1Kylp
+         8IjA==
+X-Gm-Message-State: ALKqPwdOiqUNgNJVZzdf2YB57TU5PsHGh1TtqwGF2twvplvtA41IoGIN
+        Vce80xpa33g9T+OV8zq5o20=
+X-Google-Smtp-Source: ADUXVKL3KuoO979GjZ7DEWLzH/96UqClnOjYpNNQtlCAjCQO9T2ETq63exMT9VjeZmozJdJZAxz0Iw==
+X-Received: by 2002:a19:c7c8:: with SMTP id x191-v6mr3626160lff.122.1527342937972;
+        Sat, 26 May 2018 06:55:37 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id z4-v6sm4941431lji.14.2018.05.26.06.55.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 26 May 2018 06:55:36 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v2 00/11] completion: avoid hard coding config var list
+Date:   Sat, 26 May 2018 15:55:20 +0200
+Message-Id: <20180526135531.4516-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.705.g3525833791
+In-Reply-To: <20180510141927.23590-1-pclouds@gmail.com>
+References: <20180510141927.23590-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Sat, 26 May 2018 05:49:53
- -0700 (PDT)
-In-Reply-To: <87k1rr7f86.fsf@evledraar.gmail.com>
-References: <CAPig+cR59-OEDL7GDNZF2v7a-NOrUH2zC9EwDvuog8QLRtvKTA@mail.gmail.com>
- <20180524194704.936-1-avarab@gmail.com> <xmqqpo1knog0.fsf@gitster-ct.c.googlers.com>
- <CACsJy8BjdiNF623vygUkp_1T82X5DwQiCQP9T55mATzFHuH1RQ@mail.gmail.com> <87k1rr7f86.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 26 May 2018 14:49:53 +0200
-Message-ID: <CACsJy8A67bNEHqdi-dg5YCKseutiKhZGyBeBF_z3oY_EB6rQqQ@mail.gmail.com>
-Subject: Re: [PATCH v3] checkout & worktree: introduce checkout.implicitRemote
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 25, 2018 at 8:38 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Fri, May 25 2018, Duy Nguyen wrote:
->
->> On Fri, May 25, 2018 at 10:12 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->>>> +Currently this is used by linkgit:git-checkout[1] when 'git checkout
->>>> +<something>' will checkout the '<something>' branch on another remote=
-,
->>>> +and by linkgit:git-worktree[1] when 'git worktree add' refers to a
->>>> +remote branch. This setting might be used for other checkout-like
->>>> +commands or functionality in the future.
->>>
->>> Hmph, that is an interesting direction.  You foresee that you'll
->>> have a single repository with multiple remotes to grab and share
->>> objects from different people working on the same project, and use
->>> multiple worktrees to work on different branches, yet you are happy
->>> to declare that each worktree is to work with one particular remote?
->>>
->>> We'd need a per-worktree config file to make it work, I guess, or
->>> a three-level checkout.$worktree_id.defaultRemote configuration
->>> variable, perhaps?
->>
->> I still plan to revisit per-worktree config support [1] at some point
->> and finish it off. Or is it decided that we don't need a generic
->> mechanism and will add a new level like this for each config var that
->> is per-worktree? If defaultRemote sets a precedence, then it'll be the
->> way to go from now on or we'll have another mess when some config does
->> "foo.$worktree.bar" while others use per-worktree config files.
->
-> What do you think about including worktree in this at this time? I'm not
-> very familiar with it and just included it because I worked my way
-> backwards from the DWIM function, but I could exclude it if you think
-> it's too much trouble, i.e. if you'd like to hold out for some facility
-> like the per-worktree config Junio mentioned.
+v2 changes:
 
-I think Junio was talking about the future. What is currently in the
-patch, both code and document, is fine. But if you're going to
-implement core.$worktree.defaultRemote at this time, maybe wait a bit.
-I could try to resurrect the per-worktree config topic in a month or
-so and if it does not work out, then everybody will add new config
-vars if they want per-worktree support.
---=20
-Duy
+- based on 'next'
+- C99 is now mentioned in the commit message
+- fixed Eric's comments
+- the old 8/9 partial case-insensitive support patch is replaced
+  with Szeder's version.
+  
+  Szeder I claimed authorship because I wrote the commit message which
+  may not be what you like. If you want to claim it instead, I'll be
+  glad to resend.
+
+- There is no levenshtein support yet. But the code is updated to keep
+  this config list in memory instead of printf'ing directly to make it
+  easier in the future to do that.
+
+Nguyễn Thái Ngọc Duy (11):
+  Add and use generic name->id mapping code for color slot parsing
+  grep: keep all colors in an array
+  fsck: factor out msg_id_info[] lazy initialization code
+  help: add --config to list all available config
+  fsck: produce camelCase config key names
+  advice: keep config name in camelCase in advice_config[]
+  am: move advice.amWorkDir parsing back to advice.c
+  completion: drop the hard coded list of config vars
+  completion: keep other config var completion in camelCase
+  completion: support case-insensitive config vars
+  log-tree: allow to customize 'grafted' color
+
+ Documentation/config.txt               |   3 +-
+ Documentation/git-help.txt             |   5 +
+ advice.c                               |  53 ++--
+ advice.h                               |   1 +
+ builtin/am.c                           |   6 +-
+ builtin/branch.c                       |  29 +-
+ builtin/clean.c                        |  29 +-
+ builtin/commit.c                       |  36 +--
+ builtin/help.c                         |  16 ++
+ config.c                               |  13 +
+ config.h                               |   4 +
+ contrib/completion/git-completion.bash | 357 ++-----------------------
+ diff.c                                 |  56 ++--
+ fsck.c                                 |  68 +++--
+ generate-cmdlist.sh                    |  19 ++
+ grep.c                                 | 109 ++++----
+ grep.h                                 |  21 +-
+ help.c                                 |  84 ++++++
+ help.h                                 |  45 +++-
+ log-tree.c                             |  37 +--
+ t/t4254-am-corrupt.sh                  |   2 +-
+ 21 files changed, 440 insertions(+), 553 deletions(-)
+
+-- 
+2.17.0.705.g3525833791
+
