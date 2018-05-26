@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F6B81F42D
-	for <e@80x24.org>; Sat, 26 May 2018 13:55:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B5C61F42D
+	for <e@80x24.org>; Sat, 26 May 2018 13:55:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754717AbeEZNzx (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 May 2018 09:55:53 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:47088 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754521AbeEZNzu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 May 2018 09:55:50 -0400
-Received: by mail-wr0-f193.google.com with SMTP id v13-v6so1823027wrp.13
-        for <git@vger.kernel.org>; Sat, 26 May 2018 06:55:50 -0700 (PDT)
+        id S1754475AbeEZNzv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 May 2018 09:55:51 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:37057 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031747AbeEZNzs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 May 2018 09:55:48 -0400
+Received: by mail-wm0-f67.google.com with SMTP id l1-v6so21440813wmb.2
+        for <git@vger.kernel.org>; Sat, 26 May 2018 06:55:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=q50WsWaWFIJ4O6c1mufdICqPPEgjK0KCGVOHH6XbvE4=;
-        b=tc2RHAeVaXCU1H3pBInjBOMTg0JRrL34pEf2m4yKJmV+5ahuaLXwGMJsEragIoCFlj
-         8gqX99esILOkuqb6+k3Su2nHDlLvsdQ6nBOjRtsjgLy51v5OU6Uyjc7DPCmO30DmKF9W
-         8vQg6K34ECp92sK47XWgST3uY0pegcaW5Yu4m4aGVc7jsMoBKQ0enFEy9FgHSTlJCYPg
-         rIoCdh244M08iUJyxQKUmROHbcAme0KrnZgZHbSeJKvtI8yTXG94i+W7/EeSFSr+X21I
-         qYtZ4liEg3NT3R/TAauj4hLETPkWOmqYKYHM7+1cThNuGx/X7y+e99TiLYfJSk275CJE
-         yiLA==
+        bh=kPf40o6fQ+8UHhnpzYp8EAwpgf3yaWt/CuMZZwP5In0=;
+        b=VcGjJM6Bqbu2t+oX+QExk/kvZfL7yJOSusDAzTAB33iosDUjCtXzR0lydqOvWQVeV6
+         FXj3bGodamVWZO8sfXurIMGrLGFCnZEwrH67SmKphr+LrwfjrXRCaNTOZCccMxczgt30
+         bifDXqAVYlaPLe2SNyzVdFLD//HZZQUThCSbbBvzm81Icj7cBG8cQkHiVmPq5WptsaiE
+         CNKQ35+ixWO05lcU1mpBQEJfBWLiCZGUYm0KpaRCXmhA9H/ULT4uAlNP49IRtc4MaNgC
+         jmD+/G9vvoy482K7PIytQ5OxLuK4Pr1kdWoujEkOTwRa3hoSRNeOH0RC1bng20G9e+Av
+         54PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=q50WsWaWFIJ4O6c1mufdICqPPEgjK0KCGVOHH6XbvE4=;
-        b=rG8s+WfnOyjNZK1LD2/2L1XFKj6Tpv5p1b+hZw/ftNEHtJ33WPJLd+u1oRvpLdufvd
-         6GrzCDHzHKuPCu/Zz2Ie6OwT+eQBdSqt0Yf1RwpEYSwFBXK6HZMilg8Z13HMLBvRRco/
-         mJM9d0oJriU/l7LHN1t1yPmAvGNrVY+FcdKdWhm8ab7AmmKS1qJ7kouBuMZbubeWw8s+
-         6opjvjlLWz/PKiZJjSAL2wxyOLHtC0o7GsHRfqI7UZoTEBHDbSu/Da/lekDLvbz4OnSl
-         0ci2fscPpf0RPZZd0Dr4z2YewoIS3PPhx7ogi3wSDtZEoN798ktB/LOxvE7J/FMrw3BH
-         +eHQ==
-X-Gm-Message-State: ALKqPwf2uhOZQmSd+zbU0mfr9eyDVfdP1H9QSaeidoirYdsKJF55Cl4i
-        0eNDFmmwksGVpRF4LQldZ/Y=
-X-Google-Smtp-Source: ADUXVKJ+P0wnKY2iGJNu1sZoO/7gxYGuMDqxYraHlgaJreMNJW69fq140+xyZdtjaLDYkwwLbtXb+g==
-X-Received: by 2002:a19:1003:: with SMTP id f3-v6mr3719580lfi.114.1527342949497;
-        Sat, 26 May 2018 06:55:49 -0700 (PDT)
+        bh=kPf40o6fQ+8UHhnpzYp8EAwpgf3yaWt/CuMZZwP5In0=;
+        b=asACCnw/+BNdRiziQiMxcPRfHnAcQ8zdt5tYeg0IBXJx1DOA7T964aQgMc11LNiDQ9
+         fMV53m17mpA7BSRzx/dlPm2PN+ZUCqHkeT63XzKkspsPCAKLd5odN7+SeHPOUFm9aJVf
+         8ASQrU5SansljaSpDUHYcmImnP7JhDWo4WFjU0J4PIhPqB9QNexkTULgPGFDF5oOHJiJ
+         W5lfU74PHEzL2CSYopt+4zOXzq7ZDQuFbPgxVGqR80m9/aEcjxMtshDBgmfZdmvwcpfa
+         bg2ewTustzzQH3I84YjZX3T4+BxC/RJThs+7L+KxUgK885CusSGibLppdF94K2FTvgY+
+         KdQQ==
+X-Gm-Message-State: ALKqPwcLrAyF7RmQZKYl8r3c5fS7tLX1OZrRKQu/qHHe6Ed7w+Lnv4zw
+        BwktFLHLVUifeG8D5zXfSio=
+X-Google-Smtp-Source: AB8JxZrF/fokejwMP7S0aNzMeu6GToK5X+7WsTuDctbzGKJha/ZiDT2xvaK6gnp/JFbLkEMy3cxzBQ==
+X-Received: by 2002:a2e:9158:: with SMTP id q24-v6mr4235743ljg.73.1527342946933;
+        Sat, 26 May 2018 06:55:46 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id z4-v6sm4941431lji.14.2018.05.26.06.55.48
+        by smtp.gmail.com with ESMTPSA id z4-v6sm4941431lji.14.2018.05.26.06.55.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 26 May 2018 06:55:48 -0700 (PDT)
+        Sat, 26 May 2018 06:55:46 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
@@ -56,9 +56,9 @@ Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
         Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 09/11] completion: keep other config var completion in camelCase
-Date:   Sat, 26 May 2018 15:55:29 +0200
-Message-Id: <20180526135531.4516-10-pclouds@gmail.com>
+Subject: [PATCH v2 07/11] am: move advice.amWorkDir parsing back to advice.c
+Date:   Sat, 26 May 2018 15:55:27 +0200
+Message-Id: <20180526135531.4516-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.705.g3525833791
 In-Reply-To: <20180526135531.4516-1-pclouds@gmail.com>
 References: <20180510141927.23590-1-pclouds@gmail.com>
@@ -71,66 +71,90 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The last patch makes "git config <tab>" shows camelCase names because
-that's what's in the source: config.txt. There are still a couple
-manual var completion in this code. Let's make them follow the naming
-convention as well.
+The only benefit from this move (apart from cleaner code) is that
+advice.amWorkDir should now show up in `git help --config`. There
+should be no regression since advice config is always read by the
+git_default_config().
 
-In theory we could automate this part too because we have the
-information. But let's stick to one step at a time and leave this for
-later.
+While at there, use advise() like other code. We now get "hint: "
+prefix and the output is stderr instead of stdout (which is also the
+reason for the test update because stderr is checked in a following
+test and the extra advice can fail it).
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- contrib/completion/git-completion.bash | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ advice.c              | 2 ++
+ advice.h              | 1 +
+ builtin/am.c          | 6 +-----
+ t/t4254-am-corrupt.sh | 2 +-
+ 4 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1b0c30ed9a..efc930c9d1 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2249,20 +2249,20 @@ _git_config ()
- 		;;
- 	branch.*.*)
- 		local pfx="${cur%.*}." cur_="${cur##*.}"
--		__gitcomp "remote pushremote merge mergeoptions rebase" "$pfx" "$cur_"
-+		__gitcomp "remote pushRemote merge mergeOptions rebase" "$pfx" "$cur_"
- 		return
- 		;;
- 	branch.*)
- 		local pfx="${cur%.*}." cur_="${cur#*.}"
- 		__gitcomp_direct "$(__git_heads "$pfx" "$cur_" ".")"
--		__gitcomp_nl_append $'autosetupmerge\nautosetuprebase\n' "$pfx" "$cur_"
-+		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_"
- 		return
- 		;;
- 	guitool.*.*)
- 		local pfx="${cur%.*}." cur_="${cur##*.}"
- 		__gitcomp "
--			argprompt cmd confirm needsfile noconsole norescan
--			prompt revprompt revunmerged title
-+			argPrompt cmd confirm needsFile noConsole noRescan
-+			prompt revPrompt revUnmerged title
- 			" "$pfx" "$cur_"
- 		return
- 		;;
-@@ -2291,14 +2291,14 @@ _git_config ()
- 		local pfx="${cur%.*}." cur_="${cur##*.}"
- 		__gitcomp "
- 			url proxy fetch push mirror skipDefaultUpdate
--			receivepack uploadpack tagopt pushurl
-+			receivepack uploadpack tagOpt pushurl
- 			" "$pfx" "$cur_"
- 		return
- 		;;
- 	remote.*)
- 		local pfx="${cur%.*}." cur_="${cur#*.}"
- 		__gitcomp_nl "$(__git_remotes)" "$pfx" "$cur_" "."
--		__gitcomp_nl_append "pushdefault" "$pfx" "$cur_"
-+		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_"
- 		return
- 		;;
- 	url.*.*)
+diff --git a/advice.c b/advice.c
+index 2aca11f45e..52aa85bdfd 100644
+--- a/advice.c
++++ b/advice.c
+@@ -17,6 +17,7 @@ int advice_implicit_identity = 1;
+ int advice_detached_head = 1;
+ int advice_set_upstream_failure = 1;
+ int advice_object_name_warning = 1;
++int advice_amworkdir = 1;
+ int advice_rm_hints = 1;
+ int advice_add_embedded_repo = 1;
+ int advice_ignored_hook = 1;
+@@ -68,6 +69,7 @@ static struct {
+ 	{ "detachedHead", &advice_detached_head },
+ 	{ "setupStreamFailure", &advice_set_upstream_failure },
+ 	{ "objectNameWarning", &advice_object_name_warning },
++	{ "amWorkDir", &advice_amworkdir },
+ 	{ "rmHints", &advice_rm_hints },
+ 	{ "addEmbeddedRepo", &advice_add_embedded_repo },
+ 	{ "ignoredHook", &advice_ignored_hook },
+diff --git a/advice.h b/advice.h
+index 9f5064e82a..7e9377864f 100644
+--- a/advice.h
++++ b/advice.h
+@@ -17,6 +17,7 @@ extern int advice_implicit_identity;
+ extern int advice_detached_head;
+ extern int advice_set_upstream_failure;
+ extern int advice_object_name_warning;
++extern int advice_amworkdir;
+ extern int advice_rm_hints;
+ extern int advice_add_embedded_repo;
+ extern int advice_ignored_hook;
+diff --git a/builtin/am.c b/builtin/am.c
+index aa989e7390..735d016525 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1827,15 +1827,11 @@ static void am_run(struct am_state *state, int resume)
+ 		}
+ 
+ 		if (apply_status) {
+-			int advice_amworkdir = 1;
+-
+ 			printf_ln(_("Patch failed at %s %.*s"), msgnum(state),
+ 				linelen(state->msg), state->msg);
+ 
+-			git_config_get_bool("advice.amworkdir", &advice_amworkdir);
+-
+ 			if (advice_amworkdir)
+-				printf_ln(_("Use 'git am --show-current-patch' to see the failed patch"));
++				advise(_("Use 'git am --show-current-patch' to see the failed patch"));
+ 
+ 			die_user_resolve(state);
+ 		}
+diff --git a/t/t4254-am-corrupt.sh b/t/t4254-am-corrupt.sh
+index 168739c721..fd3bdbfe2c 100755
+--- a/t/t4254-am-corrupt.sh
++++ b/t/t4254-am-corrupt.sh
+@@ -25,7 +25,7 @@ test_expect_success setup '
+ #   fatal: unable to write file '(null)' mode 100644: Bad address
+ # Also, it had the unwanted side-effect of deleting f.
+ test_expect_success 'try to apply corrupted patch' '
+-	test_must_fail git am bad-patch.diff 2>actual
++	test_must_fail git -c advice.amWorkDir=false am bad-patch.diff 2>actual
+ '
+ 
+ test_expect_success 'compare diagnostic; ensure file is still here' '
 -- 
 2.17.0.705.g3525833791
 
