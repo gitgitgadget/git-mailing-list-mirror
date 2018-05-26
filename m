@@ -6,112 +6,97 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96CAC1F42D
-	for <e@80x24.org>; Sat, 26 May 2018 02:37:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04E671F42D
+	for <e@80x24.org>; Sat, 26 May 2018 02:54:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030982AbeEZChq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 May 2018 22:37:46 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:50549 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030648AbeEZChp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 May 2018 22:37:45 -0400
-Received: by mail-wm0-f66.google.com with SMTP id t11-v6so18750389wmt.0
-        for <git@vger.kernel.org>; Fri, 25 May 2018 19:37:45 -0700 (PDT)
+        id S1030998AbeEZCyj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 May 2018 22:54:39 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:34432 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030929AbeEZCyi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 May 2018 22:54:38 -0400
+Received: by mail-wr0-f196.google.com with SMTP id j1-v6so12086558wrm.1
+        for <git@vger.kernel.org>; Fri, 25 May 2018 19:54:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=jmgIrfwXEikSRaisXHbgxMTrmCyxC0zALOS3WeeF24g=;
-        b=eO5X97EV5Ml3xLSIOHMDzLQxba7H+Zrh5E3/WwG8x8AD/ScHYUvXUV/yiLBHFDjy+E
-         Ni2hps402bCOeS4HtPhrul8oy+cam7ImTJ3U7AkdHKXLVCy9n0ltMf5S51W+A7vJUsXe
-         /h3Awcc3swW/18HcvgGEOJQ2SfpF28j7jNPGc1jk7+BQezeAxDzSgd4DUpGOPWA4BH1T
-         QaJqyxjmT8cUmqs4VZ5KLGvFDekiKpW9r0rG25+Rscl3JdBwoPzCjW3Rg6FQWhrh1mAu
-         JJ1qYcE2jPo85OUVsrSnReBNjnP7nmCf2KkW0LcQ9ewShAnFu0nTR9EnkP2nmhtD+Pwc
-         lqSQ==
+         :user-agent:mime-version;
+        bh=j16W6IjY3uQl+R6VFXA9kulyPqkoMRlM4st8ka/20pg=;
+        b=DJRkmmxnEsEi47vvgzNlC7ECFuqnOXB1ZbSAsexcnMvqmv7kN1nmqC12wHJ9LFxA+G
+         y5FaG/fsdHgDcsYv2BPOjUBG8/Wh04q6ufHlpYU+kBvo4YfJ9WcP2jOUN9x8xVw/tsZh
+         3MboX/INfJfmbZDiKmpabDTRh2niTAkqM6Vkbs+/VEDVABWiv2GfYvbDuqSm5OEtiLPF
+         5gr4hzrOzT/eHkryc/njYYtUbPnp85WG39/42s0aYwpPwI4XEzzeR72a5G2QpNKYgF0p
+         DiIiYchVJQ1q7sXo6z0CM67LQFWw1mzJzMdBiUGYf5GSibOTBWttEp85L3REu/8pQGtD
+         KCEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=jmgIrfwXEikSRaisXHbgxMTrmCyxC0zALOS3WeeF24g=;
-        b=jm3ngKLoqPCSAkmZa9tGIcwpB1+F2SrrMDnPLdP30+5UgQWojsvMPpZsJ8wU6nJ4ap
-         wtPxLdj1YWHoCh+2I0S5Nz1OC0GbRM6n02faWvN+4CYulSGcaXV64sbd36Dapwzk/vT8
-         WGhlf5YQ9BBwXBetlQZNFptm7k0F6+4tOdg62uE3wMic75zV4KvZHFxuVekCc5lJW5i9
-         rXs9T5i4bQSSCqHM8dZonyU8rmlbGF7CO/ocz52jCDT5+3bMERQgEsFrG59CykdnKlMn
-         lOFkjwdmO7PX89PGuZX0Ks9wb+OJ05odAoAsay1ThCr4CvvFJgAqJGR9HvV84v1x1lK+
-         m8UA==
-X-Gm-Message-State: ALKqPweoRRd2hBUvguQGADPFyJhRKkkZvAoQngVDKxaroU9433xcmGdd
-        GiS7b7HLHuLRBhAh6t+hkxE=
-X-Google-Smtp-Source: ADUXVKJA+74NlfmTtmGduvMqTOaacF0j/404kr4rIh6azXiuJqutv9okeRwlocBiznEPsDDjtkCtzA==
-X-Received: by 2002:a1c:e906:: with SMTP id q6-v6mr3214193wmc.23.1527302264183;
-        Fri, 25 May 2018 19:37:44 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y7-v6sm16018916wrh.86.2018.05.25.19.37.43
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=j16W6IjY3uQl+R6VFXA9kulyPqkoMRlM4st8ka/20pg=;
+        b=QY9fMedl7k+LQEQHq1nQFHfD2bmSYp+NR8ZAu0W01ghd9FiRBNl1NtVt2ex1q9Hr8b
+         JTL6Obzc1pcswnplkEl2AAj5Jt6ECVx/5VBHgSqfSjwyetRZbbL+JHzQ1Tz7jUzB1Tol
+         CPREUp8B4qzRuctSfpZ6Z8G9EEFnga2y/LJYOB79NBL8LALkLHxXixyvFGF8/eq5XAum
+         BvtDy627U7HJ3LFjiyiy7ARtW39X1gPyIGrSiewOXp/O5NCgJ6k3+tVUwS3dw4TuyWxw
+         quIbFeZaGu7aGvN6ckZGz6OOa0bimV2HI2YIUawGMH9GDk/fTnoUHhTRxoxKAQycOb4x
+         RyeA==
+X-Gm-Message-State: ALKqPwfSA5ahFXzlosB9SxLbkSHzXxPm6ezGN6dZGT0XOY8naU64zBdF
+        rEO/XtRAdDnIfkxBoj5aMMc=
+X-Google-Smtp-Source: AB8JxZodjhM8661oEALt49wleEQdDLLqp4OhvhgiEviJxlTujDM3ggRbdymGBfzv12ErCCoY7l00wg==
+X-Received: by 2002:adf:c613:: with SMTP id n19-v6mr3791829wrg.177.1527303276811;
+        Fri, 25 May 2018 19:54:36 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id o12-v6sm17526418wrf.30.2018.05.25.19.54.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 25 May 2018 19:37:43 -0700 (PDT)
+        Fri, 25 May 2018 19:54:36 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] branch: issue "-l" deprecation warning after pager starts
-References: <e440f6e0-6d7d-0e72-b875-de290cea6b94@gmail.com>
-        <87fu2qbojy.fsf@evledraar.gmail.com>
-        <20180517133601.GC17548@sigill.intra.peff.net>
-        <1527174618.10589.4.camel@gmail.com>
-        <20180524192214.GA21535@sigill.intra.peff.net>
-        <20180524193105.GB21535@sigill.intra.peff.net>
-        <xmqqh8mwpkgu.fsf@gitster-ct.c.googlers.com>
-        <20180525024002.GA1998@sigill.intra.peff.net>
-        <xmqqd0xknmf1.fsf@gitster-ct.c.googlers.com>
-        <xmqq8t88nllj.fsf@gitster-ct.c.googlers.com>
-        <20180525171050.GC10461@sigill.intra.peff.net>
-Date:   Sat, 26 May 2018 11:37:43 +0900
-In-Reply-To: <20180525171050.GC10461@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 25 May 2018 13:10:51 -0400")
-Message-ID: <xmqqsh6fm9ag.fsf@gitster-ct.c.googlers.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk, Wink Saville <wink@saville.com>
+Subject: Re: [GSoC][PATCH v3 1/4] rebase: duplicate git-rebase--interactive.sh to git-rebase--preserve-merges.sh
+References: <20180522211625.23893-1-alban.gruin@gmail.com>
+        <20180524114958.26521-1-alban.gruin@gmail.com>
+        <20180524114958.26521-2-alban.gruin@gmail.com>
+Date:   Sat, 26 May 2018 11:54:35 +0900
+In-Reply-To: <20180524114958.26521-2-alban.gruin@gmail.com> (Alban Gruin's
+        message of "Thu, 24 May 2018 13:49:55 +0200")
+Message-ID: <xmqqk1rrm8ic.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Alban Gruin <alban.gruin@gmail.com> writes:
 
->> By the way, this is one of these times when I feel that we should
->> have a better multi-line message support in die/error/warning/info
->> functions.  Ideally, I should be able to write
->> 
->> 	warning(_("the '-l' option is an alias for '--create-reflog' and\n"
->> 		  "has no effect in list mode, This option will soon be\n"
->> 		  "removed and you should omit it (or use '--list' instead)."));
->> 
->> and warning() would:
->> 
->>  - do the sprintf formatting thing as necessary to prepare a long multi-line
->>    message;
->> 
->>  - chomp that into lines at '\n' boundary; and
->> 
->>  - give each of these lines with _("warning: ") prefixed.
->> 
->> That way, translators can choose to make the resulting message to
->> different number of lines from the original easily.
+> This duplicates git-rebase--interactive.sh to
+> git-rebase--preserve-merges.sh. This is done to split -p from -i. No
+> modifications are made to this file here, but any code that is not used by -p
+> will be stripped in the next commit.
 >
-> Yep, I totally agree. In past discussions I was thinking mostly of
-> the pain of writing these multi-line messages. But I imagine it is
-> absolute hell for translators, and we should fix it for that reason.
->
-> (Also, I guess this message probably ought to be marked for
-> translation).
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>  .gitignore                     |    1 +
+>  Makefile                       |    2 +
+>  git-rebase--preserve-merges.sh | 1069 ++++++++++++++++++++++++++++++++++++++++
 
-Needless to tell you, I worked backwards when noticing that these
-three warning() lines are not marked for translation ;-).
+I would normally say "Yuck" to an approach like this series, because
+it does not force us to make any explicit effort to share as much
+code between the two codepaths.
 
-But of course, fixing this in a naïve way will involve memory
-allocation during execution of die(), which may well be due to OOM,
-which is why we knew the need but haven't found a good solution to
-it.
+But the codepath for "-p" is something that has been abandoned even
+by its original author and would be going away, so the net effect of
+this series to the project in the longer term is to remove the "dead
+code" that will be made unnecessary from "git-rebase--interactive"
+when support for "-p" gets discarded in a distant future, and do so
+before we actually remove "-p" (and replace it with the "recreate
+merges" feature).
+
+So I won't have objection to the approach taken in this series.  I
+may still raise issues on individual changes, though.
+
+Thanks.
