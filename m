@@ -4,27 +4,27 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1F8D1FD4F
-	for <e@80x24.org>; Sun, 27 May 2018 17:25:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 766AD1F42D
+	for <e@80x24.org>; Sun, 27 May 2018 17:25:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032821AbeE0RZG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 May 2018 13:25:06 -0400
+        id S1032837AbeE0RZN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 May 2018 13:25:13 -0400
 Received: from smtp-out-3.talktalk.net ([62.24.135.67]:26592 "EHLO
         smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032764AbeE0RZG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 May 2018 13:25:06 -0400
+        with ESMTP id S1032826AbeE0RZM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 May 2018 13:25:12 -0400
 Received: from PhilipOakley ([92.29.14.162])
         by smtp.talktalk.net with SMTP
-        id MzPgfaG9wbZX5MzPjfQXhQ; Sun, 27 May 2018 18:25:04 +0100
+        id MzPkfaGB5bZX5MzPofQXhW; Sun, 27 May 2018 18:25:11 +0100
 X-Originating-IP: [92.29.14.162]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
  a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
  a=xtxXYLxNAAAA:8 a=pGLkceISAAAA:8 a=pn_g1Qv9Q6IsabN1H3gA:9 a=QEXdDO2ut3YA:10
  a=xts0dhWdiJbonKbuqhAr:22
-Message-ID: <C6439659F55F4F3ABB149E7128BE00F4@PhilipOakley>
+Message-ID: <D18E1FF6FF904372AB0343830C751094@PhilipOakley>
 Reply-To: "Philip Oakley" <philipoakley@iee.org>
 From:   "Philip Oakley" <philipoakley@iee.org>
 To:     <phillip.wood@dunelm.org.uk>,
@@ -46,8 +46,8 @@ X-Mailer: Microsoft Outlook Express 6.00.2900.5931
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 X-Antivirus: AVG (VPS 180527-2, 27/05/2018), Outbound message
 X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfF+dIhK7di75WzmrXu5JaycAMQddEi0sqFmLHQmY/4hv8fRhTBNu/WsRJShGUoq0pp2WfCtetEIGu21hlke1Dimc6nrjYEpndVVc51eXjZeCKKs3Ut7c
- uEdurwxE1UW5hYnf0yfhprEGCzqPiHosPYNByu8x2XK7ulYkGZGYL7n7iFBE7nsVV0HJYU07OIr8Kd3T0Xc2ti4h7kf7pyVluEHY5+x5oEoeU9+PLNgVsBVP
+X-CMAE-Envelope: MS4wfLGqaU3ef5iSUFFKyfxuzk1gHiM1OH8nwJ26Rfv6Y67KWOFqsbqu0tU6ZuEqCuVy7i7lPmyGnF1utUhpFHqe/oNPP/h/gffaRYpOaQWa4mkwg8Et4LqG
+ 1uvQ4Z9MAw9RUToF7nK4SJelrkwhdsBiZvmujmx1p1iuQGB+SPuX/w+ZKtORzB4IPFAtHARCm2Eq2Z5oQy9ibnYz+ljphBvTyTThwaebOk/Utvrjjo4eph1a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
