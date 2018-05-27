@@ -2,95 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C43431F42D
-	for <e@80x24.org>; Sun, 27 May 2018 05:33:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35CFB1F42D
+	for <e@80x24.org>; Sun, 27 May 2018 05:33:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755158AbeE0Etn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 May 2018 00:49:43 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:62432 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755118AbeE0Etm (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 27 May 2018 00:49:42 -0400
-X-AuditID: 12074411-a87ff70000001186-d7-5b0a38e52eec
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 52.E5.04486.5E83A0B5; Sun, 27 May 2018 00:49:41 -0400 (EDT)
-Received: from mail-wm0-f46.google.com (mail-wm0-f46.google.com [74.125.82.46])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w4R4ndVY020376
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Sun, 27 May 2018 00:49:40 -0400
-Received: by mail-wm0-f46.google.com with SMTP id a8-v6so23755816wmg.5
-        for <git@vger.kernel.org>; Sat, 26 May 2018 21:49:40 -0700 (PDT)
-X-Gm-Message-State: ALKqPwdg9cs2vh14mz7fOHGVaubaXtBe5MTTXB+CcXfXg1BOw3mEVmlT
-        Kb08qU7zDeVi6JcFrcdANO/mp7AX6x0BPzO8n6g=
-X-Google-Smtp-Source: AB8JxZoKsuFBqWUWBuavNqnWoposJuysh+giIHr+eDw4vykiNnHX5EW5idqgISq69eYVjKPPXSts2noSbKm1a/5SOdw=
-X-Received: by 2002:a2e:3806:: with SMTP id f6-v6mr5406858lja.25.1527396579574;
- Sat, 26 May 2018 21:49:39 -0700 (PDT)
+        id S1755162AbeE0FCh (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 May 2018 01:02:37 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:43353 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755118AbeE0FCg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 May 2018 01:02:36 -0400
+Received: by mail-oi0-f68.google.com with SMTP id t133-v6so4225773oif.10
+        for <git@vger.kernel.org>; Sat, 26 May 2018 22:02:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=c9Ly7Xsutv7lREplwy8Q4/OQWU+s/pis4zjY8NYoGso=;
+        b=g3f93vMVgwwGgOF1NRy0q2lpP20afqkiKHzRF2ATYs/K7pbdcEgt81F0pC04wGQXoQ
+         3wo2/GIbNdVEicYJI3OoZEcNGi8tDQ8cRycJDRdL7Dl9d5Z8vLhxgWTWYkYvRH2Tzyz/
+         FxzIxj33cZ5N7pITFxE2Ce4D5CVgbJwWLGZgFqhiLqwdoxT5gK6Rknm4s7cxIF+iPFWd
+         nBEmGbO4NmHhKjXQC78jj2HScpaNSOTf7yWTlx9frxmqZ1KKiBCxbAQOijr4ErSKYMqR
+         HY+19oHyGS2bPsWDgVteU4QjoSUfPlfmN4m//9uM3e5ADAGwjDoJCuwiTUfNtqSeEwEB
+         oYUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=c9Ly7Xsutv7lREplwy8Q4/OQWU+s/pis4zjY8NYoGso=;
+        b=e1bM/F1eHcGwQuwiDEFTOOTmH0+Gr/YkUHSGYaoKqnQZW5fX2qdUOmgSqOF5nadwXC
+         yTWGJ1yrNZ3lAVeZEXfvefcwy1jNkD/Thx8bMJgSZEcRACZvgUSOIpsl+uREfZdYnnYu
+         pJBttVaAVxfNLE8/VXYghqXBaSC8lRBK4hEWGv3TIqbeofRBTFup+848Eb6d6uRQX3oJ
+         egY3Z7bHv3EHdrJB5XuHZc58fCAxEWsl2BtIjO408Pt/+xnzA4RDcmtPg4nIgFYAZ7Tk
+         X5KcNAo6/lV+OMXJyvUqlUca5qr5lDT4I9GqCkqIcTx5Vv8GGcoAs6qVWNnF5Un/rnXF
+         v0Xw==
+X-Gm-Message-State: ALKqPwd4sOttBYJxAFUK33PgpFTq28fO6G6dXD7b8HdNaQmUiV2GT+gc
+        xO3V9XdlB2+CFMeZr+93DXvLI9MFI5tCMDU3Nig=
+X-Google-Smtp-Source: ADUXVKKBz616KckPPMDhO5g1I5AnjS7UgA4+nJxLqmmiSO4MgxUscUmlcQ1j5vjlnZRF+PSdHAQTuPytvWjtF0m5l8k=
+X-Received: by 2002:aca:aad3:: with SMTP id t202-v6mr4895458oie.30.1527397355758;
+ Sat, 26 May 2018 22:02:35 -0700 (PDT)
 MIME-Version: 1.0
-Reply-To: mhagger@alum.mit.edu
-Received: by 2002:a2e:9ec3:0:0:0:0:0 with HTTP; Sat, 26 May 2018 21:49:38
+Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Sat, 26 May 2018 22:02:05
  -0700 (PDT)
-In-Reply-To: <20180526064745.20199-1-chriscool@tuxfamily.org>
-References: <20180526064745.20199-1-chriscool@tuxfamily.org>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Date:   Sun, 27 May 2018 06:49:38 +0200
-X-Gmail-Original-Message-ID: <CAMy9T_H7OVJoDQGFNnM-GrCE9jhSqNDALFL1TM45TMcwPx5nnQ@mail.gmail.com>
-Message-ID: <CAMy9T_H7OVJoDQGFNnM-GrCE9jhSqNDALFL1TM45TMcwPx5nnQ@mail.gmail.com>
-Subject: Re: [PATCH] t990X: use '.git/objects' as 'deep inside .git' path
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
-        David Turner <novalis@novalis.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        David Turner <dturner@twopensource.com>
+In-Reply-To: <xmqq8t86m0m3.fsf@gitster-ct.c.googlers.com>
+References: <20180525225601.22575-1-lintonrjeremy@gmail.com>
+ <CACsJy8C4zNZAe6Vw-mz8r8HueYdQKs4ZhMOQYX0v7ypfHdmShg@mail.gmail.com> <xmqq8t86m0m3.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 27 May 2018 07:02:05 +0200
+Message-ID: <CACsJy8CNmDkxzhkdfwjVHjGF4JeUzzPHGnp1x647NxU-GxkxvA@mail.gmail.com>
+Subject: Re: [PATCH] packfile: Correct zlib buffer handling
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeremy Linton <lintonrjeremy@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqPvUgivaYMZveYuuK91MDowenzfJ
-        BTBGcdmkpOZklqUW6dslcGXcntXAWPCepaJnxmnWBsafzF2MnBwSAiYSD3dOZOti5OIQEtjB
-        JDHv/EwWCOchk8S21sWsEM4ERokT/yazQ7SUS2yY/pgJwi6SOHNnI5DNARaf81QNJMwrIChx
-        cuYTFhBbSEBO4tWGG4wQdrjE16edYK2cArYSHR/7mSDiNhLzX/wFq2cT0JVY1NMMFmcRUJVY
-        c3IpO8T4RIkHP3MgxgdIfPw/nREkLCzgKdG+IBckLCJgKDHn9xJ2kIuZBQ6ySjRebwIbySyg
-        KdG6/Tf7BEaRWUium4UktYCRaRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrqlebmaJXmpK6SZG
-        SGgL7mCccVLuEKMAB6MSD++H2ZzRQqyJZcWVuYcYJTmYlER5LSZyRAvxJeWnVGYkFmfEF5Xm
-        pBYfYpTgYFYS4eXS5YoW4k1JrKxKLcqHSUlzsCiJ8zKb7I0SEkhPLEnNTk0tSC2CycpwcChJ
-        8L40B2oULEpNT61Iy8wpQUgzcXCCDOcBGq5qATK8uCAxtzgzHSJ/ilGXY96WST3MQix5+Xmp
-        UuK8iiCDBECKMkrz4ObAUtIrRnGgt4R5P4NU8QDTGdykV0BLmICWrFvNDrKkJBEhJdXAaCCt
-        6iccO2WNzqkpSiZfpa2WPs/lvXpUlF15p6Lptl7f97s1r1Wrv/VY/0FN8cSWlnfHyzJSLP8/
-        DX/xr9jp+ZtlfrEC+jKijpPum2bG7Vn+XUfxXDRfX5v+6jOXAi7Iq0tzP5AMVlh/6mGHpK3G
-        WhXm/Pu39nhcOdK1pm761YwHh/7nPVqzS4mlOCPRUIu5qDgRAOTbKX8kAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 26, 2018 at 8:47 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> Tests t9902-completion.sh and t9903-bash-prompt.sh each have tests
-> that check what happens when we are "in the '.git' directory" and
-> when we are "deep inside the '.git' directory".
+On Sun, May 27, 2018 at 1:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> To test the case when we are "deep inside the '.git' directory" the
-> test scripts used to perform a `cd .git/refs/heads`.
+>> On Sat, May 26, 2018 at 12:56 AM, Jeremy Linton <lintonrjeremy@gmail.com> wrote:
+>>> @@ -1416,7 +1416,7 @@ static void *unpack_compressed_entry(struct packed_git *p,
+>>>                 return NULL;
+>>>         memset(&stream, 0, sizeof(stream));
+>>>         stream.next_out = buffer;
+>>> -       stream.avail_out = size + 1;
+>>> +       stream.avail_out = size;
+>>
+>> You may want to include in your commit message a reference to
+>> 39eea7bdd9 (Fix incorrect error check while reading deflated pack data
+>> - 2009-10-21) which adds this plus one with a fascinating story
+>> behind.
 >
-> As there are plans to implement other ref storage systems, let's
-> use '.git/objects' instead of '.git/refs/heads' as the "deep inside
-> the '.git' directory" path.
+> A bit puzzled---are you saying that this recent patch breaks the old
+> fix and must be done in some other way?
 
-Seems reasonable to me. +1.
-
-Michael
+No. I actually wanted to answer that question when I tried to track
+down the commit that adds " + 1" but I did not spend enough time to
+understand the old problem. I guess your puzzle means you didn't think
+it would break anything, which is good.
+-- 
+Duy
