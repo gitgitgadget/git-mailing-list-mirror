@@ -2,153 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 414031F42D
-	for <e@80x24.org>; Sun, 27 May 2018 18:04:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17C711F42D
+	for <e@80x24.org>; Sun, 27 May 2018 18:28:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032874AbeE0SE3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 May 2018 14:04:29 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:37573 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032846AbeE0SE2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 May 2018 14:04:28 -0400
-Received: by mail-wm0-f68.google.com with SMTP id l1-v6so26536244wmb.2
-        for <git@vger.kernel.org>; Sun, 27 May 2018 11:04:28 -0700 (PDT)
+        id S1032874AbeE0S2K (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 May 2018 14:28:10 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:54873 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751425AbeE0S2J (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 May 2018 14:28:09 -0400
+Received: by mail-wm0-f67.google.com with SMTP id f6-v6so26532798wmc.4
+        for <git@vger.kernel.org>; Sun, 27 May 2018 11:28:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=AgPTS0sweyPdVHAbMp4FYd0FXPqgVMjgbyO3aqoPAfk=;
-        b=fNuKdQ2OmE3MUYvi4gtYC8lVEtv0SV0Q2z7SvyDn6IFywWeZWnwKfZ4C1gyLD3TDdd
-         BIQPK1Vc33DWa38KxTRuEPIrSxAc/KpyQNHmhqZM7HoNRXLt6WOi6v1SiEsIYwJRtWkO
-         3d+lXR42zg7+g1c4lULNticuS36Wbhdqs2OWNfF73jsGPx/IsysPhzOie8BsIYaYnywp
-         5Bc8hgfSP5mDeec0YrWwMxp93bTpZzpSxrUlvkZ5KPv7JK0QqQMYf0DernIQQLmfsgPf
-         Vkv4vY/V2GqhjHWsXMZBg5rC6oehOJRvZuPLUCa8oQWY3nGrEfW3knyptyFuFCxAN0tP
-         ZVRQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9HMXQKDGQeFuDevU9mlSqfh25GPTithy1m97uAMYZdg=;
+        b=YkBil2vI6qHsyvWFVNoE916tl+QoALs1kn7ulHO1gLk/HLvLTMdgmtPMB/pLYwyMHL
+         ViDdLquTrN14KRBjg4sxoLbkyAIAg1XKw6UMV4dBNuG4lOYpFLWhRhXR+Oaqv0EGmB/x
+         c1+59a93MQa0hBmIiLfC5CjgLy2CybgJrYNomfR6gh8o5yHB4lxXOinn1H0aGpHsnM2K
+         t6FBiC7EIf+05uuSIq9mKLZXqsZWSNEolzjeIzmtri8QpDZaoAplkIprjU7HccFgnLDa
+         DGm10xPWb61VXmq8WFUUQWr0LjK1PTB6VifdWzJxta6zJD+AiwUNeYJWPEBGIs5dosKC
+         a/3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=AgPTS0sweyPdVHAbMp4FYd0FXPqgVMjgbyO3aqoPAfk=;
-        b=dghjWf2PTOaE9te4FTIFJuOS4as0XGmNLVc/GOFi7RIJSjFDjZOALkh6ksKVHP0yxs
-         oqMpE38B1wIKkmG+6CaJOQ/yGRGrqRBV8kiuLu3DNOGqdbQp8TONrlUrmZZHmK6TXGtv
-         PJ+lV8Vbc3T3jkBTt4H1GwvwsyWaZp/K91Z5OKv0UbfpZK8cTiGS+nNGgjsz/kdmdaOU
-         0OI5f5MApcqMYx/FMhXwYJoiENJQyBSB76hhelrvn31wd8Mq77Y6ic7L5XWahBqTd8wt
-         Um0CPOaqbzc0NcJ2NUARtd4t32uqKBohy2cnroz+gThPIu4DDZUDjxhRPxoDXvv7TAIB
-         xoUw==
-X-Gm-Message-State: ALKqPweytivOnIB4zaCh1o7+kNjQQbVnbfZ269/jIIXWgiRACYKUqWvX
-        AXcPm+6CIh+SO3g23mhqW/xvG4cG
-X-Google-Smtp-Source: AB8JxZof/T4lQFH67gDNCoqfc0h2sIWV/iw80zTYQIQce2BdEcXkuNf6X45OVG6K45SVccNzhtglSw==
-X-Received: by 2002:a1c:3b87:: with SMTP id i129-v6mr7529910wma.51.1527444267500;
-        Sun, 27 May 2018 11:04:27 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egb161.neoplus.adsl.tpnet.pl. [83.21.65.161])
-        by smtp.gmail.com with ESMTPSA id 131-v6sm16226172wms.34.2018.05.27.11.04.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 27 May 2018 11:04:25 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster\@pobox.com" <gitster@pobox.com>,
-        "stolee\@gmail.com" <stolee@gmail.com>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "marten.agren\@gmail.com" <marten.agren@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>
-Subject: Re: [PATCH v3 04/20] commit: force commit to parse from object database
-References: <20180511211504.79877-1-dstolee@microsoft.com>
-        <20180524162504.158394-1-dstolee@microsoft.com>
-        <20180524162504.158394-5-dstolee@microsoft.com>
-Date:   Sun, 27 May 2018 20:04:25 +0200
-In-Reply-To: <20180524162504.158394-5-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Thu, 24 May 2018 16:25:33 +0000")
-Message-ID: <86o9h1ynyu.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9HMXQKDGQeFuDevU9mlSqfh25GPTithy1m97uAMYZdg=;
+        b=pzy+8dEkWNHL0zOKDZ3miVh+q7EvykVhRh/lizn6nyQu6j2NUvhQaoIBEny6/r02Yc
+         xVE6EAkiXfufkJZvtbPYlWtarTeupQG/5B6yforAHsdJAc6mq0900H+2eqtfOHPMRU3e
+         FleP3sm1YWZEzS7FXD2+gMSVZ08YDMuMOz+IKpX0LIOtdqPi2gc+D62viLT7vdtfcqwA
+         FeEhwKA3IJObfwT2TJmQZhlRxRmILoc+zfnsUkA4SoaCrmBLGhDT6U+vgxjOEBiTbp57
+         PHDxIVRE6VpOCip6al8w4ROvKfBjVeUZoc+sdkYM1/I0Ko7jxSWt3uqQbaOsVjr2JeLn
+         vu1g==
+X-Gm-Message-State: ALKqPwfMNXcWaGTjlg9sB09CupJkGdb7ei6P/xCK0gs0tqnLjV9pcf4m
+        /WCo0BbRy+0HvXnv2Am/pz51Ow==
+X-Google-Smtp-Source: AB8JxZpS3ly61gqPSbgOSc1eoQzJf1rbDF77hHvOYEb8FhOWRbVRI7kyMqFce9oXWPygE54bMaaQsg==
+X-Received: by 2002:a2e:1218:: with SMTP id t24-v6mr6658980lje.143.1527445688153;
+        Sun, 27 May 2018 11:28:08 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id a11-v6sm128910lji.73.2018.05.27.11.28.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 27 May 2018 11:28:07 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
+        sunshine@sunshineco.com, szeder.dev@gmail.com
+Subject: [PATCH v2 12/11] completion: complete general config vars in two steps
+Date:   Sun, 27 May 2018 20:28:00 +0200
+Message-Id: <20180527182800.25109-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.705.g3525833791
+In-Reply-To: <20180526135531.4516-12-pclouds@gmail.com>
+References: <20180526135531.4516-12-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+There are 581 config variables as of now when you do "git config
+<tab>" which can fill up a few screens and is not very helpful when
+you have to look through columns of text to find what you want.
 
-> In anticipation of verifying commit-graph file contents against the
-> object database, create parse_commit_internal() to allow side-stepping
-> the commit-graph file and parse directly from the object database.
->
-> Due to the use of generation numbers, this method should not be called
-> unless the intention is explicit in avoiding commits from the
-> commit-graph file.
+This patch instead shows you only first level when you do
 
-A straightforward addition of a parameter to parse_commit() and renaming
-it to parse_commit_internal(), while changing parse_commit() to be a
-simple wrapper around newly introduced parse_commit_internal(), passing
-the default arguments.
+    git config <tab>
 
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  commit.c | 9 +++++++--
->  commit.h | 1 +
->  2 files changed, 8 insertions(+), 2 deletions(-)
+There are 78 items, which use up 8 rows in my screen. Compared to
+screens of text, it's pretty good. Once you have chosen you first
+level, e.g. color:
 
-Nice and simple refactoring in preparation for future changes.
+    git config color.<tab>
 
->
-> diff --git a/commit.c b/commit.c
-> index 1d28677dfb..6eaed0174c 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -392,7 +392,7 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
->  	return 0;
->  }
->  
-> -int parse_commit_gently(struct commit *item, int quiet_on_missing)
-> +int parse_commit_internal(struct commit *item, int quiet_on_missing, int use_commit_graph)
+will show you all color.*
 
-I guess that the "new" parse_commit_internal() function was not made
-static despite the *_internal() in the name because it would need to be
-used from commit-graph.c, isn't it?
+This is not a new idea. branch.* and remote.* completion already does
+this for second and third levels. For those variables, you'll need to
+<tab> three times to get full variable name.
 
-I don't think we would need more similar options, so *_with_flags()
-would be YAGNI overkill.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ I mentioned about this a while back in the --no-... completion RFC.
+ It turns out not that hard to do, especially when branch.* and
+ remote.* already kinda set a precedence.
 
->  {
->  	enum object_type type;
->  	void *buffer;
-> @@ -403,7 +403,7 @@ int parse_commit_gently(struct commit *item, int quiet_on_missing)
->  		return -1;
->  	if (item->object.parsed)
->  		return 0;
-> -	if (parse_commit_in_graph(item))
-> +	if (use_commit_graph && parse_commit_in_graph(item))
->  		return 0;
->  	buffer = read_sha1_file(item->object.oid.hash, &type, &size);
->  	if (!buffer)
-> @@ -424,6 +424,11 @@ int parse_commit_gently(struct commit *item, int quiet_on_missing)
->  	return ret;
->  }
->  
-> +int parse_commit_gently(struct commit *item, int quiet_on_missing)
-> +{
-> +	return parse_commit_internal(item, quiet_on_missing, 1);
-> +}
-> +
->  void parse_commit_or_die(struct commit *item)
->  {
->  	if (parse_commit(item))
-> diff --git a/commit.h b/commit.h
-> index b5afde1ae9..5fde74fcd7 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -73,6 +73,7 @@ struct commit *lookup_commit_reference_by_name(const char *name);
->  struct commit *lookup_commit_or_die(const struct object_id *oid, const char *ref_name);
->  
->  int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long size, int check_graph);
-> +int parse_commit_internal(struct commit *item, int quiet_on_missing, int use_commit_graph);
->  int parse_commit_gently(struct commit *item, int quiet_on_missing);
->  static inline int parse_commit(struct commit *item)
->  {
+ contrib/completion/git-completion.bash | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 2cbd14b346..ab026776df 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2314,9 +2314,14 @@ _git_config ()
+ 		__gitcomp "insteadOf pushInsteadOf" "$pfx" "$cur_"
+ 		return
+ 		;;
++	*.*)
++		__git_compute_config_vars
++		__gitcomp "$__git_config_vars"
++		;;
++	*)
++		__git_compute_config_vars
++		__gitcomp "$(echo "$__git_config_vars" | sed 's/\.[^ ]*/./g')"
+ 	esac
+-	__git_compute_config_vars
+-	__gitcomp "$__git_config_vars"
+ }
+ 
+ _git_remote ()
+-- 
+2.17.0.705.g3525833791
+
