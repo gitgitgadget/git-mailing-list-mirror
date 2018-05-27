@@ -2,91 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35CFB1F42D
-	for <e@80x24.org>; Sun, 27 May 2018 05:33:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21EF71F51C
+	for <e@80x24.org>; Sun, 27 May 2018 06:57:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755162AbeE0FCh (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 May 2018 01:02:37 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:43353 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755118AbeE0FCg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 May 2018 01:02:36 -0400
-Received: by mail-oi0-f68.google.com with SMTP id t133-v6so4225773oif.10
-        for <git@vger.kernel.org>; Sat, 26 May 2018 22:02:36 -0700 (PDT)
+        id S934407AbeE0Gvk (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 May 2018 02:51:40 -0400
+Received: from mail-ua0-f180.google.com ([209.85.217.180]:38343 "EHLO
+        mail-ua0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933685AbeE0Gvk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 May 2018 02:51:40 -0400
+Received: by mail-ua0-f180.google.com with SMTP id y8-v6so6005242ual.5
+        for <git@vger.kernel.org>; Sat, 26 May 2018 23:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=c9Ly7Xsutv7lREplwy8Q4/OQWU+s/pis4zjY8NYoGso=;
-        b=g3f93vMVgwwGgOF1NRy0q2lpP20afqkiKHzRF2ATYs/K7pbdcEgt81F0pC04wGQXoQ
-         3wo2/GIbNdVEicYJI3OoZEcNGi8tDQ8cRycJDRdL7Dl9d5Z8vLhxgWTWYkYvRH2Tzyz/
-         FxzIxj33cZ5N7pITFxE2Ce4D5CVgbJwWLGZgFqhiLqwdoxT5gK6Rknm4s7cxIF+iPFWd
-         nBEmGbO4NmHhKjXQC78jj2HScpaNSOTf7yWTlx9frxmqZ1KKiBCxbAQOijr4ErSKYMqR
-         HY+19oHyGS2bPsWDgVteU4QjoSUfPlfmN4m//9uM3e5ADAGwjDoJCuwiTUfNtqSeEwEB
-         oYUw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=/T12mdbvm8SIOJlmMeb7g/TWefyoNcbhtBUBCiuSDOY=;
+        b=fpfOCefrmlaDxW+Dxigeu4e8+NJwZ1UXm8PaZGwIgyzz3/pCOWjOBUTVdaBkHKFOjF
+         DA32ZCUYM9BpTygreGA+WJX6X6g92yx9MwvSUWIkcAlelo3ZcfY5B7ycstlV3Nfepj/b
+         38qDEsyFUn5xH82zqDdA+Q6cQpsK4qUJl4disJb3r/2HvyebuWLQziS5YUcWeYCuwpMl
+         UTrL24xA4isgifwNPMuzfTPkUdrIg79fzTsXB8xIeuzA7rYcM8tEokHFhWAt7nV4+Eyx
+         gR7AUHjmz1x91sIonaYO32G06iC47SvO4WKXRH8NrtXH5HbplqrCIPbtRk6d43SMjQxS
+         H5FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=c9Ly7Xsutv7lREplwy8Q4/OQWU+s/pis4zjY8NYoGso=;
-        b=e1bM/F1eHcGwQuwiDEFTOOTmH0+Gr/YkUHSGYaoKqnQZW5fX2qdUOmgSqOF5nadwXC
-         yTWGJ1yrNZ3lAVeZEXfvefcwy1jNkD/Thx8bMJgSZEcRACZvgUSOIpsl+uREfZdYnnYu
-         pJBttVaAVxfNLE8/VXYghqXBaSC8lRBK4hEWGv3TIqbeofRBTFup+848Eb6d6uRQX3oJ
-         egY3Z7bHv3EHdrJB5XuHZc58fCAxEWsl2BtIjO408Pt/+xnzA4RDcmtPg4nIgFYAZ7Tk
-         X5KcNAo6/lV+OMXJyvUqlUca5qr5lDT4I9GqCkqIcTx5Vv8GGcoAs6qVWNnF5Un/rnXF
-         v0Xw==
-X-Gm-Message-State: ALKqPwd4sOttBYJxAFUK33PgpFTq28fO6G6dXD7b8HdNaQmUiV2GT+gc
-        xO3V9XdlB2+CFMeZr+93DXvLI9MFI5tCMDU3Nig=
-X-Google-Smtp-Source: ADUXVKKBz616KckPPMDhO5g1I5AnjS7UgA4+nJxLqmmiSO4MgxUscUmlcQ1j5vjlnZRF+PSdHAQTuPytvWjtF0m5l8k=
-X-Received: by 2002:aca:aad3:: with SMTP id t202-v6mr4895458oie.30.1527397355758;
- Sat, 26 May 2018 22:02:35 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=/T12mdbvm8SIOJlmMeb7g/TWefyoNcbhtBUBCiuSDOY=;
+        b=jRxHu7/xfAV7l9XuX6oT/rd32JOc34dKfMAieWip79dyJ9tJieWb/WKz37j+2+jkQp
+         NjJzEtUElidXo4ZXkRome0gqTb5OFm+myPVrqiZcXVRDsL2rrDt0mk4sxDPbuT9L8DGj
+         PSKNuEn5dA8Lr3x3GfcOkrNqk0xS0U4EIkMRdcUgD6/8FdigNALqm3xjHRhozaP0xPYM
+         8vyONA1Sf9T1XjMV9aG6gIAD3GuIptBJfexoe9nGw5MSV/JAl7I9U7jgb0wRnqx9SoX3
+         CtMbmi+BBa/qE/KVrbBTPpF6V13GjsX7LKpxYJlUrLZQHtCxyG9oeFAz7hTWLQN9KmT/
+         f/yA==
+X-Gm-Message-State: ALKqPwfFkeacGb4ihUhph5BmexY0lr0ri5VpWJUeeCAd6zXP2P0+0NC8
+        bPMVWdDSrEwAr8bxgiIhTe457QFmXiBnPUeMcf1j5w==
+X-Google-Smtp-Source: ADUXVKL2NpXUoAt3RoOdBpuXlddpsnnhKwPhfxTIS0bJeLrASvkZByr8XBzb0n5Edwz9O9jbpJXWb6e5LK5c6O9dSMw=
+X-Received: by 2002:ab0:195f:: with SMTP id u31-v6mr5496594uag.123.1527403899132;
+ Sat, 26 May 2018 23:51:39 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Sat, 26 May 2018 22:02:05
- -0700 (PDT)
-In-Reply-To: <xmqq8t86m0m3.fsf@gitster-ct.c.googlers.com>
-References: <20180525225601.22575-1-lintonrjeremy@gmail.com>
- <CACsJy8C4zNZAe6Vw-mz8r8HueYdQKs4ZhMOQYX0v7ypfHdmShg@mail.gmail.com> <xmqq8t86m0m3.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 27 May 2018 07:02:05 +0200
-Message-ID: <CACsJy8CNmDkxzhkdfwjVHjGF4JeUzzPHGnp1x647NxU-GxkxvA@mail.gmail.com>
-Subject: Re: [PATCH] packfile: Correct zlib buffer handling
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeremy Linton <lintonrjeremy@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
+From:   Orgad Shaneh <orgads@gmail.com>
+Date:   Sun, 27 May 2018 09:51:27 +0300
+Message-ID: <CAGHpTBLGmApTGsjeP2d93CWH=OWBXmbPdRrGxaobFRcSjUiuYw@mail.gmail.com>
+Subject: [PATCH] git-rebase--interactive: fix copy-paste mistake
+To:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 27, 2018 at 1:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> On Sat, May 26, 2018 at 12:56 AM, Jeremy Linton <lintonrjeremy@gmail.com> wrote:
->>> @@ -1416,7 +1416,7 @@ static void *unpack_compressed_entry(struct packed_git *p,
->>>                 return NULL;
->>>         memset(&stream, 0, sizeof(stream));
->>>         stream.next_out = buffer;
->>> -       stream.avail_out = size + 1;
->>> +       stream.avail_out = size;
->>
->> You may want to include in your commit message a reference to
->> 39eea7bdd9 (Fix incorrect error check while reading deflated pack data
->> - 2009-10-21) which adds this plus one with a fascinating story
->> behind.
->
-> A bit puzzled---are you saying that this recent patch breaks the old
-> fix and must be done in some other way?
+exec argument is a command, not a commit.
 
-No. I actually wanted to answer that question when I tried to track
-down the commit that adds " + 1" but I did not spend enough time to
-understand the old problem. I guess your puzzle means you didn't think
-it would break anything, which is good.
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+---
+  git-rebase--interactive.sh | 2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index cbf44f8648..85a72b933e 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -160,7 +160,7 @@ r, reword <commit> = use commit, but edit the commit
+message
+  e, edit <commit> = use commit, but stop for amending
+  s, squash <commit> = use commit, but meld into previous commit
+  f, fixup <commit> = like \"squash\", but discard this commit's log message
+-x, exec <commit> = run command (the rest of the line) using shell
++x, exec <command> = run command (the rest of the line) using shell
+  d, drop <commit> = remove commit
+  l, label <label> = label current HEAD with a name
+  t, reset <label> = reset HEAD to a label
 -- 
-Duy
+2.17.0.windows.1
