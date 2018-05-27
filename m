@@ -2,87 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45AE51F42D
-	for <e@80x24.org>; Sun, 27 May 2018 01:28:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35DCC1F42D
+	for <e@80x24.org>; Sun, 27 May 2018 04:16:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032524AbeE0B16 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 May 2018 21:27:58 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:34543 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032485AbeE0B15 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 May 2018 21:27:57 -0400
-Received: by mail-it0-f65.google.com with SMTP id c5-v6so23446945itj.1
-        for <git@vger.kernel.org>; Sat, 26 May 2018 18:27:57 -0700 (PDT)
+        id S1750987AbeE0EQH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 May 2018 00:16:07 -0400
+Received: from mail-ot0-f196.google.com ([74.125.82.196]:46546 "EHLO
+        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750728AbeE0EQF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 May 2018 00:16:05 -0400
+Received: by mail-ot0-f196.google.com with SMTP id t1-v6so10198535ott.13
+        for <git@vger.kernel.org>; Sat, 26 May 2018 21:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7ppd/ZQC50hTvVahyPNVww0bjtIeEi3/sk+Z5XfcpIc=;
-        b=dfdyVW1hfSvl5B4lm4XwpgBV1MBuQaQnA/TdlP9QkTEZ+M5EHgl+Rcyr4ffUnAiWt3
-         5W5VWVARUwYYpncYleEK0P86KOjRNt9xeYVs2oud5nfcIKUm+ywPoKrX4TlKMUZZxhTF
-         9t5/c6p6yM+RV1gF1V4ANxX3h/KluaUALgub8=
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=OgET+SIShc9ftBVsoMRUwkoKIDNitinQwWfMWztUFgs=;
+        b=OMJnirYaAcV7Rh8SAjoM62JdcD6AvRA9dYkWIzx/ppkg4CDVBaxXlFwADdsJZ+c3GD
+         ef2oG4+XeTVVPqutq4QEwoxOm0oFCbhL3MsMZPpYin3f4DL2/KmuyWM5wXKk7tveuoNh
+         SimZeTKIhDgSNJKWcn6ZMe3A0rfbTFRhcJQe/z3ebFaBJxxXifol8Q9fpTeqczXWoBk4
+         Olt4Otqws7Fwg+DvfPsc43/SKo3/E4+lvxaSvDZ6CzetwvMoFzMJcqEwp8IK6+ClmmFp
+         lRK2bm5VZo+FwWyU8EdA/8R0EJlwzxVozSnvU5QqN3F3JIVJuu3hMRwtVlze+F0i8Uaj
+         VoVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7ppd/ZQC50hTvVahyPNVww0bjtIeEi3/sk+Z5XfcpIc=;
-        b=Ycd0z9g3MOh2uUEjYIJ/TmeFAz3m0qsThLi9AtSnIVfzFI2TPUDhNoFkYxgZeIhzg/
-         5835KwqmMaOQiAAuUXbCpLWJ459qRhq9nDFCrMO5arDGR6rG6gtQpc1ryoUMksJ1viGs
-         6HffTFe5htVJj5Vza4D3w6wp6DbTSUkN4jgVC5E2fsdEy2nuS70dNGXSroWseS86Lrrs
-         0zy/9RWqDHsrHuBRYCKbNbChoyboiL8/fA0rOr3Os1RoyU8llMhm5Hgt2LZzmAOJhl26
-         OejlF1NR5GOcIQLBLreNwkiHHOkJTL3lcNJiGT/4hphS84lYsN0qrBaT3E7JUe2O1D+j
-         ldvw==
-X-Gm-Message-State: ALKqPweE5kajT2ov5q5l27Do0lyQ1L54gJRRnnNfH+H+bqHlI+Srq4pm
-        9sQOogiX3txfJN20HniOh+kvtOPQVDBgaSGs7/w=
-X-Google-Smtp-Source: AB8JxZqeosljlGHKzVDFKIprRv4Dslf5sL2tJrk2B6LPwCA26Bt9d3x2sOp+FOaVcCOSo7YfXJIuzY7SvWowCsPlEYA=
-X-Received: by 2002:a24:21ca:: with SMTP id e193-v6mr6804295ita.108.1527384477058;
- Sat, 26 May 2018 18:27:57 -0700 (PDT)
-MIME-Version: 1.0
-References: <alpine.LFD.2.21.999.1805261449160.6211@i7.lan> <xmqqd0xim1tp.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqd0xim1tp.fsf@gitster-ct.c.googlers.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Sat, 26 May 2018 18:27:45 -0700
-Message-ID: <CA+55aFycPQ9PTbAGXqL7i9QQPsx-AT8R3S5gTvC0Ue=ot2J9FQ@mail.gmail.com>
-Subject: Re: [RFC] git gc "--prune=now" semantics considered harmful
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=OgET+SIShc9ftBVsoMRUwkoKIDNitinQwWfMWztUFgs=;
+        b=O6uCfs+tAGmi4Jq1GaxcsyiIYboVmaRsV1x1m2UuXCr+UtFocXOe2bNTcU7k2Gp4br
+         5S+rmN4GpvvFQ4xzTmUYbMZOjcNUW0J5FuEjCiPN82JGpH4cf79BwE1dybgI/j0x4O2V
+         Qt3PiecEqi3jvhN4AcKJ5C09e59uQiTzxpoNS56wWbExMYwnRz+Fn2WqTXD0XtIX1B7P
+         fOn18ioLHYEeZ6SZbqzk6tytOd7EwDFF8dsqfCofaUAB+H7JsYhKSiZwq4d/jlcXipNl
+         nBoLkEJzBjWGR2CtELiqaQfVjXtLbWEWKU4JfzUtd2XaMtHXT+bzT/OL8ha1CgmtHxnF
+         eGnA==
+X-Gm-Message-State: ALKqPwfkwZSCeKk2gnr+itfkl4AyJrWbuWL1zXV3iAJofNc4+IflMU1y
+        FLolkYPUJE3Fwrw/99pk5HsqfUH1
+X-Google-Smtp-Source: ADUXVKI1CoiSxRDuj4s6iRmBQNG4Hb8Hs0Ww30xtADZbBxb5Lxz/x3NwbQVNM1yvfu1S9GQaHdPloQ==
+X-Received: by 2002:a9d:2628:: with SMTP id a37-v6mr5739775otb.377.1527394565025;
+        Sat, 26 May 2018 21:16:05 -0700 (PDT)
+Received: from [172.16.100.100] (cpe-70-113-92-26.austin.res.rr.com. [70.113.92.26])
+        by smtp.gmail.com with ESMTPSA id c21-v6sm16118169oih.27.2018.05.26.21.16.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 26 May 2018 21:16:04 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 11.3 \(3445.6.18\))
+Subject: Re: 2.17.0 Regression When Adding Patches Without Whitespace In
+ Initial Column
+From:   Jeff Felchner <jfelchner1@gmail.com>
+In-Reply-To: <20180526210752.GA3094@zaya.teonanacatl.net>
+Date:   Sat, 26 May 2018 23:16:01 -0500
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@talktalk.net>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F8B7F3D0-E0C3-4E11-92EC-567BEDF19037@gmail.com>
+References: <C6CF9BE4-FC46-4B39-A862-AEBB5CD600E2@gmail.com>
+ <20180526210752.GA3094@zaya.teonanacatl.net>
+To:     Todd Zullinger <tmz@pobox.com>
+X-Mailer: Apple Mail (2.3445.6.18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 26, 2018 at 4:31 PM Junio C Hamano <gitster@pobox.com> wrote:
+Todd, it looks like that may very well be the same issue.  And it looks =
+like it's planning on being fixed in the next release?  Would that be =
+2.17.1 since it's a regression?
 
-> *That* is something I don't do.  After all, I am fully aware that I
-> have started end-of-day ritual by that time, so I won't even look at
-> a new patch (or a pull request for that matter).
+> On 2018 May 26, at 16:07, Todd Zullinger <tmz@pobox.com> wrote:
+>=20
+> Hi Jeff,
+>=20
+> Jeff Felchner wrote:
+>> Ever since 2.17.0, when saving a patch (using add --patch
+>> but probably other ways as well), if the whitespace is
+>> removed from the initial column, the patch doesn't apply.
+>=20
+> This sounds a bit like the issue discussed in this thread a
+> few weeks ago:
+>=20
+> =
+https://public-inbox.org/git/e8aedc6b-5b3e-cfb2-be9d-971bfd9adde8@talktalk=
+.net/
+>=20
+> But I didn't download or watch the video, so I'm not positive.
+>=20
+>> Full walkthrough (including comparison with 2.16.3) in the
+>> video attached to this link:
+>>=20
+>> =
+https://www.dropbox.com/s/s1ophi4mwmf9ogv/git-add-patch-whitespace-bug.mp4=
+?dl=3D1
+>=20
+> --=20
+> Todd
+> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> Everybody knows how to raise children, except the people who have
+> them.
+>    -- P.J. O'Rourke
+>=20
 
-Sounds like you're more organized about the end-of-day ritual than I am.
-For me the gc is not quite so structured.
-
-> I however have to wonder if there are opposite "oops" end-user
-> operation we also need to worry about, i.e. we are doing a large-ish
-> fetch, and get bored and run a gc fron another terminal.  Perhaps
-> *that* is a bit too stupid to worry about?  Auto-gc deliberately
-> does not use 'now' because it wants to leave a grace period to avoid
-> exactly that kind of race.
-
-For me, a "pull" never takes that long.  Sure, any manual merging and the
-writing of the commit message might take a while, but it's "foreground"
-activity for me, I'd not start a gc in the middle of it.
-
-So at least to me, doing "git fsck --full" and "git gc --prune=now" are
-somewhat special because they take a while and tend to be background things
-that I "start and forget" about (the same way I sometimes start and forget
-a kernel build).
-
-Which is why that current "git gc --prune=now" behavior seems a bit
-dangerous.
-
-                Linus
