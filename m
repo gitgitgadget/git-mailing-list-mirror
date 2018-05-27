@@ -2,175 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 666D01F42D
-	for <e@80x24.org>; Sun, 27 May 2018 12:53:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF8681F42D
+	for <e@80x24.org>; Sun, 27 May 2018 14:04:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936400AbeE0Mxs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 May 2018 08:53:48 -0400
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:33924 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936343AbeE0Mxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 May 2018 08:53:47 -0400
-Received: by mail-wr0-f169.google.com with SMTP id j1-v6so16114583wrm.1
-        for <git@vger.kernel.org>; Sun, 27 May 2018 05:53:46 -0700 (PDT)
+        id S965484AbeE0OEK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 May 2018 10:04:10 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36798 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965011AbeE0OEJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 May 2018 10:04:09 -0400
+Received: by mail-wm0-f68.google.com with SMTP id v131-v6so6495009wma.1
+        for <git@vger.kernel.org>; Sun, 27 May 2018 07:04:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=lECji0lTqpwsKkZRp8Gk2mdtyS48qIO2O2+DU+j/CH8=;
-        b=g3YpO5Mh2vWQ04PFX0EpqmubRW3Y9FlIrugOtNFHKi8oPKOoWwQ5Ca2FYk1+1vvSLp
-         8htjSlDjPmkz8ZTRK3Q9zZUavpE1Y7+gPYhaFSdKjP7HSR6MV7Mojb9ybQWZXzIuoFiu
-         KmOu4hgKZBuGWPu6vmloAFD0hgiDSSF0YBoG/dOsQ177UZzht33OljZ+7mFyJqdDTI6G
-         s5E+berC5pcIiX08OVf8jqXcfkPVjT/isYASgY1x7aYWVT4iPrP/VeWAzfsi8PglCDdS
-         G37j5y6c+IToB2u17MHokiletid+Omac3NPP8+VewHGWwQOKRPydYvRcgyiSyNZZDSDz
-         AhfQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=CFfTvHWYzHw+Gyebd4TAnmVKE9G4iSrSdty8OYAfuPo=;
+        b=h1EsjpwFAuBWelmTwU1gVUd+d/WQE3+dtP60MGkv3W8hKHBexIu0znd/38qzqFkYBq
+         gA+fQNBX/HQDZSXsopNihij41IoG20Z0ejEP6UDzokpJu7VK5ZBqpaJK+xN/wb6VoGHx
+         +ZGFOaoElvBbIAKaLsm16RK20pVX7QMUtjMdKdgbxD/S4jotO585nv/Ph6gQOCvazr5F
+         pu92QWNge7XUzbr4lxSDEyDk4tNy7pDQFG1cRwz0YiXeEVAF+OojPmJQb2ywAo0r49L9
+         jlskZ0InRHvL2at7KWzFfW4ejPrF22ZST0yTBGIoF090GO0rQpvIgxasPNGwoMAFHelX
+         D1eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lECji0lTqpwsKkZRp8Gk2mdtyS48qIO2O2+DU+j/CH8=;
-        b=bpIdqb25UzJI9e4rGG4CvK48CRUIobIGRkwDVxg9TImMDzTPFuJU3ZDu7An3mQP4y3
-         SozUmDnVL2tiEzVvqK5zmENLUCH3DAxyrtZzxYHD+7sZ75o4xhPrOBXtEsPFni1hWhOe
-         XBVNTLu68cjCh5h/DRrNEoX0AhAdh9rGXMSADpIcigxPPOILMl/41N305rUUwRvxMObG
-         YDVdyLvFuv3fjMmUPq8lgfMejirP1sfAifvxazl6UJiwEH7f3FmkoLJuffsROXNtxeZV
-         KjVvU387f9oucmaeQDaPFOq/OYlMADGKRjF7JiC5AacKn1TDXqT+dnscFHWAoFI61I/a
-         oYDA==
-X-Gm-Message-State: ALKqPwc7BZ417COoIwE7UKsryBfz9sM28DALMi4HzOkIYd9rgaN43V29
-        jSDSKc7G+/5JXjFWjv3fg8syf7/Ty9dbSeAVdMjojQ==
-X-Google-Smtp-Source: ADUXVKJZighx50bT6PvlZy79BtW2fSuimujEpDEZj2cGOHoj+mleidzP0i2xcxKL8gZNMOrw3F8h+27krdXwCnaB6IM=
-X-Received: by 2002:a19:ea99:: with SMTP id y25-v6mr5173344lfi.20.1527425625604;
- Sun, 27 May 2018 05:53:45 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a19:d485:0:0:0:0:0 with HTTP; Sun, 27 May 2018 05:53:25
- -0700 (PDT)
-In-Reply-To: <1EAAF778D73B4AA689ADB5AE2EE9D1DD@PhilipOakley>
-References: <CAAUqJDu_3DTyd1cFKaNRKOzo3AHosfxP1jjWpa=HGtyAyitTeA@mail.gmail.com>
- <CAAUqJDvsRBJWZh5_A2e2x-CqgXi5gLSjo6-P2sYxsKz3qfidSw@mail.gmail.com> <1EAAF778D73B4AA689ADB5AE2EE9D1DD@PhilipOakley>
-From:   =?UTF-8?B?T25kcmVqIE1vc27DocSNZWs=?= <omosnacek@gmail.com>
-Date:   Sun, 27 May 2018 14:53:25 +0200
-Message-ID: <CAAUqJDvCgXPubhtSKzMLqTU5au320U15UQ8Lst7+JeZYBp8wTA@mail.gmail.com>
-Subject: Re: git rebase -i --exec and changing directory
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=CFfTvHWYzHw+Gyebd4TAnmVKE9G4iSrSdty8OYAfuPo=;
+        b=UArbe7uRvMXZQ7fjPEJbSTG6/gqkn5yruaAZbm5OrCw0RmlJK4YJ7sViUt4NexHxQg
+         tstuHJ6B6JmkbFsURlRRGMGYkDv23FSpco1HgCTIXbI/+Tl9H7uw7SUoORDdeiP8H9QQ
+         db1Zm2X6Urv8PGc8ORmqnUikdA9GxhmAYBDufTj3WI2SoYu76yytXuBRumeF3l0QHQrM
+         9gfH//nqvyuGGTUGI4m3DJcik2NHHm75UD9KjGUXHXxR1TeygnphIfFBrgTZAPiuiTNP
+         jjV8A5jj1inPzzkWg9r/ZXEy5LLdKVemJDaoF0fyV5om/vF+UVsvrpve2QLOVzy9kQkG
+         z6vg==
+X-Gm-Message-State: ALKqPwdWPlk0WZBHpH/sakt2J/iB7dIhmxRgEfU02oZbQbA/asMZQYit
+        G8n6CT0+RgNmJJNcAIL0TBb/YeuS
+X-Google-Smtp-Source: ADUXVKJaBafvdzscRiVt7H9mcQ5l3VWb1GlQgi80x7R7Hswq7RaKE1ihqS1Abat1P71lUdeBlYokVw==
+X-Received: by 2002:a1c:ec82:: with SMTP id h2-v6mr5929322wmi.137.1527429847911;
+        Sun, 27 May 2018 07:04:07 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id x24-v6sm8476270wmh.18.2018.05.27.07.04.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 27 May 2018 07:04:06 -0700 (PDT)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH] README: note git-security@googlegroups.com
+Date:   Sun, 27 May 2018 15:04:33 +0100
+Message-Id: <20180527140433.32277-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.17.0.921.gf22659ad46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+Add a mention of the security mailing list to the README.
+2caa7b8d27 ("git manpage: note git-security@googlegroups.com",
+2018-03-08) already added it to the man page, but I suspect that for
+many developers, such as myself, the README would be the first place
+to go looking for it.
 
-2018-05-27 14:28 GMT+02:00 Philip Oakley <philipoakley@iee.org>:
-> You may need to give a bit more background of things that seem obvious to
-> you.
-> So where is the src directory you are cd'ing to relative to the
-> directory/repository you are creating?
+Use the same wording as we already have on the git-scm.com website and
+in the man page.
 
-It is located in the top-level directory of the working tree (in the
-same directory that .git is in).
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
 
-From git-rebase(1):
+2caa7b8d27 ("git manpage: note git-security@googlegroups.com",
+2018-03-08) also mentions SubmittingPatches, but I think people are
+much more likely to submit a report of a security issue first, rather
+than sending a patch, for which I think the README is more useful.
 
-    The "exec" command launches the command in a shell (the one
-    specified in $SHELL, or the default shell if $SHELL is not set), so
-    you can use shell features (like "cd", ">", ";" ...). The command is
-    run from the root of the working tree.
+ README.md | 3 +++
+ 1 file changed, 3 insertions(+)
 
-So I need to run 'cd src' if I want to run a command in there
-(regardless of the working directory of the git rebase command
-itself).
+diff --git a/README.md b/README.md
+index f17af66a97..f920a42fad 100644
+--- a/README.md
++++ b/README.md
+@@ -36,6 +36,9 @@ the body to majordomo@vger.kernel.org. The mailing list archives are
+ available at <https://public-inbox.org/git/>,
+ <http://marc.info/?l=git> and other archival sites.
+ 
++Issues which are security relevant should be disclosed privately to
++the Git Security mailing list <git-security@googlegroups.com>.
++
+ The maintainer frequently sends the "What's cooking" reports that
+ list the current status of various development topics to the mailing
+ list.  The discussion following them give a good reference for
+-- 
+2.17.0.921.gf22659ad46
 
-> What is [the name of] the directory you are currently in, etc. ?
-
-I don't think that is relevant here. FWIW, when verifying the problem
-I ran the reproducer from my original message in a directory whose
-path did not contain any spaces or special characters.
-
-Did you try to run the reproducing commands I posted? Did you get a
-different result? You should see the following in the output of 'cd
-dir && git status':
-
-[...]
-Changes not staged for commit:
- (use "git add/rm <file>..." to update what will be committed)
- (use "git checkout -- <file>..." to discard changes in working directory)
-
-       deleted:    a
-       deleted:    b
-       deleted:    dir/x
-       deleted:    reproduce.sh
-
-Untracked files:
- (use "git add <file>..." to include in what will be committed)
-
-       x
-[...]
-
-When I drop the 'cd dir && ' from before 'git status', the output is
-as expected:
-
-You are currently editing a commit while rebasing branch 'master' on '19765=
-db'.
- (use "git commit --amend" to amend the current commit)
- (use "git rebase --continue" once you are satisfied with your changes)
-
-nothing to commit, working tree clean
-
->
-> Philip
-> --
->
-> From: "Ondrej Mosn=C3=A1=C4=8Dek" <omosnacek@gmail.com>
-> Bump? Has anyone had time to look at this?
->
-> 2018-05-19 18:38 GMT+02:00 Ondrej Mosn=C3=A1=C4=8Dek <omosnacek@gmail.com=
->:
->>
->> Hello,
->>
->> I am trying to run a script to edit multiple commits using 'git rebase
->> -i --exec ...' and I ran into a strange behavior when I run 'cd'
->> inside the --exec command and subsequently run a git command. For
->> example, if the command is 'cd src && git status', then git status
->> reports as if all files in the repository are deleted.
->>
->> Example command sequence to reproduce the problem:
->>
->>     # Setup:
->>     touch a
->>     mkdir dir
->>     touch dir/x
->>
->>     git init .
->>     git add --all
->>     git commit -m commit1
->>     git tag base
->>     touch b
->>     git add --all
->>     git commit -m commit2
->>
->>     # Here we go:
->>     git rebase -i --exec 'cd dir && git status' base
->>
->>     # Spawning a sub-shell doesn't help:
->>     git rebase -i --exec '(cd dir && git status)' base
->>
->> Is this expected behavior or did I found a bug? Is there any
->> workaround, other than cd'ing to the toplevel directory every time I
->> want to run a git command when I am inside a subdirectory?
->>
->> $ git --version
->> git version 2.17.0
->>
->> Thanks,
->>
->> Ondrej Mosnacek
->
->
