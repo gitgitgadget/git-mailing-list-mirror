@@ -2,107 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35DCC1F42D
-	for <e@80x24.org>; Sun, 27 May 2018 04:16:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C43431F42D
+	for <e@80x24.org>; Sun, 27 May 2018 05:33:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750987AbeE0EQH (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 May 2018 00:16:07 -0400
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:46546 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750728AbeE0EQF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 May 2018 00:16:05 -0400
-Received: by mail-ot0-f196.google.com with SMTP id t1-v6so10198535ott.13
-        for <git@vger.kernel.org>; Sat, 26 May 2018 21:16:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=OgET+SIShc9ftBVsoMRUwkoKIDNitinQwWfMWztUFgs=;
-        b=OMJnirYaAcV7Rh8SAjoM62JdcD6AvRA9dYkWIzx/ppkg4CDVBaxXlFwADdsJZ+c3GD
-         ef2oG4+XeTVVPqutq4QEwoxOm0oFCbhL3MsMZPpYin3f4DL2/KmuyWM5wXKk7tveuoNh
-         SimZeTKIhDgSNJKWcn6ZMe3A0rfbTFRhcJQe/z3ebFaBJxxXifol8Q9fpTeqczXWoBk4
-         Olt4Otqws7Fwg+DvfPsc43/SKo3/E4+lvxaSvDZ6CzetwvMoFzMJcqEwp8IK6+ClmmFp
-         lRK2bm5VZo+FwWyU8EdA/8R0EJlwzxVozSnvU5QqN3F3JIVJuu3hMRwtVlze+F0i8Uaj
-         VoVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=OgET+SIShc9ftBVsoMRUwkoKIDNitinQwWfMWztUFgs=;
-        b=O6uCfs+tAGmi4Jq1GaxcsyiIYboVmaRsV1x1m2UuXCr+UtFocXOe2bNTcU7k2Gp4br
-         5S+rmN4GpvvFQ4xzTmUYbMZOjcNUW0J5FuEjCiPN82JGpH4cf79BwE1dybgI/j0x4O2V
-         Qt3PiecEqi3jvhN4AcKJ5C09e59uQiTzxpoNS56wWbExMYwnRz+Fn2WqTXD0XtIX1B7P
-         fOn18ioLHYEeZ6SZbqzk6tytOd7EwDFF8dsqfCofaUAB+H7JsYhKSiZwq4d/jlcXipNl
-         nBoLkEJzBjWGR2CtELiqaQfVjXtLbWEWKU4JfzUtd2XaMtHXT+bzT/OL8ha1CgmtHxnF
-         eGnA==
-X-Gm-Message-State: ALKqPwfkwZSCeKk2gnr+itfkl4AyJrWbuWL1zXV3iAJofNc4+IflMU1y
-        FLolkYPUJE3Fwrw/99pk5HsqfUH1
-X-Google-Smtp-Source: ADUXVKI1CoiSxRDuj4s6iRmBQNG4Hb8Hs0Ww30xtADZbBxb5Lxz/x3NwbQVNM1yvfu1S9GQaHdPloQ==
-X-Received: by 2002:a9d:2628:: with SMTP id a37-v6mr5739775otb.377.1527394565025;
-        Sat, 26 May 2018 21:16:05 -0700 (PDT)
-Received: from [172.16.100.100] (cpe-70-113-92-26.austin.res.rr.com. [70.113.92.26])
-        by smtp.gmail.com with ESMTPSA id c21-v6sm16118169oih.27.2018.05.26.21.16.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 26 May 2018 21:16:04 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 11.3 \(3445.6.18\))
-Subject: Re: 2.17.0 Regression When Adding Patches Without Whitespace In
- Initial Column
-From:   Jeff Felchner <jfelchner1@gmail.com>
-In-Reply-To: <20180526210752.GA3094@zaya.teonanacatl.net>
-Date:   Sat, 26 May 2018 23:16:01 -0500
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@talktalk.net>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F8B7F3D0-E0C3-4E11-92EC-567BEDF19037@gmail.com>
-References: <C6CF9BE4-FC46-4B39-A862-AEBB5CD600E2@gmail.com>
- <20180526210752.GA3094@zaya.teonanacatl.net>
-To:     Todd Zullinger <tmz@pobox.com>
-X-Mailer: Apple Mail (2.3445.6.18)
+        id S1755158AbeE0Etn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 May 2018 00:49:43 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:62432 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755118AbeE0Etm (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 27 May 2018 00:49:42 -0400
+X-AuditID: 12074411-a87ff70000001186-d7-5b0a38e52eec
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 52.E5.04486.5E83A0B5; Sun, 27 May 2018 00:49:41 -0400 (EDT)
+Received: from mail-wm0-f46.google.com (mail-wm0-f46.google.com [74.125.82.46])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w4R4ndVY020376
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Sun, 27 May 2018 00:49:40 -0400
+Received: by mail-wm0-f46.google.com with SMTP id a8-v6so23755816wmg.5
+        for <git@vger.kernel.org>; Sat, 26 May 2018 21:49:40 -0700 (PDT)
+X-Gm-Message-State: ALKqPwdg9cs2vh14mz7fOHGVaubaXtBe5MTTXB+CcXfXg1BOw3mEVmlT
+        Kb08qU7zDeVi6JcFrcdANO/mp7AX6x0BPzO8n6g=
+X-Google-Smtp-Source: AB8JxZoKsuFBqWUWBuavNqnWoposJuysh+giIHr+eDw4vykiNnHX5EW5idqgISq69eYVjKPPXSts2noSbKm1a/5SOdw=
+X-Received: by 2002:a2e:3806:: with SMTP id f6-v6mr5406858lja.25.1527396579574;
+ Sat, 26 May 2018 21:49:39 -0700 (PDT)
+MIME-Version: 1.0
+Reply-To: mhagger@alum.mit.edu
+Received: by 2002:a2e:9ec3:0:0:0:0:0 with HTTP; Sat, 26 May 2018 21:49:38
+ -0700 (PDT)
+In-Reply-To: <20180526064745.20199-1-chriscool@tuxfamily.org>
+References: <20180526064745.20199-1-chriscool@tuxfamily.org>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Sun, 27 May 2018 06:49:38 +0200
+X-Gmail-Original-Message-ID: <CAMy9T_H7OVJoDQGFNnM-GrCE9jhSqNDALFL1TM45TMcwPx5nnQ@mail.gmail.com>
+Message-ID: <CAMy9T_H7OVJoDQGFNnM-GrCE9jhSqNDALFL1TM45TMcwPx5nnQ@mail.gmail.com>
+Subject: Re: [PATCH] t990X: use '.git/objects' as 'deep inside .git' path
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
+        David Turner <novalis@novalis.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        David Turner <dturner@twopensource.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqPvUgivaYMZveYuuK91MDowenzfJ
+        BTBGcdmkpOZklqUW6dslcGXcntXAWPCepaJnxmnWBsafzF2MnBwSAiYSD3dOZOti5OIQEtjB
+        JDHv/EwWCOchk8S21sWsEM4ERokT/yazQ7SUS2yY/pgJwi6SOHNnI5DNARaf81QNJMwrIChx
+        cuYTFhBbSEBO4tWGG4wQdrjE16edYK2cArYSHR/7mSDiNhLzX/wFq2cT0JVY1NMMFmcRUJVY
+        c3IpO8T4RIkHP3MgxgdIfPw/nREkLCzgKdG+IBckLCJgKDHn9xJ2kIuZBQ6ySjRebwIbySyg
+        KdG6/Tf7BEaRWUium4UktYCRaRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrqlebmaJXmpK6SZG
+        SGgL7mCccVLuEKMAB6MSD++H2ZzRQqyJZcWVuYcYJTmYlER5LSZyRAvxJeWnVGYkFmfEF5Xm
+        pBYfYpTgYFYS4eXS5YoW4k1JrKxKLcqHSUlzsCiJ8zKb7I0SEkhPLEnNTk0tSC2CycpwcChJ
+        8L40B2oULEpNT61Iy8wpQUgzcXCCDOcBGq5qATK8uCAxtzgzHSJ/ilGXY96WST3MQix5+Xmp
+        UuK8iiCDBECKMkrz4ObAUtIrRnGgt4R5P4NU8QDTGdykV0BLmICWrFvNDrKkJBEhJdXAaCCt
+        6iccO2WNzqkpSiZfpa2WPs/lvXpUlF15p6Lptl7f97s1r1Wrv/VY/0FN8cSWlnfHyzJSLP8/
+        DX/xr9jp+ZtlfrEC+jKijpPum2bG7Vn+XUfxXDRfX5v+6jOXAi7Iq0tzP5AMVlh/6mGHpK3G
+        WhXm/Pu39nhcOdK1pm761YwHh/7nPVqzS4mlOCPRUIu5qDgRAOTbKX8kAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd, it looks like that may very well be the same issue.  And it looks =
-like it's planning on being fixed in the next release?  Would that be =
-2.17.1 since it's a regression?
+On Sat, May 26, 2018 at 8:47 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Tests t9902-completion.sh and t9903-bash-prompt.sh each have tests
+> that check what happens when we are "in the '.git' directory" and
+> when we are "deep inside the '.git' directory".
+>
+> To test the case when we are "deep inside the '.git' directory" the
+> test scripts used to perform a `cd .git/refs/heads`.
+>
+> As there are plans to implement other ref storage systems, let's
+> use '.git/objects' instead of '.git/refs/heads' as the "deep inside
+> the '.git' directory" path.
 
-> On 2018 May 26, at 16:07, Todd Zullinger <tmz@pobox.com> wrote:
->=20
-> Hi Jeff,
->=20
-> Jeff Felchner wrote:
->> Ever since 2.17.0, when saving a patch (using add --patch
->> but probably other ways as well), if the whitespace is
->> removed from the initial column, the patch doesn't apply.
->=20
-> This sounds a bit like the issue discussed in this thread a
-> few weeks ago:
->=20
-> =
-https://public-inbox.org/git/e8aedc6b-5b3e-cfb2-be9d-971bfd9adde8@talktalk=
-.net/
->=20
-> But I didn't download or watch the video, so I'm not positive.
->=20
->> Full walkthrough (including comparison with 2.16.3) in the
->> video attached to this link:
->>=20
->> =
-https://www.dropbox.com/s/s1ophi4mwmf9ogv/git-add-patch-whitespace-bug.mp4=
-?dl=3D1
->=20
-> --=20
-> Todd
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> Everybody knows how to raise children, except the people who have
-> them.
->    -- P.J. O'Rourke
->=20
+Seems reasonable to me. +1.
 
+Michael
