@@ -2,181 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61ED11F51C
-	for <e@80x24.org>; Sun, 27 May 2018 10:25:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1463D1F51C
+	for <e@80x24.org>; Sun, 27 May 2018 11:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936393AbeE0KZL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 May 2018 06:25:11 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:43086 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935648AbeE0KXy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 May 2018 06:23:54 -0400
-Received: by mail-wr0-f196.google.com with SMTP id d2-v6so329549wrm.10
-        for <git@vger.kernel.org>; Sun, 27 May 2018 03:23:54 -0700 (PDT)
+        id S936390AbeE0LAF (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 May 2018 07:00:05 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:46301 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936373AbeE0LAE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 May 2018 07:00:04 -0400
+Received: by mail-wr0-f193.google.com with SMTP id v13-v6so4160714wrp.13
+        for <git@vger.kernel.org>; Sun, 27 May 2018 04:00:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=rmoIVbFn0dpUUr44vjKbeXQxqOnW2TGLmbdss/T3mRY=;
-        b=VUkxw1O14ciRgtb+ADQF/8SV7V3iDGuCc/rIFCLuoa0Zs2EKICdMqGoBWL0rSDhL4R
-         aS3XND6R2aKI4O5BW4MvFDy4L7CVAHPa+krNWxUPwdS9yW6iXtECGAuOToO99wikNJ8l
-         vomHlVvx/KHWnFD6JYDsuLSuVcPEnQIUGgqrR/A8M1/0lpxED00pzlYAqIIQNJjUN/kd
-         NUkJdycEhinRs/2vRrLux8lqVus1g5tgHcto80t+W9l+iTdWhHErZ29tpRNvdmPFHKvi
-         rxSMi8eG62b2Br6wMHy8MYjKLGIp47JkxJM+FF6ilRvKQmmORlBMNuOQtKWpuoqkzEYK
-         6fpA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=j7AAMLxNvHOIrJCR3bz3zs7Q9J1FzzwtCMpTScI1lW4=;
+        b=E6UCUjyhGXJ6XJjJrcMgGMgB1Jk5Z54pxrj7BQvVzwXlDxbPFUFX0TP+p1v2AC/MXY
+         5nnkicMa/tuIOfu459pqSIaz4yGlQlwn2JGN8l4zZd0RPxxaD8xCwPYpDDrO5GSwdx9U
+         1C+KjXVSAgy5TVE2NS8YGgXnX8Z5aaaH/bZIScWGsDhM/AosUnP9cMKJd1E6hu2wUke3
+         WFTbhr7J3rbxtexcbIEX3wo6vYE9p7fFuk/sbKSZ8IlAziMMdFKE2SFdnNNQsDJYM9Ab
+         c6y32O6C3QwBwOEa74xhEDaE8FPuE4bjSy5bzEXrXuaz6L6kuXXkFEhZq05OlZlvqisv
+         jwAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=rmoIVbFn0dpUUr44vjKbeXQxqOnW2TGLmbdss/T3mRY=;
-        b=V01+jOrI2izRYIqF7B/rp6qoTW+Ddc/8zH/pP6PC5Y2cOLLn93ac8hH/E/I6Cbz96I
-         Ij0YQ3yRoxKxo9aaIzDX8M2nGs+Q1sT3MGozZtRPdiscRMhGUSze5cxZwX8JGVArgoyf
-         oYLL2yo0zkZ/DQ3GekLbYkCLfEjKJROzW/Br+3fK6YAZhvHIePB7Kv2xSa1U8j72npOt
-         cWQUzv/FwKoPGg0z766P21+bNf1zlLrb7+IME2vFzFTbP2ENnoJKstIn//KZlXBeWHSD
-         IBLhlFuTAG4M23VH6bB3Vd2OCKS23zUVooiCyqnWrgTSuSdFsXFZcbiWnixJae4Otoga
-         xlFw==
-X-Gm-Message-State: ALKqPwcqW0kEK3OBeQuc8dPck+ZCzAxkToAWHkHPnmDBQ9aeB49LQ27N
-        dPUrEAXbHGY9HXSVzbUbPjI=
-X-Google-Smtp-Source: ADUXVKIQJZqWuXvgodo7nMkPHIgN7i4nPNsYRbUZJ3g3iVTInZF9hl6IkFcnv2uACiioiFKwsMmmFQ==
-X-Received: by 2002:adf:b710:: with SMTP id l16-v6mr166625wre.115.1527416633346;
-        Sun, 27 May 2018 03:23:53 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egg40.neoplus.adsl.tpnet.pl. [83.21.70.40])
-        by smtp.gmail.com with ESMTPSA id e7-v6sm28270892wrn.88.2018.05.27.03.23.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 27 May 2018 03:23:51 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster\@pobox.com" <gitster@pobox.com>,
-        "stolee\@gmail.com" <stolee@gmail.com>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "marten.agren\@gmail.com" <marten.agren@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>
-Subject: Re: [PATCH v3 03/20] commit-graph: parse commit from chosen graph
-References: <20180511211504.79877-1-dstolee@microsoft.com>
-        <20180524162504.158394-1-dstolee@microsoft.com>
-        <20180524162504.158394-4-dstolee@microsoft.com>
-Date:   Sun, 27 May 2018 12:23:50 +0200
-In-Reply-To: <20180524162504.158394-4-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Thu, 24 May 2018 16:25:31 +0000")
-Message-ID: <86y3g5z9ah.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=j7AAMLxNvHOIrJCR3bz3zs7Q9J1FzzwtCMpTScI1lW4=;
+        b=cUWDtGTttmxT9eqMDEZMHWrnqfaXVX5eXRFOHIFAtgG3ku8QyF7wu4t0jaC+qDNZ8p
+         GU8DUK3cGW0AJHJwD9A2bzXELY+EH0VBo/PoyTsbEdNtZVCizR+Vh11QuZrAgDxKLd/e
+         JO9krnplGhdtEdrvhTWO89EnaCHhLO6KfUO00aoThYyfd1BQvUUbAj7Mixf798mAd24K
+         a9STwPymhYSz66Wik3EY1O4YY/cDjb6aqqv1Qp1lK1GwJ+p2pygoJGC/7lKvHbLuvxRz
+         X2MRfhCWbLrFRBCWzgSXRnUaxTIBGWR3XNXY1V2ra245vNlrrBN6g/nyo9FvW5tQnixK
+         VrxQ==
+X-Gm-Message-State: ALKqPwelVtURf2RFlNcnSRyYriM8j0iQKlxG5EdxORPyxQx+QyIPjsgh
+        iU3f2Wj2M0rFKT7aEibSZn1Z6NnRMTQnPWCy3Z+7JA==
+X-Google-Smtp-Source: ADUXVKLSIrYqwmJ+P99xKvXMEosv85Yl5Bma7wRPPWBYS5qflMqwd8tB4CKt+Jf26fhV1HUZvgt5TZZx864ycdeIyTU=
+X-Received: by 2002:a19:4355:: with SMTP id m21-v6mr3098669lfj.121.1527418803092;
+ Sun, 27 May 2018 04:00:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a19:d485:0:0:0:0:0 with HTTP; Sun, 27 May 2018 03:59:42
+ -0700 (PDT)
+In-Reply-To: <CAAUqJDu_3DTyd1cFKaNRKOzo3AHosfxP1jjWpa=HGtyAyitTeA@mail.gmail.com>
+References: <CAAUqJDu_3DTyd1cFKaNRKOzo3AHosfxP1jjWpa=HGtyAyitTeA@mail.gmail.com>
+From:   =?UTF-8?B?T25kcmVqIE1vc27DocSNZWs=?= <omosnacek@gmail.com>
+Date:   Sun, 27 May 2018 12:59:42 +0200
+Message-ID: <CAAUqJDvsRBJWZh5_A2e2x-CqgXi5gLSjo6-P2sYxsKz3qfidSw@mail.gmail.com>
+Subject: Re: git rebase -i --exec and changing directory
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+Bump? Has anyone had time to look at this?
 
-> Before verifying a commit-graph file against the object database, we
-> need to parse all commits from the given commit-graph file. Create
-> parse_commit_in_graph_one() to target a given struct commit_graph.
+Thanks,
 
-If I understand it properly the problem is that when verifying against
-the object database we want to check one single commit-graph file, not
-concatenation of data from commit-graph file for the repository and
-commit-graph files from its alternates -- like prepare_commit_graph()
-does; which is called by parse_commit_in_graph().
+Ondrej Mosnacek
 
+2018-05-19 18:38 GMT+02:00 Ondrej Mosn=C3=A1=C4=8Dek <omosnacek@gmail.com>:
+> Hello,
 >
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-
-O.K., so you introduce here a layer of indirection; parse_commit_in_graph()
-now just uses parse_commit_in_graph_one(), passing core_commit_graph
-(or the_commit_graph) to it, after checking that core_commit_graph is set
-(which handles the case when feature is not turned off) and loading
-commit-graph file.
-
-Nice and simple 'split function' refactoring, with new function taking
-over when there is commit graph file prepared.
-
-
-So, after the changes:
-* parse_commit_in_graph() is responsible for checking whether to use
-  commit-graph feature and ensuring that data from commit-graph is
-  loaded, where it passes the control to parse_commit_in_graph_one()
-* parse_commit_in_graph_one() checks whether commit-graph feature is
-  turned on, whether commit we are interested in was already parsed,
-  and then uses fill_commit_in_graph() to actually get the data
-* fill_commit_in_graph() gets data out of commit-graph file, extracting
-  it from commit data chunk (and if needed large edges chunk).
-
-All those functions return 1 if they got data from commit-graph, and 0
-if they didn't.
-
-
-One minor nitpick / complaint / question is about naming of global
-variables used here, namely:
-* static struct commit_graph *commit_graph
-  from commit-graph.c for global storage of commit-graph[s] data
-* int core_commit_graph
-  from environment.c for storing core.commitGraph config
-
-But I see that at least the latter is common convention in Git source
-code; I guess that the former maybe follows convention as used for "the
-index" and "the repository" - additionally it is static / file-local.
-
-> ---
->  commit-graph.c | 18 +++++++++++++++---
->  1 file changed, 15 insertions(+), 3 deletions(-)
+> I am trying to run a script to edit multiple commits using 'git rebase
+> -i --exec ...' and I ran into a strange behavior when I run 'cd'
+> inside the --exec command and subsequently run a git command. For
+> example, if the command is 'cd src && git status', then git status
+> reports as if all files in the repository are deleted.
 >
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 82295f0975..78ba0edc80 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -310,7 +310,7 @@ static int find_commit_in_graph(struct commit *item, struct commit_graph *g, uin
->  	}
->  }
->  
-> -int parse_commit_in_graph(struct commit *item)
-> +static int parse_commit_in_graph_one(struct commit_graph *g, struct commit *item)
->  {
->  	uint32_t pos;
->  
-> @@ -318,9 +318,21 @@ static int parse_commit_in_graph_one(struct commit_graph *g, struct commit *item)
->  	if (!core_commit_graph)
->  		return 0;
-
-All right, we check that commit-graph feature is enabled because
-parse_commit_in_graph_one() will be used standalone, not by being
-invoked from parse_commit_in_graph().
-
-This check is fast.
-
->  	if (item->object.parsed)
->  		return 1;
-
-Sidenote: I just wonder why object.parsed and not for example
-object.graph_pos is used to checck whether the object was filled if
-possible with commit-graph data...
-
-> +
-> +	if (find_commit_in_graph(item, g, &pos))
-> +		return fill_commit_in_graph(item, g, pos);
-> +
-> +	return 0;
-> +}
-> +
-> +int parse_commit_in_graph(struct commit *item)
-> +{
-> +	if (!core_commit_graph)
-> +		return 0;
-
-All right, this check is here to short-circuit and make it so git does
-not even try to lod commit-graph file[s] if the feature is disabled.
-
-> +
->  	prepare_commit_graph();
-> -	if (commit_graph && find_commit_in_graph(item, commit_graph, &pos))
-> -		return fill_commit_in_graph(item, commit_graph, pos);
-> +	if (commit_graph)
-> +		return parse_commit_in_graph_one(commit_graph, item);
->  	return 0;
->  }
+> Example command sequence to reproduce the problem:
+>
+>     # Setup:
+>     touch a
+>     mkdir dir
+>     touch dir/x
+>
+>     git init .
+>     git add --all
+>     git commit -m commit1
+>     git tag base
+>     touch b
+>     git add --all
+>     git commit -m commit2
+>
+>     # Here we go:
+>     git rebase -i --exec 'cd dir && git status' base
+>
+>     # Spawning a sub-shell doesn't help:
+>     git rebase -i --exec '(cd dir && git status)' base
+>
+> Is this expected behavior or did I found a bug? Is there any
+> workaround, other than cd'ing to the toplevel directory every time I
+> want to run a git command when I am inside a subdirectory?
+>
+> $ git --version
+> git version 2.17.0
+>
+> Thanks,
+>
+> Ondrej Mosnacek
