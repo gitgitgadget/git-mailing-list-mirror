@@ -2,62 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17DD31F42D
-	for <e@80x24.org>; Mon, 28 May 2018 18:40:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 490DF1F42D
+	for <e@80x24.org>; Mon, 28 May 2018 18:45:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933486AbeE1Sks (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 May 2018 14:40:48 -0400
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:46366 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933255AbeE1Skr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 May 2018 14:40:47 -0400
-Received: by mail-ot0-f195.google.com with SMTP id t1-v6so14337053ott.13
-        for <git@vger.kernel.org>; Mon, 28 May 2018 11:40:47 -0700 (PDT)
+        id S1754726AbeE1Spv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 May 2018 14:45:51 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:45165 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754663AbeE1Spu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 May 2018 14:45:50 -0400
+Received: by mail-oi0-f68.google.com with SMTP id b130-v6so11014964oif.12
+        for <git@vger.kernel.org>; Mon, 28 May 2018 11:45:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=oMV9kCB2J9f/tAJE+Djsqu/2/Rq0kQWuytdfzNqp0ho=;
-        b=lejWm8BYntAijFTulvEuQjBDspwvgSMCMLltOwHzvKRLm+Y1Ik8iTEejCT3fd/OX7C
-         cpQDC20Gd0iwrfjU6mbtGktBKsJQjtTxAwRnv6FcUe2OifzNlKspUHLZevP1y2KpCGXA
-         FGWJ8SvdQZiH7Cd2SZAO0G8JNtQHzI7xFsfKHjxy1BSnSctSzCbwT/yEXS+h5ayIcNBR
-         czjpoJyLmBQNpKf77ha2syiEIIa/uNrLB/3tVJLoqkyg/7Q1H6hcwG+kPOCRpJwJgNPi
-         M46IHvqeBXPxVvzC87GGJyvBEJS6QUD0xTcWtoGC4XuyDK5O3qJQND/BWn616xFywVZx
-         oTFw==
+        bh=8WVGsmUVttkXXJifEuwE0XGN4QLwloOpIqFLABj+7Mo=;
+        b=Qblrtj95JS/+uT1seldClpnTJybfjj83hxANC6N5CGmLL6dNKSdY7FC6885oQR4q8q
+         EYHgpphy10cmtNR5ucvnNQHZkHgaYxblaUTkjgFdoPcKKY69SOnwKF7q5SxnMVT8jZVx
+         DTzgXIhWkX+u52Y9eqhFPV9rCrH40Ia8W0E58qQUf0lUEV0WDWyfeVds8i6gl8rgeEd7
+         udyTj+j4bY9NdyKAwc7hHbQxgy/x3I1+r67ag80PDTQTE3BpI8PP+IdvrC0ZT/PT/Wpy
+         5lMWRL6xLQiZ87nU93Ov5+da/V4KX/p7l54kKWSxFLGm8jlzflWAAufMH85Afkgx5Bc1
+         L9og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=oMV9kCB2J9f/tAJE+Djsqu/2/Rq0kQWuytdfzNqp0ho=;
-        b=EhAVC+NXf/8ZBxfP5Ayqh+ID3s8cNxeatOv3Pe8J4iklrjIZ7z3S/jEIYyvMqK7Lxs
-         vlZhhOMRbS3YvGrFx5TODOSPrHXxAGQ7U2qjeAXarBRgGcRpEQwkVqMO3E8bh10VGaob
-         UJ9TWopDjcN+QtCrZ1ayTjrE6T6GUfGXojrbPjI8UPnTdh/Y/zR1G4pc/5gmJrx1HvtK
-         K2aTCqb40YsC1ouDLB9/3PxCPd1S2HFlSrvCBxGetXX1AX+E1IzDgfKViMyD8gjIUEve
-         bL64XgPj0b15LH/67vWm26HHbK7YC2/WkpiK/i2/EljN2IcNA94CsGAfSnAgN/KMNqpG
-         NmfQ==
-X-Gm-Message-State: ALKqPwdqBLR6UDS2x1G6wxsJ/iOSBs0HZ3xyYJbh6a5YOpZKQLhDE93+
-        836y7LSIPsVRxybVU39bRMPfCenZo6Bdc2tQ+fU=
-X-Google-Smtp-Source: ADUXVKL/TK+qVowHvfW2L3hmOwTwjyO3+0lNge43SYc08g/7E0AwcV5nqpFKQZBn04dQJFRmm4EDlv/DvmZX88Y3ncY=
-X-Received: by 2002:a9d:2c94:: with SMTP id p20-v6mr4657825otb.14.1527532847112;
- Mon, 28 May 2018 11:40:47 -0700 (PDT)
+        bh=8WVGsmUVttkXXJifEuwE0XGN4QLwloOpIqFLABj+7Mo=;
+        b=j5swSL3LSUzBQXfYFCpm4NowzXI1yldVwBYaY9au45cYODeLBuImx2ooCUMnETd+BV
+         q9X3PHA24FigKXzv/KpVzkUea8orBzJgkfPeFzfHRyTD8j3wf8IoS9oOyyaFESwfDeHx
+         lXiGJ2JidVNE23Ar04ZEFPHQT9tdP2Alyw+hHWPqJk19pIMBCyZMpoCkpLC5y5m1cCQy
+         ZjlNvUctib/2+f6cywmkSRQiFHk4HC/1UMSYZICpgwriRSik6Z3EzcTB4aFqWspewQDd
+         UJgJG2+Ze5XYoIKXYLoq0YN5+G/RyGU1BcWBybzBZV++T963pg31IeErUSCDioph0gu6
+         5i1w==
+X-Gm-Message-State: ALKqPwcrinOOgae1hXeG0TknwuCs14vuAUH1wFa6N2WHSH3Y9uiZOfSk
+        ZbOqlAwvjntOxxw6kpKPwQrnJplpgyY4RHlFDiI=
+X-Google-Smtp-Source: ADUXVKJR3JESEPt8ujZg+plgrVCh8atuJwodUefCGHhjTasMI2NU3u2U6knh7JEoXeXYO+BwW6zg97ermbX8InVE8jg=
+X-Received: by 2002:aca:52c3:: with SMTP id g186-v6mr8362675oib.228.1527533149722;
+ Mon, 28 May 2018 11:45:49 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Mon, 28 May 2018 11:40:16
+Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Mon, 28 May 2018 11:45:19
  -0700 (PDT)
-In-Reply-To: <90ac0a41563f070a840076521d8935ad7c21beb9.1527279322.git.martin.agren@gmail.com>
+In-Reply-To: <xmqqin78jfnl.fsf@gitster-ct.c.googlers.com>
 References: <xmqq8t88nllj.fsf@gitster-ct.c.googlers.com> <cover.1527279322.git.martin.agren@gmail.com>
- <90ac0a41563f070a840076521d8935ad7c21beb9.1527279322.git.martin.agren@gmail.com>
+ <ef5b4e28e00ad0c95dbe625d2e7305957f9fe5ba.1527279322.git.martin.agren@gmail.com>
+ <xmqqin78jfnl.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 28 May 2018 20:40:16 +0200
-Message-ID: <CACsJy8CZQLxU5TPx=M0NV_xTR_9qyjbOWnVcdX9-Tz+BCb24VA@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/3] usage: extract `prefix_suffix_lines()` from `advise()`
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+Date:   Mon, 28 May 2018 20:45:19 +0200
+Message-ID: <CACsJy8CgzDfbES2jC+Rv+bKj_JAk8dzEDCm89JMuBFQmyGg9Gw@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/3] usage: prefix all lines in `vreportf()`, not just
+ the first
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
         Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
@@ -68,29 +70,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 25, 2018 at 11:00 PM, Martin =C3=85gren <martin.agren@gmail.com=
-> wrote:
-> advice.c contains a useful code snippet which takes a multi-line string
-> and prints the lines, prefixing and suffixing each line with two
-> constant strings. This was originally added in 23cb5bf3b3 (i18n of
-> multi-line advice messages, 2011-12-22) to produce such output:
+On Mon, May 28, 2018 at 11:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
 >
-> hint: some multi-line advice
-> hint: prefixed with "hint: "
+>> diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-sp=
+arse-checkout.sh
+>> index 0c6f48f302..31b0702e6c 100755
+>> --- a/t/t1011-read-tree-sparse-checkout.sh
+>> +++ b/t/t1011-read-tree-sparse-checkout.sh
+>> @@ -243,9 +243,9 @@ test_expect_success 'print errors when failed to upd=
+ate worktree' '
+>>       test_must_fail git checkout top 2>actual &&
+>>       cat >expected <<\EOF &&
+>>  error: The following untracked working tree files would be overwritten =
+by checkout:
+>> -     sub/added
+>> -     sub/addedtoo
+>> -Please move or remove them before you switch branches.
+>> +error:       sub/added
+>> +error:       sub/addedtoo
+>> +error: Please move or remove them before you switch branches.
+>>  Aborting
+>>  EOF
 >
-> The prefix is actually colored after 960786e761 (push: colorize errors,
-> 2018-04-21) and each line has a suffix for resetting the color.
->
-> The next commit will teach the same "prefix all the lines"-trick to the
-> code that produces, e.g., "warning: "-messages. In preparation for that,
-> extract the code for printing the individual lines and expose it through
-> git-compat-util.h.
->
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-> ---
-> I'm open for suggestions on the naming of `prefix_suffix_lines()`...
+> This shows the typical effect of this series, which (I subjectively
+> think) gives us a more pleasant end-user experience.
 
-I think the important verb, print (to FILE*), is somehow missing. This
-current name would be great if it produces another str(buf).
+Also, very subjectively, I'm torn about this. To me, just one
+"error/warning/fatal" at the start of the first paragraph feels much
+better. If we have to somehow mark the second paragraph that "this is
+also part of the error message" then it's probably better to rephrase.
 --=20
 Duy
