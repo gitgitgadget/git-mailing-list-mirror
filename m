@@ -2,118 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17FAA1F42D
-	for <e@80x24.org>; Mon, 28 May 2018 16:44:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EE681F42D
+	for <e@80x24.org>; Mon, 28 May 2018 16:50:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933689AbeE1Qov (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 May 2018 12:44:51 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:38480 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S940301AbeE1Qoq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 May 2018 12:44:46 -0400
-Received: by mail-qk0-f196.google.com with SMTP id c23-v6so9516631qkb.5
-        for <git@vger.kernel.org>; Mon, 28 May 2018 09:44:46 -0700 (PDT)
+        id S940397AbeE1QuP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 May 2018 12:50:15 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:45099 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933396AbeE1Qt7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 May 2018 12:49:59 -0400
+Received: by mail-qk0-f195.google.com with SMTP id c198-v6so9537311qkg.12
+        for <git@vger.kernel.org>; Mon, 28 May 2018 09:49:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=PzvV+Z3czwidONhB3g6ziQ7a6zIzrozFZbrb2UIpt8g=;
-        b=NAtLU2qCm0oSFPT5Frt2haa8OV4klEk1R92ydGo/RY0ak63AHnmH4hE7lZGHL1Rd0m
-         /9OsijT7byv5fsvTB0aQN7Ry41MrXNcGjwkTy8Yn4g0Msxu9rBhXcDSZJlXDuMTvsZRY
-         uIyJVBXxgoqG/ctPgztZTn+tzOQ45/y++2eYfW6upQBQnWKXbMco9COAFow/fiKqtcq2
-         DO0nUkuuRhBKYTEvlCueDXMsbgXsQLUtMwmX93bTMcdXtZSxzWWUZ9XBUwAIT1kJIYFt
-         ziH0DImHHx0IZWh3FD5GchtolZYesU5vswmAIHQ76gyCVo1yyt6WwcaqtERP0iNSo16O
-         5dVQ==
+        bh=9R0RN9eQXywR6vx+j5wuy09CCPyxFKjxWNUE0VZ+75Q=;
+        b=odqBRvpZgpGglkuXf/716re8YrqHk29N1FWtscOW84+iMqyCkVuO/S4UUVNinUPdR2
+         i7beZhS7YzEqZIic/IbTHPPveb7QK1G5a/gebR8BD6eh1Zr6biNpCSj0xlrE0g+7LNBh
+         ZSVnIXzBj1jlyNeMMqWzmgPaEpN29RWCsyuoTviMLkDdZbUPIEvuLqN5DEmXF2kZ+P4v
+         w9/akbo/IRAcG4IIc6pRE5myPRKPl960XbK4aY8qi/MGvIkShTMiL993NufSRWn141Du
+         V/ruOW5RnFVhHPP3xK7/Fn6GsYn3Iccltb1sDd0CeK9h9UpanJlX7iaImUk2BwyW+8i/
+         oTvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=PzvV+Z3czwidONhB3g6ziQ7a6zIzrozFZbrb2UIpt8g=;
-        b=T0DgCKf5gc4sbS1fANzIiJ0jpsoxTaYIQ2LmkBdzqyKAadZ1ncOZ1Tzv81vP6gb9cF
-         leRNbs2fr9RvFbZvZ7jiFP+uQYVcjb2HatZzP6R4s3UIphLs5KTToGTu0fIhKHkg9HcL
-         FTxIyph6l71+VQWKbKzrnlfaA2iX8LOgSJ52UW8wwGcPDgm+WiPBdv0lBYTvjOoidgKF
-         Yh7fkJKTg1qZvLzgw77M5aIq0z4WNbbR7uWxtc5hoN4oqGrugF/bUXo4/g28/4jBfb/d
-         AgVYY5vL1+LMEq5+uZTokR7T3k1F2kOufr1U9K7lba7ah7kUhDDUlfSGjipCtLGcjNmg
-         ckPA==
-X-Gm-Message-State: ALKqPweXkmUTk71zM4GQM7OoQtHhAbtZdfJhZ3VQzcNCR0FQIXOOnVTd
-        h+Jf7nNDi9OQ7Qc3qIKweQy1FQ5nKincBxDyhZw=
-X-Google-Smtp-Source: ADUXVKJi6X3NxHMv3hBC4+mM+iAY8iGuQQrKw9GqMaLTl5zj70y1r0bYIUq6xSgQ6GtHt0SgVFN4YnmS33N0JtF7cMM=
-X-Received: by 2002:a37:be42:: with SMTP id o63-v6mr12092129qkf.102.1527525886183;
- Mon, 28 May 2018 09:44:46 -0700 (PDT)
+        bh=9R0RN9eQXywR6vx+j5wuy09CCPyxFKjxWNUE0VZ+75Q=;
+        b=nhy5X1XjzA7KvBXpvJUHTZk6WcDeng+TDtA8eP8VfpG6ZIEhRW7oK6/6fGPzaB1erz
+         86P2ODCVLwCbgh76sKrWqnO7JhIor8AdkD37H5mxsLv7rtt0lX19iRIzjEhMn3+9TdU5
+         bGOWVW2bJJFQGk0N5JjwbgrlyTnhl/JeCwGKmjB4QcrK715zmt28nUTFwsid5hZTeBti
+         2yxSWI9xAodcINq9kpYJ1W1s+NvwFtSna6eJX5kg9Tx1BTwos1xeSHwe23zQXsvIUtcx
+         Xqmh8ZQO8y/eMAtzUonaCGjn6CBnbbWUfGr3PtVnmvgNmpDKX2rOGovqHMwQv7AGr6ZA
+         JM9w==
+X-Gm-Message-State: ALKqPwdOCoMsw3m1NK1o26n7zztlJjqfHPrwpXsiynLYIfZ5mIZzwfdf
+        LddPrQWMnMrhGBOqPM+7Z9QFcVB3k6X1U9O5ays=
+X-Google-Smtp-Source: ADUXVKI8gbOyycIQr2o6Wl9dOaCuIbdk8wRWrwYny11PUkXLgbDpjf1IIWqgTEbq0ZnBwuMd4sZp/jisrDFGpg1V3rU=
+X-Received: by 2002:a37:24d3:: with SMTP id k80-v6mr1786652qkk.109.1527526198905;
+ Mon, 28 May 2018 09:49:58 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:ac8:6718:0:0:0:0:0 with HTTP; Mon, 28 May 2018 09:44:25
- -0700 (PDT)
-In-Reply-To: <xmqqa7skjep9.fsf@gitster-ct.c.googlers.com>
-References: <20180524193516.28713-1-avarab@gmail.com> <20180525192811.25680-1-avarab@gmail.com>
- <20180525192811.25680-3-avarab@gmail.com> <CAPig+cT=i0XYOrMymNjsBJqcLfJ38Ft_=MZPZD3N-AMo8raAHQ@mail.gmail.com>
- <xmqqa7skjep9.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 28 May 2018 18:44:25 +0200
-Message-ID: <CACBZZX5mSj2=JXtVPrPZ8Y1gCyu9p+EMYoSPeFZtuvm3FsdLNg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] config doc: unify the description of fsck.* and receive.fsck.*
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20180528092017.19022-1-tiagonbotelho@hotmail.com> <xmqqpo1fj1qv.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqpo1fj1qv.fsf@gitster-ct.c.googlers.com>
+From:   Tiago Botelho <tiagonbotelho@gmail.com>
+Date:   Mon, 28 May 2018 17:49:47 +0100
+Message-ID: <CAADF+x2q6HwW3BaLt76ZVikyu8Rz0Ykbf7iD=dBORigaONmtDA@mail.gmail.com>
+Subject: Re: [RFC PATCH v4] Implement --first-parent for git rev-list --bisect
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        johannes.schindelin@gmx.de, haraldnordgren@gmail.com,
+        tiagonbotelho@hotmail.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 28, 2018 at 11:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->>> @@ -1554,23 +1554,42 @@ filter.<driver>.smudge::
->>> +Depending on the circumstances it might be better to use
->>> +`fsck.skipList` instead to explicitly whitelist those objects that
->>> +have issues, otherwise new occurrences of the same issue will be
->
-> I had to read the "instead to ..." part three times before
-> convincing myself that this is a good description, and I agree with
-> the assessment.  Perhaps we would want to make the recommendation a
-> bit stronger, even.
->
->         In general, it is better to enumerate existing objects with
->         problems with skipList, instead of listing the kind of
->         breakages these problematic objects share to be ignored, as
->         doing the latter will allow new instances of the same
->         breakages go unnoticed.
->
-> If the project has some tool constraints and have to accept new
-> "broken" objects on ongoing basis, then fsck.<msg-id> facility may
-> make sense, but that is probably a very narrow special use case.
+On 28 May 2018 at 15:25, Junio C Hamano <gitster@pobox.com> wrote:
 
-That makes sense. I'll reword this bit.
+> Tiago Botelho <tiagonbotelho@gmail.com> writes:
 
->>> +hidden going forward, although that's unlikely to happen in practice
->>> +unless someone is being deliberately malicious.
->>
->> Is it worth mentioning buggy tools and/or other buggy Git
->> implementations as sources?
->
-> Or old Git implementations we ourselves shipped.  I do not think it
-> is worth mentioning it, but I do agree that "unless somebody is
-> being deliberatly malicious" is misleading, if that is what you are
-> getting at.  One use of fsck is about noticing that you are under
-> attack, so "unless someone is being malicious" there in the sentence
-> does not make sense.  When somebody is attacking you, you do not
-> want to use fsck.<msg-id> to ignore it.
->
-> But that becomes a moot point, if we were to follow the line of
-> rewrite I suggested above.
+> > This will enable users to implement bisecting on first parents
+> > which can be useful for when the commits from a feature branch
+> > that we want to merge are not always tested.
+> >
+> > Signed-off-by: Tiago Botelho <tiagonbotelho@hotmail.com>
+> > ---
+> >
+> > This patch adds all Junio's suggestions, namely do_find_bisection()
+being
+> > broken when assigning q's weight to p if in first parent mode and q
+being
+> > not UNINTERESTING and its weight still not being known.
+> >
+> > The graph displayed in the unit tests was also changed from being
+top-bottom
+> > to be left-right in order to keep it consistent with graphs in other
+tests.
+> >
+> >  bisect.c                   | 45
+++++++++++++++++++++++++++++++---------------
+> >  bisect.h                   |  3 ++-
+> >  builtin/rev-list.c         |  3 +++
+> >  revision.c                 |  3 ---
+> >  t/t6002-rev-list-bisect.sh | 37 +++++++++++++++++++++++++++++++++++++
+> >  5 files changed, 72 insertions(+), 19 deletions(-)
 
-I'll try to clarify this, but I think we really should have some bit
-there about historical tools. Realistically no new git tools produce
-these, so the user needs to be made aware of what the trade-off of
-turning these on is.
+> > diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+> > index a66140803..774d9a4fd 100755
+> > --- a/t/t6002-rev-list-bisect.sh
+> > +++ b/t/t6002-rev-list-bisect.sh
+> > @@ -263,4 +263,41 @@ test_expect_success 'rev-parse --bisect can
+default to good/bad refs' '
+> > ...
+> > +test_output_expect_success "--bisect-all --first-parent" 'git rev-list
+--bisect-all --first-parent FX ^A' <<EOF
+> > +$(git rev-parse EX) (dist=1)
+> > +$(git rev-parse D) (dist=1)
+> > +$(git rev-parse FX) (dist=0)
+> > +EOF
+> > +
+> >  test_done
 
-The reality of that is that these objects are exceedingly rare, and
-mostly found in various old repositories. Something like that need to
-be mentioned so the user can weigh the trade-off of turning this on.
+> Running this test number of times gives me spurious errors.  Is the
+> order of these output lines unstable?  How do we "sort" these
+> bisect-all results?  If we are not sorting and the output depends on
+> happenstance, then probably we would need to compare the expected
+> and actual output after sorting.  Or if the output depends on
+> something under our control (e.g. they are related to topology and
+> relative commit timestamp), we probably should try to control that
+> "something" tighter so that we can rely on the order of the lines in
+> the "expect" file.
+
+The reason why the tests were failing was because the above "old" tests
+did not make use of test_commit which in turn would make the sha of each
+commit be different and as a result give unexpected outputs at times.
+If I move them to the top of that file the tests will pass every time,
+would that
+be ok?
+
+> It also appears that we have "--bisect and --first-parent do not
+> work well together" in t6000, which also needs to be updated.  I
+> needed the following squashed into this patch to make "make test"
+> pass.
+
+> diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
+> index 969e4e9e52..981198ae6e 100755
+> --- a/t/t6000-rev-list-misc.sh
+> +++ b/t/t6000-rev-list-misc.sh
+> @@ -96,8 +96,8 @@ test_expect_success 'rev-list can show index objects' '
+>          test_cmp expect actual
+>   '
+
+> -test_expect_success '--bisect and --first-parent can not be combined' '
+> -       test_must_fail git rev-list --bisect --first-parent HEAD
+> +test_expect_success '--bisect and --first-parent can now be combined' '
+> +       git rev-list --bisect --first-parent HEAD
+>   '
+
+>   test_expect_success '--header shows a NUL after each commit' '
