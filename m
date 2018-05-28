@@ -2,412 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 719711F42D
-	for <e@80x24.org>; Sun, 27 May 2018 22:55:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E72A71F42D
+	for <e@80x24.org>; Mon, 28 May 2018 02:43:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752664AbeE0Wzi (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 May 2018 18:55:38 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:39730 "EHLO
+        id S1752981AbeE1ClU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 May 2018 22:41:20 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:37488 "EHLO
         mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752466AbeE0Wzh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 May 2018 18:55:37 -0400
-Received: by mail-wm0-f66.google.com with SMTP id f8-v6so27460627wmc.4
-        for <git@vger.kernel.org>; Sun, 27 May 2018 15:55:36 -0700 (PDT)
+        with ESMTP id S1752952AbeE1ClT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 May 2018 22:41:19 -0400
+Received: by mail-wm0-f66.google.com with SMTP id l1-v6so28148647wmb.2
+        for <git@vger.kernel.org>; Sun, 27 May 2018 19:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=j2Di9sO+Vp2I4ROUW8HgJaCn/z52nZ0YzzWEHCrnKdc=;
-        b=Hlf1hDIQTPCI4ffkAUflWNuhJFXvR6q4PviHW8P3sVy6udCfkS8BuZcBCHW/SK/nSF
-         JT8syYFqYG21131PxGghF6pBXfhJXrcstFTESg9lN+UISFHyS/Qox+ZwIUQ/HhGLqI3r
-         Mzk++WyS0o+muItJyBQqGGIFIlcJ8WIpAi2QAt+ZOEqu/CcrPQ1srkx2cIkYSyrIqj46
-         RQYF/ice6awDBtfbENJhYR1fi6KjaEYd2IIOY8k6WG+AEn5bohYnCTeb/DXK8ZoZv3Nq
-         JvME05ktXGS8PxBL0p4B2cJFlolflHivHDlVzcy2v1PWrQdICvYsoqD4+f6VWvdFdPgC
-         IJrQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=F8dszMjZD03b+F041h4BXDxPxbN2EHN5JVY+9hVIq00=;
+        b=AYv5N1CJor81epxXdnBT0skYF94E0FMy0Q6FYWOnPl4UAyVyMLl8lbjk1XRAw2tLfc
+         wA00qTOFFgWfj7EZZWKf5FCICMfRLAKq7VdUHHRlo8lc16psRRHxDUV33eM0qGhVSY90
+         JnWFBPc5Jr1MBpHgGAgNSARkSPwxNTYztUqEEoKjgNHXKL8yQOj0iFFVXOGtC9dTh9zH
+         0RMwhHhoHiCYUp74YUKad6eBfWLu7FmAYwhffcwXlKiaoVoCBXGrM0f6XjEN1IcU/4kD
+         IrI5BxbTV/lPXowVgWToIm3W0ZODVe7EfW31P2Y5u7YqpinFH62jCzrMZyFkBteepnvn
+         Fm6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=j2Di9sO+Vp2I4ROUW8HgJaCn/z52nZ0YzzWEHCrnKdc=;
-        b=eB75gKWVOa6ElUVZhjif6aJRtEQa+fmcWWCYLEEY40t6aIpPTEjDhqqeDiIr0V1jLQ
-         RBl+ptwHxsZr5wpRpOP6dI2LDWLVhON+arztGiDxQ8d9GQGblFtPukg0Xmzhsq93TC5B
-         AwxYwYkNEyqMR6qyIHJQLxQixY6JSplwCN7WOFrqincUlpXfKXaIE3lvNbQ4zVxAddpp
-         ilIs1PfCye9fVUWNsFmqeD5JqnVdkBhbXBYuKHnke+9AWw3Rb2hjXw+nB009mPxCD1q4
-         yJr0Ra4oYsq6AwZh+1TK+lpyYNMcpY4g93edluXmIsdX+MIUNJYkbMSGFka+G3JO+vbU
-         Y6hA==
-X-Gm-Message-State: ALKqPwdWr/0XNwRwqzV3w4ggSQ4LyDX14/3Ph3GuYFCyFjzbKFBx+/Vr
-        onz/LuVtZkqFbGLbxXhfexA=
-X-Google-Smtp-Source: AB8JxZrsZYmzzPQXpThTBrLHTpejhqm3HwqHm5CpTPMH1oQV23PTmeMojyhsbDuQoMS1eLUtPgK9iA==
-X-Received: by 2002:a1c:b484:: with SMTP id d126-v6mr7004100wmf.0.1527461735861;
-        Sun, 27 May 2018 15:55:35 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egb161.neoplus.adsl.tpnet.pl. [83.21.65.161])
-        by smtp.gmail.com with ESMTPSA id n56-v6sm6846235wrn.72.2018.05.27.15.55.33
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=F8dszMjZD03b+F041h4BXDxPxbN2EHN5JVY+9hVIq00=;
+        b=TGrucitqtqBxm3JRGu6vvhm8lhXk7oWFw94KR9vwsJjW/l4Vu5TzvqWGn4QfAyBG4B
+         jXwQq0KvzEVbLc0woIm2BjgzVwWNL304l8CgGCLuzYkdGdXz1DXegz6bl0IPZTfcOWJx
+         889+qeS6xOzqh91ZEtkuwX/aH53KsU8oP1nUCqcFpHvx8c7mFGYuFd/VkLygqwwbVLAM
+         n4aKqCTbQhi/t/fyoigV/NFLAWboj80WHCn0tyNhO298BdOZoI0JEO/64bzsYmjp+CUr
+         8tWwY6LcuqLQmiBaozD4e+u4AR0jM1rwGlUqe1eDp0Fo4qpJHXYv8C1RZ+6NeDBjupST
+         K5gg==
+X-Gm-Message-State: ALKqPwecMK+ZO66dERKrz9SqlGH9iz6jPmZ1DL2HD32VP6jSP/WcRToh
+        6bcWWLH4gSOCzxfJLyYnAwc=
+X-Google-Smtp-Source: ADUXVKIY9r672Bf/fb6B4GNmPmU9w5MZWYvfTRwcroy1Kk06Sp1HB5dKew7TwwQdPfSjPx2/WjrFfQ==
+X-Received: by 2002:a1c:1f13:: with SMTP id f19-v6mr6490511wmf.73.1527475277268;
+        Sun, 27 May 2018 19:41:17 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 69-v6sm16568710wmi.29.2018.05.27.19.41.16
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 27 May 2018 15:55:34 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster\@pobox.com" <gitster@pobox.com>,
-        "stolee\@gmail.com" <stolee@gmail.com>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "marten.agren\@gmail.com" <marten.agren@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>
-Subject: Re: [PATCH v3 06/20] commit-graph: add 'verify' subcommand
-References: <20180511211504.79877-1-dstolee@microsoft.com>
-        <20180524162504.158394-1-dstolee@microsoft.com>
-        <20180524162504.158394-7-dstolee@microsoft.com>
-Date:   Mon, 28 May 2018 00:55:33 +0200
-In-Reply-To: <20180524162504.158394-7-dstolee@microsoft.com> (Derrick Stolee's
-        message of "Thu, 24 May 2018 16:25:37 +0000")
-Message-ID: <86y3g4yahm.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        Sun, 27 May 2018 19:41:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jeremy Linton <lintonrjeremy@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH] packfile: Correct zlib buffer handling
+References: <20180525225601.22575-1-lintonrjeremy@gmail.com>
+        <CACsJy8C4zNZAe6Vw-mz8r8HueYdQKs4ZhMOQYX0v7ypfHdmShg@mail.gmail.com>
+        <xmqq8t86m0m3.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8CNmDkxzhkdfwjVHjGF4JeUzzPHGnp1x647NxU-GxkxvA@mail.gmail.com>
+        <xmqqsh6dl3gg.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 28 May 2018 11:41:15 +0900
+In-Reply-To: <xmqqsh6dl3gg.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Sun, 27 May 2018 20:53:35 +0900")
+Message-ID: <xmqqk1rolcxg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> If the commit-graph file becomes corrupt, we need a way to verify
-> that its contents match the object database. In the manner of
-> 'git fsck' we will implement a 'git commit-graph verify' subcommand
-> to report all issues with the file.
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> Add the 'verify' subcommand to the 'commit-graph' builtin and its
-> documentation. The subcommand is currently a no-op except for
-> loading the commit-graph into memory, which may trigger run-time
-> errors that would be caught by normal use.
-
-So this commit is simply getting the boilerplate out of the way for
-implementing 'git commit-graph verify' subcommand.  Good.
-
->                                            Add a simple test that
-> ensures the command returns a zero error code.
-
-Nice.
-
+>> On Sun, May 27, 2018 at 1:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Duy Nguyen <pclouds@gmail.com> writes:
+>>>
+>>>> On Sat, May 26, 2018 at 12:56 AM, Jeremy Linton <lintonrjeremy@gmail.com> wrote:
+>>>>> @@ -1416,7 +1416,7 @@ static void *unpack_compressed_entry(struct packed_git *p,
+>>>>>                 return NULL;
+>>>>>         memset(&stream, 0, sizeof(stream));
+>>>>>         stream.next_out = buffer;
+>>>>> -       stream.avail_out = size + 1;
+>>>>> +       stream.avail_out = size;
+>>>>
+>>>> You may want to include in your commit message a reference to
+>>>> 39eea7bdd9 (Fix incorrect error check while reading deflated pack data
+>>>> - 2009-10-21) which adds this plus one with a fascinating story
+>>>> behind.
+>>>
+>>> A bit puzzled---are you saying that this recent patch breaks the old
+>>> fix and must be done in some other way?
+>>
+>> No. I actually wanted to answer that question when I tried to track
+>> down the commit that adds " + 1" but I did not spend enough time to
+>> understand the old problem. I guess your puzzle means you didn't think
+>> it would break anything, which is good.
 >
-> If no commit-graph file exists, this is an acceptable state. Do
-> not report any errors.
+> No it merely means I am puzzled how the posted patch that goes
+> directly opposite to what an earlier "fix" did is a correct solution
+> to anything X-<.
 
-All right.  I assume that as it is explicit verification call, it does
-ignore core.commitGraph setting, isn't it?
+Specifically, I was worried about this assertion:
 
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  Documentation/git-commit-graph.txt |  6 ++++++
->  builtin/commit-graph.c             | 38 ++++++++++++++++++++++++++++++++=
-++++++
->  commit-graph.c                     | 26 ++++++++++++++++++++++++++
->  commit-graph.h                     |  2 ++
->  t/t5318-commit-graph.sh            | 10 ++++++++++
->  5 files changed, 82 insertions(+)
->
-> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commi=
-t-graph.txt
-> index 4c97b555cc..a222cfab08 100644
-> --- a/Documentation/git-commit-graph.txt
-> +++ b/Documentation/git-commit-graph.txt
-> @@ -10,6 +10,7 @@ SYNOPSIS
->  --------
->  [verse]
->  'git commit-graph read' [--object-dir <dir>]
-> +'git commit-graph verify' [--object-dir <dir>]
->  'git commit-graph write' <options> [--object-dir <dir>]
+    Lets rely on the fact that the source buffer will only be fully
+    consumed when the when the destination buffer is inflated to the
+    correct size.
 
-In alphabetical order, good.
+which I think is the exact bad thinking that caused troubles for us
+in the past; isn't the explanation in 456cdf6e ("Fix loose object
+uncompression check.", 2007-03-19) relevant here?
 
->=20=20
->=20=20
-> @@ -52,6 +53,11 @@ existing commit-graph file.
->  Read a graph file given by the commit-graph file and output basic
->  details about the graph file. Used for debugging purposes.
->=20=20
-> +'verify'::
-> +
-> +Read the commit-graph file and verify its contents against the object
-> +database. Used to check for corrupted data.
-> +
+-	stream.avail_out = size + 1;
++	stream.avail_out = size;
+	...
+ 		stream.next_in = in;
+ 		st = git_inflate(&stream, Z_FINISH);
+ 		if (!stream.avail_out)
+-			break; /* the payload is larger than it should be */
++			break; /* done, st indicates if source fully consumed */
+ 		curpos += stream.next_in - in;
+ 	} while (st == Z_OK || st == Z_BUF_ERROR);
+ 	git_inflate_end(&stream);
+ 	if ((st != Z_STREAM_END) || stream.total_out != size) {
+ 		free(buffer);
+ 		return NULL;
+ 	}
 
-All right, good enough description.
+With minimum stream.avail_out without slack, when !avail_out, i.e.
+when we fully filled the output buffer, it could be that we had
+correct input that deflates to the correct size, in which case we
+are happy---st would say Z_STREAM_END, we would leave the loop
+because it is neither OK nor BUF_ERROR, and total_out would report
+the size we expected.  Or the input zlib stream may have ended with
+bytes that express "this concludes the stream", and the input bytes
+before that was sufficient to construct the original payload fully,
+and we may have just fed the bytes before that "this concludes the
+stream" to git_inflate().
 
->=20=20
->  EXAMPLES
->  --------
-> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-> index f0875b8bf3..0433dd6e20 100644
-> --- a/builtin/commit-graph.c
-> +++ b/builtin/commit-graph.c
-> @@ -8,10 +8,16 @@
->  static char const * const builtin_commit_graph_usage[] =3D {
->  	N_("git commit-graph [--object-dir <objdir>]"),
->  	N_("git commit-graph read [--object-dir <objdir>]"),
-> +	N_("git commit-graph verify [--object-dir <objdir>]"),
->  	N_("git commit-graph write [--object-dir <objdir>] [--append] [--stdin-=
-packs|--stdin-commits]"),
->  	NULL
->  };
+In such a case, we haven't consumed all the avail_in.  We may
+already have all the correct output, i.e. !avail_out, but because we
+haven't consumed the "this concludes the stream", st is not
+STREAM_END in such a case.  
 
-In alphabetical order, same as in the manpage for git-commit-graph.
+Our existing while() loop, with one-byte slack in avail_out, would
+have let us continue and the next iteration of the loop would have
+consumed the input without producing any more output (i.e. avail_out
+would have been left to 1 in both of these final two rounds) and we
+would have exited the loop.  After calling inflate_end(), we would
+have noticed STREAM_END and correct size and we would have been
+happy.
 
->=20=20
-> +static const char * const builtin_commit_graph_verify_usage[] =3D {
-> +	N_("git commit-graph verify [--object-dir <objdir>]"),
-> +	NULL
-> +};
-> +
->  static const char * const builtin_commit_graph_read_usage[] =3D {
->  	N_("git commit-graph read [--object-dir <objdir>]"),
->  	NULL
-> @@ -29,6 +35,36 @@ static struct opts_commit_graph {
->  	int append;
->  } opts;
->=20=20
-> +
-> +static int graph_verify(int argc, const char **argv)
-> +{
-> +	struct commit_graph *graph =3D 0;
-> +	char *graph_name;
-> +
-> +	static struct option builtin_commit_graph_verify_options[] =3D {
-> +		OPT_STRING(0, "object-dir", &opts.obj_dir,
-> +			   N_("dir"),
-> +			   N_("The object directory to store the graph")),
-> +		OPT_END(),
-> +	};
-> +
-> +	argc =3D parse_options(argc, argv, NULL,
-> +			     builtin_commit_graph_verify_options,
-> +			     builtin_commit_graph_verify_usage, 0);
-> +
-> +	if (!opts.obj_dir)
-> +		opts.obj_dir =3D get_object_directory();
+The updated code would handle this latter case rather badly, no?  We
+leave the loop early, notice st is not STREAM_END, and be very
+unhappy, because this patch did not give us to consume the very end
+of the input stream and left the loop early.
 
-Getting the boilerplate of implementing the command mostly out of the
-way.  Good.
+>> This yields two problems, first a single byte overrun won't be detected
+>> properly because the Z_STREAM_END will then be set, but the null
+>> terminator will have been overwritten.
 
-> +
-> +	graph_name =3D get_commit_graph_filename(opts.obj_dir);
-> +	graph =3D load_commit_graph_one(graph_name);
+Because we compare total_out and size at the end, we would detect it
+as an error in this function, no?  Then zlib overwriting NUL would
+not be a problem, as we would free the buffer and return NULL, no?
 
-So we are verifying only the commit-graph file belonging directly to
-current repository, as I have expected.  This is needed to for warnings
-and error messages from the 'verify' action, to be able to tell in which
-file there are problems.
+>> The other problem is that
+>> more recent zlib patches have been poisoning the unconsumed portions
+>> of the buffers which also overwrites the null, while correctly
+>> returning length and status.
 
-This means that it is possible that there would be problems with
-commit-graph files that running 'git commit-graph verify' would not
-find, because they are in commit-graph file in one of the alternates.
+Isn't that a bug in zlib, though?  Or do they do that deliberately?
 
-It is very easy, though, to check all commit-graph files that would be
-read and its data concatenated when using commit-graph feature
-(e.g. 'git commit-graph read', IIRC):
+I think a workaround with lower impact would be to manually restore
+NUL at the end of the buffer.
 
-  $ git commit-graph verify
-  $ for obj_dir in $(cat .git/objects/info/alternates) do;
-        git commit-graph --object-dir=3D"$obj_dir";
-    done
-
-Note: I have not checked the above that it works.
-
-> +	FREE_AND_NULL(graph_name);
-
-Freeing the resources, always nice to have.
-
-> +
-> +	if (!graph)
-> +		return 0;
-
-DS> If no commit-graph file exists, this is an acceptable state. Do
-DS> not report any errors.
-
-Right, non existant commit-graph file is certainly valid ;-)
-
-> +
-> +	return verify_commit_graph(graph);
-> +}
-
-I guess that graph_verify() would not change much, if at all, in
-subsequent commits in this patch series.
-
-> +
->  static int graph_read(int argc, const char **argv)
->  {
->  	struct commit_graph *graph =3D NULL;
-> @@ -163,6 +199,8 @@ int cmd_commit_graph(int argc, const char **argv, con=
-st char *prefix)
->  			     PARSE_OPT_STOP_AT_NON_OPTION);
->=20=20
->  	if (argc > 0) {
-> +		if (!strcmp(argv[0], "verify"))
-> +			return graph_verify(argc, argv);
->  		if (!strcmp(argv[0], "read"))
->  			return graph_read(argc, argv);
->  		if (!strcmp(argv[0], "write"))
-
-Not in alphabetical order... is there a reason for that?
-
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 25893ec096..55b41664ee 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -836,3 +836,29 @@ void write_commit_graph(const char *obj_dir,
->  	oids.alloc =3D 0;
->  	oids.nr =3D 0;
->  }
-> +
-> +static int verify_commit_graph_error;
-> +
-> +static void graph_report(const char *fmt, ...)
-> +{
-> +	va_list ap;
-> +	struct strbuf sb =3D STRBUF_INIT;
-> +	verify_commit_graph_error =3D 1;
-> +
-> +	va_start(ap, fmt);
-> +	strbuf_vaddf(&sb, fmt, ap);
-> +
-> +	fprintf(stderr, "%s\n", sb.buf);
-> +	strbuf_release(&sb);
-> +	va_end(ap);
-
-Why do you use strbuf_vaddf + fprintf instead of straighforward
-vfprintf (or function instead of variable-level macro)?
-
-Is it because of [string] safety?
-
-> +}
-> +
-> +int verify_commit_graph(struct commit_graph *g)
-> +{
-> +	if (!g) {
-> +		graph_report("no commit-graph file loaded");
-> +		return 1;
-> +	}
-
-All right, this is just a placeholder - we should not ever get this
-message because in this case we exit with error code of 0 (EXIT_SUCCESS)
-if there is no commit-graph file loaded before invoking
-verify_commit_graph().
-
-> +
-> +	return verify_commit_graph_error;
-
-All right, this is for the future.  Good.
-
-> +}
-> diff --git a/commit-graph.h b/commit-graph.h
-> index 96cccb10f3..71a39c5a57 100644
-> --- a/commit-graph.h
-> +++ b/commit-graph.h
-> @@ -53,4 +53,6 @@ void write_commit_graph(const char *obj_dir,
->  			int nr_commits,
->  			int append);
->=20=20
-> +int verify_commit_graph(struct commit_graph *g);
-> +
-
-Why does this need to be exported?  I think it is not used outside of
-commit-graph.c, isn't it?
-
->  #endif
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index 77d85aefe7..6ca451dfd2 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -11,6 +11,11 @@ test_expect_success 'setup full repo' '
->  	objdir=3D".git/objects"
->  '
->=20=20
-> +test_expect_success 'verify graph with no graph file' '
-> +	cd "$TRASH_DIRECTORY/full" &&
-
-Is sich bare `cd`, without corresponding `cd` back or using subshell
-safe?
-
-> +	git commit-graph verify
-> +'
-> +
->  test_expect_success 'write graph with no packs' '
->  	cd "$TRASH_DIRECTORY/full" &&
->  	git commit-graph write --object-dir . &&
-> @@ -230,4 +235,9 @@ test_expect_success 'perform fast-forward merge in fu=
-ll repo' '
->  	test_cmp expect output
->  '
->=20=20
-> +test_expect_success 'git commit-graph verify' '
-> +	cd "$TRASH_DIRECTORY/full" &&
-> +	git commit-graph verify >output
-> +'
-
-Those are tests with nearly the same code, but they are (by their
-descriptions) testing different things.  This means that they rely on
-side effects of earlier tests.
-
-This is suboptimal, as it means that it would be impossible or very
-difficult to run individual tests (e.g. with GIT_SKIP_TESTS environment
-variable, or with an individual test suite --run option), unless you
-know which tests setup the repository state for later tests.
-
-It also means that running only failed tests with prove
---state=3Dfailed,save or equivalently with
-
-  $ make DEFAULT_TEST_TARGET=3Dprove GIT_PROVE_OPTS=3D'--state=3Dfailed,sav=
-e' test
-
-wouldn't work correctly.
-
-As Johannes Schindelin (alias Dscho) said in latest Git Rev News
-interview: https://git.github.io/rev_news/2018/05/16/edition-39/
-
-JS> We have a test suite where debugging a regression may mean that you
-JS> have to run 98 test cases before the failing one every single time in
-JS> the edit/compile/debug cycle, because the 99th test case may depend on
-JS> a side effect of at least one of the preceding test cases. Git=E2=80=99=
-s test
-JS> suite is so not [21st century best practices][1].
-JS>
-JS> [1]: https://www.slideshare.net/BuckHodges/lessons-learned-doing-devops=
--at-scale-at-microsoft
-
-
-I think can be solved quite efficiently by creating and using shell
-function, or two shell functions, which would either:
-
- * rename commit-graph file to some other temporary name if it exists,
-   and move it back after the test.
- * create commit-graph file if it does not exist.
-
-For example (untested):
-
-  prepare_no_commit_graph() {
-  	mv .git/info/commit-graph .git/info/commit-graph.away &&
-  	test_when_finished "mv .git/info/commit-graph.away .git/info/commit-grap=
-h"
-  }
-
-  prepare_commit_graph() {
-  	if ! test -f ".git/info/commit-graph"
-  	then
-  		git commit-graph write
-  	fi
-  }
-
-Or something like that.
-
-> +
->  test_done
-
-Regards,
---=20
-Jakub Nar=C4=99bski
