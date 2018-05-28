@@ -3,78 +3,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FB2B1F42D
-	for <e@80x24.org>; Mon, 28 May 2018 04:13:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 147581F42D
+	for <e@80x24.org>; Mon, 28 May 2018 05:34:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750716AbeE1EMa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 May 2018 00:12:30 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:42925 "EHLO
-        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750710AbeE1EM2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 May 2018 00:12:28 -0400
-Received: by mail-io0-f175.google.com with SMTP id a10-v6so12664965ioc.9
-        for <git@vger.kernel.org>; Sun, 27 May 2018 21:12:27 -0700 (PDT)
+        id S1753165AbeE1Fek (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 May 2018 01:34:40 -0400
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:33226 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753140AbeE1Fej (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 May 2018 01:34:39 -0400
+Received: by mail-wr0-f176.google.com with SMTP id a15-v6so18179031wrm.0
+        for <git@vger.kernel.org>; Sun, 27 May 2018 22:34:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=yGY1vmNx8432gVaCC+PoAuSkk/nJtat60xBdsq+WjfU=;
-        b=UsNPJw0fIPQj4B4mU2I6BKm8o/UfIAfomabijUMn2fncy4xsZYD3hJKGalIz3MmjMo
-         XY3XI1gGhsAHtvqf6DeQUvoU4Hr6dGp6F6HGFv9X4X3CCMv/QDnTlKAR9nrwXPYvCNwz
-         IIRNWbHG7LvuWk+Ruhu+UEFG1O4hK7FdUyvdIScogp/SaS7yk3ON2xdu0ryHU4IzjVTN
-         3UA4ghPUIr1IYIbddbUJpiUVWuuIHYTwOLofYZuIuexz74mYqCedJug+xnnuziBs5+O9
-         QVCrYavxiHaQl0PNhit5X20CUPmcnymb9IkFzkNRKE9U+sm/kSRT93aZVWdrh+/xD4qr
-         i8Ag==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=jwGPTYjfAzfYF97TA9qRvMYBzcaZ+NZ5GXCgZ/X4Dbc=;
+        b=E8PQkQFWi3JnZXNR3hNfzHUSWu4poIch4bwnIO1u0bMXAwxM3ho5ASMUhBFD8vPv6Q
+         5wigtve/p08OsN59uJF0Xw5cQtFC+MVZJ3bMBZPIu4WSWZsJoRQJPBFyFXBjNvyUtraZ
+         2m/wJkyK8OZ5uMznkwDaluv7uWBD95kg8P1a6h52cLI5NRZyE4u9bR8Q+UpMtpUpFVAY
+         tXCf9ZRwDHUPNcBR+nzzKrkpuynyken4eh/ZyivE7ngxwbgcnLdsxzRhoYyCcZO8zPIm
+         IJRKlNQylCHrQ/CZ/7io3Po+NOLfBfetLGVjzlqI8ZS6O/liouOXusGRvWrljTt/7H8/
+         uFDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=yGY1vmNx8432gVaCC+PoAuSkk/nJtat60xBdsq+WjfU=;
-        b=CDE8LwHLRfgfbKjma+iZK5HiavOyaphuzjuAnR0bMoAmlckMSKVdS2pMBNQNt6irg8
-         8gUYeaQiEV1mvReTgy7TGUUydQk4//ncxlRFRhUDaGN2A9qlIiGc8bs87pLYLDNUEw3N
-         vJYUZFm+cHsXTMO3dkWpoJx7uFnf2Nq/XthzyFmlCPsetHHi03CBOegJncRVaNkTFRX8
-         cksrQtmPEXoTd8n3JqlZP3JcZ75yG2vwb2X0z6Q7fyWpzoAR5rMdihhlat3t5SWPQrYP
-         zhKbo1HrYVsapg6hdIjvm0HNB6lj7IFyZLj1+rcCHpL6nmTa+VWbu/fc3pK9VjLPS8VX
-         7s4Q==
-X-Gm-Message-State: ALKqPwcAw2TIIIQ7q1iWCIPUlvdzkX/C5BhbSK9B0WPiEaEMkJ4XYZnI
-        jm2lcYubxtKIO0svVsBMB9UZaWmXR+KQ8DG2Gsg=
-X-Google-Smtp-Source: AB8JxZqFmP8a1hGY05nUpmDQNTuT1uMGZWUvswPXCf2/rqUATJmvqArHt244ALtdaOArStCFGH/26DcS+iKFhw2e1As=
-X-Received: by 2002:a6b:ca46:: with SMTP id a67-v6mr9437328iog.53.1527480747475;
- Sun, 27 May 2018 21:12:27 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=jwGPTYjfAzfYF97TA9qRvMYBzcaZ+NZ5GXCgZ/X4Dbc=;
+        b=qMFbZzA17d8MzejGVcmfFDwXchzxS0pgjPWvK80BWBT6nJyjZVmd4BYPzuvXSes75x
+         9DPPmEdEa+tZINQ7kNix+LT3txlrbSXgDEFl/Ukht4/3KKnYxg7YBjdBRBqeAmU9gTbg
+         xLjOTBRxMVvJdYFpYtU5w/Y97Hv4Ra5zaTFreDd+UAkE5QubVqpR9DAO56xpgE6eJaTe
+         jJiybGNE8NTpJTMjIsKaFCZT+d2120AgAGD8pOp5j6thdzm8GYWIZCMcbLnizm1EY1OE
+         Z3yaiKHVhlAyvK7akHP9mHNIcyEFUnL7eb70gs75qAuCjMrOA/td3ELc7mZv3e239jch
+         mcGg==
+X-Gm-Message-State: ALKqPwcFUn8QN3qKcPxBlbmUU20pGfE+xrgB6eQs5wJ9imTfc2+VUNQS
+        JSceStdaDrTD2y6d7jTn8KA=
+X-Google-Smtp-Source: AB8JxZod4LM02qGnL3xC4viZKXsS86QL9i61Q54FA4Q+5aZ4/3DiyfE7EyDb6P5RQI/+4c5bdmEH2Q==
+X-Received: by 2002:adf:8607:: with SMTP id 7-v6mr8739960wrv.255.1527485677771;
+        Sun, 27 May 2018 22:34:37 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v196-v6sm11622451wmf.36.2018.05.27.22.34.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 27 May 2018 22:34:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (May 2018, #03; Wed, 23)
+References: <xmqqwovtudia.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BHrzaJ4O0WXJM2YhTMzSx-6nxhHTi4VmL0xXph0ts3Msg@mail.gmail.com>
+Date:   Mon, 28 May 2018 14:34:36 +0900
+In-Reply-To: <CABPp-BHrzaJ4O0WXJM2YhTMzSx-6nxhHTi4VmL0xXph0ts3Msg@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 23 May 2018 23:39:58 -0700")
+Message-ID: <xmqq7enol4wj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a4f:22db:0:0:0:0:0 with HTTP; Sun, 27 May 2018 21:12:27
- -0700 (PDT)
-In-Reply-To: <48c8a5ba-3a04-00f8-94d7-5b32083a59ef@gmail.com>
-References: <48c8a5ba-3a04-00f8-94d7-5b32083a59ef@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 28 May 2018 06:12:27 +0200
-Message-ID: <CAP8UFD1LR9gR-Au0N33yktdW6SiyVeXccBfR3zPjZHs95sjwOQ@mail.gmail.com>
-Subject: Re: [GSoC] GSoC with git, week 4
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban,
+Elijah Newren <newren@gmail.com> writes:
 
-On Sat, May 26, 2018 at 6:32 PM, Alban Gruin <alban.gruin@gmail.com> wrote:
+> On Wed, May 23, 2018 at 5:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Here are the topics that have been cooking.  Commits prefixed with
+>> '-' are only in 'pu' (proposed updates) while commits prefixed with
+>> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+>> the integration branches, but I am still holding onto them.
 >
-> I published my blog post about this week. You can read it here:
->
->     https://blog.pa1ch.fr/posts/2018/05/26/en/gsoc2018-week-4.html
->
-> All comments are welcome!
+> I don't see the series posted at
+> https://public-inbox.org/git/20180522004327.13085-1-newren@gmail.com/
+> (various merge-recursive code cleanups) -- or its predecessor --
+> showing up anywhere.  Did it slip through the cracks, by chance?
 
-Thanks for publishing a nice update!
+It does not require any chance for various serieses, especially
+their earlier iterations, do not get enough time slots to be
+processed soon after they are posted, as there are too many topics,
+both patches and discussions, active on the list.
 
-Christian.
+Especially the ones that are designed not to apply to the current
+'master', which would give me a strong incentive to ignore them
+until the prerequisite topics in flight hits 'master' ;-)
