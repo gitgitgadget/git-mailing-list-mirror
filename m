@@ -2,86 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 190E91F42D
-	for <e@80x24.org>; Mon, 28 May 2018 17:58:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17DD31F42D
+	for <e@80x24.org>; Mon, 28 May 2018 18:40:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932495AbeE1R56 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 May 2018 13:57:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54760 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S932242AbeE1R55 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 May 2018 13:57:57 -0400
-Received: (qmail 7444 invoked by uid 109); 28 May 2018 17:57:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 28 May 2018 17:57:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22491 invoked by uid 111); 28 May 2018 17:58:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 28 May 2018 13:58:07 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 May 2018 13:57:55 -0400
-Date:   Mon, 28 May 2018 13:57:55 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] make show-index a builtin
-Message-ID: <20180528175754.GA20636@sigill.intra.peff.net>
-References: <20180528093740.GA6902@sigill.intra.peff.net>
- <20180528093853.GA20229@sigill.intra.peff.net>
- <xmqqlgc3iyom.fsf@gitster-ct.c.googlers.com>
+        id S933486AbeE1Sks (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 May 2018 14:40:48 -0400
+Received: from mail-ot0-f195.google.com ([74.125.82.195]:46366 "EHLO
+        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933255AbeE1Skr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 May 2018 14:40:47 -0400
+Received: by mail-ot0-f195.google.com with SMTP id t1-v6so14337053ott.13
+        for <git@vger.kernel.org>; Mon, 28 May 2018 11:40:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=oMV9kCB2J9f/tAJE+Djsqu/2/Rq0kQWuytdfzNqp0ho=;
+        b=lejWm8BYntAijFTulvEuQjBDspwvgSMCMLltOwHzvKRLm+Y1Ik8iTEejCT3fd/OX7C
+         cpQDC20Gd0iwrfjU6mbtGktBKsJQjtTxAwRnv6FcUe2OifzNlKspUHLZevP1y2KpCGXA
+         FGWJ8SvdQZiH7Cd2SZAO0G8JNtQHzI7xFsfKHjxy1BSnSctSzCbwT/yEXS+h5ayIcNBR
+         czjpoJyLmBQNpKf77ha2syiEIIa/uNrLB/3tVJLoqkyg/7Q1H6hcwG+kPOCRpJwJgNPi
+         M46IHvqeBXPxVvzC87GGJyvBEJS6QUD0xTcWtoGC4XuyDK5O3qJQND/BWn616xFywVZx
+         oTFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=oMV9kCB2J9f/tAJE+Djsqu/2/Rq0kQWuytdfzNqp0ho=;
+        b=EhAVC+NXf/8ZBxfP5Ayqh+ID3s8cNxeatOv3Pe8J4iklrjIZ7z3S/jEIYyvMqK7Lxs
+         vlZhhOMRbS3YvGrFx5TODOSPrHXxAGQ7U2qjeAXarBRgGcRpEQwkVqMO3E8bh10VGaob
+         UJ9TWopDjcN+QtCrZ1ayTjrE6T6GUfGXojrbPjI8UPnTdh/Y/zR1G4pc/5gmJrx1HvtK
+         K2aTCqb40YsC1ouDLB9/3PxCPd1S2HFlSrvCBxGetXX1AX+E1IzDgfKViMyD8gjIUEve
+         bL64XgPj0b15LH/67vWm26HHbK7YC2/WkpiK/i2/EljN2IcNA94CsGAfSnAgN/KMNqpG
+         NmfQ==
+X-Gm-Message-State: ALKqPwdqBLR6UDS2x1G6wxsJ/iOSBs0HZ3xyYJbh6a5YOpZKQLhDE93+
+        836y7LSIPsVRxybVU39bRMPfCenZo6Bdc2tQ+fU=
+X-Google-Smtp-Source: ADUXVKL/TK+qVowHvfW2L3hmOwTwjyO3+0lNge43SYc08g/7E0AwcV5nqpFKQZBn04dQJFRmm4EDlv/DvmZX88Y3ncY=
+X-Received: by 2002:a9d:2c94:: with SMTP id p20-v6mr4657825otb.14.1527532847112;
+ Mon, 28 May 2018 11:40:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqlgc3iyom.fsf@gitster-ct.c.googlers.com>
+Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Mon, 28 May 2018 11:40:16
+ -0700 (PDT)
+In-Reply-To: <90ac0a41563f070a840076521d8935ad7c21beb9.1527279322.git.martin.agren@gmail.com>
+References: <xmqq8t88nllj.fsf@gitster-ct.c.googlers.com> <cover.1527279322.git.martin.agren@gmail.com>
+ <90ac0a41563f070a840076521d8935ad7c21beb9.1527279322.git.martin.agren@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 28 May 2018 20:40:16 +0200
+Message-ID: <CACsJy8CZQLxU5TPx=M0NV_xTR_9qyjbOWnVcdX9-Tz+BCb24VA@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/3] usage: extract `prefix_suffix_lines()` from `advise()`
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 29, 2018 at 12:31:53AM +0900, Junio C Hamano wrote:
+On Fri, May 25, 2018 at 11:00 PM, Martin =C3=85gren <martin.agren@gmail.com=
+> wrote:
+> advice.c contains a useful code snippet which takes a multi-line string
+> and prints the lines, prefixing and suffixing each line with two
+> constant strings. This was originally added in 23cb5bf3b3 (i18n of
+> multi-line advice messages, 2011-12-22) to produce such output:
+>
+> hint: some multi-line advice
+> hint: prefixed with "hint: "
+>
+> The prefix is actually colored after 960786e761 (push: colorize errors,
+> 2018-04-21) and each line has a suffix for resetting the color.
+>
+> The next commit will teach the same "prefix all the lines"-trick to the
+> code that produces, e.g., "warning: "-messages. In preparation for that,
+> extract the code for printing the individual lines and expose it through
+> git-compat-util.h.
+>
+> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+> ---
+> I'm open for suggestions on the naming of `prefix_suffix_lines()`...
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > diff --git a/show-index.c b/builtin/show-index.c
-> > similarity index 96%
-> > rename from show-index.c
-> > rename to builtin/show-index.c
-> > index 1ead41e211..65fa86dd08 100644
-> > --- a/show-index.c
-> > +++ b/builtin/show-index.c
-> > @@ -4,7 +4,7 @@
-> 
-> I squashed
-> 
-> #include "builtin.h"
-> 
-> near the beginning of this file to squelch -DDEVELOPER extra
-> warnings.  Otherwise looks obviously good.
-
-Thanks. I'm still using my custom build options, and obviously I need to
-add -Wmissing-prototypes.
-
-> > diff --git a/git.c b/git.c
-> > index 5771d62a32..c91e144d9a 100644
-> > --- a/git.c
-> > +++ b/git.c
-> > @@ -470,6 +470,7 @@ static struct cmd_struct commands[] = {
-> >  	{ "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
-> >  	{ "show", cmd_show, RUN_SETUP },
-> >  	{ "show-branch", cmd_show_branch, RUN_SETUP },
-> > +	{ "show-index", cmd_show_index },
-> 
-> Hmph, this does not need SETUP?  Ah, of course, because its
-> subcommand body used to do everything itself, and this patch just
-> turns cmd_main() to cmd_show_index().
-
-It is not even that it does the setup itself. It does not need the setup
-at all, because it is purely a mechanical parsing of the stdin stream
-to text output. No repo required, and it does not know or care if the
-matching packfile even exists.
-
--Peff
+I think the important verb, print (to FILE*), is somehow missing. This
+current name would be great if it produces another str(buf).
+--=20
+Duy
