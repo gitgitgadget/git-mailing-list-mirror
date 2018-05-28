@@ -2,128 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MIME_CHARSET_FARAWAY,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3705C1F42D
-	for <e@80x24.org>; Mon, 28 May 2018 13:02:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D95151F42D
+	for <e@80x24.org>; Mon, 28 May 2018 13:18:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S939056AbeE1NCA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 May 2018 09:02:00 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:37060 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S939011AbeE1NBy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 May 2018 09:01:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=ZJrn5DykxoU6cSloBKxkrb5JWplaAdS6znW9nunCulI=; b=0vQ/s1fpDNHJwjDSBINX3w+kwP
-        WmtAN2RWqVz28tceEurnClOcYkzZod2bvkBHjYrg1abc1r2/1PljGMMsjfipEDsqk9pdo9vh3K9jr
-        0etAOqBqCF0/KG6LZQjXzzPUYR/s/o/e2OLYjLfnlpS5BbYghvjLedLood/GDTaU089GDezMIz+oH
-        qBvMQbbBbEjIyvsA7ZYzc8sXD3MxmXsfCbm2MCH1Idd1AjBHVCSfcSZ8FCUWIwx/fO8nXCBXc1qFz
-        l7mjDHDAxxBCyQSQleTagwkHtwuu6iGTigyxvmku5A1U/02pKVem5TV8IVHPYMp3xR4VihBYVNvFE
-        w1LfNyfw==;
-Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:44760 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fNHmZ-0029Q4-Oe
-        for git@vger.kernel.org; Mon, 28 May 2018 09:01:53 -0400
-Date:   Mon, 28 May 2018 09:00:00 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: does a new repo actually *need* default template content?
-Message-ID: <alpine.LFD.2.21.1805280836140.10191@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1165279AbeE1NSx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 May 2018 09:18:53 -0400
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:45518 "EHLO
+        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1165276AbeE1NQw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 May 2018 09:16:52 -0400
+Received: by mail-vk0-f65.google.com with SMTP id n134-v6so7016692vke.12
+        for <git@vger.kernel.org>; Mon, 28 May 2018 06:16:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GFpkuO45pQeZoXW413+sIYVgYmtV1OX+MwuF4I8MwTs=;
+        b=Z/B+K9d1nvGL/Zhjiae0zcO7dwDn8NGJjUGHo9dDc5c7yWxCvSDXj49e2E9K4Q7BC0
+         j858CwWzd9M5Tq2Yi1haO3+COucjZU+1r+eTaqzF2w4Ngbxd+SW/Nf+OBt8vQaO3dMAT
+         d4cz1vRIAX7PFvr8NcJR7wnkW5UF5LtMXjU/xzQuAgC9v87vWk0gofw3Ld9mQ8wVXbJY
+         jlPhG76ryaHJ6FYGKT4KeoBg13gnfUVvFc+lL0oiNiepmJbYO5R8LZNjQATUytnT1p6v
+         o7sQemwvYtPYdzp0pF9+sO57eRm1MWC8t5mY84nFkqBkYxKgWf8iqccMcR1QWyH+AgPJ
+         WAmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GFpkuO45pQeZoXW413+sIYVgYmtV1OX+MwuF4I8MwTs=;
+        b=dco3Rp+RYYmMq6OIjs43h4mzR45zxj/tO3dpVd8B42P3gTtck2shRfxea1ILSbS22b
+         6ougotr8uD44lMsqvUzYuoryYjOCSNDfhBkjJC1SEVRWtXyXUZDw82Zq97HsnUCQJiAl
+         3Nk2JSLKfoe0lzaTWcyuag2X+4ETkkjF6al6AjmoGXTDUMMDjAAOz6MEzKC86OOAYNIW
+         NRpMBZ/TIpoctWQGUHt8EPpUqr4PPuzAyfjdBRR5qmpXv/ppsgsZk/BZ1GU9IFVLmCNv
+         7CjW5WMBodtmWgNYCafpYKsNI5RhOB1BKPwdZ3pL07+QTsTmilznrfbWdn0k9qyChXLT
+         BlJw==
+X-Gm-Message-State: ALKqPwdnzWEhXhz6HUBrpLfpiuaX9gOpwnJ8ay/nzFYqXZ7fLINEW4TQ
+        QKrhMVScr0nAkgmqG6Iifiw6i8bFvBFzeIMfPyY=
+X-Google-Smtp-Source: ADUXVKIqQAIF83IF1f0su5aAV0fel5UtL/j+rGHrYe9GFOypfUybLU/3M49zpVgNyEEajkEaSDiAdYbb6DAfDrk/xV4=
+X-Received: by 2002:a1f:5003:: with SMTP id e3-v6mr8026792vkb.47.1527513411603;
+ Mon, 28 May 2018 06:16:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1444446328-1527512403=:10191"
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+References: <CAGHpTBLGmApTGsjeP2d93CWH=OWBXmbPdRrGxaobFRcSjUiuYw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1805281455210.82@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1805281455210.82@tvgsbejvaqbjf.bet>
+From:   Orgad Shaneh <orgads@gmail.com>
+Date:   Mon, 28 May 2018 16:16:39 +0300
+Message-ID: <CAGHpTBK-=Q51m37GYJOD4D8wLAOcg=nXD4H8GMfPnDJh8Ld4Yw@mail.gmail.com>
+Subject: Re: [PATCH] git-rebase--interactive: fix copy-paste mistake
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, May 28, 2018 at 3:56 PM Johannes Schindelin <
+Johannes.Schindelin@gmx.de> wrote:
 
---8323328-1444446328-1527512403=:10191
-Content-Type: text/plain; charset=KOI8-R
-Content-Transfer-Encoding: 8BIT
+> Hi Orgad,
 
+> On Sun, 27 May 2018, Orgad Shaneh wrote:
 
-  (apologies for more pedantic nitpickery, just little things i'm
-running across in my travels. aside: i actually teach git courses, so
-it's a bit embarrassing that i don't know some of this stuff. *sigh*.)
+> > exec argument is a command, not a commit.
+> >
+> > Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+> > ---
+> >   git-rebase--interactive.sh | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> > index cbf44f8648..85a72b933e 100644
+> > --- a/git-rebase--interactive.sh
+> > +++ b/git-rebase--interactive.sh
+> > @@ -160,7 +160,7 @@ r, reword <commit> = use commit, but edit the commit
+> > message
+> >   e, edit <commit> = use commit, but stop for amending
+> >   s, squash <commit> = use commit, but meld into previous commit
+> >   f, fixup <commit> = like \"squash\", but discard this commit's log
+message
+> > -x, exec <commit> = run command (the rest of the line) using shell
+> > +x, exec <command> = run command (the rest of the line) using shell
 
-  running on fully-updated fedora 28 system:
+> Apart from the white-space (which I *think* might make `git apply` barf on
+> this diff), this looks obviously correct to me.
 
-  $ git --version
-  git version 2.17.0
-  $
+I'm behind a firewall, so I just pasted the patch in gmail, hoping it will
+pass correctly :)
 
-  is there anything in /usr/share/git-core/templates/ that is actually
-*essential* when initializing a new repo? this is what's in my
-directory by that name:
+> To make it easier for Junio, maybe you can provide a link to a branch in a
+> public repository, ready to be fetched?
 
-  †€€ branches
-  †€€ description
-  †€€ hooks
-  šš †€€ applypatch-msg.sample
-  šš †€€ commit-msg.sample
-  šš †€€ fsmonitor-watchman.sample
-  šš †€€ post-update.sample
-  šš †€€ pre-applypatch.sample
-  šš †€€ pre-commit.sample
-  šš †€€ prepare-commit-msg.sample
-  šš †€€ pre-push.sample
-  šš †€€ pre-rebase.sample
-  šš †€€ pre-receive.sample
-  šš „€€ update.sample
-  „€€ info
-      „€€ exclude
+Pushed to https://github.com/orgads/git -> exec-description branch.
 
-but none of that above looks critically important.
+> Thank you for cleaning up my mess,
 
-  "man gitrepository-layout" describes the "branches" directory as
-"slightly deprecated", the default description file has a generic
-"Unnamed repository" message but, hey, so does the git source code
-repo itself, the hooks are all "commented out", and the info/exclude
-file effectively has no content, so i'm guessing that nothing there
-actually needs to be used to populate a new repo via "git init",
-correct?
+No prob :)
 
-  under the circumstances, then, should it be a viable option to
-initialize a new repo while specifying you want *no* initial template
-content? it appears you can do that just by specifying a bogus
-template directory (or even /dev/null) with "--template=", but that
-generates a "warning" -- does a selection like that even merit a
-"warning" if it's clear that's what i'm trying to do?
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
---8323328-1444446328-1527512403=:10191--
+- Orgad
