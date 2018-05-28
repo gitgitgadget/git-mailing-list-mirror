@@ -2,103 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 754181FD4F
-	for <e@80x24.org>; Mon, 28 May 2018 09:39:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED1E91F51C
+	for <e@80x24.org>; Mon, 28 May 2018 09:45:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754207AbeE1Jj0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 May 2018 05:39:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54504 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754090AbeE1JjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 May 2018 05:39:25 -0400
-Received: (qmail 22276 invoked by uid 109); 28 May 2018 09:39:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 28 May 2018 09:39:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20801 invoked by uid 111); 28 May 2018 09:39:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 28 May 2018 05:39:35 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 May 2018 05:39:23 -0400
-Date:   Mon, 28 May 2018 05:39:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH 2/2] show-index: update documentation for index v2
-Message-ID: <20180528093923.GB20229@sigill.intra.peff.net>
-References: <20180528093740.GA6902@sigill.intra.peff.net>
+        id S1754210AbeE1Jp5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 May 2018 05:45:57 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:38347 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754194AbeE1Jp4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 May 2018 05:45:56 -0400
+Received: by mail-wr0-f196.google.com with SMTP id 94-v6so19242944wrf.5
+        for <git@vger.kernel.org>; Mon, 28 May 2018 02:45:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HayUyhKVC1jV71lVDMj+V/y5mp9NsHvPTMD4HY4DZqo=;
+        b=eZhiEhpq4oBP9XIENA1mFqAkU/hqsdSBdwCuG3tcW5DLO4B/7/+AWCvEcLez2FngM5
+         al87JU30iDD0rRipB+zGyFGxnr/HLjan6DVCswGY/NYBmhycOjvJ6p9VYDInMugjWC4A
+         MWQHP/SfB9lC/4CMRm9eI8HrT9kbSvzuHMZ21D+tcXHPN6RLpIKHksC39fBGyFr994LN
+         nFMSMQ7QC9wC3pfwkZtvOBSIagWmab/NmMsU1gF+A6QLpmV4HOALedNHKn1WVPjDXbz6
+         E/mkMVYdILAiJJSacDrTVeYbQ5hVGE4B9XpodEkAOgOEq5ikhsKHXf9xL0n8OXAt7Uwp
+         +cbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HayUyhKVC1jV71lVDMj+V/y5mp9NsHvPTMD4HY4DZqo=;
+        b=OmbFBizPDKrwxD8xGtT7Nm0p6Wqfyr8zjp9vnFGkEyDUMg699tw90mw2pp9qyJsj0R
+         iyXix+yMEiBd6K7Mo8080YYY4nzVmu5HeKg78dynLoK6W8AsDbCL7sh5F0xpr6wGpLI0
+         Jfo+bLVq8rRwu0hjmHox6ti/cKEJIpI8HV+RCbTVirpRz7eWD4ptBpJZhw5Fk6JBhw8y
+         /O9/9N71WyIykTcQQ5O4eK0OTR1JTNMArZqsNeYXh1QY32E2bdfvbGdQm+eqzjzjDq6b
+         LxEWymMH6qgUWDDPk78GerOWWZnmpOUE/tV7cxF5rx4rKA39Hl4eFeicy0tJ1HrQKXEE
+         HShQ==
+X-Gm-Message-State: ALKqPwdsIZkFyr7FjQenrlVM2PXnKBuXYCa2JUgP+ei2om9XSetsEWvh
+        41iP8mYx98w54i8OjZHxwsY=
+X-Google-Smtp-Source: ADUXVKJ0oyd90jjJWCXfIuatoWpMLf8t6825uQuD+LM+B6zW4JBfNqJuM/DukCdA0aKWuc9QTERUKA==
+X-Received: by 2002:adf:8af5:: with SMTP id z50-v6mr5597646wrz.22.1527500755145;
+        Mon, 28 May 2018 02:45:55 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id g75-v6sm22315573wmd.15.2018.05.28.02.45.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 28 May 2018 02:45:54 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/5] config doc: unify the description of fsck.* and receive.fsck.*
+References: <20180524193516.28713-1-avarab@gmail.com>
+        <20180525192811.25680-1-avarab@gmail.com>
+        <20180525192811.25680-3-avarab@gmail.com>
+        <CAPig+cT=i0XYOrMymNjsBJqcLfJ38Ft_=MZPZD3N-AMo8raAHQ@mail.gmail.com>
+Date:   Mon, 28 May 2018 18:45:54 +0900
+In-Reply-To: <CAPig+cT=i0XYOrMymNjsBJqcLfJ38Ft_=MZPZD3N-AMo8raAHQ@mail.gmail.com>
+        (Eric Sunshine's message of "Fri, 25 May 2018 17:16:38 -0400")
+Message-ID: <xmqqa7skjep9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180528093740.GA6902@sigill.intra.peff.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 32637cdf4a (show-index.c: learn about index v2,
-2007-04-09) changed the output format of show-index to
-include the object CRC32 but didn't update the
-documentation. Let's fix that and generally describe the
-output in more detail.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-There are a few other fixes here while we're rewording:
+>> @@ -1554,23 +1554,42 @@ filter.<driver>.smudge::
+>> +Depending on the circumstances it might be better to use
+>> +`fsck.skipList` instead to explicitly whitelist those objects that
+>> +have issues, otherwise new occurrences of the same issue will be
 
- - refer to index-pack along with pack-objects, since either
-   can create .idx files
+I had to read the "instead to ..." part three times before
+convincing myself that this is a good description, and I agree with
+the assessment.  Perhaps we would want to make the recommendation a
+bit stronger, even.
 
- - use "linkgit:" for referring to other commands
+	In general, it is better to enumerate existing objects with
+	problems with skipList, instead of listing the kind of
+	breakages these problematic objects share to be ignored, as
+	doing the latter will allow new instances of the same
+	breakages go unnoticed.
 
- - expand the bit about verify-pack, giving reasons why you
-   might want this command instead. I almost omitted this
-   entirely, but referring to verify-pack might help a
-   reader who is looking for more information.
+If the project has some tool constraints and have to accept new
+"broken" objects on ongoing basis, then fsck.<msg-id> facility may
+make sense, but that is probably a very narrow special use case.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-show-index.txt | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+>> +hidden going forward, although that's unlikely to happen in practice
+>> +unless someone is being deliberately malicious.
+>
+> Is it worth mentioning buggy tools and/or other buggy Git
+> implementations as sources?
 
-diff --git a/Documentation/git-show-index.txt b/Documentation/git-show-index.txt
-index a8a9509e0e..424e4ba84c 100644
---- a/Documentation/git-show-index.txt
-+++ b/Documentation/git-show-index.txt
-@@ -14,13 +14,27 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Read the idx file for a Git packfile created with
--'git pack-objects' command from the standard input, and
--dump its contents.
-+Read the `.idx` file for a Git packfile (created with
-+linkgit:git-pack-objects[1] or linkgit:git-index-pack[1]) from the
-+standard input, and dump its contents. The output consists of one object
-+per line, with each line containing two or three space-separated
-+columns:
- 
--The information it outputs is subset of what you can get from
--'git verify-pack -v'; this command only shows the packfile
--offset and SHA-1 of each object.
-+  - the first column is the offset in bytes of the object within the
-+    corresponding packfile
-+
-+  - the second column is the object id of the object
-+
-+  - if the index version is 2 or higher, the third column contains the
-+    CRC32 of the object data
-+
-+The objects are output in the order in which they are found in the index
-+file, which should be (in a correctly constructed file) sorted by object
-+id.
-+
-+Note that you can get more information on a packfile by calling
-+linkgit:git-verify-pack[1]. However, as this command considers only the
-+index file itself, it's both faster and more flexible.
- 
- GIT
- ---
--- 
-2.17.0.1391.g6fdbf40724
+Or old Git implementations we ourselves shipped.  I do not think it
+is worth mentioning it, but I do agree that "unless somebody is
+being deliberatly malicious" is misleading, if that is what you are
+getting at.  One use of fsck is about noticing that you are under
+attack, so "unless someone is being malicious" there in the sentence
+does not make sense.  When somebody is attacking you, you do not
+want to use fsck.<msg-id> to ignore it.
+
+But that becomes a moot point, if we were to follow the line of
+rewrite I suggested above.
