@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 012511F51C
-	for <e@80x24.org>; Mon, 28 May 2018 09:38:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 754181FD4F
+	for <e@80x24.org>; Mon, 28 May 2018 09:39:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754173AbeE1Ji4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 May 2018 05:38:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54502 "HELO cloud.peff.net"
+        id S1754207AbeE1Jj0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 May 2018 05:39:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54504 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754090AbeE1Jiz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 May 2018 05:38:55 -0400
-Received: (qmail 22272 invoked by uid 109); 28 May 2018 09:38:55 -0000
+        id S1754090AbeE1JjZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 May 2018 05:39:25 -0400
+Received: (qmail 22276 invoked by uid 109); 28 May 2018 09:39:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 28 May 2018 09:38:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 28 May 2018 09:39:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20798 invoked by uid 111); 28 May 2018 09:39:05 -0000
+Received: (qmail 20801 invoked by uid 111); 28 May 2018 09:39:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 28 May 2018 05:39:05 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 28 May 2018 05:39:35 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 May 2018 05:38:53 -0400
-Date:   Mon, 28 May 2018 05:38:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 May 2018 05:39:23 -0400
+Date:   Mon, 28 May 2018 05:39:23 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 1/2] make show-index a builtin
-Message-ID: <20180528093853.GA20229@sigill.intra.peff.net>
+Subject: [PATCH 2/2] show-index: update documentation for index v2
+Message-ID: <20180528093923.GB20229@sigill.intra.peff.net>
 References: <20180528093740.GA6902@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,92 +39,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The git-show-index command is built as its own separate
-program. There's really no good reason for this, and it
-means we waste extra space on disk (and CPU time running the
-linker). Let's fold it in to the main binary as a builtin.
+Commit 32637cdf4a (show-index.c: learn about index v2,
+2007-04-09) changed the output format of show-index to
+include the object CRC32 but didn't update the
+documentation. Let's fix that and generally describe the
+output in more detail.
 
-The history here is actually a bit amusing. The program
-itself is mostly self-contained, and doesn't even use our
-normal pack index code. In a5031214c4 (slim down "git
-show-index", 2010-01-21), we even stopped using xmalloc() so
-that it could avoid libgit.a entirely. But then 040a655116
-(cleanup: use internal memory allocation wrapper functions
-everywhere, 2011-10-06) switched that back to xmalloc, which
-later become ALLOC_ARRAY().
+There are a few other fixes here while we're rewording:
 
-Making it a builtin should give us the best of both worlds:
-no wasted space and no need to avoid the usual patterns.
+ - refer to index-pack along with pack-objects, since either
+   can create .idx files
+
+ - use "linkgit:" for referring to other commands
+
+ - expand the bit about verify-pack, giving reasons why you
+   might want this command instead. I almost omitted this
+   entirely, but referring to verify-pack might help a
+   reader who is looking for more information.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Makefile                             | 2 +-
- builtin.h                            | 1 +
- show-index.c => builtin/show-index.c | 2 +-
- git.c                                | 1 +
- 4 files changed, 4 insertions(+), 2 deletions(-)
- rename show-index.c => builtin/show-index.c (96%)
+ Documentation/git-show-index.txt | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index ad880d1fc5..766c5909bf 100644
---- a/Makefile
-+++ b/Makefile
-@@ -689,7 +689,6 @@ PROGRAM_OBJS += http-backend.o
- PROGRAM_OBJS += imap-send.o
- PROGRAM_OBJS += sh-i18n--envsubst.o
- PROGRAM_OBJS += shell.o
--PROGRAM_OBJS += show-index.o
- PROGRAM_OBJS += remote-testsvn.o
+diff --git a/Documentation/git-show-index.txt b/Documentation/git-show-index.txt
+index a8a9509e0e..424e4ba84c 100644
+--- a/Documentation/git-show-index.txt
++++ b/Documentation/git-show-index.txt
+@@ -14,13 +14,27 @@ SYNOPSIS
  
- # Binary suffix, set to .exe for Windows builds
-@@ -1076,6 +1075,7 @@ BUILTIN_OBJS += builtin/send-pack.o
- BUILTIN_OBJS += builtin/serve.o
- BUILTIN_OBJS += builtin/shortlog.o
- BUILTIN_OBJS += builtin/show-branch.o
-+BUILTIN_OBJS += builtin/show-index.o
- BUILTIN_OBJS += builtin/show-ref.o
- BUILTIN_OBJS += builtin/stripspace.o
- BUILTIN_OBJS += builtin/submodule--helper.o
-diff --git a/builtin.h b/builtin.h
-index 4e0f64723e..0362f1ce25 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -220,6 +220,7 @@ extern int cmd_serve(int argc, const char **argv, const char *prefix);
- extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
- extern int cmd_show(int argc, const char **argv, const char *prefix);
- extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
-+extern int cmd_show_index(int argc, const char **argv, const char *prefix);
- extern int cmd_status(int argc, const char **argv, const char *prefix);
- extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
- extern int cmd_submodule__helper(int argc, const char **argv, const char *prefix);
-diff --git a/show-index.c b/builtin/show-index.c
-similarity index 96%
-rename from show-index.c
-rename to builtin/show-index.c
-index 1ead41e211..65fa86dd08 100644
---- a/show-index.c
-+++ b/builtin/show-index.c
-@@ -4,7 +4,7 @@
- static const char show_index_usage[] =
- "git show-index";
+ DESCRIPTION
+ -----------
+-Read the idx file for a Git packfile created with
+-'git pack-objects' command from the standard input, and
+-dump its contents.
++Read the `.idx` file for a Git packfile (created with
++linkgit:git-pack-objects[1] or linkgit:git-index-pack[1]) from the
++standard input, and dump its contents. The output consists of one object
++per line, with each line containing two or three space-separated
++columns:
  
--int cmd_main(int argc, const char **argv)
-+int cmd_show_index(int argc, const char **argv, const char *prefix)
- {
- 	int i;
- 	unsigned nr;
-diff --git a/git.c b/git.c
-index 5771d62a32..c91e144d9a 100644
---- a/git.c
-+++ b/git.c
-@@ -470,6 +470,7 @@ static struct cmd_struct commands[] = {
- 	{ "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
- 	{ "show", cmd_show, RUN_SETUP },
- 	{ "show-branch", cmd_show_branch, RUN_SETUP },
-+	{ "show-index", cmd_show_index },
- 	{ "show-ref", cmd_show_ref, RUN_SETUP },
- 	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
- 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+-The information it outputs is subset of what you can get from
+-'git verify-pack -v'; this command only shows the packfile
+-offset and SHA-1 of each object.
++  - the first column is the offset in bytes of the object within the
++    corresponding packfile
++
++  - the second column is the object id of the object
++
++  - if the index version is 2 or higher, the third column contains the
++    CRC32 of the object data
++
++The objects are output in the order in which they are found in the index
++file, which should be (in a correctly constructed file) sorted by object
++id.
++
++Note that you can get more information on a packfile by calling
++linkgit:git-verify-pack[1]. However, as this command considers only the
++index file itself, it's both faster and more flexible.
+ 
+ GIT
+ ---
 -- 
 2.17.0.1391.g6fdbf40724
-
