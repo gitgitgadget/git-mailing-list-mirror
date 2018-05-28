@@ -3,104 +3,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D95151F42D
-	for <e@80x24.org>; Mon, 28 May 2018 13:18:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A31911F42D
+	for <e@80x24.org>; Mon, 28 May 2018 13:25:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1165279AbeE1NSx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 May 2018 09:18:53 -0400
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:45518 "EHLO
-        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1165276AbeE1NQw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 May 2018 09:16:52 -0400
-Received: by mail-vk0-f65.google.com with SMTP id n134-v6so7016692vke.12
-        for <git@vger.kernel.org>; Mon, 28 May 2018 06:16:52 -0700 (PDT)
+        id S1163409AbeE1NZe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 May 2018 09:25:34 -0400
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:43125 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1033122AbeE1NZa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 May 2018 09:25:30 -0400
+Received: by mail-wr0-f177.google.com with SMTP id d2-v6so4827320wrm.10
+        for <git@vger.kernel.org>; Mon, 28 May 2018 06:25:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GFpkuO45pQeZoXW413+sIYVgYmtV1OX+MwuF4I8MwTs=;
-        b=Z/B+K9d1nvGL/Zhjiae0zcO7dwDn8NGJjUGHo9dDc5c7yWxCvSDXj49e2E9K4Q7BC0
-         j858CwWzd9M5Tq2Yi1haO3+COucjZU+1r+eTaqzF2w4Ngbxd+SW/Nf+OBt8vQaO3dMAT
-         d4cz1vRIAX7PFvr8NcJR7wnkW5UF5LtMXjU/xzQuAgC9v87vWk0gofw3Ld9mQ8wVXbJY
-         jlPhG76ryaHJ6FYGKT4KeoBg13gnfUVvFc+lL0oiNiepmJbYO5R8LZNjQATUytnT1p6v
-         o7sQemwvYtPYdzp0pF9+sO57eRm1MWC8t5mY84nFkqBkYxKgWf8iqccMcR1QWyH+AgPJ
-         WAmg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=qzjH5HaY+CtqATTa5aCRogTlXZUNEJ5VrN58CJ1yR9Y=;
+        b=NPNt9cpeGMZKJnm2iDRPcrncK6G4uWpaVfqeCiHBWcr15chPnubGTFniEP93p9nXje
+         WAsIY+PHLPPla5LY3VlE0xDH9HnP/NinTNURRuQ4n7lm6JPpdqyOddeA0he+f3J8uhIj
+         4L9dkdnEAh4L2xn5/5ns3ufXD57mD3tESFWpNQ1TBjyVVM0/s16KEME9GZbt9tYzKfiE
+         9d8KeENkVplEx6RJv0vrMUXG7JMVmoHRWmIMiVBAX+VUnRycJo1E28hO86WplkrFUSzT
+         IiDm/KxtzrvTM+cjxh43S8nUQmWiCdq8UyfNlAeFPdbkCVeUd5FX9prkoC4yYFJya6ow
+         VeSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GFpkuO45pQeZoXW413+sIYVgYmtV1OX+MwuF4I8MwTs=;
-        b=dco3Rp+RYYmMq6OIjs43h4mzR45zxj/tO3dpVd8B42P3gTtck2shRfxea1ILSbS22b
-         6ougotr8uD44lMsqvUzYuoryYjOCSNDfhBkjJC1SEVRWtXyXUZDw82Zq97HsnUCQJiAl
-         3Nk2JSLKfoe0lzaTWcyuag2X+4ETkkjF6al6AjmoGXTDUMMDjAAOz6MEzKC86OOAYNIW
-         NRpMBZ/TIpoctWQGUHt8EPpUqr4PPuzAyfjdBRR5qmpXv/ppsgsZk/BZ1GU9IFVLmCNv
-         7CjW5WMBodtmWgNYCafpYKsNI5RhOB1BKPwdZ3pL07+QTsTmilznrfbWdn0k9qyChXLT
-         BlJw==
-X-Gm-Message-State: ALKqPwdnzWEhXhz6HUBrpLfpiuaX9gOpwnJ8ay/nzFYqXZ7fLINEW4TQ
-        QKrhMVScr0nAkgmqG6Iifiw6i8bFvBFzeIMfPyY=
-X-Google-Smtp-Source: ADUXVKIqQAIF83IF1f0su5aAV0fel5UtL/j+rGHrYe9GFOypfUybLU/3M49zpVgNyEEajkEaSDiAdYbb6DAfDrk/xV4=
-X-Received: by 2002:a1f:5003:: with SMTP id e3-v6mr8026792vkb.47.1527513411603;
- Mon, 28 May 2018 06:16:51 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=qzjH5HaY+CtqATTa5aCRogTlXZUNEJ5VrN58CJ1yR9Y=;
+        b=uFz1bkAMG4xvPNYcPKdYVh3YAPPpyb3jAa5/uWD8TLai+ksbmu5rm5gistEkjzr2CZ
+         Bz6fu89GOFmcXg7ihKEkQrxsYzAh8OK435CypLIEaRpwkEhFxzAH4Vwboi3Kijxltxbi
+         rm+j+Ijr0hamNiad7coHYK94ImTgL9jOO3Bi3IjFj7NtpSgaLcNoh7lt+4zoiDJIh3DW
+         Axei3pClQE6o0sRnfYy6p/yHy4AzHTDWt2JPhxCFHEe9ZKDzE6N5anPi9DQD/Y0czxsc
+         hn0G8DZ3JDyquP4CJpNxGFbu/OjYrRIcn8yTf97QJVZw2b0sJk33MUL+vS21LKm/tZgh
+         kR9A==
+X-Gm-Message-State: ALKqPwcQ8z2sAnb5ZnKx0Ub8aj9LLPvdg4z/A7TBFv70CgtKZhT35FzI
+        BWkXPIQfwX4QqWoPW0Rbo258uNWw
+X-Google-Smtp-Source: AB8JxZqR5EhCr0lzCKT5kZp7Zr3LxXOYmzs4XX587dwLimj0LXO3nNHpqlvOq+oOQEGKMRTdeDpxeA==
+X-Received: by 2002:adf:88b2:: with SMTP id f47-v6mr9296894wrf.55.1527513928363;
+        Mon, 28 May 2018 06:25:28 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id e7-v6sm30556566wrn.88.2018.05.28.06.25.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 28 May 2018 06:25:27 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Tiago Botelho <tiagonbotelho@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        johannes.schindelin@gmx.de, haraldnordgren@gmail.com,
+        Tiago Botelho <tiagonbotelho@hotmail.com>
+Subject: Re: [RFC PATCH v4] Implement --first-parent for git rev-list --bisect
+References: <20180528092017.19022-1-tiagonbotelho@hotmail.com>
+Date:   Mon, 28 May 2018 22:25:27 +0900
+In-Reply-To: <20180528092017.19022-1-tiagonbotelho@hotmail.com> (Tiago
+        Botelho's message of "Mon, 28 May 2018 10:20:17 +0100")
+Message-ID: <xmqqzi0jj4jc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-References: <CAGHpTBLGmApTGsjeP2d93CWH=OWBXmbPdRrGxaobFRcSjUiuYw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1805281455210.82@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1805281455210.82@tvgsbejvaqbjf.bet>
-From:   Orgad Shaneh <orgads@gmail.com>
-Date:   Mon, 28 May 2018 16:16:39 +0300
-Message-ID: <CAGHpTBK-=Q51m37GYJOD4D8wLAOcg=nXD4H8GMfPnDJh8Ld4Yw@mail.gmail.com>
-Subject: Re: [PATCH] git-rebase--interactive: fix copy-paste mistake
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 28, 2018 at 3:56 PM Johannes Schindelin <
-Johannes.Schindelin@gmx.de> wrote:
+Tiago Botelho <tiagonbotelho@gmail.com> writes:
 
-> Hi Orgad,
+> diff --git a/bisect.c b/bisect.c
+> index 4eafc8262..e58cb8d62 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -33,6 +33,8 @@ static const char *term_good;
+>   *
+>   * We care just barely enough to avoid recursing for
+>   * non-merge entries.
+> + *
+> + * Note: This function does not support the usage --first-parent.
+>   */
 
-> On Sun, 27 May 2018, Orgad Shaneh wrote:
+Hmph, is this because we know --first-parent codepath currently does
+not call this function, so we do not bother to prepare this function
+to be called from --first-parent codepath?
 
-> > exec argument is a command, not a commit.
-> >
-> > Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-> > ---
-> >   git-rebase--interactive.sh | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> > index cbf44f8648..85a72b933e 100644
-> > --- a/git-rebase--interactive.sh
-> > +++ b/git-rebase--interactive.sh
-> > @@ -160,7 +160,7 @@ r, reword <commit> = use commit, but edit the commit
-> > message
-> >   e, edit <commit> = use commit, but stop for amending
-> >   s, squash <commit> = use commit, but meld into previous commit
-> >   f, fixup <commit> = like \"squash\", but discard this commit's log
-message
-> > -x, exec <commit> = run command (the rest of the line) using shell
-> > +x, exec <command> = run command (the rest of the line) using shell
+I am not saying that we must prepare this function to be callable
+with --first-parent; if I have to wonder why the above comment is
+there and what it is trying to say, I suspect most other readers
+would, too, so...
 
-> Apart from the white-space (which I *think* might make `git apply` barf on
-> this diff), this looks obviously correct to me.
+> diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+> index a66140803..774d9a4fd 100755
+> --- a/t/t6002-rev-list-bisect.sh
+> +++ b/t/t6002-rev-list-bisect.sh
+> @@ -263,4 +263,41 @@ test_expect_success 'rev-parse --bisect can default to good/bad refs' '
+>  	test_cmp expect.sorted actual.sorted
+>  '
+>  
+> +# We generate the following commit graph:
+> +#
+> +#   B - C
+> +#  /      \
+> +# A        FX
+> +#  \      /
+> +#   D - EX
+> +
+> +test_expect_success 'setup' '
+> +  test_commit A &&
+> +  test_commit B &&
+> +  test_commit C &&
+> +  git reset --hard A &&
+> +  test_commit D &&
+> +  test_commit EX &&
+> +  test_merge FX C
+> +'
+> +
+> +test_output_expect_success "--bisect --first-parent" 'git rev-list --bisect --first-parent FX ^A' <<EOF
+> +$(git rev-parse EX)
+> +EOF
+> +
+> +test_output_expect_success "--bisect-vars --first-parent" 'git rev-list --bisect-vars --first-parent FX ^A' <<EOF
+> +bisect_rev='$(git rev-parse EX)'
+> +bisect_nr=1
+> +bisect_good=0
+> +bisect_bad=1
+> +bisect_all=3
+> +bisect_steps=1
+> +EOF
+> +
+> +test_output_expect_success "--bisect-all --first-parent" 'git rev-list --bisect-all --first-parent FX ^A' <<EOF
+> +$(git rev-parse EX) (dist=1)
+> +$(git rev-parse D) (dist=1)
+> +$(git rev-parse FX) (dist=0)
+> +EOF
+> +
 
-I'm behind a firewall, so I just pasted the patch in gmail, hoping it will
-pass correctly :)
+These are all good basic tests, but can you come up with a test that
+demonstrates breakage in the previous round that has been fixed in
+this version of the patch?
 
-> To make it easier for Junio, maybe you can provide a link to a branch in a
-> public repository, ready to be fetched?
+Thanks.
 
-Pushed to https://github.com/orgads/git -> exec-description branch.
-
-> Thank you for cleaning up my mess,
-
-No prob :)
-
-- Orgad
