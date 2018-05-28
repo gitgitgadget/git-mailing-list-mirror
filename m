@@ -2,88 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6024D1FD4F
-	for <e@80x24.org>; Mon, 28 May 2018 09:48:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 349BF1F51C
+	for <e@80x24.org>; Mon, 28 May 2018 11:21:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754393AbeE1JsN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 May 2018 05:48:13 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:37640 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754353AbeE1JsK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 May 2018 05:48:10 -0400
-Received: by mail-wm0-f65.google.com with SMTP id l1-v6so30499861wmb.2
-        for <git@vger.kernel.org>; Mon, 28 May 2018 02:48:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Mp/pD1absrv0gOpYlGztrFX1dToZ3sDHcfi7IBIZm38=;
-        b=I6p7UxE1+TzvF9VV7tN/6y3yqTAMohxErEQewea1SH5oeOVXGGK/CZ+ARCATZvbgWi
-         schhF5NjiVK1ZYnKQvrPVdLosLmEyY6OShNBoRTYqjBQg9uDukU1HBD9eIqITCx4Qatf
-         FWqnxQ9V+mJnyzjPDi6wuhxvrXOPQ8BmZ5g/2ZpneygjAsYW0R+F0MaIxhequMaJqGsb
-         e9oXYWd3gFOPbdbDOKgtSk00LpkjjEj3nwvAFWrCgHZE2WYMIf4R6yASC95ATCJzlL+s
-         LjCg3jiD0J3xerCyUFijs1y1zw99nNmMiL1ZOmity2WAa8/2zxw90COpRbbKBpqyvAM0
-         LTEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Mp/pD1absrv0gOpYlGztrFX1dToZ3sDHcfi7IBIZm38=;
-        b=myAYhn1V1uHdYfhGzyXhaHutS5+h4Ruo7kVFIPozPo5lcYuUSs+JoVew3wvuZXD+5m
-         c9P+cmlZLKWfAO0nK9QsMuSa/LrlV94IfBBoRFZ6TbrYaBtT5lIVUzqwT/a4HYhNadMI
-         qcSsLvb37gD/WY+sndHbVTeu6q0bP2X5gDSFE5jgfadCJjUPT5f872yZJRYPdKfJfudX
-         dqMttmOrDXJlxcbHPTfZ2dv0UlowxmBzU5i8o0QHy+8Lx/3Tt8z5RFPO3/rIrYh1UEFQ
-         b/zLi8A5hJ8QCA7sIKEedMWPOfB8aKBRpkh5X0AdgIVOeE9zlJoxQ9shuCH032OldPke
-         XStQ==
-X-Gm-Message-State: ALKqPwco4xKkSTbEuZv3M18snmoSffyhIW54ML+OWE5jKiYIcaip3/7J
-        flmqn3Kwkal3VIRwR5aM2V6VLXWU
-X-Google-Smtp-Source: ADUXVKLNbBq/g0gURuKukePQhlXtkU3j7+PDSlPsixeuef+vpZNHa6i7xmPDhgTYG0DkQssI0wyLGQ==
-X-Received: by 2002:a1c:ce0e:: with SMTP id e14-v6mr7191241wmg.87.1527500888567;
-        Mon, 28 May 2018 02:48:08 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id d90-v6sm11854817wmi.26.2018.05.28.02.48.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 28 May 2018 02:48:07 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/4] fsck: doc fixes & fetch.fsck.* implementation
-References: <20180524190214.GA21354@sigill.intra.peff.net>
-        <20180524193516.28713-1-avarab@gmail.com>
-Date:   Mon, 28 May 2018 18:48:07 +0900
-In-Reply-To: <20180524193516.28713-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 24 May 2018 19:35:12 +0000")
-Message-ID: <xmqq6038jelk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1424688AbeE1LVL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 May 2018 07:21:11 -0400
+Received: from mout.gmx.net ([212.227.17.20]:59081 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1424578AbeE1LVA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 May 2018 07:21:00 -0400
+Received: from MININT-8E55E86.fareast.corp.microsoft.com ([37.201.195.106]) by
+ mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0Lkfii-1fxPu23HUK-00aTAI; Mon, 28 May 2018 13:20:42 +0200
+Date:   Mon, 28 May 2018 13:20:41 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     peff@peff.net, git@vger.kernel.org
+Subject: Re: js/empty-config-section-fix, was Re: What's cooking in git.git
+ (May 2018, #03; Wed, 23)
+In-Reply-To: <xmqq36ycl4ly.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1805281319530.82@tvgsbejvaqbjf.bet>
+References: <xmqqwovtudia.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1805251430420.77@tvgsbejvaqbjf.bet> <xmqq36ycl4ly.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:JPXbV5aqfUaH6hAwDAT03cDWaWTkpCRnI5W4hdHBVOKFKCkLlys
+ Zlmm0EW8oX2YRZ4WaOBEAxBZBMJMGRbKLM1pVwWPNcgXea0sqn4XvbE5/CqHFDUZDYSU+Qy
+ NJ9rP8GFA4tL8H0k0m/wv26W1NXug58iA3jJG2FBDmUZ6aXuTn2HxyaaaCOL8GXrwvfc+3x
+ rtJwu/l9su3+neAXjx5cQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mjGI1nsEuM4=:Q5Y5up6h5LVRX70vnk0enY
+ 6TgVy13hyFVHtqv+AwvmM9Zp7ZbcQBKuwQKH8COmr1XOMbOtnZzA5ewexcJ59vCFZIBlDxnJt
+ OHEyo6wcUlYw8+eGY64P8u6fNy+vp0avjRYQu3BmGJd5UJ8yRVNrZhKTn/Eehd+hxsLMY2hGv
+ p/8zMnnr6/k+cUIj1ZWWFl/l/1gFrhx6bctIW5MaPmpu9rGuc+yTZnIUGc+jNWOa9t2BFOFGa
+ c4SevSWu6EBGsEjsJ4NEyaTc3uFQZMzq1IEIS1QILC1sdY0QC8AP6RgVUV+3YubRUq/ueBEWV
+ lQNrbPm+M43jZdFQMiWI6cX3TeY8cE/hHjKJC4FC2XNPQMRq0skKg4A/fneu+tzFhbWbpOzor
+ yx/rmqKyr5LQfuzXPq8RkQ7595YPa4ltBuDCVigPYvevj66+wF5edX4Mz0mjyKtnmn+u72IBA
+ RXrFNMxFbUxWagE0HGoH0AZ6qK/s0rKGwD8qzqVZEUFlB04ldQs8DjvWkwdRlLVJsMsw4q8t+
+ Ad7K8LMwQ0t9rFDv0qLMtbkufHGj1Hak6pgXvcjheVfWA1p25BjINCnR/kHQ+aW9HEYnExWvn
+ KxHIPS3R1zji7pXRsAf+Ft3WrF1DO89b+sCcr/WgjBABj4fySdAzuCyy80IxWxQTPiuDN90Fm
+ xr2p45xZdicl3VL4/HVsN0iPjsCCKKDyXwf9zXZBVzi981M9ooBs8ThmMRwakCRiiQJ+g260o
+ 5xEeVFQ4YsaOrOv8bqfV9beGuXZd9zLE1Qfkn+B7xQYGF9wi/PqAZjS9AuTD2zdEQ+vMOdrsf
+ 9rSrcj7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Hi Junio,
 
-> On Thu, May 24, 2018 at 9:02 PM, Jeff King <peff@peff.net> wrote:
->> On Thu, May 24, 2018 at 07:04:04PM +0200, Ævar Arnfjörð Bjarmason wrote:
->>
->>> That doesn't work, because that's for the server-side, but I need the
->>> fetch.fsck.* that doesn't exist. This works (I'll send a better patch
->>> with tests / docs etc. soon):
->>
->> Yeah, I think this is the right direction.
+On Mon, 28 May 2018, Junio C Hamano wrote:
 
-It seems that this 4-patch series is sufficiently commented and
-earlier parts can be further polished soonish using help made by
-others.  I need to re-read the last patch (implementation) but I
-think this generally is good.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Thu, 24 May 2018, Junio C Hamano wrote:
+> >
+> >> * js/empty-config-section-fix (2018-05-18) 1 commit
+> >>  - config: a user-provided invalid section is not a BUG
+> >> 
+> >>  Error codepath fix.
+> >> 
+> >>  Will merge to 'next'.
+> >
+> > As a hotfix, maybe we can fast-track it to master?
+> 
+> Hotfix is a proposed fix for an issue that is so important to be a
+> showstopper.  This one must be fixed before the final release, but I
+> do not think it's not that urgent to force us to drop everything
+> else and merge it to master immediately.
 
-Thanks.
+Well, in this case, a user might report a BUG when they simply have an
+invalid config.
+
+I do not care all that much, but Peff (who reported this) might.
+
+Ciao,
+Dscho
