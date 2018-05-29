@@ -2,103 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D7161F51C
-	for <e@80x24.org>; Tue, 29 May 2018 11:58:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 557F61F42D
+	for <e@80x24.org>; Tue, 29 May 2018 12:08:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933491AbeE2L6I (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 07:58:08 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:37125 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933395AbeE2L6G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 07:58:06 -0400
-Received: by mail-qk0-f193.google.com with SMTP id j12-v6so7848491qkk.4
-        for <git@vger.kernel.org>; Tue, 29 May 2018 04:58:06 -0700 (PDT)
+        id S933428AbeE2MIs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 08:08:48 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:38851 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933135AbeE2MIr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 08:08:47 -0400
+Received: by mail-wm0-f68.google.com with SMTP id m129-v6so39793533wmb.3
+        for <git@vger.kernel.org>; Tue, 29 May 2018 05:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=4jEoVAjvMHc4wnxko+oHNgWYjOcsq4NUsqSdtzwecss=;
-        b=XoiKeBHmudHp/yEbWN88aZ/KNZ5nqvLWdq47Gz5AvRg4ETxDHBvCe9mPOCkYs/e4x8
-         /vcyqLbC/MzW4NUpK2QnXexC1EJDJ+PG0bkL99K531TtZX4haYXJCps7ZTK4EaOx6fGD
-         oTJUKNsK/plwIOSfUO5lsKcnrnvB7JaqooqVdwF4MVzrfRxCbaPP3yg5pLeDJ4wesY4q
-         HIKo+h3l4Zmx2kPaziep8JaPsYqcWMmlamVnodEVByNIXMPOa2MFqf2Inl7lS8xdVQ/U
-         YYwWIaKQdq1ULzy+AIusA/Sdf3Bp7IgGQSQav19L/u3aZRYhCqZAiqrw/xaXmMV4i3P4
-         PBEQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=bRCoC8wlCca1dlbAS+PP1wuPiHWvHKkLwiMV1t/N0kw=;
+        b=M4T6HNkmsqjDt1MJ3bI/TXxDpSAXsyySYETrVzkQx0PLUi9/HXf4rIRPcFyGpmbpcX
+         szzoXyzOPJ6kty401OW0bfwhjSWs5fJlIRseTLIQoyaKGucys90nj5ZNj8DJXhvPRufo
+         ZLF0Yewb3PHGb3CryDRBgANVIil4CY9N3Ob/RG4ajQ34JPY+P+EzAHOySjm1DhYiQzdv
+         koSHEBUSRNAxD+WClI2Yu90f2eMwWlUksTwiKoJXdzcyp4ZpXrxpw3vrAqP6/Y30DrGB
+         dTXtn7z4h6s+uVTee2zlER2Nl6bdfk1u9As8MBbOLGv4hARH/K1bUEPO3koHqBE3qW6W
+         D20A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=4jEoVAjvMHc4wnxko+oHNgWYjOcsq4NUsqSdtzwecss=;
-        b=j38Q9rvJLPU8OXMf47HKYgG6LBhikbtwGN3c6GJkvc8AKJ8CKBZ1ikGxFFW3qLstcF
-         +Uk5Var70ZAIiw3zwW3op1t6ZbZiZGILnNRS/q/fJUMmXRhp34kCXadS7zeZXJo/vRy9
-         5Iwn7zVpHO0J7J6j0sKRvLWpp5Q+2Kj3PejAuaYOwl3xSsMXvMaXouUNKKP67jpvnKMN
-         SSTM652KQeWg9hfIrYoSk2ZtR7u3jsNfZqonOL8xMhNqE5yxBUj8iXlHxTSBt0xsjVhI
-         8CtFJ4GYbIaqjsus9vfjAldGXqQDqLh5TgxivFYXEkCpY2jaHwX2FK2dXuMbDVJBeOxh
-         1zlg==
-X-Gm-Message-State: ALKqPwcqARwUorf/3H91y4GnJn5yIwdfgLQ61qhONtrHIIFgiGdcRf5z
-        hxK3pcIo0YKBcG3OdoDIdAk=
-X-Google-Smtp-Source: ADUXVKK1Syqt5jlukXZdXaNM1TxeHxvkddjoOOXzPXzyb/3U+5eo2EqRjcPd+9AKDzvOYEayQTqllA==
-X-Received: by 2002:a37:a38c:: with SMTP id m134-v6mr11086149qke.57.1527595086000;
-        Tue, 29 May 2018 04:58:06 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:85b8:1327:9ae7:c654? ([2001:4898:8010:0:6eee:1327:9ae7:c654])
-        by smtp.gmail.com with ESMTPSA id x14-v6sm4669961qtk.33.2018.05.29.04.58.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 May 2018 04:58:05 -0700 (PDT)
-Subject: Re: [PATCH] t990X: use '.git/objects' as 'deep inside .git' path
-To:     mhagger@alum.mit.edu, Christian Couder <christian.couder@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?Q?Carlos_Mart=c3=adn_Nieto?= <cmn@dwim.me>,
-        David Turner <novalis@novalis.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        David Turner <dturner@twopensource.com>
-References: <20180526064745.20199-1-chriscool@tuxfamily.org>
- <CAMy9T_H7OVJoDQGFNnM-GrCE9jhSqNDALFL1TM45TMcwPx5nnQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <50c85752-7000-880e-ebfd-44b8e7f71028@gmail.com>
-Date:   Tue, 29 May 2018 07:58:03 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=bRCoC8wlCca1dlbAS+PP1wuPiHWvHKkLwiMV1t/N0kw=;
+        b=S96E9aJ8xkucfPQmFbyV9yKsOtwWV0Twa3Mfj2Ej9/rkuNIglZeKqQhmpg9qjzMdx0
+         A5zB/N96wILwZOzz1ANfqGQpQGA7RbpKLLLwwkjhnDHUvh1qt30awOOFX79xJtskukHN
+         IwrulqEIpqvpiTpJ163sele6kwbUX5dpT4t+ltnYQkFnHlFkguez5a3Iul3TtSUFcptf
+         Ki1/+OBzEB90gCjFis9vawd0LK4yDDit0RYRN1SHyyhB67pOdJTcm/sVWBnvgQj0oGgs
+         TvbbX102IIExgtza880aWohT27UupFwYMFmGIchPLxOPI6T/bMMvxzocewPDOBtYZbIS
+         U6hg==
+X-Gm-Message-State: ALKqPweOT1Furv3fhbOuuRQnekf4n3rZHOgde4wRZqjpglLKhF34wNiG
+        xxQ3pViHTu4bXwPk9jS7VAg=
+X-Google-Smtp-Source: ADUXVKLOoJhtF+zkOBfxhrPv/VvhVT33eoV90NSy13kBoZ7lwm3RTr0+IDAKDlVVw9vPMhd63VOUUg==
+X-Received: by 2002:a1c:96c1:: with SMTP id y184-v6mr11063974wmd.156.1527595725653;
+        Tue, 29 May 2018 05:08:45 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n56-v6sm18627109wrn.72.2018.05.29.05.08.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 29 May 2018 05:08:44 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [RFC PATCH 2/3] usage: prefix all lines in `vreportf()`, not just the first
+References: <xmqq8t88nllj.fsf@gitster-ct.c.googlers.com>
+        <cover.1527279322.git.martin.agren@gmail.com>
+        <ef5b4e28e00ad0c95dbe625d2e7305957f9fe5ba.1527279322.git.martin.agren@gmail.com>
+        <xmqqin78jfnl.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8CgzDfbES2jC+Rv+bKj_JAk8dzEDCm89JMuBFQmyGg9Gw@mail.gmail.com>
+        <xmqq8t83ihd7.fsf@gitster-ct.c.googlers.com>
+        <CAN0heSq1y3XibCFDYsae5b6jmzZOzcLHT4atCZ+KCb4dL5As0g@mail.gmail.com>
+        <xmqqtvqrggdt.fsf@gitster-ct.c.googlers.com>
+        <CAN0heSry9ncTTzjw2fB=wxTAo3YPyQq-wbONpXCsfi_Syxfj-A@mail.gmail.com>
+Date:   Tue, 29 May 2018 21:08:44 +0900
+In-Reply-To: <CAN0heSry9ncTTzjw2fB=wxTAo3YPyQq-wbONpXCsfi_Syxfj-A@mail.gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Tue, 29 May 2018 12:30:35
+ +0200")
+Message-ID: <xmqqa7sihdf7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAMy9T_H7OVJoDQGFNnM-GrCE9jhSqNDALFL1TM45TMcwPx5nnQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/27/2018 12:49 AM, Michael Haggerty wrote:
-> On Sat, May 26, 2018 at 8:47 AM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->> Tests t9902-completion.sh and t9903-bash-prompt.sh each have tests
->> that check what happens when we are "in the '.git' directory" and
->> when we are "deep inside the '.git' directory".
->>
->> To test the case when we are "deep inside the '.git' directory" the
->> test scripts used to perform a `cd .git/refs/heads`.
->>
->> As there are plans to implement other ref storage systems, let's
->> use '.git/objects' instead of '.git/refs/heads' as the "deep inside
->> the '.git' directory" path.
-> Seems reasonable to me. +1.
->
-> Michael
-Looks good to me, too.
+Martin Ågren <martin.agren@gmail.com> writes:
 
-Thanks,
--Stolee
+> About the _("\t")-approach that you mentioned up-thread. It would allow
+> a translator to adjust all the indentations for a particular language.
+> To be clear, what you mean is _("         " /* 9 spaces */) to align
+> nicely with "warning: ", which is the longest English string. Then the
+> translator would translate the nine spaces and all of "fatal:   " and
+> others to padded strings, all of the same length (not necessarily nine).
+> Correct?
+
+I was envisioning that these
+
+	error: the first line of an error message
+	       and the second line indented by 7 places (strlen("error:")+1)
+	info: the first line of an info message
+	      and the second line indented by 6 places (strlen("info:")+1)
+
+are produced by
+
+	vreportf("error: ", "       " /* 7 spaces */,
+		 "the first line of an error message\nand the second ...");
+	vreportf("info: ", "      " /* 6 spaces */,
+		 "the first line of an info message\nand the second ...");
+
+And if all of these string literals were inside _(), then depending
+on how many display columns translated version of "error" and "info"
+takes in the target language, these 7-space and 6-space secondary
+prefixes would be "translated" differently.
+
+Of course, since your language may translate "error" and "fatal" to
+different display columns, the 7-space secondary prefix in this one
+
+	vreportf("fatal: ", "       " /* 7 spaces */,
+		 "the first line of a fatal error message\nand the second ...");
+
+needs to be mapped to a string that is differnt from the 7-space for
+"error: ".  I think you would use "contexts" to map the same source
+7-space to different translated string when it becomes necessary.
+
+https://www.gnu.org/software/gettext/manual/html_node/Contexts.html
