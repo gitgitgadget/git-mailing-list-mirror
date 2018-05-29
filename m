@@ -2,97 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BB981F42D
-	for <e@80x24.org>; Tue, 29 May 2018 18:46:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF7D11F42D
+	for <e@80x24.org>; Tue, 29 May 2018 18:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965752AbeE2Sqy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 14:46:54 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:58622 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S964848AbeE2Sqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 14:46:53 -0400
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 6F7537C0A7;
-        Tue, 29 May 2018 18:46:53 +0000 (UTC)
-Received: from localhost (ovpn-116-54.gru2.redhat.com [10.97.116.54])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id E899A6148;
-        Tue, 29 May 2018 18:46:52 +0000 (UTC)
-Date:   Tue, 29 May 2018 15:46:51 -0300
-From:   Eduardo Habkost <ehabkost@redhat.com>
-To:     Xiaolong Ye <xiaolong.ye@intel.com>
-Cc:     Fengguang Wu <fengguang.wu@intel.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Xiaolong Ye <xiaolong.ye@intel.com>
-Subject: format-patch: no 'prerequisite-patch-id' info when specifying commit
- range
-Message-ID: <20180529184651.GB14525@localhost.localdomain>
+        id S965571AbeE2Ssx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 14:48:53 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:36763 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964830AbeE2Ssw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 14:48:52 -0400
+Received: by mail-yw0-f194.google.com with SMTP id v68-v6so5162569ywd.3
+        for <git@vger.kernel.org>; Tue, 29 May 2018 11:48:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=DP1nB32wXEue7HqDfMwbXZqGjymHyCw0HIupvdMP9Xw=;
+        b=a0dRIqlURTXmE6yga2OiLKrru6RGb3fH5boOnbQmafdmspuPO4TsNce+W6bMhJEUpT
+         BqZ+IACGV9h7Ci//8NEqSkzyYek+zJl578nn4yBDJDSsmRNbNoWCk9DBdNQIfabFGW0g
+         F6WYxtF3Jhqe84HC6+YXTzwI2DoohlvvOdyYdDNolHfrbSbHQLWg7b2QrAYXobc0IUW5
+         rlAEJsPHSvS8QmbRK0nW9GpDQJI4CSvrZ+5l72syVmiXEUtn8lul+ptOwbBWS/Nqs0A+
+         NSURJ2f/+tAvfbC5jdn/c3VFSx6xtyPDK/ffNdtYgbGfYHhFB477zrk3I5TJLeB0KwlJ
+         y8gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=DP1nB32wXEue7HqDfMwbXZqGjymHyCw0HIupvdMP9Xw=;
+        b=TUGRRND/etKGC67BKgWWK/DgQVPLzzcCn6UWWp9/WVt4SaOAIgmjLV8/DEimvNHB2g
+         0Ig+Pku0Epiq3A1n91HGy59jHIbSdDy/YmGj6mh1oydLnW9NWBObYSJQ1BGxOhClsZmC
+         Bj4TXRYa9dIeuskoWDxZM9T97GiYWWls8ynQj+rE9FVoZ8VdbLTiDBPTnc2Xlq/YjyUl
+         +1Jl4Z7P7CjDnrZcMJ5GRHhZPgIVh0Ws3gU4ADnms4wojSphwtZZ3wy2Apba3K0OvOpV
+         6nqW8kB54OhYVuIwk2eW55dmmXDor3WmkcRJCLZTizz0HBdtzeaQs71RLGTFWxnHninf
+         yw+g==
+X-Gm-Message-State: ALKqPwf/UFqITJ4Vvhke1zU5DlZqmJSnj/eWct2Q5G4PK8IOm1cVBFeU
+        puYPHiBZNIh20mEkGwzyslnzH0yqIAOAiPxZ/svdUcj09rM=
+X-Google-Smtp-Source: AB8JxZr/D7dcct36d3Nv44s/OOx1G4XFEa/TiPtNdxUt/uyyjjzSFsG6z58x3xFnTALJwpEDW5e0zVBL4b8+xNUtvKw=
+X-Received: by 2002:a81:8801:: with SMTP id y1-v6mr10014000ywf.238.1527619731956;
+ Tue, 29 May 2018 11:48:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Fnord: you can see the fnord
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Tue, 29 May 2018 18:46:53 +0000 (UTC)
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Tue, 29 May 2018 11:48:51 -0700 (PDT)
+In-Reply-To: <20180527083828.6919-4-pclouds@gmail.com>
+References: <20180417181300.23683-1-pclouds@gmail.com> <20180527083828.6919-1-pclouds@gmail.com>
+ <20180527083828.6919-4-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 29 May 2018 11:48:51 -0700
+Message-ID: <CAGZ79kZ+kDRHKJj917rZ-=mmusuTcB4_Su-BNupqdQqT6rWRaQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] completion: collapse extra --no-.. options
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Sun, May 27, 2018 at 1:38 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> The commands that make use of --git-completion-helper feature could
+> now produce a lot of --no-xxx options that a command can take. This in
+> many case could nearly double the amount of completable options, using
+> more screen estate and also harder to search for the wanted option.
+>
+> This patch attempts to mitigate that by collapsing extra --no-
+> options, the ones that are added by --git-completion-helper and not in
+> original struct option arrays. The "--no-..." option will be displayed
+> in this case to hint about more options, e.g.
+>
+>     > ~/w/git $ git clone --
+>     --bare                 --origin=3D
+>     --branch=3D              --progress
+>     --checkout             --quiet
+>     --config=3D              --recurse-submodules
+>     --depth=3D               --reference=3D
+>     --dissociate           --reference-if-able=3D
+>     --filter=3D              --separate-git-dir=3D
+>     --hardlinks            --shallow-exclude=3D
+>     --ipv4                 --shallow-since=3D
+>     --ipv6                 --shallow-submodules
+>     --jobs=3D                --shared
+>     --local                --single-branch
+>     --mirror               --tags
+>     --no-...               --template=3D
+>     --no-checkout          --upload-pack=3D
+>     --no-hardlinks         --verbose
+>     --no-tags
 
-I'm trying to use git-format-patch --base to generate the list of
-prerequisite patches for a series, but the behavior of git
-doesn't seem to match the documentation:
+https://public-inbox.org/git/20180527083828.6919-1-pclouds@gmail.com/
+" There's no magic numbers (previously we keep 3 --no- options)"
 
-When using a commit count (e.g.: "-2"), git-format-patch generates the
-prerequisite-patch-id lines as expected.  But when using a commit range like
-"Z..C", the prerequisite-patch-id lines are missing.
-
-Is this intentional, or it is a bug?
-
-Example using git.git commits:
-
-  $ git format-patch --stdout --cover-letter --stdout --base b7b1fca17~5 -2 b7b1fca17 | egrep 'base-commit|prereq'
-  base-commit: 2738744426c161a98c2ec494d41241a4c5eef9ef
-  prerequisite-patch-id: 080ac2faf21a6a7f9b23cb68286866d026a92930
-  prerequisite-patch-id: e3ee77500c9aa70248e7ee814662d01f79d0dcdb
-  prerequisite-patch-id: 6d831e23e33075681e6b74553151a32b73092013
-  (ehabkost@localhost:~/rh/proj/git (ok) 1j)
-  $ git format-patch --stdout --cover-letter --stdout --base b7b1fca17~5 b7b1fca17~2..b7b1fca17 | egrep 'base-commit|prereq'
-  base-commit: 2738744426c161a98c2ec494d41241a4c5eef9ef
-  $ git --version
-  git version 2.17.1
-  $ git log --graph --pretty=oneline -6 b7b1fca17
-  * b7b1fca175f1ed7933f361028c631b9ac86d868d fsck: complain when .gitmodules is a symlink
-  * 73c3f0f704a91b6792e0199a3f3ab6e3a1971675 index-pack: check .gitmodules files with --strict
-  * 6e328d6caef218db320978e3e251009135d87d0e unpack-objects: call fsck_finish() after fscking objects
-  * 1995b5e03e1cc97116be58cdc0502d4a23547856 fsck: call fsck_finish() after fscking objects
-  * ed8b10f631c9a71df3351d46187bf7f3fa4f9b7e fsck: check .gitmodules content
-  * 2738744426c161a98c2ec494d41241a4c5eef9ef fsck: handle promisor objects in .gitmodules check
-  $ 
-
-If I understand the documentation correctly, both "-3 C" or "Z..C" were
-supposed to be equivalent:
-
-> With `git format-patch --base=P -3 C` (or variants thereof, e.g. with
-> `--cover-letter` or using `Z..C` instead of `-3 C` to specify the
-> range), the base tree information block is shown at the end of the
-> first message the command outputs (either the first patch, or the
-> cover letter), like this:
-> 
-> ------------
-> base-commit: P
-> prerequisite-patch-id: X
-> prerequisite-patch-id: Y
-> prerequisite-patch-id: Z
-> ------------
-
--- 
-Eduardo
+Here I see 3 no- options, is the number how many no's to show configurable =
+now?
