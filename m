@@ -2,121 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 557F61F42D
-	for <e@80x24.org>; Tue, 29 May 2018 12:08:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EFBB1F42D
+	for <e@80x24.org>; Tue, 29 May 2018 12:16:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933428AbeE2MIs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 08:08:48 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:38851 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933135AbeE2MIr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 08:08:47 -0400
-Received: by mail-wm0-f68.google.com with SMTP id m129-v6so39793533wmb.3
-        for <git@vger.kernel.org>; Tue, 29 May 2018 05:08:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=bRCoC8wlCca1dlbAS+PP1wuPiHWvHKkLwiMV1t/N0kw=;
-        b=M4T6HNkmsqjDt1MJ3bI/TXxDpSAXsyySYETrVzkQx0PLUi9/HXf4rIRPcFyGpmbpcX
-         szzoXyzOPJ6kty401OW0bfwhjSWs5fJlIRseTLIQoyaKGucys90nj5ZNj8DJXhvPRufo
-         ZLF0Yewb3PHGb3CryDRBgANVIil4CY9N3Ob/RG4ajQ34JPY+P+EzAHOySjm1DhYiQzdv
-         koSHEBUSRNAxD+WClI2Yu90f2eMwWlUksTwiKoJXdzcyp4ZpXrxpw3vrAqP6/Y30DrGB
-         dTXtn7z4h6s+uVTee2zlER2Nl6bdfk1u9As8MBbOLGv4hARH/K1bUEPO3koHqBE3qW6W
-         D20A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=bRCoC8wlCca1dlbAS+PP1wuPiHWvHKkLwiMV1t/N0kw=;
-        b=S96E9aJ8xkucfPQmFbyV9yKsOtwWV0Twa3Mfj2Ej9/rkuNIglZeKqQhmpg9qjzMdx0
-         A5zB/N96wILwZOzz1ANfqGQpQGA7RbpKLLLwwkjhnDHUvh1qt30awOOFX79xJtskukHN
-         IwrulqEIpqvpiTpJ163sele6kwbUX5dpT4t+ltnYQkFnHlFkguez5a3Iul3TtSUFcptf
-         Ki1/+OBzEB90gCjFis9vawd0LK4yDDit0RYRN1SHyyhB67pOdJTcm/sVWBnvgQj0oGgs
-         TvbbX102IIExgtza880aWohT27UupFwYMFmGIchPLxOPI6T/bMMvxzocewPDOBtYZbIS
-         U6hg==
-X-Gm-Message-State: ALKqPweOT1Furv3fhbOuuRQnekf4n3rZHOgde4wRZqjpglLKhF34wNiG
-        xxQ3pViHTu4bXwPk9jS7VAg=
-X-Google-Smtp-Source: ADUXVKLOoJhtF+zkOBfxhrPv/VvhVT33eoV90NSy13kBoZ7lwm3RTr0+IDAKDlVVw9vPMhd63VOUUg==
-X-Received: by 2002:a1c:96c1:: with SMTP id y184-v6mr11063974wmd.156.1527595725653;
-        Tue, 29 May 2018 05:08:45 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id n56-v6sm18627109wrn.72.2018.05.29.05.08.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 May 2018 05:08:44 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [RFC PATCH 2/3] usage: prefix all lines in `vreportf()`, not just the first
-References: <xmqq8t88nllj.fsf@gitster-ct.c.googlers.com>
-        <cover.1527279322.git.martin.agren@gmail.com>
-        <ef5b4e28e00ad0c95dbe625d2e7305957f9fe5ba.1527279322.git.martin.agren@gmail.com>
-        <xmqqin78jfnl.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8CgzDfbES2jC+Rv+bKj_JAk8dzEDCm89JMuBFQmyGg9Gw@mail.gmail.com>
-        <xmqq8t83ihd7.fsf@gitster-ct.c.googlers.com>
-        <CAN0heSq1y3XibCFDYsae5b6jmzZOzcLHT4atCZ+KCb4dL5As0g@mail.gmail.com>
-        <xmqqtvqrggdt.fsf@gitster-ct.c.googlers.com>
-        <CAN0heSry9ncTTzjw2fB=wxTAo3YPyQq-wbONpXCsfi_Syxfj-A@mail.gmail.com>
-Date:   Tue, 29 May 2018 21:08:44 +0900
-In-Reply-To: <CAN0heSry9ncTTzjw2fB=wxTAo3YPyQq-wbONpXCsfi_Syxfj-A@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Tue, 29 May 2018 12:30:35
- +0200")
-Message-ID: <xmqqa7sihdf7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S933734AbeE2MQh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 08:16:37 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:35970 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933548AbeE2MQb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 08:16:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=6LvaQ07faFWAZSiuIdAVtGRz5XuFnnK5Yt970VisNNk=; b=dVmv+ycoBWdJrQQCni3qv81Baw
+        48BQ0IIbhGvG/1Suo/khe1219Vx1887c78aAnsqVG+ipR5HngeWDBOpJzFAXv88D+sbtqn8Cei2oS
+        ifSoslLnX7tNJ+gNGWLyIbSWGk22Oan7HIU7idmwsME+bLGzvkDp2lemYnWTsarWml+cjfxQ0WpoT
+        kEbuZDVi7yL9K5MS9+uX/us7qZ9SccVHs8vvOgA8w/CVq6aOFarFW5opKeGDob5JcF/9TAw9e1Tf1
+        xKYIQ1ljD/KTHR7DvxMluodk+apL+SOZFkr6TQeu4w0RN5fMlqxtMAoFd0RvOViXq6ui36Eg1A1iU
+        JXuX5IYQ==;
+Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:40934 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1fNdYC-008GWT-Md
+        for git@vger.kernel.org; Tue, 29 May 2018 08:16:30 -0400
+Date:   Tue, 29 May 2018 08:14:35 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: [PATCH] Fix grammar in "templates not found" msg
+Message-ID: <alpine.LFD.2.21.1805290813440.9388@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren <martin.agren@gmail.com> writes:
 
-> About the _("\t")-approach that you mentioned up-thread. It would allow
-> a translator to adjust all the indentations for a particular language.
-> To be clear, what you mean is _("         " /* 9 spaces */) to align
-> nicely with "warning: ", which is the longest English string. Then the
-> translator would translate the nine spaces and all of "fatal:   " and
-> others to padded strings, all of the same length (not necessarily nine).
-> Correct?
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 
-I was envisioning that these
+---
 
-	error: the first line of an error message
-	       and the second line indented by 7 places (strlen("error:")+1)
-	info: the first line of an info message
-	      and the second line indented by 6 places (strlen("info:")+1)
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 2542c5244..ec898f2c6 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -117,7 +117,7 @@ static void copy_templates(const char *template_dir)
 
-are produced by
+ 	dir = opendir(template_path.buf);
+ 	if (!dir) {
+-		warning(_("templates not found %s"), template_dir);
++		warning(_("templates not found in %s"), template_dir);
+ 		goto free_return;
+ 	}
 
-	vreportf("error: ", "       " /* 7 spaces */,
-		 "the first line of an error message\nand the second ...");
-	vreportf("info: ", "      " /* 6 spaces */,
-		 "the first line of an info message\nand the second ...");
 
-And if all of these string literals were inside _(), then depending
-on how many display columns translated version of "error" and "info"
-takes in the target language, these 7-space and 6-space secondary
-prefixes would be "translated" differently.
+-- 
 
-Of course, since your language may translate "error" and "fatal" to
-different display columns, the 7-space secondary prefix in this one
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
 
-	vreportf("fatal: ", "       " /* 7 spaces */,
-		 "the first line of a fatal error message\nand the second ...");
-
-needs to be mapped to a string that is differnt from the 7-space for
-"error: ".  I think you would use "contexts" to map the same source
-7-space to different translated string when it becomes necessary.
-
-https://www.gnu.org/software/gettext/manual/html_node/Contexts.html
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
