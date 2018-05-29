@@ -2,120 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58A311F42D
-	for <e@80x24.org>; Tue, 29 May 2018 18:04:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48C211F42D
+	for <e@80x24.org>; Tue, 29 May 2018 18:20:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965936AbeE2SEx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 14:04:53 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36906 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965697AbeE2SEi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 14:04:38 -0400
-Received: by mail-wm0-f66.google.com with SMTP id l1-v6so43079531wmb.2
-        for <git@vger.kernel.org>; Tue, 29 May 2018 11:04:37 -0700 (PDT)
+        id S937000AbeE2SUK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 14:20:10 -0400
+Received: from mail-yw0-f173.google.com ([209.85.161.173]:38911 "EHLO
+        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966037AbeE2STJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 14:19:09 -0400
+Received: by mail-yw0-f173.google.com with SMTP id y123-v6so5129393ywa.5
+        for <git@vger.kernel.org>; Tue, 29 May 2018 11:19:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jcBYoe4Z5VyIWDaBybjiGxEfTrteq1uG0uSwSv41y+c=;
-        b=jKirAEGw+8GML0dMX8dCaFOSV/4NuLYLwol8xT8O09am0Gy1To7ShgofxuQ8PKpVlU
-         D48XRs596Wu3ZQR4UZ9so7av82yvJkPzs4LNNZcJqo0CUiPSXDl25iIe10qi4pFKWu6f
-         vVGuiFcd8xX4ec9lEYfGt9iLXnxOAh8nwJm53I4p0410uHZhiPrfNHHBY8MKN75JBoE2
-         R6mHZmQTDdx6GhEa8tGCTh4PBs0HlwNosrsbG/fWDJ3ZtmOVsKBbbIzjHb9JzUlc8eji
-         Iar3/NiYjm39iZBjuOU7NBeFbgvCJYFBaK8uZdFsoN1V5Vm4Z05miGOa+4+ItKnbqR/6
-         O0UA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NSRQiuP47fODSunI6A3sW/Q+heWOE3u9ajkhhV3qCO4=;
+        b=e3LBdU+o0mBDfld4lDS6lNkxcX0GrZEiQ0rCphD5E+jKbNUPNu0qr7eqRJU3Uqbptz
+         j11+kckeOPwWEgwSqEwu6Va7lWUUx8gi38uifea7RYVpOHCyG7ZFzurw1eGUcWI75aTP
+         mAJdwpDnAyJbbooQIzN1KVQLzewH0KciOzOliqS6M8aHWKsqvDoZKeLRr1PaCglKOFC1
+         TY19hgJP6AFvbF+eZpI7C5Ub0ezY6SaOXmhfMUfKD0PMcH6tpZSWnuqjJDW9b7C0ODDX
+         k0MKwFDQOYqgVw9Ti4NZ3FAj/YOjcDSS/+XouW+/d3dxgZGngAHCfEfVXsEU6hzOGAQe
+         XiXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jcBYoe4Z5VyIWDaBybjiGxEfTrteq1uG0uSwSv41y+c=;
-        b=L6sT1aOajWk41MvV8T/SSKVQRUHa9BaQIMoOf2YOjGQoMvt9IEm/fvrWvemRhFdrq8
-         E/Er9IFN4xO6ZhK5NUh8WI4ZPWx87IBbw8t1vGTddjr7O8tVyt8/J9azDD5sWC0JoE0y
-         Ieeddiy47P3aNym46ZvodJkM9PXow5vnVzudMcuojh0m72c3jGV8C35vSOY8r9tPgbb4
-         iEDWw0Iy8/sPYsASsuFnuLFV4zfmO7E96uskr6KUNWZ373fZdTg2dbybCCv/Dw9v3MLq
-         TYjvaMqP/lhJIfCTjgvkS9/HZtJ5W/iyu6jvdZ5zIoMzUElr0g8pVQ/53KssrTOARZyn
-         ok9w==
-X-Gm-Message-State: ALKqPwepjP5+6Ca/3yAO2F8sJS4zMUT7gR2dcWfeZJ10KMkYstYOiiKw
-        sW9mACITzYnnx4selxgxpcXh/lI3
-X-Google-Smtp-Source: ADUXVKJ6Vnlk6mDt0CLtKtLRy/hqNEIZgNGRya67CTcoBHHYTcBoK/J+DTlcD31YoPkkx+L3mKN2jA==
-X-Received: by 2002:a1c:b807:: with SMTP id i7-v6mr12147807wmf.126.1527617077272;
-        Tue, 29 May 2018 11:04:37 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id m58-v6sm14449417wrf.61.2018.05.29.11.04.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 May 2018 11:04:36 -0700 (PDT)
-Date:   Tue, 29 May 2018 19:05:11 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 2/1] SubmittingPatches: not git-security@googlegroups.com
-Message-ID: <20180529180511.GA26159@hank.intra.tgummerer.com>
-References: <20180527140433.32277-1-t.gummerer@gmail.com>
- <20180527153418.GG207547@aiede.svl.corp.google.com>
- <20180527210822.GB8868@hank.intra.tgummerer.com>
- <xmqqbmd0lc11.fsf@gitster-ct.c.googlers.com>
- <20180529180203.GC8868@hank.intra.tgummerer.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NSRQiuP47fODSunI6A3sW/Q+heWOE3u9ajkhhV3qCO4=;
+        b=fVWuRsPFsacSb4XI6eMtYMOjU37X+p9AvrAhS2DkkRjdaV6Jdrr6ndQcslckQpr1H+
+         CPfJ/WGCyAEsN92w1gQRpnm1lsWFwriwxKOycQNi5HS725VBR2IQGcBT0VfJK49fGlEJ
+         bwy2xgVfrsNvK/QXvn9AS8IgjvU8Z6wrbSSGJJmkQ2uyvkQl+mfLG17zL63aBqdEaGz0
+         AwFTSqq5EmyVnqJYnKuNZQDytbOB4tn50gOlsL+Ck4yxTgdgkhH3yYwDxuaQBSuPJ9P+
+         XC2gBE56SKzvh/lH3HDejVJRHb1ZXno8HIPtgTdkG9Zy+qJ5jPgN7pIWPxulLQ7xl+kg
+         4cIg==
+X-Gm-Message-State: ALKqPweaePGHA0Wmge8wVFb4SXeokcaIY8loYhQa2PQtKOpIQNSZuBbr
+        BhDrEwEBzdLQ+uKFMbWQ4HfDayWDpC11/tlEmlDOMA==
+X-Google-Smtp-Source: ADUXVKKaLunCMJYIwMKdwgaejESGRnjjWnIoM/cc8UyGHMclwY8MkEPW6jlqIiTZRc+eDJUteJpIa37vb0BxMiZIdvQ=
+X-Received: by 2002:a81:9447:: with SMTP id l68-v6mr2917704ywg.345.1527617948544;
+ Tue, 29 May 2018 11:19:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180529180203.GC8868@hank.intra.tgummerer.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Tue, 29 May 2018 11:19:07 -0700 (PDT)
+In-Reply-To: <CABPp-BFQJZHfCJZ1qvhvVcMd-_sOfi0Fkm5PexEwzzN+Zw2akw@mail.gmail.com>
+References: <CABPp-BFQJZHfCJZ1qvhvVcMd-_sOfi0Fkm5PexEwzzN+Zw2akw@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 29 May 2018 11:19:07 -0700
+Message-ID: <CAGZ79ka39xbbm_koyFeEizggoDBqKuwgmGwRBZJnBc13aOWZag@mail.gmail.com>
+Subject: Re: RFC: Merge-related plans
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/29, Thomas Gummerer wrote:
-> On 05/28, Junio C Hamano wrote:
-> > Thomas Gummerer <t.gummerer@gmail.com> writes:
-> > 
-> > > Yeah sorry, that's what I meant.
-> > > https://public-inbox.org/git/20180308150820.22588-1-avarab@gmail.com/
-> > > is the reference I meant to put there.
-> > >
-> > > How about something like the below?  This is tested with asciidoc
-> > > 8.6.10 and asciidoctor 1.5.6.2.  I'm also happy to squash the two
-> > > patches into one if that's preferred.
-> > >
-> > 
-> > If the discussion in the proposed log message needs to be updated
-> > anyway, it is a good opportunity to make them into a single patch,
-> > as they share exactly the same objective.
-> 
-> This was mostly a clarification of the note I added after the '---',
-> but I'm happy to just make this one patch either way.
-> 
-> > This is a tangent, but the use of footnote below looks a but
-> > curious.  How would {1} reference pick which :1: to use?  The
-> > closest preceding one?
-> 
-> Tbh I didn't look at the docs for doing this, but just used the same
-> syntax as we're already using and tried it with both asciidoc and
-> asciidoctor.  And yes it seems like it always picks the preceeding
-> one.
-> 
-> > As this appears on a page that already has other footnotes attached
-> > to an adjacent paragraph, I am wondering if they should be made into
-> > a part of the same numbering sequence.
-> 
-> I have now actually looked at the docs, and this numbering has nothing
-> to do with the footnote format, but rather is used to substitute the
-> attribute that's specified in the curly braces with the text that's
-> after :<attribute>: [1].  This initially confused me a bit.  Maybe it
-> would be nicer to give the attributes names instead of just numbers?
-> As we keep adding footnotes, that would be less likely to produce
-> conflicts between the different attributes I think.
-> 
-> I'm also adding brian to the cc list, as he first converted this to
-> AsciiDoc for opinions.
+On Mon, May 28, 2018 at 1:48 PM, Elijah Newren <newren@gmail.com> wrote:
+> Hi everyone,
+>
+> I have some merge-related plans (and work in progress) that I'd like
+> to get some feedback on in order to find what order would be best to
+> address things in, if there are special steps I should take while
+> approaching some of the bigger items, and even if folks disagree with
+> any of the plans.
+>
+>
+> Currently, I would like to:
+>
+> A) Fix cases where directory rename detection does not work with
+>    rebase/am due to how they call merge-recursive.
+>
+>    Notes: Could just wait for D & E to land before fixing.
+>    Alternatively, email RFC to list now explaining issues and how the
+>    fix has performance implications; poll for opinions on whether to
+>    fix before or after D.
+>
+> B) Implement a remerge-diff ability (compare a merge commit to what an
+>    "automatic merge" would look like)[1].
+>
+>    Notes: Possibly for cherry-picks and reverts too.  Depends on C &
+>    E.
+>
+> C) Modify/extend how path-based and mode-based conflicts are
+>    communicated to the user.
+>
+>    Notes: Particularly important as a mechanism for handling
+>    challenges[2] with implementing the remerge-diff ability.  Need to
+>    send RFC to list with ideas to get feedback.
+>
+> D) Improve merge performance.
+>
+>    Notes: Includes 4-5 specific optimizations[5], some of which I
+>    expect to be somewhat invasive and thus may make more sense to just
+>    make part of the new merge strategy implemented in E.  Biggest
+>    optimization depends on F.
+>
+> E) Write a new merge strategy meant to replace merge-recursive.
+>
+>    Notes: Suggested by Junio[3][4].  Depends on F & G.
+>
+> F) Make file collision conflict types more consistent.
+>
+>    Notes: Specifically, make rename/rename(2to1) & rename/add
+>    conflicts behave more like add/add[6][7].  Depends on part of G.
+>    Would prefer H to be accepted first.
+>
+> G) Improve merge-related portion of testsuite.
+>
+>    Notes: Intended to help test new merge strategy with more
+>    confidence.  Will include approximately a dozen edge and corner
+>    cases where merge-recursive currently falls short.  Started at [8];
+>    see also [9].
 
-Now really adding the CC, I failed earlier.  Sorry about the noise.
+Most items forward-reference "Depends on (<later letter>) up to here;
+(H) seems independent, but might be a good first start.
+(G) [8] is queued as origin/en/merge-recursive-tests, or do you mean
+to expand (G) into a mini-framework of merge-testing? i.e. run the
+mini test framework multiple times, each using a different
+merge strategy, similar to submodule tests, e.g. see
+t/lib-submodule-update.sh and one of its users, t1013.
 
-> [1]: https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/#attributes-and-substitutions
+
+> H) Miscellaneous code cleanups irritating me while working on other
+>    changes[10].
+>
+>
+> My current plan was to work roughly in reverse, from H to A.  Some questions:
+>
+>   * Does any of this look objectionable?
+
+Going in order A-H seems slightly out-of-order to me, I'd think (H) and (G)
+would go first;
+
+(B) sounds like an independent feature, which could go in parallel?
+
+>   * Should I post RFC questions on A and C earlier?
+
+I would think so, it is easier to give feedback on code, I would think.
+
+>   * Should I split D and G?  (Current plan was to keep D together, but
+>     split G into five short slightly inter-dependent topics)
+
+I would have expected to have tests (G) as a companion of (A) or (C)
+rather than (D), as performance improvements would keep the test suite
+unchanged?
+
+>   * E is kind of big.  Are there any specific things folks would like to see
+>     with how that is handled?
+
+How much abstraction can be done ahead of time such that there is an
+interface/API where you just plug in a new merge strategy and do not
+need to duplicate a lot of code/tests?
+
+Stefan
