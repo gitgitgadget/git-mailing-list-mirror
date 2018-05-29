@@ -2,145 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44AD11F42D
-	for <e@80x24.org>; Tue, 29 May 2018 22:00:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B8791F42D
+	for <e@80x24.org>; Tue, 29 May 2018 22:13:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967727AbeE2WAV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 18:00:21 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:40474 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967460AbeE2V7K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 17:59:10 -0400
-Received: by mail-wm0-f68.google.com with SMTP id x2-v6so36639078wmh.5
-        for <git@vger.kernel.org>; Tue, 29 May 2018 14:59:10 -0700 (PDT)
+        id S967529AbeE2WNB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 18:13:01 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:36158 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966322AbeE2WM7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 18:12:59 -0400
+Received: by mail-yw0-f180.google.com with SMTP id v68-v6so5360661ywd.3
+        for <git@vger.kernel.org>; Tue, 29 May 2018 15:12:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=AeD/J2Qp5bxg33Gx62xJLML8UBtOoxzCCpN2GM1SmTI=;
-        b=Sslfiw5NUVCEc6aeOs8YCDDUb9XTqCXs3sbghJTY5uIKl+2NSJaBTe1MbcOcUxy46b
-         XdbkrhgGLCNyPbpVbhlhu+aNMQa0zL89qR7WLAkQadst6l4Mv/HJmnRaWcHV8igTcOBw
-         9a8L1PdDPC8g3dITp6y75tYyE5r/7RLDpJFx/fNA2i+inQvuckt/rSxgCbwNbir6ckZS
-         T3nJOh9aXAZPo4mAkRBMbQxidlMPapFIHULfnP+4sefCVrZBmwnKj5mgPIrwnnsGWWjt
-         u2Y6EXMMq3TAbwLSvEZ6RdSzox8gJd5aGYQnMbl5SmZmF/ejmPa/R14sM5hrdNuXtzbD
-         5LYA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=6qpuHArkh08CFdFNOm+DnSFNb1QHf/6gw8EPV44z+Ls=;
+        b=Mf04QGyEZmbB7VSHHogGrgwXgp6YUT0cGnRaAmDX1Fp6IoeDMp2GxzmyXdfHspqilP
+         lEtK7K/J/9iKHgpOt+Tmy5rZOAs3KEfwVNXJm2mTPpn1x18r0UgylRPdTZalPjtLZm1n
+         1Z7hMzG/ve7EUHmz5LxCeadpFWh3ExRWHdoGRwhEpZDonEVYUn7GMLDNtt1w2yil5b0U
+         lydvLgAgXVO0V1kBD7KtdHKi4QOjABEAadNDY/+a7x8e9sw05E/69+aJdaftlVAX+Dte
+         n/wHhkp2a1m6SJwWZFGsKVw+XQA4Zo+KFmpavo6kwpEpsUUR8DhJ60h8X/2ajiHBKYhr
+         tDfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=AeD/J2Qp5bxg33Gx62xJLML8UBtOoxzCCpN2GM1SmTI=;
-        b=YNg7pc/XbsHCdhRHsY4S1Qw8ikdKG4EKbn6D8iTtEteZ9zyWfqf5t+07cah785oOgt
-         j0VdE5jnLZLIvTPEhuZoOuw/CxSOSTeILdMjkY7HD9RhV86N5JzoYxBgcID5eD4kh2XC
-         vzOGUXofuvKqY4kyGdlQ90OIwz9DBhYwZwA4Pi8uUj1kmPKL7FmeHPzo/7dBI1YKVBt5
-         QrmOY5rhJrj4FECajll3RhAX6v5GpgKD3E4zfGFSax6ZCqPrlaI7xkOdCVwUb52BlkAq
-         B+AafO1N+ggzJe7bGH4Y+6PGwl+vHX+V6zHlDKjdl1ekhr1yB4xlDs6CNqCqk1rBEb1R
-         zGsw==
-X-Gm-Message-State: ALKqPwe1WuA0UPuMzTJ8iVb/LAb5Kx3PO5a9j/No4i+g5DPfqcrw+ckP
-        /Aljl2utmFVJr7hADHMq6y4=
-X-Google-Smtp-Source: ADUXVKKpywNTAa3wYHKwK2Jxw8LIzHlP7Fs/1n3KpciYyJIUqhbjTJUd/BvaBMcIHa4et08A+O4Rgg==
-X-Received: by 2002:a50:9248:: with SMTP id j8-v6mr571148eda.134.1527631149578;
-        Tue, 29 May 2018 14:59:09 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id c11-v6sm7794732eda.64.2018.05.29.14.59.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 May 2018 14:59:08 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fsckObjects tests: show how v2.17.1 can exploit downstream
-References: <20180529211950.26896-1-avarab@gmail.com> <20180529212458.GC7964@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180529212458.GC7964@sigill.intra.peff.net>
-Date:   Tue, 29 May 2018 23:59:07 +0200
-Message-ID: <87a7sif7is.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=6qpuHArkh08CFdFNOm+DnSFNb1QHf/6gw8EPV44z+Ls=;
+        b=XW0u7Z4eXfuMZjtAGN6aNa+pOcpOkIk/GUaEV5NGuJU6P79F7EZddIHnpE6/aVMnBE
+         E4y6ltTZYp8a2vknvDkDsBqsZGE2t7ThCDImFjUB2Etb7R3vVeN3+tBfWVoVNLGAMr+U
+         Oi4JABAy2E/0bC2asOVlwsJ59rNN/UrG8xsZU5Yqyn7AVhv3f6NlHcDVEiprSxL3+M1C
+         tjW8LpjMU8mAMFaS6HZUu15HyKYHiv8Zthg617elep0X4eT3E4wEk/k7Q6Gs/Z0WNpOs
+         7ASqCVU8GBRlVVlgKNzZjeRZiJzw5s2FdWcaAo2JdifcbaifxAGFeksh4ji++NlwgW5A
+         qIZg==
+X-Gm-Message-State: ALKqPwcVkikKUlFXblw21PoyD/nBYcFFLsIHYNMmVUSFvaRuQPlZPa09
+        yapDaQ2AKpRSXkGNtpOejS1/rwqb1Kd8Qe88Bf3PpA==
+X-Google-Smtp-Source: ADUXVKKmL9lX1SKjAu+hgQbHqNLNgKDdgZEISa3hlA88DvaJX9CNpyywsXNan0xZ2JUH+vB1Vjw9IOAPUrKhDvjX1tU=
+X-Received: by 2002:a81:9447:: with SMTP id l68-v6mr103344ywg.345.1527631978800;
+ Tue, 29 May 2018 15:12:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Tue, 29 May 2018 15:12:58 -0700 (PDT)
+In-Reply-To: <CABPp-BH1BBH7aBpoSaJE5J7okdfrDzpbu5rH-w-FSG2RM0hU1g@mail.gmail.com>
+References: <CABPp-BFQJZHfCJZ1qvhvVcMd-_sOfi0Fkm5PexEwzzN+Zw2akw@mail.gmail.com>
+ <CAGZ79ka39xbbm_koyFeEizggoDBqKuwgmGwRBZJnBc13aOWZag@mail.gmail.com> <CABPp-BH1BBH7aBpoSaJE5J7okdfrDzpbu5rH-w-FSG2RM0hU1g@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 29 May 2018 15:12:58 -0700
+Message-ID: <CAGZ79kYGTaFg7NnfxzdXQYTNddvqbUD3hfWEiq1RBETjYk=3gQ@mail.gmail.com>
+Subject: Re: RFC: Merge-related plans
+To:     Elijah Newren <newren@gmail.com>, Thomas Rast <tr@thomasrast.ch>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+context: https://public-inbox.org/git/CABPp-BFQJZHfCJZ1qvhvVcMd-_sOfi0Fkm5PexEwzzN+Zw2akw@mail.gmail.com/
 
-On Tue, May 29 2018, Jeff King wrote:
+Hi Elijah,
 
-> On Tue, May 29, 2018 at 09:19:50PM +0000, Ævar Arnfjörð Bjarmason wrote:
+>> Most items forward-reference "Depends on (<later letter>) up to here;
+>> (H) seems independent, but might be a good first start.
+>> (G) [8] is queued as origin/en/merge-recursive-tests, or do you mean
+>> to expand (G) into a mini-framework of merge-testing? i.e. run the
+>> mini test framework multiple times, each using a different
+>> merge strategy, similar to submodule tests, e.g. see
+>> t/lib-submodule-update.sh and one of its users, t1013.
 >
->> Something that's known but not explicitly discussed in the v2.17.1
->> release notes, or tested for, is that v2.17.1 will still happily pass
->> on evil .gitmodules objects by default to vulnerable downstream
->> clients.
+> Sorry, I should have been more clear about G.
+>
+> In more detail...
+>
+> [...]
+
+Yeah that is what I had in mind when talking about a mini test frame work
+above, such that you can run the same test on any merge strategy easily.
+Sorry for being confusing there.
+
+>> (B) sounds like an independent feature, which could go in parallel?
+>
+> B may sound like an independent feature, but it needs a merge
+> algorithm that doesn't mess with the working tree
+
+I agree on that,
+
+> so it depends pretty strongly on E.
+
+.. but not quite on the conclusion:
+You could also make the current merge algorithm working
+tree independent. Thomas Rast (cc'd) did so IIUC in
+https://public-inbox.org/git/cover.1409860234.git.tr@thomasrast.ch/
+(search the archive for "--remerge" if interested in this prior work)
+which did not land upstream.
+
+>>>   * Should I post RFC questions on A and C earlier?
 >>
->> This could happen e.g. if an in-house git hosting site is mirroring a
->> remote repository that doesn't have transfer.fsckObjects turned on.
->> Someone can remotely push evil data to that remote hosting site
->> knowing that it's mirrored downstream, and the in-house mirror without
->> transfer.fsckObjects will happily pass those evil objects along, even
->> though it's been updated to v2.17.1.
+>> I would think so, it is easier to give feedback on code, I would think.
 >
-> Sure, I agree with all of the above, but...
+> If the idea is to give feedback on *code* rather than just
+> ideas/tradeoffs/pinpointing-buggy-lines, then it sounds like you're
+> actually suggesting posting the RFC later rather than earlier?
+
+Some people have complained that they don't get feedback on
+ideas/tradeoffs/pinpointing-buggy-lines, but did so after sending
+RFC code. So I'd think a sure way to get feedback is to send actual
+code as an RFC even if it misses some parts.
+
+> Also, the bigger question for me wasn't so much "should I ask the list
+> about these changes?" before making them, but rather: Do folks want me
+> to bring these things up before I work on D & E -- even if I end up
+> not getting back to incorporating their answers for months until D & E
+> are completed and merged?
+
+I'd think A + C are worth asking early nevertheless, even if D & E are
+away for some month; having these niche cases covered (in code and
+tests) as well as a new UI/UX for user communication sound exciting
+(The latter could result in some bike shedding, and then having enough
+time before you spend time to do it one way or another in D&E sounds
+favorable)
+
+>>>   * Should I split D and G?  (Current plan was to keep D together, but
+>>>     split G into five short slightly inter-dependent topics)
+>>
+>> I would have expected to have tests (G) as a companion of (A) or (C)
+>> rather than (D), as performance improvements would keep the test suite
+>> unchanged?
 >
->> It's worth testing for this explicitly. So let's amend the tests added
->> in 73c3f0f704 ("index-pack: check .gitmodules files with --strict",
->> 2018-05-04) to show how this can result in a v2.17.1 client passing
->> along the evil objects.
+> Let me re-phrase: D and G are completely independent series, both of
+> which happen to be divisible.  Should either of them be split?
+
+Sorry for my confusion. This clears it up
+
 >
-> I'm not sure what testing this buys us. [...]
+> More background: D is only a handful of commits, so far; the main
+> reason to split it is to allow some of it to go first (maybe even
+> before G or H).  The downside is introducing extra churn and risk in
+> merge-recursive, when I'm planning to rewrite it soon anyway.  I was
+> trying to minimize merge-recursive changes, other than trying to make
+> sure that the new merge strategy and merge-recursive will give
+> identical results (modulo maybe fixing a few extra corner cases and
+> running faster).  Basically, I wanted it to be really easy to compare
+> old and new strategies, but otherwise wanted to leave merge-recursive
+> mostly alone.  It's not entirely clear how quickly I'll find time to
+> work on all of this, though, so maybe just-wait-for-the-rewrite is not
+> the right prioritization.
 
-Half of what I'm trying to do here is clarifying the v2.17.1 release
-notes. The initial version Junio had & my proposed amendment on
-git-security was:
+My experience is that smaller patch series are reviewed faster,
+so if the cost of splitting them up is not prohibitive, I'd strongly
+consider doing that.
 
-      * In addition to the above fix that also appears in maintenance
-    -   releases v2.13.7, v2.14.4, v2.15.2 and v2.16.4, this has support on
-    -   the server side to reject pushes to repositories that attempt to
-    -   create such problematic .gitmodules file etc. as tracked contents,
-    -   to help hosting sites protect their customers by preventing
-    -   malicious contents from spreading.
-    +   releases v2.13.7, v2.14.4, v2.15.2 and v2.16.4, this release
-    +   extends transfer.fsckObjects (off by default) to reject fetches or
-    +   pushes to repositories that attempt to create such problematic
-    +   .gitmodules file etc. as tracked contents, to help hosting sites
-    +   protect their customers by preventing malicious contents from
-    +   spreading, or to protect clients that fetch from passing on a bad
-    +   repository to their downstream fetchers.
+>>>   * E is kind of big.  Are there any specific things folks would like to see
+>>>     with how that is handled?
+>>
+>> How much abstraction can be done ahead of time such that there is an
+>> interface/API where you just plug in a new merge strategy and do not
+>> need to duplicate a lot of code/tests?
+>
+> For avoiding duplicate tests, my plan was to use a variable (like
+> GIT_TEST_SPLIT_INDEX or GIT_FSMONITOR_TEST), which, when set, would
+> change the default merge strategy from "recursive" to the new one, and
+> also replace explicit requests for the "recursive" merge strategy with
+> the new one.
 
-But Junio's final version of that in
-https://public-inbox.org/git/xmqqy3g2flb6.fsf@gitster-ct.c.googlers.com/
-rewrote that suggestion of transfer.fsckObjects to receive.fsckObjects.
+So your long term plan is to *replace* the whole merge recursive strategy
+giving the same results [analogous to implementing refstable as a new refs
+back end, that behaves the same except faster and easier code for corner
+cases] and not offer a *new* strategy [analog here: different (merge/)diff
+strategies, such as Myers vs minimal vs patience] that yields user visible
+difference and it is unclear whether the user prefers one or the other?
+That wasn't clear to me, thanks for clarifying.
 
-That means that for someone who doesn't know how this stuff works in
-detail and is just following along with our release notes (and say
-enabling just receive.fsckObjects globally on their site) they might not
-be covered at all.
+My original reply was assuming a new "mode" of merge strategy which
+would be a user visible knob to turn. The environment variable you mentioned
+sounds like that is an implementation detail, that is just for a
+smooth transition
+period, but the current code would be deprecated and deleted eventually.
 
-The receive.fsckObjects variable only kicks in when someone pushes to
-you, not when you fetch something malicious and someone then fetches
-from you.
+> For avoiding duplicate code...well, Junio's suggestion was "[to
+> rewrite] without using much from the existing code in
+> merge-recursive.c at all" because he has "written off that code as
+> mostly unsalvageable"[4].
+>
+> There are some functions that I think are worth leaving intact (e.g.
+> helpers like output(), the directory rename detection stuff, or the
+> merge_submodule code that you recently moved).  That stuff I was
+> planning to put in a "/* COPIED FROM merge-recursive.c VERBATIM */"
+> section.  And eventually, the idea would be to delete the old
+> merge-recursive and just use the replacement, making the duplication
+> concerns eventually go away.
 
-So with this and my https://news.ycombinator.com/item?id=17183044 (in
-reply to your comment) I'm trying to do my small bit to inform people
-about this angle of it being exploitable, since this issue of git mirror
-chains seems to have not been noticed so far, and lots of sites run this
-sort of setup to mirror & re-serve arbitrary public Git repos in-house.
+This clears up even more, thanks for clarifying!
 
-The other half, which is why I think this patch is needed, is making
-this aspect of it clearer to future maintainers. Before I started
-hacking on my recent fsck series[1] I didn't realize the intricacies of
-how *.fsckObjects worked in various situations, and I think explicitly
-calling this case out in code helps.
+> ...or is your question more about how to abstract things so that
+> others can also write new merge strategies in the future and allow as
+> much code and test re-use as possible?
 
-Unlike documentation, when we change something in the code we're forced
-to take notice that the test suite changes, and are thus more likely to
-notice this important but apparently forgotten use-case. If the security
-issue of promiscuously re-serving bad objects you've fetched was
-forgotten this time around, this will help us remember it if say we ever
-turn on *.fsckObjects by default in the future.
+That was my original question as I thought an API would help with
+doing that as it would help to not fiddle around with the rest of the
+code base.
 
-1. https://public-inbox.org/git/20180525192811.25680-6-avarab@gmail.com/
+>>> [4] https://public-inbox.org/git/xmqqk1ydkbx0.fsf@gitster.mtv.corp.google.com/
+
+Did you mean:
+https://public-inbox.org/git/xmqqd147kpdm.fsf@gitster.mtv.corp.google.com/
+
+So in that case my reply above ("..so it depends pretty strongly on E.."
+I have a different conclusion) is void, as that *is* the new strategy?
+
+Thanks,
+Stefan
