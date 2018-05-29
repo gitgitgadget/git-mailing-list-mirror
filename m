@@ -2,127 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EE371F42D
-	for <e@80x24.org>; Tue, 29 May 2018 17:01:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B82731F42D
+	for <e@80x24.org>; Tue, 29 May 2018 17:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965168AbeE2RBV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 13:01:21 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:51900 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965031AbeE2RBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 13:01:20 -0400
-Received: by mail-wm0-f66.google.com with SMTP id r15-v6so15026631wmc.1;
-        Tue, 29 May 2018 10:01:19 -0700 (PDT)
+        id S965536AbeE2Rlc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 13:41:32 -0400
+Received: from mail-yw0-f182.google.com ([209.85.161.182]:41985 "EHLO
+        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965284AbeE2Rla (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 13:41:30 -0400
+Received: by mail-yw0-f182.google.com with SMTP id q7-v6so5081118ywd.9
+        for <git@vger.kernel.org>; Tue, 29 May 2018 10:41:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version;
-        bh=jE0IsQZPGwMQ+pB0GYtCzeNt1aIQwozdUQAYArI+1P4=;
-        b=BwUGNuUh/qIGcLhOgn0UNeGqwBX1RcPhmP0ffx4Zk+xw3iG5Xr8UsaYll2vuzO25KW
-         7B1mczRLHs72AYEPGI6E7xq2r1J1B401tWZTEqWMhayKYLmuH8BRoFP32X1kYFgNIEAE
-         Dxd+bxK2NEgb2YrFjZnhA9wKiBvVdhzjpX9B1bK2rCFxE4bMBcdMHdeQRoJgm63B7e9f
-         X+hVL3/+mVJ0XWJ+8pe1s5u4uyaYY4r4LAvrgCTqUWZJDcw1XOVx3WoZgXRZuxbtXn92
-         Qy56Gxkffd3A6Yh4Pq6MVgwlNMIQPA9FUp2w+OkeOk34PpP1vGoOb+TPNdg/sLXwomvr
-         oeCg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mYfJhSwXTeHZ+TOOE5Aijqr8y8abnFBJm7cOaQfdZWY=;
+        b=JY12vQTAH/kNWMb0ur9uYRVQxOPI2kSvP3ubx8oYDwmAcf/ffkW1IqcJs42Id+qkA2
+         gKV9UvTYPRAb8Yk6rx0m00KKD/dvf0GWFI+h7c/ZpXb23DFHqEPxIilBpWTKgcbn8Q1d
+         z2nEqJ0Vec99vXOQD6/IrIx0FkXQpeLbAPq43WE6SScDaNj54A3NeR+4nB1nl+vQB1WA
+         KrO5+OFP5fdWTIROU89vcMtsKT65075KF/faFyv6IWrbji0jPcQhgkYIzZ+c6JneYnRD
+         UvKU2Bae/dl2jbFuZOLWT4XlQCoSOxuAn/6+9VQKBNyncmNRQD59/O9KW5oGGTYpJput
+         ZgzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :user-agent:mime-version;
-        bh=jE0IsQZPGwMQ+pB0GYtCzeNt1aIQwozdUQAYArI+1P4=;
-        b=HZP3rkQ5iXJxeUD9hCxuODwmKJKFhUN1ZtwR2CB9P1ZPb36YDFmzt+xfZMMfOzl5u9
-         pxZhRuFi2fY4Z0hFmYYCoVHAzf1WiQ3BQdHq9HNzTdPw2yyQp0Mlg5h80Rv9fvoRR1a/
-         OsCnNqdud6S2tD2k2tNK5xAyvJWaYURdBSCzH5IUQXzdbZGBBtWr1KLTDg/rHdlNnyQV
-         qQ2tL3R3TuMbv500EoSrrbTfY+CrFZFHJL1PQElhfsDocPRo4S/ijEuMCATB2TtaJa1q
-         pfRe0Qz6/EqMT613Mm9J8UbIGyDlUhds8uqx1vTFYK7U3UvdVZoeRSbMvRa0ytEVn51u
-         nysQ==
-X-Gm-Message-State: ALKqPwcWXdfFmruWm/F7Xynb9fnbX+lLkCCgJyvE5zDQVmz91EYq2zdD
-        piKQSQeqRUY/1NWu7XKrRf6qJRtA
-X-Google-Smtp-Source: ADUXVKKpCP/lio/OAwQo8nq9Q174U9hQfb84g3lwKnzLw4q1DmlGMoXfAjmSD6OIqZDw8aoyg+ezXA==
-X-Received: by 2002:a1c:da50:: with SMTP id r77-v6mr10807877wmg.105.1527613278549;
-        Tue, 29 May 2018 10:01:18 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id k126-v6sm26284734wmd.45.2018.05.29.10.01.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 May 2018 10:01:17 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.17.1, v2.13.7, v2.14.4, v2.15.2 and v2.16.4
-Date:   Wed, 30 May 2018 02:01:17 +0900
-Message-ID: <xmqqy3g2flb6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mYfJhSwXTeHZ+TOOE5Aijqr8y8abnFBJm7cOaQfdZWY=;
+        b=NpG+OXG2Dcyk3j7+1aP9vdEAHQ7iJjiwqyjl+lVMGtAxHpEXWojPkOmLh83N4niHq4
+         r706ckgTES/s02LJGhc3qWq0uB1BXO1ZYlq8VzbInl+krDXV5NaTwYcbQd5p7RKEU1Uj
+         ibDbnqPAlDmSAvp/WW34MDIPO0KnCvg3+rpdf6hk3lijPpOyE4qkce98lckKapeCIvTc
+         S3TXO0y1+iA2VX0SvFercYCOpZwogBr+SZX4HUioHZCVPv3R/6zt06I+aHDbe+TVDlC0
+         JjX0vuGX5WH82Fgvr20f/z2Bm7xVJ+6SBFyLPTYktRF+9xyHl4evFxmfEWusCqalsm3G
+         XOQQ==
+X-Gm-Message-State: ALKqPwdykKCSjR/QLc8m5mM62k6yokzYNcQWP73+Jb5EESOf30BDjxTj
+        YWN9BBz3DAPTQVpECz/cLXXwVzYvhtqJvmEejHbNSA==
+X-Google-Smtp-Source: AB8JxZpxsGVGQGIxEiN0E8vkrUegjoNcCFR7RL53PUJDCdE4yYA9vyyzTlB+ETE1n3cvQoJxJQesD6IUjCNMrTWpq0c=
+X-Received: by 2002:a0d:e28e:: with SMTP id l136-v6mr9883647ywe.500.1527615689561;
+ Tue, 29 May 2018 10:41:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Tue, 29 May 2018 10:41:28 -0700 (PDT)
+In-Reply-To: <20180526135531.4516-2-pclouds@gmail.com>
+References: <20180510141927.23590-1-pclouds@gmail.com> <20180526135531.4516-1-pclouds@gmail.com>
+ <20180526135531.4516-2-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 29 May 2018 10:41:28 -0700
+Message-ID: <CAGZ79kb7K_uZfUdjsnm065h3EYn=GE3Rma5+yACERFhBBcOL+Q@mail.gmail.com>
+Subject: Re: [PATCH v2 01/11] Add and use generic name->id mapping code for
+ color slot parsing
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The latest maintenance release Git v2.17.1 and updates to older
-maintenance tracks are now available at the usual places.
+On Sat, May 26, 2018 at 6:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> Instead of hard coding the name-to-id mapping in C code, keep it in an
+> array and use a common function to do the parsing. This reduces code
+> and also allows us to list all possible color slots later.
+>
+> This starts using C99 designated initializers more for convenience
+> (the first designated initializers have been introduced in builtin/clean.=
+c
+> for some time without complaints)
 
-The tarballs are found at:
+s/for some time without complaints/
+in 512f41cfac5 (clean.c: use designated initializer, 2017-07-14) which
+is almost a year without complaint/ maybe?
 
-    https://www.kernel.org/pub/software/scm/git/
+(just in case a resend is needed; please be precise and mention that
+other commit so it's easy to see the reasoning there)
 
-The following public repositories all have a copy of the 'v2.17.1'
-tag and the 'maint' branch that the tag points at, as well as the
-v2.13.7, v2.14.4, v2.15.2 and v2.16.4 tags:
+> +
+> +int lookup_config(const char **mapping, int nr_mapping, const char *var)
+> +{
+> +       int i;
+> +
+> +       for (i =3D 0; i < nr_mapping; i++) {
+> +               const char *name =3D mapping[i];
+> +
 
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
+    if (!name)
+        break;
 
-----------------------------------------------------------------
+maybe? We do we need to check for 'name' in the next
+condition? What input do we expect/allow?
 
-Git v2.17.1 Release Notes
-=========================
-
-Fixes since v2.17
------------------
-
- * This release contains the same fixes made in the v2.13.7 version of
-   Git, covering CVE-2018-11233 and 11235, and forward-ported to
-   v2.14.4, v2.15.2 and v2.16.4 releases.  See release notes to
-   v2.13.7 for details.
-
- * In addition to the above fixes, this release adds support on the
-   server side that reject pushes to repositories that attempt to
-   create such problematic .gitmodules file etc. as tracked
-   contents, to help hosting sites protect their customers with
-   older clients by preventing malicious contents from spreading.
-   This is enabled by the same receive.fsckObjects configuration on
-   the server side as other security and sanity related checks
-   (e.g. rejecting tree entry ".GIT" in a wrong case as tracked
-   contents, targetting victims on case insensitive systems) that
-   have already been implemented in the past releases.  It is
-   recommended to double check your configuration if you are hosting
-   contents for other people.
+> +               if (name && !strcasecmp(var, name))
+> +                       return i;
 
 
-Git v2.13.7 Release Notes
-=========================
+> +#define LOOKUP_CONFIG(mapping, var) \
+> +       lookup_config(mapping, ARRAY_SIZE(mapping), var)
+> +int lookup_config(const char **mapping, int nr_mapping, const char *var)=
+;
 
-Fixes since v2.13.6
--------------------
-
- * Submodule "names" come from the untrusted .gitmodules file, but we
-   blindly append them to $GIT_DIR/modules to create our on-disk repo
-   paths. This means you can do bad things by putting "../" into the
-   name. We now enforce some rules for submodule names which will cause
-   Git to ignore these malicious names (CVE-2018-11235).
-
-   Credit for finding this vulnerability and the proof of concept from
-   which the test script was adapted goes to Etienne Stalmans.
-
- * It was possible to trick the code that sanity-checks paths on NTFS
-   into reading random piece of memory (CVE-2018-11233).
-
-Credit for fixing for these bugs goes to Jeff King, Johannes
-Schindelin and others.
-
-----------------------------------------------------------------
+Can you add a comment here saying what mapping is or should look like?
