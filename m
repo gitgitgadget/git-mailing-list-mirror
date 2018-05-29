@@ -6,72 +6,70 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 203D61F42D
-	for <e@80x24.org>; Tue, 29 May 2018 16:49:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0E061F42D
+	for <e@80x24.org>; Tue, 29 May 2018 16:52:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964951AbeE2QtP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 12:49:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55390 "HELO cloud.peff.net"
+        id S964967AbeE2QwY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 12:52:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55404 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S935486AbeE2QtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 12:49:14 -0400
-Received: (qmail 24608 invoked by uid 109); 29 May 2018 16:49:14 -0000
+        id S964965AbeE2QwY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 12:52:24 -0400
+Received: (qmail 24761 invoked by uid 109); 29 May 2018 16:52:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 29 May 2018 16:49:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 29 May 2018 16:52:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27808 invoked by uid 111); 29 May 2018 16:49:25 -0000
+Received: (qmail 27834 invoked by uid 111); 29 May 2018 16:52:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 29 May 2018 12:49:25 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 29 May 2018 12:52:34 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 May 2018 12:49:12 -0400
-Date:   Tue, 29 May 2018 12:49:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 May 2018 12:52:22 -0400
+Date:   Tue, 29 May 2018 12:52:22 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: js/empty-config-section-fix, was Re: What's cooking in git.git
- (May 2018, #03; Wed, 23)
-Message-ID: <20180529164912.GA13385@sigill.intra.peff.net>
-References: <xmqqwovtudia.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1805251430420.77@tvgsbejvaqbjf.bet>
- <xmqq36ycl4ly.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1805281319530.82@tvgsbejvaqbjf.bet>
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        git discussion list <git@vger.kernel.org>
+Subject: Re: RFC: New reference iteration paradigm
+Message-ID: <20180529165221.GB13385@sigill.intra.peff.net>
+References: <56FD4CAD.3070100@alum.mit.edu>
+ <xmqqlh4yo7av.fsf@gitster.mtv.corp.google.com>
+ <20160331193150.GC5013@sigill.intra.peff.net>
+ <86h8mu1g8j.fsf@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1805281319530.82@tvgsbejvaqbjf.bet>
+In-Reply-To: <86h8mu1g8j.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 28, 2018 at 01:20:41PM +0200, Johannes Schindelin wrote:
+On Sat, May 26, 2018 at 07:25:32PM +0200, Jakub Narebski wrote:
 
-> On Mon, 28 May 2018, Junio C Hamano wrote:
+> > At one point I wrote a patch to binary search the packed-refs file, find
+> > the first "refs/tags/" entry, and then walk linearly through there. What
+> > stopped me is that the current refs.c code (I guess file-backend.c these
+> > days) was not happy with me partially filling in the ref_dir structs in
+> > this "inside out" way.
+> [...]
 > 
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > 
-> > > On Thu, 24 May 2018, Junio C Hamano wrote:
-> > >
-> > >> * js/empty-config-section-fix (2018-05-18) 1 commit
-> > >>  - config: a user-provided invalid section is not a BUG
-> > >> 
-> > >>  Error codepath fix.
-> > >> 
-> > >>  Will merge to 'next'.
-> > >
-> > > As a hotfix, maybe we can fast-track it to master?
-> > 
-> > Hotfix is a proposed fix for an issue that is so important to be a
-> > showstopper.  This one must be fixed before the final release, but I
-> > do not think it's not that urgent to force us to drop everything
-> > else and merge it to master immediately.
+> Isn't this what reftable - an alternative way of storing refs in Git,
+> tested by being used by JGit - would solve?  See Christian Couder post
+> "Implementing reftable in Git"
 > 
-> Well, in this case, a user might report a BUG when they simply have an
-> invalid config.
+>   https://public-inbox.org/git/CAP8UFD0PPZSjBnxCA7ez91vBuatcHKQ+JUWvTD1iHcXzPBjPBg@mail.gmail.com/t/#u
 > 
-> I do not care all that much, but Peff (who reported this) might.
+> 'Efficient lookup of an entire namespace, such as refs/tags/' is
+> allegedly one of the objectives of this format.
 
-I think it's fine to just fix it before release. Both the likelihood of
-it happening and its severity are pretty low.
+The thread you are responding to is over 2 years old. ;)
+
+Since then, Michael rewrote the packed-refs code to handle this case,
+and we mmap and binary-search the file since v2.15.
+
+Reftables would also have (amortized) log-n lookup, and also fix some
+other problems (like lack of atomic transactions). So yes, I hope we do
+eventually move to reftable, too.
 
 -Peff
