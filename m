@@ -2,109 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 341C01F42D
-	for <e@80x24.org>; Tue, 29 May 2018 19:05:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85D7C1FD4F
+	for <e@80x24.org>; Tue, 29 May 2018 19:17:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965659AbeE2TFK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 15:05:10 -0400
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:37407 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965311AbeE2TFJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 15:05:09 -0400
-Received: by mail-ot0-f196.google.com with SMTP id 77-v6so18242245otd.4
-        for <git@vger.kernel.org>; Tue, 29 May 2018 12:05:09 -0700 (PDT)
+        id S966061AbeE2TR3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 15:17:29 -0400
+Received: from mail-pl0-f52.google.com ([209.85.160.52]:35594 "EHLO
+        mail-pl0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965541AbeE2TR2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 15:17:28 -0400
+Received: by mail-pl0-f52.google.com with SMTP id i5-v6so9515523plt.2
+        for <git@vger.kernel.org>; Tue, 29 May 2018 12:17:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=TiX0aV0iNzPVAGkfPf584i4d/tob8plEsgjoURiomUw=;
-        b=h+qHXZya//2+vKob/E5FRTTDV2vHB6P6Nb9IErV7DPPcU6XN6Z2tUQbykyI3BQa4p7
-         0/7aa7FTLzVTLzb7ot8073wnFaI6IsDtENyF3wfdxPe0hok4d6gp0W1YnHWkBPGScTG4
-         wGq707c7ML6QVafSNO40MQrElKFcVeenVpO3GuWuXbLXbf3RtXGUKHKxIGlF6d8QZTTS
-         Xpgc6YUBoriNvufqcuMXgvUJhjzsh+RBVjWQ/1RZZLl+eUWMeTGC4zlMNeLcBmD9SS9j
-         lmyJjU1VdKUHTZfrk4JmxFvLI93i6e8W8wmF7R4HSYZGM3rcTJdtahRRuR0cgoj078DI
-         ewZg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=K2DUr6HMNUkuOQC25xBjUOCfCsXbSlVgsyGePxYHKsg=;
+        b=rzcgBN65sGSw8LlifqSkZDzOgETHRxHJEPVUDsAMmwdbqNYnyF4JNyo7R28PmsHIM9
+         zGNu2hSSzYM5csVT7KgTsuYHEv4s12Hxce0x1A3ObjNf93zE51QBmGy+mOGAfI6SNIoF
+         co80AJlsHOkdQT9ZkqLuQQp7uW1vU/tS418QFafuX4EX4e35l16NNe0lED0zqPImp3Of
+         8Rzl190bzt/84/F251B5hdDWf8+MPl0XGqDSU5af/ajhel9ebdT2tqD7fu6zM9Y6iFrS
+         J9vl1lE3EfW6Mbub4EA4xA5VoWcjwpPKnqcEv9QQCxxNGmQ4k1MTZYYYlCydjqT6p7Yc
+         etFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=TiX0aV0iNzPVAGkfPf584i4d/tob8plEsgjoURiomUw=;
-        b=lulUOImPwt5U46ARBepHq2uTJqwwIxo0gqgPUmhD8OuaVoEPtmI2lsSXeUqqQjkSZZ
-         RxF3f/bCdwytjAXAE3R46EIbBzxDO1JCa+vmnAK6V3n0wx2D+CLg8fdcR3rSFbGL5CEp
-         pktkBudguF2itipCP3QwtH+mtwviWpmSoE/oo+q/g8gxx+ZnfBI0EQ9jNlUKFHyCsAiV
-         6kLj1tEO7+AWPifG5xgyxFqzaT9asg92TfDIdiXOh3S9LgHPyQwF+7w7AdEGOki8d7IN
-         qgfXC1N2Akht2phVm14fiHzn/xzlAcherGjBvOpyaoRCskcpx+j/Ghr/ooL3RGnq7Ki1
-         c+Tg==
-X-Gm-Message-State: ALKqPwc00O9sVy8iyV2I7xrmDpVhRZ7xclNZRPfJQx7IYkW3v2uEoOem
-        Xbv9z/gPFgQukQvQ2SI3dpP5Bvj4xzk5FIZYmMY=
-X-Google-Smtp-Source: ADUXVKJvc4eWeyX7EEmMFREXikBDZaSHfZqb5hQEflbhphF2eCC+lTAnw2UFz+7q9k2JbMaOo5me2XhujnGTarcK6J0=
-X-Received: by 2002:a9d:49ad:: with SMTP id g45-v6mr12574169otf.65.1527620702903;
- Tue, 29 May 2018 12:05:02 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=K2DUr6HMNUkuOQC25xBjUOCfCsXbSlVgsyGePxYHKsg=;
+        b=T2UMXzOyvmlqlpeo2JRDxE28sXCCLOb5poh6nrz41hfd7KUDzwReqiH/jH74OIDpua
+         DLG8qn6c6Ec5L2/OCWwWqLWhw+8VToxrcWU7t12Nb044dOnLuJFpfvFOEkuwYr69RRGD
+         UT2RPD6pQ03vsjMmqo1P4s79AkEJnWuQBhKUjAp0XKoGDnGoYsN63iJBOhhqZ78DMX5s
+         3N2DQeGb0YqQzLs90A42nGyRqWBLxTNdF5TFXs170l2x/MwMTuVxpugRwVbpq/pTR3tN
+         XUfTV1sHmolkdssbdtsuUfOsWjQLsKIVywteSBTdfJg2b+BA9LyUqting9wOlNQUB7nN
+         MF+w==
+X-Gm-Message-State: ALKqPwc4DUa9Rj+ikkfeamYhSFphdZj6lJEvQQAK3z5NtGimfk5TBDEi
+        uqSN6aRjXnmUJPvt5Dv3ge/VdA==
+X-Google-Smtp-Source: AB8JxZoHhXczeP1ZPVku7fNb2kJCeT5Fdyae9bCtubRtWm86cO7EXp4WtPEWIXSUryspjYOU6T3imQ==
+X-Received: by 2002:a17:902:6503:: with SMTP id b3-v6mr18770611plk.147.1527621447775;
+        Tue, 29 May 2018 12:17:27 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id 73-v6sm75952922pfo.153.2018.05.29.12.17.26
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 29 May 2018 12:17:26 -0700 (PDT)
+Date:   Tue, 29 May 2018 12:17:25 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Is origin/HEAD only being created on clone a bug? #leftoverbits
+Message-ID: <20180529191725.GA259827@google.com>
+References: <87bmcyfh67.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a4a:b285:0:0:0:0:0 with HTTP; Tue, 29 May 2018 12:04:31
- -0700 (PDT)
-In-Reply-To: <CAGZ79kZ+kDRHKJj917rZ-=mmusuTcB4_Su-BNupqdQqT6rWRaQ@mail.gmail.com>
-References: <20180417181300.23683-1-pclouds@gmail.com> <20180527083828.6919-1-pclouds@gmail.com>
- <20180527083828.6919-4-pclouds@gmail.com> <CAGZ79kZ+kDRHKJj917rZ-=mmusuTcB4_Su-BNupqdQqT6rWRaQ@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 29 May 2018 21:04:31 +0200
-Message-ID: <CACsJy8Cq8LaFf=fvU02e4aepOUXC8CUTFeiUVHVvzYk50AqmVA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] completion: collapse extra --no-.. options
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87bmcyfh67.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 29, 2018 at 8:48 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Sun, May 27, 2018 at 1:38 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y <pclouds@gmail.com> wrote:
->> The commands that make use of --git-completion-helper feature could
->> now produce a lot of --no-xxx options that a command can take. This in
->> many case could nearly double the amount of completable options, using
->> more screen estate and also harder to search for the wanted option.
->>
->> This patch attempts to mitigate that by collapsing extra --no-
->> options, the ones that are added by --git-completion-helper and not in
->> original struct option arrays. The "--no-..." option will be displayed
->> in this case to hint about more options, e.g.
->>
->>     > ~/w/git $ git clone --
->>     --bare                 --origin=3D
->>     --branch=3D              --progress
->>     --checkout             --quiet
->>     --config=3D              --recurse-submodules
->>     --depth=3D               --reference=3D
->>     --dissociate           --reference-if-able=3D
->>     --filter=3D              --separate-git-dir=3D
->>     --hardlinks            --shallow-exclude=3D
->>     --ipv4                 --shallow-since=3D
->>     --ipv6                 --shallow-submodules
->>     --jobs=3D                --shared
->>     --local                --single-branch
->>     --mirror               --tags
->>     --no-...               --template=3D
->>     --no-checkout          --upload-pack=3D
->>     --no-hardlinks         --verbose
->>     --no-tags
->
-> https://public-inbox.org/git/20180527083828.6919-1-pclouds@gmail.com/
-> " There's no magic numbers (previously we keep 3 --no- options)"
->
-> Here I see 3 no- options, is the number how many no's to show configurabl=
-e now?
+On 05/29, Ævar Arnfjörð Bjarmason wrote:
+> Here's some more #leftoverbits where we have a clone/fetch feature
+> discrepancy and where clone is magical in ways that "fetch" isn't.
+> 
+> If you make an initial commit and push to a remote repo "origin", you
+> don't get a remote origin/HEAD reference, and a "fetch" won't create it
+> either.
+> 
+> You will get it if you subseuqently "clone" the repo, but not if you use
+> "git init / remote add / fetch / git checkout -t" which should otherwise
+> be equivalent.
+> 
+> If you push to "master" (or whatever HEAD is) from the clone the
+> origin/HEAD will be updated accordingly, but from the repo you pushed
+> from & the one you did init+fetch instead of clone you'll never see it.
+> 
+> Some code spelunking reveals remote_head_points_at, guess_remote_head()
+> etc. in builtin/clone.c. I.e. this is special-cased as part of the
+> "clone".
+> 
+> Can anyone thing of a reason for why this shouldn't be fixed as a bug?
+> I've tried searching the archives but "origin/HEAD" comes up with too
+> many
+> results. https://public-inbox.org/git/alpine.LSU.1.00.0803020556380.22527@racer.site/#t
+> seems to be the patch that initially added it, but it is not discussed
+> why this should be a clone-only special case that doesn't apply to
+> "fetch".
 
-In a sense, yes. If you write OPT_BOOL(0, "no-foo",...) then that
---no-foo _always_ shows. "git clone" just happens to have three of
-them.
---=20
-Duy
+I believe the issue has to deal with how symrefs are handled.  I don't
+think any of the fetch code path does anything special with symrefs.
+Symref info does get sent over the wire for the HEAD symref but i think
+its just ignored.  You'll see updates for origin/HEAD when you
+subsequently fetch most likely because its recorded as a symref locally
+which points at origin/master. This means that when you fetch
+origin/master, origin/HEAD will also but updated just because its
+locally a pointer to origin/master.
+
+With that said, yes we should probably fix this issue with fetch because
+I added symref support to protocol v2 so now symref information for refs
+other than HEAD can be sent across the wire but the client just throws
+that info away at the moment.
+
+-- 
+Brandon Williams
