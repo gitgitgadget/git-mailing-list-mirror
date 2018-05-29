@@ -2,90 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A90191F42D
-	for <e@80x24.org>; Tue, 29 May 2018 18:30:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BB981F42D
+	for <e@80x24.org>; Tue, 29 May 2018 18:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936964AbeE2Sao (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 14:30:44 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:33182 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936850AbeE2San (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 14:30:43 -0400
-Received: by mail-wm0-f48.google.com with SMTP id x12-v6so49235934wmc.0
-        for <git@vger.kernel.org>; Tue, 29 May 2018 11:30:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
-        bh=XynM7FvkjwCrKC0GIr8gsORC+4cninEEr6sNiwSRSlo=;
-        b=HgH46vVT8r0zH9SsA+YYjSaSG5dAHX4wlOJC8HsV9223cGAxPu6g6weRBvhsMyWAXm
-         Vw+g3VtxU2I7oDyYWXktoBbBRCcfihGiOQ7gLLwjk6d1JO/1pVzF8wPttd54Lhp1Ufpv
-         ZFD1zjjIZgNNDk/O6tu9yBu93R35YIe7XSB8Ydv6C81/xwp3YOjWToHmfW8gw3ulSYg8
-         vQEZj641zgQM+GzDpsHKzGPWam6lUqDekFC6z/hYky3+i3K9RHJjBim1iAySqp/AqNho
-         LcDySOttV21xf/SFKu64N8C6pgDzLNDYT9Uvo1MK86v2sP48ZPz0HN3b639rNQQsYH8z
-         WPPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
-         :mime-version;
-        bh=XynM7FvkjwCrKC0GIr8gsORC+4cninEEr6sNiwSRSlo=;
-        b=eGEB31QvvfwYe062md+dX5POl7Cge62hO7GNTXcDqIzKw+MeSn5GwUKtSY3pxfmvk4
-         EvqdpM7GHXGaTzCuTD7+e7c4ovyEid76tC7FGf5AelOBiM391AbNy4Zbbi4ULXWvznLm
-         ckEuqw7swr8Yo2mCynKisnQIecsAbqsSsvRR4ptOH9EBeqbiCE6DElJF9og/okFiYQlz
-         AisbepFHGhp3aEJ2n+JxOhzEPiwn9bvLujRD+0kVBcv8kfRvv4LsOwrR9YlD1+v+182i
-         zWhgPIL+CzJ5bQHSqcaGtW8yNKSXqHFn+Co9BUbRObneJ38WskNhrvHne9Jg1s9zdKRX
-         FHKw==
-X-Gm-Message-State: ALKqPwd1w57s7btaE2VJTin2jgZiHPkai5KyjST3O1ylHAXoty5KbtcI
-        XDTjlCtl9icVye/9L8vuvRp29Rgx
-X-Google-Smtp-Source: ADUXVKKxxeGbZQ/ZY0ZopWxtWKiJmmLbmsLB+QxKnOiRkARUwaYHLwCzAs/PzrwHpJ5FDrrhsIlRhQ==
-X-Received: by 2002:a50:9e2d:: with SMTP id z42-v6mr27909ede.246.1527618642052;
-        Tue, 29 May 2018 11:30:42 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id y7-v6sm17689066edq.8.2018.05.29.11.30.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 May 2018 11:30:41 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Git List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Is origin/HEAD only being created on clone a bug? #leftoverbits
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-Date:   Tue, 29 May 2018 20:30:40 +0200
-Message-ID: <87bmcyfh67.fsf@evledraar.gmail.com>
+        id S965752AbeE2Sqy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 14:46:54 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:58622 "EHLO mx1.redhat.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S964848AbeE2Sqx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 14:46:53 -0400
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id 6F7537C0A7;
+        Tue, 29 May 2018 18:46:53 +0000 (UTC)
+Received: from localhost (ovpn-116-54.gru2.redhat.com [10.97.116.54])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id E899A6148;
+        Tue, 29 May 2018 18:46:52 +0000 (UTC)
+Date:   Tue, 29 May 2018 15:46:51 -0300
+From:   Eduardo Habkost <ehabkost@redhat.com>
+To:     Xiaolong Ye <xiaolong.ye@intel.com>
+Cc:     Fengguang Wu <fengguang.wu@intel.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Xiaolong Ye <xiaolong.ye@intel.com>
+Subject: format-patch: no 'prerequisite-patch-id' info when specifying commit
+ range
+Message-ID: <20180529184651.GB14525@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Fnord: you can see the fnord
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Tue, 29 May 2018 18:46:53 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here's some more #leftoverbits where we have a clone/fetch feature
-discrepancy and where clone is magical in ways that "fetch" isn't.
+Hi,
 
-If you make an initial commit and push to a remote repo "origin", you
-don't get a remote origin/HEAD reference, and a "fetch" won't create it
-either.
+I'm trying to use git-format-patch --base to generate the list of
+prerequisite patches for a series, but the behavior of git
+doesn't seem to match the documentation:
 
-You will get it if you subseuqently "clone" the repo, but not if you use
-"git init / remote add / fetch / git checkout -t" which should otherwise
-be equivalent.
+When using a commit count (e.g.: "-2"), git-format-patch generates the
+prerequisite-patch-id lines as expected.  But when using a commit range like
+"Z..C", the prerequisite-patch-id lines are missing.
 
-If you push to "master" (or whatever HEAD is) from the clone the
-origin/HEAD will be updated accordingly, but from the repo you pushed
-from & the one you did init+fetch instead of clone you'll never see it.
+Is this intentional, or it is a bug?
 
-Some code spelunking reveals remote_head_points_at, guess_remote_head()
-etc. in builtin/clone.c. I.e. this is special-cased as part of the
-"clone".
+Example using git.git commits:
 
-Can anyone thing of a reason for why this shouldn't be fixed as a bug?
-I've tried searching the archives but "origin/HEAD" comes up with too
-many
-results. https://public-inbox.org/git/alpine.LSU.1.00.0803020556380.22527@racer.site/#t
-seems to be the patch that initially added it, but it is not discussed
-why this should be a clone-only special case that doesn't apply to
-"fetch".
+  $ git format-patch --stdout --cover-letter --stdout --base b7b1fca17~5 -2 b7b1fca17 | egrep 'base-commit|prereq'
+  base-commit: 2738744426c161a98c2ec494d41241a4c5eef9ef
+  prerequisite-patch-id: 080ac2faf21a6a7f9b23cb68286866d026a92930
+  prerequisite-patch-id: e3ee77500c9aa70248e7ee814662d01f79d0dcdb
+  prerequisite-patch-id: 6d831e23e33075681e6b74553151a32b73092013
+  (ehabkost@localhost:~/rh/proj/git (ok) 1j)
+  $ git format-patch --stdout --cover-letter --stdout --base b7b1fca17~5 b7b1fca17~2..b7b1fca17 | egrep 'base-commit|prereq'
+  base-commit: 2738744426c161a98c2ec494d41241a4c5eef9ef
+  $ git --version
+  git version 2.17.1
+  $ git log --graph --pretty=oneline -6 b7b1fca17
+  * b7b1fca175f1ed7933f361028c631b9ac86d868d fsck: complain when .gitmodules is a symlink
+  * 73c3f0f704a91b6792e0199a3f3ab6e3a1971675 index-pack: check .gitmodules files with --strict
+  * 6e328d6caef218db320978e3e251009135d87d0e unpack-objects: call fsck_finish() after fscking objects
+  * 1995b5e03e1cc97116be58cdc0502d4a23547856 fsck: call fsck_finish() after fscking objects
+  * ed8b10f631c9a71df3351d46187bf7f3fa4f9b7e fsck: check .gitmodules content
+  * 2738744426c161a98c2ec494d41241a4c5eef9ef fsck: handle promisor objects in .gitmodules check
+  $ 
+
+If I understand the documentation correctly, both "-3 C" or "Z..C" were
+supposed to be equivalent:
+
+> With `git format-patch --base=P -3 C` (or variants thereof, e.g. with
+> `--cover-letter` or using `Z..C` instead of `-3 C` to specify the
+> range), the base tree information block is shown at the end of the
+> first message the command outputs (either the first patch, or the
+> cover letter), like this:
+> 
+> ------------
+> base-commit: P
+> prerequisite-patch-id: X
+> prerequisite-patch-id: Y
+> prerequisite-patch-id: Z
+> ------------
+
+-- 
+Eduardo
