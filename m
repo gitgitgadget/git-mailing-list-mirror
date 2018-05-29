@@ -2,115 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85D7C1FD4F
-	for <e@80x24.org>; Tue, 29 May 2018 19:17:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F14A31F42D
+	for <e@80x24.org>; Tue, 29 May 2018 19:54:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966061AbeE2TR3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 15:17:29 -0400
-Received: from mail-pl0-f52.google.com ([209.85.160.52]:35594 "EHLO
-        mail-pl0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965541AbeE2TR2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 15:17:28 -0400
-Received: by mail-pl0-f52.google.com with SMTP id i5-v6so9515523plt.2
-        for <git@vger.kernel.org>; Tue, 29 May 2018 12:17:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=K2DUr6HMNUkuOQC25xBjUOCfCsXbSlVgsyGePxYHKsg=;
-        b=rzcgBN65sGSw8LlifqSkZDzOgETHRxHJEPVUDsAMmwdbqNYnyF4JNyo7R28PmsHIM9
-         zGNu2hSSzYM5csVT7KgTsuYHEv4s12Hxce0x1A3ObjNf93zE51QBmGy+mOGAfI6SNIoF
-         co80AJlsHOkdQT9ZkqLuQQp7uW1vU/tS418QFafuX4EX4e35l16NNe0lED0zqPImp3Of
-         8Rzl190bzt/84/F251B5hdDWf8+MPl0XGqDSU5af/ajhel9ebdT2tqD7fu6zM9Y6iFrS
-         J9vl1lE3EfW6Mbub4EA4xA5VoWcjwpPKnqcEv9QQCxxNGmQ4k1MTZYYYlCydjqT6p7Yc
-         etFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=K2DUr6HMNUkuOQC25xBjUOCfCsXbSlVgsyGePxYHKsg=;
-        b=T2UMXzOyvmlqlpeo2JRDxE28sXCCLOb5poh6nrz41hfd7KUDzwReqiH/jH74OIDpua
-         DLG8qn6c6Ec5L2/OCWwWqLWhw+8VToxrcWU7t12Nb044dOnLuJFpfvFOEkuwYr69RRGD
-         UT2RPD6pQ03vsjMmqo1P4s79AkEJnWuQBhKUjAp0XKoGDnGoYsN63iJBOhhqZ78DMX5s
-         3N2DQeGb0YqQzLs90A42nGyRqWBLxTNdF5TFXs170l2x/MwMTuVxpugRwVbpq/pTR3tN
-         XUfTV1sHmolkdssbdtsuUfOsWjQLsKIVywteSBTdfJg2b+BA9LyUqting9wOlNQUB7nN
-         MF+w==
-X-Gm-Message-State: ALKqPwc4DUa9Rj+ikkfeamYhSFphdZj6lJEvQQAK3z5NtGimfk5TBDEi
-        uqSN6aRjXnmUJPvt5Dv3ge/VdA==
-X-Google-Smtp-Source: AB8JxZoHhXczeP1ZPVku7fNb2kJCeT5Fdyae9bCtubRtWm86cO7EXp4WtPEWIXSUryspjYOU6T3imQ==
-X-Received: by 2002:a17:902:6503:: with SMTP id b3-v6mr18770611plk.147.1527621447775;
-        Tue, 29 May 2018 12:17:27 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id 73-v6sm75952922pfo.153.2018.05.29.12.17.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 May 2018 12:17:26 -0700 (PDT)
-Date:   Tue, 29 May 2018 12:17:25 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Is origin/HEAD only being created on clone a bug? #leftoverbits
-Message-ID: <20180529191725.GA259827@google.com>
-References: <87bmcyfh67.fsf@evledraar.gmail.com>
+        id S966657AbeE2TyV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 15:54:21 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57590 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S966532AbeE2TyB (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 29 May 2018 15:54:01 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:cc62:bd61:abbd:bc4b])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E63A160732;
+        Tue, 29 May 2018 19:53:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1527623639;
+        bh=zMHJN2sS58R5ipOjIGnloB29p/RyOWEDeEtC2izBVas=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=IOUY/94SDxIW5er5eYVJlxdo4ncNCS0f2+drusbxcGexRq9JzRBGLUp86qPASqL0W
+         WoGTcJd9J0MnK5jmFNdkh1/m+YcOcz4sxNtqluFMqjYdn7shcXFbHpdrA0lWY9tRbV
+         656UKoaERLP8CdS4eH+i3X57DiSO2QjMEsRfqVdo/8BCiXpzdT+kxoY8RHxvOqjtNI
+         JJ1Ehg46jyJ8zBVTlkNMQvjXW+jcb/56bhNKSJvGszH1QuResuCquPdYUwaAn+xXjg
+         qGcCsecQ2bw5HD1MNES6QU5HWlV7bJjmlnlimfLTEDMqrFC43xc06Tpy5xYpOYFjTN
+         ApDQv2nJTs2wKIVuehtT1A0TE9gP3ojV9OG4jCk0TU66mOJYD72+blfKwLNADz1WCN
+         X4KjV5Of4fm+JimKCYpNk/E07VdTIEC3FTUTj7z0CaMlflVc/5tUejB9uYGa1XmMp9
+         xxON0H0c0k8zTWJqNc4ac5OHLk4eZ+PBZqIXxN94KWDWL8g93cD
+Date:   Tue, 29 May 2018 19:53:53 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 2/1] SubmittingPatches: not git-security@googlegroups.com
+Message-ID: <20180529195353.GM652292@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+References: <20180527140433.32277-1-t.gummerer@gmail.com>
+ <20180527153418.GG207547@aiede.svl.corp.google.com>
+ <20180527210822.GB8868@hank.intra.tgummerer.com>
+ <xmqqbmd0lc11.fsf@gitster-ct.c.googlers.com>
+ <20180529180203.GC8868@hank.intra.tgummerer.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="NDuspjMMC1Ui5ypn"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87bmcyfh67.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <20180529180203.GC8868@hank.intra.tgummerer.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-3-amd64)
+User-Agent: Mutt/1.9.5 (2018-04-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/29, Ævar Arnfjörð Bjarmason wrote:
-> Here's some more #leftoverbits where we have a clone/fetch feature
-> discrepancy and where clone is magical in ways that "fetch" isn't.
-> 
-> If you make an initial commit and push to a remote repo "origin", you
-> don't get a remote origin/HEAD reference, and a "fetch" won't create it
-> either.
-> 
-> You will get it if you subseuqently "clone" the repo, but not if you use
-> "git init / remote add / fetch / git checkout -t" which should otherwise
-> be equivalent.
-> 
-> If you push to "master" (or whatever HEAD is) from the clone the
-> origin/HEAD will be updated accordingly, but from the repo you pushed
-> from & the one you did init+fetch instead of clone you'll never see it.
-> 
-> Some code spelunking reveals remote_head_points_at, guess_remote_head()
-> etc. in builtin/clone.c. I.e. this is special-cased as part of the
-> "clone".
-> 
-> Can anyone thing of a reason for why this shouldn't be fixed as a bug?
-> I've tried searching the archives but "origin/HEAD" comes up with too
-> many
-> results. https://public-inbox.org/git/alpine.LSU.1.00.0803020556380.22527@racer.site/#t
-> seems to be the patch that initially added it, but it is not discussed
-> why this should be a clone-only special case that doesn't apply to
-> "fetch".
 
-I believe the issue has to deal with how symrefs are handled.  I don't
-think any of the fetch code path does anything special with symrefs.
-Symref info does get sent over the wire for the HEAD symref but i think
-its just ignored.  You'll see updates for origin/HEAD when you
-subsequently fetch most likely because its recorded as a symref locally
-which points at origin/master. This means that when you fetch
-origin/master, origin/HEAD will also but updated just because its
-locally a pointer to origin/master.
+--NDuspjMMC1Ui5ypn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-With that said, yes we should probably fix this issue with fetch because
-I added symref support to protocol v2 so now symref information for refs
-other than HEAD can be sent across the wire but the client just throws
-that info away at the moment.
+On Tue, May 29, 2018 at 07:02:03PM +0100, Thomas Gummerer wrote:
+> On 05/28, Junio C Hamano wrote:
+> > This is a tangent, but the use of footnote below looks a but
+> > curious.  How would {1} reference pick which :1: to use?  The
+> > closest preceding one?
+>=20
+> Tbh I didn't look at the docs for doing this, but just used the same
+> syntax as we're already using and tried it with both asciidoc and
+> asciidoctor.  And yes it seems like it always picks the preceeding
+> one.
 
--- 
-Brandon Williams
+Yes, I believe the attributes namespace is flat and substituted using
+the current version that's defined.  I wouldn't rely extensively on
+that, though, so unique names are probably better.
+
+> > As this appears on a page that already has other footnotes attached
+> > to an adjacent paragraph, I am wondering if they should be made into
+> > a part of the same numbering sequence.
+>=20
+> I have now actually looked at the docs, and this numbering has nothing
+> to do with the footnote format, but rather is used to substitute the
+> attribute that's specified in the curly braces with the text that's
+> after :<attribute>: [1].  This initially confused me a bit.  Maybe it
+> would be nicer to give the attributes names instead of just numbers?
+> As we keep adding footnotes, that would be less likely to produce
+> conflicts between the different attributes I think.
+> I'm also adding brian to the cc list, as he first converted this to
+> AsciiDoc for opinions.
+
+In AsciiDoc, footnotes use the named macro syntax.  I thought it would
+be difficult to read to have the footnotes inline, so I chose to use an
+attribute to substitute them.  I used numbers because we had a small
+number of them and the original footnotes were numbered.  I was trying
+to make a minimal, faithful conversion.
+
+I have no objection to named footnotes and I agree they're easier to use
+if we have a large number of them.  I think whatever we use, we should
+try to make them unique, as I mentioned above.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--NDuspjMMC1Ui5ypn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.7 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlsNr9AACgkQv1NdgR9S
+9oseMw/9Fp0isINxBMAxRIyWY35wQmF+Ga1DFYjmE7nH6tf2k+DrLGrCYqN+AvOf
+5x2X5pSGrBKSizF0f7qAXkroKREDSv2tQD0JpEl+mJEBExivIUh4+q2uk1EtpQGO
+Wo0klTQJMj/JCL3dsrQ47uAzKRdB9Jp1VSRiO1KUtFfEdo6+eSFp8WYXiw2PqvvD
+lYAHNs4TZs9JfxjCmHMgovktburm14EOXn44BjYzk7W9elZg2mwnUHc0nA8W7Lxw
+Wdx597+3l6eBHFKJizhKGu3ps3tSPJuBodL9ng8XUNe5cLlamrmZtmRetDwRl5s0
+zflS3PaUerkQguOi9X+uwL5tDPUdmkttozu3yZPmHtCbsGSWSO2s4DWGvKrVILBZ
+k2afBnDK+gmViraFOYjo9k8FtBwdojGhH+STzGEu2c+Fhq75cefmL9ZMQIAxtTOw
+YIjrNNQaML9iKHcP21K1dVIHhxOuPrNu4p/z3BRfMCJHzW9mM8SbHdG8WvDrmlgn
+1jtx1dgueQ7Wgfc/7KU3Z6LBCjOJaogzCeRWCsywQNE/1hU8J27Pu1jbi2oskVGw
+tpWXc9WiBF//YC1o+lP1CzxxBeu1jmfY8BDIOZyBn2/pWfvLDAtvS6y24v2OpqWd
+VuI0DMsTSy7nQtPRmNGRZOLlakWIY4sofNLIeeG61DkK9myYmqg=
+=Mqfr
+-----END PGP SIGNATURE-----
+
+--NDuspjMMC1Ui5ypn--
