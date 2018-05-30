@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0BE91F42D
-	for <e@80x24.org>; Wed, 30 May 2018 21:07:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1C9D1F42D
+	for <e@80x24.org>; Wed, 30 May 2018 21:07:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932438AbeE3VHF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 17:07:05 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:44750 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932429AbeE3VHA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 17:07:00 -0400
-Received: by mail-wr0-f194.google.com with SMTP id y15-v6so30885372wrg.11
-        for <git@vger.kernel.org>; Wed, 30 May 2018 14:07:00 -0700 (PDT)
+        id S932417AbeE3VHH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 17:07:07 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:45931 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932238AbeE3VHC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 17:07:02 -0400
+Received: by mail-wr0-f193.google.com with SMTP id w3-v6so30866032wrl.12
+        for <git@vger.kernel.org>; Wed, 30 May 2018 14:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lcfYWfB4xAgfNNhN5e6LEvGrsutVeSxFLNuXaMTiBCQ=;
-        b=ZSWc8Eh/muBpbwhGo967zDxeS4HM4Mkap1NQWCTEE5cUM12uSAg2RCruk9UDLQkoHM
-         IGcylHo7rGvs5gfpQzYPbwzRdNr7/GyWhqGUDujx66Eu4iNhM1quv3+AP10PbBC5uIPo
-         QsJ4X6rQ0WdjlnujqxnjbmkIm2Gcqp7RwkCJNFB2jG1QjsCTgdjAXQTYjwh0HG3uXVIQ
-         YVlo7zW93mv7E2d+ATn7RA8svWLvRo7OKg8vFxn3YErEGeZwOiDeQU2oqIAYcGQJhd3R
-         JqroXUaqZL7Z9nS5BsToJRIVvRBz/NSPEKIMt5XKTO69KVwJp5kzTO3nHy4AhXOt0cgg
-         Lo6g==
+        bh=Uiq6IQAOLUu2dP0KDCGpwE1HpYy3KZHSFBD43BmyzQM=;
+        b=eW9fGQ50cOTDNzphqs2Nf4TMJAn9JtovvLtUlXYcGm/48NqCuewLwmyXbNSytAzu2C
+         TLF7yUgmgNGydjjHSpJhcpZNAnGmokpIVCRXcRB1FeNv9YF03jGYXWR7yy848bwRQzAn
+         c35dijEVI/34INhVIhwZCVn6itMHLsXt1vX1sGUAcjulrgB6OCcY7p9E3g0I2WbCVRwd
+         wGHzSrulGVCwF/jnW6c6Hu6gK2Mbr+jDRl6ypIdtXeMbjEs9TatjKhRJwKXF8OnfpOlI
+         B/qr6toyIrJecwL9Ws2FFjI0dneFUuWF11zEeRskAMLhlGAIXSgUpjj4tFO2KjyvOhc0
+         Pokw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lcfYWfB4xAgfNNhN5e6LEvGrsutVeSxFLNuXaMTiBCQ=;
-        b=cjnT5Mo/DpfDU0lcTibx6HjicWjdoAihLM+U/I4jXKXZlTw+VYIZRqYiFjdDkqYeoV
-         A/LvgtgqI5ywPRXJeAH2w0yWf/10xoWF7ytCgZuIYAB52iVxAUV/ojrB3yQuXSwiAzU6
-         BUw6j/t5760ubLmW1S4xh+gFqcsAm31WTMdkRwm/fter8w6XOBF++b/b6QpmWrmQleHk
-         dAY/lxPTelEv1Jxs0eqIyr6ngYeaFKXK9Sl4SmkpLk7GNi7m9gSOttY8tMmbAqIh1v5Z
-         2uuGAAruptPaeb8ztu75Lbi7d3nZmd2+WqounTnshVzEo0fYo+REBzfCchDnT84MDn5P
-         eeEA==
-X-Gm-Message-State: ALKqPweAVayudQW/owGZrYNt6obRU1VwzaSZQ/IDINAanZ3XthiicbcI
-        xcUKNrso+lCERb+ZOVJxwNGtw7y1
-X-Google-Smtp-Source: ADUXVKKWDExkTEJLq0edZppHrFWxXSSV68mj701i6K1n9ZYz0wVMOWhwnWWwp/SZZVxtH3z8I8c7BQ==
-X-Received: by 2002:adf:f546:: with SMTP id j6-v6mr2988682wrp.241.1527714419214;
-        Wed, 30 May 2018 14:06:59 -0700 (PDT)
+        bh=Uiq6IQAOLUu2dP0KDCGpwE1HpYy3KZHSFBD43BmyzQM=;
+        b=GRL94Cpb+Cv5LorcHUVXTAuM7XUIReG8crcpCQlIF52wOIuK8UOMyk08EfvtGzLW0J
+         9iVP4Bs8CuJ2VEjmZE0X3z7hL7l3TbABBS/BDqaB6FcfTLpYPNgfdeziMplCfhZshSmm
+         ZIZ+agFMTapSQyyfOi44S4G5K1TfkRLBRNal0CERpbWrG10xqPIkqVAggDW6eMTJO+BH
+         aeMgPNLOqkliI5jYe3j1xGPB4xxwoLrXVQ20oQ0JRO4a4SavlQ3MOja/4UQemf/nfqC0
+         v1QjTV1LT64mRka1YSv5yV7PfOZIfCkhr/LOQyjS5ctJKg4NygBKmG4nB+fmfvIJYYSf
+         j0Tg==
+X-Gm-Message-State: ALKqPwcPaJOPUfQ/gbAfVS40IIbb9Obxdcj3jzbGR1lqpou5wfz1cYn5
+        jOGnU8rat9JENHN8+t5S1hjU+78c
+X-Google-Smtp-Source: ADUXVKK6jBUc/cvsz8sTS12YOtFVOQ/t0B/zSf350UqQPxySNRmwfnrIO8/+OsoBvhHmtkJZ1cfFYg==
+X-Received: by 2002:adf:ac69:: with SMTP id v96-v6mr3161795wrc.5.1527714420631;
+        Wed, 30 May 2018 14:07:00 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id o16-v6sm18237097wri.67.2018.05.30.14.06.58
+        by smtp.gmail.com with ESMTPSA id o16-v6sm18237097wri.67.2018.05.30.14.06.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 May 2018 14:06:58 -0700 (PDT)
+        Wed, 30 May 2018 14:06:59 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/4] config doc: clarify "to a terminal" in color.ui
-Date:   Wed, 30 May 2018 21:06:39 +0000
-Message-Id: <20180530210641.19771-3-avarab@gmail.com>
+Subject: [RFC PATCH 3/4] color.ui config: don't die on unknown values
+Date:   Wed, 30 May 2018 21:06:40 +0000
+Message-Id: <20180530210641.19771-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.17.0.290.gded63e768a
 In-Reply-To: <20180530210641.19771-1-avarab@gmail.com>
 References: <20180530210641.19771-1-avarab@gmail.com>
@@ -71,45 +71,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the documentation added when color.ui=auto was made the default
-in 4c7f1819b3 ("make color.ui default to 'auto'", 2013-06-10) to
-describe "auto" as kicking in when writing to the terminal or a pager,
-not just to the terminal.
+Before this change git will die on any unknown color.ui values:
 
-I had someone ask me why it was that git was writing colors with
-color.ui=auto in situations where isatty(3) would return 0. The
-existing documentation about that would have been true before
-85fb65ed6e (""git -p cmd" to page anywhere", 2006-06-06), but since
-then "auto" has always used a heuristic that isn't quite what isatty()
-would return, rather it checks if we're connected to a TTY or if we're
-about to emit to a pager, trusting that the pager can handle color
-output.
+    $ git -c color.ui=doesnotexist show
+    fatal: bad numeric config value 'doesnotexist' for 'color.ui': invalid unit
 
-Instead we have the color.pager variable introduced in
-aa086eb813 ("pager: config variable pager.color", 2006-07-30) to
-explicitly disable color output to the pager. Let's change the
-documentation to reflect this.
+This makes the failure mode of introducing any new values in the
+future really bad, as explained in the documentation being added
+here. Instead let's warn and fall back to "auto".
+
+The reason for the !warned++ pattern is when stepping through this in
+the debugger I found that git_config_colorbool() is called more than
+once on e.g. a "show" if color.ui=foo is set in the config, but
+color.ui=bar in the command-line, and would then warn about
+both.
+
+Maybe we should warn about both in that case, but I don't know if
+there's other cases where not doing this would cause a warning flood,
+and in any case the user is unlikely to have such a bad value in
+multiple places, so this should be good enough.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/config.txt |  5 +++++
+ color.c                  | 13 +++++++++++++
+ t/t7006-pager.sh         | 16 ++++++++++++++++
+ 3 files changed, 34 insertions(+)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 44735dd88e..4767363519 100644
+index 4767363519..b882a88214 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1288,7 +1288,9 @@ color.ui::
- 	or the `--color` option. Set it to `always` if you want all
- 	output not intended for machine consumption to use color, to
- 	`true` or `auto` (this is the default since Git 1.8.4) if you
--	want such output to use color when written to the terminal.
-+	want such output to use color when written to the terminal (as
-+	determined by a call to `isatty(3)`) or to a pager (unless
-+	`color.pager` is set to false).
+@@ -1291,6 +1291,11 @@ color.ui::
+ 	want such output to use color when written to the terminal (as
+ 	determined by a call to `isatty(3)`) or to a pager (unless
+ 	`color.pager` is set to false).
+++
++Setting this to some value unknown to git will warn and fall back to
++`auto`. This is so that new values can be recognized in the future
++without the git configuration file being incompatible between versions
++to the point of most porcelain commands dying on the older version.
  
  column.ui::
  	Specify whether supported commands should output in columns.
+diff --git a/color.c b/color.c
+index b1c24c69de..e52c6cdd29 100644
+--- a/color.c
++++ b/color.c
+@@ -311,6 +311,19 @@ int git_config_colorbool(const char *var, const char *value)
+ 	if (!var)
+ 		return -1;
+ 
++	/*
++	 * If future git versions introduce new color.ui settings we
++	 * don't want to die right below when git_config_bool() fails
++	 * to parse them as bool.
++	 */
++	if (git_parse_maybe_bool(value) < 0) {
++		static int warned = 0;
++		if (!warned++)
++			warning(_("unknown value '%s' for '%s', falling back to 'auto'"),
++				value, var);
++		return GIT_COLOR_AUTO;
++	}
++
+ 	/* Missing or explicit false to turn off colorization */
+ 	if (!git_config_bool(var, value))
+ 		return 0;
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index 7541ba5edb..b16f2ac28b 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -309,6 +309,14 @@ test_expect_success 'no color when stdout is a regular file' '
+ 	! colorful colorless.log
+ '
+ 
++test_expect_success 'unknown color.ui values default to "auto" (regular file)' '
++	rm -f colorless.log &&
++	test_config color.ui doesnotexist &&
++	git log >colorless.log 2>err &&
++	test_i18ngrep "falling back" err &&
++	! colorful colorless.log
++'
++
+ test_expect_success TTY 'color when writing to a pager' '
+ 	rm -f paginated.out &&
+ 	test_config color.ui auto &&
+@@ -316,6 +324,14 @@ test_expect_success TTY 'color when writing to a pager' '
+ 	colorful paginated.out
+ '
+ 
++test_expect_success TTY 'unknown color.ui values default to "auto" (pager)' '
++	rm -f paginated.out &&
++	test_config color.ui doesnotexist &&
++	test_terminal git log 2>err &&
++	test_i18ngrep "falling back" err &&
++	colorful paginated.out
++'
++
+ test_expect_success TTY 'colors are suppressed by color.pager' '
+ 	rm -f paginated.out &&
+ 	test_config color.ui auto &&
 -- 
 2.17.0.290.gded63e768a
 
