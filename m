@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 758261F51C
-	for <e@80x24.org>; Wed, 30 May 2018 11:41:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 676D61F42D
+	for <e@80x24.org>; Wed, 30 May 2018 12:06:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752865AbeE3LlR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 07:41:17 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:58220 "EHLO
+        id S1751511AbeE3MGM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 08:06:12 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:34122 "EHLO
         cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752688AbeE3LlO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 07:41:14 -0400
+        with ESMTP id S1751352AbeE3MGL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 08:06:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
         To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
         Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
         :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
         List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=/q4DVTWLTOJdy36sIDbtYGmo57I0M/9z+E6zGroB9Co=; b=vOfpQ3alyCAIa2P3gk86aYe2N8
-        QaLyGrLWZBDsdJv7m7P1wI52EFbRjkHyi8JPPZcZDxVDb3RjdwpjvGHNrSHy4GnCncUlZ6CGlcksu
-        hl11tSj3ArNZmsC4RBrCw9gSPrz3MuNDDTx6/O398klIrKznkmT5G3OyHy+dMQZCKmITdus3DTISz
-        NbnQLcu8Tejh5+CbELRM8kkBQuHPKpT4SqI8iuhF62A+pbEBOZtrMtS68FICsZ9XmRU7D10EgwKuM
-        kATvj+9mmjIyJ8MHZ8LLppJtSPasTWEX8x8awpCvxoqbmGROERCH9HIfZovhHaOL+27OJdaOcpG97
-        VPdwaNgg==;
-Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:51408 helo=localhost.localdomain)
+        bh=NNrSNTLJOzb6m5QsCzDYSPCpS5aXeWwAvBbgk+p4Zaw=; b=nsv04ETThDA8M4r3L47DTKjqCP
+        gjsOWsxagJpII50rIy7yUzeYFzid0wnKqm7DANolsuh6xkl/jGVEvh18A2K+s+VajVEQS5gB6pIJA
+        kWXBlQqwWMN5249hCqfyh4L8P8nfOLIKGjt44fg8YsqPjYRLvRgVoKZMdqkhcElYa9hVTjmcdj+j2
+        dmM2XQBROdr6bamwQCOh6yr5YLrnqyQu2eb06VTyZyEVmg1ghtSAsXyWOhAwCCg5d6V2YjK81JIx0
+        U4RVbhFkM1sAQQ3V15aTqfymHaHkSsPaHfdiu8hDts9LWsutjnnsynMrjGnGUuuZCP85kX0Re6QGD
+        7vQEkjHg==;
+Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:51580 helo=localhost.localdomain)
         by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.91)
         (envelope-from <rpjday@crashcourse.ca>)
-        id 1fNzTb-00ELGm-SQ
-        for git@vger.kernel.org; Wed, 30 May 2018 07:41:12 -0400
-Date:   Wed, 30 May 2018 07:39:15 -0400 (EDT)
+        id 1fNzrl-00ERrA-98
+        for git@vger.kernel.org; Wed, 30 May 2018 08:06:10 -0400
+Date:   Wed, 30 May 2018 08:04:12 -0400 (EDT)
 From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
 X-X-Sender: rpjday@localhost.localdomain
 To:     Git Mailing list <git@vger.kernel.org>
-Subject: verifying syntax for optional and replaceable content in man pages
-Message-ID: <alpine.LFD.2.21.1805300733440.10096@localhost.localdomain>
+Subject: [PATCH] config.c: "incoherent" should say "inconsistent"
+Message-ID: <alpine.LFD.2.21.1805300802470.11330@localhost.localdomain>
 User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -59,27 +59,26 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-  willing to submit some patches to standardize the syntax of man
-pages in terms of rendering "optional" and/or "replaceable" content,
-and it seems like "man git-config" would be a good place to start:
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 
-SYNOPSIS
-       git config [<file-option>] [type] [--show-origin] [-z|--null] name [value [value_regex]]
-       git config [<file-option>] [type] --add name value
-       git config [<file-option>] [type] --replace-all name value [value_regex]
-       ...snip ...
+---
 
-  can i assume the proper (uniform) syntax for the above would be
-(shortening lines):
+  i am simply assuming that that really should say "inconsistent"; if
+it's actually correct, just toss this, of course.
 
-  ... [<type>] [--show-origin] [-z|--null] <name> [<value> [<value_regex>]]
-  ... [<type>] --add <name> <value>
-  ... [<type>] --replace-all <name> <value> [<value_regex>]
+diff --git a/builtin/config.c b/builtin/config.c
+index 1e31aa9f8..11c9c501d 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -656,7 +656,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	}
 
-and so on. is that the consensus? i wouldn't try to do it all at once,
-maybe just a page at a time to not be too disruptive.
+ 	if ((actions & (ACTION_GET_COLOR|ACTION_GET_COLORBOOL)) && type) {
+-		error("--get-color and variable type are incoherent");
++		error("--get-color and variable type are inconsistent");
+ 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	}
 
-rday
 
 -- 
 
