@@ -2,217 +2,210 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B8791F42D
-	for <e@80x24.org>; Tue, 29 May 2018 22:13:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C1131F42D
+	for <e@80x24.org>; Wed, 30 May 2018 00:48:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967529AbeE2WNB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 18:13:01 -0400
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:36158 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966322AbeE2WM7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 18:12:59 -0400
-Received: by mail-yw0-f180.google.com with SMTP id v68-v6so5360661ywd.3
-        for <git@vger.kernel.org>; Tue, 29 May 2018 15:12:59 -0700 (PDT)
+        id S968493AbeE3AsZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 20:48:25 -0400
+Received: from mail-pl0-f47.google.com ([209.85.160.47]:44103 "EHLO
+        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S968488AbeE3AsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 20:48:20 -0400
+Received: by mail-pl0-f47.google.com with SMTP id z9-v6so6614459plk.11
+        for <git@vger.kernel.org>; Tue, 29 May 2018 17:48:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6qpuHArkh08CFdFNOm+DnSFNb1QHf/6gw8EPV44z+Ls=;
-        b=Mf04QGyEZmbB7VSHHogGrgwXgp6YUT0cGnRaAmDX1Fp6IoeDMp2GxzmyXdfHspqilP
-         lEtK7K/J/9iKHgpOt+Tmy5rZOAs3KEfwVNXJm2mTPpn1x18r0UgylRPdTZalPjtLZm1n
-         1Z7hMzG/ve7EUHmz5LxCeadpFWh3ExRWHdoGRwhEpZDonEVYUn7GMLDNtt1w2yil5b0U
-         lydvLgAgXVO0V1kBD7KtdHKi4QOjABEAadNDY/+a7x8e9sw05E/69+aJdaftlVAX+Dte
-         n/wHhkp2a1m6SJwWZFGsKVw+XQA4Zo+KFmpavo6kwpEpsUUR8DhJ60h8X/2ajiHBKYhr
-         tDfQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=jjC3iZe/mjxrEuN3Qt+fB6zcWridaCOeEAYtWV6Wcmg=;
+        b=CEOCV/b1AsoKJLcWwpPa4aPe0w6vssq4MnpJ9OTMO7F5nYKTfPRWxV4CJLgjx06gOE
+         Tp8b45UPJiczVBegPCmtRQnVQYrY6MNKT8D4MPq3WEMu/O1O585/Qpuo/cxdINpIKpaD
+         /e1hG2AdgTSKbXZDxJ73qXkm+9oUsFXNOfbjl1cKgWrjQodEBLLvI8Ya+L/Pe5EQM/HP
+         Z88bWfa3NtoT/TTvRj72ox35f7iek0t46Apv58XDmaL2/RbPlyaL9uBRepgEOYBCT3Tc
+         QcSMa+tpa8ckdCM59uEPaYK9kmITMjYvoqo+uK5gVAkEB2bKO0SHO8s6vk7fbNfRIvA+
+         vERw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6qpuHArkh08CFdFNOm+DnSFNb1QHf/6gw8EPV44z+Ls=;
-        b=XW0u7Z4eXfuMZjtAGN6aNa+pOcpOkIk/GUaEV5NGuJU6P79F7EZddIHnpE6/aVMnBE
-         E4y6ltTZYp8a2vknvDkDsBqsZGE2t7ThCDImFjUB2Etb7R3vVeN3+tBfWVoVNLGAMr+U
-         Oi4JABAy2E/0bC2asOVlwsJ59rNN/UrG8xsZU5Yqyn7AVhv3f6NlHcDVEiprSxL3+M1C
-         tjW8LpjMU8mAMFaS6HZUu15HyKYHiv8Zthg617elep0X4eT3E4wEk/k7Q6Gs/Z0WNpOs
-         7ASqCVU8GBRlVVlgKNzZjeRZiJzw5s2FdWcaAo2JdifcbaifxAGFeksh4ji++NlwgW5A
-         qIZg==
-X-Gm-Message-State: ALKqPwcVkikKUlFXblw21PoyD/nBYcFFLsIHYNMmVUSFvaRuQPlZPa09
-        yapDaQ2AKpRSXkGNtpOejS1/rwqb1Kd8Qe88Bf3PpA==
-X-Google-Smtp-Source: ADUXVKKmL9lX1SKjAu+hgQbHqNLNgKDdgZEISa3hlA88DvaJX9CNpyywsXNan0xZ2JUH+vB1Vjw9IOAPUrKhDvjX1tU=
-X-Received: by 2002:a81:9447:: with SMTP id l68-v6mr103344ywg.345.1527631978800;
- Tue, 29 May 2018 15:12:58 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Tue, 29 May 2018 15:12:58 -0700 (PDT)
-In-Reply-To: <CABPp-BH1BBH7aBpoSaJE5J7okdfrDzpbu5rH-w-FSG2RM0hU1g@mail.gmail.com>
-References: <CABPp-BFQJZHfCJZ1qvhvVcMd-_sOfi0Fkm5PexEwzzN+Zw2akw@mail.gmail.com>
- <CAGZ79ka39xbbm_koyFeEizggoDBqKuwgmGwRBZJnBc13aOWZag@mail.gmail.com> <CABPp-BH1BBH7aBpoSaJE5J7okdfrDzpbu5rH-w-FSG2RM0hU1g@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=jjC3iZe/mjxrEuN3Qt+fB6zcWridaCOeEAYtWV6Wcmg=;
+        b=li90EtTmuQ211jgOAxHkGtE5nI2uIfp7tOlRad2vd1nMMZ88q0AdP8oQNPJm1B+ejb
+         A6ER+bAnCNTqkLEiYtg3JZCSbs24mSZHAUZIyjW2XRp1N+IojdbJ5OZanReQZrWodO6h
+         t9xEtute7WMbEmml4vCzlakkZJaFUHheSCPDhuE5snLAl6qwkS6yNiOt/SnJD8S3HaAn
+         UJgSWVImlFlnxH/ijU9guqG5BngCCeRhJIV63NKB/4/ZDJnXyYDZZa6XOTfBID1OnM6S
+         YU/MAfaOZ0AtbuevCJsRDg+LLFoCcWCysFil7J3USU6KwhX0dOwE52KBRrJqAWenueVS
+         Un9Q==
+X-Gm-Message-State: ALKqPwcnBrFiW0K+Km/2HH6Pn9KTAe42SeVsPQrp/2AeHgbyCDYaETU1
+        1jUOsmi8EkWTCrWr1SFZBliUh9xltZU=
+X-Google-Smtp-Source: ADUXVKJeTgOtgb2uJPVeNd55k/aE5MDOPV5Bcmwm7yNaPt2K9y1xtZYePVodKwwdnXZiZAB/zxJzEw==
+X-Received: by 2002:a17:902:ba97:: with SMTP id k23-v6mr609817pls.259.1527641299220;
+        Tue, 29 May 2018 17:48:19 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id v5-v6sm52724895pff.130.2018.05.29.17.48.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 29 May 2018 17:48:18 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 29 May 2018 15:12:58 -0700
-Message-ID: <CAGZ79kYGTaFg7NnfxzdXQYTNddvqbUD3hfWEiq1RBETjYk=3gQ@mail.gmail.com>
-Subject: Re: RFC: Merge-related plans
-To:     Elijah Newren <newren@gmail.com>, Thomas Rast <tr@thomasrast.ch>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
+Subject: [RFC PATCH 00/35] object-store: lookup_commit
+Date:   Tue, 29 May 2018 17:47:35 -0700
+Message-Id: <20180530004810.30076-1-sbeller@google.com>
+X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-context: https://public-inbox.org/git/CABPp-BFQJZHfCJZ1qvhvVcMd-_sOfi0Fkm5PexEwzzN+Zw2akw@mail.gmail.com/
+This applies on the merge of nd/commit-util-to-slab and sb/object-store-grafts,
+and is available at http://github.com/stefanbeller/ as branch object-store-lookup-commit
+as the merge has some merge conflicts as well as syntactical conflicts (upload-pack.c
+and fetch-pack.c introduce new calls of functions that would want to take a repository struct
+in the object-store-grafts series)
 
-Hi Elijah,
-
->> Most items forward-reference "Depends on (<later letter>) up to here;
->> (H) seems independent, but might be a good first start.
->> (G) [8] is queued as origin/en/merge-recursive-tests, or do you mean
->> to expand (G) into a mini-framework of merge-testing? i.e. run the
->> mini test framework multiple times, each using a different
->> merge strategy, similar to submodule tests, e.g. see
->> t/lib-submodule-update.sh and one of its users, t1013.
->
-> Sorry, I should have been more clear about G.
->
-> In more detail...
->
-> [...]
-
-Yeah that is what I had in mind when talking about a mini test frame work
-above, such that you can run the same test on any merge strategy easily.
-Sorry for being confusing there.
-
->> (B) sounds like an independent feature, which could go in parallel?
->
-> B may sound like an independent feature, but it needs a merge
-> algorithm that doesn't mess with the working tree
-
-I agree on that,
-
-> so it depends pretty strongly on E.
-
-.. but not quite on the conclusion:
-You could also make the current merge algorithm working
-tree independent. Thomas Rast (cc'd) did so IIUC in
-https://public-inbox.org/git/cover.1409860234.git.tr@thomasrast.ch/
-(search the archive for "--remerge" if interested in this prior work)
-which did not land upstream.
-
->>>   * Should I post RFC questions on A and C earlier?
->>
->> I would think so, it is easier to give feedback on code, I would think.
->
-> If the idea is to give feedback on *code* rather than just
-> ideas/tradeoffs/pinpointing-buggy-lines, then it sounds like you're
-> actually suggesting posting the RFC later rather than earlier?
-
-Some people have complained that they don't get feedback on
-ideas/tradeoffs/pinpointing-buggy-lines, but did so after sending
-RFC code. So I'd think a sure way to get feedback is to send actual
-code as an RFC even if it misses some parts.
-
-> Also, the bigger question for me wasn't so much "should I ask the list
-> about these changes?" before making them, but rather: Do folks want me
-> to bring these things up before I work on D & E -- even if I end up
-> not getting back to incorporating their answers for months until D & E
-> are completed and merged?
-
-I'd think A + C are worth asking early nevertheless, even if D & E are
-away for some month; having these niche cases covered (in code and
-tests) as well as a new UI/UX for user communication sound exciting
-(The latter could result in some bike shedding, and then having enough
-time before you spend time to do it one way or another in D&E sounds
-favorable)
-
->>>   * Should I split D and G?  (Current plan was to keep D together, but
->>>     split G into five short slightly inter-dependent topics)
->>
->> I would have expected to have tests (G) as a companion of (A) or (C)
->> rather than (D), as performance improvements would keep the test suite
->> unchanged?
->
-> Let me re-phrase: D and G are completely independent series, both of
-> which happen to be divisible.  Should either of them be split?
-
-Sorry for my confusion. This clears it up
-
->
-> More background: D is only a handful of commits, so far; the main
-> reason to split it is to allow some of it to go first (maybe even
-> before G or H).  The downside is introducing extra churn and risk in
-> merge-recursive, when I'm planning to rewrite it soon anyway.  I was
-> trying to minimize merge-recursive changes, other than trying to make
-> sure that the new merge strategy and merge-recursive will give
-> identical results (modulo maybe fixing a few extra corner cases and
-> running faster).  Basically, I wanted it to be really easy to compare
-> old and new strategies, but otherwise wanted to leave merge-recursive
-> mostly alone.  It's not entirely clear how quickly I'll find time to
-> work on all of this, though, so maybe just-wait-for-the-rewrite is not
-> the right prioritization.
-
-My experience is that smaller patch series are reviewed faster,
-so if the cost of splitting them up is not prohibitive, I'd strongly
-consider doing that.
-
->>>   * E is kind of big.  Are there any specific things folks would like to see
->>>     with how that is handled?
->>
->> How much abstraction can be done ahead of time such that there is an
->> interface/API where you just plug in a new merge strategy and do not
->> need to duplicate a lot of code/tests?
->
-> For avoiding duplicate tests, my plan was to use a variable (like
-> GIT_TEST_SPLIT_INDEX or GIT_FSMONITOR_TEST), which, when set, would
-> change the default merge strategy from "recursive" to the new one, and
-> also replace explicit requests for the "recursive" merge strategy with
-> the new one.
-
-So your long term plan is to *replace* the whole merge recursive strategy
-giving the same results [analogous to implementing refstable as a new refs
-back end, that behaves the same except faster and easier code for corner
-cases] and not offer a *new* strategy [analog here: different (merge/)diff
-strategies, such as Myers vs minimal vs patience] that yields user visible
-difference and it is unclear whether the user prefers one or the other?
-That wasn't clear to me, thanks for clarifying.
-
-My original reply was assuming a new "mode" of merge strategy which
-would be a user visible knob to turn. The environment variable you mentioned
-sounds like that is an implementation detail, that is just for a
-smooth transition
-period, but the current code would be deprecated and deleted eventually.
-
-> For avoiding duplicate code...well, Junio's suggestion was "[to
-> rewrite] without using much from the existing code in
-> merge-recursive.c at all" because he has "written off that code as
-> mostly unsalvageable"[4].
->
-> There are some functions that I think are worth leaving intact (e.g.
-> helpers like output(), the directory rename detection stuff, or the
-> merge_submodule code that you recently moved).  That stuff I was
-> planning to put in a "/* COPIED FROM merge-recursive.c VERBATIM */"
-> section.  And eventually, the idea would be to delete the old
-> merge-recursive and just use the replacement, making the duplication
-> concerns eventually go away.
-
-This clears up even more, thanks for clarifying!
-
-> ...or is your question more about how to abstract things so that
-> others can also write new merge strategies in the future and allow as
-> much code and test re-use as possible?
-
-That was my original question as I thought an API would help with
-doing that as it would help to not fiddle around with the rest of the
-code base.
-
->>> [4] https://public-inbox.org/git/xmqqk1ydkbx0.fsf@gitster.mtv.corp.google.com/
-
-Did you mean:
-https://public-inbox.org/git/xmqqd147kpdm.fsf@gitster.mtv.corp.google.com/
-
-So in that case my reply above ("..so it depends pretty strongly on E.."
-I have a different conclusion) is void, as that *is* the new strategy?
+As layed out in https://public-inbox.org/git/20180517225154.9200-1-sbeller@google.com/
+this is getting close to finishing the set of object store series though the last
+unfinished part of this RFC hints at new work on the plate:
+* To give this series a nice polish, we'd want to convert parse_commit, too.
+  But that requires the conversion of the new commit graph. Maybe we need
+  to split this series into 2. 
+* Once this is in good shape we can talk about converting parts of the revision
+  walking code,
+* which then can be used by the submodule code as the end goal for the
+  object store series.
 
 Thanks,
 Stefan
+
+Jonathan Nieder (1):
+  object: add repository argument to lookup_unknown_object
+
+Stefan Beller (34):
+  object: add repository argument to parse_object
+  object: add repository argument to lookup_object
+  object: add repository argument to parse_object_buffer
+  object: add repository argument to object_as_type
+  blob: add repository argument to lookup_blob
+  tree: add repository argument to lookup_tree
+  commit: add repository argument to lookup_commit_reference_gently
+  commit: add repository argument to lookup_commit_reference
+  commit: add repository argument to lookup_commit
+  commit: add repository argument to parse_commit_buffer
+  commit: add repository argument to set_commit_buffer
+  commit: add repository argument to get_cached_commit_buffer
+  tag: add repository argument to lookup_tag
+  tag: add repository argument to parse_tag_buffer
+  tag: add repository argument to deref_tag
+  object: add repository argument to parse_commit_gently
+  commit: add repository argument to parse_commit
+  object: allow object_as_type to handle arbitrary repositories
+  object: allow lookup_object to handle arbitrary repositories
+  blob: allow lookup_blob to handle arbitrary repositories
+  tree: allow lookup_tree to handle arbitrary repositories
+  commit: allow lookup_commit to handle arbitrary repositories
+  tag: allow lookup_tag to handle arbitrary repositories
+  tag: allow parse_tag_buffer to handle arbitrary repositories
+  commit.c: allow parse_commit_buffer to handle arbitrary repositories
+  commit-slabs: remove realloc counter outside of slab struct
+  commit.c: migrate the commit buffer to the parsed object store
+  commit.c: allow set_commit_buffer to handle arbitrary repositories
+  commit.c: allow get_cached_commit_buffer to handle arbitrary
+    repositories
+  object.c: allow parse_object_buffer to handle arbitrary repositories
+  object.c: allow parse_object to handle arbitrary repositories
+  tag.c: allow deref_tag to handle arbitrary repositories
+  commit.c: allow lookup_commit_reference_gently to handle arbitrary
+    repositories
+  commit.c: allow lookup_commit_reference to handle arbitrary
+    repositories
+
+ archive.c                        |   2 +-
+ bisect.c                         |   2 +-
+ blame.c                          |  17 +++---
+ blob.c                           |  10 ++--
+ blob.h                           |   2 +-
+ branch.c                         |   2 +-
+ builtin/am.c                     |   9 ++-
+ builtin/branch.c                 |   7 ++-
+ builtin/checkout.c               |  10 ++--
+ builtin/clone.c                  |   3 +-
+ builtin/commit-tree.c            |   4 +-
+ builtin/commit.c                 |   2 +-
+ builtin/describe.c               |  17 +++---
+ builtin/diff-tree.c              |   9 +--
+ builtin/diff.c                   |   7 ++-
+ builtin/fast-export.c            |  14 +++--
+ builtin/fetch.c                  |   9 ++-
+ builtin/fmt-merge-msg.c          |   9 ++-
+ builtin/fsck.c                   |  22 ++++---
+ builtin/grep.c                   |   3 +-
+ builtin/index-pack.c             |   5 +-
+ builtin/log.c                    |  10 ++--
+ builtin/merge-base.c             |   9 +--
+ builtin/merge-tree.c             |   3 +-
+ builtin/name-rev.c               |  15 +++--
+ builtin/notes.c                  |   5 +-
+ builtin/pack-objects.c           |   4 +-
+ builtin/prune.c                  |   2 +-
+ builtin/pull.c                   |  15 +++--
+ builtin/receive-pack.c           |   6 +-
+ builtin/reflog.c                 |  17 +++---
+ builtin/replace.c                |   4 +-
+ builtin/reset.c                  |   4 +-
+ builtin/rev-list.c               |   2 +-
+ builtin/rev-parse.c              |   6 +-
+ builtin/show-branch.c            |   9 +--
+ builtin/tag.c                    |   2 +-
+ builtin/unpack-objects.c         |   7 ++-
+ builtin/verify-commit.c          |   4 +-
+ bundle.c                         |  10 ++--
+ cache-tree.c                     |   3 +-
+ commit-graph.c                   |  20 +++----
+ commit-slab-impl.h               |   3 -
+ commit.c                         | 100 ++++++++++++++++++-------------
+ commit.h                         |  24 +++++---
+ fast-import.c                    |   6 +-
+ fetch-pack.c                     |  45 ++++++++------
+ fsck.c                           |   9 +--
+ http-backend.c                   |   4 +-
+ http-push.c                      |  18 +++---
+ line-log.c                       |   2 +-
+ list-objects.c                   |   4 +-
+ log-tree.c                       |  13 ++--
+ merge-recursive.c                |  15 +++--
+ notes-cache.c                    |   3 +-
+ notes-merge.c                    |   5 +-
+ notes-utils.c                    |   6 +-
+ object.c                         |  63 ++++++++++---------
+ object.h                         |  13 ++--
+ packfile.c                       |   2 +-
+ parse-options-cb.c               |   2 +-
+ pretty.c                         |   4 +-
+ reachable.c                      |   8 +--
+ ref-filter.c                     |  12 ++--
+ reflog-walk.c                    |   3 +-
+ refs.c                           |   4 +-
+ refs/files-backend.c             |   2 +-
+ remote.c                         |  21 ++++---
+ revision.c                       |  37 ++++++------
+ sequencer.c                      |  30 +++++-----
+ server-info.c                    |   4 +-
+ sha1-file.c                      |   4 +-
+ sha1-name.c                      |  37 ++++++------
+ shallow.c                        |  34 +++++++----
+ submodule.c                      |  10 ++--
+ t/helper/test-example-decorate.c |   6 +-
+ tag.c                            |  28 ++++-----
+ tag.h                            |   7 +--
+ tree.c                           |  21 +++----
+ tree.h                           |   2 +-
+ upload-pack.c                    |  19 +++---
+ walker.c                         |  16 +++--
+ wt-status.c                      |   2 +-
+ 83 files changed, 547 insertions(+), 423 deletions(-)
+
+-- 
+2.17.0.582.gccdcbd54c44.dirty
+
