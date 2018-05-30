@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 382B81F42D
-	for <e@80x24.org>; Wed, 30 May 2018 00:49:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBACC1F42D
+	for <e@80x24.org>; Wed, 30 May 2018 00:49:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968433AbeE3AtQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 20:49:16 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:41766 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S968558AbeE3AtA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 20:49:00 -0400
-Received: by mail-pg0-f48.google.com with SMTP id d14-v6so7326196pgv.8
-        for <git@vger.kernel.org>; Tue, 29 May 2018 17:48:59 -0700 (PDT)
+        id S968558AbeE3AtS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 20:49:18 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:38964 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S968539AbeE3Asy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 20:48:54 -0400
+Received: by mail-pf0-f178.google.com with SMTP id r11-v6so539705pfl.6
+        for <git@vger.kernel.org>; Tue, 29 May 2018 17:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ztz7I5/Yq8gRrwBbOaE7CVaWAwv2GOIBDb+Mwnl+3oc=;
-        b=GbyTsswgH5t3bqD5oncrxhvb9I4qsFYMDEEdQ5UO4+IDdXyPtoHbp7vfqm3Zf3x6V7
-         Cp9/a/5H62BkIFQUuCHkHLSTgBdD5Q4iEuoam+gGfLW3jYGYi6pdqq5LIC9Xkbf2Vykg
-         NsmV4Z3iV/7GBs/EEJFPz7v7jWmx0/a5b0akhlxVESPiDGkacvFg+IOhUqoTfa0LagYG
-         2cKE5XMzTN9TBj794OXvDPlbaTqhnt95Ap84MeK7CZLjhFyaN9+N5ipK4Wc58USUuCLq
-         jA5xtAOYb3dAZGBHK3TzKHzd1kNXHOpvIDc2tIMKueR15kevYOnzRg0X2UaSv8r2iTAX
-         ikyQ==
+        bh=iXWYo6eiSeD0sjcy4pbA5nMR8S5C0Oykf/1AXzlKsoU=;
+        b=D5PxU0m5szA+rHSR8Lllv7CEO+e/clcIutsuGL/Cyretfavd58Ck0gtybA4Nm0cwJ6
+         durRqspQjOi2hlOEMHWTPzUy1b+OuNnjwT6YgaQoPHyiHieYmlrgsMPp1sJF51Fl/3Rw
+         OZMczemj0HvO3xbLtyVwuKHfBc8EYFIJeyDIGnFDWIDbJfSlx6qtN6QBGToiBivOF9ok
+         9YP1vRMIZH2hlmxSQOD0Cv2mQWH52zDqqF8e+QxFb2+1TnVzZPMybsnAAbITaNMbEGDC
+         xeVjtSW7/32/2JeW7K3gO18RLP6gI3B24yV1wZkEwEmvYjNNuRw8XBZlZeSUaUOrNMa2
+         +5HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ztz7I5/Yq8gRrwBbOaE7CVaWAwv2GOIBDb+Mwnl+3oc=;
-        b=qVKbWPVTVrLarVOTpgSZY/pFzQ36ZTKFJmFyqcv9NmGosa+H1iULMlB041csT3OG9s
-         W5pjiB9wSVzIwhT1CE8PfL2zaz6PB+I6VxAPB9yYDQCxATf18Gniuc6ug9x2cbn5pUT+
-         5iIG3j9QNBLAF9NYX5fizTzD75u7+WMDHHaaPggshbsMvd7PyECE9QDD3OEwvmauw7Xh
-         fQtcs5Vf51o0bJlxoStiBQwaMwLXCPZhglFOaskNZ1UdRxywb7xdaT8zPE3HWCpT8U/z
-         TGa9OSNq3sotj8sO9IV20AswlTbmoYt4Fta8uX5t35OLrEimex6zu8N3NZBeL6OvRpM3
-         9/sw==
-X-Gm-Message-State: ALKqPwdMOHPybLrUQvKt9dM5vJPpQ8/3axSg/SQrNO6zg6QQYsgAZ3n4
-        btJUUWTOJQPNse9bTF2GjNgh7L0TSJg=
-X-Google-Smtp-Source: ADUXVKJKwboBGe7W/SkbzM3Wm8nwtHYjKN7kgU/Qx9WCC9/au7u7QoFZ3uHVzD6KrboGHumg/RB/Cg==
-X-Received: by 2002:a63:b34e:: with SMTP id x14-v6mr471820pgt.243.1527641338745;
-        Tue, 29 May 2018 17:48:58 -0700 (PDT)
+        bh=iXWYo6eiSeD0sjcy4pbA5nMR8S5C0Oykf/1AXzlKsoU=;
+        b=DbIYzwdbkeUbXrCNjCs6YUwX3RKzzgFJSBTABjoUpbyTdnri5MMak+erugrLTU2rub
+         0q8RQsf/BC+WwNKqC+gnbhbhdhmXH+Vyn7hGXQYVGHizkkCmw224J4YNRmJ8yeHss5iA
+         2gMVSL7AvCHX141l+Jt1HICaDZjTGtGe6tz5hANakGwjv14rK+ul6b7p4nGKK4b6JU8k
+         AY8B9+XLB9ql2qawjBu2WA0m/fBtLoWuSl2JWVspGxT8u+cg30P5nP0EsjnVpY99MNOE
+         2E6QkmUWughOrlvgBM0jXM6ZbxeVb8HCKuSDpcxgeVn+Z8u06y7cu6oFRVck+1o0/jCU
+         AmqQ==
+X-Gm-Message-State: ALKqPwd3nGGo7ZyNt5ckVpG6zdHF/+RIKUJAswqKSK7+noKdrsLqaW/d
+        jIOewOXxBXeCgu+tTszQlkw8oK8nUqo=
+X-Google-Smtp-Source: ADUXVKJIs3oTyO80DUmT3XcmYjgKH5vWfu//T7nQwjnjQ1flMGey+Vfkb4fnEsdRvPfHxdep8WSlcA==
+X-Received: by 2002:a62:9696:: with SMTP id s22-v6mr580279pfk.191.1527641333263;
+        Tue, 29 May 2018 17:48:53 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id o88-v6sm91304941pfa.29.2018.05.29.17.48.57
+        by smtp.gmail.com with ESMTPSA id s9-v6sm65245136pfa.141.2018.05.29.17.48.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 May 2018 17:48:58 -0700 (PDT)
+        Tue, 29 May 2018 17:48:52 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 26/35] commit.c: allow parse_commit_buffer to handle arbitrary repositories
-Date:   Tue, 29 May 2018 17:48:01 -0700
-Message-Id: <20180530004810.30076-27-sbeller@google.com>
+Subject: [PATCH 22/35] tree: allow lookup_tree to handle arbitrary repositories
+Date:   Tue, 29 May 2018 17:47:57 -0700
+Message-Id: <20180530004810.30076-23-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
 In-Reply-To: <20180530004810.30076-1-sbeller@google.com>
 References: <20180530004810.30076-1-sbeller@google.com>
@@ -64,69 +64,47 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- commit.c | 10 +++++-----
- commit.h |  3 +--
+ tree.c | 10 +++++-----
+ tree.h |  3 +--
  2 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 492bccf10eb..fd31c453fdc 100644
---- a/commit.c
-+++ b/commit.c
-@@ -335,7 +335,7 @@ const void *detach_commit_buffer(struct commit *commit, unsigned long *sizep)
- 	return ret;
+diff --git a/tree.c b/tree.c
+index 6b83942e444..58baf29c96f 100644
+--- a/tree.c
++++ b/tree.c
+@@ -195,13 +195,13 @@ int read_tree(struct tree *tree, int stage, struct pathspec *match,
+ 	return 0;
  }
  
--int parse_commit_buffer_the_repository(struct commit *item, const void *buffer, unsigned long size)
-+int parse_commit_buffer(struct repository *r, struct commit *item, const void *buffer, unsigned long size)
+-struct tree *lookup_tree_the_repository(const struct object_id *oid)
++struct tree *lookup_tree(struct repository *r, const struct object_id *oid)
  {
- 	const char *tail = buffer;
- 	const char *bufptr = buffer;
-@@ -355,11 +355,11 @@ int parse_commit_buffer_the_repository(struct commit *item, const void *buffer,
- 	if (get_sha1_hex(bufptr + 5, parent.hash) < 0)
- 		return error("bad tree pointer in commit %s",
- 			     oid_to_hex(&item->object.oid));
--	item->tree = lookup_tree(the_repository, &parent);
-+	item->tree = lookup_tree(r, &parent);
- 	bufptr += tree_entry_len + 1; /* "tree " + "hex sha1" + "\n" */
- 	pptr = &item->parents;
+-	struct object *obj = lookup_object(the_repository, oid->hash);
++	struct object *obj = lookup_object(r, oid->hash);
+ 	if (!obj)
+-		return create_object(the_repository, oid->hash,
+-				     alloc_tree_node(the_repository));
+-	return object_as_type(the_repository, obj, OBJ_TREE, 0);
++		return create_object(r, oid->hash,
++				     alloc_tree_node(r));
++	return object_as_type(r, obj, OBJ_TREE, 0);
+ }
  
--	graft = lookup_commit_graft(the_repository, &item->object.oid);
-+	graft = lookup_commit_graft(r, &item->object.oid);
- 	while (bufptr + parent_entry_len < tail && !memcmp(bufptr, "parent ", 7)) {
- 		struct commit *new_parent;
+ int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size)
+diff --git a/tree.h b/tree.h
+index 2ea21ed174b..d4807dc8058 100644
+--- a/tree.h
++++ b/tree.h
+@@ -12,8 +12,7 @@ struct tree {
+ 	unsigned long size;
+ };
  
-@@ -374,7 +374,7 @@ int parse_commit_buffer_the_repository(struct commit *item, const void *buffer,
- 		 */
- 		if (graft && (graft->nr_parent < 0 || grafts_replace_parents))
- 			continue;
--		new_parent = lookup_commit(the_repository, &parent);
-+		new_parent = lookup_commit(r, &parent);
- 		if (new_parent)
- 			pptr = &commit_list_insert(new_parent, pptr)->next;
- 	}
-@@ -382,7 +382,7 @@ int parse_commit_buffer_the_repository(struct commit *item, const void *buffer,
- 		int i;
- 		struct commit *new_parent;
- 		for (i = 0; i < graft->nr_parent; i++) {
--			new_parent = lookup_commit(the_repository,
-+			new_parent = lookup_commit(r,
- 						   &graft->parent[i]);
- 			if (!new_parent)
- 				continue;
-diff --git a/commit.h b/commit.h
-index b96a57ad295..536fa03955f 100644
---- a/commit.h
-+++ b/commit.h
-@@ -71,8 +71,7 @@ struct commit *lookup_commit_reference_by_name(const char *name);
-  */
- struct commit *lookup_commit_or_die(const struct object_id *oid, const char *ref_name);
+-#define lookup_tree(r, oid) lookup_tree_##r(oid)
+-struct tree *lookup_tree_the_repository(const struct object_id *oid);
++struct tree *lookup_tree(struct repository *r, const struct object_id *oid);
  
--#define parse_commit_buffer(r, i, b, s) parse_commit_buffer_##r(i, b, s)
--int parse_commit_buffer_the_repository(struct commit *item, const void *buffer, unsigned long size);
-+int parse_commit_buffer(struct repository *r, struct commit *item, const void *buffer, unsigned long size);
- #define parse_commit_gently(r, i, q) parse_commit_gently_##r(i, q)
- int parse_commit_gently_the_repository(struct commit *item, int quiet_on_missing);
- #define parse_commit(r, i) parse_commit_##r(i)
+ int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size);
+ 
 -- 
 2.17.0.582.gccdcbd54c44.dirty
 
