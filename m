@@ -2,101 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C53C41F42D
-	for <e@80x24.org>; Wed, 30 May 2018 16:43:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 179A11F42D
+	for <e@80x24.org>; Wed, 30 May 2018 17:03:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753791AbeE3QnX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 12:43:23 -0400
-Received: from mail-yb0-f179.google.com ([209.85.213.179]:42603 "EHLO
-        mail-yb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752850AbeE3QnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 12:43:20 -0400
-Received: by mail-yb0-f179.google.com with SMTP id d123-v6so6579950ybh.9
-        for <git@vger.kernel.org>; Wed, 30 May 2018 09:43:20 -0700 (PDT)
+        id S1753851AbeE3RDI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 13:03:08 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:39824 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753510AbeE3RDH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 13:03:07 -0400
+Received: by mail-pg0-f68.google.com with SMTP id w12-v6so7205793pgc.6
+        for <git@vger.kernel.org>; Wed, 30 May 2018 10:03:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ggiWivYl/Fp9tmR54CDr+tDRc8H8KsC4/7thRic9x3o=;
-        b=C2yCxtSc/iEuB82HSOdDu7kzK3i8YNrUTvt5Pd5KB0k0KvOuk56EjfYaRVSp3U4iP0
-         uOlgdypBYIJFRm+0ZKAVeOWr63er6XMBc7O28LFajf1hcufWUbXUP9zN/zjVq+wGh5NH
-         2AE7A7BkgvvTdBDdqFOrP+JRJpN9G7dtlhIpfniazZAHFxm6caYlWt3TABPbvlrTVsBV
-         J8Xt/Y134/0gEQjkW/HZU//BDJ6XwX6bZpkijS3f6ofCXaSiWVI+iZdBHfJcgxtNckK4
-         +oSA7GAyG3i59obaRuDz6khyboEdMdUdQvVPnD+CSWi38bx5rNOwmNW/9zFyUBsS5Kc4
-         n8Mw==
+        h=from:to:cc:subject:date:message-id;
+        bh=JtP5GIjYawF9oI/1tnNn+ner2/IY1PKHrrcO1kieuek=;
+        b=sihD5ciYryuxsSTuLD4UsUfQBd1ouVPNFnLCYFsvYPCkus2HvnIotiTkRWvQ/WgUYO
+         ke/3Js+Qx1Nw+LSG7nBJ3q6Mvcrs+ndkYJnyQcdWm0Tud+97iQKkTBFDjMJ1Xh8/IDxm
+         Y0IJwCqDQuC1G+a4SiOC7D+//1aA0JoIlRurTtIyILRnkVUEHfMV7jO04tbxkn4U6HQ+
+         IREH7s7qWhaU7XICHH+V17S7cSAQjYDrvdn5T3xS7ngdygNLqIZ/dsnQSsB6A231aXKv
+         pAjcDXsWDyF+xO/fwnteHK/ImJ7QAkK6Z8ZTC2jGqGvBQI5qhS+c1B4CUyc9rBV9RqOy
+         M5PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ggiWivYl/Fp9tmR54CDr+tDRc8H8KsC4/7thRic9x3o=;
-        b=JzEdm4pyxUvyvL+DZQQBmh6k2IYHCM5ARGwwx4YqHFCTRLbluL6rt5/59C5awUlV3J
-         V7kYhKCnNy0LZKVSkUlR6tqGwjNwMo7o1ilqyWuClYmL3IUEI5k3PBNIhCWrpo1UujxS
-         u4tJeDJej152bvsIrBrEs32nU1WVGQNUKRw+zzQjGUdvQHEXkHqSSZtQyg92iEHFoBjG
-         zyAHgDVaipKVP39ep7oxX/L+z2OfC5IUWH4Ry/K/WwNQ+WF0ocqtYpSjM4d2w4sifAZG
-         0xe+rd9X0MaX9KkrS9GTy45aB99fgJIn/mOuWDAdpP4u6lYtZa3VRx8AWQvnmDUdT1ok
-         HH3A==
-X-Gm-Message-State: ALKqPwfdUsgiKt1PR1uzOzXkb3C9a6T2gW54WwEt/qh4esWEbhJEAcf0
-        AdRP6xAqavV2mDC4DhQnZ2Gd4sGuRnwkyrus4gow4Q==
-X-Google-Smtp-Source: ADUXVKKadrhQ2q742eEpQ2d4qRErYkvqQwLBPr0S5dY0w+7TnLnH8EmA3JHky7MBywWOaAurx0AOl7vjFvaLjf4ATfg=
-X-Received: by 2002:a25:31c3:: with SMTP id x186-v6mr1973348ybx.352.1527698599779;
- Wed, 30 May 2018 09:43:19 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Wed, 30 May 2018 09:43:19 -0700 (PDT)
-In-Reply-To: <CACsJy8DW8e4rFWzzc4WxLRtK-WTAcG_BwFSxAya_fLfXOk9p8A@mail.gmail.com>
-References: <xmqqy3g1d4xa.fsf@gitster-ct.c.googlers.com> <CACsJy8DW8e4rFWzzc4WxLRtK-WTAcG_BwFSxAya_fLfXOk9p8A@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=JtP5GIjYawF9oI/1tnNn+ner2/IY1PKHrrcO1kieuek=;
+        b=tAuUATLTRy61mJ7cKR9izWeG9uWfDUgiy9cfTMgIR3WBLSrXcGOD02jnJ158nIb0/C
+         ma0n8JGgaM8gWz1I4XkGh5okqLq5Idf4LVftlF1ss6no7mTqwYGM8xEJeUaBfEaMulgS
+         stddNmuxFYkLvzG113///lyQVnQafOBAxZv0zw8DRA26DheYshuyPHVooke4wnWq7nNX
+         VeKKYUsHDcA6A37H1AyqozHWR2v90S/fgMkcm//SKYRd4HNmK5DSyFedyV6PSBcABYOR
+         FR3+/CoZCbhrQ+bDidRz+BPWBvBWxMZXUzv58HQugwD3xyP6zDRjzxdKDs2vi5l6tGjD
+         7a8w==
+X-Gm-Message-State: ALKqPwftwXxfVH3ueQ2+yBSytOToiBFLMZFmOBPRreLbxNjJc5BHbIxe
+        K3fr4AhK9B1V6jTdr707/enHOjrHnV8=
+X-Google-Smtp-Source: ADUXVKJyAih7gMSHq2sfR+H3PUtX/oqOPA1n46CyUfujnNXQz25Z3+J9nOOZJlFMRNtp2RfNenJZ4w==
+X-Received: by 2002:a65:644a:: with SMTP id s10-v6mr2843969pgv.360.1527699786047;
+        Wed, 30 May 2018 10:03:06 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id v5-v6sm55874742pff.130.2018.05.30.10.03.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 30 May 2018 10:03:05 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 30 May 2018 09:43:19 -0700
-Message-ID: <CAGZ79kbL-EJ9ithyxMgs0G_vcp7+Dno5tkEk2Vds8mmgUmaQVA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (May 2018, #04; Wed, 30)
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
+Subject: [PATCH 1/3] refs/packed-backend.c: close fd of empty file
+Date:   Wed, 30 May 2018 10:03:00 -0700
+Message-Id: <20180530170302.191176-1-sbeller@google.com>
+X-Mailer: git-send-email 2.17.1.1185.g55be947832-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 30, 2018 at 9:27 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, May 30, 2018 at 8:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> * sb/object-store-alloc (2018-05-16) 13 commits
->>  - alloc: allow arbitrary repositories for alloc functions
->>  - object: allow create_object to handle arbitrary repositories
->>  - object: allow grow_object_hash to handle arbitrary repositories
->>  - alloc: add repository argument to alloc_commit_index
->>  - alloc: add repository argument to alloc_report
->>  - alloc: add repository argument to alloc_object_node
->>  - alloc: add repository argument to alloc_tag_node
->>  - alloc: add repository argument to alloc_commit_node
->>  - alloc: add repository argument to alloc_tree_node
->>  - alloc: add repository argument to alloc_blob_node
->>  - object: add repository argument to grow_object_hash
->>  - object: add repository argument to create_object
->>  - repository: introduce parsed objects field
->>  (this branch is used by sb/object-store-grafts.)
->>
->>  The conversion to pass "the_repository" and then "a_repository"
->>  throughout the object access API continues.
->>
->>  Is this ready for 'next'?
->
-> I think so.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-I think so, too.
-(I even think that for sb/object-store-grafts.)
+This was an oversight in 01caf20d57a (load_contents(): don't try to mmap an
+empty file, 2018-01-24).
 
-> Stefan could remove the comment "/* TODO: what about
-> commit->util? */" if he wants since nd/commit-util-to-slab is already
-> in next. But this is really minor and does not need fixing to land on
-> 'next'.
+This and the following 2 patches apply on master.
 
-I was about to remove that comment in the follow up[1] that I sent out
-yesterday, but refrained. Now that the removal of util is being merged
-to master, I'll include that in that series
+ refs/packed-backend.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-[1] https://public-inbox.org/git/20180530004810.30076-1-sbeller@google.com/
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index cec3fb9e00f..d447a731da0 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -499,6 +499,7 @@ static int load_contents(struct snapshot *snapshot)
+ 	size = xsize_t(st.st_size);
+ 
+ 	if (!size) {
++		close(fd);
+ 		return 0;
+ 	} else if (mmap_strategy == MMAP_NONE || size <= SMALL_FILE_SIZE) {
+ 		snapshot->buf = xmalloc(size);
+-- 
+2.17.1.1185.g55be947832-goog
+
