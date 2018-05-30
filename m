@@ -7,122 +7,124 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00ED01F42D
-	for <e@80x24.org>; Wed, 30 May 2018 13:55:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFBA71F42D
+	for <e@80x24.org>; Wed, 30 May 2018 15:37:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752660AbeE3NzQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 09:55:16 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33641 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751794AbeE3NzP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 09:55:15 -0400
-Received: by mail-wr0-f194.google.com with SMTP id k16-v6so2400833wro.0
-        for <git@vger.kernel.org>; Wed, 30 May 2018 06:55:14 -0700 (PDT)
+        id S1753252AbeE3PhH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 11:37:07 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:41014 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751215AbeE3PhG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 11:37:06 -0400
+Received: by mail-lf0-f65.google.com with SMTP id d24-v6so5002730lfa.8
+        for <git@vger.kernel.org>; Wed, 30 May 2018 08:37:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bug8iMLJuCTOUcvH0glkcTzMCfazLUSYjTwe4TcRe1E=;
-        b=XujmodCt6nirLX2pi66BTaPjW72isFAMuPD4+3ZzngrtbK87/sNt5zJZn4N9Y8teIi
-         mVqCsIh1ww8GYG0cLGU9Jw8jrGZ5QaPMLkG7Xa7Ph4D7/JJtRMfVJ3dfQG6VyXBVqmVY
-         nqgehWNAYAdhDl+7jxaVq4H2QpbypGTPmRrV9cDL5W8El/Lxqk9Hovkxp49sf18vxTQ6
-         y8Mnah80L0SFo67DQUna0fLyD5ugtwKe2QZGa5H56HkHfFOAvm70iuHQR8a5b4g3KMGk
-         RFeoiiTe1JPt1VOICQ30vTWZFYLCtDW3rV8bTeOdjEZBDiq1ks6JCpvvFahhH9jpYoNa
-         7jdg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=yuJAq+CJjvHypCw7KMCKLIY8bDVLYIoLEG4MKJnIaFk=;
+        b=ZrjZvEJWLORS/7y8ucP1esDpr9RpZzJxzdcZ0urypSOFK4s8z4fZIywNlZGcd8IrIY
+         xKEg+t4PUewOUgyWIemAB0vr9cNcJhpx7rA8p2rqraondId8ibEAZrXiTlZ1nTQd5+Fx
+         q1CyIDDAONaZqL398q5YClJ5lQIlPldnZ+e99yAcNiVrmqZEgVxYSyh1YWacU7AhACyS
+         ZyNGHwjhqJAhMo4/v42+iBb1RQ52wxKvSgKfqWjNNG4vLJN4sfM8HOkTBPe8RBYgQeTR
+         M5TzLkb7t9vnIW9HfvSe7lukBQ/8sqv/CgS0GM+9HNIwZ2HBWRZHTujoVvpjtIG0JDeJ
+         t9lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bug8iMLJuCTOUcvH0glkcTzMCfazLUSYjTwe4TcRe1E=;
-        b=BQW1G+MSr2z3wlyCwdVnQ+D4O6v5CWWcfAhaSQUu1opjeixyPyAKM1/SNM3EBUOSEv
-         484eNTUhgf22YcXSJ7qZ+qZ6omN2iAc/RiFjTfPdNC3Roh/Y2ph4ZJ/PCdNIemOdcnvy
-         lMVoiQ8ypA1Sj7xleUMwmgBqQvWJ8SshoKm6FBNiby+lLEv9lLkFEHHW3eXZYVlRGm3y
-         VJM7FvYomNG1Hl5PsvA08AYUqquVCoeq8dClGf24t+FnzaQ3mJ6i7BFZjDtge6k2Reb3
-         vD/EZMgMSWOy4AiPBuHPuk77Shvl0kHFaNVrhuGLNBY+Ik2MRRcSRl/5naTOEVYRIiX5
-         7/Eg==
-X-Gm-Message-State: ALKqPwflsjibtgD+z3ORIxow8308xjrbUk/wf2VmKyNuiyuUz4F2dgbv
-        V7xCOfamkvo1HwkijrdQVnQ=
-X-Google-Smtp-Source: ADUXVKKCn9nyNFO3DdmMaVIryXx5W+N0LnxU1qKMEqxm28lYUA10KIMDYVPb2dKjKfC7U6y3JpSKrQ==
-X-Received: by 2002:adf:d192:: with SMTP id h18-v6mr2170865wri.198.1527688514117;
-        Wed, 30 May 2018 06:55:14 -0700 (PDT)
-Received: from localhost.localdomain (x590c60bd.dyn.telefonica.de. [89.12.96.189])
-        by smtp.gmail.com with ESMTPSA id e14-v6sm2280582wmh.17.2018.05.30.06.55.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 30 May 2018 06:55:13 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 01/18] Add a function to solve least-cost assignment problems
-Date:   Wed, 30 May 2018 15:55:05 +0200
-Message-Id: <20180530135505.9569-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.17.1.1124.gac09da1361
-In-Reply-To: <3f51970cbc44bfe34133c48c0844ed3723e83808.1525448066.git.johannes.schindelin@gmx.de>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de> <cover.1525448066.git.johannes.schindelin@gmx.de> <3f51970cbc44bfe34133c48c0844ed3723e83808.1525448066.git.johannes.schindelin@gmx.de>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=yuJAq+CJjvHypCw7KMCKLIY8bDVLYIoLEG4MKJnIaFk=;
+        b=FMdUljyf7zaF+QXpE4+0SgCQtWhN98D2gEsiHPQ4tqMThlHoqCqNdq66rYC5J+oTRL
+         DmHHJuqd7Rhk8GMVEQdPh/GadKFSJf2RTccFujH+u1J9maHkZxgaXCtiL866Rs2W5xvF
+         YJHpqsPs8haATaxQLLIyhbCaGekH0v6VAUhpR0fXtyb7yeGCMWE3gla42Lr6PbF7x0w6
+         qxZZoaqEXfNR6CM7bn59ulH1FPDmSFPwO42shW7pNs4QrEzIWPdDx5O6dUSTjhi8fOy1
+         SEgp7NKmB+Kf0JoV9TV/O5JzeFGiDUJTg8CNwgaZDxUCppt2x/7sPH8erA0kg++oC5oe
+         Oo6w==
+X-Gm-Message-State: ALKqPwfuctSXJeD16VyWABwzgO+W2YzevW8G/VbhZvj+zrlwjfM80JD0
+        qR77MBOpMwWmTxoLOMFJKjU=
+X-Google-Smtp-Source: ADUXVKLwrJcrUcfFj74WJTqF12Ai7uC8S5FJ4McnBBNpBYWthnv2O6S/hDj4vpSvvDN1YZt/R4eS0g==
+X-Received: by 2002:a19:ef11:: with SMTP id n17-v6mr2176712lfh.66.1527694625330;
+        Wed, 30 May 2018 08:37:05 -0700 (PDT)
+Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id u14-v6sm6482977lfk.55.2018.05.30.08.37.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 30 May 2018 08:37:04 -0700 (PDT)
+Date:   Wed, 30 May 2018 17:37:01 +0200
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] completion: complete remote names too
+Message-ID: <20180530153701.GA23809@duynguyen.home>
+References: <CGME20180525104848eucas1p28c88d657362066ea26d4eedaaef71f90@eucas1p2.samsung.com>
+ <20180525104842.2930-1-l.stelmach@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180525104842.2930-1-l.stelmach@samsung.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The Jonker-Volgenant algorithm was implemented to answer questions such
-> as: given two different versions of a topic branch (or iterations of a
-> patch series), what is the best pairing of commits/patches between the
-> different versions?
+On Fri, May 25, 2018 at 12:48:42PM +0200, Łukasz Stelmach wrote:
+> "git remote update" accepts both groups and single remotes.
 > 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
 > ---
->  Makefile    |   1 +
->  hungarian.c | 205 ++++++++++++++++++++++++++++++++++++++++++++++++++++
->  hungarian.h |  19 +++++
+>  contrib/completion/git-completion.bash | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 961a0ed76..fb05bb2f9 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -2632,7 +2632,7 @@ _git_remote ()
+>  		__gitcomp_builtin remote_update
+>  		;;
+>  	update,*)
+> -		__gitcomp "$(__git_get_config_variables "remotes")"
+> +		__gitcomp "$(__git_remotes) $(__git_get_config_variables "remotes")"
 
-(Nit: I personally don't really like these filenames, I know they will
-surprise and distract me every time I notice them for years to come... :)
+Reviewed-by: me.
 
-> +int compute_assignment(int column_count, int row_count, double *cost,
-> +		       int *column2row, int *row2column)
-> +{
-> +	double *v = xmalloc(sizeof(double) * column_count), *d;
-> +	int *free_row, free_count = 0, saved_free_count, *pred, *col;
-> +	int i, j, phase;
+The short commit description actually made me curious, which led to
+more digging and finally this follow up patch.
 
-<snip>
+-- 8< --
+Subject: [PATCH] remote.txt: update documentation for 'update' command
 
-> +	for (free_count = 0; free_count < saved_free_count; free_count++) {
-> +		int i1 = free_row[free_count], low = 0, up = 0, last, k;
-> +		double min, c, u1;
+Commit b344e1614b (git remote update: Fallback to remote if group does
+not exist - 2009-04-06) lets "git remote update" accept individual
+remotes as well. Previously this command only accepted remote
+groups. The commit updates the command syntax but not the actual
+document of this subcommand. Update it.
 
-<snip most of the loop's body>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Documentation/git-remote.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> +		/* augmentation */
-> +		do {
-> +			if (j < 0)
-> +				BUG("negative j: %d", j);
-> +			i = pred[j];
-> +			column2row[j] = i;
-> +			k = j;
-> +			j = row2column[i];
-> +			row2column[i] = k;
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 595948da53..dd38587168 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -186,8 +186,8 @@ actually prune them.
+ 
+ 'update'::
+ 
+-Fetch updates for a named set of remotes in the repository as defined by
+-remotes.<group>.  If a named group is not specified on the command line,
++Fetch updates for remotes or remote groups in the repository as defined by
++remotes.<group>.  If no group or remote is not specified on the command line,
+ the configuration parameter remotes.default will be used; if
+ remotes.default is not defined, all remotes which do not have the
+ configuration parameter remote.<name>.skipDefaultUpdate set to true will
+-- 
+2.17.0.705.g3525833791
 
-Coccinelle suggests to replace the last three lines above with:
-
-  SWAP(j, row2column[i]);
-
-I think it's right, using the SWAP macro makes the resulting code not
-only shorter and clearer, but it also saves the reader from thinking
-about whether it's important to set 'k = j' (I think it's not), or 'k'
-is just used here in lieu of a dedicated 'tmp' variable (I think it
-is).
-
-> +		} while (i1 != i);
-> +	}
-> +
+-- 8< --
