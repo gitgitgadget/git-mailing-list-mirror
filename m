@@ -2,98 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F2EB1F51C
-	for <e@80x24.org>; Wed, 30 May 2018 08:59:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FC951F51C
+	for <e@80x24.org>; Wed, 30 May 2018 09:26:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936038AbeE3I7c (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 04:59:32 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:40213 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935975AbeE3I73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 04:59:29 -0400
-Received: by mail-qt0-f170.google.com with SMTP id h2-v6so22278898qtp.7
-        for <git@vger.kernel.org>; Wed, 30 May 2018 01:59:28 -0700 (PDT)
+        id S968793AbeE3J0C (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 05:26:02 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:51907 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S968758AbeE3JZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 05:25:59 -0400
+Received: by mail-wm0-f68.google.com with SMTP id r15-v6so18894369wmc.1
+        for <git@vger.kernel.org>; Wed, 30 May 2018 02:25:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=24spWYTXC0bLCM4Tvmdpss5K9g4wbZB/Ny+qKf2sJ4M=;
-        b=pYhtv79b9r5AU5ZJPDOqFoU6GrdP6N1F2uAg0K5yCM6Vkxjh6dBwasCjv2Ro1zEXcE
-         HCgUe0r8uCrUCPdLWyk9nAltDI2isjfgtgr4OORG6PBhVnAj0ymZ+UBHbvP0em8qzZtW
-         vO38jRmp3lEOgN4RV6bK9btgFK1EFsT1eo1StFBoe4IWL7s/4xXxdwZnN8T7G5Nj2Tu+
-         B7EyfCO0cvWkA/uq2t7hfyj7soMeluhr9Aj9J0Oc5DbyGpAm0rNl/KDikMedW8H0G2rS
-         ycDeC2UX7lDR3Ghrqab7f9l+vndvo3+xcN8UMg21FyXtP/FmbHbxDQPpFYzjbkqp08db
-         NZNQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=T9cJmn/1wzP/bJ8WYco2AmEBTIcotVtoOhndQISOCCo=;
+        b=ro3nBP56P4gK4781zOxyuhWNVIBb8Y5/7rL9dZUbDFJw+fROJp68rtFvzv3zMbHsWs
+         fqiRaT7Oy4m3j4NtoYQn1hAcCvZkfg0srVeh66e+I1yX0AGfcOPvFYllb9h2ljWTR54L
+         +riocr+tC1qQ4iW4MMVEg+kcgVDFlFr18WhsbM6mcBpkcuiS/u0LLrMMGZYq2/nBWF/S
+         dPJFkJ+yMt8Yc5ZSbUz7l+gZo7TrMnnYT54t2Y9n5JzVvv9YL1Zc0Ykp+HTf3M6c1Y3Z
+         wLfq7pe1LRZbmLMcWSBfQThm6YBIFHDrdyDApudyHRaEOl2JNzS2Q01QoNJM2M36LU9+
+         46xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=24spWYTXC0bLCM4Tvmdpss5K9g4wbZB/Ny+qKf2sJ4M=;
-        b=NWWXHudS33e+RoxOnrqqID0r+7cTFtNh3bM0yH2AcdV5Z5NHGaACOIOHZk0zeRYu0h
-         tuH2s8mO9HwWwmdJyOhvrapZBvPPEh+bq2H8iGUos2/X7c7a5mYLwMuVBxYJiRIJMzIX
-         fckEPVlTVEDwaMrKFT5uLZz8bs467f13BmxDk77HGeLKZYk10Fc7aE8Q/LPIWXhzOOXi
-         tYurgb8ABj2YdcwA5vkTYDinUUvXl/B4Lm3sYAF6MwZlaNtmU9Pg/fEgCw57eKOkHo6w
-         Ca7JbUHqumehtxT8WSwzpzHGcVgrXy84ULOiskHCpklsDO1cGvR9ERY/ChVELjY/vQ54
-         6L7A==
-X-Gm-Message-State: APt69E3oCGFFbBSXqV1+2SeZ4fzU0/HISLnArQKenbBhmm3Kx+XnKqd5
-        +LagNO7g4tISBcHvn3w+FdwJiVXcBEOclQqodhI=
-X-Google-Smtp-Source: ADUXVKKcFRgI/JKGFboiQ55dqJHHACAf+z3kwGPoOeKpGT7UgoGcJBsvBIG+MxjUk6bVBSDuRhKzO5bjN49PlGRAf2g=
-X-Received: by 2002:a0c:f6cb:: with SMTP id d11-v6mr1614783qvo.41.1527670768315;
- Wed, 30 May 2018 01:59:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=T9cJmn/1wzP/bJ8WYco2AmEBTIcotVtoOhndQISOCCo=;
+        b=nr1c5e6cvrYVDrN8KHEsZAgkerfr6Aj/kLXWkohUy5tAYOABjpWCmxSraNqwKGxlMl
+         B0wOK+HIZpfYd61AFYTuSM/KpN+m5DbxLMi2ViMfHVjExiSP9XFwg8MffX7FCO6CLxcz
+         f3vLfIdlt/Vka9/oVV5NuZSgkcOHGI6G/tXarJe8VTme8+9N1edRhYZ9g1milgw3t6Uk
+         twyWxRMjoRnJNWqrwLizjC/IiNg7bL7yLaO/Yy5PVzy8McFWAnNsDUN6cJjP9vqpTiqy
+         kSL5jAgwCwFqAO5t0f/nD2zR2UTJ/7xHK1/neWjQ8E1FCdeHRsFvgXBaG5zkppQxcGf3
+         f4jQ==
+X-Gm-Message-State: ALKqPwdjPftyPCoDu53GCK5EWTEpUrgIHdkQ5xsBhdPYrkL86yxV29KS
+        +O9HBoJi34zi3MxEsyGdYRs=
+X-Google-Smtp-Source: ADUXVKL+cJzcC7B4RuoG2M46X7YzG+KSuX+12Ai363LxdxA6/rCXMvJWwPmwzqe0y5Wbn+8r4812cA==
+X-Received: by 2002:a50:9818:: with SMTP id g24-v6mr2585740edb.31.1527672358723;
+        Wed, 30 May 2018 02:25:58 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id t1-v6sm18662209edq.84.2018.05.30.02.25.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 30 May 2018 02:25:58 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH 0/5] format-patch: automate cover letter range-diff
+References: <20180530080325.37520-1-sunshine@sunshineco.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180530080325.37520-1-sunshine@sunshineco.com>
+Date:   Wed, 30 May 2018 11:25:57 +0200
+Message-ID: <878t81fqai.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a0c:aa4b:0:0:0:0:0 with HTTP; Wed, 30 May 2018 01:59:27
- -0700 (PDT)
-In-Reply-To: <20180529053037.38015-3-istephens@atlassian.com>
-References: <xmqqzi1iwz7l.fsf@gitster-ct.c.googlers.com> <20180529053037.38015-1-istephens@atlassian.com>
- <20180529053037.38015-3-istephens@atlassian.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 30 May 2018 04:59:27 -0400
-X-Google-Sender-Auth: kzrGj_jFZgMtHXsqVpBYju9ti5Y
-Message-ID: <CAPig+cQ3hRHQM4hOOU9ibOVt3LWvXjNS-VmbK8QWsFFJL=jBvw@mail.gmail.com>
-Subject: Re: [PATCH] log: prevent error if line range ends past end of file
-To:     Isabella Stephens <istephens@atlassian.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Bryan Turner <bturner@atlassian.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 29, 2018 at 1:30 AM,  <istephens@atlassian.com> wrote:
-> If the -L option is used to specify a line range in git log, and the end
-> of the range is past the end of the file, git will fail with a fatal
-> error. This commit prevents such behaviour - instead we perform the log
-> for existing lines within the specified range.
->
-> This commit also fixes a corner case where -L ,-n:file would be treated
-> as a log over the whole file. Now we treat this as -L 1,-n:file and
-> blame the first line of the file instead.
->
-> Signed-off-by: Isabella Stephens <istephens@atlassian.com>
-> ---
-> diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
-> @@ -86,12 +85,7 @@ test_expect_success '-L ,Y (Y == nlines)' '
->  test_expect_success '-L ,Y (Y == nlines + 1)' '
->         n=$(expr $(wc -l <b.c) + 1) &&
-> -       test_must_fail git log -L ,$n:b.c
-> -'
-> -
-> -test_expect_success '-L ,Y (Y == nlines + 2)' '
-> -       n=$(expr $(wc -l <b.c) + 2) &&
-> -       test_must_fail git log -L ,$n:b.c
-> +       git log -L ,$n:b.c
->  '
 
-Not sure why you removed the 'n+2' test which was added intentionally,
-along with the 'n' and 'n+1' tests, to probe the boundary handling for
-correctness. By eliminating 'n+2', coverage is reduced and, even
-though your change might be correct at this boundary, some future
-breaking change might go undetected.
+On Wed, May 30 2018, Eric Sunshine wrote:
+
+> * The final name for the 'tbdiff' replacement has not yet been nailed
+>   down. The name git-branch-diff is moribund[2]; Dscho favors merging
+>   the functionality into git-branch as a new --diff option[3]; others
+>   prefer a standalone command named git-range-diff or
+>   git-series-diff[4] or similar.
+
+FWIW Dscho in an IRC conversation on May 25th seems to have settled on
+calling it "git range-diff <args>". He just hasn't gotten around to
+submitting a new version.
