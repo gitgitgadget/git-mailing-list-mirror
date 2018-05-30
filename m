@@ -7,53 +7,56 @@ X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 179A11F42D
-	for <e@80x24.org>; Wed, 30 May 2018 17:03:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A8921F42D
+	for <e@80x24.org>; Wed, 30 May 2018 17:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753851AbeE3RDI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 13:03:08 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:39824 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753510AbeE3RDH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 13:03:07 -0400
-Received: by mail-pg0-f68.google.com with SMTP id w12-v6so7205793pgc.6
-        for <git@vger.kernel.org>; Wed, 30 May 2018 10:03:07 -0700 (PDT)
+        id S1753886AbeE3RDL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 13:03:11 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:40565 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753855AbeE3RDJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 13:03:09 -0400
+Received: by mail-pf0-f174.google.com with SMTP id f189-v6so9337733pfa.7
+        for <git@vger.kernel.org>; Wed, 30 May 2018 10:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=JtP5GIjYawF9oI/1tnNn+ner2/IY1PKHrrcO1kieuek=;
-        b=sihD5ciYryuxsSTuLD4UsUfQBd1ouVPNFnLCYFsvYPCkus2HvnIotiTkRWvQ/WgUYO
-         ke/3Js+Qx1Nw+LSG7nBJ3q6Mvcrs+ndkYJnyQcdWm0Tud+97iQKkTBFDjMJ1Xh8/IDxm
-         Y0IJwCqDQuC1G+a4SiOC7D+//1aA0JoIlRurTtIyILRnkVUEHfMV7jO04tbxkn4U6HQ+
-         IREH7s7qWhaU7XICHH+V17S7cSAQjYDrvdn5T3xS7ngdygNLqIZ/dsnQSsB6A231aXKv
-         pAjcDXsWDyF+xO/fwnteHK/ImJ7QAkK6Z8ZTC2jGqGvBQI5qhS+c1B4CUyc9rBV9RqOy
-         M5PQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=KzFTTNESR3B72P7dif1lq347zU+mEP6n8p/SZzEQ2SQ=;
+        b=klUZKiHDrmaMYMl7RkpX01q6sqP3dX+YzsQRmo7l1k4UZyl0ER5oXpoG36I4rkOAir
+         ctaALhQVOzNIsbDQkAwK1KFRuXYdGH6VrIJNT19vAaM8quwRei1CbM45CK2d4nJDF/CE
+         CO/e7A0n+UG9yoL9iV3nDIs0byztneTW5gNrBHRhQ20F+X/seMu50+i+FmdaWctkyNbV
+         FQHrM1cqYfIEanEUukLyRccRH27+7CboUAKmc1LhJuX7uBFqt9Kl8GsA/FovaVl2WPIT
+         b0/L+cTFeoolOHzV+FH5xg/yT6EnIehVQP4GzY6vzNL8Pb5o/nw6n+i7Q2g6DcA4+O9Q
+         1iVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=JtP5GIjYawF9oI/1tnNn+ner2/IY1PKHrrcO1kieuek=;
-        b=tAuUATLTRy61mJ7cKR9izWeG9uWfDUgiy9cfTMgIR3WBLSrXcGOD02jnJ158nIb0/C
-         ma0n8JGgaM8gWz1I4XkGh5okqLq5Idf4LVftlF1ss6no7mTqwYGM8xEJeUaBfEaMulgS
-         stddNmuxFYkLvzG113///lyQVnQafOBAxZv0zw8DRA26DheYshuyPHVooke4wnWq7nNX
-         VeKKYUsHDcA6A37H1AyqozHWR2v90S/fgMkcm//SKYRd4HNmK5DSyFedyV6PSBcABYOR
-         FR3+/CoZCbhrQ+bDidRz+BPWBvBWxMZXUzv58HQugwD3xyP6zDRjzxdKDs2vi5l6tGjD
-         7a8w==
-X-Gm-Message-State: ALKqPwftwXxfVH3ueQ2+yBSytOToiBFLMZFmOBPRreLbxNjJc5BHbIxe
-        K3fr4AhK9B1V6jTdr707/enHOjrHnV8=
-X-Google-Smtp-Source: ADUXVKJyAih7gMSHq2sfR+H3PUtX/oqOPA1n46CyUfujnNXQz25Z3+J9nOOZJlFMRNtp2RfNenJZ4w==
-X-Received: by 2002:a65:644a:: with SMTP id s10-v6mr2843969pgv.360.1527699786047;
-        Wed, 30 May 2018 10:03:06 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=KzFTTNESR3B72P7dif1lq347zU+mEP6n8p/SZzEQ2SQ=;
+        b=tkFHVhblo4QoBeDKbYkwFHN4OpK2htKeZ7Qpo1ihsU+ngDuPPNPMs+qmXtJ03yjFFl
+         vp/O9iJKyCqPLKeTALHvcdaY4vFntA0oYUEfDsNK6wPeCzCBgvlNuEWvbmQnXb7IRb19
+         MFVbND5Iw0ewUIADnrp0LBV1vqRQxhntmZ5f3E+eg3iA+qtllbOn/Hb9O/LxmWMq+xrf
+         SUzpl8epVKPyxOUwVwfwEH3kptDYda8olYd6zLkcbzghZ2zNMPh0cyeZ1exopQ0glR+H
+         k4U128raZaYsfZuk08JThWNlAsNmRb3eumYsEOF9XSCYh8b5rSG4Kfu+50eW/5cef7OI
+         1vdA==
+X-Gm-Message-State: ALKqPwdoU7oBwc7jyLZM17POL+hjCw/XnAvogI0MTGoLJM+uYvPUQJ5o
+        OaQDCA3siKRFJI/N0xd3r0rmTUW8IXg=
+X-Google-Smtp-Source: ADUXVKLp45FyoDxYx1Ojm3y2H8XAVxXsZFCG9yqiZoEUgJUpy7OHLh5d5/mGk2e16NA03KsZkaJRSQ==
+X-Received: by 2002:a62:1a4e:: with SMTP id a75-v6mr3519962pfa.84.1527699787957;
+        Wed, 30 May 2018 10:03:07 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id v5-v6sm55874742pff.130.2018.05.30.10.03.04
+        by smtp.gmail.com with ESMTPSA id b29-v6sm64803718pfh.155.2018.05.30.10.03.06
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 30 May 2018 10:03:05 -0700 (PDT)
+        Wed, 30 May 2018 10:03:06 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/3] refs/packed-backend.c: close fd of empty file
-Date:   Wed, 30 May 2018 10:03:00 -0700
-Message-Id: <20180530170302.191176-1-sbeller@google.com>
+Subject: [PATCH 2/3] sequencer.c: free author variable when merging fails
+Date:   Wed, 30 May 2018 10:03:01 -0700
+Message-Id: <20180530170302.191176-2-sbeller@google.com>
 X-Mailer: git-send-email 2.17.1.1185.g55be947832-goog
+In-Reply-To: <20180530170302.191176-1-sbeller@google.com>
+References: <20180530170302.191176-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -62,26 +65,28 @@ X-Mailing-List: git@vger.kernel.org
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
 
-This was an oversight in 01caf20d57a (load_contents(): don't try to mmap an
-empty file, 2018-01-24).
+This was a deliberate oversight in f241ff0d0a9 (prepare the builtins for a
+libified merge_recursive(), 2016-07-26)
 
-This and the following 2 patches apply on master.
+ sequencer.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
- refs/packed-backend.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index cec3fb9e00f..d447a731da0 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -499,6 +499,7 @@ static int load_contents(struct snapshot *snapshot)
- 	size = xsize_t(st.st_size);
- 
- 	if (!size) {
-+		close(fd);
- 		return 0;
- 	} else if (mmap_strategy == MMAP_NONE || size <= SMALL_FILE_SIZE) {
- 		snapshot->buf = xmalloc(size);
+diff --git a/sequencer.c b/sequencer.c
+index 72b4d8ecae3..5c93586cc1c 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1771,8 +1771,10 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	else if (!opts->strategy || !strcmp(opts->strategy, "recursive") || command == TODO_REVERT) {
+ 		res = do_recursive_merge(base, next, base_label, next_label,
+ 					 &head, &msgbuf, opts);
+-		if (res < 0)
++		if (res < 0) {
++			free(author);
+ 			return res;
++		}
+ 		res |= write_message(msgbuf.buf, msgbuf.len,
+ 				     git_path_merge_msg(), 0);
+ 	} else {
 -- 
 2.17.1.1185.g55be947832-goog
 
