@@ -2,101 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 549761F51C
-	for <e@80x24.org>; Wed, 30 May 2018 08:40:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0DB21F51C
+	for <e@80x24.org>; Wed, 30 May 2018 08:45:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968671AbeE3Ikf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 04:40:35 -0400
-Received: from 7.mo69.mail-out.ovh.net ([46.105.50.32]:49875 "EHLO
-        7.mo69.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964979AbeE3Ikd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 04:40:33 -0400
-X-Greylist: delayed 598 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 May 2018 04:40:33 EDT
-Received: from player693.ha.ovh.net (unknown [10.109.120.20])
-        by mo69.mail-out.ovh.net (Postfix) with ESMTP id E5A2C150A2
-        for <git@vger.kernel.org>; Wed, 30 May 2018 10:20:49 +0200 (CEST)
-Received: from [192.168.2.66] (62-183-157-47.bb.dnainternet.fi [62.183.157.47])
-        (Authenticated sender: kevin@bracey.fi)
-        by player693.ha.ovh.net (Postfix) with ESMTPSA id 0A2C04400AE;
-        Wed, 30 May 2018 10:20:44 +0200 (CEST)
-Subject: Re: Weird revision walk behaviour
-To:     Jeff King <peff@peff.net>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-References: <CAM0VKjkr71qLfksxZy59o4DYCM-x=podsCf6Qv+PzZuSe1gXZw@mail.gmail.com>
- <20180523173246.GA10299@sigill.intra.peff.net>
- <20180523173523.GB10299@sigill.intra.peff.net>
- <869a4045-0527-3dcf-33b3-90de2a45cd51@bracey.fi>
- <cb1d7c86-a989-300a-01d2-923e9c29e834@bracey.fi>
- <20180528220651.20287-1-szeder.dev@gmail.com>
- <20180529210434.GA3857@sigill.intra.peff.net>
-From:   Kevin Bracey <kevin@bracey.fi>
-Message-ID: <97644280-2187-d314-37ce-2c79935a63bc@bracey.fi>
-Date:   Wed, 30 May 2018 11:20:40 +0300
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S965133AbeE3Ipn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 04:45:43 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:40865 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964851AbeE3IpZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 04:45:25 -0400
+Received: by mail-qk0-f196.google.com with SMTP id r66-v6so13738430qkr.7
+        for <git@vger.kernel.org>; Wed, 30 May 2018 01:45:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=8iYAQJiGbhcoQE8prBhyqga66a1il5fOPBfpQfOdjus=;
+        b=fGQDr+SsJ9jJ6O8VDWbVahJgSMstETWqbEUZtHUqHgygzhAKqbslcL4V3+RRgwwNdj
+         hQibua2xb8I8eKqL6kQYOTvQQFruIdJX33QBbFMghu/uD9ymTdl04gEm+X0N3tbSavQ5
+         mAGRlrW9NxkuV5csffugFH85k37wXcfgsTLmp+TFjpAflhqKEo+lFtTAqHd9PClKPN6i
+         aWBF5WFch00fSQoYpEPJL69bZr25Zslcbzke+M86piChx4iUQXmtDlCaGCVRZPJwTbDq
+         wiqpNafR1YYFdkzk8D2B73SH07m+6uSZCC4AA7kuDi3H1vfRdlmZYXK4XLWcDXbl9keU
+         CX0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=8iYAQJiGbhcoQE8prBhyqga66a1il5fOPBfpQfOdjus=;
+        b=eb+5AwYf0d8SGvbHpLPaL8thzhPukmAGmoiikHx5iVEZWRlDb1irhoUsmWPxOSzPI7
+         gMdK/PqfMV+yp8FRa2RXwpaiLf/F7oDUTnOhM2nmXUdacHHuNL6sY708Rm9VTefzYMBC
+         pahoBVRxuOK6Nj3X7sU5rWspRyb0A2ed+/dTRwNFrqQWMRdgwrHValmHtgW04SfPrtxI
+         +Uo8d+Lg6/WUJv86O9vkIOBbm3iYXVgM86YEq3L37ecXoCRq/plpZ5LnawOUGtyAwsBg
+         tXwdPs5dp735u9PReGe1JwDmNmWVf1uVBODv7WVm6+4X7pRgRoUrvs69x853bIn1FjhZ
+         S9fw==
+X-Gm-Message-State: APt69E13DrjG2h4RO5O+w865yQGNxvstIWyOkgND83pxQ5kEt3O4DJKE
+        +gIi94rJvy4xaLGOi8FbvO6sKTjgwpTg6903GC8=
+X-Google-Smtp-Source: ADUXVKIvtaEhF1A7aC07HOgYYCIOHb2csmKrZU6Tni05d5p4y5f9mFlbFFNBxIkT29Mp/FgktJZEuQJJxZvv2hVnjKQ=
+X-Received: by 2002:a37:270b:: with SMTP id n11-v6mr1462295qkn.91.1527669924527;
+ Wed, 30 May 2018 01:45:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180529210434.GA3857@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-Ovh-Tracer-Id: 6836745710321045725
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedthedriedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
+Received: by 2002:a0c:aa4b:0:0:0:0:0 with HTTP; Wed, 30 May 2018 01:45:24
+ -0700 (PDT)
+In-Reply-To: <20180529053037.38015-2-istephens@atlassian.com>
+References: <xmqqzi1iwz7l.fsf@gitster-ct.c.googlers.com> <20180529053037.38015-1-istephens@atlassian.com>
+ <20180529053037.38015-2-istephens@atlassian.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 30 May 2018 04:45:24 -0400
+X-Google-Sender-Auth: 3U-tkMAYEtiiK6fLIJFVD_xD7zE
+Message-ID: <CAPig+cTCDP0zJonDFXyv6Kue5y4PMPaveyjfvfTVNoifzYg-Og@mail.gmail.com>
+Subject: Re: [PATCH] blame: prevent error if range ends past end of file
+To:     Isabella Stephens <istephens@atlassian.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Bryan Turner <bturner@atlassian.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30/05/2018 00:04, Jeff King wrote:
+On Tue, May 29, 2018 at 1:30 AM,  <istephens@atlassian.com> wrote:
+> If the -L option is used to specify a line range in git blame, and the
+> end of the range is past the end of the file, git will fail with a fatal
+> error. This commit prevents such behavior - instead we display the blame
+> for existing lines within the specified range.
+
+Makes sense; the new behavior is intuitive and more friendly.
+
+> Tests and documentation are ammended accordingly.
+
+s/ammended/amended/
+
+> This commit also fixes two corner cases. Blaming -L n,-(n+1) now blames
+> the first n lines of a file rather than from n to the end of the file.
+> Blaming -L ,-n will be treated as -L 1,-n and blame the first line of
+> the file, rather than blaming the whole file.
 >
-> Do we even need to do the parent rewriting here? By definition those
-> parents aren't interesting, and we're TREESAME to whatever is in
-> treesame_parents. So conceptually it seems like we just need a flag "I
-> found a treesame parent", but we only convert that into a TREESAME flag
-> if there are no relevant parents.
+> Signed-off-by: Isabella Stephens <istephens@atlassian.com>
+> ---
+> diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+> @@ -152,6 +152,16 @@ Also you can use a regular expression to specify the line range:
+>  which limits the annotation to the body of the `hello` subroutine.
+>
+> +A range that begins or ends outside the bounds of the file will
+> +blame the relevant lines. For example:
+> +
+> +       git blame -L 10,-20 foo
+> +       git blame -L 10,+20 foo
+> +
+> +will respectively blame the first 10 and last 11 lines of a
+> +20 line file. However, blaming a line range that is entirely
+> +outside the bounds of the file will fail.
 
-I think it's necessary to make the rules consistent. To mark the commit 
-as TREESAME here when it's not TREESAME to all its parents would be 
-inconsistent with the definition of the TREESAME flag used everywhere else:
+This documentation seems misplaced. Rather than inserting it after the
+discussion of -L/regex/, a more natural place would be just above
+-L/regex/ where -L<begin>,<end> is discussed.
 
-* Original definition: "A commit is TREESAME if it is treesame to any 
-parent"
-* d0af66 definition: "A commit is TREESAME if it is treesame to all parents"
-* Current 4d8266 definition: "A commit is TREESAME if it is treesame to 
-all relevant parents; if no relevant parents then if it is treesame to 
-all (irrelevant) parents."
+However, I am not at all convinced that this behavior should be
+documented to this level of detail. Doing so assigns too much emphasis
+to what should be intuitive, thus wastes readers' time wondering why
+it is so heavily emphasized. At _most_, I would think you could say
+merely:
 
-The current problem is that the node is not marked TREESAME, but that's 
-consistent with the definition. I think we do have to rewrite the commit 
-so it is TREESAME as per the definition. Not flag it as TREESAME in 
-violation of it.
+    A range that begins or ends outside the bounds of the file
+    will be clipped to the file's extent.
 
-It's possible you *could* get away with just flagging, because we never 
-recompute the TREESAME flag in simple history mode. But it would be a 
-cheat, and it may have other side effects. It means this node would 
-remain a special rare case for others to trip up on later.  And I don't 
-think it simplifies the scan. Remembering 
-"pointer-to-first-treesame-parent" (not a list) for the rewrite is no 
-more complex than remembering "bool-there-was-a-treesame-parent".  (A 
-bool is what earlier code did - it worked for the original TREESAME 
-definition. My patch series dropped that bool without replacement - 
-missing this all-irrelevant case).
+and drop the example and discussion of the example results altogether.
 
-In the simple history mode, the assumption is we're "simplifying away 
-merges up-front" here; we won't (and can't) rewrite parents later in a 
-way that needs to recompute TREESAME. In the initial scan when all 
-parents are relevant and we matched one, the commit became TREESAME as 
-per the new definition immediately because of the rewrite.  This applies 
-the equivalent rewrite when no relevant parents, consistent with the 
-general concept, and without changing the TREESAME definition.
+In fact, because this new behavior is what most users will intuitively
+expect, it might be perfectly reasonable to not say anything about it
+at all (that is, don't modify git-blame.txt).
 
-Kevin
-
-
+Thanks.
