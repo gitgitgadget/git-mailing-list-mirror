@@ -2,213 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA65F1F42D
-	for <e@80x24.org>; Wed, 30 May 2018 21:07:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 104C61F42D
+	for <e@80x24.org>; Wed, 30 May 2018 21:14:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932462AbeE3VHj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 17:07:39 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:55380 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932321AbeE3VHi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 17:07:38 -0400
-Received: by mail-wm0-f67.google.com with SMTP id a8-v6so50169763wmg.5
-        for <git@vger.kernel.org>; Wed, 30 May 2018 14:07:37 -0700 (PDT)
+        id S1753587AbeE3VOO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 17:14:14 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:34472 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753275AbeE3VON (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 17:14:13 -0400
+Received: by mail-qt0-f193.google.com with SMTP id m5-v6so25225313qti.1
+        for <git@vger.kernel.org>; Wed, 30 May 2018 14:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wrxqX6cP/E8M8QlI4itUjLGD9jLJL0t44oPIXd9ewuo=;
-        b=c9D4TIpFzs/TvKsN5BrSc3SyNyx1w/3AtnXsjCCfvQpCIxuerrHErwp8RtIf5gPxGD
-         LxbBWDZcFGFwOClbeqH4LiVQ4degMZFl9Nl7VEtu5WK8ugMDxYvcYUFbWmV1N9ZjqJpm
-         yBRinX1RiscnjJXE6n8Bn2TXo2lFThB+z7RXEQp4PoOV7Hmi07J0z8urEQOrDYStF3UK
-         TLS5M8dNQ92vBzVz8X8Ed0XaOdOva2a4iFbHDg9XJDaMBvFYCHK3W4H4G2n1lAFMyAVE
-         XL47aYNyjHNg1N6p0ZfOKE2r50nIf4JFzBQwaYCmEFFXllpfexCw/Ukz1e+7IjTvWLZI
-         YEgg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=W68N7P7R+VzCAPUuzOc/WQon7YS83KbwUfoQQlp8rNs=;
+        b=hHYaNxYqJp6FKymJhCQ4HfMa9selUmRXhGYsCwOP0nGnBaylH1HFBVjV3BGu1HrH5z
+         aIAnGyawnXBUaUlVHtPco105+A3VPFIPmxq2QOh6D4l8BUdp/hqSLTlcfkz3fpxJqd63
+         AQ/HrY8PZ5lv3zL35Eug62pm3K7q8CGflZzeMTmtZW6sDjLU9lHuHGi5gkqTGFysftl1
+         gZBNnEm4LNvSV98mXsQvr8/cSmztLXN6+tFM33UDgFJcbig/SjhIUBjUUhDLkZp5LiG+
+         7V++rT/5VLVgXqKkY6f0WPs29eQ7c14B+FI/mAlW8EA4X9vw/ib0LXv6j/J+oIl/3+bu
+         9wTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wrxqX6cP/E8M8QlI4itUjLGD9jLJL0t44oPIXd9ewuo=;
-        b=YFAnJgBCYpatcs7rTBycnT0V1FUfbb3NWvB4Mn/0i9HBMIxb/lgJJCnKWe+sJqz9Q/
-         0IUwwgagKZGd78ECIZiGIsH77GWmCzZAG25qZBWrkDSAfgxKQqIUbafnAS0iqF37h1Pu
-         rEqZU4EIXzp29xycE+MaeHdAbx9Cgc7r18z44UgxtBWu5QpfEEGT1fsq0dwXwyEJIk8o
-         uxEEBShXWqSTLWxhkxUXJSCB1Q20Ct2CRvTg1dvEwYzJrT9Hm64sdZ0FBqMvYM2xkMnj
-         KFkXjBjLu6Ocdu9pxxmuWOlDfX3IfKL7BB9XxcI7V6aJWIhM9ajEwjMjv8jW4T5Y5UJm
-         nH+g==
-X-Gm-Message-State: ALKqPwfkPNtCIjGkpOh1E3q8s+3XjFD22Vj0Y/qdSQmLZjHK0g6eQTOo
-        d+nM1lUcUIYq4c3sPPFhRWtcULEp
-X-Google-Smtp-Source: ADUXVKKjlKSye8Cips9Py4y3ROC9oZpjFFCNvIhu4kRa0L1hreZrppmfv+HCJbOrE0U3g82TkYeLCA==
-X-Received: by 2002:a1c:8f8f:: with SMTP id r137-v6mr2407127wmd.103.1527714456916;
-        Wed, 30 May 2018 14:07:36 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id o16-v6sm18237097wri.67.2018.05.30.14.07.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 May 2018 14:07:36 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH 4/4] color.ui config: add "isatty" setting
-Date:   Wed, 30 May 2018 21:06:41 +0000
-Message-Id: <20180530210641.19771-5-avarab@gmail.com>
-X-Mailer: git-send-email 2.17.0.290.gded63e768a
-In-Reply-To: <20180530210641.19771-1-avarab@gmail.com>
-References: <20180530210641.19771-1-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=W68N7P7R+VzCAPUuzOc/WQon7YS83KbwUfoQQlp8rNs=;
+        b=pNtcZCXBLS175EVH94yFSZQVBxQ5JonXCN5Dw15U2AO8SxaMesmGzK2Sm+u9mW3CVr
+         BzjeutlM44fqtZWgbVZUF42q35ZH1QXJnn1zFWRqPsklx0C66yIliyc/7pyInV5rFPpt
+         J1NxomCMvgqnyARltCU/ikyLfxQ0rtoq/6f0t+pyZCG1/VT5MkWG1zwSQJbpklZ7nZz5
+         pd5I4gYar0FdiOwrn3secHDzgAc3w+cqRac6gHxQtq0IgvjyRMjWhj6jgHQnJRjvHN2n
+         7yhJ+VNWj/TmDF6R/sURGd5PbPVKfc8sJ3fRzxsE2AjQCz/XMv8nD/hrzbezQ0s3AfzW
+         ziwA==
+X-Gm-Message-State: APt69E1eSQKxAJN+2qCDhkFEayd0yRvo0HLvulVRzV7ZjTYyjnkyq2IV
+        dDSYFtzQiPfZRq2oytBgl/b1f6+oSZ4Mvs76SII=
+X-Google-Smtp-Source: ADUXVKI20S2hLxsTIFfLOd4gTLj0ZOok/uAu69tAz82pqJK/N3rEU3pY4KNGNiOU1DfDsV5V82Rh5kfbbq2PBL0jRQo=
+X-Received: by 2002:ac8:678c:: with SMTP id b12-v6mr4128287qtp.314.1527714852370;
+ Wed, 30 May 2018 14:14:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a0c:aa4b:0:0:0:0:0 with HTTP; Wed, 30 May 2018 14:14:11
+ -0700 (PDT)
+In-Reply-To: <CAGZ79ka1-emwYsEh1EQdh=pgFUV_bi2xoDu1Ajq=Z1XkkhyuDw@mail.gmail.com>
+References: <20180530080325.37520-1-sunshine@sunshineco.com>
+ <20180530080325.37520-5-sunshine@sunshineco.com> <CAGZ79kZ2MKpjwwx0+ZsPZ9bFu_ersPJ=kKPYWRmWYjJ8yoVhuA@mail.gmail.com>
+ <CAPig+cRh02976beGp5c5Sw5=h86VgNZgVreCHh38QKP5udJeGg@mail.gmail.com> <CAGZ79ka1-emwYsEh1EQdh=pgFUV_bi2xoDu1Ajq=Z1XkkhyuDw@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 30 May 2018 17:14:11 -0400
+X-Google-Sender-Auth: uiPcNX-G2Hy93icZ4WJYTE1FN9k
+Message-ID: <CAPig+cS+X8une=g0sSVc4dnZCsnFYe1D=v1iO+zs1ChGuQAJYg@mail.gmail.com>
+Subject: Re: [RFC PATCH 4/5] format-patch: teach --range-diff to respect -v/--reroll-count
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A co-worker of mine who was using UNIX systems when dinosaurs roamed
-the earth was lamenting that kids these days were using tools like
-"git" that thought they knew better than isatty(3) when deciding
-whether or not something was a terminal, and the state of the
-documentation fixed earlier in this series certainly didn't help.
+On Wed, May 30, 2018 at 5:03 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Wed, May 30, 2018 at 1:44 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> Unrelated to this patch: how does this series cope with range diffs
+>>> that are not in commit-ish but patches on the file system?
+>>
+>> I'm not following. Can you provide a concrete example to get me up to speed?
+>
+> I was just wondering if things like
+>
+>     git format-patch --range-diff=v3-00*.patch --reroll-count=4 -3
+>
+> would be supported, but that doesn't seem to be the case, now that I read
+> the whole series. I don't think it is crucial to support right now.
 
-So this setting is a small gift to all the UNIX graybeards out
-there. Now they can set color.ui=isatty and only emit fancy colors in
-situations when the gods of old intended, not whatever heuristic we've
-decided to set "auto" to.
+Okay, that's what I thought you meant (upon thinking harder about it
+after hitting Send). git-range-diff doesn't support that mode of
+operation (nor does 'tbdiff', as far as I can tell), so as a thin
+wrapper around git-range-diff, "git format-patch --range-diff" doesn't
+support it either.
 
-As noted here this is *currently* the same as setting color.ui=auto &
-color.pager=false, but I think it's good to explicitly have this
-setting for any future changes. The reason, as now noted in the
-documentation is that the "auto" setting may become even smarter in
-the future and learn even deeper heuristics for when to turn itself on
-even if isatty(3) were returning true.
+Perhaps that sort of functionality could implement later by someone,
+if desired. In the meantime, the following (manual procedure) would
+approximate it:
 
-At that point the fans of plain isatty(3) will become even more upset
-at what we're doing, so let's give them a simple future-proof opt-out.
+    git checkout --detach <base>
+    git am v3-00*.patch
+    git format-patch --range-diff=...
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/config.txt | 10 ++++++++++
- color.c                  | 12 ++++++++----
- color.h                  |  1 +
- t/t7006-pager.sh         | 15 +++++++++++++++
- 4 files changed, 34 insertions(+), 4 deletions(-)
+> This whole series is reviewed by me and I think it is good for inclusion
+> once we have a reroll of the range-diff series and aligned the command
+> name to call.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index b882a88214..183569786f 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1292,6 +1292,16 @@ color.ui::
- 	determined by a call to `isatty(3)`) or to a pager (unless
- 	`color.pager` is set to false).
- +
-+If you don't like the magic of `auto` and prefer for git to just ask
-+`isatty(3)` whether it's connected to a terminal set this to
-+`isatty`. This will cause it to always obey that function, except
-+(like `auto`) if `TERM=dumb` is set in the environment. Currently this
-+is equivalent to setting `auto` and `color.pager=false`, but in the
-+future `auto` may be smart enough to handle other cases, i.e. when
-+`isatty(3)` returns `1` but something else other than `TERM=dumb`
-+suggests the terminal can't handle colors or not. If you'd like to
-+avoid all that magic use `isatty`.
-++
- Setting this to some value unknown to git will warn and fall back to
- `auto`. This is so that new values can be recognized in the future
- without the git configuration file being incompatible between versions
-diff --git a/color.c b/color.c
-index e52c6cdd29..05f95649bc 100644
---- a/color.c
-+++ b/color.c
-@@ -306,6 +306,8 @@ int git_config_colorbool(const char *var, const char *value)
- 			return 1;
- 		if (!strcasecmp(value, "auto"))
- 			return GIT_COLOR_AUTO;
-+		if (!strcasecmp(value, "isatty"))
-+			return GIT_COLOR_ISATTY;
- 	}
- 
- 	if (!var)
-@@ -332,13 +334,14 @@ int git_config_colorbool(const char *var, const char *value)
- 	return GIT_COLOR_AUTO;
- }
- 
--static int check_auto_color(int fd)
-+static int check_auto_color(int fd, int isatty_only)
- {
- 	static int color_stderr_is_tty = -1;
- 	int *is_tty_p = fd == 1 ? &color_stdout_is_tty : &color_stderr_is_tty;
- 	if (*is_tty_p < 0)
- 		*is_tty_p = isatty(fd);
--	if (*is_tty_p || (fd == 1 && pager_in_use() && pager_use_color)) {
-+	if (*is_tty_p || (!isatty_only && fd == 1 && pager_in_use() &&
-+			  pager_use_color)) {
- 		if (!is_terminal_dumb())
- 			return 1;
- 	}
-@@ -359,9 +362,10 @@ int want_color_fd(int fd, int var)
- 	if (var < 0)
- 		var = git_use_color_default;
- 
--	if (var == GIT_COLOR_AUTO) {
-+	if (var == GIT_COLOR_AUTO || var == GIT_COLOR_ISATTY) {
-+		int isatty_only = var == GIT_COLOR_ISATTY;
- 		if (want_auto[fd] < 0)
--			want_auto[fd] = check_auto_color(fd);
-+			want_auto[fd] = check_auto_color(fd, isatty_only);
- 		return want_auto[fd];
- 	}
- 	return var;
-diff --git a/color.h b/color.h
-index 5b744e1bc6..01d8cc01a5 100644
---- a/color.h
-+++ b/color.h
-@@ -57,6 +57,7 @@ struct strbuf;
- #define GIT_COLOR_NEVER  0
- #define GIT_COLOR_ALWAYS 1
- #define GIT_COLOR_AUTO   2
-+#define GIT_COLOR_ISATTY 3
- 
- /* A default list of colors to use for commit graphs and show-branch output */
- extern const char *column_colors_ansi[];
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index b16f2ac28b..ea4f2f47d0 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -309,6 +309,13 @@ test_expect_success 'no color when stdout is a regular file' '
- 	! colorful colorless.log
- '
- 
-+test_expect_success 'no color when stdout is a regular file (isatty)' '
-+	rm -f colorless.log &&
-+	test_config color.ui isatty &&
-+	git log >colorless.log &&
-+	! colorful colorless.log
-+'
-+
- test_expect_success 'unknown color.ui values default to "auto" (regular file)' '
- 	rm -f colorless.log &&
- 	test_config color.ui doesnotexist &&
-@@ -340,6 +347,14 @@ test_expect_success TTY 'colors are suppressed by color.pager' '
- 	! colorful paginated.out
- '
- 
-+test_expect_success TTY 'colors are suppressed by color.ui=isatty when writing to a pager' '
-+	rm -f paginated.out &&
-+	test_config color.ui isatty &&
-+	test_config color.pager true &&
-+	test_terminal git log &&
-+	! colorful paginated.out
-+'
-+
- test_expect_success 'color when writing to a file intended for a pager' '
- 	rm -f colorful.log &&
- 	test_config color.ui auto &&
--- 
-2.17.0.290.gded63e768a
-
+Thanks.
