@@ -2,224 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70C6D1F42D
-	for <e@80x24.org>; Wed, 30 May 2018 19:22:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 696691F42D
+	for <e@80x24.org>; Wed, 30 May 2018 19:51:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932145AbeE3TWv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 15:22:51 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36202 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932108AbeE3TWt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 15:22:49 -0400
-Received: by mail-wm0-f66.google.com with SMTP id v131-v6so30523640wma.1
-        for <git@vger.kernel.org>; Wed, 30 May 2018 12:22:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=G3dm87TvSooet/olMMrnz1u3sEKnd1RH1gI73LQcy4w=;
-        b=PAW/s/gJZvFKeqAo/pFYbLwnqdu2iUS7chHArQCLt3vKxflHgUum+k2otCidSZsX4Y
-         rA5ye20dnOtFiTG8j+HPCV4r7F9hNBDgVfAvPb8H5Z5vBSDekhnNbffccHCNoPGQ+gE8
-         be5VT9x+7FHYyWSEXuTcx4C23NWGspgWaghWYoFNLn0R+S0UnT/ulgilH+RROo/2b2oL
-         Nq8WW3rrgu0P5SmlvqgXnEN1MipKF9+OVSZNmZCfn603jjXMTCFjKdrrMtFL/GAyKfKU
-         6oUpSYgr4pDc5iK79I1xlr4VXxlq4IeuNKn0HQAje2/GjbZHHxV2kiMuOeMES/wQ2CIL
-         u+2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=G3dm87TvSooet/olMMrnz1u3sEKnd1RH1gI73LQcy4w=;
-        b=KmEP3oXABMBp5C8BiVJ1ZLUJeK232skQVtATh3ICvCVCyUsssYDAieXQpv1e3O8oUR
-         YED+Gh298sxajKdgNH9Qrqd9OHHkMhkFDjJaMsM6TBNr1H9O+aw65CqWXVMz049+/fH5
-         nsd0/JqzYg5MCi3zPCxbPrpPsjQpzv+ScldQr4d8smQ6Ns+qRvjWi8ok7/whxKoJ3856
-         2+2yWOjEs9GLsIxfikD+GNb0hPPpQ/DiN8LLtSirapjwluccfM36UEKNxpi9FZ4A0r8v
-         Pet9gs9bpvbdGnPULBa2p+OPmm1fuwsxtKy8PM/0AfJiQhA2FTz6ZbNOcjIRxLfvo6Vq
-         sbiA==
-X-Gm-Message-State: APt69E2bA8aoW/MITXS5fqvwGsjFYoBOmvCnUxVwE+JanckwRNxbUxZQ
-        jsu6rinqsF6LTeEYrdThug4=
-X-Google-Smtp-Source: ADUXVKIn1mcSMXabo0F5UzfJp6fqIR8N8DE1AlSTZCqOQ0TCUiWbkTWrvSSJ8HbeW89aHCeYesG+Rg==
-X-Received: by 2002:a1c:c86:: with SMTP id 128-v6mr2194802wmm.18.1527708168522;
-        Wed, 30 May 2018 12:22:48 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (ahg103.neoplus.adsl.tpnet.pl. [83.25.188.103])
-        by smtp.gmail.com with ESMTPSA id d12-v6sm27478274wre.39.2018.05.30.12.22.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 30 May 2018 12:22:47 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster\@pobox.com" <gitster@pobox.com>,
-        "stolee\@gmail.com" <stolee@gmail.com>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "marten.agren\@gmail.com" <marten.agren@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>
-Subject: Re: [PATCH v3 10/20] commit-graph: verify objects exist
-References: <20180511211504.79877-1-dstolee@microsoft.com>
-        <20180524162504.158394-1-dstolee@microsoft.com>
-        <20180524162504.158394-11-dstolee@microsoft.com>
-Date:   Wed, 30 May 2018 21:22:45 +0200
-In-Reply-To: <20180524162504.158394-11-dstolee@microsoft.com> (Derrick
-        Stolee's message of "Thu, 24 May 2018 16:25:47 +0000")
-Message-ID: <86a7shvth6.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S932174AbeE3TvA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 15:51:00 -0400
+Received: from us-smtp-delivery-139.mimecast.com ([216.205.24.139]:39755 "EHLO
+        us-smtp-delivery-139.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932208AbeE3TuF (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 30 May 2018 15:50:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zerochaos.com; s=mimecast20170602; t=1527709804; h=from:subject:date:message-id:to:mime-version:content-type:content-transfer-encoding; bh=AQpzkvlaKzY+83noLLhNNhohdCdfIhgcqps68W0muHw=; b=VJ0xGmqsmGgmVMSyyWLqmPe+gb2JpE4RcYGtwf7krXD2M8KmZ2gXSlyxhUOpDrTvlbF5fKvo1HzvC25H03t9Lw8iHXFvziUsfLIR/NXb4Z+btOykBn6p1gvVjeXQLfy6E2gwcSqDUd9uqLNOvFMmkrOz5LF+IK5ZqHehgj7RbvM=
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com
+ (mail-sn1nam02lp0017.outbound.protection.outlook.com [216.32.180.17])
+ (Using TLS) by us-smtp-1.mimecast.com with ESMTP id
+ us-mta-190-cUZzuYXLMO-pBU4p-IZWeg-1; Wed, 30 May 2018 15:48:58 -0400
+Received: from DM5PR0102MB3431.prod.exchangelabs.com (52.132.129.22) by
+ DM5PR0102MB3592.prod.exchangelabs.com (52.132.132.10) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.797.11; Wed, 30 May 2018 19:48:57 +0000
+Received: from DM5PR0102MB3431.prod.exchangelabs.com
+ ([fe80::ed58:473f:c80d:a6b5]) by DM5PR0102MB3431.prod.exchangelabs.com
+ ([fe80::ed58:473f:c80d:a6b5%2]) with mapi id 15.20.0797.020; Wed, 30 May 2018
+ 19:48:57 +0000
+From:   John Meyer <jmeyer@zerochaos.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Git installer bugs
+Thread-Topic: Git installer bugs
+Thread-Index: AdP4TzNsQLWdBxBIS0mFSNTNusay8g==
+Date:   Wed, 30 May 2018 19:48:56 +0000
+Message-ID: <DM5PR0102MB343149C5313DFE76852857DCCD6C0@DM5PR0102MB3431.prod.exchangelabs.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [75.112.171.138]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;DM5PR0102MB3592;7:KORIps3UImbG/jxIdtkcPR0gu27AKxeHxzyoTWbDJp6nxz+fv/1Q+Th1EzpBx3r97QdxWmeb9MdQVh/Zg4ZBA/O3DJOJeJNtUuFICXoIp27o93/K+DR9gVVLq3Av6IbqDFMPJd5L+EpIRLrgB2gmkZ1g22DSEG6badYh/HeQlzLa8pX24lN2vZE4i0BkME/NCZHlHAc/VGdoPiy14cHFozE+cilKLMuH+AxSU40TPsUY08MO1X3ijebcQhbUTFuz;20:HdE26Q6hEnfMDCeOjG9lBYeCePQfFM/jGP3M7466S6PaBFilKNFoQQ+LmI+5nv6GDCfUYFRwDWuvgYNlQjrzJwrLrRGX0Azbzpds26q8EkAMo72SPHZ2AtmzdZUTEd/lKJEHxLlCd7RYQJxfMrKVEoFF/1tqF/L7HEHeuVc5fis=
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:DM5PR0102MB3592;
+x-ms-traffictypediagnostic: DM5PR0102MB3592:
+x-microsoft-antispam-prvs: <DM5PR0102MB3592844A438B4150715D6BDDCD6C0@DM5PR0102MB3592.prod.exchangelabs.com>
+x-exchange-antispam-report-test: UriScan:(100217034793204);
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3002001)(10201501046)(3231254)(944501410)(52105095)(149027)(150027)(6041310)(20161123560045)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(20161123564045)(6072148)(201708071742011)(7699016);SRVR:DM5PR0102MB3592;BCL:0;PCL:0;RULEID:;SRVR:DM5PR0102MB3592;
+x-forefront-prvs: 0688BF9B46
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(346002)(396003)(39850400004)(376002)(39380400002)(366004)(199004)(189003)(2351001)(59450400001)(106356001)(3480700004)(5660300001)(7116003)(53936002)(9686003)(7736002)(5640700003)(6436002)(5250100002)(305945005)(6916009)(81166006)(1730700003)(2501003)(81156014)(33656002)(2906002)(105586002)(186003)(26005)(14454004)(74316002)(2900100001)(478600001)(99286004)(486006)(476003)(8936002)(3280700002)(97736004)(102836004)(3660700001)(8676002)(316002)(6116002)(7696005)(25786009)(6506007)(66066001)(55016002)(3846002)(86362001)(68736007);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR0102MB3592;H:DM5PR0102MB3431.prod.exchangelabs.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+x-microsoft-antispam-message-info: k0ljGMh7lrxKVcBv8pqBXJRxL8/wAFx2vMzOo0rpqo+DcbiE2BRPc+UoSfgCkw0zYQMPAWUVqnYX6RaXxm0KAmvTFDu3p9isSH3U8NNhEulM66NxkF/Ij1xMzNcFYGHlaQAzYNaHqu0l5pFYwuj/bz4V3A0XEyAcgc50YgqX3Xc1/6WnFiJlbaGwuf/i41z6
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+X-MS-Office365-Filtering-Correlation-Id: 160c7e4f-daf4-49d3-97fb-08d5c66661af
+X-OriginatorOrg: zerochaos.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 160c7e4f-daf4-49d3-97fb-08d5c66661af
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 May 2018 19:48:56.9873
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 1718ad97-4ed4-4b59-b5ab-e4a031924237
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR0102MB3592
+X-MC-Unique: cUZzuYXLMO-pBU4p-IZWeg-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
-
-> In the 'verify' subcommand, load commits directly from the object
-> database to ensure they exist. Parse by skipping the commit-graph.
-
-All right, before we check that the commit data matches, we need to
-check that all the commits in cache (in the serialized commit graph) are
-present in real data (in the object database of the repository).
-
-What's nice of this series is that the operation that actually removes
-unreachable commits from the object database, that is `git gc`, would
-also update commit-gaph file.
-
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  commit-graph.c          | 20 ++++++++++++++++++++
->  t/t5318-commit-graph.sh |  7 +++++++
->  2 files changed, 27 insertions(+)
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index cbd1aae514..0420ebcd87 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -238,6 +238,10 @@ static struct commit_list **insert_parent_or_die(str=
-uct commit_graph *g,
->  {
->  	struct commit *c;
->  	struct object_id oid;
-> +
-> +	if (pos >=3D g->num_commits)
-> +		die("invalid parent position %"PRIu64, pos);
-> +
-
-This change is not described in the commit message.
-
->  	hashcpy(oid.hash, g->chunk_oid_lookup + g->hash_len * pos);
->  	c =3D lookup_commit(&oid);
->  	if (!c)
-> @@ -905,5 +909,21 @@ int verify_commit_graph(struct commit_graph *g)
->  		cur_fanout_pos++;
->  	}
->=20=20
-> +	if (verify_commit_graph_error)
-> +		return verify_commit_graph_error;
-
-All right, so we by default short-circuit so that errors found earlier
-wouldn't cause crash when checking other things.
-
-Is it needed, though, in this case?  Though I guess it is better to be
-conservative; lso by terminating after a batch of one type of errors we
-don't get many different error messages from the same error (i.e. error
-propagation).
-
-> +
-> +	for (i =3D 0; i < g->num_commits; i++) {
-> +		struct commit *odb_commit;
-> +
-> +		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
-> +
-> +		odb_commit =3D (struct commit *)create_object(cur_oid.hash, alloc_comm=
-it_node());
-
-Do we really need to keep all those commits from the object database in
-memory (in the object::obj_hash hash table)?  Perhaps using something
-like Flywheel / Recycler pattern would be a better solution (if
-possible)?
-
-Though perhaps this doesn't matter much with respect to memory use.
-
-> +		if (parse_commit_internal(odb_commit, 0, 0)) {
-
-Just a reminder to myself: the signature is
-
-  int parse_commit_internal(struct commit *item, int quiet_on_missing, int =
-use_commit_graph)
+Ran the installer, selected the option to not modify the path & the path wa=
+s modified anyway... it removed git from the path (it was there from a prio=
+r install).  I should NOT have to manually fix my path after an update, eve=
+n the option to add git to the path should be smart enough to recognize it'=
+s there already & leave the path unmodified (sorry, I know that's 2 differe=
+nt bugs in 1 email, but they are related).
 
 
-Hmmm... I wonder if with two boolean paramaters wouldn't it be better to
-use flags parameter, i.e.
+John Meyer
+Technical Lead, ZeroChaos
+jmeyer@zerochaos.com
 
-  int parse_commit_internal(struct commit *item, int flags)
+Disclaimer: This email is intended only for the use of the party to which i=
+t is addressed and may contain information that is privileged, confidential=
+, or protected by law. If you are not the intended recipient you are hereby=
+ notified that any dissemination, copying or distribution of this email or =
+its contents is strictly prohibited. If you have received this message in e=
+rror, please notify us immediately by replying to the message and deleting =
+it from your device.
 
-  ...
+This email message has been delivered safely and archived online by Mimecas=
+t.  For more information please visit http://www.mimecast.com
 
-  parse_commit_internal(commit, QUIET_ON_MISSING | USE_COMMIT_GRAPH)
-
-But I guess that it is not worth it (especially for internal-ish
-function).
-
-> +			graph_report("failed to parse %s from object database",
-> +				     oid_to_hex(&cur_oid));
-
-Wouldn't parse_commit_internal() show it's own error message, in
-addition to the one above?
-
-> +			continue;
-> +		}
-> +	}
-> +
->  	return verify_commit_graph_error;
->  }
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index c050ef980b..996a016239 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -247,6 +247,7 @@ test_expect_success 'git commit-graph verify' '
->  	git commit-graph verify >output
->  '
->=20=20
-> +NUM_COMMITS=3D9
->  HASH_LEN=3D20
->  GRAPH_BYTE_VERSION=3D4
->  GRAPH_BYTE_HASH=3D5
-> @@ -265,6 +266,7 @@ GRAPH_BYTE_FANOUT1=3D`expr $GRAPH_FANOUT_OFFSET + 4 \=
-* 4`
->  GRAPH_BYTE_FANOUT2=3D`expr $GRAPH_FANOUT_OFFSET + 4 \* 255`
->  GRAPH_OID_LOOKUP_OFFSET=3D`expr $GRAPH_FANOUT_OFFSET + 4 \* 256`
->  GRAPH_BYTE_OID_LOOKUP_ORDER=3D`expr $GRAPH_OID_LOOKUP_OFFSET + $HASH_LEN=
- \* 8`
-> +GRAPH_BYTE_OID_LOOKUP_MISSING=3D`expr $GRAPH_OID_LOOKUP_OFFSET + $HASH_L=
-EN \* 4 + 10`
-
-All right, so we modify 10-the byte of OID of 5-th commit out of 9,
-am I correct here?
-
->=20=20
->  # usage: corrupt_graph_and_verify <position> <data> <string>
->  # Manipulates the commit-graph file at the position
-> @@ -334,4 +336,9 @@ test_expect_success 'detect incorrect OID order' '
->  		"incorrect OID order"
->  '
->=20=20
-> +test_expect_success 'detect OID not in object database' '
-> +	corrupt_graph_and_verify $GRAPH_BYTE_OID_LOOKUP_MISSING "\01" \
-> +		"from object database"
-> +'
-
-I guess that if we ensure that OIDs are constant, you have chosen the
-change to actually corrupt the OID in OID Lookup chunk to point to OID
-that is not in the object database (while still not violating the
-constraint that OID in OID Lookup chunk needs to be sorted).
-
-> +
->  test_done
-
-All right (well, except for `expr ... ` --> $(( ... )) change).
-
---=20
-Jakub Nar=C4=99bski
