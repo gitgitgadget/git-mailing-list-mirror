@@ -2,228 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC7051F42D
-	for <e@80x24.org>; Wed, 30 May 2018 22:25:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADCEC1F42D
+	for <e@80x24.org>; Wed, 30 May 2018 22:32:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932503AbeE3WZD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 18:25:03 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:39833 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932392AbeE3WZC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 18:25:02 -0400
-Received: by mail-wm0-f66.google.com with SMTP id f8-v6so50642631wmc.4
-        for <git@vger.kernel.org>; Wed, 30 May 2018 15:25:01 -0700 (PDT)
+        id S932457AbeE3Wc5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 18:32:57 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:32775 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932393AbeE3Wc4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 18:32:56 -0400
+Received: by mail-yw0-f196.google.com with SMTP id u124-v6so5406740ywg.0
+        for <git@vger.kernel.org>; Wed, 30 May 2018 15:32:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=6li+zP+O2isaWR4c4OA5eGr92CrL1YD3Fs+eyiddXW4=;
-        b=cEY+bE+0Pp265k+co57SK4ekmRkk7d6dfs2IXkaFoC/NY8SFrYMPsYEx/kyhYCnqG4
-         luOafbJIynOKyICOb9zL68TLV+MgMWDBSS5aoQQUrDCKIL7+DE3v/cRfEsi9Mi5H359S
-         K6nJt0Yhmss+qL4m0prymmr0sEcBSUFkYEY+ch0hnLBG1fFY5cF3+yN2PXUo83udsuUq
-         KA0xEQb5bVVh4xk7OjpXVocMv/m/yKMsEnkNIHYQtPbuTGVpgFu9nO2Lp4X05uvkvO9c
-         n0IKlBZCbVnH13UnpNufw9i3NtwEA5f0EOawSiQJUNU8qvsSR6/j4QMr0pf463EI1aT3
-         Y45Q==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=sMt4k2w9iCdYl0hIheORtPqQhGs/vCqaAq63m6C3zo8=;
+        b=D788CEky2ywyAhrdgegaDL8yPT/t4VT0aGCZx/Ph5U+w1IHp+W3ZDOjtRQNk9kIo7N
+         u+jlVQcdaxSu0yoFTBBPHwnz8TdeeonOEBgfuiCkz4DEwsGDdvqnDkofM+5kZ0sqMfSl
+         dJQ5oxfLtkMWibdADPltqza19hJwzqnggLmVM/gDRwZiVzKE+vA+9mmAlU4wvGNWKW/3
+         1ZHyNWd6pH3rHbrPi2qABVblW2UEz1lVMI4ccbQKdITYEGbICkOH0vSbH2BaWjJmGWF6
+         ONQ5ZlU4UpXlTtm8wGljOUceaRNXLWeEYB4AN9tMOC4ACkV4NspKIw2lDYHNSxY5py64
+         dw4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=6li+zP+O2isaWR4c4OA5eGr92CrL1YD3Fs+eyiddXW4=;
-        b=OA/bzxj+MpXyvlR59Li3NfLze7HJnezt2KP0AE6fCPmLbWxcqD+5CcUoJbYCUgPs5R
-         aW8wVLFWIEqlgu6GhPM5RaeNgqaiMaoVEM4V6jmYVUKdbQYs2MzbnArOurYtVL0M/QhU
-         89dXu9L6G2CxRGYI1ccvgw+bcG7ZkKML08sZ7ZT3TcFAA5M5N4Cs54nri+C4Lkl2g9zs
-         x80vrWdKizmA4gVxdDaNf0K7eXL+SkDCjPwqpDXC3lgx5KXcbbrm4UJTCFma1M/AXWWY
-         i/FwdrzDGiYQEJp/YgJtOhRzy++LqFL0Mo6WR1DOuyL12vrJqrcNAxdkjZkIOGS2npAR
-         IZZA==
-X-Gm-Message-State: ALKqPwd6aEtfM0tKuivoa2LRBNP10vn0gd+IuTDSDkmHGx1Po2ysgzNk
-        lPcqrc2K9RaCyk4Kprgbdj4=
-X-Google-Smtp-Source: ADUXVKJeRxHmFKmkGVKAYqzcONnPP9XFIDmU71H7eZ76wMn24g09Ujo3FZjwG06KmsNu8dPAPsv2JA==
-X-Received: by 2002:a1c:a104:: with SMTP id k4-v6mr2557101wme.106.1527719101239;
-        Wed, 30 May 2018 15:25:01 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (ahg103.neoplus.adsl.tpnet.pl. [83.25.188.103])
-        by smtp.gmail.com with ESMTPSA id r3-v6sm16131532wrj.78.2018.05.30.15.24.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 30 May 2018 15:24:59 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster\@pobox.com" <gitster@pobox.com>,
-        "stolee\@gmail.com" <stolee@gmail.com>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "marten.agren\@gmail.com" <marten.agren@gmail.com>,
-        "peff\@peff.net" <peff@peff.net>
-Subject: Re: [PATCH v3 11/20] commit-graph: verify root tree OIDs
-References: <20180511211504.79877-1-dstolee@microsoft.com>
-        <20180524162504.158394-1-dstolee@microsoft.com>
-        <20180524162504.158394-12-dstolee@microsoft.com>
-Date:   Thu, 31 May 2018 00:24:58 +0200
-In-Reply-To: <20180524162504.158394-12-dstolee@microsoft.com> (Derrick
-        Stolee's message of "Thu, 24 May 2018 16:25:49 +0000")
-Message-ID: <86zi0gvl1h.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=sMt4k2w9iCdYl0hIheORtPqQhGs/vCqaAq63m6C3zo8=;
+        b=uAoY670kLxVQWW5sqTTX+HbWEcOV8/6PRwWghc0H4GAqwm7zItNhIRGfP2IzfJbIFW
+         IK5E49uEsqohPrqW1ccpzEnaChjsM449MAwl6ZkdG8X7Cq9C2ulDJpwTV0Ja6SoxR7Mr
+         0HRbu9BZ1Yt7EgdhRcMrqmCrb4LwiInBWUiEAHsB3UEYGEwdELIUs3uMulg992PUiK6o
+         mZElPms9nmV2YRvOuwxIt4JAc+nMVS8Y4+gzGZByRZhyZOKcJQ0Zy/jClO7iwa6oqvGI
+         MBXU6P2M9zxvbK2MK9tjp+foJCzg/mavnff4++JdGiRTskZtGJIfUz+dPTL2MsbSoWt6
+         ++6g==
+X-Gm-Message-State: ALKqPweO77fTwIOUbL0bcoP2rRa0EzMN942lfzagJndflqwo3WWf1GoI
+        /HDoGz8hxVZSBEP3NuaPgJVWysHm+fs+WNrxrMYt4Q==
+X-Google-Smtp-Source: ADUXVKLHRZGzFkTDvxrqd6fou4Y1f/2GTN5cWmsWmRTuZYgb2naJmUhLUOkSrfpeyPpuCsR8UZQeLsoq5PctF94f56s=
+X-Received: by 2002:a81:9447:: with SMTP id l68-v6mr2458240ywg.345.1527719575454;
+ Wed, 30 May 2018 15:32:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Wed, 30 May 2018 15:32:54 -0700 (PDT)
+In-Reply-To: <20180530210641.19771-4-avarab@gmail.com>
+References: <20180530210641.19771-1-avarab@gmail.com> <20180530210641.19771-4-avarab@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 30 May 2018 15:32:54 -0700
+Message-ID: <CAGZ79kZVq1szZ=nPQ87nv1Hrg+yCrQbbkzfuNg1itfEGrBR03w@mail.gmail.com>
+Subject: Re: [RFC PATCH 3/4] color.ui config: don't die on unknown values
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <dstolee@microsoft.com> writes:
+On Wed, May 30, 2018 at 2:06 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Before this change git will die on any unknown color.ui values:
+>
+>     $ git -c color.ui=3Ddoesnotexist show
+>     fatal: bad numeric config value 'doesnotexist' for 'color.ui': invali=
+d unit
+>
+> This makes the failure mode of introducing any new values in the
+> future really bad, as explained in the documentation being added
+> here. Instead let's warn and fall back to "auto".
 
-> The 'verify' subcommand must compare the commit content parsed from the
-> commit-graph and compare it against the content in the object database.
+We had a similar regression in the protocol.version setting in 2.16 IIRC.
+It makes sense to fix it this way.
 
-You have "compare" twice in the above sentence.
+> The reason for the !warned++ pattern is when stepping through this in
+> the debugger I found that git_config_colorbool() is called more than
+> once on e.g. a "show" if color.ui=3Dfoo is set in the config, but
+> color.ui=3Dbar in the command-line, and would then warn about
+> both.
+>
+> Maybe we should warn about both in that case, but I don't know if
+> there's other cases where not doing this would cause a warning flood,
+> and in any case the user is unlikely to have such a bad value in
+> multiple places, so this should be good enough.
 
-> Use lookup_commit() and parse_commit_in_graph_one() to parse the commits
-> from the graph and compare against a commit that is loaded separately
-> and parsed directly from the object database.
-
-All right, that looks like a nice extension of what was done in previous
-patch.  We want to check that cache (serialized commit graph) matches
-reality (object database).
+agreed.
 
 >
-> Add checks for the root tree OID.
-
-All right; isn't it that now we check almost all information from
-commit-graph that hs match in object database (with exception of commit
-parents, I think).
-
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  commit-graph.c          | 17 ++++++++++++++++-
->  t/t5318-commit-graph.sh |  7 +++++++
->  2 files changed, 23 insertions(+), 1 deletion(-)
+>  Documentation/config.txt |  5 +++++
+>  color.c                  | 13 +++++++++++++
+>  t/t7006-pager.sh         | 16 ++++++++++++++++
+>  3 files changed, 34 insertions(+)
 >
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 0420ebcd87..19ea369fc6 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -880,6 +880,8 @@ int verify_commit_graph(struct commit_graph *g)
->  		return verify_commit_graph_error;
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 4767363519..b882a88214 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1291,6 +1291,11 @@ color.ui::
+>         want such output to use color when written to the terminal (as
+>         determined by a call to `isatty(3)`) or to a pager (unless
+>         `color.pager` is set to false).
+> ++
+> +Setting this to some value unknown to git will warn and fall back to
+> +`auto`. This is so that new values can be recognized in the future
+> +without the git configuration file being incompatible between versions
+> +to the point of most porcelain commands dying on the older version.
+>
+>  column.ui::
+>         Specify whether supported commands should output in columns.
+> diff --git a/color.c b/color.c
+> index b1c24c69de..e52c6cdd29 100644
+> --- a/color.c
+> +++ b/color.c
+> @@ -311,6 +311,19 @@ int git_config_colorbool(const char *var, const char=
+ *value)
+>         if (!var)
+>                 return -1;
+>
+> +       /*
+> +        * If future git versions introduce new color.ui settings we
+> +        * don't want to die right below when git_config_bool() fails
+> +        * to parse them as bool.
+> +        */
 
-NOTE: we will be checking Commit Data chunk; I think it would be good
-idea to verify that size of Commit Data chunk matches (N * (H + 16) bytes)
-that format gives us, so that we don't accidentally red outside of
-memory if something got screwed up (like number of commits being wrong,
-or file truncated).
+I am not sure we need to document this here. Ignoring unknown
+(or warning about unknown) values is the standard for config keys
+at least, for values we probably want a similar thing.
 
->=20=20
->  	for (i =3D 0; i < g->num_commits; i++) {
-> +		struct commit *graph_commit;
-> +
->  		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
->=20=20
->  		if (i && oidcmp(&prev_oid, &cur_oid) >=3D 0)
-> @@ -897,6 +899,11 @@ int verify_commit_graph(struct commit_graph *g)
->=20=20
->  			cur_fanout_pos++;
->  		}
-> +
-> +		graph_commit =3D lookup_commit(&cur_oid);
+> +       if (git_parse_maybe_bool(value) < 0) {
+> +               static int warned =3D 0;
 
-So now I see why we add all commits to memory (to hash structure).
+As someone who moved a lot of global state into the repository object
+this is a fine example where we do not want to have the counter not
+in the repository? (although strictly speaking you'd want to have the
+warning approximately once per repository that is configured wrongly
+or do you want to have this warning once at all?)
 
-> +		if (!parse_commit_in_graph_one(g, graph_commit))
-> +			graph_report("failed to parse %s from commit-graph",
-> +				     oid_to_hex(&cur_oid));
+I think we should take patches 1-3 at least.
 
-All right, this verifies that commit in OID Lookup chunk has parse-able
-data in Commit Data chunk, isn't it?
-
->  	}
->=20=20
->  	while (cur_fanout_pos < 256) {
-> @@ -913,16 +920,24 @@ int verify_commit_graph(struct commit_graph *g)
->  		return verify_commit_graph_error;
->=20=20
->  	for (i =3D 0; i < g->num_commits; i++) {
-> -		struct commit *odb_commit;
-> +		struct commit *graph_commit, *odb_commit;
->=20=20
->  		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
->=20=20
-> +		graph_commit =3D lookup_commit(&cur_oid);
->  		odb_commit =3D (struct commit *)create_object(cur_oid.hash, alloc_comm=
-it_node());
-
-All right, so we have commit data from graph, and commit data from the
-object database.
-
->  		if (parse_commit_internal(odb_commit, 0, 0)) {
->  			graph_report("failed to parse %s from object database",
->  				     oid_to_hex(&cur_oid));
->  			continue;
->  		}
-> +
-> +		if (oidcmp(&get_commit_tree_in_graph_one(g, graph_commit)->object.oid,
-> +			   get_commit_tree_oid(odb_commit)))
-> +			graph_report("root tree OID for commit %s in commit-graph is %s !=3D =
-%s",
-> +				     oid_to_hex(&cur_oid),
-> +				     oid_to_hex(get_commit_tree_oid(graph_commit)),
-> +				     oid_to_hex(get_commit_tree_oid(odb_commit)));
-
-Maybe explicitly say that it doesn't match the value from the object
-database; OTOH this may be too verbose.
-
->  	}
->=20=20
->  	return verify_commit_graph_error;
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index 996a016239..21cc8e82f3 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -267,6 +267,8 @@ GRAPH_BYTE_FANOUT2=3D`expr $GRAPH_FANOUT_OFFSET + 4 \=
-* 255`
->  GRAPH_OID_LOOKUP_OFFSET=3D`expr $GRAPH_FANOUT_OFFSET + 4 \* 256`
->  GRAPH_BYTE_OID_LOOKUP_ORDER=3D`expr $GRAPH_OID_LOOKUP_OFFSET + $HASH_LEN=
- \* 8`
->  GRAPH_BYTE_OID_LOOKUP_MISSING=3D`expr $GRAPH_OID_LOOKUP_OFFSET + $HASH_L=
-EN \* 4 + 10`
-> +GRAPH_COMMIT_DATA_OFFSET=3D`expr $GRAPH_OID_LOOKUP_OFFSET + $HASH_LEN \*=
- $NUM_COMMITS`
-> +GRAPH_BYTE_COMMIT_TREE=3D$GRAPH_COMMIT_DATA_OFFSET
-
-All right, so the first is entry into record in Commit Data chunk, and
-the latter points into tree entry in this record -- which entry is first
-field:
-
-  Commit Data (ID: {'C', 'G', 'E', 'T' }) (N * (H + 16) bytes)
-    * The first H bytes are for the OID of the root tree.
-
->=20=20
->  # usage: corrupt_graph_and_verify <position> <data> <string>
->  # Manipulates the commit-graph file at the position
-> @@ -341,4 +343,9 @@ test_expect_success 'detect OID not in object databas=
-e' '
->  		"from object database"
->  '
->=20=20
-> +test_expect_success 'detect incorrect tree OID' '
-> +	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_TREE "\01" \
-> +		"root tree OID for commit"
-> +'
-
-All right.
-
-I wonder if we can create a test for first check added (that Commit
-Graph data parses correctly), that is the one with the following error
-message:
-
-  "failed to parse <OID> from commit-graph file".
-
-> +
->  test_done
-
-Regards,
---=20
-Jakub Nar=C4=99bski
+Thanks,
+Stefan
