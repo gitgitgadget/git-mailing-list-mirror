@@ -7,71 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E733F1F42D
-	for <e@80x24.org>; Wed, 30 May 2018 23:28:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D18891F42D
+	for <e@80x24.org>; Wed, 30 May 2018 23:37:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932536AbeE3X2r (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 19:28:47 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58324 "EHLO
+        id S932526AbeE3Xh1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 19:37:27 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58338 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753734AbeE3X2p (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 30 May 2018 19:28:45 -0400
+        by vger.kernel.org with ESMTP id S932408AbeE3Xh0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 30 May 2018 19:37:26 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:cc62:bd61:abbd:bc4b])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AC04D60732;
-        Wed, 30 May 2018 23:28:42 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C293E60732;
+        Wed, 30 May 2018 23:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1527722923;
-        bh=xlXTFsShdqjWgZC+bPfWtEv3VAfMb+UWsPRalUoQGo4=;
+        s=default; t=1527723441;
+        bh=r2Y3PAy6XW8Lb7jgeIycibgUXQK6ekGymAL3zR+vdXo=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=sBobBqf6YDCc50dhiDgg3kqkgWiV4aJIuqaEdHhQ68sCUTda3hSqVElhzBsEtVE8t
-         vDQs/Imv6OJckjQWp3ZqbMt1VoF4bGG/38QN4+pLYwqGIGu5ftOElav+NIfzKSm8eM
-         hI0hk70/duF/DC0jV1VevnUVdVBCKvgxHBgrdcdtI9AHDd11+gaNYQAGzUMnUoYCrJ
-         +8KJfrDPwAd/jg67RUEAnNxo1/cw12VxOsybzHcnVzIao3ZbTGup548tTu+K+ULs91
-         ZbIEKgnEhIhZ7nbkzYtmxY03StKdURdGqMZkMVMv9sdqHC1DwsiOHWrOA+uRAEcK5r
-         44Mi4QPpV80rEyWX68SqFZ+D5NQ7VP0uWtOF0y7w4/a7onlnDxhRPzSUt09PDpkn+Z
-         ClO5StfbFE9xvSnae03qfRGwT/INUkS9Y/LkEDT+c2VZ28u6KOsAT2PJZUbMUct3Ao
-         DTIVB7IJHI/xmDOl4UZ0kcQ42oKfc0ZwRT4k00IhITkKOhMt+BL
-Date:   Wed, 30 May 2018 23:28:38 +0000
+        b=L4hb37kZRVFVbOoVJKDbd7Z5+KvxihovfOzk2KQWWIhHZiqs1/DeZ52FvLKm4Hf8Q
+         H9a9RbKfIk0GkpxyspiQ5mQbDOt9+fF16Rl6034ylnccFrLsq5MTQnCIM6maH4K47A
+         HHKe5kGKQOaqZ7N2nPggm1/TsQcU7lV6Sc1cVd81lrMZRCkt9V1KNE3zWJtsjNboOW
+         BOqBTBHSPMHsUum+kjC01bHStIYLEkvIXBhRxn8OT67OLSGN1757nmIqM/3d/nVg28
+         LKsE5/LRRWf+s03TIOOHb86vJwCEiT+fbQVYrv/1L39w4jcyoSis1JH+TlFtfbRZQz
+         2mq+hiHBQmeSxN0b3O+dsvmvEJbCP0ufPn3dXKgnXkj0WR1CCESLWBYHTjqqUPav4T
+         0+lOq8gf/vcqEo/ZsyiQfjV/PEhlluNMlmL67k+hzRbowHBWzL1nH+ol+WHUFiMGQK
+         OJwvHzV2dKKjf69aGbbjHb++HJbmKo9fSrgchTWom0HqaJO41a4
+Date:   Wed, 30 May 2018 23:37:16 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 01/18] Add a function to solve least-cost assignment
- problems
-Message-ID: <20180530232837.GD671367@genre.crustytoothpaste.net>
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 2/2] note git-security@googlegroups.com in more places
+Message-ID: <20180530233716.GE671367@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <cover.1525361419.git.johannes.schindelin@gmx.de>
- <cover.1525448066.git.johannes.schindelin@gmx.de>
- <3f51970cbc44bfe34133c48c0844ed3723e83808.1525448066.git.johannes.schindelin@gmx.de>
- <20180530135505.9569-1-szeder.dev@gmail.com>
- <CAGZ79kZ77qBuSDGBJa5b1AvKLBSOOnTad_UXm9EP0aJSrmEohw@mail.gmail.com>
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <20180527140433.32277-1-t.gummerer@gmail.com>
+ <20180530205255.13090-1-t.gummerer@gmail.com>
+ <20180530205255.13090-2-t.gummerer@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="SFyWQ0h3ruR435lw"
+        protocol="application/pgp-signature"; boundary="hwvH6HDNit2nSK4j"
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kZ77qBuSDGBJa5b1AvKLBSOOnTad_UXm9EP0aJSrmEohw@mail.gmail.com>
+In-Reply-To: <20180530205255.13090-2-t.gummerer@gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.15.0-3-amd64)
 User-Agent: Mutt/1.10.0 (2018-05-17)
@@ -82,59 +67,84 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---SFyWQ0h3ruR435lw
+--hwvH6HDNit2nSK4j
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 30, 2018 at 09:14:06AM -0700, Stefan Beller wrote:
-> Good point. I remember my initial reaction to the file names was expecting
-> some hungarian notation, which totally didn't make sense, so I refrained =
-=66rom
-> commenting. Searching the web for the algorithm, maybe 'lapjv.c' is adequ=
-ate?
-> (short for "Linear Assignment Problem Jonker Volgenant") Matlab has a fun=
-ction
-> named lapjv solving the same problem, so it would fall in line with the o=
-utside
-> world.
+On Wed, May 30, 2018 at 09:52:55PM +0100, Thomas Gummerer wrote:
+> Add a mention of the security mailing list to the README, and to
+> Documentation/SubmittingPatches..  2caa7b8d27 ("git manpage: note
+> git-security@googlegroups.com", 2018-03-08) already added it to the
+> man page, but for developers either the README, or the documentation
+> on how to contribute (SubmittingPatches) may be the first place to
+> look.
 >=20
-> Out of interest, why is it called hungarian in the first place? (I presum=
-e that
-> comes from some background of DScho in image processing or such, so the
-> the answer will be interesting for sure:)
+> Use the same wording as we already have on the git-scm.com website and
+> in the man page for the README, while the wording is adjusted in
+> SubmittingPatches to match the surrounding document better.
+>=20
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>  Documentation/SubmittingPatches | 13 +++++++++++++
+>  README.md                       |  3 +++
+>  2 files changed, 16 insertions(+)
+>=20
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPa=
+tches
+> index 27553128f5..c8f9deb391 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -176,6 +176,12 @@ that is fine, but please mark it as such.
+>  [[send-patches]]
+>  =3D=3D=3D Sending your patches.
+> =20
+> +:security-ml: footnoteref:[security-ml,The Git Security mailing list: gi=
+t-security@googlegroups.com]
+> +
+> +Before sending any patches, please note that patches that may be
+> +security relevant should be submitted privately to the Git Security
+> +mailing list{security-ml}, instead of the public mailing list.
+> +
+>  Learn to use format-patch and send-email if possible.  These commands
+>  are optimized for the workflow of sending patches, avoiding many ways
+>  your existing e-mail client that is optimized for "multipart/*" mime
+> @@ -259,6 +265,13 @@ patch, format it as "multipart/signed", not a text/p=
+lain message
+>  that starts with `-----BEGIN PGP SIGNED MESSAGE-----`.  That is
+>  not a text/plain, it's something else.
+> =20
+> +:security-ml-ref: footnoteref:[security-ml]
 
-I think it's because tbdiff uses the hungarian Python module, which
-implements the Hungarian method, also known as the Kuhn-Munkres
-algorithm, for solving the linear assignment problem.  This is the
-Jonker-Volgenant algorithm, which solves the same problem.  It's faster,
-but less tolerant.
+My only feedback here is that using the footnoteref syntax to refer to
+the previous footnote potentially makes this a little less readable for
+plain text users, although it also reduces duplication.  I'm not sure I
+feel strongly one way or the other on this.
 
-At least this is what I just learned after about ten minutes of
-searching.
+Otherwise, this looked fine to me.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---SFyWQ0h3ruR435lw
+--hwvH6HDNit2nSK4j
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.7 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlsPM6UACgkQv1NdgR9S
-9ovgthAAiY3ZRKlXTjOFHOScNcQOj8eZA/WL42BYESErkz0ZwgA4Y/h1Dj3lk/lb
-evJNFV1x2Zg6erXxmJsg+Q3ovY1FvuGfMo97ixrMM59HUOYnH63wbmhgxQYf4wYS
-ieSR6/3ZyfSNxLbcE9vhEldcGpF1AMBrpIHxxf9pL3bQJU/PFbA/Ys/BGYVkVcgg
-mAuYWLG925iS0k8sJw7aZ/zgdQRxoE01eIn6q1YF5Tu65xQ7tFqZ9agXoM9vCSDV
-xet0NKvXU1uF29dU/jn3z/lx2dAzaDODKM5/YHxAd0FqGy1RXtzGbdeCfHC4sp9/
-QaV+GDsLgPJmyBA+QceYCP1ZN60qgOMmochjxREcjGTdMIUYCKNCd+qiMNIlgpYh
-ki51KWvfCTasj6qbg0dOWnRt/sFZ2PKxC8JSbVQuXtTZQp7i4rjpYFEqRZaB3kZo
-BaNvgGjNfXidPu5ZENtnJyztkwo3hgvm5/5UzXgYZ/ubaqSV2sRwv35zU5y6VnxY
-72gtY26KKwrHK4I45WnI4N/2vbPbZKHWyqv4InZLHyVHIfZ2yIQH4RL9S9RGC6dS
-DG29MxCcKgqQOcCMEfwsfAg73BENSU3VitlgBiLapc4QugL+GtFP3YGMmSqYjYbZ
-IDtp/btcSUaMyDGHncK/kgAfqEd5fEiGj8gFu4y4bnryKoYqwgk=
-=iEAX
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlsPNawACgkQv1NdgR9S
+9otJXBAAv9WIdUL/eq+GdRibPPaVXiWBnHFhLgTUJ1XTPL2oIYaN0y0WPemty5Tf
+K8JQZVccDWdSV30GJbeZcPgZ/7Y75pXRovbLLFVD7EXwVHGbPpR4C2yN1GsOuqw0
+mWX4+fTvwNvXtjWVp3IiJwpTK07fVgb8BHD0okUjwwKsFAhD05piwK6uoXsK4bWx
+mCIMWYbccnbzr5k9jdxs6Csq81QRFE+BI92PLLhXhb4jICapS9rOI26Ai/OGJhmL
+R2uKCvzQId8PT5QZhWh70vD3CjfpMmDxIZMO8bhjkivF+Iph50W43L8lt7wOrWwo
+RxE6k5giIuuh0R2mcC5FQtEfS4fyro854fEYHK+uNYVBdys959cfgG7l9zxk/Jxx
+pf2TBO/I4HvvX03/fSr3IM4i+cGImBJFGJFMTbEvlGtUF+Z37gsuTssOJLTG452c
+X9xKE7RR8QnwDv/AIvuJdvzaB79pVaan8Uk23J1ivsNDTp0A5WXw7VyweEVlbyf3
+1I1/3noY9m2E/ZpyNrjc/zAcvXtdpd7YQngvgWYfGEYX2L4Dw7Ykf11p0yolqVjB
+66NamHpUyge3q4BKV8T/oCqbuMgdGmyP2rvMJoB2KF7jzJLsavpH4tL8J7IKARQr
+K4mRHvnbJkFIo7Mqvtns4L5SDSR40jO08ZCnFhKMr9MB2bJKE1k=
+=a6m+
 -----END PGP SIGNATURE-----
 
---SFyWQ0h3ruR435lw--
+--hwvH6HDNit2nSK4j--
