@@ -2,152 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94E611F51C
-	for <e@80x24.org>; Wed, 30 May 2018 09:54:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60C051F51C
+	for <e@80x24.org>; Wed, 30 May 2018 10:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750990AbeE3Jyo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 05:54:44 -0400
-Received: from mout.gmx.net ([212.227.15.19]:38887 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750735AbeE3Jyk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 05:54:40 -0400
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MZCUG-1fcCLI0lAa-00KuZI; Wed, 30
- May 2018 11:54:28 +0200
-Date:   Wed, 30 May 2018 11:54:27 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] sequencer: ensure labels that are object IDs are
- rewritten
-In-Reply-To: <20180529163236.646275-1-sandals@crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.1805301144470.82@tvgsbejvaqbjf.bet>
-References: <20180529163236.646275-1-sandals@crustytoothpaste.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751086AbeE3KTi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 06:19:38 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:40519 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750710AbeE3KTh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 06:19:37 -0400
+Received: by mail-pl0-f65.google.com with SMTP id t12-v6so10814445plo.7
+        for <git@vger.kernel.org>; Wed, 30 May 2018 03:19:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=AGeUQtyZi3FgCjjIISQTnAYs2tegJpkk7vJkQljM1BY=;
+        b=W5XOl8yADk8zKyVLN9fh1KjG+h8NP/xT8FwwDMh9MzLlWFDh/zpSrMrY5XDw0UKmX3
+         APeeTd+t+B6/dGPY2BvlVueauKW4YAcnSvjBYGoZknn6HgW9KpsndAIllLUMbXJ9Ll0G
+         rzeEWqCF7xVAMe0SZCnvr9TYWuZwRdjULcGzK8k2mGnE8wvvYnc+79IKtmc+97vT0Om+
+         6UzcIv7N19MxoaGuxRMYJ3AgnJai6/876DwFTWnk9VWVFAAwyKGNYLZBiYsFDVE2EYzL
+         hjKVPCUc8NMqH26j+W3Kq68SlweI0iRLdMoTZlcKjMlPXdf2kvMCv8DAiMKZMnyh1E09
+         V/4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=AGeUQtyZi3FgCjjIISQTnAYs2tegJpkk7vJkQljM1BY=;
+        b=dY4EA4eDgWwsY8+afjcWqg1Vy3DKhlq7j3nmEbwLzH4sTwx/G3aGqQVHNuw7UzbQqS
+         0MMz7Jy7IIFuufZeIjBdDogMgVWDxSwaAq21nm3rKvqRqcgKxYIKqs/VryILF6pnTkmB
+         JwpfQDyAcrpTCbCgL2PINYaFG9QzTo3H/pLuePx4vlD2JrZzxBMwbC7jbYQNInvUgfyE
+         NdWmJVk029e65Llu7LWDLlaM/rPpRDMBaRHnLV4901zKnOstAdXRSA8v3zMK4tJQPpj6
+         Yfv+F3T5YESJM4RBKKCLUmIniBGxEmdgU5t3+DGvI3VXAJ86vATcEojDgrWkHoKpAB7R
+         wgAw==
+X-Gm-Message-State: ALKqPwftvYtxKniR3ikyG+0ugIGtmabxAN+S+CHAKSvFYyinteCsMuGB
+        fTKwuCuQvs6r35tZTtO5H6jgRDBlqBNI02jnoPA=
+X-Google-Smtp-Source: ADUXVKLTji56YuGdq4dDBsNmTv2X7Ex6iNOziMjJqvnfeuX5kIu4S6JxmQANLiimwaGGXoxF1RxIIyqLU9pz7Nejy+s=
+X-Received: by 2002:a17:902:b94a:: with SMTP id h10-v6mr2300469pls.321.1527675577288;
+ Wed, 30 May 2018 03:19:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:0BpOK8XKFBEpxfn2dSyPW+MHxKLoBj1o9KlAXJZgLjpq2e/6I+k
- NB/Ykefheo0NOhjoKuQotJ91S8hGCmjVqkDk0crHcehWNo7VmM5flUl3YCfqiiWOEZ3EN4J
- 0dAlbO60tXOgGwOZ/6SlgKDVh5XhkZaH7i4r0S51qyKUrDvZ2zAHK7cbUICaJ/ioQ31xeHT
- HXRwb3VcH0y92uYyncA/g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:eBrcD/MygZE=:5G7DwjTuftpdiGT6mgnMEo
- OgVvygxm50UcDeLCZFTCnd7isZAvaMf37ikor4qGNWE+ZBmiT1bHD61AZBUZDKEscXZ19ZGmB
- ckuH42szmpJjfe2wtZl5G6UrSfnveCTlUrFQGFvepjjnk5mZqUjmgf4Jo6shSU02E7cVxqnw4
- 1YUVecNKrEblSrYd187lsEsTFdLtcVTgreRveugMZInpKBwJ03oeyTXEBmSnuL0diQAlJgVa7
- 0VJ2E/wDAJHITatUqkwAiWIitKLCuuC/823UgiusMW9AqnDx31IvUWylumcOs0haXB44DUf5i
- QYNgaLmUKe4Vimjx4ChdXyS7b69w8qZ0r6ou1ZhCF1uOpPY0qQkKNgYlH/ddAnUFggiTY7B/U
- AeSHvbniNw+g/LcCocQj3TFZT2nyXiIkbEM1/mcoWpJS/TyGrAYNJJrHz992mPsIl+ARFuvJR
- hreYXqigmi5MbNcsLR69nJApm6fwB/EAOJYt2rwevYN24QycMTgYgs4rgPSOHg4GLCAZScilq
- o6+x5hPHypIIoGAhu/v2E3Ull/clHo+j86ucylnsmABas8h8XsDzj0A2e9vd2L9MRSA0IftHe
- yVEUZPtFMrfIkdQHnTkiP/DIAzTxV8ptRPqCDnWyIh1ughiwMrxm4LbIPno1zRTuAeQFW3cme
- lZwsDXuPx6RVZ2MUhSGRYdPcS6oRRtwTzHWTofGqVc2FigMxCGrfx7r9yNqNV5doccVtYU2Sy
- fs18yXlOdpaJm7WnYmF8kxTS7zHxruCzcNDWE8bUg7qR/bWQpKmuxFwO4fg9axSOkhs0qNzih
- +U9XABB
+Received: by 2002:a17:90a:760e:0:0:0:0 with HTTP; Wed, 30 May 2018 03:19:36
+ -0700 (PDT)
+In-Reply-To: <CACsJy8C-BT158DW_Tz24ea_QUfQHQpToCC-=E+-zZeZeAD9heQ@mail.gmail.com>
+References: <xmqq8t88nllj.fsf@gitster-ct.c.googlers.com> <cover.1527279322.git.martin.agren@gmail.com>
+ <ef5b4e28e00ad0c95dbe625d2e7305957f9fe5ba.1527279322.git.martin.agren@gmail.com>
+ <xmqqin78jfnl.fsf@gitster-ct.c.googlers.com> <CACsJy8CgzDfbES2jC+Rv+bKj_JAk8dzEDCm89JMuBFQmyGg9Gw@mail.gmail.com>
+ <xmqq8t83ihd7.fsf@gitster-ct.c.googlers.com> <CAN0heSq1y3XibCFDYsae5b6jmzZOzcLHT4atCZ+KCb4dL5As0g@mail.gmail.com>
+ <CACsJy8C-BT158DW_Tz24ea_QUfQHQpToCC-=E+-zZeZeAD9heQ@mail.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 30 May 2018 12:19:36 +0200
+Message-ID: <CAN0heSoeuSDyeJ0sFgYo689AaHfj4q0SC5bJt4cpv2TeQX5uVA@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/3] usage: prefix all lines in `vreportf()`, not just
+ the first
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brian,
+On 29 May 2018 at 17:50, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, May 29, 2018 at 6:49 AM, Martin =C3=85gren <martin.agren@gmail.co=
+m> wrote:
+>> On 28 May 2018 at 23:45, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Duy Nguyen <pclouds@gmail.com> writes:
+>>>
+>>>>>> +error:       sub/added
+>>>>>> +error:       sub/addedtoo
+>>>>>> +error: Please move or remove them before you switch branches.
+>>>>>>  Aborting
+>>>>>>  EOF
+>>>>>
+>>>>> This shows the typical effect of this series, which (I subjectively
+>>>>> think) gives us a more pleasant end-user experience.
+>>>>
+>>>> Also, very subjectively, I'm torn about this. To me, just one
+>>>> "error/warning/fatal" at the start of the first paragraph feels much
+>>>> better. If we have to somehow mark the second paragraph that "this is
+>>>> also part of the error message" then it's probably better to rephrase.
+>>
+>> Would you feel the same about "hint: "? We already do prefix all the
+>> lines there. It seems to we we should probably do the same for "hint: "
+>> as for "warning: ", whatever we decide is right.
+>
+> It may depend on context. Let's look at the commit that introduces
+> this "hint:" prefix, 38ef61cfde (advice: Introduce
+> error_resolve_conflict - 2011-08-04). The example in the commit
+> message shows the hint paragraph sandwiched by an error and a fatal
+> one:
+>
+>       error: 'commit' is not possible because you have unmerged files.
+>       hint: Fix them up in the work tree ...
+>       hint: ...
+>       fatal: Exiting because of an unresolved conflict.
+>
+> I think in this case (dense paragraphs of different message types) yes
+> it might make sense to prefix lines with "hint:". But when there's
+> only one type of message like the "error" part quoted at the top, it
+> feels too verbose to have error: prefix everywhere.
 
-On Tue, 29 May 2018, brian m. carlson wrote:
+Hmm, that's interesting. Deciding based on what has already been output
+seems feasible, although it sounds like the potential target of infinite
+tweaking of some central logic for deciding which way to go. Or, lots of
+various places to try and make consistent. I am tempted towards
+indenting with spaces in v2, and to leave "hint: " alone as an outlier.
+(It always was one. :-/ ) I'll keep your feedback in mind.
 
-> When writing the todo script for --rebase-merges, we try to find a label
-> for certain commits.  If the label ends up being a valid object ID, such
-> as when we merge a detached commit, we want to rewrite it so it is no
-> longer a valid object ID.
-> 
-> However, the code path that does this checks for its length to be
-> equivalent to GIT_SHA1_RAWSZ, which isn't correct, since what we are
-> reading is a hex object ID.  Instead, check for the length being
-> equivalent to that of a hex object ID.  Use the_hash_algo so this code
-> works regardless of the hash size.
-
-D'oh. Thank you so much for this fix.
-
-> I noticed this while cleaning up a few instances of GIT_SHA1_* constants
-> and thought I'd send a patch.
-
-You thought well!
-
-> diff --git a/sequencer.c b/sequencer.c
-> index 1ce63261a3..75ed86a94e 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3636,7 +3636,7 @@ static const char *label_oid(struct object_id *oid, const char *label,
->  				p[i] = save;
->  			}
->  		}
-> -	} else if (((len = strlen(label)) == GIT_SHA1_RAWSZ &&
-> +	} else if (((len = strlen(label)) == the_hash_algo->hexsz &&
-
-Obviously good!
-
->  		    !get_oid_hex(label, &dummy)) ||
->  		   (len == 1 && *label == '#') ||
->  		   hashmap_get_from_hash(&state->labels,
-> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-> index 3d4dfdf7be..472ad9463c 100755
-> --- a/t/t3430-rebase-merges.sh
-> +++ b/t/t3430-rebase-merges.sh
-> @@ -70,6 +70,7 @@ test_expect_success 'create completely different structure' '
->  	merge -C H second
->  	merge onebranch # Merge the topic branch '\''onebranch'\''
->  	EOF
-> +	cp script-from-scratch script-from-scratch-orig &&
->  	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
->  	test_tick &&
->  	git rebase -i -r A &&
-> @@ -241,4 +242,20 @@ test_expect_success 'refuse to merge ancestors of HEAD' '
->  	test_cmp_rev HEAD $before
->  '
->  
-> +test_expect_success 'labels that are object IDs are rewritten' '
-
-Thanks for writing a test, I had been meaning to, but it slipped from my
-mind.
-
-> +	git checkout -b third B &&
-> +	test_tick &&
-> +	test_commit I &&
-
-The test_tick before test_commit is unnecessary.
-
-> +	third=$(git rev-parse HEAD) &&
-> +	git checkout -b labels master &&
-> +	git merge --no-commit third &&
-> +	test_tick &&
-> +	git commit -m "Merge commit '\''$third'\'' into labels" &&
-
-Here, the test_tick is required because we commit via `git commit`.
-
-BTW another thing that I had been meaning to address but totally forgot is
-this '\'' ugliness. I had been meaning to define SQ="'" before all test
-cases and then use $SQ everywhere. Not your problem, though.
-
-> +	cp script-from-scratch-orig script-from-scratch &&
-
-There is nothing in that script that you need. Why not simply
-
-	echo noop >script-from-scratch
-
-or if you care about the branch,
-
-	echo reset $third >script-from-scratch
-
-> +	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
-> +	test_tick &&
-> +	git rebase -i -r A &&
-> +	! grep "^label $third$" .git/ORIGINAL-TODO
-
-I would like to verify in addition that /^label $third-/ is present in
-ORIGINAL-TODO, what do you think?
-
-Thank you,
-Dscho
+Thanks,
+Martin
