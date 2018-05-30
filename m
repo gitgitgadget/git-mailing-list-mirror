@@ -2,98 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 022BD1F42D
-	for <e@80x24.org>; Wed, 30 May 2018 23:06:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B3891F42D
+	for <e@80x24.org>; Wed, 30 May 2018 23:27:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932546AbeE3XF6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 19:05:58 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:38213 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932416AbeE3XF5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 19:05:57 -0400
-Received: by mail-wm0-f68.google.com with SMTP id m129-v6so50534613wmb.3
-        for <git@vger.kernel.org>; Wed, 30 May 2018 16:05:56 -0700 (PDT)
+        id S932575AbeE3X14 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 19:27:56 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:36732 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753734AbeE3X1z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 19:27:55 -0400
+Received: by mail-pg0-f65.google.com with SMTP id m5-v6so4451101pgd.3
+        for <git@vger.kernel.org>; Wed, 30 May 2018 16:27:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=b6OWoYxK83rUaJV9a7+suctpBKxITh06NGW6E+KsIl0=;
-        b=ouP/PB4MntrsalrIqsDNouNd3S6uF82YV387dy9dv2baYnw3y6tUdao/UavXyKW00F
-         5kJQqphE0xNWYMCZPItfCPumLVS6bwAhkwfmiqKRMZ1+PcbwX/rH1U8CvenE3/rz6cQa
-         UTnoHqy68q2Z5Nnvas33qe6PYhaXs0UIGve+OzMYh7JK545PoWkhbDjiJ2Z7xXg3Yw9b
-         JCLczz4bNll6E5DvYPdX0mQkZY0BWE4iBCwtyE+WBj28s332gpdULXOYGIspFke78pPT
-         82WaKywjAfpDO5q10XAJ8dRJCfDOlteaiH2IFdV8QFaF4MYgB2d9Ak9+FtdgQUjGor8T
-         TPOg==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=K/Lsr/H86owXPPrBjqVy8vKZ1Jt1zsnN03GpRMjrL6o=;
+        b=qHVqliOAwQxBA6Jep3Bgw4szqh3FOcwJqSEQAp/86neiWHpB9OwUCbPhM7hglX4dFi
+         3YLYknRVCFkhSQqTAeVVGaQpZ4FIZT8CjpylS7SHIspMohXIOWl5YcPJhHzf8UKGr4Hg
+         BgWRkDY9nDRsslhacFLc27DeiZGpakQ57qGtOGOOHtBVn/ayAyn1tGJLJOWE8Lcycn4b
+         ei+5tsMGf02AGQeHifwE8LBfdZ1NRHEI8y9KCn0A4wxJBaVZIa9v9w/qIhwy5WBRoyoX
+         Nyrb5uV6ECtLdQoJFUub6itowW5rL6J5B1nyTz+W0fschtTbIdYVaVcsUDln9iTI42bZ
+         e1IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=b6OWoYxK83rUaJV9a7+suctpBKxITh06NGW6E+KsIl0=;
-        b=BoLJwTX3fyliWLZPrqdCB79+Vzuu5tqjMl0aGx6giOGk7Zq4iNfisQ8h3msAIE0ESq
-         W4Zi6h5rZ2sMQ2Szkwt4YP2tnfZEu7lyf1haOQVBmryxbbPmHmMA8B43lwu9JIhUazM7
-         5Cu7tvBAZNAo9pYY6/Fn7cNwxlYRL7P5wn+5a8hxRlA/fSarLY9Ey6M/s5sVlK+R4OA8
-         xUnMLqCERRAyaUdEy6BIML6eAl4wLKFLCAAdoM+LK7UwUGAohsT5CiDkejO8jaAPoTla
-         FIBVl36YAXWQiXDj2FUt3PRwzsCyfDAfuFswGI9qijx0/+LGFZuvX984Vns2RcXA6TKX
-         c8lg==
-X-Gm-Message-State: ALKqPwdZyPdGBjPrue352avDvlgiGNB0xDvkJiycxpYRTVm5wl4QuhAF
-        L3g5X3Pfk6qmP/8decXs8dI=
-X-Google-Smtp-Source: ADUXVKIpoEY/WuaS34tVGPDSlfKKspvf/q/bsPjtB8JcOR6+lOWghAU8TXv1xYrleejbuUFveWd/4g==
-X-Received: by 2002:a1c:8d8a:: with SMTP id p132-v6mr2574110wmd.49.1527721555947;
-        Wed, 30 May 2018 16:05:55 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x63-v6sm30146878wma.25.2018.05.30.16.05.55
+        bh=K/Lsr/H86owXPPrBjqVy8vKZ1Jt1zsnN03GpRMjrL6o=;
+        b=T5TWxvWhVeKWaVnNpId1mdrjbH8ZRKiTZYm1c4R11T+l6cdl6KUkHOYUiC1XIQOPfO
+         l5yK4Ds90phI13UHk8a8vUiH1IxMnDQh0JK9qySaf4z+UOAiON9f+ShCP1b44m6tSKZz
+         Ed4Sh1dex6l0kQojjE/d7kVviPyiNcamFng2bvU1WCKZCZ+gGAI3sHBRrPHLtr397Uho
+         +Q/6FUNE9mUh7dyTi5dT0VI3OH/OJjpy7EFSz7UIkcOOPrM0bUYycFD62JsM5sSM2OOm
+         dfpXLqk1GHimVcBJCS8RVRrOW8ABqaceD+oe6chtJUbNuPbuNFYv3E6BsRnMRDkafYcz
+         Uu2A==
+X-Gm-Message-State: ALKqPwf2EYQFU+2yPtxa4mhbnYggnpo3RBYLXpx/E39zp/Kstpd7OPKl
+        57KU1dq3bjDP2nlCsITB/dDaZg==
+X-Google-Smtp-Source: ADUXVKLJyfWQPg4A/E2flYN97YkwTnBM8OS4VZLi2K4KqRNxYqeus2CLK+izWpiK4ET0TNo3dDp0Yw==
+X-Received: by 2002:a62:2043:: with SMTP id g64-v6mr4611033pfg.12.1527722874923;
+        Wed, 30 May 2018 16:27:54 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id d15-v6sm63335554pfh.97.2018.05.30.16.27.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 30 May 2018 16:05:55 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 3/4] color.ui config: don't die on unknown values
-References: <20180530210641.19771-1-avarab@gmail.com>
-        <20180530210641.19771-4-avarab@gmail.com>
-Date:   Thu, 31 May 2018 08:05:54 +0900
-In-Reply-To: <20180530210641.19771-4-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 30 May 2018 21:06:40 +0000")
-Message-ID: <xmqqin74d9rh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Wed, 30 May 2018 16:27:54 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] Announce: unset GIT_PAGER and add minimal usage in header
+Date:   Wed, 30 May 2018 16:27:50 -0700
+Message-Id: <20180530232750.10432-1-sbeller@google.com>
+X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+When running the Announce script in a terminal, the git shortlog will
+open a pager, which is confusing as it leads to omission of the rest
+of the message inside the pager. Do not page the output to avoid confusion.
 
-> Before this change git will die on any unknown color.ui values:
->
->     $ git -c color.ui=doesnotexist show
->     fatal: bad numeric config value 'doesnotexist' for 'color.ui': invalid unit
+While at it, add a basic usage example to the header, which illustrates
+how it is used. This might be useful, but the way branch and previous
+are set already help a lot.
 
-I do not think "unit" is correct, so there may be some room for
-improvement.  For _this_ particular case, I agree that it is not the
-end of the world if we did not color the output (because we do not
-know what the 'doesnotyetexist' token from the future is trying to
-tell us), but as a general principle, we should diagnose and die, if
-a misconfiguration is easy to correct, than blindly go ahead and do
-random things that the end-user did not expect by giving something
-we do not (but they thought they do) understand.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-If we really want to introduce "here is a setting you may not
-understand, in which case you may safely ignore", the right way to
-do so is to follow the model the index extension took, where from
-the syntax of the unknown thing an old/existing code can tell if it
-is optional.  Forcing all codepaths to forever ignore what they do
-not understand and what they happen to think is a safe fallback is
-simply being irresponsible---the existing code does not understand
-the new setting so they do not even know if their "current
-behaviour" as a fallback is a safe and sensible one from the point
-of view of the person who asked for the feature from the future.
+This applies to the todo branch. Not sure if it is worth it, though.
+
+I played around with the Announce script after I realized that the
+announcement emails are not checked in, but generated on the fly.
+The reason I played around with the script is the two seemingly same
+points
+
+>  * Rename detection logic in "diff" family that is used in "merge" has
+>    learned to guess when all of x/a, x/b and x/c have moved to z/a,
+>    z/b and z/c, it is likely that x/d added in the meantime would also
+>    want to move to z/d by taking the hint that the entire directory
+>    'x' moved to 'z'.  A bug causing dirty files involved in a rename
+>    to be overwritten during merge has also been fixed as part of this
+>    work. 
+
+The second time it appears, it also contains:
+
+>           Incidentally, this also avoids updating a file in the
+>    working tree after a (non-trivial) merge whose result matches what
+>    our side originally had.
+
+which made me wonder how this message comes to life. 
+
+Thanks,
+Stefan
+
+ Announce | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Announce b/Announce
+index 91d0ba44cca..7c573e2fc40 100755
+--- a/Announce
++++ b/Announce
+@@ -1,11 +1,16 @@
+ #!/bin/sh
+ # Announcement message skelton
++# usage: Meta/Announce <version to announce> <diff-against>
++# e.g. Meta/Announce v2.18.0-rc0 v2.17.0
+ #
++
+ tmpbase=/var/tmp/git-announce.$$
+ trap 'rm -f $tmpbase.*' 0
+ branch=${1?branch}
+ previous=${2?previous}
+ commit=${3-"$1"}
++GIT_PAGER=
++export GIT_PAGER
+ 
+ relname=$(git describe "$commit") &&
+ vername=$(expr "$relname" : 'v\(.*\)') || exit $?
+-- 
+2.17.0.582.gccdcbd54c44.dirty
+
