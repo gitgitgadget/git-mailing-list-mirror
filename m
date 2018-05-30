@@ -2,115 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50FAE1F42D
-	for <e@80x24.org>; Wed, 30 May 2018 18:10:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C61601F42D
+	for <e@80x24.org>; Wed, 30 May 2018 18:11:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753898AbeE3SK4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 14:10:56 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:47030 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753882AbeE3SKz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 14:10:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=cJDo7e6ROzIR8UL8AuW+kLObtWECjwMopu5v5Zv1iIU=; b=M6YWL7xr+YDN8UqPhi9r5LQ/8
-        KamI1WkO2P62bnuD8njeQNqbtR0YLbVYWkf5FOHXG20lX2TGBSAR0CEFLLHW03XRR+TLuJqBW3MR2
-        PsKfMeLTaf/WUOggOxmhM/4mKjMfmT9iXVuIBYJkbYBeNuBKCw5XijdAILWqYNnPQyX7PGM8jheUA
-        fYJsm/HvXzxhRSDBiqjtFNrqgr2LX50zLjpNB1twEiHrXRez9yHaLjTR3tpHX7N+5+YgeQ6t3+43t
-        QDWLk0LHDBe291p8rV4itZh/K6Yj00oEGgu4/BTXajx6TrL7EKOqDz5JIbUBDsgqtThstekcat3py
-        Vsc8LHaEg==;
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:36476 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1fO5Yi-00GG5Z-D4; Wed, 30 May 2018 14:10:53 -0400
-Date:   Wed, 30 May 2018 14:08:54 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Stefan Beller <sbeller@google.com>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: verifying syntax for optional and replaceable content in man
- pages
-In-Reply-To: <CAGZ79kbdbV8r6Vr06ECOy9XXnBO_r=F-XcQU3WCCtOuCr0cfiQ@mail.gmail.com>
-Message-ID: <alpine.LFD.2.21.1805301405200.9810@localhost.localdomain>
-References: <alpine.LFD.2.21.1805300733440.10096@localhost.localdomain> <CAGZ79kbdbV8r6Vr06ECOy9XXnBO_r=F-XcQU3WCCtOuCr0cfiQ@mail.gmail.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1753903AbeE3SLM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 14:11:12 -0400
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:35773 "EHLO
+        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753882AbeE3SLL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 14:11:11 -0400
+Received: by mail-yw0-f170.google.com with SMTP id v131-v6so3517972ywg.2
+        for <git@vger.kernel.org>; Wed, 30 May 2018 11:11:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=QLlzvzzyD16y5Z1VHqNS6DhyrbcJR/ECUa4wwmwRtf0=;
+        b=MSgNS9JljAWc035CaKWcqD6ebMxTwgm3upW3BInlDLtWxwyMvlyLITFRLdX74mj5k4
+         lSqZjNnn83pJh0OwXWqyBTqoIRvwr6cNg/go3KUIHgBy8Qmm7TUmupmNRsgiSTwzY4wJ
+         QU+Mpybav/XvF7sGm5ysQNv2K0An2oEquF5gsSiu8CivFgpX5WuNUuYBfLxi4ShPlYay
+         eiCQGsTrLYtXw26b+gJi0rcKVAvENdnDZ24FtsCm4IvNmYKkof+8r5lGD64Anc1TmBjH
+         HRnN6L0f4A20EaZz3Za5x74nG4bfi/JoCXe1E4XQhtuGAV5aXVLHVSUfOSiGDCugUvcF
+         psQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QLlzvzzyD16y5Z1VHqNS6DhyrbcJR/ECUa4wwmwRtf0=;
+        b=skUmwxvddwrB8oe4xVMqPuKw/bCVpbwnwqu1WzY8ndDyesBCyKeXYHmBbPZ9AAM4Wp
+         pkb2C2jn883IdU4UwYOIEkzb52POf32cSewOkKrMgBzrS64l8V/Ba866kphof/rJmlGq
+         olRn1XuW0rgII9uu4PcPrH4hFLSeuPhZzKcdB8Bq+rraO+iS/SCw2A9CK65wpnR2beGV
+         uz7OJtlj0GRo/ne7BhXONnjmrWFBYlyVsGDbrVgEiU3B2VxWGMD6ZcZChk1Z4QwtC3et
+         3as3lKoiyC6/Z0iiQLRhYQXw6Fh04yOaJEWITdjSvWtjo0wZFHh0NXLRyVu3lhjfrtS+
+         aoRA==
+X-Gm-Message-State: ALKqPweWT6Tvs3c0DQt5NXp2Z+LYBGUUgSdUuTmsJ4FVXkaRv+rUM1tf
+        ag0lTxMDowiVIw16wdJMtMJ2CbZPAx4wo2pS2ip8HtiXgsk=
+X-Google-Smtp-Source: ADUXVKLNa3uIbZUDiYE2EDMbZ4LnkWXmCNv7QCcCt/GX4azRmW9laEGNt5a1PxWabprMQ/dQXzZhxv0mN0KDLwAGKn8=
+X-Received: by 2002:a81:9447:: with SMTP id l68-v6mr2008574ywg.345.1527703870793;
+ Wed, 30 May 2018 11:11:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Wed, 30 May 2018 11:11:10 -0700 (PDT)
+In-Reply-To: <1B7D3974-AA1C-42B5-A7F5-C5A36B28C34F@gmail.com>
+References: <1B7D3974-AA1C-42B5-A7F5-C5A36B28C34F@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 30 May 2018 11:11:10 -0700
+Message-ID: <CAGZ79kb6S0NT7YVH6JBV3W+=ikeBJtdbrTK5y_q9hEaGPzpeeQ@mail.gmail.com>
+Subject: Re: [bug-ish] [convenience] fatal: only [12] (reference)s? expected,
+ [12] given
+To:     mana vortex <manavortex@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 30 May 2018, Stefan Beller wrote:
-
-> On Wed, May 30, 2018 at 4:39 AM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
-> >
-> >   willing to submit some patches to standardize the syntax of man
-> > pages in terms of rendering "optional" and/or "replaceable"
-> > content, and it seems like "man git-config" would be a good place
-> > to start:
-> >
-> > SYNOPSIS
-> >        git config [<file-option>] [type] [--show-origin] [-z|--null] name [value [value_regex]]
-> >        git config [<file-option>] [type] --add name value
-> >        git config [<file-option>] [type] --replace-all name value [value_regex]
-> >        ...snip ...
-> >
-> >   can i assume the proper (uniform) syntax for the above would be
-> > (shortening lines):
-> >
-> >   ... [<type>] [--show-origin] [-z|--null] <name> [<value> [<value_regex>]]
+On Wed, May 30, 2018 at 1:12 AM, mana vortex <manavortex@gmail.com> wrote:
+> Hello git folks,
+> I=E2=80=99m writing about something that annoys me since forever: The ref=
+erence
+> handling is not consistent between commands. For example, I do
 >
-> So the difference are the angle brackets around 'name', otherwise no
-> change?
+> git checkout origin master
 
-  more precisely, angle brackets would represent any "replaceable"
-content, regardless of where it occurs.
+  $ git checkout origin master
+  error: pathspec 'master' did not match any file(s) known to git.
+
+(I am running a recent build of the next branch,
+which version do you run?)
+
+If I do
+  git checkout or<TAB>
+it auto-completes to
+  git checkout origin/
+which I can then type master after and it works with origin/master
+
+> but I do
 >
-> >   ... [<type>] --add <name> <value>
+> git reset =E2=80=94hard origin/master
+
+That worked for me, and the whitespaced version fails as:
+  $ git reset --hard origin master
+  fatal: Cannot do hard reset with paths.
+
+I do not understand the problem, yet, as for these two commands
+you'd want to give <remote>/<branch> with the slash in between.
+
+> I always get it wrong the first time.
+
+What exactly? The confusion with slash or whitespace?
+
+> Is there a convenience option that circumvents the error?
+
+I think understanding the Git model would help with that:
+
+The only commands that need a whitespace between origin and
+master I can think of are push and fetch. These two commands
+are commands that use the network to directly talk to the specified
+remote and the second argument "master" is just a short form of a
+refspec, typed out long it would be "refs/heads/master:refs/heads/master"
+which specifies the branch (with full prefix) once on the sending side
+and once on the receiving side, separated by colon.
+
+And for these commands we actually talk to the remote.
+For all other commands we use the locally cached version of the
+branch that we think the remote has, so the "origin" is just a prefix
+in the namespace of branches, indicating that all branches under
+"origin/" are "remote tracking branches", i.e. these local cached branches.
+
+> If one argument is given, but two are expected, split the argument at the
+> first / and retry - throw error if that isn=E2=80=99t valid
+> If two arguments are given, but one is expected, concat the arguments wit=
+h a
+> /.
 >
-> all the same but angle brackets around name and value,
+> Is that possible already, and if not, would you care to implement it?
 
-  same rationale as above, [<...>] would represent both optional *and*
-replaceable content. and so on, and so on.
+I think that would make for hilarious error messages in corner cases;
+I am not sure if we want to water down the difference of a remote + refspec
+and a local remote tracking branch, such that it is harder to understand?
 
-  the only other obvious inconsistency i've seen is, when referring to
-an environment variable, i've seen both of:
-
-  `VARIABLE`
-  `$VARIABLE`
-
-my personal preference is the one without the $ if just referring to
-the variable, without trying to dereference it. but that's just me.
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Thanks,
+Stefan
