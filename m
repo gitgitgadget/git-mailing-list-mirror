@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BFC81F42D
-	for <e@80x24.org>; Wed, 30 May 2018 00:50:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA2B31F42D
+	for <e@80x24.org>; Wed, 30 May 2018 00:50:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968551AbeE3AuN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 May 2018 20:50:13 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:35391 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966337AbeE3Asm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 May 2018 20:48:42 -0400
-Received: by mail-pl0-f65.google.com with SMTP id i5-v6so9961136plt.2
-        for <git@vger.kernel.org>; Tue, 29 May 2018 17:48:42 -0700 (PDT)
+        id S968610AbeE3AuQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 May 2018 20:50:16 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:39077 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S968349AbeE3Aso (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 May 2018 20:48:44 -0400
+Received: by mail-pl0-f68.google.com with SMTP id f1-v6so9517747plt.6
+        for <git@vger.kernel.org>; Tue, 29 May 2018 17:48:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0d5RQmwBQl28/UvlzbYrp+T82dvryetuYcybkFKIKEQ=;
-        b=sIzY+gO7vj/pjY2ApzBI8vFY+k0eSy0y8Dqs+U1oLhOd8U3tmGceiwh7jVYm/VUySU
-         pRZLS5lnXpaJkprlskhdjIdsWB8XaXGiNk5Dnui95Lz1IgSZn3Y2dGukBkSGc7VNXC4I
-         g/0SL9YFYhx5hQc7pahsVdnrH9i5nSiQnH2N16Mn5yWRgoSk7sm7kqt3yjvd2U5nWPn9
-         cmStekum/VlFoDE310tLWsmSClw1YTpFodaovVXCFMYvXO3iC9LvJpitfmfqjYfPwJHa
-         C3SkGICAsmd1wsJIoMR7g1ZbZQ0GkC/JGB/3sYzPaST3cjSHjScMLp9dpeuOfLOMGB7j
-         8r0A==
+        bh=hLyoAQlS067yZZzC6uQvmoSGed/vFu1pqexZzKaVJec=;
+        b=u7JWs6sCnY8Bpv7spNNIPIq31RIJg3JYHRuijUtSNeNqA0T3xT/2Xg2wHbwmS0cEB9
+         eQ0y+z2upxjprXa/N6i4GQO5/2g5UvfaIJewVhWBIPTjASQvVG4BFzvjfkFyw4XYsyAR
+         G7jimUWkfbBhk4aJRWLYziJfH7MIvpIfgmvXl5vIXhhzA6yPsmMFkMIEfh4DkRlc5aJu
+         EY/QauFoTTBVR9pH2zVP9CHwMGtfwNg6ua2gDoSPRSY4CujEJHBkgIgvyTl+Ycsh2xC3
+         ujJxPABhbETrM3PQzLd8x3SKoUl+8xd9Rvgvx8FweRkPloezs69hJj2IVSy30yeIZjC9
+         eW1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0d5RQmwBQl28/UvlzbYrp+T82dvryetuYcybkFKIKEQ=;
-        b=iCajF/cREUmkR4nDXrYJlFozNccmfZ4HITa+EH4i5zFAh075odr0PdtafCUaH8K5/3
-         +BUC22hHxtbjcp+CSQ8nrfoI/qZgT4tXyIcRL1mdS5CR87DIUCBY2Zd4ubLY0nEeTnhI
-         NJGwVTfSc8yygA7NhEzLoFfjG6pwDiMubsjBoNrRwKwCpmRQVGBiqFD93vmikbzlebVa
-         B0evAnZc+PvNMfm0zHbUUexSwGGhm1+rzOLQAjs110H/9BPNZzX4baaQ5T4MHktmT4UC
-         TyDyxqfBeM1TZpFphnTRkncfoVrMaJQU6Daxl0WtCnNMuiR9z/D17W9iyj+KIOEox5W+
-         llRg==
-X-Gm-Message-State: ALKqPwdUovnRh3cXw68W41xvfDigz5BQx9ofLZXd6r2JXeKAc869oTIg
-        b480pthxWFWhpuULs3htEXeT2DNXtVQ=
-X-Google-Smtp-Source: ADUXVKJqypQJknVItaaSKxDRPIZHEEvdH2gQ+AeRYYhESo7bczO/AfDe8IvgC0kj5M3Uvy3WwOJ35A==
-X-Received: by 2002:a17:902:125:: with SMTP id 34-v6mr659325plb.42.1527641321542;
-        Tue, 29 May 2018 17:48:41 -0700 (PDT)
+        bh=hLyoAQlS067yZZzC6uQvmoSGed/vFu1pqexZzKaVJec=;
+        b=rlyc9/kwCFQGMgEAk1luYdM+H16sN2pje304G2LgRlhHvec36JJbearUseFYvt5PQY
+         S18K3E6yL/Om4avuCYpgEddLqFDjBpbzFWSe14VcQBX3akYxxqywMF9/1A99bfxwEcuJ
+         1joT+5yHN4eXqZSNrSxVVtWawIDndrHSwTt4fyPDZdLOs0qZr4qk17y2E9TehqeXJFGa
+         dHxjRAP29tMkuraXvUzKxb+5+0UgdgHMmqJK0hvjskXSPDCLqP2PbaHiXKLl2Wilmxgb
+         rUQzORCyv3sLzZDUD2vnqNrYMBiKmFr+nipZphszYjZkgGtt90/Bu1gvEkok7pu6Ek/P
+         6jfg==
+X-Gm-Message-State: ALKqPwcCxN4TEdt4+wF8tm/g6KM3pyeWKo23Xe9SjzLQ+NUEu767c9+K
+        5drgGKKiDLHwBVl5KHvdzLiYMxEbUYk=
+X-Google-Smtp-Source: ADUXVKIOSlhXl3AqO8yZxGsuY9/uNQDeloceFifwx0lUKZNF3DeTYfQslsSdAM76SF70SErceGQmMg==
+X-Received: by 2002:a17:902:24b:: with SMTP id 69-v6mr660922plc.54.1527641323336;
+        Tue, 29 May 2018 17:48:43 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id y1-v6sm10658699pfm.87.2018.05.29.17.48.40
+        by smtp.gmail.com with ESMTPSA id f16-v6sm17859968pff.57.2018.05.29.17.48.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 May 2018 17:48:40 -0700 (PDT)
+        Tue, 29 May 2018 17:48:42 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 14/35] tag: add repository argument to lookup_tag
-Date:   Tue, 29 May 2018 17:47:49 -0700
-Message-Id: <20180530004810.30076-15-sbeller@google.com>
+Subject: [PATCH 15/35] tag: add repository argument to parse_tag_buffer
+Date:   Tue, 29 May 2018 17:47:50 -0700
+Message-Id: <20180530004810.30076-16-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.582.gccdcbd54c44.dirty
 In-Reply-To: <20180530004810.30076-1-sbeller@google.com>
 References: <20180530004810.30076-1-sbeller@google.com>
@@ -63,7 +63,7 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow the callers of lookup_tag
+Add a repository argument to allow the callers of parse_tag_buffer
 to be more specific about which repository to act on. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
@@ -74,147 +74,102 @@ repository other than the_repository at compile time.
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/describe.c     | 6 +++---
- builtin/pack-objects.c | 2 +-
- builtin/replace.c      | 2 +-
- log-tree.c             | 2 +-
- object.c               | 2 +-
- sha1-name.c            | 2 +-
- tag.c                  | 4 ++--
- tag.h                  | 4 ++--
- 8 files changed, 12 insertions(+), 12 deletions(-)
+ builtin/replace.c | 2 +-
+ log-tree.c        | 2 +-
+ object.c          | 2 +-
+ sha1-file.c       | 2 +-
+ tag.c             | 4 ++--
+ tag.h             | 3 ++-
+ 6 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 080b5ce082c..6fb713b6be1 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -93,13 +93,13 @@ static int replace_name(struct commit_name *e,
- 		struct tag *t;
- 
- 		if (!e->tag) {
--			t = lookup_tag(&e->oid);
-+			t = lookup_tag(the_repository, &e->oid);
- 			if (!t || parse_tag(t))
- 				return 1;
- 			e->tag = t;
- 		}
- 
--		t = lookup_tag(oid);
-+		t = lookup_tag(the_repository, oid);
- 		if (!t || parse_tag(t))
- 			return 0;
- 		*tag = t;
-@@ -267,7 +267,7 @@ static unsigned long finish_depth_computation(
- static void append_name(struct commit_name *n, struct strbuf *dst)
- {
- 	if (n->prio == 2 && !n->tag) {
--		n->tag = lookup_tag(&n->oid);
-+		n->tag = lookup_tag(the_repository, &n->oid);
- 		if (!n->tag || parse_tag(n->tag))
- 			die(_("annotated tag %s not available"), n->path);
- 	}
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 6eae39cf858..41192fdf595 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2365,7 +2365,7 @@ static void add_tag_chain(const struct object_id *oid)
- 	if (packlist_find(&to_pack, oid->hash, NULL))
- 		return;
- 
--	tag = lookup_tag(oid);
-+	tag = lookup_tag(the_repository, oid);
- 	while (1) {
- 		if (!tag || parse_tag(tag) || !tag->tagged)
- 			die("unable to pack objects reachable from tag %s",
 diff --git a/builtin/replace.c b/builtin/replace.c
-index 14e142d5a80..8c8cec4aae6 100644
+index 8c8cec4aae6..bff1c3df964 100644
 --- a/builtin/replace.c
 +++ b/builtin/replace.c
-@@ -359,7 +359,7 @@ static void check_one_mergetag(struct commit *commit,
- 	int i;
- 
- 	hash_object_file(extra->value, extra->len, type_name(OBJ_TAG), &tag_oid);
--	tag = lookup_tag(&tag_oid);
-+	tag = lookup_tag(the_repository, &tag_oid);
+@@ -362,7 +362,7 @@ static void check_one_mergetag(struct commit *commit,
+ 	tag = lookup_tag(the_repository, &tag_oid);
  	if (!tag)
  		die(_("bad mergetag in commit '%s'"), ref);
- 	if (parse_tag_buffer(tag, extra->value, extra->len))
+-	if (parse_tag_buffer(tag, extra->value, extra->len))
++	if (parse_tag_buffer(the_repository, tag, extra->value, extra->len))
+ 		die(_("malformed mergetag in commit '%s'"), ref);
+ 
+ 	/* iterate over new parents */
 diff --git a/log-tree.c b/log-tree.c
-index a47283eca64..727758eb442 100644
+index 727758eb442..ac42ad42acc 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -506,7 +506,7 @@ static void show_one_mergetag(struct commit *commit,
- 	size_t payload_size, gpg_message_offset;
- 
- 	hash_object_file(extra->value, extra->len, type_name(OBJ_TAG), &oid);
--	tag = lookup_tag(&oid);
-+	tag = lookup_tag(the_repository, &oid);
- 	if (!tag)
+@@ -511,7 +511,7 @@ static void show_one_mergetag(struct commit *commit,
  		return; /* error message already given */
  
+ 	strbuf_init(&verify_message, 256);
+-	if (parse_tag_buffer(tag, extra->value, extra->len))
++	if (parse_tag_buffer(the_repository, tag, extra->value, extra->len))
+ 		strbuf_addstr(&verify_message, "malformed mergetag\n");
+ 	else if (is_common_merge(commit) &&
+ 		 !oidcmp(&tag->tagged->oid,
 diff --git a/object.c b/object.c
-index e859662c63c..b94f8358919 100644
+index b94f8358919..eb35e82a4a9 100644
 --- a/object.c
 +++ b/object.c
-@@ -223,7 +223,7 @@ struct object *parse_object_buffer_the_repository(const struct object_id *oid, e
- 			obj = &commit->object;
- 		}
+@@ -225,7 +225,7 @@ struct object *parse_object_buffer_the_repository(const struct object_id *oid, e
  	} else if (type == OBJ_TAG) {
--		struct tag *tag = lookup_tag(oid);
-+		struct tag *tag = lookup_tag(the_repository, oid);
+ 		struct tag *tag = lookup_tag(the_repository, oid);
  		if (tag) {
- 			if (parse_tag_buffer(tag, buffer, size))
+-			if (parse_tag_buffer(tag, buffer, size))
++			if (parse_tag_buffer(the_repository, tag, buffer, size))
  			       return NULL;
-diff --git a/sha1-name.c b/sha1-name.c
-index 5eef8ddd6d6..98b66c4896c 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -359,7 +359,7 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 			format_commit_message(commit, " %ad - %s", &desc, &pp);
+ 			obj = &tag->object;
  		}
- 	} else if (type == OBJ_TAG) {
--		struct tag *tag = lookup_tag(oid);
-+		struct tag *tag = lookup_tag(the_repository, oid);
- 		if (!parse_tag(tag) && tag->tag)
- 			strbuf_addf(&desc, " %s", tag->tag);
- 	}
-diff --git a/tag.c b/tag.c
-index 5dcdf7bf6f9..5b41fc71fad 100644
---- a/tag.c
-+++ b/tag.c
-@@ -92,7 +92,7 @@ struct object *deref_tag_noverify(struct object *o)
- 	return o;
+diff --git a/sha1-file.c b/sha1-file.c
+index 00b1b2b8660..3440b67639e 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -1788,7 +1788,7 @@ static void check_tag(const void *buf, size_t size)
+ {
+ 	struct tag t;
+ 	memset(&t, 0, sizeof(t));
+-	if (parse_tag_buffer(&t, buf, size))
++	if (parse_tag_buffer(the_repository, &t, buf, size))
+ 		die("corrupt tag");
  }
  
--struct tag *lookup_tag(const struct object_id *oid)
-+struct tag *lookup_tag_the_repository(const struct object_id *oid)
+diff --git a/tag.c b/tag.c
+index 5b41fc71fad..4971fd4dfc9 100644
+--- a/tag.c
++++ b/tag.c
+@@ -126,7 +126,7 @@ void release_tag_memory(struct tag *t)
+ 	t->date = 0;
+ }
+ 
+-int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
++int parse_tag_buffer_the_repository(struct tag *item, const void *data, unsigned long size)
  {
- 	struct object *obj = lookup_object(the_repository, oid->hash);
- 	if (!obj)
-@@ -160,7 +160,7 @@ int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
- 	} else if (!strcmp(type, commit_type)) {
- 		item->tagged = (struct object *)lookup_commit(the_repository, &oid);
- 	} else if (!strcmp(type, tag_type)) {
--		item->tagged = (struct object *)lookup_tag(&oid);
-+		item->tagged = (struct object *)lookup_tag(the_repository, &oid);
- 	} else {
- 		error("Unknown type %s", type);
- 		item->tagged = NULL;
+ 	struct object_id oid;
+ 	char type[20];
+@@ -203,7 +203,7 @@ int parse_tag(struct tag *item)
+ 		return error("Object %s not a tag",
+ 			     oid_to_hex(&item->object.oid));
+ 	}
+-	ret = parse_tag_buffer(item, data, size);
++	ret = parse_tag_buffer(the_repository, item, data, size);
+ 	free(data);
+ 	return ret;
+ }
 diff --git a/tag.h b/tag.h
-index 9057d76a506..276c448cd55 100644
+index 276c448cd55..149959c81ba 100644
 --- a/tag.h
 +++ b/tag.h
-@@ -11,8 +11,8 @@ struct tag {
- 	char *tag;
- 	timestamp_t date;
+@@ -13,7 +13,8 @@ struct tag {
  };
--
--extern struct tag *lookup_tag(const struct object_id *oid);
-+#define lookup_tag(r, o) lookup_tag_##r(o)
-+extern struct tag *lookup_tag_the_repository(const struct object_id *oid);
- extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long size);
+ #define lookup_tag(r, o) lookup_tag_##r(o)
+ extern struct tag *lookup_tag_the_repository(const struct object_id *oid);
+-extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long size);
++#define parse_tag_buffer(r, i, d, s) parse_tag_buffer_##r(i, d, s)
++extern int parse_tag_buffer_the_repository(struct tag *item, const void *data, unsigned long size);
  extern int parse_tag(struct tag *item);
  extern void release_tag_memory(struct tag *t);
+ extern struct object *deref_tag(struct object *, const char *, int);
 -- 
 2.17.0.582.gccdcbd54c44.dirty
 
