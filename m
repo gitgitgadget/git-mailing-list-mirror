@@ -2,86 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DC7D1F42D
-	for <e@80x24.org>; Wed, 30 May 2018 21:03:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 070381F42D
+	for <e@80x24.org>; Wed, 30 May 2018 21:07:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932263AbeE3VDi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 May 2018 17:03:38 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:46134 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932222AbeE3VDh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 May 2018 17:03:37 -0400
-Received: by mail-yw0-f195.google.com with SMTP id v197-v6so5174700ywc.13
-        for <git@vger.kernel.org>; Wed, 30 May 2018 14:03:37 -0700 (PDT)
+        id S932430AbeE3VHA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 May 2018 17:07:00 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:37005 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932445AbeE3VG5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 May 2018 17:06:57 -0400
+Received: by mail-wr0-f193.google.com with SMTP id i12-v6so30911075wrc.4
+        for <git@vger.kernel.org>; Wed, 30 May 2018 14:06:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=7HNwDOj98qntrJFCU1+u6BKxPAsLRTJXjto2nWvQRew=;
-        b=RLboXxBlFRwJD/DrN4AZXONLTLn5ccOYfqIpd/i/Owh5EbaovNbxaR3sV0LyLpQh6N
-         j2tP1+UWPeo991DKr/5zKdpzV18zwI6HfwtR3XF62/XZW9t11lt/zerRjsaWfhi7L+5Q
-         HnZc5+xrcZ42rg1Eoe+fiJjDjN7PdYKEjHZ7BmvLlbVP1uBx615wFODDMBA+4ma/ZNOF
-         2GbaIh8kCqGd5/vq4tB3i8q941vxDE6Mwx9TEBVm6OyWaVWr3PRbGEoibQQx30VlziK3
-         HPI8QW5DCYKjRUsGJzMTxo1Trr7Lyqo9UJ6R+Y9sTOktjKvn0pSHtjqLEzhTaNDcsz21
-         J8cg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eH7wlyT5CtQlwFdCjK1XPtmwA4YsWLRGIgmB5V0zC3o=;
+        b=nNKje9S3eXqne+JFoK1f/G/yECShEgzJZdEBrKCrVAttohtbH4UM5OR9dt+N8M1vGl
+         0FfRb+qws4r60ubarwFTvzgBxv5rQOJt5jt3GynZ9GDcn3CxtIXD+0fHxvxzZNxFx9vm
+         Nfm6gabWZDi8k4Xr3TFJuyGYgGXR7iVWGgd1u/j+eUIixV+vdgaNaOAfdCJ5f3K1oGl7
+         8rLHOqfXrL0ePlzUjRPrWbmFg8dxEdKvikJQwgGUNyldtLvgP/y89KDffZnjs3+otQUE
+         X9/7qGNhqIaVbwccj/C9pkYqTQ99rpszYPwiNuwMmM7wWvTOJDgpIdA/mbH9bka/xObS
+         81ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=7HNwDOj98qntrJFCU1+u6BKxPAsLRTJXjto2nWvQRew=;
-        b=QowCCNoo8CYhU81O3EHq/u5EJG3VzJGaE3JOkvRa4UZcw94kODcUnJLaMPJppXncxe
-         l7gVb7yevpHBLx6RG4IoYdQfOZ1mzfphwALPwB/gC99MLKeBWALdBun0qKNSKWTHnZu6
-         r7iDTIpejCw67oa9fOdUQUJnfwpkxHnYCTt30Uyx7MlRxIJfp0gXi3vN6RTc7UBfVrtQ
-         58z7LKWQauoccgL5XPaffJOblOhOLL8cc8weMOt9o0yVQuhzH8vDjRzGwNvH3pmtDAMl
-         NnJ9gSa8IMLUhXkH0iip/bs1NTmSTS6wadGYeinJtM0+ENgDciI0Jp4G2zRgfvsj85Kn
-         HlYA==
-X-Gm-Message-State: APt69E2ij1lIoi9diPtdZTyL22w29H+JMD18cB4KXW4kvuIL9kz7N8JU
-        xDnbm40o7YypTzyEg5n9Xce+aI7FCjG1SSm6jASVJQ==
-X-Google-Smtp-Source: ADUXVKIYz4nExVRD/t11GyBoqTMznted8A957UxfT76qf+NcsXXbzQdxsgzdx6oUCEKz7oiAScfuuQe3HEN5lZlg0G4=
-X-Received: by 2002:a81:8801:: with SMTP id y1-v6mr2372854ywf.238.1527714216933;
- Wed, 30 May 2018 14:03:36 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eH7wlyT5CtQlwFdCjK1XPtmwA4YsWLRGIgmB5V0zC3o=;
+        b=GV9coYTYrIOg28pKrEtZdZ8+sE329yWvnY7wX6aXWj1nTrQnFLzbo3iMjlRySfj0ye
+         vPjai6W3P7ZwqiUOlf/rIIpMXfW2w+t3loMv2HROkpXrzqMeNz63HULeaXDa16d+1Joy
+         2tWbZBWHUkyUcKFQ9L5YpoRNNOET4/sHc0pKHp4cSwuyBIRWrLWpykJYapWNO8fCYpMg
+         fMG4171XQF2hj/eAH/T9A7302Hd/2m08saQ0OpiQm6SjxrMDMjy/GBjh4XqfMIxEpZyW
+         Mt+yUFE/GTAgcF/lt/Naj84+AS8cvlZewFirCxsRpTEZ8p8e5jqbnGRI5DiJwhlyjH1h
+         ShCg==
+X-Gm-Message-State: ALKqPwfFXZryqMIP5JSI+ET+RfHMrlCYVlmTYAmb7njGBnBDzgZ5r8OI
+        F9+6A8p6AS4upnl8xkxILKc3u/Oz
+X-Google-Smtp-Source: ADUXVKJ1qkJ9e9MnDvvzk9eD5WYswDRTx886/Ua9dtKU/+lNz9HaIN9WNUP95ufXnYJa5nybfKkUag==
+X-Received: by 2002:adf:e94e:: with SMTP id m14-v6mr3321856wrn.126.1527714415869;
+        Wed, 30 May 2018 14:06:55 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id o16-v6sm18237097wri.67.2018.05.30.14.06.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 30 May 2018 14:06:55 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/4] color.ui docs & add color.ui=isatty
+Date:   Wed, 30 May 2018 21:06:37 +0000
+Message-Id: <20180530210641.19771-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.17.0.290.gded63e768a
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Wed, 30 May 2018 14:03:36 -0700 (PDT)
-In-Reply-To: <CAPig+cRh02976beGp5c5Sw5=h86VgNZgVreCHh38QKP5udJeGg@mail.gmail.com>
-References: <20180530080325.37520-1-sunshine@sunshineco.com>
- <20180530080325.37520-5-sunshine@sunshineco.com> <CAGZ79kZ2MKpjwwx0+ZsPZ9bFu_ersPJ=kKPYWRmWYjJ8yoVhuA@mail.gmail.com>
- <CAPig+cRh02976beGp5c5Sw5=h86VgNZgVreCHh38QKP5udJeGg@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 30 May 2018 14:03:36 -0700
-Message-ID: <CAGZ79ka1-emwYsEh1EQdh=pgFUV_bi2xoDu1Ajq=Z1XkkhyuDw@mail.gmail.com>
-Subject: Re: [RFC PATCH 4/5] format-patch: teach --range-diff to respect -v/--reroll-count
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 30, 2018 at 1:44 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+I started writing this for the reasons explained in 4/4, but the
+justification there is a bit of a stretch. Where we'd realistically
+like to diverge color.ui=auto and color.pager=false, but since I wrote
+it already maybe some people will come out of the woodworks telling me
+that this is what they've always wanted for whatever reason.
 
->> Unrelated to this patch: how does this series cope with range diffs
->> that are not in commit-ish but patches on the file system?
->
-> I'm not following. Can you provide a concrete example to get me up to speed?
+Maybe if we don't like 4/4 we should take 3/4 because we might want
+another such option in the future, but that's probably overly hedging
+our bets, still. I really don't like this pattern that we have a
+multi-value config option that dies instead of warns on unknown future
+values, so I'm leaning towards saying that should be accepted to git.
 
-I was just wondering if things like
+But while I was working towards 4/4 I did some nice fixes in [12]/4. I
+think those should go in regardless, so they're non-RFC.
 
-    git format-patch --range-diff=v3-00*.patch --reroll-count=4 -3
+Ævar Arnfjörð Bjarmason (4):
+  config doc: move color.ui documentation to one place
+  config doc: clarify "to a terminal" in color.ui
+  color.ui config: don't die on unknown values
+  color.ui config: add "isatty" setting
 
-would be supported, but that doesn't seem to be the case, now that I read
-the whole series. I don't think it is crucial to support right now.
+ Documentation/config.txt | 100 +++++++++++++++++++++------------------
+ color.c                  |  25 ++++++++--
+ color.h                  |   1 +
+ t/t7006-pager.sh         |  31 ++++++++++++
+ 4 files changed, 107 insertions(+), 50 deletions(-)
 
-This whole series is reviewed by me and I think it is good for inclusion
-once we have a reroll of the range-diff series and aligned the command
-name to call.
+-- 
+2.17.0.290.gded63e768a
 
-Thanks,
-Stefan
