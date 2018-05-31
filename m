@@ -7,130 +7,93 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E54C51F42D
-	for <e@80x24.org>; Thu, 31 May 2018 18:44:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CFBF1F42D
+	for <e@80x24.org>; Thu, 31 May 2018 18:52:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755960AbeEaSoG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 14:44:06 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:35879 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755877AbeEaSoF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 14:44:05 -0400
-Received: by mail-yw0-f194.google.com with SMTP id v68-v6so7498737ywd.3
-        for <git@vger.kernel.org>; Thu, 31 May 2018 11:44:05 -0700 (PDT)
+        id S1756002AbeEaSwz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 14:52:55 -0400
+Received: from mail-yb0-f193.google.com ([209.85.213.193]:41168 "EHLO
+        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755877AbeEaSwy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 14:52:54 -0400
+Received: by mail-yb0-f193.google.com with SMTP id l2-v6so7925072ybp.8
+        for <git@vger.kernel.org>; Thu, 31 May 2018 11:52:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=RnpgRQ7cVUth54TGoMXpKLzW6hApXFTW2QwadtImd/U=;
-        b=n5l85wrxXG6WTdtfSrVyEoyByD6iofr831YAqumPQ7JvOmtEooIPtohSp2WYiqwxuQ
-         lcGCRdabaHpI/7N35wFGdSzmCrcofc7ClUoxjouL2bxS4Bdw/RCerrSo5fyXfpeMRZKr
-         avQmZFc3o7DHMcsPq9viob7B1SPnksKtqaTaTuIsKBhr1O16gzHBVJAtCMAJznHi9Iy1
-         GhMFE/XJg8jpyvF+JxfJjgbbaM/UGRRI1FPQKVDNHw3GR1XYP3FlGeTKE5RNtP5hc6Vt
-         dX0iZepvkqhB38xb9QVojRF3Sm/usym3G3mHI2uump+29cK9zQy+vOUQvG30Y+rc+uXL
-         FJ2w==
+         :cc;
+        bh=WTXDe6E5xUztxZK9w7YRJvmU03RrMRzqrDYaGzsLC6A=;
+        b=uMrB12YQTGgEMKeBOsu5MpznQSXIxqxVYRKbiKsjC3rbzAxsJyyGQxq7xl/F/l8Udt
+         /qExSx48KCzaVBWB1/Fl6FLDb0ceBfUi45um8VX+lAVVRPBgwITc5O6PoSA8VN8gADCg
+         23QOj6thDAkUqweoeJVAGVxZgOhO5X/dLZ0njSMjnbQsTTtPXQ2QjTAmDsqLuojbroZk
+         I9T6T4m63D4J5sJ4obhcuU8JWH1AEsiUAhFuJ0WcGzKs28HATA7qwfEHjaphyI8P/nqu
+         i/2i7tXFAyBptVoP/STb+kUr12Pq/eSAJG1EFUmlvycc+WyowO81xVKkGhs3nmR299fw
+         Fu7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RnpgRQ7cVUth54TGoMXpKLzW6hApXFTW2QwadtImd/U=;
-        b=MELutpU9n2eK0JNduC/LnuQJWHS1OWa6PjmnAWan1yjho9O4ufDOm+zjSR+QSOLs1P
-         +kS4Un+xHkOfy9YO+omSa+RJ2UWu/ElFoxzoug65f+NQ7SmI5+GwGRjokTaRGDfiqVK3
-         /lFO4ufFqB9CgjEAhlhYyNEHG/GBFycfEFSkjvvahq6WgXeZKOMpdhVyHZDqiiL778Wa
-         Ed3E80tCPxVRQAEqFSbbuMNHgUHBlPZQv6XBhbvzoU7uxmTouowBE1+U5lJfFeMj9ghk
-         rNTy3g4QM7RSMhBG9TmBCzocGHqKKDylFZXm22++3F8eOwHBjAJJEgP8TA2YsOsNs6wh
-         2OWQ==
-X-Gm-Message-State: ALKqPwchUexhjkF6ac+MH8wvd0nZqfSX1ZsntdNpjpoR+jHAxJCN4fCJ
-        4p4QsjvrVc6HBpAWY95VsxV7FcA097WjtJAbVy6l6G1etXw=
-X-Google-Smtp-Source: ADUXVKIa8J/i2fdLXPjbzb/oCqwS5CebehbqR5Jwws0Q6saXzId84U8DIU+7nRf/+/b3cu3ErHjhMnlVg1FUrF4FuH4=
-X-Received: by 2002:a81:3758:: with SMTP id e85-v6mr4405767ywa.340.1527792244936;
- Thu, 31 May 2018 11:44:04 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=WTXDe6E5xUztxZK9w7YRJvmU03RrMRzqrDYaGzsLC6A=;
+        b=rAsCYPHvYuQWce3rDJLfQmNFrCdFrbEEcj8xGJSlKxkPyTK0GLcI2D+4oM8Qg9zmwH
+         HRrBUJ6iXDzcBa3cBvI+/8zFUPQfS2PnjSRdTfONTgwj1rciR8BpcsUYT4dy8R2pMomx
+         mbAJQuQPNYgFz3uQJyeqbvbewguTjbUuDyTbSSHuvUihP/Gniy5FiWVQTgimUxRewiaY
+         mAN71kRTPaeh1/xvuUOiJHnVRA3mwXYVM0DLeGxCui6dAkgF3ZMGNtxeG+hb48aSK/uY
+         ORXImO63F/xZofgFwtsqjNVkui2KfEz5V+wdlIPGgRcYzWW+ANMgHW7DB+4lNqUmB/8K
+         vSgg==
+X-Gm-Message-State: ALKqPwd0IB4S+Bom9JYEtH2mx8HraiCOdINaDFJjy5hULNdqotlw48bj
+        aDJalS/ETZ+lh+PTcNYY/ukivLg5/7o2efJUjEtnwA==
+X-Google-Smtp-Source: ADUXVKLWSupAdzde5NCaKXkAc3Ahp7coLWw+eaafvGgi3CDBU+qb55ZfdIOqKBA7V5clcxP80ePChfjnGfJh8xm0sN0=
+X-Received: by 2002:a25:6cc2:: with SMTP id h185-v6mr4622147ybc.307.1527792773198;
+ Thu, 31 May 2018 11:52:53 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Thu, 31 May 2018 11:44:04 -0700 (PDT)
-In-Reply-To: <a6d6e5c1-e7ea-1131-c798-9d5e44603d87@talktalk.net>
-References: <20180531110130.18839-1-alban.gruin@gmail.com> <a6d6e5c1-e7ea-1131-c798-9d5e44603d87@talktalk.net>
+Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Thu, 31 May 2018 11:52:52 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1805311402210.82@tvgsbejvaqbjf.bet>
+References: <20180530170302.191176-1-sbeller@google.com> <20180530170302.191176-2-sbeller@google.com>
+ <nycvar.QRO.7.76.6.1805311402210.82@tvgsbejvaqbjf.bet>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 31 May 2018 11:44:04 -0700
-Message-ID: <CAGZ79kZ7HiyZTS40XPwpjN3PBbdW0ETN=dfzeE-90Rp+irXnSA@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 0/2] rebase -i: rewrite append_todo_help() in C
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Alban Gruin <alban.gruin@gmail.com>, git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Thu, 31 May 2018 11:52:52 -0700
+Message-ID: <CAGZ79kbhYSuBEEgALAmFT6Cf4+wmqFO_cMScBDs8CcgFwckXQg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] sequencer.c: free author variable when merging fails
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 31, 2018 at 10:48 AM, Phillip Wood
-<phillip.wood@talktalk.net> wrote:
-> Hi Alban, it's great to see you working on this
+On Thu, May 31, 2018 at 5:04 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Stefan,
 >
-> On 31/05/18 12:01, Alban Gruin wrote:
->> This series rewrites append_todo_help() from shell to C. This is part
->> of the effort to rewrite interactive rebase in C.
+> On Wed, 30 May 2018, Stefan Beller wrote:
+>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
 >>
->> The first commit rewrites append_todo_help() in C (the C version
->> covers a bit more than the old shell version), adds some parameters to
->> rebase--helper, etc.
+>> This was a deliberate oversight in f241ff0d0a9 (prepare the builtins for a
+>> libified merge_recursive(), 2016-07-26)
 >
-> I've had a read of the first patch and I think it looks fine, my only
-> comment would be that the help for '--edit-todo' is a bit misleading at
-> the moment as currently it's just a flag to tell rebase-helper that the
-> todo list is being edited rather than actually implementing the
-> functionality to edit the list (but hopefully that will follow in the
-> future).
+> No, it was not deliberate. It was inadvertent, most likely ;-)
 
-Would you have better suggestions for the name of the flag?
-Of the top of my head:
-  --write-edit-todo
-  --hint-todo-edit
-  --include-todo-edit-hint
-not sure I like these names, though they seem to reflect the
-nature of that flag a little bit better.
+ok, I am not just bad at writing commit messages, but
+also bad at reading other peoples commit messages. ;)
 
->> The second one strips newlines from append_todo_help() messages, which
->> require to update the translations. This change was advised to me by
->> Stefan Beller, but Johannes Schindelin voiced concerns. I don=E2=80=99t =
-really
->> have a strong opinion about it, so feel free to give yours.
+"As this patch is already complex enough, we
+leave that change for a later patch." is what lead me to
+believe it was deliberate.
+
+>> -             if (res < 0)
+>> +             if (res < 0) {
+>> +                     free(author);
+>>                       return res;
 >
-> I'm not sure I understand what the point of this patch is, if the
-> newlines are unnecessary then I'd just omit them from the first patch -
-> am I missing something?
->
+> Why not `goto leave;` instead? I wonder what is happening to the commit
+> message: can we be certain at this point that it was not set yet? And
+> also: should we call `update_abort_safety_file()`?
 
-The new lines are part of the output and are currently in the part to
-be translated:
-For example from the German translation file:
-
-#: git-rebase--interactive.sh:171
-msgid ""
-"\n"
-"Do not remove any line. Use 'drop' explicitly to remove a commit.\n"
-msgstr ""
-"\n"
-"Keine Zeile entfernen. Benutzen Sie 'drop', um explizit einen Commit zu\n"
-"entfernen.\n"
-
-After patch 2 is applied, the translators only see
-"Do not remove any line. Use 'drop' explicitly to remove a commit."
-as a need to translate, and the two additional new lines (one in front
-and one after the string) are just put in place autormatically.
-
-Usually we do not want to play sentence lego, but this is a whole
-sentence for translation; it is rather about formatting the output for
-the terminal, adding new lines to separate some messages.
-
-I thought this patch would just show goodwill towards translators
-that do not need to replicate the formatting exactly.
-
-If you feel strongly, I'd rather see Alban drop this second patch and
-move on instead of waiting for our argument to settle. ( I do not feel
-strongly about it, but put it out as a suggestion as that seemed like
-it would lead to a better end state for the project).
+I think so, but wasn't sure. I wrote these patches before
+my usual morning routine. I'll change that.
 
 Thanks,
 Stefan
