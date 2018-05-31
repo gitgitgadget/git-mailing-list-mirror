@@ -2,107 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E3D21F42D
-	for <e@80x24.org>; Thu, 31 May 2018 19:07:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DB961F42D
+	for <e@80x24.org>; Thu, 31 May 2018 19:22:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754143AbeEaTHn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 15:07:43 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:33459 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754021AbeEaTHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 15:07:42 -0400
-Received: by mail-yb0-f196.google.com with SMTP id x36-v6so7943123ybi.0
-        for <git@vger.kernel.org>; Thu, 31 May 2018 12:07:42 -0700 (PDT)
+        id S1754101AbeEaTWM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 15:22:12 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:51168 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754030AbeEaTWL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 15:22:11 -0400
+Received: by mail-wm0-f66.google.com with SMTP id t11-v6so55944177wmt.0
+        for <git@vger.kernel.org>; Thu, 31 May 2018 12:22:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8tSH1S7Bwdl9Kq7xm0XM0mYf4UBTtTFO/+9c6PGllig=;
-        b=WR5gIlzUEq21LizD+fc6MiiFI5HvrhEaRuOSh/JBFdt6E1mr/FBeExvjvYWzxoGQUT
-         L/ScZmhO3Xh6mHAip8xzjjju2vw4gMZlzh6+HInIsgASA4TuzeuiXQoDAXqOkyEAkyEx
-         3PA9QjrFWgQ0VpSZbrrIHMaw9moqDdBmBV6UjqaDsObzhIX3I6/0myiHT3Ygo1XnbQ1G
-         ffb+wG+6Cl6jzjEk+XucbYnoLlLde7nZcgaNoujUCKypes/ebXN81lN3xmDyE/YeKGKE
-         hJ3BRt15Z4Juycj5ILo0fB2bFICn3gsZPFHIAsK0g7kQ8Gsx2iXtgHxyfM58jZqgH/Xk
-         532w==
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XUUNKwla6QF1z7jQbDI1zo2TF+o4pYbiPl2utlN0htE=;
+        b=C2Oc9F998IaBSa2hyW7+dZCJgKf69QGDtHK4pJ1EIy0g5xO+FvinfyQCEyMycFUuUA
+         FifrPlQcaHPq5KR/LkCJU6gP6U7poPnierY10sTI4AqFke10rZRLaOHEBlvDcVisjtT7
+         aFVmCreNwLSu27BhLNYbRSRc7CxGxvjPI9otzRYAk8SUt2MLWdbtSdwHrLCMW9/fADnE
+         /Cv0jVTmopZHGl7Y0hkl+1QsTjfy41EQ+EqfzIpPB/uCch2spIglNnO3GpPHnE7l4YbM
+         lMJNuy0zdePpUSS0YGEfEL436l/TU4V5kOqb4LQqeRaSZCNhMbADm6IXVk5xlIeRco3M
+         G2cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8tSH1S7Bwdl9Kq7xm0XM0mYf4UBTtTFO/+9c6PGllig=;
-        b=X0fz9Q/b4jf+LOvFHYQ+EIIkEPyp466mPn/x9ThUM9kn871RJLaoS0+aQkQ6G6efgT
-         HltfsdXP0qBXNL3eyr8fzUs8mVZIpnXk/whXpOhPWmi7W4KNOlCmYxYSwjlhmuslcfyN
-         oDMpKXJTuiaOLSZybBzWYvQLuMDYJfxnIuGWxOuoJ2ch7LwWeHo0+xhyRuH9pZalUIgT
-         VSES4mS8FVtNs2fVtUc5BqwIYWLETO7xZbE41pKcCVki2t+k71Isr5A2hDrJXcnYWrKT
-         7ih23qB9TpsC4EwjHMv+STw2Brme4lvA8SI91FCYr5SEd0HDE00GrO+9hOuW/ZwyqAbA
-         DhjQ==
-X-Gm-Message-State: ALKqPwfrMgNd5NHx+QpG+2NQROzBO4qdctRYi6xwX5l+zFZASTQjhrEV
-        UvLfX/MNOlnjmYocxLc2jt+v6unxinDIeO/l1uvnvV8c
-X-Google-Smtp-Source: ADUXVKIANFOtT35w3Xlf1xhkyt/uSSqHdH+Nh9QNdOn4l93FTxr1fCxYmQ5YVfWqjGVe6csEgtlNTn4CNVCWbyZrpx0=
-X-Received: by 2002:a25:6cc2:: with SMTP id h185-v6mr4653320ybc.307.1527793661597;
- Thu, 31 May 2018 12:07:41 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XUUNKwla6QF1z7jQbDI1zo2TF+o4pYbiPl2utlN0htE=;
+        b=e07HG7Z3/9wJpdMeXkRthlWj7/C/OjOsg62w8SdubRvO2Ozggc4IK07aNLjwM9vS6v
+         mPCwEWGlM9FLWMt24adupF5dfF3Q7bLtQDCLxWkcfOr/LS1DrZUviIzJHB0GwqtOlOrA
+         3EvS0dka8OiZjwTzRzAniw3JADD84eTRiLo+lECNp6FKZ4Ac3sXuTnDnlj2xcSRWZiH9
+         Y+8XW8FjYq6GSe61ir7YCHelY9pP9NFeQETmDg12H7o1wQp8Inskl0xFsGGUKgdqadNa
+         EXM3RKKasFUdqA+wNnAIIAd7FExK4yMfo+Y3Pn/VPGECpa+G9girWFJX7S8Xgn5B5qpG
+         ud2g==
+X-Gm-Message-State: ALKqPwetH8QjzOJihEDO/N3EyJCTf0zcvHqihDbgCupPBR5pVVuKPykc
+        lrGBNwrG70/ql65a2WQeJzM=
+X-Google-Smtp-Source: ADUXVKK3BPAqfbelCO+0CIckhiTGVA09w41pgxDnQR2NLLJzdn+6KsPtDeZ3KV7EcnroZfGkdg0OvQ==
+X-Received: by 2002:a1c:ee5d:: with SMTP id m90-v6mr718143wmh.113.1527794530030;
+        Thu, 31 May 2018 12:22:10 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id q2-v6sm36762128wrm.26.2018.05.31.12.22.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 31 May 2018 12:22:09 -0700 (PDT)
+Date:   Thu, 31 May 2018 20:22:45 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 2/2] note git-security@googlegroups.com in more places
+Message-ID: <20180531192245.GB26159@hank.intra.tgummerer.com>
+References: <20180527140433.32277-1-t.gummerer@gmail.com>
+ <20180530205255.13090-1-t.gummerer@gmail.com>
+ <20180530205255.13090-2-t.gummerer@gmail.com>
+ <20180530233716.GE671367@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-Received: by 2002:a25:e87:0:0:0:0:0 with HTTP; Thu, 31 May 2018 12:07:41 -0700 (PDT)
-In-Reply-To: <20180531174024.124488-5-dstolee@microsoft.com>
-References: <20180531174024.124488-1-dstolee@microsoft.com> <20180531174024.124488-5-dstolee@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 31 May 2018 12:07:41 -0700
-Message-ID: <CAGZ79kYcrTHzj_6S5gV2e72DhZf_LTAKHiwX+HZY2Tskk0eqYw@mail.gmail.com>
-Subject: Re: [RFC PATCH 4/6] commit-graph: avoid writing when repo is shallow
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "jnareb@gmail.com" <jnareb@gmail.com>,
-        "stolee@gmail.com" <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180530233716.GE671367@genre.crustytoothpaste.net>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 31, 2018 at 10:41 AM, Derrick Stolee <dstolee@microsoft.com> wrote:
-> Shallow clones do not interact well with the commit-graph feature for
-> several reasons. Instead of doing the hard thing to fix those
-> interactions, instead prevent reading or writing a commit-graph file for
-> shallow repositories.
+On 05/30, brian m. carlson wrote:
+> On Wed, May 30, 2018 at 09:52:55PM +0100, Thomas Gummerer wrote:
+> > Add a mention of the security mailing list to the README, and to
+> > Documentation/SubmittingPatches..  2caa7b8d27 ("git manpage: note
+> > git-security@googlegroups.com", 2018-03-08) already added it to the
+> > man page, but for developers either the README, or the documentation
+> > on how to contribute (SubmittingPatches) may be the first place to
+> > look.
+> > 
+> > Use the same wording as we already have on the git-scm.com website and
+> > in the man page for the README, while the wording is adjusted in
+> > SubmittingPatches to match the surrounding document better.
+> > 
+> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > ---
+> >  Documentation/SubmittingPatches | 13 +++++++++++++
+> >  README.md                       |  3 +++
+> >  2 files changed, 16 insertions(+)
+> > 
+> > diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> > index 27553128f5..c8f9deb391 100644
+> > --- a/Documentation/SubmittingPatches
+> > +++ b/Documentation/SubmittingPatches
+> > @@ -176,6 +176,12 @@ that is fine, but please mark it as such.
+> >  [[send-patches]]
+> >  === Sending your patches.
+> >  
+> > +:security-ml: footnoteref:[security-ml,The Git Security mailing list: git-security@googlegroups.com]
+> > +
+> > +Before sending any patches, please note that patches that may be
+> > +security relevant should be submitted privately to the Git Security
+> > +mailing list{security-ml}, instead of the public mailing list.
+> > +
+> >  Learn to use format-patch and send-email if possible.  These commands
+> >  are optimized for the workflow of sending patches, avoiding many ways
+> >  your existing e-mail client that is optimized for "multipart/*" mime
+> > @@ -259,6 +265,13 @@ patch, format it as "multipart/signed", not a text/plain message
+> >  that starts with `-----BEGIN PGP SIGNED MESSAGE-----`.  That is
+> >  not a text/plain, it's something else.
+> >  
+> > +:security-ml-ref: footnoteref:[security-ml]
+> 
+> My only feedback here is that using the footnoteref syntax to refer to
+> the previous footnote potentially makes this a little less readable for
+> plain text users, although it also reduces duplication.  I'm not sure I
+> feel strongly one way or the other on this.
 
-Makes sense.
+Yeah, using the plain footnote syntax we end up with two footnotes
+that are exactly the same, which felt a little awkward.  But I don't
+feel strongly either, so if the consensus is to duplicate the footnote
+for better readability in plain text I'm happy to change that.
 
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  commit-graph.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 95af4ed519..80e377b90f 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -208,6 +208,9 @@ static void prepare_commit_graph(void)
->                 return;
->         prepare_commit_graph_run_once = 1;
->
-> +       if (is_repository_shallow())
-> +               return;
-> +
->         obj_dir = get_object_directory();
->         prepare_commit_graph_one(obj_dir);
->         prepare_alt_odb();
-> @@ -711,6 +714,15 @@ void write_commit_graph(const char *obj_dir,
->         int num_extra_edges;
->         struct commit_list *parent;
->
-> +       /*
-> +        * Shallow clones are not supproted, as they create bad
+To really improve the readability we'd probably have to duplicate the
+attribute as well, which I wanted to avoid (altough it's not
+completely possible with the footnoteref syntax either).
 
-supported
-
-> +        * generation skips as they are un-shallowed.
-> +        */
-> +       if (is_repository_shallow()) {
-> +               warning("writing a commit-graph in a shallow repository is not supported");
-
-_() ?
+> Otherwise, this looked fine to me.
+> -- 
+> brian m. carlson: Houston, Texas, US
+> OpenPGP: https://keybase.io/bk2204
