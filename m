@@ -2,148 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36EE61F51C
-	for <e@80x24.org>; Thu, 31 May 2018 07:23:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B6CF1F51C
+	for <e@80x24.org>; Thu, 31 May 2018 07:24:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754001AbeEaHXL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 03:23:11 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:52336 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753846AbeEaHXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 03:23:10 -0400
-Received: by mail-wm0-f68.google.com with SMTP id 18-v6so46496305wml.2
-        for <git@vger.kernel.org>; Thu, 31 May 2018 00:23:09 -0700 (PDT)
+        id S1754030AbeEaHYL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 03:24:11 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:37910 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754026AbeEaHYH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 03:24:07 -0400
+Received: by mail-pl0-f68.google.com with SMTP id c11-v6so12695483plr.5
+        for <git@vger.kernel.org>; Thu, 31 May 2018 00:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=1UAhO//WBJp4smE/2FxC7oR4lCMqQrVQKf2Y8mGSGZw=;
-        b=mvdG9ieojlwrYyXtJXJGyxZohMTrF6ooqa2zSUoIR0vtVAXGh/uq9bH2C2W0qG887t
-         ilsMUSYQOYvvHVKKJTAQ9+Jh1B7ciiuTIwoy08RayhzNNmT5flkbClz4TEbIbyy5YaN0
-         fQnadqPGIymBTBhxX30wv++kT78uQfkAR+B6disjaePGHdzPvkV4tm8MzOjnmHvLGTHt
-         gF2zd6oqi/9R3Yg8xX0oxvbKNRUrzYPxgo4gMwsmp+1IA2DLlujEaRZp6JAOyRTl5Q1M
-         VJkn/5CX7pQiszE6Zyln9P+METmh6qHX3RcqnoHaphch0A7npTZqQRyyVkVLwnXlp/c9
-         ZJCg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/9mpLWiDuIxaVJDwU6rRWWD6FLBkSrkYAcg5ctriDu4=;
+        b=U5DgOBkObG5d3ShRf+ZkT6YI275gJsFoFAdqc8pQlDgNm6LpmY2+UrpnchrleQbuT9
+         RHoyX0sL08oy7nFhULjoYfpQkE9o+EcVMEZVyieEQFwAUm1MEms7lVZ0d/J88GPGwX0y
+         An3hncAGwglrePKCvuWBMdFhlUAJJuZKlnwuLwMrSOfYudLO/lpfDe8FVf4VAxyGZmkq
+         at/+kHCHYqGugUYp+bImvA4uMDd1qn3JbgCapA8aPPfkAHrOVhYU7YYIRWf7nMAoPbYP
+         9Bwy0lrs8997UGmO+9ejwD3JS6uZpkZ/JePR/FHF/dROR90hgm5LWRljt8UI86JLSuzz
+         /U8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=1UAhO//WBJp4smE/2FxC7oR4lCMqQrVQKf2Y8mGSGZw=;
-        b=JbzIuseeVI1l7JN3Z226huCEQQJqadGJYsu7iQ2fhZSz2DoP4c2a2ZLvwBNKnyufiZ
-         rLSdNmrcSpqpd6hhij4tOvTDqtxt+h0fH1lO2emsN6UF7y7aLPTWZC1m0OiXDOgcRAeW
-         rL0ffW2UibemFz1pGPPko1N4eVtoh1qsmINhkxhItFdd5hXd1r+nfahkB6cQB8kXQcOj
-         hu5OLDzcKqKEvUqpIaTlzgN1s+K9iOp68sZ8OtYaCvDv/lCdEBsWW7VhD43PwfwdCGF+
-         g66/rqsg6JNkQGmvQzfLmk648KP3VlVuW3Dv+6PptvRwsZMF5cmS4SxHo3MvVrDj3Wel
-         d+Qw==
-X-Gm-Message-State: ALKqPwdNaSfK1U4XkziMKbircUDgtbqYd5M3edWyKqitKSVgcCw32tA2
-        KxuvTmoGQbuCNU6eNQBlfI0=
-X-Google-Smtp-Source: ADUXVKKYF23ekpbT44r/xs4T17SodKzWD26Xwb0fGKQ/UeQK817yPiBgC7tPlf/Ponp23oLLfguHaA==
-X-Received: by 2002:a50:83a5:: with SMTP id 34-v6mr6663621edi.276.1527751388907;
-        Thu, 31 May 2018 00:23:08 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id b47-v6sm21647517ede.70.2018.05.31.00.23.08
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/9mpLWiDuIxaVJDwU6rRWWD6FLBkSrkYAcg5ctriDu4=;
+        b=NHA6oXRWXdBOx044aNnstA3k+WoNrBOqFrTcWTUhdcYbRu6voQVIYBKDrfJkSfA6S5
+         NJBvQifWqSqHI28+ODoxmxf/iL+qfdvqw/7usKHUzsyqw640M9PHwNM2X8AzXXXvPyAf
+         r98YfcY8PHVPbhAPPaVctlOryVT1LqSzZOgeX5NPWi1Va4/bo2Np1yj7j5tHqRJCLBkR
+         aRogJD6tq7fUFBEN7f7aSnTsihjphmWrjDKb7e04HH1NvuTSYvPK3X0l9cGqOzYpZuyn
+         n4yBsRkcUIl/tXIjsxfSvZEOIGaylKuFUYNoWXYGaBD1Sd28KOkZ8fwbhBpAbBXr7yNg
+         HIUg==
+X-Gm-Message-State: ALKqPwfhIZRUGYmjF3qkaemULgW8vkr+R/u5f/oTpDqr79AOp+Xzy8A+
+        jBvAodXzEkiYynuAuYsggVw=
+X-Google-Smtp-Source: ADUXVKJ8PvVuXz4BlsX2rRO8rdoNrsVyvfi8PSGhqZUUE2T/XXIHXK5bzHwtuSp9C18zJXqoZt/7gw==
+X-Received: by 2002:a17:902:189:: with SMTP id b9-v6mr5986778plb.204.1527751446469;
+        Thu, 31 May 2018 00:24:06 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id n10-v6sm83510662pfj.68.2018.05.31.00.24.05
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 May 2018 00:23:08 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 5/5] fetch: implement fetch.fsck.*
-References: <20180525192811.25680-1-avarab@gmail.com> <20180524193516.28713-1-avarab@gmail.com> <20180525192811.25680-6-avarab@gmail.com> <xmqqin75ere0.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqin75ere0.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 31 May 2018 09:23:07 +0200
-Message-ID: <87efhs9tlw.fsf@evledraar.gmail.com>
+        Thu, 31 May 2018 00:24:05 -0700 (PDT)
+Date:   Thu, 31 May 2018 00:23:39 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] fetch: do not pass ref-prefixes for fetch by exact SHA1
+Message-ID: <20180531072339.GA43435@aiede.svl.corp.google.com>
+References: <20180516225823.235426-1-bmwill@google.com>
+ <20180516234822.182663-1-bmwill@google.com>
+ <20180516234822.182663-2-bmwill@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180516234822.182663-2-bmwill@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When v2.18.0-rc0~10^2~1 (refspec: consolidate ref-prefix generation
+logic, 2018-05-16) factored out the ref-prefix generation code for
+reuse, it left out the 'if (!item->exact_sha1)' test in the original
+ref-prefix generation code. As a result, fetches by SHA-1 generate
+ref-prefixes as though the SHA-1 being fetched were an abbreviated ref
+name:
 
-On Wed, May 30 2018, Junio C Hamano wrote:
+ $ GIT_TRACE_PACKET=1 bin-wrappers/git -c protocol.version=2 \
+	fetch origin 12039e008f9a4e3394f3f94f8ea897785cb09448
+[...]
+ packet:        fetch> ref-prefix 12039e008f9a4e3394f3f94f8ea897785cb09448
+ packet:        fetch> ref-prefix refs/12039e008f9a4e3394f3f94f8ea897785cb09448
+ packet:        fetch> ref-prefix refs/tags/12039e008f9a4e3394f3f94f8ea897785cb09448
+ packet:        fetch> ref-prefix refs/heads/12039e008f9a4e3394f3f94f8ea897785cb09448
+ packet:        fetch> ref-prefix refs/remotes/12039e008f9a4e3394f3f94f8ea897785cb09448
+ packet:        fetch> ref-prefix refs/remotes/12039e008f9a4e3394f3f94f8ea897785cb09448/HEAD
+ packet:        fetch> 0000
 
-> Earlier I mumbled "this 4-patch series generally looks good but I
-> need to re-read the implementation step"; I meant this 5-patch
-> series and here is my impression after re-reading the implementation
-> step.
->
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index f97f21c022..f69cd31ad0 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -1426,6 +1426,16 @@ fetch.fsckObjects::
->> ...
->
-> Nicely written.
->
->> diff --git a/fetch-pack.c b/fetch-pack.c
->> index 490c38f833..9e4282788e 100644
->> --- a/fetch-pack.c
->> +++ b/fetch-pack.c
->> @@ -19,6 +19,7 @@
->>  #include "sha1-array.h"
->>  #include "oidset.h"
->>  #include "packfile.h"
->> +#include "fsck.h"
->>
->>  static int transfer_unpack_limit = -1;
->>  static int fetch_unpack_limit = -1;
->> @@ -33,6 +34,7 @@ static int agent_supported;
->>  static int server_supports_filtering;
->>  static struct lock_file shallow_lock;
->>  static const char *alternate_shallow_file;
->> +static struct strbuf fsck_msg_types = STRBUF_INIT;
->
-> s/msg_types[]/exclude[]/ or something, as this is not just about "we
-> tolerate known and future instances of 0-padded mode in trees", but
-> also "we know this and that object is bad so do not complain" as well.
+If there is another ref name on the command line or the object being
+fetched is already available locally, then that's mostly harmless.
+But otherwise, we error out with
 
-I copied the fsck_msg_types variable as-is from builtin/receive-pack.c
-which Johannes added in 5d477a334a ("fsck (receive-pack): allow demoting
-errors to warnings", 2015-06-22).
+ fatal: no matching remote head
 
-That's not a justification for doing the same here, but does your
-critique also extend to that variable name, so I could fix it there
-while I'm at it?
+since the server did not send any refs we are interested in.  Filter
+out the exact_sha1 refspecs to avoid this.
 
-> Other than that, the implementation looks good.
->
->> diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
->> index 49d3621a92..b7f5222c2b 100755
->> --- a/t/t5504-fetch-receive-strict.sh
->> +++ b/t/t5504-fetch-receive-strict.sh
->> @@ -135,6 +135,20 @@ test_expect_success 'push with receive.fsck.skipList' '
->>  	git push --porcelain dst bogus
->>  '
->>
->> +test_expect_success 'fetch with fetch.fsck.skipList' '
->> +	commit="$(git hash-object -t commit -w --stdin <bogus-commit)" &&
->> +	refspec=refs/heads/bogus:refs/heads/bogus &&
->> +	git push . $commit:refs/heads/bogus &&
->> +	rm -rf dst &&
->> +	git init dst &&
->> +	git --git-dir=dst/.git config fetch.fsckObjects true &&
->> +	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec &&
->> +	git --git-dir=dst/.git config fetch.fsck.skipList dst/.git/SKIP &&
->> +	echo $commit >dst/.git/SKIP &&
->> +	git --git-dir=dst/.git fetch "file://$(pwd)" $refspec
->> +'
->
-> If the test does not change meaning when file://$(pwd) is replaced
-> with "." (or ".." or whatever if other tests below moves cwd
-> around), I'd think it is preferrable.  Seeing $(pwd) always makes me
-> nervous about Windows.
+This patch adds a test to check this behavior that notices another
+behavior difference between protocol v0 and v2 in the process.  Add a
+NEEDSWORK comment to clear it up.
 
-Thanks. Will fix.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Here's the change described in
+https://public-inbox.org/git/20180531010739.GB36515@aiede.svl.corp.google.com/
+as a proper patch.
+
+Thoughts of all kinds welcome, as always.
+
+ refspec.c             |  2 ++
+ refspec.h             |  4 ++++
+ t/t5516-fetch-push.sh | 19 +++++++++++++++++++
+ 3 files changed, 25 insertions(+)
+
+diff --git a/refspec.c b/refspec.c
+index c59a4ccf1e..ada7854f7a 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -202,6 +202,8 @@ void refspec_ref_prefixes(const struct refspec *rs,
+ 		const struct refspec_item *item = &rs->items[i];
+ 		const char *prefix = NULL;
+ 
++		if (item->exact_sha1)
++			continue;
+ 		if (rs->fetch == REFSPEC_FETCH)
+ 			prefix = item->src;
+ 		else if (item->dst)
+diff --git a/refspec.h b/refspec.h
+index 01b700e094..3a9363887c 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -42,6 +42,10 @@ void refspec_clear(struct refspec *rs);
+ int valid_fetch_refspec(const char *refspec);
+ 
+ struct argv_array;
++/*
++ * Determine what <prefix> values to pass to the peer in ref-prefix lines
++ * (see Documentation/technical/protocol-v2.txt).
++ */
+ void refspec_ref_prefixes(const struct refspec *rs,
+ 			  struct argv_array *ref_prefixes);
+ 
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index f4d28288f0..a5077d8b7c 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1121,6 +1121,25 @@ test_expect_success 'fetch exact SHA1' '
+ 	)
+ '
+ 
++test_expect_success 'fetch exact SHA1 in protocol v2' '
++	mk_test testrepo heads/master hidden/one &&
++	git push testrepo master:refs/hidden/one &&
++	git -C testrepo config transfer.hiderefs refs/hidden &&
++	check_push_result testrepo $the_commit hidden/one &&
++
++	mk_child testrepo child &&
++	git -C child config protocol.version 2 &&
++
++	# make sure $the_commit does not exist here
++	git -C child repack -a -d &&
++	git -C child prune &&
++	test_must_fail git -C child cat-file -t $the_commit &&
++
++	# fetching the hidden object succeeds by default
++	# NEEDSWORK: should this match the v0 behavior instead?
++	git -C child fetch -v ../testrepo $the_commit:refs/heads/copy
++'
++
+ for configallowtipsha1inwant in true false
+ do
+ 	test_expect_success "shallow fetch reachable SHA1 (but not a ref), allowtipsha1inwant=$configallowtipsha1inwant" '
+-- 
+2.17.1.1185.g55be947832
+
