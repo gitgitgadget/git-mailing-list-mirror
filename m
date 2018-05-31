@@ -2,124 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D70021F42D
-	for <e@80x24.org>; Thu, 31 May 2018 22:45:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FC911FD4F
+	for <e@80x24.org>; Thu, 31 May 2018 23:08:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750795AbeEaWpd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 18:45:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58494 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750766AbeEaWpd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 18:45:33 -0400
-Received: (qmail 23959 invoked by uid 109); 31 May 2018 22:45:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 31 May 2018 22:45:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18378 invoked by uid 111); 31 May 2018 22:45:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 31 May 2018 18:45:44 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 May 2018 18:45:31 -0400
-Date:   Thu, 31 May 2018 18:45:31 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH 2/2] index-pack: handle --strict checks of non-repo packs
-Message-ID: <20180531224531.GB13127@sigill.intra.peff.net>
-References: <20180531223901.GA18999@sigill.intra.peff.net>
+        id S1750728AbeEaXIk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 19:08:40 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:24284 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750714AbeEaXIj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 19:08:39 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 40xjnK4vM4z5tlG;
+        Fri,  1 Jun 2018 01:08:37 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id DC8E11CA1;
+        Fri,  1 Jun 2018 01:08:36 +0200 (CEST)
+Subject: Re: is there a reason pre-commit.sample uses "git diff-index"?
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing list <git@vger.kernel.org>
+References: <alpine.LFD.2.21.1805311235410.15130@localhost.localdomain>
+ <CACsJy8CP=1_bHAzs+mveaJvbOOzr9vny-2xz6kM4cEcCYWmOOw@mail.gmail.com>
+ <alpine.LFD.2.21.1805311323220.17047@localhost.localdomain>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <f27d8344-4acb-3e87-3bd9-b23b21c4b82a@kdbg.org>
+Date:   Fri, 1 Jun 2018 01:08:36 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180531223901.GA18999@sigill.intra.peff.net>
+In-Reply-To: <alpine.LFD.2.21.1805311323220.17047@localhost.localdomain>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 73c3f0f704 (index-pack: check .gitmodules files with
---strict, 2018-05-04) added a call to add_packed_git(), with
-the intent that the newly-indexed objects would be available
-to the process when we run fsck_finish().  But that's not
-what add_packed_git() does. It only allocates the struct,
-and you must install_packed_git() on the result. So that
-call was effectively doing nothing (except leaking a
-struct).
+Am 31.05.2018 um 19:27 schrieb Robert P. J. Day:
+> On Thu, 31 May 2018, Duy Nguyen wrote:
+>> git diff-index is "plumbing", designed for writing scripts. "git
+>> diff" on the other hand is for users and its behavior may change
+>> even if it breaks backward compatibility.
+> 
+>    ah, this was a philosophical underpinning i was unaware of. i see
+> occasional explanations of git porcelain versus plumbing, but i don't
+> recall anyone simply stating that the plumbing is meant to have a
+> long-term stability that is not guaranteed for the porcelain.
 
-But wait, we passed all of the tests! Does that mean we
-don't need the call at all?
+So, there you have it. ;) Plumbing commands offer long-term stability. 
+That is not just philosophical, but practically relevant.
 
-For normal cases, no. When we run "index-pack --stdin"
-inside a repository, we write the new pack into the object
-directory. If fsck_finish() needs to access one of the new
-objects, then our initial lookup will fail to find it, but
-we'll follow up by running reprepare_packed_git() and
-looking again. That logic was meant to handle somebody else
-repacking simultaneously, but it ends up working for us
-here.
+>    in any event, this does mean that, stability issues aside, "git
+> diff" would apparently have worked just fine for that hook.
 
-But there is a case that does need this, that we were not
-testing. You can run "git index-pack foo.pack" on any file,
-even when it is not inside the object directory. Or you may
-not even be in a repository at all! This case fails without
-doing the proper install_packed_git() call.
+It may have worked just fine. You should still not use it.
 
-We can make this work by adding the install call.
+Didn't you say that you are teaching git and hooks? Then you should 
+teach the right thing, and the right thing is to use plumbing for scripts.
 
-Note that we should be prepared to handle add_packed_git()
-failing. We can just silently ignore this case, though. If
-fsck_finish() later needs the objects and they're not
-available, it will complain itself. And if it doesn't
-(because we were able to resolve the whole fsck in the first
-pass), then it actually isn't an interesting error at all.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/index-pack.c       |  8 ++++++--
- t/t7415-submodule-names.sh | 10 ++++++++++
- 2 files changed, 16 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 4ab31ed388..74fe2973e1 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1482,8 +1482,12 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 	} else
- 		chmod(final_index_name, 0444);
- 
--	if (do_fsck_object)
--		add_packed_git(final_index_name, strlen(final_index_name), 0);
-+	if (do_fsck_object) {
-+		struct packed_git *p;
-+		p = add_packed_git(final_index_name, strlen(final_index_name), 0);
-+		if (p)
-+			install_packed_git(the_repository, p);
-+	}
- 
- 	if (!from_stdin) {
- 		printf("%s\n", sha1_to_hex(hash));
-diff --git a/t/t7415-submodule-names.sh b/t/t7415-submodule-names.sh
-index a770d92a55..4157e1a134 100755
---- a/t/t7415-submodule-names.sh
-+++ b/t/t7415-submodule-names.sh
-@@ -122,6 +122,16 @@ test_expect_success 'transfer.fsckObjects handles odd pack (index)' '
- 	test_must_fail git -C dst.git index-pack --strict --stdin <odd.pack
- '
- 
-+test_expect_success 'index-pack --strict works for non-repo pack' '
-+	rm -rf dst.git &&
-+	git init --bare dst.git &&
-+	cp odd.pack dst.git &&
-+	test_must_fail git -C dst.git index-pack --strict odd.pack 2>output &&
-+	# Make sure we fail due to bad gitmodules content, not because we
-+	# could not read the blob in the first place.
-+	grep gitmodulesName output
-+'
-+
- test_expect_success 'fsck detects symlinked .gitmodules file' '
- 	git init symlink &&
- 	(
--- 
-2.17.1.1443.gd58a3f03b7
+-- Hannes
