@@ -2,175 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8209C1F42D
-	for <e@80x24.org>; Thu, 31 May 2018 15:44:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 696951F42D
+	for <e@80x24.org>; Thu, 31 May 2018 15:57:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755450AbeEaPol (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 May 2018 11:44:41 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:39320 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755417AbeEaPok (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 May 2018 11:44:40 -0400
-Received: by mail-lf0-f66.google.com with SMTP id t134-v6so10435206lff.6
-        for <git@vger.kernel.org>; Thu, 31 May 2018 08:44:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=m5zDK/JoK3mdHKu4nmpLJ9/u/qbHY88o3irmsDycDHw=;
-        b=nw9Yu7ZigIRdBhl5Q1eBYzHgEkCws2+1pQOb7HLY5aslNhAbmQ55A40hZPcviHPM3L
-         4sjnfQe2Hw/UfJFhermnj+EJ+3pP/j2bKnyv/S9NBeLG5WQc3aeM2GveQSHAZwwHGPW9
-         5HxV+DxbuRDsXA8/lKd7sbbJ9u2qeEPeySDSSzSWYzbH7WRhBwTeST87mlWLXLBfO//w
-         MJK28JTNh8t1EhJep6cu2FsHVeRxxZJh7xnhM+d9FCTpbfBQE/54sLKgydGONRI/N51G
-         7gAN22Zl+TkPpqo+Xv9kyKME3vxWHCe6rp30vPBUvtFxO2Ap3guh1Je2F4z8zYL9XJLt
-         LZqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=m5zDK/JoK3mdHKu4nmpLJ9/u/qbHY88o3irmsDycDHw=;
-        b=FGj0+vKFnmkEJjLIgL2/GZ2ZL6W4I9dwWJUJyP7QxUSS3njEe03Roo+58K17L5bYnD
-         89LuJ/tZc1fxjsPdLqvAVD0dYiDxjH6EO9DO64co0eg4fc3NRVUBjOo760QeSnR0ueph
-         V0MCPw2C7527DOEhF1P+Fx0Ekl4kq0+MPmrgxd6cY+srwQY6nbVVBDmv05SckkNTRK/a
-         fb6q5NytWOp/f5s3bBcxxb2KhMX7Pb1vs/BvDbo3KEc+2MG2D4Nt/qBagJ+yymzObhpX
-         AHFj9lczAvkmZfRz7wVYDT91f/Cob0eJSX/b6C9G9l4GmiUHwmQ+0c+F8GIQY5Ks0ex8
-         ub9A==
-X-Gm-Message-State: ALKqPwdPNR2mZRGfzRRkEhOw1U41V+EsNqbVYZggslt8LZmF6NDntD8Y
-        Hk9C54DFg2eKLMj6IKH1bEYKZsaYFfFo6mwUOaAhzw==
-X-Google-Smtp-Source: ADUXVKJZzURub6Ztx5J64l1jqJyR74Vzay9o6z9NWl7Gt+z9Q+AS6KGNvueq9pz55ricvCnEvwLLNcc3O2Yba0FIOzM=
-X-Received: by 2002:a19:de0a:: with SMTP id v10-v6mr4415747lfg.94.1527781478203;
- Thu, 31 May 2018 08:44:38 -0700 (PDT)
+        id S1755560AbeEaP5b (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 May 2018 11:57:31 -0400
+Received: from mail-by2nam01on0070.outbound.protection.outlook.com ([104.47.34.70]:44843
+        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1755537AbeEaP5a (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 May 2018 11:57:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zillowgroup.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fBh47ZTWMixcdi9Lsjycr36sqxK6H/bBH96iBQeJoC4=;
+ b=NonXgvN+5ZnlIS23fMp0W1oYKxCCGuGHUddXL9gOd7/SfDI1xRqeHg5XMxtZYhB9CCq1aovYy4LLovlpHkmU25U6JaRv9eJOdVRl5TF8w+zOrufPElpAn0tl21sla9nwHXWL3EFP214RjztiPVsEObx/b7XD7OrcxyU0p+VACLI=
+Received: from CY1PR0601MB1990.namprd06.prod.outlook.com (10.164.221.24) by
+ CY1PR0601MB1469.namprd06.prod.outlook.com (10.163.21.27) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.797.11; Thu, 31 May 2018 15:57:28 +0000
+Received: from CY1PR0601MB1990.namprd06.prod.outlook.com
+ ([fe80::e142:f997:293c:917]) by CY1PR0601MB1990.namprd06.prod.outlook.com
+ ([fe80::e142:f997:293c:917%4]) with mapi id 15.20.0820.010; Thu, 31 May 2018
+ 15:57:28 +0000
+From:   Erika Voss <erikav@zillowgroup.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Git Vulnerability Announced?
+Thread-Topic: Git Vulnerability Announced?
+Thread-Index: AQHT+PgTcVOcVy9ioEefRG9+4BJCcQ==
+Date:   Thu, 31 May 2018 15:57:28 +0000
+Message-ID: <D47B86A7-2E5A-4401-99B2-E59FD859C7E6@zillowgroup.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=erikav@zillowgroup.com; 
+x-originating-ip: [64.125.67.66]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;CY1PR0601MB1469;7:ffdcu3dlhyD6rwRaRGg+x6vTPQ7j5mz/Me65kckcMSPsAbu9sJdqcSqjocVDsA5Ps39j2ui54n6eJefFuTAsM10RrAfHRVU3hYCThps4vyDnIEfhloPOQf3F1U+wodCDpU5ywHNcj8slpXplvlMo7kUf+hGhqhaaexS80+bznb0eNs0hA0D7VDwalZZ/sZpDmfmlNfhnKqtMx5PJk6qRydpgsa5W1wksFlWY1l2cQKrVFKw6XrmD2kDljHWEFGog
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(8989080)(48565401081)(5600026)(4534165)(4627221)(201703031133081)(201702281549075)(8990040)(2017052603328)(7153060)(7193020);SRVR:CY1PR0601MB1469;
+x-ms-traffictypediagnostic: CY1PR0601MB1469:
+x-microsoft-antispam-prvs: <CY1PR0601MB1469D9A58FCA956FA226249AC3630@CY1PR0601MB1469.namprd06.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:;
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(10201501046)(3002001)(3231254)(944501410)(52105095)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123562045)(20161123564045)(20161123558120)(6072148)(201708071742011)(7699016);SRVR:CY1PR0601MB1469;BCL:0;PCL:0;RULEID:;SRVR:CY1PR0601MB1469;
+x-forefront-prvs: 06891E23FB
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(346002)(376002)(366004)(396003)(39860400002)(39380400002)(189003)(199004)(6512007)(478600001)(68736007)(2501003)(6506007)(305945005)(7736002)(36756003)(102836004)(53936002)(186003)(5250100002)(5640700003)(6916009)(83716003)(2900100001)(6116002)(8676002)(3846002)(3660700001)(81156014)(1730700003)(81166006)(106356001)(3280700002)(3480700004)(26005)(97736004)(66066001)(33656002)(105586002)(7116003)(5660300001)(8936002)(6486002)(2351001)(2906002)(486006)(25786009)(99286004)(558084003)(82746002)(316002)(2616005)(14454004)(86362001)(476003)(6436002);DIR:OUT;SFP:1101;SCL:1;SRVR:CY1PR0601MB1469;H:CY1PR0601MB1990.namprd06.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: zillowgroup.com does not designate
+ permitted sender hosts)
+x-microsoft-antispam-message-info: 7aJUziuX6bZKDuYJcIWDlBqFih/R+6Hw4y+giOJcH2zzRnGKK01iyoyufDKq0EJema//629NaG41kKoOLdUn5pFF6i6zh6z2pcMGSV6A/TlZvVA1r6xJ4cDT9vgwZKxYZLDhBw6iNdxG8H7JqMO03q8EZWFyXQPdSbbkh3zvLc59zKq7k/pXiOO/uCZgSiu5
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <48A9C6B4451F9741B6A08B1875418845@namprd06.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Received: by 2002:a2e:90c:0:0:0:0:0 with HTTP; Thu, 31 May 2018 08:44:37 -0700 (PDT)
-In-Reply-To: <20180531072339.GA43435@aiede.svl.corp.google.com>
-References: <20180516225823.235426-1-bmwill@google.com> <20180516234822.182663-1-bmwill@google.com>
- <20180516234822.182663-2-bmwill@google.com> <20180531072339.GA43435@aiede.svl.corp.google.com>
-From:   Brandon Williams <bmwill@google.com>
-Date:   Thu, 31 May 2018 08:44:37 -0700
-Message-ID: <CAKoko1peCNXq-2txoMfQ07FgFDOOcb8b9gMq1c1h9B8Le4kGww@mail.gmail.com>
-Subject: Re: [PATCH] fetch: do not pass ref-prefixes for fetch by exact SHA1
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Office365-Filtering-Correlation-Id: 8d07f7d6-c44f-4e61-012a-08d5c70f35c2
+X-OriginatorOrg: zillowgroup.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8d07f7d6-c44f-4e61-012a-08d5c70f35c2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 May 2018 15:57:28.2756
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 03346483-0d18-40e7-a588-3784ac50e16f
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR0601MB1469
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for finding this, I don't know how I missed moving that bit
-over when factoring it out.  Well I guess I sort of rewrote it and
-combined two pieces of logic so that's how.  Anyway, this looks right
-and thanks for adding the test.
-
-On Thu, May 31, 2018 at 12:23 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> When v2.18.0-rc0~10^2~1 (refspec: consolidate ref-prefix generation
-> logic, 2018-05-16) factored out the ref-prefix generation code for
-> reuse, it left out the 'if (!item->exact_sha1)' test in the original
-> ref-prefix generation code. As a result, fetches by SHA-1 generate
-> ref-prefixes as though the SHA-1 being fetched were an abbreviated ref
-> name:
->
->  $ GIT_TRACE_PACKET=1 bin-wrappers/git -c protocol.version=2 \
->         fetch origin 12039e008f9a4e3394f3f94f8ea897785cb09448
-> [...]
->  packet:        fetch> ref-prefix 12039e008f9a4e3394f3f94f8ea897785cb09448
->  packet:        fetch> ref-prefix refs/12039e008f9a4e3394f3f94f8ea897785cb09448
->  packet:        fetch> ref-prefix refs/tags/12039e008f9a4e3394f3f94f8ea897785cb09448
->  packet:        fetch> ref-prefix refs/heads/12039e008f9a4e3394f3f94f8ea897785cb09448
->  packet:        fetch> ref-prefix refs/remotes/12039e008f9a4e3394f3f94f8ea897785cb09448
->  packet:        fetch> ref-prefix refs/remotes/12039e008f9a4e3394f3f94f8ea897785cb09448/HEAD
->  packet:        fetch> 0000
->
-> If there is another ref name on the command line or the object being
-> fetched is already available locally, then that's mostly harmless.
-> But otherwise, we error out with
->
->  fatal: no matching remote head
->
-> since the server did not send any refs we are interested in.  Filter
-> out the exact_sha1 refspecs to avoid this.
->
-> This patch adds a test to check this behavior that notices another
-> behavior difference between protocol v0 and v2 in the process.  Add a
-> NEEDSWORK comment to clear it up.
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> Here's the change described in
-> https://public-inbox.org/git/20180531010739.GB36515@aiede.svl.corp.google.com/
-> as a proper patch.
->
-> Thoughts of all kinds welcome, as always.
->
->  refspec.c             |  2 ++
->  refspec.h             |  4 ++++
->  t/t5516-fetch-push.sh | 19 +++++++++++++++++++
->  3 files changed, 25 insertions(+)
->
-> diff --git a/refspec.c b/refspec.c
-> index c59a4ccf1e..ada7854f7a 100644
-> --- a/refspec.c
-> +++ b/refspec.c
-> @@ -202,6 +202,8 @@ void refspec_ref_prefixes(const struct refspec *rs,
->                 const struct refspec_item *item = &rs->items[i];
->                 const char *prefix = NULL;
->
-> +               if (item->exact_sha1)
-> +                       continue;
->                 if (rs->fetch == REFSPEC_FETCH)
->                         prefix = item->src;
->                 else if (item->dst)
-> diff --git a/refspec.h b/refspec.h
-> index 01b700e094..3a9363887c 100644
-> --- a/refspec.h
-> +++ b/refspec.h
-> @@ -42,6 +42,10 @@ void refspec_clear(struct refspec *rs);
->  int valid_fetch_refspec(const char *refspec);
->
->  struct argv_array;
-> +/*
-> + * Determine what <prefix> values to pass to the peer in ref-prefix lines
-> + * (see Documentation/technical/protocol-v2.txt).
-> + */
->  void refspec_ref_prefixes(const struct refspec *rs,
->                           struct argv_array *ref_prefixes);
->
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index f4d28288f0..a5077d8b7c 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -1121,6 +1121,25 @@ test_expect_success 'fetch exact SHA1' '
->         )
->  '
->
-> +test_expect_success 'fetch exact SHA1 in protocol v2' '
-> +       mk_test testrepo heads/master hidden/one &&
-> +       git push testrepo master:refs/hidden/one &&
-> +       git -C testrepo config transfer.hiderefs refs/hidden &&
-> +       check_push_result testrepo $the_commit hidden/one &&
-> +
-> +       mk_child testrepo child &&
-> +       git -C child config protocol.version 2 &&
-> +
-> +       # make sure $the_commit does not exist here
-> +       git -C child repack -a -d &&
-> +       git -C child prune &&
-> +       test_must_fail git -C child cat-file -t $the_commit &&
-> +
-> +       # fetching the hidden object succeeds by default
-> +       # NEEDSWORK: should this match the v0 behavior instead?
-> +       git -C child fetch -v ../testrepo $the_commit:refs/heads/copy
-> +'
-> +
->  for configallowtipsha1inwant in true false
->  do
->         test_expect_success "shallow fetch reachable SHA1 (but not a ref), allowtipsha1inwant=$configallowtipsha1inwant" '
-> --
-> 2.17.1.1185.g55be947832
->
+R29vZCBtb3JuaW5nLA0KDQpUaGVyZSB3YXMgYW4gYXJ0aWNsZSBJIGNhbWUgYWNyb3NzIHllc3Rl
+cmRheSBpZGVudGlmeWluZyBhIHZ1bG5lcmFiaWxpdHkgdG8gcGF0Y2ggb3VyIEdpdCBlbnZpcm9u
+bWVudHMuICBJIGRvbuKAmXQgc2VlIG9uZSB0aGF0IGlzIGF2YWlsYWJsZSBmb3Igb3VyIE1hYyBD
+bGllbnRzIC0gaXMgdGhlcmUgYSBtb3JlIHJlY2VudCBvbmUgdGhhdCBJIGNhbiBkb3dubG9hZCB0
+aGF0IGlzIGF2YWlsYWJsZSB0byBwYXRjaCB0aGUgMi4xNy4wIHZlcnNpb24/DQoNClRoYW5rIHlv
+dSwNCkVyaWthDQoNCg==
